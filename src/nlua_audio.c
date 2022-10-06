@@ -867,13 +867,11 @@ static int audioL_seek( lua_State *L )
    LuaAudio_t *la = luaL_checkaudio(L,1);
    double offset = luaL_checknumber(L,2);
    const char *unit = luaL_optstring(L,3,"seconds");
-   int seconds;
+   int seconds = 1;
 
-   if (strcmp(unit,"seconds")==0)
-      seconds = 1;
-   else if (strcmp(unit,"samples")==0)
+   if (strcmp(unit,"samples")==0)
       seconds = 0;
-   else
+   else if (strcmp(unit,"seconds")!=0)
       NLUA_ERROR(L, _("Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"), unit );
 
    if (sound_disabled)
@@ -920,13 +918,11 @@ static int audioL_tell( lua_State *L )
    const char *unit = luaL_optstring(L,2,"seconds");
    double offset = -1.;
    float aloffset;
-   int seconds;
+   int seconds = 1;
 
-   if (strcmp(unit,"seconds")==0)
-      seconds = 1;
-   else if (strcmp(unit,"samples")==0)
+   if (strcmp(unit,"samples")==0)
       seconds = 0;
-   else
+   else if (strcmp(unit,"seconds")!=0)
       NLUA_ERROR(L, _("Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"), unit );
 
    if (sound_disabled) {
@@ -976,15 +972,13 @@ static int audioL_getDuration( lua_State *L )
    LuaAudio_t *la = luaL_checkaudio(L,1);
    const char *unit = luaL_optstring(L,2,"seconds");
    float duration = -1.;
-   int seconds;
+   int seconds = 1;
    ALint bytes, channels, bits, samples;
    ALuint buffer;
 
-   if (strcmp(unit,"seconds")==0)
-      seconds = 1;
-   else if (strcmp(unit,"samples")==0)
+   if (strcmp(unit,"samples")==0)
       seconds = 0;
-   else
+   else if (strcmp(unit,"seconds")!=0)
       NLUA_ERROR(L, _("Unknown duration source '%s'! Should be either 'seconds' or 'samples'!"), unit );
 
    if (sound_disabled) {
