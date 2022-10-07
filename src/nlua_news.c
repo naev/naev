@@ -166,7 +166,6 @@ news_t* luaL_validnews( lua_State *L, int ind )
  */
 int newsL_add( lua_State *L )
 {
-   LuaNews_t n_article;
    const char *title, *body, *faction;
    ntime_t date, date_to_rm;
    int priority;
@@ -281,12 +280,12 @@ int newsL_add( lua_State *L )
          date = luaL_checklong(L, 5);
    }
 
-   if (title && body && faction)
-      n_article = news_add( title, body, faction, NULL, date, date_to_rm, priority );
+   if (title && body && faction) {
+      LuaNews_t n_article = news_add( title, body, faction, NULL, date, date_to_rm, priority );
+      lua_pushnews( L, n_article );
+   }
    else
       NLUA_ERROR(L,_("Bad arguments"));
-
-   lua_pushnews( L, n_article );
 
    /* If we're landed, we should regenerate the news buffer. */
    if (landed) {
