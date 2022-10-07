@@ -7,15 +7,14 @@ import argparse
 import subprocess
 
 def nluacheck( filename, extra_opts=[] ):
-    with open( filename, 'r' ) as f:
+    with open( filename, 'r', encoding='utf-8' ) as f:
         data = f.read()
 
-    hooks = re.findall("hook\.(?!pilot)[a-z]*?\(.*?\"(.+?)\".*?\)", data, re.S)
-    pilot_hooks = re.findall("hook\.pilot ?\(.*?,.*?, *?\"(.+?)\".*?\)", data, re.S)
+    hooks = re.findall(r'hook\.(?!pilot)[a-z]* ?\(.*?"(.+?)".*?\)', data, re.S)
+    pilot_hooks = re.findall(r'hook\.pilot ?\(.*?,.*?, *?"(.+?)".*?\)', data, re.S)
     hooks += pilot_hooks
 
-    hooks = list(set(hooks))
-    hooks.sort()
+    hooks = sorted(set(hooks))
 
     args = [ "luacheck", filename ]
     args += extra_opts
