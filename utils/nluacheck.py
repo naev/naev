@@ -7,8 +7,11 @@ import argparse
 import subprocess
 from multiprocessing import Pool
 
+# TODO also filter out hook.custom from HOOKS_REGEX
 HOOKS_REGEX = re.compile( r'hook\.(?!pilot)[a-z]*\s*\(.*?"(.+?)"' )
 HOOKS_PILOT_REGEX = re.compile( r'hook\.pilot\s*\(.*?,.*?, *?"(.+?)"' )
+HOOKS_CUSTOM_REGEX = re.compile( r'hook\.custom\s*\(.*?, *?"(.+?)"' )
+NPC_REGEX = re.compile( r'(evt|misn)\.npcAdd\( *?"(.+?)"' )
 
 def nluacheck( filename, extra_opts=[] ):
     with open( filename, 'r', encoding='utf-8' ) as f:
@@ -16,9 +19,9 @@ def nluacheck( filename, extra_opts=[] ):
 
     # XXX - will not detect multi-line calls unless the function name is on the first line.
     hooks = HOOKS_REGEX.findall( data )
-    pilot_hooks = HOOKS_PILOT_REGEX.findall( data )
-    hooks += pilot_hooks
-
+    hooks += HOOKS_PILOT_REGEX.findall( data )
+    hooks += HOOKS_CUSTOM_REGEX.findall( data )
+    hooks += list(map( lambda x: x[1], NPC_REGEX.findall( data ) ) )
     hooks = sorted(set(hooks))
 
     args = [ "luacheck", filename ]
