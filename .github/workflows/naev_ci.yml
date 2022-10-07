@@ -37,9 +37,9 @@ jobs:
           - image: naev-linux-latest
             config: linux.ini
             wrap_mode: forcefallback
-          #- image: naev-linux-lts
-          #  config: linux.ini
-          #  wrap_mode: default
+          - image: naev-linux-lts
+            config: linux.ini
+            wrap_mode: default
           - image: naev-steamruntime
             config: linux_steamruntime.ini
             wrap_mode: forcefallback
