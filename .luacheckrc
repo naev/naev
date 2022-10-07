@@ -1,8 +1,12 @@
 -- vim: set expandtab shiftwidth=3 syntax=lua:
+
+-- Load automatically generated API
 local stds_gen = require "utils.luacheckrc_gen"
 for k,v in pairs(stds_gen) do
    stds[k] = v
 end
+-- We do some modifications locally here
+stds.ai.read_globals.__ai = {}
 
 -- Note that naev actually contains all the API, so we assume the developers knows what they are using
 std = "lua51+love+Basic+naev"
