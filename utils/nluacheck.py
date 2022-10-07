@@ -10,8 +10,9 @@ def nluacheck( filename, extra_opts=[] ):
     with open( filename, 'r', encoding='utf-8' ) as f:
         data = f.read()
 
-    hooks = re.findall(r'hook\.(?!pilot)[a-z]* ?\(.*?"(.+?)".*?\)', data, re.S)
-    pilot_hooks = re.findall(r'hook\.pilot ?\(.*?,.*?, *?"(.+?)".*?\)', data, re.S)
+    # XXX - will not detect multi-line calls unless the function name is on the first line.
+    hooks = re.findall(r'hook\.(?!pilot)[a-z]*\s*\(.*?"(.+?)"', data)
+    pilot_hooks = re.findall(r'hook\.pilot\s*\(.*?,.*?, *?"(.+?)"', data)
     hooks += pilot_hooks
 
     hooks = sorted(set(hooks))
