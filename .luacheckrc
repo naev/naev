@@ -4,7 +4,8 @@ for k,v in pairs(stds_gen) do
    stds[k] = v
 end
 
-std = "lua51+love+Basic"
+-- Note that naev actually contains all the API, so we assume the developers knows what they are using
+std = "lua51+love+Basic+naev"
 
 -- It would be nice to enforce a ~120 char limit for regular lines of code, but missions etc. have inline text of considerable size.
 -- Note: there's a `max_string_line_length` option, but that only applies when the line ending is inside a string. Useless.

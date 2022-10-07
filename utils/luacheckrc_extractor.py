@@ -45,10 +45,17 @@ if __name__ == "__main__":
     else:
         output = open(args.output,'w')
 
+    modlist = []
     output.write("local stds = {}\n")
+
+    # write all the standard modules
     for filename in args.filename:
         modname = os.path.basename(filename).replace('nlua_','').replace('.c','')
+        modlist += [modname]
         output.write( generate_api( modname, filename )+'\n' )
-    output.write("return stds")
 
-#api = generate_api( "news", "/home/ess/naev/src/nlua_news.c" )
+    # meta-module for naev
+    for m in modlist:
+        output.write(f"stds.naev.read_globals.{m} = stds.{m}.read_globals.{m}\n")
+
+    output.write("return stds")
