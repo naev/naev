@@ -25,7 +25,7 @@ ignore = {"21./_.*", "213", "231/_.*"}
 -- The following corresponds to internal Lua functions added by naev
 stds.Basic={
    globals={
-      "__resize",
+      "__resize", -- Can be defined to handle when a resize event happens
    },
    read_globals={
       table={
