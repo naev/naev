@@ -220,6 +220,7 @@ if buildExec.disabled() == false
 
    # Luacheck (linter) wrapper
    luacheck = find_program('luacheck', required: false)
+   nluacheck = find_program('utils/nluacheck.py')
 
    # Audio
    openal = dependency('openal', required: true)
