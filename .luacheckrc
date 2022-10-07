@@ -186,6 +186,9 @@ stds.API_pilotoutfit = {globals={
    "update",
    "mem", -- Automatically created using nlua_setenv().
 }}
+stds.API_mem = {globals={
+   "mem",
+}}
 
 files["dat/ai/**/*.lua"].std = STANDARD .. "+ai+API_ai"
 files["dat/autoequip.lua"].std = STANDARD .. TK .. "+API_autoequip"
@@ -212,7 +215,7 @@ files["dat/spob/**/*.lua"].std = STANDARD .. GFX .."+camera+API_spob"
 files["dat/effects/**/*.lua"].std = STANDARD .. "+API_effects"
 
 -- No way to be sure what type of environment will load these.
-files["dat/scripts/**/*.lua"].std = STANDARD .. TK .. "+misn+hook+camera+tex+bkg+music" .. TK
+files["dat/scripts/**/*.lua"].std = STANDARD .. TK .. "+API_mem+misn+hook+camera+tex+bkg+music" .. TK
 
 files["docs/ai/**/*.lua"].std = files["dat/ai/**/*.lua"].std
 -- TODO: Enable when no one is likely to invoke a pre-1.0 Luacheck manually.
