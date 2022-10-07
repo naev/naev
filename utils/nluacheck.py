@@ -36,7 +36,7 @@ if __name__ == "__main__":
             filelist.add( a )
         else:
             p = pl.Path(a)
-            for f in p.glob( os.path.join("**", "*.lua" ) ):
+            for f in p.glob( os.path.join("**", "*.lua") ):
                 filelist.add( f )
 
     filelist = list(filelist)
