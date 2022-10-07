@@ -26,12 +26,12 @@ ignore = {"21./_.*", "213", "231/_.*"}
 stds.Basic={
    globals={
       "__resize", -- Can be defined to handle when a resize event happens
+      "_LOADED", -- NLUA_LOAD_TABLE
    },
    read_globals={
       table={
          fields={"unpack", "pack"}
       },
-      "_LOADED", -- NLUA_LOAD_TABLE
       "inlist",
       "tcopy",
       "tmerge",
@@ -237,3 +237,6 @@ files["extras/autotests.lua"].std = STANDARD
 files["utils/**/*.lua"].std = STANDARD
 
 files["**/datapath.lua"].std = "API_datapath"
+
+-- This file should have no dependencies and sets globals, so we'll just remove it from luachecking
+exclude_files = {"dat/common.lua"}
