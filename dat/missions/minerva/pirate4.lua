@@ -36,8 +36,6 @@ local shippos     = vec2.new( 4000, 0 ) -- asteroid field center
 --    2. defend torture ship
 mem.misn_state = nil
 local mainship, spawned_dvaereds, spawned_pirates -- Non-persistent state
--- luacheck: globals attack_spam_over dv_reinforcement1 dv_reinforcement2 dv_reinforcement3 enter followup found_mole generate_npc heartbeat mainship_attacked mainship_board mainship_dead mainship_stealth minerva_molecaught msg1 msg2 msg3 msg4 pir_reinforcements (Hook functions passed by name)
--- luacheck: globals approach_pir (NPC functions passed by name)
 
 function create ()
    if not misn.claim( mainsys ) then

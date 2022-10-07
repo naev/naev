@@ -34,7 +34,6 @@ local drone2pos = vec2.new( -10000,   6000 )
 --    1: Get back to Minerva Station
 mem.misn_state = nil
 local badweaps, drone1, drone2 -- Non-persistent state
--- luacheck: globals drone_attacked drone_death drone_ranaway enter heartbeat land reinforcements_jumpin (Hook functions passed by name)
 
 function create ()
    if not misn.claim( mainsys ) then

@@ -40,8 +40,6 @@ local mainsys = system.get("Gammacron")
 --    3. hacking center disabled
 mem.misn_state = nil
 local all_ships, drone_control1, drone_control2, drone_group1, drone_group2, hacking_center, main_boss -- Non-persistent state
--- luacheck: globals blowup drone_control1_dead drone_control2_dead enter generate_npc hacking_center_dead message_first message_hostile message_warn plant_explosives (Hook functions passed by name)
--- luacheck: globals approach_zuri (NPC functions passed by name)
 
 
 function create ()

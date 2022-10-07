@@ -84,8 +84,6 @@ local eccpos = vec2.new( 7500, -6000 ) -- Should coincide with "Strangelove Lab"
 mem.misn_state = nil
 local defense_systems, feral_drone_boss -- Non-persistent state
 local hintosd -- Forward-declared functions
--- luacheck: globals ecc_dist ecc_drone_dead_check ecc_feral_boss_attacked ecc_feral_boss_dead ecc_feral_boss_msg ecc_timer ecc_timer_dead enter generate_npc (Hook functions passed by name)
--- luacheck: globals approach_eccentric approach_hint1 approach_hint2 approach_hint3 approach_hint4 approach_maikki (NPC functions passed by name)
 
 function create ()
    if not misn.claim( eccsys ) then
