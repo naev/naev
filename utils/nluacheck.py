@@ -32,6 +32,7 @@ def nluacheck( filename, extra_opts=[] ):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser( description='Wrapper for luacheck that "understands" Naev hooks.' )
     parser.add_argument('filename', metavar='FILENAME', nargs='+', type=str, help='Name of the file(s) to parse.')
+    parser.add_argument('-j', '--jobs', metavar='jobs', type=int, default=None, help='Number of jobs to use. Defaults to number of CPUs.')
     args, unknown = parser.parse_known_args()
 
     filelist = set()
@@ -49,7 +50,7 @@ if __name__ == "__main__":
 
     filelist = list(filelist)
     filelist.sort()
-    with Pool() as pool:
+    with Pool( args.jobs ) as pool:
         retlist = pool.map( nluacheck_w, filelist )
     err = 0
     for r in retlist:
