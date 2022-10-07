@@ -56,6 +56,7 @@ if __name__ == "__main__":
 
     # meta-module for naev
     for m in modlist:
-        output.write(f"stds.naev.read_globals.{m} = stds.{m}.read_globals.{m}\n")
+        if m != 'naev':  # Do not create a recursive data structure!
+            output.write(f"stds.naev.read_globals.naev.fields.{m} = stds.{m}.read_globals.{m}\n")
 
     output.write("return stds")
