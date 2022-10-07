@@ -38,57 +38,15 @@ stds.Basic={
    },
    read_globals={"N_", "_", "__debugging", "gettext", "n_", "p_", "warn"},
 }
-stds.AI = {read_globals={"ai","__ai"}} -- the C function is ai_loadProfile() in this case
-stds.Audio = {read_globals={"audio"}}
-stds.Asteroid = {read_globals={"asteroid"}}
-stds.Background = {read_globals={"bkg"}}
-stds.Camera = {read_globals={"camera"}}
-stds.Canvas = {read_globals={"canvas"}}
-stds.Col = {read_globals={"colour"}}
-stds.Commodity = {read_globals={"commodity"}}
-stds.Data = {read_globals={"data"}}
-stds.Diff = {read_globals={"diff"}}
-stds.Evt = {read_globals={"evt"}}
-stds.CLI = {read_globals={"script", "printRaw"}} -- Actually set in cli_initLua()
-stds.Faction = {read_globals={"faction"}}
-stds.File = {read_globals={"file"}}
-stds.Font = {read_globals={"font"}}
-stds._GFX = {read_globals={"gfx"}}
-stds.GUI = {read_globals={"gui"}}
-stds.Hook = {read_globals={"hook"}}
-stds.Jump = {read_globals={"jump"}}
-stds.LinOpt = {read_globals={"linopt"}}
-stds.Misn = {read_globals={"misn"}}
-stds.Music = {read_globals={"music"}}
-stds.Naev = {read_globals={"naev"}}
-stds.News = {read_globals={"news"}}
-stds.Outfit = {read_globals={"outfit"}}
-stds._Pilot = {read_globals={"pilot"}}
-stds.PilotOutfit = {read_globals={"pilotoutfit"}}
-stds.Spob = {read_globals={"spob"}}
-stds.Player = {read_globals={"player"}}
-stds.Rnd = {read_globals={"rnd"}}
-stds.Safelanes = {read_globals={"safelanes"}}
-stds.Shader = {read_globals={"shader"}}
-stds.Ship = {read_globals={"ship"}}
-stds.Shiplog = {read_globals={"shiplog"}}
-stds.Spfx = {read_globals={"spfx"}}
-stds.System = {read_globals={"system"}}
-stds.Tex = {read_globals={"tex"}}
-stds.Time = {read_globals={"time"}}
-stds._Tk = {read_globals={"tk"}}
-stds.Transform = {read_globals={"transform"}}
-stds.Var = {read_globals={"var"}}
-stds.Vector = {read_globals={"vec2"}}
 
-PILOT = "+_Pilot+Ship+Asteroid"
-STANDARD = "+Naev+Var+Spob+System+Jump+Time+Player" .. PILOT .. "+Rnd+Diff+Faction+Vector+Outfit+Commodity+News+Shiplog+File+Data+LinOpt+Safelanes+Spfx+Audio"
-GFX = "+_GFX+Col+Tex+Font+Transform+Shader+Canvas"
-TK = "+_Tk+Col" .. GFX
+PILOT = "+pilot+ship+asteroid"
+STANDARD = "+naev+var+spob+system+jump+time+player" .. PILOT .. "+rnd+diff+faction+vec2+outfit+commodity+news+shiplog+file+data+linopt+safelanes+spfx+audio"
+GFX = "+gfx+colour+tex+font+transform+shader+canvas"
+TK = "+tk+colour" .. GFX
 
 -- In addition, the Naev code base looks for APIs *exported* by certain types of scripts:
 -- This is done using nlua_refenv-family calls for exported functions, and nlua_getenv/nlua_setenv for magic variables.
-stds.AI.globals = {
+stds.API_ai = {globals={
    "attacked",
    "attacked_manual",
    "control",
@@ -130,7 +88,7 @@ stds.AI.globals = {
    "should_investigate",
    "taunt",                     -- everyone has their own!
    "transportParam",            -- initialization helper for the AIs
-}
+}}
 stds.API_board = {globals={"board"}}    -- C function: player_board()
 stds.API_comm = {globals={"comm"}}      -- C function: comm_openPilot()
 stds.API_datapath = {globals={"datapath"}} -- C functon: conf_loadConfigPath
@@ -168,9 +126,13 @@ stds.API_effects = {globals={
    "extend",   -- C function: effect_add
    "remove",   -- C function: effect_update
 }}
-stds.Background.globals={"background", "renderbg", "rendermg", "renderfg", "renderov"}
-stds.Evt.globals={"create", "mem"}
-stds.GUI.globals = {
+stds.API_background = {globals={
+   "background", "renderbg", "rendermg", "renderfg", "renderov"
+}}
+stds.API_evt = {globals={
+   "create", "mem"
+}}
+stds.API_gui = {globals={
    "create",
    "end_cooldown",
    "mouse_click",
@@ -184,9 +146,11 @@ stds.GUI.globals = {
    "update_system",
    "update_effects",
    "update_target",
-}
-stds.Misn.globals={"abort", "accept", "create", "mem"}
-stds.Music.globals={
+}}
+stds.API_misn = {globals={
+   "abort", "accept", "create", "mem"
+}}
+stds.API_music = {globals={
    "choose",
    "update",
    "play",
@@ -195,8 +159,8 @@ stds.Music.globals={
    "resume",
    "info",
    "volume",
-}
-stds.PilotOutfit.globals={
+}}
+stds.API_pilotoutfit = {globals={
    "price",
    "buy",
    "sell",
@@ -221,34 +185,34 @@ stds.PilotOutfit.globals={
    "jumpin",
    "update",
    "mem", -- Automatically created using nlua_setenv().
-}
+}}
 
-files["dat/ai/**/*.lua"].std = STANDARD .. "+AI"
+files["dat/ai/**/*.lua"].std = STANDARD .. "+ai+API_ai"
 files["dat/autoequip.lua"].std = STANDARD .. TK .. "+API_autoequip"
-files["dat/bkg/**/*.lua"].std = STANDARD .. GFX .. "+Background+Camera"
+files["dat/bkg/**/*.lua"].std = STANDARD .. GFX .. "+bkg+camera+API_background"
 files["dat/board.lua"].std = STANDARD .. "+API_board"
 files["dat/comm.lua"].std = STANDARD .. "+API_comm"
 files["dat/common.lua"].std = STANDARD
 files["dat/loadscreen.lua"].std = STANDARD .."+API_loadscreen"
-files["dat/events/**/*.lua"].std = STANDARD .. "+Evt+Hook+Camera+Tex+Background+Music" .. TK
+files["dat/events/**/*.lua"].std = STANDARD .. "+API_evt+evt+hook+camera+tex+bkg+music" .. TK
 files["dat/factions/equip/*.lua"].std = STANDARD .. "+API_equip"
 files["dat/factions/spawn/**/*.lua"].std = STANDARD .. "+API_spawn"
 files["dat/factions/standing/**/*.lua"].std = STANDARD .. "+API_faction"
-files["dat/gui/*.lua"].std = STANDARD .. GFX .. "+GUI" .. TK
+files["dat/gui/*.lua"].std = STANDARD .. GFX .. "+API_gui" .. TK
 files["dat/landing.lua"].std = STANDARD .. "+API_land"
 files["dat/lua-repl/**/*.lua"].only = {}  -- not our code, so shut up, please
-files["dat/missions/**/*.lua"].std = STANDARD .. "+Misn+Hook+Camera+Tex+Background+Music" .. TK
-files["dat/outfits/**/*.lua"].std = STANDARD .. GFX .. "+PilotOutfit+Camera+Hook" -- TODO doesn't really support the full API
+files["dat/missions/**/*.lua"].std = STANDARD .. "+API_misn+misn+hook+camera+tex+bkg+music" .. TK
+files["dat/outfits/**/*.lua"].std = STANDARD .. GFX .. "+API_pilotoutfit+pilotoutfit+camera+hook" -- TODO doesn't really support the full API
 files["dat/rescue.lua"].std = STANDARD .. TK .. "+API_rescue"
-files["dat/rep.lua"].std = STANDARD .. TK .. "+Tex+Col+Background+CLI+Camera+Music+LinOpt"
+files["dat/rep.lua"].std = STANDARD .. TK .. "+tex+colour+bkg+cli+camera+music+linopt"
 files["dat/save_updater.lua"].std = "API_save_updater"
 files["dat/shipai.lua"].std = STANDARD .. TK .. "+API_shipai"
-files["dat/snd/music.lua"].std = STANDARD .. TK .. "+Music"
-files["dat/spob/**/*.lua"].std = STANDARD .. GFX .."+Camera+API_spob"
+files["dat/snd/music.lua"].std = STANDARD .. TK .. "+API_music+music"
+files["dat/spob/**/*.lua"].std = STANDARD .. GFX .."+camera+API_spob"
 files["dat/effects/**/*.lua"].std = STANDARD .. "+API_effects"
 
 -- No way to be sure what type of environment will load these.
-files["dat/scripts/**/*.lua"].std = STANDARD .. TK .. "+Misn+Hook+Camera+Tex+Background+Music" .. TK
+files["dat/scripts/**/*.lua"].std = STANDARD .. TK .. "+misn+hook+camera+tex+bkg+music" .. TK
 
 files["docs/ai/**/*.lua"].std = files["dat/ai/**/*.lua"].std
 -- TODO: Enable when no one is likely to invoke a pre-1.0 Luacheck manually.
