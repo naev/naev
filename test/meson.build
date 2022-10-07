@@ -31,6 +31,7 @@ if (luacheck.found())
         nluacheck,
         args: ['dat', 'docs', 'extras', 'utils', '--no-color'],
         workdir: meson.source_root(),
+        timeout: 150,
         )
 endif
 
