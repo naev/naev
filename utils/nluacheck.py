@@ -6,7 +6,7 @@ import pathlib as pl
 import argparse
 import subprocess
 
-def nluacheck( filename ):
+def nluacheck( filename, extra_opts=[] ):
     with open( filename, 'r' ) as f:
         data = f.read()
 
@@ -18,6 +18,7 @@ def nluacheck( filename ):
     hooks.sort()
 
     args = [ "luacheck", filename ]
+    args += extra_opts
     for r in hooks:
         args += [ "--globals", r ]
     ret = subprocess.run( args, capture_output=True )
@@ -30,7 +31,7 @@ def nluacheck( filename ):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser( description='Wrapper for luacheck that "understands" Naev hooks.' )
     parser.add_argument('filename', metavar='FILENAME', nargs='+', type=str, help='Name of the file(s) to parse.')
-    args = parser.parse_args()
+    args, unknown = parser.parse_known_args()
 
     filelist = set()
 
@@ -45,4 +46,4 @@ if __name__ == "__main__":
     filelist = list(filelist)
     filelist.sort()
     for f in filelist:
-        nluacheck( f )
+        nluacheck( f, unknown )
