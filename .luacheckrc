@@ -22,17 +22,16 @@ max_line_length = 4096
 -- Iteration idioms in Lua all but require ipairs(), and whether we happen to use the key or value isn't fundamental.
 ignore = {"21./_.*", "213", "231/_.*"}
 
--- The following standards correspond to nlua_load* functions.
--- Most of them just load one metatable, but some have dependencies, like nlua_loadGFX.
--- This is represented as: stds._GFX for the stuff loaded directly by nlua_loadGFX, and GFX representing all corresponding stds.
-
+-- The following corresponds to internal Lua functions added by naev
 stds.Basic={
    globals={
+      "__resize",
+   },
+   read_globals={
       table={
          fields={"unpack", "pack"}
       },
       "_LOADED", -- NLUA_LOAD_TABLE
-      "__resize",
       "inlist",
       "tcopy",
       "tmerge",
@@ -40,10 +39,17 @@ stds.Basic={
       "tmergei",
       "trepeat",
       "treverse",
+      "N_",
+      "_",
+      "__debugging",
+      "gettext",
+      "n_",
+      "p_",
+      "warn",
    },
-   read_globals={"N_", "_", "__debugging", "gettext", "n_", "p_", "warn"},
 }
 
+-- The following standards correspond to useful combinations of libraries
 PILOT = "+pilot+ship+asteroid"
 STANDARD = "+naev+var+spob+system+jump+time+player" .. PILOT .. "+rnd+diff+faction+vec2+outfit+commodity+news+shiplog+file+data+linopt+safelanes+spfx+audio"
 GFX = "+gfx+colour+tex+font+transform+shader+canvas"
