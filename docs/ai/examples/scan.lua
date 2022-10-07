@@ -10,7 +10,7 @@ function scan( target )
       return
    end
    local dir = ai.face(target)
-   local dist = ai.dist( ai.pos(target) )
+   local dist = ai.dist( target )
    if dir < math.rad(10) and dist > 300 then
       ai.accel()
    elseif dist < 300 then
