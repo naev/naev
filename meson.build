@@ -220,7 +220,7 @@ if buildExec.disabled() == false
 
    # Luacheck (linter) wrapper
    luacheck = find_program('luacheck', required: false)
-   nluacheck = find_program('utils/nluacheck.py')
+   nluacheck = find_program(join_paths('utils','nluacheck.py'))
 
    # Audio
    openal = dependency('openal', required: true)
@@ -323,7 +323,7 @@ if buildExec.disabled() == false
       export_dynamic: get_option('debug'),
       install: true)
 
-   gen_authors = find_program('utils/build/gen_authors.py')
+   gen_authors = find_program(join_paths('utils','build','gen_authors.py'))
    authors = custom_target(
       'authors',
       command: [
@@ -338,7 +338,7 @@ if buildExec.disabled() == false
       install_dir: ndata_path / 'dat',
    )
 
-   gen_gettext_stats = find_program('utils/build/gen_gettext_stats.py')
+   gen_gettext_stats = find_program(join_paths('utils','build','gen_gettext_stats.py'))
    gettext_stats = custom_target(
       'gettext_stats',
       command: [gen_gettext_stats, '--output', '@OUTPUT@', '@INPUT@'],
@@ -348,7 +348,7 @@ if buildExec.disabled() == false
       install_dir: ndata_path / 'dat/gettext_stats',
    )
 
-   gen_zip_overlay = find_program('utils/build/gen_zip_overlay.py')
+   gen_zip_overlay = find_program(join_paths('utils','build','gen_zip_overlay.py'))
    gen_zip_command = [gen_zip_overlay, '@OUTPUT@', authors.full_path(), '--cd', 'gettext_stats', gettext_stats.full_path()]
    gen_zip_command += ['--cd', 'outfits/bioship']
    foreach target: bio_outfits
@@ -366,7 +366,7 @@ if buildExec.disabled() == false
    )
 
    naev_sh = configure_file(
-      input: 'utils/build/naev.sh',
+      input: join_paths('utils','build','naev.sh'),
       output: 'naev.sh',
       configuration: {
          'build_root': meson.current_build_dir(),
@@ -428,12 +428,12 @@ if buildExec.disabled() == false
    subdir('test')
 
    if host_machine.system() == 'windows'
-      meson.add_install_script('extras/windows/packageWindows.sh', '-n', get_option('nightly').to_string())
+      meson.add_install_script(join_paths('extras','windows','packageWindows.sh'), '-n', get_option('nightly').to_string())
    endif
    if host_machine.system() == 'darwin'
-      meson.add_install_script('extras/macos/bundle.py', debug ? '-d' : [])
+      meson.add_install_script(join_paths('extras','macos','bundle.py'), debug ? '-d' : [])
       if get_option('dmg')
-	 meson.add_install_script('extras/macos/createDMG.sh', '-s', meson.source_root() , '-b', meson.current_build_dir())
+	 meson.add_install_script(join_paths('extras','macos','createDMG.sh'), '-s', meson.source_root() , '-b', meson.current_build_dir())
       endif
    endif
 endif
@@ -442,7 +442,7 @@ endif
 # Soundtrack
 ####
 if (mutagen.found())
-   soundtrackpy = find_program('utils/soundtrack.py')
+   soundtrackpy = find_program(join_paths('utils','soundtrack.py'))
    custom_target(
       'soundtrack',
       command: [
@@ -461,7 +461,7 @@ endif
 ####
 # luacheckrc
 ####
-luacheckrc_extractor = find_program('utils/luacheckrc_extractor.py')
+luacheckrc_extractor = find_program(join_paths('utils','luacheckrc_extractor.py'))
 custom_target(
   'luacheckrc_gen',
   build_by_default: true,
