@@ -463,6 +463,7 @@ endif
 luacheckrc_extractor = find_program('utils/luacheckrc_extractor.py')
 custom_target(
   'luacheckrc_gen',
+  build_by_default: true,
   command: [
     luacheckrc_extractor,
     nlua_source,
