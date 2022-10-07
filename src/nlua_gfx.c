@@ -17,7 +17,7 @@
 #include "font.h"
 #include "log.h"
 #include "ndata.h"
-#include "nlua_col.h"
+#include "nlua_colour.h"
 #include "nlua_font.h"
 #include "nlua_shader.h"
 #include "nlua_tex.h"

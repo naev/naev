@@ -17,7 +17,7 @@
 #include "log.h"
 #include "nluadef.h"
 #include "nlua_tex.h"
-#include "nlua_col.h"
+#include "nlua_colour.h"
 
 static int nlua_canvas_counter = 0;
 static GLuint previous_fbo = 0;

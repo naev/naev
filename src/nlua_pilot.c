@@ -26,7 +26,7 @@
 #include "nlua.h"
 #include "nlua_asteroid.h"
 #include "nlua_canvas.h"
-#include "nlua_col.h"
+#include "nlua_colour.h"
 #include "nlua_gfx.h"
 #include "nlua_commodity.h"
 #include "nlua_faction.h"

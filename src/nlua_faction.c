@@ -19,7 +19,7 @@
 #include "array.h"
 #include "faction.h"
 #include "log.h"
-#include "nlua_col.h"
+#include "nlua_colour.h"
 #include "nlua_tex.h"
 #include "nluadef.h"
 

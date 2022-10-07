@@ -2,7 +2,7 @@
  * See Licensing and Copyright notice in naev.h
  */
 /**
- * @file nlua_col.c
+ * @file nlua_colour.c
  *
  * @brief Handles colours.
  */
@@ -13,7 +13,7 @@
 #include "naev.h"
 /** @endcond */
 
-#include "nlua_col.h"
+#include "nlua_colour.h"
 
 #include "log.h"
 #include "nluadef.h"

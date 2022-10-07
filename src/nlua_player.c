@@ -33,7 +33,7 @@
 #include "map_overlay.h"
 #include "mission.h"
 #include "ndata.h"
-#include "nlua_col.h"
+#include "nlua_colour.h"
 #include "nlua_commodity.h"
 #include "nlua_outfit.h"
 #include "nlua_pilot.h"

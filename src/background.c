@@ -22,7 +22,7 @@
 #include "nlua.h"
 #include "nlua_audio.h"
 #include "nlua_bkg.h"
-#include "nlua_col.h"
+#include "nlua_colour.h"
 #include "nlua_tex.h"
 #include "nlua_camera.h"
 #include "nlua_gfx.h"

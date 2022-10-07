@@ -61,7 +61,7 @@
 #include "nlua_misn.h"
 #include "nlua_var.h"
 #include "nlua_tex.h"
-#include "nlua_col.h"
+#include "nlua_colour.h"
 #include "nlua_gfx.h"
 #include "nlua_naev.h"
 #include "nlua_rnd.h"

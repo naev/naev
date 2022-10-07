@@ -21,7 +21,7 @@
 #include "land.h"
 #include "land_outfits.h"
 #include "log.h"
-#include "nlua_col.h"
+#include "nlua_colour.h"
 #include "nlua_gfx.h"
 #include "nlua_outfit.h"
 #include "nluadef.h"
