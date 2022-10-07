@@ -467,7 +467,7 @@ custom_target(
     luacheckrc_extractor,
     nlua_source,
     '--output',
-    '@OUTPUT@',
+    join_paths(meson.current_source_dir(),'utils','@OUTPUT@'),
   ],
   output: [
     'luacheckrc_gen.lua',

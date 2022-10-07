@@ -1,4 +1,8 @@
 -- vim: set expandtab shiftwidth=3 syntax=lua:
+local stds_gen = require "utils.luacheckrc_gen"
+for k,v in pairs(stds_gen) do
+   stds[k] = v
+end
 
 std = "lua51+love+Basic"
 

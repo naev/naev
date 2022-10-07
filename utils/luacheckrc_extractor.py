@@ -45,8 +45,10 @@ if __name__ == "__main__":
     else:
         output = open(args.output,'w')
 
+    output.write("local stds = {}\n")
     for filename in args.filename:
         modname = os.path.basename(filename).replace('nlua_','').replace('.c','')
         output.write( generate_api( modname, filename )+'\n' )
+    output.write("return stds")
 
 #api = generate_api( "news", "/home/ess/naev/src/nlua_news.c" )
