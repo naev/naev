@@ -22,8 +22,6 @@ local audio = require "love.audio"
 local luaspfx = require "luaspfx"
 local taiomi = require "common.taiomi"
 
--- luacheck: globals enter heartbeat land (Hook functions passed by name)
-
 local reward = taiomi.rewards.taiomi01
 local title = _("Secrets of the Hypergates")
 local base, basesys = spob.getS("One-Wing Goddard")

@@ -21,8 +21,6 @@ local taiomi = require "common.taiomi"
 local der = require 'common.derelict'
 local pilotai = require "pilotai"
 
--- luacheck: globals enter heartbeat land spawn_fleet board_convoy (Hook functions passed by name)
-
 local reward = taiomi.rewards.taiomi02
 local title = _("Information Hunting")
 local base, basesys = spob.getS("One-Wing Goddard")

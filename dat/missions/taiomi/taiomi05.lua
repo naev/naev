@@ -24,8 +24,6 @@ local fleet = require "fleet"
 --local equipopt = require "equipopt"
 --local luatk = require "luatk"
 
--- luacheck: globals enter land scavenger_enter scavenger_hail scavenger_death scavenger_msg check_location scavenger_pos scavenger_broadcast (Hook functions passed by name)
-
 local reward = taiomi.rewards.taiomi05
 local title = _("Missing Drones")
 local base, basesys = spob.getS("One-Wing Goddard")
