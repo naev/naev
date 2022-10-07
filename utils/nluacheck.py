@@ -10,12 +10,15 @@ def nluacheck( filename ):
     with open( filename, 'r' ) as f:
         data = f.read()
 
-    result = re.findall("hook\.[a-z]*?\(.*?\"(.+?)\".*?\)", data, re.S)
-    result = list(set(result))
-    result.sort()
+    hooks = re.findall("hook\.(?!pilot)[a-z]*?\(.*?\"(.+?)\".*?\)", data, re.S)
+    pilot_hooks = re.findall("hook\.pilot ?\(.*?,.*?, *?\"(.+?)\".*?\)", data, re.S)
+    hooks += pilot_hooks
+
+    hooks = list(set(hooks))
+    hooks.sort()
 
     args = [ "luacheck", filename ]
-    for r in result:
+    for r in hooks:
         args += [ "--globals", r ]
     ret = subprocess.run( args, capture_output=True )
 
