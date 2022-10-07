@@ -5,6 +5,7 @@ import sys
 import pathlib as pl
 import argparse
 import subprocess
+from multiprocessing import Pool
 
 HOOKS_REGEX = re.compile( r'hook\.(?!pilot)[a-z]*\s*\(.*?"(.+?)"' )
 HOOKS_PILOT_REGEX = re.compile( r'hook\.pilot\s*\(.*?,.*?, *?"(.+?)"' )
@@ -26,10 +27,7 @@ def nluacheck( filename, extra_opts=[] ):
         args += [ "--globals", r ]
     ret = subprocess.run( args, capture_output=True )
 
-    sys.stdout.buffer.write( ret.stdout )
-    if ret.returncode!=0:
-        sys.exit( ret.returncode )
-    return ret.returncode
+    return ret.returncode, ret.stdout
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser( description='Wrapper for luacheck that "understands" Naev hooks.' )
@@ -46,7 +44,16 @@ if __name__ == "__main__":
             for f in p.glob( os.path.join("**", "*.lua") ):
                 filelist.add( f )
 
+    def nluacheck_w( filename ):
+        return nluacheck( filename, unknown )
+
     filelist = list(filelist)
     filelist.sort()
-    for f in filelist:
-        nluacheck( f, unknown )
+    with Pool() as pool:
+        retlist = pool.map( nluacheck_w, filelist )
+    err = 0
+    for r in retlist:
+        sys.stdout.buffer.write( r[1] )
+        if r[0]!=0:
+            err = r[0]
+    sys.exit( err )
