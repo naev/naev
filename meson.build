@@ -456,3 +456,20 @@ if (mutagen.found())
       ]
    )
 endif
+
+####
+# luacheckrc
+####
+luacheckrc_extractor = find_program('utils/luacheckrc_extractor.py')
+custom_target(
+  'luacheckrc_gen',
+  command: [
+    luacheckrc_extractor,
+    nlua_source,
+    '--output',
+    '@OUTPUT@',
+  ],
+  output: [
+    'luacheckrc_gen.lua',
+  ]
+)
