@@ -8,12 +8,12 @@ import subprocess
 from multiprocessing import Pool
 
 # TODO also filter out hook.custom from HOOKS_REGEX
-HOOKS_REGEX = re.compile( r'hook\.(?!pilot)[a-z]*\s*\(.*?"(.+?)"' )
+HOOKS_REGEX = re.compile( r'hook\.(?!pilot)[_a-z]*\s*\(.*?"(.+?)"' )
 HOOKS_PILOT_REGEX = re.compile( r'hook\.pilot\s*\(.*?,.*?, *?"(.+?)"' )
 HOOKS_CUSTOM_REGEX = re.compile( r'hook\.custom\s*\(.*?, *?"(.+?)"' )
 NPC_REGEX = re.compile( r'(evt|misn)\.npcAdd\( *?"(.+?)"' )
 AI_REGEX = re.compile( r'ai.pushtask\( *?"(.+?)"' )
-PROXIMITY_REGEX = re.compile( r'hook\.timer\(.*?, "proximity", *?{.*?funcname *?= *?"(.+?)"' )
+PROXIMITY_REGEX = re.compile( r'hook\.timer\(.*?, "(proximity|proximityScan|invProximity)", *?{.*?funcname *?= *?"(.+?)"' )
 
 def nluacheck( filename, extra_opts=[] ):
     with open( filename, 'r', encoding='utf-8' ) as f:
@@ -25,7 +25,7 @@ def nluacheck( filename, extra_opts=[] ):
     hooks += HOOKS_CUSTOM_REGEX.findall( data )
     hooks += list(map( lambda x: x[1], NPC_REGEX.findall( data ) ) )
     hooks += AI_REGEX.findall( data )
-    hooks += PROXIMITY_REGEX.findall( data )
+    hooks += list(map( lambda x: x[1], PROXIMITY_REGEX.findall( data ) ) )
     hooks = sorted(set(hooks))
 
     args = [ "luacheck", filename ]
