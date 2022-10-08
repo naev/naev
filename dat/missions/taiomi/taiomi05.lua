@@ -163,6 +163,7 @@ end
 
 function check_location( pos )
    if pos:dist( player.pos() ) < DIST_THRESHOLD then
+      scavenger:taskClear()
       scavenger:moveto( pos )
       scavenger:comm(_("Let me get in position."))
       hook.timer( 10, "scavenger_pos", pos )
@@ -207,6 +208,7 @@ function scavenger_broadcast( pos )
    end
 
    if broadcast_timer > BROADCAST_LENGTH then
+      scavenger:taskClear()
       scavenger:follow( player.pilot() )
       if mem.state==2 then
          scavenger:comm(_("Nothing… Let us move on."))
@@ -220,7 +222,7 @@ function scavenger_broadcast( pos )
 
    -- Update OSD
    local osdtitle, osd = misn.osdGet()
-   osd[1] = fmt.f(_("Protect Scavenger ({left} s remaining)"),
+   osd[1] = fmt.f(_("Protect Scavenger ({left} s left)"),
       {left=BROADCAST_LENGTH-broadcast_timer})
    misn.osdCreate( osdtitle, osd )
 
@@ -292,6 +294,7 @@ function land ()
       vn.run()
 
       mem.marker = misn.markerMove( mem.marker, firstsys )
+      mem.state = 1 -- advance state
 
       misn.osdCreate( title, {
          fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=firstsys}),
@@ -303,6 +306,7 @@ function land ()
    end
 
    -- TODO
+   --[=[
    vn.clear()
    vn.scene()
    local s = vn.newCharacter( taiomi.vn_scavenger() )
@@ -319,4 +323,5 @@ Scavenger backs out of the Goddard and returns to space.]]))
    player.pay( reward )
    taiomi.log.main(_("You collected important resources for the inhabitants of Taiomi."))
    misn.finish(true)
+   --]=]
 end
