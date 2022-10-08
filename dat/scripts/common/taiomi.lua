@@ -45,6 +45,7 @@ local taiomi = {
       taiomi02 = 300e3,
       taiomi03 = 350e3,
       taiomi04 = 300e3,
+      taiomi05 = 500e3,
    },
 }
 
@@ -53,6 +54,7 @@ local missions = {
    "Taiomi 2", -- 2
    "Taiomi 3", -- 3
    "Taiomi 4", -- 4
+   "Taiomi 5", -- 5
 }
 
 -- Gets the current progress of the Taiomi campaign
