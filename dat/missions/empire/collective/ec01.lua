@@ -33,7 +33,6 @@ local misn_base, misn_base_sys = spob.getS("Omega Station")
 local targsys1 = system.get("C-43")
 local targsys2 = system.get("C-59")
 
--- luacheck: globals enter land scantimer (Hook functions passed by name)
 
 function create ()
    -- Note: this mission does not make any system claims.

@@ -18,8 +18,6 @@ local equipopt = require 'equipopt'
 local logidstr = "log_gauntlet"
 local enemies, enemy_faction, gmods, wave_enemies, wave_killed -- Non-persistent state
 local wave_end -- Forward-declared functions
--- luacheck: globals countdown countdown_done enter_the_ring enter_wave land leave_the_ring loaded p_death p_disabled player_lost player_lost_disable wave_end_msg wave_round_setup (Hook functions passed by name)
--- luacheck: globals approach_gauntlet (NPC functions passed by name)
 
 local npc_portrait   = "/gfx/misc/crimson_gauntlet.webp"
 local npc_description= _("A terminal to access the Crimson Gauntlet Virtual Reality environment. This directly allows you to enter the different challenges and tournaments available.")
@@ -212,7 +210,7 @@ end
 --[[
    Wave stuff
 --]]
-function enter_wave ()
+function enter_wave () -- luacheck: globals enter_wave (passed by reference)
    if system.cur() ~= system.get("Crimson Gauntlet") then
       return
    end

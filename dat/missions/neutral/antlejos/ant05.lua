@@ -33,8 +33,6 @@ local rearpoint  = jump.get( mainsys, rearsys )
 local supplylanded, supplydied
 local sysmrk
 
--- luacheck: globals approaching enter heartbeat land protest protestor1 protestor2 protestor3 protestor4 supply1 supply2 supply3 supply4 supply5 supplydeath supplyattacked supplyland (Hook functions passed by name)
-
 function create ()
    if ant.datecheck() then misn.finish() end
 
@@ -179,12 +177,12 @@ function enter ()
    pilot.toggleSpawn(false)
 
    sysmrk = system.mrkAdd( entrypoint:pos(), _("Supply Ship Entry Point") )
-   hook.timer( "3", "approaching" )
+   hook.timer( 3, "approaching" )
 end
 
 function approaching ()
    if player.pos():dist( entrypoint:pos() ) > 3000 then
-      hook.timer( "3", "approaching" )
+      hook.timer( 3, "approaching" )
       return
    end
 

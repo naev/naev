@@ -38,7 +38,6 @@ local car = require "common.cargo"
 local fmt = require "format"
 local srs = require "common.sirius"
 
--- luacheck: globals land tick (Hook functions passed by name)
 
 local dest_planet, dest_sys = spob.getS("Mutris")
 

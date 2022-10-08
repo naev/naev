@@ -29,7 +29,6 @@ local reward = ant.rewards.ant03
 
 local returnpnt, returnsys = spob.getS("Antlejos V")
 
--- luacheck: globals land (Hook functions passed by name)
 
 function create ()
    if ant.datecheck() then misn.finish() end

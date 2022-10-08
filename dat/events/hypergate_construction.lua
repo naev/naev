@@ -14,7 +14,6 @@ local vn = require "vn"
 local der = require "common.derelict"
 local ccomm = require "common.comm"
 
--- luacheck: globals endevent boss_first boss_hail boss_board (Hook functions passed by name)
 
 local hypergates_list = {
    "Hypergate Dvaer", -- Dvaered

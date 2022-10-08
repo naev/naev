@@ -33,7 +33,6 @@ local mainsys = system.get("Klintus")
 
 local mothership_name = _("Planet Saviour")
 
--- luacheck: globals approaching enter land mothershipdeath mothershipboard mothershipexplosives (Hook functions passed by name)
 
 function create ()
    if not misn.claim(mainsys) then misn.finish() end

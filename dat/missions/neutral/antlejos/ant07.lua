@@ -29,7 +29,6 @@ local reward = ant.rewards.ant07
 local retpnt, retsys = spob.getS("Antlejos V")
 local mainpnt, mainsys = spob.getS("Gordon's Exchange")
 
--- luacheck: globals approaching enter land (Hook functions passed by name)
 
 function create ()
    if not misn.claim{mainsys,retsys} then misn.finish() end

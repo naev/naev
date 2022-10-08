@@ -29,7 +29,6 @@ local vn = require 'vn'
 
 local student_portrait = nebu_research.student.portrait
 
--- luacheck: globals beginFirstScan beginSecondScan drainShields endSecondScan jumpin land noticeProblems startProblems stopProblems takeoff (Hook functions passed by name)
 
 -- Mission Constants
 local t_sys = { system.get("Doeston"), system.get("Iris") }

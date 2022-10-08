@@ -24,7 +24,6 @@ local zbh = require "common.zalek_blackhole"
 local lmisn = require  "lmisn"
 local pilotai = require "pilotai"
 
--- luacheck: globals land enter scout_discovered feral_hail (Hook functions passed by name)
 
 local reward = zbh.rewards.zbh08
 local cargo_name = _("Sensor Upgrades")

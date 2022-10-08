@@ -5,7 +5,6 @@
    @module proximity
 --]]
 
--- luacheck: globals _proximity _proximityScan proximity proximityCancel proximityScan (Hook functions passed by name)
 
 --[[--
 Poll for player proximity to a point in space.

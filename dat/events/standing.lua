@@ -11,7 +11,6 @@
 local fmt = require "format"
 local lf = require "love.filesystem"
 
--- luacheck: globals mission_done (Hook functions passed by name)
 
 local factions = {}
 for k,v in ipairs(lf.enumerate("scripts/factions")) do

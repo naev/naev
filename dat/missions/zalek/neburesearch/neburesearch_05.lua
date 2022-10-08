@@ -31,7 +31,6 @@ local vn = require 'vn'
 
 local mensing_portrait = nebu_research.mensing.portrait
 
--- luacheck: globals land takeoff jumpin arrive_at_testing_sys timer moveto endScan peacemaker board rescue (Hook functions passed by name)
 local hasShieldingPrototypeEquipped, beginScan -- Forward-declared functions
 
 -- Mission constants

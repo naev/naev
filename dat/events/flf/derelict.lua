@@ -13,7 +13,6 @@
 local fmt = require "format"
 
 local boarded, shipDV, shipFLF, timerDV, timerFLF
--- luacheck: globals boardDV boardFLF broadcastDV broadcastFLF deathDV deathFLF enter (Hook functions passed by name)
 
 function create()
    local csys = system.cur()

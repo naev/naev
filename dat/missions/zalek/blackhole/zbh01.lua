@@ -22,7 +22,6 @@ local vn = require "vn"
 local fmt = require "format"
 local zbh = require "common.zalek_blackhole"
 
--- luacheck: globals land enter heartbeat (Hook functions passed by name)
 
 local reward = zbh.rewards.zbh01
 local destpnt, destsys = spob.getS("Research Post Sigma-13")

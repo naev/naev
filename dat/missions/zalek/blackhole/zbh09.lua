@@ -26,7 +26,6 @@ local fmt = require "format"
 local zbh = require "common.zalek_blackhole"
 local fleet = require "fleet"
 
--- luacheck: globals land enter scout_discovered zach_say heartbeat_wormhole heartbeat_ferals feral_hail (Hook functions passed by name)
 
 local reward = zbh.rewards.zbh09
 

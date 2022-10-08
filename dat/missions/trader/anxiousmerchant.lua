@@ -34,7 +34,6 @@ local car = require "common.cargo"
 local fmt = require "format"
 local portrait = require "portrait"
 
--- luacheck: globals land tick (Hook functions passed by name)
 
 function create()
    -- Note: this mission does not make any system claims.

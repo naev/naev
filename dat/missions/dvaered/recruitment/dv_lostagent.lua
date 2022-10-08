@@ -39,7 +39,6 @@ local vn       = require 'vn'
 local vntk     = require 'vntk'
 local dv       = require "common.dvaered"
 
--- luacheck: globals enter land loading escape scanned discussWithAg spawnSwan swanDisabled swanExploded swanBoarded assetBoardsSwan swanEscaped spawnSquad spawnDuchmol duchExploded duchEscaped duchAttacked message
 
 -- Define the cargo commodity
 local cargo_misn

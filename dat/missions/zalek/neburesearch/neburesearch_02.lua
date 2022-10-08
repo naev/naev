@@ -29,7 +29,6 @@ local vn = require 'vn'
 
 local mensing_portrait = nebu_research.mensing.portrait
 
--- luacheck: globals land (Hook functions passed by name)
 
 -- Mission constants
 local credits = nebu_research.rewards.credits02

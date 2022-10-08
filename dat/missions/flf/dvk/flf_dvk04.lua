@@ -22,7 +22,7 @@ local fmt = require "format"
 local flf = require "missions.flf.flf_common"
 require "missions.flf.flf_diversion"
 
--- luacheck: globals enter land leave pay_text success_text (from base mission flf_diversion)
+-- luacheck: globals success_text pay_text land (overwriting main mission, TODO get rid of this hack)
 
 success_text = {
    _([[You receive a transmission from Benito. "Operation successful!" she says. "I've got your pay waiting for you back at home, so don't get yourself blown up on the way back!"]]),

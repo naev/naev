@@ -10,7 +10,6 @@ local vn = require "vn"
 local nebula = require "common.nebula"
 local poi = {}
 
--- luacheck: globals _poi_enter _poi_scan _poi_heartbeat_nooutfit _poi_heartbeat (Hook functions passed by name)
 
 --[[--
 Tries to generate a new setting for a point of interest.

@@ -8,7 +8,6 @@
 --]]
 local lf = require "love.filesystem"
 
--- luacheck: globals enter timer pers_attacked pers_death (Hook funtions passed by name)
 
 -- Parse directory to add personas
 local pers_func_list = {}

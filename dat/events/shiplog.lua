@@ -18,7 +18,6 @@
 local fmt = require "format"
 
 local attacked, lastsys -- Non-persistent state
--- luacheck: globals jumpin land player_attacked (Hook functions passed by name)
 
 function create ()
    shiplog.create( "travel", _("Travel Log"), _("Travel"), false, 20 )

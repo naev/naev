@@ -29,7 +29,6 @@ local poi = require "common.poi"
 local vn = require "vn"
 local lf = require "love.filesystem"
 
--- luacheck: globals found board (Hook functions passed by name)
 
 function create ()
    mem.sys, mem.risk = poi.start()
@@ -77,6 +76,7 @@ function create ()
    poi.misnSetup{ sys=mem.sys, found="found", risk=mem.risk }
 end
 
+-- luacheck: globals found (passed to POI framework for hooks)
 function found ()
    player.msg(_("You have found something!"),true)
 

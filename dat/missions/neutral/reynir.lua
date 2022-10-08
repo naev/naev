@@ -40,7 +40,6 @@
 local fmt = require "format"
 local neu = require "common.neutral"
 
--- luacheck: globals landed (Hook functions passed by name)
 
 function create ()
    -- Note: this mission does not make any system claims.

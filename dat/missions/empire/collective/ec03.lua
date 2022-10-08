@@ -35,7 +35,6 @@ local dronequota = 5 -- The amount of drones the player must whack to win
 local misn_base = spob.get("Omega Station")
 local misn_target_sys = system.get("C-59")
 
--- luacheck: globals death jumpin land (Hook functions passed by name)
 
 mem.osd_msg = {}
 

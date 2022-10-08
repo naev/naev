@@ -11,7 +11,6 @@ local bioship = require "bioship"
 local textoverlay = require "textoverlay"
 local audio = require 'love.audio'
 
--- luacheck: globals update_bioship bioship_pay bioship_land (Hook functions passed by name)
 
 local function bioship_click ()
    bioship.window()

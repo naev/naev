@@ -11,7 +11,6 @@
 --]]
 local fleet = require "fleet"
 
--- luacheck: globals endevent (Hook functions passed by name)
 
 local hypergates_list = {
    "Hypergate Dvaer", -- Dvaered

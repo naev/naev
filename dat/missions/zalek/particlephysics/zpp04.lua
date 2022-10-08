@@ -23,7 +23,6 @@ local zpp = require "common.zalek_physics"
 local portrait = require "portrait"
 local fleet = require "fleet"
 
--- luacheck: globals land approach_guy enter heartbeat (Hook functions passed by name)
 
 local reward = zpp.rewards.zpp04
 local cargo_name = _("strange container")

@@ -44,7 +44,6 @@ local reward = 200e3
 
 local defense_fleet, fraider, raider_fleet, raiders_left -- Non-persistent state
 local defend_system -- Forward-declared functions
--- luacheck: globals add_cas_and_check celebrate_victory congratulations enter_system ship_enters victorious (Hook functions passed by name)
 
 -- Create the mission on the current planet, and present the first Bar text.
 function create ()

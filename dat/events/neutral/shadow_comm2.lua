@@ -15,7 +15,6 @@
 --]]
 require "proximity"
 
--- luacheck: globals finish hailme (Hook functions passed by name)
 
 function create ()
    -- Make sure system isn't claimed, but we don't claim it

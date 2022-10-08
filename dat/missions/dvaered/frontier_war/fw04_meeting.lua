@@ -26,6 +26,7 @@
    3) Taking off from Laars
    4) Land on Laars and get rewarded
 --]]
+-- luacheck: globals toocloseControl1 toocloseControl2 toocloseControl3 toocloseControl4 toocloseControl5 incomingControl1 incomingControl2 incomingControl3 incomingControl4 incomingControl5
 
 local fw = require "common.frontier_war"
 require "proximity"
@@ -34,9 +35,6 @@ local fmt = require "format"
 
 local alpha, attackers, canland, controls, hamelsen, jules, spy, targpos, toldya, wrlrds -- Non-persistent state
 local StraferNspy, equipHyena, scheduleIncoming, spawn1Wrlrd, spawnAlpha, spawnBeta, strNpc -- Forward-declared functions
--- luacheck: globals beepMe checkClearance1 checkClearance2 checkClearance3 checkClearance4 checkClearance5 checkHamelsen deathOfStrafer flee hamelsenLanded imDoingNothing incomingHamelsen killerDied land loading message spawnControl spawnHam spawnKillers spawnWrlrd straferDied takeoff warlordTaunt (Hook functions passed by name)
--- luacheck: globals incomingControl1 incomingControl2 incomingControl3 incomingControl4 incomingControl5 toocloseControl1 toocloseControl2 toocloseControl3 toocloseControl4 toocloseControl5 (Dynamic proximity hooks)
--- luacheck: globals discussOff discussStr (NPC functions passed by name)
 
 message = fw.message -- common hooks
 
@@ -410,23 +408,23 @@ local function incomingControl( self )
 end
 function incomingControl1()
    incomingControl( controls[1] )
-   hook.timer(0.5, "proximity", {anchor = controls[1], radius = 1000, funcname = ("checkClearance1")}) -- Just because I cannot pass an argument to proximity hooks :(
+   hook.timer(0.5, "proximity", {anchor = controls[1], radius = 1000, funcname = "checkClearance1"}) -- Just because I cannot pass an argument to proximity hooks :(
 end
 function incomingControl2()
    incomingControl( controls[2] )
-   hook.timer(0.5, "proximity", {anchor = controls[2], radius = 1000, funcname = ("checkClearance2")})
+   hook.timer(0.5, "proximity", {anchor = controls[2], radius = 1000, funcname = "checkClearance2"})
 end
 function incomingControl3()
    incomingControl( controls[3] )
-   hook.timer(0.5, "proximity", {anchor = controls[3], radius = 1000, funcname = ("checkClearance3")})
+   hook.timer(0.5, "proximity", {anchor = controls[3], radius = 1000, funcname = "checkClearance3"})
 end
 function incomingControl4()
    incomingControl( controls[4] )
-   hook.timer(0.5, "proximity", {anchor = controls[4], radius = 1000, funcname = ("checkClearance4")})
+   hook.timer(0.5, "proximity", {anchor = controls[4], radius = 1000, funcname = "checkClearance4"})
 end
 function incomingControl5()
    incomingControl( controls[5] )
-   hook.timer(0.5, "proximity", {anchor = controls[5], radius = 1000, funcname = ("checkClearance5")})
+   hook.timer(0.5, "proximity", {anchor = controls[5], radius = 1000, funcname = "checkClearance5"})
 end
 
 -- Player checks security clearance of a ship
@@ -471,7 +469,7 @@ function spawnHam()
    hamelsen:land(targpla)
 
    hook.pilot( hamelsen, "land", "hamelsenLanded" )
-   hook.timer(0.5, "proximity", {location = targpos, radius = 10000, funcname = ("incomingHamelsen"), focus = hamelsen})
+   hook.timer(0.5, "proximity", {location = targpos, radius = 10000, funcname = "incomingHamelsen", focus = hamelsen})
 
    -- Hamelsen's partner, whose purpose is to make a fight occur
    jules = pilot.add( "Hyena", "Independent", system.get("Beeklo") )
@@ -519,7 +517,7 @@ function incomingHamelsen()
    alpha[1]:comm( fmt.f(_("A-NightClaws Leader to {player}: intercept {plt} and confirm their security clearance code"), {player=player.name(), plt=hamelsen} ) )
    hamelsen:setHilight()
    hamelsen:setVisible()
-   hook.timer(0.5, "proximity", {anchor = hamelsen, radius = 1000, funcname = ("checkHamelsen")})
+   hook.timer(0.5, "proximity", {anchor = hamelsen, radius = 1000, funcname = "checkHamelsen"})
    misn.osdActive(2)
 end
 

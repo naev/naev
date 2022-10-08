@@ -26,7 +26,6 @@ local lmisn = require "lmisn"
 local zlk = require "common.zalek"
 
 local isMounted, isOwned, rmTheOutfit -- Forward-declared functions
--- luacheck: globals baTotext backToControl backToNormal enter land noAnswer noAntext outOfControl outOftext slow slowtext speedtext takeoff teleport teleportation (Hook functions passed by name)
 
 local engines = {
            _("engine with phase-change material cooling"),

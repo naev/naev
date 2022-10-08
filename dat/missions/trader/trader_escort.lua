@@ -28,8 +28,6 @@ local fmt = require "format"
 local vntk = require "vntk"
 local escort = require "escort"
 
--- luacheck: globals success trader_create trader_attacked trader_safe spawn_ambush (Hook functions passed by name)
-
 local misn_title = {}
 misn_title[1] = _("Escort a tiny convoy to {pnt} in {sys}")
 misn_title[2] = _("Escort a small convoy to {pnt} in {sys}")
@@ -127,6 +125,7 @@ function accept()
    hook.enter( "spawn_ambush" )
 end
 
+-- luacheck: globals success
 function success ()
    local alive = escort.num_alive()
    local alive_frac = alive / mem.num_ships
@@ -147,6 +146,7 @@ function success ()
    misn.finish( true )
 end
 
+-- luacheck: globals trader_create
 function trader_create( p )
    for j, c in ipairs( p:cargoList() ) do
       p:cargoRm( c.name, c.q )
@@ -158,6 +158,7 @@ end
 local last_spammed = 0
 local unsafe = false
 -- Handle the convoy getting attacked.
+-- luacheck: globals trader_attacked
 function trader_attacked( p, _attacker )
    unsafe = true
    p:control( false )

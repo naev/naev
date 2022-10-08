@@ -22,8 +22,6 @@ local pir_description = _("You see a seedy pirate flashing looks at you, as if t
 local transponder = outfit.get("Fake Transponder")
 local cost = 1e6
 
--- luacheck: globals enter (Hook functions passed by name)
--- luacheck: globals approach_pirate (NPC functions passed by name)
 
 function create ()
    -- Player already has it somehow, so this event makes no sense

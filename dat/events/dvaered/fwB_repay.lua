@@ -32,8 +32,6 @@ npc_desc[3] = _([[Strafer has put heaps of papers and datapads on his table. He 
 
 local fillIn
 
--- luacheck: globals takeoff (Hook functions passed by name)
--- luacheck: globals pay (NPC functions passed by name)
 
 -- Each time the player lands, he meets a member of the team
 function create()

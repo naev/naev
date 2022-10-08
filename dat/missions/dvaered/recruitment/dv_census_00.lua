@@ -32,8 +32,6 @@ local fmt    = require "format"
 local dv     = require "common.dvaered"
 local pir    = require "common.pirate"
 
--- luacheck: globals enter land testInRange (Hook functions passed by name)
--- luacheck: globals approach_nelly
 
 local detected
 

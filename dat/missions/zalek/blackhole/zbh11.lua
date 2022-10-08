@@ -25,7 +25,6 @@ local fmt = require "format"
 local sokoban = require "minigames.sokoban"
 local zbh = require "common.zalek_blackhole"
 
--- luacheck: globals land enter zach_say board_drone heartbeat heartbeat_bh (Hook functions passed by name)
 
 local retpnt, retsys = spob.getS("Research Post Sigma-13")
 local targetsys = system.get("Anubis Black Hole")

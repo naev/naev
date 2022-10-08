@@ -27,7 +27,6 @@ local pilotname = require "pilotname"
 local lmisn = require "lmisn"
 
 local bounty_setup, level_setup, spawn_target, succeed -- Forward-declared functions
--- luacheck: globals jumpin jumpout pilot_attacked pilot_death pilot_jump takeoff (Hook functions passed by name)
 
 -- Mission details
 local misn_title = {}

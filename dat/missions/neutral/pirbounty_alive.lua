@@ -30,7 +30,7 @@ local lmisn = require "lmisn"
 local vntk = require "vntk"
 require "missions.neutral.pirbounty_dead"
 
--- luacheck: globals board_fail bounty_setup get_faction misn_title pay_capture_text pay_kill_text pilot_death share_text subdue_fail_text subdue_text succeed (from base mission neutral.pirbounty_dead)
+-- luacheck: globals pay_capture_text pay_kill_text misn_title pilot_death succeed bounty_setup board_fail (inherited from mission above, probably best to clean up )
 
 local kill_instead_text = {
    _([[As you return to your ship, you are contacted by an officer. "I see you were unable to capture {plt}," the officer says. "Disappointing. However, we would rather this pirate be dead than roaming free, so you will be paid {credits} if you finish them off right now."]]),

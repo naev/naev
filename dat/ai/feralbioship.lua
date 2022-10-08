@@ -10,7 +10,6 @@ mem.atk_board     = false
 mem.comm_no       = _("No response.")
 mem.loiter        = math.huge
 
--- luacheck: globals mine_bite (AI Task functions passed by name)
 function mine_bite( ast )
    if not ast:exists() then
       ai.poptask()

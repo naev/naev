@@ -25,7 +25,6 @@ local fmt = require "format"
 local shark = require "common.shark"
 
 local hawking -- Non-persistent state
--- luacheck: globals enter hail land (Hook functions passed by name)
 
 -- Mission constants
 local paypla, paysys = spob.getS("Darkshed")

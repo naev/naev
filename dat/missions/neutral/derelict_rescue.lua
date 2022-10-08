@@ -19,7 +19,6 @@ local vntk = require "vntk"
 local lmisn = require "lmisn"
 local der = require "common.derelict"
 
--- luacheck: globals land (Hook functions passed by name)
 
 function create ()
    mem.destpnt, mem.destsys = lmisn.getRandomSpobAtDistance( system.cur(), 0, 5, "Independent" )

@@ -23,7 +23,6 @@ local zbh = require "common.zalek_blackhole"
 local fleet = require "fleet"
 local lmisn = require "lmisn"
 
--- luacheck: globals land enter heartbeat icarus_idle icarus_attacked icarus_death (Hook functions passed by name)
 
 local reward = zbh.rewards.zbh06
 

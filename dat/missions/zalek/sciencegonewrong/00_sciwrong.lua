@@ -28,8 +28,6 @@ local sciwrong = require "common.sciencegonewrong"
 
 local adm1, lance1, lance2 -- Non-persistent state
 local spwn_police -- Forward-declared functions
--- luacheck: globals call_the_police fine_vanish fnl_ld go_board land1 land2 sys_enter (Hook functions passed by name)
--- luacheck: globals first_trd second_trd third_trd (NPC functions passed by name)
 
 -- set mission variables
 mem.t_sys = {}

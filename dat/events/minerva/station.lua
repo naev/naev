@@ -24,8 +24,6 @@ local window = require 'love.window'
 --local love_shaders = require 'love_shaders'
 
 local npc_patrons -- Non-persistent state
--- luacheck: globals bargreeter leave molecaught start_alter1 start_alter2 start_spapropaganda (Hook functions passed by name)
--- luacheck: globals approach_blackjack approach_chuckaluck approach_maikki approach_patron approach_scavengers approach_terminal (NPC functions passed by name)
 
 -- NPC Stuff
 local gambling_priority = 3

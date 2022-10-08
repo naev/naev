@@ -31,7 +31,6 @@ local vn = require "vn"
 local portrait = require "portrait"
 
 local spawn_target -- Forward-declared functions
--- luacheck: globals land jumpin jumpout pilot_attacked pilot_death pilot_jump takeoff (Hook functions passed by name)
 
 local hunters = {}
 local hunter_hits = {}

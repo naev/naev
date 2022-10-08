@@ -35,7 +35,6 @@ local misn_target = system.get("Merisi")
 local misn_base, misn_base_sys = spob.getS("Omega Station")
 
 local p -- Non-persistent state
--- luacheck: globals enter idle jumpout kill land spotdrone (Hook functions passed by name)
 
 function create ()
     local missys = {misn_target}

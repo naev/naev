@@ -12,7 +12,6 @@ local fmt = require "format"
 local lmisn = require "lmisn"
 local lf = require "love.filesystem"
 
--- luacheck: globals land (Hook funtions passed by name)
 
 local add_article, add_econ_article, add_header -- forward-declared functions
 

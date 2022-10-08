@@ -11,7 +11,6 @@
 -- naev.eventStart("System Tour")
 --]]
 local systems, idx
--- luacheck: globals screenshot teleport (Hook functions passed by name)
 
 function create()
    player.pilot():setInvincible()

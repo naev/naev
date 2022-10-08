@@ -97,7 +97,6 @@ function accept ()
    hook.land("land")
 end
 
--- luacheck: globals land (Hook functions passed by name)
 function land ()
    init_search() -- to rescue naev-0.9.1 games, which weren't saving the progress
 

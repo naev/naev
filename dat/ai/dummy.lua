@@ -18,7 +18,6 @@ function control_manual( _dt ) end
 function attacked ( _attacker ) end
 
 -- Does nothing
--- luacheck: globals idle (AI Task functions passed by name)
 function idle () end
 
 -- Brakes the pilot

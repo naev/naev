@@ -47,7 +47,6 @@ local mining = require "minigames.mining"
    1: Acquired something and flying back
 --]]
 mem.misn_state = nil
--- luacheck: globals enter land heartbeat (Hook functions passed by name)
 
 local reward_amount = tutnel.reward.nelly03
 local reward_cargo = commodity.get("Nickel")

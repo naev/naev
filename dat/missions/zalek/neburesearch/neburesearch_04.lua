@@ -28,7 +28,6 @@ local vn = require 'vn'
 
 local mensing_portrait = nebu_research.mensing.portrait
 
--- luacheck: globals cannotLand jumpin land secondWarningMessage startAmbush takeoff warningMessage (Hook functions passed by name)
 
 -- Mission constants
 local homeworld, homeworld_sys = spob.getS("Jorla")

@@ -25,7 +25,6 @@ local sokoban = require "minigames.sokoban"
 local audio = require 'love.audio'
 local love = require "love"
 
--- luacheck: globals land enter drone_board heartbeat update renderbg (Hook functions passed by name)
 
 --local reward = zpp.rewards.zpp05 -- No reward
 local mainpnt, mainsys = spob.getS("Katar I")

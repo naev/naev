@@ -27,7 +27,6 @@ local dv     = require "common.dvaered"
 local pir    = require "common.pirate"
 local vntk   = require 'vntk'
 
--- luacheck: globals enter land testInRange (Hook functions passed by name)
 
 local detected
 

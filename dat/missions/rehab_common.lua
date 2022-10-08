@@ -10,7 +10,6 @@ local fmt   = require "format"
 local vntk  = require 'vntk'
 
 local setFine -- Forward-declared functions
--- luacheck: globals standing (Hook functions passed by name)
 
 function create()
     -- Note: this mission does not make any system claims.

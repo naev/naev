@@ -25,7 +25,6 @@ local fleet = require "fleet"
 local fmt = require "format"
 local emp = require "common.empire"
 
--- luacheck: globals enemies enter land (Hook functions passed by name)
 
 function create ()
    -- Note: this mission does not make any system claims.

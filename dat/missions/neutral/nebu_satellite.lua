@@ -28,7 +28,6 @@ local neu = require "common.neutral"
 
 local credits = 750e3
 local launchSatellite -- Forward-declared functions
--- luacheck: globals beginCountdown beginLaunch countLaunch jumpin land (Hook functions passed by name)
 
 local articles = {
    {

@@ -23,7 +23,6 @@ local zpp = require "common.zalek_physics"
 local lmisn = require "lmisn"
 local sokoban = require "minigames.sokoban"
 
--- luacheck: globals land approach_guy (Hook functions passed by name)
 
 local reward = zpp.rewards.zpp02
 local cargo_name = _("drone interface controllers")

@@ -58,13 +58,11 @@ function attacked( hostile )
 end
 
 
--- luacheck: globals stationary (AI Task functions passed by name)
 function stationary ()
    -- Do nothing
 end
 
 
--- luacheck: globals attack (AI Task functions passed by name)
 function attack ()
    local target = ai.taskdata()
 

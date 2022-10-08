@@ -38,7 +38,6 @@ local vntk     = require 'vntk'
 local dv       = require "common.dvaered"
 local pir      = require "common.pirate"
 
--- luacheck: globals enter land loading land_state1 land_state3 escape biker1 biker2 biker3 biker4 bbb1 spawnGang nextActivity timerIncrement startHallway finishHallway tick timeOver killPil1 killPil2 killPil3 bbb1bis bbb2 startDuel killBBB boardBBB
 
 
 local agentPort = "dvaered/dv_military_m2.webp"
@@ -56,6 +55,9 @@ local gangs = { _("Big Bang Band"), -- gang of Blue Belly Billy
                 _("Flamethrower Gang"),
                 _("The Stabbers"),
                 _("The Warriors") }
+
+-- Forward declarations of functions
+local spawnGang, land_state1, land_state3
 
 function create()
    mem.baronpnt, mem.baronsys  = spob.getS("Ulios") -- Where you get paid

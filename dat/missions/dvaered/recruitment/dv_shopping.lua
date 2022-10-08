@@ -37,7 +37,6 @@ local pir      = require "common.pirate"
 local lmisn    = require "lmisn"
 
 local DvFleet, noPirates
--- luacheck: globals enter land escape OkranDeath OkranMoves spawnTrick veryBadThings discussWithTrickster OkranTalks Hewhewhew
 
 
 local agentPort = "dvaered/dv_military_m2.webp"

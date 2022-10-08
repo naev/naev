@@ -27,7 +27,6 @@ local fleet = require "fleet"
 local fmt = require "format"
 local srs = require "common.sirius"
 
--- luacheck: globals attacked lastsys misn_over takeoff (Hook functions passed by name)
 
 -- Mission constants
 local targetasset, targetsys = spob.getS("Ulios") --this will be the new HQ for the Nasin in the next part.

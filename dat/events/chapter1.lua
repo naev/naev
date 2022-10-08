@@ -25,7 +25,6 @@ local diff_progress1 = "hypergates_1"
 local diff_progress2 = "hypergates_2"
 local diff_progress3 = "hypergates_3"
 
--- luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_main_sfx cutscene_main0 cutscene_main1 cutscene_main2 cutscene_main3 cutscene_main4 cutscene_main5 cutscene_main6 cutscene_main7 cutscene_pan cutscene_jumpin cutscene_posttext cutscene_nebu cutscene_nebu_zoom cutscene_nebu_fade cutscene_cleanup (Hook functions passed by name)
 
 -- Purposely exclude other hypergates
 local hypergate_list = {
@@ -122,13 +121,13 @@ local function fg_setup( text )
 end
 
 -- Fades out to black
-function fadeout ()
+function fadeout () -- used in some hooks, must be global
    fg.alpha_dir = 1
    fg.alpha = math.max( 0, fg.alpha )
 end
 
 -- Fades in from black
-function fadein ()
+local function fadein ()
    fg.alpha_dir = -1
    fg.alpha = math.min( 1, fg.alpha )
 end

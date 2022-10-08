@@ -18,7 +18,6 @@ DESCRIPTION:
 
 ]]--
 
--- luacheck: globals enter_system (Hook functions passed by name)
 
 -- Stage one: something goes wrong in fabric of reality.
 local text = {}

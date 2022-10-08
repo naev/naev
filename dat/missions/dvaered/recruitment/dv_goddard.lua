@@ -37,7 +37,6 @@ local vntk     = require 'vntk'
 local dv       = require "common.dvaered"
 local pir      = require "common.pirate"
 
--- luacheck: globals enter land escape spawnKoala koalaHailed koalaEscaped koalaBoard spreadCommando gather spawnShark makeSilentDeathAnnoying sharkEscaped sharkAttacked sharkKilled
 
 -- Define the cargo commodity
 local cargo_misn

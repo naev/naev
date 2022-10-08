@@ -18,8 +18,6 @@
 local srs = require "common.sirius"
 local fmt = require "format"
 
--- luacheck: globals enter land (Hook functions passed by name)
--- luacheck: globals talkJoanne (NPC functions passed by name)
 
 -- Mission constants
 local misn_reward = fmt.credits(400e3)

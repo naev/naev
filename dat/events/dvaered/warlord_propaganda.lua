@@ -19,8 +19,6 @@ local fmt      = require "format"
 local portrait = require "portrait"
 local vn       = require 'vn'
 
--- luacheck: globals takeoff (Hook functions passed by name)
--- luacheck: globals approach (NPC functions passed by name)
 
 local port = portrait.getMil("Dvaered")
 

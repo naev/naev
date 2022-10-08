@@ -21,7 +21,6 @@
 local fmt = require "format"
 local srs = require "common.sirius"
 
--- luacheck: globals landing (Hook functions passed by name)
 
 function create()
    --this mission makes no system claims

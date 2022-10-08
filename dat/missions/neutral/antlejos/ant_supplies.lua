@@ -41,7 +41,6 @@ local levelup = {
    2500, -- +bad spaceships
 }
 
--- luacheck: globals land enter protest (Hook functions passed by name)
 
 function create ()
    mem.tier = rnd.rnd(1,3)

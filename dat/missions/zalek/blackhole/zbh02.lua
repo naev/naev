@@ -23,7 +23,6 @@ local fmt = require "format"
 local zbh = require "common.zalek_blackhole"
 local lmisn = require "lmisn"
 
--- luacheck: globals land enter heartbeat cutscene_done welcome_back (Hook functions passed by name)
 
 local reward = zbh.rewards.zbh02
 local cargo_name = _("Repair Supplies")

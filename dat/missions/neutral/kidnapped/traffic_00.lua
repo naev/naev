@@ -24,8 +24,6 @@ local neu = require "common.neutral"
 -- TODO add some sort of reward I guess
 
 local kidnappers -- Non-persistent state
--- luacheck: globals attackedkidnappers boardkidnappers enter explodedkidnappers idle kidskilled land1 land2 land3 (Hook functions passed by name)
--- luacheck: globals firstpirates secondpirates (NPC functions passed by name)
 
 local sys1 = system.get("Arcturus")
 local sys2 = system.get("Goddard")

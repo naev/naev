@@ -26,7 +26,6 @@ local fleet = require "fleet"
 local fmt = require "format"
 local emp = require "common.empire"
 
--- luacheck: globals enter jumpout land (Hook functions passed by name)
 
 function create ()
    -- Target destination

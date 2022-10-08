@@ -20,7 +20,6 @@ local fmt = require "format"
 local lmisn = require "lmisn"
 local emp = require "common.empire"
 
--- luacheck: globals land tick (Hook functions passed by name)
 
 local piracyrisk = {}
 piracyrisk[1] = _("#nPiracy Risk:#0 None")

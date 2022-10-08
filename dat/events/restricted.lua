@@ -15,7 +15,6 @@ local careful = require "ai.core.misc.careful"
 local lanes = require "ai.core.misc.lanes"
 
 local sysfct
--- luacheck: globals endevent make_hostile msg_buoy (Hook functions passed by name)
 
 function create ()
    local csys = system.cur()

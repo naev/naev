@@ -25,7 +25,6 @@ local luaspfx = require "luaspfx"
 local love_shaders = require "love_shaders"
 local tut = require "common.tutorial"
 
--- luacheck: globals land enter feral_idle feral_move feral_discovered feral_hailstart feral_hail zach_msg spacewhale (Hook functions passed by name)
 
 local reward = zbh.rewards.zbh04
 

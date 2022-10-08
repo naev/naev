@@ -11,7 +11,6 @@ local pp_shaders = require "pp_shaders"
 
 local pixelcode = lf.read( "glsl/love/wormhole_travel.frag" )
 
--- luacheck: globals update wormhole (Hook functions passed by name)
 
 local target, shader, r
 local sfx = audio.newSource( 'snd/sounds/wormhole.ogg' )

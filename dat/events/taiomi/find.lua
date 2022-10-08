@@ -21,7 +21,6 @@ local vne = require "vn.extras"
 
 local board_flashback -- Forward-declared functions
 local derelict_mule, derelicts, drone, evt_state, fidget_hook, numboarded -- Event state, never saved.
--- luacheck: globals board boardnothing boardothers drone_runaway fidget heartbeat leave returncontrol whatwasthat (Hook functions passed by name)
 
 -- Threshold distances to detect the drone
 local dist_detect_mule = 3e3 -- first encounter at mule
@@ -160,6 +159,7 @@ function boardnothing ()
    player.unboard()
 end
 
+-- luacheck: globals boardothers
 function boardothers( _p )
    numboarded = numboarded + 1
    if numboarded == 2 then

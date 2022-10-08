@@ -2,7 +2,6 @@ local lanes = require 'ai.core.misc.lanes'
 local scans = require 'ai.core.misc.scans'
 
 -- Default task to run when idle
--- luacheck: globals idle (AI Task functions passed by name)
 function idle ()
    local p = ai.pilot()
    -- Aggressives will try to find enemies first, before falling back on

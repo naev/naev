@@ -13,7 +13,6 @@ local fmt = require 'format'
 local audio = require 'love.audio'
 local textoverlay = require "textoverlay"
 
--- luacheck: globals discovered endevent heartbeat textfg textupdate (Hook functions passed by name)
 
 -- These trigger at specific places
 local system_events = {

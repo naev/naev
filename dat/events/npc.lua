@@ -15,7 +15,6 @@ local vn = require 'vn'
 local lf = require "love.filesystem"
 local npc = require "common.npc"
 
--- luacheck: globals land npc_talk (NPC functions passed by name)
 
 local npcs, npc_list, npc_spawners
 

@@ -29,7 +29,6 @@ local lmisn = require "lmisn"
 local pilotai = require "pilotai"
 local love_shaders = require "love_shaders"
 
--- luacheck: globals delay_abort land approach_nelly enter enter_delay heartbeat nemesis_dead found board board_nelly (Hook functions passed by name)
 
 --[[
 States
@@ -414,6 +413,7 @@ function nemesis_dead ()
    cutscene = 5
 end
 
+-- luacheck: globals found (used in POI framework)
 function found ()
    player.msg(_("You have found something!"),true)
 

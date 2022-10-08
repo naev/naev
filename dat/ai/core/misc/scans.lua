@@ -63,7 +63,6 @@ end
 --[[
 -- Tries to get close to scan the enemy
 --]]
--- luacheck: globals scan (AI Task functions passed by name)
 function scans.scan( target )
    if not target:exists() then
       ai.poptask()

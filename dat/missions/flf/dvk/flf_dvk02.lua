@@ -23,7 +23,6 @@ local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
 
 local boss, pirates -- Non-persistent state
--- luacheck: globals enter land pilot_death_boss pilot_death_pirate pilot_hail_boss pilot_hail_pirate (Hook functions passed by name)
 
 -- TODO this mission needs to be adapted to the new pirate clan stuff
 -- for now I just swapped "Pirate" for "Dreamer Clan"

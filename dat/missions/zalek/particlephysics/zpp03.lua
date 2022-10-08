@@ -24,7 +24,6 @@ local fmt = require "format"
 local zpp = require "common.zalek_physics"
 local sokoban = require "minigames.sokoban"
 
--- luacheck: globals land enter drone_board heartbeat (Hook functions passed by name)
 
 local reward = zpp.rewards.zpp03
 local mainpnt, mainsys = spob.getS("Katar I")

@@ -3,7 +3,6 @@ Library for dealing with escorts in missions.
 
 @module escort
 --]]
--- luacheck: globals _escort_spawn _escort_jumpin _escort_jumpout _escort_land _escort_takeoff _escort_failure _escort_e_death _escort_e_land _escort_e_jump _escort_e_attacked(Hook functions passed by name)
 local escort = {}
 
 local lmisn = require "lmisn"
@@ -300,6 +299,7 @@ function _escort_jumpout()
    mem._escort.origin = system.cur()
 end
 
+-- luacheck: globals _escort_failure
 function _escort_failure ()
    local n = #mem._escort.ships_orig
    if escort.num_alive() <= 0 then

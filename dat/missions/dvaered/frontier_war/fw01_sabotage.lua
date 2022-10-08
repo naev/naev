@@ -49,8 +49,6 @@ local battleaddict, battleaddict2, hamelsen, klank, klank2, leblanc, randguy, ta
 local mypos, step -- location and spacing of the duel, initialized with the above pilots
 
 local equipGoddard, player_civilian, release_baddies -- Forward-declared functions
--- luacheck: globals battleaddict_killed beginDuel disableDuel enter enter1_message enter2_message everyoneLands fighterDuel killing land meeting message moreSound1 moreSound2 phalanx_attacked phalanx_boarded phalanx_died phalanx_safe spawn_phalanx (Hook functions passed by name)
--- luacheck: globals endMisn hamfresser majorTam (NPC functions passed by name)
 
 -- common hooks
 message = fw.message

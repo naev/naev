@@ -25,7 +25,6 @@ local fmt = require "format"
 local sciwrong = require "common.sciencegonewrong"
 
 local target -- Non-persistent state
--- luacheck: globals land sys_enter targetBoard targetDeath targetExploded targetIdle (Hook functions passed by name)
 
 -- mission variables
 mem.t_sys = {}

@@ -20,7 +20,6 @@ local car = require "common.cargo"
 local fmt = require "format"
 local lmisn = require "lmisn"
 
--- luacheck: globals land tick (Hook functions passed by name)
 
 --[[
 --   Pirates shipping missions are always timed, but quite lax on the schedules

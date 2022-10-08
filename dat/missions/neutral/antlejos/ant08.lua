@@ -32,7 +32,6 @@ local mainpnt, mainsys = spob.getS("Griffin III")
 local atksys1 = system.get("Yarn")
 local atksys2 = system.get("Delta Polaris")
 
--- luacheck: globals approaching enter land escort_success miner_salute miner_create miner_attacked protest (Hook functions passed by name)
 
 function create ()
    if not misn.claim{mainsys,atksys1,atksys2} then misn.finish() end
@@ -115,6 +114,7 @@ function land ()
    end
 end
 
+-- luacheck: globals escort_success
 function escort_success ()
    vn.clear()
    vn.scene()
@@ -154,6 +154,7 @@ function miner_salute( p )
 end
 
 local firstcreate = true
+-- luacheck: globals miner_create
 function miner_create( p )
    p:setFaction( fct_miner() )
    p:outfitAdd( "Laser Turret MK1" )
@@ -165,6 +166,7 @@ function miner_create( p )
 end
 
 local last_spammed = 0
+-- luacheck: globals miner_attacked
 function miner_attacked( p )
    local t = naev.ticks()
    if (t-last_spammed) > 10 then

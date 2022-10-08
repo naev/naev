@@ -29,7 +29,6 @@ local lmisn  = require "lmisn"
 local pir    = require "common.pirate"
 require "proximity"
 
--- luacheck: globals enter land beginSpread spreadFlyers spawnHostiles (Hook functions passed by name)
 
 -- Define the flyers commodity
 local cargo_flyers

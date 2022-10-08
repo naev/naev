@@ -34,7 +34,6 @@ local broadcastmsg = {
    _("…and that's how I was able to get a third liver haha. Oops is this on? Er, nevermind that. Outfits for sale!"),
 }
 
--- luacheck: globals board broadcast hail leave (Hook functions passed by name)
 
 function create ()
    local scur = system.cur()

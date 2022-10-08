@@ -24,7 +24,6 @@ local vn = require "vn"
 local fmt = require "format"
 local zpp = require "common.zalek_physics"
 
--- luacheck: globals land (Hook functions passed by name)
 
 local reward = zpp.rewards.zpp06
 local destpnt, destsys = spob.getS("PRP-1")

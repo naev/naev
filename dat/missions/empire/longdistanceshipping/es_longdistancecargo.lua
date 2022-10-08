@@ -23,7 +23,6 @@ local lmisn = require "lmisn"
 local emp = require "common.empire"
 local pir = require "common.pirate"
 
--- luacheck: globals land tick (Hook functions passed by name)
 
 local piracyrisk = {}
 piracyrisk[1] = _("#nPiracy Risk:#0 None")

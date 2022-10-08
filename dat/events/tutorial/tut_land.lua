@@ -14,7 +14,6 @@ local fmt = require "format"
 local tut = require "common.tutorial"
 local vn  = require 'vn'
 
--- luacheck: globals outfit_buy ship_buy takeoff (Hook functions passed by name)
 
 function create ()
    if tut.isDisabled() then evt.finish() end
