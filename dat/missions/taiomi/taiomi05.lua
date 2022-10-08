@@ -291,7 +291,7 @@ function land ()
       vn.done( taiomi.scavenger.transition )
       vn.run()
 
-      mem.marker = misn.markerMove( firstsys )
+      mem.marker = misn.markerMove( mem.marker, firstsys )
 
       misn.osdCreate( title, {
          fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=firstsys}),
