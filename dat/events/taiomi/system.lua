@@ -355,7 +355,7 @@ Scavenger goes silent for a second, as if thinking.
       if lastq ~= "who" then
          table.insert( opts, 1, {_([["Who are you?"]]), "who"} )
       end
-      if lastq ~= "curious_drones" and var.peek( "taiomi_scav_who" ) then
+      if lastq ~= "curious_drones" and var.peek( "taiomi_scav_who" ) and d_young_a then
          table.insert( opts, 1, {_("Ask about the drones following you around"), "curious_drones"} )
       end
       if lastq ~= "others" and progress >= 1 and var.peek( "taiomi_drone_names" ) then
