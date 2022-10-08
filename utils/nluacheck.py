@@ -61,7 +61,7 @@ if __name__ == "__main__":
         retlist = pool.map( nluacheck_w, filelist )
     err = 0
     for r in retlist:
-        sys.stdout.buffer.write( r[1] )
         if r[0]!=0:
             err = r[0]
+            sys.stdout.buffer.write( r[1] )
     sys.exit( err )
