@@ -110,6 +110,7 @@ local function spawn_scavenger( pos )
    hook.pilot( scavenger, "death", "scavenger_death" )
    local mem = scavenger:memory()
    mem.vulnerability = 1000 -- Less preferred as a target
+   scavenger:intrinsicSet( "shield", 1000 ) -- beefy shields
    return scavenger
 end
 
@@ -126,6 +127,7 @@ function scavenger_death ()
    lmisn.fail( "Scavenger died! You were supposed to protect them!" )
 end
 
+local systemmrk
 function scavenger_enter ()
    local dead = taiomi.young_died()
    local osd = {
@@ -153,7 +155,7 @@ function scavenger_enter ()
    s:follow( player.pilot() ) -- TODO probably something better than just following
 
    -- Highlight position
-   system.mrkAdd( pos )
+   systemmrk = system.mrkAdd( pos )
    misn.osdCreate( title, osd )
 
    hook.timer( 5, "scavenger_msg", msg )
@@ -188,6 +190,8 @@ function scavenger_pos( pos )
       end
       scavenger:comm(_("Commencing broadcast!"))
       scavenger_broadcast( pos )
+      system.mrkRm( systemmrk )
+      scavenger:setHilight( true )
       pulse( scavenger:pos(), scavenger:vel(), {col={0.3,0.8,0.1,0.5}} )
 
       pilotai.clear() -- Get rid of all natural pilots if possible
@@ -218,6 +222,8 @@ function scavenger_broadcast( pos )
       if mem.state==2 then
          scavenger:comm(_("Nothing… Let us move on."))
          pilot.toggleSpawn(true)
+         scavenger:setHilight( false )
+         mem.marker = misn.markerMove( mem.marker, fightsys )
          return
       --else
       end
