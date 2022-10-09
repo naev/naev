@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<trail name="proteron">
+ <type>trail_split</type>
+ <thickness>6</thickness>
+ <ttl>1.5</ttl>
+ <idle r="1" g="1" b="1" a="0.05" />
+ <glow r="0.76" g="0.27" b="0.86" a="0.7" />
+ <afterburn r="1" g="0.5" b="0" a="0.85" scale="1.5" />
+ <jumping r="0.9" g="0.1" b="0.9" a="0.85" scale="2"/>
+</trail>
