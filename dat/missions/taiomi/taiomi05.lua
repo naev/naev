@@ -39,17 +39,18 @@ local BROADCAST_LENGTH = 150 -- Length in seconds
 local SPAWNLIST_FIRST = {
    { p={"Pirate Hyena", "Pirate Hyena"}, t=0 },
    { p={"Pirate Shark", "Pirate Shark"}, t=20 },
-   { p={"Pirate Admonisher"}, t=40 }, -- Slow, will take time
+   { p={"Pirate Admonisher"}, t=30 }, -- Slow, will take time
    { p={"Pirate Hyena", "Pirate Hyena"}, t=60 },
-   { p={"Pirate Ancestor"}, t=100 },
-   { p={"Pirate Vendetta","Pirate Vendetta"}, t=120 },
+   { p={"Pirate Ancestor"}, t=70 },
+   { p={"Pirate Vendetta","Pirate Vendetta"}, t=100 },
 }
 local SPAWNLIST_FIGHT = {
    { p={"Pirate Hyena", "Pirate Hyena", "Pirate Hyena", "Pirate Hyena"}, t=0 },
+   { p={"Pirate Admonisher"}, t=20 }, -- Slow, will take time
    { p={"Pirate Shark", "Pirate Shark"}, t=40 },
-   { p={"Pirate Admonisher"}, t=40 }, -- Slow, will take time
-   { p={"Pirate Starbridge"}, t=60 }, -- Slow, will take time
-   { p={"Pirate Vendetta", "Pirate Vendetta"}, t=70 },
+   { p={"Pirate Starbridge"}, t=40 }, -- Slow, will take time
+   { p={"Pirate Vendetta", "Pirate Vendetta"}, t=65 },
+   { p={"Pirate Ancestor"}, t=80 },
    { p={"Pirate Shark","Pirate Shark", "Pirate Shark"}, t=100 },
 }
 
