@@ -342,7 +342,7 @@ static void player_autonav (void)
          t = ANGLE( player.p->solid->pos.x - jp->pos.x,
                     player.p->solid->pos.y - jp->pos.y );
          d = space_jumpDistance( player.p, jp );
-         vec2_padd( &pos, MAX( 0.8*d, d-100. ), t );
+         vec2_padd( &pos, MAX( 0.8*d, d-30. ), t );
          ret = player_autonavApproach( &pos, &d, 0 );
          if (ret)
             player.autonav = AUTONAV_JUMP_BRAKE;
