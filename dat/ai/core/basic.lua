@@ -238,6 +238,9 @@ function follow( target )
    local dir   = ai.face(target)
    local dist  = ai.dist(target)
 
+   -- Stealth like whoever is being followed
+   ai.stealth( target:flags("stealth") )
+
    -- Must approach
    if dir < math.rad(10) and dist > 300 then
       ai.accel()
@@ -251,6 +254,9 @@ function follow_accurate( target )
       ai.poptask()
       return
    end
+
+   -- Stealth like whoever is being followed
+   ai.stealth( target:flags("stealth") )
 
    local goal = ai.follow_accurate(target, mem.radius,
          mem.angle, mem.Kp, mem.Kd)
