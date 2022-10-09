@@ -483,13 +483,15 @@ function atk.preferred_enemy( pref_func )
    local targets = {}
    for k,h in ipairs( p:getHostiles( maxrange, nil, nil, true, false, true ) ) do
       local w = h:memory().vulnerability or 0
-      local v, F, H = careful.checkVulnerable( p, h, mem.vulnattack, r )
-      if not v then
-         F = 1
-         H = 1
+      if w < math.huge then -- math.huge can be used to make the AI try not to target
+         local v, F, H = careful.checkVulnerable( p, h, mem.vulnattack, r )
+         if not v then
+            F = 1
+            H = 1
+         end
+         w = w + pref_func( p, h, v, F, H ) -- Compute pref function
+         table.insert( targets, { p=h, priority=w, v=v, F=F, H=H } )
       end
-      w = w + pref_func( p, h, v, F, H ) -- Compute pref function
-      table.insert( targets, { p=h, priority=w, v=v, F=F, H=H } )
    end
    if #targets <= 0 then return nil end
    table.sort( targets, function(a,b)
