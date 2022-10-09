@@ -126,6 +126,7 @@ local function spawn_scavenger( pos )
    scavenger:setFriendly(true)
    hook.pilot( scavenger, "hail", "scavenger_hail" )
    hook.pilot( scavenger, "death", "scavenger_death" )
+   hook.pilot( scavenger, "attacked", "scavenger_attacked" )
    local mem = scavenger:memory()
    mem.vulnerability = 1000 -- Less preferred as a target
    scavenger:intrinsicSet( "shield", 1000 ) -- beefy shields
@@ -143,6 +144,11 @@ end
 
 function scavenger_death ()
    lmisn.fail( "Scavenger died! You were supposed to protect them!" )
+end
+
+function scavenger_attacked( _p, attacker )
+   -- Make whatever attacks scavenger hostile
+   attacker:setHostile(true)
 end
 
 local systemmrk
