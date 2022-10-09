@@ -107,6 +107,8 @@ local function spawn_scavenger( pos )
    scavenger:setFriendly(true)
    hook.pilot( scavenger, "hail", "scavenger_hail" )
    hook.pilot( scavenger, "death", "scavenger_death" )
+   local mem = scavenger:memory()
+   mem.vulnerability = 1000 -- Less preferred as a target
    return scavenger
 end
 
