@@ -223,7 +223,11 @@ function scavenger_broadcast( pos )
          scavenger:comm(_("Nothing… Let us move on."))
          pilot.toggleSpawn(true)
          scavenger:setHilight( false )
-         mem.marker = misn.markerMove( mem.marker, fightsys )
+         -- Update OSD and marker
+         local osdtitle, osd = misn.osdGet()
+         table.remove( osd, 1 )
+         misn.osdCreate( osdtitle, osd )
+         misn.markerAdd( fightsys )
          return
       --else
       end
