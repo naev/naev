@@ -1,4 +1,4 @@
-local atk = require "ai.core.attack"
+local atk = require "ai.core.attack.util"
 
 function idle ()
    if mem.aggressive then

@@ -1,4 +1,4 @@
-local atk = require "ai.core.attack"
+local atk = require "ai.core.attack.util"
 
 -- Variables
 mem.planet_dist = 1500 -- distance to keep from planets
