@@ -1,4 +1,5 @@
-local atk = require "ai.core.attack"
+local atklib = require "ai.core.attack"
+local atk = require "ai.core.attack.util"
 local atk_generic = require "ai.core.attack.generic"
 local fmt = require "format"
 local formation = require "formation"
@@ -445,7 +446,7 @@ function control_funcs.generic_attack( si )
       -- Cool down, if necessary.
       should_cooldown()
 
-      atk.think( target, si )
+      atklib.think( target, si )
    end
 
    -- Handle distress
@@ -457,7 +458,7 @@ end
 function control( dt )
    mem.elapsed = mem.elapsed + dt
    local p = ai.pilot()
-   local enemy = ai.getenemy()
+   local enemy = atk.preferred_enemy()
 
    -- Task information stuff
    local task = ai.taskname()
@@ -662,7 +663,7 @@ function control_funcs.runaway ()
       ai.hyperspace()
    else
       -- If far enough away, stop the task
-      local enemy = ai.getenemy() -- nearest enemy
+      local enemy = atk.preferred_enemy() -- nearest enemy
       if not enemy or (enemy and ai.dist(enemy) > mem.safe_distance) then
          ai.poptask()
          return true
@@ -684,7 +685,7 @@ function control_funcs.board ()
       return true
    end
    -- We want to think in case another attacker gets close
-   atk.think( target, si )
+   atklib.think( target, si )
    return true
 end
 function control_funcs.attack ()
@@ -814,7 +815,7 @@ function attacked( attacker )
 
    -- Let attacker profile handle it.
    elseif si.attack then
-      atk.attacked( attacker )
+      atklib.attacked( attacker )
 
    elseif task == "runaway" then
       if ai.taskdata() ~= attacker and not mem.norun then
@@ -859,7 +860,7 @@ function create_pre ()
    mem.elapsed = 0 -- Restart elapsed timer
 
    -- Choose attack algorithm
-   atk.choose()
+   atklib.choose()
 end
 
 -- Finishes create stuff like choose attack and prepare plans

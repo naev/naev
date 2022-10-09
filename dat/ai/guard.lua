@@ -1,5 +1,6 @@
 require 'ai.core.core'
 local scans = require 'ai.core.misc.scans'
+local atk = require "ai.core.attack"
 --[[
 
    Guard Mission AI. Have to set mem.guardpos to the position to guard.
@@ -54,7 +55,7 @@ function idle ()
    -- Aggressives will try to find enemies first, before falling back on
    -- loitering, to avoid weird stuff starting to scan before attacking
    if mem.aggressive then
-      local enemy  = ai.getenemy()
+      local enemy  = atk.preferred_enemy()
       if enemy ~= nil and should_attack(enemy) then
          ai.pushtask( "attack", enemy )
          return

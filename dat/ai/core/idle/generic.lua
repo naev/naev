@@ -1,5 +1,6 @@
 local lanes = require 'ai.core.misc.lanes'
 local scans = require 'ai.core.misc.scans'
+local atk = require "ai.core.attack"
 
 -- Default task to run when idle
 function idle ()
@@ -7,7 +8,7 @@ function idle ()
    -- Aggressives will try to find enemies first, before falling back on
    -- loitering, to avoid weird stuff starting to scan before attacking
    if not mem.force_leave and mem.aggressive then
-      local enemy  = ai.getenemy()
+      local enemy  = atk.preferred_enemy()
       if should_attack( enemy ) then
          ai.pushtask( "attack", enemy )
          return

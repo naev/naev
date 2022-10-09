@@ -2,10 +2,9 @@
       AI for stationary turrets.
 --]]
 require 'ai.core.core'
-
+local atk = require "ai.core.attack"
 
 control_rate = 2
-
 
 local function attack_nearest( hostile )
    -- Must not be same
@@ -32,7 +31,7 @@ end
 function control( dt )
    mem.elapsed = mem.elapsed + dt
    local task = ai.taskname()
-   local enemy = ai.getenemy()
+   local enemy = atk.preferred_enemy()
 
    if task == "stationary" then
       if enemy ~= nil then

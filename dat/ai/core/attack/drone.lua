@@ -13,7 +13,8 @@ local atk_drone = {}
 -- Mainly targets small drones.
 --]]
 function atk_drone.think( target, _si )
-   local enemy    = ai.getenemy_size(0, 200)  -- find a small ship to attack
+   --local enemy    = ai.getenemy_size(0, 200)  -- find a small ship to attack
+   local enemy = atk.preferred_enemy()
    local nearest_enemy = ai.getenemy()
    local dist     = ai.dist(target)
 

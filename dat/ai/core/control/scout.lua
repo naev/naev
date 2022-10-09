@@ -1,3 +1,5 @@
+local atk = require "ai.core.attack"
+
 -- Variables
 mem.planet_dist = 1500 -- distance to keep from planets
 mem.enemy_dist = 800 -- distance to keep from enemies
@@ -11,7 +13,7 @@ function control ()
    local planet
 
    if task == nil or task == "idle" then
-      local enemy = ai.getenemy()
+      local enemy = atk.preferred_enemy()
 
       -- There is an enemy
       if enemy ~= nil then

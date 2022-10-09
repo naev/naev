@@ -15,7 +15,6 @@ function __hoge( data ) -- internal in name only, or forward-declared local func
 
 -- Remark: the (sub)taskdata is passed as the (sub)task function argument
 --]]
-
 local atk = require "ai.core.attack.util"
 local fmt = require "format"
 local scans = require "ai.core.misc.scans"
@@ -358,7 +357,7 @@ end
 -- luacheck: globals _hyp_approach_shoot (AI Task functions passed by name)
 function _hyp_approach_shoot( target )
    -- Shoot and approach
-   local enemy = ai.getenemy()
+   local enemy = atk.preferred_enemy()
    __shoot_turret( enemy )
    __hyp_approach( target )
 end
@@ -370,7 +369,7 @@ end
 
 -- luacheck: globals _landgo_shoot (AI Task functions passed by name)
 function _landgo_shoot ( planet )
-   local enemy = ai.getenemy()
+   local enemy = atk.preferred_enemy()
    __shoot_turret( enemy )
    __landgo( planet )
 end
