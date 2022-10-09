@@ -83,7 +83,8 @@ function pilotai.clear( allpilots )
          local pp = p:pos()
          local pfct = p:faction()
          local dist = math.huge
-         local candspob, candjump
+         local distj = math.huge
+         local candspob, candjump, closestjump
          for i,s in ipairs(system.cur():spobs()) do
             local sfct = s:faction()
             if s:services().land and sfct and not pfct:areEnemies(sfct) then
@@ -103,6 +104,10 @@ function pilotai.clear( allpilots )
                   candjump = j
                   dist = d
                end
+               if d < distj then
+                  closestjump = j
+                  distj = d
+               end
             end
          end
 
@@ -113,6 +118,13 @@ function pilotai.clear( allpilots )
             m.goal_pos = candspob:pos()
             p:pushtask("land", m.goal_planet)
          elseif candjump then
+            m.goal = "hyperspace"
+            m.goal_hyperspace = candjump
+            m.goal_pos = candjump:pos()
+            p:pushtask("hyperspace",m.goal_hyperspace)
+         else
+            -- Get them out the closest jump
+            candjump = closestjump
             m.goal = "hyperspace"
             m.goal_hyperspace = candjump
             m.goal_pos = candjump:pos()
