@@ -87,6 +87,19 @@ function create ()
    hook.land( "land" )
 end
 
+local function osd_list ()
+   local dead = taiomi.young_died()
+   local osd = {
+      fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=fightsys}),
+      fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=lastsys}),
+      _("Scavenger must survive"),
+   }
+   if mem.state <= 2 then
+      table.insert( osd, 1, fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=firstsys}) )
+   end
+   return osd
+end
+
 local prevsys = basesys
 function enter ()
    if mem.timer then
@@ -131,19 +144,6 @@ function scavenger_death ()
    lmisn.fail( "Scavenger died! You were supposed to protect them!" )
 end
 
-local function osd_list ()
-   local dead = taiomi.young_died()
-   local osd = {
-      fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=fightsys}),
-      fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=lastsys}),
-      _("Scavenger must survive"),
-   }
-   if mem.state < 2 then
-      table.insert( osd, 1, fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=firstsys}) )
-   end
-   return osd
-end
-
 local systemmrk
 function scavenger_enter ()
    local jmp, pos, msg
@@ -152,7 +152,7 @@ function scavenger_enter ()
       pos = firstpos
       msg = _("I have marked the first location.")
    else
-      jmp = jump.get( firstsys, basesys )
+      jmp = jump.get( fightsys, firstsys )
       pos = fightpos
       msg = _("Let us make haste to the next location.")
    end
@@ -324,12 +324,8 @@ function land ()
       mem.marker = misn.markerMove( mem.marker, firstsys )
       mem.state = 1 -- advance state
 
-      misn.osdCreate( title, {
-         fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=firstsys}),
-         fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=fightsys}),
-         fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=lastsys}),
-         _("Scavenger must survive"),
-      } )
+      local osd = osd_list ()
+      misn.osdCreate( title, osd )
       return
    end
 
