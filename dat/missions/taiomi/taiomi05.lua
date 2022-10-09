@@ -34,16 +34,16 @@ local lastsys = system.get("Haven")
 local firstpos = vec2.new( -2500, -2000 )
 local fightpos = vec2.new( -2000, 3000 )
 local DIST_THRESHOLD = 2000 -- Distance in units
-local BROADCAST_LENGTH = 150 -- Length in seconds
+local BROADCAST_LENGTH = 300 -- Length in seconds
 local SPAWNLIST_FIRST = {
    { p={"Pirate Hyena", "Pirate Hyena"}, t=0 },
-   { p={"Pirate Shark", "Pirate Shark"}, t=10 },
-   { p={"Pirate Admonisher"}, t=20 },
-   { p={"Pirate Hyena", "Pirate Hyena"}, t=30 },
-   { p={"Pirate Ancestor"}, t=50 },
-   { p={"Pirate Vendetta","Pirate Vendetta"}, t=60 },
-   { p={"Pirate Starbridge"}, 90 },
-   { p={"Pirate Hyena", "Pirate Hyena", "Pirate Hyena"}, t=120 },
+   { p={"Pirate Shark", "Pirate Shark"}, t=20 },
+   { p={"Pirate Admonisher"}, t=40 },
+   { p={"Pirate Hyena", "Pirate Hyena"}, t=60 },
+   { p={"Pirate Ancestor"}, t=100 },
+   { p={"Pirate Vendetta","Pirate Vendetta"}, t=120 },
+   { p={"Pirate Starbridge"}, t=180 },
+   { p={"Pirate Hyena", "Pirate Hyena", "Pirate Hyena"}, t=240 },
 }
 local SPAWNLIST_FIGHT = {
 }
@@ -175,6 +175,7 @@ end
 local broadcast_timer, broadcast_spawned, broadcast_spawnlist
 function scavenger_pos( pos )
    if pos:dist( scavenger:pos() ) < 100 then
+      mem.state = mem.state+1
       broadcast_spawned = 0
       broadcast_timer = 0
       if mem.state==2 then
@@ -197,7 +198,7 @@ function scavenger_broadcast( pos )
    broadcast_timer = broadcast_timer + 1
 
    local spawn = broadcast_spawnlist[ broadcast_spawned+1 ]
-   if spawn and broadcast_timer > spawn.t then
+   if spawn and spawn.t and broadcast_timer > spawn.t then
       local fct = faction.get("Marauder")
       for k,p in ipairs( fleet.add( 1, spawn.p, fct ) ) do
          pilotai.guard( p, pos )
