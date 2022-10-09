@@ -428,6 +428,7 @@ int system_hasSpob( const StarSystem *sys );
 /*
  * Hyperspace.
  */
+int space_jumpDistance( const Pilot *p, const JumpPoint *jp );
 int space_canHyperspace( const Pilot *p);
 int space_hyperspace( Pilot *p );
 int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, vec2 *pos, vec2 *vel, double *dir, const Pilot *p );

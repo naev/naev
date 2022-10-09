@@ -418,6 +418,17 @@ int spob_rmService( Spob *p, int service )
 }
 
 /**
+ * @brief Distance at which a pilot can jump.
+ */
+int space_jumpDistance( const Pilot *p, const JumpPoint *jp )
+{
+   double r = jp->radius * p->stats.jump_distance;
+   if (pilot_isFlag( p, PILOT_STEALTH )) /* Stealth gives a jump distance bonus. */
+      r *= 3.;
+   return r;
+}
+
+/**
  * @brief Checks to make sure if pilot is far enough away to hyperspace.
  *
  *    @param p Pilot to check if he can hyperspace.
@@ -444,9 +455,7 @@ int space_canHyperspace( const Pilot* p )
    jp = &cur_system->jumps[ p->nav_hyperspace ];
 
    /* Check distance. */
-   r = jp->radius * p->stats.jump_distance;
-   if (pilot_isFlag( p, PILOT_STEALTH )) /* Stealth gives a jump distance bonus. */
-      r *= 3.;
+   r = space_jumpDistance( p, jp );
    d = vec2_dist2( &p->solid->pos, &jp->pos );
    if (d > pow2(r))
       return 0;

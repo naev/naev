@@ -329,6 +329,7 @@ static void player_autonav (void)
    int ret, map_npath, inrange;
    double d, t, tint;
    double vel;
+   vec2 pos;
 
    (void) map_getDestination( &map_npath );
 
@@ -336,7 +337,13 @@ static void player_autonav (void)
       case AUTONAV_JUMP_APPROACH:
          /* Target jump. */
          jp    = &cur_system->jumps[ player.p->nav_hyperspace ];
-         ret   = player_autonavApproach( &jp->pos, &d, 0 );
+         /* Don't target center, but position offset in the direction of the player. */
+         pos = jp->pos;
+         t = ANGLE( player.p->solid->pos.x - jp->pos.x,
+                    player.p->solid->pos.y - jp->pos.y );
+         d = space_jumpDistance( player.p, jp );
+         vec2_padd( &pos, MAX( 0.8*d, d-100. ), t );
+         ret = player_autonavApproach( &pos, &d, 0 );
          if (ret)
             player.autonav = AUTONAV_JUMP_BRAKE;
          else if (!tc_rampdown && (map_npath<=1)) {
