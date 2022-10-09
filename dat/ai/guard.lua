@@ -1,6 +1,6 @@
 require 'ai.core.core'
 local scans = require 'ai.core.misc.scans'
-local atk = require "ai.core.attack"
+local atk = require "ai.core.attack.util"
 --[[
 
    Guard Mission AI. Have to set mem.guardpos to the position to guard.

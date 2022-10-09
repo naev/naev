@@ -2,7 +2,7 @@
       AI for stationary turrets.
 --]]
 require 'ai.core.core'
-local atk = require "ai.core.attack"
+local atk = require "ai.core.attack.util"
 
 control_rate = 2
 

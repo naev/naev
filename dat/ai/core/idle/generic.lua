@@ -1,6 +1,6 @@
 local lanes = require 'ai.core.misc.lanes'
 local scans = require 'ai.core.misc.scans'
-local atk = require "ai.core.attack"
+local atk = require "ai.core.attack.util"
 
 -- Default task to run when idle
 function idle ()
