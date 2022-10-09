@@ -122,7 +122,7 @@ function pilotai.clear( allpilots )
             m.goal_hyperspace = candjump
             m.goal_pos = candjump:pos()
             p:pushtask("hyperspace",m.goal_hyperspace)
-         else
+         elseif closestjump then
             -- Get them out the closest jump
             candjump = closestjump
             m.goal = "hyperspace"
