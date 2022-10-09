@@ -21,6 +21,7 @@ local taiomi = require "common.taiomi"
 local lmisn = require "lmisn"
 local pilotai = require "pilotai"
 local fleet = require "fleet"
+local pulse = require "luaspfx.pulse"
 --local equipopt = require "equipopt"
 --local luatk = require "luatk"
 
@@ -187,6 +188,7 @@ function scavenger_pos( pos )
       end
       scavenger:comm(_("Commencing broadcast!"))
       scavenger_broadcast( pos )
+      pulse( scavenger:pos(), scavenger:vel(), {col={0.3,0.8,0.1,0.5}} )
 
       pilotai.clear() -- Get rid of all natural pilots if possible
       pilot.toggleSpawn(false)
