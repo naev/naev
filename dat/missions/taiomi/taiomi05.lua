@@ -148,7 +148,7 @@ end
 local systemmrk
 function scavenger_enter ()
    local jmp, pos, msg
-   if mem.state==0 then
+   if mem.state<2 then
       jmp = jump.get( firstsys, basesys )
       pos = firstpos
       msg = _("I have marked the first location.")
@@ -247,14 +247,14 @@ function scavenger_broadcast( pos )
          scavenger:comm(_("Nothing… Let us move on."))
          pilot.toggleSpawn(true)
          scavenger:setHilight( false )
-         -- Update OSD and marker
-         local osd = osd_list()
-         misn.osdCreate( title, osd )
          mem.marker = misn.markerMove( mem.marker, fightsys )
          return
       --else
       end
       mem.state = mem.state + 1
+      -- Update OSD and marker
+      local osd = osd_list()
+      misn.osdCreate( title, osd )
       return
    end
 
