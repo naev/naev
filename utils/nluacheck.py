@@ -26,7 +26,7 @@ def nluacheck( filename, extra_opts=[] ):
     hooks += list(map( lambda x: x[1], NPC_REGEX.findall( data ) ) )
     hooks += AI_REGEX.findall( data )
     hooks += list(map( lambda x: x[1], PROXIMITY_REGEX.findall( data ) ) )
-    hooks = sorted(set(hooks))
+    hooks = sorted(set(hooks)) # remove duplicates
 
     args = [ "luacheck", filename ]
     args += extra_opts
@@ -38,20 +38,25 @@ def nluacheck( filename, extra_opts=[] ):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser( description='Wrapper for luacheck that "understands" Naev hooks.' )
-    parser.add_argument('filename', metavar='FILENAME', nargs='+', type=str, help='Name of the file(s) to parse.')
+    parser.add_argument('filename', metavar='PATH', nargs='+', type=str, help='Name of the path(s) to parse. Recurses over .lua files in the case of directories.')
     parser.add_argument('-j', '--jobs', metavar='jobs', type=int, default=None, help='Number of jobs to use. Defaults to number of CPUs.')
     args, unknown = parser.parse_known_args()
 
+    # find files, either as directories or direct names based on extension
     filelist = set()
-
     for a in args.filename:
-        if a[-4:]==".lua":
+        if os.path.isfile(a):
             filelist.add( a )
-        else:
+        elif os.path.isdir(a):
             p = pl.Path(a)
             for f in p.glob( os.path.join("**", "*.lua") ):
                 filelist.add( f )
+        else:
+            parser.print_help()
+            sys.stderr.write(f"\nError: non-existant path '{a}'\n")
+            sys.exit(-1)
 
+    # Wrapper that will pass through unknown parameters meant for luacheck
     def nluacheck_w( filename ):
         return nluacheck( filename, unknown )
 
@@ -63,5 +68,6 @@ if __name__ == "__main__":
     for r in retlist:
         if r[0]!=0:
             err = r[0]
+            # only write to stdeout in class of error for less spam
             sys.stdout.buffer.write( r[1] )
     sys.exit( err )
