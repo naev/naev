@@ -165,9 +165,9 @@ function _escort_e_death( p )
    end
 end
 
-function _escort_e_attacked( p )
+function _escort_e_attacked( p, attacker )
    if mem._escort.params.func_pilot_attacked then
-      _G[mem._escort.params.func_pilot_attacked]( p )
+      _G[mem._escort.params.func_pilot_attacked]( p, attacker )
    end
 end
 
