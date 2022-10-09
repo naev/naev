@@ -35,18 +35,22 @@ local lastsys = system.get("Haven")
 local firstpos = vec2.new( -2500, -2000 )
 local fightpos = vec2.new( -2000, 3000 )
 local DIST_THRESHOLD = 2000 -- Distance in units
-local BROADCAST_LENGTH = 300 -- Length in seconds
+local BROADCAST_LENGTH = 150 -- Length in seconds
 local SPAWNLIST_FIRST = {
    { p={"Pirate Hyena", "Pirate Hyena"}, t=0 },
    { p={"Pirate Shark", "Pirate Shark"}, t=20 },
-   { p={"Pirate Admonisher"}, t=40 },
+   { p={"Pirate Admonisher"}, t=40 }, -- Slow, will take time
    { p={"Pirate Hyena", "Pirate Hyena"}, t=60 },
    { p={"Pirate Ancestor"}, t=100 },
    { p={"Pirate Vendetta","Pirate Vendetta"}, t=120 },
-   { p={"Pirate Starbridge"}, t=180 },
-   { p={"Pirate Hyena", "Pirate Hyena", "Pirate Hyena"}, t=240 },
 }
 local SPAWNLIST_FIGHT = {
+   { p={"Pirate Hyena", "Pirate Hyena", "Pirate Hyena", "Pirate Hyena"}, t=0 },
+   { p={"Pirate Shark", "Pirate Shark"}, t=40 },
+   { p={"Pirate Admonisher"}, t=40 }, -- Slow, will take time
+   { p={"Pirate Starbridge"}, t=60 }, -- Slow, will take time
+   { p={"Pirate Vendetta", "Pirate Vendetta"}, t=70 },
+   { p={"Pirate Shark","Pirate Shark", "Pirate Shark"}, t=100 },
 }
 
 --[[
@@ -127,28 +131,30 @@ function scavenger_death ()
    lmisn.fail( "Scavenger died! You were supposed to protect them!" )
 end
 
-local systemmrk
-function scavenger_enter ()
+local function osd_list ()
    local dead = taiomi.young_died()
    local osd = {
-      fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=firstsys}),
       fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=fightsys}),
       fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=lastsys}),
       _("Scavenger must survive"),
    }
+   if mem.state < 2 then
+      table.insert( osd, 1, fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=firstsys}) )
+   end
+   return osd
+end
 
+local systemmrk
+function scavenger_enter ()
    local jmp, pos, msg
    if mem.state==0 then
       jmp = jump.get( firstsys, basesys )
       pos = firstpos
       msg = _("I have marked the first location.")
-      osd[1] = _("Go to the marked location")
    else
       jmp = jump.get( firstsys, basesys )
       pos = fightpos
       msg = _("Let us make haste to the next location.")
-      table.remove( osd, 1 )
-      osd[1] = _("Go to the marked location")
    end
    local s = spawn_scavenger( jmp )
    s:control()
@@ -156,6 +162,8 @@ function scavenger_enter ()
 
    -- Highlight position
    systemmrk = system.mrkAdd( pos )
+   local osd = osd_list ()
+   osd[1] = _("Go to the marked location")
    misn.osdCreate( title, osd )
 
    hook.timer( 5, "scavenger_msg", msg )
@@ -216,6 +224,12 @@ function scavenger_broadcast( pos )
       broadcast_spawned = broadcast_spawned+1
    end
 
+   -- Can get knocked off by weapon knockback, go back
+   if pos:dist( scavenger:pos() ) < 100 then
+      scavenger:moveto( pos )
+   end
+
+   -- Broadcast over
    if broadcast_timer > BROADCAST_LENGTH then
       scavenger:taskClear()
       scavenger:follow( player.pilot() )
@@ -224,10 +238,9 @@ function scavenger_broadcast( pos )
          pilot.toggleSpawn(true)
          scavenger:setHilight( false )
          -- Update OSD and marker
-         local osdtitle, osd = misn.osdGet()
-         table.remove( osd, 1 )
-         misn.osdCreate( osdtitle, osd )
-         misn.markerAdd( fightsys )
+         local osd = osd_list()
+         misn.osdCreate( title, osd )
+         mem.marker = misn.markerMove( mem.marker, fightsys )
          return
       --else
       end
@@ -236,10 +249,10 @@ function scavenger_broadcast( pos )
    end
 
    -- Update OSD
-   local osdtitle, osd = misn.osdGet()
+   local osd = osd_list()
    osd[1] = fmt.f(_("Protect Scavenger ({left} s left)"),
       {left=BROADCAST_LENGTH-broadcast_timer})
-   misn.osdCreate( osdtitle, osd )
+   misn.osdCreate( title, osd )
 
    hook.timer( 1, "scavenger_broadcast", pos )
 end
