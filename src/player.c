@@ -1935,8 +1935,11 @@ int player_jump (void)
 
    /* Try to hyperspace. */
    h = space_hyperspace(player.p);
-   if (h == -1)
-      player_message( "#r%s", _("You are too far from a jump point to initiate hyperspace."));
+   if (h == -1) {
+      player_hyperspacePreempt( 1 );
+      player_autonavStart();
+      //player_message( "#r%s", _("You are too far from a jump point to initiate hyperspace."));
+   }
    else if (h == -2)
       player_message( "#r%s", _("Hyperspace drive is offline."));
    else if (h == -3)
@@ -1954,6 +1957,7 @@ int player_jump (void)
 
       return 1;
    }
+
    return 0;
 }
 
