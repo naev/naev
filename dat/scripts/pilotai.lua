@@ -76,7 +76,7 @@ function pilotai.clear( allpilots )
          m.loiter       = -1 -- for generic AI
          m.boarded      = 1 -- for pirate AI
          m.doscans      = false
-         m.vulnerability = 1e3 -- Have them be targetted less
+         m.vulnerability = math.huge -- Have them be targetted less
          p:taskClear()
 
          -- Try to make them leave from the closest place
