@@ -186,6 +186,10 @@ function check_location( pos )
    hook.timer( 1, "check_location", pos )
 end
 
+local function do_pulse ()
+   pulse( scavenger:pos(), scavenger:vel(), {col={0.3,0.8,0.1,0.5}, size=1000} )
+end
+
 local broadcast_timer, broadcast_spawned, broadcast_spawnlist
 function scavenger_pos( pos )
    if pos:dist( scavenger:pos() ) < 100 then
@@ -201,7 +205,7 @@ function scavenger_pos( pos )
       scavenger_broadcast( pos )
       system.mrkRm( systemmrk )
       scavenger:setHilight( true )
-      pulse( scavenger:pos(), scavenger:vel(), {col={0.3,0.8,0.1,0.5}} )
+      do_pulse()
 
       pilotai.clear() -- Get rid of all natural pilots if possible
       pilot.toggleSpawn(false)
@@ -223,6 +227,11 @@ function scavenger_broadcast( pos )
          table.insert( enemies, p )
       end
       broadcast_spawned = broadcast_spawned+1
+   end
+
+   -- Do more pulses over time
+   if math.fmod( broadcast_timer, 4 )==0 then
+      do_pulse()
    end
 
    -- Can get knocked off by weapon knockback, go back
