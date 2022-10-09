@@ -777,6 +777,7 @@ static void economy_modifySystemCommodityPrice( StarSystem *sys )
       }
    }
    array_shrink( &avprice );
+   array_free( sys->averagePrice );
    sys->averagePrice = avprice;
 }
 
