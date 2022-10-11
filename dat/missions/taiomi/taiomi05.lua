@@ -34,6 +34,7 @@ local fightsys = system.get("Gamel")
 local lastsys = system.get("Haven")
 local firstpos = vec2.new( -2500, -2000 )
 local fightpos = vec2.new( -2000, 3000 )
+local corpsepos = vec2.new( 11e3, 5e3 )
 local DIST_THRESHOLD = 2000 -- Distance in units
 local BROADCAST_LENGTH = 150 -- Length in seconds
 local SPAWNLIST_FIRST = {
@@ -58,9 +59,10 @@ local SPAWNLIST_FIGHT = {
    0: mission started
    1: landed on one-winged goddard
    2: first broadcast
-   3: second broadcast
-   4: scavenger goes berserk
-   5: return time
+   3: finish defense
+   4: second broadcast
+   5: finish second defense
+   6: return time
 --]]
 mem.state = 0
 
@@ -168,7 +170,7 @@ function scavenger_enter ()
    s:follow( player.pilot() ) -- TODO probably something better than just following
 
    -- Highlight position
-   systemmrk = system.mrkAdd( pos )
+   systemmrk = system.markerAdd( pos )
    local osd = osd_list ()
    osd[1] = _("Go to the marked location")
    misn.osdCreate( title, osd )
@@ -209,7 +211,7 @@ function scavenger_pos( pos )
       end
       scavenger:comm(_("Commencing broadcast!"))
       scavenger_broadcast( pos )
-      system.mrkRm( systemmrk )
+      system.markerRm( systemmrk )
       scavenger:setHilight( true )
       do_pulse()
 
@@ -254,8 +256,22 @@ function scavenger_broadcast( pos )
          pilot.toggleSpawn(true)
          scavenger:setHilight( false )
          mem.marker = misn.markerMove( mem.marker, fightsys )
+      else
+         scavenger:setHilight( false )
+
+         -- Find location
+         local corpse = pilot.add( "Drone", "Independent", corpsepos, taiomi.young_died() )
+         corpse:disable()
+         corpse:setInvisible(true)
+         system.markerAdd( corpsepos )
+
+         scavenger:comm(_("I got a faint signal! Let's rush there!"))
+         misn.osdCreate( title, {
+            _("Search the marked area"),
+         } )
+         mem.state = 5
+         hook.timer( 1, "scavenger_approachcorpse" )
          return
-      --else
       end
       mem.state = mem.state + 1
       -- Update OSD and marker
@@ -272,6 +288,36 @@ function scavenger_broadcast( pos )
 
    hook.timer( 1, "scavenger_broadcast", pos )
 end
+
+function scavenger_approachcorpse ()
+   local d = player.pos():dist( corpsepos )
+   if d < 3e3 then
+      player.cinematics( true )
+
+      local pp = player.pilot()
+      pp:control()
+      pp:brake()
+      camera.set( scavenger )
+      scavenger:setInvincible(true)
+
+      hook.timer( "corpse00" )
+      return
+   end
+   hook.timer( 1, "scavenger_approachcorpse" )
+end
+
+--[[
+function corpse00 ()
+   hook.timer( 5
+end
+
+function corpse99 ()
+   local pp = player.pilot()
+   pp:control( false )
+   camera.set()
+   player.cinematics( false )
+end
+--]]
 
 function land ()
    local c = spob.cur()
