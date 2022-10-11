@@ -259,7 +259,7 @@ function heartbeat ()
       local af = system.cur():asteroidFields()
       nelly_say(fmt.f(_("I've marked an asteroid field on your overlay. Use {overlaykey} to check it!"),
          {overlaykey=tut.getKey("overlay")}))
-      system.mrkAdd( af[ rnd.rnd(1,#af) ].pos )
+      system.markerAdd( af[ rnd.rnd(1,#af) ].pos )
       hb_state = hb_state+1
    elseif hb_state==2 then
       local af = system.cur():asteroidFields()
@@ -276,7 +276,7 @@ function heartbeat ()
       local pp = player.pilot()
       local a = asteroid.get( pp )
       if a:pos():dist( pp:pos() ) < 50 and a:vel():dist( pp:vel() ) < 15 then
-         system.mrkClear()
+         system.markerClear()
          drilltime()
          a:setTimer( -1 ) -- Get rid of the asteroid
          return -- We're done here

@@ -206,9 +206,9 @@ function enter ()
       player.allowLand( false, _("Zach is analyzing the wormhole signal.") )
 
       if mem.wormholeknown then
-         system.mrkAdd( inwormhole:pos(), _("Wormhole") )
+         system.markerAdd( inwormhole:pos(), _("Wormhole") )
       else
-         system.mrkAdd( inwormhole:pos(), _("Suspicious Signal") )
+         system.markerAdd( inwormhole:pos(), _("Suspicious Signal") )
       end
 
       hook.timer( 5, "zach_say", _("Weird that Icarus didn't follow us through the jump…") )

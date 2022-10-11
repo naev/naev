@@ -608,7 +608,7 @@ end
 function ecc_timer ()
    player.msg(_("Your ship has detected a curious signal originating from inside the system."), true)
    player.autonavReset()
-   mem.sysmarker = system.mrkAdd( eccpos, _("Curious Signal") )
+   mem.sysmarker = system.markerAdd( eccpos, _("Curious Signal") )
    hook.timer( 0.5, "ecc_dist" )
 end
 
@@ -618,7 +618,7 @@ function ecc_dist ()
    local dist = pp:pos():dist( eccpos )
 
    if dist < math.min( pp:detectedDistance(), 3000 ) then
-      system.mrkRm( mem.sysmarker )
+      system.markerRm( mem.sysmarker )
       local spawners = {
          "Za'lek Heavy Drone",
          "Za'lek Light Drone",

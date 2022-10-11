@@ -143,10 +143,10 @@ end
 
 local feral, points
 local function feral_map( first )
-   system.mrkClear()
+   system.markerClear()
    for k,v in ipairs(points) do
       local pos = v + vec2.newP( 300+1500*rnd.rnd(), rnd.angle() )
-      system.mrkAdd( pos, _("Detected Motion")  )
+      system.markerAdd( pos, _("Detected Motion")  )
    end
 
    local msg
@@ -250,7 +250,7 @@ function feral_discovered ()
    pp:brake()
    pp:face(feral)
 
-   system.mrkClear()
+   system.markerClear()
 
    hook.pilot( feral, "hail", "feral_hail" )
 

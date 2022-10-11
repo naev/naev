@@ -176,7 +176,7 @@ function enter ()
    pilot.clear()
    pilot.toggleSpawn(false)
 
-   sysmrk = system.mrkAdd( entrypoint:pos(), _("Supply Ship Entry Point") )
+   sysmrk = system.markerAdd( entrypoint:pos(), _("Supply Ship Entry Point") )
    hook.timer( 3, "approaching" )
 end
 
@@ -233,7 +233,7 @@ function supply5 ()
    add_supplyship( "Koala" )
    add_supplyship( "Koala" )
    player.msg(_("The last supply ships have entered the system!"))
-   system.mrkRm( sysmrk )
+   system.markerRm( sysmrk )
 end
 
 function protestor1 ()

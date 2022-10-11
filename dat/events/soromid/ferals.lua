@@ -117,7 +117,7 @@ function spawn_ferals ()
 
    lastsys = (#jumps==1)
 
-   mem.mrk = system.mrkAdd( pos+vec2.newP( 2000*rnd.rnd(), rnd.angle() ), _("Signal"), 4000 )
+   mem.mrk = system.markerAdd( pos+vec2.newP( 2000*rnd.rnd(), rnd.angle() ), _("Signal"), 4000 )
    player.msg(_("You have detected an unknown signal!"), true)
    player.autonavReset( 1 )
 
@@ -145,7 +145,7 @@ end
 
 function ferals_discovered ()
    if mem.mrk then
-      system.mrkRm( mem.mrk )
+      system.markerRm( mem.mrk )
       mem.mrk = nil
    end
    for k,p in ipairs(plts) do

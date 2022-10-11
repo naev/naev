@@ -476,7 +476,7 @@ function cutscene_timer ()
          mem.cuttimeout = nil
       end
       if mem.sysmarker then
-         system.mrkRm( mem.sysmarker )
+         system.markerRm( mem.sysmarker )
          mem.sysmarker = nil
       end
    else
@@ -491,7 +491,7 @@ end
 
 function cutscene_timeout ()
    player.msg(_("#pYour ship has detected a curious signal originating from inside the system.#0"))
-   mem.sysmarker = system.mrkAdd( pscavB:pos(), _("Curious Signal") )
+   mem.sysmarker = system.markerAdd( pscavB:pos(), _("Curious Signal") )
    mem.cuttimeout = nil
 end
 

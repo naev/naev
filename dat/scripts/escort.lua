@@ -250,10 +250,10 @@ function escort.spawn( pos )
    -- Mark destination
    local scur = system.cur()
    if mem._escort.nextsys ~= scur then
-      system.mrkAdd( jump.get( scur, mem._escort.nextsys ):pos() )
+      system.markerAdd( jump.get( scur, mem._escort.nextsys ):pos() )
    else
       if mem._escort.destspob then
-         system.mrkAdd( mem._escort.destspob:pos() )
+         system.markerAdd( mem._escort.destspob:pos() )
       end
    end
 

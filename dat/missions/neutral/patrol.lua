@@ -173,7 +173,7 @@ end
 
 function jumpout ()
    if mem.mark ~= nil then
-      system.mrkRm( mem.mark )
+      system.markerRm( mem.mark )
       mem.mark = nil
    end
 
@@ -191,7 +191,7 @@ end
 
 function land ()
    if mem.mark ~= nil then
-      system.mrkRm( mem.mark )
+      system.markerRm( mem.mark )
       mem.mark = nil
    end
 
@@ -269,7 +269,7 @@ function timer ()
       local point_pos = mem.points[1]:pos()
 
       if mem.mark == nil then
-         mem.mark = system.mrkAdd( point_pos, _("Patrol Point") )
+         mem.mark = system.markerAdd( point_pos, _("Patrol Point") )
       end
 
       if player_pos:dist( point_pos ) < 500 then
@@ -288,7 +288,7 @@ function timer ()
          misn.osdCreate( _("Patrol"), mem.osd_msg )
          misn.osdActive(2)
          if mem.mark ~= nil then
-            system.mrkRm( mem.mark )
+            system.markerRm( mem.mark )
             mem.mark = nil
          end
       end

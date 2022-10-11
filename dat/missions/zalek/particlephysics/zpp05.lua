@@ -150,7 +150,7 @@ function enter ()
       pextra:setDir( a+math.pi )
    end
 
-   system.mrkAdd( pos, _("Experiment Site") )
+   system.markerAdd( pos, _("Experiment Site") )
 
    hook.timer( 5, "heartbeat" )
    hook.update( "update" )
@@ -318,7 +318,7 @@ function heartbeat ()
    elseif stage==17 then
       pilot.comm(_("Noona"), _("Come back to Katar I."))
       misn.osdActive(2)
-      system.mrkClear()
+      system.markerClear()
       misn.markerAdd( mainpnt )
       return
    end
