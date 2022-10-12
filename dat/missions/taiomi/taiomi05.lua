@@ -223,6 +223,7 @@ function scavenger_pos( pos )
 end
 
 local enemies = {}
+local corpse
 function scavenger_broadcast( pos )
    broadcast_timer = broadcast_timer + 1
 
@@ -260,7 +261,7 @@ function scavenger_broadcast( pos )
          scavenger:setHilight( false )
 
          -- Find location
-         local corpse = pilot.add( "Drone", "Independent", corpsepos, taiomi.young_died() )
+         corpse = pilot.add( "Drone", "Independent", corpsepos, taiomi.young_died() )
          corpse:disable()
          corpse:setInvisible(true)
          system.markerAdd( corpsepos )
@@ -300,15 +301,57 @@ function scavenger_approachcorpse ()
       camera.set( scavenger )
       scavenger:setInvincible(true)
 
-      hook.timer( "corpse00" )
+      local spos = scavenger:pos()
+      local cpos = corpse:pos()
+      local pos = cpos - vec2.newP( 100, (cpos-spos):angle() )
+      scavenger:taskClear()
+      scavenger:moveTo( pos )
+      scavenger:face( cpos )
+
+      hook.timer( 5, "corpse00" )
       return
    end
    hook.timer( 1, "scavenger_approachcorpse" )
 end
 
---[[
+local corpse_pir
 function corpse00 ()
-   hook.timer( 5
+   vn.clear()
+   vn.scene()
+   --vn.music("") -- TODO some sad music
+   local s = vn.newCharacter( taiomi.vn_scavenger() )
+   vn.transition( taiomi.scavenger.transition )
+
+   vn.na(_("In the vast darkness of space, you make out a small white speck. Instinctively knowing the worst has come to pass, scavenger slows down and gets closer to take a good look."))
+   s(_([[""]]))
+
+   vn.done( taiomi.scavenger.transition )
+   vn.run()
+
+   local pos = corpse:pos() + vec2.newP( 3000, rnd.angle() )
+   corpse_pir = pilot.add( "Pirate Hyena", "Marauder", pos )
+   corpse_pir:control()
+   corpse_pir:attack( scavenger )
+   hook.pilot( corpse_pir, "death", "pirate_death" )
+
+   hook.timer( 5, "corpse01" )
+end
+
+function corpse01 ()
+   scavenger:intrinsicSet( "fwd_damage", 500 )
+   scavenger:intrinsicSet( "tur_damage", 500 )
+   scavenger:intrinsicSet( "launch_damage", 500 )
+   scavenger:taskClear()
+   scavenger:attack( corpse_pir )
+end
+
+function pirate_death ()
+   scavenger:taskClear()
+   local ppos = player.pos()
+   local spos = scavenger:pos()
+   local pos = spos + vec2.newP( 10e3, (spos-ppos):angle() )
+   scavenger:moveto( pos )
+   hook.timer( 5, "corpse99" )
 end
 
 function corpse99 ()
@@ -316,8 +359,9 @@ function corpse99 ()
    pp:control( false )
    camera.set()
    player.cinematics( false )
+
+   scavenger:effectAdd( "Fade-Out" )
 end
---]]
 
 function land ()
    local c = spob.cur()
