@@ -67,6 +67,7 @@ dat/effects/bloodlust.xml
 dat/effects/crippling_plasma.xml
 dat/effects/ethereal.xml
 dat/effects/fadein.xml
+dat/effects/fadeout.xml
 dat/effects/feral_rage_i.xml
 dat/effects/hypergate_enter.xml
 dat/effects/hypergate_exit.xml
@@ -2498,6 +2499,7 @@ dat/bkg/taiomi.lua
 dat/board.lua
 dat/comm.lua
 dat/common.lua
+dat/effects/lua/fadeout.lua
 dat/effects/lua/hypergate_enter.lua
 dat/effects/lua/wormhole_enter.lua
 dat/effects/lua/wormhole_exit.lua
