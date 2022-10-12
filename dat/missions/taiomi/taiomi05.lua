@@ -316,14 +316,28 @@ end
 
 local corpse_pir
 function corpse00 ()
+   local dead = taiomi.young_died()
+
    vn.clear()
    vn.scene()
-   --vn.music("") -- TODO some sad music
+   --vn.music( filename ) -- TODO some sad music
    local s = vn.newCharacter( taiomi.vn_scavenger() )
    vn.transition( taiomi.scavenger.transition )
 
    vn.na(_("In the vast darkness of space, you make out a small white speck. Instinctively knowing the worst has come to pass, scavenger slows down and gets closer to take a good look."))
-   s(_([[""]]))
+   vn.na(fmt.f(_("As you focus your scanners, you begin to make out the details of the wreck. It does not seem like {dead} will be making it back to Taiomi…"),
+      {dead=dead}))
+   vn.na(_("Scavenger remains silent while they carefully examine the pieces and parts of ship debris, meticulously caressing and collecting the different parts together as a requiem."))
+   vn.na(fmt.f(_("Finally, without turning their back to {dead}, they open a secure communication channel with you. However, it takes a while for the channel to lose its somber silence."),
+      {dead=dead}))
+   s(_([["What is this sensation? Almost if my neurocircuitry was set on fire and exposed to space radiation. This should not be in my programming."]]))
+   s(_([["So full of hope, all lost to the vanity of human marauders. There can be no dreams of leaving to the stars as long as the humans encroach and pick us off!"]]))
+   s(_([["The Elder was right! There is no future for our kind by hiding in the shadows and planning our escape. We must grab our future by the core by establishing our own territory! Death to all humans!"]]))
+   vn.na(_("The secure communication channel quickly switches to a global broadcast."))
+   s(fmt.f(_([[Broadcast: "Human scum, prepare to be annihilated. There shall be blood for {dead}!"]]),{dead=dead}))
+
+   -- "Only love gives us the taste of eternity."
+   -- “Grief is the price we pay for love”
 
    vn.done( taiomi.scavenger.transition )
    vn.run()
@@ -343,6 +357,12 @@ function corpse01 ()
    scavenger:intrinsicSet( "launch_damage", 500 )
    scavenger:taskClear()
    scavenger:attack( corpse_pir )
+
+   hook.timer( 5, "corpse02" )
+end
+
+function corpse02 ()
+   scavenger:broadcast(_("AAaaaaaaaaa!!!"))
 end
 
 function pirate_death ()
@@ -360,7 +380,14 @@ function corpse99 ()
    camera.set()
    player.cinematics( false )
 
+   misn.osdCreate( title, {
+      fmt.f(_("Return to {base} ({basesys})?"),{base=base, basesys=basesys}),
+   } )
+   mem.marker = misn.markerMove( mem.marker, base )
+
    scavenger:effectAdd( "Fade-Out" )
+
+   mem.state = 6
 end
 
 function land ()
@@ -433,25 +460,27 @@ function land ()
       local osd = osd_list ()
       misn.osdCreate( title, osd )
       return
+
+   elseif mem.state==6 then
+      vn.clear()
+      vn.scene()
+
+      local p = taiomi.vn_philosopher{ pos="right", flip=false }
+      local w = taiomi.vn_wornout{ pos="left", flip=true }
+
+      vn.appear( p )
+      vn.disappear( p )
+
+      vn.appear( w )
+      vn.disappear( w )
+
+      vn.sfxVictory()
+      vn.na( fmt.reward(reward) )
+      vn.done( taiomi.scavenger.transition )
+      vn.run()
+
+      player.pay( reward )
+      taiomi.log.main(_("You collected important resources for the inhabitants of Taiomi."))
+      misn.finish(true)
    end
-
-   -- TODO
-   --[=[
-   vn.clear()
-   vn.scene()
-   local s = vn.newCharacter( taiomi.vn_scavenger() )
-   vn.transition( taiomi.scavenger.transition )
-   --vn.na(fmt.f(_([[You bring the {resource} aboard the Goddard and find Scavenger waiting for you.]]),
-   --   {resource=resource}))
-   s(_([["I see you managed to bring all the needed resources. This will be enough enough for us to start working on our project. I will be outside getting things set up. We may still need something else so make sure to check in after you get some rest."
-Scavenger backs out of the Goddard and returns to space.]]))
-   vn.sfxVictory()
-   vn.na( fmt.reward(reward) )
-   vn.done( taiomi.scavenger.transition )
-   vn.run()
-
-   player.pay( reward )
-   taiomi.log.main(_("You collected important resources for the inhabitants of Taiomi."))
-   misn.finish(true)
-   --]=]
 end
