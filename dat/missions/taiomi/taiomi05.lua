@@ -22,8 +22,7 @@ local lmisn = require "lmisn"
 local pilotai = require "pilotai"
 local fleet = require "fleet"
 local pulse = require "luaspfx.pulse"
---local equipopt = require "equipopt"
---local luatk = require "luatk"
+local tut = require "common.tutorial"
 
 local reward = taiomi.rewards.taiomi05
 local title = _("Missing Drones")
@@ -320,7 +319,7 @@ function corpse00 ()
 
    vn.clear()
    vn.scene()
-   --vn.music( filename ) -- TODO some sad music
+   vn.music( "snd/sounds/songs/sad_drama.ogg" )
    local s = vn.newCharacter( taiomi.vn_scavenger() )
    vn.transition( taiomi.scavenger.transition )
 
@@ -465,8 +464,15 @@ function land ()
       vn.clear()
       vn.scene()
 
-      local p = taiomi.vn_philosopher{ pos="right", flip=false }
-      local w = taiomi.vn_wornout{ pos="left", flip=true }
+      local p = taiomi.vn_philosopher{ pos="farright", flip=false }
+      local w = taiomi.vn_wornout{ pos="farleft", flip=true }
+      local sai = vn.newCharacter( tut.vn_shipai() )
+
+      vn.na(fmt.f(_("You return to the {base} to try to process what happened. "),
+         {base=base}))
+
+      vn.appear( sai, tut.shipai.transition )
+      vn.disappear( sai, tut.shipai.transition )
 
       vn.appear( p )
       vn.disappear( p )
