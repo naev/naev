@@ -39,6 +39,7 @@ static int vectorL_setP( lua_State *L );
 static int vectorL_distance( lua_State *L );
 static int vectorL_distance2( lua_State *L );
 static int vectorL_mod( lua_State *L );
+static int vectorL_angle( lua_State *L );
 static int vectorL_normalize( lua_State *L );
 static const luaL_Reg vector_methods[] = {
    { "new", vectorL_new },
@@ -60,6 +61,7 @@ static const luaL_Reg vector_methods[] = {
    { "dist", vectorL_distance },
    { "dist2", vectorL_distance2 },
    { "mod", vectorL_mod },
+   { "angle", vectorL_angle },
    { "normalize", vectorL_normalize },
    {0,0}
 }; /**< Vector metatable methods. */
@@ -664,6 +666,19 @@ static int vectorL_mod( lua_State *L )
 {
    vec2 *v = luaL_checkvector(L,1);
    lua_pushnumber(L, VMOD(*v));
+   return 1;
+}
+
+/**
+ * @brief Gets the angle of the vector.
+ *    @luatparam Vec2 v Vector to get angle of.
+ *    @luatreturn number The angle of the vector.
+ * @luafunc angle
+ */
+static int vectorL_angle( lua_State *L )
+{
+   vec2 *v = luaL_checkvector(L,1);
+   lua_pushnumber(L, VANGLE(*v));
    return 1;
 }
 
