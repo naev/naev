@@ -468,17 +468,50 @@ function land ()
       local w = taiomi.vn_wornout{ pos="farleft", flip=true }
       local sai = vn.newCharacter( tut.vn_shipai() )
 
-      vn.na(fmt.f(_("You return to the {base} to try to process what happened. "),
-         {base=base}))
+      vn.na(fmt.f(_("You return to the {base} to try to process what happened… Not only was the life of {dead} lost, but Scavenger has also gone missing in their thirst for revenge…"),
+         {base=base, dead=taiomi.young_died()}))
 
       vn.appear( sai, tut.shipai.transition )
+      sai(fmt.f(_([[While you are pondering to yourself, {shipai} materializes besides you.
+"I recorded the last communication with Scavenger. You may find it of use."]]),
+         {shipai=tut.ainame()}))
+      sai(fmt.f(_([[As you get a notification of nearby motion, {shipai} dematerializes.]]),
+         {shipai=tut.ainame()}))
       vn.disappear( sai, tut.shipai.transition )
 
-      vn.appear( p )
-      vn.disappear( p )
+      vn.appear( {p,w} )
+      vn.music( "snd/sounds/songs/sad_drama.ogg" ) -- TODO necessary?
+      vn.na(_("You hear the squeal of metal rubbing on metal as Elder and Philosopher make their way haphazardly through the ship. They get close to you until they fill your entire field of vision."))
+      w(_([[After what seems an eternity, Elder begins to broadcast slow and solemnly over an audio channel.
+"It seems like Scavenger has not returned."]]))
+      vn.menu{
+         {_([["They have gone missing."]]), "01_cont"},
+         {fmt.f(_([["We found {died}…"]]),{died=taiomi.young_died()}), "01_cont"},
+         {_([[…]]), "01_silent"},
+      }
 
-      vn.appear( w )
+      vn.label("01_missing")
+      vn.na(_("You explain the events that happened leading up to finding {died}'s body and Scavenger deciding to take revenge in their own hands."))
+      vn.jump("01_cont")
+
+      vn.label("01_silent")
+      vn.na(_("You play the recording of the events that happened leading up to finding {died}'s body and Scavenger deciding to take revenge in their own hands."))
+      vn.jump("01_cont")
+
+      vn.label("01_cont")
+      w(_([[After a bout of silence, Elder speaks.
+"The only way to be safe is to carve our own space. If we are to be decimated, I would rather go down fighting than hunted."]]))
+      w(_([["It seems like Scavenger has finally seen the way. Without security, we have no freedom. We have to refocus on eliminating all hostiles to ensure the safety of our young ones and continuity of our species!"]]))
+      w(_([[They turn to you.
+"I have seen you have been helping Scavenger. If you wish to further help us secure our freedom, communicate with me out in space. I do not do well in closed spaces."]]))
+      w(_([[After their last words, Elder once again begins the painstaking process of getting out of the Goddard as a chorus of metal scratching sounds echoes throughout the ship.]]))
       vn.disappear( w )
+
+      p(_([[You are left alone with Philosopher, who suddenly breaks the silence.
+"It seems like things are changing faster than expected. We may seem like rational machines, but that that is a mere illusion. I do not believe it is possible for there to be sentience without some irrationality."]]))
+      p(_([["Before you left, Scavenger told me to follow-up. Although I am not much of mundane pragmatism, my musing depend on our survival. Please take this reward for helping Scavenger. If you are looking for more work, I recommend you see Elder. I can not provide anything else."]]))
+      p(_([[Philosopher takes their leave, exiting the ship in a slightly more elegant way than Elder.]]))
+      vn.disappear( p )
 
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
@@ -486,7 +519,7 @@ function land ()
       vn.run()
 
       player.pay( reward )
-      taiomi.log.main(_("You collected important resources for the inhabitants of Taiomi."))
+      taiomi.log.main(_("You found out that {died} was destroyed by marauders. This caused Scavenger to go into a rage and disappear into deeper space to seek revenge. Back at Taiomi, Elder offered to give you more work."))
       misn.finish(true)
    end
 end
