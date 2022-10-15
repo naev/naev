@@ -194,7 +194,7 @@ function check_location( pos )
 end
 
 local function do_pulse ()
-   pulse( scavenger:pos(), scavenger:vel(), {col={0.3,0.8,0.1,0.5}, size=1000} )
+   pulse( scavenger:pos(), scavenger:vel(), {size=1000} )
 end
 
 local broadcast_timer, broadcast_spawned, broadcast_spawnlist
