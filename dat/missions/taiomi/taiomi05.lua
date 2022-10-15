@@ -256,7 +256,7 @@ function scavenger_broadcast( pos )
          scavenger:comm(_("Nothing… Let us move on."))
          pilot.toggleSpawn(true)
          scavenger:setHilight( false )
-         mem.marker = misn.markerMove( mem.marker, fightsys )
+         misn.markerMove( mem.marker, fightsys )
          mem.state = 3
       else
          scavenger:setHilight( false )
@@ -292,7 +292,7 @@ end
 
 function scavenger_approachcorpse ()
    local d = player.pos():dist( corpsepos )
-   if d < 3e3 then
+   if d < 2e3 then
       player.cinematics( true )
 
       local pp = player.pilot()
@@ -305,10 +305,10 @@ function scavenger_approachcorpse ()
       local cpos = corpse:pos()
       local pos = cpos - vec2.newP( 100, (cpos-spos):angle() )
       scavenger:taskClear()
-      scavenger:moveTo( pos )
+      scavenger:moveto( pos )
       scavenger:face( cpos )
 
-      hook.timer( 5, "corpse00" )
+      hook.timer( 15, "corpse00" )
       return
    end
    hook.timer( 1, "scavenger_approachcorpse" )
@@ -383,7 +383,7 @@ function corpse99 ()
    misn.osdCreate( title, {
       fmt.f(_("Return to {base} ({basesys})?"),{base=base, basesys=basesys}),
    } )
-   mem.marker = misn.markerMove( mem.marker, base )
+   misn.markerMove( mem.marker, base )
 
    scavenger:effectAdd( "Fade-Out" )
 
@@ -454,7 +454,7 @@ function land ()
       vn.done( taiomi.scavenger.transition )
       vn.run()
 
-      mem.marker = misn.markerMove( mem.marker, firstsys )
+      misn.markerMove( mem.marker, firstsys )
       mem.state = 1 -- advance state
 
       local osd = osd_list ()
@@ -466,8 +466,8 @@ function land ()
       vn.scene()
 
       local p = taiomi.vn_philosopher{ pos="farright", flip=false }
-      local w = taiomi.vn_wornout{ pos="farleft", flip=true }
-      local sai = vn.newCharacter( tut.vn_shipai() )
+      local w = taiomi.vn_elder{ pos="farleft", flip=true }
+      local sai = tut.vn_shipai()
 
       vn.na(fmt.f(_("You return to the {base} to try to process what happened… Not only was the life of {dead} lost, but Scavenger has also gone missing in their thirst for revenge…"),
          {base=base, dead=taiomi.young_died()}))
@@ -518,6 +518,9 @@ function land ()
       vn.na( fmt.reward(reward) )
       vn.done( taiomi.scavenger.transition )
       vn.run()
+
+      -- Force name known just in case
+      var.push( "taiomi_drone_elder", true )
 
       player.pay( reward )
       taiomi.log.main(_("You found out that {died} was destroyed by marauders. This caused Scavenger to go into a rage and disappear into deeper space to seek revenge. Back at Taiomi, Elder offered to give you more work."))

@@ -4,9 +4,10 @@ function add( p )
 end
 
 function remove( p )
-   if player.pilot()~=p then
+   if player.pilot()~=p and p:exists() then
       p:rm()
+   else
+      p:setInvincible(false)
+      p:setInvisible(false)
    end
-   p:setInvincible(false)
-   p:setInvisible(false)
 end
