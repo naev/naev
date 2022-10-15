@@ -338,7 +338,7 @@ Scavenger goes silent for a second, as if thinking.
             vn.jump("menu_ask")
          end
       end
-   elseif progress == 4+math.huge and naev.claimTest( {system.get("Bastion"), system.get("Gamel")}, true ) then
+   elseif progress == 4 and naev.claimTest( {system.get("Bastion"), system.get("Gamel")}, true ) then
       local dead = taiomi.young_died()
       local alive = taiomi.young_alive()
       vn.na(_([[You initiate a communication channel and immediately notice that something feels… off.]]))
