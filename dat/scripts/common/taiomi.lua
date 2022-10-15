@@ -10,8 +10,8 @@ local taiomi = {
       image = 'gfx/ship/drone/drone_hyena_comm.webp',
       colour = nil,
    },
-   wornout = {
-      name = _("Worn-out Drone"),
+   elder = {
+      name = _("Elder Drone"),
       portrait = nil,
       image = 'gfx/ship/drone/drone_comm.webp',
       colour = nil,
@@ -85,11 +85,15 @@ function taiomi.vn_scavenger( params )
             color=taiomi.scavenger.colour,
          }, params) )
 end
-function taiomi.vn_wornout( params )
-   return vn.Character.new( taiomi.wornout.name,
+function taiomi.vn_elder( params )
+   local name = taiomi.elder.name
+   if not var.peek( "taiomi_drone_elder" ) then
+      name = _("Worn-out Drone")
+   end
+   return vn.Character.new( name,
          tmerge( {
-            image=taiomi.wornout.image,
-            color=taiomi.wornout.colour,
+            image=taiomi.elder.image,
+            color=taiomi.elder.colour,
          }, params) )
 end
 function taiomi.vn_philosopher( params )

@@ -21,7 +21,7 @@ local taiomi = require 'common.taiomi'
 local tut = require "common.tutorial"
 
 local progress, scavenger_missing
-local d_loiter, d_philosopher, d_scavenger, d_wornout, d_young_a, d_young_b -- Drone pilots.
+local d_loiter, d_philosopher, d_scavenger, d_elder, d_young_a, d_young_b -- Drone pilots.
 
 function create ()
    --[[
@@ -60,15 +60,15 @@ function create ()
    hook.pilot( d_philosopher, "hail", "hail_philosopher" )
 
    -- Worn-out Drone
-   d_wornout = addDrone( "Drone", vec2.new(-500,-300), _("Worn-out Drone") )
+   d_elder = addDrone( "Drone", vec2.new(-500,-300), _("Worn-out Drone") )
    if var.peek( "taiomi_drone_elder" ) then
-      d_wornout:rename( _("Elder Drone") )
+      d_elder:rename( _("Elder Drone") )
    end
-   d_wornout:setFriendly(false) -- Always neutral
+   d_elder:setFriendly(false) -- Always neutral
    if progress >= 5 then
-      d_wornout:setHilight(true)
+      d_elder:setHilight(true)
    end
-   hook.pilot( d_wornout, "hail", "hail_wornout" )
+   hook.pilot( d_elder, "hail", "hail_elder" )
 
    -- Younglings that follow around the player up until taiomi04
    if progress < 4 and not (progress == 3 and taiomi.inprogress()) then
@@ -155,7 +155,7 @@ function hail_philosopher ()
    player.commClose()
 end
 
-function hail_wornout( p )
+function hail_elder( p )
    if progress < 5 then
       p:comm(_("The drone seems fairly beaten and immobile. It slightly moves to acknowledge your presence but nothing more."))
       player.commClose()
@@ -164,7 +164,7 @@ function hail_wornout( p )
 
    vn.clear()
    vn.scene()
-   local d = vn.newCharacter( taiomi.vn_wornout() )
+   local d = vn.newCharacter( taiomi.vn_elder() )
    vn.transition()
    vn.na(_("The drone seems fairly beaten and immobile. You can see some slight movement when you begin communication."))
 
@@ -463,7 +463,7 @@ They fidget a bit in place.
       {namea=taiomi.younga.name, nameb=taiomi.youngb.name}) )
    vn.func( function ()
       var.push( "taiomi_drone_elder", true )
-      d_wornout:rename(_("Elder Drone"))
+      d_elder:rename(_("Elder Drone"))
       lastq = "others"
    end )
    vn.jump("menu_ask")
