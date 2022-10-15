@@ -162,18 +162,34 @@ function hail_wornout( p )
       return
    end
 
-   --[[
    vn.clear()
    vn.scene()
    local d = vn.newCharacter( taiomi.vn_wornout() )
    vn.transition()
    vn.na(_("The drone seems fairly beaten and immobile. You can see some slight movement when you begin communication."))
-   d("TODO")
 
+   if progress == 5*math.huge and naev.claimTest( {system.get("Bastion"), system.get("Gamel")}, true ) then
+      -- TODO
+      vn.jump("menu")
+   else
+      d(_([["I still have not prepared a target."]]))
+      vn.jump("menu")
+   end
+
+   vn.label("menu")
+   vn.menu( function ()
+      -- Set up main options
+      local opts = {
+         {_("Leave."),"leave"},
+      }
+      return opts
+   end )
+
+   vn.label("leave")
+   vn.na(_("You take your leave."))
    vn.done()
    vn.run()
    player.commClose()
-   --]]
 end
 
 function hail_youngling( p )
