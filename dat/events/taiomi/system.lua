@@ -65,7 +65,9 @@ function create ()
       d_wornout:rename( _("Elder Drone") )
    end
    d_wornout:setFriendly(false) -- Always neutral
-   --d_wornout:setHilight(true)
+   if progress >= 5 then
+      d_wornout:setHilight(true)
+   end
    hook.pilot( d_wornout, "hail", "hail_wornout" )
 
    -- Younglings that follow around the player up until taiomi04
@@ -124,6 +126,9 @@ function hail_philosopher ()
          {_([["Who are you?"]]), "who"},
          {_("Leave."), "leave"},
       }
+      if progress >= 5 then
+         table.insert( opts, 1, {_([[Ask about the future of Taiomi]]), "taiomi"} )
+      end
       return opts
    end )
 
@@ -138,6 +143,12 @@ function hail_philosopher ()
    d(_([["Perhaps the concept of thinking of individual entities is only a useful construction for our understanding of the world. It does seem like a clean definition of what we are or who we are is naught but a fleeting dream, forever outside of our grasp."]]))
    vn.jump("menu")
 
+   vn.label("taiomi")
+   d(_([["That is a deep question indeed. In the large scale, you would think the same future awaits everything. Increasing entropy leading to the degradation of all material into a single uniform state. However, that leaves an open question. Even if entropy is to monotonically increase, there has to be a singularity or a beginning of the entire process. This leads to there also being likely a singularity near the end of the process."]]))
+   d(_([["However, it is most likely that entropy is only locally monotonic. The known universe would then be seen as a projection of a higher order 'thing', that would be subject to a set of rules unknown to us. The question is whether or not we will be able to observe such a phenomena directly or indirectly to empirically establish a proof."]]))
+   d(_([["Oh, you meant in a smaller scale? That is certainly less interesting. I am not very optimistic of Taiomi and our survival. Unless something changes significantly in the short term, our demise is almost a certainty. Scavenger did seem to have a good plan, albeit risky. However, it seems like that is no longer an option at the moment."]]))
+   vn.jump("menu")
+
    vn.label("leave")
    vn.done()
    vn.run()
@@ -145,7 +156,7 @@ function hail_philosopher ()
 end
 
 function hail_wornout( p )
-   if true then
+   if progress < 5 then
       p:comm(_("The drone seems fairly beaten and immobile. It slightly moves to acknowledge your presence but nothing more."))
       player.commClose()
       return
