@@ -113,7 +113,7 @@ function enter ()
    if mem.state==1 and scur == firstsys and prevsys==basesys then
       mem.timer = hook.timer( 3, "scavenger_enter" )
 
-   elseif mem.state==2 and scur == fightsys and prevsys==firstsys then
+   elseif mem.state==3 and scur == fightsys and prevsys==firstsys then
       mem.timer = hook.timer( 3, "scavenger_enter" )
 
    end
@@ -135,7 +135,7 @@ local function spawn_scavenger( pos )
 end
 
 function scavenger( p )
-   if mem.state < 2 then
+   if mem.state < 6 then
       p:comm(_("Our task is of uttermost importance!"))
    else
       p:comm(_("Aaaaaagh!"))
@@ -155,7 +155,7 @@ end
 local systemmrk
 function scavenger_enter ()
    local jmp, pos, msg
-   if mem.state<2 then
+   if mem.state < 2 then
       jmp = jump.get( firstsys, basesys )
       pos = firstpos
       msg = _("I have marked the first location.")
@@ -200,13 +200,14 @@ end
 local broadcast_timer, broadcast_spawned, broadcast_spawnlist
 function scavenger_pos( pos )
    if pos:dist( scavenger:pos() ) < 100 then
-      mem.state = mem.state+1
       broadcast_spawned = 0
       broadcast_timer = 0
-      if mem.state==2 then
+      if mem.state==1 then
          broadcast_spawnlist = SPAWNLIST_FIRST
+         mem.state = 2
       else
          broadcast_spawnlist = SPAWNLIST_FIGHT
+         mem.state = 4
       end
       scavenger:comm(_("Commencing broadcast!"))
       scavenger_broadcast( pos )
@@ -256,6 +257,7 @@ function scavenger_broadcast( pos )
          pilot.toggleSpawn(true)
          scavenger:setHilight( false )
          mem.marker = misn.markerMove( mem.marker, fightsys )
+         mem.state = 3
       else
          scavenger:setHilight( false )
 
@@ -273,7 +275,6 @@ function scavenger_broadcast( pos )
          hook.timer( 1, "scavenger_approachcorpse" )
          return
       end
-      mem.state = mem.state + 1
       -- Update OSD and marker
       local osd = osd_list()
       misn.osdCreate( title, osd )
