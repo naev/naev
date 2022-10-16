@@ -56,7 +56,7 @@ function create ()
 Only ships to which you or your fleet deal over 50% damage will count towards the number of ships destroyed.]]),
       {num = NUMBER_SHIPS, sys = fightsys} ))
    misn.setReward( fmt.credits(reward) )
-   mem.marker = misn.markerAdd( base )
+   mem.marker = misn.markerAdd( fightsys )
 
    osd()
 
@@ -76,7 +76,7 @@ function pilot_death( p, _attacker )
    if pt.player >= pt.nonplayer then
       mem.killed = mem.killed + 1
       osd()
-      if (mem.killed >= NUMBER_SHIPS) and not mem.marker then
+      if (mem.killed >= NUMBER_SHIPS) then
          mem.marker = misn.markerAdd( base )
       end
    end
