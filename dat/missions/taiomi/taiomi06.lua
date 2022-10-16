@@ -129,12 +129,26 @@ function land ()
    e(fmt.f(_([["How was the fighting? Cleaning {sys} is an important first step for our security."]]),
       {sys=fightsys}))
    vn.menu{
-      {_([[]]), ""},
-      {_([[…]]), ""},
+      {_([["It was a cakewalk."]]), "01_cakewalk"},
+      {_([["Is there no other way?"]]), "01_other"},
+      {_([[…]]), "01_cont"},
    }
 
+   vn.label("01_cakewalk")
+   e(_([["It seems that the best way to deal with humans is another human."]]))
+   vn.jump("01_cont")
+
+   vn.label("01_other")
+   e(_([["There is no other option. Our numbers dwindle, picked off by stray ships. Only establishing a secure zone will allow us to survive."]]))
+   vn.jump("01_cont")
+
+   vn.label("01_cont")
+   e(_([["I would hope that you have bought us enough time for a while. However, usually space is not kind to us. We may need to move again soon."]]))
+   e(_([["I am not used to dealing with humans, but Philosopher told me it was customary in capitalistic societies to provide rewards in exchange for services. Seems like a waste of resources, but I shall comply. Please take some credits we scrounged up from derelict ships."]]))
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )
+   e(_([["I shall be outside planning our next steps."]]))
+   vn.na(_([[Elder scratches their way out of the Goddard.]]))
    vn.run()
 
    player.pay( reward )
