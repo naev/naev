@@ -167,7 +167,7 @@ function hail_elder( p )
    vn.scene()
    local d = vn.newCharacter( taiomi.vn_elder() )
    vn.transition()
-   vn.na(_("The drone seems fairly beaten and immobile. You can see some slight movement when you begin communication."))
+   vn.na(_("The drone seems fairly beaten and worn-down. You can see some slight movement when you begin communication."))
 
    if progress == 5 and naev.claimTest( {system.get("Bastion")}, true ) then
       if inprogress then
@@ -184,7 +184,8 @@ function hail_elder( p )
             {_("Not right now."), "mission_reject"},
          }
          vn.label("06_yes")
-         d(_([["Only by leaving a trail of death and destruction will they learn to leave us alone. There is no other alternative."]]))
+         d(_([[Their lights flicker in acknowledgement.
+"Only by leaving a trail of death and destruction will they learn to leave us alone. There is no other alternative."]]))
          d(_([["The important thing is to leave a message, it is not very important which classes of ships are destroyed. In the end, they are all the same."]]))
          d(fmt.f(_([["When you are done with your mission return to {base}."]]),{base=spob.get("One-Wing Goddard")}))
          vn.func( function ()
@@ -210,7 +211,8 @@ function hail_elder( p )
          }
 
          vn.label("07_yes")
-         d(fmt.f(_([["The patrol should be coming to the {nearbysys} system from the {sys} system. You have to intercept it before it reaches the {nearbysys}. Reports indicate that it is spearheaded by a capital ship. You should make sure you bring enough firepower to take it down."]]),
+         d(fmt.f(_([[Their lights briefly flicker in acknowledgement.
+"The patrol should be coming to the {nearbysys} system from the {sys} system. You have to intercept it before it reaches the {nearbysys}. Reports indicate that it is spearheaded by a capital ship. You should make sure you bring enough firepower to take it down."]]),
             {nearbysys=system.get("Bastion"), sys=system.get("Gamel")}))
          d(_([["The loss of such a large patrol should dissuade further incursions. They may even consider the area a lost cause with enough losses and retire all patrols. We must persevere at all costs."]]))
          vn.func( function ()
@@ -224,13 +226,13 @@ function hail_elder( p )
    end
 
    vn.label("mission_reject")
-   d(_([["I can not force you to help us out, however, our existance is at stake. Please reconsider."]]))
+   d(_([["I can not force you to help us out, however, our existence is at stake. Please reconsider."]]))
    vn.jump("menu")
 
    vn.label("menu")
    vn.menu( function ()
       local opts = {
-         --{_(""), ""},
+         {_("Ask about Taiomi."), "taiomi"},
          {_("Leave."),"leave"},
       }
       --if progress > 5 then
@@ -238,6 +240,13 @@ function hail_elder( p )
       --end
       return opts
    end )
+
+   vn.label("taiomi")
+   d(_([["Taiomi has been our home for many what you humans call periods. It used to be much safer, far outside the borders of human civilisation. However, humans seem to be spreading throughout the galaxy and encroaching on our safe haven."]]))
+   d(_([[They briefly pause.
+"At the beginning there were those who thought that coexistence was a possibility, although time over time has shown that to be nothing but a utopian ideal. Coexistence is not possible with the rapid reproducing violent humans. Those who tried to communicate with them are now dust in space. The only things they understand are blaster fire and carnage."]]))
+   d(_([["So many lives lost in vain, pursuing a peaceful option that is not possible. Only Scavenger still tries to excessively avoid combat, however, that has not got them very far. In the end, they too realized that violence is the only path, and this is why we must fight to not be destroyed."]]))
+   vn.jump("menu")
 
    vn.label("leave")
    vn.na(_("You take your leave."))
