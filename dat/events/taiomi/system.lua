@@ -161,6 +161,7 @@ function hail_elder( p )
       player.commClose()
       return
    end
+   local inprogress = taiomi.inprogress()
 
    vn.clear()
    vn.scene()
@@ -168,20 +169,39 @@ function hail_elder( p )
    vn.transition()
    vn.na(_("The drone seems fairly beaten and immobile. You can see some slight movement when you begin communication."))
 
-   if progress == 5*math.huge and naev.claimTest( {system.get("Bastion"), system.get("Gamel")}, true ) then
-      -- TODO
-      vn.jump("menu")
+   if progress == 5*math.huge and naev.claimTest( {system.get("Bastion")}, true ) then
+      if inprogress then
+         d(_([["Have you destroyed all the ships already?"]]))
+         vn.jump("menu")
+      else
+         d(_([["The time for scuttling around in the dark are gone. We must make it clear that our territory is not a safe place for humans and get us some breathing space. This is a life or death question."]]))
+         -- 37 is a prime number on purpose, they like primes
+         d(fmt.f(_([["I need you to go to the nearby {sys} system and destroy 37 ships, to deliver a clear sign that they are not welcome in the system."]]),
+            {sys=system.get("Bastion")}))
+         vn.menu{
+            {_("Agree to help out."), "06_yes"},
+            {_("Not right now."), "mission_reject"},
+         }
+         vn.label("06_yes")
+         d(_([["Only by leaving a trail of death and destruction will they learn to leave us alone. There is no other alternative."]]))
+         d(_([["The important thing is to leave a message, it is not very important which classes of ships are destroyed. In the end, they are all the same."]]))
+         vn.jump("menu")
+      end
    else
       d(_([["I still have not prepared a target."]]))
       vn.jump("menu")
    end
 
+   vn.label("mission_reject")
+   d(_([["I can not force you to help us out, however, our existance is at stake. Please reconsider."]]))
+   vn.jump("menu")
+
    vn.label("menu")
    vn.menu( function ()
-      -- Set up main options
       local opts = {
          {_("Leave."),"leave"},
       }
+      -- TODO more options
       return opts
    end )
 
