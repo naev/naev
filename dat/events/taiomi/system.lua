@@ -20,7 +20,7 @@ local fmt = require 'format'
 local taiomi = require 'common.taiomi'
 local tut = require "common.tutorial"
 
-local progress, scavenger_missing
+local progress, scavenger_missing, philosopher_remark
 local d_loiter, d_philosopher, d_scavenger, d_elder, d_young_a, d_young_b -- Drone pilots.
 
 function create ()
@@ -102,6 +102,20 @@ function hail_philosopher ()
    vn.scene()
    local d = vn.newCharacter( taiomi.vn_philosopher() )
    vn.transition()
+
+   -- Special remark at the start of Taiomi 7
+   if philosopher_remark then
+      philosopher_remark = false
+      local died = taiomi.young_died()
+      vn.na(_([[You open a communication channel with Philosopher, who quickly upgrades it to an encrypted channel.]]))
+      d(_([["I see you have accepted to spread more of Elder's bloodshed. While it is not necessarily a poor answer to a situation, I do think that we have nothing to win in this scenario. Being the underdogs, there is much more to be lost if we become known and are deemed are a threat to human society."]]))
+      d(_([["While I may not agree with Scavenger on many aspects, I do believe entrusting our fate to their hands gives the highest probability of survival for us. We must bring them back or go down in the fires brought forth by Elder."]]))
+      d(fmt.f(_([["Scavenger is almost surely still alive. They are the most resourceful of our tribe, if they can not survive, none of us will ever be able to. That said, they are probably not in the best state of mind. {died} was what you could consider an offspring, although quite different from the human sense. The loss with the pressure of the survival of our species must have been too much for them."]]),
+         {died=died}))
+      d(_([["When performing Elder's new task, make sure to keep an eye out for Scavenger. I am not sure the best way to bring them back to their senses, you will have to use your human judgement. After all, we are much less different than you would expect."]]))
+      vn.na(_([[The encrypted connection is closed and you are left with your duties, and hope of meeting Scavenger once again.]]))
+      vn.done()
+   end
 
    vn.label("menu")
    d( function ()
@@ -217,6 +231,7 @@ function hail_elder( p )
          d(_([["The loss of such a large patrol should dissuade further incursions. They may even consider the area a lost cause with enough losses and retire all patrols. We must persevere at all costs."]]))
          vn.func( function ()
             naev.missionStart("Taiomi 7")
+            philosopher_remark = true
          end )
          vn.jump("menu")
       end
@@ -253,6 +268,11 @@ function hail_elder( p )
    vn.done()
    vn.run()
    player.commClose()
+
+   -- Time for philosopher to make a remark
+   if philosopher_remark then
+      d_philosopher:hailPlayer()
+   end
 end
 
 function hail_youngling( p )
