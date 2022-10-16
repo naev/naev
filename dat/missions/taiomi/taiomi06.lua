@@ -27,7 +27,7 @@ local fightsys = system.get("Bastion")
 
 local NUMBER_SHIPS = 37 -- Number of ships to kill
 
-mem.pilots = {} -- stores damage done to ships, reset on enter
+local pilots = {} -- stores damage done to ships, reset on enter
 mem.killed = 0 -- number of ships killed
 
 local function osd ()
@@ -71,7 +71,7 @@ function pilot_death( p, _attacker )
    end
 
    local id = p:id()
-   local pt = mem.pilots[id] or { player=0, nonplayer=0}
+   local pt = pilots[id] or { player=0, nonplayer=0}
 
    if pt.player >= pt.nonplayer then
       mem.killed = mem.killed + 1
@@ -92,17 +92,17 @@ function pilot_attacked( p, attacker, dmg )
    end
 
    local id = p:id()
-   local pt = mem.pilots[id] or { player=0, nonplayer=0}
+   local pt = pilots[id] or { player=0, nonplayer=0}
    if attacker:withPlayer() then
       pt.player = pt.player + dmg
    else
       pt.nonplayer = pt.nonplayer + dmg
    end
-   mem.pilots[id] = pt
+   pilots[id] = pt
 end
 
 function enter ()
-   mem.pilots = {}
+   pilots = {}
 
    -- Only set up hooks when necessary
    if system.cur() == fightsys then
@@ -123,5 +123,14 @@ function land ()
 
    vn.clear()
    vn.scene()
+   local e = vn.newCharacter( taiomi.vn_elder() )
+   vn.transition()
+   e(_([[]]))
+   vn.sfxVictory()
+   vn.na( fmt.reward(reward) )
    vn.run()
+
+   player.pay( reward )
+   taiomi.log.main(_("TODO"))
+   misn.finish(true)
 end
