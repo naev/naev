@@ -192,6 +192,32 @@ function hail_elder( p )
          end )
          vn.jump("menu")
       end
+   elseif progress == 6 and naev.claimTest( {system.get("Gamel")}, true ) then
+      if inprogress then
+         d(_([["Have you taken out the patrol yet?"]]))
+         vn.jump("menu")
+      else
+         local fct = var.peek( "taiomi_convoy_fct" ) or "Empire"
+         if fct== "Soromid" then
+            d(_([["One of our scouts has reported that while it seems like our attack did bring results. However, it seems like the Soromid are sending reinforcements to patrol the area."]]))
+         else
+            d(_([["One of our scouts has reported that while it seems like our attack did bring results. However, it seems like the Empire is sending reinforcements to patrol the area."]]))
+         end
+         d(_([["It is an opportunity to strike once again, harder then before! This will send a clear message and stop them from encroaching on our territory! Will you help us eliminate the intruding patrol?"]]))
+         vn.menu{
+            {_("Agree to help out."), "07_yes"},
+            {_("Not right now."), "mission_reject"},
+         }
+
+         vn.label("07_yes")
+         d(fmt.f(_([["The patrol should be coming to the {nearbysys} system from the {sys} system. You have to intercept it before it reaches the {nearbysys}. Reports indicate that it is spearheaded by a capital ship. You should make sure you bring enough firepower to take it down."]]),
+            {nearbysys=system.get("Bastion"), sys=system.get("Gamel")}))
+         d(_([["The loss of such a large patrol should dissuade further incursions. They may even consider the area a lost cause with enough losses and retire all patrols. We must persevere at all costs."]]))
+         vn.func( function ()
+            naev.missionStart("Taiomi 7")
+         end )
+         vn.jump("menu")
+      end
    else
       d(_([["I still have not prepared a target."]]))
       vn.jump("menu")
@@ -204,9 +230,12 @@ function hail_elder( p )
    vn.label("menu")
    vn.menu( function ()
       local opts = {
+         --{_(""), ""},
          {_("Leave."),"leave"},
       }
-      -- TODO more options
+      --if progress > 5 then
+      --   table.insert( opts, 1, {_(""),""} )
+      --end
       return opts
    end )
 
