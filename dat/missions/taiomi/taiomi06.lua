@@ -51,7 +51,9 @@ function create ()
 
    -- Mission details
    misn.setTitle( title )
-   misn.setDesc(fmt.f(_("Destroy {num} ships in the {sys} system."),
+   misn.setDesc(fmt.f(_([[Destroy {num} ships in the {sys} system.
+
+Only ships to which you or your fleet deal over 50% damage will count towards the number of ships destroyed.]]),
       {num = NUMBER_SHIPS, sys = fightsys} ))
    misn.setReward( fmt.credits(reward) )
    mem.marker = misn.markerAdd( base )
