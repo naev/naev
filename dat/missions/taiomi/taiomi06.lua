@@ -13,7 +13,7 @@
 --[[
    Taiomi 06
 
-   Player has to destroy 37 ships in Bastion
+   Player has to destroy a number ships in Bastion
 ]]--
 local vn = require "vn"
 local fmt = require "format"
@@ -25,7 +25,7 @@ local base, basesys = spob.getS("One-Wing Goddard")
 -- The systems below backtrack from Taiomi to Haven
 local fightsys = system.get("Bastion")
 
-local NUMBER_SHIPS = 37 -- Number of ships to kill
+local NUMBER_SHIPS = 23 -- Number of ships to kill, prime on purpose
 
 local pilots = {} -- stores damage done to ships, reset on enter
 mem.killed = 0 -- number of ships killed
@@ -33,7 +33,7 @@ mem.killed = 0 -- number of ships killed
 local function osd ()
    local left = NUMBER_SHIPS - mem.killed
    misn.osdCreate( title, {
-      fmt.f(_("Destroy {total} ships in {sys} ({left} left)"),{sys=fightsys, total=NUMBER_SHIPS, left=left}),
+      fmt.f(_("Destroy {left} ships in {sys}"),{sys=fightsys, left=left}),
       fmt.f(_("Return to {base} ({basesys})"),{base=base, basesys=basesys}),
    } )
    if left <= 0 then

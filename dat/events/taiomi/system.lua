@@ -169,15 +169,16 @@ function hail_elder( p )
    vn.transition()
    vn.na(_("The drone seems fairly beaten and immobile. You can see some slight movement when you begin communication."))
 
-   if progress == 5*math.huge and naev.claimTest( {system.get("Bastion")}, true ) then
+   if progress == 5 and naev.claimTest( {system.get("Bastion")}, true ) then
       if inprogress then
          d(_([["Have you destroyed all the ships already?"]]))
          vn.jump("menu")
       else
          d(_([["The time for scuttling around in the dark are gone. We must make it clear that our territory is not a safe place for humans and get us some breathing space. This is a life or death question."]]))
          -- 37 is a prime number on purpose, they like primes
-         d(fmt.f(_([["I need you to go to the nearby {sys} system and destroy 37 ships, to deliver a clear sign that they are not welcome in the system."]]),
-            {sys=system.get("Bastion")}))
+         local num = 23
+         d(fmt.f(_([["I need you to go to the nearby {sys} system and destroy {num} ships, to deliver a clear sign that they are not welcome in the system."]]),
+            {sys=system.get("Bastion"), num=num}))
          vn.menu{
             {_("Agree to help out."), "06_yes"},
             {_("Not right now."), "mission_reject"},
@@ -185,7 +186,7 @@ function hail_elder( p )
          vn.label("06_yes")
          d(_([["Only by leaving a trail of death and destruction will they learn to leave us alone. There is no other alternative."]]))
          d(_([["The important thing is to leave a message, it is not very important which classes of ships are destroyed. In the end, they are all the same."]]))
-         d(fmt.f(_([["When you are done with your mission return to {base}."]]),{base=spob.get("One-Winged Goddard")}))
+         d(fmt.f(_([["When you are done with your mission return to {base}."]]),{base=spob.get("One-Wing Goddard")}))
          vn.func( function ()
             naev.missionStart("Taiomi 6")
          end )
@@ -249,7 +250,7 @@ function hail_scavenger ()
 
          vn.label("01_yes")
          d(_([["Excellent. I will provide you with the analyzer. However, it is important to note that it has a particular wave signature which may make it suspicious to local authorities. I would advise against allowing your vessel to be scanned by patrols."]]))
-         d(_([["Once you get near any hypergate, it should automatically collect data about it without manual intervention. Please deliver the collected data to the One-Winged Goddard. I will collect it there. Bon voyage."]]))
+         d(_([["Once you get near any hypergate, it should automatically collect data about it without manual intervention. Please deliver the collected data to the One-Wing Goddard. I will collect it there. Bon voyage."]]))
          vn.func( function ()
             naev.missionStart("Taiomi 1")
          end )
@@ -308,7 +309,7 @@ function hail_scavenger ()
       local minesys = system.get("Haven")
       if inprogress then
          d(fmt.f(_([["How is the collection of {resource} coming along? If you have any, please drop it off at {base}."]]),
-            {base=_("One-Winged Goddard"), resource=resource}))
+            {base=spob.get("One-Wing Goddard"), resource=resource}))
          vn.jump("menu")
       else
          local sai = tut.vn_shipai{pos="farleft"}
@@ -375,7 +376,7 @@ Scavenger goes silent for a second, as if thinking.
          {_("Not right now."), "05_no"},
       }
       vn.label("05_yes")
-      d(_([["Appreciations. We must set off at once. Please land on the One-Winged Goddard and let us depart. I shall come with you."]]))
+      d(_([["Appreciations. We must set off at once. Please land on the One-Wing Goddard and let us depart. I shall come with you."]]))
       vn.func( function ()
          naev.missionStart("Taiomi 5")
       end )
