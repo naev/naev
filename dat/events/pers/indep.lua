@@ -30,7 +30,7 @@ return function ()
             local m = p:memory()
             m.comm_greet = _([["Children say that people are hanged sometimes for speaking the truth."]])
             m.taunt = _("I am not afraid… I was born to do this.")
-            m.bribe_no = _("You must be reprimanded for your sins!")
+            m.bribe_no = _([["You must be reprimanded for your sins!"]])
             m.formation = "cross"
             m.norun = true
             local pos = p:pos()
@@ -59,7 +59,7 @@ return function ()
             local m = p:memory()
             m.comm_greet = _([["The White Shield brings justice for al!"]])
             m.taunt = _("Prepare to face justice!")
-            m.bribe_no = _("There is nothing but justice!")
+            m.bribe_no = _([["There is nothing but justice!"]])
             m.whiteknight = true
             m.norun = true
             m.atk_kill = false
@@ -96,7 +96,7 @@ return function ()
             local m = p:memory()
             m.ad = _("Don't forget to pay your shareware registration fee!")
             m.taunt = _("Prepare to pay your shareware registration fee!")
-            m.bribe_no = _("You can't pay your shareware registration fee with credits, only blood!")
+            m.bribe_no = _([["You can't pay your shareware registration fee with credits, only blood!"]])
             m.norun = true
          end,
          w = 100, -- Almost ensured in Zied

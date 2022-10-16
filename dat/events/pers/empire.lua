@@ -22,7 +22,7 @@ return function ()
             m.ad = ad
             m.comm_greet = ad
             m.taunt = taunt
-            m.bribe_no = _("I shall particularly enjoy your execution.")
+            m.bribe_no = _([["I shall particularly enjoy your execution."]])
             return p
          end
       end
@@ -75,7 +75,7 @@ return function ()
                m.ad = _("Empire is recruiting new Combat Bureaucrats. Inquire at your nearest Bureau.")
                m.comm_greet = _([["You wouldn't be interested in becoming an Empire Combat Bureaucrat, would you?"]])
                m.taunt = _("You just signed your own death warrant, and here comes the certificate!")
-               m.bribe_no = _("You didn't fill in the EB-2781 request for bribe form!")
+               m.bribe_no = _([["You didn't fill in the EB-2781 request for bribe form!"]])
                local pos = p:pos()
                local vel = p:vel()
                for i=1,3 do

@@ -125,12 +125,19 @@ function land ()
    vn.scene()
    local e = vn.newCharacter( taiomi.vn_elder() )
    vn.transition()
-   e(_([[]]))
+   vn.na(_([[You find Elder waiting for you in the Goddard hangar bay.]]))
+   e(fmt.f(_([["How was the fighting? Cleaning {sys} is an important first step for our security."]]),
+      {sys=fightsys}))
+   vn.menu{
+      {_([[]]), ""},
+      {_([[…]]), ""},
+   }
+
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )
    vn.run()
 
    player.pay( reward )
-   taiomi.log.main(_("TODO"))
+   taiomi.log.main(fmt.f(_("You destroyed {num} ships in the {sys} as ordered by Elder."),{num=37, sys=fightsys}))
    misn.finish(true)
 end
