@@ -185,6 +185,10 @@ function hail_elder( p )
          vn.label("06_yes")
          d(_([["Only by leaving a trail of death and destruction will they learn to leave us alone. There is no other alternative."]]))
          d(_([["The important thing is to leave a message, it is not very important which classes of ships are destroyed. In the end, they are all the same."]]))
+         d(fmt.f(_([["When you are done with your mission return to {base}."]]),{base=spob.get("One-Winged Goddard")}))
+         vn.func( function ()
+            naev.missionStart("Taiomi 6")
+         end )
          vn.jump("menu")
       end
    else

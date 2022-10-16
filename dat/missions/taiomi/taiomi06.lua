@@ -20,7 +20,7 @@ local fmt = require "format"
 local taiomi = require "common.taiomi"
 
 local reward = taiomi.rewards.taiomi06
-local title = _("Missing Drones")
+local title = _("Human Extermination")
 local base, basesys = spob.getS("One-Wing Goddard")
 -- The systems below backtrack from Taiomi to Haven
 local fightsys = system.get("Bastion")
