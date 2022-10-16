@@ -56,6 +56,16 @@ function create ()
 
    hook.enter( "enter" )
    hook.land( "land" )
+
+   hook.custom( "taiomi_philosopher", "taiomi_philosopher" )
+end
+
+function taiomi_philosopher ()
+   misn.osdCreate( title, {
+      fmt.f(_("Destroy the patrol in {sys}"),{sys=fightsys}),
+      fmt.f(_("Return to {base} ({basesys})"),{base=base, basesys=basesys}),
+      _("Save Scavenger if possible"),
+   } )
 end
 
 function enter ()

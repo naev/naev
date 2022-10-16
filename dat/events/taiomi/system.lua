@@ -114,7 +114,11 @@ function hail_philosopher ()
          {died=died}))
       d(_([["When performing Elder's new task, make sure to keep an eye out for Scavenger. I am not sure the best way to bring them back to their senses, you will have to use your human judgement. After all, we are much less different than you would expect."]]))
       vn.na(_([[The encrypted connection is closed and you are left with your duties, and hope of meeting Scavenger once again.]]))
+      vn.func( function ()
+         naev.trigger("taiomi_philosopher")
+      end )
       vn.done()
+      -- don't return here on purpose as we want it to end at vn.run
    end
 
    vn.label("menu")
