@@ -87,7 +87,7 @@ function create ()
    -- Loitering drones
    d_loiter = {}
    for i = 1,rnd.rnd(3,6) do
-      local d = addDrone( "Drone", vec2.new( rnd.rnd()*1000, rnd.angle() ) )
+      local d = addDrone( "Drone", vec2.newP( rnd.rnd()*1000, rnd.angle() ) )
       d:setVisplayer(false)
       d:control(false)
       d:setNoJump(true)
