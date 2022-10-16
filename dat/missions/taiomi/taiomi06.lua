@@ -66,6 +66,10 @@ end
 
 -- Only count as player kill if player did >50% damage
 function pilot_death( p, _attacker )
+   if p:withPlayer() then
+      return
+   end
+
    local id = p:id()
    local pt = mem.pilots[id] or { player=0, nonplayer=0}
 
@@ -81,6 +85,9 @@ end
 -- Compare damage of player vs non-player
 function pilot_attacked( p, attacker, dmg )
    if not attacker or not attacker:exists() then
+      return
+   end
+   if p:withPlayer() then
       return
    end
 
