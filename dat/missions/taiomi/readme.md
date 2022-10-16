@@ -10,7 +10,7 @@ Chapter 1 campaign where the player helps some escaped collective drones leave t
 * **Notable Characters:**
    * Scavenger Drone
    * Philosopher Drone
-   * Worn-Out Drone
+   * Elder Drone
    * Curious Drones
 * **Notable Rewards:**
    * Scavenger Drone Escort (???)
@@ -21,4 +21,5 @@ Chapter 1 campaign where the player helps some escaped collective drones leave t
 1. **taiomi02:** steal info from convoys
 1. **taiomi03:** infiltrate a research laboratory and steal information
 1. **taiomi04:** obtain minerals from either mining or convoys (curious drones help)
-1. ...
+1. **taiomi05:** try to find missing curious drone
+1. **taiomi06:** destroy a number of ships in Bastion
