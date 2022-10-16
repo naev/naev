@@ -23,4 +23,4 @@ Chapter 1 campaign where the player helps some escaped collective drones leave t
 1. **taiomi04:** obtain minerals from either mining or convoys (curious drones help)
 1. **taiomi05:** try to find missing curious drone
 1. **taiomi06:** destroy a number of ships in Bastion
-1. **taiomi07:** destroy a large patrol
+1. **taiomi07:** destroy a large patrol in Gamel

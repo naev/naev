@@ -1,44 +1,38 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<mission name="Taiomi 6">
+<mission name="Taiomi 7">
  <unique />
  <chance>0</chance>
  <location>None</location>
- <done>Taiomi 5</done>
+ <done>Taiomi 6</done>
  <notes>
   <campaign>Taiomi</campaign>
  </notes>
 </mission>
 --]]
 --[[
-   Taiomi 06
+   Taiomi 07
 
-   Player has to destroy a number ships in Bastion
+   Player has to destroy a large fleet in Gamel
 ]]--
 local vn = require "vn"
 local fmt = require "format"
 local taiomi = require "common.taiomi"
+local fleet = require "fleet"
 
-local reward = taiomi.rewards.taiomi06
-local title = _("Human Extermination")
+local reward = taiomi.rewards.taiomi07
+local title = _("Patrol Elimination")
 local base, basesys = spob.getS("One-Wing Goddard")
-local fightsys = system.get("Bastion")
+local fightsys = system.get("Gamel")
+--local entersys = system.get("Dune")
+--local exitsys = system.get("Bastion")
 
-local NUMBER_SHIPS = 23 -- Number of ships to kill, prime on purpose
-
-local pilots = {} -- stores damage done to ships, reset on enter
-mem.killed = 0 -- number of ships killed
-
-local function osd ()
-   local left = NUMBER_SHIPS - mem.killed
-   misn.osdCreate( title, {
-      fmt.f(_("Destroy {left} ships in {sys}"),{sys=fightsys, left=left}),
-      fmt.f(_("Return to {base} ({basesys})"),{base=base, basesys=basesys}),
-   } )
-   if left <= 0 then
-      misn.osdActive(2)
-   end
-end
+--[[
+   0: mission started
+   1: destroyed patrol
+   2: calmed down Scavenger
+--]]
+mem.state = 0
 
 function create ()
    if not misn.claim( {fightsys}, true) then
@@ -50,73 +44,31 @@ function create ()
 
    -- Mission details
    misn.setTitle( title )
-   misn.setDesc(fmt.f(_([[Destroy {num} ships in the {sys} system.
-
-Only ships to which you or your fleet deal over 50% damage will count towards the number of ships destroyed.]]),
-      {num = NUMBER_SHIPS, sys = fightsys} ))
+   misn.setDesc(fmt.f(_([[Destroy a patrol in the {sys} system.]]),
+      {sys = fightsys} ))
    misn.setReward( fmt.credits(reward) )
    mem.marker = misn.markerAdd( fightsys )
 
-   osd()
+   misn.osdCreate( title, {
+      fmt.f(_("Destroy the patrol in {sys}"),{sys=fightsys}),
+      fmt.f(_("Return to {base} ({basesys})"),{base=base, basesys=basesys}),
+   } )
 
    hook.enter( "enter" )
    hook.land( "land" )
 end
 
--- Only count as player kill if player did >50% damage
-function pilot_death( p, _attacker )
-   if p:withPlayer() then
-      return
-   end
-
-   local id = p:id()
-   local pt = pilots[id] or { player=0, nonplayer=0}
-
-   if pt.player >= pt.nonplayer then
-      mem.killed = mem.killed + 1
-      osd()
-      if (mem.killed >= NUMBER_SHIPS) then
-         mem.marker = misn.markerAdd( base )
-      end
-   end
-end
-
--- Compare damage of player vs non-player
-function pilot_attacked( p, attacker, dmg )
-   if not attacker or not attacker:exists() then
-      return
-   end
-   if p:withPlayer() then
-      return
-   end
-
-   local id = p:id()
-   local pt = pilots[id] or { player=0, nonplayer=0}
-   if attacker:withPlayer() then
-      pt.player = pt.player + dmg
-   else
-      pt.nonplayer = pt.nonplayer + dmg
-   end
-   pilots[id] = pt
-end
-
 function enter ()
-   pilots = {}
-
-   -- Only set up hooks when necessary
-   if system.cur() == fightsys then
-      mem.hook_death = hook.pilot( nil, "death", "pilot_death" )
-      mem.hook_attacked = hook.pilot( nil, "attacked", "pilot_attacked" )
-   elseif mem.hook_death then
-      hook.rm( mem.hook_death )
-      hook.rm( mem.hook_attacked )
-      mem.hook_death = nil
-      mem.hook_attacked = nil
+   if system.cur() ~= fightsys or mem.state ~= 0 then
+      return
    end
+
+   -- Spawn the patrol
+   fleet.add( )
 end
 
 function land ()
-   if mem.killed < NUMBER_SHIPS then
+   if mem.state ~= 2 then
       return -- Not done yet
    end
 
