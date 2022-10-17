@@ -20,6 +20,7 @@ local fmt = require "format"
 local taiomi = require "common.taiomi"
 local fleet = require "fleet"
 local pilotai = require "pilotai"
+local lmisn = require "lmisn"
 
 local reward = taiomi.rewards.taiomi07
 local title = _("Patrol Elimination")
@@ -112,7 +113,12 @@ function enter ()
       pilotai.hyperspace( p, exitjmp )
 
       hook.pilot( p, "death", "patrol_death" )
+      hook.pilot( p, "jump", "patrol_jump" )
    end
+end
+
+function patrol_jump ()
+   lmisn.fail(_("some of the patrol got away!"))
 end
 
 function patrol_death ()
