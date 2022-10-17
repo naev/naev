@@ -19,13 +19,14 @@ local vn = require "vn"
 local fmt = require "format"
 local taiomi = require "common.taiomi"
 local fleet = require "fleet"
+local pilotai = require "pilotai"
 
 local reward = taiomi.rewards.taiomi07
 local title = _("Patrol Elimination")
 local base, basesys = spob.getS("One-Wing Goddard")
 local fightsys = system.get("Gamel")
---local entersys = system.get("Dune")
---local exitsys = system.get("Bastion")
+local entersys = system.get("Dune")
+local exitsys = system.get("Bastion")
 
 --[[
    0: mission started
@@ -68,13 +69,75 @@ function taiomi_philosopher ()
    } )
 end
 
+local plts = {}
 function enter ()
    if system.cur() ~= fightsys or mem.state ~= 0 then
       return
    end
 
+   -- We'll make a fancy caravan
+   local fct = var.peek( "taiomi_convoy_fct" ) or "Empire"
+   local flt
+   if fct== "Soromid" then
+      flt = {
+         "Soromid Ira",
+         "Soromid Odium",
+         "Soromid Odium",
+         "Soromid Reaver",
+         "Soromid Reaver",
+         "Soromid Reaver",
+         "Soromid Reaver",
+      }
+   else
+      flt = {
+         "Empire Hawking",
+         "Empire Admonisher",
+         "Empire Admonisher",
+         "Empire Lancelot",
+         "Empire Lancelot",
+         "Empire Lancelot",
+         "Empire Lancelot",
+      }
+   end
+
+   local enterjmp = jump.get( fightsys, entersys )
+   local exitjmp = jump.get( fightsys, exitsys )
+
    -- Spawn the patrol
-   fleet.add( )
+   plts = fleet.add( 1, flt, faction.get(fct), enterjmp )
+   plts[1]:setHilight(true)
+   for k,p in ipairs(plts) do
+      local m = p:memory()
+      m.norun = true
+      pilotai.hyperspace( p, exitjmp )
+
+      hook.pilot( p, "death", "patrol_death" )
+   end
+end
+
+function patrol_death ()
+   local nplts = {}
+   local hashilight = false
+   for k,p in ipairs(plts) do
+      if p:exists() then
+         table.insert( nplts, p )
+         if p:flags("hilight") then
+            hashilight = true
+         end
+      end
+   end
+   plts = nplts
+
+   if #plts <= 0 then
+      mem.state = 1 -- next state
+      misn.osdActive(2)
+      misn.markerMove( base )
+   else
+      -- Rehighlight as necessary
+      if not hashilight then
+         plts[1]:setHilight(true)
+      end
+   end
 end
 
 function land ()

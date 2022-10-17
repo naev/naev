@@ -193,8 +193,7 @@ function hail_elder( p )
          vn.jump("menu")
       else
          d(_([["The time for scuttling around in the dark are gone. We must make it clear that our territory is not a safe place for humans and get us some breathing space. This is a life or death question."]]))
-         -- 37 is a prime number on purpose, they like primes
-         local num = 23
+         local num = 23 -- prime number on purpose, they like primes
          d(fmt.f(_([["I need you to go to the nearby {sys} system and destroy {num} ships, to deliver a clear sign that they are not welcome in the system."]]),
             {sys=system.get("Bastion"), num=num}))
          vn.menu{
@@ -216,6 +215,7 @@ function hail_elder( p )
          d(_([["Have you taken out the patrol yet?"]]))
          vn.jump("menu")
       else
+         -- The fleet depends on who the player harassed at the beginning
          local fct = var.peek( "taiomi_convoy_fct" ) or "Empire"
          if fct== "Soromid" then
             d(_([["One of our scouts has reported that while it seems like our attack did bring results. However, it seems like the Soromid are sending reinforcements to patrol the area."]]))
