@@ -128,13 +128,13 @@ local function spawn_scavenger( pos )
    hook.pilot( scavenger, "hail", "scavenger_hail" )
    hook.pilot( scavenger, "death", "scavenger_death" )
    hook.pilot( scavenger, "attacked", "scavenger_attacked" )
-   local mem = scavenger:memory()
-   mem.vulnerability = 1000 -- Less preferred as a target
+   local m = scavenger:memory()
+   m.vulnerability = 1000 -- Less preferred as a target
    scavenger:intrinsicSet( "shield", 1000 ) -- beefy shields
    return scavenger
 end
 
-function scavenger( p )
+function scavenger_hail ( p )
    if mem.state < 6 then
       p:comm(_("Our task is of uttermost importance!"))
    else
