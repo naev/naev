@@ -21,6 +21,7 @@ local taiomi = require "common.taiomi"
 local fleet = require "fleet"
 local pilotai = require "pilotai"
 local lmisn = require "lmisn"
+local tut = require "common.tutorial"
 
 local reward = taiomi.rewards.taiomi07
 local title = _("Patrol Elimination")
@@ -28,16 +29,19 @@ local base, basesys = spob.getS("One-Wing Goddard")
 local fightsys = system.get("Gamel")
 local entersys = system.get("Dune")
 local exitsys = system.get("Bastion")
+local scenesys = exitsys
 
 --[[
    0: mission started
    1: destroyed patrol
-   2: calmed down Scavenger
+   2: noticed scavenger
+   3: badguy down
+   4: calmed down Scavenger
 --]]
 mem.state = 0
 
 function create ()
-   if not misn.claim( {fightsys}, true) then
+   if not misn.claim( {fightsys, scenesys}, true) then
       warn(_("Unable to claim system that should be claimable!"))
       misn.finish(false)
    end
@@ -71,50 +75,103 @@ function taiomi_philosopher ()
 end
 
 local plts = {}
+local scavenger, badguy
 function enter ()
-   if system.cur() ~= fightsys or mem.state ~= 0 then
-      return
-   end
+   -- Fight the fancy patrol
+   if mem.state==0 and system.cur()==fightsys then
+      local fct = var.peek( "taiomi_convoy_fct" ) or "Empire"
+      local flt
+      if fct== "Soromid" then
+         flt = {
+            "Soromid Ira",
+            "Soromid Odium",
+            "Soromid Odium",
+            "Soromid Reaver",
+            "Soromid Reaver",
+            "Soromid Reaver",
+            "Soromid Reaver",
+         }
+      else
+         flt = {
+            "Empire Hawking",
+            "Empire Admonisher",
+            "Empire Admonisher",
+            "Empire Lancelot",
+            "Empire Lancelot",
+            "Empire Lancelot",
+            "Empire Lancelot",
+         }
+      end
 
-   -- We'll make a fancy caravan
-   local fct = var.peek( "taiomi_convoy_fct" ) or "Empire"
-   local flt
-   if fct== "Soromid" then
-      flt = {
-         "Soromid Ira",
-         "Soromid Odium",
-         "Soromid Odium",
-         "Soromid Reaver",
-         "Soromid Reaver",
-         "Soromid Reaver",
-         "Soromid Reaver",
-      }
+      local enterjmp = jump.get( fightsys, entersys )
+      local exitjmp = jump.get( fightsys, exitsys )
+
+      -- Spawn the patrol
+      plts = fleet.add( 1, flt, faction.get(fct), enterjmp )
+      plts[1]:setHilight(true)
+      for k,p in ipairs(plts) do
+         local m = p:memory()
+         m.norun = true
+         pilotai.hyperspace( p, exitjmp )
+
+         hook.pilot( p, "death", "patrol_death" )
+         hook.pilot( p, "jump", "patrol_jump" )
+      end
+   elseif mem.state==1 and system.cur()==scenesys then
+      -- Scene with Scavenger
+      -- Get closest jump to player
+      local pos = player.pos()
+      local jmp
+      local d = math.huge
+      for k,j in ipairs(system.cur():jumps()) do
+         local jd = j:pos():dist2( pos )
+         if jd < d then
+            jmp = j
+            d = jd
+         end
+      end
+
+      local out = jump.get( scenesys, basesys )
+      pos = (jmp:pos() + out) / 2
+      scavenger = pilot.add( "Drone (Hyena)", "Independent", pos, _("Scavenger Drone") )
+      scavenger:setInvisible(true)
+      scavenger:setInvincible(true)
+      scavenger:intrinsicSet( "shield", 1000 ) -- beefy shields
+      hook.pilot( scavenger, "hail", "scavenger_hail" )
+      hook.pilot( scavenger, "death", "scavenger_death" )
+      local m = scavenger:memory()
+      m.vulnerability = 1000 -- Less preferred as a target
+      scavenger:setNoDeath() -- Too much work to work around this
+      scavenger:setNoDisable()
+      scavenger:control()
+      scavenger:brake()
+
+      badguy = pilot.add("Pirate Admonisher", "Marauder", pos+vec2.newP( 1000, rnd.angle() ) )
+      badguy:setHostile(true)
+      badguy:setInvisible(true)
+      badguy:setInvincible(true)
+      hook.pilot( badguy, "death", "badguy_down" )
+      hook.pilot( badguy, "disable", "badguy_down" )
+      badguy:control()
+      badguy:brake()
+
+      hook.timer( 1, "scene_trigger" )
+   elseif mem.state==2 or mem.state==3 then
+      lmisn.fail(_("You abandoned Scavenger!"))
+   end
+end
+
+function scavenger_hail( p )
+   if mem.state == 1 then
+      p:comm(_("Aaaaaagh!"))
    else
-      flt = {
-         "Empire Hawking",
-         "Empire Admonisher",
-         "Empire Admonisher",
-         "Empire Lancelot",
-         "Empire Lancelot",
-         "Empire Lancelot",
-         "Empire Lancelot",
-      }
+      p:comm(_("…"))
    end
+   player.commClose()
+end
 
-   local enterjmp = jump.get( fightsys, entersys )
-   local exitjmp = jump.get( fightsys, exitsys )
-
-   -- Spawn the patrol
-   plts = fleet.add( 1, flt, faction.get(fct), enterjmp )
-   plts[1]:setHilight(true)
-   for k,p in ipairs(plts) do
-      local m = p:memory()
-      m.norun = true
-      pilotai.hyperspace( p, exitjmp )
-
-      hook.pilot( p, "death", "patrol_death" )
-      hook.pilot( p, "jump", "patrol_jump" )
-   end
+function scavenger_death ()
+   lmisn.fail(_("Scavenger died!"))
 end
 
 function patrol_jump ()
@@ -146,8 +203,61 @@ function patrol_death ()
    end
 end
 
+-- Basically triggers on distance
+function scene_trigger ()
+   local pos = player.pos()
+   local THRESHOLD = 2500
+   for k,p in ipairs{
+      scavenger:pos(),
+      badguy:pos(),
+      jump.get( scenesys, basesys ):pos(),
+   } do
+      if p:dist( pos ) < THRESHOLD then
+         -- Start scene
+         mem.state = 2
+         scavenger:setHilight(true)
+         local pp = player.pilot()
+         player.cinematics( true )
+         pp:control()
+         pp:brake()
+         pp:setInvincible( true )
+         camera.set( scavenger )
+         misn.osdCreate( title, {
+            _("Save Scavenger!"),
+         } )
+         hook.timer( 10, "scene00" )
+         return
+      end
+   end
+   hook.timer( 1, "scene_trigger" )
+end
+
+function scene00 ()
+   -- Undo some stuff
+   player.cinematics( false )
+   local pp = player.pilot()
+   pp:setInvincible( false )
+   pp:control(false)
+   camera.set()
+   hook.timer( 3, "scene01" )
+end
+
+function scene01 ()
+   player.msg(fmt.f(_("{shipai}: Is that not Scavenger?"),{shipai=tut.ainame()}), true )
+end
+
+function badguy_down ()
+   if mem.state >= 3 then
+      return
+   end
+
+   mem.state = 3
+   scavenger:broadcast(_("Aaaaargh!"))
+   scavenger:attack( player.pilot() )
+end
+
 function land ()
-   if mem.state ~= 2 then
+   if mem.state < 4 then
       return -- Not done yet
    end
 
