@@ -144,7 +144,7 @@ function scavenger( p )
 end
 
 function scavenger_death ()
-   lmisn.fail( "Scavenger died! You were supposed to protect them!" )
+   lmisn.fail(_("Scavenger died! You were supposed to protect them!"))
 end
 
 function scavenger_attacked( _p, attacker )
