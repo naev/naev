@@ -36,7 +36,8 @@ local scenesys = exitsys
    1: destroyed patrol
    2: noticed scavenger
    3: badguy down
-   4: calmed down Scavenger
+   4: Scavenger calmed donw a bit
+   5: completely calmed down
 --]]
 mem.state = 0
 
@@ -156,14 +157,25 @@ function enter ()
       badguy:brake()
 
       hook.timer( 1, "scene_trigger" )
-   elseif mem.state==2 or mem.state==3 then
+   elseif mem.state>=2 and mem.state<5 then
       lmisn.fail(_("You abandoned Scavenger!"))
    end
 end
 
 function scavenger_hail( p )
-   if mem.state == 1 then
+   if mem.state < 4 then
       p:comm(_("Aaaaaagh!"))
+   elseif mem.state == 4 then
+
+      vn.clear()
+      vn.scene()
+      local s = vn.newCharacter( taiomi.vn_scavenger() )
+      vn.transition( taiomi.scavenger.transition )
+      s(_([[""]]))
+
+      vn.done( taiomi.scavenger.transition )
+      vn.run()
+
    else
       p:comm(_("…"))
    end
@@ -222,6 +234,15 @@ function scene_trigger ()
          pp:brake()
          pp:setInvincible( true )
          camera.set( scavenger )
+
+         scavenger:setInvisible(false)
+         scavenger:setInvincible(false)
+         scavenger:attack( badguy )
+
+         badguy:setInvisible(false)
+         badguy:setInvincible(false)
+         badguy:control( false )
+
          misn.osdCreate( title, {
             _("Save Scavenger!"),
          } )
@@ -254,10 +275,27 @@ function badguy_down ()
    mem.state = 3
    scavenger:broadcast(_("Aaaaargh!"))
    scavenger:attack( player.pilot() )
+
+   hook.timer( 5, "scene02" )
+end
+
+function scene02 ()
+   player.msg(fmt.f(_("{shipai}: Don't destroy them!"),{shipai=tut.ainame()}), true )
+   hook.timer( 4+3*rnd.rnd(), "scavenger_yell" )
+   hook.timer( 15, "scene03" )
+end
+
+function scene03 ()
+   player.msg(fmt.f(_("{shipai}: Maybe try hailing?"),{shipai=tut.ainame()}), true )
+   mem.state = 4
+end
+
+function scavenger_yell ()
+   scavenger:broadcast(fmt.f(_("Aaaaah! {died}! Die!"),{died=taiomi.young_died()}))
 end
 
 function land ()
-   if mem.state < 4 then
+   if mem.state < 5 then
       return -- Not done yet
    end
 
