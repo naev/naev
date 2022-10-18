@@ -73,6 +73,7 @@ function taiomi_philosopher ()
       fmt.f(_("Return to {base} ({basesys})"),{base=base, basesys=basesys}),
       _("Save Scavenger if possible"),
    } )
+   mem.philosopher = true
 end
 
 local plts = {}
@@ -166,16 +167,66 @@ function scavenger_hail( p )
    if mem.state < 4 then
       p:comm(_("Aaaaaagh!"))
    elseif mem.state == 4 then
-
       vn.clear()
       vn.scene()
       local s = vn.newCharacter( taiomi.vn_scavenger() )
       vn.transition( taiomi.scavenger.transition )
-      s(_([[""]]))
+      vn.na(_("After some attempts, it seems like you finally are able to establish a communication channel with a beaten and worn-down Scavenger."))
+      vn.menu{
+         {fmt.f(_([["It's me, {player}!"]]),{player=player.name()}), "cont01"},
+         {_([["Snap out of it!"]]), "cont01"},
+      }
+
+      vn.label("cont01")
+      s(_([[They don't seem to recognize you. It looks like they've been through quite a lot.
+"aaaaaah!"]]))
+      vn.menu{
+         {_([["Scavenger, you're safe now!]]), "cont02"},
+         {_([["Chill out, Scavenger!"]]), "cont02"},
+      }
+
+      vn.label("cont02")
+      s(_([[Their weapon systems seem to power down a bit. Maybe it was mentioning their name?]]))
+      vn.menu{
+         {fmt.f(_([["Scavenger, it's me, {player}!"]]),{player=player.name()}), "cont03"},
+         {_([["Scavenger, snap out of it!"]]), "cont03"},
+      }
+      s(fmt.f(_([["{player}?"
+Their systems dim a second, almost if… rebooting?
+"What happened?"]]),
+         {player=player.name()}))
+      vn.menu{
+         {_([["You're back!"]]), "cont04_back"},
+         {_([["Have you realized what you've done?]]), "cont04_done"},
+      }
+
+      vn.label("cont04_back")
+      s(_([["What do you mean I'm back? What happened?"]]))
+      vn.jump("cont04")
+
+      vn.label("cont04_done")
+      s(_([["Have I done something wrong? I seen to have large amounts of corrupted memory archives."]]))
+      vn.jump("cont04")
+
+      local extra = ""
+      if mem.philosopher then
+         extra = _(" Philosopher will be happy to see Scavenger back in one piece.")
+      end
+      vn.label("cont04")
+      vn.na(fmt.f(_([[You tell them they have to go back to Taiomi and you'll explain on the One-Wing Goddard. Still very confused, they seem to agree that it is the best course of action and head back.{extra}]]),
+         {extra=extra}))
 
       vn.done( taiomi.scavenger.transition )
       vn.run()
 
+      scavenger:setInvincible(true)
+      local out = jump.get( scenesys, basesys )
+      scavenger:hyperspace( out )
+      mem.state = 5
+
+      misn.osdCreate( title, {
+         fmt.f(_("Go back to {base} ({basesys})"),{base=base, basesys=basesys})
+      } )
    else
       p:comm(_("…"))
    end
@@ -292,6 +343,15 @@ end
 
 function scavenger_yell ()
    scavenger:broadcast(fmt.f(_("Aaaaah! {died}! Die!"),{died=taiomi.young_died()}))
+   hook.timer( 15, "scavenger_yell2" )
+end
+
+function scavenger_yell2 ()
+   if mem.state > 4 then
+      return
+   end
+   scavenger:broadcast(_("Aaaa aaa aagh!"))
+   hook.timer( 15, "scavenger_yell2" )
 end
 
 function land ()
