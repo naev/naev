@@ -8,7 +8,7 @@ local taiomi = {
       name = _("Scavenger Drone"),
       portrait = nil,
       image = 'gfx/ship/drone/drone_hyena_comm.webp',
-      colour = nil,
+      colour = { 0.7, 0.8, 1.0 },
    },
    elder = {
       name = _("Elder Drone"),
@@ -20,7 +20,7 @@ local taiomi = {
       name = _("Philosopher Drone"),
       portrait = nil,
       image = 'gfx/ship/drone/drone_comm.webp',
-      colour = nil,
+      colour = {1.0, 0.65, 1.0},
    },
    younga = {
       name = _("Hugonn"), -- Odin's raven
