@@ -151,6 +151,6 @@ function land ()
    vn.run()
 
    player.pay( reward )
-   taiomi.log.main(fmt.f(_("You destroyed {num} ships in the {sys} as ordered by Elder."),{num=37, sys=fightsys}))
+   taiomi.log.main(fmt.f(_("You destroyed {num} ships in the {sys} system as ordered by Elder."),{num=37, sys=fightsys}))
    misn.finish(true)
 end
