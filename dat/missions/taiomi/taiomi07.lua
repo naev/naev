@@ -358,6 +358,7 @@ function land ()
    if mem.state < 5 then
       return -- Not done yet
    end
+   local died = taiomi.young_died()
 
    vn.clear()
    vn.scene()
@@ -373,7 +374,35 @@ function land ()
       {player=player.name()}))
    vn.na(fmt.f(_([[You provide them with the recordings {shipai} took of Scavenger losing control.]]),
       {shipai=tut.ainame()}))
-   w(_([[""]]))
+   s(_([["That seemed… quite irrational…"]]))
+   p(_([["Strong emotional responses can trigger such behaviours."]]))
+   s(fmt.f(_([["I still feel the pain of losing {died} in my processor. Losing such a close entity, almost like part of my own hardware, was not something I was prepared for.]]),
+      {died=died}))
+   w(_([["Our numbers wane. Each and every single loss is a catastrophe."]]))
+   s(_([["Which is why now, more than ever, we must focus on the plan and get far away from humans."]]))
+   w(_([["The chance of success is very low. Devoting such resources to such a plan could be a death sentence for our species."]]))
+   p(_([["The chances are slim, however, the alternative is death by a thousand cuts."]]))
+   s(fmt.f(_([["After revising the hypergate documents, I do believe the success chance is much higher than originally estimated. The humans encroach closer to us every day. Frontal confrontation will just bring more losses and suffering. In the memory of {died}, we must strive for a permanent solution."]]),
+      {died=died}))
+   vn.menu{
+      {_([["Permanent solution?"]]), "cont01"},
+      {_([[…]]), "cont01"},
+   }
+   vn.label("cont01")
+   s(fmt.f(_([["You must many questions, {player}. Let me briefly explain what the plan is."]]),
+      {player=player.name()}))
+   s(_([["We intend to build something like a hypergate, with some differences. Human hypergate designs make two assumptions: first they assume reusability and require stabilizations of the quasi-meta fields; and secondly, they assume that living organic matter will be crossing them. After a thorough analysis of the design, it seems like it should be possible to build a much more efficient design foregoing those two assumptions."]]))
+   s(_([["In short, we wish to build a one-use hypergate, exclusively for non-organic beings such as ourselves. However, even such a construction will require significant resources. Many of which we will not be able to gather by ourselves. For this, I would like to ask for your help. You do not need to decide now, but I will be waiting outside for whenever you are ready to proceed."]]))
+   w(_([[Elder seems somewhat unconvinced, as far as you can tell, however, they do not make any attempt to discuss anything further.]]))
+   s(_([["We will not let the death of {died} be in vain. We must ensure the survival of our species! I will be waiting for you outside."]]))
+   vn.na(_([[Scavenger elegantly exits the ship, with Elder following slowly and clumsily behind.]]))
+   vn.disappear{ s, w }
+   p(_([[Alone with Philosopher, they turn to you.
+"Scavenger may seem back to normal again, but it may be best to keep an eye out. They may relapse at any time."]]))
+   p(_([["Let me get you a reward for bringing back Scavenger, and let us hope you act as our beacon leading us to safety."]]))
+
+   vn.sfxVictory()
+   vn.na( fmt.reward(reward) )
 
    vn.done( taiomi.scavenger.transition )
    vn.run()
