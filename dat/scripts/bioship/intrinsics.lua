@@ -674,7 +674,6 @@ intrinsics["Pirate Revenant"] = {
          "genedrive",
          "weap1",
          "weap2",
-         "weap3",
       },
    },
    {

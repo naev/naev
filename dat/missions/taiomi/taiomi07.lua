@@ -361,35 +361,25 @@ function land ()
 
    vn.clear()
    vn.scene()
-   local e = vn.newCharacter( taiomi.vn_elder() )
-   vn.transition()
-   vn.na(_([[You find Elder waiting for you in the Goddard hangar bay.]]))
-   e(fmt.f(_([["How was the fighting? Cleaning {sys} is an important first step for our security."]]),
-      {sys=fightsys}))
-   vn.menu{
-      {_([["It was a cakewalk."]]), "01_cakewalk"},
-      {_([["Is there no other way?"]]), "01_other"},
-      {_([[…]]), "01_cont"},
-   }
+   local s = vn.newCharacter( taiomi.vn_scavenger() )
+   local p = taiomi.vn_philosopher{ pos="farright", flip=false }
+   local w = taiomi.vn_elder{ pos="farleft", flip=true }
+   vn.transition( taiomi.scavenger.transition )
 
-   vn.label("01_cakewalk")
-   e(_([["It seems that the best way to deal with humans is another human."]]))
-   vn.jump("01_cont")
+   vn.na(_([[You reach the hangar and see that an impromptu meeting has already started to take place between Elder, Philosopher, and Scavenger. It seems like most of the communication is binary data going through Taiomi channels, however, when Scavenger sees you, they switch to natural language and the others follow suit.]]))
+   s(_([["It seems like a lot has happened. I am still working on recovering my memory archives."]]))
+   p(_([["Memory is just a collection of qualia. You should not overestimate its value. Please use our collective archives to get a better approximation."]]))
+   s(fmt.f(_([["There may be something of interest, although I may think it is a lost cause. It would be useful to obtain data from {player} too, for completeness."]]),
+      {player=player.name()}))
+   vn.na(fmt.f(_([[You provide them with the recordings {shipai} took of Scavenger losing control.]]),
+      {shipai=tut.ainame()}))
+   w(_([[""]]))
 
-   vn.label("01_other")
-   e(_([["There is no other option. Our numbers dwindle, picked off by stray ships. Only establishing a secure zone will allow us to survive."]]))
-   vn.jump("01_cont")
-
-   vn.label("01_cont")
-   e(_([["I would hope that you have bought us enough time for a while. However, usually space is not kind to us. We may need to move again soon."]]))
-   e(_([["I am not used to dealing with humans, but Philosopher told me it was customary in capitalistic societies to provide rewards in exchange for services. Seems like a waste of resources, but I shall comply. Please take some credits we scrounged up from derelict ships."]]))
-   vn.sfxVictory()
-   vn.na( fmt.reward(reward) )
-   e(_([["I shall be outside planning our next steps."]]))
-   vn.na(_([[Elder scratches their way out of the Goddard.]]))
+   vn.done( taiomi.scavenger.transition )
    vn.run()
 
    player.pay( reward )
-   taiomi.log.main(fmt.f(_("You destroyed {num} ships in the {sys} as ordered by Elder."),{num=37, sys=fightsys}))
+   taiomi.log.main(fmt.f(_("You destroyed a patrol in the {sys} system as ordered by Elder. On the way back, you found a berserk Scavenger whom you were able to calm and bring back to Taiomi. Scavenger once again went back to work on their plan to save their species."),
+      {sys=fightsys}))
    misn.finish(true)
 end

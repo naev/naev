@@ -3549,7 +3549,7 @@ void pilots_clean( int persist )
     * sorts of Lua stuff. */
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
-      if (pilot_isFlag(p, PILOT_DELETE)
+      if (pilot_isFlag(p, PILOT_DELETE))
          continue;
       if (p == player.p &&
           (persist && pilot_isFlag(p, PILOT_PERSIST)))
