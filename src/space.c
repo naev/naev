@@ -1575,7 +1575,7 @@ void space_init( const char* sysname, int do_simulate )
    }
 
    /* See if we should get a new music song. */
-   if (player.p != NULL)
+   if ((player.p != NULL) && do_simulate)
       music_choose(NULL);
 
    /* Reset new trails. */

@@ -1,6 +1,6 @@
 --[[
-choose will get called with a string parameter indicating status valid
-parameters:
+choose will get called with a string parameter indicating status.
+Valid parameters:
    load - game is loading
    land - player landed
    takeoff - player took off
