@@ -3547,8 +3547,10 @@ void pilots_clean( int persist )
 
    /* First pass to stop outfits without clearing stuff - this can call all
     * sorts of Lua stuff. */
-   for (int i=0; i < array_size(pilot_stack); i++) {
+   for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
+      if (pilot_isFlag(p, PILOT_DELETE)
+         continue;
       if (p == player.p &&
           (persist && pilot_isFlag(p, PILOT_PERSIST)))
          continue;
