@@ -3549,8 +3549,6 @@ void pilots_clean( int persist )
     * sorts of Lua stuff. */
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
-      if (pilot_isFlag(p, PILOT_DELETE))
-         continue;
       if (p == player.p &&
           (persist && pilot_isFlag(p, PILOT_PERSIST)))
          continue;
@@ -3563,8 +3561,9 @@ void pilots_clean( int persist )
    /* Here we actually clean up stuff. */
    for (int i=0; i<array_size(pilot_stack); i++) {
       /* move player and persisted pilots to start */
-      if (pilot_stack[i] == player.p ||
-          (persist && pilot_isFlag(pilot_stack[i], PILOT_PERSIST))) {
+      if (!pilot_isFlag(pilot_stack[i], PILOT_DELETE) &&
+            (pilot_stack[i] == player.p ||
+             (persist && pilot_isFlag(pilot_stack[i], PILOT_PERSIST)))) {
          /* Have to swap the pilots so it gets properly freed. */
          Pilot *p = pilot_stack[persist_count];
          pilot_stack[persist_count] = pilot_stack[i];
