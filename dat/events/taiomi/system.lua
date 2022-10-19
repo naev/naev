@@ -43,7 +43,7 @@ function create ()
       return d
    end
 
-   scavenger_missing = (progress > 4) or (progress==4 and taiomi.inprogress())
+   scavenger_missing = ((progress > 4) or (progress==4 and taiomi.inprogress())) and progress < 7
 
    -- Scavenger
    if not scavenger_missing then
@@ -65,7 +65,7 @@ function create ()
       d_elder:rename( _("Elder Drone") )
    end
    d_elder:setFriendly(false) -- Always neutral
-   if progress >= 5 then
+   if progress >= 5 and progress < 7 then
       d_elder:setHilight(true)
    end
    hook.pilot( d_elder, "hail", "hail_elder" )
@@ -176,6 +176,10 @@ end
 function hail_elder( p )
    if progress < 5 then
       p:comm(_("The drone seems fairly beaten and immobile. It slightly moves to acknowledge your presence but nothing more."))
+      player.commClose()
+      return
+   elseif progress >= 7 then
+      p:comm(_("Elder seems a bit tired and defeated. They move slightly to acknowledge your presence but nothing more."))
       player.commClose()
       return
    end
@@ -448,6 +452,7 @@ Scavenger goes silent for a second, as if thinking.
       d(fmt.f(_([["As time increases, the probability of finding {dead} decreases."]]),
          {dead=dead}))
       vn.jump("menu")
+   --elseif progress == 7+math.huge and naev.claimTest( {system.get("Bastion"), system.get("Gamel")}, true ) then
    else
       d(_([["I am still preparing our next steps."]]))
       vn.jump("menu")
