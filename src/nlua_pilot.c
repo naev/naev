@@ -823,8 +823,8 @@ static int pilotL_canSpawn( lua_State *L )
  *
  * @usage pilot.toggleSpawn() -- Defaults to flipping the global spawning (true->false and false->true)
  * @usage pilot.toggleSpawn( false ) -- Disables global spawning
- * @usage pilot.toggleSpawn( "Pirates" ) -- Defaults to disabling pirate spawning
- * @usage pilot.toggleSpawn( "Pirates", true ) -- Turns on pirate spawning
+ * @usage pilot.toggleSpawn( "Pirate" ) -- Defaults to disabling pirate spawning
+ * @usage pilot.toggleSpawn( "Pirate", true ) -- Turns on pirate spawning
  *
  *    @luatparam[opt] Faction fid Faction to enable or disable spawning off. If ommited it works on global spawning.
  *    @luatparam[opt] boolean enable true enables spawn, false disables it.
