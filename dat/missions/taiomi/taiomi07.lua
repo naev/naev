@@ -85,7 +85,7 @@ function enter ()
       local flt
       if fct== "Soromid" then
          flt = {
-            "Soromid Ira",
+            "Soromid Nyx",
             "Soromid Odium",
             "Soromid Odium",
             "Soromid Reaver",
@@ -95,7 +95,7 @@ function enter ()
          }
       else
          flt = {
-            "Empire Hawking",
+            "Empire Pacifier",
             "Empire Admonisher",
             "Empire Admonisher",
             "Empire Lancelot",
@@ -108,16 +108,23 @@ function enter ()
       local enterjmp = jump.get( fightsys, entersys )
       local exitjmp = jump.get( fightsys, exitsys )
 
+      -- Disable pilots for a bit
+      pilot.clear()
+      pilot.toggleSpawn( false )
+
       -- Spawn the patrol
       plts = fleet.add( 1, flt, faction.get(fct), enterjmp )
+      pilotai.hyperspace( plts[1], exitjmp )
+      plts[1]:setSpeedLimit( 100 )
       plts[1]:setHilight(true)
+      plts[1]:setVisplayer(true)
       for k,p in ipairs(plts) do
          local m = p:memory()
          m.norun = true
-         pilotai.hyperspace( p, exitjmp )
 
          hook.pilot( p, "death", "patrol_death" )
          hook.pilot( p, "jump", "patrol_jump" )
+         hook.pilot( p, "attacked", "patrol_attacked" )
       end
    elseif mem.state==1 and system.cur()==scenesys then
       -- Scene with Scavenger
@@ -237,6 +244,12 @@ function scavenger_death ()
    lmisn.fail(_("Scavenger died!"))
 end
 
+function patrol_attacked ()
+   if plts[1] then
+      plts[1]:setSpeedLimit( 0 )
+   end
+end
+
 function patrol_jump ()
    lmisn.fail(_("some of the patrol got away!"))
 end
@@ -246,6 +259,7 @@ function patrol_death ()
    local hashilight = false
    for k,p in ipairs(plts) do
       if p:exists() then
+         print( string.format("%02d: %s", k, p ) )
          table.insert( nplts, p )
          if p:flags("hilight") then
             hashilight = true
@@ -258,10 +272,14 @@ function patrol_death ()
       mem.state = 1 -- next state
       misn.osdActive(2)
       misn.markerMove( base )
+
+      -- Reenable pilots
+      pilot.toggleSpawn(true)
    else
       -- Rehighlight as necessary
       if not hashilight then
          plts[1]:setHilight(true)
+         plts[1]:setVisplayer(true)
       end
    end
 end
