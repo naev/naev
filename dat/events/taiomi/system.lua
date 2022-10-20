@@ -214,7 +214,7 @@ function hail_elder( p )
          end )
          vn.jump("menu")
       end
-   elseif progress == 6 and naev.claimTest( {system.get("Gamel"), system.get("Bastion")}, true ) then
+   elseif progress == 6 and naev.claimTest( {system.get("Gamel"), system.get("Bastion")} ) then
       if inprogress then
          d(_([["Have you taken out the patrol yet?"]]))
          vn.jump("menu")

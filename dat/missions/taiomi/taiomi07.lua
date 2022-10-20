@@ -42,7 +42,7 @@ local scenesys = exitsys
 mem.state = 0
 
 function create ()
-   if not misn.claim( {fightsys, scenesys}, true) then
+   if not misn.claim( {fightsys, scenesys} ) then
       warn(_("Unable to claim system that should be claimable!"))
       misn.finish(false)
    end
