@@ -198,6 +198,7 @@ function scavenger_hail( p )
          {fmt.f(_([["Scavenger, it's me, {player}!"]]),{player=player.name()}), "cont03"},
          {_([["Scavenger, snap out of it!"]]), "cont03"},
       }
+      vn.label("cont03")
       s(fmt.f(_([["{player}?"
 Their systems dim a second, almost if… rebooting?
 "What happened?"]]),
