@@ -36,12 +36,13 @@ local scenesys = exitsys
    1: destroyed patrol
    2: noticed scavenger
    3: badguy down
-   4: Scavenger calmed donw a bit
+   4: Scavenger calmed down a bit
    5: completely calmed down
 --]]
 mem.state = 0
 
 function create ()
+   -- Strictly speaking fightsys is a hard claim, but scenesys is a soft claim
    if not misn.claim( {fightsys, scenesys} ) then
       warn(_("Unable to claim system that should be claimable!"))
       misn.finish(false)
