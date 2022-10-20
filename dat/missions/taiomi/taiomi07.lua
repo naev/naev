@@ -229,7 +229,9 @@ Their systems dim a second, almost if… rebooting?
 
       scavenger:setInvincible(true)
       local out = jump.get( scenesys, basesys )
+      scavenger:taskClear()
       scavenger:hyperspace( out )
+      scavenger:setFriendly(true)
       mem.state = 5
 
       misn.osdCreate( title, {
@@ -381,8 +383,8 @@ function land ()
    vn.clear()
    vn.scene()
    local s = vn.newCharacter( taiomi.vn_scavenger() )
-   local p = taiomi.vn_philosopher{ pos="farright", flip=false }
-   local w = taiomi.vn_elder{ pos="farleft", flip=true }
+   local p = vn.newCharacter( taiomi.vn_philosopher{ pos="farright", flip=false } )
+   local w = vn.newCharacter( taiomi.vn_elder{ pos="farleft", flip=true } )
    vn.transition( taiomi.scavenger.transition )
 
    vn.na(_([[You reach the hangar and see that an impromptu meeting has already started to take place between Elder, Philosopher, and Scavenger. It seems like most of the communication is binary data going through Taiomi channels, however, when Scavenger sees you, they switch to natural language and the others follow suit.]]))
@@ -412,7 +414,8 @@ function land ()
    s(_([["We intend to build something like a hypergate, with some differences. Human hypergate designs make two assumptions: first they assume reusability and require stabilizations of the quasi-meta fields; and secondly, they assume that living organic matter will be crossing them. After a thorough analysis of the design, it seems like it should be possible to build a much more efficient design foregoing those two assumptions."]]))
    s(_([["In short, we wish to build a one-use hypergate, exclusively for non-organic beings such as ourselves. However, even such a construction will require significant resources. Many of which we will not be able to gather by ourselves. For this, I would like to ask for your help. You do not need to decide now, but I will be waiting outside for whenever you are ready to proceed."]]))
    w(_([[Elder seems somewhat unconvinced, as far as you can tell, however, they do not make any attempt to discuss anything further.]]))
-   s(_([["We will not let the death of {died} be in vain. We must ensure the survival of our species! I will be waiting for you outside."]]))
+   s(fmt.f(_([["We will not let the death of {died} be in vain. We must ensure the survival of our species! I will be waiting for you outside."]]),
+      {died=died}))
    vn.na(_([[Scavenger elegantly exits the ship, with Elder following slowly and clumsily behind.]]))
    vn.disappear{ s, w }
    p(_([[Alone with Philosopher, they turn to you.
