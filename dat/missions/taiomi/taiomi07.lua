@@ -141,7 +141,7 @@ function enter ()
       end
 
       local out = jump.get( scenesys, basesys )
-      pos = (jmp:pos() + out) / 2
+      pos = (jmp:pos() + out:pos()) / 2
       scavenger = pilot.add( "Drone (Hyena)", "Independent", pos, _("Scavenger Drone") )
       scavenger:setInvisible(true)
       scavenger:setInvincible(true)
@@ -245,7 +245,7 @@ function scavenger_death ()
 end
 
 function patrol_attacked ()
-   if plts[1] then
+   if plts[1] and plts[1]:exists() then
       plts[1]:setSpeedLimit( 0 )
    end
 end
@@ -254,12 +254,11 @@ function patrol_jump ()
    lmisn.fail(_("some of the patrol got away!"))
 end
 
-function patrol_death ()
+function patrol_death( d )
    local nplts = {}
    local hashilight = false
    for k,p in ipairs(plts) do
-      if p:exists() then
-         print( string.format("%02d: %s", k, p ) )
+      if p:exists() and p ~= d then
          table.insert( nplts, p )
          if p:flags("hilight") then
             hashilight = true
@@ -271,7 +270,7 @@ function patrol_death ()
    if #plts <= 0 then
       mem.state = 1 -- next state
       misn.osdActive(2)
-      misn.markerMove( base )
+      misn.markerMove( mem.marker, base )
 
       -- Reenable pilots
       pilot.toggleSpawn(true)
