@@ -142,7 +142,7 @@ function scom.spawn( pilots )
          local L = lanes.get(fct, "non-friendly")
          for i = 1,20 do -- Just brute force sampling
             local np = lanes.getNonPoint( L, p, r, m )
-            if np and #pilot.getHostiles( fct, m, np ) == 0 then
+            if np and #pilot.getEnemies( fct, m, np ) == 0 then
                origin = np
                break
             end

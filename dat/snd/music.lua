@@ -461,7 +461,7 @@ local function should_combat ()
    end
 
    -- Nearby enemies targetting the player will also switch
-   local enemies = pp:getHostiles( enemy_dist, nil, true )
+   local enemies = pp:getEnemies( enemy_dist, nil, true )
    for k,v in ipairs(enemies) do
       local tgt = v:target()
       if tgt and tgt:withPlayer() then
@@ -487,7 +487,7 @@ local function should_ambient ()
    end
 
    -- Enemies nearby
-   local enemies = pp:getHostiles( enemy_dist, nil, true )
+   local enemies = pp:getEnemies( enemy_dist, nil, true )
    if #enemies > 0 then
       return false
    end

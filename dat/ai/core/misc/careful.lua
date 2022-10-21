@@ -96,7 +96,7 @@ function careful.checkVulnerable( p, plt, threshold )
    -- Make sure not in safe lanes
    if always_yes or careful.posIsGood( plt, pos ) then
       -- Check to see vulnerability
-      local H = 1+__estimate_strength( p:getHostiles( mem.vulnrange, pos, true ) )
+      local H = 1+__estimate_strength( p:getEnemies( mem.vulnrange, pos, true ) )
       local F = 1+__estimate_strength( __join_tables(
             p:getAllies( mem.vulnrange, pos, true ),
             p:getAllies( mem.vulnrange, nil, true ) ) )
