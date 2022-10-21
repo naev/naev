@@ -515,6 +515,8 @@ static int commodityL_description( lua_State *L )
  *        or used as a mission cargo (see misn.cargoAdd), and in those cases it will persist in saved games.
  *        Caution: Usage as a regular commodity in the player's cargo holds is not yet supported.
  *
+ * @usage commodity.new( N_("Cheesburgers"), N_("I can has cheezburger?") )
+ *
  *    @luatparam string cargo Name of the cargo to add. This must not match a cargo name defined in commodity.xml.
  *    @luatparam string decription Description of the cargo to add.
  *    @luatparam[opt=nil] table params Table of named parameters. Currently supported is "gfx_space".
