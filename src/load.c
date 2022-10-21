@@ -105,7 +105,7 @@ static void move_old_save( const char *path, const char *fname, const char *ext,
 static int load_load( nsave_t *save, const char *path );
 static int load_game( nsave_t *ns );
 static int load_gameInternal( const char* file, const char* version );
-static int load_gameInternalDeferred( void *data );
+static int load_gameInternalHook( void *data );
 static int load_enumerateCallback( void* data, const char* origdir, const char* fname );
 static int load_enumerateCallbackPlayer( void* data, const char* origdir, const char* fname );
 static int load_compatibilityTest( const nsave_t *ns );
@@ -1103,17 +1103,18 @@ static int load_gameInternal( const char* file, const char* version )
    data = malloc( sizeof(const char*) * 2 );
    data[0] = file;
    data[1] = version;
-   if (player.p != NULL)
-      hook_addFunc( load_gameInternalDeferred, data, "safe" );
+   /* If the player isn't loaded, hooks aren't run so we can just go right away. */
+   if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED)) /* same condition in hook.c */
+      return load_gameInternalHook( data );
    else
-      return load_gameInternalDeferred( data );
+      hook_addFunc( load_gameInternalHook, data, "safe" );
    return 0;
 }
 
 /**
  * @brief Loads a game .Meant to be run in a function hook.
  */
-static int load_gameInternalDeferred( void *data )
+static int load_gameInternalHook( void *data )
 {
    xmlNodePtr node;
    xmlDocPtr doc;
