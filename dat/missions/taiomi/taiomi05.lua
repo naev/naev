@@ -468,6 +468,7 @@ function land ()
       local p = taiomi.vn_philosopher{ pos="farright", flip=false }
       local w = taiomi.vn_elder{ pos="farleft", flip=true }
       local sai = tut.vn_shipai()
+      local died = taiomi.young_died()
 
       vn.na(fmt.f(_("You return to the {base} to try to process what happened… Not only was the life of {dead} lost, but Scavenger has also gone missing in their thirst for revenge…"),
          {base=base, dead=taiomi.young_died()}))
@@ -487,16 +488,18 @@ function land ()
 "It seems like Scavenger has not returned."]]))
       vn.menu{
          {_([["They have gone missing."]]), "01_cont"},
-         {fmt.f(_([["We found {died}…"]]),{died=taiomi.young_died()}), "01_cont"},
+         {fmt.f(_([["We found {died}…"]]),{died=died}), "01_cont"},
          {_([[…]]), "01_silent"},
       }
 
       vn.label("01_missing")
-      vn.na(_("You explain the events that happened leading up to finding {died}'s body and Scavenger deciding to take revenge in their own hands."))
+      vn.na(fmt.f(_("You explain the events that happened leading up to finding {died}'s body and Scavenger deciding to take revenge in their own hands."),
+         {died=died}))
       vn.jump("01_cont")
 
       vn.label("01_silent")
-      vn.na(_("You play the recording of the events that happened leading up to finding {died}'s body and Scavenger deciding to take revenge in their own hands."))
+      vn.na(fmt.f(_("You play the recording of the events that happened leading up to finding {died}'s body and Scavenger deciding to take revenge in their own hands."),
+         {died=died}))
       vn.jump("01_cont")
 
       vn.label("01_cont")
@@ -523,7 +526,8 @@ function land ()
       var.push( "taiomi_drone_elder", true )
 
       player.pay( reward )
-      taiomi.log.main(_("You found out that {died} was destroyed by marauders. This caused Scavenger to go into a rage and disappear into deeper space to seek revenge. Back at Taiomi, Elder offered to give you more work."))
+      taiomi.log.main(fmt.f(_("You found out that {died} was destroyed by marauders. This caused Scavenger to go into a rage and disappear into deeper space to seek revenge. Back at Taiomi, Elder offered to give you more work."),
+         {died=died}))
       misn.finish(true)
    end
 end
