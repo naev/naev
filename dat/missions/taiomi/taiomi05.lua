@@ -432,7 +432,7 @@ function land ()
          {alive=alive, dead=dead}))
       s(fmt.f(_([["I have simulated the most likely situations and devised a plan that maximizes the chance of recovering {dead} safely by minimizing the amount of time to find them, however, this will come at a risk for us."]]),
          {dead=dead}))
-      s(fmt.f(_([["The core idea is to backtrack the most probably path, starting with {firstsys}, then {fightsys}, and finally {lastsys}. At each system, we will make a run to an optimal position, and I will begin broadcasting a special code while listening to possible answers."]]),
+      s(fmt.f(_([["The core idea is to backtrack the most probable path, starting with {firstsys}, then {fightsys}, and finally {lastsys}. At each system, we will make a run to an optimal position, and I will begin broadcasting a special code while listening to possible answers."]]),
          {firstsys=firstsys, fightsys=fightsys, lastsys=lastsys}))
       s(fmt.f(_([["There is no time to explain the details, but this code will allow detecting {dead}. However, I will remain largely immobile, and it is likely that it will attract unwanted attention in the system. I will need you to protect me for the duration of the signal."]]),
          {dead=dead}))
