@@ -892,6 +892,7 @@ static int hooks_executeParam( const char* stack, const HookParam *param )
          hook_run( h, param, j );
          run++;
 
+         /* If hook_cleanup was run, hook_list will be NULL */
          if (hook_list==NULL)
             break;
       }
