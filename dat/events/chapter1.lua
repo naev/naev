@@ -245,7 +245,14 @@ local function getFactionStuff( fct )
    return bossship, testership, extraships, tester_broadcast, boss_broadcast
 end
 
+local system_known_list = {}
 function cutscene_start ()
+   -- Store known status
+   for k,v in ipairs(hypergate_list) do
+      local _hyp, hyps = spob.getS( v )
+      system_known_list[ hyps ] = hyps:known()
+   end
+
    local fadetime = 3
    fg_setup()
    fadeout()
@@ -609,8 +616,13 @@ function cutscene_cleanup ()
    end
 
    -- Set the hypergates as known, should make them appear by name on selection menu
-   for k,v in ipairs(hypergate_list) do
-      v:setKnown(true)
+   for k,v in pairs(system_known_list) do
+      local f = k:faction()
+      if f and f:tags().generic then
+         k:setKnown( true )
+      else
+         k:setKnown( v )
+      end
    end
 
    local pp = player.pilot()
