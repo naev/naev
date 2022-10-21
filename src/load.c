@@ -105,6 +105,7 @@ static void move_old_save( const char *path, const char *fname, const char *ext,
 static int load_load( nsave_t *save, const char *path );
 static int load_game( nsave_t *ns );
 static int load_gameInternal( const char* file, const char* version );
+static int load_gameInternalDeferred( void *data );
 static int load_enumerateCallback( void* data, const char* origdir, const char* fname );
 static int load_enumerateCallbackPlayer( void* data, const char* origdir, const char* fname );
 static int load_compatibilityTest( const nsave_t *ns );
@@ -1087,16 +1088,41 @@ static int load_game( nsave_t *ns )
  */
 static int load_gameInternal( const char* file, const char* version )
 {
-   xmlNodePtr node;
-   xmlDocPtr doc;
-   Spob *pnt;
-   int version_diff = (version!=NULL) ? naev_versionCompare(version) : 0;
+   const char** data;
 
    /* Make sure it exists. */
    if (!PHYSFS_exists( file )) {
       dialogue_alert( _("Saved game file seems to have been deleted.") );
       return -1;
    }
+
+   /* Some global cleaning has to be done here. */
+   toolkit_closeAll();
+   hook_cleanup();
+
+   data = malloc( sizeof(const char*) * 2 );
+   data[0] = file;
+   data[1] = version;
+   if (player.p != NULL)
+      hook_addFunc( load_gameInternalDeferred, data, "safe" );
+   else
+      return load_gameInternalDeferred( data );
+   return 0;
+}
+
+/**
+ * @brief Loads a game .Meant to be run in a function hook.
+ */
+static int load_gameInternalDeferred( void *data )
+{
+   xmlNodePtr node;
+   xmlDocPtr doc;
+   Spob *pnt;
+   const char **sdata = data;
+   const char *file = sdata[0];
+   const char *version = sdata[1];
+   int version_diff = (version!=NULL) ? naev_versionCompare(version) : 0;
+   free(data);
 
    /* Load the XML. */
    doc = load_xml_parsePhysFS( file );
@@ -1176,7 +1202,8 @@ static int load_gameInternal( const char* file, const char* version )
 err_doc:
    xmlFreeDoc(doc);
 err:
-   WARN( _("Saved game '%s' invalid!"), file);
+   dialogue_alert( _("Saved game '%s' invalid!"), file);
+   menu_main();
    return -1;
 }
 

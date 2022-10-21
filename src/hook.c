@@ -1189,8 +1189,6 @@ int hook_load( xmlNodePtr parent )
 {
    xmlNodePtr node;
 
-   hook_cleanup();
-
    /* We're loading. */
    hook_loadingstack = 1;
 
