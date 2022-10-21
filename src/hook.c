@@ -891,7 +891,12 @@ static int hooks_executeParam( const char* stack, const HookParam *param )
          /* Run hook. */
          hook_run( h, param, j );
          run++;
+
+         if (hook_list==NULL)
+            break;
       }
+      if (hook_list==NULL)
+         break;
    }
    hook_runningstack--; /* not running hooks anymore */
 
@@ -1081,9 +1086,6 @@ static void hook_free( Hook *h )
 void hook_cleanup (void)
 {
    Hook *h;
-
-   if (hook_runningstack)
-      WARN(_("Running hook_cleanup while hook stack is being run!"));
 
    /* Clear queued hooks. */
    hq_clear();
