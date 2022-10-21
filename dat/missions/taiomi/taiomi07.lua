@@ -410,7 +410,7 @@ function land ()
       {_([[…]]), "cont01"},
    }
    vn.label("cont01")
-   s(fmt.f(_([["You must many questions, {player}. Let me briefly explain what the plan is."]]),
+   s(fmt.f(_([["You must have many questions, {player}. Let me briefly explain what the plan is."]]),
       {player=player.name()}))
    s(_([["We intend to build something like a hypergate, with some differences. Human hypergate designs make two assumptions: first they assume reusability and require stabilizations of the quasi-meta fields; and secondly, they assume that living organic matter will be crossing them. After a thorough analysis of the design, it seems like it should be possible to build a much more efficient design foregoing those two assumptions."]]))
    s(_([["In short, we wish to build a one-use hypergate, exclusively for non-organic beings such as ourselves. However, even such a construction will require significant resources. Many of which we will not be able to gather by ourselves. For this, I would like to ask for your help. You do not need to decide now, but I will be waiting outside for whenever you are ready to proceed."]]))
