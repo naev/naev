@@ -481,7 +481,7 @@ function atk.preferred_enemy( pref_func )
    local r = math.pow( mem.lanedistance, 2 )
    local maxrange = mem.atk_pref_range
    local targets = {}
-   for k,h in ipairs( p:getEnemies( maxrange, nil, true, true, false, true ) ) do
+   for k,h in ipairs( p:getEnemies( maxrange, nil, false, true, false, true ) ) do
       local w = h:memory().vulnerability or 0
       if w < math.huge then -- math.huge can be used to make the AI try not to target
          local v, F, H = careful.checkVulnerable( p, h, mem.vulnattack, r )

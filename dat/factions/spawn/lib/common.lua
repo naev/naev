@@ -134,7 +134,7 @@ function scom.spawn( pilots )
    local leader
    local origin
    if issim then
-      -- Stealth should avoid pirates
+      -- Stealth should avoid enemies nearby
       if pilots.__stealth then
          local r = system.cur():radius() * 0.8
          local p = vec2.newP( rnd.rnd() * r, rnd.angle() )
