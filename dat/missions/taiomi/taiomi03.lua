@@ -275,6 +275,12 @@ function spawn_baddies ()
          local p = spawn_baddie( "Soromid Reaver" )
          p:setLeader( l )
       end
+   elseif fct == "Dvaered" then
+      local l = spawn_baddie( "Dvaered Vigilance" )
+      for i=1,3 do
+         local p = spawn_baddie( "Dvaered Vendetta" )
+         p:setLeader( l )
+      end
    else
       local l = spawn_baddie( "Empire Pacifier" )
       for i=1,3 do

@@ -94,6 +94,16 @@ function enter ()
             "Soromid Reaver",
             "Soromid Reaver",
          }
+      elseif fct=="Dvaered" then
+         flt = {
+            "Dvaered Vigilance",
+            "Dvaered Phalanx",
+            "Dvaered Phalanx",
+            "Dvaered Vendetta",
+            "Dvaered Vendetta",
+            "Dvaered Vendetta",
+            "Dvaered Vendetta",
+         }
       else
          flt = {
             "Empire Pacifier",
