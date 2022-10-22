@@ -262,7 +262,7 @@ function optimize.optimize( p, cores, outfit_list, params )
    end
 
    -- Special case bioships
-   if pt.bioship then
+   if pt.bioship and not p:shipvarPeek("bioship_init") then
       local stage = bioship.maxstage( p )
       bioship.simulate( p, rnd.rnd(1,stage) )
    end

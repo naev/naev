@@ -286,6 +286,7 @@ function bioship.simulate( p, stage, setskills )
    -- Heal up
    p:setHealth( 100, 100 )
    p:setEnergy( 100 )
+   p:shipvarPush("bioship_init",true)
 end
 
 local stage, skills, intrinsics, skillpoints, skilltxt
