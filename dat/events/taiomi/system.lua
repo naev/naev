@@ -454,7 +454,28 @@ Scavenger goes silent for a second, as if thinking.
          {dead=dead}))
       vn.jump("menu")
    elseif progress == 7+math.huge and naev.claimTest( {system.get("Haven"), system.get("Titus")}, true ) then
-      d(_([[""]]))
+      if inprogress then
+         d(_([["How is raiding the convoys going?"]]))
+         vn.jump("menu")
+      else
+         vn.na(_([[Once again you see the familiar sight of Scavenger in the Taiomi system. Their ship is much more beaten up than before, but they still hold themselves up with an air of dignity and fierce dedication.]]))
+         d(_([["My irrational absence has put us behind schedule, however, I accept full responsibility."]]))
+         d(_([["I have been trying to rethink our approach. Instead of working from mainly raw materials, it seems that it would be optimal to make use of existing materials. Intercepting communications it seems like the pirates are smuggling much equipment that could allow us to bootstrap the construction."]]))
+         d(_([["At the current moment, I am not aware the exact details of their operation. However, we are aware of some convoy activity. Would you be willing board the convoys to collect information and supplies? This time I would not be able to accompany you."]]))
+         vn.menu{
+            {_("Agree to help out."), "08_yes"},
+            {_("Not right now."), "mission_reject"},
+         }
+
+         vn.label("08_yes")
+         d(fmt.f(_([["Appreciations. The convoys are known to operate around the {sys1} and {sys2} systems. We would need to collect information on their storage, supply routes, and general operation to see if we can further accelerate the process."]]),
+            {sys1=system.get("Haven"),sys2=system.get("Titus")}))
+         d(_([["It is believed that the convoys will also have materials that will be useful for building our hypergate. If you are able to recover materials, they will also be very useful. Bon voyage!"]]))
+         vn.func( function ()
+            naev.missionStart("Taiomi 8")
+         end )
+         vn.jump("menu_ask")
+      end
    else
       d(_([["I am still preparing our next steps."]]))
       vn.jump("menu")
