@@ -1106,8 +1106,16 @@ static int load_gameInternal( const char* file, const char* version )
    /* If the player isn't loaded, hooks aren't run so we can just go right away. */
    if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED)) /* same condition in hook.c */
       return load_gameInternalHook( data );
-   else
+   else {
+      /* Break out of potential inner loops. */
+      SDL_Event event;
+      SDL_memset( &event, 0, sizeof(event) );
+      event.type = SDL_LOOPDONE;
+      SDL_PushEvent( &event );
+
+      /* Delay one frame. */
       hook_addFunc( load_gameInternalHook, data, "safe" );
+   }
    return 0;
 }
 
