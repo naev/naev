@@ -290,6 +290,7 @@ end
 
 function hail_scavenger ()
    local inprogress = taiomi.inprogress()
+   local lab, labsys = taiomi.laboratory()
    -- Wording is chosen to make it seem a it unnatural and robotic, as if
    -- someone studied how to interact with humans from some obsolete text books
    -- or something like that
@@ -322,7 +323,8 @@ function hail_scavenger ()
          end )
          vn.jump("menu_ask")
       end
-   elseif progress == 1 then
+   elseif progress == 1 and naev.claimTest( {system.get("Delta Pavonis"), system.get("Father's Pride"), system.get("Doranthex")}, true ) then
+      -- TODO would be nice to not hardcode the systems up here
       if inprogress then
          d(_([["How is the progress on collecting the hypergate information going?"]]))
          vn.jump("menu")
@@ -343,13 +345,12 @@ function hail_scavenger ()
          end )
          vn.jump("menu_ask")
       end
-   elseif progress == 2 then
+   elseif progress == 2 and naev.claimTest( labsys, true ) then
       if inprogress then
          d(_([["How is the collecting the documents going?"]]))
          vn.jump("menu")
       else
          local fct = var.peek( "taiomi_convoy_fct" ) or "Empire"
-         local lab, labsys = taiomi.laboratory()
          d(fmt.f(_([["The data you collected from the convoys has been very useful. I have started to put together a more concrete plan. However, it seems like there are many references to important documents that seem to be stored away at a {fct} laboratory."]]),
             {fct=fct}))
          d(_([["Without access to such documents, I would have to reverse engineer the design and run probabilistic simulations to fill in the remaining details. Such a heuristical process is bound to be error prone and take significant computational resources. The most logical course of action is to attempt to recover the documents."]]))
@@ -452,7 +453,8 @@ Scavenger goes silent for a second, as if thinking.
       d(fmt.f(_([["As time increases, the probability of finding {dead} decreases."]]),
          {dead=dead}))
       vn.jump("menu")
-   --elseif progress == 7+math.huge and naev.claimTest( {system.get("Bastion"), system.get("Gamel")}, true ) then
+   elseif progress == 7+math.huge and naev.claimTest( {system.get("Haven"), system.get("Titus")}, true ) then
+      d(_([[""]]))
    else
       d(_([["I am still preparing our next steps."]]))
       vn.jump("menu")

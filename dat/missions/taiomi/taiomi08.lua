@@ -66,6 +66,15 @@ local function osd ()
 end
 
 function create ()
+   local claimsys = {}
+   for k,v in ipairs(convoysys) do
+      table.insert( claimsys, v.sys )
+   end
+   if not misn.claim( claimsys ) then
+      warn(_("Unable to claim system that should be claimable!"))
+      misn.finish(false)
+   end
+
    misn.accept()
 
    -- Mission details
