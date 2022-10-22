@@ -4,7 +4,7 @@
  <priority>4</priority>
  <chance>10</chance>
  <location>Bar</location>
- <cond>faction.playerStanding("Pirate") &gt;= -20</cond>
+ <cond>faction.playerStanding("Pirate") &gt;= -20 and not player.misnActive("Stealing ships")</cond>
  <faction>Wild Ones</faction>
  <faction>Black Lotus</faction>
  <faction>Raven Clan</faction>
