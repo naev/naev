@@ -575,3 +575,6 @@ end
 
 function end_cooldown ()
 end
+
+function update_effects ()
+end
