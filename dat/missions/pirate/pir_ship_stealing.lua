@@ -198,7 +198,7 @@ function land()
    local landed, landsys = spob.cur()
    if landed == mem.planet then
       -- Try to swap ships
-      local tmp = pilot.add( mem.ship, "Independent" )
+      local tmp = pilot.add( mem.ship, "Independent", nil, nil, {naked=true} )
       equipopt.generic( tmp )
       if not swapship.swap( tmp, fmt.f(_("You acquired the ship through illegitimate means at {pnt} in the {sys} system. Yarr!"),{pnt=landed, sys=landsys}) ) then
          -- Failed to swap ship!
