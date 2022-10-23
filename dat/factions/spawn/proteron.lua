@@ -1,7 +1,7 @@
 local scom = require "factions.spawn.lib.common"
 
 local seuler      = ship.get("Proteron Euler")
-local sderivative = ship.get("Proteron Derivative")
+local sdalton     = ship.get("Proteron Dalton")
 local shippocrates= ship.get("Proteron Hippocrates")
 local sgauss      = ship.get("Proteron Gauss")
 local spythagoras = ship.get("Proteron Pythagoras")
@@ -19,9 +19,9 @@ local function spawn_patrol ()
       scom.addPilot( pilots, seuler )
       scom.addPilot( pilots, seuler )
    else
-      scom.addPilot( pilots, sderivative )
-      scom.addPilot( pilots, sderivative )
-      scom.addPilot( pilots, sderivative )
+      scom.addPilot( pilots, sdalton )
+      scom.addPilot( pilots, sdalton )
+      scom.addPilot( pilots, sdalton )
    end
 
    return pilots

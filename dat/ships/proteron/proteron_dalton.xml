@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<ship name="Proteron Derivative">
+<ship name="Proteron Dalton">
  <points>30</points>
- <base_type>Derivative</base_type>
- <GFX size="40">derivative</GFX>
+ <base_type>Dalton</base_type>
+ <GFX size="40">dalton</GFX>
  <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
@@ -17,7 +17,7 @@
  <license>Light Combat Vessel</license>
  <cond>faction.playerStanding("Proteron") &gt;= 20</cond>
  <condstr>You need at least 20 reputation with the Proteron.</condstr>
- <description>While smaller and less intimidating than its bigger siblings in the Proteron arsenal, a pack of Derivatives is still a foe to be reckoned with. True to its name, it's the latest in a long line of largely carrier-based interceptors. The Derivative's armor shell can be retracted and functions as cargo box for more convenient handling and storage. Packing relatively little firepower, they're ill-suited to duelling, but a carrier group unleashing several squadrons has been known to turn the tide of battle on many occasions.</description>
+ <description>While smaller and less intimidating than its bigger siblings in the Proteron arsenal, a pack of Daltons is still a foe to be reckoned with. It's the latest in a long line of largely carrier-based interceptors. The Dalton's armor shell can be retracted and functions as cargo box for more convenient handling and storage. Packing relatively little firepower, they're ill-suited to duelling, but a carrier group unleashing several squadrons has been known to turn the tide of battle on many occasions.</description>
  <health>
   <armour>35</armour>
   <armour_regen>0</armour_regen>
