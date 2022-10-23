@@ -1,20 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Proteron Derivative Bay">
+<outfit name="Proteron Derivative Dock">
  <general>
   <slot prop="fighter_bay">weapon</slot>
-  <size>large</size>
+  <size>medium</size>
   <license>Light Combat Vessel</license>
   <rarity>2</rarity>
-  <mass>180</mass>
-  <price>1580000</price>
+  <mass>90</mass>
+  <price>740000</price>
   <gfx_store>proteron_derivative_fighter.webp</gfx_store>
-  <description>This fighter bay allows your ship to carry four Proteron Derivative class interceptors. It comes with all the devices required for the maintenance and flight of the interceptors.</description>
-  <cpu>-450</cpu>
+  <description>This fighter bay allows your ship to carry twin Proteron Derivative class interceptors. It comes with all the devices required for the maintenance and flight of the interceptors.</description>
+  <cpu>-170</cpu>
  </general>
  <specific type="fighter bay" secondary="1">
   <delay>5</delay>
   <reload_time>240</reload_time>
-  <amount>4</amount>
+  <amount>2</amount>
   <ship>Proteron Derivative</ship>
   <ship_mass>60</ship_mass>
  </specific>
