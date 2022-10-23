@@ -470,6 +470,7 @@ Scavenger goes silent for a second, as if thinking.
          vn.label("08_yes")
          d(fmt.f(_([["Appreciations. The convoys are known to operate around the {sys1} and {sys2} systems. We would need to collect information on their storage, supply routes, and general operation to see if we can further accelerate the process."]]),
             {sys1=system.get("Haven"),sys2=system.get("Titus")}))
+         d(_([["The convoys are expected to be heavily guarded. Make sure you bring heavy firepower to be able to disable and board them."]]))
          d(_([["It is believed that the convoys will also have materials that will be useful for building our hypergate. If you are able to recover materials, they will also be very useful. Bon voyage!"]]))
          vn.func( function ()
             naev.missionStart("Taiomi 8")
