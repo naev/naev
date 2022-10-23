@@ -156,7 +156,7 @@ function spawn_fleet ()
    pilotai.hyperspace( fleet[1], endpos )
    local fm = fleet[1]:memory()
    fm.norun = true
-   fm.aggressive = true
+   fm.aggressive = false
    hook.pilot( fleet[1], "board", "board_convoy" )
 end
 
