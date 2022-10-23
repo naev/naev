@@ -294,6 +294,9 @@ cores.standard.engines["Starbridge"] = function ()
    return choose_one{ "Unicorp Falcon 1300 Engine", "Krain Patagium Engine" }
 end
 cores.standard.engines["Pirate Starbridge"] = cores.standard.engines["Starbridge"]
+cores.standard.systems["Proteron Hippocrates"] = function ()
+   return "Milspec Thalos 5402 Core System"
+end
 
 -- Elite exceptions
 cores.elite.engines["Kestrel"] = function ()
@@ -312,6 +315,9 @@ cores.elite.hulls["Gawain"] = function ()
 end
 cores.elite.engines["Gawain"] = function ()
    return choose_one{ "Nexus Dart 150 Engine", "Tricon Zephyr Engine" }
+end
+cores.elite.systems["Proteron Hippocrates"] = function ()
+   return "Milspec Thalos 5402 Core System"
 end
 
 --[[
