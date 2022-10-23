@@ -27,22 +27,21 @@ local title = _("Just Pirate Business")
 local base, basesys = spob.getS("One-Wing Goddard")
 local N = 2
 
+local pir_escorts = {
+   "Mule",
+   "Pirate Admonisher",
+   "Pirate Shark",
+   "Pirate Shark",
+   "Pirate Hyena",
+}
 local convoysys = {
    {
       sys = system.get("Haven"),
-      escorts = {
-         "Pirate Zebra",
-         "Pirate Shark",
-         "Pirate Shark",
-      },
+      escorts = pir_escorts,
    },
    {
       sys = system.get("Titus"),
-      escorts = {
-         "Pirate Zebra",
-         "Pirate Shark",
-         "Pirate Shark",
-      },
+      escorts = pir_escorts,
    },
 }
 

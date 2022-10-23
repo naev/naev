@@ -453,7 +453,7 @@ Scavenger goes silent for a second, as if thinking.
       d(fmt.f(_([["As time increases, the probability of finding {dead} decreases."]]),
          {dead=dead}))
       vn.jump("menu")
-   elseif progress == 7+math.huge and naev.claimTest( {system.get("Haven"), system.get("Titus")}, true ) then
+   elseif progress == 7 and naev.claimTest( {system.get("Haven"), system.get("Titus")}, true ) then
       if inprogress then
          d(_([["How is raiding the convoys going?"]]))
          vn.jump("menu")
