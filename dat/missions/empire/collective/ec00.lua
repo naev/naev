@@ -8,6 +8,7 @@
  <location>Bar</location>
  <done>Empire Shipping 3</done>
  <spob>Omega Station</spob>
+ <chapter>[^0]</chapter>
  <notes>
   <campaign>Collective</campaign>
  </notes>
