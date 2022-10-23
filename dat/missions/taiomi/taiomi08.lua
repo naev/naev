@@ -149,6 +149,7 @@ function spawn_fleet ()
    end
 
    -- First ship is the convoy ship that has special stuff
+   fleet[1]:rename(_("Pirate Convoy"))
    fleet[1]:setHilight(true)
    fleet[1]:cargoRm( "all" )
    fleet[1]:cargoAdd( mem.cargo, fleet[1]:cargoFree() )
@@ -168,7 +169,7 @@ function board_convoy( _p )
       vn.na(_([[You board the ship and first quickly download the system log information. It seems to have quite a lot of details of pirate convoy operations done in the vicinity.]]))
       vn.func( function ()
          local c = commodity.new( N_("Pirate Convoy Logs"), N_("Logging information containing lots of details about pirate convoy operations near Taiomi.") )
-         mem.cargo = misn.cargoAdd( c, 0 )
+         mem.loot = misn.cargoAdd( c, 0 )
       end )
    else
       vn.na(_([[You board the ship and download even more system log information.]]))
