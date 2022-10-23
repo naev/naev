@@ -65,7 +65,7 @@ function accept()
 
    misn.osdCreate(_("Baron"), {
       fmt.f(_("Fly to the {sys} system and land on planet {pnt}"), {sys=sys1, pnt=pnt}),
-      fmt.f(_("Fly to the {sys} system and dock with (board) Kahan Pinnacle"), {sys=sys2}),
+      fmt.f(_("Fly to the {sys} system and dock with (board) Gauss Pinnacle"), {sys=sys2}),
    })
 
    mem.misn_marker = misn.markerAdd( pnt, "low" )
@@ -90,7 +90,7 @@ end
 function jumpin()
    if mem.talked and system.cur() == sys2 then
       local homepos = spob.get("Ulios"):pos()
-      pinnacle = pilot.add( "Proteron Kahan", "Proteron", homepos + vec2.new(-400,-400), _("Pinnacle"), {ai="trader"} )
+      pinnacle = pilot.add( "Proteron Gauss", "Proteron", homepos + vec2.new(-400,-400), _("Pinnacle"), {ai="trader"} )
       pinnacle:setFaction("Independent")
       pinnacle:setInvincible(true)
       pinnacle:control()

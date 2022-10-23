@@ -1,21 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<ship name="Proteron Kahan">
+<ship name="Proteron Gauss">
  <points>90</points>
- <base_type>Kahan</base_type>
- <GFX size="100" sx="10" sy="10">kahan</GFX>
+ <base_type>Gauss</base_type>
+ <GFX size="100" sx="10" sy="10">gauss</GFX>
  <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>2200000</price>
  <time_mod>1.1</time_mod>
- <trail_generator x="-40" y="17" h="0" />
- <trail_generator x="-40" y="-17" h="0" />
+ <trail_generator x="-40" y="17" h="0">proteron</trail_generator>
+ <trail_generator x="-40" y="-17" h="0">proteron</trail_generator>
  <trail_generator x="-40" y="-5" h="0">nebula</trail_generator>
  <trail_generator x="-40" y="5" h="0">nebula</trail_generator>
  <fabricator>Proteron</fabricator>
  <license>Medium Combat Vessel</license>
- <description>The Kahan is a cutting-edge vessel. Its design was completed shortly before the Incident, and it was on track to become the Proteron military's primary combat vessel. While possessing fewer weapon mounts than the Pacifier, it makes up for it with its lower mass and expanded structural space.</description>
+ <description>The Gauss is a cutting-edge vessel. Its design was completed shortly before the Incident, and it was on track to become the Proteron military's primary combat vessel. While possessing fewer weapon mounts than the Pacifier, it makes up for it with its lower mass and expanded structural space.</description>
  <health>
   <armour>500</armour>
   <armour_regen>0</armour_regen>
@@ -46,10 +46,10 @@
   <structure size="medium" />
  </slots>
  <stats>
-  <shield_mod>15</shield_mod>
+  <speed_mod>5</speed_mod>
+  <thrust_mod>5</thrust_mod>
+  <turn_mod>5</turn_mod>
   <shield_regen_mod>20</shield_regen_mod>
-  <heat_dissipation>15</heat_dissipation>
-  <engine_limit_rel>20</engine_limit_rel>
  </stats>
  <tags>
   <tag>proteron</tag>

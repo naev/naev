@@ -161,7 +161,7 @@ function abort ()
       elseif f == faction.get( "Thurion" ) then
          choices = { "Thurion Apprehension", "Thurion Certitude" }
       elseif f == faction.get( "Proteron" ) then
-         choices = { "Proteron Kahan", "Proteron Watson", "Proteron Archimedes" }
+         choices = { "Proteron Gauss", "Proteron Watson", "Proteron Archimedes" }
       elseif f == faction.get( "Collective" ) then
          choices = { "Collective Drone", "Collective Heavy Drone" }
       elseif f == faction.get( "FLF" ) then

@@ -17,7 +17,7 @@ local pnt = spob.get("Ulios")
 
 function create()
     -- TODO: Change this to the Krieger once the Baron has it. Needs "King" mission first.
-    local baronship = pilot.add( "Proteron Kahan", "Independent", pnt:pos() + vec2.new(-400,-400), _("Pinnacle"), {ai="trader"} )
+    local baronship = pilot.add( "Proteron Gauss", "Independent", pnt:pos() + vec2.new(-400,-400), _("Pinnacle"), {ai="trader"} )
     baronship:setInvincible(true)
     baronship:setFriendly()
     baronship:control()

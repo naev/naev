@@ -26,12 +26,13 @@ local function spawn_fleet( pos )
    else
       ships[1] = "Proteron Archimedes"
    end
+   ships[2] = "Proteron Pythagoras"
 
-   for i=1,rnd.rnd(1,3) do
-      table.insert( ships, "Proteron Kahan" )
+   for i=1,rnd.rnd(1,2) do
+      table.insert( ships, "Proteron Gauss" )
    end
-   for i=1,rnd.rnd(4,6) do
-      table.insert( ships, "Proteron Derivative" )
+   for i=1,rnd.rnd(1,2) do
+      table.insert( ships, "Proteron Hippocrates" )
    end
 
    local plts = {}

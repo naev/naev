@@ -9,6 +9,7 @@
 --]]
 local outfit_list = {
    -- Below is a list of changes from 0.9.0 to 0.10.0
+   ["Proteron Kahan"] = "Proteron Gauss",
    ["Drone Fighter Bay"] = "Drone Bay",
    ["Empire Lancelot Fighter Bay"] = "Empire Lancelot Bay",
    ["Fidelity Fighter Bay"] = "Fidelity Bay",

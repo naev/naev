@@ -57,7 +57,7 @@ function accept()
       misn.setReward(_("You weren't told!"))
       misn.setDesc(fmt.f(_("Baron Sauterfeldt has summoned you to his ship, which is in the {sys} system."), {sys=baronsys}))
       misn.osdCreate(_("Prince"), {
-         fmt.f(_("Fly to the {sys} system and dock with (board) Kahan Pinnacle"), {sys=baronsys}),
+         fmt.f(_("Fly to the {sys} system and dock with (board) Gauss Pinnacle"), {sys=baronsys}),
       })
       mem.marker = misn.markerAdd(baronsys, "low")
 
@@ -77,7 +77,7 @@ function board()
     "I should warn you, {wrongname2}. Some of my, ah, colleagues have also set their sights on this item, and so you can expect their henchmen to try to take it off you. I trust you are equipped to defend yourself against their despicable sort."]]), {wrongname1=mangle(player.name()), pnt=flintplanet, sys=flintsys, wrongname2=mangle(player.name())}))
       tk.msg(_("Off to the shops"), _([[You are swiftly escorted back to your ship. You didn't really get the chance to ask the Baron any questions, such as who these potential attackers are, how you're supposed to pay for the artefacts once you locate the sellers, or what you will get out of all this. You do, however, find an update to your galaxy map that shows the location of the sellers, as well as a list of names and portraits. It would seem that the only way to find out what you're dealing with is the hard way.]]))
       misn.osdCreate(_("Prince"), {
-         fmt.f(_("Fly to the {sys} system and dock with (board) Kahan Pinnacle"), {sys=baronsys}),
+         fmt.f(_("Fly to the {sys} system and dock with (board) Gauss Pinnacle"), {sys=baronsys}),
          _("Buy the artefact and take it to Flintley"),
       })
       misn.setDesc(_("Baron Sauterfeldt has tasked you with finding an ancient artefact, but he doesn't know exactly where to get it."))
@@ -185,7 +185,7 @@ function flintley()
     "It's called a skate-board," Flintley continues. "The records about it are a bit sketchy and a lot is nothing but conjecture, but it appears it was once used in primitive communal rituals. The exact nature of these rituals is unknown, but they may have been tribal initiations or even mating rituals. The patterns in the board itself are thought to have a spiritual or mystical meaning. Also, according to some theories, people used to stand on top of the skate-board, with the cylinder wheels facing the ground. This has led some historians to believe that the feet were once central to human psychology."
     Flintley seems to have a lot more to say on the subject, but you're not that interested, so you thank him and return to your ship with the ancient artefact. You can only hope that the Baron is as enthusiastic about this skate-board as his historian!]]), {player=player.name()}))
       misn.osdCreate(_("Prince"), {
-         fmt.f(_("Fly to the {sys} system and dock with (board) Kahan Pinnacle"), {sys=baronsys}),
+         fmt.f(_("Fly to the {sys} system and dock with (board) Gauss Pinnacle"), {sys=baronsys}),
          _("Buy the artefact and take it to Flintley"),
          _("Take the artefact to Baron Sauterfeldt"),
       })
@@ -247,7 +247,7 @@ end
 
 function enter()
    if system.cur() == baronsys then
-      pinnacle = pilot.add("Proteron Kahan", "Independent", spob.get("Ulios"):pos() + vec2.new(-400,-400), _("Pinnacle"), {ai="trader"} )
+      pinnacle = pilot.add("Proteron Gauss", "Independent", spob.get("Ulios"):pos() + vec2.new(-400,-400), _("Pinnacle"), {ai="trader"} )
       pinnacle:setInvincible(true)
       pinnacle:setFriendly()
       pinnacle:control()
