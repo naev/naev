@@ -8,6 +8,7 @@
    value indicating the amount of credits to refund the player.
 --]]
 local ship_list = {
+   ["Proteron Derivative"] = "Proteron Dalton",
    ["Proteron Kahan"] = "Proteron Gauss",
 }
 --[[--
@@ -32,7 +33,8 @@ local outfit_list = {
    ["Lancelot Fighter Bay"] = "Lancelot Bay",
    ["Pirate Hyena Fighter Dock"] = "Pirate Hyena Bay",
    ["Pirate Hyena Fighter Bay"] = "Pirate Hyena Dock",
-   ["Proteron Derivative Fighter Bay"] = "Proteron Derivative Bay",
+   ["Proteron Derivative Bay"] = "Proteron Dalton Bay",
+   ["Proteron Derivative Fighter Bay"] = "Proteron Dalton Bay",
    ["Soromid Brigand Fighter Bay"] = "Soromid Brigand Bay",
    ["Thurion Perspicacity Fighter Dock"] = "Thurion Perspicacity Bay",
    ["Thurion Perspicacity Fighter Bay"] = "Thurion Perspicacity Dock",
