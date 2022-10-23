@@ -166,12 +166,17 @@ function board_convoy( _p )
    vn.sfx( der.sfx.board )
    vn.music( der.sfx.ambient )
    if mem.state == 0 then
-      vn.na(_([[You board the ship.]]))
+      vn.na(_([[You board the ship and first quickly download the system log information. It seems to have quite a lot of details of pirate convoy operations done in the vicinity.]]))
+      vn.func( function ()
+         local c = commodity.new( N_("Pirate Convoy Logs"), N_("Logging information containing lots of details about pirate convoy operations near Taiomi.") )
+         mem.cargo = misn.cargoAdd( c, 0 )
+      end )
+   else
+      vn.na(_([[You board the ship and download even more system log information.]]))
       if mem.state == N then
          vn.na(_([[It seems like you have collected all the necessary data and can return to Scavenger.]]))
       end
    end
-   vn.sfx( der.sfx.unboard )
    vn.run()
 
    mem.state = mem.state+1
@@ -220,8 +225,20 @@ function land ()
    vn.scene()
    local s = vn.newCharacter( taiomi.vn_scavenger() )
    vn.transition( taiomi.scavenger.transition )
-   vn.na(_([[You board the Goddard and and find Scavenger waiting for you.]]))
-   s(_([[""]]))
+   vn.na(_([[You board the Goddard and and find eagerly Scavenger waiting for you.]]))
+   s(_([["Were the pirate convoys accessible?"]]))
+   if cargo_owned > 0 then
+      vn.na(_("You explain how you were able to raid the convoys and obtain parts of the ship logs detailing smuggling operations, and recover large amounts of cargo that may be useful for Scavenger's plan."))
+      s(_([["Excellent. That will be most useful for the construction."]]))
+   else
+      vn.na(_("You explain how you were able to raid the convoys and obtain parts of the ship logs detailing smuggling operations."))
+   end
+   s(_([["The information looks promising. I will have to do an in-depth analysis afterwards. Meet me outside, I will be planning our next steps."]]))
+   if cargo_owned > 0 then
+      s(_([["Let me provide you with a reward for your services. I should be able to make an extra allowance and provide a bonus for the cargo you were able to recover."]]))
+   else
+      s(_([["Let me provide you with a reward for your services."]]))
+   end
    vn.sfxVictory()
 
    vn.na( fmt.reward(full_reward) )
@@ -229,7 +246,12 @@ function land ()
    vn.run()
 
    player.pay( full_reward )
-   player.fleetCargoRm( mem.cargo, cargo_owned )
-   taiomi.log.main(_(""))
+   local log = _("You raided pirate convoys near Taiomi for information on smuggling operations.")
+   if cargo_owned > 0 then
+      player.fleetCargoRm( mem.cargo, cargo_owned )
+   else
+      log = log .. fmt.f(_(" You were also able to recover large amounts of {cargo} to help accelerate the construction of the hypergate."),{cargo=mem.cargo})
+   end
+   taiomi.log.main( log )
    misn.finish(true)
 end
