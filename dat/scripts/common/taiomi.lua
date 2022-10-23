@@ -8,10 +8,10 @@ local taiomi = {
       name = _("Scavenger Drone"),
       portrait = nil,
       image = 'gfx/ship/drone/drone_hyena_comm.webp',
-      colour = nil,
+      colour = { 0.7, 0.8, 1.0 },
    },
-   wornout = {
-      name = _("Worn-out Drone"),
+   elder = {
+      name = _("Elder Drone"),
       portrait = nil,
       image = 'gfx/ship/drone/drone_comm.webp',
       colour = nil,
@@ -20,7 +20,7 @@ local taiomi = {
       name = _("Philosopher Drone"),
       portrait = nil,
       image = 'gfx/ship/drone/drone_comm.webp',
-      colour = nil,
+      colour = {1.0, 0.65, 1.0},
    },
    younga = {
       name = _("Hugonn"), -- Odin's raven
@@ -46,6 +46,9 @@ local taiomi = {
       taiomi03 = 350e3,
       taiomi04 = 300e3,
       taiomi05 = 500e3,
+      taiomi06 = 400e3,
+      taiomi07 = 450e3,
+      taiomi08 = 400e3,
    },
 }
 
@@ -55,6 +58,9 @@ local missions = {
    "Taiomi 3", -- 3
    "Taiomi 4", -- 4
    "Taiomi 5", -- 5
+   "Taiomi 6", -- 6
+   "Taiomi 7", -- 7
+   "Taiomi 8", -- 8
 }
 
 -- Gets the current progress of the Taiomi campaign
@@ -85,11 +91,15 @@ function taiomi.vn_scavenger( params )
             color=taiomi.scavenger.colour,
          }, params) )
 end
-function taiomi.vn_wornout( params )
-   return vn.Character.new( taiomi.wornout.name,
+function taiomi.vn_elder( params )
+   local name = taiomi.elder.name
+   if not var.peek( "taiomi_drone_elder" ) then
+      name = _("Worn-out Drone")
+   end
+   return vn.Character.new( name,
          tmerge( {
-            image=taiomi.wornout.image,
-            color=taiomi.wornout.colour,
+            image=taiomi.elder.image,
+            color=taiomi.elder.colour,
          }, params) )
 end
 function taiomi.vn_philosopher( params )

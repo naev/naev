@@ -106,7 +106,6 @@ local function equip_soromid( p, opt_params  )
 
    -- Try to equip
    return optimize.optimize( p, cores, outfits, params )
-   -- TODO randomly change some bio plasma weapons to weaker ones
 end
 
 return equip_soromid

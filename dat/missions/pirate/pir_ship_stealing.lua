@@ -4,7 +4,7 @@
  <priority>4</priority>
  <chance>10</chance>
  <location>Bar</location>
- <cond>faction.playerStanding("Pirate") &gt;= -20</cond>
+ <cond>faction.playerStanding("Pirate") &gt;= -20 and not player.misnActive("Stealing ships")</cond>
  <faction>Wild Ones</faction>
  <faction>Black Lotus</faction>
  <faction>Raven Clan</faction>
@@ -198,7 +198,7 @@ function land()
    local landed, landsys = spob.cur()
    if landed == mem.planet then
       -- Try to swap ships
-      local tmp = pilot.add( mem.ship, "Independent" )
+      local tmp = pilot.add( mem.ship, "Independent", nil, nil, {naked=true} )
       equipopt.generic( tmp )
       if not swapship.swap( tmp, fmt.f(_("You acquired the ship through illegitimate means at {pnt} in the {sys} system. Yarr!"),{pnt=landed, sys=landsys}) ) then
          -- Failed to swap ship!

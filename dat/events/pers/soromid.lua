@@ -23,7 +23,7 @@ return function ()
                local m = p:memory()
                m.comm_greet = _([["Do you feel the ebb of the universe? Only through harmony will we surpass our frail selves."]])
                m.taunt = _("You shall make a good sacrifice to my bioship!")
-               m.bribe_no = _("We do not deal with the tainted.")
+               m.bribe_no = _([["We do not deal with the tainted."]])
                return p
             end,
          },

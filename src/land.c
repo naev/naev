@@ -239,6 +239,8 @@ int can_swapEquipment( const char *shipname )
          land_errDialogueBuild( _("You have deployed fighters.") );
          return 0;
       }
+      /* Recall fighters. */
+      escort_clearDeployed( player.p );
    }
    return 1;
 }

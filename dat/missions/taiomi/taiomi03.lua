@@ -34,6 +34,10 @@ mem.state = 0
 
 function create ()
    mem.lab, mem.labsys = taiomi.laboratory()
+   if not misn.claim( mem.labsys, true ) then
+      warn(_("Unable to claim system that should be claimable!"))
+      misn.finish(false)
+   end
 
    misn.accept()
 
@@ -273,6 +277,12 @@ function spawn_baddies ()
       local l = spawn_baddie( "Soromid Nyx" )
       for i=1,3 do
          local p = spawn_baddie( "Soromid Reaver" )
+         p:setLeader( l )
+      end
+   elseif fct == "Dvaered" then
+      local l = spawn_baddie( "Dvaered Vigilance" )
+      for i=1,3 do
+         local p = spawn_baddie( "Dvaered Vendetta" )
          p:setLeader( l )
       end
    else

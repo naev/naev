@@ -52,7 +52,7 @@ local function update( s, dt )
    -- See what can trigger it
    local triggers
    if d.fct then
-      triggers = pilot.getHostiles( d.fct, d.range, sp, false, true )
+      triggers = pilot.getEnemies( d.fct, d.range, sp, true, true )
    else
       triggers = pilot.getInrange( sp, d.range )
    end

@@ -6,7 +6,7 @@ local formation = require "formation"
 local lanes = require 'ai.core.misc.lanes'
 local scans = require 'ai.core.misc.scans'
 
-local choose_weapset, clean_task, gen_distress, gen_distress_attacked, handle_messages, lead_fleet, should_cooldown -- Forward-declared functions
+local choose_weapset, clean_task, gen_distress, gen_distress_attacked, handle_messages, lead_fleet, should_cooldown, consider_taunt -- Forward-declared functions
 
 --[[
 -- Variables to adjust AI
@@ -582,7 +582,7 @@ function control( dt )
       -- See what decision to take
       if should_attack( enemy, si ) then
          ai.hostile(enemy) -- Should be done before taunting
-         taunt(enemy, true)
+         consider_taunt(enemy, true)
          ai.pushtask("attack", enemy)
       elseif l then -- Leader should be set already
          ai.pushtask("follow_fleet")
@@ -608,7 +608,7 @@ function control( dt )
       -- See if really want to attack
       if should_attack( enemy, si ) then
          ai.hostile(enemy) -- Should be done before taunting
-         taunt(enemy, true)
+         consider_taunt(enemy, true)
          clean_task()
          ai.pushtask("attack", enemy)
       end
@@ -800,7 +800,7 @@ function attacked( attacker )
       if mem.defensive then
          -- Some taunting
          ai.hostile(attacker) -- Should be done before taunting
-         taunt( attacker, false )
+         consider_taunt( attacker, false )
 
          -- Now pilot fights back
          clean_task( task )
@@ -896,6 +896,16 @@ function taunt( _target, _offensive )
    -- Empty stub
 end
 
+-- Lower taunt frequency, at most once per X seconds per target
+mem._taunted = {}
+function consider_taunt( target, offensive )
+   local id = target:id()
+   local last_taunted = mem._taunted[id] or -100
+   if mem.elapsed - last_taunted > 15 then
+      taunt( target, offensive )
+      mem._taunted[id] = mem.elapsed
+   end
+end
 
 -- Handle distress signals
 function distress( pilot, attacker )

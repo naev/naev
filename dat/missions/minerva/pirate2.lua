@@ -178,7 +178,7 @@ function enter ()
       fzalek = faction.dynAdd( "Za'lek", "zalek_thugs", _("Za'lek") )
 
       drone1 = drone_create( drone1pos )
-      mem.drone1marker = system.mrkAdd( drone1:pos(), _("Za'lek Drone") )
+      mem.drone1marker = system.markerAdd( drone1:pos(), _("Za'lek Drone") )
 
       mem.drones_killed = 0
    end
@@ -191,14 +191,14 @@ function drone_death ()
    end
    mem.drones_killed = mem.drones_killed+1
    if mem.drones_killed==1 then
-      system.mrkRm( mem.drone1marker )
+      system.markerRm( mem.drone1marker )
       drone2 = drone_create( drone2pos )
-      mem.drone2marker = system.mrkAdd( drone2:pos(), _("Za'lek Drone") )
+      mem.drone2marker = system.markerAdd( drone2:pos(), _("Za'lek Drone") )
       player.msg(_("You detected another Za'lek drone in the system!"))
       mem.zalek_inbound = false
       hook.timer( 0.5, "heartbeat" )
    elseif mem.drones_killed==2 then
-      system.mrkRm( mem.drone2marker )
+      system.markerRm( mem.drone2marker )
       mem.misn_state = 1
       misn.osdActive(2)
       pilot.toggleSpawn(true)

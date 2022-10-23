@@ -891,7 +891,13 @@ static int hooks_executeParam( const char* stack, const HookParam *param )
          /* Run hook. */
          hook_run( h, param, j );
          run++;
+
+         /* If hook_cleanup was run, hook_list will be NULL */
+         if (hook_list==NULL)
+            break;
       }
+      if (hook_list==NULL)
+         break;
    }
    hook_runningstack--; /* not running hooks anymore */
 
@@ -1082,9 +1088,6 @@ void hook_cleanup (void)
 {
    Hook *h;
 
-   if (hook_runningstack)
-      WARN(_("Running hook_cleanup while hook stack is being run!"));
-
    /* Clear queued hooks. */
    hq_clear();
 
@@ -1188,8 +1191,6 @@ int hook_save( xmlTextWriterPtr writer )
 int hook_load( xmlNodePtr parent )
 {
    xmlNodePtr node;
-
-   hook_cleanup();
 
    /* We're loading. */
    hook_loadingstack = 1;

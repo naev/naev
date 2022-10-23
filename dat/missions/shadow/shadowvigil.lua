@@ -181,7 +181,7 @@ function enter()
          end
       end
       local rend_point = vec2.new(0,0)
-      mem.start_marker = system.mrkAdd( rend_point, _("Rendezvous point") )
+      mem.start_marker = system.markerAdd( rend_point, _("Rendezvous point") )
       mem.proxy = hook.timer(0.5, "proximity", {location = rend_point, radius = 500, funcname = "escortStart"})
    end
 end
@@ -357,7 +357,7 @@ end
 -- The player has successfully joined up with the escort fleet. Cutscene -> departure.
 function escortStart()
    if mem.start_marker ~= nil then
-      system.mrkRm( mem.start_marker )
+      system.markerRm( mem.start_marker )
    end
    mem.stage = 2 -- Fly to the refuel planet.
    misn.osdActive(2)

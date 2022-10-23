@@ -19,22 +19,22 @@ local buffer, tw, th, fgparts, bgparts, wing, pos
 
 function background ()
    -- Create particles and buffer
-   local density = 250*250
+   local density = 300
    buffer = 200
    tw = zmax*nw+2*buffer
    th = zmax*nh+2*buffer
-   local nparts = math.floor( tw * th / density + 0.5 )
+   local nparts = math.floor( tw * th / math.pow(density,2) + 0.5 )
 
    -- Load graphics
    local images_raw = {
       -- Debris
-      { n = 5, i = lg.newImage( 'gfx/spfx/cargo.webp' ), s = 6, debris = true },
-      { n = 5, i = lg.newImage( 'gfx/spfx/debris0.webp' ), s = 6, debris = true },
-      { n = 5, i = lg.newImage( 'gfx/spfx/debris1.webp' ), s = 6, debris = true },
-      { n = 5, i = lg.newImage( 'gfx/spfx/debris2.webp' ), s = 6, debris = true },
-      { n = 5, i = lg.newImage( 'gfx/spfx/debris3.webp' ), s = 6, debris = true },
-      { n = 5, i = lg.newImage( 'gfx/spfx/debris4.webp' ), s = 6, debris = true },
-      { n = 5, i = lg.newImage( 'gfx/spfx/debris5.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/cargo.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris0.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris1.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris2.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris3.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris4.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris5.webp' ), s = 6, debris = true },
       { n = 2, i = lg.newImage( 'gfx/spfx/debris_cluster1.webp' ), s = 6, debris = true },
       { n = 2, i = lg.newImage( 'gfx/spfx/debris_cluster2.webp' ), s = 6, debris = true },
       -- Neutral
@@ -102,7 +102,7 @@ function background ()
    -- Create background
    bgparts = {}
    for i = 1,nparts*3 do
-      local part = parts_create()
+      local part = parts_create( true )
       bgparts[i] = part
       part.s = 1 / (2 + 5*rnd.rnd())
    end
@@ -111,7 +111,7 @@ function background ()
    -- Create foreground
    fgparts = {}
    for i = 1,nparts do
-      local part = parts_create()
+      local part = parts_create( false )
       fgparts[i] = part
       part.s = 1 + rnd.rnd()
    end

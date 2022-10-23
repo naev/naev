@@ -162,7 +162,7 @@ function jumpout ()
       if marks ~= nil then
          for i, m in ipairs(marks) do
             if m ~= nil then
-               system.mrkRm(m)
+               system.markerRm(m)
             end
          end
          marks = nil
@@ -250,7 +250,7 @@ function set_marks ()
    if marks ~= nil then
       for i, m in ipairs(marks) do
          if m ~= nil then
-            system.mrkRm(m)
+            system.markerRm(m)
          end
       end
    end
@@ -258,6 +258,6 @@ function set_marks ()
    -- Add new marks
    marks = {}
    for i, p in ipairs(mem.points) do
-      marks[i] = system.mrkAdd( p:pos(), _("Attraction") )
+      marks[i] = system.markerAdd( p:pos(), _("Attraction") )
    end
 end

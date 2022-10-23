@@ -34,6 +34,7 @@
 #include "nxml.h"
 #include "nxml_lua.h"
 #include "player.h"
+#include "player_fleet.h"
 #include "rng.h"
 #include "space.h"
 
@@ -1194,12 +1195,11 @@ void missions_cleanup (void)
  */
 int missions_saveActive( xmlTextWriterPtr writer )
 {
-   /* We also save specially created cargos here. Since it can only be mission
-    * cargo and can only be placed on the player's main ship, we don't have to
-    * worry about it being on other ships. */
-   xmlw_startElem(writer,"mission_cargo");
-   for (int i=0; i<array_size(player.p->commodities); i++) {
-      const Commodity *c = player.p->commodities[i].commodity;
+   /* We also save specially created cargos here. */
+   PilotCommodity *pcom = pfleet_cargoList();
+   xmlw_startElem(writer,"temporary_cargo");
+   for (int i=0; i<array_size(pcom); i++) {
+      const Commodity *c = pcom[i].commodity;
       if (!c->istemp)
          continue;
       xmlw_startElem(writer,"cargo");
@@ -1207,6 +1207,7 @@ int missions_saveActive( xmlTextWriterPtr writer )
       xmlw_endElem(writer); /* "cargo" */
    }
    xmlw_endElem(writer); /* "missions_cargo */
+   array_free(pcom);
 
    xmlw_startElem(writer,"missions");
    for (int i=0; i<array_size(player_missions); i++) {
@@ -1301,12 +1302,13 @@ int missions_loadCommodity( xmlNodePtr parent )
 {
    xmlNodePtr node;
 
-   /* We have to ensure the mission_cargo stuff is loaded first. */
+   /* We have to ensure the temporary_cargo stuff is loaded first. */
    node = parent->xmlChildrenNode;
    do {
       xml_onlyNodes(node);
 
-      if (xml_isNode(node,"mission_cargo")) {
+      /* TODO remove support for "mission_cargo" in the future (maybe 0.12.0?). 0.10.0 onwards uses "temporary_cargo" */
+      if (xml_isNode(node,"temporary_cargo") || xml_isNode(node,"mission_cargo")) {
          xmlNodePtr cur = node->xmlChildrenNode;
          do {
             xml_onlyNodes(cur);

@@ -23,7 +23,7 @@ return function ()
                local m = p:memory()
                m.comm_greet = _([["Think not of what the pack will do for you, but only what you can do for the pack."]])
                m.taunt = _("The pack will tear you limb from limb!")
-               m.bribe_no = _("We only wish for blood!")
+               m.bribe_no = _([["We only wish for blood!"]])
                m.formation = "wedge"
                local pos = p:pos()
                local vel = p:vel()

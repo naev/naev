@@ -24,25 +24,28 @@
       * Schroedinger uses less fuel instead of getting a large bonus
       * Plasma has a burning effect
       * Changed spawning and behaviour of pirates to be less dangerous in populated systems
-      * Fighters only attack enemies visible by tehir carrier
+      * Fighters only attack enemies visible by their carrier
+      * AI is better at choosing targets
    * New Content
       * Added a gigantic black hole
       * Added new space anomalies such as plasma storms
       * Lots of new asteroid types and commodities
       * More interesting places to visit and explore
       * More engine sounds
-      * 30 New missions
+      * 41 New missions
          * More terraforming
          * Continuation of the Za'lek story
          * Help the Dvaered do some tasks
          * Tutorial for new mechanics
-      * 7 New ships
+         * Secret system
+      * 12 New ships
       * New spob graphics
       * Lots of new outfits and reworked old outfits
          * Use energy to avoid death
          * Create scanning pulses
          * Blinking has animations
          * Advanced mining techniques
+         * Space mines
       * News revamped to be more flexible and relate more with current events
       * NPCs revamped to be more flexible with many new messages
       * New commodities that are only available from mining
@@ -58,6 +61,10 @@
       * Redid the music engine to be less prone to play combat music
       * Hide radar when overlay is open (with option to revert to old behaviour)
       * Duplicate effects get collapsed into stacks in the GUI
+      * Allowing exiting and reloading while love framework is open (VN, etc.)
+      * Autonav is more flexible with positioning on jump points
+      * Can customize jump flash brightness
+      * Player will not be scanned immediately on jumping in or taking off
    * Engine changes
       * Work has begun on a development manual
       * Plugin support with explicit support for total conversions

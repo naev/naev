@@ -70,7 +70,7 @@ static int pilotL_canSpawn( lua_State *L );
 static int pilotL_toggleSpawn( lua_State *L );
 static int pilotL_getPilots( lua_State *L );
 static int pilotL_getAllies( lua_State *L );
-static int pilotL_getHostiles( lua_State *L );
+static int pilotL_getEnemies( lua_State *L );
 static int pilotL_getVisible( lua_State *L );
 static int pilotL_getInrange( lua_State *L );
 static int pilotL_eq( lua_State *L );
@@ -221,7 +221,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "rm", pilotL_remove },
    { "get", pilotL_getPilots },
    { "getAllies", pilotL_getAllies },
-   { "getHostiles", pilotL_getHostiles },
+   { "getEnemies", pilotL_getEnemies },
    { "getVisible", pilotL_getVisible },
    { "getInrange", pilotL_getInrange },
    { "__eq", pilotL_eq },
@@ -823,8 +823,8 @@ static int pilotL_canSpawn( lua_State *L )
  *
  * @usage pilot.toggleSpawn() -- Defaults to flipping the global spawning (true->false and false->true)
  * @usage pilot.toggleSpawn( false ) -- Disables global spawning
- * @usage pilot.toggleSpawn( "Pirates" ) -- Defaults to disabling pirate spawning
- * @usage pilot.toggleSpawn( "Pirates", true ) -- Turns on pirate spawning
+ * @usage pilot.toggleSpawn( "Pirate" ) -- Defaults to disabling pirate spawning
+ * @usage pilot.toggleSpawn( "Pirate", true ) -- Turns on pirate spawning
  *
  *    @luatparam[opt] Faction fid Faction to enable or disable spawning off. If ommited it works on global spawning.
  *    @luatparam[opt] boolean enable true enables spawn, false disables it.
@@ -967,7 +967,7 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
       p     = luaL_validpilot(L,1);
       dist  = luaL_optnumber(L,2,-1.);
       v     = luaL_optvector(L,3,&p->solid->pos);
-      inrange = lua_toboolean(L,4);
+      inrange = !lua_toboolean(L,4);
       dis   = lua_toboolean(L,5);
       fighters = lua_toboolean(L,6);
    }
@@ -1062,19 +1062,19 @@ static int pilotL_getAllies( lua_State *L )
 /**
  * @brief Gets hostile pilots to a pilot (or faction) within a certain distance.
  *
- * @usage p:getHostiles( 5000 ) -- get hostiles within 5000
- * @usage pilot.getHostiles( faction.get("Pirate"), 5000, vec2.new(0,0) ) -- Got hostiles of "Pirate" faction 5000 units from origin
+ * @usage p:getEnemies( 5000 ) -- get hostiles within 5000
+ * @usage pilot.getEnemies( faction.get("Pirate"), 5000, vec2.new(0,0) ) -- Got hostiles of "Pirate" faction 5000 units from origin
  *
  *    @luatparam Pilot|faction pilot Pilot or to get hostiles of.
  *    @luatparam[opt=infinity] number dist Distance to look for hostiles.
  *    @luatparam[opt=pilot.pos] Vec2 pos Position to check from.
- *    @luatparam[opt=false] boolean Whether or not to only check for pilots in range (only in the case of pilot, not faction)
+ *    @luatparam[opt=false] boolean ignore_range Whether or not to ignore checks for pilots in range (only in the case of pilot, not faction)
  *    @luatparam[opt=false] boolean disabled Whether or not to count disabled pilots.
  *    @luatparam[opt=false] boolean fighters Whether or not to count deployed fighters.
  *    @luatreturn {Pilot,...} A table containing the pilots.
- * @luafunc getHostiles
+ * @luafunc getEnemies
  */
-static int pilotL_getHostiles( lua_State *L )
+static int pilotL_getEnemies( lua_State *L )
 {
    return pilotL_getFriendOrFoe( L, 0 );
 }

@@ -207,7 +207,7 @@ function enter ()
          hook.timer( 17, "zach_say", _("Actually, in this case it does though…") )
          hook.timer( 22, "zach_say", _("Statistically, we're more likely to survive.") )
          hook.timer( 27, "zach_say", _("I'll shut up now.") )
-         system.mrkAdd( jret:pos(), _("Safest Jump Point") )
+         system.markerAdd( jret:pos(), _("Safest Jump Point") )
          hook.timer( 30, "heartbeat" )
       end
 
@@ -296,7 +296,7 @@ function board_drone ()
    end
 
    misn.osdActive(2)
-   system.mrkAdd( jtarget:pos(), _("Jump Point") )
+   system.markerAdd( jtarget:pos(), _("Jump Point") )
    misn.markerMove( mem.mrk, retpnt )
    hook.timer( 1, "heartbeat_bh" )
 

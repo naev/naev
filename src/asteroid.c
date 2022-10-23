@@ -177,7 +177,7 @@ void asteroids_update( double dt )
                   a->timer_max = a->timer = 10. + 20.*RNGF();
                   break;
                case ASTEROID_BG_TO_FG:
-                  a->timer_max = a->timer = 30. + 60.*RNGF();
+                  a->timer_max = a->timer = 90. + 30.*RNGF();
                   break;
 
                /* Special case needs to respawn. */

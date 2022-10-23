@@ -103,8 +103,8 @@ function enter()
         hook.pilot(fleet1[1], "idle", "idle")
         hook.pilot(fleet2[1], "idle", "idle")
 
-        system.mrkAdd(waypoint1, _("Empire flanking maneuver"))
-        system.mrkAdd(waypoint2, _("Empire flanking maneuver"))
+        system.markerAdd(waypoint1, _("Empire flanking maneuver"))
+        system.markerAdd(waypoint2, _("Empire flanking maneuver"))
 
         swarm1 = {}
         for i = 1,24 do

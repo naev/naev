@@ -20,8 +20,8 @@ local fmt = require 'format'
 local taiomi = require 'common.taiomi'
 local tut = require "common.tutorial"
 
-local progress, scavenger_missing
-local d_loiter, d_philosopher, d_scavenger, d_wornout, d_young_a, d_young_b -- Drone pilots.
+local progress, scavenger_missing, philosopher_remark
+local d_loiter, d_philosopher, d_scavenger, d_elder, d_young_a, d_young_b -- Drone pilots.
 
 function create ()
    --[[
@@ -43,7 +43,7 @@ function create ()
       return d
    end
 
-   scavenger_missing = (progress > 4) or (progress==4 and taiomi.inprogress())
+   scavenger_missing = ((progress > 4) or (progress==4 and taiomi.inprogress())) and progress < 7
 
    -- Scavenger
    if not scavenger_missing then
@@ -60,13 +60,15 @@ function create ()
    hook.pilot( d_philosopher, "hail", "hail_philosopher" )
 
    -- Worn-out Drone
-   d_wornout = addDrone( "Drone", vec2.new(-500,-300), _("Worn-out Drone") )
+   d_elder = addDrone( "Drone", vec2.new(-500,-300), _("Worn-out Drone") )
    if var.peek( "taiomi_drone_elder" ) then
-      d_wornout:rename( _("Elder Drone") )
+      d_elder:rename( _("Elder Drone") )
    end
-   d_wornout:setFriendly(false) -- Always neutral
-   --d_wornout:setHilight(true)
-   hook.pilot( d_wornout, "hail", "hail_wornout" )
+   d_elder:setFriendly(false) -- Always neutral
+   if progress >= 5 and progress < 7 then
+      d_elder:setHilight(true)
+   end
+   hook.pilot( d_elder, "hail", "hail_elder" )
 
    -- Younglings that follow around the player up until taiomi04
    if progress < 4 and not (progress == 3 and taiomi.inprogress()) then
@@ -85,7 +87,7 @@ function create ()
    -- Loitering drones
    d_loiter = {}
    for i = 1,rnd.rnd(3,6) do
-      local d = addDrone( "Drone", vec2.new( rnd.rnd()*1000, rnd.angle() ) )
+      local d = addDrone( "Drone", vec2.newP( rnd.rnd()*1000, rnd.angle() ) )
       d:setVisplayer(false)
       d:control(false)
       d:setNoJump(true)
@@ -100,6 +102,24 @@ function hail_philosopher ()
    vn.scene()
    local d = vn.newCharacter( taiomi.vn_philosopher() )
    vn.transition()
+
+   -- Special remark at the start of Taiomi 7
+   if philosopher_remark then
+      philosopher_remark = false
+      local died = taiomi.young_died()
+      vn.na(_([[You open a communication channel with Philosopher, who quickly upgrades it to an encrypted channel.]]))
+      d(_([["I see you have accepted to spread more of Elder's bloodshed. While it is not necessarily a poor answer to a situation, I do think that we have nothing to win in this scenario. Being the underdogs, there is much more to be lost if we become known and are deemed are a threat to human society."]]))
+      d(_([["While I may not agree with Scavenger on many aspects, I do believe entrusting our fate to their hands gives the highest probability of survival for us. We must bring them back or go down in the fires brought forth by Elder."]]))
+      d(fmt.f(_([["Scavenger is almost surely still alive. They are the most resourceful of our tribe, if they can not survive, none of us will ever be able to. That said, they are probably not in the best state of mind. {died} was what you could consider an offspring, although quite different from the human sense. The loss with the pressure of the survival of our species must have been too much for them."]]),
+         {died=died}))
+      d(_([["When performing Elder's new task, make sure to keep an eye out for Scavenger. I am not sure the best way to bring them back to their senses, you will have to use your human judgement. After all, we are much less different than you would expect."]]))
+      vn.na(_([[The encrypted connection is closed and you are left with your duties, and hope of meeting Scavenger once again.]]))
+      vn.func( function ()
+         naev.trigger("taiomi_philosopher")
+      end )
+      vn.done()
+      -- don't return here on purpose as we want it to end at vn.run
+   end
 
    vn.label("menu")
    d( function ()
@@ -124,6 +144,9 @@ function hail_philosopher ()
          {_([["Who are you?"]]), "who"},
          {_("Leave."), "leave"},
       }
+      if progress >= 5 then
+         table.insert( opts, 1, {_([[Ask about the future of Taiomi]]), "taiomi"} )
+      end
       return opts
    end )
 
@@ -138,31 +161,126 @@ function hail_philosopher ()
    d(_([["Perhaps the concept of thinking of individual entities is only a useful construction for our understanding of the world. It does seem like a clean definition of what we are or who we are is naught but a fleeting dream, forever outside of our grasp."]]))
    vn.jump("menu")
 
+   vn.label("taiomi")
+   d(_([["That is a deep question indeed. In the large scale, you would think the same future awaits everything. Increasing entropy leading to the degradation of all material into a single uniform state. However, that leaves an open question. Even if entropy is to monotonically increase, there has to be a singularity or a beginning of the entire process. This leads to there also being likely a singularity near the end of the process."]]))
+   d(_([["However, it is most likely that entropy is only locally monotonic. The known universe would then be seen as a projection of a higher order 'thing', that would be subject to a set of rules unknown to us. The question is whether or not we will be able to observe such a phenomena directly or indirectly to empirically establish a proof."]]))
+   d(_([["Oh, you meant in a smaller scale? That is certainly less interesting. I am not very optimistic of Taiomi and our survival. Unless something changes significantly in the short term, our demise is almost a certainty. Scavenger did seem to have a good plan, albeit risky. However, it seems like that is no longer an option at the moment."]]))
+   vn.jump("menu")
+
    vn.label("leave")
    vn.done()
    vn.run()
    player.commClose()
 end
 
-function hail_wornout( p )
-   if true then
+function hail_elder( p )
+   if progress < 5 then
       p:comm(_("The drone seems fairly beaten and immobile. It slightly moves to acknowledge your presence but nothing more."))
       player.commClose()
       return
+   elseif progress >= 7 then
+      p:comm(_("Elder seems a bit tired and defeated. They move slightly to acknowledge your presence but nothing more."))
+      player.commClose()
+      return
    end
+   local inprogress = taiomi.inprogress()
 
-   --[[
    vn.clear()
    vn.scene()
-   local d = vn.newCharacter( taiomi.vn_wornout() )
+   local d = vn.newCharacter( taiomi.vn_elder() )
    vn.transition()
-   vn.na(_("The drone seems fairly beaten and immobile. You can see some slight movement when you begin communication."))
-   d("TODO")
+   vn.na(_("The drone seems fairly beaten and worn-down. You can see some slight movement when you begin communication."))
 
+   if progress == 5 and naev.claimTest( {system.get("Bastion")}, true ) then
+      if inprogress then
+         d(_([["Have you destroyed all the ships already?"]]))
+         vn.jump("menu")
+      else
+         d(_([["The time for scuttling around in the dark are gone. We must make it clear that our territory is not a safe place for humans and get us some breathing space. This is a life or death question."]]))
+         local num = 23 -- prime number on purpose, they like primes
+         d(fmt.f(_([["I need you to go to the nearby {sys} system and destroy {num} ships, to deliver a clear sign that they are not welcome in the system."]]),
+            {sys=system.get("Bastion"), num=num}))
+         vn.menu{
+            {_("Agree to help out."), "06_yes"},
+            {_("Not right now."), "mission_reject"},
+         }
+         vn.label("06_yes")
+         d(_([[Their lights flicker in acknowledgement.
+"Only by leaving a trail of death and destruction will they learn to leave us alone. There is no other alternative."]]))
+         d(_([["The important thing is to leave a message, it is not very important which classes of ships are destroyed. In the end, they are all the same."]]))
+         d(fmt.f(_([["When you are done with your mission return to {base}."]]),{base=spob.get("One-Wing Goddard")}))
+         vn.func( function ()
+            naev.missionStart("Taiomi 6")
+         end )
+         vn.jump("menu")
+      end
+   elseif progress == 6 and naev.claimTest( {system.get("Gamel"), system.get("Bastion")} ) then
+      if inprogress then
+         d(_([["Have you taken out the patrol yet?"]]))
+         vn.jump("menu")
+      else
+         -- The fleet depends on who the player harassed at the beginning
+         local fct = var.peek( "taiomi_convoy_fct" ) or "Empire"
+         if fct== "Soromid" then
+            d(_([["One of our scouts has reported that while it seems like our attack did bring results. However, it seems like the Soromid are sending reinforcements to patrol the area."]]))
+         else
+            d(_([["One of our scouts has reported that while it seems like our attack did bring results. However, it seems like the Empire is sending reinforcements to patrol the area."]]))
+         end
+         d(_([["It is an opportunity to strike once again, harder then before! This will send a clear message and stop them from encroaching on our territory! Will you help us eliminate the intruding patrol?"]]))
+         vn.menu{
+            {_("Agree to help out."), "07_yes"},
+            {_("Not right now."), "mission_reject"},
+         }
+
+         vn.label("07_yes")
+         d(fmt.f(_([[Their lights briefly flicker in acknowledgement.
+"The patrol should be coming to the {nearbysys} system from the {sys} system. You have to intercept it before it reaches the {nearbysys}. Reports indicate that it is spearheaded by a capital ship. You should make sure you bring enough firepower to take it down."]]),
+            {nearbysys=system.get("Bastion"), sys=system.get("Gamel")}))
+         d(_([["The loss of such a large patrol should dissuade further incursions. They may even consider the area a lost cause with enough losses and retire all patrols. We must persevere at all costs."]]))
+         vn.func( function ()
+            naev.missionStart("Taiomi 7")
+            philosopher_remark = true
+         end )
+         vn.jump("menu")
+      end
+   else
+      d(_([["I still have not prepared a target."]]))
+      vn.jump("menu")
+   end
+
+   vn.label("mission_reject")
+   d(_([["I can not force you to help us out, however, our existence is at stake. Please reconsider."]]))
+   vn.jump("menu")
+
+   vn.label("menu")
+   vn.menu( function ()
+      local opts = {
+         {_("Ask about Taiomi."), "taiomi"},
+         {_("Leave."),"leave"},
+      }
+      --if progress > 5 then
+      --   table.insert( opts, 1, {_(""),""} )
+      --end
+      return opts
+   end )
+
+   vn.label("taiomi")
+   d(_([["Taiomi has been our home for many what you humans call periods. It used to be much safer, far outside the borders of human civilisation. However, humans seem to be spreading throughout the galaxy and encroaching on our safe haven."]]))
+   d(_([[They briefly pause.
+"At the beginning there were those who thought that coexistence was a possibility, although time over time has shown that to be nothing but a utopian ideal. Coexistence is not possible with the rapid reproducing violent humans. Those who tried to communicate with them are now dust in space. The only things they understand are blaster fire and carnage."]]))
+   d(_([["So many lives lost in vain, pursuing a peaceful option that is not possible. Only Scavenger still tries to excessively avoid combat, however, that has not got them very far. In the end, they too realized that violence is the only path, and this is why we must fight to not be destroyed."]]))
+   vn.jump("menu")
+
+   vn.label("leave")
+   vn.na(_("You take your leave."))
    vn.done()
    vn.run()
    player.commClose()
-   --]]
+
+   -- Time for philosopher to make a remark
+   if philosopher_remark then
+      d_philosopher:hailPlayer()
+   end
 end
 
 function hail_youngling( p )
@@ -172,6 +290,7 @@ end
 
 function hail_scavenger ()
    local inprogress = taiomi.inprogress()
+   local lab, labsys = taiomi.laboratory()
    -- Wording is chosen to make it seem a it unnatural and robotic, as if
    -- someone studied how to interact with humans from some obsolete text books
    -- or something like that
@@ -198,13 +317,14 @@ function hail_scavenger ()
 
          vn.label("01_yes")
          d(_([["Excellent. I will provide you with the analyzer. However, it is important to note that it has a particular wave signature which may make it suspicious to local authorities. I would advise against allowing your vessel to be scanned by patrols."]]))
-         d(_([["Once you get near any hypergate, it should automatically collect data about it without manual intervention. Please deliver the collected data to the One-Winged Goddard. I will collect it there. Bon voyage."]]))
+         d(_([["Once you get near any hypergate, it should automatically collect data about it without manual intervention. Please deliver the collected data to the One-Wing Goddard. I will collect it there. Bon voyage."]]))
          vn.func( function ()
             naev.missionStart("Taiomi 1")
          end )
          vn.jump("menu_ask")
       end
-   elseif progress == 1 then
+   elseif progress == 1 and naev.claimTest( {system.get("Delta Pavonis"), system.get("Father's Pride"), system.get("Doranthex")}, true ) then
+      -- TODO would be nice to not hardcode the systems up here
       if inprogress then
          d(_([["How is the progress on collecting the hypergate information going?"]]))
          vn.jump("menu")
@@ -225,13 +345,12 @@ function hail_scavenger ()
          end )
          vn.jump("menu_ask")
       end
-   elseif progress == 2 then
+   elseif progress == 2 and naev.claimTest( labsys, true ) then
       if inprogress then
          d(_([["How is the collecting the documents going?"]]))
          vn.jump("menu")
       else
          local fct = var.peek( "taiomi_convoy_fct" ) or "Empire"
-         local lab, labsys = taiomi.laboratory()
          d(fmt.f(_([["The data you collected from the convoys has been very useful. I have started to put together a more concrete plan. However, it seems like there are many references to important documents that seem to be stored away at a {fct} laboratory."]]),
             {fct=fct}))
          d(_([["Without access to such documents, I would have to reverse engineer the design and run probabilistic simulations to fill in the remaining details. Such a heuristical process is bound to be error prone and take significant computational resources. The most logical course of action is to attempt to recover the documents."]]))
@@ -257,7 +376,7 @@ function hail_scavenger ()
       local minesys = system.get("Haven")
       if inprogress then
          d(fmt.f(_([["How is the collection of {resource} coming along? If you have any, please drop it off at {base}."]]),
-            {base=_("One-Winged Goddard"), resource=resource}))
+            {base=spob.get("One-Wing Goddard"), resource=resource}))
          vn.jump("menu")
       else
          local sai = tut.vn_shipai{pos="farleft"}
@@ -311,7 +430,7 @@ Scavenger goes silent for a second, as if thinking.
             vn.jump("menu_ask")
          end
       end
-   elseif progress == 4+math.huge and naev.claimTest( {system.get("Bastion"), system.get("Gamel")}, true ) then
+   elseif progress == 4 and naev.claimTest( {system.get("Bastion"), system.get("Gamel")}, true ) then
       local dead = taiomi.young_died()
       local alive = taiomi.young_alive()
       vn.na(_([[You initiate a communication channel and immediately notice that something feels… off.]]))
@@ -324,7 +443,7 @@ Scavenger goes silent for a second, as if thinking.
          {_("Not right now."), "05_no"},
       }
       vn.label("05_yes")
-      d(_([["Appreciations. We must set off at once. Please land on the One-Winged Goddard and let us depart. I shall come with you."]]))
+      d(_([["Appreciations. We must set off at once. Please land on the One-Wing Goddard and let us depart. I shall come with you."]]))
       vn.func( function ()
          naev.missionStart("Taiomi 5")
       end )
@@ -334,6 +453,30 @@ Scavenger goes silent for a second, as if thinking.
       d(fmt.f(_([["As time increases, the probability of finding {dead} decreases."]]),
          {dead=dead}))
       vn.jump("menu")
+   elseif progress == 7 and naev.claimTest( {system.get("Haven"), system.get("Titus")}, true ) then
+      if inprogress then
+         d(_([["How is raiding the convoys going?"]]))
+         vn.jump("menu")
+      else
+         vn.na(_([[Once again you see the familiar sight of Scavenger in the Taiomi system. Their ship is much more beaten up than before, but they still hold themselves up with an air of dignity and fierce dedication.]]))
+         d(_([["My irrational absence has put us behind schedule, however, I accept full responsibility."]]))
+         d(_([["I have been trying to rethink our approach. Instead of working from mainly raw materials, it seems that it would be optimal to make use of existing materials. Intercepting communications it seems like the pirates are smuggling much equipment that could allow us to bootstrap the construction."]]))
+         d(_([["At the current moment, I am not aware the exact details of their operation. However, we are aware of some convoy activity. Would you be willing board the convoys to collect information and supplies? This time I would not be able to accompany you."]]))
+         vn.menu{
+            {_("Agree to help out."), "08_yes"},
+            {_("Not right now."), "mission_reject"},
+         }
+
+         vn.label("08_yes")
+         d(fmt.f(_([["Appreciations. The convoys are known to operate around the {sys1} and {sys2} systems. We would need to collect information on their storage, supply routes, and general operation to see if we can further accelerate the process."]]),
+            {sys1=system.get("Haven"),sys2=system.get("Titus")}))
+         d(_([["The convoys are expected to be heavily guarded. Make sure you bring heavy firepower to be able to disable and board them."]]))
+         d(_([["It is believed that the convoys will also have materials that will be useful for building our hypergate. If you are able to recover materials, they will also be very useful. Bon voyage!"]]))
+         vn.func( function ()
+            naev.missionStart("Taiomi 8")
+         end )
+         vn.jump("menu_ask")
+      end
    else
       d(_([["I am still preparing our next steps."]]))
       vn.jump("menu")
@@ -432,11 +575,14 @@ They fidget a bit in place.
    d(_([["We are a small community, I could introduce you to everyone, however, human transmissions are inefficient and it would take too long. If I could only send you a complete data packet. Let us focus on other members who you may have noticed stand out a bit."]]))
    d(_([["You may have noticed the Philosopher. I am not sure what to make out of them, but they have taken a large interest in the human practice of philosophy. I am not quite clear on the details, but it seems to consist of questioning everything while not doing anything. They make claims like 'the richest is not the one who has the most, but the one who needs the least', likely taken from studying human documents, while not assisting in most of the daily needs of the community. It is quite illogical."]]))
    d(_([["There also is the Elder, whom is distinguishable by their worn out parts which they refuse to replace. They are one of original members of the community. However, they have taken a less active role recently. We have disagreements on how to protect our community, but they always have the survival of the community on their mind."]]))
-   d(fmt.f(_([["You have also already met {namea} and {nameb}, which are the new joys of the community. It is rare to see such young members with such strong character. I look forward to their developments in the future"]]),
-      {namea=taiomi.younga.name, nameb=taiomi.youngb.name}) )
+   if d_young_a then
+      d(fmt.f(_([["You have also already met {namea} and {nameb}, which are the new joys of the community. It is rare to see such young members with such strong character. I look forward to their developments in the future"]]),
+         {namea=taiomi.younga.name, nameb=taiomi.youngb.name}) )
+      -- TODO alternate text
+   end
    vn.func( function ()
       var.push( "taiomi_drone_elder", true )
-      d_wornout:rename(_("Elder Drone"))
+      d_elder:rename(_("Elder Drone"))
       lastq = "others"
    end )
    vn.jump("menu_ask")

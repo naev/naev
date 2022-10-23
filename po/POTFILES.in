@@ -67,6 +67,7 @@ dat/effects/bloodlust.xml
 dat/effects/crippling_plasma.xml
 dat/effects/ethereal.xml
 dat/effects/fadein.xml
+dat/effects/fadeout.xml
 dat/effects/feral_rage_i.xml
 dat/effects/hypergate_enter.xml
 dat/effects/hypergate_exit.xml
@@ -2320,6 +2321,7 @@ dat/tech/plasma2.xml
 dat/tech/proteron_maps.xml
 dat/tech/proteron_military_outfits.xml
 dat/tech/proteron_military_ships.xml
+dat/tech/raven_clan_tech.xml
 dat/tech/sirius_elite_outfits.xml
 dat/tech/sirius_military_outfits.xml
 dat/tech/sirius_military_ships.xml
@@ -2339,6 +2341,7 @@ dat/tech/thurion_maps.xml
 dat/tech/thurion_military_outfits.xml
 dat/tech/thurion_military_ships.xml
 dat/tech/thurion_outfits.xml
+dat/tech/wild_ones_tech.xml
 dat/tech/yachts.xml
 dat/tech/zalek_military_ships.xml
 dat/tech/zalek_outfits_high.xml
@@ -2498,6 +2501,7 @@ dat/bkg/taiomi.lua
 dat/board.lua
 dat/comm.lua
 dat/common.lua
+dat/effects/lua/fadeout.lua
 dat/effects/lua/hypergate_enter.lua
 dat/effects/lua/wormhole_enter.lua
 dat/effects/lua/wormhole_exit.lua
@@ -2820,6 +2824,9 @@ dat/missions/taiomi/taiomi02.lua
 dat/missions/taiomi/taiomi03.lua
 dat/missions/taiomi/taiomi04.lua
 dat/missions/taiomi/taiomi05.lua
+dat/missions/taiomi/taiomi06.lua
+dat/missions/taiomi/taiomi07.lua
+dat/missions/taiomi/taiomi08.lua
 dat/missions/trader/anxiousmerchant.lua
 dat/missions/trader/trader_escort.lua
 dat/missions/trader/trader_rehab.lua

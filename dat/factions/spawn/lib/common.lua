@@ -134,7 +134,7 @@ function scom.spawn( pilots )
    local leader
    local origin
    if issim then
-      -- Stealth should avoid pirates
+      -- Stealth should avoid enemies nearby
       if pilots.__stealth then
          local r = system.cur():radius() * 0.8
          local p = vec2.newP( rnd.rnd() * r, rnd.angle() )
@@ -142,7 +142,7 @@ function scom.spawn( pilots )
          local L = lanes.get(fct, "non-friendly")
          for i = 1,20 do -- Just brute force sampling
             local np = lanes.getNonPoint( L, p, r, m )
-            if np and #pilot.getHostiles( fct, m, np ) == 0 then
+            if np and #pilot.getEnemies( fct, m, np ) == 0 then
                origin = np
                break
             end

@@ -628,7 +628,7 @@ function straferDiscuss()
    local cfuel = commodity.new( N_("Fuel"), N_("Tanks of usable fuel."), {gfx_space="fuel.webp"})
    local pos = vec2.new( -1.2*system.cur():radius(), 0 )
    system.addGatherable( cfuel, 1, pos, vec2.new(0,0), 3600 ) -- Lasts for an houer
-   mem.Imark = system.mrkAdd( pos, _("FUEL") )
+   mem.Imark = system.markerAdd( pos, _("FUEL") )
    mem.gathHook = hook.gather("gather")
 end
 
@@ -642,7 +642,7 @@ function gather( comm, qtt )
    pilot.cargoRm( player.pilot(), comm, qtt )
    player.pilot():setFuel(true)
    player.msg( _("You filled your fuel tanks.") )
-   system.mrkRm(mem.Imark)
+   system.markerRm(mem.Imark)
 end
 
 -- Remove scan hooks

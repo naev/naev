@@ -118,8 +118,13 @@ static int musicL_stop( lua_State *L )
  */
 static int musicL_isPlaying( lua_State* L )
 {
-   MusicInfo_t *minfo = music_info();
-   lua_pushboolean(L, minfo->playing);
+   if (music_disabled) {
+      lua_pushboolean(L, 0);
+   }
+   else {
+      MusicInfo_t *minfo = music_info();
+      lua_pushboolean(L, minfo->playing);
+   }
    return 1;
 }
 
@@ -134,9 +139,15 @@ static int musicL_isPlaying( lua_State* L )
  */
 static int musicL_current( lua_State* L )
 {
-   MusicInfo_t *minfo = music_info();
-   lua_pushstring(L, minfo->name);
-   lua_pushnumber(L, minfo->pos);
+   if (music_disabled) {
+      lua_pushstring(L, "none");
+      lua_pushnumber(L, 0.);
+   }
+   else {
+      MusicInfo_t *minfo = music_info();
+      lua_pushstring(L, minfo->name);
+      lua_pushnumber(L, minfo->pos);
+   }
    return 2;
 }
 

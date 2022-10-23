@@ -116,7 +116,7 @@ function _poi_enter ()
    goal = mpos + vec2.newP( 600+400*rnd.rnd(), angle )
    mem.goal = goal
 
-   mrk = system.mrkAdd( pos, _("Point of Interest") )
+   mrk = system.markerAdd( pos, _("Point of Interest") )
 
    -- Custom hook for when the player scans
    mem.poi.chook = hook.custom( "poi_scan", "_poi_scan" )
@@ -224,7 +224,7 @@ end
    @brief Cleans up after a point of interest mission.
 --]]
 function poi.misnDone( failed )
-   system.mrkRm( mrk )
+   system.markerRm( mrk )
    for k,v in ipairs(path_spfx) do
       v:rm()
    end

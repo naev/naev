@@ -1,19 +1,20 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<mission name="Taiomi 2">
+<mission name="Taiomi 8">
  <unique />
  <chance>0</chance>
  <location>None</location>
- <done>Taiomi 1</done>
+ <done>Taiomi 7</done>
  <notes>
   <campaign>Taiomi</campaign>
  </notes>
 </mission>
 --]]
 --[[
-   Taiomi 02
+   Taiomi 08
 
-   Player is asked to board convoys
+   Player has to raid pirate convoys
+   * bonus points for looting materials
 ]]--
 local vn = require "vn"
 local fmt = require "format"
@@ -21,40 +22,26 @@ local taiomi = require "common.taiomi"
 local der = require 'common.derelict'
 local pilotai = require "pilotai"
 
-local reward = taiomi.rewards.taiomi02
-local title = _("Information Hunting")
+local reward = taiomi.rewards.taiomi08
+local title = _("Just Pirate Business")
 local base, basesys = spob.getS("One-Wing Goddard")
 local N = 2
 
+local pir_escorts = {
+   "Mule",
+   "Pirate Admonisher",
+   "Pirate Shark",
+   "Pirate Shark",
+   "Pirate Hyena",
+}
 local convoysys = {
    {
-      sys = system.get( "Delta Pavonis" ),
-      fct = faction.get("Empire"),
-      escorts = {
-         "Empire Lancelot",
-         "Empire Lancelot",
-         "Empire Lancelot",
-         "Empire Lancelot",
-      },
+      sys = system.get("Haven"),
+      escorts = pir_escorts,
    },
    {
-      sys = system.get( "Father's Pride" ),
-      fct = faction.get("Soromid"),
-      escorts = {
-         "Soromid Reaver",
-         "Soromid Reaver",
-         "Soromid Reaver",
-      },
-   },
-   {
-      sys = system.get( "Doranthex" ),
-      fct = faction.get("Dvaered"),
-      escorts = {
-         "Dvaered Vendetta",
-         "Dvaered Vendetta",
-         "Dvaered Vendetta",
-         "Dvaered Vendetta",
-      }
+      sys = system.get("Titus"),
+      escorts = pir_escorts,
    },
 }
 
@@ -67,8 +54,9 @@ mem.state = 0
 
 local function osd ()
    misn.osdCreate( title, {
-      fmt.f(_("Board convoy ships ({n}/{total})"),{n=mem.state, total=N}),
-      fmt.f(_("Return to the {spobname} ({spobsys})"), {spobname=base, spobsys=basesys}),
+      fmt.f(_("Raid pirate transports ({n}/{total})"),{n=mem.state, total=N}),
+      fmt.f(_("Return to {spobname} ({spobsys})"), {spobname=base, spobsys=basesys}),
+      fmt.f(_("[Optional] Steal {cargo}"), {cargo=mem.cargo}),
    } )
 
    if mem.state >= N then
@@ -91,7 +79,7 @@ function create ()
    -- Mission details
    misn.setTitle( title )
 
-   local desc = _("You have agreed to help the robotic citizens of Taiomi to obtain important information regarding the hypergates. The information can be found on convoys that tend to cross the following systems:")
+   local desc = _("You have agreed to help Scavenger search for a dealer to obtain supplies for a large hypergate-like construction. Raiding pirate convoys in the following systems may lead to hints and useful resources:")
    for k,v in ipairs(convoysys) do
       desc = desc .. "\n" .. fmt.f(_("   {sysname}"),{sysname=v.sys})
    end
@@ -101,6 +89,10 @@ function create ()
    for k,v in ipairs(convoysys) do
       misn.markerAdd( v.sys )
    end
+
+   -- Special cargo
+   mem.cargo = commodity.new(N_("High-Tech Contraband"),N_("An assortment of various high-tech equipment and gadgets that seem to be sourced through all sorts of illegal mechanisms."))
+   mem.cargo:illegalto{ "Empire", "Soromid", "Dvaered", "Za'lek", "Sirius" }
 
    osd()
 
@@ -146,18 +138,21 @@ function spawn_fleet ()
    local startpos = j[1]
    local endpos = j[2]
 
-   -- Create the mule and change faction
-   table.insert( fleet, pilot.add( "Mule", "Trader", startpos ) )
+   -- Create the pirates
+   local fct = faction.get("Pirate")
    for k,v in ipairs(cursys.escorts) do
-      local p = pilot.add( v, cursys.fct, startpos )
-      p:setLeader( fleet[1] )
+      local p = pilot.add( v, fct, startpos )
       table.insert( fleet, p )
+   end
+   for i=2,#fleet do
+      fleet[i]:setLeader( fleet[1] )
    end
 
    -- First ship is the convoy ship that has special stuff
-   fleet[1]:rename(_("Convoy"))
-   fleet[1]:setFaction(cursys.fct)
+   fleet[1]:rename(_("Pirate Convoy"))
    fleet[1]:setHilight(true)
+   fleet[1]:cargoRm( "all" )
+   fleet[1]:cargoAdd( mem.cargo, fleet[1]:cargoFree() )
    pilotai.hyperspace( fleet[1], endpos )
    local fm = fleet[1]:memory()
    fm.norun = true
@@ -165,29 +160,24 @@ function spawn_fleet ()
    hook.pilot( fleet[1], "board", "board_convoy" )
 end
 
-function board_convoy( p )
+function board_convoy( _p )
    vn.clear()
    vn.scene()
    vn.sfx( der.sfx.board )
    vn.music( der.sfx.ambient )
    if mem.state == 0 then
-      vn.na(_([[You board the ship and are able to obtain some hypergate information from the convoy systems.]]))
+      vn.na(_([[You board the ship and first quickly download the system log information. It seems to have quite a lot of details of pirate convoy operations done in the vicinity.]]))
       vn.func( function ()
-         local c = commodity.new( N_("Hypergate Information"), N_("Information relating to the hypergate construction and planning.") )
-         mem.cargo = misn.cargoAdd( c, 0 )
+         local c = commodity.new( N_("Pirate Convoy Logs"), N_("Logging information containing lots of details about pirate convoy operations near Taiomi.") )
+         mem.loot = misn.cargoAdd( c, 0 )
       end )
    else
-      vn.na(_([[You board the ship and are able to more hypergate information from the convoy systems.]]))
+      vn.na(_([[You board the ship and download even more system log information.]]))
       if mem.state == N then
          vn.na(_([[It seems like you have collected all the necessary data and can return to Scavenger.]]))
       end
    end
-   vn.sfx( der.sfx.unboard )
    vn.run()
-   player.unboard()
-
-   -- Store faction which will be used for next missions
-   var.push( "taiomi_convoy_fct", p:faction():nameRaw() )
 
    mem.state = mem.state+1
    osd() -- Update OSD
@@ -228,22 +218,40 @@ function land ()
       return
    end
 
+   local cargo_owned = player.fleetCargoOwned( mem.cargo )
+   local full_reward = reward + cargo_owned*1000
+
    vn.clear()
    vn.scene()
    local s = vn.newCharacter( taiomi.vn_scavenger() )
    vn.transition( taiomi.scavenger.transition )
-   vn.na(_([[You board the Goddard and and find Scavenger waiting for you.]]))
-   s(_([["I can sense you have managed to collect the necessary data. Let me analyze it hastily."]]))
-   s(_([[Scavenger takes the data and there is a brief flicker of their lights.]]))
-   s(_([["Very interesting. While the documents contain mainly mundane details that aren't particularly of importance to us, there is a lead to one of the experimental locations. I believe it should be possible to find more in-depth construction details there."]]))
-   s(_([["I will be outside preparing our next steps."
-Scavenger backs out of the Goddard and returns to space.]]))
+   vn.na(_([[You board the Goddard and and find eagerly Scavenger waiting for you.]]))
+   s(_([["Were the pirate convoys accessible?"]]))
+   if cargo_owned > 0 then
+      vn.na(_("You explain how you were able to raid the convoys and obtain parts of the ship logs detailing smuggling operations, and recover large amounts of cargo that may be useful for Scavenger's plan."))
+      s(_([["Excellent. That will be most useful for the construction."]]))
+   else
+      vn.na(_("You explain how you were able to raid the convoys and obtain parts of the ship logs detailing smuggling operations."))
+   end
+   s(_([["The information looks promising. I will have to do an in-depth analysis afterwards. Meet me outside, I will be planning our next steps."]]))
+   if cargo_owned > 0 then
+      s(_([["Let me provide you with a reward for your services. I should be able to make an extra allowance and provide a bonus for the cargo you were able to recover."]]))
+   else
+      s(_([["Let me provide you with a reward for your services."]]))
+   end
    vn.sfxVictory()
-   vn.na( fmt.reward(reward) )
+
+   vn.na( fmt.reward(full_reward) )
    vn.done( taiomi.scavenger.transition )
    vn.run()
 
-   player.pay( reward )
-   taiomi.log.main(_("You helped the robotic inhabitants of Taiomi collect important information regarding the hypergates by obtaining it from convoys."))
+   player.pay( full_reward )
+   local log = _("You raided pirate convoys near Taiomi for information on smuggling operations.")
+   if cargo_owned > 0 then
+      player.fleetCargoRm( mem.cargo, cargo_owned )
+   else
+      log = log .. fmt.f(_(" You were also able to recover large amounts of {cargo} to help accelerate the construction of the hypergate."),{cargo=mem.cargo})
+   end
+   taiomi.log.main( log )
    misn.finish(true)
 end

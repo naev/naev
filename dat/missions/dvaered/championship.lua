@@ -292,7 +292,7 @@ function enter()
 
       --Adding the starting mark
       local start_pos = mispla:pos() + vec2.new( -1000, -1500)
-      mem.mark = system.mrkAdd( start_pos, _("START") )
+      mem.mark = system.markerAdd( start_pos, _("START") )
       mem.prox = hook.timer(0.5, "proximity", {location = start_pos, radius = 300, funcname = "assault"})
 
    elseif haslauncher == true then
@@ -315,7 +315,7 @@ function oppo_attacked(_pilot, attacker)  --The player tries to cheat by attacki
    if mem.stage == 0 and (attacker and attacker:withPlayer()) then
       land_everyone()
       tk.msg(_("You are dismissed"), _("You weren't supposed to attack before the signal."))
-      system.mrkRm(mem.mark)
+      system.markerRm(mem.mark)
       misn.finish(false)
    end
 end
@@ -331,7 +331,7 @@ function assault()
    opponent:attack(player.pilot()) -- Probably fine to just attack player
    hook.rm(mem.prox)
    hook.rm(mem.attackhook)
-   system.mrkRm(mem.mark)
+   system.markerRm(mem.mark)
 end
 
 function land()

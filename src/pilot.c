@@ -3547,7 +3547,7 @@ void pilots_clean( int persist )
 
    /* First pass to stop outfits without clearing stuff - this can call all
     * sorts of Lua stuff. */
-   for (int i=0; i < array_size(pilot_stack); i++) {
+   for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
       if (p == player.p &&
           (persist && pilot_isFlag(p, PILOT_PERSIST)))
@@ -3559,10 +3559,11 @@ void pilots_clean( int persist )
    }
 
    /* Here we actually clean up stuff. */
-   for (int i=0; i < array_size(pilot_stack); i++) {
+   for (int i=0; i<array_size(pilot_stack); i++) {
       /* move player and persisted pilots to start */
-      if (pilot_stack[i] == player.p ||
-          (persist && pilot_isFlag(pilot_stack[i], PILOT_PERSIST))) {
+      if (!pilot_isFlag(pilot_stack[i], PILOT_DELETE) &&
+            (pilot_stack[i] == player.p ||
+             (persist && pilot_isFlag(pilot_stack[i], PILOT_PERSIST)))) {
          /* Have to swap the pilots so it gets properly freed. */
          Pilot *p = pilot_stack[persist_count];
          pilot_stack[persist_count] = pilot_stack[i];
@@ -3572,8 +3573,6 @@ void pilots_clean( int persist )
          p->lockons = 0; /* Clear lockons. */
          p->projectiles = 0; /* Clear projectiles. */
          pilot_clearTimers( p ); /* Reset timers. */
-         /* Initialize AI. */
-         ai_init( p );
          /* Reset trails */
          for (int g=0; g<array_size(p->trail); g++)
             spfx_trail_remove( p->trail[g] );
@@ -3585,6 +3584,10 @@ void pilots_clean( int persist )
          pilot_free(pilot_stack[i]);
    }
    array_erase( &pilot_stack, &pilot_stack[persist_count], array_end(pilot_stack) );
+
+   /* Init AI on the remaining pilots, has to be done here so the pilot_stack is consistent. */
+   for (int i=0; i<array_size(pilot_stack); i++)
+      ai_init( pilot_stack[i] );
 
    /* Clear global hooks. */
    pilots_clearGlobalHooks();
