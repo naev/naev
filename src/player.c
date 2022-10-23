@@ -47,6 +47,7 @@
 #include "nfile.h"
 #include "nlua_misn.h"
 #include "nlua_outfit.h"
+#include "nlua_ship.h"
 #include "nlua_var.h"
 #include "nstring.h"
 #include "ntime.h"
@@ -158,6 +159,7 @@ static int player_parseMetadata( xmlNodePtr parent );
 static void player_addOutfitToPilot( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s );
 static int player_runUpdaterScript( const char* type, const char* name, int q );
 static const Outfit* player_tryGetOutfit( const char* name, int q );
+static const Ship* player_tryGetShip( const char* name );
 static void player_tryAddLicense( const char* name );
 /* Render. */
 static void player_renderStealthUnderlay( double dt );
@@ -3648,6 +3650,33 @@ static const Outfit* player_tryGetOutfit( const char *name, int q )
 }
 
 /**
+ * @brief Tries to get an ship for the player or looks for equivalents.
+ */
+static const Ship* player_tryGetShip( const char *name )
+{
+   const Ship *s = ship_getW( name );
+
+   /* Ship was found normally. */
+   if (s != NULL)
+      return s;
+   player_ran_updater = 1;
+
+   /* Try to find out equivalent. */
+   if (player_runUpdaterScript( "ship", name, 1 ) == 0)
+      return NULL;
+   else if (lua_type(naevL,-1) == LUA_TSTRING)
+      s = ship_get( lua_tostring(naevL,-1) );
+   else if (lua_isship(naevL,-1))
+      s = lua_toship(naevL,-1);
+   else
+      WARN(_("Ship '%s' in player save not found!"), name );
+
+   lua_pop(naevL,1);
+
+   return s;
+}
+
+/**
  * @brief Tries to get an outfit for the player or looks for equivalents.
  */
 static void player_tryAddLicense( const char *name )
@@ -4203,9 +4232,11 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    }
 
    /* Get the ship. */
-   ship_parsed = ship_get(model);
+   ship_parsed = player_tryGetShip( model );
    if (ship_parsed == NULL) {
       WARN(_("Player ship '%s' not found!"), model);
+
+      /* TODO we should probably parse the outfits and give them to the player. */
 
       /* Clean up. */
       free(name);

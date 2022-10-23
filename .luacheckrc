@@ -114,6 +114,7 @@ stds.API_rescue = {globals={"rescue"}}  -- C function: land_stranded
 stds.API_save_updater = {globals={
    "license",                           -- C function: player_tryAddLicense
    "outfit",                            -- C function: player_tryGetOutfit
+   "ship",                              -- C function: player_tryGetShip
 }}
 stds.API_shipai = {globals={"create"}}  -- C function: info_shipAI
 stds.API_spawn = {globals={

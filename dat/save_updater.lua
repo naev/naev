@@ -4,12 +4,26 @@
 
 --[[
    The format is ["oldname"] = newvalue where newvalue can either take a string
+   for the new name of the ship (if there is a direct equivalent) or a number
+   value indicating the amount of credits to refund the player.
+--]]
+local ship_list = {
+   ["Proteron Kahan"] = "Proteron Gauss",
+}
+--[[--
+   Takes an ship name and should return either a new ship name or the amount of credits to give back to the player.
+--]]
+function ship( name )
+   return ship_list[name]
+end
+
+--[[
+   The format is ["oldname"] = newvalue where newvalue can either take a string
    for the new name of the outfit (if there is a direct equivalent) or a number
    value indicating the amount of credits to refund the player.
 --]]
 local outfit_list = {
    -- Below is a list of changes from 0.9.0 to 0.10.0
-   ["Proteron Kahan"] = "Proteron Gauss",
    ["Drone Fighter Bay"] = "Drone Bay",
    ["Empire Lancelot Fighter Bay"] = "Empire Lancelot Bay",
    ["Fidelity Fighter Bay"] = "Fidelity Bay",
