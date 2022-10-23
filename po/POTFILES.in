@@ -250,8 +250,8 @@ dat/outfits/fighter_bays/hyena_dock.xml
 dat/outfits/fighter_bays/lancelot_bay.xml
 dat/outfits/fighter_bays/pirate_hyena_bay.xml
 dat/outfits/fighter_bays/pirate_hyena_dock.xml
-dat/outfits/fighter_bays/proteron_derivative_bay.xml
-dat/outfits/fighter_bays/proteron_derivative_dock.xml
+dat/outfits/fighter_bays/proteron_dalton_bay.xml
+dat/outfits/fighter_bays/proteron_dalton_dock.xml
 dat/outfits/fighter_bays/sirius_shaman_bay.xml
 dat/outfits/fighter_bays/soromid_brigand_bay.xml
 dat/outfits/fighter_bays/thurion_perspicacity_bay.xml
@@ -519,7 +519,7 @@ dat/ships/pirate/pirate_starbridge.xml
 dat/ships/pirate/pirate_vendetta.xml
 dat/ships/pirate/pirate_zebra.xml
 dat/ships/proteron/proteron_archimedes.xml
-dat/ships/proteron/proteron_derivative.xml
+dat/ships/proteron/proteron_dalton.xml
 dat/ships/proteron/proteron_euler.xml
 dat/ships/proteron/proteron_gauss.xml
 dat/ships/proteron/proteron_hippocrates.xml
