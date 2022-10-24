@@ -1015,6 +1015,7 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
          else
             player_message("#r%s",_("Active cooldown aborted!"));
       }
+      gui_cooldownEnd();
    }
 
    pilot_rmFlag(p, PILOT_COOLDOWN);

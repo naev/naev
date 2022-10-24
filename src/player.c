@@ -1431,10 +1431,8 @@ void player_restoreControl( int reason, const char *str )
    if (reason != PINPUT_BRAKING) {
       pilot_rmFlag(player.p, PILOT_BRAKING);
       pilot_rmFlag(player.p, PILOT_COOLDOWN_BRAKE);
-      if (pilot_isFlag(player.p, PILOT_COOLDOWN)) {
-         gui_cooldownEnd();
+      if (pilot_isFlag(player.p, PILOT_COOLDOWN))
          pilot_cooldownEnd(player.p, str);
-      }
    }
 }
 
