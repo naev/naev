@@ -402,15 +402,28 @@ function render( _dt )
    render_warnings()
 end
 
-
 function update_faction()
 end
 
--- Game crashes if this isn't defined
-function render_cooldown ()
+local cooldown_omsg
+function render_cooldown( _percent, seconds )
+   local msg = _("Cooling down...\n%.1f seconds remaining"):format( seconds )
+   local fail = true
+   if cooldown_omsg ~= nil then
+      if player.omsgChange( cooldown_omsg, msg, seconds ) then
+         fail = false
+      end
+   end
+   if fail then
+      cooldown_omsg = player.omsgAdd( msg, seconds )
+   end
 end
 
 function cooldown_end ()
+   if cooldown_omsg ~= nil then
+      player.omsgRm( cooldown_omsg )
+      cooldown_omsg = nil
+   end
 end
 
 function update_effects ()
