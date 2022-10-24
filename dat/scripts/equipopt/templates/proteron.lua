@@ -5,12 +5,12 @@ local eparams = require 'equipopt.params'
 
 local proteron_outfits = eoutfits.merge{{
    -- Heavy Weapons
-   "Proteron Derivative Bay",
+   "Proteron Dalton Bay",
    "Heavy Razor Turret", "Grave Beam", "Railgun",
    "Heavy Laser Turret", "Railgun Turret", "Ragnarok Beam",
    "Heavy Ripper Turret",
    -- Medium Weapons
-   "Proteron Derivative Dock",-- "Proteron Derivative Port",
+   "Proteron Dalton Dock",
    "Enygma Systems Turreted Fury Launcher",
    "Enygma Systems Turreted Headhunter Launcher",
    "Laser Turret MK2", "Plasma Turret MK2",
@@ -37,7 +37,7 @@ local proteron_outfits = eoutfits.merge{{
 }}
 
 local proteron_params = {
-   ["Proteron Derivative"] = function () return {
+   ["Proteron Dalton"] = function () return {
    type_range = {
             ["Launcher"] = { max = 1 },
          },
@@ -71,9 +71,6 @@ local proteron_params = {
 --local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 local proteron_params_overwrite = {
---   type_range = {
---      ["Bolt Turret"] = { min = 1 },
---   },
    turret = 1.1,
    launcher = 0.9,
    max_same_stru = 3,
