@@ -146,7 +146,7 @@ stds.API_evt = {globals={
 }}
 stds.API_gui = {globals={
    "create",
-   "end_cooldown",
+   "cooldown_end",
    "mouse_click",
    "mouse_move",
    "render",

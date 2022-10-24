@@ -153,7 +153,7 @@ static glTexture *gui_target_pilot  = NULL; /**< Pilot targeting icon. */
 static int gui_lua_create           = LUA_NOREF;
 static int gui_lua_render           = LUA_NOREF;
 static int gui_lua_render_cooldown  = LUA_NOREF;
-static int gui_lua_end_cooldown     = LUA_NOREF;
+static int gui_lua_cooldown_end     = LUA_NOREF;
 static int gui_lua_mouse_move       = LUA_NOREF;
 static int gui_lua_mouse_click      = LUA_NOREF;
 static int gui_lua_update_cargo     = LUA_NOREF;
@@ -850,7 +850,7 @@ void gui_render( double dt )
  */
 void gui_cooldownEnd (void)
 {
-   gui_doFunc( gui_lua_end_cooldown, "end_cooldown" );
+   gui_doFunc( gui_lua_cooldown_end, "cooldown_end" );
 }
 
 /**
@@ -1886,7 +1886,7 @@ int gui_load( const char* name )
    LUA_FUNC( create );
    LUA_FUNC( render );
    LUA_FUNC( render_cooldown );
-   LUA_FUNC( end_cooldown );
+   LUA_FUNC( cooldown_end );
    LUA_FUNC( mouse_move );
    LUA_FUNC( mouse_click );
    LUA_FUNC( update_cargo );
@@ -1954,7 +1954,7 @@ void gui_cleanup (void)
    LUA_CLEANUP( gui_lua_create );
    LUA_CLEANUP( gui_lua_render );
    LUA_CLEANUP( gui_lua_render_cooldown );
-   LUA_CLEANUP( gui_lua_end_cooldown );
+   LUA_CLEANUP( gui_lua_cooldown_end );
    LUA_CLEANUP( gui_lua_mouse_move );
    LUA_CLEANUP( gui_lua_mouse_click );
    LUA_CLEANUP( gui_lua_update_cargo );

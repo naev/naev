@@ -1196,5 +1196,5 @@ function mouse_move( x, y )
    end
 end
 
-function end_cooldown ()
+function cooldown_end ()
 end

@@ -1106,7 +1106,7 @@ function render_cooldown( _percent, seconds )
    end
 end
 
-function end_cooldown()
+function cooldown_end ()
    if cooldown_omsg ~= nil then
       player.omsgRm( cooldown_omsg )
       cooldown_omsg = nil

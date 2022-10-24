@@ -410,7 +410,7 @@ end
 function render_cooldown ()
 end
 
-function end_cooldown ()
+function cooldown_end ()
 end
 
 function update_effects ()
