@@ -39,7 +39,7 @@ function update_bioship ()
       end
       local caption = _("Bioship")
       if bioship.skillpointsfree(pp) > 0 then
-         caption = caption .. _(" #r!!#0")
+         caption = caption .. "#r" .. _(" !!") .. "#0"
       end
       infobtn = player.infoButtonRegister( caption, bioship_click )
    end
