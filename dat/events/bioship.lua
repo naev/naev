@@ -30,6 +30,8 @@ function update_bioship ()
    -- Enable info window button based on bioship status
    if is_bioship then
       local pp = player.pilot()
+      -- Indicate to equipopt that we'll be handling the stages
+      pp:shipvarPush("bioship_init",true)
       local stage = pp:shipvarPeek("biostage")
       -- Initialize in the case stage isn't set
       if not stage then
