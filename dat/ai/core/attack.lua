@@ -40,7 +40,7 @@ end
 --[[
 -- Wrapper for the think functions.
 --]]
-function atk.think( target, si )
+function atk.think( target, si, noretarget )
    -- Ignore other enemies
    if si.noattack then return end
 
@@ -96,9 +96,12 @@ function atk.think( target, si )
       end
    end
 
-   local lib = (mem.atk or atk_generic)
-   local func = (lib.think or atk_generic.think)
-   func( target, si )
+   -- The think function basically tries to figure out new targets
+   if not noretarget then
+      local lib = (mem.atk or atk_generic)
+      local func = (lib.think or atk_generic.think)
+      func( target, si )
+   end
 end
 
 --[[

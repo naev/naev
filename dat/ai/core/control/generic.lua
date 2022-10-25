@@ -419,7 +419,7 @@ end
 -- doing the task, or false otherwise.
 --]]
 control_funcs = {}
-function control_funcs.generic_attack( si )
+function control_funcs.generic_attack( si, noretarget )
    si = si or _stateinfo( ai.taskname() )
    local target = ai.taskdata()
    -- Needs to have a target
@@ -446,7 +446,7 @@ function control_funcs.generic_attack( si )
       -- Cool down, if necessary.
       should_cooldown()
 
-      atklib.think( target, si )
+      atklib.think( target, si, noretarget )
    end
 
    -- Handle distress
@@ -693,7 +693,7 @@ function control_funcs.attack ()
 end
 function control_funcs.attack_forced ()
    -- Independent of control_funcs.attack
-   control_funcs.generic_attack()
+   control_funcs.generic_attack( nil, true )
    return true
 end
 function control_funcs.flyback () return true end
