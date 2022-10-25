@@ -1324,28 +1324,28 @@ int input_clickedJump( int jump, int autonav )
 {
    JumpPoint *jp = &cur_system->jumps[ jump ];
 
-   if (!jp_isUsable(jp))
+   if (!jp_isUsable(jp) || !jp_isKnown(jp))
       return 0;
 
-   /* Update map path. */
+   if (autonav)
+      return 0;
+
    if (player.p->nav_hyperspace != jump)
       map_select( jp->target, 0 );
 
-   if (autonav) {
+   if ((jump == player.p->nav_hyperspace) && input_isDoubleClick( (void*)jp )) {
       player_targetHyperspaceSet( jump, 0 );
-      player_autonavStart();
-      return 1;
-   }
-
-   if (jump == player.p->nav_hyperspace && input_isDoubleClick( (void*)jp )) {
       if (space_canHyperspace(player.p))
          player_jump();
+      else
+         player_autonavStart();
+      return 1;
    }
    else
       player_targetHyperspaceSet( jump, 0 );
 
    input_clicked( (void*)jp );
-   return 1;
+   return 0;
 }
 
 /**
