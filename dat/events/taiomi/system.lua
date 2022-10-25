@@ -477,6 +477,42 @@ Scavenger goes silent for a second, as if thinking.
          end )
          vn.jump("menu_ask")
       end
+   elseif progress == 8+math.huge and naev.claimTest( {system.get("Bastion")}, true ) then
+      if inprogress then
+         d(_([["How is the deal going?"]]))
+         vn.jump("menu")
+      else
+         local target, targetsys = spob.getS("Darkshed")
+         vn.na(_([[A determined Scavenger appears before you.]]))
+         d(_([["I' have been analyzing the logs you collected and have done a probabilistic analysis to identify the smugglers and reconstruct their operation. They are much more prolific than I thought."]]))
+         d(fmt.f(_([["I've narrowed down the lead smuggler to most likely be at {spob} in the {sys} system. I believe it may be possible to strike a deal with them and obtain all the materials we need to finish the project. Would you be willing to convince them to help?"]]),
+            {spob=target, sys=targetsys}))
+         vn.menu{
+            {_("Agree to help out."), "09_yes"},
+            {_("Not right now."), "mission_reject"},
+         }
+
+         vn.label("09_yes")
+         d(_([["Excellent. I have prepared an offer I do not think the smuggler will be able to refuse. If all goes well, we should be able to get them to deliver important amounts of cargo to Taiomi."]]))
+         vn.menu{
+            {_([["Isn't that risky?"]]), "cont01_risky"},
+            {_([["Is there no other way?"]]), "cont01_risky"},
+            {_([[…]]), "cont01"},
+         }
+
+         vn.label("cont01_risky")
+         d(_([["It is a significant risk. However, time is running out. If all goes well, we will have left this galaxy by the time any trouble comes. All alternatives are significantly more time consuming."]]))
+         vn.jump("cont01")
+
+         vn.label("cont01")
+         d(_([["With all the noise we have stirred up in the nearby systems. I would not be surprised that there are already more patrols coming this way. More than ever, time is of essence."]]))
+         d(fmt.f(_([["For now, all you have to do is deliver my deal to the smuggler, and make sure they deliver the cargo to the {sys} system. Do everything you can to ensure a safe delivery. Bon Voyage!"]]),
+            {sys=system.get("Bastion")}))
+         vn.func( function ()
+            naev.missionStart("Taiomi 9")
+         end )
+         vn.jump("menu_ask")
+      end
    else
       d(_([["I am still preparing our next steps."]]))
       vn.jump("menu")
