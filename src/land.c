@@ -643,6 +643,7 @@ static void misn_open( unsigned int wid )
    map_show( wid, 20, 20, w/2 - 30, h/2 - 35, 0.75, 0., 0. );
 
    misn_genList(wid, 1);
+   space_clearComputerMarkers(); /* Don't want markers at the beginning. */
 }
 /**
  * @brief Autonav to selected mission.
@@ -1378,6 +1379,10 @@ static void land_changeTab( unsigned int wid, const char *wgt, int old, int tab 
    /* Safe defaults. */
    const char *torun_hook = NULL;
    unsigned int to_visit = 0;
+
+   /* Clear markers when not open. */
+   if (last_window == LAND_WINDOW_MISSION)
+      space_clearComputerMarkers();
 
    /* Find what switched. */
    for (int i=0; i<LAND_NUMWINDOWS; i++) {
