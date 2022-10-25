@@ -1324,7 +1324,7 @@ int input_clickedJump( int jump, int autonav )
 {
    JumpPoint *jp = &cur_system->jumps[ jump ];
 
-   if (!jp_isUsable(jp) || !jp_isKnown(jp))
+   if (!jp_isUsable(jp))
       return 0;
 
    if (autonav)
