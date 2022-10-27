@@ -89,7 +89,7 @@ function enter ()
          local ro = spob.get( "Raglan Outpost" )
 
          -- Spawn Raglan Outpost ship
-         dv_base = pilot.add( "Raglan Outpost", "Dvaered", ro:pos() , nil, {ai="dvaered_norun"} )
+         dv_base = pilot.add( "Raglan Outpost", "Dvaered", ro:pos() , nil, {ai="dvaered_norun", naked=true} )
          dv_base:outfitRm( "all" )
          dv_base:outfitRm( "cores" )
          dv_base:outfitAdd( "Dummy Systems" )

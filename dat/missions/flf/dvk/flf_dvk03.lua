@@ -94,7 +94,7 @@ function enter ()
          ms = spob.get( "Marius Station" )
 
          -- Spawn Raelid Outpost ship
-         dv_base = pilot.add( "Raelid Outpost", "Dvaered", ro:pos() , nil, {ai="dvaered_norun"} )
+         dv_base = pilot.add( "Raelid Outpost", "Dvaered", ro:pos() , nil, {ai="dvaered_norun", naked=true} )
          dv_base:outfitRm( "all" )
          dv_base:outfitRm( "cores" )
          dv_base:outfitAdd( "Dummy Systems" )
