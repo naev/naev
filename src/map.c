@@ -383,7 +383,7 @@ void map_open (void)
             "btnAutonav", _("Autonav"), player_autonavStartWindow, SDLK_a );
    /* MInimal button */
    window_addButtonKey( wid, -20 - 4*(BUTTON_WIDTH+20), y, BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnMinimal", NULL, map_buttonMinimal, SDLK_i );
+            "btnMinimal", NULL, map_buttonMinimal, SDLK_v );
    map_setMinimal( wid, map_minimal_mode );
    /* System info button */
    window_addButtonKey( wid, -20 - 5*(BUTTON_WIDTH+20), y, BUTTON_WIDTH, BUTTON_HEIGHT,
