@@ -16,10 +16,13 @@
    Player has to make a deal with a smuggler to bring goods to bastion.
 ]]--
 local vn = require "vn"
+local vni = require "vnimage"
 local fmt = require "format"
 local taiomi = require "common.taiomi"
+local escort = require "escort"
 --local der = require 'common.derelict'
 --local pilotai = require "pilotai"
+local lmisn = require "lmisn"
 
 local reward = taiomi.rewards.taiomi09
 local title = _("Smuggler's Deal")
@@ -28,6 +31,7 @@ local smugden, smugsys = spob.getS("Darkshed")
 local startspob, startsys = spob.getS("Arrakis")
 local fightsys = system.get("Gamel")
 local handoffsys = system.get("Bastion")
+local handoffpos = vec2.new( 5e3, 5e3 )
 
 --[[
    0: mission started
@@ -53,7 +57,7 @@ function create ()
    misn.setDesc(_(""))
    misn.setReward( fmt.credits(reward) )
 
-   misn.markerAdd( smugden )
+   mem.marker = misn.markerAdd( smugden )
 
    misn.osdCreate( title, {
       fmt.f(_("Find the smuggler in {spob} ({sys})"),{spob=smugden, sys=smugsys}),
@@ -76,9 +80,49 @@ function land ()
 end
 
 function land_smuggler ()
+   vn.clear()
+   vn.scene()
+   local s = vn.Character.new( _("Smuggler"), { image=vni.generic() } )
+   vn.transition()
+
+   vn.appear( s )
+
+   vn.run()
+
+   misn.osdCreate( title, {
+      fmt.f(_("Rendezvous with smugglers at {spob} ({sys})"),{spob=startspob, sys=startsys}),
+   } )
+   misn.markerMove( startspob )
 end
 
 function land_escorts ()
+   vn.clear()
+   vn.scene()
+   vn.transition()
+   vn.na(_([[]]))
+   vn.run()
+
+   local ships = {}
+   escort.init( ships, {} )
+   escort.setDest( handoffsys, "escort_success", "escort_failure" )
+
+   misn.osdCreate( title, {
+      fmt.f(_("Escort the smugglers to {sys}"),{sys=handoffsys})
+   } )
+end
+
+-- luacheck: globals escort_success
+function escort_success ()
+   -- Not actually done yet
+   for e in ipairs(escort.pilots()) do
+      e:control(true)
+      e:moveto( handoffpos + vec2.newP( 200*rnd.rnd(), rnd.angle() ) )
+   end
+end
+
+-- luacheck: globals escort_failure
+function escort_failure ()
+   lmisn.fail(_("The smuggler ships were all destroyed!"))
 end
 
 function land_final ()
