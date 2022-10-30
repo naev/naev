@@ -146,15 +146,37 @@ function land_smuggler ()
    vn.disappear( scav )
 
    s(_([["Let us see what we have here…"]]))
+   vn.na(_([[They fiddle with the console to access the rest of the contents of the holodrive.]]))
+   s(_([[Suddenly they break out into a chuckle.
+"Ho-ho-ho, that is mighty interesting, ain't it? Your client must be really interested in getting their hands on them hardware."
+Their put away their weapon.]]))
 
    vn.func( function ()
       if not tackled then
          vn.jump("cont03")
       end
    end )
+   s(_([[They gesture towards your burning shoulder.
+"Let me fix that in a jiffy. Stay still hun."]]))
+   s(_([[They approach you and spray your injury with what appears to be some wound sealing spray.
+"That'll let you get back to your ship. You might want to get it checked up though, or the skin grows back funny. Now back to business!"]]))
 
    vn.label("cont03")
+   s(_([["So I've decided to, umm, carefully think it over, and I thinks we got a deal!"]]))
+   s(fmt.f(_([["Them convoy with them parts be at {spob} in the {sys} system. I'll send word about them deal and have them meet you at the spaceport."]]),
+      {spob=startspob, sys=startsys}))
+   s(fmt.f(_([["We'll do our part with them convoy, but it'll be your job to keep it in one piece to {destsys}. Not that I think people gonna be waitin' fer a convoy to that empty place."]]),
+      {destsys=handoffsys}))
+   vn.na(_([[You feel like you've overstayed your due and head out back to the station to go on with the job.]]))
 
+   vn.func( function ()
+      if not tackled then
+         vn.jump("cont04")
+      end
+   end )
+   vn.na(_([[You don't feel any pain in your shoulder, but it doesn't look too good, but you should recover. At least they didn't aim at your head. Time to get back to your ship before the painkillers wear out.]]))
+
+   vn.label("cont04")
    vn.run()
 
    misn.osdCreate( title, {
