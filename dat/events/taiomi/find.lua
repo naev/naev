@@ -17,7 +17,7 @@
 
 --]]
 local vn = require 'vn'
-local vne = require "vn.extras"
+local vne = require "vnextras"
 
 local board_flashback -- Forward-declared functions
 local derelict_mule, derelicts, drone, evt_state, fidget_hook, numboarded -- Event state, never saved.
