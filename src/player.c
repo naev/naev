@@ -897,7 +897,11 @@ void player_soundResume (void)
  */
 void player_warp( double x, double y )
 {
+   unsigned int target = cam_getTarget();
    vec2_cset( &player.p->solid->pos, x, y );
+   /* Have to move camera over to avoid moving stars when loading. */
+   if (target == player.p->id)
+      cam_setTargetPilot( target, 0 );
 }
 
 /**
