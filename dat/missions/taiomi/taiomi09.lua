@@ -49,6 +49,9 @@ function create ()
       misn.finish(false)
    end
 
+   -- Store if the player knows the station
+   mem.smugden_known = smugden:known()
+
    misn.accept()
 
    -- Mission details
@@ -84,12 +87,73 @@ function land_smuggler ()
    vn.clear()
    vn.scene()
    local s = vn.Character.new( _("Smuggler"), { image=vni.generic() } )
+   local scav = vni.soundonly( 1, {pos="farleft"} )
    vn.transition()
 
-   vn.na(fmt.f(_([[You land on {spob} and follow the directions Scavenger gave you to locate the smugglers.]]),
-      {spob=smugden}))
+   if mem.smugden_known then
+      vn.na(fmt.f(_([[You land on {spob} and follow the directions Scavenger gave you to locate the smuggler. Although you are somewhat familiar with the layout of {spob}, Scavenger's instructions take you to an area you have never visited before.]]),
+         {spob=smugden}))
+   else
+      vn.na(fmt.f(_([[You land on {spob} and follow the directions Scavenger gave you to locate the smuggler. Following Scavenger's you head into the depths of the station.]]),
+         {spob=smugden}))
+   end
+   vn.na(_([[Making your way through the labyrinth of dimly lit corridors and rooms, you finally make it to the airlock to your destination.]]))
+   vn.menu{
+      {_([[Knock.]]), "cont01_knock"},
+      {_([[Barge in.]]), "cont01_barge"},
+   }
 
    vn.appear( s )
+   vn.label("cont01_knock")
+   vn.na(_([[As soon as you knock, you are told to come in just to find yourself looking down the barrel of a plasma shotgun.]]))
+   vn.jump("cont01")
+
+   vn.label("cont01_barge")
+   vn.na(_([[You barge in unannounced, and quickly find yourself looking down the barrel of a plasma shotgun.]]))
+   vn.jump("cont01")
+
+   vn.label("cont01")
+   s(_([["Giv'me a reason not to blow ye brains to make some abstract art on them wall behind'ye."]]))
+   vn.menu{
+      {_([[Put your hands up.]]), "cont02_hands"},
+      {_([[Try to tackle them.]]), "cont02_tackle"},
+   }
+
+   local tackled = false
+   vn.label("cont02_hands")
+   vn.na(_([[You put your hands up non-aggressively and mention that you bring a deal to the table.]]))
+   s(_([["Let's see about that. Keep 'em hands up."]]))
+   s(_([[The pat you down and find the holodrive you have containing Scavenger's deal. They take it despite your objections, and begin playback.]]))
+   vn.jump("cont02")
+
+   vn.label("cont02_tackle")
+   vn.func( function () tackled = true end )
+   vn.na(_([[You begin to move and immediately are hit on the shoulder flinging you helplessly against the wall. Then suddenly an intense burning sensation begins to spread from your shoulder.]]))
+   s(_([["Shouldn't of done that. Be glad I set them settin' to non-lethal."]]))
+   s(_([[Barely able to make what is going on due to the pain, you can make out them whistling to themself as they approach you. Still stunned and unable to react, they pat you down and take a holodrive you have containing Scavenger's deal.]]))
+   s(_([[With you still writhing in pain, they begin playback.]]))
+   vn.jump("cont02")
+
+   vn.label("cont02")
+   vn.appear( scav )
+   vn.na(_([[The holodrive begins playing a sound-only file. You recognize the voice as Scavenger's.]]))
+   scav(_([["Hello. Who I am is not important, but it has come to my attention that you are in possession of large amounts of contraband hypergate components."]]))
+   scav(_([["Such components are heavily marked and it is unlikely that anybody would be able to use them without arising suspicions from the Empire. While you could try to take it apart to reuse some components, that is a waste of the full potential of your contraband."]]))
+   scav(_([["I believe we could reach a mutual agreement to take the contraband off your hands. Take a look at the attached sample. There is more where this comes from."]]))
+   scav(fmt.f(_([["I need the cargo delivered to the location marked in the {sys} system. The individual there will provide escort."]]),
+      {sys=handoffsys}))
+   vn.na(_([[The audio playback ends.]]))
+   vn.disappear( scav )
+
+   s(_([["Let us see what we have here…"]]))
+
+   vn.func( function ()
+      if not tackled then
+         vn.jump("cont03")
+      end
+   end )
+
+   vn.label("cont03")
 
    vn.run()
 
