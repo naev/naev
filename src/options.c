@@ -1821,7 +1821,7 @@ static void opt_plugins( unsigned int wid )
    n = array_size(plgs);
    if (n <= 0) {
       str = malloc( sizeof(char *) * 1 );
-      str[0] = strdup(_("No Active Plugins"));
+      str[0] = strdup(_("No Plugins Found"));
       n = 1;
    }
    else {

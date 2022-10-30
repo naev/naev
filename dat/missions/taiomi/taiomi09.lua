@@ -31,7 +31,7 @@ local smugden, smugsys = spob.getS("Darkshed")
 local startspob, startsys = spob.getS("Arrakis")
 local fightsys = system.get("Gamel")
 local handoffsys = system.get("Bastion")
-local handoffpos = vec2.new( 5e3, 5e3 )
+local handoffpos = vec2.new( 8e3, 3e3 )
 
 --[[
    0: mission started
