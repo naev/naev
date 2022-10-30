@@ -5,8 +5,7 @@ local lmisn = require "lmisn"
 local fmt = require "format"
 local luaspfx = require "luaspfx"
 local prob = require "prob"
-local lg = require "love.graphics"
-local vn = require "vn"
+local vni = require "vnimage"
 local nebula = require "common.nebula"
 local poi = {}
 
@@ -263,22 +262,7 @@ Creates a "SOUND ONLY" character for the VN.
    @treturn vn.Character A new vn character you can add with `vn.newCharacter`.
 --]]
 function poi.vn_soundonly( id, params )
-   params = params or {}
-   local c = lg.newCanvas( 1000, 1415 )
-   local oc = lg.getCanvas()
-   local fl = lg.newFont( "fonts/D2CodingBold.ttf", 300 )
-   local fs = lg.newFont( 64 )
-   local col = params.color or { 1, 0, 0 }
-   lg.setCanvas( c )
-   lg.clear{ 0, 0, 0, 0.8 }
-   lg.setColor( col )
-   lg.printf( id, fl, 0, 200, 1000, "center" )
-   lg.printf( p_("poi", "SOUND ONLY"), fs, 0, 550, 1000, "center" )
-   lg.setCanvas( oc )
-
-   return vn.Character.new(
-         fmt.f(_("VOICE {id}"),{id=id}),
-         tmerge( {image=c, flip=false}, params ) )
+   return vni.soundonly( id, params )
 end
 
 local noise_list = {

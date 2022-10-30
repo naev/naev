@@ -5,6 +5,10 @@ Functions for handling vnis in Naev.
 --]]
 local portrait = require "portrait"
 
+local vn = require "vn"
+local lg = require "love.graphics"
+local fmt = require "format"
+
 local vni = {}
 
 local neutral_m = {
@@ -132,6 +136,31 @@ function vni.sirius.serra()
       return vni.sirius.serraFemale()
    end
    return vni.sirius.serraMale()
+end
+
+--[[--
+Creates a "SOUND ONLY" character for the VN.
+   @tparam string id ID of the voice to add.
+   @tparam table params Optional parameters to pass or overwrite.
+   @treturn vn.Character A new vn character you can add with `vn.newCharacter`.
+--]]
+function vni.soundonly( id, params )
+   params = params or {}
+   local c = lg.newCanvas( 1000, 1415 )
+   local oc = lg.getCanvas()
+   local fl = lg.newFont( "fonts/D2CodingBold.ttf", 300 )
+   local fs = lg.newFont( 64 )
+   local col = params.color or { 1, 0, 0 }
+   lg.setCanvas( c )
+   lg.clear{ 0, 0, 0, 0.8 }
+   lg.setColor( col )
+   lg.printf( id, fl, 0, 200, 1000, "center" )
+   lg.printf( p_("vn_extras", "SOUND ONLY"), fs, 0, 550, 1000, "center" )
+   lg.setCanvas( oc )
+
+   return vn.Character.new(
+         fmt.f(_("VOICE {id}"),{id=id}),
+         tmerge( {image=c, flip=false}, params ) )
 end
 
 return vni
