@@ -26,7 +26,7 @@ local lmisn = require "lmisn"
 
 local reward = taiomi.rewards.taiomi09
 local title = _("Smuggler's Deal")
-local base, _basesys = spob.getS("One-Wing Goddard")
+local base, basesys = spob.getS("One-Wing Goddard")
 local smugden, smugsys = spob.getS("Darkshed")
 local startspob, startsys = spob.getS("Arrakis")
 local fightsys = system.get("Gamel")
@@ -54,7 +54,8 @@ function create ()
    -- Mission details
    misn.setTitle( title )
 
-   misn.setDesc(_(""))
+   misn.setDesc(fmt.f(_("You have been tasked to contact smugglers at {smugden} ({smugsys}) to obtain new materials for the citizens of {basesys}."),
+      {smugden=smugden, smugsys=smugsys, basesys=basesys}))
    misn.setReward( fmt.credits(reward) )
 
    mem.marker = misn.markerAdd( smugden )
@@ -85,6 +86,9 @@ function land_smuggler ()
    local s = vn.Character.new( _("Smuggler"), { image=vni.generic() } )
    vn.transition()
 
+   vn.na(fmt.f(_([[You land on {spob} and follow the directions Scavenger gave you to locate the smugglers.]]),
+      {spob=smugden}))
+
    vn.appear( s )
 
    vn.run()
@@ -102,13 +106,22 @@ function land_escorts ()
    vn.na(_([[]]))
    vn.run()
 
-   local ships = {}
-   escort.init( ships, {} )
+   local ships = { "Mule", "Mule", "Mule" }
+   escort.init( ships, {
+      func_pilot_create = "escort_spawn",
+      func_pilot_death = "escort_death",
+   } )
    escort.setDest( handoffsys, "escort_success", "escort_failure" )
 
    misn.osdCreate( title, {
-      fmt.f(_("Escort the smugglers to {sys}"),{sys=handoffsys})
+      fmt.f(_("Escort the smugglers to {sys}"),{sys=handoffsys}),
    } )
+end
+
+-- luacheck: globals escort_spawn
+function escort_spawn( p )
+   local fconvoy = faction.dynAdd( "Pirate", "taiomi_convoy", _("Smugglers"), {clear_enemies=true, clear_allies=true} )
+   p:setFaction( fconvoy )
 end
 
 -- luacheck: globals escort_success
@@ -116,8 +129,28 @@ function escort_success ()
    -- Not actually done yet
    for e in ipairs(escort.pilots()) do
       e:control(true)
-      e:moveto( handoffpos + vec2.newP( 200*rnd.rnd(), rnd.angle() ) )
+      local pos = handoffpos + vec2.newP( 200*rnd.rnd(), rnd.angle() )
+      e:moveto( pos )
+      escort_inpos()
    end
+end
+
+function escort_inpos ()
+   local notstopped = false
+   for k,p in ipairs(escort.pilots()) do
+      if not p:isStopped() then
+         notstopped = true
+         break
+      end
+   end
+   if notstopped then
+      hook.timer( 1, "escort_inpos" )
+   else
+      hook.timer( 3, "cutscene00" )
+   end
+end
+
+function cutscene00()
 end
 
 -- luacheck: globals escort_failure
