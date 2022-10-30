@@ -160,6 +160,10 @@ function _escort_e_death( p )
             end
             escort.reset_ai()
          end
+
+         if mem._escort.params.func_pilot_death then
+            _G[mem._escort.params.func_pilot_death]( p )
+         end
          return
       end
    end
