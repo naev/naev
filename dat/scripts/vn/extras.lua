@@ -5,7 +5,7 @@
 --]]
 local vn = require "vn"
 local love_shaders = require "love_shaders"
-local graphics = require 'love.graphics'
+local lg = require 'love.graphics'
 
 local extras = {}
 
@@ -26,11 +26,11 @@ function extras.notebookStart( name )
    vn.func( function ()
       vn.setBackground( function ()
          vn.setColor( {1, 1, 1, 1} )
-         graphics.rectangle("fill", 0, 0, nw, nh )
+         lg.rectangle("fill", 0, 0, nw, nh )
          vn.setColor( {1, 1, 1, 0.3} )
-         graphics.setShader( oldify )
+         lg.setShader( oldify )
          paperbg:draw( 0, 0 )
-         graphics.setShader()
+         lg.setShader()
       end )
       -- Store old values
       textbox_bg_alpha = vn.textbox_bg_alpha
@@ -40,7 +40,7 @@ function extras.notebookStart( name )
       textbox_y = vn.textbox_y
       textbox_font = vn.textbox_font
       -- New values
-      vn.textbox_font = graphics.newFont( _("fonts/CoveredByYourGrace-Regular.ttf"), 24 )
+      vn.textbox_font = lg.newFont( _("fonts/CoveredByYourGrace-Regular.ttf"), 24 )
       vn.textbox_bg_alpha = 0
       vn.textbox_h = math.min(0.7*nh, 800 )
       vn.textbox_y = (nh-vn.textbox_h)/2
