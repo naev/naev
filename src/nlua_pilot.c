@@ -97,6 +97,7 @@ static int pilotL_outfitToggle( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
+static int pilotL_isStopped( lua_State *L );
 static int pilotL_dir( lua_State *L );
 static int pilotL_evasion( lua_State *L );
 static int pilotL_temp( lua_State *L );
@@ -250,6 +251,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
+   { "isStopped", pilotL_isStopped },
    { "dir", pilotL_dir },
    { "evasion", pilotL_evasion },
    { "temp", pilotL_temp },
@@ -2183,6 +2185,22 @@ static int pilotL_velocity( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
    lua_pushvector(L, p->solid->vel);
+   return 1;
+}
+
+/**
+ * @brief Checks to see if a pilot is stopped.
+ *
+ * @usage if p:isStopped() then ... end
+ *
+ *    @luatparam Pilot p Pilot to get the velocity of.
+ *    @luatreturn boolean Whether the pilot is stopped or not.
+ *    @luafunc isStopped
+ */
+static int pilotL_isStopped( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   lua_pushboolean(L,(VMOD(p->solid->vel) < MIN_VEL_ERR));
    return 1;
 }
 
