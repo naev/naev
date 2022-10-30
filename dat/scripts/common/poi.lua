@@ -5,7 +5,6 @@ local lmisn = require "lmisn"
 local fmt = require "format"
 local luaspfx = require "luaspfx"
 local prob = require "prob"
-local vni = require "vnimage"
 local nebula = require "common.nebula"
 local poi = {}
 
@@ -253,16 +252,6 @@ Gets how many points of interest were failed by the player.
 --]]
 function poi.failed()
    return var.peek("poi_failed") or 0
-end
-
---[[--
-Creates a "SOUND ONLY" character for the VN.
-   @tparam string id ID of the voice to add.
-   @tparam table params Optional parameters to pass or overwrite.
-   @treturn vn.Character A new vn character you can add with `vn.newCharacter`.
---]]
-function poi.vn_soundonly( id, params )
-   return vni.soundonly( id, params )
 end
 
 local noise_list = {
