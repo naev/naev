@@ -2132,7 +2132,10 @@ void player_targetSet( unsigned int id )
    player.p->nav_anchor = -1;
 
    /* The player should not continue following if the target pilot has been changed. */
-   if (player_isFlag(PLAYER_AUTONAV) && player.autonav == AUTONAV_PLT_FOLLOW)
+   if ((old != id) && player_isFlag(PLAYER_AUTONAV) &&
+      (player.autonav == AUTONAV_PLT_FOLLOW ||
+         player.autonav == AUTONAV_PLT_BOARD_APPROACH ||
+         player.autonav == AUTONAV_PLT_BOARD_BRAKE))
       player_autonavAbort(NULL);
 }
 
