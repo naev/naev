@@ -125,6 +125,14 @@ function board( p )
    end
 
    vn.label("reward")
+   if mem.reward.type == "function" then
+      local rwd = require( mem.reward.requirename )( mem )
+      if rwd then
+         rwd.func()
+      else -- Failed to get a reward, just default to data
+         mem.reward.type = "data"
+      end
+   end
    if mem.reward.type == "credits" then
       local msg = _([[You access the main computer and are able to login to find a hefty amount of credits. This will come in handy.]])
       msg = msg .. "\n\n" .. fmt.reward(mem.reward.value)
@@ -150,9 +158,6 @@ function board( p )
       vn.func( function ()
          player.outfitAdd( mem.reward.value )
       end )
-   elseif mem.reward.type == "function" then
-      local rwd = require( mem.reward.requirename )( mem )
-      rwd.func()
    end
    vn.sfxVictory()
    vn.na(_([[You explore the rest of the ship but do not find anything else of interest. Although the ship is in very good condition, it is still not space-worthy, and there is not anything that you can do with it. You let it rest among the stars.]]))
