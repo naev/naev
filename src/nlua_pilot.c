@@ -2379,9 +2379,9 @@ static int pilotL_setDir( lua_State *L )
 /**
  * @brief Makes the pilot broadcast a message.
  *
- * @usage p:broadcast( "Mayday! Requesting assistance!" )
- * @usage p:broadcast( "Help!", true ) -- Will ignore interference
- * @usage pilot.broadcast( "Message Buoy", _("Important annauncement") ) -- Messages player ignoring interference
+ * @usage p:broadcast(_("Mayday! Requesting assistance!"))
+ * @usage p:broadcast(_("Help!"), true ) -- Will ignore interference
+ * @usage pilot.broadcast( _("Message Buoy"), _("Important annauncement") ) -- Messages player ignoring interference
  *
  *    @luatparam Pilot|string p Pilot to broadcast the message, or string to use as a fictional pilot name. In the case of a string, interference is always ignored, and instead of the ignore_int parameter, a colour character such as 'F' or 'H' can be optionally passed.
  *    @luatparam string msg Message to broadcast.
