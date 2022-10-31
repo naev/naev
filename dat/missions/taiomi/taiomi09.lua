@@ -20,6 +20,7 @@ local vni = require "vnimage"
 local fmt = require "format"
 local taiomi = require "common.taiomi"
 local escort = require "escort"
+local fleet = require "fleet"
 --local der = require 'common.derelict'
 --local pilotai = require "pilotai"
 local lmisn = require "lmisn"
@@ -35,11 +36,10 @@ local handoffpos = vec2.new( 8e3, 3e3 )
 
 --[[
    0: mission started
-   1: met smuggler
-   2: made deal with smuggler
-   3: escort from xxx to bastion
-   4: fight done
-   5: cutscene done
+   1: made deal with smuggler
+   2: escort from xxx to bastion
+   3: fight done
+   4: cutscene done
 --]]
 mem.state = 0
 
@@ -74,11 +74,11 @@ end
 local land_smuggler, land_escorts, land_final
 function land ()
    local scur = spob.cur()
-   if mem.state == 0 and scur==smugden then
+   if mem.state==0 and scur==smugden then
       land_smuggler()
-   elseif mem.state==3 and scur==startspob then
+   elseif mem.state==1 and scur==startspob then
       land_escorts()
-   elseif mem.state==5 and scur==base then
+   elseif mem.state==4 and scur==base then
       land_final()
    end
 end
@@ -183,31 +183,36 @@ Their put away their weapon.]]))
       fmt.f(_("Rendezvous with smugglers at {spob} ({sys})"),{spob=startspob, sys=startsys}),
    } )
    misn.markerMove( startspob )
+   mem.state = 1
 end
 
 function land_escorts ()
    vn.clear()
    vn.scene()
    vn.transition()
-   vn.na(_([[]]))
+   vn.na(fmt.f(_([[You land and are quickly greeted by smugglers. They briefly introduce themselves, and say they'll be delivering the promised cargo to the specified location at {sys} before leaving on shuttles. After the formality head back to their ships to await your departure.]]),
+      {sys=handoffsys}))
    vn.run()
 
    local ships = { "Mule", "Mule", "Mule" }
    escort.init( ships, {
       func_pilot_create = "escort_spawn",
-      func_pilot_death = "escort_death",
    } )
    escort.setDest( handoffsys, "escort_success", "escort_failure" )
 
    misn.osdCreate( title, {
       fmt.f(_("Escort the smugglers to {sys}"),{sys=handoffsys}),
    } )
+   mem.state = 2
+end
+
+local function escort_faction ()
+   return faction.dynAdd( "Pirate", "taiomi_convoy", _("Smugglers"), {clear_enemies=true, clear_allies=true} )
 end
 
 -- luacheck: globals escort_spawn
 function escort_spawn( p )
-   local fconvoy = faction.dynAdd( "Pirate", "taiomi_convoy", _("Smugglers"), {clear_enemies=true, clear_allies=true} )
-   p:setFaction( fconvoy )
+   p:setFaction( escort_faction() )
 end
 
 -- luacheck: globals escort_success
@@ -217,8 +222,8 @@ function escort_success ()
       e:control(true)
       local pos = handoffpos + vec2.newP( 200*rnd.rnd(), rnd.angle() )
       e:moveto( pos )
-      escort_inpos()
    end
+   escort_inpos()
 end
 
 function escort_inpos ()
@@ -237,6 +242,122 @@ function escort_inpos ()
 end
 
 function cutscene00()
+   player.cinematics( true )
+   local pp = player.pilot()
+   pp:setInvincible(true)
+   pp:control(true)
+   pp:brake()
+
+   local ep = escort.pilots()
+   for k,v in ipairs(ep) do
+      v:brake()
+   end
+   camera.set( ep[1] )
+
+   hook.timer( 6, "cutscene01" )
+end
+
+function cutscene01()
+   local ep = escort.pilots()
+   local fconvoy = escort_faction()
+   local leavers = {}
+   local j = jump.get( system.cur(), fightsys )
+   for k,v in ipairs(ep) do
+      local p = pilot.add("Schroedinger", fconvoy, v:pos())
+      p:setDir( v:dir() )
+      p:setInvisible( true )
+      p:setInvincible( true )
+      p:control()
+      p:hyperspace( j )
+      if #leavers==0 then
+         p:broadcast(_("Deal is done, time to scram!"), true )
+      end
+      table.insert( leavers, p )
+   end
+
+   hook.timer( 8, "cutscene99" )
+end
+
+function cutscene99()
+   player.cinematics( false )
+   local pp = player.pilot()
+   pp:setInvincible(false)
+   pp:control(false)
+   camera.set()
+   mem.state = 4
+
+   misn.osdCreate( title, {
+      fmt.f(_("Return to {spob} ({sys})"),{spob=base, sys=basesys}),
+   } )
+end
+
+function enter ()
+   local scur = system.cur()
+   if scur==fightsys then
+      local fct = var.peek( "taiomi_convoy_fct" ) or "Empire"
+      local flt
+      if fct== "Soromid" then
+         flt = {
+            "Soromid Nyx",
+            "Soromid Odium",
+            "Soromid Odium",
+            "Soromid Reaver",
+            "Soromid Reaver",
+            "Soromid Reaver",
+            "Soromid Reaver",
+         }
+      elseif fct=="Dvaered" then
+         flt = {
+            "Dvaered Vigilance",
+            "Dvaered Phalanx",
+            "Dvaered Phalanx",
+            "Dvaered Vendetta",
+            "Dvaered Vendetta",
+            "Dvaered Vendetta",
+            "Dvaered Vendetta",
+         }
+      else
+         flt = {
+            "Empire Pacifier",
+            "Empire Admonisher",
+            "Empire Admonisher",
+            "Empire Lancelot",
+            "Empire Lancelot",
+            "Empire Lancelot",
+            "Empire Lancelot",
+         }
+      end
+
+      pilot.toggleSpawn(false)
+      pilot.clear()
+
+      local function add_fleet( pos )
+         pos = pos or vec2.newP( scur:radius()*rnd.rnd(), rnd.angle() )
+         local p = fleet.add( 1, flt, fct, pos )
+         for k,v in ipairs(p) do
+            local m = v:memory()
+            m.loiter = math.huge
+            m.doscans = true
+         end
+         return p
+      end
+
+      if mem.state < 2 then
+         for i=1,4 do
+            add_fleet()
+         end
+      else
+         -- TODO add patrols that fight
+         add_fleet()
+      end
+   elseif scur==handoffsys then
+      hook.timer( 5, "almost_there" )
+   end
+end
+
+function almost_there ()
+   local pe = escort.pilots()
+   pe[1]:broadcast(_("Almost there! Head to the rendezvous point!"))
 end
 
 -- luacheck: globals escort_failure
