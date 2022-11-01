@@ -213,6 +213,8 @@ end
 -- luacheck: globals escort_spawn
 function escort_spawn( p )
    p:setFaction( escort_faction() )
+   local m = p:memory()
+   m.vulnerability = 500 -- less preferred as targets compared to player
 end
 
 -- luacheck: globals escort_success
@@ -331,9 +333,10 @@ function enter ()
       pilot.toggleSpawn(false)
       pilot.clear()
 
-      local function add_fleet( pos )
+      local function add_fleet( pos, local_fct )
          pos = pos or vec2.newP( scur:radius()*rnd.rnd(), rnd.angle() )
-         local p = fleet.add( 1, flt, fct, pos )
+         local_fct = local_fct or fct
+         local p = fleet.add( 1, flt, local_fct, pos )
          for k,v in ipairs(p) do
             local m = v:memory()
             m.loiter = math.huge
@@ -347,12 +350,27 @@ function enter ()
             add_fleet()
          end
       else
-         -- TODO add patrols that fight
-         add_fleet()
+         local fescort = escort_faction()
+         local fbaddies = faction.dynAdd( fct, "taiomi_baddies", fct:name() )
+         fbaddies:dynEnemy( fescort )
+         local f1 = add_fleet( vec2.new( -10e3, -4e3 ), fbaddies )
+         local f2 = add_fleet( vec2.new( 12e3, 5e3 ), fbaddies )
+         for k,v in ipairs(f1) do
+            v:hostile()
+         end
+         for k,v in ipairs(f2) do
+            v:hostile()
+         end
+         hook.timer( 8, "incoming_bogies" )
       end
    elseif scur==handoffsys then
       hook.timer( 5, "almost_there" )
    end
+end
+
+function incoming_bogies ()
+   local pe = escort.pilots()
+   pe[1]:broadcast(_("Incoming bogies!"))
 end
 
 function almost_there ()
