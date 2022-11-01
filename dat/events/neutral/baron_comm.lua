@@ -11,7 +11,8 @@
       system.cur():faction() == faction.get("Empire") or
       system.cur():faction() == faction.get("Dvaered") or
       system.cur():faction() == faction.get("Sirius")
-   )
+   ) and
+   player.wealth() > 1e6
   </cond>
   <notes>
    <campaign>Baron Sauterfeldt</campaign>
