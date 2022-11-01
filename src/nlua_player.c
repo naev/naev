@@ -57,6 +57,7 @@ static int playerL_getname( lua_State *L );
 static int playerL_shipname( lua_State *L );
 static int playerL_pay( lua_State *L );
 static int playerL_credits( lua_State *L );
+static int playerL_wealth( lua_State *L );
 static int playerL_msg( lua_State *L );
 static int playerL_msgClear( lua_State *L );
 static int playerL_msgToggle( lua_State *L );
@@ -142,6 +143,7 @@ static const luaL_Reg playerL_methods[] = {
    { "ship", playerL_shipname },
    { "pay", playerL_pay },
    { "credits", playerL_credits },
+   { "wealth", playerL_wealth },
    { "msg", playerL_msg },
    { "msgClear", playerL_msgClear },
    { "msgToggle", playerL_msgToggle },
@@ -305,6 +307,7 @@ static int playerL_pay( lua_State *L )
 
    return 0;
 }
+
 /**
  * @brief Gets how many credits the player has on him.
  *
@@ -332,6 +335,44 @@ static int playerL_credits( lua_State *L )
    }
    return 1;
 }
+
+/**
+ * @brief Gets how many credits the player owns both directly, and in the form of assets (ships, outfits, ...).
+ *
+ * @usage monies = player.wealth()
+ * @usage monies, readable = player.wealth( 2 )
+ *
+ *    @luatparam[opt] number decimal Optional argument that makes it return human readable form with so many decimals.
+ *    @luatreturn number The player's wealth in numerical form.
+ *    @luatreturn string The player's wealth in human-readable form.
+ * @luafunc wealth
+ */
+static int playerL_wealth( lua_State *L )
+{
+   PLAYER_CHECK();
+   const PlayerShip_t *ps = player_getShipStack();
+   const PlayerOutfit_t *po = player_getOutfits();
+   credits_t wealth = player.p->credits + pilot_worth( player.p );
+   /* Parse parameters. */
+   int decimals = luaL_optinteger(L,1,-1);
+
+   /* Compute total wealth. */
+   for (int i=0; i<array_size(ps); i++)
+      wealth += pilot_worth( ps[i].p  );
+   for (int i=0; i<array_size(po); i++)
+      wealth += po[i].q * po[i].o->price;
+
+   /* Push return. */
+   lua_pushnumber(L, wealth);
+   if (decimals >= 0) {
+      char buf[ ECON_CRED_STRLEN ];
+      credits2str( buf, wealth, decimals );
+      lua_pushstring(L, buf);
+      return 2;
+   }
+   return 1;
+}
+
 /**
  * @brief Sends the player an in-game message.
  *
