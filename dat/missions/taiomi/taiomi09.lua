@@ -374,6 +374,8 @@ function escort_failure ()
 end
 
 function land_final ()
+   var.push("taiomi09_done", time.get() )
+
    vn.clear()
    vn.scene()
    local s = vn.newCharacter( taiomi.vn_scavenger() )
@@ -448,8 +450,6 @@ function land_final ()
    vn.label("done")
    vn.done( taiomi.scavenger.transition )
    vn.run()
-
-   var.push("taiomi09_done", time.get() )
 
    player.pay( reward )
    taiomi.log.main(_([[You managed to convince a smuggler to deliver contraband hypergate components to the inhabitants of Taiomi. The cargo was successfully delivered after you were able to successfully defend it from patrols.]]))
