@@ -516,7 +516,12 @@ Scavenger goes silent for a second, as if thinking.
          end )
          vn.jump("menu_ask")
       end
-   elseif progress == 9+math.huge and taiomi9done and time.get() >= taiomi9done+time.new(0,3,0) and naev.claimTest( {system.cur()} ) then
+   elseif progress == 9 then
+      if time.get() < taiomi9done+time.new(0,3,0) or not naev.claimTest( {system.cur()} ) then
+         d(_([["We are still working on the construction, it is almost ready!"]]))
+      else
+         d(_([["I am still preparing our next steps."]]))
+      end
       vn.jump("menu_ask")
    else
       d(_([["I am still preparing our next steps."]]))
