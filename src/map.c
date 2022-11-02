@@ -501,7 +501,7 @@ static void map_update( unsigned int wid )
    unsigned int services, services_u, services_h, services_f, services_r;
    int hasSpobs;
    char t;
-   const char *sym, *adj;
+   const char *adj;
    char buf[STRMAX];
    int p;
    const glTexture *logo;
@@ -672,20 +672,25 @@ static void map_update( unsigned int wid )
    p = 0;
    buf[0] = '\0';
    for (int i=0; i<array_size(sys->spobs); i++) {
-      if (!spob_isKnown(sys->spobs[i]))
+      const char *prefix, *suffix;
+      Spob *s = sys->spobs[i];
+
+      if (!spob_isKnown(s))
          continue;
 
       /* Colourize output. */
-      spob_updateLand(sys->spobs[i]);
-      t = spob_getColourChar(sys->spobs[i]);
-      sym = spob_getSymbol(sys->spobs[i]);
+      spob_updateLand( s );
+      t = spob_getColourChar( s );
+      prefix = spob_getSymbol( s );
+      //suffix = (spob_isFlag( s, SPOB_MARKED ) ? _(" #o(M)") : "");
+      suffix = "";
 
       if (!hasSpobs)
-         p += scnprintf( &buf[p], sizeof(buf)-p, "#%c%s%s#n",
-               t, sym, spob_name(sys->spobs[i]) );
+         p += scnprintf( &buf[p], sizeof(buf)-p, "#%c%s%s%s#n",
+               t, prefix, spob_name( s ), suffix );
       else
-         p += scnprintf( &buf[p], sizeof(buf)-p, ",\n#%c%s%s#n",
-               t, sym, spob_name(sys->spobs[i]) );
+         p += scnprintf( &buf[p], sizeof(buf)-p, ",\n#%c%s%s%s#n",
+               t, prefix, spob_name( s ), suffix );
       hasSpobs = 1;
    }
    if (hasSpobs == 0) {
