@@ -21,8 +21,7 @@ local fmt = require "format"
 local taiomi = require "common.taiomi"
 local escort = require "escort"
 local fleet = require "fleet"
---local der = require 'common.derelict'
---local pilotai = require "pilotai"
+local pilotai = require "pilotai"
 local lmisn = require "lmisn"
 
 local reward = taiomi.rewards.taiomi09
@@ -250,11 +249,18 @@ function cutscene00()
    pp:control(true)
    pp:brake()
 
+   -- In case stragglers are around
+   pilotai.clear()
+
    local ep = escort.pilots()
    for k,v in ipairs(ep) do
+      v:setInvisible(true)
+      v:setInvincible(true)
       v:brake()
    end
    camera.set( ep[1] )
+
+   mem.survived = #ep
 
    hook.timer( 6, "cutscene01" )
 end
@@ -305,8 +311,6 @@ function enter ()
             "Soromid Odium",
             "Soromid Reaver",
             "Soromid Reaver",
-            "Soromid Reaver",
-            "Soromid Reaver",
          }
       elseif fct=="Dvaered" then
          flt = {
@@ -315,16 +319,12 @@ function enter ()
             "Dvaered Phalanx",
             "Dvaered Vendetta",
             "Dvaered Vendetta",
-            "Dvaered Vendetta",
-            "Dvaered Vendetta",
          }
       else
          flt = {
             "Empire Pacifier",
             "Empire Admonisher",
             "Empire Admonisher",
-            "Empire Lancelot",
-            "Empire Lancelot",
             "Empire Lancelot",
             "Empire Lancelot",
          }
@@ -352,7 +352,8 @@ function enter ()
       else
          local fescort = escort_faction()
          local fbaddies = faction.dynAdd( fct, "taiomi_baddies", fct:name() )
-         fbaddies:dynEnemy( fescort )
+         fbaddies:dynEnemy( fescort ) -- dynamic faction gives no faction hits, good I guess?
+         -- positions chosen so that hopefully the player doesn't fight them all at once
          local f1 = add_fleet( vec2.new( -10e3, -4e3 ), fbaddies )
          local f2 = add_fleet( vec2.new( 12e3, 5e3 ), fbaddies )
          for k,v in ipairs(f1) do
@@ -388,14 +389,35 @@ function land_final ()
    vn.scene()
    local s = vn.newCharacter( taiomi.vn_scavenger() )
    vn.transition( taiomi.scavenger.transition )
-   vn.na(_([[You board the Goddard and and find eagerly Scavenger waiting for you.]]))
+   vn.na(_([[You board the Goddard and find eagerly Scavenger waiting for you.]]))
+   if mem.survived==3 then
+      s(_([["Thank you for bringing the convoy over without a loss. I estimate the probability of that occurring being 3%. All the resources are going to be very useful!"]]))
+   else
+      s(_([["You managed to bring the convoy over! Do not worry about the convoy losses, they are well within design tolerances."]]))
+   end
+   s(_([["We have already started to bring in the materials. It should not take much longer before they are all here."]]))
+   s(_([["Now all that is left is to finish the construction and run some preliminary tests. Given our synchronization, I estimate that the construction should be over in a few periods at most."]]))
+   vn.menu{
+      {_([[Ask about what was given to the smuggler.]]), "cont01_smuggler"},
+      {_([[…]]), "cont01_"},
+   }
+
+   vn.label("cont01_smuggler")
+   s(_([[Scavenger seems to do what you can only describe as a chuckle.
+"Every human has their weakness, and the smuggler was no exception. Some want credits, some want fame, but others want more… special things."]]))
+   s(_([["They had a weakness for historical documents, many of which we have recovered throughout our existence. We do not have much need for them anymore. It is a small price to pay for our freedom."]]))
+
+   vn.label("cont01")
    s(_([[""]]))
+
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )
    vn.done( taiomi.scavenger.transition )
    vn.run()
 
+   var.push("taiomi09_done", time.get() )
+
    player.pay( reward )
-   taiomi.log.main(_(""))
+   taiomi.log.main(_([[You managed to convince a smuggler to deliver contraband hypergate components to the inhabitants of Taiomi. The cargo was successfully delivered after you were able to successfully defend it from patrols.]]))
    misn.finish(true)
 end
