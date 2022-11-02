@@ -182,7 +182,7 @@ Their put away their weapon.]]))
    misn.osdCreate( title, {
       fmt.f(_("Rendezvous with smugglers at {spob} ({sys})"),{spob=startspob, sys=startsys}),
    } )
-   misn.markerMove( startspob )
+   misn.markerMove( mem.marker, startspob )
    mem.state = 1
 end
 
@@ -203,6 +203,7 @@ function land_escorts ()
    misn.osdCreate( title, {
       fmt.f(_("Escort the smugglers to {sys}"),{sys=handoffsys}),
    } )
+   misn.markerMove( mem.marker, handoffsys )
    mem.state = 2
 end
 
@@ -212,15 +213,16 @@ end
 
 -- luacheck: globals escort_spawn
 function escort_spawn( p )
+   p:rename(_("Smuggler"))
    p:setFaction( escort_faction() )
    local m = p:memory()
-   m.vulnerability = 500 -- less preferred as targets compared to player
+   m.vulnerability = 100 -- less preferred as targets compared to player
 end
 
 -- luacheck: globals escort_success
 function escort_success ()
    -- Not actually done yet
-   for e in ipairs(escort.pilots()) do
+   for k,e in ipairs(escort.pilots()) do
       e:control(true)
       local pos = handoffpos + vec2.newP( 200*rnd.rnd(), rnd.angle() )
       e:moveto( pos )
@@ -244,25 +246,13 @@ function escort_inpos ()
 end
 
 function cutscene00()
-   player.cinematics( true )
-   local pp = player.pilot()
-   pp:setInvincible(true)
-   pp:control(true)
-   pp:brake()
-
-   -- In case stragglers are around
-   pilotai.clear()
-
    local ep = escort.pilots()
    for k,v in ipairs(ep) do
       v:setInvisible(true)
       v:setInvincible(true)
       v:brake()
    end
-   camera.set( ep[1] )
-
    mem.survived = #ep
-
    hook.timer( 6, "cutscene01" )
 end
 
@@ -284,20 +274,11 @@ function cutscene01()
       table.insert( leavers, p )
    end
 
-   hook.timer( 8, "cutscene99" )
-end
-
-function cutscene99()
-   player.cinematics( false )
-   local pp = player.pilot()
-   pp:setInvincible(false)
-   pp:control(false)
-   camera.set()
    mem.state = 4
-
    misn.osdCreate( title, {
       fmt.f(_("Return to {spob} ({sys})"),{spob=base, sys=basesys}),
    } )
+   misn.markerMove( mem.marker, base )
 end
 
 function enter ()
@@ -330,6 +311,7 @@ function enter ()
             "Empire Lancelot",
          }
       end
+      fct = faction.get( fct )
 
       pilot.toggleSpawn(false)
       pilot.clear()
@@ -355,14 +337,20 @@ function enter ()
          local fbaddies = faction.dynAdd( fct, "taiomi_baddies", fct:name() )
          fbaddies:dynEnemy( fescort ) -- dynamic faction gives no faction hits, good I guess?
          -- positions chosen so that hopefully the player doesn't fight them all at once
-         local f1 = add_fleet( vec2.new( -10e3, -4e3 ), fbaddies )
-         local f2 = add_fleet( vec2.new( 12e3, 5e3 ), fbaddies )
+         local f1 = add_fleet( vec2.new( 3e3, -8e3 ), fbaddies )
+         local f2 = add_fleet( vec2.new( 3e3, 13e3 ), fbaddies )
          for k,v in ipairs(f1) do
             v:hostile()
          end
          for k,v in ipairs(f2) do
             v:hostile()
          end
+         local wp = {
+            vec2.new( 6e3, 6e3 ),
+            vec2.new( 13e3, -7e3 ),
+         }
+         pilotai.patrol( f1[1], wp )
+         pilotai.patrol( f2[1], wp )
          hook.timer( 8, "incoming_bogies" )
       end
    elseif scur==handoffsys and mem.state==2 then

@@ -478,7 +478,7 @@ Scavenger goes silent for a second, as if thinking.
          end )
          vn.jump("menu_ask")
       end
-   elseif progress == 8+math.huge and naev.claimTest( {system.get("Dune"), system.get("Gamel"), system.get("Bastion")} ) then
+   elseif progress==8 and naev.claimTest( {system.get("Dune"), system.get("Gamel"), system.get("Bastion")} ) then
       if inprogress then
          d(_([["How is the deal going?"]]))
          vn.jump("menu")
