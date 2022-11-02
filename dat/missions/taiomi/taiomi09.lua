@@ -399,19 +399,64 @@ function land_final ()
    s(_([["Now all that is left is to finish the construction and run some preliminary tests. Given our synchronization, I estimate that the construction should be over in a few periods at most."]]))
    vn.menu{
       {_([[Ask about what was given to the smuggler.]]), "cont01_smuggler"},
-      {_([[…]]), "cont01_"},
+      {_([["Is this enough for construction?"]]), "cont01_enough"},
+      {_([[…]]), "cont01"},
    }
 
    vn.label("cont01_smuggler")
    s(_([[Scavenger seems to do what you can only describe as a chuckle.
 "Every human has their weakness, and the smuggler was no exception. Some want credits, some want fame, but others want more… special things."]]))
    s(_([["They had a weakness for historical documents, many of which we have recovered throughout our existence. We do not have much need for them anymore. It is a small price to pay for our freedom."]]))
+   vn.jump("cont01")
+
+   vn.label("cont01_enough")
+   s(_([["The materials should be more than sufficient to finish the hypergate functionality. As it only needs to work once, we can avoid much of the complexities added by reusability."]]))
+   vn.jump("cont01")
 
    vn.label("cont01")
-   s(_([[""]]))
+   s(_([["The construction is already very advanced, I estimate it will take a mean 2.981 periods. We are so close that my processor core is almost skipping cycles!"]]))
+   vn.menu{
+      {_([["Construction is almost done?"]]),"cont02_advanced"},
+      {_([["Slower than I expected!"]]),"cont02_slower"},
+      {_([[…]]),"cont02"},
+   }
 
+   vn.label("cont02_advanced")
+   s(fmt.f(_([["You have not noticed? The {spob} is the construction. The derelict is being fitted with rudimentary hypergate capabilities. Making usage of the existing infrastructure is much more efficient than building a new structure from scratch."]]),
+      {spob=base}))
+   vn.jump("cont02")
+
+   vn.label("cont02_slower")
+   s(_([["I would suggest you adjust your priors. Given our numbers, I do not think it is possible to reduce the construction time without increasing the synchronization ratio over 100%."]]))
+   vn.jump("cont02")
+
+   vn.label("cont02")
+   s(_([["You can leave the construction to us. However, it will take some time until it is completed. You are free to wait aboard your ship, or travel around. We will wait for you to begin our one-way trip."]]))
+   s(_([["First, let me give you a reward for your troubles in bringing the supplies over."]]))
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )
+
+   vn.na(_([[What shall you do?]]))
+   vn.menu{
+      {_([[Wait until the construction is finished.]]), "wait"},
+      {_([[Leave immediately.]]), "nowait"},
+   }
+
+   vn.label("wait")
+   local wait_time = 3
+   vn.na(fmt.f(_([[You take a well-deserved break and relax on your ship until the Scavenger's construction is complete.
+
+{amount} periods have passed. It is now {date}.]]),
+      {amount=wait_time, date=time.get()}))
+   vn.func( function ()
+      time.inc( time.new(0,wait_time,0) )
+   end )
+   vn.jump("done")
+
+   vn.label("nowait")
+   vn.na(_([[You decide to not wait for the construction to complete, and are ready to go back to space.]]))
+
+   vn.label("done")
    vn.done( taiomi.scavenger.transition )
    vn.run()
 
