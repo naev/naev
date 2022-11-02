@@ -764,6 +764,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
       glUseProgram(shaders.safelane.program);
       gl_renderShader( (x1+x2)/2., (y1+y2)/2., rw, rh, r, &shaders.safelane, &col, 1 );
    }
+   array_free( safelanes );
 
    /* Render cursor position. */
    gl_print( &gl_defFontMono, bx + 5., by + 65.,
