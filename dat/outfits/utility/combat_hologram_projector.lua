@@ -32,7 +32,7 @@ local function turnon( p, po )
          np:outfitAdd( v, 1, true )
       end
    end
-   aisetup( np ) -- Initialize AI
+   aisetup.setup( np ) -- Initialize AI
    -- No damage and low health
    np:intrinsicSet( {
       launch_damage  = -1000,
