@@ -102,12 +102,13 @@ function land_smuggler ()
       {_([[Barge in.]]), "cont01_barge"},
    }
 
-   vn.appear( s )
    vn.label("cont01_knock")
+   vn.appear( s )
    vn.na(_([[As soon as you knock, you are told to come in just to find yourself looking down the barrel of a plasma shotgun.]]))
    vn.jump("cont01")
 
    vn.label("cont01_barge")
+   vn.appear( s )
    vn.na(_([[You barge in unannounced, and quickly find yourself looking down the barrel of a plasma shotgun.]]))
    vn.jump("cont01")
 
@@ -364,7 +365,7 @@ function enter ()
          end
          hook.timer( 8, "incoming_bogies" )
       end
-   elseif scur==handoffsys then
+   elseif scur==handoffsys and mem.state==2 then
       hook.timer( 5, "almost_there" )
    end
 end
