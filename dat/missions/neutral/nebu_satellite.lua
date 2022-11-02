@@ -137,7 +137,7 @@ function countLaunch ()
    end
 end
 function launchSatellite ()
-   articles[1].date_to_rm = time.get()+time.create(0,20,0)
+   articles[1].date_to_rm = time.get()+time.new(0,20,0)
    news.add( articles )
 
    mem.misn_stage = 1

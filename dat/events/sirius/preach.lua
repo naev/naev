@@ -242,7 +242,7 @@ function theFunBegins()
    hook.timer(17.5, "release")
 
    --hook up timer for re-hailing player
-   hailHook=hook.date(time.create(0, 0, 1000), "reHail") --hail every 1000 STU till player answers
+   hailHook=hook.date(time.new(0, 0, 1000), "reHail") --hail every 1000 STU till player answers
 
    --when hailed, the preacher preaches to you
    hook.pilot(preacher, "hail", "hail")

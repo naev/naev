@@ -50,12 +50,12 @@ function create()
    local stu_distance = 0.2 * mem.travel_dist
    local stu_jumps = 10300 * mem.num_jumps
    local stu_takeoff = 10300
-   mem.time_limit = time.get() + time.create(0, 0, stu_distance + stu_jumps + stu_takeoff)
+   mem.time_limit = time.get() + time.new(0, 0, stu_distance + stu_jumps + stu_takeoff)
 
    -- Allow extra time for refuelling stops.
    local jumpsperstop = 3 + math.min(tier, 3)
    if mem.num_jumps > jumpsperstop then
-      mem.time_limit:add(time.create( 0, 0, math.floor((mem.num_jumps-1) / jumpsperstop) * stu_jumps ))
+      mem.time_limit:add(time.new( 0, 0, math.floor((mem.num_jumps-1) / jumpsperstop) * stu_jumps ))
    end
 
    mem.payment = 20 * (stu_distance + (stu_jumps / 10))
@@ -96,7 +96,7 @@ function accept()
 
    mem.intime = true
    mem.land_hook = hook.land("land")
-   mem.date_hook = hook.date(time.create(0, 0, 42), "tick") -- 42STU per tick
+   mem.date_hook = hook.date(time.new(0, 0, 42), "tick") -- 42STU per tick
 
    -- OSD
    tick()

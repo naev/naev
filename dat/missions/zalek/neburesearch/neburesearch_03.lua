@@ -45,7 +45,7 @@ function create()
     local stuperjump = 10000
     local stupertakeoff = 10500
     local allowance  = traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 250 * numjumps
-    mem.timelimit  = time.get() + time.create(0, 0, allowance)
+    mem.timelimit  = time.get() + time.new(0, 0, allowance)
 
     -- Spaceport bar stuff
     misn.setNPC(_("Robert"), student_portrait, _("The student is already awaiting you."))
@@ -81,7 +81,7 @@ function accept()
     mem.misn_marker = misn.markerAdd(dest_planet, "high")
 
     hook.land("land")
-    hook.date(time.create(0, 0, 100), "tick") -- 100STU per tick
+    hook.date(time.new(0, 0, 100), "tick") -- 100STU per tick
     tick() -- set OSD
 end
 

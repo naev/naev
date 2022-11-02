@@ -291,6 +291,7 @@ end
 function hail_scavenger ()
    local inprogress = taiomi.inprogress()
    local lab, labsys = taiomi.laboratory()
+   local taiomi9done = var.peek("taiomi09_done")
    -- Wording is chosen to make it seem a it unnatural and robotic, as if
    -- someone studied how to interact with humans from some obsolete text books
    -- or something like that
@@ -515,6 +516,8 @@ Scavenger goes silent for a second, as if thinking.
          end )
          vn.jump("menu_ask")
       end
+   elseif progress == 9+math.huge and taiomi9done and time.get() >= taiomi9done+time.new(0,3,0) and naev.claimTest( {system.cur()} ) then
+      vn.jump("menu_ask")
    else
       d(_([["I am still preparing our next steps."]]))
       vn.jump("menu")

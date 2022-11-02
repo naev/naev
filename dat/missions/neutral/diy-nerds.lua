@@ -80,7 +80,7 @@ function accept ()
     "Really? You'll do it? Um, great. Fantastic. I just knew that, eventually, someone desperate would turn up. OK, we're set to go. We better take off immediately and go directly to {pnt}, or we'll be late for the contest!"]]), {pnt=mem.destPlanet}))
       local distance = vec2.dist( spob.pos(mem.srcPlanet), spob.pos(mem.destPlanet) )
       local stuperpx = 1 / player.pilot():stats().speed_max * 30 -- from common.cargo
-      mem.expiryDate = time.get() + time.create(0, 0, 10010 + distance * stuperpx + 3300 ) -- takeoff + min travel time + leeway
+      mem.expiryDate = time.get() + time.new(0, 0, 10010 + distance * stuperpx + 3300 ) -- takeoff + min travel time + leeway
 
       addNerdCargo()
       mem.lhook = hook.land("nerds_land1", "land")
@@ -88,7 +88,7 @@ function accept ()
 	      fmt.f(_("Bring the nerds and their box to {pnt} before {time}"), {pnt=mem.destPlanet, time=time.str(mem.expiryDate, 1)}),
 	      fmt.f(_("You have {time} remaining"), {time=time.str(mem.expiryDate - time.get(), 1)}),
       })
-      mem.dhook = hook.date(time.create(0, 0, 100), "nerds_fly1")
+      mem.dhook = hook.date(time.new(0, 0, 100), "nerds_fly1")
    end
 end
 
@@ -111,10 +111,10 @@ function nerds_land1()
          tk.msg(_("Happy nerds"), fmt.f(_([["Good job, {player}," Mia compliments you upon arrival. "We'll now go win the competition and celebrate a bit. You better stay in the system. We will hail you in about 4 or 5 periods, so you can pick us up an' bring us back to {pnt}."
     That said, the nerds shoulder the box and rush towards a banner which reads "Admissions".]]), {player=player.name(), pnt=mem.srcPlanet} ))
            misn.osdCreate( _("DIY Nerds"), {_("Wait several periods in this system until hailed by the nerds for their return trip")} )
-         mem.expiryDate = time.get() + time.create(0, 0, 36000+rnd.rnd(-7500,7500), 0)
+         mem.expiryDate = time.get() + time.new(0, 0, 36000+rnd.rnd(-7500,7500), 0)
          mem.hailed = false
          mem.impatient = false
-         mem.dhook = hook.date(time.create(0, 0, 100), "nerds_fly2")
+         mem.dhook = hook.date(time.new(0, 0, 100), "nerds_fly2")
          mem.lhook = hook.land("nerds_land2", "land")
          mem.jhook = hook.jumpout("nerds_jump")
 
@@ -210,7 +210,7 @@ function nerds_fly2()
       mem.hailed = true
    end
 
-   mem.intime = time.get() <= mem.expiryDate + time.create(0,3,3000)
+   mem.intime = time.get() <= mem.expiryDate + time.new(0,3,3000)
 
    -- no pickup since hail+2STP+1STP: mission failed (however, you must still land somewhere)
    if not mem.intime then
@@ -222,7 +222,7 @@ function nerds_fly2()
    end
 
    -- no pickup since hail+2STP
-   if mem.hailed and mem.intime and time.get() > mem.expiryDate + time.create(0,2,0) then
+   if mem.hailed and mem.intime and time.get() > mem.expiryDate + time.new(0,2,0) then
       if not mem.impatient then
          tk.msg(_("In-system communication"), _([[Your comm link comes up again. It is the nerds, whom you'd almost forgotten. You hear Mia's voice: "Hey, what are you waiting for? You'd better be here within one period, or we'll get another pilot and pay them, not you!"]]) )
          mem.impatient = true
@@ -230,7 +230,7 @@ function nerds_fly2()
         misn.osdCreate( _("DIY Nerds"), {
            fmt.f(_("Pick up the nerds on {pickup_pnt} for their return trip to {dropoff_pnt}"), {pickup_pnt=mem.destPlanet, dropoff_pnt=mem.srcPlanet}),
            _("The nerds are getting impatient"),
-           fmt.f(_("You have {time} remaining"), {time=time.str(mem.expiryDate + time.create(0,3,0) - time.get(), 2)}),
+           fmt.f(_("You have {time} remaining"), {time=time.str(mem.expiryDate + time.new(0,3,0) - time.get(), 2)}),
         })
         misn.osdActive(2)
    end
@@ -287,7 +287,7 @@ function nerds_land3()
          tk.msg(_("The End"), fmt.f( _([["You can wait for it, won't take longer than half a period," Mia informs you. You stand by as the nerds start to mod their box. As they are going about it, you wonder if they're actually wrecking it and you'll maybe be left with a piece of worthless junk.
     Finally, they set the modified box before you. "Here you are. Now you're the proud owner of the system's only home-made core system. It's a bit bulkier than we expected, with all this rigging for energy and coolant supply, but it should work just fine, about equivalent to the {outfit}. We need to go now and think about something more advanced for the next competition. Have a nice day."
     With that, the nerds leave. Having gotten nothing else out of this, you think you should visit an outfitter to see if the homemade core system may actually be of any use, or if you can at least sell it.]]), {outfit=_(reward_outfit)} ))
-         time.inc(time.create(0,0,5000))
+         time.inc(time.new(0,0,5000))
          player.outfitAdd(reward_outfit)
          if spob.services(cp)["outfits"] then
             player.landWindow("equipment")

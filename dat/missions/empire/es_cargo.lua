@@ -51,12 +51,12 @@ function create()
    local stuperpx   = 0.3 - 0.015 * mem.tier
    local stuperjump = 11000 - 75 * mem.tier
    local stupertakeoff = 15000
-   mem.timelimit  = time.get() + time.create(0, 0, mem.traveldist * stuperpx + mem.numjumps * stuperjump + stupertakeoff + 480 * mem.numjumps)
+   mem.timelimit  = time.get() + time.new(0, 0, mem.traveldist * stuperpx + mem.numjumps * stuperjump + stupertakeoff + 480 * mem.numjumps)
 
    -- Allow extra time for refuelling stops.
    local jumpsperstop = 3 + math.min(mem.tier, 2)
    if mem.numjumps > jumpsperstop then
-      mem.timelimit:add(time.create( 0, 0, math.floor((mem.numjumps-1) / jumpsperstop) * stuperjump ))
+      mem.timelimit:add(time.new( 0, 0, math.floor((mem.numjumps-1) / jumpsperstop) * stuperjump ))
    end
 
    --Determine risk of piracy
@@ -112,7 +112,7 @@ function accept()
       _("The Empire workers load the {tonnes} of {cargo} onto your ship."),
       {tonnes=fmt.tonnes(mem.amount), cargo=_(mem.cargo)} ) )
    hook.land( "land" ) -- only hook after accepting
-   hook.date(time.create(0, 0, 100), "tick") -- 100STU per tick
+   hook.date(time.new(0, 0, 100), "tick") -- 100STU per tick
    tick() -- set OSD
 end
 

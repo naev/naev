@@ -63,7 +63,7 @@ function accept()
    mem.enterhook = hook.enter("enter")
    mem.enterhook = hook.jumpout("jumpout")
    hook.land("land")
-   mem.datehook = hook.date(time.create(0, 2, 0), "date")
+   mem.datehook = hook.date(time.new(0, 2, 0), "date")
 end
 
 -- Jump-out hook.

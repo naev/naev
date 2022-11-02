@@ -67,8 +67,8 @@ function accept()
     Then Rebina takes her leave from you and gracefully departs the spaceport bar. You order yourself another drink. You've got the feeling you're going to need it.]]), {pnt=pnt, t1=mem.timelimit1, t2=mem.timelimit2, plt=shipname}))
 
       -- Set deadlines
-      mem.deadline1 = time.get() + time.create(0, mem.timelimit1, 0)
-      mem.deadline2 = time.get() + time.create(0, mem.timelimit2, 0)
+      mem.deadline1 = time.get() + time.new(0, mem.timelimit1, 0)
+      mem.deadline2 = time.get() + time.new(0, mem.timelimit2, 0)
 
       misn.setTitle(_("Shadowrun"))
       misn.setReward(_("You were promised riches..."))
@@ -81,7 +81,7 @@ function accept()
       mem.shadowrun = 2
 
       mem.dateres = 500
-      mem.datehook = hook.date(time.create(0, 0, mem.dateres), "date")
+      mem.datehook = hook.date(time.new(0, 0, mem.dateres), "date")
       hook.land("land")
       hook.enter("enter")
    else
@@ -158,18 +158,18 @@ function date()
 end
 
 function dateresolution(time)
-   if time - time.get() < time.create(0, 0, 5000) and mem.dateres > 30 then
+   if time - time.get() < time.new(0, 0, 5000) and mem.dateres > 30 then
       mem.dateres = 30
       hook.rm(mem.datehook)
-      mem.datehook = hook.date(time.create(0, 0, mem.dateres), "date")
-   elseif time - time.get() < time.create(0, 1, 0) and mem.dateres > 100 then
+      mem.datehook = hook.date(time.new(0, 0, mem.dateres), "date")
+   elseif time - time.get() < time.new(0, 1, 0) and mem.dateres > 100 then
       mem.dateres = 100
       hook.rm(mem.datehook)
-      mem.datehook = hook.date(time.create(0, 0, mem.dateres), "date")
-   elseif time - time.get() >= time.create(0, 1, 0) and mem.dateres < 500 then
+      mem.datehook = hook.date(time.new(0, 0, mem.dateres), "date")
+   elseif time - time.get() >= time.new(0, 1, 0) and mem.dateres < 500 then
       mem.dateres = 500
       hook.rm(mem.datehook)
-      mem.datehook = hook.date(time.create(0, 0, mem.dateres), "date")
+      mem.datehook = hook.date(time.new(0, 0, mem.dateres), "date")
    end
 end
 

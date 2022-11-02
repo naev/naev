@@ -89,8 +89,8 @@ function create()
       allowance = allowance + math.floor((mem.numjumps-1) / jumpsperstop) * stuperjump
    end
 
-   mem.timelimit  = time.get() + time.create(0, 0, allowance)
-   mem.timelimit2 = time.get() + time.create(0, 0, allowance * 1.2)
+   mem.timelimit  = time.get() + time.new(0, 0, allowance)
+   mem.timelimit2 = time.get() + time.new(0, 0, allowance * 1.2)
 
    local riskreward
    if mem.avgrisk == 0 then
@@ -148,7 +148,7 @@ function accept()
    mem.intime = true
    misn.cargoAdd(mem.cargo, mem.amount)
    hook.land("land")
-   hook.date(time.create(0, 0, 100), "tick") -- 100STU per tick
+   hook.date(time.new(0, 0, 100), "tick") -- 100STU per tick
    tick() -- set OSD
 end
 

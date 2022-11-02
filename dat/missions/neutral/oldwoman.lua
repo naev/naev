@@ -81,7 +81,7 @@ function accept ()
       mem.dist_total = car.calculateDistance(system.cur(), spob.cur():pos(), mem.destsys, mem.destplanet)
       mem.complaint = 0
 
-      hook.date(time.create(0, 0, 300), "date")
+      hook.date(time.new(0, 0, 300), "date")
       hook.land("land")
    else
       return

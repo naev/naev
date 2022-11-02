@@ -79,7 +79,7 @@ function create ()
 
    local last_run = var.peek( "last_commodity_run" )
    if last_run ~= nil then
-      local delay = time.create(0, 7, 0)
+      local delay = time.new(0, 7, 0)
       if time.get() < time.fromnumber(last_run) + delay then
          misn.finish(false)
       end

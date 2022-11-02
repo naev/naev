@@ -189,7 +189,7 @@ function create ()
       var.push( "shiplover_lastplayed", lastplayed )
    end
    lastplayed = time.fromnumber( lastplayed )
-   if lastplayed + time.create( 0, 10, 0 ) > time.get() then
+   if lastplayed + time.new( 0, 10, 0 ) > time.get() then
       evt.finish()
    end
 
