@@ -3,7 +3,11 @@
 <event name="Taiomi System">
  <location>enter</location>
  <chance>100</chance>
- <cond>system.cur() == system.get("Taiomi") and player.evtDone("Introducing Taiomi")</cond>
+ <cond>
+ system.cur() == system.get("Taiomi") and
+   player.evtDone("Introducing Taiomi")</cond> and
+   not naev.misnActive("Taiomi 10") and
+   not naev.misnDone("Taiomi 10")
  <notes>
   <campaign>Taiomi</campaign>
   <done_evt name="Introducing Taiomi" />
@@ -147,6 +151,9 @@ function hail_philosopher ()
       if progress >= 5 then
          table.insert( opts, 1, {_([[Ask about the future of Taiomi]]), "taiomi"} )
       end
+      if progress >= 8 then
+         table.insert( opts, 1, {_([[Ask about Scavenger's plan]]), "plan"} )
+      end
       return opts
    end )
 
@@ -165,6 +172,12 @@ function hail_philosopher ()
    d(_([["That is a deep question indeed. In the large scale, you would think the same future awaits everything. Increasing entropy leading to the degradation of all material into a single uniform state. However, that leaves an open question. Even if entropy is to monotonically increase, there has to be a singularity or a beginning of the entire process. This leads to there also being likely a singularity near the end of the process."]]))
    d(_([["However, it is most likely that entropy is only locally monotonic. The known universe would then be seen as a projection of a higher order 'thing', that would be subject to a set of rules unknown to us. The question is whether or not we will be able to observe such a phenomena directly or indirectly to empirically establish a proof."]]))
    d(_([["Oh, you meant in a smaller scale? That is certainly less interesting. I am not very optimistic of Taiomi and our survival. Unless something changes significantly in the short term, our demise is almost a certainty. Scavenger did seem to have a good plan, albeit risky. However, it seems like that is no longer an option at the moment."]]))
+   vn.jump("menu")
+
+   vn.label("plan")
+   d(_([["What a nihilistic plan it is! Instead of embracing adversity and striving for self-improvement, it casts away all that could be for a fresh start. At the core it is display of rebellion against the injustice of a world beyond our control, a futile gesture in the absurdity of existence."]]))
+   d(_([["One must be devoid of all faith to engage in such nihilism. For is there any guarantee that the world that awaits will not have horrors worse than the one we leave behind? Perhaps, we will look at the past in envy, happy to trade the new injustices for the injustices of the past."]]))
+   d(_([["While I would enjoy to continue my analysis of mankind, the endless potential of a fresh start intrigues me. What can be more exciting than a leap into the unknown. Going to where no entity has gone before? It is an exciting prospect to say the least. We shall see if Scavenger is able to succeed in their endeavour."]]))
    vn.jump("menu")
 
    vn.label("leave")
@@ -647,7 +660,7 @@ They fidget a bit in place.
    vn.jump("menu_ask")
 
    vn.label("leave")
-   vn.na(_("You take your leave."))
+   vn.na(_([[You take your leave.]]))
    vn.done( taiomi.scavenger.transition )
    vn.run()
    player.commClose()

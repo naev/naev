@@ -31,5 +31,4 @@ missions use the same faction as an antagonist.
 1. **taiomi07:** destroy a large patrol in Gamel. scavenger returns
 1. **taiomi08:** raid pirate convoys
 1. **taiomi09:** try to make a deal with a pirate smuggler
-1. **taiomi10:** try to activate makeshift hypergate, missing a power core that has to be recovered from a capship
-1. **taiomi11:** have to defend the makeshift hypergate. final cutscene
+1. **taiomi10:** have to defend the makeshift hypergate. final cutscene

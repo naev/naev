@@ -415,6 +415,7 @@ function land_final ()
    vn.label("cont02_advanced")
    s(fmt.f(_([["You have not noticed? The {spob} is the construction. The derelict is being fitted with rudimentary hypergate capabilities. Making usage of the existing infrastructure is much more efficient than building a new structure from scratch."]]),
       {spob=base}))
+   vn.func( function () var.push( "taiomi_construction_known", true ) end )
    vn.jump("cont02")
 
    vn.label("cont02_slower")
