@@ -10,8 +10,9 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-08-23 20:07+0900\n"
-"PO-Revision-Date: 2022-10-02 09:19+0000\n"
-"Last-Translator: Bloody Kenshiro <redhokuto@gmail.com>\n"
+"PO-Revision-Date: 2022-11-03 09:03+0000\n"
+"Last-Translator: Anthony Gregory Souza dos Santos "
+"<antonigregorysouza123@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
 "naev/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -19,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.14.2-dev\n"
 
 #: physfs.c:1
 msgid "no error"
@@ -719,7 +720,7 @@ msgstr "Modelador das naves Shark e Rhino"
 
 #: dat/AUTHORS:145
 msgid "Devin Khan"
-msgstr ""
+msgstr " Devin Khan"
 
 #: dat/AUTHORS:146
 msgid "   * Modeller of the Phalanx"
@@ -727,7 +728,7 @@ msgstr "Modelador da Nave Phalanx"
 
 #: dat/AUTHORS:148
 msgid "Areze"
-msgstr ""
+msgstr "Areze"
 
 #: dat/AUTHORS:149
 msgid "   * Junior assistant galaxy creator"
@@ -735,7 +736,7 @@ msgstr "Criador assistente júnior de galaxia "
 
 #: dat/AUTHORS:151
 msgid "Old Man <oldtopman@gmail.com>"
-msgstr ""
+msgstr " Old Man <oldtopman@gmail.com>"
 
 #: dat/AUTHORS:152
 msgid "   * Desura Maintainer"
@@ -743,7 +744,7 @@ msgstr "Mantenedor da plataforma Desura"
 
 #: dat/AUTHORS:154
 msgid "NeD"
-msgstr ""
+msgstr " NeD"
 
 #: dat/AUTHORS:155 dat/AUTHORS:161
 msgid "   * Mission contributor"
@@ -751,7 +752,7 @@ msgstr "Colaborador de missões"
 
 #: dat/AUTHORS:157
 msgid "Sudarshan S"
-msgstr ""
+msgstr " Sudarshan S"
 
 #: dat/AUTHORS:158
 msgid "   * Event contributor"
@@ -759,7 +760,7 @@ msgstr "Colaborador de eventos"
 
 #: dat/AUTHORS:160 dat/AUTHORS:178
 msgid "PhoenixRiver"
-msgstr ""
+msgstr " PhoenixRiver"
 
 #: dat/AUTHORS:162
 msgid "   * Misc fixes and typos"
@@ -767,7 +768,7 @@ msgstr "Correções gerais e de erros tipográficos"
 
 #: dat/AUTHORS:164
 msgid "Alastair Basden"
-msgstr ""
+msgstr " Alastair Basden"
 
 #: dat/AUTHORS:165
 msgid "   * Economy development"
@@ -787,7 +788,7 @@ msgstr "Música por Mattew Pablo"
 
 #: dat/AUTHORS:170
 msgid "http://www.matthewpablo.com"
-msgstr ""
+msgstr " http://www.matthewpablo.com"
 
 #: dat/AUTHORS:172
 msgid "Testers"
@@ -795,15 +796,15 @@ msgstr "Jogadores de teste"
 
 #: dat/AUTHORS:175
 msgid "John Schwartfeger"
-msgstr ""
+msgstr " John Schwartfeger"
 
 #: dat/AUTHORS:176
 msgid "Leonardo Valeri Manera"
-msgstr ""
+msgstr " Leonardo Valeri Manera"
 
 #: dat/AUTHORS:177
 msgid "EvanR"
-msgstr ""
+msgstr " EvanR"
 
 #: dat/AUTHORS:180
 msgid "Artwork Contributors"
@@ -10819,7 +10820,7 @@ msgstr ""
 
 #: dat/spob/anya.xml:2
 msgid "Anya"
-msgstr ""
+msgstr " Anya"
 
 #: dat/spob/anya.xml:15 dat/spob/sevlow.xml:15 dat/spob/wellen.xml:16
 msgid "N"
@@ -10855,19 +10856,19 @@ msgstr ""
 
 #: dat/spob/apez_ii.xml:2
 msgid "Apez II"
-msgstr ""
+msgstr " Apez II"
 
 #: dat/spob/apez_v.xml:2
 msgid "Apez V"
-msgstr ""
+msgstr " Apez V"
 
 #: dat/spob/apik_i.xml:2
 msgid "Apik I"
-msgstr ""
+msgstr " Apik I"
 
 #: dat/spob/apik_ii.xml:2
 msgid "Apik II"
-msgstr ""
+msgstr " Apik II"
 
 #: dat/spob/apik_shipyard.xml:2
 msgid "Apik Shipyard"
@@ -10885,15 +10886,15 @@ msgstr ""
 
 #: dat/spob/aquilia.xml:2
 msgid "Aquilia"
-msgstr ""
+msgstr " Aquilia"
 
 #: dat/spob/arai.xml:2
 msgid "Arai"
-msgstr ""
+msgstr " Arai"
 
 #: dat/spob/arashu.xml:2
 msgid "Arashu"
-msgstr ""
+msgstr " Arashu"
 
 #: dat/spob/arashu.xml:28
 msgid ""
@@ -11003,7 +11004,7 @@ msgstr ""
 
 #: dat/spob/arck.xml:2
 msgid "Arck"
-msgstr ""
+msgstr " Arck"
 
 #: dat/spob/arck.xml:26
 msgid ""
@@ -11090,47 +11091,47 @@ msgstr ""
 
 #: dat/spob/arcturus_i.xml:2
 msgid "Arcturus I"
-msgstr ""
+msgstr " Arcturus I"
 
 #: dat/spob/arcturus_ii.xml:2
 msgid "Arcturus II"
-msgstr ""
+msgstr " Arcturus II"
 
 #: dat/spob/ariadus_ii.xml:2
 msgid "Ariadus II"
-msgstr ""
+msgstr " Ariadus II"
 
 #: dat/spob/ariadus_iv.xml:2
 msgid "Ariadus IV"
-msgstr ""
+msgstr " Ariadus IV"
 
 #: dat/spob/ariadus_vi.xml:2
 msgid "Ariadus VI"
-msgstr ""
+msgstr " Ariadus VI"
 
 #: dat/spob/ariadus_via.xml:2
 msgid "Ariadus VIa"
-msgstr ""
+msgstr " Ariadus VIa"
 
 #: dat/spob/ariadus_vib.xml:2
 msgid "Ariadus VIb"
-msgstr ""
+msgstr " Ariadus VIb"
 
 #: dat/spob/ariak.xml:2
 msgid "Ariak"
-msgstr ""
+msgstr " Ariak"
 
 #: dat/spob/armorhead_i1.xml:2
 msgid "Armorhead I-1"
-msgstr ""
+msgstr " Armorhead I-1"
 
 #: dat/spob/armorhead_i1_b.xml:2
 msgid "Armorhead I-1 b"
-msgstr ""
+msgstr " Armorhead I-1 b"
 
 #: dat/spob/arrakis.xml:2
 msgid "Arrakis"
-msgstr ""
+msgstr " Arrakis"
 
 #: dat/spob/arrakis.xml:26
 msgid ""
@@ -11161,7 +11162,7 @@ msgstr ""
 
 #: dat/spob/arrentil.xml:2
 msgid "Arrentil"
-msgstr ""
+msgstr " Arrentil"
 
 #: dat/spob/arrentil.xml:26
 msgid ""
@@ -11197,7 +11198,7 @@ msgstr ""
 
 #: dat/spob/astana.xml:2 dat/ssys/astana.xml:2
 msgid "Astana"
-msgstr ""
+msgstr " Astana"
 
 #: dat/spob/astana.xml:26
 msgid ""
@@ -11228,11 +11229,11 @@ msgstr ""
 
 #: dat/spob/astana_iiv.xml:2
 msgid "Astana IIV"
-msgstr ""
+msgstr " Astana IIV"
 
 #: dat/spob/atalanta.xml:2
 msgid "Atalanta"
-msgstr ""
+msgstr " Atalanta"
 
 #: dat/spob/atalanta.xml:27
 msgid ""
@@ -11276,7 +11277,7 @@ msgstr "Atlântida I"
 
 #: dat/spob/atryssa.xml:2
 msgid "Atryssa"
-msgstr ""
+msgstr " Atryssa"
 
 #: dat/spob/atryssa.xml:28
 msgid ""
@@ -11352,7 +11353,7 @@ msgstr ""
 
 #: dat/spob/avoss.xml:2
 msgid "Avoss"
-msgstr ""
+msgstr " Avoss"
 
 #: dat/spob/avoss.xml:25
 msgid ""
@@ -11376,15 +11377,15 @@ msgstr ""
 
 #: dat/spob/awowa_iv.xml:2
 msgid "Awowa IV"
-msgstr ""
+msgstr " Awowa IV"
 
 #: dat/spob/awowa_v.xml:2
 msgid "Awowa V"
-msgstr ""
+msgstr " Awowa V"
 
 #: dat/spob/baba_yaga.xml:2
 msgid "Baba Yaga"
-msgstr ""
+msgstr " Baba Yaga"
 
 #: dat/spob/babylon_i.xml:2
 msgid "Babylon I"
@@ -11400,15 +11401,15 @@ msgstr "Babilônia IIa"
 
 #: dat/spob/baf_i.xml:2
 msgid "Baf I"
-msgstr ""
+msgstr " Baf I"
 
 #: dat/spob/baf_iv.xml:2
 msgid "Baf IV"
-msgstr ""
+msgstr " Baf IV"
 
 #: dat/spob/basel_i.xml:2
 msgid "Basel I"
-msgstr ""
+msgstr " Basel I"
 
 #: dat/spob/bastion_station.xml:2
 msgid "Bastion Station"
@@ -11445,7 +11446,7 @@ msgstr ""
 
 #: dat/spob/beeklo_ii.xml:2
 msgid "Beeklo II"
-msgstr ""
+msgstr " Beeklo II"
 
 #: dat/spob/beene.xml:2
 msgid "Beene"
@@ -11620,7 +11621,7 @@ msgstr "Bete"
 
 #: dat/spob/bgg1356.xml:2
 msgid "BGG-1356"
-msgstr ""
+msgstr " BGG-1356"
 
 #: dat/spob/blackwell_i.xml:2
 msgid "Blackwell I"
@@ -11640,7 +11641,7 @@ msgstr "Bacamarte II"
 
 #: dat/spob/bolero.xml:2
 msgid "Bolero"
-msgstr ""
+msgstr " Bolero"
 
 #: dat/spob/bolero.xml:29
 msgid ""
@@ -11679,7 +11680,7 @@ msgstr ""
 
 #: dat/spob/bon_sebb.xml:2
 msgid "Bon Sebb"
-msgstr ""
+msgstr " Bon Sebb"
 
 #: dat/spob/bon_sebb.xml:29
 msgid ""
@@ -11749,7 +11750,7 @@ msgstr ""
 
 #: dat/spob/botarn_i.xml:2
 msgid "Botarn I"
-msgstr ""
+msgstr " Botarn I"
 
 #: dat/spob/brandt_station.xml:2
 msgid "Brandt Station"
@@ -11781,7 +11782,7 @@ msgstr ""
 
 #: dat/spob/brendon_i.xml:2
 msgid "Brendon I"
-msgstr ""
+msgstr " Brendon I"
 
 #: dat/spob/brimstone_i.xml:2
 msgid "Brimstone I"
@@ -11805,7 +11806,7 @@ msgstr "Enxofre III"
 
 #: dat/spob/brock.xml:2
 msgid "Brock"
-msgstr ""
+msgstr " Brock"
 
 #: dat/spob/brock.xml:27
 msgid ""
@@ -11833,7 +11834,7 @@ msgstr ""
 
 #: dat/spob/brooks.xml:2
 msgid "Brooks"
-msgstr ""
+msgstr " Brooks"
 
 #: dat/spob/brooks.xml:26
 msgid ""
@@ -11865,7 +11866,7 @@ msgstr ""
 
 #: dat/spob/buritt.xml:2
 msgid "Buritt"
-msgstr ""
+msgstr " Buritt"
 
 #: dat/spob/buritt.xml:27
 msgid ""
@@ -11893,7 +11894,7 @@ msgstr ""
 
 #: dat/spob/burnan.xml:2
 msgid "Burnan"
-msgstr ""
+msgstr " Burnan"
 
 #: dat/spob/burnan.xml:29
 msgid ""
@@ -12155,7 +12156,7 @@ msgstr "Carbonizado"
 
 #: dat/spob/chriik.xml:2
 msgid "Chriik"
-msgstr ""
+msgstr " Chriik"
 
 #: dat/spob/chriik.xml:27
 msgid ""
@@ -12186,19 +12187,19 @@ msgstr ""
 
 #: dat/spob/churchill_i.xml:2
 msgid "Churchill I"
-msgstr ""
+msgstr " Churchill I"
 
 #: dat/spob/churchill_ii.xml:2
 msgid "Churchill II"
-msgstr ""
+msgstr " Churchill II"
 
 #: dat/spob/churchill_iia.xml:2
 msgid "Churchill IIa"
-msgstr ""
+msgstr " Churchill IIa"
 
 #: dat/spob/claudius_mehan.xml:2
 msgid "Claudius Mehan"
-msgstr ""
+msgstr " Claudius Mehan"
 
 #: dat/spob/cole_station.xml:2
 msgid "Cole Station"
@@ -12218,7 +12219,7 @@ msgstr ""
 
 #: dat/spob/colley.xml:2
 msgid "Colley"
-msgstr ""
+msgstr " Colley"
 
 #: dat/spob/colley.xml:27
 msgid ""
@@ -12258,11 +12259,11 @@ msgstr ""
 
 #: dat/spob/coran.xml:2
 msgid "Coran"
-msgstr ""
+msgstr " Coran"
 
 #: dat/spob/corax.xml:2
 msgid "Corax"
-msgstr ""
+msgstr "Corax"
 
 #: dat/spob/corax.xml:27
 msgid ""
@@ -12358,19 +12359,19 @@ msgstr ""
 
 #: dat/spob/corvus_i.xml:2
 msgid "Corvus I"
-msgstr ""
+msgstr " Corvus I"
 
 #: dat/spob/corvus_vi.xml:2
 msgid "Corvus VI"
-msgstr ""
+msgstr " Corvus VI"
 
 #: dat/spob/corvus_via.xml:2
 msgid "Corvus VI-a"
-msgstr ""
+msgstr " Corvus VI-a"
 
 #: dat/spob/corvus_vib.xml:2
 msgid "Corvus VI-b"
-msgstr ""
+msgstr " Corvus VI-b"
 
 #: dat/spob/corvus_vib.xml:24
 msgid ""
@@ -12400,7 +12401,7 @@ msgstr ""
 
 #: dat/spob/cristen.xml:2
 msgid "Cristen"
-msgstr ""
+msgstr " Cristen"
 
 #: dat/spob/cristen.xml:25
 msgid ""
@@ -12433,7 +12434,7 @@ msgstr ""
 #: dat/spob/crow.xml:2 dat/scripts/pilotname/generic.lua:24
 #: dat/scripts/pilotname/pirate.lua:277
 msgid "Crow"
-msgstr ""
+msgstr "Corvo"
 
 #: dat/spob/crow.xml:28
 msgid ""
@@ -12443,6 +12444,11 @@ msgid ""
 "in the galaxy, being away from the core worlds can give people the breathing "
 "room to live on the edge."
 msgstr ""
+"Apesar de fazer fronteira com um setor perigoso do espaço, o sistema Corvus, "
+"e Corvo em particular, estão prosperando. O planeta é uma fronteira de "
+"cultura, comércio e prosperidade. Mesmo para os Soromid, uma das sociedades "
+"mais jovens da galáxia, estar longe dos mundos centrais pode dar às pessoas "
+"espaço para respirar no limite."
 
 #: dat/spob/crow.xml:29
 msgid ""
@@ -12451,10 +12457,14 @@ msgid ""
 "those at another. Given some of the newer customs cropping up here a lot of "
 "out-of-system traders are thankful for this."
 msgstr ""
+"Este bar foi projetado com a acústica em mente.  A música de fundo é "
+"penetrante, mas discreta e as conversas mantidas em uma mesa não perturbam "
+"as que estão em outra.  Dado alguns dos novos costumes surgindo aqui, muitos "
+"comerciantes fora do sistema estão agradecidos por isso."
 
 #: dat/spob/crylo.xml:2
 msgid "Crylo"
-msgstr ""
+msgstr " Crylo"
 
 #: dat/spob/crylo.xml:27
 msgid ""
@@ -12473,10 +12483,15 @@ msgid ""
 "creature. Some of the more experimental drinks might also be better avoided "
 "unless you like your ingredients very fresh indeed."
 msgstr ""
+"Pescar é o nome do jogo no Crylo e a barra de espaçoporto não é nada se não "
+"estiver no personagem. Quase tudo aqui é com tema de peixe, incluindo o bar, "
+"que foi feito da espinha de alguma criatura aquática gigantesca. Algumas das "
+"bebidas mais experimentais também podem ser evitadas, a menos que você goste "
+"de seus ingredientes muito frescos."
 
 #: dat/spob/culex.xml:2
 msgid "Culex"
-msgstr ""
+msgstr " Culex"
 
 #: dat/spob/culex.xml:26
 msgid ""
@@ -12487,6 +12502,12 @@ msgid ""
 "habitat with no economy of its own. It's fairly uninteresting to most people "
 "who don't actually live here."
 msgstr ""
+"Culex é a lua do planeta Myonei. Myonei em si é um mundo fabril, mas é muito "
+"desagradável até mesmo para o Soromid geneticamente alterado viver. "
+"Felizmente, o Culex é bastante adequado para habitação e por isso os "
+"trabalhadores que trabalham na superfície têm aqui as suas casas. Culex é "
+"pouco mais que um habitat sem economia própria. É bastante desinteressante "
+"para a maioria das pessoas que não moram aqui."
 
 #: dat/spob/culex.xml:27
 msgid ""
@@ -12496,10 +12517,15 @@ msgid ""
 "fashion. Most of the facility is filled with recreational facilities and "
 "even a dance floor."
 msgstr ""
+"Como Culex vê pouco tráfego além de passageiros de e para Myonei, a barra do "
+"espaçoporto foi reaproveitada como um centro comunitário pelos moradores "
+"locais. As instalações padrão ainda estão presentes e operacionais, mas de "
+"forma mínima. A maior parte da instalação está repleta de instalações "
+"recreativas e até mesmo uma pista de dança."
 
 #: dat/spob/curie.xml:2
 msgid "Curie"
-msgstr ""
+msgstr " Curie"
 
 #: dat/spob/curie.xml:28
 msgid ""
@@ -12509,6 +12535,11 @@ msgid ""
 "it a potentially valuable Za'lek world despite the unpleasantness of its "
 "environment."
 msgstr ""
+"Este planeta ainda está em sua infância e é uma fonte primária de pesquisa "
+"geológica para os cientistas Za'lek, abrigando um dos principais centros de "
+"pesquisa de materiais. Isso e a alta densidade de metais pesados raros e "
+"valiosos o tornam um mundo Za'lek potencialmente valioso, apesar do "
+"desconforto de seu ambiente."
 
 #: dat/spob/curie.xml:29
 msgid ""
@@ -12517,10 +12548,13 @@ msgid ""
 "phenomena on the planet that those whose interests in geology might find "
 "interesting."
 msgstr ""
+"O bar tem fotos dos cientistas famosos que deram o nome ao planeta, bem como "
+"várias fotos e holopinturas de alguns dos fenômenos do planeta que aqueles "
+"cujos interesses em geologia podem achar interessantes."
 
 #: dat/spob/cutha.xml:2
 msgid "Cutha"
-msgstr ""
+msgstr " Cutha"
 
 #: dat/spob/cutha.xml:27
 msgid ""
@@ -12532,6 +12566,13 @@ msgid ""
 "Nowadays, Cutha houses most of the Soromid involved in the military "
 "operations at Heronus."
 msgstr ""
+"Cutha é uma maravilha da engenharia planetária. Começou como um mundo "
+"bastante hostil, sua atmosfera cheia de substâncias tóxicas, mas os Soromid "
+"o dominaram e o transformaram em um lugar bastante decente para se viver. "
+"Claro, mesmo a engenharia Soromid tem seus limites, então Cutha não é um "
+"mundo tão bom quanto Turawee em Sarcophagus, mas o resultado ainda é "
+"impressionante. Hoje em dia, Cutha abriga a maioria dos Soromids envolvidos "
+"nas operações militares em Heronus."
 
 #: dat/spob/cutha.xml:28
 msgid ""
@@ -100576,7 +100617,7 @@ msgstr ""
 #: src/map.c:814
 #, c-format
 msgid "%sNebula"
-msgstr ""
+msgstr "%sNebulosa"
 
 #: src/map.c:825
 #, c-format
@@ -100618,28 +100659,30 @@ msgid ""
 "No price info for\n"
 "%s here"
 msgstr ""
+"Nenhuma informação de preço para\n"
+"%s aqui"
 
 #: src/map.c:2114
 msgid "Travel (Default)"
-msgstr ""
+msgstr "Viagem (padrão)"
 
 #: src/map.c:2117
 #, c-format
 msgid "%s: Cost"
-msgstr ""
+msgstr "%s: Custo"
 
 #: src/map.c:2118
 #, c-format
 msgid "%s: Trade"
-msgstr ""
+msgstr "%s: Comércio"
 
 #: src/map.c:2174
 msgid "Normal View"
-msgstr ""
+msgstr "Visualização Normal"
 
 #: src/map.c:2174
 msgid "Minimal View"
-msgstr ""
+msgstr "Visualização Mínima"
 
 #: src/map.c:2197
 msgid "Add System Note"
@@ -100661,8 +100704,8 @@ msgstr[1] ""
 #, c-format
 msgid "Loaded %d map decorator"
 msgid_plural "Loaded %d map decorators"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Carregado decorador de mapa %d"
+msgstr[1] "%d decoradores de mapa carregados"
 
 #: src/map.c:3107
 #, c-format
@@ -100672,33 +100715,33 @@ msgstr ""
 #: src/map.c:3128
 #, c-format
 msgid "Could not load map decorator texture '%s'."
-msgstr ""
+msgstr "Não foi possível carregar a textura do decorador de mapa '%s'."
 
 #: src/map.c:3132
 #, c-format
 msgid "Map decorator has unknown node '%s'."
-msgstr ""
+msgstr "O decorador de mapa tem um nó desconhecido '%s'."
 
 #. Create window.
 #: src/map_find.c:197 src/map_find.c:740 src/map_find.c:873
 msgid "Search Results"
-msgstr ""
+msgstr "Procurar Resultados"
 
 #: src/map_find.c:211
 msgid "Select"
-msgstr ""
+msgstr "Selecionar"
 
 #: src/map_find.c:291
 msgid "Jump to first system not found!"
-msgstr ""
+msgstr "Ir para o primeiro sistema não encontrado!"
 
 #: src/map_find.c:327
 msgid "Matching jumps not found, something is up..."
-msgstr ""
+msgstr "Saltos correspondentes não encontrados, algo está acontecendo..."
 
 #: src/map_find.c:386
 msgid "unknown route"
-msgstr ""
+msgstr "rota desconhecida"
 
 #: src/map_find.c:390
 #, c-format
@@ -101025,7 +101068,7 @@ msgstr ""
 #. create menu window
 #: src/menu.c:224 src/menu.c:640
 msgid "Main Menu"
-msgstr ""
+msgstr "Menu principal"
 
 #: src/menu.c:233
 msgid "Load Game"
@@ -101033,37 +101076,37 @@ msgstr ""
 
 #: src/menu.c:236
 msgid "New Game"
-msgstr ""
+msgstr "Novo jogo"
 
 #: src/menu.c:240 src/menu.c:728
 msgid "Editors"
-msgstr ""
+msgstr "Editores"
 
 #. Create window and tabs.
 #: src/menu.c:244 src/menu.c:457 src/naev.c:403 src/options.c:139
 msgid "Options"
-msgstr ""
+msgstr "Opções"
 
 #: src/menu.c:247
 msgctxt "Menu|"
 msgid "Credits"
-msgstr ""
+msgstr "Créditos"
 
 #: src/menu.c:250 src/menu.c:642
 msgid "Exit Game"
-msgstr ""
+msgstr "Sair do jogo"
 
 #: src/menu.c:337
 msgid "Main menu does not exist."
-msgstr ""
+msgstr "O menu principal não existe."
 
 #: src/menu.c:436
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 #: src/menu.c:442
 msgid "Resume"
-msgstr ""
+msgstr "Retomar"
 
 #: src/menu.c:452
 msgid "Load / Save"
@@ -101071,7 +101114,7 @@ msgstr ""
 
 #: src/menu.c:461
 msgid "Exit to Title"
-msgstr ""
+msgstr "Sair para o menu principal"
 
 #: src/menu.c:499
 msgid "Small menu does not exist."
@@ -101080,7 +101123,7 @@ msgstr ""
 #. Stop player sounds because sometimes they hang.
 #: src/menu.c:542
 msgid "Exited game."
-msgstr ""
+msgstr "Saiu do jogo."
 
 #: src/menu.c:563
 msgid "Exit to Menu?"
@@ -101098,19 +101141,19 @@ msgstr ""
 
 #: src/menu.c:633
 msgid "Continue"
-msgstr ""
+msgstr "Continuar"
 
 #: src/menu.c:636
 msgid "Restart"
-msgstr ""
+msgstr "Reiniciar"
 
 #: src/menu.c:695
 msgid "Quit Naev"
-msgstr ""
+msgstr "Sair do Naev"
 
 #: src/menu.c:695
 msgid "Are you sure you want to quit Naev?"
-msgstr ""
+msgstr "Tem certeza de que deseja sair do Naev?"
 
 #: src/menu.c:733
 msgid "Universe Map"
@@ -105993,7 +106036,7 @@ msgstr ""
 #: src/start.c:124
 #, c-format
 msgid "'%s' has unknown node '%s'."
-msgstr ""
+msgstr "'%s' tem nó desconhecido '%s'."
 
 #. Safety checking.
 #: src/start.c:132
