@@ -18,6 +18,7 @@
 local vn = require "vn"
 local fmt = require "format"
 local taiomi = require "common.taiomi"
+local lmisn = require "lmisn"
 
 local title = _("Final Breath of Taiomi")
 local base, basesys = spob.getS("One-Wing Goddard")
@@ -61,4 +62,28 @@ function land ()
    s(_([[""]]))
    vn.done( taiomi.scavenger.transition )
    vn.run()
+
+   misn.osdCreate( title, {
+      fmt.f(_("Defend the {base}"), {base=base})
+   } )
+   misn.markerAdd( basesys )
+end
+
+local hypergate
+function enter ()
+   if mem.state ~= 0 then
+      lmisn.fail(_([[You were supposed to protect the hypergate!"]]))
+   end
+   mem.state = 1 -- start
+
+   --local pos = base:pos()
+   diff.apply("onewing_goddard_gone")
+   hypergate = pilot.add( "One-Wing Goddard", "Independent", player.pos(), nil, {naked=true, ai="dummy"} )
+   hypergate:disable()
+   hypergate:setHilight(true)
+   hook.pilot( hypergate, "death", "hypergate_dead" )
+end
+
+function hypergate_dead ()
+   -- TODO big explosion and kill player
 end
