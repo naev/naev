@@ -8,8 +8,9 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-07-20 00:21-0400\n"
-"PO-Revision-Date: 2022-10-02 09:16+0000\n"
-"Last-Translator: Bloody Kenshiro <redhokuto@gmail.com>\n"
+"PO-Revision-Date: 2022-11-03 09:07+0000\n"
+"Last-Translator: Anthony Gregory Souza dos Santos "
+"<antonigregorysouza123@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
 "naev-0-9-x/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -17,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.14.2-dev\n"
 
 #: dat/intro:2
 msgid ""
@@ -596,7 +597,7 @@ msgstr "Modelador das naves Shark e Rhino"
 
 #: dat/AUTHORS:145
 msgid "Devin Khan"
-msgstr ""
+msgstr " Devin Khan"
 
 #: dat/AUTHORS:146
 msgid "   * Modeller of the Phalanx"
@@ -604,7 +605,7 @@ msgstr "Modelador da Nave Phalanx"
 
 #: dat/AUTHORS:148
 msgid "Areze"
-msgstr ""
+msgstr "Areze"
 
 #: dat/AUTHORS:149
 msgid "   * Junior assistant galaxy creator"
@@ -612,7 +613,7 @@ msgstr "Criador assistente júnior de galaxia "
 
 #: dat/AUTHORS:151
 msgid "Old Man <oldtopman@gmail.com>"
-msgstr ""
+msgstr " Old Man <oldtopman@gmail.com>"
 
 #: dat/AUTHORS:152
 msgid "   * Desura Maintainer"
@@ -620,7 +621,7 @@ msgstr "Mantenedor da plataforma Desura"
 
 #: dat/AUTHORS:154
 msgid "NeD"
-msgstr ""
+msgstr " NeD"
 
 #: dat/AUTHORS:155 dat/AUTHORS:161
 msgid "   * Mission contributor"
@@ -628,7 +629,7 @@ msgstr "Colaborador de missões"
 
 #: dat/AUTHORS:157
 msgid "Sudarshan S"
-msgstr ""
+msgstr " Sudarshan S"
 
 #: dat/AUTHORS:158
 msgid "   * Event contributor"
@@ -636,7 +637,7 @@ msgstr "Colaborador de eventos"
 
 #: dat/AUTHORS:160 dat/AUTHORS:178
 msgid "PhoenixRiver"
-msgstr ""
+msgstr " PhoenixRiver"
 
 #: dat/AUTHORS:162
 msgid "   * Misc fixes and typos"
@@ -644,7 +645,7 @@ msgstr "Correções gerais e de erros tipográficos"
 
 #: dat/AUTHORS:164
 msgid "Alastair Basden"
-msgstr ""
+msgstr " Alastair Basden"
 
 #: dat/AUTHORS:165
 msgid "   * Economy development"
@@ -664,7 +665,7 @@ msgstr "Música por Mattew Pablo"
 
 #: dat/AUTHORS:170
 msgid "http://www.matthewpablo.com"
-msgstr ""
+msgstr " http://www.matthewpablo.com"
 
 #: dat/AUTHORS:172
 msgid "Testers"
@@ -672,15 +673,15 @@ msgstr "Jogadores de teste"
 
 #: dat/AUTHORS:175
 msgid "John Schwartfeger"
-msgstr ""
+msgstr " John Schwartfeger"
 
 #: dat/AUTHORS:176
 msgid "Leonardo Valeri Manera"
-msgstr ""
+msgstr " Leonardo Valeri Manera"
 
 #: dat/AUTHORS:177
 msgid "EvanR"
-msgstr ""
+msgstr " EvanR"
 
 #: dat/AUTHORS:180
 msgid "Artwork Contributors"
@@ -1679,7 +1680,7 @@ msgstr ""
 
 #: dat/assets/anya.xml:2
 msgid "Anya"
-msgstr ""
+msgstr " Anya"
 
 #: dat/assets/anya.xml:29
 msgid ""
@@ -1711,19 +1712,19 @@ msgstr ""
 
 #: dat/assets/apez_ii.xml:2
 msgid "Apez II"
-msgstr ""
+msgstr " Apez II"
 
 #: dat/assets/apez_v.xml:2
 msgid "Apez V"
-msgstr ""
+msgstr " Apez V"
 
 #: dat/assets/apik_i.xml:2
 msgid "Apik I"
-msgstr ""
+msgstr " Apik I"
 
 #: dat/assets/apik_ii.xml:2
 msgid "Apik II"
-msgstr ""
+msgstr " Apik II"
 
 #: dat/assets/apik_shipyard.xml:2
 msgid "Apik Shipyard"
@@ -1741,15 +1742,15 @@ msgstr ""
 
 #: dat/assets/aquilia.xml:2
 msgid "Aquilia"
-msgstr ""
+msgstr " Aquilia"
 
 #: dat/assets/arai.xml:2
 msgid "Arai"
-msgstr ""
+msgstr " Arai"
 
 #: dat/assets/arashu.xml:2
 msgid "Arashu"
-msgstr ""
+msgstr " Arashu"
 
 #: dat/assets/arashu.xml:31
 msgid ""
@@ -1845,7 +1846,7 @@ msgstr ""
 
 #: dat/assets/arck.xml:2
 msgid "Arck"
-msgstr ""
+msgstr " Arck"
 
 #: dat/assets/arck.xml:29
 msgid ""
@@ -1888,6 +1889,10 @@ msgid ""
 "core systems. Piracy is nearly non-existent in the core systems due to the "
 "large standing force stationed here and their routine patrols."
 msgstr ""
+"Arcturus Gamma é a primeira linha de defesa do Império quando se trata de "
+"seus sistemas centrais. A pirataria é quase inexistente nos sistemas "
+"centrais devido à grande força permanente estacionada aqui e suas patrulhas "
+"de rotina."
 
 #: dat/assets/arcturus_gamma.xml:32
 msgid ""
@@ -1901,47 +1906,47 @@ msgstr ""
 
 #: dat/assets/arcturus_i.xml:2
 msgid "Arcturus I"
-msgstr ""
+msgstr " Arcturus I"
 
 #: dat/assets/arcturus_ii.xml:2
 msgid "Arcturus II"
-msgstr ""
+msgstr " Arcturus II"
 
 #: dat/assets/ariadus_ii.xml:2
 msgid "Ariadus II"
-msgstr ""
+msgstr " Ariadus II"
 
 #: dat/assets/ariadus_iv.xml:2
 msgid "Ariadus IV"
-msgstr ""
+msgstr " Ariadus IV"
 
 #: dat/assets/ariadus_vi.xml:2
 msgid "Ariadus VI"
-msgstr ""
+msgstr " Ariadus VI"
 
 #: dat/assets/ariadus_via.xml:2
 msgid "Ariadus VIa"
-msgstr ""
+msgstr " Ariadus VIa"
 
 #: dat/assets/ariadus_vib.xml:2
 msgid "Ariadus VIb"
-msgstr ""
+msgstr " Ariadus VIb"
 
 #: dat/assets/ariak.xml:2
 msgid "Ariak"
-msgstr ""
+msgstr " Ariak"
 
 #: dat/assets/armorhead_i1.xml:2
 msgid "Armorhead I-1"
-msgstr ""
+msgstr " Armorhead I-1"
 
 #: dat/assets/armorhead_i1_b.xml:2
 msgid "Armorhead I-1 b"
-msgstr ""
+msgstr " Armorhead I-1 b"
 
 #: dat/assets/arrakis.xml:2
 msgid "Arrakis"
-msgstr ""
+msgstr " Arrakis"
 
 #: dat/assets/arrakis.xml:29
 msgid ""
@@ -1949,6 +1954,10 @@ msgid ""
 "can rage for weeks. The locals are continuously discussing sandworms, though "
 "you're not sure what to make of it."
 msgstr ""
+"Arrakis é um planeta deserto sem precipitação natural e as tempestades de "
+"poeira podem durar semanas. Os moradores estão continuamente discutindo "
+"sobre os vermes da areia, embora você não tenha certeza do que fazer com "
+"isso."
 
 #: dat/assets/arrakis.xml:30
 msgid ""
@@ -1964,7 +1973,7 @@ msgstr ""
 
 #: dat/assets/arrentil.xml:2
 msgid "Arrentil"
-msgstr ""
+msgstr " Arrentil"
 
 #: dat/assets/arrentil.xml:29
 msgid ""
@@ -1975,6 +1984,12 @@ msgid ""
 "population is thriving and the economy is stable. By all means, Arrentil is "
 "an example of Soromid persistence."
 msgstr ""
+"Como é típico para os mundos Soromid, Arentil seria considerado totalmente "
+"inóspito pelo resto da humanidade. A atmosfera é tóxica e a superfície "
+"instável, mas os Soromid conseguiram domar este mundo. Claro que até eles "
+"precisam viver em habitats protegidos, mas apesar disso a população está "
+"prosperando e a economia é estável. Por todos os meios, Arentil é um exemplo "
+"de persistência Soromid."
 
 #: dat/assets/arrentil.xml:30
 msgid ""
@@ -1994,7 +2009,7 @@ msgstr ""
 
 #: dat/assets/astana.xml:2 dat/ssys/astana.xml:2
 msgid "Astana"
-msgstr ""
+msgstr " Astana"
 
 #: dat/assets/astana.xml:28
 msgid ""
@@ -2004,6 +2019,11 @@ msgid ""
 "ideal spot for this as, besides the scientists who work here, no one else "
 "wants to land on the planet."
 msgstr ""
+"Astana é o lar do Centro de Testes de Armas Experimentais Imperiais. É aqui "
+"que a maioria das novas armas e equipamentos equipados pelos militares do "
+"Império são testados e qualificados para o serviço ativo. Este planeta é um "
+"local ideal para isso, pois, além dos cientistas que trabalham aqui, ninguém "
+"mais quer pousar no planeta."
 
 #: dat/assets/astana.xml:29
 msgid ""
@@ -2019,11 +2039,11 @@ msgstr ""
 
 #: dat/assets/astana_iiv.xml:2
 msgid "Astana IIV"
-msgstr ""
+msgstr " Astana IIV"
 
 #: dat/assets/atalanta.xml:2
 msgid "Atalanta"
-msgstr ""
+msgstr " Atalanta"
 
 #: dat/assets/atalanta.xml:30
 msgid ""
@@ -2057,7 +2077,7 @@ msgstr "Atlântida I"
 
 #: dat/assets/atryssa.xml:2
 msgid "Atryssa"
-msgstr ""
+msgstr " Atryssa"
 
 #: dat/assets/atryssa.xml:31
 msgid ""
@@ -2135,7 +2155,7 @@ msgstr ""
 
 #: dat/assets/avoss.xml:2
 msgid "Avoss"
-msgstr ""
+msgstr " Avoss"
 
 #: dat/assets/avoss.xml:27
 msgid ""
@@ -2159,15 +2179,15 @@ msgstr ""
 
 #: dat/assets/awowa_iv.xml:2
 msgid "Awowa IV"
-msgstr ""
+msgstr " Awowa IV"
 
 #: dat/assets/awowa_v.xml:2
 msgid "Awowa V"
-msgstr ""
+msgstr " Awowa V"
 
 #: dat/assets/baba_yaga.xml:2
 msgid "Baba Yaga"
-msgstr ""
+msgstr " Baba Yaga"
 
 #: dat/assets/babylon_i.xml:2
 msgid "Babylon I"
@@ -2183,15 +2203,15 @@ msgstr "Babilônia IIa"
 
 #: dat/assets/baf_i.xml:2
 msgid "Baf I"
-msgstr ""
+msgstr " Baf I"
 
 #: dat/assets/baf_iv.xml:2
 msgid "Baf IV"
-msgstr ""
+msgstr " Baf IV"
 
 #: dat/assets/basel_i.xml:2
 msgid "Basel I"
-msgstr ""
+msgstr " Basel I"
 
 #: dat/assets/bastion_station.xml:2
 msgid "Bastion Station"
@@ -2205,6 +2225,12 @@ msgid ""
 "Za'lek political scene. The House Za'lek Defense Force conducts most of "
 "their foreign contact here, where they can keep an eye on affairs."
 msgstr ""
+"Bastion Station é uma das duas principais estações base de defesa, guarda de "
+"fronteira e patrulha que levam ao espaço Za'lek. Como tal, é um dos poucos "
+"gastos militares que (em grande parte) não é contestado até mesmo pela "
+"notória cena política de Za'lek. A Força de Defesa da Casa Za'lek realiza a "
+"maior parte de seus contatos estrangeiros aqui, onde podem ficar de olho nos "
+"assuntos."
 
 #: dat/assets/bedimann_shipyards.xml:2
 msgid "Bedimann Shipyards"
@@ -2216,10 +2242,13 @@ msgid ""
 "sent out to the defense forces. It also maintains a small contingent of "
 "Za'lek vessels at home to serve as a in-system guard."
 msgstr ""
+"Esses estaleiros são um dos lugares onde as naves Za'lek são construídas e "
+"enviadas às forças de defesa. Também mantém um pequeno contingente de naves "
+"Za'lek em casa para servir como guarda no sistema."
 
 #: dat/assets/beeklo_ii.xml:2
 msgid "Beeklo II"
-msgstr ""
+msgstr " Beeklo II"
 
 #: dat/assets/beene.xml:2
 msgid "Beene"
@@ -2333,6 +2362,9 @@ msgid ""
 "crops that are bound for the western systems. It is a quiet world, with "
 "little in the way of the bustle and fuss of other, more core, planets."
 msgstr ""
+"Benteen é um dos principais mundos agrícolas do Império. Cresce a maioria "
+"das culturas que se destinam aos sistemas ocidentais. É um mundo tranquilo, "
+"com pouca agitação e agitação de outros planetas mais centrais."
 
 #: dat/assets/benteen.xml:30
 msgid ""
@@ -2382,7 +2414,7 @@ msgstr "Bete"
 
 #: dat/assets/bgg1356.xml:2
 msgid "BGG-1356"
-msgstr ""
+msgstr " BGG-1356"
 
 #: dat/assets/blackwell_i.xml:2
 msgid "Blackwell I"
@@ -2402,7 +2434,7 @@ msgstr "Bacamarte II"
 
 #: dat/assets/bolero.xml:2
 msgid "Bolero"
-msgstr ""
+msgstr " Bolero"
 
 #: dat/assets/bolero.xml:31
 msgid ""
@@ -2441,7 +2473,7 @@ msgstr ""
 
 #: dat/assets/bon_sebb.xml:2
 msgid "Bon Sebb"
-msgstr ""
+msgstr " Bon Sebb"
 
 #: dat/assets/bon_sebb.xml:31
 msgid ""
@@ -2511,7 +2543,7 @@ msgstr ""
 
 #: dat/assets/botarn_i.xml:2
 msgid "Botarn I"
-msgstr ""
+msgstr " Botarn I"
 
 #: dat/assets/brandt_station.xml:2
 msgid "Brandt Station"
@@ -2543,7 +2575,7 @@ msgstr ""
 
 #: dat/assets/brendon_i.xml:2
 msgid "Brendon I"
-msgstr ""
+msgstr " Brendon I"
 
 #: dat/assets/brimstone_i.xml:2
 msgid "Brimstone I"
@@ -2567,7 +2599,7 @@ msgstr "Enxofre III"
 
 #: dat/assets/brock.xml:2
 msgid "Brock"
-msgstr ""
+msgstr " Brock"
 
 #: dat/assets/brock.xml:30
 msgid ""
@@ -2595,7 +2627,7 @@ msgstr ""
 
 #: dat/assets/brooks.xml:2
 msgid "Brooks"
-msgstr ""
+msgstr " Brooks"
 
 #: dat/assets/brooks.xml:29
 msgid ""
@@ -2618,10 +2650,14 @@ msgid ""
 "prices for refreshments and services at the spaceport bar, Brooks, after "
 "all, is a boom world and where profit is to made."
 msgstr ""
+"Em Brooks tudo é caro, algo que vem com os mundos economicamente mais "
+"prósperos. No entanto, a maioria dos comerciantes suporta os preços "
+"inflacionados de refrescos e serviços no bar do espaçoporto, afinal Brooks é "
+"um mundo em expansão e onde há lucro."
 
 #: dat/assets/buritt.xml:2
 msgid "Buritt"
-msgstr ""
+msgstr " Buritt"
 
 #: dat/assets/buritt.xml:30
 msgid ""
@@ -2649,7 +2685,7 @@ msgstr ""
 
 #: dat/assets/burnan.xml:2
 msgid "Burnan"
-msgstr ""
+msgstr " Burnan"
 
 #: dat/assets/burnan.xml:31
 msgid ""
@@ -2825,6 +2861,12 @@ msgid ""
 "theories around the Incident, one can never be too sure where reality ends "
 "and fiction begins."
 msgstr ""
+"Nomeado em homenagem ao cão guardião do submundo por seu papel no "
+"monitoramento e observação da imensa nebulosa do Sol. Ela foi criada logo "
+"após a nebulosa se estabilizar. Os detalhes exatos são confidenciais e há "
+"influência militar mais do que suficiente para torná-lo suspeito. Com todas "
+"as teorias da conspiração em torno do Incidente, nunca se pode ter certeza "
+"de onde termina a realidade e começa a ficção."
 
 #: dat/assets/cerberus.xml:29
 msgid ""
@@ -2894,7 +2936,7 @@ msgstr "Carbonizado"
 
 #: dat/assets/chriik.xml:2
 msgid "Chriik"
-msgstr ""
+msgstr " Chriik"
 
 #: dat/assets/chriik.xml:30
 msgid ""
@@ -2925,19 +2967,19 @@ msgstr ""
 
 #: dat/assets/churchill_i.xml:2
 msgid "Churchill I"
-msgstr ""
+msgstr " Churchill I"
 
 #: dat/assets/churchill_ii.xml:2
 msgid "Churchill II"
-msgstr ""
+msgstr " Churchill II"
 
 #: dat/assets/churchill_iia.xml:2
 msgid "Churchill IIa"
-msgstr ""
+msgstr " Churchill IIa"
 
 #: dat/assets/claudius_mehan.xml:2
 msgid "Claudius Mehan"
-msgstr ""
+msgstr " Claudius Mehan"
 
 #: dat/assets/cole_station.xml:2
 msgid "Cole Station"
@@ -2949,10 +2991,13 @@ msgid ""
 "transport ships stop to refuel and regenerate their shields within, safely "
 "away from the radiation of the nebula."
 msgstr ""
+"A estação Cole é a última estação civil na rota para Doeston. Muitas naves "
+"de transporte param para reabastecer e regenerar seus escudos, longe da "
+"radiação da nebulosa."
 
 #: dat/assets/colley.xml:2
 msgid "Colley"
-msgstr ""
+msgstr " Colley"
 
 #: dat/assets/colley.xml:29
 msgid ""
@@ -2970,6 +3015,9 @@ msgid ""
 "look as alert as they have ever been and you feel their eyes look you over "
 "as you sit down to order a drink."
 msgstr ""
+"A idade média dos clientes aqui parece estar em torno de setenta anos, mas "
+"eles parecem mais alertas do que nunca e você sente seus olhos olhando para "
+"você enquanto você se senta para pedir uma bebida."
 
 #: dat/assets/coral_station.xml:2
 msgid "Coral Station"
@@ -2982,14 +3030,18 @@ msgid ""
 "station inspects all trade traffic entering Sirius space this way as well as "
 "keeping an eye on outbound traffic too."
 msgstr ""
+"A Coral Station atua como guarda de fronteira. As forças estacionadas aqui "
+"são a primeira linha de defesa contra ameaças vindas de fora do espaço "
+"Siriano. A estação inspeciona todo o tráfego comercial que entra no espaço "
+"Sirius dessa maneira, além de ficar de olho no tráfego de saída."
 
 #: dat/assets/coran.xml:2
 msgid "Coran"
-msgstr ""
+msgstr " Coran"
 
 #: dat/assets/corax.xml:2
 msgid "Corax"
-msgstr ""
+msgstr "Corax"
 
 #: dat/assets/corax.xml:30
 msgid ""
@@ -3085,19 +3137,19 @@ msgstr ""
 
 #: dat/assets/corvus_i.xml:2
 msgid "Corvus I"
-msgstr ""
+msgstr " Corvus I"
 
 #: dat/assets/corvus_vi.xml:2
 msgid "Corvus VI"
-msgstr ""
+msgstr " Corvus VI"
 
 #: dat/assets/corvus_via.xml:2
 msgid "Corvus VI-a"
-msgstr ""
+msgstr " Corvus VI-a"
 
 #: dat/assets/corvus_vib.xml:2
 msgid "Corvus VI-b"
-msgstr ""
+msgstr " Corvus VI-b"
 
 #: dat/assets/corvus_vib.xml:27
 msgid ""
@@ -3127,7 +3179,7 @@ msgstr ""
 
 #: dat/assets/cristen.xml:2
 msgid "Cristen"
-msgstr ""
+msgstr " Cristen"
 
 #: dat/assets/cristen.xml:28
 msgid ""
@@ -3160,7 +3212,7 @@ msgstr ""
 #: dat/assets/crow.xml:2 dat/scripts/pilotname/generic.lua:24
 #: dat/scripts/pilotname/pirate.lua:277
 msgid "Crow"
-msgstr ""
+msgstr "Corvo"
 
 #: dat/assets/crow.xml:31
 msgid ""
@@ -3170,6 +3222,11 @@ msgid ""
 "in the galaxy, being away from the core worlds can give people the breathing "
 "room to live on the edge."
 msgstr ""
+"Apesar de fazer fronteira com um setor perigoso do espaço, o sistema Corvus, "
+"e Corvo em particular, estão prosperando. O planeta é uma fronteira de "
+"cultura, comércio e prosperidade. Mesmo para os Soromid, uma das sociedades "
+"mais jovens da galáxia, estar longe dos mundos centrais pode dar às pessoas "
+"espaço para respirar no limite."
 
 #: dat/assets/crow.xml:32
 msgid ""
@@ -3178,10 +3235,14 @@ msgid ""
 "those at another. Given some of the newer customs cropping up here a lot of "
 "out-of-system traders are thankful for this."
 msgstr ""
+"Este bar foi projetado com a acústica em mente.  A música de fundo é "
+"penetrante, mas discreta e as conversas mantidas em uma mesa não perturbam "
+"as que estão em outra.  Dado alguns dos novos costumes surgindo aqui, muitos "
+"comerciantes fora do sistema estão agradecidos por isso."
 
 #: dat/assets/crylo.xml:2
 msgid "Crylo"
-msgstr ""
+msgstr " Crylo"
 
 #: dat/assets/crylo.xml:30
 msgid ""
@@ -3190,6 +3251,11 @@ msgid ""
 "this world is considered a delicacy in large parts of the galaxy, this has "
 "attracted people to settle and spawned a flourishing fishing industry."
 msgstr ""
+"Crylo é um mundo oceânico com muito pouca superfície terrestre, mas com um "
+"número surpreendente de habitantes. Acontece que a vida aquática encontrada "
+"neste mundo é considerada uma iguaria em grande parte da galáxia, isso "
+"atraiu pessoas para se estabelecer e gerou uma florescente indústria "
+"pesqueira."
 
 #: dat/assets/crylo.xml:31
 msgid ""
@@ -3199,10 +3265,15 @@ msgid ""
 "creature. Some of the more experimental drinks might also be better avoided "
 "unless you like your ingredients very fresh indeed."
 msgstr ""
+"Pescar é o nome do jogo no Crylo e a barra de espaçoporto não é nada se não "
+"estiver no personagem. Quase tudo aqui é com tema de peixe, incluindo o bar, "
+"que foi feito da espinha de alguma criatura aquática gigantesca. Algumas das "
+"bebidas mais experimentais também podem ser evitadas, a menos que você goste "
+"de seus ingredientes muito frescos."
 
 #: dat/assets/culex.xml:2
 msgid "Culex"
-msgstr ""
+msgstr " Culex"
 
 #: dat/assets/culex.xml:28
 msgid ""
@@ -3213,6 +3284,12 @@ msgid ""
 "habitat with no economy of its own. It's fairly uninteresting to most people "
 "who don't actually live here."
 msgstr ""
+"Culex é a lua do planeta Myonei. Myonei em si é um mundo fabril, mas é muito "
+"desagradável até mesmo para o Soromid geneticamente alterado viver. "
+"Felizmente, o Culex é bastante adequado para habitação e por isso os "
+"trabalhadores que trabalham na superfície têm aqui as suas casas. Culex é "
+"pouco mais que um habitat sem economia própria. É bastante desinteressante "
+"para a maioria das pessoas que não moram aqui."
 
 #: dat/assets/culex.xml:29
 msgid ""
@@ -3222,10 +3299,15 @@ msgid ""
 "fashion. Most of the facility is filled with recreational facilities and "
 "even a dance floor."
 msgstr ""
+"Como Culex vê pouco tráfego além de passageiros de e para Myonei, a barra do "
+"espaçoporto foi reaproveitada como um centro comunitário pelos moradores "
+"locais. As instalações padrão ainda estão presentes e operacionais, mas de "
+"forma mínima. A maior parte da instalação está repleta de instalações "
+"recreativas e até mesmo uma pista de dança."
 
 #: dat/assets/curie.xml:2
 msgid "Curie"
-msgstr ""
+msgstr " Curie"
 
 #: dat/assets/curie.xml:31
 msgid ""
@@ -3235,6 +3317,11 @@ msgid ""
 "it a potentially valuable Za'lek world despite the unpleasantness of its "
 "environment."
 msgstr ""
+"Este planeta ainda está em sua infância e é uma fonte primária de pesquisa "
+"geológica para os cientistas Za'lek, abrigando um dos principais centros de "
+"pesquisa de materiais. Isso e a alta densidade de metais pesados raros e "
+"valiosos o tornam um mundo Za'lek potencialmente valioso, apesar do "
+"desconforto de seu ambiente."
 
 #: dat/assets/curie.xml:32
 msgid ""
@@ -3243,10 +3330,13 @@ msgid ""
 "phenomena on the planet that those whose interests in geology might find "
 "interesting."
 msgstr ""
+"O bar tem fotos dos cientistas famosos que deram o nome ao planeta, bem como "
+"várias fotos e holopinturas de alguns dos fenômenos do planeta que aqueles "
+"cujos interesses em geologia podem achar interessantes."
 
 #: dat/assets/cutha.xml:2
 msgid "Cutha"
-msgstr ""
+msgstr " Cutha"
 
 #: dat/assets/cutha.xml:29
 msgid ""
@@ -3258,6 +3348,13 @@ msgid ""
 "Nowadays, Cutha houses most of the Soromid involved in the military "
 "operations at Heronus."
 msgstr ""
+"Cutha é uma maravilha da engenharia planetária. Começou como um mundo "
+"bastante hostil, sua atmosfera cheia de substâncias tóxicas, mas os Soromid "
+"o dominaram e o transformaram em um lugar bastante decente para se viver. "
+"Claro, mesmo a engenharia Soromid tem seus limites, então Cutha não é um "
+"mundo tão bom quanto Turawee em Sarcophagus, mas o resultado ainda é "
+"impressionante. Hoje em dia, Cutha abriga a maioria dos Soromids envolvidos "
+"nas operações militares em Heronus."
 
 #: dat/assets/cutha.xml:30
 msgid ""
@@ -82424,30 +82521,30 @@ msgstr ""
 #: src/map.c:721
 #, c-format
 msgid "%sNebula"
-msgstr ""
+msgstr "%sNebulosa"
 
 #: src/map.c:730
 #, c-format
 msgid "#rDense Interference (%.0f%%)#0"
-msgstr ""
+msgstr "#rInterferência densa (%.0f%%)#0"
 
 #: src/map.c:732
 #, c-format
 msgid "#oLight Interference (%.0f%%)#0"
-msgstr ""
+msgstr "#oInterferência de luz (%.0f%%)#0"
 
 #: src/map.c:734
 #, c-format
 msgid "#yInterference (%.0f%%)#0"
-msgstr ""
+msgstr "#yInterferência (%.0f%%)#0"
 
 #: src/map.c:749
 msgid "#oDense Asteroid Field#0"
-msgstr ""
+msgstr "#oCampo de asteroides denso#0"
 
 #: src/map.c:751
 msgid "#yLight Asteroid Field"
-msgstr ""
+msgstr "#yCampo de asteróides leves"
 
 #: src/map.c:1598
 #, c-format
@@ -82455,76 +82552,78 @@ msgid ""
 "No price info for\n"
 "%s here"
 msgstr ""
+"Nenhuma informação de preço para\n"
+"%s aqui"
 
 #: src/map.c:1853
 msgid "Travel (Default)"
-msgstr ""
+msgstr "Viagem (padrão)"
 
 #: src/map.c:1856
 #, c-format
 msgid "%s: Cost"
-msgstr ""
+msgstr "%s: Custo"
 
 #: src/map.c:1857
 #, c-format
 msgid "%s: Trade"
-msgstr ""
+msgstr "%s: Comércio"
 
 #: src/map.c:1912
 msgid "Normal View"
-msgstr ""
+msgstr "Visualização Normal"
 
 #: src/map.c:1912
 msgid "Minimal View"
-msgstr ""
+msgstr "Visualização Mínima"
 
 #: src/map.c:2696
 #, c-format
 msgid "Malformed %s file: missing root element 'map'"
-msgstr ""
+msgstr "Arquivo %s malformado: elemento raiz 'map' ausente"
 
 #: src/map.c:2714 src/slots.c:77 src/start.c:121 src/tech.c:126
 #, c-format
 msgid "'%s' has unknown node '%s'."
-msgstr ""
+msgstr "'%s' tem nó desconhecido '%s'."
 
 #: src/map.c:2719
 #, c-format
 msgid "Loaded %d map decorator"
 msgid_plural "Loaded %d map decorators"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Carregado decorador de mapa %d"
+msgstr[1] "%d decoradores de mapa carregados"
 
 #: src/map.c:2746
 #, c-format
 msgid "Could not load map decorator texture '%s'."
-msgstr ""
+msgstr "Não foi possível carregar a textura do decorador de mapa '%s'."
 
 #: src/map.c:2751
 #, c-format
 msgid "Map decorator has unknown node '%s'."
-msgstr ""
+msgstr "O decorador de mapa tem um nó desconhecido '%s'."
 
 #. Create window.
 #: src/map_find.c:224 src/map_find.c:766 src/map_find.c:887
 msgid "Search Results"
-msgstr ""
+msgstr "Procurar Resultados"
 
 #: src/map_find.c:238
 msgid "Select"
-msgstr ""
+msgstr "Selecionar"
 
 #: src/map_find.c:321
 msgid "Jump to first system not found!"
-msgstr ""
+msgstr "Ir para o primeiro sistema não encontrado!"
 
 #: src/map_find.c:357
 msgid "Matching jumps not found, something is up..."
-msgstr ""
+msgstr "Saltos correspondentes não encontrados, algo está acontecendo..."
 
 #: src/map_find.c:417
 msgid "unknown route"
-msgstr ""
+msgstr "rota desconhecida"
 
 #: src/map_find.c:421
 #, c-format
@@ -82860,66 +82959,66 @@ msgstr ""
 #. create menu window
 #: src/menu.c:218 src/menu.c:555
 msgid "Main Menu"
-msgstr ""
+msgstr "Menu principal"
 
 #: src/menu.c:226
 msgid "New Game"
-msgstr ""
+msgstr "Novo jogo"
 
 #: src/menu.c:230 src/menu.c:643
 msgid "Editors"
-msgstr ""
+msgstr "Editores"
 
 #. Create window and tabs.
 #: src/menu.c:234 src/menu.c:428 src/naev.c:391 src/options.c:130
 msgid "Options"
-msgstr ""
+msgstr "Opções"
 
 #: src/menu.c:237
 msgctxt "Menu|"
 msgid "Credits"
-msgstr ""
+msgstr "Créditos"
 
 #: src/menu.c:240 src/menu.c:557
 msgid "Exit Game"
-msgstr ""
+msgstr "Sair do jogo"
 
 #: src/menu.c:325
 msgid "Main menu does not exist."
-msgstr ""
+msgstr "O menu principal não existe."
 
 #: src/menu.c:416
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 #: src/menu.c:422
 msgid "Resume"
-msgstr ""
+msgstr "Retomar"
 
 #: src/menu.c:430
 msgid "Exit to Title"
-msgstr ""
+msgstr "Sair para o menu principal"
 
 #. Stop player sounds because sometimes they hang.
 #: src/menu.c:482
 msgid "Exited game."
-msgstr ""
+msgstr "Saiu do jogo."
 
 #: src/menu.c:548
 msgid "Continue"
-msgstr ""
+msgstr "Continuar"
 
 #: src/menu.c:551
 msgid "Restart"
-msgstr ""
+msgstr "Reiniciar"
 
 #: src/menu.c:610
 msgid "Quit Naev"
-msgstr ""
+msgstr "Sair do Naev"
 
 #: src/menu.c:610
 msgid "Are you sure you want to quit Naev?"
-msgstr ""
+msgstr "Tem certeza de que deseja sair do Naev?"
 
 #: src/menu.c:648
 msgid "Universe Map"
