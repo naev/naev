@@ -5,8 +5,12 @@ on:
 
 name: Nightly Release
 
+permissions: {}
 jobs:
   "Package_Source":
+    permissions:
+      contents: read  #  to fetch code (actions/checkout)
+
     runs-on: ubuntu-latest
 
     container:
@@ -255,6 +259,9 @@ jobs:
           path: build/dist/steam-ndata.tar.xz
 
   "Upload_Naev_Release":
+    permissions:
+      contents: write  #  to generate pre-release (marvinpinto/action-automatic-releases)
+
     strategy:
       fail-fast: false
       matrix:

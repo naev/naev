@@ -9,8 +9,12 @@ on:
 
 name: Release
 
+permissions: {}
 jobs:
   "Package_Source":
+    permissions:
+      contents: read  #  to fetch code (actions/checkout)
+
     runs-on: ubuntu-latest
 
     container:
@@ -327,6 +331,9 @@ jobs:
           if-no-files-found: error
 
   "Upload_Naev_Release":
+    permissions:
+      contents: write  #  to create a release (ncipollo/release-action)
+
     strategy:
       fail-fast: true
       matrix:

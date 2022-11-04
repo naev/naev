@@ -2,8 +2,12 @@ on: [push, pull_request]
 
 name: CI
 
+permissions: {}
 jobs:
   "Package_Source":
+    permissions:
+      contents: read  #  to fetch code (actions/checkout)
+
     runs-on: ubuntu-latest
     container:
       image: "ghcr.io/naev/naev-release:latest"
