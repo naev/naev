@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-08-23 20:07+0900\n"
-"PO-Revision-Date: 2022-11-04 15:01+0000\n"
+"PO-Revision-Date: 2022-11-04 20:02+0000\n"
 "Last-Translator: Jérémie Guegain <mirejai@orange.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
 "Language: fr\n"
@@ -111,11 +111,11 @@ msgstr "permission refusée"
 
 #: physfs.c:23
 msgid "no space available for writing"
-msgstr ""
+msgstr "espace insuffisant pour écrire"
 
 #: physfs.c:24
 msgid "filename is illegal or insecure"
-msgstr ""
+msgstr "nom de fichier interdit ou dangereux"
 
 #: physfs.c:25
 msgid "tried to modify a file the OS needs"
@@ -1374,19 +1374,19 @@ msgstr ""
 
 #: dat/difficulty/default.xml:2 src/dev_uniedit.c:394
 msgid "Default"
-msgstr ""
+msgstr "Défaut"
 
 #: dat/difficulty/default.xml:3
 msgid "Standard difficulty mode."
-msgstr ""
+msgstr "Difficulté standard."
 
 #: dat/difficulty/easy_mode.xml:2
 msgid "Easy Mode"
-msgstr ""
+msgstr "Mode Facile"
 
 #: dat/difficulty/easy_mode.xml:3
 msgid "Makes the game easier for the player, without trivializing most things."
-msgstr ""
+msgstr "Rend le jeu plus facile pour le joueur sans le rendre inintéressant."
 
 #: dat/difficulty/masochist_mode.xml:2
 msgid "Masochist Mode"
@@ -1394,7 +1394,7 @@ msgstr ""
 
 #: dat/difficulty/masochist_mode.xml:3
 msgid "Makes the game significantly harder for the player."
-msgstr ""
+msgstr "Rend le jeu largement plus dur pour le joueur."
 
 #: dat/difficulty/slow_mode.xml:2
 #, fuzzy
@@ -1410,13 +1410,15 @@ msgstr ""
 
 #: dat/difficulty/story_mode.xml:2
 msgid "Story Mode"
-msgstr ""
+msgstr "Mode Histoire"
 
 #: dat/difficulty/story_mode.xml:3
 msgid ""
 "Significantly reduces the difficulty of the game, allowing to concentrate on "
 "the story."
 msgstr ""
+"Rend le jeu largement plus simple pour permettre de se concentrer sur le "
+"scenario."
 
 #: dat/effects/ambush_hunter.xml:2
 #: dat/outfits/bioship/skills/ambush_hunter.xml:2
