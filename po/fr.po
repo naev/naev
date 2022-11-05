@@ -11,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-08-23 20:07+0900\n"
 "PO-Revision-Date: 2022-11-05 20:02+0000\n"
-"Last-Translator: Theodore DA <my.super.garbage.collector@gmail.com>\n"
+"Last-Translator: Jérémie Guegain <mirejai@orange.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -1776,6 +1776,8 @@ msgid ""
 "The Empire is the bureaucratic heart of the universe that provides stability "
 "and cohesion, when possible."
 msgstr ""
+"L'Empire est le cœur bureaucratique de l'univers qui donne de la stabilité "
+"et de la cohésion quand c'est possible."
 
 #. FLF are not a natural enemy of the Empire, we have to enforce that
 #.
@@ -1804,6 +1806,8 @@ msgid ""
 "The Frontier Liberation Front is a group of terrorists advocating for the "
 "independence of the Frontier from Imperial tyranny."
 msgstr ""
+"Le Front De Libération De La Frontière est un groupe de terroriste qui "
+"réclame l'indépendance de la Frontière vis à vis de la tyrannie impériale."
 
 #: dat/factions/four_winds.xml:2 dat/factions/rogue_four_winds.xml:5
 msgid "Four Winds"
@@ -1887,6 +1891,9 @@ msgid ""
 "aggressive and will attack most vessels unprovoked. Even the pirate clans "
 "have difficulty in dealing with them."
 msgstr ""
+"Les maraudeurs pirates sont les plus mauvais et les plus vils des pirates. "
+"Ils sont extrêmement agressifs et attaquent la plupart des vaisseaux sans "
+"être provoqués. Même les clans de pirates ont du mal à marchander avec eux."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -1983,8 +1990,6 @@ msgid "Nasin"
 msgstr ""
 
 #: dat/factions/pirate.xml:6
-#, fuzzy
-#| msgid "Galactic Pirates"
 msgid "Galactic Space Pirates"
 msgstr "Pirates Galactiques"
 
@@ -1994,6 +1999,9 @@ msgid ""
 "affiliated with any particular clan. Due to their disorganized nature, they "
 "tend to respect the clans they operate near."
 msgstr ""
+"Les pirates galactiques sont des vaisseaux pirates indépendants et sans "
+"affiliations avec un clan quelconque. De par leur nature désorganisé, ils "
+"ont tendance à respecter les clans dont ils sont proches."
 
 #: dat/factions/proteron.xml:2 dat/ships/proteron/proteron_archimedes.xml:20
 #: dat/ships/proteron/proteron_derivative.xml:16
@@ -2015,19 +2023,19 @@ msgstr ""
 
 #: dat/factions/raven_clan.xml:2
 msgid "Raven Clan"
-msgstr ""
+msgstr "Le Clan Des Corbeaux"
 
 #: dat/factions/raven_clan.xml:5
-#, fuzzy
-#| msgid "Rogue Pirate"
 msgid "Raven Pirate Clan"
-msgstr "Pirate Voleur"
+msgstr "Le Clan Pirate Des Corbeaux"
 
 #: dat/factions/raven_clan.xml:12
 msgid ""
 "The Raven Pirate Clan is a band of pirates that lead over the widespread "
 "Qorel sector between the Empire and Dvaered systems."
 msgstr ""
+"Le Clan Pirate Des Corbeaux est une bande de pirates qui domine le vaste "
+"secteur de Qorel entre les systèmes de L'Empire et des Dvaereds."
 
 #: dat/factions/rogue_four_winds.xml:2
 msgid "Rogue Four Winds"
@@ -2067,6 +2075,9 @@ msgid ""
 "themselves in order to survive a pandemic. They now openly embrace their "
 "human transcendence as a sign of strength."
 msgstr ""
+"Les Soromid sont des individus qui ont été forcé à se modifier génétiquement "
+"pour survivre à une pandémie. Maintenant il embrasse ouvertement leur "
+"transcendance humaine comme un symbole de force."
 
 #: dat/factions/strangelove.xml:2
 msgid "Strangelove"
@@ -2081,6 +2092,8 @@ msgid ""
 "The Thurion are a mysterious faction located deep in the Nebula. They seem "
 "to be out of touch with the external world."
 msgstr ""
+"Les Thurions sont une mystérieuse faction qui se situe loin dans la "
+"Nébuleuse. Ils sont hors de portée des mondes extérieurs."
 
 #: dat/factions/trader.xml:2
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:74
@@ -2122,11 +2135,11 @@ msgstr "A FAIRE on doit rendre ces gens là plus intéressants."
 #: dat/factions/warlords.xml:2 dat/events/dvaered/warlords_battle.lua:66
 #: dat/events/dvaered/warlords_battle.lua:67
 msgid "Warlords"
-msgstr ""
+msgstr "Chefs De Guerre"
 
 #: dat/factions/warlords.xml:7
 msgid "Dvaered Warlords"
-msgstr ""
+msgstr "Chefs De Guerre Dvaered"
 
 #: dat/factions/wild_ones.xml:2
 msgid "Wild Ones"
@@ -2177,6 +2190,8 @@ msgid ""
 "House Za'lek is the scientific heart of the Empire. Until recently they were "
 "a secretive Great House, but they have recently become much more open."
 msgstr ""
+"La Maison Za'lek est le cœur scientifique de l'Empire. Ils étaient une "
+"grande maison secrète, mais ils sont récemment devenus plus ouvert."
 
 #: dat/outfits/accessory/air_freshener.xml:2
 msgid "Air Freshener"
