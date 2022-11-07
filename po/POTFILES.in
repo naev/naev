@@ -2586,6 +2586,7 @@ dat/events/pers/soromid.lua
 dat/events/pers/zalek.lua
 dat/events/pirate/fake_transponder.lua
 dat/events/pirate/shipcheck.lua
+dat/events/poi.lua
 dat/events/proteron/blockade.lua
 dat/events/restricted.lua
 dat/events/shipai.lua
