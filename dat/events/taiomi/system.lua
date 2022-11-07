@@ -533,12 +533,16 @@ Scavenger goes silent for a second, as if thinking.
       if time.get() < taiomi9done+time.new(0,3,0) or not naev.claimTest( {system.cur()} ) then
          d(_([["We are still working on the construction, it is almost ready!"]]))
       else
-         d(_([["The construction is finished. Soon we will be leaving behind this galaxy."]]))
+         d(_([["The construction is finished. Soon we will be leaving behind this galaxy. Such a mix of emotions that my processor core is not very well equipped to handle."]]))
+         d(_([["I have to ask a last favour from you. The hypergate has to be triggered and maintained in Taiomi to ensure a stable connection for our passage. Would you be willing to do the honours and bless our voyage into the depths of space? If you have anything you wish to do before we leave, now is your last chance."]]))
 
          vn.menu{
             {_("Agree to help out."), "10_yes"},
             {_("Not right now."), "mission_reject"},
          }
+
+         d(fmt.f(_([["Excellence. I will need to make some adjustments to your ship on the {spob}. When you are ready for the modifications, please land on {spob}."]]),
+            {spob=spob.get("One-Wing Goddard")}))
 
          vn.label("10_yes")
          vn.func( function ()

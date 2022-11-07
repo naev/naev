@@ -43,7 +43,7 @@ function create ()
    misn.setTitle( title )
 
    misn.setDesc(_("You have been tasked to help the citizens of Taiomi reach their freedom!"))
-   misn.setReward(_("Unknown"))
+   misn.setReward(_("Freedom for the Taiomi Citizens!"))
 
    mem.marker = misn.markerAdd( base )
    misn.osdCreate( title, {
@@ -66,7 +66,7 @@ function land ()
    misn.osdCreate( title, {
       fmt.f(_("Defend the {base}"), {base=base})
    } )
-   misn.markerAdd( basesys )
+   misn.markerMove( mem.marker, basesys )
 end
 
 local hypergate
