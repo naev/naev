@@ -7,7 +7,7 @@
   <priority>7</priority>
   <mass>140</mass>
   <price>360000</price>
-  <description>The Red Star Organisation have developed a hull modification that provides both ample cargo space and protection for their own work and have now started selling it to others. Deciding "in for a penny, in for a pound", an electromagnetic shockwave absorbtion generator was added, typically this makes the hull rather pointy and scanner obvious but since the hull is already rather lumpy due to the cargo pods... on the other hand, for the price of some CPU power, missile jams, tracking zero-points and reduced secondary splash damage are all achieved making this hull rather more resiliant.</description>
+  <description>Developed by the Red Star Organization for their medical relief ships, this cargo hull and its variants have been made publicly available in an attempt to raise funds. Red Star hulls increase resilience against missile attacks via lock disruption and shock absorption. Though this comes at the cost of a larger radar profile, most relief efforts are already barred from using silent running procedures.</description>
   <gfx_store>rs_hull_m.webp</gfx_store>
   <cpu>-64</cpu>
  </general>
