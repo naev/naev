@@ -534,6 +534,17 @@ Scavenger goes silent for a second, as if thinking.
          d(_([["We are still working on the construction, it is almost ready!"]]))
       else
          d(_([["The construction is finished. Soon we will be leaving behind this galaxy."]]))
+
+         vn.menu{
+            {_("Agree to help out."), "10_yes"},
+            {_("Not right now."), "mission_reject"},
+         }
+
+         vn.label("10_yes")
+         vn.func( function ()
+            naev.missionStart("Taiomi 10")
+         end )
+         vn.jump("menu_ask")
       end
       vn.jump("menu_ask")
    else

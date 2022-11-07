@@ -7,11 +7,87 @@
 </event>
 --]]
 local vn = require "vn"
+local vni = require "vnimage"
 local poi = require "common.poi"
 local fmt = require "format"
 
+local BOARD_CHANCE = 0.05
+local NPC_CHANCE = 0.05
+
 function create ()
+   hook.land( "land" )
    hook.board( "board" )
+end
+
+local npc_image, npc_prt, npc_poidata, npc_name, npc_desc
+function land ()
+   local cur, scur = spob.cur()
+   local presence = scur:presences()["Independent"] or 0
+   local fct = cur:faction()
+
+   -- Need a generic faction
+   if not fct or not fct:tags().generic then
+      return
+   end
+
+   -- Need independent presence in the system
+   if presence <= 0 then
+      return
+   end
+
+   -- Don't appear on restricted assets
+   if cur:tags().restricted then
+      return
+   end
+
+   if poi.done() < 1 then
+      return
+   end
+
+   npc_poidata = poi.generate()
+   if not npc_poidata then -- failed to generate
+      return
+   end
+
+   if rnd.rnd() > NPC_CHANCE then
+      return
+   end
+
+   npc_image, npc_prt = vni.generic()
+   npc_name = _("Tipsy Patron")
+   npc_desc = _("You see a tipsy individual who seems like they have something to say.")
+   evt.npcAdd( "approach_npc", npc_name, npc_prt, npc_desc, 9 )
+end
+
+function approach_npc( npcid )
+   local accept = false
+
+   vn.clear()
+   vn.scene()
+   local n = vn.newCharacter( npc_name, {image=npc_image} )
+   vn.transition()
+   n(fmt.f(_([["The other day I was arguing with a pilot about weird sensor readings in the {sys} system. They claim that there has to be something there, but I call bullocks!"]]),
+      {sys="#b"..npc_poidata.sys:name().."#0"}))
+
+   vn.menu{
+      { _("Inquire about the coordinates."), "accept" },
+      { _("Be off."), "reject" },
+   }
+
+   vn.label("accept")
+   vn.func( function () accept = true end )
+   vn.na(_([[After some persistence, you manage to get the coordinates of the weird readings.]]))
+   vn.done()
+
+   vn.label("reject")
+   vn.na(_("You take your leave."))
+   vn.run()
+
+   if accept then
+      poi.setup( npc_poidata )
+      naev.missionStart("Point of Interest")
+      evt.npcRm( npcid )
+   end
 end
 
 function board( p )
@@ -20,11 +96,11 @@ function board( p )
       return
    end
 
-   if poi.done() < 1 then
+   if rnd.rnd() > BOARD_CHANCE then
       return
    end
 
-   if rnd.rnd() < 0.95 then
+   if poi.done() < 1 then
       return
    end
 
