@@ -21,6 +21,8 @@ end
 
 local npc_image, npc_prt, npc_poidata, npc_name, npc_desc
 function land ()
+   -- condition here is basically the same as a generic NPC
+   -- TODO maybe make the condition some shared code so we don't get bugs creeping in here
    local cur, scur = spob.cur()
    local presence = scur:presences()["Independent"] or 0
    local fct = cur:faction()
