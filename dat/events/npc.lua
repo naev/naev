@@ -15,7 +15,6 @@ local vn = require 'vn'
 local lf = require "love.filesystem"
 local npc = require "common.npc"
 
-
 local npcs, npc_list, npc_spawners
 
 function create()
