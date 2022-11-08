@@ -20,9 +20,29 @@ local fmt = require "format"
 local taiomi = require "common.taiomi"
 local lmisn = require "lmisn"
 local pp_shaders = require "pp_shaders"
+local fleet = require "fleet"
+local pilotai = require "pilotai"
 
 local title = _("Final Breath of Taiomi")
 local base, basesys = spob.getS("One-Wing Goddard")
+
+local DEFENSE_LENGTH = 60*3 -- Length in seconds
+local SPAWNLIST_EMPIRE = {
+   { p={"Empire Pacifier", "Empire Shark", "Empire Shark"}, t=0 },
+   { p={"Empire Admonisher", "Empire Admonisher"}, t=15 },
+   { p={"Empire Lancelot", "Empire Lancelot", "Empire Lancelot"}, t=20 },
+   { p={"Empire Pacifier"}, t=30 },
+   { p={"Empire Shark", "Empire Shark", "Empire Shark" }, t=35 },
+   { p={"Empire Hawking"}, t=45 },
+   { p={"Empire Lancelot", "Empire Lancelot" }, t=55 },
+   { p={"Empire Pacifier"}, t=65 },
+   { p={"Empire Peacemaker"}, t=90 },
+   { p={"Empire Lancelot", "Empire Lancelot" }, t=100 },
+   { p={"Empire Pacifier", "Empire Shark", "Empire Shark"}, t=120 },
+   { p={"Empire Admonisher", "Empire Admonisher"}, t=140 },
+   { p={"Empire Peacemaker", "Empire Peacemaker", "Empire Rainmaker"}, t=150 },
+   { p={"Empire Hawking", "Empire Hawking", "Empire Hawking"}, t=160 },
+}
 
 --[[
    0: mission started
@@ -31,6 +51,7 @@ local base, basesys = spob.getS("One-Wing Goddard")
    3: cutscene done
 --]]
 mem.state = 0
+local defense_timer, defense_spawn, defense_fct, defense_spawnlist
 
 function create ()
    if not misn.claim{ basesys } then
@@ -55,7 +76,16 @@ function create ()
    hook.land( "land" )
 end
 
+local function osd ()
+   misn.osdCreate( title, {
+      fmt.f(_("Defend the {base} ({left} s left)"),
+         {base=base, left=DEFENSE_LENGTH-defense_timer})
+   } )
+end
+
 function land ()
+   defense_fct = faction.get( var.peek( "taiomi_convoy_fct" ) or "Empire" )
+
    vn.clear()
    vn.scene()
    local s = vn.newCharacter( taiomi.vn_scavenger() )
@@ -63,11 +93,6 @@ function land ()
    s(_([[""]]))
    vn.done( taiomi.scavenger.transition )
    vn.run()
-
-   misn.osdCreate( title, {
-      fmt.f(_("Defend the {base}"), {base=base})
-   } )
-   misn.markerMove( mem.marker, basesys )
 end
 
 local hypergate
@@ -75,6 +100,15 @@ function enter ()
    if mem.state ~= 0 then
       lmisn.fail(_([[You were supposed to protect the hypergate!"]]))
    end
+
+   defense_timer = 0
+   defense_spawn = 0
+   defense_fct = var.peek( "taiomi_convoy_fct" ) or "Empire"
+   if defense_fct then
+      defense_spawnlist = SPAWNLIST_EMPIRE
+   end
+   osd()
+   misn.markerMove( mem.marker, basesys )
    mem.state = 1 -- start
 
    local pos = base:pos()
@@ -83,6 +117,28 @@ function enter ()
    hypergate:disable()
    hypergate:setHilight(true)
    hook.pilot( hypergate, "death", "hypergate_dead" )
+
+   hook.timer( 1, "heartbeat" )
+end
+
+function heartbeat ()
+   defense_timer = defense_timer + 1
+
+   if defense_timer >= DEFENSE_LENGTH then
+      -- TODO win cinematics
+      return
+   end
+
+   local spawn = defense_spawnlist[ defense_spawn+1 ]
+   if spawn and spawn.t and defense_timer > spawn.t then
+      for k,p in ipairs( fleet.add( 1, spawn.p, defense_fct ) ) do
+         pilotai.guard( p, base:pos() )
+         p:setHostile()
+      end
+      defense_spawn = defense_spawn+1
+   end
+
+   hook.timer( 1, "heartbeat" )
 end
 
 local shader_explode
