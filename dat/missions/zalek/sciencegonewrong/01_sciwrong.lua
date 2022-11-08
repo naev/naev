@@ -115,7 +115,6 @@ function targetDeath()
       return
    end
    tk.msg(_([[What have you done?]]),_([[The ship explodes before your eyes and you realize that you will never be able to get the secret tech now.]]))
-   sor:modPlayer(-5)
    misn.finish(false)
 end
 
