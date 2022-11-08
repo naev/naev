@@ -19,6 +19,7 @@ local vn = require "vn"
 local fmt = require "format"
 local taiomi = require "common.taiomi"
 local lmisn = require "lmisn"
+local pp_shaders = require "pp_shaders"
 
 local title = _("Final Breath of Taiomi")
 local base, basesys = spob.getS("One-Wing Goddard")
@@ -76,14 +77,62 @@ function enter ()
    end
    mem.state = 1 -- start
 
-   --local pos = base:pos()
+   local pos = base:pos()
    diff.apply("onewing_goddard_gone")
-   hypergate = pilot.add( "One-Wing Goddard", "Independent", player.pos(), nil, {naked=true, ai="dummy"} )
+   hypergate = pilot.add( "One-Wing Goddard", "Independent", pos, nil, {naked=true, ai="dummy"} )
    hypergate:disable()
    hypergate:setHilight(true)
    hook.pilot( hypergate, "death", "hypergate_dead" )
 end
 
+local shader_explode
 function hypergate_dead ()
-   -- TODO big explosion and kill player
+   -- Activate hypergate with big flash
+   local pixelcode = [[
+#include "lib/blur.glsl"
+
+const float THRESHOLD = 0.4;
+const float INTENSITY = 10.0;
+
+uniform float u_progress = 0.0;
+
+vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
+{
+   /* Fade in. */
+   if (u_progress < THRESHOLD)
+      return mix( texture( tex, texture_coords ), vec4(1.0), progress / THRESHOLD );
+
+   /* Fade out. */
+   float progress = (u_progress-THRESHOLD) / (1.0-THRESHOLD);
+   float disp = INTENSITY*(0.5-distance(0.5, progress));
+   vec4 c1 = vec4(1.0);
+   vec4 c2 = blur9( tex, texture_coords, love_ScreenSize.xy, disp );
+   return mix( c1, c2, progress );
+}
+]]
+   shader_explode = { shader=pp_shaders.newShader( pixelcode ) }
+
+   player.cinematics(true)
+   camera.set( base:pos() )
+   hook.timer( 3, "explode" )
+end
+
+local function shader_init( shd, speed )
+   shd._dt = 0
+   shd._update = function( self, dt )
+      self._dt = self._dt + dt * speed
+      self.shader:send( "u_progress", math.min( 1, self._dt ) )
+   end
+   shd.shader:addPPShader("game", 99)
+end
+
+function explode ()
+   shader_init( shader_explode, 5 )
+   hook.timer( 1, "everyone_dead" )
+end
+
+function everyone_dead ()
+   for k,v in ipairs(pilot.get()) do
+      v:kill() -- Everyone dies ٩(๑´3｀๑)۶
+   end
 end
