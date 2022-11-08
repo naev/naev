@@ -206,7 +206,7 @@ function comm( plt )
             end
          end
       end
-      if not hostile then
+      if not hostile and not mem.carried then
          table.insert( opts, 1, {_("Request Fuel"), "refuel"} )
       end
       return opts
