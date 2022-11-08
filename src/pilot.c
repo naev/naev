@@ -72,7 +72,6 @@ static void pilot_hyperspace( Pilot* pilot, double dt );
 static void pilot_refuel( Pilot *p, double dt );
 /* Clean up. */
 static void pilot_erase( Pilot *p );
-static void pilot_dead( Pilot* p, unsigned int killer );
 /* Misc. */
 static int pilot_getStackPos( unsigned int id );
 static void pilot_init_trails( Pilot* p );
@@ -1700,7 +1699,7 @@ void pilot_updateDisable( Pilot* p, unsigned int shooter )
  *    @param p Pilot that just died.
  *    @param killer Pilot killer or 0 if invalid.
  */
-static void pilot_dead( Pilot* p, unsigned int killer )
+void pilot_dead( Pilot* p, unsigned int killer )
 {
    HookParam hparam;
 

@@ -207,6 +207,7 @@ static int pilotL_hookClear( lua_State *L );
 static int pilotL_choosePoint( lua_State *L );
 static int pilotL_collisionTest( lua_State *L );
 static int pilotL_damage( lua_State *L );
+static int pilotL_kill( lua_State *L );
 static int pilotL_knockback( lua_State *L );
 static int pilotL_calcStats( lua_State *L );
 static int pilotL_showEmitters( lua_State *L );
@@ -373,6 +374,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "choosePoint", pilotL_choosePoint },
    { "collisionTest", pilotL_collisionTest },
    { "damage", pilotL_damage },
+   { "kill", pilotL_kill },
    { "knockback", pilotL_knockback },
    { "calcStats", pilotL_calcStats },
    { "showEmitters", pilotL_showEmitters },
@@ -5399,6 +5401,22 @@ static int pilotL_damage( lua_State *L )
 
    lua_pushnumber(L, damage);
    return 1;
+}
+
+/**
+ * @brief Kills a pilot.
+ *
+ * Can fail to kill a pilot if they have a hook that regenerates them.
+ *
+ *    @luatparam Pilot p Pilot to kill.
+ * @luafunc kill
+ */
+static int pilotL_kill( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   p->armour = -1.;
+   pilot_dead( p, 0 );
+   return 0;
 }
 
 /**

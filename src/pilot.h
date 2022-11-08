@@ -459,6 +459,7 @@ void pilot_reset( Pilot* pilot );
 Pilot* pilot_setPlayer( Pilot* after );
 void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ignore_rules, int guerilla );
 void pilot_delete( Pilot *p );
+void pilot_dead( Pilot* p, unsigned int killer );
 
 /*
  * Init and cleanup.
