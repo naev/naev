@@ -553,7 +553,7 @@ const char* pilot_checkSpaceworthy( const Pilot *p )
       return _("Insufficient Shield Regeneration");
    if (p->energy_max < 0.)
       return _("Insufficient Energy");
-   if (p->energy_regen < 0.)
+   if (p->energy_regen <= 0. && p->energy_max > 0.)
       return _("Insufficient Energy Regeneration");
 
    /* Misc. */
