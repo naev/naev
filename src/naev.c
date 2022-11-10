@@ -543,12 +543,15 @@ void loadscreen_load (void)
    free(buf);
 }
 
+/**
+ * @brief Renders the loadscreen if necessary.
+ */
 void naev_renderLoadscreen (void)
 {
    SDL_Event event;
    unsigned int t = SDL_GetTicks();
 
-   /* Only render if forced or try for low FPS. */
+   /* Only render if forced or try for low 10 FPS. */
    if (!load_force_render && (t-load_last_render) < 100 )
       return;
    load_last_render = t;
@@ -591,7 +594,7 @@ void loadscreen_update( double done, const char *msg )
       lua_pop(naevL,1);
    }
 
-   /* Render as necessary. */
+   /* Force rerender. */
    load_force_render = 1;
    naev_renderLoadscreen();
 }
