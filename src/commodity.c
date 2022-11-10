@@ -485,6 +485,9 @@ int commodity_load (void)
             int *e = &array_grow( &econ_comm );
             *e = array_size(commodity_stack)-1;
          }
+
+         /* Render if necessary. */
+         naev_renderLoadscreen();
       }
       free( commodities[i] );
    }

@@ -1598,6 +1598,9 @@ int factions_load (void)
             nf.oflags = nf.flags;
             array_push_back( &faction_stack, nf );
          }
+
+         /* Render if necessary. */
+         naev_renderLoadscreen();
       }
    }
 

@@ -3344,10 +3344,10 @@ static int systems_load (void)
          system_updateAsteroids( &sys );
 
          array_push_back( &systems_stack, sys );
-      }
 
-      /* Render if necessary. */
-      naev_renderLoadscreen();
+         /* Render if necessary. */
+         naev_renderLoadscreen();
+      }
    }
    qsort( systems_stack, array_size(systems_stack), sizeof(StarSystem), system_cmp );
    for (int j=0; j<array_size(systems_stack); j++) {

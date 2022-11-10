@@ -109,11 +109,6 @@
 #define AI_DISTRESS     (1<<2)   /**< Sent distress signal. */
 
 /*
- * file info
- */
-#define AI_SUFFIX       ".lua" /**< AI file suffix. */
-
-/*
  * all the AI profiles
  */
 static AI_Profile* profiles = NULL; /**< Array of AI_Profiles loaded. */
@@ -527,7 +522,6 @@ static int ai_sort( const void *p1, const void *p2 )
 int ai_load (void)
 {
    char** files;
-   int suflen;
    Uint32 time = SDL_GetTicks();
 
    /* get the file list */
@@ -537,22 +531,23 @@ int ai_load (void)
    profiles = array_create( AI_Profile );
 
    /* load the profiles */
-   suflen = strlen(AI_SUFFIX);
    for (size_t i=0; files[i]!=NULL; i++) {
-      int flen = strlen(files[i]);
-      if ((flen > suflen) &&
-            strncmp(&files[i][flen-suflen], AI_SUFFIX, suflen)==0) {
-         AI_Profile prof;
-         char path[PATH_MAX];
-         int ret;
+      AI_Profile prof;
+      char path[PATH_MAX];
+      int ret;
 
-         snprintf( path, sizeof(path), AI_PATH"%s", files[i] );
-         ret = ai_loadProfile(&prof,path); /* Load the profile */
-         if (ret == 0)
-            array_push_back( &profiles, prof );
-         else
-            WARN( _("Error loading AI profile '%s'"), path);
-      }
+      if (!ndata_matchExt( files[i], "lua" ))
+         continue;
+
+      snprintf( path, sizeof(path), AI_PATH"%s", files[i] );
+      ret = ai_loadProfile(&prof,path); /* Load the profile */
+      if (ret == 0)
+         array_push_back( &profiles, prof );
+      else
+         WARN( _("Error loading AI profile '%s'"), path);
+
+      /* Render if necessary. */
+      naev_renderLoadscreen();
    }
    qsort( profiles, array_size(profiles), sizeof(AI_Profile), ai_sort );
 
@@ -616,7 +611,7 @@ static int ai_loadProfile( AI_Profile *prof, const char* filename )
    const char *str;
 
    /* Set name. */
-   len = strlen(filename)-strlen(AI_PATH)-strlen(AI_SUFFIX);
+   len = strlen(filename)-strlen(AI_PATH)-strlen(".lua");
    prof->name = malloc(len+1);
    strncpy( prof->name, &filename[strlen(AI_PATH)], len );
    prof->name[len] = '\0';
