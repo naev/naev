@@ -295,9 +295,9 @@ intrinsics["Soromid Nyx"] = {
       },
    },
    {
-      name = _("Gene Drive Growth I"),
-      outfit = "Largus Gene Drive II",
-      slot = "genedrive",
+      name = _("Cortex Growth II"),
+      outfit = "Largus Cortex III",
+      slot = "shell",
    },
    {
       name = _("Weapon Organ Growth II"),
