@@ -22,6 +22,7 @@ local fleet = require "fleet"
 local pilotai = require "pilotai"
 local lmisn = require "lmisn"
 local tut = require "common.tutorial"
+local cinema = require "cinema"
 
 local reward = taiomi.rewards.taiomi07
 local title = _("Patrol Elimination")
@@ -310,11 +311,8 @@ function scene_trigger ()
          -- Start scene
          mem.state = 2
          scavenger:setHilight(true)
-         local pp = player.pilot()
-         player.cinematics( true )
-         pp:control()
-         pp:brake()
-         pp:setInvincible( true )
+
+         cinema.on()
          camera.set( scavenger )
 
          scavenger:setInvisible(false)
@@ -337,11 +335,7 @@ end
 
 function scene00 ()
    -- Undo some stuff
-   player.cinematics( false )
-   local pp = player.pilot()
-   pp:setInvincible( false )
-   pp:control(false)
-   camera.set()
+   cinema.off()
    hook.timer( 3, "scene01" )
 end
 

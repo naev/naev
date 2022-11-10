@@ -23,6 +23,7 @@ local pilotai = require "pilotai"
 local fleet = require "fleet"
 local pulse = require "luaspfx.pulse"
 local tut = require "common.tutorial"
+local cinema = require "cinema"
 
 local reward = taiomi.rewards.taiomi05
 local title = _("Missing Drones")
@@ -291,11 +292,8 @@ end
 function scavenger_approachcorpse ()
    local d = player.pos():dist( corpsepos )
    if d < 2e3 then
-      player.cinematics( true )
+      cinema.on()
 
-      local pp = player.pilot()
-      pp:control()
-      pp:brake()
       camera.set( scavenger )
       scavenger:setInvincible(true)
 
@@ -373,10 +371,7 @@ function pirate_death ()
 end
 
 function corpse99 ()
-   local pp = player.pilot()
-   pp:control( false )
-   camera.set()
-   player.cinematics( false )
+   cinema.off()
 
    misn.osdCreate( title, {
       fmt.f(_("Return to {base} ({basesys})?"),{base=base, basesys=basesys}),
