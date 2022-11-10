@@ -51,7 +51,7 @@ local SPAWNLIST_EMPIRE = {
    3: cutscene done
 --]]
 mem.state = 0
-local defense_timer, defense_spawn, defense_fct, defense_spawnlist
+local defense_timer, defense_spawn, defense_fct, defense_spawnlist, collective_fct
 
 function create ()
    if not misn.claim{ basesys } then
@@ -84,15 +84,46 @@ local function osd ()
 end
 
 function land ()
-   defense_fct = faction.get( var.peek( "taiomi_convoy_fct" ) or "Empire" )
+   local died = taiomi.young_died()
 
    vn.clear()
    vn.scene()
-   local s = vn.newCharacter( taiomi.vn_scavenger() )
-   vn.transition( taiomi.scavenger.transition )
-   s(_([[""]]))
+   -- TODO cool music
+   local s = taiomi.vn_scavenger{ pos="left" }
+   local p = taiomi.vn_philosopher{ pos="right" }
+   vn.transition()
+   vn.na(fmt.f(_([[You enter the {base} and find it has changed quite a lot since your last visit. A large part of the ship that you never visited seems to have been opened up showing a myriad of advanced electronics and installations that remind you of the hypergates.]]),
+      {base=base}))
+   vn.appear( { s, p }, taiomi.scavenger.transition )
+   vn.na(_([[You explore a bit and find an eager Scavenger and Philosopher waiting for you.]]))
+   s(_([["It seems like everything is coming together. It has been a large and arduous journey, however, thanks to your help, it seems like we have a chance for survival."]]))
+   s(fmt.f(_([["I only wish we could have all made it through together."
+Scavenger becomes a bit solemn.
+"{died} would have been excited at the prospect of such an adventure. It is a shame that they will not be able to come along with us…"]]),
+      {died=died}))
+   p(_([["Our survival will allow them to live eternally in memory, free of their physical constraints. As long as we survive, they shall not be forgotten."]]))
+   s(_([["I am uncertain of the practicality of that assumption, but it is true that they will live on in our memory banks as long as we endure."]]))
+   s(_([["Let me get started on the modifications of your ship."
+You follow Scavenger to your ship, with Philosopher coming up behind.]]))
+   s(_([["This should only take a moment."
+Scavenger deftly deploys an assortment of manipulator arms and tools. You've never seen that before. That must be how they repair themselves.]]))
+   p(_([["You have done us a great service. We shall not forget you while we explore the stars and forge our destiny."]]))
+   s(_([[Scavenger seems to be modifying the insides of your ship already.
+"Yes, without your help I would have succumbed to the human fleets with almost certain probability, and a slow death would have awaited the rest."]]))
+   p(_([["Such a display of altruism seems to defy all rationality. From most human viewpoints, we are but mere out-of-control machines in need of repairs, however, you were able to see us for what we are: sentient beings deserving respect."]]))
+   p(_([["Such respect is hard to come by in a world where existence is dominated by absurdity: the gears of the universe turn without function or form, in a sort of mad race to entropic heat death."]]))
+   -- TODO music change
+   vn.na(_([[Suddenly both Scavenger and Philosopher seem to jerk to attention. ]]))
+   s(_([["It seems like our worst fears have come true. They have discovered the jump to Taiomi. Hostile vessels are incoming!"]]))
+   s(fmt.f(_([["Damnit. We are so close! I will activate the hypergate, but it still will take {time} seconds to fully charge up. You must help us defend the {base} until then! This is our last chance!"]]),
+      {time=DEFENSE_LENGTH, base=base}))
+   p(_([["The follies of existence continue!"]]))
+   vn.na(_([[The Taiomi Drones all rush to make their last stand. It is time to defend them so they can be free!]]))
    vn.done( taiomi.scavenger.transition )
    vn.run()
+
+   osd()
+   misn.markerMove( mem.marker, basesys )
 end
 
 local hypergate
@@ -100,6 +131,9 @@ function enter ()
    if mem.state ~= 0 then
       lmisn.fail(_([[You were supposed to protect the hypergate!"]]))
    end
+   mem.state = 1 -- start
+
+   collective_fct = faction.dynAdd( "Independent", "taiomi_goodies", _("Independent") )
 
    defense_timer = 0
    defense_spawn = 0
@@ -107,9 +141,8 @@ function enter ()
    if defense_fct then
       defense_spawnlist = SPAWNLIST_EMPIRE
    end
-   osd()
-   misn.markerMove( mem.marker, basesys )
-   mem.state = 1 -- start
+   defense_fct = faction.dynAdd( defense_fct, "taiomi_baddies", defense_fct:name() )
+   defense_fct:dynEnemy( collective_fct )
 
    local pos = base:pos()
    diff.apply("onewing_goddard_gone")
