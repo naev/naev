@@ -1036,6 +1036,9 @@ int ships_load (void)
          int ret = ship_parse( &s, ship_files[i] );
          if (ret == 0)
             array_push_back( &ship_stack, s );
+
+         /* Render if necessary. */
+         naev_renderLoadscreen();
       }
 
       /* Clean up. */

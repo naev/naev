@@ -2472,6 +2472,9 @@ static int outfit_loadDir( char *dir )
          int ret = outfit_parse( &o, outfit_files[i] );
          if (ret == 0)
             array_push_back( &outfit_stack, o );
+
+         /* Render if necessary. */
+         naev_renderLoadscreen();
       }
       free( outfit_files[i] );
    }

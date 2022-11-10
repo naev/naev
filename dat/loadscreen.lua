@@ -100,8 +100,14 @@ local shipw, shiph = shipgfx:getDimensions()
 local progressbar = lg.newShader( progressbar_frag, love_shaders.vertexcode )
 local r = rnd.rnd()
 local sb = naev.conf().bg_brightness
+local load_msg = ""
 
-function render( done, msg )
+function update( done, msg )
+   load_msg = msg
+   progressbar:send( "progress", done )
+end
+
+function render ()
    local nw, nh = naev.gfx.dim()
 
    -- Draw starfield background
@@ -125,9 +131,8 @@ function render( done, msg )
    -- Draw loading bar
    lg.setShader( progressbar )
    progressbar:send( "u_r", r )
-   progressbar:send( "progress", done )
    progressbar:send( "dimensions", w, h )
    love_shaders.img:draw( x, y+h, 0, w, h )
    lg.setShader()
-   lg.print( msg, x+10, y )
+   lg.print( load_msg, x+10, y )
 end

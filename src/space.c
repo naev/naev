@@ -1734,6 +1734,9 @@ static int spobs_load (void)
             s.id = array_size( spob_stack );
             array_push_back( &spob_stack, s );
          }
+
+         /* Render if necessary. */
+         naev_renderLoadscreen();
       }
 
       /* Clean up. */
@@ -3342,6 +3345,9 @@ static int systems_load (void)
 
          array_push_back( &systems_stack, sys );
       }
+
+      /* Render if necessary. */
+      naev_renderLoadscreen();
    }
    qsort( systems_stack, array_size(systems_stack), sizeof(StarSystem), system_cmp );
    for (int j=0; j<array_size(systems_stack); j++) {
