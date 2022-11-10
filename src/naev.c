@@ -549,7 +549,7 @@ void naev_renderLoadscreen (void)
    unsigned int t = SDL_GetTicks();
 
    /* Only render if forced or try for low FPS. */
-   if (!load_force_render && (t-load_last_render) >= 100 )
+   if (!load_force_render && (t-load_last_render) < 100 )
       return;
    load_last_render = t;
 
