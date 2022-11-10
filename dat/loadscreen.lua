@@ -10,6 +10,7 @@ local progressbar_frag = [[
 uniform vec2 dimensions;
 uniform float progress;
 uniform float u_r;
+uniform float time;
 
 vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords ) {
    vec4 colour_out;
@@ -18,7 +19,6 @@ vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords 
    const float margin = 0.05;
    float relprog = smoothstep( -margin, margin, texture_coords.x-progress);
 
-   const float time  = 0.0;
    const float hue   = 0.65;
    float value       = 0.4*(1.0-relprog);
    float brightness  = 0.1*relprog;
@@ -132,6 +132,7 @@ function render ()
    lg.setShader( progressbar )
    progressbar:send( "u_r", r )
    progressbar:send( "dimensions", w, h )
+   progressbar:send( "time", naev.ticks()*0.3 )
    love_shaders.img:draw( x, y+h, 0, w, h )
    lg.setShader()
    lg.print( load_msg, x+10, y )
