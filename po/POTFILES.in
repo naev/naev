@@ -2921,6 +2921,7 @@ dat/save_updater.lua
 dat/scripts/bioship.lua
 dat/scripts/bioship/intrinsics.lua
 dat/scripts/bioship/skills.lua
+dat/scripts/cinema.lua
 dat/scripts/class.lua
 dat/scripts/colour.lua
 dat/scripts/common/antlejos.lua
