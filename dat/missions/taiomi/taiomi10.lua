@@ -144,14 +144,45 @@ function enter ()
    defense_fct = faction.dynAdd( defense_fct, "taiomi_baddies", defense_fct:name() )
    defense_fct:dynEnemy( collective_fct )
 
-   local pos = base:pos()
+   local bpos = base:pos()
    diff.apply("onewing_goddard_gone")
-   hypergate = pilot.add( "One-Wing Goddard", "Independent", pos, nil, {naked=true, ai="dummy"} )
+   hypergate = pilot.add( "One-Wing Goddard", "Independent", bpos, nil, {naked=true, ai="dummy"} )
    hypergate:disable()
    hypergate:setHilight(true)
    hook.pilot( hypergate, "death", "hypergate_dead" )
 
+   local sdrone = ship.get("Drone")
+   local function add_drone ()
+      local pos = bpos + vec2.newP( rnd.rnd()*500, rnd.angle() )
+      local d = pilot.add( sdrone, collective_fct, pos )
+      d:setNoDeath(true)
+      d:setFriendly(true)
+      pilotai.guard( d, pos )
+      hook.pilot( d, "attacked", "drone_attacked" )
+      return d
+   end
+   for i=1,15 do
+      add_drone()
+   end
+
    hook.timer( 1, "heartbeat" )
+end
+
+function drone_attacked( d )
+   local a, _s = d:health()
+   if a < 20 then
+      d:setInvincible(true)
+      d:setInvisible(true)
+      d:disable()
+      hook.timer( 10, "drone_disabled", d )
+   end
+end
+
+function drone_disabled( d )
+   d:setInvincible(false)
+   d:setInvisible(false)
+   d:disable(false)
+   d:setHealth( 100, 100 )
 end
 
 function heartbeat ()
