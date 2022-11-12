@@ -114,6 +114,7 @@ extern Spob* land_spob;
  * prototypes
  */
 /* Update. */
+static void map_update_autonav( unsigned int wid );
 static void map_update_status( unsigned int wid, const char *buf );
 static void map_update( unsigned int wid );
 /* Render. */
@@ -476,6 +477,33 @@ static void map_update_commod_av_price (void)
       commod_av_gal_price = 0;
 }
 
+static void map_update_autonav( unsigned int wid )
+{
+   char buf[STRMAX];
+   StarSystem *sys;
+   int autonav, th;
+   int jumps = floor(player.p->fuel / player.p->fuel_consumption);
+   int p = 0;
+   int rw = RCOL_HEADER_W;
+   p += scnprintf(&buf[p], sizeof(buf)-p, "#n%s#0", _("Fuel: ") );
+   p += scnprintf(&buf[p], sizeof(buf)-p, n_("%d jump", "%d jumps", jumps), jumps );
+   sys = map_getDestination( &autonav );
+   p += scnprintf(&buf[p], sizeof(buf)-p, "\n#n%s#0", _("Autonav: ") );
+   if (sys==NULL)
+      p += scnprintf(&buf[p], sizeof(buf)-p, _("Off") );
+   else {
+      if (autonav > jumps)
+         p += scnprintf(&buf[p], sizeof(buf)-p, "#r" );
+      p += scnprintf(&buf[p], sizeof(buf)-p, n_("%d jump", "%d jumps", autonav), autonav );
+      if (autonav > jumps)
+         p += scnprintf(&buf[p], sizeof(buf)-p, "#0" );
+   }
+   th = gl_printHeightRaw( &gl_smallFont, rw, buf );
+   window_resizeWidget( wid, "txtPlayerStatus", rw, th );
+   window_moveWidget( wid, "txtPlayerStatus", RCOL_X, 40+BUTTON_HEIGHT*2 );
+   window_modifyText( wid, "txtPlayerStatus", buf );
+}
+
 static void map_update_status( unsigned int wid, const char *buf )
 {
    int w, h;
@@ -506,7 +534,6 @@ static void map_update( unsigned int wid )
    int p;
    const glTexture *logo;
    double w, dmg, itf;
-   int jumps, autonav, rw, th;
 
    /* Needs map to update. */
    if (!map_isOpen())
@@ -590,6 +617,9 @@ static void map_update( unsigned int wid )
       window_moveWidget( wid, "txtSServices", x, y );
       window_moveWidget( wid, "txtServices", x, y -gl_smallFont.h - 5 );
       window_modifyText( wid, "txtServices", _("Unknown") );
+
+      /* Update autonav stuff. */
+      map_update_autonav( wid );
 
       /*
        * Bottom Text
@@ -863,26 +893,7 @@ static void map_update( unsigned int wid )
    }
 
    /* Player info. */
-   jumps = floor(player.p->fuel / player.p->fuel_consumption);
-   p = 0;
-   rw = RCOL_HEADER_W;
-   p += scnprintf(&buf[p], sizeof(buf)-p, "#n%s#0", _("Fuel: ") );
-   p += scnprintf(&buf[p], sizeof(buf)-p, n_("%d jump", "%d jumps", jumps), jumps );
-   sys = map_getDestination( &autonav );
-   p += scnprintf(&buf[p], sizeof(buf)-p, "\n#n%s#0", _("Autonav: ") );
-   if (sys==NULL)
-      p += scnprintf(&buf[p], sizeof(buf)-p, _("Off") );
-   else {
-      if (autonav > jumps)
-         p += scnprintf(&buf[p], sizeof(buf)-p, "#r" );
-      p += scnprintf(&buf[p], sizeof(buf)-p, n_("%d jump", "%d jumps", autonav), autonav );
-      if (autonav > jumps)
-         p += scnprintf(&buf[p], sizeof(buf)-p, "#0" );
-   }
-   th = gl_printHeightRaw( &gl_smallFont, rw, buf );
-   window_resizeWidget( wid, "txtPlayerStatus", rw, th );
-   window_moveWidget( wid, "txtPlayerStatus", RCOL_X, 40+BUTTON_HEIGHT*2 );
-   window_modifyText( wid, "txtPlayerStatus", buf );
+   map_update_autonav( wid );
 }
 
 /**
