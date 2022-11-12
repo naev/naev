@@ -356,16 +356,15 @@ void osd_render (void)
 {
    double p;
    int l;
-   const glColour *c;
    int *ignore;
    int nignore;
-   int is_duplicate, duplicates;
-   char title[1024];
+   char title[STRMAX_SHORT];
 
    /* Nothing to render. */
    if (osd_list == NULL)
       return;
 
+   /* TODO this ignore stuff and memory allocation should be computed only when the OSD changes. */
    nignore = array_size(osd_list);
    ignore  = calloc( nignore, sizeof( int ) );
 
@@ -376,7 +375,7 @@ void osd_render (void)
    p = osd_y-gl_smallFont.h;
    l = 0;
    for (int k=0; k<array_size(osd_list); k++) {
-      int x, w;
+      int x, w, duplicates;
       OSD_t *ll;
 
       if (ignore[k])
@@ -392,7 +391,7 @@ void osd_render (void)
          if ((strcmp(osd_list[m].title, ll->title) == 0) &&
                (array_size(osd_list[m].items) == array_size(ll->items)) &&
                (osd_list[m].active == ll->active)) {
-            is_duplicate = 1;
+            int is_duplicate = 1;
             for (int i=osd_list[m].active; i<array_size(osd_list[m].items); i++) {
                if (array_size(osd_list[m].items[i]) == array_size(ll->items[i])) {
                   for (int j=0; j<array_size(osd_list[m].items[i]); j++) {
@@ -432,9 +431,9 @@ void osd_render (void)
 
       /* Print items. */
       for (int i=ll->active; i<array_size(ll->items); i++) {
+         const glColour *c = (i == (int)ll->active) ? &cFontWhite : &cFontGrey;
          x = osd_x;
          w = osd_w;
-         c = (i == (int)ll->active) ? &cFontWhite : &cFontGrey;
          for (int j=0; j<array_size(ll->items[i]); j++) {
             gl_printMaxRaw( &gl_smallFont, w, x, p,
                   c, -1., ll->items[i][j] );
