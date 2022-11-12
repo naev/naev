@@ -22,6 +22,7 @@ local lmisn = require "lmisn"
 local pp_shaders = require "pp_shaders"
 local fleet = require "fleet"
 local pilotai = require "pilotai"
+local cinema = require "cinema"
 
 local title = _("Final Breath of Taiomi")
 local base, basesys = spob.getS("One-Wing Goddard")
@@ -126,7 +127,7 @@ Scavenger deftly deploys an assortment of manipulator arms and tools. You've nev
    misn.markerMove( mem.marker, basesys )
 end
 
-local hypergate
+local hypergate, dscavenger, drones
 function enter ()
    if mem.state ~= 0 then
       lmisn.fail(_([[You were supposed to protect the hypergate!"]]))
@@ -152,20 +153,32 @@ function enter ()
    hook.pilot( hypergate, "death", "hypergate_dead" )
 
    local sdrone = ship.get("Drone")
-   local function add_drone ()
+   local function add_drone( ship, name )
+      ship = ship or sdrone
       local pos = bpos + vec2.newP( rnd.rnd()*500, rnd.angle() )
-      local d = pilot.add( sdrone, collective_fct, pos )
+      local d = pilot.add( ship, collective_fct, pos, name )
       d:setNoDeath(true)
       d:setFriendly(true)
       pilotai.guard( d, pos )
       hook.pilot( d, "attacked", "drone_attacked" )
       return d
    end
+   drones = {}
    for i=1,15 do
-      add_drone()
+      table.insert( drones, add_drone() )
    end
+   dscavenger = add_drone( "Drone (Hyena)", _("Scavenger") )
 
    hook.timer( 1, "heartbeat" )
+
+   hook.timer( 3, "scavenger_say", _("Brace for hostiles!") )
+   hook.timer( 53, "scavenger_say", _("We must not falter!") )
+   hook.timer( 97, "scavenger_say", _("Almost there!") )
+   hook.timer( 170, "scavenger_say", _("Prepare for jump!") )
+end
+
+function scavenger_say( msg )
+   dscavenger:broadcast( msg )
 end
 
 function drone_attacked( d )
@@ -181,7 +194,6 @@ end
 function drone_disabled( d )
    d:setInvincible(false)
    d:setInvisible(false)
-   d:disable(false)
    d:setHealth( 100, 100 )
 end
 
@@ -189,7 +201,32 @@ function heartbeat ()
    defense_timer = defense_timer + 1
 
    if defense_timer >= DEFENSE_LENGTH then
-      -- TODO win cinematics
+      cinema.on()
+      camera.set( hypergate )
+
+      hypergate:setInvincible(true)
+
+      local hpos = hypergate:pos()
+      local function move_drone( d )
+         local off = hpos - d:pos()
+         local pos = hpos + vec2.newP( 50+rnd.rnd()*50, off:angle() )
+         d:setHealth( 100, 100 )
+         d:setInvincible(true)
+         d:control()
+         d:moveto( pos )
+         d:face( hypergate )
+      end
+
+      for k,d in ipairs(drones) do
+         move_drone( d )
+      end
+
+      dscavenger:setHealth( 100, 100 )
+      dscavenger:setInvincible(true)
+      camera.set( dscavenger )
+
+      hook.timer( 5, "cutscene00" )
+
       return
    end
 
@@ -255,4 +292,7 @@ function everyone_dead ()
    for k,v in ipairs(pilot.get()) do
       v:kill() -- Everyone dies ٩(๑´3｀๑)۶
    end
+end
+
+function cutscene00 ()
 end
