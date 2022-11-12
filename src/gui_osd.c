@@ -21,6 +21,8 @@
 typedef struct OSD_s {
    unsigned int id;  /**< OSD id. */
    int priority;     /**< Priority level. */
+   int skip;         /**< Not rendered. */
+   int duplicates;   /**< How many duplicates of this OSD there are. */
    char *title;      /**< Title of the OSD. */
    char **titlew;    /**< Wrapped version of the title. */
 
@@ -356,17 +358,11 @@ void osd_render (void)
 {
    double p;
    int l;
-   int *ignore;
-   int nignore;
    char title[STRMAX_SHORT];
 
    /* Nothing to render. */
    if (osd_list == NULL)
       return;
-
-   /* TODO this ignore stuff and memory allocation should be computed only when the OSD changes. */
-   nignore = array_size(osd_list);
-   ignore  = calloc( nignore, sizeof( int ) );
 
    /* Background. */
    gl_renderRect( osd_x-5., osd_y-(osd_rh+5.), osd_w+10., osd_rh+10, &cBlackHilight );
@@ -375,48 +371,19 @@ void osd_render (void)
    p = osd_y-gl_smallFont.h;
    l = 0;
    for (int k=0; k<array_size(osd_list); k++) {
-      int x, w, duplicates;
-      OSD_t *ll;
+      int x, w;
+      OSD_t *ll = &osd_list[k];
 
-      if (ignore[k])
+      if (ll->skip)
          continue;
 
-      ll = &osd_list[k];
       x = osd_x;
       w = osd_w;
 
-      /* Check how many duplicates we have, mark duplicates for ignoring */
-      duplicates = 0;
-      for (int m=k+1; m<array_size(osd_list); m++) {
-         if ((strcmp(osd_list[m].title, ll->title) == 0) &&
-               (array_size(osd_list[m].items) == array_size(ll->items)) &&
-               (osd_list[m].active == ll->active)) {
-            int is_duplicate = 1;
-            for (int i=osd_list[m].active; i<array_size(osd_list[m].items); i++) {
-               if (array_size(osd_list[m].items[i]) == array_size(ll->items[i])) {
-                  for (int j=0; j<array_size(osd_list[m].items[i]); j++) {
-                     if (strcmp(osd_list[m].items[i][j], ll->items[i][j]) != 0 ) {
-                        is_duplicate = 0;
-                        break;
-                     }
-                  }
-               } else {
-                  is_duplicate = 0;
-               }
-               if (!is_duplicate)
-                  break;
-            }
-            if (is_duplicate) {
-               duplicates++;
-               ignore[m] = 1;
-            }
-         }
-      }
-
       /* Print title. */
       for (int i=0; i<array_size(ll->titlew); i++) {
-         if ((duplicates > 0) && (i==array_size(ll->titlew)-1)) {
-            snprintf( title, sizeof(title), "%s #b(%dx)#0", ll->titlew[i], duplicates+1 );
+         if ((ll->duplicates > 0) && (i==array_size(ll->titlew)-1)) {
+            snprintf( title, sizeof(title), "%s #b(%dx)#0", ll->titlew[i], ll->duplicates+1 );
             gl_printMaxRaw( &gl_smallFont, w, x, p, NULL, -1., title);
          }
          else
@@ -424,10 +391,8 @@ void osd_render (void)
          p -= gl_smallFont.h + 5.;
          l++;
       }
-      if (l >= osd_lines) {
-         free(ignore);
+      if (l >= osd_lines)
          return;
-      }
 
       /* Print items. */
       for (int i=ll->active; i<array_size(ll->items); i++) {
@@ -443,15 +408,11 @@ void osd_render (void)
             }
             p -= gl_smallFont.h + 5.;
             l++;
-            if (l >= osd_lines) {
-               free(ignore);
+            if (l >= osd_lines)
                return;
-            }
          }
       }
    }
-
-   free(ignore);
 }
 
 /**
@@ -459,39 +420,41 @@ void osd_render (void)
  */
 static void osd_calcDimensions (void)
 {
-   /* TODO decrease code duplication with osd_render */
-   OSD_t *ll;
    double len;
-   int *ignore;
-   int nignore;
    int is_duplicate, duplicates;
 
    /* Nothing to render. */
    if (osd_list == NULL)
       return;
 
-   nignore = array_size(osd_list);
-   ignore  = calloc( nignore, sizeof( int ) );
+   /* Reset skips. */
+   for (int k=0; k<array_size(osd_list); k++) {
+      OSD_t *ll = &osd_list[k];
+      ll->skip = 0;
+      ll->duplicates = 0;
+   }
 
    /* Render each thingy. */
    len = 0;
    for (int k=0; k<array_size(osd_list); k++) {
-      if (ignore[k])
-         continue;
+      OSD_t *ll = &osd_list[k];
 
-      ll = &osd_list[k];
+      if (ll->skip)
+         continue;
 
       /* Check how many duplicates we have, mark duplicates for ignoring */
       duplicates = 0;
       for (int m=k+1; m<array_size(osd_list); m++) {
-         if ((strcmp(osd_list[m].title, ll->title) == 0) &&
-               (array_size(osd_list[m].items) == array_size(ll->items)) &&
-               (osd_list[m].active == ll->active)) {
+         OSD_t *lm = &osd_list[m];
+
+         if ((strcmp(lm->title, ll->title) == 0) &&
+               (array_size(lm->items) == array_size(ll->items)) &&
+               (lm->active == ll->active)) {
             is_duplicate = 1;
-            for (int i=osd_list[m].active; i<array_size(osd_list[m].items); i++) {
-               if (array_size(osd_list[m].items[i]) == array_size(ll->items[i])) {
-                  for (int j=0; j<array_size(osd_list[m].items[i]); j++) {
-                     if (strcmp(osd_list[m].items[i][j], ll->items[i][j]) != 0 ) {
+            for (int i=lm->active; i<array_size(lm->items); i++) {
+               if (array_size(lm->items[i]) == array_size(ll->items[i])) {
+                  for (int j=0; j<array_size(lm->items[i]); j++) {
+                     if (strcmp(lm->items[i][j], ll->items[i][j]) != 0 ) {
                         is_duplicate = 0;
                         break;
                      }
@@ -504,10 +467,11 @@ static void osd_calcDimensions (void)
             }
             if (is_duplicate) {
                duplicates++;
-               ignore[m] = 1;
+               lm->skip = 1;
             }
          }
       }
+      ll->duplicates = duplicates;
 
       /* Print title. */
       len += gl_smallFont.h + 5.;
@@ -518,7 +482,6 @@ static void osd_calcDimensions (void)
             len += gl_smallFont.h + 5.;
    }
    osd_rh = MIN( len, osd_h );
-   free(ignore);
 }
 
 /**
