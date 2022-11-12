@@ -804,7 +804,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
     * Combat
     */
    /* shooting primary weapon */
-   } else if (KEY("primary") && NODEAD() && !repeat) {
+   } else if (KEY("primary") && !repeat) {
       if (value==KEY_PRESS) {
          player_setFlag(PLAYER_PRIMARY);
       }
@@ -869,7 +869,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
     * secondary weapons
     */
    /* shooting secondary weapon */
-   } else if (KEY("secondary") && NODEAD() && !repeat) {
+   } else if (KEY("secondary") && !repeat) {
       if (value==KEY_PRESS) {
          player_setFlag(PLAYER_SECONDARY);
       }
