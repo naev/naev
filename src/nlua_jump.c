@@ -115,7 +115,6 @@ LuaJump* luaL_checkjump( lua_State *L, int ind )
  */
 static JumpPoint *luaL_validjumpSystem( lua_State *L, int ind, int *offset )
 {
-   LuaJump *lj;
    JumpPoint *jp;
    StarSystem *a, *b;
 
@@ -125,7 +124,7 @@ static JumpPoint *luaL_validjumpSystem( lua_State *L, int ind, int *offset )
    b = NULL;
 
    if (lua_isjump(L, ind)) {
-      lj = luaL_checkjump(L, ind);
+      LuaJump *lj = luaL_checkjump(L, ind);
       a = system_getIndex( lj->srcid );
       b = system_getIndex( lj->destid );
       if (offset != NULL)
@@ -150,8 +149,8 @@ static JumpPoint *luaL_validjumpSystem( lua_State *L, int ind, int *offset )
       // noreturn
    }
 
-   if (b != NULL && a != NULL)
-         jp = jump_getTarget( b, a );
+   if ((b != NULL) && (a != NULL))
+      jp = jump_getTarget( b, a );
 
    if (jp == NULL)
       NLUA_ERROR(L, _("Jump is invalid"));
