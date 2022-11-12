@@ -905,6 +905,7 @@ static int systemL_setknown( lua_State *L )
 
    /* Update outfits image array. */
    outfits_updateEquipmentOutfits();
+   ovr_refresh(); /* Update overlay as necessary. */
 
    return 0;
 }

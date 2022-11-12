@@ -19,6 +19,7 @@
 #include "land_outfits.h"
 #include "log.h"
 #include "map.h"
+#include "map_overlay.h"
 #include "nlua_colour.h"
 #include "nlua_commodity.h"
 #include "nlua_faction.h"
@@ -912,9 +913,11 @@ static int spobL_setKnown( lua_State *L )
    else
       spob_rmFlag( p, SPOB_KNOWN );
 
-   /* Update outfits image array. */
-   if (changed)
+   if (changed) {
+      ovr_refresh();
+      /* Update outfits image array. */
       outfits_updateEquipmentOutfits();
+   }
 
    return 0;
 }
