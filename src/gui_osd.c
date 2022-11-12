@@ -400,7 +400,7 @@ void osd_render (void)
          x = osd_x;
          w = osd_w;
          for (int j=0; j<array_size(ll->items[i]); j++) {
-            gl_printMaxRaw( &gl_smallFont, w, x, p,
+            gl_printRaw( &gl_smallFont, x, p,
                   c, -1., ll->items[i][j] );
             if (j==0) {
                w = osd_w - osd_hyphenLen;
