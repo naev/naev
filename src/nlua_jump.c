@@ -18,6 +18,7 @@
 #include "nlua_vec2.h"
 #include "nlua_system.h"
 #include "land_outfits.h"
+#include "map_overlay.h"
 #include "log.h"
 
 RETURNS_NONNULL static JumpPoint *luaL_validjumpSystem( lua_State *L, int ind, int *offset );
@@ -403,7 +404,6 @@ static int jumpL_setKnown( lua_State *L )
    int b, offset, changed;
    JumpPoint *jp;
 
-
    offset = 0;
    jp     = luaL_validjumpSystem( L, 1, &offset );
 
@@ -420,9 +420,12 @@ static int jumpL_setKnown( lua_State *L )
    else
       jp_rmFlag( jp, JP_KNOWN );
 
-   /* Update outfits image array - in the case it changes map owned status. */
-   if (changed)
+   if (changed) {
+      /* Update overlay. */
+      ovr_refresh();
+      /* Update outfits image array - in the case it changes map owned status. */
       outfits_updateEquipmentOutfits();
+   }
 
    return 0;
 }
