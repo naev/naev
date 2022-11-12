@@ -421,7 +421,6 @@ void osd_render (void)
 static void osd_calcDimensions (void)
 {
    double len;
-   int is_duplicate, duplicates;
 
    /* Nothing to render. */
    if (osd_list == NULL)
@@ -437,6 +436,7 @@ static void osd_calcDimensions (void)
    /* Render each thingy. */
    len = 0;
    for (int k=0; k<array_size(osd_list); k++) {
+      int duplicates;
       OSD_t *ll = &osd_list[k];
 
       if (ll->skip)
@@ -450,7 +450,7 @@ static void osd_calcDimensions (void)
          if ((strcmp(lm->title, ll->title) == 0) &&
                (array_size(lm->items) == array_size(ll->items)) &&
                (lm->active == ll->active)) {
-            is_duplicate = 1;
+            int is_duplicate = 1;
             for (int i=lm->active; i<array_size(lm->items); i++) {
                if (array_size(lm->items[i]) == array_size(ll->items[i])) {
                   for (int j=0; j<array_size(lm->items[i]); j++) {
