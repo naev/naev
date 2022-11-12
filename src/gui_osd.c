@@ -400,8 +400,7 @@ void osd_render (void)
          x = osd_x;
          w = osd_w;
          for (int j=0; j<array_size(ll->items[i]); j++) {
-            gl_printRaw( &gl_smallFont, x, p,
-                  c, -1., ll->items[i][j] );
+            gl_printRaw( &gl_smallFont, x, p, c, -1., ll->items[i][j] );
             if (j==0) {
                w = osd_w - osd_hyphenLen;
                x = osd_x + osd_hyphenLen;
@@ -474,7 +473,8 @@ static void osd_calcDimensions (void)
       ll->duplicates = duplicates;
 
       /* Print title. */
-      len += gl_smallFont.h + 5.;
+      for (int i=0; i<array_size(ll->titlew); i++)
+         len += gl_smallFont.h + 5.;
 
       /* Print items. */
       for (int i=ll->active; i<array_size(ll->items); i++)
