@@ -26,6 +26,7 @@ RETURNS_NONNULL static JumpPoint *luaL_validjumpSystem( lua_State *L, int ind, i
 /* Jump metatable methods */
 static int jumpL_get( lua_State *L );
 static int jumpL_eq( lua_State *L );
+static int jumpL_tostring( lua_State *L );
 static int jumpL_radius( lua_State *L );
 static int jumpL_position( lua_State *L );
 static int jumpL_angle( lua_State *L );
@@ -38,6 +39,7 @@ static int jumpL_setKnown( lua_State *L );
 static const luaL_Reg jump_methods[] = {
    { "get", jumpL_get },
    { "__eq", jumpL_eq },
+   { "__tostring", jumpL_tostring },
    { "radius", jumpL_radius },
    { "pos", jumpL_position },
    { "angle", jumpL_angle },
@@ -266,6 +268,23 @@ static int jumpL_eq( lua_State *L )
    a = luaL_checkjump(L,1);
    b = luaL_checkjump(L,2);
    lua_pushboolean(L,((a->srcid == b->srcid) && (a->destid == b->destid)));
+   return 1;
+}
+
+/**
+ * @brief Converts a jump to readable form. Mainly meant to be used for printing.
+ *
+ *    @luatparam Jump j Jump to print.
+ * @luafunc __tostring
+ */
+static int jumpL_tostring( lua_State *L )
+{
+   char buf[STRMAX_SHORT];
+   LuaJump *lj = luaL_checkjump(L,1);
+   StarSystem *src = system_getIndex( lj->srcid );
+   StarSystem *dst = system_getIndex( lj->destid );
+   snprintf( buf, sizeof(buf), _("Jump( %s -> %s )"), _(src->name), _(dst->name) );
+   lua_pushstring( L, buf );
    return 1;
 }
 
