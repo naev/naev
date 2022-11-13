@@ -330,6 +330,18 @@ function choose_table.ambient ()
 end
 
 
+local nebula_combat = {
+   "nebu_battle1.ogg",
+   "nebu_battle2.ogg",
+   "combat1.ogg",
+   "combat2.ogg",
+}
+local normal_combat = {
+   "combat3.ogg",
+   "combat1.ogg",
+   "combat2.ogg",
+   "vendetta.ogg",
+}
 -- Faction-specific combat songs
 local factional_combat = {
    Collective = { "collective2.ogg", "galacticbattle.ogg", "battlesomething1.ogg", "combat3.ogg" },
@@ -367,9 +379,9 @@ function choose_table.combat ()
 
    local nebu = nebu_dens > 0
    if nebu then
-      combat = { "nebu_battle1.ogg", "nebu_battle2.ogg", "combat1.ogg", "combat2.ogg", }
+      combat = nebula_combat
    else
-      combat = { "combat3.ogg", "combat1.ogg", "combat2.ogg", }
+      combat = normal_combat
    end
 
    if factional_combat[strongest] then
