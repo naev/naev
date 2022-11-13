@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Map: Lotus Hypergate">
+<outfit name="Map: Kretogg - NGC-14549">
  <general>
   <rarity>2</rarity>
   <mass>0</mass>
   <price>500000</price>
-  <description>This map reveals the path to the secret Black Lotus hypergate.</description>
+  <description>A map revealing a hidden jump point from Kretogg to NGC-14549. It's not entirely clear why this would be useful to know.</description>
   <gfx_store>map_sector_04.webp</gfx_store>
  </general>
  <specific type="map">
@@ -13,7 +13,6 @@
   </sys>
   <sys name="NGC-14549">
    <jump>Kretogg</jump>
-   <spob>Hypergate NGC-14549</spob>
   </sys>
  </specific>
 </outfit>
