@@ -16,6 +16,7 @@
    Defend the hypergate and final cutscene!
 ]]--
 local vn = require "vn"
+local vne = require "vnextras"
 local fmt = require "format"
 local taiomi = require "common.taiomi"
 local lmisn = require "lmisn"
@@ -28,6 +29,7 @@ local luaspfx = require "luaspfx"
 
 local title = _("Final Breath of Taiomi")
 local base, basesys = spob.getS("One-Wing Goddard")
+local endsys = system.get("Toros")
 
 local HYPERGATE_SFX = audio.newSource( "snd/sounds/hypergate_turnon.ogg" )
 local FAILURE_SFX = audio.newSource( "snd/sounds/equipment_failure.ogg" )
@@ -303,6 +305,14 @@ function cutscene00 ()
    move_drone( dscavenger )
 
    hook.timer( 5, "cutscene01" )
+   hook.update( "update" )
+end
+
+local update_shaders = {}
+function update( dt, _real_dt )
+   for k,v in ipairs( update_shaders ) do
+      v._update( dt )
+   end
 end
 
 local sfx_playback
@@ -378,23 +388,72 @@ end
 local shader_fadeout
 function cutscene09 ()
    local fadeout_pixelcode = [[
-#include "lib/blur.glsl"
+const float THRESHOLD = 0.8;
 
 uniform float u_progress = 0.0;
 
 vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 {
-   /* Fade out. */
-   return mix( texture( tex, texture_coords ), vec4(1.0), progress );
+   if (u_progress < THRESHOLD)
+      return mix( texture( tex, texture_coords ), vec4(1.0), progress / THRESHOLD );
+
+   float progress = (u_progress-THRESHOLD) / (1.0-THRESHOLD);
+   return mix( vec4(1.0), vec4(vec3(0.0),1.0) );
 }
 ]]
    shader_fadeout = { shader=pp_shaders.newShader( fadeout_pixelcode ) }
-   shader_init( shader_fadeout, 1/3 )
+   local s = shader_init( shader_fadeout, 1/3 )
+   table.insert( update_shaders, s )
 
    hook.timer( 3, "cutscene10" )
 end
 
+local shader_fadein
 function cutscene10 ()
-   player.teleport( "" )
-   -- TODO music
+   player.teleport( endsys )
+
+   local pp = player.pilot()
+   pp:setNoDeath(false)
+   pp:setHealth( 1+rnd.rnd()*5, 100 )
+
+   local pos = pp:pos() + vec2.newP( 250, rnd.angle() )
+   dscavenger = pilot.add( "Drone (Hyena)", "Independent", pos, _("Scavenger") )
+   dscavenger:setInvincible(true)
+   dscavenger:setHealth( 1+rnd.rnd()*5, 0 )
+   dscavenger:setHilight()
+   dscavenger:setVisplayer()
+   dscavenger:disable()
+   dscavenger:setDir( rnd.angle() )
+   hook.pilot( dscavenger, "board", "cutscene_board" )
+
+   local fadein_pixelcode = [[
+#include "lib/blur.glsl"
+
+const float INTENSITY = 10.0;
+
+uniform float u_progress = 0.0;
+
+vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
+{
+   float disp = INTENSITY*(0.5-distance(0.5, u_progress));
+   vec4 c1 = vec4(vec3(0.0),1.0);
+   vec4 c2 = blur9( tex, texture_coords, love_ScreenSize.xy, disp );
+   return mix( c1, c2, u_progress );
+}
+]]
+   shader_fadein = { shader=pp_shaders.newShader( fadein_pixelcode ) }
+
+   vn.clear()
+   local log = vne.flashbackTextStart()
+   log(_([[]]))
+   vne.flashbackTextEnd(true)
+   vn.run()
+
+   shader_fadeout.shader:rmPPShader()
+   update_shaders = {} -- clear shaders
+   local s = shader_init( shader_fadein, 1/5 )
+   table.insert( update_shaders, s )
+end
+
+function cutscene_board ()
 end
