@@ -604,6 +604,9 @@ function vn.StateScene:_init()
    -- Set alpha to max (since transitions will be used in general)
    vn._globalalpha = 1
 
+   -- Clear stuff
+   vn._buffer = ""
+
    _finish(self)
 end
 --[[
