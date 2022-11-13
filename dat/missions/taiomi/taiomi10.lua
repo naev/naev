@@ -23,10 +23,14 @@ local pp_shaders = require "pp_shaders"
 local fleet = require "fleet"
 local pilotai = require "pilotai"
 local cinema = require "cinema"
+local audio = require "love.audio"
+local luaspfx = require "luaspfx"
 
 local title = _("Final Breath of Taiomi")
 local base, basesys = spob.getS("One-Wing Goddard")
 
+local HYPERGATE_SFX = audio.newSource( "snd/sounds/hypergate_turnon.ogg" )
+local FAILURE_SFX = audio.newSource( "snd/sounds/equipment_failure.ogg" )
 local DEFENSE_LENGTH = 60*3 -- Length in seconds
 local SPAWNLIST_EMPIRE = {
    { p={"Empire Pacifier", "Empire Shark", "Empire Shark"}, t=0 },
@@ -168,6 +172,7 @@ function enter ()
       table.insert( drones, add_drone() )
    end
    dscavenger = add_drone( "Drone (Hyena)", _("Scavenger") )
+   dscavenger:setVisplayer(true)
 
    hook.timer( 1, "heartbeat" )
 
@@ -204,28 +209,12 @@ function heartbeat ()
       cinema.on()
       camera.set( hypergate )
 
-      hypergate:setInvincible(true)
-
-      local hpos = hypergate:pos()
-      local function move_drone( d )
-         local off = hpos - d:pos()
-         local pos = hpos + vec2.newP( 50+rnd.rnd()*50, off:angle() )
-         d:setHealth( 100, 100 )
-         d:setInvincible(true)
-         d:control()
-         d:moveto( pos )
-         d:face( hypergate )
-      end
-
-      for k,d in ipairs(drones) do
-         move_drone( d )
-      end
-
+      hypergate:setNoDeath(true)
       dscavenger:setHealth( 100, 100 )
       dscavenger:setInvincible(true)
       camera.set( dscavenger )
 
-      hook.timer( 5, "cutscene00" )
+      hook.timer( 3, "cutscene00" )
 
       return
    end
@@ -245,7 +234,7 @@ end
 local shader_explode
 function hypergate_dead ()
    -- Activate hypergate with big flash
-   local pixelcode = [[
+   local fade_pixelcode = [[
 #include "lib/blur.glsl"
 
 const float THRESHOLD = 0.4;
@@ -267,7 +256,7 @@ vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
    return mix( c1, c2, progress );
 }
 ]]
-   shader_explode = { shader=pp_shaders.newShader( pixelcode ) }
+   shader_explode = { shader=pp_shaders.newShader( fade_pixelcode ) }
 
    player.cinematics(true)
    camera.set( base:pos() )
@@ -295,4 +284,117 @@ function everyone_dead ()
 end
 
 function cutscene00 ()
+   dscavenger:broadcast(_("Get to the hypergate!"))
+
+   local hpos = hypergate:pos()
+   local function move_drone( d )
+      local off = hpos - d:pos()
+      local pos = hpos + vec2.newP( 50+rnd.rnd()*50, off:angle() )
+      d:setHealth( 100, 100 )
+      d:setInvincible(true)
+      d:control()
+      d:moveto( pos )
+      d:face( hypergate )
+   end
+
+   for k,d in ipairs(drones) do
+      move_drone( d )
+   end
+   move_drone( dscavenger )
+
+   hook.timer( 5, "cutscene01" )
+end
+
+local sfx_playback
+function cutscene01 ()
+   camera.set( hypergate )
+
+   sfx_playback = luaspfx.sfx( true, nil, HYPERGATE_SFX, {volume=0.8} )
+
+   hook.timer( 3, "cutscene02" )
+end
+
+function cutscene02 ()
+   sfx_playback:rm()
+   luaspfx.sfx( true, nil, FAILURE_SFX )
+   hook.timer( 2, "cutscene03" )
+end
+
+function cutscene03 ()
+   dscavenger:broadcast(_("It failed!"))
+   hook.timer( 3, "cutscene04" )
+end
+
+function cutscene04 ()
+   dscavenger:broadcast(_("Buy me some time!"))
+   dscavenger:taskClear()
+   for i=1,30 do
+      dscavenger:moveto( vec2.newP( 100*rnd.rnd(), rnd.angle() ) )
+   end
+
+   player.pilot():setNoDeath(true) -- No death from now on
+
+   hook.timer( 3, "cutscene05" )
+
+   misn.osdCreate( title, {
+      _("Buy Scavenger more time!"),
+   } )
+end
+
+function cutscene05 ()
+   cinema.off()
+
+   hook.timer( 15, "cutscene06" )
+end
+
+function cutscene06 ()
+   cinema.on()
+   camera.set( dscavenger )
+
+   for i=1,20 do -- TODO max
+      hook.timer( i+rnd.rnd(), "explosion" )
+   end
+
+   hook.timer( 5, "cutscene07" )
+end
+
+function explosion ()
+   local pos = base:pos() + vec2.newP( 200*rnd.rnd(), rnd.angle() )
+   luaspfx.explosion( pos, nil, 20+20*rnd.rnd(), nil, {volume=0.5} )
+end
+
+function cutscene07 ()
+   dscavenger:broadcast(_("It's not holding together!"))
+
+   hook.timer( 6, "cutscene08" )
+end
+
+function cutscene08 ()
+   dscavenger:broadcast(_("Activating!"))
+   luaspfx.sfx( true, nil, HYPERGATE_SFX, {volume=0.8} )
+   hook.timer( 3.5, "cutscene09" ) -- sound peaks at 6.5 s
+end
+
+local shader_fadeout
+function cutscene09 ()
+   local fadeout_pixelcode = [[
+#include "lib/blur.glsl"
+
+uniform float u_progress = 0.0;
+
+vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
+{
+   /* Fade out. */
+   return mix( texture( tex, texture_coords ), vec4(1.0), progress );
+}
+]]
+   shader_fadeout = { shader=pp_shaders.newShader( fadeout_pixelcode ) }
+   shader_init( shader_fadeout, 1/3 )
+
+   hook.timer( 3, "cutscene10" )
+end
+
+function cutscene10 ()
+   player.teleport( "" )
+   -- TODO music
 end
