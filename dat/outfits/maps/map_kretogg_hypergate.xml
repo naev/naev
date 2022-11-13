@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Map: Lotus Hypergate">
+ <general>
+  <rarity>2</rarity>
+  <mass>0</mass>
+  <price>500000</price>
+  <description>This map reveals the path to the secret Black Lotus hypergate.</description>
+  <gfx_store>map_sector_04.webp</gfx_store>
+ </general>
+ <specific type="map">
+  <sys name="Kretogg">
+   <jump>NGC-14549</jump>
+  </sys>
+  <sys name="NGC-14549">
+   <jump>Kretogg</jump>
+   <spob>Hypergate NGC-14549</spob>
+  </sys>
+ </specific>
+</outfit>
