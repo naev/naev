@@ -12,26 +12,13 @@ local extras = {}
 -- Used to restore values
 local textbox_bg_alpha, textbox_font, textbox_h, textbox_w, textbox_x, textbox_y
 
---[[--
-Converts the VN to behave like a notebook with hand-written text.
-
-   @tparam[opt=_("Notebook")] string Name to give the "noteboo" vn character.
-   @treturn vn.Character The new character to use for the notebook.
---]]
-function extras.notebookStart( name )
-   name = name or _("Notebook")
+local function fullscreenStart( func, params )
+   params = params or {}
    local nw, nh = naev.gfx.dim()
-   local paperbg = love_shaders.paper( nw, nh )
-   local oldify = love_shaders.oldify()
    vn.func( function ()
-      vn.setBackground( function ()
-         vn.setColor( {1, 1, 1, 1} )
-         lg.rectangle("fill", 0, 0, nw, nh )
-         vn.setColor( {1, 1, 1, 0.3} )
-         lg.setShader( oldify )
-         paperbg:draw( 0, 0 )
-         lg.setShader()
-      end )
+      if func then
+         func()
+      end
       -- Store old values
       textbox_bg_alpha = vn.textbox_bg_alpha
       textbox_h = vn.textbox_h
@@ -40,7 +27,9 @@ function extras.notebookStart( name )
       textbox_y = vn.textbox_y
       textbox_font = vn.textbox_font
       -- New values
-      vn.textbox_font = lg.newFont( _("fonts/CoveredByYourGrace-Regular.ttf"), 24 )
+      if params.font then
+         vn.textbox_font = params.font
+      end
       vn.textbox_bg_alpha = 0
       vn.textbox_h = math.min(0.7*nh, 800 )
       vn.textbox_y = (nh-vn.textbox_h)/2
@@ -49,12 +38,14 @@ function extras.notebookStart( name )
       vn.show_options = false
    end )
    vn.scene()
-   local log = vn.newCharacter( name, { color={0, 0, 0}, hidetitle=true } )
+   local name = params.name or _("Notebook")
+   local colour = params.textcolour or {1, 1, 1}
+   local log = vn.newCharacter( name, { color=colour, hidetitle=true } )
    vn.transition()
    return log
 end
 
-function extras.notebookEnd ()
+local function fullscreenEnd( done, func )
    vn.scene()
    vn.func( function ()
       vn.setBackground()
@@ -65,8 +56,64 @@ function extras.notebookEnd ()
       vn.textbox_y = textbox_y
       vn.textbox_font = textbox_font
       vn.show_options = true
+      if done then
+         vn.textbox_bg_alpha = 0
+         vn.show_options = false
+      end
+      if func then
+         func()
+      end
    end )
    vn.transition()
 end
+
+--[[--
+Converts the VN to behave like a notebook with hand-written text.
+
+   @tparam[opt=_("Notebook")] string Name to give the "notebook" vn character.
+   @treturn vn.Character The new character to use for the notebook.
+--]]
+function extras.notebookStart( name )
+   local nw, nh = naev.gfx.dim()
+   local paperbg = love_shaders.paper( nw, nh )
+   local oldify = love_shaders.oldify()
+   return fullscreenStart( function ()
+      vn.setBackground( function ()
+         vn.setColor( {1, 1, 1, 1} )
+         lg.rectangle("fill", 0, 0, nw, nh )
+         vn.setColor( {1, 1, 1, 0.3} )
+         lg.setShader( oldify )
+         paperbg:draw( 0, 0 )
+         lg.setShader()
+      end )
+   end, {
+      name = name or _("Notebook"),
+      textcolour = {0, 0, 0},
+      font = lg.newFont( _("fonts/CoveredByYourGrace-Regular.ttf"), 24 )
+   } )
+end
+extras.notebookEnd = fullscreenEnd
+
+--[[--
+Converts the VN to behave like a grainy flashback.
+
+   @tparam[opt=_("Notebook")] string Name to give the "notebook" vn character.
+   @treturn vn.Character The new character to use for the notebook.
+--]]
+function extras.flashbackTextStart( name )
+   local nw, nh = naev.gfx.dim()
+   return fullscreenStart( function ()
+      --ft_oldify.shader:addPPShader( "final" )
+      vn.setBackground( function ()
+         vn.setColor( {0, 0, 0, 1} )
+         lg.rectangle("fill", 0, 0, nw, nh )
+      end )
+   end, {
+      name = name or _("Flashback"),
+      textcolour = {0.8, 0.8, 0.8},
+      font = lg.newFont( 20 )
+   } )
+end
+extras.flashbackTextEnd = fullscreenEnd
 
 return extras
