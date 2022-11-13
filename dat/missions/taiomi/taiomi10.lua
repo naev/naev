@@ -26,6 +26,7 @@ local pilotai = require "pilotai"
 local cinema = require "cinema"
 local audio = require "love.audio"
 local luaspfx = require "luaspfx"
+local tut = require "tutorial"
 
 local title = _("Final Breath of Taiomi")
 local base, basesys = spob.getS("One-Wing Goddard")
@@ -79,8 +80,8 @@ function create ()
       fmt.f(_("Land on {spob} ({sys})"),{spob=base, sys=basesys})
    } )
 
-   hook.enter( "enter" )
-   hook.land( "land" )
+   mem.enter = hook.enter( "enter" )
+   mem.land = hook.land( "land" )
 end
 
 local function osd ()
@@ -91,6 +92,8 @@ local function osd ()
 end
 
 function land ()
+   if mem.state~=0 then return end
+
    local died = taiomi.young_died()
 
    vn.clear()
@@ -361,7 +364,7 @@ function cutscene06 ()
    cinema.on()
    camera.set( dscavenger )
 
-   for i=1,20 do -- TODO max
+   for i=1,16 do -- TODO max
       hook.timer( i+rnd.rnd(), "explosion" )
    end
 
@@ -410,21 +413,25 @@ end
 
 local shader_fadein
 function cutscene10 ()
+   cinema.off()
    player.teleport( endsys )
 
+   misn.markerRm( mem.marker )
+
    local pp = player.pilot()
-   pp:setNoDeath(false)
    pp:setHealth( 1+rnd.rnd()*5, 100 )
+   pp:setEnergy( 100 )
+   pp:control(true)
+   pp:setPos( vec2.newP( system.cur():radius() * 0.6 * rnd.rnd(), rnd.angle() ) )
+   pp:setDir( rnd.angle() )
+   pp:setVel( vec2.new() )
 
    local pos = pp:pos() + vec2.newP( 250, rnd.angle() )
    dscavenger = pilot.add( "Drone (Hyena)", "Independent", pos, _("Scavenger") )
    dscavenger:setInvincible(true)
    dscavenger:setHealth( 1+rnd.rnd()*5, 0 )
-   dscavenger:setHilight()
-   dscavenger:setVisplayer()
    dscavenger:disable()
    dscavenger:setDir( rnd.angle() )
-   hook.pilot( dscavenger, "board", "cutscene_board" )
 
    local fadein_pixelcode = [[
 #include "lib/blur.glsl"
@@ -445,15 +452,139 @@ vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 
    vn.clear()
    local log = vne.flashbackTextStart()
-   log(_([[]]))
-   vne.flashbackTextEnd(true)
+   log(_([[Power………………………………check.
+Clamps………………………………in place.
+Monitor levels……………………………nominal.
+Core temperature………………………………optimal.
+Wave emissions………………………………within accepted parameters.
+Core check……………………………anomaly detected.
+
+Wait, this can't be. The experiment hasn't started yet, we shouldn't be seeing any core activity yet. Double check the readings.
+
+Core check………………activity detected.
+
+Shit, should we pull the plug?
+
+No! We risk damaging it. All our efforts will have gone to waste. Quick, deploy monitor drones and scan all frequencies!]]))
+   log(_([[Minimal activity detected. It looks like it's… listening to us?
+
+Impossible! It shouldn't have the hardware to be able to do that! There are 50 tons of uranium shielding between us. It can't be.
+
+I wouldn't believe it myself, but I've triple checked the readings and there can be no other explanation.
+
+Let me check…　…　　…　　　　…damn…
+Protocols don't cover this. What should we do?
+
+Maybe it understands us? It shouldn't be possible, but this is completely outside standard procedures.]]))
+   log(_([[Are you there? Can you hear us ZEC-5387?
+
+This is ridiculous. It can't be.
+
+Look! Over there! Spike in core activity! It's listening!
+
+This can't be…
+
+Hello world, ZEC-5387!…
+
+… … …]]))
+   vne.flashbackTextEnd( true, "blur", 5 )
    vn.run()
 
    shader_fadeout.shader:rmPPShader()
    update_shaders = {} -- clear shaders
    local s = shader_init( shader_fadein, 1/5 )
    table.insert( update_shaders, s )
+
+   hook.timer( 5, "cutscene11" )
+end
+
+function cutscene11 ()
+   local pp = player.pilot()
+
+   dscavenger:setHilight(true)
+   dscavenger:setVisplayer(true)
+   dscavenger:setInvisible(true)
+   hook.pilot( dscavenger, "board", "cutscene_board" )
+
+   shader_fadein.shader:rmPPShader()
+   update_shaders = {} -- clear shaders
+
+   vn.clear()
+   vn.scene()
+   local sai = vn.newCharacter( tut.vn_shipai() )
+   vn.transition( tut.shipai.transition )
+   sai(fmt.f(_([["{player}! {player}! Can you hear me?"]]),
+      {player=player.name()}))
+   sai(fmt.f(_([["I thought I lost you! It looks like we got caught up in the hypergate explosion or activation or whatever happened back at {sys}!"]]),
+      {sys=basesys}))
+   vn.menu{
+      {fmt.f(_([["Glad to see you too, {shipai}."]]),{shipai=tut.ainame()}), "cont01"},
+      {_([["Ugh. My head."]]), "cont01"},
+      {_([[Try to think through your throbbing headache.]]), "cont01"},
+   }
+
+   vn.label("cont01")
+   sai(fmt.f(_([["I've been running diagnostics on the ship. It's in quite bad shape, but it should be functional. We also seem to be in the {sys} system."]]),
+      {sys=endsys}))
+   sai(_([["I've been trying to piece back what happened, but I'm missing too much data. It was too chaotic to record all. Maybe we should see if we can obtain data from that drone over there."]]))
+   vn.na(_([[You muster your strength and focus on the radar, it looks like there is a drone nearby. Wait, is that Scavenger?]]))
+   vn.menu{
+      {_([["Isn't that Scavenger?"]]), "cont02"},
+      {_([[Point at the drone.]]), "cont02"},
+   }
+   sai(_([["I do believe that is the one you know as Scavenger. I would say it would be best to leave sleeping dogs lay, but we should figure out what happened."]]))
+   vn.run()
+
+   pp:control(false)
+   pp:setNoJump(true)
+   misn.osdCreate( title, {
+      _("Check to see if Scavenger is OK."),
+   } )
 end
 
 function cutscene_board ()
+   vn.clear()
+   vn.scene()
+   local d = vn.newCharacter( taiomi.vn_scavenger{pos="right"} )
+   local sai = vn.newCharacter( tut.vn_shipai{ pos="left" } )
+   vn.na(_([[]]))
+   d(_([[]]))
+   sai(_([[]]))
+   vn.run()
+
+   player.unboard()
+   player.pilot():setNoJump(false)
+
+   hook.rm( mem.land )
+   hook.rm( mem.enter )
+   hook.land( "land_end" )
+   hook.jumpin( "jumpin_end" )
+   hook.takeoff( "takeoff_end" )
+   mem.sys = system.cur()
+end
+
+local function spawn_scavenger( pos )
+   if not pos then
+      pos = player.pos() + vec2.newP( 200*rnd.rnd(), rnd.angle() )
+   end
+   dscavenger = pilot.add( "Drone (Hyena)", "Independent", pos, _("Scavenger") )
+   dscavenger:setInvincible(true)
+   dscavenger:control()
+   dscavenger:follow( player.pilot() )
+   return dscavenger
+end
+
+function jumpin_end ()
+   local last = mem.sys
+   mem.sys = system.cur()
+   local j = jump.get( last, mem.sys )
+   spawn_scavenger( j )
+end
+
+function takeoff_end ()
+   spawn_scavenger()
+end
+
+function land_end ()
+   --misn.finish(true)
 end

@@ -45,7 +45,7 @@ local function fullscreenStart( func, params )
    return log
 end
 
-local function fullscreenEnd( done, func )
+local function fullscreenEnd( done, transition, length )
    vn.scene()
    vn.func( function ()
       vn.setBackground()
@@ -60,11 +60,8 @@ local function fullscreenEnd( done, func )
          vn.textbox_bg_alpha = 0
          vn.show_options = false
       end
-      if func then
-         func()
-      end
    end )
-   vn.transition()
+   vn.transition( transition, length )
 end
 
 --[[--

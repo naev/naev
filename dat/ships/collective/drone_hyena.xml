@@ -5,9 +5,10 @@
  <GFX size="70">drone_hyena</GFX>
  <GUI>brushed</GUI>
  <flags>
+  <unique/>
   <noplayer/>
  </flags>
- <rarity>3</rarity>
+ <rarity>6</rarity>
  <sound>engine</sound>
  <class display="Robotic Interceptor">Interceptor</class>
  <price>500000</price>
