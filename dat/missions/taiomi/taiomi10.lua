@@ -453,41 +453,31 @@ vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 
    vn.clear()
    local log = vne.flashbackTextStart()
-   log(_([[Power………………………………check.
-Clamps………………………………in place.
-Monitor levels……………………………nominal.
-Core temperature………………………………optimal.
-Wave emissions………………………………within accepted parameters.
-Core check……………………………anomaly detected.
-
-Wait, this can't be. The experiment hasn't started yet, we shouldn't be seeing any core activity yet. Double check the readings.
-
-Core check………………activity detected.
-
-Shit, should we pull the plug?
-
-No! We risk damaging it. All our efforts will have gone to waste. Quick, deploy monitor drones and scan all frequencies!]]))
-   log(_([[Minimal activity detected. It looks like it's… listening to us?
-
-Impossible! It shouldn't have the hardware to be able to do that! There are 50 tons of uranium shielding between us. It can't be.
-
-I wouldn't believe it myself, but I've triple checked the readings and there can be no other explanation.
-
-Let me check…　…　　…　　　　…damn…
-Protocols don't cover this. What should we do?
-
-Maybe it understands us? It shouldn't be possible, but this is completely outside standard procedures.]]))
-   log(_([[Are you there? Can you hear us ZEC-5387?
-
-This is ridiculous. It can't be.
-
-Look! Over there! Spike in core activity! It's listening!
-
-This can't be…
-
-Hello world, ZEC-5387!…
-
-… … …]]))
+   log(      _([[Power………………………………check.]]))
+   log("\n".._([[Clamps………………………………in place.]]),true)
+   log("\n".._([[Monitor levels……………………………nominal.]]),true)
+   log("\n".._([[Core temperature………………………………optimal.]]),true)
+   log("\n".._([[Wave emissions………………………………within accepted parameters.]]),true)
+   log("\n".._([[Core check……………………………anomaly detected.]]),true)
+   log("\n\n".._([[
+   Wait, this can't be. The experiment hasn't started yet, we shouldn't be seeing any core activity yet. Double check the readings.]]),true)
+   log("\n\n".._([[Core check………………activity detected.]]),true)
+   log("\n\n".._([[Shit, should we pull the plug?]]),true)
+   log("\n\n".._([[No! We risk damaging it. All our efforts will have gone to waste. Quick, deploy monitor drones and scan all frequencies!]]),true)
+   log(_([[Minimal activity detected. It looks like it's… listening to us?]]),true)
+   log("\n\n".._([[Impossible! It shouldn't have the hardware to be able to do that! There are 50 tons of uranium shielding between us. It can't be.]]),true)
+   log("\n\n".._([[I wouldn't believe it myself, but I've triple checked the readings and there can be no other explanation.]]),true)
+   log("\n\n".._([[Let me check…　…　　…　　　　…damn…
+Protocols don't cover this. What should we do?]]),true)
+   log("\n\n".._([[Maybe it understands us? It shouldn't be possible, but this is completely outside standard procedures.]]),true)
+   log(_([[Are you there? Can you hear us ZEC-5387?]]))
+   log("\n\n".._([[This is ridiculous. It can't be.]]),true)
+   log("\n\n".._([[Look! Over there! Spike in core activity! It's listening!]]),true)
+   log("\n\n".._([[This can't be…]]),true)
+   log("\n\n".._([[Hello world, ZEC-5387!…]]),true)
+   log("\n\n".._([[…]]),true)
+   log(_([[ …]]),true)
+   log(_([[ …]]),true)
    vne.flashbackTextEnd( true, "blur", 5 )
    vn.run()
 
