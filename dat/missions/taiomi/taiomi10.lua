@@ -465,12 +465,14 @@ vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
    l2g(_([[Core check………………activity detected.]]))
    l2g(_([[Shit, should we pull the plug?]]))
    l2g(_([[No! We risk damaging it. All our efforts will have gone to waste. Quick, deploy monitor drones and scan all frequencies!]]))
+
    log(_([[Minimal activity detected. It looks like it's… listening to us?]]))
    l2g(_([[Impossible! It shouldn't have the hardware to be able to do that! There are 50 tons of uranium shielding between us. It can't be.]]))
    l2g(_([[I wouldn't believe it myself, but I've triple checked the readings and there can be no other explanation.]]))
    l2g(_([[Let me check…　…　　…　　　　…damn…
 Protocols don't cover this. What should we do?]]))
    l2g(_([[Maybe it understands us? It shouldn't be possible, but this is completely outside standard procedures.]]))
+
    log(_([[Are you there? Can you hear us ZEC-5387?]]))
    l2g(_([[This is ridiculous. It can't be.]]))
    l2g(_([[Look! Over there! Spike in core activity! It's listening!]]))
