@@ -507,16 +507,18 @@ end
 Makes the player say something.
 
    @tparam string what What is being said.
+   @tparam bool noclear Whether or not to clear the text buffer.
    @tparam bool nowait Whether or not to wait for player input when said.
 ]]
-function vn.me( what, nowait ) vn.say( "You", what, nowait ) end
+function vn.me( what, noclear, nowait ) vn.say( "You", what, noclear, nowait ) end
 --[[--
 Makes the narrator say something.
 
    @tparam string what What is being said.
+   @tparam bool noclear Whether or not to clear the text buffer.
    @tparam bool nowait Whether or not to wait for player input when said.
 ]]
-function vn.na( what, nowait ) vn.say( "Narrator", what, nowait ) end
+function vn.na( what, noclear, nowait ) vn.say( "Narrator", what, noclear, nowait ) end
 
 --[[
 -- State
@@ -660,7 +662,7 @@ end
 -- Say
 --]]
 vn.StateSay = {}
-function vn.StateSay.new( who, what )
+function vn.StateSay.new( who, what, noclear )
    local s = vn.State.new()
    s._init = vn.StateSay._init
    s._update = vn.StateSay._update
@@ -669,6 +671,7 @@ function vn.StateSay.new( who, what )
    s._type = "Say"
    s.who = who
    s._what = what
+   s._noclear = noclear
    return s
 end
 function vn.StateSay:_init()
@@ -685,12 +688,20 @@ function vn.StateSay:_init()
    self._textbuf = table.concat( wrappedtext, "\n" )
    -- Set up initial buffer
    self._timer = vn.speed
+   if self._noclear then
+      self._pos = utf8.len( vn._buffer )
+      self._textbuf = vn._buffer .. self._textbuf
+      self._text = vn._buffer
+      vn._buffer = self._text
+   else
+      self._pos = utf8.next( self._textbuf )
+      self._text = ""
+      -- Initialize scroll
+      vn._buffer_y = 0
+   end
    self._len = utf8.len( self._textbuf )
-   self._pos = utf8.next( self._textbuf )
-   self._text = ""
    local c = vn._getCharacter( self.who )
    vn._bufcol = c.color or vn._default._bufcol
-   vn._buffer = self._text
    if c.hidetitle then
       vn._title = nil
    else
@@ -701,9 +712,6 @@ function vn.StateSay:_init()
       v.talking = false
    end
    c.talking = true
-
-   -- Initialize scroll
-   vn._buffer_y = 0
 end
 function vn.StateSay:_update( dt )
    self._timer = self._timer - dt
@@ -1144,9 +1152,10 @@ vn.Character = {}
 --[[--
 Makes a character say something.
    @tparam string what What is being said.
+   @tparam bool noclear Whether or not to clear the text buffer.
    @tparam bool nowait Whether or not to wait for player input when said.
 --]]
-function vn.Character:say( what, nowait ) return vn.say( self.who, what, nowait ) end
+function vn.Character:say( what, noclear, nowait ) return vn.say( self.who, what, noclear, nowait ) end
 vn.Character_mt = { __index = vn.Character, __call = vn.Character.say }
 --[[--
 Creates a new character without adding it to the VN.
@@ -1338,11 +1347,12 @@ Has a character say something.
 
    @tparam string who The name of the character that is saying something.
    @tparam string what What the character is saying.
+   @tparam[opt=false] bool noclear Whether or not to clear the text buffer.
    @tparam[opt=false] bool nowait Whether or not to introduce a wait or just skip to the next text right away (defaults to false).
 ]]
-function vn.say( who, what, nowait )
+function vn.say( who, what, noclear, nowait )
    vn._checkstarted()
-   table.insert( vn._states, vn.StateSay.new( who, what ) )
+   table.insert( vn._states, vn.StateSay.new( who, what, noclear ) )
    if not nowait then
       table.insert( vn._states, vn.StateWait.new() )
    end
