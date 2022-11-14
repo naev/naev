@@ -34,6 +34,7 @@ local endsys = system.get("Toros")
 
 local HYPERGATE_SFX = audio.newSource( "snd/sounds/hypergate_turnon.ogg" )
 local FAILURE_SFX = audio.newSource( "snd/sounds/equipment_failure.ogg" )
+local ELECTRIC_SFX = audio.newSource( "snd/sounds/electric_zap.ogg" )
 local DEFENSE_LENGTH = 60*3 -- Length in seconds
 local SPAWNLIST_EMPIRE = {
    { p={"Empire Pacifier", "Empire Shark", "Empire Shark"}, t=0 },
@@ -547,9 +548,42 @@ function cutscene_board ()
    vn.scene()
    local d = vn.newCharacter( taiomi.vn_scavenger{pos="right"} )
    local sai = vn.newCharacter( tut.vn_shipai{ pos="left" } )
-   vn.na(_([[]]))
-   d(_([[]]))
-   sai(_([[]]))
+   vn.na(_([[You approach the wreck resembling Scavenger. They do not seem to be in a good shape and are irresponsive.]]))
+   sai(_([["This does not look good. We may need to jump start them. Try to get closer and get ready for a space walk."]]))
+   vn.na(fmt.f(_([[You carefully maneuver your ship adjacent to Scavenger. Donning your space suit you eject and manually approach Scavenger, who once again looks imposing up close. Following {shipai}'s guidance you attach your ship's electrical system to Scavenger.]]),
+      {shipai=tut.ainame()}))
+   sai(_([["Let there be power!"]]))
+   vn.sfx( ELECTRIC_SFX )
+   vn.na(_([[You hear an electric discharge that seems to jerk Scavenger back to life.]]))
+   d(_([["Aa…　…gh… … …urgh…
+…
+Erk…"]]))
+   sai(_([["It's alive!"]]))
+   d(_([["Where… where am I?"]]))
+   vn.menu{
+      {fmt.f(_([["This is {sys}.]]),{sys=endsys}), "cont01"},
+      {_([["You're alive!"]]), "cont01"},
+      {_([["What happened?"]]), "cont01"},
+      {_([[…]]), "cont01"},
+   }
+
+   vn.label("cont01")
+   d(_([["I… I'm having trouble remembering anything…"]]))
+   vn.na(fmt.f(_([[{shipai} plays a partially incomplete recording of the battle in the {sys} system and subsequent potentially activation of the hypergate. Scavenger seems to be digesting the information.]]),
+      {shipai=tut.ainame(), sys=basesys}))
+   d(_([["Let me try to do a probabilistic reconstruction of the events. I believe the hypergate malfunctioned, no wait, due to the attack, I was not able to fully install the activation protocols on your ship."]]))
+   d(_([["The hypergate failed to activate due to subspace instabilities and sustained damage. I believe I salvaged the situation by staying behind and activating it myself."]]))
+   d(_([["It seems like all went well and the other drones made it somewhere, but the reverberations knocked us here."]]))
+   vn.menu{
+      {_([["Why here?"]]), "cont02"},
+      {_([["Are they alright?"]]), "cont02_alright"},
+      {_([[…]]), "cont02"},
+   }
+
+   vn.label("cont02_alright")
+
+   vn.label("cont02")
+
    vn.run()
 
    player.unboard()
