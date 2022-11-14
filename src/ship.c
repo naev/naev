@@ -818,6 +818,10 @@ static int ship_parse( Ship *temp, const char *filename )
                ship_setFlag( temp, SHIP_NOESCORT );
                continue;
             }
+            if (xml_isNode(cur,"unique")) {
+               ship_setFlag( temp, SHIP_UNIQUE );
+               continue;
+            }
             WARN(_("Ship '%s' has unknown flags node '%s'."), temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
