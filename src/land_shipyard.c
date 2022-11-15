@@ -230,6 +230,10 @@ void shipyard_update( unsigned int wid, const char* str )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(ship->fabricator) );
    k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Crew:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d", ship->crew );
+   if (player.fleet_capacity > 0) {
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Fleet Capacity:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d", ship->points );
+   }
    /* Weapons & Manoeuvrability */
    k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n\n%s", _("Base Properties") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n\n%s", "");
