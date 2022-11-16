@@ -118,7 +118,7 @@ end
 
 
 function enter ()
-   if pilot.cargoHas( player.pilot(), mem.chosen_comm ) > 0 then
+   if player.fleetCargoOwned( mem.chosen_comm ) > 0 then
       misn.osdActive(2)
    else
       misn.osdActive(1)
@@ -127,14 +127,14 @@ end
 
 
 function land ()
-   local amount = pilot.cargoHas( player.pilot(), mem.chosen_comm )
-   local reward = amount * mem.price
+   local amount = player.fleetCargoOwned( mem.chosen_comm )
 
    if spob.cur() == mem.misplanet and amount > 0 then
+      amount = player.fleetCargoRm( mem.chosen_comm, amount )
+      local reward = amount * mem.price
       local txt = fmt.f(cargo_land[rnd.rnd(1, #cargo_land)],
             {cargo=_(mem.chosen_comm), credits=fmt.credits(reward)} )
       vntk.msg(_("Delivery success!"), txt)
-      pilot.cargoRm(player.pilot(), mem.chosen_comm, amount)
       player.pay(reward)
       if not pir.factionIsPirate( mem.paying_faction ) then
          pir.reputationNormalMission(rnd.rnd(2,3))
