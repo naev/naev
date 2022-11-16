@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Drone (Hyena)">
- <points>30</points>
+ <points>20</points>
  <base_type>Drone</base_type>
  <GFX size="70">drone_hyena</GFX>
  <GUI>brushed</GUI>
@@ -17,7 +17,7 @@
  <trail_generator x="-9" y="-13" h="0">nebula</trail_generator>
  <trail_generator x="-8" y="0" h="-3" always_under="1" />
  <fabricator>Robosys</fabricator>
- <description>This is a modified version of the Collective Drone that now includes a life support system for humans and is also disguised as a Hyena.</description>
+ <description>A fully sentient drone disguised as a Hyena.</description>
  <health>
   <armour>40</armour>
   <armour_regen>7</armour_regen>
