@@ -101,9 +101,9 @@ static int playerL_shipMetadata( lua_State *L );
 static int playerL_shipDeploy( lua_State *L );
 static int playerL_outfits( lua_State *L );
 static int playerL_numOutfit( lua_State *L );
-static int playerL_addOutfit( lua_State *L );
-static int playerL_rmOutfit( lua_State *L );
-static int playerL_addShip( lua_State *L );
+static int playerL_outfitAdd( lua_State *L );
+static int playerL_outfitRm( lua_State *L );
+static int playerL_shipAdd( lua_State *L );
 static int playerL_shipSwap( lua_State *L );
 /* Mission/event management stuff. */
 static int playerL_missions( lua_State *L );
@@ -179,9 +179,9 @@ static const luaL_Reg playerL_methods[] = {
    { "shipDeploy", playerL_shipDeploy },
    { "outfits", playerL_outfits },
    { "numOutfit", playerL_numOutfit },
-   { "outfitAdd", playerL_addOutfit },
-   { "outfitRm", playerL_rmOutfit },
-   { "shipAdd", playerL_addShip },
+   { "outfitAdd", playerL_outfitAdd },
+   { "outfitRm", playerL_outfitRm },
+   { "shipAdd", playerL_shipAdd },
    { "shipSwap", playerL_shipSwap },
    { "missions", playerL_missions },
    { "misnActive", playerL_misnActive },
@@ -1300,7 +1300,7 @@ static int playerL_numOutfit( lua_State *L )
  *    @luatparam[opt=1] number q Quantity to give.
  * @luafunc outfitAdd
  */
-static int playerL_addOutfit( lua_State *L  )
+static int playerL_outfitAdd( lua_State *L  )
 {
 
    /* Handle parameters. */
@@ -1326,7 +1326,7 @@ static int playerL_addOutfit( lua_State *L  )
  *    @luatparam[opt] number q Quantity to remove (default 1).
  * @luafunc outfitRm
  */
-static int playerL_rmOutfit( lua_State *L )
+static int playerL_outfitRm( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
 
@@ -1381,7 +1381,7 @@ static int playerL_rmOutfit( lua_State *L )
  *    @luatreturn string The new ship's name.
  * @luafunc addShip
  */
-static int playerL_addShip( lua_State *L )
+static int playerL_shipAdd( lua_State *L )
 {
    PlayerShip_t *new_ship;
    /* Handle parameters. */
