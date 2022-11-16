@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- All hypergates are on and active! -->
 <unidiff name="hypergates_3">
+ <!-- All hypergates are on and active! -->
  <spob name="Hypergate Dvaer">
   <displayname>Hypergate</displayname>
   <lua>spob/lua/hypergate_dvaer.lua</lua>
