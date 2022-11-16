@@ -298,6 +298,7 @@ dat/outfits/maps/map_empire_core.xml
 dat/outfits/maps/map_flf.xml
 dat/outfits/maps/map_flf_pirate_route.xml
 dat/outfits/maps/map_inner_nebula_secret_jump.xml
+dat/outfits/maps/map_kretogg_hypergate.xml
 dat/outfits/maps/map_kretogg_secrets.xml
 dat/outfits/maps/map_nebula_edge.xml
 dat/outfits/maps/map_new_haven_secrets.xml
@@ -2306,7 +2307,7 @@ dat/tech/ion3.xml
 dat/tech/kinetic1.xml
 dat/tech/kinetic2.xml
 dat/tech/kinetic3.xml
-dat/tech/kretog_maps.xml
+dat/tech/kretogg_maps.xml
 dat/tech/laser1.xml
 dat/tech/laser2.xml
 dat/tech/laser3.xml
