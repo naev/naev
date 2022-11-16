@@ -86,6 +86,7 @@
       * AI can use special outfits
       * Lots of engine rewriting and modernization that should bring some speed improvements and more flexibility when modding
       * Added lua-enet library to allow for networking in plugins (off by default, requires setting in configuration file)
+      * Can animate loading screen
    * Bug Fixes
       * Too many to list, but we'll try
       * Fixed pilots not getting equipped at all in some cases
