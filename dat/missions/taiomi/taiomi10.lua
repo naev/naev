@@ -541,7 +541,9 @@ function cutscene_board ()
    vn.clear()
    vn.scene()
    local d = vn.newCharacter( taiomi.vn_scavenger{pos="right"} )
-   local sai = vn.newCharacter( tut.vn_shipai{ pos="left" } )
+   vn.transition( taiomi.scavenger.transition )
+   local sai = tut.vn_shipai{ pos="left" }
+   vn.appear( sai, tut.shipai.transition )
    vn.na(_([[You approach the wreck resembling Scavenger. They do not seem to be in a good shape and are irresponsive.]]))
    sai(_([["This does not look good. We may need to jump start them. Try to get closer and get ready for a space walk."]]))
    vn.na(fmt.f(_([[You carefully maneuver your ship adjacent to Scavenger. Donning your space suit you eject and manually approach Scavenger, who once again looks imposing up close. Following {shipai}'s guidance you attach your ship's electrical system to Scavenger.]]),
@@ -644,6 +646,8 @@ They seem to almost let out a sigh.]]))
 
    vn.label("cont05")
    sai(_([["Then it is settled. Let us head towards a nearby spaceport. Too much has happened recently."]]))
+   vn.disappear( sai, tut.shipai.transition )
+   vn.done( taiomi.scavenger.transition )
    vn.run()
 
    player.unboard()
