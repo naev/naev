@@ -76,7 +76,7 @@ function approach_npc( npcid )
    vn.scene()
    local n = vn.newCharacter( npc_name, {image=npc_image} )
    vn.transition()
-   n(fmt.f(msg), {sys="#b"..npc_poidata.sys:name().."#0"})
+   n(fmt.f(msg, {sys="#b"..npc_poidata.sys:name().."#0"}))
 
    vn.menu{
       { _("Inquire about the coordinates."), "accept" },
