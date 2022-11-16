@@ -365,7 +365,8 @@ function cutscene06 ()
    cinema.on()
    camera.set( dscavenger )
 
-   for i=1,16 do -- TODO max
+   -- Explosions computed to be rendered for the rest of the scene
+   for i=1,16 do
       hook.timer( i+rnd.rnd(), "explosion" )
    end
 
@@ -568,20 +569,94 @@ Erk…"]]))
    d(_([["The hypergate failed to activate due to subspace instabilities and sustained damage. I believe I salvaged the situation by staying behind and activating it myself."]]))
    d(_([["It seems like all went well and the other drones made it somewhere, but the reverberations knocked us here."]]))
    vn.menu{
-      {_([["Why here?"]]), "cont02"},
+      {_([["Why here?"]]), "cont02_here"},
       {_([["Are they alright?"]]), "cont02_alright"},
       {_([[…]]), "cont02"},
    }
 
+   vn.label("cont02_here")
+   d(_([["We seem to have gotten stuck in a side-effect of the activation. It could have been worse, we could have been warped to a sun or black hole."]]))
+   vn.jump("cont02")
+
    vn.label("cont02_alright")
+   d(_([["It is impossible to know. Furthermore, the probability of meeting them again is statistically irrelevant."
+They seem to almost let out a sigh.]]))
+   vn.jump("cont02")
 
    vn.label("cont02")
+   d(_([["This looks like the Nebula! I have only heard of it from intercepted transmissions and recovered looks. It is quite a sensory overload."]]))
+   d(_([["The others would have loved to see this. Such a bizarre display!"]]))
+   vn.menu{
+      {_([["What are you going to do now?"]]), "cont03_do"},
+      {_([["Are you alright?"]]), "cont03_alright"},
+      {_([[…]]), "cont03"},
+   }
 
+   vn.label("cont03_do")
+   d(_([["That is a good question. Given that I am now alone, and in unknown territory, I think my options are limited."]]))
+
+   vn.label("cont03_alright")
+   d(_([["Yes. I am glad that the others seem to have made it. There is no greater pride than seeing the fruits of your plans. Now I can die without guilt."]]))
+
+   vn.label("cont03")
+   d(_([["I believe I will take the opportunity to explore and enjoy myself before inevitably expiring."]]))
+   vn.menu{
+      {_([[Ask them to come with you.]]), "cont04_recruit"},
+      {_([[Wish them luck.]]), "cont04_bye"},
+   }
+
+   vn.label("cont04_recruit")
+   d(_([["Are you sure that is a good idea? My presence could be a liability. It is not clear to what extent my cover will work."]]))
+   sai(fmt.f(_([[The silent {shipai} suddenly speaks up.
+"I agree with Scavenger's assessment. It is a significant risk."]]),
+      {shipai=tut.ainame()}))
+   d(_([["I can not rebuke that point."]]))
+   sai(_([["However, I think there is more risk in not having them travel with us."]]))
+   vn.jump("cont04")
+
+   vn.label("cont04_bye")
+   d(_([["So many things to see. What shall I do?"]]))
+   sai(fmt.f(_([[The silent {shipai} suddenly speaks up.
+"What if… what if they came with us?"]]),
+      {shipai=tut.ainame()}))
+   d(_([["Are you sure that is a good idea? My presence could be a liability. It is not clear to what extent my cover will work."]]))
+   sai(_([["I agree with Scavenger's assessment. It is a significant risk."]]))
+   d(_([["I can not rebuke that point."]]))
+   sai(_([["However, I think there is more risk in not having them travel with us."]]))
+   vn.jump("cont04")
+
+   vn.label("cont04")
+   vn.menu{
+      {_([[Insist that Scavenger join you.]]), "cont05_yes"},
+      {_([[Only take them to a nearby dock.]]), "cont05_no"},
+   }
+
+   vn.label("cont05_yes")
+   d(_([["If you insist, I shall accompany you in your journey. I can not think of a better way to explore the universe!"]]))
+   vn.jump("cont05")
+
+   vn.label("cont05_no")
+   d(_([["I see. I believe if you explain a bit more how to survive in a human society I should be fine."]]))
+   vn.func( function ()
+      mem.scavenger_no = true
+   end )
+   vn.jump("cont05")
+
+   vn.label("cont05")
+   sai(_([["Then it is settled. Let us head towards a nearby spaceport. Too much has happened recently."]]))
    vn.run()
 
    player.unboard()
    player.pilot():setNoJump(false)
 
+   -- Scavenger follows player
+   dscavenger:setHilight(false)
+   dscavenger:setVisplayer(false)
+   dscavenger:setInvisible(false)
+   dscavenger:control(true)
+   dscavenger:follow(player.pilot())
+
+   -- New hooks
    hook.rm( mem.land )
    hook.rm( mem.enter )
    hook.land( "land_end" )
