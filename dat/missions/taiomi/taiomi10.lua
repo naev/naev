@@ -403,7 +403,7 @@ uniform float u_progress = 0.0;
 vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 {
    if (u_progress < THRESHOLD)
-      return mix( texture( tex, texture_coords ), vec4(1.0), progress / THRESHOLD );
+      return mix( texture( tex, texture_coords ), vec4(1.0), u_progress / THRESHOLD );
 
    float progress = (u_progress-THRESHOLD) / (1.0-THRESHOLD);
    return mix( vec4(1.0), vec4(vec3(0.0),1.0) );
