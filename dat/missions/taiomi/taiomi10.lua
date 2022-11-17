@@ -297,8 +297,8 @@ function cutscene00 ()
 
    local hpos = hypergate:pos()
    local function move_drone( d )
-      local off = hpos - d:pos()
-      local pos = hpos + vec2.newP( 50+rnd.rnd()*50, off:angle() )
+      local off = d:pos() - hpos
+      local pos = hpos + vec2.newP( 30+rnd.rnd()*150, off:angle() + rnd.rnd() )
       d:setHealth( 100, 100 )
       d:setInvincible(true)
       d:control()
