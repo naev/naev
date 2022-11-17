@@ -29,7 +29,7 @@
   <cargo>0</cargo>
  </characteristics>
  <slots>
-  <weapon size="small" x="5" y="0" h="-5">Neutron Disruptor</weapon>
+  <weapon size="small" x="5" y="0" h="-5" />
   <weapon size="small" x="5" y="0" h="-5">Neutron Disruptor</weapon>
   <weapon size="small" x="5" y="0" h="-5">Neutron Disruptor</weapon>
   <utility size="small" prop="systems">Unicorp PT-16 Core System</utility>
