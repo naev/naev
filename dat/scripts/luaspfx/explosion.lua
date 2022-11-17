@@ -57,7 +57,7 @@ local function spfx_explosion( pos, vel, size, params )
    d.speed  = speed
    d.steps  = math.min( math.floor(0.0111688 * size + 8.16463 + 0.5), 16 )
    if params.volume then
-      local ss = sfx:sfx()
+      local ss = s:sfx()
       ss:setVolume( params.volume )
    end
 end
