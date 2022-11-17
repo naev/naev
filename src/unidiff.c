@@ -1800,6 +1800,20 @@ static int diff_checkUpdateUniverse (void)
       Pilot *p = pilots[i];
       p->nav_spob       = -1;
       p->nav_hyperspace = -1;
+
+      /* Hack in case the pilot was actively jumping, this won't run the hook,
+       * but I guess it's too much effort to properly fix for a situation that
+       * will likely never happen. */
+      if (p->id != PLAYER_ID && pilot_isFlag( p, PILOT_HYPERSPACE ))
+         pilot_delete(d);
+      else
+         pilot_rmFlag( p, PILOT_HYPERSPACE ); /* Corner case player, just have it not crash and randomly stop the jump. */
+
+      /* Have to reset in the case of starting. */
+      if (pilot_isFlag( p, PILOT_HYP_BEGIN ) ||
+            pilot_isFlag( p, PILOT_HYP_BRAKE ) ||
+            pilot_isFlag( p, PILOT_HYP_PREP ))
+         pilot_hyperspaceAbort( p );
    }
 
    /* Player has to update the GUI so we send again. */
