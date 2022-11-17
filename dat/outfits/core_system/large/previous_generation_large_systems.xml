@@ -10,10 +10,10 @@
   <gfx_store>misc02.webp</gfx_store>
  </general>
  <specific type="modification">
-  <cpu_max>640</cpu_max>
+  <cpu_max>480</cpu_max>
   <energy>2200</energy>
   <energy_regen>100</energy_regen>
-  <shield>700</shield>
+  <shield>600</shield>
   <shield_regen>10</shield_regen>
  </specific>
 </outfit>
