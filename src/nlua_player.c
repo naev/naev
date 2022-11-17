@@ -710,7 +710,7 @@ static int playerL_cinematics( lua_State *L )
 
    /* Parse parameters. */
    b = lua_toboolean( L, 1 );
-   if (lua_gettop(L) > 1) {
+   if (!lua_isnoneornil(L,2)) {
       if (!lua_istable(L,2)) {
          NLUA_ERROR( L, _("Second parameter to cinematics should be a table of options or omitted!") );
          return 0;
