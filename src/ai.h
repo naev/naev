@@ -41,6 +41,7 @@ typedef struct Task_ {
 typedef struct AI_Profile_ {
    char* name;       /**< Name of the profile. */
    nlua_env env;     /**< Assosciated Lua Environment. */
+   double control_rate; /**< Control rate of the AI. */
    int lua_mem;      /**< Initial memory state. */
    int ref_control;  /**< Profile control reference function. */
    int ref_control_manual; /**< Profile manual control reference function. */

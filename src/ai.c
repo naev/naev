@@ -471,6 +471,9 @@ int ai_pinit( Pilot *p, const char *ai )
    ai_create( p );
    pilot_setFlag(p, PILOT_CREATED_AI);
 
+   /* Initialize randomly within a control tick. */
+   p->tcontrol = RNGF() * p->ai->control_rate;
+
    return 0;
 }
 
@@ -663,6 +666,11 @@ static int ai_loadProfile( AI_Profile *prof, const char* filename )
    if (prof->ref_create == LUA_NOREF)
       WARN( str, filename, "create" );
 
+   /* Get the control rate. */
+   nlua_getenv(naevL, env, "control_rate");
+   prof->control_rate = lua_tonumber(naevL,-1);
+   lua_pop(naevL,1);
+
    return 0;
 }
 
@@ -735,10 +743,7 @@ void ai_think( Pilot* pilot, const double dt )
 
    /* control function if pilot is idle or tick is up */
    if ((cur_pilot->tcontrol < 0.) || (t == NULL)) {
-      double crate;
-      nlua_getenv(naevL, env, "control_rate");
-      crate = lua_tonumber(naevL,-1);
-      lua_pop(naevL,1);
+      double crate = cur_pilot->ai->control_rate;
       if (pilot_isFlag(pilot,PILOT_PLAYER) ||
           pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL)) {
          lua_rawgeti( naevL, LUA_REGISTRYINDEX, cur_pilot->ai->ref_control_manual );
