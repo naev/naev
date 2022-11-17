@@ -29,9 +29,9 @@
   <cargo>0</cargo>
  </characteristics>
  <slots>
-  <weapon size="small" x="5" y="0" h="-5" />
-  <weapon size="small" x="5" y="0" h="-5" />
-  <weapon size="small" x="5" y="0" h="-5" />
+  <weapon size="small" x="5" y="0" h="-5">Neutron Disruptor</weapon>
+  <weapon size="small" x="5" y="0" h="-5">Neutron Disruptor</weapon>
+  <weapon size="small" x="5" y="0" h="-5">Neutron Disruptor</weapon>
   <utility size="small" prop="systems">Unicorp PT-16 Core System</utility>
   <utility size="small" prop="accessory" />
   <utility size="small" />
@@ -45,4 +45,7 @@
   <cargo_mod>-100</cargo_mod>
   <armour_mod>-20</armour_mod>
  </stats>
+ <tags>
+  <tag>noequip</tag>
+ </tags>
 </ship>

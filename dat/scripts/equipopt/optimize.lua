@@ -111,7 +111,6 @@ special_ships["Drone"] = function( p )
       p:outfitAdd( o, 1, true )
    end
 end
-special_ships["Drone (Hyena)"] = special_ships["Drone"]
 special_ships["Heavy Drone"] = function( p )
    for k,o in ipairs{
       "Milspec Thalos 3602 Core System",
