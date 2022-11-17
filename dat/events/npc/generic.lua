@@ -16,6 +16,7 @@ local gfx_list = {
    "neutral/female3n.webp",
    "neutral/female4n.webp",
    "neutral/male1n.webp",
+   "neutral/male2n.webp",
 }
 
 local desc_list = {
