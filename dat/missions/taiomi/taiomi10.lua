@@ -26,7 +26,7 @@ local pilotai = require "pilotai"
 local cinema = require "cinema"
 local audio = require "love.audio"
 local luaspfx = require "luaspfx"
-local tut = require "tutorial"
+local tut = require "common.tutorial"
 
 local title = _("Final Breath of Taiomi")
 local base, basesys = spob.getS("One-Wing Goddard")
