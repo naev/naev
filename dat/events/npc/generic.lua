@@ -7,7 +7,7 @@ local vni = require "vnimage"
 local jm_chance_min = 0
 local jm_chance_max = 0.25
 -- State. Nothing persists.
-local msg_combined, seltargets
+local msg_combined
 
 local gfx_list = {
    "neutral/female1n.webp",
@@ -100,29 +100,22 @@ local function getMessageLore ()
 end
 
 -- Returns a jump point message and updates jump point known status accordingly. If all jumps are known by the player, defaults to a lore message.
+local jumptargets = {}
 local function getMessageJump ()
-   -- Collect a table of jump points in the system the player does NOT know.
-   local mytargets = {}
-   seltargets = seltargets or {} -- We need to keep track of jump points NPCs will tell the player about so there are no duplicates.
-   for _, j in ipairs(system.cur():jumps(true)) do
-      if not j:known() and not j:hidden() and not seltargets[j] then
-         table.insert(mytargets, j)
-      end
-   end
-
    -- The player already knows all jumps in this system or no messages
-   if #mytargets == 0 or #msg_jump==0 then
+   if #jumptargets == 0 or #msg_jump==0 then
       return getMessageLore()
    end
 
    local retmsg =  msg_jump[rnd.rnd(1, #msg_jump)]
-   local sel = rnd.rnd(1, #mytargets)
+   local sel = rnd.rnd(1, #jumptargets)
+   local tgt = jumptargets[sel]
    local myfunc = function( npcdata )
       if npcdata.talked then
          return
       end
-      mytargets[sel]:setKnown(true)
-      mytargets[sel]:dest():setKnown(true, false)
+      tgt:setKnown(true)
+      tgt:dest():setKnown(true, false)
 
       -- Reduce jump message chance
       local jm_chance = var.peek("npc_jm_chance") or jm_chance_max
@@ -130,9 +123,9 @@ local function getMessageJump ()
       npcdata.talked = true
    end
 
-   -- Don't need to remove messages from tables here, but add whatever jump point we selected to the "selected" table.
-   seltargets[mytargets[sel]] = true
-   return fmt.f( retmsg, {jmp=mytargets[sel]:dest()} ), myfunc
+   -- Remove target from list
+   table.remove( jumptargets, sel )
+   return fmt.f( retmsg, {jmp=tgt:dest()} ), myfunc
 end
 
 local function getMessage( lst )
@@ -164,6 +157,14 @@ return function ()
 
    -- Create a list of conditional messages
    msg_combined = npc.combine_cond( msg_cond )
+
+   -- Collect a table of jump points in the system the player does NOT know.
+   jumptargets = {}
+   for _, j in ipairs(system.cur():jumps(true)) do
+      if not j:known() and not j:hidden() then
+         table.insert(jumptargets, j)
+      end
+   end
 
    local function gen_npc()
       -- Append the faction to the civilian name, unless there is no faction.
