@@ -716,18 +716,15 @@ function land_end ()
       vn.done()
 
       vn.label("cont01")
+      s(_([["Acknowledged. That does make things much more simple."]]))
       vn.func( function ()
          mem.scavenger_no = false
       end )
    end
-   s(_([[]]))
+   s(_([["Such a change of environment is quite befuddling. I am going to have to adjust my priors. However, having ensured the survival of my brethren, it is a good chance to start anew. Thank you for all that you have done for me."]]))
 
-   local reward = 500e3
-   vn.func( function ()
-      player.pay( reward )
-   end )
    vn.sfxVictory()
-   vn.na(fmt.reward(reward).."\n\n".._([[#gScavenger#0 has joined your fleet!]]))
+   vn.na(_([[#gScavenger#0 has joined your fleet!]]))
 
    vn.done( taiomi.scavenger.transition )
    vn.run()
