@@ -44,6 +44,7 @@ function atk_generic.attacked( attacker )
    local dist   = ai.dist(attacker)
    local range  = ai.getweaprange( 0 )
 
+   -- TODO probably something smarter based on mem.atk_pref_func
    if target ~= attacker and dist < tdist and
          dist < range * mem.atk_changetarget then
       ai.pushtask("attack", attacker)

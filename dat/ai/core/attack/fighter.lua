@@ -16,8 +16,8 @@ function atk_fighter.think( target, _si )
       return
    end
 
-   local enemy    = atk.preferred_enemy()
-   local dist     = ai.dist( target )
+   local enemy = atk.preferred_enemy()
+   local dist  = ai.dist( target )
    local range = ai.getweaprange(3, 0)
 
    -- Get new target if it's closer
