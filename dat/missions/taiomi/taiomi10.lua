@@ -102,7 +102,7 @@ function land ()
    -- TODO cool music
    local s = taiomi.vn_scavenger{ pos="left" }
    local p = taiomi.vn_philosopher{ pos="right" }
-   vn.transition()
+   vn.transition( taiomi.scavenger.transition )
    vn.na(fmt.f(_([[You enter the {base} and find it has changed quite a lot since your last visit. A large part of the ship that you never visited seems to have been opened up showing a myriad of advanced electronics and installations that remind you of the hypergates.]]),
       {base=base}))
    vn.appear( { s, p }, taiomi.scavenger.transition )
@@ -692,5 +692,49 @@ function takeoff_end ()
 end
 
 function land_end ()
-   --misn.finish(true)
+   vn.clear()
+   vn.scene()
+   local s = vn.newCharacter( taiomi.vn_scavenger() )
+   vn.transition( taiomi.scavenger.transition )
+   vn.na(_([[You dock at the spaceport with Scavenger following your movements. Eventually you make it to the hangar and dock with Scavenger alongside. Scavenger transmits directly to your headset.]]))
+   s(_([["This is very weird. All all human spaceports this impractical?"]]))
+   if mem.scavenger_no then
+      s(_([["Can you teach me the basics of human society before I take my leave?"]]))
+      vn.menu{
+         {_([[Change your mind and ask them to join you.]]), "cont01"},
+         {_([[Teach them the basics (Scavenger will be gone).]]), "byebye"},
+      }
+
+      vn.label("byebye")
+      vn.na(_([[You teach Scavenger as much as you can about the tricks and tips you learned during your piloting career, and send them off on their way. Before they leave they give you some resources they still had available.]]))
+      local reward = 1e6
+      vn.func( function ()
+         player.pay( reward )
+      end )
+      vn.sfxVictory()
+      vn.na( fmt.reward(reward) )
+      vn.done()
+
+      vn.label("cont01")
+      vn.func( function ()
+         mem.scavenger_no = false
+      end )
+   end
+   s(_([[]]))
+
+   local reward = 500e3
+   vn.func( function ()
+      player.pay( reward )
+   end )
+   vn.sfxVictory()
+   vn.na(fmt.reward(reward).."\n\n".._([[#gScavenger#0 has joined your fleet!]]))
+
+   vn.done( taiomi.scavenger.transition )
+   vn.run()
+
+   if not mem.scavenger_no then
+      player.shipAdd( "Drone (Hyena)", _("Scavenger"), _("Joined your fleet after helping their brethren at Taiomi."), true )
+   end
+
+   misn.finish(true)
 end
