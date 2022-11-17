@@ -167,7 +167,7 @@ function enter ()
    local sdrone = ship.get("Drone")
    local function add_drone( ship, name )
       ship = ship or sdrone
-      local pos = bpos + vec2.newP( rnd.rnd()*500, rnd.angle() )
+      local pos = bpos + vec2.newP( rnd.rnd()*1000, rnd.angle() )
       local d = pilot.add( ship, collective_fct, pos, name )
       d:setNoDeath(true)
       d:setFriendly(true)
