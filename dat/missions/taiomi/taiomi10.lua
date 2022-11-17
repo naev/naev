@@ -133,6 +133,7 @@ Scavenger deftly deploys an assortment of manipulator arms and tools. You've nev
    vn.done( taiomi.scavenger.transition )
    vn.run()
 
+   defense_timer = 0
    osd()
    misn.markerMove( mem.marker, basesys )
 end
@@ -152,6 +153,7 @@ function enter ()
    if defense_fct then
       defense_spawnlist = SPAWNLIST_EMPIRE
    end
+   defense_fct = faction.get( defense_fct )
    defense_fct = faction.dynAdd( defense_fct, "taiomi_baddies", defense_fct:name() )
    defense_fct:dynEnemy( collective_fct )
 
@@ -234,6 +236,7 @@ function heartbeat ()
       defense_spawn = defense_spawn+1
    end
 
+   osd()
    hook.timer( 1, "heartbeat" )
 end
 
