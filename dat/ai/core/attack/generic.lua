@@ -9,7 +9,12 @@ local atk_generic = {}
 -- Mainly manages targeting nearest enemy.
 --]]
 function atk_generic.think( target, _si )
-   -- Get new target if it's closer
+   -- A chance to just focus on the current enemy
+   if rnd.rnd() < 0.5 then
+      return
+   end
+
+   -- Get new target if it is better
    local enemy = atk.preferred_enemy()
    if enemy ~= target and enemy ~= nil then
       local dist  = ai.dist( target )

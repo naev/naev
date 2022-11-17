@@ -123,6 +123,11 @@ end
 -- big game hunter attack pattern using heuristic target identification.
 --]]
 function atk.heuristic_big_game_think( target, _si )
+   -- Chance to just focus on the current enemy
+   if rnd.rnd() < 0.7 then
+      return
+   end
+
    local enemy = atk.preferred_enemy( atk.prefer_capship )
 
    local dist = ai.dist(target)
@@ -489,7 +494,8 @@ function atk.preferred_enemy( pref_func )
             F = 1
             H = 1
          end
-         w = w + pref_func( p, h, v, F, H ) -- Compute pref function
+         -- Insert some randomness for less consistency
+         w = w + (1+0.2*rnd.rnd())*pref_func( p, h, v, F, H ) -- Compute pref function
          table.insert( targets, { p=h, priority=w, v=v, F=F, H=H } )
       end
    end

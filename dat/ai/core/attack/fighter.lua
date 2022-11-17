@@ -11,10 +11,15 @@ local atk_fighter = {}
 -- Mainly targets small fighters.
 --]]
 function atk_fighter.think( target, _si )
+   -- Lower chance to not change targets
+   if rnd.rnd() < 0.3 then
+      return
+   end
+
    local enemy    = atk.preferred_enemy()
    local dist     = ai.dist( target )
-
    local range = ai.getweaprange(3, 0)
+
    -- Get new target if it's closer
    --prioritize targets within the size limit
    if enemy ~= target and enemy ~= nil then
