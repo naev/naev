@@ -213,13 +213,13 @@ function __moveto_generic( target, dir )
    local dist  = ai.dist( target )
    local bdist = 50
 
-   -- Need to get closer
-   if dir < math.rad(10) and dist > bdist then
-      ai.accel()
-
    -- Need to start braking
-   elseif dist < bdist then
+   if dist < bdist then
       ai.poptask()
+
+   -- Need to get closer
+   elseif dir < math.rad(10) and dist > bdist then
+      ai.accel()
    end
 end
 
