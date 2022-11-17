@@ -307,7 +307,10 @@ function cutscene00 ()
    end
 
    for k,d in ipairs(drones) do
-      move_drone( d )
+      -- Not all make it
+      if rnd.rnd() < 0.8 then
+         move_drone( d )
+      end
    end
    move_drone( dscavenger )
 
