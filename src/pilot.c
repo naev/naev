@@ -788,6 +788,10 @@ double pilot_face( Pilot* p, const double dir )
 int pilot_brake( Pilot *p )
 {
    double dir, thrust, diff;
+   int isstopped = pilot_isStopped(p);
+
+   if (isstopped)
+      return 1;
 
    /* Face backwards by default. */
    dir    = VANGLE(p->solid->vel) + M_PI;
@@ -812,11 +816,11 @@ int pilot_brake( Pilot *p )
    }
 
    diff = pilot_face(p, dir);
-   if (ABS(diff) < MAX_DIR_ERR && !pilot_isStopped(p))
+   if (ABS(diff) < MAX_DIR_ERR && !isstopped)
       pilot_setThrust(p, thrust);
    else {
       pilot_setThrust(p, 0.);
-      if (pilot_isStopped(p))
+      if (isstopped)
          return 1;
    }
 
