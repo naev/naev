@@ -1805,7 +1805,7 @@ static int diff_checkUpdateUniverse (void)
        * but I guess it's too much effort to properly fix for a situation that
        * will likely never happen. */
       if (p->id != PLAYER_ID && pilot_isFlag( p, PILOT_HYPERSPACE ))
-         pilot_delete(d);
+         pilot_delete(p);
       else
          pilot_rmFlag( p, PILOT_HYPERSPACE ); /* Corner case player, just have it not crash and randomly stop the jump. */
 
