@@ -230,12 +230,15 @@ int nlua_dobufenv( nlua_env env,
                    size_t sz,
                    const char *name )
 {
-   if (luaL_loadbuffer(naevL, buff, sz, name) != 0)
-      return -1;
+   int ret;
+   ret = luaL_loadbuffer(naevL, buff, sz, name);
+   if (ret != 0)
+      return ret;
    nlua_pushenv(naevL, env);
    lua_setfenv(naevL, -2);
-   if (nlua_pcall(env, 0, LUA_MULTRET) != 0)
-      return -1;
+   ret = nlua_pcall(env, 0, LUA_MULTRET);
+   if (ret != 0)
+      return ret;
 #if DEBUGGING
    lua_pushstring( naevL, name );
    nlua_setenv( naevL, env, "__name" );
