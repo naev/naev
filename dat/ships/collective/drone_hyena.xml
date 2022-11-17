@@ -40,6 +40,7 @@
   <structure size="small" />
  </slots>
  <stats>
+  <cpu_max>2</cpu_max>
   <turn_mod>20</turn_mod>
   <thrust_mod>20</thrust_mod>
   <cargo_mod>-100</cargo_mod>
