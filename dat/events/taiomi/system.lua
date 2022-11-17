@@ -4,10 +4,11 @@
  <location>enter</location>
  <chance>100</chance>
  <cond>
- system.cur() == system.get("Taiomi") and
-   player.evtDone("Introducing Taiomi")</cond> and
-   not naev.misnActive("Taiomi 10") and
-   not naev.misnDone("Taiomi 10")
+   (system.cur() == system.get("Taiomi")) and
+   player.evtDone("Introducing Taiomi") and
+   (not player.misnActive("Taiomi 10")) and
+   (not player.misnDone("Taiomi 10"))
+ </cond>
  <notes>
   <campaign>Taiomi</campaign>
   <done_evt name="Introducing Taiomi" />
