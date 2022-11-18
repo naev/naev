@@ -223,7 +223,6 @@ function heartbeat ()
       camera.set( dscavenger )
 
       hook.timer( 3, "cutscene00" )
-
       return
    end
 
@@ -314,7 +313,7 @@ function cutscene00 ()
    end
    move_drone( dscavenger )
 
-   hook.timer( 5, "cutscene01" )
+   hook.timer( 5, "cutscene01_w" )
    hook.update( "update" )
 end
 
@@ -323,6 +322,17 @@ function update( dt, _real_dt )
    for k,v in ipairs( update_shaders ) do
       v._update( dt )
    end
+end
+
+local wait_elapsed = 0
+function cutscene01_w ()
+   local d = dscavenger():pos():dist( hypergate:pos() )
+   if d > 300 and wait_elapsed < 20 then
+      wait_elapsed = wait_elapsed+1
+      hook.timer( 1, "cutscene01_w" )
+      return
+   end
+   hook.timer( 1, "cutscene01" )
 end
 
 local sfx_playback
