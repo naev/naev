@@ -2608,6 +2608,7 @@ dat/events/zalek/sigma13.lua
 dat/factions/equip/dvaered.lua
 dat/factions/equip/empire.lua
 dat/factions/equip/generic.lua
+dat/factions/equip/marauder.lua
 dat/factions/equip/miner.lua
 dat/factions/equip/pirate.lua
 dat/factions/equip/proteron.lua
