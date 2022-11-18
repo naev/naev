@@ -13,6 +13,8 @@ Enables cinematic mode.
    @param params Parameters.
 --]]
 function cinema.on( params )
+   if cinema._on then return end
+
    local pp = player.pilot()
    local plts = pp:followers()
    table.insert( plts, pp )
@@ -30,12 +32,16 @@ function cinema.on( params )
    end
 
    player.cinematics( true, params )
+
+   cinema._on = true
 end
 
 --[[--
 Disables cinematic mode.
 --]]
 function cinema.off ()
+   if not cinema._on then return end
+
    for p,o in ipairs(old) do
       p:control( o.control )
       p:setInvincible( o.invincible )
