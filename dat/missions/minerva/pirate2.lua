@@ -186,7 +186,7 @@ end
 
 
 function drone_death ()
-   if not dvaered_weapons() then
+   if not mem.weap_ok then
       lmisn.fail(_("You were supposed to kill the drones with Dvaered-only weapons!"))
    end
    mem.drones_killed = mem.drones_killed+1
