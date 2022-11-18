@@ -276,15 +276,10 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
  */
 static int misn_setTitle( lua_State *L )
 {
-   const char *str;
-   Mission *cur_mission;
-
-   str = luaL_checkstring(L,1);
-
-   cur_mission = misn_getFromLua(L);
+   const char *str = luaL_checkstring(L,1);
+   Mission *cur_mission = misn_getFromLua(L);
    free(cur_mission->title);
    cur_mission->title = strdup(str);
-
    return 0;
 }
 /**
@@ -298,15 +293,10 @@ static int misn_setTitle( lua_State *L )
  */
 static int misn_setDesc( lua_State *L )
 {
-   const char *str;
-   Mission *cur_mission;
-
-   str = luaL_checkstring(L,1);
-
-   cur_mission = misn_getFromLua(L);
+   const char *str = luaL_checkstring(L,1);
+   Mission *cur_mission = misn_getFromLua(L);
    free(cur_mission->desc);
    cur_mission->desc = strdup(str);
-
    return 0;
 }
 /**
@@ -317,12 +307,8 @@ static int misn_setDesc( lua_State *L )
  */
 static int misn_setReward( lua_State *L )
 {
-   const char *str;
-   Mission *cur_mission;
-
-   str = luaL_checkstring(L,1);
-
-   cur_mission = misn_getFromLua(L);
+   const char *str = luaL_checkstring(L,1);
+   Mission *cur_mission = misn_getFromLua(L);
    free(cur_mission->reward);
    cur_mission->reward = strdup(str);
    return 0;
