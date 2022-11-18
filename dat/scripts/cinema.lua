@@ -53,4 +53,13 @@ function cinema.off ()
    cinema._on = false
 end
 
+--[[--
+Allows for toggling parameters.
+--]]
+function cinema.reset( params )
+   if not cinema._on then return end
+
+   player.cinematics( true, params )
+end
+
 return cinema
