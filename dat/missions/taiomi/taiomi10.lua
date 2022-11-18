@@ -63,7 +63,7 @@ mem.state = 0
 local defense_timer, defense_spawn, defense_fct, defense_spawnlist, collective_fct
 
 function create ()
-   if not misn.claim{ basesys } then
+   if not misn.claim{ basesys, endsys } then
       warn(_("Unable to claim system that should be claimable!"))
       misn.finish(false)
    end
@@ -182,13 +182,19 @@ function enter ()
    dscavenger = add_drone( "Drone (Hyena)", _("Scavenger") )
    dscavenger:setVisplayer(true)
 
+--[[
+   cinema.on()
+   camera.set(hypergate)
+   hook.timer( 1, "cutscene09" )
+--]]
+   hook.update( "update" )
+
    hook.timer( 1, "heartbeat" )
 
    hook.timer( 3, "scavenger_say", _("Brace for hostiles!") )
    hook.timer( 53, "scavenger_say", _("We must not falter!") )
    hook.timer( 97, "scavenger_say", _("Almost there!") )
    hook.timer( 170, "scavenger_say", _("Prepare for jump!") )
-   hook.update( "update" )
 end
 
 function scavenger_say( msg )
@@ -435,8 +441,8 @@ vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 }
 ]]
    shader_fadeout = { shader=pp_shaders.newShader( fadeout_pixelcode ) }
-   local s = shader_init( shader_fadeout, 1/3 )
-   table.insert( update_shaders, s )
+   shader_init( shader_fadeout, 1/3 )
+   table.insert( update_shaders, shader_fadeout )
 
    hook.timer( 3, "cutscene10_t" )
 end
@@ -451,8 +457,9 @@ end
 local shader_fadein
 function cutscene10 ()
    explosions_done = true
-   cinema.off()
    player.teleport( endsys )
+   pilot.clear()
+   pilot.toggleSpawn(false)
 
    misn.markerRm( mem.marker )
 
@@ -463,6 +470,7 @@ function cutscene10 ()
    pp:setPos( vec2.newP( system.cur():radius() * 0.6 * rnd.rnd(), rnd.angle() ) )
    pp:setDir( rnd.angle() )
    pp:setVel( vec2.new() )
+   camera.set( pp, true ) -- Hard set camera
 
    local pos = pp:pos() + vec2.newP( 250, rnd.angle() )
    dscavenger = pilot.add( "Drone (Hyena)", "Independent", pos, _("Scavenger") )
@@ -470,23 +478,6 @@ function cutscene10 ()
    dscavenger:setHealth( 1+rnd.rnd()*5, 0 )
    dscavenger:disable()
    dscavenger:setDir( rnd.angle() )
-
-   local fadein_pixelcode = [[
-#include "lib/blur.glsl"
-
-const float INTENSITY = 10.0;
-
-uniform float u_progress = 0.0;
-
-vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
-{
-   float disp = INTENSITY*(0.5-distance(0.5, u_progress));
-   vec4 c1 = vec4(vec3(0.0),1.0);
-   vec4 c2 = blur9( tex, texture_coords, love_ScreenSize.xy, disp );
-   return mix( c1, c2, u_progress );
-}
-]]
-   shader_fadein = { shader=pp_shaders.newShader( fadein_pixelcode ) }
 
    vn.clear()
    local log = vne.flashbackTextStart()
@@ -518,29 +509,51 @@ Protocols don't cover this. What should we do?]]))
    l2g(_([[…]]))
    log(_([[ …]]),true)
    log(_([[ …]]),true)
-   vne.flashbackTextEnd( true, "blur", 5 )
+   vne.flashbackTextEnd( true, "blur", 3 )
    vn.run()
 
+   local fadein_pixelcode = [[
+#include "lib/blur.glsl"
+
+const float INTENSITY = 10.0;
+
+uniform float u_progress = 0.0;
+
+vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
+{
+   float disp = INTENSITY*(0.5-distance(0.5, u_progress));
+   vec4 c1 = vec4(vec3(0.0),1.0);
+   vec4 c2 = blur9( tex, texture_coords, love_ScreenSize.xy, disp );
+   return mix( c1, c2, u_progress );
+}
+]]
+   shader_fadein = { shader=pp_shaders.newShader( fadein_pixelcode ) }
    shader_fadeout.shader:rmPPShader()
    update_shaders = {} -- clear shaders
-   local s = shader_init( shader_fadein, 1/5 )
-   table.insert( update_shaders, s )
+   shader_init( shader_fadein, 1/5 )
+   table.insert( update_shaders, shader_fadein )
 
    hook.timer( 5, "cutscene11" )
 end
 
 function cutscene11 ()
-   local pp = player.pilot()
-
-   dscavenger:setHilight(true)
-   dscavenger:setVisplayer(true)
-   dscavenger:setInvisible(true)
-   hook.pilot( dscavenger, "board", "cutscene_board" )
+   cinema.off()
 
    shader_fadein.shader:rmPPShader()
    update_shaders = {} -- clear shaders
 
-   vn.clear()
+   hook.timer( 5, "cutscene12" )
+end
+
+function cutscene12 ()
+   local pp = player.pilot()
+
+   dscavenger:setHilight(true)
+   dscavenger:setVisplayer(true)
+   dscavenger:setInvisible(false)
+   hook.pilot( dscavenger, "board", "cutscene_board" )
+
+   vn.reset() -- Need to reset here
    vn.scene()
    local sai = vn.newCharacter( tut.vn_shipai() )
    vn.transition( tut.shipai.transition )
@@ -563,6 +576,7 @@ function cutscene11 ()
       {_([["Isn't that Scavenger?"]]), "cont02"},
       {_([[Point at the drone.]]), "cont02"},
    }
+   vn.label("cont02")
    sai(_([["I do believe that is the one you know as Scavenger. I would say it would be best to leave sleeping dogs lay, but we should figure out what happened."]]))
    vn.run()
 
@@ -690,9 +704,9 @@ They seem to almost let out a sigh.]]))
    player.pilot():setNoJump(false)
 
    -- Scavenger follows player
+   dscavenger:setHealth( 100, 100 )
    dscavenger:setHilight(false)
    dscavenger:setVisplayer(false)
-   dscavenger:setInvisible(false)
    dscavenger:control(true)
    dscavenger:follow(player.pilot())
 
