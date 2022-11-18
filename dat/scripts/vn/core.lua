@@ -689,7 +689,7 @@ function vn.StateSay:_init()
    -- Set up initial buffer
    self._timer = vn.speed
    if self._noclear then
-      self._pos = string.len( vn._buffer )
+      self._pos = utf8.len( vn._buffer )
       self._textbuf = vn._buffer .. self._textbuf
       self._text = vn._buffer
       vn._buffer = self._text
@@ -722,7 +722,7 @@ function vn.StateSay:_update( dt )
          return
       end
       self._pos = utf8.next( self._textbuf, self._pos )
-      self._text = string.sub( self._textbuf, 1, self._pos )
+      self._text = utf8.sub( self._textbuf, 1, self._pos )
       self._timer = self._timer + vn.speed
       vn._buffer = self._text
 
