@@ -36,22 +36,6 @@ local HYPERGATE_SFX = audio.newSource( "snd/sounds/hypergate_turnon.ogg" )
 local FAILURE_SFX = audio.newSource( "snd/sounds/equipment_failure.ogg" )
 local ELECTRIC_SFX = audio.newSource( "snd/sounds/electric_zap.ogg" )
 local DEFENSE_LENGTH = 60*3 -- Length in seconds
-local SPAWNLIST_EMPIRE = {
-   { p={"Empire Pacifier", "Empire Shark", "Empire Shark"}, t=0 },
-   { p={"Empire Admonisher", "Empire Admonisher"}, t=15 },
-   { p={"Empire Lancelot", "Empire Lancelot", "Empire Lancelot"}, t=20 },
-   { p={"Empire Pacifier"}, t=30 },
-   { p={"Empire Shark", "Empire Shark", "Empire Shark" }, t=35 },
-   { p={"Empire Hawking"}, t=45 },
-   { p={"Empire Lancelot", "Empire Lancelot" }, t=55 },
-   { p={"Empire Pacifier"}, t=65 },
-   { p={"Empire Peacemaker"}, t=90 },
-   { p={"Empire Lancelot", "Empire Lancelot" }, t=100 },
-   { p={"Empire Pacifier", "Empire Shark", "Empire Shark"}, t=120 },
-   { p={"Empire Admonisher", "Empire Admonisher"}, t=140 },
-   { p={"Empire Peacemaker", "Empire Peacemaker", "Empire Rainmaker"}, t=150 },
-   { p={"Empire Hawking", "Empire Hawking", "Empire Hawking"}, t=160 },
-}
 
 --[[
    0: mission started
@@ -150,13 +134,57 @@ function enter ()
    defense_timer = 0
    defense_spawn = 0
    defense_fct = var.peek( "taiomi_convoy_fct" ) or "Empire"
-   defense_fct = "Empire"
-   if defense_fct then
-      defense_spawnlist = SPAWNLIST_EMPIRE
+   local d_interceptor, d_fighter, d_bomber, d_corvette, d_destroyer, d_bulkfreighter, d_cruiser, d_battleship, d_carrier
+   if defense_fct=="Soromid" then
+      d_interceptor     = "Soromid Brigand"
+      d_fighter         = "Soromid Reaver"
+      d_bomber          = "Soromid Marauder"
+      d_corvette        = "Soromid Odium"
+      d_destroyer       = "Soromid Nyx"
+      d_bulkfreighter   = "Soromid Copia"
+      d_cruiser         = "Soromid Ira"
+      d_battleship      = "Soromid Vox"
+      d_carrier         = "Soromid Arx"
+   elseif defense_fct=="Dvaered" then
+      d_fighter         = "Dvaered Vendetta"
+      d_bomber          = "Dvaered Ancestor"
+      d_corvette        = "Dvaered Phalanx"
+      d_destroyer       = "Dvaered Vigilance"
+      d_bulkfreighter   = "Dvaered Arsenal"
+      d_cruiser         = "Dvaered Retribution"
+      d_battleship      = "Dvaered Goddard"
+      d_interceptor     = d_fighter -- makes them quite stronger...
+      d_carrier         = d_battleship
+   else
+      d_interceptor     = "Empire Shark"
+      d_fighter         = "Empire Lancelot"
+      d_corvette        = "Empire Admonisher"
+      d_destroyer       = "Empire Pacifier"
+      d_cruiser         = "Empire Hawking"
+      d_bulkfreighter   = "Empire Rainmaker"
+      d_carrier         = "Empire Peacemaker"
+      d_bomber          = d_fighter
+      d_battleship      = d_carrier
    end
    defense_fct = faction.get( defense_fct )
    defense_fct = faction.dynAdd( defense_fct, "taiomi_baddies", defense_fct:name() )
    defense_fct:dynEnemy( collective_fct )
+   defense_spawnlist = {
+      { t=0,   p={d_destroyer, d_interceptor, d_interceptor} },
+      { t=15,  p={d_corvette, d_corvette} },
+      { t=20,  p={d_fighter, d_fighter, d_fighter} },
+      { t=30,  p={d_destroyer} },
+      { t=35,  p={d_interceptor, d_interceptor, d_interceptor} },
+      { t=45,  p={d_cruiser} },
+      { t=55,  p={d_bomber, d_bomber} },
+      { t=65,  p={d_destroyer} },
+      { t=90,  p={d_carrier} },
+      { t=100, p={d_fighter, d_bomber, d_bomber} },
+      { t=120, p={d_destroyer, d_interceptor, d_interceptor} },
+      { t=140, p={d_corvette, d_corvette} },
+      { t=150, p={d_battleship, d_carrier, d_bulkfreighter} },
+      { t=160, p={d_cruiser, d_cruiser, d_cruiser} },
+   }
 
    local bpos = base:pos()
    diff.apply("onewing_goddard_gone")
