@@ -36,6 +36,7 @@ local HYPERGATE_SFX = audio.newSource( "snd/sounds/hypergate_turnon.ogg" )
 local FAILURE_SFX = audio.newSource( "snd/sounds/equipment_failure.ogg" )
 local ELECTRIC_SFX = audio.newSource( "snd/sounds/electric_zap.ogg" )
 local DEFENSE_LENGTH = 60*3 -- Length in seconds
+--local DEFENSE_LENGTH = 1 -- Length in seconds
 local SPAWNLIST_EMPIRE = {
    { p={"Empire Pacifier", "Empire Shark", "Empire Shark"}, t=0 },
    { p={"Empire Admonisher", "Empire Admonisher"}, t=15 },
@@ -326,7 +327,7 @@ end
 
 local wait_elapsed = 0
 function cutscene01_w ()
-   local d = dscavenger():pos():dist( hypergate:pos() )
+   local d = dscavenger:pos():dist( hypergate:pos() )
    if d > 300 and wait_elapsed < 20 then
       wait_elapsed = wait_elapsed+1
       hook.timer( 1, "cutscene01_w" )
@@ -374,24 +375,32 @@ end
 function cutscene05 ()
    cinema.off()
 
-   hook.timer( 15, "cutscene06" )
+   --local a = 20
+   hook.timer( 20, "cutscene06" )
+   --hook.timer( 2, "cutscene06" )
 end
 
+local explosions_done = false
 function cutscene06 ()
    cinema.on()
    camera.set( dscavenger )
 
    -- Explosions computed to be rendered for the rest of the scene
-   for i=1,16 do
-      hook.timer( i+rnd.rnd(), "explosion" )
-   end
+   local t = rnd.rnd()
+   hook.timer( t, "explosion", t )
 
    hook.timer( 5, "cutscene07" )
 end
 
-function explosion ()
+local explosions_elapsed = 0
+function explosion( dt )
+   explosions_elapsed = explosions_elapsed + dt
    local pos = base:pos() + vec2.newP( 200*rnd.rnd(), rnd.angle() )
-   luaspfx.explosion( pos, nil, 20+20*rnd.rnd(), nil, {volume=0.5} )
+   luaspfx.explosion( pos, nil, 50+50*rnd.rnd(), nil, {volume=0.5} )
+   if not explosions_done then
+      local t = math.max( 0.1,  (rnd.rnd()*3) / explosions_elapsed )
+      hook.timer( t, "explosion", t )
+   end
 end
 
 function cutscene07 ()
@@ -419,18 +428,26 @@ vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
       return mix( texture( tex, texture_coords ), vec4(1.0), u_progress / THRESHOLD );
 
    float progress = (u_progress-THRESHOLD) / (1.0-THRESHOLD);
-   return mix( vec4(1.0), vec4(vec3(0.0),1.0) );
+   return mix( vec4(1.0), vec4(vec3(0.0),1.0), progress );
 }
 ]]
    shader_fadeout = { shader=pp_shaders.newShader( fadeout_pixelcode ) }
    local s = shader_init( shader_fadeout, 1/3 )
    table.insert( update_shaders, s )
 
-   hook.timer( 3, "cutscene10" )
+   hook.timer( 3, "cutscene10_t" )
+end
+
+function cutscene10_t ()
+   -- Remove enter hook or it'll screw stuff up
+   hook.rm( mem.land )
+   hook.rm( mem.enter )
+   hook.safe( "cutscene10" )
 end
 
 local shader_fadein
 function cutscene10 ()
+   explosions_done = true
    cinema.off()
    player.teleport( endsys )
 
@@ -677,8 +694,6 @@ They seem to almost let out a sigh.]]))
    dscavenger:follow(player.pilot())
 
    -- New hooks
-   hook.rm( mem.land )
-   hook.rm( mem.enter )
    hook.land( "land_end" )
    hook.jumpin( "jumpin_end" )
    hook.takeoff( "takeoff_end" )
