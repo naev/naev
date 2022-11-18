@@ -108,7 +108,7 @@ function extras.flashbackTextStart( name )
    end, {
       name = name or _("Flashback"),
       textcolour = {0.8, 0.8, 0.8},
-      font = lg.newFont( 20 )
+      font = lg.newFont( 18 )
    } )
 end
 extras.flashbackTextEnd = fullscreenEnd
