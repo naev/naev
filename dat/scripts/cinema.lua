@@ -50,6 +50,7 @@ function cinema.off ()
    player.cinematics( false )
 
    old = {}
+   cinema._on = false
 end
 
 return cinema
