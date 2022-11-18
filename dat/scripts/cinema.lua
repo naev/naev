@@ -19,7 +19,6 @@ function cinema.on( params )
    local plts = pp:followers()
    table.insert( plts, pp )
 
-   old = {}
    for k,p in ipairs(plts) do
       old[ p ] = {
          invincible = p:flags("invincible"),
@@ -42,7 +41,7 @@ Disables cinematic mode.
 function cinema.off ()
    if not cinema._on then return end
 
-   for p,o in ipairs(old) do
+   for p,o in pairs(old) do
       p:control( o.control )
       p:setInvincible( o.invincible )
    end
