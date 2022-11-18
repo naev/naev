@@ -35,6 +35,11 @@ function atk.choose ()
    else
       mem.atk = atk_generic
    end
+
+   -- Initialize if necessary
+   if mem.atk.init then
+      mem.atk.init()
+   end
 end
 
 --[[

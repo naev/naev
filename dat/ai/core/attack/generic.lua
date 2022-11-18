@@ -40,14 +40,16 @@ function atk_generic.attacked( attacker )
       ai.pushtask("attack", attacker)
       return
    end
-   local tdist  = ai.dist(target)
-   local dist   = ai.dist(attacker)
-   local range  = ai.getweaprange( 0 )
+   local dist  = ai.dist(attacker)
+   local range = ai.getweaprange( 0 )
 
-   -- TODO probably something smarter based on mem.atk_pref_func
-   if target ~= attacker and dist < tdist and
-         dist < range * mem.atk_changetarget then
-      ai.pushtask("attack", attacker)
+   -- Choose target based on preference
+   if target ~= attacker and dist < range * mem.atk_changetarget then
+      local wtarget = atk.preferred_enemy_test( target )
+      local wattacker = atk.preferred_enemy_test( attacker )
+      if wattacker < wtarget then -- minimizing
+         ai.pushtask("attack", attacker)
+      end
    end
 end
 
