@@ -36,7 +36,6 @@ local HYPERGATE_SFX = audio.newSource( "snd/sounds/hypergate_turnon.ogg" )
 local FAILURE_SFX = audio.newSource( "snd/sounds/equipment_failure.ogg" )
 local ELECTRIC_SFX = audio.newSource( "snd/sounds/electric_zap.ogg" )
 local DEFENSE_LENGTH = 60*3 -- Length in seconds
---local DEFENSE_LENGTH = 1 -- Length in seconds
 local SPAWNLIST_EMPIRE = {
    { p={"Empire Pacifier", "Empire Shark", "Empire Shark"}, t=0 },
    { p={"Empire Admonisher", "Empire Admonisher"}, t=15 },
@@ -189,10 +188,13 @@ function enter ()
    hook.timer( 53, "scavenger_say", _("We must not falter!") )
    hook.timer( 97, "scavenger_say", _("Almost there!") )
    hook.timer( 170, "scavenger_say", _("Prepare for jump!") )
+   hook.update( "update" )
 end
 
 function scavenger_say( msg )
-   dscavenger:broadcast( msg )
+   if dscavenger:exists() then
+      dscavenger:broadcast( msg )
+   end
 end
 
 function drone_attacked( d )
@@ -240,8 +242,25 @@ function heartbeat ()
    hook.timer( 1, "heartbeat" )
 end
 
+local function shader_init( shd, speed )
+   shd._dt = 0
+   shd._update = function( self, dt )
+      self._dt = self._dt + dt * speed
+      self.shader:send( "u_progress", math.min( 1, self._dt ) )
+   end
+   shd.shader:addPPShader("game", 99)
+end
+
+local update_shaders = {}
+function update( dt, _real_dt )
+   for k,v in ipairs( update_shaders ) do
+      v:_update( dt )
+   end
+end
+
 local shader_explode
 function hypergate_dead ()
+   if shader_explode then return end
    -- Activate hypergate with big flash
    local fade_pixelcode = [[
 #include "lib/blur.glsl"
@@ -255,7 +274,7 @@ vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 {
    /* Fade in. */
    if (u_progress < THRESHOLD)
-      return mix( texture( tex, texture_coords ), vec4(1.0), progress / THRESHOLD );
+      return mix( texture( tex, texture_coords ), vec4(1.0), u_progress / THRESHOLD );
 
    /* Fade out. */
    float progress = (u_progress-THRESHOLD) / (1.0-THRESHOLD);
@@ -269,24 +288,16 @@ vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 
    player.cinematics(true)
    camera.set( base:pos() )
-   hook.timer( 3, "explode" )
+
+   hypergate:setHealth(100,100)
+
+   shader_init( shader_explode, 1/5 )
+   update_shaders = { shader_explode }
+
+   hook.timer( 1, "everyone_dies" )
 end
 
-local function shader_init( shd, speed )
-   shd._dt = 0
-   shd._update = function( self, dt )
-      self._dt = self._dt + dt * speed
-      self.shader:send( "u_progress", math.min( 1, self._dt ) )
-   end
-   shd.shader:addPPShader("game", 99)
-end
-
-function explode ()
-   shader_init( shader_explode, 5 )
-   hook.timer( 1, "everyone_dead" )
-end
-
-function everyone_dead ()
+function everyone_dies ()
    for k,v in ipairs(pilot.get()) do
       v:kill() -- Everyone dies ٩(๑´3｀๑)۶
    end
@@ -315,14 +326,6 @@ function cutscene00 ()
    move_drone( dscavenger )
 
    hook.timer( 5, "cutscene01_w" )
-   hook.update( "update" )
-end
-
-local update_shaders = {}
-function update( dt, _real_dt )
-   for k,v in ipairs( update_shaders ) do
-      v._update( dt )
-   end
 end
 
 local wait_elapsed = 0
@@ -375,9 +378,7 @@ end
 function cutscene05 ()
    cinema.off()
 
-   --local a = 20
    hook.timer( 20, "cutscene06" )
-   --hook.timer( 2, "cutscene06" )
 end
 
 local explosions_done = false
@@ -410,6 +411,7 @@ function cutscene07 ()
 end
 
 function cutscene08 ()
+   cinema.reset{ speed = 0.8 }
    dscavenger:broadcast(_("Activating!"))
    luaspfx.sfx( true, nil, HYPERGATE_SFX, {volume=0.8} )
    hook.timer( 3.5, "cutscene09" ) -- sound peaks at 6.5 s
@@ -417,6 +419,7 @@ end
 
 local shader_fadeout
 function cutscene09 ()
+   cinema.reset{ speed = 0.6 }
    local fadeout_pixelcode = [[
 const float THRESHOLD = 0.8;
 
