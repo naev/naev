@@ -99,7 +99,7 @@ function land ()
 
    vn.clear()
    vn.scene()
-   -- TODO cool music
+   vn.music("snd/music/imminent_threat.ogg")
    local s = taiomi.vn_scavenger{ pos="left" }
    local p = taiomi.vn_philosopher{ pos="right" }
    vn.transition( taiomi.scavenger.transition )
@@ -123,7 +123,7 @@ Scavenger deftly deploys an assortment of manipulator arms and tools. You've nev
 "Yes, without your help I would have succumbed to the human fleets with almost certain probability, and a slow death would have awaited the rest."]]))
    p(_([["Such a display of altruism seems to defy all rationality. From most human viewpoints, we are but mere out-of-control machines in need of repairs, however, you were able to see us for what we are: sentient beings deserving respect."]]))
    p(_([["Such respect is hard to come by in a world where existence is dominated by absurdity: the gears of the universe turn without function or form, in a sort of mad race to entropic heat death."]]))
-   -- TODO music change
+   vn.music("snd/music/automat.ogg")
    vn.na(_([[Suddenly both Scavenger and Philosopher seem to jerk to attention. ]]))
    s(_([["It seems like our worst fears have come true. They have discovered the jump to Taiomi. Hostile vessels are incoming!"]]))
    s(fmt.f(_([["Damnit. We are so close! I will activate the hypergate, but it still will take {time} seconds to fully charge up. You must help us defend the {base} until then! This is our last chance!"]]),
@@ -218,9 +218,11 @@ function drone_attacked( d )
 end
 
 function drone_disabled( d )
-   d:setInvincible(false)
-   d:setInvisible(false)
-   d:setHealth( 100, 100 )
+   if d:exists() then
+      d:setInvincible(false)
+      d:setInvisible(false)
+      d:setHealth( 100, 100 )
+   end
 end
 
 function heartbeat ()
@@ -488,6 +490,7 @@ function cutscene10 ()
    dscavenger:setFriendly(true)
 
    vn.clear()
+   vn.music("snd/sounds/songs/inca-spa.ogg")
    local log = vne.flashbackTextStart()
    local function l1g( txt ) log("\n"..txt,true) end
    local function l2g( txt ) log("\n\n"..txt,true) end
@@ -519,6 +522,7 @@ Protocols don't cover this. What should we do?]]))
    log(_([[ …]]),true)
    vne.flashbackTextEnd( true, "blur", 3 )
    vn.run()
+   music.stop()
 
    local fadein_pixelcode = [[
 #include "lib/blur.glsl"
@@ -598,6 +602,7 @@ end
 function cutscene_board ()
    vn.clear()
    vn.scene()
+   vn.music("snd/sounds/songs/inca-spa.ogg")
    local d = vn.newCharacter( taiomi.vn_scavenger{pos="right"} )
    vn.transition( taiomi.scavenger.transition )
    local sai = tut.vn_shipai{ pos="left" }
