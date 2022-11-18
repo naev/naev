@@ -699,14 +699,15 @@ static int playerL_autonavReset( lua_State *L )
  */
 static int playerL_cinematics( lua_State *L )
 {
-   int b;
+   int b, f_gui, f_2x;
    const char *abort_msg;
-   int f_gui, f_2x;
+   double speed;
 
    /* Defaults. */
-   abort_msg = NULL;
-   f_gui     = 0;
-   f_2x      = 0;
+   abort_msg= NULL;
+   f_gui    = 0;
+   f_2x     = 0;
+   speed    = 1.;
 
    /* Parse parameters. */
    b = lua_toboolean( L, 1 );
@@ -728,13 +729,17 @@ static int playerL_cinematics( lua_State *L )
       lua_getfield( L, 2, "no2x" );
       f_2x = lua_toboolean(L, -1);
       lua_pop( L, 1 );
+
+      lua_getfield( L, 2, "speed" );
+      speed = luaL_optnumber(L,-1,1.);
+      lua_pop( L, 1 );
    }
 
    if (b) {
       /* Reset speeds. This will override the player's ship base speed. */
-      player.speed = 1.;
-      sound_setSpeed( 1. );
-      pause_setSpeed( 1. );
+      player.speed = speed;
+      sound_setSpeed( speed );
+      pause_setSpeed( speed );
 
       /* Get rid of stuff that could be bothersome. */
       player_autonavAbort( abort_msg );
