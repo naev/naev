@@ -368,6 +368,9 @@ function optimize.optimize( p, cores, outfit_list, params )
       oo.name     = out:nameRaw()
       oo.outfit   = out
       oo.slot, oo.size = out:slot()
+      oo.is_weap = (oo.slot=="Weapon")
+      oo.is_util = (oo.slot=="Utility")
+      oo.is_stru = (oo.slot=="Structure")
       local os = outfit_stats[oo.name]
       oo.stats    = os
       oo.dps, oo.disable, oo.eps, oo.range, oo.trackmin, oo.trackmax, oo.lockon, oo.iflockon, oo.seeker = out:weapstats( p )
@@ -439,6 +442,7 @@ function optimize.optimize( p, cores, outfit_list, params )
 
    -- Figure out slots
    local slots = {}
+   local slots_w, slots_u, slots_s = {}, {}, {}
    for k,v in ipairs(slots_base) do
       local has_outfits = {}
       local outfitpos = {}
@@ -465,6 +469,15 @@ function optimize.optimize( p, cores, outfit_list, params )
          -- potential outfits, but only one constraint
          ncols = ncols + #v.outfits
          nrows = nrows + 1
+
+         -- Sort by type to apply limits
+         if v.type=="Weapon" then
+            table.insert( slots_w, v )
+         elseif v.type=="Utility" then
+            table.insert( slots_u, v )
+         elseif v.type=="Structure" then
+            table.insert( slots_s, v )
+         end
       end
    end
 
@@ -530,6 +543,23 @@ function optimize.optimize( p, cores, outfit_list, params )
       lp:set_row( v.id, name, v.min, v.max )
       r = r+1
    end
+   -- Add maximum amount of slots to use
+   local r_weap, r_util, r_stru
+   if params.max_weap then
+      lp:set_row( r, "max_weap", nil, params.max_weap )
+      r_weap = r
+      r = r+1
+   end
+   if params.max_util then
+      lp:set_row( r, "max_util", nil, params.max_util )
+      r_util = r
+      r = r+1
+   end
+   if params.max_stru then
+      lp:set_row( r, "max_stru", nil, params.max_stru )
+      r_stru = r
+      r = r+1
+   end
    -- Add outfit checks
    local c = 1
    for i,s in ipairs(slots) do
@@ -577,6 +607,22 @@ function optimize.optimize( p, cores, outfit_list, params )
          local sp = s.samepos[j]
          if sp then
             table.insert( ia, sworthy + #limits + sp )
+            table.insert( ja, c )
+            table.insert( ar, 1 )
+         end
+         -- Maximum of slot type
+         if params.max_weap then
+            table.insert( ja, r_weap )
+            table.insert( ja, c )
+            table.insert( ar, 1 )
+         end
+         if params.max_util then
+            table.insert( ja, r_util )
+            table.insert( ja, c )
+            table.insert( ar, 1 )
+         end
+         if params.max_stru then
+            table.insert( ja, r_stru )
             table.insert( ja, c )
             table.insert( ar, 1 )
          end
