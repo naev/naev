@@ -497,6 +497,16 @@ function optimize.optimize( p, cores, outfit_list, params )
    if #same_list > 0 then
       nrows = nrows + #same_list
    end
+   -- Add max limits
+   if params.max_weap then
+      nrows = nrows+1
+   end
+   if params.max_util then
+      nrows = nrows+1
+   end
+   if params.max_stru then
+      nrows = nrows+1
+   end
    local ntype_range = 0
    for k,v in pairs(params.type_range) do ntype_range = ntype_range+1 end
    nrows = nrows + ntype_range
@@ -546,18 +556,18 @@ function optimize.optimize( p, cores, outfit_list, params )
    -- Add maximum amount of slots to use
    local r_weap, r_util, r_stru
    if params.max_weap then
-      lp:set_row( r, "max_weap", nil, params.max_weap )
       r_weap = r
+      lp:set_row( r_weap, "max_weap", nil, params.max_weap )
       r = r+1
    end
    if params.max_util then
-      lp:set_row( r, "max_util", nil, params.max_util )
       r_util = r
+      lp:set_row( r_util, "max_util", nil, params.max_util )
       r = r+1
    end
    if params.max_stru then
-      lp:set_row( r, "max_stru", nil, params.max_stru )
       r_stru = r
+      lp:set_row( r_stru, "max_stru", nil, params.max_stru )
       r = r+1
    end
    -- Add outfit checks
@@ -612,17 +622,17 @@ function optimize.optimize( p, cores, outfit_list, params )
          end
          -- Maximum of slot type
          if params.max_weap then
-            table.insert( ja, r_weap )
+            table.insert( ia, r_weap )
             table.insert( ja, c )
             table.insert( ar, 1 )
          end
          if params.max_util then
-            table.insert( ja, r_util )
+            table.insert( ia, r_util )
             table.insert( ja, c )
             table.insert( ar, 1 )
          end
          if params.max_stru then
-            table.insert( ja, r_stru )
+            table.insert( ia, r_stru )
             table.insert( ja, c )
             table.insert( ar, 1 )
          end
