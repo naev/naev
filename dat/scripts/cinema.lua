@@ -17,6 +17,7 @@ function cinema.on( params )
    local plts = pp:followers()
    table.insert( plts, pp )
 
+   old = {}
    for k,p in ipairs(plts) do
       old[ p ] = {
          invincible = p:flags("invincible"),
