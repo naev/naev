@@ -462,6 +462,7 @@ end
 
 local shader_fadein
 function cutscene10 ()
+   cinema.reset{ speed = 1 }
    explosions_done = true
    player.teleport( endsys )
    pilot.clear()
@@ -484,6 +485,7 @@ function cutscene10 ()
    dscavenger:setHealth( 1+rnd.rnd()*5, 0 )
    dscavenger:disable()
    dscavenger:setDir( rnd.angle() )
+   dscavenger:setFriendly(true)
 
    vn.clear()
    local log = vne.flashbackTextStart()
@@ -718,6 +720,7 @@ They seem to almost let out a sigh.]]))
 
    -- New hooks
    hook.land( "land_end" )
+   hook.jumpout( "jumpout_end" )
    hook.jumpin( "jumpin_end" )
    hook.takeoff( "takeoff_end" )
    mem.sys = system.cur()
@@ -731,13 +734,16 @@ local function spawn_scavenger( pos )
    dscavenger:setInvincible(true)
    dscavenger:control()
    dscavenger:follow( player.pilot() )
+   dscavenger:setFriendly(true)
    return dscavenger
 end
 
-function jumpin_end ()
-   local last = mem.sys
+function jumpout_end ()
    mem.sys = system.cur()
-   local j = jump.get( last, mem.sys )
+end
+
+function jumpin_end ()
+   local j = jump.get( system.cur(), mem.sys )
    spawn_scavenger( j )
 end
 
