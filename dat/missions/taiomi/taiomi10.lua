@@ -150,6 +150,7 @@ function enter ()
    defense_timer = 0
    defense_spawn = 0
    defense_fct = var.peek( "taiomi_convoy_fct" ) or "Empire"
+   defense_fct = "Empire"
    if defense_fct then
       defense_spawnlist = SPAWNLIST_EMPIRE
    end
@@ -172,6 +173,9 @@ function enter ()
       d:setNoDeath(true)
       d:setFriendly(true)
       pilotai.guard( d, pos )
+      local m = d:memory()
+      m.guarddodist = 2000
+      m.guardreturndist = 4000
       hook.pilot( d, "attacked", "drone_attacked" )
       return d
    end
@@ -372,7 +376,9 @@ function cutscene04 ()
       dscavenger:moveto( vec2.newP( 100*rnd.rnd(), rnd.angle() ) )
    end
 
-   player.pilot():setNoDeath(true) -- No death from now on
+   local pp = player.pilot()
+   pp:setNoDeath(true) -- No death from now on
+   pp:setNoDisable(true) -- makes it more fun, and stops time speed up
 
    hook.timer( 3, "cutscene05" )
 
