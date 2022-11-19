@@ -14,6 +14,7 @@
 -- Sudarshan S <ssoxygen@users.sf.net>
 local fleet = require "fleet"
 local fmt = require "format"
+local cinema = require "cinema"
 
 local restoreControl -- Forward-declared function
 local attackers, curr, follower, followers, hailHook, praiser, preacher, rep, target -- Event state, never saved.
@@ -178,11 +179,11 @@ function theFunBegins()
    hook.jumpout("cleanup")
 
    camera.set(preacher)
-   player.cinematics(true,{gui=true, abort=presence[rnd.rnd(1,#presence)]})
+   cinema.on{ gui=true, abort=presence[rnd.rnd(1,#presence)] }
 
    --you're hooked till you hear him out!
-   pp:control()
    player.msg(urge[rnd.rnd(1,#urge)])
+   pp:face( preacher )
 
    --create a random band of converted pirate followers
    local followerShips = {"Pirate Kestrel", "Pirate Admonisher", "Pirate Shark", "Pirate Vendetta", "Pirate Rhino"} --the types of followers allowed
@@ -373,18 +374,12 @@ function restoreControl()
 end
 
 local function release_player ()
-   local pp = player.pilot()
-   pp:setInvincible(false)
-   pp:control(false)
-   for k,v in ipairs(pp:followers()) do
-      v:setInvincible(false)
-   end
+   cinema.off()
+   camera.set()
 end
 
 --releases the player after the cutscene
 function release()
-   camera.set()
-   player.cinematics(false)
    release_player ()
    --if the attacks have already started, we shouldn't set a target yet
    if #attackers==0 then
@@ -403,9 +398,7 @@ end
 
 --everything is done
 function cleanup()
-   release_player()
-   camera.set( nil, true )
-   player.cinematics(false)
+   release_player ()
    evt.finish(true)
 end
 
