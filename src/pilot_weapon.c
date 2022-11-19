@@ -43,8 +43,8 @@
  */
 static void pilot_weapSetUpdateOutfits( Pilot* p, PilotWeaponSet *ws );
 static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level );
-static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfit *o, int level, double time );
-static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time );
+static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfit *o, int level, double time, int aim );
+static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time, int aim );
 static void pilot_weapSetUpdateRange( const Pilot *p, PilotWeaponSet *ws );
 unsigned int pilot_weaponSetShootStop( Pilot* p, PilotWeaponSet *ws, int level );
 
@@ -130,7 +130,7 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
          continue;
 
       /* Shoot the weapon of the weaponset. */
-      ret += pilot_shootWeaponSetOutfit( p, ws, o, level, time );
+      ret += pilot_shootWeaponSetOutfit( p, ws, o, level, time, !ws->manual );
    }
 
    /* Destealth when attacking. */
@@ -930,7 +930,7 @@ double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const vec2 *pos,
 /**
  * @brief Calculates and shoots the appropriate weapons in a weapon set matching an outfit.
  */
-static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfit *o, int level, double time )
+static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfit *o, int level, double time, int aim )
 {
    int ret;
    int is_launcher, is_bay;
@@ -945,7 +945,7 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfi
    if (outfit_isBeam(o)) {
       for (int i=0; i<array_size(ws->slots); i++) {
          if (ws->slots[i].slot->outfit == o && (level == -1 || level == ws->slots[i].level)) {
-            ret += pilot_shootWeapon( p, ws->slots[i].slot, 0 );
+            ret += pilot_shootWeapon( p, ws->slots[i].slot, 0, aim );
             ws->slots[i].slot->inrange = ws->inrange; /* State if the weapon has to be turn off when out of range. */
          }
       }
@@ -1009,7 +1009,7 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfi
       return 0;
 
    /* Shoot the weapon. */
-   ret += pilot_shootWeapon( p, ws->slots[minh].slot, time );
+   ret += pilot_shootWeapon( p, ws->slots[minh].slot, time, aim );
 
    return ret;
 }
@@ -1020,9 +1020,10 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfi
  *    @param p Pilot that is shooting.
  *    @param w Pilot's outfit to shoot.
  *    @param time Expected flight time.
+ *    @param aim Whether or not to aim.
  *    @return 0 if nothing was shot and 1 if something was shot.
  */
-static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time )
+static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time, int aim )
 {
    vec2 vp, vv;
    double rate_mod, energy_mod;
@@ -1074,7 +1075,7 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time )
       if (!outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY )) {
          for (int i=0; i<w->outfit->u.blt.shots; i++)
             weapon_add( w, w->heat_T, p->solid->dir,
-                  &vp, &vv, p, p->target, time );
+                  &vp, &vv, p, p->target, time, aim );
       }
    }
 
@@ -1099,7 +1100,7 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time )
       w->state = PILOT_OUTFIT_ON;
       if (!outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY )) {
          w->u.beamid = beam_start( w, p->solid->dir,
-               &vp, &p->solid->vel, p, p->target );
+               &vp, &p->solid->vel, p, p->target, aim );
       }
 
       w->timer = w->outfit->u.bem.duration;
@@ -1137,7 +1138,7 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time )
       if (!outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY )) {
          for (int i=0; i<w->outfit->u.lau.shots; i++)
             weapon_add( w, w->heat_T, p->solid->dir,
-                  &vp, &vv, p, p->target, time );
+                  &vp, &vv, p, p->target, time, aim );
       }
 
       pilot_rmAmmo( p, w, 1 );
@@ -1500,7 +1501,7 @@ int pilot_outfitOffAll( Pilot *p )
 /**
  * @brief Activate the afterburner.
  */
-void pilot_afterburn (Pilot *p)
+void pilot_afterburn( Pilot *p )
 {
    double afb_mod;
 
@@ -1547,7 +1548,7 @@ void pilot_afterburn (Pilot *p)
 /**
  * @brief Deactivates the afterburner.
  */
-void pilot_afterburnOver (Pilot *p)
+void pilot_afterburnOver( Pilot *p )
 {
    if (p == NULL)
       return;

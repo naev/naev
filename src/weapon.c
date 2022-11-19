@@ -112,12 +112,12 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
       const Pilot *pilot_target, const vec2 *pos, const vec2 *vel, double dir,
       double swivel, double time );
 static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
-      const double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time );
+      const double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time, int aim );
 static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
-      const double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time );
+      const double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time, int aim );
 static Weapon* weapon_create( PilotOutfitSlot* po, double T,
       const double dir, const vec2* pos, const vec2* vel,
-      const Pilot *parent, const unsigned int target, double time );
+      const Pilot *parent, const unsigned int target, double time, int aim );
 static double weapon_computeTimes( double rdir, double rx, double ry, double dvx, double dvy, double pxv,
       double vmin, double acc, double *tt );
 /* Updating. */
@@ -1637,9 +1637,11 @@ static double weapon_computeTimes( double rdir, double rx, double ry, double dvx
  *    @param vel Velocity of the slot (absolute).
  *    @param parent Shooter.
  *    @param time Expected flight time.
+ *    @param aim Whether or not to aim.
+ *    @param whether or not to aim
  */
 static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
-      const double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time )
+      const double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time, int aim )
 {
    vec2 v;
    double mass, rdir, acc, m;
@@ -1652,7 +1654,10 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
    else /* fire straight or at asteroid */
       pilot_target = NULL;
 
-   rdir = weapon_aimTurret( outfit, parent, pilot_target, pos, vel, dir, outfit->u.blt.swivel, time );
+   if (aim)
+      rdir = weapon_aimTurret( outfit, parent, pilot_target, pos, vel, dir, outfit->u.blt.swivel, time );
+   else
+      rdir = dir;
 
    /* Disperse as necessary. */
    if (outfit->u.blt.dispersion > 0.)
@@ -1713,9 +1718,10 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
  *    @param vel Velocity of the slot (absolute).
  *    @param parent Shooter.
  *    @param time Expected flight time.
+ *    @param aim Whether or not to aim.
  */
 static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
-      const double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time )
+      const double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time, int aim )
 {
    (void) T;
    vec2 v;
@@ -1729,10 +1735,14 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    else /* fire straight or at asteroid */
       pilot_target = NULL;
 
-   if (outfit->type == OUTFIT_TYPE_TURRET_LAUNCHER)
-      rdir = weapon_aimTurret( outfit, parent, pilot_target, pos, vel, dir, M_PI, time );
-   else if (outfit->u.lau.swivel > 0.)
-      rdir = weapon_aimTurret( outfit, parent, pilot_target, pos, vel, dir, outfit->u.lau.swivel, time );
+   if (aim) {
+      if (outfit->type == OUTFIT_TYPE_TURRET_LAUNCHER)
+         rdir = weapon_aimTurret( outfit, parent, pilot_target, pos, vel, dir, M_PI, time );
+      else if (outfit->u.lau.swivel > 0.)
+         rdir = weapon_aimTurret( outfit, parent, pilot_target, pos, vel, dir, outfit->u.lau.swivel, time );
+      else
+         rdir = dir;
+   }
    else
       rdir = dir;
 
@@ -1814,11 +1824,12 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
  *    @param parent Shooter.
  *    @param target Target ID of the shooter.
  *    @param time Expected flight time.
+ *    @param aim Whether or not to aim.
  *    @return A pointer to the newly created weapon.
  */
 static Weapon* weapon_create( PilotOutfitSlot *po, double T,
       const double dir, const vec2* pos, const vec2* vel,
-      const Pilot* parent, const unsigned int target, double time )
+      const Pilot* parent, const unsigned int target, double time, int aim )
 {
    double mass, rdir;
    Pilot *pilot_target;
@@ -1855,14 +1866,14 @@ static Weapon* weapon_create( PilotOutfitSlot *po, double T,
       /* Bolts treated together */
       case OUTFIT_TYPE_BOLT:
       case OUTFIT_TYPE_TURRET_BOLT:
-         weapon_createBolt( w, outfit, T, dir, pos, vel, parent, time );
+         weapon_createBolt( w, outfit, T, dir, pos, vel, parent, time, aim );
          break;
 
       /* Beam weapons are treated together. */
       case OUTFIT_TYPE_BEAM:
       case OUTFIT_TYPE_TURRET_BEAM:
          rdir = dir;
-         if (outfit->type == OUTFIT_TYPE_TURRET_BEAM) {
+         if (aim && (outfit->type == OUTFIT_TYPE_TURRET_BEAM)) {
             pilot_target = pilot_get(target);
             if ((w->parent != w->target) && (pilot_target != NULL))
                rdir = vec2_angle(pos, &pilot_target->solid->pos);
@@ -1903,7 +1914,7 @@ static Weapon* weapon_create( PilotOutfitSlot *po, double T,
       /* Treat seekers together. */
       case OUTFIT_TYPE_LAUNCHER:
       case OUTFIT_TYPE_TURRET_LAUNCHER:
-         weapon_createAmmo( w, outfit, T, dir, pos, vel, parent, time );
+         weapon_createAmmo( w, outfit, T, dir, pos, vel, parent, time, aim );
          break;
 
       /* just dump it where the player is */
@@ -1931,10 +1942,11 @@ static Weapon* weapon_create( PilotOutfitSlot *po, double T,
  *    @param parent Pilot ID of the shooter.
  *    @param target Target ID that is getting shot.
  *    @param time Expected flight time.
+ *    @param aim Whether or not to aim.
  */
 void weapon_add( PilotOutfitSlot *po, const double T, const double dir,
       const vec2* pos, const vec2* vel,
-      const Pilot *parent, unsigned int target, double time )
+      const Pilot *parent, unsigned int target, double time, int aim )
 {
    WeaponLayer layer;
    Weapon *w, **m;
@@ -1947,7 +1959,7 @@ void weapon_add( PilotOutfitSlot *po, const double T, const double dir,
    }
 
    layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
-   w     = weapon_create( po, T, dir, pos, vel, parent, target, time );
+   w     = weapon_create( po, T, dir, pos, vel, parent, target, time, aim );
 
    /* set the proper layer */
    switch (layer) {
@@ -1986,13 +1998,14 @@ void weapon_add( PilotOutfitSlot *po, const double T, const double dir,
  *    @param vel Velocity of the slot (absolute).
  *    @param parent Pilot shooter.
  *    @param target Target ID that is getting shot.
+ *    @param aim Whether or not to aim.
  *    @return The identifier of the beam weapon.
  *
  * @sa beam_end
  */
 unsigned int beam_start( PilotOutfitSlot *po,
       const double dir, const vec2* pos, const vec2* vel,
-      const Pilot *parent, const unsigned int target )
+      const Pilot *parent, const unsigned int target, int aim )
 {
    WeaponLayer layer;
    Weapon *w, **m;
@@ -2005,7 +2018,7 @@ unsigned int beam_start( PilotOutfitSlot *po,
    }
 
    layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
-   w = weapon_create( po, 0., dir, pos, vel, parent, target, 0. );
+   w = weapon_create( po, 0., dir, pos, vel, parent, target, 0., aim );
    w->ID = ++beam_idgen;
    w->mount = po;
    w->timer2 = 0.;
