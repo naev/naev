@@ -6,8 +6,7 @@
  <cond>
    (system.cur() == system.get("Taiomi")) and
    player.evtDone("Introducing Taiomi") and
-   (not player.misnActive("Taiomi 10")) and
-   (not player.misnDone("Taiomi 10"))
+   (not player.misnActive("Taiomi 10"))
  </cond>
  <notes>
   <campaign>Taiomi</campaign>
@@ -35,6 +34,13 @@ function create ()
    local pp = player.pilot()
    local dfact = faction.get("Independent")
    progress = taiomi.progress()
+
+   if progress >= 10 then
+      if taiomi.scavenger_escort() then
+         hook.timer( 5, "scavenger_say" )
+      end
+      return
+   end
 
    local function addDrone( ship, pos, name )
       local d = pilot.add( ship, dfact, pos, name )
@@ -100,6 +106,17 @@ function create ()
       aimem.loiter = math.huge -- Should make them loiter forever
       table.insert( d_loiter, d )
    end
+end
+
+function scavenger_say ()
+   local s = taiomi.scavenger_escort()
+   local msg_list = {
+      _("So many memories about this place."),
+      _("It's been ages since we've been back."),
+      _("What nostalgia Taiomi brings."),
+      _("I hope they are all doing well."),
+   }
+   s:comm( msg_list[rnd.rnd(1,#msg_list)] )
 end
 
 function hail_philosopher ()
