@@ -16,8 +16,16 @@ local music_played = 0 -- elapsed play time for the current situation
 local music_vol = naev.conf().music -- music global volume
 
 local function tracks_stop ()
+   local remove = {}
    for k,v in ipairs( tracks ) do
       v.fade = -1
+      if v.elapsed <= 0 then
+         v.m:stop()
+         table.insert( remove, k )
+      end
+   end
+   for k=#remove, 1, -1 do
+      table.remove( tracks, k )
    end
 end
 
@@ -46,6 +54,7 @@ local function tracks_add( name, situation, params )
       vol   = 1,
       delay = params.delay,
       name  = name_orig,
+      elapsed = 0,
    }
    if not params.delay then
       m:play()
@@ -520,6 +529,7 @@ function update( dt )
    dt = math.min( dt, 0.1 ) -- Take smaller steps when lagging
    local remove = {}
    for k,v in ipairs(tracks) do
+      v.elapsed = v.elapsed + dt
       if v.delay then
          v.delay = v.delay - dt
          if v.delay < 0 then
@@ -537,6 +547,7 @@ function update( dt )
             if v.paused then
                v.m:pause()
             else
+               v.m:stop()
                table.insert( remove, k )
             end
          end
