@@ -19,6 +19,7 @@ local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
 local fmt = require "format"
 local lmisn = require "lmisn"
+local cinema = require "cinema"
 
 local dv_ships, emp_ships, flf_ships, flf_base -- State of battle phase (jumping out to save not allowed).
 
@@ -222,8 +223,7 @@ function pilot_death_sindbad( pilot, attacker, _arg )
    music.play( "machina.ogg" )
    var.push( "music_wait", true )
 
-   player.pilot():setInvincible()
-   player.cinematics()
+   cinema.on()
    camera.set( flf_base, true )
 
    tk.msg( _("Escape and Live On"), _([[As the last shot penetrates the hull of Sindbad, a sense of dread comes over you. The FLF, Benito, your comrades... no...
@@ -241,8 +241,8 @@ end
 
 
 function timer_plcontrol ()
+   cinema.off()
    camera.set( player.pilot(), true )
-   player.cinematics( false )
    hook.timer( 2.0, "timer_end" )
 end
 
