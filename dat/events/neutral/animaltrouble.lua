@@ -19,7 +19,6 @@
 
 local neu = require "common.neutral"
 
-
 function create ()
     -- Allow some time before the problems start
     hook.timer(45.0, "startProblems")
@@ -27,8 +26,7 @@ end
 
 function startProblems()
     -- Cancel autonav.
-    player.cinematics(true)
-    player.cinematics(false)
+    player.autonavAbort()
     tk.msg(_("Panic!"), _([[Suddenly, your instruments go haywire, and your ship careens out of control. The controls aren't responding! Something is wrong with your systems!]]))
     local ps = player.pilot()
     ps:control()
