@@ -258,7 +258,6 @@ function heartbeat ()
 
    if defense_timer >= DEFENSE_LENGTH then
       cinema.on()
-      camera.set( hypergate )
 
       hypergate:setNoDeath(true)
       dscavenger:setHealth( 100, 100 )
@@ -454,6 +453,7 @@ end
 
 function cutscene08 ()
    cinema.reset{ speed = 0.8 }
+   camera.setZoom( 2.0 )
    dscavenger:broadcast(_("Activating!"))
    luaspfx.sfx( true, nil, HYPERGATE_SFX, {volume=0.8} )
    hook.timer( 3.5, "cutscene09" ) -- sound peaks at 6.5 s
