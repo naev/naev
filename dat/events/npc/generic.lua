@@ -63,11 +63,13 @@ local msg_cond = {
    {npc.test_misnHint("Hitman"), _([["There are often shady characters hanging out in the Alteris system. I'd stay away from there if I were you, someone might offer you a dirty kind of job!"]])},
    -- Event hints
    {npc.test_evtHint("FLF/DV Derelicts"), _([["The FLF and the Dvaered sometimes clash in Surano. If you go there, you might find something of interest… Or not."]])},
+   {npc.test_evtHint("Introducing Taiomi", function () return (player.chapter()~="0") end ), _([["I've heard that there are ghosts to the north of Dune. They seem to be around asteroid fields. As if such a thing could exist! Probably just a brave miner in a Llama!"]])},
    -- Mission Completion
    {npc.test_misnDone("Nebula Satellite"), _([["Heard some reckless scientists got someone to put a satellite inside the nebula for them. I thought everyone with half a brain knew to stay out of there, but oh well."]])},
    {npc.test_misnDone("Shadow Vigil"), _([["Did you hear? There was some big incident during a diplomatic meeting between the Empire and the Dvaered. Nobody knows what exactly happened, but both diplomats died. Now both sides are accusing the other of foul play. Could get ugly."]])},
    {npc.test_misnDone("Baron"), _([["Some thieves broke into a museum on Varia and stole a holopainting! Most of the thieves were caught, but the one who carried the holopainting offworld is still at large. No leads. Damn criminals…"]])},
    {npc.test_misnDone("Destroy the FLF base!"), _([["The Dvaered scored a major victory against the FLF recently. They went into Sigur and blew the hidden base there to bits! I bet that was a serious setback for the FLF."]])},
+   {npc.test_misnDone("Taiomi 10"), _([["There have been an awful lot of patrols going missing near Bastion. Could this be work of the ghosts people talk about?"]])},
    -- Event Completion
    {npc.test_evtDone("Animal trouble"), _([["What? You had rodents sabotage your ship? Man, you're lucky to be alive. If it had hit the wrong power line…"]])},
    {npc.test_evtDone("Naev Needs You!"), _([["What do you mean, the world ended and then the creator of the universe came and fixed it? What kind of illegal substance are you on?"]])},
