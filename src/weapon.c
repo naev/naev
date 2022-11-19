@@ -1638,7 +1638,6 @@ static double weapon_computeTimes( double rdir, double rx, double ry, double dvx
  *    @param parent Shooter.
  *    @param time Expected flight time.
  *    @param aim Whether or not to aim.
- *    @param whether or not to aim
  */
 static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
       const double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time, int aim )
