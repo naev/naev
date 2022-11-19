@@ -17,6 +17,7 @@
 local fleet = require "fleet"
 local fmt = require "format"
 local shadow = require "common.shadow"
+local cinema = require "cinema"
 require "proximity"
 
 local genbu, joe, leader, leaderdest, leaderstart, seiryuu, squads -- Non-persistent state
@@ -453,14 +454,16 @@ end
 -- Capsule function for player.pilot():control(), for timer use
 -- Also saves the player's velocity.
 local pvel
-function playerControl(status)
-   player.pilot():control(status)
-   player.cinematics(status)
+function playerControl( status )
+   local pp = player.pilot()
    if status then
-      pvel = player.pilot():vel()
-      player.pilot():setVel(vec2.new(0, 0))
+      cinema.on()
+      pp:control(false)
+      pvel = pp:vel()
+      pp:setVel(vec2.new(0, 0))
    else
-      player.pilot():setVel(pvel)
+      cinema.off()
+      pp:setVel(pvel)
    end
 end
 
