@@ -2014,13 +2014,12 @@ void pilot_renderOverlay( Pilot* p )
 
    /* Text ontop if needed. */
    if (p->comm_msg != NULL) {
-      double x, y;
+      double x, y, dx, dy;
 
       /* Coordinate translation. */
       gl_gameToScreenCoords( &x, &y, p->solid->pos.x, p->solid->pos.y );
 
       /* Display the text. */
-      double dx, dy;
       glColour c = {1., 1., 1., 1.};
 
       /* Colour. */
@@ -2036,6 +2035,43 @@ void pilot_renderOverlay( Pilot* p )
 
       /* Display text. */
       gl_printRaw( NULL, dx, dy, &c, -1., p->comm_msg );
+   }
+
+   /* Show health / friendlyness */
+   if (conf.healthbars && !pilot_isPlayer(p)) {
+      double x, y, dx, dy, w, h;
+      const glColour *col;
+      double health, health_max;
+
+      /* Coordinate translation. */
+      gl_gameToScreenCoords( &x, &y, p->solid->pos.x, p->solid->pos.y );
+
+      w = p->ship->gfx_space->sw + 4.;
+      h = p->ship->gfx_space->sh + 4.;
+
+      /* Can do an inbounds check now. */
+      if ((x < -w) || (x > SCREEN_W+w) ||
+            (y < -h) || (y > SCREEN_H+h))
+         return;
+
+      col = pilot_getColour( p );
+      health = p->armour + p->shield;
+      health_max = p->armour_max + p->shield_max;
+
+      w = PILOT_SIZE_APPROX * p->ship->gfx_space->sw;
+      h = PILOT_SIZE_APPROX * p->ship->gfx_space->sh / 3.;
+
+      dx = x + w/2. + 2.;
+      dy = y - h/2.;
+
+      gl_renderRect( dx-1., dy-1., 4.+2., h+2., col );
+
+      if (p->shield > 0.)
+         col = &cShield;
+      else
+         col = &cArmour;
+      gl_renderRect( dx, dy, 4., h, &cBlack );
+      gl_renderRect( dx, dy, 4., h * health / health_max, col );
    }
 }
 
