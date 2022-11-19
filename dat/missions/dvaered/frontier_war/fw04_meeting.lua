@@ -32,6 +32,7 @@ local fw = require "common.frontier_war"
 require "proximity"
 local portrait = require "portrait"
 local fmt = require "format"
+local cinema = require "cinema"
 
 local alpha, attackers, canland, controls, hamelsen, jules, spy, targpos, toldya, wrlrds -- Non-persistent state
 local StraferNspy, equipHyena, scheduleIncoming, spawn1Wrlrd, spawnAlpha, spawnBeta, strNpc -- Forward-declared functions
@@ -580,9 +581,7 @@ end
 
 -- Many enemies jump and kill Strafer
 function deathOfStrafer()
-   player.pilot():control()
-   player.pilot():brake()
-   player.cinematics( true, { gui = true } )
+   cinema.on{ gui=true }
    camera.set( alpha[2], false, 20000 )
 
    tk.msg( _("Something is happening at the station"), _([[You start to head to the station, but you hear a flurry of messages coming from the NightClaws squadron. A Schroedinger has managed to take off, unnoticed, from the High Command station, presumably carrying classified information. It managed to sneak through the blockade. The squadrons have been taken by surprise, but Strafer is catching up.]]) )
@@ -599,9 +598,8 @@ end
 
 -- Strafer just died: now, there will be action for the player
 function straferDied()
+   cinema.off()
    camera.set( nil, true )
-   player.pilot():control( false )
-   player.cinematics( false )
    hook.timer( 1.0, "spawnKillers" )
 
    for i = 1, #attackers do
