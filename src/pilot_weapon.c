@@ -347,6 +347,32 @@ void pilot_weapSetInrange( Pilot* p, int id, int inrange )
 }
 
 /**
+ * @brief Checks the current weapon set manual property.
+ *
+ *    @param p Pilot to manipulate.
+ *    @param id ID of the weapon set to check.
+ *    @return The manual mode of the weapon set.
+ */
+int pilot_weapSetManualCheck( Pilot *p, int id )
+{
+   PilotWeaponSet *ws = pilot_weapSet(p,id);
+   return ws->manual;
+}
+
+/**
+ * @brief Changes the weapon set manual property.
+ *
+ *    @param p Pilot to manipulate.
+ *    @param id ID of the weapon set.
+ *    @param manual Whether or not to have manual aiming.
+ */
+void pilot_weapSetManual( Pilot* p, int id, int manual )
+{
+   PilotWeaponSet *ws = pilot_weapSet(p,id);
+   ws->manual = manual;
+}
+
+/**
  * @brief Gets the name of a weapon set.
  */
 const char *pilot_weapSetName( Pilot* p, int id )

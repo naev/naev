@@ -160,6 +160,7 @@ typedef struct PilotWeaponSet_ {
    PilotWeaponSetOutfit *slots; /**< Slots involved with the weapon set. */
    /* Only applicable to weapon type. */
    int inrange;   /**< Whether or not to fire only if the target is inrange. */
+   int manual;    /**< Whether or not is manually aiming. */
    double range[PILOT_WEAPSET_MAX_LEVELS]; /**< Range of the levels in the outfit slot. */
    double speed[PILOT_WEAPSET_MAX_LEVELS]; /**< Speed of the levels in the outfit slot. */
 } PilotWeaponSet;

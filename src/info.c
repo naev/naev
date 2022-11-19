@@ -120,6 +120,7 @@ static void weapons_update( unsigned int wid, const char *str );
 static void weapons_autoweap( unsigned int wid, const char *str );
 static void weapons_fire( unsigned int wid, const char *str );
 static void weapons_inrange( unsigned int wid, const char *str );
+static void weapons_manual( unsigned int wid, const char *str );
 static void aim_lines( unsigned int wid, const char *str );
 static void weapons_renderLegend( double bx, double by, double bw, double bh, void* data );
 static void info_openStandings( unsigned int wid );
@@ -715,6 +716,10 @@ static void info_openWeapons( unsigned int wid )
    window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
          "chkInrange", _("Only shoot weapons that are in range"), weapons_inrange,
          pilot_weapSetInrangeCheck( player.p, info_eq_weaps.weapons ) );
+   y -= 30;
+   window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
+         "chkManual", _("Enable manual aiming mode."), weapons_manual,
+         pilot_weapSetManualCheck( player.p, info_eq_weaps.weapons ) );
    y -= 40;
    window_addText( wid, x, y, wlen, 20, 0, "txtGlobal", NULL, NULL,
          _("Global Settings"));
@@ -795,6 +800,10 @@ static void weapons_update( unsigned int wid, const char *str )
    window_checkboxSet( wid, "chkInrange",
          pilot_weapSetInrangeCheck( player.p, pos ) );
 
+   /* Update manual aiming. */
+   window_checkboxSet( wid, "chkManual",
+         pilot_weapSetManualCheck( player.p, pos ) );
+
    /* Update autoweap. */
    window_checkboxSet( wid, "chkAutoweap", player.p->autoweap );
 }
@@ -871,6 +880,15 @@ static void weapons_inrange( unsigned int wid, const char *str )
 {
    int state = window_checkboxState( wid, str );
    pilot_weapSetInrange( player.p, info_eq_weaps.weapons, state );
+}
+
+/**
+ * @brief Sets the manual aim property.
+ */
+static void weapons_manual( unsigned int wid, const char *str )
+{
+   int state = window_checkboxState( wid, str );
+   pilot_weapSetManual( player.p, info_eq_weaps.weapons, state );
 }
 
 /**

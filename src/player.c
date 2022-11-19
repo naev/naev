@@ -3447,6 +3447,7 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
       xmlw_startElem(writer,"weaponset");
       /* Inrange isn't handled by autoweap for the player. */
       xmlw_attr(writer,"inrange","%d",pilot_weapSetInrangeCheck(ship,i));
+      xmlw_attr(writer,"manual","%d",pilot_weapSetManualCheck(ship,i));
       xmlw_attr(writer,"id","%d",i);
       if (!ship->autoweap) {
          const char *name = pilot_weapSetName(ship,i);
@@ -4211,7 +4212,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    xmlNodePtr node;
    Commodity *com;
    PilotFlags flags;
-   int autoweap, level, weapid, active_set, aim_lines, in_range, weap_type;
+   int autoweap, level, weapid, active_set, aim_lines, in_range, manual, weap_type;
    PlayerShip_t ps;
 
    memset( &ps, 0, sizeof(PlayerShip_t) );
@@ -4493,7 +4494,12 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          if (in_range > 0)
             pilot_weapSetInrange( ship, id, in_range );
 
-         if (autoweap) /* Autoweap handles everything except inrange. */
+         /* Set manual mode. */
+         xmlr_attr_int( cur, "manual", manual );
+         if (manual > 0)
+            pilot_weapSetManual( ship, id, manual );
+
+         if (autoweap) /* Autoweap handles everything except inrange and manual. */
             continue;
 
          /* Set type mode. */

@@ -47,6 +47,8 @@ int pilot_weapSetTypeCheck( Pilot* p, int id );
 void pilot_weapSetType( Pilot* p, int id, int type );
 int pilot_weapSetInrangeCheck( Pilot* p, int id );
 void pilot_weapSetInrange( Pilot* p, int id, int inrange );
+int pilot_weapSetManualCheck( Pilot *p, int id );
+void pilot_weapSetManual( Pilot* p, int id, int manual );
 
 /* High level. */
 void pilot_weaponClear( Pilot *p );
