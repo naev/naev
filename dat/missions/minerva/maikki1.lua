@@ -39,6 +39,7 @@ local vn = require 'vn'
 local love_shaders = require 'love_shaders'
 local fmt = require "format"
 local lmisn = require "lmisn"
+local cinema = require "cinema"
 
 local maikki_portrait = minerva.maikki.portrait
 
@@ -554,7 +555,7 @@ function stealthstart ()
 
    -- Start the cinematics
    mem.stealthanimation = 0
-   player.cinematics( true )
+   cinema.on()
    camera.set( waypoints[1] )
    hook.timer( 1.0, "stealthstartanimation" )
 end
@@ -579,7 +580,7 @@ function stealthstartanimation ()
       hook.timer( 4.0, "stealthstartanimation" )
    elseif mem.stealthanimation==6 then
       -- Back to player
-      player.cinematics( false )
+      cinema.off()
       camera.set()
       player.pilot():control(false)
       mem.stealthtarget = 0
@@ -689,9 +690,7 @@ function stealthheartbeat ()
                p:brake()
                p:face( wreck )
             end
-            pp:control()
-            pp:brake()
-            player.cinematics( true )
+            cinema.on()
             camera.set( waypoints[ #waypoints ] )
             mem.wreckscene = 0
             hook.timer( 3.0, "wreckcutscene" )
@@ -748,9 +747,7 @@ function wreckcutscene ()
    elseif mem.wreckscene==5 then
       scavengers_encounter()
       mem.found_wreck = true
-      local pp = player.pilot()
-      pp:control( false )
-      player.cinematics( false )
+      cinema.off()
       camera.set()
       return
    end
