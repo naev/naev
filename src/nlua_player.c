@@ -655,12 +655,12 @@ static int playerL_autonavDest( lua_State *L )
  *
  * @note Does not do anything if the player is not in autonav.
  *
- *    @luatparam string msg Abort message.
+ *    @luatparam[opt] string msg Abort message.
  * @luafunc autonavAbort
  */
 static int playerL_autonavAbort( lua_State *L )
 {
-   const char *str = luaL_checkstring(L,1);
+   const char *str = luaL_optstring(L,1,NULL);
    player_autonavAbort( str );
    return 0;
 }
