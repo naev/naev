@@ -35,6 +35,7 @@ require "proximity"
 local fw = require "common.frontier_war"
 local fmt = require "format"
 local pir = require "common.pirate"
+local cinema = require "cinema"
 
 -- Mission constants
 local bombMass = 100
@@ -219,10 +220,10 @@ function enter()
       randguy:control(true)
       randguy:face(klank)
 
-      player.pilot():control()
-      player.pilot():moveto( mypos + vec2.new(0, -step/2) ) -- To avoid being in the range
-      player.cinematics( true, { gui = true } )
-      player.pilot():setInvincible()
+      local pp = player.pilot()
+      cinema.on{ gui = true }
+      pp:taskClear()
+      pp:moveto( mypos + vec2.new(0, -step/2) ) -- To avoid being in the range
 
       camera.set( mypos + vec2.new(0, step/2), true )
 
@@ -494,9 +495,7 @@ function battleaddict_killed()
 
    hook.timer( 2.0, "everyoneLands" )
    camera.set( nil, true )
-   player.pilot():control( false )
-   player.cinematics( false )
-   player.pilot():setInvincible( false )
+   cinema.off()
 
    mem.stage = 7
    misn.osdActive(2)
