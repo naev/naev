@@ -1607,6 +1607,11 @@ void takeoff( int delay, int nosave )
 
       /* Update lua stuff. */
       pilot_outfitLInitAll( p );
+
+      /* Normal pilots stop here. */
+      if (!pilot_isWithPlayer( p ))
+         continue;
+
       pilot_outfitLOntakeoff( p );
 
       /* Set take off stuff. */

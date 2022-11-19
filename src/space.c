@@ -1514,6 +1514,7 @@ void space_init( const char* sysname, int do_simulate )
    background_clear(); /* Get rid of the background. */
    factions_clearDynamic(); /* get rid of dynamic factions. */
    space_spawn = 1; /* spawn is enabled by default. */
+
    /* Clear persistent pilot stuff. */
    if (player.p != NULL) {
       Pilot *const* pilot_stack = pilot_getAll();
