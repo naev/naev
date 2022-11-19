@@ -624,7 +624,7 @@ int pilot_reportSpaceworthy( const Pilot *p, char *buf, int bufSize )
    else {
       if (pos == 0) {
          /* String is empty so no errors encountered */
-         snprintf( buf, bufSize, _("Spaceworthy"));
+         pos += snprintf( buf, bufSize, _("Spaceworthy"));
          if (ship_isFlag(p->ship, SHIP_NOPLAYER))
             pos += snprintf( &buf[pos], bufSize-pos, "\n#o%s#0", _("Escort only") );
          if (ship_isFlag(p->ship, SHIP_NOESCORT))
