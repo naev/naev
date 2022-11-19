@@ -28,10 +28,11 @@ local fmt = require "format"
 require "proximity"
 local portrait = require "portrait"
 local dv = require "common.dvaered"
+local cinema = require "cinema"
 
 -- Mission constants
 local DVplanet, DVsys = spob.getS("Stalwart Station")
-local basepos = vec2.new(-8700, -3000) -- NOTE: Should be the same coordinates as in asset.xml!
+local basepos = spob.get("Sindbad"):pos()
 
 local base, bomber, bombers, fighterpos, fightersDV, fleetDV, fleetFLF, fleetpos, obstinate, vendetta, vigilance -- Non-persistent state
 local nextStage, spawnDV, spawnbase, updatepos -- Forward-declared functions
@@ -200,8 +201,8 @@ function spawnbase()
 end
 
 function deathBase()
-    player.pilot():setInvincible()
-    player.cinematics()
+    cinema.on()
+
     camera.set( base, false, 5000 )
     hook.timer( 8.0, "timer_plcontrol" )
 
@@ -242,8 +243,8 @@ function deathBase()
 end
 
 function timer_plcontrol ()
-    camera.set( player.pilot(), false, 5000 )
-    player.cinematics( false )
+   cinema.off()
+   camera.set( player.pilot(), false, 5000 )
 end
 
 -- Spawns the one-time-only Dvaered ships. Bombers are handled elsewhere.
