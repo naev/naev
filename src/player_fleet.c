@@ -124,6 +124,9 @@ int pfleet_deploy( PlayerShip_t *ps )
    pilot_reset( ps->p );
    pilot_rmFlag( ps->p, PILOT_PLAYER );
 
+   /* AI only knows how to use auto weapon sets. */
+   pilot_weaponAuto( ps->p );
+
    return 0;
 }
 
