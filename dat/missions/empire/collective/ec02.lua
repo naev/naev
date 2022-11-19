@@ -28,6 +28,7 @@
 local fleet = require "fleet"
 local emp = require "common.empire"
 local fmt = require "format"
+local cinema = require "cinema"
 
 -- Mission consstants
 local misn_base, misn_base_sys = spob.getS("Omega Station")
@@ -82,6 +83,7 @@ function land()
       -- Initiate cutscene
       mem.takeoffhook = hook.takeoff("takeoff")
       player.takeoff()
+
    -- Return bit
    elseif mem.misn_stage == 1 and spob.cur() == misn_base then
       tk.msg( _("Mission Accomplished"), _([[As your ship touches ground, you see Lt. Commander Dimitri come out to greet you.
@@ -98,6 +100,10 @@ function land()
 end
 
 function takeoff()
+    -- Build the actual cutscene
+    player.pilot():setHide(true)
+    cinema.on()
+
     -- Sinister music landing
     music.play("landing_sinister.ogg")
 
@@ -107,9 +113,6 @@ function takeoff()
 
     local sml_swarm = { "Drone", "Drone", "Drone", "Heavy Drone" }
 
-    -- Build the actual cutscene
-    player.pilot():setHide(true)
-    player.cinematics(true)
     swarm1 = fleet.add( 1, sml_swarm, "Collective", vec2.new(-11000, 4000), _("Collective Drone") )
     swarm1[4]:rename(_("Collective Heavy Drone"))
     moveSwarm(swarm1, vec2.new(-8000, -7500))
@@ -167,7 +170,7 @@ function endCutscene()
     mem.misn_stage = 1
     misn.markerMove( mem.misn_marker, misn_base )
     player.pilot():setHide(false)
-    player.cinematics(false)
+    cinema.off()
     misn.osdActive(2)
     music.choose("ambient")
 end
