@@ -271,10 +271,9 @@ function loading()
 end
 
 function meeting_timer() -- Delay the triggering of the meeting
-   player.pilot():control() -- Make sure to remove the autonav
-   player.pilot():brake()
-   player.cinematics( true )
-   player.cinematics( false )
+   local pp = player.pilot()
+   pp:control() -- Make sure to remove the autonav
+   pp:brake()
 
    hook.timer(7.0, "meeting")
 end
