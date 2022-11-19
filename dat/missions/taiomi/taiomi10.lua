@@ -823,7 +823,8 @@ function land_end ()
    vn.run()
 
    if not mem.scavenger_no then
-      player.shipAdd( "Drone (Hyena)", _("Scavenger"), _("Joined your fleet after helping their brethren at Taiomi."), true )
+      local name = player.shipAdd( "Drone (Hyena)", _("Scavenger"), _("Joined your fleet after helping their brethren at Taiomi."), true )
+      player.shipvarPush( "taiomi_scavenger", true, name )
    end
 
    misn.finish(true)
