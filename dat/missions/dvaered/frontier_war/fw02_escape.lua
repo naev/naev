@@ -39,6 +39,7 @@ local portrait = require "portrait"
 local fw = require "common.frontier_war"
 local fmt = require "format"
 local pir = require "common.pirate"
+local cinema = require "cinema"
 
 local athooks, escort, hewhew, scanHooks, squad, strafer, target, zlkPilots, zlk_list -- Non-persistent state
 local rmScanHooksRaw, spawnEmpSquadron, spawnZlkSquadron, barAgents -- Forward-declared functions
@@ -591,9 +592,7 @@ function scanBloc()
    if mem.firstBloc then -- avoid having that happening twice in systems where there are 2 blocus
       tk.msg(_("Troubles straight ahead!"), _([[As you approach the jump point, your sensors pick up a squadron of military ships in a tight formation near the jump point. No doubt those ships are waiting for you, and it seems foolhardy to try to run the blockade.]]))
 
-      player.pilot():control()
-      player.pilot():brake() -- Normally, nobody should want to kill the player
-      player.cinematics( true )
+      cinema.on()
       camera.set( squad[1]:pos(), true ) -- TODO if possible: choose the right squad
 
       rmScanHooksRaw()
@@ -617,9 +616,8 @@ end
 -- The player discuss with Strafer
 function straferDiscuss()
    hook.rm(mem.prox)
+   cinema.off()
    camera.set( nil, true )
-   player.cinematics(false)
-   player.pilot():control(false)
 
    tk.msg(_("A friend in the dark"), fmt.f(_([[The Gawain hails you. When you respond, you hear a familiar voice. "Strafer here. I was wondering what was taking you so long. It looks like you had trouble with the Za'lek after all. There are blockades in {1}, {2}, {3} and {4}. They scan all ships. You have no chance to cross these systems alive. What did you to them to upset them like that? Anyway, I did not come empty-handed. I've have as much fuel as you want. Unfortunately, I can't board you as they would chase me as well, so I have jettisoned a few tanks at coordinates I will give to you. Just go there and scoop them. Good luck!"]]), zlk_list ) )
    strafer:control(false)  -- Strafer stops following the player
