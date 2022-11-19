@@ -20,6 +20,7 @@ local fleet = require "fleet"
 local fmt = require "format"
 local shadow = require "common.shadow"
 local pir = require "common.pirate"
+local cinema = require "cinema"
 
 -- Mission constants
 local rebinasys = system.get("Pas")
@@ -493,10 +494,7 @@ end
 
 -- This is the final cutscene.
 function diplomatCutscene()
-   player.pilot():control()
-   player.pilot():brake()
-   player.pilot():setInvincible(true)
-   player.cinematics(true)
+   cinema.on()
 
    camera.set(dvaerplomat, false, 500)
 
@@ -540,11 +538,8 @@ function diplomatKilled()
 end
 
 function escortFlee()
+   cinema.off()
    camera.set()
-
-   player.pilot():setInvincible(false)
-   player.pilot():control(false)
-   player.cinematics(false)
 
    for i, j in ipairs(escorts) do
       if j:exists() then
