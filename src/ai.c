@@ -2734,7 +2734,8 @@ static int aiL_combat( lua_State *L )
       else if (i==0)
          pilot_rmFlag(cur_pilot, PILOT_COMBAT);
    }
-   else pilot_setFlag(cur_pilot, PILOT_COMBAT);
+   else
+      pilot_setFlag(cur_pilot, PILOT_COMBAT);
 
    return 0;
 }
