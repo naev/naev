@@ -138,14 +138,50 @@ end
 
 function create ()
    local _game_version, save_version = naev.version()
+   local didupdate = false
 
    -- Run on saves older than 0.9.0
    if not save_version or naev.versionTest( save_version, "0.9.0" ) < 0 then
       updater090()
+      didupdate = true
    end
    --if naev.versionTest( save_version, "0.10.0" ) < 0 then
       updater0100()
+      --didupdate = true
    --end
+
+   -- Note that games before 0.10.0 will have lastplayed set days from the unix epoch
+   local _local, lastplayed = naev.lastplayed()
+   if not didupdate and lastplayed > 30 and lastplayed < 365*30 then
+      vn.clear()
+      vn.scene()
+      local sai = vn.newCharacter( tut.vn_shipai() )
+      vn.transition( tut.shipai.transition )
+      vn.na(fmt.f(_([[Your ship AI, {ainame}, materializes in front of you.]]),
+         {ainame=tut.ainame()}))
+      sai(fmt.f(_([["Welcome back, {player}! My ship logs indicate that you have not played Naev in quite a long time!"]]),
+         {player=player.name()}))
+      sai(_([["With that said, would you like me to reset the in-game advice as you do things throughout the game? Some might refer to things you are already familiar with, but it could help you learn new things."]]))
+      vn.menu{
+         {_("Reset and enable tutorial hints"), "enable"},
+         {fmt.f(_("Leave as is (hints are {state})"),{state=((tut.isDisabled() and ("#r".._("off").."#0")) or ("#g".._("on").."#0"))}), "asis"},
+      }
+
+      vn.label("enable")
+      vn.func( function () tut.reset() end )
+      sai(fmt.f(_([["Great! I'll be giving you short hints as you do things through the game. If you want to change my settings or turn off the hints, please do so from the '#oShip AI#0' button in the #oInformation#0 menu you can open with {infokey}. Now, let's go adventuring!"]]),
+         {infokey=tut.getKey("info")}))
+      vn.done( tut.shipai.transition )
+
+      vn.label("asis")
+      vn.func( function ()
+         var.push( "tut_disable", true )
+      end )
+      sai(fmt.f(_([["OK, I will not be resetting the hints, and leave them as is. If you want to change my settings, turn on the hints, or get information and advice, please do so from the '#oShip AI#0' button in the #oInformation#0 menu you can open with {infokey}. Now, let's go adventuring!"]]),{infokey=tut.getKey("info")}))
+
+      vn.done( tut.shipai.transition )
+      vn.run()
+   end
 
    -- Done
    evt.finish()
