@@ -3210,7 +3210,6 @@ int player_save( xmlTextWriterPtr writer )
       xmlw_elem(writer,"difficulty","%s",player.difficulty);
    if (player.gui != NULL)
       xmlw_elem(writer,"gui","%s",player.gui);
-   xmlw_elem(writer,"guiOverride","%d",player.guiOverride);
    xmlw_elem(writer,"mapOverlay","%d",ovr_isOpen());
    gui_radarGetRes( &player.radar_res );
    xmlw_elem(writer,"radar_res","%f",player.radar_res);
@@ -3742,7 +3741,6 @@ static Spob* player_parse( xmlNodePtr parent )
       xmlr_ulong(node, "credits", player_creds);
       xmlr_strd(node, "gui", player.gui);
       xmlr_strd(node, "chapter", player.chapter);
-      xmlr_int(node, "guiOverride", player.guiOverride);
       xmlr_int(node, "mapOverlay", map_overlay_enabled);
       xmlr_float(node, "radar_res", player.radar_res);
       xmlr_int(node, "eq_outfitMode", player.eq_outfitMode);

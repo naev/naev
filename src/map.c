@@ -2371,7 +2371,7 @@ else (x) = MAX( y, (x) - dt )
          AMIN( cst->alpha_path );
          AMAX( cst->alpha_names );
          AMIN( cst->alpha_commod );
-         AMIN( cst->alpha_markers );
+         AMAX( cst->alpha_markers );
          break;
 
       case MAPMODE_TRADE:
@@ -2381,7 +2381,7 @@ else (x) = MAX( y, (x) - dt )
          AMIN( cst->alpha_path );
          AMIN( cst->alpha_names );
          AMAX( cst->alpha_commod );
-         AMIN( cst->alpha_markers );
+         ATAR( cst->alpha_markers, 0.5 );
          break;
    }
 #undef AMAX

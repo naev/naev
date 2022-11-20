@@ -53,12 +53,12 @@ function accept()
    local accepted = false
    local p = player.pilot()
    local s = p:ship(p)
-   local shipclass = s:class()
+   local shipsize = s:size()
    vn.clear()
    vn.scene()
    local mensing = vn.newCharacter( nebu_research.vn_mensing() )
    vn.transition("fade")
-   mensing(fmt.f(_([["{player}? Great timing! I need someone insane.. eh.. I meant brave enough to test the nebula resistant shielding prototype in a realistic testing environment. And there is no better place for this tests than the Sol nebula itself!"]]), {player=player.name()}))
+   mensing(fmt.f(_([["{player}? Great timing! I need someone insane… eh… I meant brave enough to test the nebula resistant shielding prototype in a realistic testing environment. And there is no better place for this tests than the Sol nebula itself!"]]), {player=player.name()}))
    mensing(_([["No no, it's absolutely safe! We ran some basic tests on the device in a simulation chamber and tested it on a ship in space. It works absolutely fine so far. The next step is to actually test it within the Sol nebula itself. This is your chance to make history! Are you ready?"]]))
    vn.menu( {
       { _("Accept the job"), "accept" },
@@ -68,11 +68,11 @@ function accept()
    mensing(_([["Too bad. I hope you will change your mind. Otherwise some other pilot will take the chance to make history."]]))
    vn.done()
    vn.label("accept")
-   mensing(_([["I'm glad to hear that you're in. First of all - since our motto is "safety first".. Wait, why are you rolling your eyes? Anyway, you'll require at least a corvette class ship or preferably something larger and please equip some additional shield boosters and shield capacitors. Just in case that there will be a problem with the prototype.."]]))
-   if not (shipclass == "Corvette" or shipclass == "Destroyer" or shipclass == "Cruiser" or shipclass == "Battleship" or shipclass == "Carrier" or shipclass == "Armoured Transporter" or shipclass == "Bulk Freighter") then
-      mensing(_([["However, since your ship is very small it's not a good idea to send you into the Sol nebula. Please return with a larger ship. I'd say at least a Corvette class ship. It will increase your chances to survive. Just in case, you know? I don't actually expect that something goes wrong."]]))
+   if shipsize < 3 then
+      mensing(_([["I'm glad to hear that you're in. First of all - since our motto is "safety first"… Wait, why are you rolling your eyes? Anyway, since your current ship is very small, it's not a good idea to send you into the Sol nebula. Please return with a larger ship. I'd say at least a Corvette class ship. It will increase your chances to survive. Just in case, you know? I don't actually expect that something goes wrong."]]))
       vn.done()
    else
+      mensing(_([["I'm glad to hear that you're in. First of all - since our motto is "safety first"… Wait, why are you rolling your eyes? Anyway, you'll require at least a corvette class ship or preferably something larger and please equip some additional shield boosters and shield capacitors. Just in case that there will be a problem with the prototype."]]))
       vn.func( function () accepted = true end )
    end
    mensing(fmt.f(_([["My team will bring the shielding prototype onboard your ship. Don't forget to install it before departing! Your first destination will be {pnt} in the {sys} system. Robert will be waiting there since he demanded to be involved in this project."]]), {pnt=dest_planet, sys=dest_sys}))
@@ -85,7 +85,7 @@ function accept()
    end
 
    mem.stage = 0
-   -- Give the player a Nebular Shielding Prototype only if he has none.
+   -- Give the player a Nebular Shielding Prototype only if they have none.
    if player.numOutfit("Nebular Shielding Prototype", false)==0 then
       player.outfitAdd("Nebular Shielding Prototype")
    end
@@ -115,7 +115,7 @@ function land()
       local student = vn.newCharacter( nebu_research.vn_student() )
       vn.transition("fade")
       student(_([[Shortly after landing you are greeted by the student.
-"That took long enough! Being stuck in a place like this.. It's always us students who have to do all the hard work!]]))
+"That took long enough! Being stuck in a place like this… It's always us students who have to do all the hard work!]]))
       student(_([["Anyway, I'm done here with my measurements. Since the shielding prototype requires fine tuning of some parameters these measurements are essential. I just need a few minutes to configure the device. We can start anytime soon."]]))
       if not hasShieldingPrototypeEquipped() then
         student(_([["You did remember to install the shielding prototype, right?"]]))
@@ -210,7 +210,7 @@ end
 function timer()
    if player.pos():dist(point_pos) < 500 then
       local osd_msg = {}
-      osd_msg[1] = _("Wait...")
+      osd_msg[1] = _("Wait…")
       osd_msg[2] = fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=homeworld, sys=homeworld_sys})
       mem.stage = 4
       system.markerRm(marker)
@@ -223,10 +223,6 @@ end
 
 function beginScan()
    ghost = pilot.add("Thurion Ingenuity", "Thurion", point_pos + vec2.new(600, 1200), _("Ghost Ship"))
-   ghost:outfitRm("cores")
-   ghost:outfitAdd("Nexus Light Stealth Plating")
-   ghost:outfitAdd("Milspec Thalos 3602 Core System")
-   ghost:outfitAdd("Tricon Zephyr II Engine")
    ghost:setInvincible()
    ghost:control()
 --   ghost:follow(player.pilot())
@@ -255,7 +251,7 @@ function endScan()
    vn.clear()
    vn.scene()
    vn.transition("fade")
-   vn.na(_([[Looking out of the window you see blurry shapes moving past your ship vaguely resembling space ships of unfamiliar design. Your sensors show nothing out there, though. Maybe you started to imagine things that do not exist. You wonder if you have spent too much time inside the nebula. Or maybe the rumors about ghost ships are true after all...]]))
+   vn.na(_([[Looking out of the window you see blurry shapes moving past your ship vaguely resembling space ships of unfamiliar design. Your sensors show nothing out there, though. Maybe you started to imagine things that do not exist. You wonder if you have spent too much time inside the nebula. Or maybe the rumors about ghost ships are true after all…]]))
    vn.na(_([[Suddenly, without a warning, your shield energy begins to drop at a rapid pace. The shielding prototype must be broken! You hope it is just a temporary problem and ask Robert what the problem is. His reply is simply "Busy!"]]))
    vn.menu( {
       { fmt.f(_("Retreat to {sys}"), {sys=system.get("Arandon")}), "retreat" },
@@ -284,10 +280,10 @@ function endScan()
    } )
    vn.label("clear_throat")
    vn.label("ask")
-   student(_([["Oh, captain we have a few problems.. It's the.. Well, I'm not sure. To be honest, I have no idea what happened. I guess we won't make it. There is no reason to give up though, at least for me, but you may want to start praying or whatever you non-scientists do."]]))
+   student(_([["Oh, captain we have a few problems… It's the… Well, I'm not sure. To be honest, I have no idea what happened. I guess we won't make it. There is no reason to give up though, at least for me, but you may want to start praying or whatever you non-scientists do."]]))
    vn.jump("talk_end")
    vn.label("lose_nerves")
-   student(_([["Ah.. Well, the problem is.. uh.. Well, I guess you're right. Please calm down. Panic won't help us right now. At least I will continue to working on the problem. You may want to start praying or whatever you non-scientists do."]]))
+   student(_([["Ah… Well, the problem is… uh… Well, I guess you're right. Please calm down. Panic won't help us right now. At least I will continue to working on the problem. You may want to start praying or whatever you non-scientists do."]]))
    vn.label("talk_end")
    vn.disappear( student, "fade" )
    vn.transition("fade")

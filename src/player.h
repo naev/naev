@@ -121,7 +121,6 @@ typedef struct Player_s {
 
    /* Options that we save. */
    char *gui;        /**< Player's GUI. */
-   int guiOverride;  /**< GUI is overridden (not default). */
    double radar_res; /**< Player's radar resolution. */
    int eq_outfitMode;/**< Equipment outfit mode. */
    int map_minimal;  /**< Map is set in minimal mode. */
