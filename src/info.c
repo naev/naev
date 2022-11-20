@@ -106,7 +106,6 @@ static void info_close( unsigned int wid, const char *str );
 static void info_openMain( unsigned int wid );
 static void info_setGui( unsigned int wid, const char *str );
 static void setgui_load( unsigned int wdw, const char *str );
-static void info_toggleGuiOverride( unsigned int wid, const char *name );
 static void info_openShip( unsigned int wid );
 static void info_openWeapons( unsigned int wid );
 static void info_openCargo( unsigned int wid );
@@ -507,7 +506,7 @@ static void info_setGui( unsigned int wid, const char *str )
 
    /* List */
    window_addList( wid, 20, -50,
-         SETGUI_WIDTH-BUTTON_WIDTH/2 - 60, SETGUI_HEIGHT-110,
+         SETGUI_WIDTH-BUTTON_WIDTH/2 - 60, SETGUI_HEIGHT-70,
          "lstGUI", gui_copy, nguis, 0, NULL, NULL );
    toolkit_setList( wid, "lstGUI", gui_pick() );
 
@@ -516,12 +515,6 @@ static void info_setGui( unsigned int wid, const char *str )
          "btnBack", _("Close"), setgui_close );
    window_addButton( wid, -20, 30 + BUTTON_HEIGHT, BUTTON_WIDTH/2, BUTTON_HEIGHT,
          "btnLoad", _("Load"), setgui_load );
-
-   /* Checkboxes */
-   window_addCheckbox( wid, 20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "chkOverride", _("Override GUI"),
-         info_toggleGuiOverride, player.guiOverride );
-   info_toggleGuiOverride( wid, "chkOverride" );
 
    /* default action */
    window_setAccept( wid, setgui_load );
@@ -542,17 +535,6 @@ static void setgui_load( unsigned int wdw, const char *str )
    if (strcmp(gui,_("None")) == 0)
       return;
 
-   if (player.guiOverride == 0) {
-      if (dialogue_YesNo( _("GUI Override is not set."),
-               _("Enable GUI Override and change GUI to '%s'?"), gui )) {
-         player.guiOverride = 1;
-         window_checkboxSet( wid, "chkOverride", player.guiOverride );
-      }
-      else {
-         return;
-      }
-   }
-
    /* Set the GUI. */
    free( player.gui );
    player.gui = strdup( gui );
@@ -562,20 +544,6 @@ static void setgui_load( unsigned int wdw, const char *str )
 
    /* Load the GUI. */
    gui_load( gui_pick() );
-}
-
-/**
- * @brief GUI override was toggled.
- *
- *    @param wid Window id.
- *    @param name of widget.
- */
-static void info_toggleGuiOverride( unsigned int wid, const char *name )
-{
-   player.guiOverride = window_checkboxState( wid, name );
-   /* Go back to the default one. */
-   if (player.guiOverride == 0)
-      toolkit_setList( wid, "lstGUI", gui_pick() );
 }
 
 /**
