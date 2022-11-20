@@ -362,6 +362,10 @@ SHADERS = [
       name = "stealthmarker",
       fs_path = "stealthmarker.frag",
    ),
+   SimpleShader(
+      name = "healthbar",
+      fs_path = "healthbar.frag",
+   ),
 ]
 
 def header_chunks():
