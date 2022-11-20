@@ -2039,10 +2039,8 @@ void pilot_renderOverlay( Pilot* p )
 
    /* Show health / friendlyness */
    if (conf.healthbars && (player.p!=NULL) && !pilot_isPlayer(p) && !pilot_isFlag(p, PILOT_DEAD) &&
-         (pilot_isFlag(p, PILOT_COMBAT) || pilot_isFriendly(p) || (p->shield < p->shield_max))) {
-      double x, y, dx, w, h;
-      const glColour *col;
-      double health, health_max;
+         (pilot_isFlag(p, PILOT_COMBAT) || (p->shield < p->shield_max))) {
+      double x, y, w, h;
 
       /* Coordinate translation. */
       gl_gameToScreenCoords( &x, &y, p->solid->pos.x, p->solid->pos.y );
@@ -2055,18 +2053,14 @@ void pilot_renderOverlay( Pilot* p )
             (y < -h) || (y > SCREEN_H+h))
          return;
 
-      col = pilot_getColour( p );
-      health = p->armour + p->shield;
-      health_max = p->armour_max + p->shield_max;
-
       w = PILOT_SIZE_APPROX * p->ship->gfx_space->sw;
       h = PILOT_SIZE_APPROX * p->ship->gfx_space->sh / 3.;
 
       glUseProgram( shaders.healthbar.program );
       glUniform2f( shaders.healthbar.dimensions, 5., h );
-      glUniform1f( shaders.healthbar.paramf, health / health_max );
+      glUniform1f( shaders.healthbar.paramf, (p->armour + p->shield) / (p->armour_max + p->shield_max) );
       gl_uniformColor( shaders.healthbar.paramv, (p->shield > 0.) ? &cShield : &cArmour );
-      gl_renderShader( x + w/2. + 2.5, y, 5., h, 0., &shaders.healthbar, col, 1 );
+      gl_renderShader( x + w/2. + 2.5, y, 5., h, 0., &shaders.healthbar, pilot_getColour(p), 1 );
    }
 }
 
