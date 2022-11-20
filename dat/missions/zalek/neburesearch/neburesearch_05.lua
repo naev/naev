@@ -53,7 +53,7 @@ function accept()
    local accepted = false
    local p = player.pilot()
    local s = p:ship(p)
-   local shipclass = s:class()
+   local shipsize = s:size()
    vn.clear()
    vn.scene()
    local mensing = vn.newCharacter( nebu_research.vn_mensing() )
@@ -69,7 +69,7 @@ function accept()
    vn.done()
    vn.label("accept")
    mensing(_([["I'm glad to hear that you're in. First of all - since our motto is "safety first"… Wait, why are you rolling your eyes? Anyway, you'll require at least a corvette class ship or preferably something larger and please equip some additional shield boosters and shield capacitors. Just in case that there will be a problem with the prototype."]]))
-   if not (shipclass == "Corvette" or shipclass == "Destroyer" or shipclass == "Cruiser" or shipclass == "Battleship" or shipclass == "Carrier" or shipclass == "Armoured Transporter" or shipclass == "Bulk Freighter") then
+   if shipsize < 3 then
       mensing(_([["However, since your ship is very small it's not a good idea to send you into the Sol nebula. Please return with a larger ship. I'd say at least a Corvette class ship. It will increase your chances to survive. Just in case, you know? I don't actually expect that something goes wrong."]]))
       vn.done()
    else
@@ -85,7 +85,7 @@ function accept()
    end
 
    mem.stage = 0
-   -- Give the player a Nebular Shielding Prototype only if he has none.
+   -- Give the player a Nebular Shielding Prototype only if they have none.
    if player.numOutfit("Nebular Shielding Prototype", false)==0 then
       player.outfitAdd("Nebular Shielding Prototype")
    end
