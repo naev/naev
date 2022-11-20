@@ -26,6 +26,7 @@ end
 function outfit_buy( outfitname )
    local o = outfit.get(outfitname)
    local tbroad = o:typeBroad()
+   local isturret = o:specificstats().isturret
 
    if tbroad == "Afterburner" and not var.peek( "tut_afterburner" ) then
       vn.clear()
@@ -60,6 +61,18 @@ function outfit_buy( outfitname )
       vn.done( tut.shipai.transition )
       vn.run()
       var.push( "tut_fighterbay", true )
+
+   elseif isturret and not var.peek( "tut_turret" ) then
+      vn.clear()
+      vn.scene()
+      local sai = vn.newCharacter( tut.vn_shipai() )
+      vn.transition( tut.shipai.transition )
+      sai(_([["Is that a #oTurret#0 weapon you just bought? Almost all weapons have built-in tracking capabilities, however, non-turret weapons have very limited mobility, and are only able to target weapons more or less straight ahead. On the other hand, turret weapons have 360 degree tracking capability and can hit enemy ships from all over!"]]))
+      sai(fmt.f(_([["Like non-turret weapons, turret weapons must be fired manually. When outfitting a ship with both turrets and non-turrets at the same time, it may be useful to set up #oWeapon Sets#0 to be able to fire non-turrets and turrets independently. Weapon sets can be set up from the #oWeapons#0 tab of the #oInformation#0 menu accessible with {infokey}. You should try and see what works best for you!"]]),
+         {infokey=tut.getKey("info")}))
+      vn.done( tut.shipai.transition )
+      vn.run()
+      var.push( "tut_turret", true )
 
    elseif tbroad == "License" then
 
