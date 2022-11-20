@@ -105,6 +105,7 @@ local stateinfo = {
    },
    backoff = {
       running  = true,
+      fighting = true,
       noattack = true,
    },
    runaway = {
@@ -191,6 +192,7 @@ function control_manual( dt )
    local p = ai.pilot()
    local task = ai.taskname()
    local si = _stateinfo( task )
+   ai.combat( si.fighting )
 
    lead_fleet( p )
    handle_messages( si, false )
@@ -463,6 +465,7 @@ function control( dt )
    -- Task information stuff
    local task = ai.taskname()
    local si = _stateinfo( task )
+   ai.combat( si.fighting )
 
    lead_fleet( p )
    local taskchange = handle_messages( si, true )
