@@ -67,6 +67,7 @@
       * Autonav is more flexible with positioning on jump points
       * Can customize jump flash brightness
       * Player will not be scanned immediately on jumping in or taking off
+      * Show health bars near pilots in combat (can be disabled)
    * Engine changes
       * Work has begun on a development manual
       * Plugin support with explicit support for total conversions
