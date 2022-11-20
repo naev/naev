@@ -2038,7 +2038,8 @@ void pilot_renderOverlay( Pilot* p )
    }
 
    /* Show health / friendlyness */
-   if (conf.healthbars && !pilot_isPlayer(p)) {
+   if (conf.healthbars && !pilot_isPlayer(p) &&
+         (pilot_isFlag(p, PILOT_COMBAT) || pilot_isFriendly(p) || (p->shield < p->shield_max))) {
       double x, y, dx, dy, w, h;
       const glColour *col;
       double health, health_max;
