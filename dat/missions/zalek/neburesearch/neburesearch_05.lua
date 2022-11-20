@@ -68,11 +68,11 @@ function accept()
    mensing(_([["Too bad. I hope you will change your mind. Otherwise some other pilot will take the chance to make history."]]))
    vn.done()
    vn.label("accept")
-   mensing(_([["I'm glad to hear that you're in. First of all - since our motto is "safety first"… Wait, why are you rolling your eyes? Anyway, you'll require at least a corvette class ship or preferably something larger and please equip some additional shield boosters and shield capacitors. Just in case that there will be a problem with the prototype."]]))
    if shipsize < 3 then
-      mensing(_([["However, since your ship is very small it's not a good idea to send you into the Sol nebula. Please return with a larger ship. I'd say at least a Corvette class ship. It will increase your chances to survive. Just in case, you know? I don't actually expect that something goes wrong."]]))
+      mensing(_([["I'm glad to hear that you're in. First of all - since our motto is "safety first"… Wait, why are you rolling your eyes? Anyway, since your current ship is very small, it's not a good idea to send you into the Sol nebula. Please return with a larger ship. I'd say at least a Corvette class ship. It will increase your chances to survive. Just in case, you know? I don't actually expect that something goes wrong."]]))
       vn.done()
    else
+      mensing(_([["I'm glad to hear that you're in. First of all - since our motto is "safety first"… Wait, why are you rolling your eyes? Anyway, you'll require at least a corvette class ship or preferably something larger and please equip some additional shield boosters and shield capacitors. Just in case that there will be a problem with the prototype."]]))
       vn.func( function () accepted = true end )
    end
    mensing(fmt.f(_([["My team will bring the shielding prototype onboard your ship. Don't forget to install it before departing! Your first destination will be {pnt} in the {sys} system. Robert will be waiting there since he demanded to be involved in this project."]]), {pnt=dest_planet, sys=dest_sys}))
