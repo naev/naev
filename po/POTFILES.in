@@ -167,6 +167,8 @@ dat/outfits/bioship/skills/hunters_instinct.xml
 dat/outfits/bioship/skills/natural_healing_i.xml
 dat/outfits/bioship/skills/natural_healing_ii.xml
 dat/outfits/bioship/skills/paralyzing_plasma.xml
+dat/outfits/bioship/skills/plasma_burst.xml
+dat/outfits/bioship/skills/reflective_shell.xml
 dat/outfits/bioship/skills/silence.xml
 dat/outfits/bioship/skills/the_bite.xml
 dat/outfits/bioship/skills/the_bite_blood_lust.xml
@@ -2882,6 +2884,8 @@ dat/outfits/bioship/skills/bioplasma2.lua
 dat/outfits/bioship/skills/feral_rage_i.lua
 dat/outfits/bioship/skills/feral_rage_iii.lua
 dat/outfits/bioship/skills/hunters_instinct.lua
+dat/outfits/bioship/skills/plasma_burst.lua
+dat/outfits/bioship/skills/reflective_shell.lua
 dat/outfits/bioship/skills/the_bite.lua
 dat/outfits/bioship/skills/tunnelling_organ.lua
 dat/outfits/launchers/space_mine_layer.lua

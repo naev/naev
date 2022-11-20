@@ -186,9 +186,9 @@ skills.set.health = {
       name = _("Reflective Shell"),
       tier = 5,
       requires = { "health4" },
-      desc = _("TODO damage reflection?"),
+      desc = _("Reflects 5% of damage back to attackers."),
+      outfit = "Reflective Shell",
       icon = "spiked-shell.webp",
-      -- TODO
    },
 }
 
@@ -279,9 +279,10 @@ skills.set.plasma = {
       name = _("Plasma Burst"),
       tier = 5,
       requires = { "plasma4" },
-      desc = _("creates an explosion of plasma affecting all ships around the pilot"),
-      -- TODO
+      desc = _("Creates an explosion of plasma affecting all ships around the pilot. Deals 300 damage with 50% penetration to all hostiles ships within 200 range."),
+      outfit = "Plasma Burst",
       icon = "goo-skull.webp",
+      slot = "plasma_burst",
    },
 }
 
