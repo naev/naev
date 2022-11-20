@@ -150,8 +150,9 @@ void conf_setDefaults (void)
    conf.devautosave  = 0;
    conf.lua_enet     = 0;
    conf.lua_repl     = 0;
-   conf.lastversion = strdup( "" );
+   conf.lastversion  = strdup( "" );
    conf.translation_warning_seen = 0;
+   memset( &conf.last_played, 0, sizeof(time_t) );
 
    /* Gameplay. */
    conf_setGameplayDefaults();
@@ -419,6 +420,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "conf_nosave", conf.nosave );
       conf_loadString( lEnv, "lastversion", conf.lastversion );
       conf_loadBool( lEnv, "translation_warning_seen", conf.translation_warning_seen );
+      conf_loadInt( lEnv, "last_played", conf.last_played );
 
       /* Debugging. */
       conf_loadBool( lEnv, "fpu_except", conf.fpu_except );
@@ -736,6 +738,9 @@ if (sizeof(buf) != pos) \
 
 #define  conf_saveInt(n,i)    \
 pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = %d\n", n, i);
+
+#define  conf_saveULong(n,i)    \
+pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = %lu\n", n, i);
 
 #define  conf_saveFloat(n,f)    \
 pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = %f\n", n, f);
@@ -1077,6 +1082,10 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment(_("Indicates whether we've already warned about incomplete game translations."));
    conf_saveBool("translation_warning_seen",conf.translation_warning_seen);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Time Naev was last played. This gets refreshed each time you exit Naev."));
+   conf_saveULong("last_played",time(NULL));
    conf_saveEmptyLine();
 
    /* Debugging. */

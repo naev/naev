@@ -162,6 +162,7 @@ typedef struct PlayerConf_s {
    int nosave; /**< Disables conf saving. */
    char *lastversion; /**< The last version the game was ran in. */
    int translation_warning_seen; /**< No need to warn about incomplete game translations again. */
+   time_t last_played; /**< Date the game was last played. */
 
    /* Debugging. */
    int fpu_except; /**< Enable FPU exceptions? */
@@ -170,7 +171,6 @@ typedef struct PlayerConf_s {
    char *dev_save_sys; /**< Path to save systems to. */
    char *dev_save_map; /**< Path to save maps to. */
    char *dev_save_spob; /**< Path to save spobs to. */
-
 } PlayerConf_t;
 extern PlayerConf_t conf; /**< Player configuration. */
 
