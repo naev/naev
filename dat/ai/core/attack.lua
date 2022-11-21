@@ -87,7 +87,7 @@ function atk.think( target, si, noretarget )
       end
 
       -- The bite
-      if mem._o.bite then
+      if mem._o.bite and p:outfitReady( mem._o.bite )then
          if ai.dir( target ) < math.rad(20) then
             local dtime = 3
             if mem._o.bite_lust then
@@ -101,7 +101,7 @@ function atk.think( target, si, noretarget )
       end
 
       -- Plasma Burst
-      if mem._o.plasma_burst then
+      if mem._o.plasma_burst and p:outfitReady( mem._o.plasma_burst ) then
          if ai.dist( target ) < 300 then
             p:outfitToggle( mem._o.plasma_burst, true )
          else
