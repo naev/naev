@@ -14,6 +14,7 @@ local function activate( p, po )
       return false
    end
 
+   -- TODO would be great to delay the damage by 0.5 seconds to make it fit better with sound and effects
    local dur = 10
    local pos = p:pos()
    for k,t in ipairs(p:getEnemies( radius )) do
