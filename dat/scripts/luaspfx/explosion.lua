@@ -35,6 +35,11 @@ local function render( sp, x, y, z )
    explosion_shader:send( "u_grain", d.grain )
    explosion_shader:send( "u_speed", d.speed )
    explosion_shader:send( "u_steps", d.steps )
+   explosion_shader:send( "u_smokiness", d.smokiness )
+   explosion_shader:send( "u_colorbase", d.colorbase )
+   explosion_shader:send( "u_colorsmoke", d.colorsmoke )
+   explosion_shader:send( "u_smoke_fade", d.smokefade )
+   explosion_shader:send( "u_roll_speed", d.rollspeed )
 
    local s = d.size * z
    local old_shader = lg.getShader()
@@ -44,7 +49,7 @@ local function render( sp, x, y, z )
 end
 
 local function spfx_explosion( pos, vel, size, params )
-   local speed  = math.max( -0.000940296 * size + 0.719132, 0.2 )
+   local speed = params.speed or math.max( -0.000940296 * size + 0.719132, 0.2 )
    local sfx
    if not params.silent then
       sfx = explosion_sfx[ rnd.rnd(1,#explosion_sfx) ]
@@ -53,9 +58,14 @@ local function spfx_explosion( pos, vel, size, params )
    local d  = s:data()
    d.timer  = 0
    d.size   = size
-   d.grain  = 0.0016265 * size + 0.0944304
+   d.grain  = params.grain or (0.0016265 * size + 0.0944304)
    d.speed  = speed
-   d.steps  = math.min( math.floor(0.0111688 * size + 8.16463 + 0.5), 16 )
+   d.steps  = params.steps or math.min( math.floor(0.0111688 * size + 8.16463 + 0.5), 16 )
+   d.smokiness = params.smokiness or 0.588
+   d.colorbase = params.colorbase or {1.2, 0.9, 0.5, 0.7}
+   d.colorsmoke = params.colorsmoke or {0.15, 0.15, 0.15, 0.1}
+   d.smokefade = params.smokefade or 1.4
+   d.rollspeed = params.rollspeed or 1.0
    if params.volume then
       local ss = s:sfx()
       ss:setVolume( params.volume )
