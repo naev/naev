@@ -17,6 +17,7 @@ local usable_outfits = {
    ["The Bite"]                  = "bite",
    ["The Bite - Improved"]       = "bite",
    ["The Bite - Blood Lust"]     = {"bite", "bite_lust"},
+   ["Plasma Burst"]              = "plasma_burst",
 }
 
 if __debugging then

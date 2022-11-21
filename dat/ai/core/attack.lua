@@ -99,6 +99,18 @@ function atk.think( target, si, noretarget )
             end
          end
       end
+
+      -- Plasma Burst
+      if mem._o.plasma_burst then
+         if ai.dist( target ) < 300 then
+            p:outfitToggle( mem._o.plasma_burst, true )
+         else
+            local e = p:getEnemies( 300 )
+            if #e >= 2 then
+               p:outfitToggle( mem._o.plasma_burst, true )
+            end
+         end
+      end
    end
 
    -- The think function basically tries to figure out new targets
