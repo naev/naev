@@ -1,4 +1,4 @@
---<desc_extra>Deals 300 plasma damage to all hostile ships in 200 range.</desc_extra>
+local explosion = require "luaspfx.explosion"
 
 local damage = 300
 local penetration = 0.5
@@ -22,6 +22,16 @@ local function activate( p, po )
    end
 
    -- TODO visuals and sound
+   explosion( pos, p:vel(), 400, nil, {
+      speed = 0.5,
+      grain = 0.3,
+      steps = 8,
+      smokiness = 0.4,
+      rollspeed = 0.3,
+      smokefade = 1.6,
+      colorbase = {0.9, 0.1, 0.1, 0.1},
+      colorsmoke = {0.6, 0.3, 0.3, 0.25},
+   } )
 
    mem.timer = cooldown
    po:state("cooldown")
