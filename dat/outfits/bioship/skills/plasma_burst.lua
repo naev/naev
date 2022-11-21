@@ -1,9 +1,12 @@
-local explosion = require "luaspfx.explosion"
+local luaspfx = require "luaspfx"
+local audio = require "love.audio"
 
 local damage = 100
 local penetration = 0.5
 local radius = 200
 local cooldown = 20
+
+local sfx = audio.newSource( 'snd/sounds/plasma_burst.ogg' )
 
 local function activate( p, po )
    -- Still on cooldown
@@ -28,8 +31,14 @@ local function activate( p, po )
       t:effectAdd( "Crippling Plasma", dur )
    end
 
-   -- TODO visuals and sound
-   explosion( pos, p:vel(), 400, nil, {
+   if mem.isp then
+      mem.spfx_start = luaspfx.sfx( true, nil, sfx )
+   else
+      mem.spfx_start = luaspfx.sfx( p:pos(), p:vel(), sfx )
+   end
+
+   luaspfx.explosion( pos, p:vel(), 400, nil, {
+      silent    = true,
       speed     = 0.5,
       grain     = 0.3,
       steps     = 8,
