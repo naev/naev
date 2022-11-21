@@ -94,6 +94,7 @@ static int pilotL_outfitsList( lua_State *L );
 static int pilotL_outfits( lua_State *L );
 static int pilotL_outfitGet( lua_State *L );
 static int pilotL_outfitToggle( lua_State *L );
+static int pilotL_outfitReady( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
@@ -249,6 +250,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "outfits", pilotL_outfits },
    { "outfitGet", pilotL_outfitGet },
    { "outfitToggle", pilotL_outfitToggle },
+   { "outfitReady", pilotL_outfitReady },
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
@@ -2133,6 +2135,29 @@ static int pilotL_outfitToggle( lua_State *L )
       pilot_calcStats( p );
 
    lua_pushboolean(L,n);
+   return 1;
+}
+
+/**
+ * @brief Sees if an outfit is ready to use.
+ *
+ *    @luatparam Pilot p Pilot to toggle outfit of.
+ *    @luatparam integer id ID of the pilot outfit.
+ *    @luatreturn boolean Whether or not the outfit is ready to use.
+ * @luafunc outfitReady
+ */
+static int pilotL_outfitReady( lua_State *L )
+{
+   /* Parse parameters */
+   Pilot *p  = luaL_validpilot(L,1);
+   int id    = luaL_checkinteger(L,2)-1;
+   if (id < 0 || id >= array_size(p->outfits))
+      NLUA_ERROR(L, _("Pilot '%s' outfit ID '%d' is out of range!"), p->name, id);
+
+   if (p->outfits[id]->outfit != NULL)
+      lua_pushboolean( L, p->outfits[id]->state==PILOT_OUTFIT_OFF );
+   else
+      lua_pushboolean( L, 0 );
    return 1;
 }
 
