@@ -2575,6 +2575,7 @@ dat/events/npc/frontier.lua
 dat/events/npc/generic.lua
 dat/events/npc/pirate.lua
 dat/events/npc/proteron.lua
+dat/events/npc/raven_clan.lua
 dat/events/npc/sirius.lua
 dat/events/npc/soromid.lua
 dat/events/npc/thurion.lua
