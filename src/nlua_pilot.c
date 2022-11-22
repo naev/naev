@@ -201,6 +201,7 @@ static int pilotL_tryStealth( lua_State *L );
 static int pilotL_land( lua_State *L );
 static int pilotL_hailPlayer( lua_State *L );
 static int pilotL_msg( lua_State *L );
+static int pilotL_mothership( lua_State *L );
 static int pilotL_leader( lua_State *L );
 static int pilotL_setLeader( lua_State *L );
 static int pilotL_followers( lua_State *L );
@@ -369,6 +370,7 @@ static const luaL_Reg pilotL_methods[] = {
    /* Misc. */
    { "hailPlayer", pilotL_hailPlayer },
    { "msg", pilotL_msg },
+   { "mothership" ,pilotL_mothership },
    { "leader", pilotL_leader },
    { "setLeader", pilotL_setLeader },
    { "followers", pilotL_followers },
@@ -5175,6 +5177,29 @@ static int pilotL_msg( lua_State *L )
    }
 
    return 0;
+}
+
+/**
+ * @brief Gets a pilots mothership (only exists for deployed pilots). Guaranteed to exist or will be nil.
+ *
+ *    @luatparam Pilot p Pilot to get the mothership of.
+ *    @luatreturn Pilot|nil The mothership or nil.
+ * @luafunc mothership
+ */
+static int pilotL_mothership( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L, 1);
+   if (p->dockpilot != 0) {
+      Pilot *l = pilot_get( p->dockpilot );
+      if ((l == NULL) || pilot_isFlag( l, PILOT_DEAD )) {
+         lua_pushnil(L);
+      }
+      else
+         lua_pushpilot(L, p->dockpilot);
+   }
+   else
+      lua_pushnil(L);
+   return 1;
 }
 
 /**

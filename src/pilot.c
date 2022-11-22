@@ -2988,6 +2988,7 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
    pilot->autoweap = 1;
    pilot->aimLines = 0;
    pilot->dockpilot = dockpilot;
+   pilot->parent = dockpilot; /* leader will default to mothership if exists. */
    pilot->dockslot = dockslot;
    ss_statsInit( &pilot->intrinsic_stats );
 
