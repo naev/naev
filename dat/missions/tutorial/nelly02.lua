@@ -450,6 +450,13 @@ function timer_pirate_nelly ()
    local osdtitle, osdelem = misn.osdGet()
    table.insert( osdelem, 1, _("Hail and bribe the pirates") )
    misn.osdCreate( osdtitle, osdelem )
+
+   player.setSpeed( 2/3 )
+   hook.timer( 15, "reset_speed" )
+end
+
+function reset_speed ()
+   player.setSpeed()
 end
 
 function timer_pirate_checkbribe ()
@@ -471,6 +478,7 @@ function timer_pirate_checkbribe ()
    local pp = player.pilot()
    if allbribed then
       pp:comm(_([[Nelly: "Now we should be able to get out of here safely."]]))
+      player.setSpeed()
       return
    end
 
@@ -479,15 +487,19 @@ function timer_pirate_checkbribe ()
       local msg
       if n <= 0 then
          msg = _([[Nelly: "I guess that's another way of doing it."]])
+         player.setSpeed()
       elseif somebribed then
          msg = _([[Nelly: "You only bribed some pilots, try to bribe them all!"]])
       else
-         msg = fmt.f(_([[Nelly: "Quickly! Target the hostile pirates with {targetkey} and bribe them by hailing them with {hailkey}!"]]),{targetkey=tut.getKey("target_hostile"),hailkey=tut.getKey("hail")})
+         msg = fmt.f(_([[Nelly: "Quickly! Target the hostile pirates with {targetkey} and bribe them by hailing them with {hailkey}!"]]),
+            {targetkey=tut.getKey("target_hostile"),hailkey=tut.getKey("hail")})
       end
       pp:comm( msg )
    end
 
-   hook.timer( 3, "timer_pirate_checkbribe" )
+   if n > 0 then
+      hook.timer( 3, "timer_pirate_checkbribe" )
+   end
 end
 
 function reset_osd_hook ()
