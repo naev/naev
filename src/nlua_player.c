@@ -77,6 +77,7 @@ static int playerL_autonavDest( lua_State *L );
 static int playerL_autonavAbort( lua_State *L );
 static int playerL_autonavReset( lua_State *L );
 /* Cinematics. */
+static int playerL_setSpeed( lua_State *L );
 static int playerL_cinematics( lua_State *L );
 static int playerL_damageSPFX( lua_State *L );
 static int playerL_screenshot( lua_State *L );
@@ -160,6 +161,7 @@ static const luaL_Reg playerL_methods[] = {
    { "autonavDest", playerL_autonavDest },
    { "autonavAbort", playerL_autonavAbort },
    { "autonavReset", playerL_autonavReset },
+   { "setSpeed", playerL_setSpeed },
    { "cinematics", playerL_cinematics },
    { "damageSPFX", playerL_damageSPFX },
    { "screenshot", playerL_screenshot },
@@ -678,6 +680,27 @@ static int playerL_autonavReset( lua_State *L )
    double timer = luaL_optnumber(L,1,0.);
    player_autonavResetSpeed();
    player.autonav_timer = timer;
+   return 0;
+}
+
+/**
+ * @brief Sets the game speed directly.
+ *
+ *    @luatparam number speed Speed to set the game to. If omitted it will reset the game speed.
+ * @luafunc setSpeed
+ */
+static int playerL_setSpeed( lua_State *L )
+{
+   double speed = luaL_optnumber( L, 1, -1 );
+
+   if (speed > 0.) {
+      player.speed = speed;
+      sound_setSpeed( speed );
+      pause_setSpeed( speed );
+   }
+   else
+      player_resetSpeed();
+
    return 0;
 }
 
