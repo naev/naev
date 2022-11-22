@@ -204,7 +204,6 @@ function handle_messages( si, dopush )
    local l = p:leader()
    for i, msg in ipairs(ai.messages()) do
       local sender, msgtype, data = msg[1], msg[2], msg[3]
-
       -- This is the case that the message is being sent from the environment, such as asteroids
       if sender==nil then
          -- Asteroid was blown up with mining tools
@@ -263,7 +262,7 @@ function handle_messages( si, dopush )
             -- Messages coming from followers
             if sender:leader() == p then
                if msgtype == "f_attacked" then
-                  if not si.fighting and should_attack( data, si ) then
+                  if not si.fighting and should_attack( data, si, true ) then
                      -- Also signal to other followers
                      for k,v in ipairs(p:followers()) do
                         p:msg( v, "l_attacked", data )
@@ -280,7 +279,7 @@ function handle_messages( si, dopush )
                if msgtype == "form-pos" then
                   mem.form_pos = data
                elseif msgtype == "l_attacked" then
-                  if not si.fighting and should_attack( data, si ) then
+                  if not si.fighting and should_attack( data, si, true ) then
                      if dopush then
                         ai.pushtask("attack", data)
                         taskchange = true
@@ -338,12 +337,12 @@ end
 --[[
 -- Whether or not the pilot should try to attack an enemy.
 --]]
-function should_attack( enemy, si )
+function should_attack( enemy, si, aggressor )
    if not enemy or not enemy:exists() then
       return false
    end
 
-   if not mem.aggressive then
+   if not aggressor and not mem.aggressive then
       return false
    end
 
@@ -583,7 +582,7 @@ function control( dt )
    -- Get new task
    if task == nil then
       -- See what decision to take
-      if should_attack( enemy, si ) then
+      if should_attack( enemy, si, false ) then
          ai.hostile(enemy) -- Should be done before taunting
          consider_taunt(enemy, true)
          ai.pushtask("attack", enemy)
@@ -609,7 +608,7 @@ function control( dt )
    -- Enemy sighted, handled doing specific tasks
    if enemy ~= nil and mem.aggressive then
       -- See if really want to attack
-      if should_attack( enemy, si ) then
+      if should_attack( enemy, si, false ) then
          ai.hostile(enemy) -- Should be done before taunting
          consider_taunt(enemy, true)
          clean_task()
@@ -773,7 +772,7 @@ function attacked( attacker )
 
    -- Cooldown should be left running if not taking heavy damage.
    if mem.cooldown then
-      local _, pshield = p:health()
+      local _a, pshield = p:health()
       if pshield < 90 then
          mem.cooldown = false
          p:setCooldown( false )
@@ -965,7 +964,7 @@ function distress( pilot, attacker )
    -- Already fighting
    if si.attack then
       -- Ignore if not interested in attacking
-      if not should_attack( badguy, si ) then return end
+      if not should_attack( badguy, si, false ) then return end
 
       local target = ai.taskdata()
 
@@ -979,7 +978,7 @@ function distress( pilot, attacker )
    elseif task ~= "runaway" and task ~= "refuel" then
       if not si.noattack and mem.aggressive then
          -- Ignore if not interested in attacking
-         if not should_attack( badguy, si ) then return end
+         if not should_attack( badguy, si, false ) then return end
          if p:inrange( badguy ) then -- TODO: something to help in the other case
             clean_task( task )
             ai.pushtask( "attack", badguy )
