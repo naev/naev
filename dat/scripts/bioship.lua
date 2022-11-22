@@ -184,12 +184,12 @@ local function skill_enable( p, s )
 end
 
 local _maxstageSize = {
-   5,
-   6,
-   7,
-   8,
-   9,
-  10
+   5, -- interceptor
+   6, -- fighter / bomber
+   7, -- corvette
+   8, -- destroyer
+   9, -- cruiser
+  10, -- carrier / battleship
 }
 function bioship.maxstage( p )
    return _maxstageSize[ p:ship():size() ]
