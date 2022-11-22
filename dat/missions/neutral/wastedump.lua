@@ -25,7 +25,6 @@ local fmt = require "format"
 local pir = require "common.pirate"
 local vntk = require "vntk"
 
-
 local text = {}
 text[1] = _("The waste containers are loaded onto your ship and you are paid {credits}. You begin to wonder if accepting this job was really a good idea.")
 text[2] = _("Workers pack your cargo hold full of as much garbage as it can carry, then hastily hand you a credit chip containing {credits}. Smelling the garbage, you immediately regret taking the job.")
@@ -46,17 +45,21 @@ abort_text[3] = _("You dump the waste containers into space illegally, noting th
 local dest_planets = { "The Stinker", "Eiroik" }
 
 function create ()
-   local dist = nil
+   local dist = math.huge
    for i, j in ipairs( dest_planets ) do
       local _p, sys = spob.getS( j )
-      if dist == nil or system.cur():jumpDist(sys) < dist then
+      if system.cur():jumpDist(sys) < dist then
          dist = system.cur():jumpDist(sys)
       end
+   end
+   -- failed to create
+   if dist == math.huge then
+      misn.finish(false)
    end
 
    -- Note: this mission makes no system claims
 
-   mem.credits_factor = 1e3 * dist
+   mem.credits_factor = 1e3 + 150 * dist
    mem.credits_mod = 10e3 * rnd.sigma()
 
    mem.landed = true
@@ -126,8 +129,10 @@ function abort ()
       misn.cargoJet( mem.cid )
 
       -- Make everyone angry
-      for i, j in ipairs( pilot.get() ) do
-         j:setHostile()
+      for i, p in ipairs(pilot.get()) do
+         if not p:withPlayer() then
+            p:setHostile()
+         end
       end
 
       -- Add some police!
