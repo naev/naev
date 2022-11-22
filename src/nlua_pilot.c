@@ -4573,6 +4573,10 @@ static int pilotL_pushtask( lua_State *L )
 {
    Pilot *p          = luaL_validpilot(L,1);
    const char *task  = luaL_checkstring(L,2);
+
+   if (pilot_isPlayer(p) && !pilot_isFlag(p,PILOT_MANUAL_CONTROL))
+      return 0;
+
    Task *t           = ai_newtask( L, p, task, 0, 1 );
    if (!lua_isnoneornil(L,3)) {
       lua_pushvalue( L, 3 );

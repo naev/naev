@@ -1137,6 +1137,9 @@ static Task* ai_createTask( lua_State *L, int subtask )
    /* Parse basic parameters. */
    const char *func = luaL_checkstring(L,1);
 
+   if (pilot_isPlayer(cur_pilot) && !pilot_isFlag(cur_pilot,PILOT_MANUAL_CONTROL))
+      return NULL;
+
    /* Creates a new AI task. */
    Task *t = ai_newtask( L, cur_pilot, func, subtask, 0 );
 
