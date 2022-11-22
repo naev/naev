@@ -484,6 +484,9 @@ end
 function graphics.Font:setOutline( size )
    self.outline = size
 end
+function graphics.Font:getOutline()
+   return self.outline
+end
 function graphics.setFont( fnt ) graphics._font = fnt end
 function graphics.getFont() return graphics._font end
 function graphics.setNewFont( file, size, ...  )
