@@ -44,6 +44,15 @@ abort_text[3] = _("You dump the waste containers into space illegally, noting th
 -- List of possible waste dump planets.
 local dest_planets = { "The Stinker", "Eiroik" }
 
+local function update_desc( hide_free )
+   local desc = _("Take as many waste containers as your ship can hold and drop them off at any authorized garbage collection facility. You will be paid immediately, but any attempt to illegally jettison the waste into space will be severely punished if you are caught.")
+   if not hide_free then
+      desc = desc.."\n\n"..fmt.f(_("You can fit {amount} of waste containers in your ship."),
+         {amount=player.pilot():cargoFree()} )
+   end
+   misn.setDesc( desc )
+end
+
 function create ()
    local dist = math.huge
    for i, j in ipairs( dest_planets ) do
@@ -71,13 +80,21 @@ function create ()
 
    -- Set mission details
    misn.setTitle( _("Waste Dump") )
-   misn.setDesc( _("Take as many waste containers as your ship can hold and drop them off at any authorized garbage collection facility. You will be paid immediately, but any attempt to illegally jettison the waste into space will be severely punished if you are caught.") )
+   update_desc()
    misn.setReward( fmt.f(_("{credits} per tonne"), {credits=fmt.credits(mem.credits_factor)} ) )
+
+   -- Update description until accepted
+   mem.update_desc_hook = hook.land( "update_land_desc", "mission" )
 end
 
+function update_land_desc ()
+   update_desc(false)
+end
 
 function accept ()
    misn.accept()
+   hook.rm( mem.update_desc_hook ) -- No longer need this
+   update_desc(true)
 
    local q = player.pilot():cargoFree()
    mem.credits = mem.credits_factor * q + mem.credits_mod
@@ -95,11 +112,9 @@ function accept ()
    hook.land( "land" )
 end
 
-
 function takeoff ()
    mem.landed = false
 end
-
 
 function land ()
    mem.landed = true
@@ -113,7 +128,6 @@ function land ()
       end
    end
 end
-
 
 function abort ()
    if mem.landed then
