@@ -2528,6 +2528,7 @@ dat/events/dvaered/poster.lua
 dat/events/dvaered/totoran.lua
 dat/events/dvaered/warlord_propaganda.lua
 dat/events/dvaered/warlords_battle.lua
+dat/events/escort_settings.lua
 dat/events/flf/derelict.lua
 dat/events/flf/flf_catastrophe.lua
 dat/events/hired_escorts.lua
