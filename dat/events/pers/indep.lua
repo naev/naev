@@ -77,7 +77,22 @@ return function ()
             m.norun = true
             return p
          end
-      }
+      }, {
+         spawn = function ()
+            local p = pilot.add("Za'lek Sting", "Independent", nil, _("Bee"), {naked=true, ai="pers"})
+            p:intrinsicSet( "shield_mod", 50 )
+            p:intrinsicSet( "fbay_capacity", 50 )
+            p:intrinsicSet( "fbay_reload", 100 )
+            equipopt.zalek( p, {
+               fighterbay = 10,
+               bolt = 0.1,
+            } )
+            local m = p:memory()
+            m.comm_greet = _([["Humans like to use fancy technology to try to disguise the fact that they are basically poop-flinging monkeys."]])
+            m.taunt = _("Why are you doing this to me!?")
+            return p
+         end
+      },
    }
 
    if scur == system.get("Zied") then
