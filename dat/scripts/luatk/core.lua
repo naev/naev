@@ -908,6 +908,13 @@ function luatk.List:set( idx )
    self.selected = math.max( 1, math.min( idx, #self.items ) )
    self.onselect( self:get() )
 end
+function luatk.List:setItem( itm )
+   for k,v in ipairs(self.items) do
+      if v==itm then
+         return self:set( k )
+      end
+   end
+end
 function luatk.List:setPos( pos )
    self.pos = pos * self.scrollh
    self.pos = math.max( 0, math.min( self.scrollh, self.pos ) )
