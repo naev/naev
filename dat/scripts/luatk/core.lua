@@ -453,6 +453,12 @@ end
 luatk.Widget = {}
 luatk.Widget_mt = { __index = luatk.Widget }
 function luatk.newWidget( parent, x, y, w, h )
+   if x < 0 then
+      x = parent.w - w + x
+   end
+   if y < 0 then
+      y = parent.h - h + y
+   end
    local wgt = { parent=parent, x=x, y=y, w=w, h=h }
    setmetatable( wgt, luatk.Widget_mt )
    table.insert( parent._widgets, wgt )
