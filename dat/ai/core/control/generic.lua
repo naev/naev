@@ -840,6 +840,7 @@ function create_pre ()
    mem.tookoff    = p:flags("takingoff")
    mem.jumpedin   = p:flags("jumpingin")
    mem.carried    = p:flags("carried")
+   mem.mothership = p:mothership()
 
    -- Amount of faction lost when the pilot distresses at the player
    -- Should be roughly 1 for a 20 point llama and 4.38 for a 150 point hawking

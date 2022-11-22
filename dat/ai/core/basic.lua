@@ -451,11 +451,25 @@ function _landland ( planet )
    end
 end
 
-
 --[[
 -- Attempts to run away from the target.
 --]]
 function runaway( target )
+   if mem.mothership and mem.mothership:exists() then
+      local goal = ai.follow_accurate( mem.mothership, 0, 0, mem.Kp, mem.Kd )
+      local dir  = ai.face( goal )
+      local dist = ai.dist( goal )
+
+      if dist > 300 then
+         if dir < math.rad(10) then
+            ai.accel()
+         end
+      else -- Time to dock
+         ai.dock( mem.mothership )
+      end
+      return
+   end
+
    -- Target must exist
    if not target or not target:exists() then
       ai.poptask()
