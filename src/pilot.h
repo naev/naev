@@ -49,6 +49,7 @@
 /* Pilot-related hooks. */
 enum {
    PILOT_HOOK_NONE,      /**< No hook. */
+   PILOT_HOOK_CREATION,  /**< Pilot was created. */
    PILOT_HOOK_DEATH,     /**< Pilot died. */
    PILOT_HOOK_BOARDING,  /**< Player is boarding. */
    PILOT_HOOK_BOARD,     /**< Player got boarded. */

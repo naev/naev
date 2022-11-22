@@ -3209,6 +3209,9 @@ unsigned int pilot_create( const Ship* ship, const char* name, int faction, cons
    /* Run Lua stuff. */
    pilot_outfitLInitAll( p );
 
+   /* Pilot creation hook. */
+   pilot_runHook( p, PILOT_HOOK_CREATION );
+
    return p->id;
 }
 
