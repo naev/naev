@@ -211,7 +211,7 @@ function enter ()
    for i=1,15 do
       table.insert( drones, add_drone() )
    end
-   dscavenger = add_drone( "Drone (Hyena)", _("Scavenger") )
+   dscavenger = add_drone( "Drone (Hyena)", p_("drone", "Scavenger") )
    dscavenger:setVisplayer(true)
 
 --[[
@@ -510,7 +510,7 @@ function cutscene10 ()
    camera.set( pp, true ) -- Hard set camera
 
    local pos = pp:pos() + vec2.newP( 250, rnd.angle() )
-   dscavenger = pilot.add( "Drone (Hyena)", "Independent", pos, _("Scavenger") )
+   dscavenger = pilot.add( "Drone (Hyena)", "Independent", pos, p_("drone", "Scavenger") )
    dscavenger:setInvincible(true)
    dscavenger:setHealth( 1+rnd.rnd()*5, 0 )
    dscavenger:disable()
@@ -763,7 +763,7 @@ local function spawn_scavenger( pos )
    if not pos then
       pos = player.pos() + vec2.newP( 200*rnd.rnd(), rnd.angle() )
    end
-   dscavenger = pilot.add( "Drone (Hyena)", "Independent", pos, _("Scavenger") )
+   dscavenger = pilot.add( "Drone (Hyena)", "Independent", pos, p_("drone", "Scavenger") )
    dscavenger:setInvincible(true)
    dscavenger:control()
    dscavenger:follow( player.pilot() )
@@ -823,7 +823,7 @@ function land_end ()
    vn.run()
 
    if not mem.scavenger_no then
-      local name = player.shipAdd( "Drone (Hyena)", _("Scavenger"), _("Joined your fleet after helping their brethren at Taiomi."), true )
+      local name = player.shipAdd( "Drone (Hyena)", p_("drone", "Scavenger"), _("Joined your fleet after helping their brethren at Taiomi."), true )
       player.shipvarPush( "taiomi_scavenger", true, name )
    end
 
