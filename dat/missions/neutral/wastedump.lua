@@ -75,8 +75,6 @@ function create ()
    mem.credits_factor = 1e3 + 150 * dist
    mem.credits_mod = 10e3 * rnd.sigma()
 
-   mem.landed = true
-
    for i, j in ipairs( dest_planets ) do
       local p = spob.get( j )
       misn.markerAdd( p, "computer" )
@@ -112,17 +110,10 @@ function accept ()
 
    misn.osdCreate( _("Waste Dump"), {_("Land on any garbage collection facility (indicated on your map) to drop off the Waste Containers")} )
 
-   hook.takeoff( "takeoff" )
    hook.land( "land" )
 end
 
-function takeoff ()
-   mem.landed = false
-end
-
 function land ()
-   mem.landed = true
-
    for i, j in ipairs( dest_planets ) do
       if spob.get(j) == spob.cur() then
          local txt = finish_text[ rnd.rnd( 1, #finish_text ) ]
@@ -134,12 +125,19 @@ function land ()
 end
 
 function abort ()
-   if mem.landed then
-      misn.cargoRm( mem.cid )
-      local fine = 2 * mem.credits
-      vntk.msg( "", fmt.f(_("In your desperation to rid yourself of the garbage, you clumsily eject it from your cargo pod while you are still landed. Garbage spills all over the hangar and local officials immediately take notice. After you apologize profusely and explain the situation was an accident, the officials let you off with a fine of {credits}."), {credits=fmt.credits(fine)} ) )
+   if player.isLanded() then
+      local fine = math.min( player.credits(), 2 * mem.credits )
+      local msg
+      local spb = spob.get()
+      if spb:services().inhabited then
+         msg = fmt.f(_("In your desperation to rid yourself of the garbage, you clumsily eject it from your cargo pod while you are still landed. Garbage spills all over the hangar and local officials immediately take notice. After you apologize profusely and explain the situation was an accident, the officials let you off with a fine of {credits}."), {credits=fmt.credits(fine)} )
+      else
+         msg = fmt.f(_("Thinking {spob} to be devoid of people, you eject your cargo pod while landed. To your surprise, you find a wandering environmentalist knocking on your ship airlock. You make the mistake of opening the airlock and letting them in. After having to hear a tirade about how you are polluting pristine locations around the galaxy, you end up paying them {credits} to leave and clean up the mess you made."), {credits=fmt.credits(fine), spob=spb} )
+      end
+      vntk.msg( "", msg )
       player.pay( -fine )
       misn.finish( false )
+
    else
       local txt = abort_text[ rnd.rnd( 1, #abort_text ) ]
       vntk.msg( "", txt )
