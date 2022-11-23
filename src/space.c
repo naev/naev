@@ -1679,11 +1679,12 @@ Spob *spob_new (void)
 
    /* Lua doesn't default to 0 as a safe value... */
    p->lua_env     = LUA_NOREF;
+   p->lua_mem     = LUA_NOREF;
    p->lua_init    = LUA_NOREF;
    p->lua_load    = LUA_NOREF;
    p->lua_unload  = LUA_NOREF;
-   p->lua_land    = LUA_NOREF;
    p->lua_can_land= LUA_NOREF;
+   p->lua_land    = LUA_NOREF;
    p->lua_render  = LUA_NOREF;
    p->lua_update  = LUA_NOREF;
    p->lua_comm    = LUA_NOREF;
@@ -1996,7 +1997,7 @@ int spob_luaInit( Spob *spob )
    lua_pop( naevL, 2 );          /* */
 
    /* Run init if applicable. */
-   if (spob->lua_init) {
+   if (spob->lua_init != LUA_NOREF) {
       spob_luaInitMem( spob );
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, spob->lua_init); /* f */
       lua_pushspob(naevL, spob_index(spob));
@@ -2014,7 +2015,7 @@ int spob_luaInit( Spob *spob )
  */
 void spob_gfxLoad( Spob *spob )
 {
-   if (spob->lua_load) {
+   if (spob->lua_load != LUA_NOREF) {
       spob_luaInitMem( spob );
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, spob->lua_load); /* f */
       if (nlua_pcall( spob->lua_env, 0, 2 )) {
