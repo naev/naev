@@ -42,7 +42,13 @@ abort_text[2] = _("You decide that the nearest waste dump location is too far aw
 abort_text[3] = _("You dump the waste containers into space illegally, noting that you should make sure not to get caught by authorities.")
 
 -- List of possible waste dump planets.
-local dest_planets = { "The Stinker", "Eiroik" }
+local dest_planets = {}
+for k,v in ipairs(spob.getAll()) do
+   local t = v:tags()
+   if t.garbage then
+      table.insert( dest_planets, v )
+   end
+end
 
 local function update_desc( hide_free )
    local desc = _("Take as many waste containers as your ship can hold and drop them off at any authorized garbage collection facility. You will be paid immediately, but any attempt to illegally jettison the waste into space will be severely punished if you are caught.")
@@ -54,12 +60,10 @@ local function update_desc( hide_free )
 end
 
 function create ()
+   local scur = system.cur()
    local dist = math.huge
-   for i, j in ipairs( dest_planets ) do
-      local _p, sys = spob.getS( j )
-      if system.cur():jumpDist(sys) < dist then
-         dist = system.cur():jumpDist(sys)
-      end
+   for i, p in ipairs( dest_planets ) do
+      dist = math.min( dist, scur:jumpDist(p:system()) )
    end
    -- failed to create
    if dist == math.huge then
