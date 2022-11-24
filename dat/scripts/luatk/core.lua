@@ -811,9 +811,11 @@ end
 function luatk.Fader:get()
    return self.val
 end
-function luatk.Fader:set( val )
+function luatk.Fader:set( val, no_handler )
    self.val = math.max( self.min, math.min( self.max, val ) )
-   self.handler( self, self.val )
+   if not no_handler then
+      self.handler( self, self.val )
+   end
 end
 
 --[[
@@ -904,14 +906,16 @@ end
 function luatk.List:get()
    return self.items[ self.selected ], self.selected
 end
-function luatk.List:set( idx )
+function luatk.List:set( idx, no_handler )
    self.selected = math.max( 1, math.min( idx, #self.items ) )
-   self.onselect( self:get() )
+   if not no_handler then
+      self.onselect( self:get() )
+   end
 end
-function luatk.List:setItem( itm )
+function luatk.List:setItem( itm, no_handler )
    for k,v in ipairs(self.items) do
       if v==itm then
-         return self:set( k )
+         return self:set( k, no_handler )
       end
    end
 end
