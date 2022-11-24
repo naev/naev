@@ -136,18 +136,18 @@ function create ()
    local prefix = ""
    if mem.paying_faction:static() then
       prefix = ""
-   elseif mem.faction == faction.get("Za'lek") then
+   elseif mem.paying_faction == faction.get("Za'lek") then
       prefix = require("common.zalek").prefix
-   elseif mem.faction == faction.get("Empire") then
+   elseif mem.paying_faction == faction.get("Empire") then
       prefix = require("common.empire").prefix
-   elseif mem.faction == faction.get("Dvaered") then
+   elseif mem.paying_faction == faction.get("Dvaered") then
       prefix = require("common.dvaered").prefix
-   elseif mem.faction == faction.get("Soromid") then
+   elseif mem.paying_faction == faction.get("Soromid") then
       prefix = require("common.soromid").prefix
-   elseif mem.faction == faction.get("Sirius") then
+   elseif mem.paying_faction == faction.get("Sirius") then
       prefix = require("common.sirius").prefix
-   elseif inlist( pir.factions, mem.faction ) then
-      prefix = pir.prefix( mem.faction )
+   elseif inlist( pir.factions, mem.paying_faction ) then
+      prefix = pir.prefix( mem.paying_faction )
    end
 
    -- Set mission details
@@ -227,7 +227,7 @@ function land ()
       if not pir.factionIsPirate( mem.paying_faction ) then
          pir.reputationNormalMission( mem.reputation )
       end
-      mem.paying_faction:modPlayerSingle( mem.reputation )
+      mem.paying_faction:modPlayer( mem.reputation )
       misn.finish( true )
    elseif not mem.job_done and system.cur() == mem.missys then
       local txt = abandon_text[ rnd.rnd( 1, #abandon_text ) ]
