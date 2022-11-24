@@ -685,8 +685,8 @@ void mission_cleanup( Mission* misn )
    }
 
    /* Cargo. */
-   for (int i=0; i<array_size(misn->cargo); i++) { /* must unlink all the cargo */
-      if ((player.p != NULL) && !pilot_isFlag(player.p, PILOT_DEAD)) { /* Only remove if player exists. */
+   if ((player.p != NULL) && !pilot_isFlag(player.p, PILOT_DEAD)) { /* Only remove if player exists. */
+      for (int i=0; i<array_size(misn->cargo); i++) { /* must unlink all the cargo */
          int ret = pilot_rmMissionCargo( player.p, misn->cargo[i], 0 );
          if (ret)
             WARN(_("Failed to remove mission cargo '%d' for mission '%s'."), misn->cargo[i], misn->title);
