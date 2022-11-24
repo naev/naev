@@ -630,11 +630,11 @@ static void misn_open( unsigned int wid )
    window_addText( wid, w/2 + 110, y,
          w/2 - 130, 40, 0,
          "txtDate", NULL, NULL, NULL );
-   y -= 2 * gl_defFont.h + 50;
+   y -= 2 * gl_defFont.h + 30;
    window_addText( wid, w/2 + 10, y,
-         w/2 - 30, 20, 0,
-         "txtReward", &gl_defFont, NULL, _("#nReward:#0 None") );
-   y -= 20;
+         w/2 - 30, 50, 0,
+         "txtHeader", &gl_defFont, NULL, NULL );
+   y -= 50;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, y - 40 + h - 2*LAND_BUTTON_HEIGHT, 0,
          "txtDesc", &gl_defFont, NULL, NULL );
@@ -782,7 +782,7 @@ static void misn_update( unsigned int wid, const char *str )
 
    active_misn = toolkit_getList( wid, "lstMission" );
    if (strcmp(active_misn,_("No Missions"))==0) {
-      window_modifyText( wid, "txtReward", _("#nReward:#0 None") );
+      window_modifyText( wid, "txtHeader", NULL );
       window_modifyText( wid, "txtDesc",
             _("There are no missions available here.") );
       window_disableButton( wid, "btnAcceptMission" );
@@ -794,8 +794,8 @@ static void misn_update( unsigned int wid, const char *str )
    sys = mission_sysComputerMark( misn );
    if (sys!=NULL)
       map_center( wid, sys->name );
-   snprintf( txt, sizeof(txt), _("#nReward:#0 %s"), misn->reward );
-   window_modifyText( wid, "txtReward", txt );
+   snprintf( txt, sizeof(txt), _("%s\n#nReward:#0 %s"), misn->title, misn->reward );
+   window_modifyText( wid, "txtHeader", txt );
    window_modifyText( wid, "txtDesc", misn->desc );
    window_enableButton( wid, "btnAcceptMission" );
    window_enableButton( wid, "btnAutonavMission" );
