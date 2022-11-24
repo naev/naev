@@ -157,7 +157,7 @@ function create ()
 
 #nPatrol System:#0 {sys}
 #nPatrol Points:#0 {amount}]]),
-      {amount=numpoints, sys=mem.missys})
+      {amount=#mem.points, sys=mem.missys})
    if not mem.paying_faction:static() then
       desc = desc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
          {fct=mem.paying_faction})
