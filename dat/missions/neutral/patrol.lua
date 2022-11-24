@@ -48,10 +48,6 @@ abandon_text    = {
 }
 
 
--- Mission details
-mem.misn_title  = _("Patrol of the {sys} System")
-mem.misn_desc   = _("Patrol specified points in the {sys} system, eliminating any hostiles you encounter.")
-
 -- Messages
 msg = {
    _("Point secure."),
@@ -136,9 +132,37 @@ function create ()
    mem.credits = mem.credits + rnd.sigma() * (mem.credits / 3)
    mem.reputation = math.floor( n_enemies / 75 )
 
+   -- TODO something better than this
+   local prefix = ""
+   if mem.paying_faction:static() then
+      prefix = ""
+   elseif mem.faction == faction.get("Za'lek") then
+      prefix = require("common.zalek").prefix
+   elseif mem.faction == faction.get("Empire") then
+      prefix = require("common.empire").prefix
+   elseif mem.faction == faction.get("Dvaered") then
+      prefix = require("common.dvaered").prefix
+   elseif mem.faction == faction.get("Soromid") then
+      prefix = require("common.soromid").prefix
+   elseif mem.faction == faction.get("Sirius") then
+      prefix = require("common.sirius").prefix
+   elseif inlist( pir.factions, mem.faction ) then
+      prefix = pir.prefix( mem.faction )
+   end
+
    -- Set mission details
-   misn.setTitle( fmt.f( mem.misn_title, {sys=mem.missys, fct=mem.paying_faction} ) )
-   misn.setDesc( fmt.f( mem.misn_desc, {sys=mem.missys} ) )
+   misn.setTitle(fmt.f(_("{prefix}Patrol of the {sys} System"),
+      {sys=mem.missys, prefix=prefix}))
+   local desc = fmt.f(_([[Patrol specified points in the {sys} system, eliminating any hostiles you encounter.
+
+#nPatrol System:#0 {sys}
+#nPatrol Points:#0 {amount}]]),
+      {amount=numpoints, sys=mem.missys})
+   if not mem.paying_faction:static() then
+      desc = desc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
+         {fct=mem.paying_faction})
+   end
+   misn.setDesc(desc)
    misn.setReward( fmt.credits( mem.credits ) )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
