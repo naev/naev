@@ -1856,6 +1856,7 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
 void pilot_render( Pilot *p )
 {
    double scale, x,y, w,h, z;
+   int inbounds = 1;
    Effect *e = NULL;
    glColour c = {.r=1., .g=1., .b=1., .a=1.};
 
@@ -1872,81 +1873,83 @@ void pilot_render( Pilot *p )
    /* Check if inbounds */
    if ((x < -w) || (x > SCREEN_W+w) ||
          (y < -h) || (y > SCREEN_H+h))
-      return;
+      inbounds = 0;
 
-   /* Render effects. */
-   for (int i=0; i<array_size(p->effects); i++) {
-   //for (int i=array_size(p->effects)-1; i>=0; i--) {
-      Effect *eiter = &p->effects[i];
-      if (eiter->data->program==0)
-         continue;
+   if (inbounds) {
+      /* Render effects. */
+      for (int i=0; i<array_size(p->effects); i++) {
+      //for (int i=array_size(p->effects)-1; i>=0; i--) {
+         Effect *eiter = &p->effects[i];
+         if (eiter->data->program==0)
+            continue;
 
-      /* Only render one effect for now. */
-      e = eiter;
-      break;
-   }
-
-   /* Check if needs scaling. */
-   if (pilot_isFlag( p, PILOT_LANDING ))
-      scale = CLAMP( 0., 1., p->ptimer / p->landing_delay );
-   else if (pilot_isFlag( p, PILOT_TAKEOFF ))
-      scale = CLAMP( 0., 1., 1. - p->ptimer / p->landing_delay );
-   else
-      scale = 1.;
-
-   /* Add some transparency if stealthed. TODO better effect */
-   if (pilot_isFlag(p, PILOT_STEALTH))
-      c.a = 0.5;
-
-   /* Render normally. */
-   if (e==NULL) {
-      if (p->ship->gfx_3d != NULL) {
-         /* 3d */
-         object_renderSolidPart(p->ship->gfx_3d, p->solid, "body", c.a, p->ship->gfx_3d_scale * scale);
-         object_renderSolidPart(p->ship->gfx_3d, p->solid, "engine", c.a * p->engine_glow, p->ship->gfx_3d_scale * scale);
+         /* Only render one effect for now. */
+         e = eiter;
+         break;
       }
+
+      /* Check if needs scaling. */
+      if (pilot_isFlag( p, PILOT_LANDING ))
+         scale = CLAMP( 0., 1., p->ptimer / p->landing_delay );
+      else if (pilot_isFlag( p, PILOT_TAKEOFF ))
+         scale = CLAMP( 0., 1., 1. - p->ptimer / p->landing_delay );
+      else
+         scale = 1.;
+
+      /* Add some transparency if stealthed. TODO better effect */
+      if (pilot_isFlag(p, PILOT_STEALTH))
+         c.a = 0.5;
+
+      /* Render normally. */
+      if (e==NULL) {
+         if (p->ship->gfx_3d != NULL) {
+            /* 3d */
+            object_renderSolidPart(p->ship->gfx_3d, p->solid, "body", c.a, p->ship->gfx_3d_scale * scale);
+            object_renderSolidPart(p->ship->gfx_3d, p->solid, "engine", c.a * p->engine_glow, p->ship->gfx_3d_scale * scale);
+         }
+         else {
+            gl_renderSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
+                  1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
+                  scale, scale, p->tsx, p->tsy, &c );
+         }
+      }
+      /* Render effect single effect. */
       else {
-         gl_renderSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
-               1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
-               scale, scale, p->tsx, p->tsy, &c );
+         mat4 projection, tex_mat;
+         const EffectData *ed = e->data;
+
+         /* Render onto framebuffer. */
+         pilot_renderFramebuffer( p, gl_screen.fbo[2], gl_screen.nw, gl_screen.nh );
+
+         glUseProgram( ed->program );
+
+         glActiveTexture( GL_TEXTURE0 );
+         glBindTexture( GL_TEXTURE_2D, gl_screen.fbo_tex[2] );
+         glUniform1i( ed->u_tex, 0 );
+
+         glEnableVertexAttribArray( ed->vertex );
+         gl_vboActivateAttribOffset( gl_squareVBO, ed->vertex, 0, 2, GL_FLOAT, 0 );
+
+         projection = gl_view_matrix;
+         mat4_translate( &projection, x + (1.-scale)*z*w/2., y + (1.-scale)*z*h/2., 0. );
+         mat4_scale( &projection, scale*z*w, scale*z*h, 1. );
+         gl_uniformMat4(ed->projection, &projection);
+
+         tex_mat = mat4_identity();
+         mat4_scale( &tex_mat, w/(double)gl_screen.nw, h/(double)gl_screen.nh, 1. );
+         gl_uniformMat4(ed->tex_mat, &tex_mat);
+
+         glUniform3f( ed->dimensions, SCREEN_W, SCREEN_H, cam_getZoom() );
+         glUniform1f( ed->u_timer, e->timer );
+         glUniform1f( ed->u_elapsed, e->elapsed );
+         glUniform1f( ed->u_r, e->r );
+
+         /* Draw. */
+         glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+         /* Clear state. */
+         glDisableVertexAttribArray( ed->vertex );
       }
-   }
-   /* Render effect single effect. */
-   else {
-      mat4 projection, tex_mat;
-      const EffectData *ed = e->data;
-
-      /* Render onto framebuffer. */
-      pilot_renderFramebuffer( p, gl_screen.fbo[2], gl_screen.nw, gl_screen.nh );
-
-      glUseProgram( ed->program );
-
-      glActiveTexture( GL_TEXTURE0 );
-      glBindTexture( GL_TEXTURE_2D, gl_screen.fbo_tex[2] );
-      glUniform1i( ed->u_tex, 0 );
-
-      glEnableVertexAttribArray( ed->vertex );
-      gl_vboActivateAttribOffset( gl_squareVBO, ed->vertex, 0, 2, GL_FLOAT, 0 );
-
-      projection = gl_view_matrix;
-      mat4_translate( &projection, x + (1.-scale)*z*w/2., y + (1.-scale)*z*h/2., 0. );
-      mat4_scale( &projection, scale*z*w, scale*z*h, 1. );
-      gl_uniformMat4(ed->projection, &projection);
-
-      tex_mat = mat4_identity();
-      mat4_scale( &tex_mat, w/(double)gl_screen.nw, h/(double)gl_screen.nh, 1. );
-      gl_uniformMat4(ed->tex_mat, &tex_mat);
-
-      glUniform3f( ed->dimensions, SCREEN_W, SCREEN_H, cam_getZoom() );
-      glUniform1f( ed->u_timer, e->timer );
-      glUniform1f( ed->u_elapsed, e->elapsed );
-      glUniform1f( ed->u_r, e->r );
-
-      /* Draw. */
-      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-      /* Clear state. */
-      glDisableVertexAttribArray( ed->vertex );
    }
 
 #ifdef DEBUGGING

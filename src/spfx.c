@@ -836,7 +836,7 @@ void spfx_trail_draw( const Trail_spfx* trail )
 
       /* Make sure in bounds. */
       if ((MAX(x1,x2) < 0.) || (MIN(x1,x2) > (double)SCREEN_W) ||
-         (MAX(y1,y2) < 0.) || (MIN(y1,y2) > (double)SCREEN_H)) {
+          (MAX(y1,y2) < 0.) || (MIN(y1,y2) > (double)SCREEN_H)) {
          len += s;
          continue;
       }
