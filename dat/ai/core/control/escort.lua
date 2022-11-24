@@ -1,7 +1,3 @@
--- Don't run away from master ship
-mem.norun = true
-mem.carried = true -- Is a carried fighter
-
 -- Simple create function
 function create ()
    create_pre()
@@ -13,6 +9,8 @@ function create ()
    if l then
       local lmem = l:memory()
       mem.atk_kill = lmem.atk_kill
+      mem.aggressive = lmem.aggressive
+      mem.enemyclose = lmem.enemyclose
    end
 end
 

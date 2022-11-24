@@ -120,7 +120,7 @@ int pfleet_deploy( PlayerShip_t *ps )
    escort_createRef( player.p, ps->p, &v, NULL, a, ESCORT_TYPE_FLEET, 1, -1 );
 
    /* Initialize. */
-   ai_pinit( ps->p, "player" );
+   ai_pinit( ps->p, "escort" );
    pilot_reset( ps->p );
    pilot_rmFlag( ps->p, PILOT_PLAYER );
 
