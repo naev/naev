@@ -54,15 +54,6 @@ for k,v in ipairs(spob.getAll()) do
    end
 end
 
-local function update_desc( hide_free )
-   local desc = _("Take as many waste containers as your ship can hold and drop them off at any authorized garbage collection facility. You will be paid immediately, but any attempt to illegally get rid of the waste will be severely punished if you are caught.")
-   if not hide_free then
-      desc = desc.."\n\n"..fmt.f(_("You can fit {amount} of waste containers in your ship."),
-         {amount=player.pilot():cargoFree()} )
-   end
-   misn.setDesc( desc )
-end
-
 function create ()
    local scur = system.cur()
    local dist = math.huge
@@ -85,21 +76,12 @@ function create ()
 
    -- Set mission details
    misn.setTitle( _("Waste Dump") )
-   update_desc()
+   mem.setDesc(_("Take as many waste containers as your ship can hold and drop them off at any authorized garbage collection facility. You will be paid immediately, but any attempt to illegally get rid of the waste will be severely punished if you are caught."))
    misn.setReward( fmt.f(_("{credits} per tonne"), {credits=fmt.credits(mem.credits_factor)} ) )
-
-   -- Update description until accepted
-   mem.update_desc_hook = hook.land( "update_land_desc", "mission" )
-end
-
-function update_land_desc ()
-   update_desc(false)
 end
 
 function accept ()
    misn.accept()
-   hook.rm( mem.update_desc_hook ) -- No longer need this
-   update_desc(true)
 
    local q = player.pilot():cargoFree()
    mem.credits = mem.credits_factor * q + mem.credits_mod
