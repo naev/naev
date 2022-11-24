@@ -122,7 +122,7 @@ end
 
 
 function accept ()
-   if player.pilot():ship():classDisplay() ~= "Luxury Yacht" then
+   if not player.pilot():ship():tags().luxury then
       if tk.yesno( _("Not Very Luxurious"), fmt.f( _("Since your ship is not a Luxury Yacht class ship, you will only be paid {credits}. Accept the mission anyway?"), {credits=fmt.credits(mem.credits_nolux)} ) ) then
          mem.nolux_known = true
          misn.setReward( fmt.credits( mem.credits_nolux ) )
