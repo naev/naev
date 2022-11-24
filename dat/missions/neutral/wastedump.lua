@@ -62,7 +62,7 @@ end
 function create ()
    local scur = system.cur()
    local dist = math.huge
-   for i, p in ipairs( dest_planets ) do
+   for i,p in ipairs(dest_planets) do
       dist = math.min( dist, scur:jumpDist(p:system()) )
    end
    -- failed to create
@@ -72,11 +72,10 @@ function create ()
 
    -- Note: this mission makes no system claims
 
-   mem.credits_factor = 1e3 + 150 * dist
+   mem.credits_factor = 500 + 300 * dist
    mem.credits_mod = 10e3 * rnd.sigma()
 
-   for i, j in ipairs( dest_planets ) do
-      local p = spob.get( j )
+   for i,p in ipairs( dest_planets ) do
       misn.markerAdd( p, "computer" )
    end
 
@@ -114,8 +113,8 @@ function accept ()
 end
 
 function land ()
-   for i, j in ipairs( dest_planets ) do
-      if spob.get(j) == spob.cur() then
+   for i,p in ipairs(dest_planets) do
+      if p == spob.cur() then
          local txt = finish_text[ rnd.rnd( 1, #finish_text ) ]
          vntk.msg( "", txt )
          pir.reputationNormalMission(rnd.rnd(2,3))
@@ -145,7 +144,7 @@ function abort ()
       misn.cargoJet( mem.cid )
 
       -- Make everyone angry
-      for i, p in ipairs(pilot.get()) do
+      for i,p in ipairs(pilot.get()) do
          if not p:withPlayer() then
             p:setHostile()
          end
@@ -194,7 +193,7 @@ function abort ()
          choices = { "Lancelot", "Pacifier", "Ancestor", "Vendetta" }
       end
 
-      for n = 1, rnd.rnd( 2, 4 ) do
+      for n = 1,rnd.rnd( 2, 4 ) do
          for i, j in ipairs( system.cur():jumps() ) do
             local p = pilot.add( choices[ rnd.rnd( 1, #choices ) ], f, j:dest() )
             p:setHostile()
