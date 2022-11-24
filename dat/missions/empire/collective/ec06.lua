@@ -30,6 +30,7 @@
 require "proximity"
 local emp = require "common.empire"
 local fmt = require "format"
+local pilotai = require "pilotai"
 
 -- Mission constants
 local misn_base = spob.get("Omega Station")
@@ -112,6 +113,7 @@ function jumpin ()
          fleetC = {}
          droneC = {}
          local fleetCpos = vec2.new(0, 0)
+         local fleetEpos = jump.get( system.cur(), mem.last_sys ):pos()
          mem.deathsC = 0
 
          fleetE[#fleetE + 1] = pilot.add( "Empire Peacemaker", "Empire", mem.last_sys )
@@ -147,16 +149,19 @@ function jumpin ()
          for _, j in ipairs(fleetE) do
             j:changeAI("empire_idle")
             j:setVisible()
+            pilotai.guard( j, fleetCpos )
          end
 
          for _, j in ipairs(fleetC) do
             j:changeAI("collective_norun")
             j:setVisible()
             j:setHilight()
+            pilotai.guard( j, fleetEpos )
          end
          for _, j in ipairs(droneC) do
             j:changeAI("collective_norun")
             j:setVisible()
+            pilotai.guard( j, fleetEpos )
          end
 
          fleetE[1]:broadcast(_("To all pilots, this is mission control! We are ready to begin our attack! Engage at will!"))
@@ -178,8 +183,8 @@ end
 
 function fail_timer ()
    tk.msg( _("Cowardly Behavior"), _([[You receive a message signed by Commodore Keer:
-    "There is no room for cowards in the Empire's fleet."
-    The signature does seem valid.]]) )
+"There is no room for cowards in the Empire's fleet."
+The signature does seem valid.]]) )
    emp.addCollectiveLog( _([[You abandoned your mission to help the Empire destroy the Collective. Commander Keer transmitted a message: "There is no room for cowards in the Empire's fleet."]]) )
    misn.finish( true )
 end
@@ -229,6 +234,13 @@ function col_dead( _victim )
    misn.osdActive(3)
    addRefuelShip()
    mem.misn_stage = 4
+
+   -- Change back to normal AI
+   for k,v in ipairs(fleetE) do
+      if v:exists() then
+         v:changeAI( "empire" )
+      end
+   end
 end
 
 
