@@ -87,7 +87,7 @@ function accept ()
    mem.credits = mem.credits_factor * q + mem.credits_mod
 
    local txt = text[ rnd.rnd( 1, #text ) ]
-   vntk.msg( "", fmt.f( txt, {credits = fmt.credits( mem.credits ) } ) )
+   vntk.msg(_("Waste Containers Loaded"), fmt.f( txt, {credits = fmt.credits( mem.credits ) } ) )
 
    local c = commodity.new( N_("Waste Containers"), N_("A bunch of waste containers leaking all sorts of indescribable liquids. You hope they don't leak onto your ship.") )
    mem.cid = misn.cargoAdd( c, q )
@@ -102,7 +102,7 @@ function land ()
    for i,p in ipairs(dest_planets) do
       if p == spob.cur() then
          local txt = finish_text[ rnd.rnd( 1, #finish_text ) ]
-         vntk.msg( "", txt )
+         vntk.msg(_("No More Garbage"), txt)
          pir.reputationNormalMission(rnd.rnd(2,3))
          misn.finish( true )
       end
@@ -119,13 +119,13 @@ function abort ()
       else
          msg = fmt.f(_("Thinking {spob} to be devoid of people, you eject your cargo pod while landed. To your surprise, you find a wandering environmentalist knocking on your ship airlock. You make the mistake of opening the airlock and letting them in. After having to hear a tirade about how you are polluting pristine locations around the galaxy, you end up paying them {credits} to leave and clean up the mess you made."), {credits=fmt.credits(fine), spob=spb} )
       end
-      vntk.msg( "", msg )
+      vntk.msg(_("Dirty Deed"), msg)
       player.pay( -fine )
       misn.finish( false )
 
    else
       local txt = abort_text[ rnd.rnd( 1, #abort_text ) ]
-      vntk.msg( "", txt )
+      vntk.msg(_("Dirty Deed"), txt)
 
       misn.cargoJet( mem.cid )
 
