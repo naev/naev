@@ -2031,8 +2031,6 @@ void player_brokeHyperspace (void)
       Pilot *p = pilot_stack[i];
 
       if (pilot_isFlag(p, PILOT_PERSIST) || pilot_isFlag(p, PILOT_PLAYER)) {
-         pilot_clearHooks(p);
-         ai_cleartasks(p);
          if (p != player.p)
             space_calcJumpInPos( cur_system, sys, &p->solid->pos, &p->solid->vel, &p->solid->dir, player.p );
 
@@ -2069,11 +2067,7 @@ void player_brokeHyperspace (void)
       }
    }
 
-   /* Update lua stuff. */
-   pilot_outfitLInitAll( player.p );
-
    /* Safe since this is run in the player hook section. */
-   pilot_outfitLOnjumpin( player.p );
    hooks_run( "jumpin" );
    hooks_run( "enter" );
    events_trigger( EVENT_TRIGGER_ENTER );
