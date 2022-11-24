@@ -112,7 +112,7 @@ function escort_gui ()
    luatk.newText( wdw, 0, 10, w, 20, _("Escort Manager"), nil, "center" )
 
    local function update_wgt ()
-      lst_profiles:setItem( "custom" )
+      lst_profiles:setItem( "Custom", true )
       update_pilots()
    end
 
@@ -138,12 +138,20 @@ function escort_gui ()
 
    luatk.newText( wdw, 20, 30, 260, 20, "#n".._("Profiles:") )
    lst_profiles = luatk.newList( wdw, 20, 55, 260, 120, profiles_list, function ( itm, idx )
-      if itm=="custom" then return end
+      if itm=="Custom" then return end
       local prof = profiles[idx]
-      chk_aggressive:set( prof.aggressive )
-      fad_enemyclose:set( prof.enemyclose )
-      fad_returndist:set( prof.leadermaxdist )
-      fad_armourrun:set(  prof.armour_run )
+      if prof.aggressive then
+         chk_aggressive:set( prof.aggressive, true )
+      end
+      if prof.enemyclose then
+         fad_enemyclose:set( prof.enemyclose, true )
+      end
+      if prof.leadermaxdist then
+         fad_returndist:set( prof.leadermaxdist, true )
+      end
+      if prof.armour_run then
+         fad_armourrun:set(  prof.armour_run, true )
+      end
       update_pilots()
    end, 1 )
    lst_profiles:setItem( profile )
