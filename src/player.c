@@ -2009,21 +2009,8 @@ void player_brokeHyperspace (void)
    /* reduce fuel */
    player.p->fuel -= player.p->fuel_consumption;
 
-   /* stop hyperspace */
-   pilot_rmFlag( player.p, PILOT_HYPERSPACE );
-   pilot_rmFlag( player.p, PILOT_HYP_BEGIN );
-   pilot_rmFlag( player.p, PILOT_HYP_BRAKE );
-   pilot_rmFlag( player.p, PILOT_HYP_PREP );
-
    /* Set the ptimer. */
    player.p->ptimer = HYPERSPACE_FADEIN;
-
-   /* GIve some non-targetable time. */
-   player.p->itimer = PILOT_PLAYER_NONTARGETABLE_JUMPIN_DELAY;
-   pilot_setFlag( player.p, PILOT_NONTARGETABLE );
-
-   /* Update the map */
-   map_jump();
 
    /* Add persisted pilots */
    pilot_stack = pilot_getAll();
@@ -2049,6 +2036,9 @@ void player_brokeHyperspace (void)
          pilot_rmFlag( p, PILOT_HYP_PREP );
       }
    }
+
+   /* Update the map */
+   map_jump();
 
    /* Disable autonavigation if arrived. */
    if (player_isFlag(PLAYER_AUTONAV)) {
