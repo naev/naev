@@ -3195,7 +3195,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
  */
 static int system_parseJumps( StarSystem *sys )
 {
-   xmlNodePtr parent, cur, node;
+   xmlNodePtr parent, node;
    xmlDocPtr doc;
 
    doc = xml_parsePhysFS( sys->filename );
@@ -3211,7 +3211,7 @@ static int system_parseJumps( StarSystem *sys )
    node  = parent->xmlChildrenNode;
    do { /* load all the data */
       if (xml_isNode(node,"jumps")) {
-         cur = node->children;
+         xmlNodePtr cur = node->children;
          do {
             if (xml_isNode(cur,"jump"))
                system_parseJumpPoint( cur, sys );
@@ -4007,7 +4007,6 @@ void system_presenceAddSpob( StarSystem *sys, const SpobPresence *ap )
 {
    int id, curSpill;
    Queue q, qn;
-   StarSystem *cur;
    double spillfactor;
    int faction = ap->faction;
    double base = ap->base;
@@ -4077,7 +4076,7 @@ void system_presenceAddSpob( StarSystem *sys, const SpobPresence *ap )
       int x;
 
       /* Pull one off the current range queue. */
-      cur = q_dequeue(q);
+      StarSystem *cur = q_dequeue(q);
 
       /* Ran out of candidates before running out of spill range! */
       if (cur == NULL)
@@ -4363,6 +4362,12 @@ const char *space_populationStr( uint64_t population )
    return pop;
 }
 
+/**
+ * @brief Gets the map shader by name.
+ *
+ *    @param name NAme of the map shader.
+ *    @return The map shader.
+ */
 static const MapShader *mapshader_get( const char *name )
 {
    MapShader *ms;
