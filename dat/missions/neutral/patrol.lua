@@ -132,27 +132,17 @@ function create ()
    mem.credits = mem.credits + rnd.sigma() * (mem.credits / 3)
    mem.reputation = math.floor( n_enemies / 75 )
 
-   -- TODO something better than this
-   local prefix = ""
+   -- Faction prefix
+   local prefix
    if mem.paying_faction:static() then
       prefix = ""
-   elseif mem.paying_faction == faction.get("Za'lek") then
-      prefix = require("common.zalek").prefix
-   elseif mem.paying_faction == faction.get("Empire") then
-      prefix = require("common.empire").prefix
-   elseif mem.paying_faction == faction.get("Dvaered") then
-      prefix = require("common.dvaered").prefix
-   elseif mem.paying_faction == faction.get("Soromid") then
-      prefix = require("common.soromid").prefix
-   elseif mem.paying_faction == faction.get("Sirius") then
-      prefix = require("common.sirius").prefix
-   elseif inlist( pir.factions, mem.paying_faction ) then
-      prefix = pir.prefix( mem.paying_faction )
+   else
+      prefix = require("common.prefix").prefix(mem.paying_faction)
    end
 
    -- Set mission details
-   misn.setTitle(fmt.f(_("{prefix}Patrol of the {sys} System"),
-      {sys=mem.missys, prefix=prefix}))
+   misn.setTitle(prefix..fmt.f(_("Patrol of the {sys} System"),
+      {sys=mem.missys}))
    local desc = fmt.f(_([[Patrol specified points in the {sys} system, eliminating any hostiles you encounter.
 
 #nPatrol System:#0 {sys}

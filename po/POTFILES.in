@@ -2954,6 +2954,7 @@ dat/scripts/common/neutral.lua
 dat/scripts/common/npc.lua
 dat/scripts/common/pirate.lua
 dat/scripts/common/poi.lua
+dat/scripts/common/prefix.lua
 dat/scripts/common/sciencegonewrong.lua
 dat/scripts/common/shadow.lua
 dat/scripts/common/shark.lua
