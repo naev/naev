@@ -32,11 +32,11 @@ local lmisn = require "lmisn"
 
 local misn_desc = {}
 -- Note: indexed from 0 to match mission tiers.
-misn_desc[0] = _("Small shipment to {pnt} in the {sys} system.")
-misn_desc[1] = _("Medium shipment to {pnt} in the {sys} system.")
-misn_desc[2] = _("Sizable cargo delivery to {pnt} in the {sys} system.")
-misn_desc[3] = _("Large cargo delivery to {pnt} in the {sys} system.")
-misn_desc[4] = _("Bulk freight delivery to {pnt} in the {sys} system.")
+misn_desc[0] = _("Small shipment of {amount} of {cargo} to {pnt} in the {sys} system.")
+misn_desc[1] = _("Medium shipment of {amount} of {cargo} to {pnt} in the {sys} system.")
+misn_desc[2] = _("Sizable cargo delivery of {amount} of {cargo} to {pnt} in the {sys} system.")
+misn_desc[3] = _("Large cargo delivery of {amount} of {cargo} to {pnt} in the {sys} system.")
+misn_desc[4] = _("Bulk freight delivery of {amount} of {cargo} to {pnt} in the {sys} system.")
 
 local piracyrisk = {}
 piracyrisk[1] = _("#nPiracy Risk:#0 None")
@@ -86,9 +86,9 @@ function create()
    mem.reward = 1.5^mem.tier * (mem.avgrisk*riskreward + mem.numjumps * jumpreward + mem.traveldist * distreward) * (1 + 0.05*rnd.twosigma())
 
    misn.setTitle( fmt.f(_("Shipment to {pnt} in {sys} ({tonnes})"),
-         {pnt=mem.destplanet, sys=mem.destsys, tonnes=fmt.tonnes(mem.amount)} ) )
+         {pnt=mem.destplanet, sys=mem.destsys, tonnes=fmt.tonnes_short(mem.amount)} ) )
    misn.markerAdd(mem.destplanet, "computer")
-   car.setDesc( fmt.f( misn_desc[mem.tier], {pnt=mem.destplanet, sys=mem.destsys} ), mem.cargo, mem.amount, mem.destplanet, nil, piracyrisk )
+   car.setDesc( fmt.f( misn_desc[mem.tier], {cargo=mem.cargo, amount=fmt.tonnes(mem.amount), pnt=mem.destplanet, sys=mem.destsys} ), mem.cargo, mem.amount, mem.destplanet, nil, piracyrisk )
    misn.setReward( fmt.credits(mem.reward) )
 end
 
