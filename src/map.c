@@ -2938,7 +2938,7 @@ int map_isUseless( const Outfit* map )
 
    for (int i=0; i<array_size(map->u.map->spobs);i++) {
       Spob *p = map->u.map->spobs[i];
-      if (!spob_hasSystem( p->name ) )
+      if (!spob_hasSystem( p ) )
          continue;
       if (!spob_isKnown(p))
          return 0;
@@ -2975,7 +2975,7 @@ int localmap_map( const Outfit *lmap )
    detect = lmap->u.lmap.spob_detect;
    for (int i=0; i<array_size(cur_system->spobs); i++) {
       Spob *p = cur_system->spobs[i];
-      if (!spob_hasSystem( p->name ) )
+      if (!spob_hasSystem( p ) )
          continue;
       if (mod*p->hide <= detect)
          spob_setKnown( p );

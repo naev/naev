@@ -960,13 +960,13 @@ int system_index( const StarSystem *sys )
 /**
  * @brief Get whether or not a spob has a system (i.e. is on the map).
  *
- *    @param spobname Spob name to match.
+ *    @param spbe Spob to search for.
  *    @return 1 if the spob has a system, 0 otherwise.
  */
-int spob_hasSystem( const char* spobname )
+int spob_hasSystem( const Spob *spb )
 {
    for (int i=0; i<array_size(spobname_stack); i++)
-      if (strcmp(spobname_stack[i],spobname)==0)
+      if (strcmp(spobname_stack[i],spb->name)==0)
          return 1;
    return 0;
 }
