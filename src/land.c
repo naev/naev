@@ -624,7 +624,7 @@ static void misn_open( unsigned int wid )
    y = -60;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, 40, 0,
-         "txtSDate", NULL, NULL,
+         "txtSDate", NULL, &cFontGrey,
          _("Date:\n"
          "Free Space:"));
    window_addText( wid, w/2 + 110, y,
