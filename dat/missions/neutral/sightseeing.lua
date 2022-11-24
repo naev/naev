@@ -2,17 +2,23 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Sightseeing">
  <priority>4</priority>
- <cond>spob.cur():class() ~= "1" and spob.cur():class() ~= "2" and spob.cur():class() ~= "3" and system.cur():presences()["Independent"] ~= nil and system.cur():presences()["Independent"] &gt; 0</cond>
+ <cond>
+   local scur = spob.cur()
+   local f = scur:faction()
+   if not f or not f:tags().generic then
+      return false
+   end
+   if scur:tags().station then
+      return false
+   end
+   local sindep = system.cur():presences()["Independent"] or 0
+   if sindep &lt;= 0 then
+      return false
+   end
+   return true
+ </cond>
  <chance>460</chance>
  <location>Computer</location>
- <faction>Dvaered</faction>
- <faction>Empire</faction>
- <faction>Frontier</faction>
- <faction>Goddard</faction>
- <faction>Independent</faction>
- <faction>Sirius</faction>
- <faction>Soromid</faction>
- <faction>Za'lek</faction>
  <notes>
   <tier>1</tier>
  </notes>
@@ -66,9 +72,8 @@ local ssmsg = {
 }
 
 function create ()
-   mem.paying_faction = spob.cur():faction()
-   mem.startingplanet = spob.cur()
-   mem.startingsystem = system.cur()
+   mem.startingplanet, mem.startingsystem = spob.cur()
+   mem.paying_faction = mem.startingplanet:faction()
    local systems = lmisn.getSysAtDistance( system.cur(), 1, 2 )
    systems[ #systems + 1 ] = mem.startingsystem
 
