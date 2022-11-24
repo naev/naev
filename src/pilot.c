@@ -3622,8 +3622,12 @@ void pilots_clean( int persist )
    array_erase( &pilot_stack, &pilot_stack[persist_count], array_end(pilot_stack) );
 
    /* Init AI on the remaining pilots, has to be done here so the pilot_stack is consistent. */
-   for (int i=0; i<array_size(pilot_stack); i++)
-      ai_init( pilot_stack[i] );
+   for (int i=0; i<array_size(pilot_stack); i++) {
+      Pilot *p = pilot_stack[i];
+      pilot_clearHooks(p);
+      ai_cleartasks(p);
+      ai_init(p);
+   }
 
    /* Clear global hooks. */
    pilots_clearGlobalHooks();
