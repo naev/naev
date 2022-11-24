@@ -47,6 +47,8 @@ static int factionL_logo( lua_State *L );
 static int factionL_colour( lua_State *L );
 static int factionL_isknown( lua_State *L );
 static int factionL_setKnown( lua_State *L );
+static int factionL_isInvisible( lua_State *L );
+static int factionL_isStatic( lua_State *L );
 static int factionL_tags( lua_State *L );
 static int factionL_dynAdd( lua_State *L );
 static int factionL_dynAlly( lua_State *L );
@@ -74,6 +76,8 @@ static const luaL_Reg faction_methods[] = {
    { "colour", factionL_colour },
    { "known", factionL_isknown },
    { "setKnown", factionL_setKnown },
+   { "invisible", factionL_isInvisible },
+   { "static", factionL_isStatic },
    { "tags", factionL_tags },
    { "dynAdd", factionL_dynAdd },
    { "dynAlly", factionL_dynAlly },
@@ -572,6 +576,38 @@ static int factionL_setKnown( lua_State *L )
    int b   = lua_toboolean(L, 2);
    faction_setKnown( fac, b );
    return 0;
+}
+
+/**
+ * @brief Checks to see if a faction is invisible the player.
+ *
+ * @usage b = f:invisible()
+ *
+ *    @luatparam Faction f Faction to check if is invisible to the player.
+ *    @luatreturn boolean true if the faction is invisible to the player.
+ * @luafunc invisible
+ */
+static int factionL_isInvisible( lua_State *L )
+{
+   int fac = luaL_validfaction(L, 1);
+   lua_pushboolean(L, faction_isInvisible(fac));
+   return 1;
+}
+
+/**
+ * @brief Checks to see if a faction has a static standing with the player.
+ *
+ * @usage b = f:static()
+ *
+ *    @luatparam Faction f Faction to check if has a static standing to the player.
+ *    @luatreturn boolean true if the faction is static to the player.
+ * @luafunc static
+ */
+static int factionL_isStatic( lua_State *L )
+{
+   int fac = luaL_validfaction(L, 1);
+   lua_pushboolean(L, faction_isStatic(fac));
+   return 1;
 }
 
 /**

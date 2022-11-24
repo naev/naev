@@ -235,6 +235,14 @@ void faction_clearKnown()
 }
 
 /**
+ * @brief Is the faction static?
+ */
+int faction_isStatic( int id )
+{
+   return faction_isFlag( &faction_stack[id], FACTION_STATIC );
+}
+
+/**
  * @brief Is the faction invisible?
  */
 int faction_isInvisible( int id )

@@ -24,6 +24,7 @@ int faction_get( const char* name );
 int* faction_getAll (void);
 int* faction_getAllVisible (void);
 int* faction_getKnown();
+int faction_isStatic( int id );
 int faction_isInvisible( int id );
 int faction_setInvisible( int id, int state );
 int faction_isKnown( int id );
