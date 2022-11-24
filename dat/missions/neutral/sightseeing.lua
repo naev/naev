@@ -34,32 +34,36 @@ local lmisn = require "lmisn"
 local marks -- Non-persistent state
 local set_marks -- Forward-declared functions
 
-local pay_text    = {}
-pay_text[1] = _("The passengers disembark with a new appreciation for the wonders of the universe.")
-pay_text[2] = _("Going off-world has renewed your passengers sense of adventure.")
-pay_text[3] = _("The passengers burst into cheers upon returning to the hanger. What a wonderful experience.")
-pay_text[4] = _("The passengers enjoyed their time aboard your vessel.")
+local pay_text = {
+   _("The passengers disembark with a new appreciation for the wonders of the universe."),
+   _("Going off-world has renewed your passengers sense of adventure."),
+   _("The passengers burst into cheers upon returning to the hanger. What a wonderful experience."),
+   _("The passengers enjoyed their time aboard your vessel."),
+}
 
-local pay_s_lux_text    = {}
-pay_s_lux_text[1] = _("The passengers appreciate that you took them an a Luxury Yacht class ship after all. You are paid the original fare rather than the reduced fare.")
-pay_s_lux_text[2] = _("Your passengers were thrilled that they were able to ride in a Luxury Yacht after all. They insist on paying the originally offered fare as a show of appreciation.")
-pay_s_lux_text[3] = _("As your passengers disembark, one wealthy passenger personally thanks you for taking them on a Luxury Yacht after all and gives you a tip amounting to the difference between the original fare and what your passengers paid.")
-pay_s_lux_text[4] = _("When it comes time to collect your fare, the passengers collectively announce that they will be paying the original fare offered, since you took them on a Luxury Yacht after all.")
+local pay_s_lux_text = {
+   _("The passengers appreciate that you took them an a Luxury Yacht class ship after all. You are paid the original fare rather than the reduced fare."),
+   _("Your passengers were thrilled that they were able to ride in a Luxury Yacht after all. They insist on paying the originally offered fare as a show of appreciation."),
+   _("As your passengers disembark, one wealthy passenger personally thanks you for taking them on a Luxury Yacht after all and gives you a tip amounting to the difference between the original fare and what your passengers paid."),
+   _("When it comes time to collect your fare, the passengers collectively announce that they will be paying the original fare offered, since you took them on a Luxury Yacht after all."),
+}
 
-local pay_s_nolux_text    = {}
-pay_s_nolux_text[1] = _("Several passengers are furious that you did not take them on your Luxury Yacht class ship after all. They refuse to pay, leaving you with much less overall payment.")
-pay_s_nolux_text[2] = _("While your passengers enjoyed the trip, they are not happy that you didn't take them on your Luxury Yacht class ship the entire way. They refuse to pay the full fare.")
-pay_s_nolux_text[3] = _("Most of the passengers enjoyed your tour, but one particularly loud passenger complains that you tricked them into paying full price even though you did not take them on a Luxury Yacht. To calm this passenger down, you offer to reduce everyone's fare. Some passengers refuse the offer, but you still end up being paid much less than you otherwise would have been.")
+local pay_s_nolux_text = {
+   _("Several passengers are furious that you did not take them on your Luxury Yacht class ship after all. They refuse to pay, leaving you with much less overall payment."),
+   _("While your passengers enjoyed the trip, they are not happy that you didn't take them on your Luxury Yacht class ship the entire way. They refuse to pay the full fare."),
+   _("Most of the passengers enjoyed your tour, but one particularly loud passenger complains that you tricked them into paying full price even though you did not take them on a Luxury Yacht. To calm this passenger down, you offer to reduce everyone's fare. Some passengers refuse the offer, but you still end up being paid much less than you otherwise would have been."),
+}
 
 --Sightseeing Messages
-local ssmsg = {}
-ssmsg[1] = _("The passengers are loving it.")
-ssmsg[2] = _("The wide-eyed passengers mutter with astonishment.")
-ssmsg[3] = _("The passengers faces are pressed up against the windows of your ship.")
-ssmsg[4] = _("Everyone seems like they're having a good time.")
-ssmsg[5] = _("A collective gasp of wonder travels through the cabin.")
-ssmsg[6] = _("A sense of terror and mystery engulfs the passengers as they contemplate their existence above the skies.")
-ssmsg[7] = _("Truly a sight to behold for the passengers.")
+local ssmsg = {
+   _("The passengers are loving it."),
+   _("The wide-eyed passengers mutter with astonishment."),
+   _("The passengers faces are pressed up against the windows of your ship."),
+   _("Everyone seems like they're having a good time."),
+   _("A collective gasp of wonder travels through the cabin."),
+   _("A sense of terror and mystery engulfs the passengers as they contemplate their existence above the skies."),
+   _("Truly a sight to behold for the passengers."),
+}
 
 function create ()
    mem.paying_faction = spob.cur():faction()

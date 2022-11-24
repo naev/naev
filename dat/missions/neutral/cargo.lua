@@ -4,17 +4,16 @@
  <priority>6</priority>
  <chance>960</chance>
  <location>Computer</location>
- <faction>Dvaered</faction>
- <faction>Empire</faction>
- <faction>Frontier</faction>
- <faction>Goddard</faction>
- <faction>Independent</faction>
- <faction>Proteron</faction>
- <faction>Sirius</faction>
- <faction>Soromid</faction>
- <faction>Thurion</faction>
- <faction>Traders Guild</faction>
- <faction>Za'lek</faction>
+ <cond>
+   local f = spob.cur():faction()
+   if f then
+      local ft = f:tags()
+      if ft.generic or ft.misn_cargo then
+         return true
+      end
+   end
+   return false
+ </cond>
  <notes>
   <tier>1</tier>
  </notes>
@@ -46,11 +45,12 @@ piracyrisk[3] = _("#nPiracy Risk:#0 Medium")
 piracyrisk[4] = _("#nPiracy Risk:#0 High")
 --=Landing=--
 
-local cargo_land = {}
-cargo_land[1] = _("The containers of {cargo} are carried out of your ship by a sullen group of workers. The job takes inordinately long to complete, and the leader pays you #g{credits}#0 without speaking a word.")
-cargo_land[2] = _("Shortly after you land, a team rushes the containers of {cargo} out of your vessel. Before you can even collect your thoughts, one of the workers presses a credit chip worth #g{credits}#0 in your hand and departs.")
-cargo_land[3] = _("The containers of {cargo} are unloaded by an exhausted-looking bunch of dockworkers. Still, they make fairly good time, delivering your pay of #g{credits}#0 upon completion of the job.")
-cargo_land[4] = _("The containers of {cargo} are unloaded by a team of robotic drones supervised by a human overseer, who hands you your pay of #g{credits}#0 when they finish.")
+local cargo_land = {
+   _("The containers of {cargo} are carried out of your ship by a sullen group of workers. The job takes inordinately long to complete, and the leader pays you #g{credits}#0 without speaking a word."),
+   _("Shortly after you land, a team rushes the containers of {cargo} out of your vessel. Before you can even collect your thoughts, one of the workers presses a credit chip worth #g{credits}#0 in your hand and departs."),
+   _("The containers of {cargo} are unloaded by an exhausted-looking bunch of dockworkers. Still, they make fairly good time, delivering your pay of #g{credits}#0 upon completion of the job."),
+   _("The containers of {cargo} are unloaded by a team of robotic drones supervised by a human overseer, who hands you your pay of #g{credits}#0 when they finish."),
+}
 
 -- Create the mission
 function create()

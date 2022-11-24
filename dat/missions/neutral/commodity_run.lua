@@ -2,20 +2,22 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Commodity Run">
  <priority>5</priority>
- <cond>var.peek("commodity_runs_active") == nil or var.peek("commodity_runs_active") &lt; 3</cond>
  <chance>90</chance>
  <location>Computer</location>
- <faction>Dvaered</faction>
- <faction>Empire</faction>
- <faction>Frontier</faction>
- <faction>Goddard</faction>
- <faction>Independent</faction>
- <faction>Proteron</faction>
- <faction>Sirius</faction>
- <faction>Soromid</faction>
- <faction>Thurion</faction>
- <faction>Traders Guild</faction>
- <faction>Za'lek</faction>
+ <cond>
+   local cra = var.peek("commodity_runs_active") or 0
+   if cra &gt;= 3 then
+      return false
+   end
+   local f = spob.cur():faction()
+   if f then
+      local ft = f:tags()
+      if ft.generic or ft.misn_cargo then
+         return true
+      end
+   end
+   return false
+ </cond>
  <notes>
   <tier>1</tier>
  </notes>

@@ -4,42 +4,46 @@
  <priority>9</priority>
  <chance>10</chance>
  <location>Computer</location>
- <faction>Dvaered</faction>
- <faction>Empire</faction>
- <faction>Frontier</faction>
- <faction>Goddard</faction>
- <faction>Independent</faction>
- <faction>Sirius</faction>
- <faction>Soromid</faction>
- <faction>Thurion</faction>
- <faction>Traders Guild</faction>
- <faction>Za'lek</faction>
+ <cond>
+   local f = spob.cur():faction()
+   if f then
+      local ft = f:tags()
+      if ft.generic or ft.misn_cargo then
+         return true
+      end
+   end
+   return false
+ </cond>
+ <notes>
+  <tier>1</tier>
+ </notes>
 </mission>
 --]]
 --[[
-
    Waste Dump
-
 --]]
 local fmt = require "format"
 local pir = require "common.pirate"
 local vntk = require "vntk"
 
-local text = {}
-text[1] = _("The waste containers are loaded onto your ship and you are paid {credits}. You begin to wonder if accepting this job was really a good idea.")
-text[2] = _("Workers pack your cargo hold full of as much garbage as it can carry, then hastily hand you a credit chip containing {credits}. Smelling the garbage, you immediately regret taking the job.")
-text[3] = _("Your hold is crammed full with garbage and you are summarily paid {credits}. By the time the overpowering stench emanating from your cargo hold reaches you, it's too late to back down; you're stuck with this garbage until you can find some place to get rid of it.")
+local text = {
+   _("The waste containers are loaded onto your ship and you are paid {credits}. You begin to wonder if accepting this job was really a good idea."),
+   _("Workers pack your cargo hold full of as much garbage as it can carry, then hastily hand you a credit chip containing {credits}. Smelling the garbage, you immediately regret taking the job."),
+   _("Your hold is crammed full with garbage and you are summarily paid {credits}. By the time the overpowering stench emanating from your cargo hold reaches you, it's too late to back down; you're stuck with this garbage until you can find some place to get rid of it."),
+}
 
-local finish_text = {}
-finish_text[1] = _("You drop the garbage off, relieved to have it out of your ship.")
-finish_text[2] = _("You finally drop off the garbage and proceed to disinfect yourself and your cargo hold to the best of your ability.")
-finish_text[3] = _("Finally, the garbage leaves your ship and you breathe a sigh of relief.")
-finish_text[4] = _("Wrinkling your nose in disgust, you finally rid yourself of the waste containers you have been charged with disposing of.")
+local finish_text = {
+   _("You drop the garbage off, relieved to have it out of your ship."),
+   _("You finally drop off the garbage and proceed to disinfect yourself and your cargo hold to the best of your ability."),
+   _("Finally, the garbage leaves your ship and you breathe a sigh of relief."),
+   _("Wrinkling your nose in disgust, you finally rid yourself of the waste containers you have been charged with disposing of."),
+}
 
-local abort_text = {}
-abort_text[1] = _("Sick and tired of smelling garbage, you illegally jettison the waste containers into space, hoping that no one notices.")
-abort_text[2] = _("You decide that the nearest waste dump location is too far away for you to bother to go to and simply jettison the containers of waste. You hope you don't get caught.")
-abort_text[3] = _("You dump the waste containers into space illegally, noting that you should make sure not to get caught by authorities.")
+local abort_text = {
+   _("Sick and tired of smelling garbage, you illegally jettison the waste containers into space, hoping that no one notices."),
+   _("You decide that the nearest waste dump location is too far away for you to bother to go to and simply jettison the containers of waste. You hope you don't get caught."),
+   _("You dump the waste containers into space illegally, noting that you should make sure not to get caught by authorities."),
+}
 
 -- List of possible waste dump planets.
 local dest_planets = {}
@@ -51,7 +55,7 @@ for k,v in ipairs(spob.getAll()) do
 end
 
 local function update_desc( hide_free )
-   local desc = _("Take as many waste containers as your ship can hold and drop them off at any authorized garbage collection facility. You will be paid immediately, but any attempt to illegally jettison the waste into space will be severely punished if you are caught.")
+   local desc = _("Take as many waste containers as your ship can hold and drop them off at any authorized garbage collection facility. You will be paid immediately, but any attempt to illegally get rid of the waste will be severely punished if you are caught.")
    if not hide_free then
       desc = desc.."\n\n"..fmt.f(_("You can fit {amount} of waste containers in your ship."),
          {amount=player.pilot():cargoFree()} )
@@ -103,7 +107,7 @@ function accept ()
    local txt = text[ rnd.rnd( 1, #text ) ]
    vntk.msg( "", fmt.f( txt, {credits = fmt.credits( mem.credits ) } ) )
 
-   local c = commodity.new( N_("Waste Containers"), N_("A bunch of waste containers leaking all sorts of indescribable liquids.") )
+   local c = commodity.new( N_("Waste Containers"), N_("A bunch of waste containers leaking all sorts of indescribable liquids. You hope they don't leak onto your ship.") )
    mem.cid = misn.cargoAdd( c, q )
    player.pay( mem.credits )
 
@@ -193,8 +197,9 @@ function abort ()
          choices = { "Lancelot", "Pacifier", "Ancestor", "Vendetta" }
       end
 
+      local sjumps = system.cur():jumps()
       for n = 1,rnd.rnd( 2, 4 ) do
-         for i, j in ipairs( system.cur():jumps() ) do
+         for i,j in ipairs(sjumps) do
             local p = pilot.add( choices[ rnd.rnd( 1, #choices ) ], f, j:dest() )
             p:setHostile()
          end
