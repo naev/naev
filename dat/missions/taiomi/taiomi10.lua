@@ -30,7 +30,9 @@ local tut = require "common.tutorial"
 
 local title = _("Final Breath of Taiomi")
 local base, basesys = spob.getS("One-Wing Goddard")
-local endsys = system.get("Toros")
+-- TODO switch to some other remote system (maybe discover a hidden jump) when nebula gets reworked
+--local endsys = system.get("Toros")
+local endsys = system.get("Toaxis")
 
 local HYPERGATE_SFX = audio.newSource( "snd/sounds/hypergate_turnon.ogg" )
 local FAILURE_SFX = audio.newSource( "snd/sounds/equipment_failure.ogg" )
