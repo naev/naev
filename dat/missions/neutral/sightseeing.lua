@@ -120,7 +120,10 @@ function create ()
 
    -- Set mission details
    misn.setTitle( fmt.f( _("Sightseeing in the {sys} System"), {sys=mem.missys} ) )
-   misn.setDesc( fmt.f(_("Several passengers wish to go off-world and go on a sightseeing tour. Navigate to specified attractions in the {sys} system."), {sys=mem.missys} ) )
+   misn.setDesc( fmt.f(_([[Several passengers wish to go off-world and go on a sightseeing tour. Navigate to specified {amount} different attractions in the {sys} system.
+
+#nAttractions:#0 {amount}
+#nPreferred Ship:0 Luxury Yacht-class]]), {sys=mem.missys, amount=mem.attractions} ) )
    misn.setReward( fmt.credits( mem.credits ) )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
@@ -128,7 +131,7 @@ end
 
 function accept ()
    if not player.pilot():ship():tags().luxury then
-      if tk.yesno( _("Not Very Luxurious"), fmt.f( _("Since your ship is not a Luxury Yacht class ship, you will only be paid {credits}. Accept the mission anyway?"), {credits=fmt.credits(mem.credits_nolux)} ) ) then
+      if vntk.yesno( _("Not Very Luxurious"), fmt.f( _("Since your ship is not a Luxury Yacht-class ship, you will only be paid {credits}. Accept the mission anyway?"), {credits=fmt.credits(mem.credits_nolux)} ) ) then
          mem.nolux_known = true
          misn.setReward( fmt.credits( mem.credits_nolux ) )
       else
@@ -155,7 +158,7 @@ end
 
 function enter ()
    if system.cur() == mem.missys and not mem.job_done then
-      if player.pilot():ship():classDisplay() ~= "Luxury Yacht" then
+      if not player.pilot():ship():tags().luxury then
          mem.nolux = true
       end
       set_marks()
