@@ -2012,6 +2012,13 @@ void player_brokeHyperspace (void)
    /* Set the ptimer. */
    player.p->ptimer = HYPERSPACE_FADEIN;
 
+   /* Update the map, we have to remove the player flags first or it breaks down. */
+   pilot_rmFlag( player.p, PILOT_HYPERSPACE );
+   pilot_rmFlag( player.p, PILOT_HYP_BEGIN );
+   pilot_rmFlag( player.p, PILOT_HYP_BRAKE );
+   pilot_rmFlag( player.p, PILOT_HYP_PREP );
+   map_jump();
+
    /* Add persisted pilots */
    pilot_stack = pilot_getAll();
    for (int i=0; i<array_size(pilot_stack); i++) {
@@ -2036,9 +2043,6 @@ void player_brokeHyperspace (void)
          pilot_rmFlag( p, PILOT_HYP_PREP );
       }
    }
-
-   /* Update the map */
-   map_jump();
 
    /* Disable autonavigation if arrived. */
    if (player_isFlag(PLAYER_AUTONAV)) {
