@@ -76,7 +76,7 @@ function create ()
 
    -- Set mission details
    misn.setTitle( _("Waste Dump") )
-   mem.setDesc(_("Take as many waste containers as your ship can hold and drop them off at any authorized garbage collection facility. You will be paid immediately, but any attempt to illegally get rid of the waste will be severely punished if you are caught."))
+   misn.setDesc(_("Take as many waste containers as your ship can hold and drop them off at any authorized garbage collection facility. You will be paid immediately, but any attempt to illegally get rid of the waste will be severely punished if you are caught."))
    misn.setReward( fmt.f(_("{credits} per tonne"), {credits=fmt.credits(mem.credits_factor)} ) )
 end
 
