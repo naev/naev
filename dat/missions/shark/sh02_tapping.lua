@@ -29,6 +29,7 @@
 local pir = require "common.pirate"
 local fmt = require "format"
 local shark = require "common.shark"
+local equipopt = require "equipopt"
 
 local badguys -- Non-persistent state
 local add_llama, bombers, choose, corvette, cruiser, hvy_intercept, interceptors, rndNb -- Forward-declared functions
@@ -173,22 +174,7 @@ function interceptors()
    local nb = rndNb( mem.nInterce )
    for i = 1, nb do
       badguys[i] = pilot.add( "Hyena", "Mercenary", nil, _("Mercenary") )
-      badguys[i]:setHostile()
-
-      --Their outfits must be quite good
-      badguys[i]:outfitRm("all")
-      badguys[i]:outfitRm("cores")
-
-      badguys[i]:outfitAdd("S&K Ultralight Combat Plating")
-      badguys[i]:outfitAdd("Milspec Orion 2301 Core System")
-      badguys[i]:outfitAdd("Tricon Zephyr Engine")
-
-      badguys[i]:outfitAdd("Gauss Gun",3)
-      badguys[i]:outfitAdd("Improved Stabilizer") -- Just try to avoid fight with these fellas
-
-      badguys[i]:setHealth(100,100)
-      badguys[i]:setEnergy(100)
-
+      badguys[i]:setHostile(true)
       hook.pilot( badguys[i], "death", "InterceptorDead")
    end
 end
@@ -198,24 +184,7 @@ function hvy_intercept()
    local nb = rndNb( mem.nFighter )
    for i = 1, nb do
       badguys[i] = pilot.add( "Lancelot", "Mercenary", nil, _("Mercenary") )
-      badguys[i]:setHostile()
-
-      --Their outfits must be quite good
-      badguys[i]:outfitRm("all")
-      badguys[i]:outfitRm("cores")
-
-      badguys[i]:outfitAdd("Unicorp D-4 Light Plating")
-      badguys[i]:outfitAdd("Unicorp PT-68 Core System")
-      badguys[i]:outfitAdd("Tricon Zephyr II Engine")
-
-      badguys[i]:outfitAdd("TeraCom Fury Launcher")
-      badguys[i]:outfitAdd("Laser Cannon MK2",2)
-      badguys[i]:outfitAdd("Laser Cannon MK1")
-      badguys[i]:outfitAdd("Reactor Class I")
-
-      badguys[i]:setHealth(100,100)
-      badguys[i]:setEnergy(100)
-
+      badguys[i]:setHostile(true)
       hook.pilot( badguys[i], "death", "FighterDead")
    end
 end
@@ -225,25 +194,7 @@ function corvette()
    local nb = rndNb( mem.nCorvett )
    for i = 1, nb do
       badguys[i] = pilot.add( "Admonisher", "Mercenary", nil, _("Mercenary") )
-      badguys[i]:setHostile()
-
-      badguys[i]:outfitRm("all")
-      badguys[i]:outfitRm("cores")
-
-      badguys[i]:outfitAdd("Unicorp D-12 Medium Plating")
-      badguys[i]:outfitAdd("Unicorp PT-200 Core System")
-      badguys[i]:outfitAdd("Tricon Cyclone Engine")
-
-      badguys[i]:outfitAdd("TeraCom Headhunter Launcher",2)
-      badguys[i]:outfitAdd("Razor Turret MK2")
-      badguys[i]:outfitAdd("Razor Turret MK1",2)
-
-      badguys[i]:outfitAdd("Shield Capacitor II")
-      badguys[i]:outfitAdd("Reactor Class I",2)
-
-      badguys[i]:setHealth(100,100)
-      badguys[i]:setEnergy(100)
-
+      badguys[i]:setHostile(true)
       hook.pilot( badguys[i], "death", "CorvetteDead")
    end
 end
@@ -253,26 +204,16 @@ function cruiser()
    if mem.nCruiser == 1 then
       local origin = pilot.choosePoint( faction.get("Mercenary") )
 
-      local badguy = pilot.add( "Kestrel", "Mercenary", origin, _("Mercenary") )
-      badguy:setHostile()
-
-      badguy:outfitRm("all")
-      badguy:outfitRm("cores")
-
-      badguy:outfitAdd("Unicorp D-48 Heavy Plating")
-      badguy:outfitAdd("Unicorp PT-500 Core System")
-      badguy:outfitAdd("Krain Remige Engine")
-
-      badguy:outfitAdd("Heavy Laser Turret",2)
-      badguy:outfitAdd("TeraCom Headhunter Launcher",4)
-
-      badguy:outfitAdd("Pinpoint Combat AI")
-      badguy:outfitAdd("Photo-Voltaic Nanobot Coating")
-      badguy:outfitAdd("Reactor Class III")
-      badguy:outfitAdd("Improved Stabilizer",3)
-      badguy:setHealth(100,100)
-      badguy:setEnergy(100)
-
+      local badguy = pilot.add( "Kestrel", "Mercenary", origin, _("Mercenary"), {naked=true} )
+      badguy:setHostile(true)
+      equipopt.generic( badguy, {
+         prefer = {
+            ["TeraCom Headhunter Launcher"] = 100,
+         },
+         type_range = {
+            ["Launcher"] = { max=4 },
+         },
+      } )
       hook.pilot( badguy, "death", "CruiserDead")
 
       -- Escort
@@ -293,24 +234,13 @@ function bombers()
    for i = 1, nb do
       local origin = pilot.choosePoint( faction.get("Mercenary") )
 
-      badguys[i] = pilot.add( "Ancestor", "Mercenary", origin, _("Mercenary") )
-      badguys[i]:setHostile()
-
-      badguys[i]:outfitRm("all")
-      badguys[i]:outfitRm("cores")
-
-      badguys[i]:outfitAdd("Unicorp D-2 Light Plating")
-      badguys[i]:outfitAdd("Unicorp PT-68 Core System")
-      badguys[i]:outfitAdd("Tricon Zephyr II Engine")
-
-      badguys[i]:outfitAdd("Unicorp Caesar IV Launcher",2)
-      badguys[i]:outfitAdd("Gauss Gun",2)
-
-      badguys[i]:outfitAdd("Reactor Class I")
-
-      badguys[i]:setHealth(100,100)
-      badguys[i]:setEnergy(100)
-
+      badguys[i] = pilot.add( "Ancestor", "Mercenary", origin, _("Mercenary"), {naked=true} )
+      badguys[i]:setHostile(true)
+      equipopt.generic( badguys[i], {
+         prefer = {
+            ["Unicorp Caesar IV Launcher"] = 100,
+         },
+      } )
       hook.pilot( badguys[i], "death", "BomberDead")
 
       -- Escort
@@ -332,7 +262,7 @@ function add_llama()
    --adding an useless Llama
    if mem.nLlamas == 1 then
       local useless = pilot.add( "Llama", "Mercenary", nil, _("Amateur Mercenary") )
-      useless:setHostile()
+      useless:setHostile(true)
       hook.pilot( useless, "death", "LlamaDead")
    end
 end
