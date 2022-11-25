@@ -189,7 +189,7 @@ function enter()
 
       local shiplist = ships[mem.level+1]
       local oppotype = shiplist[ rnd.rnd(1,#shiplist) ]
-      opponent = pilot.add( oppotype, "Thugs", mispla, mem.opponame, {ai="baddie", naked=true} )
+      opponent = pilot.add( oppotype, "Mercenary", mispla, mem.opponame, {ai="baddie", naked=true} )
 
       oppotype = opponent:ship()
 
