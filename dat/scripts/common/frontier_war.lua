@@ -1,6 +1,7 @@
 --[[
 -- Common data for the Frontier War campaign
 --]]
+local ai_setup = require "ai.core.setup"
 
 local fw = {}
 
@@ -87,6 +88,7 @@ function fw.equipVendettaMace( pilot )
    pilot:outfitAdd("Shield Capacitor I")
    pilot:outfitAdd("Milspec Impacto-Plastic Coating")
    pilot:outfitAdd("TeraCom Mace Launcher", 6)
+   ai_setup.setup(pilot)
 
    pilot:setHealth(100,100)
    pilot:setEnergy(100)
