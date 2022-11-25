@@ -136,22 +136,7 @@ function enter ()
       baddie:control()
       baddie:moveto(pos)
 
-      --The pirate comes with nice defensive outfits
-      baddie:outfitRm("all")
-      baddie:outfitRm("cores")
       baddie:cargoRm( "all" )
-
-      baddie:outfitAdd("Nexus Light Stealth Plating")
-      baddie:outfitAdd("Milspec Orion 2301 Core System")
-      baddie:outfitAdd("Tricon Zephyr Engine")
-
-      baddie:outfitAdd("Shield Capacitor I")
-      baddie:outfitAdd("Plasteel Plating")
-      baddie:outfitAdd("Milspec Impacto-Plastic Coating")
-      baddie:outfitAdd("Laser Cannon MK1", 2)
-
-      baddie:setHealth(100,100)
-      baddie:setEnergy(100)
 
       hook.pilot(baddie, "idle", "idle", pos)
       hook.pilot(baddie, "attacked", "attacked")
