@@ -49,15 +49,14 @@ function ambusher()
 
    -- TODO: adjust requirements, use equipopt instead of manually equipping
    if vel >= 350 then
-      baddie = pilot.add( "Hyena", "Mercenary", source_system, _("Mercenary") )
+      baddie = pilot.add( "Hyena", "Mercenary", source_system, _("Mercenary"), {naked=true} )
    elseif vel >= 210 then
-      baddie = pilot.add( "Lancelot", "Mercenary", source_system, _("Mercenary") )
+      baddie = pilot.add( "Lancelot", "Mercenary", source_system, _("Mercenary"), {naked=true} )
    else
-      baddie = pilot.add( "Ancestor", "Mercenary", source_system, _("Mercenary") )
+      baddie = pilot.add( "Ancestor", "Mercenary", source_system, _("Mercenary"), {naked=true} )
    end
 
    baddie:setHostile()
-   baddie:outfitRm("all")
    baddie:outfitRm("cores")
    baddie:cargoRm("all")
 
