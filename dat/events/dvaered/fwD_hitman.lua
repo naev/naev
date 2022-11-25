@@ -60,6 +60,7 @@ function ambusher()
    baddie:outfitRm("cores")
    baddie:cargoRm("all")
 
+   -- TODO ideally use tricks to slow the ship down instead of relying on loadouts
    if vel >= 350 then
       baddie:outfitAdd("S&K Ultralight Combat Plating")
       baddie:outfitAdd("Milspec Thalos 2202 Core System")
