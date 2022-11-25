@@ -32,7 +32,7 @@ function create ()
    end
 
    -- Create a Vendetta who hails the player after a bit
-   vendetta = pilot.add( "Vendetta", "Four Winds", nil, _("Four Winds Vendetta"), {ai="trader"} )
+   vendetta = pilot.add( "Vendetta", shadow.fct_fourwinds(), nil, _("Four Winds Vendetta"), {ai="trader"} )
    vendetta:control()
    vendetta:follow(player.pilot())
    hook.timer(0.5, "proximityScan", {focus = vendetta, funcname = "hailme"})

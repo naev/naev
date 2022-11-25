@@ -139,7 +139,7 @@ end
 -- Enter hook
 function enter()
    if system.cur() == seirsys then
-      seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", vec2.new(300, 300) + seirplanet:pos(), _("Seiryuu"), {ai="trader"} )
+      seiryuu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), vec2.new(300, 300) + seirplanet:pos(), _("Seiryuu"), {ai="trader"} )
       seiryuu:setInvincible(true)
       seiryuu:control()
       if mem.stage == 1 or mem.stage == 6 then
@@ -158,7 +158,7 @@ function enter()
       pilot.toggleSpawn(false)
       player.allowLand(false, _("Landing permission denied. Our docking clamps are currently undergoing maintenance."))
       -- Meet Joe, our informant.
-      joe = pilot.add( "Vendetta", "Four Winds", vec2.new(-500, -4000), _("Four Winds Informant"), {ai="trader"} )
+      joe = pilot.add( "Vendetta", shadow.fct_fourwinds(), vec2.new(-500, -4000), _("Four Winds Informant"), {ai="trader"} )
       joe:control()
       joe:setHilight(true)
       joe:setVisplayer()
@@ -245,7 +245,7 @@ function spawnSquads(highlight)
    leader = {}
 
    for i, start in ipairs(leaderstart) do
-      squads[i] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[i], _("Four Winds Patrol") )
+      squads[i] = fleet.add( 4, "Vendetta", shadow.fct_rogues(), leaderstart[i], _("Four Winds Patrol") )
       for j, k in ipairs(squads[i]) do
          hook.pilot(k, "attacked", "attacked")
          k:outfitRm("all")
@@ -325,7 +325,7 @@ end
 
 -- Spawns the Genbu
 function spawnGenbu(sys)
-   genbu = pilot.add( "Pirate Kestrel", "Four Winds", sys, _("Genbu") )
+   genbu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), sys, _("Genbu") )
    genbu:outfitRm("all")
    genbu:outfitAdd("Heavy Laser Turret", 3)
    genbu:outfitAdd("Cheater's Ragnarok Beam", 3) -- You can't win. Seriously.
@@ -365,7 +365,7 @@ end
 
 -- Spawns a wing of Lancelots that intercept the player.
 function spawnInterceptors()
-   local inters = fleet.add( 3, "Lancelot", "Rogue Four Winds", genbu:pos(), _("Four Winds Lancelot") )
+   local inters = fleet.add( 3, "Lancelot", shadow.fct_rogues(), genbu:pos(), _("Four Winds Lancelot") )
    for _, j in ipairs(inters) do
       j:outfitRm("all")
       j:outfitAdd("Cheater's Laser Cannon", 4) -- Equip these fellas with unfair weaponry

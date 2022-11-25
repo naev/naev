@@ -172,7 +172,7 @@ end
 function enter()
    if system.cur() == misssys[1] and mem.stage == 1 and mem.missend == false then
       -- case enter system where escorts wait
-      escorts = fleet.add( 3, "Lancelot", "Four Winds", vec2.new(0, 0), _("Four Winds Escort"), {ai="baddie_norun"} )
+      escorts = fleet.add( 3, "Lancelot", shadow.fct_fourwinds(), vec2.new(0, 0), _("Four Winds Escort"), {ai="baddie_norun"} )
       for i, j in ipairs(escorts) do
          if not mem.alive[i] then j:rm() end -- Dead escorts stay dead.
          if j:exists() then
@@ -196,7 +196,7 @@ function jumpin()
    end
 
    if mem.stage == 0 and system.cur() == rebinasys then -- put Rebina's ship
-      seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", vec2.new(0, -2000), _("Seiryuu"), {ai="trader"} )
+      seiryuu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), vec2.new(0, -2000), _("Seiryuu"), {ai="trader"} )
       seiryuu:control(true)
       seiryuu:setActiveBoard(true)
       seiryuu:setInvincible(true)
@@ -213,7 +213,7 @@ function jumpin()
 
    if mem.stage == 4 then
       -- Spawn the diplomat.
-      diplomat = pilot.add( "Gawain", "Diplomatic", mem.origin, _("Imperial Diplomat") )
+      diplomat = pilot.add( "Gawain", shadow.fct_diplomatic(), mem.origin, _("Imperial Diplomat") )
       hook.pilot(diplomat, "death", "diplomatDeath")
       hook.pilot(diplomat, "jump", "diplomatJump")
       hook.pilot(diplomat, "attacked", "diplomatAttacked")
@@ -235,7 +235,7 @@ function jumpin()
       end
 
       -- Spawn the escorts.
-      escorts = fleet.add( 3, "Lancelot", "Four Winds", mem.origin, _("Four Winds Escort"), {ai="baddie_norun"} )
+      escorts = fleet.add( 3, "Lancelot", shadow.fct_fourwinds(), mem.origin, _("Four Winds Escort"), {ai="baddie_norun"} )
       for i, j in ipairs(escorts) do
          if not mem.alive[i] then j:rm() end -- Dead escorts stay dead.
          if j:exists() then
@@ -257,7 +257,7 @@ function jumpin()
             end
          end
       elseif system.cur() == misssys[3] then -- case join up with diplomat
-         diplomat = pilot.add( "Gawain", "Diplomatic", vec2.new(0, 0), _("Imperial Diplomat") )
+         diplomat = pilot.add( "Gawain", shadow.fct_diplomatic(), vec2.new(0, 0), _("Imperial Diplomat") )
          hook.pilot(diplomat, "death", "diplomatDeath")
          hook.pilot(diplomat, "jump", "diplomatJump")
          diplomat:setSpeedLimit( 130 )
@@ -288,7 +288,7 @@ function jumpin()
          dvaerplomat:setHilight(true)
          dvaerplomat:setVisplayer()
          dvaerplomat:setDir(math.pi)
-         dvaerplomat:setFaction("Diplomatic")
+         dvaerplomat:setFaction( shadow.fct_diplomatic() )
          diplomat:setInvincible(true)
          diplomat:moveto(vec2.new(1850, 4000), true)
          mem.diplomatidle = hook.pilot(diplomat, "idle", "diplomatIdle")
@@ -339,7 +339,7 @@ function jumpin()
 
    elseif system.cur() == mem.seirsys then -- not escorting.
       -- case enter system where Seiryuu is
-      seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", vec2.new(0, -2000), _("Seiryuu"), {ai="trader"} )
+      seiryuu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), vec2.new(0, -2000), _("Seiryuu"), {ai="trader"} )
       seiryuu:setInvincible(true)
       if mem.missend then
          seiryuu:setActiveBoard(true)
