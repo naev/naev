@@ -88,7 +88,7 @@ function create()
    misn.setTitle( fmt.f(_("Shipment to {pnt} in {sys} ({tonnes})"),
          {pnt=mem.destplanet, sys=mem.destsys, tonnes=fmt.tonnes_short(mem.amount)} ) )
    misn.markerAdd(mem.destplanet, "computer")
-   car.setDesc( fmt.f( misn_desc[mem.tier], {cargo=mem.cargo, amount=fmt.tonnes(mem.amount), pnt=mem.destplanet, sys=mem.destsys} ), mem.cargo, mem.amount, mem.destplanet, nil, piracyrisk )
+   car.setDesc( fmt.f( misn_desc[mem.tier], {cargo=_(mem.cargo), amount=fmt.tonnes(mem.amount), pnt=mem.destplanet, sys=mem.destsys} ), mem.cargo, mem.amount, mem.destplanet, nil, piracyrisk )
    misn.setReward( fmt.credits(mem.reward) )
 end
 

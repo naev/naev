@@ -155,7 +155,7 @@ function escort_gui ()
       update_pilots()
    end, 1 )
    lst_profiles:setItem( profile )
-   luatk.newButton( wdw, -20, -20, 80, 40, "Close", luatk.close )
+   luatk.newButton( wdw, -20, -20, 80, 40, _("Close"), luatk.close )
    luatk.run()
 
    -- Save as variables
