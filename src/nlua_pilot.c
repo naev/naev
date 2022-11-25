@@ -2524,6 +2524,9 @@ static int pilotL_comm( lua_State *L )
          }
       }
 
+      if (player.p==NULL)
+         return 0;
+
       if (!ignore_int && !pilot_inRangePilot( player.p, p, NULL ))
          return 0;
 
