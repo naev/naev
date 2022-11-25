@@ -24,6 +24,7 @@ local ant = require "common.antlejos"
 local fleet = require "fleet"
 local escort = require "escort"
 local pilotai = require "pilotai"
+local ai_setup = require "ai.core.setup"
 
 local reward = ant.rewards.ant08
 
@@ -159,6 +160,7 @@ function miner_create( p )
    p:setFaction( fct_miner() )
    p:outfitAdd( "Laser Turret MK1" )
    p:outfitAdd( "Laser Turret MK1" )
+   ai_setup.setup(p)
    if firstcreate then
       hook.timer( 10, "miner_salute", p )
       firstcreate = false
