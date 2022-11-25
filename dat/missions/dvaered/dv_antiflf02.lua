@@ -27,6 +27,7 @@ local fleet = require "fleet"
 local fmt = require "format"
 local portrait = require "portrait"
 local dv = require "common.dvaered"
+local ai_setup = require "ai.core.setup"
 
 local fleetDV, fleetFLF -- Non-persistent state
 local spawnFLF -- Forward-declared functions
@@ -134,6 +135,7 @@ function spawnDV()
         j:outfitRm("all")
         j:outfitAdd("Turreted Gauss Gun", 1)
         j:outfitAdd("Small Shield Booster", 1)
+        ai_setup.setup(j)
         hook.pilot(j, "disable", "disableDV")
     end
 
@@ -168,6 +170,7 @@ function spawnFLF()
         j:setInvincPlayer()
         -- Re-outfit the ships to use disable weapons. Kind of ugly, should probably be handled via AI orders in the future.
         j:outfitAdd("EMP Grenade Launcher", 3)
+        ai_setup.setup(j)
     end
     local vecFLF = vec2.newP(800, rnd.angle() )
     fleetFLF = fleet.add( 4, "Vendetta", "FLF", player.pos() + vecFLF, nil, {ai="flf_norun"} )
