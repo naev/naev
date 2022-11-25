@@ -148,6 +148,11 @@ end
 function comm( plt )
    local mem = plt:memory()
 
+   if mem.carried then
+      plt:comm(_("The fighter does not respond."), true, true)
+      return
+   end
+
    vn.reset()
    vn.scene()
 
