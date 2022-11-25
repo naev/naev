@@ -23,6 +23,7 @@ require "proximity"
 local srs = require "common.sirius"
 local fmt = require "format"
 local pir = require "common.pirate"
+local achack = require "common.achack"
 
 local ambush, joanne -- Non-persistent state
 local ambushSet -- Forward-declared functions
@@ -159,23 +160,11 @@ function enter()
       mem.warnFuel = false
    end
 
-   joanne = pilot.add("Sirius Fidelity", "Achack_sirius", mem.origin, _("Joanne"))
-   joanne:control()
-   joanne:outfitRm("cores")
-   joanne:outfitRm("all")
-   joanne:outfitAdd("Tricon Zephyr Engine")
-   joanne:outfitAdd("Milspec Orion 2301 Core System")
-   joanne:outfitAdd("S&K Ultralight Combat Plating")
-   joanne:cargoRm( "all" )
-   joanne:outfitAdd("Razor MK2", 4)
-   joanne:outfitAdd("Reactor Class I", 1)
-   joanne:outfitAdd("Shield Capacitor I", 1)
-   joanne:setHealth(100,100)
-   joanne:setEnergy(100)
-   joanne:setFuel(true)
-   joanne:setVisplayer()
-   joanne:setHilight()
-   joanne:setInvincPlayer()
+   joanne = pilot.add("Sirius Fidelity", achack.fct_sirius(), mem.origin, _("Joanne"))
+   joanne:control(true)
+   joanne:setVisplayer(true)
+   joanne:setHilight(true)
+   joanne:setInvincPlayer(true)
    local stats = joanne:stats()
    local joanneshipspeed = stats.speed_max
    if mem.playershipspeed < joanneshipspeed then
@@ -212,7 +201,7 @@ end
 function ambushSet(ships, location)
    -- TODO should probably redo how this is handled. It's not very robust if
    -- the player or whatever attacks them early
-   ambush = fleet.add(1, ships, "Achack_thugs", location)
+   ambush = fleet.add(1, ships, achack.fct_thugs(), location)
    for _, j in ipairs(ambush) do
       j:control()
    end

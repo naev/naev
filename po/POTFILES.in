@@ -79,8 +79,6 @@ dat/effects/shieldaura.xml
 dat/effects/shieldboost.xml
 dat/effects/wormhole_enter.xml
 dat/effects/wormhole_exit.xml
-dat/factions/achack_sirius.xml
-dat/factions/achack_thugs.xml
 dat/factions/black_lotus.xml
 dat/factions/collective.xml
 dat/factions/derelict.xml
@@ -2934,6 +2932,7 @@ dat/scripts/bioship/skills.lua
 dat/scripts/cinema.lua
 dat/scripts/class.lua
 dat/scripts/colour.lua
+dat/scripts/common/achack.lua
 dat/scripts/common/antlejos.lua
 dat/scripts/common/baron.lua
 dat/scripts/common/cargo.lua

@@ -19,6 +19,7 @@ local fleet = require "fleet"
 require "proximity"
 local srs = require "common.sirius"
 local fmt = require "format"
+local achack = require "achack"
 
 local bhfleet, harja -- Non-persistent state
 
@@ -161,7 +162,7 @@ end
 function jumpin()
    if system.cur() == mem.destsys and mem.stage == stages.killAssociates then
       local bhships = {"Pirate Vendetta", "Pacifier", "Lancelot", "Hyena"}
-      bhfleet = fleet.add(1, bhships, "Achack_thugs", vec2.new(-3000, -7000), _("Bounty Hunter"))
+      bhfleet = fleet.add(1, bhships, achack.fct_thugs(), vec2.new(-3000, -7000), _("Bounty Hunter"))
       mem.alive = #bhfleet
       for i, j in ipairs(bhfleet) do
          j:control()
@@ -182,7 +183,7 @@ end
 function enter()
    if mem.stage == stages.finish then
       -- Remember, Harja will be with you. Always. Well, until the mission ends.
-      harja = pilot.add("Shark", "Achack_sirius", mem.enter_src, _("Harja's Shark"), {ai="trader"})
+      harja = pilot.add("Shark", achack.fct_sirius(), mem.enter_src, _("Harja's Shark"), {ai="trader"})
       harja:control()
       harja:setInvincible(true)
       harja:follow(player.pilot())
