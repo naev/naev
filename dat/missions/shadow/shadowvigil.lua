@@ -21,6 +21,7 @@ local fmt = require "format"
 local shadow = require "common.shadow"
 local pir = require "common.pirate"
 local cinema = require "cinema"
+local ai_setup = require "ai.core.setup"
 
 -- Mission constants
 local rebinasys = system.get("Pas")
@@ -521,6 +522,7 @@ function killDiplomats()
          j:taskClear()
          j:outfitRm("all")
          j:outfitAdd("Cheater's Ragnarok Beam", 1)
+         ai_setup.setup(j)
          j:attack(dvaerplomat)
          j:setHilight(false)
       end

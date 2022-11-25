@@ -18,6 +18,7 @@ local fleet = require "fleet"
 local fmt = require "format"
 local shadow = require "common.shadow"
 local cinema = require "cinema"
+local ai_setup = require "ai.core.setup"
 require "proximity"
 
 local genbu, joe, leader, leaderdest, leaderstart, seiryuu, squads -- Non-persistent state
@@ -250,6 +251,7 @@ function spawnSquads(highlight)
          hook.pilot(k, "attacked", "attacked")
          k:outfitRm("all")
          k:outfitAdd("Cheater's Laser Cannon", 6) -- Equip these fellas with unfair weaponry
+         ai_setup.setup(k)
          k:setNoDisable()
       end
       squads[i][1]:control() -- Only need to control leader. Others will follow
@@ -329,6 +331,7 @@ function spawnGenbu(sys)
    genbu:outfitRm("all")
    genbu:outfitAdd("Heavy Laser Turret", 3)
    genbu:outfitAdd("Cheater's Ragnarok Beam", 3) -- You can't win. Seriously.
+   ai_setup.setup(genbu)
    genbu:control()
    genbu:setHilight()
    genbu:setVisplayer()
@@ -371,6 +374,7 @@ function spawnInterceptors()
       j:outfitAdd("Cheater's Laser Cannon", 4) -- Equip these fellas with unfair weaponry
       j:outfitAdd("Engine Reroute", 1)
       j:outfitAdd("Improved Stabilizer", 1)
+      ai_setup.setup(j)
       j:setLeader( genbu )
       j:control()
       j:attack(player.pilot())
