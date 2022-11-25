@@ -267,7 +267,7 @@ function optimize.optimize( p, cores, outfit_list, params )
    end
 
    -- Handle cores
-   if cores then
+   if cores and not pt.nocores then
       -- Don't actually have to remove cores as it should overwrite default
       -- cores as necessary
       --p:outfitRm( "cores" )
