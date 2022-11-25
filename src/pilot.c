@@ -1145,41 +1145,6 @@ void pilot_setCommMsg( Pilot *p, const char *s )
 }
 
 /**
- * @brief Have pilot send a message to another.
- *
- *    @param p Pilot sending message.
- *    @param target Target of the message.
- *    @param msg The message.
- *    @param ignore_int Whether or not should ignore interference.
- */
-void pilot_message( Pilot *p, unsigned int target, const char *msg, int ignore_int )
-{
-   Pilot *t;
-
-   /* Makes no sense with no player.p atm. */
-   if (player.p==NULL)
-      return;
-
-   /* Get the target. */
-   t = pilot_get(target);
-   if (t == NULL)
-      return;
-
-   /* Must be in range. */
-   if (!ignore_int && !pilot_inRangePilot( player.p, p, NULL ))
-      return;
-
-   /* Only really affects player.p atm. */
-   if (target == PLAYER_ID) {
-      char c = pilot_getFactionColourChar( p );
-      player_message( _("#%cComm %s>#0 \"%s\""), c, p->name, msg );
-
-      /* Set comm message. */
-      pilot_setCommMsg( p, msg );
-   }
-}
-
-/**
  * @brief Has the pilot broadcast a message.
  *
  *    @param p Pilot to broadcast the message.

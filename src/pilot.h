@@ -495,7 +495,6 @@ void pilot_renderOverlay( Pilot* p );
 /*
  * communication
  */
-void pilot_message( Pilot *p, unsigned int target, const char *msg, int ignore_int );
 void pilot_broadcast( Pilot *p, const char *msg, int ignore_int );
 void pilot_distress( Pilot *p, Pilot *attacker, const char *msg );
 void pilot_setCommMsg( Pilot *p, const char *s );

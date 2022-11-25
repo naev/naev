@@ -2453,7 +2453,8 @@ static int pilotL_broadcast( lua_State *L )
  *    @luatparam Pilot|string p Pilot to message the player, or string to use as a fictional pilot name. In the case of a string, interference is always ignored, and instead of ignore_int, a colour character such as 'F' or 'H' can be passed.
  *    @luatparam Pilot target Target to send message to.
  *    @luatparam string msg Message to send.
- *    @luatparam[opt=false] boolean ignore_int Whether or not it should ignore interference.
+ *    @luatparam[opt=false] boolean|colour param1 Whether or not it should ignore interference in the case a pilot is being used, otherwise it is a colour string such as 'N' that can be used to colour the text..
+ *    @luatparam[opt=false] boolean raw Whether or not to just display the raw text instead of a "message".
  * @luafunc comm
  */
 static int pilotL_comm( lua_State *L )
@@ -2462,6 +2463,7 @@ static int pilotL_comm( lua_State *L )
       const char *s;
       LuaPilot target;
       const char *msg, *col;
+      int raw;
 
       if (player.p==NULL)
          return 0;
@@ -2471,6 +2473,7 @@ static int pilotL_comm( lua_State *L )
       if (lua_isstring(L,2)) {
          msg   = luaL_checkstring(L,2);
          col   = luaL_optstring(L,3,NULL);
+         raw   = lua_toboolean(L,4);
       }
       else {
          target = luaL_checkpilot(L,2);
@@ -2478,10 +2481,14 @@ static int pilotL_comm( lua_State *L )
             return 0;
          msg   = luaL_checkstring(L,3);
          col   = luaL_optstring(L,4,NULL);
+         raw   = lua_toboolean(L,5);
       }
 
       /* Broadcast message. */
-      player_message( _("#%cComm %s>#0 \"%s\""), ((col==NULL)?'N':col[0]), s, msg );
+      if (raw)
+         player_message( _("#%c%s>#0 %s"), ((col==NULL)?'N':col[0]), s, msg );
+      else
+         player_message( _("#%cComm %s>#0 \"%s\""), ((col==NULL)?'N':col[0]), s, msg );
       if (player.p)
          pilot_setCommMsg( player.p, msg );
    }
@@ -2489,7 +2496,7 @@ static int pilotL_comm( lua_State *L )
       Pilot *p, *t;
       LuaPilot target;
       const char *msg;
-      int ignore_int;
+      int ignore_int, raw;
 
       /* Parse parameters. */
       p = luaL_validpilot(L,1);
@@ -2497,11 +2504,13 @@ static int pilotL_comm( lua_State *L )
          target = 0;
          msg   = luaL_checkstring(L,2);
          ignore_int = lua_toboolean(L,3);
+         raw = lua_toboolean(L,4);
       }
       else {
          target = luaL_checkpilot(L,2);
          msg   = luaL_checkstring(L,3);
          ignore_int = lua_toboolean(L,4);
+         raw = lua_toboolean(L,5);
       }
 
       /* Check to see if pilot is valid. */
@@ -2515,8 +2524,20 @@ static int pilotL_comm( lua_State *L )
          }
       }
 
+      if (!ignore_int && !pilot_inRangePilot( player.p, p, NULL ))
+         return 0;
+
       /* Broadcast message. */
-      pilot_message( p, t->id, msg, ignore_int );
+      if (target == PLAYER_ID) {
+         char c = pilot_getFactionColourChar( p );
+         if (raw)
+            player_message( _("#%c%s>#0 %s"), c, p->name, msg );
+         else
+            player_message( _("#%cComm %s>#0 \"%s\""), c, p->name, msg );
+
+         /* Set comm message. */
+         pilot_setCommMsg( p, msg );
+      }
    }
    return 0;
 }
