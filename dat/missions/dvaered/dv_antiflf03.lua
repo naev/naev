@@ -29,6 +29,7 @@ require "proximity"
 local portrait = require "portrait"
 local dv = require "common.dvaered"
 local cinema = require "cinema"
+local ai_setup = require "ai.core.setup"
 
 -- Mission constants
 local DVplanet, DVsys = spob.getS("Stalwart Station")
@@ -186,12 +187,7 @@ end
 
 -- Spawns the FLF base, ship version.
 function spawnbase()
-    base = pilot.add( "Sindbad", "FLF", basepos, nil, {ai="flf_norun"} )
-    base:outfitRm("all")
-    base:outfitRm("cores")
-    base:outfitAdd("Dummy Systems")
-    base:outfitAdd("Dummy Plating")
-    base:outfitAdd("Dummy Engine")
+    base = pilot.add( "Sindbad", "FLF", basepos, nil, {ai="flf_norun", naked=true} )
     base:outfitAdd("Base Ripper MK2", 8)
     base:setHostile()
     base:setNoDisable(true)
@@ -262,6 +258,7 @@ function spawnDV()
     obstinate:outfitAdd("Engine Reroute")
     obstinate:outfitAdd("Small Shield Booster")
     obstinate:outfitAdd("Small Shield Booster")
+    ai_setup.setup(obstinate)
     hook.pilot(obstinate, "attacked", "attackedObstinate")
     hook.pilot(obstinate, "death", "deathObstinate")
     hook.pilot(obstinate, "idle", "idle")
@@ -406,6 +403,7 @@ function spawnDVbomber()
     bomber:outfitAdd("TeraCom Imperator Launcher", 1, true, true)
     bomber:outfitAdd("Engine Reroute", 1)
     bomber:outfitAdd("Vulcan Gun", 3)
+    ai_setup.setup(bomber)
     bomber:setNoDisable(true)
     bomber:setFriendly()
     bomber:control()
@@ -519,6 +517,7 @@ function deathDVbomber()
                 bomber:outfitAdd("TeraCom Imperator Launcher", 1, true, true)
                 bomber:outfitAdd("Engine Reroute", 1)
                 bomber:outfitAdd("Vulcan Gun", 3)
+                ai_setup.setup(bomber)
                 bomber:setNoDisable(true)
                 bomber:setFriendly()
                 bomber:control()
