@@ -331,7 +331,7 @@ end
 
 -- Spawn one warlord
 function spawn1Wrlrd( origin )
-   wrlrds[mem.noWrlrd] = pilot.add( "Dvaered Goddard", "Warlords", origin, fw.lords[mem.noWrlrd] )
+   wrlrds[mem.noWrlrd] = pilot.add( "Dvaered Goddard", fw.fct_warlords(), origin, fw.lords[mem.noWrlrd] )
    wrlrds[mem.noWrlrd]:control()
 
    -- Decide if the Warlord will play at shooting at the player
@@ -561,12 +561,12 @@ function StraferNspy()
 
    -- First, teleport Strafer far away from any backup
    alpha[2]:rm()
-   alpha[2] = pilot.add( "Hyena", "DHC", strpos, _("Lieutenant Strafer") )
+   alpha[2] = pilot.add( "Hyena", fw.fct_dhc(), strpos, _("Lieutenant Strafer") )
    alpha[2]:setVisplayer()
    alpha[2]:control()
 
    -- Then put the fleeing spy
-   spy = pilot.add( "Schroedinger", "Warlords", spypos )
+   spy = pilot.add( "Schroedinger", fw.fct_warlords(), spypos )
    spy:setVisplayer()
    spy:control()
    spy:hyperspace( system.get("Gremlin") )
@@ -586,9 +586,10 @@ function deathOfStrafer()
 
    tk.msg( _("Something is happening at the station"), _([[You start to head to the station, but you hear a flurry of messages coming from the NightClaws squadron. A Schroedinger has managed to take off, unnoticed, from the High Command station, presumably carrying classified information. It managed to sneak through the blockade. The squadrons have been taken by surprise, but Strafer is catching up.]]) )
 
+   local fwarlords = fw.fct_warlords()
    attackers = {}
    for i = 1, 10 do
-      attackers[i] = pilot.add( "Hyena", "Warlords", system.get("Gremlin") )
+      attackers[i] = pilot.add( "Hyena", fwarlords, system.get("Gremlin") )
       attackers[i]:control()
       attackers[i]:attack( alpha[2] )
    end
@@ -619,10 +620,11 @@ function spawnKillers()
    misn.osdDestroy()
    misn.osdCreate( _("The Meeting"), {_("Eliminate the hostile fighters")} )
 
+   local fwarlords = fw.fct_warlords()
    local killers = {}
-   killers[1] = pilot.add( "Hyena", "Warlords", haltpla, _("Curiatius"), {ai="baddie_norun"} )
-   killers[2] = pilot.add( "Shark", "Warlords", haltpla, _("Curiatius"), {ai="baddie_norun"} )
-   killers[3] = pilot.add( "Lancelot", "Warlords", haltpla, _("Curiatius"), {ai="baddie_norun"} )
+   killers[1] = pilot.add( "Hyena", fwarlords, haltpla, _("Curiatius"), {ai="baddie_norun"} )
+   killers[2] = pilot.add( "Shark", fwarlords, haltpla, _("Curiatius"), {ai="baddie_norun"} )
+   killers[3] = pilot.add( "Lancelot", fwarlords, haltpla, _("Curiatius"), {ai="baddie_norun"} )
 
    mem.deadkillers = 0
    for i = 1, #killers do

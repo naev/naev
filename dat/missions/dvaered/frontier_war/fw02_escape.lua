@@ -299,7 +299,7 @@ function enter()
          origin = mem.lastSys
       end
 
-      strafer = pilot.add("Vendetta", "DHC", origin, _("Lieutenant Strafer"), {ai="baddie_norun"})
+      strafer = pilot.add("Vendetta", fw.fct_dhc(), origin, _("Lieutenant Strafer"), {ai="baddie_norun"})
       strafer:setHilight()
       strafer:setVisplayer()
 
@@ -430,9 +430,10 @@ end
 function targetAttacked()
    strafer:control(false)
    hook.rm(mem.attackhook)
+   local fwarlords = fw.fct_warlords()
    for i, j in ipairs(athooks) do
       hook.rm(j)
-      escort[i]:setFaction("Warlords") -- Hack so that Strafer attacks them and not the Sting
+      escort[i]:setFaction(fwarlords) -- Hack so that Strafer attacks them and not the Sting
    end
    target:setHostile(true)
 

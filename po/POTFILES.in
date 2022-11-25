@@ -82,7 +82,6 @@ dat/effects/wormhole_exit.xml
 dat/factions/black_lotus.xml
 dat/factions/collective.xml
 dat/factions/derelict.xml
-dat/factions/dhc.xml
 dat/factions/dreamer_clan.xml
 dat/factions/dummy.xml
 dat/factions/dvaered.xml
@@ -104,7 +103,6 @@ dat/factions/strangelove.xml
 dat/factions/thurion.xml
 dat/factions/trader.xml
 dat/factions/traders_guild.xml
-dat/factions/warlords.xml
 dat/factions/wild_ones.xml
 dat/factions/zalek.xml
 dat/map_decorator/blackhole.xml

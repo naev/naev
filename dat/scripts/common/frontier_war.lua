@@ -95,4 +95,31 @@ function fw.equipVendettaMace( pilot )
    pilot:setFuel(true)
 end
 
+local function make_fct ()
+   local f1 = faction.dynAdd( "Dvaered", "fw_warlords", _("Warlords"), {
+      ai="baddie",
+      clear_enemies=true,
+      clear_allies=true,
+      player=-10,
+   } )
+   local f2 =  faction.dynAdd( "Dvaered", "fw_dhc", _("Thugs"), {
+      longname=_("Dvaered High Command"),
+      ai="baddie_norun",
+      player=10,
+      -- Don't clear enemies/allies so they behave like Dvaered
+   } )
+   f2:dynEnemy( f1 )
+   return f1, f2
+end
+
+function fw.fct_warlords ()
+   local f, _f = make_fct()
+   return f
+end
+
+function fw.fct_dhc ()
+   local _f, f = make_fct()
+   return f
+end
+
 return fw

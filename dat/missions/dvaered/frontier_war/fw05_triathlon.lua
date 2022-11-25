@@ -371,10 +371,11 @@ function takeoff()
          player.pilot():control()
          player.pilot():face(mem.center)
 
+         local fwarlords = fw.fct_warlords()
          targets = {}
          for i = 1, 30 do
             pos = mem.center + vec2.newP( rnd.rnd(0,radius), rnd.angle() )
-            targets[i] = pilot.add( "Llama", "Warlords", pos, _("Target "))
+            targets[i] = pilot.add( "Llama", fwarlords, pos, _("Target "))
             targets[i]:control()
             targets[i]:setHostile() -- Just in case
             pos = mem.center + vec2.newP( rnd.rnd(0,radius), rnd.angle() )
@@ -424,10 +425,11 @@ function takeoff()
          p:memory().gather_range = 4*radius
       end
 
+      local fwarlords = fw.fct_warlords()
       annoyers = {}
       for i = 1, 10 do
          pos = mem.center + vec2.newP( rnd.rnd(0,radius-500), rnd.angle() )
-         annoyers[i] = pilot.add( "Dvaered Vendetta", "Warlords", pos, _("Shooter"))
+         annoyers[i] = pilot.add( "Dvaered Vendetta", fwarlords, pos, _("Shooter"))
          fw.equipVendettaMace( annoyers[i] )
          annoyers[i]:setSpeedLimit( .0001 )
          annoyers[i]:control()
@@ -471,7 +473,7 @@ function takeoff()
          mem.playerHitHook = hook.pilot( player.pilot(), "attacked", "playerHit" )
 
          -- Mark this one as player's opponent
-         competitors[5]:setFaction("Warlords")
+         competitors[5]:setFaction( fw.fct_warlords() )
          competitors[5]:setHostile()
          competitors[5]:setHilight()
          mem.duelsEnded = 0
@@ -608,10 +610,11 @@ end
 
 -- Spawn Competitors
 function spawnCompetitors( )
+   local fdhc = fw.fct_dhc()
    competitors = {} -- tam, leblanc, klank, strafer, caros, micoult, johnson, ernst, guo
    for i = 1, 9 do
       local pos = mem.center + vec2.newP( radius, i*math.pi/5 - math.pi/2 )
-      competitors[i] = pilot.add( "Dvaered Vendetta", "DHC", pos, mem.competitors_names[i])
+      competitors[i] = pilot.add( "Dvaered Vendetta", fdhc, pos, mem.competitors_names[i])
       fw.equipVendettaMace( competitors[i] )
       competitors[i]:memory().Cindex = i -- Store their index
       competitors[i]:setVisible()

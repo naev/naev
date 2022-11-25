@@ -175,7 +175,7 @@ function spawnTam( origin )
    majorTam = pilot.add( "Dvaered Vendetta", "Dvaered", origin, _("Major Tam") )
    majorTam:setHilight()
    majorTam:setVisplayer()
-   majorTam:setFaction("DHC")
+   majorTam:setFaction( fw.fct_dhc() )
 
    majorTam:outfitRm("all")
    majorTam:outfitRm("cores")
@@ -296,7 +296,7 @@ function meeting()
       mem.stage = 3
       quickie = pilot.add( "Dvaered Vendetta", "Dvaered", destpla2 )
       quickie:cargoRm( "all" )
-      quickie:setFaction("Warlords")
+      quickie:setFaction( fw.fct_warlords() )
 
       majorTam:taskClear()
       majorTam:memory().careful = true
@@ -322,7 +322,7 @@ function attackMe()
 
    -- Change the enemies to Warlords in order to make them attack
    for i = 1,#p do
-      p[i]:setFaction("Warlords")
+      p[i]:setFaction( fw.fct_warlords() )
       p[i]:control(false)
    end
 end
@@ -330,15 +330,16 @@ end
 -- Battleaddict's bros
 function moreBadGuys()
    local buff
+   local fwarlords = fw.fct_warlords()
    for i = 1, 3 do
       buff = pilot.add( "Dvaered Ancestor", "Dvaered", destpla2 )
-      buff:setFaction("Warlords")
+      buff:setFaction(fwarlords)
    end
    buff = pilot.add( "Dvaered Vigilance", "Dvaered", destpla2, _("Colonel Hamelsen") )
-   buff:setFaction("Warlords")
+   buff:setFaction(fwarlords)
    buff = pilot.add( "Dvaered Phalanx", "Dvaered", destpla2 )
-   buff:setFaction("Warlords")
-   warlord:setFaction("Warlords")
+   buff:setFaction(fwarlords)
+   warlord:setFaction(fwarlords)
    warlord:control(false)
 end
 
@@ -346,13 +347,14 @@ end
 function hamelsenAmbush()
    local jp     = jump.get(system.cur(), mem.previous)
    local x, y, pos
+   local fwarlords = fw.fct_warlords()
    ambush = {}
    for i = 1, 3 do
       x = 1000 * rnd.rnd() + 1000
       y = 1000 * rnd.rnd() + 1000
       pos = jp:pos() + vec2.new(x,y)
 
-      ambush[i] = pilot.add( "Shark", "Warlords", pos, nil, {ai="baddie_norun"} )
+      ambush[i] = pilot.add( "Shark", fwarlords, pos, nil, {ai="baddie_norun"} )
       ambush[i]:setHostile()
       hook.pilot(ambush[i], "death", "ambushDied")
       hook.pilot(ambush[i], "land", "ambushDied")
@@ -362,7 +364,7 @@ function hamelsenAmbush()
    x = 1000 * rnd.rnd() + 2000
    y = 1000 * rnd.rnd() + 2000
    pos = jp:pos() + vec2.new(x,y)
-   hamelsen = pilot.add( "Shark", "Warlords", pos, _("Colonel Hamelsen"), {ai="baddie_norun"} )
+   hamelsen = pilot.add( "Shark", fwarlords, pos, _("Colonel Hamelsen"), {ai="baddie_norun"} )
 
    -- Nice outfits for Colonel Hamelsen (the Hellburner is her life insurance)
    hamelsen:outfitRm("all")
@@ -408,8 +410,9 @@ function ambush_msg()
    majorTam:control(false)
    hook.rm(mem.proxHook) -- To avoid triggering by mistake
 
+   local fdhc = fw.fct_dhc()
    for i, pi in ipairs(savers) do
-      pi:setFaction("DHC")
+      pi:setFaction( fdhc )
    end
 end
 
