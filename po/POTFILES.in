@@ -81,7 +81,6 @@ dat/effects/wormhole_enter.xml
 dat/effects/wormhole_exit.xml
 dat/factions/achack_sirius.xml
 dat/factions/achack_thugs.xml
-dat/factions/associates.xml
 dat/factions/black_lotus.xml
 dat/factions/collective.xml
 dat/factions/derelict.xml
@@ -108,7 +107,6 @@ dat/factions/shadow_pirates.xml
 dat/factions/sirius.xml
 dat/factions/soromid.xml
 dat/factions/strangelove.xml
-dat/factions/thugs.xml
 dat/factions/thurion.xml
 dat/factions/trader.xml
 dat/factions/traders_guild.xml
