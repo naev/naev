@@ -21,6 +21,7 @@
 local fleet = require "fleet"
 local fmt = require "format"
 local portrait = require "portrait"
+local ai_setup = require "ai.core.setup"
 
 
 local destsys = system.get("Torg")
@@ -106,6 +107,7 @@ function enter()
       hawk:outfitAdd("Unicorp PT-2200 Core System")
       hawk:outfitAdd("Unicorp Eagle 7000 Engine")
       hawk:outfitAdd("TeraCom Mace Launcher", 3) -- Half finished installing weapons. :)
+      ai_setup.setup(hawk)
       hawk:setHilight(true)
       hawk:setVisible(true)
       hawk:cargoAdd("Food", 500)
