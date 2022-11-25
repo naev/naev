@@ -945,18 +945,20 @@ void faction_setPlayer( int f, double value )
    mod = value - faction->player;
    faction->player = value;
    /* Run hook if necessary. */
-   hparam[0].type    = HOOK_PARAM_FACTION;
-   hparam[0].u.lf    = f;
-   hparam[1].type    = HOOK_PARAM_NUMBER;
-   hparam[1].u.num   = mod;
-   hparam[2].type    = HOOK_PARAM_SENTINEL;
-   hooks_runParam( "standing", hparam );
+   if (!faction_isFlag(faction, FACTION_DYNAMIC)) {
+      hparam[0].type    = HOOK_PARAM_FACTION;
+      hparam[0].u.lf    = f;
+      hparam[1].type    = HOOK_PARAM_NUMBER;
+      hparam[1].u.num   = mod;
+      hparam[2].type    = HOOK_PARAM_SENTINEL;
+      hooks_runParam( "standing", hparam );
 
-   /* Sanitize just in case. */
-   faction_sanitizePlayer( faction );
+      /* Sanitize just in case. */
+      faction_sanitizePlayer( faction );
 
-   /* Tell space the faction changed. */
-   space_factionChange();
+      /* Tell space the faction changed. */
+      space_factionChange();
+   }
 }
 
 /**
@@ -1874,8 +1876,9 @@ void factions_clearDynamic (void)
  *    @param name Name of the faction to set.
  *    @param display Display name to use.
  *    @param ai Default pilot AI to use (if NULL, inherit from base).
+ *    @param colour Default colour to use (if NULL, inherit from base).
  */
-int faction_dynAdd( int base, const char* name, const char* display, const char* ai )
+int faction_dynAdd( int base, const char* name, const char* display, const char* ai, const glColour* colour )
 {
    Faction *f = &array_grow( &faction_stack );
    memset( f, 0, sizeof(Faction) );
@@ -1913,6 +1916,10 @@ int faction_dynAdd( int base, const char* name, const char* display, const char*
       /* Lua stuff. */
       f->equip_env = bf->equip_env;
    }
+
+   /* Copy colour over if applicable. */
+   if (colour != NULL)
+      f->colour = *colour;
 
    /* TODO make this incremental. */
    faction_computeGrid();

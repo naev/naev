@@ -647,7 +647,10 @@ static int factionL_dynAdd( lua_State *L )
 {
    LuaFaction fac, newfac;
    const char *name, *display, *ai;
+   const glColour *colour;
    int clear_allies, clear_enemies;
+   double player;
+   int set_player;
 
    if (!lua_isnoneornil(L, 1))
       fac   = luaL_validfactionSilent(L,1); /* Won't error. */
@@ -655,6 +658,7 @@ static int factionL_dynAdd( lua_State *L )
       fac   = -1;
    name     = luaL_checkstring(L,2);
    display  = luaL_optstring(L,3,name);
+   set_player = 0;
 
    /* Just return existing and ignore the rest. */
    if (faction_exists(name)) {
@@ -679,21 +683,39 @@ static int factionL_dynAdd( lua_State *L )
       lua_getfield(L,4,"clear_enemies");
       clear_enemies = lua_toboolean(L,-1);
       lua_pop(L,1);
+
+      lua_getfield(L,4,"player");
+      if (lua_isnumber(L,-1)) {
+         player = lua_tonumber(L,-1);
+         set_player = 1;
+      }
+      lua_pop(L,1);
+
+      lua_getfield(L,4,"colour");
+      if (lua_isstring(L,-1))
+         colour = col_fromName( lua_tostring(L,-1) );
+      else
+         colour = lua_tocolour( L, -1 );
+      lua_pop(L,1);
    }
    else {
       ai             = NULL;
       clear_allies   = 0;
       clear_enemies  = 0;
+      player         = 0.;
+      colour         = NULL;
    }
 
    /* Create new faction. */
-   newfac = faction_dynAdd( fac, name, display, ai );
+   newfac = faction_dynAdd( fac, name, display, ai, colour );
 
    /* Clear if necessary. */
    if (clear_allies)
       faction_clearAlly( newfac );
    if (clear_enemies)
       faction_clearEnemy( newfac );
+   if (set_player)
+      faction_setPlayer( newfac, player );
 
    lua_pushfaction( L, newfac );
    return 1;

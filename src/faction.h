@@ -84,4 +84,4 @@ void faction_clearKnown (void);
 
 /* Dynamic factions. */
 void factions_clearDynamic (void);
-int faction_dynAdd( int base, const char* name, const char* display, const char* ai );
+int faction_dynAdd( int base, const char* name, const char* display, const char* ai, const glColour* colour );
