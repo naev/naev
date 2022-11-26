@@ -1164,7 +1164,7 @@ int pilot_slotIsActive( const PilotOutfitSlot *o )
    oo = o->outfit;
    if (oo == NULL)
       return 0;
-   if (outfit_isMod(oo) && !oo->u.mod.active && oo->lua_ontoggle == LUA_NOREF)
+   if (outfit_isMod(oo) && (oo->lua_ontoggle == LUA_NOREF))
       return 0;
 
    return 1;
