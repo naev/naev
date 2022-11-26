@@ -18,25 +18,25 @@ skills.set.bite = {
       icon = "food-chain.webp",
    },
    ["bite2"] = {
-      --name = _("Cannibalism II"),
-      name = _("Cannibal II"),
-      tier = 2,
-      requires = { "bite1" },
-      shipvar = "cannibal2",
-      desc = _("Cannibalizing boarded ships will now restore 2 points of armour per 3 points of armour cannibalized, and boarding will cause your ship to perform a full cooldown cycle."),
-      icon = "food-chain.webp",
-   },
-   ["bite3"] = {
       name = _("The Bite"),
-      tier = 3,
+      tier = 2,
       outfit = "The Bite",
       slot = "the_bite",
-      requires = { "bite2" },
+      requires = { "bite1" },
       desc = function( p )
          local dmg = 10*math.sqrt(p:mass())
          return fmt.f(_("The ship will lunge at the target enemy and take a huge bite out of it. +800% thrust and +30% absorb for 3 seconds or until target ship is bitten. This ship will do {dmg:.0f} damage with its current mass. Has a 15 second cooldown period."),{dmg=dmg})
       end,
       icon = "fangs.webp",
+   },
+   ["bite3"] = {
+      --name = _("Cannibalism II"),
+      name = _("Cannibal II"),
+      tier = 3,
+      requires = { "bite2" },
+      shipvar = "cannibal2",
+      desc = _("Cannibalizing boarded ships will now restore 2 points of armour per 3 points of armour cannibalized, and boarding will cause your ship to perform a full cooldown cycle."),
+      icon = "food-chain.webp",
    },
    ["bite4"] = {
       name = _("Blood Lust"),
