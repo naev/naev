@@ -2562,7 +2562,7 @@ int outfit_load (void)
       o->lua_sell       = nlua_refenvtype( env, "sell",     LUA_TFUNCTION );
 
       if (outfit_isMod(o)) {
-         nlua_getenv( naevL, env, "inactive" );
+         nlua_getenv( naevL, env, "notactive" );
          o->u.mod.active = !lua_toboolean(naevL,-1);
          lua_pop(naevL,1);
       }

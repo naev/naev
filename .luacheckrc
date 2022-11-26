@@ -176,7 +176,7 @@ stds.API_music = {globals={
    "volume",
 }}
 stds.API_pilotoutfit = {globals={
-   "inactive",
+   "notactive",
    "price",
    "buy",
    "sell",
