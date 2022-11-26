@@ -87,7 +87,7 @@ vec2 normal( vec2 uv )
 
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
-   vec4 color_out;
+   vec4 color_out = vec4(0.0);
    // Scaled UV coordinates.
    vec2 uv = 2.0*(texture_coords - 0.5);
    // Scaled radius.
@@ -113,7 +113,6 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    if (radius<=1.0) {
       // Render the surface.
       float light;
-      float radius_noise = 3.5+1.0*sin(speed/4.0*u_time);
       vec3 atmosphere_color;
       // Smooth the edges.
       float alpha = clamp(100.0*(1.0-radius-0.25/100.0), 0.0, 1.0);
