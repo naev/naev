@@ -595,7 +595,7 @@ static void info_openShip( unsigned int wid )
 
    /* Custom widget. */
    equipment_slotWidget( wid, -20, -40, 180, h-60, &info_eq );
-   info_eq.selected  = player.p;
+   info_eq.selected  = &player.ps;
    info_eq.canmodify = 0;
 
    /* Update ship. */
@@ -662,7 +662,7 @@ static void info_openWeapons( unsigned int wid )
 
    /* Custom widget. */
    equipment_slotWidget( wid, 20, -40, 180, h-60, &info_eq_weaps );
-   info_eq_weaps.selected  = player.p;
+   info_eq_weaps.selected  = &player.ps;
    info_eq_weaps.weapons = 0;
    info_eq_weaps.canmodify = 0;
 
@@ -731,7 +731,7 @@ static void weapons_genList( unsigned int wid )
    /* List */
    buf = malloc( sizeof(char*) * PILOT_WEAPON_SETS );
    for (int i=0; i<PILOT_WEAPON_SETS; i++) {
-      const char *str = pilot_weapSetName( info_eq_weaps.selected, i );
+      const char *str = pilot_weapSetName( info_eq_weaps.selected->p, i );
       if (str == NULL)
          snprintf( tbuf, sizeof(tbuf), "%d - ??", (i+1)%10 );
       else
