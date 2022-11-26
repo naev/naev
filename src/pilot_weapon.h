@@ -41,6 +41,7 @@ double pilot_weapSetSpeed( Pilot* p, int id, int level );
 double pilot_weapSetAmmo( Pilot *p, int id, int level );
 void pilot_weapSetCleanup( Pilot* p, int id );
 PilotWeaponSetOutfit* pilot_weapSetList( Pilot* p, int id );
+void pilot_weapSetCopy( PilotWeaponSet *dest, const PilotWeaponSet *src );
 
 /* Properties. */
 int pilot_weapSetTypeCheck( Pilot* p, int id );
@@ -60,3 +61,7 @@ void pilot_afterburnOver ( Pilot *p );
 int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o );
 int pilot_outfitOffAll( Pilot *p );
 int pilot_outfitOn( Pilot *p, PilotOutfitSlot *o );
+
+/* Weaponset stuff. */
+void ws_copy( PilotWeaponSet dest[PILOT_WEAPON_SETS], const PilotWeaponSet src[PILOT_WEAPON_SETS] );
+void ws_free( PilotWeaponSet ws[PILOT_WEAPON_SETS] );

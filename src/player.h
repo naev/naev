@@ -72,6 +72,7 @@ typedef struct PlayerOutfit_s {
  */
 typedef struct PlayerShip_s {
    Pilot *p;      /**< Pilot. */
+   PilotWeaponSet weapon_sets[PILOT_WEAPON_SETS]; /**< All the weapon sets the pilot has. */
    int autoweap;  /**< Automatically update weapon sets. */
    int favourite; /**< Whether or not it is favourited. */
 

@@ -475,6 +475,8 @@ static PlayerShip_t *player_newShipMake( const char *name )
       pilot_reset( ps->p );
       pilot_setPlayer( ps->p );
    }
+   /* Initialize parent weapon sets. */
+   ws_copy( ps->weapon_sets, ps->p->weapon_sets );
 
    if (player.p == NULL)
       ERR(_("Something seriously wonky went on, newly created player does not exist, bailing!"));
@@ -559,6 +561,9 @@ void player_swapShip( const char *shipname, int move_cargo )
    /* Store position. */
    v     = player.p->solid->pos;
    dir   = player.p->solid->dir;
+
+   /* Copy over weapon sets. */
+   ws_copy( player.ps.p->weapon_sets, player.ps.weapon_sets );
 
    /* If the pilot is deployed, we must redeploy. */
    removed = 0;
@@ -3430,21 +3435,19 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
    xmlw_attr(writer, "active_set", "%d", ship->active_set);
    xmlw_attr(writer, "aim_lines", "%d", ship->aimLines);
    for (int i=0; i<PILOT_WEAPON_SETS; i++) {
-      PilotWeaponSetOutfit *weaps = pilot_weapSetList( ship, i );
+      PilotWeaponSet *ws = &pship->weapon_sets[i];
+      PilotWeaponSetOutfit *weaps = ws->slots;
       xmlw_startElem(writer,"weaponset");
       /* Inrange isn't handled by autoweap for the player. */
-      xmlw_attr(writer,"inrange","%d",pilot_weapSetInrangeCheck(ship,i));
-      xmlw_attr(writer,"manual","%d",pilot_weapSetManualCheck(ship,i));
+      xmlw_attr(writer,"inrange","%d",ws->inrange);
+      xmlw_attr(writer,"manual","%d",ws->manual);
       xmlw_attr(writer,"id","%d",i);
       if (!ship->autoweap) {
-         const char *name = pilot_weapSetName(ship,i);
-         if (name != NULL)
-            xmlw_attr(writer,"name","%s",name);
-         xmlw_attr(writer,"type","%d",pilot_weapSetTypeCheck(ship,i));
+         xmlw_attr(writer,"type","%d",ws->type);
          for (int j=0; j<array_size(weaps); j++) {
             xmlw_startElem(writer,"weapon");
             xmlw_attr(writer,"level","%d",weaps[j].level);
-            xmlw_str(writer,"%d",weaps[j].slot->id);
+            xmlw_str(writer,"%d",weaps[j].slotid);
             xmlw_endElem(writer); /* "weapon" */
          }
       }
@@ -4538,6 +4541,8 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       ship->active_set = active_set;
    else
       pilot_weaponSetDefault( ship );
+   /* Copy the weapon set over to the player ship, where we store it. */
+   ws_copy( ps.weapon_sets, ship->weapon_sets );
 
    /* Set aimLines */
    ship->aimLines = aim_lines;

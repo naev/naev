@@ -1569,7 +1569,7 @@ static int pilotL_weapset( lua_State *L )
       /* Iterate over weapons. */
       for (int i=0; i<n; i++) {
          /* Get base look ups. */
-         slot = all ?  p->outfits[i] : po_list[i].slot;
+         slot = all ?  p->outfits[i] : p->outfits[ po_list[i].slotid ];
          o    = slot->outfit;
          if (o == NULL)
             continue;
@@ -1768,7 +1768,7 @@ static int pilotL_weapsetHeat( lua_State *L )
       for (int i=0; i<n; i++) {
          int level;
          /* Get base look ups. */
-         PilotOutfitSlot *slot = all ?  p->outfits[i] : po_list[i].slot;
+         PilotOutfitSlot *slot = all ?  p->outfits[i] : p->outfits[ po_list[i].slotid ];
          const Outfit *o = slot->outfit;
          if (o == NULL)
             continue;

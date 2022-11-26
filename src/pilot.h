@@ -146,7 +146,7 @@ typedef struct PilotOutfitSlot_ {
 typedef struct PilotWeaponSetOutfit_ {
    int level;              /**< Level of trigger. */
    double range2;          /**< Range squared of this specific outfit. */
-   PilotOutfitSlot *slot;  /**< Slot associated with it. */
+   int slotid;             /**< ID of the slot associated with the weapon set. */
 } PilotWeaponSetOutfit;
 
 /**

@@ -2841,7 +2841,7 @@ static int aiL_gatherablePos( lua_State *L )
 static int aiL_weapSet( lua_State *L )
 {
    Pilot* p;
-   int id, type, on, l, i;
+   int id, type;
    PilotWeaponSet *ws;
 
    p = cur_pilot;
@@ -2856,10 +2856,10 @@ static int aiL_weapSet( lua_State *L )
 
    if (ws->type == WEAPSET_TYPE_ACTIVE) {
       /* Check if outfit is on */
-      on = 1;
-      l  = array_size(ws->slots);
-      for (i=0; i<l; i++) {
-         if (ws->slots[i].slot->state == PILOT_OUTFIT_OFF) {
+      int on = 1;
+      int l  = array_size(ws->slots);
+      for (int i=0; i<l; i++) {
+         if (p->outfits[ ws->slots[i].slotid ]->state == PILOT_OUTFIT_OFF) {
             on = 0;
             break;
          }

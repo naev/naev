@@ -336,6 +336,9 @@ static void info_close( unsigned int wid, const char *str )
    if (info_wid > 0) {
       info_lastTab = window_tabWinGetActive( info_wid, "tabInfo" );
 
+      /* Copy weapon sets over if changed. */
+      ws_copy( player.ps.weapon_sets, player.p->weapon_sets );
+
       window_close( info_wid, str );
       info_wid = 0;
       info_windows = NULL;
