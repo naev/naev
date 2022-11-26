@@ -131,7 +131,7 @@ static int playerL_inventoryOwned( lua_State *L );
 static int playerL_teleport( lua_State *L );
 static int playerL_dt_mod( lua_State *L );
 static int playerL_fleetCapacity( lua_State *L );
-static int playerL_setFleetCapacity( lua_State *L );
+static int playerL_flleetCapacitySet( lua_State *L );
 static int playerL_chapter( lua_State *L );
 static int playerL_chapterSet( lua_State *L );
 static int playerL_infoButtonRegister( lua_State *L );
@@ -206,7 +206,7 @@ static const luaL_Reg playerL_methods[] = {
    { "teleport", playerL_teleport },
    { "dt_mod", playerL_dt_mod },
    { "fleetCapacity", playerL_fleetCapacity },
-   { "setFleetCapacity", playerL_setFleetCapacity },
+   { "fleetCapacitySet", playerL_fleetCapacitySet },
    { "chapter", playerL_chapter },
    { "chapterSet", playerL_chapterSet },
    { "infoButtonRegister", playerL_infoButtonRegister },
@@ -1982,9 +1982,9 @@ static int playerL_fleetCapacity( lua_State *L )
  * @brief Sets the fleet capacity of the player.
  *
  *    @luatparam number capacity Fleet capacity to set the player to.
- * @luafunc setFleetCapacity
+ * @luafunc fleetCapacitySet
  */
-static int playerL_setFleetCapacity( lua_State *L )
+static int playerL_fleetCapacitySet( lua_State *L )
 {
    player.fleet_capacity = luaL_checkinteger(L,1);
    return 0;
