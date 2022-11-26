@@ -131,7 +131,7 @@ static int playerL_inventoryOwned( lua_State *L );
 static int playerL_teleport( lua_State *L );
 static int playerL_dt_mod( lua_State *L );
 static int playerL_fleetCapacity( lua_State *L );
-static int playerL_flleetCapacitySet( lua_State *L );
+static int playerL_fleetCapacitySet( lua_State *L );
 static int playerL_chapter( lua_State *L );
 static int playerL_chapterSet( lua_State *L );
 static int playerL_infoButtonRegister( lua_State *L );
