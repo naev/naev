@@ -86,11 +86,11 @@ local function removehologram()
    mem.p = nil
 end
 
-local function turnoff( po )
+local function turnoff( p, po )
    removehologram()
 
    -- Set outfit state
-   mem.timer = cooldown
+   mem.timer = cooldown * p:shipstat("cooldown_mod",true)
    po:state("cooldown")
    po:progress(1)
 end
@@ -102,12 +102,12 @@ function init( p, po )
    mem.isp = player.pilot()==p -- is player?
 end
 
-function update( _p, po, dt )
+function update( p, po, dt )
    mem.timer = mem.timer - dt
    if mem.p then
       po:progress( mem.timer / active )
       if not mem.p:exists() or mem.timer < 0 or mem.p:health(true) < 5 then
-         turnoff( po )
+         turnoff( p, po )
       end
    else
       po:progress( mem.timer / cooldown )

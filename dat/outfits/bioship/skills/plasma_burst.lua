@@ -50,7 +50,7 @@ local function activate( p, po )
       colorsmoke = {0.6, 0.3, 0.3, 0.25},
    } )
 
-   mem.timer = cooldown
+   mem.timer = cooldown * p:shipstat("cooldown_mod",true)
    po:state("cooldown")
    po:progress(1)
 

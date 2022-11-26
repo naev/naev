@@ -1470,7 +1470,7 @@ int pilot_outfitOn( Pilot *p, PilotOutfitSlot *o )
       return pilot_outfitLOntoggle( p, o, 1 );
    else {
       o->state  = PILOT_OUTFIT_ON;
-      o->stimer = outfit_duration( o->outfit );
+      o->stimer = outfit_duration( o->outfit ) * p->stats.cooldown_mod;
    }
 
    return 1;

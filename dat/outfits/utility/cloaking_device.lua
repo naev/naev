@@ -64,7 +64,7 @@ local function turnoff( p, po )
    -- Turn off shader
    oshader:off()
 
-   mem.timer = cooldown
+   mem.timer = cooldown * p:shipstat("cooldown_mod",true)
    mem.active = false
    return true
 end

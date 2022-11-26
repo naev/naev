@@ -49,7 +49,7 @@ function update( p, po, dt )
          po:set("thrust_mod", penalty)
          po:set("turn_mod", penalty)
          mem.cooldown = true
-         mem.timer = cooldown
+         mem.timer = cooldown * p:shipstat("cooldown_mod",true)
       else
          -- Cooldown is over
          if mem.cooldown then
