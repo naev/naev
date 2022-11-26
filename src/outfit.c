@@ -436,7 +436,7 @@ int outfit_isActive( const Outfit* o )
 {
    if (outfit_isForward(o) || outfit_isTurret(o) || outfit_isLauncher(o) || outfit_isFighterBay(o))
       return 1;
-   if (outfit_isMod(o) && (o->u.mod.active || o->lua_env != LUA_NOREF))
+   if (outfit_isMod(o) && o->u.mod.active)
       return 1;
    if (outfit_isAfterburner(o))
       return 1;
@@ -2560,6 +2560,12 @@ int outfit_load (void)
       o->lua_price      = nlua_refenvtype( env, "price",    LUA_TFUNCTION );
       o->lua_buy        = nlua_refenvtype( env, "buy",      LUA_TFUNCTION );
       o->lua_sell       = nlua_refenvtype( env, "sell",     LUA_TFUNCTION );
+
+      if (outfit_isMod(o)) {
+         nlua_getenv( naevL, env, "inactive" );
+         o->u.mod.active = !lua_toboolean(naevL,-1);
+         lua_pop(naevL,1);
+      }
    }
 
 #ifdef DEBUGGING

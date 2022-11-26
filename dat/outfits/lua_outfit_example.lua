@@ -11,6 +11,11 @@ API and must be set in the XML file. This only works for *Modifier* outfits!
 * You have access to the pilotoutfit API which is meant for manipulating po.
 * Use the <desc_extra> field in the XML when describing what the Lua does.
 --]]
+-- The 'inactive' variable controls whether the outfit is considered an active
+-- outfit or not. By default, it is set to nil and thus the outfit is
+-- considered an active outfit. It can be used to have outfits with custom
+-- descriptions or prices while not being an active outfit.
+inactive = false
 
 -- The onload is run once when the outfit Lua is loaded. Useful for setting up
 -- variables. The passed variable is the outfit itself.

@@ -1,3 +1,5 @@
+inactive = true -- Doesnt' become active
+
 local fmt = require "format"
 local poi = require "common.poi"
 
