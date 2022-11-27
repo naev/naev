@@ -636,15 +636,15 @@ static void map_update( unsigned int wid )
    for (int i=0; i<array_size(sys->spobs); i++) {
       if (!spob_isKnown(sys->spobs[i]))
          continue;
-      if ((sys->spobs[i]->presence.faction > 0)
+      if ((sys->spobs[i]->presence.faction >= 0)
             && (!faction_isKnown(sys->spobs[i]->presence.faction)) )
          continue;
 
-      if ((f == -1) && (sys->spobs[i]->presence.faction > 0)) {
+      if ((f == -1) && (sys->spobs[i]->presence.faction >= 0)) {
          f = sys->spobs[i]->presence.faction;
       }
       else if (f != sys->spobs[i]->presence.faction /** @todo more verbosity */
-               && (sys->spobs[i]->presence.faction > 0)) {
+               && (sys->spobs[i]->presence.faction >= 0)) {
          snprintf( buf, sizeof(buf), _("Multiple") );
          multiple = 1;
          break;

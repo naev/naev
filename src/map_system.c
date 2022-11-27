@@ -439,9 +439,9 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       f = -1;
       for (i=0; i<array_size(sys->spobs); i++) {
          if (spob_isKnown( sys->spobs[i] )) {
-            if ((f==-1) && (sys->spobs[i]->presence.faction>0) ) {
+            if ((f==-1) && (sys->spobs[i]->presence.faction>=0) ) {
                f = sys->spobs[i]->presence.faction;
-            } else if (f != sys->spobs[i]->presence.faction &&  (sys->spobs[i]->presence.faction>0) ) {
+            } else if (f != sys->spobs[i]->presence.faction &&  (sys->spobs[i]->presence.faction>=0) ) {
                cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Faction: Multiple\n") );
                break;
             }
@@ -497,7 +497,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    } else {
      /* display spob info */
      p = cur_spobObj_sel;
-     if (p->presence.faction > 0 ) {/* show the faction */
+     if (p->presence.faction >= 0 ) {/* show the faction */
         char factionBuf[64];
         logo = faction_logo( p->presence.faction );
         if (logo != NULL)

@@ -1371,7 +1371,7 @@ static void sysedit_editPnt (void)
    snprintf( buf, sizeof(buf), "%s ", _("Faction:") );
    w = gl_printWidthRaw( NULL, buf );
    window_addText( wid, 20, y, 180, 15, 0, "txtFactionLabel", &gl_smallFont, NULL, buf );
-   snprintf( buf, sizeof(buf), "%s", p->presence.faction > 0 ? faction_name( p->presence.faction ) : _("None") );
+   snprintf( buf, sizeof(buf), "%s", p->presence.faction >= 0 ? faction_name( p->presence.faction ) : _("None") );
    window_addText( wid, 20 + w, y, 180, 15, 0, "txtFaction", &gl_smallFont, NULL, buf );
    y -= gl_defFont.h + 5;
 
@@ -2282,7 +2282,7 @@ static void sysedit_btnFactionSet( unsigned int wid, const char *unused )
    }
 
    /* Update the editor window. */
-   window_modifyText( sysedit_widEdit, "txtFaction", p->presence.faction > 0 ? faction_name( p->presence.faction ) : _("None") );
+   window_modifyText( sysedit_widEdit, "txtFaction", p->presence.faction >= 0 ? faction_name( p->presence.faction ) : _("None") );
 
    window_close( wid, unused );
 }
