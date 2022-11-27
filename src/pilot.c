@@ -1387,7 +1387,8 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
 
    /* Invincible means no damage. */
    if (pilot_isFlag( p, PILOT_INVINCIBLE ) ||
-         pilot_isFlag( p, PILOT_HIDE ))
+         pilot_isFlag( p, PILOT_HIDE ) ||
+         ((pshooter!=NULL) && pilot_isWithPlayer(pshooter) && pilot_isFlag( p, PILOT_INVINC_PLAYER )))
       return 0.;
 
    /* Defaults. */
