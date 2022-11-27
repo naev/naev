@@ -212,7 +212,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          l  = array_size(ws->slots);
          for (int i=0; i<l; i++) {
             PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
-            if (pos == PILOT_OUTFIT_OFF) {
+            if (pos->state == PILOT_OUTFIT_OFF) {
                on = 0;
                break;
             }
