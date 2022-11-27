@@ -292,9 +292,6 @@ int faction_setKnown( int id, int state )
       faction_setFlag( &faction_stack[id], FACTION_KNOWN );
    else
       faction_rmFlag( &faction_stack[id], FACTION_KNOWN );
-
-
-
    return 0;
 }
 
