@@ -140,6 +140,11 @@ function create ()
    local _game_version, save_version = naev.version()
    local didupdate = false
 
+   -- Fixes a tiny bug that sneaked in for a bit (around 2022-11-27)
+   if var.peek("disc_blacklotus") and not faction.get("Black Lotus"):known() then
+      faction.get("Black Lotus"):setKnown(true)
+   end
+
    -- Run on saves older than 0.9.0
    if not save_version or naev.versionTest( save_version, "0.9.0" ) < 0 then
       updater090()
