@@ -1225,6 +1225,10 @@ void weapon_hitAI( Pilot *p, const Pilot *shooter, double dmg )
    if (shooter == NULL)
       return;
 
+   /* Only care about actual damage. */
+   if (dmg <= 0.)
+      return;
+
    /* Must not be disabled. */
    if (pilot_isDisabled(p))
       return;
