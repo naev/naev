@@ -1727,7 +1727,7 @@ int pfaction_save( xmlTextWriterPtr writer )
 {
    xmlw_startElem(writer,"factions");
 
-   for (int i=1; i<array_size(faction_stack); i++) { /* player is faction 0 */
+   for (int i=0; i<array_size(faction_stack); i++) { /* player is faction 0 */
       /* Must not be static. */
       if (faction_isFlag( &faction_stack[i], FACTION_STATIC ))
          continue;
