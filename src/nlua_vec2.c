@@ -18,6 +18,7 @@
 
 #include "log.h"
 #include "nluadef.h"
+#include "collision.h"
 
 /* Vector metatable methods */
 static int vectorL_new( lua_State *L );
@@ -41,6 +42,7 @@ static int vectorL_distance2( lua_State *L );
 static int vectorL_mod( lua_State *L );
 static int vectorL_angle( lua_State *L );
 static int vectorL_normalize( lua_State *L );
+static int vectorL_collideLineLine( lua_State *L );
 static const luaL_Reg vector_methods[] = {
    { "new", vectorL_new },
    { "newP", vectorL_newP },
@@ -63,6 +65,7 @@ static const luaL_Reg vector_methods[] = {
    { "mod", vectorL_mod },
    { "angle", vectorL_angle },
    { "normalize", vectorL_normalize },
+   { "collideLineLine", vectorL_collideLineLine },
    {0,0}
 }; /**< Vector metatable methods. */
 
@@ -696,4 +699,27 @@ static int vectorL_normalize( lua_State *L )
    v->y /= m;
    lua_pushvector(L, *v);
    return 1;
+}
+
+/**
+ * @brief Sees if two line segments collide.
+ *
+ *    @luatparam Vec2 s1 Start point of the first segment.
+ *    @luatparam Vec2 e1 End point of the first segment.
+ *    @luatparam Vec2 s2 Start point of the second segment.
+ *    @luatparam Vec2 e2 End point of the second segment.
+ *    @luatreturn integer 0 if they don't collide, 1 if they collide on a point, 2 if they are parallel, and 3 if they are coincident.
+ * @luafunc collideLineLine
+ */
+static int vectorL_collideLineLine( lua_State *L )
+{
+   vec2 *s1 = luaL_checkvector(L,1);
+   vec2 *e1 = luaL_checkvector(L,2);
+   vec2 *s2 = luaL_checkvector(L,3);
+   vec2 *e2 = luaL_checkvector(L,4);
+   vec2 crash;
+   int ret = CollideLineLine( s1->x, s1->y, e1->x, e1->y, s2->x, s2->y, e2->x, e2->y, &crash );
+   lua_pushinteger( L, ret );
+   lua_pushvector( L, crash );
+   return 2;
 }
