@@ -3,6 +3,7 @@ local pir = require "common.pirate"
 local prefix = {}
 
 function prefix.prefix( fct )
+   fct = faction.get(fct)
    if fct == faction.get("Za'lek") then
       return require("common.zalek").prefix
    elseif fct == faction.get("Empire") then
