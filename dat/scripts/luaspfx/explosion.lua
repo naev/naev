@@ -54,7 +54,7 @@ local function spfx_explosion( pos, vel, size, params )
    if not params.silent then
       sfx = explosion_sfx[ rnd.rnd(1,#explosion_sfx) ]
    end
-   local s  = spfx.new( 1/speed, update, nil, render, nil, pos, vel, sfx )
+   local s  = spfx.new( 1/speed, update, nil, render, nil, pos, vel, sfx, size*0.5 )
    local d  = s:data()
    d.timer  = 0
    d.size   = size

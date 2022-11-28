@@ -32,9 +32,10 @@ local function blink( pos, vel )
       blink_shader = lg.newShader( blink_shader_frag )
    end
 
-   local s = spfx.new( ttl, update, render, nil, nil, pos, vel )
+   local c = lg.newCanvas( player.pilot():render() )
+   local s = spfx.new( ttl, update, render, nil, nil, pos, vel, nil, (c.w+c.h)*0.25 )
    local d  = s:data()
-   d.canvas = lg.newCanvas( player.pilot():render() )
+   d.canvas = c
    d.timer = 0
    return s
 end

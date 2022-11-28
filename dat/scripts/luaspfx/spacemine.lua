@@ -132,13 +132,14 @@ local function spacemine( pos, vel, fct, params )
 
    -- Other params
    local duration = params.duration or 90
+   local range = 300
 
    -- Sound is handled separately in outfit
-   local s  = spfx.new( duration, update, render, nil, nil, pos, vel )
+   local s  = spfx.new( duration, update, render, nil, nil, pos, vel, nil, range )
    local d  = s:data()
    d.timer  = 0
    d.check  = rnd.rnd() * CHECK_INTERVAL
-   d.range  = 300
+   d.range  = range
    d.explosion = 500
    d.fct    = fct
    d.damage = params.damage or 1000
