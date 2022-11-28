@@ -8,6 +8,7 @@
 --]]
 local fmt   = require "format"
 local vntk  = require 'vntk'
+local prefix = require "common.prefix"
 
 local setFine -- Forward-declared functions
 
@@ -29,7 +30,7 @@ function create()
 
     setFine(mem.rep)
 
-    misn.setTitle(fmt.f(_("{fct} Rehabilitation"), {fct=mem.fac}))
+    misn.setTitle(prefix.prefix(mem.fac)..fmt.f(_("{fct} Rehabilitation"), {fct=mem.fac}))
     misn.setDesc(fmt.f(_([[You may pay a fine for a chance to redeem yourself in the eyes of a faction you have offended. You may interact with this faction as if your reputation were neutral, but your reputation will not actually improve until you've regained their trust. ANY hostile action against this faction will immediately void this agreement.
 
 #nFaction:#0 {fct}
