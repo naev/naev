@@ -1085,10 +1085,13 @@ void land_genWindows( int load, int changetab )
    if (!regen) {
       landed = 1;
       music_choose("land"); /* Must be before hooks in case hooks change music. */
+
       /* We don't run the "land" hook when loading. If you want to have it do stuff when loading, use the "load" hook.
        * Note that you can use the same function for both hooks. */
       if (!load)
          hooks_run("land");
+      else
+         hooks_run("load"); /* Should be run before generating missions, so if the load hook cancels a mission, it can reappear. */
       events_trigger( EVENT_TRIGGER_LAND );
 
       /* An event, hook or the likes made Naev quit. */
@@ -1249,10 +1252,6 @@ void land( Spob* p, int load )
 
    /* Create all the windows. */
    land_genWindows( load, 0 );
-
-   /* Hack so that load can run player.takeoff(). */
-   if (load)
-      hooks_run( "load" );
 
    /* Just in case? */
    bar_regen();
