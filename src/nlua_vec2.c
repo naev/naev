@@ -67,7 +67,7 @@ static const luaL_Reg vector_methods[] = {
    { "angle", vectorL_angle },
    { "normalize", vectorL_normalize },
    { "collideLineLine", vectorL_collideLineLine },
-   { "collideCircleLine", vectorL_collideLineCircle },
+   { "collideCircleLine", vectorL_collideCircleLine },
    {0,0}
 }; /**< Vector metatable methods. */
 
@@ -737,7 +737,7 @@ static int vectorL_collideLineLine( lua_State *L )
  *    @luatreturn Vector|nil Second point of collision or nil if single-point collision.
  * @luafunc collideCircleLine
  */
-static int vectorL_collideLineCircle( lua_State *L )
+static int vectorL_collideCircleLine( lua_State *L )
 {
    vec2 *center, *p1, *p2, crash[2];
    double radius;
