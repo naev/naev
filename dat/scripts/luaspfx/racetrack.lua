@@ -4,14 +4,12 @@ local love_shaders = require 'love_shaders'
 
 local track_shader, buoy_gfx, buoy_w, buoy_h
 
-local function update( s, dt )
+local function update( s, _dt )
    local d = s:data()
-   d.timer = d.timer + dt
-
    if d.ready then
       local p = player.pos()
-      local ret = vec2.collideCircleLine( player.pos(), 30, d.seg1, d.seg2 )
-      if ret then
+      local ret = vec2.collideLineLine( d.ppos, p, d.seg1, d.seg2 )
+      if ret==1 then
          d.ready = false
          d.activate()
       end
@@ -31,7 +29,6 @@ local function render( sp, x, y, z )
    local sw = d.size * 0.2 * z
    local sh = d.size * z
    local old_shader = lg.getShader()
-   track_shader:send( "u_time", d.timer )
    track_shader:send( "u_dimensions", sw, sh );
    lg.setShader( track_shader )
    lg.setColor( d.col )
@@ -62,7 +59,6 @@ local function racetrack_new( pos, rot, activate, params )
 
    local s = spfx.new( math.huge, update, nil, nil, render, pos, nil, nil, size )
    local d  = s:data()
-   d.timer  = 0
    d.size   = size
    d.col    = params.col or {0, 1, 1, 0.3}
    d.rot    = rot
@@ -87,12 +83,13 @@ function racetrack:data()
 end
 
 function racetrack:setReady( state )
-   local d = self.s:data()
+   local d = self:data()
    d.ready = state
+   d.ppos = player.pos()
 end
 
 function racetrack:setCol( col )
-   local d = self.s:data()
+   local d = self:data()
    d.col = col
 end
 
