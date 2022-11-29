@@ -44,7 +44,10 @@ local function render( sp, x, y, z )
    render_buoy( d.seg2, z, w, h )
 end
 
-local function racetrack( pos, rot, activate, params )
+local racetrack = {}
+local racetrack_mt = { __index=racetrack }
+
+local function racetrack_new( pos, rot, activate, params )
    params = params or {}
    -- Lazy loading shader
    if not track_shader then
@@ -68,7 +71,29 @@ local function racetrack( pos, rot, activate, params )
    d.seg2   = pos+vec2.newP(size*0.5,math.pi/2-rot)
    d.ppos   = player.pos()
    d.activate = activate
-   return s
+
+   local obj = { s=s }
+   setmetatable( obj, racetrack_mt )
+
+   return obj
 end
 
-return racetrack
+function racetrack:rm()
+   self.s:rm()
+end
+
+function racetrack:data()
+   return self.s:data()
+end
+
+function racetrack:setReady( state )
+   local d = self.s:data()
+   d.ready = state
+end
+
+function racetrack:setCol( col )
+   local d = self.s:data()
+   d.col = col
+end
+
+return racetrack_new
