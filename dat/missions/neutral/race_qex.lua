@@ -200,7 +200,6 @@ function start_race ()
    omsg_timer = player.omsgAdd(_("3…"), 0, 50)
    hook.timer( 1, "countdown", _("2…") )
    hook.timer( 2, "countdown", _("1…") )
-   hook.timer( 3, "countdown", _("GO!") )
    hook.timer( 3, "allowmove" )
 end
 
@@ -212,7 +211,8 @@ function race_complete ()
 end
 
 function countdown( msg )
-   player.omsgChange( omsg_timer, msg, 1 )
+   -- TODO sound
+   player.omsgChange( omsg_timer, msg, 0 )
 end
 
 function update_timer ()
@@ -228,6 +228,9 @@ function update_timer ()
 end
 
 function allowmove ()
+   player.omsgChange( omsg_timer, _("GO!"), 5 )
+   -- TODO sound
+
    player.pilot():control(false)
 
    elapsed_time = 0
