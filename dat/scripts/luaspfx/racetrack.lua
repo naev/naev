@@ -59,7 +59,7 @@ local function racetrack_new( pos, rot, activate, params )
 
    local size = params.size or 500
 
-   local s = spfx.new( math.huge, update, nil, nil, render, pos, nil, nil, size )
+   local s = spfx.new( math.huge, update, render, nil, nil, pos, nil, nil, size )
    local d  = s:data()
    d.size   = size
    d.col    = params.col or nil
