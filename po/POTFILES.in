@@ -3018,6 +3018,7 @@ dat/scripts/luaspfx/core.lua
 dat/scripts/luaspfx/explosion.lua
 dat/scripts/luaspfx/pheromones.lua
 dat/scripts/luaspfx/pulse.lua
+dat/scripts/luaspfx/racetrack.lua
 dat/scripts/luaspfx/sfx.lua
 dat/scripts/luaspfx/spacemine.lua
 dat/scripts/luaspfx/trail.lua
