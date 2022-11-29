@@ -209,7 +209,15 @@ function race_complete ()
    local pp = player.pilot()
    pp:setNoJump(false)
    pp:setNoLand(false)
+   hook.land("race_landed")
    player.land( mem.race_spob )
+end
+
+function race_landed ()
+   vntk.msg(_("Race Finished!"),fmt.f(_("You finished the race in {elapsed}. Congratulations!"), {
+      elapsed=display_time( elapsed_time ),
+   }))
+   misn.finish(false) -- false until we actually set up proper rewards and stuff
 end
 
 function countdown( msg )
