@@ -141,6 +141,9 @@ function start_race ()
    local gates = {}
 
    local function gate_activate( k )
+      -- Note that this function is called from luaspfx stuff. We can't use
+      -- hooks or the likes here, only set local variables to communicate with
+      -- the mission. Worst case we can trigger custom hooks if necessary
       for i=0,4 do
          if k-i > 0 then
             local c = {col_past[1], col_past[2], col_past[3], col_past[4]*(1-i/4)}
@@ -150,11 +153,9 @@ function start_race ()
 
       local ngates = #gates
       if k >= ngates then
-         -- done here
-         race_done = true
+         race_done = true -- This should trigger the timer hook
          omsg_timer = player.omsgAdd(display_time(elapsed_time), 5, 50)
          -- TODO sound effect?
-         hook.timer( 5, "race_complete" )
          return
       end
       -- TODO sound effect?
@@ -185,15 +186,16 @@ function start_race ()
       gate_add( k, g, angle )
    end
 
+   local angle = (gates_p[2]-gates_p[1]):angle()
    local pp = player.pilot()
    pp:setPos( gates_p[1] )
    pp:setVel( vec2.new() )
-   pp:setDir( (gates_p[2]-gates_p[1]):angle() )
+   pp:setDir( angle )
    pp:control(true)
    pp:setNoJump(true)
    pp:setNoLand(true)
    camera.setZoom(2)
-   gate_activate(0)
+   gate_activate(1)
 
    -- TODO music?
 
@@ -224,6 +226,8 @@ function update_timer ()
 
    if not race_done then
       hook.timer( 0.1, "update_timer" )
+   else
+      hook.timer( 5, "race_complete" )
    end
 end
 
