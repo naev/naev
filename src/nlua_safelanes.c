@@ -24,7 +24,6 @@
 #include "nluadef.h"
 #include "safelanes.h"
 
-
 /* diffs */
 static int safelanesL_get( lua_State *L );
 static int safelanesL_intersect( lua_State *L );
@@ -33,7 +32,6 @@ static const luaL_Reg safelanesL_methods[] = {
    { "intersect", safelanesL_intersect },
    {0,0}
 }; /**< Safelane Lua methods. */
-
 
 /**
  * @brief Loads the safelanes Lua library.
@@ -45,7 +43,6 @@ int nlua_loadSafelanes( nlua_env env )
    nlua_register(env, "safelanes", safelanesL_methods, 0);
    return 0;
 }
-
 
 /**
  * @brief Lua accessor functions to safe lane information.
@@ -146,7 +143,6 @@ static int safelanesL_get( lua_State *L )
 
    return 1;
 }
-
 
 /**
  * @brief Computes the intersection of a line segment and a circle.
