@@ -423,7 +423,7 @@ static int playerL_msgToggle( lua_State *L )
  *
  * @usage player.omsgAdd( "some_message", 5 )
  *    @luatparam string msg Message to add.
- *    @luatparam[opt=10] number duration Duration to add message (if 0. the duration is infinite).
+ *    @luatparam[opt=10] number duration Duration to add message in seconds (if 0. the duration is infinite).
  *    @luatparam[opt=16] number fontsize Size of the font to use.
  *    @luatparam[opt=white] Colour col Colour to use for the text or white if not specified.
  *    @luatreturn number ID of the created overlay message.
@@ -460,7 +460,7 @@ static int playerL_omsgAdd( lua_State *L )
  * @usage player.omsgChange( omsg_id, "new message", 3 )
  *    @luatparam number id ID of the overlay message to change.
  *    @luatparam string msg Message to change to.
- *    @luatparam number duration New duration to set (0. for infinity).
+ *    @luatparam number duration New duration to set in seconds (0. for infinity).
  *    @luatreturn boolean true if all went well, false otherwise.
  * @luafunc omsgChange
  */
