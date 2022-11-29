@@ -43,6 +43,7 @@ static int vectorL_mod( lua_State *L );
 static int vectorL_angle( lua_State *L );
 static int vectorL_normalize( lua_State *L );
 static int vectorL_collideLineLine( lua_State *L );
+static int vectorL_collideCircleLine( lua_State *L );
 static const luaL_Reg vector_methods[] = {
    { "new", vectorL_new },
    { "newP", vectorL_newP },
@@ -66,6 +67,7 @@ static const luaL_Reg vector_methods[] = {
    { "angle", vectorL_angle },
    { "normalize", vectorL_normalize },
    { "collideLineLine", vectorL_collideLineLine },
+   { "collideCircleLine", vectorL_collideLineCircle },
    {0,0}
 }; /**< Vector metatable methods. */
 
@@ -722,4 +724,34 @@ static int vectorL_collideLineLine( lua_State *L )
    lua_pushinteger( L, ret );
    lua_pushvector( L, crash );
    return 2;
+}
+
+/**
+ * @brief Computes the intersection of a line segment and a circle.
+ *
+ *    @luatparam Vector center Center of the circle.
+ *    @luatparam number radius Radius of the circle.
+ *    @luatparam Vector p1 First point of the line segment.
+ *    @luatparam Vector p2 Second point of the line segment.
+ *    @luatreturn Vector|nil First point of collision or nil if no collision.
+ *    @luatreturn Vector|nil Second point of collision or nil if single-point collision.
+ * @luafunc collideCircleLine
+ */
+static int vectorL_collideLineCircle( lua_State *L )
+{
+   vec2 *center, *p1, *p2, crash[2];
+   double radius;
+
+   center = luaL_checkvector( L, 1 );
+   radius = luaL_checknumber( L, 2 );
+   p1     = luaL_checkvector( L, 3 );
+   p2     = luaL_checkvector( L, 4 );
+
+   int cnt = CollideLineCircle( p1, p2, center, radius, crash );
+   if (cnt>0)
+      lua_pushvector( L, crash[0] );
+   if (cnt>1)
+      lua_pushvector( L, crash[1] );
+
+   return cnt;
 }
