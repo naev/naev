@@ -27,12 +27,12 @@ end
 
 local function render( sp, x, y, z )
    local d = sp:data()
-   track_shader:send( "u_time", d.timer )
-   track_shader:send( "u_size", d.size )
 
    local sw = d.size * 0.2 * z
    local sh = d.size * z
    local old_shader = lg.getShader()
+   track_shader:send( "u_time", d.timer )
+   track_shader:send( "u_dimensions", sw, sh );
    lg.setShader( track_shader )
    lg.setColor( d.col )
    love_shaders.img:draw( x-sw*0.5, y-sh*0.5, d.rot, sw, sh )
