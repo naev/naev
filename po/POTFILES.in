@@ -2781,6 +2781,7 @@ dat/missions/neutral/poi/zalek_drone.lua
 dat/missions/neutral/poi_intro.lua
 dat/missions/neutral/race1.lua
 dat/missions/neutral/race2.lua
+dat/missions/neutral/race_qex.lua
 dat/missions/neutral/reynir.lua
 dat/missions/neutral/runaway/runaway_cynthia.lua
 dat/missions/neutral/runaway/runaway_search.lua
