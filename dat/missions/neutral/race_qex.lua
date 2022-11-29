@@ -13,9 +13,11 @@
    Qex Racing
 
 --]]
---local fmt = require "format"
+local fmt = require "format"
 local spfxtrack = require "luaspfx.racetrack"
 local vntk = require "vntk"
+
+local elapsed_time, race_done
 
 local col_next = {0, 1, 1, 0.3}
 local col_past = {1, 0, 1, 0.2}
@@ -70,6 +72,7 @@ local track = {
 function create ()
    if not var.peek("testing") then return end
 
+   mem.race_spob = spob.cur()
    if not misn.claim( system.cur() ) then
       misn.finish(false)
    end
@@ -85,8 +88,21 @@ function accept ()
    misn.setDesc(_("You're participating in a race!"))
    misn.setReward(_("Endless Riches!"))
 
+   hook.load( "loaded" ) -- don't load into the race
    hook.safe("start_race")
    player.takeoff() -- take off and start the race!
+end
+
+function loaded ()
+   misn.finish(false)
+end
+
+local function display_time( time )
+   return fmt.f(_("{1}:{2}.{3}"),{
+      math.floor( time / 60 ),
+      math.floor( time ),
+      math.fmod( time, 0.1 ),
+   })
 end
 
 local omsg_timer
@@ -122,8 +138,13 @@ function start_race ()
       local ngates = #gates
       if k >= ngates then
          -- done here
+         race_done = true
+         omsg_timer = player.omsgAdd(display_time(elapsed_time), 5, 50)
+         -- TODO sound effect?
+         hook.timer( 5, "race_complete" )
          return
       end
+      -- TODO sound effect?
 
       local gate_next = gates[ k+1 ]
       gate_next:setReady( true )
@@ -168,12 +189,30 @@ function start_race ()
    hook.timer( 3, "allowmove" )
 end
 
+function race_complete ()
+   player.land( mem.race_spob )
+end
+
 function countdown( msg )
    player.omsgChange( omsg_timer, msg, 1 )
 end
 
+function update_timer ()
+   misn.osdCreate(_("Qex Racing"), {
+      _("Beat the Race!"),
+      display_time( elapsed_time ),
+   } )
+
+   if not race_done then
+      hook.timer( 0.1, "update_timer" )
+   end
+end
+
 function allowmove ()
    player.pilot():control(false)
+
+   elapsed_time = 0
+   update_timer ()
 end
 
 function abort ()
