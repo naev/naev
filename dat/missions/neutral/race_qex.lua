@@ -35,38 +35,44 @@ local function cubicBezier( t, p0, p1, p2, p3 )
    return lerp(l4, l5, t)
 end
 
-local track = {
+local track_list = {
    {
-      vec2.new(  5e3,  2e3 ), -- start near Qex IV
-      vec2.new( -1e3,  3e3 ),
-      vec2.new(  1e3, -1e3 ),
-      vec2.new(  2e3,  2e3 ),
-   }, {
-      vec2.new(  2e3,  2e3 ),
-      vec2.new( -1e3,  1e3 ),
-      vec2.new(  2e3,    0 ),
-      vec2.new( -1e3,  5e3 ), -- passes by Qex V
-   }, {
-      vec2.new( -1e3,  5e3 ),
-      vec2.new( -6e3,    0 ),
-      vec2.new(  1e3,  1e3 ),
-      vec2.new( -8e3,  2e3 ), -- circle Qex II
-   }, {
-      vec2.new( -8e3,  2e3 ),
-      vec2.new( -1e3, -1e3 ),
-      vec2.new( -1e3,  1e3 ),
-      vec2.new( -8e3,  4e3 ),
-   }, {
-      vec2.new( -8e3,  4e3 ),
-      vec2.new(  1e3, -1e3 ),
-      vec2.new(    0,  2e3 ),
-      vec2.new( -1e3,  2e3 ), -- Through asteroid field
-   }, {
-      vec2.new( -1e3,  2e3 ),
-      vec2.new(    0, -4e3 ),
-      vec2.new(  1e3, -3e3 ),
-      vec2.new(  5e3,  2e3 ),
-   }
+      name = _("Qex Tour"),
+      laps = 1,
+      track = {
+         {
+            vec2.new(  5e3,  2e3 ), -- start near Qex IV
+            vec2.new( -1e3,  3e3 ),
+            vec2.new(  1e3, -1e3 ),
+            vec2.new(  2e3,  2e3 ),
+         }, {
+            vec2.new(  2e3,  2e3 ),
+            vec2.new( -1e3,  1e3 ),
+            vec2.new(  2e3,    0 ),
+            vec2.new( -1e3,  5e3 ), -- passes by Qex V
+         }, {
+            vec2.new( -1e3,  5e3 ),
+            vec2.new( -6e3,    0 ),
+            vec2.new(  1e3,  1e3 ),
+            vec2.new( -8e3,  2e3 ), -- circle Qex II
+         }, {
+            vec2.new( -8e3,  2e3 ),
+            vec2.new( -1e3, -1e3 ),
+            vec2.new( -1e3,  1e3 ),
+            vec2.new( -8e3,  4e3 ),
+         }, {
+            vec2.new( -8e3,  4e3 ),
+            vec2.new(  1e3, -1e3 ),
+            vec2.new(    0,  2e3 ),
+            vec2.new( -1e3,  2e3 ), -- Through asteroid field
+         }, {
+            vec2.new( -1e3,  2e3 ),
+            vec2.new(    0, -4e3 ),
+            vec2.new(  1e3, -3e3 ),
+            vec2.new(  5e3,  2e3 ),
+         }
+      },
+   },
 }
 
 function create ()
@@ -89,6 +95,9 @@ function accept ()
    misn.setReward(_("Endless Riches!"))
 
    hook.load( "loaded" ) -- don't load into the race
+
+   -- TODO track selector
+   mem.track = track_list[1].track
    hook.safe("start_race")
    player.takeoff() -- take off and start the race!
 end
@@ -98,19 +107,23 @@ function loaded ()
 end
 
 local function display_time( time )
-   return fmt.f(_("{1}:{2}.{3}"),{
+   return fmt.f(_("{1:02.0f}:{2:02.0f}.{3:.0f}"),{
       math.floor( time / 60 ),
-      math.floor( time ),
-      math.fmod( time, 0.1 ),
+      math.floor(math.fmod( time, 60 ) ),
+      math.floor(math.fmod( time, 1 )*10),
    })
 end
 
 local omsg_timer
 function start_race ()
+   pilot.clear()
+   pilot.toggleSpawn(false)
+   -- TODO add spectators / cameras?
+
    local lp
    local elapsed = 0
    local gates_p = {}
-   for k,trk in ipairs(track) do
+   for k,trk in ipairs(mem.track) do
       for t = 0,1,0.005 do
          local p = cubicBezier( t, trk[1], trk[1]+trk[2], trk[4]+trk[3], trk[4] )
          local d = (lp and p:dist(lp)) or math.huge
@@ -177,6 +190,8 @@ function start_race ()
    pp:setVel( vec2.new() )
    pp:setDir( (gates_p[2]-gates_p[1]):angle() )
    pp:control(true)
+   pp:setNoJump(true)
+   pp:setNoLand(true)
    camera.setZoom(2)
    gate_activate(0)
 
@@ -190,6 +205,9 @@ function start_race ()
 end
 
 function race_complete ()
+   local pp = player.pilot()
+   pp:setNoJump(false)
+   pp:setNoLand(false)
    player.land( mem.race_spob )
 end
 
@@ -198,6 +216,7 @@ function countdown( msg )
 end
 
 function update_timer ()
+   elapsed_time = elapsed_time+0.1
    misn.osdCreate(_("Qex Racing"), {
       _("Beat the Race!"),
       display_time( elapsed_time ),
@@ -212,9 +231,14 @@ function allowmove ()
    player.pilot():control(false)
 
    elapsed_time = 0
-   update_timer ()
+   hook.timer( 0.1, "update_timer" )
 end
 
 function abort ()
    camera.setZoom()
+   local pp = player.pilot()
+   pp:setNoJump(false)
+   pp:setNoLand(false)
+   player.land( mem.race_spob )
+   misn.finish()
 end
