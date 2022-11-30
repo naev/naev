@@ -16,6 +16,8 @@
 local fmt = require "format"
 local spfxtrack = require "luaspfx.racetrack"
 local vntk = require "vntk"
+local luatk = require "luatk"
+local bezier = require "luatk.bezier"
 
 local elapsed_time, race_done
 
@@ -85,10 +87,63 @@ function create ()
    misn.setNPC(_("A laid back person"), "neutral/unique/laidback.webp", _("You see a laid back person, who appears to be one of the locals, looking around the bar."))
 end
 
+local function display_time( time )
+   return fmt.f(_("{1:02.0f}:{2:02.0f}.{3:.0f}"),{
+      math.floor( time / 60 ),
+      math.floor(math.fmod( time, 60 ) ),
+      math.floor(math.fmod( time, 1 )*10),
+   })
+end
+
 function accept ()
-   if not vntk.yesno(_("Race?"),_("Do you wanto to race?")) then
-      return
+   local accept = false
+   local track
+
+   local w, h = 460, 400
+   local wdw = luatk.newWindow( nil, nil, w, h )
+   luatk.newButton( wdw, -20-80-20, -20, 80, 30, _("Race!"), function ()
+      accept = true
+      luatk.close()
+   end )
+   luatk.newButton( wdw, -20, -20, 80, 30, _("Close"), luatk.close )
+   luatk.newText( wdw, 0, 10, w, 20, _("Choose Race Track"), nil, "center" )
+
+   local txt_race = luatk.newText( wdw, 240, 40, w-260, 200 )
+
+   local bzr_race = bezier.newBezier( wdw, 20+200+20, 120, 200, 200 )
+
+   local track_names = {}
+   for k,v in ipairs(track_list) do
+      table.insert( track_names, v.name )
    end
+   local lst_race = luatk.newList( wdw, 20, 40, 200, h-60, track_names, function ( _name, idx )
+      track = track_list[idx]
+      local txt = ""
+
+      -- Length of the track
+      local length = 0
+      local lp = track.track[1][1]
+      for k,trk in ipairs(track.track) do
+         for t = 0,1,0.01 do -- only 100 samples
+            local p = cubicBezier( t, trk[1], trk[1]+trk[2], trk[4]+trk[3], trk[4] )
+            length = length + p:dist(lp)
+            lp = p
+         end
+      end
+
+      bzr_race:set( track.track )
+
+      txt = txt.."#n".._("Name: ").."#0"..track.name.."\n"
+      txt = txt.."#n".._("Length: ").."#0"..fmt.number(length).."\n"
+      txt = txt.."#n".._("Best Time: ").."#0"..display_time(0)
+
+      txt_race:set(txt)
+   end )
+   lst_race:set( 1 )
+
+   luatk.run()
+
+   if not accept then return end
 
    misn.accept()
    misn.setDesc(_("You're participating in a race!"))
@@ -97,21 +152,13 @@ function accept ()
    hook.load( "loaded" ) -- don't load into the race
 
    -- TODO track selector
-   mem.track = track_list[1].track
+   mem.track = track
    hook.safe("start_race")
    player.takeoff() -- take off and start the race!
 end
 
 function loaded ()
    misn.finish(false)
-end
-
-local function display_time( time )
-   return fmt.f(_("{1:02.0f}:{2:02.0f}.{3:.0f}"),{
-      math.floor( time / 60 ),
-      math.floor(math.fmod( time, 60 ) ),
-      math.floor(math.fmod( time, 1 )*10),
-   })
 end
 
 local omsg_timer
