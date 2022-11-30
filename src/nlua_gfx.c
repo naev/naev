@@ -554,7 +554,7 @@ static gl_vbo *vbo_lines = NULL;
 static int gfxL_renderLinesH( lua_State *L )
 {
    GLfloat buf[256*2];
-   int i = 2;
+   int i = 3;
    GLuint n = 0;
    const mat4 *H = luaL_checktransform(L,1);
    const glColour *c = luaL_optcolour(L,2,&cWhite);
@@ -569,20 +569,20 @@ static int gfxL_renderLinesH( lua_State *L )
          break;
       }
 
-      if (lua_isvector(L,i)) {
-         vec2 *v = lua_tovector(L,i);
-         buf[2*n+0] = v->x;
-         buf[2*n+1] = v->y;
-         n++;
-         i+=1;
-      }
-      else if (lua_isnumber(L,i)) {
+      if (lua_isnumber(L,i)) {
          double x = luaL_checknumber(L,i);
          double y = luaL_checknumber(L,i+1);
          buf[2*n+0] = x;
          buf[2*n+1] = y;
          n++;
          i+=2;
+      }
+      else {
+         vec2 *v = luaL_checkvector(L,i);
+         buf[2*n+0] = v->x;
+         buf[2*n+1] = v->y;
+         n++;
+         i+=1;
       }
    }
 
