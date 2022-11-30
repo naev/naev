@@ -174,8 +174,8 @@ int lua_isvector( lua_State *L, int ind )
  * @usage vec2.new( 5, 3 ) -- creates a vector at (5,3)
  * @usage vec2.new() -- creates a vector at (0,0)
  *
- *    @luatparam number x If set, the X value for the new vector.
- *    @luatparam number y If set, the Y value for the new vector.
+ *    @luatparam[opt=0] number x If set, the X value for the new vector.
+ *    @luatparam[opt=x] number y If set, the Y value for the new vector.
  *    @luatreturn Vec2 The new vector.
  * @luafunc new
  */
@@ -192,7 +192,7 @@ static int vectorL_new( lua_State *L )
    if (!lua_isnoneornil(L,2))
       y = luaL_checknumber(L,2);
    else
-      y = 0.;
+      y = x;
 
    vec2_cset( &v, x, y );
    lua_pushvector(L, v);
