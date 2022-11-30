@@ -3024,6 +3024,7 @@ dat/scripts/luaspfx/sfx.lua
 dat/scripts/luaspfx/spacemine.lua
 dat/scripts/luaspfx/trail.lua
 dat/scripts/luatk.lua
+dat/scripts/luatk/bezier.lua
 dat/scripts/luatk/conf.lua
 dat/scripts/luatk/core.lua
 dat/scripts/luatk/main.lua
