@@ -625,9 +625,10 @@ static int vectorL_distance( lua_State *L )
    v1 = luaL_checkvector(L,1);
 
    /* Get rest of parameters. */
-   v2 = NULL;
    if (!lua_isnoneornil(L,2))
       v2 = luaL_checkvector(L,2);
+   else
+      v2 = NULL;
 
    /* Get distance. */
    if (v2 == NULL)
@@ -660,9 +661,10 @@ static int vectorL_distance2( lua_State *L )
    v1 = luaL_checkvector(L,1);
 
    /* Get rest of parameters. */
-   v2 = NULL;
    if (!lua_isnoneornil(L,2))
       v2 = luaL_checkvector(L,2);
+   else
+      v2 = NULL;
 
    /* Get distance. */
    if (v2 == NULL)
