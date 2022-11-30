@@ -138,8 +138,7 @@ vec2* luaL_checkvector( lua_State *L, int ind )
  */
 vec2* lua_pushvector( lua_State *L, vec2 vec )
 {
-   vec2 *v;
-   v = (vec2*) lua_newuserdata(L, sizeof(vec2));
+   vec2 *v = (vec2*) lua_newuserdata(L, sizeof(vec2));
    *v = vec;
    luaL_getmetatable(L, VECTOR_METATABLE);
    lua_setmetatable(L, -2);
@@ -185,14 +184,15 @@ static int vectorL_new( lua_State *L )
    vec2 v;
    double x, y;
 
-   if ((lua_gettop(L) > 1) && lua_isnumber(L,1) && lua_isnumber(L,2)) {
-      x = lua_tonumber(L,1);
-      y = lua_tonumber(L,2);
-   }
-   else {
+   if (!lua_isnoneornil(L,1))
+      x = luaL_checknumber(L,1);
+   else
       x = 0.;
+
+   if (!lua_isnoneornil(L,2))
+      y = luaL_checknumber(L,2);
+   else
       y = 0.;
-   }
 
    vec2_cset( &v, x, y );
    lua_pushvector(L, v);
@@ -215,14 +215,15 @@ static int vectorL_newP( lua_State *L )
    vec2 v;
    double m, a;
 
-   if ((lua_gettop(L) > 1) && lua_isnumber(L,1) && lua_isnumber(L,2)) {
-      m = lua_tonumber(L, 1);
-      a = lua_tonumber(L, 2);
-   }
-   else {
+   if (!lua_isnoneornil(L,1))
+      m = luaL_checknumber(L, 1);
+   else
       m = 0.;
+
+   if (!lua_isnoneornil(L,2))
+      a = luaL_checknumber(L, 2);
+   else
       a = 0.;
-   }
 
    vec2_pset( &v, m, a );
    lua_pushvector(L, v);
@@ -275,13 +276,9 @@ static int vectorL_add( lua_State *L )
       x = v2->x;
       y = v2->y;
    }
-   else if ((lua_gettop(L) > 2) && lua_isnumber(L,2) && lua_isnumber(L,3)) {
-      x = lua_tonumber(L,2);
-      y = lua_tonumber(L,3);
-   }
    else {
-      NLUA_INVALID_PARAMETER(L);
-      return 0;
+      x = luaL_checknumber(L,2);
+      y = luaL_checknumber(L,3);
    }
 
    /* Actually add it */
@@ -304,13 +301,9 @@ static int vectorL_add__( lua_State *L )
       x = v2->x;
       y = v2->y;
    }
-   else if ((lua_gettop(L) > 2) && lua_isnumber(L,2) && lua_isnumber(L,3)) {
-      x = lua_tonumber(L,2);
-      y = lua_tonumber(L,3);
-   }
    else {
-      NLUA_INVALID_PARAMETER(L);
-      return 0;
+      x = luaL_checknumber(L,2);
+      y = luaL_checknumber(L,3);
    }
 
    /* Actually add it */
@@ -350,13 +343,9 @@ static int vectorL_sub( lua_State *L )
       x = v2->x;
       y = v2->y;
    }
-   else if ((lua_gettop(L) > 2) && lua_isnumber(L,2) && lua_isnumber(L,3)) {
-      x = lua_tonumber(L,2);
-      y = lua_tonumber(L,3);
-   }
    else {
-      NLUA_INVALID_PARAMETER(L);
-      return 0;
+      x = luaL_checknumber(L,2);
+      y = luaL_checknumber(L,3);
    }
 
    /* Actually add it */
@@ -378,13 +367,9 @@ static int vectorL_sub__( lua_State *L )
       x = v2->x;
       y = v2->y;
    }
-   else if ((lua_gettop(L) > 2) && lua_isnumber(L,2) && lua_isnumber(L,3)) {
-      x = lua_tonumber(L,2);
-      y = lua_tonumber(L,3);
-   }
    else {
-      NLUA_INVALID_PARAMETER(L);
-      return 0;
+      x = luaL_checknumber(L,2);
+      y = luaL_checknumber(L,3);
    }
 
    /* Actually add it */
@@ -433,14 +418,19 @@ static int vectorL_mul( lua_State *L )
 static int vectorL_mul__( lua_State *L )
 {
    vec2 *v1;
-   double mod;
 
    /* Get parameters. */
-   v1    = luaL_checkvector(L,1);
-   mod   = luaL_checknumber(L,2);
+   v1 = luaL_checkvector(L,1);
+   if (lua_isnumber(L,2)) {
+      double mod = luaL_checknumber(L,2);
+      vec2_cset( v1, v1->x * mod, v1->y * mod );
+   }
+   else {
+      vec2 *v2 = luaL_checkvector(L,2);
+      vec2_cset( v1, v1->x * v2->x, v1->y * v2->y );
+   }
 
    /* Actually add it */
-   vec2_cset( v1, v1->x * mod, v1->y * mod );
    lua_pushvector( L, *v1 );
    return 1;
 }
@@ -459,28 +449,36 @@ static int vectorL_mul__( lua_State *L )
 static int vectorL_div( lua_State *L )
 {
    vec2 vout, *v1;
-   double mod;
 
    /* Get parameters. */
    v1    = luaL_checkvector(L,1);
-   mod   = luaL_checknumber(L,2);
+   if (lua_isnumber(L,2)) {
+      double mod = lua_tonumber(L,2);
+      vec2_cset( &vout, v1->x / mod, v1->y / mod );
+   }
+   else {
+      vec2 *v2 = luaL_checkvector(L,2);
+      vec2_cset( &vout, v1->x / v2->x, v1->y / v2->y );
+   }
 
-   /* Actually add it */
-   vec2_cset( &vout, v1->x / mod, v1->y / mod );
    lua_pushvector( L, vout );
    return 1;
 }
 static int vectorL_div__( lua_State *L )
 {
    vec2 *v1;
-   double mod;
 
    /* Get parameters. */
    v1    = luaL_checkvector(L,1);
-   mod   = luaL_checknumber(L,2);
+   if (lua_isnumber(L,2)) {
+      double mod = lua_tonumber(L,2);
+      vec2_cset( v1, v1->x / mod, v1->y / mod );
+   }
+   else {
+      vec2 *v2 = luaL_checkvector(L,2);
+      vec2_cset( v1, v1->x / v2->x, v1->y / v2->y );
+   }
 
-   /* Actually add it */
-   vec2_cset( v1, v1->x / mod, v1->y / mod );
    lua_pushvector( L, *v1 );
    return 1;
 }
@@ -596,7 +594,7 @@ static int vectorL_setP( lua_State *L )
  * @usage my_vec:dist( your_vec ) -- Gets distance from both vectors (your_vec - my_vec).
  *
  *    @luatparam Vec2 v Vector to act as origin.
- *    @luatparam Vec2 v2 Vector to get distance from, uses origin (0,0) if not set.
+ *    @luatparam[opt=vec2.new()] Vec2 v2 Vector to get distance from, uses origin (0,0) if not set.
  *    @luatreturn number The distance calculated.
  * @luafunc dist
  */
@@ -610,9 +608,8 @@ static int vectorL_distance( lua_State *L )
 
    /* Get rest of parameters. */
    v2 = NULL;
-   if (lua_gettop(L) > 1) {
+   if (!lua_isnoneornil(L,2))
       v2 = luaL_checkvector(L,2);
-   }
 
    /* Get distance. */
    if (v2 == NULL)
@@ -632,7 +629,7 @@ static int vectorL_distance( lua_State *L )
  * @usage my_vec:dist2( your_vec ) -- Gets squared distance from both vectors (your_vec - my_vec)^2.
  *
  *    @luatparam Vec2 v Vector to act as origin.
- *    @luatparam Vec2 v2 Vector to get squared distance from, uses origin (0,0) if not set.
+ *    @luatparam[opt=vec2.new()] Vec2 v2 Vector to get squared distance from, uses origin (0,0) if not set.
  *    @luatreturn number The distance calculated.
  * @luafunc dist2
  */
@@ -646,9 +643,8 @@ static int vectorL_distance2( lua_State *L )
 
    /* Get rest of parameters. */
    v2 = NULL;
-   if (lua_gettop(L) > 1) {
+   if (!lua_isnoneornil(L,2))
       v2 = luaL_checkvector(L,2);
-   }
 
    /* Get distance. */
    if (v2 == NULL)
