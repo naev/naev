@@ -152,7 +152,7 @@ function accept ()
    hook.load( "loaded" ) -- don't load into the race
 
    -- TODO track selector
-   mem.track = track
+   mem.track = track.track
    hook.safe("start_race")
    player.takeoff() -- take off and start the race!
 end
