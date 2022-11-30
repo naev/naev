@@ -37,18 +37,20 @@ local function _H( x, y, r, sx, sy )
       H = graphics._O
    end
    H = graphics._T[1].T * H
-   if r == 0 then
-      H = H:translate(x,y)
-           :scale( sx, -sy )
-           :translate(0,-1)
-   else
-      local hw = sx/2
-      local hh = sy/2
-      H = H:translate(x+hw,y+hh)
-           :rotate2d(r)
-           :translate(-hw,-hh)
-           :scale( sx, -sy )
-           :translate(0,-1)
+   if x then
+      if r == 0 then
+         H = H:translate(x,y)
+            :scale( sx, -sy )
+            :translate(0,-1)
+      else
+         local hw = sx/2
+         local hh = sy/2
+         H = H:translate(x+hw,y+hh)
+            :rotate2d(r)
+            :translate(-hw,-hh)
+            :scale( sx, -sy )
+            :translate(0,-1)
+      end
    end
    return H
 end
@@ -199,6 +201,14 @@ function graphics.newQuad( x, y, width, height, sw, sh )
    H:translate( q.x, q.y ):scale( q.w, q.h )
    q.H = H
    return q
+end
+
+
+--[[
+-- Line stuff
+--]]
+function graphics.line( ... )
+   naev.gfx.renderLinesH( _H(), graphics._fgcol, ... )
 end
 
 
