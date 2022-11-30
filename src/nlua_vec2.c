@@ -256,7 +256,7 @@ static int vectorL_tostring( lua_State *L )
  * @usage my_vec:add( your_vec )
  * @usage my_vec:add( 5, 3 )
  *
- *    @luatparam Vector v Vector getting stuff subtracted from.
+ *    @luatparam Vector v Vector getting stuff added to.
  *    @luatparam number|Vec2 x X coordinate or vector to add to.
  *    @luatparam number|nil y Y coordinate or nil to add to.
  *    @luatreturn Vec2 The result of the vector operation.
@@ -267,21 +267,27 @@ static int vectorL_add( lua_State *L )
    vec2 vout, *v1;
    double x, y;
 
-   /* Get self. */
-   v1    = luaL_checkvector(L,1);
-
-   /* Get rest of parameters. */
-   if (lua_isvector(L,2)) {
-      vec2 *v2 = lua_tovector(L,2);
-      x = v2->x;
-      y = v2->y;
+   if (lua_isnumber(L,1)) {
+      x = y = lua_tonumber(L,1);
+      v1 = luaL_checkvector(L,2);
    }
    else {
-      x = luaL_checknumber(L,2);
-      if (!lua_isnoneornil(L,3))
-         y = luaL_checknumber(L,3);
-      else
-         y = x;
+      /* Get self. */
+      v1    = luaL_checkvector(L,1);
+
+      /* Get rest of parameters. */
+      if (lua_isvector(L,2)) {
+         vec2 *v2 = lua_tovector(L,2);
+         x = v2->x;
+         y = v2->y;
+      }
+      else {
+         x = luaL_checknumber(L,2);
+         if (!lua_isnoneornil(L,3))
+            y = luaL_checknumber(L,3);
+         else
+            y = x;
+      }
    }
 
    /* Actually add it */
@@ -296,7 +302,7 @@ static int vectorL_add__( lua_State *L )
    double x, y;
 
    /* Get self. */
-   v1    = luaL_checkvector(L,1);
+   v1 = luaL_checkvector(L,1);
 
    /* Get rest of parameters. */
    if (lua_isvector(L,2)) {
