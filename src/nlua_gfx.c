@@ -563,6 +563,12 @@ static int gfxL_renderLinesH( lua_State *L )
       vbo_lines = gl_vboCreateDynamic( 256*sizeof(GLfloat)*2, NULL );
 
    while (!lua_isnoneornil(L,i)) {
+      if (n >= 256) {
+         WARN(_("Trying to draw too many lines in one call!"));
+         n = 256;
+         break;
+      }
+
       if (lua_isvector(L,i)) {
          vec2 *v = lua_tovector(L,i);
          buf[2*n+0] = v->x;
@@ -577,11 +583,6 @@ static int gfxL_renderLinesH( lua_State *L )
          buf[2*n+1] = y;
          n++;
          i+=2;
-      }
-
-      if (n > sizeof(buf)/sizeof(GLfloat)) {
-         WARN(_("Trying to draw too many lines in one call!"));
-         break;
       }
    }
 
