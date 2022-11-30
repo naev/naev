@@ -65,9 +65,10 @@ function Bezier:set( curves )
       maxy = math.max( maxy, y )
    end
    local minv = vec2.new( minx, miny )
-   local scale = (vec2.new(math.min(self.w,self.h))-vec2.new(20)) / (vec2.new( maxx, maxy )-minv)
+   local scale = math.min( (self.w-20)/(maxx-minx), (self.h-20)/(maxy-miny) )
+   local off = (vec2.new(self.w,self.h)-vec2.new(maxx-minx,maxy-miny)*scale)*0.5
    for k,v in ipairs(self.lines) do
-      self.lines[k] = (v-minv) * scale + vec2.new(10)
+      self.lines[k] = (v-minv) * scale + off
    end
 end
 
