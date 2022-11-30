@@ -278,7 +278,10 @@ static int vectorL_add( lua_State *L )
    }
    else {
       x = luaL_checknumber(L,2);
-      y = luaL_checknumber(L,3);
+      if (!lua_isnoneornil(L,3))
+         y = luaL_checknumber(L,3);
+      else
+         y = x;
    }
 
    /* Actually add it */
@@ -303,7 +306,10 @@ static int vectorL_add__( lua_State *L )
    }
    else {
       x = luaL_checknumber(L,2);
-      y = luaL_checknumber(L,3);
+      if (!lua_isnoneornil(L,3))
+         y = luaL_checknumber(L,3);
+      else
+         y = x;
    }
 
    /* Actually add it */
@@ -345,7 +351,10 @@ static int vectorL_sub( lua_State *L )
    }
    else {
       x = luaL_checknumber(L,2);
-      y = luaL_checknumber(L,3);
+      if (!lua_isnoneornil(L,3))
+         y = luaL_checknumber(L,3);
+      else
+         y = x;
    }
 
    /* Actually add it */
@@ -369,7 +378,10 @@ static int vectorL_sub__( lua_State *L )
    }
    else {
       x = luaL_checknumber(L,2);
-      y = luaL_checknumber(L,3);
+      if (!lua_isnoneornil(L,3))
+         y = luaL_checknumber(L,3);
+      else
+         y = x;
    }
 
    /* Actually add it */
