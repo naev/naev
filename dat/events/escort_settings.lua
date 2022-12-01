@@ -42,6 +42,10 @@ function update_followers ()
 end
 
 function create_hook( p )
+   -- Since this hook runs after direct creation, only pilots spawned
+   -- directly as an escort of the player should trigger. This means
+   -- that followers spawned by missions and such should not have the
+   -- variables overwritten.
    local m = p:memory()
    if p:leader()==player.pilot() then
       m.aggressive = aggressive
