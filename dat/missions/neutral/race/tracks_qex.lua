@@ -1,40 +1,5 @@
 return {
    {
-      name = _("Qex Tour"),
-      track = {
-         {
-            vec2.new(  5e3,  2e3 ), -- start near Qex IV
-            vec2.new( -1e3,  3e3 ),
-            vec2.new(  1e3, -1e3 ),
-            vec2.new(  2e3,  2e3 ),
-         }, {
-            vec2.new(  2e3,  2e3 ),
-            vec2.new( -1e3,  1e3 ),
-            vec2.new(  2e3,    0 ),
-            vec2.new( -1e3,  5e3 ), -- passes by Qex V
-         }, {
-            vec2.new( -1e3,  5e3 ),
-            vec2.new( -6e3,    0 ),
-            vec2.new(  1e3,  1e3 ),
-            vec2.new( -8e3,  2e3 ), -- circle Qex II
-         }, {
-            vec2.new( -8e3,  2e3 ),
-            vec2.new( -1e3, -1e3 ),
-            vec2.new( -1e3,  1e3 ),
-            vec2.new( -8e3,  4e3 ),
-         }, {
-            vec2.new( -8e3,  4e3 ),
-            vec2.new(  1e3, -1e3 ),
-            vec2.new(    0,  2e3 ),
-            vec2.new( -1e3,  2e3 ), -- Through asteroid field
-         }, {
-            vec2.new( -1e3,  2e3 ),
-            vec2.new(    0, -4e3 ),
-            vec2.new(  1e3, -3e3 ),
-            vec2.new(  5e3,  2e3 ),
-         }
-      },
-   }, {
       name = _("Peninsula"),
       scale = 15,
       center = true,
@@ -153,6 +118,41 @@ return {
             vec2.new( 0, 63 ),
             vec2.new( 942, 381 ),
          },
+      },
+   }, {
+      name = _("Qex Tour"),
+      track = {
+         {
+            vec2.new(  5e3,  2e3 ), -- start near Qex IV
+            vec2.new( -1e3,  3e3 ),
+            vec2.new(  1e3, -1e3 ),
+            vec2.new(  2e3,  2e3 ),
+         }, {
+            vec2.new(  2e3,  2e3 ),
+            vec2.new( -1e3,  1e3 ),
+            vec2.new(  2e3,    0 ),
+            vec2.new( -1e3,  5e3 ), -- passes by Qex V
+         }, {
+            vec2.new( -1e3,  5e3 ),
+            vec2.new( -6e3,    0 ),
+            vec2.new(  1e3,  1e3 ),
+            vec2.new( -8e3,  2e3 ), -- circle Qex II
+         }, {
+            vec2.new( -8e3,  2e3 ),
+            vec2.new( -1e3, -1e3 ),
+            vec2.new( -1e3,  1e3 ),
+            vec2.new( -8e3,  4e3 ),
+         }, {
+            vec2.new( -8e3,  4e3 ),
+            vec2.new(  1e3, -1e3 ),
+            vec2.new(    0,  2e3 ),
+            vec2.new( -1e3,  2e3 ), -- Through asteroid field
+         }, {
+            vec2.new( -1e3,  2e3 ),
+            vec2.new(    0, -4e3 ),
+            vec2.new(  1e3, -3e3 ),
+            vec2.new(  5e3,  2e3 ),
+         }
       },
    },
 }
