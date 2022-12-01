@@ -4,7 +4,7 @@
  <priority>3</priority>
  <chance>100</chance>
  <location>Bar</location>
- <spob>Reidd</spob>
+ <spob>Melendez Dome</spob>
 </mission>
 --]]
 --[[
