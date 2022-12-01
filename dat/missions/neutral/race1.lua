@@ -4,8 +4,12 @@
  <unique />
  <priority>3</priority>
  <cond>player.pilot():ship():class() == "Yacht" and spob.cur():class() ~= "1" and spob.cur():class() ~= "2" and spob.cur():class() ~= "3" and system.cur():presences()["Independent"] ~= nil and system.cur():presences()["Independent"] &gt; 0</cond>
+ <!--
  <chance>10</chance>
  <location>Bar</location>
+ -->
+ <chance>0</chance>
+ <location>None</location>
 </mission>
 --]]
 --[[
