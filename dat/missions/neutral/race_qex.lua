@@ -50,8 +50,6 @@ local function track_besttime( track )
 end
 
 function create ()
-   if not var.peek("testing") then return end
-
    mem.race_spob = spob.cur()
    if not misn.claim( system.cur() ) then
       misn.finish(false)
