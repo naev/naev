@@ -127,7 +127,7 @@ function approach_terminal ()
 
    local txt_race = luatk.newText( wdw, 240, 40, w-260, 200 )
 
-   local bzr_race = bezier.newBezier( wdw, 20+200+20, 120, 200, 200 )
+   local bzr_race = bezier.newBezier( wdw, 20+200+20, 130, 200, 200 )
 
    local track_names = {}
    for k,v in ipairs(track_list) do
@@ -139,10 +139,10 @@ function approach_terminal ()
 
       bzr_race:set( track.track )
 
-      txt = txt.."#n".._("Name: ").."#0"     ..track.name.."\n"
+      --txt = txt.."#n".._("Name: ").."#0"     ..track.name.."\n"
       txt = txt.."#n".._("Length: ").."#0"   ..fmt.number(track.length).."\n"
-      txt = txt.."#n".._("Goal Time: ").."#0"..display_time(track.goaltime).."#n"
-      txt = txt.."#n".._("Reward: ").."#0"   ..track.reward.."#n"
+      txt = txt.."#n".._("Goal Time: ").."#0"..display_time(track.goaltime).."\n"
+      txt = txt.."#n".._("Reward: ").."#0"   ..fmt.credits(track.reward).."\n"
       txt = txt.."#n".._("Best Time: ").."#0"..display_time(track.besttime)
 
       txt_race:set(txt)
@@ -294,7 +294,7 @@ function race_landed ()
       var.push( track_besttime(mem.track), elapsed_time )
       best_improved = true
    end
-   local reward = mem.track.reward or DEFAULT_REWARD
+   local reward = mem.track.reward
 
    vn.clear()
    vn.scene()
