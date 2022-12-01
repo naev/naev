@@ -14,6 +14,8 @@
    hired from the bar, including generating NPCs at the bar and managing
    escort creation and behavior in space.
 
+   TODO remove entirely in 0.11.0
+
 --]]
 local fmt = require "format"
 
