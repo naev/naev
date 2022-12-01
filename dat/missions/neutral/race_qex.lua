@@ -16,10 +16,11 @@
 local fmt = require "format"
 local spfxtrack = require "luaspfx.racetrack"
 local vn = require "vn"
-local vntk = require "vntk"
 local luatk = require "luatk"
 local bezier = require "luatk.bezier"
 local portrait = require 'portrait'
+
+local DEFAULT_REWARD = 100e3
 
 local elapsed_time, race_done
 
@@ -45,6 +46,10 @@ local npc_portrait   = "minerva_terminal.png"
 local npc_description= _("A terminal to let you participate in the different available races.")
 local laid_back_portrait = portrait.getFullPath("neutral/unique/laidback.webp")
 
+local function track_besttime( track )
+   return "race_bt_"..track.name
+end
+
 function create ()
    if not var.peek("testing") then return end
 
@@ -52,6 +57,27 @@ function create ()
    if not misn.claim( system.cur() ) then
       misn.finish(false)
    end
+
+   -- Load track properties
+   for k,track in ipairs(track_list) do
+      -- Length of the track
+      local length = 0
+      local lp = track.track[1][1]
+      local scale = track.scale or 1
+      for i,trk in ipairs(track.track) do
+         for t = 0,1,0.01 do -- only 100 samples
+            local p = cubicBezier( t, trk[1], trk[1]+trk[2], trk[4]+trk[3], trk[4] ) * scale
+            length = length + p:dist(lp)
+            lp = p
+         end
+      end
+
+      track.length = length
+      track.goaltime = length / 550 -- TODO something better
+      track.reward = track.reward or DEFAULT_REWARD
+      track.besttime = var.peek( track_besttime() ) or 0
+   end
+
    misn.npcAdd( "approach_terminal", _("Racing Terminal"), npc_portrait, npc_description )
 end
 
@@ -112,23 +138,13 @@ function approach_terminal ()
       track = track_list[idx]
       local txt = ""
 
-      -- Length of the track
-      local length = 0
-      local lp = track.track[1][1]
-      local scale = track.scale or 1
-      for k,trk in ipairs(track.track) do
-         for t = 0,1,0.01 do -- only 100 samples
-            local p = cubicBezier( t, trk[1], trk[1]+trk[2], trk[4]+trk[3], trk[4] ) * scale
-            length = length + p:dist(lp)
-            lp = p
-         end
-      end
-
       bzr_race:set( track.track )
 
-      txt = txt.."#n".._("Name: ").."#0"..track.name.."\n"
-      txt = txt.."#n".._("Length: ").."#0"..fmt.number(length).."\n"
-      txt = txt.."#n".._("Best Time: ").."#0"..display_time(0)
+      txt = txt.."#n".._("Name: ").."#0"     ..track.name.."\n"
+      txt = txt.."#n".._("Length: ").."#0"   ..fmt.number(track.length).."\n"
+      txt = txt.."#n".._("Goal Time: ").."#0"..display_time(track.goaltime).."#n"
+      txt = txt.."#n".._("Reward: ").."#0"   ..track.reward.."#n"
+      txt = txt.."#n".._("Best Time: ").."#0"..display_time(track.besttime)
 
       txt_race:set(txt)
    end )
@@ -272,9 +288,47 @@ function race_complete ()
 end
 
 function race_landed ()
-   vntk.msg(_("Race Finished!"),fmt.f(_("You finished the race in {elapsed}. Congratulations!"), {
-      elapsed="#g"..display_time( elapsed_time ).."#0",
-   }))
+   local beat_time = (elapsed_time <= mem.track.goaltime)
+   local best_improved = false
+   -- Update best time if applicable
+   if elapsed_time < mem.track.besttime or mem.track.besttime <= 0 then
+      var.push( track_besttime(mem.track), elapsed_time )
+      best_improved = true
+   end
+   local reward = mem.track.reward or DEFAULT_REWARD
+
+   vn.clear()
+   vn.scene()
+   vn.transition()
+   if beat_time then
+      if best_improved then
+         vn.na(fmt.f(_("You finished the race in {elapsed} and beat the goal time of {goal}! This is your new best time! Congratulations!"), {
+            elapsed="#g"..display_time( elapsed_time ).."#0",
+            goal=display_time( mem.track.goaltime ),
+         }))
+      else
+         vn.na(fmt.f(_("You finished the race in {elapsed} and beat the goal time of {goal}! Congratulations!"), {
+            elapsed="#g"..display_time( elapsed_time ).."#0",
+            goal=display_time( mem.track.goaltime ),
+         }))
+      end
+      vn.na(fmt.reward(reward))
+      vn.func( function ()
+         player.pay(reward)
+      end )
+   elseif best_improved then
+      vn.na(fmt.f(_("You finished the race in {elapsed}, but were {short} of the goal time. This is your new best time! Keep trying!"), {
+         elapsed="#g"..display_time( elapsed_time ).."#0",
+         short="#r"..display_time( mem.track.goaltime - elapsed_time ).."#0",
+      }))
+   else
+      vn.na(fmt.f(_("You finished the race in {elapsed}, but were {short} of the goal time. Keep trying!"), {
+         elapsed="#g"..display_time( elapsed_time ).."#0",
+         short="#r"..display_time( mem.track.goaltime - elapsed_time ).."#0",
+      }))
+   end
+   vn.run()
+
    misn.finish(false) -- false until we actually set up proper rewards and stuff
 end
 
