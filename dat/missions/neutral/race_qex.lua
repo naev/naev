@@ -149,8 +149,8 @@ function approach_terminal ()
          txt = txt.."#n".._("Best Time: ").."#0".._("N/A")
       else
          local col = ""
-         if track.besttime < track.goaltime then
-            col = "#b"
+         if track.besttime <= track.goaltime then
+            col = "#g"
          end
          txt = txt.."#n".._("Best Time: ").."#0"..col..display_time(track.besttime)
       end
