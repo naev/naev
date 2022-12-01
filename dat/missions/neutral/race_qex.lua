@@ -148,7 +148,11 @@ function approach_terminal ()
       if track.besttime == math.huge then
          txt = txt.."#n".._("Best Time: ").."#0".._("N/A")
       else
-         txt = txt.."#n".._("Best Time: ").."#0"..display_time(track.besttime)
+         local col = ""
+         if track.besttime < track.goaltime then
+            col = "#b"
+         end
+         txt = txt.."#n".._("Best Time: ").."#0"..col..display_time(track.besttime)
       end
 
       txt_race:set(txt)
