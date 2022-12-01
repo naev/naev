@@ -74,7 +74,7 @@ function create ()
       track.length = length
       track.goaltime = length / 600 -- TODO something better
       track.reward = track.reward or DEFAULT_REWARD
-      track.besttime = var.peek( track_besttime(track) ) or 0
+      track.besttime = var.peek( track_besttime(track) ) or math.huge
    end
 
    misn.npcAdd( "approach_terminal", _("Racing Terminal"), npc_portrait, npc_description )
@@ -143,7 +143,11 @@ function approach_terminal ()
       txt = txt.."#n".._("Length: ").."#0"   ..fmt.number(track.length).."\n"
       txt = txt.."#n".._("Goal Time: ").."#0"..display_time(track.goaltime).."\n"
       txt = txt.."#n".._("Reward: ").."#0"   ..fmt.credits(track.reward).."\n"
-      txt = txt.."#n".._("Best Time: ").."#0"..display_time(track.besttime)
+      if track.besttime == math.huge then
+         txt = txt.."#n".._("Best Time: ").."#0".._("N/A")
+      else
+         txt = txt.."#n".._("Best Time: ").."#0"..display_time(track.besttime)
+      end
 
       txt_race:set(txt)
    end )
@@ -291,10 +295,12 @@ function race_landed ()
    local best_improved = false
    -- Update best time if applicable
    if elapsed_time < mem.track.besttime or mem.track.besttime <= 0 then
+      mem.track.besttime = elapsed_time
       var.push( track_besttime(mem.track), elapsed_time )
       best_improved = true
    end
    local reward = mem.track.reward
+   local reward_outfit = outfit.get("Racing Trophy")
 
    vn.clear()
    vn.scene()
@@ -311,7 +317,24 @@ function race_landed ()
             goal=display_time( mem.track.goaltime ),
          }))
       end
-      vn.na(fmt.reward(reward))
+      local did_all = true
+      for k,v in ipairs(track_list) do
+         if v.besttime > v.goaltime then
+            did_all = false
+            break
+         end
+      end
+      if player.numOutfit( reward_outfit ) <= 0 and did_all then
+         vn.na(fmt.f(_([[An individual in a suit and tie suddenly takes you up onto a stage. A large name tag on their jacket says 'Melendez Corporation'. "Congratulations on your win," they say, shaking your hand, "That wasa great race! On behalf of Melendez Corporation, and for beating the goal times of all the courses here at {spobname}, I would like to present to you your trophy!".
+They hand you one of those fake oversized cheques for the audienc, and then a credit chip with the actual prize oney on it. At least the trophy looks cool.]]),
+            {spobname=spob.cur()}))
+         vn.na(fmt.reward(reward_outfit).."\n"..fmt.reward(reward))
+         vn.func( function ()
+            player.outfitAdd( reward_outfit )
+         end )
+      else
+         vn.na(fmt.reward(reward))
+      end
       vn.func( function ()
          player.pay(reward)
       end )
@@ -326,6 +349,7 @@ function race_landed ()
          short="#r"..display_time( mem.track.goaltime - elapsed_time ).."#0",
       }))
    end
+
    vn.run()
 
    misn.finish( beat_time )
