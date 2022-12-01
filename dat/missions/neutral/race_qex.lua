@@ -329,7 +329,7 @@ function race_landed ()
    end
    vn.run()
 
-   misn.finish(false) -- false until we actually set up proper rewards and stuff
+   misn.finish( beat_time )
 end
 
 function countdown( msg )
