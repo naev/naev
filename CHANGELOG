@@ -15,7 +15,7 @@
       * More complex space objects (spob)
       * Support for different difficulty settings
       * New exploration mechanic with points of interest
-      * Unique ships to be find throughout the universe (pers)
+      * Unique ships to be found throughout the universe (pers)
       * Manual aiming mode for weapon sets
    * Gameplay Changes
       * Weapon types are more differentiated
@@ -27,13 +27,14 @@
       * Changed spawning and behaviour of pirates to be less dangerous in populated systems
       * Fighters only attack enemies visible by their carrier
       * AI is better at choosing targets
+      * More dump targets for waste dump mission and tweaked rewards
    * New Content
       * Added a gigantic black hole
       * Added new space anomalies such as plasma storms
       * Lots of new asteroid types and commodities
       * More interesting places to visit and explore
       * More engine sounds
-      * 44 New missions
+      * 45 New missions
          * More terraforming
          * Continuation of the Za'lek story
          * Help the Dvaered do some tasks
@@ -51,6 +52,7 @@
       * News revamped to be more flexible and relate more with current events
       * NPCs revamped to be more flexible with many new messages
       * New commodities that are only available from mining
+      * Fancy racing mini-game that replaces old race missions
    * Quality of Life
       * Support for save snapshots for each pilot
       * Can ask pilots to refuel you more than 100 units at a time
@@ -67,7 +69,9 @@
       * Autonav is more flexible with positioning on jump points
       * Can customize jump flash brightness
       * Player will not be scanned immediately on jumping in or taking off
-      * Show health bars near pilots in combat (can be disabled)
+      * Show health bars near pilots in combat (can be disabled in options)
+      * Escort AI is customizable
+      * Ship AI reminds player about things when they haven't played in a while
    * Engine changes
       * Work has begun on a development manual
       * Plugin support with explicit support for total conversions
