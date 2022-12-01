@@ -73,9 +73,9 @@ function create ()
       end
 
       track.length = length
-      track.goaltime = length / 550 -- TODO something better
+      track.goaltime = length / 600 -- TODO something better
       track.reward = track.reward or DEFAULT_REWARD
-      track.besttime = var.peek( track_besttime() ) or 0
+      track.besttime = var.peek( track_besttime(track) ) or 0
    end
 
    misn.npcAdd( "approach_terminal", _("Racing Terminal"), npc_portrait, npc_description )
