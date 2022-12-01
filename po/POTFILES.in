@@ -2568,6 +2568,7 @@ dat/events/npc/empire.lua
 dat/events/npc/flf.lua
 dat/events/npc/frontier.lua
 dat/events/npc/generic.lua
+dat/events/npc/melendez_dome.lua
 dat/events/npc/pirate.lua
 dat/events/npc/proteron.lua
 dat/events/npc/raven_clan.lua
