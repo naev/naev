@@ -188,7 +188,7 @@ int player_init (void)
    if (player_outfits==NULL)
       player_outfits = array_create( PlayerOutfit_t );
    player_initSound();
-   memset( &player.ps, 0, sizeof(PlayerShip_t) );
+   memset( &player, 0, sizeof(PlayerShip_t) );
    return 0;
 }
 
@@ -678,6 +678,7 @@ void player_rmShip( const char *shipname )
       /* Free player ship. */
       pilot_rmFlag( ps->p, PILOT_NOFREE );
       pilot_free( ps->p );
+      ws_free( ps->weapon_sets );
       free( ps->acquired );
 
       array_erase( &player_stack, ps, ps+1 );
@@ -731,7 +732,7 @@ void player_cleanup (void)
    free(player.name);
    player.name = NULL;
    free( player.ps.acquired );
-   memset( &player.ps, 0, sizeof(PlayerShip_t) );
+   ws_free( player.ps.weapon_sets );
 
    free(player_message_noland);
    player_message_noland = NULL;
@@ -769,6 +770,7 @@ void player_cleanup (void)
    for (int i=0; i<array_size(player_stack); i++) {
       pilot_rmFlag( player_stack[i].p, PILOT_NOFREE );
       pilot_free( player_stack[i].p );
+      ws_free( player_stack[i].weapon_sets );
       free( player_stack[i].acquired );
    }
    array_free(player_stack);
