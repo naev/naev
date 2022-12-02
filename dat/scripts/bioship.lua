@@ -192,7 +192,9 @@ local _maxstageSize = {
   10, -- carrier / battleship
 }
 function bioship.maxstage( p )
-   return _maxstageSize[ p:ship():size() ]
+   local ps = p:ship()
+   local intrin = biointrin[ ps:nameRaw() ]
+   return intrin.maxstage or _maxstageSize[ ps:size() ]
 end
 
 function bioship.setstage( p, stage )
