@@ -768,10 +768,11 @@ void player_cleanup (void)
 
    /* clean up the stack */
    for (int i=0; i<array_size(player_stack); i++) {
-      pilot_rmFlag( player_stack[i].p, PILOT_NOFREE );
-      pilot_free( player_stack[i].p );
-      ws_free( player_stack[i].weapon_sets );
-      free( player_stack[i].acquired );
+      PlayerShip_t *ps = &player_stack[i];
+      pilot_rmFlag( ps->p, PILOT_NOFREE );
+      pilot_free( ps->p );
+      ws_free( ps->weapon_sets );
+      free( ps->acquired );
    }
    array_free(player_stack);
    player_stack = NULL;
