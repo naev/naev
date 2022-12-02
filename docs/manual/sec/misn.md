@@ -11,7 +11,7 @@ The general rule of thumb when choosing which to make is that if you want the pl
 Example missions include cargo deliveries, system patrols, etc.
 On the other hand, most events are related to game internals and cutscenes such as the save game updater event ([`dat/events/updater.lua`](https://github.com/naev/naev/blob/main/dat/events/updater.lua)) or news generator event ([`dat/events/news.lua`](https://github.com/naev/naev/blob/main/dat/events/news.lua)).
 
-A full overview of the Lua API can be found at [naev.org/api](https://naev.org/api) and is out of the scope of this document.
+A full overview of the Naev Lua API can be found at [naev.org/api](https://naev.org/api) and is out of the scope of this document.
 
 ## Mission Guidelines
 
