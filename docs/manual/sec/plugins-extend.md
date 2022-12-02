@@ -46,7 +46,7 @@ Most of the meat of news lies in the articles. Each article is represented as a 
 3. `tag` (optional): Used to determine if a piece of news is repeated. Defaults to the head, but you can define multiple news with the same tag to make them mutually exclusive.
 4. `priority` (optional): Determines how high up the news is shown. Smaller values prioritize the news. Defaults to a value of 6.
 
-And that is all!
+As an alternative, it is also possible to bypass the news script entirely and directly add news with [`news.add`](https://naev.org/api/modules/news.html#add). This can be useful when adding news you want to appear directly as a result of in-game actions and not have it randomly appear. However, do note that not all players read the news and it can easily be missed.
 
 ### Adding Bar NPCs \naev
 
