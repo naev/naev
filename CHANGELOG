@@ -1,4 +1,8 @@
-* 0.10.0 (unreleased)
+* 0.10.0-beta.1
+   * Fixed player.setSpeed() not resetting speed as intended.
+   * Fixed pilot.comm not showing messages
+
+* 0.10.0 (beta)
    * New Mechanics
       * Support for setting ships as escorts and thus player fleets
       * Hypergates that allow for long distance travel

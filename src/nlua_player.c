@@ -698,8 +698,10 @@ static int playerL_setSpeed( lua_State *L )
       sound_setSpeed( speed );
       pause_setSpeed( speed );
    }
-   else
+   else {
+      player.speed = 1.;
       player_resetSpeed();
+   }
 
    return 0;
 }
