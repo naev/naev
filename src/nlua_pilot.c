@@ -2531,7 +2531,7 @@ static int pilotL_comm( lua_State *L )
          return 0;
 
       /* Broadcast message. */
-      if (target == PLAYER_ID) {
+      if (target == 0 || target == PLAYER_ID) {
          char c = pilot_getFactionColourChar( p );
          if (raw)
             player_message( _("#%c%s>#0 %s"), c, p->name, msg );
