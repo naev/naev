@@ -424,8 +424,8 @@ function timer_pirate( fpir )
          table.insert( enemies, p )
       end
       pp:comm(fmt.f(_([[Nelly: "Wait, are those pirates coming our way?"]])))
-      player.autonavReset(7)
-      hook.timer( 5, "timer_pirate_nelly" )
+      player.autonavReset(5)
+      hook.timer( 3, "timer_pirate_nelly" )
       hook.timer( 3, "timer_pirate_checkbribe" )
       mem.nelly_spam = 2
       return
