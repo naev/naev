@@ -132,7 +132,7 @@ tar -Jxf "$TEMPPATH/naev-win64/steam-win64.tar.xz" -C "$OUTDIR/win64"
 tar -Jxf "$TEMPPATH/naev-ndata/steam-ndata.tar.xz" -C "$OUTDIR/win64"
 
 # Rename windows binary so it follows the correct naming scheme.
-mv "$OUTDIR"/win64/*.exe "$OUTDIR/win64/naev-$SUFFIX-win64.exe"
+mv -f "$OUTDIR"/win64/*.exe "$OUTDIR/win64/naev-$SUFFIX-win64.exe"
 
 # Prepare itch.toml for Linux
 
