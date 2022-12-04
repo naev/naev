@@ -356,65 +356,65 @@ local function wave_compute_score ()
    local c = pp:ship():class()
    if mem.wave_category == "skirmisher" then
       if c=="Corvette" then
-         newbonus( "Corvette %d%%", -20 )
+         newbonus( _("Corvette %d%%"), -20 )
       elseif c=="Destroyer" then
-         newbonus( "Destroyer %d%%", -40 )
+         newbonus( _("Destroyer %d%%"), -40 )
       elseif c=="Cruiser" then
-         newbonus( "Cruiser %d%%", -80 )
+         newbonus( _("Cruiser %d%%"), -80 )
       elseif c=="Carrier" then
-         newbonus( "Carrier %d%%", -90 )
+         newbonus( _("Carrier %d%%"), -90 )
       elseif c=="Battleship" then
-         newbonus( "Battleship %d%%", -90 )
+         newbonus( _("Battleship %d%%"), -90 )
       end
       if elapsed < 15 then
-         newbonus( "Fast Clear (<15s) %d%%", 25 )
+         newbonus( _("Fast Clear (<15s) %d%%"), 25 )
       elseif elapsed > 90 then
-         newbonus( "Slow Clear (>90s) %d%%", -25 )
+         newbonus( _("Slow Clear (>90s) %d%%"), -25 )
       end
    elseif mem.wave_category == "warrior" then
       if c=="Fighter" then
-         newbonus( "Fighter %d%%", 100 )
+         newbonus( _("Fighter %d%%"), 100 )
       elseif c=="Bomber" then
-         newbonus( "Bomber %d%%", 100 )
+         newbonus( _("Bomber %d%%"), 100 )
       elseif c=="Corvette" then
-         newbonus( "Corvette %d%%", 25 )
+         newbonus( _("Corvette %d%%"), 25 )
       elseif c=="Cruiser" then
-         newbonus( "Cruiser %d%%", -20 )
+         newbonus( _("Cruiser %d%%"), -20 )
       elseif c=="Carrier" then
-         newbonus( "Carrier %d%%", -30 )
+         newbonus( _("Carrier %d%%"), -30 )
       elseif c=="Battleship" then
-         newbonus( "Battleship %d%%", -30 )
+         newbonus( _("Battleship %d%%"), -30 )
       end
       if elapsed < 25 then
-         newbonus( "Fast Clear (<25s) %d%%", 25 )
+         newbonus( _("Fast Clear (<25s) %d%%"), 25 )
       elseif elapsed > 120 then
-         newbonus( "Slow Clear (>120s) %d%%", -25 )
+         newbonus( _("Slow Clear (>120s) %d%%"), -25 )
       end
    elseif mem.wave_category == "warlord" then
       if c=="Fighter" then -- I'd love to see someone take down a kestrel in a fighter
-         newbonus( "Fighter %d%%", 500 )
+         newbonus( _("Fighter %d%%"), 500 )
       elseif c=="Bomber" then
-         newbonus( "Bomber %d%%", 400 )
+         newbonus( _("Bomber %d%%"), 400 )
       elseif c=="Corvette" then
-         newbonus( "Corvette %d%%", 100 )
+         newbonus( _("Corvette %d%%"), 100 )
       elseif c=="Destroyer" then
-         newbonus( "Destroyer %d%%", 50 )
+         newbonus( _("Destroyer %d%%"), 50 )
       elseif c=="Cruiser" then
-         newbonus( "Cruiser %d%%", 25 )
+         newbonus( _("Cruiser %d%%"), 25 )
       end
       if elapsed < 40 then
-         newbonus( "Fast Clear (<40s) %d%%", 25 )
+         newbonus( _("Fast Clear (<40s) %d%%"), 25 )
       elseif elapsed > 180 then
-         newbonus( "Slow Clear (>180s) %d%%", -25 )
+         newbonus( _("Slow Clear (>180s) %d%%"), -25 )
       end
    end
 
    -- Implement global modifier bonuses here
    if gmods.doubledmgtaken then
-      newbonus( "Double Damage Enemies %d%%", 50 )
+      newbonus( _("Double Damage Enemies %d%%"), 50 )
    end
    if gmods.nohealing then
-      newbonus( "No Healing Between Waves %d%%", 25 )
+      newbonus( _("No Healing Between Waves %d%%"), 25 )
    end
 
    score = math.max( 0, score * bonus / 100 )
