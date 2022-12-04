@@ -732,6 +732,7 @@ void player_cleanup (void)
    free(player.name);
    player.name = NULL;
    free( player.ps.acquired );
+   player.ps.acquired = NULL;
    ws_free( player.ps.weapon_sets );
 
    free(player_message_noland);

@@ -1590,6 +1590,8 @@ void ws_copy( PilotWeaponSet dest[PILOT_WEAPON_SETS], const PilotWeaponSet src[P
  */
 void ws_free( PilotWeaponSet ws[PILOT_WEAPON_SETS] )
 {
-   for (int i=0; i<PILOT_WEAPON_SETS; i++)
+   for (int i=0; i<PILOT_WEAPON_SETS; i++) {
       array_free( ws[i].slots );
+      ws[i].slots = NULL;
+   }
 }
