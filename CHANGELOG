@@ -2,6 +2,7 @@
    * Fixed crash on load when player has more than one ship.
    * Fixed player.setSpeed() not resetting speed as intended.
    * Fixed pilot.comm not showing messages
+   * Fixed typo in sightseeing mission descriptions.
 
 * 0.10.0 (beta)
    * New Mechanics

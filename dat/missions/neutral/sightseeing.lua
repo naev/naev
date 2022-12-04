@@ -124,7 +124,7 @@ function create ()
    misn.setDesc( fmt.f(_([[Several passengers wish to go off-world and go on a sightseeing tour. Navigate to specified {amount} different attractions in the {sys} system.
 
 #nAttractions:#0 {amount}
-#nPreferred Ship:0 Luxury Yacht-class]]), {sys=mem.missys, amount=mem.attractions} ) )
+#nPreferred Ship:#0 Luxury Yacht-class]]), {sys=mem.missys, amount=mem.attractions} ) )
    misn.setReward( fmt.credits( mem.credits ) )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
