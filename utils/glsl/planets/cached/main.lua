@@ -9,7 +9,7 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 ]]
 
 local planet_types
-local global_dt, idata, img, shader, shader_name, csv, csv_diffuse, csv_height, csv_normal
+local global_dt, idata, img, shader, shader_name, csv_diffuse, csv_height, csv_normal
 
 local function set_shader( num )
    local s = planet_types[num+1]
@@ -105,7 +105,7 @@ function love.load()
    idata = love.image.newImageData( 1, 1 )
    idata:setPixel( 0, 0, 1, 1, 1, 1 )
    img = love.graphics.newImage( idata )
-   csv = love.graphics.newCanvas( w, h, {dpiscale=1} )
+   --csv = love.graphics.newCanvas( w, h, {dpiscale=1} )
 
    -- Define shader data.
    planet_types = {
