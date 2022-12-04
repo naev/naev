@@ -264,7 +264,7 @@ end
 
 function zach_say( msg )
    player.autonavReset( 3 )
-   player.pilot():comm(fmt.f(_([[Zach: "{msg}"]]),{msg=msg}))
+   player.msg(fmt.f(_([[Zach: "{msg}"]]),{msg=msg}),true)
 end
 
 local zach_msg_known = {

@@ -2454,7 +2454,7 @@ static int pilotL_broadcast( lua_State *L )
  *    @luatparam Pilot target Target to send message to.
  *    @luatparam string msg Message to send.
  *    @luatparam[opt=false] boolean|colour param1 Whether or not it should ignore interference in the case a pilot is being used, otherwise it is a colour string such as 'N' that can be used to colour the text..
- *    @luatparam[opt=false] boolean raw Whether or not to just display the raw text instead of a "message".
+ *    @luatparam[opt=false] boolean raw Whether or not to just display the raw text without quotation marks instead of a "message".
  * @luafunc comm
  */
 static int pilotL_comm( lua_State *L )

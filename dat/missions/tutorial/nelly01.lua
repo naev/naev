@@ -368,7 +368,7 @@ function board ()
 end
 
 function info_reminder ()
-   player.pilot():comm(fmt.f(_([[Nelly: "Try opening the info menu with {infokey}."]]),{infokey=tut.getKey("info")}))
+   player.msg(fmt.f(_([[Nelly: "Try opening the info menu with {infokey}."]]),{infokey=tut.getKey("info")}), true)
    mem.times_said = (mem.times_said or 0) + 1
    if mem.times_said < 4 then
       mem.hk_info_timer = hook.timer( 15, "info_reminder" )

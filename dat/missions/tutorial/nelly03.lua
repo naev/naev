@@ -180,7 +180,7 @@ end
 
 local function nelly_say( msg )
    player.autonavReset( 3 )
-   player.pilot():comm(fmt.f(_([[Nelly: "{msg}"]]),{msg=msg}))
+   player.msg(fmt.f(_([[Nelly: "{msg}"]]),{msg=msg}),true)
 end
 
 local function drilltime ()

@@ -296,7 +296,7 @@ function idle ()
 end
 
 function disable ()
-   player.pilot():comm(fmt.f(_([[Nelly: "You disabled it! Now get on top of the ship and board it with {boardkey}!"]]),{boardkey=tut.getKey("board")}))
+   player.msg(fmt.f(_([[Nelly: "You disabled it! Now get on top of the ship and board it with {boardkey}!"]]),{boardkey=tut.getKey("board")}),true)
 end
 
 function board ()
@@ -423,7 +423,7 @@ function timer_pirate( fpir )
          aimem.vulnignore = true -- Ignore vulnerability
          table.insert( enemies, p )
       end
-      pp:comm(fmt.f(_([[Nelly: "Wait, are those pirates coming our way?"]])))
+      player.msg(fmt.f(_([[Nelly: "Wait, are those pirates coming our way?"]])),true)
       player.autonavReset(5)
       hook.timer( 3, "timer_pirate_nelly" )
       hook.timer( 3, "timer_pirate_checkbribe" )
@@ -475,9 +475,8 @@ function timer_pirate_checkbribe ()
       end
    end
 
-   local pp = player.pilot()
    if allbribed then
-      pp:comm(_([[Nelly: "Now we should be able to get out of here safely."]]))
+      player.msg(_([[Nelly: "Now we should be able to get out of here safely."]]),true)
       player.setSpeed()
       return
    end
@@ -494,7 +493,7 @@ function timer_pirate_checkbribe ()
          msg = fmt.f(_([[Nelly: "Quickly! Target the hostile pirates with {targetkey} and bribe them by hailing them with {hailkey}!"]]),
             {targetkey=tut.getKey("target_hostile"),hailkey=tut.getKey("hail")})
       end
-      pp:comm( msg )
+      player.msg( msg, true )
    end
 
    if n > 0 then
@@ -587,7 +586,7 @@ function spotter_spot ()
       mem.spotter_scanning = false
       spotter:taskClear()
       spotter:moveto( spotter_pos )
-      pp:comm(_([[Nelly: "Phew, it seems like they lost track of us."]]))
+      player.msg(_([[Nelly: "Phew, it seems like they lost track of us."]]),true)
 
    elseif mem.spotter_scanning and spotter:scandone() then
       spotter:control(false)
@@ -601,7 +600,7 @@ function spotter_spot ()
       mem.spotter_scanning = true
       spotter:taskClear()
       spotter:pushtask( "scan", pp )
-      pp:comm(fmt.f(_([[Nelly: "They found us and are scanning us. Quickly try to stealth with {stealthkey}!"]]),{stealthkey=tut.getKey("stealth")}))
+      player.msg(fmt.f(_([[Nelly: "They found us and are scanning us. Quickly try to stealth with {stealthkey}!"]]),{stealthkey=tut.getKey("stealth")}),true)
       player.autonavReset( 5 )
 
    end
