@@ -75,3 +75,6 @@ docs/manual/naev_dev_manual.markdown.out
 docs/manual/naev_dev_manual.out
 docs/manual/naev_dev_manual.pdf
 docs/manual/naev_dev_manual.toc
+
+.vscode
+.cache
