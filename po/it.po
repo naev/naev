@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-02 14:48+0900\n"
-"PO-Revision-Date: 2022-12-05 19:48+0000\n"
+"PO-Revision-Date: 2022-12-06 03:47+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -322,7 +322,7 @@ msgstr "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
 
 #: dat/AUTHORS:14
 msgid "   * Code Carnage and Bug Beating"
-msgstr ""
+msgstr "   * Distruttore di Codice e Perquotitore di Bug"
 
 #: dat/AUTHORS:16
 msgid "nenau"
@@ -330,7 +330,7 @@ msgstr "nenau"
 
 #: dat/AUTHORS:17
 msgid "   * Misc. Development and Dvaered aficionado"
-msgstr ""
+msgstr "   * Sviluppatore Misc. e affezionato Dvaered"
 
 #: dat/AUTHORS:19
 msgid "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
@@ -485,40 +485,46 @@ msgstr "   * Script di Rendering"
 #: dat/AUTHORS:75
 msgid "   Helped out when the project was starting. Great morale booster."
 msgstr ""
+"   Ha aiutato quando il progetto stava partendo. Grande stimolatore del "
+"morale."
 
 #: dat/AUTHORS:77
 msgid "Amir Taaki <genjix@gmail.com>"
-msgstr ""
+msgstr "Amir Taaki <genjix@gmail.com>"
 
 #: dat/AUTHORS:78
 msgid "Rob Loach <http://robloach.net>"
-msgstr ""
+msgstr "Rob Loach <http://robloach.net>"
 
 #: dat/AUTHORS:79
 msgid "   * SDL_collide"
-msgstr ""
+msgstr "   * SDL_collide"
 
 #: dat/AUTHORS:80
 msgid ""
 "   Although we don't use the SDL_collide library itself, it was "
 "inspirational for Naev's own collision routines."
 msgstr ""
+"   Anche se non viene usata la libreria SDL_collide, è stata fonte "
+"d'ispirazione per le procedure di collisione di Naev."
 
 #: dat/AUTHORS:82
 msgid "Pete Shinners <pete@shinners.org>"
-msgstr ""
+msgstr "Pete Shinners <pete@shinners.org>"
 
 #: dat/AUTHORS:83
 msgid "   * SavePNG"
-msgstr ""
+msgstr "   * SavePNG"
 
 #: dat/AUTHORS:84
 msgid "   Great function ripped straight out of pygame. Works marvelously!"
 msgstr ""
+"   Ottima funzione estratta direttamente da pygame. Funziona "
+"meravigliosamente!"
 
 #: dat/AUTHORS:86
 msgid "Aurore D. \"Rore\" <aurore.d@gmail.com>"
-msgstr ""
+msgstr "Aurore D. \"Rore\" <aurore.d@gmail.com>"
 
 #: dat/AUTHORS:87
 msgid "   * Planet gimp script"
