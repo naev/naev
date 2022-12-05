@@ -30,7 +30,7 @@ SetCompressor /FINAL /SOLID lzma
 
 ;Name and file
 Name "Naev"
-OutFile "naev-${SUFFIX}.exe"
+OutFile "naev-${VERSION}.exe"
 
 ;--------------------------------
 ;Variables
