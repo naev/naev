@@ -22,7 +22,7 @@ jobs:
 
       - name: Package Dist
         run: |
-          meson setup build source -Dnightly=false -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
+          meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
           meson dist -C build --no-tests --include-subprojects
 
       - name: Upload Dist Artifact
@@ -71,7 +71,7 @@ jobs:
               --buildtype=debug \
               --wrap-mode=${{ matrix.wrap_mode }} \
               --force-fallback-for=SuiteSparse,glpk \
-              -Dnightly=false \
+              -Dinstaller=false \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
@@ -165,7 +165,7 @@ jobs:
               --cross-file='source/utils/build/${{ matrix.config }}' \
               --buildtype=debug \
               --wrap-mode=forcefallback \
-              -Dnightly=false \
+              -Dinstaller=false \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
@@ -244,7 +244,7 @@ jobs:
               -Dndata_path=Contents/Resources \
               --cross-file='source/utils/build/${{ matrix.config }}' \
               --buildtype=debug \
-              -Dnightly=false \
+              -Dinstaller=false \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
@@ -319,7 +319,7 @@ jobs:
               --native-file='source/utils/build/linux.ini' \
               --buildtype=debug \
               --wrap-mode=forcefallback \
-              -Dnightly=false \
+              -Dinstaller=false \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
@@ -357,7 +357,6 @@ jobs:
       - name: Meson Setup
         run: |
           meson setup build source \
-              -Dnightly=false \
               -Dexecutable=disabled
 
       - name: Meson Compile

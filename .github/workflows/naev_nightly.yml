@@ -26,7 +26,7 @@ jobs:
 
       - name: Package Dist
         run: |
-          meson setup build source -Dnightly=true -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
+          meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
           meson dist -C build --no-tests --include-subprojects
 
       - name: Collect Artifacts
@@ -126,7 +126,7 @@ jobs:
               --cross-file='source/utils/build/windows_cross_mingw.ini' \
               --buildtype=debug \
               --force-fallback-for=glpk,SuiteSparse \
-              -Dnightly=true \
+              -Dinstaller=true \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
@@ -172,7 +172,7 @@ jobs:
               -Dndata_path=Contents/Resources \
               --cross-file='source/utils/build/macos_cross_osxcross.ini' \
               --buildtype=debug \
-              -Dnightly=true \
+              -Dinstaller=true \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
@@ -221,7 +221,7 @@ jobs:
               --buildtype=debug \
               --force-fallback-for=SuiteSparse,sdl2_image \
               -Dprefix="/usr" \
-              -Dnightly=true \
+              -Dinstaller=true \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
