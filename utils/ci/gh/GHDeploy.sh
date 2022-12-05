@@ -65,17 +65,7 @@ run_gau () {
     $GH -retry 5 -logtostderr "$@"
 }
 
-# Collect date and assemble the VERSION suffix
-
-BUILD_DATE="$(date +%Y%m%d)"
 VERSION="$(<"$TEMPPATH/naev-version/VERSION")"
-
-if [ "$NIGHTLY" == "true" ]; then
-    SUFFIX="$VERSION+DEBUG.$BUILD_DATE"
-else
-    SUFFIX="$VERSION"
-fi
-
 
 # Make dist path if it does not exist
 mkdir -p "$OUTDIR"/dist
@@ -86,25 +76,25 @@ mkdir -p "$OUTDIR"/soundtrack
 
 # Move all build artefacts to deployment locations
 # Move Linux AppImage, zsync files and set AppImage as executable
-cp "$TEMPPATH"/naev-linux-x86-64/*.AppImage "$OUTDIR"/lin64/naev-"$SUFFIX"-linux-x86-64.AppImage
-cp "$TEMPPATH"/naev-linux-x86-64/*.zsync "$OUTDIR"/lin64/naev-"$SUFFIX"-linux-x86-64.AppImage.zsync
+cp "$TEMPPATH"/naev-linux-x86-64/*.AppImage "$OUTDIR"/lin64/naev-"$VERSION"-linux-x86-64.AppImage
+cp "$TEMPPATH"/naev-linux-x86-64/*.zsync "$OUTDIR"/lin64/naev-"$VERSION"-linux-x86-64.AppImage.zsync
 
-chmod +x "$OUTDIR"/lin64/naev-"$SUFFIX"-linux-x86-64.AppImage
+chmod +x "$OUTDIR"/lin64/naev-"$VERSION"-linux-x86-64.AppImage
 
 # Move macOS dmg image to deployment location
-cp "$TEMPPATH"/naev-macos/*.dmg "$OUTDIR"/macos/naev-"$SUFFIX"-macos.dmg
+cp "$TEMPPATH"/naev-macos/*.dmg "$OUTDIR"/macos/naev-"$VERSION"-macos.dmg
 
 # Move Windows installer to deployment location
-cp "$TEMPPATH"/naev-win64/naev*.exe "$OUTDIR"/win64/naev-"$SUFFIX"-win64.exe
+cp "$TEMPPATH"/naev-win64/naev*.exe "$OUTDIR"/win64/naev-"$VERSION"-win64.exe
 
 # Move Dist to deployment location
-cp "$TEMPPATH"/naev-dist/source.tar.xz "$OUTDIR"/dist/naev-"$SUFFIX"-source.tar.xz
+cp "$TEMPPATH"/naev-dist/source.tar.xz "$OUTDIR"/dist/naev-"$VERSION"-source.tar.xz
 
 # Move Soundtrack to deployment location if this is a release.
 if [ "$NIGHTLY" == "true" ] || [ "$PRERELEASE" == "true" ]; then
     echo "not preparing soundtrack"
 else
-    cp "$TEMPPATH"/naev-soundtrack/naev-*-soundtrack.zip "$OUTDIR"/dist/naev-"$SUFFIX"-soundtrack.zip
+    cp "$TEMPPATH"/naev-soundtrack/naev-*-soundtrack.zip "$OUTDIR"/dist/naev-"$VERSION"-soundtrack.zip
 fi
 
 # Push builds to github via gh
@@ -114,14 +104,14 @@ fi
 
 if [ "$DRYRUN" == "false" ]; then
     run_gau -version
-    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/lin64/naev-"$SUFFIX"-linux-x86-64.AppImage -mediatype "application/octet-stream" -overwrite
-    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/lin64/naev-"$SUFFIX"-linux-x86-64.AppImage.zsync -mediatype "application/octet-stream" -overwrite
-    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/macos/naev-"$SUFFIX"-macos.dmg -mediatype "application/octet-stream" -overwrite
-    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/win64/naev-"$SUFFIX"-win64.exe -mediatype "application/vnd.microsoft.portable-executable" -overwrite
+    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/lin64/naev-"$VERSION"-linux-x86-64.AppImage -mediatype "application/octet-stream" -overwrite
+    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/lin64/naev-"$VERSION"-linux-x86-64.AppImage.zsync -mediatype "application/octet-stream" -overwrite
+    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/macos/naev-"$VERSION"-macos.dmg -mediatype "application/octet-stream" -overwrite
+    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/win64/naev-"$VERSION"-win64.exe -mediatype "application/vnd.microsoft.portable-executable" -overwrite
     if [ "$NIGHTLY" == "false" ] && [ "$PRERELEASE" == "false" ]; then
-        run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/dist/naev-"$SUFFIX"-soundtrack.zip -mediatype "application/zip" -overwrite
+        run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/dist/naev-"$VERSION"-soundtrack.zip -mediatype "application/zip" -overwrite
     fi
-    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/dist/naev-"$SUFFIX"-source.tar.xz -mediatype "application/x-gtar" -overwrite
+    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/dist/naev-"$VERSION"-source.tar.xz -mediatype "application/x-gtar" -overwrite
 elif [ "$DRYRUN" == "true" ]; then
     run_gau -version
     if [ "$NIGHTLY" == "true" ]; then
