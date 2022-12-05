@@ -302,7 +302,7 @@ static int misn_setDesc( lua_State *L )
 /**
  * @brief Sets the current mission reward description.
  *
- *    @luatparam string reward Description of the reward to use.
+ *    @luatparam string|number reward Description of the reward to use. Can pass a number to signify a monetary reward.
  * @luafunc setReward
  */
 static int misn_setReward( lua_State *L )
