@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - name: Checkout Naev Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
           path: source
@@ -42,42 +42,42 @@ jobs:
           cp source/dat/VERSION build/dist
 
       - name: Upload Source Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: naev-dist
           path: ${{ github.workspace }}/build/dist/source.tar.xz
           if-no-files-found: error
 
       - name: Upload Changelog Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: naev-changelog
           path: ${{ github.workspace }}/build/dist/CHANGELOG
           if-no-files-found: error
 
       - name: Upload Version Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: naev-version
           path: ${{ github.workspace }}/build/dist/VERSION
           if-no-files-found: error
 
       - name: Upload GitHub Deployment Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: naev-github-deployment
           path: ${{ github.workspace }}/build/dist/gh/*
           if-no-files-found: error
 
       - name: Upload Steam Deployment Script Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: naev-steam-deployment
           path: ${{ github.workspace }}/build/dist/steam/*
           if-no-files-found: error
 
       - name: Upload Itch Deployment Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: naev-itch-deployment
           path: ${{ github.workspace }}/build/dist/itch/*
@@ -92,7 +92,7 @@ jobs:
 
     steps:
       - name: Get Source
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: naev-dist
 
@@ -106,7 +106,7 @@ jobs:
           ./source/utils/buildAppImage.sh -s "source" -b "build"
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: naev-linux-x86-64
           path: "${{ github.workspace }}/build/dist/*"
@@ -120,7 +120,7 @@ jobs:
 
     steps:
       - name: Get Source
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: naev-dist
 
@@ -154,7 +154,7 @@ jobs:
           meson install -C build
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: naev-win64
           path: ${{ github.workspace }}/build/dist/*
@@ -168,7 +168,7 @@ jobs:
 
     steps:
       - name: Get Source
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: naev-dist
 
@@ -201,7 +201,7 @@ jobs:
           meson install -C build
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: naev-macos
           path: ${{ github.workspace }}/build/dist/*
@@ -216,7 +216,7 @@ jobs:
 
     steps:
       - name: Get Source
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v3
         with:
           name: naev-dist
 
@@ -255,19 +255,19 @@ jobs:
           mv staging/usr/bin/naev build/dist/naev.x64
           chmod +x build/dist/naev.x64
 
-          tar -cJvf build/dist/steam-ndata.tar.xz -C staging/usr/share/naev dat
+          tar -cJvf build/dist/naev-ndata.tar.xz -C staging/usr/share/naev dat
 
       - name: Upload Naev Binary Artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: naev-steamruntime
           path: build/dist/naev.x64
 
       - name: Upload Naev Data Artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: naev-ndata
-          path: build/dist/steam-ndata.tar.xz
+          path: build/dist/naev-ndata.tar.xz
 
   "Steam_Naev_Soundtrack_Release":
     needs: "Package_Source"
@@ -278,7 +278,7 @@ jobs:
 
     steps:
       - name: Get Source
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v3
         with:
           name: naev-dist
 
@@ -316,14 +316,14 @@ jobs:
           ./source/utils/convertToMP3.sh -i build/staging -f ogg -o build/dist/steam
 
       - name: Upload Soundtrack Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: naev-soundtrack
           path: ${{ github.workspace }}/build/dist/naev-*-soundtrack.zip
           if-no-files-found: error
 
       - name: Upload Steam Soundtrack Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: naev-steam-soundtrack
           path: ${{ github.workspace }}/build/dist/steam/*
@@ -359,7 +359,7 @@ jobs:
 
     steps:
       - name: Checkout Naev Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         if: ${{ matrix.releasetype == 'github' }}
 
       - name: Create Release Staging and Output Areas
@@ -368,7 +368,7 @@ jobs:
         working-directory: ${{ github.workspace }}
 
       - name: Download Artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           path: ${{ github.workspace }}/build/staging
 

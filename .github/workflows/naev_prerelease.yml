@@ -254,7 +254,7 @@ jobs:
           mv staging/usr/bin/naev build/dist/naev.x64
           chmod +x build/dist/naev.x64
 
-          tar -cJvf build/dist/steam-ndata.tar.xz -C staging/usr/share/naev dat
+          tar -cJvf build/dist/naev-ndata.tar.xz -C staging/usr/share/naev dat
 
       - name: Upload Naev Binary Artifact
         uses: actions/upload-artifact@v1
@@ -266,7 +266,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: naev-ndata
-          path: build/dist/steam-ndata.tar.xz
+          path: build/dist/naev-ndata.tar.xz
 
   "Upload_Naev_Release":
     permissions:
