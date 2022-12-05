@@ -43,7 +43,6 @@ else
     WORKPATH=$(readlink -mf "$BUILDPATH")
 fi
 
-BUILD_DATE="$(date +%Y%m%d)"
 BUILDPATH="$WORKPATH/builddir"
 
 # Honours the MESON variable set by the environment before setting it manually
@@ -114,10 +113,6 @@ if [[ "$NIGHTLY" =~ "true" ]]; then
     TAG="nightly"
 else
     TAG="latest"
-fi
-
-if [[ "$BUILDTYPE" =~ "debug" ]]; then
-    export VERSION="$VERSION+DEBUG.$BUILD_DATE"
 fi
 
 SUFFIX="$VERSION-linux"
