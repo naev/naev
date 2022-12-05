@@ -314,7 +314,7 @@ static int misn_setReward( lua_State *L )
    if (lua_isnumber(L,1)) {
       char buf[ECON_CRED_STRLEN];
       cur_mission->reward_value = CLAMP( CREDITS_MIN, CREDITS_MAX, (credits_t)round(luaL_checknumber(L,1)) );
-      credits2str( buf, cur_mission->reward_value, -1 );
+      credits2str( buf, cur_mission->reward_value, 2 );
       cur_mission->reward = strdup(buf);
    }
    else {
