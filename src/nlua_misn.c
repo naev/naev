@@ -307,10 +307,20 @@ static int misn_setDesc( lua_State *L )
  */
 static int misn_setReward( lua_State *L )
 {
-   const char *str = luaL_checkstring(L,1);
+   const char *str;
    Mission *cur_mission = misn_getFromLua(L);
    free(cur_mission->reward);
-   cur_mission->reward = strdup(str);
+   cur_mission->reward_value = -1.;
+   if (lua_isnumber(L,1)) {
+      char buf[ECON_CRED_STRLEN];
+      cur_mission->reward_value = CLAMP( CREDITS_MIN, CREDITS_MAX, (credits_t)round(luaL_checknumber(L,1)) );
+      credits2str( buf, cur_mission->reward_value, -1 );
+      cur_mission->reward = strdup(buf);
+   }
+   else {
+      str = luaL_checkstring(L,1);
+      cur_mission->reward = strdup(str);
+   }
    return 0;
 }
 
