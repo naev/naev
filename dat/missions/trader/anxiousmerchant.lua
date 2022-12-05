@@ -4,15 +4,16 @@
  <priority>3</priority>
  <chance>5</chance>
  <location>Bar</location>
- <faction>Dvaered</faction>
- <faction>Empire</faction>
- <faction>Frontier</faction>
- <faction>Goddard</faction>
- <faction>Independent</faction>
- <faction>Sirius</faction>
- <faction>Soromid</faction>
- <faction>Traders Guild</faction>
- <faction>Za'lek</faction>
+ <cond>
+   local f = spob.cur():faction()
+   if f then
+      local ft = f:tags()
+      if ft.generic or ft.misn_cargo then
+         return true
+      end
+   end
+   return false
+ </cond>
  <notes>
   <tier>2</tier>
  </notes>
