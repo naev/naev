@@ -4,6 +4,7 @@ option('debug_arrays', type: 'boolean', value: false    , description: 'Promote 
 option('debug_gl'    , type: 'boolean', value: false    , description: 'Use an OpenGL debug context to get fast error feedback.')
 option('steamruntime', type: 'boolean', value: false    , description: 'If you like this stuff you should be ashamed..')
 option('installer'   , type: 'boolean', value: false    , description: 'For macOS: package as a DMG as well as an app bundle. Requires "genisoimage". For Windows: packages an NSIS-based installer. Requires "makensis".')
+option('release'     , type: 'boolean', value: false    , description: 'Set to true if releasing. Will create archives which are used by the release scripts to build the store releases.')
 option('executable'  , type: 'feature', value: 'enabled', description: 'Enable compilation of Naev\'s executable.')
 option('docs_c'      , type: 'feature', value: 'auto'   , description: 'Enable compilation of Naev\'s C documentation.')
 option('docs_lua'    , type: 'feature', value: 'auto'   , description: 'Enable compilation of Naev\'s Lua documentation.')
