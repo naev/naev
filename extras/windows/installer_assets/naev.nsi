@@ -5,7 +5,7 @@ SetCompressor /FINAL /SOLID lzma
 ;Enables Unicode installer to clear ANSI deprecation message
 ;Unicode true
 ;Version, Icon and URL
-;!define SUFFIX "0.8.0-win64"
+;!define VERSION "0.10.0.beta.1"
 !define URL "https://naev.org"
 !define MUI_ICON "logo.ico"
 ;!define MUI_UNICON "logo.ico"
@@ -56,6 +56,7 @@ Var StartMenuFolder
 
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE "legal\gpl-3.0.txt"
+!insertmacro MUI_PAGE_LICENSE "legal\naev-license.txt"
 !insertmacro MULTIUSER_PAGE_INSTALLMODE
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_DIRECTORY
@@ -70,7 +71,7 @@ Var StartMenuFolder
 
 !insertmacro MUI_PAGE_INSTFILES
 
-!define MUI_FINISHPAGE_RUN $INSTDIR\naev-${SUFFIX}.exe
+!define MUI_FINISHPAGE_RUN $INSTDIR\naev.exe
 !define MUI_FINISHPAGE_RUN_PARAMETERS
 !insertmacro MUI_PAGE_FINISH
 
@@ -106,11 +107,11 @@ Section "Naev Engine and Data" BinarySection
 
    ;Add uninstall information
    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "DisplayName" "Naev"
-   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "DisplayIcon" "$\"$INSTDIR\naev-${SUFFIX}.exe$\""
+   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "DisplayIcon" "$\"$INSTDIR\naev.exe$\""
    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "UninstallString" "$\"$INSTDIR\Uninstall.exe$\""
    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "QuietUninstallString" "$\"$INSTDIR\Uninstall.exe$\" /S"
    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "URLInfoAbout" "${URL}"
-   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "DisplayVersion" "${SUFFIX}"
+   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "DisplayVersion" "${VERSION}"
    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "Publisher" "Naev Team"
    WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "NoModify" 1
    WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "NoRepair" 1
@@ -119,8 +120,8 @@ Section "Naev Engine and Data" BinarySection
 
       ;Create shortcuts
       CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
-      CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Naev.lnk" "$INSTDIR\naev-${SUFFIX}.exe"
-      CreateShortCut "$DESKTOP\Naev.lnk" "$INSTDIR\naev-${SUFFIX}.exe"
+      CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Naev.lnk" "$INSTDIR\naev.exe"
+      CreateShortCut "$DESKTOP\Naev.lnk" "$INSTDIR\naev.exe"
 
    !insertmacro MUI_STARTMENU_WRITE_END
    ${Else}

@@ -133,12 +133,13 @@ jobs:
         run: |
           meson setup build source \
               --prefix="$(pwd)"/source/extras/windows/installer \
-              --bindir=bin \
-              -Dndata_path=bin \
+              --bindir=. \
+              -Dndata_path=. \
               --cross-file='source/utils/build/windows_cross_mingw.ini' \
               --buildtype=release \
               --force-fallback-for=glpk,SuiteSparse \
               -Dinstaller=true \
+              -Drelease=true \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \

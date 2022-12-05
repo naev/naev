@@ -85,11 +85,11 @@ chmod +x "$STEAMPATH"/content/lin64/naev.x64
 unzip "$TEMPPATH/naev-macos/naev-macos.zip" -d "$STEAMPATH/content/macos/"
 
 # Unzip Windows binary and DLLs and move to deployment location
-tar -Jxf "$TEMPPATH/naev-win64/steam-win64.tar.xz" -C "$STEAMPATH/content/win64"
+tar -Jxf "$TEMPPATH/naev-win64/naev-windows.tar.xz" -C "$STEAMPATH/content/win64"
 mv "$STEAMPATH"/content/win64/naev*.exe "$STEAMPATH/content/win64/naev.exe"
 
 # Move data to deployment location
-tar -Jxf "$TEMPPATH/naev-ndata/steam-ndata.tar.xz" -C "$STEAMPATH/content/ndata"
+tar -Jxf "$TEMPPATH/naev-ndata/naev-ndata.tar.xz" -C "$STEAMPATH/content/ndata"
 
 # Runs STEAMCMD, and builds the app as well as all needed depots.
 

@@ -128,8 +128,8 @@ chmod +x "$OUTDIR/lin64/naev-$SUFFIX-linux-x86-64.AppImage"
 unzip "$TEMPPATH"/naev-macos/*.zip -d "$OUTDIR"/macos
 
 # Unzip Windows binary and DLLs and move to deployment location
-tar -Jxf "$TEMPPATH/naev-win64/steam-win64.tar.xz" -C "$OUTDIR/win64"
-tar -Jxf "$TEMPPATH/naev-ndata/steam-ndata.tar.xz" -C "$OUTDIR/win64"
+tar -Jxf "$TEMPPATH/naev-win64/naev-windows.tar.xz" -C "$OUTDIR/win64"
+tar -Jxf "$TEMPPATH/naev-ndata/naev-ndata.tar.xz" -C "$OUTDIR/win64"
 
 # Rename windows binary so it follows the correct naming scheme.
 mv -f "$OUTDIR"/win64/*.exe "$OUTDIR/win64/naev-$SUFFIX-win64.exe"
