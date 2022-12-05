@@ -39,6 +39,7 @@ function luaspob.load ()
       _([["Permission to land granted."]]),
       _([["You are clear to land."]]),
       _([["Proceed to land."]]),
+      _([["Landing authorized."]]),
    }
    mem.msg_cantbribe = mem.params.msg_cantbribe or {
       _([["We do not accept bribes."]]),
