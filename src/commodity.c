@@ -63,6 +63,7 @@ static int commodity_parse( Commodity *temp, const char *filename );
 void credits2str( char *str, credits_t credits, int decimals )
 {
    if (decimals < 0) {
+      /* TODO support , separator like fmt.credits(). */
       snprintf( str, CRED_TEXT_MAX, _("%.*f ¤"), 0, (double)credits );
    }
    else if (credits >= 1000000000000000000LL)
