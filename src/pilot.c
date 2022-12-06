@@ -1635,7 +1635,10 @@ void pilot_updateDisable( Pilot* p, unsigned int shooter )
       if (pilot_outfitOffAll( p ) > 0)
          pilot_calcStats( p );
 
-      pilot_setFlag( p,PILOT_DISABLED ); /* set as disabled */
+      pilot_setFlag( p, PILOT_DISABLED ); /* set as disabled */
+      if (pilot_isPlayer( p ))
+         player_message("#r%s",_("You have been disabled!"));
+
       /* Run hook */
       if (shooter > 0) {
          hparam.type       = HOOK_PARAM_PILOT;
@@ -1658,8 +1661,10 @@ void pilot_updateDisable( Pilot* p, unsigned int shooter )
       pilot_runHook( p, PILOT_HOOK_UNDISABLE );
 
       /* This is sort of a hack to make sure it gets reset... */
-      if (p->id==PLAYER_ID)
+      if (pilot_isPlayer(p)) {
          player_autonavResetSpeed();
+         player_message("#g%s",_("You have recovered control of your ship!"));
+      }
    }
 }
 
@@ -1963,12 +1968,16 @@ void pilot_render( Pilot *p )
  */
 void pilot_renderOverlay( Pilot* p )
 {
+   int playerdead;
+
    /* Don't render the pilot. */
    if (pilot_isFlag( p, PILOT_NORENDER ))
       return;
 
+   playerdead = (player_isFlag(PLAYER_DESTROYED) || (player.p==NULL));
+
    /* Render the hailing graphic if needed. */
-   if (pilot_isFlag( p, PILOT_HAILING )) {
+   if (!playerdead && pilot_isFlag( p, PILOT_HAILING )) {
       glTexture *ico_hail = gui_hailIcon();
       if (ico_hail != NULL) {
          int sx = (int)ico_hail->sx;
@@ -2007,7 +2016,7 @@ void pilot_renderOverlay( Pilot* p )
    }
 
    /* Show health / friendlyness */
-   if (conf.healthbars && (player.p!=NULL) && !pilot_isPlayer(p) && !pilot_isFlag(p, PILOT_DEAD) &&
+   if (conf.healthbars && !playerdead && !pilot_isPlayer(p) && !pilot_isFlag(p, PILOT_DEAD) &&
          (pilot_isFlag(p, PILOT_COMBAT) || (p->shield < p->shield_max))) {
       double x, y, w, h;
 
