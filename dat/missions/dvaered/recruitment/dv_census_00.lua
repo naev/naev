@@ -133,7 +133,8 @@ end
 function land()
    --Pay the player
    if spob.cur():faction() == faction.get( "Dvaered" ) and mem.misn_state == 1 then
-      vntk.msg( _("Reward"), _("You land and transmit a datapad to the local Dvaered liaison officer. They unlock for you the Dvaered Census missions, that you can now find at the mission computer under the label DVAERED.") )
+      vntk.msg( _("Reward"), fmt.f(_("You land and transmit a datapad to the local Dvaered liaison officer. They unlock for you the Dvaered Census missions, that you can now find at the mission computer under the label {label}."),
+         {label=dv.prefix}))
 
       player.pay( mem.credits )
       dv.addStandardLog( _([[You accomplished a patrol census mission for the Dvaered. They seem disposed to entrust you with more missions of that kind in the future.]]) )
