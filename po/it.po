@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-02 14:48+0900\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-12-05 19:48+0000\n"
+"Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
+"Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.15-dev\n"
 
 #: physfs.c:1
 msgid "no error"
@@ -143,6 +144,9 @@ msgid ""
 "The night sky always draws our eyes. People look up with a question, or in "
 "wonder, and sometimes with a dream: to venture forth among the stars."
 msgstr ""
+"Il cielo notturno attira da sempre il nostro sguardo. La gente guarda in "
+"alto con una domanda o con meraviglia e alcune volte con un sogno: di "
+"avventurarsi fuori tra le stelle."
 
 #: dat/intro:4
 msgid ""
@@ -150,6 +154,10 @@ msgid ""
 "of distant suns, far away but so clear. To reach out and grasp one would "
 "only cost a lifetime. Cheap at the price."
 msgstr ""
+"Dalla Terra, i primi viaggiatori spaziali hanno spiato piccole gemme che "
+"brillavano della luce di soli distanti, lontani, ma nitidi. Per raggiungerne "
+"e catturarne una costa soltanto la durata di una vita. Il prezzo è a buon "
+"mercato."
 
 #: dat/intro:7
 msgid ""
@@ -157,6 +165,10 @@ msgid ""
 "hurled themselves out into the void. On arrival, they decanted and woke to "
 "find new stars staring coldly down from stranger skies."
 msgstr ""
+"Così uomini e donne hanno rinchiuso i loro corpi dormienti in enormi scatole "
+"di metallo. Si sono lanciati nel vuoto. All'arrivo si sono svegliati per "
+"trovare nuove stelle che li fissano freddamente dall'alto di cieli "
+"sconosciuti."
 
 #: dat/intro:10
 msgid ""
@@ -165,6 +177,11 @@ msgid ""
 "civilisation spread, as it always has, with exponential enthusiasm -- "
 "ripples in the dark sea of space."
 msgstr ""
+"La prima ondata di esploratori si è spostata furtivamente di stella in "
+"stella ad una velocità inferiore a quella della luce, fino all'invenzione "
+"del motore iperspaziale non generò una seconda ondata. La civiltà si "
+"diffuse, come ha sempre fatto, con entusiasmo esponenziale -- increspature "
+"nello scuro mare spaziale."
 
 #: dat/intro:12
 msgid ""
@@ -173,12 +190,19 @@ msgid ""
 "food, and distrust sowed the seeds of discord. Once begun, the fever of war "
 "spread from world to world and became a holocaust."
 msgstr ""
+"Tuttavia, l'eroica età delle scoperte durò soltanto fino a quando la "
+"curiosità umana fu superiore all'avidità. Troppo presto scoppiarono "
+"disaccordi nelle colonie. Terra, carburante, cibo e sfiducia gettarono i "
+"semi della discordia. Una volta iniziata, la febbre della guerra si propagò "
+"da mondo a mondo e divenne un olocausto."
 
 #: dat/intro:15
 msgid ""
 "After a hundred years of interstellar conflict, on the ashes that remained, "
 "at last a new order built its foundations."
 msgstr ""
+"Dopo un centinaio di anni di conflitto interstellare, sulle ceneri "
+"rimanenti, finalmente un nuovo ordine costituì le sue fondamenta."
 
 #: dat/intro:17
 msgid ""
@@ -187,6 +211,11 @@ msgid ""
 "military, relations between planets resumed; abandoned trade routes saw "
 "traffic for the first time in living memory."
 msgstr ""
+"Un uomo chiamato Daedris esercitò il suo dominio sui resti planetari "
+"impoveriti. Fondò un Impero Galattico e si autoproclamò suo dominatore. "
+"Sotto il suo pugno di ferro militare vennero ristabilite le relazioni tra i "
+"pianeti; rotte commerciali abbandonate videro la rinascita per la prima "
+"volta nella memoria degli attuali viventi."
 
 #: dat/intro:19
 msgid ""
@@ -194,6 +223,9 @@ msgid ""
 "irradiated rock was cleansed and dead planets brought back to life. Peace "
 "reigned in an imperial golden age."
 msgstr ""
+"Gli storici lo chiamarono lo Zenith: la tecnologia avanzò grandemente, la "
+"coltura fiorì, terre rocciose radioattive vennero bonificate e pianeti morti "
+"vennero riportati in vita. La pace regnò in un'età dell'oro imperiale."
 
 #: dat/intro:21
 msgid ""
@@ -202,18 +234,23 @@ msgid ""
 "the imperium went awry. In some regions, administration fell into the hands "
 "of other powers. The Great Houses now policed the space lanes."
 msgstr ""
+"Dopo Daedris, sotto i suoi successori, la luce imperiale affievolì. "
+"Conflitti civili e divisioni religiose indebolirono i legami sociali. I "
+"grandiosi progetti imperiali deragliarono. In alcune regione "
+"l'amministrazione precipitò nelle mani di altri poteri. Le Grandi Case hanno "
+"così assunto il controllo delle rotte spaziali."
 
 #: dat/intro:23
 msgid "Rise and fall, the rhythm of history."
-msgstr ""
+msgstr "Ascesa e declino, il ritmo della storia."
 
 #: dat/intro:25
 msgid "But the march of history stumbled over the unknown, over the Incident."
-msgstr ""
+msgstr "Ma la marcia della storia inciampò sull'ignoto, sull'Incidente."
 
 #: dat/intro:27
 msgid "It tore the heart out of the Empire."
-msgstr ""
+msgstr "Dilaniò il cuore dell'Impero."
 
 #: dat/intro:29
 msgid ""
@@ -222,10 +259,15 @@ msgid ""
 "the mysterious nebula left behind. Now the great, galaxy-spanning "
 "civilisation survives as a shadow of its former glory."
 msgstr ""
+"Dalla Terra, un'esplosione cataclismica si propagò attraverso lo spazio, "
+"annichilendo stelle, vaporizzando mondi. Miliardi morirono. Dozzine di "
+"sistemi sparirono dentro la nebula misteriosa che si lasciò alle spalle. Ora "
+"la grandiosa civiltà che aveva un'estensione dalle dimensioni galattiche, "
+"sopravvive come ombra della sua gloria antica."
 
 #: dat/intro:32
 msgid "What else remains? Questions."
-msgstr ""
+msgstr "Cos'altro rimane? Domande."
 
 #: dat/intro:34
 msgid ""
@@ -233,47 +275,50 @@ msgid ""
 "decaying empire. After the Incident, corruption and piracy run rampant, but "
 "where there is chaos, there is also opportunity."
 msgstr ""
+"Sono trascorsi dieci Cicli Standard in un universo governato dai frammenti "
+"di un impero decadente. Dopo l'Incidente, regnano la corruzione e la "
+"pirateria, ma dove c'è il caos c'è anche l'opportunità."
 
 #: dat/intro:36
 msgid "Welcome to the universe of Naev..."
-msgstr ""
+msgstr "Benvenuto nell'universo di Naev..."
 
 #: dat/AUTHORS:1
 msgid "Current Core Development Team"
-msgstr ""
+msgstr "Team di Sviluppo principale attuale"
 
 #: dat/AUTHORS:2 dat/AUTHORS:26 dat/AUTHORS:38 dat/AUTHORS:63 dat/AUTHORS:173
 #: dat/AUTHORS:181
 msgid "---------------------------------------"
-msgstr ""
+msgstr "---------------------------------------"
 
 #: dat/AUTHORS:4
 msgid "Edgar Simo-Serra \"bobbens\" <bobbens@gmail.com>"
-msgstr ""
+msgstr "Edgar Simo-Serra \"bobbens\" <bobbens@gmail.com>"
 
 #: dat/AUTHORS:5
 msgid "   * Lead Developer"
-msgstr ""
+msgstr "   * Sviluppatore Leader"
 
 #: dat/AUTHORS:7
 msgid "Bas Fournier \"BTAxis\" <btaxis@gmail.com>"
-msgstr ""
+msgstr "Bas Fournier \"BTAxis\" <btaxis@gmail.com>"
 
 #: dat/AUTHORS:8
 msgid "   * Story Writer and Misc. Development"
-msgstr ""
+msgstr "   * Autore Storia e Sviluppatore Misc."
 
 #: dat/AUTHORS:10
 msgid "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
-msgstr ""
+msgstr "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
 
 #: dat/AUTHORS:11
 msgid "   * Misc. Development and Lua unifier"
-msgstr ""
+msgstr "   * Sviluppatore Misc. e unificatore Lua"
 
 #: dat/AUTHORS:13
 msgid "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
-msgstr ""
+msgstr "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
 
 #: dat/AUTHORS:14
 msgid "   * Code Carnage and Bug Beating"
@@ -281,7 +326,7 @@ msgstr ""
 
 #: dat/AUTHORS:16
 msgid "nenau"
-msgstr ""
+msgstr "nenau"
 
 #: dat/AUTHORS:17
 msgid "   * Misc. Development and Dvaered aficionado"
@@ -289,131 +334,131 @@ msgstr ""
 
 #: dat/AUTHORS:19
 msgid "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
-msgstr ""
+msgstr "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
 
 #: dat/AUTHORS:20
 msgid "   * CI dude and Bringer of automated releases"
-msgstr ""
+msgstr "   * Esperto di CI e Creatore dei rilasci automatici"
 
 #: dat/AUTHORS:22
 msgid "Viktor Hahn <viktor.hahn@web.de>"
-msgstr ""
+msgstr "Viktor Hahn <viktor.hahn@web.de>"
 
 #: dat/AUTHORS:23
 msgid "   * 3D modelling"
-msgstr ""
+msgstr "   * Modellazione 3D"
 
 #: dat/AUTHORS:25
 msgid "Past Development Team"
-msgstr ""
+msgstr "Gruppo di Sviluppo Precedente"
 
 #: dat/AUTHORS:28
 msgid "Nikola Whallon <6.saturn.6@gmail.com>"
-msgstr ""
+msgstr "Nikola Whallon <6.saturn.6@gmail.com>"
 
 #: dat/AUTHORS:29
 msgid "   * Bringer of Sound"
-msgstr ""
+msgstr "   * Esperto Suoni"
 
 #: dat/AUTHORS:31
 msgid "Deiz"
-msgstr ""
+msgstr "Deiz"
 
 #: dat/AUTHORS:32 dat/AUTHORS:35
 msgid "   * Misc. Development"
-msgstr ""
+msgstr "   * Sviluppatore Misc."
 
 #: dat/AUTHORS:34
 msgid "Layla and Emmy \"The Diligent Circle\" <diligentcircle@riseup.net>"
-msgstr ""
+msgstr "Layla and Emmy \"The Diligent Circle\" <diligentcircle@riseup.net>"
 
 #: dat/AUTHORS:37
 msgid "Major Contributors"
-msgstr ""
+msgstr "Principali Contributori"
 
 #: dat/AUTHORS:40
 msgid "Josiah Schwartfeger"
-msgstr ""
+msgstr "Josiah Schwartfeger"
 
 #: dat/AUTHORS:41
 msgid "   * Graphic Designer and Modeller"
-msgstr ""
+msgstr "   * Disegno Grafico e Modellazione"
 
 #: dat/AUTHORS:43
 msgid "Elderman"
-msgstr ""
+msgstr "Elderman"
 
 #: dat/AUTHORS:44
 msgid "   * Mission Development"
-msgstr ""
+msgstr "   * Sviluppatore delle Missioni"
 
 #: dat/AUTHORS:45
 msgid "   The first non-bobbens mission developer!"
-msgstr ""
+msgstr "   Il primo sviluppatore di missioni non-bobbens!"
 
 #: dat/AUTHORS:47
 msgid "Ingo Ruhnke <grumbel@gmx.de>"
-msgstr ""
+msgstr "Ingo Ruhnke <grumbel@gmx.de>"
 
 #: dat/AUTHORS:48
 msgid "   * NPC Portrait Artist"
-msgstr ""
+msgstr "   * Ritrattista NPC"
 
 #: dat/AUTHORS:50
 msgid "Enigmatic"
-msgstr ""
+msgstr "Enigmatic"
 
 #: dat/AUTHORS:51
 msgid "   * Ships for the Sirius, many other models and faction logos"
-msgstr ""
+msgstr "   * Astronavi per Sirio, molti altri modelli e loghi delle fazioni"
 
 #: dat/AUTHORS:53
 msgid "Felix Schneider \"Scaatis\" <fsfuenf@gmail.com>"
-msgstr ""
+msgstr "Felix Schneider \"Scaatis\" <fsfuenf@gmail.com>"
 
 #: dat/AUTHORS:54
 msgid "   * Naev logo, Lua GUI development"
-msgstr ""
+msgstr "   * logo Naev, sviluppo GUI in Lua"
 
 #: dat/AUTHORS:56
 msgid "M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>"
-msgstr ""
+msgstr "M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>"
 
 #: dat/AUTHORS:57
 msgid "   * Ships for the Soromid and the Za'lek"
-msgstr ""
+msgstr "   * Astronavi per Soromid e Za'lek"
 
 #: dat/AUTHORS:59
 msgid "Askyel"
-msgstr ""
+msgstr "Askyel"
 
 #: dat/AUTHORS:60
 msgid "   * Composer of nearly an hour of Naev-exclusive music."
-msgstr ""
+msgstr "   * Compositore di quasi un'ora di musica esclusiva per Naev."
 
 #: dat/AUTHORS:62
 msgid "Contributions"
-msgstr ""
+msgstr "Contributi"
 
 #: dat/AUTHORS:65
 msgid "Vega Strike <http://vegastrike.sf.net>"
-msgstr ""
+msgstr "Vega Strike <http://vegastrike.sf.net>"
 
 #: dat/AUTHORS:66
 msgid "   * Ship Models"
-msgstr ""
+msgstr "   * Modelli Astronavi"
 
 #: dat/AUTHORS:67
 msgid "   * Music"
-msgstr ""
+msgstr "   * Musica"
 
 #: dat/AUTHORS:68
 msgid "   * Sounds"
-msgstr ""
+msgstr "   * Souni"
 
 #: dat/AUTHORS:69
 msgid "   * Planet images"
-msgstr ""
+msgstr "   * Immagini Planetarie"
 
 #: dat/AUTHORS:70
 msgid ""
@@ -421,18 +466,21 @@ msgid ""
 "didn't actively participate, by allowing me to use their data they did me a "
 "great favour and let me concentrate on the coding."
 msgstr ""
+"   Non sarebbe stato possibile senza il gruppo Vega Strike, anche se non "
+"hanno partecipato attivamente, permettendomi di usare i loro dati mi hanno "
+"fatto un grande favore e permesso di concentrarmi sulla programmazione."
 
 #: dat/AUTHORS:72
 msgid "Joel Hans <wolorf@gmail.com>"
-msgstr ""
+msgstr "Joel Hans <wolorf@gmail.com>"
 
 #: dat/AUTHORS:73
 msgid "   * Planet Graphics"
-msgstr ""
+msgstr "   * Grafica dei Pianeti"
 
 #: dat/AUTHORS:74
 msgid "   * Render Script"
-msgstr ""
+msgstr "   * Script di Rendering"
 
 #: dat/AUTHORS:75
 msgid "   Helped out when the project was starting. Great morale booster."
@@ -1833,7 +1881,7 @@ msgstr ""
 
 #: dat/factions/strangelove.xml:2
 msgid "Strangelove"
-msgstr ""
+msgstr "Stranamore"
 
 #: dat/factions/thurion.xml:2
 msgid "Thurion"
@@ -5328,7 +5376,7 @@ msgstr ""
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:2
 msgid "Low Radiation Sensor Modulator"
-msgstr ""
+msgstr "Modulatore del Sensore a Bassa Radiazione"
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:10
 msgid ""
@@ -5458,7 +5506,7 @@ msgstr ""
 
 #: dat/outfits/utility/targeting_conduit.xml:2
 msgid "Targeting Conduit"
-msgstr ""
+msgstr "Condotto di Puntamento"
 
 #: dat/outfits/utility/targeting_conduit.xml:10
 msgid ""
@@ -5901,7 +5949,7 @@ msgstr ""
 
 #: dat/outfits/weapons/plasma_cannon.xml:2
 msgid "Plasma Cannon"
-msgstr ""
+msgstr "Cannone al Plasma"
 
 #: dat/outfits/weapons/plasma_cannon.xml:9
 msgid ""
@@ -5913,7 +5961,7 @@ msgstr ""
 
 #: dat/outfits/weapons/plasma_cluster_cannon.xml:2
 msgid "Plasma Cluster Cannon"
-msgstr ""
+msgstr "Cluster di Cannoni al Plasma"
 
 #: dat/outfits/weapons/plasma_cluster_cannon.xml:9
 msgid ""
@@ -6637,7 +6685,7 @@ msgstr ""
 #: dat/ships/neutral/llama.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:180
 #: dat/missions/flf/dvk/flf_dvk06.lua:163
 msgid "Llama"
-msgstr ""
+msgstr "Lama"
 
 #: dat/ships/neutral/llama.xml:17
 msgid ""
@@ -6743,7 +6791,7 @@ msgstr ""
 
 #: dat/ships/neutral/starbridge.xml:2
 msgid "Starbridge"
-msgstr ""
+msgstr "Ponte Stellare"
 
 #: dat/ships/neutral/starbridge.xml:17
 msgid ""
@@ -6806,7 +6854,7 @@ msgstr ""
 #: dat/ships/pirate/pirate_starbridge.xml:16
 #: dat/ships/pirate/pirate_vendetta.xml:16 dat/ships/pirate/pirate_zebra.xml:20
 msgid "Skull and Bones"
-msgstr ""
+msgstr "Teschio e Ossa"
 
 #: dat/ships/pirate/pirate_admonisher.xml:19
 msgid ""
@@ -23458,7 +23506,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:165
 #: dat/scripts/common/frontier_war.lua:21
 msgid "Lady Bitterfly"
-msgstr ""
+msgstr "Dama Bitterfly"
 
 #: dat/ai/advertiser.lua:113 dat/scripts/common/frontier_war.lua:22
 msgid "Lady Pointblank"
@@ -23478,11 +23526,11 @@ msgstr ""
 
 #: dat/ai/advertiser.lua:117 dat/scripts/common/frontier_war.lua:26
 msgid "Lady Blackswan"
-msgstr ""
+msgstr "Dama Blackswan"
 
 #: dat/ai/advertiser.lua:118 dat/scripts/common/frontier_war.lua:27
 msgid "Lady Killington"
-msgstr ""
+msgstr "Dama Killington"
 
 #: dat/ai/advertiser.lua:119 dat/scripts/common/frontier_war.lua:28
 msgid "Lord Richthofen"
@@ -23523,7 +23571,7 @@ msgstr ""
 #: dat/ai/advertiser.lua:122 dat/missions/dvaered/gauntlet/tables.lua:81
 #: dat/scripts/common/frontier_war.lua:31
 msgid "Lady Sainte-Beuverie"
-msgstr ""
+msgstr "Dama Sainte-Beuverie"
 
 #: dat/ai/advertiser.lua:123 dat/scripts/common/frontier_war.lua:32
 msgid "Lord Louverture"
@@ -23535,7 +23583,7 @@ msgstr ""
 
 #: dat/ai/advertiser.lua:125 dat/scripts/common/frontier_war.lua:34
 msgid "Lady Proserpina"
-msgstr ""
+msgstr "Dama Proserpina"
 
 #: dat/ai/advertiser.lua:131
 msgid "I hereby declare {butthead} is a {badword}. -{sponsor}"
@@ -27072,7 +27120,7 @@ msgstr ""
 
 #: dat/events/discovery.lua:71
 msgid "Crater City"
-msgstr ""
+msgstr "Città Cratere"
 
 #: dat/events/discovery.lua:72
 msgid "Touching the Universe"
@@ -36125,7 +36173,7 @@ msgstr ""
 #: dat/missions/minerva/kex3.lua:304 dat/missions/minerva/kex3.lua:373
 #: dat/missions/minerva/kex3.lua:451
 msgid "Major Malik"
-msgstr ""
+msgstr "Maggiore Malik"
 
 #: dat/events/pers/minerva.lua:44
 msgid ""
@@ -52057,7 +52105,7 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:33
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:36
 msgid "Lieutenant"
-msgstr ""
+msgstr "Tenente"
 
 #: dat/missions/empire/emp_cargo00.lua:48
 msgid "You see an Empire Lieutenant who seems to be looking at you."
@@ -56087,7 +56135,7 @@ msgstr ""
 #. Main stuff starts
 #: dat/missions/minerva/kex2.lua:212
 msgid "Baroness Eve"
-msgstr ""
+msgstr "Baronessa Eve"
 
 #: dat/missions/minerva/kex3.lua:55
 msgid ""
@@ -95357,7 +95405,7 @@ msgstr ""
 
 #: dat/scripts/pilotname/pirate.lua:303
 msgid "Emperor"
-msgstr ""
+msgstr "Imperatore"
 
 #: dat/scripts/pilotname/pirate.lua:304
 msgid "Energy-Volt"
