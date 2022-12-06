@@ -121,7 +121,7 @@ function create ()
    -- Set mission details
    misn.setTitle( fmt.f( _("Sightseeing in the {sys} System"), {sys=mem.missys} ) )
    -- TODO should probably not just mention luxury yachts, but since they're the only luxury type ship, I guess it works for now.
-   misn.setDesc( fmt.f(_([[Several passengers wish to go off-world and go on a sightseeing tour. Navigate to specified {amount} different attractions in the {sys} system. Once done with the visit, return the passengers to {retspob} ({retsys} system).
+   misn.setDesc( fmt.f(_([[Several passengers wish to go off-world and go on a sightseeing tour. Navigate to specified {amount} different attractions in the {sys} system. Once done with the visit, return the passengers to {retspob} ({retsys} system). Payment will be reduced if not in a preferred ship.
 
 #nAttractions:#0 {amount}
 #nPreferred Ship:#0 Luxury Yacht-class]]),
