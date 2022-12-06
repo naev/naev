@@ -40,8 +40,9 @@ Checks to see if a position is good for a pilot, considering both lanes and spob
 --]]
 function careful.posIsGood( p, pos )
    local m = p:memory()
-   local lanedist = lanes.getDistance2P( p, pos )
-   if lanedist < math.pow( m.lanedistance, 2 ) then
+   local thr = math.pow( m.lanedistance, 2 )
+   local ld = lanes.getDistance2P( p, pos )
+   if (ld < math.huge and ld > thr) or lanes.getDistance2PH( p, pos ) < thr then
       return false
    end
    return checkSpobJumps( p:faction(), pos, m.spobdistance, m.jumpdistance )

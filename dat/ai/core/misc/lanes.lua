@@ -244,6 +244,14 @@ local function getCacheP( p )
    end
    return mem.__lanes
 end
+-- Same thing for hostile lanes
+local function getCachePH( p )
+   local mem = p:memory()
+   if not mem.__lanes_H then
+      mem.__lanes_H = lanes.get( p:faction(), "hostile" )
+   end
+   return mem.__lanes_H
+end
 
 
 -- Same as safelanes.get but does caching
@@ -277,6 +285,9 @@ end
 function lanes.getDistanceP( p, pos )
    return lanes.getDistance( getCacheP(p), pos )
 end
+function lanes.getDistancePH( p, pos )
+   return lanes.getDistance( getCachePH(p), pos )
+end
 
 
 --[[
@@ -297,6 +308,9 @@ function lanes.getDistance2( L, pos )
 end
 function lanes.getDistance2P( p, pos )
    return lanes.getDistance2( getCacheP(p), pos )
+end
+function lanes.getDistance2PH( p, pos )
+   return lanes.getDistance2( getCachePH(p), pos )
 end
 
 
