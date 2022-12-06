@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-02 14:48+0900\n"
-"PO-Revision-Date: 2022-12-06 03:47+0000\n"
+"PO-Revision-Date: 2022-12-06 16:48+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -528,33 +528,37 @@ msgstr "Aurore D. \"Rore\" <aurore.d@gmail.com>"
 
 #: dat/AUTHORS:87
 msgid "   * Planet gimp script"
-msgstr ""
+msgstr "   * script di gimp Planet"
 
 #: dat/AUTHORS:88
 msgid ""
 "   Saved a lot of trouble by allowing us to quickly create space planet "
 "graphics."
 msgstr ""
+"   Ci ha risparmiato molti problemi permettendoci di creare velocemente la "
+"grafica di pianeti spaziali."
 
 #: dat/AUTHORS:90
 msgid "Andrew Mustun"
-msgstr ""
+msgstr "Andrew Mustun"
 
 #: dat/AUTHORS:91
 msgid "   * Sprite gimp script"
-msgstr ""
+msgstr "   * script di gimp Sprite"
 
 #: dat/AUTHORS:92
 msgid "   Although not used directly, it helped create our own sprite script."
 msgstr ""
+"   Anche se non è stato usato direttamente, ci ha aiutato a creare i nostri "
+"script di sprite."
 
 #: dat/AUTHORS:94
 msgid "J.C. Wilk"
-msgstr ""
+msgstr "J.C. Wilk"
 
 #: dat/AUTHORS:95
 msgid "   * Turbulence noise"
-msgstr ""
+msgstr "   * Rumore di Turbolenze"
 
 #: dat/AUTHORS:96
 msgid ""
@@ -562,255 +566,270 @@ msgid ""
 "turbulence noise seemed to do everything perfectly where we screwed up. With "
 "heavy optimization the code was introduced to Naev."
 msgstr ""
+"   Dopo un orribile fallimento del nostro tentativo di frattale di plasma, "
+"il rumore di turbolenze di TCOD sembrava fare tutto perfettamente dove noi "
+"avevamo fallito. Dopo una pesante ottimizzazione il codice è stato "
+"introdotto in Naev."
 
 #: dat/AUTHORS:98
 msgid "Jordi Pegueroles Queralt \"pegue\" <j.pegueroles.queralt@gmail.com>"
-msgstr ""
+msgstr "Jordi Pegueroles Queralt \"pegue\" <j.pegueroles.queralt@gmail.com>"
 
 #: dat/AUTHORS:99
 msgid "   * Mace Rocket model"
-msgstr ""
+msgstr "   * Modello di Missile Mace"
 
 #: dat/AUTHORS:101
 msgid "Brian J. Cameron"
-msgstr ""
+msgstr "Brian J. Cameron"
 
 #: dat/AUTHORS:102
 msgid "   * Much artwork"
-msgstr ""
+msgstr "   * Diversi lavori artistici grafici"
 
 #: dat/AUTHORS:103
 msgid "   Talented artist, one of the first in creating custom Naev content."
 msgstr ""
+"   Artista di talento, uno dei primi a creare contenuti personalizzati per "
+"Naev."
 
 #: dat/AUTHORS:105
 msgid "Camilo Polymeris <cpolymeris@gmx.net>"
-msgstr ""
+msgstr "Camilo Polymeris <cpolymeris@gmx.net>"
 
 #: dat/AUTHORS:106
 msgid "   * Art and code"
-msgstr ""
+msgstr "   * Arte e codice"
 
 #: dat/AUTHORS:107
 msgid ""
 "   Great to see someone else working on Naev code and Lua documentation."
 msgstr ""
+"   Grandioso vedere qualcun altro lavorare sui sorgenti di Naev e sulla "
+"documentazione Lua."
 
 #: dat/AUTHORS:109
 msgid "Dimitry Marakasov"
-msgstr ""
+msgstr "Dimitry Marakasov"
 
 #: dat/AUTHORS:110
 msgid "   * FreeBSD port and CMake"
-msgstr ""
+msgstr "   * port per FreeBSD e CMake"
 
 #: dat/AUTHORS:111
 msgid "   Talented coder who did the first official port of Naev."
 msgstr ""
+"   Programmatore di talento che ha realizzato il primo port ufficiale di "
+"Naev."
 
 #: dat/AUTHORS:113
 msgid "Alexandru Mosoi <brtzsnr@gmail.com>"
-msgstr ""
+msgstr "Alexandru Mosoi <brtzsnr@gmail.com>"
 
 #: dat/AUTHORS:114
 msgid "   * Coded cool features"
-msgstr ""
+msgstr "   * Programmazione di funzionalità veramente interessanti"
 
 #: dat/AUTHORS:115
 msgid ""
 "   First non-bobbens coder to make serious commits! Like the reason the maps "
 "are all over or the faction in the maps."
 msgstr ""
+"   Primo programmatore non-bobben ad effettuare commit seri! Come il motivo "
+"per cui le mappe sono dappertutto o le fazioni sulle mappe."
 
 #: dat/AUTHORS:117
 msgid "Peter Johnson <zid@zid.yggdrasil.sk>"
-msgstr ""
+msgstr "Peter Johnson <zid@zid.yggdrasil.sk>"
 
 #: dat/AUTHORS:118
 msgid "   * Sped up nebula generation by a lot"
-msgstr ""
+msgstr "   * Estrema velocizzazione nella generazione delle nebulose"
 
 #: dat/AUTHORS:120
 msgid "Unavowed <unavowed@vexillium.org>"
-msgstr ""
+msgstr "Unavowed <unavowed@vexillium.org>"
 
 #: dat/AUTHORS:121
 msgid "   * Ported Naev's build system to autotools."
-msgstr ""
+msgstr "   * Port in autotools del sistema di compilazione di Naev."
 
 #: dat/AUTHORS:122
 msgid "   Probably the cleanest autotools implementation I've ever seen."
 msgstr ""
+"   Probabilmente la più pulita implementazione di autotools che ho mai visto."
 
 #: dat/AUTHORS:124
 msgid "Cypher3c <cypher3c@gmail.com>"
-msgstr ""
+msgstr "Cypher3c <cypher3c@gmail.com>"
 
 #: dat/AUTHORS:125
 msgid "   * Spiced up the boring generic cargo missions."
-msgstr ""
+msgstr "   * Rese più divertenti le generiche e noiose missioni cargo."
 
 #: dat/AUTHORS:127
 msgid "Nathan Loewen <loewen.nathan@gmail.com>"
-msgstr ""
+msgstr "Nathan Loewen <loewen.nathan@gmail.com>"
 
 #: dat/AUTHORS:128
 msgid "   * Missions"
-msgstr ""
+msgstr "   * Missioni"
 
 #: dat/AUTHORS:129
 msgid "   * Misc coding support"
-msgstr ""
+msgstr "   * Supporto vario alla programmazione"
 
 #: dat/AUTHORS:131
 msgid "Fisherman"
-msgstr ""
+msgstr "Fisherman"
 
 #: dat/AUTHORS:132
 msgid ""
 "   * Threading code to speed up nebula generation (and in the future who "
 "knows?)"
 msgstr ""
+"   * Suddivisione del codice in thread per velocizzare la generazione di "
+"nebulose (e in futuro chi lo sa?)"
 
 #: dat/AUTHORS:133
 msgid "   * Hot dog mission"
-msgstr ""
+msgstr "   * Missione Hot dog"
 
 #: dat/AUTHORS:135
 msgid "Ludovic Bellière \"xrogaan\""
-msgstr ""
+msgstr "Ludovic Bellière \"xrogaan\""
 
 #: dat/AUTHORS:136
 msgid "   * Python programmer extraordinaire"
-msgstr ""
+msgstr "   * Straordinario programmatore Python"
 
 #: dat/AUTHORS:137
 msgid "His utilities save gray hairs for everyone."
-msgstr ""
+msgstr "Le sue funzionalità hanno salvato l'ingrigimento dei capelli a tutti."
 
 #: dat/AUTHORS:139
 msgid "Josh Combs"
-msgstr ""
+msgstr "Josh Combs"
 
 #: dat/AUTHORS:140
 msgid "   * Artist of most of the nebulae."
-msgstr ""
+msgstr "   * Artista creatore della maggior parte delle nebulose."
 
 #: dat/AUTHORS:142
 msgid "Galileus"
-msgstr ""
+msgstr "Galileus"
 
 #: dat/AUTHORS:143
 msgid "   * Modeller of the Shark and Rhino"
-msgstr ""
+msgstr "   * Modello dello Shark e Rhino"
 
 #: dat/AUTHORS:145
 msgid "Devin Khan"
-msgstr ""
+msgstr "Devin Khan"
 
 #: dat/AUTHORS:146
 msgid "   * Modeller of the Phalanx"
-msgstr ""
+msgstr "   * Modello del Phalanx"
 
 #: dat/AUTHORS:148
 msgid "Areze"
-msgstr ""
+msgstr "Areze"
 
 #: dat/AUTHORS:149
 msgid "   * Junior assistant galaxy creator"
-msgstr ""
+msgstr "   * Assistente junior nella creazione delle galassie"
 
 #: dat/AUTHORS:151
 msgid "Old Man <oldtopman@gmail.com>"
-msgstr ""
+msgstr "Old Man <oldtopman@gmail.com>"
 
 #: dat/AUTHORS:152
 msgid "   * Desura Maintainer"
-msgstr ""
+msgstr "   * Mantenitore di Desura"
 
 #: dat/AUTHORS:154
 msgid "NeD"
-msgstr ""
+msgstr "NeD"
 
 #: dat/AUTHORS:155 dat/AUTHORS:161
 msgid "   * Mission contributor"
-msgstr ""
+msgstr "   * Collaboratore alle missioni"
 
 #: dat/AUTHORS:157
 msgid "Sudarshan S"
-msgstr ""
+msgstr "Sudarshan S"
 
 #: dat/AUTHORS:158
 msgid "   * Event contributor"
-msgstr ""
+msgstr "   * Collaboratore agli eventi"
 
 #: dat/AUTHORS:160 dat/AUTHORS:178
 msgid "PhoenixRiver"
-msgstr ""
+msgstr "PhoenixRiver"
 
 #: dat/AUTHORS:162
 msgid "   * Misc fixes and typos"
-msgstr ""
+msgstr "   * Correzioni varie e correzioni di errori di battitura"
 
 #: dat/AUTHORS:164
 msgid "Alastair Basden"
-msgstr ""
+msgstr "Alastair Basden"
 
 #: dat/AUTHORS:165
 msgid "   * Economy development"
-msgstr ""
+msgstr "   * Sviluppo dell'economia"
 
 #: dat/AUTHORS:166
 msgid "   * Ship log"
-msgstr ""
+msgstr "   * Registro delle Astronavi"
 
 #: dat/AUTHORS:167
 msgid "   * Solar system information screen"
-msgstr ""
+msgstr "   * Schermata informativa del sistema solare"
 
 #: dat/AUTHORS:169
 msgid "Music by Matthew Pablo"
-msgstr ""
+msgstr "Musica di Matthew Pablo"
 
 #: dat/AUTHORS:170
 msgid "http://www.matthewpablo.com"
-msgstr ""
+msgstr "http://www.matthewpablo.com"
 
 #: dat/AUTHORS:172
 msgid "Testers"
-msgstr ""
+msgstr "Tester"
 
 #: dat/AUTHORS:175
 msgid "John Schwartfeger"
-msgstr ""
+msgstr "John Schwartfeger"
 
 #: dat/AUTHORS:176
 msgid "Leonardo Valeri Manera"
-msgstr ""
+msgstr "Leonardo Valeri Manera"
 
 #: dat/AUTHORS:177
 msgid "EvanR"
-msgstr ""
+msgstr "EvanR"
 
 #: dat/AUTHORS:180
 msgid "Artwork Contributors"
-msgstr ""
+msgstr "Collaboratori di artwork"
 
 #: artwork/gfx/loading/admonisher.webp.txt:1
 msgid "ADMONISHER"
-msgstr ""
+msgstr "ADMONISHER"
 
 #: artwork/gfx/loading/admonisher_pirate.webp.txt:1
 msgid "PIRATE ADMONISHER"
-msgstr ""
+msgstr "PIRATE ADMONISHER"
 
 #: artwork/gfx/loading/ancestor.webp.txt:1
 msgid "ANCESTOR"
-msgstr ""
+msgstr "ANCESTOR"
 
 #: artwork/gfx/loading/ancestor_pirate.webp.txt:1
 msgid "PIRATE ANCESTOR"
-msgstr ""
+msgstr "PIRATE ANCESTOR"
 
 #: artwork/gfx/loading/dalton.webp.txt:1
 msgid "DALTON"
@@ -818,11 +837,11 @@ msgstr ""
 
 #: artwork/gfx/loading/diablo.webp.txt:1
 msgid "ZA'LEK DIABLO"
-msgstr ""
+msgstr "ZA'LEK DIABLO"
 
 #: artwork/gfx/loading/drone.webp.txt:1
 msgid "DRONE"
-msgstr ""
+msgstr "DRONE"
 
 #: artwork/gfx/loading/euler.webp.txt:1
 msgid "EULER"
@@ -830,7 +849,7 @@ msgstr ""
 
 #: artwork/gfx/loading/fidelity.webp.txt:1
 msgid "SIRIUS FIDELITY"
-msgstr ""
+msgstr "SIRIUS FIDELITY"
 
 #: artwork/gfx/loading/gauss.webp.txt:1
 msgid "GAUSS"
@@ -838,39 +857,39 @@ msgstr ""
 
 #: artwork/gfx/loading/gawain.webp.txt:1
 msgid "GAWAIN"
-msgstr ""
+msgstr "GAWAIN"
 
 #: artwork/gfx/loading/goddard.webp.txt:1
 msgid "GODDARD"
-msgstr ""
+msgstr "GODDARD"
 
 #: artwork/gfx/loading/hawking.webp.txt:1
 msgid "HAWKING"
-msgstr ""
+msgstr "HAWKING"
 
 #: artwork/gfx/loading/koala.webp.txt:1
 msgid "KOALA"
-msgstr ""
+msgstr "KOALA"
 
 #: artwork/gfx/loading/lancelot.webp.txt:1
 msgid "LANCELOT"
-msgstr ""
+msgstr "LANCELOT"
 
 #: artwork/gfx/loading/llama.webp.txt:1
 msgid "LLAMA"
-msgstr ""
+msgstr "LLAMA"
 
 #: artwork/gfx/loading/mule.webp.txt:1
 msgid "MULE"
-msgstr ""
+msgstr "MULE"
 
 #: artwork/gfx/loading/pacifier.webp.txt:1
 msgid "PACIFIER"
-msgstr ""
+msgstr "PACIFIER"
 
 #: artwork/gfx/loading/peacemaker.webp.txt:1
 msgid "EMPIRE PEACEMAKER"
-msgstr ""
+msgstr "EMPIRE PEACEMAKER"
 
 #: artwork/gfx/loading/preacher.webp.txt:1
 msgid "SIRIUS PREACHER"
@@ -7680,7 +7699,7 @@ msgstr ""
 
 #: dat/spob/abacus.xml:2
 msgid "Abacus"
-msgstr ""
+msgstr "Abacus"
 
 #: dat/spob/abacus.xml:16 dat/spob/adius.xml:9 dat/spob/aesir_iv.xml:9
 #: dat/spob/aldous_moon.xml:9 dat/spob/alteris_iv.xml:9 dat/spob/ammu.xml:15
@@ -7827,6 +7846,11 @@ msgid ""
 "researchers on site at any one time. Tourism is out of the question, so is a "
 "bar."
 msgstr ""
+"Abacus è un pianeta enorme, per le dimensioni normali dei pianeti rocciosi. "
+"Gli Soromid hanno stabilito un avamposto di ricerca per indagare "
+"maggiormente sulla struttura del pianeta. L'avamposto è piuttosto piccolo, "
+"con soltanto un paio di dozzine di ricercatori presenti in sito "
+"contemporaneamente. Il turismo qui è fuori questione, così pure il bar."
 
 #: dat/spob/abacus.xml:28 dat/spob/astana.xml:49 dat/spob/curie.xml:48
 #: dat/spob/dono.xml:30 dat/spob/excelcior.xml:56 dat/spob/gastan.xml:32
@@ -7869,7 +7893,7 @@ msgstr ""
 
 #: dat/spob/adham.xml:2
 msgid "Adham"
-msgstr ""
+msgstr "Adham"
 
 #: dat/spob/adham.xml:15 dat/spob/adrian.xml:15 dat/spob/alteris_v.xml:9
 #: dat/spob/amatiri_ia.xml:9 dat/spob/andee_iiia.xml:9 dat/spob/andors.xml:15
@@ -7899,14 +7923,20 @@ msgid ""
 "considered neutral territory, most of the planet's surface is subject to the "
 "destructive sport that is so popular among Totoran's visitors."
 msgstr ""
+"Adham è un gelido pianeta senza vita. L'unica ragione per cui vi sia una "
+"pista d'atterraggio qui è che il pianeta è la sede delle arene a tema artico "
+"per i giochi dei gladiatori di Totoran. Mentre la zona d'atterraggio e una "
+"piccola area intorno ad essa sono considerati territorio neutrale, la "
+"maggior parte della superficie planetaria è sottoposta allo sport "
+"distruttivo così popolare tra i visitatori di Totoran."
 
 #: dat/spob/adius.xml:2
 msgid "Adius"
-msgstr ""
+msgstr "Adius"
 
 #: dat/spob/adrian.xml:2
 msgid "Adrian"
-msgstr ""
+msgstr "Adrian"
 
 #: dat/spob/adrian.xml:25
 msgid ""
@@ -7916,6 +7946,12 @@ msgid ""
 "it was a matter of a few cycles before the Sirii came to power. Today Adrian "
 "persists, despite having served its only purpose."
 msgstr ""
+"Un mondo gelido e sgradevole, i Sirius hanno stabilito la loro colonia su "
+"Adian mentre si stavano espandendo in Eiderdown. A quel tempo il sistema era "
+"sotto il controllo imperiale, ma con questa solida testa di ponte presente "
+"nel sistema è stata questione di pochi cicli prima che i Sirii prendessero "
+"il potere. Attualmente la colonia su Adrian resta funzionante, nonostante il "
+"suo unico scopo iniziale non sia più necessario."
 
 #: dat/spob/adrian.xml:26
 msgid ""
@@ -7923,10 +7959,14 @@ msgid ""
 "kept at an acceptable, though uncomfortable, low. Most patrons of this "
 "spaceport bar are in full winter gear."
 msgstr ""
+"Riscaldare un mondo di classe P è spesso un affare costoso, per questo "
+"motivo le temperature sono mantenute ad un basso livello accettabile "
+"finanziariamente, ma non confortevole. Molti clienti del bar di questo "
+"spazioporto hanno un abbigliamento invernale."
 
 #: dat/spob/aera.xml:2
 msgid "Aera"
-msgstr ""
+msgstr "Aera"
 
 #: dat/spob/aera.xml:15 dat/spob/allous_gg3.xml:9 dat/spob/amatiri_i.xml:9
 #: dat/spob/antlejos_iv.xml:9 dat/spob/ariadus_vi.xml:9
@@ -7959,6 +7999,11 @@ msgid ""
 "subduction, which coaxes them out of the planet's dangerous core and into "
 "the upper atmosphere where they can be safely collected."
 msgstr ""
+"Questo gigante gassoso è abbastanza ricco di minerali preziosi e per questo "
+"i Proteron hanno deciso di stabilirvi una colonia mineraria. I minerali sono "
+"estratti tramite subduzione termica OOA, che li incanala dal pericoloso "
+"nucleo planetario verso l'alta atmosfera dove possono essere raccolti senza "
+"rischi."
 
 #: dat/spob/aera.xml:27 dat/spob/ahmed.xml:42 dat/spob/aillis.xml:30
 #: dat/spob/aldernael.xml:38 dat/spob/amhurst.xml:45 dat/spob/andors.xml:41
@@ -7985,11 +8030,11 @@ msgstr ""
 
 #: dat/spob/aesir_iv.xml:2
 msgid "Aesir IV"
-msgstr ""
+msgstr "Aesir IV"
 
 #: dat/spob/agino.xml:2
 msgid "Agino"
-msgstr ""
+msgstr "Agino"
 
 #: dat/spob/agino.xml:15 dat/spob/aillis.xml:15 dat/spob/ambre.xml:15
 #: dat/spob/arck.xml:15 dat/spob/bon_sebb.xml:15 dat/spob/brooks.xml:15
@@ -8036,6 +8081,11 @@ msgid ""
 "core but, this being a remote part of Soromid space, it is still a local "
 "highlight."
 msgstr ""
+"Agino è un pianeta completamente invaso da attività rumorose, per la maggior "
+"parte di cittadini della classe media si Soromid. Il pianeta non eccelle in "
+"nessuna area, se confrontato con i mondi principali di Soromid, ma essendo "
+"una parte remota del territorio di Soromid è pur sempre un punto di "
+"riferimento locale."
 
 #: dat/spob/agino.xml:28
 msgid ""
@@ -8046,6 +8096,13 @@ msgid ""
 "who you are and cheerfully pour you a drink. Some spacers secretly suspect "
 "he has an audiovisual database installed in his head."
 msgstr ""
+"La persona che gestisce il bar di questo spazioporto è un uomo corpulento di "
+"Soromid chiamato Alverik Sogheem. Di solito Alverik serve al bar "
+"personalmente e per questo conosce tutti i suoi clienti per nome e per viso. "
+"Non ha importanza per quanto tempo si è stati lontani o dove si è stati "
+"nella galassia, ritornando su Agino, Alverik si ricorderà di voi e vi "
+"verserà allegramente da bere. Alcuni sospettano segretamente che abbia un "
+"database audiovisivo installato nella sua testa."
 
 #: dat/spob/agino.xml:49 dat/spob/atryssa.xml:57 dat/spob/brooks.xml:38
 #: dat/spob/dawn.xml:33 dat/spob/draconis_epsilon.xml:42 dat/spob/edorn.xml:39
@@ -8073,7 +8130,7 @@ msgstr ""
 
 #: dat/spob/ahmed.xml:2
 msgid "Ahmed"
-msgstr ""
+msgstr "Ahmed"
 
 #: dat/spob/ahmed.xml:15 dat/spob/akra_iii.xml:9 dat/spob/andee_iia.xml:9
 #: dat/spob/arrakis.xml:15 dat/spob/astana_iiv.xml:9 dat/spob/awowa_iv.xml:9
