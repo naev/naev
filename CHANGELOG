@@ -1,9 +1,12 @@
 * 0.10.0-beta.2
    * Pirates should avoid attacking near safeish areas
    * Fixed crash on load when player has more than one ship.
-   * Fixed player.setSpeed() not resetting speed as intended.
+   * Fixed player.setSpeed() not resetting speed as intended
    * Fixed pilot.comm not showing messages
-   * Fixed typo in sightseeing mission descriptions.
+   * Fixed typo/grammar in sightseeing and dvaered census introductory mission
+   * Don't display health bars with no player alive
+   * Autonav doesn't go only to the center of spobs
+   * Mention escort AI settings when buying a fighter bay tutorial plays
 
 * 0.10.0 (beta)
    * New Mechanics
