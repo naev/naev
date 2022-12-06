@@ -44,7 +44,7 @@ function careful.posIsGood( p, pos )
    if lanedist < math.pow( m.lanedistance, 2 ) then
       return false
    end
-   return checkSpobJumps( p:faction(), p:pos(), m.spobdistance, m.jumpdistance )
+   return checkSpobJumps( p:faction(), pos, m.spobdistance, m.jumpdistance )
 end
 
 function careful.posIsGoodL( L, fct, pos, lanedistance, spobdistance, jumpdistance )
