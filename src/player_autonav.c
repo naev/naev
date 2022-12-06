@@ -185,13 +185,21 @@ void player_autonavPos( double x, double y )
 void player_autonavSpob( const char *name, int tryland )
 {
    Spob *p;
+   vec2 pos;
+   double a;
 
    if (player_autonavSetup())
       return;
    p = spob_get( name );
    player.autonavmsg = strdup( spob_name(p) );
    player.autonavcol = spob_getColourChar( p );
-   vec2_cset( &player.autonav_pos, p->pos.x, p->pos.y );
+   pos = p->pos;
+
+   /* Don't target center, but position offset in the direction of the player. */
+   a = ANGLE( player.p->solid->pos.x - pos.x,
+              player.p->solid->pos.y - pos.y );
+   vec2_padd( &pos, 0.6 * p->radius, a );
+   player.autonav_pos = pos;
 
    if (tryland) {
       player.autonav = AUTONAV_SPOB_LAND_APPROACH;
