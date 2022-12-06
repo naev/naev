@@ -239,11 +239,8 @@ end
 local function getCacheP( p )
    local mem = p:memory()
    if not mem.__lanes then
-      local L = {}
       local standing = (mem.lanes_useneutral and "non-hostile") or "friendly"
-      L.lanes = safelanes.get( p:faction(), standing )
-      L.v, L.e = safelanesToGraph( L.lanes )
-      mem.__lanes = L
+      mem.__lanes = lanes.get( p:faction(), standing )
    end
    return mem.__lanes
 end
