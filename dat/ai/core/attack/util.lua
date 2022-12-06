@@ -6,7 +6,7 @@ local careful = require "ai.core.misc.careful"
 
 local atk = {}
 
-mem.lanedistance = mem.lanedistance or 2e3
+mem.lanedistance = mem.lanedistance or mem.enemyclose or 3e3
 --mem.atk_pref_func = nil
 mem.atk_pref_range = 5e3
 
