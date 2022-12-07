@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-07 01:49+0900\n"
-"PO-Revision-Date: 2022-12-06 16:48+0000\n"
+"PO-Revision-Date: 2022-12-07 18:47+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -8154,6 +8154,10 @@ msgid ""
 "people not mining are doing administration or come here as traders and "
 "businessmen looking for turn a credit or two."
 msgstr ""
+"La luna di Ahmed è una piccola colonia di persone austere, ma non è "
+"sorprendente dato che sono per lo più minatori. Le poche persone che non si "
+"occupano dell'attività estrattiva sono amministratori o commercianti e "
+"uomini d'affari che arrivano qui per cercare di racimolare uno o due crediti."
 
 #: dat/spob/ahmed.xml:27
 msgid ""
@@ -8162,10 +8166,15 @@ msgid ""
 "gas extraction. The Soromid might understand comfort and how to have a good "
 "time but this is clearly not the place where they are doing it."
 msgstr ""
+"Un bar molto utilitaristico con un atteggiamento piuttosto permissivo verso "
+"il benessere, almeno per gli standard dell'Impero. Le persone vengono qui "
+"per fare affari e parlare di estrazione di rocce minerarie, minerali e gas. "
+"Gli abitanti di Soromid potrebbero capire cos'è il benessere e come "
+"divertirsi, ma chiaramente questo non è il posto dove lo fanno."
 
 #: dat/spob/aillis.xml:2
 msgid "Aillis"
-msgstr ""
+msgstr "Aillis"
 
 #: dat/spob/aillis.xml:26
 msgid ""
@@ -8175,6 +8184,11 @@ msgid ""
 "valuable, and so Aillis offers a fair living for those who don't shun heavy, "
 "dangerous labour."
 msgstr ""
+"Aillis è la base operativa per i minatori di Koralis VI. Nessuna abitazione "
+"è presente, o lo sarà mai, su Koralis VI, dato che è altamente radioattivo. "
+"Tuttavia alcuni degli elementi pesanti, presenti nelle viscere del pianeta, "
+"sono piuttosto preziosi e quindi Aillis offre un posto discreto in cui "
+"vivere per chi non disdegna lavori pesanti e pericolosi."
 
 #: dat/spob/aillis.xml:27
 msgid ""
@@ -8182,6 +8196,10 @@ msgid ""
 "very welcome. Running costs are kept low which means maintenance and service "
 "suffer. Nevertheless, it's quite possible to have a good time here."
 msgstr ""
+"Anche se questo bar non è esattamente inospitale, allo stesso tempo non vi "
+"fa sentire molto benvenuti. I costi di gestione sono mantenuti bassi, il che "
+"significa che la manutenzione e il servizio ne risentono. Ciononostante è "
+"possibile divertirsi."
 
 #: dat/spob/aillis.xml:31 dat/spob/amhurst.xml:44 dat/spob/avoss.xml:29
 #: dat/spob/drognain.xml:28 dat/spob/edorn.xml:37 dat/spob/gennus.xml:38
@@ -8203,7 +8221,7 @@ msgstr ""
 
 #: dat/spob/akios_station.xml:2
 msgid "Akios Station"
-msgstr ""
+msgstr "Stazione di Akios"
 
 #: dat/spob/akios_station.xml:16 dat/spob/akra_station.xml:15
 #: dat/spob/allan.xml:15 dat/spob/alleyway.xml:15
@@ -109176,7 +109194,7 @@ msgstr ""
 
 #: src/weapon.c:2039 src/weapon.c:2081 src/weapon.c:2227
 msgid "Invalid WEAPON_LAYER specified"
-msgstr ""
+msgstr "Il WEAPON_LAYER specificato non è valido"
 
 #: src/weapon.c:2087
 msgid "Trying to remove beam with ID 0!"
