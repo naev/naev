@@ -19,7 +19,7 @@ local pir = require "common.pirate"
 local car = require "common.cargo"
 local fmt = require "format"
 local lmisn = require "lmisn"
-
+local vntk = require "vntk"
 
 --[[
 --   Pirates shipping missions are always timed, but quite lax on the schedules
@@ -156,14 +156,14 @@ end
 function accept()
    local playerbest = car.getTransit( mem.numjumps, mem.traveldist )
    if mem.timelimit < playerbest then
-      if not tk.yesno( _("Too slow"), fmt.f(
+      if not vntk.yesno( _("Too slow"), fmt.f(
             _("This shipment must arrive within {time_limit}, but it will take at least {time} for your ship to reach {pnt}, missing the deadline. Accept the mission anyway?"),
 	    {time_limit=(mem.timelimit - time.get()), time=(playerbest - time.get()), pnt=mem.destplanet} ) ) then
          return
       end
    end
    if player.pilot():cargoFree() < mem.amount then
-      tk.msg( _("No room in ship"), fmt.f(
+      vntk.msg( _("No room in ship"), fmt.f(
          _("You don't have enough cargo space to accept this mission. It requires {tonnes_free} of free space ({tonnes_short} more than you have)."),
          { tonnes_free = fmt.tonnes(mem.amount), tonnes_short = fmt.tonnes( mem.amount - player.pilot():cargoFree() ) } ) )
       return
@@ -172,7 +172,7 @@ function accept()
    misn.accept()
 
    mem.carg_id = misn.cargoAdd( mem.cargo, mem.amount )
-   tk.msg( _("Mission Accepted"), fmt.f(
+   vntk.msg( _("Mission Accepted"), fmt.f(
       _("{tonnes} of {cargo} are loaded onto your ship."),
       {tonnes=fmt.tonnes(mem.amount), cargo=_(mem.cargo)} ) )
    hook.land( "land" ) -- only hook after accepting
@@ -183,7 +183,7 @@ end
 -- Land hook
 function land()
    if spob.cur() == mem.destplanet then
-         tk.msg( _("Successful Delivery"), fmt.f(
+         vntk.msg( _("Successful Delivery"), fmt.f(
             _("The containers of {cargo} are unloaded at the docks."), {cargo=_(mem.cargo)} ) )
       player.pay(mem.reward)
       local n = var.peek("ps_misn") or 0
