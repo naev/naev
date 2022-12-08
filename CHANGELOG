@@ -1,3 +1,7 @@
+* 0.10.0-beta.3
+   * Contraband missions use vntk instead of tk.
+   * Sightseeing missions mention explicitly how much you get paid when completed.
+
 * 0.10.0-beta.2
    * Pirates should avoid attacking near safeish areas
    * Fixed crash on load when player has more than one ship.

@@ -190,6 +190,13 @@ function land ()
    if mem.job_done and spob.cur() == mem.startingplanet then
       misn.cargoRm( mem.civs )
 
+      local reward
+      if mem.nolux then
+         reward = mem.credits_nolux
+      else
+         reward = mem.credits
+      end
+
       local ttl = _("Mission Completed")
       local txt = pay_text[ rnd.rnd( 1, #pay_text ) ]
       if mem.nolux ~= mem.nolux_known then
@@ -202,14 +209,10 @@ function land ()
          end
       end
       lmisn.sfxMoney()
-      vntk.msg( ttl, txt )
+      vntk.msg( ttl, txt.."\n\n"..fmt.reward(reward) )
 
       pir.reputationNormalMission(rnd.rnd(2,3))
-      if mem.nolux then
-         player.pay( mem.credits_nolux )
-      else
-         player.pay( mem.credits )
-      end
+      player.pay( reward )
 
       misn.finish( true )
    end
