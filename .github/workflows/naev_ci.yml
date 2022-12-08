@@ -381,4 +381,4 @@ jobs:
           repo: naev.github.io
           github_token: ${{ secrets.WEBSITE_ACCESS_TOKEN }}
           workflow_file_name: website_publish.yml
-          inputs: '{ "publish_type": "docs" }'
+          client_payload: '{ "publish_type": "docs" }'
