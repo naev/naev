@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Checkout Naev Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: source
           fetch-depth: 0
@@ -26,7 +26,7 @@ jobs:
           meson dist -C build --no-tests --include-subprojects
 
       - name: Upload Dist Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: naev-dist-${{ github.sha }}
           path: ${{ github.workspace }}/build/meson-dist/*
@@ -54,14 +54,14 @@ jobs:
 
     steps:
       - name: Get Source
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v3
         with:
           name: naev-dist-${{ github.sha }}
 
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf naev-dist-${{ github.sha }}/naev-*.tar.xz -C source --strip 1
+          tar -xf naev-*.tar.xz -C source --strip 1
 
       - name: Meson Setup
         id: setup
@@ -78,7 +78,7 @@ jobs:
               -Ddocs_lua=disabled
 
       - name: Upload Setup Log
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ success() || steps.setup.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-setup-log
@@ -90,14 +90,14 @@ jobs:
           meson compile -C build
 
       - name: Upload Compile Log
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ success() || steps.compile.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-compile-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
       - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-buildArtifacts
           path: |
@@ -111,7 +111,7 @@ jobs:
           DESTDIR: "${{ github.workspace }}/staging"
 
       - name: Upload Install Log
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ success() || steps.install.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-install-log
@@ -123,7 +123,7 @@ jobs:
           ./source/utils/buildAppImage.sh -c -m -s source -b appImageBuild | tee appImageBuildLog.txt
 
       - name: Upload AppImage Compile Log
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ (success() || steps.appimageCompile.outcome == 'failure') }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-AppImageBuild-log
@@ -146,14 +146,14 @@ jobs:
 
     steps:
       - name: Get Source
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v3
         with:
           name: naev-dist-${{ github.sha }}
 
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf naev-dist-${{ github.sha }}/naev-*.tar.xz -C source --strip 1
+          tar -xf naev-*.tar.xz -C source --strip 1
 
       - name: Meson Setup
         id: setup
@@ -173,7 +173,7 @@ jobs:
               -Ddocs_lua=disabled
 
       - name: Upload Setup Log
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ success() || steps.setup.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-setup-log
@@ -185,14 +185,14 @@ jobs:
           meson compile -C build
 
       - name: Upload Compile Log
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ success() || steps.compile.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-compile-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
       - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-buildArtifacts
           path: |
@@ -205,7 +205,7 @@ jobs:
           meson install -C build
 
       - name: Upload Install Log
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ success() || steps.install.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-install-log
@@ -227,14 +227,14 @@ jobs:
 
     steps:
       - name: Get Source
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v3
         with:
           name: naev-dist-${{ github.sha }}
 
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf naev-dist-${{ github.sha }}/naev-*.tar.xz -C source --strip 1
+          tar -xf naev-*.tar.xz -C source --strip 1
 
       - name: Meson Setup
         id: setup
@@ -253,7 +253,7 @@ jobs:
               -Ddocs_lua=disabled
 
       - name: Upload Setup Log
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ success() || steps.setup.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-setup-log
@@ -265,14 +265,14 @@ jobs:
           meson compile -C build
 
       - name: Upload Compile Log
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ success() || steps.compile.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-compile-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
       - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-buildArtifacts
           path: |
@@ -285,7 +285,7 @@ jobs:
           meson install -C build
 
       - name: Upload Install Log
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ success() || steps.install.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-install-log
@@ -305,14 +305,14 @@ jobs:
 
     steps:
       - name: Get Source
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v3
         with:
           name: naev-dist-${{ github.sha }}
 
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf naev-dist-${{ github.sha }}/naev-*.tar.xz -C source --strip 1
+          tar -xf naev-*.tar.xz -C source --strip 1
 
       - name: Meson Setup
         id: setup
@@ -333,7 +333,7 @@ jobs:
           meson test luacheck -C build
 
       - name: Upload Test Log
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ success() || steps.test.outcome == 'failure' }}
         with:
           name: ${{ github.sha }}-lualint-testlog
@@ -347,14 +347,14 @@ jobs:
 
     steps:
       - name: Get Source
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v3
         with:
           name: naev-dist-${{ github.sha }}
 
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf naev-dist-${{ github.sha }}/naev-*.tar.xz -C source --strip 1
+          tar -xf naev-*.tar.xz -C source --strip 1
 
       - name: Meson Setup
         run: |
@@ -367,7 +367,7 @@ jobs:
           meson compile -C build
 
       - name: Upload Compile Log
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ steps.compile.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-ldoc-log
@@ -375,7 +375,7 @@ jobs:
 
       - name: Trigger API Documentation Update
         if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
-        uses: convictional/trigger-workflow-and-wait@v1.5.0
+        uses: convictional/trigger-workflow-and-wait@v1.6.5
         with:
           owner: naev
           repo: naev.github.io
