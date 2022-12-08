@@ -223,7 +223,7 @@ jobs:
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf naev-dist/source.tar.xz -C source --strip 1
+          tar -xf source.tar.xz -C source --strip 1
 
       - name: Meson Setup
         run: |
@@ -285,7 +285,7 @@ jobs:
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf naev-dist/source.tar.xz -C source --strip 1
+          tar -xf source.tar.xz -C source --strip 1
 
       - name: Meson Setup
         run: |
