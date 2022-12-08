@@ -30,7 +30,9 @@ SetCompressor /FINAL /SOLID lzma
 
 ;Name and file
 Name "Naev"
-OutFile "naev-${VERSION}.exe"
+;Don't worry, we pass this value in with the createNSIS.sh script.
+;If you aren't using that script try passing in Outfile with the -X or /X (On Windows) flag.
+;OutFile "naev-${VERSION}.exe"
 
 ;--------------------------------
 ;Variables

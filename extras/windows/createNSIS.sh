@@ -54,9 +54,7 @@ cp -r "${MESON_INSTALL_DESTDIR_PREFIX}/." "$WORKPATH/bin"
 VERSION="$(<"${MESON_INSTALL_DESTDIR_PREFIX}/dat/VERSION")"
 
 # Compile NSIS installer
-makensis -DVERSION="$VERSION" "$WORKPATH/naev.nsi"
-
-mv "$WORKPATH/*.exe" "${MESON_BUILD_ROOT}/dist"
+makensis "-XOutFile ${MESON_BUILD_ROOT}/dist/naev-installer.exe" -DVERSION="$VERSION" "$WORKPATH/naev.nsi"
 
 #Clean up
 rm -rf "$WORKPATH"
