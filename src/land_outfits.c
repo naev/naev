@@ -118,8 +118,6 @@ void outfits_open( unsigned int wid, const Outfit **outfits )
 {
    int w, h, iw, ih, bw, bh, off;
    LandOutfitData *data = NULL;
-   char buf[STRMAX_SHORT];
-   size_t l = 0;
 
    /* initialize the outfit mode. */
    outfit_Mode = 0;
@@ -191,13 +189,8 @@ void outfits_open( unsigned int wid, const Outfit **outfits )
    window_addText( wid, 20 + iw + 20, -40 - gl_defFont.h*2. - 30,
          w - (20 + iw + 20) - 264 - 40, 400, 0, "txtDescShort", &gl_defFont, NULL, NULL );
 
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", _("Owned:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Mass:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Price:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Money:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("License:") );
    window_addText( wid, 20 + iw + 20, 0,
-         90, 160, 0, "txtSDesc", &gl_defFont, &cFontGrey, buf );
+         90, 160, 0, "txtSDesc", &gl_defFont, &cFontGrey, NULL );
    window_addText( wid, 20 + iw + 20 + 90, 0,
          w - (20 + iw + 20 + 90), 160, 0, "txtDDesc", &gl_defFont, NULL, NULL );
    window_addText( wid, 20 + iw + 20, 0,
@@ -414,8 +407,7 @@ void outfits_update( unsigned int wid, const char *str )
    const char *buf_price;
    credits_t price;
    size_t l = 0, k = 0;
-   double th;
-   int iw, ih, w, h, blackmarket, canbuy, cansell, sw;
+   int iw, ih, w, h, blackmarket, canbuy, cansell, sw, th;
    double mass;
    const char *summary;
 
