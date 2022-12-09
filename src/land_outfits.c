@@ -415,7 +415,7 @@ void outfits_update( unsigned int wid, const char *str )
    credits_t price;
    size_t l = 0, k = 0;
    double th;
-   int iw, ih, w, h, blackmarket, canbuy, cansell;
+   int iw, ih, w, h, blackmarket, canbuy, cansell, sw;
    double mass;
    const char *summary;
 
@@ -484,7 +484,8 @@ void outfits_update( unsigned int wid, const char *str )
 
    outfit_getNameWithClass( outfit, buf, sizeof(buf) );
    window_modifyText( wid, "txtOutfitName", buf );
-   th = gl_printHeightRaw( &gl_defFont, w - (20 + iw + 20) - 264 - 40, buf );
+   window_dimWidget( wid, "txtOutfitName", &sw, NULL );
+   th = gl_printHeightRaw( &gl_defFont, sw, buf );
    l = 0;
    l += scnprintf( &buf[l], sizeof(buf)-l, "%d", player_outfitOwned(outfit) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_mass );
@@ -509,11 +510,13 @@ void outfits_update( unsigned int wid, const char *str )
    summary = pilot_outfitSummary( player.p, outfit );
    window_modifyText( wid, "txtDescShort", summary );
    window_moveWidget( wid, "txtDescShort", 20+iw+20, -40-th );
-   th += gl_printHeightRaw( &gl_defFont, w - (20 + iw + 20) - 264 - 40, summary );
+   window_dimWidget( wid, "txtDescShort", &sw, NULL );
+   th += gl_printHeightRaw( &gl_defFont, sw, summary );
    th = MAX( th, 230 );
    window_moveWidget( wid, "txtSDesc", 20+iw+20, -40-th-gl_defFont.h );
    window_moveWidget( wid, "txtDDesc", 20+iw+20+90, -40-th-gl_defFont.h );
-   th += gl_printHeightRaw( &gl_defFont, w - (20 + iw + 20) - 200 - 20, buf );
+   window_dimWidget( wid, "txtDDesc", &sw, NULL );
+   th += gl_printHeightRaw( &gl_defFont, sw, buf );
    th = MAX( th+gl_defFont.h, 256+10 );
    window_moveWidget( wid, "txtDescription", 20+iw+20, -40-th-gl_defFont.h );
 }
