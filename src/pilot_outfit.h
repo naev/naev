@@ -9,7 +9,7 @@
 
 /* Augmentations of normal pilot API. */
 const char* pilot_outfitDescription( const Pilot *pilot, const Outfit *o );
-const char* pilot_outfitSummary( const Pilot *pilot, const Outfit *o );
+const char* pilot_outfitSummary( const Pilot *p, const Outfit *o, int withname );
 
 /* Raw changes. */
 int pilot_addOutfitRaw( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s );

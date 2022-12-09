@@ -409,7 +409,7 @@ const char* outfit_getType( const Outfit *o );
 const char* outfit_getTypeBroad( const Outfit *o );
 const char* outfit_getAmmoAI( const Outfit *o );
 const char* outfit_description( const Outfit *o );
-const char* outfit_summary( const Outfit *o );
+const char* outfit_summary( const Outfit *o, int withname );
 
 /*
  * Search.

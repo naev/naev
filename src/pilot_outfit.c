@@ -1266,16 +1266,25 @@ const char* pilot_outfitDescription( const Pilot *p, const Outfit *o )
  *
  *    @param p Pilot to get the outfit summary of (or NULL for no pilot).
  *    @param o Outfit to get summary of.
+ *    @param withname Whether or not to show the name too.
  *    @return The summary of the outfit.
  */
-const char* pilot_outfitSummary( const Pilot *p, const Outfit *o )
+const char* pilot_outfitSummary( const Pilot *p, const Outfit *o, int withname )
 {
    static char o_summary[STRMAX];
    const char *de = pilot_outfitLDescExtra( p, o );
-   if (de == NULL)
-      snprintf( o_summary, sizeof(o_summary), "%s\n%s", _(o->name), o->summary_raw );
-   else
-      snprintf( o_summary, sizeof(o_summary), "%s\n%s\n%s", _(o->name), o->summary_raw, de );
+   if (de == NULL) {
+      if (withname)
+         snprintf( o_summary, sizeof(o_summary), "%s\n%s", _(o->name), o->summary_raw );
+      else
+         snprintf( o_summary, sizeof(o_summary), "%s", o->summary_raw );
+   }
+   else {
+      if (withname)
+         snprintf( o_summary, sizeof(o_summary), "%s\n%s\n%s", _(o->name), o->summary_raw, de );
+      else
+         snprintf( o_summary, sizeof(o_summary), "%s\n%s", o->summary_raw, de );
+   }
    return o_summary;
 }
 

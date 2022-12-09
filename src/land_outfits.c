@@ -507,18 +507,18 @@ void outfits_update( unsigned int wid, const char *str )
    }
    window_modifyText( wid, "txtSDesc", lbl );
    window_modifyText( wid, "txtDDesc", buf );
-   summary = pilot_outfitSummary( player.p, outfit );
+   summary = pilot_outfitSummary( player.p, outfit, 0 );
    window_modifyText( wid, "txtDescShort", summary );
    window_moveWidget( wid, "txtDescShort", 20+iw+20, -40-th );
    window_dimWidget( wid, "txtDescShort", &sw, NULL );
    th += gl_printHeightRaw( &gl_defFont, sw, summary );
-   th = MAX( th, 230 );
-   window_moveWidget( wid, "txtSDesc", 20+iw+20, -40-th-gl_defFont.h );
-   window_moveWidget( wid, "txtDDesc", 20+iw+20+90, -40-th-gl_defFont.h );
+   th = MAX( th+gl_defFont.h, 210 );
+   window_moveWidget( wid, "txtSDesc", 20+iw+20, -40-th );
+   window_moveWidget( wid, "txtDDesc", 20+iw+20+90, -40-th );
    window_dimWidget( wid, "txtDDesc", &sw, NULL );
    th += gl_printHeightRaw( &gl_defFont, sw, buf );
    th = MAX( th+gl_defFont.h, 256+10 );
-   window_moveWidget( wid, "txtDescription", 20+iw+20, -40-th-gl_defFont.h );
+   window_moveWidget( wid, "txtDescription", 20+iw+20, -40-th );
 }
 
 /**
@@ -676,7 +676,7 @@ int outfit_altText( char *buf, int n, const Outfit *o, const Pilot *plt )
    if (o->slot.spid != 0)
       p += scnprintf( &buf[p], n-p, "#o%s#0\n",
             _(sp_display( o->slot.spid) ) );
-   p += scnprintf( &buf[p], n-p, "%s", pilot_outfitSummary( plt, o ) );
+   p += scnprintf( &buf[p], n-p, "%s", pilot_outfitSummary( plt, o, 1 ) );
    if ((o->mass > 0.) && (p < n)) {
       char buf_mass[ECON_MASS_STRLEN];
       tonnes2str( buf_mass, (int)round( mass ) );
@@ -716,7 +716,7 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits, 
          col_blend( &coutfits[i].bg, c, &cGrey70, 1 );
 
          /* Short description. */
-         coutfits[i].alt = strdup( pilot_outfitSummary( p, o ) );
+         coutfits[i].alt = strdup( pilot_outfitSummary( p, o, 1 ) );
 
          /* Slot type. */
          if ( (strcmp(outfit_slotName(o), "N/A") != 0)

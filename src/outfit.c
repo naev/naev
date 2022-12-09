@@ -946,11 +946,12 @@ const char* outfit_description( const Outfit *o )
  * Subsequent calls will change the memory, strdup if necessary.
  *
  *    @param o Outfit to get summary of.
+ *    @param withname Whether or not to include the outfit name.
  *    @return Summary of the outfit.
  */
-const char* outfit_summary( const Outfit *o )
+const char* outfit_summary( const Outfit *o, int withname )
 {
-   return pilot_outfitSummary( NULL, o );
+   return pilot_outfitSummary( NULL, o, withname );
 }
 
 /**
@@ -1069,7 +1070,8 @@ static void sdesc_miningRarity( int *l, Outfit *temp, int rarity )
       return;
    if (rarity == 2)
       SDESC_ADD( *l, temp, "\n#g%s#0", _("Can mine uncommon and rare minerals") );
-   SDESC_ADD( *l, temp, "\n#g%s#0", _("Can mine uncommon minerals") );
+   else
+      SDESC_ADD( *l, temp, "\n#g%s#0", _("Can mine uncommon minerals") );
 }
 
 /**
