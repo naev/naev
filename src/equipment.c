@@ -699,12 +699,13 @@ static void equipment_renderOverlayColumn( double x, double y, double h,
 {
    const glColour *c;
    glColour tc;
-   int text_width, yoff, top;
+   int text_width, yoff;
    const char *display;
 
    /* Iterate for all the slots. */
    for (int i=0; i<array_size(lst); i++) {
       int subtitle = 0;
+      int top = 0;
       if (lst[i].outfit != NULL) {
          /* See if needs a subtitle. */
          if ((outfit_isLauncher(lst[i].outfit) ||
