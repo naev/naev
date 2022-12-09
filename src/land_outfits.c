@@ -189,7 +189,7 @@ void outfits_open( unsigned int wid, const Outfit **outfits )
    window_addText( wid, 20 + iw + 20, -40,
          w - (20 + iw + 20) - 264 - 40, 160, 0, "txtOutfitName", &gl_defFont, NULL, NULL );
    window_addText( wid, 20 + iw + 20, -40 - gl_defFont.h*2. - 30,
-         w - (20 + iw + 20) - 264 - 40, 320, 0, "txtDescShort", &gl_defFont, NULL, NULL );
+         w - (20 + iw + 20) - 264 - 40, 400, 0, "txtDescShort", &gl_defFont, NULL, NULL );
 
    l += scnprintf( &buf[l], sizeof(buf)-l, "%s", _("Owned:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Mass:") );
