@@ -633,6 +633,9 @@ static const char *outfit_getPrice( const Outfit *outfit, credits_t *price, int 
    lua_pushinteger(naevL, q);
    if (nlua_pcall( outfit->lua_env, 1, 3 )) {   /* */
       WARN(_("Outfit '%s' failed to run '%s':\n%s"),outfit->name,"price",lua_tostring(naevL,-1));
+      *price = 0;
+      *canbuy = 0;
+      *cansell = 0;
       lua_pop(naevL, 1);
       return pricestr;
    }
