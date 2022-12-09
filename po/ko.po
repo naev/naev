@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-12-07 01:49+0900\n"
+"POT-Creation-Date: 2022-12-09 22:20+0900\n"
 "PO-Revision-Date: 2022-04-08 09:11+0000\n"
 "Last-Translator: 이정희 <daemul72@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/naev/naev/ko/>\n"
@@ -3938,10 +3938,7 @@ msgid ""
 "The Mace class unguided rocket is a cheap, expendable weapon used to boost "
 "peak firepower in tight situations. It is far better at dealing damage to "
 "light targets than most fighter sized energy cannons, but comes with the "
-"disadvantage of running out of ammunition after only a short time of fire.\n"
-"\n"
-"TeraCom's Mace launcher uses an advanced reload mechanism that allows the "
-"launcher to fire more rockets in less time."
+"disadvantage of running out of ammunition after only a short time of fire."
 msgstr ""
 
 #: dat/outfits/launchers/teracom_medusa_launcher.xml:2
@@ -3955,11 +3952,7 @@ msgid ""
 "out a ship's internal systems, rendering it harmless and ready for boarding. "
 "The warhead does only limited damage, so even lightly armoured targets can "
 "effectively be disabled with this weapon. However, the Medusa is not the "
-"most agile missile on the market.\n"
-"\n"
-"TeraCom has built a highly efficient Medusa launcher, capable of locking on "
-"and firing faster than the standard specification, and holding a greater "
-"amount in the magazine as well."
+"most agile missile on the market."
 msgstr ""
 
 #: dat/outfits/launchers/teracom_vengeance_launcher.xml:2
@@ -6860,8 +6853,8 @@ msgstr "투리온의 불꽃"
 #: dat/ships/misc/raglan_outpost.xml:12 dat/ships/misc/sindbad.xml:12
 #: dat/missions/neutral/race_qex.lua:147 src/dev_uniedit.c:259
 #: src/dev_uniedit.c:265 src/dev_uniedit.c:1443 src/dev_uniedit.c:1444
-#: src/land_outfits.c:440 src/land_outfits.c:441 src/land_outfits.c:442
-#: src/land_outfits.c:443 src/land_trade.c:203 src/land_trade.c:207
+#: src/land_outfits.c:432 src/land_outfits.c:433 src/land_outfits.c:434
+#: src/land_outfits.c:435 src/land_trade.c:203 src/land_trade.c:207
 #: src/land_trade.c:208 src/land_trade.c:209 src/map.c:655 src/map.c:656
 #: src/outfit.c:293 src/outfit.c:312
 msgid "N/A"
@@ -27308,7 +27301,7 @@ msgstr ""
 #: src/dev_sysedit.c:2227 src/dev_sysedit.c:2285 src/dev_uniedit.c:1513
 #: src/dev_uniedit.c:1676 src/dev_uniedit.c:1892 src/dev_uniedit.c:1957
 #: src/info.c:437 src/info.c:538 src/info.c:949 src/info.c:1313 src/input.c:524
-#: src/land.c:877 src/land_outfits.c:446 src/land_outfits.c:692
+#: src/land.c:877 src/land_outfits.c:438 src/land_outfits.c:690
 #: src/land_shipyard.c:129 src/land_shipyard.c:218 src/land_trade.c:85
 #: src/land_trade.c:87 src/land_trade.c:153 src/load.c:531 src/load.c:612
 #: src/map.c:727 src/map.c:780 src/map.c:1959 src/map_find.c:697
@@ -27337,7 +27330,7 @@ msgstr ""
 #: src/dev_sysedit.c:2337 src/dev_uniedit.c:414 src/dev_uniedit.c:1571
 #: src/dev_uniedit.c:1770 src/dev_uniedit.c:2006 src/info.c:425 src/info.c:518
 #: src/info.c:569 src/info.c:709 src/info.c:914 src/info.c:1168 src/info.c:1265
-#: src/info.c:1610 src/land_outfits.c:167 src/map.c:376 src/map_find.c:1022
+#: src/info.c:1610 src/land_outfits.c:165 src/map.c:376 src/map_find.c:1022
 #: src/map_system.c:202
 msgid "Close"
 msgstr ""
@@ -28344,10 +28337,10 @@ msgstr ""
 #: dat/missions/shadow/shadowvigil.lua:60
 #: dat/missions/zalek/blackhole/zbh11.lua:108 dat/scripts/common/comm.lua:30
 #: dat/scripts/common/comm.lua:35 dat/scripts/common/poi.lua:200
-#: dat/scripts/common/poi.lua:206 src/equipment.c:1810 src/gui.c:1531
+#: dat/scripts/common/poi.lua:206 src/equipment.c:1811 src/gui.c:1531
 #: src/map.c:589 src/map.c:595 src/map.c:601 src/map.c:607 src/map.c:613
 #: src/map.c:619 src/map.c:1920 src/map.c:2213 src/map_overlay.c:227
-#: src/map_system.c:479 src/outfit.c:301 src/outfit.c:320 src/outfit.c:906
+#: src/map_system.c:479 src/outfit.c:301 src/outfit.c:320 src/outfit.c:905
 #: src/player.c:2068 src/player_autonav.c:92 src/player_autonav.c:225
 #: src/player_autonav.c:475 src/player_autonav.c:502 src/plugin.c:154
 #: src/plugin.c:156 src/plugin.c:158 src/ship.c:212
@@ -42780,7 +42773,7 @@ msgstr "크레딧:"
 msgid "Nav:"
 msgstr ""
 
-#: dat/gui/slim.lua:1099 src/equipment.c:1788 src/info.c:387 src/info.c:589
+#: dat/gui/slim.lua:1099 src/equipment.c:1789 src/info.c:387 src/info.c:589
 #: src/land_shipyard.c:297 src/map_system.c:681
 msgid "Fuel:"
 msgstr ""
@@ -69238,7 +69231,7 @@ msgstr ""
 #. Nothing to do.
 #: dat/missions/neutral/patrol.lua:215
 #: dat/missions/neutral/pirbounty_dead.lua:234
-#: dat/missions/neutral/sightseeing.lua:193
+#: dat/missions/neutral/sightseeing.lua:200
 msgid "Mission Completed"
 msgstr ""
 
@@ -72644,22 +72637,22 @@ msgstr "빛 "
 msgid "A bunch of sightseeing civilians."
 msgstr ""
 
-#: dat/missions/neutral/sightseeing.lua:197
+#: dat/missions/neutral/sightseeing.lua:204
 msgid "Disappointment"
 msgstr ""
 
-#: dat/missions/neutral/sightseeing.lua:200
+#: dat/missions/neutral/sightseeing.lua:207
 msgid "Unexpected Bonus"
 msgstr ""
 
 #. Another check since the previous block could change the result
-#: dat/missions/neutral/sightseeing.lua:251
+#: dat/missions/neutral/sightseeing.lua:254
 msgid "All attractions visited. Return to {pnt} and collect your pay."
 msgstr ""
 
 #. Remove existing marks
 #. Add new marks
-#: dat/missions/neutral/sightseeing.lua:275
+#: dat/missions/neutral/sightseeing.lua:278
 msgid "Attraction"
 msgstr ""
 
@@ -93958,7 +93951,7 @@ msgid ""
 msgstr ""
 
 #. if luatk.yesno( _("Remove Afterburner?"), _("Your ship already has an afterburner. Remove to learn the new skill?")A)
-#: dat/scripts/bioship/skills.lua:75 src/outfit.c:873 src/outfit.c:900
+#: dat/scripts/bioship/skills.lua:75 src/outfit.c:872 src/outfit.c:899
 msgid "Afterburner"
 msgstr ""
 
@@ -100668,7 +100661,7 @@ msgctxt "keyname"
 msgid "0"
 msgstr ""
 
-#: src/SDL_keynames.h:64 src/SDL_keynames.h:164
+#: src/SDL_keynames.h:64 src/SDL_keynames.h:165
 msgctxt "keyname"
 msgid "Return"
 msgstr ""
@@ -100741,882 +100734,887 @@ msgctxt "keyname"
 msgid "`"
 msgstr ""
 
+#: src/SDL_keynames.h:78
+msgctxt "keyname"
+msgid "("
+msgstr ""
+
 #: src/SDL_keynames.h:79
 msgctxt "keyname"
-msgid "."
+msgid ")"
 msgstr ""
 
 #: src/SDL_keynames.h:80
 msgctxt "keyname"
-msgid "/"
+msgid "."
 msgstr ""
 
 #: src/SDL_keynames.h:81
 msgctxt "keyname"
-msgid "CapsLock"
+msgid "/"
 msgstr ""
 
 #: src/SDL_keynames.h:82
 msgctxt "keyname"
-msgid "F1"
+msgid "CapsLock"
 msgstr ""
 
 #: src/SDL_keynames.h:83
 msgctxt "keyname"
-msgid "F2"
+msgid "F1"
 msgstr ""
 
 #: src/SDL_keynames.h:84
 msgctxt "keyname"
-msgid "F3"
+msgid "F2"
 msgstr ""
 
 #: src/SDL_keynames.h:85
 msgctxt "keyname"
-msgid "F4"
+msgid "F3"
 msgstr ""
 
 #: src/SDL_keynames.h:86
 msgctxt "keyname"
-msgid "F5"
+msgid "F4"
 msgstr ""
 
 #: src/SDL_keynames.h:87
 msgctxt "keyname"
-msgid "F6"
+msgid "F5"
 msgstr ""
 
 #: src/SDL_keynames.h:88
 msgctxt "keyname"
-msgid "F7"
+msgid "F6"
 msgstr ""
 
 #: src/SDL_keynames.h:89
 msgctxt "keyname"
-msgid "F8"
+msgid "F7"
 msgstr ""
 
 #: src/SDL_keynames.h:90
 msgctxt "keyname"
-msgid "F9"
+msgid "F8"
 msgstr ""
 
 #: src/SDL_keynames.h:91
 msgctxt "keyname"
-msgid "F10"
+msgid "F9"
 msgstr ""
 
 #: src/SDL_keynames.h:92
 msgctxt "keyname"
-msgid "F11"
+msgid "F10"
 msgstr ""
 
 #: src/SDL_keynames.h:93
 msgctxt "keyname"
-msgid "F12"
+msgid "F11"
 msgstr ""
 
 #: src/SDL_keynames.h:94
 msgctxt "keyname"
-msgid "PrintScreen"
+msgid "F12"
 msgstr ""
 
 #: src/SDL_keynames.h:95
 msgctxt "keyname"
-msgid "ScrollLock"
+msgid "PrintScreen"
 msgstr ""
 
 #: src/SDL_keynames.h:96
 msgctxt "keyname"
-msgid "Pause"
+msgid "ScrollLock"
 msgstr ""
 
 #: src/SDL_keynames.h:97
 msgctxt "keyname"
-msgid "Insert"
+msgid "Pause"
 msgstr ""
 
 #: src/SDL_keynames.h:98
 msgctxt "keyname"
-msgid "Home"
+msgid "Insert"
 msgstr ""
 
 #: src/SDL_keynames.h:99
 msgctxt "keyname"
-msgid "PageUp"
+msgid "Home"
 msgstr ""
 
 #: src/SDL_keynames.h:100
 msgctxt "keyname"
-msgid "Delete"
+msgid "PageUp"
 msgstr ""
 
 #: src/SDL_keynames.h:101
 msgctxt "keyname"
-msgid "End"
+msgid "Delete"
 msgstr ""
 
 #: src/SDL_keynames.h:102
 msgctxt "keyname"
-msgid "PageDown"
+msgid "End"
 msgstr ""
 
 #: src/SDL_keynames.h:103
+msgctxt "keyname"
+msgid "PageDown"
+msgstr ""
+
+#: src/SDL_keynames.h:104
 #, fuzzy
 #| msgid "Light "
 msgctxt "keyname"
 msgid "Right"
 msgstr "빛 "
 
-#: src/SDL_keynames.h:104
+#: src/SDL_keynames.h:105
 msgctxt "keyname"
 msgid "Left"
 msgstr ""
 
-#: src/SDL_keynames.h:105
+#: src/SDL_keynames.h:106
 msgctxt "keyname"
 msgid "Down"
 msgstr ""
 
-#: src/SDL_keynames.h:106
+#: src/SDL_keynames.h:107
 msgctxt "keyname"
 msgid "Up"
 msgstr ""
 
-#: src/SDL_keynames.h:107
+#: src/SDL_keynames.h:108
 msgctxt "keyname"
 msgid "Numlock"
 msgstr ""
 
-#: src/SDL_keynames.h:108
+#: src/SDL_keynames.h:109
 msgctxt "keyname"
 msgid "Keypad /"
 msgstr ""
 
-#: src/SDL_keynames.h:109
+#: src/SDL_keynames.h:110
 msgctxt "keyname"
 msgid "Keypad *"
 msgstr ""
 
-#: src/SDL_keynames.h:110
+#: src/SDL_keynames.h:111
 msgctxt "keyname"
 msgid "Keypad -"
 msgstr ""
 
-#: src/SDL_keynames.h:111
+#: src/SDL_keynames.h:112
 msgctxt "keyname"
 msgid "Keypad +"
 msgstr ""
 
-#: src/SDL_keynames.h:112
+#: src/SDL_keynames.h:113
 msgctxt "keyname"
 msgid "Keypad Enter"
 msgstr ""
 
-#: src/SDL_keynames.h:113
+#: src/SDL_keynames.h:114
 msgctxt "keyname"
 msgid "Keypad 1"
 msgstr ""
 
-#: src/SDL_keynames.h:114
+#: src/SDL_keynames.h:115
 msgctxt "keyname"
 msgid "Keypad 2"
 msgstr ""
 
-#: src/SDL_keynames.h:115
+#: src/SDL_keynames.h:116
 msgctxt "keyname"
 msgid "Keypad 3"
 msgstr ""
 
-#: src/SDL_keynames.h:116
+#: src/SDL_keynames.h:117
 msgctxt "keyname"
 msgid "Keypad 4"
 msgstr ""
 
-#: src/SDL_keynames.h:117
+#: src/SDL_keynames.h:118
 msgctxt "keyname"
 msgid "Keypad 5"
 msgstr ""
 
-#: src/SDL_keynames.h:118
+#: src/SDL_keynames.h:119
 msgctxt "keyname"
 msgid "Keypad 6"
 msgstr ""
 
-#: src/SDL_keynames.h:119
+#: src/SDL_keynames.h:120
 msgctxt "keyname"
 msgid "Keypad 7"
 msgstr ""
 
-#: src/SDL_keynames.h:120
+#: src/SDL_keynames.h:121
 msgctxt "keyname"
 msgid "Keypad 8"
 msgstr ""
 
-#: src/SDL_keynames.h:121
+#: src/SDL_keynames.h:122
 msgctxt "keyname"
 msgid "Keypad 9"
 msgstr ""
 
-#: src/SDL_keynames.h:122
+#: src/SDL_keynames.h:123
 msgctxt "keyname"
 msgid "Keypad 0"
 msgstr ""
 
-#: src/SDL_keynames.h:123
+#: src/SDL_keynames.h:124
 msgctxt "keyname"
 msgid "Keypad ."
 msgstr ""
 
-#: src/SDL_keynames.h:125
+#: src/SDL_keynames.h:126
 #, fuzzy
 msgctxt "keyname"
 msgid "Application"
 msgstr "옵션"
 
-#: src/SDL_keynames.h:126
+#: src/SDL_keynames.h:127
 msgctxt "keyname"
 msgid "Power"
 msgstr ""
 
-#: src/SDL_keynames.h:127
+#: src/SDL_keynames.h:128
 msgctxt "keyname"
 msgid "Keypad ="
 msgstr ""
 
-#: src/SDL_keynames.h:128
+#: src/SDL_keynames.h:129
 msgctxt "keyname"
 msgid "F13"
 msgstr ""
 
-#: src/SDL_keynames.h:129
+#: src/SDL_keynames.h:130
 msgctxt "keyname"
 msgid "F14"
 msgstr ""
 
-#: src/SDL_keynames.h:130
+#: src/SDL_keynames.h:131
 msgctxt "keyname"
 msgid "F15"
 msgstr ""
 
-#: src/SDL_keynames.h:131
+#: src/SDL_keynames.h:132
 msgctxt "keyname"
 msgid "F16"
 msgstr ""
 
-#: src/SDL_keynames.h:132
+#: src/SDL_keynames.h:133
 msgctxt "keyname"
 msgid "F17"
 msgstr ""
 
-#: src/SDL_keynames.h:133
+#: src/SDL_keynames.h:134
 msgctxt "keyname"
 msgid "F18"
 msgstr ""
 
-#: src/SDL_keynames.h:134
+#: src/SDL_keynames.h:135
 msgctxt "keyname"
 msgid "F19"
 msgstr ""
 
-#: src/SDL_keynames.h:135
+#: src/SDL_keynames.h:136
 msgctxt "keyname"
 msgid "F20"
 msgstr ""
 
-#: src/SDL_keynames.h:136
+#: src/SDL_keynames.h:137
 msgctxt "keyname"
 msgid "F21"
 msgstr ""
 
-#: src/SDL_keynames.h:137
+#: src/SDL_keynames.h:138
 msgctxt "keyname"
 msgid "F22"
 msgstr ""
 
-#: src/SDL_keynames.h:138
+#: src/SDL_keynames.h:139
 msgctxt "keyname"
 msgid "F23"
 msgstr ""
 
-#: src/SDL_keynames.h:139
+#: src/SDL_keynames.h:140
 msgctxt "keyname"
 msgid "F24"
 msgstr ""
 
-#: src/SDL_keynames.h:140
+#: src/SDL_keynames.h:141
 msgctxt "keyname"
 msgid "Execute"
 msgstr ""
 
-#: src/SDL_keynames.h:141
+#: src/SDL_keynames.h:142
 msgctxt "keyname"
 msgid "Help"
 msgstr ""
 
-#: src/SDL_keynames.h:142
+#: src/SDL_keynames.h:143
 #, fuzzy
 #| msgid "Menu"
 msgctxt "keyname"
 msgid "Menu"
 msgstr "메뉴"
 
-#: src/SDL_keynames.h:143
+#: src/SDL_keynames.h:144
 #, fuzzy
 #| msgid "Select"
 msgctxt "keyname"
 msgid "Select"
 msgstr "선택"
 
-#: src/SDL_keynames.h:144
+#: src/SDL_keynames.h:145
 msgctxt "keyname"
 msgid "Stop"
 msgstr ""
 
-#: src/SDL_keynames.h:145
+#: src/SDL_keynames.h:146
 msgctxt "keyname"
 msgid "Again"
 msgstr ""
 
-#: src/SDL_keynames.h:146
+#: src/SDL_keynames.h:147
 msgctxt "keyname"
 msgid "Undo"
 msgstr ""
 
-#: src/SDL_keynames.h:147
+#: src/SDL_keynames.h:148
 #, fuzzy
 msgctxt "keyname"
 msgid "Cut"
 msgstr "시스템"
 
-#: src/SDL_keynames.h:148
+#: src/SDL_keynames.h:149
 msgctxt "keyname"
 msgid "Copy"
 msgstr ""
 
-#: src/SDL_keynames.h:149
+#: src/SDL_keynames.h:150
 msgctxt "keyname"
 msgid "Paste"
 msgstr ""
 
-#: src/SDL_keynames.h:150
+#: src/SDL_keynames.h:151
 msgctxt "keyname"
 msgid "Find"
 msgstr ""
 
-#: src/SDL_keynames.h:151
+#: src/SDL_keynames.h:152
 msgctxt "keyname"
 msgid "Mute"
 msgstr ""
 
-#: src/SDL_keynames.h:152
+#: src/SDL_keynames.h:153
 msgctxt "keyname"
 msgid "VolumeUp"
 msgstr ""
 
-#: src/SDL_keynames.h:153
+#: src/SDL_keynames.h:154
 msgctxt "keyname"
 msgid "VolumeDown"
 msgstr ""
 
-#: src/SDL_keynames.h:155
+#: src/SDL_keynames.h:156
 msgctxt "keyname"
 msgid "Keypad ,"
 msgstr ""
 
-#: src/SDL_keynames.h:156
+#: src/SDL_keynames.h:157
 msgctxt "keyname"
 msgid "Keypad = (AS400)"
 msgstr ""
 
-#: src/SDL_keynames.h:159
+#: src/SDL_keynames.h:160
 msgctxt "keyname"
 msgid "AltErase"
 msgstr ""
 
-#: src/SDL_keynames.h:160
+#: src/SDL_keynames.h:161
 msgctxt "keyname"
 msgid "SysReq"
 msgstr ""
 
-#: src/SDL_keynames.h:161
+#: src/SDL_keynames.h:162
 #, fuzzy
 #| msgid "Lancelot"
 msgctxt "keyname"
 msgid "Cancel"
 msgstr "랜슬롯"
 
-#: src/SDL_keynames.h:162
+#: src/SDL_keynames.h:163
 msgctxt "keyname"
 msgid "Clear"
 msgstr ""
 
-#: src/SDL_keynames.h:163
+#: src/SDL_keynames.h:164
 msgctxt "keyname"
 msgid "Prior"
 msgstr ""
 
-#: src/SDL_keynames.h:165
+#: src/SDL_keynames.h:166
 #, fuzzy
 #| msgid "Za'lek Fabricators"
 msgctxt "keyname"
 msgid "Separator"
 msgstr "잘렉의 제작사"
 
-#: src/SDL_keynames.h:166
+#: src/SDL_keynames.h:167
 #, fuzzy
 #| msgid "Outfit"
 msgctxt "keyname"
 msgid "Out"
 msgstr "의상"
 
-#: src/SDL_keynames.h:167
+#: src/SDL_keynames.h:168
 msgctxt "keyname"
 msgid "Oper"
 msgstr ""
 
-#: src/SDL_keynames.h:168
+#: src/SDL_keynames.h:169
 msgctxt "keyname"
 msgid "Clear / Again"
 msgstr ""
 
-#: src/SDL_keynames.h:169
+#: src/SDL_keynames.h:170
 msgctxt "keyname"
 msgid "CrSel"
 msgstr ""
 
-#: src/SDL_keynames.h:170
+#: src/SDL_keynames.h:171
 msgctxt "keyname"
 msgid "ExSel"
 msgstr ""
 
-#: src/SDL_keynames.h:172
+#: src/SDL_keynames.h:173
 msgctxt "keyname"
 msgid "Keypad 00"
 msgstr ""
 
-#: src/SDL_keynames.h:173
+#: src/SDL_keynames.h:174
 msgctxt "keyname"
 msgid "Keypad 000"
 msgstr ""
 
-#: src/SDL_keynames.h:174
+#: src/SDL_keynames.h:175
 msgctxt "keyname"
 msgid "ThousandsSeparator"
 msgstr ""
 
-#: src/SDL_keynames.h:175
+#: src/SDL_keynames.h:176
 msgctxt "keyname"
 msgid "DecimalSeparator"
 msgstr ""
 
-#: src/SDL_keynames.h:176
+#: src/SDL_keynames.h:177
 msgctxt "keyname"
 msgid "CurrencyUnit"
 msgstr ""
 
-#: src/SDL_keynames.h:177
+#: src/SDL_keynames.h:178
 msgctxt "keyname"
 msgid "CurrencySubUnit"
 msgstr ""
 
-#: src/SDL_keynames.h:178
+#: src/SDL_keynames.h:179
 msgctxt "keyname"
 msgid "Keypad ("
 msgstr ""
 
-#: src/SDL_keynames.h:179
+#: src/SDL_keynames.h:180
 msgctxt "keyname"
 msgid "Keypad )"
 msgstr ""
 
-#: src/SDL_keynames.h:180
+#: src/SDL_keynames.h:181
 msgctxt "keyname"
 msgid "Keypad {"
 msgstr ""
 
-#: src/SDL_keynames.h:181
+#: src/SDL_keynames.h:182
 msgctxt "keyname"
 msgid "Keypad }"
 msgstr ""
 
-#: src/SDL_keynames.h:182
+#: src/SDL_keynames.h:183
 msgctxt "keyname"
 msgid "Keypad Tab"
 msgstr ""
 
-#: src/SDL_keynames.h:183
+#: src/SDL_keynames.h:184
 msgctxt "keyname"
 msgid "Keypad Backspace"
 msgstr ""
 
-#: src/SDL_keynames.h:184
+#: src/SDL_keynames.h:185
 msgctxt "keyname"
 msgid "Keypad A"
 msgstr ""
 
-#: src/SDL_keynames.h:185
+#: src/SDL_keynames.h:186
 msgctxt "keyname"
 msgid "Keypad B"
 msgstr ""
 
-#: src/SDL_keynames.h:186
+#: src/SDL_keynames.h:187
 msgctxt "keyname"
 msgid "Keypad C"
 msgstr ""
 
-#: src/SDL_keynames.h:187
+#: src/SDL_keynames.h:188
 msgctxt "keyname"
 msgid "Keypad D"
 msgstr ""
 
-#: src/SDL_keynames.h:188
+#: src/SDL_keynames.h:189
 msgctxt "keyname"
 msgid "Keypad E"
 msgstr ""
 
-#: src/SDL_keynames.h:189
+#: src/SDL_keynames.h:190
 msgctxt "keyname"
 msgid "Keypad F"
 msgstr ""
 
-#: src/SDL_keynames.h:190
+#: src/SDL_keynames.h:191
 msgctxt "keyname"
 msgid "Keypad XOR"
 msgstr ""
 
-#: src/SDL_keynames.h:191
+#: src/SDL_keynames.h:192
 msgctxt "keyname"
 msgid "Keypad ^"
 msgstr ""
 
-#: src/SDL_keynames.h:192
+#: src/SDL_keynames.h:193
 msgctxt "keyname"
 msgid "Keypad %"
 msgstr ""
 
-#: src/SDL_keynames.h:193
+#: src/SDL_keynames.h:194
 msgctxt "keyname"
 msgid "Keypad <"
 msgstr ""
 
-#: src/SDL_keynames.h:194
+#: src/SDL_keynames.h:195
 msgctxt "keyname"
 msgid "Keypad >"
 msgstr ""
 
-#: src/SDL_keynames.h:195
+#: src/SDL_keynames.h:196
 msgctxt "keyname"
 msgid "Keypad &"
 msgstr ""
 
-#: src/SDL_keynames.h:196
+#: src/SDL_keynames.h:197
 msgctxt "keyname"
 msgid "Keypad &&"
 msgstr ""
 
-#: src/SDL_keynames.h:197
+#: src/SDL_keynames.h:198
 msgctxt "keyname"
 msgid "Keypad |"
 msgstr ""
 
-#: src/SDL_keynames.h:198
+#: src/SDL_keynames.h:199
 msgctxt "keyname"
 msgid "Keypad ||"
 msgstr ""
 
-#: src/SDL_keynames.h:199
+#: src/SDL_keynames.h:200
 msgctxt "keyname"
 msgid "Keypad :"
 msgstr ""
 
-#: src/SDL_keynames.h:200
+#: src/SDL_keynames.h:201
 msgctxt "keyname"
 msgid "Keypad #"
 msgstr ""
 
-#: src/SDL_keynames.h:201
+#: src/SDL_keynames.h:202
 msgctxt "keyname"
 msgid "Keypad Space"
 msgstr ""
 
-#: src/SDL_keynames.h:202
+#: src/SDL_keynames.h:203
 msgctxt "keyname"
 msgid "Keypad @"
 msgstr ""
 
-#: src/SDL_keynames.h:203
+#: src/SDL_keynames.h:204
 msgctxt "keyname"
 msgid "Keypad !"
 msgstr ""
 
-#: src/SDL_keynames.h:204
+#: src/SDL_keynames.h:205
 msgctxt "keyname"
 msgid "Keypad MemStore"
 msgstr ""
 
-#: src/SDL_keynames.h:205
+#: src/SDL_keynames.h:206
 msgctxt "keyname"
 msgid "Keypad MemRecall"
 msgstr ""
 
-#: src/SDL_keynames.h:206
+#: src/SDL_keynames.h:207
 msgctxt "keyname"
 msgid "Keypad MemClear"
 msgstr ""
 
-#: src/SDL_keynames.h:207
+#: src/SDL_keynames.h:208
 msgctxt "keyname"
 msgid "Keypad MemAdd"
 msgstr ""
 
-#: src/SDL_keynames.h:208
+#: src/SDL_keynames.h:209
 msgctxt "keyname"
 msgid "Keypad MemSubtract"
 msgstr ""
 
-#: src/SDL_keynames.h:209
+#: src/SDL_keynames.h:210
 msgctxt "keyname"
 msgid "Keypad MemMultiply"
 msgstr ""
 
-#: src/SDL_keynames.h:210
+#: src/SDL_keynames.h:211
 msgctxt "keyname"
 msgid "Keypad MemDivide"
 msgstr ""
 
-#: src/SDL_keynames.h:211
+#: src/SDL_keynames.h:212
 msgctxt "keyname"
 msgid "Keypad +/-"
 msgstr ""
 
-#: src/SDL_keynames.h:212
+#: src/SDL_keynames.h:213
 msgctxt "keyname"
 msgid "Keypad Clear"
 msgstr ""
 
-#: src/SDL_keynames.h:213
+#: src/SDL_keynames.h:214
 msgctxt "keyname"
 msgid "Keypad ClearEntry"
 msgstr ""
 
-#: src/SDL_keynames.h:214
+#: src/SDL_keynames.h:215
 msgctxt "keyname"
 msgid "Keypad Binary"
 msgstr ""
 
-#: src/SDL_keynames.h:215
+#: src/SDL_keynames.h:216
 msgctxt "keyname"
 msgid "Keypad Octal"
 msgstr ""
 
-#: src/SDL_keynames.h:216
+#: src/SDL_keynames.h:217
 msgctxt "keyname"
 msgid "Keypad Decimal"
 msgstr ""
 
-#: src/SDL_keynames.h:217
+#: src/SDL_keynames.h:218
 msgctxt "keyname"
 msgid "Keypad Hexadecimal"
 msgstr ""
 
-#: src/SDL_keynames.h:219
+#: src/SDL_keynames.h:220
 msgctxt "keyname"
 msgid "Left Ctrl"
 msgstr ""
 
-#: src/SDL_keynames.h:220
+#: src/SDL_keynames.h:221
 msgctxt "keyname"
 msgid "Left Shift"
 msgstr ""
 
-#: src/SDL_keynames.h:221
+#: src/SDL_keynames.h:222
 msgctxt "keyname"
 msgid "Left Alt"
 msgstr ""
 
-#: src/SDL_keynames.h:222
+#: src/SDL_keynames.h:223
 msgctxt "keyname"
 msgid "Left GUI"
 msgstr ""
 
-#: src/SDL_keynames.h:223
+#: src/SDL_keynames.h:224
 #, fuzzy
 #| msgid "Light "
 msgctxt "keyname"
 msgid "Right Ctrl"
 msgstr "빛 "
 
-#: src/SDL_keynames.h:224
+#: src/SDL_keynames.h:225
 msgctxt "keyname"
 msgid "Right Shift"
 msgstr ""
 
-#: src/SDL_keynames.h:225
+#: src/SDL_keynames.h:226
 #, fuzzy
 #| msgid "Light "
 msgctxt "keyname"
 msgid "Right Alt"
 msgstr "빛 "
 
-#: src/SDL_keynames.h:226
+#: src/SDL_keynames.h:227
 #, fuzzy
 #| msgid "Light "
 msgctxt "keyname"
 msgid "Right GUI"
 msgstr "빛 "
 
-#: src/SDL_keynames.h:230
+#: src/SDL_keynames.h:231
 msgctxt "keyname"
 msgid "ModeSwitch"
 msgstr ""
 
-#: src/SDL_keynames.h:231
+#: src/SDL_keynames.h:232
 #, fuzzy
 #| msgid "Audio"
 msgctxt "keyname"
 msgid "AudioNext"
 msgstr "오디오"
 
-#: src/SDL_keynames.h:232
+#: src/SDL_keynames.h:233
 #, fuzzy
 #| msgid "Audio"
 msgctxt "keyname"
 msgid "AudioPrev"
 msgstr "오디오"
 
-#: src/SDL_keynames.h:233
+#: src/SDL_keynames.h:234
 #, fuzzy
 #| msgid "Audio"
 msgctxt "keyname"
 msgid "AudioStop"
 msgstr "오디오"
 
-#: src/SDL_keynames.h:234
+#: src/SDL_keynames.h:235
 #, fuzzy
 #| msgid "Audio"
 msgctxt "keyname"
 msgid "AudioPlay"
 msgstr "오디오"
 
-#: src/SDL_keynames.h:235
+#: src/SDL_keynames.h:236
 #, fuzzy
 #| msgid "Audio"
 msgctxt "keyname"
 msgid "AudioMute"
 msgstr "오디오"
 
-#: src/SDL_keynames.h:236
+#: src/SDL_keynames.h:237
 #, fuzzy
 #| msgid "Select"
 msgctxt "keyname"
 msgid "MediaSelect"
 msgstr "선택"
 
-#: src/SDL_keynames.h:237
+#: src/SDL_keynames.h:238
 msgctxt "keyname"
 msgid "WWW"
 msgstr ""
 
-#: src/SDL_keynames.h:238
+#: src/SDL_keynames.h:239
 msgctxt "keyname"
 msgid "Mail"
 msgstr ""
 
-#: src/SDL_keynames.h:239
+#: src/SDL_keynames.h:240
 msgctxt "keyname"
 msgid "Calculator"
 msgstr ""
 
-#: src/SDL_keynames.h:240
+#: src/SDL_keynames.h:241
 msgctxt "keyname"
 msgid "Computer"
 msgstr ""
 
-#: src/SDL_keynames.h:241
+#: src/SDL_keynames.h:242
 msgctxt "keyname"
 msgid "AC Search"
 msgstr ""
 
-#: src/SDL_keynames.h:242
+#: src/SDL_keynames.h:243
 msgctxt "keyname"
 msgid "AC Home"
 msgstr ""
 
-#: src/SDL_keynames.h:243
+#: src/SDL_keynames.h:244
 #, fuzzy
 #| msgid "Back"
 msgctxt "keyname"
 msgid "AC Back"
 msgstr "뒤"
 
-#: src/SDL_keynames.h:244
+#: src/SDL_keynames.h:245
 msgctxt "keyname"
 msgid "AC Forward"
 msgstr ""
 
-#: src/SDL_keynames.h:245
+#: src/SDL_keynames.h:246
 msgctxt "keyname"
 msgid "AC Stop"
 msgstr ""
 
-#: src/SDL_keynames.h:246
+#: src/SDL_keynames.h:247
 msgctxt "keyname"
 msgid "AC Refresh"
 msgstr ""
 
-#: src/SDL_keynames.h:247
+#: src/SDL_keynames.h:248
 msgctxt "keyname"
 msgid "AC Bookmarks"
 msgstr ""
 
-#: src/SDL_keynames.h:248
+#: src/SDL_keynames.h:249
 #, fuzzy
 #| msgid "Light "
 msgctxt "keyname"
 msgid "BrightnessDown"
 msgstr "빛 "
 
-#: src/SDL_keynames.h:249
+#: src/SDL_keynames.h:250
 #, fuzzy
 #| msgid "Light "
 msgctxt "keyname"
 msgid "BrightnessUp"
 msgstr "빛 "
 
-#: src/SDL_keynames.h:250
+#: src/SDL_keynames.h:251
 msgctxt "keyname"
 msgid "DisplaySwitch"
 msgstr ""
 
-#: src/SDL_keynames.h:251
+#: src/SDL_keynames.h:252
 msgctxt "keyname"
 msgid "KBDIllumToggle"
 msgstr ""
 
-#: src/SDL_keynames.h:252
+#: src/SDL_keynames.h:253
 msgctxt "keyname"
 msgid "KBDIllumDown"
 msgstr ""
 
-#: src/SDL_keynames.h:253
+#: src/SDL_keynames.h:254
 msgctxt "keyname"
 msgid "KBDIllumUp"
 msgstr ""
 
-#: src/SDL_keynames.h:254
+#: src/SDL_keynames.h:255
 msgctxt "keyname"
 msgid "Eject"
 msgstr ""
 
-#: src/SDL_keynames.h:255
+#: src/SDL_keynames.h:256
 msgctxt "keyname"
 msgid "Sleep"
-msgstr ""
-
-#: src/SDL_keynames.h:78
-msgctxt "keyname"
-msgid "),"
 msgstr ""
 
 #. error has occurred
@@ -101820,7 +101818,7 @@ msgid ""
 "                This file can be found in Naev's artwork repo."
 msgstr ""
 
-#: src/asteroid.c:689 src/outfit.c:1161 src/ship.c:539 src/ship.c:670
+#: src/asteroid.c:689 src/outfit.c:1162 src/ship.c:539 src/ship.c:670
 #: src/space.c:1790 src/space.c:2128 src/space.c:2836
 #, c-format
 msgid "Malformed %s file: does not contain elements"
@@ -102894,7 +102892,7 @@ msgstr ""
 #. Update text.
 #. Text.
 #: src/dev_sysedit.c:1359 src/dev_uniedit.c:1774 src/dev_uniedit.c:2058
-#: src/equipment.c:1760 src/info.c:572 src/load.c:729
+#: src/equipment.c:1761 src/info.c:572 src/load.c:729
 msgid "Name:"
 msgstr "이름:"
 
@@ -103430,8 +103428,8 @@ msgstr ""
 msgid "Spob '%s' has saved economy data but doesn't exist!"
 msgstr ""
 
-#: src/effect.c:57 src/faction.c:1271 src/faction.c:1454 src/outfit.c:2200
-#: src/outfit.c:2676 src/plugin.c:42 src/spfx.c:1129 src/start.c:69
+#: src/effect.c:57 src/faction.c:1271 src/faction.c:1454 src/outfit.c:2201
+#: src/outfit.c:2677 src/plugin.c:42 src/spfx.c:1129 src/start.c:69
 #: src/tech.c:249 src/tech.c:345
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
@@ -103498,12 +103496,12 @@ msgstr ""
 "%s"
 
 #: src/equipment.c:320 src/land.c:349 src/land.c:615 src/land.c:1341
-#: src/land_outfits.c:162 src/land_shipyard.c:94 src/land_trade.c:73
+#: src/land_outfits.c:160 src/land_shipyard.c:94 src/land_trade.c:73
 msgid "Take Off"
 msgstr ""
 
 #. Check if player really wants to sell.
-#: src/equipment.c:324 src/equipment.c:2296
+#: src/equipment.c:324 src/equipment.c:2297
 msgid "Sell Ship"
 msgstr ""
 
@@ -103570,374 +103568,374 @@ msgstr ""
 msgid "!! %.0f%% Slower !!"
 msgstr ""
 
-#: src/equipment.c:720
+#: src/equipment.c:721
 msgid "Locked"
 msgstr ""
 
-#: src/equipment.c:729
+#: src/equipment.c:730
 msgid "Right click to remove"
 msgstr ""
 
-#: src/equipment.c:740
+#: src/equipment.c:741
 msgid "Right click to add"
 msgstr ""
 
-#: src/equipment.c:850 src/outfit.c:398
+#: src/equipment.c:851 src/outfit.c:398
 #, c-format
 msgid "#%c%s #%c%s #0slot"
 msgstr ""
 
-#: src/equipment.c:855
+#: src/equipment.c:856
 msgid " [exclusive]"
 msgstr ""
 
-#: src/equipment.c:858
+#: src/equipment.c:859
 msgid " [locked]"
 msgstr ""
 
-#: src/equipment.c:1344
+#: src/equipment.c:1345
 #, c-format
 msgid "%.2f DPS [%.2f EPS]"
 msgstr ""
 
-#: src/equipment.c:1381 src/equipment.c:2046
+#: src/equipment.c:1382 src/equipment.c:2047
 #, fuzzy
 #| msgid "Dvaered Ancestor"
 msgid "Invalid Escort"
 msgstr "드 베어드 조상"
 
-#: src/equipment.c:1381 src/equipment.c:2046
+#: src/equipment.c:1382 src/equipment.c:2047
 #, c-format
 msgid "You can not set your ship '%s' as an escort!"
 msgstr ""
 
-#: src/equipment.c:1484
+#: src/equipment.c:1485
 #, c-format
 msgid "Ship Stats\n"
 msgstr ""
 
-#: src/equipment.c:1574 src/land_outfits.c:325 src/shiplog.c:489
+#: src/equipment.c:1575 src/land_outfits.c:318 src/shiplog.c:489
 #: src/shiplog.c:534
 msgid "All"
 msgstr ""
 
-#: src/equipment.c:1607
+#: src/equipment.c:1608
 msgid "Very little space on equipment outfit tabs!"
 msgstr ""
 
-#: src/equipment.c:1617 src/land_outfits.c:361
+#: src/equipment.c:1618 src/land_outfits.c:354
 msgid "Filter…"
 msgstr ""
 
-#: src/equipment.c:1747
+#: src/equipment.c:1748
 msgid "You do not remember how you acquired this ship."
 msgstr ""
 
-#: src/equipment.c:1763 src/info.c:573 src/land_shipyard.c:225
+#: src/equipment.c:1764 src/info.c:573 src/land_shipyard.c:225
 #: src/map_system.c:656
 #, fuzzy
 #| msgid "Mode"
 msgid "Model:"
 msgstr "모드"
 
-#: src/equipment.c:1764 src/info.c:574 src/land.c:1322 src/land_shipyard.c:227
+#: src/equipment.c:1765 src/info.c:574 src/land.c:1322 src/land_shipyard.c:227
 #: src/map_system.c:657
 msgid "Class:"
 msgstr ""
 
-#: src/equipment.c:1765
+#: src/equipment.c:1766
 msgid "Acquired Date:"
 msgstr ""
 
-#: src/equipment.c:1769
+#: src/equipment.c:1770
 msgid "Value:"
 msgstr ""
 
-#: src/equipment.c:1771 src/land_shipyard.c:234
+#: src/equipment.c:1772 src/land_shipyard.c:234
 msgid "Fleet Capacity:"
 msgstr ""
 
-#: src/equipment.c:1772 src/info.c:575 src/land_shipyard.c:231
+#: src/equipment.c:1773 src/info.c:575 src/land_shipyard.c:231
 #: src/map_system.c:660
 msgid "Crew:"
 msgstr ""
 
-#: src/equipment.c:1773 src/info.c:577 src/land_outfits.c:195
-#: src/land_outfits.c:429 src/land_shipyard.c:247 src/map_find.c:637
-#: src/map_system.c:636 src/map_system.c:663
+#: src/equipment.c:1774 src/info.c:577 src/land_outfits.c:421
+#: src/land_shipyard.c:247 src/map_find.c:637 src/map_system.c:636
+#: src/map_system.c:663
 msgid "Mass:"
 msgstr ""
 
-#: src/equipment.c:1774 src/info.c:578
+#: src/equipment.c:1775 src/info.c:578
 #, fuzzy
 msgid "Jump Time:"
 msgstr "%s (%d 점프, %.0fk 거리)"
 
-#: src/equipment.c:1775 src/info.c:579 src/land_shipyard.c:251
+#: src/equipment.c:1776 src/info.c:579 src/land_shipyard.c:251
 #: src/map_system.c:664
 msgid "Thrust:"
 msgstr ""
 
-#: src/equipment.c:1776 src/info.c:580 src/land_shipyard.c:256
+#: src/equipment.c:1777 src/info.c:580 src/land_shipyard.c:256
 #: src/map_system.c:666
 msgid "Speed:"
 msgstr ""
 
-#: src/equipment.c:1777 src/info.c:581 src/land_shipyard.c:261
+#: src/equipment.c:1778 src/info.c:581 src/land_shipyard.c:261
 #: src/map_system.c:668
 msgid "Turn:"
 msgstr ""
 
-#: src/equipment.c:1778 src/info.c:582 src/land_shipyard.c:266
+#: src/equipment.c:1779 src/info.c:582 src/land_shipyard.c:266
 #: src/map_system.c:670
 msgid "Time Constant:"
 msgstr ""
 
-#: src/equipment.c:1779
+#: src/equipment.c:1780
 msgid "Detected at:"
 msgstr ""
 
-#: src/equipment.c:1780
+#: src/equipment.c:1781
 #, fuzzy
 #| msgid "Faction:"
 msgid "Evasion:"
 msgstr "팩션:"
 
-#: src/equipment.c:1781
+#: src/equipment.c:1782
 msgid "Stealth:"
 msgstr ""
 
 #. Misc
-#: src/equipment.c:1783 src/info.c:584 src/land_shipyard.c:271
+#: src/equipment.c:1784 src/info.c:584 src/land_shipyard.c:271
 #: src/map_system.c:672
 msgid "Absorption:"
 msgstr ""
 
-#: src/equipment.c:1784 src/info.c:585 src/land_shipyard.c:276
+#: src/equipment.c:1785 src/info.c:585 src/land_shipyard.c:276
 #: src/map_system.c:674
 msgid "Shield:"
 msgstr ""
 
-#: src/equipment.c:1785 src/info.c:586 src/land_shipyard.c:281
+#: src/equipment.c:1786 src/info.c:586 src/land_shipyard.c:281
 #: src/map_system.c:676
 msgid "Armour:"
 msgstr ""
 
-#: src/equipment.c:1786 src/info.c:587 src/land_shipyard.c:286
+#: src/equipment.c:1787 src/info.c:587 src/land_shipyard.c:286
 #: src/map_system.c:678
 msgid "Energy:"
 msgstr ""
 
-#: src/equipment.c:1787 src/info.c:588 src/land_shipyard.c:293
+#: src/equipment.c:1788 src/info.c:588 src/land_shipyard.c:293
 #: src/map_system.c:680
 msgid "Cargo Space:"
 msgstr ""
 
-#: src/equipment.c:1790
+#: src/equipment.c:1791
 msgid "Ship Status:"
 msgstr ""
 
-#: src/equipment.c:1793
+#: src/equipment.c:1794
 #, fuzzy
 msgid "Time Flown:"
 msgstr "%s (%d 점프, %.0fk 거리)"
 
-#: src/equipment.c:1794
+#: src/equipment.c:1795
 #, fuzzy
 msgid "Jumped Times:"
 msgstr "%s (%d 점프, %.0fk 거리)"
 
-#: src/equipment.c:1795
+#: src/equipment.c:1796
 #, fuzzy
 msgid "Landed Times:"
 msgstr "조판됨:"
 
-#: src/equipment.c:1796
+#: src/equipment.c:1797
 msgid "Damage Done:"
 msgstr ""
 
-#: src/equipment.c:1797
+#: src/equipment.c:1798
 msgid "Damage Taken:"
 msgstr ""
 
-#: src/equipment.c:1798
+#: src/equipment.c:1799
 msgid "Ships Destroyed:"
 msgstr ""
 
-#: src/equipment.c:1799
+#: src/equipment.c:1800
 msgid "Intrinsic Outfits:"
 msgstr ""
 
-#: src/equipment.c:1827 src/equipment.c:1856 src/info.c:407 src/info.c:622
+#: src/equipment.c:1828 src/equipment.c:1857 src/info.c:407 src/info.c:622
 #: src/info.c:642
 msgid "tonne"
 msgid_plural "tonnes"
 msgstr[0] ""
 
-#: src/equipment.c:1829 src/info.c:624
+#: src/equipment.c:1830 src/info.c:624
 #, c-format
 msgid "%s average"
 msgstr ""
 
-#: src/equipment.c:1831
+#: src/equipment.c:1832
 #, c-format
 msgid "#%c%s%.0f#0 kN/tonne"
 msgstr ""
 
-#: src/equipment.c:1833
+#: src/equipment.c:1834
 #, c-format
 msgid ""
 "\n"
 "#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)"
 msgstr ""
 
-#: src/equipment.c:1836
+#: src/equipment.c:1837
 #, c-format
 msgid ""
 "\n"
 "#%c%s%.0f#0 deg/s"
 msgstr ""
 
-#: src/equipment.c:1840
+#: src/equipment.c:1841
 #, c-format
 msgid "%s (%.1f secs for scan)"
 msgstr ""
 
-#: src/equipment.c:1845 src/equipment.c:1848 src/equipment.c:1851
+#: src/equipment.c:1846 src/equipment.c:1849 src/equipment.c:1852
 #, c-format
 msgid "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"
 msgstr ""
 
 #. Misc.
-#: src/equipment.c:1855
+#: src/equipment.c:1856
 #, c-format
 msgid "%d / #%c%s%d#0 %s"
 msgstr ""
 
-#: src/equipment.c:1858
+#: src/equipment.c:1859
 #, c-format
 msgid "%s %s (%d %s)"
 msgstr ""
 
-#: src/equipment.c:1859 src/info.c:644 src/land_shipyard.c:298
+#: src/equipment.c:1860 src/info.c:644 src/land_shipyard.c:298
 #: src/land_shipyard.c:302 src/map_system.c:681 src/map_system.c:683
 msgid "unit"
 msgid_plural "units"
 msgstr[0] ""
 
-#: src/equipment.c:1859 src/info.c:404 src/info.c:645
+#: src/equipment.c:1860 src/info.c:404 src/info.c:645
 msgid "jump"
 msgid_plural "jumps"
 msgstr[0] ""
 
-#: src/equipment.c:1868 src/info.c:409
+#: src/equipment.c:1869 src/info.c:409
 #, c-format
 msgid "%.1f hours"
 msgstr ""
 
-#: src/equipment.c:1872 src/equipment.c:1874 src/info.c:413 src/info.c:415
+#: src/equipment.c:1873 src/equipment.c:1875 src/info.c:413 src/info.c:415
 #, c-format
 msgid "%s MJ"
 msgstr ""
 
-#: src/equipment.c:1962 src/land_outfits.c:761
+#: src/equipment.c:1963 src/land_outfits.c:759
 msgid "Show all outfits"
 msgstr ""
 
-#: src/equipment.c:1963 src/land_outfits.c:762
+#: src/equipment.c:1964 src/land_outfits.c:760
 msgid "Show only outfits equipable on any of your ships"
 msgstr ""
 
-#: src/equipment.c:1964 src/land_outfits.c:763
+#: src/equipment.c:1965 src/land_outfits.c:761
 msgid "Show only outfits equipable on current ship"
 msgstr ""
 
-#: src/equipment.c:1965 src/land_outfits.c:764
+#: src/equipment.c:1966 src/land_outfits.c:762
 msgid "Show only light outfits"
 msgstr ""
 
-#: src/equipment.c:1966 src/land_outfits.c:765
+#: src/equipment.c:1967 src/land_outfits.c:763
 msgid "Show only medium outfits"
 msgstr ""
 
-#: src/equipment.c:1967 src/land_outfits.c:766
+#: src/equipment.c:1968 src/land_outfits.c:764
 msgid "Show only heavy outfits"
 msgstr ""
 
-#: src/equipment.c:2147
+#: src/equipment.c:2148
 msgid ""
 "You can't unequip your ship when you have more cargo than it can hold "
 "without modifications!"
 msgstr ""
 
-#: src/equipment.c:2150
+#: src/equipment.c:2151
 msgid "Unequip Ship"
 msgstr ""
 
 #. confirm
-#: src/equipment.c:2151
+#: src/equipment.c:2152
 msgid "Are you sure you want to remove all equipment from your ship?"
 msgstr ""
 
-#: src/equipment.c:2154 src/land.c:238
+#: src/equipment.c:2155 src/land.c:238
 #, fuzzy
 msgid "Recall Fighters"
 msgstr "랜슬롯"
 
-#: src/equipment.c:2154 src/land.c:238
+#: src/equipment.c:2155 src/land.c:238
 msgid "This action will recall your deployed fighters. Is that OK?"
 msgstr ""
 
-#: src/equipment.c:2231 src/land.c:1647
+#: src/equipment.c:2232 src/land.c:1647
 #, fuzzy, c-format
 msgid "File '%s' not found!"
 msgstr "셰이더 '%s'을 (를) 찾을 수 없습니다."
 
-#: src/equipment.c:2239
+#: src/equipment.c:2240
 #, fuzzy, c-format
 #| msgid "Failure to copy '%s' to '%s': %s"
 msgid "Failed to run '%s': %s"
 msgstr "'%s'을 (를) '%s'에 복사하지 못했습니다. %s"
 
-#: src/equipment.c:2251
+#: src/equipment.c:2252
 #, c-format
 msgid "'%s' doesn't have valid required 'autoequip' function!"
 msgstr ""
 
-#: src/equipment.c:2257
+#: src/equipment.c:2258
 #, c-format
 msgid "'%s' failed to run required 'autoequip' function: %s"
 msgstr ""
 
-#: src/equipment.c:2297
+#: src/equipment.c:2298
 #, fuzzy, c-format
 msgid "Are you sure you want to sell your ship %s for %s?"
 msgstr "Naev를 나가겠습니까?"
 
 #. Display widget.
-#: src/equipment.c:2314
+#: src/equipment.c:2315
 msgid "Ship Sold"
 msgstr ""
 
-#: src/equipment.c:2315
+#: src/equipment.c:2316
 #, c-format
 msgid "You have sold your ship %s for %s."
 msgstr ""
 
-#: src/equipment.c:2339 src/player.c:392
+#: src/equipment.c:2340 src/player.c:392
 msgid "Ship Name"
 msgstr ""
 
-#: src/equipment.c:2340
+#: src/equipment.c:2341
 #, c-format
 msgid "Please enter a new name for your %s:"
 msgstr ""
 
-#: src/equipment.c:2348
+#: src/equipment.c:2349
 msgid "Name Collision"
 msgstr ""
 
-#: src/equipment.c:2349 src/player.c:419
+#: src/equipment.c:2350 src/player.c:419
 msgid "Please do not give the ship the same name as another of your ships."
 msgstr ""
 
@@ -104511,7 +104509,7 @@ msgstr ""
 msgid "Date:"
 msgstr "날짜:"
 
-#: src/info.c:385 src/land.c:1326 src/land_outfits.c:197 src/land_outfits.c:431
+#: src/info.c:385 src/land.c:1326 src/land_outfits.c:423
 #: src/land_shipyard.c:307 src/land_trade.c:91 src/map_find.c:639
 msgid "Money:"
 msgstr ""
@@ -105108,7 +105106,7 @@ msgstr ""
 msgid "Cycles through jump points."
 msgstr ""
 
-#: src/input.c:95 src/map.c:249 src/outfit.c:875
+#: src/input.c:95 src/map.c:249 src/outfit.c:874
 msgid "Star Map"
 msgstr ""
 
@@ -105651,46 +105649,45 @@ msgstr ""
 msgid "Rescue: 'rescue' : '%s'"
 msgstr ""
 
-#: src/land_outfits.c:171 src/land_trade.c:71
+#: src/land_outfits.c:169 src/land_trade.c:71
 msgid "Sell"
 msgstr ""
 
-#: src/land_outfits.c:174 src/land_shipyard.c:100 src/land_trade.c:69
+#: src/land_outfits.c:172 src/land_shipyard.c:100 src/land_trade.c:69
 msgid "Buy"
 msgstr ""
 
-#: src/land_outfits.c:177
+#: src/land_outfits.c:175
 msgid "Find Outfits"
 msgstr ""
 
+#: src/land_outfits.c:318
+msgid "Other"
+msgstr ""
+
 #. Set up keys.
-#: src/land_outfits.c:194 src/land_outfits.c:428 src/map_find.c:636
-#: src/map_system.c:635
+#: src/land_outfits.c:420 src/map_find.c:636 src/map_system.c:635
 msgid "Owned:"
 msgstr ""
 
-#: src/land_outfits.c:196 src/land_outfits.c:430 src/land_shipyard.c:305
-#: src/map_find.c:638 src/map_system.c:637 src/map_system.c:684
+#: src/land_outfits.c:422 src/land_shipyard.c:305 src/map_find.c:638
+#: src/map_system.c:637 src/map_system.c:684
 msgid "Price:"
 msgstr ""
 
-#: src/land_outfits.c:198 src/land_outfits.c:494 src/land_shipyard.c:309
-#: src/map_find.c:640 src/map_system.c:685
+#: src/land_outfits.c:487 src/land_shipyard.c:309 src/map_find.c:640
+#: src/map_system.c:685
 #, fuzzy
 #| msgid "License"
 msgid "License:"
 msgstr "라이센스"
 
-#: src/land_outfits.c:325
-msgid "Other"
-msgstr ""
-
-#: src/land_outfits.c:501 src/land_shipyard.c:312
+#: src/land_outfits.c:494 src/land_shipyard.c:312
 msgid "Requires:"
 msgstr ""
 
 #.
-#: src/land_outfits.c:635 src/land_outfits.c:897 src/land_outfits.c:1006
+#: src/land_outfits.c:630 src/land_outfits.c:895 src/land_outfits.c:1004
 #, fuzzy, c-format
 #| msgid ""
 #| "Failed to run '%s':\n"
@@ -105702,65 +105699,65 @@ msgstr ""
 "'%s' 실행 실패:\n"
 "%s"
 
-#: src/land_outfits.c:667
+#: src/land_outfits.c:665
 msgid "Unique"
 msgstr ""
 
-#: src/land_outfits.c:669
+#: src/land_outfits.c:667
 msgid "Only 1 of type per ship"
 msgstr ""
 
-#: src/land_outfits.c:806
+#: src/land_outfits.c:804
 msgid "You can only own one of this outfit."
 msgstr ""
 
-#: src/land_outfits.c:813
+#: src/land_outfits.c:811
 msgid "You already know of everything this map contains."
 msgstr ""
 
-#: src/land_outfits.c:818
+#: src/land_outfits.c:816
 msgid "You already own this GUI."
 msgstr ""
 
-#: src/land_outfits.c:823
+#: src/land_outfits.c:821
 msgid "You already have this license."
 msgstr ""
 
-#: src/land_outfits.c:829 src/land_shipyard.c:451 src/land_trade.c:294
+#: src/land_outfits.c:827 src/land_shipyard.c:451 src/land_trade.c:294
 #, c-format
 msgid "You need %s more."
 msgstr ""
 
-#: src/land_outfits.c:834
+#: src/land_outfits.c:832
 #, c-format
 msgid "You need the '%s' license to buy this outfit."
 msgstr ""
 
-#: src/land_outfits.c:845
+#: src/land_outfits.c:843
 msgid "You lack the resources to buy this outfit."
 msgstr ""
 
-#: src/land_outfits.c:944
+#: src/land_outfits.c:942
 msgid "You can't sell a unique outfit."
 msgstr ""
 
-#: src/land_outfits.c:949
+#: src/land_outfits.c:947
 msgid "You can't sell a map."
 msgstr ""
 
-#: src/land_outfits.c:954
+#: src/land_outfits.c:952
 msgid "You can't sell a GUI."
 msgstr ""
 
-#: src/land_outfits.c:959
+#: src/land_outfits.c:957
 msgid "You can't sell a license."
 msgstr ""
 
-#: src/land_outfits.c:964 src/land_trade.c:324
+#: src/land_outfits.c:962 src/land_trade.c:324
 msgid "You can't sell something you don't have!"
 msgstr ""
 
-#: src/land_outfits.c:969
+#: src/land_outfits.c:967
 #, fuzzy
 msgid "You are unable to sell this outfit!"
 msgstr "너는 FLF와 어울리지 않아."
@@ -107797,7 +107794,7 @@ msgstr ""
 msgid "Outfit is invalid."
 msgstr ""
 
-#: src/nlua_outfit.c:554
+#: src/nlua_outfit.c:556
 #, fuzzy
 #| msgid "Commodity is invalid."
 msgid "Outfit has invalid damage type."
@@ -109009,94 +109006,94 @@ msgstr ""
 msgid "Large"
 msgstr ""
 
-#: src/outfit.c:426
+#: src/outfit.c:425
 #, c-format
 msgid "'%s' does not match any outfit slot sizes."
 msgstr ""
 
-#: src/outfit.c:865
+#: src/outfit.c:864
 msgid "NULL"
 msgstr ""
 
-#: src/outfit.c:866
+#: src/outfit.c:865
 msgid "Bolt Cannon"
 msgstr ""
 
-#: src/outfit.c:867
+#: src/outfit.c:866
 #, fuzzy
 msgid "Beam Cannon"
 msgstr "리퍼 캐논"
 
-#: src/outfit.c:868
+#: src/outfit.c:867
 #, fuzzy
 msgid "Bolt Turret"
 msgstr "레일 건 터렛"
 
-#: src/outfit.c:869
+#: src/outfit.c:868
 #, fuzzy
 msgid "Beam Turret"
 msgstr "플라즈마 터렛 MK1"
 
-#: src/outfit.c:870 src/outfit.c:897
+#: src/outfit.c:869 src/outfit.c:896
 msgid "Launcher"
 msgstr ""
 
-#: src/outfit.c:871
+#: src/outfit.c:870
 #, fuzzy
 msgid "Turret Launcher"
 msgstr "터레 티드 가우스 건"
 
-#: src/outfit.c:872
+#: src/outfit.c:871
 #, fuzzy
 msgid "Ship Modification"
 msgstr "선체 수정"
 
-#: src/outfit.c:874 src/outfit.c:901
+#: src/outfit.c:873 src/outfit.c:900
 msgid "Fighter Bay"
 msgstr ""
 
-#: src/outfit.c:876 src/outfit.c:903
+#: src/outfit.c:875 src/outfit.c:902
 msgid "Local Map"
 msgstr ""
 
-#: src/outfit.c:877 src/outfit.c:904
+#: src/outfit.c:876 src/outfit.c:903
 msgid "GUI"
 msgstr "그래픽 유저 인터페이스"
 
-#: src/outfit.c:878 src/outfit.c:905
+#: src/outfit.c:877 src/outfit.c:904
 msgid "License"
 msgstr "라이센스"
 
-#: src/outfit.c:895
+#: src/outfit.c:894
 msgid "Bolt Weapon"
 msgstr ""
 
-#: src/outfit.c:896
+#: src/outfit.c:895
 msgid "Beam Weapon"
 msgstr ""
 
 #. else if (outfit_isTurret(o))     return N_("Turret");
-#: src/outfit.c:899
+#: src/outfit.c:898
 msgid "Modification"
 msgstr ""
 
-#: src/outfit.c:902
+#: src/outfit.c:901
 msgid "Map"
 msgstr ""
 
-#: src/outfit.c:917
+#: src/outfit.c:916
 msgid "Unguided"
 msgstr "유도되지 않음"
 
-#: src/outfit.c:918
+#: src/outfit.c:917
 msgid "Seek"
 msgstr "탐색"
 
-#: src/outfit.c:919
+#: src/outfit.c:918
 msgid "Smart"
 msgstr "똑똑하다"
 
-#: src/outfit.c:923
+#: src/outfit.c:922
 #, fuzzy, c-format
 #| msgid "Outfit '%s' is not an ammo outfit"
 msgid "Outfit '%s' is not a launcher outfit"
@@ -109111,21 +109108,21 @@ msgstr ""
 msgid "Can mine uncommon and rare minerals"
 msgstr ""
 
-#: src/outfit.c:1072
+#: src/outfit.c:1073
 msgid "Can mine uncommon minerals"
 msgstr ""
 
-#: src/outfit.c:1112
+#: src/outfit.c:1113
 #, c-format
 msgid "Unknown damage type '%s'"
 msgstr ""
 
-#: src/outfit.c:1115
+#: src/outfit.c:1116
 #, c-format
 msgid "Damage has unknown node '%s'"
 msgstr ""
 
-#: src/outfit.c:1143
+#: src/outfit.c:1144
 #, c-format
 msgid ""
 "%s xml collision polygon does not exist!\n"
@@ -109133,225 +109130,225 @@ msgid ""
 "found in Naev's artwork repo."
 msgstr ""
 
-#: src/outfit.c:1249 src/outfit.c:1596
+#: src/outfit.c:1250 src/outfit.c:1597
 #, c-format
 msgid "Outfit '%s' has invalid blowup property: '%s'"
 msgstr ""
 
-#: src/outfit.c:1275 src/outfit.c:1624
+#: src/outfit.c:1276 src/outfit.c:1625
 #, c-format
 msgid ""
 "Outfit '%s': the number of collision polygons is wrong.\n"
 "                     npolygon = %i and sx*sy = %i"
 msgstr ""
 
-#: src/outfit.c:1319 src/outfit.c:1483 src/outfit.c:1680 src/outfit.c:1813
-#: src/outfit.c:1882 src/outfit.c:1948 src/outfit.c:2030 src/outfit.c:2048
-#: src/outfit.c:2087 src/outfit.c:2123 src/outfit.c:2156 src/outfit.c:2345
-#: src/outfit.c:2438
+#: src/outfit.c:1320 src/outfit.c:1484 src/outfit.c:1681 src/outfit.c:1814
+#: src/outfit.c:1883 src/outfit.c:1949 src/outfit.c:2031 src/outfit.c:2049
+#: src/outfit.c:2088 src/outfit.c:2124 src/outfit.c:2157 src/outfit.c:2346
+#: src/outfit.c:2439
 #, c-format
 msgid "Outfit '%s' has unknown node '%s'"
 msgstr ""
 
-#: src/outfit.c:1345 src/outfit.c:1498 src/outfit.c:1698
+#: src/outfit.c:1346 src/outfit.c:1499 src/outfit.c:1699
 #, c-format
 msgid "%s [%s]"
-msgstr ""
-
-#: src/outfit.c:1348 src/outfit.c:1501 src/outfit.c:1701
-#, c-format
-msgid ""
-"\n"
-"     %.0f%% vs armour"
 msgstr ""
 
 #: src/outfit.c:1349 src/outfit.c:1502 src/outfit.c:1702
 #, c-format
 msgid ""
 "\n"
-"     %.0f%% vs shield"
+"     %.0f%% vs armour"
 msgstr ""
 
 #: src/outfit.c:1350 src/outfit.c:1503 src/outfit.c:1703
 #, c-format
 msgid ""
 "\n"
+"     %.0f%% vs shield"
+msgstr ""
+
+#: src/outfit.c:1351 src/outfit.c:1504 src/outfit.c:1704
+#, c-format
+msgid ""
+"\n"
 "     %.0f%% knockback"
 msgstr ""
 
-#: src/outfit.c:1351 src/outfit.c:1504 src/outfit.c:1704 src/outfit.c:1890
-#: src/outfit.c:1955
+#: src/outfit.c:1352 src/outfit.c:1505 src/outfit.c:1705 src/outfit.c:1891
+#: src/outfit.c:1956
 #, c-format
 msgid ""
 "\n"
 "%.0f CPU"
 msgstr ""
 
-#: src/outfit.c:1352 src/outfit.c:1505 src/outfit.c:1705 src/outfit.c:1825
-#: src/outfit.c:1891 src/outfit.c:1956
+#: src/outfit.c:1353 src/outfit.c:1506 src/outfit.c:1706 src/outfit.c:1826
+#: src/outfit.c:1892 src/outfit.c:1957
 #, c-format
 msgid ""
 "\n"
 "%.0f Mass"
 msgstr ""
 
-#: src/outfit.c:1353 src/outfit.c:1506 src/outfit.c:1723
+#: src/outfit.c:1354 src/outfit.c:1507 src/outfit.c:1724
 #, c-format
 msgid ""
 "\n"
 "%.0f%% Penetration"
 msgstr ""
 
-#: src/outfit.c:1354 src/outfit.c:1724
+#: src/outfit.c:1355 src/outfit.c:1725
 #, c-format
 msgid ""
 "\n"
 "%.2f DPS [%.0f Damage]"
 msgstr ""
 
-#: src/outfit.c:1356
+#: src/outfit.c:1357
 #, c-format
 msgid ""
 "\n"
 "%.2f Disable/s [%.0f Disable]"
 msgstr ""
 
-#: src/outfit.c:1358 src/outfit.c:1728
+#: src/outfit.c:1359 src/outfit.c:1729
 #, c-format
 msgid ""
 "\n"
 "%.1f Shots Per Second"
 msgstr ""
 
-#: src/outfit.c:1359 src/outfit.c:1741
+#: src/outfit.c:1360 src/outfit.c:1742
 #, c-format
 msgid ""
 "\n"
 "%.1f EPS [%.0f Energy]"
 msgstr ""
 
-#: src/outfit.c:1361 src/outfit.c:1515
+#: src/outfit.c:1362 src/outfit.c:1516
 #, c-format
 msgid ""
 "\n"
 "%s Range"
 msgstr ""
 
-#: src/outfit.c:1362 src/outfit.c:1737
+#: src/outfit.c:1363 src/outfit.c:1738
 #, c-format
 msgid ""
 "\n"
 "%.0f Speed"
 msgstr ""
 
-#: src/outfit.c:1363 src/outfit.c:1516
+#: src/outfit.c:1364 src/outfit.c:1517
 #, c-format
 msgid ""
 "\n"
 "%.1f second heat up"
 msgstr ""
 
-#: src/outfit.c:1364
+#: src/outfit.c:1365
 #, c-format
 msgid ""
 "\n"
 "%.1f Degree Dispersion"
 msgstr ""
 
-#: src/outfit.c:1366 src/outfit.c:1518 src/outfit.c:1718
+#: src/outfit.c:1367 src/outfit.c:1519 src/outfit.c:1719
 #, c-format
 msgid ""
 "\n"
 "%.1f Degree Swivel"
 msgstr ""
 
-#: src/outfit.c:1367 src/outfit.c:1710 src/outfit.c:1716
+#: src/outfit.c:1368 src/outfit.c:1711 src/outfit.c:1717
 #, c-format
 msgid ""
 "\n"
 "%s Optimal Tracking"
 msgstr ""
 
-#: src/outfit.c:1368 src/outfit.c:1711 src/outfit.c:1717
+#: src/outfit.c:1369 src/outfit.c:1712 src/outfit.c:1718
 #, c-format
 msgid ""
 "\n"
 "%s Minimal Tracking"
 msgstr ""
 
-#: src/outfit.c:1372 src/outfit.c:1522 src/outfit.c:1909 src/outfit.c:1962
-#: src/outfit.c:2063 src/outfit.c:2100 src/outfit.c:2132 src/outfit.c:2173
-#: src/outfit.c:2442
+#: src/outfit.c:1373 src/outfit.c:1523 src/outfit.c:1910 src/outfit.c:1963
+#: src/outfit.c:2064 src/outfit.c:2101 src/outfit.c:2133 src/outfit.c:2174
+#: src/outfit.c:2443
 #, c-format
 msgid "Outfit '%s' missing/invalid '%s' element"
 msgstr ""
 
-#: src/outfit.c:1507
+#: src/outfit.c:1508
 #, c-format
 msgid ""
 "\n"
 "%.2f DPS [%s]"
 msgstr ""
 
-#: src/outfit.c:1510
+#: src/outfit.c:1511
 #, c-format
 msgid ""
 "\n"
 "%.0f Disable/s"
 msgstr ""
 
-#: src/outfit.c:1511 src/outfit.c:1896
+#: src/outfit.c:1512 src/outfit.c:1897
 #, c-format
 msgid ""
 "\n"
 "%.1f EPS"
 msgstr ""
 
-#: src/outfit.c:1512
+#: src/outfit.c:1513
 #, c-format
 msgid ""
 "\n"
 "%.1f Duration"
 msgstr ""
 
-#: src/outfit.c:1513
+#: src/outfit.c:1514
 #, c-format
 msgid " (%.1f minimum)"
 msgstr ""
 
-#: src/outfit.c:1514
+#: src/outfit.c:1515
 #, c-format
 msgid ""
 "\n"
 "%.1f Cooldown"
 msgstr ""
 
-#: src/outfit.c:1668
+#: src/outfit.c:1669
 #, c-format
 msgid "Ammo '%s' has unknown ai type '%s'."
 msgstr ""
 
 #. Condition for not taking max_speed into account.
-#: src/outfit.c:1692
+#: src/outfit.c:1693
 #, c-format
 msgid "Max speed of ammo '%s' will be ignored."
-msgstr ""
-
-#: src/outfit.c:1708
-#, c-format
-msgid ""
-"\n"
-"%.1f Second Lock-on"
 msgstr ""
 
 #: src/outfit.c:1709
 #, c-format
 msgid ""
 "\n"
+"%.1f Second Lock-on"
+msgstr ""
+
+#: src/outfit.c:1710
+#, c-format
+msgid ""
+"\n"
 "%.1f Second In-Flight Calibration"
 msgstr ""
 
-#: src/outfit.c:1714
+#: src/outfit.c:1715
 msgid ""
 "\n"
 "No Seeking"
@@ -109359,56 +109356,56 @@ msgstr ""
 "\n"
 "찾기 없음"
 
-#: src/outfit.c:1722
+#: src/outfit.c:1723
 #, c-format
 msgid ""
 "\n"
 "Holds %d ammo"
 msgstr ""
 
-#: src/outfit.c:1726
+#: src/outfit.c:1727
 #, c-format
 msgid ""
 "\n"
 "%.1f Disable/s [%.0f Disable]"
 msgstr ""
 
-#: src/outfit.c:1729
+#: src/outfit.c:1730
 #, c-format
 msgid ""
 "\n"
 "%s Range [%.1f duration]"
 msgstr ""
 
-#: src/outfit.c:1732
+#: src/outfit.c:1733
 #, c-format
 msgid ""
 "\n"
 "%.0f Initial Speed (%.0f Thrust)"
 msgstr ""
 
-#: src/outfit.c:1734
+#: src/outfit.c:1735
 #, c-format
 msgid ""
 "\n"
 "%.0f Thrust"
 msgstr ""
 
-#: src/outfit.c:1739
+#: src/outfit.c:1740
 #, c-format
 msgid ""
 "\n"
 "%.0f Maximum Speed"
 msgstr ""
 
-#: src/outfit.c:1740 src/outfit.c:1959
+#: src/outfit.c:1741 src/outfit.c:1960
 #, c-format
 msgid ""
 "\n"
 "%.1f Seconds to Reload"
 msgstr ""
 
-#: src/outfit.c:1742
+#: src/outfit.c:1743
 #, c-format
 msgid ""
 "\n"
@@ -109417,62 +109414,62 @@ msgstr ""
 "\n"
 "%.0f%% 방해 막기"
 
-#: src/outfit.c:1746
+#: src/outfit.c:1747
 #, c-format
 msgid "Outfit '%s' missing '%s' element"
 msgstr ""
 
-#: src/outfit.c:1771
+#: src/outfit.c:1772
 #, fuzzy, c-format
 #| msgid "Outfit '%s' is not an ammo outfit"
 msgid "Outfit '%s' has no speed nor thrust set!"
 msgstr "의상 '%s'은 탄약 의상이 아닙니다"
 
-#: src/outfit.c:1773
+#: src/outfit.c:1774
 #, fuzzy, c-format
 #| msgid "Outfit '%s' is not an ammo outfit"
 msgid "Outfit '%s' has longer 'iflockon' than ammo 'duration'"
 msgstr "의상 '%s'은 탄약 의상이 아닙니다"
 
-#: src/outfit.c:1821 src/outfit.c:1889
+#: src/outfit.c:1822 src/outfit.c:1890
 msgid ""
 "\n"
 "#rActivated Outfit#0"
 msgstr ""
 
-#: src/outfit.c:1823
+#: src/outfit.c:1824
 #, c-format
 msgid " #r(%.1f s Cooldown)#0"
 msgstr ""
 
-#: src/outfit.c:1824
+#: src/outfit.c:1825
 #, c-format
 msgid ""
 "\n"
 "%+.0f CPU"
 msgstr ""
 
-#: src/outfit.c:1892
+#: src/outfit.c:1893
 msgid ""
 "\n"
 "Only one can be equipped"
-msgstr ""
-
-#: src/outfit.c:1893
-#, c-format
-msgid ""
-"\n"
-"%.0f Maximum Effective Mass"
 msgstr ""
 
 #: src/outfit.c:1894
 #, c-format
 msgid ""
 "\n"
-"%.0f%% Thrust"
+"%.0f Maximum Effective Mass"
 msgstr ""
 
 #: src/outfit.c:1895
+#, c-format
+msgid ""
+"\n"
+"%.0f%% Thrust"
+msgstr ""
+
+#: src/outfit.c:1896
 #, c-format
 msgid ""
 "\n"
@@ -109481,118 +109478,118 @@ msgstr ""
 "\n"
 "%.0f%% 최대 속도"
 
-#: src/outfit.c:1897
+#: src/outfit.c:1898
 #, c-format
 msgid ""
 "\n"
 "%.1f Rumble"
 msgstr ""
 
-#: src/outfit.c:1957
+#: src/outfit.c:1958
 #, c-format
 msgid ""
 "\n"
 "%.1f Seconds Per Launch"
 msgstr ""
 
-#: src/outfit.c:1958
+#: src/outfit.c:1959
 #, c-format
 msgid ""
 "\n"
 "Holds %d ships"
 msgstr ""
 
-#: src/outfit.c:2002
+#: src/outfit.c:2003
 #, c-format
 msgid "Map '%s' has invalid system '%s'"
 msgstr ""
 
-#: src/outfit.c:2019
+#: src/outfit.c:2020
 #, fuzzy, c-format
 #| msgid "Mission in %s has invalid or no name"
 msgid "Map '%s' has invalid spob '%s'"
 msgstr "%s의 임무에 유효하지 않거나 이름이 없습니다"
 
-#: src/outfit.c:2027
+#: src/outfit.c:2028
 #, c-format
 msgid "Map '%s' has invalid jump point '%s'"
 msgstr ""
 
-#: src/outfit.c:2129
+#: src/outfit.c:2130
 #, c-format
 msgid "GUI (Graphical User Interface)"
 msgstr ""
 
-#: src/outfit.c:2236
+#: src/outfit.c:2237
 #, fuzzy, c-format
 #| msgid "Mission in %s has invalid or no name"
 msgid "Outfit '%s' has invalid or no name"
 msgstr "%s의 임무에 유효하지 않거나 이름이 없습니다"
 
-#: src/outfit.c:2288
+#: src/outfit.c:2289
 #, c-format
 msgid "Outfit '%s' has an slot type invalid."
 msgstr ""
 
-#: src/outfit.c:2298
+#: src/outfit.c:2299
 #, c-format
 msgid "Outfit '%s' has unknown slot type '%s'."
 msgstr ""
 
-#: src/outfit.c:2319
+#: src/outfit.c:2320
 #, c-format
 msgid "Empty faction string for outfit '%s' legality!"
 msgstr ""
 
-#: src/outfit.c:2325
+#: src/outfit.c:2326
 #, c-format
 msgid "Outfit '%s' has no factions defined in <illegalto> block!"
 msgstr ""
 
-#: src/outfit.c:2328
+#: src/outfit.c:2329
 #, c-format
 msgid "Outfit '%s' has unknown general node '%s'"
 msgstr ""
 
-#: src/outfit.c:2362
+#: src/outfit.c:2363
 #, fuzzy, c-format
 msgid "Outfit '%s' has unknown node in tags '%s'."
 msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다."
 
-#: src/outfit.c:2371
+#: src/outfit.c:2372
 #, c-format
 msgid "Outfit '%s' element 'specific' missing property 'type'"
 msgstr ""
 
-#: src/outfit.c:2387
+#: src/outfit.c:2388
 #, c-format
 msgid "Outfit '%s' has group '%d', should be in the 1-%d range"
 msgstr ""
 
-#: src/outfit.c:2398
+#: src/outfit.c:2399
 #, c-format
 msgid "Outfit '%s' is of type NONE"
 msgstr ""
 
-#: src/outfit.c:2516
+#: src/outfit.c:2517
 #, fuzzy, c-format
 msgid "Outfit '%s' failed to read Lua '%s'!"
 msgstr "존재하지 않는 행성 '%s'을 (를) 로드하지 못했습니다."
 
-#: src/outfit.c:2531
+#: src/outfit.c:2532
 #, c-format
 msgid ""
 "Outfit '%s' Lua error:\n"
 "%s"
 msgstr ""
 
-#: src/outfit.c:2587
+#: src/outfit.c:2588
 #, c-format
 msgid "Name collision! %d outfit is named '%s'"
 msgid_plural "Name collision! %d outfits are named '%s'"
 msgstr[0] ""
 
-#: src/outfit.c:2596
+#: src/outfit.c:2597
 #, fuzzy, c-format
 #| msgid "Loaded %d Mission"
 #| msgid_plural "Loaded %d Missions"
@@ -109600,38 +109597,38 @@ msgid "Loaded %d Outfit in %.3f s"
 msgid_plural "Loaded %d Outfits in %.3f s"
 msgstr[0] "%d개의 임무를 불러왔습니다"
 
-#: src/outfit.c:2599
+#: src/outfit.c:2600
 #, c-format
 msgid "Loaded %d Outfit"
 msgid_plural "Loaded %d Outfits"
 msgstr[0] ""
 
-#: src/outfit.c:2615
+#: src/outfit.c:2616
 #, fuzzy, c-format
 msgid "Fighter Bay Outfit '%s' has not found ship '%s'!"
 msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다."
 
-#: src/outfit.c:2629
+#: src/outfit.c:2630
 msgid ""
 "\n"
 "#rIllegal to:#0"
 msgstr ""
 
-#: src/outfit.c:2631
+#: src/outfit.c:2632
 #, c-format
 msgid ""
 "\n"
 "#r- %s#0"
 msgstr ""
 
-#: src/outfit.c:2642
+#: src/outfit.c:2643
 #, c-format
 msgid ""
 "Outfit '%s' lua load error -> 'load':\n"
 "%s"
 msgstr ""
 
-#: src/outfit.c:2650
+#: src/outfit.c:2651
 #, fuzzy, c-format
 #| msgid "Outfit '%s' is not an ammo outfit"
 msgid "Outfit '%s' has inexistent license requirement '%s'!"
