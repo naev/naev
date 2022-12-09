@@ -1,11 +1,12 @@
 * 0.10.0-beta.3
-   * Contraband missions use vntk instead of tk.
-   * Sightseeing missions mention explicitly how much you get paid when completed.
-   * Removed outfit name duplication in alt texts.
+   * Contraband missions use vntk instead of tk
+   * Sightseeing missions mention explicitly how much you get paid when completed
+   * Removed outfit name duplication in alt texts
+   * Made outfit descriptions fit in the landing window for all outfits
 
 * 0.10.0-beta.2
    * Pirates should avoid attacking near safeish areas
-   * Fixed crash on load when player has more than one ship.
+   * Fixed crash on load when player has more than one ship
    * Fixed player.setSpeed() not resetting speed as intended
    * Fixed pilot.comm not showing messages
    * Fixed typo/grammar in sightseeing and dvaered census introductory mission
