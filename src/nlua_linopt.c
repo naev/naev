@@ -770,8 +770,9 @@ static int linoptL_writeProblem( lua_State *L )
    const char *dirname = PHYSFS_getWriteDir();
    char *fpath;
    int ret;
-   asprintf( &fpath, "%s/%s", dirname, fpath );
-   ret = glpk_format ? glp_write_prob( lp->prob, 0, fpath ) : glp_write_mps(  lp->prob, GLP_MPS_FILE, NULL, fname );
+   asprintf( &fpath, "%s/%s", dirname, fname );
+   ret = glpk_format ? glp_write_prob( lp->prob, 0, fpath ) : glp_write_mps(  lp->prob, GLP_MPS_FILE, NULL, fpath );
+   free( fpath );
    lua_pushboolean( L, ret==0 );
    return 1;
 }
