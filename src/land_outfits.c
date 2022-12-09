@@ -80,7 +80,7 @@ static void outfits_getSize( unsigned int wid, int *w, int *h,
 
    /* Calculate image array dimensions. */
    if (iw != NULL)
-      *iw = 704 + (*w - LAND_WIDTH);
+      *iw = 680 + (*w - LAND_WIDTH);
    if (ih != NULL)
       *ih = *h - 60;
 
@@ -477,7 +477,7 @@ void outfits_update( unsigned int wid, const char *str )
    outfit_getNameWithClass( outfit, buf, sizeof(buf) );
    window_modifyText( wid, "txtOutfitName", buf );
    window_dimWidget( wid, "txtOutfitName", &sw, NULL );
-   th = gl_printHeightRaw( &gl_defFont, sw, buf );
+   th = gl_printHeightRaw( &gl_defFont, sw, buf )+gl_defFont.h/2;
    l = 0;
    l += scnprintf( &buf[l], sizeof(buf)-l, "%d", player_outfitOwned(outfit) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_mass );
@@ -504,12 +504,12 @@ void outfits_update( unsigned int wid, const char *str )
    window_moveWidget( wid, "txtDescShort", 20+iw+20, -40-th );
    window_dimWidget( wid, "txtDescShort", &sw, NULL );
    th += gl_printHeightRaw( &gl_defFont, sw, summary );
-   th = MAX( th+gl_defFont.h, 210 );
+   th = MAX( th+gl_defFont.h/2, 210 );
    window_moveWidget( wid, "txtSDesc", 20+iw+20, -40-th );
    window_moveWidget( wid, "txtDDesc", 20+iw+20+90, -40-th );
    window_dimWidget( wid, "txtDDesc", &sw, NULL );
    th += gl_printHeightRaw( &gl_defFont, sw, buf );
-   th = MAX( th+gl_defFont.h, 256+10 );
+   th = MAX( th+gl_defFont.h/2, 256+10 );
    window_moveWidget( wid, "txtDescription", 20+iw+20, -40-th );
 }
 
