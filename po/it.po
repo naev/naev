@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.4\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-07-20 00:21-0400\n"
-"PO-Revision-Date: 2022-12-07 18:47+0000\n"
+"PO-Revision-Date: 2022-12-11 03:48+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "it/>\n"
@@ -117,8 +117,8 @@ msgstr ""
 "Dopo Daedris, sotto i suoi successori, la luce imperiale affievolì. "
 "Conflitti civili e divisioni religiose indebolirono i legami sociali. I "
 "grandiosi progetti imperiali deragliarono. In alcune regione "
-"l'amministrazione precipitò nelle mani di altri poteri. Le Grandi Case hanno "
-"così assunto il controllo delle rotte spaziali."
+"l'amministrazione precipitò nelle mani di altri poteri. Le Grandi Casate "
+"hanno così assunto il controllo delle rotte spaziali."
 
 #: dat/intro:23
 msgid "Rise and fall, the rhythm of history."
@@ -601,7 +601,7 @@ msgstr "Galileus"
 
 #: dat/AUTHORS:143
 msgid "   * Modeller of the Shark and Rhino"
-msgstr "   * Modello dello Shark e Rhino"
+msgstr "   * Modello dello Squalo e del Rinoceronte"
 
 #: dat/AUTHORS:145
 msgid "Devin Khan"
@@ -701,27 +701,27 @@ msgstr "ADMONISHER"
 
 #: artwork/gfx/loading/admonisher_pirate.webp.txt:1
 msgid "PIRATE ADMONISHER"
-msgstr "PIRATE ADMONISHER"
+msgstr "SORVEGLIANTE PIRATESCO"
 
 #: artwork/gfx/loading/ancestor.webp.txt:1
 msgid "ANCESTOR"
-msgstr "ANCESTOR"
+msgstr "PROGENITORE"
 
 #: artwork/gfx/loading/ancestor_pirate.webp.txt:1
 msgid "PIRATE ANCESTOR"
-msgstr "PIRATE ANCESTOR"
+msgstr "PROGENITORE PIRATESCO"
 
 #: artwork/gfx/loading/archimedes.webp.txt:1
 msgid "ARCHIMEDES"
-msgstr "ARCHIMEDES"
+msgstr "ARCHIMEDE"
 
 #: artwork/gfx/loading/derivative.webp.txt:1
 msgid "DERIVATIVE"
-msgstr "DERIVATIVE"
+msgstr "DERIVATA"
 
 #: artwork/gfx/loading/diablo.webp.txt:1
 msgid "ZA'LEK DIABLO"
-msgstr "ZA'LEK DIABLO"
+msgstr "DIABLO DI ZA'LEK"
 
 #: artwork/gfx/loading/drone.webp.txt:1
 msgid "DRONE"
@@ -729,11 +729,11 @@ msgstr "DRONE"
 
 #: artwork/gfx/loading/fidelity.webp.txt:1
 msgid "SIRIUS FIDELITY"
-msgstr "SIRIUS FIDELITY"
+msgstr "FEDELTÀ DI SIRIO"
 
 #: artwork/gfx/loading/gawain.webp.txt:1
 msgid "GAWAIN"
-msgstr "GAWAIN"
+msgstr "GALVANO"
 
 #: artwork/gfx/loading/goddard.webp.txt:1
 msgid "GODDARD"
@@ -741,7 +741,7 @@ msgstr "GODDARD"
 
 #: artwork/gfx/loading/hawking.webp.txt:1
 msgid "HAWKING"
-msgstr "HAWKING"
+msgstr "FALCONIERE"
 
 #: artwork/gfx/loading/kahan.webp.txt:1
 msgid "KAHAN"
@@ -749,87 +749,87 @@ msgstr "KAHAN"
 
 #: artwork/gfx/loading/kestrel_pirate.webp.txt:1
 msgid "PIRATE KESTREL"
-msgstr "PIRATE KESTREL"
+msgstr "Falco Piratesco"
 
 #: artwork/gfx/loading/koala.webp.txt:1
 msgid "KOALA"
-msgstr "KOALA"
+msgstr "COALA"
 
 #: artwork/gfx/loading/lancelot.webp.txt:1
 msgid "LANCELOT"
-msgstr "LANCELOT"
+msgstr "LANCILLOTTO"
 
 #: artwork/gfx/loading/llama.webp.txt:1
 msgid "LLAMA"
-msgstr "LLAMA"
+msgstr "LAMA"
 
 #: artwork/gfx/loading/mule.webp.txt:1
 msgid "MULE"
-msgstr "MULE"
+msgstr "MULO"
 
 #: artwork/gfx/loading/pacifier.webp.txt:1
 msgid "PACIFIER"
-msgstr "PACIFIER"
+msgstr "CONCILIATORE"
 
 #: artwork/gfx/loading/peacemaker.webp.txt:1
 msgid "EMPIRE PEACEMAKER"
-msgstr "EMPIRE PEACEMAKER"
+msgstr "PACIFICATORE IMPERIALE"
 
 #: artwork/gfx/loading/preacher.webp.txt:1
 msgid "SIRIUS PREACHER"
-msgstr ""
+msgstr "PREDICATORE DI SIRIO"
 
 #: artwork/gfx/loading/quicksilver.webp.txt:1
 msgid "QUICKSILVER"
-msgstr ""
+msgstr "MERCURIO"
 
 #: artwork/gfx/loading/rhino.webp.txt:1
 msgid "RHINO"
-msgstr ""
+msgstr "RINOCERONTE"
 
 #: artwork/gfx/loading/rhino_pirate.webp.txt:1
 msgid "PIRATE RHINO"
-msgstr ""
+msgstr "RINOCERONTE PIRATESCO"
 
 #: artwork/gfx/loading/schroedinger.webp.txt:1
 msgid "SCHROEDINGER"
-msgstr ""
+msgstr "SCHROEDINGER"
 
 #: artwork/gfx/loading/shaman.webp.txt:1
 msgid "SIRIUS SHAMAN"
-msgstr ""
+msgstr "SCIAMANO DI SIRIO"
 
 #: artwork/gfx/loading/shark.webp.txt:1
 msgid "SHARK"
-msgstr ""
+msgstr "SQUALO"
 
 #: artwork/gfx/loading/shark_empire.webp.txt:1
 msgid "EMPIRE SHARK"
-msgstr ""
+msgstr "SQUALO IMPERIALE"
 
 #: artwork/gfx/loading/shark_pirate.webp.txt:1
 msgid "PIRATE SHARK"
-msgstr ""
+msgstr "SQUALO PIRATESCO"
 
 #: artwork/gfx/loading/sting.webp.txt:1
 msgid "ZA'LEK STING"
-msgstr ""
+msgstr "PUNGIGLIONE DI ZA'LEK"
 
 #: artwork/gfx/loading/vendetta.webp.txt:1
 msgid "VENDETTA"
-msgstr ""
+msgstr "VENDETTA"
 
 #: artwork/gfx/loading/vendetta_pirate.webp.txt:1
 msgid "PIRATE VENDETTA"
-msgstr ""
+msgstr "VENDETTA PIRATESCA"
 
 #: artwork/gfx/loading/vigilance.webp.txt:1
 msgid "VIGILANCE"
-msgstr ""
+msgstr "VIGILANZA"
 
 #: dat/assets/abacus.xml:2
 msgid "Abacus"
-msgstr "Abacus"
+msgstr "Abaco"
 
 #: dat/assets/abacus.xml:27
 msgid ""
@@ -839,7 +839,7 @@ msgid ""
 "researchers on site at any one time. Tourism is out of the question, so is a "
 "bar."
 msgstr ""
-"Abacus è un pianeta enorme, per le dimensioni normali dei pianeti rocciosi. "
+"Abaco è un pianeta enorme, per le dimensioni normali dei pianeti rocciosi. "
 "Gli Soromid hanno stabilito un avamposto di ricerca per indagare "
 "maggiormente sulla struttura del pianeta. L'avamposto è piuttosto piccolo, "
 "con soltanto un paio di dozzine di ricercatori presenti in sito "
@@ -870,7 +870,7 @@ msgstr "Adius"
 
 #: dat/assets/adrian.xml:2
 msgid "Adrian"
-msgstr "Adrian"
+msgstr "Adriano"
 
 #: dat/assets/adrian.xml:28
 msgid ""
@@ -880,12 +880,12 @@ msgid ""
 "it was a matter of a few cycles before the Sirii came to power. Today Adrian "
 "persists, despite having served its only purpose."
 msgstr ""
-"Un mondo gelido e sgradevole, i Sirius hanno stabilito la loro colonia su "
-"Adian mentre si stavano espandendo in Eiderdown. A quel tempo il sistema era "
-"sotto il controllo imperiale, ma con questa solida testa di ponte presente "
-"nel sistema è stata questione di pochi cicli prima che i Sirii prendessero "
-"il potere. Attualmente la colonia su Adrian resta funzionante, nonostante il "
-"suo unico scopo iniziale non sia più necessario."
+"Un mondo gelido e sgradevole, i siriani hanno stabilito la loro colonia su "
+"Adriano mentre si stavano espandendo nel sistema solare Piumino. A quel "
+"tempo il sistema era sotto il controllo imperiale, ma con questa solida "
+"testa di ponte presente nel sistema è stata questione di pochi cicli prima "
+"che i siriani prendessero il potere. Attualmente la colonia su Adriano resta "
+"funzionante, nonostante il suo unico scopo iniziale non sia più necessario."
 
 #: dat/assets/adrian.xml:29
 msgid ""
@@ -930,11 +930,11 @@ msgid ""
 "core but, this being a remote part of Soromid space, it is still a local "
 "highlight."
 msgstr ""
-"Agino è un pianeta completamente invaso da attività rumorose, per la maggior "
-"parte di cittadini della classe media si Soromid. Il pianeta non eccelle in "
-"nessuna area, se confrontato con i mondi principali di Soromid, ma essendo "
-"una parte remota del territorio di Soromid è pur sempre un punto di "
-"riferimento locale."
+"Agino è un pianeta completamente invaso da attività rumorose, abitato per la "
+"maggior parte di cittadini della classe media di Soromid. Il pianeta non "
+"eccelle in nessuna area, se confrontato con i mondi principali di Soromid, "
+"ma essendo una parte remota del territorio di Soromid è pur sempre un punto "
+"di riferimento locale."
 
 #: dat/assets/agino.xml:31
 msgid ""
@@ -1023,14 +1023,19 @@ msgid ""
 "(comparatively) little debate over the necessity over this station's "
 "existence."
 msgstr ""
+"La Stazione di Akios è situata al confine di Za'lek, il suo scopo è quello "
+"di tenere i pirati del sistema di Kretogg all'esterno dello spazio di "
+"Za'lek. A causa della reale minaccia che gli abominevoli criminali pongono "
+"alla sicurezza della Grande Casata, c'è (relativamente) poco dibattito sulla "
+"necessità dell'esistenza di questa stazione."
 
 #: dat/assets/akra_iii.xml:2
 msgid "Akra III"
-msgstr ""
+msgstr "Akra III"
 
 #: dat/assets/akra_station.xml:2
 msgid "Akra Station"
-msgstr ""
+msgstr "Stazione di Akra"
 
 #: dat/assets/akra_station.xml:29
 msgid ""
@@ -1039,24 +1044,31 @@ msgid ""
 "system congregate here, leading to more inter-planetary personal "
 "relationships than normal."
 msgstr ""
+"Costruita per offrire servizi alle navi dell'area, la Stazione di Akra è "
+"anche utilizzata come centro di commercio e di comunicazione essenziale per "
+"i residenti di Akra. Le persone di tutto i sistema si riuniscono qui, questo "
+"permette di avere maggiori relazioni personali interplanetarie rispetto al "
+"normale."
 
 #: dat/assets/akra_station.xml:30
 msgid ""
 "The bar is bustling and seemingly constantly packed, yet never seems to "
 "cause anyone any problem due to how efficient everything is."
 msgstr ""
+"Il bar è vivace e apparentemente è costantemente affollato, ma questo non "
+"sembra causare problemi a nessuno grazie all'efficienza di qualsiasi cosa."
 
 #: dat/assets/akra_v.xml:2
 msgid "Akra V"
-msgstr ""
+msgstr "Akra V"
 
 #: dat/assets/akrikos.xml:2
 msgid "Akrikos"
-msgstr ""
+msgstr "Akrikos"
 
 #: dat/assets/aldarus.xml:2
 msgid "Aldarus"
-msgstr ""
+msgstr "Aldarus"
 
 #: dat/assets/aldarus.xml:30
 msgid ""
@@ -1066,6 +1078,12 @@ msgid ""
 "materials for all sorts of industries though, and the lack of pollution "
 "controls on the planet make it very attractive for corporations."
 msgstr ""
+"Aldarus è coperto da vasti oceani ripieni di una poltiglia di sedimenti in "
+"sospensione che ha poco a che vedere con l'acqua. L'atmosfera è tossica e "
+"ucciderebbe un essere umano non protetto nell'arco di cento secondi. Però la "
+"poltiglia nei mari è un'ottima sorgente di materie prime per tutti i tipi di "
+"industrie e la mancanza di controlli sull'inquinamento del pianeta lo rende "
+"veramente attrattivo alle corporazioni."
 
 #: dat/assets/aldarus.xml:31
 msgid ""
@@ -1074,10 +1092,16 @@ msgid ""
 "for private conversations, in case the bar's main area is a little too "
 "public for comfort. The music here can also be a bit grating on the ears."
 msgstr ""
+"Il bar dello spazioporto su Aldarus mette a disposizione una varietà di "
+"attività ricreative, come gioco d'azzardo e giochi competitivi. Sono anche "
+"presenti bugigattoli divisi da pareti in cui è possibile effettuare "
+"conversazioni private, nel caso in cui l'area principale del bar è un po' "
+"troppo pubblica per essere soddisfacente. La musica qui potrebbe risultare "
+"un po' fastidiosa per le orecchie."
 
 #: dat/assets/aldernael.xml:2
 msgid "Aldernael"
-msgstr ""
+msgstr "Aldernael"
 
 #: dat/assets/aldernael.xml:29
 msgid ""
@@ -1088,6 +1112,13 @@ msgid ""
 "going through a mainstream colonization phase. New immigrants arrive every "
 "day and Soromid habitation centres are constantly under construction."
 msgstr ""
+"Aldernael potrebbe apparire rude e sgradevole ad un visitatore ordinario. Se "
+"però si considera che il pianeta era privo di vita, con una superficie "
+"tossica e con un'atmosfera quasi inesistente, si può dire che è divenuto "
+"molto più ospitale da quando i Soromid hanno iniziato a terraformarlo. "
+"Attualmente il pianeta è in una fase di colonizzazione generale. Nuovi "
+"immigranti arrivano ogni giorno e centri abitativi su Soromid sono "
+"costantemente in costruzione."
 
 #: dat/assets/aldernael.xml:30
 msgid ""
@@ -1097,10 +1128,15 @@ msgid ""
 "more customers but also the occasional move from one building to another to "
 "make room for renovations."
 msgstr ""
+"A causa dell'intenso sviluppo su Aldernael, il bar dello spazioporto è "
+"soggetto a trasferimenti occasionali. Naturalmente lo spazioporto è al "
+"centro di tutto questo e il bar, a turno, ne soffre o ne beneficia. Questa "
+"crescita porta ad avere più clienti e gli spostamenti occasionali da un "
+"edificio ad un altro danno anche la possibilità per rinnovarlo."
 
 #: dat/assets/aldous.xml:2
 msgid "Aldous"
-msgstr ""
+msgstr "Aldous"
 
 #: dat/assets/aldous.xml:28
 msgid ""
@@ -1111,6 +1147,13 @@ msgid ""
 "their home. The ocean may be toxic, but it also happens to be the perfect "
 "environment for producing high quality positronic circuitry."
 msgstr ""
+"Il pianeta Aldous è un mare gigantesco composto da un fluido tossico per gli "
+"esseri umani. Anche la più piccola esposizione ai materiali tossici "
+"dell'oceano di Aldous è letale. In fatto di abitabilità, pianeti come questo "
+"sono nell'ultimo posto della lista di quelli da scegliere. Tuttavia una "
+"manciata di anime coraggiose ha scelto questo pianeta come sua casa. "
+"L'oceano può essere tossico, ma è anche l'ambiente perfetto per produrre "
+"circuiti positronici di alta qualità."
 
 #: dat/assets/aldous.xml:29
 msgid ""
@@ -3537,11 +3580,11 @@ msgstr ""
 
 #: dat/assets/eiderdown_i.xml:2
 msgid "Eiderdown I"
-msgstr ""
+msgstr "Piumino I"
 
 #: dat/assets/eiderdown_iii.xml:2
 msgid "Eiderdown III"
-msgstr ""
+msgstr "Piumino III"
 
 #: dat/assets/eiger.xml:2 dat/ssys/eiger.xml:2
 msgid "Eiger"
@@ -4505,11 +4548,11 @@ msgstr ""
 
 #: dat/assets/goddard_iii.xml:2
 msgid "Goddard III"
-msgstr ""
+msgstr "Goddard III"
 
 #: dat/assets/goddard_iv.xml:2
 msgid "Goddard IV"
-msgstr ""
+msgstr "Goddard IV"
 
 #: dat/assets/godtra.xml:2
 msgid "Godtra"
@@ -6130,11 +6173,11 @@ msgstr ""
 
 #: dat/assets/koralis_iv.xml:2
 msgid "Koralis IV"
-msgstr ""
+msgstr "Koralis IV"
 
 #: dat/assets/koralis_vi.xml:2
 msgid "Koralis VI"
-msgstr ""
+msgstr "Koralis VI"
 
 #: dat/assets/korifa_i.xml:2
 msgid "Korifa I"
@@ -6197,15 +6240,15 @@ msgstr ""
 
 #: dat/assets/kretogg_i.xml:2
 msgid "Kretogg I"
-msgstr ""
+msgstr "Kretogg I"
 
 #: dat/assets/kretogg_ii.xml:2
 msgid "Kretogg II"
-msgstr ""
+msgstr "Kretogg II"
 
 #: dat/assets/kretogg_iii.xml:2
 msgid "Kretogg III"
-msgstr ""
+msgstr "Kretogg III"
 
 #: dat/assets/ksher_i.xml:2
 msgid "Ksher I"
@@ -11299,7 +11342,7 @@ msgstr ""
 
 #: dat/assets/totoran.xml:2 dat/events/discovery.lua:110
 msgid "Totoran"
-msgstr ""
+msgstr "Totoran"
 
 #: dat/assets/totoran.xml:30
 msgid ""
@@ -12109,7 +12152,7 @@ msgstr ""
 
 #: dat/assets/vigilance_station.xml:2
 msgid "Vigilance Station"
-msgstr ""
+msgstr "Stazione di Vigilanza"
 
 #: dat/assets/vigilance_station.xml:29
 msgid ""
@@ -13340,25 +13383,28 @@ msgstr ""
 
 #: dat/faction.xml:153
 msgid "Black Lotus"
-msgstr ""
+msgstr "Fiore di Loto Nero"
 
 #: dat/faction.xml:156
 msgid "Black Lotus Pirate Clan"
-msgstr ""
+msgstr "Clan dei Pirati del Fiore di Loto Nero"
 
 #: dat/faction.xml:163
 msgid ""
 "The Black Lotus Pirate Clan is a fiercely organized pirate clan located "
 "between the Za'lek and Sirius space. Organized crime at its finest."
 msgstr ""
+"Il Clan dei Pirati del Fiore di Loto Nero è un clan di pirati organizzato in "
+"una feroce organizzazione e che occupa lo spazio tra Za'lek e Sirio. Il più "
+"grande crimine organizzato."
 
 #: dat/faction.xml:188
 msgid "Dreamer Clan"
-msgstr ""
+msgstr "Clan dei Sognatori"
 
 #: dat/faction.xml:191
 msgid "Dreamer Pirate Clan"
-msgstr ""
+msgstr "Clan dei Pirati Sognatori"
 
 #: dat/faction.xml:198
 msgid ""
@@ -13596,12 +13642,12 @@ msgstr ""
 
 #: dat/faction.xml:555 dat/ships/goddard.xml:2 dat/ssys/goddard.xml:2
 msgid "Goddard"
-msgstr ""
+msgstr "Goddard"
 
 #: dat/faction.xml:560 dat/ships/dvaered_goddard.xml:18
 #: dat/ships/goddard.xml:17
 msgid "House Goddard"
-msgstr ""
+msgstr "Casata dei Goddard"
 
 #: dat/faction.xml:565
 msgid ""
@@ -15970,7 +16016,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/empire_lancelot_fighter_bay.xml:2
 msgid "Empire Lancelot Fighter Bay"
-msgstr ""
+msgstr "Hangar per caccia Lancillotto Imperiali"
 
 #: dat/outfits/fighter_bays/empire_lancelot_fighter_bay.xml:11
 msgid ""
@@ -15978,6 +16024,9 @@ msgid ""
 "fighters. It comes with all the devices required for the maintenance and "
 "flight of the fighters."
 msgstr ""
+"Questo hangar per caccia permette alla tua astronave di portare un paio di "
+"caccia della classe Lancillotto Imperiali. È fornito di tutti i dispositivi "
+"necessari per la manutenzione e il volo dei caccia."
 
 #: dat/outfits/fighter_bays/fidelity_fighter_bay.xml:2
 msgid "Fidelity Fighter Bay"
@@ -15989,6 +16038,9 @@ msgid ""
 "are stronger when working together in groups. Quite apropos, given Sirian "
 "society."
 msgstr ""
+"L'hangar lancia tre caccia Fedeltà di Sirio. Deboli individualmente, essi "
+"sono forti quando lavorano insieme in gruppo. Un'idea alquanto azzeccata, "
+"vista la società siriana."
 
 #: dat/outfits/fighter_bays/hyena_fighter_bay.xml:2
 msgid "Hyena Fighter Bay"
@@ -16014,7 +16066,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/lancelot_fighter_bay.xml:2
 msgid "Lancelot Fighter Bay"
-msgstr ""
+msgstr "Hangar per caccia Lancillotto"
 
 #: dat/outfits/fighter_bays/lancelot_fighter_bay.xml:10
 msgid ""
@@ -16022,6 +16074,9 @@ msgid ""
 "fighters. It comes with all the devices required for the maintenance and "
 "flight of the fighters."
 msgstr ""
+"Questo hangar per caccia permette alla tua astronave di portare un paio di "
+"caccia della classe Lancillotto. È fornito di tutti i dispositivi necessari "
+"per la manutenzione e il volo dei caccia."
 
 #: dat/outfits/fighter_bays/pirate_hyena_fighter_bay.xml:2
 msgid "Pirate Hyena Fighter Bay"
@@ -16161,7 +16216,7 @@ msgstr ""
 
 #: dat/outfits/fighters/empire_lancelot_fighter.xml:2
 msgid "Empire Lancelot Fighter"
-msgstr ""
+msgstr "Caccia Lancillotto Imperiali"
 
 #: dat/outfits/fighters/empire_lancelot_fighter.xml:8
 msgid ""
@@ -16169,6 +16224,9 @@ msgid ""
 "Fighter Bay. It contains all the features of the standalone Empire Lancelot "
 "with improved encrypted communication."
 msgstr ""
+"Questo è un caccia di classe Lancillotto Imperiale adattato per l'uso "
+"nell'hangar di classe Lancillotto. Contiene tutte le funzionalità del "
+"Lancillotto Imperiale normale con comunicazioni cifrate migliorate."
 
 #: dat/outfits/fighters/fidelity_fighter.xml:2
 msgid "Fidelity Fighter"
@@ -16190,7 +16248,7 @@ msgstr ""
 
 #: dat/outfits/fighters/lancelot_fighter.xml:2
 msgid "Lancelot Fighter"
-msgstr ""
+msgstr "Caccia Lancillotto"
 
 #: dat/outfits/fighters/lancelot_fighter.xml:8
 msgid ""
@@ -16198,6 +16256,9 @@ msgid ""
 "Bay. It contains all the features of the standalone Lancelot with improved "
 "encrypted communication."
 msgstr ""
+"Questo è un caccia di classe Lancillotto adattato per l'uso nell'hangar di "
+"classe Lancillotto. Contiene tutte le funzionalità del Lancillotto normale "
+"con comunicazioni cifrate migliorate."
 
 #: dat/outfits/fighters/pirate_hyena_fighter.xml:2
 msgid "Pirate Hyena Fighter"
@@ -16688,7 +16749,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_kretogg_hidden_jumps.xml:2
 msgid "Map: Kretogg's hidden jump points"
-msgstr ""
+msgstr "Mappa: punto di salto spaziale nascosto di Kretogg"
 
 #: dat/outfits/maps/map_kretogg_hidden_jumps.xml:7
 msgid ""
@@ -18632,7 +18693,7 @@ msgstr ""
 
 #: dat/ships/admonisher.xml:2
 msgid "Admonisher"
-msgstr ""
+msgstr "Sorvegliante"
 
 #: dat/ships/admonisher.xml:17 dat/ships/empire_admonisher.xml:18
 #: dat/ships/empire_hawking.xml:19 dat/ships/empire_lancelot.xml:16
@@ -18650,10 +18711,13 @@ msgid ""
 "between the ruggedness of the Pacifier and the agility of the Lancelot. "
 "Overall a very solid fighter."
 msgstr ""
+"Una nave da combattimento veramente versatile. Nexus definisce il "
+"Sorvegliante come un compromesso tra la robustezza del Conciliatore e "
+"l'agilità del Lancillotto. Nel complesso un caccia veramente solido."
 
 #: dat/ships/ancestor.xml:2
 msgid "Ancestor"
-msgstr ""
+msgstr "Progenitore"
 
 #: dat/ships/ancestor.xml:16
 msgid ""
@@ -18779,7 +18843,7 @@ msgstr ""
 
 #: dat/ships/empire_admonisher.xml:2
 msgid "Empire Admonisher"
-msgstr ""
+msgstr "Sorvegliante Imperiale"
 
 #: dat/ships/empire_admonisher.xml:20
 msgid ""
@@ -18790,7 +18854,7 @@ msgstr ""
 
 #: dat/ships/empire_hawking.xml:2
 msgid "Empire Hawking"
-msgstr ""
+msgstr "Falconiere Imperiale"
 
 #: dat/ships/empire_hawking.xml:21
 msgid ""
@@ -18801,7 +18865,7 @@ msgstr ""
 
 #: dat/ships/empire_lancelot.xml:2
 msgid "Empire Lancelot"
-msgstr ""
+msgstr "Lancillotto Imperiale"
 
 #: dat/ships/empire_lancelot.xml:18
 msgid ""
@@ -18812,7 +18876,7 @@ msgstr ""
 
 #: dat/ships/empire_pacifier.xml:2
 msgid "Empire Pacifier"
-msgstr ""
+msgstr "Conciliatore Imperiale"
 
 #: dat/ships/empire_pacifier.xml:18
 msgid ""
@@ -18823,7 +18887,7 @@ msgstr ""
 
 #: dat/ships/empire_peacemaker.xml:2
 msgid "Empire Peacemaker"
-msgstr ""
+msgstr "Pacificatore Imperiale"
 
 #: dat/ships/empire_peacemaker.xml:20
 msgid ""
@@ -18852,7 +18916,7 @@ msgstr ""
 
 #: dat/ships/empire_shark.xml:2
 msgid "Empire Shark"
-msgstr ""
+msgstr "Squalo Imperiale"
 
 #: dat/ships/empire_shark.xml:19
 msgid ""
@@ -18865,7 +18929,7 @@ msgstr ""
 #: dat/ships/gawain.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:185
 #: dat/missions/flf/dvk/flf_dvk06.lua:168
 msgid "Gawain"
-msgstr ""
+msgstr "Galvano"
 
 #: dat/ships/gawain.xml:15
 msgid ""
@@ -18887,7 +18951,7 @@ msgstr ""
 
 #: dat/ships/hawking.xml:2
 msgid "Hawking"
-msgstr ""
+msgstr "Falconiere"
 
 #: dat/ships/hawking.xml:20
 msgid ""
@@ -18919,7 +18983,7 @@ msgstr ""
 
 #: dat/ships/kestrel.xml:2
 msgid "Kestrel"
-msgstr ""
+msgstr "Falco"
 
 #: dat/ships/kestrel.xml:15 dat/ships/starbridge.xml:15
 msgid "Krain Industries"
@@ -18936,7 +19000,7 @@ msgstr ""
 
 #: dat/ships/koala.xml:2
 msgid "Koala"
-msgstr ""
+msgstr "Coala"
 
 #: dat/ships/koala.xml:14 dat/ships/llama.xml:16 dat/ships/mule.xml:15
 #: dat/ships/quicksilver.xml:15 dat/ships/rhino.xml:16
@@ -18952,7 +19016,7 @@ msgstr ""
 
 #: dat/ships/lancelot.xml:2
 msgid "Lancelot"
-msgstr ""
+msgstr "Lancillotto"
 
 #: dat/ships/lancelot.xml:17
 msgid ""
@@ -18979,7 +19043,7 @@ msgstr ""
 
 #: dat/ships/mule.xml:2
 msgid "Mule"
-msgstr ""
+msgstr "Mulo"
 
 #: dat/ships/mule.xml:17
 msgid ""
@@ -18991,7 +19055,7 @@ msgstr ""
 
 #: dat/ships/pacifier.xml:2
 msgid "Pacifier"
-msgstr ""
+msgstr "Conciliatore"
 
 #: dat/ships/pacifier.xml:17
 msgid ""
@@ -19013,7 +19077,7 @@ msgstr ""
 
 #: dat/ships/pirate_admonisher.xml:2
 msgid "Pirate Admonisher"
-msgstr ""
+msgstr "Sorvegliante Piratesca"
 
 #: dat/ships/pirate_admonisher.xml:18 dat/ships/pirate_ancestor.xml:15
 #: dat/ships/pirate_hyena.xml:16 dat/ships/pirate_kestrel.xml:16
@@ -19033,7 +19097,7 @@ msgstr ""
 
 #: dat/ships/pirate_ancestor.xml:2
 msgid "Pirate Ancestor"
-msgstr ""
+msgstr "Progenitore Piratesco"
 
 #: dat/ships/pirate_ancestor.xml:16
 msgid ""
@@ -19059,7 +19123,7 @@ msgstr ""
 
 #: dat/ships/pirate_kestrel.xml:2
 msgid "Pirate Kestrel"
-msgstr ""
+msgstr "Falco Piratesco"
 
 #: dat/ships/pirate_kestrel.xml:17
 msgid ""
@@ -19082,7 +19146,7 @@ msgstr ""
 
 #: dat/ships/pirate_rhino.xml:2
 msgid "Pirate Rhino"
-msgstr ""
+msgstr "Rinoceronte Piratesco"
 
 #: dat/ships/pirate_rhino.xml:18
 msgid ""
@@ -19093,7 +19157,7 @@ msgstr ""
 
 #: dat/ships/pirate_shark.xml:2
 msgid "Pirate Shark"
-msgstr ""
+msgstr "Squalo Piratesco"
 
 #: dat/ships/pirate_shark.xml:18
 msgid ""
@@ -19117,7 +19181,7 @@ msgstr ""
 
 #: dat/ships/pirate_vendetta.xml:2
 msgid "Pirate Vendetta"
-msgstr ""
+msgstr "Vendetta Piratesca"
 
 #: dat/ships/pirate_vendetta.xml:17
 msgid ""
@@ -19178,7 +19242,7 @@ msgstr ""
 
 #: dat/ships/quicksilver.xml:2
 msgid "Quicksilver"
-msgstr ""
+msgstr "Mercurio"
 
 #: dat/ships/quicksilver.xml:16
 msgid ""
@@ -19204,7 +19268,7 @@ msgstr ""
 
 #: dat/ships/rhino.xml:2
 msgid "Rhino"
-msgstr ""
+msgstr "Rinoceronte"
 
 #: dat/ships/rhino.xml:18
 msgid ""
@@ -19217,7 +19281,7 @@ msgstr ""
 
 #: dat/ships/schroedinger.xml:2
 msgid "Schroedinger"
-msgstr ""
+msgstr "Schroedinger"
 
 #: dat/ships/schroedinger.xml:15 dat/ships/sirius_divinity.xml:14
 #: dat/ships/sirius_dogma.xml:14 dat/ships/sirius_fidelity.xml:14
@@ -19272,7 +19336,7 @@ msgstr ""
 
 #: dat/ships/sirius_fidelity.xml:2
 msgid "Sirius Fidelity"
-msgstr ""
+msgstr "Fedeltà di Sirio"
 
 #: dat/ships/sirius_fidelity.xml:15
 msgid ""
@@ -19280,10 +19344,13 @@ msgid ""
 "competent alone, it's often employed as a forward scout, bringing with it "
 "far deadlier allies."
 msgstr ""
+"La Fedeltà è un caccia leggero della Casata di Sirio. Sebbene non sia "
+"particolarmente competente da solo, viene spesso impiegato come esploratore "
+"avanzato, portando con sé alleati molto più letali."
 
 #: dat/ships/sirius_preacher.xml:2
 msgid "Sirius Preacher"
-msgstr ""
+msgstr "Predicatore di Sirio"
 
 #: dat/ships/sirius_preacher.xml:15
 msgid ""
@@ -19294,7 +19361,7 @@ msgstr ""
 
 #: dat/ships/sirius_shaman.xml:2
 msgid "Sirius Shaman"
-msgstr ""
+msgstr "Sciamano di Sirio"
 
 #: dat/ships/sirius_shaman.xml:15
 msgid ""
@@ -19485,7 +19552,7 @@ msgstr ""
 #: dat/ships/vendetta.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:223
 msgid "Vendetta"
-msgstr ""
+msgstr "Vendetta"
 
 #: dat/ships/vendetta.xml:17
 msgid ""
@@ -19499,7 +19566,7 @@ msgstr ""
 
 #: dat/ships/vigilance.xml:2
 msgid "Vigilance"
-msgstr ""
+msgstr "Vigilanza"
 
 #: dat/ships/vigilance.xml:16
 msgid ""
@@ -19529,7 +19596,7 @@ msgstr ""
 
 #: dat/ships/zalek_diablo.xml:2
 msgid "Za'lek Diablo"
-msgstr ""
+msgstr "Diablo di Za'lek"
 
 #: dat/ships/zalek_diablo.xml:18
 msgid ""
@@ -19625,7 +19692,7 @@ msgstr ""
 
 #: dat/ships/zalek_sting.xml:2
 msgid "Za'lek Sting"
-msgstr ""
+msgstr "Pungiglione di Za'lek"
 
 #: dat/ships/zalek_sting.xml:18
 msgid ""
@@ -19742,7 +19809,7 @@ msgstr ""
 
 #: dat/ssys/aesir.xml:2
 msgid "Aesir"
-msgstr ""
+msgstr "Aesir"
 
 #: dat/ssys/aesir.xml:4
 msgid "#pSirius Homeworld#0"
@@ -19762,7 +19829,7 @@ msgstr ""
 
 #: dat/ssys/akra.xml:2
 msgid "Akra"
-msgstr ""
+msgstr "Akra"
 
 #: dat/ssys/allous.xml:2
 msgid "Allous"
@@ -20004,7 +20071,7 @@ msgstr ""
 #: dat/ssys/crimson_gauntlet.xml:2 dat/events/dvaered/totoran.lua:134
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:83
 msgid "Crimson Gauntlet"
-msgstr ""
+msgstr "Ordalia Scarlatta"
 
 #: dat/ssys/cygnus.xml:2
 msgid "Cygnus"
@@ -20116,7 +20183,7 @@ msgstr ""
 
 #: dat/ssys/eiderdown.xml:2
 msgid "Eiderdown"
-msgstr ""
+msgstr "Piumino"
 
 #: dat/ssys/eisenhorn.xml:2
 msgid "Eisenhorn"
@@ -20424,7 +20491,7 @@ msgstr ""
 
 #: dat/ssys/koralis.xml:2
 msgid "Koralis"
-msgstr ""
+msgstr "Koralis"
 
 #: dat/ssys/korifa.xml:2
 msgid "Korifa"
@@ -20440,7 +20507,7 @@ msgstr ""
 
 #: dat/ssys/kretogg.xml:2 dat/events/discovery.lua:133
 msgid "Kretogg"
-msgstr ""
+msgstr "Kretogg"
 
 #: dat/ssys/ksher.xml:2
 msgid "Ksher"
@@ -21606,6 +21673,7 @@ msgstr ""
 msgid ""
 "Never take off without your courage. Never take off without your Vendetta."
 msgstr ""
+"Mai decollare senza il proprio coraggio. Mai decollare senza la tua Vendetta."
 
 #: dat/ai/advertiser.lua:17
 msgid "Unicorp: low price and high quality!"
@@ -21665,6 +21733,7 @@ msgstr ""
 #: dat/ai/advertiser.lua:33
 msgid "Bet on Totoran and win incredible sums thanks to the Crimson Gauntlet!"
 msgstr ""
+"Punta su Totoran e vinci incredibili somme grazie all'Ordalia Scarlatta!"
 
 #: dat/ai/advertiser.lua:34
 msgid ""
@@ -24954,7 +25023,7 @@ msgstr ""
 
 #: dat/events/discovery.lua:284
 msgid "#HBlack Lotus Territory#0"
-msgstr ""
+msgstr "#HTerritorio del Fiore di Loto Nero#0"
 
 #: dat/events/discovery.lua:285
 msgid "#HPiracy has never been Snazzier#0"
@@ -24962,7 +25031,7 @@ msgstr ""
 
 #: dat/events/discovery.lua:295
 msgid "#HDreamer Clan Territory#0"
-msgstr ""
+msgstr "#HTerritorio del Clan dei Sognatori#0"
 
 #: dat/events/discovery.lua:296
 msgid "#HPiracy to Rebel against Reality#0"
@@ -25611,6 +25680,9 @@ msgid ""
 "violence, but I've been destroying ships long before I started participating "
 "in the Crimson Gauntlet!\""
 msgstr ""
+"\"Alcuni dicono che l'Ordalia Scarlatta incoraggia e promuove la violenza, "
+"ma io ho iniziato a distruggere astronavi molto prima di aver iniziato a "
+"partecipare all'Ordalia Scarlatta!\""
 
 #: dat/events/dvaered/totoran.lua:64
 msgid ""
@@ -32962,15 +33034,15 @@ msgstr ""
 
 #: dat/factions/spawn/miner.lua:15
 msgid "Miner Koala"
-msgstr ""
+msgstr "Coala Minerario"
 
 #: dat/factions/spawn/miner.lua:17
 msgid "Miner Mule"
-msgstr ""
+msgstr "Mulo Minerario"
 
 #: dat/factions/spawn/miner.lua:19
 msgid "Miner Rhino"
-msgstr ""
+msgstr "Rinoceronte Minerario"
 
 #. @brief Creation hook.
 #. Create weights for spawn table
@@ -33023,11 +33095,11 @@ msgstr ""
 #: dat/factions/spawn/trader.lua:14 dat/missions/flf/dvk/flf_dvk03.lua:185
 #: dat/missions/flf/dvk/flf_dvk06.lua:168 dat/missions/neutral/dts_02.lua:108
 msgid "Trader Koala"
-msgstr ""
+msgstr "Coala Commerciale"
 
 #: dat/factions/spawn/trader.lua:17
 msgid "Trader Quicksilver"
-msgstr ""
+msgstr "Mercurio Commerciale"
 
 #. If any pirates still alive, send player back out.
 #. A fellow warrior says hello in passing if player jumps out of the system without landing
@@ -33038,11 +33110,11 @@ msgstr ""
 
 #: dat/factions/spawn/trader.lua:23
 msgid "Trader Rhino"
-msgstr ""
+msgstr "Rinoceronte Commerciale"
 
 #: dat/factions/spawn/trader.lua:26
 msgid "Trader Shark"
-msgstr ""
+msgstr "Squalo Commerciale"
 
 #. Doubles the credits of the pilot
 #. @brief Spawns a small trade fleet.
@@ -40302,7 +40374,7 @@ msgstr ""
 #. Add to log
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:80
 msgid "Totoran Tournament"
-msgstr ""
+msgstr "Torneo di Totoran"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:84
 msgid "Defeat all the other adversaries!"
@@ -44341,7 +44413,7 @@ msgstr ""
 
 #: dat/missions/flf/flf_empatrol.lua:57
 msgid " There is a Hawking among them, so you must be very careful."
-msgstr ""
+msgstr "C'è un Falconiere tra di essi, perciò devi essere veramente cauto."
 
 #: dat/missions/flf/flf_empatrol.lua:61 dat/missions/flf/flf_patrol.lua:64
 #: dat/missions/flf/flf_pirates.lua:68 dat/missions/flf/flf_rogue.lua:55
@@ -44468,7 +44540,7 @@ msgstr[1] ""
 
 #: dat/missions/flf/flf_patrol.lua:57
 msgid " There is a Vigilance among them, so you must proceed with caution."
-msgstr ""
+msgstr "C'è una Vigilanza tra di esse, per questo devi procedere con cautela."
 
 #: dat/missions/flf/flf_patrol.lua:60
 msgid " There is a Goddard among them, so you must be very careful."
@@ -44575,7 +44647,7 @@ msgstr ""
 
 #: dat/missions/flf/flf_pirates.lua:64
 msgid " There is a Kestrel among them, so you must be very careful."
-msgstr ""
+msgstr " C'è un Falco tra di essi, perciò devi essere molto cauto."
 
 #. Spawn a pirate patrol with n ships.
 #: dat/missions/flf/flf_pirates.lua:228
@@ -48081,7 +48153,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:175
 msgid "You do not have enough Minerva Tokens to buy her a drink."
-msgstr ""
+msgstr "Non hai sufficienti Gettoni Minerva per comprarle una bevanda."
 
 #: dat/missions/minerva/maikki1.lua:182
 msgid ""
@@ -62344,10 +62416,12 @@ msgid ""
 "Buy a Shark (but not a Pirate Shark), then fly to the {sys} system and land "
 "on {pnt}"
 msgstr ""
+"Compra uno Squalo (ma non uno Squalo Piratesco), poi vola fino al sistema "
+"{sys} e atterra su {pnt}"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:74
 msgid "Go to {sys} and kill the pirate with your Shark"
-msgstr ""
+msgstr "Vai su {sys} e uccidi il pirata con il tuo Squalo"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:75
 msgid "Land on {pnt} and collect your fee"
@@ -72255,8 +72329,8 @@ msgstr ""
 #, lua-format
 msgid "#p%s Minerva Token#0"
 msgid_plural "#p%s Minerva Tokens#0"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "#p%s Gettone Minerva#0"
+msgstr[1] "#p%s Gettoni Minerva#0"
 
 #. List of all the pirate factions
 #. List of all the pirate clan factions
@@ -73833,8 +73907,8 @@ msgstr ""
 #: dat/scripts/minigames/blackjack.lua:141
 msgid "#gYou won #p{n} Minerva Token#g!#0"
 msgid_plural "#gYou won #p{n} Minerva Tokens#g!#0"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "#gHai vinto #p{n} Gettone Minerva#g!#0"
+msgstr[1] "#gHai vinto #p{n} Gettoni Minerva#g!#0"
 
 #: dat/scripts/minigames/blackjack.lua:150
 msgid "Double Blackjack! Push!"
@@ -73870,8 +73944,8 @@ msgstr ""
 #: dat/scripts/minigames/chuckaluck.lua:183
 msgid "You have {credits} and #p{n} Minerva Token#0."
 msgid_plural "You have {credits} and #p{n} Minerva Tokens#0."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Possiedi {credits} e #p{n} Gettone Minerva#0."
+msgstr[1] "Possiedi {credits} e #p{n} Gettoni Minerva#0."
 
 #: dat/scripts/minigames/blackjack.lua:332
 #: dat/scripts/minigames/chuckaluck.lua:190
@@ -73931,8 +74005,8 @@ msgstr ""
 #: dat/scripts/minigames/chuckaluck.lua:231
 msgid "#gYou won #p{n} Minerva Token#g (matched one)!#0"
 msgid_plural "#gYou won #p{n} Minerva Tokens#g (matched one)!#0"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "#gHai vinto #p{n} Gettone Minerva#g (una corrispondenza)!#0"
+msgstr[1] "#gHai vinto #p{n} Gettoni Minerva#g (una corrispondenza)!#0"
 
 #.
 #. -- Playing dice game stuff
@@ -80736,32 +80810,32 @@ msgstr ""
 #. window
 #: src/load.c:330 src/menu.c:223
 msgid "Load Game"
-msgstr ""
+msgstr "Carica Gioco"
 
 #: src/load.c:345
 #, c-format
 msgid "%s #r(Backup)#0"
-msgstr ""
+msgstr "%s #r(Backup)#0"
 
 #: src/load.c:415
 msgid "Version:"
-msgstr ""
+msgstr "Versione:"
 
 #: src/load.c:419
 msgid "Planet:"
-msgstr ""
+msgstr "Pianeta:"
 
 #: src/load.c:423
 msgid "Ship Name:"
-msgstr ""
+msgstr "Nome Astronave:"
 
 #: src/load.c:425
 msgid "Ship Model:"
-msgstr ""
+msgstr "Modello Astronave:"
 
 #: src/load.c:453
 msgid "Save game version mismatch"
-msgstr ""
+msgstr "La versione del gioco salvato non corrisponde"
 
 #: src/load.c:454
 #, c-format
@@ -80771,62 +80845,66 @@ msgid ""
 "   Naev version: %s\n"
 "Are you sure you want to load this game? It may lose data."
 msgstr ""
+"La versione '%s' del gioco salvato non corrisponde alla versione di Naev:\n"
+"   Versione salvataggio: #r%s#0\n"
+"   Versione Naev: %s\n"
+"Si è sicuri di voler caricare questo gioco? Potrebbe perdere dei dati."
 
 #: src/load.c:493
 msgid "Permanently Delete?"
-msgstr ""
+msgstr "Cancellare in modo permanente?"
 
 #: src/load.c:494
 #, c-format
 msgid "Are you sure you want to permanently delete '%s'?"
-msgstr ""
+msgstr "Si è sicuri di voler cancellare permanentemente '%s'?"
 
 #: src/load.c:560 src/load.c:625
 msgid "Saved game file seems to have been deleted."
-msgstr ""
+msgstr "Il gioco salvato sembra essere stato cancellato."
 
 #: src/load.c:583 src/load.c:707
 #, c-format
 msgid "Saved game '%s' invalid!"
-msgstr ""
+msgstr "Il gioco salvato '%s' è invalido!"
 
 #. Welcome message - must be before space_init.
 #: src/load.c:642 src/player.c:337
 #, c-format
 msgid "#gWelcome to %s!"
-msgstr ""
+msgstr "#gBenvenuto a %s!"
 
 #: src/load.c:655
 msgid "Old version detected. Sanitizing ships for slots"
-msgstr ""
+msgstr "Rilevata vecchia versione. Sanificazione astronavi per gli slot"
 
 #: src/log.c:135
 msgid "Unable to redirect stdout to file"
-msgstr ""
+msgstr "Impossibile ridirigere lo standard output verso un file"
 
 #: src/log.c:139
 msgid "Unable to redirect stderr to file"
-msgstr ""
+msgstr "Impossibile ridirigere lo standard error verso un file"
 
 #: src/log.c:278
 #, c-format
 msgid "An error occurred while buffering %s!"
-msgstr ""
+msgstr "Si è verificato un errore durante il buffering %s!"
 
 #: src/log.h:17
 #, c-format
 msgid "WARNING %s:%d [%s]: "
-msgstr ""
+msgstr "ATTENZIONE %s:%d [%s]: "
 
 #: src/log.h:19
 #, c-format
 msgid "Warning: [%s] "
-msgstr ""
+msgstr "Attenzione: [%s] "
 
 #: src/log.h:21
 #, c-format
 msgid "ERROR %s:%d [%s]: "
-msgstr ""
+msgstr "ERRORE %s:%d [%s]: "
 
 #: src/map.c:307
 msgid "Standing:"
@@ -80834,11 +80912,11 @@ msgstr ""
 
 #: src/map.c:321
 msgid "Planets:"
-msgstr ""
+msgstr "Pianeti:"
 
 #: src/map.c:328
 msgid "Services:"
-msgstr ""
+msgstr "Servizi:"
 
 #. Commodity button
 #: src/map.c:336
@@ -81329,70 +81407,71 @@ msgstr ""
 #. create menu window
 #: src/menu.c:218 src/menu.c:555
 msgid "Main Menu"
-msgstr ""
+msgstr "Menu Principale"
 
 #: src/menu.c:226
 msgid "New Game"
-msgstr ""
+msgstr "Nuovo Gioco"
 
 #: src/menu.c:230 src/menu.c:643
 msgid "Editors"
-msgstr ""
+msgstr "Redattori"
 
 #. Create window and tabs.
 #: src/menu.c:234 src/menu.c:428 src/naev.c:391 src/options.c:130
 msgid "Options"
-msgstr ""
+msgstr "Opzioni"
 
 #: src/menu.c:237
 msgctxt "Menu|"
 msgid "Credits"
-msgstr ""
+msgstr "Crediti"
 
 #: src/menu.c:240 src/menu.c:557
 msgid "Exit Game"
-msgstr ""
+msgstr "Uscita dal Gioco"
 
 #: src/menu.c:325
 msgid "Main menu does not exist."
-msgstr ""
+msgstr "Il menu principale non esiste."
 
 #: src/menu.c:416
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 #: src/menu.c:422
+#, fuzzy
 msgid "Resume"
-msgstr ""
+msgstr "Proseguire"
 
 #: src/menu.c:430
 msgid "Exit to Title"
-msgstr ""
+msgstr "Uscita al Titolo"
 
 #. Stop player sounds because sometimes they hang.
 #: src/menu.c:482
 msgid "Exited game."
-msgstr ""
+msgstr "Uscito dal gioco."
 
 #: src/menu.c:548
 msgid "Continue"
-msgstr ""
+msgstr "Continuare"
 
 #: src/menu.c:551
 msgid "Restart"
-msgstr ""
+msgstr "Riavvia"
 
 #: src/menu.c:610
 msgid "Quit Naev"
-msgstr ""
+msgstr "Esci da Naev"
 
 #: src/menu.c:610
 msgid "Are you sure you want to quit Naev?"
-msgstr ""
+msgstr "Sei sicuro di voler uscire da Naev?"
 
 #: src/menu.c:648
 msgid "Universe Map"
-msgstr ""
+msgstr "Mappa dell'Universo"
 
 #: src/menu.c:651
 msgid "Map Outfits"
@@ -81400,7 +81479,7 @@ msgstr ""
 
 #: src/menu.c:654
 msgid "Exit to Main Menu"
-msgstr ""
+msgstr "Uscita al Menu Principale"
 
 #: src/mission.c:103 src/nlua_player.c:1179 src/nlua_player.c:1201
 #, c-format
@@ -81409,7 +81488,7 @@ msgstr ""
 
 #: src/mission.c:154
 msgid "No description."
-msgstr ""
+msgstr "Nessuna descrizione."
 
 #: src/mission.c:168
 #, c-format
@@ -81418,6 +81497,9 @@ msgid ""
 "%s\n"
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
+"Errore caricando il file della missione: %s\n"
+"%s\n"
+"Molto probabilmente il file Lua ha una sintassi non corretta, controllare"
 
 #: src/mission.c:254
 #, c-format
@@ -81686,7 +81768,7 @@ msgstr ""
 
 #: src/naev.c:366
 msgid "Reached main menu"
-msgstr ""
+msgstr "Menu principale raggiunto"
 
 #: src/naev.c:387
 msgid "Incomplete Translation"
@@ -84424,25 +84506,25 @@ msgstr ""
 #. Get the name.
 #: src/player.c:246
 msgid "Player Name"
-msgstr ""
+msgstr "Nome del Giocatore"
 
 #: src/player.c:247
 msgid "Please write your name:"
-msgstr ""
+msgstr "Scrivere il proprio nome:"
 
 #: src/player.c:257
 msgid "Overwrite"
-msgstr ""
+msgstr "Soprascrivere"
 
 #: src/player.c:258
 #, c-format
 msgid "You already have a pilot named %s. Overwrite?"
-msgstr ""
+msgstr "Si possiede già un pilota con nome %s. Sovrascriverlo?"
 
 #. Set game speed.
 #: src/player.c:266
 msgid "Game Speed"
-msgstr ""
+msgstr "Velocità del Gioco"
 
 #: src/player.c:267
 msgid ""
@@ -84452,16 +84534,22 @@ msgid ""
 "like to use normal speed or slow speed for this profile? (If unsure, normal "
 "speed is probably what you want.)"
 msgstr ""
+"Il tuo gioco può essere impostato a velocità normale o lenta. La velocità "
+"lenta ha come effetto che il tempo nello spazio scorra ad tasso dimezzato "
+"rispetto alla velocità normale, questo potrebbe essere utile se si hanno "
+"difficoltà a giocare alla velocità normale. Si vuole utilizzare la velocità "
+"normale o lenta per questo profilo? (Se non si è sicuri, la velocità normale "
+"è probabilmente quella desiderata.)"
 
 #: src/player.c:300
 #, c-format
 msgid "Failed to run start mission '%s'."
-msgstr ""
+msgstr "Esecuzione della missione iniziale '%s' fallita."
 
 #: src/player.c:306
 #, c-format
 msgid "Failed to run start event '%s'."
-msgstr ""
+msgstr "Esecuzione dell'evento iniziale '%s' fallita."
 
 #: src/player.c:344
 msgid "Ship not properly set by module."
@@ -84469,36 +84557,44 @@ msgstr ""
 
 #: src/player.c:404
 msgid "Please name your new ship:"
-msgstr ""
+msgstr "Assegnare un nome alla propria astronave:"
 
 #: src/player.c:429
 msgid "Name collision"
-msgstr ""
+msgstr "Conflitto di nomi"
 
 #: src/player.c:440
 msgid "Player ship isn't valid... This shouldn't happen!"
-msgstr ""
+msgstr "L'astronave del giocatore è invalida... Questo non dovrebbe accadere!"
 
 #: src/player.c:509
 msgid ""
 "Something seriously wonky went on, newly created player does not exist, "
 "bailing!"
 msgstr ""
+"È successo qualcosa di veramente grave, il nuovo giocatore appena creato non "
+"esiste, uscita!"
 
 #: src/player.c:603
 #, c-format
 msgid "Unable to swap player.p with ship '%s': ship does not exist!"
 msgstr ""
+"Impossibile cambiare giocatore.p con l'astronave '%s': l'astronave non "
+"esiste!"
 
 #: src/player.c:630
 #, c-format
 msgid "Unable to find price for player's ship '%s': ship does not exist!"
 msgstr ""
+"Impossibile trovare il prezzo per l'astronave del giocatore '%s': "
+"l'astronave non esiste!"
 
 #: src/player.c:1376
 #, c-format
 msgid "Trying to set player's planet target to invalid ID '%d'"
 msgstr ""
+"Tentativo di impostare il pianeta obiettivo del giocatore ad un ID '%d' "
+"invalido"
 
 #: src/player.c:1426
 msgid "Asteroid targeted, composition: "
@@ -84507,7 +84603,7 @@ msgstr ""
 #: src/player.c:1429
 #, c-format
 msgid "%s, quantity: %i"
-msgstr ""
+msgstr "%s, quantità: %i"
 
 #: src/player.c:1434
 msgid "Asteroid targeted"
@@ -84515,7 +84611,7 @@ msgstr ""
 
 #: src/player.c:1499
 msgid "#rThere are no planets to land on."
-msgstr ""
+msgstr "#rNon ci sono pianeti dove atterrare."
 
 #: src/player.c:1536
 msgid "#rDocking stabilizers malfunctioning, cannot land."
@@ -84523,36 +84619,38 @@ msgstr ""
 
 #: src/player.c:1543
 msgid "#rYou can't land here."
-msgstr ""
+msgstr "#rNon puoi atterrare qui."
 
 #. No shoes, no shirt, no lifeforms, no service.
 #: src/player.c:1561
 #, c-format
 msgid "#oReady to land on %s."
-msgstr ""
+msgstr "#oPronto per atterrare su %s."
 
 #: src/player.c:1571
 #, c-format
 msgid "#rYou are too far away to land on %s."
-msgstr ""
+msgstr "#rTu sei troppo lontano per atterrare su %s."
 
 #: src/player.c:1577
 #, c-format
 msgid "#rYou are going too fast to land on %s."
-msgstr ""
+msgstr "#rTu stai viaggiando troppo velocemente per atterrare su %s."
 
 #: src/player.c:1619
 msgid "Player has landing permission, but no valid planet targeted."
 msgstr ""
+"Il giocatore ha il permesso di atterrare, ma non è stato selezionato nessun "
+"pianeta valido."
 
 #: src/player.c:1630
 #, c-format
 msgid "#%c%s>#0 Landing permission revoked."
-msgstr ""
+msgstr "#%c%s>#0 Il permesso di atterrare è stato revocato."
 
 #: src/player.c:1655
 msgid "You are not allowed to land at this moment."
-msgstr ""
+msgstr "Tu non sei autorizzato ad atterrare in questo momento."
 
 #: src/player.c:1701
 #, c-format
@@ -86553,17 +86651,17 @@ msgstr ""
 #: src/unidiff.c:939
 #, c-format
 msgid "   unknown hunk '%d'"
-msgstr ""
+msgstr "   blocco '%d' sconosciuto"
 
 #: src/unidiff.c:1219
 #, c-format
 msgid "Unknown hunk type '%d'."
-msgstr ""
+msgstr "Tipo blocco '%d' sconosciuto."
 
 #: src/unidiff.c:1417
 #, c-format
 msgid "Unknown Hunk type '%d'."
-msgstr ""
+msgstr "Tipo blocco '%d' sconosciuto."
 
 #: src/unidiff.c:1422
 #, c-format
@@ -86572,39 +86670,43 @@ msgstr ""
 
 #: src/unidiff.c:1542
 msgid "Expected node \"diff\" to contain the name of a unidiff. Was empty."
-msgstr ""
+msgstr "Atteso nodo \"diff\" contenente il nome di un unidiff. Era vuoto."
 
 #: src/weapon.c:401
 #, c-format
 msgid "Unknown weapon status for '%s'"
-msgstr ""
+msgstr "Stato sconosciuto dell'arma per '%s'"
 
 #: src/weapon.c:562 src/weapon.c:711 src/weapon.c:1776
 msgid "Unknown weapon layer!"
-msgstr ""
+msgstr "Livello di armi sconosciuto!"
 
 #: src/weapon.c:665
 #, c-format
 msgid "Weapon of type '%s' has no update implemented yet!"
-msgstr ""
+msgstr "Non è ancora stato implementato l'aggiornamento dell'arma di tipo '%s'!"
 
 #: src/weapon.c:850
 #, c-format
 msgid "Weapon of type '%s' has no render implemented yet!"
-msgstr ""
+msgstr "Non è ancora stato implementato il rendering dell'arma di tipo '%s'!"
 
 #: src/weapon.c:1725
 #, c-format
 msgid "Weapon of type '%s' has no create implemented yet!"
-msgstr ""
+msgstr "Non è ancora stata implementata la creazione dell'arma di tipo '%s'!"
 
 #: src/weapon.c:1759
 msgid "Trying to create a Weapon from a non-Weapon type Outfit"
 msgstr ""
+"Tentativo di creare un'arma da un equipaggiamento di tipo non adatto per le "
+"armi."
 
 #: src/weapon.c:1819
 msgid "Trying to create a Beam Weapon from a non-beam outfit."
 msgstr ""
+"Tentativo di creare un'arma disintegratore da un equipaggiamento di tipo non "
+"disintegratore."
 
 #: src/weapon.c:1839 src/weapon.c:1881 src/weapon.c:2023
 msgid "Invalid WEAPON_LAYER specified"
