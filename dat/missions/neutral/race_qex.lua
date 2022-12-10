@@ -18,6 +18,8 @@ local vn = require "vn"
 local luatk = require "luatk"
 local bezier = require "luatk.bezier"
 local portrait = require 'portrait'
+local luasfx = require "luaspfx.sfx"
+local lmisn = require "lmisn"
 
 local DEFAULT_REWARD = 100e3
 
@@ -25,6 +27,8 @@ local elapsed_time, race_done
 
 local col_next = {0, 1, 1, 0.3}
 local col_past = {1, 0, 1, 0.2}
+
+local sfx = audio.new("snd/sounds/race_start.ogg")
 
 local function lerp(a, b, t)
 	return a + (b - a) * t
@@ -236,7 +240,7 @@ function start_race ()
       if k >= ngates then
          race_done = true -- This should trigger the timer hook
          omsg_timer = player.omsgAdd(display_time(elapsed_time), 5, 50)
-         -- TODO sound effect?
+         lmisn.sfxVictory()
          return
       end
       -- TODO sound effect?
@@ -281,6 +285,7 @@ function start_race ()
    -- TODO music?
 
    omsg_timer = player.omsgAdd(_("3…"), 0, 50)
+   luasfx( true, nil, sfx )
    hook.timer( 1, "countdown", _("2…") )
    hook.timer( 2, "countdown", _("1…") )
    hook.timer( 3, "allowmove" )
@@ -360,7 +365,7 @@ They hand you one of those fake oversized cheques for the audienc, and then a cr
 end
 
 function countdown( msg )
-   -- TODO sound
+   luasfx( true, nil, sfx )
    player.omsgChange( omsg_timer, msg, 0 )
 end
 
@@ -380,7 +385,7 @@ end
 
 function allowmove ()
    player.omsgChange( omsg_timer, _("GO!"), 5 )
-   -- TODO sound
+   luasfx( true, nil, sfx, {pitch=2} )
 
    player.pilot():control(false)
 
