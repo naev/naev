@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-12-11 17:22+0900\n"
+"POT-Creation-Date: 2022-12-11 18:26+0900\n"
 "PO-Revision-Date: 2022-09-19 19:18+0000\n"
 "Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -88444,7 +88444,7 @@ msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_05.lua:343
 msgid ""
-"After docking to the Peacemaker its captain invited you on his ship. It "
+"After docking to the Peacemaker its captain invited you on her ship. It "
 "turned out that she is as curious about your rescue as you are. "
 "Unfortunately, you are not able to answer any of her questions "
 "satisfactorily."
@@ -110468,27 +110468,27 @@ msgstr ""
 msgid "Expected node \"diff\" to contain the name of a unidiff. Was empty."
 msgstr ""
 
-#: src/weapon.c:413
+#: src/weapon.c:418
 #, c-format
 msgid "Unknown weapon status for '%s'"
 msgstr ""
 
-#: src/weapon.c:574 src/weapon.c:723 src/weapon.c:1975
+#: src/weapon.c:579 src/weapon.c:728 src/weapon.c:1980
 msgid "Unknown weapon layer!"
 msgstr ""
 
-#: src/weapon.c:677
+#: src/weapon.c:682
 #, c-format
 msgid "Weapon of type '%s' has no update implemented yet!"
 msgstr ""
 
-#: src/weapon.c:864
+#: src/weapon.c:869
 #, c-format
 msgid "Weapon of type '%s' has no render implemented yet!"
 msgstr ""
 
 #.
-#: src/weapon.c:1333
+#: src/weapon.c:1338
 #, c-format
 msgid ""
 "Outfit '%s' -> '%s':\n"
@@ -110497,24 +110497,24 @@ msgstr ""
 "Vybavení '%s' -> '%s':\n"
 "%s"
 
-#: src/weapon.c:1923
+#: src/weapon.c:1928
 #, c-format
 msgid "Weapon of type '%s' has no create implemented yet!"
 msgstr ""
 
-#: src/weapon.c:1958
+#: src/weapon.c:1963
 msgid "Trying to create a Weapon from a non-Weapon type Outfit"
 msgstr ""
 
-#: src/weapon.c:2017
+#: src/weapon.c:2022
 msgid "Trying to create a Beam Weapon from a non-beam outfit."
 msgstr ""
 
-#: src/weapon.c:2037 src/weapon.c:2079 src/weapon.c:2225
+#: src/weapon.c:2042 src/weapon.c:2084 src/weapon.c:2230
 msgid "Invalid WEAPON_LAYER specified"
 msgstr ""
 
-#: src/weapon.c:2085
+#: src/weapon.c:2090
 msgid "Trying to remove beam with ID 0!"
 msgstr ""
 
