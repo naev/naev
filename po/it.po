@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-11 22:53+0900\n"
-"PO-Revision-Date: 2022-12-11 13:54+0000\n"
+"PO-Revision-Date: 2022-12-11 20:49+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -8876,7 +8876,7 @@ msgstr ""
 
 #: dat/spob/amhurst.xml:2
 msgid "Amhurst"
-msgstr ""
+msgstr "Amhurst"
 
 #: dat/spob/amhurst.xml:15 dat/spob/antlejos_v.xml:9 dat/spob/arcadia.xml:15
 #: dat/spob/arcturus_ii.xml:9 dat/spob/ariadus_via.xml:9
@@ -8908,6 +8908,11 @@ msgid ""
 "has not been hit as hard as many, it has seen its population dip in recent "
 "cycles. Most of the population are miners and other working-class folk."
 msgstr ""
+"Un glorioso mondo commerciale e minerario, questo pianeta è una delle "
+"migliori vittime dell'esodo di competenze che ha interessato la frontiera "
+"meridionale di Za'lek. Anche se non è stato colpito così duramente come "
+"altri, ha visto la sua popolazione collassare recentemente. La maggior parte "
+"della popolazione è composta da minatori e altri tipi di operai."
 
 #: dat/spob/amhurst.xml:29
 msgid ""
@@ -8915,6 +8920,9 @@ msgid ""
 "rough aesthetic, the clientele, almost everything. There is little sign of "
 "the usual Za'lek trappings here."
 msgstr ""
+"Se non lo si conoscesse, si potrebbe presumere che questo sia un bar dei "
+"Dvaered. L'estetica, la clientela, pressoché tutto è rozzo. Qui sono "
+"presenti pochissimi segni degli usuali simboli di Za'lek."
 
 #: dat/spob/amhurst.xml:46 dat/spob/antica.xml:43 dat/spob/brooks.xml:39
 #: dat/spob/cantina_station.xml:31 dat/spob/crow.xml:53
@@ -8940,7 +8948,7 @@ msgstr ""
 
 #: dat/spob/amianta.xml:2
 msgid "Amianta"
-msgstr ""
+msgstr "Amianta"
 
 #: dat/spob/amianta.xml:25
 msgid ""
@@ -8948,10 +8956,13 @@ msgid ""
 "Proteron colonized it anyway due to the rich source of both food and water "
 "found underneath the ice."
 msgstr ""
+"Le temperature artiche di Amianta avrebbero fatto allontanare parecchie "
+"persone, ma i Proteron lo hanno colonizzato comunque perché è ricco di "
+"sorgenti di cibo e di acqua sotto il ghiaccio."
 
 #: dat/spob/ammu.xml:2
 msgid "Ammu"
-msgstr ""
+msgstr "Ammu"
 
 #: dat/spob/ammu.xml:27
 msgid ""
