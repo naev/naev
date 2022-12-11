@@ -69,7 +69,7 @@ misn_title = {
 mem.misn_desc = _([[The pirate known as {pirname} was recently seen in the {sys} system. {fct} authorities want this pirate alive. {pirname} is believed to be flying a {shipclass}-class ship.
 
 #nTarget:#0 {pirname} ({shipclass}-class ship)
-#nWanted:#0 Dead or Alive
+#nWanted:#0 Alive
 #nLast Seen:#0 {sys} system]])
 
 mem.osd_msg[2] = _("Capture {plt}")
