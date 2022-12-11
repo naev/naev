@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-11 18:26+0900\n"
-"PO-Revision-Date: 2022-12-11 09:26+0000\n"
+"PO-Revision-Date: 2022-12-11 13:54+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -25,119 +25,119 @@ msgstr "nessun errore"
 #: physfs.c:2 src/background.c:471 src/gui.c:1719 src/nlua_evt.c:147
 #: src/nlua_misn.c:239 src/nopenal.c:68
 msgid "unknown error"
-msgstr ""
+msgstr "errore sconosciuto"
 
 #: physfs.c:3
 msgid "out of memory"
-msgstr ""
+msgstr "memoria esaurita"
 
 #: physfs.c:4
 msgid "not initialized"
-msgstr ""
+msgstr "non inizializzato"
 
 #: physfs.c:5
 msgid "already initialized"
-msgstr ""
+msgstr "già inizializzato"
 
 #: physfs.c:6
 msgid "argv[0] is NULL"
-msgstr ""
+msgstr "argv[0] è NULL"
 
 #: physfs.c:7
 msgid "unsupported"
-msgstr ""
+msgstr "non supportato"
 
 #: physfs.c:8
 msgid "past end of file"
-msgstr ""
+msgstr "oltre la fine del file"
 
 #: physfs.c:9
 msgid "files still open"
-msgstr ""
+msgstr "i file sono ancora aperti"
 
 #: physfs.c:10
 msgid "invalid argument"
-msgstr ""
+msgstr "argomento invalido"
 
 #: physfs.c:11
 msgid "not mounted"
-msgstr ""
+msgstr "non montato"
 
 #: physfs.c:12
 msgid "not found"
-msgstr ""
+msgstr "non trovato"
 
 #: physfs.c:13
 msgid "symlinks are forbidden"
-msgstr ""
+msgstr "i collegamenti simbolici sono vietati"
 
 #: physfs.c:14
 msgid "write directory is not set"
-msgstr ""
+msgstr "la directory di scrittura non è impostata"
 
 #: physfs.c:15
 msgid "file open for reading"
-msgstr ""
+msgstr "file aperto in lettura"
 
 #: physfs.c:16
 msgid "file open for writing"
-msgstr ""
+msgstr "file aperto in scrittura"
 
 #: physfs.c:17
 msgid "not a file"
-msgstr ""
+msgstr "non è un file"
 
 #: physfs.c:18
 msgid "read-only filesystem"
-msgstr ""
+msgstr "filesystem in sola lettura"
 
 #: physfs.c:19
 msgid "corrupted"
-msgstr ""
+msgstr "corrotto"
 
 #: physfs.c:20
 msgid "infinite symbolic link loop"
-msgstr ""
+msgstr "ciclo di link simbolici infinito"
 
 #: physfs.c:21
 msgid "i/o error"
-msgstr ""
+msgstr "errore di I/O"
 
 #: physfs.c:22
 msgid "permission denied"
-msgstr ""
+msgstr "permesso negato"
 
 #: physfs.c:23
 msgid "no space available for writing"
-msgstr ""
+msgstr "spazio insufficiente per la scrittura"
 
 #: physfs.c:24
 msgid "filename is illegal or insecure"
-msgstr ""
+msgstr "il nome del file è illegale o non sicuro"
 
 #: physfs.c:25
 msgid "tried to modify a file the OS needs"
-msgstr ""
+msgstr "tentativo di modificare un file necessario al sistema operativo"
 
 #: physfs.c:26
 msgid "directory isn't empty"
-msgstr ""
+msgstr "la directory non è vuota"
 
 #: physfs.c:27
 msgid "OS reported an error"
-msgstr ""
+msgstr "il sistema operativo ha riportato un errore"
 
 #: physfs.c:28
 msgid "duplicate resource"
-msgstr ""
+msgstr "risorsa duplicata"
 
 #: physfs.c:29
 msgid "bad password"
-msgstr ""
+msgstr "password errata"
 
 #: physfs.c:30
 msgid "app callback reported error"
-msgstr ""
+msgstr "errore riportato dalla callback dell'app"
 
 #: dat/intro:2
 msgid ""
@@ -845,7 +845,7 @@ msgstr "DRONE"
 
 #: artwork/gfx/loading/euler.webp.txt:1
 msgid "EULER"
-msgstr ""
+msgstr "EULERO"
 
 #: artwork/gfx/loading/fidelity.webp.txt:1
 msgid "SIRIUS FIDELITY"
@@ -853,7 +853,7 @@ msgstr "FEDELTÀ DI SIRIO"
 
 #: artwork/gfx/loading/gauss.webp.txt:1
 msgid "GAUSS"
-msgstr ""
+msgstr "GAUSS"
 
 #: artwork/gfx/loading/gawain.webp.txt:1
 msgid "GAWAIN"
@@ -945,7 +945,7 @@ msgstr "VIGILANZA"
 
 #: dat/commodities/clay.xml:3
 msgid "Clay"
-msgstr ""
+msgstr "Argilla"
 
 #: dat/commodities/clay.xml:4
 msgid ""
@@ -954,6 +954,11 @@ msgid ""
 "shielding material or construction. Depending on the precedence of the clay "
 "it can have many different compositions and material properties."
 msgstr ""
+"L'argilla estratta dagli asteroidi tende ad avere proprietà differenti da "
+"quella trovata nei corpi planetari e ha una varietà differente d'usi come "
+"materiale schermante o di costruzione. A seconda della provenienza "
+"dell'argilla può avere molte differenti composizioni e proprietà del "
+"materiale."
 
 #: dat/commodities/diamond.xml:3 dat/scripts/pilotname/generic.lua:29
 msgid "Diamond"
@@ -4569,7 +4574,7 @@ msgstr ""
 
 #: dat/outfits/structure/nanobond_plating.xml:2
 msgid "Nanobond Plating"
-msgstr ""
+msgstr "Armatura di Nanobond"
 
 #: dat/outfits/structure/nanobond_plating.xml:10
 msgid ""
@@ -5673,7 +5678,7 @@ msgstr ""
 
 #: dat/outfits/weapons/gauss_gun.xml:2
 msgid "Gauss Gun"
-msgstr ""
+msgstr "Cannone Gauss"
 
 #: dat/outfits/weapons/gauss_gun.xml:8
 msgid ""
@@ -6182,7 +6187,7 @@ msgstr ""
 
 #: dat/outfits/weapons/turreted_gauss_gun.xml:2
 msgid "Turreted Gauss Gun"
-msgstr ""
+msgstr "Cannone Gauss per Torretta"
 
 #: dat/outfits/weapons/turreted_gauss_gun.xml:9
 msgid ""
@@ -8566,6 +8571,13 @@ msgid ""
 "occurs. Some spacers even insist on wearing breathing masks, even in the "
 "spaceport bar, just to be on the safe side."
 msgstr ""
+"L'impianto dello spazioporto fa parte di una struttura più ampia che ospita "
+"la totalità degli abitanti umani di questo pianeta. Il complesso, più o "
+"meno, galleggia sulla superficie ed è sigillato ermeticamente dall'ambiente "
+"esterno. Inoltre, il complesso è altamente compartimentato, nel caso in cui "
+"si verifichi una perdita. Alcuni astronauti insistono addirittura ad "
+"indossare maschere respiratorie, anche nel bar dello spazioporto, per essere "
+"al sicuro in caso di problemi."
 
 #: dat/spob/aldous.xml:30 dat/spob/ammu.xml:39 dat/spob/andors_refining.xml:36
 #: dat/spob/arrentil.xml:30 dat/spob/bedimann_shipyards.xml:42
@@ -8587,11 +8599,11 @@ msgstr ""
 
 #: dat/spob/aldous_moon.xml:2
 msgid "Aldous' moon"
-msgstr ""
+msgstr "Luna di Aldous"
 
 #: dat/spob/aleph.xml:2
 msgid "Aleph"
-msgstr ""
+msgstr "Alef"
 
 #: dat/spob/aleph.xml:25
 msgid ""
@@ -8600,6 +8612,11 @@ msgid ""
 "primarily residential and sports no superheavy industry, the wastefulness of "
 "the Dvaered inhabitants more than makes up for that."
 msgstr ""
+"In un'impressionante opera di de-terraformazione, i Dvaered hanno "
+"trasformato Alef da un pianeta di quasi classe M in un deserto sterile. "
+"Sebbene il mondo sia principalmente residenziale e non vi siano industrie "
+"superpesanti, lo spreco degli abitanti Dvaered compensa ampiamente a questa "
+"mancanza."
 
 #: dat/spob/aleph.xml:26
 msgid ""
@@ -8608,10 +8625,14 @@ msgid ""
 "the staleness completely. The drinks do little to relieve the stuffiness "
 "either."
 msgstr ""
+"L'aria nel bar dello spazioporto è stantia. È stantia ovunque su questo "
+"pianeta. Nessuna quantità di condizionatori o filtri d'aria è in grado di "
+"sbarazzarsi completamente dell'aria stagnante. Neppure le bevande riescono a "
+"mitigare un po' l'aria viziata."
 
 #: dat/spob/allan.xml:2
 msgid "Allan"
-msgstr ""
+msgstr "Allan"
 
 #: dat/spob/allan.xml:25
 msgid ""
@@ -8620,6 +8641,11 @@ msgid ""
 "left behind. It is now barely maintained by a small contingent of Dvaered "
 "soldiers and engineers for the use of traders."
 msgstr ""
+"Allan una volta era una stazione di pattugliamento, inviata per perlustrare "
+"le zone meridionali raggiungibili dello spazio. Con l'Incidente e la "
+"regressione del potere Imperiale, Allan è stata abbandonata. È attualmente "
+"mantenuta a malapena da un piccolo contingente di soldati e ingegneri di "
+"Dvaered per essere usata dai commercianti."
 
 #: dat/spob/allan.xml:26
 msgid ""
@@ -8627,10 +8653,13 @@ msgid ""
 "with clean facilities, decent food and strong drink. For its patrons it "
 "provides a small respite from the harsh galaxy."
 msgstr ""
+"Allan non ha molte risorse, ma il bar sembra abbastanza decente, con "
+"strutture pulite, cibo decente e bevande forti. Per i clienti rappresenta "
+"una piccola tregua dalle durezze galattiche."
 
 #: dat/spob/alleyway.xml:2
 msgid "Alleyway"
-msgstr ""
+msgstr "Alleyway"
 
 #: dat/spob/alleyway.xml:25
 msgid ""
@@ -8639,6 +8668,11 @@ msgid ""
 "hunters. Authorities have long ago given up any hope of controlling the "
 "chaos, so everyone knows to be armed and remain vigilant at all times."
 msgstr ""
+"Destinata in origine ad essere uno snodo commerciale e un stazione di "
+"rifornimento per i mercanti, questa stazione è diventata in realtà un centro "
+"di passaggio per pirati e cacciatori di taglie. Le autorità hanno già da "
+"molto rinunciato a controllare questo caos, per questo tutti sanno di dover "
+"girare armati e restare sempre vigili."
 
 #: dat/spob/alleyway.xml:26
 msgid ""
@@ -8646,6 +8680,11 @@ msgid ""
 "merchants and gamblers. Fights often break out and it's hard to tell who to "
 "trust, so most people keep to themselves and avoid eye contact with others."
 msgstr ""
+"Il bar è principalmente frequentato da un misto di pirati e cacciatori di "
+"taglie, con una manciata di mercanti e giocatori d'azzardo. Scoppiano "
+"frequentemente risse ed è difficile capire di chi fidarsi, per questo la "
+"maggior parte delle persone pensa a sé ed evita il contatto visivo diretto "
+"con gli altri."
 
 #: dat/spob/alleyway.xml:29 dat/spob/darkshed.xml:49 dat/spob/efferey.xml:36
 #: dat/spob/foundation_station.xml:36 dat/spob/fury_station.xml:63
@@ -8659,11 +8698,11 @@ msgstr ""
 
 #: dat/spob/allous_gg3.xml:2
 msgid "Allous GG-3"
-msgstr ""
+msgstr "Allous GG-3"
 
 #: dat/spob/allous_i.xml:2
 msgid "Allous I"
-msgstr ""
+msgstr "Allous I"
 
 #: dat/spob/allous_i.xml:9 dat/spob/alteris_i.xml:9 dat/spob/anarbalis_ii.xml:9
 #: dat/spob/andee_ii.xml:9 dat/spob/astana.xml:16 dat/spob/behemoth.xml:9
@@ -8687,11 +8726,11 @@ msgstr ""
 
 #: dat/spob/allous_ii.xml:2
 msgid "Allous II"
-msgstr ""
+msgstr "Allous II"
 
 #: dat/spob/allous_station.xml:2
 msgid "Allous Station"
-msgstr ""
+msgstr "Stazione di Allous"
 
 #: dat/spob/allous_station.xml:24
 msgid ""
@@ -8703,6 +8742,14 @@ msgid ""
 "need for them to pay for it as numerous warlords, with dreams of "
 "intellectualism, are happy to offer their patronage."
 msgstr ""
+"Nonostante il nome, la Stazione di Allous non è un avamposto militare, è più "
+"un centro di osservazione scientifica e un osservatorio dello spazio "
+"profondo. Originariamente doveva servire per controllare l'alta interferenza "
+"della nebulosa PSO. Persino i Dvaered hanno una comunità scientifica e hanno "
+"pagano per questa stazione di loro tasca. Naturalmente, una volta che venne "
+"costruita, non c'è stata più nessuna necessità per loro di pagare, poiché i "
+"numerosi signori della guerra, con sogni intellettuali, sono felici di "
+"offrire il loro patrocinio."
 
 #: dat/spob/allous_station.xml:25
 msgid ""
@@ -8710,30 +8757,34 @@ msgid ""
 "and soldiers are interacting with surprising friendliness and conviviality. "
 "Of course, the local warlords would, and do, tolerate nothing less."
 msgstr ""
+"Questo bar assomiglia a qualcosa che uno si aspetterebbe dallo spazio di "
+"Za'lek. Soldati e scienziati interagiscono con sorprendente cordialità e "
+"convivialità. Naturalmente i signori della guerra locali non vorrebbero e "
+"non tollerano nulla di meno."
 
 #: dat/spob/alteris_i.xml:2
 msgid "Alteris I"
-msgstr ""
+msgstr "Alteris I"
 
 #: dat/spob/alteris_iv.xml:2
 msgid "Alteris IV"
-msgstr ""
+msgstr "Alteris IV"
 
 #: dat/spob/alteris_v.xml:2
 msgid "Alteris V"
-msgstr ""
+msgstr "Alteris V"
 
 #: dat/spob/aluben.xml:2
 msgid "Aluben"
-msgstr ""
+msgstr "Aluben"
 
 #: dat/spob/amaroq_i.xml:2
 msgid "Amaroq I"
-msgstr ""
+msgstr "Amaroq I"
 
 #: dat/spob/amaroq_iii.xml:2
 msgid "Amaroq III"
-msgstr ""
+msgstr "Amaroq III"
 
 #: dat/spob/amaroq_iii.xml:9 dat/spob/amphion.xml:16
 #: dat/spob/anarbalis_iii.xml:9 dat/spob/anecu.xml:15 dat/spob/antica.xml:15
@@ -8760,15 +8811,15 @@ msgstr ""
 
 #: dat/spob/amatiri_i.xml:2
 msgid "Amatiri I"
-msgstr ""
+msgstr "Amatiri I"
 
 #: dat/spob/amatiri_ia.xml:2
 msgid "Amatiri Ia"
-msgstr ""
+msgstr "Amatiri Ia"
 
 #: dat/spob/amatiri_ii.xml:2
 msgid "Amatiri II"
-msgstr ""
+msgstr "Amatiri II"
 
 #: dat/spob/amatiri_ii.xml:9 dat/spob/amianta.xml:15 dat/spob/anker.xml:9
 #: dat/spob/anku_iii.xml:9 dat/spob/antlejos_prime.xml:9 dat/spob/apik_ii.xml:9
@@ -8784,7 +8835,7 @@ msgstr ""
 
 #: dat/spob/ambre.xml:2
 msgid "Ambre"
-msgstr ""
+msgstr "Ambre"
 
 #: dat/spob/ambre.xml:27
 msgid ""
@@ -8796,6 +8847,13 @@ msgid ""
 "This was one of the important reasons the Emperor granted House Dvaered its "
 "independence."
 msgstr ""
+"Ambre è stato uno dei pianeti che ha giocato un ruolo chiave nelle rivolte "
+"dei lavoratori che alla fine portarono all'istituzione della Casata dei "
+"Dvaered. In quei tempi, in questo settore spaziale, il pianeta ospitava una "
+"considerevole percentuale di lavoratori imperiali. Senza lavoratori nelle "
+"miniere e nei cantieri, l'Impero rischiava di perdere cifre monetarie "
+"astronomiche ogni ciclo. Questa fu una delle ragioni importanti che "
+"portarono l'Impero a concedere l'indipendenza alla Casata dei Dvaered."
 
 #: dat/spob/ambre.xml:28
 msgid ""
@@ -8807,6 +8865,14 @@ msgid ""
 "into one of the only remaining spaces available, which was right over the "
 "freight lines."
 msgstr ""
+"Il bar dello spazioporto di Ambre non è mai tranquillo. Ad intervalli "
+"regolari tutti i rimori nel bar vengono sovrastati dal suono delle capsule "
+"cargo che sferragliano nella ferrovia sottostante. Il bar è stato costruito "
+"relativamente tardi in quello che è stato lo sviluppo planetario; Il governo "
+"Imperiale non vedeva la necessità di averne uno quando Ambre era poco più "
+"grande di un campo di lavoro. Dopo l'indipendenza il bar è stato stipato in "
+"uno degli spazi disponibili rimanenti che era proprio sopra la rete di "
+"trasporto merci."
 
 #: dat/spob/amhurst.xml:2
 msgid "Amhurst"
@@ -11547,27 +11613,27 @@ msgstr ""
 
 #: dat/spob/euler_i.xml:2
 msgid "Euler I"
-msgstr ""
+msgstr "Eulero I"
 
 #: dat/spob/euler_ia.xml:2
 msgid "Euler Ia"
-msgstr ""
+msgstr "Eulero Ia"
 
 #: dat/spob/euler_ii.xml:2
 msgid "Euler II"
-msgstr ""
+msgstr "Eulero II"
 
 #: dat/spob/euler_iii.xml:2
 msgid "Euler III"
-msgstr ""
+msgstr "Eulero III"
 
 #: dat/spob/euler_iiia.xml:2
 msgid "Euler IIIa"
-msgstr ""
+msgstr "Eulero IIIa"
 
 #: dat/spob/euler_iv.xml:2
 msgid "Euler IV"
-msgstr ""
+msgstr "Eulero IV"
 
 #: dat/spob/europea.xml:2
 msgid "Europea"
@@ -16597,31 +16663,31 @@ msgstr ""
 
 #: dat/spob/pso_1234.xml:2
 msgid "PSO 1234"
-msgstr ""
+msgstr "PSO 1234"
 
 #: dat/spob/pso_1251.xml:2
 msgid "PSO 1251"
-msgstr ""
+msgstr "PSO 1251"
 
 #: dat/spob/pso_1324.xml:2
 msgid "PSO 1324"
-msgstr ""
+msgstr "PSO 1324"
 
 #: dat/spob/pso_2212.xml:2
 msgid "PSO 2212"
-msgstr ""
+msgstr "PSO 2212"
 
 #: dat/spob/pso_2345.xml:2
 msgid "PSO 2345"
-msgstr ""
+msgstr "PSO 2345"
 
 #: dat/spob/pso_2356.xml:2
 msgid "PSO 2356"
-msgstr ""
+msgstr "PSO 2356"
 
 #: dat/spob/pso_2434.xml:2
 msgid "PSO 2434"
-msgstr ""
+msgstr "PSO 2434"
 
 #: dat/spob/pso_monitor.xml:2
 msgid "PSO Monitor"
@@ -21307,19 +21373,19 @@ msgstr "Akra"
 
 #: dat/ssys/allous.xml:2
 msgid "Allous"
-msgstr ""
+msgstr "Allous"
 
 #: dat/ssys/alteris.xml:2
 msgid "Alteris"
-msgstr ""
+msgstr "Alteris"
 
 #: dat/ssys/amaroq.xml:2
 msgid "Amaroq"
-msgstr ""
+msgstr "Amaroq"
 
 #: dat/ssys/amatiri.xml:2
 msgid "Amatiri"
-msgstr ""
+msgstr "Amatiri"
 
 #: dat/ssys/amatiri.xml:6 dat/ssys/ariadus.xml:6 dat/ssys/bonanza.xml:6
 #: dat/ssys/fertile_crescent.xml:6 dat/ssys/hasselt.xml:6 dat/ssys/kansas.xml:6
@@ -21731,7 +21797,7 @@ msgstr ""
 
 #: dat/ssys/euler.xml:2
 msgid "Euler"
-msgstr ""
+msgstr "Eulero"
 
 #: dat/ssys/euler.xml:6 dat/ssys/mirror.xml:6 dat/ssys/narousse.xml:6
 #: dat/ssys/ngc10081.xml:6 dat/ssys/ngc10653.xml:6 dat/ssys/ngc11050.xml:6
@@ -21775,7 +21841,7 @@ msgstr ""
 
 #: dat/ssys/feye.xml:4
 msgid "#pSoromid Homeworld#0"
-msgstr ""
+msgstr "#pPianeta d'origine dei Soromid#0"
 
 #: dat/ssys/fidelis.xml:2
 msgid "Fidelis"
@@ -22639,7 +22705,7 @@ msgstr ""
 
 #: dat/ssys/pso.xml:2
 msgid "PSO"
-msgstr ""
+msgstr "PSO"
 
 #: dat/ssys/pudas.xml:2
 msgid "Pudas"
@@ -29092,6 +29158,10 @@ msgid ""
 "Deposit: {deposit_text}\n"
 "Royalty: {royalty_percent:.1f}% of mission earnings"
 msgstr ""
+"Nome Pilota: {name}\n"
+"Astronave: {ship}\n"
+"Deposito: {deposit_text}\n"
+"Diritti: {royalty_percent:.1f}% dei guadagni della missione"
 
 #: dat/events/hired_escorts.lua:59
 msgid ""
@@ -46277,15 +46347,15 @@ msgstr ""
 #. Spawn the Beta squadrons
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:242
 msgid "B-Storks-4"
-msgstr ""
+msgstr "B-Cicogne-4"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:243
 msgid "B-Storks-3"
-msgstr ""
+msgstr "B-Cicogne-3"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:244
 msgid "B-Storks-2"
-msgstr ""
+msgstr "B-Cicogne-2"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:245
 msgid "B-Storks-Lead"
@@ -46293,15 +46363,15 @@ msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:246
 msgid "B-Storks-7"
-msgstr ""
+msgstr "B-Cicogne-7"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:247
 msgid "B-Storks-6"
-msgstr ""
+msgstr "B-Cicogne-6"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:248
 msgid "B-Storks-5"
-msgstr ""
+msgstr "B-Cicogne-5"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:249
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:250
@@ -75240,7 +75310,7 @@ msgstr ""
 #. the probability of an ambush goes up when you cross a system without meeting any ennemy
 #: dat/missions/shark/sh02_tapping.lua:110
 msgid "Time to go back to Alteris"
-msgstr ""
+msgstr "È ora di tornare su Alteris."
 
 #: dat/missions/shark/sh02_tapping.lua:110
 msgid ""
@@ -86155,6 +86225,8 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:220
 msgid "You helped Dr. Mensing to collect sensor data of the PSO nebula."
 msgstr ""
+"Hai aiutato il Dr. Mensing a raccogliere i dati dei sensori della nebulosa "
+"PSO."
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:244
 #: dat/scripts/escort.lua:193
