@@ -340,7 +340,7 @@ function rescue()
    vn.clear()
    vn.scene()
    local captain = vn.newCharacter( nebu_research.vn_empire_captain() )
-   vn.na(_("After docking to the Peacemaker its captain invited you on his ship. It turned out that she is as curious about your rescue as you are. Unfortunately, you are not able to answer any of her questions satisfactorily."))
+   vn.na(_("After docking to the Peacemaker its captain invited you on her ship. It turned out that she is as curious about your rescue as you are. Unfortunately, you are not able to answer any of her questions satisfactorily."))
    vn.na(_("She tells you that her crew received a distress signal and followed it to your position. With the heavy interference of the nebula this should be impossible, or at least extremely unlikely."))
    captain(_([["It is nearly impossible that a signal passes through the nebula out here. So either there's something you're hiding or you had incredible luck. And just what were you doing out there? I did saw those Za'lek doing even more ridiculous stuff, though."]]))
    vn.menu( {
