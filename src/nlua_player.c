@@ -1817,7 +1817,6 @@ static int playerL_inventoryOwned( lua_State *L )
 static int playerL_teleport( lua_State *L )
 {
    Spob *pnt;
-   StarSystem *sys;
    const char *name, *pntname;
    int no_simulate, silent;
 
@@ -1834,8 +1833,8 @@ static int playerL_teleport( lua_State *L )
 
    /* Get a system. */
    if (lua_issystem(L,1)) {
-      sys   = luaL_validsystem(L,1);
-      name  = system_getIndex(sys->id)->name;
+      StarSystem *sys = luaL_validsystem(L,1);
+      name = system_getIndex(sys->id)->name;
    }
    /* Get a spob. */
    else if (lua_isspob(L,1)) {
@@ -1867,7 +1866,7 @@ static int playerL_teleport( lua_State *L )
          }
       }
       else
-         sys = system_get( sysname );
+         name = sysname;
    }
    else
       NLUA_INVALID_PARAMETER(L);
