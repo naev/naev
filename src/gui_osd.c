@@ -398,13 +398,10 @@ void osd_render (void)
       for (int i=ll->active; i<array_size(ll->items); i++) {
          const glColour *c = (i == (int)ll->active) ? &cFontWhite : &cFontGrey;
          x = osd_x;
-         w = osd_w;
          for (int j=0; j<array_size(ll->items[i]); j++) {
             gl_printRaw( &gl_smallFont, x, p, c, -1., ll->items[i][j] );
-            if (j==0) {
-               w = osd_w - osd_hyphenLen;
+            if (j==0)
                x = osd_x + osd_hyphenLen;
-            }
             p -= gl_smallFont.h + 5.;
             l++;
             if (l >= osd_lines)
