@@ -1525,8 +1525,6 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
    y = (target_pos->y + target_vel->y*t) - (pos->y + vel->y*t);
 
    /* Compute both the angles we want. */
-   rdir        = ANGLE(rx, ry);
-
    if (pilot_target != NULL) {
       /* Lead angle is determined from ewarfare. */
       double trackmin = outfit_trackmin(outfit);
