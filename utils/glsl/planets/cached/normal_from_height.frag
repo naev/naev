@@ -7,10 +7,10 @@ uniform vec2 dimensions;
 /* Compute normal map using the height texture. */
 vec2 normal( vec2 uv )
 {
-   vec2 uv1 = uv + vec2(  NORMAL_OFFSET, 0.0 );
-   vec2 uv2 = uv + vec2( -NORMAL_OFFSET, 0.0 );
-   vec2 uv3 = uv + vec2( 0.0,  NORMAL_OFFSET );
-   vec2 uv4 = uv + vec2( 0.0, -NORMAL_OFFSET );
+   vec2 uv1 = fract( uv + vec2(  NORMAL_OFFSET, 0.0 ) );
+   vec2 uv2 = fract( uv + vec2( -NORMAL_OFFSET, 0.0 ) );
+   vec2 uv3 = fract( uv + vec2( 0.0,  NORMAL_OFFSET ) );
+   vec2 uv4 = fract( uv + vec2( 0.0, -NORMAL_OFFSET ) );
    float h1 = texture( height, uv1 ).g;
    float h2 = texture( height, uv2 ).g;
    float h3 = texture( height, uv3 ).g;

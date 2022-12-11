@@ -1,30 +1,26 @@
 const float RADIUS = 0.8;
 
-uniform vec3 ground_color        = vec3(0.44,0.36,0.25);
-uniform vec3 ground_color_bright = vec3( 0.7,0.65,0.6 );
-uniform vec3 ground_color_dark   = vec3(0.1, 0.08,0.07);
-uniform vec3 cloud_color_bright  = vec3(0.65,0.65,0.5 );
-uniform vec3 cloud_color_dark    = vec3( 0.3, 0.2,0.1 );
-uniform vec3 lava_color          = vec3( 0.8, 0.1,0.05);
-uniform float mountain_height    = 0.5;   // Controls height scale of mountains.
+uniform vec3 cloud_color_bright     = vec3(0.8,0.6,0.75);
+uniform vec3 cloud_color_dark       = vec3(0.4,0.3, 0.7);
+uniform vec3 glow_color_bright      = vec3(0.8, 0.4, 0.6);
+uniform vec3 glow_color_dark        = vec3(0.3, 0.2, 0.6);
+uniform vec3 atmosphere_color_light = vec3(0.5, 0.6, 0.9); // Color of the atmosphere gradient.
+uniform vec3 atmosphere_color_dark  = vec3(0.6, 0.2, 0.4);
+uniform float water_height = 0.55;
+uniform float snow_width = 0.15;
+uniform float vegetation_width = 0.3;
+uniform float mountain_height = 0.5;
 uniform float rotation_speed     = 0.05;  // Rotation speed of the sphere.
-uniform float cloud_scroll_speed1 = 0.05; // Rotation speed of bright cloud layer.
-uniform float cloud_scroll_speed2 = 0.07; // Rotation speed of dark cloud layer.
+uniform float cloud_scroll_speed = 0.05;  // Rotation speed of cloud layer.
 uniform float cloud_height = 0.025;       // Distance of the cloud layer's shadow.
+uniform float cloud_density = 0.4;        // Opacity of cloud layers.
 uniform float normal_scale = 0.2;         // Strength of the normal displacement.
-uniform float crater_depth = 0.05;        // How deep the craters look.
-uniform float cloud_density = 0.6;        // Opacity of cloud layers.
-uniform float lava_height = 0.02;         // Lava below that height.
 uniform vec3 light_color = vec3(1.0,0.975,0.9);
-uniform vec3 light_dir   = normalize(vec3(0.6, 0.2, -0.75));
-uniform float ambient = 0.02;             // Ambient light.
-uniform vec3 atmosphere_color_light = vec3(1.0, 0.4, 0.1); // Color of the atmosphere gradient.
-uniform vec3 atmosphere_color_dark  = vec3(0.4, 0.03, 0.02);
-uniform float atmosphere_density = 0.75;  // Opacity of the atmosphere.
+uniform vec3 light_dir   = normalize(vec3(0.7, 0.2, -0.3));
+uniform float ambient = 0.02;       // Ambient light.
+uniform float atmosphere_density = 1.0;   // Opacity of the atmosphere.
 uniform float atmosphere_radius  = 0.05;  // Size of the atmopshere.
-uniform int depth_min_layers = 8;         // Min and max number of steps for parallax mapping.
-uniform int depth_max_layers = 32;
-uniform float depth_scale = 0.05;         // Amount of parallax mapping.
+uniform float glow_speed = 0.1;
 
 uniform sampler2D diffuse;
 uniform sampler2D height;
@@ -108,10 +104,22 @@ float get_depth( vec2 uv )
 
 float cloud_texture( vec3 pos )
 {
+   float w = (0.7-0.7*voronoi( 6.0*pos + u_seed + 2.5*snoise( 0.5*pos + u_seed ) ))*(0.75 + 0.25*snoise( 1.5*pos ));
+   float t = 2.0*abs(1.0 - 2.0*fract(cloud_scroll_speed*u_time)) - 1.0;
+   float amp = 4.0*cnoise( 9.0*pos*cloud_scroll_speed*t ) + cos(12.0*cloud_scroll_speed*u_time);
+   w = clamp(w*w, 0.0, 1.0);
+   vec3 p = pos + 2.0*t*w*w*(clamp(2.0*w - 1.0, 0.0, 1.0)*cross(pos, vec3(snoise( amp*pos + u_seed ), snoise( amp*pos - u_seed ), 1.0)) + clamp(2.0-2.0*w, 0.0, 1.0)*cross(pos, vec3(0.707,0.707/2.0,snoise( 1.1*amp*pos + u_seed/2.0 ))));
    vec3 seed_offset = hash(vec3(9*u_seed, 17*u_seed, 21*u_seed));
-   float h = (1.0-voronoi_rigded(vec3(0.4,0.4,0.6)*pos + seed_offset)) + voronoi_fbm(vec3(1.8,1.8,2.2)*pos - seed_offset) - 0.5 + cloud_density - 0.5;
+   float h = (1.0-voronoi_rigded(vec3(0.4,0.4,0.6)*p + seed_offset)) + voronoi_fbm(vec3(1.8,1.8,2.2)*p - seed_offset) - 0.5 + cloud_density - 0.5;
    h = clamp((1.5*(h-0.5) + 0.5) * (0.5 + 0.5*cloud_density), 0.0, 1.0);
    return h;
+}
+
+float glow_strength( vec3 pos, float h )
+{
+   float m = clamp(0.0 + 2.0*snoise( 4.0*pos + vec3(0.1*glow_speed*u_time, glow_speed*u_time, -0.05*glow_speed*u_time) ), 0.0, 1.0);
+   h = (h - water_height)/(1.0-water_height);
+   return m*clamp(4.0*( 0.02 - 0.5*min(min(min(abs(h-0.75 + 0.05*abs(1.0-2.0*fract(1.3*glow_speed*u_time)) ), 2.0*abs(h-0.25 + 0.05*abs(1.0-2.0*fract(0.9*glow_speed*u_time)))), 1.5*abs(h-0.5 - 0.05*abs(1.0-2.0*fract(0.7*glow_speed*u_time)))), 1.5*abs(h+0.25 - 0.05*abs(1.0-2.0*fract(1.5*glow_speed*u_time)))) ), 0.0, 1.0);
 }
 
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
@@ -147,50 +155,19 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
       vec3 atmosphere_color;
       // Rescaled and rotated UV coordinates.
       vec2 p = fract(vec2(asin(uv.x/RADIUS/sqrt(1.0-uv.y*uv.y/RADIUS*RADIUS))/M_PI/4.0, 0.5 + asin(uv.y/RADIUS)/M_PI) + 0.25*vec2(rotation_speed/M_PI*u_time, 0.0));
-
-      {
-         // Parallax mapping.
-         vec3 view_dir = vec3(uv.x*uv.x*sign(uv.x)/RADIUS/RADIUS, uv.y*uv.y*sign(uv.y)/RADIUS/RADIUS, 1.0-(uv.x*uv.x + uv.y*uv.y)/RADIUS/RADIUS);
-         // Max number of steps.
-         float depth_layers = mix(float(depth_max_layers), float(depth_min_layers), abs(dot(vec3(0,0,1), view_dir)));
-         float layer_depth = 1.0 / depth_layers;
-         float current_layer_depth = 0.0;
-         // Offset direction.
-         vec2 dir = view_dir.xy * depth_scale * vec2(0.25, 1.0);
-         // Step size.
-         vec2 delta = dir / depth_layers;
-         vec2 ofs = p;
-         float depth = get_depth(ofs);
-         float current_depth = 0.0;
-         while (current_depth < depth) {
-            // Iterate until depth is reached.
-            ofs -= delta;
-            depth = get_depth(fract(ofs));
-            current_depth += layer_depth;
-         }
-         vec2 prev_ofs = ofs + delta;
-         float after_depth  = depth - current_depth;
-         float before_depth = get_depth(prev_ofs) - current_depth + layer_depth;
-         float weight = after_depth / (after_depth - before_depth);
-         ofs = mix(ofs, prev_ofs, weight);
-         p = fract(ofs);
-      }
-
       float a = max( norm2.x*norm2.x + norm2.y*norm2.y - RADIUS*RADIUS + 8.0*atmosphere_radius*atmosphere_radius, 0.0 ) / (RADIUS*RADIUS + 8.0*atmosphere_radius*atmosphere_radius);
       // Smooth the edges.
       float alpha = clamp(100.0*(1.0-radius-0.005), 0.0, 1.0);
-      float alpha_surface = alpha;
-      vec3 cloud_pos1 = sphere_coords( uv*vec2(0.75,1.0), (rotation_speed+cloud_scroll_speed1)*u_time ) - 0.5*hash(vec3(u_seed));
-      vec3 cloud_pos2 = sphere_coords( uv*vec2(0.75,1.0), (rotation_speed+cloud_scroll_speed2)*u_time ) + 0.5*hash(vec3(u_seed));
-      float cloud_weight1 = cloud_texture( cloud_pos1 );
-      float cloud_weight2 = cloud_texture( cloud_pos2 );
-      float cloud_weight = min(0.75*(cloud_weight1 + cloud_weight2), 1.0);
-      float cloud_shadow = clamp(0.75*(cloud_texture( cloud_pos1 + cloud_height*light_dir ) + cloud_texture( cloud_pos2 + cloud_height*light_dir )) - 0.8*cloud_weight*cloud_weight, 0.0, 1.0);
+      vec3 pos = sphere_coords( uv, rotation_speed*u_time );
+      vec3 cloud_pos = sphere_coords( uv*vec2(0.75,1.0), (rotation_speed+cloud_scroll_speed)*u_time ) - 0.5*hash(vec3(u_seed));
+      float cloud_weight = cloud_texture( cloud_pos );
+      float cloud_shadow = clamp(cloud_texture( cloud_pos + cloud_height*light_dir ) - 0.5*cloud_weight*cloud_weight, 0.0, 1.0);
       float h = get_depth( p );
       vec3 surface_color = texture(diffuse, p).rgb;
       vec4 cloud_color = vec4(0,0,0,1);
-      vec3 lava_glow = 0.25*lava_color*(0.25 + surface_color.r*surface_color.r + surface_color.g*surface_color.g + surface_color.b*surface_color.b)*max(2.0*((lava_height - h)/lava_height - 0.25) + 0.25, 0.0);
-      float ns = normal_scale*max(1.0 - cloud_weight, 0.0);
+      float water_weight = clamp(25.0*(water_height-h), 0.0, 1.0);
+      float ns = normal_scale*max(1.0 - cloud_weight, 0.0)*max(1.0 - water_weight, 0.0)*max(h - water_height, 0.0)/(1.0-water_height);
+      float glow = glow_strength( pos, h );
 
       // Compute light strength for clouds (sphere).
       cloud_light = clamp(dot(norm, -light_dir), 0.0, 1.0);
@@ -201,25 +178,19 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
       light = clamp(dot(norm, -light_dir), 0.0, 1.0);
       a *= 2.0*a;
       atmosphere_color = mix(atmosphere_color_dark, atmosphere_color_light, a);
-      // Blend off lowered terrain on the edges.
-      alpha_surface *= clamp(50.0*(1.01 - (radius+crater_depth*(0.9-h))), 0.0, 1.0);
       // Specular blob.
       spec = 0.5*max(1.0 + min(h, 0.0), 0.0);
       light += max(spec - cloud_weight, 0.0)*exp(20.0*spec*(light-0.95));
-      cloud_color.rgb = mix(cloud_color_bright, cloud_color_dark, cloud_weight2);
-      cloud_color.a = alpha*min(max(cloud_weight1, cloud_weight2) + (1.0 - max(cloud_weight1, cloud_weight2))*min(cloud_weight1, cloud_weight2), 1.0);
+      cloud_color.rgb = mix(cloud_color_dark, cloud_color_bright, cloud_weight);
+      cloud_color.a = alpha*cloud_weight;
       // Darken light below clouds.
       light *= max(1.0 - cloud_shadow, 0.5);
-      // Darken light below a certain hight.
-      light *= 1.0 - max(0.25 - h, 0.0);
-      // Adjust brightness and contrast.
-      surface_color = clamp(0.9*(0.55*surface_color-0.6) + 0.55, 0.0, 1.0);
       // Apply light.
       surface_color *= min(ambient + (1.0-ambient)*light_color*light, 4.0);
-      surface_color += lava_glow*max(1.0 - 0.99*cloud_weight, 0.0);
       // Add surface color.
-      color_out.rgb = min(mix(color_out.rgb, surface_color, alpha_surface), 1.0);
-      color_out.a = max(color_out.a, alpha_surface);
+      color_out.rgb = min(mix(color_out.rgb, surface_color, alpha), 1.0);
+      color_out.rgb += 0.5*(1.0+5.0*light)*glow*mix(glow_color_dark, glow_color_bright, clamp(4.0*glow - 0.25, 0.0, 1.0));
+      color_out.a = max(color_out.a, alpha);
       // Add cloud layer.
       color_out.rgb = mix(color_out.rgb, min(ambient + (1.0-ambient)*light_color*cloud_light, 4.0)*cloud_color.rgb, cloud_color.a);
       color_out.a = max(color_out.a, min(2.0*alpha*cloud_weight, 1.0));
