@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.10.0-beta.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-12-09 22:20+0900\n"
+"POT-Creation-Date: 2022-12-11 14:57+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "no error"
 msgstr ""
 
-#: physfs.c:2 src/background.c:471 src/gui.c:1723 src/nlua_evt.c:147
+#: physfs.c:2 src/background.c:471 src/gui.c:1719 src/nlua_evt.c:147
 #: src/nlua_misn.c:239 src/nopenal.c:68
 msgid "unknown error"
 msgstr ""
@@ -6472,10 +6472,10 @@ msgstr ""
 
 #: dat/ships/misc/onewing_goddard.xml:12 dat/ships/misc/raelid_outpost.xml:12
 #: dat/ships/misc/raglan_outpost.xml:12 dat/ships/misc/sindbad.xml:12
-#: dat/missions/neutral/race_qex.lua:147 src/dev_uniedit.c:259
+#: dat/missions/neutral/race_qex.lua:151 src/dev_uniedit.c:259
 #: src/dev_uniedit.c:265 src/dev_uniedit.c:1443 src/dev_uniedit.c:1444
-#: src/land_outfits.c:432 src/land_outfits.c:433 src/land_outfits.c:434
-#: src/land_outfits.c:435 src/land_trade.c:203 src/land_trade.c:207
+#: src/land_outfits.c:436 src/land_outfits.c:437 src/land_outfits.c:438
+#: src/land_outfits.c:439 src/land_trade.c:203 src/land_trade.c:207
 #: src/land_trade.c:208 src/land_trade.c:209 src/map.c:655 src/map.c:656
 #: src/outfit.c:293 src/outfit.c:312
 msgid "N/A"
@@ -26286,7 +26286,7 @@ msgstr ""
 #: src/dev_sysedit.c:2227 src/dev_sysedit.c:2285 src/dev_uniedit.c:1513
 #: src/dev_uniedit.c:1676 src/dev_uniedit.c:1892 src/dev_uniedit.c:1957
 #: src/info.c:437 src/info.c:538 src/info.c:949 src/info.c:1313 src/input.c:524
-#: src/land.c:877 src/land_outfits.c:438 src/land_outfits.c:690
+#: src/land.c:877 src/land_outfits.c:442 src/land_outfits.c:694
 #: src/land_shipyard.c:129 src/land_shipyard.c:218 src/land_trade.c:85
 #: src/land_trade.c:87 src/land_trade.c:153 src/load.c:531 src/load.c:612
 #: src/map.c:727 src/map.c:780 src/map.c:1959 src/map_find.c:697
@@ -26307,7 +26307,7 @@ msgstr ""
 #. Destroy if exists
 #: dat/board.lua:410 dat/board.lua:453 dat/comm.lua:171
 #: dat/events/escort_settings.lua:162 dat/events/shipai.lua:35
-#: dat/events/shipai.lua:49 dat/missions/neutral/race_qex.lua:125
+#: dat/events/shipai.lua:49 dat/missions/neutral/race_qex.lua:129
 #: dat/outfits/unique/fuel_recycler.lua:90 dat/spob/lua/lib/hypergate.lua:308
 #: dat/spob/lua/lib/spob.lua:114 src/console.c:694 src/dev_sysedit.c:1460
 #: src/dev_sysedit.c:1568 src/dev_sysedit.c:1665 src/dev_sysedit.c:1808
@@ -26315,7 +26315,7 @@ msgstr ""
 #: src/dev_sysedit.c:2337 src/dev_uniedit.c:414 src/dev_uniedit.c:1571
 #: src/dev_uniedit.c:1770 src/dev_uniedit.c:2006 src/info.c:425 src/info.c:518
 #: src/info.c:569 src/info.c:709 src/info.c:914 src/info.c:1168 src/info.c:1265
-#: src/info.c:1610 src/land_outfits.c:165 src/map.c:376 src/map_find.c:1022
+#: src/info.c:1610 src/land_outfits.c:166 src/map.c:376 src/map_find.c:1022
 #: src/map_system.c:202
 msgid "Close"
 msgstr ""
@@ -27252,7 +27252,7 @@ msgstr ""
 #: dat/missions/shadow/shadowvigil.lua:60
 #: dat/missions/zalek/blackhole/zbh11.lua:108 dat/scripts/common/comm.lua:30
 #: dat/scripts/common/comm.lua:35 dat/scripts/common/poi.lua:200
-#: dat/scripts/common/poi.lua:206 src/equipment.c:1811 src/gui.c:1531
+#: dat/scripts/common/poi.lua:206 src/equipment.c:1811 src/gui.c:1527
 #: src/map.c:589 src/map.c:595 src/map.c:601 src/map.c:607 src/map.c:613
 #: src/map.c:619 src/map.c:1920 src/map.c:2213 src/map_overlay.c:227
 #: src/map_system.c:479 src/outfit.c:301 src/outfit.c:320 src/outfit.c:905
@@ -36611,11 +36611,11 @@ msgstr ""
 msgid "Rename Ship AI"
 msgstr ""
 
-#: dat/events/shipai.lua:52 dat/events/updater.lua:121
+#: dat/events/shipai.lua:52 dat/events/updater.lua:95
 msgid "Enable tutorial hints"
 msgstr ""
 
-#: dat/events/shipai.lua:54 dat/events/updater.lua:122
+#: dat/events/shipai.lua:54 dat/events/updater.lua:96
 msgid "Disable tutorial hints"
 msgstr ""
 
@@ -39555,7 +39555,6 @@ msgstr ""
 #. Small updater to handle moving saves to newer versions.
 #. --
 #. Runs on saves older than 0.10.0
-#. TODO move ship AI explanation here and deal with both saves older than 0.9.0 and 0.10.0
 #. "nelly_met" variable wasn't used in older versions
 #. Update mission-variable based items to inventory-based
 #. Chase scavengers and the works
@@ -39574,69 +39573,49 @@ msgstr ""
 #. Helpers to create main characters
 #. Token stuff
 #. Roughly 1 token is 1000 credits
-#: dat/events/updater.lua:33 dat/scripts/common/minerva.lua:217
+#: dat/events/updater.lua:31 dat/scripts/common/minerva.lua:217
 msgid "Minerva Token"
 msgstr ""
 
 #. Helpers to create main characters
 #. Emblem stuff
-#: dat/events/updater.lua:34 dat/scripts/common/gauntlet.lua:30
+#: dat/events/updater.lua:32 dat/scripts/common/gauntlet.lua:30
 msgid "Totoran Emblem"
 msgstr ""
 
-#.
-#. Important new features we should probably introduce:
-#. 1. Notes in the star map
-#. 2. New asteroids
-#. 3. Difficulties
-#. --
-#. Runs on saves older than 0.9.0
-#. Changed how the FLF base diff stuff works
-#. Set up pirate faction
-#. Only get first parameter
-#. We'll be kind and set the player's pirate standing for the clans
-#. to be positive if the player was doing well with pirates before
-#. Update pirate/marauder
-#. Some previously known factions become unknown
-#. Hostile by default
-#. Do update tutorial
-#. TODO explain new mechanics:
-#. - introduce ship ai
-#. - electronic warfare (stealth, scanning)
-#. - outfit balance
-#. - safe lanes
-#: dat/events/updater.lua:91
+#. Do update tutorial, have to handle older versions here
+#: dat/events/updater.lua:49
 msgid "Suddenly, a hologram materializes in front of you."
 msgstr ""
 
-#: dat/events/updater.lua:92
+#: dat/events/updater.lua:50
 msgid ""
 "\"Hello there {playername}! I'm your Ship AI. Up until now I've been "
 "resident in your ship controlling your Autonav and other functionality, but "
 "with new updates, I can now materialize and communicate directly with you as "
 "a hologram.\"\n"
-"They stare at you for a few seconds.\n"
-"\"Say, now that I can see you, you look very familiar. You wouldn't be "
+"   They stare at you for a few seconds.\n"
+"   \"Say, now that I can see you, you look very familiar. You wouldn't be "
 "related my late previous owner? Terrible what happened…\""
 msgstr ""
 
-#: dat/events/updater.lua:95
+#: dat/events/updater.lua:53
 msgid ""
 "\"I'm sure you have many questions about the update, but first, would you "
 "like to give me a name?\""
 msgstr ""
 
 #. TODO integrate into vn
-#: dat/events/updater.lua:99 dat/missions/tutorial/tutorial.lua:54
+#: dat/events/updater.lua:57 dat/missions/tutorial/tutorial.lua:54
 msgid "Name Ship AI"
 msgstr ""
 
-#: dat/events/updater.lua:99 dat/missions/tutorial/tutorial.lua:54
+#: dat/events/updater.lua:57 dat/missions/tutorial/tutorial.lua:54
 msgid "Please enter a name for your Ship AI"
 msgstr ""
 
 #. Can't use rename here
-#: dat/events/updater.lua:115
+#: dat/events/updater.lua:73
 msgid ""
 "\"Great! I'll use the name {ainame} from now on. If you want to change it, "
 "you can do so from the #oInformation#0 menu which you open with {infokey} by "
@@ -39644,7 +39623,19 @@ msgid ""
 "explanations and change tutorial options.\""
 msgstr ""
 
-#: dat/events/updater.lua:116
+#: dat/events/updater.lua:75
+msgid "\"Your ship AI {shipai} materializes before you.\""
+msgstr ""
+
+#: dat/events/updater.lua:77
+msgid ""
+"\"It seems like there has been a significant update to the game!\n"
+"Many of the new features come with small tutorials in form of missions. I "
+"will not go over these to not spoil you as they will appear in-game. Let me "
+"cover some of the features that you may miss.\""
+msgstr ""
+
+#: dat/events/updater.lua:82
 msgid ""
 "\"With the update, a lot of new mechanics and features have been changed. "
 "The largest change includes a revamp of #oElectronic Warfare#0, which now "
@@ -39654,7 +39645,15 @@ msgid ""
 "area nearby.\""
 msgstr ""
 
-#: dat/events/updater.lua:117
+#: dat/events/updater.lua:85
+msgid ""
+"\"Asteroids have been completely reworked. They no longer explode randomly "
+"and asteroid fields can spawn different types of asteroids. While it is "
+"possible to mine them with regular weapons, there are special outfits that "
+"will help you mine them and give you access to more rare rewards.\""
+msgstr ""
+
+#: dat/events/updater.lua:86
 msgid ""
 "\"You may have also noticed that there has been a major change in outfits. "
 "Lots of outfits have been removed, added, or renamed, leading to a loss of "
@@ -39663,22 +39662,35 @@ msgid ""
 "to be flying a poorly equipped ship in space!\""
 msgstr ""
 
-#: dat/events/updater.lua:118
+#: dat/events/updater.lua:88
 msgid ""
-"\"There are also a lot of other changes, for example, there are now patrol "
-"routes in systems that are more heavily guarded by local factions, seeking "
-"missiles can be jammed, and some factions have been completely reworked. You "
-"will notice a lot of smaller differences too as you play the game.\""
+"\"Bioships have also been reworked completely. Similar to the old ships, "
+"they gain ranks through experience. However, instead of the ranks being on a "
+"per-outfit level, they are now on per-ship levels. Increasing ranks will "
+"give you better core outfits and weapons, while also unlocking skill points "
+"that you can use to significantly change the functionality and performance "
+"of the bioship.\""
 msgstr ""
 
-#: dat/events/updater.lua:119
+#: dat/events/updater.lua:90
+msgid ""
+"\"This update also provides significant modernization of the engine and many "
+"other features. To list a few, the star map is larger and you can save "
+"system notes, many new missions and campaigns, health bars are shown for "
+"pilots in combat, backgrounds reworked, news and NPCs reworked, unique "
+"pilots appear throughout the universe, manual aiming mode, save snapshots, "
+"difficulty settings, etc. Some features can be toggled through the "
+"#oOptions#0 menu, so make sure to check that if interested.\""
+msgstr ""
+
+#: dat/events/updater.lua:93
 msgid ""
 "\"With that said, would you like me to provide small, in-game advice as you "
 "do things throughout the game? Some might refer to things you are already "
 "familiar with, but it could help you learn new things.\""
 msgstr ""
 
-#: dat/events/updater.lua:126 dat/events/updater.lua:177
+#: dat/events/updater.lua:100 dat/events/updater.lua:197
 msgid ""
 "\"Great! I'll be giving you short hints as you do things through the game. "
 "If you want to change my settings or turn off the hints, please do so from "
@@ -39686,7 +39698,7 @@ msgid ""
 "{infokey}. Now, let's go adventuring!\""
 msgstr ""
 
-#: dat/events/updater.lua:133
+#: dat/events/updater.lua:107
 msgid ""
 "\"OK, I will not be giving you any hints. If you want to change my settings, "
 "turn on the hints, or get information and advice, please do so from the "
@@ -39694,46 +39706,62 @@ msgid ""
 "{infokey}. Now, let's go adventuring!\""
 msgstr ""
 
+#: dat/events/updater.lua:109
+msgid ""
+"\"And that is all! If you want to brush on game mechanics or get more hints, "
+"remember you can get in touch with me directly by clicking the '#oShip AI#0' "
+"button in the #oInformation#0 menu that you can open with {infokey}. Now, "
+"let's go adventuring!\""
+msgstr ""
+
+#. Runs on saves older than 0.9.0
+#. Changed how the FLF base diff stuff works
+#. Set up pirate faction
+#. Only get first parameter
+#. We'll be kind and set the player's pirate standing for the clans
+#. to be positive if the player was doing well with pirates before
+#. Update pirate/marauder
+#. Some previously known factions become unknown
+#. Hostile by default
 #. Fixes a tiny bug that sneaked in for a bit (around 2022-11-27)
+#. TODO remove hack near 0.11.0 release
 #. Run on saves older than 0.9.0
-#. if naev.versionTest( save_version, "0.10.0" ) < 0 then
-#. didupdate = true
-#. end
+#. Run on saves older than 0.10.0
 #. Note that games before 0.10.0 will have lastplayed set days from the unix epoch
-#: dat/events/updater.lua:165
+#: dat/events/updater.lua:185
 msgid "Your ship AI, {ainame}, materializes in front of you."
 msgstr ""
 
-#: dat/events/updater.lua:167
+#: dat/events/updater.lua:187
 msgid ""
 "\"Welcome back, {player}! My ship logs indicate that you have not played "
 "Naev in quite a long time!\""
 msgstr ""
 
-#: dat/events/updater.lua:169
+#: dat/events/updater.lua:189
 msgid ""
 "\"With that said, would you like me to reset the in-game advice as you do "
 "things throughout the game? Some might refer to things you are already "
 "familiar with, but it could help you learn new things.\""
 msgstr ""
 
-#: dat/events/updater.lua:171
+#: dat/events/updater.lua:191
 msgid "Reset and enable tutorial hints"
 msgstr ""
 
-#: dat/events/updater.lua:172
+#: dat/events/updater.lua:192
 msgid "Leave as is (hints are {state})"
 msgstr ""
 
-#: dat/events/updater.lua:172
+#: dat/events/updater.lua:192
 msgid "off"
 msgstr ""
 
-#: dat/events/updater.lua:172
+#: dat/events/updater.lua:192
 msgid "on"
 msgstr ""
 
-#: dat/events/updater.lua:185
+#: dat/events/updater.lua:205
 msgid ""
 "\"OK, I will not be resetting the hints, and leave them as is. If you want "
 "to change my settings, turn on the hints, or get information and advice, "
@@ -47226,20 +47254,19 @@ msgstr ""
 #. the mission. Worst case we can trigger custom hooks if necessary
 #. This should trigger the timer hook
 #. TODO sound effect?
-#. TODO sound effect?
 #. TODO music?
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:131
-#: dat/missions/minerva/kex3.lua:401 dat/missions/neutral/race_qex.lua:283
+#: dat/missions/minerva/kex3.lua:401 dat/missions/neutral/race_qex.lua:287
 msgid "3…"
 msgstr ""
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:132
-#: dat/missions/minerva/kex3.lua:402 dat/missions/neutral/race_qex.lua:284
+#: dat/missions/minerva/kex3.lua:402 dat/missions/neutral/race_qex.lua:289
 msgid "2…"
 msgstr ""
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:133
-#: dat/missions/minerva/kex3.lua:403 dat/missions/neutral/race_qex.lua:285
+#: dat/missions/minerva/kex3.lua:403 dat/missions/neutral/race_qex.lua:290
 msgid "1…"
 msgstr ""
 
@@ -47729,7 +47756,7 @@ msgstr ""
 #. Block the player and set timers
 #: dat/missions/dvaered/recruitment/dv_bikers.lua:200
 #: dat/missions/dvaered/recruitment/dv_bikers.lua:235
-#: dat/missions/neutral/race_qex.lua:382
+#: dat/missions/neutral/race_qex.lua:387
 msgid "GO!"
 msgstr ""
 
@@ -68664,7 +68691,7 @@ msgid ""
 "prize of {credits} if you win. Interested?\""
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:47 dat/missions/neutral/race_qex.lua:165
+#: dat/missions/neutral/race1.lua:47 dat/missions/neutral/race_qex.lua:169
 msgid "You're participating in a race!"
 msgstr ""
 
@@ -68900,7 +68927,7 @@ msgstr ""
 #. Qex Racing
 #.
 #. --
-#: dat/missions/neutral/race_qex.lua:45
+#: dat/missions/neutral/race_qex.lua:49
 msgid "A terminal to let you participate in the different available races."
 msgstr ""
 
@@ -68908,37 +68935,37 @@ msgstr ""
 #. Length of the track
 #. only 100 samples
 #. TODO something better
-#: dat/missions/neutral/race_qex.lua:78
+#: dat/missions/neutral/race_qex.lua:82
 msgid "Racing Terminal"
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:82
+#: dat/missions/neutral/race_qex.lua:86
 msgid "{1:02.0f}:{2:02.0f}.{3:.0f}"
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:96
+#: dat/missions/neutral/race_qex.lua:100
 msgid "Laid Back Person"
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:99
+#: dat/missions/neutral/race_qex.lua:103
 msgid "One of the locals appears as you get close to the racing terminal."
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:101
+#: dat/missions/neutral/race_qex.lua:105
 msgid ""
 "\"Hiya there! You seem like a new face. You want an explanation on how "
 "racing works?\""
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:103
+#: dat/missions/neutral/race_qex.lua:107
 msgid "Get an explanation"
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:104
+#: dat/missions/neutral/race_qex.lua:108
 msgid "Skip explanation"
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:108
+#: dat/missions/neutral/race_qex.lua:112
 msgid ""
 "\"Racing is quite simple, you have to go through all the gates in order "
 "until you reach the final goal. There are no limitations on what ship and "
@@ -68946,70 +68973,70 @@ msgid ""
 "ships if you want to make good times.\""
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:109
+#: dat/missions/neutral/race_qex.lua:113
 msgid ""
 "\"Each track has a goal time to beat. If you beat the time, you will get a "
 "nice credit reward. Furthermore, if you beat all the tracks here, a Melendez "
 "Corporation representative will give you a nice trophy to commemorate!\""
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:110
+#: dat/missions/neutral/race_qex.lua:114
 msgid ""
 "\"You can try as many times as you want with no penalty. Your best time will "
 "also be saved so you can try to beat it again.\""
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:111
+#: dat/missions/neutral/race_qex.lua:115
 msgid "\"It's really fun, just be careful not to get addicted. He he."
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:114
+#: dat/missions/neutral/race_qex.lua:118
 msgid "\"OK, look forward to seeing your racing skills!\""
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:121
+#: dat/missions/neutral/race_qex.lua:125
 msgid "Race!"
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:126
+#: dat/missions/neutral/race_qex.lua:130
 msgid "Choose Race Track"
 msgstr ""
 
 #. txt = txt.."#n".._("Name: ").."#0"     ..track.name.."\n"
-#: dat/missions/neutral/race_qex.lua:143
+#: dat/missions/neutral/race_qex.lua:147
 msgid "Length: "
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:144
+#: dat/missions/neutral/race_qex.lua:148
 msgid "Goal Time: "
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:145
+#: dat/missions/neutral/race_qex.lua:149
 msgid "Reward: "
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:147 dat/missions/neutral/race_qex.lua:153
+#: dat/missions/neutral/race_qex.lua:151 dat/missions/neutral/race_qex.lua:157
 msgid "Best Time: "
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:166
+#: dat/missions/neutral/race_qex.lua:170
 msgid "Endless Riches!"
 msgstr ""
 
 #. Update best time if applicable
-#: dat/missions/neutral/race_qex.lua:314
+#: dat/missions/neutral/race_qex.lua:319
 msgid ""
 "You finished the race in {elapsed} and beat the goal time of {goal}! This is "
 "your new best time! Congratulations!"
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:319
+#: dat/missions/neutral/race_qex.lua:324
 msgid ""
 "You finished the race in {elapsed} and beat the goal time of {goal}! "
 "Congratulations!"
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:332
+#: dat/missions/neutral/race_qex.lua:337
 msgid ""
 "An individual in a suit and tie suddenly takes you up onto a stage. A large "
 "name tag on their jacket says 'Melendez Corporation'. \"Congratulations on "
@@ -69021,28 +69048,26 @@ msgid ""
 "cool."
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:346
+#: dat/missions/neutral/race_qex.lua:351
 msgid ""
 "You finished the race in {elapsed}, but were {short} of the goal time. This "
 "is your new best time! Keep trying!"
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:351
+#: dat/missions/neutral/race_qex.lua:356
 msgid ""
 "You finished the race in {elapsed}, but were {short} of the goal time. Keep "
 "trying!"
 msgstr ""
 
-#. TODO sound
-#: dat/missions/neutral/race_qex.lua:369
+#: dat/missions/neutral/race_qex.lua:374
 msgid "Qex Racing"
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:370
+#: dat/missions/neutral/race_qex.lua:375
 msgid "Beat the Race!"
 msgstr ""
 
-#. TODO sound
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <mission name="Hot dogs from space">
@@ -98628,7 +98653,7 @@ msgstr ""
 msgid "Trying to add subtask '%s' to non-existent task."
 msgstr ""
 
-#: src/ai.c:1200 src/ai.c:1266 src/nlua_pilot.c:4626
+#: src/ai.c:1200 src/ai.c:1266 src/nlua_pilot.c:4615
 msgid "Trying to pop task when there are no tasks on the stack."
 msgstr ""
 
@@ -98637,7 +98662,7 @@ msgstr ""
 msgid "Trying to pop subtask when there are no subtasks for the task '%s'."
 msgstr ""
 
-#: src/ai.c:2309 src/nlua_pilot.c:5116
+#: src/ai.c:2309 src/nlua_pilot.c:5105
 #, c-format
 msgid "Spob '%s' not found in system '%s'"
 msgstr ""
@@ -100277,7 +100302,7 @@ msgstr ""
 msgid "Unable to create economy G Matrix."
 msgstr ""
 
-#: src/economy.c:532 src/gui.c:1614 src/ndata.c:196 src/nfile.c:479
+#: src/economy.c:532 src/gui.c:1610 src/ndata.c:196 src/nfile.c:479
 #: src/opengl_tex.c:133 src/opengl_tex.c:370 src/physics.c:289
 msgid "Out of Memory"
 msgstr ""
@@ -100358,7 +100383,7 @@ msgid ""
 msgstr ""
 
 #: src/equipment.c:320 src/land.c:349 src/land.c:615 src/land.c:1341
-#: src/land_outfits.c:160 src/land_shipyard.c:94 src/land_trade.c:73
+#: src/land_outfits.c:161 src/land_shipyard.c:94 src/land_trade.c:73
 msgid "Take Off"
 msgstr ""
 
@@ -100442,7 +100467,7 @@ msgstr ""
 msgid "Right click to add"
 msgstr ""
 
-#: src/equipment.c:851 src/outfit.c:398
+#: src/equipment.c:851
 #, c-format
 msgid "#%c%s #%c%s #0slot"
 msgstr ""
@@ -100474,7 +100499,7 @@ msgstr ""
 msgid "Ship Stats\n"
 msgstr ""
 
-#: src/equipment.c:1575 src/land_outfits.c:318 src/shiplog.c:489
+#: src/equipment.c:1575 src/land_outfits.c:322 src/shiplog.c:489
 #: src/shiplog.c:534
 msgid "All"
 msgstr ""
@@ -100483,7 +100508,7 @@ msgstr ""
 msgid "Very little space on equipment outfit tabs!"
 msgstr ""
 
-#: src/equipment.c:1618 src/land_outfits.c:354
+#: src/equipment.c:1618 src/land_outfits.c:358
 msgid "Filter…"
 msgstr ""
 
@@ -100518,7 +100543,7 @@ msgstr ""
 msgid "Crew:"
 msgstr ""
 
-#: src/equipment.c:1774 src/info.c:577 src/land_outfits.c:421
+#: src/equipment.c:1774 src/info.c:577 src/land_outfits.c:425
 #: src/land_shipyard.c:247 src/map_find.c:637 src/map_system.c:636
 #: src/map_system.c:663
 msgid "Mass:"
@@ -100693,27 +100718,27 @@ msgstr ""
 msgid "%s MJ"
 msgstr ""
 
-#: src/equipment.c:1963 src/land_outfits.c:759
+#: src/equipment.c:1963 src/land_outfits.c:763
 msgid "Show all outfits"
 msgstr ""
 
-#: src/equipment.c:1964 src/land_outfits.c:760
+#: src/equipment.c:1964 src/land_outfits.c:764
 msgid "Show only outfits equipable on any of your ships"
 msgstr ""
 
-#: src/equipment.c:1965 src/land_outfits.c:761
+#: src/equipment.c:1965 src/land_outfits.c:765
 msgid "Show only outfits equipable on current ship"
 msgstr ""
 
-#: src/equipment.c:1966 src/land_outfits.c:762
+#: src/equipment.c:1966 src/land_outfits.c:766
 msgid "Show only light outfits"
 msgstr ""
 
-#: src/equipment.c:1967 src/land_outfits.c:763
+#: src/equipment.c:1967 src/land_outfits.c:767
 msgid "Show only medium outfits"
 msgstr ""
 
-#: src/equipment.c:1968 src/land_outfits.c:764
+#: src/equipment.c:1968 src/land_outfits.c:768
 msgid "Show only heavy outfits"
 msgstr ""
 
@@ -101212,27 +101237,27 @@ msgstr ""
 msgid "Adding translations from %s"
 msgstr ""
 
-#: src/gui.c:1692
+#: src/gui.c:1688
 #, c-format
 msgid "GUI '%s': Trying to run GUI func '%s' but no GUI is loaded!"
 msgstr ""
 
-#: src/gui.c:1701
+#: src/gui.c:1697
 #, c-format
 msgid "GUI '%s': no function '%s' defined!"
 msgstr ""
 
-#: src/gui.c:1722
+#: src/gui.c:1718
 #, c-format
 msgid "GUI '%s' Lua -> '%s': %s"
 msgstr ""
 
-#: src/gui.c:1858
+#: src/gui.c:1854
 #, c-format
 msgid "Unable to find GUI '%s'."
 msgstr ""
 
-#: src/gui.c:1869
+#: src/gui.c:1865
 #, c-format
 msgid ""
 "Failed to load GUI Lua: %s\n"
@@ -101240,7 +101265,7 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/gui.c:2016
+#: src/gui.c:2012
 #, c-format
 msgid "#oRadar set to %.0fx.#0"
 msgstr ""
@@ -101359,7 +101384,7 @@ msgstr ""
 msgid "Date:"
 msgstr ""
 
-#: src/info.c:385 src/land.c:1326 src/land_outfits.c:423
+#: src/info.c:385 src/land.c:1326 src/land_outfits.c:427
 #: src/land_shipyard.c:307 src/land_trade.c:91 src/map_find.c:639
 msgid "Money:"
 msgstr ""
@@ -102495,108 +102520,108 @@ msgstr ""
 msgid "Rescue: 'rescue' : '%s'"
 msgstr ""
 
-#: src/land_outfits.c:169 src/land_trade.c:71
+#: src/land_outfits.c:171 src/land_trade.c:71
 msgid "Sell"
 msgstr ""
 
-#: src/land_outfits.c:172 src/land_shipyard.c:100 src/land_trade.c:69
+#: src/land_outfits.c:175 src/land_shipyard.c:100 src/land_trade.c:69
 msgid "Buy"
 msgstr ""
 
-#: src/land_outfits.c:175
+#: src/land_outfits.c:179
 msgid "Find Outfits"
 msgstr ""
 
-#: src/land_outfits.c:318
+#: src/land_outfits.c:322
 msgid "Other"
 msgstr ""
 
 #. Set up keys.
-#: src/land_outfits.c:420 src/map_find.c:636 src/map_system.c:635
+#: src/land_outfits.c:424 src/map_find.c:636 src/map_system.c:635
 msgid "Owned:"
 msgstr ""
 
-#: src/land_outfits.c:422 src/land_shipyard.c:305 src/map_find.c:638
+#: src/land_outfits.c:426 src/land_shipyard.c:305 src/map_find.c:638
 #: src/map_system.c:637 src/map_system.c:684
 msgid "Price:"
 msgstr ""
 
-#: src/land_outfits.c:487 src/land_shipyard.c:309 src/map_find.c:640
+#: src/land_outfits.c:491 src/land_shipyard.c:309 src/map_find.c:640
 #: src/map_system.c:685
 msgid "License:"
 msgstr ""
 
-#: src/land_outfits.c:494 src/land_shipyard.c:312
+#: src/land_outfits.c:498 src/land_shipyard.c:312
 msgid "Requires:"
 msgstr ""
 
 #.
-#: src/land_outfits.c:630 src/land_outfits.c:895 src/land_outfits.c:1004
+#: src/land_outfits.c:634 src/land_outfits.c:899 src/land_outfits.c:1008
 #, c-format
 msgid ""
 "Outfit '%s' failed to run '%s':\n"
 "%s"
 msgstr ""
 
-#: src/land_outfits.c:665
+#: src/land_outfits.c:669
 msgid "Unique"
 msgstr ""
 
-#: src/land_outfits.c:667
+#: src/land_outfits.c:671
 msgid "Only 1 of type per ship"
 msgstr ""
 
-#: src/land_outfits.c:804
+#: src/land_outfits.c:808
 msgid "You can only own one of this outfit."
 msgstr ""
 
-#: src/land_outfits.c:811
+#: src/land_outfits.c:815
 msgid "You already know of everything this map contains."
 msgstr ""
 
-#: src/land_outfits.c:816
+#: src/land_outfits.c:820
 msgid "You already own this GUI."
 msgstr ""
 
-#: src/land_outfits.c:821
+#: src/land_outfits.c:825
 msgid "You already have this license."
 msgstr ""
 
-#: src/land_outfits.c:827 src/land_shipyard.c:451 src/land_trade.c:294
+#: src/land_outfits.c:831 src/land_shipyard.c:451 src/land_trade.c:294
 #, c-format
 msgid "You need %s more."
 msgstr ""
 
-#: src/land_outfits.c:832
+#: src/land_outfits.c:836
 #, c-format
 msgid "You need the '%s' license to buy this outfit."
 msgstr ""
 
-#: src/land_outfits.c:843
+#: src/land_outfits.c:847
 msgid "You lack the resources to buy this outfit."
 msgstr ""
 
-#: src/land_outfits.c:942
+#: src/land_outfits.c:946
 msgid "You can't sell a unique outfit."
 msgstr ""
 
-#: src/land_outfits.c:947
+#: src/land_outfits.c:951
 msgid "You can't sell a map."
 msgstr ""
 
-#: src/land_outfits.c:952
+#: src/land_outfits.c:956
 msgid "You can't sell a GUI."
 msgstr ""
 
-#: src/land_outfits.c:957
+#: src/land_outfits.c:961
 msgid "You can't sell a license."
 msgstr ""
 
-#: src/land_outfits.c:962 src/land_trade.c:324
+#: src/land_outfits.c:966 src/land_trade.c:324
 msgid "You can't sell something you don't have!"
 msgstr ""
 
-#: src/land_outfits.c:967
+#: src/land_outfits.c:971
 msgid "You are unable to sell this outfit!"
 msgstr ""
 
@@ -104293,7 +104318,7 @@ msgstr ""
 msgid "Unknown audio effect '%s'!"
 msgstr ""
 
-#: src/nlua_canvas.c:218 src/nlua_pilot.c:5694 src/opengl_tex.c:227
+#: src/nlua_canvas.c:218 src/nlua_pilot.c:5683 src/opengl_tex.c:227
 msgid "Error setting up framebuffer!"
 msgstr ""
 
@@ -104315,8 +104340,8 @@ msgstr ""
 msgid "Commodity '%s' not found!"
 msgstr ""
 
-#: src/nlua_commodity.c:351 src/nlua_commodity.c:387 src/nlua_player.c:1845
-#: src/nlua_player.c:1865
+#: src/nlua_commodity.c:351 src/nlua_commodity.c:387 src/nlua_player.c:1844
+#: src/nlua_player.c:1864
 #, c-format
 msgid "Spob '%s' does not belong to a system."
 msgstr ""
@@ -104531,22 +104556,22 @@ msgstr ""
 msgid "Article is invalid."
 msgstr ""
 
-#: src/nlua_news.c:235 src/nlua_news.c:288
+#: src/nlua_news.c:235 src/nlua_news.c:281
 msgid "Bad arguments"
 msgstr ""
 
-#: src/nlua_news.c:259
+#: src/nlua_news.c:252
 msgid ""
 "\n"
 "Bad arguments, use addArticle(\"Faction\",\"Title\",\"Content\",[date,"
 "[date_to_rm]])"
 msgstr ""
 
-#: src/nlua_news.c:477 src/nlua_news.c:492
+#: src/nlua_news.c:470 src/nlua_news.c:485
 msgid "Bad argument to news.date(), must be article or a table of articles"
 msgstr ""
 
-#: src/nlua_news.c:482 src/nlua_news.c:497
+#: src/nlua_news.c:475 src/nlua_news.c:490
 msgid "Article not valid"
 msgstr ""
 
@@ -104596,84 +104621,84 @@ msgid "#%cBroadcast %s>#0 \"%s\""
 msgstr ""
 
 #. Hostile
-#: src/nlua_pilot.c:2489 src/nlua_pilot.c:2537 src/player.c:1626
+#: src/nlua_pilot.c:2489 src/nlua_pilot.c:2526 src/player.c:1626
 #: src/player.c:1635 src/player.c:1638 src/player.c:1641
 #, c-format
 msgid "#%c%s>#0 %s"
 msgstr ""
 
-#: src/nlua_pilot.c:2491 src/nlua_pilot.c:2539
+#: src/nlua_pilot.c:2491 src/nlua_pilot.c:2528
 #, c-format
 msgid "#%cComm %s>#0 \"%s\""
 msgstr ""
 
-#: src/nlua_pilot.c:3068 src/nlua_pilot.c:3106 src/nlua_pilot.c:3234
+#: src/nlua_pilot.c:3057 src/nlua_pilot.c:3095 src/nlua_pilot.c:3223
 #, c-format
 msgid "Pilot '%s' with ship '%s' does not have named slot '%s'!"
 msgstr ""
 
-#: src/nlua_pilot.c:4036
+#: src/nlua_pilot.c:4025
 msgid ""
 "Quantity must be positive for pilot.cargoAdd (if removing, use pilot.cargoRm)"
 msgstr ""
 
-#: src/nlua_pilot.c:4072
+#: src/nlua_pilot.c:4061
 msgid ""
 "Quantity must be positive for pilot.cargoRm (if adding, use pilot.cargoAdd)"
 msgstr ""
 
-#: src/nlua_pilot.c:4303
+#: src/nlua_pilot.c:4292
 #, c-format
 msgid "Tried to access unknown flag '%s' for pilot '%s'!"
 msgstr ""
 
-#: src/nlua_pilot.c:4460 src/pilot.c:1248
+#: src/nlua_pilot.c:4449 src/pilot.c:1248
 #, c-format
 msgid "Pilot '%s' does not have an AI!"
 msgstr ""
 
-#: src/nlua_pilot.c:4664
+#: src/nlua_pilot.c:4653
 msgid "Pilot is not on manual control."
 msgstr ""
 
-#: src/nlua_pilot.c:5024
+#: src/nlua_pilot.c:5013
 #, c-format
 msgid "Pilot '%s' can't jump out exit only jump '%s'"
 msgstr ""
 
 #. Not found.
-#: src/nlua_pilot.c:5036
+#: src/nlua_pilot.c:5025
 #, c-format
 msgid "System '%s' is not adjacent to current system '%s'"
 msgstr ""
 
-#: src/nlua_pilot.c:5157
+#: src/nlua_pilot.c:5146
 #, c-format
 msgid "#%c%s#0 is hailing you."
 msgstr ""
 
-#: src/nlua_pilot.c:5281
+#: src/nlua_pilot.c:5270
 #, c-format
 msgid ""
 "Trying to change the leader of pilot '%s' that is a deployed fighter or part "
 "of the player fleet!"
 msgstr ""
 
-#: src/nlua_pilot.c:5289
+#: src/nlua_pilot.c:5278
 #, c-format
 msgid "Pilot '%s' not found in followers of '%s'"
 msgstr ""
 
-#: src/nlua_pilot.c:5302
+#: src/nlua_pilot.c:5291
 #, c-format
 msgid "Trying to set pilot '%s' to be their own leader!"
 msgstr ""
 
-#: src/nlua_pilot.c:5615
+#: src/nlua_pilot.c:5604
 msgid "Requires a debug build."
 msgstr ""
 
-#: src/nlua_pilot.c:5719
+#: src/nlua_pilot.c:5708
 #, c-format
 msgid "Canvas is too small to fully render '%s': %.0f x %.0f < %.0f x %.0f"
 msgstr ""
@@ -104719,42 +104744,42 @@ msgstr ""
 msgid "Event '%s' not found in stack"
 msgstr ""
 
-#: src/nlua_player.c:1828
+#: src/nlua_player.c:1827
 msgid "Can not teleport the player while landed!"
 msgstr ""
 
-#: src/nlua_player.c:1830
+#: src/nlua_player.c:1829
 msgid "Can not teleport the player while the comm is open!"
 msgstr ""
 
-#: src/nlua_player.c:1832
+#: src/nlua_player.c:1831
 msgid "Can not teleport the player while they are boarded!"
 msgstr ""
 
-#: src/nlua_player.c:1860
+#: src/nlua_player.c:1859
 #, c-format
 msgid "'%s' is not a valid teleportation target."
 msgstr ""
 
-#: src/nlua_player.c:1880
+#: src/nlua_player.c:1879
 #, c-format
 msgid "System '%s' does not exist."
 msgstr ""
 
-#: src/nlua_player.c:2055
+#: src/nlua_player.c:2054
 #, c-format
 msgid "Failed to unregister info button with id '%d'!"
 msgstr ""
 
-#: src/nlua_player.c:2087
+#: src/nlua_player.c:2086
 msgid "Unable to save when not landed and land spob is not specified!"
 msgstr ""
 
-#: src/nlua_player.c:2089
+#: src/nlua_player.c:2088
 msgid "Unable to save when landed and land_spob does not match landed spob!"
 msgstr ""
 
-#: src/nlua_player.c:2114
+#: src/nlua_player.c:2113
 msgid "Can not back up save to 'autosave'."
 msgstr ""
 
@@ -105712,6 +105737,13 @@ msgstr ""
 msgid "Large"
 msgstr ""
 
+#: src/outfit.c:398
+#, c-format
+msgid ""
+"\n"
+"#%c%s #%c%s #0slot"
+msgstr ""
+
 #: src/outfit.c:425
 #, c-format
 msgid "'%s' does not match any outfit slot sizes."
@@ -106410,55 +106442,55 @@ msgid ""
 "%s"
 msgstr ""
 
-#: src/pilot.c:1640
+#: src/pilot.c:1639
 msgid "You have been disabled!"
 msgstr ""
 
-#: src/pilot.c:1666
+#: src/pilot.c:1665
 msgid "You have recovered control of your ship!"
 msgstr ""
 
-#: src/pilot.c:1715
+#: src/pilot.c:1714
 #, c-format
 msgid "#rShip under command '%s' was destroyed!#0"
 msgstr ""
 
-#: src/pilot.c:2699 src/pilot.c:2726
+#: src/pilot.c:2698 src/pilot.c:2725
 msgid "Strayed too far from jump point: jump aborted."
 msgstr ""
 
-#: src/pilot.c:2706
+#: src/pilot.c:2705
 msgid "Afterburner active: jump aborted."
 msgstr ""
 
-#: src/pilot.c:2746
+#: src/pilot.c:2745
 #, c-format
 msgid "Pilot '%s' trying to jump through exit-only jump from '%s' to '%s'"
 msgstr ""
 
-#: src/pilot.c:3042
+#: src/pilot.c:3041
 #, c-format
 msgid "Pilot '%s' failed safety check: %s"
 msgstr ""
 
-#: src/pilot.c:3045
+#: src/pilot.c:3044
 #, c-format
 msgid "   [%d] %s"
 msgstr ""
 
-#: src/pilot.c:3160 src/pilot.c:3210 src/pilot.c:3234
+#: src/pilot.c:3159 src/pilot.c:3209 src/pilot.c:3233
 msgid "Unable to allocate memory"
 msgstr ""
 
-#: src/pilot.c:3278
+#: src/pilot.c:3277
 msgid "Duplicate pilots on stack!"
 msgstr ""
 
-#: src/pilot.c:3400
+#: src/pilot.c:3399
 msgid "Creating pilot in system with no jumps nor spobs to take off from!"
 msgstr ""
 
-#: src/pilot.c:3511
+#: src/pilot.c:3510
 #, c-format
 msgid "Trying to remove non-existent pilot '%s' from stack!"
 msgstr ""
@@ -109032,7 +109064,7 @@ msgstr ""
 msgid "Unknown weapon status for '%s'"
 msgstr ""
 
-#: src/weapon.c:574 src/weapon.c:723 src/weapon.c:1977
+#: src/weapon.c:574 src/weapon.c:723 src/weapon.c:1975
 msgid "Unknown weapon layer!"
 msgstr ""
 
@@ -109054,24 +109086,24 @@ msgid ""
 "%s"
 msgstr ""
 
-#: src/weapon.c:1925
+#: src/weapon.c:1923
 #, c-format
 msgid "Weapon of type '%s' has no create implemented yet!"
 msgstr ""
 
-#: src/weapon.c:1960
+#: src/weapon.c:1958
 msgid "Trying to create a Weapon from a non-Weapon type Outfit"
 msgstr ""
 
-#: src/weapon.c:2019
+#: src/weapon.c:2017
 msgid "Trying to create a Beam Weapon from a non-beam outfit."
 msgstr ""
 
-#: src/weapon.c:2039 src/weapon.c:2081 src/weapon.c:2227
+#: src/weapon.c:2037 src/weapon.c:2079 src/weapon.c:2225
 msgid "Invalid WEAPON_LAYER specified"
 msgstr ""
 
-#: src/weapon.c:2087
+#: src/weapon.c:2085
 msgid "Trying to remove beam with ID 0!"
 msgstr ""
 
