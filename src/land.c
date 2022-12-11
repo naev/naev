@@ -1482,7 +1482,7 @@ void takeoff( int delay, int nosave )
          const PlayerShip_t *pe = &pships[i];
          if (!pe->deployed)
             continue;
-         if (!!pilot_checkSpaceworthy(pe->p)) {
+         if (!pilot_isSpaceworthy(pe->p)) {
             badfleet = 1;
             l += scnprintf( &badfleet_ships[l], sizeof(badfleet_ships)-l, "\n%s", pe->p->name );
          }
@@ -1508,7 +1508,7 @@ void takeoff( int delay, int nosave )
    }
 
    /* Player's ship is not able to fly. */
-   if (pilot_checkSpaceworthy(player.p)!=NULL) {
+   if (!pilot_isSpaceworthy(player.p)) {
       char message[STRMAX_SHORT];
       pilot_reportSpaceworthy( player.p, message, sizeof(message) );
       dialogue_msgRaw( _("Ship not fit for flight"), message );

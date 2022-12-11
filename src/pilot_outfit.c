@@ -525,51 +525,9 @@ int pilot_slotsCheckRequired( const Pilot *p )
  *    @param p Pilot to check.
  *    @return The reason why the pilot is not safe (or NULL if safe).
  */
-const char* pilot_checkSpaceworthy( const Pilot *p )
+int pilot_isSpaceworthy( const Pilot *p )
 {
-   if (!pilot_slotsCheckSafety(p))
-      return _("Doesn't fit slot");
-
-   /* CPU. */
-   if (p->cpu < 0)
-      return _("Insufficient CPU");
-
-   /* Movement. */
-   if (p->thrust <= 0.)
-      return _("Insufficient Thrust");
-   if (p->speed <= 0.)
-      return _("Insufficient Speed");
-   if (p->turn <= 0.)
-      return _("Insufficient Turn");
-
-   /* Health. */
-   if (p->armour_max <= 0.)
-      return _("Insufficient Armour");
-   if (p->armour_regen < 0.)
-      return _("Insufficient Armour Regeneration");
-   if (p->shield_max < 0.)
-      return _("Insufficient Shield");
-   if (p->shield_regen < 0.)
-      return _("Insufficient Shield Regeneration");
-   if (p->energy_max < 0.)
-      return _("Insufficient Energy");
-   if (p->energy_regen <= 0. && p->energy_max > 0.)
-      return _("Insufficient Energy Regeneration");
-
-   /* Misc. */
-   if (p->fuel_max < 0)
-      return _("Insufficient Fuel Maximum");
-   if (p->fuel_consumption <= 0)
-      return _("Insufficient Fuel Consumption");
-   if (p->cargo_free < 0)
-      return _("Insufficient Free Cargo Space");
-
-   /* Core Slots */
-   if (!pilot_slotsCheckRequired(p))
-      return _("Not all core slots are equipped");
-
-   /* All OK. */
-   return NULL;
+   return !pilot_reportSpaceworthy( p, NULL, 0 );
 }
 
 /**
@@ -584,9 +542,10 @@ int pilot_reportSpaceworthy( const Pilot *p, char *buf, int bufSize )
 {
 #define SPACEWORTHY_CHECK(cond,msg) \
    if (cond) { ret++; \
-      if (pos > 0) \
-         pos += scnprintf( &buf[pos], bufSize-pos, "\n" ); \
-      pos += scnprintf( &buf[pos], bufSize-pos, (msg) ); }
+      if (buf != NULL) { \
+         if (pos > 0) \
+            pos += scnprintf( &buf[pos], bufSize-pos, "\n" ); \
+         pos += scnprintf( &buf[pos], bufSize-pos, (msg) ); } }
    int pos = 0;
    int ret = 0;
 
@@ -614,6 +573,10 @@ int pilot_reportSpaceworthy( const Pilot *p, char *buf, int bufSize )
    SPACEWORTHY_CHECK( p->cargo_free < 0,       _("!! Insufficient Free Cargo Space") );
    SPACEWORTHY_CHECK( p->crew < 0,             _("!! Insufficient Crew") );
 
+   /* No need to mess with the string. */
+   if (buf==NULL)
+      return ret;
+
    /* Buffer is full, lets write that there is more then what's copied */
    if (pos > bufSize-1) {
       buf[bufSize-4]='.';
@@ -621,15 +584,13 @@ int pilot_reportSpaceworthy( const Pilot *p, char *buf, int bufSize )
       buf[bufSize-2]='.';
       /* buf[bufSize-1]='\0'; already done for us */
    }
-   else {
-      if (pos == 0) {
-         /* String is empty so no errors encountered */
-         pos += snprintf( buf, bufSize, _("Spaceworthy"));
-         if (ship_isFlag(p->ship, SHIP_NOPLAYER))
-            pos += snprintf( &buf[pos], bufSize-pos, "\n#o%s#0", _("Escort only") );
-         if (ship_isFlag(p->ship, SHIP_NOESCORT))
-            pos += snprintf( &buf[pos], bufSize-pos, "\n#o%s#0", _("Lead ship only") );
-      }
+   else if (pos == 0) {
+      /* String is empty so no errors encountered */
+      pos += snprintf( buf, bufSize, _("Spaceworthy"));
+      if (ship_isFlag(p->ship, SHIP_NOPLAYER))
+         pos += snprintf( &buf[pos], bufSize-pos, "\n#o%s#0", _("Escort only") );
+      if (ship_isFlag(p->ship, SHIP_NOESCORT))
+         pos += snprintf( &buf[pos], bufSize-pos, "\n#o%s#0", _("Lead ship only") );
    }
 
    return ret;

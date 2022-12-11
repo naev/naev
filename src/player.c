@@ -3139,7 +3139,7 @@ int player_addEscorts (void)
          continue;
 
       /* Only deploy spaceworthy escorts. */
-      if (!!pilot_checkSpaceworthy(ps->p))
+      if (!pilot_isSpaceworthy(ps->p))
          continue;
 
       pfleet_deploy( ps );
@@ -4065,7 +4065,7 @@ static int player_parseEscorts( xmlNodePtr parent )
             WARN(_("Fleet ship '%s' is deployed despite not being marked for deployal!"), ps->p->name);
 
          /* Only deploy spaceworthy escorts. */
-         if (!!pilot_checkSpaceworthy(ps->p))
+         if (!pilot_isSpaceworthy(ps->p))
             WARN(_("Fleet ship '%s' is deployed despite not being space worthy!"), ps->p->name);
 
          pfleet_deploy( ps );
@@ -4418,7 +4418,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    if (fuel >= 0)
       ship->fuel = MIN(ship->fuel_max, fuel);
    /* ships can now be non-spaceworthy on save
-    * str = pilot_checkSpaceworthy( ship ); */
+    * str = pilot_isSpaceworthy( ship ); */
    if (!pilot_slotsCheckSafety( ship )) {
       DEBUG(_("Player ship '%s' failed slot validity check , removing all outfits and adding to stock."),
             ship->name );

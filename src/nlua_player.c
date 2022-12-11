@@ -1595,7 +1595,7 @@ static int playerL_fleetList( lua_State *L )
       if (!ps->deployed)
          continue;
       /* We can avoid the spaceWorthy check as they will be set to false due to not having a pilot. */
-      /*if (!!pilot_checkSpaceworthy(ps->p))
+      /*if (!!pilot_isSpaceworthy(ps->p))
          continue;*/
 
       if (ps->p==NULL)

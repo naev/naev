@@ -1704,7 +1704,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
    Pilot *ship;
    PlayerShip_t *ps, *prevship;
    char *nt;
-   int onboard, cargo, jumps, favourite, deployed, x, h;
+   int onboard, cargo, jumps, favourite, deployed, x, h, spaceworthy;
    int ww, wh, sw, sh, hacquired, hname;
    int wgtw, wgth;
    size_t l = 0;
@@ -1739,7 +1739,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
    nt = ntime_pretty( pilot_hyperspaceDelay( ship ), 2 );
 
    /* Get ship error report. */
-   pilot_reportSpaceworthy( ship, errorReport, sizeof(errorReport));
+   spaceworthy = !pilot_reportSpaceworthy( ship, errorReport, sizeof(errorReport));
 
    jumps = floor(ship->fuel_max / ship->fuel_consumption);
 
@@ -1859,7 +1859,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, _("%s %s (%d %s)"),
             sfuel, n_( "unit", "units", ship->fuel_max ), jumps, n_( "jump", "jumps", jumps ) );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%s#0", pilot_checkSpaceworthy(ship) ? 'r' : '0', errorReport );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%s#0", spaceworthy ? '0' : 'r', errorReport );
    }
    else {
       int destroyed = 0;

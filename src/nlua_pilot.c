@@ -2316,6 +2316,8 @@ static int pilotL_faction( lua_State *L )
 /**
  * @brief Checks the pilot's spaceworthiness
  *
+ * Message can be non-null even if spaceworthy.
+ *
  * @usage spaceworthy = p:spaceworthy()
  *
  *    @luatparam Pilot p Pilot to get the spaceworthy status of.
@@ -2325,10 +2327,11 @@ static int pilotL_faction( lua_State *L )
  */
 static int pilotL_spaceworthy( lua_State *L )
 {
+   char message[STRMAX_SHORT];
    Pilot *p = luaL_validpilot(L,1);
-   const char *str = pilot_checkSpaceworthy(p);
-   lua_pushboolean( L, (str==NULL) ? 1 : 0 );
-   lua_pushstring( L, str );
+   int worthy = !pilot_reportSpaceworthy( p, message, sizeof(message) );
+   lua_pushboolean( L, worthy );
+   lua_pushstring( L, message );
    return 2;
 }
 
