@@ -154,23 +154,27 @@ void outfits_open( unsigned int wid, const Outfit **outfits )
    window_setAccept( wid, outfits_buy );
 
    /* buttons */
+   off = -20;
    if (data==NULL) {
-      window_addButtonKey( wid, off = -20, 20,
+      window_addButtonKey( wid, off, 20,
             bw, bh, "btnCloseOutfits",
             _("Take Off"), land_buttonTakeoff, SDLK_t );
    }
    else {
-      window_addButtonKey( wid, off = -20, 20,
+      window_addButtonKey( wid, off, 20,
             bw, bh, "btnCloseOutfits",
             _("Close"), window_close, SDLK_t );
    }
-   window_addButtonKey( wid, off -= 20+bw, 20,
+   off -= 20+bw;
+   window_addButtonKey( wid, off, 20,
          bw, bh, "btnSellOutfit",
          _("Sell"), outfits_sell, SDLK_s );
-   window_addButtonKey( wid, off -= 20+bw, 20,
+   off -= 20+bw;
+   window_addButtonKey( wid, off, 20,
          bw, bh, "btnBuyOutfit",
          _("Buy"), outfits_buy, SDLK_b );
-   window_addButtonKey( wid, off -= 20+bw, 20,
+   off -= 20+bw;
+   window_addButtonKey( wid, off, 20,
          bw, bh, "btnFindOutfits",
          _("Find Outfits"), outfits_find, SDLK_f );
 
