@@ -2493,7 +2493,7 @@ static int pilotL_comm( lua_State *L )
          pilot_setCommMsg( player.p, msg );
    }
    else {
-      Pilot *p, *t;
+      Pilot *p;
       LuaPilot target;
       const char *msg;
       int ignore_int, raw;
@@ -2511,17 +2511,6 @@ static int pilotL_comm( lua_State *L )
          msg   = luaL_checkstring(L,3);
          ignore_int = lua_toboolean(L,4);
          raw = lua_toboolean(L,5);
-      }
-
-      /* Check to see if pilot is valid. */
-      if (target == 0)
-         t = player.p;
-      else {
-         t = pilot_get(target);
-         if (t == NULL) {
-            NLUA_ERROR(L,"Pilot param 2 not found in pilot stack!");
-            return 0;
-         }
       }
 
       if (player.p==NULL)
