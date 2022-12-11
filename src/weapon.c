@@ -353,7 +353,7 @@ static void think_seeker( Weapon* w, const double dt )
          if (jc > 0.) {
             /* Roll based on distance. */
             d = vec2_dist( &p->solid->pos, &w->solid->pos );
-            if (d / p->ew_evasion < w->r) {
+            if (d < w->r * p->ew_evasion) {
                if (RNGF() < jc) {
                   double r = RNGF();
                   if (r < 0.3) {
