@@ -350,6 +350,7 @@ function hail_ad()
    hook.rm(mem.hailie)
    hook.rm(mem.hailie2)
    tk.msg( _("You're looking for someone"), _([["Hi there", says the pilot. "You seem to be lost." As you explain that you're looking for an outlaw pilot and have no idea where to find your target, the pilot laughs. "So, you've taken a Seek and Destroy job, but you have no idea how it works. Well, there are two ways to get information on an outlaw: first way is to land on a planet and ask questions at the bar. The second way is to ask pilots in space. By the way, pilots of the same faction as your target are most likely to have information, but won't give it easily. Good luck with your task!"]]) ) -- Give advice to the player
+   player.commClose()
 end
 
 -- Player hails a ship for info
