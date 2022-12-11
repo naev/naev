@@ -15,8 +15,6 @@ local fmt = require 'format'
 
 -- Runs on saves older than 0.10.0
 local function updater0100( did090 )
-   -- TODO move ship AI explanation here and deal with both saves older than 0.9.0 and 0.10.0
-
    -- "nelly_met" variable wasn't used in older versions
    if player.misnDone("Helping Nelly Out 1") then
       var.push( "nelly_met", true )
@@ -159,6 +157,7 @@ function create ()
    local didupdate = false
 
    -- Fixes a tiny bug that sneaked in for a bit (around 2022-11-27)
+   -- TODO remove hack near 0.11.0 release
    if var.peek("disc_blacklotus") and not faction.get("Black Lotus"):known() then
       faction.get("Black Lotus"):setKnown(true)
    end
@@ -170,6 +169,7 @@ function create ()
       didupdate = true
       did090 = true
    end
+   -- Run on saves older than 0.10.0
    if naev.versionTest( save_version, "0.10.0" ) < 0 then
       updater0100( did090 )
       didupdate = true
