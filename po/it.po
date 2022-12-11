@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-11 17:22+0900\n"
-"PO-Revision-Date: 2022-12-11 03:50+0000\n"
+"PO-Revision-Date: 2022-12-11 09:26+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: physfs.c:1
 msgid "no error"
-msgstr ""
+msgstr "nessun errore"
 
 #: physfs.c:2 src/background.c:471 src/gui.c:1719 src/nlua_evt.c:147
 #: src/nlua_misn.c:239 src/nopenal.c:68
@@ -1838,11 +1838,11 @@ msgstr ""
 
 #: dat/factions/raven_clan.xml:2
 msgid "Raven Clan"
-msgstr ""
+msgstr "Clan del Corvo"
 
 #: dat/factions/raven_clan.xml:5
 msgid "Raven Pirate Clan"
-msgstr ""
+msgstr "Pirati del Clan del Corvo"
 
 #: dat/factions/raven_clan.xml:12
 msgid ""
@@ -1941,11 +1941,11 @@ msgstr ""
 
 #: dat/factions/wild_ones.xml:2
 msgid "Wild Ones"
-msgstr ""
+msgstr "Selvaggio"
 
 #: dat/factions/wild_ones.xml:5
 msgid "Wild Ones Pirate Clan"
-msgstr ""
+msgstr "Pirati del Clan del Selvaggio"
 
 #: dat/factions/wild_ones.xml:12
 msgid ""
@@ -94428,7 +94428,7 @@ msgstr ""
 
 #: dat/scripts/pilotname/generic.lua:65 dat/scripts/pilotname/pirate.lua:422
 msgid "Raven"
-msgstr ""
+msgstr "Corvo"
 
 #: dat/scripts/pilotname/generic.lua:66
 msgid "Rebirth"
