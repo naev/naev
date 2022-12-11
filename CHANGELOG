@@ -4,6 +4,8 @@
    * Removed outfit name duplication in alt texts
    * Made outfit descriptions fit in the landing window for all outfits
    * Added sound effects to starting race
+   * Fixed non-Lua active outfits (jammers, etc.)
+   * Sort ship stats in outfit/ship descriptions
 
 * 0.10.0-beta.2
    * Pirates should avoid attacking near safeish areas
