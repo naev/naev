@@ -244,6 +244,9 @@ ShipStatList* ss_listFromXML( xmlNodePtr node )
          break;
    }
 
+   /* Sort them. */
+   ss_sort( &ll );
+
    return ll;
 }
 
