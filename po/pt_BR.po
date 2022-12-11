@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-12-11 14:57+0900\n"
+"POT-Creation-Date: 2022-12-11 17:22+0900\n"
 "PO-Revision-Date: 2022-11-03 09:03+0000\n"
 "Last-Translator: Anthony Gregory Souza dos Santos "
 "<antonigregorysouza123@gmail.com>\n"
@@ -102896,7 +102896,7 @@ msgid "Spob '%s' has saved economy data but doesn't exist!"
 msgstr ""
 
 #: src/effect.c:57 src/faction.c:1271 src/faction.c:1454 src/outfit.c:2201
-#: src/outfit.c:2677 src/plugin.c:42 src/spfx.c:1129 src/start.c:69
+#: src/outfit.c:2682 src/plugin.c:42 src/spfx.c:1129 src/start.c:69
 #: src/tech.c:249 src/tech.c:345
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
@@ -108881,53 +108881,59 @@ msgid ""
 "%s"
 msgstr ""
 
-#: src/outfit.c:2588
+#: src/outfit.c:2571
+#, c-format
+msgid ""
+"Outfit '%s' has 'ontoggle' Lua function defined, but is set as 'notactive'!"
+msgstr ""
+
+#: src/outfit.c:2593
 #, c-format
 msgid "Name collision! %d outfit is named '%s'"
 msgid_plural "Name collision! %d outfits are named '%s'"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/outfit.c:2597
+#: src/outfit.c:2602
 #, c-format
 msgid "Loaded %d Outfit in %.3f s"
 msgid_plural "Loaded %d Outfits in %.3f s"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/outfit.c:2600
+#: src/outfit.c:2605
 #, c-format
 msgid "Loaded %d Outfit"
 msgid_plural "Loaded %d Outfits"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/outfit.c:2616
+#: src/outfit.c:2621
 #, c-format
 msgid "Fighter Bay Outfit '%s' has not found ship '%s'!"
 msgstr ""
 
-#: src/outfit.c:2630
+#: src/outfit.c:2635
 msgid ""
 "\n"
 "#rIllegal to:#0"
 msgstr ""
 
-#: src/outfit.c:2632
+#: src/outfit.c:2637
 #, c-format
 msgid ""
 "\n"
 "#r- %s#0"
 msgstr ""
 
-#: src/outfit.c:2643
+#: src/outfit.c:2648
 #, c-format
 msgid ""
 "Outfit '%s' lua load error -> 'load':\n"
 "%s"
 msgstr ""
 
-#: src/outfit.c:2651
+#: src/outfit.c:2656
 #, c-format
 msgid "Outfit '%s' has inexistent license requirement '%s'!"
 msgstr ""
@@ -110467,17 +110473,17 @@ msgstr ""
 msgid "Reverse Thrusters"
 msgstr ""
 
-#: src/shipstats.c:332
+#: src/shipstats.c:335
 #, c-format
 msgid "ss_lookup: %s should have id %d but has %d"
 msgstr ""
 
-#: src/shipstats.c:599
+#: src/shipstats.c:602
 #, c-format
 msgid "ss_typeFromName: No ship stat matching '%s'"
 msgstr ""
 
-#: src/shipstats.c:827 src/shipstats.c:954 src/shipstats.c:973
+#: src/shipstats.c:830 src/shipstats.c:957 src/shipstats.c:976
 #, c-format
 msgid "Unknown ship stat type '%s'!"
 msgstr ""
