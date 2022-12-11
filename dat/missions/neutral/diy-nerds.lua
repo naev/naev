@@ -268,6 +268,7 @@ end
 function nerds_return()
    addNerdCargo()
    misn.osdCreate(_("DIY Nerds"), { fmt.f(_("Return the nerds to {pnt}"), {pnt=mem.srcPlanet} ) })
+   misn.markerMove( mem.marker, mem.srcPlanet )
    mem.lhook = hook.land("nerds_land3", "land")
 end
 
