@@ -2564,7 +2564,12 @@ int outfit_load (void)
 
       if (outfit_isMod(o)) {
          nlua_getenv( naevL, env, "notactive" );
-         o->u.mod.active = !lua_toboolean(naevL,-1);
+         o->u.mod.active = (o->lua_ontoggle != LUA_NOREF);
+         if (lua_toboolean(naevL,-1)) {
+            o->u.mod.active = 0;
+            if (o->lua_ontoggle != LUA_NOREF)
+               WARN(_("Outfit '%s' has 'ontoggle' Lua function defined, but is set as 'notactive'!"),o->name);
+         }
          lua_pop(naevL,1);
       }
    }
