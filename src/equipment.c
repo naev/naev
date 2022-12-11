@@ -469,7 +469,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
             dc = &cFontRed;
          else if (level == 1)
             dc = &cFontYellow;
-         else if (pilot_slotIsActive( &lst[i] ))
+         else if (pilot_slotIsToggleable( &lst[i] ))
             dc = &cFontBlue;
          else
             dc = &cFontGrey;

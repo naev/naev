@@ -1155,7 +1155,7 @@ void pilot_updateMass( Pilot *pilot )
  *    @param o Outfit slot to check.
  *    @return 1 if can toggle, 0 otherwise.
  */
-int pilot_slotIsActive( const PilotOutfitSlot *o )
+int pilot_slotIsToggleable( const PilotOutfitSlot *o )
 {
    const Outfit *oo;
    if (!o->active)

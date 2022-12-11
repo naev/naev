@@ -441,7 +441,7 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
       return;
 
    /* Make sure outfit type is weapon (or usable). */
-   if (!pilot_slotIsActive(o))
+   if (!pilot_slotIsToggleable(o))
       return;
 
    /* Create if needed. */
