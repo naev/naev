@@ -89,16 +89,20 @@ void shipyard_open( unsigned int wid )
    bh = LAND_BUTTON_HEIGHT;
 
    /* buttons */
-   window_addButtonKey( wid, off = -20, 20,
+   off = -20;
+   window_addButtonKey( wid, off, 20,
          bw, bh, "btnCloseShipyard",
          _("Take Off"), land_buttonTakeoff, SDLK_t );
-   window_addButtonKey( wid, off -= 20+bw, 20,
+   off -= 20+bw;
+   window_addButtonKey( wid, off, 20,
          bw, bh, "btnTradeShip",
          _("Trade-In"), shipyard_trade, SDLK_r );
-   window_addButtonKey( wid, off -= 20+bw, 20,
+   off -= 20+bw;
+   window_addButtonKey( wid, off, 20,
          bw, bh, "btnBuyShip",
          _("Buy"), shipyard_buy, SDLK_b );
-   window_addButtonKey( wid, off -= 20+bw, 20,
+   off -= 20+bw;
+   window_addButtonKey( wid, off, 20,
          bw, bh, "btnFindShips",
          _("Find Ships"), shipyard_find, SDLK_f );
 
