@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.4\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-07-20 00:21-0400\n"
-"PO-Revision-Date: 2022-12-11 03:48+0000\n"
+"PO-Revision-Date: 2022-12-11 20:47+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "it/>\n"
@@ -1164,14 +1164,21 @@ msgid ""
 "occurs. Some spacers even insist on wearing breathing masks, even in the "
 "spaceport bar, just to be on the safe side."
 msgstr ""
+"L'impianto dello spazioporto fa parte di una struttura più ampia che ospita "
+"la totalità degli abitanti umani di questo pianeta. Il complesso, più o "
+"meno, galleggia sulla superficie ed è sigillato ermeticamente dall'ambiente "
+"esterno. Inoltre, il complesso è altamente compartimentato, nel caso in cui "
+"si verifichi una perdita. Alcuni astronauti insistono addirittura ad "
+"indossare maschere respiratorie, anche nel bar dello spazioporto, per essere "
+"al sicuro in caso di problemi."
 
 #: dat/assets/aldous_moon.xml:2
 msgid "Aldous' moon"
-msgstr ""
+msgstr "Luna di Aldous"
 
 #: dat/assets/aleph.xml:2
 msgid "Aleph"
-msgstr ""
+msgstr "Alef"
 
 #: dat/assets/aleph.xml:28
 msgid ""
@@ -1180,6 +1187,11 @@ msgid ""
 "primarily residential and sports no superheavy industry, the wastefulness of "
 "the Dvaered inhabitants more than makes up for that."
 msgstr ""
+"In un'impressionante opera di de-terraformazione, i Dvaered hanno "
+"trasformato Alef da un pianeta di quasi classe M in un deserto sterile. "
+"Sebbene il mondo sia principalmente residenziale e non vi siano industrie "
+"superpesanti, lo spreco degli abitanti Dvaered compensa ampiamente a questa "
+"mancanza."
 
 #: dat/assets/aleph.xml:29
 msgid ""
@@ -1188,10 +1200,14 @@ msgid ""
 "the staleness completely. The drinks do little to relieve the stuffiness "
 "either."
 msgstr ""
+"L'aria nel bar dello spazioporto è stantia. È stantia ovunque su questo "
+"pianeta. Nessuna quantità di condizionatori o filtri d'aria è in grado di "
+"sbarazzarsi completamente dell'aria stagnante. Neppure le bevande riescono a "
+"mitigare un po' l'aria viziata."
 
 #: dat/assets/allan.xml:2
 msgid "Allan"
-msgstr ""
+msgstr "Allan"
 
 #: dat/assets/allan.xml:28
 msgid ""
@@ -1200,6 +1216,11 @@ msgid ""
 "left behind. It is now barely maintained by a small contingent of Dvaered "
 "soldiers and engineers for the use of traders."
 msgstr ""
+"Allan una volta era una stazione di pattugliamento, inviata per perlustrare "
+"le zone meridionali raggiungibili dello spazio. Con l'Incidente e la "
+"regressione del potere Imperiale, Allan è stata abbandonata. È attualmente "
+"mantenuta a malapena da un piccolo contingente di soldati e ingegneri di "
+"Dvaered per essere usata dai commercianti."
 
 #: dat/assets/allan.xml:29
 msgid ""
@@ -1207,10 +1228,13 @@ msgid ""
 "with clean facilities, decent food and strong drink. For its patrons it "
 "provides a small respite from the harsh galaxy."
 msgstr ""
+"Allan non ha molte risorse, ma il bar sembra abbastanza decente, con "
+"strutture pulite, cibo decente e bevande forti. Per i clienti rappresenta "
+"una piccola tregua dalle durezze galattiche."
 
 #: dat/assets/alleyway.xml:2
 msgid "Alleyway"
-msgstr ""
+msgstr "Alleyway"
 
 #: dat/assets/alleyway.xml:28
 msgid ""
@@ -1219,6 +1243,11 @@ msgid ""
 "hunters. Authorities have long ago given up any hope of controlling the "
 "chaos, so everyone knows to be armed and remain vigilant at all times."
 msgstr ""
+"Destinata in origine ad essere uno snodo commerciale e un stazione di "
+"rifornimento per i mercanti, questa stazione è diventata in realtà un centro "
+"di passaggio per pirati e cacciatori di taglie. Le autorità hanno già da "
+"molto rinunciato a controllare questo caos, per questo tutti sanno di dover "
+"girare armati e restare sempre vigili."
 
 #: dat/assets/alleyway.xml:29
 msgid ""
@@ -1226,22 +1255,27 @@ msgid ""
 "merchants and gamblers. Fights often break out and it's hard to tell who to "
 "trust, so most people keep to themselves and avoid eye contact with others."
 msgstr ""
+"Il bar è principalmente frequentato da un misto di pirati e cacciatori di "
+"taglie, con una manciata di mercanti e giocatori d'azzardo. Scoppiano "
+"frequentemente risse ed è difficile capire di chi fidarsi, per questo la "
+"maggior parte delle persone pensa a sé ed evita il contatto visivo diretto "
+"con gli altri."
 
 #: dat/assets/allous_gg3.xml:2
 msgid "Allous GG-3"
-msgstr ""
+msgstr "Allous GG-3"
 
 #: dat/assets/allous_i.xml:2
 msgid "Allous I"
-msgstr ""
+msgstr "Allous I"
 
 #: dat/assets/allous_ii.xml:2
 msgid "Allous II"
-msgstr ""
+msgstr "Allous II"
 
 #: dat/assets/allous_station.xml:2
 msgid "Allous Station"
-msgstr ""
+msgstr "Stazione di Allous"
 
 #: dat/assets/allous_station.xml:27
 msgid ""
@@ -1253,6 +1287,14 @@ msgid ""
 "need for them to pay for it as numerous warlords, with dreams of "
 "intellectualism, are happy to offer their patronage."
 msgstr ""
+"Nonostante il nome, la Stazione di Allous non è un avamposto militare, è più "
+"un centro di osservazione scientifica e un osservatorio dello spazio "
+"profondo. Originariamente doveva servire per controllare l'alta interferenza "
+"della nebulosa PSO. Persino i Dvaered hanno una comunità scientifica e hanno "
+"pagano per questa stazione di loro tasca. Naturalmente, una volta che venne "
+"costruita, non c'è stata più nessuna necessità per loro di pagare, poiché i "
+"numerosi signori della guerra, con sogni intellettuali, sono felici di "
+"offrire il loro patrocinio."
 
 #: dat/assets/allous_station.xml:28
 msgid ""
@@ -1260,46 +1302,50 @@ msgid ""
 "and soldiers are interacting with surprising friendliness and conviviality. "
 "Of course, the local warlords would, and do, tolerate nothing less."
 msgstr ""
+"Questo bar assomiglia a qualcosa che uno si aspetterebbe dallo spazio di "
+"Za'lek. Soldati e scienziati interagiscono con sorprendente cordialità e "
+"convivialità. Naturalmente i signori della guerra locali non vorrebbero e "
+"non tollerano nulla di meno."
 
 #: dat/assets/alteris_i.xml:2
 msgid "Alteris I"
-msgstr ""
+msgstr "Alteris I"
 
 #: dat/assets/alteris_iv.xml:2
 msgid "Alteris IV"
-msgstr ""
+msgstr "Alteris IV"
 
 #: dat/assets/alteris_v.xml:2
 msgid "Alteris V"
-msgstr ""
+msgstr "Alteris V"
 
 #: dat/assets/aluben.xml:2
 msgid "Aluben"
-msgstr ""
+msgstr "Aluben"
 
 #: dat/assets/amaroq_i.xml:2
 msgid "Amaroq I"
-msgstr ""
+msgstr "Amaroq I"
 
 #: dat/assets/amaroq_iii.xml:2
 msgid "Amaroq III"
-msgstr ""
+msgstr "Amaroq III"
 
 #: dat/assets/amatiri_i.xml:2
 msgid "Amatiri I"
-msgstr ""
+msgstr "Amatiri I"
 
 #: dat/assets/amatiri_ia.xml:2
 msgid "Amatiri Ia"
-msgstr ""
+msgstr "Amatiri Ia"
 
 #: dat/assets/amatiri_ii.xml:2
 msgid "Amatiri II"
-msgstr ""
+msgstr "Amatiri II"
 
 #: dat/assets/ambre.xml:2
 msgid "Ambre"
-msgstr ""
+msgstr "Ambre"
 
 #: dat/assets/ambre.xml:30
 msgid ""
@@ -1311,6 +1357,13 @@ msgid ""
 "This was one of the important reasons the Emperor granted House Dvaered its "
 "independence."
 msgstr ""
+"Ambre è stato uno dei pianeti che ha giocato un ruolo chiave nelle rivolte "
+"dei lavoratori che alla fine portarono all'istituzione della Casata dei "
+"Dvaered. In quei tempi, in questo settore spaziale, il pianeta ospitava una "
+"considerevole percentuale di lavoratori imperiali. Senza lavoratori nelle "
+"miniere e nei cantieri, l'Impero rischiava di perdere cifre monetarie "
+"astronomiche ogni ciclo. Questa fu una delle ragioni importanti che "
+"portarono l'Impero a concedere l'indipendenza alla Casata dei Dvaered."
 
 #: dat/assets/ambre.xml:31
 msgid ""
@@ -1322,10 +1375,18 @@ msgid ""
 "into one of the only remaining spaces available, which was right over the "
 "freight lines."
 msgstr ""
+"Il bar dello spazioporto di Ambre non è mai tranquillo. Ad intervalli "
+"regolari tutti i rimori nel bar vengono sovrastati dal suono delle capsule "
+"cargo che sferragliano nella ferrovia sottostante. Il bar è stato costruito "
+"relativamente tardi in quello che è stato lo sviluppo planetario; Il governo "
+"Imperiale non vedeva la necessità di averne uno quando Ambre era poco più "
+"grande di un campo di lavoro. Dopo l'indipendenza il bar è stato stipato in "
+"uno degli spazi disponibili rimanenti che era proprio sopra la rete di "
+"trasporto merci."
 
 #: dat/assets/amhurst.xml:2
 msgid "Amhurst"
-msgstr ""
+msgstr "Amhurst"
 
 #: dat/assets/amhurst.xml:31
 msgid ""
@@ -1334,6 +1395,11 @@ msgid ""
 "has not been hit as hard as many, it has seen its population dip in recent "
 "cycles. Most of the population are miners and other working-class folk."
 msgstr ""
+"Un glorioso mondo commerciale e minerario, questo pianeta è una delle "
+"migliori vittime dell'esodo di competenze che ha interessato la frontiera "
+"meridionale di Za'lek. Anche se non è stato colpito così duramente come "
+"altri, ha visto la sua popolazione collassare recentemente. La maggior parte "
+"della popolazione è composta da minatori e altri tipi di operai."
 
 #: dat/assets/amhurst.xml:32
 msgid ""
@@ -1341,10 +1407,13 @@ msgid ""
 "rough aesthetic, the clientele, almost everything. There is little sign of "
 "the usual Za'lek trappings here."
 msgstr ""
+"Se non lo si conoscesse, si potrebbe presumere che questo sia un bar dei "
+"Dvaered. L'estetica, la clientela, pressoché tutto è rozzo. Qui sono "
+"presenti pochissimi segni degli usuali simboli di Za'lek."
 
 #: dat/assets/amianta.xml:2
 msgid "Amianta"
-msgstr ""
+msgstr "Amianta"
 
 #: dat/assets/amianta.xml:28
 msgid ""
@@ -1352,10 +1421,13 @@ msgid ""
 "Proteron colonized it anyway due to the rich source of both food and water "
 "found underneath the ice."
 msgstr ""
+"Le temperature artiche di Amianta avrebbero fatto allontanare parecchie "
+"persone, ma i Proteron lo hanno colonizzato comunque perché è ricco di "
+"sorgenti di cibo e di acqua sotto il ghiaccio."
 
 #: dat/assets/ammu.xml:2
 msgid "Ammu"
-msgstr ""
+msgstr "Ammu"
 
 #: dat/assets/ammu.xml:30
 msgid ""
@@ -1364,6 +1436,10 @@ msgid ""
 "subterranean spaceport but the way it doesn't seem to faze the locals "
 "reassures you."
 msgstr ""
+"Ammu è un pianeta generalmente calmo, una volta che ci si è abituati ai "
+"costanti boati delle colate laviche. Le eruzioni di lava sono spesso sentite "
+"nello spazioporto sotterraneo, ma sei rassicurato dal fatto che tutto questo "
+"non sembra intimorire i locali."
 
 #: dat/assets/ammu.xml:31
 msgid ""
@@ -1372,6 +1448,10 @@ msgid ""
 "known for its temperature, that's not to say you can't get a mean Pan-"
 "Galactic Gargle Blaster."
 msgstr ""
+"Il bar dello spazioporto di Ammu, conosciuto come \"Il Dissipatore\" a causa "
+"delle sue temperature gelide, è in contrasto con il resto della stazione. "
+"Anche se conosciuto principalmente per le sue temperature, non è detto che "
+"non si possa bere un eccellente Folgoratore Gangasmico Pan-Galattico."
 
 #: dat/assets/amphion.xml:2
 msgid "Amphion"
@@ -3839,27 +3919,27 @@ msgstr ""
 
 #: dat/assets/euler_i.xml:2
 msgid "Euler I"
-msgstr ""
+msgstr "Eulero I"
 
 #: dat/assets/euler_ia.xml:2
 msgid "Euler Ia"
-msgstr ""
+msgstr "Eulero Ia"
 
 #: dat/assets/euler_ii.xml:2
 msgid "Euler II"
-msgstr ""
+msgstr "Eulero II"
 
 #: dat/assets/euler_iii.xml:2
 msgid "Euler III"
-msgstr ""
+msgstr "Eulero III"
 
 #: dat/assets/euler_iiia.xml:2
 msgid "Euler IIIa"
-msgstr ""
+msgstr "Eulero IIIa"
 
 #: dat/assets/euler_iv.xml:2
 msgid "Euler IV"
-msgstr ""
+msgstr "Eulero IV"
 
 #: dat/assets/europea.xml:2
 msgid "Europea"
@@ -8726,31 +8806,31 @@ msgstr ""
 
 #: dat/assets/pso_1234.xml:2
 msgid "PSO 1234"
-msgstr ""
+msgstr "PSO 1234"
 
 #: dat/assets/pso_1251.xml:2
 msgid "PSO 1251"
-msgstr ""
+msgstr "PSO 1251"
 
 #: dat/assets/pso_1324.xml:2
 msgid "PSO 1324"
-msgstr ""
+msgstr "PSO 1324"
 
 #: dat/assets/pso_2212.xml:2
 msgid "PSO 2212"
-msgstr ""
+msgstr "PSO 2212"
 
 #: dat/assets/pso_2345.xml:2
 msgid "PSO 2345"
-msgstr ""
+msgstr "PSO 2345"
 
 #: dat/assets/pso_2356.xml:2
 msgid "PSO 2356"
-msgstr ""
+msgstr "PSO 2356"
 
 #: dat/assets/pso_2434.xml:2
 msgid "PSO 2434"
-msgstr ""
+msgstr "PSO 2434"
 
 #: dat/assets/pso_monitor.xml:2
 msgid "PSO Monitor"
@@ -13355,11 +13435,11 @@ msgstr ""
 
 #: dat/faction.xml:83
 msgid "Raven Clan"
-msgstr ""
+msgstr "Clan del Corvo"
 
 #: dat/faction.xml:86
 msgid "Raven Pirate Clan"
-msgstr ""
+msgstr "Pirati del Clan del Corvo"
 
 #: dat/faction.xml:93
 msgid ""
@@ -13369,11 +13449,11 @@ msgstr ""
 
 #: dat/faction.xml:118
 msgid "Wild Ones"
-msgstr ""
+msgstr "Selvaggio"
 
 #: dat/faction.xml:121
 msgid "Wild Ones Pirate Clan"
-msgstr ""
+msgstr "Pirati del Clan del Selvaggio"
 
 #: dat/faction.xml:128
 msgid ""
@@ -17332,7 +17412,7 @@ msgstr ""
 
 #: dat/outfits/structure/nanobond_plating.xml:2
 msgid "Nanobond Plating"
-msgstr ""
+msgstr "Armatura di Nanobond"
 
 #: dat/outfits/structure/nanobond_plating.xml:10
 msgid ""
@@ -18196,7 +18276,7 @@ msgstr ""
 
 #: dat/outfits/weapons/gauss_gun.xml:2
 msgid "Gauss Gun"
-msgstr ""
+msgstr "Cannone Gauss"
 
 #: dat/outfits/weapons/gauss_gun.xml:8
 msgid ""
@@ -18659,7 +18739,7 @@ msgstr ""
 
 #: dat/outfits/weapons/turreted_gauss_gun.xml:2
 msgid "Turreted Gauss Gun"
-msgstr ""
+msgstr "Cannone Gauss per Torretta"
 
 #: dat/outfits/weapons/turreted_gauss_gun.xml:9
 msgid ""
@@ -19833,19 +19913,19 @@ msgstr "Akra"
 
 #: dat/ssys/allous.xml:2
 msgid "Allous"
-msgstr ""
+msgstr "Allous"
 
 #: dat/ssys/alteris.xml:2
 msgid "Alteris"
-msgstr ""
+msgstr "Alteris"
 
 #: dat/ssys/amaroq.xml:2
 msgid "Amaroq"
-msgstr ""
+msgstr "Amaroq"
 
 #: dat/ssys/amatiri.xml:2
 msgid "Amatiri"
-msgstr ""
+msgstr "Amatiri"
 
 #: dat/ssys/amatiri.xml:5 dat/ssys/ariadus.xml:5 dat/ssys/bonanza.xml:5
 #: dat/ssys/hasselt.xml:5 dat/ssys/kansas.xml:5 dat/ssys/klunzar.xml:5
@@ -20219,7 +20299,7 @@ msgstr ""
 
 #: dat/ssys/euler.xml:2
 msgid "Euler"
-msgstr ""
+msgstr "Eulero"
 
 #: dat/ssys/eye_of_night.xml:2
 msgid "Eye of Night"
@@ -20251,7 +20331,7 @@ msgstr ""
 
 #: dat/ssys/feye.xml:4
 msgid "#pSoromid Homeworld#0"
-msgstr ""
+msgstr "#pPianeta d'origine dei Soromid#0"
 
 #: dat/ssys/fidelis.xml:2
 msgid "Fidelis"
@@ -21035,7 +21115,7 @@ msgstr ""
 
 #: dat/ssys/pso.xml:2
 msgid "PSO"
-msgstr ""
+msgstr "PSO"
 
 #: dat/ssys/pudas.xml:2
 msgid "Pudas"
@@ -25007,7 +25087,7 @@ msgstr ""
 #. subtitle = _("None"),
 #: dat/events/discovery.lua:262
 msgid "#HWild Ones Territory#0"
-msgstr ""
+msgstr "#HTerritorio del Clan Selvaggio#0"
 
 #: dat/events/discovery.lua:263
 msgid "#HUncontrolled and Raging Pirate Fury#0"
@@ -25015,7 +25095,7 @@ msgstr ""
 
 #: dat/events/discovery.lua:273
 msgid "#HRaven Clan Territory#0"
-msgstr ""
+msgstr "#HTerritorio del Clan del Corvo#0"
 
 #: dat/events/discovery.lua:274
 msgid "#HDark Hand of the Black Market#0"
@@ -26365,6 +26445,11 @@ msgid ""
 "Deposit: {deposit_text}\n"
 "Royalty: {royalty_percent:.1f}% of mission earnings"
 msgstr ""
+"Sembra che il pilota stia cercando lavoro:\n"
+"\n"
+"Astronave: {ship}\n"
+"Deposito: {deposit_text}\n"
+"Diritti: {royalty_percent:.1f}% dei guadagni della missione"
 
 #: dat/events/hired_escorts.lua:147
 msgid ""
@@ -26373,6 +26458,10 @@ msgid ""
 "Deposit: {deposit_text}\n"
 "Royalty: {royalty_percent:.1f}% of mission earnings"
 msgstr ""
+"Nome Pilota: {name}\n"
+"Astronave: {ship}\n"
+"Deposito: {deposit_text}\n"
+"Diritti: {royalty_percent:.1f}% dei guadagni della missione"
 
 #: dat/events/hired_escorts.lua:153
 msgid ""
@@ -26460,6 +26549,8 @@ msgid ""
 "You hired a {ship} ship named '{name}' for {deposit_text} and "
 "{royalty_percent:.1f}% of mission earnings."
 msgstr ""
+"Hai ingaggiato un'astronave {ship} con nome '{name}' per {deposit_text} e "
+"{royalty_percent:.1f}% dei guadagni della missione."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -39279,15 +39370,15 @@ msgstr ""
 #. Spawn the Beta squadrons
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:247
 msgid "B-Storks-4"
-msgstr ""
+msgstr "B-Cicogne-4"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:248
 msgid "B-Storks-3"
-msgstr ""
+msgstr "B-Cicogne-3"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:249
 msgid "B-Storks-2"
-msgstr ""
+msgstr "B-Cicogne-2"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:250
 msgid "B-Storks-Lead"
@@ -39295,15 +39386,15 @@ msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:251
 msgid "B-Storks-7"
-msgstr ""
+msgstr "B-Cicogne-7"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:252
 msgid "B-Storks-6"
-msgstr ""
+msgstr "B-Cicogne-6"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:253
 msgid "B-Storks-5"
-msgstr ""
+msgstr "B-Cicogne-5"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:254
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:255
@@ -62911,7 +63002,7 @@ msgstr ""
 #. the probability of an ambush goes up when you cross a system without meeting any ennemy
 #: dat/missions/shark/sh02_tapping.lua:121
 msgid "Time to go back to Alteris"
-msgstr ""
+msgstr "È ora di tornare su Alteris."
 
 #: dat/missions/shark/sh02_tapping.lua:121
 msgid ""
@@ -68864,6 +68955,8 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:179
 msgid "You helped Dr. Mensing to collect sensor data of the PSO nebula."
 msgstr ""
+"Hai aiutato il Dr. Mensing a raccogliere i dati dei sensori della nebulosa "
+"PSO."
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:224
 msgid "We're under attack!"
@@ -74289,7 +74382,7 @@ msgstr ""
 
 #: dat/scripts/pilotname/generic.lua:65 dat/scripts/pilotname/pirate.lua:422
 msgid "Raven"
-msgstr ""
+msgstr "Corvo"
 
 #: dat/scripts/pilotname/generic.lua:66
 msgid "Rebirth"
@@ -77232,7 +77325,7 @@ msgstr ""
 #: src/background.c:437 src/gui.c:1710 src/nlua_evt.c:146 src/nlua_misn.c:243
 #: src/nopenal.c:72
 msgid "unknown error"
-msgstr ""
+msgstr "errore sconosciuto"
 
 #. error has occurred
 #: src/board.c:92 src/player.c:3365
