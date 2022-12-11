@@ -323,7 +323,7 @@ static void think_seeker( Weapon* w, const double dt )
    double diff;
    Pilot *p;
    vec2 v;
-   double t, turn_max, d, r, jc, speed_mod;
+   double t, turn_max, d, jc, speed_mod;
 
    if (w->target == w->parent)
       return; /* no self shooting */
@@ -354,24 +354,29 @@ static void think_seeker( Weapon* w, const double dt )
             /* Roll based on distance. */
             d = vec2_dist( &p->solid->pos, &w->solid->pos );
             if (d / p->ew_evasion < w->r) {
-               if (jc < RNGF()) {
-                  r = RNGF();
-                  if (r < 0.4) {
-                     w->status = WEAPON_STATUS_JAMMED_SLOWED;
-                     w->falloff = RNGF()*0.5;
+               if (RNGF() < jc) {
+                  double r = RNGF();
+                  if (r < 0.3) {
+                     w->timer = -1.; /* Should blow up. */
+                     w->status = WEAPON_STATUS_JAMMED;
                   }
-                  else if (r < 0.7) {
+                  else if (r < 0.6) {
                      w->status = WEAPON_STATUS_JAMMED;
                      weapon_setTurn( w, w->outfit->u.lau.turn * ((RNGF()>0.5)?-1.0:1.0) );
                   }
-                  else {
+                  else if (r < 0.8) {
                      w->status = WEAPON_STATUS_JAMMED;
                      weapon_setTurn( w, 0. );
                      weapon_setThrust( w, w->outfit->u.lau.thrust * w->outfit->mass );
                   }
+                  else {
+                     w->status = WEAPON_STATUS_JAMMED_SLOWED;
+                     w->falloff = RNGF()*0.5;
+                  }
                   break;
                }
-               w->status = WEAPON_STATUS_UNJAMMED;
+               else
+                  w->status = WEAPON_STATUS_UNJAMMED;
             }
          }
          FALLTHROUGH;
