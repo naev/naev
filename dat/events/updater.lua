@@ -36,7 +36,7 @@ local function updater0100( did090 )
    local metai = (var.peek("shipai_name") ~= nil)
    local hasbioship = player.pilot():ship():tags().bioship
    for k,v in ipairs(player.ships()) do
-      if v.ship():tags().bioship then
+      if v.ship:tags().bioship then
          hasbioship = true
          break
       end
@@ -76,15 +76,16 @@ local function updater0100( did090 )
    else
       vn.na(fmt.f(_([["Your ship AI {shipai} materializes before you."]]),
          {shipai=tut.ainame()}))
-      sai(_([["It seems like there has been a significant update. Many of the new features come with small tutorials in form of missions. I will not go over these to not spoil you as they will appear in-game. Let me cover some of the features that you may miss."]]))
+      sai(_([["It seems like there has been a significant update to the game!
+Many of the new features come with small tutorials in form of missions. I will not go over these to not spoil you as they will appear in-game. Let me cover some of the features that you may miss."]]))
    end
 
    if did090 then
       sai(fmt.f(_([["With the update, a lot of new mechanics and features have been changed. The largest change includes a revamp of #oElectronic Warfare#0, which now includes a new stealth mechanic. In this new framework, you will be scanned by patrol ships, which means you have to be careful when carrying illegal cargo or outfits. You can activate stealth with {stealthkey} when no ships area nearby."]]),{stealthkey=tut.getKey("stealth")}))
-      sai(_([["You may have also noticed that there has been a major change in outfits. Lots of outfits have been removed, added, or renamed, leading to a loss of outfits when updating old save games. Please make sure to take some time inspecting your ships and their equipment before taking off, you don't want to be flying a poorly equipped ship in space!"]]))
    end
 
    sai(_([["Asteroids have been completely reworked. They no longer explode randomly and asteroid fields can spawn different types of asteroids. While it is possible to mine them with regular weapons, there are special outfits that will help you mine them and give you access to more rare rewards."]]))
+   sai(_([["You may have also noticed that there has been a major change in outfits. Lots of outfits have been removed, added, or renamed, leading to a loss of outfits when updating old save games. Please make sure to take some time inspecting your ships and their equipment before taking off, you don't want to be flying a poorly equipped ship in space!"]]))
    if hasbioship then
       sai(_([["Bioships have also been reworked completely. Similar to the old ships, they gain ranks through experience. However, instead of the ranks being on a per-outfit level, they are now on per-ship levels. Increasing ranks will give you better core outfits and weapons, while also unlocking skill points that you can use to significantly change the functionality and performance of the bioship."]]))
    end
