@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-12-11 18:26+0900\n"
+"POT-Creation-Date: 2022-12-11 22:53+0900\n"
 "PO-Revision-Date: 2022-09-19 19:18+0000\n"
 "Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -27031,7 +27031,7 @@ msgstr ""
 #: src/dev_uniedit.c:1676 src/dev_uniedit.c:1892 src/dev_uniedit.c:1957
 #: src/info.c:437 src/info.c:538 src/info.c:949 src/info.c:1313 src/input.c:524
 #: src/land.c:877 src/land_outfits.c:442 src/land_outfits.c:694
-#: src/land_shipyard.c:129 src/land_shipyard.c:218 src/land_trade.c:85
+#: src/land_shipyard.c:133 src/land_shipyard.c:222 src/land_trade.c:85
 #: src/land_trade.c:87 src/land_trade.c:153 src/load.c:531 src/load.c:612
 #: src/map.c:727 src/map.c:780 src/map.c:1959 src/map_find.c:697
 #: src/map_system.c:649
@@ -41985,7 +41985,7 @@ msgid "Nav:"
 msgstr ""
 
 #: dat/gui/slim.lua:1099 src/equipment.c:1789 src/info.c:387 src/info.c:589
-#: src/land_shipyard.c:297 src/map_system.c:681
+#: src/land_shipyard.c:301 src/map_system.c:681
 msgid "Fuel:"
 msgstr ""
 
@@ -46152,8 +46152,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:699
-#: dat/missions/neutral/seek_n_destroy.lua:463
-#: dat/missions/neutral/seek_n_destroy.lua:553
+#: dat/missions/neutral/seek_n_destroy.lua:464
+#: dat/missions/neutral/seek_n_destroy.lua:554
 msgid "Not enough money"
 msgstr ""
 
@@ -65942,12 +65942,12 @@ msgid "Return the nerds to {pnt}"
 msgstr "Vraťte nerdy na {pnt}"
 
 #. hooked to 'land' in the final stage (returning the nerds)
-#: dat/missions/neutral/diy-nerds.lua:279
-#: dat/missions/neutral/diy-nerds.lua:287
+#: dat/missions/neutral/diy-nerds.lua:280
+#: dat/missions/neutral/diy-nerds.lua:288
 msgid "The End"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:279
+#: dat/missions/neutral/diy-nerds.lua:280
 msgid ""
 "The nerds, finally exhausted from all the partying, still smile as they pack "
 "up their prize-winning box and leave your ship. Mia beams as she turns to "
@@ -65956,11 +65956,11 @@ msgid ""
 "without your service. Here, have 30,000. Good day to you.\""
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:282
+#: dat/missions/neutral/diy-nerds.lua:283
 msgid "Minor Complications"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:282
+#: dat/missions/neutral/diy-nerds.lua:283
 msgid ""
 "With sagging shoulders, the nerds unload their box. Mia turns to address "
 "you, not bold at all this time. \"Um, we got a bit of a problem here. You "
@@ -65978,18 +65978,18 @@ msgid ""
 "can have it as a compensation for your troubles. Interested?\""
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:285
+#: dat/missions/neutral/diy-nerds.lua:286
 msgid "So what?"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:285
+#: dat/missions/neutral/diy-nerds.lua:286
 msgid ""
 "\"Honestly, there is nothing you can do about it,\" Mia says impatiently, as "
 "if you were a small child complaining about the finiteness of an ice cream "
 "cone. \"Just stand by while we rig the thing up.\""
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:287
+#: dat/missions/neutral/diy-nerds.lua:288
 msgid ""
 "\"You can wait for it, won't take longer than half a period,\" Mia informs "
 "you. You stand by as the nerds start to mod their box. As they are going "
@@ -68102,7 +68102,7 @@ msgid ""
 "{shipclass}-class ship.\n"
 "\n"
 "#nTarget:#0 {pirname} ({shipclass}-class ship)\n"
-"#nWanted:#0 Dead or Alive\n"
+"#nWanted:#0 Alive\n"
 "#nLast Seen:#0 {sys} system"
 msgstr ""
 
@@ -68345,7 +68345,7 @@ msgid ""
 "flying a {shipclass}-class ship.\n"
 "\n"
 "#nTarget:#0 {pirname} ({shipclass}-class ship)\n"
-"#nWanted:#0 Alive\n"
+"#nWanted:#0 Dead or Alive\n"
 "#nLast Seen:#0 {sys} system"
 msgstr ""
 
@@ -70926,7 +70926,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:223
-#: dat/missions/neutral/seek_n_destroy.lua:568
+#: dat/missions/neutral/seek_n_destroy.lua:569
 msgid "Fly to the {sys} system and search for clues"
 msgstr ""
 
@@ -70935,7 +70935,7 @@ msgid "Land in {paying_faction} territory to collect your bounty"
 msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:226
-#: dat/missions/neutral/seek_n_destroy.lua:569
+#: dat/missions/neutral/seek_n_destroy.lua:570
 msgid "Seek and Destroy"
 msgstr ""
 
@@ -70974,24 +70974,24 @@ msgstr ""
 #. No more claimed system : need to finish the mission
 #. The player ask for clues in the bar
 #. No more claimed system : need to finish the mission
-#: dat/missions/neutral/seek_n_destroy.lua:366
-#: dat/missions/neutral/seek_n_destroy.lua:535
+#: dat/missions/neutral/seek_n_destroy.lua:367
+#: dat/missions/neutral/seek_n_destroy.lua:536
 msgid "Your track is cold"
 msgstr ""
 
 #. If hailed pilot is enemy to the target, there is less chance he knows
 #. If hailed pilot is enemy to the player, there is less chance he mem.tells
 #. NPC does not know the target
-#: dat/missions/neutral/seek_n_destroy.lua:385
-#: dat/missions/neutral/seek_n_destroy.lua:539
+#: dat/missions/neutral/seek_n_destroy.lua:386
+#: dat/missions/neutral/seek_n_destroy.lua:540
 msgid "No clue"
 msgstr ""
 
 #. NPC tells the clue
-#: dat/missions/neutral/seek_n_destroy.lua:387
-#: dat/missions/neutral/seek_n_destroy.lua:458
-#: dat/missions/neutral/seek_n_destroy.lua:550
-#: dat/missions/neutral/seek_n_destroy.lua:558
+#: dat/missions/neutral/seek_n_destroy.lua:388
+#: dat/missions/neutral/seek_n_destroy.lua:459
+#: dat/missions/neutral/seek_n_destroy.lua:551
+#: dat/missions/neutral/seek_n_destroy.lua:559
 msgid "I know the pilot you're looking for"
 msgstr ""
 
@@ -71000,18 +71000,18 @@ msgstr ""
 #. If target is quicker, no fear
 #. The NPC knows the target. The player has to convince him to give info
 #. Pilot doesn't like you
-#: dat/missions/neutral/seek_n_destroy.lua:428
+#: dat/missions/neutral/seek_n_destroy.lua:429
 msgid "I won't tell you"
 msgstr ""
 
-#: dat/missions/neutral/seek_n_destroy.lua:428
-#: dat/missions/neutral/seek_n_destroy.lua:452
-#: dat/missions/neutral/seek_n_destroy.lua:544
+#: dat/missions/neutral/seek_n_destroy.lua:429
+#: dat/missions/neutral/seek_n_destroy.lua:453
+#: dat/missions/neutral/seek_n_destroy.lua:545
 msgid "Give up"
 msgstr ""
 
-#: dat/missions/neutral/seek_n_destroy.lua:428
-#: dat/missions/neutral/seek_n_destroy.lua:452
+#: dat/missions/neutral/seek_n_destroy.lua:429
+#: dat/missions/neutral/seek_n_destroy.lua:453
 msgid "Threaten the pilot"
 msgstr ""
 
@@ -71021,32 +71021,32 @@ msgstr ""
 #. Clean the previous hook if it exists
 #. Player attacks an informant who has refused to give info
 #. Target was hit sufficiently to get more talkative
-#: dat/missions/neutral/seek_n_destroy.lua:431
-#: dat/missions/neutral/seek_n_destroy.lua:473
-#: dat/missions/neutral/seek_n_destroy.lua:498
+#: dat/missions/neutral/seek_n_destroy.lua:432
+#: dat/missions/neutral/seek_n_destroy.lua:474
+#: dat/missions/neutral/seek_n_destroy.lua:499
 msgid "You're intimidating!"
 msgstr ""
 
-#: dat/missions/neutral/seek_n_destroy.lua:436
-#: dat/missions/neutral/seek_n_destroy.lua:478
+#: dat/missions/neutral/seek_n_destroy.lua:437
+#: dat/missions/neutral/seek_n_destroy.lua:479
 msgid "Not impressed"
 msgstr ""
 
 #. Clean the previous hook if it exists
 #. Pilot wants payment
 #. NPC wants money
-#: dat/missions/neutral/seek_n_destroy.lua:450
-#: dat/missions/neutral/seek_n_destroy.lua:542
+#: dat/missions/neutral/seek_n_destroy.lua:451
+#: dat/missions/neutral/seek_n_destroy.lua:543
 msgid "How much money do you have?"
 msgstr ""
 
-#: dat/missions/neutral/seek_n_destroy.lua:452
-#: dat/missions/neutral/seek_n_destroy.lua:544
+#: dat/missions/neutral/seek_n_destroy.lua:453
+#: dat/missions/neutral/seek_n_destroy.lua:545
 msgid "Pay the sum"
 msgstr ""
 
-#: dat/missions/neutral/seek_n_destroy.lua:463
-#: dat/missions/neutral/seek_n_destroy.lua:553
+#: dat/missions/neutral/seek_n_destroy.lua:464
+#: dat/missions/neutral/seek_n_destroy.lua:554
 msgid "You don't have enough money."
 msgstr "Nemáte dost peněz."
 
@@ -71056,11 +71056,11 @@ msgstr "Nemáte dost peněz."
 #. NPC does not know the target
 #. NPC wants money
 #. NPC mem.tells the clue
-#: dat/missions/neutral/seek_n_destroy.lua:520
+#: dat/missions/neutral/seek_n_destroy.lua:521
 msgid "Shifty Person"
 msgstr ""
 
-#: dat/missions/neutral/seek_n_destroy.lua:520
+#: dat/missions/neutral/seek_n_destroy.lua:521
 msgid ""
 "This person might be an outlaw, a pirate, or even worse, a bounty hunter. "
 "You normally wouldn't want to get close to this kind of person, but they may "
@@ -71068,15 +71068,15 @@ msgid ""
 msgstr ""
 
 #. Player wants to be paid
-#: dat/missions/neutral/seek_n_destroy.lua:524
+#: dat/missions/neutral/seek_n_destroy.lua:525
 msgid "Good work, pilot!"
 msgstr ""
 
-#: dat/missions/neutral/seek_n_destroy.lua:574
+#: dat/missions/neutral/seek_n_destroy.lua:575
 msgid "You're not going to kill anybody like that"
 msgstr ""
 
-#: dat/missions/neutral/seek_n_destroy.lua:574
+#: dat/missions/neutral/seek_n_destroy.lua:575
 msgid ""
 "You had a chance to neutralize {plt}, and you wasted it! Now you have to "
 "start all over. Maybe some other pilots in {sys} know where your target is "
@@ -71085,11 +71085,11 @@ msgstr ""
 
 #. Target ran away. Unfortunately, we cannot continue the mission
 #. on the other side because the system has not been claimed...
-#: dat/missions/neutral/seek_n_destroy.lua:587
+#: dat/missions/neutral/seek_n_destroy.lua:588
 msgid "Target ran away"
 msgstr ""
 
-#: dat/missions/neutral/seek_n_destroy.lua:587
+#: dat/missions/neutral/seek_n_destroy.lua:588
 msgid ""
 "That was close, but unfortunately, {plt} ran away. Maybe some other pilots "
 "in this system know where your target is heading."
@@ -101673,7 +101673,7 @@ msgid ""
 msgstr ""
 
 #: src/equipment.c:320 src/land.c:349 src/land.c:615 src/land.c:1341
-#: src/land_outfits.c:161 src/land_shipyard.c:94 src/land_trade.c:73
+#: src/land_outfits.c:161 src/land_shipyard.c:95 src/land_trade.c:73
 msgid "Take Off"
 msgstr ""
 
@@ -101806,12 +101806,12 @@ msgstr ""
 msgid "You do not remember how you acquired this ship."
 msgstr ""
 
-#: src/equipment.c:1764 src/info.c:573 src/land_shipyard.c:225
+#: src/equipment.c:1764 src/info.c:573 src/land_shipyard.c:229
 #: src/map_system.c:656
 msgid "Model:"
 msgstr ""
 
-#: src/equipment.c:1765 src/info.c:574 src/land.c:1322 src/land_shipyard.c:227
+#: src/equipment.c:1765 src/info.c:574 src/land.c:1322 src/land_shipyard.c:231
 #: src/map_system.c:657
 msgid "Class:"
 msgstr ""
@@ -101824,17 +101824,17 @@ msgstr ""
 msgid "Value:"
 msgstr ""
 
-#: src/equipment.c:1772 src/land_shipyard.c:234
+#: src/equipment.c:1772 src/land_shipyard.c:238
 msgid "Fleet Capacity:"
 msgstr ""
 
-#: src/equipment.c:1773 src/info.c:575 src/land_shipyard.c:231
+#: src/equipment.c:1773 src/info.c:575 src/land_shipyard.c:235
 #: src/map_system.c:660
 msgid "Crew:"
 msgstr ""
 
 #: src/equipment.c:1774 src/info.c:577 src/land_outfits.c:425
-#: src/land_shipyard.c:247 src/map_find.c:637 src/map_system.c:636
+#: src/land_shipyard.c:251 src/map_find.c:637 src/map_system.c:636
 #: src/map_system.c:663
 msgid "Mass:"
 msgstr ""
@@ -101843,22 +101843,22 @@ msgstr ""
 msgid "Jump Time:"
 msgstr ""
 
-#: src/equipment.c:1776 src/info.c:579 src/land_shipyard.c:251
+#: src/equipment.c:1776 src/info.c:579 src/land_shipyard.c:255
 #: src/map_system.c:664
 msgid "Thrust:"
 msgstr ""
 
-#: src/equipment.c:1777 src/info.c:580 src/land_shipyard.c:256
+#: src/equipment.c:1777 src/info.c:580 src/land_shipyard.c:260
 #: src/map_system.c:666
 msgid "Speed:"
 msgstr ""
 
-#: src/equipment.c:1778 src/info.c:581 src/land_shipyard.c:261
+#: src/equipment.c:1778 src/info.c:581 src/land_shipyard.c:265
 #: src/map_system.c:668
 msgid "Turn:"
 msgstr ""
 
-#: src/equipment.c:1779 src/info.c:582 src/land_shipyard.c:266
+#: src/equipment.c:1779 src/info.c:582 src/land_shipyard.c:270
 #: src/map_system.c:670
 msgid "Time Constant:"
 msgstr ""
@@ -101876,27 +101876,27 @@ msgid "Stealth:"
 msgstr ""
 
 #. Misc
-#: src/equipment.c:1784 src/info.c:584 src/land_shipyard.c:271
+#: src/equipment.c:1784 src/info.c:584 src/land_shipyard.c:275
 #: src/map_system.c:672
 msgid "Absorption:"
 msgstr ""
 
-#: src/equipment.c:1785 src/info.c:585 src/land_shipyard.c:276
+#: src/equipment.c:1785 src/info.c:585 src/land_shipyard.c:280
 #: src/map_system.c:674
 msgid "Shield:"
 msgstr ""
 
-#: src/equipment.c:1786 src/info.c:586 src/land_shipyard.c:281
+#: src/equipment.c:1786 src/info.c:586 src/land_shipyard.c:285
 #: src/map_system.c:676
 msgid "Armour:"
 msgstr ""
 
-#: src/equipment.c:1787 src/info.c:587 src/land_shipyard.c:286
+#: src/equipment.c:1787 src/info.c:587 src/land_shipyard.c:290
 #: src/map_system.c:678
 msgid "Energy:"
 msgstr ""
 
-#: src/equipment.c:1788 src/info.c:588 src/land_shipyard.c:293
+#: src/equipment.c:1788 src/info.c:588 src/land_shipyard.c:297
 #: src/map_system.c:680
 msgid "Cargo Space:"
 msgstr ""
@@ -101986,8 +101986,8 @@ msgstr ""
 msgid "%s %s (%d %s)"
 msgstr ""
 
-#: src/equipment.c:1860 src/info.c:644 src/land_shipyard.c:298
-#: src/land_shipyard.c:302 src/map_system.c:681 src/map_system.c:683
+#: src/equipment.c:1860 src/info.c:644 src/land_shipyard.c:302
+#: src/land_shipyard.c:306 src/map_system.c:681 src/map_system.c:683
 msgid "unit"
 msgid_plural "units"
 msgstr[0] ""
@@ -102683,7 +102683,7 @@ msgid "Date:"
 msgstr ""
 
 #: src/info.c:385 src/land.c:1326 src/land_outfits.c:427
-#: src/land_shipyard.c:307 src/land_trade.c:91 src/map_find.c:639
+#: src/land_shipyard.c:311 src/land_trade.c:91 src/map_find.c:639
 msgid "Money:"
 msgstr ""
 
@@ -102763,7 +102763,7 @@ msgstr ""
 msgid "Stats:"
 msgstr ""
 
-#: src/info.c:626 src/land_shipyard.c:253 src/map_system.c:665
+#: src/info.c:626 src/land_shipyard.c:257 src/map_system.c:665
 #, c-format
 msgid "%.0f kN/tonne"
 msgstr ""
@@ -102773,7 +102773,7 @@ msgstr ""
 msgid "%.0f m/s (max %.0f m/s)"
 msgstr ""
 
-#: src/info.c:631 src/land_shipyard.c:263 src/map_system.c:669
+#: src/info.c:631 src/land_shipyard.c:267 src/map_system.c:669
 #, c-format
 msgid "%.0f deg/s"
 msgstr ""
@@ -103656,7 +103656,7 @@ msgstr ""
 msgid "You can not swap ships and set %s as an escort!"
 msgstr ""
 
-#: src/land.c:231 src/land_shipyard.c:498
+#: src/land.c:231 src/land_shipyard.c:502
 #, c-format
 msgid "You have %d tonne more cargo than the new ship can hold."
 msgid_plural "You have %d tonnes more cargo than the new ship can hold."
@@ -103825,7 +103825,7 @@ msgstr ""
 msgid "Sell"
 msgstr ""
 
-#: src/land_outfits.c:175 src/land_shipyard.c:100 src/land_trade.c:69
+#: src/land_outfits.c:175 src/land_shipyard.c:103 src/land_trade.c:69
 msgid "Buy"
 msgstr ""
 
@@ -103842,17 +103842,17 @@ msgstr ""
 msgid "Owned:"
 msgstr ""
 
-#: src/land_outfits.c:426 src/land_shipyard.c:305 src/map_find.c:638
+#: src/land_outfits.c:426 src/land_shipyard.c:309 src/map_find.c:638
 #: src/map_system.c:637 src/map_system.c:684
 msgid "Price:"
 msgstr ""
 
-#: src/land_outfits.c:491 src/land_shipyard.c:309 src/map_find.c:640
+#: src/land_outfits.c:491 src/land_shipyard.c:313 src/map_find.c:640
 #: src/map_system.c:685
 msgid "License:"
 msgstr ""
 
-#: src/land_outfits.c:498 src/land_shipyard.c:312
+#: src/land_outfits.c:498 src/land_shipyard.c:316
 msgid "Requires:"
 msgstr ""
 
@@ -103890,7 +103890,7 @@ msgstr ""
 msgid "You already have this license."
 msgstr ""
 
-#: src/land_outfits.c:831 src/land_shipyard.c:451 src/land_trade.c:294
+#: src/land_outfits.c:831 src/land_shipyard.c:455 src/land_trade.c:294
 #, c-format
 msgid "You need %s more."
 msgstr ""
@@ -103928,90 +103928,90 @@ msgstr ""
 msgid "You are unable to sell this outfit!"
 msgstr "Toto oblečení nemůžete prodat!"
 
-#: src/land_shipyard.c:97
+#: src/land_shipyard.c:99
 msgid "Trade-In"
 msgstr ""
 
-#: src/land_shipyard.c:103
+#: src/land_shipyard.c:107
 msgid "Find Ships"
 msgstr ""
 
-#: src/land_shipyard.c:229 src/map_system.c:659
+#: src/land_shipyard.c:233 src/map_system.c:659
 msgid "Fabricator:"
 msgstr ""
 
 #. Weapons & Manoeuvrability
-#: src/land_shipyard.c:238
+#: src/land_shipyard.c:242
 msgid "Base Properties"
 msgstr ""
 
 #. Weapons & Manoeuvrability
-#: src/land_shipyard.c:241 src/map_system.c:662
+#: src/land_shipyard.c:245 src/map_system.c:662
 msgid "CPU:"
 msgstr ""
 
-#: src/land_shipyard.c:242 src/map_system.c:662
+#: src/land_shipyard.c:246 src/map_system.c:662
 msgid "teraflop"
 msgid_plural "teraflops"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/land_shipyard.c:258 src/map_system.c:667
+#: src/land_shipyard.c:262 src/map_system.c:667
 #, c-format
 msgid "%.0f m/s"
 msgstr ""
 
-#: src/land_shipyard.c:273 src/map_system.c:673
+#: src/land_shipyard.c:277 src/map_system.c:673
 #, c-format
 msgid "%.0f%% damage"
 msgstr ""
 
-#: src/land_shipyard.c:278 src/land_shipyard.c:283 src/land_shipyard.c:288
+#: src/land_shipyard.c:282 src/land_shipyard.c:287 src/land_shipyard.c:292
 #: src/map_system.c:675 src/map_system.c:677 src/map_system.c:679
 #, c-format
 msgid "%.0f MJ (%.1f MW)"
 msgstr ""
 
-#: src/land_shipyard.c:301 src/map_system.c:682
+#: src/land_shipyard.c:305 src/map_system.c:682
 msgid "Fuel Use:"
 msgstr ""
 
-#: src/land_shipyard.c:407 src/land_shipyard.c:555 src/land_shipyard.c:561
-#: src/land_shipyard.c:567
+#: src/land_shipyard.c:411 src/land_shipyard.c:559 src/land_shipyard.c:565
+#: src/land_shipyard.c:571
 msgid "Are you sure?"
 msgstr ""
 
 #. confirm
-#: src/land_shipyard.c:408
+#: src/land_shipyard.c:412
 #, c-format
 msgid "Do you really want to spend %s on a new ship?"
 msgstr ""
 
 #. Player just got a new ship
 #. player just got a new ship
-#: src/land_shipyard.c:412 src/land_shipyard.c:574
+#: src/land_shipyard.c:416 src/land_shipyard.c:578
 #, c-format
 msgid "Bought at %s in the %s system."
 msgstr "Zakoupeno na %s v systému %s."
 
-#: src/land_shipyard.c:437
+#: src/land_shipyard.c:441
 #, c-format
 msgid "You need the '%s' license to buy this ship."
 msgstr ""
 
 #. Already on-board.
-#: src/land_shipyard.c:477
+#: src/land_shipyard.c:481
 msgid "You can't sell the ship you're piloting!"
 msgstr ""
 
 #. Escorts are in space.
-#: src/land_shipyard.c:505
+#: src/land_shipyard.c:509
 msgid "You can't strand your fighters in space."
 msgstr ""
 
 #. confirm
-#: src/land_shipyard.c:556
+#: src/land_shipyard.c:560
 #, c-format
 msgid ""
 "Your %s is worth %s, exactly as much as the new ship, so no credits need be "
@@ -104019,7 +104019,7 @@ msgid ""
 msgstr ""
 
 #. confirm
-#: src/land_shipyard.c:562
+#: src/land_shipyard.c:566
 #, c-format
 msgid ""
 "Your %s is worth %s, more than the new ship. For your ship, you will get the "
@@ -104027,14 +104027,14 @@ msgid ""
 msgstr ""
 
 #. confirm
-#: src/land_shipyard.c:568
+#: src/land_shipyard.c:572
 #, c-format
 msgid ""
 "Your %s is worth %s, so the new ship will cost %s. Are you sure you want to "
 "trade your ship in?"
 msgstr ""
 
-#: src/land_shipyard.c:608
+#: src/land_shipyard.c:612
 msgid "Slots:"
 msgstr ""
 
