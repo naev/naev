@@ -4,15 +4,14 @@
   <typename>Electronic Warfare Scrambler</typename>
   <slot>utility</slot>
   <size>medium</size>
-  <mass>3</mass>
+  <mass>2</mass>
   <price>410000</price>
   <description>Milspec knows what's important out there. It's that you don't get shot! And the best way not to get shot is not to get targeted in the first place. The Milspec RX 500-C scrambler will put the wool over your enemies' sensors, at a minimal cost to you or your ship's reactor! Fly safe, fly Milspec.</description>
   <gfx_store>jammer1.webp</gfx_store>
   <limit>scrambler</limit>
  </general>
  <specific type="modification">
-  <energy_regen_mod>-10</energy_regen_mod>
   <ew_evade>10</ew_evade>
-  <jam_chance>25</jam_chance>
+  <jam_chance>40</jam_chance>
  </specific>
 </outfit>
