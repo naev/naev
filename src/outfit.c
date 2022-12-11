@@ -443,6 +443,24 @@ int outfit_isActive( const Outfit* o )
 }
 
 /**
+ * @brief Checks if outfit can be toggled.
+ *    @param o Outfit to check.
+ *    @return 1 if o is active.
+ */
+int outfit_isToggleable( const Outfit *o )
+{
+   /* Must be active. */
+   if (!outfit_isActive(o))
+      return 0;
+
+   /* Special case it is lua-based and not toggleable. */
+   if (outfit_isMod(o) && (o->lua_env != LUA_NOREF) && (o->lua_ontoggle == LUA_NOREF))
+      return 0;
+
+   return 1;
+}
+
+/**
  * @brief Checks if outfit is a fixed mounted weapon.
  *    @param o Outfit to check.
  *    @return 1 if o is a weapon (beam/bolt).
@@ -2564,7 +2582,7 @@ int outfit_load (void)
 
       if (outfit_isMod(o)) {
          nlua_getenv( naevL, env, "notactive" );
-         o->u.mod.active = (o->lua_ontoggle != LUA_NOREF);
+         o->u.mod.active = 1;
          if (lua_toboolean(naevL,-1)) {
             o->u.mod.active = 0;
             if (o->lua_ontoggle != LUA_NOREF)

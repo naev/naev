@@ -1164,7 +1164,7 @@ int pilot_slotIsActive( const PilotOutfitSlot *o )
    oo = o->outfit;
    if (oo == NULL)
       return 0;
-   if (outfit_isMod(oo) && !outfit_isActive(oo))
+   if (!outfit_isToggleable(oo))
       return 0;
 
    return 1;
