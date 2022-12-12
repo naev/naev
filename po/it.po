@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.4\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-07-20 00:21-0400\n"
-"PO-Revision-Date: 2022-12-11 20:47+0000\n"
+"PO-Revision-Date: 2022-12-13 03:47+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "it/>\n"
@@ -1455,7 +1455,7 @@ msgstr ""
 
 #: dat/assets/amphion.xml:2
 msgid "Amphion"
-msgstr ""
+msgstr "Anfione"
 
 #: dat/assets/amphion.xml:28
 msgid ""
@@ -1465,6 +1465,11 @@ msgid ""
 "calm and the many underwater cities are famous all over the Empire for their "
 "grandeur and opulence."
 msgstr ""
+"Anfione è un luogo di ritiro popolare per gli ufficiali dell'Impero. È "
+"abbastanza vicino al centro imperiale per suscitare memorie di servizio di "
+"ammirazione, ma abbastanza lontano per vivere in pace. Gli oceani, che "
+"dominano la superficie planetaria, sono calmi e le molte città sottomarine "
+"sono famose in tutto l'Impero per la loro magnificenze e opulenza."
 
 #: dat/assets/amphion.xml:29
 msgid ""
@@ -1473,34 +1478,38 @@ msgid ""
 "cheery. You wind up making easy friends in the amiable and relaxing "
 "atmosphere."
 msgstr ""
+"L'età media degli avventori sembra essere di oltre la mezz'età. Lo stesso "
+"bar è arredato con uno stile usato nelle taverne di tempi passati, basso e "
+"scuro, accogliente e allegro. Si finisce per trovare facilmente nuovi amici "
+"nell'amabile e rilassante atmosfera."
 
 #: dat/assets/anarbalis_ii.xml:2
 msgid "Anarbalis II"
-msgstr ""
+msgstr "Anarbalis II"
 
 #: dat/assets/anarbalis_iii.xml:2
 msgid "Anarbalis III"
-msgstr ""
+msgstr "Anarbalis III"
 
 #: dat/assets/andee_ii.xml:2
 msgid "Andee II"
-msgstr ""
+msgstr "Andee II"
 
 #: dat/assets/andee_iia.xml:2
 msgid "Andee IIa"
-msgstr ""
+msgstr "Andee IIa"
 
 #: dat/assets/andee_iii.xml:2
 msgid "Andee III"
-msgstr ""
+msgstr "Andee III"
 
 #: dat/assets/andee_iiia.xml:2
 msgid "Andee IIIa"
-msgstr ""
+msgstr "Andee IIIa"
 
 #: dat/assets/andors.xml:2
 msgid "Andors"
-msgstr ""
+msgstr "Andors"
 
 #: dat/assets/andors.xml:31
 msgid ""
@@ -1509,6 +1518,10 @@ msgid ""
 "resources. Unlike more developed Za'lek settlements, there is little in the "
 "way of scholarly presence here."
 msgstr ""
+"Questo mondo desolato possiede una ricchezza mineraria sepolta sotto "
+"chilometri di ghiaccio e i Za'lek hanno utilizzato cospicue risorse per "
+"riuscire a sfruttarla. Contrariamente agli insediamenti Za'lek più "
+"sviluppati, qui la presenza scientifica è molto limitata."
 
 #: dat/assets/andors.xml:32
 msgid ""
@@ -1517,10 +1530,14 @@ msgid ""
 "beverages and hearty food, and the patrons are almost exclusively off-duty "
 "Za'lek workers."
 msgstr ""
+"Questo bar offre una tregua dai venti pungenti e dalle temperature glaciali "
+"che pervadono il pianeta. Il menu è composto principalmente di bevande calde "
+"e cibo saporito e gli avventori sono quasi esclusivamente lavoratori Za'lek "
+"in pausa lavorativa."
 
 #: dat/assets/andors_refining.xml:2
 msgid "Andors Refining"
-msgstr ""
+msgstr "Raffinazione di Andors"
 
 #: dat/assets/andors_refining.xml:27
 msgid ""
@@ -1528,10 +1545,13 @@ msgid ""
 "into a more useful form and shipped out to other worlds to be turned into "
 "whatever is needed."
 msgstr ""
+"Questo semplice impianto di raffinazione è dove le risorse minerarie "
+"estratte su Andors vengono trasformate in una forma più utile e spedite su "
+"altri pianeti per essere ulteriormente trasformate."
 
 #: dat/assets/anecu.xml:2
 msgid "Anecu"
-msgstr ""
+msgstr "Anecu"
 
 #: dat/assets/anecu.xml:31
 msgid ""
@@ -1542,6 +1562,13 @@ msgid ""
 "which use the high pressure of the water as a benchmark against which ships "
 "can be measured."
 msgstr ""
+"Anecu è un pianeta completamente acquatico. La sua superficie è "
+"completamente ricoperta da acqua, ma nelle zone poco profonde sono state "
+"costruite grandi città subacquee. Il clima sopra la distesa d'acqua è molto "
+"violento; sono state registrate onde alte fino a due chilometri. Il pianeta "
+"vanta impianti estensivi di progettazione di astronavi che utilizzano l'alta "
+"pressione dell'acqua come parametro di riferimento confrontare tra loro le "
+"astronavi."
 
 #: dat/assets/anecu.xml:32
 msgid ""
@@ -1551,6 +1578,11 @@ msgid ""
 "gelatinous creatures sliding around, barely illuminated by the bar's "
 "lighting."
 msgstr ""
+"Il bar dello spazioporto è approssimativamente tre chilometri sotto la "
+"superficie planetaria. Le pareti sono costruite con un polimero trasparente "
+"e indurito, che permette di vedere nell'oscurità acquatica. Ogni tanto è "
+"possibile scorgere creature gelatinose scivolare ovunque, a malapena "
+"illuminate dalle luci del bar."
 
 #: dat/assets/anger_i.xml:2
 msgid "Anger I"
@@ -19941,11 +19973,11 @@ msgstr ""
 
 #: dat/ssys/anarbalis.xml:2
 msgid "Anarbalis"
-msgstr ""
+msgstr "Anarbalis"
 
 #: dat/ssys/andee.xml:2
 msgid "Andee"
-msgstr ""
+msgstr "Andee"
 
 #: dat/ssys/andres.xml:2
 msgid "Andres"
