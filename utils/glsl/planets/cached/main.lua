@@ -105,10 +105,37 @@ function love.load()
    idata = love.image.newImageData( 1, 1 )
    idata:setPixel( 0, 0, 1, 1, 1, 1 )
    img = love.graphics.newImage( idata )
-   --csv = love.graphics.newCanvas( w, h, {dpiscale=1} )
 
    -- Define shader data.
    planet_types = {
+      {
+         name = "destroyed city",
+         main = "destroyed_city.frag",
+         height = "destroyed_city_height.frag",
+         normal = "normal_from_height.frag",
+         diffuse = "destroyed_city_diffuse.frag",
+      },
+      {
+         name = "burned",
+         main = "burned.frag",
+         height = "burned_height.frag",
+         normal = "normal_from_height.frag",
+         diffuse = "burned_diffuse.frag",
+      },
+      {
+         name = "craters",
+         main = "craters.frag",
+         height = "craters_height.frag",
+         normal = "normal_from_height.frag",
+         diffuse = "craters_diffuse.frag",
+      },
+      {
+         name = "frozen",
+         main = "frozen.frag",
+         height = "frozen_height.frag",
+         normal = "normal_from_height.frag",
+         diffuse = "frozen_diffuse.frag",
+      },
       {
          name = "fractured",
          main = "fractured.frag",

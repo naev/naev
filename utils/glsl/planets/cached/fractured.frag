@@ -10,20 +10,21 @@ uniform float mountain_height    = 0.5;   // Controls height scale of mountains.
 uniform float rotation_speed     = 0.05;  // Rotation speed of the sphere.
 uniform float cloud_scroll_speed1 = 0.05; // Rotation speed of bright cloud layer.
 uniform float cloud_scroll_speed2 = 0.07; // Rotation speed of dark cloud layer.
-uniform float cloud_height = 0.025; // Distance of the cloud layer's shadow.
-uniform float normal_scale = 0.2;   // Strength of the normal displacement.
-uniform float cloud_density = 0.6;  // Opacity of cloud layers.
-uniform float lava_height = 0.02;   // Lava below that height.
+uniform float cloud_height = 0.025;       // Distance of the cloud layer's shadow.
+uniform float normal_scale = 0.2;         // Strength of the normal displacement.
+uniform float crater_depth = 0.05;        // How deep the craters look.
+uniform float cloud_density = 0.6;        // Opacity of cloud layers.
+uniform float lava_height = 0.02;         // Lava below that height.
 uniform vec3 light_color = vec3(1.0,0.975,0.9);
 uniform vec3 light_dir   = normalize(vec3(0.6, 0.2, -0.75));
-uniform float ambient = 0.02;       // Ambient light.
+uniform float ambient = 0.02;             // Ambient light.
 uniform vec3 atmosphere_color_light = vec3(1.0, 0.4, 0.1); // Color of the atmosphere gradient.
 uniform vec3 atmosphere_color_dark  = vec3(0.4, 0.03, 0.02);
-uniform float atmosphere_density = 0.75; // Opacity of the atmosphere.
-uniform float atmosphere_radius  = 0.05; // Size of the atmopshere.
-uniform int depth_min_layers = 8;        // Min and max number of steps for parallax mapping.
+uniform float atmosphere_density = 0.75;  // Opacity of the atmosphere.
+uniform float atmosphere_radius  = 0.05;  // Size of the atmopshere.
+uniform int depth_min_layers = 8;         // Min and max number of steps for parallax mapping.
 uniform int depth_max_layers = 32;
-uniform float depth_scale = 0.05;        // Amount of parallax mapping.
+uniform float depth_scale = 0.05;         // Amount of parallax mapping.
 
 uniform sampler2D diffuse;
 uniform sampler2D height;
@@ -145,7 +146,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
       float spec;
       vec3 atmosphere_color;
       // Rescaled and rotated UV coordinates.
-      vec2 p = fract(vec2(asin(uv.x/RADIUS)/M_PI/4.0, 0.5 + asin(uv.y/RADIUS)/M_PI) + 0.25*vec2(rotation_speed/M_PI*u_time, 0.0));
+      vec2 p = fract(vec2(asin(uv.x/RADIUS/sqrt(1.0-uv.y*uv.y/RADIUS*RADIUS))/M_PI/4.0, 0.5 + asin(uv.y/RADIUS)/M_PI) + 0.25*vec2(rotation_speed/M_PI*u_time, 0.0));
 
       {
          // Parallax mapping.
@@ -164,7 +165,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
          while (current_depth < depth) {
             // Iterate until depth is reached.
             ofs -= delta;
-            depth = get_depth(ofs);
+            depth = get_depth(fract(ofs));
             current_depth += layer_depth;
          }
          vec2 prev_ofs = ofs + delta;
@@ -179,7 +180,6 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
       // Smooth the edges.
       float alpha = clamp(100.0*(1.0-radius-0.005), 0.0, 1.0);
       float alpha_surface = alpha;
-      vec3 pos = sphere_coords( uv, rotation_speed*u_time );
       vec3 cloud_pos1 = sphere_coords( uv*vec2(0.75,1.0), (rotation_speed+cloud_scroll_speed1)*u_time ) - 0.5*hash(vec3(u_seed));
       vec3 cloud_pos2 = sphere_coords( uv*vec2(0.75,1.0), (rotation_speed+cloud_scroll_speed2)*u_time ) + 0.5*hash(vec3(u_seed));
       float cloud_weight1 = cloud_texture( cloud_pos1 );
@@ -201,7 +201,8 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
       light = clamp(dot(norm, -light_dir), 0.0, 1.0);
       a *= 2.0*a;
       atmosphere_color = mix(atmosphere_color_dark, atmosphere_color_light, a);
-      alpha_surface *= clamp(50.0*(1.01 - (radius+0.05*(0.9-h))), 0.0, 1.0);
+      // Blend off lowered terrain on the edges.
+      alpha_surface *= clamp(50.0*(1.01 - (radius+crater_depth*(0.9-h))), 0.0, 1.0);
       // Specular blob.
       spec = 0.5*max(1.0 + min(h, 0.0), 0.0);
       light += max(spec - cloud_weight, 0.0)*exp(20.0*spec*(light-0.95));
