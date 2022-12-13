@@ -379,6 +379,7 @@ jobs:
           bodyFile: "build/staging/naev-changelog/CHANGELOG"
           token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: false
+          makeLatest: true
 
       - name: Build and Upload Github Release
         if: ${{ matrix.releasetype == 'github' }}
