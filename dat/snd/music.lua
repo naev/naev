@@ -349,7 +349,7 @@ local normal_combat = {
    "combat3.ogg",
    "combat1.ogg",
    "combat2.ogg",
-   "vendetta.ogg",
+   "Vendetta.ogg",
 }
 -- Faction-specific combat songs
 local factional_combat = {
