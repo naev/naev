@@ -10,6 +10,7 @@
    * Buffed jamers and scramblers
    * Buffed evasion bonus of Red Star hulls to compensate for detection malus
    * Fix "Dead or Alive" and "Alive" being swapped in bounty mission descriptions
+   * Lowered error in physics approximation (shouldn't be noticeable though)
    * Fixed other minor issues
 
 * 0.10.0-beta.2
