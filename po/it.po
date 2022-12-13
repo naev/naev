@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-11 22:53+0900\n"
-"PO-Revision-Date: 2022-12-13 03:49+0000\n"
+"PO-Revision-Date: 2022-12-13 21:48+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -9146,11 +9146,11 @@ msgstr ""
 
 #: dat/spob/anger_i.xml:2
 msgid "Anger I"
-msgstr ""
+msgstr "Rabbia I"
 
 #: dat/spob/anger_ii.xml:2
 msgid "Anger II"
-msgstr ""
+msgstr "Rabbia II"
 
 #: dat/spob/anger_ii.xml:9 dat/spob/anku_ii.xml:9 dat/spob/apez_v.xml:9
 #: dat/spob/baf_iv.xml:9 dat/spob/doormat.xml:15 dat/spob/draygar_iii.xml:9
@@ -9163,27 +9163,27 @@ msgstr ""
 
 #: dat/spob/anifta.xml:2
 msgid "Anifta"
-msgstr ""
+msgstr "Anifta"
 
 #: dat/spob/anker.xml:2
 msgid "Anker"
-msgstr ""
+msgstr "Anker"
 
 #: dat/spob/anku_i.xml:2
 msgid "An'ku I"
-msgstr ""
+msgstr "An'ku I"
 
 #: dat/spob/anku_ii.xml:2
 msgid "An'ku II"
-msgstr ""
+msgstr "An'ku II"
 
 #: dat/spob/anku_iii.xml:2
 msgid "An'ku III"
-msgstr ""
+msgstr "An'ku III"
 
 #: dat/spob/antica.xml:2
 msgid "Antica"
-msgstr ""
+msgstr "Antica"
 
 #: dat/spob/antica.xml:28
 msgid ""
@@ -9192,6 +9192,10 @@ msgid ""
 "transports stop at Antica to sell their wares before venturing deeper into "
 "Empire space."
 msgstr ""
+"Anche se l'installazione orbitante militare è dedita soltanto agli affari, "
+"Antica mescola, piuttosto facilmente, gli affari al piacere. Data la sua "
+"posizione, un numero enorme di trasporti si ferma ad Antica per vedere i "
+"loro prodotti prima di avventurarsi più in profondità nello spazio imperiale."
 
 #: dat/spob/antica.xml:29
 msgid ""
@@ -9200,10 +9204,14 @@ msgid ""
 "finest food and drink, this Arcturian bar is often a traveller's "
 "introduction to Empire cuisine."
 msgstr ""
+"Il bar di Antica è piuttosto sontuoso, assolutamente in contrasto con "
+"l'esterno austero della stazione militare orbitante. Servendo alcuni dei "
+"migliori cibi e bevande imperiali, questo bar è spesso un'introduzione alla "
+"cucina imperiale per i viaggiatori di passaggio."
 
 #: dat/spob/antlejos_iii.xml:2
 msgid "Antlejos III"
-msgstr ""
+msgstr "Antlejos III"
 
 #: dat/spob/antlejos_iii.xml:9
 msgid "B"
@@ -9211,21 +9219,23 @@ msgstr ""
 
 #: dat/spob/antlejos_iv.xml:2
 msgid "Antlejos IV"
-msgstr ""
+msgstr "Antlejos IV"
 
 #: dat/spob/antlejos_prime.xml:2
 msgid "Antlejos Prime"
-msgstr ""
+msgstr "Antlejos Primo"
 
 #. Use default
 #. Function for adding log entries for miscellaneous one-off missions.
 #: dat/spob/antlejos_v.xml:2 dat/scripts/common/antlejos.lua:29
 msgid "Antlejos V"
-msgstr ""
+msgstr "Antlejos V"
 
 #: dat/spob/antlejos_v.xml:15
 msgid "A cold and barren inhospitable moon devoid of all life."
 msgstr ""
+"Una luna fredda, inospitale e desolata, completamente priva di qualsiasi "
+"forma di vita."
 
 #: dat/spob/anubis.xml:2
 msgid "Anubis"
@@ -21464,7 +21474,7 @@ msgstr ""
 
 #: dat/ssys/anku.xml:2
 msgid "An'ku"
-msgstr ""
+msgstr "An'ku"
 
 #: dat/ssys/anrique.xml:2
 msgid "Anrique"
@@ -21476,7 +21486,7 @@ msgstr ""
 
 #: dat/ssys/antlejos.xml:2
 msgid "Antlejos"
-msgstr ""
+msgstr "Antlejos"
 
 #. subtitle = _("None"),
 #. PlasmaStorm = {
