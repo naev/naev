@@ -171,24 +171,24 @@ static void solid_update_rk4( Solid *obj, double dt )
       }
 
       /* x component */
-      tx = ix = vx;
+      tx = ix = ax;
       tx += 2.*ix + h*tx;
       tx += 2.*ix + h*tx;
       tx += ix + h*tx;
       tx *= h/6.;
 
-      px += tx;
-      vx += ax * h;
+      vx += tx;
+      px += vx * h;
 
       /* y component */
-      ty = iy = vy;
+      ty = iy = ay;
       ty += 2.*iy + h*ty;
       ty += 2.*iy + h*ty;
       ty += iy + h*ty;
       ty *= h/6.;
 
-      py += ty;
-      vy += ay * h;
+      vy += ty;
+      py += vy * h;
 
       /* rotation. */
       obj->dir += obj->dir_vel*h;
