@@ -86,13 +86,11 @@ static void solid_update_euler( Solid *obj, double dt )
    ax = th*cdir / obj->mass;
    ay = th*sdir / obj->mass;
 
-   /* p = v*dt + 0.5*a*dt^2 */
-   px += vx*dt + 0.5*ax * dt*dt;
-   py += vy*dt + 0.5*ay * dt*dt;
-
-   /* v = a*dt */
+   /* Symplectic Euler */
    vx += ax*dt;
    vy += ay*dt;
+   px += vx*dt;
+   py += vy*dt;
 
    /* Update position and velocity. */
    vec2_cset( &obj->vel, vx, vy );
@@ -184,8 +182,8 @@ static void solid_update_rk4( Solid *obj, double dt )
 
       /* y component */
       ty = iy = vy;
-      ty += 2.*(iy + h/2.*ty);
-      ty += 2.*(iy + h/2.*ty);
+      ty += 2.*iy + h*ty;
+      ty += 2.*iy + h*ty;
       ty += iy + h*ty;
       ty *= h/6.;
 
