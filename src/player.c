@@ -188,7 +188,7 @@ int player_init (void)
    if (player_outfits==NULL)
       player_outfits = array_create( PlayerOutfit_t );
    player_initSound();
-   memset( &player.ps, 0, sizeof(PlayerShip_t) );
+   memset( &player, 0, sizeof(PlayerShip_t) );
    return 0;
 }
 
@@ -475,6 +475,8 @@ static PlayerShip_t *player_newShipMake( const char *name )
       pilot_reset( ps->p );
       pilot_setPlayer( ps->p );
    }
+   /* Initialize parent weapon sets. */
+   ws_copy( ps->weapon_sets, ps->p->weapon_sets );
 
    if (player.p == NULL)
       ERR(_("Something seriously wonky went on, newly created player does not exist, bailing!"));
@@ -559,6 +561,9 @@ void player_swapShip( const char *shipname, int move_cargo )
    /* Store position. */
    v     = player.p->solid->pos;
    dir   = player.p->solid->dir;
+
+   /* Copy over weapon sets. */
+   ws_copy( player.ps.p->weapon_sets, player.ps.weapon_sets );
 
    /* If the pilot is deployed, we must redeploy. */
    removed = 0;
@@ -673,6 +678,7 @@ void player_rmShip( const char *shipname )
       /* Free player ship. */
       pilot_rmFlag( ps->p, PILOT_NOFREE );
       pilot_free( ps->p );
+      ws_free( ps->weapon_sets );
       free( ps->acquired );
 
       array_erase( &player_stack, ps, ps+1 );
@@ -726,7 +732,8 @@ void player_cleanup (void)
    free(player.name);
    player.name = NULL;
    free( player.ps.acquired );
-   memset( &player.ps, 0, sizeof(PlayerShip_t) );
+   player.ps.acquired = NULL;
+   ws_free( player.ps.weapon_sets );
 
    free(player_message_noland);
    player_message_noland = NULL;
@@ -762,9 +769,11 @@ void player_cleanup (void)
 
    /* clean up the stack */
    for (int i=0; i<array_size(player_stack); i++) {
-      pilot_rmFlag( player_stack[i].p, PILOT_NOFREE );
-      pilot_free( player_stack[i].p );
-      free( player_stack[i].acquired );
+      PlayerShip_t *ps = &player_stack[i];
+      pilot_rmFlag( ps->p, PILOT_NOFREE );
+      pilot_free( ps->p );
+      ws_free( ps->weapon_sets );
+      free( ps->acquired );
    }
    array_free(player_stack);
    player_stack = NULL;
@@ -1614,7 +1623,7 @@ int player_land( int loud )
    }
    else if ((spob->lua_can_land!=LUA_NOREF) && !spob->can_land) {
       if (spob->land_msg)
-         player_message( "#%c%s>#0 %s", spob_getColourChar(spob),
+         player_message( _("#%c%s>#0 %s"), spob_getColourChar(spob),
                spob_name(spob), spob->land_msg );
       else
          player_message( "#r%s", _("You can't land here.") );
@@ -1623,13 +1632,13 @@ int player_land( int loud )
    else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
       if (spob_hasService(spob,SPOB_SERVICE_INHABITED)) { /* Basic services */
          if (spob->can_land)
-            player_message( "#%c%s>#0 %s", spob_getColourChar(spob),
+            player_message( _("#%c%s>#0 %s"), spob_getColourChar(spob),
                   spob_name(spob), spob->land_msg );
          else if (spob->land_override > 0)
-            player_message( "#%c%s>#0 %s", spob_getColourChar(spob),
+            player_message( _("#%c%s>#0 %s"), spob_getColourChar(spob),
                   spob_name(spob), _("Landing authorized.") );
          else { /* Hostile */
-            player_message( "#%c%s>#0 %s", spob_getColourChar(spob),
+            player_message( _("#%c%s>#0 %s"), spob_getColourChar(spob),
                   spob_name(spob), spob->land_msg );
             return PLAYER_LAND_DENIED;
          }
@@ -2009,20 +2018,14 @@ void player_brokeHyperspace (void)
    /* reduce fuel */
    player.p->fuel -= player.p->fuel_consumption;
 
-   /* stop hyperspace */
+   /* Set the ptimer. */
+   player.p->ptimer = HYPERSPACE_FADEIN;
+
+   /* Update the map, we have to remove the player flags first or it breaks down. */
    pilot_rmFlag( player.p, PILOT_HYPERSPACE );
    pilot_rmFlag( player.p, PILOT_HYP_BEGIN );
    pilot_rmFlag( player.p, PILOT_HYP_BRAKE );
    pilot_rmFlag( player.p, PILOT_HYP_PREP );
-
-   /* Set the ptimer. */
-   player.p->ptimer = HYPERSPACE_FADEIN;
-
-   /* GIve some non-targetable time. */
-   player.p->itimer = PILOT_PLAYER_NONTARGETABLE_JUMPIN_DELAY;
-   pilot_setFlag( player.p, PILOT_NONTARGETABLE );
-
-   /* Update the map */
    map_jump();
 
    /* Add persisted pilots */
@@ -2031,8 +2034,6 @@ void player_brokeHyperspace (void)
       Pilot *p = pilot_stack[i];
 
       if (pilot_isFlag(p, PILOT_PERSIST) || pilot_isFlag(p, PILOT_PLAYER)) {
-         pilot_clearHooks(p);
-         ai_cleartasks(p);
          if (p != player.p)
             space_calcJumpInPos( cur_system, sys, &p->solid->pos, &p->solid->vel, &p->solid->dir, player.p );
 
@@ -2069,11 +2070,7 @@ void player_brokeHyperspace (void)
       }
    }
 
-   /* Update lua stuff. */
-   pilot_outfitLInitAll( player.p );
-
    /* Safe since this is run in the player hook section. */
-   pilot_outfitLOnjumpin( player.p );
    hooks_run( "jumpin" );
    hooks_run( "enter" );
    events_trigger( EVENT_TRIGGER_ENTER );
@@ -3142,7 +3139,7 @@ int player_addEscorts (void)
          continue;
 
       /* Only deploy spaceworthy escorts. */
-      if (!!pilot_checkSpaceworthy(ps->p))
+      if (!pilot_isSpaceworthy(ps->p))
          continue;
 
       pfleet_deploy( ps );
@@ -3210,7 +3207,6 @@ int player_save( xmlTextWriterPtr writer )
       xmlw_elem(writer,"difficulty","%s",player.difficulty);
    if (player.gui != NULL)
       xmlw_elem(writer,"gui","%s",player.gui);
-   xmlw_elem(writer,"guiOverride","%d",player.guiOverride);
    xmlw_elem(writer,"mapOverlay","%d",ovr_isOpen());
    gui_radarGetRes( &player.radar_res );
    xmlw_elem(writer,"radar_res","%f",player.radar_res);
@@ -3443,20 +3439,19 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
    xmlw_attr(writer, "active_set", "%d", ship->active_set);
    xmlw_attr(writer, "aim_lines", "%d", ship->aimLines);
    for (int i=0; i<PILOT_WEAPON_SETS; i++) {
-      PilotWeaponSetOutfit *weaps = pilot_weapSetList( ship, i );
+      PilotWeaponSet *ws = &pship->weapon_sets[i];
+      PilotWeaponSetOutfit *weaps = ws->slots;
       xmlw_startElem(writer,"weaponset");
       /* Inrange isn't handled by autoweap for the player. */
-      xmlw_attr(writer,"inrange","%d",pilot_weapSetInrangeCheck(ship,i));
+      xmlw_attr(writer,"inrange","%d",ws->inrange);
+      xmlw_attr(writer,"manual","%d",ws->manual);
       xmlw_attr(writer,"id","%d",i);
       if (!ship->autoweap) {
-         const char *name = pilot_weapSetName(ship,i);
-         if (name != NULL)
-            xmlw_attr(writer,"name","%s",name);
-         xmlw_attr(writer,"type","%d",pilot_weapSetTypeCheck(ship,i));
+         xmlw_attr(writer,"type","%d",ws->type);
          for (int j=0; j<array_size(weaps); j++) {
             xmlw_startElem(writer,"weapon");
             xmlw_attr(writer,"level","%d",weaps[j].level);
-            xmlw_str(writer,"%d",weaps[j].slot->id);
+            xmlw_str(writer,"%d",weaps[j].slotid);
             xmlw_endElem(writer); /* "weapon" */
          }
       }
@@ -3741,7 +3736,6 @@ static Spob* player_parse( xmlNodePtr parent )
       xmlr_ulong(node, "credits", player_creds);
       xmlr_strd(node, "gui", player.gui);
       xmlr_strd(node, "chapter", player.chapter);
-      xmlr_int(node, "guiOverride", player.guiOverride);
       xmlr_int(node, "mapOverlay", map_overlay_enabled);
       xmlr_float(node, "radar_res", player.radar_res);
       xmlr_int(node, "eq_outfitMode", player.eq_outfitMode);
@@ -4071,7 +4065,7 @@ static int player_parseEscorts( xmlNodePtr parent )
             WARN(_("Fleet ship '%s' is deployed despite not being marked for deployal!"), ps->p->name);
 
          /* Only deploy spaceworthy escorts. */
-         if (!!pilot_checkSpaceworthy(ps->p))
+         if (!pilot_isSpaceworthy(ps->p))
             WARN(_("Fleet ship '%s' is deployed despite not being space worthy!"), ps->p->name);
 
          pfleet_deploy( ps );
@@ -4211,7 +4205,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    xmlNodePtr node;
    Commodity *com;
    PilotFlags flags;
-   int autoweap, level, weapid, active_set, aim_lines, in_range, weap_type;
+   int autoweap, level, weapid, active_set, aim_lines, in_range, manual, weap_type;
    PlayerShip_t ps;
 
    memset( &ps, 0, sizeof(PlayerShip_t) );
@@ -4424,7 +4418,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    if (fuel >= 0)
       ship->fuel = MIN(ship->fuel_max, fuel);
    /* ships can now be non-spaceworthy on save
-    * str = pilot_checkSpaceworthy( ship ); */
+    * str = pilot_isSpaceworthy( ship ); */
    if (!pilot_slotsCheckSafety( ship )) {
       DEBUG(_("Player ship '%s' failed slot validity check , removing all outfits and adding to stock."),
             ship->name );
@@ -4493,7 +4487,12 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          if (in_range > 0)
             pilot_weapSetInrange( ship, id, in_range );
 
-         if (autoweap) /* Autoweap handles everything except inrange. */
+         /* Set manual mode. */
+         xmlr_attr_int( cur, "manual", manual );
+         if (manual > 0)
+            pilot_weapSetManual( ship, id, manual );
+
+         if (autoweap) /* Autoweap handles everything except inrange and manual. */
             continue;
 
          /* Set type mode. */
@@ -4546,6 +4545,8 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       ship->active_set = active_set;
    else
       pilot_weaponSetDefault( ship );
+   /* Copy the weapon set over to the player ship, where we store it. */
+   ws_copy( ps.weapon_sets, ship->weapon_sets );
 
    /* Set aimLines */
    ship->aimLines = aim_lines;

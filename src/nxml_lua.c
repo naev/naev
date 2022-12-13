@@ -493,6 +493,8 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
              * article, audio, canvas, colour, data, file, font, linopt, pilot, pilotoutfit, shader, tex, transform.
              * */
             WARN(_("Unknown Lua data type!"));
+            free(type);
+            free(name);
             lua_pop(L,1);
             return -1;
          }

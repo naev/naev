@@ -24,7 +24,7 @@ local lmisn = require "lmisn"
 local luaspfx = require "luaspfx"
 local love_shaders = require "love_shaders"
 local tut = require "common.tutorial"
-
+local cinema = require "cinema"
 
 local reward = zbh.rewards.zbh04
 
@@ -241,7 +241,7 @@ function feral_discovered ()
    feral:face( player.pilot() )
 
    player.autonavAbort(_("You found something!"))
-   player.cinematics( true, {gui=true} )
+   cinema.on{ gui=true }
    camera.set( feral )
 
    -- Have to do this AFTER aborting autonav
@@ -262,8 +262,7 @@ end
 local feral_canhail = false
 function feral_hailstart ()
    feral_canhail = true
-   player.pilot():control(false)
-   player.cinematics(false)
+   cinema.off()
    camera.set()
 end
 

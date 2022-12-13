@@ -48,10 +48,6 @@ abandon_text    = {
 }
 
 
--- Mission details
-mem.misn_title  = _("Patrol of the {sys} System")
-mem.misn_desc   = _("Patrol specified points in the {sys} system, eliminating any hostiles you encounter.")
-
 -- Messages
 msg = {
    _("Point secure."),
@@ -136,9 +132,27 @@ function create ()
    mem.credits = mem.credits + rnd.sigma() * (mem.credits / 3)
    mem.reputation = math.floor( n_enemies / 75 )
 
+   -- Faction prefix
+   local prefix
+   if mem.paying_faction:static() then
+      prefix = ""
+   else
+      prefix = require("common.prefix").prefix(mem.paying_faction)
+   end
+
    -- Set mission details
-   misn.setTitle( fmt.f( mem.misn_title, {sys=mem.missys, fct=mem.paying_faction} ) )
-   misn.setDesc( fmt.f( mem.misn_desc, {sys=mem.missys} ) )
+   misn.setTitle(prefix..fmt.f(_("Patrol of the {sys} System"),
+      {sys=mem.missys}))
+   local desc = fmt.f(_([[Patrol specified points in the {sys} system, eliminating any hostiles you encounter.
+
+#nPatrol System:#0 {sys}
+#nPatrol Points:#0 {amount}]]),
+      {amount=#mem.points, sys=mem.missys})
+   if not mem.paying_faction:static() then
+      desc = desc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
+         {fct=mem.paying_faction})
+   end
+   misn.setDesc(desc)
    misn.setReward( fmt.credits( mem.credits ) )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
@@ -203,7 +217,7 @@ function land ()
       if not pir.factionIsPirate( mem.paying_faction ) then
          pir.reputationNormalMission( mem.reputation )
       end
-      mem.paying_faction:modPlayerSingle( mem.reputation )
+      mem.paying_faction:modPlayer( mem.reputation )
       misn.finish( true )
    elseif not mem.job_done and system.cur() == mem.missys then
       local txt = abandon_text[ rnd.rnd( 1, #abandon_text ) ]

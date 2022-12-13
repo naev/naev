@@ -11,7 +11,6 @@ set -e
 
 # Defaults
 SOURCEPATH="$(pwd)"
-NIGHTLY="false"
 BUILDTYPE="release"
 
 while getopts dcns:b: OPTION "$@"; do
@@ -23,7 +22,6 @@ while getopts dcns:b: OPTION "$@"; do
         BUILDTYPE="debugoptimized"
         ;;
     n)
-        NIGHTLY="true"
         BUILDTYPE="debug"
         ;;
     s)
@@ -45,7 +43,6 @@ else
     WORKPATH=$(readlink -mf "$BUILDPATH")
 fi
 
-BUILD_DATE="$(date +%Y%m%d)"
 BUILDPATH="$WORKPATH/builddir"
 
 # Honours the MESON variable set by the environment before setting it manually
@@ -59,7 +56,6 @@ fi
 echo "SCRIPT WORKING PATH: $WORKPATH"
 echo "SOURCE PATH:         $SOURCEPATH"
 echo "BUILD PATH:          $BUILDPATH"
-echo "NIGHTLY:             $NIGHTLY"
 echo "BUILDTYPE:           $BUILDTYPE"
 echo "MESON WRAPPER PATH:  $MESON"
 
@@ -69,10 +65,15 @@ mkdir -p "$WORKPATH"/{dist,utils,AppDir}
 DESTDIR="$WORKPATH/AppDir"
 export DESTDIR
 
+# Get arch for use with linuxdeploy and to help make the linuxdeploy URL more architecture agnostic.
+ARCH=$(arch)
+
+export ARCH
+
 # Get linuxdeploy's AppImage
-linuxdeploy="$WORKPATH/utils/linuxdeploy-x86_64.AppImage"
+linuxdeploy="$WORKPATH/utils/linuxdeploy.AppImage"
 if [ ! -f "$linuxdeploy" ]; then
-    curl -L -o "$linuxdeploy" https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+    curl -L -o "$linuxdeploy" "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-$ARCH.AppImage"
     #
     # This fiddles with some magic bytes in the ELF header. Don't ask me what this means.
     # For the layman: makes appimages run in docker containers properly again.
@@ -88,7 +89,6 @@ sh "$MESON" setup "$BUILDPATH" "$SOURCEPATH" \
 --native-file "$SOURCEPATH/utils/build/linux.ini" \
 --buildtype "$BUILDTYPE" \
 --force-fallback-for=glpk,SuiteSparse \
--Dnightly="$NIGHTLY" \
 -Dprefix="/usr" \
 -Db_lto=true \
 -Dauto_features=enabled \
@@ -99,9 +99,6 @@ sh "$MESON" setup "$BUILDPATH" "$SOURCEPATH" \
 sh "$MESON" install -C "$BUILDPATH"
 
 # Prep dist directory for appimage
-
-# Set ARCH of AppImage
-ARCH=$(arch)
 
 # Set VERSION and OUTPUT variables
 if [ -f "$SOURCEPATH/dat/VERSION" ]; then
@@ -116,10 +113,6 @@ if [[ "$NIGHTLY" =~ "true" ]]; then
     TAG="nightly"
 else
     TAG="latest"
-fi
-
-if [[ "$BUILDTYPE" =~ "debug" ]]; then
-    export VERSION="$VERSION+DEBUG.$BUILD_DATE"
 fi
 
 SUFFIX="$VERSION-linux"

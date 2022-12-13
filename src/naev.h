@@ -81,3 +81,5 @@ int naev_versionCompare( const char *version );
 void naev_quit (void);
 int naev_isQuit (void);
 double naev_getrealdt (void);
+
+void naev_renderLoadscreen (void);

@@ -106,7 +106,6 @@ static void info_close( unsigned int wid, const char *str );
 static void info_openMain( unsigned int wid );
 static void info_setGui( unsigned int wid, const char *str );
 static void setgui_load( unsigned int wdw, const char *str );
-static void info_toggleGuiOverride( unsigned int wid, const char *name );
 static void info_openShip( unsigned int wid );
 static void info_openWeapons( unsigned int wid );
 static void info_openCargo( unsigned int wid );
@@ -120,6 +119,7 @@ static void weapons_update( unsigned int wid, const char *str );
 static void weapons_autoweap( unsigned int wid, const char *str );
 static void weapons_fire( unsigned int wid, const char *str );
 static void weapons_inrange( unsigned int wid, const char *str );
+static void weapons_manual( unsigned int wid, const char *str );
 static void aim_lines( unsigned int wid, const char *str );
 static void weapons_renderLegend( double bx, double by, double bw, double bh, void* data );
 static void info_openStandings( unsigned int wid );
@@ -294,7 +294,7 @@ void menu_info( int window )
 
    /* Dimensions. */
    w = 640;
-   h = 600;
+   h = 680;
 
    /* Create the window. */
    info_wid = window_create( "wdwInfo", _("Info"), -1, -1, w, h );
@@ -335,6 +335,9 @@ static void info_close( unsigned int wid, const char *str )
    (void) wid;
    if (info_wid > 0) {
       info_lastTab = window_tabWinGetActive( info_wid, "tabInfo" );
+
+      /* Copy weapon sets over if changed. */
+      ws_copy( player.ps.weapon_sets, player.p->weapon_sets );
 
       window_close( info_wid, str );
       info_wid = 0;
@@ -506,7 +509,7 @@ static void info_setGui( unsigned int wid, const char *str )
 
    /* List */
    window_addList( wid, 20, -50,
-         SETGUI_WIDTH-BUTTON_WIDTH/2 - 60, SETGUI_HEIGHT-110,
+         SETGUI_WIDTH-BUTTON_WIDTH/2 - 60, SETGUI_HEIGHT-70,
          "lstGUI", gui_copy, nguis, 0, NULL, NULL );
    toolkit_setList( wid, "lstGUI", gui_pick() );
 
@@ -515,12 +518,6 @@ static void info_setGui( unsigned int wid, const char *str )
          "btnBack", _("Close"), setgui_close );
    window_addButton( wid, -20, 30 + BUTTON_HEIGHT, BUTTON_WIDTH/2, BUTTON_HEIGHT,
          "btnLoad", _("Load"), setgui_load );
-
-   /* Checkboxes */
-   window_addCheckbox( wid, 20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "chkOverride", _("Override GUI"),
-         info_toggleGuiOverride, player.guiOverride );
-   info_toggleGuiOverride( wid, "chkOverride" );
 
    /* default action */
    window_setAccept( wid, setgui_load );
@@ -541,17 +538,6 @@ static void setgui_load( unsigned int wdw, const char *str )
    if (strcmp(gui,_("None")) == 0)
       return;
 
-   if (player.guiOverride == 0) {
-      if (dialogue_YesNo( _("GUI Override is not set."),
-               _("Enable GUI Override and change GUI to '%s'?"), gui )) {
-         player.guiOverride = 1;
-         window_checkboxSet( wid, "chkOverride", player.guiOverride );
-      }
-      else {
-         return;
-      }
-   }
-
    /* Set the GUI. */
    free( player.gui );
    player.gui = strdup( gui );
@@ -561,20 +547,6 @@ static void setgui_load( unsigned int wdw, const char *str )
 
    /* Load the GUI. */
    gui_load( gui_pick() );
-}
-
-/**
- * @brief GUI override was toggled.
- *
- *    @param wid Window id.
- *    @param name of widget.
- */
-static void info_toggleGuiOverride( unsigned int wid, const char *name )
-{
-   player.guiOverride = window_checkboxState( wid, name );
-   /* Go back to the default one. */
-   if (player.guiOverride == 0)
-      toolkit_setList( wid, "lstGUI", gui_pick() );
 }
 
 /**
@@ -623,7 +595,7 @@ static void info_openShip( unsigned int wid )
 
    /* Custom widget. */
    equipment_slotWidget( wid, -20, -40, 180, h-60, &info_eq );
-   info_eq.selected  = player.p;
+   info_eq.selected  = &player.ps;
    info_eq.canmodify = 0;
 
    /* Update ship. */
@@ -690,7 +662,7 @@ static void info_openWeapons( unsigned int wid )
 
    /* Custom widget. */
    equipment_slotWidget( wid, 20, -40, 180, h-60, &info_eq_weaps );
-   info_eq_weaps.selected  = player.p;
+   info_eq_weaps.selected  = &player.ps;
    info_eq_weaps.weapons = 0;
    info_eq_weaps.canmodify = 0;
 
@@ -715,6 +687,10 @@ static void info_openWeapons( unsigned int wid )
    window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
          "chkInrange", _("Only shoot weapons that are in range"), weapons_inrange,
          pilot_weapSetInrangeCheck( player.p, info_eq_weaps.weapons ) );
+   y -= 30;
+   window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
+         "chkManual", _("Enable manual aiming mode."), weapons_manual,
+         pilot_weapSetManualCheck( player.p, info_eq_weaps.weapons ) );
    y -= 40;
    window_addText( wid, x, y, wlen, 20, 0, "txtGlobal", NULL, NULL,
          _("Global Settings"));
@@ -755,7 +731,7 @@ static void weapons_genList( unsigned int wid )
    /* List */
    buf = malloc( sizeof(char*) * PILOT_WEAPON_SETS );
    for (int i=0; i<PILOT_WEAPON_SETS; i++) {
-      const char *str = pilot_weapSetName( info_eq_weaps.selected, i );
+      const char *str = pilot_weapSetName( info_eq_weaps.selected->p, i );
       if (str == NULL)
          snprintf( tbuf, sizeof(tbuf), "%d - ??", (i+1)%10 );
       else
@@ -794,6 +770,10 @@ static void weapons_update( unsigned int wid, const char *str )
    /* Update inrange. */
    window_checkboxSet( wid, "chkInrange",
          pilot_weapSetInrangeCheck( player.p, pos ) );
+
+   /* Update manual aiming. */
+   window_checkboxSet( wid, "chkManual",
+         pilot_weapSetManualCheck( player.p, pos ) );
 
    /* Update autoweap. */
    window_checkboxSet( wid, "chkAutoweap", player.p->autoweap );
@@ -871,6 +851,15 @@ static void weapons_inrange( unsigned int wid, const char *str )
 {
    int state = window_checkboxState( wid, str );
    pilot_weapSetInrange( player.p, info_eq_weaps.weapons, state );
+}
+
+/**
+ * @brief Sets the manual aim property.
+ */
+static void weapons_manual( unsigned int wid, const char *str )
+{
+   int state = window_checkboxState( wid, str );
+   pilot_weapSetManual( player.p, info_eq_weaps.weapons, state );
 }
 
 /**

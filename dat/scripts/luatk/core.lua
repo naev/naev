@@ -61,9 +61,13 @@ end
 Runs the luatk. Should be used after the windows are set up.
 --]]
 function luatk.run ()
+   local f = lg.getFont()
+   local o = f:getOutline()
+   f:setOutline(1)
    luatk._love = true
    love.exec( 'scripts/luatk' )  -- luacheck: ignore
    luatk._love = false
+   f:setOutline(o)
 end
 --[[--
 Creates a custom state inside a vn state.
@@ -453,6 +457,12 @@ end
 luatk.Widget = {}
 luatk.Widget_mt = { __index = luatk.Widget }
 function luatk.newWidget( parent, x, y, w, h )
+   if x < 0 then
+      x = parent.w - w + x
+   end
+   if y < 0 then
+      y = parent.h - h + y
+   end
    local wgt = { parent=parent, x=x, y=y, w=w, h=h }
    setmetatable( wgt, luatk.Widget_mt )
    table.insert( parent._widgets, wgt )
@@ -598,7 +608,7 @@ function luatk.newText( parent, x, y, w, h, text, col, align, font )
    wgt.text    = text
    wgt.col     = col or luatk.colour.text
    wgt.align   = align or "left"
-   wgt.font    = font or luatk._deffont or lg.newFont( 12 )
+   wgt.font    = font or luatk._deffont or lg.getFont()
    return wgt
 end
 function luatk.Text:draw( bx, by )
@@ -620,8 +630,27 @@ Gets the height of the text widget text.
    @treturn number Height of the text in the widget.
 --]]
 function luatk.Text:height ()
-   local _maxw, wrap = self.font:getWrap( self.text, self.w )
-   return self.font:getLineHeight() * #wrap
+   local _w, h = self:dimensions()
+   return h
+end
+--[[--
+Gets the maximum width of the text widget text.
+
+   @treturn number Width of the text in the widget.
+--]]
+function luatk.Text:width ()
+   local w, _h = self:dimensions()
+   return w
+end
+--[[--
+Gets the dimensions of the text widget text.
+
+   @treturn number Width of the text in the widget.
+   @treturn number Height of the text in the widget.
+--]]
+function luatk.Text:dimensions ()
+   local maxw, wrap = self.font:getWrap( self.text, self.w )
+   return maxw, self.font:getLineHeight() * #wrap
 end
 
 --[[
@@ -686,7 +715,7 @@ function luatk.newCheckbox( parent, x, y, w, h, text, handler, default )
    wgt.text    = text
    wgt.handler = handler
    wgt.state   = (default==true)
-   wgt.font    = luatk._deffont or lg.newFont( 12 )
+   wgt.font    = luatk._deffont or lg.getFont()
    wgt.fonth   = wgt.font:getHeight()
    return wgt
 end
@@ -734,7 +763,7 @@ function luatk.newFader( parent, x, y, w, h, min, max, def, handler, params )
    def = def or (min+max)*0.5
    wgt.val = math.min( math.max( def, min ), max )
    wgt.params = params
-   wgt.font = params.font or luatk._deffont or lg.newFont( 12 )
+   wgt.font = params.font or luatk._deffont or lg.getFont()
    return wgt
 end
 function luatk.Fader:draw( bx, by )
@@ -782,9 +811,11 @@ end
 function luatk.Fader:get()
    return self.val
 end
-function luatk.Fader:set( val )
+function luatk.Fader:set( val, no_handler )
    self.val = math.max( self.min, math.min( self.max, val ) )
-   self.handler( self, self.val )
+   if not no_handler then
+      self.handler( self, self.val )
+   end
 end
 
 --[[
@@ -875,9 +906,18 @@ end
 function luatk.List:get()
    return self.items[ self.selected ], self.selected
 end
-function luatk.List:set( idx )
+function luatk.List:set( idx, no_handler )
    self.selected = math.max( 1, math.min( idx, #self.items ) )
-   self.onselect( self:get() )
+   if not no_handler then
+      self.onselect( self:get() )
+   end
+end
+function luatk.List:setItem( itm, no_handler )
+   for k,v in ipairs(self.items) do
+      if v==itm then
+         return self:set( k, no_handler )
+      end
+   end
 end
 function luatk.List:setPos( pos )
    self.pos = pos * self.scrollh
@@ -896,7 +936,7 @@ function luatk.newInput( parent, x, y, w, h, max, params )
    params = params or {}
    wgt.max     = max
    wgt.params  = params
-   wgt.font    = params.font or luatk._deffont or lg.newFont( 12 )
+   wgt.font    = params.font or luatk._deffont or lg.getFont()
    wgt.fonth   = wgt.font:getHeight()
    wgt.fontlh  = wgt.font:getLineHeight()
    if (wgt.h-10) / wgt.font:getLineHeight() < 2 then

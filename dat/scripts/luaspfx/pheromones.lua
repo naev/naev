@@ -30,11 +30,13 @@ local function pheromones( pos, vel, params )
       pheromones_shader = lg.newShader( pheromones_bg_shader_frag )
    end
 
+   local size   = params.size or 6000
+
    -- Sound is handled in outfit
-   local s = spfx.new( 8, update, nil, nil, render, pos, vel )
+   local s = spfx.new( 8, update, nil, nil, render, pos, vel, nil, size )
    local d  = s:data()
    d.timer  = 0
-   d.size   = params.size or 6000
+   d.size   = size
    d.col    = params.col or {1.0, 0.5, 0.8, 0.5}
    return s
 end

@@ -102,6 +102,8 @@ void _array_free_helper(void *a)
 
 void *_array_copy_helper(size_t e_size, void *a)
 {
+   if (a==NULL)
+      return NULL;
    _private_container *c = _array_private_container(a);
    void *copy = _array_create_helper( e_size, c->_size );
    _array_resize_helper( &copy, e_size, c->_size );

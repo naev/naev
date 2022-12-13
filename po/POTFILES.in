@@ -79,20 +79,14 @@ dat/effects/shieldaura.xml
 dat/effects/shieldboost.xml
 dat/effects/wormhole_enter.xml
 dat/effects/wormhole_exit.xml
-dat/factions/achack_sirius.xml
-dat/factions/achack_thugs.xml
-dat/factions/associates.xml
 dat/factions/black_lotus.xml
 dat/factions/collective.xml
 dat/factions/derelict.xml
-dat/factions/dhc.xml
-dat/factions/diplomatic.xml
 dat/factions/dreamer_clan.xml
 dat/factions/dummy.xml
 dat/factions/dvaered.xml
 dat/factions/empire.xml
 dat/factions/flf.xml
-dat/factions/four_winds.xml
 dat/factions/frontier.xml
 dat/factions/goddard.xml
 dat/factions/independent.xml
@@ -103,16 +97,12 @@ dat/factions/nasin.xml
 dat/factions/pirate.xml
 dat/factions/proteron.xml
 dat/factions/raven_clan.xml
-dat/factions/rogue_four_winds.xml
-dat/factions/shadow_pirates.xml
 dat/factions/sirius.xml
 dat/factions/soromid.xml
 dat/factions/strangelove.xml
-dat/factions/thugs.xml
 dat/factions/thurion.xml
 dat/factions/trader.xml
 dat/factions/traders_guild.xml
-dat/factions/warlords.xml
 dat/factions/wild_ones.xml
 dat/factions/zalek.xml
 dat/map_decorator/blackhole.xml
@@ -167,6 +157,8 @@ dat/outfits/bioship/skills/hunters_instinct.xml
 dat/outfits/bioship/skills/natural_healing_i.xml
 dat/outfits/bioship/skills/natural_healing_ii.xml
 dat/outfits/bioship/skills/paralyzing_plasma.xml
+dat/outfits/bioship/skills/plasma_burst.xml
+dat/outfits/bioship/skills/reflective_shell.xml
 dat/outfits/bioship/skills/silence.xml
 dat/outfits/bioship/skills/the_bite.xml
 dat/outfits/bioship/skills/the_bite_blood_lust.xml
@@ -298,6 +290,7 @@ dat/outfits/maps/map_empire_core.xml
 dat/outfits/maps/map_flf.xml
 dat/outfits/maps/map_flf_pirate_route.xml
 dat/outfits/maps/map_inner_nebula_secret_jump.xml
+dat/outfits/maps/map_kretogg_hypergate.xml
 dat/outfits/maps/map_kretogg_secrets.xml
 dat/outfits/maps/map_nebula_edge.xml
 dat/outfits/maps/map_new_haven_secrets.xml
@@ -483,6 +476,7 @@ dat/ships/empire/empire_shark.xml
 dat/ships/feral_bioship/kauweke.xml
 dat/ships/feral_bioship/nohinohi.xml
 dat/ships/feral_bioship/taitamariki.xml
+dat/ships/misc/onewing_goddard.xml
 dat/ships/misc/raelid_outpost.xml
 dat/ships/misc/raglan_outpost.xml
 dat/ships/misc/sindbad.xml
@@ -1166,6 +1160,7 @@ dat/spob/medenus_observatory.xml
 dat/spob/megala.xml
 dat/spob/megan_station.xml
 dat/spob/megas.xml
+dat/spob/melendez_dome.xml
 dat/spob/memory_of_sorom.xml
 dat/spob/mendez.xml
 dat/spob/merisi_i.xml
@@ -1339,6 +1334,7 @@ dat/spob/pokyos_station.xml
 dat/spob/polaris_prime.xml
 dat/spob/poller_d2.xml
 dat/spob/poller_i1.xml
+dat/spob/poller_mass.xml
 dat/spob/porro_farming_station.xml
 dat/spob/porro_ii.xml
 dat/spob/porro_iii.xml
@@ -1516,6 +1512,7 @@ dat/spob/soromid_wards_alpha.xml
 dat/spob/soromid_wards_beta.xml
 dat/spob/soromid_wards_gamma.xml
 dat/spob/soros_station.xml
+dat/spob/sorrow_ii.xml
 dat/spob/sroolu.xml
 dat/spob/stalwart_station.xml
 dat/spob/starlight_end_i.xml
@@ -1590,6 +1587,7 @@ dat/spob/the_stinker.xml
 dat/spob/the_wringer.xml
 dat/spob/theras_ii.xml
 dat/spob/theras_iii.xml
+dat/spob/theras_iv.xml
 dat/spob/thosson.xml
 dat/spob/three_and_a_half_kings.xml
 dat/spob/thymo.xml
@@ -2305,7 +2303,7 @@ dat/tech/ion3.xml
 dat/tech/kinetic1.xml
 dat/tech/kinetic2.xml
 dat/tech/kinetic3.xml
-dat/tech/kretog_maps.xml
+dat/tech/kretogg_maps.xml
 dat/tech/laser1.xml
 dat/tech/laser2.xml
 dat/tech/laser3.xml
@@ -2399,6 +2397,7 @@ dat/unidiff/heavy_weapons_license.xml
 dat/unidiff/hypergates_1.xml
 dat/unidiff/hypergates_2.xml
 dat/unidiff/hypergates_3.xml
+dat/unidiff/onewing_goddard.xml
 dat/unidiff/raelid_outpost_death.xml
 dat/unidiff/raglan_outpost_death.xml
 dat/unidiff/sigma13_fixed1.xml
@@ -2523,6 +2522,7 @@ dat/events/dvaered/poster.lua
 dat/events/dvaered/totoran.lua
 dat/events/dvaered/warlord_propaganda.lua
 dat/events/dvaered/warlords_battle.lua
+dat/events/escort_settings.lua
 dat/events/flf/derelict.lua
 dat/events/flf/flf_catastrophe.lua
 dat/events/hired_escorts.lua
@@ -2568,8 +2568,10 @@ dat/events/npc/empire.lua
 dat/events/npc/flf.lua
 dat/events/npc/frontier.lua
 dat/events/npc/generic.lua
+dat/events/npc/melendez_dome.lua
 dat/events/npc/pirate.lua
 dat/events/npc/proteron.lua
+dat/events/npc/raven_clan.lua
 dat/events/npc/sirius.lua
 dat/events/npc/soromid.lua
 dat/events/npc/thurion.lua
@@ -2585,6 +2587,7 @@ dat/events/pers/soromid.lua
 dat/events/pers/zalek.lua
 dat/events/pirate/fake_transponder.lua
 dat/events/pirate/shipcheck.lua
+dat/events/poi.lua
 dat/events/proteron/blockade.lua
 dat/events/restricted.lua
 dat/events/shipai.lua
@@ -2605,6 +2608,7 @@ dat/events/zalek/sigma13.lua
 dat/factions/equip/dvaered.lua
 dat/factions/equip/empire.lua
 dat/factions/equip/generic.lua
+dat/factions/equip/marauder.lua
 dat/factions/equip/miner.lua
 dat/factions/equip/pirate.lua
 dat/factions/equip/proteron.lua
@@ -2777,8 +2781,11 @@ dat/missions/neutral/poi/proteron_agent.lua
 dat/missions/neutral/poi/soromid_biologist.lua
 dat/missions/neutral/poi/zalek_drone.lua
 dat/missions/neutral/poi_intro.lua
+dat/missions/neutral/race/tracks_qex.lua
+dat/missions/neutral/race/tracks_zlk.lua
 dat/missions/neutral/race1.lua
 dat/missions/neutral/race2.lua
+dat/missions/neutral/race_qex.lua
 dat/missions/neutral/reynir.lua
 dat/missions/neutral/runaway/runaway_cynthia.lua
 dat/missions/neutral/runaway/runaway_search.lua
@@ -2877,6 +2884,8 @@ dat/outfits/bioship/skills/bioplasma2.lua
 dat/outfits/bioship/skills/feral_rage_i.lua
 dat/outfits/bioship/skills/feral_rage_iii.lua
 dat/outfits/bioship/skills/hunters_instinct.lua
+dat/outfits/bioship/skills/plasma_burst.lua
+dat/outfits/bioship/skills/reflective_shell.lua
 dat/outfits/bioship/skills/the_bite.lua
 dat/outfits/bioship/skills/tunnelling_organ.lua
 dat/outfits/launchers/space_mine_layer.lua
@@ -2919,8 +2928,10 @@ dat/save_updater.lua
 dat/scripts/bioship.lua
 dat/scripts/bioship/intrinsics.lua
 dat/scripts/bioship/skills.lua
+dat/scripts/cinema.lua
 dat/scripts/class.lua
 dat/scripts/colour.lua
+dat/scripts/common/achack.lua
 dat/scripts/common/antlejos.lua
 dat/scripts/common/baron.lua
 dat/scripts/common/cargo.lua
@@ -2939,6 +2950,7 @@ dat/scripts/common/neutral.lua
 dat/scripts/common/npc.lua
 dat/scripts/common/pirate.lua
 dat/scripts/common/poi.lua
+dat/scripts/common/prefix.lua
 dat/scripts/common/sciencegonewrong.lua
 dat/scripts/common/shadow.lua
 dat/scripts/common/shark.lua
@@ -3011,10 +3023,12 @@ dat/scripts/luaspfx/core.lua
 dat/scripts/luaspfx/explosion.lua
 dat/scripts/luaspfx/pheromones.lua
 dat/scripts/luaspfx/pulse.lua
+dat/scripts/luaspfx/racetrack.lua
 dat/scripts/luaspfx/sfx.lua
 dat/scripts/luaspfx/spacemine.lua
 dat/scripts/luaspfx/trail.lua
 dat/scripts/luatk.lua
+dat/scripts/luatk/bezier.lua
 dat/scripts/luatk/conf.lua
 dat/scripts/luatk/core.lua
 dat/scripts/luatk/main.lua
@@ -3088,6 +3102,7 @@ dat/spob/lua/lib/spob.lua
 dat/spob/lua/lib/wormhole.lua
 dat/spob/lua/lowclass.lua
 dat/spob/lua/pirate_clanworld.lua
+dat/spob/lua/poller_mass.lua
 dat/spob/lua/proteron_mil_restricted.lua
 dat/spob/lua/sirius_mil_mutris.lua
 dat/spob/lua/sirius_mil_restricted.lua

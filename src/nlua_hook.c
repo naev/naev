@@ -945,6 +945,7 @@ static int hookL_custom( lua_State *L )
  *
  * You can hook to different actions.  Currently hook system only supports:<br />
  * <ul>
+ *    <li> "creation" : triggered when a pilot is created.</li>
  *    <li> "death" : triggered when pilot dies (before marked as dead). </li>
  *    <li> "exploded" : triggered when pilot has died and the final explosion has begun. </li>
  *    <li> "boarding" : triggered when a pilot boards another ship (start of boarding).</li>
@@ -1025,7 +1026,8 @@ static int hookL_pilot( lua_State *L )
    hook_type   = luaL_checkstring(L,2);
 
    /* Check to see if hook_type is valid */
-   if (strcmp(hook_type,"death")==0)         type = PILOT_HOOK_DEATH;
+   if (strcmp(hook_type,"creation")==0)      type = PILOT_HOOK_CREATION;
+   else if (strcmp(hook_type,"death")==0)    type = PILOT_HOOK_DEATH;
    else if (strcmp(hook_type,"exploded")==0) type = PILOT_HOOK_EXPLODED;
    else if (strcmp(hook_type,"boarding")==0) type = PILOT_HOOK_BOARDING;
    else if (strcmp(hook_type,"boardall")==0) type = PILOT_HOOK_BOARD_ALL;
@@ -1046,6 +1048,11 @@ static int hookL_pilot( lua_State *L )
       NLUA_ERROR(L, _("Invalid pilot hook type: '%s'"), hook_type);
       return 0;
    }
+
+#ifdef DEBUGGING
+   if ((type == PILOT_HOOK_CREATION) && (p!=0))
+      NLUA_ERROR( L, _("'creation' pilot hook can not be set on a specific pilot, only globally.") );
+#endif /* DEBUGGING */
 
    /* actually add the hook */
    snprintf( buf, sizeof(buf), "p_%s", hook_type );

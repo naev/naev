@@ -43,7 +43,6 @@ local thurion_outfits = eoutfits.merge{{
 }}
 
 local thurion_params = {
-   --["Sirius Demon"] = function () return {
    ["Thurion Apprehension"] = function () return {
          type_range = {
             ["Launcher"] = { max = 1 },
@@ -55,7 +54,6 @@ local thurion_params = {
          },
       } end,
 }
---local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 local thurion_cores = {
 }
 

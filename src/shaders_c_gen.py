@@ -157,6 +157,14 @@ SHADERS = [
       subroutines = {},
    ),
    Shader(
+      name = "lines",
+      vs_path = "lines.vert",
+      fs_path = "lines.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "colour"],
+      subroutines = {},
+   ),
+   Shader(
       name = "font",
       vs_path = "font.vert",
       fs_path = "font.frag",
@@ -361,6 +369,10 @@ SHADERS = [
    SimpleShader(
       name = "stealthmarker",
       fs_path = "stealthmarker.frag",
+   ),
+   SimpleShader(
+      name = "healthbar",
+      fs_path = "healthbar.frag",
    ),
 ]
 

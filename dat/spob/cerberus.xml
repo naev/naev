@@ -27,4 +27,7 @@
   <bar>The bar is maintained by off-duty scientists and soldiers. It's rather small and has a minuscule selection of beverages. There's little ambient noise; it seems as though boredom has gotten the best of most of the souls aboard.</bar>
  </general>
  <tech/>
+ <tags>
+  <tag>station</tag>
+ </tags>
 </spob>

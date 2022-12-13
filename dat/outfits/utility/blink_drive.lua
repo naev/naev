@@ -40,7 +40,7 @@ function ontoggle( p, po, on )
    luaspfx.blink( pos ) -- Blink afterimage
    p:effectAdd( "Blink" ) -- Cool "blink in" effect
    p:setPos( pos + vec2.newP( dist, p:dir() ) )
-   mem.timer = cooldown
+   mem.timer = cooldown * p:shipstat("cooldown_mod",true)
    po:state("cooldown")
    po:progress(1)
 

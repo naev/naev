@@ -116,7 +116,7 @@ int dpl_saveSpob( const Spob *p )
       xmlw_elemEmpty( writer, "uninhabited" );
    xmlw_endElem( writer ); /* "services" */
    if (spob_hasService( p, SPOB_SERVICE_LAND )) {
-      if (p->presence.faction > 0) {
+      if (p->presence.faction >= 0) {
          xmlw_startElem( writer, "commodities" );
          for (int i=0; i<array_size(p->commodities); i++) {
             Commodity *c = p->commodities[i];

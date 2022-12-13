@@ -727,7 +727,7 @@ void hooks_update( double dt )
    Hook *h;
 
    /* Don't update without player. */
-   if ((player.p == NULL) || player_isFlag(PLAYER_CREATING))
+   if ((player.p == NULL) || player_isFlag(PLAYER_CREATING) || player_isFlag(PLAYER_DESTROYED))
       return;
 
    /* Clear creation flags. */

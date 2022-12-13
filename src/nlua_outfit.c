@@ -449,16 +449,18 @@ static int outfitL_description( lua_State *L )
  *
  *    @luatparam String o Outfit to get the summary of.
  *    @luatparam[opt=player.pilot()] Pilot p Pilot to set summary to.
+ *    @luatparam[opt=false] string noname Whether or not to hide the outfit name at the top.
  *    @luatreturn string The summary (with translating).
  * @luafunc summary
  */
 static int outfitL_summary( lua_State *L )
 {
    const Outfit *o = luaL_validoutfit(L,1);
+   int noname = lua_toboolean(L,3);
    if (lua_ispilot(L,2))
-      lua_pushstring(L, pilot_outfitSummary( luaL_validpilot(L,2), o ) );
+      lua_pushstring(L, pilot_outfitSummary( luaL_validpilot(L,2), o, !noname ) );
    else
-      lua_pushstring(L, pilot_outfitSummary( player.p, o ) );
+      lua_pushstring(L, pilot_outfitSummary( player.p, o, !noname ) );
    return 1;
 }
 

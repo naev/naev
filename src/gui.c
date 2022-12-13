@@ -1131,8 +1131,6 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       ovr_center( &ox, &oy );
       x += ox;
       y += oy;
-      w *= 2.;
-      h *= 2.;
    }
 
    if (p->id == player.p->target)
@@ -1495,8 +1493,6 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       /* Transform coordinates. */
       cx += ox;
       cy += oy;
-      w  *= 2.;
-      h  *= 2.;
    }
 
    /* See if far side is marked. */
@@ -1827,7 +1823,7 @@ char* gui_pick (void)
     * naev_resize and can cause an issue if player is dead. */
    if ((player.p == NULL) || pilot_isFlag(player.p,PILOT_DEAD))
       gui = NULL;
-   else if (player.gui && (player.guiOverride == 1 || strcmp(player.p->ship->gui,"default")==0))
+   else if (player.gui != NULL)
       gui = player.gui;
    else
       gui = player.p->ship->gui;

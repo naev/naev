@@ -213,13 +213,13 @@ function __moveto_generic( target, dir )
    local dist  = ai.dist( target )
    local bdist = 50
 
-   -- Need to get closer
-   if dir < math.rad(10) and dist > bdist then
-      ai.accel()
-
    -- Need to start braking
-   elseif dist < bdist then
+   if dist < bdist then
       ai.poptask()
+
+   -- Need to get closer
+   elseif dir < math.rad(10) and dist > bdist then
+      ai.accel()
    end
 end
 
@@ -451,11 +451,25 @@ function _landland ( planet )
    end
 end
 
-
 --[[
 -- Attempts to run away from the target.
 --]]
 function runaway( target )
+   if mem.mothership and mem.mothership:exists() then
+      local goal = ai.follow_accurate( mem.mothership, 0, 0, mem.Kp, mem.Kd )
+      local dir  = ai.face( goal )
+      local dist = ai.dist( goal )
+
+      if dist > 300 then
+         if dir < math.rad(10) then
+            ai.accel()
+         end
+      else -- Time to dock
+         ai.dock( mem.mothership )
+      end
+      return
+   end
+
    -- Target must exist
    if not target or not target:exists() then
       ai.poptask()

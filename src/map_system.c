@@ -439,9 +439,9 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       f = -1;
       for (i=0; i<array_size(sys->spobs); i++) {
          if (spob_isKnown( sys->spobs[i] )) {
-            if ((f==-1) && (sys->spobs[i]->presence.faction>0) ) {
+            if ((f==-1) && (sys->spobs[i]->presence.faction>=0) ) {
                f = sys->spobs[i]->presence.faction;
-            } else if (f != sys->spobs[i]->presence.faction &&  (sys->spobs[i]->presence.faction>0) ) {
+            } else if (f != sys->spobs[i]->presence.faction &&  (sys->spobs[i]->presence.faction>=0) ) {
                cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Faction: Multiple\n") );
                break;
             }
@@ -497,7 +497,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    } else {
      /* display spob info */
      p = cur_spobObj_sel;
-     if (p->presence.faction > 0 ) {/* show the faction */
+     if (p->presence.faction >= 0 ) {/* show the faction */
         char factionBuf[64];
         logo = faction_logo( p->presence.faction );
         if (logo != NULL)
@@ -622,7 +622,7 @@ static void map_system_array_update( unsigned int wid, const char* str )
       /* FIXME: The point of this misery is to split desc_short into a 2-column layout.
        * It works poorly, but if we don't do this, check out e.g. the TeraCom Medusa Launcher in a 720p window. */
       char *desc_start = &infobuf[l];
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s\n\n", pilot_outfitSummary( player.p, outfit ) );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s\n\n", pilot_outfitSummary( player.p, outfit, 0 ) );
       while ( (desc_start = strchr( desc_start, '\n' )) != NULL ) {
          char *tab_pos = desc_start;
          desc_start = strchr( &tab_pos[1], '\n' );

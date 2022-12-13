@@ -1,33 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <unidiff name="hypergates_2">
+ <!-- All hypergates are deactivated and ready! -->
  <spob name="Hypergate Dvaer">
-  <displayname>Hypergate</displayname>
-  <lua>spob/lua/hypergate_dvaer.lua</lua>
-  <tag_add>active</tag_add>
+  <gfx_space>hypergate_dvaered_deactivated.webp</gfx_space>
  </spob>
  <spob name="Hypergate Feye">
-  <displayname>Hypergate</displayname>
-  <lua>spob/lua/hypergate_feye.lua</lua>
-  <tag_add>active</tag_add>
+  <gfx_space>hypergate_soromid_deactivated.webp</gfx_space>
  </spob>
  <spob name="Hypergate Gamma Polaris">
-  <displayname>Hypergate</displayname>
-  <lua>spob/lua/hypergate_gamma_polaris.lua</lua>
-  <tag_add>active</tag_add>
+  <gfx_space>hypergate_empire_deactivated.webp</gfx_space>
  </spob>
  <spob name="Hypergate Kiwi">
-  <displayname>Hypergate</displayname>
-  <lua>spob/lua/hypergate_kiwi.lua</lua>
-  <tag_add>active</tag_add>
+  <gfx_space>hypergate_sirius_deactivated.webp</gfx_space>
  </spob>
  <spob name="Hypergate Ruadan">
-  <displayname>Hypergate</displayname>
-  <lua>spob/lua/hypergate_ruadan.lua</lua>
-  <tag_add>active</tag_add>
+  <gfx_space>hypergate_zalek_deactivated.webp</gfx_space>
  </spob>
  <spob name="Hypergate NGC-14549">
-  <displayname>Hypergate</displayname>
-  <lua>spob/lua/hypergate_ngc14549.lua</lua>
-  <tag_add>active</tag_add>
+  <gfx_space>hypergate_neutral_deactivated.webp</gfx_space>
  </spob>
 </unidiff>

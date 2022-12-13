@@ -54,12 +54,6 @@ end
 local function render( sp, x, y, z )
    local d = sp:data()
    local sz = d.size * z
-   local nw, nh = naev.gfx.dim()
-
-   -- Out of bounds, no need to draw
-   if x < -sz or y < -sz or x > nw+sz or y > nh+sz then
-      return
-   end
 
    lg.push()
    lg.translate( x, y )
@@ -83,10 +77,12 @@ end
 local function trail( pos, point, params )
    params = params or {}
 
-   local s = spfx.new( math.huge, update, nil, nil, render, pos )
+   local size = params.size or 300
+
+   local s = spfx.new( math.huge, update, nil, nil, render, pos, nil, nil, size )
    local d  = s:data()
    d.timer  = 0
-   d.size   = params.size or 300
+   d.size   = size
    d.col    = params.col or {0, 1.0, 0.7, 0.5} -- in HSV
 	d.colspread = params.colspread or 50
    if point then

@@ -49,6 +49,7 @@
 /* Pilot-related hooks. */
 enum {
    PILOT_HOOK_NONE,      /**< No hook. */
+   PILOT_HOOK_CREATION,  /**< Pilot was created. */
    PILOT_HOOK_DEATH,     /**< Pilot died. */
    PILOT_HOOK_BOARDING,  /**< Player is boarding. */
    PILOT_HOOK_BOARD,     /**< Player got boarded. */
@@ -145,7 +146,7 @@ typedef struct PilotOutfitSlot_ {
 typedef struct PilotWeaponSetOutfit_ {
    int level;              /**< Level of trigger. */
    double range2;          /**< Range squared of this specific outfit. */
-   PilotOutfitSlot *slot;  /**< Slot associated with it. */
+   int slotid;             /**< ID of the slot associated with the weapon set. */
 } PilotWeaponSetOutfit;
 
 /**
@@ -160,6 +161,7 @@ typedef struct PilotWeaponSet_ {
    PilotWeaponSetOutfit *slots; /**< Slots involved with the weapon set. */
    /* Only applicable to weapon type. */
    int inrange;   /**< Whether or not to fire only if the target is inrange. */
+   int manual;    /**< Whether or not is manually aiming. */
    double range[PILOT_WEAPSET_MAX_LEVELS]; /**< Range of the levels in the outfit slot. */
    double speed[PILOT_WEAPSET_MAX_LEVELS]; /**< Speed of the levels in the outfit slot. */
 } PilotWeaponSet;
@@ -459,6 +461,7 @@ void pilot_reset( Pilot* pilot );
 Pilot* pilot_setPlayer( Pilot* after );
 void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ignore_rules, int guerilla );
 void pilot_delete( Pilot *p );
+void pilot_dead( Pilot* p, unsigned int killer );
 
 /*
  * Init and cleanup.
@@ -492,7 +495,6 @@ void pilot_renderOverlay( Pilot* p );
 /*
  * communication
  */
-void pilot_message( Pilot *p, unsigned int target, const char *msg, int ignore_int );
 void pilot_broadcast( Pilot *p, const char *msg, int ignore_int );
 void pilot_distress( Pilot *p, Pilot *attacker, const char *msg );
 void pilot_setCommMsg( Pilot *p, const char *s );

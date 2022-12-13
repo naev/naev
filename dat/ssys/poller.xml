@@ -10,6 +10,7 @@
  <spobs>
   <spob>Poller D-2</spob>
   <spob>Poller I-1</spob>
+  <spob>Poller Mass</spob>
   <spob_virtual>Miner Local</spob_virtual>
  </spobs>
  <jumps>

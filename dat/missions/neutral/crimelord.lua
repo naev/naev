@@ -19,6 +19,7 @@ DESCRIPTION: Pirates chase you to Ogat.
 ]]--
 local fmt = require "format"
 local fleet = require "fleet"
+local equipopt = require "equipopt"
 
 local reward = 600e3
 
@@ -60,13 +61,18 @@ function accept ()
 
 end
 
+local fct_baddie, fct_goodie
 function enter ()
+   fct_goodie = faction.dynAdd( nil, "crimelord_associates", _("Associates"), {ai="dvaered"} )
+   fct_baddie = faction.dynAdd( nil, "crimelord_thugs", _("Thugs"), {ai="dvaered" } )
+   fct_baddie:dynEnemy( fct_goodie )
+
    hook.timer(4.0, "spawnBaddies")
 
    if system.cur() == mem.targetsystem then
       local defenderships = { "Lancelot", "Lancelot", "Admonisher", "Pacifier", "Hawking", "Kestrel" }
       local jumpin = jump.pos(mem.targetsystem, mem.last_system)
-      defenders = fleet.add( 1, defenderships, "Associates", jumpin )
+      defenders = fleet.add( 1, defenderships, fct_goodie, jumpin )
       for pilot_number, pilot_object in pairs(defenders) do
          local rn = pilot_object:ship():nameRaw()
          if rn == "Lancelot" then
@@ -98,6 +104,7 @@ function jumpout ()
 end
 
 function spawnBaddies ()
+
    local ai
    if system.cur() ~= mem.targetsystem then
       ai = "baddiepos"
@@ -113,18 +120,10 @@ function spawnBaddies ()
    end
 
    local pp = player.pilot()
-   thugs = fleet.add( 4, "Admonisher", "Thugs", sp, _("Thug"), {ai=ai} )
+   thugs = fleet.add( 4, "Admonisher", fct_baddie, sp, _("Thug"), {ai=ai, naked=true} )
    for pilot_number, pilot_object in ipairs(thugs) do
-      -- TODO Modern optimized equipping, or at least a manual equip from "naked"
       pilot_object:setHostile(true)
-      pilot_object:outfitRm("all")
-      pilot_object:outfitAdd("Ripper Cannon")
-      pilot_object:outfitAdd("Plasma Blaster MK2", 2)
-      pilot_object:outfitAdd("Vulcan Gun", 2)
-      pilot_object:outfitAdd("Reactor Class II", 2)
-      pilot_object:outfitAdd("Milspec Jammer")
-      pilot_object:outfitAdd("Engine Reroute")
-      pilot_object:outfitAdd("Shield Capacitor II")
+      equipopt.dvaered( pilot_object, { launcher=0, turret=0, fighterbay=0 } )
       if ai=="baddiepos" then
          pilot_object:memory().guardpos = pp:pos()
       else

@@ -15,7 +15,7 @@
 --[[
    Za'lek Black Hole 10
 
-   FInal showdown vs evil PI
+   Final showdown vs evil PI
 ]]--
 local vn = require "vn"
 local fmt = require "format"

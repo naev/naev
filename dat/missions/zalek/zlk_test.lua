@@ -194,8 +194,7 @@ end
 function slow()
 
    -- Cancel autonav.
-   player.cinematics(true)
-   player.cinematics(false)
+   player.autonavAbort()
    camera.shake()
    audio.soundPlay( "empexplode" )
 
@@ -224,9 +223,8 @@ end
 
 --Player's ship run amok and behaves randomly
 function outOfControl()
-
    -- Cancel autonav.
-   player.cinematics(true)
+   player.autonavAbort()
    camera.shake()
 
    player.pilot():control()
@@ -240,9 +238,8 @@ end
 
 --The player can't control his ship anymore
 function noAnswer()
-
    -- Cancel autonav.
-   player.cinematics(true)
+   player.autonavAbort()
    camera.shake()
 
    player.pilot():control()
@@ -252,7 +249,6 @@ end
 
 --Just de-control the player's ship
 function backToControl()
-   player.cinematics(false)
    player.pilot():control(false)
    hook.timer(1.0, "baTotext")
 end

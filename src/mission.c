@@ -685,8 +685,8 @@ void mission_cleanup( Mission* misn )
    }
 
    /* Cargo. */
-   for (int i=0; i<array_size(misn->cargo); i++) { /* must unlink all the cargo */
-      if ((player.p != NULL) && !pilot_isFlag(player.p, PILOT_DEAD)) { /* Only remove if player exists. */
+   if ((player.p != NULL) && !pilot_isFlag(player.p, PILOT_DEAD)) { /* Only remove if player exists. */
+      for (int i=0; i<array_size(misn->cargo); i++) { /* must unlink all the cargo */
          int ret = pilot_rmMissionCargo( player.p, misn->cargo[i], 0 );
          if (ret)
             WARN(_("Failed to remove mission cargo '%d' for mission '%s'."), misn->cargo[i], misn->title);
@@ -1408,8 +1408,7 @@ static int missions_parseActive( xmlNodePtr parent )
    char *title;
    const char **items;
    int nitems, active;
-
-   xmlNodePtr node, cur, nest;
+   xmlNodePtr node;
 
    if (player_missions == NULL)
       player_missions = array_create( Mission* );
@@ -1417,6 +1416,7 @@ static int missions_parseActive( xmlNodePtr parent )
    node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node, "mission")) {
+         xmlNodePtr cur;
          const MissionData *data;
          Mission *misn = calloc( 1, sizeof(Mission) );
          array_push_back( &player_missions, misn );
@@ -1450,7 +1450,7 @@ static int missions_parseActive( xmlNodePtr parent )
 
             /* Get the markers. */
             if (xml_isNode(cur,"markers")) {
-               nest = cur->xmlChildrenNode;
+               xmlNodePtr nest = cur->xmlChildrenNode;
                do {
                   if (xml_isNode(nest,"marker"))
                      mission_markerLoad( misn, nest );
@@ -1459,7 +1459,7 @@ static int missions_parseActive( xmlNodePtr parent )
 
             /* Cargo. */
             if (xml_isNode(cur,"cargos")) {
-               nest = cur->xmlChildrenNode;
+               xmlNodePtr nest = cur->xmlChildrenNode;
                do {
                   if (xml_isNode(nest,"cargo"))
                      mission_linkCargo( misn, xml_getLong(nest) );
@@ -1468,6 +1468,7 @@ static int missions_parseActive( xmlNodePtr parent )
 
             /* OSD. */
             if (xml_isNode(cur,"osd")) {
+               xmlNodePtr nest;
                int i = 0;
                xmlr_attr_int_def( cur, "nitems", nitems, -1 );
                if (nitems == -1)

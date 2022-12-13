@@ -179,7 +179,7 @@ function accept ()
 end
 
 function enter ()
-   local q = player.pilot():cargoHas( mem.misn_cargo )
+   local q = player.fleetCargoOwned( mem.misn_cargo )
    if mem.convoy_spawned and q <= 0 then
       lmisn.fail(fmt.f(_("You did not recover any {cargo} from the convoy!"), {cargo=mem.misn_cargo}))
    end
@@ -196,10 +196,9 @@ function enter ()
 end
 
 function land ()
-   local pp = player.pilot()
-   local q = pp:cargoHas( mem.misn_cargo )
+   local q = player.fleetCargoOwned( mem.misn_cargo )
    if mem.convoy_spawned and q > 0 and spob.cur()==mem.returnpnt then
-      q = pp:cargoRm( mem.misn_cargo, q ) -- Remove it
+      q = player.fleetCargoRm( mem.misn_cargo, q ) -- Remove it
       local reward = mem.reward_base + q * mem.reward_cargo
       lmisn.sfxVictory()
       vntk.msg( _("Mission Success"), fmt.f(_("The workers unload your {cargo} and take it away to somewhere you can't see. As you wonder about your payment, you suddenly receive a message that #g{reward}#0 was transferred to your account."), {cargo=mem.misn_cargo, reward=fmt.credits(reward)}) )
@@ -324,7 +323,7 @@ function convoy_board ()
 end
 
 function convoy_boarded ()
-   if player.pilot():cargoHas( mem.misn_cargo ) > 0 then
+   if player.fleetCargoOwned( mem.misn_cargo ) > 0 then
       misn.osdGetActive(3)
    end
 end

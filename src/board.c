@@ -142,12 +142,12 @@ int player_tryBoard( int noisy )
       player_message( "#r%s", _("Target ship can not be boarded.") );
       return PLAYER_BOARD_IMPOSSIBLE;
    }
-   else if (pilot_isFlag(p,PILOT_BOARDED)) {
-      player_message( "#r%s", _("Your target cannot be boarded again.") );
-      return PLAYER_BOARD_IMPOSSIBLE;
-   }
    else if (!pilot_isDisabled(p) && !pilot_isFlag(p,PILOT_BOARDABLE)) {
       player_message( "#r%s", _("You cannot board a ship that isn't disabled!") );
+      return PLAYER_BOARD_IMPOSSIBLE;
+   }
+   else if (pilot_isFlag(p,PILOT_BOARDED)) {
+      player_message( "#r%s", _("Your target cannot be boarded again.") );
       return PLAYER_BOARD_IMPOSSIBLE;
    }
    else if (vec2_dist(&player.p->solid->pos,&p->solid->pos) >

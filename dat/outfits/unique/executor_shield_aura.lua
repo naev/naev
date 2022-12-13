@@ -1,3 +1,5 @@
+notactive = true
+
 -- Init function run on creation
 local t
 function init( p, _po )

@@ -7,7 +7,7 @@ local vni = require "vnimage"
 local jm_chance_min = 0
 local jm_chance_max = 0.25
 -- State. Nothing persists.
-local msg_combined, seltargets
+local msg_combined
 
 local gfx_list = {
    "neutral/female1n.webp",
@@ -16,6 +16,7 @@ local gfx_list = {
    "neutral/female3n.webp",
    "neutral/female4n.webp",
    "neutral/male1n.webp",
+   "neutral/male2n.webp",
 }
 
 local desc_list = {
@@ -51,6 +52,7 @@ local msg_lore = {
    _([["Sometimes I look at the stars and wonder… are we the only sentient species in the universe?"]]),
    _([["Hey, you ever wonder why we're here?" You respond that it's one of the great mysteries of the universe. Why are we here? Are we the product of some cosmic coincidence or is there some great cosmic plan for us? You don't know, but it sometimes keeps you up at night. As you say this, the citizen stares at you incredulously. "What?? No, I mean why are we in here, in this bar?"]]),
    _([["Life is so boring here. I would love to go gamble with all the famous people at Minerva Station."]]),
+   _([["I used to dream of being a racer at Melendez Station, but my reflexes are just not up to the job."]]),
 }
 
 local msg_cond = {
@@ -62,11 +64,13 @@ local msg_cond = {
    {npc.test_misnHint("Hitman"), _([["There are often shady characters hanging out in the Alteris system. I'd stay away from there if I were you, someone might offer you a dirty kind of job!"]])},
    -- Event hints
    {npc.test_evtHint("FLF/DV Derelicts"), _([["The FLF and the Dvaered sometimes clash in Surano. If you go there, you might find something of interest… Or not."]])},
+   {npc.test_evtHint("Introducing Taiomi", function () return (player.chapter()~="0") end ), _([["I've heard that there are ghosts to the north of Dune. They seem to be around asteroid fields. As if such a thing could exist! Probably just a brave miner in a Llama!"]])},
    -- Mission Completion
    {npc.test_misnDone("Nebula Satellite"), _([["Heard some reckless scientists got someone to put a satellite inside the nebula for them. I thought everyone with half a brain knew to stay out of there, but oh well."]])},
    {npc.test_misnDone("Shadow Vigil"), _([["Did you hear? There was some big incident during a diplomatic meeting between the Empire and the Dvaered. Nobody knows what exactly happened, but both diplomats died. Now both sides are accusing the other of foul play. Could get ugly."]])},
    {npc.test_misnDone("Baron"), _([["Some thieves broke into a museum on Varia and stole a holopainting! Most of the thieves were caught, but the one who carried the holopainting offworld is still at large. No leads. Damn criminals…"]])},
    {npc.test_misnDone("Destroy the FLF base!"), _([["The Dvaered scored a major victory against the FLF recently. They went into Sigur and blew the hidden base there to bits! I bet that was a serious setback for the FLF."]])},
+   {npc.test_misnDone("Taiomi 10"), _([["There have been an awful lot of patrols going missing near Bastion. Could this be work of the ghosts people talk about?"]])},
    -- Event Completion
    {npc.test_evtDone("Animal trouble"), _([["What? You had rodents sabotage your ship? Man, you're lucky to be alive. If it had hit the wrong power line…"]])},
    {npc.test_evtDone("Naev Needs You!"), _([["What do you mean, the world ended and then the creator of the universe came and fixed it? What kind of illegal substance are you on?"]])},
@@ -100,29 +104,22 @@ local function getMessageLore ()
 end
 
 -- Returns a jump point message and updates jump point known status accordingly. If all jumps are known by the player, defaults to a lore message.
+local jumptargets = {}
 local function getMessageJump ()
-   -- Collect a table of jump points in the system the player does NOT know.
-   local mytargets = {}
-   seltargets = seltargets or {} -- We need to keep track of jump points NPCs will tell the player about so there are no duplicates.
-   for _, j in ipairs(system.cur():jumps(true)) do
-      if not j:known() and not j:hidden() and not seltargets[j] then
-         table.insert(mytargets, j)
-      end
-   end
-
    -- The player already knows all jumps in this system or no messages
-   if #mytargets == 0 or #msg_jump==0 then
+   if #jumptargets == 0 or #msg_jump==0 then
       return getMessageLore()
    end
 
    local retmsg =  msg_jump[rnd.rnd(1, #msg_jump)]
-   local sel = rnd.rnd(1, #mytargets)
+   local sel = rnd.rnd(1, #jumptargets)
+   local tgt = jumptargets[sel]
    local myfunc = function( npcdata )
       if npcdata.talked then
          return
       end
-      mytargets[sel]:setKnown(true)
-      mytargets[sel]:dest():setKnown(true, false)
+      tgt:setKnown(true)
+      tgt:dest():setKnown(true, false)
 
       -- Reduce jump message chance
       local jm_chance = var.peek("npc_jm_chance") or jm_chance_max
@@ -130,9 +127,9 @@ local function getMessageJump ()
       npcdata.talked = true
    end
 
-   -- Don't need to remove messages from tables here, but add whatever jump point we selected to the "selected" table.
-   seltargets[mytargets[sel]] = true
-   return fmt.f( retmsg, {jmp=mytargets[sel]:dest()} ), myfunc
+   -- Remove target from list
+   table.remove( jumptargets, sel )
+   return fmt.f( retmsg, {jmp=tgt:dest()} ), myfunc
 end
 
 local function getMessage( lst )
@@ -164,6 +161,14 @@ return function ()
 
    -- Create a list of conditional messages
    msg_combined = npc.combine_cond( msg_cond )
+
+   -- Collect a table of jump points in the system the player does NOT know.
+   jumptargets = {}
+   for _, j in ipairs(system.cur():jumps(true)) do
+      if not j:known() and not j:hidden() then
+         table.insert(jumptargets, j)
+      end
+   end
 
    local function gen_npc()
       -- Append the faction to the civilian name, unless there is no faction.

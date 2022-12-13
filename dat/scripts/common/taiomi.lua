@@ -162,4 +162,13 @@ function taiomi.laboratory ()
    return spob.getS( "Zhiru" )
 end
 
+function taiomi.scavenger_escort ()
+   for k,p in ipairs(player.pilot():followers()) do
+      if p:shipvarPeek("taiomi_scavenger") then
+         return p
+      end
+   end
+   return nil
+end
+
 return taiomi

@@ -111,7 +111,6 @@ special_ships["Drone"] = function( p )
       p:outfitAdd( o, 1, true )
    end
 end
-special_ships["Drone (Hyena)"] = special_ships["Drone"]
 special_ships["Heavy Drone"] = function( p )
    for k,o in ipairs{
       "Milspec Thalos 3602 Core System",
@@ -268,7 +267,7 @@ function optimize.optimize( p, cores, outfit_list, params )
    end
 
    -- Handle cores
-   if cores then
+   if cores and not pt.nocores then
       -- Don't actually have to remove cores as it should overwrite default
       -- cores as necessary
       --p:outfitRm( "cores" )
@@ -369,6 +368,9 @@ function optimize.optimize( p, cores, outfit_list, params )
       oo.name     = out:nameRaw()
       oo.outfit   = out
       oo.slot, oo.size = out:slot()
+      oo.is_weap = (oo.slot=="Weapon")
+      oo.is_util = (oo.slot=="Utility")
+      oo.is_stru = (oo.slot=="Structure")
       local os = outfit_stats[oo.name]
       oo.stats    = os
       oo.dps, oo.disable, oo.eps, oo.range, oo.trackmin, oo.trackmax, oo.lockon, oo.iflockon, oo.seeker = out:weapstats( p )
@@ -440,6 +442,7 @@ function optimize.optimize( p, cores, outfit_list, params )
 
    -- Figure out slots
    local slots = {}
+   local slots_w, slots_u, slots_s = {}, {}, {}
    for k,v in ipairs(slots_base) do
       local has_outfits = {}
       local outfitpos = {}
@@ -466,6 +469,15 @@ function optimize.optimize( p, cores, outfit_list, params )
          -- potential outfits, but only one constraint
          ncols = ncols + #v.outfits
          nrows = nrows + 1
+
+         -- Sort by type to apply limits
+         if v.type=="Weapon" then
+            table.insert( slots_w, v )
+         elseif v.type=="Utility" then
+            table.insert( slots_u, v )
+         elseif v.type=="Structure" then
+            table.insert( slots_s, v )
+         end
       end
    end
 
@@ -484,6 +496,16 @@ function optimize.optimize( p, cores, outfit_list, params )
    nrows = nrows + sworthy + #limits
    if #same_list > 0 then
       nrows = nrows + #same_list
+   end
+   -- Add max limits
+   if params.max_weap then
+      nrows = nrows+1
+   end
+   if params.max_util then
+      nrows = nrows+1
+   end
+   if params.max_stru then
+      nrows = nrows+1
    end
    local ntype_range = 0
    for k,v in pairs(params.type_range) do ntype_range = ntype_range+1 end
@@ -529,6 +551,23 @@ function optimize.optimize( p, cores, outfit_list, params )
    for name,v in pairs(params.type_range) do
       v.id = r
       lp:set_row( v.id, name, v.min, v.max )
+      r = r+1
+   end
+   -- Add maximum amount of slots to use
+   local r_weap, r_util, r_stru
+   if params.max_weap then
+      r_weap = r
+      lp:set_row( r_weap, "max_weap", nil, params.max_weap )
+      r = r+1
+   end
+   if params.max_util then
+      r_util = r
+      lp:set_row( r_util, "max_util", nil, params.max_util )
+      r = r+1
+   end
+   if params.max_stru then
+      r_stru = r
+      lp:set_row( r_stru, "max_stru", nil, params.max_stru )
       r = r+1
    end
    -- Add outfit checks
@@ -578,6 +617,22 @@ function optimize.optimize( p, cores, outfit_list, params )
          local sp = s.samepos[j]
          if sp then
             table.insert( ia, sworthy + #limits + sp )
+            table.insert( ja, c )
+            table.insert( ar, 1 )
+         end
+         -- Maximum of slot type
+         if params.max_weap then
+            table.insert( ia, r_weap )
+            table.insert( ja, c )
+            table.insert( ar, 1 )
+         end
+         if params.max_util then
+            table.insert( ia, r_util )
+            table.insert( ja, c )
+            table.insert( ar, 1 )
+         end
+         if params.max_stru then
+            table.insert( ia, r_stru )
             table.insert( ja, c )
             table.insert( ar, 1 )
          end

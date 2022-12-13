@@ -18,7 +18,7 @@ missions use the same faction as an antagonist.
    * Elder Drone
    * Curious Drones
 * **Notable Rewards:**
-   * Scavenger Drone Escort (???)
+   * Scavenger Drone Escort
 
 ### Mission Overview
 

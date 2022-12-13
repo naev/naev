@@ -393,12 +393,11 @@ char outfit_slotTypeColourFont( const OutfitSlot* os )
  */
 size_t outfit_getNameWithClass( const Outfit* outfit, char* buf, size_t size )
 {
-   size_t p = scnprintf( &buf[0], size, "%s\n", _(outfit->name) );
+   size_t p = scnprintf( &buf[0], size, "%s", _(outfit->name) );
    if (outfit->slot.type != OUTFIT_SLOT_NA) {
-      p += scnprintf( &buf[p], size-p, _("#%c%s #%c%s #0slot"),
+      p += scnprintf( &buf[p], size-p, _("\n#%c%s #%c%s #0slot"),
             outfit_slotSizeColourFont( &outfit->slot ), _(outfit_slotSize( outfit )),
             outfit_slotTypeColourFont( &outfit->slot ), _(outfit_slotName( outfit )) );
-      p += scnprintf( &buf[p], size-p, "\n" );
    }
    return p;
 }
@@ -436,11 +435,29 @@ int outfit_isActive( const Outfit* o )
 {
    if (outfit_isForward(o) || outfit_isTurret(o) || outfit_isLauncher(o) || outfit_isFighterBay(o))
       return 1;
-   if (outfit_isMod(o) && (o->u.mod.active || o->lua_env != LUA_NOREF))
+   if (outfit_isMod(o) && o->u.mod.active)
       return 1;
    if (outfit_isAfterburner(o))
       return 1;
    return 0;
+}
+
+/**
+ * @brief Checks if outfit can be toggled.
+ *    @param o Outfit to check.
+ *    @return 1 if o is active.
+ */
+int outfit_isToggleable( const Outfit *o )
+{
+   /* Must be active. */
+   if (!outfit_isActive(o))
+      return 0;
+
+   /* Special case it is lua-based and not toggleable. */
+   if (outfit_isMod(o) && (o->lua_env != LUA_NOREF) && (o->lua_ontoggle == LUA_NOREF))
+      return 0;
+
+   return 1;
 }
 
 /**
@@ -946,11 +963,12 @@ const char* outfit_description( const Outfit *o )
  * Subsequent calls will change the memory, strdup if necessary.
  *
  *    @param o Outfit to get summary of.
+ *    @param withname Whether or not to include the outfit name.
  *    @return Summary of the outfit.
  */
-const char* outfit_summary( const Outfit *o )
+const char* outfit_summary( const Outfit *o, int withname )
 {
-   return pilot_outfitSummary( NULL, o );
+   return pilot_outfitSummary( NULL, o, withname );
 }
 
 /**
@@ -1069,7 +1087,8 @@ static void sdesc_miningRarity( int *l, Outfit *temp, int rarity )
       return;
    if (rarity == 2)
       SDESC_ADD( *l, temp, "\n#g%s#0", _("Can mine uncommon and rare minerals") );
-   SDESC_ADD( *l, temp, "\n#g%s#0", _("Can mine uncommon minerals") );
+   else
+      SDESC_ADD( *l, temp, "\n#g%s#0", _("Can mine uncommon minerals") );
 }
 
 /**
@@ -2472,6 +2491,9 @@ static int outfit_loadDir( char *dir )
          int ret = outfit_parse( &o, outfit_files[i] );
          if (ret == 0)
             array_push_back( &outfit_stack, o );
+
+         /* Render if necessary. */
+         naev_renderLoadscreen();
       }
       free( outfit_files[i] );
    }
@@ -2557,6 +2579,17 @@ int outfit_load (void)
       o->lua_price      = nlua_refenvtype( env, "price",    LUA_TFUNCTION );
       o->lua_buy        = nlua_refenvtype( env, "buy",      LUA_TFUNCTION );
       o->lua_sell       = nlua_refenvtype( env, "sell",     LUA_TFUNCTION );
+
+      if (outfit_isMod(o)) {
+         nlua_getenv( naevL, env, "notactive" );
+         o->u.mod.active = 1;
+         if (lua_toboolean(naevL,-1)) {
+            o->u.mod.active = 0;
+            if (o->lua_ontoggle != LUA_NOREF)
+               WARN(_("Outfit '%s' has 'ontoggle' Lua function defined, but is set as 'notactive'!"),o->name);
+         }
+         lua_pop(naevL,1);
+      }
    }
 
 #ifdef DEBUGGING

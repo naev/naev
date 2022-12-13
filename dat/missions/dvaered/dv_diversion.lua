@@ -21,6 +21,7 @@
 local fleet = require "fleet"
 local fmt = require "format"
 local portrait = require "portrait"
+local ai_setup = require "ai.core.setup"
 
 
 local destsys = system.get("Torg")
@@ -106,6 +107,7 @@ function enter()
       hawk:outfitAdd("Unicorp PT-2200 Core System")
       hawk:outfitAdd("Unicorp Eagle 7000 Engine")
       hawk:outfitAdd("TeraCom Mace Launcher", 3) -- Half finished installing weapons. :)
+      ai_setup.setup(hawk)
       hawk:setHilight(true)
       hawk:setVisible(true)
       hawk:cargoAdd("Food", 500)
@@ -243,8 +245,7 @@ end
 
 function spawn_fleet() -- spawn warlord killing fleet
    -- Cancel autonav.
-   player.cinematics(true)
-   player.cinematics(false)
+   player.autonavAbort()
    mem.jump_fleet_entered = true
    local dv_med_force = { "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance" }
    jump_fleet = fleet.add( 1, dv_med_force, attkfaction, destjump, nil, {ai="dvaered_norun"} )

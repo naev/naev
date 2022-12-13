@@ -797,12 +797,10 @@ static void spfx_trail_free( Trail_spfx* trail )
  */
 void spfx_trail_draw( const Trail_spfx* trail )
 {
-   double x1, y1, x2, y2, z;
-   const TrailStyle *sp, *spp, *styles;
+   const TrailStyle *styles;
    size_t n;
    GLfloat len;
-   mat4 projection;
-   double s;
+   double z;
 
    n = trail_size(trail);
    if (n==0)
@@ -821,6 +819,9 @@ void spfx_trail_draw( const Trail_spfx* trail )
    z   = cam_getZoom();
    len = 0.;
    for (size_t i=trail->iread + 1; i < trail->iwrite; i++) {
+      mat4 projection;
+      const TrailStyle *sp, *spp;
+      double x1, y1, x2, y2, s;
       TrailPoint *tp  = &trail_at( trail, i );
       TrailPoint *tpp = &trail_at( trail, i-1 );
 
@@ -835,7 +836,7 @@ void spfx_trail_draw( const Trail_spfx* trail )
 
       /* Make sure in bounds. */
       if ((MAX(x1,x2) < 0.) || (MIN(x1,x2) > (double)SCREEN_W) ||
-         (MAX(y1,y2) < 0.) || (MIN(y1,y2) > (double)SCREEN_H)) {
+          (MAX(y1,y2) < 0.) || (MIN(y1,y2) > (double)SCREEN_H)) {
          len += s;
          continue;
       }

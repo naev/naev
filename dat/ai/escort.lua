@@ -3,7 +3,8 @@ require 'ai.core.control.escort'
 
 -- Do not distress or board
 mem.distress   = false
--- TODO the options below here should be player-configurable
+mem.atk_board  = false
+-- Some defaults that should get overwritten
 mem.aggressive = true
 mem.enemyclose = 3e3
 mem.leadermaxdist = 8e3

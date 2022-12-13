@@ -30,6 +30,7 @@
 require "proximity"
 local emp = require "common.empire"
 local fmt = require "format"
+local pilotai = require "pilotai"
 
 -- Mission constants
 local misn_base = spob.get("Omega Station")
@@ -40,10 +41,10 @@ local misn_final_sys = system.get("C-00")
 local droneC, fleetC, fleetE, refesc, refship -- Non-persistent state
 
 function create ()
-    local missys = {misn_target_sys1, misn_target_sys2, misn_final_sys}
-    if not misn.claim(missys) then
-        misn.finish( false )
-    end
+   local missys = {misn_target_sys1, misn_target_sys2, misn_final_sys}
+   if not misn.claim(missys) then
+      misn.finish( false )
+   end
 
    misn.setNPC( _("Keer"), "empire/unique/keer.webp", _("You see Commodore Keer at a table with a couple of other pilots. She motions for you to sit down with them.") )
 end
@@ -96,90 +97,94 @@ end
 
 -- Handles jumping to target system
 function jumpin ()
-    if system.cur() == misn_target_sys1 or system.cur() == misn_target_sys2 then
-        -- Remove collective pilots in most dangerous systems
-        pilot.clear()
-        pilot.toggleSpawn(false)
-    end
-    if mem.misn_stage == 0 then
-        -- Entering target system?
-        if system.cur() == misn_final_sys then
-            pilot.clear()
-            pilot.toggleSpawn(false)
+   if system.cur() == misn_target_sys1 or system.cur() == misn_target_sys2 then
+      -- Remove collective pilots in most dangerous systems
+      pilot.clear()
+      pilot.toggleSpawn(false)
+   end
+   if mem.misn_stage == 0 then
+      -- Entering target system?
+      if system.cur() == misn_final_sys then
+         pilot.clear()
+         pilot.toggleSpawn(false)
 
-            -- Create big battle
-            fleetE = {}
-            fleetC = {}
-            droneC = {}
-            local fleetCpos = vec2.new(0, 0)
-            mem.deathsC = 0
+         -- Create big battle
+         fleetE = {}
+         fleetC = {}
+         droneC = {}
+         local fleetCpos = vec2.new(0, 0)
+         local fleetEpos = jump.get( system.cur(), mem.last_sys ):pos()
+         mem.deathsC = 0
 
-            fleetE[#fleetE + 1] = pilot.add( "Empire Peacemaker", "Empire", mem.last_sys )
-            fleetE[#fleetE + 1] = pilot.add( "Empire Hawking", "Empire", mem.last_sys )
-            fleetE[#fleetE + 1] = pilot.add( "Empire Hawking", "Empire", mem.last_sys )
-            for i = 1, 6 do
-                fleetE[#fleetE + 1] = pilot.add( "Empire Pacifier", "Empire", mem.last_sys )
-            end
-            for i = 1, 15 do
-                fleetE[#fleetE + 1] = pilot.add( "Empire Lancelot", "Empire", mem.last_sys )
-            end
+         fleetE[#fleetE + 1] = pilot.add( "Empire Peacemaker", "Empire", mem.last_sys )
+         fleetE[#fleetE + 1] = pilot.add( "Empire Hawking", "Empire", mem.last_sys )
+         fleetE[#fleetE + 1] = pilot.add( "Empire Hawking", "Empire", mem.last_sys )
+         for i = 1, 6 do
+            fleetE[#fleetE + 1] = pilot.add( "Empire Pacifier", "Empire", mem.last_sys )
+         end
+         for i = 1, 15 do
+            fleetE[#fleetE + 1] = pilot.add( "Empire Lancelot", "Empire", mem.last_sys )
+         end
 
-            fleetC[#fleetC + 1] = pilot.add( "Goddard", "Empire", fleetCpos, _("Starfire"), {ai="collective"} )
+         fleetC[#fleetC + 1] = pilot.add( "Goddard", "Empire", fleetCpos, _("Starfire"), {ai="collective"} )
+         hook.pilot(fleetC[#fleetC], "death", "col_dead")
+         fleetC[#fleetC]:setNoDisable()
+         fleetC[#fleetC]:setFaction( "Collective" )
+         if var.peek("trinity") then
+            fleetC[#fleetC + 1] = pilot.add( "Empire Hawking", "Empire", fleetCpos + vec2.new(300, 0), _("ESS Trinity") )
             hook.pilot(fleetC[#fleetC], "death", "col_dead")
             fleetC[#fleetC]:setNoDisable()
             fleetC[#fleetC]:setFaction( "Collective" )
-            if var.peek("trinity") then
-                fleetC[#fleetC + 1] = pilot.add( "Empire Hawking", "Empire", fleetCpos + vec2.new(300, 0), _("ESS Trinity") )
-                hook.pilot(fleetC[#fleetC], "death", "col_dead")
-                fleetC[#fleetC]:setNoDisable()
-                fleetC[#fleetC]:setFaction( "Collective" )
+         end
+         droneC = {}
+         for i = 1, 60 do
+            local pos = fleetCpos + vec2.new(rnd.rnd(-10000, 10000), rnd.rnd(-10000, 10000))
+            if i <= 10 then
+               droneC[#droneC + 1] = pilot.add( "Heavy Drone", "Collective", pos, _("Collective Heavy Drone") )
+            else
+               droneC[#droneC + 1] = pilot.add( "Drone", "Collective", pos, _("Collective Drone") )
             end
-            droneC = {}
-            for i = 1, 60 do
-                local pos = fleetCpos + vec2.new(rnd.rnd(-10000, 10000), rnd.rnd(-10000, 10000))
-                if i <= 10 then
-                    droneC[#droneC + 1] = pilot.add( "Heavy Drone", "Collective", pos, _("Collective Heavy Drone") )
-                else
-                    droneC[#droneC + 1] = pilot.add( "Drone", "Collective", pos, _("Collective Drone") )
-                end
-            end
+         end
 
-            for _, j in ipairs(fleetE) do
-                j:changeAI("empire_idle")
-                j:setVisible()
-            end
+         for _, j in ipairs(fleetE) do
+            j:changeAI("empire_idle")
+            j:setVisible()
+            pilotai.guard( j, fleetCpos )
+         end
 
-            for _, j in ipairs(fleetC) do
-                j:changeAI("collective_norun")
-                j:setVisible()
-                j:setHilight()
-            end
-            for _, j in ipairs(droneC) do
-                j:changeAI("collective_norun")
-                j:setVisible()
-            end
+         for _, j in ipairs(fleetC) do
+            j:changeAI("collective_norun")
+            j:setVisible()
+            j:setHilight()
+            pilotai.guard( j, fleetEpos )
+         end
+         for _, j in ipairs(droneC) do
+            j:changeAI("collective_norun")
+            j:setVisible()
+            pilotai.guard( j, fleetEpos )
+         end
 
-            fleetE[1]:broadcast(_("To all pilots, this is mission control! We are ready to begin our attack! Engage at will!"))
-            misn.osdActive(2)
-            mem.misn_stage = 1
-        else
-            misn.osdActive(1)
-            mem.misn_stage = 0
-        end
-    elseif mem.misn_stage == 1 and system.cur() ~= misn_final_sys then
-        pilot.clear()
-        pilot.toggleSpawn(false)
-        mem.misn_stage = 0
-        diff.apply("collective_dead")
-        hook.timer( 4.0, "fail_timer" )
-    end
+         fleetE[1]:broadcast(_("To all pilots, this is mission control! We are ready to begin our attack! Engage at will!"))
+         misn.osdActive(2)
+         mem.misn_stage = 1
+      else
+         misn.osdActive(1)
+         mem.misn_stage = 0
+      end
+   elseif mem.misn_stage == 1 and system.cur() ~= misn_final_sys then
+      pilot.clear()
+      pilot.toggleSpawn(false)
+      mem.misn_stage = 0
+      diff.apply("collective_dead")
+      hook.timer( 4.0, "fail_timer" )
+   end
 end
 
 
 function fail_timer ()
    tk.msg( _("Cowardly Behavior"), _([[You receive a message signed by Commodore Keer:
-    "There is no room for cowards in the Empire's fleet."
-    The signature does seem valid.]]) )
+"There is no room for cowards in the Empire's fleet."
+The signature does seem valid.]]) )
    emp.addCollectiveLog( _([[You abandoned your mission to help the Empire destroy the Collective. Commander Keer transmitted a message: "There is no room for cowards in the Empire's fleet."]]) )
    misn.finish( true )
 end
@@ -222,13 +227,20 @@ end
 
 -- Handles collective death
 function col_dead( _victim )
-    mem.deathsC = mem.deathsC + 1
-    if var.peek("trinity") and mem.deathsC < 2 then
-        return
-    end
-    misn.osdActive(3)
-    addRefuelShip()
-    mem.misn_stage = 4
+   mem.deathsC = mem.deathsC + 1
+   if var.peek("trinity") and mem.deathsC < 2 then
+      return
+   end
+   misn.osdActive(3)
+   addRefuelShip()
+   mem.misn_stage = 4
+
+   -- Change back to normal AI
+   for k,v in ipairs(fleetE) do
+      if v:exists() then
+         v:changeAI( "empire" )
+      end
+   end
 end
 
 

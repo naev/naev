@@ -4,17 +4,16 @@
  <priority>6</priority>
  <chance>960</chance>
  <location>Computer</location>
- <faction>Dvaered</faction>
- <faction>Empire</faction>
- <faction>Frontier</faction>
- <faction>Goddard</faction>
- <faction>Independent</faction>
- <faction>Proteron</faction>
- <faction>Sirius</faction>
- <faction>Soromid</faction>
- <faction>Thurion</faction>
- <faction>Traders Guild</faction>
- <faction>Za'lek</faction>
+ <cond>
+   local f = spob.cur():faction()
+   if f then
+      local ft = f:tags()
+      if ft.generic or ft.misn_cargo then
+         return true
+      end
+   end
+   return false
+ </cond>
  <notes>
   <tier>1</tier>
  </notes>
@@ -33,11 +32,11 @@ local lmisn = require "lmisn"
 
 local misn_desc = {}
 -- Note: indexed from 0 to match mission tiers.
-misn_desc[0] = _("Small shipment to {pnt} in the {sys} system.")
-misn_desc[1] = _("Medium shipment to {pnt} in the {sys} system.")
-misn_desc[2] = _("Sizable cargo delivery to {pnt} in the {sys} system.")
-misn_desc[3] = _("Large cargo delivery to {pnt} in the {sys} system.")
-misn_desc[4] = _("Bulk freight delivery to {pnt} in the {sys} system.")
+misn_desc[0] = _("Small shipment of {amount} of {cargo} to {pnt} in the {sys} system.")
+misn_desc[1] = _("Medium shipment of {amount} of {cargo} to {pnt} in the {sys} system.")
+misn_desc[2] = _("Sizable cargo delivery of {amount} of {cargo} to {pnt} in the {sys} system.")
+misn_desc[3] = _("Large cargo delivery of {amount} of {cargo} to {pnt} in the {sys} system.")
+misn_desc[4] = _("Bulk freight delivery of {amount} of {cargo} to {pnt} in the {sys} system.")
 
 local piracyrisk = {}
 piracyrisk[1] = _("#nPiracy Risk:#0 None")
@@ -46,11 +45,12 @@ piracyrisk[3] = _("#nPiracy Risk:#0 Medium")
 piracyrisk[4] = _("#nPiracy Risk:#0 High")
 --=Landing=--
 
-local cargo_land = {}
-cargo_land[1] = _("The containers of {cargo} are carried out of your ship by a sullen group of workers. The job takes inordinately long to complete, and the leader pays you #g{credits}#0 without speaking a word.")
-cargo_land[2] = _("Shortly after you land, a team rushes the containers of {cargo} out of your vessel. Before you can even collect your thoughts, one of the workers presses a credit chip worth #g{credits}#0 in your hand and departs.")
-cargo_land[3] = _("The containers of {cargo} are unloaded by an exhausted-looking bunch of dockworkers. Still, they make fairly good time, delivering your pay of #g{credits}#0 upon completion of the job.")
-cargo_land[4] = _("The containers of {cargo} are unloaded by a team of robotic drones supervised by a human overseer, who hands you your pay of #g{credits}#0 when they finish.")
+local cargo_land = {
+   _("The containers of {cargo} are carried out of your ship by a sullen group of workers. The job takes inordinately long to complete, and the leader pays you #g{credits}#0 without speaking a word."),
+   _("Shortly after you land, a team rushes the containers of {cargo} out of your vessel. Before you can even collect your thoughts, one of the workers presses a credit chip worth #g{credits}#0 in your hand and departs."),
+   _("The containers of {cargo} are unloaded by an exhausted-looking bunch of dockworkers. Still, they make fairly good time, delivering your pay of #g{credits}#0 upon completion of the job."),
+   _("The containers of {cargo} are unloaded by a team of robotic drones supervised by a human overseer, who hands you your pay of #g{credits}#0 when they finish."),
+}
 
 -- Create the mission
 function create()
@@ -86,9 +86,9 @@ function create()
    mem.reward = 1.5^mem.tier * (mem.avgrisk*riskreward + mem.numjumps * jumpreward + mem.traveldist * distreward) * (1 + 0.05*rnd.twosigma())
 
    misn.setTitle( fmt.f(_("Shipment to {pnt} in {sys} ({tonnes})"),
-         {pnt=mem.destplanet, sys=mem.destsys, tonnes=fmt.tonnes(mem.amount)} ) )
+         {pnt=mem.destplanet, sys=mem.destsys, tonnes=fmt.tonnes_short(mem.amount)} ) )
    misn.markerAdd(mem.destplanet, "computer")
-   car.setDesc( fmt.f( misn_desc[mem.tier], {pnt=mem.destplanet, sys=mem.destsys} ), mem.cargo, mem.amount, mem.destplanet, nil, piracyrisk )
+   car.setDesc( fmt.f( misn_desc[mem.tier], {cargo=_(mem.cargo), amount=fmt.tonnes(mem.amount), pnt=mem.destplanet, sys=mem.destsys} ), mem.cargo, mem.amount, mem.destplanet, nil, piracyrisk )
    misn.setReward( fmt.credits(mem.reward) )
 end
 

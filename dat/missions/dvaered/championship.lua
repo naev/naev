@@ -28,6 +28,7 @@ local fmt = require "format"
 require "proximity"
 local portrait = require "portrait"
 local bioship = require "bioship"
+local ai_setup = require "ai.core.setup"
 
 -- NPC
 mem.npc_portrait = {}
@@ -189,7 +190,7 @@ function enter()
 
       local shiplist = ships[mem.level+1]
       local oppotype = shiplist[ rnd.rnd(1,#shiplist) ]
-      opponent = pilot.add( oppotype, "Thugs", mispla, mem.opponame, {ai="baddie", naked=true} )
+      opponent = pilot.add( oppotype, "Mercenary", mispla, mem.opponame, {ai="baddie", naked=true} )
 
       oppotype = opponent:ship()
 
@@ -230,6 +231,7 @@ function enter()
 
       opponent:control()
       opponent:moveto(mispla:pos() + vec2.new( 1000,  1500))
+      ai_setup.setup(opponent)
 
       --The TV and the security
       tv1 = pilot.add( "Gawain", "Dvaered", mispla, _("Holovision"), {ai="civilian"} )
@@ -296,10 +298,10 @@ function enter()
       mem.prox = hook.timer(0.5, "proximity", {location = start_pos, radius = 300, funcname = "assault"})
 
    elseif haslauncher == true then
-      tk.msg(_("You are dismissed"), _("You weren't allowed to use missiles"))
+      tk.msg(_("You are dismissed"), _("You weren't allowed to use missiles!"))
       misn.finish(false)
    elseif mem.playerclass ~= "Fighter" then
-      tk.msg(_("You are dismissed"), _("You had to use a fighter"))
+      tk.msg(_("You are dismissed"), _("You had to use a fighter!"))
       misn.finish(false)
    end
 end

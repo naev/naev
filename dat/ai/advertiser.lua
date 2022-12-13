@@ -25,6 +25,7 @@ local ads_empire = {
    _("Need help with your EW-59831 form? Try Bob's Bureaucratic Bazaar at Semper!"),
    _("Not filing your EE-91726 for unauthorized pet iguanas is a crime. Report to your Empire Animal Bureau now."),
    _("Keep your documents properly filed. Unicorp Filing Cabinets."),
+   _("Want to test your skills in racing? Come to the Melendez Dome in the Qex system!"),
 }
 local ads_dvaered = {
    _("Only your hard work will save the Dvaered economy!"),

@@ -9,7 +9,12 @@ local atk_generic = {}
 -- Mainly manages targeting nearest enemy.
 --]]
 function atk_generic.think( target, _si )
-   -- Get new target if it's closer
+   -- A chance to just focus on the current enemy
+   if rnd.rnd() < 0.5 then
+      return
+   end
+
+   -- Get new target if it is better
    local enemy = atk.preferred_enemy()
    if enemy ~= target and enemy ~= nil then
       local dist  = ai.dist( target )
@@ -35,13 +40,16 @@ function atk_generic.attacked( attacker )
       ai.pushtask("attack", attacker)
       return
    end
-   local tdist  = ai.dist(target)
-   local dist   = ai.dist(attacker)
-   local range  = ai.getweaprange( 0 )
+   local dist  = ai.dist(attacker)
+   local range = ai.getweaprange( 0 )
 
-   if target ~= attacker and dist < tdist and
-         dist < range * mem.atk_changetarget then
-      ai.pushtask("attack", attacker)
+   -- Choose target based on preference
+   if target ~= attacker and dist < range * mem.atk_changetarget then
+      local wtarget = atk.preferred_enemy_test( target )
+      local wattacker = atk.preferred_enemy_test( attacker )
+      if wattacker < wtarget then -- minimizing
+         ai.pushtask("attack", attacker)
+      end
    end
 end
 

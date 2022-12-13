@@ -40,11 +40,12 @@ Checks to see if a position is good for a pilot, considering both lanes and spob
 --]]
 function careful.posIsGood( p, pos )
    local m = p:memory()
-   local lanedist = lanes.getDistance2P( p, pos )
-   if lanedist < math.pow( m.lanedistance, 2 ) then
+   local thr = math.pow( m.lanedistance, 2 )
+   local ld = lanes.getDistance2P( p, pos )
+   if (ld < math.huge and ld > thr) or lanes.getDistance2PH( p, pos ) < thr then
       return false
    end
-   return checkSpobJumps( p:faction(), p:pos(), m.spobdistance, m.jumpdistance )
+   return checkSpobJumps( p:faction(), pos, m.spobdistance, m.jumpdistance )
 end
 
 function careful.posIsGoodL( L, fct, pos, lanedistance, spobdistance, jumpdistance )
@@ -94,7 +95,7 @@ function careful.checkVulnerable( p, plt, threshold )
    local always_yes = (mem.vulnignore or not mem.natural)
    local pos = plt:pos()
    -- Make sure not in safe lanes
-   if always_yes or careful.posIsGood( plt, pos ) then
+   if always_yes or careful.posIsGood( p, pos ) then
       -- Check to see vulnerability
       local H = 1+__estimate_strength( p:getEnemies( mem.vulnrange, pos ) )
       local F = 1+__estimate_strength( __join_tables(

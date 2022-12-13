@@ -195,7 +195,7 @@ function enter()
          target:setHealth( mem.arm, mem.sld, mem.str )
          target:setTemp( mem.tem )
          target:setHilight()
-         target:setFaction("Warlords")
+         target:setFaction(fw.fct_warlords())
 
          hook.pilot(target, "death","lastOne_died")
          hook.pilot(target, "jump","lastOne_jumped")
@@ -257,7 +257,7 @@ end
 function spawnEscort( origin )
    escort = {}
    if mem.alive[1] then
-      escort[1] = pilot.add( "Schroedinger", "DHC", origin, _("Lieutenant Strafer") )
+      escort[1] = pilot.add( "Schroedinger", fw.fct_dhc(), origin, _("Lieutenant Strafer") )
 
       -- Give him nice outfits
       escort[1]:outfitRm("all")
@@ -290,7 +290,7 @@ function spawnEscort( origin )
    end
 
    if mem.alive[2] then
-      escort[2] = pilot.add( "Vendetta", "DHC", origin )
+      escort[2] = pilot.add( "Vendetta", fw.fct_dhc(), origin )
       hook.pilot(escort[2], "hail", "escort_hailed")
       hook.pilot(escort[2], "death", "escort_died2")
       escort[2]:control()
@@ -300,7 +300,7 @@ function spawnEscort( origin )
       escort[2]:setVisplayer()
    end
    if mem.alive[3] then
-      escort[3] = pilot.add( "Phalanx", "DHC", origin )
+      escort[3] = pilot.add( "Phalanx", fw.fct_dhc(), origin )
       hook.pilot(escort[3], "hail", "escort_hailed")
       hook.pilot(escort[3], "death", "escort_died3")
       escort[3]:control()
@@ -355,8 +355,9 @@ local function spawnTam( origin )
    tamteam[3] = pilot.add( "Dvaered Vendetta", "Dvaered", origin )
    tamteam[4] = pilot.add( "Dvaered Vendetta", "Dvaered", origin )
 
+   local fdhc = fw.fct_dhc()
    for i,p in ipairs(tamteam) do
-      p:setFaction("DHC")
+      p:setFaction( fdhc )
    end
    hook.pilot(tamteam[1], "death", "tamDied")
 end
@@ -497,9 +498,10 @@ function baddie_land( pilot, planet )
 end
 
 function start_battle()
+   local fwarlords = fw.fct_warlords()
    badguys[1]:control(false)
    for i,p in ipairs(badguys) do
-      p:setFaction("Warlords")
+      p:setFaction( fwarlords )
    end
    for i,p in ipairs(escort) do
       p:control(false)
@@ -585,7 +587,7 @@ end
 function spawnHamelsen( origin )
    hamelsen = pilot.add( "Schroedinger", "Independent", origin, _("Colonel Hamelsen") )
    hamelsen:setInvincible()
-   hamelsen:setFaction("Warlords")
+   hamelsen:setFaction(fw.fct_warlords())
 
    hamelsen:comm( _("You won't take me alive! Never!") )
    hamelsen:control()

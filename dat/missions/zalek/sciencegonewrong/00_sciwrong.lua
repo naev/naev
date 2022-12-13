@@ -25,6 +25,7 @@
 local fmt = require "format"
 require "proximity"
 local sciwrong = require "common.sciencegonewrong"
+local equipopt = require "equipopt"
 
 local adm1, lance1, lance2 -- Non-persistent state
 local spwn_police -- Forward-declared functions
@@ -172,26 +173,29 @@ function call_the_police ()
 end
 
 function spwn_police ()
-      lance1 = pilot.add( "Empire Lancelot", "Empire", system.get("Provectus Nova") )
-      lance2 = pilot.add( "Empire Lancelot", "Empire", system.get("Provectus Nova") )
-      adm1 = pilot.add( "Empire Admonisher", "Empire", system.get("Provectus Nova") )
-      -- Re-outfit the ships to use disable weapons. Make a proper function for that.
-      lance1:outfitRm("all")
-      lance1:outfitAdd("Heavy Ion Cannon", 1)
-      lance1:outfitAdd("Ion Cannon", 1)
-      lance1:outfitAdd("TeraCom Medusa Launcher", 2)
-      lance2:outfitRm("all")
-      lance2:outfitAdd("Heavy Ion Cannon", 1)
-      lance2:outfitAdd("Ion Cannon", 1)
-      lance2:outfitAdd("TeraCom Medusa Launcher", 2)
+   lance1 = pilot.add( "Empire Lancelot", "Empire", system.get("Provectus Nova"), nil, {naked=true} )
+   lance2 = pilot.add( "Empire Lancelot", "Empire", system.get("Provectus Nova"), nil, {naked=true} )
+   adm1 = pilot.add( "Empire Admonisher", "Empire", system.get("Provectus Nova"), nil, {naked=true} )
 
-      adm1:outfitRm("all")
-      adm1:outfitAdd("Heavy Ion Turret", 2)
-      adm1:outfitAdd("EMP Grenade Launcher", 1)
-      adm1:outfitAdd("Ion Cannon", 2)
-      lance1:setHostile(true)
-      lance2:setHostile(true)
-      adm1:setHostile(true)
+   local eparams = {
+      damage = 0, -- disable weapons only
+      outfits_add = { -- Give them disable weapons (Emprie don't have by default!)
+         "Ion Cannon",
+         "Heavy Ion Cannon",
+         "TeraCom Medusa Launcher",
+         "EMP Grenade Launcher",
+      },
+   }
+
+   -- Re-outfit the ships to use disable weapons.
+   equipopt.empire( lance1, eparams )
+   equipopt.empire( lance2, eparams )
+   equipopt.empire( adm1, eparams )
+
+   -- Hostile
+   lance1:setHostile(true)
+   lance2:setHostile(true)
+   adm1:setHostile(true)
 end
 -- move to the player ship
 

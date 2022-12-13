@@ -362,7 +362,7 @@ int pilot_inRangeJump( const Pilot *p, int i )
    if (hide==0.)
       return 1;
 
-   sense = EW_JUMPDETECT_DIST * p->stats.ew_jump_detect;
+   sense = EW_JUMPDETECT_DIST * p->stats.ew_jump_detect * p->stats.ew_detect;
    /* Handle hidden jumps separately, as they use a special range parameter. */
    if (jp_isFlag(jp, JP_HIDDEN))
       sense *= p->stats.misc_hidden_jump_detect;

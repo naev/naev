@@ -818,6 +818,10 @@ static int ship_parse( Ship *temp, const char *filename )
                ship_setFlag( temp, SHIP_NOESCORT );
                continue;
             }
+            if (xml_isNode(cur,"unique")) {
+               ship_setFlag( temp, SHIP_UNIQUE );
+               continue;
+            }
             WARN(_("Ship '%s' has unknown flags node '%s'."), temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
@@ -1036,6 +1040,9 @@ int ships_load (void)
          int ret = ship_parse( &s, ship_files[i] );
          if (ret == 0)
             array_push_back( &ship_stack, s );
+
+         /* Render if necessary. */
+         naev_renderLoadscreen();
       }
 
       /* Clean up. */

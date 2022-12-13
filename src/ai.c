@@ -109,11 +109,6 @@
 #define AI_DISTRESS     (1<<2)   /**< Sent distress signal. */
 
 /*
- * file info
- */
-#define AI_SUFFIX       ".lua" /**< AI file suffix. */
-
-/*
  * all the AI profiles
  */
 static AI_Profile* profiles = NULL; /**< Array of AI_Profiles loaded. */
@@ -476,6 +471,9 @@ int ai_pinit( Pilot *p, const char *ai )
    ai_create( p );
    pilot_setFlag(p, PILOT_CREATED_AI);
 
+   /* Initialize randomly within a control tick. */
+   p->tcontrol = RNGF() * p->ai->control_rate;
+
    return 0;
 }
 
@@ -527,7 +525,6 @@ static int ai_sort( const void *p1, const void *p2 )
 int ai_load (void)
 {
    char** files;
-   int suflen;
    Uint32 time = SDL_GetTicks();
 
    /* get the file list */
@@ -537,22 +534,23 @@ int ai_load (void)
    profiles = array_create( AI_Profile );
 
    /* load the profiles */
-   suflen = strlen(AI_SUFFIX);
    for (size_t i=0; files[i]!=NULL; i++) {
-      int flen = strlen(files[i]);
-      if ((flen > suflen) &&
-            strncmp(&files[i][flen-suflen], AI_SUFFIX, suflen)==0) {
-         AI_Profile prof;
-         char path[PATH_MAX];
-         int ret;
+      AI_Profile prof;
+      char path[PATH_MAX];
+      int ret;
 
-         snprintf( path, sizeof(path), AI_PATH"%s", files[i] );
-         ret = ai_loadProfile(&prof,path); /* Load the profile */
-         if (ret == 0)
-            array_push_back( &profiles, prof );
-         else
-            WARN( _("Error loading AI profile '%s'"), path);
-      }
+      if (!ndata_matchExt( files[i], "lua" ))
+         continue;
+
+      snprintf( path, sizeof(path), AI_PATH"%s", files[i] );
+      ret = ai_loadProfile(&prof,path); /* Load the profile */
+      if (ret == 0)
+         array_push_back( &profiles, prof );
+      else
+         WARN( _("Error loading AI profile '%s'"), path);
+
+      /* Render if necessary. */
+      naev_renderLoadscreen();
    }
    qsort( profiles, array_size(profiles), sizeof(AI_Profile), ai_sort );
 
@@ -616,7 +614,7 @@ static int ai_loadProfile( AI_Profile *prof, const char* filename )
    const char *str;
 
    /* Set name. */
-   len = strlen(filename)-strlen(AI_PATH)-strlen(AI_SUFFIX);
+   len = strlen(filename)-strlen(AI_PATH)-strlen(".lua");
    prof->name = malloc(len+1);
    strncpy( prof->name, &filename[strlen(AI_PATH)], len );
    prof->name[len] = '\0';
@@ -667,6 +665,11 @@ static int ai_loadProfile( AI_Profile *prof, const char* filename )
    prof->ref_create = nlua_refenvtype( env, "create", LUA_TFUNCTION );
    if (prof->ref_create == LUA_NOREF)
       WARN( str, filename, "create" );
+
+   /* Get the control rate. */
+   nlua_getenv(naevL, env, "control_rate");
+   prof->control_rate = lua_tonumber(naevL,-1);
+   lua_pop(naevL,1);
 
    return 0;
 }
@@ -740,10 +743,7 @@ void ai_think( Pilot* pilot, const double dt )
 
    /* control function if pilot is idle or tick is up */
    if ((cur_pilot->tcontrol < 0.) || (t == NULL)) {
-      double crate;
-      nlua_getenv(naevL, env, "control_rate");
-      crate = lua_tonumber(naevL,-1);
-      lua_pop(naevL,1);
+      double crate = cur_pilot->ai->control_rate;
       if (pilot_isFlag(pilot,PILOT_PLAYER) ||
           pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL)) {
          lua_rawgeti( naevL, LUA_REGISTRYINDEX, cur_pilot->ai->ref_control_manual );
@@ -1136,6 +1136,9 @@ static Task* ai_createTask( lua_State *L, int subtask )
 {
    /* Parse basic parameters. */
    const char *func = luaL_checkstring(L,1);
+
+   if (pilot_isPlayer(cur_pilot) && !pilot_isFlag(cur_pilot,PILOT_MANUAL_CONTROL))
+      return NULL;
 
    /* Creates a new AI task. */
    Task *t = ai_newtask( L, cur_pilot, func, subtask, 0 );
@@ -2734,7 +2737,8 @@ static int aiL_combat( lua_State *L )
       else if (i==0)
          pilot_rmFlag(cur_pilot, PILOT_COMBAT);
    }
-   else pilot_setFlag(cur_pilot, PILOT_COMBAT);
+   else
+      pilot_setFlag(cur_pilot, PILOT_COMBAT);
 
    return 0;
 }
@@ -2837,7 +2841,7 @@ static int aiL_gatherablePos( lua_State *L )
 static int aiL_weapSet( lua_State *L )
 {
    Pilot* p;
-   int id, type, on, l, i;
+   int id, type;
    PilotWeaponSet *ws;
 
    p = cur_pilot;
@@ -2852,10 +2856,10 @@ static int aiL_weapSet( lua_State *L )
 
    if (ws->type == WEAPSET_TYPE_ACTIVE) {
       /* Check if outfit is on */
-      on = 1;
-      l  = array_size(ws->slots);
-      for (i=0; i<l; i++) {
-         if (ws->slots[i].slot->state == PILOT_OUTFIT_OFF) {
+      int on = 1;
+      int l  = array_size(ws->slots);
+      for (int i=0; i<l; i++) {
+         if (p->outfits[ ws->slots[i].slotid ]->state == PILOT_OUTFIT_OFF) {
             on = 0;
             break;
          }

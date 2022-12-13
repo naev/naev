@@ -390,6 +390,7 @@ const Outfit* outfit_getAll (void);
 int outfit_compareTech( const void *outfit1, const void *outfit2 );
 /* outfit types */
 int outfit_isActive( const Outfit *o );
+int outfit_isToggleable( const Outfit *o );
 int outfit_isForward( const Outfit *o );
 int outfit_isBolt( const Outfit *o );
 int outfit_isBeam( const Outfit *o );
@@ -409,7 +410,7 @@ const char* outfit_getType( const Outfit *o );
 const char* outfit_getTypeBroad( const Outfit *o );
 const char* outfit_getAmmoAI( const Outfit *o );
 const char* outfit_description( const Outfit *o );
-const char* outfit_summary( const Outfit *o );
+const char* outfit_summary( const Outfit *o, int withname );
 
 /*
  * Search.

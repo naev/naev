@@ -233,13 +233,6 @@ int newsL_add( lua_State *L )
                news_add( title, body, faction, NULL, date, date_to_rm, priority );
             else
                WARN(_("Bad arguments"));
-
-            faction = NULL;
-            title = NULL;
-            body = NULL;
-
-            date = ntime_get();
-            date_to_rm = NEWS_FOREVER;
          }
          lua_pop(L, 1);
       }

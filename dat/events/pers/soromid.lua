@@ -27,6 +27,22 @@ return function ()
                return p
             end,
          },
+         {
+            spawn = function ()
+               -- Irala = maori unisex name that means god wrestler
+               local p = pilot.add("Soromid Odium", "Soromid", nil, _("Witch Doctor Irala"), {naked=true, ai="pers"})
+               equipopt.soromid( p, { bioship_stage=8,
+                     bioship_skills={
+                        "attack1", "attack2", "attack3",
+                        "plasma1", "plasma2", "plasma3",
+                        "health1","health2"} } )
+               local m = p:memory()
+               m.comm_greet = _([["The sky omens indicate troubled times ahead."]])
+               m.taunt = _("You disrupt the order of nature!")
+               m.bribe_no = _([["We do not deal with the tainted."]])
+               return p
+            end,
+         },
       } do
          table.insert( pers, v )
       end

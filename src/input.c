@@ -648,11 +648,11 @@ void input_update( double dt )
 }
 
 #define KEY(s)    (strcmp(input_keybinds[keynum].name,s)==0) /**< Shortcut for ease. */
-#define INGAME()  (!toolkit_isOpen() && (value==KEY_RELEASE || !player_isFlag(PLAYER_CINEMATICS))) /**< Makes sure player is in game. */
+#define INGAME()  (!toolkit_isOpen() && ((value==KEY_RELEASE) || !player_isFlag(PLAYER_CINEMATICS))) /**< Makes sure player is in game. */
 #define NOHYP()   \
-((player.p != NULL) && !pilot_isFlag(player.p,PILOT_HYP_PREP) &&\
-!pilot_isFlag(player.p,PILOT_HYP_BEGIN) &&\
-!pilot_isFlag(player.p,PILOT_HYPERSPACE)) /**< Make sure the player isn't jumping. */
+   ((player.p != NULL) && !pilot_isFlag(player.p,PILOT_HYP_PREP) &&\
+   !pilot_isFlag(player.p,PILOT_HYP_BEGIN) &&\
+   !pilot_isFlag(player.p,PILOT_HYPERSPACE)) /**< Make sure the player isn't jumping. */
 #define NODEAD()  ((player.p != NULL) && !pilot_isFlag(player.p,PILOT_DEAD)) /**< Player isn't dead. */
 #define NOLAND()  ((player.p != NULL) && (!landed && !pilot_isFlag(player.p,PILOT_LANDING))) /**< Player isn't landed. */
 /**
@@ -804,7 +804,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
     * Combat
     */
    /* shooting primary weapon */
-   } else if (KEY("primary") && NODEAD() && !repeat) {
+   } else if (KEY("primary") && !repeat) {
       if (value==KEY_PRESS) {
          player_setFlag(PLAYER_PRIMARY);
       }
@@ -869,7 +869,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
     * secondary weapons
     */
    /* shooting secondary weapon */
-   } else if (KEY("secondary") && NODEAD() && !repeat) {
+   } else if (KEY("secondary") && !repeat) {
       if (value==KEY_PRESS) {
          player_setFlag(PLAYER_SECONDARY);
       }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unidiff name="onewing_goddard_gone">
+ <system name="Taiomi">
+  <spob name="One-Wing Goddard">remove</spob>
+ </system>
+</unidiff>

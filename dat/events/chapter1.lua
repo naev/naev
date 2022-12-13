@@ -606,7 +606,7 @@ function cutscene_cleanup ()
    sfx:play()
 
    -- Initialize fleet capacity
-   player.setFleetCapacity( 100 )
+   player.fleetCapacitySet( 100 )
    player.chapterSet("1")
    player.canDiscover( true )
 

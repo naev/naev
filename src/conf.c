@@ -150,8 +150,9 @@ void conf_setDefaults (void)
    conf.devautosave  = 0;
    conf.lua_enet     = 0;
    conf.lua_repl     = 0;
-   conf.lastversion = strdup( "" );
+   conf.lastversion  = strdup( "" );
    conf.translation_warning_seen = 0;
+   memset( &conf.last_played, 0, sizeof(time_t) );
 
    /* Gameplay. */
    conf_setGameplayDefaults();
@@ -245,6 +246,7 @@ void conf_setVideoDefaults (void)
    conf.nebu_scale   = NEBULA_SCALE_FACTOR_DEFAULT;
    conf.minimize     = MINIMIZE_DEFAULT;
    conf.colorblind   = COLORBLIND_DEFAULT;
+   conf.healthbars   = HEALTHBARS_DEFAULT;
    conf.bg_brightness = BG_BRIGHTNESS_DEFAULT;
    conf.nebu_nonuniformity = NEBU_NONUNIFORMITY_DEFAULT;
    conf.jump_brightness = JUMP_BRIGHTNESS_DEFAULT;
@@ -340,6 +342,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "borderless", conf.borderless );
       conf_loadBool( lEnv, "minimize", conf.minimize );
       conf_loadBool( lEnv, "colorblind", conf.colorblind );
+      conf_loadBool( lEnv, "healthbars", conf.healthbars );
       conf_loadFloat( lEnv, "bg_brightness", conf.bg_brightness );
       /* todo leave only nebu_nonuniformity sometime */
       conf_loadFloat( lEnv, "nebu_brightness", conf.nebu_nonuniformity ); /* Old conf name. */
@@ -417,6 +420,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "conf_nosave", conf.nosave );
       conf_loadString( lEnv, "lastversion", conf.lastversion );
       conf_loadBool( lEnv, "translation_warning_seen", conf.translation_warning_seen );
+      conf_loadInt( lEnv, "last_played", conf.last_played );
 
       /* Debugging. */
       conf_loadBool( lEnv, "fpu_except", conf.fpu_except );
@@ -735,6 +739,9 @@ if (sizeof(buf) != pos) \
 #define  conf_saveInt(n,i)    \
 pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = %d\n", n, i);
 
+#define  conf_saveULong(n,i)    \
+pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = %lu\n", n, i);
+
 #define  conf_saveFloat(n,f)    \
 pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = %f\n", n, f);
 
@@ -887,12 +894,16 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("borderless",conf.borderless);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Minimize on focus loss"));
+   conf_saveComment(_("Minimize the game on focus loss."));
    conf_saveBool("minimize",conf.minimize);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Colorblind mode"));
+   conf_saveComment(_("Enables colourblind mode. Good for simulating colourblindness."));
    conf_saveBool("colorblind",conf.colorblind);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Enable health bars. These show hostility/friendliness and health of pilots on screen."));
+   conf_saveBool("healthbars",conf.healthbars);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Background brightness. 1 is normal brightness while setting it to 0 would make the backgrounds pitch black."));
@@ -1071,6 +1082,10 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment(_("Indicates whether we've already warned about incomplete game translations."));
    conf_saveBool("translation_warning_seen",conf.translation_warning_seen);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Time Naev was last played. This gets refreshed each time you exit Naev."));
+   conf_saveULong("last_played",time(NULL));
    conf_saveEmptyLine();
 
    /* Debugging. */

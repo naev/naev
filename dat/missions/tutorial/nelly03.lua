@@ -180,7 +180,7 @@ end
 
 local function nelly_say( msg )
    player.autonavReset( 3 )
-   player.pilot():comm(fmt.f(_([[Nelly: "{msg}"]]),{msg=msg}))
+   player.msg(fmt.f(_([[Nelly: "{msg}"]]),{msg=msg}),true)
 end
 
 local function drilltime ()
@@ -251,6 +251,7 @@ She gives a small reverence to the debris before coming back to her happy self.
    vn.run()
 
    mem.misn_state = 1
+   misn.markerAdd( mem.retpnt )
    misn.osdActive(3)
 end
 

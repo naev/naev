@@ -2,17 +2,23 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Sightseeing">
  <priority>4</priority>
- <cond>spob.cur():class() ~= "1" and spob.cur():class() ~= "2" and spob.cur():class() ~= "3" and system.cur():presences()["Independent"] ~= nil and system.cur():presences()["Independent"] &gt; 0</cond>
+ <cond>
+   local scur = spob.cur()
+   local f = scur:faction()
+   if not f or not f:tags().generic then
+      return false
+   end
+   if scur:tags().station then
+      return false
+   end
+   local sindep = system.cur():presences()["Independent"] or 0
+   if sindep &lt;= 0 then
+      return false
+   end
+   return true
+ </cond>
  <chance>460</chance>
  <location>Computer</location>
- <faction>Dvaered</faction>
- <faction>Empire</faction>
- <faction>Frontier</faction>
- <faction>Goddard</faction>
- <faction>Independent</faction>
- <faction>Sirius</faction>
- <faction>Soromid</faction>
- <faction>Za'lek</faction>
  <notes>
   <tier>1</tier>
  </notes>
@@ -34,37 +40,40 @@ local lmisn = require "lmisn"
 local marks -- Non-persistent state
 local set_marks -- Forward-declared functions
 
-local pay_text    = {}
-pay_text[1] = _("The passengers disembark with a new appreciation for the wonders of the universe.")
-pay_text[2] = _("Going off-world has renewed your passengers sense of adventure.")
-pay_text[3] = _("The passengers burst into cheers upon returning to the hanger. What a wonderful experience.")
-pay_text[4] = _("The passengers enjoyed their time aboard your vessel.")
+local pay_text = {
+   _("The passengers disembark with a new appreciation for the wonders of the universe."),
+   _("Going off-world has renewed your passengers sense of adventure."),
+   _("The passengers burst into cheers upon returning to the hanger. What a wonderful experience."),
+   _("The passengers enjoyed their time aboard your vessel."),
+}
 
-local pay_s_lux_text    = {}
-pay_s_lux_text[1] = _("The passengers appreciate that you took them an a Luxury Yacht class ship after all. You are paid the original fare rather than the reduced fare.")
-pay_s_lux_text[2] = _("Your passengers were thrilled that they were able to ride in a Luxury Yacht after all. They insist on paying the originally offered fare as a show of appreciation.")
-pay_s_lux_text[3] = _("As your passengers disembark, one wealthy passenger personally thanks you for taking them on a Luxury Yacht after all and gives you a tip amounting to the difference between the original fare and what your passengers paid.")
-pay_s_lux_text[4] = _("When it comes time to collect your fare, the passengers collectively announce that they will be paying the original fare offered, since you took them on a Luxury Yacht after all.")
+local pay_s_lux_text = {
+   _("The passengers appreciate that you took them an a Luxury Yacht class ship after all. You are paid the original fare rather than the reduced fare."),
+   _("Your passengers were thrilled that they were able to ride in a Luxury Yacht after all. They insist on paying the originally offered fare as a show of appreciation."),
+   _("As your passengers disembark, one wealthy passenger personally thanks you for taking them on a Luxury Yacht after all and gives you a tip amounting to the difference between the original fare and what your passengers paid."),
+   _("When it comes time to collect your fare, the passengers collectively announce that they will be paying the original fare offered, since you took them on a Luxury Yacht after all."),
+}
 
-local pay_s_nolux_text    = {}
-pay_s_nolux_text[1] = _("Several passengers are furious that you did not take them on your Luxury Yacht class ship after all. They refuse to pay, leaving you with much less overall payment.")
-pay_s_nolux_text[2] = _("While your passengers enjoyed the trip, they are not happy that you didn't take them on your Luxury Yacht class ship the entire way. They refuse to pay the full fare.")
-pay_s_nolux_text[3] = _("Most of the passengers enjoyed your tour, but one particularly loud passenger complains that you tricked them into paying full price even though you did not take them on a Luxury Yacht. To calm this passenger down, you offer to reduce everyone's fare. Some passengers refuse the offer, but you still end up being paid much less than you otherwise would have been.")
+local pay_s_nolux_text = {
+   _("Several passengers are furious that you did not take them on your Luxury Yacht class ship after all. They refuse to pay, leaving you with much less overall payment."),
+   _("While your passengers enjoyed the trip, they are not happy that you didn't take them on your Luxury Yacht class ship the entire way. They refuse to pay the full fare."),
+   _("Most of the passengers enjoyed your tour, but one particularly loud passenger complains that you tricked them into paying full price even though you did not take them on a Luxury Yacht. To calm this passenger down, you offer to reduce everyone's fare. Some passengers refuse the offer, but you still end up being paid much less than you otherwise would have been."),
+}
 
 --Sightseeing Messages
-local ssmsg = {}
-ssmsg[1] = _("The passengers are loving it.")
-ssmsg[2] = _("The wide-eyed passengers mutter with astonishment.")
-ssmsg[3] = _("The passengers faces are pressed up against the windows of your ship.")
-ssmsg[4] = _("Everyone seems like they're having a good time.")
-ssmsg[5] = _("A collective gasp of wonder travels through the cabin.")
-ssmsg[6] = _("A sense of terror and mystery engulfs the passengers as they contemplate their existence above the skies.")
-ssmsg[7] = _("Truly a sight to behold for the passengers.")
+local ssmsg = {
+   _("The passengers are loving it."),
+   _("The wide-eyed passengers mutter with astonishment."),
+   _("The passengers faces are pressed up against the windows of your ship."),
+   _("Everyone seems like they're having a good time."),
+   _("A collective gasp of wonder travels through the cabin."),
+   _("A sense of terror and mystery engulfs the passengers as they contemplate their existence above the skies."),
+   _("Truly a sight to behold for the passengers."),
+}
 
 function create ()
-   mem.paying_faction = spob.cur():faction()
-   mem.startingplanet = spob.cur()
-   mem.startingsystem = system.cur()
+   mem.startingplanet, mem.startingsystem = spob.cur()
+   mem.paying_faction = mem.startingplanet:faction()
    local systems = lmisn.getSysAtDistance( system.cur(), 1, 2 )
    systems[ #systems + 1 ] = mem.startingsystem
 
@@ -111,15 +120,20 @@ function create ()
 
    -- Set mission details
    misn.setTitle( fmt.f( _("Sightseeing in the {sys} System"), {sys=mem.missys} ) )
-   misn.setDesc( fmt.f(_("Several passengers wish to go off-world and go on a sightseeing tour. Navigate to specified attractions in the {sys} system."), {sys=mem.missys} ) )
+   -- TODO should probably not just mention luxury yachts, but since they're the only luxury type ship, I guess it works for now.
+   misn.setDesc( fmt.f(_([[Several passengers wish to go off-world and go on a sightseeing tour. Navigate to specified {amount} different attractions in the {sys} system. Once done with the visit, return the passengers to {retspob} ({retsys} system). Payment will be reduced if not in a preferred ship.
+
+#nAttractions:#0 {amount}
+#nPreferred Ship:#0 Luxury Yacht-class]]),
+      {sys=mem.missys, amount=mem.attractions, retspob=mem.startingplanet, retsys=mem.startingsystem} ) )
    misn.setReward( fmt.credits( mem.credits ) )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
 
 
 function accept ()
-   if player.pilot():ship():classDisplay() ~= "Luxury Yacht" then
-      if tk.yesno( _("Not Very Luxurious"), fmt.f( _("Since your ship is not a Luxury Yacht class ship, you will only be paid {credits}. Accept the mission anyway?"), {credits=fmt.credits(mem.credits_nolux)} ) ) then
+   if not player.pilot():ship():tags().luxury then
+      if vntk.yesno( _("Not Very Luxurious"), fmt.f( _("Since your ship is not a Luxury Yacht-class ship, you will only be paid {credits}. Accept the mission anyway?"), {credits=fmt.credits(mem.credits_nolux)} ) ) then
          mem.nolux_known = true
          misn.setReward( fmt.credits( mem.credits_nolux ) )
       else
@@ -146,7 +160,7 @@ end
 
 function enter ()
    if system.cur() == mem.missys and not mem.job_done then
-      if player.pilot():ship():classDisplay() ~= "Luxury Yacht" then
+      if not player.pilot():ship():tags().luxury then
          mem.nolux = true
       end
       set_marks()
@@ -176,6 +190,13 @@ function land ()
    if mem.job_done and spob.cur() == mem.startingplanet then
       misn.cargoRm( mem.civs )
 
+      local reward
+      if mem.nolux then
+         reward = mem.credits_nolux
+      else
+         reward = mem.credits
+      end
+
       local ttl = _("Mission Completed")
       local txt = pay_text[ rnd.rnd( 1, #pay_text ) ]
       if mem.nolux ~= mem.nolux_known then
@@ -188,14 +209,10 @@ function land ()
          end
       end
       lmisn.sfxMoney()
-      vntk.msg( ttl, txt )
+      vntk.msg( ttl, txt.."\n\n"..fmt.reward(reward) )
 
       pir.reputationNormalMission(rnd.rnd(2,3))
-      if mem.nolux then
-         player.pay( mem.credits_nolux )
-      else
-         player.pay( mem.credits )
-      end
+      player.pay( reward )
 
       misn.finish( true )
    end

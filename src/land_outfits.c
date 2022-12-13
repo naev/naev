@@ -80,7 +80,7 @@ static void outfits_getSize( unsigned int wid, int *w, int *h,
 
    /* Calculate image array dimensions. */
    if (iw != NULL)
-      *iw = 704 + (*w - LAND_WIDTH);
+      *iw = 680 + (*w - LAND_WIDTH);
    if (ih != NULL)
       *ih = *h - 60;
 
@@ -118,8 +118,6 @@ void outfits_open( unsigned int wid, const Outfit **outfits )
 {
    int w, h, iw, ih, bw, bh, off;
    LandOutfitData *data = NULL;
-   char buf[STRMAX_SHORT];
-   size_t l = 0;
 
    /* initialize the outfit mode. */
    outfit_Mode = 0;
@@ -156,23 +154,27 @@ void outfits_open( unsigned int wid, const Outfit **outfits )
    window_setAccept( wid, outfits_buy );
 
    /* buttons */
+   off = -20;
    if (data==NULL) {
-      window_addButtonKey( wid, off = -20, 20,
+      window_addButtonKey( wid, off, 20,
             bw, bh, "btnCloseOutfits",
             _("Take Off"), land_buttonTakeoff, SDLK_t );
    }
    else {
-      window_addButtonKey( wid, off = -20, 20,
+      window_addButtonKey( wid, off, 20,
             bw, bh, "btnCloseOutfits",
             _("Close"), window_close, SDLK_t );
    }
-   window_addButtonKey( wid, off -= 20+bw, 20,
+   off -= 20+bw;
+   window_addButtonKey( wid, off, 20,
          bw, bh, "btnSellOutfit",
          _("Sell"), outfits_sell, SDLK_s );
-   window_addButtonKey( wid, off -= 20+bw, 20,
+   off -= 20+bw;
+   window_addButtonKey( wid, off, 20,
          bw, bh, "btnBuyOutfit",
          _("Buy"), outfits_buy, SDLK_b );
-   window_addButtonKey( wid, off -= 20+bw, 20,
+   off -= 20+bw;
+   window_addButtonKey( wid, off, 20,
          bw, bh, "btnFindOutfits",
          _("Find Outfits"), outfits_find, SDLK_f );
 
@@ -189,15 +191,10 @@ void outfits_open( unsigned int wid, const Outfit **outfits )
    window_addText( wid, 20 + iw + 20, -40,
          w - (20 + iw + 20) - 264 - 40, 160, 0, "txtOutfitName", &gl_defFont, NULL, NULL );
    window_addText( wid, 20 + iw + 20, -40 - gl_defFont.h*2. - 30,
-         w - (20 + iw + 20) - 264 - 40, 320, 0, "txtDescShort", &gl_defFont, NULL, NULL );
+         w - (20 + iw + 20) - 264 - 40, 400, 0, "txtDescShort", &gl_defFont, NULL, NULL );
 
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", _("Owned:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Mass:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Price:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Money:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("License:") );
    window_addText( wid, 20 + iw + 20, 0,
-         90, 160, 0, "txtSDesc", &gl_defFont, &cFontGrey, buf );
+         90, 160, 0, "txtSDesc", &gl_defFont, &cFontGrey, NULL );
    window_addText( wid, 20 + iw + 20 + 90, 0,
          w - (20 + iw + 20 + 90), 160, 0, "txtDDesc", &gl_defFont, NULL, NULL );
    window_addText( wid, 20 + iw + 20, 0,
@@ -414,8 +411,7 @@ void outfits_update( unsigned int wid, const char *str )
    const char *buf_price;
    credits_t price;
    size_t l = 0, k = 0;
-   double th;
-   int iw, ih, w, h, blackmarket, canbuy, cansell;
+   int iw, ih, w, h, blackmarket, canbuy, cansell, sw, th;
    double mass;
    const char *summary;
 
@@ -484,7 +480,8 @@ void outfits_update( unsigned int wid, const char *str )
 
    outfit_getNameWithClass( outfit, buf, sizeof(buf) );
    window_modifyText( wid, "txtOutfitName", buf );
-   th = gl_printHeightRaw( &gl_defFont, w - (20 + iw + 20) - 264 - 40, buf );
+   window_dimWidget( wid, "txtOutfitName", &sw, NULL );
+   th = gl_printHeightRaw( &gl_defFont, sw, buf )+gl_defFont.h/2;
    l = 0;
    l += scnprintf( &buf[l], sizeof(buf)-l, "%d", player_outfitOwned(outfit) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_mass );
@@ -506,16 +503,18 @@ void outfits_update( unsigned int wid, const char *str )
    }
    window_modifyText( wid, "txtSDesc", lbl );
    window_modifyText( wid, "txtDDesc", buf );
-   summary = pilot_outfitSummary( player.p, outfit );
+   summary = pilot_outfitSummary( player.p, outfit, 0 );
    window_modifyText( wid, "txtDescShort", summary );
    window_moveWidget( wid, "txtDescShort", 20+iw+20, -40-th );
-   th += gl_printHeightRaw( &gl_defFont, w - (20 + iw + 20) - 264 - 40, summary );
-   th = MAX( th, 230 );
-   window_moveWidget( wid, "txtSDesc", 20+iw+20, -40-th-gl_defFont.h );
-   window_moveWidget( wid, "txtDDesc", 20+iw+20+90, -40-th-gl_defFont.h );
-   th += gl_printHeightRaw( &gl_defFont, w - (20 + iw + 20) - 200 - 20, buf );
-   th = MAX( th+gl_defFont.h, 256+10 );
-   window_moveWidget( wid, "txtDescription", 20+iw+20, -40-th-gl_defFont.h );
+   window_dimWidget( wid, "txtDescShort", &sw, NULL );
+   th += gl_printHeightRaw( &gl_defFont, sw, summary );
+   th = MAX( th+gl_defFont.h/2, 210 );
+   window_moveWidget( wid, "txtSDesc", 20+iw+20, -40-th );
+   window_moveWidget( wid, "txtDDesc", 20+iw+20+90, -40-th );
+   window_dimWidget( wid, "txtDDesc", &sw, NULL );
+   th += gl_printHeightRaw( &gl_defFont, sw, buf );
+   th = MAX( th+gl_defFont.h/2, 256+10 );
+   window_moveWidget( wid, "txtDescription", 20+iw+20, -40-th );
 }
 
 /**
@@ -633,6 +632,9 @@ static const char *outfit_getPrice( const Outfit *outfit, credits_t *price, int 
    lua_pushinteger(naevL, q);
    if (nlua_pcall( outfit->lua_env, 1, 3 )) {   /* */
       WARN(_("Outfit '%s' failed to run '%s':\n%s"),outfit->name,"price",lua_tostring(naevL,-1));
+      *price = 0;
+      *canbuy = 0;
+      *cansell = 0;
       lua_pop(naevL, 1);
       return pricestr;
    }
@@ -670,7 +672,7 @@ int outfit_altText( char *buf, int n, const Outfit *o, const Pilot *plt )
    if (o->slot.spid != 0)
       p += scnprintf( &buf[p], n-p, "#o%s#0\n",
             _(sp_display( o->slot.spid) ) );
-   p += scnprintf( &buf[p], n-p, "%s", pilot_outfitSummary( plt, o ) );
+   p += scnprintf( &buf[p], n-p, "%s", pilot_outfitSummary( plt, o, 1 ) );
    if ((o->mass > 0.) && (p < n)) {
       char buf_mass[ECON_MASS_STRLEN];
       tonnes2str( buf_mass, (int)round( mass ) );
@@ -710,7 +712,7 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits, 
          col_blend( &coutfits[i].bg, c, &cGrey70, 1 );
 
          /* Short description. */
-         coutfits[i].alt = strdup( pilot_outfitSummary( p, o ) );
+         coutfits[i].alt = strdup( pilot_outfitSummary( p, o, 1 ) );
 
          /* Slot type. */
          if ( (strcmp(outfit_slotName(o), "N/A") != 0)

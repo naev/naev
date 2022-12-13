@@ -184,11 +184,27 @@ function create ()
    mem.tgtship = ships[rnd.rnd(1,#ships)]
    mem.credits = 1e6 + rnd.rnd()*500e3
    mem.cursys = 1
+   -- Faction prefix
+   local prefix
+   if mem.paying_faction:static() then
+      prefix = ""
+   else
+      prefix = require("common.prefix").prefix(mem.paying_faction)
+   end
 
    -- Set mission details
-   misn.setTitle( fmt.f( _("Seek And Destroy Mission, starting in {sys}"), {sys=mem.mysys[1]} ) )
-   misn.setDesc( fmt.f( _("The {target_faction} pilot known as {plt} is wanted dead or alive by {paying_faction} authorities. He was last seen in the {sys} system."),
-         {target_faction=mem.target_faction, plt=mem.name, paying_faction=mem.paying_faction, sys=mem.mysys[1]} ) )
+   misn.setTitle(prefix..fmt.f( _("Seek And Destroy Mission, starting in {sys}"), {sys=mem.mysys[1]} ) )
+   local desc = fmt.f(_([[The {target_faction} pilot known as {plt} is wanted dead or alive by {paying_faction} authorities. They were last seen in the {sys} system.
+
+#nTarget:#0 {plt} ({shipclass}-class ship)
+#nWanted:#0 Dead or Alive
+#nLast Seen:#0 {sys} system]]),
+         {target_faction=mem.target_faction, plt=mem.name, paying_faction=mem.paying_faction, sys=mem.mysys[1], shipclass=_(ship.get(mem.aship):classDisplay())} )
+   if not mem.paying_faction:static() then
+      desc = desc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
+         {fct=mem.paying_faction})
+   end
+   misn.setDesc(desc)
    misn.setReward( fmt.credits( mem.credits ) )
    mem.marker = misn.markerAdd( mem.mysys[1], "computer" )
 end
@@ -334,6 +350,7 @@ function hail_ad()
    hook.rm(mem.hailie)
    hook.rm(mem.hailie2)
    tk.msg( _("You're looking for someone"), _([["Hi there", says the pilot. "You seem to be lost." As you explain that you're looking for an outlaw pilot and have no idea where to find your target, the pilot laughs. "So, you've taken a Seek and Destroy job, but you have no idea how it works. Well, there are two ways to get information on an outlaw: first way is to land on a planet and ask questions at the bar. The second way is to ask pilots in space. By the way, pilots of the same faction as your target are most likely to have information, but won't give it easily. Good luck with your task!"]]) ) -- Give advice to the player
+   player.commClose()
 end
 
 -- Player hails a ship for info

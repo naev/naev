@@ -7,7 +7,8 @@
   <mass>15</mass>
   <price>100000</price>
   <gfx_store>placeholder.webp</gfx_store>
-  <description>TODO</description>
+  <description>The vastness of space limits the applicability of space mines in lieu of automated or manned patrols in most situations. However, when raw explosive power is mandated, nothing can surpass the destructive force of space mines.</description>
+  <desc_extra>Space mines detonate five seconds after hostiles come within 300 units with a maximum tracking of 10,000 units and minimum tracking of 3,000 units. Detonations have a range of 500 units and damage all ships within range.</desc_extra>
   <cpu>-12</cpu>
  </general>
  <specific type="launcher">

@@ -10,6 +10,7 @@ local progressbar_frag = [[
 uniform vec2 dimensions;
 uniform float progress;
 uniform float u_r;
+uniform float time;
 
 vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords ) {
    vec4 colour_out;
@@ -18,7 +19,6 @@ vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords 
    const float margin = 0.05;
    float relprog = smoothstep( -margin, margin, texture_coords.x-progress);
 
-   const float time  = 0.0;
    const float hue   = 0.65;
    float value       = 0.4*(1.0-relprog);
    float brightness  = 0.1*relprog;
@@ -96,38 +96,49 @@ local fh = 24
 local font = lg.newFont( fh )
 local bg = load_shader()
 local shipgfx, shipcaption = load_gfx()
+local captionw = font:getWidth( shipcaption )
 local shipw, shiph = shipgfx:getDimensions()
 local progressbar = lg.newShader( progressbar_frag, love_shaders.vertexcode )
-local r = rnd.rnd()
+progressbar:send( "u_r", rnd.rnd() )
 local sb = naev.conf().bg_brightness
+local load_msg = ""
 
-function render( done, msg )
+function update( done, msg )
+   load_msg = msg
+   progressbar:send( "progress", done )
+end
+
+local lw, lh = 0, 0
+local bx, by, w, h, x, y
+function render ()
    local nw, nh = naev.gfx.dim()
+   if nw~=lw or nh~=lh then
+      lw, lh = nw, nh
+
+      -- Dimensions
+      bx = (nw-shipw)/2
+      by = (nh-shiph)/2-50
+      w = nw * 0.5
+      h = nh * 0.025
+      x = (nw-w)/2
+      y = by + shiph + h + 10
+
+      progressbar:send( "dimensions", w, h )
+   end
 
    -- Draw starfield background
    lg.setColor( sb, sb, sb, 1 )
    bg:draw( 0, 0, 0, 1, 1 )
 
-   -- Dimenions
-   local bx = (nw-shipw)/2
-   local by = (nh-shiph)/2-50
-   local w = nw * 0.5
-   local h = nh * 0.025
-   local x = (nw-w)/2
-   local y = by + shiph + h + 10
-
    -- Draw ship
    lg.setColor( 1, 1, 1, 1 )
    shipgfx:draw( bx, by )
-   local tw = font:getWidth( shipcaption )
-   lg.print( shipcaption, font, bx+shipw-tw, by+shiph-20 )
+   lg.print( shipcaption, font, bx+shipw-captionw, by+shiph-20 )
 
    -- Draw loading bar
    lg.setShader( progressbar )
-   progressbar:send( "u_r", r )
-   progressbar:send( "progress", done )
-   progressbar:send( "dimensions", w, h )
+   progressbar:send( "time", naev.ticks()*0.3 )
    love_shaders.img:draw( x, y+h, 0, w, h )
    lg.setShader()
-   lg.print( msg, x+10, y )
+   lg.print( load_msg, x+10, y )
 end

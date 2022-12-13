@@ -190,8 +190,7 @@ end
 
 function startProblems()
    -- Cancel autonav.
-   player.cinematics(true)
-   player.cinematics(false)
+   player.autonavAbort()
    local ps = player.pilot()
    ps:control()
    mem.phook = hook.timer(0.1, "drainShields")

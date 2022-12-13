@@ -52,17 +52,17 @@ end
 function accept()
    mem.stage = 0
 
-   if tk.yesno(_("Nexus Shipyards needs you"), _([["I have another job for you. The Baron was unfortunately not as impressed as we hoped. So we need a better demonstration, and we think we know what to do: we're going to demonstrate that the Lancelot, our higher-end fighter design, is more than capable of defeating Destroyer class ships.
-    "Now, one small problem we face is that pirates almost never use Destroyer class ships; they tend to stick to fighters, corvettes, and cruisers. More importantly, actually sending a fighter after a Destroyer is exceedingly dangerous, even if we could find a pirate piloting one. So we have another plan: we want someone to pilot a Destroyer class ship and just let another pilot disable them with ion cannons.
+   if tk.yesno(_("Nexus Shipyards needs you"), _([["I have another job for you. The Baron was unfortunately not as impressed as we hoped. So we need a better demonstration, and we think we know what to do: we're going to demonstrate that the Lancelot, our higher-end fighter design, is more than capable of defeating Destroyer-class ships.
+    "Now, one small problem we face is that pirates almost never use Destroyer-class ships; they tend to stick to fighters, corvettes, and cruisers. More importantly, actually sending a fighter after a Destroyer is exceedingly dangerous, even if we could find a pirate piloting one. So we have another plan: we want someone to pilot a Destroyer-class ship and just let another pilot disable them with ion cannons.
     "What do you say? Are you interested?"]])) then
       misn.accept()
       tk.msg(_("Wonderful"), fmt.f(_([["Great! Go and meet our pilot in {battlesys}. After the job is done, meet me on {pnt} in the {sys} system."]]), {battlesys=battlesys, pnt=paypla, sys=paysys}))
 
       misn.setTitle(_("Sharkman is back"))
       misn.setReward(fmt.credits(shark.rewards.sh01/2))
-      misn.setDesc(_("Nexus Shipyards wants you to fake a loss against a Lancelot while piloting a Destroyer class ship."))
+      misn.setDesc(_("Nexus Shipyards wants you to fake a loss against a Lancelot while piloting a Destroyer-class ship."))
       misn.osdCreate(_("Sharkman Is Back"), {
-         fmt.f(_("Jump in {sys} with a Destroyer class ship and let the Lancelot disable you"), {sys=battlesys}),
+         fmt.f(_("Jump in {sys} with a Destroyer-class ship and let the Lancelot disable you"), {sys=battlesys}),
          fmt.f(_("Go to {pnt} in {sys} to collect your pay"), {pnt=paypla, sys=paysys}),
       })
       misn.osdActive(1)
@@ -97,9 +97,9 @@ function land()
 end
 
 function enter()
-   local playerclass = player.pilot():ship():class()
+   local playersize = player.pilot():ship():size()
    --Jumping in Toaxis for the battle with a Destroyer class ship
-   if system.cur() == battlesys and mem.stage == 0 and playerclass == "Destroyer" then
+   if system.cur() == battlesys and mem.stage == 0 and playersize == 4 then
       pilot.clear()
       pilot.toggleSpawn( false )
 
@@ -110,25 +110,9 @@ end
 function lets_go()
    -- spawns the Shark
    sharkboy = pilot.add( "Lancelot", "Mercenary", system.get("Raelid"), nil, {ai="baddie_norun"} )
-   sharkboy:setHostile()
-   sharkboy:setHilight()
+   sharkboy:setHostile(true)
+   sharkboy:setHilight(true)
 
-   --The shark becomes nice outfits
-   sharkboy:outfitRm("all")
-   sharkboy:outfitRm("cores")
-
-   sharkboy:outfitAdd("S&K Light Combat Plating")
-   sharkboy:outfitAdd("Milspec Orion 3701 Core System")
-   sharkboy:outfitAdd("Tricon Zephyr II Engine")
-
-   sharkboy:outfitAdd("Reactor Class I",2)
-
-   sharkboy:outfitAdd("Heavy Ion Cannon")
-   sharkboy:outfitAdd("Ion Cannon",3)
-
-   sharkboy:setHealth(100,100)
-   sharkboy:setEnergy(100)
-   sharkboy:setFuel(true)
    mem.stage = 1
 
    mem.shark_dead_hook = hook.pilot( sharkboy, "death", "shark_dead" )
@@ -147,8 +131,8 @@ function disabled(pilot, attacker)
       mem.marker2 = misn.markerAdd(paypla, "low")
       pilot.toggleSpawn( true )
    end
-   sharkboy:control()
-   --making sure the shark doesn't continue attacking the player
+   sharkboy:control(true)
+   -- making sure the shark doesn't continue attacking the player
    sharkboy:hyperspace(escapesys, true)
    sharkboy:setNoDeath(true)
 end

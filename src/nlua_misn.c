@@ -276,15 +276,10 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
  */
 static int misn_setTitle( lua_State *L )
 {
-   const char *str;
-   Mission *cur_mission;
-
-   str = luaL_checkstring(L,1);
-
-   cur_mission = misn_getFromLua(L);
+   const char *str = luaL_checkstring(L,1);
+   Mission *cur_mission = misn_getFromLua(L);
    free(cur_mission->title);
    cur_mission->title = strdup(str);
-
    return 0;
 }
 /**
@@ -298,33 +293,34 @@ static int misn_setTitle( lua_State *L )
  */
 static int misn_setDesc( lua_State *L )
 {
-   const char *str;
-   Mission *cur_mission;
-
-   str = luaL_checkstring(L,1);
-
-   cur_mission = misn_getFromLua(L);
+   const char *str = luaL_checkstring(L,1);
+   Mission *cur_mission = misn_getFromLua(L);
    free(cur_mission->desc);
    cur_mission->desc = strdup(str);
-
    return 0;
 }
 /**
  * @brief Sets the current mission reward description.
  *
- *    @luatparam string reward Description of the reward to use.
+ *    @luatparam string|number reward Description of the reward to use. Can pass a number to signify a monetary reward.
  * @luafunc setReward
  */
 static int misn_setReward( lua_State *L )
 {
    const char *str;
-   Mission *cur_mission;
-
-   str = luaL_checkstring(L,1);
-
-   cur_mission = misn_getFromLua(L);
+   Mission *cur_mission = misn_getFromLua(L);
    free(cur_mission->reward);
-   cur_mission->reward = strdup(str);
+   cur_mission->reward_value = -1.;
+   if (lua_isnumber(L,1)) {
+      char buf[ECON_CRED_STRLEN];
+      cur_mission->reward_value = CLAMP( CREDITS_MIN, CREDITS_MAX, (credits_t)round(luaL_checknumber(L,1)) );
+      credits2str( buf, cur_mission->reward_value, 2 );
+      cur_mission->reward = strdup(buf);
+   }
+   else {
+      str = luaL_checkstring(L,1);
+      cur_mission->reward = strdup(str);
+   }
    return 0;
 }
 

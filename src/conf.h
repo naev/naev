@@ -42,7 +42,8 @@
 #define SHOW_PAUSE_DEFAULT             1     /**< Whether to display pause status. */
 #define MINIMIZE_DEFAULT               1     /**< Whether to minimize on focus loss. */
 #define COLORBLIND_DEFAULT             0     /**< Whether to enable colorblindness simulation. */
-#define BG_BRIGHTNESS_DEFAULT          0.7   /**< How much to darken (or lighten) the backgrounds. */
+#define HEALTHBARS_DEFAULT             1     /**< Whether or not to show pilot health bars. */
+#define BG_BRIGHTNESS_DEFAULT          0.5   /**< How much to darken (or lighten) the backgrounds. */
 #define NEBU_NONUNIFORMITY_DEFAULT     1.    /**< How much to darken (or lighten) the nebula stuff. */
 #define GAMMA_CORRECTION_DEFAULT       1.    /**< How much gamma correction to do. */
 #define BACKGROUND_FANCY_DEFAULT       0     /**< Default fancy background. */
@@ -93,7 +94,8 @@ typedef struct PlayerConf_s {
    int notresizable; /**< Whether or not the window is resizable. */
    int borderless; /**< Whether to disable window decorations. */
    int minimize; /**< Whether to minimize on focus loss. */
-   int colorblind; /**< Whether to enable colorblindness simulation. */
+   int colorblind; /**< Whether to enable colourblindness simulation. */
+   int healthbars; /**< Whether or not to show health bars next to pilots. */
    double bg_brightness; /**< How much to darken the background stuff. */
    double nebu_nonuniformity; /**< How much to darken the nebula stuff. */
    double jump_brightness; /**< Intensity to fade to/from when jumping. */
@@ -160,6 +162,7 @@ typedef struct PlayerConf_s {
    int nosave; /**< Disables conf saving. */
    char *lastversion; /**< The last version the game was ran in. */
    int translation_warning_seen; /**< No need to warn about incomplete game translations again. */
+   time_t last_played; /**< Date the game was last played. */
 
    /* Debugging. */
    int fpu_except; /**< Enable FPU exceptions? */
@@ -168,7 +171,6 @@ typedef struct PlayerConf_s {
    char *dev_save_sys; /**< Path to save systems to. */
    char *dev_save_map; /**< Path to save maps to. */
    char *dev_save_spob; /**< Path to save spobs to. */
-
 } PlayerConf_t;
 extern PlayerConf_t conf; /**< Player configuration. */
 

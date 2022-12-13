@@ -43,6 +43,7 @@ typedef struct LuaSpfxData_s {
    double ttl;    /**< Time to live. */
    vec2 pos;      /**< Position. */
    vec2 vel;      /**< Velocity. */
+   double radius; /**< Used for rendering. */
    int data;      /**< Reference to table of data. */
    int render_bg; /**< Reference to background render function. */
    int render_mg; /**< Reference to middle render function. */
@@ -288,6 +289,7 @@ static int spfxL_getAll( lua_State *L )
  *    @luatparam vec2|boolean pos Position of the effect, or a boolean to indicate whether or not the effect is local.
  *    @luatparam vec2 vel Velocity of the effect.
  *    @luatparam audio sfx Sound effect associated with the spfx.
+ *    @luatparam number radius Radius to use to determine if should render.
  *    @luatreturn spfx New spfx corresponding to the data.
  * @luafunc new
  */
@@ -374,6 +376,9 @@ static int spfxL_new( lua_State *L )
          soundUnlock();
       }
    }
+
+   /* Store radius. */
+   ls.radius = luaL_optnumber(L,9,-1.);
 
    /* Set up new data. */
    lua_newtable(L);
@@ -684,6 +689,7 @@ void spfxL_rendermg (void)
    for (int i=0; i<array_size(lua_spfx); i++) {
       vec2 pos;
       LuaSpfxData_t *ls = &lua_spfx[i];
+      double r = ls->radius;
 
       /* Skip no rendering. */
       if ((ls->render_mg == LUA_NOREF) || (ls->flags & SPFX_CLEANUP))
@@ -691,6 +697,13 @@ void spfxL_rendermg (void)
 
       /* Convert coordinates. */
       gl_gameToScreenCoords( &pos.x, &pos.y, ls->pos.x, ls->pos.y );
+
+      /* If radius is defined see if in screen. */
+      if ((r > 0.) && ((pos.x < -r) || (pos.y < -r) ||
+            (pos.x > SCREEN_W+r) || (pos.y > SCREEN_H+r)))
+         continue;
+
+      /* Invert y axis. */
       pos.y = SCREEN_H-pos.y;
 
       /* Render. */
@@ -717,6 +730,7 @@ void spfxL_renderfg (void)
    for (int i=0; i<array_size(lua_spfx); i++) {
       vec2 pos;
       LuaSpfxData_t *ls = &lua_spfx[i];
+      double r = ls->radius;
 
       /* Skip no rendering. */
       if ((ls->render_fg == LUA_NOREF) || (ls->flags & SPFX_CLEANUP))
@@ -724,6 +738,13 @@ void spfxL_renderfg (void)
 
       /* Convert coordinates. */
       gl_gameToScreenCoords( &pos.x, &pos.y, ls->pos.x, ls->pos.y );
+
+      /* If radius is defined see if in screen. */
+      if ((r > 0.) && ((pos.x < -r) || (pos.y < -r) ||
+            (pos.x > SCREEN_W+r) || (pos.y > SCREEN_H+r)))
+         continue;
+
+      /* Invert y axis. */
       pos.y = SCREEN_H-pos.y;
 
       /* Render. */

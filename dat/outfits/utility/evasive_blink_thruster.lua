@@ -48,7 +48,7 @@ function ontoggle( p, po, on )
       dir = dir - math.pi*0.5
    end
    p:setPos( pos + vec2.newP( dist, dir ) )
-   mem.timer = cooldown
+   mem.timer = cooldown * p:shipstat("cooldown_mod",true)
    po:state("cooldown")
    po:progress(1)
 

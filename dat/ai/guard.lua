@@ -80,7 +80,12 @@ function idle ()
    end
 
    if guarddist < mem.guardbrake then
-      ai.pushtask("brake" )
+      if ai.isstopped() then
+         ai.settimer( 0, 3 )
+         ai.pushtask("idle_wait")
+      else
+         ai.pushtask("brake" )
+      end
    else
       -- Just return
       ai.pushtask( "moveto", mem.guardpos )

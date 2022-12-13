@@ -103,7 +103,10 @@ stds.API_ai = {globals={
 stds.API_board = {globals={"board"}}    -- C function: player_board()
 stds.API_comm = {globals={"comm"}}      -- C function: comm_openPilot()
 stds.API_datapath = {globals={"datapath"}} -- C functon: conf_loadConfigPath
-stds.API_loadscreen = {globals={"render"}}    -- C function: loadscreen_render()
+stds.API_loadscreen = {globals={
+   "update",                           -- C function: loadscreen_update()
+   "render",                           -- C function: naev_renderLoadscreen()
+}}
 stds.API_autoequip = {globals={"autoequip"}}            -- C function: equipment_autoequipShip()
 stds.API_equip = {globals={"equip", "equip_generic"}}   -- C function: ai_create
 stds.API_faction = {globals={
@@ -173,6 +176,7 @@ stds.API_music = {globals={
    "volume",
 }}
 stds.API_pilotoutfit = {globals={
+   "notactive",
    "price",
    "buy",
    "sell",

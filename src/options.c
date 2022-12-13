@@ -96,7 +96,7 @@ static void opt_setBGBrightness( unsigned int wid, const char *str );
 static void opt_setNebuNonuniformity( unsigned int wid, const char *str );
 static void opt_setJumpBrightness( unsigned int wid, const char *str );
 static void opt_checkColorblind( unsigned int wid, const char *str );
-static void opt_checkBGFancy( unsigned int wid, const char *str );
+static void opt_checkHealth( unsigned int wid, const char *str );
 /* Audio. */
 static void opt_audio( unsigned int wid );
 static int opt_audioSave( unsigned int wid, const char *str );
@@ -1394,8 +1394,8 @@ static void opt_video( unsigned int wid )
          conf.colorblind );
    y -= 25;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkBGFancy", _("Fancy and expensive background shaders"), opt_checkBGFancy,
-         conf.background_fancy );
+         "chkHealth", _("Health bars for pilots"), opt_checkHealth,
+         conf.healthbars );
    y -= 30;
    window_addText( wid, x, y-3, cw-20, 20, 0, "txtBGBrightness",
          NULL, NULL, NULL );
@@ -1534,11 +1534,10 @@ static void opt_checkColorblind( unsigned int wid, const char *str )
 /**
  * @brief Handles the fancy background checkbox.
  */
-static void opt_checkBGFancy( unsigned int wid, const char *str )
+static void opt_checkHealth( unsigned int wid, const char *str )
 {
    int f = window_checkboxState( wid, str );
-   conf.background_fancy = f;
-   background_load( cur_system->background );
+   conf.healthbars = f;
 }
 
 /**

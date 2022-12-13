@@ -6,7 +6,7 @@ local careful = require "ai.core.misc.careful"
 
 local atk = {}
 
-mem.lanedistance = mem.lanedistance or 2e3
+mem.lanedistance = mem.lanedistance or mem.enemyclose or 3e3
 --mem.atk_pref_func = nil
 mem.atk_pref_range = 5e3
 
@@ -123,6 +123,11 @@ end
 -- big game hunter attack pattern using heuristic target identification.
 --]]
 function atk.heuristic_big_game_think( target, _si )
+   -- Chance to just focus on the current enemy
+   if rnd.rnd() < 0.7 then
+      return
+   end
+
    local enemy = atk.preferred_enemy( atk.prefer_capship )
 
    local dist = ai.dist(target)
@@ -473,6 +478,26 @@ function atk.prefer_weaker( p, h, v )
 end
 
 --[[
+Evaluates a single enemy
+--]]
+function atk.preferred_enemy_test( target, pref_func )
+   pref_func = mem.atk_pref_func or pref_func or atk.prefer_similar
+   local p = ai.pilot()
+   local w = target:memory().vulnerability or 0
+   local r = math.pow( mem.lanedistance, 2 )
+   if w < math.huge then -- math.huge can be used to make the AI try not to target
+      local v, F, H = careful.checkVulnerable( p, target, mem.vulnattack, r )
+      if not v then
+         F = 1
+         H = 1
+      end
+      -- Insert some randomness for less consistency
+      w = w + (0.9+0.2*rnd.rnd())*pref_func( p, target, v, F, H ) -- Compute pref function
+   end
+   return w
+end
+
+--[[
 Tries to find a preferred enemy.
 --]]
 function atk.preferred_enemy( pref_func )
@@ -489,7 +514,8 @@ function atk.preferred_enemy( pref_func )
             F = 1
             H = 1
          end
-         w = w + pref_func( p, h, v, F, H ) -- Compute pref function
+         -- Insert some randomness for less consistency
+         w = w + (0.9+0.2*rnd.rnd())*pref_func( p, h, v, F, H ) -- Compute pref function
          table.insert( targets, { p=h, priority=w, v=v, F=F, H=H } )
       end
    end
@@ -498,6 +524,7 @@ function atk.preferred_enemy( pref_func )
       return a.priority < b.priority -- minimizing
    end )
    -- TODO statistical sampling instead of determinism?
+   -- Some randomness is handled above so it may not be necessary
    return targets[1].p, targets[1]
 end
 

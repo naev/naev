@@ -311,8 +311,10 @@ Note that `_()` and friends all assume that you are inputting strings in English
 It is important to note that strings not shown to the player, e.g., strings representing faction names or ship names, do not need to be translated! So when adding a pilot you can just use directly the correct strings:
 
 ```lua
-pilot.add( "Hyena", "Mercenary" )
+pilot.add( "Hyena", "Mercenary", nil, _("Cool Dude") )
 ```
+
+Note that the name (`Cool Dude` in this case) does have to be translated!
 
 ### Formatting Text
 \label{sec:misn-basic-fmt}

@@ -148,6 +148,11 @@ end
 function comm( plt )
    local mem = plt:memory()
 
+   if mem.carried then
+      plt:comm(_("The fighter does not respond."), true, true)
+      return
+   end
+
    vn.reset()
    vn.scene()
 
@@ -206,7 +211,7 @@ function comm( plt )
             end
          end
       end
-      if not hostile then
+      if not hostile and not mem.carried then
          table.insert( opts, 1, {_("Request Fuel"), "refuel"} )
       end
       return opts

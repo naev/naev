@@ -586,7 +586,7 @@ static char **map_fuzzyOutfits( Outfit **o, const char *name )
          array_push_back( &names, o[i]->name );
       else if (strcasestr( outfit_description(o[i]), name ) != NULL)
          array_push_back( &names, o[i]->name );
-      else if (strcasestr( outfit_summary(o[i]), name ) != NULL)
+      else if (strcasestr( outfit_summary(o[i], 0), name ) != NULL)
          array_push_back( &names, o[i]->name );
    }
 
@@ -675,7 +675,7 @@ static void map_showOutfitDetail( unsigned int wid, const char* wgtname, int x, 
 
    window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 128, 128 );
    l = outfit_getNameWithClass( outfit, buf, sizeof(buf) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", pilot_outfitSummary( player.p, outfit ) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", pilot_outfitSummary( player.p, outfit, 0 ) );
    window_modifyText( wid, "txtDescShort", buf );
    th = gl_printHeightRaw( &gl_smallFont, 280, buf );
 

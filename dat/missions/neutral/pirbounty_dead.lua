@@ -82,7 +82,11 @@ misn_title = {
    _("Dangerous Dead or Alive Bounty in {sys}"),
 }
 
-mem.misn_desc   = _("The pirate known as {pirname} was recently seen in the {sys} system. {fct} authorities want this pirate dead or alive. {pirname} is believed to be flying a {shipclass}-class ship.")
+mem.misn_desc = _([[The pirate known as {pirname} was recently seen in the {sys} system. {fct} authorities want this pirate dead or alive. {pirname} is believed to be flying a {shipclass}-class ship.
+
+#nTarget:#0 {pirname} ({shipclass}-class ship)
+#nWanted:#0 Dead or Alive
+#nLast Seen:#0 {sys} system]])
 
 -- Messages
 msg = {
@@ -148,9 +152,23 @@ function create ()
    mem.board_failed = false
    mem.pship, mem.credits, mem.reputation = bounty_setup()
 
+   -- Faction prefix
+   local prefix
+   if mem.paying_faction:static() then
+      prefix = ""
+   else
+      prefix = require("common.prefix").prefix(mem.paying_faction)
+   end
+
    -- Set mission details
-   misn.setTitle( fmt.f( misn_title[mem.level], {sys=mem.missys} ) )
-   misn.setDesc( fmt.f( mem.misn_desc, {pirname=mem.name, sys=mem.missys, fct=mem.paying_faction, shipclass=_(ship.get(mem.pship):classDisplay()) } ) )
+   misn.setTitle( prefix..fmt.f(misn_title[mem.level], {sys=mem.missys}) )
+   local desc = fmt.f(mem.misn_desc,
+      {pirname=mem.name, sys=mem.missys, fct=mem.paying_faction, shipclass=_(ship.get(mem.pship):classDisplay()) })
+   if not mem.paying_faction:static() then
+      desc = desc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
+         {fct=mem.paying_faction})
+   end
+   misn.setDesc(desc)
    misn.setReward( fmt.credits( mem.credits ) )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
 end

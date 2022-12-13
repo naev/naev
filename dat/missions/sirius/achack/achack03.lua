@@ -19,6 +19,7 @@
 require "proximity"
 local srs = require "common.sirius"
 local fmt = require "format"
+local achack = require "achack"
 
 local harja -- Non-persistent state
 
@@ -102,7 +103,7 @@ function date()
       end
       mem.spawnpoint = spawnpoints[rnd.rnd(#spawnpoints)]
 
-      harja = pilot.add("Shark", "Achack_sirius", mem.spawnpoint, _("Harja's Shark"), {ai="trader"})
+      harja = pilot.add("Shark", achack.fct_sirius(), mem.spawnpoint, _("Harja's Shark"), {ai="trader"})
       harja:memory().aggressive = true
       harja:control()
       harja:follow(player.pilot())

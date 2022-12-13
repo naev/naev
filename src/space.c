@@ -960,13 +960,13 @@ int system_index( const StarSystem *sys )
 /**
  * @brief Get whether or not a spob has a system (i.e. is on the map).
  *
- *    @param spobname Spob name to match.
+ *    @param spb Spob to search for.
  *    @return 1 if the spob has a system, 0 otherwise.
  */
-int spob_hasSystem( const char* spobname )
+int spob_hasSystem( const Spob *spb )
 {
    for (int i=0; i<array_size(spobname_stack); i++)
-      if (strcmp(spobname_stack[i],spobname)==0)
+      if (strcmp(spobname_stack[i],spb->name)==0)
          return 1;
    return 0;
 }
@@ -1514,6 +1514,7 @@ void space_init( const char* sysname, int do_simulate )
    background_clear(); /* Get rid of the background. */
    factions_clearDynamic(); /* get rid of dynamic factions. */
    space_spawn = 1; /* spawn is enabled by default. */
+
    /* Clear persistent pilot stuff. */
    if (player.p != NULL) {
       Pilot *const* pilot_stack = pilot_getAll();
@@ -1678,11 +1679,12 @@ Spob *spob_new (void)
 
    /* Lua doesn't default to 0 as a safe value... */
    p->lua_env     = LUA_NOREF;
+   p->lua_mem     = LUA_NOREF;
    p->lua_init    = LUA_NOREF;
    p->lua_load    = LUA_NOREF;
    p->lua_unload  = LUA_NOREF;
-   p->lua_land    = LUA_NOREF;
    p->lua_can_land= LUA_NOREF;
+   p->lua_land    = LUA_NOREF;
    p->lua_render  = LUA_NOREF;
    p->lua_update  = LUA_NOREF;
    p->lua_comm    = LUA_NOREF;
@@ -1734,6 +1736,9 @@ static int spobs_load (void)
             s.id = array_size( spob_stack );
             array_push_back( &spob_stack, s );
          }
+
+         /* Render if necessary. */
+         naev_renderLoadscreen();
       }
 
       /* Clean up. */
@@ -1992,7 +1997,7 @@ int spob_luaInit( Spob *spob )
    lua_pop( naevL, 2 );          /* */
 
    /* Run init if applicable. */
-   if (spob->lua_init) {
+   if (spob->lua_init != LUA_NOREF) {
       spob_luaInitMem( spob );
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, spob->lua_init); /* f */
       lua_pushspob(naevL, spob_index(spob));
@@ -2010,7 +2015,7 @@ int spob_luaInit( Spob *spob )
  */
 void spob_gfxLoad( Spob *spob )
 {
-   if (spob->lua_load) {
+   if (spob->lua_load != LUA_NOREF) {
       spob_luaInitMem( spob );
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, spob->lua_load); /* f */
       if (nlua_pcall( spob->lua_env, 0, 2 )) {
@@ -3190,7 +3195,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
  */
 static int system_parseJumps( StarSystem *sys )
 {
-   xmlNodePtr parent, cur, node;
+   xmlNodePtr parent, node;
    xmlDocPtr doc;
 
    doc = xml_parsePhysFS( sys->filename );
@@ -3206,7 +3211,7 @@ static int system_parseJumps( StarSystem *sys )
    node  = parent->xmlChildrenNode;
    do { /* load all the data */
       if (xml_isNode(node,"jumps")) {
-         cur = node->children;
+         xmlNodePtr cur = node->children;
          do {
             if (xml_isNode(cur,"jump"))
                system_parseJumpPoint( cur, sys );
@@ -3341,6 +3346,9 @@ static int systems_load (void)
          system_updateAsteroids( &sys );
 
          array_push_back( &systems_stack, sys );
+
+         /* Render if necessary. */
+         naev_renderLoadscreen();
       }
    }
    qsort( systems_stack, array_size(systems_stack), sizeof(StarSystem), system_cmp );
@@ -3999,7 +4007,6 @@ void system_presenceAddSpob( StarSystem *sys, const SpobPresence *ap )
 {
    int id, curSpill;
    Queue q, qn;
-   StarSystem *cur;
    double spillfactor;
    int faction = ap->faction;
    double base = ap->base;
@@ -4069,7 +4076,7 @@ void system_presenceAddSpob( StarSystem *sys, const SpobPresence *ap )
       int x;
 
       /* Pull one off the current range queue. */
-      cur = q_dequeue(q);
+      StarSystem *cur = q_dequeue(q);
 
       /* Ran out of candidates before running out of spill range! */
       if (cur == NULL)
@@ -4355,6 +4362,12 @@ const char *space_populationStr( uint64_t population )
    return pop;
 }
 
+/**
+ * @brief Gets the map shader by name.
+ *
+ *    @param name NAme of the map shader.
+ *    @return The map shader.
+ */
 static const MapShader *mapshader_get( const char *name )
 {
    MapShader *ms;

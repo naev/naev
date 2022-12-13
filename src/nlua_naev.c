@@ -197,13 +197,16 @@ static int naevL_language( lua_State *L )
  * @brief Gets how many days it has been since the player last played Naev.
  *
  *    @luatreturn number Number of days since the player last played.
+ *    @luatreturn number Number of days since any of the save games were played.
  * @luafunc lastplayed
  */
 static int naevL_lastplayed( lua_State *L )
 {
    double d = difftime( time(NULL), player.last_played );
+   double g = difftime( time(NULL), conf.last_played );
    lua_pushnumber(L, d/(3600.*24.)); /*< convert to days */
-   return 1;
+   lua_pushnumber(L, g/(3600.*24.)); /*< convert to days */
+   return 2;
 }
 
 /**

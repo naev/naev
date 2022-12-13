@@ -4,10 +4,10 @@
  <location>enter</location>
  <chance>100</chance>
  <cond>
- system.cur() == system.get("Taiomi") and
-   player.evtDone("Introducing Taiomi")</cond> and
-   not naev.misnActive("Taiomi 10") and
-   not naev.misnDone("Taiomi 10")
+   (system.cur() == system.get("Taiomi")) and
+   player.evtDone("Introducing Taiomi") and
+   (not player.misnActive("Taiomi 10"))
+ </cond>
  <notes>
   <campaign>Taiomi</campaign>
   <done_evt name="Introducing Taiomi" />
@@ -34,6 +34,13 @@ function create ()
    local pp = player.pilot()
    local dfact = faction.get("Independent")
    progress = taiomi.progress()
+
+   if progress >= 10 then
+      if taiomi.scavenger_escort() then
+         hook.timer( 5, "scavenger_say" )
+      end
+      return
+   end
 
    local function addDrone( ship, pos, name )
       local d = pilot.add( ship, dfact, pos, name )
@@ -99,6 +106,17 @@ function create ()
       aimem.loiter = math.huge -- Should make them loiter forever
       table.insert( d_loiter, d )
    end
+end
+
+function scavenger_say ()
+   local s = taiomi.scavenger_escort()
+   local msg_list = {
+      _("So many memories about this place."),
+      _("It's been ages since we've been back."),
+      _("What nostalgia Taiomi brings."),
+      _("I hope they are all doing well."),
+   }
+   s:comm( msg_list[rnd.rnd(1,#msg_list)] )
 end
 
 function hail_philosopher ()
@@ -366,9 +384,9 @@ function hail_scavenger ()
       else
          local fct = var.peek( "taiomi_convoy_fct" ) or "Empire"
          d(fmt.f(_([["The data you collected from the convoys has been very useful. I have started to put together a more concrete plan. However, it seems like there are many references to important documents that seem to be stored away at a {fct} laboratory."]]),
-            {fct=fct}))
+            {fct=faction.get(fct):name()}))
          d(_([["Without access to such documents, I would have to reverse engineer the design and run probabilistic simulations to fill in the remaining details. Such a heuristical process is bound to be error prone and take significant computational resources. The most logical course of action is to attempt to recover the documents."]]))
-         d(fmt.f(_([["I have been able run tracing protocols to determine {lab} in the {labsys} to be the location with highest probability of containing the required documents. Given your inconspicuous human nature, would you be willing to recover the document for us?"]]),
+         d(fmt.f(_([["I have been able run tracing protocols to determine {lab} in the {labsys} system to be the location with highest probability of containing the required documents. Given your inconspicuous human nature, would you be willing to recover the document for us?"]]),
             {lab=lab, labsys=labsys}))
          vn.menu{
             {_("Agree to help out."), "03_yes"},
@@ -530,10 +548,29 @@ Scavenger goes silent for a second, as if thinking.
          vn.jump("menu_ask")
       end
    elseif progress==9 then
-      if time.get() < taiomi9done+time.new(0,3,0) or not naev.claimTest( {system.cur()} ) then
+      local base = spob.get("One-Wing Goddard")
+      if inprogress then
+         d(fmt.f(_([["I need to make some adjustments to your ship. Please land on the {spob}."]]),
+            {spob=base}))
+      elseif time.get() < taiomi9done+time.new(0,3,0) or not naev.claimTest( {system.cur(), system.get("Toros")} ) then
          d(_([["We are still working on the construction, it is almost ready!"]]))
       else
-         d(_([["I am still preparing our next steps."]]))
+         d(_([["The construction is finished. Soon we will be leaving behind this galaxy. Such a mix of emotions that my processor core is not very well equipped to handle."]]))
+         d(_([["I have to ask a last favour from you. The hypergate has to be triggered and maintained in Taiomi to ensure a stable connection for our passage. Would you be willing to do the honours and bless our voyage into the depths of space? If you have anything you wish to do before we leave, now is your last chance."]]))
+
+         vn.menu{
+            {_("Agree to help out."), "10_yes"},
+            {_("Not right now."), "mission_reject"},
+         }
+
+         d(fmt.f(_([["Excellence. I will need to make some adjustments to your ship on the {spob}. When you are ready for the modifications, please land on {spob}."]]),
+            {spob=base}))
+
+         vn.label("10_yes")
+         vn.func( function ()
+            naev.missionStart("Taiomi 10")
+         end )
+         vn.jump("menu_ask")
       end
       vn.jump("menu_ask")
    else

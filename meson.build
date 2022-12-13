@@ -1,5 +1,5 @@
 project('naev', 'c',
-   version : '0.10.0-alpha.1',
+   version : '0.10.0-beta.2',
    default_options : [
       'warning_level=2',
       'optimization=g',
@@ -427,15 +427,7 @@ if buildExec.disabled() == false
 
    subdir('test')
 
-   if host_machine.system() == 'windows'
-      meson.add_install_script(join_paths('extras','windows','packageWindows.sh'), '-n', get_option('nightly').to_string())
-   endif
-   if host_machine.system() == 'darwin'
-      meson.add_install_script(join_paths('extras','macos','bundle.py'), debug ? '-d' : [])
-      if get_option('dmg')
-	 meson.add_install_script(join_paths('extras','macos','createDMG.sh'), '-s', meson.source_root() , '-b', meson.current_build_dir())
-      endif
-   endif
+   subdir ('extras')
 endif
 
 ####

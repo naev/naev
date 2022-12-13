@@ -7,7 +7,7 @@
   <rarity>2</rarity>
   <mass>90</mass>
   <price>740000</price>
-  <gfx_store>proteron_derivative_fighter.webp</gfx_store>
+  <gfx_store>dalton_dock.webp</gfx_store>
   <description>This fighter bay allows your ship to carry twin Proteron Dalton class interceptors. It comes with all the devices required for the maintenance and flight of the interceptors.</description>
   <cpu>-170</cpu>
  </general>

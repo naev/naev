@@ -770,6 +770,21 @@ static void move_old_save( const char *path, const char *fname, const char *ext,
          PHYSFS_mkdir( new_path );
       free( new_path );
       asprintf( &new_path, "saves/%s/%s", dirname, new_name );
+      /* If it's going to overwrite a file, try to back it up. */
+      if (PHYSFS_exists( new_path )) {
+         int tries = 0;
+         char *bkp_path;
+         asprintf( &bkp_path, "%s.bkp", new_path );
+         while (PHYSFS_exists(bkp_path) && (tries++ < 10)) {
+            char *bkp_bkp_path;
+            asprintf( &bkp_bkp_path, "%s.bkp", bkp_path );
+            free( bkp_path );
+            bkp_path = bkp_bkp_path;
+         }
+         ndata_copyIfExists( new_path, bkp_path );
+         free( bkp_path );
+      }
+      /* Copy over the old file. */
       if (!ndata_copyIfExists( path, new_path ))
          if (!PHYSFS_delete( path ))
             dialogue_alert( _("Unable to delete %s"), path );

@@ -368,7 +368,7 @@ function board ()
 end
 
 function info_reminder ()
-   player.pilot():comm(fmt.f(_([[Nelly: "Try opening the info menu with {infokey}."]]),{infokey=tut.getKey("info")}))
+   player.msg(fmt.f(_([[Nelly: "Try opening the info menu with {infokey}."]]),{infokey=tut.getKey("info")}), true)
    mem.times_said = (mem.times_said or 0) + 1
    if mem.times_said < 4 then
       mem.hk_info_timer = hook.timer( 15, "info_reminder" )
@@ -527,7 +527,7 @@ function equip ()
       return
    end
 
-   info_msg( fmt.f(_([["Great! Now you have the #o{outfit}#0 equipped. If your ship is set to automatically weapons, it should be assigned to a primary weapon. If not, you will have to assign the #o{outfit}#0 to a weapon set so you can use that. You can check by opening the #oInfo Window#0 with {infokey}. Check to make sure that is set up and let us go back to {pnt} in {sys}."]]), {outfit=outfit_tobuy, infokey=tut.getKey("info"), pnt=mem.retpnt, sys=mem.retsys} ))
+   info_msg( fmt.f(_([["Great! Now you have the #o{outfit}#0 equipped. If your ship is set to automatically handle weapons, it should be assigned to a primary weapon. If not, you will have to assign the #o{outfit}#0 to a weapon set so you can use that. You can check by opening the #oInfo Window#0 with {infokey}. Check to make sure that is set up and let us go back to {pnt} in {sys}."]]), {outfit=outfit_tobuy, infokey=tut.getKey("info"), pnt=mem.retpnt, sys=mem.retsys} ))
 
    hook.rm( mem.hk_equip )
    mem.hk_equip = nil

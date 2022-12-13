@@ -28,10 +28,12 @@ local fmt = require "format"
 require "proximity"
 local portrait = require "portrait"
 local dv = require "common.dvaered"
+local cinema = require "cinema"
+local ai_setup = require "ai.core.setup"
 
 -- Mission constants
 local DVplanet, DVsys = spob.getS("Stalwart Station")
-local basepos = vec2.new(-8700, -3000) -- NOTE: Should be the same coordinates as in asset.xml!
+local basepos = spob.get("Sindbad"):pos()
 
 local base, bomber, bombers, fighterpos, fightersDV, fleetDV, fleetFLF, fleetpos, obstinate, vendetta, vigilance -- Non-persistent state
 local nextStage, spawnDV, spawnbase, updatepos -- Forward-declared functions
@@ -185,12 +187,7 @@ end
 
 -- Spawns the FLF base, ship version.
 function spawnbase()
-    base = pilot.add( "Sindbad", "FLF", basepos, nil, {ai="flf_norun"} )
-    base:outfitRm("all")
-    base:outfitRm("cores")
-    base:outfitAdd("Dummy Systems")
-    base:outfitAdd("Dummy Plating")
-    base:outfitAdd("Dummy Engine")
+    base = pilot.add( "Sindbad", "FLF", basepos, nil, {ai="flf_norun", naked=true} )
     base:outfitAdd("Base Ripper MK2", 8)
     base:setHostile()
     base:setNoDisable(true)
@@ -200,8 +197,8 @@ function spawnbase()
 end
 
 function deathBase()
-    player.pilot():setInvincible()
-    player.cinematics()
+    cinema.on()
+
     camera.set( base, false, 5000 )
     hook.timer( 8.0, "timer_plcontrol" )
 
@@ -242,8 +239,8 @@ function deathBase()
 end
 
 function timer_plcontrol ()
-    camera.set( player.pilot(), false, 5000 )
-    player.cinematics( false )
+   cinema.off()
+   camera.set( player.pilot(), false, 5000 )
 end
 
 -- Spawns the one-time-only Dvaered ships. Bombers are handled elsewhere.
@@ -261,6 +258,7 @@ function spawnDV()
     obstinate:outfitAdd("Engine Reroute")
     obstinate:outfitAdd("Small Shield Booster")
     obstinate:outfitAdd("Small Shield Booster")
+    ai_setup.setup(obstinate)
     hook.pilot(obstinate, "attacked", "attackedObstinate")
     hook.pilot(obstinate, "death", "deathObstinate")
     hook.pilot(obstinate, "idle", "idle")
@@ -405,6 +403,7 @@ function spawnDVbomber()
     bomber:outfitAdd("TeraCom Imperator Launcher", 1, true, true)
     bomber:outfitAdd("Engine Reroute", 1)
     bomber:outfitAdd("Vulcan Gun", 3)
+    ai_setup.setup(bomber)
     bomber:setNoDisable(true)
     bomber:setFriendly()
     bomber:control()
@@ -518,6 +517,7 @@ function deathDVbomber()
                 bomber:outfitAdd("TeraCom Imperator Launcher", 1, true, true)
                 bomber:outfitAdd("Engine Reroute", 1)
                 bomber:outfitAdd("Vulcan Gun", 3)
+                ai_setup.setup(bomber)
                 bomber:setNoDisable(true)
                 bomber:setFriendly()
                 bomber:control()

@@ -1,4 +1,28 @@
-* 0.10.0 (unreleased)
+* 0.10.0-beta.3
+   * Contraband missions use vntk instead of tk
+   * Sightseeing missions mention explicitly how much you get paid when completed
+   * Removed outfit name duplication in alt texts
+   * Made outfit descriptions fit in the landing window for all outfits
+   * Added sound effects to starting race
+   * Fixed non-Lua active outfits (jammers, etc.)
+   * Sort ship stats in outfit/ship descriptions
+   * Fixed jammers and jamming
+   * Buffed jamers and scramblers
+   * Buffed evasion bonus of Red Star hulls to compensate for detection malus
+   * Fix "Dead or Alive" and "Alive" being swapped in bounty mission descriptions
+   * Fixed other minor issues
+
+* 0.10.0-beta.2
+   * Pirates should avoid attacking near safeish areas
+   * Fixed crash on load when player has more than one ship
+   * Fixed player.setSpeed() not resetting speed as intended
+   * Fixed pilot.comm not showing messages
+   * Fixed typo/grammar in sightseeing and dvaered census introductory mission
+   * Don't display health bars with no player alive
+   * Autonav doesn't go only to the center of spobs
+   * Mention escort AI settings when buying a fighter bay tutorial plays
+
+* 0.10.0 (beta)
    * New Mechanics
       * Support for setting ships as escorts and thus player fleets
       * Hypergates that allow for long distance travel
@@ -15,7 +39,8 @@
       * More complex space objects (spob)
       * Support for different difficulty settings
       * New exploration mechanic with points of interest
-      * Unique ships to be find throughout the universe (pers)
+      * Unique ships to be found throughout the universe (pers)
+      * Manual aiming mode for weapon sets
    * Gameplay Changes
       * Weapon types are more differentiated
       * Removed nearly redundant launchers
@@ -26,19 +51,22 @@
       * Changed spawning and behaviour of pirates to be less dangerous in populated systems
       * Fighters only attack enemies visible by their carrier
       * AI is better at choosing targets
+      * More dump targets for waste dump mission and tweaked rewards
+      * Removed escorts for hire in lieu of player fleets
    * New Content
       * Added a gigantic black hole
       * Added new space anomalies such as plasma storms
       * Lots of new asteroid types and commodities
       * More interesting places to visit and explore
       * More engine sounds
-      * 41 New missions
+      * 45 New missions
          * More terraforming
          * Continuation of the Za'lek story
          * Help the Dvaered do some tasks
          * Tutorial for new mechanics
-         * Secret system
-      * 12 New ships
+         * Secret system!
+      * 14 New ships
+         * Certain secret faction completely revamped
       * New spob graphics
       * Lots of new outfits and reworked old outfits
          * Use energy to avoid death
@@ -49,6 +77,7 @@
       * News revamped to be more flexible and relate more with current events
       * NPCs revamped to be more flexible with many new messages
       * New commodities that are only available from mining
+      * Fancy racing mini-game that replaces old race missions
    * Quality of Life
       * Support for save snapshots for each pilot
       * Can ask pilots to refuel you more than 100 units at a time
@@ -65,6 +94,9 @@
       * Autonav is more flexible with positioning on jump points
       * Can customize jump flash brightness
       * Player will not be scanned immediately on jumping in or taking off
+      * Show health bars near pilots in combat (can be disabled in options)
+      * Escort AI is customizable
+      * Ship AI reminds player about things when they haven't played in a while
    * Engine changes
       * Work has begun on a development manual
       * Plugin support with explicit support for total conversions
@@ -86,6 +118,7 @@
       * AI can use special outfits
       * Lots of engine rewriting and modernization that should bring some speed improvements and more flexibility when modding
       * Added lua-enet library to allow for networking in plugins (off by default, requires setting in configuration file)
+      * Can animate loading screen
    * Bug Fixes
       * Too many to list, but we'll try
       * Fixed pilots not getting equipped at all in some cases

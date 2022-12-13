@@ -119,6 +119,8 @@ const double fps_min    = 1./30.; /**< Minimum fps to run at. */
 double elapsed_time_mod = 0.; /**< Elapsed modified time. */
 
 static nlua_env load_env = LUA_NOREF; /**< Environment for displaying load messages and stuff. */
+static int load_force_render = 0;
+static unsigned int load_last_render = 0;
 
 /*
  * prototypes
@@ -136,7 +138,7 @@ static double fps_elapsed (void);
 static void fps_control (void);
 static void update_all (void);
 /* Misc. */
-static void loadscreen_render( double done, const char *msg );
+static void loadscreen_update( double done, const char *msg );
 void main_loop( int update ); /* dialogue.c */
 
 /**
@@ -306,7 +308,7 @@ int main( int argc, char** argv )
 
    /* Display the load screen. */
    loadscreen_load();
-   loadscreen_render( 0., _("Initializing subsystems…") );
+   loadscreen_update( 0., _("Initializing subsystems…") );
    time_ms = SDL_GetTicks();
 
    /*
@@ -542,24 +544,25 @@ void loadscreen_load (void)
 }
 
 /**
- * @brief Renders the load screen with message.
- *
- *    @param done Amount done (1. == completed).
- *    @param msg Loading screen message.
+ * @brief Renders the loadscreen if necessary.
  */
-void loadscreen_render( double done, const char *msg )
+void naev_renderLoadscreen (void)
 {
    SDL_Event event;
+   unsigned int t = SDL_GetTicks();
+
+   /* Only render if forced or try for low 10 FPS. */
+   if (!load_force_render && (t-load_last_render) < 100 )
+      return;
+   load_last_render = t;
 
    /* Clear background. */
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
    /* Run Lua. */
    nlua_getenv( naevL, load_env, "render" );
-   lua_pushnumber( naevL, done );
-   lua_pushstring( naevL, msg );
-   if (nlua_pcall(load_env, 2, 0)) { /* error has occurred */
-      WARN( _("Loadscreen: '%s'"), lua_tostring(naevL,-1));
+   if (nlua_pcall(load_env, 0, 0)) { /* error has occurred */
+      WARN( _("Loadscreen '%s': '%s'"), "render", lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
 
@@ -569,6 +572,31 @@ void loadscreen_render( double done, const char *msg )
    /* Flip buffers. HACK: Also try to catch a late-breaking resize from the WM (...or a crazy user?). */
    SDL_GL_SwapWindow( gl_screen.window );
    naev_resize();
+
+   /* Clear forcing. */
+   load_force_render = 0;
+}
+
+/**
+ * @brief Renders the load screen with message.
+ *
+ *    @param done Amount done (1. == completed).
+ *    @param msg Loading screen message.
+ */
+void loadscreen_update( double done, const char *msg )
+{
+   /* Run Lua. */
+   nlua_getenv( naevL, load_env, "update" );
+   lua_pushnumber( naevL, done );
+   lua_pushstring( naevL, msg );
+   if (nlua_pcall(load_env, 2, 0)) { /* error has occurred */
+      WARN( _("Loadscreen '%s': '%s'"), "update", lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
+   }
+
+   /* Force rerender. */
+   load_force_render = 1;
+   naev_renderLoadscreen();
 }
 
 /**
@@ -590,55 +618,55 @@ void load_all (void)
    sp_load();
 
    /* order is very important as they're interdependent */
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Commodities…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading Commodities…") );
    commodity_load(); /* dep for space */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Special Effects…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading Special Effects…") );
    spfx_load(); /* no dep */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Effects…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading Effects…") );
    effect_load(); /* no dep */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Damage Types…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading Damage Types…") );
    dtype_load(); /* dep for outfits */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Outfits…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading Outfits…") );
    outfit_load(); /* dep for ships, factions */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Ships…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading Ships…") );
    ships_load(); /* dep for fleet */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Factions…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading Factions…") );
    factions_load(); /* dep for fleet, space, missions, AI */
 
    /* Handle outfit loading part that may use ships and factions. */
    outfit_loadPost();
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading AI…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading AI…") );
    ai_load(); /* dep for fleets */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Techs…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading Techs…") );
    tech_load(); /* dep for space */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading the Universe…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading the Universe…") );
    space_load(); /* dep for events/missions */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Events…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading Events…") );
    events_load();
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Missions…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading Missions…") );
    missions_load();
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading the UniDiffs…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading the UniDiffs…") );
    diff_loadAvailable();
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Populating Maps…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Populating Maps…") );
    outfit_mapParse();
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Calculating Patrols…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Calculating Patrols…") );
    safelanes_init();
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Initializing Details…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Initializing Details…") );
 #if DEBUGGING
    if (stage > LOADING_STAGES)
       WARN(_("Too many loading stages, please increase LOADING_STAGES"));
@@ -651,7 +679,7 @@ void load_all (void)
    pilots_init();
    weapon_init();
    player_init(); /* Initialize player stuff. */
-   loadscreen_render( 1., _("Loading Completed!") );
+   loadscreen_update( 1., _("Loading Completed!") );
 }
 /**
  * @brief Unloads all data, simplifies main().
@@ -774,6 +802,9 @@ void naev_resize (void)
    /* Finally do a render pass to avoid half-rendered stuff. */
    render_all( 0., 0. );
    SDL_GL_SwapWindow( gl_screen.window );
+
+   /* Force render. */
+   load_force_render = 1;
 }
 
 /*
