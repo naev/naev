@@ -549,9 +549,12 @@ function update( dt )
             else
                v.m:stop()
                table.insert( remove, k )
+               v = nil
             end
          end
-         v.m:setVolume( music_vol * v.vol, true )
+         if v then
+            v.m:setVolume( music_vol * v.vol, true )
+         end
       end
    end
    for k=#remove, 1, -1 do
