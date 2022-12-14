@@ -19,7 +19,8 @@ local function tracks_stop ()
    local remove = {}
    for k,v in ipairs( tracks ) do
       v.fade = -1
-      if v.elapsed <= 0 then
+      v.paused = nil
+      if v.elapsed <= 0 or v.m:isPaused() then
          v.m:stop()
          table.insert( remove, k )
       end
