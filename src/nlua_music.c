@@ -134,14 +134,14 @@ static int musicL_isPlaying( lua_State* L )
  * @usage songname, songplayed = music.current()
  *
  *    @luatreturn string The name of the current playing song or "none" if no song is playing.
- *    @luatreturn number The current offset inside the song (0. if music is none).
+ *    @luatreturn number The current offset inside the song (-1. if music is none).
  * @luafunc current
  */
 static int musicL_current( lua_State* L )
 {
    if (music_disabled) {
       lua_pushstring(L, "none");
-      lua_pushnumber(L, 0.);
+      lua_pushnumber(L, -1.);
    }
    else {
       MusicInfo_t *minfo = music_info();
