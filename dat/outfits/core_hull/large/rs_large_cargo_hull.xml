@@ -7,7 +7,7 @@
   <priority>7</priority>
   <mass>550</mass>
   <price>1200000</price>
-  <description>The Red Star Organization's specialized cargo hulls have helped bring more than a few freighters to their destinations that would have otherwise been effectively defenseless from attack against pirates and privateers. As the Red Star is barred by treaty from equipping most weapons, these hulls instead seek to blunt the effect of missile weapons via jamming and impact resistance. Those few raiders stupid enough to press on usually find that the largest Red Star ships are not disallowed from carrying an extensive array of short-range defensive turrets.</description>
+  <description>The Imperial Red Star is dedicated to relief efforts in areas stricken by war, piracy and disease. Recently developed by the organization is a series of specialized cargo hulls meant to maximize the odds of their supplies and personnel safely arriving where they are needed most. The integrated scrambler systems allow even the largest ships a chance to turn away torpedoes.</description>
   <gfx_store>rs_hull_l.webp</gfx_store>
   <cpu>-160</cpu>
  </general>
