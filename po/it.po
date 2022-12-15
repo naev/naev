@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-11 22:53+0900\n"
-"PO-Revision-Date: 2022-12-13 03:49+0000\n"
+"PO-Revision-Date: 2022-12-14 21:49+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -9146,11 +9146,11 @@ msgstr ""
 
 #: dat/spob/anger_i.xml:2
 msgid "Anger I"
-msgstr ""
+msgstr "Rabbia I"
 
 #: dat/spob/anger_ii.xml:2
 msgid "Anger II"
-msgstr ""
+msgstr "Rabbia II"
 
 #: dat/spob/anger_ii.xml:9 dat/spob/anku_ii.xml:9 dat/spob/apez_v.xml:9
 #: dat/spob/baf_iv.xml:9 dat/spob/doormat.xml:15 dat/spob/draygar_iii.xml:9
@@ -9163,27 +9163,27 @@ msgstr ""
 
 #: dat/spob/anifta.xml:2
 msgid "Anifta"
-msgstr ""
+msgstr "Anifta"
 
 #: dat/spob/anker.xml:2
 msgid "Anker"
-msgstr ""
+msgstr "Anker"
 
 #: dat/spob/anku_i.xml:2
 msgid "An'ku I"
-msgstr ""
+msgstr "An'ku I"
 
 #: dat/spob/anku_ii.xml:2
 msgid "An'ku II"
-msgstr ""
+msgstr "An'ku II"
 
 #: dat/spob/anku_iii.xml:2
 msgid "An'ku III"
-msgstr ""
+msgstr "An'ku III"
 
 #: dat/spob/antica.xml:2
 msgid "Antica"
-msgstr ""
+msgstr "Antica"
 
 #: dat/spob/antica.xml:28
 msgid ""
@@ -9192,6 +9192,10 @@ msgid ""
 "transports stop at Antica to sell their wares before venturing deeper into "
 "Empire space."
 msgstr ""
+"Anche se l'installazione orbitante militare è dedita soltanto agli affari, "
+"Antica mescola, piuttosto facilmente, gli affari al piacere. Data la sua "
+"posizione, un numero enorme di trasporti si ferma ad Antica per vedere i "
+"loro prodotti prima di avventurarsi più in profondità nello spazio imperiale."
 
 #: dat/spob/antica.xml:29
 msgid ""
@@ -9200,10 +9204,14 @@ msgid ""
 "finest food and drink, this Arcturian bar is often a traveller's "
 "introduction to Empire cuisine."
 msgstr ""
+"Il bar di Antica è piuttosto sontuoso, assolutamente in contrasto con "
+"l'esterno austero della stazione militare orbitante. Servendo alcuni dei "
+"migliori cibi e bevande imperiali, questo bar è spesso un'introduzione alla "
+"cucina imperiale per i viaggiatori di passaggio."
 
 #: dat/spob/antlejos_iii.xml:2
 msgid "Antlejos III"
-msgstr ""
+msgstr "Antlejos III"
 
 #: dat/spob/antlejos_iii.xml:9
 msgid "B"
@@ -9211,25 +9219,27 @@ msgstr ""
 
 #: dat/spob/antlejos_iv.xml:2
 msgid "Antlejos IV"
-msgstr ""
+msgstr "Antlejos IV"
 
 #: dat/spob/antlejos_prime.xml:2
 msgid "Antlejos Prime"
-msgstr ""
+msgstr "Antlejos Primo"
 
 #. Use default
 #. Function for adding log entries for miscellaneous one-off missions.
 #: dat/spob/antlejos_v.xml:2 dat/scripts/common/antlejos.lua:29
 msgid "Antlejos V"
-msgstr ""
+msgstr "Antlejos V"
 
 #: dat/spob/antlejos_v.xml:15
 msgid "A cold and barren inhospitable moon devoid of all life."
 msgstr ""
+"Una luna fredda, inospitale e desolata, completamente priva di qualsiasi "
+"forma di vita."
 
 #: dat/spob/anubis.xml:2
 msgid "Anubis"
-msgstr ""
+msgstr "Anubi"
 
 #: dat/spob/anubis.xml:28
 msgid ""
@@ -9242,6 +9252,16 @@ msgid ""
 "House Dvaered. Today, the Dvaered use Anubis to produce ammunition and light "
 "combat ships to supply Raelid Outpost."
 msgstr ""
+"Anubi, il cui nome deriva dal dio egizio della morte, è stata fondata per "
+"essere una base mineraria da una fazione mineraria, in verità prima della "
+"Guerra delle Fazioni. L'abbondanza di elementi radioattivi e pesanti rendono "
+"il pianeta un'ottima postazione per produrre armi, un affare lucrativo data "
+"la sua prossimità a Sol. Durante la Guerra delle Fazioni, Anubi è stato "
+"annesso all'Impero, ma conseguentemente la popolazione locale si unì al "
+"movimento di protesta che alla fine portò alla creazione della Casata dei "
+"Dvaered. Attualmente, i Dvaered utilizzano Anubi per la produzione di "
+"munizioni e astronavi leggere da combattimento per rifornire l'avamposto di "
+"Raelid."
 
 #: dat/spob/anubis.xml:29
 msgid ""
@@ -9252,10 +9272,17 @@ msgid ""
 "the locals know how unpleasant it is to have to work in such raging, "
 "radioactive conditions."
 msgstr ""
+"Quello che è bello è spesso pericoloso, ma alcune volte è vero anche il "
+"contrario. Il bar dello spazioporto su Anubi ha una vista su un canyon della "
+"superficie del pianeta e le tempeste radioattive che frequentemente "
+"imperversano internamente ad esso sono una curiosità da vedere. Però "
+"soltanto chi non è di Anubi le osservano con piacere, mentre la maggior "
+"parte della popolazione locale conosce quanto sia spiacevole dover lavorare "
+"in tali impetuose condizioni radioattive."
 
 #: dat/spob/anya.xml:2
 msgid "Anya"
-msgstr ""
+msgstr "Anya"
 
 #: dat/spob/anya.xml:15 dat/spob/sevlow.xml:15 dat/spob/wellen.xml:16
 msgid "N"
@@ -9271,6 +9298,14 @@ msgid ""
 "capital world. This is due, at least in part, to the geological "
 "instabilities of the planet."
 msgstr ""
+"Anya è il pianeta gemello di Sabe, i due pianeti orbitano in tandem intorno "
+"al loro centro di gravità comune. Anya è avvolto da una copertura permanente "
+"di nuvole e ricoperto di neve e cenere, quest'ultima generata dalle attività "
+"geologiche. Un piccolo numero di Thurioni vivono sulla superficie di Anya, "
+"ma nessuno sforzo di colonizzazione su larga scala è stato fatto finora "
+"nonostante la prossimità del pianeta a Sabe, il pianeta capitale dei "
+"Thurian. Questo è dovuto, almeno in parte, all'instabilità geologica del "
+"pianeta."
 
 #: dat/spob/anya.xml:27
 msgid ""
@@ -9278,26 +9313,29 @@ msgid ""
 "is usual for Thurion bars, no alcohol or other substances deemed to be "
 "damaging to the brain are served."
 msgstr ""
+"Il bar su Anya è piccolo e pittoresco, frequentato dai locali. Come usuale "
+"per i bar dei Thurion, non vengono serviti alcoolici o altre sostanze "
+"ritenute dannose per il cervello."
 
 #: dat/spob/apez_ii.xml:2
 msgid "Apez II"
-msgstr ""
+msgstr "Apez II"
 
 #: dat/spob/apez_v.xml:2
 msgid "Apez V"
-msgstr ""
+msgstr "Apez V"
 
 #: dat/spob/apik_i.xml:2
 msgid "Apik I"
-msgstr ""
+msgstr "Apik I"
 
 #: dat/spob/apik_ii.xml:2
 msgid "Apik II"
-msgstr ""
+msgstr "Apik II"
 
 #: dat/spob/apik_shipyard.xml:2
 msgid "Apik Shipyard"
-msgstr ""
+msgstr "Cantiere di astronavi su Apik"
 
 #: dat/spob/apik_shipyard.xml:25
 msgid ""
@@ -9305,18 +9343,21 @@ msgid ""
 "needs of the general population. It efficiently churns out and services "
 "civilian vessels on an as-needed basis."
 msgstr ""
+"A differenza della Stazione Sigma su Protera, il Cantiere di Astronavi su "
+"Apik è progettato per soddisfare le esigenze della popolazione in generale. "
+"Produce e serve efficientemente i vascelli dei civili in base alle necessità."
 
 #: dat/spob/aquilia.xml:2
 msgid "Aquilia"
-msgstr ""
+msgstr "Aquilia"
 
 #: dat/spob/arai.xml:2
 msgid "Arai"
-msgstr ""
+msgstr "Arai"
 
 #: dat/spob/arashu.xml:2
 msgid "Arashu"
-msgstr ""
+msgstr "Arashu"
 
 #: dat/spob/arashu.xml:28
 msgid ""
@@ -9328,6 +9369,13 @@ msgid ""
 "platforms so the workers and equipment are safe from the constant seismic "
 "activity."
 msgstr ""
+"Arashu è un pianeta singolare, è sia oceanico che altamente vulcanico. La "
+"crosta oceanica planetaria è soggetta a terremoti che causano onde di marea "
+"che spazzano le poche aree di terra asciutta. Una corporazione siriana ha "
+"investito nello sfruttamento dell'energia rilasciata da questo processo, "
+"trasformando il pianeta in un impianto profittevole di produzioni di armi. "
+"Tutta la manifattura avviene su piatteforme flottanti in modo che i "
+"lavoratori e le attrezzature siano al sicuro dall'attività sismica costante."
 
 #: dat/spob/arashu.xml:29
 msgid ""
@@ -9337,10 +9385,16 @@ msgid ""
 "at the moment, so it is actually quite fascinating interesting to watch, "
 "especially once you can place the spaceport and bar!"
 msgstr ""
+"Nel bar è contenuto un grosso schermo che mostra una mappa geologica del "
+"pianeta, ma poiché la maggior parte del pianeta è ricoperto dall'oceano, "
+"tale mappa è veramente poco interessante. Lo schermo mostra anche tutte le "
+"attività vulcaniche in corso attualmente, il che la rende abbastanza "
+"affascinante e interessante da guardare, specialmente quando si può "
+"posizionare lo spazioporto e il bar!"
 
 #: dat/spob/arcadia.xml:2
 msgid "Arcadia"
-msgstr ""
+msgstr "Arcadia"
 
 #: dat/spob/arcadia.xml:26
 msgid ""
@@ -9351,6 +9405,14 @@ msgid ""
 "technology and procedures. The project was in fact so successful that "
 "Arcadia became a hub for food distribution throughout localized Za'lek space."
 msgstr ""
+"Alquanto ironicamente, ma adeguatamente chiamato, Arcadia è un mondo "
+"bombardato da piogge acide e altre forme meteorologiche altrettanto "
+"sgradevoli. In quanto tale, è stato il mondo essenziale per un esperimento "
+"di successo atto a verificare se tale ambiente riuscisse a supportare una "
+"massiva campagna di crescita di raccolti usando tecnologie e procedure di "
+"isolamento appropriate. Tale progetto fu effettivamente così di successo che "
+"Arcadia è diventato il centro di distribuzione di cibo per tutto lo spazio "
+"circostante di Za'lek."
 
 #: dat/spob/arcadia.xml:27
 msgid ""
@@ -9358,6 +9420,10 @@ msgid ""
 "discussing new and better ways to improve farming technology and get more "
 "and better food for less cost."
 msgstr ""
+"Diversi capitani spedizionieri, agricoltori e scienziati socializzano "
+"pacificamente qui, discutendo nuove e migliori modalità per migliorare le "
+"tecnologie agricole e ottenere cibo più abbondante e migliore con minori "
+"costi."
 
 #: dat/spob/arcadia.xml:30 dat/spob/benteen.xml:30 dat/spob/caladan.xml:45
 #: dat/spob/corinth_foods.xml:28 dat/spob/crylo.xml:41 dat/spob/em_1.xml:43
@@ -9375,7 +9441,7 @@ msgstr ""
 
 #: dat/spob/arch_arai.xml:2
 msgid "Arch Arai"
-msgstr ""
+msgstr "Arch Arai"
 
 #: dat/spob/arch_arai.xml:28
 msgid ""
@@ -9384,6 +9450,10 @@ msgid ""
 "fairly law-abiding Sirius world, earning its existence through trade and "
 "industry like almost every other planet."
 msgstr ""
+"Mondo indipendente nel passato, rifugio di pirati e commercianti del mercato "
+"nero, Arch Arai è da tempo caduto sotto l'incantesimo dei Toccati. Ora è un "
+"mondo di Sirio abbastanza rispettoso della legge, guadagnando la sua "
+"esistenza tramite il commercio e l'industria come quasi ogni altro pianeta."
 
 #: dat/spob/arch_arai.xml:29
 msgid ""
@@ -9392,10 +9462,14 @@ msgid ""
 "effect is contagious making newcomers follow the example of those who are "
 "already there, almost instinctively."
 msgstr ""
+"Questo bar è un posto tranquillo. Anche se non manca la clientela, le "
+"persone che vengono qui non sembrano preoccuparsi di nulla. L'effetto è "
+"contagioso facendo sì che i nuovi clienti seguano l'esempio di quelli che "
+"sono già qui presenti, quasi istintivamente."
 
 #: dat/spob/arck.xml:2
 msgid "Arck"
-msgstr ""
+msgstr "Arck"
 
 #: dat/spob/arck.xml:26
 msgid ""
@@ -9406,6 +9480,13 @@ msgid ""
 "doing here is a form of reverse terraforming - an attempt to turn Arck into "
 "an X class planet."
 msgstr ""
+"Con nove miliardi di abitanti, Arck è uno dei monti più densamente popolati "
+"della galassia. La maggior parte della superficie planetaria è ricoperta da "
+"una gigantesca città che si è espansa in modo incontrollato. Naturalmente, "
+"con così tante abitazioni ne consegue che vi sia un massivo inquinamento "
+"ambientale; molti scettici credono che quello che i Dvaered stiano facendo "
+"qui sia una forma di terraformazione inversa: un tentativo di trasformare "
+"Arck in un pianeta di classe X."
 
 #: dat/spob/arck.xml:27
 msgid ""
@@ -9415,6 +9496,11 @@ msgid ""
 "often irritates traders who come here to do business, only to find "
 "themselves in the middle of a Dvaered Turborave party."
 msgstr ""
+"Lo spazioporto su Arck è situato giusto nel mezzo di un centro urbano "
+"particolarmente densamente abitato. Il bar associato è stato espanso fino a "
+"trasformarsi in una struttura di svago generico per la popolazione locale, "
+"qualcosa che spesso irrita i commercianti che arrivano qui per fare affari, "
+"solo per trovarsi nel mezzo di una festa Turborave di Dvaered."
 
 #: dat/spob/arcturus_gamma.xml:2
 msgid "Arcturus Gamma"
@@ -17427,7 +17513,7 @@ msgstr ""
 
 #: dat/spob/sabe.xml:2
 msgid "Sabe"
-msgstr ""
+msgstr "Sabe"
 
 #: dat/spob/sabe.xml:28
 msgid ""
@@ -17897,7 +17983,7 @@ msgstr ""
 
 #: dat/spob/sigma_station.xml:2
 msgid "Sigma Station"
-msgstr ""
+msgstr "Stazione Sigma"
 
 #: dat/spob/sigma_station.xml:28
 msgid ""
@@ -21464,7 +21550,7 @@ msgstr ""
 
 #: dat/ssys/anku.xml:2
 msgid "An'ku"
-msgstr ""
+msgstr "An'ku"
 
 #: dat/ssys/anrique.xml:2
 msgid "Anrique"
@@ -21476,7 +21562,7 @@ msgstr ""
 
 #: dat/ssys/antlejos.xml:2
 msgid "Antlejos"
-msgstr ""
+msgstr "Antlejos"
 
 #. subtitle = _("None"),
 #. PlasmaStorm = {
@@ -21518,11 +21604,11 @@ msgstr ""
 
 #: dat/ssys/apez.xml:2
 msgid "Apez"
-msgstr ""
+msgstr "Apez"
 
 #: dat/ssys/apik.xml:2
 msgid "Apik"
-msgstr ""
+msgstr "Apik"
 
 #: dat/ssys/arandon.xml:2
 msgid "Arandon"
@@ -22740,7 +22826,7 @@ msgstr ""
 
 #: dat/ssys/protera.xml:2
 msgid "Protera"
-msgstr ""
+msgstr "Protera"
 
 #: dat/ssys/provectus_nova.xml:2
 msgid "Provectus Nova"
@@ -36894,11 +36980,11 @@ msgstr ""
 
 #: dat/events/shipai.lua:34
 msgid "Tutorial/Ship AI Options"
-msgstr ""
+msgstr "Opzioni Esercitazione/IA Astronave"
 
 #: dat/events/shipai.lua:47
 msgid "Reset all tutorial hints"
-msgstr ""
+msgstr "Resetta tutti gli aiuti dell'esercitazione"
 
 #: dat/events/shipai.lua:48
 msgid "Rename Ship AI"
@@ -36906,31 +36992,36 @@ msgstr ""
 
 #: dat/events/shipai.lua:52 dat/events/updater.lua:95
 msgid "Enable tutorial hints"
-msgstr ""
+msgstr "Abilita gli aiuti dell'esercitazione"
 
 #: dat/events/shipai.lua:54 dat/events/updater.lua:96
 msgid "Disable tutorial hints"
-msgstr ""
+msgstr "Disabilita gli aiuti dell'esercitazione"
 
 #: dat/events/shipai.lua:61
 msgid ""
 "\"In-game hints are now enabled! If you want to revisit old tutorial hints, "
 "make sure to reset them.\""
 msgstr ""
+"\"Gli aiuti durante il gioco sono ora abilitati! Se si vogliono rivedere i "
+"vecchi aiuti dell'esercitazione, assicurarsi di resettarli.\""
 
 #: dat/events/shipai.lua:66
 msgid "\"In-game tutorial hints are now disabled.\""
 msgstr ""
+"\"Gli aiuti dell'esercitazione, durante il gioco, sono ora disabilitati.\""
 
 #: dat/events/shipai.lua:70
 msgid ""
 "\"This will reset and enable all in-game tutorial hints, are you sure you "
 "want to do this?\""
 msgstr ""
+"\"Questo resetterà e abiliterà tutti gli aiuti dell'esercitazione durante il "
+"gioco, si è sicuri di volerlo fare?\""
 
 #: dat/events/shipai.lua:72
 msgid "Reset tutorial hints"
-msgstr ""
+msgstr "Resetta gli aiuti dell'esercitazione"
 
 #: dat/events/shipai.lua:73 dat/events/shipai.lua:111
 #: dat/missions/tutorial/tutorial.lua:104
@@ -36943,6 +37034,9 @@ msgid ""
 "\"All in-game tutorial hints have been set and enabled! They will naturally "
 "pop up as you do different things in the game.\""
 msgstr ""
+"\"Tutti gli aiuti dell'esercitazione durante il gioco sono stati impostati e "
+"abilitati! Naturalmente verranno mostrati mentre si faranno cose diverse "
+"durante il gioco.\""
 
 #. TODO integrate into vn
 #: dat/events/shipai.lua:84
@@ -39901,11 +39995,11 @@ msgstr ""
 #. TODO integrate into vn
 #: dat/events/updater.lua:57 dat/missions/tutorial/tutorial.lua:54
 msgid "Name Ship AI"
-msgstr ""
+msgstr "Nome dell'IA dell'Astronave"
 
 #: dat/events/updater.lua:57 dat/missions/tutorial/tutorial.lua:54
 msgid "Please enter a name for your Ship AI"
-msgstr ""
+msgstr "Inserire il nome dell'IA della propria Astronave"
 
 #. Can't use rename here
 #: dat/events/updater.lua:73
@@ -39915,6 +40009,10 @@ msgid ""
 "clicking on the '#oShip AI#0' button. From there you can also access "
 "explanations and change tutorial options.\""
 msgstr ""
+"\"Ottimo! Userò il nome {ainame} da ora in poi. Se si vuole modificarlo è "
+"possibile farlo dal menu #oInformazione#0 che si può aprire con {infokey} "
+"facendo clic sul bottone '#oIA dell'Astronave#0'. Da qui è possibile anche "
+"accedere alle spiegazioni e alle opzioni per modificare l'esercitazione.\" "
 
 #: dat/events/updater.lua:75
 msgid "\"Your ship AI {shipai} materializes before you.\""
@@ -59044,7 +59142,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:636
 msgid "#rYou are about to be discovered!"
-msgstr ""
+msgstr "#rStai per essere scoperto!"
 
 #: dat/missions/minerva/maikki1.lua:640
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:288
@@ -61856,7 +61954,7 @@ msgstr ""
 
 #: dat/missions/minerva/pirate4.lua:282
 msgid "We have been discovered!"
-msgstr ""
+msgstr "Siamo stati scoperti!"
 
 #: dat/missions/minerva/pirate4.lua:288
 msgid "The interrogation ship was destroyed!"
@@ -82245,7 +82343,7 @@ msgstr ""
 #: dat/missions/tutorial/tutorial.lua:35 dat/missions/tutorial/tutorial.lua:136
 #: dat/scripts/common/tutorial.lua:45
 msgid "Tutorial"
-msgstr ""
+msgstr "Esercitazione"
 
 #: dat/missions/tutorial/tutorial.lua:36
 msgid "Your Ship AI has offered to teach you how to fly your ship."
@@ -82310,6 +82408,9 @@ msgid ""
 "name or want to change tutorial settings, you can always do so from the info "
 "menu which you can open with {infokey}.\""
 msgstr ""
+"\"OK! Piacere di conoscerti {playername}. Se cambi idea rispetto al mio nome "
+"o vuoi modificare le impostazioni dell'esercitazione, puoi sempre farlo dal "
+"menu info che puoi aprire con {infokey}.\""
 
 #: dat/missions/tutorial/tutorial.lua:93
 msgid ""
@@ -82319,15 +82420,15 @@ msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:95
 msgid "Do the tutorial"
-msgstr ""
+msgstr "Fai l'esercitazione"
 
 #: dat/missions/tutorial/tutorial.lua:96 dat/missions/tutorial/tutorial.lua:103
 msgid "Skip the tutorial"
-msgstr ""
+msgstr "Salta l'esercitazione"
 
 #: dat/missions/tutorial/tutorial.lua:97
 msgid "Turn off all tutorial hints"
-msgstr ""
+msgstr "Disabilita tutti gli aiuti dell'esercitazione"
 
 #: dat/missions/tutorial/tutorial.lua:101
 msgid ""
@@ -82335,6 +82436,9 @@ msgid ""
 "to do it again without starting a new game. You will still get prompts for "
 "advanced in-game mechanics as you encounter them.\""
 msgstr ""
+"\"Sei sicuro che vuoi saltare il tutorial iniziale? Non si potrà farlo "
+"ancora senza iniziare una nuova partita. Sarai ancora istruito durante il "
+"gioco sui meccanismi avanzati quando li incontrerai.\""
 
 #: dat/missions/tutorial/tutorial.lua:110
 msgid ""
@@ -82682,6 +82786,8 @@ msgid ""
 "Your Ship AI gave you a tutorial on how to pilot your ship. Hopefully you "
 "will fare better than their late previous owner."
 msgstr ""
+"L'IA della tua Astronave ti ha dato un'esercitazione per imparare come "
+"pilotarla. Sperando che farai meglio del precedente ultimo proprietario."
 
 #: dat/missions/tutorial/tutorial.lua:352
 msgid ""
@@ -89355,7 +89461,7 @@ msgstr ""
 
 #: dat/missions/zalek/zlk_test.lua:40
 msgid "ancient engine discovered at an old crash site"
-msgstr ""
+msgstr "un motore antico scoperto in un sito di un vecchio incidente"
 
 #: dat/missions/zalek/zlk_test.lua:41
 msgid "engine controlled by the MegaSys Wondigs operating system"
@@ -99338,11 +99444,11 @@ msgstr ""
 #: src/conf.c:91
 #, c-format
 msgid "Usage: %s [OPTIONS] [DATA]"
-msgstr ""
+msgstr "Uso: %s [OPZIONI][DATI]"
 
 #: src/conf.c:92
 msgid "Options are:"
-msgstr ""
+msgstr "Le opzioni sono:"
 
 #: src/conf.c:93
 msgid "   -f, --fullscreen      activate fullscreen"
@@ -99480,6 +99586,8 @@ msgid ""
 "Language to use. Set to the two character identifier to the language (e.g., "
 "\"en\" for English), and nil for autodetect."
 msgstr ""
+"Lingua da usare. Impostare i due caratteri identificativi della lingua (ad "
+"esempio \"it\" per italiano) o nil per autorilevamento."
 
 #. Difficulty.
 #: src/conf.c:840
@@ -101799,7 +101907,7 @@ msgstr ""
 
 #: src/info.c:696
 msgid "Global Settings"
-msgstr ""
+msgstr "Impostazioni Globali"
 
 #: src/info.c:699
 msgid "Automatically handle weapons"
@@ -104225,6 +104333,9 @@ msgid ""
 "remaining text will be English. Language settings are available in the \"%s"
 "\" screen."
 msgstr ""
+"%s è parzialmente tradotto (%.0f%%) nella tua lingua (%s), ma il testo "
+"rimanente sarà in inglese. Le impostazioni per la lingua sono disponibili "
+"nella schermata \"%s\"."
 
 #: src/naev.c:414
 msgid "Welcome to Naev"
@@ -104899,7 +105010,7 @@ msgstr ""
 
 #: src/nlua_pilot.c:693
 msgid "'parameters' should be a table of options or omitted!"
-msgstr ""
+msgstr "'parametri' dovrebbero essere una tabella di opzioni o essere omesse!"
 
 #: src/nlua_pilot.c:763
 msgid "Trying to remove the bloody player!"
@@ -105411,7 +105522,7 @@ msgstr ""
 #: src/object.c:190
 #, c-format
 msgid "Options not supported for %s"
-msgstr ""
+msgstr "Opzioni non supportate per %s"
 
 #: src/object.c:238
 #, c-format
@@ -105632,7 +105743,7 @@ msgstr ""
 
 #: src/options.c:298
 msgid "Language:"
-msgstr ""
+msgstr "Lingua:"
 
 #: src/options.c:331
 msgid "Difficulty (this save):"
@@ -105652,7 +105763,7 @@ msgstr ""
 
 #: src/options.c:391
 msgid "Settings:"
-msgstr ""
+msgstr "Impostazioni:"
 
 #: src/options.c:395
 msgid "Enable manual zoom control"
@@ -105923,7 +106034,7 @@ msgstr ""
 
 #: src/options.c:1582
 msgid "Keep Video Settings"
-msgstr ""
+msgstr "Mantenere le Impostazioni Video"
 
 #: src/options.c:1583
 #, c-format
@@ -105940,7 +106051,7 @@ msgstr ""
 
 #: src/options.c:1588
 msgid "Video Settings Restored"
-msgstr ""
+msgstr "Impostazioni Video Ripristinate"
 
 #: src/options.c:1589
 #, c-format
@@ -108603,11 +108714,11 @@ msgstr ""
 #: src/space.c:1426
 #, c-format
 msgid "You discovered #%c%s#0."
-msgstr ""
+msgstr "Hai scoperto #%c%s#0."
 
 #: src/space.c:1456
 msgid "You discovered a Jump Point."
-msgstr ""
+msgstr "Hai scoperto un ingresso di un Salto Spaziale."
 
 #: src/space.c:1529
 msgid "Cannot reinit system if there is no system previously loaded"
