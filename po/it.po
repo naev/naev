@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-15 22:03+0900\n"
-"PO-Revision-Date: 2022-12-14 21:49+0000\n"
+"PO-Revision-Date: 2022-12-17 03:47+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15-dev\n"
+"X-Generator: Weblate 4.15\n"
 
 #: physfs.c:1
 msgid "no error"
@@ -9500,7 +9500,7 @@ msgstr ""
 
 #: dat/spob/arcturus_gamma.xml:2
 msgid "Arcturus Gamma"
-msgstr ""
+msgstr "Arturo Gamma"
 
 #: dat/spob/arcturus_gamma.xml:16 dat/spob/belltower_station.xml:16
 #: dat/spob/brandt_station.xml:16 dat/spob/cerberus.xml:15
@@ -9542,6 +9542,9 @@ msgid ""
 "meticulously maintained and full of off-duty Empire soldiers - not a place "
 "to get into a fight."
 msgstr ""
+"Il bar di Arturo Gamma è veramente un posto funzionale, è di un colore "
+"grigio metallico, meticolosamente mantenuto e pieno di soldati imperiali "
+"fuori servizio; sicuramente non un posto dove litigare."
 
 #: dat/spob/arcturus_gamma.xml:56 dat/spob/belltower_station.xml:52
 #: dat/spob/brandt_station.xml:30 dat/spob/cerberus.xml:31
@@ -9583,47 +9586,47 @@ msgstr ""
 
 #: dat/spob/arcturus_i.xml:2
 msgid "Arcturus I"
-msgstr ""
+msgstr "Arturo I"
 
 #: dat/spob/arcturus_ii.xml:2
 msgid "Arcturus II"
-msgstr ""
+msgstr "Arturo II"
 
 #: dat/spob/ariadus_ii.xml:2
 msgid "Ariadus II"
-msgstr ""
+msgstr "Ariadus II"
 
 #: dat/spob/ariadus_iv.xml:2
 msgid "Ariadus IV"
-msgstr ""
+msgstr "Ariadus IV"
 
 #: dat/spob/ariadus_vi.xml:2
 msgid "Ariadus VI"
-msgstr ""
+msgstr "Ariadus VI"
 
 #: dat/spob/ariadus_via.xml:2
 msgid "Ariadus VIa"
-msgstr ""
+msgstr "Ariadus VIa"
 
 #: dat/spob/ariadus_vib.xml:2
 msgid "Ariadus VIb"
-msgstr ""
+msgstr "Ariadus VIb"
 
 #: dat/spob/ariak.xml:2
 msgid "Ariak"
-msgstr ""
+msgstr "Ariak"
 
 #: dat/spob/armorhead_i1.xml:2
 msgid "Armorhead I-1"
-msgstr ""
+msgstr "Armorhead I-1"
 
 #: dat/spob/armorhead_i1_b.xml:2
 msgid "Armorhead I-1 b"
-msgstr ""
+msgstr "Armorhead I-1 b"
 
 #: dat/spob/arrakis.xml:2
 msgid "Arrakis"
-msgstr ""
+msgstr "Arrakis"
 
 #: dat/spob/arrakis.xml:26
 msgid ""
@@ -9641,6 +9644,10 @@ msgid ""
 "mercenaries can be found plying their trade. \"The spice must flow\", they "
 "say, it may not, but at least the rum does."
 msgstr ""
+"La mensa di Arrakis è uno dei bar più ombroso dello spazio imperiale. "
+"Situato ai confini dell'Impero, poche pattuglie giungono fino qui e molti "
+"furfanti e mercenari possono essere trovati a giocare e commerciare. \"La "
+"spezia deve scorrere\", essi dicono, forse non può, ma almeno il rum lo può."
 
 #: dat/spob/arrentil.xml:2
 msgid "Arrentil"
@@ -21616,15 +21623,15 @@ msgstr ""
 
 #: dat/ssys/arcturus.xml:2
 msgid "Arcturus"
-msgstr ""
+msgstr "Arturo"
 
 #: dat/ssys/ariadus.xml:2
 msgid "Ariadus"
-msgstr ""
+msgstr "Ariadus"
 
 #: dat/ssys/armorhead.xml:2
 msgid "Armorhead"
-msgstr ""
+msgstr "Armorhead"
 
 #: dat/ssys/atlantis.xml:2
 msgid "Atlantis"
