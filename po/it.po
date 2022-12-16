@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.4\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-07-20 00:21-0400\n"
-"PO-Revision-Date: 2022-12-14 21:49+0000\n"
+"PO-Revision-Date: 2022-12-17 03:50+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "it/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15-dev\n"
+"X-Generator: Weblate 4.15\n"
 
 #: dat/intro:2
 msgid ""
@@ -1913,7 +1913,7 @@ msgstr ""
 
 #: dat/assets/arcturus_gamma.xml:2
 msgid "Arcturus Gamma"
-msgstr ""
+msgstr "Arturo Gamma"
 
 #: dat/assets/arcturus_gamma.xml:31
 msgid ""
@@ -1921,6 +1921,10 @@ msgid ""
 "core systems. Piracy is nearly non-existent in the core systems due to the "
 "large standing force stationed here and their routine patrols."
 msgstr ""
+"Arturo Gamma è la prima linea difensiva imperiale per quanto riguarda i loro "
+"sistemi centrali. La pirateria è praticamente inesistente nei sistemi "
+"centrali grazie alla vasta forza permanente qui presente e il continuo "
+"pattugliamento."
 
 #: dat/assets/arcturus_gamma.xml:32
 msgid ""
@@ -1928,50 +1932,53 @@ msgid ""
 "meticulously maintained and full of off-duty Empire soldiers - not a place "
 "to get into a fight."
 msgstr ""
+"Il bar di Arturo Gamma è veramente un posto funzionale, è di un colore "
+"grigio metallico, meticolosamente mantenuto e pieno di soldati imperiali "
+"fuori servizio; sicuramente non un posto dove litigare."
 
 #: dat/assets/arcturus_i.xml:2
 msgid "Arcturus I"
-msgstr ""
+msgstr "Arturo I"
 
 #: dat/assets/arcturus_ii.xml:2
 msgid "Arcturus II"
-msgstr ""
+msgstr "Arturo II"
 
 #: dat/assets/ariadus_ii.xml:2
 msgid "Ariadus II"
-msgstr ""
+msgstr "Ariadus II"
 
 #: dat/assets/ariadus_iv.xml:2
 msgid "Ariadus IV"
-msgstr ""
+msgstr "Ariadus IV"
 
 #: dat/assets/ariadus_vi.xml:2
 msgid "Ariadus VI"
-msgstr ""
+msgstr "Ariadus VI"
 
 #: dat/assets/ariadus_via.xml:2
 msgid "Ariadus VIa"
-msgstr ""
+msgstr "Ariadus VIa"
 
 #: dat/assets/ariadus_vib.xml:2
 msgid "Ariadus VIb"
-msgstr ""
+msgstr "Ariadus VIb"
 
 #: dat/assets/ariak.xml:2
 msgid "Ariak"
-msgstr ""
+msgstr "Ariak"
 
 #: dat/assets/armorhead_i1.xml:2
 msgid "Armorhead I-1"
-msgstr ""
+msgstr "Armorhead I-1"
 
 #: dat/assets/armorhead_i1_b.xml:2
 msgid "Armorhead I-1 b"
-msgstr ""
+msgstr "Armorhead I-1 b"
 
 #: dat/assets/arrakis.xml:2
 msgid "Arrakis"
-msgstr ""
+msgstr "Arrakis"
 
 #: dat/assets/arrakis.xml:29
 msgid ""
@@ -1979,6 +1986,10 @@ msgid ""
 "can rage for weeks. The locals are continuously discussing sandworms, though "
 "you're not sure what to make of it."
 msgstr ""
+"Arrakis è un pianeta desertico privo di precipitazioni naturali e le "
+"tempeste di sabbia possono imperversare per settimane. La popolazione locale "
+"discute continuamente dei vermi della sabbia, anche se non sei sicuro come "
+"interpretarli."
 
 #: dat/assets/arrakis.xml:30
 msgid ""
@@ -1987,6 +1998,10 @@ msgid ""
 "mercenaries can be found plying their trade. \"The spice must flow\", they "
 "say, it may not, but at least the rum does."
 msgstr ""
+"La mensa di Arrakis è uno dei bar più ombroso dello spazio imperiale. "
+"Situato ai confini dell'Impero, poche pattuglie giungono fino qui e molti "
+"furfanti e mercenari possono essere trovati a giocare e commerciare. \"La "
+"spezia deve scorrere\", essi dicono, forse non può, ma almeno il rum lo può."
 
 #: dat/assets/arrentil.xml:2
 msgid "Arrentil"
@@ -20111,15 +20126,15 @@ msgstr ""
 
 #: dat/ssys/arcturus.xml:2
 msgid "Arcturus"
-msgstr ""
+msgstr "Arturo"
 
 #: dat/ssys/ariadus.xml:2
 msgid "Ariadus"
-msgstr ""
+msgstr "Ariadus"
 
 #: dat/ssys/armorhead.xml:2
 msgid "Armorhead"
-msgstr ""
+msgstr "Armorhead"
 
 #: dat/ssys/atlantis.xml:2
 msgid "Atlantis"
