@@ -11,6 +11,7 @@
    * Buffed evasion bonus of Red Star hulls to compensate for detection malus
    * Fix "Dead or Alive" and "Alive" being swapped in bounty mission descriptions
    * Lowered error in physics approximation (shouldn't be noticeable though)
+   * Added particle beam and particle lance to Za'lek outfitters
    * Fixed other minor issues
 
 * 0.10.0-beta.2
