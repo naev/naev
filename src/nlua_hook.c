@@ -943,6 +943,8 @@ static int hookL_custom( lua_State *L )
 /**
  * @brief Hooks the function to a specific pilot.
  *
+ * These hooks only live in the current system and get reset every time the player enters a new system.
+ *
  * You can hook to different actions.  Currently hook system only supports:<br />
  * <ul>
  *    <li> "creation" : triggered when a pilot is created.</li>

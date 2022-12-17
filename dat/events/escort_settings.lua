@@ -23,6 +23,11 @@ function create ()
    -- Set an info button up
    player.infoButtonRegister( _("Escort AI"), escort_gui, 2, "E" )
 
+   -- Hooks are cleared upon entering, so we have to readd the hook each time
+   hook.enter( "setup" )
+end
+
+function setup ()
    -- Set up hook for all newly created pilots
    hook.pilot( nil, "creation", "create_hook" )
 end
@@ -46,8 +51,8 @@ function create_hook( p )
    -- directly as an escort of the player should trigger. This means
    -- that followers spawned by missions and such should not have the
    -- variables overwritten.
-   local m = p:memory()
    if p:leader()==player.pilot() then
+      local m = p:memory()
       m.aggressive = aggressive
       m.enemyclose = enemyclose
       m.leadermaxdist = returndist

@@ -134,16 +134,16 @@ void pilot_addHook( Pilot *pilot, int type, unsigned int hook )
  */
 void pilots_addGlobalHook( int type, unsigned int hook )
 {
-   PilotHook *phook;
+   PilotHook phook;
 
    /* Allocate memory. */
    if (pilot_globalHooks == NULL)
       pilot_globalHooks = array_create( PilotHook );
 
    /* Create the new hook. */
-   phook       = &array_grow( &pilot_globalHooks );
-   phook->type = type;
-   phook->id   = hook;
+   phook.type = type;
+   phook.id   = hook;
+   array_push_back( &pilot_globalHooks, phook );
 }
 
 /**
