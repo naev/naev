@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-15 22:03+0900\n"
-"PO-Revision-Date: 2022-12-17 03:47+0000\n"
+"PO-Revision-Date: 2022-12-17 18:47+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15\n"
+"X-Generator: Weblate 4.15.1-dev\n"
 
 #: physfs.c:1
 msgid "no error"
@@ -9651,7 +9651,7 @@ msgstr ""
 
 #: dat/spob/arrentil.xml:2
 msgid "Arrentil"
-msgstr ""
+msgstr "Arrentil"
 
 #: dat/spob/arrentil.xml:26
 msgid ""
@@ -9672,10 +9672,17 @@ msgid ""
 "but here in Soromid space it has given it a more organic feel, so much so "
 "that it almost feels like it is growing."
 msgstr ""
+"Mentre venivano costruiti gli habitat di questo mondo inospitale si dava "
+"minor attenzione ai comfort meno essenziali. Il bar è stato aggiunto "
+"innestandolo all'interno di un lato dello spazioporto. In qualsiasi altro "
+"posto della galassia una modifica del progetto iniziale avrebbe "
+"probabilmente portato ad avere un bar angusto e fatiscente, ma qui nello "
+"spazio Soromid gli è stata conferita un'atmosfera armoniosa, tanto che si ha "
+"la sensazione che si stia evolvendo."
 
 #: dat/spob/astana.xml:2 dat/ssys/astana.xml:2
 msgid "Astana"
-msgstr ""
+msgstr "Astana"
 
 #: dat/spob/astana.xml:26
 msgid ""
@@ -9693,14 +9700,18 @@ msgid ""
 "than the IEWTF there is little reason to remain on the world for very long "
 "apart from the bar."
 msgstr ""
+"Il bar è il posto dove molti dei lavoratori della IPASI hanno un momento di "
+"relax, alcuni di loro stanno parlando di un progetto che ti lascia "
+"stupefatto. A parte l'IPASI ci sono pochissime ragioni per restare sul "
+"pianeta per un lungo periodo eccetto per il bar."
 
 #: dat/spob/astana_iiv.xml:2
 msgid "Astana IIV"
-msgstr ""
+msgstr "Astana IIV"
 
 #: dat/spob/atalanta.xml:2
 msgid "Atalanta"
-msgstr ""
+msgstr "Atalanta"
 
 #: dat/spob/atalanta.xml:27
 msgid ""
@@ -9709,6 +9720,10 @@ msgid ""
 "making a decent enough living thanks to the caches of heavy elements trapped "
 "under the ice."
 msgstr ""
+"Atalanta ha avuto il suo nome direttamente dall'astronave colonizzatrice "
+"omonima che si è stabilita qui. Sebbene il pianeta sia troppo freddo per "
+"essere di reale valore, la popolazione fa una vita abbastanza decente grazie "
+"alle riserve di elementi pesanti intrappolate sotto i ghiacci."
 
 #: dat/spob/atalanta.xml:28
 msgid ""
@@ -9718,6 +9733,12 @@ msgid ""
 "Atalanta's orbit makes this a rare occurrence but the bar's profits soar "
 "every cycle."
 msgstr ""
+"Come tutte le strutture planetaria, il bar di Atalanta è costruito sotto i "
+"ghiacci, ma è abbastanza vicino alla superficie. Questa è la causa del "
+"motivo per cui sia possibile osservare uno spettacolare effetto di luci "
+"sopra la propria testa quando il sole splende direttamente sul ghiaccio "
+"soprastante. L'orbita di Atalanta fa si che questo accada raramente, ma i "
+"profitti del bar salgono ogni volta che accade."
 
 #: dat/spob/atalanta.xml:40 dat/spob/avoss.xml:28 dat/spob/cetrat.xml:38
 #: dat/spob/dawn.xml:31 dat/spob/jaegnhild.xml:35 dat/spob/jorlan.xml:40
@@ -9731,7 +9752,7 @@ msgstr ""
 
 #: dat/spob/atlantis_i.xml:2
 msgid "Atlantis I"
-msgstr ""
+msgstr "Atlantide I"
 
 #: dat/spob/atryssa.xml:2
 msgid "Atryssa"
@@ -21635,7 +21656,7 @@ msgstr "Armorhead"
 
 #: dat/ssys/atlantis.xml:2
 msgid "Atlantis"
-msgstr ""
+msgstr "Atlantide"
 
 #: dat/ssys/auger.xml:2
 msgid "Auger"
