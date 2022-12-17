@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.4\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-07-20 00:21-0400\n"
-"PO-Revision-Date: 2022-12-17 03:50+0000\n"
+"PO-Revision-Date: 2022-12-17 18:49+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "it/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15\n"
+"X-Generator: Weblate 4.15.1-dev\n"
 
 #: dat/intro:2
 msgid ""
@@ -2005,7 +2005,7 @@ msgstr ""
 
 #: dat/assets/arrentil.xml:2
 msgid "Arrentil"
-msgstr ""
+msgstr "Arrentil"
 
 #: dat/assets/arrentil.xml:29
 msgid ""
@@ -2016,6 +2016,11 @@ msgid ""
 "population is thriving and the economy is stable. By all means, Arrentil is "
 "an example of Soromid persistence."
 msgstr ""
+"Com'è tipico per i mondi Soromid, Arrentil sarebbe considerato totalmente "
+"inospitale dal resto dell'umanità. L'atmosfera è tossica e la superficie "
+"instabile, ma gli Soromid sono riusciti a domare questo mondo. Certamente "
+"anch'essi devono vivere in habitat riparati, ma nonostante questo la "
+"popolazione prospera e l'economia è stabile."
 
 #: dat/assets/arrentil.xml:30
 msgid ""
@@ -2026,10 +2031,17 @@ msgid ""
 "but here in Soromid space it has given it a more organic feel, so much so "
 "that it almost feels like it is growing."
 msgstr ""
+"Mentre venivano costruiti gli habitat di questo mondo inospitale si dava "
+"minor attenzione ai comfort meno essenziali. Il bar è stato aggiunto "
+"innestandolo all'interno di un lato dello spazioporto. In qualsiasi altro "
+"posto della galassia una modifica del progetto iniziale avrebbe "
+"probabilmente portato ad avere un bar angusto e fatiscente, ma qui nello "
+"spazio Soromid gli è stata conferita un'atmosfera armoniosa, tanto che si ha "
+"la sensazione che si stia evolvendo."
 
 #: dat/assets/astana.xml:2 dat/ssys/astana.xml:2
 msgid "Astana"
-msgstr ""
+msgstr "Astana"
 
 #: dat/assets/astana.xml:28
 msgid ""
@@ -2039,6 +2051,12 @@ msgid ""
 "ideal spot for this as, besides the scientists who work here, no one else "
 "wants to land on the planet."
 msgstr ""
+"Astana è la sede dell'Impianto di Prova per le Armi Sperimentali Imperiali "
+"(IPASI). È qui dove la maggior parte delle nuove armi e degli "
+"equipaggiamenti in dotazione ai militari imperiali sono provati e "
+"qualificati per il servizio attivo. Questo pianeta è un posto ideale per "
+"tali attività poiché, a parte gli scienziati che lavorano qui, nessun altro "
+"vorrebbe atterrare sul pianeta."
 
 #: dat/assets/astana.xml:29
 msgid ""
@@ -2047,14 +2065,18 @@ msgid ""
 "than the IEWTF there is little reason to remain on the world for very long "
 "apart from the bar."
 msgstr ""
+"Il bar è il posto dove molti dei lavoratori della IPASI hanno un momento di "
+"relax, alcuni di loro stanno parlando di un progetto che ti lascia "
+"stupefatto. A parte l'IPASI ci sono pochissime ragioni per restare sul "
+"pianeta per un lungo periodo eccetto per il bar."
 
 #: dat/assets/astana_iiv.xml:2
 msgid "Astana IIV"
-msgstr ""
+msgstr "Astana IIV"
 
 #: dat/assets/atalanta.xml:2
 msgid "Atalanta"
-msgstr ""
+msgstr "Atalanta"
 
 #: dat/assets/atalanta.xml:30
 msgid ""
@@ -2063,6 +2085,10 @@ msgid ""
 "making a decent enough living thanks to the caches of heavy elements trapped "
 "under the ice."
 msgstr ""
+"Atalanta ha avuto il suo nome direttamente dall'astronave colonizzatrice "
+"omonima che si è stabilita qui. Sebbene il pianeta sia troppo freddo per "
+"essere di reale valore, la popolazione fa una vita abbastanza decente grazie "
+"alle riserve di elementi pesanti intrappolate sotto i ghiacci."
 
 #: dat/assets/atalanta.xml:31
 msgid ""
@@ -2072,10 +2098,16 @@ msgid ""
 "Atalanta's orbit makes this a rare occurrence but the bar's profits soar "
 "every cycle."
 msgstr ""
+"Come tutte le strutture planetaria, il bar di Atalanta è costruito sotto i "
+"ghiacci, ma è abbastanza vicino alla superficie. Questa è la causa del "
+"motivo per cui sia possibile osservare uno spettacolare effetto di luci "
+"sopra la propria testa quando il sole splende direttamente sul ghiaccio "
+"soprastante. L'orbita di Atalanta fa si che questo accada raramente, ma i "
+"profitti del bar salgono ogni volta che accade."
 
 #: dat/assets/atlantis_i.xml:2
 msgid "Atlantis I"
-msgstr ""
+msgstr "Atlantide I"
 
 #: dat/assets/atryssa.xml:2
 msgid "Atryssa"
@@ -20138,7 +20170,7 @@ msgstr "Armorhead"
 
 #: dat/ssys/atlantis.xml:2
 msgid "Atlantis"
-msgstr ""
+msgstr "Atlantide"
 
 #: dat/ssys/auger.xml:2
 msgid "Auger"
