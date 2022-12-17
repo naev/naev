@@ -936,7 +936,7 @@ static void opt_audioLevelStr( char *buf, int max, int type, double pos )
    vol = type ? music_getVolumeLog() : sound_getVolumeLog();
 
    if (vol == 0.)
-      snprintf( buf, max, str, _("Muted") );
+      snprintf( buf, max, _("%s: %s"), str, _("Muted") );
    else {
       magic = -48. / log(0.00390625); /* -48 dB minimum divided by logarithm of volume floor. */
       snprintf( buf, max, _("%s: %.2f (%.0f dB)"), str, pos, log(vol) * magic );
