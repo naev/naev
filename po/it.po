@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-15 22:03+0900\n"
-"PO-Revision-Date: 2022-12-17 18:47+0000\n"
+"PO-Revision-Date: 2022-12-18 03:47+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -9756,7 +9756,7 @@ msgstr "Atlantide I"
 
 #: dat/spob/atryssa.xml:2
 msgid "Atryssa"
-msgstr ""
+msgstr "Atryssa"
 
 #: dat/spob/atryssa.xml:28
 msgid ""
@@ -9765,6 +9765,11 @@ msgid ""
 "Ruadan. Beyond these two things there is little to recommend it (though one "
 "of these may, at least, be plenty enough)."
 msgstr ""
+"Atryssa è un mondo ricco economicamente grazie alla tecnologia degli Za'lek. "
+"È anche il più vicino pianeta degli Za'lek che sia degno di nota, dove gli "
+"estranei possono atterrare a Ruadan. Oltre questi due fatti c'è veramente "
+"poco per consigliarlo (anche se uno di questi potrebbe almeno essere "
+"sufficiente)."
 
 #: dat/spob/atryssa.xml:29
 msgid ""
@@ -9773,6 +9778,10 @@ msgid ""
 "There are also one or two people wandering about with notepads, though "
 "everyone goes quiet when they approach."
 msgstr ""
+"Il modello di un bar degli Za'lek, anche se è molto affollato. La folla "
+"sembra essersi divisa in gruppi di persone che discutono tra loro "
+"silenziosamente. Sono presenti anche una o due persone che gironzolano con "
+"palmari, anche se tutti si zittiscono al loro avvicinarsi."
 
 #. Finish event (removes npc)
 #.
@@ -9798,7 +9807,7 @@ msgstr ""
 #: dat/spob/august.xml:2 dat/events/neutral/shipwreck.lua:24
 #: dat/missions/neutral/spacefamily.lua:52
 msgid "August"
-msgstr ""
+msgstr "Augusto"
 
 #: dat/spob/august.xml:26
 msgid ""
@@ -9807,16 +9816,24 @@ msgid ""
 "residential world, primarily for the scientists working on Warnecke who, "
 "after a hard week's work, don't want to see another lab for a while."
 msgstr ""
+"Pur essendo freddo, Augusto è un mondo piuttosto normale. Rarità per un "
+"pianeta degli Za'lek, non contiene molte stazioni di ricerca. È quasi un "
+"mondo completamente residenziale, principalmente per gli scienziati che "
+"lavorano su Warnecke che, dopo una settimana di duro lavoro, non vogliono "
+"vedere un altro laboratorio per un po'."
 
 #: dat/spob/august.xml:27
 msgid ""
 "This bar has the feel of an old-world pub, with plenty of wood furnishing on "
 "display, good food and better beer. A great place to relax and unwind."
 msgstr ""
+"Questo bar ha l'atmosfera di un pub del vecchio mondo, con un'abbondanza di "
+"mobili in legno in mostra, buon cibo e birra migliore. Un ottimo posto per "
+"rilassarsi e distendersi."
 
 #: dat/spob/avoss.xml:2
 msgid "Avoss"
-msgstr ""
+msgstr "Avoss"
 
 #: dat/spob/avoss.xml:25
 msgid ""
@@ -9829,46 +9846,54 @@ msgid ""
 "devastated, a mere shadow of its former self. The colonists have managed to "
 "survive, however, and the hardy remain even today."
 msgstr ""
+"Avoss era in origine un mondo mediocre, ma abitabile. Quando arrivò la "
+"quattordicesima astronave di coloni, questi si considerarono abbastanza "
+"fortunati di avere trovato un posto che potessero chiamare casa. Però, circa "
+"cinquant'anni dopo che la spedizione atterrò, il mondo cominciò a cambiare. "
+"Ovunque l'attività sismica iniziò ad intensificarsi causando terremoti ed "
+"eruzioni vulcaniche in tutto il pianeta. Ora il mondo è devastato, un'ombra "
+"di quello che era precedentemente. Tuttavia i coloni sono riusciti a "
+"sopravvivere e i più resistenti sono rimasti fino ad ora."
 
 #: dat/spob/awowa_iv.xml:2
 msgid "Awowa IV"
-msgstr ""
+msgstr "Awowa IV"
 
 #: dat/spob/awowa_v.xml:2
 msgid "Awowa V"
-msgstr ""
+msgstr "Awowa V"
 
 #: dat/spob/baba_yaga.xml:2
 msgid "Baba Yaga"
-msgstr ""
+msgstr "Baba Jaga"
 
 #: dat/spob/babylon_i.xml:2
 msgid "Babylon I"
-msgstr ""
+msgstr "Babilonia I"
 
 #: dat/spob/babylon_ii.xml:2
 msgid "Babylon II"
-msgstr ""
+msgstr "Babilonia II"
 
 #: dat/spob/babylon_iia.xml:2
 msgid "Babylon IIa"
-msgstr ""
+msgstr "Babilonia IIa"
 
 #: dat/spob/baf_i.xml:2
 msgid "Baf I"
-msgstr ""
+msgstr "Baf I"
 
 #: dat/spob/baf_iv.xml:2
 msgid "Baf IV"
-msgstr ""
+msgstr "Baf IV"
 
 #: dat/spob/basel_i.xml:2
 msgid "Basel I"
-msgstr ""
+msgstr "Basilea I"
 
 #: dat/spob/bastion_station.xml:2
 msgid "Bastion Station"
-msgstr ""
+msgstr "Stazione della Roccaforte"
 
 #: dat/spob/bastion_station.xml:26
 msgid ""
@@ -9881,7 +9906,7 @@ msgstr ""
 
 #: dat/spob/bedimann_shipyards.xml:2
 msgid "Bedimann Shipyards"
-msgstr ""
+msgstr "Cantieri di Astronavi Bedimann"
 
 #: dat/spob/bedimann_shipyards.xml:26
 msgid ""
@@ -9892,11 +9917,11 @@ msgstr ""
 
 #: dat/spob/beeklo_ii.xml:2
 msgid "Beeklo II"
-msgstr ""
+msgstr "Beeklo II"
 
 #: dat/spob/beene.xml:2
 msgid "Beene"
-msgstr ""
+msgstr "Beene"
 
 #: dat/spob/beene.xml:29
 msgid ""
@@ -9906,6 +9931,11 @@ msgid ""
 "bioships. This supply of minerals means Beene is quite an important "
 "strategic location for Soromid fleets."
 msgstr ""
+"Beene è un pianeta ricco di tutti i tipi di minerali comuni, quindi gli "
+"Soromid lo utilizzano come farebbe chiunque: come una sorgente di materie "
+"prime. Gli elementi estratti vengono trasformati in pacchetti standard usati "
+"dalle astronavi bio degli Soromid. Questa fornitura di minerali rende Beene "
+"un'importante locazione strategica per le astronavi degli Soromid."
 
 #: dat/spob/beene.xml:30
 msgid ""
@@ -9915,14 +9945,20 @@ msgid ""
 "population. As such, having a drink in Beene's bar is a bit of an ordeal. "
 "It's one of the less popular places among traders looking for a drink."
 msgstr ""
+"I piloti sono avvertiti di indossare tute a tenuta stagna quando visitano il "
+"bar di Beene. L'atmosfera planetaria può causare seri problemi per gli umani "
+"normali e gli Soromid non si sono preoccupati di installare filtri di "
+"decontaminazione per la popolazione locale. Per questo bere una bevanda nel "
+"bar di Beene è un po' una tortura. È uno dei posti meno popolari tra i "
+"commercianti alla ricerca di una bevanda."
 
 #: dat/spob/behemoth.xml:2
 msgid "Behemoth"
-msgstr ""
+msgstr "Beemot"
 
 #: dat/spob/belltower_station.xml:2
 msgid "Belltower Station"
-msgstr ""
+msgstr "Stazione del Campanile"
 
 #: dat/spob/belltower_station.xml:27
 msgid ""
@@ -9932,6 +9968,12 @@ msgid ""
 "start to wonder if they're really part of the Soromid collective at all. "
 "Belltower is here to remind them that they are."
 msgstr ""
+"La Stazione del Campanile è un piccolo avamposto militare degli Soromid il "
+"cui scopo principale è di mantenere in riga il sistema Adiadus. Essendo così "
+"lontano dal centro degli Soromid c'è pochissimo traffico interstellare, ogni "
+"tanto alcuni degli abitanti si chiedono se fanno effettivamente parte del "
+"collettivo degli Soromid. La Stazione del Campanile è qui per ricordargli "
+"che ne fanno parte."
 
 #: dat/spob/belltower_station.xml:28
 msgid ""
@@ -9941,6 +9983,11 @@ msgid ""
 "offenders are transferred to the penal facilities on Agino, in the Zintar "
 "system."
 msgstr ""
+"Il bar ha una porta che porta direttamente al blocco delle celle. "
+"Normalmente i prigionieri non stanno qui molto a lungo. La Stazione del "
+"Campanile non ha né la capacità, né l'autorità per trattare direttamente con "
+"criminali più che insignificanti. I delinquenti più importanti sono "
+"trasferiti al penitenziario su Agino, nel sistema Zintar."
 
 #: dat/spob/belltower_station.xml:51 dat/spob/finn.xml:28
 #: dat/spob/tanulwa.xml:29 dat/spob/trinel.xml:27 dat/spob/vercingetorix.xml:44
@@ -9950,7 +9997,7 @@ msgstr ""
 
 #: dat/spob/benedict.xml:2
 msgid "Benedict"
-msgstr ""
+msgstr "Benedetto"
 
 #: dat/spob/benedict.xml:28
 msgid ""
@@ -9960,6 +10007,12 @@ msgid ""
 "elements used to produce them, this makes it an, almost literal, gold mine "
 "for Soromid building materials."
 msgstr ""
+"Un altro gigante gassoso, un altro avamposto degli Soromid. Questo avamposto "
+"particolare è alquanto più grosso di altri dato la grande quantità di "
+"minerali ed elementi che vengono qui estratti. Il pianeta ha grosse "
+"concentrazioni di materiale organico, come pure degli elementi usati per "
+"produrlo e questo lo rende, quasi letteralmente, una miniera d'oro per i "
+"materiali di costruzione degli Soromid."
 
 #: dat/spob/benedict.xml:29
 msgid ""
@@ -9969,6 +10022,11 @@ msgid ""
 "with straws, which is a thoughtful touch for those traders who are forced to "
 "wear air-breathers."
 msgstr ""
+"Come in molti altri bar degli Soromid in luoghi meno ospitali, "
+"l'atteggiamento in questo bar è piuttosto scontroso con un elemento di "
+"pericolo per i non Soromid, neppure l'aria è eccezionale. La maggior parte "
+"delle bevande è qui servita con cannucce, come segno di premura per quei "
+"commercianti che sono obbligati ad indossare respiratori."
 
 #: dat/spob/benteen.xml:2
 msgid "Benteen"
@@ -17331,7 +17389,7 @@ msgstr ""
 
 #: dat/spob/ruadan_bastion.xml:2
 msgid "Ruadan Bastion"
-msgstr ""
+msgstr "Roccaforte di Ruadan"
 
 #: dat/spob/ruadan_bastion.xml:26
 msgid ""
@@ -17346,19 +17404,19 @@ msgstr ""
 
 #: dat/spob/ruadan_ii.xml:2
 msgid "Ruadan II"
-msgstr ""
+msgstr "Ruadan II"
 
 #: dat/spob/ruadan_j1.xml:2
 msgid "Ruadan J-1"
-msgstr ""
+msgstr "Ruadan J-1"
 
 #: dat/spob/ruadan_j2.xml:2
 msgid "Ruadan J-2"
-msgstr ""
+msgstr "Ruadan J-2"
 
 #: dat/spob/ruadan_prime.xml:2 dat/events/discovery.lua:49
 msgid "Ruadan Prime"
-msgstr ""
+msgstr "Ruadan Primo"
 
 #: dat/spob/ruadan_prime.xml:28
 msgid ""
@@ -17377,11 +17435,11 @@ msgstr ""
 
 #: dat/spob/ruadan_secundus.xml:2
 msgid "Ruadan Secundus"
-msgstr ""
+msgstr "Ruadan Secondo"
 
 #: dat/spob/ruadan_station.xml:2
 msgid "Ruadan Station"
-msgstr ""
+msgstr "Stazione di Ruadan"
 
 #: dat/spob/ruadan_station.xml:23
 msgid ""
@@ -21664,15 +21722,15 @@ msgstr ""
 
 #: dat/ssys/awowa.xml:2
 msgid "Awowa"
-msgstr ""
+msgstr "Awowa"
 
 #: dat/ssys/babylon.xml:2
 msgid "Babylon"
-msgstr ""
+msgstr "Babilonia"
 
 #: dat/ssys/baf.xml:2
 msgid "Baf"
-msgstr ""
+msgstr "Baf"
 
 #: dat/ssys/baf.xml:4
 msgid "#oRestricted#0"
@@ -21680,7 +21738,7 @@ msgstr ""
 
 #: dat/ssys/basel.xml:2
 msgid "Basel"
-msgstr ""
+msgstr "Basilea"
 
 #: dat/ssys/bastion.xml:2
 msgid "Bastion"
@@ -21688,11 +21746,11 @@ msgstr ""
 
 #: dat/ssys/bedimann.xml:2
 msgid "Bedimann"
-msgstr ""
+msgstr "Bedimann"
 
 #: dat/ssys/beeklo.xml:2
 msgid "Beeklo"
-msgstr ""
+msgstr "Beeklo"
 
 #: dat/ssys/behar.xml:2
 msgid "Behar"
@@ -22934,7 +22992,7 @@ msgstr ""
 
 #: dat/ssys/ruadan.xml:2
 msgid "Ruadan"
-msgstr ""
+msgstr "Ruadan"
 
 #: dat/ssys/ruadan.xml:4
 msgid "#pZa'lek Homeworld#0"
