@@ -38,7 +38,7 @@ Note that it is also possible to give custom class names. For example, you can h
 
 Each ship is represented with a stand alone file that has to be located in `ships/` in the data files or plugins. Each ship has to be defined in a separate file and has to have a single `<ship>` base node.
 
-* `name` (*attribute*): Ship name, dispayed in game and referenced by `tech` lists.
+* `name` (*attribute*): Ship name, displayed in game and referenced by `tech` lists.
 * `points`: Fleet point value. In general used by both the fleet spawning code and by player fleets.
 * `base_type`: Specifies the base version of the ship, useful for factional or other situational variants. (For example, a Pirate Hyena would have the "Hyena" base type.
 * `GFX`: Name of the ship graphic in `.webp` format. It is looked up at `gfx/ship/DIR/NAME`, where `DIR` is the value of `GFX` up to the first underscore, and `NAME` is the value of `GFX` with a special suffix depending on the type of image. The base image will use a suffix of `.webp` (or `.png` if the webp is not found), the comm window graphic will use a suffix of `_comm.webp`, and the engine glow will use a suffix of `_engine.webp`. As an example, for a value of `GFX="hyena_pirate`, the base graphic will be searched at `gfx/ship/hyena/hyena_pirate.webp`
@@ -53,10 +53,10 @@ Each ship is represented with a stand alone file that has to be located in `ship
 * `trail_generator`: Creates a particle trail during flight.
     * `x`, `y` (*attributes*): Trail origin coordinates, relative to the ship sprite in a "90 degree" heading.
     * `h` (*attributes*): Trail coordinate y-offset, used to modify the origin point on a "perspective" camera.
-* `fabricator`: Flavor text stating the ship's manufacturuer.
+* `fabricator`: Flavor text stating the ship's manufacturer.
 * `license` (*optional*): License-type outfit which must be owned to purchase the ship.
-* `cond` (*optional*): Lua conditional expression te evaluate to see if the player can buy the ship.
-* `condstr` (*optional*): human-readable intepretation of the Lua conditional expression `cond`.
+* `cond` (*optional*): Lua conditional expression to evaluate to see if the player can buy the ship.
+* `condstr` (*optional*): human-readable interpretation of the Lua conditional expression `cond`.
 * `description`: Flavor text describing the ship and its capabilities.
 * `characteristics`: Core ship characteristics that are defined as integers.
     * `crew`: Number of crewmen operating the ship. Used in boarding actions.
@@ -139,7 +139,40 @@ A full example of the \naev starter ship "Llama" is shown below.
 
 ## Ship Graphics
 
-TODO
+Ship graphics are defined in the `<GFX>` node as a string with additional attributes like number of sprites or size also defined in the XML. Graphics for each ship are stored in a directory found in `gfx/ship/`, where the base graphics, engine glow graphics, and comm window graphics are placed separately with specific file names.
+
+In particular, the `GFX` string name is sensitive to underscores, and the first component up to the first underscore is used as the directory name. As an example, with `<GFX>llama</GFX>`, the graphics would have to be put in `gfx/ship/llama/`, while for `<GFX>hyena_pirate</GFX>`, the directory would be `gfx/ship/hyena`. The specific graphics are then searched for inside the directory with the full `GFX` string value and a specific prefix. Assuming `GFX` is the graphics name and `DIR` is the directory name (up to first underscore in `GFX`), we get:
+
+* `gfx/ship/DIR/GFX.webp`: ship base graphic file
+* `gfx/ship/DIR/GFX_engine.webp`: ship engine glow graphics file
+* `gfx/ship/DIR/GFX_comm.webp`: ship communication graphics (used in the comm window)
+
+The base graphics are stored as a spritesheet and start facing right before spinning counter-clockwise. The top-left sprite faces to the right and it rotates across the row first before going down to the next row. The background should be stored in RGBA with a transparent background. An example can be seen in Figure \ref{fig:llamagfx}.
+
+\begin{figure}[h!]
+\centering
+\colorbox{black}{\includegraphics[width=0.8\linewidth]{images/llama.png}}
+\caption{Example of the ship graphics for the "Llama". Starting from top-left position, and going right first before going down, the ship rotates counter-clockwise and starts facing right. A black background has been added for visibility.}
+\label{fig:llamagfx}
+\end{figure}
+
+The engine glow graphics are similar to the base graphics, but should show engine glow of the ship. This graphic gets used instead of the normal graphic when accelerated with some interpolation to fade on and off. An example is shown in Figure \ref{fig:llamaenginegfx}.
+
+\begin{figure}[h!]
+\centering
+\colorbox{black}{\includegraphics[width=0.8\linewidth]{images/llamaengine.png}}
+\caption{Example of the engine glow graphics for the "Llama". Notice the yellow glow of the engines. A black background has been added for visibility.}
+\label{fig:llamaenginegfx}
+\end{figure}
+
+The comm graphics should show the ship facing the player and be higher resolution. This image will be shown in large when the player communicates with them. An example is shown in Figure \ref{fig:llamacommgfx}.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.8\linewidth]{images/llamacomm.png}
+\caption{Example of the comm graphics for the "Llama".}
+\label{fig:llamacommgfx}
+\end{figure}
 
 ## Ship Conditional Expressions
 
