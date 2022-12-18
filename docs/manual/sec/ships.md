@@ -174,6 +174,16 @@ The comm graphics should show the ship facing the player and be higher resolutio
 \label{fig:llamacommgfx}
 \end{figure}
 
+### Specifying Full Paths
+
+It is also possible to avoid all the path logic in the `<GFX>` nodes by specifying the graphics individually using other nodes. In particular, you can use the following nodes in the XML in place of a single `<GFX>` node to specify graphics:
+
+* `<gfx_space>`: Indicates the full path to the base graphics (`gfx/` is prepended). The `sx` and `sy` attributes should be specified or they default to 8.
+* `<gfx_engine>`: Indicates the full path to the engine glow graphics (`gfx/` is prepended). The `sx` and `sy` attributes should be specified or they default to 8.
+* `<gfx_comm>`: Indicates the full path to the comm graphics (`gfx/` is prepended).
+
+This gives more flexibility and allows using, for example, spob station graphics for a "ship".
+
 ## Ship Conditional Expressions
 
 TODO
