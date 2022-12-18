@@ -676,6 +676,7 @@ static int ship_parse( Ship *temp, const char *filename )
 
    /* Defaults. */
    ss_statsInit( &temp->stats_array );
+   temp->dt_default = 1.;
 
    /* Get name. */
    xmlr_attr_strd( parent, "name", temp->name );
@@ -986,7 +987,7 @@ static int ship_parse( Ship *temp, const char *filename )
    MELEMENT(temp->class==SHIP_CLASS_NULL,"class");
    MELEMENT(temp->points==0,"points");
    MELEMENT(temp->price==0,"price");
-   MELEMENT(temp->dt_default==0.,"time_mod");
+   MELEMENT(temp->dt_default<=0.,"time_mod");
    MELEMENT(temp->fabricator==NULL,"fabricator");
    MELEMENT(temp->description==NULL,"description");
    MELEMENT(temp->armour==0.,"armour");
