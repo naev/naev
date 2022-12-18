@@ -720,7 +720,7 @@ static int ship_parse( Ship *temp, const char *filename )
          ship_loadGFX( temp, buf, sx, sy, !noengine );
 
          /* Validity check: there must be 1 polygon per sprite. */
-         if (array_size(temp->polygon) != sx*sy) {
+         if ((temp->polygon != NULL) && array_size(temp->polygon) != sx*sy) {
             WARN(_("Ship '%s': the number of collision polygons is wrong.\n \
                     npolygon = %i and sx*sy = %i"),
                     temp->name, array_size(temp->polygon), sx*sy);
