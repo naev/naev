@@ -1,6 +1,6 @@
 # Ships
 
-TODO
+Ships are tho cornerstone of gameplay in Naev. The player themselves is represented as a ship and so are all other NPCs found in space.
 
 ## Ship Classes
 
@@ -36,44 +36,119 @@ Note that it is also possible to give custom class names. For example, you can h
 
 ## Ship XML
 
-* `name`: Ship name, dispayed in game and referenced by `tech` lists.
-* `points`: Fleet point value.
+Each ship is represented with a stand alone file that has to be located in `ships/` in the data files or plugins. Each ship has to be defined in a separate file and has to have a single `<ship>` base node.
+
+* `name` (*attribute*): Ship name, dispayed in game and referenced by `tech` lists.
+* `points`: Fleet point value. In general used by both the fleet spawning code and by player fleets.
 * `base_type`: Specifies the base version of the ship, useful for factional or other situational variants. (For example, a Pirate Hyena would have the "Hyena" base type.
-* `GFX`: Name of the ship graphic in .webp format.
-* * `size`: The ship sprite's resolution in pixels ^2. For example, `size=60` refers to a 60x60 graphic.
-* * `sx` and `sy`: The number of columns and rows, respectively, in the sprite sheet.
+* `GFX`: Name of the ship graphic in `.webp` format. It is looked up at `gfx/ship/DIR/NAME`, where `DIR` is the value of `GFX` up to the first underscore, and `NAME` is the value of `GFX` with a special suffix depending on the type of image. The base image will use a suffix of `.webp` (or `.png` if the webp is not found), the comm window graphic will use a suffix of `_comm.webp`, and the engine glow will use a suffix of `_engine.webp`. As an example, for a value of `GFX="hyena_pirate`, the base graphic will be searched at `gfx/ship/hyena/hyena_pirate.webp`
+    * `size` (*attribute*): The ship sprite's resolution in pixels. For example, `size=60` refers to a 60x60 graphic.
+    * `sx` and `sy` (*attributes*): The number of columns and rows, respectively, in the sprite sheet.
 * `GUI`: The in-flight GUI used when flying this ship.
 * `sound`: Sound effect used when accelerating during flight.
 * `class`: Defines the ship's AI when flown by escorts and NPCs.
-* * `display`: Overrides the displayed "class" field in the ship stats screen.
+    * `display` (*attribute*): Overrides the displayed "class" field in the ship stats screen.
 * `price`: Credits value of the ship in its "dry" state with no outfits.
-* `time_mod`: Time compression factor during normal flight. A value of `1` means the ship will fly in "real time", <1 speeds up the game and >1 slows down the game.
+* `time_mod` (*optional*): Time compression factor during normal flight. A value of `1` means the ship will fly in "real time", <1 speeds up the game and >1 slows down the game.
 * `trail_generator`: Creates a particle trail during flight.
-* * `x` and `y`: Trail origin coordinates, relative to the ship sprite in a "90 degree" heading.
-* * `h`: Trail coordinate y-offset, used to modify the origin point on "perspective" graphics.
+    * `x`, `y` (*attributes*): Trail origin coordinates, relative to the ship sprite in a "90 degree" heading.
+    * `h` (*attributes*): Trail coordinate y-offset, used to modify the origin point on a "perspective" camera.
 * `fabricator`: Flavor text stating the ship's manufacturuer.
-* `license`: License-type outfit(s) which must be owned to purchase the ship.
+* `license` (*optional*): License-type outfit which must be owned to purchase the ship.
+* `cond` (*optional*): Lua conditional expression te evaluate to see if the player can buy the ship.
+* `condstr` (*optional*): human-readable intepretation of the Lua conditional expression `cond`.
 * `description`: Flavor text describing the ship and its capabilities.
-* `health`: Supercategory which defines the ship's intrinsic durability before modifiers from `stats` and equipped outfits.
-* * `armour`: Armour value.
-* * `armour_regen`: Armour regeneration in MW (MJ per second).
-* * `shield`: Shield value.
-* * `shield_regen`: Shield regeneration in MW (MJ per second).
-* * `energy`: Energy capacity.
-* * `energy_regen`: Energy regeneration in MW (MJ per second).
-* * `absorb`: Reduction to incoming damage.
-* `characteristics`: Additional ship stats involving integers.
-* * `crew`: Number of crewmen operating the ship. Used in boarding actions.
-* * `mass`: Tonnage of the ship hull without any cargo or outfits.
-* * `fuel_consumption`: How many units of fuel the ship consumes to make a hyperspace jump.
-* * `cargo`: Capacity for tonnes of cargo.
-* `slots`: Outfit slots.
-* * `weapon`, `utility` and `structure`: Defines whether the outfit slot fits under the Weapon, Utility or Structure columns.
-* * * `x`, `y` and `h` define the origin coordinates of weapon graphics such as projectiles, particles and launched fighters.
-* * * `size`: Defines the largest size of outfit allowed in the slot. Valid values are `small`, `medium` and `large`.
-* * * `prop`: Defines the slot as accepting a particular type of outfit. Of note are the `systems`, `engines` and `hull` values for Core Systems, Engines and Hull outfits which must be filled for a ship to be spaceworthy.
-* * * `exclusive=1`: Restricts the slot to accepting only the outfits defined by the `prop` field.
-* * * Inserting an outfit's `name` will add it to that outfit slot in the ship's "stock" configuration. This is useful for selling a ship with prefilled core outfits to ensure its spaceworthiness immediately upon purchase.
-* `stats`: Defines modifiers applied to all characteristics and outfits on the ship.
-* * Fields here correspond to those in the `characteristics` category and the `general` and `specifics` categories on equipped outfits.
-* `tags`: Referenced by scripts. Can be used to effect availability of missions, NPC behavior and other elements.
+* `characteristics`: Core ship characteristics that are defined as integers.
+    * `crew`: Number of crewmen operating the ship. Used in boarding actions.
+    * `mass`: Tonnage of the ship hull without any cargo or outfits.
+    * `fuel_consumption`: How many units of fuel the ship consumes to make a hyperspace jump.
+    * `cargo`: Capacity for tonnes of cargo.
+* `slots`: List of available outfit slots of the ship.
+    * `weapon`, `utility` and `structure`: Defines whether the outfit slot fits under the Weapon, Utility or Structure columns.
+        * `x`, `y`, and `h` (*attributes*) define the origin coordinates of weapon graphics such as projectiles, particles and launched fighters.
+        * `size` (*attribute*): Defines the largest size of outfit allowed in the slot. Valid values are `small`, `medium` and `large`.
+        * `prop` (*attribute*): Defines the slot as accepting a particular type of outfit. Of note are the `systems`, `engines` and `hull` values for Core Systems, Engines and Hull outfits which must be filled for a ship to be spaceworthy.
+        * `exclusive=1` (*attribute*): Restricts the slot to accepting only the outfits defined by the `prop` field.
+        * Inserting an outfit's `name` will add it to that outfit slot in the ship's "stock" configuration. This is useful for selling a ship with prefilled core outfits to ensure its spaceworthiness immediately upon purchase.
+* `stats` (*optional*): Defines modifiers applied to all characteristics and outfits on the ship.
+    * Fields here correspond to those in the `characteristics` category and the `general` and `specifics` categories on equipped outfits.
+* `tags` (*optional*): Referenced by scripts. Can be used to effect availability of missions, NPC behavior and other elements.
+    * `tag`: Each `tag` node represents a binary flag which are accessible as a table with `ship.tags()`
+* `health`: Supercategory which defines the ship's intrinsic durability before modifiers from `stats` and equipped outfits. **Note that this node and subnodes are deprecated and will likely be removed in future versions. Use ship stats instead!**
+    * `armour`: Armour value.
+    * `armour_regen`: Armour regeneration in MW (MJ per second).
+    * `shield`: Shield value.
+    * `shield_regen`: Shield regeneration in MW (MJ per second).
+    * `energy`: Energy capacity.
+    * `energy_regen`: Energy regeneration in MW (MJ per second).
+    * `absorb`: Reduction to incoming damage.
+
+A full example of the \naev starter ship "Llama" is shown below.
+
+```xml
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Llama">
+ <points>20</points>
+ <base_type>Llama</base_type>
+ <GFX size="47">llama</GFX>
+ <GUI>brushed</GUI>
+ <sound>engine</sound>
+ <class>Yacht</class>
+ <price>120000</price>
+ <time_mod>1</time_mod>
+ <trail_generator x="-12" y="-16" h="-2">nebula</trail_generator>
+ <trail_generator x="-12" y="16" h="-2">nebula</trail_generator>
+ <trail_generator x="-12" y="-6" h="0">fire-thin</trail_generator>
+ <trail_generator x="-12" y="0" h="0">fire-thin</trail_generator>
+ <trail_generator x="-12" y="6" h="0">fire-thin</trail_generator>
+ <fabricator>Melendez Corp.</fabricator>
+ <description>One of the most widely used ships in the galaxy. Renowned for its stability and stubbornness. The design hasn't been modified much since its creation many, many cycles ago. It was one of the first civilian use spacecrafts, first used by aristocracy and now used by everyone who cannot afford better.</description>
+ <characteristics>
+  <crew>2</crew>
+  <mass>80</mass>
+  <fuel_consumption>100</fuel_consumption>
+  <cargo>15</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="small" x="7" y="0" h="1" />
+  <weapon size="small" x="-3" y="0" h="2" />
+  <utility size="small" prop="systems">Unicorp PT-16 Core System</utility>
+  <utility size="small" prop="accessory" />
+  <utility size="small" />
+  <utility size="small" />
+  <structure size="small" prop="engines">Nexus Dart 150 Engine</structure>
+  <structure size="small" prop="hull">Unicorp D-2 Light Plating</structure>
+  <structure size="small" />
+  <structure size="small" />
+ </slots>
+ <stats>
+  <armour>25<armour>
+  <speed_mod>-10</speed_mod>
+  <turn_mod>-10</turn_mod>
+  <cargo_mod>20</cargo_mod>
+  <armour_mod>10</armour_mod>
+  <cargo_inertia>-20</cargo_inertia>
+  <ew_hide>-10</ew_hide>
+ </stats>
+ <tags>
+  <tag>standard</tag>
+  <tag>transport</tag>
+ </tags>
+</ship>
+```
+
+## Ship Graphics
+
+TODO
+
+## Ship Conditional Expressions
+
+TODO
+
+## Ship trails
+
+TODO
+
+## Ship Slots
+
+TODO
