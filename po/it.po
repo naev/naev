@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.4\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-07-20 00:21-0400\n"
-"PO-Revision-Date: 2022-12-18 03:48+0000\n"
+"PO-Revision-Date: 2022-12-18 22:47+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "it/>\n"
@@ -2392,7 +2392,7 @@ msgstr ""
 
 #: dat/assets/benteen.xml:2
 msgid "Benteen"
-msgstr ""
+msgstr "Benteen"
 
 #: dat/assets/benteen.xml:29
 msgid ""
@@ -2400,16 +2400,23 @@ msgid ""
 "crops that are bound for the western systems. It is a quiet world, with "
 "little in the way of the bustle and fuss of other, more core, planets."
 msgstr ""
+"Benteen è uno dei principali pianeti agricoli dell'Impero. Coltiva la "
+"maggior parte delle colture che sono dirette verso i sistemi occidentali. È "
+"un mondo tranquillo, con poco viavai e baccano rispetto agli altri pianeti "
+"più centrali."
 
 #: dat/assets/benteen.xml:30
 msgid ""
 "The bar is a place to relax after a long trip or a hard day's work. The beer "
 "is fine and the locals seem friendly enough. Mostly harmless."
 msgstr ""
+"Il bar è un posto per rilassarsi dopo un lungo viaggio o una giornata di "
+"duro lavoro. La birra è buona e i locali sembrano abbastanza amichevoli. Per "
+"lo più innocui."
 
 #: dat/assets/berkhere.xml:2
 msgid "Berkhere"
-msgstr ""
+msgstr "Berkhere"
 
 #: dat/assets/berkhere.xml:29
 msgid ""
@@ -2418,6 +2425,11 @@ msgid ""
 "mineral wealth for survival. Crops will not grow on this arid planet, so all "
 "food has to be imported."
 msgstr ""
+"La maggior parte della superficie di Berkhere è rocciosa, polverosa e "
+"sabbiosa. Ma sotto la superficie sono presenti gemme e minerali rari e "
+"preziosi. La colonia fa affidamento su questa abbondanza mineraria per "
+"sopravvivere. Le colture non crescono su questo arido pianeta, per questo "
+"tutto il cibo viene importato."
 
 #: dat/assets/berkhere.xml:30
 msgid ""
@@ -2428,34 +2440,41 @@ msgid ""
 "sold, the reasoning goes, Berkhere's future isn't in peril. Needless to say, "
 "the gem is heavily protected by security systems."
 msgstr ""
+"Il bar dello spazioporto è situato intorno ad un'area centrale che serve "
+"come mostra per la più grande singola gemma non tagliata che sia mai stata "
+"trovata sotto la sabbia di Berkhere. È un promemoria sia per i visitatori "
+"che per la popolazione locale che Berkhere è ancora benestante. Così si "
+"pensa che fino a quando la gemma in mostra non dovrà essere venduta, il "
+"futuro di Berkhere non sarà in pericolo. È inutile dire che la gemma è "
+"fortemente protetta da sistemi di sicurezza."
 
 #: dat/assets/beth.xml:2
 msgid "Beth"
-msgstr ""
+msgstr "Beth"
 
 #: dat/assets/bgg1356.xml:2
 msgid "BGG-1356"
-msgstr ""
+msgstr "BGG-1356"
 
 #: dat/assets/blackwell_i.xml:2
 msgid "Blackwell I"
-msgstr ""
+msgstr "Blackwell I"
 
 #: dat/assets/blackwell_iix.xml:2
 msgid "Blackwell IIX"
-msgstr ""
+msgstr "Blackwell IIX"
 
 #: dat/assets/blackwell_vii.xml:2
 msgid "Blackwell VII"
-msgstr ""
+msgstr "Blackwell VII"
 
 #: dat/assets/blunderbuss_ii.xml:2
 msgid "Blunderbuss II"
-msgstr ""
+msgstr "Spingarda II"
 
 #: dat/assets/bolero.xml:2
 msgid "Bolero"
-msgstr ""
+msgstr "Bolero"
 
 #: dat/assets/bolero.xml:31
 msgid ""
@@ -2467,6 +2486,14 @@ msgid ""
 "nostalgia to all those who were able to visit Earth before the Incident. "
 "However, some people avoid it for exactly the same reason…"
 msgstr ""
+"Bolero è uno dei pianeti imperiali di maggior successo. La popolazione è "
+"prospera e benestante e le condizioni planetarie sono miti. Sebbene sia "
+"ancora trattato come provincia remota a causa della sua locazione, sta "
+"diventando sempre più importante nelle politiche imperiali. Gran parte della "
+"popolarità di Bolero è data dal fatto che il clima è simile alla Terra, "
+"questo da un senso di nostalgia confortante a tutti coloro che erano stati "
+"in grado di visitare la Terra prima dell'Incidente. Tuttavia alcuni lo "
+"evitano esattamente per la stessa ragione…"
 
 #: dat/assets/bolero.xml:32
 msgid ""
@@ -2477,10 +2504,17 @@ msgid ""
 "in with the patrons, with the majority of people looking like temporary "
 "visitors, either arriving for vacations or business trips."
 msgstr ""
+"Sfruttando al massimo la similarità di Bolero con la Terra, il bar qui è un "
+"pub in vecchio stile terrestre con basso soffitto, birra calda e buon cibo. "
+"L'atmosfera è calda e accogliente, i clienti sono tutti educati e sorridenti "
+"e i buttafuori raramente devono intervenire. Sembra che vi siano "
+"relativamente pochi locali tra i clienti, con la maggior parte delle persone "
+"che sembrano visitatori temporanei, arrivati per le vacanze o per viaggi "
+"d'affari."
 
 #: dat/assets/bon_sebb.xml:2
 msgid "Bon Sebb"
-msgstr ""
+msgstr "Bon Sebb"
 
 #: dat/assets/bon_sebb.xml:31
 msgid ""
@@ -2489,6 +2523,11 @@ msgid ""
 "gigantic junk yard, known as the \"Junkle\", where the locals \"hunt\" for "
 "useful equipment they can sell to each other, or to passing travellers."
 msgstr ""
+"Bon Sebb è un posto misterioso. Oggetti da tutta la galassia hanno "
+"l'abitudine di comparire qui. Infatti una grossa area della superficie "
+"planetaria è una gigantesca discarica conosciuta come \"Junkle\" dove i "
+"locali vanno a \"caccia\" di attrezzi utili che possono vedersi tra loro o "
+"ai viaggiatori di passaggio."
 
 #: dat/assets/bon_sebb.xml:32
 msgid ""
@@ -2497,18 +2536,23 @@ msgid ""
 "only somewhat symmetrical feature of the bar is a holoportrait of the "
 "Creator of the Universe, hanging over the lopsided bar."
 msgstr ""
+"Il bar su Bon Sebb è stato realizzato usando pezzi recuperati da Junkle. Le "
+"pareti e il mobilio sono stati realizzati come mosaici di diversi modelli e "
+"materiali. L'unica peculiarità del bar che è in qualche modo simmetrica è un "
+"ritratto olografico del Creatore dell'Universo, sospeso sopra il bar "
+"asimmetrico."
 
 #: dat/assets/bonanza_i.xml:2
 msgid "Bonanza I"
-msgstr ""
+msgstr "Manna I"
 
 #: dat/assets/bonanza_ii.xml:2
 msgid "Bonanza II"
-msgstr ""
+msgstr "Manna II"
 
 #: dat/assets/boowoy.xml:2
 msgid "Boowoy"
-msgstr ""
+msgstr "Boowoy"
 
 #: dat/assets/boowoy.xml:30
 msgid ""
@@ -2518,6 +2562,12 @@ msgid ""
 "the planet's ecosystem has been terminally disrupted, causing most of the "
 "surface to erode into desert."
 msgstr ""
+"Boowoy non è mai stata una colonia veramente decente. È stato colonizzato "
+"nella speranza che potesse essere terraformato trasformandolo in un "
+"piacevole pianeta residenziale di classe M, ma la corruzione persistente e "
+"il malgoverno hanno fatto fallire ogni tentativo. Attualmente l'ecosistema "
+"planetario è stato sconvolto in modo incurabile, causando la "
+"desertificazione della maggior parte della superficie planetaria."
 
 #: dat/assets/boowoy.xml:31
 msgid ""
@@ -2527,14 +2577,19 @@ msgid ""
 "local patrons makes it clear they'd prefer it if you weren't here for long, "
 "at all."
 msgstr ""
+"Ai locali non piacciono gli stranieri, ma mantengono funzionante lo "
+"spazioporto perché essere tagliati fuori dalla galassia sarebbe fatale ad un "
+"pianeta così dipendente dalle importazioni. Tuttavia le occhiate che ricevi "
+"dal personale e dai clienti locali rende chiaro che preferirebbero non "
+"averti tra i piedi a lungo, per nessun motivo."
 
 #: dat/assets/botarn_i.xml:2
 msgid "Botarn I"
-msgstr ""
+msgstr "Botarn I"
 
 #: dat/assets/brandt_station.xml:2
 msgid "Brandt Station"
-msgstr ""
+msgstr "Stazione di Brandt"
 
 #: dat/assets/brandt_station.xml:27
 msgid ""
@@ -2543,6 +2598,12 @@ msgid ""
 "and Anarbalis. The ships here, however, are not equipped to handle the "
 "stress of the border conflicts with the Dvaered at Eye of Night."
 msgstr ""
+"La stazione di Brandt funge come punto di controllo per la sicurezza locale "
+"dispiegando due squadroni di astronavi di reazione leggere. La stazione è "
+"principalmente responsabile per i sistemi solari Nigeria, Lapislazzuli e "
+"Anarbalis. In ogni caso le astronavi qui presenti non sono equipaggiate per "
+"gestire lo stress di un conflitto di confine con i Dvaered del sistema Occhi "
+"della Notte."
 
 #: dat/assets/brandt_station.xml:28
 msgid ""
@@ -2550,34 +2611,38 @@ msgid ""
 "Sirian echelons in any way. However, the soldiers and sailors stationed on "
 "Brandt Station all know their place and treat each other accordingly."
 msgstr ""
+"Curiosamente questo bar dello spazioporto non sembra fare, in nessun modo, "
+"differenze tra i tre scaglioni siriani. Tuttavia tutti i soldati e gli "
+"astronauti presenti sulla stazione di Brandt conoscono il loro posto e si "
+"comportano tra loro di conseguenza."
 
 #: dat/assets/brendon_i.xml:2
 msgid "Brendon I"
-msgstr ""
+msgstr "Brendon I"
 
 #: dat/assets/brimstone_i.xml:2
 msgid "Brimstone I"
-msgstr ""
+msgstr "Canarino Solforato I"
 
 #: dat/assets/brimstone_ia.xml:2
 msgid "Brimstone Ia"
-msgstr ""
+msgstr "Canarino Solforato Ia"
 
 #: dat/assets/brimstone_ib.xml:2
 msgid "Brimstone Ib"
-msgstr ""
+msgstr "Canarino Solforato Ib"
 
 #: dat/assets/brimstone_ii.xml:2
 msgid "Brimstone II"
-msgstr ""
+msgstr "Canarino Solforato II"
 
 #: dat/assets/brimstone_iii.xml:2
 msgid "Brimstone III"
-msgstr ""
+msgstr "Canarino Solforato III"
 
 #: dat/assets/brock.xml:2
 msgid "Brock"
-msgstr ""
+msgstr "Tasso"
 
 #: dat/assets/brock.xml:30
 msgid ""
@@ -2586,6 +2651,10 @@ msgid ""
 "for this purpose and no other, comfort was the last thing on the designers' "
 "minds."
 msgstr ""
+"Una delle attività di estrazione di gas degli Dvaered è situata qui. Il gas "
+"è raffinato e trasformato in combustibile per le astronavi Dvaered. Gli "
+"impianti sono qui costruiti solamente per questo scopo, il comfort era "
+"l'ultima cosa che il progettista aveva in mente."
 
 #: dat/assets/brock.xml:31
 msgid ""
@@ -2594,10 +2663,15 @@ msgid ""
 "bars. Unlike most Dvaered bars, this one is small and rather clean. Rather "
 "shocking, especially for outsiders."
 msgstr ""
+"Il bar è pieno di minatori e truppe della guarnigione, come la maggior parte "
+"dei bar Dvaered. Anche bevande abbondanti sono quasi certamente probabili, "
+"come la maggior parte dei bar Dvaered. Diversamente dalla maggior parte dei "
+"bar Dvaered, questo è piccolo e abbastanza pulito. Piuttosto scioccante per "
+"gli stranieri."
 
 #: dat/assets/brooks.xml:2
 msgid "Brooks"
-msgstr ""
+msgstr "Ruscelli"
 
 #: dat/assets/brooks.xml:29
 msgid ""
@@ -2607,6 +2681,12 @@ msgid ""
 "economic and political weight within the Empire, the Imperial Navy protects "
 "Arcturus for Brooks' sake, as much as for the Imperial core systems."
 msgstr ""
+"Ruscelli è un pianeta imperiale, borghese, densamente popolato e "
+"animatissimo. Con il declino dell'Impero, si è ritrovato sul confine di uno "
+"spazio pericoloso, una posizione abbastanza scomoda. Poiché Ruscelli è un "
+"ricco pianeta con un cospicuo peso economico e politico all'interno "
+"dell'Impero, la Flotta Imperiale protegge Arturo per il bene di Ruscelli, "
+"così come dei sistemi centrali imperiali."
 
 #: dat/assets/brooks.xml:30
 msgid ""
@@ -2615,10 +2695,15 @@ msgid ""
 "prices for refreshments and services at the spaceport bar, Brooks, after "
 "all, is a boom world and where profit is to made."
 msgstr ""
+"Su Ruscelli ogni cosa è costosa, così succede nella maggior parte dei mondi "
+"in piena espansione economica. Tuttavia la maggior parte dei commercianti "
+"sopporta i prezzi gonfiati per rinfreschi e servizi nello spazioporto; "
+"Ruscelli, dopo tutto, è un pianeta in forte espansione e dove i profitti "
+"vengono realizzati."
 
 #: dat/assets/buritt.xml:2
 msgid "Buritt"
-msgstr ""
+msgstr "Buritt"
 
 #: dat/assets/buritt.xml:30
 msgid ""
@@ -2628,6 +2713,11 @@ msgid ""
 "natural environment but, with the Dvaered being Dvaered, no attempt is being "
 "made to address this."
 msgstr ""
+"Non così bello come Varia nel sistema di Pietra Nera, Buritt è, più o meno, "
+"un mondo ragionevolmente abitabile. Troverai qui molta della classe media "
+"dei Dvaered. Troverai anche inquinamento su larga scala dell'ambiente "
+"naturale, ma, dato che i Dvaered sono i Dvaered, nessun tentativo è stato "
+"fatto per cercare di affrontare questa problematica."
 
 #: dat/assets/buritt.xml:31
 msgid ""
@@ -2635,10 +2725,13 @@ msgid ""
 "brain-melting music, it would be quite a comfortable place to be. But it "
 "does, so it isn't."
 msgstr ""
+"Se nel bar dello spazioporto non venisse eseguita una musica prodotta "
+"localmente, incessante, monotona e sfonda-cervello, sarebbe un posto dove "
+"stare tranquilli e confortevoli. Ma è eseguita e quindi non è tale posto."
 
 #: dat/assets/burnan.xml:2
 msgid "Burnan"
-msgstr ""
+msgstr "Burnan"
 
 #: dat/assets/burnan.xml:31
 msgid ""
@@ -2647,6 +2740,11 @@ msgid ""
 "hyperspace jumps. Burnan has a large political district in its primary city, "
 "this also houses one of the largest Sirian temples in all of Sirius space."
 msgstr ""
+"Burnan è considerata come la capitale locale non ufficiale. Aesir è lontana "
+"e molti servizi governativi sono resi meglio localmente che tramite una "
+"distanza di parecchi salti iperspaziali. Burnan ha un ampio distretto "
+"politico nella sua città principale, qui è anche presente uno dei tempi "
+"siriani più grandi di tutto lo spazio siriano."
 
 #: dat/assets/burnan.xml:32
 msgid ""
@@ -2657,14 +2755,21 @@ msgid ""
 "elevated area that has tables for visitors to sit down at, where they won't "
 "get in the way of the bustle and traffic of the main floor."
 msgstr ""
+"Burnan non ha un bar dello spazioporto separato, nello stesso modo che molti "
+"altri pianeti hanno. Il bar dello spazioporto e l'ingresso principale dello "
+"spazioporto sono invece la stessa cosa. Ci sono uscite per i terminali su "
+"tutti i lati e l'area centrale è dominata da un'isola di interfacce per "
+"servizi e banconi. È presenta un'area elevata con tavoli per permettere ai "
+"visitatori di sedersi, in modo da non essere intralciati dal trambusto e dal "
+"traffico del piano principale."
 
 #: dat/assets/burnans_moon.xml:2
 msgid "Burnan's moon"
-msgstr ""
+msgstr "Luna di Burnan"
 
 #: dat/assets/caladan.xml:2
 msgid "Caladan"
-msgstr ""
+msgstr "Caladan"
 
 #: dat/assets/caladan.xml:31
 msgid ""
@@ -2678,6 +2783,16 @@ msgid ""
 "for its people. Other traditional products include wine and various "
 "livestock, most prominently cattle."
 msgstr ""
+"La superficie planetaria è ricoperta predominantemente con acqua e il clima "
+"del pianeta è caratterizzato da precipitazioni abbondanti e forti venti, "
+"anche se sufficientemente tollerabili da rendere non necessari costosi "
+"macchinari per la modifica del clima. Le terre abitabili sono spesso "
+"caratterizzate da pianure, paludi e dense foreste. Le risorsa primarie di "
+"Caladan consistono principalmente di agricoltura e biomassa, con "
+"coltivazione del riso che rappresenta la principale esportazione, e pesca, "
+"una fonte tradizionale di sostentamento per la popolazione. Altri prodotti "
+"tradizionali includono il vino e diversi allevamenti, principalmente di "
+"bovini."
 
 #: dat/assets/caladan.xml:32
 msgid ""
@@ -2686,14 +2801,18 @@ msgid ""
 "You could also tuck into some of the local cuisine which is rather refined, "
 "with most dishes containing meat."
 msgstr ""
+"Il bar è appena fuori dallo spazioporto con un'ottima vista sul porto. Puoi "
+"osservare i pescatori correre affannosamente per ore mentre eseguono i loro "
+"compiti. Puoi anche assaporare qualcosa della cucina locale che è piuttosto "
+"raffinata, con la maggior parte dei piatti contenenti carne."
 
 #: dat/assets/calvin.xml:2
 msgid "Calvin"
-msgstr ""
+msgstr "Calvino"
 
 #: dat/assets/cantina_station.xml:2
 msgid "Cantina Station"
-msgstr ""
+msgstr "Stazione della Cantina"
 
 #: dat/assets/cantina_station.xml:29
 msgid ""
@@ -2701,6 +2820,10 @@ msgid ""
 "deals are made here, and given the frequent and transitory foot traffic, it "
 "makes for a good place to meet someone."
 msgstr ""
+"Questa stazione è principalmente un centro commerciale per lo spazio "
+"occidentale degli Za'lek. Qui vengono effettuati molti accordi commerciali e "
+"dato il frequente e transitorio passaggio di pedoni è un buon posto per "
+"incontrare qualcuno."
 
 #: dat/assets/cantina_station.xml:30
 msgid ""
@@ -2711,6 +2834,12 @@ msgid ""
 "technology and the fact that at least half of the populace look like "
 "scientists, researchers, or engineers."
 msgstr ""
+"Il bar è all'altezza della stessa stazione. In effetti sembra essere "
+"l'attrazione principale, essendo un'enorme stanza a forma di anello con "
+"molti baristi che servono i clienti, con musica di sottofondo e buon cibo. "
+"L'unica sembianza di essere di origini Za'lek è l'uso disinvolto di "
+"sconcertante tecnologia avanzata e il fatto che almeno la metà degli "
+"avventori sembrano scienziati, ricercatori o ingegneri."
 
 #: dat/assets/capricorn_ii.xml:2
 msgid "Capricorn II"
@@ -3242,11 +3371,11 @@ msgstr ""
 
 #: dat/assets/darkstone_iv.xml:2
 msgid "Darkstone IV"
-msgstr ""
+msgstr "Pietra Nera IV"
 
 #: dat/assets/darkstone_v.xml:2
 msgid "Darkstone V"
-msgstr ""
+msgstr "Pietra Nera V"
 
 #: dat/assets/dawn.xml:2
 msgid "Dawn"
@@ -4224,15 +4353,15 @@ msgstr ""
 
 #: dat/assets/eye_of_night_i.xml:2
 msgid "Eye of Night I"
-msgstr ""
+msgstr "Occhi della Notte I"
 
 #: dat/assets/eye_of_night_ii.xml:2
 msgid "Eye of Night II"
-msgstr ""
+msgstr "Occhi della Notte II"
 
 #: dat/assets/eye_of_night_iii.xml:2
 msgid "Eye of Night III"
-msgstr ""
+msgstr "Occhi della Notte III"
 
 #: dat/assets/facett_outpost.xml:2
 msgid "Facett Outpost"
@@ -6678,15 +6807,15 @@ msgstr ""
 
 #: dat/assets/lazuli_i.xml:2
 msgid "Lazuli I"
-msgstr ""
+msgstr "Lapislazzuli I"
 
 #: dat/assets/lazuli_ia.xml:2
 msgid "Lazuli Ia"
-msgstr ""
+msgstr "Lapislazzuli Ia"
 
 #: dat/assets/lazuli_iii.xml:2
 msgid "Lazuli III"
-msgstr ""
+msgstr "Lapislazzuli III"
 
 #: dat/assets/leo.xml:2
 msgid "Leo"
@@ -7905,11 +8034,11 @@ msgstr ""
 
 #: dat/assets/niger_i.xml:2
 msgid "Niger I"
-msgstr ""
+msgstr "Nigeria I"
 
 #: dat/assets/niger_ii.xml:2
 msgid "Niger II"
-msgstr ""
+msgstr "Nigeria II"
 
 #: dat/assets/nixa.xml:2
 msgid "Nixa"
@@ -12315,7 +12444,7 @@ msgstr ""
 
 #: dat/assets/varia.xml:2
 msgid "Varia"
-msgstr ""
+msgstr "Varia"
 
 #: dat/assets/varia.xml:30
 msgid ""
@@ -13059,6 +13188,11 @@ msgid ""
 "and in-system supply routes are always easier to maintain than routes "
 "leading through a jump point."
 msgstr ""
+"Questa stazione militare doveva essere originalmente costruita nei dintorni "
+"del sistema di Manna, ma i militari Soromid scelsero di cambiare locazione "
+"per ragioni logistiche. Hasselt ha numerosi pianeti abitati e le rotte di "
+"rifornimento interne al sistema sono sempre più semplici da mantenere che "
+"quelle che conducono ad un salto spaziale."
 
 #: dat/assets/yak_station.xml:28
 msgid ""
@@ -20287,15 +20421,15 @@ msgstr ""
 
 #: dat/ssys/blackwell.xml:2
 msgid "Blackwell"
-msgstr ""
+msgstr "Blackwell"
 
 #: dat/ssys/blunderbuss.xml:2
 msgid "Blunderbuss"
-msgstr ""
+msgstr "Spingarda"
 
 #: dat/ssys/bonanza.xml:2
 msgid "Bonanza"
-msgstr ""
+msgstr "Manna"
 
 #: dat/ssys/booster.xml:2
 msgid "Booster"
@@ -20307,15 +20441,15 @@ msgstr ""
 
 #: dat/ssys/botarn.xml:2
 msgid "Botarn"
-msgstr ""
+msgstr "Botarn"
 
 #: dat/ssys/brendon.xml:2
 msgid "Brendon"
-msgstr ""
+msgstr "Brendon"
 
 #: dat/ssys/brimstone.xml:2
 msgid "Brimstone"
-msgstr ""
+msgstr "Canarino Solforato"
 
 #: dat/ssys/brumerebus.xml:2
 msgid "Brumerebus"
@@ -20421,7 +20555,7 @@ msgstr ""
 
 #: dat/ssys/darkstone.xml:2
 msgid "Darkstone"
-msgstr ""
+msgstr "Pietra Nera"
 
 #: dat/ssys/defa.xml:2
 msgid "Defa"
@@ -20537,7 +20671,7 @@ msgstr "Eulero"
 
 #: dat/ssys/eye_of_night.xml:2
 msgid "Eye of Night"
-msgstr ""
+msgstr "Occhi della Notte"
 
 #: dat/ssys/farizel.xml:2
 msgid "Farizel"
@@ -20837,7 +20971,7 @@ msgstr ""
 
 #: dat/ssys/lazuli.xml:2
 msgid "Lazuli"
-msgstr ""
+msgstr "Lapislazzuli"
 
 #: dat/ssys/limbo.xml:2
 msgid "Limbo"
@@ -21193,7 +21327,7 @@ msgstr ""
 
 #: dat/ssys/niger.xml:2
 msgid "Niger"
-msgstr ""
+msgstr "Nigeria"
 
 #: dat/ssys/nixon.xml:2
 msgid "Nixon"
