@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-15 22:03+0900\n"
-"PO-Revision-Date: 2022-12-18 22:49+0000\n"
+"PO-Revision-Date: 2022-12-21 02:47+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -10474,27 +10474,27 @@ msgstr ""
 
 #: dat/spob/capricorn_ii.xml:2
 msgid "Capricorn II"
-msgstr ""
+msgstr "Capricorno II"
 
 #: dat/spob/capricorn_iii.xml:2
 msgid "Capricorn III"
-msgstr ""
+msgstr "Capricorno III"
 
 #: dat/spob/capricorn_iiia.xml:2
 msgid "Capricorn IIIa"
-msgstr ""
+msgstr "Capricorno IIIa"
 
 #: dat/spob/castellan_epsilon.xml:2
 msgid "Castellan Epsilon"
-msgstr ""
+msgstr "Castellano Epsilon"
 
 #: dat/spob/castellan_i.xml:2
 msgid "Castellan I"
-msgstr ""
+msgstr "Castellano I"
 
 #: dat/spob/castellan_iii.xml:2
 msgid "Castellan III"
-msgstr ""
+msgstr "Castellano III"
 
 #: dat/spob/castellan_iii.xml:25
 msgid ""
@@ -10504,6 +10504,12 @@ msgid ""
 "support it. The majority of these are food and medical supplies for the "
 "miners."
 msgstr ""
+"Castellano III è, come la maggior parte dei pianeti Dvaered, un mondo "
+"minerario e, come la maggior parte dei pianeti minerari Dvaered, le "
+"condizioni sono infernali. Il pianeta non è in grado di mantenere la vita "
+"naturale e per questo necessita di un flusso continuo di risorse per "
+"sostenerla. La maggior parte sono costituite da rifornimento di cibo e "
+"medicinali per i minatori."
 
 #: dat/spob/castellan_iii.xml:26
 msgid ""
@@ -10513,14 +10519,19 @@ msgid ""
 "and recuperate was a good way to show off their philanthropy. Either way, "
 "it's appreciated."
 msgstr ""
+"Il bar di Castellano III è sorprendentemente elegante. Probabilmente ciò è "
+"dovuto al fatto che è il rifugio per gli ufficiali Dvaered. Forse qualcuno "
+"in una posizione di potere o di influenza ha deciso che avere un posto "
+"carino per permettere ai minatori di rilassarsi e riprendersi sarebbe stato "
+"un buon modo per mostrare la propria filantropia. In ogni caso è apprezzato."
 
 #: dat/spob/castellan_vi.xml:2
 msgid "Castellan VI"
-msgstr ""
+msgstr "Castellano VI"
 
 #: dat/spob/cerberus.xml:2 dat/ssys/cerberus.xml:2
 msgid "Cerberus"
-msgstr ""
+msgstr "Cerbero"
 
 #: dat/spob/cerberus.xml:26
 msgid ""
@@ -10540,26 +10551,30 @@ msgid ""
 "and has a minuscule selection of beverages. There's little ambient noise; it "
 "seems as though boredom has gotten the best of most of the souls aboard."
 msgstr ""
+"Il bar è gestito da scienziati e soldati fuori servizio. È abbastanza "
+"piccolo e dispone di una limitatissima scelta di bevande. C'è poco rumore "
+"ambientale; sembra che la stanchezza abbia avuto la meglio sulla maggior "
+"parte dei presenti a bordo."
 
 #: dat/spob/cerberus_i.xml:2
 msgid "Cerberus I"
-msgstr ""
+msgstr "Cerbero I"
 
 #: dat/spob/cerberus_ii.xml:2
 msgid "Cerberus II"
-msgstr ""
+msgstr "Cerbero II"
 
 #: dat/spob/cerberus_iia.xml:2
 msgid "Cerberus IIa"
-msgstr ""
+msgstr "Cerbero IIa"
 
 #: dat/spob/cerberus_iv.xml:2
 msgid "Cerberus IV"
-msgstr ""
+msgstr "Cerbero IV"
 
 #: dat/spob/cetrat.xml:2
 msgid "Cetrat"
-msgstr ""
+msgstr "Cetrat"
 
 #: dat/spob/cetrat.xml:27
 msgid ""
@@ -10569,6 +10584,12 @@ msgid ""
 "that field. Cetrat was colonized by the eighth colony ship launched during "
 "the First Growth, Brooklyn."
 msgstr ""
+"Cetrat è un pianeta acquatico conosciuto per le sue alghe mediche. Nessuno è "
+"stato in grado di riprodurle in modo esatto come si trovano in natura, ma, "
+"data la loro abbondanza nell'enorme oceano planetario, ci sono stati "
+"soltanto tentativi limitato in tale campo. Cetrat è stato colonizzato da "
+"Brooklyn, l'ottava astronave colonizzatrice, che è stata lanciata durante la "
+"Prima Espansione."
 
 #: dat/spob/cetrat.xml:28
 msgid ""
@@ -10578,6 +10599,12 @@ msgid ""
 "but sometimes small cephalopods or more exotic beings. As exotic cultures "
 "go, Cetrat is among the stranger."
 msgstr ""
+"Il bar è veramente vasto, eppure sono presenti relativamente pochi clienti. "
+"Noti che l'elenco delle bevande ha un menu \"vivente\". Quando chiedi "
+"spiegazioni al barista, ottieni come risposta che si sono specializzati in "
+"bevande contenenti creature vive. Solitamente meduse, ma occasionalmente "
+"cefalopodi o esseri più esotici. Come cultura esotica, Cetric è tra le più "
+"strane."
 
 #: dat/spob/cetrat.xml:41 dat/spob/soromid_databank.xml:32
 #: dat/spob/soromid_wards_alpha.xml:29 dat/spob/soromid_wards_beta.xml:32
@@ -10587,15 +10614,15 @@ msgstr ""
 
 #: dat/spob/charcoal.xml:2
 msgid "Charcoal"
-msgstr ""
+msgstr "Carbonella"
 
 #: dat/spob/charred.xml:2
 msgid "Charred"
-msgstr ""
+msgstr "Bruciato"
 
 #: dat/spob/chriik.xml:2
 msgid "Chriik"
-msgstr ""
+msgstr "Chriik"
 
 #: dat/spob/chriik.xml:27
 msgid ""
@@ -10606,6 +10633,13 @@ msgid ""
 "planet for heavy industries to set up shop since they can pollute all they "
 "want without repercussions."
 msgstr ""
+"Chriik è un pianeta morto. Come la maggior parte dei pianeti desertici, ha "
+"un clima rovente e non possiede acqua liquida in superficie, ma, "
+"diversamente dalla maggior parte dei pianeti desertici, non ha nessuna forma "
+"di vita indigena. In effetti non esiste una ragione per cui qualcuno o "
+"qualcosa possa volere vivere qui, tanto per cominciare. Questo lo rende un "
+"pianeta perfetto per creare qui nuove industrie pesanti perché possono "
+"inquinare tutto quello che vogliono senza nessuna ripercussione."
 
 #: dat/spob/chriik.xml:28
 msgid ""
@@ -10613,26 +10647,30 @@ msgid ""
 "complexes the air is so dry it will parch you out in record time. The large "
 "number of manual workers also contributes to the busy crowd."
 msgstr ""
+"Il bar dello spazioporto di Chriik è un posto apprezzato, perfino dentro il "
+"complesso abitativo l'aria è così secca che ti disidraterà in tempi record. "
+"Contribuiscono alla calca indaffarata qui presente anche il grande numero di "
+"operai."
 
 #: dat/spob/churchill_i.xml:2
 msgid "Churchill I"
-msgstr ""
+msgstr "Churchill I"
 
 #: dat/spob/churchill_ii.xml:2
 msgid "Churchill II"
-msgstr ""
+msgstr "Churchill II"
 
 #: dat/spob/churchill_iia.xml:2
 msgid "Churchill IIa"
-msgstr ""
+msgstr "Churchill IIa"
 
 #: dat/spob/claudius_mehan.xml:2
 msgid "Claudius Mehan"
-msgstr ""
+msgstr "Claudio Mehan"
 
 #: dat/spob/cole_station.xml:2
 msgid "Cole Station"
-msgstr ""
+msgstr "Stazione Cavolo"
 
 #: dat/spob/cole_station.xml:24
 msgid ""
@@ -10644,7 +10682,7 @@ msgstr ""
 
 #: dat/spob/colley.xml:2
 msgid "Colley"
-msgstr ""
+msgstr "Colley"
 
 #: dat/spob/colley.xml:27
 msgid ""
@@ -10652,6 +10690,9 @@ msgid ""
 "unassuming nature. The world has mild weather and is ideally closeted away "
 "from the cares and worries of the wider galaxy."
 msgstr ""
+"Colley è un mondo apprezzato e frequentato da pensionati e vacanzieri per la "
+"sua natura quieta e modesta. Il pianeta ha un clima mite ed è idealmente "
+"nascosto da responsabilità e preoccupazioni dell'intera galassia."
 
 #: dat/spob/colley.xml:28
 msgid ""
@@ -10662,7 +10703,7 @@ msgstr ""
 
 #: dat/spob/coral_station.xml:2
 msgid "Coral Station"
-msgstr ""
+msgstr "Stazione Corallo"
 
 #: dat/spob/coral_station.xml:24
 msgid ""
@@ -10674,11 +10715,11 @@ msgstr ""
 
 #: dat/spob/coran.xml:2
 msgid "Coran"
-msgstr ""
+msgstr "Coran"
 
 #: dat/spob/corax.xml:2
 msgid "Corax"
-msgstr ""
+msgstr "Corvo Imperiale"
 
 #: dat/spob/corax.xml:27
 msgid ""
@@ -10688,6 +10729,12 @@ msgid ""
 "environmental discomfort has given them a head start on this world in terms "
 "of resource extraction. Other life, it seems, will have to wait its turn."
 msgstr ""
+"Anche se il pianeta Corvo Imperiale potesse, in un distante futuro, "
+"diventare un mondo semiabitabile saranno rimasti pochi rocce minerarie e "
+"minerali preziosi (escludendo il ferro). L'abilità degli Soromid di "
+"sopportare livelli inusuali di disagio ambientale gli ha permesso di avere "
+"un vantaggio nell'estrazione delle risorse su questo pianeta. Sembra che "
+"altre forme di vita dovranno attendere il loro turno."
 
 #: dat/spob/corax.xml:28
 msgid ""
@@ -10698,6 +10745,12 @@ msgid ""
 "you ask for a cocktail though, you'll likely be directed to one of the local "
 "sulphurous hot-water geysers."
 msgstr ""
+"Data la stabilità approssimativa di questo pianeta, il bar sembra un po' più "
+"seguire gli standard dell'Impero che quelli dei mondi degli Soromid. Ci sono "
+"tavoli, sedie, distributori, un barista e, soprattutto, bevande. Di queste "
+"ultime ce ne sono a profusine, però, essendo un piccolo pianeta, non in una "
+"grande varietà. Se fai richiesta di un cocktail, probabilmente verrai "
+"indirizzato verso uno dei gayser solforici di acqua calda locale."
 
 #: dat/spob/corinth_1.xml:2
 msgid "Corinth 1"
@@ -11098,7 +11151,7 @@ msgstr ""
 
 #: dat/spob/doeston_prime.xml:2
 msgid "Doeston Prime"
-msgstr ""
+msgstr "Doeston Primo"
 
 #: dat/spob/dohriabi_prime.xml:2
 msgid "Dohriabi Prime"
@@ -21943,11 +21996,11 @@ msgstr ""
 
 #: dat/ssys/capricorn.xml:2
 msgid "Capricorn"
-msgstr ""
+msgstr "Capricorno"
 
 #: dat/ssys/castellan.xml:2
 msgid "Castellan"
-msgstr ""
+msgstr "Castellano"
 
 #: dat/ssys/chloe.xml:2
 msgid "Chloe"
@@ -21959,7 +22012,7 @@ msgstr ""
 
 #: dat/ssys/churchill.xml:2
 msgid "Churchill"
-msgstr ""
+msgstr "Churchill"
 
 #: dat/ssys/cleai.xml:2
 msgid "Cleai"
@@ -22045,7 +22098,7 @@ msgstr ""
 
 #: dat/ssys/doeston.xml:2
 msgid "Doeston"
-msgstr ""
+msgstr "Doeston"
 
 #: dat/ssys/dohriabi.xml:2
 msgid "Dohriabi"
