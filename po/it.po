@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-20 22:13-0500\n"
-"PO-Revision-Date: 2022-12-21 02:47+0000\n"
+"PO-Revision-Date: 2022-12-21 14:51+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -10754,15 +10754,15 @@ msgstr ""
 
 #: dat/spob/corinth_1.xml:2
 msgid "Corinth 1"
-msgstr ""
+msgstr "Corinto 1"
 
 #: dat/spob/corinth_2.xml:2
 msgid "Corinth 2"
-msgstr ""
+msgstr "Corinto 2"
 
 #: dat/spob/corinth_foods.xml:2
 msgid "Corinth Foods"
-msgstr ""
+msgstr "Cibi di Corinto"
 
 #: dat/spob/corinth_foods.xml:25
 msgid ""
@@ -10772,10 +10772,16 @@ msgid ""
 "and maintenance. So far it seems to be working, as Corinth Foods produces "
 "enough food to be exported from Za'lek space entirely."
 msgstr ""
+"Questo nuovo tipo di stazione agricola viene utilizzata come produttrice "
+"principale di cibo per l'enclave del Procione e non solo. La stazione è "
+"progettata su più livelli per produrre più cibo in un ambiente più "
+"controllato e usando meno materiali e manutenzione. Finora sembra funzionare "
+"dato che i Cibi di Corinto producono abbastanza cibo per essere esportato da "
+"tutto lo spazio degli Za'lek."
 
 #: dat/spob/cornwal_ordinance.xml:2
 msgid "Cornwal Ordinance"
-msgstr ""
+msgstr "Ordinanza di Cornwal"
 
 #: dat/spob/cornwal_ordinance.xml:25
 msgid ""
@@ -10787,6 +10793,13 @@ msgid ""
 "on the harsh worlds in Undergate and always makes sure they receive a "
 "generous price for their exports."
 msgstr ""
+"È un impianto per la manifattura di armi che è gestito da Federico Cornwal, "
+"un uomo d'affari locale. Cornwal guadagna dalla produzione massiva di "
+"munizioni e armi con licenza per civili. Cornwal importa le materie prime "
+"dai pianeti vicini Wagenni e Sollebor e vende i prodotti finite all'esterno "
+"del sistema per un considerevole profitto. Cornwal è indulgente verso la "
+"popolazione che vive nei rudi pianeti del sistema Undergate e si assicura "
+"sempre che abbiano prezzi generosi per le loro esportazioni."
 
 #: dat/spob/cornwal_ordinance.xml:26
 msgid ""
@@ -10795,22 +10808,27 @@ msgid ""
 "of his merchandise so widely throughout Sirius space. The regular shipments "
 "required to keep business going helps too, so it is with the bar too."
 msgstr ""
+"Per una stazione così remota, l'Ordinanza di Cornwal è insolitamente ben "
+"frequentata da commercianti. Federico Cornwal è un uomo d'affari di talento "
+"per essere riuscito a spargere la voce della sua mercanzia così ampiamente "
+"in tutto lo spazio di Sirio. Di certo aiutano anche le spedizioni regolari "
+"necessarie per mandare avanti gli affari, così come il bar."
 
 #: dat/spob/corvus_i.xml:2
 msgid "Corvus I"
-msgstr ""
+msgstr "Corvi I"
 
 #: dat/spob/corvus_vi.xml:2
 msgid "Corvus VI"
-msgstr ""
+msgstr "Corvi VI"
 
 #: dat/spob/corvus_via.xml:2
 msgid "Corvus VI-a"
-msgstr ""
+msgstr "Corvi IV-a"
 
 #: dat/spob/corvus_vib.xml:2
 msgid "Corvus VI-b"
-msgstr ""
+msgstr "Corvi VI-b"
 
 #: dat/spob/corvus_vib.xml:24
 msgid ""
@@ -10820,6 +10838,11 @@ msgid ""
 "inadvertently, provide protection by being more important, juicier and more "
 "obvious targets."
 msgstr ""
+"Essendo una piccola luna in un sistema già in espansione, pochi coloni hanno "
+"prestato attenzione a Corvi VI-b; il suo stesso nome è una prova lampante. "
+"Tuttavia i coloni di questa luna apprezzano i loro vicini più grandi che, "
+"inavvertitamente, offrono protezione dal solo fatto di essere più "
+"importanti, più redditizi e un obiettivo più evidente."
 
 #: dat/spob/corvus_vib.xml:25
 msgid ""
@@ -10828,10 +10851,15 @@ msgid ""
 "given how crowded it is. Then again, given the interesting position this "
 "system occupies in space, maybe caution is the better part of valour."
 msgstr ""
+"Un bar piccolo, ma con possibilità indubbia di espansione e, data l'attuale "
+"fortuna del sistema, qualcosa che il proprietario deve aver già preso in "
+"considerazione visto quanto è affollato. D'altra parte, data la posizione "
+"interessante occupata da questo sistema nello spazio, forse essere cauti è "
+"la cosa migliore da fare."
 
 #: dat/spob/cristen.xml:2
 msgid "Cristen"
-msgstr ""
+msgstr "Cristen"
 
 #: dat/spob/cristen.xml:25
 msgid ""
@@ -10841,6 +10869,11 @@ msgid ""
 "Due to this the settlement on Cristen is one giant complex, isolated from "
 "the outside environment."
 msgstr ""
+"Tutta l'acqua su Cristen è tossica e, per questo, il pianeta è inospitale a "
+"tutte le forme di vita tranne quelle più resistenti. Tuttavia, la tossicità "
+"del sistema idrico vuol anche dire che determinate sostanze possano essere "
+"ottenute veramente facilmente qui. A causa di questo la colonia su Cristen è "
+"in un complesso gigante, isolata dall'ambiente esterno."
 
 #: dat/spob/cristen.xml:26
 msgid ""
@@ -10850,11 +10883,17 @@ msgid ""
 "get to wear hazard suits outside of the main domes and they get a rather "
 "nice bar too - certainly not something many Dvaereds can claim."
 msgstr ""
+"Il bar dello spazioporto è una delle strutture più protette sul pianeta. Il "
+"governo locale considera molto più importante la vita dei potenziali soci "
+"commerciali rispetto a quella dei lavoratori. Detto questo loro devono "
+"indossare tute protettive all'esterno delle cupole principali ed è a loro "
+"disposizione anche un bar carino, certamente non qualcosa che molti Dvaered "
+"possano affermare."
 
 #: dat/spob/crow.xml:2 dat/scripts/pilotname/generic.lua:24
 #: dat/scripts/pilotname/pirate.lua:277
 msgid "Crow"
-msgstr ""
+msgstr "Cornacchia"
 
 #: dat/spob/crow.xml:28
 msgid ""
@@ -10864,6 +10903,11 @@ msgid ""
 "in the galaxy, being away from the core worlds can give people the breathing "
 "room to live on the edge."
 msgstr ""
+"Nonostante sia al confine con un settore di spazio pericoloso, il sistema "
+"Corvi, e in particolare Cornacchia, prosperano. Il pianeta è una frontiera "
+"di culture, commercio e prosperità. Persino per gli Soromid, una delle "
+"società più giovanili della galassia, l'essere lontani dai mondi centrali "
+"può dare alla popolazione lo spazio per vivere ai margini."
 
 #: dat/spob/crow.xml:29
 msgid ""
@@ -10872,6 +10916,10 @@ msgid ""
 "those at another. Given some of the newer customs cropping up here a lot of "
 "out-of-system traders are thankful for this."
 msgstr ""
+"Il bar è stato progettando pensando all'acustica. La musica di sottofondo è "
+"pervasiva, ma non invadente e le conversazione tenute ad un tavolo non "
+"disturbano quelli che sono su un altro. Le nuove produzioni vegetali qui "
+"realizzate sono molto apprezzate dai commercianti esterni a questo sistema."
 
 #: dat/spob/crylo.xml:2
 msgid "Crylo"
@@ -16963,7 +17011,7 @@ msgstr ""
 
 #: dat/spob/procyon_shipyards.xml:2
 msgid "Procyon Shipyards"
-msgstr ""
+msgstr "Cantieri di Astronavi di Procione"
 
 #: dat/spob/procyon_shipyards.xml:25
 msgid ""
@@ -20138,15 +20186,15 @@ msgstr ""
 
 #: dat/spob/undergate_ii.xml:2
 msgid "Undergate II"
-msgstr ""
+msgstr "Undergate II"
 
 #: dat/spob/undergate_iii.xml:2
 msgid "Undergate III"
-msgstr ""
+msgstr "Undergate III"
 
 #: dat/spob/undergate_v.xml:2
 msgid "Undergate V"
-msgstr ""
+msgstr "Undergate V"
 
 #: dat/spob/unicorn_i.xml:2
 msgid "Unicorn I"
@@ -22024,7 +22072,7 @@ msgstr ""
 
 #: dat/ssys/corinth.xml:2
 msgid "Corinth"
-msgstr ""
+msgstr "Corinto"
 
 #: dat/ssys/coriolis.xml:2
 msgid "Coriolis"
@@ -22032,7 +22080,7 @@ msgstr ""
 
 #: dat/ssys/corvus.xml:2
 msgid "Corvus"
-msgstr ""
+msgstr "Corvi"
 
 #. Create the OSD
 #: dat/ssys/crimson_gauntlet.xml:2 dat/events/dvaered/totoran.lua:141
@@ -23082,7 +23130,7 @@ msgstr ""
 
 #: dat/ssys/procyon.xml:2
 msgid "Procyon"
-msgstr ""
+msgstr "Procione"
 
 #: dat/ssys/protera.xml:2
 msgid "Protera"
@@ -23499,7 +23547,7 @@ msgstr ""
 
 #: dat/ssys/undergate.xml:2
 msgid "Undergate"
-msgstr ""
+msgstr "Undergate"
 
 #: dat/ssys/unicorn.xml:2
 msgid "Unicorn"
