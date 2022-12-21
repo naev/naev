@@ -34,7 +34,7 @@ end
 function accept ()
    -- Note: this mission does not make any system claims.
    if not tk.yesno( _("Crimelord"), fmt.f( _([[The private detective greets you and gets right down to business.
-   "I have tracked down and collected evidence against a local crime lord," he says. "The evidence is on this data disk. He would love nothing more than to get their hands on this.
+   "I have tracked down and collected evidence against a local crime lord," he says. "The evidence is on this data disk. They would love nothing more than to get their hands on this.
    I want you to bring this to my associates in the {sys} system. While the local authorities have proven corruptible, my associates will ensure that this criminal ends up in prison, where they belong. I must warn you, however:
    This criminal has considerable influence and many friends. There's no doubt they will send some of their mercenaries to stop you. You'll need a fast ship to shake them off. My associates will compensate you generously when you reach {sys}.
    Regrettably, you are not the first pilot I've contacted regarding this matter. Your predecessor was intercepted when they landed en route to {sys}. The crime lord has many underlings lurking in nearby spaceports -- you must NOT land until you've delivered the data."
