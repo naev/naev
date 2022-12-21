@@ -404,11 +404,29 @@ function should_investigate( pos, si )
       return false
    end
 
-   local d = mem.enemyclose or math.huge
-   if mem.doscans and rnd.rnd() < 0.2 and ai.dist2(pos) < d*d then
-      return true
+   -- Only care about scanning
+   if not mem.doscans or rnd.rnd() < 0.8 then
+      return false
    end
-   return false
+
+   -- Conmfort
+   local ec = mem.enemyclose or math.huge
+   local ec2 = ec*ec
+
+   -- Should be nearby
+   if ai.dist2(pos) > ec2 then
+      return false
+   end
+
+   -- Check to see if we want to go back to the lanes
+   if mem.natural and ec < math.huge then
+      local d, _pos = lanes.getDistance2P( ai.pilot(), pos )
+      if math.huge > d and d > ec2 then
+         return false
+      end
+   end
+
+   return true
 end
 
 --[[
