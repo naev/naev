@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-12-15 22:03+0900\n"
+"POT-Creation-Date: 2022-12-20 22:13-0500\n"
 "PO-Revision-Date: 2022-11-05 20:02+0000\n"
 "Last-Translator: Jérémie Guegain <mirejai@orange.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
@@ -1367,7 +1367,7 @@ msgstr "nébuleuse"
 msgid "shieldbreaker"
 msgstr "casseur de bouclier"
 
-#: dat/difficulty/default.xml:2 dat/events/escort_settings.lua:75
+#: dat/difficulty/default.xml:2 dat/events/escort_settings.lua:80
 #: src/dev_uniedit.c:394
 msgid "Default"
 msgstr "Défaut"
@@ -27024,7 +27024,7 @@ msgstr ""
 
 #. Destroy if exists
 #: dat/board.lua:410 dat/board.lua:453 dat/comm.lua:171
-#: dat/events/escort_settings.lua:162 dat/events/shipai.lua:35
+#: dat/events/escort_settings.lua:167 dat/events/shipai.lua:35
 #: dat/events/shipai.lua:49 dat/missions/neutral/race_qex.lua:129
 #: dat/outfits/unique/fuel_recycler.lua:90 dat/spob/lua/lib/hypergate.lua:308
 #: dat/spob/lua/lib/spob.lua:114 src/console.c:694 src/dev_sysedit.c:1460
@@ -29291,54 +29291,55 @@ msgstr ""
 msgid "Escort AI"
 msgstr ""
 
+#. Hooks are cleared upon entering, so we have to readd the hook each time
 #. Set up hook for all newly created pilots
 #. Since this hook runs after direct creation, only pilots spawned
 #. directly as an escort of the player should trigger. This means
 #. that followers spawned by missions and such should not have the
 #. variables overwritten.
-#: dat/events/escort_settings.lua:63
+#: dat/events/escort_settings.lua:68
 msgid "Hyper-Offensive"
 msgstr ""
 
-#: dat/events/escort_settings.lua:69
+#: dat/events/escort_settings.lua:74
 msgid "Offensive"
 msgstr ""
 
-#: dat/events/escort_settings.lua:81
+#: dat/events/escort_settings.lua:86
 msgid "Defensive"
 msgstr ""
 
-#: dat/events/escort_settings.lua:87
+#: dat/events/escort_settings.lua:92
 msgid "Hyper-Defensive"
 msgstr ""
 
-#: dat/events/escort_settings.lua:93
+#: dat/events/escort_settings.lua:98
 msgid "Custom"
 msgstr ""
 
-#: dat/events/escort_settings.lua:116
+#: dat/events/escort_settings.lua:121
 msgid "Escort Manager"
 msgstr ""
 
-#: dat/events/escort_settings.lua:124
+#: dat/events/escort_settings.lua:129
 msgid "#nAggressive:#0 escorts seek out hostiles"
 msgstr ""
 
-#: dat/events/escort_settings.lua:126
+#: dat/events/escort_settings.lua:131
 msgid "Engage distance:"
 msgstr ""
 
-#: dat/events/escort_settings.lua:127
+#: dat/events/escort_settings.lua:132
 #, fuzzy
 #| msgid "Nebula Sensor Suit"
 msgid "Return distance:"
 msgstr "Combinaison de Capteur de Nébuleuse"
 
-#: dat/events/escort_settings.lua:136
+#: dat/events/escort_settings.lua:141
 msgid "Armour to return to mothership at (only fighters):"
 msgstr ""
 
-#: dat/events/escort_settings.lua:143
+#: dat/events/escort_settings.lua:148
 msgid "Profiles:"
 msgstr ""
 
@@ -65840,8 +65841,8 @@ msgstr ""
 msgid ""
 "The private detective greets you and gets right down to business.\n"
 "   \"I have tracked down and collected evidence against a local crime lord,"
-"\" he says. \"The evidence is on this data disk. They would love nothing more "
-"than to get their hands on this.\n"
+"\" he says. \"The evidence is on this data disk. They would love nothing "
+"more than to get their hands on this.\n"
 "   I want you to bring this to my associates in the {sys} system. While the "
 "local authorities have proven corruptible, my associates will ensure that "
 "this criminal ends up in prison, where they belong. I must warn you, "
@@ -106918,17 +106919,17 @@ msgstr ""
 msgid "No hook target was set."
 msgstr ""
 
-#: src/nlua_hook.c:1023
+#: src/nlua_hook.c:1025
 msgid "Invalid parameter #1 for hook.pilot, expecting pilot or nil."
 msgstr ""
 
 #. hook_type not valid
-#: src/nlua_hook.c:1048
+#: src/nlua_hook.c:1050
 #, c-format
 msgid "Invalid pilot hook type: '%s'"
 msgstr ""
 
-#: src/nlua_hook.c:1054
+#: src/nlua_hook.c:1056
 msgid ""
 "'creation' pilot hook can not be set on a specific pilot, only globally."
 msgstr ""
@@ -107976,6 +107977,11 @@ msgstr ""
 
 #: src/options.c:935
 msgid "Sound Volume"
+msgstr ""
+
+#: src/options.c:939
+#, c-format
+msgid "%s: %s"
 msgstr ""
 
 #: src/options.c:939
@@ -109878,93 +109884,93 @@ msgstr ""
 msgid "Ship '%s' has required slot without a default outfit."
 msgstr ""
 
-#: src/ship.c:683
+#: src/ship.c:684
 #, c-format
 msgid "Ship in %s has invalid or no name"
 msgstr ""
 
-#: src/ship.c:704
+#: src/ship.c:705
 #, c-format
 msgid "Ship '%s': GFX element is NULL"
 msgstr ""
 
-#: src/ship.c:723
+#: src/ship.c:724
 #, c-format
 msgid ""
 "Ship '%s': the number of collision polygons is wrong.\n"
 "                     npolygon = %i and sx*sy = %i"
 msgstr ""
 
-#: src/ship.c:735
+#: src/ship.c:736
 #, c-format
 msgid "Ship '%s': gfx_space element is NULL"
 msgstr ""
 
-#: src/ship.c:754
+#: src/ship.c:755
 #, c-format
 msgid "Ship '%s': gfx_engine element is NULL"
 msgstr ""
 
-#: src/ship.c:773
+#: src/ship.c:774
 #, c-format
 msgid "Ship '%s': gfx_comm element is NULL"
 msgstr ""
 
-#: src/ship.c:825
+#: src/ship.c:826
 #, c-format
 msgid "Ship '%s' has unknown flags node '%s'."
 msgstr ""
 
 #. All the xmlr_ stuff have continue cases.
-#: src/ship.c:856
+#: src/ship.c:857
 #, c-format
 msgid "Ship '%s' has unknown movement node '%s'."
 msgstr ""
 
 #. All the xmlr_ stuff have continue cases.
-#: src/ship.c:872
+#: src/ship.c:873
 #, c-format
 msgid "Ship '%s' has unknown health node '%s'."
 msgstr ""
 
 #. All the xmlr_ stuff have continue cases.
-#: src/ship.c:887
+#: src/ship.c:888
 #, c-format
 msgid "Ship '%s' has unknown characteristic node '%s'."
 msgstr ""
 
-#: src/ship.c:908
+#: src/ship.c:909
 #, c-format
 msgid "Ship '%s' has unknown slot node '%s'."
 msgstr ""
 
-#: src/ship.c:927
+#: src/ship.c:928
 #, c-format
 msgid "Ship '%s' has unknown stat '%s'."
 msgstr ""
 
-#: src/ship.c:960
+#: src/ship.c:961
 #, c-format
 msgid "Ship '%s' has unknown node in tags '%s'."
 msgstr ""
 
-#: src/ship.c:969
+#: src/ship.c:970
 #, c-format
 msgid "Ship '%s' has unknown node '%s'."
 msgstr ""
 
-#: src/ship.c:978
+#: src/ship.c:979
 #, c-format
 msgid "Ship '%s' has inexistent license requirement '%s'!"
 msgstr ""
 
 #. ship validator
-#: src/ship.c:981
+#: src/ship.c:982
 #, c-format
 msgid "Ship '%s' missing '%s' element"
 msgstr ""
 
-#: src/ship.c:1057
+#: src/ship.c:1058
 #, fuzzy, c-format
 #| msgid "Loaded %d Ship"
 #| msgid_plural "Loaded %d Ships"
@@ -109973,7 +109979,7 @@ msgid_plural "Loaded %d Ships in %.3f s"
 msgstr[0] "Loaded %d Ship"
 msgstr[1] "Loaded %d Ships"
 
-#: src/ship.c:1060
+#: src/ship.c:1061
 #, c-format
 msgid "Loaded %d Ship"
 msgid_plural "Loaded %d Ships"
