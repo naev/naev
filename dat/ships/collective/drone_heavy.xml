@@ -3,7 +3,7 @@
  <points>50</points>
  <base_type>Drone</base_type>
  <GFX sx="10" sy="10">drone_heavy</GFX>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class display="Robotic Drone">Fighter</class>

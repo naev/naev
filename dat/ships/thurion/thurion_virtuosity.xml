@@ -4,7 +4,7 @@
  <base_type>Virtuosity</base_type>
  <GFX size="70">virtuosity</GFX>
  <rarity>3</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Corvette</class>
  <price>1250000</price>

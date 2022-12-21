@@ -3,7 +3,7 @@
  <points>50</points>
  <base_type>Vendetta</base_type>
  <GFX size="49">vendetta</GFX>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Fighter</class>
  <price>400000</price>

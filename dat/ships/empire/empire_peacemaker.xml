@@ -4,7 +4,7 @@
  <base_type>Peacemaker</base_type>
  <GFX size="110" sx="12" sy="12">peacemaker</GFX>
  <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Carrier</class>
  <price>10000000</price>

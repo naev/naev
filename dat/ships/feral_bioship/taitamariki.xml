@@ -4,7 +4,7 @@
  <base_type>Odium</base_type>
  <GFX>odium_feral</GFX>
  <rarity>5</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <flags>
   <noplayer/>
  </flags>

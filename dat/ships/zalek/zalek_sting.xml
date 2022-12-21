@@ -4,7 +4,7 @@
  <base_type>Sting</base_type>
  <GFX sx="10" sy="10">sting</GFX>
  <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine_zalek</sound>
  <class>Corvette</class>
  <price>1300000</price>

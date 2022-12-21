@@ -1,4 +1,5 @@
 * 0.10.0-beta.3
+   * Made slim the default GUI instead of brushed
    * Contraband missions use vntk instead of tk
    * Sightseeing missions mention explicitly how much you get paid when completed
    * Removed outfit name duplication in alt texts

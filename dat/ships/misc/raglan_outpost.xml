@@ -4,7 +4,7 @@
  <base_type>Raglan Outpost</base_type>
  <gfx_space sx="1" sy="1">spob/space/station-battlestation.webp</gfx_space>
  <gfx_comm>spob/exterior/station05.webp</gfx_comm>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class display="Station">Battleship</class>
  <price>1</price>

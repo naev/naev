@@ -3,7 +3,7 @@
  <points>20</points>
  <base_type>Drone</base_type>
  <GFX size="70">drone_hyena</GFX>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <flags>
   <unique/>
   <noplayer/>

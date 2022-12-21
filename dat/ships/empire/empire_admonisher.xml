@@ -4,7 +4,7 @@
  <base_type>Admonisher</base_type>
  <GFX size="68">admonisher_empire</GFX>
  <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Corvette</class>
  <price>1100000</price>

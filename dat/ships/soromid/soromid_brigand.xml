@@ -4,7 +4,7 @@
  <base_type>Brigand</base_type>
  <GFX>brigand</GFX>
  <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine_soromid</sound>
  <class display="Bio-Interceptor">Interceptor</class>
  <price>380000</price>

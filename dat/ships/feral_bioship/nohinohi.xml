@@ -4,7 +4,7 @@
  <base_type>Reaver</base_type>
  <GFX size="68">reaver_feral</GFX>
  <rarity>5</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <flags>
   <noplayer/>
  </flags>

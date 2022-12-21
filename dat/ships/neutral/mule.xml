@@ -3,7 +3,7 @@
  <points>80</points>
  <base_type>Mule</base_type>
  <GFX size="96" sx="10" sy="10">mule</GFX>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Freighter</class>
  <price>900000</price>

@@ -3,7 +3,7 @@
  <points>20</points>
  <base_type>Euler</base_type>
  <GFX size="45">euler</GFX>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Scout</class>
  <price>200000</price>

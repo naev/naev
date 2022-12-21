@@ -4,7 +4,7 @@
  <base_type>Marauder</base_type>
  <GFX size="66">marauder</GFX>
  <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine_soromid</sound>
  <class display="Bio-Bomber">Bomber</class>
  <price>700000</price>

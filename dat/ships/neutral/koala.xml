@@ -3,7 +3,7 @@
  <points>30</points>
  <base_type>Koala</base_type>
  <GFX size="46">koala</GFX>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Courier</class>
  <price>420000</price>

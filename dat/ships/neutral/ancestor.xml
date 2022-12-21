@@ -3,7 +3,7 @@
  <points>40</points>
  <base_type>Ancestor</base_type>
  <GFX size="65">ancestor</GFX>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Bomber</class>
  <price>500000</price>
