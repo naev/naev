@@ -1595,6 +1595,12 @@ void sound_volumeGroup( int group, double volume )
       return;
 
    g->volume = volume;
+
+   soundLock();
+   for (int j=0; j<g->nsources; j++)
+      alSourcef( g->sources[j], AL_GAIN, volume );
+   al_checkErr();
+   soundUnlock();
 }
 
 /**
