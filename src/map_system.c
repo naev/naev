@@ -258,6 +258,8 @@ void map_system_show( int wid, int x, int y, int w, int h)
 /**
  * @brief Renders the custom solar system map widget.
  *
+ * TODO this shouldn't compute all the strings every render frame.
+ *
  *    @param bx Base X position to render at.
  *    @param by Base Y position to render at.
  *    @param w Width of the widget.
@@ -511,28 +513,30 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#o%s#0", _("Not advisable to land here\n") );
       else
          cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#r%s#0", _("You cannot land here\n") );
-      /* Add a description */
-      cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "%s", (p->description==NULL?_("No description available"):_(p->description)) );
-
-      txtHeight = gl_printHeightRaw( &gl_smallFont, (w - nameWidth-pitch-60)/2, buf );
 
       if (infobuf[0]=='\0') {
          int infocnt = 0;
+
+         /* Add a description */
+         infocnt += scnprintf( &infobuf[infocnt], sizeof(infobuf)-infocnt, "%s\n\n", (p->description==NULL?_("No description available"):_(p->description)) );
+
          /* show some additional information */
-         infocnt = scnprintf( infobuf, sizeof(infobuf), "%s\n"
+         infocnt += scnprintf( &infobuf[infocnt], sizeof(infobuf)-infocnt, "%s\n"
                "%s\n%s\n%s\n%s\n%s\n%s\n%s",
                spob_hasService( p, SPOB_SERVICE_LAND) ? _("This system is landable") : _("This system is not landable"),
                spob_hasService( p, SPOB_SERVICE_INHABITED) ? _("This system is inhabited") : _("This system is not inhabited"),
                spob_hasService( p, SPOB_SERVICE_REFUEL) ? _("You can refuel here") : _("You cannot refuel here"),
                spob_hasService( p, SPOB_SERVICE_BAR) ? _("This system has a bar") : _("This system does not have a bar"),
-               spob_hasService( p,SPOB_SERVICE_MISSIONS) ? _("This system offers missions") : _("This system does not offer missions"),
+               spob_hasService( p, SPOB_SERVICE_MISSIONS) ? _("This system offers missions") : _("This system does not offer missions"),
                spob_hasService( p, SPOB_SERVICE_COMMODITY) ? _("This system has a trade outlet") : _("This system does not have a trade outlet"),
                spob_hasService( p, SPOB_SERVICE_OUTFITS) ? _("This system sells ship equipment") : _("This system does not sell ship equipment"),
                spob_hasService( p, SPOB_SERVICE_SHIPYARD) ? _("This system sells ships") : _("This system does not sell ships"));
-         if ( p->bar_description && spob_hasService( p, SPOB_SERVICE_BAR ) ) {
-            infocnt+=scnprintf( &infobuf[infocnt], sizeof(infobuf)-infocnt, "\n\n%s", _(p->bar_description) );
-         }
+         if (p->bar_description && spob_hasService( p, SPOB_SERVICE_BAR ))
+            infocnt += scnprintf( &infobuf[infocnt], sizeof(infobuf)-infocnt, "\n\n%s", _(p->bar_description) );
       }
+
+      txtHeight = gl_printHeightRaw( &gl_smallFont, (w - nameWidth-pitch-60)/2, buf );
+
       gl_printTextRaw( &gl_smallFont, (w - nameWidth - pitch - 60) / 2, txtHeight,
             bx + 10 + pitch + nameWidth, by + h - 10 - txtHeight, 0, &cFontWhite, -1., buf );
    }
@@ -737,6 +741,7 @@ void map_system_updateSelected( unsigned int wid )
    float g,o,s;
    nameWidth = 0; /* get the widest spob/star name */
    nshow=1;/* start at 1 for the sun*/
+   infobuf[0] = '\0'; /* clear buffer. */
    for (int i=0; i<array_size(sys->spobs); i++) {
       p = sys->spobs[i];
       if (spob_isKnown( p )) {
