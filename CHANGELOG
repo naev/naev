@@ -15,6 +15,7 @@
    * Added particle beam and particle lance to Za'lek outfitters
    * Fixed escort ai not being properly applied to newly spawned escorts
    * Improved rendering of the map system information window
+   * Improved minor artefacts in slim and slimv2 GUIs with scaling enabled
    * Fixed other minor issues
 
 * 0.10.0-beta.2
