@@ -489,52 +489,52 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          }
       }
    } else {
-     /* display spob info */
-     p = cur_spobObj_sel;
-     if (p->presence.faction >= 0 ) {/* show the faction */
-        char factionBuf[64];
-        logo = faction_logo( p->presence.faction );
-        if (logo != NULL)
-           gl_renderScale( logo, bx + pitch + nameWidth + 200, by + h - 21, 20, 20, &cWhite );
+      /* display spob info */
+      p = cur_spobObj_sel;
+      if (p->presence.faction >= 0 ) {/* show the faction */
+         char factionBuf[64];
+         logo = faction_logo( p->presence.faction );
+         if (logo != NULL)
+            gl_renderScale( logo, bx + pitch + nameWidth + 200, by + h - 21, 20, 20, &cWhite );
 
-        snprintf( factionBuf, 64, "%s", faction_shortname( p->presence.faction ) );
-        gl_printTextRaw( &gl_smallFont, (w - nameWidth-pitch - 60) / 2, 20,
-            bx+pitch+nameWidth + 230, by + h - 31, 0, &cFontWhite, -1., factionBuf );
-     }
+         snprintf( factionBuf, 64, "%s", faction_shortname( p->presence.faction ) );
+         gl_printTextRaw( &gl_smallFont, (w - nameWidth-pitch - 60) / 2, 20,
+               bx+pitch+nameWidth + 230, by + h - 31, 0, &cFontWhite, -1., factionBuf );
+      }
 
-     cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Spob: %s\nPlanetary class: %s    Population: roughly %s\n"), spob_name(p), _(p->class), space_populationStr( p->population ) );
-     if (!spob_hasService( p, SPOB_SERVICE_INHABITED ))
-        cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("No space port here\n") );
-     else if (p->can_land)
-        cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#g%s#0", _("You can land here\n") );
-     else if (areEnemies( FACTION_PLAYER, p->presence.faction))
-        cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#o%s#0", _("Not advisable to land here\n") );
-     else
-        cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#r%s#0", _("You cannot land here\n") );
-     /* Add a description */
-     cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "%s", (p->description==NULL?_("No description available"):_(p->description)) );
+      cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Spob: %s\nPlanetary class: %s    Population: roughly %s\n"), spob_name(p), _(p->class), space_populationStr( p->population ) );
+      if (!spob_hasService( p, SPOB_SERVICE_INHABITED ))
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("No space port here\n") );
+      else if (p->can_land)
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#g%s#0", _("You can land here\n") );
+      else if (areEnemies( FACTION_PLAYER, p->presence.faction))
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#o%s#0", _("Not advisable to land here\n") );
+      else
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#r%s#0", _("You cannot land here\n") );
+      /* Add a description */
+      cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "%s", (p->description==NULL?_("No description available"):_(p->description)) );
 
-     txtHeight = gl_printHeightRaw( &gl_smallFont, (w - nameWidth-pitch-60)/2, buf );
+      txtHeight = gl_printHeightRaw( &gl_smallFont, (w - nameWidth-pitch-60)/2, buf );
 
-     if (infobuf[0] == '\0') {
-        int infocnt = 0;
-        /* show some additional information */
-        infocnt = scnprintf( infobuf, sizeof(infobuf), "%s\n"
-              "%s\n%s\n%s\n%s\n%s\n%s\n%s",
-              spob_hasService( p, SPOB_SERVICE_LAND) ? _("This system is landable") : _("This system is not landable"),
-              spob_hasService( p, SPOB_SERVICE_INHABITED) ? _("This system is inhabited") : _("This system is not inhabited"),
-              spob_hasService( p, SPOB_SERVICE_REFUEL) ? _("You can refuel here") : _("You cannot refuel here"),
-              spob_hasService( p, SPOB_SERVICE_BAR) ? _("This system has a bar") : _("This system does not have a bar"),
-              spob_hasService( p,SPOB_SERVICE_MISSIONS) ? _("This system offers missions") : _("This system does not offer missions"),
-              spob_hasService( p, SPOB_SERVICE_COMMODITY) ? _("This system has a trade outlet") : _("This system does not have a trade outlet"),
-              spob_hasService( p, SPOB_SERVICE_OUTFITS) ? _("This system sells ship equipment") : _("This system does not sell ship equipment"),
-              spob_hasService( p, SPOB_SERVICE_SHIPYARD) ? _("This system sells ships") : _("This system does not sell ships"));
-        if ( p->bar_description && spob_hasService( p, SPOB_SERVICE_BAR ) ) {
-           infocnt+=scnprintf( &infobuf[infocnt], sizeof(infobuf)-infocnt, "\n\n%s", _(p->bar_description) );
-        }
-     }
-     gl_printTextRaw( &gl_smallFont, (w - nameWidth - pitch - 60) / 2, txtHeight,
-         bx + 10 + pitch + nameWidth, by + h - 10 - txtHeight, 0, &cFontWhite, -1., buf );
+      if (infobuf[0]=='\0') {
+         int infocnt = 0;
+         /* show some additional information */
+         infocnt = scnprintf( infobuf, sizeof(infobuf), "%s\n"
+               "%s\n%s\n%s\n%s\n%s\n%s\n%s",
+               spob_hasService( p, SPOB_SERVICE_LAND) ? _("This system is landable") : _("This system is not landable"),
+               spob_hasService( p, SPOB_SERVICE_INHABITED) ? _("This system is inhabited") : _("This system is not inhabited"),
+               spob_hasService( p, SPOB_SERVICE_REFUEL) ? _("You can refuel here") : _("You cannot refuel here"),
+               spob_hasService( p, SPOB_SERVICE_BAR) ? _("This system has a bar") : _("This system does not have a bar"),
+               spob_hasService( p,SPOB_SERVICE_MISSIONS) ? _("This system offers missions") : _("This system does not offer missions"),
+               spob_hasService( p, SPOB_SERVICE_COMMODITY) ? _("This system has a trade outlet") : _("This system does not have a trade outlet"),
+               spob_hasService( p, SPOB_SERVICE_OUTFITS) ? _("This system sells ship equipment") : _("This system does not sell ship equipment"),
+               spob_hasService( p, SPOB_SERVICE_SHIPYARD) ? _("This system sells ships") : _("This system does not sell ships"));
+         if ( p->bar_description && spob_hasService( p, SPOB_SERVICE_BAR ) ) {
+            infocnt+=scnprintf( &infobuf[infocnt], sizeof(infobuf)-infocnt, "\n\n%s", _(p->bar_description) );
+         }
+      }
+      gl_printTextRaw( &gl_smallFont, (w - nameWidth - pitch - 60) / 2, txtHeight,
+            bx + 10 + pitch + nameWidth, by + h - 10 - txtHeight, 0, &cFontWhite, -1., buf );
    }
 
    /* show the trade/outfit/ship info */
