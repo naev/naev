@@ -14,6 +14,7 @@
    * Lowered error in physics approximation (shouldn't be noticeable though)
    * Added particle beam and particle lance to Za'lek outfitters
    * Fixed escort ai not being properly applied to newly spawned escorts
+   * Improved rendering of the map system information window
    * Fixed other minor issues
 
 * 0.10.0-beta.2

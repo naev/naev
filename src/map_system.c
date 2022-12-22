@@ -206,9 +206,8 @@ void map_system_open( int sys_selected )
    window_disableButton( wid, "btnBuyCommodPrice");
 
    /* Load the spob gfx if necessary */
-   if ( cur_sys_sel != cur_system ) {
+   if (cur_sys_sel != cur_system)
      space_gfxLoad( cur_sys_sel );
-   }
    /* get textures for the stars.  The first will be the nebula */
    /* There seems no other reliable way of getting the correct images -*/
    /* these are determined by a random number generator in lua */
@@ -228,7 +227,6 @@ void map_system_open( int sys_selected )
 
    map_system_show( wid, 20, 60, w-40, h-100);
    map_system_updateSelected( wid );
-
 }
 
 /**
@@ -270,7 +268,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    (void) data;
    int i, vis_index;
    double iw, ih;
-   StarSystem *sys=cur_sys_sel;
+   StarSystem *sys = cur_sys_sel;
    Spob *p;
    static int phase=0;
    glColour ccol;
@@ -322,9 +320,9 @@ static void map_system_render( double bx, double by, double w, double h, void *d
             (cur_spob_sel == vis_index ? &cFontGreen : &cFontWhite), -1., spob_name(p) );
    }
    /* draw the star */
-   ih=pitch;
-   iw=ih;
-   if ( array_size( bgImages ) > 0 ) {
+   ih = pitch;
+   iw = ih;
+   if (array_size( bgImages ) > 0) {
       if ( bgImages[starCnt]->w > bgImages[starCnt]->h )
          ih = ih * bgImages[starCnt]->h / bgImages[starCnt]->w;
       else if ( bgImages[starCnt]->w < bgImages[starCnt]->h )
@@ -351,30 +349,26 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          ccol.a = 1 - ccol.a;
          gl_renderScale( bgImages[i], bx+2, by+(nshow-1)*pitch + (pitch-ih)/2 + offset, iw, ih, &ccol );
       }
-   } else {
+   }
+   else {
       /* no nebula or star images - probably due to nebula */
-      txtHeight=gl_printHeightRaw( &gl_smallFont,pitch,_("Obscured by the nebula") );
+      txtHeight = gl_printHeightRaw( &gl_smallFont,pitch,_("Obscured by the nebula") );
       gl_printTextRaw( &gl_smallFont, pitch, txtHeight, (bx+2),
             (by + (nshow-0.5)*pitch + offset), 0, &cFontRed, -1., _("Obscured by the nebula") );
    }
    gl_printRaw( &gl_smallFont, bx + 5 + pitch, by + (nshow-0.5)*pitch + offset,
          (cur_spob_sel == 0 ? &cFontGreen : &cFontWhite), -1., _(sys->name) );
-   if ( cur_spob_sel == 0 && array_size( bgImages ) > 0 ) {
+   if ((cur_spob_sel==0) && array_size( bgImages ) > 0) {
       /* make use of space to draw a nice nebula */
-      double imgw,imgh;
+      double imgw,imgh, s;
       iw = w - 50 - pitch - nameWidth;
-      ih = h - 110;
+      ih = h;
       imgw = bgImages[0]->w;
       imgh = bgImages[0]->h;
-      if ( (ih * imgw) / imgh > iw ) {
-         /* image is wider per height than the space allows - use all width */
-         int newih = (int)((iw * imgh) / imgw);
-         gl_renderScale( bgImages[0], bx + 10 + pitch + nameWidth, by + (ih-newih)/2, iw, newih, &cWhite );
-      } else {
-         /* image is higher, so use all height. */
-         int newiw = (int)((ih * imgw) / imgh);
-         gl_renderScale( bgImages[0], bx + 10 + pitch + nameWidth + (iw-newiw)/2, by, newiw, ih, &cWhite );
-      }
+      s = MIN( iw / imgw, ih / imgh );
+      imgw *= s;
+      imgh *= s;
+      gl_renderScale( bgImages[0], bx+w-iw+(iw-imgw)*0.5, by+h-ih+(ih-imgh)*0.5, imgw, imgh, &cWhite );
    }
    /* draw marker around currently selected spob */
    ccol.r=0; ccol.g=0.6+0.4*sin( phase/150.*2*M_PI ); ccol.b=0; ccol.a=1;
