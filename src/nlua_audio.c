@@ -1728,6 +1728,9 @@ static int audioL_setGlobalAirAbsorption( lua_State *L )
  */
 static int audioL_setGlobaDopplerFactor( lua_State *L )
 {
+   if (sound_disabled)
+      return 0;
+
    soundLock();
    alDopplerFactor( luaL_checknumber(L,1) );
    al_checkErr();
