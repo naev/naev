@@ -1304,30 +1304,26 @@ void player_update( Pilot *pplayer, const double dt )
 void player_updateSpecific( Pilot *pplayer, const double dt )
 {
    int engsound;
-   double pitch = 1., volume = 1.;
+   double pitch = 1.;
 
    /* Calculate engine sound to use. */
    if (pilot_isFlag(pplayer, PILOT_AFTERBURNER))
       engsound = pplayer->afterburner->outfit->u.afb.sound;
-   else if ((pplayer->solid->thrust > 1e-3) || (pplayer->solid->thrust < -1e-3)) {
-      /* See if is in hyperspace. */
-      if (pilot_isFlag(pplayer, PILOT_HYPERSPACE)) {
-         engsound = snd_hypEng;
-      }
-      else {
-         engsound = pplayer->ship->sound;
-         pitch = pplayer->ship->engine_pitch;
-         volume = conf.engine_vol;
-      }
+   else if (pilot_isFlag(pplayer, PILOT_HYPERSPACE))
+      engsound = snd_hypEng;
+   else if (pplayer->engine_glow > 0.) {
+      engsound = pplayer->ship->sound;
+      pitch = pplayer->ship->engine_pitch;
    }
    else
       engsound = -1;
+   if (engsound >= 0)
+      sound_volumeGroup( player_engine_group, conf.engine_vol * pplayer->engine_glow );
    /* See if sound must change. */
    if (player_lastEngineSound != engsound) {
       sound_stopGroup( player_engine_group );
       if (engsound >= 0) {
          sound_pitchGroup( player_engine_group, pitch );
-         sound_volumeGroup( player_engine_group, volume );
          sound_playGroup( player_engine_group, engsound, 0 );
       }
    }
