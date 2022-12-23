@@ -8,9 +8,10 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-23 10:39+0900\n"
-"PO-Revision-Date: 2022-12-21 14:51+0000\n"
+"PO-Revision-Date: 2022-12-24 01:56+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
-"Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
+"Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev-0-10-x/"
+"it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -833,7 +834,7 @@ msgstr "PROGENITORE PIRATESCO"
 
 #: artwork/gfx/loading/dalton.webp.txt:1
 msgid "DALTON"
-msgstr ""
+msgstr "DALTON"
 
 #: artwork/gfx/loading/diablo.webp.txt:1
 msgid "ZA'LEK DIABLO"
@@ -962,7 +963,7 @@ msgstr ""
 
 #: dat/commodities/diamond.xml:3 dat/scripts/pilotname/generic.lua:29
 msgid "Diamond"
-msgstr ""
+msgstr "Diamanti"
 
 #: dat/commodities/diamond.xml:4
 msgid ""
@@ -973,10 +974,16 @@ msgid ""
 "enough to produce synthetically that it is not as sought after as much as it "
 "once was."
 msgstr ""
+"I diamanti sono un'altra forma di grafite che si è cristallizzata a causa di "
+"pressione e calore intensi nelle profondità di alcuni tipi di pianeti. Il "
+"materiale è utile in alcune applicazioni di taglio grazie alla sua durezza "
+"ed è utilizzato comunemente in applicazioni decorative, ma ora i diamanti "
+"possono essere prodotti sinteticamente abbastanza facilmente e per questo "
+"non sono più ricercati come lo erano una volta."
 
 #: dat/commodities/food.xml:3
 msgid "Food"
-msgstr ""
+msgstr "Cibo"
 
 #: dat/commodities/food.xml:4
 msgid ""
@@ -984,10 +991,13 @@ msgid ""
 "meals are rich in nutrients and able to last many cycles in their vacuum-"
 "sealed packaging."
 msgstr ""
+"I moderni pasti confezionati, evoluzioni delle razioni militari dell'antico "
+"passato, sono ricchi di nutrienti e in grado di durare molti cicli nelle "
+"loro confezioni sottovuoto."
 
 #: dat/commodities/gold.xml:3 dat/ssys/gold.xml:2
 msgid "Gold"
-msgstr ""
+msgstr "Oro"
 
 #: dat/commodities/gold.xml:4
 msgid ""
@@ -996,20 +1006,27 @@ msgid ""
 "its most demanding application is as a component in decorative articles, "
 "such as jewelry."
 msgstr ""
+"L'oro è apprezzato per la sua combinazione tra la resistenza alla corrosione "
+"e la conduttività, che permette di essere usato per incrementare la vita dei "
+"prodotti elettronici, anche se la principale richiesta di applicazione è "
+"quella di essere usato come uno dei componenti negli articoli decorativi, "
+"come la gioielleria."
 
 #: dat/commodities/industrial_goods.xml:3
 msgid "Industrial Goods"
-msgstr ""
+msgstr "Beni Industriali"
 
 #: dat/commodities/industrial_goods.xml:4
 msgid ""
 "An assortment of industrial goods, ranging from cutting lasers to processed "
 "metals."
 msgstr ""
+"Un assortimento di beni industriali, che vanno dai raggi laser per taglio ai "
+"metalli lavorati."
 
 #: dat/commodities/iron.xml:3
 msgid "Iron"
-msgstr ""
+msgstr "Ferro"
 
 #: dat/commodities/iron.xml:4
 msgid ""
@@ -1017,10 +1034,13 @@ msgid ""
 "production processes. Despite the wide availability in asteroids, there is "
 "always significant demand for more."
 msgstr ""
+"Il ferro svolge un ruolo fondamentale in molti differenti processi chimici e "
+"per la produzione di materiali. Malgrado la vasta disponibilità negli "
+"asteroidi, c'è sempre una domanda significativa per averne di più."
 
 #: dat/commodities/kermite.xml:3
 msgid "Kermite"
-msgstr ""
+msgstr "Kermite"
 
 #: dat/commodities/kermite.xml:4
 msgid ""
@@ -1031,26 +1051,33 @@ msgid ""
 "generators, practically ensuring their widespread demand throughout the "
 "universe."
 msgstr ""
+"Anche se è uno dei materiali più rari presente negli asteroidi, la Kermite "
+"si è assicurata un ruolo fondamentale in molte applicazioni tecnologiche "
+"differenti grazie agli effetti di curvatura dello spaziotempo quando è "
+"soggetta a particolari combinazioni di pressione e radiazioni. È comunemente "
+"usata in alcuni tipi di generatori di scuri, praticamente assicurando la sua "
+"richiesta estesa in tutto l'universo."
 
 #: dat/commodities/luxury_goods.xml:3
 msgid "Luxury Goods"
-msgstr ""
+msgstr "Beni di Lusso"
 
 #: dat/commodities/luxury_goods.xml:4
 msgid "All sorts of high quality luxury goods."
-msgstr ""
+msgstr "Qualsiasi tipo di beni di lusso di elevata qualità."
 
 #: dat/commodities/medicine.xml:3
 msgid "Medicine"
-msgstr ""
+msgstr "Farmaci"
 
 #: dat/commodities/medicine.xml:4
 msgid "An assortment of medicines suitable for curing all sorts of ailments."
 msgstr ""
+"Un assortimento di farmaci adatti per curare qualsiasi tipo di malattia."
 
 #: dat/commodities/nebula_crystals.xml:3
 msgid "Nebula Crystals"
-msgstr ""
+msgstr "Nebulosa dei Cristalli"
 
 #: dat/commodities/nebula_crystals.xml:4
 msgid ""
@@ -1059,10 +1086,14 @@ msgid ""
 "you think you can hear noises coming from them. However, your scanners don't "
 "show anything out of the ordinary."
 msgstr ""
+"Non è esattamente chiaro come questi cristalli si formino, ma possono essere "
+"trovati nelle profondità della nebulosa. Sono stranamente caldi al tocco e "
+"alcune volte pensi di sentire dei rumori provenire da essi. Tuttavia il tuo "
+"analizzatore non mostra nulla fuori dall'ordinario."
 
 #: dat/commodities/neodymium.xml:3
 msgid "Neodymium"
-msgstr ""
+msgstr "Neodimio"
 
 #: dat/commodities/neodymium.xml:4
 msgid ""
@@ -1072,10 +1103,16 @@ msgid ""
 "technologies, the demand for Neodymium remains relatively high and constant "
 "throughout the galaxy."
 msgstr ""
+"Il neodimio è veramente utile grazie alle sue proprietà magnetiche e "
+"termiche, e per questo ha un ruolo cruciale nelle applicazioni di "
+"raffreddamento criogenico e nelle camere di stasi. Data la crescita della "
+"popolazione e l'uso su vasta scala delle nuove tecnologie che si sono avute "
+"dopo l'Incidente, la domanda di neodimio rimane relativamente alta e "
+"costante in tutta la galassia."
 
 #: dat/commodities/nickel.xml:3
 msgid "Nickel"
-msgstr ""
+msgstr "Nichel"
 
 #: dat/commodities/nickel.xml:4
 msgid ""
@@ -1083,10 +1120,14 @@ msgid ""
 "quite common among asteroids like Iron, the wide applicability makes it so "
 "there is a constant and steady demand throughout the galaxy."
 msgstr ""
+"Il nichel è comunemente utilizzato nelle leghe e per creare campi magnetici. "
+"Sebbene sia abbastanza comune negli asteroidi, come lo è il ferro, la "
+"vastità di applicabilità fa sì che vi sia una costante e continua richiesta "
+"in tutta la galassia."
 
 #: dat/commodities/olivine.xml:3
 msgid "Olivine"
-msgstr ""
+msgstr "Olivina"
 
 #: dat/commodities/olivine.xml:4
 msgid ""
@@ -1094,20 +1135,27 @@ msgid ""
 "is steadly increasing for it's usefulness in enhanced weathering and "
 "terraforming, for which immense amounts are needed."
 msgstr ""
+"Sebbene sia stato usato principalmente per usi decorativi nella storia "
+"antica, la domanda di olivina è costantemente in aumento per il suo uso come "
+"amplificatore delle attività di controllo degli agenti atmosferici e di "
+"terraformazione, per i quali sono richieste immense quantità."
 
 #: dat/commodities/ore.xml:3
 msgid "Ore"
-msgstr ""
+msgstr "Rocce Minerarie"
 
 #: dat/commodities/ore.xml:4
 msgid ""
 "Ore is a key material in many industries. Smelted into metals, without ore, "
 "the ship-building industry and many others would grind to a halt."
 msgstr ""
+"Le rocce minerarie sono un materiale fondamentale in molte attività "
+"industriali. La fusione dei metalli, senza le rocce minerarie, causerebbe un "
+"arresto per le industrie di costruzione di astronavi e per molte altre."
 
 #: dat/commodities/platinum.xml:3
 msgid "Platinum"
-msgstr ""
+msgstr "Platino"
 
 #: dat/commodities/platinum.xml:4
 msgid ""
@@ -1115,6 +1163,9 @@ msgid ""
 "equipment. Although there is high demand for it, it is rather uncommonly "
 "found throughout space."
 msgstr ""
+"Il platino è un metallo prezioso, altamente non reattivo e comunemente "
+"utilizzato nei dispositivi costosi. Sebbene vi sia un'alta richiesta è "
+"piuttosto difficile trovarlo in qualsiasi parte dello spazio."
 
 #: dat/commodities/rhodium.xml:3
 msgid "Rhodium"
@@ -3441,7 +3492,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/proteron_dalton_bay.xml:2
 msgid "Proteron Dalton Bay"
-msgstr ""
+msgstr "Hangar per Proteon Dalton"
 
 #: dat/outfits/fighter_bays/proteron_dalton_bay.xml:11
 msgid ""
@@ -3449,10 +3500,13 @@ msgid ""
 "interceptors. It comes with all the devices required for the maintenance and "
 "flight of the interceptors."
 msgstr ""
+"Questo hangar dei caccia permette alla tua astronave di portare quattro "
+"intercettori di classe Proteron Dalton. È fornito con tutti i dispositivi "
+"necessari per la manutenzione e il combattimento degli intercettori."
 
 #: dat/outfits/fighter_bays/proteron_dalton_dock.xml:2
 msgid "Proteron Dalton Dock"
-msgstr ""
+msgstr "Alloggiamento di espansione per Proteon Dalton"
 
 #: dat/outfits/fighter_bays/proteron_dalton_dock.xml:11
 msgid ""
@@ -3460,6 +3514,9 @@ msgid ""
 "interceptors. It comes with all the devices required for the maintenance and "
 "flight of the interceptors."
 msgstr ""
+"Questo hangar dei caccia permette alla tua astronave di portare una coppia "
+"di intercettori di classe Proteron Dalton. È fornito con tutti i dispositivi "
+"necessari per la manutenzione e il combattimento degli intercettori."
 
 #: dat/outfits/fighter_bays/sirius_shaman_bay.xml:2
 msgid "Sirius Shaman Bay"
@@ -7034,7 +7091,7 @@ msgstr ""
 
 #: dat/ships/proteron/proteron_dalton.xml:2
 msgid "Proteron Dalton"
-msgstr ""
+msgstr "Proteron Dalton"
 
 #: dat/ships/proteron/proteron_dalton.xml:19
 msgid "You need at least 20 reputation with the Proteron."
