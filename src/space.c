@@ -3951,7 +3951,7 @@ static int space_parseSpobs( xmlNodePtr parent, StarSystem* sys )
 {
    xmlNodePtr node = parent->xmlChildrenNode;
    do {
-      if (xml_isNode(node,"spob") || xml_isNode(node,"planet")) { /* TODO remove "planet" check in 0.11.0 */
+      if (xml_isNode(node,"spob")) {
          Spob *spob = spob_get(xml_get(node));
          if (spob != NULL) /* Must exist */
             spob_setKnown(spob);
