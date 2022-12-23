@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.4\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-07-20 00:21-0400\n"
-"PO-Revision-Date: 2022-12-21 14:49+0000\n"
+"PO-Revision-Date: 2022-12-24 01:49+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "it/>\n"
@@ -13819,7 +13819,7 @@ msgstr ""
 
 #: dat/commodities/diamond.xml:3 dat/scripts/pilotname/generic.lua:29
 msgid "Diamond"
-msgstr ""
+msgstr "Diamanti"
 
 #: dat/commodities/diamond.xml:4
 msgid ""
@@ -13830,10 +13830,16 @@ msgid ""
 "enough to produce synthetically that it is not as sought after as much as it "
 "once was."
 msgstr ""
+"I diamanti sono un'altra forma di grafite che si è cristallizzata a causa di "
+"pressione e calore intensi nelle profondità di alcuni tipi di pianeti. Il "
+"materiale è utile in alcune applicazioni di taglio grazie alla sua durezza "
+"ed è utilizzato comunemente in applicazioni decorative, ma ora i diamanti "
+"possono essere prodotti sinteticamente abbastanza facilmente e per questo "
+"non sono più ricercati come lo erano una volta."
 
 #: dat/commodities/food.xml:3
 msgid "Food"
-msgstr ""
+msgstr "Cibo"
 
 #: dat/commodities/food.xml:4
 msgid ""
@@ -13841,10 +13847,13 @@ msgid ""
 "meals are rich in nutrients and able to last many cycles in their vacuum-"
 "sealed packaging."
 msgstr ""
+"I moderni pasti confezionati, evoluzioni delle razioni militari dell'antico "
+"passato, sono ricchi di nutrienti e in grado di durare molti cicli nelle "
+"loro confezioni sottovuoto."
 
 #: dat/commodities/gold.xml:3 dat/ssys/gold.xml:2
 msgid "Gold"
-msgstr ""
+msgstr "Oro"
 
 #: dat/commodities/gold.xml:4
 msgid ""
@@ -13853,42 +13862,53 @@ msgid ""
 "its most demanding application is as a component in decorative articles, "
 "such as jewelry."
 msgstr ""
+"L'oro è apprezzato per la sua combinazione tra la resistenza alla corrosione "
+"e la conduttività, che permette di essere usato per incrementare la vita dei "
+"prodotti elettronici, anche se la principale richiesta di applicazione è "
+"quella di essere usato come uno dei componenti negli articoli decorativi, "
+"come la gioielleria."
 
 #: dat/commodities/industrial_goods.xml:3
 msgid "Industrial Goods"
-msgstr ""
+msgstr "Beni Industriali"
 
 #: dat/commodities/industrial_goods.xml:4
 msgid ""
 "An assortment of industrial goods, ranging from cutting lasers to processed "
 "metals."
 msgstr ""
+"Un assortimento di beni industriali, che vanno dai raggi laser per taglio ai "
+"metalli lavorati."
 
 #: dat/commodities/luxury_goods.xml:3
 msgid "Luxury Goods"
-msgstr ""
+msgstr "Beni di Lusso"
 
 #: dat/commodities/luxury_goods.xml:4
 msgid "All sorts of high quality luxury goods."
-msgstr ""
+msgstr "Qualsiasi tipo di beni di lusso di elevata qualità."
 
 #: dat/commodities/medicine.xml:3
 msgid "Medicine"
-msgstr ""
+msgstr "Farmaci"
 
 #: dat/commodities/medicine.xml:4
 msgid "An assortment of medicines suitable for curing all sorts of ailments."
 msgstr ""
+"Un assortimento di farmaci adatti per curare qualsiasi tipo di malattia."
 
 #: dat/commodities/ore.xml:3
 msgid "Ore"
-msgstr ""
+msgstr "Rocce Minerarie"
 
 #: dat/commodities/ore.xml:4
 msgid ""
 "Ore is a key material in many industries. Smelted into metals, without ore, "
 "the ship-building industry and many others would grind to a halt."
 msgstr ""
+"Le rocce minerarie sono un materiale fondamentale in molte attività "
+"industriali. La fusione dei metalli, senza le rocce minerarie, causerebbe un "
+"arresto per le industrie di costruzione di astronavi e per molte altre."
 
 #: dat/commodities/water.xml:3
 msgid "Water"
@@ -75325,7 +75345,7 @@ msgstr ""
 
 #: dat/scripts/pilotname/pirate.lua:87
 msgid "Iron"
-msgstr ""
+msgstr "Ferro"
 
 #: dat/scripts/pilotname/pirate.lua:88
 msgid "Justice"
