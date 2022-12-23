@@ -170,7 +170,7 @@ function create ()
       did090 = true
    end
    -- Run on saves older than 0.10.0
-   if naev.versionTest( save_version, "0.10.0-beta.1" ) < 0 then
+   if naev.versionTest( save_version, "0.10.0" ) < 0 then
       updater0100( did090 )
       didupdate = true
    end
