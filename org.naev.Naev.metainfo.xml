@@ -40,6 +40,9 @@
   </categories>
 
   <releases>
+    <release version="0.10.0" type="stable" date="2022-12-23">
+      <url>https://naev.org/blarg/2022-12-23_0.10.0/</url>
+    </release>
     <release version="0.9.4" type="stable" date="2022-07-20">
       <url>https://naev.org/blarg/2022-07-20_0.9.4/</url>
     </release>
@@ -91,40 +94,56 @@
 
   <screenshots>
     <screenshot type="default">
-      <caption>A pirate kestrel in a firefight</caption>
-      <image>https://naev.org/imgs/screenshots_0.9.0/png/fight1.png</image>
+      <caption>A Rhino being scanned</caption>
+      <image>https://naev.org/imgs/screenshots_0.10.0/png/scan.png</image>
     </screenshot>
     <screenshot>
-      <caption>A pirate kestrel attacking a ship</caption>
-      <image>https://naev.org/imgs/screenshots_0.9.0/png/attack.png</image>
+      <caption>A Pirate Kestrel releasing Za'lek drones</caption>
+      <image>https://naev.org/imgs/screenshots_0.10.0/png/alteris_skirmish.png</image>
     </screenshot>
     <screenshot>
-      <caption>A Gas Giant</caption>
-      <image>https://naev.org/imgs/screenshots_0.9.0/png/gas_giant.png</image>
+      <caption>Exploring the depths of the Nebula</caption>
+      <image>https://naev.org/imgs/screenshots_0.10.0/png/arandon.png</image>
     </screenshot>
     <screenshot>
-      <caption>The equipment screen</caption>
-      <image>https://naev.org/imgs/screenshots_0.9.0/png/equipment.png</image>
+      <caption>Cruising near a black hole</caption>
+      <image>https://naev.org/imgs/screenshots_0.10.0/png/blackhole.png</image>
     </screenshot>
     <screenshot>
-      <caption>The shipyard screen</caption>
-      <image>https://naev.org/imgs/screenshots_0.9.0/png/shipyard.png</image>
+      <caption>A Goddard engaged in a large skirmish</caption>
+      <image>https://naev.org/imgs/screenshots_0.10.0/png/gauntlet.png</image>
     </screenshot>
     <screenshot>
-      <caption>The mission screen</caption>
-      <image>https://naev.org/imgs/screenshots_0.9.0/png/missions.png</image>
+      <caption>A Llama jumping into a new system</caption>
+      <image>https://naev.org/imgs/screenshots_0.10.0/png/jump.png</image>
     </screenshot>
     <screenshot>
-      <caption>Prepare to be scanned</caption>
-      <image>https://naev.org/imgs/screenshots_0.9.0/png/scanned.png</image>
+      <caption>Mining for valuable resources</caption>
+      <image>https://naev.org/imgs/screenshots_0.10.0/png/mining.png</image>
     </screenshot>
     <screenshot>
-      <caption>Flying through a nebula</caption>
-      <image>https://naev.org/imgs/screenshots_0.9.0/png/nebula.png</image>
+      <caption>Racing to prove your pilot abilities</caption>
+      <image>https://naev.org/imgs/screenshots_0.10.0/png/race.png</image>
     </screenshot>
     <screenshot>
-      <caption>Flying stealthily through a system</caption>
-      <image>https://naev.org/imgs/screenshots_0.9.0/png/stealth.png</image>
+      <caption>Perusing the shipyard to obtain a better ship</caption>
+      <image>https://naev.org/imgs/screenshots_0.10.0/png/shipyard.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Looking for work and meeting locals at the spaceport bar</caption>
+      <image>https://naev.org/imgs/screenshots_0.10.0/png/spaceportbar.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Hiding from other ships using stealth</caption>
+      <image>https://naev.org/imgs/screenshots_0.10.0/png/stealth.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Looking at system details with the map</caption>
+      <image>https://naev.org/imgs/screenshots_0.10.0/png/system_map.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>A Llama being attacked by a pirate</caption>
+      <image>https://naev.org/imgs/screenshots_0.10.0/png/llama_attacked.png</image>
     </screenshot>
     <screenshot>
       <caption>Beware the chicken</caption>
