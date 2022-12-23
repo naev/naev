@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-12-20 22:13-0500\n"
+"POT-Creation-Date: 2022-12-23 10:39+0900\n"
 "PO-Revision-Date: 2022-11-03 09:03+0000\n"
 "Last-Translator: Anthony Gregory Souza dos Santos "
 "<antonigregorysouza123@gmail.com>\n"
@@ -26833,6 +26833,10 @@ msgstr ""
 #.
 #. -- Whether or not the pilot should investigate a certain location.
 #. --
+#. Only care about scanning
+#. Conmfort
+#. Should be nearby
+#. Check to see if we want to go back to the lanes
 #.
 #. -- Table of think functions for the different tasks (uses task name as an index).
 #. -- These are used after the general thought process, including things like
@@ -28744,7 +28748,7 @@ msgstr ""
 #: src/land_shipyard.c:133 src/land_shipyard.c:222 src/land_trade.c:85
 #: src/land_trade.c:87 src/land_trade.c:153 src/load.c:531 src/load.c:612
 #: src/map.c:727 src/map.c:780 src/map.c:1959 src/map_find.c:697
-#: src/map_system.c:649
+#: src/map_system.c:647
 #, c-format
 msgid "None"
 msgstr ""
@@ -28824,7 +28828,7 @@ msgid ""
 "You have {playercreds}. Extract the {outfit}?"
 msgstr ""
 
-#: dat/board.lua:534 dat/spob/lua/lib/hypergate.lua:303 src/map_system.c:1038
+#: dat/board.lua:534 dat/spob/lua/lib/hypergate.lua:303 src/map_system.c:1037
 msgid "Insufficient Credits"
 msgstr ""
 
@@ -29701,7 +29705,7 @@ msgstr ""
 #: dat/events/discovery.lua:201 dat/factions/spawn/lib/common.lua:189
 #: dat/gui/brushed.lua:385 dat/gui/brushed.lua:837 dat/gui/brushed.lua:876
 #: dat/gui/legacy.lua:213 dat/gui/legacy.lua:304 dat/gui/legacy.lua:318
-#: dat/gui/slim.lua:387 dat/gui/slim.lua:1000
+#: dat/gui/slim.lua:392 dat/gui/slim.lua:1005
 #: dat/missions/pirate/blackcat.lua:95 dat/missions/shadow/darkshadow.lua:58
 #: dat/missions/shadow/shadowvigil.lua:60
 #: dat/missions/zalek/blackhole/zbh11.lua:108 dat/scripts/common/comm.lua:30
@@ -29709,8 +29713,8 @@ msgstr ""
 #: dat/scripts/common/poi.lua:206 src/equipment.c:1811 src/gui.c:1527
 #: src/map.c:589 src/map.c:595 src/map.c:601 src/map.c:607 src/map.c:613
 #: src/map.c:619 src/map.c:1920 src/map.c:2213 src/map_overlay.c:227
-#: src/map_system.c:479 src/outfit.c:301 src/outfit.c:320 src/outfit.c:923
-#: src/player.c:2068 src/player_autonav.c:92 src/player_autonav.c:225
+#: src/map_system.c:475 src/outfit.c:301 src/outfit.c:320 src/outfit.c:923
+#: src/player.c:2064 src/player_autonav.c:92 src/player_autonav.c:225
 #: src/player_autonav.c:475 src/player_autonav.c:502 src/plugin.c:154
 #: src/plugin.c:156 src/plugin.c:158 src/ship.c:212
 #, c-format
@@ -42969,9 +42973,9 @@ msgstr ""
 #. Set OSD
 #. Space out the text.
 #. Bottom bar
-#: dat/gui/brushed.lua:274 dat/gui/brushed.lua:391 dat/gui/slim.lua:393
-#: dat/gui/slim.lua:1077 dat/gui/slim.lua:1095 dat/gui/slim.lua:1134
-#: dat/gui/slim.lua:1135
+#: dat/gui/brushed.lua:274 dat/gui/brushed.lua:391 dat/gui/slim.lua:398
+#: dat/gui/slim.lua:1082 dat/gui/slim.lua:1100 dat/gui/slim.lua:1139
+#: dat/gui/slim.lua:1140
 msgid "none"
 msgstr ""
 
@@ -42979,7 +42983,7 @@ msgstr ""
 #. Refire indicator
 #. Handling missile lock-on.
 #. Handling turret tracking.
-#: dat/gui/brushed.lua:304 dat/gui/slim.lua:641
+#: dat/gui/brushed.lua:304 dat/gui/slim.lua:646
 msgid "Too big!"
 msgstr ""
 
@@ -43016,7 +43020,7 @@ msgstr ""
 #. Timer stuff
 #. Table for convenience.
 #. "Spaceport" is nicer than "Land"
-#: dat/gui/brushed.lua:374 dat/gui/slim.lua:373
+#: dat/gui/brushed.lua:374 dat/gui/slim.lua:378
 msgid "Spaceport"
 msgstr ""
 
@@ -43050,7 +43054,7 @@ msgstr ""
 #. Extend the pane depending on the services available.
 #. Render background images.
 #. Render planet image.
-#: dat/gui/brushed.lua:935 dat/gui/slim.lua:918 dat/gui/slim.lua:1048
+#: dat/gui/brushed.lua:935 dat/gui/slim.lua:923 dat/gui/slim.lua:1053
 msgid "TARGETED"
 msgstr ""
 
@@ -43066,7 +43070,7 @@ msgstr ""
 
 #. Space out the text.
 #. Render dir sprite.
-#: dat/gui/brushed.lua:951 dat/gui/slim.lua:1067
+#: dat/gui/brushed.lua:951 dat/gui/slim.lua:1072
 msgid "SERVICES:"
 msgstr ""
 
@@ -43090,7 +43094,7 @@ msgstr ""
 #. Weapon bars
 #. Truncate names for readability.
 #. Formation selection button
-#: dat/gui/brushed.lua:969 dat/gui/slim.lua:808
+#: dat/gui/brushed.lua:969 dat/gui/slim.lua:813
 msgid "Set formation"
 msgstr ""
 
@@ -43203,7 +43207,7 @@ msgstr ""
 #. Faction Logo
 #. Cargo light cargo_light_off
 #. Status information
-#: dat/gui/legacy.lua:335 dat/gui/slim.lua:969
+#: dat/gui/legacy.lua:335 dat/gui/slim.lua:974
 msgid "Disabled"
 msgstr ""
 
@@ -43264,12 +43268,12 @@ msgstr ""
 #. Initialize bar data
 #. Ammo, heat and ready bars
 #. Missile lock warning
-#: dat/gui/slim.lua:196
+#: dat/gui/slim.lua:201
 msgid "Warning - Missile Lock-on Detected"
 msgstr ""
 
 #. Colour the planet name based on friendliness.
-#: dat/gui/slim.lua:405
+#: dat/gui/slim.lua:410
 #, lua-format
 msgid " (%s free)"
 msgstr ""
@@ -43317,71 +43321,71 @@ msgstr ""
 #. update_system()
 #. update_nav()
 #. update_faction()
-#: dat/gui/slim.lua:473 dat/gui/slimv2.lua:259
+#: dat/gui/slim.lua:478 dat/gui/slimv2.lua:265
 msgid "Cooling down..."
 msgstr ""
 
-#: dat/gui/slim.lua:516 dat/gui/slim.lua:561
+#: dat/gui/slim.lua:521 dat/gui/slim.lua:566
 msgid "UNAVAILABLE"
 msgstr ""
 
-#: dat/gui/slim.lua:971
+#: dat/gui/slim.lua:976
 msgid "Boardable"
 msgstr ""
 
-#: dat/gui/slim.lua:973
+#: dat/gui/slim.lua:978
 msgid "Cooling Down"
 msgstr ""
 
 #. Render bars.
 #. Dist
-#: dat/gui/slim.lua:1010
+#: dat/gui/slim.lua:1015
 msgid "DIST"
 msgstr ""
 
 #. Dir
-#: dat/gui/slim.lua:1017
+#: dat/gui/slim.lua:1022
 msgid "DIR"
 msgstr ""
 
-#: dat/gui/slim.lua:1049
+#: dat/gui/slim.lua:1054
 msgid "DISTANCE:"
 msgstr ""
 
-#: dat/gui/slim.lua:1050
+#: dat/gui/slim.lua:1055
 msgid "CLASS:"
 msgstr ""
 
-#: dat/gui/slim.lua:1098 src/info.c:383
+#: dat/gui/slim.lua:1103 src/info.c:383
 msgid "Pilot:"
 msgstr ""
 
-#: dat/gui/slim.lua:1098
+#: dat/gui/slim.lua:1103
 msgid "System:"
 msgstr ""
 
-#: dat/gui/slim.lua:1098
+#: dat/gui/slim.lua:1103
 msgid "Time:"
 msgstr ""
 
-#: dat/gui/slim.lua:1098 src/load.c:744
+#: dat/gui/slim.lua:1103 src/load.c:744
 msgid "Credits:"
 msgstr ""
 
-#: dat/gui/slim.lua:1099
+#: dat/gui/slim.lua:1104
 msgid "Nav:"
 msgstr ""
 
-#: dat/gui/slim.lua:1099 src/equipment.c:1789 src/info.c:387 src/info.c:589
-#: src/land_shipyard.c:301 src/map_system.c:681
+#: dat/gui/slim.lua:1104 src/equipment.c:1789 src/info.c:387 src/info.c:589
+#: src/land_shipyard.c:301 src/map_system.c:679
 msgid "Fuel:"
 msgstr ""
 
-#: dat/gui/slim.lua:1100
+#: dat/gui/slim.lua:1105
 msgid "WSet:"
 msgstr ""
 
-#: dat/gui/slim.lua:1100 src/info.c:388
+#: dat/gui/slim.lua:1105 src/info.c:388
 msgid "Cargo:"
 msgstr ""
 
@@ -95478,7 +95482,7 @@ msgstr[1] ""
 #. @return A short string like "22 t" describing the given mass.
 #. --
 #. Translator note: this form represents an abbreviation of "_ tonnes".
-#: dat/scripts/format.lua:91 src/map_system.c:617
+#: dat/scripts/format.lua:91 src/map_system.c:615
 #, c-format, lua-format
 msgid "%d t"
 msgid_plural "%d t"
@@ -101128,7 +101132,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: src/ai.c:590 src/board.c:86 src/comm.c:158 src/land.c:1651 src/naev.c:536
-#: src/player.c:3598
+#: src/player.c:3594
 #, c-format
 msgid ""
 "Error loading file: %s\n"
@@ -101217,7 +101221,7 @@ msgstr ""
 msgid "Pilot '%s' (ai '%s') has no land target"
 msgstr ""
 
-#: src/ai.c:2364 src/comm.c:203 src/nlua_player.c:916 src/player.c:1686
+#: src/ai.c:2364 src/comm.c:203 src/nlua_player.c:916 src/player.c:1682
 #: src/space.c:1908 src/space.c:2005 src/space.c:2022 src/space.c:2073
 #: src/space.c:3485 src/space.c:3506
 #, c-format
@@ -101370,12 +101374,12 @@ msgid "#gYou reactivate the systems of %s."
 msgstr ""
 
 #. error has occurred
-#: src/board.c:101 src/player.c:3612
+#: src/board.c:101 src/player.c:3608
 #, c-format
 msgid "Board: '%s'"
 msgstr ""
 
-#: src/board.c:132 src/player.c:1768
+#: src/board.c:132 src/player.c:1764
 msgid "You need a target to board first!"
 msgstr ""
 
@@ -103062,12 +103066,12 @@ msgid "You do not remember how you acquired this ship."
 msgstr ""
 
 #: src/equipment.c:1764 src/info.c:573 src/land_shipyard.c:229
-#: src/map_system.c:656
+#: src/map_system.c:654
 msgid "Model:"
 msgstr ""
 
 #: src/equipment.c:1765 src/info.c:574 src/land.c:1322 src/land_shipyard.c:231
-#: src/map_system.c:657
+#: src/map_system.c:655
 msgid "Class:"
 msgstr ""
 
@@ -103084,13 +103088,13 @@ msgid "Fleet Capacity:"
 msgstr ""
 
 #: src/equipment.c:1773 src/info.c:575 src/land_shipyard.c:235
-#: src/map_system.c:660
+#: src/map_system.c:658
 msgid "Crew:"
 msgstr ""
 
 #: src/equipment.c:1774 src/info.c:577 src/land_outfits.c:425
-#: src/land_shipyard.c:251 src/map_find.c:637 src/map_system.c:636
-#: src/map_system.c:663
+#: src/land_shipyard.c:251 src/map_find.c:637 src/map_system.c:634
+#: src/map_system.c:661
 msgid "Mass:"
 msgstr ""
 
@@ -103099,22 +103103,22 @@ msgid "Jump Time:"
 msgstr ""
 
 #: src/equipment.c:1776 src/info.c:579 src/land_shipyard.c:255
-#: src/map_system.c:664
+#: src/map_system.c:662
 msgid "Thrust:"
 msgstr ""
 
 #: src/equipment.c:1777 src/info.c:580 src/land_shipyard.c:260
-#: src/map_system.c:666
+#: src/map_system.c:664
 msgid "Speed:"
 msgstr ""
 
 #: src/equipment.c:1778 src/info.c:581 src/land_shipyard.c:265
-#: src/map_system.c:668
+#: src/map_system.c:666
 msgid "Turn:"
 msgstr ""
 
 #: src/equipment.c:1779 src/info.c:582 src/land_shipyard.c:270
-#: src/map_system.c:670
+#: src/map_system.c:668
 msgid "Time Constant:"
 msgstr ""
 
@@ -103132,27 +103136,27 @@ msgstr ""
 
 #. Misc
 #: src/equipment.c:1784 src/info.c:584 src/land_shipyard.c:275
-#: src/map_system.c:672
+#: src/map_system.c:670
 msgid "Absorption:"
 msgstr ""
 
 #: src/equipment.c:1785 src/info.c:585 src/land_shipyard.c:280
-#: src/map_system.c:674
+#: src/map_system.c:672
 msgid "Shield:"
 msgstr ""
 
 #: src/equipment.c:1786 src/info.c:586 src/land_shipyard.c:285
-#: src/map_system.c:676
+#: src/map_system.c:674
 msgid "Armour:"
 msgstr ""
 
 #: src/equipment.c:1787 src/info.c:587 src/land_shipyard.c:290
-#: src/map_system.c:678
+#: src/map_system.c:676
 msgid "Energy:"
 msgstr ""
 
 #: src/equipment.c:1788 src/info.c:588 src/land_shipyard.c:297
-#: src/map_system.c:680
+#: src/map_system.c:678
 msgid "Cargo Space:"
 msgstr ""
 
@@ -103241,7 +103245,7 @@ msgid "%s %s (%d %s)"
 msgstr ""
 
 #: src/equipment.c:1860 src/info.c:644 src/land_shipyard.c:302
-#: src/land_shipyard.c:306 src/map_system.c:681 src/map_system.c:683
+#: src/land_shipyard.c:306 src/map_system.c:679 src/map_system.c:681
 msgid "unit"
 msgid_plural "units"
 msgstr[0] ""
@@ -104010,7 +104014,7 @@ msgstr ""
 msgid "Stats:"
 msgstr ""
 
-#: src/info.c:626 src/land_shipyard.c:257 src/map_system.c:665
+#: src/info.c:626 src/land_shipyard.c:257 src/map_system.c:663
 #, c-format
 msgid "%.0f kN/tonne"
 msgstr ""
@@ -104020,7 +104024,7 @@ msgstr ""
 msgid "%.0f m/s (max %.0f m/s)"
 msgstr ""
 
-#: src/info.c:631 src/land_shipyard.c:267 src/map_system.c:669
+#: src/info.c:631 src/land_shipyard.c:267 src/map_system.c:667
 #, c-format
 msgid "%.0f deg/s"
 msgstr ""
@@ -105082,17 +105086,17 @@ msgid "Other"
 msgstr ""
 
 #. Set up keys.
-#: src/land_outfits.c:424 src/map_find.c:636 src/map_system.c:635
+#: src/land_outfits.c:424 src/map_find.c:636 src/map_system.c:633
 msgid "Owned:"
 msgstr ""
 
 #: src/land_outfits.c:426 src/land_shipyard.c:309 src/map_find.c:638
-#: src/map_system.c:637 src/map_system.c:684
+#: src/map_system.c:635 src/map_system.c:682
 msgid "Price:"
 msgstr ""
 
 #: src/land_outfits.c:491 src/land_shipyard.c:313 src/map_find.c:640
-#: src/map_system.c:685
+#: src/map_system.c:683
 msgid "License:"
 msgstr ""
 
@@ -105178,7 +105182,7 @@ msgstr ""
 msgid "Find Ships"
 msgstr ""
 
-#: src/land_shipyard.c:233 src/map_system.c:659
+#: src/land_shipyard.c:233 src/map_system.c:657
 msgid "Fabricator:"
 msgstr ""
 
@@ -105188,33 +105192,33 @@ msgid "Base Properties"
 msgstr ""
 
 #. Weapons & Manoeuvrability
-#: src/land_shipyard.c:245 src/map_system.c:662
+#: src/land_shipyard.c:245 src/map_system.c:660
 msgid "CPU:"
 msgstr ""
 
-#: src/land_shipyard.c:246 src/map_system.c:662
+#: src/land_shipyard.c:246 src/map_system.c:660
 msgid "teraflop"
 msgid_plural "teraflops"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/land_shipyard.c:262 src/map_system.c:667
+#: src/land_shipyard.c:262 src/map_system.c:665
 #, c-format
 msgid "%.0f m/s"
 msgstr ""
 
-#: src/land_shipyard.c:277 src/map_system.c:673
+#: src/land_shipyard.c:277 src/map_system.c:671
 #, c-format
 msgid "%.0f%% damage"
 msgstr ""
 
 #: src/land_shipyard.c:282 src/land_shipyard.c:287 src/land_shipyard.c:292
-#: src/map_system.c:675 src/map_system.c:677 src/map_system.c:679
+#: src/map_system.c:673 src/map_system.c:675 src/map_system.c:677
 #, c-format
 msgid "%.0f MJ (%.1f MW)"
 msgstr ""
 
-#: src/land_shipyard.c:305 src/map_system.c:682
+#: src/land_shipyard.c:305 src/map_system.c:680
 msgid "Fuel Use:"
 msgstr ""
 
@@ -105321,8 +105325,8 @@ msgstr ""
 msgid "%s/t"
 msgstr ""
 
-#: src/land_trade.c:240 src/land_trade.c:242 src/map_system.c:723
-#: src/map_system.c:725
+#: src/land_trade.c:240 src/land_trade.c:242 src/map_system.c:721
+#: src/map_system.c:723
 #, c-format
 msgid "%s/t ± %s/t"
 msgstr ""
@@ -105850,117 +105854,117 @@ msgid "No gfx for %s…"
 msgstr ""
 
 #. no nebula or star images - probably due to nebula
-#: src/map_system.c:356 src/map_system.c:358
+#: src/map_system.c:357 src/map_system.c:359
 msgid "Obscured by the nebula"
 msgstr ""
 
-#: src/map_system.c:396
+#: src/map_system.c:392
 #, c-format
 msgid "System: %s\n"
 msgstr ""
 
 #. display sun information
-#: src/map_system.c:398
+#: src/map_system.c:394
 #, c-format
 msgid "%d-star system\n"
 msgid_plural "%d-star system\n"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/map_system.c:404
+#: src/map_system.c:400
 msgid "Nebula: Volatile, "
 msgstr ""
 
-#: src/map_system.c:406
+#: src/map_system.c:402
 msgid "Nebula: Dangerous, "
 msgstr ""
 
-#: src/map_system.c:408
+#: src/map_system.c:404
 msgid "Nebula: Unstable, "
 msgstr ""
 
-#: src/map_system.c:410
+#: src/map_system.c:406
 msgid "Nebula: Stable, "
 msgstr ""
 
-#: src/map_system.c:414
+#: src/map_system.c:410
 msgid "Dense\n"
 msgstr ""
 
-#: src/map_system.c:416
+#: src/map_system.c:412
 msgid "Light\n"
 msgstr ""
 
-#: src/map_system.c:418
+#: src/map_system.c:414
 msgid "Medium\n"
 msgstr ""
 
-#: src/map_system.c:420
+#: src/map_system.c:416
 msgid "Nebula: None\n"
 msgstr ""
 
-#: src/map_system.c:425
+#: src/map_system.c:421
 msgid "Interference: Dense\n"
 msgstr ""
 
-#: src/map_system.c:427
+#: src/map_system.c:423
 msgid "Interference: Light\n"
 msgstr ""
 
-#: src/map_system.c:436
+#: src/map_system.c:432
 #, c-format
 msgid "Asteroid field density: %.2g\n"
 msgstr ""
 
-#: src/map_system.c:445
+#: src/map_system.c:441
 msgid "Faction: Multiple\n"
 msgstr ""
 
-#: src/map_system.c:451
+#: src/map_system.c:447
 msgid "Faction: N/A\n"
 msgstr ""
 
 #. saw them all and all the same
-#: src/map_system.c:454
+#: src/map_system.c:450
 #, c-format
 msgid ""
 "Faction: %s\n"
 "Standing: %s\n"
 msgstr ""
 
-#: src/map_system.c:481
+#: src/map_system.c:477
 msgid "Presence: N/A\n"
 msgstr ""
 
 #. First jump
-#: src/map_system.c:490
+#: src/map_system.c:486
 msgid "   Jump points to:\n"
 msgstr ""
 
-#: src/map_system.c:494
+#: src/map_system.c:490
 msgid "     Unknown system\n"
 msgstr ""
 
-#: src/map_system.c:511
+#: src/map_system.c:507
 #, c-format
 msgid ""
 "Spob: %s\n"
 "Planetary class: %s    Population: roughly %s\n"
 msgstr ""
 
-#: src/map_system.c:513
+#: src/map_system.c:509
 msgid "No space port here\n"
 msgstr ""
 
-#: src/map_system.c:515
+#: src/map_system.c:511
 msgid "You can land here\n"
 msgstr ""
 
-#: src/map_system.c:517
+#: src/map_system.c:513
 msgid "Not advisable to land here\n"
 msgstr ""
 
-#: src/map_system.c:519
+#: src/map_system.c:515
 msgid "You cannot land here\n"
 msgstr ""
 
@@ -105969,132 +105973,132 @@ msgstr ""
 msgid "No description available"
 msgstr ""
 
-#: src/map_system.c:530
+#: src/map_system.c:526
 msgid "This system is landable"
 msgstr ""
 
-#: src/map_system.c:530
+#: src/map_system.c:526
 msgid "This system is not landable"
 msgstr ""
 
-#: src/map_system.c:531
+#: src/map_system.c:527
 msgid "This system is inhabited"
 msgstr ""
 
-#: src/map_system.c:531
+#: src/map_system.c:527
 msgid "This system is not inhabited"
 msgstr ""
 
-#: src/map_system.c:532
+#: src/map_system.c:528
 msgid "You can refuel here"
 msgstr ""
 
-#: src/map_system.c:532
+#: src/map_system.c:528
 msgid "You cannot refuel here"
 msgstr ""
 
-#: src/map_system.c:533
+#: src/map_system.c:529
 msgid "This system has a bar"
 msgstr ""
 
-#: src/map_system.c:533
+#: src/map_system.c:529
 msgid "This system does not have a bar"
 msgstr ""
 
-#: src/map_system.c:534
+#: src/map_system.c:530
 msgid "This system offers missions"
 msgstr ""
 
-#: src/map_system.c:534
+#: src/map_system.c:530
 msgid "This system does not offer missions"
 msgstr ""
 
-#: src/map_system.c:535
+#: src/map_system.c:531
 msgid "This system has a trade outlet"
 msgstr ""
 
-#: src/map_system.c:535
+#: src/map_system.c:531
 msgid "This system does not have a trade outlet"
 msgstr ""
 
-#: src/map_system.c:536
+#: src/map_system.c:532
 msgid "This system sells ship equipment"
 msgstr ""
 
-#: src/map_system.c:536
+#: src/map_system.c:532
 msgid "This system does not sell ship equipment"
 msgstr ""
 
-#: src/map_system.c:537
+#: src/map_system.c:533
 msgid "This system sells ships"
 msgstr ""
 
-#: src/map_system.c:537
+#: src/map_system.c:533
 msgid "This system does not sell ships"
 msgstr ""
 
-#: src/map_system.c:712
+#: src/map_system.c:710
 #, c-format
 msgid "#nYou have:#0 %d tonne, purchased at %s/t\n"
 msgid_plural "#nYou have:#0 %d tonnes, purchased at %s/t\n"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/map_system.c:718
+#: src/map_system.c:716
 #, c-format
 msgid "#nYou have:#0 %d tonne\n"
 msgid_plural "#nYou have:#0 %d tonnes\n"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/map_system.c:722
+#: src/map_system.c:720
 msgid "Average price seen here:"
 msgstr ""
 
-#: src/map_system.c:724
+#: src/map_system.c:722
 msgid "Average price seen everywhere:"
 msgstr ""
 
-#: src/map_system.c:729
+#: src/map_system.c:727
 msgid "Unexpected call to map_system_array_update\n"
 msgstr ""
 
 #. no route
-#: src/map_system.c:1026
+#: src/map_system.c:1025
 msgid "Unavailable"
 msgstr ""
 
-#: src/map_system.c:1026
+#: src/map_system.c:1025
 #, c-format
 msgid "Commodity prices for %s are not available here at the moment."
 msgstr ""
 
-#: src/map_system.c:1038
+#: src/map_system.c:1037
 #, c-format
 msgid "You need %s to purchase this information."
 msgstr ""
 
-#: src/map_system.c:1040
+#: src/map_system.c:1039
 msgid "No commodities sold here"
 msgstr ""
 
-#: src/map_system.c:1040
+#: src/map_system.c:1039
 msgid "There are no commodities sold here."
 msgstr ""
 
-#: src/map_system.c:1042
+#: src/map_system.c:1041
 msgid "Already Up-to-date"
 msgstr ""
 
-#: src/map_system.c:1042
+#: src/map_system.c:1041
 msgid "You have newer information that what is available."
 msgstr ""
 
-#: src/map_system.c:1044
+#: src/map_system.c:1043
 msgid "Purchase commodity prices?"
 msgstr ""
 
-#: src/map_system.c:1044
+#: src/map_system.c:1043
 #, c-format
 msgid "Purchase %g period old pricing information for %s for %s?"
 msgstr ""
@@ -107168,8 +107172,8 @@ msgid "#%cBroadcast %s>#0 \"%s\""
 msgstr ""
 
 #. Hostile
-#: src/nlua_pilot.c:2492 src/nlua_pilot.c:2529 src/player.c:1626
-#: src/player.c:1635 src/player.c:1638 src/player.c:1641
+#: src/nlua_pilot.c:2492 src/nlua_pilot.c:2529 src/player.c:1622
+#: src/player.c:1631 src/player.c:1634 src/player.c:1637
 #, c-format
 msgid "#%c%s>#0 %s"
 msgstr ""
@@ -107670,7 +107674,7 @@ msgstr ""
 msgid "No such material %s"
 msgstr ""
 
-#: src/opengl.c:110 src/player.c:2308
+#: src/opengl.c:110 src/player.c:2304
 msgid "Aborting screenshot"
 msgstr ""
 
@@ -109286,88 +109290,88 @@ msgstr ""
 msgid "Unable to find price for player's ship '%s': ship does not exist!"
 msgstr ""
 
-#: src/player.c:1466
+#: src/player.c:1462
 #, c-format
 msgid "Trying to set player's spob target to invalid ID '%d'"
 msgstr ""
 
-#: src/player.c:1575
+#: src/player.c:1571
 msgid "There are no spobs to land on."
 msgstr ""
 
-#: src/player.c:1613
+#: src/player.c:1609
 msgid "Docking stabilizers malfunctioning, cannot land."
 msgstr ""
 
-#: src/player.c:1621 src/player.c:1629
+#: src/player.c:1617 src/player.c:1625
 msgid "You can't land here."
 msgstr ""
 
-#: src/player.c:1639
+#: src/player.c:1635
 msgid "Landing authorized."
 msgstr ""
 
 #. No shoes, no shirt, no lifeforms, no service.
-#: src/player.c:1647
+#: src/player.c:1643
 #, c-format
 msgid "#oReady to land on %s."
 msgstr ""
 
-#: src/player.c:1657
+#: src/player.c:1653
 #, c-format
 msgid "#rYou are too far away to land on %s."
 msgstr ""
 
-#: src/player.c:1662
+#: src/player.c:1658
 #, c-format
 msgid "#rYou are going too fast to land on %s."
 msgstr ""
 
-#: src/player.c:1717
+#: src/player.c:1713
 msgid "Player has landing permission, but no valid spob targeted."
 msgstr ""
 
-#: src/player.c:1728
+#: src/player.c:1724
 #, c-format
 msgid "#%c%s>#0 Landing permission revoked."
 msgstr ""
 
-#: src/player.c:1745
+#: src/player.c:1741
 msgid "You are not allowed to land at this moment."
 msgstr ""
 
-#: src/player.c:1791
+#: src/player.c:1787
 #, c-format
 msgid "Trying to set player's hyperspace target to invalid ID '%d'"
 msgstr ""
 
-#: src/player.c:1892
+#: src/player.c:1888
 #, c-format
 msgid "#rReceiving hail! Press #b%s#0 to respond."
 msgstr ""
 
-#: src/player.c:1945
+#: src/player.c:1941
 msgid "Aborting hyperspace sequence."
 msgstr ""
 
-#: src/player.c:1957
+#: src/player.c:1953
 msgid "Hyperspace drive is offline."
 msgstr ""
 
-#: src/player.c:1959
+#: src/player.c:1955
 msgid "You do not have enough fuel to hyperspace jump."
 msgstr ""
 
-#: src/player.c:1961
+#: src/player.c:1957
 msgid "Preparing for hyperspace."
 msgstr ""
 
-#: src/player.c:2059
+#: src/player.c:2055
 #, c-format
 msgid "#oAutonav arrived at the %s system."
 msgstr ""
 
-#: src/player.c:2065
+#: src/player.c:2061
 #, c-format
 msgid "#oAutonav continuing until %s (%d jump left)."
 msgid_plural "#oAutonav continuing until %s (%d jumps left)."
@@ -109375,123 +109379,123 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. in case the crap system breaks :)
-#: src/player.c:2320
+#: src/player.c:2316
 msgid "You have reached the maximum amount of screenshots [999]"
 msgstr ""
 
 #. now proceed to take the screenshot
-#: src/player.c:2325
+#: src/player.c:2321
 #, c-format
 msgid "Taking screenshot [%03d]..."
 msgstr ""
 
-#: src/player.c:2356
+#: src/player.c:2352
 #, c-format
 msgid "#r%s is out of comm range, unable to contact."
 msgstr ""
 
-#: src/player.c:2374
+#: src/player.c:2370
 #, c-format
 msgid "#r%s does not respond."
 msgstr ""
 
-#: src/player.c:2381 src/player.c:2403
+#: src/player.c:2377 src/player.c:2399
 msgid "No target selected to hail."
 msgstr ""
 
-#: src/player.c:2436
+#: src/player.c:2432
 msgid "You haven't been hailed by any pilots."
 msgstr ""
 
-#: src/player.c:2449
+#: src/player.c:2445
 msgid "Mouse flying enabled."
 msgstr ""
 
-#: src/player.c:2455
+#: src/player.c:2451
 msgid "Mouse flying disabled."
 msgstr ""
 
-#: src/player.c:2676 src/player.c:2695
+#: src/player.c:2672 src/player.c:2691
 #, c-format
 msgid "Player ship '%s' not found in stack"
 msgstr ""
 
-#: src/player.c:3111
+#: src/player.c:3107
 msgid "Escort is undeployed, removing."
 msgstr ""
 
-#: src/player.c:3122
+#: src/player.c:3118
 msgid "Escort is deployed past outfit limits, removing."
 msgstr ""
 
-#: src/player.c:3415
+#: src/player.c:3411
 #, c-format
 msgid "Found mission cargo '%s' without associated mission."
 msgstr ""
 
-#: src/player.c:3416 src/player.c:3422
+#: src/player.c:3412 src/player.c:3418
 msgid "Please reload save game to remove the dead cargo."
 msgstr ""
 
-#: src/player.c:3421
+#: src/player.c:3417
 #, c-format
 msgid "Found cargo '%s' with 0 quantity."
 msgstr ""
 
-#: src/player.c:3645
+#: src/player.c:3641
 #, c-format
 msgid "Outfit '%s' in player save not found!"
 msgstr ""
 
-#: src/player.c:3672
+#: src/player.c:3668
 #, c-format
 msgid "Ship '%s' in player save not found!"
 msgstr ""
 
-#: src/player.c:3697
+#: src/player.c:3693
 #, c-format
 msgid "Saved license does not exist and could not be found or updated: '%s'!"
 msgstr ""
 
-#: src/player.c:3757
+#: src/player.c:3753
 msgid "Malformed time in save game!"
 msgstr ""
 
-#: src/player.c:3794
+#: src/player.c:3790
 #, c-format
 msgid "Outfit '%s' was saved without quantity!"
 msgstr ""
 
-#: src/player.c:3821
+#: src/player.c:3817
 msgid "Player ship does not exist!"
 msgstr ""
 
-#: src/player.c:3824
+#: src/player.c:3820
 msgid "Player has no other ships, giving starting ship."
 msgstr ""
 
-#: src/player.c:3835
+#: src/player.c:3831
 #, c-format
 msgid "Giving player ship '%s'."
 msgstr ""
 
-#: src/player.c:3841
+#: src/player.c:3837
 msgid "Something went horribly wrong, player does not exist after load..."
 msgstr ""
 
-#: src/player.c:3851
+#: src/player.c:3847
 msgid "Save has no time information, setting to start information."
 msgstr ""
 
-#: src/player.c:3857
+#: src/player.c:3853
 msgid "Player save was updated!"
 msgstr ""
 
-#: src/player.c:3858
+#: src/player.c:3854
 msgid "Save Game Updated"
 msgstr ""
 
-#: src/player.c:3858
+#: src/player.c:3854
 msgid ""
 "The loaded save games has had outfits and ships updated to the current Naev "
 "version. You will find that some outfits and ships you have had have been "
@@ -109499,168 +109503,168 @@ msgid ""
 "refunded the cost in credits."
 msgstr ""
 
-#: src/player.c:3866
+#: src/player.c:3862
 #, c-format
 msgid ""
 "Player starts out in non-existent or invalid spob '%s',trying to find a "
 "suitable one instead."
 msgstr ""
 
-#: src/player.c:3895
+#: src/player.c:3891
 #, c-format
 msgid "Could not find a spob satisfying criteria %d."
 msgstr ""
 
-#: src/player.c:3899
+#: src/player.c:3895
 msgid "Could not find a suitable spob. Choosing a random spob."
 msgstr ""
 
-#: src/player.c:3952
+#: src/player.c:3948
 #, c-format
 msgid "Mission '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3977
+#: src/player.c:3973
 #, c-format
 msgid "Event '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:4002
+#: src/player.c:3998
 msgid "License node is missing name."
 msgstr ""
 
-#: src/player.c:4029
+#: src/player.c:4025
 msgid "Inventory item node is missing name."
 msgstr ""
 
-#: src/player.c:4065
+#: src/player.c:4061
 #, c-format
 msgid "Fleet ship '%s' is deployed despite not being marked for deployal!"
 msgstr ""
 
-#: src/player.c:4069
+#: src/player.c:4065
 #, c-format
 msgid "Fleet ship '%s' is deployed despite not being space worthy!"
 msgstr ""
 
-#: src/player.c:4074
+#: src/player.c:4070
 #, c-format
 msgid "Escort has invalid type '%s'."
 msgstr ""
 
-#: src/player.c:4125 src/player.c:4306
+#: src/player.c:4121 src/player.c:4302
 #, c-format
 msgid "Unknown ship class '%s' when parsing 'ships_destroyed' node!"
 msgstr ""
 
-#: src/player.c:4144
+#: src/player.c:4140
 #, c-format
 msgid ""
 "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to "
 "stock."
 msgstr ""
 
-#: src/player.c:4152
+#: src/player.c:4148
 #, c-format
 msgid "Outfit '%s' does not fit on player's pilot '%s', adding to stock."
 msgstr ""
 
-#: src/player.c:4172
+#: src/player.c:4168
 msgid "Empty ship slot node found, skipping."
 msgstr ""
 
-#: src/player.c:4227
+#: src/player.c:4223
 #, c-format
 msgid "Ignoring player-owned ship '%s': duplicate of player's current ship."
 msgstr ""
 
-#: src/player.c:4236
+#: src/player.c:4232
 #, c-format
 msgid "Player ship '%s' not found!"
 msgstr ""
 
-#: src/player.c:4324 src/player.c:4342 src/player.c:4360 src/player.c:4377
+#: src/player.c:4320 src/player.c:4338 src/player.c:4356 src/player.c:4373
 #, c-format
 msgid "Save has unknown '%s' tag!"
 msgstr ""
 
-#: src/player.c:4329
+#: src/player.c:4325
 msgid "Outfit slot out of range, not adding to ship."
 msgstr ""
 
-#: src/player.c:4347 src/player.c:4365
+#: src/player.c:4343 src/player.c:4361
 msgid "Outfit slot out of range, not adding."
 msgstr ""
 
-#: src/player.c:4398
+#: src/player.c:4394
 #, c-format
 msgid "Unknown commodity '%s' detected, removing."
 msgstr ""
 
-#: src/player.c:4405
+#: src/player.c:4401
 #, c-format
 msgid ""
 "Adding cargo '%s' to ship '%s' that is not a mission cargo with quantity=0!"
 msgstr ""
 
-#: src/player.c:4423
+#: src/player.c:4419
 #, c-format
 msgid ""
 "Player ship '%s' failed slot validity check , removing all outfits and "
 "adding to stock."
 msgstr ""
 
-#: src/player.c:4468
+#: src/player.c:4464
 #, c-format
 msgid ""
 "Player ship '%s' has unknown node '%s' in 'weaponsets' (expected "
 "'weaponset')."
 msgstr ""
 
-#: src/player.c:4476
+#: src/player.c:4472
 #, c-format
 msgid "Player ship '%s' missing 'id' tag for weapon set."
 msgstr ""
 
-#: src/player.c:4480
+#: src/player.c:4476
 #, c-format
 msgid "Player ship '%s' has invalid weapon set id '%d' [max %d]."
 msgstr ""
 
-#: src/player.c:4501
+#: src/player.c:4497
 #, c-format
 msgid "Player ship '%s' missing 'type' tag for weapon set."
 msgstr ""
 
-#: src/player.c:4514
+#: src/player.c:4510
 #, c-format
 msgid ""
 "Player ship '%s' has unknown 'weaponset' child node '%s' (expected 'weapon')."
 msgstr ""
 
-#: src/player.c:4522
+#: src/player.c:4518
 #, c-format
 msgid "Player ship '%s' missing 'level' tag for weapon set weapon."
 msgstr ""
 
-#: src/player.c:4527
+#: src/player.c:4523
 #, c-format
 msgid "Player ship '%s' has invalid weapon id %d [max %d]."
 msgstr ""
 
-#: src/player.c:4574
+#: src/player.c:4570
 msgid "You have destealthed."
 msgstr ""
 
-#: src/player.c:4580
+#: src/player.c:4576
 msgid "You have entered stealth mode."
 msgstr ""
 
-#: src/player.c:4585
+#: src/player.c:4581
 msgid "Unable to stealth: missiles locked on!"
 msgstr ""
 
-#: src/player.c:4587
+#: src/player.c:4583
 msgid "Unable to stealth: other pilots nearby!"
 msgstr ""
 
@@ -110501,88 +110505,88 @@ msgstr[1] ""
 msgid "Group '%d' has no free sounds."
 msgstr ""
 
-#: src/sound.c:1479 src/sound.c:1855
+#: src/sound.c:1479 src/sound.c:1861
 #, c-format
 msgid "Group '%d' not found."
 msgstr ""
 
-#: src/sound.c:1878
+#: src/sound.c:1884
 #, c-format
 msgid "SDL_LoadWav_RW failed: %s"
 msgstr ""
 
-#: src/sound.c:1894
+#: src/sound.c:1900
 msgid "Big endian WAVs unsupported!"
 msgstr ""
 
-#: src/sound.c:1897
+#: src/sound.c:1903
 msgid "Invalid WAV format!"
 msgstr ""
 
-#: src/sound.c:1921
+#: src/sound.c:1927
 msgid "A read from media returned an error."
 msgstr ""
 
-#: src/sound.c:1922
+#: src/sound.c:1928
 msgid "Internal logic fault; indicates a bug or heap/stack corruption."
 msgstr ""
 
-#: src/sound.c:1923
+#: src/sound.c:1929
 msgid "Feature not implemented."
 msgstr ""
 
-#: src/sound.c:1924
+#: src/sound.c:1930
 msgid ""
 "Either an invalid argument, or incompletely initialized argument passed to "
 "libvorbisfile call"
 msgstr ""
 
-#: src/sound.c:1925
+#: src/sound.c:1931
 msgid "Bitstream is not Vorbis data."
 msgstr ""
 
-#: src/sound.c:1926
+#: src/sound.c:1932
 msgid "Invalid Vorbis bitstream header."
 msgstr ""
 
-#: src/sound.c:1927
+#: src/sound.c:1933
 msgid "Vorbis version mismatch."
 msgstr ""
 
-#: src/sound.c:1928
+#: src/sound.c:1934
 msgid ""
 "The given link exists in the Vorbis data stream, but is not decipherable due "
 "to garbage or corruption."
 msgstr ""
 
-#: src/sound.c:1929
+#: src/sound.c:1935
 msgid "The given stream is not seekable."
 msgstr ""
 
-#: src/sound.c:1931
+#: src/sound.c:1937
 msgid "Unknown vorbisfile error."
 msgstr ""
 
-#: src/sound.c:1955
+#: src/sound.c:1961
 #, c-format
 msgid "Failed to finish loading Ogg file: %s"
 msgstr ""
 
-#: src/sound.c:1974
+#: src/sound.c:1980
 msgid "Error reading from OGG file!"
 msgstr ""
 
-#: src/sound.c:2022 src/sound.c:2048
+#: src/sound.c:2028 src/sound.c:2054
 #, c-format
 msgid "Failed to load sound file '%s'."
 msgstr ""
 
-#: src/sound.c:2060
+#: src/sound.c:2066
 #, c-format
 msgid "Something went wrong when loading sound file '%s'."
 msgstr ""
 
-#: src/sound.c:2133
+#: src/sound.c:2139
 #, c-format
 msgid ""
 "Sound '%s' has %d channels but is being played as positional. It should be "
