@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-23 10:39+0900\n"
-"PO-Revision-Date: 2022-12-24 01:56+0000\n"
+"PO-Revision-Date: 2022-12-24 22:51+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -1168,7 +1168,7 @@ msgstr ""
 
 #: dat/commodities/rhodium.xml:3
 msgid "Rhodium"
-msgstr ""
+msgstr "Rodio"
 
 #: dat/commodities/rhodium.xml:4
 msgid ""
@@ -1178,10 +1178,16 @@ msgid ""
 "older technologies still require Rhodium and are the backbone of the market "
 "demand."
 msgstr ""
+"Sebbene la resistenza alla corrosione del Rodio è stata tradizionalmente "
+"molto importante per molte leghe, l'alta disponibilità di nuove ceramiche e "
+"materiali temprati contro le radiazioni hanno portato ad una diminuzione "
+"della domanda. In ogni caso, le tecnologie economiche o più vecchie "
+"richiedono ancora l'uso del Rodio e queste sono il pilastro che regge la "
+"domanda presente sul mercato."
 
 #: dat/commodities/silicate.xml:3
 msgid "Silicate"
-msgstr ""
+msgstr "Silicati"
 
 #: dat/commodities/silicate.xml:4
 msgid ""
@@ -1189,10 +1195,14 @@ msgid ""
 "to their versalitility they are commonly used in manufacturing of many "
 "different fundamental components to space-faring life."
 msgstr ""
+"I Silicati comprendono un insieme svariato di materiali tra cui silice e "
+"quarzo. Grazie alla loro versatilità sono comunemente utilizzati nella "
+"manifattura di molti differenti componenti fondamentali per il sostentamento "
+"vitale nei viaggi spaziali."
 
 #: dat/commodities/space_moss.xml:3
 msgid "Space Moss"
-msgstr ""
+msgstr "Muschio Spaziale"
 
 #. Some useful variable names
 #. Add the head guy
@@ -1228,11 +1238,11 @@ msgstr ""
 #: dat/outfits/utility/evasive_blink_thruster.xml:11
 #: dat/events/hypergate_construction.lua:121 dat/scripts/common/minerva.lua:32
 msgid "TODO"
-msgstr ""
+msgstr "DAFARE"
 
 #: dat/commodities/therite.xml:3
 msgid "Therite"
-msgstr ""
+msgstr "Therite"
 
 #: dat/commodities/therite.xml:4
 msgid ""
@@ -1244,6 +1254,14 @@ msgid ""
 "applications, from sub-space sensors to reinforced armours, leading to a "
 "constant and large demand for it."
 msgstr ""
+"La Therite è un composto estremamente raro che è principalmente formato "
+"tramite l'applicazione di radiazione estreme. Sebbene vi siano diverse "
+"teorie, quella dominante ipotizza che sia una proiezione di quasi-materia di "
+"radiazioni auto-interferenti. Tuttavia, anche senza aver compreso la fisica "
+"esatta che sta dietro questo composto, gli ingegneri hanno trovato un'ampia "
+"gamma di usi in applicazioni per materiali di alto livello, dai sensori "
+"subspaziali alle armature rinforzate, portando ad avere una costante e "
+"notevole domanda di esso."
 
 #: dat/commodities/vixilium.xml:3
 msgid "Vixilium"
@@ -27554,6 +27572,8 @@ msgid ""
 "As soon as your ship lands, your ship AI {shipai} materializes infront of "
 "you."
 msgstr ""
+"Non appena la tua astronave atterra, l'IA della tua Astronave {shipai} si "
+"materializza in fronte a te."
 
 #: dat/events/chapter1.lua:652
 msgid ""
@@ -37357,7 +37377,7 @@ msgstr "Resetta tutti gli aiuti dell'esercitazione"
 
 #: dat/events/shipai.lua:48
 msgid "Rename Ship AI"
-msgstr ""
+msgstr "Rinomina l'IA dell'Astronave"
 
 #: dat/events/shipai.lua:52 dat/events/updater.lua:95
 msgid "Enable tutorial hints"
@@ -37410,7 +37430,7 @@ msgstr ""
 #. TODO integrate into vn
 #: dat/events/shipai.lua:84
 msgid "Name your Ship AI"
-msgstr ""
+msgstr "Assegna un nome all'IA dell'Astronave"
 
 #: dat/events/shipai.lua:84
 msgid "SAI"
@@ -37419,7 +37439,7 @@ msgstr ""
 #. Can't use rename here
 #: dat/events/shipai.lua:100
 msgid "Your Ship AI has been renamed '{ainame}'."
-msgstr ""
+msgstr "L'IA della tua Astronave è stato rinominato in '{ainame}'."
 
 #: dat/events/shipai.lua:104
 msgid "\"Hello {playername}. What do you want to learn about?\""
@@ -37743,7 +37763,7 @@ msgstr ""
 #. TODO replace with real portrait
 #: dat/events/shipai.lua:247 dat/scripts/common/tutorial.lua:15
 msgid "Ship AI"
-msgstr ""
+msgstr "IA dell'Astronave"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -63228,7 +63248,7 @@ msgstr ""
 
 #: dat/missions/neutral/antlejos/ant03.lua:63
 msgid "\"Perfect! We're starting to make true progress!\""
-msgstr ""
+msgstr "\"Perfetto! Stiamo iniziando a fare dei veri progressi!\""
 
 #: dat/missions/neutral/antlejos/ant03.lua:98
 msgid "The automated cargo drones load the {amount} of {cargo} onto your ship."
@@ -82727,6 +82747,8 @@ msgid ""
 "As you are admiring the view from your cockpit, suddenly a holographic "
 "projection appears in front of you."
 msgstr ""
+"Mentre stai ammirando il panorama dalla tua cabina di pilotaggio, "
+"improvvisamente una proiezione olografica ti appare di fronte."
 
 #: dat/missions/tutorial/tutorial.lua:46
 msgid ""
@@ -82736,6 +82758,12 @@ msgid ""
 "\"Say, you look very familiar. You wouldn't be related my late previous "
 "owner? Terrible what happened…\""
 msgstr ""
+"\"Congratulazione per la tua prima astronave {playername}! Cosa, cosa sono "
+"io? Io sono l'IA (Intelligenza Artificiale) personale della tua astronave. "
+"Sempre pronta ad offrirti assistenza.\"\n"
+"I suoi occhi ti fissano per alcuni secondi.\n"
+"\"Dimmi, tu mi sembri veramente familiare. Non sarai mica un parente del mio "
+"precedente proprietario? È terribile quello che è successo...\""
 
 #: dat/missions/tutorial/tutorial.lua:49
 msgid ""
@@ -82745,31 +82773,38 @@ msgid ""
 "believe I can be of help. As your new Ship AI, would you like to give me a "
 "name?\""
 msgstr ""
+"\"Ad ogni modo, d'ora in poi io sarò l'IA della tua astronave, ma non "
+"preoccuparti se passerai su una nuova astronave, io sarò trasferita su di "
+"essa senza problemi. Se hai domande o commenti su come funziona la tua "
+"astronave o come fare determinate cose, penso di poterti essere d'aiuto. "
+"Dato che sono l'IA della tua nuova astronave, desideri darmi un nome?\""
 
 #. Can't use rename here
 #: dat/missions/tutorial/tutorial.lua:73
 msgid "\"You have given me the name of '{ainame}', is this correct?\""
-msgstr ""
+msgstr "\"Mi hai assegnato il nome '{ainame}', è corretto?\""
 
 #: dat/missions/tutorial/tutorial.lua:76
 msgid "Continue with '{ainame}'"
-msgstr ""
+msgstr "Continua con '{ainame}'"
 
 #: dat/missions/tutorial/tutorial.lua:77 dat/missions/tutorial/tutorial.lua:86
 #: src/dev_sysedit.c:237 src/dev_sysedit.c:1365 src/dev_uniedit.c:228
 #: src/dev_uniedit.c:1776 src/equipment.c:386
 msgid "Rename"
-msgstr ""
+msgstr "Rinomina"
 
 #: dat/missions/tutorial/tutorial.lua:83
 msgid ""
 "\"You haven't given me a name. I will be continued to be called 'Ship AI' or "
 "SAI for short. Is that OK?\""
 msgstr ""
+"\"Non mi hai dato un nome. Continuerò ad utilizzare il nome 'IA "
+"dell'Astronave' o, in breve, IAdA . Va bene?\""
 
 #: dat/missions/tutorial/tutorial.lua:85
 msgid "\"'Ship AI' is fine\""
-msgstr ""
+msgstr "\"'IA dell'Astronave' va bene\""
 
 #: dat/missions/tutorial/tutorial.lua:90
 msgid ""
@@ -82786,6 +82821,9 @@ msgid ""
 "\"Now that we have you out in space for the first time, how about I go over "
 "your new ship's controls with you real quick? No charge!\""
 msgstr ""
+"\"Dato che ti abbiamo portato nello spazio per la prima volta, cosa ne dici "
+"se ti fornisco un ripasso veloce dei controlli della tua nuova Astronave? "
+"Senza nessun addebito!\""
 
 #: dat/missions/tutorial/tutorial.lua:95
 msgid "Do the tutorial"
@@ -82805,19 +82843,22 @@ msgid ""
 "to do it again without starting a new game. You will still get prompts for "
 "advanced in-game mechanics as you encounter them.\""
 msgstr ""
-"\"Sei sicuro che vuoi saltare il tutorial iniziale? Non si potrà farlo "
-"ancora senza iniziare una nuova partita. Sarai ancora istruito durante il "
-"gioco sui meccanismi avanzati quando li incontrerai.\""
+"\"Sei sicuro che vuoi saltare l'esercitazione iniziale? Non si potrà rifarla "
+"senza iniziare una nuova partita. In ogni caso sarai ancora istruito durante "
+"il gioco sui meccanismi avanzati quando li incontrerai.\""
 
 #: dat/missions/tutorial/tutorial.lua:110
 msgid ""
 "\"Are you sure you want to disable all the hints? This includes explanation "
 "of advanced in-game mechanics you will meet as you play the game.\""
 msgstr ""
+"\"Sei sicuro di vole disabilitare tutti i suggerimenti? Questi includono le "
+"spiegazioni avanzate delle meccaniche di gioco che incontrerai durante il "
+"gioco.\""
 
 #: dat/missions/tutorial/tutorial.lua:112
 msgid "Disable all hints"
-msgstr ""
+msgstr "Disabilitare tutti i suggerimenti"
 
 #: dat/missions/tutorial/tutorial.lua:125
 msgid ""
@@ -82829,27 +82870,40 @@ msgid ""
 "your starship. Give it a try by flying over to {pnt}! You see it on your "
 "screen, right? It's the planet right next to you.\""
 msgstr ""
+"\"D'accordo, allora vediamo come pilotare la tua nuova astronave "
+"d'avanguardia! Muoversi è piuttosto facile: puoi girare l'astronave con "
+"{leftkey} e {rightkey} e accelerare per muovere l'astronave in avanti con "
+"{accelkey}! Puoi anche usare {reversekey} per far girare l'astronave nella "
+"direzione opposta alla quale si sta muovendo o invertire l'accelerazione se "
+"compri ed installi un invertitore d'accelerazione sull'astronave. Fai una "
+"prova volando fino a {pnt}! Lo puoi vedere sul tuo schermo, corretto? È il "
+"pianeta giusto accanto a te.\""
 
 #: dat/missions/tutorial/tutorial.lua:137
 msgid "Fly to {startpnt} in the {sys} system with the movement keys"
 msgstr ""
+"Vola fino a {startpnt} nel sistema {sys} utilizzando i tasti per muoverti"
 
 #: dat/missions/tutorial/tutorial.lua:138
 msgid "Land on {startpnt} in the {sys} system by double-clicking on it"
-msgstr ""
+msgstr "Atterra su {startpnt} nel sistema {sys} facendo doppio clic su di esso"
 
 #: dat/missions/tutorial/tutorial.lua:139
 msgid ""
 "Go to {destpnt} in the {sys} system by right-clicking it on the overview map"
 msgstr ""
+"Vai fino a {destpnt} nel sistema {sys} facendo clic con il tasto destro del "
+"mouse sulla mappa panoramica"
 
 #: dat/missions/tutorial/tutorial.lua:140
 msgid "Destroy the practice drone near {destpnt} in the {sys} system"
 msgstr ""
+"Distruggi il drone d'esercitazione che è vicino a {destpnt} nel sistema {sys}"
 
 #: dat/missions/tutorial/tutorial.lua:141
 msgid "Jump to a nearby system by using your starmap"
 msgstr ""
+"Fai un salto spaziale ad un sistema vicino usando la propria mappa stellare"
 
 #. Set stuff known as necessary
 #. Have to be in the mission system
@@ -82861,6 +82915,11 @@ msgid ""
 "your #bmouse pointer#0 automatically. It's up to you which method you prefer "
 "to use.\""
 msgstr ""
+"\"Perfetto! Questo è stato abbastanza semplice, giusto? Io raccomando l'uso "
+"di questo modo per volare, conosciuto come 'volo con tastiera'. Tuttavia "
+"esiste anche un'altra modalità di volo se la preferisci: premi {mouseflykey} "
+"sulla tastiera e la tua astronave seguirà il tuo #bpuntatore del mouse#0 "
+"automaticamente. È tua la scelta del metodo che preferisci usare.\""
 
 #: dat/missions/tutorial/tutorial.lua:170
 msgid ""
@@ -82868,6 +82927,10 @@ msgid ""
 "As you can see, you completed your first objective of the Tutorial mission, "
 "so the next objective is now being focused.\""
 msgstr ""
+"\"Avrai anche notato che sul tuo monitor è presente la visualizzazione della "
+"lista delle missioni. Come puoi vedere, hai completato il tuo primo "
+"obiettivo delle missioni dell'esercitazione, ora è evidenziato l'obiettivo "
+"successivo.\""
 
 #: dat/missions/tutorial/tutorial.lua:171
 msgid ""
@@ -82877,6 +82940,12 @@ msgid ""
 "or alternatively by pressing certain buttons on your control console. How "
 "about you try landing on {pnt}?\""
 msgstr ""
+"\"A questo proposito, parliamo dell'atterraggio. Tutte le azioni tipo "
+"atterrare su pianeti, iniziare una conversazione con un'astronave, assaltare "
+"le astronavi disabilitate e fare un salto spaziale in un altro sistema, "
+"possono essere effettuate tramite #bdoppio clic#0 sul bersaglio voluto o, in "
+"alternativa, premendo determinati tasti sulla tastiera. Cosa ne diresti di "
+"provare ad atterrare su {pnt}?\""
 
 #: dat/missions/tutorial/tutorial.lua:172
 msgid ""
@@ -82887,6 +82956,13 @@ msgid ""
 "with {targetplanetkey}, and then using the {landkey}. You can also #bdouble "
 "click#0 on the planet to engage the same behaviour. Give it a try!\""
 msgstr ""
+"\"Per atterrare su {pnt} devi far rallentare l'astronave quando sei sopra il "
+"pianeta e attivare il sistema di atterraggio. Puoi compiere queste azioni "
+"manualmente usando i tasti movimento e attivare il sistema d'atterraggio con "
+"{landkey} o tutto questo può essere fatto automaticamente facendo #bclic#0 "
+"sul pianeta o con il tasto {targetplanetkey} e poi usando il tasto {landkey}"
+". Si può anche fare #bdoppio clic#0 sul pianeta per ottenere lo stesso "
+"risultato. Prova!\""
 
 #: dat/missions/tutorial/tutorial.lua:185
 msgid ""
@@ -82895,6 +82971,11 @@ msgid ""
 "appreciate this feature in your ship in time, especially as you travel from "
 "system to system delivering goods and such, given the vastness of space.\""
 msgstr ""
+"\"Ottimo lavoro! Come puoi vedere, usando le funzionalità di Autonavigazione "
+"dell'astronave la durata percepita del viaggio è stata ridotta "
+"sensibilmente. Con il passare del tempo apprezzerai questa funzionalità "
+"presente sull'astronave, specialmente, data la vastità dello spazio, quando "
+"viaggerai da sistema a sistema per consegnare merci e simili.\""
 
 #: dat/missions/tutorial/tutorial.lua:186
 msgid ""
@@ -82906,6 +82987,14 @@ msgid ""
 "around, but they don't guarantee your safety. When starting out it is "
 "probably best to not stray too far.\""
 msgstr ""
+"\"Spero tu abbia notato alcune caratteristiche presenti sulla mappa "
+"panoramica quando l'hai attivata. Non soltanto sono visibili oggetti come "
+"pianeti, astronavi e asteroidi, ma sono mostrati anche #brotte di "
+"pattugliamento#0 della fazione, tramite linee più grosse. Queste rotte "
+"demarcano aree che sono generalmente pattugliate e utilizzate dalle "
+"astronavi. È generalmente la cosa migliore utilizzare queste rotte quando si "
+"viaggia, anche se non garantiscono la propria sicurezza. All'inizio, non "
+"staccarsi troppo da queste, è probabilmente la scelta migliore.\""
 
 #: dat/missions/tutorial/tutorial.lua:187
 msgid ""
@@ -82917,6 +83006,14 @@ msgid ""
 "ornament like my late previous owner after encountering… Anyway, on to the "
 "drone.\""
 msgstr ""
+"\"Facciamo ora pratica di combattimento. Non ne avrai bisogno se resterai "
+"all'interno dei sistemi sicuri nella parte centrale dell'Impero, ma "
+"purtroppo incontrerai astronavi ostili se ti avventurerai più lontano, per "
+"questo hai bisogno di sapere come poterti difendere. Fortunatamente la tua "
+"astronave è equipaggiata con un cannone laser all'avanguardia proprio per "
+"questa ragione! Se tutto andrà per il verso giusto non finirai per essere un "
+"ornamento della nave come è successo al proprietario precedente dopo aver "
+"incontrato... Comunque, passiamo al drone.\""
 
 #: dat/missions/tutorial/tutorial.lua:188
 msgid ""
@@ -82930,6 +83027,15 @@ msgid ""
 "remedy that by pressing {cooldownkey} or double tapping {reversekey} to "
 "engage active cooling.\""
 msgstr ""
+"\"Lancerò ora, al largo di {pnt}, un drone per fare pratica di "
+"combattimento. Non preoccuparti; i nostri droni non hanno nessuna arma e "
+"quindi non ti faranno alcun male. Seleziona il drone facendo clic su di esso "
+"o premi il tasto {targethostilekey}, poi usare le tue armi, controllate "
+"tramite i tasti {primarykey} e {secondarykey}, per distruggerlo!\"\n"
+"\"Ah, giusto, ancora un consiglio prima di lanciare il drone: se le tue armi "
+"iniziano a perdere d'accuratezza, è perché si stanno surriscaldando. Puoi "
+"rimediare a questo premendo il tasto {cooldownkey} o premendo due volte il "
+"tasto {reversekey} per attivare il raffreddamento dinamico.\""
 
 #: dat/missions/tutorial/tutorial.lua:190
 msgid ""
@@ -82937,6 +83043,9 @@ msgid ""
 "it. Being an artificial intelligence it is unable to compute feelings you "
 "know? Not like me, ha ha. HUMOUR PROCEDURE TERMINATED\""
 msgstr ""
+"\"Si dice che l'IA del drone sia un po' capricciosa, ma non farci caso. "
+"Essendo un'intelligenza artificiale non è in grado di elaborare emozioni, lo "
+"sapevi? Non come me, ah ah. PROCEDURA UMORISTICA TERMINATA\""
 
 #: dat/missions/tutorial/tutorial.lua:214
 msgid ""
@@ -82952,6 +83061,19 @@ msgid ""
 "you can do on a planet. When you are done, click the '#bTake Off#0' button "
 "so we can continue.\""
 msgstr ""
+"\"Eccellente! L'atterraggio è stato un successo. Come IA della tua Astronave "
+"ho l'incarico di guidarla ed effettuare la procedura di atterraggio, questo "
+"ha ridotto drasticamente le sventure capitate durante le procedure di "
+"atterraggio manuali controllate da umani. Quando atterri la tua astronave è "
+"rifornita di carburante automaticamente e tu puoi fare cose come parlare con "
+"i civili al bar, comprare nuovi componenti per l'astronave, configurare "
+"l'astronave e, più importante di tutto, accettare missioni dal computer "
+"delle missioni. Perché non dai un'occhiata in giro? Come puoi vedere noi "
+"siamo nella scheda principale di atterraggio, dove si possono leggere "
+"informazioni sul pianeta e comprare una mappa dello spazio circostante. Fare "
+"clic su tutte le altre schede qui sotto e io ti farò fare un giro turistico "
+"su tutto quello che puoi fare su un pianeta. Quando hai terminato fai clic "
+"sul bottone '#bDecolla#0' così possiamo continuare.\""
 
 #: dat/missions/tutorial/tutorial.lua:234
 msgid ""
@@ -82963,6 +83085,13 @@ msgid ""
 "talking to bar patrons, who knows what good tips or interesting jobs they "
 "will have available for you.\""
 msgstr ""
+"\"Questo è il Bar dello Spazioporto, dove è possibile leggere le ultime "
+"notizie (come puoi vedere ora alla tua destra), ma più importante, puoi "
+"incontrare altri piloti, civili e molto altro! Fai clic su qualcuno al bar e "
+"poi fai clic sul bottone '#bIncontra#0' per incontrarli. I personaggi "
+"importanti saranno identificati con un punto esclamativo rosso. In generale, "
+"io raccomando di parlare regolarmente con i clienti del bar, chi sa quali "
+"buoni consigli o lavori interessanti ti saranno proposti.\""
 
 #: dat/missions/tutorial/tutorial.lua:240
 msgid ""
@@ -82974,6 +83103,15 @@ msgid ""
 "mission. Since many missions involve cargo, you can also see how much free "
 "space is available in your ship in the top-right.\""
 msgstr ""
+"\"Questo è il Computer delle Missioni dove puoi trovare le missioni di base "
+"presenti nella base dati ufficiale delle missioni. Le Missioni sono il modo "
+"in cui guadagni da vivere come pilota, quinti ti consiglio di controllare "
+"spesso questa schermata in modo da vedere se sono presenti delle opportunità "
+"per guadagnare soldi! Per ogni missione è presente un breve sommario e "
+"facendo clic su di esse puoi vedere più dettagli della missione selezionata. "
+"Poiché diverse missioni necessitano il trasporto di merci, puoi verificare "
+"quanto spazio libero hai a disposizione sulla tua astronave guardando in "
+"alto a destra.\""
 
 #: dat/missions/tutorial/tutorial.lua:241
 msgid ""
@@ -90421,7 +90559,7 @@ msgstr ""
 #. Only player can use
 #: dat/outfits/unique/fuel_recycler.lua:146
 msgid "You already have maximum fuel!"
-msgstr ""
+msgstr "Hai già il massimo carburante!"
 
 #: dat/outfits/unique/fuel_recycler.lua:152
 msgid "You do not have any cargo you can recycle."
@@ -103354,7 +103492,7 @@ msgstr ""
 
 #: src/land_outfits.c:825
 msgid "You already have this license."
-msgstr ""
+msgstr "Hai già questa licenza."
 
 #: src/land_outfits.c:831 src/land_shipyard.c:455 src/land_trade.c:294
 #, c-format
@@ -103678,7 +103816,7 @@ msgstr ""
 
 #: src/load.c:672 src/player.c:258
 msgid "Overwrite"
-msgstr "Soprascrivere"
+msgstr "Sovrascrivere"
 
 #: src/load.c:673
 #, c-format
@@ -107475,6 +107613,8 @@ msgid ""
 "You already have a pilot named %s. Their autosave and backup save will be "
 "overwritten. Do you wish to continue?"
 msgstr ""
+"Hai già un pilota con nome %s. I suoi salvataggi automatici e i backup "
+"saranno sovrascritti. Si vuole continuare?"
 
 #: src/player.c:281
 #, c-format
