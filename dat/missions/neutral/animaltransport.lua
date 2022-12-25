@@ -6,7 +6,7 @@
  <chance>10</chance>
  <location>Bar</location>
  <faction>Sirius</faction>
- <cond>spob.cur():class() ~= "0" and spob.cur():class() ~= "1" and spob.cur():class() ~= "2" and spob.cur():class() ~= "3"</cond>
+ <cond>spob.cur():tags().station==nil</cond>
  <notes>
   <tier>1</tier>
  </notes>
