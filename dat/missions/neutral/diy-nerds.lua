@@ -25,7 +25,7 @@ local vntk = require "vntk"
 local portrait = require "portrait"
 
 -- Mission details.
-local reward = 40e3
+local reward = 100e3
 
 -- helper functions, defined below
 local addNerdCargo, rmNerdCargo, nerds_return, system_hasAtLeast
@@ -43,7 +43,7 @@ local npc_portrait = "neutral/unique/mia.webp"
 local npc_image = portrait.getFullPath( npc_portrait )
 
 -- the outfit name as in outfit.xml
-local reward_outfit = "Unicorp PT-16 Core System"
+local reward_outfit = outfit.get("Homebrew Processing Unit")
 
 function create ()
    -- the mission cannot be started with less than two landable spobs in the system
@@ -73,9 +73,9 @@ function accept ()
    mia(_([[As you approach the group, the babbling ceases and the papers are quickly and jealously stashed away. One of the girls comes forward and introduces herself.
 "Hi, I'm Mia. We need transportation, and you look as if you could use some dough. Interested?"]]))
    vn.na(_([[You reply that for a deal to be worked out, they better provide some details.]]))
-   mia(fmt.f(_([["Listen," she says, "there's this Homebrew Processing Box Masters on {pnt}. Right over there, this system. I'm sure our box will get us the first prize. You take us there, you take us back, you get 20,000."
+   mia(fmt.f(_([["Listen," she says, "there's this Homebrew Processing Box Masters on {pnt}. Right over there, this system. I'm sure our box will get us the first prize. You take us there, you take us back, you get {creds}."
 You just start to marvel at the self-assurance of one so young when she signals her impatience. "Answer me now! Will you do it?"]]),
-      {pnt=mem.destPlanet} ))
+      {pnt=mem.destPlanet, creds=fmt.credits(reward)} ))
    vn.menu{
       {_([[Accept]]), "accept"},
       {_([[Refuse]]), "refuse"},
@@ -200,7 +200,8 @@ function nerds_land2()
 
    if mem.intime and spob.cur() == mem.destPlanet then
       -- you pickup the nerds in time
-      mem.nerdswon = (rnd.rnd() >= 0.6)
+      --mem.nerdswon = (rnd.rnd() >= 0.6)
+      mem.nerdswon = false
       if mem.nerdswon then
          vntk.msg(_("Happy nerds"), fmt.f(_([[As soon as you exit your ship, you are surrounded by the group of nerds, who are euphoric. "We won!" one of the nerds shouts at you. Surprisingly, it seems the group isn't completely dependent on Mia when it comes to communicating with outsiders. Though maybe the booze the group is copiously drinking did help a little. "Take us back to {pnt}," one of them says, "we'll continue to celebrate on the way."]]), {pnt=mem.srcPlanet}))
       else
@@ -320,9 +321,15 @@ function nerds_land3()
    vn.transition()
 
    if mem.nerdswon then
-      mia(fmt.f(_([[The nerds, finally exhausted from all the partying, still smile as they pack up their prize-winning box and leave your ship. Mia beams as she turns to you. "Well done, {player}. You see, since we got loads of prize money, we decided to give you a bonus. After all, we wouldn't have gotten there without your service. Here, have 30,000. Good day to you."]]),
-         {player=player.name()}))
-      player.pay( reward )
+      -- Not technically possible at the moment
+      -- TODO add description about getting outfit too
+      mia(fmt.f(_([[The nerds, finally exhausted from all the partying, still smile as they pack up their prize-winning box and leave your ship. Mia beams as she turns to you. "Well done, {player}. You see, since we got loads of prize money, we decided to give you a bonus. After all, we wouldn't have gotten there without your service. Here, have {creds}. Good day to you."]]),
+         {player=player.name(), creds=fmt.credits(reward)}))
+      vn.func( function ()
+         player.pay( reward )
+         player.outfitAdd(reward_outfit)
+      end )
+      vn.na(fmt.reward(reward).."\n"..fmt.reward(reward_outfit))
    else
       mia(_([[With sagging shoulders, the nerds unload their box. Mia turns to address you, not bold at all this time. "Um, we got a bit of a problem here. You know, we intended to pay the trip from our prize money. Now we don't have any prize money."]]))
       vn.na(_([[As you're trying to decide what to make of the situation, one of the other nerds creeps up behind Mia and cautiously gestures for her to join the group a few yards away, all the time avoiding your eyes. Strange guy, you think, as if he was not accustomed to socializing with strangers. Mia joins the group, and some whispering ensues. Mia returns to you after a few hectoseconds.]]))
@@ -340,9 +347,10 @@ function nerds_land3()
       mia(fmt.f(_([["You can wait for it, won't take longer than half a period," Mia informs you. You stand by as the nerds start to mod their box. As they are going about it, you wonder if they're actually wrecking it and you'll maybe be left with a piece of worthless junk.
    Finally, they set the modified box before you. "Here you are. Now you're the proud owner of the system's only home-made core system. It's a bit bulkier than we expected, with all this rigging for energy and coolant supply, but it should work just fine, about equivalent to the {outfit}. We need to go now and think about something more advanced for the next competition. Have a nice day."]]),
          {outfit=_(reward_outfit)} ))
-      vn.na(_([[With that, the nerds leave. Having gotten nothing else out of this, you think you should visit an outfitter to see if the homemade core system may actually be of any use, or if you can at least sell it.]]))
 
       vn.label("cont")
+      vn.na(_([[With that, the nerds leave. Having gotten nothing else out of this, you think you should visit an outfitter to see if the homemade core system may actually be of any use, or if you can at least sell it.]]))
+      vn.sfxVictory()
       vn.func( function ()
          time.inc(time.new(0,0,5000))
          player.outfitAdd(reward_outfit)
@@ -358,7 +366,7 @@ end
 -- to check if the spobs in the current system have at least _amount_ of _service_
 function system_hasAtLeast( amount, service )
    local p = {}
-   for i,v in ipairs(system.spobs(system.cur())) do
+   for i,v in ipairs(system.cur():spobs()) do
       if spob.services(v)[service] and v:canLand() then
          table.insert(p,v)
       end
