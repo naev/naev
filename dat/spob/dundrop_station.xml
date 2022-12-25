@@ -37,4 +37,8 @@
   <item>Missiles 2</item>
   <item>Low Tech Upgrades</item>
  </tech>
+ <tags>
+  <tag>station</tag>
+  <tag>trade</tag>
+ </tags>
 </spob>
