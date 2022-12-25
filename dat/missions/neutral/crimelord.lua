@@ -31,7 +31,7 @@ local capship, defenders, thugs -- Non-persistent state
 
 local npc_name = _("A detective")
 local npc_portrait = "neutral/unique/hunter.webp"
-local npc_image = portrait.getFulLPath( npc_portrait )
+local npc_image = portrait.getFullPath( npc_portrait )
 
 function create ()
    mem.targetsystem = system.get("Ogat")
