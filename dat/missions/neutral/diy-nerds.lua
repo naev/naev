@@ -60,8 +60,9 @@ function accept ()
    if not tk.yesno( _("A group of excited nerds"), fmt.f(_([[As you approach the group, the babbling ceases and the papers are quickly and jealously stashed away. One of the girls comes forward and introduces herself.
     "Hi, I'm Mia. We need transportation, and you look as if you could use some dough. Interested?"
     You reply that for a deal to be worked out, they better provide some details.
-    "Listen," she says, "there's this Homebrew Processing Box Masters on {pnt}. Right over there, this system. I'm sure our box will get us the first prize. You take us there, you take us back, you get 20,000."
-    You just start to marvel at the self-assurance of one so young when she signals her impatience. "Answer me now! Will you do it?"]]), {pnt=mem.destPlanet} )) then
+    "Listen," she says, "there's this Homebrew Processing Box Masters on {pnt}. Right over there, this system. I'm sure our box will get us the first prize. You take us there, you take us back, you get {creds}."
+    You just start to marvel at the self-assurance of one so young when she signals her impatience. "Answer me now! Will you do it?"]]),
+         {pnt=mem.destPlanet, creds=fmt.credits(reward)} )) then
       return
    else
       if player.pilot():cargoFree() < 4 then
@@ -277,7 +278,8 @@ function nerds_land3()
    local cp = spob.cur()
    if cp == mem.srcPlanet then
       if mem.nerdswon then
-         tk.msg(_("The End"), fmt.f(_([[The nerds, finally exhausted from all the partying, still smile as they pack up their prize-winning box and leave your ship. Mia beams as she turns to you. "Well done, {player}. You see, since we got loads of prize money, we decided to give you a bonus. After all, we wouldn't have gotten there without your service. Here, have 30,000. Good day to you."]]), {player=player.name()}))
+         tk.msg(_("The End"), fmt.f(_([[The nerds, finally exhausted from all the partying, still smile as they pack up their prize-winning box and leave your ship. Mia beams as she turns to you. "Well done, {player}. You see, since we got loads of prize money, we decided to give you a bonus. After all, we wouldn't have gotten there without your service. Here, have {creds}. Good day to you."]]),
+            {player=player.name(), creds=fmt.credits(reward)}))
          player.pay( reward )
       else
          if not tk.yesno(_("Minor Complications"), _([[With sagging shoulders, the nerds unload their box. Mia turns to address you, not bold at all this time. "Um, we got a bit of a problem here. You know, we intended to pay the trip from our prize money. Now we don't have any prize money."
