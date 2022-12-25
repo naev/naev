@@ -6,7 +6,7 @@
  <chance>5</chance>
  <location>Bar</location>
  <faction>Dvaered</faction>
- <cond>player.numOutfit("Mercenary License") &gt; 0 and spob.cur():class() ~= "0" and spob.cur():class() ~= "1" and spob.cur():class() ~= "2" and spob.cur():class() ~= "3"</cond>
+ <cond>(player.numOutfit("Mercenary License") &gt; 0) and (spob.cur():tags().station == nil)</cond>
  <notes>
   <tier>3</tier>
  </notes>
