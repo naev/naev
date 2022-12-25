@@ -73,6 +73,7 @@ function accept ()
    vn.clear()
    vn.scene()
    local ari = vn.newCharacter( npc_name, { image=npc_image } )
+   vn.transition()
 
    ari(fmt.f( _([[You begin to approach the aristocrat. Next to him stands a well dressed and muscular man, perhaps his assistant, or maybe his bodyguard, you're not sure. When you get close to his table, he begins talking to you as if you work for him. "This simply will not do. When I ordered this 'drink', if you can call it that, it seemed interesting. It certainly doesn't taste interesting. It's just bland. The only parts of it that are in any way interesting are not at all pleasing. It just tastes so… common.
     You know what I would really like? There was this drink at a bar on, what planet was that? Damien, do you remember? The green drink with the red fruit shavings." Damien looks down at him and seems to think for a second before shaking his head. "I believe it might have been {pnt} in the {sys} system. The drink was something like an Atmospheric Re-Entry or Gaian Bombing or something. It's the bar's specialty. They'll know what you're talking about. You should go get me one. Can you leave right away?"]]),
@@ -172,6 +173,7 @@ function land ()
       vn.clear()
       vn.scene()
       local ari = vn.newCharacter( npc_name, { image=npc_image } )
+      vn.transition()
 
       ari(fmt.f(_([["Ahh! I was just thinking how much I wanted one of those drinks! I'm so glad that you managed to find it. You sure seemed to take your time though." You give him his drink and tell him that it wasn't easy, and how many systems you had to go through. "Hmm. That is quite a few systems. No reason for you to be this late though." He takes a sip from his drink. "Ahh! That is good though. I suppose you'll be wanting to get paid for your efforts. You did go through a lot of trouble. Then again, you did take quite a long time. I suppose {credits} should be appropriate."]]),
          {credits=fmt.credits(payment)}))

@@ -62,6 +62,7 @@ function accept ()
    vn.clear()
    vn.scene()
    local rod = vn.newCharacter( npc_name, {image=npc_image} )
+   vn.transition()
    rod(fmt.f(_([["Good day to you, captain. I'm looking for someone with a ship who can take this crate here to planet {pnt} in the {sys} system. The crate contains a colony of rodents I've bred myself. My in-law has a pet shop on {pnt} where I hope to sell them. Upon delivery, you will be paid {credits}. Are you interested in the job?"]]),
       {credits=fmt.credits(money_reward), pnt=mem.destplanet, sys=mem.destsys}))
    vn.menu{

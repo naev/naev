@@ -44,6 +44,7 @@ function accept ()
    vn.clear()
    vn.scene()
    local det = vn.newCharacter( npc_name, {image=npc_image} )
+   vn.transition()
    det(fmt.f(_([[The private detective greets you and gets right down to business.
    "I have tracked down and collected evidence against a local crime lord," he says. "The evidence is on this data disk. They would love nothing more than to get their hands on this. I want you to bring this to my associates in the {sys} system. While the local authorities have proven corruptible, my associates will ensure that this criminal ends up in prison, where they belong."]]),
       {sys=mem.targetsystem}))
@@ -176,6 +177,7 @@ function capHailed ()
    vn.clear()
    vn.scene()
    local p = ccomm.newCharacter( vn, capship )
+   vn.transition()
    p(fmt.f(_([["Excellent work. This data will ensure an arrest and swift prosecution. You've certainly done your part towards cleaning up the region. As for your compensation, I've had {credits} transferred to you."]]),
       {credits=fmt.credits(reward)}))
    vn.sfxVictory()
