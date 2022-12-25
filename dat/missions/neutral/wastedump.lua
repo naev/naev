@@ -25,6 +25,7 @@
 local fmt = require "format"
 local pir = require "common.pirate"
 local vntk = require "vntk"
+local lmisn = require "lmisn"
 
 local text = {
    _("The waste containers are loaded onto your ship and you are paid {credits}. You begin to wonder if accepting this job was really a good idea."),
@@ -86,6 +87,7 @@ function accept ()
    local q = player.pilot():cargoFree()
    mem.credits = mem.credits_factor * q + mem.credits_mod
 
+   lmisn.sfxMoney()
    local txt = text[ rnd.rnd( 1, #text ) ]
    vntk.msg(_("Waste Containers Loaded"), fmt.f( txt, {credits = fmt.credits( mem.credits ) } ) )
 
@@ -102,6 +104,7 @@ function land ()
    for i,p in ipairs(dest_planets) do
       if p == spob.cur() then
          local txt = finish_text[ rnd.rnd( 1, #finish_text ) ]
+         lmisn.sfxVictory()
          vntk.msg(_("No More Garbage"), txt)
          pir.reputationNormalMission(rnd.rnd(2,3))
          misn.finish( true )
