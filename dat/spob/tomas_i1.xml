@@ -6,7 +6,7 @@
   <exterior>station01.webp</exterior>
  </GFX>
  <general>
-  <class>0</class>
+  <class>I</class>
   <population>0</population>
   <hide>1.000000</hide>
   <services/>

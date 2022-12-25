@@ -12,7 +12,7 @@
   <range>2</range>
  </presence>
  <general>
-  <class>A</class>
+  <class>0</class>
   <population>7000</population>
   <hide>1.000000</hide>
   <services>
@@ -26,5 +26,6 @@
  </general>
  <tags>
   <tag>agriculture</tag>
+  <tag>station</tag>
  </tags>
 </spob>
