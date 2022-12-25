@@ -46,12 +46,13 @@ local function getMessage( lst )
 end
 
 return function ()
-   local cur, scur = spob.cur()
-   local presence = scur:presences()["FLF"] or 0
+   local cur, _scur = spob.cur()
+   --local presence = scur:presences()["FLF"] or 0
    local tags = cur:tags()
 
-   -- Need presence in the system
-   if presence <= 0 then
+   -- Only spawn on FLF assets
+   -- TODO sympathizers
+   if cur:faction() ~= faction.get("FLF") then
       return nil
    end
 
