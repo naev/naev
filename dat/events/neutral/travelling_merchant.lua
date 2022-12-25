@@ -209,6 +209,7 @@ function board ()
       { "Operation Cold Metal",     "Left Boot" },
       { "Black Cat",                "Black Cat Doll" },
       { "Terraforming Antlejos 10", "Commemorative Stein" },
+      { "DIY Nerds",                "Hombrew Processing Unit" },
    }
    local event_rewards = {
    }
