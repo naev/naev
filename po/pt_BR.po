@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-12-26 11:22+0900\n"
+"POT-Creation-Date: 2022-12-27 01:20+0900\n"
 "PO-Revision-Date: 2022-11-03 09:03+0000\n"
 "Last-Translator: Anthony Gregory Souza dos Santos "
 "<antonigregorysouza123@gmail.com>\n"
@@ -52895,7 +52895,6 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant07.lua:48
 #: dat/missions/neutral/antlejos/ant08.lua:53
 #: dat/missions/neutral/antlejos/ant09.lua:54
-#: dat/missions/neutral/foodbiz/deliverlove.lua:72
 #: dat/missions/pirate/contraband_cake.lua:81
 #: dat/missions/pirate/pir_hit_intro.lua:99
 #: dat/missions/zalek/blackhole/zbh01.lua:45
@@ -58693,7 +58692,6 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant07.lua:49
 #: dat/missions/neutral/antlejos/ant08.lua:54
 #: dat/missions/neutral/antlejos/ant09.lua:55
-#: dat/missions/neutral/foodbiz/deliverlove.lua:73
 #: dat/missions/pirate/contraband_cake.lua:82
 #: dat/missions/pirate/pir_hit_intro.lua:100
 #: dat/missions/zalek/blackhole/zbh01.lua:46
@@ -68339,7 +68337,7 @@ msgid "Deliver the recipes to Michal on {pnt} in the {sys} system."
 msgstr ""
 
 #: dat/missions/neutral/foodbiz/delivercake.lua:55
-#: dat/missions/neutral/foodbiz/deliverlove.lua:97
+#: dat/missions/neutral/foodbiz/deliverlove.lua:72
 msgid "Fly to {pnt} in the {sys} system."
 msgstr ""
 
@@ -68393,34 +68391,35 @@ msgstr ""
 #. Author: iwaschosen
 #. Plot: Talk to man on Zeo, bargain, load some cargo, deliver it to Zhiru in Goddard, get $
 #. --
-#: dat/missions/neutral/foodbiz/deliverlove.lua:28
+#: dat/missions/neutral/foodbiz/deliverlove.lua:24
 msgid "Love Letters"
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:29
+#: dat/missions/neutral/foodbiz/deliverlove.lua:25
 msgid "A cargo of feelings inked onto pulped, dried cellulose fibres."
 msgstr ""
 
 #. Can get doubled, must be global!
-#: dat/missions/neutral/foodbiz/deliverlove.lua:35
+#. No system shall be claimed by mission
+#: dat/missions/neutral/foodbiz/deliverlove.lua:34
 msgid "Old-Fashioned Man"
 msgstr ""
 
-#. No system shall be claimed by mission
-#: dat/missions/neutral/foodbiz/deliverlove.lua:42
+#: dat/missions/neutral/foodbiz/deliverlove.lua:34
 msgid "A man sits in the corner of the bar, writing a letter."
 msgstr ""
 
 #. Introductions and a bit of bargaining
 #. look at you go, double the reward
-#: dat/missions/neutral/foodbiz/deliverlove.lua:55
-#: dat/missions/neutral/foodbiz/deliverlove.lua:59
-#: dat/missions/neutral/foodbiz/deliverlove.lua:61
-#: dat/missions/neutral/foodbiz/deliverlove.lua:66
+#: dat/missions/neutral/foodbiz/deliverlove.lua:41
+#: dat/missions/neutral/foodbiz/deliverlove.lua:45
+#: dat/missions/neutral/foodbiz/deliverlove.lua:47
+#: dat/missions/neutral/foodbiz/deliverlove.lua:52
+#: dat/missions/neutral/foodbiz/deliverlove.lua:56
 msgid "Absence Makes The Heart Grow Fonder"
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:55
+#: dat/missions/neutral/foodbiz/deliverlove.lua:41
 msgid ""
 "You can't help but wonder why the man in the corner is writing on paper "
 "instead of a datapad. As you approach the table he motions you to sit. \"You "
@@ -68431,16 +68430,16 @@ msgid ""
 "\"You wouldn't happen to be heading to {pnt} would you?\" he asks."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:59
+#: dat/missions/neutral/foodbiz/deliverlove.lua:45
 msgid ""
 "\"It is a nice place I hear!\" he exclaims visibly excited. \"Say, I have "
 "written a ton of these letters at this point. You wouldn't be able to drop "
 "them off, would you?\" You raise your eyebrow. \"There would be a few "
-"credits in it for you… say, {credits}?\" The man adds quickly with a hopeful "
-"expression. It seems like a low reward for a long journey…"
+"credits in it for you... say, {credits}?\" The man adds quickly with a "
+"hopeful expression. It seems like a low reward for a long journey..."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:61
+#: dat/missions/neutral/foodbiz/deliverlove.lua:47
 msgid ""
 "The man grabs your arm as you begin to get up. \"Alright, how about "
 "{credits}? Look, I wouldn't want The Empire reading these. The Emperor "
@@ -68448,32 +68447,30 @@ msgid ""
 "answering."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:66
+#: dat/missions/neutral/foodbiz/deliverlove.lua:52
 msgid ""
 "You run a check of your cargo hold and notice it is packed to the brim. "
 "\"Did I not mention I wrote a tonne of these letters? You don't have enough "
 "space for all of these,\" the man says. \"I will be in the bar if you free "
-"up some space.\" You didn't expect him to have a LITERAL tonne of letters…"
+"up some space.\" You didn't expect him to have a LITERAL tonne of letters..."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:70
+#: dat/missions/neutral/foodbiz/deliverlove.lua:56
 msgid "\"Ah, are you able to deliver my ton of letters for me now?\""
 msgstr ""
 
 #. Add Mission Cargo and set up the computer
-#: dat/missions/neutral/foodbiz/deliverlove.lua:92
-#: dat/missions/neutral/foodbiz/deliverlove.lua:96
+#: dat/missions/neutral/foodbiz/deliverlove.lua:67
+#: dat/missions/neutral/foodbiz/deliverlove.lua:71
 msgid "Deliver Love"
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:94
-msgid ""
-"Absence makes the heart grow fonder. Deliver love letters to {pnt} in the "
-"{sys} system."
+#: dat/missions/neutral/foodbiz/deliverlove.lua:69
+msgid "Deliver love letters to {pnt} in the {sys} system."
 msgstr ""
 
 #. set up hooks
-#: dat/missions/neutral/foodbiz/deliverlove.lua:112
+#: dat/missions/neutral/foodbiz/deliverlove.lua:84
 msgid ""
 "You deliver the letters to a young woman who excitedly takes them and thanks "
 "you profusely. It seems you really made her day. When you check your "
@@ -68482,7 +68479,7 @@ msgid ""
 "you don't think it will be missed."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:114
+#: dat/missions/neutral/foodbiz/deliverlove.lua:86
 msgid ""
 "You delivered a literal tonne of letters for a love-struck, old-fashioned "
 "man."
@@ -83903,7 +83900,7 @@ msgstr ""
 #. Need commodity exchange
 #. Check for asteroid fields
 #: dat/missions/tutorial/nelly02.lua:100 dat/missions/tutorial/nelly03.lua:80
-msgid "You see a Nelly motioning to you at a table."
+msgid "You see Nelly motioning to you at a table."
 msgstr ""
 
 #. Check to see if truly accepted
