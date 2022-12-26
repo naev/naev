@@ -890,8 +890,15 @@ static void opt_setEngineLevel( unsigned int wid, const char *str )
 {
    char buf[32];
    double vol = window_getFaderValue(wid, str);
+   const char *label = _("Engine Volume");
+   double logvol = 1. / pow(2., (1.-vol) * 8.);
    conf.engine_vol = vol;
-   snprintf( buf, sizeof(buf), _("Engine Volume: %.0f%%"), vol*100. );
+   if (sound_disabled)
+      snprintf( buf, sizeof(buf), _("%s: %s"), label, _("Muted") );
+   else {
+      const double magic = -48. / log(0.00390625); /* -48 dB minimum divided by logarithm of volume floor. */
+      snprintf( buf, sizeof(buf), _("%s: %.2f (%.0f dB)"), label, vol, log(logvol) * magic );
+   }
    window_modifyText( wid, "txtEngine", buf );
 }
 
@@ -929,16 +936,13 @@ static void opt_setAudioLevel( unsigned int wid, const char *str )
  */
 static void opt_audioLevelStr( char *buf, int max, int type, double pos )
 {
-   double vol, magic;
-   const char *str;
-
-   str = type ? _("Music Volume") : _("Sound Volume");
-   vol = type ? music_getVolumeLog() : sound_getVolumeLog();
+   const char *str = type ? _("Music Volume") : _("Sound Volume");
+   double vol = type ? music_getVolumeLog() : sound_getVolumeLog();
 
    if (vol == 0.)
       snprintf( buf, max, _("%s: %s"), str, _("Muted") );
    else {
-      magic = -48. / log(0.00390625); /* -48 dB minimum divided by logarithm of volume floor. */
+      const double magic = -48. / log(0.00390625); /* -48 dB minimum divided by logarithm of volume floor. */
       snprintf( buf, max, _("%s: %.2f (%.0f dB)"), str, pos, log(vol) * magic );
    }
 }
