@@ -17,12 +17,9 @@ Mission Name: Deliver Love
 Author: iwaschosen
 Plot: Talk to man on Zeo, bargain, load some cargo, deliver it to Zhiru in Goddard, get $
 --]]
-
 local fmt = require "format"
 local neu = require "common.neutral"
-local lmisn = require "lmisn"
 local vn = require "vn"
-local vntk = require "vntk"
 local portrait = require "portrait"
 
 local cargoname = N_("Love Letters")
@@ -35,6 +32,10 @@ local reward_outfit = outfit.get("Love Letter")
 local npc_name = _("Old-Fashioned Man")
 local npc_portrait = "neutral/unique/michal.webp"
 local npc_image = portrait.getFullPath( npc_portrait )
+
+local npc2_name = _("Young Woman")
+local npc2_portrait = "neutral/unique/paddy.webp"
+local npc2_image = portrait.getFullPath( npc2_portrait )
 
 function create () --No system shall be claimed by mission
    mem.started = false
@@ -134,10 +135,22 @@ function land()
       return
    end
 
-   lmisn.sfxVictory()
-   player.pay( mem.reward )
-   vntk.msg(fmt.f(_([[You deliver the letters to a young woman who excitedly takes them and thanks you profusely. It seems you really made her day. When you check your balance, you see that {credits} have been transferred into your account. It also seems like you forgot a letter in the ship, but there were enough that you don't think it will be missed.]]), {credits=fmt.credits(mem.reward)} ).."\n\n"..fmt.reward(mem.reward).."\n"..fmt.reward(reward_outfit) )
-   player.outfitAdd( reward_outfit )
+   vn.clear()
+   vn.scene()
+   local paddy = vn.newCharacter( npc2_name, {image=npc2_image} )
+   vn.transition()
+
+   paddy(fmt.f(_([[You deliver the letters to a young woman who excitedly takes them and thanks you profusely. It seems you really made her day. When you check your balance, you see that {credits} have been transferred into your account. It also seems like you forgot a letter in the ship, but there were enough that you don't think it will be missed.]]),
+      {credits=fmt.credits(mem.reward)}))
+   vn.sfxVictory()
+   vn.func( function ()
+      player.pay( mem.reward )
+      player.outfitAdd( reward_outfit )
+   end )
+   vn.na(fmt.reward(mem.reward).."\n\n"..fmt.reward(reward_outfit) )
+
+   vn.run()
+
    neu.addMiscLog( _([[You delivered a literal tonne of letters for a love-struck, old-fashioned man.]]) )
    misn.finish( true )
 end
