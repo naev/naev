@@ -860,6 +860,8 @@ static int playerL_isLanded( lua_State *L )
  */
 static int playerL_takeoff( lua_State *L )
 {
+   PLAYER_CHECK();
+
    if (!landed) {
       NLUA_ERROR(L,_("Player must be landed to force takeoff."));
       return 0;
@@ -940,7 +942,6 @@ static int playerL_land( lua_State *L )
  */
 static int playerL_allowLand( lua_State *L )
 {
-
    int b;
    const char *str = NULL;
 
@@ -1044,6 +1045,7 @@ static PlayerShip_t *playerL_shipvarShip( lua_State *L, int idx )
  */
 static int playerL_shipvarPeek( lua_State *L )
 {
+   PLAYER_CHECK();
    const char *str  = luaL_checkstring(L,1);
    PlayerShip_t *ps = playerL_shipvarShip(L,2);
    lvar *var        = lvar_get( ps->p->shipvar, str );
@@ -1062,6 +1064,7 @@ static int playerL_shipvarPeek( lua_State *L )
  */
 static int playerL_shipvarPush( lua_State *L )
 {
+   PLAYER_CHECK();
    const char *str  = luaL_checkstring(L,1);
    lvar var         = lvar_tovar( L, str, 2 );
    PlayerShip_t *ps = playerL_shipvarShip(L,3);
@@ -1080,6 +1083,7 @@ static int playerL_shipvarPush( lua_State *L )
  */
 static int playerL_shipvarPop( lua_State *L )
 {
+   PLAYER_CHECK();
    const char *str  = luaL_checkstring(L,1);
    PlayerShip_t *ps = playerL_shipvarShip(L,2);
    lvar *var        = lvar_get( ps->p->shipvar, str );
@@ -1260,6 +1264,7 @@ static int playerL_shipMetadata( lua_State *L )
  */
 static int playerL_shipDeploy( lua_State *L )
 {
+   PLAYER_CHECK();
    const char *shipname = luaL_checkstring(L,1);
    int deploy = lua_toboolean(L,2);
    PlayerShip_t *ps = player_getPlayerShip( shipname );
@@ -1332,6 +1337,7 @@ static int playerL_numOutfit( lua_State *L )
  */
 static int playerL_outfitAdd( lua_State *L  )
 {
+   PLAYER_CHECK();
 
    /* Handle parameters. */
    const Outfit *o = luaL_validoutfit(L, 1);
