@@ -123,8 +123,13 @@ function approach_terminal ()
    local w, h = 460, 400
    local wdw = luatk.newWindow( nil, nil, w, h )
    luatk.newButton( wdw, -20-80-20, -20, 80, 30, _("Race!"), function ()
-      accept = true
-      luatk.close()
+      local worthy, reason = player.pilot():spaceworthy()
+      if not worthy then
+         luatk.msg(_("Not Spaceworthy!"), _("Your ship is not spaceworthy and can not participate in the race right now for the following reasons:\n\n")..reason)
+      else
+         accept = true
+         luatk.close()
+      end
    end )
    luatk.newButton( wdw, -20, -20, 80, 30, _("Close"), luatk.close )
    luatk.newText( wdw, 0, 10, w, 20, _("Choose Race Track"), nil, "center" )
