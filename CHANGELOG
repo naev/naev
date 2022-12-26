@@ -4,6 +4,9 @@
 
 * 0.10.1 (unreleased)
    * Fixed many stations not marked as stations
+   * FLF combatants only appear on FLF spobs
+   * diy-nerds: fixed reward and description not matching
+   * Fixed cases where the player could be forced to take off when not spaceworthy
 
 * 0.10.0
    * Made slim the default GUI instead of brushed
