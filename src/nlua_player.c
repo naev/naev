@@ -866,6 +866,10 @@ static int playerL_takeoff( lua_State *L )
       NLUA_ERROR(L,_("Player must be landed to force takeoff."));
       return 0;
    }
+   if (!pilot_isSpaceworthy( player.p )) {
+      NLUA_ERROR(L,_("Player must be spaceworthy to force takeoff!"));
+      return 0;
+   }
 
    land_queueTakeoff();
 
