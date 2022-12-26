@@ -389,7 +389,7 @@ function update_timer ()
 end
 
 function allowmove ()
-   player.omsgChange( omsg_timer, _("GO!"), 5 )
+   player.omsgChange( omsg_timer, _("GO!"), 3 )
    luasfx( true, nil, sfx, {pitch=2} )
 
    player.pilot():control(false)
