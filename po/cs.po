@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-12-23 10:39+0900\n"
+"POT-Creation-Date: 2022-12-26 11:22+0900\n"
 "PO-Revision-Date: 2022-09-19 19:18+0000\n"
 "Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -6597,7 +6597,7 @@ msgstr ""
 
 #: dat/ships/misc/onewing_goddard.xml:12 dat/ships/misc/raelid_outpost.xml:12
 #: dat/ships/misc/raglan_outpost.xml:12 dat/ships/misc/sindbad.xml:12
-#: dat/missions/neutral/race_qex.lua:151 src/dev_uniedit.c:259
+#: dat/missions/neutral/race_qex.lua:156 src/dev_uniedit.c:259
 #: src/dev_uniedit.c:265 src/dev_uniedit.c:1443 src/dev_uniedit.c:1444
 #: src/land_outfits.c:436 src/land_outfits.c:437 src/land_outfits.c:438
 #: src/land_outfits.c:439 src/land_trade.c:203 src/land_trade.c:207
@@ -7785,17 +7785,17 @@ msgstr "Abacus"
 #: dat/spob/hadosh_iv.xml:9 dat/spob/hasselt_ii.xml:9 dat/spob/hasselt_iv.xml:9
 #: dat/spob/hatter_i.xml:9 dat/spob/hatter_ii.xml:9 dat/spob/hekaras_iii.xml:9
 #: dat/spob/hekaras_iv.xml:9 dat/spob/humdrum_i.xml:9 dat/spob/humdrum_ii.xml:9
-#: dat/spob/humdrum_iii.xml:9 dat/spob/hzmm01.xml:15 dat/spob/hznss3.xml:15
-#: dat/spob/icarus.xml:15 dat/spob/imk.xml:9 dat/spob/inca.xml:9
-#: dat/spob/infinity_iv.xml:9 dat/spob/ingot_i.xml:9 dat/spob/jackson_ii.xml:9
-#: dat/spob/jackson_v.xml:9 dat/spob/jade_i.xml:9 dat/spob/jade_vi.xml:9
-#: dat/spob/jemard.xml:15 dat/spob/jervis_v.xml:9 dat/spob/jervis_vii.xml:9
-#: dat/spob/jugreny.xml:9 dat/spob/juran.xml:9 dat/spob/kaira.xml:9
-#: dat/spob/kansas_i.xml:9 dat/spob/kansas_iii.xml:9 dat/spob/kansas_iv.xml:9
-#: dat/spob/kansas_vi.xml:9 dat/spob/karman_i.xml:9 dat/spob/karman_ii.xml:9
-#: dat/spob/kaso.xml:9 dat/spob/katami_i.xml:9 dat/spob/katar.xml:9
-#: dat/spob/kaulas.xml:15 dat/spob/khaas_i.xml:9 dat/spob/khorin.xml:9
-#: dat/spob/klantar_i.xml:9 dat/spob/klantar_iii.xml:9 dat/spob/kobopos_i.xml:9
+#: dat/spob/humdrum_iii.xml:9 dat/spob/hzmm01.xml:15 dat/spob/icarus.xml:15
+#: dat/spob/imk.xml:9 dat/spob/inca.xml:9 dat/spob/infinity_iv.xml:9
+#: dat/spob/ingot_i.xml:9 dat/spob/jackson_ii.xml:9 dat/spob/jackson_v.xml:9
+#: dat/spob/jade_i.xml:9 dat/spob/jade_vi.xml:9 dat/spob/jemard.xml:15
+#: dat/spob/jervis_v.xml:9 dat/spob/jervis_vii.xml:9 dat/spob/jugreny.xml:9
+#: dat/spob/juran.xml:9 dat/spob/kaira.xml:9 dat/spob/kansas_i.xml:9
+#: dat/spob/kansas_iii.xml:9 dat/spob/kansas_iv.xml:9 dat/spob/kansas_vi.xml:9
+#: dat/spob/karman_i.xml:9 dat/spob/karman_ii.xml:9 dat/spob/kaso.xml:9
+#: dat/spob/katami_i.xml:9 dat/spob/katar.xml:9 dat/spob/kaulas.xml:15
+#: dat/spob/khaas_i.xml:9 dat/spob/khorin.xml:9 dat/spob/klantar_i.xml:9
+#: dat/spob/klantar_iii.xml:9 dat/spob/kobopos_i.xml:9
 #: dat/spob/kobopos_iv.xml:9 dat/spob/koga.xml:15 dat/spob/koralis_iv.xml:9
 #: dat/spob/koralis_vi.xml:9 dat/spob/kotori.xml:9 dat/spob/kraft_i.xml:9
 #: dat/spob/kraft_ii.xml:9 dat/spob/kraft_iv.xml:9 dat/spob/kraft_v.xml:9
@@ -7909,21 +7909,22 @@ msgstr ""
 "místě může být jen několik desítek výzkumníků. Není tu místo pro turisty, "
 "dokonce ani pro bar."
 
-#: dat/spob/abacus.xml:28 dat/spob/astana.xml:49 dat/spob/curie.xml:48
-#: dat/spob/dono.xml:30 dat/spob/excelcior.xml:56 dat/spob/gastan.xml:32
+#: dat/spob/abacus.xml:28 dat/spob/allous_station.xml:29 dat/spob/astana.xml:49
+#: dat/spob/curie.xml:48 dat/spob/dono.xml:30 dat/spob/excelcior.xml:56
+#: dat/spob/galileo.xml:31 dat/spob/gastan.xml:32
 #: dat/spob/gerhart_station.xml:47 dat/spob/hznss1.xml:31
 #: dat/spob/jacqueline.xml:30 dat/spob/jorla.xml:46 dat/spob/jurai.xml:45
 #: dat/spob/kanar.xml:42 dat/spob/katar_i.xml:28 dat/spob/lugun.xml:32
 #: dat/spob/medenus_observatory.xml:28 dat/spob/naga.xml:45
 #: dat/spob/neo_pomerania.xml:54 dat/spob/oberon.xml:29 dat/spob/olario.xml:28
-#: dat/spob/prp1.xml:30 dat/spob/prp2.xml:30 dat/spob/prp3.xml:29
+#: dat/spob/prp1.xml:30 dat/spob/prp2.xml:30 dat/spob/prp3.xml:30
 #: dat/spob/prp4.xml:30 dat/spob/pso_monitor.xml:26 dat/spob/rulkar.xml:31
 #: dat/spob/scorch.xml:30 dat/spob/soromid_databank.xml:34
 #: dat/spob/soromid_wards_beta.xml:34 dat/spob/soromid_wards_gamma.xml:33
-#: dat/spob/stein.xml:57 dat/spob/stormy.xml:43 dat/spob/topkapi_station.xml:28
-#: dat/spob/tumut.xml:27 dat/spob/vaal.xml:21 dat/spob/vinooso.xml:42
-#: dat/spob/vracha.xml:29 dat/spob/warnecke.xml:61 dat/spob/wigheta.xml:31
-#: dat/spob/wonclock.xml:48 dat/spob/zhiru.xml:46
+#: dat/spob/stein.xml:57 dat/spob/stormy.xml:43 dat/spob/telika_station.xml:30
+#: dat/spob/topkapi_station.xml:28 dat/spob/tumut.xml:27 dat/spob/vaal.xml:21
+#: dat/spob/vinooso.xml:42 dat/spob/vracha.xml:29 dat/spob/warnecke.xml:61
+#: dat/spob/wigheta.xml:31 dat/spob/wonclock.xml:48 dat/spob/zhiru.xml:46
 msgid "research"
 msgstr ""
 
@@ -7956,9 +7957,10 @@ msgstr "Adham"
 #: dat/spob/amatiri_ia.xml:9 dat/spob/andee_iiia.xml:9 dat/spob/andors.xml:15
 #: dat/spob/arch_arai.xml:15 dat/spob/ariadus_vib.xml:9
 #: dat/spob/atalanta.xml:15 dat/spob/august.xml:15 dat/spob/babylon_ii.xml:9
-#: dat/spob/darkstone_iv.xml:9 dat/spob/dowue.xml:15 dat/spob/durumdra.xml:15
-#: dat/spob/dusk.xml:9 dat/spob/edergast.xml:9 dat/spob/elixir_i.xml:9
-#: dat/spob/elza_iii.xml:9 dat/spob/esker_iv.xml:9 dat/spob/euler_iv.xml:9
+#: dat/spob/claudius_mehan.xml:9 dat/spob/darkstone_iv.xml:9
+#: dat/spob/dowue.xml:15 dat/spob/durumdra.xml:15 dat/spob/dusk.xml:9
+#: dat/spob/edergast.xml:9 dat/spob/elixir_i.xml:9 dat/spob/elza_iii.xml:9
+#: dat/spob/esker_iv.xml:9 dat/spob/euler_iv.xml:9
 #: dat/spob/eye_of_night_iii.xml:9 dat/spob/fortitude_iii.xml:9
 #: dat/spob/fried_ia.xml:9 dat/spob/garten_x.xml:9 dat/spob/harnaar.xml:15
 #: dat/spob/luna_skona.xml:9 dat/spob/maus_ii.xml:9 dat/spob/poller_d2.xml:9
@@ -8040,9 +8042,9 @@ msgstr "Aera"
 #: dat/spob/qulam_primus.xml:9 dat/spob/seiben_iv.xml:9
 #: dat/spob/stelman_i3.xml:9 dat/spob/stormy.xml:15 dat/spob/sultan_vi.xml:9
 #: dat/spob/tesla_station.xml:16 dat/spob/theras_iv.xml:9
-#: dat/spob/unseelie.xml:9 dat/spob/ux_iix.xml:9 dat/spob/ux_vii.xml:9
-#: dat/spob/vanir_ii.xml:9 dat/spob/vauban_i1.xml:9 dat/spob/zethus.xml:9
-#: dat/spob/zintar_v.xml:9
+#: dat/spob/tomas_i1.xml:9 dat/spob/unseelie.xml:9 dat/spob/ux_iix.xml:9
+#: dat/spob/ux_vii.xml:9 dat/spob/vanir_ii.xml:9 dat/spob/vauban_i1.xml:9
+#: dat/spob/zethus.xml:9 dat/spob/zintar_v.xml:9
 msgid "I"
 msgstr ""
 
@@ -8254,12 +8256,12 @@ msgstr ""
 #: dat/spob/drognain.xml:28 dat/spob/edorn.xml:37 dat/spob/gennus.xml:38
 #: dat/spob/greenberg.xml:30 dat/spob/hassak.xml:29 dat/spob/hurada.xml:30
 #: dat/spob/jasmine.xml:28 dat/spob/jeronon.xml:43 dat/spob/jorlan.xml:41
-#: dat/spob/magellan.xml:37 dat/spob/new_dortmund.xml:44 dat/spob/nixa.xml:29
-#: dat/spob/nonuri.xml:31 dat/spob/semper.xml:43 dat/spob/stella.xml:30
-#: dat/spob/takeru.xml:29 dat/spob/tenalp.xml:27 dat/spob/thymo.xml:38
-#: dat/spob/trichu.xml:33 dat/spob/vaal.xml:19 dat/spob/vao_vos.xml:32
-#: dat/spob/vargos_rock.xml:30 dat/spob/vault.xml:41
-#: dat/spob/vercingetorix.xml:42 dat/spob/vertigo.xml:31
+#: dat/spob/magellan.xml:37 dat/spob/megan_station.xml:30
+#: dat/spob/new_dortmund.xml:44 dat/spob/nixa.xml:29 dat/spob/nonuri.xml:31
+#: dat/spob/semper.xml:43 dat/spob/stella.xml:30 dat/spob/takeru.xml:29
+#: dat/spob/tenalp.xml:27 dat/spob/thymo.xml:38 dat/spob/trichu.xml:33
+#: dat/spob/vaal.xml:19 dat/spob/vao_vos.xml:32 dat/spob/vargos_rock.xml:30
+#: dat/spob/vault.xml:41 dat/spob/vercingetorix.xml:42 dat/spob/vertigo.xml:31
 #: dat/spob/vlexair.xml:30 dat/spob/vracha.xml:28 dat/spob/vuere.xml:31
 #: dat/spob/wagenni.xml:38 dat/spob/wahri.xml:42 dat/spob/wakan.xml:27
 #: dat/spob/warnecke.xml:59 dat/spob/waterholes_moon.xml:32
@@ -8277,19 +8279,19 @@ msgstr "Stanice Akios"
 #: dat/spob/allous_station.xml:15 dat/spob/andors_refining.xml:15
 #: dat/spob/apik_shipyard.xml:15 dat/spob/bastion_station.xml:15
 #: dat/spob/bedimann_shipyards.xml:16 dat/spob/cantina_station.xml:15
-#: dat/spob/claudius_mehan.xml:9 dat/spob/cole_station.xml:15
-#: dat/spob/corinth_foods.xml:15 dat/spob/cornwal_ordinance.xml:15
-#: dat/spob/darkshed.xml:15 dat/spob/diabolos.xml:15
-#: dat/spob/dundrop_station.xml:15 dat/spob/duran_shipyard.xml:15
-#: dat/spob/dvnn_central.xml:15 dat/spob/eclipse_station.xml:16
-#: dat/spob/ekta_station.xml:15 dat/spob/freshwater_station.xml:15
-#: dat/spob/galileo.xml:9 dat/spob/gath_station.xml:16
-#: dat/spob/gaula_foods.xml:15 dat/spob/gerhart_station.xml:15
-#: dat/spob/gorchenchev_shipyards.xml:16 dat/spob/gordons_exchange.xml:15
-#: dat/spob/grindstone_shipyards.xml:15 dat/spob/hartwell_station.xml:16
-#: dat/spob/heronus_orbital.xml:16 dat/spob/house_zalek_central_station.xml:16
-#: dat/spob/hurne_station.xml:15 dat/spob/hystera_outpost.xml:15
-#: dat/spob/hznss1.xml:15 dat/spob/hznss2.xml:15 dat/spob/inios_station.xml:15
+#: dat/spob/cole_station.xml:15 dat/spob/corinth_foods.xml:15
+#: dat/spob/cornwal_ordinance.xml:15 dat/spob/darkshed.xml:15
+#: dat/spob/diabolos.xml:15 dat/spob/dundrop_station.xml:15
+#: dat/spob/duran_shipyard.xml:15 dat/spob/dvnn_central.xml:15
+#: dat/spob/eclipse_station.xml:16 dat/spob/ekta_station.xml:15
+#: dat/spob/freshwater_station.xml:15 dat/spob/galileo.xml:15
+#: dat/spob/gath_station.xml:16 dat/spob/gaula_foods.xml:15
+#: dat/spob/gerhart_station.xml:15 dat/spob/gorchenchev_shipyards.xml:16
+#: dat/spob/gordons_exchange.xml:15 dat/spob/grindstone_shipyards.xml:15
+#: dat/spob/hartwell_station.xml:16 dat/spob/heronus_orbital.xml:16
+#: dat/spob/house_zalek_central_station.xml:16 dat/spob/hurne_station.xml:15
+#: dat/spob/hystera_outpost.xml:15 dat/spob/hznss1.xml:15
+#: dat/spob/hznss2.xml:15 dat/spob/hznss3.xml:15 dat/spob/inios_station.xml:15
 #: dat/spob/inss1.xml:15 dat/spob/inss2.xml:15 dat/spob/inss3.xml:15
 #: dat/spob/jade_court.xml:16 dat/spob/janus_farming_station.xml:15
 #: dat/spob/janus_station.xml:16 dat/spob/madeleine_station.xml:16
@@ -8323,12 +8325,11 @@ msgstr "Stanice Akios"
 #: dat/spob/tau_station.xml:15 dat/spob/telika_station.xml:15
 #: dat/spob/tenalp.xml:15 dat/spob/thaddius_station.xml:15
 #: dat/spob/the_frontier_council.xml:15 dat/spob/the_wringer.xml:15
-#: dat/spob/three_and_a_half_kings.xml:15 dat/spob/tomas_i1.xml:9
-#: dat/spob/torg_crops.xml:15 dat/spob/trevis_station.xml:16
-#: dat/spob/triton_station.xml:15 dat/spob/turnpike_station.xml:15
-#: dat/spob/umbrella_station.xml:15 dat/spob/urbanus_crops.xml:15
-#: dat/spob/westeros_station.xml:15 dat/spob/yaroslav_farming_station.xml:15
-#: dat/spob/zabween.xml:15
+#: dat/spob/three_and_a_half_kings.xml:15 dat/spob/torg_crops.xml:15
+#: dat/spob/trevis_station.xml:16 dat/spob/triton_station.xml:15
+#: dat/spob/turnpike_station.xml:15 dat/spob/umbrella_station.xml:15
+#: dat/spob/urbanus_crops.xml:15 dat/spob/westeros_station.xml:15
+#: dat/spob/yaroslav_farming_station.xml:15 dat/spob/zabween.xml:15
 msgid "0"
 msgstr ""
 
@@ -8368,7 +8369,7 @@ msgstr ""
 #: dat/spob/morgan_station.xml:48 dat/spob/mutris.xml:46
 #: dat/spob/myuirr_station.xml:36 dat/spob/nolan.xml:27
 #: dat/spob/obelisk_station.xml:33 dat/spob/omega_station.xml:45
-#: dat/spob/pokyos_station.xml:46 dat/spob/priscus.xml:44
+#: dat/spob/pokyos_station.xml:47 dat/spob/priscus.xml:44
 #: dat/spob/raptor_station.xml:35 dat/spob/rikaina.xml:63
 #: dat/spob/ruadan_bastion.xml:54 dat/spob/ruadan_prime.xml:62
 #: dat/spob/sarrii_station.xml:35 dat/spob/scorpion_station.xml:40
@@ -8405,7 +8406,7 @@ msgstr ""
 #: dat/spob/olario.xml:27 dat/spob/omega_station.xml:46
 #: dat/spob/raptor_station.xml:36 dat/spob/rockhardt.xml:53
 #: dat/spob/ruadan_bastion.xml:55 dat/spob/savoy.xml:50 dat/spob/scorch.xml:31
-#: dat/spob/scorpion_station.xml:41 dat/spob/sirou_alpha.xml:59
+#: dat/spob/scorpion_station.xml:42 dat/spob/sirou_alpha.xml:59
 #: dat/spob/soromid_customs_central.xml:31 dat/spob/soromid_databank.xml:35
 #: dat/spob/stormy.xml:44 dat/spob/tanulwa.xml:30 dat/spob/tartarus.xml:30
 #: dat/spob/taxumi_iiia.xml:51 dat/spob/tesla_station.xml:38
@@ -8415,6 +8416,94 @@ msgstr ""
 #: dat/spob/yak_station.xml:31
 msgid "military"
 msgstr ""
+
+#: dat/spob/akios_station.xml:52 dat/spob/akra_station.xml:44
+#: dat/spob/allan.xml:29 dat/spob/alleyway.xml:30
+#: dat/spob/allous_station.xml:28 dat/spob/andors_refining.xml:37
+#: dat/spob/apik_shipyard.xml:48 dat/spob/arcturus_gamma.xml:56
+#: dat/spob/bastion_station.xml:49 dat/spob/bedimann_shipyards.xml:44
+#: dat/spob/belltower_station.xml:52 dat/spob/brandt_station.xml:30
+#: dat/spob/cantina_station.xml:32 dat/spob/cerberus.xml:31
+#: dat/spob/cole_station.xml:27 dat/spob/coral_station.xml:28
+#: dat/spob/corinth_foods.xml:29 dat/spob/cornwal_ordinance.xml:38
+#: dat/spob/darkshed.xml:51 dat/spob/diabolos.xml:26
+#: dat/spob/dumas_station.xml:35 dat/spob/dundrop_station.xml:41
+#: dat/spob/duran_shipyard.xml:35 dat/spob/dvaered_high_command.xml:49
+#: dat/spob/dvnn_central.xml:28 dat/spob/eclipse_station.xml:44
+#: dat/spob/efferey.xml:37 dat/spob/eist_shipyard.xml:33
+#: dat/spob/ekta_station.xml:47 dat/spob/emperors_wrath.xml:28
+#: dat/spob/facett_outpost.xml:32 dat/spob/fairfax_station.xml:42
+#: dat/spob/fd24.xml:26 dat/spob/fernando_station.xml:43
+#: dat/spob/forbes_station.xml:34 dat/spob/fort_sirius.xml:45
+#: dat/spob/fort_voproid.xml:50 dat/spob/foundation_station.xml:37
+#: dat/spob/freshwater_station.xml:30 dat/spob/fury_station.xml:64
+#: dat/spob/fyruse_station.xml:30 dat/spob/galileo.xml:30
+#: dat/spob/gamma_station.xml:50 dat/spob/gath_station.xml:41
+#: dat/spob/gaula_foods.xml:32 dat/spob/gerhart_station.xml:49
+#: dat/spob/gorchenchev_shipyards.xml:38 dat/spob/gordons_exchange.xml:30
+#: dat/spob/grindstone_shipyards.xml:33 dat/spob/hartwell_station.xml:48
+#: dat/spob/heronus_orbital.xml:43 dat/spob/house_zalek_central_station.xml:77
+#: dat/spob/hs224.xml:30 dat/spob/hs232.xml:30 dat/spob/hs24.xml:30
+#: dat/spob/hs37.xml:30 dat/spob/hs54.xml:30 dat/spob/hurne_station.xml:40
+#: dat/spob/hystera_outpost.xml:30 dat/spob/hznss1.xml:33
+#: dat/spob/hznss2.xml:29 dat/spob/hznss3.xml:29 dat/spob/inios_station.xml:41
+#: dat/spob/inss1.xml:30 dat/spob/inss2.xml:30 dat/spob/inss3.xml:29
+#: dat/spob/jade_court.xml:31 dat/spob/janus_farming_station.xml:27
+#: dat/spob/janus_station.xml:48 dat/spob/madeleine_station.xml:46
+#: dat/spob/manuel_station.xml:50 dat/spob/marauder_station.xml:53
+#: dat/spob/marius_station.xml:42 dat/spob/mastodon_station.xml:29
+#: dat/spob/maus_station.xml:47 dat/spob/medenus_observatory.xml:29
+#: dat/spob/megan_station.xml:29 dat/spob/melendez_dome.xml:35
+#: dat/spob/memory_of_sorom.xml:53 dat/spob/minerva_station.xml:51
+#: dat/spob/mokoshotar.xml:43 dat/spob/monsoon_station.xml:30
+#: dat/spob/moorline_station.xml:53 dat/spob/morgan_station.xml:49
+#: dat/spob/myuirr_station.xml:37 dat/spob/niflheim.xml:45 dat/spob/ns1.xml:27
+#: dat/spob/ns144.xml:27 dat/spob/ns27.xml:27 dat/spob/ns42.xml:27
+#: dat/spob/ns63.xml:27 dat/spob/obelisk_station.xml:34
+#: dat/spob/omega_station.xml:47 dat/spob/onyx_shipyard.xml:35
+#: dat/spob/oort_farming_station.xml:27 dat/spob/opal_station.xml:40
+#: dat/spob/orville_shipyard.xml:33 dat/spob/outbound_station.xml:43
+#: dat/spob/point_zero_station.xml:30 dat/spob/pokyos_station.xml:46
+#: dat/spob/polaris_prime.xml:49 dat/spob/porro_farming_station.xml:28
+#: dat/spob/procyon_shipyards.xml:38 dat/spob/prp1.xml:31 dat/spob/prp2.xml:31
+#: dat/spob/prp3.xml:29 dat/spob/prp4.xml:31 dat/spob/pso_monitor.xml:27
+#: dat/spob/raelid_outpost.xml:38 dat/spob/raglan_outpost.xml:29
+#: dat/spob/raptor_station.xml:37 dat/spob/research_post_sigma13.xml:27
+#: dat/spob/rikaina.xml:64 dat/spob/ruadan_bastion.xml:56
+#: dat/spob/ruadan_station.xml:26 dat/spob/s00000.xml:21 dat/spob/s00018.xml:21
+#: dat/spob/s00522.xml:21 dat/spob/s00653.xml:21 dat/spob/s13024.xml:21
+#: dat/spob/s23001.xml:21 dat/spob/s23491.xml:21 dat/spob/s38729.xml:21
+#: dat/spob/s49281.xml:21 dat/spob/s49335.xml:21 dat/spob/s49588.xml:21
+#: dat/spob/s58309.xml:21 dat/spob/s72288.xml:21 dat/spob/s72839.xml:21
+#: dat/spob/s91456.xml:21 dat/spob/salsax_station.xml:39 dat/spob/savoy.xml:51
+#: dat/spob/scorpion_station.xml:41 dat/spob/secundus_station.xml:26
+#: dat/spob/shade__sunshine_station.xml:30 dat/spob/shariff_station.xml:28
+#: dat/spob/sigma_station.xml:66 dat/spob/sirius_ordnance.xml:42
+#: dat/spob/sirius_shipyards.xml:33 dat/spob/sirou_alpha.xml:60
+#: dat/spob/slofeldt.xml:30 dat/spob/socrates_military_academy.xml:30
+#: dat/spob/solvac_crops.xml:31 dat/spob/soromid_customs_central.xml:27
+#: dat/spob/soromid_databank.xml:31 dat/spob/soromid_wards_alpha.xml:28
+#: dat/spob/soromid_wards_beta.xml:31 dat/spob/soromid_wards_gamma.xml:31
+#: dat/spob/soros_station.xml:35 dat/spob/stalwart_station.xml:43
+#: dat/spob/steiner.xml:27 dat/spob/sy1025.xml:51 dat/spob/sy1206.xml:51
+#: dat/spob/sy159.xml:51 dat/spob/sy19.xml:51 dat/spob/sy237.xml:51
+#: dat/spob/sy256.xml:51 dat/spob/sy314.xml:51 dat/spob/sy413.xml:51
+#: dat/spob/sy612.xml:51 dat/spob/sy894.xml:51 dat/spob/sy920.xml:51
+#: dat/spob/tankard_station.xml:42 dat/spob/tarsus_station.xml:28
+#: dat/spob/tau_station.xml:31 dat/spob/telika_station.xml:29
+#: dat/spob/tenalp.xml:28 dat/spob/thaddius_station.xml:43
+#: dat/spob/the_crucible.xml:46 dat/spob/the_frontier_council.xml:27
+#: dat/spob/the_wringer.xml:34 dat/spob/three_and_a_half_kings.xml:43
+#: dat/spob/torg_crops.xml:30 dat/spob/trevis_station.xml:40
+#: dat/spob/triton_station.xml:36 dat/spob/turnpike_station.xml:40
+#: dat/spob/umbrella_station.xml:29 dat/spob/urbanus_crops.xml:30
+#: dat/spob/vigil_station.xml:28 dat/spob/vigilance_station.xml:58
+#: dat/spob/violin_station.xml:27 dat/spob/wardens_end.xml:53
+#: dat/spob/warnecke.xml:58 dat/spob/westeros_station.xml:29
+#: dat/spob/wildwood_station.xml:29 dat/spob/yak_station.xml:29
+#: dat/spob/yaroslav_farming_station.xml:28 dat/spob/zabween.xml:45
+msgid "station"
+msgstr "Stanice Akios"
 
 #: dat/spob/akra_iii.xml:2
 msgid "Akra III"
@@ -8953,23 +9042,25 @@ msgstr ""
 
 #: dat/spob/amhurst.xml:46 dat/spob/antica.xml:43 dat/spob/brooks.xml:39
 #: dat/spob/cantina_station.xml:31 dat/spob/crow.xml:53
-#: dat/spob/darkshed.xml:50 dat/spob/dawn.xml:34 dat/spob/eiger.xml:30
+#: dat/spob/darkshed.xml:50 dat/spob/dawn.xml:34
+#: dat/spob/dundrop_station.xml:42 dat/spob/eiger.xml:30
 #: dat/spob/excelcior.xml:57 dat/spob/fuzka.xml:46 dat/spob/gastan.xml:33
 #: dat/spob/gerhart_station.xml:48 dat/spob/gordons_exchange.xml:29
-#: dat/spob/halir.xml:49 dat/spob/jaegnhild.xml:38 dat/spob/jankelo.xml:37
-#: dat/spob/jaxheen.xml:59 dat/spob/jorlan.xml:44 dat/spob/kataka.xml:41
-#: dat/spob/khelim.xml:40 dat/spob/lapra.xml:48 dat/spob/larling.xml:36
+#: dat/spob/halir.xml:49 dat/spob/hurne_station.xml:41
+#: dat/spob/jaegnhild.xml:38 dat/spob/jankelo.xml:37 dat/spob/jaxheen.xml:59
+#: dat/spob/jorlan.xml:44 dat/spob/kataka.xml:41 dat/spob/khelim.xml:40
+#: dat/spob/lapra.xml:48 dat/spob/larling.xml:36 dat/spob/manuel_station.xml:51
 #: dat/spob/mk.xml:40 dat/spob/neurri.xml:36 dat/spob/niflheim.xml:43
-#: dat/spob/nova_shakar.xml:46 dat/spob/outbound_station.xml:42
-#: dat/spob/point_zero_station.xml:29 dat/spob/polaris_prime.xml:48
-#: dat/spob/rockhardt.xml:55 dat/spob/rodney.xml:31
-#: dat/spob/salsax_station.xml:38 dat/spob/soromid_customs_central.xml:29
-#: dat/spob/topkapi_station.xml:29 dat/spob/turnpike_station.xml:39
-#: dat/spob/varaati.xml:46 dat/spob/vilati_vilata.xml:44 dat/spob/vino.xml:44
-#: dat/spob/vorca.xml:56 dat/spob/wardens_end.xml:55
-#: dat/spob/westeros_station.xml:30 dat/spob/wikon.xml:53
-#: dat/spob/yaroslav_farming_station.xml:30 dat/spob/zabween.xml:43
-#: dat/spob/zembla_shakar.xml:42 dat/spob/zuner.xml:34
+#: dat/spob/nova_shakar.xml:46 dat/spob/opal_station.xml:41
+#: dat/spob/outbound_station.xml:42 dat/spob/point_zero_station.xml:29
+#: dat/spob/polaris_prime.xml:48 dat/spob/rockhardt.xml:55
+#: dat/spob/rodney.xml:31 dat/spob/salsax_station.xml:38
+#: dat/spob/soromid_customs_central.xml:29 dat/spob/topkapi_station.xml:29
+#: dat/spob/turnpike_station.xml:39 dat/spob/varaati.xml:46
+#: dat/spob/vilati_vilata.xml:44 dat/spob/vino.xml:44 dat/spob/vorca.xml:56
+#: dat/spob/wardens_end.xml:55 dat/spob/westeros_station.xml:30
+#: dat/spob/wikon.xml:53 dat/spob/yaroslav_farming_station.xml:30
+#: dat/spob/zabween.xml:43 dat/spob/zembla_shakar.xml:42 dat/spob/zuner.xml:34
 msgid "trade"
 msgstr ""
 
@@ -9370,6 +9461,15 @@ msgstr ""
 "uspokojovala potřeby běžné populace. Účinně chrlí a obsluhuje civilní "
 "plavidla podle potřeby."
 
+#: dat/spob/apik_shipyard.xml:49 dat/spob/bedimann_shipyards.xml:45
+#: dat/spob/duran_shipyard.xml:34 dat/spob/gorchenchev_shipyards.xml:39
+#: dat/spob/grindstone_shipyards.xml:34 dat/spob/onyx_shipyard.xml:36
+#: dat/spob/orville_shipyard.xml:34 dat/spob/procyon_shipyards.xml:39
+#: dat/spob/sirius_shipyards.xml:34 dat/spob/warei.xml:39
+#: dat/spob/wigheta.xml:33 dat/spob/zhiru.xml:48
+msgid "shipbuilding"
+msgstr ""
+
 #: dat/spob/aquilia.xml:2
 msgid "Aquilia"
 msgstr "Aquilia"
@@ -9447,14 +9547,18 @@ msgstr ""
 
 #: dat/spob/arcadia.xml:30 dat/spob/benteen.xml:30 dat/spob/caladan.xml:45
 #: dat/spob/corinth_foods.xml:28 dat/spob/crylo.xml:41 dat/spob/em_1.xml:43
-#: dat/spob/excelcior.xml:55 dat/spob/gaula.xml:30 dat/spob/gaula_foods.xml:31
-#: dat/spob/haurn.xml:30 dat/spob/hznss1.xml:30 dat/spob/hznss2.xml:28
-#: dat/spob/hznss3.xml:28 dat/spob/inss1.xml:29 dat/spob/inss2.xml:29
-#: dat/spob/kayel.xml:37 dat/spob/mendez.xml:30 dat/spob/percola.xml:38
+#: dat/spob/excelcior.xml:55 dat/spob/freshwater_station.xml:31
+#: dat/spob/gaula.xml:30 dat/spob/gaula_foods.xml:31 dat/spob/haurn.xml:30
+#: dat/spob/hznss1.xml:30 dat/spob/hznss2.xml:28 dat/spob/hznss3.xml:28
+#: dat/spob/inss1.xml:29 dat/spob/inss2.xml:29 dat/spob/inss3.xml:30
+#: dat/spob/janus_farming_station.xml:28 dat/spob/kayel.xml:37
+#: dat/spob/mendez.xml:30 dat/spob/oort_farming_station.xml:28
+#: dat/spob/percola.xml:38 dat/spob/porro_farming_station.xml:29
 #: dat/spob/priscus.xml:45 dat/spob/reidd.xml:38 dat/spob/rogan.xml:47
 #: dat/spob/sander.xml:32 dat/spob/shade__sunshine_station.xml:29
 #: dat/spob/smaal.xml:36 dat/spob/solvac_crops.xml:30
-#: dat/spob/tau_station.xml:30 dat/spob/yaroslav_farming_station.xml:29
+#: dat/spob/tau_station.xml:30 dat/spob/torg_crops.xml:29
+#: dat/spob/urbanus_crops.xml:31 dat/spob/yaroslav_farming_station.xml:29
 #: dat/spob/zuner.xml:33
 msgid "agriculture"
 msgstr ""
@@ -9570,44 +9674,6 @@ msgstr ""
 "Bar na Arcturu Gamma je čistě užitkové místo. Je kovově šedý, pečlivě "
 "udržovaný a plný vojáků říše mimo službu - není to místo, kde byste se mohli "
 "dostat do šarvátky."
-
-#: dat/spob/arcturus_gamma.xml:56 dat/spob/belltower_station.xml:52
-#: dat/spob/brandt_station.xml:30 dat/spob/cerberus.xml:31
-#: dat/spob/coral_station.xml:28 dat/spob/dumas_station.xml:35
-#: dat/spob/dvaered_high_command.xml:49 dat/spob/efferey.xml:37
-#: dat/spob/eist_shipyard.xml:33 dat/spob/emperors_wrath.xml:28
-#: dat/spob/facett_outpost.xml:32 dat/spob/fairfax_station.xml:42
-#: dat/spob/fd24.xml:26 dat/spob/fernando_station.xml:43
-#: dat/spob/forbes_station.xml:34 dat/spob/fort_sirius.xml:45
-#: dat/spob/fort_voproid.xml:50 dat/spob/foundation_station.xml:37
-#: dat/spob/fury_station.xml:64 dat/spob/fyruse_station.xml:30
-#: dat/spob/gamma_station.xml:50 dat/spob/hs224.xml:30 dat/spob/hs232.xml:30
-#: dat/spob/hs24.xml:30 dat/spob/hs37.xml:30 dat/spob/hs54.xml:30
-#: dat/spob/melendez_dome.xml:35 dat/spob/ns1.xml:27 dat/spob/ns144.xml:27
-#: dat/spob/ns27.xml:27 dat/spob/ns42.xml:27 dat/spob/ns63.xml:27
-#: dat/spob/outbound_station.xml:43 dat/spob/polaris_prime.xml:49
-#: dat/spob/raglan_outpost.xml:29 dat/spob/rikaina.xml:64
-#: dat/spob/ruadan_bastion.xml:56 dat/spob/s00000.xml:21 dat/spob/s00018.xml:21
-#: dat/spob/s00522.xml:21 dat/spob/s00653.xml:21 dat/spob/s13024.xml:21
-#: dat/spob/s23001.xml:21 dat/spob/s23491.xml:21 dat/spob/s38729.xml:21
-#: dat/spob/s49281.xml:21 dat/spob/s49335.xml:21 dat/spob/s49588.xml:21
-#: dat/spob/s58309.xml:21 dat/spob/s72288.xml:21 dat/spob/s72839.xml:21
-#: dat/spob/s91456.xml:21 dat/spob/savoy.xml:51 dat/spob/sigma_station.xml:66
-#: dat/spob/soromid_customs_central.xml:27 dat/spob/soromid_databank.xml:31
-#: dat/spob/soromid_wards_alpha.xml:28 dat/spob/soromid_wards_beta.xml:31
-#: dat/spob/soromid_wards_gamma.xml:31 dat/spob/stalwart_station.xml:43
-#: dat/spob/sy1025.xml:51 dat/spob/sy1206.xml:51 dat/spob/sy159.xml:51
-#: dat/spob/sy19.xml:51 dat/spob/sy237.xml:51 dat/spob/sy256.xml:51
-#: dat/spob/sy314.xml:51 dat/spob/sy413.xml:51 dat/spob/sy612.xml:51
-#: dat/spob/sy894.xml:51 dat/spob/sy920.xml:51 dat/spob/the_crucible.xml:46
-#: dat/spob/the_frontier_council.xml:27 dat/spob/vigil_station.xml:28
-#: dat/spob/vigilance_station.xml:58 dat/spob/violin_station.xml:27
-#: dat/spob/wardens_end.xml:53 dat/spob/warnecke.xml:58
-#: dat/spob/westeros_station.xml:29 dat/spob/wildwood_station.xml:29
-#: dat/spob/yak_station.xml:29 dat/spob/yaroslav_farming_station.xml:28
-#: dat/spob/zabween.xml:45
-msgid "station"
-msgstr "Stanice Akios"
 
 #: dat/spob/arcturus_i.xml:2
 msgid "Arcturus I"
@@ -10627,7 +10693,8 @@ msgstr ""
 
 #: dat/spob/cetrat.xml:41 dat/spob/soromid_databank.xml:32
 #: dat/spob/soromid_wards_alpha.xml:29 dat/spob/soromid_wards_beta.xml:32
-#: dat/spob/soromid_wards_gamma.xml:34 dat/spob/wonclock.xml:49
+#: dat/spob/soromid_wards_gamma.xml:34 dat/spob/umbrella_station.xml:30
+#: dat/spob/wonclock.xml:49
 msgid "medical"
 msgstr ""
 
@@ -12517,6 +12584,26 @@ msgstr ""
 
 #: dat/spob/galileo.xml:2
 msgid "Galileo"
+msgstr ""
+
+#: dat/spob/galileo.xml:26
+msgid ""
+"Originally funded by an ambitious research proposal to expand Za'lek space "
+"beyond the Anubis black hole, the Galileo project has been plagued by "
+"funding mismanagement, inner quarrels, and even a murder investigation. "
+"While the original research project itself is more or less a failure, the "
+"station does host a significant amount of researchers. Furthermore, despite "
+"originally being focused on applied science, the funding issues have made it "
+"so that most of the researchers that remain are more focused on theoretical "
+"developments that require few resources."
+msgstr ""
+
+#: dat/spob/galileo.xml:27
+msgid ""
+"The bar is frequented by many Za'lek scientists who mainly keep to "
+"themselves as they attempt to untangle large equations and decipher texts on "
+"theoretical advances in their field of study. Even by Za'lek standards it is "
+"very quiet and calm."
 msgstr ""
 
 #: dat/spob/gamma.xml:2
@@ -20971,10 +21058,6 @@ msgid ""
 "is far from comfortable."
 msgstr ""
 
-#: dat/spob/warei.xml:39 dat/spob/wigheta.xml:33 dat/spob/zhiru.xml:48
-msgid "shipbuilding"
-msgstr ""
-
 #: dat/spob/warnecke.xml:2
 msgid "Warnecke"
 msgstr ""
@@ -27051,7 +27134,7 @@ msgstr ""
 #. Destroy if exists
 #: dat/board.lua:410 dat/board.lua:453 dat/comm.lua:171
 #: dat/events/escort_settings.lua:167 dat/events/shipai.lua:35
-#: dat/events/shipai.lua:49 dat/missions/neutral/race_qex.lua:129
+#: dat/events/shipai.lua:49 dat/missions/neutral/race_qex.lua:134
 #: dat/outfits/unique/fuel_recycler.lua:90 dat/spob/lua/lib/hypergate.lua:308
 #: dat/spob/lua/lib/spob.lua:114 src/console.c:694 src/dev_sysedit.c:1460
 #: src/dev_sysedit.c:1568 src/dev_sysedit.c:1665 src/dev_sysedit.c:1808
@@ -29147,7 +29230,7 @@ msgid "Trade"
 msgstr ""
 
 #: dat/events/dvaered/totoran.lua:251 dat/events/minerva/station.lua:343
-#: dat/events/minerva/station.lua:370 dat/missions/dvaered/gauntlet/gui.lua:295
+#: dat/events/minerva/station.lua:370 dat/missions/dvaered/gauntlet/gui.lua:300
 #: dat/rescue.lua:304 dat/rescue.lua:315 dat/scripts/luatk/core.lua:1126
 #: src/dialogue.c:726 src/escort.c:369 src/map_find.c:213 src/options.c:276
 #: src/options.c:853 src/options.c:963 src/options.c:1226 src/options.c:1277
@@ -35087,12 +35170,14 @@ msgstr ""
 
 #. local msg_tip = {}
 #. Returns a lore message for the given faction.
-#. Need presence in the system
+#. local presence = scur:presences()["FLF"] or 0
+#. Only spawn on FLF assets
+#. TODO sympathizers
 #. Don't appear on restricted assets
 #. TODO military personnel
 #. Create a list of conditional messages
 #. Add tag-appropriate descriptions
-#: dat/events/npc/flf.lua:71
+#: dat/events/npc/flf.lua:72
 msgid "FLF Supporter"
 msgstr ""
 
@@ -48334,17 +48419,17 @@ msgstr ""
 #. TODO sound effect?
 #. TODO music?
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:131
-#: dat/missions/minerva/kex3.lua:401 dat/missions/neutral/race_qex.lua:287
+#: dat/missions/minerva/kex3.lua:401 dat/missions/neutral/race_qex.lua:292
 msgid "3…"
 msgstr ""
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:132
-#: dat/missions/minerva/kex3.lua:402 dat/missions/neutral/race_qex.lua:289
+#: dat/missions/minerva/kex3.lua:402 dat/missions/neutral/race_qex.lua:294
 msgid "2…"
 msgstr ""
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:133
-#: dat/missions/minerva/kex3.lua:403 dat/missions/neutral/race_qex.lua:290
+#: dat/missions/minerva/kex3.lua:403 dat/missions/neutral/race_qex.lua:295
 msgid "1…"
 msgstr ""
 
@@ -48529,31 +48614,45 @@ msgstr ""
 msgid "Warlord"
 msgstr ""
 
+#: dat/missions/dvaered/gauntlet/gui.lua:227
+#: dat/missions/neutral/race_qex.lua:128
+#, fuzzy
+#| msgid "No space port here\n"
+msgid "Not Spaceworthy!"
+msgstr "Žádný vesmírný port zde není\n"
+
+#: dat/missions/dvaered/gauntlet/gui.lua:227
+msgid ""
+"Your ship is not spaceworthy and can not participate in the Crimson Gauntlet "
+"right now for the following reasons:\n"
+"\n"
+msgstr ""
+
 #. Outlined fonts
 #. Clear defaults
 #. Window and top details
-#: dat/missions/dvaered/gauntlet/gui.lua:262
+#: dat/missions/dvaered/gauntlet/gui.lua:267
 msgid "CRIMSON"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gui.lua:263
+#: dat/missions/dvaered/gauntlet/gui.lua:268
 msgid "GAUNTLET"
 msgstr ""
 
 #. Tournament Types
-#: dat/missions/dvaered/gauntlet/gui.lua:269
+#: dat/missions/dvaered/gauntlet/gui.lua:274
 msgid "Tournament"
 msgstr "Turnaj"
 
-#: dat/missions/dvaered/gauntlet/gui.lua:269
+#: dat/missions/dvaered/gauntlet/gui.lua:274
 msgid "Challenge"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gui.lua:269
+#: dat/missions/dvaered/gauntlet/gui.lua:274
 msgid "Infinity Arena"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gui.lua:269
+#: dat/missions/dvaered/gauntlet/gui.lua:274
 msgid "Special"
 msgstr ""
 
@@ -48561,7 +48660,7 @@ msgstr ""
 #. Subtypes
 #. Modifier
 #. Close or Cancel
-#: dat/missions/dvaered/gauntlet/gui.lua:293
+#: dat/missions/dvaered/gauntlet/gui.lua:298
 msgid "ENTER ARENA"
 msgstr ""
 
@@ -48834,7 +48933,7 @@ msgstr "Vyhněte se mi"
 #. Block the player and set timers
 #: dat/missions/dvaered/recruitment/dv_bikers.lua:200
 #: dat/missions/dvaered/recruitment/dv_bikers.lua:235
-#: dat/missions/neutral/race_qex.lua:387
+#: dat/missions/neutral/race_qex.lua:392
 msgid "GO!"
 msgstr ""
 
@@ -51385,6 +51484,7 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant07.lua:48
 #: dat/missions/neutral/antlejos/ant08.lua:53
 #: dat/missions/neutral/antlejos/ant09.lua:54
+#: dat/missions/neutral/foodbiz/deliverlove.lua:72
 #: dat/missions/pirate/contraband_cake.lua:81
 #: dat/missions/pirate/pir_hit_intro.lua:99
 #: dat/missions/zalek/blackhole/zbh01.lua:45
@@ -57190,6 +57290,7 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant07.lua:49
 #: dat/missions/neutral/antlejos/ant08.lua:54
 #: dat/missions/neutral/antlejos/ant09.lua:55
+#: dat/missions/neutral/foodbiz/deliverlove.lua:73
 #: dat/missions/pirate/contraband_cake.lua:82
 #: dat/missions/pirate/pir_hit_intro.lua:100
 #: dat/missions/zalek/blackhole/zbh01.lua:46
@@ -63060,7 +63161,7 @@ msgstr ""
 #. <chance>10</chance>
 #. <location>Bar</location>
 #. <faction>Sirius</faction>
-#. <cond>spob.cur():class() ~= "0" and spob.cur():class() ~= "1" and spob.cur():class() ~= "2" and spob.cur():class() ~= "3"</cond>
+#. <cond>spob.cur():tags().station==nil</cond>
 #. <notes>
 #. <tier>1</tier>
 #. </notes>
@@ -65667,16 +65768,16 @@ msgid ""
 "details.\n"
 "    \"Listen,\" she says, \"there's this Homebrew Processing Box Masters on "
 "{pnt}. Right over there, this system. I'm sure our box will get us the first "
-"prize. You take us there, you take us back, you get 20,000.\"\n"
+"prize. You take us there, you take us back, you get {creds}.\"\n"
 "    You just start to marvel at the self-assurance of one so young when she "
 "signals her impatience. \"Answer me now! Will you do it?\""
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:68
+#: dat/missions/neutral/diy-nerds.lua:69
 msgid "Not enough cargo space"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:68
+#: dat/missions/neutral/diy-nerds.lua:69
 msgid ""
 "\"Aw, I forgot\" she adds. \"We would of course need 4 tonnes of free cargo "
 "space for our box.\""
@@ -65687,26 +65788,26 @@ msgstr ""
 #. date hooked to update the time in the mission OSD in stage 1 (carting the nerds to the contest)
 #. no pickup since hail+2STP+1STP: mission failed (however, you must still land somewhere)
 #. common prep for the final stage
-#: dat/missions/neutral/diy-nerds.lua:73 dat/missions/neutral/diy-nerds.lua:87
-#: dat/missions/neutral/diy-nerds.lua:113
-#: dat/missions/neutral/diy-nerds.lua:141
-#: dat/missions/neutral/diy-nerds.lua:146
-#: dat/missions/neutral/diy-nerds.lua:207
-#: dat/missions/neutral/diy-nerds.lua:217
-#: dat/missions/neutral/diy-nerds.lua:230
-#: dat/missions/neutral/diy-nerds.lua:270
+#: dat/missions/neutral/diy-nerds.lua:74 dat/missions/neutral/diy-nerds.lua:88
+#: dat/missions/neutral/diy-nerds.lua:114
+#: dat/missions/neutral/diy-nerds.lua:142
+#: dat/missions/neutral/diy-nerds.lua:147
+#: dat/missions/neutral/diy-nerds.lua:208
+#: dat/missions/neutral/diy-nerds.lua:218
+#: dat/missions/neutral/diy-nerds.lua:231
+#: dat/missions/neutral/diy-nerds.lua:271
 msgid "DIY Nerds"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:75
+#: dat/missions/neutral/diy-nerds.lua:76
 msgid "Cart some nerds to their contest, and back."
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:78
+#: dat/missions/neutral/diy-nerds.lua:79
 msgid "We have a deal!"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:78
+#: dat/missions/neutral/diy-nerds.lua:79
 msgid ""
 "Upon accepting the task, you see the entire group visibly relax and you can "
 "almost feel Mia's confidence fade away - to some extent, at least. It seems "
@@ -65720,14 +65821,14 @@ msgid ""
 "contest!\""
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:88 dat/missions/neutral/diy-nerds.lua:142
-#: dat/missions/neutral/diy-nerds.lua:147
+#: dat/missions/neutral/diy-nerds.lua:89 dat/missions/neutral/diy-nerds.lua:143
+#: dat/missions/neutral/diy-nerds.lua:148
 msgid "Bring the nerds and their box to {pnt} before {time}"
 msgstr ""
 
 #. Case still in time
-#: dat/missions/neutral/diy-nerds.lua:89 dat/missions/neutral/diy-nerds.lua:143
-#: dat/missions/neutral/diy-nerds.lua:233 dat/missions/shadow/shadowrun.lua:78
+#: dat/missions/neutral/diy-nerds.lua:90 dat/missions/neutral/diy-nerds.lua:144
+#: dat/missions/neutral/diy-nerds.lua:234 dat/missions/shadow/shadowrun.lua:78
 #: dat/missions/shadow/shadowrun.lua:145 dat/missions/shadow/shadowrun.lua:152
 #: dat/missions/sirius/srs_ferry.lua:348
 msgid "You have {time} remaining"
@@ -65737,12 +65838,12 @@ msgstr ""
 #. in time, right planet
 #. hooked to 'land' in the second stage (wait for the nerds to hail you for the return trip)
 #. you pickup the nerds in time
-#: dat/missions/neutral/diy-nerds.lua:111
-#: dat/missions/neutral/diy-nerds.lua:170
+#: dat/missions/neutral/diy-nerds.lua:112
+#: dat/missions/neutral/diy-nerds.lua:171
 msgid "Happy nerds"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:111
+#: dat/missions/neutral/diy-nerds.lua:112
 msgid ""
 "\"Good job, {player},\" Mia compliments you upon arrival. \"We'll now go win "
 "the competition and celebrate a bit. You better stay in the system. We will "
@@ -65752,18 +65853,18 @@ msgid ""
 "reads \"Admissions\"."
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:113
+#: dat/missions/neutral/diy-nerds.lua:114
 msgid ""
 "Wait several periods in this system until hailed by the nerds for their "
 "return trip"
 msgstr ""
 
 #. late, right planet
-#: dat/missions/neutral/diy-nerds.lua:123
+#: dat/missions/neutral/diy-nerds.lua:124
 msgid "Angry nerds"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:123
+#: dat/missions/neutral/diy-nerds.lua:124
 msgid ""
 "Mia fumes. \"Great. Just great! We're late, you jerk.\" She points to a "
 "crumpled banner reading \"Admissions\". The area below it is deserted. \"No "
@@ -65776,11 +65877,11 @@ msgid ""
 msgstr ""
 
 #. late, not even the right planet
-#: dat/missions/neutral/diy-nerds.lua:130
+#: dat/missions/neutral/diy-nerds.lua:131
 msgid "Furious nerds"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:130
+#: dat/missions/neutral/diy-nerds.lua:131
 msgid ""
 "The nerds quickly and quietly pack up their box and start to leave your "
 "ship. Finally, Mia turns to you. Her body language suggests that she's "
@@ -65794,13 +65895,13 @@ msgid ""
 "group, and they are gone."
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:148
+#: dat/missions/neutral/diy-nerds.lua:149
 msgid ""
 "You're late and the nerds are getting angry and abusive; land to get rid of "
 "the nerds and their box"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:170
+#: dat/missions/neutral/diy-nerds.lua:171
 msgid ""
 "As soon as you exit your ship, you are surrounded by the group of nerds, who "
 "are euphoric. \"We won!\" one of the nerds shouts at you. Surprisingly, it "
@@ -65810,11 +65911,11 @@ msgid ""
 "\"we'll continue to celebrate on the way.\""
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:172
+#: dat/missions/neutral/diy-nerds.lua:173
 msgid "Sad nerds"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:172
+#: dat/missions/neutral/diy-nerds.lua:173
 msgid ""
 "As you get of your ship, you do not immediately see the nerds. You finally "
 "find them in a dark corner of the landing pad quietly sitting on their box, "
@@ -65831,22 +65932,22 @@ msgstr ""
 
 #. player has enough free cargo
 #. player has not enough free cargo space, give him last chance to make room
-#: dat/missions/neutral/diy-nerds.lua:183
+#: dat/missions/neutral/diy-nerds.lua:184
 msgid "Room for the box"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:183
+#: dat/missions/neutral/diy-nerds.lua:184
 msgid ""
 "\"Aw {player},\" Mia complains, \"as if you didn't know that our box needs 4 "
 "tonnes of free cargo space. Make room now, and pick us up at the bar.\""
 msgstr ""
 
 #. you're late for the pickup
-#: dat/missions/neutral/diy-nerds.lua:190
+#: dat/missions/neutral/diy-nerds.lua:191
 msgid "No more nerds"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:190
+#: dat/missions/neutral/diy-nerds.lua:191
 msgid ""
 "You look around, but the nerds are nowhere to be found. That is not much of "
 "a surprise, seeing that you are way too late.\n"
@@ -65857,11 +65958,11 @@ msgid ""
 msgstr ""
 
 #. you're late and far from the nerds
-#: dat/missions/neutral/diy-nerds.lua:197
+#: dat/missions/neutral/diy-nerds.lua:198
 msgid "You forgot the nerds"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:197
+#: dat/missions/neutral/diy-nerds.lua:198
 msgid ""
 "Seeing that it is already too late to pick up the nerds, and that you're "
 "quite far from {pnt}, you decide it's better to forget about them completely."
@@ -65869,12 +65970,12 @@ msgstr ""
 
 #. date hooked in stage 2 (waiting for the nerds hail you for their return trip)
 #. no pickup since hail+2STP
-#: dat/missions/neutral/diy-nerds.lua:206
-#: dat/missions/neutral/diy-nerds.lua:227
+#: dat/missions/neutral/diy-nerds.lua:207
+#: dat/missions/neutral/diy-nerds.lua:228
 msgid "In-system communication"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:206
+#: dat/missions/neutral/diy-nerds.lua:207
 msgid ""
 "A beep from your communications equipment tells you that someone wants to "
 "talk to you. You realize it is the nerds, and return the hail. \"Yo! This is "
@@ -65882,44 +65983,44 @@ msgid ""
 "come back and pick us up, we have things to do on {pnt}.\""
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:208
-#: dat/missions/neutral/diy-nerds.lua:218
-#: dat/missions/neutral/diy-nerds.lua:231
+#: dat/missions/neutral/diy-nerds.lua:209
+#: dat/missions/neutral/diy-nerds.lua:219
+#: dat/missions/neutral/diy-nerds.lua:232
 msgid ""
 "Pick up the nerds on {pickup_pnt} for their return trip to {dropoff_pnt}"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:219
+#: dat/missions/neutral/diy-nerds.lua:220
 msgid "You didn't pick up the nerds in time"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:227
+#: dat/missions/neutral/diy-nerds.lua:228
 msgid ""
 "Your comm link comes up again. It is the nerds, whom you'd almost forgotten. "
 "You hear Mia's voice: \"Hey, what are you waiting for? You'd better be here "
 "within one period, or we'll get another pilot and pay them, not you!\""
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:232
+#: dat/missions/neutral/diy-nerds.lua:233
 msgid "The nerds are getting impatient"
 msgstr ""
 
 #. hooked to entering the bar in stage 2
-#: dat/missions/neutral/diy-nerds.lua:244
+#: dat/missions/neutral/diy-nerds.lua:245
 msgid "Departure"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:244
+#: dat/missions/neutral/diy-nerds.lua:245
 msgid ""
 "The nerds follow you to your ship and finally stow away their box. Now, "
 "you're all set to go."
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:247
+#: dat/missions/neutral/diy-nerds.lua:248
 msgid "No room, no job"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:247
+#: dat/missions/neutral/diy-nerds.lua:248
 msgid ""
 "As you enter the bar, the nerds are immediately upon you. \"What is it with "
 "you?\" Mia asks. \"Is it so hard to make some room for our box? I am fed up "
@@ -65929,39 +66030,39 @@ msgid ""
 msgstr ""
 
 #. hooked to leaving the system in stage 2
-#: dat/missions/neutral/diy-nerds.lua:254
+#: dat/missions/neutral/diy-nerds.lua:255
 msgid "Have the nerds not told you to stay in the system? Mission failed!"
 msgstr ""
 
 #. hooked to inappropriately taking off in stage 2
-#: dat/missions/neutral/diy-nerds.lua:262
+#: dat/missions/neutral/diy-nerds.lua:263
 msgid "Have the nerds not told you to pick them up at the bar? Mission failed!"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:270
+#: dat/missions/neutral/diy-nerds.lua:271
 msgid "Return the nerds to {pnt}"
 msgstr "Vraťte nerdy na {pnt}"
 
 #. hooked to 'land' in the final stage (returning the nerds)
-#: dat/missions/neutral/diy-nerds.lua:280
-#: dat/missions/neutral/diy-nerds.lua:288
+#: dat/missions/neutral/diy-nerds.lua:281
+#: dat/missions/neutral/diy-nerds.lua:290
 msgid "The End"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:280
+#: dat/missions/neutral/diy-nerds.lua:281
 msgid ""
 "The nerds, finally exhausted from all the partying, still smile as they pack "
 "up their prize-winning box and leave your ship. Mia beams as she turns to "
 "you. \"Well done, {player}. You see, since we got loads of prize money, we "
 "decided to give you a bonus. After all, we wouldn't have gotten there "
-"without your service. Here, have 30,000. Good day to you.\""
+"without your service. Here, have {creds}. Good day to you.\""
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:283
+#: dat/missions/neutral/diy-nerds.lua:285
 msgid "Minor Complications"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:283
+#: dat/missions/neutral/diy-nerds.lua:285
 msgid ""
 "With sagging shoulders, the nerds unload their box. Mia turns to address "
 "you, not bold at all this time. \"Um, we got a bit of a problem here. You "
@@ -65979,18 +66080,18 @@ msgid ""
 "can have it as a compensation for your troubles. Interested?\""
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:286
+#: dat/missions/neutral/diy-nerds.lua:288
 msgid "So what?"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:286
+#: dat/missions/neutral/diy-nerds.lua:288
 msgid ""
 "\"Honestly, there is nothing you can do about it,\" Mia says impatiently, as "
 "if you were a small child complaining about the finiteness of an ice cream "
 "cone. \"Just stand by while we rig the thing up.\""
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:288
+#: dat/missions/neutral/diy-nerds.lua:290
 msgid ""
 "\"You can wait for it, won't take longer than half a period,\" Mia informs "
 "you. You stand by as the nerds start to mod their box. As they are going "
@@ -66865,7 +66966,7 @@ msgid "Deliver the recipes to Michal on {pnt} in the {sys} system."
 msgstr "Doručte recepty Michalovi na {pnt} v systému {sys}."
 
 #: dat/missions/neutral/foodbiz/delivercake.lua:55
-#: dat/missions/neutral/foodbiz/deliverlove.lua:72
+#: dat/missions/neutral/foodbiz/deliverlove.lua:97
 msgid "Fly to {pnt} in the {sys} system."
 msgstr "Leťte na {pnt} v systému {sys}."
 
@@ -66919,35 +67020,34 @@ msgstr ""
 #. Author: iwaschosen
 #. Plot: Talk to man on Zeo, bargain, load some cargo, deliver it to Zhiru in Goddard, get $
 #. --
-#: dat/missions/neutral/foodbiz/deliverlove.lua:24
+#: dat/missions/neutral/foodbiz/deliverlove.lua:28
 msgid "Love Letters"
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:25
+#: dat/missions/neutral/foodbiz/deliverlove.lua:29
 msgid "A cargo of feelings inked onto pulped, dried cellulose fibres."
 msgstr ""
 
 #. Can get doubled, must be global!
-#. No system shall be claimed by mission
-#: dat/missions/neutral/foodbiz/deliverlove.lua:34
+#: dat/missions/neutral/foodbiz/deliverlove.lua:35
 msgid "Old-Fashioned Man"
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:34
+#. No system shall be claimed by mission
+#: dat/missions/neutral/foodbiz/deliverlove.lua:42
 msgid "A man sits in the corner of the bar, writing a letter."
 msgstr ""
 
 #. Introductions and a bit of bargaining
 #. look at you go, double the reward
-#: dat/missions/neutral/foodbiz/deliverlove.lua:41
-#: dat/missions/neutral/foodbiz/deliverlove.lua:45
-#: dat/missions/neutral/foodbiz/deliverlove.lua:47
-#: dat/missions/neutral/foodbiz/deliverlove.lua:52
-#: dat/missions/neutral/foodbiz/deliverlove.lua:56
+#: dat/missions/neutral/foodbiz/deliverlove.lua:55
+#: dat/missions/neutral/foodbiz/deliverlove.lua:59
+#: dat/missions/neutral/foodbiz/deliverlove.lua:61
+#: dat/missions/neutral/foodbiz/deliverlove.lua:66
 msgid "Absence Makes The Heart Grow Fonder"
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:41
+#: dat/missions/neutral/foodbiz/deliverlove.lua:55
 msgid ""
 "You can't help but wonder why the man in the corner is writing on paper "
 "instead of a datapad. As you approach the table he motions you to sit. \"You "
@@ -66958,16 +67058,16 @@ msgid ""
 "\"You wouldn't happen to be heading to {pnt} would you?\" he asks."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:45
+#: dat/missions/neutral/foodbiz/deliverlove.lua:59
 msgid ""
 "\"It is a nice place I hear!\" he exclaims visibly excited. \"Say, I have "
 "written a ton of these letters at this point. You wouldn't be able to drop "
 "them off, would you?\" You raise your eyebrow. \"There would be a few "
-"credits in it for you... say, {credits}?\" The man adds quickly with a "
-"hopeful expression. It seems like a low reward for a long journey..."
+"credits in it for you… say, {credits}?\" The man adds quickly with a hopeful "
+"expression. It seems like a low reward for a long journey…"
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:47
+#: dat/missions/neutral/foodbiz/deliverlove.lua:61
 msgid ""
 "The man grabs your arm as you begin to get up. \"Alright, how about "
 "{credits}? Look, I wouldn't want The Empire reading these. The Emperor "
@@ -66975,30 +67075,34 @@ msgid ""
 "answering."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:52
+#: dat/missions/neutral/foodbiz/deliverlove.lua:66
 msgid ""
 "You run a check of your cargo hold and notice it is packed to the brim. "
 "\"Did I not mention I wrote a tonne of these letters? You don't have enough "
 "space for all of these,\" the man says. \"I will be in the bar if you free "
-"up some space.\" You didn't expect him to have a LITERAL tonne of letters..."
+"up some space.\" You didn't expect him to have a LITERAL tonne of letters…"
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:56
+#: dat/missions/neutral/foodbiz/deliverlove.lua:70
 msgid "\"Ah, are you able to deliver my ton of letters for me now?\""
 msgstr ""
 
 #. Add Mission Cargo and set up the computer
-#: dat/missions/neutral/foodbiz/deliverlove.lua:67
-#: dat/missions/neutral/foodbiz/deliverlove.lua:71
+#: dat/missions/neutral/foodbiz/deliverlove.lua:92
+#: dat/missions/neutral/foodbiz/deliverlove.lua:96
 msgid "Deliver Love"
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:69
-msgid "Deliver love letters to {pnt} in the {sys} system."
+#: dat/missions/neutral/foodbiz/deliverlove.lua:94
+#, fuzzy
+#| msgid "Deliver love letters to {pnt} in the {sys} system."
+msgid ""
+"Absence makes the heart grow fonder. Deliver love letters to {pnt} in the "
+"{sys} system."
 msgstr "Doručte milostné dopisy na {pnt} v systému {sys}."
 
 #. set up hooks
-#: dat/missions/neutral/foodbiz/deliverlove.lua:84
+#: dat/missions/neutral/foodbiz/deliverlove.lua:112
 msgid ""
 "You deliver the letters to a young woman who excitedly takes them and thanks "
 "you profusely. It seems you really made her day. When you check your "
@@ -67007,7 +67111,7 @@ msgid ""
 "you don't think it will be missed."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:86
+#: dat/missions/neutral/foodbiz/deliverlove.lua:114
 msgid ""
 "You delivered a literal tonne of letters for a love-struck, old-fashioned "
 "man."
@@ -69816,7 +69920,7 @@ msgid ""
 "prize of {credits} if you win. Interested?\""
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:47 dat/missions/neutral/race_qex.lua:169
+#: dat/missions/neutral/race1.lua:47 dat/missions/neutral/race_qex.lua:174
 msgid "You're participating in a race!"
 msgstr ""
 
@@ -70123,45 +70227,52 @@ msgstr ""
 msgid "Race!"
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:130
+#: dat/missions/neutral/race_qex.lua:128
+msgid ""
+"Your ship is not spaceworthy and can not participate in the race right now "
+"for the following reasons:\n"
+"\n"
+msgstr ""
+
+#: dat/missions/neutral/race_qex.lua:135
 msgid "Choose Race Track"
 msgstr ""
 
 #. txt = txt.."#n".._("Name: ").."#0"     ..track.name.."\n"
-#: dat/missions/neutral/race_qex.lua:147
+#: dat/missions/neutral/race_qex.lua:152
 msgid "Length: "
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:148
+#: dat/missions/neutral/race_qex.lua:153
 msgid "Goal Time: "
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:149
+#: dat/missions/neutral/race_qex.lua:154
 msgid "Reward: "
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:151 dat/missions/neutral/race_qex.lua:157
+#: dat/missions/neutral/race_qex.lua:156 dat/missions/neutral/race_qex.lua:162
 msgid "Best Time: "
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:170
+#: dat/missions/neutral/race_qex.lua:175
 msgid "Endless Riches!"
 msgstr ""
 
 #. Update best time if applicable
-#: dat/missions/neutral/race_qex.lua:319
+#: dat/missions/neutral/race_qex.lua:324
 msgid ""
 "You finished the race in {elapsed} and beat the goal time of {goal}! This is "
 "your new best time! Congratulations!"
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:324
+#: dat/missions/neutral/race_qex.lua:329
 msgid ""
 "You finished the race in {elapsed} and beat the goal time of {goal}! "
 "Congratulations!"
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:337
+#: dat/missions/neutral/race_qex.lua:342
 msgid ""
 "An individual in a suit and tie suddenly takes you up onto a stage. A large "
 "name tag on their jacket says 'Melendez Corporation'. \"Congratulations on "
@@ -70173,23 +70284,23 @@ msgid ""
 "cool."
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:351
+#: dat/missions/neutral/race_qex.lua:356
 msgid ""
 "You finished the race in {elapsed}, but were {short} of the goal time. This "
 "is your new best time! Keep trying!"
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:356
+#: dat/missions/neutral/race_qex.lua:361
 msgid ""
 "You finished the race in {elapsed}, but were {short} of the goal time. Keep "
 "trying!"
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:374
+#: dat/missions/neutral/race_qex.lua:379
 msgid "Qex Racing"
 msgstr ""
 
-#: dat/missions/neutral/race_qex.lua:375
+#: dat/missions/neutral/race_qex.lua:380
 msgid "Beat the Race!"
 msgstr ""
 
