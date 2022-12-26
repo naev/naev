@@ -97,7 +97,7 @@ function create ()
       misn.finish()
    end
 
-   misn.setNPC( tutnel.nelly.name, tutnel.nelly.portrait, _("You see a Nelly motioning to you at a table.") )
+   misn.setNPC( tutnel.nelly.name, tutnel.nelly.portrait, _("You see Nelly motioning to you at a table.") )
 
    misn.setTitle( _("Helping Nelly Out… Again") )
    misn.setDesc( _("Help Nelly fix their ship.") )
