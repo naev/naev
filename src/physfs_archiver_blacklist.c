@@ -211,7 +211,7 @@ int blacklist_init (void)
    /* Set up the string. */
    l = 0;
    for (int i=0; i<array_size(blk_blacklists_re); i++)
-      l += snprintf( &buf[l], sizeof(buf)-l-1, "%s%s", (i==0) ? "" : "|", blk_blacklists_re[i] );
+      l += scnprintf( &buf[l], sizeof(buf)-l-1, "%s%s", (i==0) ? "" : "|", blk_blacklists_re[i] );
 
    /* Try to compile the regex. */
    blk_re = pcre2_compile( (PCRE2_SPTR)buf, PCRE2_ZERO_TERMINATED, 0, &errornumber, &erroroffset, NULL );

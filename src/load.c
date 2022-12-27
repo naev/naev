@@ -514,8 +514,8 @@ void load_loadGameMenu (void)
          nsave_t *ns = &load_saves[i].saves[0];
          if (ns->compatible) {
             char buf[STRMAX_SHORT];
-            int l = 0;
-            l += snprintf( &buf[l], sizeof(buf)-l, _("%s (#r%s#0)"),
+            size_t l = 0;
+            l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (#r%s#0)"),
                load_saves[i].name, load_compatibilityString( ns ) );
             names[i] = strdup( buf );
          }
@@ -595,11 +595,11 @@ void load_loadSnapshotMenu( const char *name, int disablesave )
          nsave_t *ns = &ps->saves[i];
          if (ns->compatible) {
             char buf[STRMAX_SHORT];
-            int l = 0;
-            l += snprintf( &buf[l], sizeof(buf)-l, "#r" );
-            l += snprintf( buf, sizeof(buf), _("%s (%s)"),
+            size_t l = 0;
+            l += scnprintf( &buf[l], sizeof(buf)-l, "#r" );
+            l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (%s)"),
                load_saves[i].name, load_compatibilityString( ns ) );
-            l += snprintf( &buf[l], sizeof(buf)-l, "#0" );
+            l += scnprintf( &buf[l], sizeof(buf)-l, "#0" );
             names[i] = strdup( buf );
          }
          else
