@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-26 11:22+0900\n"
-"PO-Revision-Date: 2022-12-24 22:51+0000\n"
+"PO-Revision-Date: 2022-12-27 15:13+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -1265,7 +1265,7 @@ msgstr ""
 
 #: dat/commodities/vixilium.xml:3
 msgid "Vixilium"
-msgstr ""
+msgstr "Vixilium"
 
 #: dat/commodities/vixilium.xml:4
 msgid ""
@@ -1276,10 +1276,17 @@ msgid ""
 "a surge in demand throughout the galaxy, especially in cryptographic and "
 "security applications."
 msgstr ""
+"Conosciuto in origine come Roccia Mineraria Fantasma per quanto inizialmente "
+"fosse difficile rilevarlo con sensori, ma anche ad occhio nudo, a causa "
+"della bassa presenza di materia normale, questo fino all'avvento della "
+"fotografia quantica. Sebbene apprezzato in creazioni artistiche, le "
+"proprietà quantiche e di quasi-materia hanno portato ad un'impennata della "
+"domanda galattica, specialmente in applicazioni criptografiche e di "
+"sicurezza."
 
 #: dat/commodities/water.xml:3
 msgid "Water"
-msgstr ""
+msgstr "Acqua"
 
 #: dat/commodities/water.xml:4
 msgid ""
@@ -1289,10 +1296,15 @@ msgid ""
 "leading to heavy concentrations in some areas and a complete absence of "
 "water in other areas."
 msgstr ""
+"Una combinazione chimica inusuale, data per scontata per noi umani, l'acqua "
+"è indispensabile per sostenere la vita umana e utile in diversi processi "
+"industriali per le sue proprietà uniche. Sebbene sia un bene comune, non è "
+"distribuita uniformemente nella galassia, portando a enormi concentrazioni "
+"in alcune aree e completa assenza in altre."
 
 #: dat/commodities/yttrium.xml:3
 msgid "Yttrium"
-msgstr ""
+msgstr "Ittrio"
 
 #: dat/commodities/yttrium.xml:4
 msgid ""
@@ -1300,147 +1312,157 @@ msgid ""
 "demand has seen record prices of Yttrium since the Incident. Economists "
 "believe this is a key indicator of rough times ahead."
 msgstr ""
+"Avendo un ruolo cruciale nelle tecnologie d'illuminazione e laser, la "
+"domanda costante ha causato prezzi record di Ittrio dall'Incidente. Gli "
+"economisti ritengono che questo sia un indicatore chiave dei tempi duri che "
+"verranno."
 
 #: dat/damagetype/armourbreaker.xml:2
 msgid "armourbreaker"
-msgstr ""
+msgstr "rompiarmatura"
 
 #: dat/damagetype/emp.xml:2
 msgid "emp"
-msgstr ""
+msgstr "emp"
 
 #: dat/damagetype/explosion_splash.xml:2
 msgid "explosion_splash"
-msgstr ""
+msgstr "explosion_splash"
 
 #: dat/damagetype/impact.xml:2
 msgid "impact"
-msgstr ""
+msgstr "impatto"
 
 #: dat/damagetype/ion.xml:2
 msgid "ion"
-msgstr ""
+msgstr "ione"
 
 #: dat/damagetype/nebula.xml:2
 msgid "nebula"
-msgstr ""
+msgstr "nebulosa"
 
 #: dat/damagetype/shieldbreaker.xml:2
 msgid "shieldbreaker"
-msgstr ""
+msgstr "rompiscudo"
 
 #: dat/difficulty/default.xml:2 dat/events/escort_settings.lua:80
 #: src/dev_uniedit.c:394
 msgid "Default"
-msgstr ""
+msgstr "Predefinito"
 
 #: dat/difficulty/default.xml:3
 msgid "Standard difficulty mode."
-msgstr ""
+msgstr "Modalità di difficoltà predefinita."
 
 #: dat/difficulty/easy_mode.xml:2
 msgid "Easy Mode"
-msgstr ""
+msgstr "Modalità facile"
 
 #: dat/difficulty/easy_mode.xml:3
 msgid "Makes the game easier for the player, without trivializing most things."
 msgstr ""
+"Rende il gioco più facile per il giocatore, senza rendere banali la maggior "
+"parte delle cose."
 
 #: dat/difficulty/masochist_mode.xml:2
 msgid "Masochist Mode"
-msgstr ""
+msgstr "Modalità Masochistica"
 
 #: dat/difficulty/masochist_mode.xml:3
 msgid "Makes the game significantly harder for the player."
-msgstr ""
+msgstr "Rende il gioco molto più difficile per il giocatore."
 
 #: dat/difficulty/slow_mode.xml:2
 msgid "Slow Mode"
-msgstr ""
+msgstr "Modalità rallentata"
 
 #: dat/difficulty/slow_mode.xml:3
 msgid ""
 "Makes gameplay run at half speed. Useful if you have difficulties with "
 "reaction times."
 msgstr ""
+"Rallenta della metà la velocità del gioco. Utile se si hanno difficoltà con "
+"i tempi di reazione."
 
 #: dat/difficulty/story_mode.xml:2
 msgid "Story Mode"
-msgstr ""
+msgstr "Modalità Narrazione"
 
 #: dat/difficulty/story_mode.xml:3
 msgid ""
 "Significantly reduces the difficulty of the game, allowing to concentrate on "
 "the story."
 msgstr ""
+"Riduce significativamente la difficoltà del gioco permettendo di "
+"concentrarsi sulla narrazione."
 
 #: dat/effects/ambush_hunter.xml:2
 #: dat/outfits/bioship/skills/ambush_hunter.xml:2
 #: dat/scripts/bioship/skills.lua:133
 msgid "Ambush Hunter"
-msgstr ""
+msgstr "Cacciatore per Imboscate"
 
 #: dat/effects/ambush_hunter.xml:3
 msgid "The ship has caught other ships by surprise!"
-msgstr ""
+msgstr "L'astronave ha colto di sorpresa altre astronavi!"
 
 #: dat/effects/antimatter_taint.xml:2
 msgid "Antimatter Taint"
-msgstr ""
+msgstr "Contaminazione di Antimateria"
 
 #: dat/effects/antimatter_taint.xml:3
 msgid "Antimatter is tainting your ship!"
-msgstr ""
+msgstr "L'antimateria sta contaminando la tua astronave!"
 
 #: dat/effects/blink.xml:2
 msgid "Blink"
-msgstr ""
+msgstr "Teletrasportare"
 
 #: dat/effects/blink.xml:3
 msgid "Your ship just blinked!"
-msgstr ""
+msgstr "La tua astronave è stata teletrasportata proprio ora!"
 
 #: dat/effects/bloodlust.xml:2 dat/scripts/bioship/skills.lua:42
 msgid "Blood Lust"
-msgstr ""
+msgstr "Sete di Sangue"
 
 #: dat/effects/bloodlust.xml:3
 msgid "The ship has had a taste of blood and wants more!"
-msgstr ""
+msgstr "L'astronave ha assaggiato il sangue e ne vuole altro!"
 
 #: dat/effects/crippling_plasma.xml:2
 #: dat/outfits/bioship/skills/crippling_plasma.xml:2
 #: dat/scripts/bioship/skills.lua:263
 msgid "Crippling Plasma"
-msgstr ""
+msgstr "Plasma Debilitante"
 
 #: dat/effects/crippling_plasma.xml:3
 msgid "Plasma is interfering with the weapon systems!"
-msgstr ""
+msgstr "Il plasma sta interferendo con il sistema degli armamenti!"
 
 #: dat/effects/ethereal.xml:2
 msgid "Ethereal"
-msgstr ""
+msgstr "Etereo"
 
 #: dat/effects/ethereal.xml:3
 msgid "Ship is ethereal."
-msgstr ""
+msgstr "L'astronave è eterea."
 
 #: dat/effects/fadein.xml:2
 msgid "Fade-In"
-msgstr ""
+msgstr "Dissolvenza"
 
 #: dat/effects/fadein.xml:3
 msgid "Fading in!"
-msgstr ""
+msgstr "In dissolvenza!"
 
 #: dat/effects/fadeout.xml:2
 msgid "Fade-Out"
-msgstr ""
+msgstr "Svanito"
 
 #: dat/effects/fadeout.xml:3
 msgid "Fading Out!"
-msgstr ""
+msgstr "Svanire!"
 
 #. Attack tree
 #. For everyone!
@@ -1448,53 +1470,53 @@ msgstr ""
 #: dat/effects/feral_rage_i.xml:2 dat/outfits/bioship/skills/feral_rage_i.xml:2
 #: dat/scripts/bioship/skills.lua:200
 msgid "Feral Rage I"
-msgstr ""
+msgstr "Rabbia Furiosa I"
 
 #: dat/effects/hypergate_enter.xml:2
 msgid "Hypergate Enter"
-msgstr ""
+msgstr "Ingresso di un Varco Iperspaziale"
 
 #: dat/effects/hypergate_enter.xml:3
 msgid "Entering a hypergate!"
-msgstr ""
+msgstr "Entrando in un Varco Iperspaziale!"
 
 #: dat/effects/hypergate_exit.xml:2
 msgid "Hypergate Exit"
-msgstr ""
+msgstr "Uscita di un Varco Iperspaziale"
 
 #: dat/effects/hypergate_exit.xml:3
 msgid "Exitting a hypergate!"
-msgstr ""
+msgstr "Uscendo da un Varco Iperspaziale!"
 
 #: dat/effects/paralyzing_plasma.xml:2
 #: dat/outfits/bioship/skills/paralyzing_plasma.xml:2
 #: dat/scripts/bioship/skills.lua:255
 msgid "Paralyzing Plasma"
-msgstr ""
+msgstr "Plasma Paralizzante"
 
 #: dat/effects/paralyzing_plasma.xml:3
 msgid "Plasma is slowing the ship down!"
-msgstr ""
+msgstr "Il plasma sta rallentando l'astronave!"
 
 #: dat/effects/plasma_burn.xml:2
 msgid "Plasma Burn"
-msgstr ""
+msgstr "Plasma Incendiante"
 
 #: dat/effects/plasma_burn.xml:3 dat/effects/plasma_burn_ii.xml:3
 msgid "Plasma is burning the ship!"
-msgstr ""
+msgstr "Il plasma sta incendiando l'astronave!"
 
 #: dat/effects/plasma_burn_ii.xml:2
 msgid "Plasma Burn II"
-msgstr ""
+msgstr "Plasma incendiante II"
 
 #: dat/effects/ride_of_the_valkyries.xml:2
 msgid "Ride of the Valkyries"
-msgstr ""
+msgstr "Cavalcata delle Valchirie"
 
 #: dat/effects/ride_of_the_valkyries.xml:3
 msgid "The Valkyrie beam is draining your shields!"
-msgstr ""
+msgstr "Il disintegratore delle Valchirie sta prosciugando i tuoi scudi!"
 
 #: dat/effects/shieldaura.xml:2
 msgid "Shield Aura"
@@ -2473,7 +2495,7 @@ msgstr ""
 #: dat/outfits/bioship/skills/feral_rage_ii.xml:2
 #: dat/scripts/bioship/skills.lua:216
 msgid "Feral Rage II"
-msgstr ""
+msgstr "Rabbia Furiosa II"
 
 #: dat/outfits/bioship/skills/feral_rage_ii.xml:9
 msgid ""
@@ -2487,7 +2509,7 @@ msgstr ""
 #: dat/outfits/bioship/skills/feral_rage_iii.xml:2
 #: dat/scripts/bioship/skills.lua:233
 msgid "Feral Rage III"
-msgstr ""
+msgstr "Rabbia Furiosa III"
 
 #: dat/outfits/bioship/skills/feral_rage_iii.xml:9
 msgid ""
@@ -92124,6 +92146,9 @@ msgid ""
 "The state of feral rage duration is increased to 7 seconds with a 30% damage "
 "bonus, and can be triggered manually with a 30 second cooldown.."
 msgstr ""
+"La durata dello stato di rabbia furiosa è stato incrementato di 7 secondi "
+"con un bonus del 30% sul danno e può essere attivata manualmente con 30 "
+"secondi di raffreddamento..."
 
 #: dat/scripts/bioship/skills.lua:251
 msgid ""
