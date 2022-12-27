@@ -747,7 +747,7 @@ void player_cleanup (void)
    info_buttonClear();
 
    array_free(player_outfits);
-   player_outfits  = NULL;
+   player_outfits = NULL;
 
    array_free(missions_done);
    missions_done = NULL;
