@@ -42,6 +42,14 @@ function create ()
 
    mem.harrassmsg = true
 
+   -- First stop; subsequent stops will be handled in the land function
+   mem.nextstop = 1
+   mem.targsys = lmisn.getSysAtDistance(nil, 3) -- Populate the array
+   mem.targsys = getlandablesystems( mem.targsys )
+   if #mem.targsys == 0 then mem.targsys = {system.get("Apez")} end -- In case no systems were found.
+   mem.destsys = mem.targsys[rnd.rnd(1, #mem.targsys)]
+   mem.destplanet = getlandable(mem.destsys) -- pick a landable planet in the destination system
+
    -- Intro text, player meets family
    vn.clear()
    vn.scene()
@@ -55,19 +63,12 @@ You can't help but glance at Harrus's kids, who have begun enthusiastically stam
       {plt=_("August")}))
    vn.na(_([[Then Harrus brightens up, apparently putting his recent misfortune behind him in the blink of an eye. "Everything's going to be fine now," he says cheerfully. "We've been rescued, and all we need now is for you to take us to a suitable world where we can build a new life."
 Without further ado, and without so much as formally asking for the favour, Harrus and his family proceed onto your ship and install themselves into your living quarters. They do not seem about to leave.]]))
+   vn.na(fmt.f(directions[mem.nextstop], {pnt=mem.destplanet, sys=mem.destsys})) -- NPC telling you where to go
    vn.run()
 
    local c = commodity.new( N_("Space Family"), N_("A family who you rescued in space.") )
    mem.carg_id = misn.cargoAdd( c, 0 )
 
-   -- First stop; subsequent stops will be handled in the land function
-   mem.nextstop = 1
-   mem.targsys = lmisn.getSysAtDistance(nil, 3) -- Populate the array
-   mem.targsys = getlandablesystems( mem.targsys )
-   if #mem.targsys == 0 then mem.targsys = {system.get("Apez")} end -- In case no systems were found.
-   mem.destsys = mem.targsys[rnd.rnd(1, #mem.targsys)]
-   mem.destplanet = getlandable(mem.destsys) -- pick a landable planet in the destination system
-   tk.msg(_("Next stop"), fmt.f(directions[mem.nextstop], {pnt=mem.destplanet, sys=mem.destsys})) -- NPC telling you where to go
    misn.osdCreate(_("The Space Family"), {
       fmt.f(_("Take the space family to {pnt} in the {sys} system"), {pnt=mem.destplanet, sys=mem.destsys}),
    })
