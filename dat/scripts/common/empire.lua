@@ -29,13 +29,30 @@ emp.czesc = {
    description = _("Lieutenant Czesc, from the Empire Armada Shipping Division, is sitting at the bar."),
 }
 emp.czesc.image = portrait.getFullPath(emp.czesc.portrait)
+emp.soldner = {
+   portrait = "empire/unique/soldner.webp",
+   name = _("Commander Soldner"),
+   colour = nil,
+   transition = "pixelize",
+}
+emp.soldner.image = portrait.getFullPath(emp.soldner.portrait)
+
 function emp.vn_czesc( params )
    return vn.Character.new( emp.czesc.name,
-         tmerge( {
-            image=emp.czesc.image,
-            color=emp.czesc.colour,
-         }, params) )
+      tmerge( {
+         image=emp.czesc.image,
+         color=emp.czesc.colour,
+      }, params) )
 end
+
+function emp.vn_soldner( params )
+   return vn.Character.new( emp.soldner.name,
+      tmerge( {
+         image=emp.soldner.image,
+         color=emp.soldner.colour,
+      }, params) )
+end
+
 
 emp.rewards = {
    cargo00 = 100e3,
