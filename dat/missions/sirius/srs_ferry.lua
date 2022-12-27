@@ -3,7 +3,7 @@
 <mission name="Sirius Pilgrimage Transport">
  <priority>3</priority>
  <chance>266</chance>
- <cond>faction.playerStanding("Sirius") &gt; 5</cond>
+ <cond>faction.playerStanding("Sirius") &gt; 0</cond>
  <location>Computer</location>
  <faction>Sirius</faction>
  <notes>

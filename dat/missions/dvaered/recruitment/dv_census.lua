@@ -5,6 +5,7 @@
  <chance>150</chance>
  <location>Computer</location>
  <faction>Dvaered</faction>
+ <cond>faction.playerStanding("Dvaered") &gt; 0</cond>
  <done>Dvaered Census 0</done>
  <notes>
   <campaign>Dvaered Recruitment</campaign>
