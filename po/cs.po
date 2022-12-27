@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-12-26 11:22+0900\n"
+"POT-Creation-Date: 2022-12-27 01:44+0900\n"
 "PO-Revision-Date: 2022-09-19 19:18+0000\n"
 "Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -29233,7 +29233,7 @@ msgstr ""
 #: dat/events/minerva/station.lua:370 dat/missions/dvaered/gauntlet/gui.lua:300
 #: dat/rescue.lua:304 dat/rescue.lua:315 dat/scripts/luatk/core.lua:1126
 #: src/dialogue.c:726 src/escort.c:369 src/map_find.c:213 src/options.c:276
-#: src/options.c:853 src/options.c:963 src/options.c:1226 src/options.c:1277
+#: src/options.c:853 src/options.c:967 src/options.c:1230 src/options.c:1281
 msgid "Cancel"
 msgstr ""
 
@@ -51484,7 +51484,6 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant07.lua:48
 #: dat/missions/neutral/antlejos/ant08.lua:53
 #: dat/missions/neutral/antlejos/ant09.lua:54
-#: dat/missions/neutral/foodbiz/deliverlove.lua:72
 #: dat/missions/pirate/contraband_cake.lua:81
 #: dat/missions/pirate/pir_hit_intro.lua:99
 #: dat/missions/zalek/blackhole/zbh01.lua:45
@@ -57290,7 +57289,6 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant07.lua:49
 #: dat/missions/neutral/antlejos/ant08.lua:54
 #: dat/missions/neutral/antlejos/ant09.lua:55
-#: dat/missions/neutral/foodbiz/deliverlove.lua:73
 #: dat/missions/pirate/contraband_cake.lua:82
 #: dat/missions/pirate/pir_hit_intro.lua:100
 #: dat/missions/zalek/blackhole/zbh01.lua:46
@@ -66966,7 +66964,7 @@ msgid "Deliver the recipes to Michal on {pnt} in the {sys} system."
 msgstr "Doručte recepty Michalovi na {pnt} v systému {sys}."
 
 #: dat/missions/neutral/foodbiz/delivercake.lua:55
-#: dat/missions/neutral/foodbiz/deliverlove.lua:97
+#: dat/missions/neutral/foodbiz/deliverlove.lua:72
 msgid "Fly to {pnt} in the {sys} system."
 msgstr "Leťte na {pnt} v systému {sys}."
 
@@ -67020,34 +67018,35 @@ msgstr ""
 #. Author: iwaschosen
 #. Plot: Talk to man on Zeo, bargain, load some cargo, deliver it to Zhiru in Goddard, get $
 #. --
-#: dat/missions/neutral/foodbiz/deliverlove.lua:28
+#: dat/missions/neutral/foodbiz/deliverlove.lua:24
 msgid "Love Letters"
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:29
+#: dat/missions/neutral/foodbiz/deliverlove.lua:25
 msgid "A cargo of feelings inked onto pulped, dried cellulose fibres."
 msgstr ""
 
 #. Can get doubled, must be global!
-#: dat/missions/neutral/foodbiz/deliverlove.lua:35
+#. No system shall be claimed by mission
+#: dat/missions/neutral/foodbiz/deliverlove.lua:34
 msgid "Old-Fashioned Man"
 msgstr ""
 
-#. No system shall be claimed by mission
-#: dat/missions/neutral/foodbiz/deliverlove.lua:42
+#: dat/missions/neutral/foodbiz/deliverlove.lua:34
 msgid "A man sits in the corner of the bar, writing a letter."
 msgstr ""
 
 #. Introductions and a bit of bargaining
 #. look at you go, double the reward
-#: dat/missions/neutral/foodbiz/deliverlove.lua:55
-#: dat/missions/neutral/foodbiz/deliverlove.lua:59
-#: dat/missions/neutral/foodbiz/deliverlove.lua:61
-#: dat/missions/neutral/foodbiz/deliverlove.lua:66
+#: dat/missions/neutral/foodbiz/deliverlove.lua:41
+#: dat/missions/neutral/foodbiz/deliverlove.lua:45
+#: dat/missions/neutral/foodbiz/deliverlove.lua:47
+#: dat/missions/neutral/foodbiz/deliverlove.lua:52
+#: dat/missions/neutral/foodbiz/deliverlove.lua:56
 msgid "Absence Makes The Heart Grow Fonder"
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:55
+#: dat/missions/neutral/foodbiz/deliverlove.lua:41
 msgid ""
 "You can't help but wonder why the man in the corner is writing on paper "
 "instead of a datapad. As you approach the table he motions you to sit. \"You "
@@ -67058,16 +67057,16 @@ msgid ""
 "\"You wouldn't happen to be heading to {pnt} would you?\" he asks."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:59
+#: dat/missions/neutral/foodbiz/deliverlove.lua:45
 msgid ""
 "\"It is a nice place I hear!\" he exclaims visibly excited. \"Say, I have "
 "written a ton of these letters at this point. You wouldn't be able to drop "
 "them off, would you?\" You raise your eyebrow. \"There would be a few "
-"credits in it for you… say, {credits}?\" The man adds quickly with a hopeful "
-"expression. It seems like a low reward for a long journey…"
+"credits in it for you... say, {credits}?\" The man adds quickly with a "
+"hopeful expression. It seems like a low reward for a long journey..."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:61
+#: dat/missions/neutral/foodbiz/deliverlove.lua:47
 msgid ""
 "The man grabs your arm as you begin to get up. \"Alright, how about "
 "{credits}? Look, I wouldn't want The Empire reading these. The Emperor "
@@ -67075,34 +67074,32 @@ msgid ""
 "answering."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:66
+#: dat/missions/neutral/foodbiz/deliverlove.lua:52
 msgid ""
 "You run a check of your cargo hold and notice it is packed to the brim. "
 "\"Did I not mention I wrote a tonne of these letters? You don't have enough "
 "space for all of these,\" the man says. \"I will be in the bar if you free "
-"up some space.\" You didn't expect him to have a LITERAL tonne of letters…"
+"up some space.\" You didn't expect him to have a LITERAL tonne of letters..."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:70
+#: dat/missions/neutral/foodbiz/deliverlove.lua:56
 msgid "\"Ah, are you able to deliver my ton of letters for me now?\""
 msgstr ""
 
 #. Add Mission Cargo and set up the computer
-#: dat/missions/neutral/foodbiz/deliverlove.lua:92
-#: dat/missions/neutral/foodbiz/deliverlove.lua:96
+#: dat/missions/neutral/foodbiz/deliverlove.lua:67
+#: dat/missions/neutral/foodbiz/deliverlove.lua:71
 msgid "Deliver Love"
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:94
+#: dat/missions/neutral/foodbiz/deliverlove.lua:69
 #, fuzzy
-#| msgid "Deliver love letters to {pnt} in the {sys} system."
-msgid ""
-"Absence makes the heart grow fonder. Deliver love letters to {pnt} in the "
-"{sys} system."
-msgstr "Doručte milostné dopisy na {pnt} v systému {sys}."
+#| msgid "Deliver the shipment to {pnt} in the {sys} system"
+msgid "Deliver love letters to {pnt} in the {sys} system."
+msgstr "Doručení zásilky do {pnt} v systému {sys}"
 
 #. set up hooks
-#: dat/missions/neutral/foodbiz/deliverlove.lua:112
+#: dat/missions/neutral/foodbiz/deliverlove.lua:84
 msgid ""
 "You deliver the letters to a young woman who excitedly takes them and thanks "
 "you profusely. It seems you really made her day. When you check your "
@@ -67111,7 +67108,7 @@ msgid ""
 "you don't think it will be missed."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:114
+#: dat/missions/neutral/foodbiz/deliverlove.lua:86
 msgid ""
 "You delivered a literal tonne of letters for a love-struck, old-fashioned "
 "man."
@@ -82633,7 +82630,7 @@ msgstr ""
 #. Need commodity exchange
 #. Check for asteroid fields
 #: dat/missions/tutorial/nelly02.lua:100 dat/missions/tutorial/nelly03.lua:80
-msgid "You see a Nelly motioning to you at a table."
+msgid "You see Nelly motioning to you at a table."
 msgstr ""
 
 #. Check to see if truly accepted
@@ -92192,8 +92189,8 @@ msgstr ""
 #. Add the OK button
 #: dat/scripts/bioship.lua:618 dat/scripts/luatk/core.lua:1084
 #: src/dialogue.c:153 src/dialogue.c:275 src/dialogue.c:331 src/dialogue.c:724
-#: src/options.c:273 src/options.c:650 src/options.c:960 src/options.c:1274
-#: src/options.c:1811
+#: src/options.c:273 src/options.c:650 src/options.c:964 src/options.c:1278
+#: src/options.c:1815
 msgid "OK"
 msgstr ""
 
@@ -106814,7 +106811,7 @@ msgstr ""
 msgid "system"
 msgstr ""
 
-#: src/options.c:279 src/options.c:653 src/options.c:966 src/options.c:1280
+#: src/options.c:279 src/options.c:653 src/options.c:970 src/options.c:1284
 msgid "Defaults"
 msgstr ""
 
@@ -106989,232 +106986,231 @@ msgstr ""
 msgid "Keybindings restored to defaults."
 msgstr ""
 
-#: src/options.c:894
-#, c-format
-msgid "Engine Volume: %.0f%%"
+#: src/options.c:893
+msgid "Engine Volume"
 msgstr ""
 
-#: src/options.c:935
-msgid "Music Volume"
-msgstr ""
-
-#: src/options.c:935
-msgid "Sound Volume"
-msgstr ""
-
-#: src/options.c:939
+#: src/options.c:897 src/options.c:943
 #, fuzzy, c-format
 #| msgid "%s: Cost"
 msgid "%s: %s"
 msgstr "%s: cena"
 
-#: src/options.c:939
+#: src/options.c:897 src/options.c:943
 msgid "Muted"
 msgstr ""
 
 #. -48 dB minimum divided by logarithm of volume floor.
-#: src/options.c:942
+#: src/options.c:900 src/options.c:946
 #, c-format
 msgid "%s: %.2f (%.0f dB)"
 msgstr ""
 
-#: src/options.c:972
-msgid "Disable all sound/music"
+#: src/options.c:939
+msgid "Music Volume"
+msgstr ""
+
+#: src/options.c:939
+msgid "Sound Volume"
 msgstr ""
 
 #: src/options.c:976
+msgid "Disable all sound/music"
+msgstr ""
+
+#: src/options.c:980
 msgid "EFX (More CPU)"
 msgstr ""
 
-#: src/options.c:982
+#: src/options.c:986
 msgid "Volume Levels:"
 msgstr ""
 
-#: src/options.c:1181
+#: src/options.c:1185
 #, c-format
 msgid ""
 "Key '%s' overlaps with key '%s' that was just set. You may want to correct "
 "this."
 msgstr ""
 
-#: src/options.c:1214
+#: src/options.c:1218
 msgid "Set Keybinding"
 msgstr ""
 
-#: src/options.c:1221
+#: src/options.c:1225
 msgid ""
 "To use a modifier key hit that key twice in a row, otherwise it will "
 "register as a modifier. To set with any modifier click the checkbox."
 msgstr ""
 
-#: src/options.c:1230
+#: src/options.c:1234
 msgid "Unset"
 msgstr ""
 
-#: src/options.c:1234
+#: src/options.c:1238
 msgid "Set any modifier"
 msgstr ""
 
-#: src/options.c:1287
+#: src/options.c:1291
 msgid "Resolution:"
 msgstr ""
 
-#: src/options.c:1292
+#: src/options.c:1296
 msgid "Fullscreen"
 msgstr ""
 
-#: src/options.c:1358
+#: src/options.c:1362
 msgid "FPS Control:"
 msgstr ""
 
-#: src/options.c:1360
+#: src/options.c:1364
 msgid "FPS Limit"
 msgstr ""
 
-#: src/options.c:1370
+#: src/options.c:1374
 msgid "Show FPS"
 msgstr ""
 
-#: src/options.c:1379
+#: src/options.c:1383
 msgid "OpenGL:"
 msgstr ""
 
-#: src/options.c:1382
+#: src/options.c:1386
 msgid "Vertical Sync"
 msgstr ""
 
-#: src/options.c:1387
+#: src/options.c:1391
 msgid "Features:"
 msgstr ""
 
-#: src/options.c:1390
+#: src/options.c:1394
 msgid "Minimize on focus loss"
 msgstr ""
 
-#: src/options.c:1393
+#: src/options.c:1397
 msgid "Colorblind mode"
 msgstr ""
 
-#: src/options.c:1397
+#: src/options.c:1401
 msgid "Health bars for pilots"
 msgstr ""
 
-#: src/options.c:1431
+#: src/options.c:1435
 msgid "GUI:"
 msgstr ""
 
-#: src/options.c:1434
+#: src/options.c:1438
 msgid "Bigger icons"
 msgstr ""
 
-#: src/options.c:1450
+#: src/options.c:1454
 msgid "#rRestart Naev for changes to take effect.#0"
 msgstr ""
 
-#: src/options.c:1480
+#: src/options.c:1484
 msgid "Height/Width invalid. Should be formatted like 1024x768."
 msgstr ""
 
-#: src/options.c:1578
+#: src/options.c:1582
 msgid "Resolution can't be changed while maximized."
 msgstr ""
 
-#: src/options.c:1582
+#: src/options.c:1586
 msgid "Keep Video Settings"
 msgstr ""
 
-#: src/options.c:1583
+#: src/options.c:1587
 #, c-format
 msgid "Do you want to keep running at %dx%d %s?"
 msgstr ""
 
-#: src/options.c:1584 src/options.c:1590
+#: src/options.c:1588 src/options.c:1594
 msgid "fullscreen"
 msgstr ""
 
-#: src/options.c:1584 src/options.c:1590
+#: src/options.c:1588 src/options.c:1594
 msgid "windowed"
 msgstr ""
 
-#: src/options.c:1588
+#: src/options.c:1592
 msgid "Video Settings Restored"
 msgstr ""
 
-#: src/options.c:1589
+#: src/options.c:1593
 #, c-format
 msgid "Resolution reset to %dx%d %s."
 msgstr ""
 
-#: src/options.c:1667
+#: src/options.c:1671
 #, c-format
 msgid "Scaling: %.1fx"
 msgstr ""
 
-#: src/options.c:1685
+#: src/options.c:1689
 #, c-format
 msgid "Far Zoom: %.1fx"
 msgstr ""
 
-#: src/options.c:1707
+#: src/options.c:1711
 #, c-format
 msgid "Near Zoom: %.1fx"
 msgstr ""
 
-#: src/options.c:1728
+#: src/options.c:1732
 #, c-format
 msgid "Gamma: %.1f"
 msgstr ""
 
-#: src/options.c:1744
+#: src/options.c:1748
 #, c-format
 msgid "BG (Stars, etc.) brightness: %.0f%%"
 msgstr ""
 
-#: src/options.c:1759
+#: src/options.c:1763
 #, c-format
 msgid "Nebula non-uniformity: %.0f%%"
 msgstr ""
 
-#: src/options.c:1774
+#: src/options.c:1778
 #, c-format
 msgid "Jump Brightness: %.0f%%"
 msgstr ""
 
-#: src/options.c:1789
+#: src/options.c:1793
 #, c-format
 msgid "Map Overlay Opacity: %.0f%%"
 msgstr ""
 
 #. Text stuff.
-#: src/options.c:1814
+#: src/options.c:1818
 msgid "Plugins Directory: "
 msgstr ""
 
-#: src/options.c:1823
+#: src/options.c:1827
 msgid "No Plugins Found"
-msgstr ""
-
-#: src/options.c:1846
-msgctxt "plugins"
-msgid "Name:"
-msgstr ""
-
-#: src/options.c:1848
-msgctxt "plugins"
-msgid "Author(s):"
 msgstr ""
 
 #: src/options.c:1850
 msgctxt "plugins"
-msgid "Version:"
+msgid "Name:"
 msgstr ""
 
 #: src/options.c:1852
 msgctxt "plugins"
+msgid "Author(s):"
+msgstr ""
+
+#: src/options.c:1854
+msgctxt "plugins"
+msgid "Version:"
+msgstr ""
+
+#: src/options.c:1856
+msgctxt "plugins"
 msgid "Description:"
 msgstr ""
 
-#: src/options.c:1855
+#: src/options.c:1859
 msgid "Total Conversion"
 msgstr ""
 
@@ -110863,6 +110859,13 @@ msgstr ""
 #: dat/outfits/bioship/generate.py:480
 msgid "Immanis Cortex III"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Deliver love letters to {pnt} in the {sys} system."
+#~ msgid ""
+#~ "Absence makes the heart grow fonder. Deliver love letters to {pnt} in the "
+#~ "{sys} system."
+#~ msgstr "Doručte milostné dopisy na {pnt} v systému {sys}."
 
 #~ msgid "Achack_sirius"
 #~ msgstr "Achack sirius"
