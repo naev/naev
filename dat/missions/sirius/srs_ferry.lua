@@ -37,6 +37,7 @@
 local car = require "common.cargo"
 local fmt = require "format"
 local srs = require "common.sirius"
+local vntk = require "vntk"
 
 
 local dest_planet, dest_sys = spob.getS("Mutris")
@@ -182,7 +183,7 @@ end
 function accept()
     local playerbest = car.getTransit( mem.numjumps, mem.traveldist )
     if mem.timelimit < playerbest then
-        if not tk.yesno( _("Too slow"), fmt.f(_([[The passenger requests arrival within {time_limit}, but it will take at least {time} for your ship to reach {pnt}, missing the deadline.
+        if not vntk.yesno( _("Too slow"), fmt.f(_([[The passenger requests arrival within {time_limit}, but it will take at least {time} for your ship to reach {pnt}, missing the deadline.
 
 Accept the mission anyway?]]), {time_limit=(mem.timelimit - time.get()), time=(playerbest - time.get()), pnt=mem.destplanet}) ) then
             return
@@ -237,9 +238,9 @@ Accept the mission anyway?]]), {time_limit=(mem.timelimit - time.get()), time=(p
 
         local no_clearance_p1 = _("The passenger looks at your credentials and remarks, \"Someone of your standing will not be allowed to set foot on the holy ground. ")
         if can_downgrade then
-            ok = tk.yesno(_("Deficient clearance"), no_clearance_p1 .. no_clearance_text)
+            ok = vntk.yesno(_("Deficient clearance"), no_clearance_p1 .. no_clearance_text)
         else
-            tk.msg(_("Deficient clearance"), no_clearance_p1 .. no_clearance_text)
+            vntk.msg(_("Deficient clearance"), no_clearance_p1 .. no_clearance_text)
         end
         if not ok then
             return
@@ -258,22 +259,22 @@ Accept the mission anyway?]]), {time_limit=(mem.timelimit - time.get()), time=(p
 
         if picky > 2 then
             -- Demands to be delivered in a Sirian ship
-            tk.msg(_("Transportation details"), _("As you arrive at the hangar, the Sirian looks at your ship and remarks, \"What? This is to be the ship for my pilgrimage? This is unacceptable - such a crude ship must not be allowed to touch the sacred soil of Mutris. I will wait for a pilot who can ferry me in a true Sirian vessel.\""))
+            vntk.msg(_("Transportation details"), _("As you arrive at the hangar, the Sirian looks at your ship and remarks, \"What? This is to be the ship for my pilgrimage? This is unacceptable - such a crude ship must not be allowed to touch the sacred soil of Mutris. I will wait for a pilot who can ferry me in a true Sirian vessel.\""))
             return
         elseif picky > 0 then
             -- Could be persuaded, for a discount
             mem.reward = mem.reward*0.6666
-            if not tk.yesno(_("Transportation details"), fmt.f(_("As you arrive at the hangar, the Sirian looks at your ship and remarks, \"Oh, you didn't tell me your ship is not from our native Sirian shipyards. Since that is the case, I would prefer to wait for another pilot. A pilgrimage is a sacred matter, and the vessel should be likewise.\"\nThe Sirian looks like they might be open to negotiating, however. Would you offer to fly the mission for {credits}?"), {credits=fmt.credits(mem.reward)})) then
+            if not vntk.yesno(_("Transportation details"), fmt.f(_("As you arrive at the hangar, the Sirian looks at your ship and remarks, \"Oh, you didn't tell me your ship is not from our native Sirian shipyards. Since that is the case, I would prefer to wait for another pilot. A pilgrimage is a sacred matter, and the vessel should be likewise.\"\nThe Sirian looks like they might be open to negotiating, however. Would you offer to fly the mission for {credits}?"), {credits=fmt.credits(mem.reward)})) then
                 return -- Player won't offer a discount
             end
             if picky > 1 then
-                tk.msg(_("Offer denied"), _("\"I'm sorry. Your price is reasonable, but piety is of greater value.\""))
+                vntk.msg(_("Offer denied"), _("\"I'm sorry. Your price is reasonable, but piety is of greater value.\""))
                 return -- Would not be persuaded by a discount
             else
-                tk.msg(_("Offer accepted"), _("\"Very well. For a price that reasonable, I will adjust my expectations.\""))  -- discount is ok
+                vntk.msg(_("Offer accepted"), _("\"Very well. For a price that reasonable, I will adjust my expectations.\""))  -- discount is ok
             end
         elseif picky <= 0 then
-            tk.msg(_("Transportation details"), _("As you arrive at the hangar, the Sirian looks at your ship, and you catch a hint of disappointment on their face, before they notice you and quickly hide it.")) -- ok with the arrangements
+            vntk.msg(_("Transportation details"), _("As you arrive at the hangar, the Sirian looks at your ship, and you catch a hint of disappointment on their face, before they notice you and quickly hide it.")) -- ok with the arrangements
         end
 
         mem.wants_sirian = false  -- Will not expect to arrive in a Sirian ship
@@ -302,7 +303,7 @@ function land()
         if mem.wants_sirian and not mem.has_sirian_ship then
             mem.change = 1  -- Bad: they wanted a Sirian ship and you switched on them
             mem.reward = mem.reward / (mem.rank+1.5)
-            tk.msg( _("Altering the deal"), fmt.f( _("On landing, the passenger gives you a brief glare. \"I had paid for transportation in a Sirian ship,\" they remark. \"This alternate arrangement is quite disappointing.\" They hand you {credits}, but it's definitely less than you were expecting."), {credits=fmt.credits(mem.reward)} ) )
+            vntk.msg( _("Altering the deal"), fmt.f( _("On landing, the passenger gives you a brief glare. \"I had paid for transportation in a Sirian ship,\" they remark. \"This alternate arrangement is quite disappointing.\" They hand you {credits}, but it's definitely less than you were expecting."), {credits=fmt.credits(mem.reward)} ) )
             player.pay(mem.reward)
             misn.finish(true)
         elseif not mem.wants_sirian and mem.has_sirian_ship then
@@ -313,20 +314,20 @@ function land()
             local distbonus = math.max(math.min(mem.numjumps,mem.distbonus_maxjumps)-mem.distbonus_minjumps+1, 0) / 2  -- ranges from 0 (<mem.distbonus_minjumps jumps) to 4 (>=mem.distbonus_maxjumps jumps)
             faction.modPlayerSingle("Sirius", rnd.rnd(distbonus, distbonus+mem.rank+1))
 
-            tk.msg(_("Successful arrival!"), fmt.f( ferry_land_p2[mem.rank], {passenger=ferry_land_p1[mem.rank]} ) )
+            vntk.msg(_("Successful arrival!"), fmt.f( ferry_land_p2[mem.rank], {passenger=ferry_land_p1[mem.rank]} ) )
         elseif mem.overtime then
-            tk.msg(_("Passenger transport failure"), _("Well, you arrived, but with this late of an arrival, you can't hope for any payment."))
+            vntk.msg(_("Passenger transport failure"), _("Well, you arrived, but with this late of an arrival, you can't hope for any payment."))
             misn.finish(false)
         else
             -- You were late
             mem.reward = mem.reward / (mem.rank + 1)
-            tk.msg(_("Late arrival"), fmt.f(ferry_land_p3[mem.rank], {passenger=ferry_land_p1[mem.rank], credits=fmt.credits(mem.reward)}))
+            vntk.msg(_("Late arrival"), fmt.f(ferry_land_p3[mem.rank], {passenger=ferry_land_p1[mem.rank], credits=fmt.credits(mem.reward)}))
         end
 
         if mem.change == 2 then
             -- A little bonus for doing something nice
             faction.modPlayerSingle("Sirius", 1)
-            tk.msg(_("Altering the deal"), _("Since you were unexpectedly able to procure a Sirian ship for the journey, you find a few extra credits tucked in with the fare!"))
+            vntk.msg(_("Altering the deal"), _("Since you were unexpectedly able to procure a Sirian ship for the journey, you find a few extra credits tucked in with the fare!"))
             mem.reward = mem.reward * 1.25
         end
 
@@ -334,7 +335,7 @@ function land()
         misn.finish(true)
     elseif mem.timelimit2 <= time.get() then
         -- if we missed the second deadline, drop the person off at the planet.
-        tk.msg(_("Passenger transport failure"), _("You drop the upset pilgrim off at the nearest spaceport."))
+        vntk.msg(_("Passenger transport failure"), _("You drop the upset pilgrim off at the nearest spaceport."))
         misn.finish(false)
     end
 end
@@ -363,5 +364,5 @@ function tick()
 end
 
 function abort()
-    tk.msg(_("Passenger transport aborted"), fmt.f(_("Informing the pilgrim that their flight to {pnt} has been canceled, you promise to drop them off at the nearest planet."), {pnt=mem.destplanet}))
+    vntk.msg(_("Passenger transport aborted"), fmt.f(_("Informing the pilgrim that their flight to {pnt} has been canceled, you promise to drop them off at the nearest planet."), {pnt=mem.destplanet}))
 end
