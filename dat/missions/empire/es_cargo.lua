@@ -21,7 +21,6 @@ local lmisn = require "lmisn"
 local emp = require "common.empire"
 local vntk = require "vntk"
 
-
 local piracyrisk = {}
 piracyrisk[1] = _("#nPiracy Risk:#0 None")
 piracyrisk[2] = _("#nPiracy Risk:#0 Low")
