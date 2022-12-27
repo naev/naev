@@ -51,7 +51,7 @@ function accept ()
    }
 
    vn.label("decline")
-   vn.done()
+   vn.done( emp.czesc.transition )
 
    -- Flavour text and mini-briefing
    vn.label("accept")
@@ -60,6 +60,7 @@ function accept ()
       {pnt=targetworld, sys=targetworld_sys}))
    vn.func( function () accepted = true end )
 
+   vn.done( emp.czesc.transition )
    vn.run()
 
    if not accepted then return end

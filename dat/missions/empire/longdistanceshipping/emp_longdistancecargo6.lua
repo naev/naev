@@ -57,13 +57,14 @@ function accept ()
    }
 
    vn.label("decline")
-   vn.done()
+   vn.done( emp.czesc.transition )
 
    -- Flavour text and mini-briefing
    vn.label("accept")
    czesc(_([[Internally you groan from the idea of having to do another haul across the galaxy for more paperwork, but at least you'll have access to new missions. Lieutenant Czesc excitedly gets up from the bar. "Let's get going as soon as possible. There's no place like home!"]]))
    vn.func( function () accepted = true end )
 
+   vn.done( emp.czesc.transition )
    vn.run()
 
    if not accepted then return end
@@ -107,6 +108,7 @@ function land()
    end )
    vn.na(fmt.reward( emp.rewards.ldc6 ))
 
+   vn.done( emp.czesc.transition )
    vn.run()
 
    emp.addShippingLog( fmt.f( _([[You transported Lieutenant Czesc to {pnt} for some paperwork. You can now do long-distance cargo missions for the Empire. They pay better than regular Empire shipping missions, but often require traveling longer distances and into territory controlled by other factions. You'll probably be more likely to see them on the edges of Empire space where cargo is ready to head out to other factions.]]), {pnt=targetworld} ) )
