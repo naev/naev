@@ -167,16 +167,7 @@ function create()
 end
 
 local function player_has_sirian_ship()
-    local playership = player.pilot():ship():baseType()
-    local sirianships = {"Fidelity", "Shaman", "Preacher", "Divinity", "Dogma"}
-    local has_sirian_ship = false
-    for _,v in pairs(sirianships) do
-        if playership == v then
-            has_sirian_ship = true
-            break
-        end
-    end
-    return has_sirian_ship
+   return player.pilot():ship():tags().sirius
 end
 
 -- Mission is accepted
