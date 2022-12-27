@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-12-26 11:22+0900\n"
-"PO-Revision-Date: 2022-12-24 22:51+0000\n"
+"POT-Creation-Date: 2022-12-27 01:44+0900\n"
+"PO-Revision-Date: 2022-12-27 15:13+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -1265,7 +1265,7 @@ msgstr ""
 
 #: dat/commodities/vixilium.xml:3
 msgid "Vixilium"
-msgstr ""
+msgstr "Vixilium"
 
 #: dat/commodities/vixilium.xml:4
 msgid ""
@@ -1276,10 +1276,17 @@ msgid ""
 "a surge in demand throughout the galaxy, especially in cryptographic and "
 "security applications."
 msgstr ""
+"Conosciuto in origine come Roccia Mineraria Fantasma per quanto inizialmente "
+"fosse difficile rilevarlo con sensori, ma anche ad occhio nudo, a causa "
+"della bassa presenza di materia normale, questo fino all'avvento della "
+"fotografia quantica. Sebbene apprezzato in creazioni artistiche, le "
+"proprietà quantiche e di quasi-materia hanno portato ad un'impennata della "
+"domanda galattica, specialmente in applicazioni criptografiche e di "
+"sicurezza."
 
 #: dat/commodities/water.xml:3
 msgid "Water"
-msgstr ""
+msgstr "Acqua"
 
 #: dat/commodities/water.xml:4
 msgid ""
@@ -1289,10 +1296,15 @@ msgid ""
 "leading to heavy concentrations in some areas and a complete absence of "
 "water in other areas."
 msgstr ""
+"Una combinazione chimica inusuale, data per scontata per noi umani, l'acqua "
+"è indispensabile per sostenere la vita umana e utile in diversi processi "
+"industriali per le sue proprietà uniche. Sebbene sia un bene comune, non è "
+"distribuita uniformemente nella galassia, portando a enormi concentrazioni "
+"in alcune aree e completa assenza in altre."
 
 #: dat/commodities/yttrium.xml:3
 msgid "Yttrium"
-msgstr ""
+msgstr "Ittrio"
 
 #: dat/commodities/yttrium.xml:4
 msgid ""
@@ -1300,147 +1312,157 @@ msgid ""
 "demand has seen record prices of Yttrium since the Incident. Economists "
 "believe this is a key indicator of rough times ahead."
 msgstr ""
+"Avendo un ruolo cruciale nelle tecnologie d'illuminazione e laser, la "
+"domanda costante ha causato prezzi record di Ittrio dall'Incidente. Gli "
+"economisti ritengono che questo sia un indicatore chiave dei tempi duri che "
+"verranno."
 
 #: dat/damagetype/armourbreaker.xml:2
 msgid "armourbreaker"
-msgstr ""
+msgstr "rompiarmatura"
 
 #: dat/damagetype/emp.xml:2
 msgid "emp"
-msgstr ""
+msgstr "emp"
 
 #: dat/damagetype/explosion_splash.xml:2
 msgid "explosion_splash"
-msgstr ""
+msgstr "explosion_splash"
 
 #: dat/damagetype/impact.xml:2
 msgid "impact"
-msgstr ""
+msgstr "impatto"
 
 #: dat/damagetype/ion.xml:2
 msgid "ion"
-msgstr ""
+msgstr "ione"
 
 #: dat/damagetype/nebula.xml:2
 msgid "nebula"
-msgstr ""
+msgstr "nebulosa"
 
 #: dat/damagetype/shieldbreaker.xml:2
 msgid "shieldbreaker"
-msgstr ""
+msgstr "rompiscudo"
 
 #: dat/difficulty/default.xml:2 dat/events/escort_settings.lua:80
 #: src/dev_uniedit.c:394
 msgid "Default"
-msgstr ""
+msgstr "Predefinito"
 
 #: dat/difficulty/default.xml:3
 msgid "Standard difficulty mode."
-msgstr ""
+msgstr "Modalità di difficoltà predefinita."
 
 #: dat/difficulty/easy_mode.xml:2
 msgid "Easy Mode"
-msgstr ""
+msgstr "Modalità facile"
 
 #: dat/difficulty/easy_mode.xml:3
 msgid "Makes the game easier for the player, without trivializing most things."
 msgstr ""
+"Rende il gioco più facile per il giocatore, senza rendere banali la maggior "
+"parte delle cose."
 
 #: dat/difficulty/masochist_mode.xml:2
 msgid "Masochist Mode"
-msgstr ""
+msgstr "Modalità Masochistica"
 
 #: dat/difficulty/masochist_mode.xml:3
 msgid "Makes the game significantly harder for the player."
-msgstr ""
+msgstr "Rende il gioco molto più difficile per il giocatore."
 
 #: dat/difficulty/slow_mode.xml:2
 msgid "Slow Mode"
-msgstr ""
+msgstr "Modalità rallentata"
 
 #: dat/difficulty/slow_mode.xml:3
 msgid ""
 "Makes gameplay run at half speed. Useful if you have difficulties with "
 "reaction times."
 msgstr ""
+"Rallenta della metà la velocità del gioco. Utile se si hanno difficoltà con "
+"i tempi di reazione."
 
 #: dat/difficulty/story_mode.xml:2
 msgid "Story Mode"
-msgstr ""
+msgstr "Modalità Narrazione"
 
 #: dat/difficulty/story_mode.xml:3
 msgid ""
 "Significantly reduces the difficulty of the game, allowing to concentrate on "
 "the story."
 msgstr ""
+"Riduce significativamente la difficoltà del gioco permettendo di "
+"concentrarsi sulla narrazione."
 
 #: dat/effects/ambush_hunter.xml:2
 #: dat/outfits/bioship/skills/ambush_hunter.xml:2
 #: dat/scripts/bioship/skills.lua:133
 msgid "Ambush Hunter"
-msgstr ""
+msgstr "Cacciatore per Imboscate"
 
 #: dat/effects/ambush_hunter.xml:3
 msgid "The ship has caught other ships by surprise!"
-msgstr ""
+msgstr "L'astronave ha colto di sorpresa altre astronavi!"
 
 #: dat/effects/antimatter_taint.xml:2
 msgid "Antimatter Taint"
-msgstr ""
+msgstr "Contaminazione di Antimateria"
 
 #: dat/effects/antimatter_taint.xml:3
 msgid "Antimatter is tainting your ship!"
-msgstr ""
+msgstr "L'antimateria sta contaminando la tua astronave!"
 
 #: dat/effects/blink.xml:2
 msgid "Blink"
-msgstr ""
+msgstr "Teletrasportare"
 
 #: dat/effects/blink.xml:3
 msgid "Your ship just blinked!"
-msgstr ""
+msgstr "La tua astronave è stata teletrasportata proprio ora!"
 
 #: dat/effects/bloodlust.xml:2 dat/scripts/bioship/skills.lua:42
 msgid "Blood Lust"
-msgstr ""
+msgstr "Sete di Sangue"
 
 #: dat/effects/bloodlust.xml:3
 msgid "The ship has had a taste of blood and wants more!"
-msgstr ""
+msgstr "L'astronave ha assaggiato il sangue e ne vuole altro!"
 
 #: dat/effects/crippling_plasma.xml:2
 #: dat/outfits/bioship/skills/crippling_plasma.xml:2
 #: dat/scripts/bioship/skills.lua:263
 msgid "Crippling Plasma"
-msgstr ""
+msgstr "Plasma Debilitante"
 
 #: dat/effects/crippling_plasma.xml:3
 msgid "Plasma is interfering with the weapon systems!"
-msgstr ""
+msgstr "Il plasma sta interferendo con il sistema degli armamenti!"
 
 #: dat/effects/ethereal.xml:2
 msgid "Ethereal"
-msgstr ""
+msgstr "Etereo"
 
 #: dat/effects/ethereal.xml:3
 msgid "Ship is ethereal."
-msgstr ""
+msgstr "L'astronave è eterea."
 
 #: dat/effects/fadein.xml:2
 msgid "Fade-In"
-msgstr ""
+msgstr "Dissolvenza"
 
 #: dat/effects/fadein.xml:3
 msgid "Fading in!"
-msgstr ""
+msgstr "In dissolvenza!"
 
 #: dat/effects/fadeout.xml:2
 msgid "Fade-Out"
-msgstr ""
+msgstr "Svanito"
 
 #: dat/effects/fadeout.xml:3
 msgid "Fading Out!"
-msgstr ""
+msgstr "Svanire!"
 
 #. Attack tree
 #. For everyone!
@@ -1448,53 +1470,53 @@ msgstr ""
 #: dat/effects/feral_rage_i.xml:2 dat/outfits/bioship/skills/feral_rage_i.xml:2
 #: dat/scripts/bioship/skills.lua:200
 msgid "Feral Rage I"
-msgstr ""
+msgstr "Rabbia Furiosa I"
 
 #: dat/effects/hypergate_enter.xml:2
 msgid "Hypergate Enter"
-msgstr ""
+msgstr "Ingresso di un Varco Iperspaziale"
 
 #: dat/effects/hypergate_enter.xml:3
 msgid "Entering a hypergate!"
-msgstr ""
+msgstr "Entrando in un Varco Iperspaziale!"
 
 #: dat/effects/hypergate_exit.xml:2
 msgid "Hypergate Exit"
-msgstr ""
+msgstr "Uscita di un Varco Iperspaziale"
 
 #: dat/effects/hypergate_exit.xml:3
 msgid "Exitting a hypergate!"
-msgstr ""
+msgstr "Uscendo da un Varco Iperspaziale!"
 
 #: dat/effects/paralyzing_plasma.xml:2
 #: dat/outfits/bioship/skills/paralyzing_plasma.xml:2
 #: dat/scripts/bioship/skills.lua:255
 msgid "Paralyzing Plasma"
-msgstr ""
+msgstr "Plasma Paralizzante"
 
 #: dat/effects/paralyzing_plasma.xml:3
 msgid "Plasma is slowing the ship down!"
-msgstr ""
+msgstr "Il plasma sta rallentando l'astronave!"
 
 #: dat/effects/plasma_burn.xml:2
 msgid "Plasma Burn"
-msgstr ""
+msgstr "Plasma Incendiante"
 
 #: dat/effects/plasma_burn.xml:3 dat/effects/plasma_burn_ii.xml:3
 msgid "Plasma is burning the ship!"
-msgstr ""
+msgstr "Il plasma sta incendiando l'astronave!"
 
 #: dat/effects/plasma_burn_ii.xml:2
 msgid "Plasma Burn II"
-msgstr ""
+msgstr "Plasma incendiante II"
 
 #: dat/effects/ride_of_the_valkyries.xml:2
 msgid "Ride of the Valkyries"
-msgstr ""
+msgstr "Cavalcata delle Valchirie"
 
 #: dat/effects/ride_of_the_valkyries.xml:3
 msgid "The Valkyrie beam is draining your shields!"
-msgstr ""
+msgstr "Il disintegratore delle Valchirie sta prosciugando i tuoi scudi!"
 
 #: dat/effects/shieldaura.xml:2
 msgid "Shield Aura"
@@ -2473,7 +2495,7 @@ msgstr ""
 #: dat/outfits/bioship/skills/feral_rage_ii.xml:2
 #: dat/scripts/bioship/skills.lua:216
 msgid "Feral Rage II"
-msgstr ""
+msgstr "Rabbia Furiosa II"
 
 #: dat/outfits/bioship/skills/feral_rage_ii.xml:9
 msgid ""
@@ -2487,7 +2509,7 @@ msgstr ""
 #: dat/outfits/bioship/skills/feral_rage_iii.xml:2
 #: dat/scripts/bioship/skills.lua:233
 msgid "Feral Rage III"
-msgstr ""
+msgstr "Rabbia Furiosa III"
 
 #: dat/outfits/bioship/skills/feral_rage_iii.xml:9
 msgid ""
@@ -29133,7 +29155,7 @@ msgstr ""
 #: dat/events/minerva/station.lua:370 dat/missions/dvaered/gauntlet/gui.lua:300
 #: dat/rescue.lua:304 dat/rescue.lua:315 dat/scripts/luatk/core.lua:1126
 #: src/dialogue.c:726 src/escort.c:369 src/map_find.c:213 src/options.c:276
-#: src/options.c:853 src/options.c:963 src/options.c:1226 src/options.c:1277
+#: src/options.c:853 src/options.c:967 src/options.c:1230 src/options.c:1281
 msgid "Cancel"
 msgstr ""
 
@@ -51177,7 +51199,6 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant07.lua:48
 #: dat/missions/neutral/antlejos/ant08.lua:53
 #: dat/missions/neutral/antlejos/ant09.lua:54
-#: dat/missions/neutral/foodbiz/deliverlove.lua:72
 #: dat/missions/pirate/contraband_cake.lua:81
 #: dat/missions/pirate/pir_hit_intro.lua:99
 #: dat/missions/zalek/blackhole/zbh01.lua:45
@@ -56975,7 +56996,6 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant07.lua:49
 #: dat/missions/neutral/antlejos/ant08.lua:54
 #: dat/missions/neutral/antlejos/ant09.lua:55
-#: dat/missions/neutral/foodbiz/deliverlove.lua:73
 #: dat/missions/pirate/contraband_cake.lua:82
 #: dat/missions/pirate/pir_hit_intro.lua:100
 #: dat/missions/zalek/blackhole/zbh01.lua:46
@@ -66621,7 +66641,7 @@ msgid "Deliver the recipes to Michal on {pnt} in the {sys} system."
 msgstr ""
 
 #: dat/missions/neutral/foodbiz/delivercake.lua:55
-#: dat/missions/neutral/foodbiz/deliverlove.lua:97
+#: dat/missions/neutral/foodbiz/deliverlove.lua:72
 msgid "Fly to {pnt} in the {sys} system."
 msgstr ""
 
@@ -66675,34 +66695,35 @@ msgstr ""
 #. Author: iwaschosen
 #. Plot: Talk to man on Zeo, bargain, load some cargo, deliver it to Zhiru in Goddard, get $
 #. --
-#: dat/missions/neutral/foodbiz/deliverlove.lua:28
+#: dat/missions/neutral/foodbiz/deliverlove.lua:24
 msgid "Love Letters"
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:29
+#: dat/missions/neutral/foodbiz/deliverlove.lua:25
 msgid "A cargo of feelings inked onto pulped, dried cellulose fibres."
 msgstr ""
 
 #. Can get doubled, must be global!
-#: dat/missions/neutral/foodbiz/deliverlove.lua:35
+#. No system shall be claimed by mission
+#: dat/missions/neutral/foodbiz/deliverlove.lua:34
 msgid "Old-Fashioned Man"
 msgstr ""
 
-#. No system shall be claimed by mission
-#: dat/missions/neutral/foodbiz/deliverlove.lua:42
+#: dat/missions/neutral/foodbiz/deliverlove.lua:34
 msgid "A man sits in the corner of the bar, writing a letter."
 msgstr ""
 
 #. Introductions and a bit of bargaining
 #. look at you go, double the reward
-#: dat/missions/neutral/foodbiz/deliverlove.lua:55
-#: dat/missions/neutral/foodbiz/deliverlove.lua:59
-#: dat/missions/neutral/foodbiz/deliverlove.lua:61
-#: dat/missions/neutral/foodbiz/deliverlove.lua:66
+#: dat/missions/neutral/foodbiz/deliverlove.lua:41
+#: dat/missions/neutral/foodbiz/deliverlove.lua:45
+#: dat/missions/neutral/foodbiz/deliverlove.lua:47
+#: dat/missions/neutral/foodbiz/deliverlove.lua:52
+#: dat/missions/neutral/foodbiz/deliverlove.lua:56
 msgid "Absence Makes The Heart Grow Fonder"
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:55
+#: dat/missions/neutral/foodbiz/deliverlove.lua:41
 msgid ""
 "You can't help but wonder why the man in the corner is writing on paper "
 "instead of a datapad. As you approach the table he motions you to sit. \"You "
@@ -66713,16 +66734,16 @@ msgid ""
 "\"You wouldn't happen to be heading to {pnt} would you?\" he asks."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:59
+#: dat/missions/neutral/foodbiz/deliverlove.lua:45
 msgid ""
 "\"It is a nice place I hear!\" he exclaims visibly excited. \"Say, I have "
 "written a ton of these letters at this point. You wouldn't be able to drop "
 "them off, would you?\" You raise your eyebrow. \"There would be a few "
-"credits in it for you… say, {credits}?\" The man adds quickly with a hopeful "
-"expression. It seems like a low reward for a long journey…"
+"credits in it for you... say, {credits}?\" The man adds quickly with a "
+"hopeful expression. It seems like a low reward for a long journey..."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:61
+#: dat/missions/neutral/foodbiz/deliverlove.lua:47
 msgid ""
 "The man grabs your arm as you begin to get up. \"Alright, how about "
 "{credits}? Look, I wouldn't want The Empire reading these. The Emperor "
@@ -66730,35 +66751,33 @@ msgid ""
 "answering."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:66
+#: dat/missions/neutral/foodbiz/deliverlove.lua:52
 msgid ""
 "You run a check of your cargo hold and notice it is packed to the brim. "
 "\"Did I not mention I wrote a tonne of these letters? You don't have enough "
 "space for all of these,\" the man says. \"I will be in the bar if you free "
-"up some space.\" You didn't expect him to have a LITERAL tonne of letters…"
+"up some space.\" You didn't expect him to have a LITERAL tonne of letters..."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:70
+#: dat/missions/neutral/foodbiz/deliverlove.lua:56
 msgid "\"Ah, are you able to deliver my ton of letters for me now?\""
 msgstr ""
 
 #. Add Mission Cargo and set up the computer
-#: dat/missions/neutral/foodbiz/deliverlove.lua:92
-#: dat/missions/neutral/foodbiz/deliverlove.lua:96
+#: dat/missions/neutral/foodbiz/deliverlove.lua:67
+#: dat/missions/neutral/foodbiz/deliverlove.lua:71
 msgid "Deliver Love"
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:94
+#: dat/missions/neutral/foodbiz/deliverlove.lua:69
 #, fuzzy
 #| msgid "Destroy the practice drone near {destpnt} in the {sys} system"
-msgid ""
-"Absence makes the heart grow fonder. Deliver love letters to {pnt} in the "
-"{sys} system."
+msgid "Deliver love letters to {pnt} in the {sys} system."
 msgstr ""
 "Distruggi il drone d'esercitazione che è vicino a {destpnt} nel sistema {sys}"
 
 #. set up hooks
-#: dat/missions/neutral/foodbiz/deliverlove.lua:112
+#: dat/missions/neutral/foodbiz/deliverlove.lua:84
 msgid ""
 "You deliver the letters to a young woman who excitedly takes them and thanks "
 "you profusely. It seems you really made her day. When you check your "
@@ -66767,7 +66786,7 @@ msgid ""
 "you don't think it will be missed."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:114
+#: dat/missions/neutral/foodbiz/deliverlove.lua:86
 msgid ""
 "You delivered a literal tonne of letters for a love-struck, old-fashioned "
 "man."
@@ -82176,7 +82195,7 @@ msgstr ""
 #. Need commodity exchange
 #. Check for asteroid fields
 #: dat/missions/tutorial/nelly02.lua:100 dat/missions/tutorial/nelly03.lua:80
-msgid "You see a Nelly motioning to you at a table."
+msgid "You see Nelly motioning to you at a table."
 msgstr ""
 
 #. Check to see if truly accepted
@@ -91841,8 +91860,8 @@ msgstr ""
 #. Add the OK button
 #: dat/scripts/bioship.lua:618 dat/scripts/luatk/core.lua:1084
 #: src/dialogue.c:153 src/dialogue.c:275 src/dialogue.c:331 src/dialogue.c:724
-#: src/options.c:273 src/options.c:650 src/options.c:960 src/options.c:1274
-#: src/options.c:1811
+#: src/options.c:273 src/options.c:650 src/options.c:964 src/options.c:1278
+#: src/options.c:1815
 msgid "OK"
 msgstr ""
 
@@ -92124,6 +92143,9 @@ msgid ""
 "The state of feral rage duration is increased to 7 seconds with a 30% damage "
 "bonus, and can be triggered manually with a 30 second cooldown.."
 msgstr ""
+"La durata dello stato di rabbia furiosa è stato incrementato di 7 secondi "
+"con un bonus del 30% sul danno e può essere attivata manualmente con 30 "
+"secondi di raffreddamento..."
 
 #: dat/scripts/bioship/skills.lua:251
 msgid ""
@@ -106350,7 +106372,7 @@ msgstr ""
 msgid "system"
 msgstr ""
 
-#: src/options.c:279 src/options.c:653 src/options.c:966 src/options.c:1280
+#: src/options.c:279 src/options.c:653 src/options.c:970 src/options.c:1284
 msgid "Defaults"
 msgstr ""
 
@@ -106525,231 +106547,230 @@ msgstr ""
 msgid "Keybindings restored to defaults."
 msgstr ""
 
-#: src/options.c:894
-#, c-format
-msgid "Engine Volume: %.0f%%"
+#: src/options.c:893
+msgid "Engine Volume"
 msgstr ""
 
-#: src/options.c:935
-msgid "Music Volume"
-msgstr ""
-
-#: src/options.c:935
-msgid "Sound Volume"
-msgstr ""
-
-#: src/options.c:939
+#: src/options.c:897 src/options.c:943
 #, c-format
 msgid "%s: %s"
 msgstr ""
 
-#: src/options.c:939
+#: src/options.c:897 src/options.c:943
 msgid "Muted"
 msgstr ""
 
 #. -48 dB minimum divided by logarithm of volume floor.
-#: src/options.c:942
+#: src/options.c:900 src/options.c:946
 #, c-format
 msgid "%s: %.2f (%.0f dB)"
 msgstr ""
 
-#: src/options.c:972
-msgid "Disable all sound/music"
+#: src/options.c:939
+msgid "Music Volume"
+msgstr ""
+
+#: src/options.c:939
+msgid "Sound Volume"
 msgstr ""
 
 #: src/options.c:976
+msgid "Disable all sound/music"
+msgstr ""
+
+#: src/options.c:980
 msgid "EFX (More CPU)"
 msgstr ""
 
-#: src/options.c:982
+#: src/options.c:986
 msgid "Volume Levels:"
 msgstr ""
 
-#: src/options.c:1181
+#: src/options.c:1185
 #, c-format
 msgid ""
 "Key '%s' overlaps with key '%s' that was just set. You may want to correct "
 "this."
 msgstr ""
 
-#: src/options.c:1214
+#: src/options.c:1218
 msgid "Set Keybinding"
 msgstr ""
 
-#: src/options.c:1221
+#: src/options.c:1225
 msgid ""
 "To use a modifier key hit that key twice in a row, otherwise it will "
 "register as a modifier. To set with any modifier click the checkbox."
 msgstr ""
 
-#: src/options.c:1230
+#: src/options.c:1234
 msgid "Unset"
 msgstr ""
 
-#: src/options.c:1234
+#: src/options.c:1238
 msgid "Set any modifier"
 msgstr ""
 
-#: src/options.c:1287
+#: src/options.c:1291
 msgid "Resolution:"
 msgstr ""
 
-#: src/options.c:1292
+#: src/options.c:1296
 msgid "Fullscreen"
 msgstr ""
 
-#: src/options.c:1358
+#: src/options.c:1362
 msgid "FPS Control:"
 msgstr ""
 
-#: src/options.c:1360
+#: src/options.c:1364
 msgid "FPS Limit"
 msgstr ""
 
-#: src/options.c:1370
+#: src/options.c:1374
 msgid "Show FPS"
 msgstr ""
 
-#: src/options.c:1379
+#: src/options.c:1383
 msgid "OpenGL:"
 msgstr ""
 
-#: src/options.c:1382
+#: src/options.c:1386
 msgid "Vertical Sync"
 msgstr ""
 
-#: src/options.c:1387
+#: src/options.c:1391
 msgid "Features:"
 msgstr ""
 
-#: src/options.c:1390
+#: src/options.c:1394
 msgid "Minimize on focus loss"
 msgstr ""
 
-#: src/options.c:1393
+#: src/options.c:1397
 msgid "Colorblind mode"
 msgstr ""
 
-#: src/options.c:1397
+#: src/options.c:1401
 msgid "Health bars for pilots"
 msgstr ""
 
-#: src/options.c:1431
+#: src/options.c:1435
 msgid "GUI:"
 msgstr ""
 
-#: src/options.c:1434
+#: src/options.c:1438
 msgid "Bigger icons"
 msgstr ""
 
-#: src/options.c:1450
+#: src/options.c:1454
 msgid "#rRestart Naev for changes to take effect.#0"
 msgstr ""
 
-#: src/options.c:1480
+#: src/options.c:1484
 msgid "Height/Width invalid. Should be formatted like 1024x768."
 msgstr ""
 
-#: src/options.c:1578
+#: src/options.c:1582
 msgid "Resolution can't be changed while maximized."
 msgstr ""
 
-#: src/options.c:1582
+#: src/options.c:1586
 msgid "Keep Video Settings"
 msgstr "Mantenere le Impostazioni Video"
 
-#: src/options.c:1583
+#: src/options.c:1587
 #, c-format
 msgid "Do you want to keep running at %dx%d %s?"
 msgstr ""
 
-#: src/options.c:1584 src/options.c:1590
+#: src/options.c:1588 src/options.c:1594
 msgid "fullscreen"
 msgstr ""
 
-#: src/options.c:1584 src/options.c:1590
+#: src/options.c:1588 src/options.c:1594
 msgid "windowed"
 msgstr ""
 
-#: src/options.c:1588
+#: src/options.c:1592
 msgid "Video Settings Restored"
 msgstr "Impostazioni Video Ripristinate"
 
-#: src/options.c:1589
+#: src/options.c:1593
 #, c-format
 msgid "Resolution reset to %dx%d %s."
 msgstr ""
 
-#: src/options.c:1667
+#: src/options.c:1671
 #, c-format
 msgid "Scaling: %.1fx"
 msgstr ""
 
-#: src/options.c:1685
+#: src/options.c:1689
 #, c-format
 msgid "Far Zoom: %.1fx"
 msgstr ""
 
-#: src/options.c:1707
+#: src/options.c:1711
 #, c-format
 msgid "Near Zoom: %.1fx"
 msgstr ""
 
-#: src/options.c:1728
+#: src/options.c:1732
 #, c-format
 msgid "Gamma: %.1f"
 msgstr ""
 
-#: src/options.c:1744
+#: src/options.c:1748
 #, c-format
 msgid "BG (Stars, etc.) brightness: %.0f%%"
 msgstr ""
 
-#: src/options.c:1759
+#: src/options.c:1763
 #, c-format
 msgid "Nebula non-uniformity: %.0f%%"
 msgstr ""
 
-#: src/options.c:1774
+#: src/options.c:1778
 #, c-format
 msgid "Jump Brightness: %.0f%%"
 msgstr ""
 
-#: src/options.c:1789
+#: src/options.c:1793
 #, c-format
 msgid "Map Overlay Opacity: %.0f%%"
 msgstr ""
 
 #. Text stuff.
-#: src/options.c:1814
+#: src/options.c:1818
 msgid "Plugins Directory: "
 msgstr ""
 
-#: src/options.c:1823
+#: src/options.c:1827
 msgid "No Plugins Found"
-msgstr ""
-
-#: src/options.c:1846
-msgctxt "plugins"
-msgid "Name:"
-msgstr ""
-
-#: src/options.c:1848
-msgctxt "plugins"
-msgid "Author(s):"
 msgstr ""
 
 #: src/options.c:1850
 msgctxt "plugins"
-msgid "Version:"
+msgid "Name:"
 msgstr ""
 
 #: src/options.c:1852
 msgctxt "plugins"
+msgid "Author(s):"
+msgstr ""
+
+#: src/options.c:1854
+msgctxt "plugins"
+msgid "Version:"
+msgstr ""
+
+#: src/options.c:1856
+msgctxt "plugins"
 msgid "Description:"
 msgstr ""
 
-#: src/options.c:1855
+#: src/options.c:1859
 msgid "Total Conversion"
 msgstr ""
 
