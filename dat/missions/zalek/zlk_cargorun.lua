@@ -129,10 +129,14 @@ function land ()
          misn.osdActive(2)  --OSD
       end
    elseif spob.cur() == mem.delivWorld and mem.pickedup and not mem.droppedoff then
-      tk.msg( _("Success"), _([[You land on the Za'lek planet and find your ship swarmed by dockhands in red and advanced-looking droids rapidly. They unload the equipment and direct you to a rambling edifice for payment.
-    When you enter, your head spins at a combination of the highly advanced and esoteric-looking tech so casually on display as well as the utter chaos of the facility. It takes a solid ten hectoseconds before someone comes to you asking what you need, looking quite frazzled. You state that you delivered some equipment and are looking for payment. The man types in a wrist-pad for a few seconds and says that the person you are looking for has not landed yet. He gives you a code to act as a beacon so you can catch the shuttle in-bound.]]) )
-      misn.cargoRm (mem.cargoID)
+      vn.clear()
+      vn.scene()
+      vn.transition()
+      vn.na(_([[You land on the Za'lek planet and find your ship swarmed by dockhands in red and advanced-looking droids rapidly. They unload the equipment and direct you to a rambling edifice for payment.]]))
+      vn.na(_([[When you enter, your head spins at a combination of the highly advanced and esoteric-looking tech so casually on display as well as the utter chaos of the facility. It takes a solid ten hectoseconds before someone comes to you asking what you need, looking quite frazzled. You state that you delivered some equipment and are looking for payment. The man types in a wrist-pad for a few seconds and says that the person you are looking for has not landed yet. He gives you a code to act as a beacon so you can catch the shuttle in-bound.]]))
+      vn.run()
 
+      misn.cargoRm (mem.cargoID)
       misn.markerRm(mem.marker)
       misn.osdDestroy ()
 
@@ -173,7 +177,7 @@ function hail()
    vn.run()
 
 --   eventually I'll implement a bonus
---   tk.msg( _("Bonus"), fmt.f(_([["For your trouble, I will add a bonus of {credits} to your fee. I am pleased by your help, captain; I hope we meet again."]]), {credits=fmt.credits(mem.bonus)} ) )
+--   vntk.msg( _("Bonus"), fmt.f(_([["For your trouble, I will add a bonus of {credits} to your fee. I am pleased by your help, captain; I hope we meet again."]]), {credits=fmt.credits(mem.bonus)} ) )
 
    mem.bonus = 0
    logan:setVisplayer(false)
