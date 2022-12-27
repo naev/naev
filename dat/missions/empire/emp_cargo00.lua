@@ -65,7 +65,7 @@ function accept ()
    }
 
    vn.label("decline")
-   vn.done()
+   vn.done( emp.czesc.transition )
 
    vn.label("accept")
    vn.func( function () accepted = true end )
@@ -73,6 +73,7 @@ function accept ()
    czesc(fmt.f(_([[He hits a couple buttons on his wrist computer, which springs into action. "It looks like we already have a simple task for you. Deliver these parcels to {pnt} in the {sys} system. The best pilots started by delivering papers and ended up flying into combat against gigantic warships with the Interception Division."]]),
       {pnt=mem.dest, sys=mem.sys}))
 
+   vn.done( emp.czesc.transition )
    vn.run()
 
    if not accepted then return end
