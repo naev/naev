@@ -189,11 +189,7 @@ He looks at you with determination.
    kex(_([["It would be ideal if you can disable the ship and find the evidence itself, however, given that it is always delivered in secured vaults, you should be able to recover the vault from the debris if you roll that way."]]))
    vn.func( function ()
       if mem.misn_state==nil then
-         if not misn.accept() then
-            tk.msg(_("You have too many active missions."))
-            vn.jump("menu_msg")
-            return
-         end
+         misn.accept()
 
          minerva.log.kex(_("You agreed to help Kex to find dirt on the Minerva Station CEO to try to get him free."))
          mem.misn_marker = misn.markerAdd( targetsys )

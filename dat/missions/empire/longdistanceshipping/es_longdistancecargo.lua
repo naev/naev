@@ -22,7 +22,7 @@ local fmt = require "format"
 local lmisn = require "lmisn"
 local emp = require "common.empire"
 local pir = require "common.pirate"
-
+local vntk = require "vntk"
 
 local piracyrisk = {}
 piracyrisk[1] = _("#nPiracy Risk:#0 None")
@@ -100,7 +100,7 @@ function accept()
       end
    end
    if player.pilot():cargoFree() < mem.amount then
-      tk.msg( _("No room in ship"), fmt.f(
+      vntk.msg( _("No room in ship"), fmt.f(
          _("You don't have enough cargo space to accept this mission. It requires {tonnes_free} of free space ({tonnes_short} more than you have)."),
          { tonnes_free = fmt.tonnes(mem.amount), tonnes_short = fmt.tonnes( mem.amount - player.pilot():cargoFree() ) } ) )
       return
@@ -109,7 +109,7 @@ function accept()
    misn.accept()
 
    mem.carg_id = misn.cargoAdd( mem.cargo, mem.amount )
-   tk.msg( _("Mission Accepted"), fmt.f(
+   vntk.msg( _("Mission Accepted"), fmt.f(
       _("The Empire workers load the {tonnes} of {cargo} onto your ship."),
       {tonnes=fmt.tonnes(mem.amount), cargo=_(mem.cargo)} ) )
    hook.land( "land" ) -- only hook after accepting
@@ -119,23 +119,22 @@ end
 
 -- Land hook
 function land()
-   if spob.cur() == mem.destplanet then
-      tk.msg( _("Successful Delivery"), fmt.f(
-         _("The Empire workers unload the {cargo} at the docks."), {cargo=_(mem.cargo)} ) )
-      player.pay(mem.reward)
-      local n = var.peek("es_misn")
-      if n ~= nil then
-         var.push("es_misn", n+1)
-         else
-         var.push("es_misn", 1)
-      end
-
-      -- increase faction
-      local reputation = rnd.rnd(4, 6)
-      faction.modPlayerSingle("Empire", reputation)
-      pir.reputationNormalMission(reputation)
-      misn.finish(true)
+   if spob.cur() ~= mem.destplanet then
+      return
    end
+   lmisn.sfxVictory()
+   player.pay(mem.reward)
+   vntk.msg( _("Successful Delivery"), fmt.f(_("The Empire workers unload the {cargo} at the docks."),
+      {cargo=_(mem.cargo)} ).."\n\n"..fmt.reward(mem.reward) )
+
+   local n = var.peek("es_misn") or 0
+   var.push("es_misn", n+1)
+
+   -- increase faction
+   local reputation = rnd.rnd(4, 6)
+   faction.modPlayerSingle("Empire", reputation)
+   pir.reputationNormalMission(reputation)
+   misn.finish(true)
 end
 
 -- Date hook

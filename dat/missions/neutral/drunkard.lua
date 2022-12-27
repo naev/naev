@@ -111,7 +111,7 @@ end
 function land ()
    if spob.cur() == mem.pickupWorld and not mem.pickedup then
       if player.pilot():cargoFree() < cargo_amount then
-         tk.msg( _("No Room"), _([[You don't have enough cargo space to accept this mission.]]) )  -- Not enough space
+         vntk.msg( _("No Room"), fmt.f(_([[You need at least {amount} of free space to pick up the cargo.]]), {amount=cargo_amount}))  -- Not enough space
          misn.finish()
 
       else
@@ -165,7 +165,7 @@ function hail()
    p(_([["Hello again. It's Willie. I'm just here to inform you that the countess has taken care of your payment and transferred it to your account. And don't worry about me, the countess has covered my portion just fine. I'm just glad to have Ol' Bessy here back."]]))
 
 --   eventually I'll implement a bonus
---   tk.msg( _("Bonus"), fmt.f(_([["Oh, and she put in a nice bonus for you of {credits} for such a speedy delivery."]]), {credits=fmt.credits(mem.bonus)} ) )
+--   p(fmt.f(_([["Oh, and she put in a nice bonus for you of {credits} for such a speedy delivery."]]), {credits=fmt.credits(mem.bonus)}))
 
    vn.disappear( p )
 

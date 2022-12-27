@@ -230,7 +230,7 @@ Suddenly, a guy approaches you. "Hi, are you {player}? The nerds wanted you to k
 
    elseif not mem.intime then
    -- you're late and far from the nerds
-      tk.msg(_("You forgot the nerds"), fmt.f(_([[Seeing that it is already too late to pick up the nerds, and that you're quite far from {pnt}, you decide it's better to forget about them completely.]]), {pnt=mem.srcPlanet}))
+      vntk.msg(_("You forgot the nerds"), fmt.f(_([[Seeing that it is already too late to pick up the nerds, and that you're quite far from {pnt}, you decide it's better to forget about them completely.]]), {pnt=mem.srcPlanet}))
       cleanup()
       misn.finish(true)
    end

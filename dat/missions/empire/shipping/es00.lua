@@ -65,6 +65,7 @@ function accept ()
 "Once you get our captured people back, bring them over to {ret_pnt} in {ret_sys} for debriefing. You'll be compensated for your troubles. Good luck."]]),
       {dest_pnt=mem.dest, dest_sys=mem.destsys, ret_pnt=mem.ret, ret_sys=mem.retsys} ))
    vn.func( function () accepted = true end )
+   vn.na(_([[The prisoners are loaded onto your ship along with a few marines to ensure nothing untoward happens.]]))
 
    vn.done( emp.soldner.transition )
    vn.run()
@@ -88,7 +89,6 @@ function accept ()
    -- Set up the goal
    local c = commodity.new( N_("Prisoners"), N_("FLF prisoners.") )
    mem.prisoners = misn.cargoAdd( c, 0 )
-   tk.msg( _("Prisoner Exchange"), _([[The prisoners are loaded onto your ship along with a few marines to ensure nothing untoward happens.]]) )
 
    -- Set hooks
    hook.land("land")
