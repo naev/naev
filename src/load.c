@@ -673,6 +673,7 @@ static void load_snapshot_menu_save( unsigned int wdw, const char *str )
          _("You already have a snapshot named '%s'. Overwrite?"), save_name);
       if (r==0) {
          load_snapshot_menu_save( wdw, str );
+         free( save_name );
          return;
       }
    }
@@ -683,6 +684,7 @@ static void load_snapshot_menu_save( unsigned int wdw, const char *str )
       load_snapshot_menu_close( wdw, str );
       load_loadSnapshotMenu( player.name, 1 );
    }
+   free( save_name );
 }
 
 /**
