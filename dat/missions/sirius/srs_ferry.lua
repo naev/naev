@@ -244,19 +244,21 @@ Accept the mission anyway?]]), {time_limit=(mem.timelimit - time.get()), time=(p
 
       if picky > 2 then
          -- Demands to be delivered in a Sirian ship
-         vntk.msg(_("Transportation details"), _("As you arrive at the hangar, the Sirian looks at your ship and remarks, \"What? This is to be the ship for my pilgrimage? This is unacceptable - such a crude ship must not be allowed to touch the sacred soil of Mutris. I will wait for a pilot who can ferry me in a true Sirian vessel.\""))
+         vntk.msg(_("Transportation details"), _([[As you arrive at the hangar, the Sirian looks at your ship and remarks, "What? This is to be the ship for my pilgrimage? This is unacceptable - such a crude ship must not be allowed to touch the sacred soil of Mutris. I will wait for a pilot who can ferry me in a true Sirian vessel."]]))
          return
       elseif picky > 0 then
          -- Could be persuaded, for a discount
          mem.reward = mem.reward*0.6666
-         if not vntk.yesno(_("Transportation details"), fmt.f(_("As you arrive at the hangar, the Sirian looks at your ship and remarks, \"Oh, you didn't tell me your ship is not from our native Sirian shipyards. Since that is the case, I would prefer to wait for another pilot. A pilgrimage is a sacred matter, and the vessel should be likewise.\"\nThe Sirian looks like they might be open to negotiating, however. Would you offer to fly the mission for {credits}?"), {credits=fmt.credits(mem.reward)})) then
+         if not vntk.yesno(_("Transportation details"), fmt.f(_([["As you arrive at the hangar, the Sirian looks at your ship and remarks, "Oh, you didn't tell me your ship is not from our native Sirian shipyards. Since that is the case, I would prefer to wait for another pilot. A pilgrimage is a sacred matter, and the vessel should be likewise."
+The Sirian looks like they might be open to negotiating, however. Would you offer to fly the mission for {credits}?"]]),
+            {credits=fmt.credits(mem.reward)})) then
             return -- Player won't offer a discount
          end
          if picky > 1 then
-            vntk.msg(_("Offer denied"), _("\"I'm sorry. Your price is reasonable, but piety is of greater value.\""))
+            vntk.msg(_("Offer denied"), _([["I'm sorry. Your price is reasonable, but piety is of greater value."]]))
             return -- Would not be persuaded by a discount
          else
-            vntk.msg(_("Offer accepted"), _("\"Very well. For a price that reasonable, I will adjust my expectations.\""))  -- discount is ok
+            vntk.msg(_("Offer accepted"), _([["Very well. For a price that reasonable, I will adjust my expectations."]]))  -- discount is ok
          end
       elseif picky <= 0 then
          vntk.msg(_("Transportation details"), _("As you arrive at the hangar, the Sirian looks at your ship, and you catch a hint of disappointment on their face, before they notice you and quickly hide it.")) -- ok with the arrangements
@@ -287,7 +289,8 @@ function land()
       if mem.wants_sirian and not mem.has_sirian_ship then
          mem.change = 1  -- Bad: they wanted a Sirian ship and you switched on them
          mem.reward = mem.reward / (mem.rank+1.5)
-         vntk.msg( _("Altering the deal"), fmt.f( _("On landing, the passenger gives you a brief glare. \"I had paid for transportation in a Sirian ship,\" they remark. \"This alternate arrangement is quite disappointing.\" They hand you {credits}, but it's definitely less than you were expecting."), {credits=fmt.credits(mem.reward)} ) )
+         vntk.msg( _("Altering the deal"), fmt.f( _([["On landing, the passenger gives you a brief glare. "I had paid for transportation in a Sirian ship," they remark. "This alternate arrangement is quite disappointing." They hand you {credits}, but it's definitely less than you were expecting."]]),
+            {credits=fmt.credits(mem.reward)} ) )
          player.pay(mem.reward)
          misn.finish(true)
       elseif not mem.wants_sirian and mem.has_sirian_ship then
