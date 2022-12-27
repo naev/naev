@@ -4,6 +4,9 @@
 -- This framework allows to keep consistency and abstracts around commonly used
 --  empire mission functions.
 --]]
+local portrait = require "portrait"
+local vn = require "vn"
+
 local emp = {}
 
 emp.prefix = "#g".._("EMPIRE: ").."#0" -- Repeatable Empire mission prefix
@@ -16,6 +19,21 @@ end
 function emp.addCollectiveLog( text )
    shiplog.create("empire_collective", _("Empire Collective Campaign"), _("Empire"))
    shiplog.append("empire_collective", text)
+end
+
+emp.czesc = {
+   portrait = "empire/unique/czesc.webp",
+   name = _("Lieutenant Czesc"),
+   colour = nil,
+   transition = "pixelize",
+}
+emp.czesc.image = portrait.getFullPath(emp.czesc.portrait)
+function emp.vn_czesc( params )
+   return vn.Character.new( emp.czesc.name,
+         tmerge( {
+            image=emp.czesc.image,
+            color=emp.czesc.colour,
+         }, params) )
 end
 
 emp.rewards = {
