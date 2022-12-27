@@ -52,7 +52,7 @@ function accept ()
 
    -- See if accept mission
    soldner(_([[You approach Commander Soldner, who seems to be waiting for you.
-"Ready for your next mission?"]]) )
+"Ready for your next mission? We need you to do a pick up and delivery, however, you are expected to encounter hostilities on the way. Interested?"]]) )
    vn.menu{
       {_([[Accept]]), "accept"},
       {_([[Decline]]), "decline"},
