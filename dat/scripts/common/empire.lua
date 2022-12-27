@@ -34,6 +34,7 @@ emp.soldner = {
    name = _("Commander Soldner"),
    colour = nil,
    transition = "pixelize",
+   description = _("You see Commander Soldner. He is expecting you."),
 }
 emp.soldner.image = portrait.getFullPath(emp.soldner.portrait)
 
