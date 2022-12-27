@@ -27,6 +27,7 @@
    final "this is a bug, please report" happens more than it ought to.
 
 --]]
+local vntk = require "vntk"
 
 local required = {} -- Slots that must be filled in order to take off.
 local equipped = {} -- Outfits equipped in required slots.
@@ -260,7 +261,7 @@ end
 
 local function cancel()
    cancelled = true
-   tk.msg( _("Stranded"), _([[Very well, but it's unlikely you'll be able to take off.
+   vntk.msg( _("Stranded"), _([[Very well, but it's unlikely you'll be able to take off.
 
 If you can't find a way to make your ship spaceworthy, you can always attempt to take off again to trigger this dialogue, or try loading your backup save.]]) )
 end
@@ -376,11 +377,11 @@ function rescue()
          local msg_success = gettext.ngettext(
             [[After adding the missing outfit, your ship is now spaceworthy, though it may have somewhat lower performance than usual. You should get to a planet with a proper shipyard and outfitter.]],
             [[After adding the missing outfits, your ship is now spaceworthy, though it may have somewhat lower performance than usual. You should get to a planet with a proper shipyard and outfitter.]], #missing)
-         tk.msg(_("Stranded"), msg_success)
+         vntk.msg(_("Stranded"), msg_success)
          return
       end
 
-      tk.msg( _("Stranded"), _([[Unfortunately, your ship still isn't spaceworthy. However, there are still other options for getting your ship airborne.]]) )
+      vntk.msg( _("Stranded"), _([[Unfortunately, your ship still isn't spaceworthy. However, there are still other options for getting your ship airborne.]]) )
       buildTables() -- Rebuild tables, as we've added outfits.
    end
 
@@ -409,7 +410,7 @@ function rescue()
 
       -- Only "Cancel" remains, nothing to do.
       if #strings < 2 then
-         tk.msg(_("Stranded"), _([[Well... this isn't good. Your ship has been restored to its default configuration, yet still isn't spaceworthy.
+         vntk.msg(_("Stranded"), _([[Well… this isn't good. Your ship has been restored to its default configuration, yet still isn't spaceworthy.
 
 Please report this to the developers along with a copy of your save file.]]))
          return
@@ -423,7 +424,7 @@ Please report this to the developers along with a copy of your save file.]]))
       end
 
       if player.pilot():spaceworthy() then
-         tk.msg( _("Stranded"), _([[Your ship is now spaceworthy, though you should get to an outfitter as soon as possible.]]) )
+         vntk.msg( _("Stranded"), _([[Your ship is now spaceworthy, though you should get to an outfitter as soon as possible.]]) )
          return
       end
 
