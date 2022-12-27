@@ -26,6 +26,7 @@ emp.czesc = {
    name = _("Lieutenant Czesc"),
    colour = nil,
    transition = "pixelize",
+   description = _("Lieutenant Czesc, from the Empire Armada Shipping Division, is sitting at the bar."),
 }
 emp.czesc.image = portrait.getFullPath(emp.czesc.portrait)
 function emp.vn_czesc( params )

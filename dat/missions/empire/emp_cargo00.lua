@@ -45,7 +45,7 @@ function create ()
    mem.dest = planets[index][1]
    mem.sys = planets[index][2]
 
-   misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", _("You see an Empire Lieutenant who seems to be looking at you.") )
+   misn.setNPC( _("Lieutenant"), emp.czesc.portrait, _("You see an Empire Lieutenant who seems to be looking at you.") )
 end
 
 
