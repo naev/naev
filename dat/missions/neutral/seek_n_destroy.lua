@@ -455,11 +455,12 @@ end
 
 -- The NPC knows the target. The player has to convince him to give info
 function space_clue( target )
+   vn.clear()
+   vn.scene()
+   local p = ccomm.newCharacter( vn, target )
+   vn.transition()
+
    if target:hostile() then -- Pilot doesn't like you
-      vn.clear()
-      vn.scene()
-      local p = ccomm.newCharacter( vn, advisor )
-      vn.transition()
       p(quotes.noinfo[rnd.rnd(1,#quotes.noinfo)])
       vn.menu{
          {_([[Give up]]), "giveup"},
@@ -500,51 +501,78 @@ function space_clue( target )
          mem.attack = hook.pilot( target, "attacked", "clue_attacked" )
       end )
 
-      vn.run()
-
    else -- Pilot wants payment
-      mem.price = (5 + 5*rnd.rnd()) * 1e3
-      local choice = tk.choice(
-         _("How much money do you have?"),
-         fmt.f( quotes.money[rnd.rnd(1,#quotes.money)], {plt=mem.name, credits=fmt.credits(mem.price)} ),
-         _("Pay the sum"), _("Give up"), _("Threaten the pilot")
-      )
 
-      if choice == 1 then
-         if player.credits() >= mem.price then
-            player.pay(-mem.price)
-            tk.msg( _("I know the pilot you're looking for"), fmt.f( quotes.clue[rnd.rnd(1,#quotes.clue)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]} ) )
-            next_sys()
-            target:setHostile( false )
-            target:comm(comms.thank[rnd.rnd(1,#comms.thank)])
-         else
-            tk.msg( _("Not enough money"), _("You don't have enough money.") )
+      vn.func( function ()
+         mem.price = (5 + 5*rnd.rnd()) * 1e3
+      end )
+      p(_("How much money do you have?"))
+      vn.menu( function ()
+         return {
+            {fmt.f(_([[Pay {amount}]]), mem.price), "pay"},
+            {_([[Give up]]), "giveup"},
+            {_([[Threaten the pilot]]), "threaten"},
+         }
+      end )
+
+      vn.label("broke")
+      vn.na(_("You don't have enough money."))
+      vn.done()
+
+      vn.label("giveup")
+      vn.done()
+
+      vn.label("pay")
+      vn.func( function ()
+         if player.credits() < mem.price then
+            vn.jump("broke")
+            return
          end
-      elseif choice == 3 then -- Threaten the pilot
+         player.pay(-mem.price)
+      end )
+      p(_("I know the pilot you're looking for"), fmt.f( quotes.clue[rnd.rnd(1,#quotes.clue)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]}))
+      vn.func( function ()
+         next_sys()
+         target:setHostile( false )
+         target:comm(comms.thank[rnd.rnd(1,#comms.thank)])
+      end )
+      vn.done()
 
+      vn.label("threaten")
+      vn.func( function ()
          -- Everybody except the pirates takes offence if you threaten them
-         if target:faction() ~= faction.get("Pirate") then
+         if not pir.factionIsPirate( target:faction() ) then
             faction.modPlayerSingle( target:faction(), -1 )
          end
 
-         if isScared (target) then
-            tk.msg( _("You're intimidating!"), fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]} ) )
+         if isScared(target) then
+            vn.jump("scared")
+         else
+            vn.jump("notimpressed")
+         end
+      end )
+
+      vn.label("scared")
+      p(fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]}))
+      vn.func( function ()
             next_sys()
             target:control()
             target:runaway(player.pilot())
-         else
-            tk.msg( _("Not impressed"), fmt.f( quotes.not_scared[rnd.rnd(1,#quotes.not_scared)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]} ) )
-            target:comm(comms.not_scared[rnd.rnd(1,#comms.not_scared)])
+      end )
 
+      vn.label("notimpressed")
+      p(fmt.f( quotes.not_scared[rnd.rnd(1,#quotes.not_scared)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]}))
+      vn.func( function ()
+            target:comm(comms.not_scared[rnd.rnd(1,#comms.not_scared)])
             -- Clean the previous hook if it exists
             if mem.attack then
                hook.rm(mem.attack)
             end
             mem.attack = hook.pilot( target, "attacked", "clue_attacked" )
-         end
-      end
+      end )
    end
 
+   vn.run()
 end
 
 -- Player attacks an informant who has refused to give info
