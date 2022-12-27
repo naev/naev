@@ -23,15 +23,29 @@ shark.arnold = {
    portrait = "neutral/unique/arnoldsmith.webp",
    colour = nil,
    transition = "pixelize",
-   description = _(""),
+   description = _([[The Nexus employee seems to be looking for pilots. Maybe he has another task for you.]]),
 }
 shark.arnold.image = portrait.getFullPath(shark.arnold.portrait)
+
+shark.agent = {
+   name = _("Nexu's Agent"),
+   portrait = "neutral/unique/nexus_agent.webp",
+}
+shark.agent.image = portrait.getFullPath(shark.agent.portrait)
 
 function shark.vn_arnold( params )
    return vn.Character.new( shark.arnold.name,
       tmerge( {
          image=shark.arnold.image,
          color=shark.arnold.colour,
+      }, params) )
+end
+
+function shark.vn_agent( params )
+   return vn.Character.new( shark.agent.name,
+      tmerge( {
+         image=shark.agent.image,
+         color=shark.agent.colour,
       }, params) )
 end
 

@@ -30,6 +30,7 @@ local pir = require "common.pirate"
 local fmt = require "format"
 local shark = require "common.shark"
 local equipopt = require "equipopt"
+local vn = require "vn"
 
 local badguys -- Non-persistent state
 local add_llama, bombers, choose, corvette, cruiser, hvy_intercept, interceptors, rndNb -- Forward-declared functions
@@ -44,54 +45,85 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC(_("Arnold Smith"), "neutral/unique/arnoldsmith.webp", _([[Arnold Smith is here. Perhaps he might have another job for you.]]))
+   misn.setNPC( shark.arnold.name, shark.arnold.portrait, shark.arnold.description )
 end
 
 function accept()
    mem.stage = 0
    mem.proba = 0.4  --the chances you have to get an ambush
+   local accepted = false
 
-   if tk.yesno(_("Nexus Shipyards needs you (again)"), fmt.f(_([[You sit at Smith's table and ask him if he has a job for you. "Of course," he answers. "But this time, it's... well...
-    "Listen, I need to give some background. As you know, Nexus designs are used far and wide in smaller militaries. The Empire is definitely our biggest customer, but the Frontier also notably makes heavy use of our Lancelot design, as do many independent systems. Still, competition is stiff; House Dvaered's Vendetta design, for instance, is quite popular with the FLF, ironically enough.
-    "But matters just got a little worse for us: it seems that House Sirius is looking to get in on the shipbuilding business as well, and the Frontier are prime targets. If they succeed, the Lancelot design could be completely pushed out of Frontier space, and we would be crushed in that market between House Dvaered and House Sirius. Sure, the FLF would still be using a few Pacifiers, but it would be a token business at best, and not to mention the authorities would start associating us with terrorism.
-    "So we've conducted a bit of espionage. We have an agent who has recorded some hopefully revealing conversations between a House Sirius sales manager and representatives of the Frontier. All we need you to do is meet with the agent, get the recordings, and bring them back to me on {pnt} in the {sys} system." You raise an eyebrow.
-    "It's not exactly legal. That being said, you're just doing the delivery, so you almost certainly won't be implicated. What do you say? Is this something you can do?"]]), {pnt=paypla, sys=paysys})) then
-      misn.accept()
-      tk.msg(_("The job"), fmt.f(_([["I'm glad to hear it. Go meet our agent on {pnt} in the {sys} system. Oh, yes, and I suppose I should mention that I'm known as 'James Neptune' to the agent. Good luck!"]]), {pnt=mem.mispla, sys=mem.missys}))
+   vn.clear()
+   vn.scene()
+   local arnold = shark.vn_arnold()
+   vn.transition( shark.arnold.transition )
 
-      misn.setTitle(_("Unfair Competition"))
-      misn.setReward(fmt.credits(shark.rewards.sh02))
-      misn.setDesc(_("Nexus Shipyards is in competition with House Sirius."))
-      misn.osdCreate(_("Unfair Competition"), {
-         fmt.f(_("Land on {pnt} in {sys} and meet the Nexus agent"), {pnt=mem.mispla, sys=mem.missys}),
-         fmt.f(_("Bring the recording back to {pnt} in the {sys} system"), {pnt=paypla, sys=paysys}),
-      })
-      misn.osdActive(1)
+   arnold(_([[You sit at Smith's table and ask him if he has a job for you. "Of course," he answers. "But this time, it's… well…"]]))
+   arnold(_([["Listen, I need to give some background. As you know, Nexus designs are used far and wide in smaller militaries. The Empire is definitely our biggest customer, but the Frontier also notably makes heavy use of our Lancelot design, as do many independent systems. Still, competition is stiff; House Dvaered's Vendetta design, for instance, is quite popular with the FLF, ironically enough."]]))
+   arnold(_([["But matters just got a little worse for us: it seems that House Sirius is looking to get in on the shipbuilding business as well, and the Frontier are prime targets. If they succeed, the Lancelot design could be completely pushed out of Frontier space, and we would be crushed in that market between House Dvaered and House Sirius. Sure, the FLF would still be using a few Pacifiers, but it would be a token business at best, and not to mention the authorities would start associating us with terrorism."]]))
+   arnold(fmt.f(_([["So we've conducted a bit of espionage. We have an agent who has recorded some hopefully revealing conversations between a House Sirius sales manager and representatives of the Frontier. All we need you to do is meet with the agent, get the recordings, and bring them back to me on {pnt} in the {sys} system." You raise an eyebrow.]]),
+      {pnt=paypla, sys=paysys}))
+   arnold(_([["It's not exactly legal. That being said, you're just doing the delivery, so you almost certainly won't be implicated. What do you say? Is this something you can do?"]]))
+   vn.menu{
+      {_([[Accept]]), "accept"},
+      {_([[Decline]]), "decline"},
+   }
 
-      mem.marker = misn.markerAdd(mem.mispla, "low")
+   vn.label("decline")
+   arnold(_([["OK, sorry to bother you."]]))
+   vn.done( shark.arnold.transition )
 
-      hook.land("land")
-      hook.enter("enter")
-   else
-      tk.msg(_("Sorry, not interested"), _([["OK, sorry to bother you."]]))
-   end
+   vn.label("accept")
+   vn.func( function () accepted = true end )
+   arnold(fmt.f(_([["I'm glad to hear it. Go meet our agent on {pnt} in the {sys} system. Oh, yes, and I suppose I should mention that I'm known as 'James Neptune' to the agent. Good luck!"]]),
+      {pnt=mem.mispla, sys=mem.missys}))
+
+   vn.done( shark.arnold.transition )
+   vn.run()
+
+   if not accepted then return end
+
+   misn.accept()
+
+   misn.setTitle(_("Unfair Competition"))
+   misn.setReward(fmt.credits(shark.rewards.sh02))
+   misn.setDesc(_("Nexus Shipyards is in competition with House Sirius."))
+   misn.osdCreate(_("Unfair Competition"), {
+      fmt.f(_("Land on {pnt} in {sys} and meet the Nexus agent"), {pnt=mem.mispla, sys=mem.missys}),
+      fmt.f(_("Bring the recording back to {pnt} in the {sys} system"), {pnt=paypla, sys=paysys}),
+   })
+   misn.osdActive(1)
+
+   mem.marker = misn.markerAdd(mem.mispla, "low")
+
+   hook.land("land")
+   hook.enter("enter")
 end
 
 function land()
    --The player is landing on the mission planet to get the box
    if mem.stage == 0 and spob.cur() == mem.mispla then
-      mem.agent = misn.npcAdd("beginrun", _("Nexus's agent"), "neutral/unique/nexus_agent.webp", _([[This guy seems to be the agent Arnold Smith was talking about.]]))
+      mem.agent = misn.npcAdd("beginrun", shark.agent.name, shark.agent.portrait, _([[This guy seems to be the agent Arnold Smith was talking about.]]))
    end
 
    --Job is done
    if mem.stage == 1 and spob.cur() == paypla then
-      if misn.cargoRm(mem.records) then
-         tk.msg(_("Good job"), _([[The Nexus employee greets you as you reach the ground. "Excellent! I will just need to spend a few hectoseconds analyzing these recordings. See if you can find me in the bar soon; I might have another job for you."]]))
+      vn.clear()
+      vn.scene()
+      local arnold = shark.vn_arnold()
+      vn.transition( shark.arnold.transition )
+      arnold(_([[The Nexus employee greets you as you reach the ground. "Excellent! I will just need to spend a few hectoseconds analyzing these recordings. See if you can find me in the bar soon; I might have another job for you."]]))
+      vn.func( function ()
          pir.reputationNormalMission(rnd.rnd(2,3))
          player.pay(shark.rewards.sh02)
-         shark.addLog( _([[You helped Nexus Shipyards gather information in an attempt to sabotage competition from House Sirius. Arnold Smith said to meet him in the bar soon; he may have another job for you.]]) )
-         misn.finish(true)
-      end
+      end )
+      vn.sfxVictory()
+      vn.na(fmt.reward( shark.rewards.sh02 ))
+      vn.done( shark.arnold.transition )
+      vn.run()
+
+      shark.addLog( _([[You helped Nexus Shipyards gather information in an attempt to sabotage competition from House Sirius. Arnold Smith said to meet him in the bar soon; he may have another job for you.]]) )
+      misn.finish(true)
    end
 end
 
@@ -107,7 +139,13 @@ function enter()
 end
 
 function beginrun()
-   tk.msg(_("Time to go back to Alteris"), _([[You approach the agent and obtain the package without issue. Before you leave, he suggests that you stay vigilant. "They might come after you," he says.]]))
+   vn.clear()
+   vn.scene()
+   local agent = shark.vn_agent()
+   vn.transition()
+   agent(_([[You approach the agent and obtain the package without issue. Before you leave, he suggests that you stay vigilant. "They might come after you," he says.]]))
+   vn.run()
+
    local c = commodity.new(N_("Recorder"), N_("A holophone recorder."))
    mem.records = misn.cargoAdd(c, 0)  --Adding the cargo
    mem.stage = 1
