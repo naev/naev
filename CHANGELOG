@@ -4,6 +4,7 @@
    * diy-nerds: fixed reward and description not matching
    * Fixed cases where the player could be forced to take off when not spaceworthy
    * Show engine volume option same as other volume options
+   * deliverlove: fixed credit exploit
 
 * 0.10.0
    * Made slim the default GUI instead of brushed

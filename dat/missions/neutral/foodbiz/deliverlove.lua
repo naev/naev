@@ -25,8 +25,7 @@ local cargoname = N_("Love Letters")
 local cargodesc = N_("A cargo of feelings inked onto pulped, dried cellulose fibres.")
 local targetworld, targetworld_sys = spob.getS( "Zhiru" )
 
-mem.reward = 50e3 -- Can get doubled, must be global!
-
+local reward = 50e3 -- Can get doubled
 
 function create () --No system shall be claimed by mission
    mem.started = false
@@ -36,6 +35,8 @@ end
 
 
 function accept ()
+   mem.reward = reward -- Can get doubled, must be global!
+
    -- Introductions and a bit of bargaining
    if not mem.started then
       if not tk.yesno( _("Absence Makes The Heart Grow Fonder"), fmt.f(_([[You can't help but wonder why the man in the corner is writing on paper instead of a datapad. As you approach the table he motions you to sit. "You must be wondering why I am using such an old fashioned way of recording information," he remarks with a grin. You take a sip of your drink as he continues. "I am writing a poem to my beloved. She lives on {pnt}." You glance at the flowing hand writing, back at the man, and back at the paper. "You wouldn't happen to be heading to {pnt} would you?" he asks.]]), {pnt=targetworld} ) ) then
