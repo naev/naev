@@ -213,7 +213,7 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords ) {
    vec2 p = (dist>0.0) ? (floor(uv / squareSize) + 0.5) * squareSize : uv;
 
    vec4 c1 = Texel( texprev, p );
-   vec4 c2 = Texel( tex, p )
+   vec4 c2 = Texel( tex, p );
    return mix( c1, c2, progress);
 }
 ]]
