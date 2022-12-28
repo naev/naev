@@ -60,14 +60,14 @@ local function tracks_add( name, situation, params )
    if not params.delay then
       m:play()
    end
-   tracks_stop () -- Only play one at a time
+   tracks_stop() -- Only play one at a time
    table.insert( tracks, t )
    return t
 end
 
 local function tracks_playing ()
    for k,v in ipairs( tracks ) do
-      if (not v.fade or v.fade > 0) and not v.m:isStopped() then
+      if (not v.fade or v.fade > 0) and (v.delay or not v.m:isStopped()) then
          return v
       end
    end
