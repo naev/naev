@@ -12,6 +12,7 @@ local pir = require 'common.pirate'
 local tut = require 'common.tutorial'
 local vn  = require 'vn'
 local fmt = require 'format'
+local luatk = require "luatk"
 
 -- Runs on saves older than 0.10.0
 local function updater0100( did090 )
@@ -52,19 +53,20 @@ local function updater0100( did090 )
    "Say, now that I can see you, you look very familiar. You wouldn't be related my late previous owner? Terrible what happened…"]]),{playername=player.name()}))
       sai(_([["I'm sure you have many questions about the update, but first, would you like to give me a name?"]]))
       local ainame
-      vn.func( function ()
-         -- TODO integrate into vn
-         ainame = tk.input( _("Name Ship AI"), 1, 16, _("Please enter a name for your Ship AI") )
-         if ainame then
-            var.push("shipai_name",ainame)
-            sai.displayname = ainame -- Can't use rename here
+      luatk.vn( function ()
+         luatk.msgInput( _("Name Ship AI"), _("Please enter a name for your Ship AI"), 50, function( str )
+            ainame = str
+            if ainame then
+               var.push("shipai_name",ainame)
+               sai.displayname = ainame -- Can't use rename here
 
-            if tut.specialnames[ string.upper(ainame) ] then
-               vn.jump("specialname")
-               return
+               if tut.specialnames[ string.upper(ainame) ] then
+                  vn.jump("specialname")
+                  return
+               end
             end
-         end
-         vn.jump("gavename")
+            vn.jump("gavename")
+         end )
       end )
       vn.label("specialname")
       sai( function () return tut.specialnames[ string.upper(ainame) ] end )

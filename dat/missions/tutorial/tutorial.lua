@@ -15,6 +15,7 @@ local fmt = require "format"
 local tut = require "common.tutorial"
 local vn = require "vn"
 local vntk = require "vntk"
+local luatk = require "luatk"
 
 local captainTP -- Non-persistent state
 local msg_info, spawn_captain_tp -- Forward-declared functions
@@ -49,22 +50,23 @@ They stare at you for a few seconds.
    sai(_([["Anyway, from now on, I will be your Ship AI, but don't worry if you get a new ship, I will be transferred over without an issue. If you have any questions or comments about how your ship works or how to do things, I believe I can be of help. As your new Ship AI, would you like to give me a name?"]]))
    vn.label("rename")
    local ainame
-   vn.func( function ()
-      -- TODO integrate into vn
-      ainame = tk.input( _("Name Ship AI"), 1, 16, _("Please enter a name for your Ship AI") )
-      if ainame then
-         var.push("shipai_name",ainame)
-         sai.displayname = ainame -- Can't use rename here
+   luatk.vn( function ()
+      luatk.msgInput( _("Name Ship AI"), _("Please enter a name for your Ship AI"), 50, function( str )
+         ainame = str
+         if ainame then
+            var.push("shipai_name",ainame)
+            sai.displayname = ainame -- Can't use rename here
 
-         if tut.specialnames[ string.upper(ainame) ] then
-            vn.jump("specialname")
+            if tut.specialnames[ string.upper(ainame) ] then
+               vn.jump("specialname")
+               return
+            end
+
+            vn.jump("gavename")
             return
          end
-
-         vn.jump("gavename")
-         return
-      end
-      vn.jump("noname")
+         vn.jump("noname")
+      end )
    end )
    vn.label("specialname")
    sai( function () return tut.specialnames[ string.upper(ainame) ] end )
