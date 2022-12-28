@@ -85,18 +85,19 @@ function landed()
    if spob.cur() == mem.misn_base then
       misn.cargoRm( mem.cargoID )
       local reward_text, log_text
+      mem.reward = player.pilot():cargoFree()
       if mem.misn_bleeding then
-         mem.reward = math.min(1, player.pilot():cargoFree())
          reward_text = _([[Reynir doesn't look happy when you meet him outside the ship.
     "I lost my hearing out there! Damn you!! I made a promise, though, so I'd better keep it. Here's your reward, {tonnes} of hot dogs..."]])
          log_text = _([[You took an old man named Reynir on a ride in outer space, but he was made very angry because the distance you traveled led to him getting injured and losing his hearing. Still, he begrudgingly paid you in the form of {tonnes} of hot dogs.]])
       else
-         mem.reward = player.pilot():cargoFree()
          reward_text = _([["Thank you so much! Here's {tonnes} of hot dogs. They're worth more than their weight in gold, aren't they?"]])
          log_text = _([[You took an old man named Reynir on a ride in outer space. He was happy and paid you in the form of {tonnes} of hot dogs.]])
       end
       tk.msg( _("Reynir"), fmt.f( reward_text, {tonnes=fmt.tonnes(mem.reward)} ) )
-      player.pilot():cargoAdd( "Food", mem.reward )
+      if mem.reward > 0 then
+         player.pilot():cargoAdd( "Food", mem.reward )
+      end
       neu.addMiscLog( fmt.f( log_text, {tonnes=fmt.tonnes(mem.reward)} ) )
       misn.finish(true)
    -- If we're in mem.misn_base_sys but not on mem.misn_base then...
