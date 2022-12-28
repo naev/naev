@@ -1192,7 +1192,7 @@ function vn.Character.new( who, params )
          end
          local iw, ih = img:getDimensions()
          if iw <= 256 or ih <= 256 then
-            img:setFilter("nearest")
+            img:setFilter( "linear", "nearest" )
          end
       elseif pimage._type=="ImageData" then
          img = graphics.newImage( pimage )
