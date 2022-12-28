@@ -1174,8 +1174,10 @@ function vn.Character.new( who, params )
    if pimage ~= nil then
       local img
       if type(pimage)=='string' then
-         local searchpath = { "",
-               "gfx/vn/characters/" }
+         local searchpath = {
+            "",
+            "gfx/vn/characters/",
+         }
          for k,s in ipairs(searchpath) do
             local info = filesystem.getInfo( s..pimage )
             if info ~= nil then
@@ -1187,6 +1189,10 @@ function vn.Character.new( who, params )
          end
          if img == nil then
             error(string.format(_("vn: character image '%s' not found!"),pimage))
+         end
+         local iw, ih = img:getDimensions()
+         if iw <= 256 or ih <= 256 then
+            img:setFilter("nearest")
          end
       elseif pimage._type=="ImageData" then
          img = graphics.newImage( pimage )

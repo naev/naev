@@ -3,6 +3,7 @@
    * FLF combatants only appear on FLF spobs
    * Fixed cases where the player could be forced to take off when not spaceworthy
    * Show engine volume option same as other volume options
+   * Use nearest neighbour interpolation for small resolution vn images
    * diy-nerds: fixed reward and description not matching
    * deliverlove: fixed credit exploit
    * reynir: don't add 0 tonnes of hotdogs
