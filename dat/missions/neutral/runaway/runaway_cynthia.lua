@@ -44,7 +44,7 @@ function accept ()
    vn.clear()
    vn.scene()
    local cynthia = vn.newCharacter( npc_name, {image=npc_image} )
-   vn.trasnition()
+   vn.transition()
 
    cynthia(fmt.f( _([[She looks out of place in the bar. As you approach, she seems to stiffen.
 "H..H..Hi", she stutters. "My name is Cynthia. Could you give me a lift? I really need to get out of here.
