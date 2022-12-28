@@ -1585,6 +1585,7 @@ void sound_speedGroup( int group, int enable )
  */
 void sound_volumeGroup( int group, double volume )
 {
+   double v;
    alGroup_t *g;
 
    if (sound_disabled)
@@ -1596,7 +1597,14 @@ void sound_volumeGroup( int group, double volume )
 
    g->volume = volume;
 
-   al_volumeUpdate();
+   soundLock();
+   v = svolume * g->volume;
+   if (g->speed)
+      v *= svolume_speed;
+   for (int j=0; j<g->nsources; j++)
+      alSourcef( g->sources[j], AL_GAIN, v );
+   al_checkErr();
+   soundUnlock();
 }
 
 /**
