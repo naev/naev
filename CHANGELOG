@@ -4,6 +4,7 @@
    * Fixed cases where the player could be forced to take off when not spaceworthy
    * Show engine volume option same as other volume options
    * Use nearest neighbour interpolation for small resolution vn images
+   * Fix engine sound being played at high time compression values
    * Try to fix issue where music stops playing
    * diy-nerds: fixed reward and description not matching
    * deliverlove: fixed credit exploit
