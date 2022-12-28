@@ -54,7 +54,7 @@ function accept ()
 
    vn.clear()
    vn.scene()
-   local czesc = emp.vn_czesc()
+   local czesc = vn.newCharacter( emp.vn_czesc() )
    vn.transition( emp.czesc.transition )
 
    czesc(_([[You approach the Empire Lieutenant.

@@ -57,7 +57,7 @@ function accept()
 
    vn.clear()
    vn.scene()
-   local arnold = shark.vn_arnold()
+   local arnold = vn.newCharacter( shark.vn_arnold() )
    vn.transition( shark.arnold.transition )
 
    arnold(_([[You approach the man and he introduces himself. "Hello, my name is Arnold Smith; I work for Nexus Shipyards. I'm looking for a talented pilot to make a demonstration to one of our potential customers.]]))
@@ -113,7 +113,7 @@ function land()
    if spob.cur() == mispla and mem.stage == 4 then
       vn.clear()
       vn.scene()
-      local arnold = shark.vn_arnold()
+      local arnold = vn.newCharacter( shark.vn_arnold() )
       vn.transition( shark.arnold.transition )
 
       arnold(_([[As you step on the ground, Arnold Smith greets you. "That was a great demonstration! Thank you. I haven't been able to speak to the Baron about the results yet, but I am confident he will be impressed." He hands you your pay. "I may have another mission for you later. Be sure to check back!"]]))
@@ -172,7 +172,7 @@ function beginbattle()
 
    vn.clear()
    vn.scene()
-   local arnold = shark.vn_arnold()
+   local arnold = vn.newCharacter( shark.vn_arnold() )
    vn.transition( shark.arnold.transition )
 
    arnold(_([["Nice to see you again," he says with a smile. "I hope you are ready to kick that pirate's ass! Please follow me. I will introduce you to my boss, the sales manager of Nexus Shipyards. Oh, and the Baron, too."]]))

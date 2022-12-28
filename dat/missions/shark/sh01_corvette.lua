@@ -56,7 +56,7 @@ function accept()
 
    vn.clear()
    vn.scene()
-   local arnold = shark.vn_arnold()
+   local arnold = vn.newCharacter( shark.vn_arnold() )
    vn.transition( shark.arnold.transition )
 
    arnold(_([["I have another job for you. The Baron was unfortunately not as impressed as we hoped. So we need a better demonstration, and we think we know what to do: we're going to demonstrate that the Lancelot, our higher-end fighter design, is more than capable of defeating Destroyer-class ships.]]))
@@ -112,7 +112,7 @@ function land()
    if mem.stage == 2 and spob.cur() == paypla then
       vn.clear()
       vn.scene()
-      local arnold = shark.vn_arnold()
+      local arnold = vn.newCharacter( shark.vn_arnold() )
       vn.transition( shark.arnold.transition )
       arnold(_([[As you land, you see Arnold Smith waiting for you. He explains that the Baron was so impressed by the battle that he signed an updated contract with Nexus Shipyards, solidifying Nexus as the primary supplier of ships for his fleet. As a reward, they give you twice the sum of credits they promised to you.]]))
       vn.func( function ()

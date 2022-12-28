@@ -47,7 +47,7 @@ function accept()
 
    vn.clear()
    vn.scene()
-   local arnold = shark.vn_arnold()
+   local arnold = vn.newCharacter( shark.vn_arnold() )
    vn.transition( shark.arnold.transition )
 
    arnold(_([["Is your ship ready for the dangers of the Nebula?"]]))
@@ -94,7 +94,7 @@ function land()
    if mem.stage == 1 and spob.cur() == paypla then
       vn.clear()
       vn.scene()
-      local arnold = shark.vn_arnold()
+      local arnold = vn.newCharacter( shark.vn_arnold() )
       vn.transition( shark.arnold.transition )
       arnold(_([[Smith thanks you for the job well done. "Here is your pay," he says. "I will be in the bar if I have another task for you."]]))
       vn.func( function ()

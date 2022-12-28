@@ -52,7 +52,7 @@ function accept()
 
    vn.clear()
    vn.scene()
-   local arnold = shark.vn_arnold()
+   local arnold = vn.newCharacter( shark.vn_arnold() )
    vn.transition( shark.arnold.transition )
 
    arnold(fmt.f(_([["OK, are you ready for the travel to {pnt} in the {sys} system?"]]),
@@ -101,7 +101,7 @@ function land()
    if mem.stage == 0 and spob.cur() == mispla then
       vn.clear()
       vn.scene()
-      local arnold = shark.vn_arnold()
+      local arnold = vn.newCharacter( shark.vn_arnold() )
       vn.transition( shark.arnold.transition )
       arnold(_([[As you land, you see a group of people that were waiting for your ship. Smith hails them and tells you to wait in the ship while he goes to a private part of the bar.]]))
       arnold(_([[A few periods later, he comes back and explains that he wasn't able to improve Nexus sales in the Frontier, but he was able to stop House Sirius from entering the picture, at least.]]))
@@ -116,7 +116,7 @@ function land()
    elseif mem.stage == 1 and spob.cur() == paypla then
       vn.clear()
       vn.scene()
-      local arnold = shark.vn_arnold()
+      local arnold = vn.newCharacter( shark.vn_arnold() )
       vn.transition( shark.arnold.transition )
       arnold(_([[Smith gets out of your ship and looks at you, smiling. "You know, it's like that in our kind of job. Sometimes it works and sometimes it fails. It's not our fault. Anyway, here is your pay."]]))
       vn.func( function ()

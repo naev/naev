@@ -44,7 +44,7 @@ function accept ()
 
    vn.clear()
    vn.scene()
-   local soldner = emp.vn_soldner()
+   local soldner = vn.newCharacter( emp.vn_soldner() )
    vn.transition( emp.soldner.transition )
 
    -- Intro text
@@ -135,7 +135,7 @@ From the cockpit you see the marines lead the prisoners in front of them with gu
 
       vn.clear()
       vn.scene()
-      local soldner = emp.vn_soldner()
+      local soldner = vn.newCharacter( emp.vn_soldner() )
       vn.transition( emp.soldner.transition )
 
       -- Flavour text

@@ -66,7 +66,7 @@ function accept ()
 
    vn.clear()
    vn.scene()
-   local soldner = emp.vn_soldner()
+   local soldner = vn.newCharacter( emp.vn_soldner() )
    vn.transition( emp.soldner.transition )
 
    -- Intro text
@@ -129,7 +129,7 @@ function land ()
 
          vn.clear()
          vn.scene()
-         local soldner = emp.vn_soldner()
+         local soldner = vn.newCharacter( emp.vn_soldner() )
          vn.transition( emp.soldner.transition )
 
          vn.na(_([[You land at the starport. It looks like the VIP has already recovered. He thanks you profusely before heading off. You proceed to pay Commander Soldner a visit. He seems to be happy, for once.]]))

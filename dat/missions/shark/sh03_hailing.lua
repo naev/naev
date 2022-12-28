@@ -49,7 +49,7 @@ function accept()
 
    vn.clear()
    vn.scene()
-   local arnold = shark.vn_arnold()
+   local arnold = vn.newCharacter( shark.vn_arnold() )
    vn.transition( shark.arnold.transition )
 
    arnold(_([["Hello there, nice to meet you again! According to the information that you brought us, the negotiations between the Frontier officials and House Sirius are proceeding very quickly. We have to act now. There is a member of the Frontier Council who, for political reasons, could help us."]]))
@@ -96,7 +96,7 @@ function land()
    if mem.stage == 1 and spob.cur() == paypla then
       vn.clear()
       vn.scene()
-      local arnold = shark.vn_arnold()
+      local arnold = vn.newCharacter( shark.vn_arnold() )
       vn.transition( shark.arnold.transition )
       arnold(fmt.f(_([[Smith seems to relax as you tell him that everything went according to plan. "Fantastic! I have another mission for you; meet me in the bar when you are ready to bring me to {pnt} in the {sys} system."]]),
          {pnt=nextpla, sys=nextsys}))

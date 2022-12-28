@@ -50,7 +50,7 @@ function accept()
 
    vn.clear()
    vn.scene()
-   local arnold = shark.vn_arnold()
+   local arnold = vn.newCharacter( shark.vn_arnold() )
    vn.transition( shark.arnold.transition )
 
    arnold(fmt.f(_([["Hello, {player}! Are you ready to take part in another sales mission?"]]),
@@ -97,7 +97,7 @@ function land()
    if mem.stage == 1 and spob.cur() == paypla then
       vn.clear()
       vn.scene()
-      local arnold = shark.vn_arnold()
+      local arnold = vn.newCharacter( shark.vn_arnold() )
       vn.transition( shark.arnold.transition )
       arnold(fmt.f(_([[Smith is clearly pleased with the results. "I have received word that the FLF leaders are indeed interested. Meet me at the bar whenever you're ready to take me to {sys}. And here's your payment."]]),
          {sys=mem.nextsys}))

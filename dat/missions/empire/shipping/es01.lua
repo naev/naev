@@ -47,7 +47,7 @@ function accept ()
 
    vn.clear()
    vn.scene()
-   local soldner = emp.vn_soldner()
+   local soldner = vn.newCharacter( emp.vn_soldner() )
    vn.transition( emp.soldner.transition )
 
    -- See if accept mission
@@ -142,7 +142,7 @@ function land ()
 
       vn.clear()
       vn.scene()
-      local soldner = emp.vn_soldner()
+      local soldner = vn.newCharacter( emp.vn_soldner() )
       vn.transition( emp.soldner.transition )
 
       -- Flavour text
