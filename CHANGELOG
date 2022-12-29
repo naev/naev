@@ -1,3 +1,6 @@
+* 0.10.2 (unreleased)
+   * taiomi: fixed some claims
+
 * 0.10.1
    * Fixed many stations not marked as stations
    * FLF combatants only appear on FLF spobs
