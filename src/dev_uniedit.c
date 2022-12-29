@@ -1050,7 +1050,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 
       case SDL_MOUSEWHEEL:
          /* Must be in bounds. */
-         if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
+         if ((mx < 0.) || (mx > w-130.) || (my < 60.) || (my > h))
             return 0;
 
          if (event->wheel.y > 0)
@@ -1062,7 +1062,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 
       case SDL_MOUSEBUTTONDOWN:
          /* Must be in bounds. */
-         if ((mx < 60.) || (mx > w) || (my < 0.) || (my > h-130))
+         if ((mx < 0.) || (mx > w-130.) || (my < 60.) || (my > h))
             return 0;
          window_setFocus( wid, "cstSysEdit" );
          lastClick = uniedit_lastClick;
@@ -1075,8 +1075,10 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          my /= uniedit_zoom;
 
          /* Finish rotation. */
-         if (uniedit_mode == UNIEDIT_ROTATE)
+         if (uniedit_mode == UNIEDIT_ROTATE) {
             uniedit_mode = UNIEDIT_DEFAULT;
+            return 1;
+         }
 
          /* Create new system if applicable. */
          if (uniedit_mode == UNIEDIT_NEWSYS) {
