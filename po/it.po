@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-28 00:18+0900\n"
-"PO-Revision-Date: 2022-12-27 15:13+0000\n"
+"PO-Revision-Date: 2022-12-29 02:51+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -1520,35 +1520,35 @@ msgstr "Il disintegratore delle Valchirie sta prosciugando i tuoi scudi!"
 
 #: dat/effects/shieldaura.xml:2
 msgid "Shield Aura"
-msgstr ""
+msgstr "Scudi Aura"
 
 #: dat/effects/shieldaura.xml:3
 msgid "Under the effects of a shield aura."
-msgstr ""
+msgstr "Sotto l'effetto di uno scudo aura."
 
 #: dat/effects/shieldboost.xml:2
 msgid "Shield Boost"
-msgstr ""
+msgstr "Scudi Aumentati"
 
 #: dat/effects/shieldboost.xml:3
 msgid "Shields are being boosted."
-msgstr ""
+msgstr "Gli scudi sono stati aumentati."
 
 #: dat/effects/wormhole_enter.xml:2
 msgid "Wormhole Enter"
-msgstr ""
+msgstr "Ingresso nel Cunicolo Spaziotemporale"
 
 #: dat/effects/wormhole_enter.xml:3
 msgid "Entering a wormhole!"
-msgstr ""
+msgstr "Si sta entrando in un cunicolo spaziotemporale!"
 
 #: dat/effects/wormhole_exit.xml:2
 msgid "Wormhole Exit"
-msgstr ""
+msgstr "Uscita di un Cunicolo Spaziotemporale"
 
 #: dat/effects/wormhole_exit.xml:3
 msgid "Exiting a wormhole!"
-msgstr ""
+msgstr "Si sta uscendo da un cunicolo spaziotemporale!"
 
 #: dat/factions/black_lotus.xml:2
 msgid "Black Lotus"
@@ -1569,13 +1569,15 @@ msgstr ""
 
 #: dat/factions/collective.xml:2
 msgid "Collective"
-msgstr ""
+msgstr "Collettività"
 
 #: dat/factions/collective.xml:9
 msgid ""
 "The Collective are a hivemind of AI ships gone rogue. They seem to attack "
 "and destroy all humans on sight."
 msgstr ""
+"La Collettività è una coscienza collettiva di IA di astronavi che si sono "
+"ribellate. Sembra che attacchino e distruggano tutti gli umani a vista."
 
 #. Don't spawn in restricted space
 #. Don't spawn in Thurion space
@@ -1637,7 +1639,7 @@ msgstr ""
 #: dat/events/taiomi/find.lua:48 dat/events/taiomi/find.lua:60
 #: dat/missions/tutorial/nelly01.lua:330 dat/scripts/common/derelict.lua:19
 msgid "Derelict"
-msgstr ""
+msgstr "Astronave alla Deriva"
 
 #: dat/factions/dreamer_clan.xml:2
 msgid "Dreamer Clan"
@@ -1652,10 +1654,13 @@ msgid ""
 "The Dreamer Pirate Clan consists largely of disgruntled pirates from the "
 "Frontier, fed up with both the FLF and Dvaered terrorism, and Empire tyranny."
 msgstr ""
+"Il Clan dei Pirati Sognatori è composto per la maggior parte da pirati "
+"scontenti della Frontiera, che sono stufi sia del terrorismo perpetrato dal "
+"FLF e dagli Dvaered, che della tirannia imperiale."
 
 #: dat/factions/dummy.xml:2
 msgid "Dummy"
-msgstr ""
+msgstr "Fittizio"
 
 #. Add the Cargo
 #. Ship to go back to
@@ -1678,7 +1683,7 @@ msgstr ""
 #: dat/missions/minerva/kex3.lua:371 dat/scripts/common/dvaered.lua:14
 #: dat/scripts/common/dvaered.lua:19
 msgid "Dvaered"
-msgstr ""
+msgstr "Dvaered"
 
 #: dat/factions/dvaered.xml:7 dat/ships/dvaered/dvaered_ancestor.xml:15
 #: dat/ships/dvaered/dvaered_arsenal.xml:18
@@ -1689,24 +1694,29 @@ msgstr ""
 #: dat/ships/neutral/phalanx.xml:15 dat/ships/neutral/vendetta.xml:15
 #: dat/ships/neutral/vigilance.xml:14
 msgid "House Dvaered"
-msgstr ""
+msgstr "Casata Dvaered"
 
 #: dat/factions/dvaered.xml:12
 msgid ""
 "House Dvaered is one of the oldest Great Houses in the Empire. They are "
 "proud and formed by a coalition of many powerful warlords."
 msgstr ""
+"La Casata Dvaered è una delle Grandi Casate più antiche dell'Impero. È "
+"orgogliosa e composta da una coalizione di molti potenti signori della "
+"guerra."
 
 #: dat/factions/empire.xml:2 dat/scripts/common/empire.lua:15
 #: dat/scripts/common/empire.lua:20
 msgid "Empire"
-msgstr ""
+msgstr "Impero"
 
 #: dat/factions/empire.xml:11
 msgid ""
 "The Empire is the bureaucratic heart of the universe that provides stability "
 "and cohesion, when possible."
 msgstr ""
+"L'Impero è il cuore burocratico dell'universo che fornisce stabilità e "
+"coesione, quando possibile."
 
 #. FLF are not a natural enemy of the Empire, we have to enforce that
 #.
@@ -1724,31 +1734,35 @@ msgstr ""
 #: dat/factions/flf.xml:2 dat/events/flf/flf_catastrophe.lua:96
 #: dat/missions/flf/flf_common.lua:71
 msgid "FLF"
-msgstr ""
+msgstr "FLF"
 
 #: dat/factions/flf.xml:5
 msgid "Frontier Liberation Front"
-msgstr ""
+msgstr "Fronte di Liberazione della Frontiera"
 
 #: dat/factions/flf.xml:11
 msgid ""
 "The Frontier Liberation Front is a group of terrorists advocating for the "
 "independence of the Frontier from Imperial tyranny."
 msgstr ""
+"Il Fronte di Liberazione della Frontiera (FLF) è un gruppo terroristico "
+"sostenente l'indipendenza della Frontiera dalla tirannia imperiale."
 
 #: dat/factions/frontier.xml:2 dat/missions/flf/flf_common.lua:71
 msgid "Frontier"
-msgstr ""
+msgstr "Frontiera"
 
 #: dat/factions/frontier.xml:6
 msgid "Frontier Alliance"
-msgstr ""
+msgstr "Alleanza della Frontiera"
 
 #: dat/factions/frontier.xml:11
 msgid ""
 "The Frontier Alliance is formed by the survivors of the initial attempts of "
 "Human expansion into space."
 msgstr ""
+"L'Alleanza della Frontiera è composta dai sopravvissuti dei tentativi "
+"iniziali di espansione umana nello spazio."
 
 #: dat/factions/goddard.xml:2 dat/ships/neutral/goddard.xml:2
 #: dat/ssys/goddard.xml:2 dat/events/dvaered/fwB_repay.lua:89
@@ -1765,6 +1779,8 @@ msgid ""
 "House Goddard is a minor house wedged between the Empire and Dvaered. They "
 "are one of the main fabricators of ships for the Dvaered."
 msgstr ""
+"La Casata Goddard è una casata minore incuneata tra l'Impero e i Dvaered. "
+"Sono uno dei principali costruttori di astronavi per i Dvaered."
 
 #.
 #. if gauntlet_subtype == newsubtype then
@@ -1778,11 +1794,11 @@ msgstr ""
 #: dat/missions/dvaered/gauntlet/gui.lua:142
 #: dat/missions/taiomi/taiomi10.lua:134
 msgid "Independent"
-msgstr ""
+msgstr "Indipendenza"
 
 #: dat/factions/marauder.xml:2
 msgid "Marauder"
-msgstr ""
+msgstr "Predatore"
 
 #. Returns a lore message for the given faction.
 #. Need presence
@@ -1800,11 +1816,11 @@ msgstr ""
 #: dat/missions/tutorial/nelly02.lua:257 dat/scripts/common/pirate.lua:65
 #: dat/scripts/common/shadow.lua:25
 msgid "Pirate"
-msgstr ""
+msgstr "Pirata"
 
 #: dat/factions/marauder.xml:4
 msgid "Pirate Marauders"
-msgstr ""
+msgstr "Pirati Predatori"
 
 #: dat/factions/marauder.xml:14
 msgid ""
@@ -1812,6 +1828,9 @@ msgid ""
 "aggressive and will attack most vessels unprovoked. Even the pirate clans "
 "have difficulty in dealing with them."
 msgstr ""
+"I Pirati Predatori sono i più infimi e più ignobili tra i pirati. Sono "
+"estremamente aggressivi e attaccheranno, senza nessun motivo, la maggior "
+"parte delle astronavi. Persino i clan dei pirati hanno difficoltà con loro."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -1889,19 +1908,19 @@ msgstr ""
 #: dat/missions/shark/sh02_tapping.lua:286
 #: dat/missions/shark/sh02_tapping.lua:291
 msgid "Mercenary"
-msgstr ""
+msgstr "Mercenario"
 
 #: dat/factions/miner.xml:2
 msgid "Miner"
-msgstr ""
+msgstr "Minatore"
 
 #: dat/factions/nasin.xml:2
 msgid "Nasin"
-msgstr ""
+msgstr "Nasin"
 
 #: dat/factions/pirate.xml:6
 msgid "Galactic Space Pirates"
-msgstr ""
+msgstr "Pirati dello Spazio Galattico"
 
 #: dat/factions/pirate.xml:13
 msgid ""
@@ -1909,6 +1928,10 @@ msgid ""
 "affiliated with any particular clan. Due to their disorganized nature, they "
 "tend to respect the clans they operate near."
 msgstr ""
+"I Pirati dello Spazio Galattico sono un insieme di vascelli pirata "
+"indipendenti che non sono affiliati a nessun clan in particolare. Data la "
+"loro natura disorganizzata, tendono a rispettare i clan che operano nelle "
+"vicinanze."
 
 #: dat/factions/proteron.xml:2 dat/ships/proteron/proteron_archimedes.xml:18
 #: dat/ships/proteron/proteron_dalton.xml:16
@@ -1918,11 +1941,11 @@ msgstr ""
 #: dat/ships/proteron/proteron_pythagoras.xml:17
 #: dat/ships/proteron/proteron_watson.xml:18
 msgid "Proteron"
-msgstr ""
+msgstr "Proteron"
 
 #: dat/factions/proteron.xml:5
 msgid "Fallen House Proteron"
-msgstr ""
+msgstr "Decaduta Casata Proteron"
 
 #: dat/factions/proteron.xml:11
 msgid ""
@@ -1930,6 +1953,9 @@ msgid ""
 "attack the Emperor himself. This caused the Incident and left the universe "
 "irreversibly ravaged."
 msgstr ""
+"La Decaduta Casata Proteron era una Grande Casata Imperiale che decise di "
+"attaccare l'Imperatore. Questo causò l'Incidente e lasciò l'universo "
+"irrimediabilmente devastato."
 
 #: dat/factions/raven_clan.xml:2
 msgid "Raven Clan"
@@ -1944,6 +1970,8 @@ msgid ""
 "The Raven Pirate Clan is a band of pirates that lead over the widespread "
 "Qorel sector between the Empire and Dvaered systems."
 msgstr ""
+"I Pirati del Clan del Corvo sono una banda di pirati che dominano sul vasto "
+"settore Qorel tra i sistemi dell'Impero e quelli dei Dvaered."
 
 #. --
 #. Functions for handling cinematic scenes.
@@ -1971,17 +1999,19 @@ msgstr ""
 #: dat/scripts/common/achack.lua:4 dat/scripts/common/sirius.lua:11
 #: dat/scripts/common/sirius.lua:17
 msgid "Sirius"
-msgstr ""
+msgstr "Sirio"
 
 #: dat/factions/sirius.xml:7 dat/events/dvaered/fwB_repay.lua:72
 msgid "House Sirius"
-msgstr ""
+msgstr "Casata Sirio"
 
 #: dat/factions/sirius.xml:12
 msgid ""
 "House Sirius is defined by its state religion more than anything else, with "
 "Sirichana as the focus of worship."
 msgstr ""
+"La Casata di Sirio è caratterizzata dalla sua religione di stato più di "
+"qualsiasi altra cosa, il centro del culto è situato in Sirichana."
 
 #: dat/factions/soromid.xml:2 dat/ships/feral_bioship/kauweke.xml:23
 #: dat/ships/feral_bioship/nohinohi.xml:16
@@ -1993,7 +2023,7 @@ msgstr ""
 #: dat/ships/soromid/soromid_nyx.xml:14 dat/ships/soromid/soromid_odium.xml:15
 #: dat/ships/soromid/soromid_reaver.xml:13 dat/ships/soromid/soromid_vox.xml:17
 msgid "Soromid"
-msgstr ""
+msgstr "Soromid"
 
 #: dat/factions/soromid.xml:11
 msgid ""
@@ -4114,7 +4144,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_flf.xml:2
 msgid "Map: FLF Hidden Jumps"
-msgstr ""
+msgstr "Salto Spaziale Nascosto dell'FLF"
 
 #: dat/outfits/maps/map_flf.xml:7
 msgid ""
@@ -4851,7 +4881,7 @@ msgstr ""
 
 #: dat/outfits/unique/executor_shield_aura.xml:6
 msgid "Aura"
-msgstr ""
+msgstr "Aura"
 
 #: dat/outfits/unique/executor_shield_aura.xml:11
 msgid ""
