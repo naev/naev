@@ -97,6 +97,7 @@ You just start to marvel at the self-assurance of one so young when she signals 
    mia(fmt.f(_([[As the others scramble to get up from their cramped table and start to gather their belongings, it is again up to Mia to address you:
 "Really? You'll do it? Um, great. Fantastic. I just knew that, eventually, someone desperate would turn up. OK, we're set to go. We better take off immediately and go directly to {pnt}, or we'll be late for the contest!"]]),
       {pnt=mem.destPlanet}))
+   vn.done()
 
    vn.label("nospace")
    mia(fmt.f(_([["Aw, I forgot" she adds. "We would of course need {needed} of free cargo space for our box."
@@ -347,7 +348,7 @@ function nerds_land3()
       vn.label("yes")
       mia(fmt.f(_([["You can wait for it, won't take longer than half a period," Mia informs you. You stand by as the nerds start to mod their box. As they are going about it, you wonder if they're actually wrecking it and you'll maybe be left with a piece of worthless junk.
    Finally, they set the modified box before you. "Here you are. Now you're the proud owner of the system's only home-made core system. It's a bit bulkier than we expected, with all this rigging for energy and coolant supply, but it should work just fine, about equivalent to the {outfit}. We need to go now and think about something more advanced for the next competition. Have a nice day."]]),
-         {outfit=_(reward_outfit)} ))
+         {outfit=reward_outfit} ))
 
       vn.label("cont")
       vn.na(_([[With that, the nerds leave. Having gotten nothing else out of this, you think you should visit an outfitter to see if the homemade core system may actually be of any use, or if you can at least sell it.]]))
