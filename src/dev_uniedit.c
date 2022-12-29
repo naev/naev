@@ -1262,7 +1262,7 @@ char *uniedit_nameFilter( const char *name )
  */
 static void uniedit_renameSys (void)
 {
-   int cancelall_prompt 0;
+   int cancelall_prompt = 0;
    for (int i=0; i<array_size(uniedit_sys); i++) {
       char *name, *oldName, *newName, *filtered;
       StarSystem *sys = uniedit_sys[i];
