@@ -218,7 +218,7 @@ jobs:
           meson setup build source \
               --native-file='source/utils/build/linux_steamruntime.ini' \
               --buildtype=debug \
-              --force-fallback-for=SuiteSparse,sdl2_image \
+              --force-fallback-for=SuiteSparse,sdl2_image,enet \
               -Dprefix="/usr" \
               -Dinstaller=true \
               -Db_lto=true \
