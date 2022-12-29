@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-12-27 01:44+0900\n"
+"POT-Creation-Date: 2022-12-29 17:46+0900\n"
 "PO-Revision-Date: 2022-09-19 19:18+0000\n"
 "Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -42062,7 +42062,7 @@ msgstr ""
 msgid "Time:"
 msgstr ""
 
-#: dat/gui/slim.lua:1103 src/load.c:744
+#: dat/gui/slim.lua:1103 src/load.c:746
 msgid "Credits:"
 msgstr ""
 
@@ -66964,7 +66964,7 @@ msgid "Deliver the recipes to Michal on {pnt} in the {sys} system."
 msgstr "Doručte recepty Michalovi na {pnt} v systému {sys}."
 
 #: dat/missions/neutral/foodbiz/delivercake.lua:55
-#: dat/missions/neutral/foodbiz/deliverlove.lua:72
+#: dat/missions/neutral/foodbiz/deliverlove.lua:73
 msgid "Fly to {pnt} in the {sys} system."
 msgstr "Leťte na {pnt} v systému {sys}."
 
@@ -67026,27 +67026,28 @@ msgstr ""
 msgid "A cargo of feelings inked onto pulped, dried cellulose fibres."
 msgstr ""
 
-#. Can get doubled, must be global!
+#. Can get doubled
 #. No system shall be claimed by mission
-#: dat/missions/neutral/foodbiz/deliverlove.lua:34
+#: dat/missions/neutral/foodbiz/deliverlove.lua:33
 msgid "Old-Fashioned Man"
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:34
+#: dat/missions/neutral/foodbiz/deliverlove.lua:33
 msgid "A man sits in the corner of the bar, writing a letter."
 msgstr ""
 
+#. Can get doubled, must be global!
 #. Introductions and a bit of bargaining
 #. look at you go, double the reward
-#: dat/missions/neutral/foodbiz/deliverlove.lua:41
-#: dat/missions/neutral/foodbiz/deliverlove.lua:45
-#: dat/missions/neutral/foodbiz/deliverlove.lua:47
-#: dat/missions/neutral/foodbiz/deliverlove.lua:52
-#: dat/missions/neutral/foodbiz/deliverlove.lua:56
+#: dat/missions/neutral/foodbiz/deliverlove.lua:42
+#: dat/missions/neutral/foodbiz/deliverlove.lua:46
+#: dat/missions/neutral/foodbiz/deliverlove.lua:48
+#: dat/missions/neutral/foodbiz/deliverlove.lua:53
+#: dat/missions/neutral/foodbiz/deliverlove.lua:57
 msgid "Absence Makes The Heart Grow Fonder"
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:41
+#: dat/missions/neutral/foodbiz/deliverlove.lua:42
 msgid ""
 "You can't help but wonder why the man in the corner is writing on paper "
 "instead of a datapad. As you approach the table he motions you to sit. \"You "
@@ -67057,7 +67058,7 @@ msgid ""
 "\"You wouldn't happen to be heading to {pnt} would you?\" he asks."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:45
+#: dat/missions/neutral/foodbiz/deliverlove.lua:46
 msgid ""
 "\"It is a nice place I hear!\" he exclaims visibly excited. \"Say, I have "
 "written a ton of these letters at this point. You wouldn't be able to drop "
@@ -67066,7 +67067,7 @@ msgid ""
 "hopeful expression. It seems like a low reward for a long journey..."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:47
+#: dat/missions/neutral/foodbiz/deliverlove.lua:48
 msgid ""
 "The man grabs your arm as you begin to get up. \"Alright, how about "
 "{credits}? Look, I wouldn't want The Empire reading these. The Emperor "
@@ -67074,7 +67075,7 @@ msgid ""
 "answering."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:52
+#: dat/missions/neutral/foodbiz/deliverlove.lua:53
 msgid ""
 "You run a check of your cargo hold and notice it is packed to the brim. "
 "\"Did I not mention I wrote a tonne of these letters? You don't have enough "
@@ -67082,24 +67083,24 @@ msgid ""
 "up some space.\" You didn't expect him to have a LITERAL tonne of letters..."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:56
+#: dat/missions/neutral/foodbiz/deliverlove.lua:57
 msgid "\"Ah, are you able to deliver my ton of letters for me now?\""
 msgstr ""
 
 #. Add Mission Cargo and set up the computer
-#: dat/missions/neutral/foodbiz/deliverlove.lua:67
-#: dat/missions/neutral/foodbiz/deliverlove.lua:71
+#: dat/missions/neutral/foodbiz/deliverlove.lua:68
+#: dat/missions/neutral/foodbiz/deliverlove.lua:72
 msgid "Deliver Love"
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:69
+#: dat/missions/neutral/foodbiz/deliverlove.lua:70
 #, fuzzy
 #| msgid "Deliver the shipment to {pnt} in the {sys} system"
 msgid "Deliver love letters to {pnt} in the {sys} system."
 msgstr "Doručení zásilky do {pnt} v systému {sys}"
 
 #. set up hooks
-#: dat/missions/neutral/foodbiz/deliverlove.lua:84
+#: dat/missions/neutral/foodbiz/deliverlove.lua:85
 msgid ""
 "You deliver the letters to a young woman who excitedly takes them and thanks "
 "you profusely. It seems you really made her day. When you check your "
@@ -67108,7 +67109,7 @@ msgid ""
 "you don't think it will be missed."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:86
+#: dat/missions/neutral/foodbiz/deliverlove.lua:87
 msgid ""
 "You delivered a literal tonne of letters for a love-struck, old-fashioned "
 "man."
@@ -70343,8 +70344,8 @@ msgstr ""
 #. If we're in mem.misn_base_sys but not on mem.misn_base then...
 #. If we're in another system then make Reynir bleed out his ears ;)
 #: dat/missions/neutral/reynir.lua:46 dat/missions/neutral/reynir.lua:75
-#: dat/missions/neutral/reynir.lua:77 dat/missions/neutral/reynir.lua:98
-#: dat/missions/neutral/reynir.lua:104 dat/missions/neutral/reynir.lua:108
+#: dat/missions/neutral/reynir.lua:77 dat/missions/neutral/reynir.lua:97
+#: dat/missions/neutral/reynir.lua:105 dat/missions/neutral/reynir.lua:109
 msgid "Reynir"
 msgstr "Reynir"
 
@@ -70370,7 +70371,7 @@ msgstr ""
 
 #. For missions from the Bar only.
 #: dat/missions/neutral/reynir.lua:70 dat/missions/neutral/reynir.lua:76
-#: dat/missions/neutral/reynir.lua:105 dat/missions/neutral/reynir.lua:109
+#: dat/missions/neutral/reynir.lua:106 dat/missions/neutral/reynir.lua:110
 msgid "Rich reward from space!"
 msgstr ""
 
@@ -70412,29 +70413,29 @@ msgid ""
 "of hot dogs."
 msgstr ""
 
-#: dat/missions/neutral/reynir.lua:95
+#: dat/missions/neutral/reynir.lua:94
 msgid ""
 "\"Thank you so much! Here's {tonnes} of hot dogs. They're worth more than "
 "their weight in gold, aren't they?\""
 msgstr ""
 
-#: dat/missions/neutral/reynir.lua:96
+#: dat/missions/neutral/reynir.lua:95
 msgid ""
 "You took an old man named Reynir on a ride in outer space. He was happy and "
 "paid you in the form of {tonnes} of hot dogs."
 msgstr ""
 
-#: dat/missions/neutral/reynir.lua:104
+#: dat/missions/neutral/reynir.lua:105
 msgid ""
 "Reynir walks out of the ship, amazed by the view. \"So this is how {pnt_cur} "
 "looks like! I've always wondered... I want to go back to {pnt} now, please.\""
 msgstr ""
 
-#: dat/missions/neutral/reynir.lua:105 dat/missions/neutral/reynir.lua:109
+#: dat/missions/neutral/reynir.lua:106 dat/missions/neutral/reynir.lua:110
 msgid "Take Reynir home to {pnt}"
 msgstr "Vezměte Reynira domů na {pnt}"
 
-#: dat/missions/neutral/reynir.lua:108
+#: dat/missions/neutral/reynir.lua:109
 msgid ""
 "Reynir walks out of the ship. You notice that he's bleeding out of both "
 "ears. \"Where have you taken me?! Get me back to {pnt} right now!!\""
@@ -98005,7 +98006,7 @@ msgstr ""
 #. @tparam tab params Parameter table.
 #. @treturn Character New character.
 #. --
-#: dat/scripts/vn/core.lua:1189
+#: dat/scripts/vn/core.lua:1191
 #, lua-format
 msgid "vn: character image '%s' not found!"
 msgstr ""
@@ -98168,12 +98169,12 @@ msgstr ""
 #.
 #. @tparam func updatefunc Update function to run every frame.
 #. --
-#: dat/scripts/vn/core.lua:1642
+#: dat/scripts/vn/core.lua:1648
 #, lua-format
 msgid "vn: unable to find label '%s'"
 msgstr ""
 
-#: dat/scripts/vn/core.lua:1652
+#: dat/scripts/vn/core.lua:1658
 #, lua-format
 msgid "vn: character '%s' not found!"
 msgstr ""
@@ -98189,7 +98190,7 @@ msgstr ""
 #. <em>Note</em> You have to set up the states first.
 #. <em>Note</em> This function doesn't return until the VN is done running.
 #. --
-#: dat/scripts/vn/core.lua:1686
+#: dat/scripts/vn/core.lua:1692
 msgid "vn: run without any states"
 msgstr ""
 
@@ -101198,7 +101199,7 @@ msgstr ""
 #. Update text.
 #. Text.
 #: src/dev_sysedit.c:1359 src/dev_uniedit.c:1774 src/dev_uniedit.c:2058
-#: src/equipment.c:1761 src/info.c:572 src/load.c:729
+#: src/equipment.c:1761 src/info.c:572 src/load.c:731
 msgid "Name:"
 msgstr ""
 
@@ -102787,7 +102788,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: src/info.c:384 src/load.c:738
+#: src/info.c:384 src/load.c:740
 msgid "Date:"
 msgstr ""
 
@@ -104336,56 +104337,56 @@ msgstr ""
 msgid "You already have a snapshot named '%s'. Overwrite?"
 msgstr ""
 
-#: src/load.c:680
+#: src/load.c:681
 msgid ""
 "Failed to save the game! You should exit and check the log to see what "
 "happened and then file a bug report!"
 msgstr ""
 
-#: src/load.c:722
+#: src/load.c:724
 #, c-format
 msgid "%s (options)"
 msgstr ""
 
-#: src/load.c:725
+#: src/load.c:727
 #, c-format
 msgid "%s (this save)"
 msgstr ""
 
-#: src/load.c:731
+#: src/load.c:733
 msgid "Version:"
 msgstr ""
 
-#: src/load.c:736
+#: src/load.c:738
 msgid "Difficulty:"
 msgstr ""
 
-#: src/load.c:740
+#: src/load.c:742
 msgid "Chapter:"
 msgstr ""
 
-#: src/load.c:742
+#: src/load.c:744
 msgid "Spob:"
 msgstr ""
 
-#: src/load.c:746
+#: src/load.c:748
 msgid "Ship Name:"
 msgstr ""
 
-#: src/load.c:748
+#: src/load.c:750
 msgid "Ship Model:"
 msgstr "Model lodi:"
 
-#: src/load.c:790 src/load.c:946
+#: src/load.c:792 src/load.c:948
 #, c-format
 msgid "Unable to delete %s"
 msgstr ""
 
-#: src/load.c:938 src/load.c:975
+#: src/load.c:940 src/load.c:977
 msgid "Permanently Delete?"
 msgstr "Navždy smazat?"
 
-#: src/load.c:939
+#: src/load.c:941
 #, fuzzy, c-format
 #| msgid "Are you sure you want to permanently delete '%s'?"
 msgid ""
@@ -104393,12 +104394,12 @@ msgid ""
 "#rThis is an undoable action!#0"
 msgstr "Opravdu chcete navždy smazat '%s'?"
 
-#: src/load.c:949
+#: src/load.c:951
 #, c-format
 msgid "Unable to delete '%s' directory"
 msgstr ""
 
-#: src/load.c:976
+#: src/load.c:978
 #, fuzzy, c-format
 #| msgid "Are you sure you want to permanently delete '%s'?"
 msgid ""
@@ -104406,22 +104407,22 @@ msgid ""
 "#rThis is an undoable action!#0"
 msgstr "Opravdu chcete navždy smazat '%s'?"
 
-#: src/load.c:1048 src/load.c:1110
+#: src/load.c:1050 src/load.c:1112
 msgid "Saved game file seems to have been deleted."
 msgstr "Tato uložená hra je nejspíš smazaná."
 
-#: src/load.c:1071 src/load.c:1229
+#: src/load.c:1073 src/load.c:1231
 #, c-format
 msgid "Saved game '%s' invalid!"
 msgstr "Chyba v uložené hře '%s'!"
 
 #. Welcome message - must be before space_init.
-#: src/load.c:1164 src/player.c:319
+#: src/load.c:1166 src/player.c:319
 #, c-format
 msgid "#gWelcome to %s!"
 msgstr "#gVítejte v %s!"
 
-#: src/load.c:1177
+#: src/load.c:1179
 msgid "Old version detected. Sanitizing ships for slots"
 msgstr "Zjištěna stará verze. Sanitace lodí pro sloty"
 
@@ -108113,7 +108114,6 @@ msgstr ""
 
 #. String is empty so no errors encountered
 #: src/pilot_outfit.c:589
-#, c-format
 msgid "Spaceworthy"
 msgstr ""
 
@@ -109455,88 +109455,88 @@ msgstr[2] ""
 msgid "Group '%d' has no free sounds."
 msgstr ""
 
-#: src/sound.c:1479 src/sound.c:1861
+#: src/sound.c:1479 src/sound.c:1865
 #, c-format
 msgid "Group '%d' not found."
 msgstr ""
 
-#: src/sound.c:1884
+#: src/sound.c:1888
 #, c-format
 msgid "SDL_LoadWav_RW failed: %s"
 msgstr ""
 
-#: src/sound.c:1900
+#: src/sound.c:1904
 msgid "Big endian WAVs unsupported!"
 msgstr ""
 
-#: src/sound.c:1903
+#: src/sound.c:1907
 msgid "Invalid WAV format!"
 msgstr ""
 
-#: src/sound.c:1927
+#: src/sound.c:1931
 msgid "A read from media returned an error."
 msgstr ""
 
-#: src/sound.c:1928
+#: src/sound.c:1932
 msgid "Internal logic fault; indicates a bug or heap/stack corruption."
 msgstr ""
 
-#: src/sound.c:1929
+#: src/sound.c:1933
 msgid "Feature not implemented."
 msgstr ""
 
-#: src/sound.c:1930
+#: src/sound.c:1934
 msgid ""
 "Either an invalid argument, or incompletely initialized argument passed to "
 "libvorbisfile call"
 msgstr ""
 
-#: src/sound.c:1931
+#: src/sound.c:1935
 msgid "Bitstream is not Vorbis data."
 msgstr ""
 
-#: src/sound.c:1932
+#: src/sound.c:1936
 msgid "Invalid Vorbis bitstream header."
 msgstr ""
 
-#: src/sound.c:1933
+#: src/sound.c:1937
 msgid "Vorbis version mismatch."
 msgstr ""
 
-#: src/sound.c:1934
+#: src/sound.c:1938
 msgid ""
 "The given link exists in the Vorbis data stream, but is not decipherable due "
 "to garbage or corruption."
 msgstr ""
 
-#: src/sound.c:1935
+#: src/sound.c:1939
 msgid "The given stream is not seekable."
 msgstr ""
 
-#: src/sound.c:1937
+#: src/sound.c:1941
 msgid "Unknown vorbisfile error."
 msgstr ""
 
-#: src/sound.c:1961
+#: src/sound.c:1965
 #, c-format
 msgid "Failed to finish loading Ogg file: %s"
 msgstr ""
 
-#: src/sound.c:1980
+#: src/sound.c:1984
 msgid "Error reading from OGG file!"
 msgstr ""
 
-#: src/sound.c:2028 src/sound.c:2054
+#: src/sound.c:2032 src/sound.c:2058
 #, c-format
 msgid "Failed to load sound file '%s'."
 msgstr ""
 
-#: src/sound.c:2066
+#: src/sound.c:2070
 #, c-format
 msgid "Something went wrong when loading sound file '%s'."
 msgstr ""
 
-#: src/sound.c:2139
+#: src/sound.c:2143
 #, c-format
 msgid ""
 "Sound '%s' has %d channels but is being played as positional. It should be "
