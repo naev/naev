@@ -10,6 +10,7 @@
    * Use nearest neighbour interpolation for small resolution vn images
    * Fix engine sound being played at high time compression values
    * Try to fix issue where music stops playing
+   * Statically link libenet on steam versions
    * diy-nerds: fixed reward and description not matching
    * deliverlove: fixed credit exploit
    * reynir: don't add 0 tonnes of hotdogs
