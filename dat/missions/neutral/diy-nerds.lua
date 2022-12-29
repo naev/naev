@@ -104,9 +104,9 @@ You just start to marvel at the self-assurance of one so young when she signals 
       {space=fmt.tonnes(4-player.pilot():cargoFree())}))
    vn.done()
 
-   if not accepted then
-      return
-   end
+   vn.run()
+
+   if not accepted then return end
 
    misn.accept()
    misn.setTitle( _("DIY Nerds") )
