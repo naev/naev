@@ -1270,8 +1270,13 @@ static void uniedit_renameSys (void)
       name = dialogue_input( _("Rename Star System"), 1, 32, _("What do you want to rename #r%s#0?"), sys->name );
 
       /* Keep current name. */
-      if (name == NULL)
+      if (name == NULL) {
+         if (i < array_size(uniedit_sys)) {
+            if (dialogue_YesNoRaw( _("Cancel batch renaming?"), _("Do you want to cancel renaming all selected star systems?")))
+               break;
+         }
          continue;
+      }
 
       /* Try again. */
       if (uniedit_checkName( name )) {
