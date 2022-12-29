@@ -6,6 +6,9 @@
  <chance>5</chance>
  <location>Bar</location>
  <cond>
+   if spob.cur():tags().station then
+      return false
+   end
    local count = 0
    for i, p in ipairs(system.cur():spobs()) do
       if p:services()["inhabited"] then
@@ -86,6 +89,7 @@ function accept ()
    vn.label("2accept")
    reynir(fmt.f(_([["Thank you so much! Just fly me around in the system, preferably near {pnt}."]]),
       {pnt=mem.misn_base}))
+   vn.func( function () accepted = true end )
    vn.run()
 
    if not accepted then return end
@@ -96,7 +100,9 @@ function accept ()
    misn.setDesc( _("Reynir wants to travel to space and will reward you richly.") )
    hook.land( "landed" )
 
-   misn.osdCreate(_("Rich reward from space!"), {fmt.f(_("Fly around in the system, preferably near {pnt}"), {pnt=mem.misn_base})})
+   misn.osdCreate( _("Rich reward from space!"), {
+      fmt.f(_("Fly around in the system, preferably near {pnt}"), {pnt=mem.misn_base}),
+   })
    local c = commodity.new( N_("Reynir"), N_("A old man who wants to see space.") )
    mem.cargoID = misn.cargoAdd( c, 0 )
 end
