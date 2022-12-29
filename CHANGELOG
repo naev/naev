@@ -2,7 +2,7 @@
    * Moved many missions to the vn system
    * diy-nerds: improved reward
 
-* 0.10.1 (unreleased)
+* 0.10.1
    * Fixed many stations not marked as stations
    * FLF combatants only appear on FLF spobs
    * Fixed cases where the player could be forced to take off when not spaceworthy
