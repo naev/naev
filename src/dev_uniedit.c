@@ -1262,6 +1262,7 @@ char *uniedit_nameFilter( const char *name )
  */
 static void uniedit_renameSys (void)
 {
+   int cancelall_prompt 0;
    for (int i=0; i<array_size(uniedit_sys); i++) {
       char *name, *oldName, *newName, *filtered;
       StarSystem *sys = uniedit_sys[i];
@@ -1271,9 +1272,10 @@ static void uniedit_renameSys (void)
 
       /* Keep current name. */
       if (name == NULL) {
-         if (i < array_size(uniedit_sys)) {
+         if (!cancelall_prompt && (i < array_size(uniedit_sys))) {
             if (dialogue_YesNoRaw( _("Cancel batch renaming?"), _("Do you want to cancel renaming all selected star systems?")))
                break;
+            cancelall_prompt = 1;
          }
          continue;
       }
