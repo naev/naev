@@ -1,12 +1,10 @@
-# Introduction
-
-Welcome to the Naev development manual! This manual is meant to cover all aspects of Naev development. It is currently a work in progress. The source code for the manual can be found on the [naev github](https://github.com/naev/naev/tree/main/docs/manual) with pull requests and issues being welcome.
+# Introduction to the Naev Engine
 
 While this document does cover the Naev engine in general, many sections refer to customs and properties specific to the **Sea of Darkness** default Naev universe. These are marked with \naev.
 
 ## Getting Started
 
-This document assumes you have access to the Naev data. This can be either from downloading the game directly from a distribution platform, or getting directly the [naev source code](https://github.com/naev/naev). Either way it is possible to modify the game data and change many aspects of the game. It is also possible to create plugins that add or replace content from the game without touching the core data to be compatible with updates.
+Th Naev engine explanations assume you have access to the Naev data. This can be either from downloading the game directly from a distribution platform, or getting directly the [naev source code](https://github.com/naev/naev). Either way it is possible to modify the game data and change many aspects of the game. It is also possible to create plugins that add or replace content from the game without touching the core data to be compatible with updates.
 
 | Operating System | Data Location |
 | --- | --- |
