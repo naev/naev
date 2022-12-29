@@ -1,4 +1,5 @@
 # Plugin Framework
+\label{chapter:plugins}
 
 Plugins are user-made collections of files that can add or change content from Naev. They can be seen as a set of files that can overwrite core Naev files and add new content such as missions, outfits, ships, etc. They are implemented with [PHYSFS](https://icculus.org/physfs/) that allows treating the plugins and Naev data as a single "combined" virtual filesystems. Effectively, Naev will see plugin files as part of core data files, and use them appropriately.
 

@@ -31,8 +31,11 @@ Plugins are found at the following locations by default, and are automatically l
 Note that plugins can use either a directory structure or be compressed as zip files (while still having the appropriate directory structure). For example, it is possible to add a single mission by creating a plugin with the follow structure:
 
 ```
+plugin.xml
 missions/
    my_mission.xml
 ```
 
-This will cause `my_mission.xml` to be loaded as an extra mission.
+This will cause `my_mission.xml` to be loaded as an extra mission. `plugin.xml` is a plugin-specific file which would contain information on plugin name, authors, version, description, compatibility, and so on.
+
+Plugins are described in detail in Chapter \ref{chapter:plugins}.
