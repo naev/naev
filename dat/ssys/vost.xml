@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-573.390026" y="-686.373725"/>
+ <pos x="-290.295626" y="-786.492125"/>
  <spobs>
   <spob>Andors</spob>
   <spob>Andors Refining</spob>
@@ -21,11 +21,11 @@
   </jump>
   <jump target="Poltergeist">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Procyon">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

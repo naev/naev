@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-455.164644" y="-762.660637"/>
+ <pos x="-114.556911" y="-825.319037"/>
  <spobs>
   <spob>Fae</spob>
   <spob>Oberon</spob>
@@ -14,10 +14,6 @@
   <spob>Unseelie</spob>
  </spobs>
  <jumps>
-  <jump target="Astana">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
   <jump target="Hargen">
    <autopos/>
    <hide>1.000000</hide>

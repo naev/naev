@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-442.043575" y="-977.423108"/>
+ <pos x="108.053761" y="-953.188570"/>
  <spobs>
   <spob>Tomas I-1</spob>
   <spob>Tomas J-1</spob>
@@ -15,6 +15,10 @@
  </spobs>
  <jumps>
   <jump target="Garten">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Ruadan">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

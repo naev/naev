@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="682.000000" y="-337.000000"/>
+ <pos x="866.485062" y="-358.156413"/>
  <spobs>
   <spob>Alleyway</spob>
   <spob>Brimstone I</spob>
@@ -24,6 +24,10 @@
    <hide>1.000000</hide>
   </jump>
   <jump target="Aneel Azi">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Gilligan's Light">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

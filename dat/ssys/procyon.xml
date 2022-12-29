@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-673.352707" y="-668.887175"/>
+ <pos x="-313.439107" y="-710.656775"/>
  <spobs>
   <spob>Excelcior</spob>
   <spob>Procyon Shipyards</spob>
@@ -31,7 +31,7 @@
   </jump>
   <jump target="Vost">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

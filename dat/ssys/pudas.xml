@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-29.000000" y="-767.000000"/>
+ <pos x="113.343040" y="-746.864960"/>
  <spobs>
   <spob>Ambre</spob>
   <spob>Pudas I</spob>
@@ -16,11 +16,6 @@
  <jumps>
   <jump target="Daravon">
    <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Zied">
-   <autopos/>
-   <exitonly/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

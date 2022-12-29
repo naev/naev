@@ -9,7 +9,7 @@
   <interference>20.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-198.870017" y="-906.945482"/>
+ <pos x="256.715788" y="-826.463777"/>
  <spobs/>
  <jumps>
   <jump target="Gold">
@@ -22,11 +22,6 @@
   </jump>
   <jump target="Xavier">
    <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Zied">
-   <autopos/>
-   <exitonly/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

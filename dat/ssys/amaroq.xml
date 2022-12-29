@@ -6,7 +6,7 @@
   <interference>2.439024</interference>
   <nebula volatility="0.000000" hue="290.000000">50.000000</nebula>
  </general>
- <pos x="-1.634259" y="-986.932870"/>
+ <pos x="572.728586" y="-1089.873001"/>
  <spobs>
   <spob>Amaroq I</spob>
   <spob>Amaroq III</spob>
@@ -25,11 +25,6 @@
   </jump>
   <jump target="PSO">
    <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Zied">
-   <autopos/>
-   <exitonly/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

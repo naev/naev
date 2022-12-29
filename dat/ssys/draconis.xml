@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="202.250000" y="59.222222"/>
+ <pos x="109.896080" y="200.033102"/>
  <spobs>
   <spob>Draconis Alpha</spob>
   <spob>Draconis Beta</spob>
@@ -26,10 +26,6 @@
   <jump target="Pilatis">
    <autopos/>
    <hide>0.000000</hide>
-  </jump>
-  <jump target="Surano">
-   <autopos/>
-   <hide>1.000000</hide>
   </jump>
   <jump target="Tau Prime">
    <autopos/>

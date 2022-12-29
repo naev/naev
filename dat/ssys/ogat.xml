@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="150.000000" y="-250.000000"/>
+ <pos x="468.512640" y="-498.486720"/>
  <spobs>
   <spob>Fernando Station</spob>
   <spob>Gamma</spob>
@@ -16,15 +16,11 @@
  <jumps>
   <jump target="Doranthex">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Draygar">
    <autopos/>
-   <hide>0.000000</hide>
-  </jump>
-  <jump target="Goddard">
-   <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Vlexon">
    <autopos/>

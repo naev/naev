@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="523.000000" y="-326.000000"/>
+ <pos x="805.200997" y="-423.064224"/>
  <spobs>
   <spob>Dawn</spob>
   <spob>Dusk</spob>
@@ -16,6 +16,10 @@
   <spob_virtual>Miner Local</spob_virtual>
  </spobs>
  <jumps>
+  <jump target="Brimstone">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Ingot">
    <autopos/>
    <hidden/>

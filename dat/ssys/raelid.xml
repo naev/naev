@@ -6,7 +6,7 @@
   <interference>5.882353</interference>
   <nebula volatility="0.000000" hue="240.000000">100.000000</nebula>
  </general>
- <pos x="269.000000" y="-137.000000"/>
+ <pos x="498.486080" y="-357.389120"/>
  <spobs>
   <spob>Marius Station</spob>
   <spob>Raelid II</spob>
@@ -24,10 +24,6 @@
    <hide>1.000000</hide>
   </jump>
   <jump target="Surano">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Tau Prime">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

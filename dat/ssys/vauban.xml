@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-660.865335" y="-1019.302738"/>
+ <pos x="-122.321450" y="-1080.033642"/>
  <spobs>
   <spob>Amhurst</spob>
   <spob>HZNSS-3</spob>
@@ -19,10 +19,6 @@
    <hide>1.000000</hide>
   </jump>
   <jump target="Newmarch">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Ruadan">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

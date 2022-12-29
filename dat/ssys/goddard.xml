@@ -7,7 +7,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="39.000000" y="-183.000000"/>
+ <pos x="134.782446" y="84.780779"/>
  <spobs>
   <spob>Geron</spob>
   <spob>Goddard III</spob>
@@ -26,7 +26,7 @@
    <pos x="-17204.057496" y="16139.359158"/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Ogat">
+  <jump target="Tau Prime">
    <autopos/>
    <hide>0.000000</hide>
   </jump>
