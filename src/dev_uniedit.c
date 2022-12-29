@@ -58,6 +58,8 @@ typedef enum UniEditMode_ {
    UNIEDIT_DEFAULT,  /**< Default editor mode. */
    UNIEDIT_JUMP,     /**< Jump point toggle mode. */
    UNIEDIT_NEWSYS,   /**< New system editor mode. */
+   UNIEDIT_ROTATE,   /**< Rotation mode. */
+
 } UniEditMode;
 
 typedef enum UniEditViewMode_ {
@@ -89,6 +91,9 @@ static int uniedit_dragSys    = 0;  /**< Dragging system around. */
 static int uniedit_dragSel    = 0;  /**< Dragging selection box. */
 static double uniedit_dragSelX= 0;  /**< Dragging selection initial X position */
 static double uniedit_dragSelY= 0;  /**< Dragging selection initial Y position */
+static double uniedit_rotate  = 0.; /**< Rotated angle (in radians). */
+static double uniedit_rotate_cx = 0.; /**< Center position of rotation. */
+static double uniedit_rotate_cy = 0.; /**< Center position of rotation. */
 static StarSystem **uniedit_sys = NULL; /**< Selected systems. */
 static StarSystem *uniedit_tsys = NULL; /**< Temporarily clicked system. */
 static int uniedit_tadd       = 0;  /**< Temporarily clicked system should be added. */
@@ -224,8 +229,8 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
    buttonPos++;
 
    /* Rename system. */
-   window_addButtonKey( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnRename", _("Rename"), uniedit_btnRename, SDLK_r );
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnRename", _("Rename"), uniedit_btnRename );
    buttonPos++;
 
    /* Edit system. */
@@ -279,11 +284,27 @@ static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) wid;
    (void) mod;
+   int n;
 
    switch (key) {
       /* Mode changes. */
       case SDLK_ESCAPE:
          uniedit_mode = UNIEDIT_DEFAULT;
+         return 1;
+
+      case SDLK_r:
+         n = array_size(uniedit_sys);
+         if (n > 1) {
+            uniedit_mode = UNIEDIT_ROTATE;
+            uniedit_rotate = 0.; /* Initialize rotation. */
+            uniedit_rotate_cx = uniedit_rotate_cy = 0.;
+            for (int i=0; i<n; i++) {
+               uniedit_rotate_cx += uniedit_sys[i]->pos.x;
+               uniedit_rotate_cy += uniedit_sys[i]->pos.y;
+            }
+            uniedit_rotate_cx /= (double) n;
+            uniedit_rotate_cy /= (double) n;
+         }
          return 1;
 
       default:
@@ -1053,6 +1074,10 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          mx /= uniedit_zoom;
          my /= uniedit_zoom;
 
+         /* Finish rotation. */
+         if (uniedit_mode == UNIEDIT_ROTATE)
+            uniedit_mode = UNIEDIT_DEFAULT;
+
          /* Create new system if applicable. */
          if (uniedit_mode == UNIEDIT_NEWSYS) {
             uniedit_newSys( mx, my );
@@ -1194,8 +1219,34 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 
       case SDL_MOUSEMOTION:
          /* Update mouse positions. */
-         uniedit_mx  = mx;
-         uniedit_my  = my;
+         uniedit_mx = mx;
+         uniedit_my = my;
+
+         /* Handle rotation. */
+         if (uniedit_mode == UNIEDIT_ROTATE) {
+            double a1, a2, amod;
+            double cx = mx - w/2. + uniedit_xpos;
+            double cy = my - h/2. + uniedit_ypos;
+            cx /= uniedit_zoom;
+            cy /= uniedit_zoom;
+            cx -= uniedit_rotate_cx;
+            cy -= uniedit_rotate_cy;
+            a1 = atan2( cy, cx );
+            cx -= rx / uniedit_zoom;
+            cy += ry / uniedit_zoom;
+            a2 = atan2( cy, cx );
+            amod = a1-a2;
+            uniedit_rotate += amod;
+            for (int i=0; i<array_size(uniedit_sys); i++) {
+               StarSystem *s = uniedit_sys[i];
+               double sx = s->pos.x - uniedit_rotate_cx;
+               double sy = s->pos.y - uniedit_rotate_cy;
+               double a = atan2( sy, sx );
+               double m = hypot( sx, sy );
+               s->pos.x = uniedit_rotate_cx + m*cos(a+amod);
+               s->pos.y = uniedit_rotate_cy + m*sin(a+amod);
+            }
+         }
 
          /* Handle dragging. */
          if (uniedit_drag) {
