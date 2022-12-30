@@ -258,11 +258,11 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
    window_addButton( wid, 80, 20, 30, 30, "btnZoomOut", "-", uniedit_buttonZoom );
 
    /* Nebula. */
-   window_addText( wid, -10, -20, 110, 60, 0, "txtNebula",
+   window_addText( wid, -10, -20, 110, 200, 0, "txtNebula",
          &gl_smallFont, NULL, _("N/A") );
 
    /* Presence. */
-   window_addText( wid, -10, -80-gl_smallFont.h-5, 110, 140, 0, "txtPresence",
+   window_addText( wid, -10, -80-gl_smallFont.h-5, 110, 200, 0, "txtPresence",
          &gl_smallFont, NULL, _("N/A") );
 
    /* Selected text. */
