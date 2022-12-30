@@ -279,7 +279,6 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
 static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) wid;
-   (void) mod;
    int n;
 
    switch (key) {
@@ -287,6 +286,15 @@ static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
       case SDLK_ESCAPE:
          uniedit_mode = UNIEDIT_DEFAULT;
          return 1;
+
+      case SDLK_a:
+         if (mod & (KMOD_LCTRL | KMOD_RCTRL)) {
+            uniedit_deselect();
+            for (int i=0; i<array_size(systems_stack); i++)
+               uniedit_selectAdd( &systems_stack[i] );
+            return 1;
+         }
+         return 0;
 
       case SDLK_r:
          n = array_size(uniedit_sys);
@@ -1565,7 +1573,7 @@ void uniedit_selectText (void)
       if (array_size(uniedit_sys) == 1) {
          StarSystem *sys = uniedit_sys[0];
 
-         buf[0] = "\0";
+         buf[0] = '\0';
          l = 0;
          if (sys->nebu_density > 0.)
             l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f Density\n%.1f Volatility\n%.0f Hue"), sys->nebu_density, sys->nebu_volatility, sys->nebu_hue*360.);
