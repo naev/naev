@@ -982,7 +982,7 @@ char* spob_getSystem( const char* spobname )
    for (int i=0; i<array_size(spobname_stack); i++)
       if (strcmp(spobname_stack[i],spobname)==0)
          return systemname_stack[i];
-   LOG(_("Spob '%s' is not placed in a system"), spobname);
+   DEBUG(_("Spob '%s' is not placed in a system"), spobname);
    return NULL;
 }
 

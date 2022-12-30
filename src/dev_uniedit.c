@@ -258,15 +258,11 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
    window_addButton( wid, 80, 20, 30, 30, "btnZoomOut", "-", uniedit_buttonZoom );
 
    /* Nebula. */
-   window_addText( wid, -20, -40, 100, 20, 0, "txtSNebula",
-         &gl_smallFont, &cFontGrey, _("Nebula:") );
-   window_addText( wid, -10, -40-gl_smallFont.h-5, 110, 60, 0, "txtNebula",
+   window_addText( wid, -10, -20, 110, 60, 0, "txtNebula",
          &gl_smallFont, NULL, _("N/A") );
 
    /* Presence. */
-   window_addText( wid, -20, -100, 100, 20, 0, "txtSPresence",
-         &gl_smallFont, &cFontGrey, _("Presence:") );
-   window_addText( wid, -10, -100-gl_smallFont.h-5, 110, 140, 0, "txtPresence",
+   window_addText( wid, -10, -80-gl_smallFont.h-5, 110, 140, 0, "txtPresence",
          &gl_smallFont, NULL, _("N/A") );
 
    /* Selected text. */
@@ -1559,6 +1555,7 @@ void uniedit_selectText (void)
       l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", uniedit_sys[i]->name,
             (i == array_size(uniedit_sys)-1) ? "" : ", " );
    }
+
    if (l == 0)
       uniedit_deselect();
    else {
@@ -1567,19 +1564,26 @@ void uniedit_selectText (void)
       /* Presence text. */
       if (array_size(uniedit_sys) == 1) {
          StarSystem *sys = uniedit_sys[0];
-         map_updateFactionPresence( uniedit_wid, "txtPresence", sys, 1 );
 
-         if (sys->nebu_density<=0.)
-            snprintf( buf, sizeof(buf), _("None") );
-         else
-            snprintf( buf, sizeof(buf), _("%.0f Density\n%.1f Volatility"), sys->nebu_density, sys->nebu_volatility);
+         buf[0] = "\0";
+         l = 0;
+         if (sys->nebu_density > 0.)
+            l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f Density\n%.1f Volatility\n%.0f Hue"), sys->nebu_density, sys->nebu_volatility, sys->nebu_hue*360.);
+         if (sys->interference > 0.)
+            l += scnprintf( &buf[l], sizeof(buf)-l, _("%s%.1f Interference"), (l>0)?"\n":"", sys->interference);
+
          window_modifyText( uniedit_wid, "txtNebula", buf );
+
+         /* Update presence stuff. */
+         map_updateFactionPresence( uniedit_wid, "txtPresence", sys, 1 );
       }
       else {
          window_modifyText( uniedit_wid, "txtNebula", _("Multiple selected") );
          window_modifyText( uniedit_wid, "txtPresence", _("Multiple selected") );
       }
    }
+
+   window_moveWidget( uniedit_wid, "txtPresence", -10, -40-window_getTextHeight( uniedit_wid, "txtNebula" ) );
 }
 
 /**
