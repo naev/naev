@@ -2,7 +2,7 @@
 <spob name="Efferey">
  <pos x="1341.000000" y="967.000000"/>
  <GFX>
-  <space>000.webp</space>
+  <space>station-ring1.webp</space>
   <exterior>station00.webp</exterior>
  </GFX>
  <presence>

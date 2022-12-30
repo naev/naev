@@ -2,13 +2,13 @@
 <spob name="Ruadan Station">
  <pos x="-8313.446778" y="-6385.162765"/>
  <GFX>
-  <space>000.webp</space>
+  <space>002.webp</space>
   <exterior>station00.webp</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>6.666667</base>
-  <bonus>3.333333</bonus>
+  <base>6.666670</base>
+  <bonus>3.333330</bonus>
   <range>0</range>
  </presence>
  <general>

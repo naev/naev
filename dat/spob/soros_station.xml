@@ -2,13 +2,13 @@
 <spob name="Soros Station">
  <pos x="-11638.001887" y="-5124.991657"/>
  <GFX>
-  <space>000.webp</space>
+  <space>station-shipyard3.webp</space>
   <exterior>station00.webp</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>33.333333</base>
-  <bonus>16.666667</bonus>
+  <base>33.333300</base>
+  <bonus>16.666700</bonus>
   <range>2</range>
  </presence>
  <general>
