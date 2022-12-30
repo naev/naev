@@ -6,29 +6,11 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-216.118363" y="-793.828136"/>
+ <pos x="166.100561" y="-470.330885"/>
  <spobs>
   <spob_virtual>Miner Local</spob_virtual>
-  <spob_virtual>Trade Lane (Za'lek)</spob_virtual>
  </spobs>
- <jumps>
-  <jump target="Regas">
-   <autopos/>
-   <hide>0.000000</hide>
-  </jump>
-  <jump target="Seelie">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Seiben">
-   <autopos/>
-   <hide>0.000000</hide>
-  </jump>
-  <jump target="Vost">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
- </jumps>
+ <jumps/>
  <asteroids>
   <asteroid>
    <group>typeC-poor</group>

@@ -15,15 +15,20 @@
   <spob>Kraft V</spob>
   <spob>Kraft VI</spob>
   <spob>Simoen</spob>
+  <spob_virtual>Trade Lane (Sirius)</spob_virtual>
  </spobs>
  <jumps>
+  <jump target="Monogram">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
   <jump target="Neon">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Sorrow">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>0.000000</hide>
   </jump>
  </jumps>
 </ssys>

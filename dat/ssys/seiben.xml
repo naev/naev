@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-203.042171" y="-853.796458"/>
+ <pos x="-160.504206" y="-876.284017"/>
  <spobs>
   <spob>Arcadia</spob>
   <spob>Gastan</spob>
@@ -15,7 +15,7 @@
   <spob_virtual>Trade Lane (Za'lek)</spob_virtual>
  </spobs>
  <jumps>
-  <jump target="Poltergeist">
+  <jump target="Regas">
    <autopos/>
    <hide>0.000000</hide>
   </jump>

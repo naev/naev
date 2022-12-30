@@ -11,15 +11,16 @@
   <spob>Arashu</spob>
   <spob>Botarn I</spob>
   <spob>Dundrop Station</spob>
+  <spob_virtual>Trade Lane (Sirius)</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Monogram">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Vanir">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Voproid">
    <autopos/>

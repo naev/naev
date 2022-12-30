@@ -16,6 +16,10 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Urbanus">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Volus">
    <autopos/>
    <hide>1.000000</hide>

@@ -14,15 +14,20 @@
   <spob>Oort Farming Station</spob>
   <spob>Saraab</spob>
   <spob>Wikon</spob>
+  <spob_virtual>Trade Lane (Sirius)</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Botarn">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Kiwi">
    <autopos/>
    <hide>1.000000</hide>
+  </jump>
+  <jump target="Kraft">
+   <autopos/>
+   <hide>0.000000</hide>
   </jump>
   <jump target="NGC-15670">
    <autopos/>
