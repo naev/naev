@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Proxima Centauri">
+ <general>
+  <radius>15000.000000</radius>
+  <stars>400</stars>
+  <interference>54.800000</interference>
+  <nebula volatility="47.200000" hue="295.000000">700.000000</nebula>
+ </general>
+ <pos x="726.959858" y="-204.004838"/>
+ <spobs/>
+ <jumps>
+  <jump target="Polaris">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Sten">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+ </jumps>
+</ssys>
