@@ -4,7 +4,7 @@
   <rarity>0</rarity>
   <mass>0</mass>
   <price>25000</price>
-  <description>This map contains the route leading from Dvaered/Imperial space to the edge of the Nebula. It also lists the two Imperial stations along the route.</description>
+  <description>This map contains border of the Nebula with Dvaered/Imperial space. It also lists the deepest Imperial station within the Nebula.</description>
   <gfx_store>map_sector_01.webp</gfx_store>
  </general>
  <specific type="map">
@@ -30,11 +30,6 @@
   </sys>
   <sys name="Akodu"/>
   <sys name="Qellan"/>
-  <sys name="Alsafi"/>
-  <sys name="Cygni"/>
-  <sys name="Thirty Stars">
-   <spob>Charred</spob>
-  </sys>
   <sys name="Toaxis"/>
   <sys name="Aneel Azi">
    <jump>Hephaestus</jump>
@@ -46,8 +41,9 @@
   <sys name="Atlantis">
    <spob>Atlantis I</spob>
   </sys>
-  <sys name="Sorrow">
-   <spob>Sorrow II</spob>
+  <sys name="Doeston">
+   <spob>Cerberus</spob>
+   <spob>Doeston Prime</spob>
   </sys>
  </specific>
 </outfit>
