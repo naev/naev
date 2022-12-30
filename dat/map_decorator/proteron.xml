@@ -2,6 +2,6 @@
 <decorator>
  <image>proteron.webp</image>
  <x>1196.000000</x>
- <y>510.000000</y>
+ <y>490.000000</y>
  <detection_radius>100</detection_radius>
 </decorator>
