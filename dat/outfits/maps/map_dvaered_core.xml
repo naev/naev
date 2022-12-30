@@ -1,6 +1,7 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <outfit name="Map: Dvaered Core">
  <general>
+  <rarity>0</rarity>
   <mass>0</mass>
   <price>25000</price>
   <description>This map lists the locations of all Dvaered worlds and stations close to the Dvaered capital.</description>
@@ -9,7 +10,6 @@
  <specific type="map">
   <sys name="Dvaer">
    <jump>Beeklo</jump>
-   <jump>Gremlin</jump>
    <jump>Radix</jump>
    <jump>Urbanus</jump>
    <spob>Dvaer II</spob>
@@ -19,11 +19,8 @@
    <spob>Dvaer Prime</spob>
    <spob>Dvaered High Command</spob>
    <spob>Eist Shipyard</spob>
+   <spob>Hypergate Dvaer</spob>
    <spob>Laarss</spob>
-  </sys>
-  <sys name="Gremlin">
-   <jump>Daravon</jump>
-   <jump>Dvaer</jump>
   </sys>
   <sys name="Radix">
    <jump>Dvaer</jump>
@@ -52,13 +49,6 @@
    <spob>Dumas Station</spob>
    <spob>MGG-1294</spob>
   </sys>
-  <sys name="Daravon">
-   <jump>Gremlin</jump>
-   <spob>Daravon I</spob>
-   <spob>Daravon III</spob>
-   <spob>Eclipse Station</spob>
-   <spob>Vilati Vilata</spob>
-  </sys>
   <sys name="Awowa">
    <jump>Beeklo</jump>
    <spob>Awowa IV</spob>
@@ -68,6 +58,7 @@
   </sys>
   <sys name="Urbanus">
    <jump>Dvaer</jump>
+   <jump>Perhelion</jump>
    <spob>Onyx Shipyard</spob>
    <spob>Trincea</spob>
    <spob>Urbanus Crops</spob>
@@ -81,6 +72,13 @@
    <spob>Sheik Hall</spob>
    <spob>Stalwart Station</spob>
    <spob>Varia</spob>
+  </sys>
+  <sys name="Perhelion">
+   <jump>Urbanus</jump>
+   <spob>Handalier</spob>
+   <spob>Perhelion Alpha</spob>
+   <spob>Perhelion Beta</spob>
+   <spob>Perhelion Gamma</spob>
   </sys>
  </specific>
 </outfit>

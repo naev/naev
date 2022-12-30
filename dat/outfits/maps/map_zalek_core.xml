@@ -5,33 +5,9 @@
   <mass>0</mass>
   <price>25000</price>
   <description>This map contains the heart of Za'lek space, including its capital Ruadan and central hub, Za'lek.</description>
-  <gfx_store>map.webp</gfx_store>
+  <gfx_store>map_sector_02.webp</gfx_store>
  </general>
  <specific type="map">
-  <sys name="Za'lek">
-   <jump>Damien</jump>
-   <jump>Hideyoshi's Star</jump>
-   <jump>Qulam</jump>
-   <jump>Seiben</jump>
-   <spob>Atryssa</spob>
-   <spob>House Za'lek Central Station</spob>
-   <spob>Ocata</spob>
-   <spob>PRP-1</spob>
-   <spob>PRP-2</spob>
-   <spob>PRP-3</spob>
-   <spob>PRP-4</spob>
-   <spob>Tu'halar</spob>
-   <spob>Za'lek II</spob>
-   <spob>Za'lek IV</spob>
-  </sys>
-  <sys name="Seiben">
-   <jump>Poltergeist</jump>
-   <jump>Za'lek</jump>
-   <spob>Arcadia</spob>
-   <spob>Gastan</spob>
-   <spob>Seiben IV</spob>
-   <spob>Seiben XI</spob>
-  </sys>
   <sys name="Qulam">
    <jump>Za'lek</jump>
    <spob>Cantina Station</spob>
@@ -47,30 +23,10 @@
    <spob>Trinel</spob>
   </sys>
   <sys name="Hideyoshi's Star">
-   <jump>Vauban</jump>
    <jump>Za'lek</jump>
    <spob>HS-5</spob>
    <spob>HS-51</spob>
    <spob>Jurai</spob>
-  </sys>
-  <sys name="Vauban">
-   <jump>Hideyoshi's Star</jump>
-   <spob>Amhurst</spob>
-   <spob>HZNSS-3</spob>
-   <spob>Vauban I-1</spob>
-  </sys>
-  <sys name="Woreck"/>
-  <sys name="Poltergeist">
-   <jump>Seiben</jump>
-  </sys>
-  <sys name="Damien">
-   <jump>Garten</jump>
-   <jump>Ruadan</jump>
-   <jump>Za'lek</jump>
-   <spob>Anker</spob>
-   <spob>Damien VII</spob>
-   <spob>Naga</spob>
-   <spob>Topkapi Station</spob>
   </sys>
   <sys name="Ruadan">
    <jump>Damien</jump>
@@ -83,6 +39,52 @@
    <spob>Ruadan Prime</spob>
    <spob>Ruadan Secundus</spob>
    <spob>Ruadan Station</spob>
+  </sys>
+  <sys name="Regas">
+   <jump>Seiben</jump>
+   <spob>Jorla</spob>
+   <spob>Lugun</spob>
+  </sys>
+  <sys name="Damien">
+   <jump>Garten</jump>
+   <jump>Ruadan</jump>
+   <jump>Za'lek</jump>
+   <spob>Anker</spob>
+   <spob>Damien VII</spob>
+   <spob>Naga</spob>
+   <spob>Topkapi Station</spob>
+  </sys>
+  <sys name="Za'lek">
+   <jump>Damien</jump>
+   <jump>Hideyoshi's Star</jump>
+   <jump>Qulam</jump>
+   <jump>Seelie</jump>
+   <jump>Seiben</jump>
+   <spob>Atryssa</spob>
+   <spob>House Za'lek Central Station</spob>
+   <spob>Ocata</spob>
+   <spob>PRP-1</spob>
+   <spob>PRP-2</spob>
+   <spob>PRP-3</spob>
+   <spob>PRP-4</spob>
+   <spob>Tu'halar</spob>
+   <spob>Za'lek II</spob>
+   <spob>Za'lek IV</spob>
+  </sys>
+  <sys name="Seiben">
+   <jump>Regas</jump>
+   <jump>Za'lek</jump>
+   <spob>Arcadia</spob>
+   <spob>Gastan</spob>
+   <spob>Seiben IV</spob>
+   <spob>Seiben XI</spob>
+  </sys>
+  <sys name="Seelie">
+   <jump>Za'lek</jump>
+   <spob>Fae</spob>
+   <spob>Oberon</spob>
+   <spob>Sidhe</spob>
+   <spob>Unseelie</spob>
   </sys>
  </specific>
 </outfit>

@@ -5,7 +5,7 @@
   <mass>0</mass>
   <price>500000</price>
   <description>This map contains the location of the jump points in and out of the Qorel expanse, a set of systems not accessible through standard jump points. Getting the location of these very special jump points is usually very costly to reduce the number of people having access to it.</description>
-  <gfx_store>map.webp</gfx_store>
+  <gfx_store>map_sector_02.webp</gfx_store>
  </general>
  <specific type="map">
   <sys name="Terminus">
@@ -19,24 +19,6 @@
   </sys>
   <sys name="Blacin">
    <jump>Trohem</jump>
-  </sys>
-  <sys name="Blunderbuss">
-   <spob>Blunderbuss II</spob>
-   <spob>DVNN Central</spob>
-   <spob>Greis</spob>
-   <spob>Onar</spob>
-   <spob>Utsuwa</spob>
-  </sys>
-  <sys name="Ekkodu">
-   <jump>Torg</jump>
-  </sys>
-  <sys name="Torg">
-   <jump>Ekkodu</jump>
-   <spob>Godtra</spob>
-   <spob>Jorcan</spob>
-   <spob>Torg Crops</spob>
-   <spob>Torg I</spob>
-   <spob>Torg IV</spob>
   </sys>
   <sys name="Firk">
    <jump>Doowa</jump>
@@ -67,5 +49,24 @@
    <jump>Blacin</jump>
    <jump>Effetey</jump>
   </sys>
+  <sys name="Gremlin"/>
+  <sys name="Pas"/>
+  <sys name="Provectus Nova">
+   <spob>Provectus Nova I</spob>
+   <spob>Provectus Nova Ia</spob>
+  </sys>
+  <sys name="Uhriabi">
+   <spob>Mugen</spob>
+   <spob>Steiner</spob>
+   <spob>Uhriabi-17</spob>
+   <spob>Uhriabi-9</spob>
+  </sys>
+  <sys name="Eneguoz">
+   <spob>Eneguoz II</spob>
+   <spob>Oma</spob>
+   <spob>Opa</spob>
+   <spob>Shiarta</spob>
+  </sys>
+  <sys name="Acheron"/>
  </specific>
 </outfit>

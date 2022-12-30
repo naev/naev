@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <outfit name="Map: FLF Hidden Jumps">
  <general>
   <rarity>2</rarity>
@@ -8,31 +8,33 @@
   <gfx_store>map_sector_01.webp</gfx_store>
  </general>
  <specific type="map">
-  <sys name="Sigur">
-   <jump>Arcanis</jump>
-  </sys>
-  <sys name="Arcanis">
-   <jump>Sigur</jump>
-  </sys>
-  <sys name="Myad">
-   <jump>Gilligan's Light</jump>
-  </sys>
+  <sys name="Sigur"/>
+  <sys name="Arcanis"/>
+  <sys name="Myad"/>
   <sys name="Ingot">
-   <jump>Tuoladis</jump>
-   <jump>Gilligan's Light</jump>
-  </sys>
-  <sys name="Tuoladis">
-   <jump>Ingot</jump>
+   <spob>Ingot I</spob>
+   <spob>Ulios</spob>
   </sys>
   <sys name="Gilligan's Light">
-   <jump>Myad</jump>
-   <jump>Ingot</jump>
+   <jump>Theras</jump>
+   <spob>Dawn</spob>
+   <spob>Dusk</spob>
+   <spob>Gilligan's Light III</spob>
+   <spob>The Frontier Council</spob>
   </sys>
   <sys name="Theras">
-   <jump>Klantar</jump>
+   <jump>Gilligan's Light</jump>
+   <spob>Cetrat</spob>
+   <spob>Theras II</spob>
+   <spob>Theras III</spob>
+   <spob>Theras IV</spob>
   </sys>
   <sys name="Klantar">
-   <jump>Theras</jump>
+   <spob>Donnar</spob>
+   <spob>Klantar I</spob>
+   <spob>Klantar III</spob>
+   <spob>Nor</spob>
+   <spob>Tuur</spob>
   </sys>
  </specific>
 </outfit>
