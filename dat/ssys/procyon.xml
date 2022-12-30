@@ -13,8 +13,6 @@
   <spob>UHP-1001</spob>
   <spob>UHP-1002</spob>
   <spob>Vigilance Station</spob>
-  <spob_virtual>Empire Unpresence (Range 1)</spob_virtual>
-  <spob_virtual>Trade Lane (Za'lek)</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Copernicus">

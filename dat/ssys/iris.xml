@@ -10,6 +10,7 @@
  <spobs>
   <spob>Aluben</spob>
   <spob>Tenal-P</spob>
+  <spob_virtual>Independent All Unpresence (Range 1)</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Behar">
