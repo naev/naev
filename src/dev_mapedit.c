@@ -60,10 +60,6 @@ extern StarSystem *systems_stack;
 #define MAPEDIT_SAVE_HEIGHT      500   /**< Open window height. */
 #define MAPEDIT_SAVE_TXT_WIDTH   300   /**< Text width. */
 
-#define MAPEDIT_FILENAME_MAX     128   /**< Max filename length. */
-#define MAPEDIT_NAME_MAX         128   /**< Maximum name length. */
-#define MAPEDIT_DESCRIPTION_MAX 1024   /**< Maximum description length. */
-
 typedef struct mapOutfitsList_s {
    char *fileName;
    char *mapName;
@@ -196,7 +192,7 @@ void mapedit_open( unsigned int wid_unused, const char *unused )
    /* Map name. */
    window_addText( wid, -200, -40-textPos*parHeight-linesPos*lineHeight, 100, lineHeight, 0, "txtSMapName",
          &gl_smallFont, NULL, "Map Name:" );
-   window_addInput( wid, -30, -40-textPos*parHeight-(linesPos+1)*lineHeight, 170, lineHeight, "inpMapName",
+   window_addInput( wid, -30, -40-textPos*parHeight-linesPos*lineHeight, 170, lineHeight, "inpMapName",
          1024, 1, &gl_smallFont );
    textPos++;
    linesPos++;
@@ -236,7 +232,15 @@ void mapedit_open( unsigned int wid_unused, const char *unused )
          64, 1, &gl_smallFont );
    window_setInputFilter( wid, "inpPrice", INPUT_FILTER_NUMBER );
    textPos++;
-   linesPos+=curLines+1;
+   linesPos+=curLines;
+
+   curLines = 1;
+   window_addText( wid, -200, -40-textPos*parHeight-linesPos*lineHeight, 100, 20, 0, "txtSGFX",
+         &gl_smallFont, NULL, "Graphics:" );
+   window_addInput( wid, -30, -40-textPos*parHeight-linesPos*lineHeight, 170, lineHeight, "inpGFX",
+         64, 1, &gl_smallFont );
+   textPos++;
+   linesPos+=curLines;
 
    curLines = 1;
    window_addText( wid, -200, -40-textPos*parHeight-linesPos*lineHeight, 100, 20, 0, "txtSRarity",
@@ -823,6 +827,7 @@ static void mapedit_btnSaveMapAs( unsigned int wdw, const char *unused )
    ns.fileName = strdup( window_getInput( wdw, "inpFileName" ) );
    ns.mapName = strdup( window_getInput( wdw, "inpMapName" ) );
    ns.description = strdup( window_getInput( wdw, "inpDescription" ) );
+   ns.gfx_store = strdup( window_getInput( wdw, "inpGFX" ) );
    ns.numSystems = mapedit_nsys;
    ns.price = atoll(window_getInput( wdw, "inpPrice" ));
    ns.rarity = atoi(window_getInput( wdw, "inpRarity" ));
@@ -832,6 +837,7 @@ static void mapedit_btnSaveMapAs( unsigned int wdw, const char *unused )
    free( ns.fileName );
    free( ns.mapName );
    free( ns.description );
+   free( ns.gfx_store );
 }
 
 /**
@@ -845,6 +851,7 @@ void mapedit_setGlobalLoadedInfos( mapOutfitsList_t* ns )
    window_setInput( mapedit_wid, "inpFileName",    ns->fileName );
    window_setInput( mapedit_wid, "inpMapName",     ns->mapName );
    window_setInput( mapedit_wid, "inpDescription", ns->description );
+   window_setInput( mapedit_wid, "inpGFX",         ns->gfx_store );
    snprintf( buf, sizeof(buf), "%i", ns->numSystems );
    window_modifyText( mapedit_wid, "txtCurrentNumSystems", buf );
    snprintf( buf, sizeof(buf), "%"CREDITS_PRI, ns->price );
@@ -921,7 +928,7 @@ static int mapedit_mapsList_refresh (void)
                   xmlr_str(cur,"description",description);
                   xmlr_long(cur,"price",price);
                   xmlr_int(cur,"rarity",rarity);
-                  xmlr_str(cur, "gfx_store",gfx_store);
+                  xmlr_str(cur,"gfx_store",gfx_store);
                } while (xml_nextNode(cur));
             }
             continue;
