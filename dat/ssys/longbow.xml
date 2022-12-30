@@ -16,6 +16,10 @@
   <spob>Tummalin</spob>
  </spobs>
  <jumps>
+  <jump target="Herculis">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Moor">
    <autopos/>
    <hide>1.000000</hide>

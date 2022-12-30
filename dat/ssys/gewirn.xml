@@ -17,6 +17,10 @@
    <autopos/>
    <hide>0.000000</hide>
   </jump>
+  <jump target="Ivella">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Point Zero">
    <autopos/>
    <hide>1.000000</hide>

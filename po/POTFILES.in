@@ -1802,6 +1802,7 @@ dat/ssys/aet.xml
 dat/ssys/akodu.xml
 dat/ssys/akra.xml
 dat/ssys/allous.xml
+dat/ssys/alpha_centauri.xml
 dat/ssys/alsafi.xml
 dat/ssys/altair.xml
 dat/ssys/alteris.xml
@@ -1831,6 +1832,7 @@ dat/ssys/auger.xml
 dat/ssys/awowa.xml
 dat/ssys/babylon.xml
 dat/ssys/baf.xml
+dat/ssys/baitas.xml
 dat/ssys/barnards_star.xml
 dat/ssys/basel.xml
 dat/ssys/bastion.xml
@@ -1956,6 +1958,7 @@ dat/ssys/haven.xml
 dat/ssys/hekaras.xml
 dat/ssys/hephaestus.xml
 dat/ssys/herakin.xml
+dat/ssys/herculis.xml
 dat/ssys/hideyoshis_star.xml
 dat/ssys/hubfar.xml
 dat/ssys/humdrum.xml
@@ -1964,6 +1967,7 @@ dat/ssys/ianella.xml
 dat/ssys/infinity.xml
 dat/ssys/ingot.xml
 dat/ssys/iris.xml
+dat/ssys/ivella.xml
 dat/ssys/jackson.xml
 dat/ssys/jade.xml
 dat/ssys/jervis.xml
@@ -1992,6 +1996,7 @@ dat/ssys/kyo.xml
 dat/ssys/lalande.xml
 dat/ssys/lapis.xml
 dat/ssys/lazuli.xml
+dat/ssys/leporis.xml
 dat/ssys/limbo.xml
 dat/ssys/logania.xml
 dat/ssys/longbow.xml
@@ -2105,6 +2110,7 @@ dat/ssys/ngc9654.xml
 dat/ssys/ngc9897.xml
 dat/ssys/ngcg5882.xml
 dat/ssys/niger.xml
+dat/ssys/nirtos.xml
 dat/ssys/nixon.xml
 dat/ssys/norn.xml
 dat/ssys/norpin.xml
@@ -2171,12 +2177,14 @@ dat/ssys/rotide.xml
 dat/ssys/ruadan.xml
 dat/ssys/ruttwi.xml
 dat/ssys/ryder.xml
+dat/ssys/sagittarius.xml
 dat/ssys/sagittarius_prime.xml
 dat/ssys/salvador.xml
 dat/ssys/santoros.xml
 dat/ssys/sarcophagus.xml
 dat/ssys/sarrii.xml
 dat/ssys/scarlet.xml
+dat/ssys/scholzs_star.xml
 dat/ssys/scorpius.xml
 dat/ssys/seelie.xml
 dat/ssys/seiben.xml
@@ -2217,11 +2225,13 @@ dat/ssys/suna.xml
 dat/ssys/surano.xml
 dat/ssys/sylph.xml
 dat/ssys/symm.xml
+dat/ssys/syndania.xml
 dat/ssys/taiomi.xml
 dat/ssys/tandar.xml
 dat/ssys/tarmak.xml
 dat/ssys/tarsus.xml
 dat/ssys/tartan.xml
+dat/ssys/tasopa.xml
 dat/ssys/tau_ceti.xml
 dat/ssys/tau_prime.xml
 dat/ssys/taxumi.xml
@@ -2256,6 +2266,7 @@ dat/ssys/unicorn.xml
 dat/ssys/urbanus.xml
 dat/ssys/urdads.xml
 dat/ssys/uridhrion.xml
+dat/ssys/urillian.xml
 dat/ssys/ux.xml
 dat/ssys/vadornla.xml
 dat/ssys/valerie.xml
@@ -2268,6 +2279,7 @@ dat/ssys/vean.xml
 dat/ssys/vedalus.xml
 dat/ssys/vega.xml
 dat/ssys/verex.xml
+dat/ssys/veses.xml
 dat/ssys/virgo.xml
 dat/ssys/vlexon.xml
 dat/ssys/volus.xml

@@ -6,7 +6,7 @@
   <interference>50.000000</interference>
   <nebula volatility="10.000000" hue="240.000000">400.000000</nebula>
  </general>
- <pos x="1056.808340" y="315.208730"/>
+ <pos x="1013.038352" y="347.593066"/>
  <spobs/>
  <jumps>
   <jump target="Cleai">
@@ -15,6 +15,11 @@
   </jump>
   <jump target="Leporis">
    <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Scholz's Star">
+   <autopos/>
+   <hidden/>
    <hide>1.000000</hide>
   </jump>
  </jumps>
