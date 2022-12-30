@@ -27,6 +27,10 @@
    <hidden/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Oxuram">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Sultan">
    <pos x="13426.403116" y="16833.176987"/>
    <hide>1.000000</hide>

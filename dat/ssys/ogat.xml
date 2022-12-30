@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="468.512640" y="-498.486720"/>
+ <pos x="398.201526" y="-585.137158"/>
  <spobs>
   <spob>Fernando Station</spob>
   <spob>Gamma</spob>
@@ -14,7 +14,7 @@
   <spob_virtual>Trade Lane (Dvaered)</spob_virtual>
  </spobs>
  <jumps>
-  <jump target="Doranthex">
+  <jump target="Blunderbuss">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
@@ -22,11 +22,15 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Vlexon">
+  <jump target="Torg">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Zacron">
+  <jump target="Tuoladis">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Vlexon">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

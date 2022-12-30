@@ -6,14 +6,14 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="322.956160" y="-261.348960"/>
+ <pos x="11.156160" y="-25.148960"/>
  <spobs/>
  <jumps>
-  <jump target="Akodu">
+  <jump target="Firk">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Doowa">
+  <jump target="Terminus">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

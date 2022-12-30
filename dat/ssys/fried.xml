@@ -18,11 +18,6 @@
   <spob>Fried Ia</spob>
  </spobs>
  <jumps>
-  <jump target="Effetey">
-   <pos x="16966.529931" y="-4082.991631"/>
-   <hidden/>
-   <hide>1.000000</hide>
-  </jump>
   <jump target="Gold">
    <autopos/>
    <hide>1.000000</hide>

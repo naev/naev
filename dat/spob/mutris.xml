@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Mutris">
  <lua>spob/lua/sirius_mil_mutris.lua</lua>
- <pos x="33152.000000" y="30118.000000"/>
+ <pos x="26196.025870" y="16073.556994"/>
  <GFX>
   <space>L00.webp</space>
   <exterior>mining4.webp</exterior>

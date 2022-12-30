@@ -7,7 +7,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="587.569742" y="-529.021119"/>
+ <pos x="587.623075" y="-495.867786"/>
  <spobs>
   <spob>Doranthex Prime</spob>
   <spob>Doranthex Secundus</spob>
@@ -22,10 +22,6 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Ogat">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
   <jump target="Tarsus">
    <autopos/>
    <hide>0.000000</hide>
@@ -34,8 +30,8 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Tuoladis">
-   <pos x="11836.302770" y="31893.263337"/>
+  <jump target="Zacron">
+   <autopos/>
    <hide>0.000000</hide>
   </jump>
  </jumps>

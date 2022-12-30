@@ -6,12 +6,16 @@
   <interference>50.000000</interference>
   <nebula volatility="82.200000" hue="320.000000">800.000000</nebula>
  </general>
- <pos x="611.702991" y="-45.503777"/>
+ <pos x="632.102991" y="-37.103777"/>
  <spobs>
   <spob>Hypergate Polaris</spob>
  </spobs>
  <jumps>
   <jump target="Nasona">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Proxima Centauri">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

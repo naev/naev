@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="498.701468" y="-591.359793"/>
+ <pos x="506.871168" y="-565.175758"/>
  <spobs>
   <spob>Godtra</spob>
   <spob>Jorcan</spob>
@@ -20,9 +20,12 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Firk">
+  <jump target="Ekkodu">
    <autopos/>
-   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Ogat">
+   <autopos/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

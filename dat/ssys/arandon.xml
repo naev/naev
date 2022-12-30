@@ -6,12 +6,16 @@
   <interference>33.333300</interference>
   <nebula volatility="15.600000" hue="270.000000">600.000000</nebula>
  </general>
- <pos x="582.459887" y="-156.120282"/>
+ <pos x="571.459887" y="-143.120282"/>
  <spobs>
   <spob_virtual>Empire Unpresence</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Doeston">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Gliese">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

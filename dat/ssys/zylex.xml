@@ -6,13 +6,9 @@
   <interference>11.111111</interference>
   <nebula volatility="1.000000">400.000000</nebula>
  </general>
- <pos x="512.794220" y="-248.472217"/>
+ <pos x="509.594220" y="-247.672217"/>
  <spobs/>
  <jumps>
-  <jump target="Arcanis">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
   <jump target="Doeston">
    <autopos/>
    <hide>1.000000</hide>

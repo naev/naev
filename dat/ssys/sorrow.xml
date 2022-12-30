@@ -3,18 +3,14 @@
  <general>
   <radius>10000.000000</radius>
   <stars>400</stars>
-  <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <interference>4.300000</interference>
+  <nebula volatility="0.000000">100.000000</nebula>
  </general>
- <pos x="1235.307371" y="-23.807157"/>
+ <pos x="1039.206683" y="64.821151"/>
  <spobs>
   <spob>Sorrow II</spob>
  </spobs>
  <jumps>
-  <jump target="Eisenhorn">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
   <jump target="Kraft">
    <autopos/>
    <hide>1.000000</hide>
@@ -22,6 +18,10 @@
   <jump target="NGC-15670">
    <autopos/>
    <hidden/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Penn">
+   <autopos/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

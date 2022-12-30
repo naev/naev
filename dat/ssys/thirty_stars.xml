@@ -6,12 +6,12 @@
   <interference>5.882353</interference>
   <nebula volatility="0.000000">200.000000</nebula>
  </general>
- <pos x="266.997964" y="188.925527"/>
+ <pos x="365.197964" y="487.125527"/>
  <spobs>
   <spob>Charred</spob>
  </spobs>
  <jumps>
-  <jump target="Oberon">
+  <jump target="Gewirn">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

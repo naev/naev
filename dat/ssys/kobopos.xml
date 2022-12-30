@@ -23,6 +23,10 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Logania">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Senara">
    <autopos/>
    <hide>0.500000</hide>

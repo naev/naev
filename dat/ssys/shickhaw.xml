@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="994.968319" y="-275.084135"/>
+ <pos x="937.747618" y="-221.736899"/>
  <spobs>
   <spob>Avoss</spob>
   <spob>Kotori</spob>
@@ -21,6 +21,10 @@
    <hide>1.000000</hide>
   </jump>
   <jump target="Brimstone">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Gyrios">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

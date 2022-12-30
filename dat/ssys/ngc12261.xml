@@ -9,7 +9,7 @@
   <interference>25.000000</interference>
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
- <pos x="1688.332291" y="55.968408"/>
+ <pos x="1335.989021" y="300.493703"/>
  <spobs/>
  <jumps>
   <jump target="Mirror">
@@ -17,6 +17,14 @@
    <hide>1.000000</hide>
   </jump>
   <jump target="NGC-10653">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="NGC-14430">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="NGC-7319">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

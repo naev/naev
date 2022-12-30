@@ -15,11 +15,15 @@
  <jumps>
   <jump target="Father's Pride">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Point Zero">
    <autopos/>
    <hide>1.000000</hide>
+  </jump>
+  <jump target="Thirty Stars">
+   <autopos/>
+   <hide>0.000000</hide>
   </jump>
  </jumps>
 </ssys>

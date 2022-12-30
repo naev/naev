@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="988.836360" y="-652.332653"/>
+ <pos x="956.836360" y="-648.332653"/>
  <spobs>
   <spob>Marauder Station</spob>
   <spob>Omar</spob>
@@ -25,6 +25,10 @@
   <jump target="Maus">
    <autopos/>
    <hide>0.000000</hide>
+  </jump>
+  <jump target="Norpin">
+   <autopos/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

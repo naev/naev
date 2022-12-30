@@ -3,23 +3,19 @@
  <general>
   <radius>17500.000000</radius>
   <stars>500</stars>
-  <interference>3.030300</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <interference>8.000000</interference>
+  <nebula volatility="0.000000" hue="240.000000">100.000000</nebula>
  </general>
- <pos x="524.815360" y="-417.095680"/>
+ <pos x="569.587582" y="-430.462347"/>
  <spobs>
   <spob_virtual>Pirate Small</spob_virtual>
  </spobs>
  <jumps>
-  <jump target="Ogat">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Raelid">
+  <jump target="Doranthex">
    <autopos/>
    <hide>0.000000</hide>
   </jump>
-  <jump target="Tuoladis">
+  <jump target="Raelid">
    <autopos/>
    <hide>0.000000</hide>
   </jump>

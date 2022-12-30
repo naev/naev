@@ -24,8 +24,8 @@
    <autopos/>
    <hide>0.000000</hide>
   </jump>
-  <jump target="Thirty Stars">
-   <pos x="19272.562144" y="8011.507651"/>
+  <jump target="Struve">
+   <autopos/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

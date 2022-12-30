@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="411.150562" y="-663.047936"/>
+ <pos x="429.446562" y="-687.599936"/>
  <spobs>
   <spob>Blunderbuss II</spob>
   <spob>DVNN Central</spob>
@@ -15,9 +15,8 @@
   <spob>Utsuwa</spob>
  </spobs>
  <jumps>
-  <jump target="Ekkodu">
+  <jump target="Ogat">
    <autopos/>
-   <hidden/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Verex">

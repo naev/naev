@@ -26,6 +26,10 @@
    <pos x="-17204.057496" y="16139.359158"/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Santoros">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
   <jump target="Tau Prime">
    <autopos/>
    <hide>0.000000</hide>

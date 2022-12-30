@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="1111.500243" y="-323.686649"/>
+ <pos x="1010.770530" y="-232.790301"/>
  <spobs>
   <spob>Gyrios II</spob>
   <spob>Gyrios IV</spob>
@@ -22,6 +22,10 @@
    <hide>1.000000</hide>
   </jump>
   <jump target="Karman">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Shickhaw">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

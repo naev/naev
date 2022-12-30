@@ -6,14 +6,10 @@
   <interference>11.111111</interference>
   <nebula volatility="0.000000">400.000000</nebula>
  </general>
- <pos x="335.975119" y="-7.216158"/>
+ <pos x="457.535119" y="440.503842"/>
  <spobs/>
  <jumps>
   <jump target="Basel">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Iris">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

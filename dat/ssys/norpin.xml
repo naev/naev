@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="1003.863789" y="-563.034415"/>
+ <pos x="980.922391" y="-507.022206"/>
  <spobs>
   <spob>Folevo</spob>
   <spob>New Dortmund</spob>
@@ -15,6 +15,10 @@
   <spob_virtual>FLF Small</spob_virtual>
  </spobs>
  <jumps>
+  <jump target="Millstone">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Slaccid">
    <autopos/>
    <hide>1.000000</hide>

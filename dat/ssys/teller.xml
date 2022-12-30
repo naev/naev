@@ -3,10 +3,10 @@
  <general>
   <radius>21000.000000</radius>
   <stars>400</stars>
-  <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <interference>25.800000</interference>
+  <nebula volatility="0.500000" hue="275.000000">350.000000</nebula>
  </general>
- <pos x="917.596208" y="-1.503267"/>
+ <pos x="849.484062" y="45.683223"/>
  <spobs>
   <spob>Jezza</spob>
   <spob>Killerog</spob>
@@ -14,7 +14,15 @@
   <spob>Sanchez</spob>
  </spobs>
  <jumps>
+  <jump target="Fern">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Penn">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Seifer">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

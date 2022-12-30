@@ -1,32 +1,13 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <outfit name="Map: Za'lek Core">
  <general>
+  <rarity>0</rarity>
   <mass>0</mass>
   <price>25000</price>
   <description>This map contains the heart of Za'lek space, including its capital Ruadan and central hub, Za'lek.</description>
-  <gfx_store>map_sector_02.webp</gfx_store>
+  <gfx_store>map.webp</gfx_store>
  </general>
  <specific type="map">
-  <sys name="Ruadan">
-   <jump>Damien</jump>
-   <jump>Vauban</jump>
-   <jump>Woreck</jump>
-   <spob>Ruadan Bastion</spob>
-   <spob>Ruadan Gamma</spob>
-   <spob>Ruadan II</spob>
-   <spob>Ruadan Prime</spob>
-   <spob>Ruadan Secundus</spob>
-   <spob>Ruadan Station</spob>
-  </sys>
-  <sys name="Damien">
-   <jump>Garten</jump>
-   <jump>Ruadan</jump>
-   <jump>Za'lek</jump>
-   <spob>Anker</spob>
-   <spob>Damien VII</spob>
-   <spob>Naga</spob>
-   <spob>Topkapi Station</spob>
-  </sys>
   <sys name="Za'lek">
    <jump>Damien</jump>
    <jump>Hideyoshi's Star</jump>
@@ -55,6 +36,7 @@
    <jump>Za'lek</jump>
    <spob>Cantina Station</spob>
    <spob>Katar</spob>
+   <spob>Katar I</spob>
    <spob>Qulam Primus</spob>
   </sys>
   <sys name="Garten">
@@ -67,16 +49,40 @@
   <sys name="Hideyoshi's Star">
    <jump>Vauban</jump>
    <jump>Za'lek</jump>
+   <spob>HS-5</spob>
+   <spob>HS-51</spob>
+   <spob>Jurai</spob>
   </sys>
   <sys name="Vauban">
    <jump>Hideyoshi's Star</jump>
-   <jump>Ruadan</jump>
+   <spob>Amhurst</spob>
+   <spob>HZNSS-3</spob>
+   <spob>Vauban I-1</spob>
   </sys>
-  <sys name="Woreck">
-   <jump>Ruadan</jump>
-  </sys>
+  <sys name="Woreck"/>
   <sys name="Poltergeist">
    <jump>Seiben</jump>
+  </sys>
+  <sys name="Damien">
+   <jump>Garten</jump>
+   <jump>Ruadan</jump>
+   <jump>Za'lek</jump>
+   <spob>Anker</spob>
+   <spob>Damien VII</spob>
+   <spob>Naga</spob>
+   <spob>Topkapi Station</spob>
+  </sys>
+  <sys name="Ruadan">
+   <jump>Damien</jump>
+   <spob>Hypergate Ruadan</spob>
+   <spob>Ruadan Bastion</spob>
+   <spob>Ruadan Gamma</spob>
+   <spob>Ruadan II</spob>
+   <spob>Ruadan J-1</spob>
+   <spob>Ruadan J-2</spob>
+   <spob>Ruadan Prime</spob>
+   <spob>Ruadan Secundus</spob>
+   <spob>Ruadan Station</spob>
   </sys>
  </specific>
 </outfit>

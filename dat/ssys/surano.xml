@@ -3,13 +3,21 @@
  <general>
   <radius>19250.000000</radius>
   <stars>600</stars>
-  <interference>3.030303</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <interference>11.000000</interference>
+  <nebula volatility="0.000000" hue="240.000000">150.000000</nebula>
  </general>
- <pos x="413.766080" y="-373.229120"/>
+ <pos x="428.282104" y="-410.954603"/>
  <spobs/>
  <jumps>
   <jump target="Raelid">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Tuoladis">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Van Maanen">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

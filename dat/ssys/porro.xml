@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="1663.771497" y="-372.523284"/>
+ <pos x="1565.182630" y="-236.762393"/>
  <spobs>
   <spob>Porro Farming Station</spob>
   <spob>Porro II</spob>
@@ -14,6 +14,10 @@
   <spob>Waldar</spob>
  </spobs>
  <jumps>
+  <jump target="Korma">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Margarita">
    <autopos/>
    <hide>1.000000</hide>
@@ -22,7 +26,7 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Narousse">
+  <jump target="NGC-12108">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

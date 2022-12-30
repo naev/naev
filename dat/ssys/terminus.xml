@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="167.651874" y="54.521618"/>
+ <pos x="40.051874" y="54.921618"/>
  <spobs>
   <spob>Foundation Station</spob>
  </spobs>
@@ -16,7 +16,7 @@
    <hidden/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Akodu">
+  <jump target="Flok">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

@@ -33,6 +33,10 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Seelie">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Seiben">
    <autopos/>
    <hide>0.000000</hide>

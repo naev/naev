@@ -6,10 +6,10 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
- <pos x="997.999080" y="63.252495"/>
+ <pos x="1656.039645" y="-287.758373"/>
  <spobs/>
  <jumps>
-  <jump target="Penn">
+  <jump target="Porro">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

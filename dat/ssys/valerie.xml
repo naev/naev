@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-150.254237" y="-370.392598"/>
+ <pos x="-141.614237" y="-374.712598"/>
  <spobs>
   <spob>Soros Station</spob>
   <spob>Valerie II</spob>
@@ -16,7 +16,7 @@
   <spob_virtual>Miner Local</spob_virtual>
  </spobs>
  <jumps>
-  <jump target="NGC-4746">
+  <jump target="Palejos">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-5.933570" y="-500.633785"/>
+ <pos x="-7.133570" y="-518.633785"/>
  <spobs>
   <spob>Madeleine Station</spob>
   <spob>Waterhole</spob>
@@ -14,6 +14,10 @@
   <spob_virtual>Trade Lane</spob_virtual>
  </spobs>
  <jumps>
+  <jump target="Majesteka">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Overture">
    <autopos/>
    <hide>0.000000</hide>

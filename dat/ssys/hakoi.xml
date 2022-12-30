@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="139.729577" y="-284.884701"/>
+ <pos x="149.529577" y="-177.484701"/>
  <spobs>
   <spob>Em 1</spob>
   <spob>Em 2</spob>
@@ -19,13 +19,12 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Salvador">
-   <pos x="9216.302743" y="120.608077"/>
-   <hidden/>
+  <jump target="Ross">
+   <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Trask">
-   <autopos/>
+  <jump target="Salvador">
+   <pos x="9216.302743" y="120.608077"/>
    <hidden/>
    <hide>1.000000</hide>
   </jump>

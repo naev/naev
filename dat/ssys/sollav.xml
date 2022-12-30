@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-109.063901" y="-739.267208"/>
+ <pos x="-117.463901" y="-729.667208"/>
  <spobs>
   <spob>Sollav II</spob>
   <spob>Sollav VI</spob>
@@ -17,10 +17,6 @@
    <hide>1.000000</hide>
   </jump>
   <jump target="Limbo">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Pultatis">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
