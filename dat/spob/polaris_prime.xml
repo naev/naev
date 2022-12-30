@@ -3,7 +3,7 @@
  <lua>spob/lua/highclass.lua</lua>
  <pos x="14060.037687" y="4973.423281"/>
  <GFX>
-  <space>002.webp</space>
+  <space>station-fleetbase4.webp</space>
   <exterior>traderoom.webp</exterior>
  </GFX>
  <presence>
