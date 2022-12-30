@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Hypergate Protera">
+ <display>Ruined Hypergate</display>
+ <marker>spobmarker_triangle</marker>
+ <pos x="5058.433323" y="3567.526660"/>
+ <GFX>
+  <space>hypergate_debris.webp</space>
+ </GFX>
+ <presence>
+  <faction>Derelict</faction>
+  <base>0.000000</base>
+  <bonus>0.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>Construct</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+ <tags>
+  <tag>hypergate</tag>
+  <tag>ruined</tag>
+ </tags>
+</spob>
