@@ -14,11 +14,11 @@
   <spob>Elpa</spob>
  </spobs>
  <jumps>
-  <jump target="Mida">
+  <jump target="Leporis">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Protera">
+  <jump target="Mida">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

@@ -6,23 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="1109.510161" y="373.876125"/>
- <spobs>
-  <spob>Protera Sigma</spob>
-  <spob>Sigma Station</spob>
- </spobs>
- <jumps>
-  <jump target="Apik">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Haered">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Hystera">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
- </jumps>
+ <pos x="928.022161" y="610.180125"/>
+ <spobs/>
+ <jumps/>
 </ssys>

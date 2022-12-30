@@ -6,14 +6,14 @@
   <interference>50.000000</interference>
   <nebula volatility="10.000000" hue="240.000000">400.000000</nebula>
  </general>
- <pos x="1065.208340" y="316.408730"/>
+ <pos x="1056.808340" y="315.208730"/>
  <spobs/>
  <jumps>
   <jump target="Cleai">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Protera">
+  <jump target="Leporis">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

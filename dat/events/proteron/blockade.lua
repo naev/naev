@@ -1,14 +1,14 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<event name="Protera Blockade">
+<event name="Proteron Blockade">
  <location>enter</location>
  <chance>100</chance>
- <cond>system.cur() == system.get("Protera")</cond>
+ <cond>system.cur() == system.get("Leporis")</cond>
 </event>
 --]]
 
 --[[
-   Protera Blockade
+   Proteron Blockade
 
    This is just there to show off how the proteron are a bunch of fascist
    xenophobes who don't like outsiders. It also hides the fact that there is no
