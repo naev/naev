@@ -962,8 +962,8 @@ static int mapedit_mapsList_refresh (void)
          newMapItem->numSystems  = nSystems;
          newMapItem->fileName    = strdup( map_files[ i ] );
          newMapItem->mapName     = strdup( name );
-         newMapItem->description = strdup( description != NULL ? description : "" );
-         newMapItem->gfx_store   = strdup( gfx_store != NULL ? gfx_store : "" );
+         newMapItem->description = strdup( (description != NULL) ? description : "" );
+         newMapItem->gfx_store   = strdup( (gfx_store != NULL) ? gfx_store : "" );
          newMapItem->price       = price;
          newMapItem->rarity      = rarity;
       }
@@ -971,6 +971,8 @@ static int mapedit_mapsList_refresh (void)
       /* Clean up. */
       free(name);
       free(file);
+      free(description);
+      free(gfx_store);
   }
 
    /* Clean up. */
