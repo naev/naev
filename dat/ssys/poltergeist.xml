@@ -6,11 +6,28 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="166.100561" y="-470.330885"/>
+ <pos x="141.038455" y="-418.802148"/>
  <spobs>
   <spob_virtual>Miner Local</spob_virtual>
  </spobs>
- <jumps/>
+ <jumps>
+  <jump target="Ianella">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Majesteka">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Pas">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Virgo">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+ </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-poor</group>
