@@ -7,7 +7,12 @@
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
  <pos x="42.243987" y="-420.485787"/>
- <spobs/>
+ <spobs>
+  <spob>Erebus Terminal</spob>
+  <spob>Majestika II</spob>
+  <spob>Majestika IV</spob>
+  <spob>Majestika Prime</spob>
+ </spobs>
  <jumps>
   <jump target="Hubfar">
    <autopos/>

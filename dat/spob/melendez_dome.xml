@@ -2,7 +2,7 @@
 <spob name="Melendez Dome">
  <pos x="5195.645644" y="1136.188782"/>
  <GFX>
-  <space>003.webp</space>
+  <space>station-round1.webp</space>
   <exterior>traderoom.webp</exterior>
  </GFX>
  <presence>

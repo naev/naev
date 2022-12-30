@@ -7,7 +7,10 @@
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
  <pos x="56.762672" y="-490.558663"/>
- <spobs/>
+ <spobs>
+  <spob>Hubfar I</spob>
+  <spob>Hubfar Station</spob>
+ </spobs>
  <jumps>
   <jump target="Daravon">
    <autopos/>
@@ -22,4 +25,15 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeA-poor</group>
+   <radius>4000.000000</radius>
+   <pos x="-47.922000" y="1427.010664"/>
+  </asteroid>
+  <exclusion>
+   <radius>3000.000000</radius>
+   <pos x="53.246667" y="1251.296664"/>
+  </exclusion>
+ </asteroids>
 </ssys>
