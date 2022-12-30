@@ -68,6 +68,7 @@ typedef struct mapOutfitsList_s {
    char *fileName;
    char *mapName;
    char *description;
+   char *gfx_store;
    int numSystems;
    credits_t price;
    int rarity;
@@ -877,6 +878,7 @@ static int mapedit_mapsList_refresh (void)
    newMapItem = NULL;
    for (size_t i=0; map_files[i]!=NULL; i++) {
       char *description = NULL;
+      char *gfx_store = NULL;
       credits_t price = 1000;
       int rarity = 0;
 
@@ -919,6 +921,7 @@ static int mapedit_mapsList_refresh (void)
                   xmlr_str(cur,"description",description);
                   xmlr_long(cur,"price",price);
                   xmlr_int(cur,"rarity",rarity);
+                  xmlr_str(cur, "gfx_store",gfx_store);
                } while (xml_nextNode(cur));
             }
             continue;
@@ -955,11 +958,12 @@ static int mapedit_mapsList_refresh (void)
 
       /* If the map is a regular one, then load it into the list */
       if (nSystems > 0) {
-         newMapItem               = &array_grow( &mapList );
+         newMapItem              = &array_grow( &mapList );
          newMapItem->numSystems  = nSystems;
          newMapItem->fileName    = strdup( map_files[ i ] );
          newMapItem->mapName     = strdup( name );
          newMapItem->description = strdup( description != NULL ? description : "" );
+         newMapItem->gfx_store   = strdup( gfx_store != NULL ? gfx_store : "" );
          newMapItem->price       = price;
          newMapItem->rarity      = rarity;
       }
@@ -985,6 +989,7 @@ static void mapsList_free (void)
       free( mapList[i].fileName );
       free( mapList[i].mapName );
       free( mapList[i].description );
+      free( mapList[i].gfx_store );
    }
    array_free(mapList);
    mapList = NULL;
@@ -1027,7 +1032,7 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t* ns )
    xmlw_elem( writer, "mass", "%d", 0 );
    xmlw_elem( writer, "price", "%"CREDITS_PRI, ns->price );
    xmlw_elem( writer, "description", "%s", ns->description );
-   xmlw_elem( writer, "gfx_store", "%s", "map.webp" );
+   xmlw_elem( writer, "gfx_store", "%s",  ns->gfx_store );
    xmlw_endElem( writer ); /* "general" */
 
    xmlw_startElem( writer, "specific" );
