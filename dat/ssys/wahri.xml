@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="30.888954" y="716.262262"/>
+ <pos x="180.752470" y="697.934337"/>
  <spobs>
   <spob>Dono</spob>
   <spob>Raptor Station</spob>
@@ -15,23 +15,15 @@
   <spob>Wahri IV</spob>
  </spobs>
  <jumps>
-  <jump target="Daled">
+  <jump target="Diadem">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Forlat">
+  <jump target="Moordra">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Kelvos">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Octantis">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Regulus">
+  <jump target="Muran">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

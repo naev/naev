@@ -9,13 +9,9 @@
   <interference>27.272700</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="248.254734" y="593.675646"/>
+ <pos x="202.817334" y="594.516517"/>
  <spobs/>
  <jumps>
-  <jump target="Dendria">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
   <jump target="Elixir">
    <autopos/>
    <hide>1.000000</hide>

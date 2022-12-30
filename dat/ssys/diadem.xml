@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="320.967801" y="694.952612"/>
+ <pos x="240.527801" y="648.472612"/>
  <spobs>
   <spob>Diadem I</spob>
   <spob>Diadem II</spob>
@@ -14,7 +14,7 @@
   <spob>Riun</spob>
  </spobs>
  <jumps>
-  <jump target="Dendria">
+  <jump target="Babylon">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
@@ -22,7 +22,15 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Muran">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Solene">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Wahri">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

@@ -6,15 +6,11 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="154.649284" y="748.306014"/>
+ <pos x="84.209284" y="729.826014"/>
  <spobs>
   <spob>Dust</spob>
  </spobs>
  <jumps>
-  <jump target="Dendria">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
   <jump target="Forlat">
    <autopos/>
    <hide>1.000000</hide>

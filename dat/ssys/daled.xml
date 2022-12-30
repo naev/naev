@@ -9,7 +9,7 @@
   <interference>23.809524</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="43.663630" y="621.362991"/>
+ <pos x="-49.579151" y="564.868056"/>
  <spobs>
   <spob_virtual>Pirate Small</spob_virtual>
  </spobs>
@@ -31,10 +31,6 @@
   <jump target="New Haven">
    <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Wahri">
-   <autopos/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

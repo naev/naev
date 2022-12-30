@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="273.497773" y="754.732439"/>
+ <pos x="259.724440" y="694.085772"/>
  <spobs>
   <spob>Babylon I</spob>
   <spob>Babylon II</spob>
@@ -14,7 +14,7 @@
   <spob>Scipio</spob>
  </spobs>
  <jumps>
-  <jump target="Dendria">
+  <jump target="Diadem">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

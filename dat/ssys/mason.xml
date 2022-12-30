@@ -9,7 +9,7 @@
   <interference>20.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-79.996156" y="640.383542"/>
+ <pos x="-167.376472" y="503.609190"/>
  <spobs>
   <spob>Mason I</spob>
   <spob>Mason II</spob>
@@ -21,6 +21,10 @@
   <jump target="C-28">
    <pos x="-6275.245619" y="-7360.922215"/>
    <hidden/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Capricorn">
+   <autopos/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Daled">

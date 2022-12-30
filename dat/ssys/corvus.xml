@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="214.300745" y="856.501927"/>
+ <pos x="116.669135" y="780.286712"/>
  <spobs>
   <spob>Corax</spob>
   <spob>Corvus I</spob>
@@ -22,14 +22,6 @@
    <hide>1.000000</hide>
   </jump>
   <jump target="NGC-3371">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Octantis">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Regulus">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

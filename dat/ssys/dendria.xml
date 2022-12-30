@@ -6,27 +6,10 @@
   <interference>5.882353</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="271.277228" y="662.665542"/>
+ <pos x="-286.764052" y="-295.569978"/>
  <spobs/>
  <jumps>
-  <jump target="Babylon">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Diadem">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Dust">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Muran">
-   <autopos/>
-   <hidden/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Titus">
+  <jump target="Ux">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

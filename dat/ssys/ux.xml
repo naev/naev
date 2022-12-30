@@ -16,6 +16,10 @@
   <spob>UX VII</spob>
  </spobs>
  <jumps>
+  <jump target="Dendria">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Valerie">
    <autopos/>
    <hide>1.000000</hide>

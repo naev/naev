@@ -15,6 +15,10 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Octantis">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Percival">
    <autopos/>
    <hide>1.000000</hide>

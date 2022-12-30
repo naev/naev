@@ -6,12 +6,11 @@
   <interference>11.111100</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="189.739446" y="681.717605"/>
+ <pos x="75.183299" y="653.643489"/>
  <spobs/>
  <jumps>
-  <jump target="Dendria">
+  <jump target="Diadem">
    <autopos/>
-   <hidden/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Forlat">
@@ -21,6 +20,10 @@
   <jump target="New Haven">
    <autopos/>
    <hidden/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Wahri">
+   <autopos/>
    <hide>1.000000</hide>
   </jump>
  </jumps>
