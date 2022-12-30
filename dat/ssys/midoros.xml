@@ -13,6 +13,11 @@
   <spob_virtual>Thurion Local</spob_virtual>
  </spobs>
  <jumps>
+  <jump target="Carrza">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Metsys">
    <autopos/>
    <hide>1.000000</hide>
