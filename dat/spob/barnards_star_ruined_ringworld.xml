@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Barnard's Star Ruined Ringworld">
+ <display>Ruined RingWorld</display>
+ <pos x="5099.313287" y="-1559.782213"/>
+ <GFX>
+  <space>ringworld_destroyed.webp</space>
+ </GFX>
+ <presence>
+  <faction>Derelict</faction>
+  <base>0.000000</base>
+  <bonus>0.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+ <tags>
+  <tag>ringworld</tag>
+  <tag>ruined</tag>
+ </tags>
+</spob>
