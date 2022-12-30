@@ -493,6 +493,7 @@ int main( int argc, char** argv )
 
    /* Clean up parser. */
    xmlCleanupParser();
+   xmlMemoryDump();
 
    /* Clean up signal handler. */
    debug_sigClose();
