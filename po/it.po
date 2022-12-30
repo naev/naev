@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-28 00:18+0900\n"
-"PO-Revision-Date: 2022-12-29 02:51+0000\n"
+"PO-Revision-Date: 2022-12-31 02:48+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -2031,6 +2031,9 @@ msgid ""
 "themselves in order to survive a pandemic. They now openly embrace their "
 "human transcendence as a sign of strength."
 msgstr ""
+"I Soromid sono composti da individui che sono stati obbligati a modificare "
+"il proprio genoma per sopravvivere ad una pandemia. Ora accettano "
+"apertamente la loro trascendenza umana come un segno di forza."
 
 #: dat/factions/strangelove.xml:2
 msgid "Strangelove"
@@ -2038,31 +2041,33 @@ msgstr "Stranamore"
 
 #: dat/factions/thurion.xml:2
 msgid "Thurion"
-msgstr ""
+msgstr "Thurion"
 
 #: dat/factions/thurion.xml:10
 msgid ""
 "The Thurion are a mysterious faction located deep in the Nebula. They seem "
 "to be out of touch with the external world."
 msgstr ""
+"I Thurion sono una fazione misteriosa insediatasi nelle profondità della "
+"Nebulosa. Sembra che non abbiano contatti con altre parti esterne."
 
 #: dat/factions/trader.xml:2
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:73
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:75
 msgid "Trader"
-msgstr ""
+msgstr "Mercante"
 
 #: dat/factions/traders_guild.xml:2
 msgid "Traders Guild"
-msgstr ""
+msgstr "Corporazione dei Mercanti"
 
 #: dat/factions/traders_guild.xml:5
 msgid "Space Traders Guild"
-msgstr ""
+msgstr "Corporazione dei Mercanti Spaziali"
 
 #: dat/factions/traders_guild.xml:10
 msgid "TODO we have to make these guys more interesting."
-msgstr ""
+msgstr "DAFARE dobbiamo rendere questi tizi più interessanti."
 
 #: dat/factions/wild_ones.xml:2
 msgid "Wild Ones"
@@ -2077,6 +2082,9 @@ msgid ""
 "The Wild Ones Pirate Clan is a violent and loosely organized band of pirates "
 "that control the Haven sector between Empire and Soromid territories."
 msgstr ""
+"I Pirati del Clan del Selvaggio è una banda di pirati violenta e "
+"approssimativamente organizzata che controlla il settore dell'Oasi situato "
+"tra i territori dell'Impero e degli Soromid."
 
 #. Gets reset on enter system
 #. Must be goal system
@@ -2103,21 +2111,24 @@ msgstr ""
 #: dat/scripts/common/zalek_blackhole.lua:89
 #: dat/scripts/common/zalek_physics.lua:32
 msgid "Za'lek"
-msgstr ""
+msgstr "Za'lek"
 
 #: dat/factions/zalek.xml:7
 msgid "House Za'lek"
-msgstr ""
+msgstr "Casata Za'lek"
 
 #: dat/factions/zalek.xml:12
 msgid ""
 "House Za'lek is the scientific heart of the Empire. Until recently they were "
 "a secretive Great House, but they have recently become much more open."
 msgstr ""
+"La Casata Za'lek è il centro scientifico dell'Impero. Fino a poco tempo fa "
+"era una Grande Casata misteriosa, ma recentemente sono diventati più "
+"trasparenti."
 
 #: dat/outfits/accessory/air_freshener.xml:2
 msgid "Air Freshener"
-msgstr ""
+msgstr "Deodorante per Ambienti"
 
 #: dat/outfits/accessory/air_freshener.xml:5
 #: dat/outfits/accessory/black_cat_doll.xml:5
@@ -2140,7 +2151,7 @@ msgstr ""
 #: dat/outfits/accessory/ugly_statue.xml:5
 #: dat/outfits/accessory/vacuum_cleaner.xml:5 dat/slots/accessory.xml:3
 msgid "Accessory"
-msgstr ""
+msgstr "Accessorio"
 
 #: dat/outfits/accessory/air_freshener.xml:11
 msgid ""
@@ -2149,25 +2160,33 @@ msgid ""
 "modern ships' powerful filtration systems, these days they are entirely "
 "cosmetic."
 msgstr ""
+"A quanto pare i deodoranti per ambiente sono stati utilizzati "
+"tradizionalmente nei veicolo umani come ornamenti. Una volta emanavano una "
+"fragranza profumata, ma, dato che questo non ha più nessun impatto sui "
+"validi sistemi di filtraggio delle astronavi moderne, attualmente hanno uno "
+"scopo puramente cosmetico."
 
 #: dat/outfits/accessory/black_cat_doll.xml:2
 msgid "Black Cat Doll"
-msgstr ""
+msgstr "Pupazzo di Gatto Nero"
 
 #: dat/outfits/accessory/black_cat_doll.xml:11
 msgid ""
 "A crude doll of a black cat made from authentic \"Felis catus\" fur you made "
 "that was all over your ship. It's quite cute."
 msgstr ""
+"Un semplice pupazzo di un gatto nero che hai creato usando pelliccia "
+"autentica di \"Felis catus\" che era sparsa ovunque sulla tua astronave. È "
+"proprio carino."
 
 #: dat/outfits/accessory/black_cat_doll.xml:13
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:11
 msgid "#pOnly active when in stealth.#0"
-msgstr ""
+msgstr "#pAttivo soltanto quando si è in modalità invisibilità.#0"
 
 #: dat/outfits/accessory/broken_nebular_shielding_prototype.xml:2
 msgid "Broken Nebular Shielding Prototype"
-msgstr ""
+msgstr "Prototipo Difettoso di Schermatura Nebulare"
 
 #: dat/outfits/accessory/broken_nebular_shielding_prototype.xml:11
 msgid ""
@@ -2176,10 +2195,14 @@ msgid ""
 "On the other hand it does seem to absorb harmful energy and emit heat "
 "radiation into space."
 msgstr ""
+"Un prototipo difettoso per un originale dispositivo di schermatura che "
+"dovrebbe permettere di viaggiare nella Nebulosa Sol. Tuttavia, a causa dei "
+"suoi malfunzionamenti sei quasi morto. D'altro canto sembra che sia in grado "
+"di assorbire l'energia nociva ed emettere la radiazione termica nello spazio."
 
 #: dat/outfits/accessory/commemorative_stein.xml:2
 msgid "Commemorative Stein"
-msgstr ""
+msgstr "Boccale Commemorativo"
 
 #: dat/outfits/accessory/commemorative_stein.xml:11
 msgid ""
@@ -2191,10 +2214,18 @@ msgid ""
 "there is an inscription saying \"Screw the PUAAA, long live the Hero of "
 "Antlejos!\" with an illegible signature."
 msgstr ""
+"Questo è un boccale che commemora la terraformazione e la costituzione di "
+"una colonia permanente su Antlejos V. Il boccale è coperto da intricate "
+"incisioni che sembrano rappresentare scene della breve storia coloniale. "
+"Puoi intuire quello che sembrano essere individui che combattono a mani "
+"nude, un sacco di macchinari pesanti e persone che sembra danzino in "
+"circolo. Tutto questo è accaduto? Sul fondo c'è un'iscrizione che recita \"Al"
+" diavolo la PUAAA, lunga vita all'Eroe di Antlejos!\" con una firma "
+"illeggibile."
 
 #: dat/outfits/accessory/dv_handbook.xml:2
 msgid "Handbook for Dvaered Good Manners"
-msgstr ""
+msgstr "Manuale delle Buone Maniere Dvaered"
 
 #: dat/outfits/accessory/dv_handbook.xml:11
 msgid ""
@@ -2207,10 +2238,18 @@ msgid ""
 "highest ranks\" -- Colonel Urnus, Executive Office Manager at the High "
 "Command"
 msgstr ""
+"Quando un gentiluomo usa la testa di un altro gentiluomo come trofeo nel "
+"proprio bagno? E quando è più appropriato utilizzarla come boccale? Quando è "
+"permesso bruciare la casa di una delle tue vittime? E quando è assolutamente "
+"sbagliato farlo? Lord Chainsaw, uno dei Signori della Guerra di maggior "
+"successo del nostro tempo, risponde a questi spinosi interrogativi e a molti "
+"altri in questo piccolo libro indispensabile. \"Questo libro mi ha permesso "
+"di farmi strada rapidamente verso i ranghi più elevati\" -- Colonnello "
+"Urnus, Responsabile dell'Ufficio Esecutivo dell'Alto Comando. "
 
 #: dat/outfits/accessory/fuzzy_dice.xml:2
 msgid "Fuzzy Dice"
-msgstr ""
+msgstr "Dadi di Peluche"
 
 #: dat/outfits/accessory/fuzzy_dice.xml:11
 msgid ""
@@ -2219,24 +2258,31 @@ msgid ""
 "belonged to starship pilot Mireia, who was famous for recovering artefacts "
 "from the Nebula before she disappeared mysteriously."
 msgstr ""
+"Un paio di dadi di peluche che possono essere appesi dentro la tua "
+"astronave. Apparentemente dovrebbero portarti fortuna. Si dice che questo "
+"paio particolare di dati fosse appartenuto al pilota di astronavi Mireia, "
+"famosa per recuperare artefatti dalla Nebulosa prima di scomparire "
+"misteriosamente."
 
 #: dat/outfits/accessory/fuzzy_dice.xml:12
 #: dat/outfits/intrinsic/machiavellian_fortune.xml:10
 msgid "#pImproves luck!#0"
-msgstr ""
+msgstr "#pMigliora la fortuna!#0"
 
 #: dat/outfits/accessory/key_chain.xml:2
 msgid "Fancy Key Chain"
-msgstr ""
+msgstr "Portachiavi Bizzarro"
 
 #: dat/outfits/accessory/key_chain.xml:11
 msgid ""
 "A small statue of a crossed-eyed gorilla lifting a Goddard Battlecruiser."
 msgstr ""
+"Una statuetta di un gorilla strabico che solleva un Incrociatore da "
+"Battaglia Goddard."
 
 #: dat/outfits/accessory/left_boot.xml:2
 msgid "Left Boot"
-msgstr ""
+msgstr "Stivale Sinistro"
 
 #: dat/outfits/accessory/left_boot.xml:11
 msgid ""
@@ -2244,14 +2290,17 @@ msgid ""
 "and is full of confetti. You're not sure what to do with it, but it might "
 "liven up the ship."
 msgstr ""
+"Lo stivale sinistro di un ufficiale imperiale di alto rango. Non sembra "
+"essere della tua misura ed è pieno di confetti. Non sei sicuro di cosa "
+"farne, ma potrebbe vivacizzare l'astronave."
 
 #: dat/outfits/accessory/left_boot.xml:13
 msgid "#pSmells funky.#0"
-msgstr ""
+msgstr "#pOdore nauseabondo.#0"
 
 #: dat/outfits/accessory/love_letter.xml:2
 msgid "Love Letter"
-msgstr ""
+msgstr "Lettera d'Amore"
 
 #: dat/outfits/accessory/love_letter.xml:11
 msgid ""
@@ -2260,28 +2309,34 @@ msgid ""
 "fairly certain that you did a favour in not delivering it. At least it makes "
 "your ship look cuter."
 msgstr ""
+"Una lettera d'amore assurda che avresti dovuto consegnare, leggendo la prima "
+"riga \"My tootlepumps, how frompscious are thein pluckerpumps...\" sei "
+"abbastanza certo di aver fatto un favore non consegnandola. Almeno fa "
+"sembrare la tua astronave più carina."
 
 #: dat/outfits/accessory/love_letter.xml:13
 msgid "#rLove is in the air.#0"
-msgstr ""
+msgstr "#rL'amore è nell'aria.#0"
 
 #: dat/outfits/accessory/pentagram_of_valor.xml:2
 msgid "Pentagram of Valor"
-msgstr ""
+msgstr "Pentagramma di Valore"
 
 #: dat/outfits/accessory/pentagram_of_valor.xml:11
 msgid "A token of commitment to the FLF cause. It smells oddly of fish."
-msgstr ""
+msgstr "Un attestato di devozione alla causa FLF. Curiosamente puzza di pesce."
 
 #: dat/outfits/accessory/racing_trophy.xml:2
 msgid "Racing Trophy"
-msgstr ""
+msgstr "Trofeo di Gara di Velocità"
 
 #: dat/outfits/accessory/racing_trophy.xml:11
 msgid ""
 "Racing trophy you won with your excellent piloting skills. Looks great on "
 "the wall!"
 msgstr ""
+"Il trofeo di gara di velocità che hai vinto grazie alle tue eccellenti "
+"capacità di pilota. Ha un aspetto favoloso sulla parete!"
 
 #: dat/outfits/accessory/sandwich_holder.xml:2
 msgid "Sandwich Holder"
@@ -3470,7 +3525,7 @@ msgstr ""
 #: dat/outfits/fighter_bays/empire_lancelot_bay.xml:8
 #: dat/ships/empire/empire_pacifier.xml:19
 msgid "You need at least 50 reputation with the Empire."
-msgstr ""
+msgstr "Hai bisogno di almeno 50 reputazioni con l'Impero."
 
 #: dat/outfits/fighter_bays/empire_lancelot_bay.xml:13
 msgid ""
@@ -3488,7 +3543,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/fidelity_bay.xml:8
 msgid "You need at least 50 reputation with House Sirius."
-msgstr ""
+msgstr "Hai bisogno di almeno 50 reputazioni con la Casata Sirio."
 
 #: dat/outfits/fighter_bays/fidelity_bay.xml:13
 msgid ""
@@ -3594,7 +3649,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/sirius_shaman_bay.xml:8
 msgid "You need at least 50 reputation with the Sirius."
-msgstr ""
+msgstr "Hai bisogno di almeno 50 reputazioni con i siriani."
 
 #: dat/outfits/fighter_bays/sirius_shaman_bay.xml:13
 msgid ""
@@ -3610,7 +3665,7 @@ msgstr ""
 #: dat/outfits/fighter_bays/soromid_brigand_bay.xml:8
 #: dat/ships/soromid/soromid_nyx.xml:17
 msgid "You need at least 50 reputation with the Soromid."
-msgstr ""
+msgstr "Hai bisogno di almeno 50 reputazioni con i Soromid."
 
 #: dat/outfits/fighter_bays/soromid_brigand_bay.xml:13
 msgid ""
@@ -3627,7 +3682,7 @@ msgstr ""
 #: dat/ships/thurion/thurion_apprehension.xml:20
 #: dat/ships/thurion/thurion_taciturnity.xml:19
 msgid "You need at least 50 reputation with the Thurion."
-msgstr ""
+msgstr "Hai bisogno di almeno 50 reputazioni con i Thurion."
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_bay.xml:13
 msgid ""
@@ -3644,7 +3699,7 @@ msgstr ""
 #: dat/ships/thurion/thurion_ingenuity.xml:19
 #: dat/ships/thurion/thurion_scintillation.xml:20
 msgid "You need at least 30 reputation with the Thurion."
-msgstr ""
+msgstr "Hai bisogno di almeno 30 reputazioni con i Thurion."
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_dock.xml:13
 msgid ""
@@ -3661,7 +3716,7 @@ msgstr ""
 #: dat/outfits/fighter_bays/zalek_light_drone_bay.xml:8
 #: dat/ships/zalek/zalek_demon.xml:19
 msgid "You need at least 50 reputation with House Za'lek."
-msgstr ""
+msgstr "Hai bisogno di almeno 50 reputazioni con la Casata Za'lek."
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_bay.xml:13
 msgid ""
@@ -3679,7 +3734,7 @@ msgstr ""
 #: dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml:8
 #: dat/outfits/launchers/zalek_hunter_launcher.xml:8
 msgid "You need at least 30 reputation with House Za'lek."
-msgstr ""
+msgstr "Hai bisogno di almeno 30 reputazioni con la Casata Za'lek."
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_mini_bay.xml:13
 msgid ""
@@ -3696,7 +3751,7 @@ msgstr ""
 #: dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml:8
 #: dat/ships/zalek/zalek_mammon.xml:23
 msgid "You need at least 60 reputation with House Za'lek."
-msgstr ""
+msgstr "Hai bisogno di almeno 60 reputazioni con la Casata Za'lek."
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml:13
 msgid ""
@@ -3713,7 +3768,7 @@ msgstr ""
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:8
 #: dat/ships/zalek/zalek_sting.xml:19
 msgid "You need at least 40 reputation with House Za'lek."
-msgstr ""
+msgstr "Hai bisogno di almeno 40 reputazioni con la Casata Za'lek."
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml:13
 msgid ""
@@ -5258,7 +5313,7 @@ msgstr ""
 
 #: dat/outfits/utility/combatai/hive_combat_ai.xml:10
 msgid "You need at least 10 reputation with House Za'lek."
-msgstr ""
+msgstr "Hai bisogno di almeno 10 reputazioni con la Casata Za'lek."
 
 #: dat/outfits/utility/combatai/hive_combat_ai.xml:13
 msgid ""
@@ -6423,7 +6478,7 @@ msgstr ""
 #: dat/ships/dvaered/dvaered_ancestor.xml:18
 #: dat/ships/dvaered/dvaered_vendetta.xml:19
 msgid "You need at least 30 reputation with House Dvaered."
-msgstr ""
+msgstr "Hai bisogno di almeno 30 reputazioni con la Casata Dvaered."
 
 #: dat/ships/dvaered/dvaered_ancestor.xml:19
 msgid ""
@@ -6439,7 +6494,7 @@ msgstr ""
 #: dat/ships/dvaered/dvaered_arsenal.xml:21
 #: dat/ships/dvaered/dvaered_retribution.xml:19
 msgid "You need at least 60 reputation with House Dvaered."
-msgstr ""
+msgstr "Hai bisogno di almeno 60 reputazioni con la Casata Dvaered."
 
 #: dat/ships/dvaered/dvaered_arsenal.xml:22
 msgid ""
@@ -6458,7 +6513,7 @@ msgstr ""
 
 #: dat/ships/dvaered/dvaered_goddard.xml:21
 msgid "You need at least 70 reputation with House Dvaered."
-msgstr ""
+msgstr "Hai bisogno di almeno 70 reputazioni con la Casata Dvaered."
 
 #: dat/ships/dvaered/dvaered_goddard.xml:22
 msgid ""
@@ -6477,7 +6532,7 @@ msgstr ""
 
 #: dat/ships/dvaered/dvaered_phalanx.xml:19
 msgid "You need at least 40 reputation with House Dvaered."
-msgstr ""
+msgstr "Hai bisogno di almeno 40 reputazioni con la Casata Dvaered."
 
 #: dat/ships/dvaered/dvaered_phalanx.xml:20
 msgid ""
@@ -6518,7 +6573,7 @@ msgstr ""
 
 #: dat/ships/dvaered/dvaered_vigilance.xml:18
 msgid "You need at least 50 reputation with House Dvaered."
-msgstr ""
+msgstr "Hai bisogno di almeno 50 reputazioni con la Casata Dvaered."
 
 #: dat/ships/dvaered/dvaered_vigilance.xml:19
 msgid ""
@@ -6545,7 +6600,7 @@ msgstr ""
 
 #: dat/ships/empire/empire_admonisher.xml:21
 msgid "You need at least 40 reputation with the Empire."
-msgstr ""
+msgstr "Hai bisogno di almeno 40 reputazioni con l'Impero."
 
 #: dat/ships/empire/empire_admonisher.xml:22
 msgid ""
@@ -6561,7 +6616,7 @@ msgstr "Falconiere Imperiale"
 #: dat/ships/empire/empire_hawking.xml:22
 #: dat/ships/empire/empire_rainmaker.xml:23
 msgid "You need at least 60 reputation with the Empire."
-msgstr ""
+msgstr "Hai bisogno di almeno 60 reputazioni con l'Impero."
 
 #: dat/ships/empire/empire_hawking.xml:23
 msgid ""
@@ -6576,7 +6631,7 @@ msgstr "Lancillotto Imperiale"
 
 #: dat/ships/empire/empire_lancelot.xml:19
 msgid "You need at least 30 reputation with the Empire."
-msgstr ""
+msgstr "Hai bisogno di almeno 30 reputazioni con l'Impero."
 
 #: dat/ships/empire/empire_lancelot.xml:20
 msgid ""
@@ -6602,7 +6657,7 @@ msgstr "Pacificatore Imperiale"
 
 #: dat/ships/empire/empire_peacemaker.xml:21
 msgid "You need at least 70 reputation with the Empire."
-msgstr ""
+msgstr "Hai bisogno di almeno 70 reputazioni con l'Impero."
 
 #: dat/ships/empire/empire_peacemaker.xml:22
 msgid ""
@@ -6635,7 +6690,7 @@ msgstr "Squalo Imperiale"
 
 #: dat/ships/empire/empire_shark.xml:20
 msgid "You need at least 20 reputation with the Empire."
-msgstr ""
+msgstr "Hai bisogno di almeno 20 reputazioni con l'Impero."
 
 #: dat/ships/empire/empire_shark.xml:21
 msgid ""
@@ -7165,7 +7220,7 @@ msgstr ""
 #: dat/ships/proteron/proteron_archimedes.xml:21
 #: dat/ships/proteron/proteron_watson.xml:21
 msgid "You need at least 70 reputation with the Proteron."
-msgstr ""
+msgstr "Hai bisogno di almeno 70 reputazioni con i Proteon."
 
 #: dat/ships/proteron/proteron_archimedes.xml:22
 msgid ""
@@ -7179,7 +7234,7 @@ msgstr "Proteron Dalton"
 
 #: dat/ships/proteron/proteron_dalton.xml:19
 msgid "You need at least 20 reputation with the Proteron."
-msgstr ""
+msgstr "Hai bisogno di almeno 20 reputazioni con i Proteon."
 
 #: dat/ships/proteron/proteron_dalton.xml:20
 msgid ""
@@ -7223,7 +7278,7 @@ msgstr ""
 
 #: dat/ships/proteron/proteron_hippocrates.xml:21
 msgid "You need at least 50 reputation with the Proteron."
-msgstr ""
+msgstr "Hai bisogno di almeno 50 reputazioni con i Proteon."
 
 #: dat/ships/proteron/proteron_hippocrates.xml:22
 msgid ""
@@ -7240,7 +7295,7 @@ msgstr ""
 
 #: dat/ships/proteron/proteron_pythagoras.xml:20
 msgid "You need at least 60 reputation with the Proteron."
-msgstr ""
+msgstr "Hai bisogno di almeno 60 reputazioni con i Proteon."
 
 #: dat/ships/proteron/proteron_pythagoras.xml:21
 msgid ""
@@ -7268,7 +7323,7 @@ msgstr ""
 
 #: dat/ships/sirius/sirius_divinity.xml:17 dat/ships/sirius/sirius_dogma.xml:17
 msgid "You need at least 70 reputation with House Sirius."
-msgstr ""
+msgstr "Hai bisogno di almeno 70 reputazioni con la Casata Sirio."
 
 #: dat/ships/sirius/sirius_divinity.xml:18
 msgid ""
@@ -7296,7 +7351,7 @@ msgstr "Fedeltà di Sirio"
 
 #: dat/ships/sirius/sirius_fidelity.xml:16
 msgid "You need at least 20 reputation with House Sirius."
-msgstr ""
+msgstr "Hai bisogno di almeno 20 reputazioni con la Casata Sirio."
 
 #: dat/ships/sirius/sirius_fidelity.xml:17
 msgid ""
@@ -7311,7 +7366,7 @@ msgstr "Predicatore di Sirio"
 
 #: dat/ships/sirius/sirius_preacher.xml:16
 msgid "You need at least 40 reputation with House Sirius."
-msgstr ""
+msgstr "Hai bisogno di almeno 40 reputazioni con la Casata Sirio."
 
 #: dat/ships/sirius/sirius_preacher.xml:17
 msgid ""
@@ -7326,7 +7381,7 @@ msgstr ""
 
 #: dat/ships/sirius/sirius_providence.xml:21
 msgid "You need at least 60 reputation with House Sirius."
-msgstr ""
+msgstr "Hai bisogno di almeno 60 reputazioni con la Casata Sirio."
 
 #: dat/ships/sirius/sirius_providence.xml:22
 msgid ""
@@ -7342,7 +7397,7 @@ msgstr "Sciamano di Sirio"
 
 #: dat/ships/sirius/sirius_shaman.xml:16
 msgid "You need at least 30 reputation with House Sirius."
-msgstr ""
+msgstr "Hai bisogno di almeno 30 reputazioni con la Casata Sirio."
 
 #: dat/ships/sirius/sirius_shaman.xml:17
 msgid ""
@@ -7361,7 +7416,7 @@ msgstr ""
 
 #: dat/ships/soromid/soromid_arx.xml:23 dat/ships/soromid/soromid_vox.xml:20
 msgid "You need at least 70 reputation with the Soromid."
-msgstr ""
+msgstr "Hai bisogno di almeno 70 reputazioni con i Soromid."
 
 #: dat/ships/soromid/soromid_arx.xml:24
 msgid ""
@@ -7382,7 +7437,7 @@ msgstr ""
 
 #: dat/ships/soromid/soromid_brigand.xml:16
 msgid "You need at least 20 reputation with the Soromid."
-msgstr ""
+msgstr "Hai bisogno di almeno 20 reputazioni con i Soromid."
 
 #: dat/ships/soromid/soromid_brigand.xml:17
 msgid ""
@@ -7402,7 +7457,7 @@ msgstr ""
 
 #: dat/ships/soromid/soromid_copia.xml:23 dat/ships/soromid/soromid_ira.xml:21
 msgid "You need at least 60 reputation with the Soromid."
-msgstr ""
+msgstr "Hai bisogno di almeno 60 reputazioni con i Soromid."
 
 #: dat/ships/soromid/soromid_copia.xml:24
 msgid ""
@@ -7438,7 +7493,7 @@ msgstr ""
 #: dat/ships/soromid/soromid_marauder.xml:17
 #: dat/ships/soromid/soromid_reaver.xml:16
 msgid "You need at least 30 reputation with the Soromid."
-msgstr ""
+msgstr "Hai bisogno di almeno 30 reputazioni con i Soromid."
 
 #: dat/ships/soromid/soromid_marauder.xml:18
 msgid ""
@@ -7469,7 +7524,7 @@ msgstr ""
 
 #: dat/ships/soromid/soromid_odium.xml:18
 msgid "You need at least 40 reputation with the Soromid."
-msgstr ""
+msgstr "Hai bisogno di almeno 40 reputazioni con i Soromid."
 
 #: dat/ships/soromid/soromid_odium.xml:19
 msgid ""
@@ -7529,7 +7584,7 @@ msgstr ""
 
 #: dat/ships/thurion/thurion_certitude.xml:21
 msgid "You need at least 70 reputation with the Thurion."
-msgstr ""
+msgstr "Hai bisogno di almeno 70 reputazioni con i Thurion."
 
 #: dat/ships/thurion/thurion_ingenuity.xml:2
 msgid "Thurion Ingenuity"
@@ -7551,7 +7606,7 @@ msgstr ""
 
 #: dat/ships/thurion/thurion_perspicacity.xml:21
 msgid "You need at least 20 reputation with the Thurion."
-msgstr ""
+msgstr "Hai bisogno di almeno 20 reputazioni con i Thurion."
 
 #: dat/ships/thurion/thurion_perspicacity.xml:22
 msgid ""
@@ -7586,7 +7641,7 @@ msgstr ""
 
 #: dat/ships/thurion/thurion_virtuosity.xml:21
 msgid "You need at least 40 reputation with the Thurion."
-msgstr ""
+msgstr "Hai bisogno di almeno 40 reputazioni con i Thurion."
 
 #: dat/ships/thurion/thurion_virtuosity.xml:22
 msgid ""
@@ -7620,7 +7675,7 @@ msgstr "Diablo di Za'lek"
 
 #: dat/ships/zalek/zalek_diablo.xml:19 dat/ships/zalek/zalek_mephisto.xml:17
 msgid "You need at least 70 reputation with House Za'lek."
-msgstr ""
+msgstr "Hai bisogno di almeno 70 reputazioni con la Casata Za'lek."
 
 #: dat/ships/zalek/zalek_diablo.xml:20
 msgid ""
@@ -38280,7 +38335,7 @@ msgstr ""
 #. Do message if increased
 #: dat/events/standing.lua:81
 msgid "Reputation limit with {fct} increased to {val}!"
-msgstr ""
+msgstr "Il limite di reputazione con {fct} è stato incrementato a {val}!"
 
 #. Only update if there's a tag we care about
 #.
@@ -87238,7 +87293,7 @@ msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:79
 msgid "a reputation as scientist (?)"
-msgstr ""
+msgstr "una reputazione come scienziato (?)"
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:80
 msgid ""
@@ -92707,7 +92762,7 @@ msgstr ""
 #. --
 #: dat/scripts/common/pirate.lua:154
 msgid " This mission will increase your reputation with {fct_longname}."
-msgstr ""
+msgstr " Questa missione incrementerà la tua reputazione con {fct_longname}."
 
 #.
 #. @brief Decrease pirate standings for doing normal missions.
@@ -102020,6 +102075,8 @@ msgid ""
 "Lua script for faction '%s' did not return a string from 'standing:"
 "reputation_max(...)'."
 msgstr ""
+"Lo script Lua per la fazione '%s' non ritorna una stringa da "
+"'standing:reputation_max(...)'."
 
 #: src/faction.c:1283
 #, c-format
@@ -102551,7 +102608,7 @@ msgstr ""
 #: src/info.c:1245
 #, c-format
 msgid "You can have a maximum reputation of %.0f%% with this faction."
-msgstr ""
+msgstr "Puoi avere una reputazione massima di %.0f%% con questa fazione."
 
 #: src/info.c:1267
 msgid "Abort"
