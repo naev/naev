@@ -423,7 +423,8 @@ static void sysedit_btnNewAsteroids( unsigned int wid_unused, const char *unused
 {
    (void) wid_unused;
    (void) unused;
-   const char *title, *caption, *ret;
+   const char *title, *caption;
+   char *ret;
    const char *opts[] = {
       _("Asteroid Field"),
       _("Exclusion Zone"),
