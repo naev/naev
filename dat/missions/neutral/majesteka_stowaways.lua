@@ -103,6 +103,7 @@ function land ()
       vn.sfxVictory()
       vn.na(_([[With that settled, you bright the kids over to Verner who quickly enthralls with some sleight of hand. Seeing that they are in good hands, you now return to your ship with peace of mind.]]))
       vn.func( function ()
+         goodness = 1
          mem.verner = true
       end )
       vn.jump("byebye_good")
@@ -157,7 +158,10 @@ However, it may be better to try to locate a more fitting environment for them t
    vn.label("keeplooking")
    vn.na(_([[You decide to keep looking for a new home for the stowaway orphans.]]))
    vn.func( function()
-      mem.visited[ spb:nameRaw() ] = true
+      -- Only disable for non-good targets
+      if goodness <= 0 then
+         mem.visited[ spb:nameRaw() ] = true
+      end
    end )
    vn.done()
 
