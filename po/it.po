@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-29 17:46+0900\n"
-"PO-Revision-Date: 2022-12-31 02:50+0000\n"
+"PO-Revision-Date: 2022-12-31 22:49+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev-0-10-x/"
 "it/>\n"
@@ -2341,7 +2341,7 @@ msgstr ""
 
 #: dat/outfits/accessory/sandwich_holder.xml:2
 msgid "Sandwich Holder"
-msgstr ""
+msgstr "Reggi Panino Imbottito"
 
 #: dat/outfits/accessory/sandwich_holder.xml:11
 msgid ""
@@ -2349,40 +2349,50 @@ msgid ""
 "useful for hands-free eating of sandwiches in zero gravity. Apparently the "
 "CEO really loves his sandwiches."
 msgstr ""
+"Sembra essere un'edizione limitata del reggi panini imbottiti dei Cantieri "
+"di Astronavi Nexus. Veramente utili per mangiare panini imbottiti avendo le "
+"mani libere in gravità zero. Evidentemente l'Amministratore Delegato ama "
+"decisamente i suoi panini imbottiti."
 
 #: dat/outfits/accessory/satellite_mockup.xml:2
 msgid "Satellite Mock-up"
-msgstr ""
+msgstr "Modello Satellitare"
 
 #: dat/outfits/accessory/satellite_mockup.xml:11
 msgid ""
 "A mock-up of a satellite you helped launch into the Nebula. It even has cute "
 "blinking lights!"
 msgstr ""
+"Un modello di un satellite che hai contribuito a lanciare all'interno della "
+"Nebulosa. Ha anche graziose luci lampeggianti!"
 
 #: dat/outfits/accessory/star_of_valor.xml:2
 msgid "Star of Valor"
-msgstr ""
+msgstr "Stellina al Valore"
 
 #: dat/outfits/accessory/star_of_valor.xml:11
 msgid ""
 "A shiny medal for your contribution to the Dvaered cause. On the back it "
 "says \"not for rectal use\". Wait, what?"
 msgstr ""
+"Una medaglia scintillante per i tuoi contributi alla causa Dvaered. Sul "
+"retro riporta \"non per uso rettale\". Aspetta, cosa?"
 
 #: dat/outfits/accessory/swamp_bombing.xml:2
 msgid "Swamp Bombing"
-msgstr ""
+msgstr "Bombardamento Paludoso"
 
 #: dat/outfits/accessory/swamp_bombing.xml:11
 msgid ""
 "A fairly mediocre cocktail that you don't intend to drink. At least it looks "
 "good as an accessory."
 msgstr ""
+"Una bevanda abbastanza mediocre che non hai intenzione di bere. Se non altro "
+"sembra perfetta come accessorio."
 
 #: dat/outfits/accessory/toy_drone.xml:2
 msgid "Toy Drone"
-msgstr ""
+msgstr "Drone Giocattolo"
 
 #: dat/outfits/accessory/toy_drone.xml:11
 msgid ""
@@ -2390,10 +2400,13 @@ msgid ""
 "too well and it has a habit of bumping into the walls and beeping all the "
 "time, but it is rather cute."
 msgstr ""
+"Un piccolo drone giocattolo che può volare intorno all'astronave. L'IA "
+"sembra non funzionare troppo bene, ha l'abitudine di sbattere contro le "
+"pareti ed emettere bip continuamente, ma è piuttosto carino."
 
 #: dat/outfits/accessory/trading_card_common.xml:2
 msgid "Trading Card (Common)"
-msgstr ""
+msgstr "Figurina (Comune)"
 
 #: dat/outfits/accessory/trading_card_common.xml:11
 msgid ""
@@ -2402,10 +2415,14 @@ msgid ""
 "the Hyena put so much strain on the pilots that it could crush them during "
 "high acceleration?"
 msgstr ""
+"Una figurina della #oIena#0 di un gioco di carte, la cui rarità è comune. "
+"Descrive in dettaglio tutte le statistiche importanti della Iena. Sapevi che "
+"i primi modelli della Iena imprimevano sforzi tali ai piloti tali da poterli "
+"schiacciare durante le accelerazioni repentine?"
 
 #: dat/outfits/accessory/trading_card_rare.xml:2
 msgid "Trading Card (Rare)"
-msgstr ""
+msgstr "Figurina (Rara)"
 
 #: dat/outfits/accessory/trading_card_rare.xml:11
 msgid ""
@@ -2413,10 +2430,14 @@ msgid ""
 "going into the important details of the ship, it just shows a high "
 "definition holographic rendition of the supposed Golden Llama."
 msgstr ""
+"Una figurina del #oLama Dorato#0 di un gioco di carte, la cui rarità è "
+"#prara#0. Al posto di entrare nei dettagli importanti dell'astronave, "
+"visualizza soltanto una rappresentazione olografica ad alta definizione del "
+"presunto Lama Dorato."
 
 #: dat/outfits/accessory/trading_card_uncommon.xml:2
 msgid "Trading Card (Uncommon)"
-msgstr ""
+msgstr "Figurina (Non Comune)"
 
 #: dat/outfits/accessory/trading_card_uncommon.xml:11
 msgid ""
@@ -2426,10 +2447,15 @@ msgid ""
 "allowing the crew to man it past damage that would usually incapacitate "
 "normal ships?"
 msgstr ""
+"Una figurina della #oVigilanza Dvaered#0 di un gioco di carte, la cui rarità "
+"è #pnon comune#0. Descrive in dettaglio tutte le statistiche importanti "
+"della Vigilanza Dvaered. Sapevi che la Vigilanza ha sistemi di supporti "
+"vitali con tripla ridondanza, permettendo così all'equipaggio di supportare "
+"danni che normalmente rendono inabitabili le astronavi normali?"
 
 #: dat/outfits/accessory/ugly_statue.xml:2
 msgid "Ugly Statue"
-msgstr ""
+msgstr "Statua Ripugnante"
 
 #: dat/outfits/accessory/ugly_statue.xml:11
 msgid ""
@@ -2439,10 +2465,16 @@ msgid ""
 "ukulele and its head bobbles around with the ship acceleration. How "
 "tasteful..."
 msgstr ""
+"Una statua che ti è stata regalata dal Barone Sauterfeldt per il tuo "
+"eccellente lavoro. Gli saresti stato più grato se non avesse menzionato che "
+"la sua amante l'avesse obbligato a sbarazzarsene. La statua sembra "
+"rappresentare un gamberetto che indossa una cravatta a farfalla suonando un "
+"ukulele e la cui testa si muova a destra e sinistra seguendo l'accelerazione "
+"dell'astronave. Proprio di buon gusto..."
 
 #: dat/outfits/accessory/vacuum_cleaner.xml:2
 msgid "Vacuum Cleaner?"
-msgstr ""
+msgstr "Aspirapolvere?"
 
 #: dat/outfits/accessory/vacuum_cleaner.xml:11
 msgid ""
@@ -2451,11 +2483,15 @@ msgid ""
 "most certainly not an actual vacuum cleaner, but you don't know this "
 "outfit's real name."
 msgstr ""
+"Scoperto su un caccia modello Quattro Venti che trasportava un "
+"disintegratore Ragnarǫk. Sembra incrementare le prestazioni del tuo motore "
+"quando la massa dell'astronave è elevata. Indubbiamente non è un "
+"aspirapolvere, ma non hai idea del nome di questo tipo di equipaggiamento."
 
 #: dat/outfits/bioship/skills/adaptive_jump.xml:2
 #: dat/scripts/bioship/skills.lua:309
 msgid "Adaptive Jump"
-msgstr ""
+msgstr "Salto Spaziale Adattivo"
 
 #: dat/outfits/bioship/skills/adaptive_jump.xml:4
 #: dat/outfits/bioship/skills/adrenal_gland_i.xml:4
@@ -2489,7 +2525,7 @@ msgstr ""
 #: dat/outfits/bioship/skills/tunnelling_organ.xml:4
 #: dat/outfits/bioship/skills/wanderer.xml:4
 msgid "Bioship Organ"
-msgstr ""
+msgstr "Organo di Bioastronave"
 
 #. Movement skill tree
 #. Only for up to destroyers
@@ -2497,7 +2533,7 @@ msgstr ""
 #: dat/outfits/bioship/skills/adrenal_gland_i.xml:2
 #: dat/scripts/bioship/skills.lua:66
 msgid "Adrenal Gland I"
-msgstr ""
+msgstr "Ghiandola Surrenale I"
 
 #: dat/outfits/bioship/skills/adrenal_gland_i.xml:9
 #: dat/outfits/bioship/skills/adrenal_gland_ii.xml:9
@@ -2507,21 +2543,24 @@ msgid ""
 "adrenaline from raw energy, allowing the ship to temporarily have augmented "
 "movement."
 msgstr ""
+"L'organo Ghiandola Surrenale per Bioastronavi è in grado di generare un "
+"quantitativo immenso di adrenalina a partire da energia grezza, permettendo "
+"all'astronave di avere un aumento di velocità temporaneo."
 
 #: dat/outfits/bioship/skills/adrenal_gland_ii.xml:2
 #: dat/scripts/bioship/skills.lua:84
 msgid "Adrenal Gland II"
-msgstr ""
+msgstr "Ghiandola Surrenale II"
 
 #: dat/outfits/bioship/skills/adrenal_gland_iii.xml:2
 #: dat/scripts/bioship/skills.lua:102
 msgid "Adrenal Gland III"
-msgstr ""
+msgstr "Ghiandola Surrenale III"
 
 #: dat/outfits/bioship/skills/adrenaline_hormones.xml:2
 #: dat/scripts/bioship/skills.lua:208
 msgid "Adrenaline Hormones"
-msgstr ""
+msgstr "Ormoni di Adrenala"
 
 #. Health tree
 #. For everyone!
@@ -2529,7 +2568,7 @@ msgstr ""
 #: dat/outfits/bioship/skills/bulky_abdomen.xml:2
 #: dat/scripts/bioship/skills.lua:155
 msgid "Bulky Abdomen"
-msgstr ""
+msgstr "Addome Voluminoso"
 
 #. Misc tree
 #. For everyone!
@@ -2537,7 +2576,7 @@ msgstr ""
 #: dat/outfits/bioship/skills/cargo_sacs.xml:2
 #: dat/scripts/bioship/skills.lua:294
 msgid "Cargo Sacs"
-msgstr ""
+msgstr "Sacchi Cargo"
 
 #. Stealth skill tree
 #. For up to destroyer
@@ -2545,7 +2584,7 @@ msgstr ""
 #: dat/outfits/bioship/skills/compound_eyes.xml:2
 #: dat/scripts/bioship/skills.lua:118
 msgid "Compound Eyes"
-msgstr ""
+msgstr "Occhi Composti"
 
 #. Plasma tree
 #. For everyone!
@@ -2553,17 +2592,17 @@ msgstr ""
 #: dat/outfits/bioship/skills/corrosion_i.xml:2
 #: dat/scripts/bioship/skills.lua:248
 msgid "Corrosion I"
-msgstr ""
+msgstr "Corrosione I"
 
 #: dat/outfits/bioship/skills/corrosion_ii.xml:2
 #: dat/scripts/bioship/skills.lua:271
 msgid "Corrosion II"
-msgstr ""
+msgstr "Corrosione II"
 
 #: dat/outfits/bioship/skills/enhanced_smell.xml:2
 #: dat/scripts/bioship/skills.lua:317
 msgid "Enhanced Smell"
-msgstr ""
+msgstr "Miglioramento dell'Olfatto"
 
 #: dat/outfits/bioship/skills/feral_rage_i.xml:9
 msgid ""
@@ -2572,11 +2611,16 @@ msgid ""
 "output is significantly increased. Armour damage is needed to enter the "
 "trance-like state."
 msgstr ""
+"Attraverso precise manipolazioni del tronco encefalico, si può indurre la "
+"bioastronave in uno stato primitivo di rabbia furiosa nella quale la potenza "
+"delle armi anteriori e della torretta sono incrementate considerevolmente. "
+"Entrando in questo stato simile all'ipnosi si ha come conseguenza un danno "
+"alle armature."
 
 #: dat/outfits/bioship/skills/feral_rage_i.xml:11
 #: dat/outfits/bioship/skills/feral_rage_ii.xml:11
 msgid "Active for 5 seconds since armour was last damaged."
-msgstr ""
+msgstr "Attiva per 5 secondi dall'ultimo danno subito dall'armatura."
 
 #: dat/outfits/bioship/skills/feral_rage_ii.xml:2
 #: dat/scripts/bioship/skills.lua:216
@@ -2591,6 +2635,12 @@ msgid ""
 "trance-like state. Further coupling with the cerebellum allows the trance to "
 "also increase the ship agility temporarily."
 msgstr ""
+"Attraverso precise manipolazioni del tronco encefalico, si può indurre la "
+"bioastronave in uno stato primitivo di rabbia furiosa nella quale la potenza "
+"delle armi anteriori e della torretta sono incrementate considerevolmente. "
+"Entrando in questo stato simile all'ipnosi si ha come conseguenza un danno "
+"alle armature. Un ulteriore accoppiamento con il cervelletto permette alla "
+"fase di ipnosi anche di aumentare temporaneamente l'agilità dell'astronave."
 
 #: dat/outfits/bioship/skills/feral_rage_iii.xml:2
 #: dat/scripts/bioship/skills.lua:233
@@ -2606,88 +2656,99 @@ msgid ""
 "is induced automaticalyl upon armour damage, but can also be manually "
 "triggered through focusing."
 msgstr ""
+"Attraverso precise manipolazioni del tronco encefalico, si può indurre la "
+"bioastronave in uno stato primitivo di rabbia furiosa nella quale la potenza "
+"delle armi anteriori e della torretta sono incrementate considerevolmente. "
+"Un ulteriore accoppiamento con il cervelletto permette alla fase di ipnosi "
+"anche di aumentare temporaneamente l'agilità dell'astronave. L'ipnosi è "
+"indotta automaticamente in caso di danni all'armatura, ma può anche essere "
+"scatenata manualmente tramite la concentrazione."
 
 #: dat/outfits/bioship/skills/feral_rage_iii.xml:11
 msgid ""
 "Active for 7 seconds since armour was last damaged, or can be manually "
 "toggled with a 30 second cooldown."
 msgstr ""
+"Attiva per 7 secondi dall'ultimo danno all'armatura o può essere attivata "
+"manualmente con un tempo d'attesa di 30 secondi dall'ultimo uso."
 
 #: dat/outfits/bioship/skills/fuel_bladder.xml:2
 #: dat/scripts/bioship/skills.lua:301
 msgid "Fuel Bladder"
-msgstr ""
+msgstr "Vescica del Carburante"
 
 #: dat/outfits/bioship/skills/hard_shell.xml:2
 #: dat/scripts/bioship/skills.lua:170
 msgid "Hard Shell"
-msgstr ""
+msgstr "Corazza Rigida"
 
 #: dat/outfits/bioship/skills/hunters_instinct.xml:2
 #: dat/scripts/bioship/skills.lua:125
 msgid "Hunter's Instinct"
-msgstr ""
+msgstr "Istinto del Cacciatore"
 
 #: dat/outfits/bioship/skills/natural_healing_i.xml:2
 #: dat/scripts/bioship/skills.lua:162
 msgid "Natural Healing I"
-msgstr ""
+msgstr "Guarigione Naturale I"
 
 #: dat/outfits/bioship/skills/natural_healing_ii.xml:2
 #: dat/scripts/bioship/skills.lua:178
 msgid "Natural Healing II"
-msgstr ""
+msgstr "Guarigione Naturale II"
 
 #: dat/outfits/bioship/skills/plasma_burst.xml:2
 #: dat/scripts/bioship/skills.lua:279
 msgid "Plasma Burst"
-msgstr ""
+msgstr "Raffica di Plasma"
 
 #: dat/outfits/bioship/skills/plasma_burst.xml:11
 msgid "Deals 300 plasma damage to all hostile ships in 200 range."
 msgstr ""
+"Infligge 300 danni di arma al plasma a tutte le astronavi ostili presenti "
+"nel raggio di 200."
 
 #: dat/outfits/bioship/skills/reflective_shell.xml:2
 #: dat/scripts/bioship/skills.lua:186
 msgid "Reflective Shell"
-msgstr ""
+msgstr "Corazza Riflettente"
 
 #: dat/outfits/bioship/skills/reflective_shell.xml:11
 msgid "Reflect 5% of damage back to attackers."
-msgstr ""
+msgstr "Riflette il 5% del danno all'attaccante."
 
 #: dat/outfits/bioship/skills/silence.xml:2 dat/scripts/bioship/skills.lua:141
 msgid "Silence"
-msgstr ""
+msgstr "Silenzio"
 
 #: dat/outfits/bioship/skills/the_bite.xml:2 dat/scripts/bioship/skills.lua:21
 msgid "The Bite"
-msgstr ""
+msgstr "Il Morso"
 
 #: dat/outfits/bioship/skills/the_bite_blood_lust.xml:2
 msgid "The Bite - Blood Lust"
-msgstr ""
+msgstr "Il Morso - Sete di Sangue"
 
 #: dat/outfits/bioship/skills/the_bite_improved.xml:2
 msgid "The Bite - Improved"
-msgstr ""
+msgstr "Il Morso - Migliorato"
 
 #: dat/outfits/bioship/skills/tracking_antennae.xml:2
 msgid "Tracking Antennae"
-msgstr ""
+msgstr "Antenne di Tracciamento"
 
 #: dat/outfits/bioship/skills/tunnelling_organ.xml:2
 #: dat/scripts/bioship/skills.lua:325
 msgid "Tunnelling Organ"
-msgstr ""
+msgstr "Organo con effetto tunnel"
 
 #: dat/outfits/bioship/skills/wanderer.xml:2 dat/scripts/bioship/skills.lua:94
 msgid "Wanderer"
-msgstr ""
+msgstr "Vagabondo"
 
 #: dat/outfits/core_engine/dummy_engine.xml:2
 msgid "Dummy Engine"
-msgstr ""
+msgstr "Motore Fittizio"
 
 #: dat/outfits/core_engine/dummy_engine.xml:4
 #: dat/outfits/core_engine/large/beat_up_large_engine.xml:4
@@ -2712,17 +2773,19 @@ msgstr ""
 #: dat/outfits/core_engine/small/unicorp_hawk_350_engine.xml:4
 #: dat/outfits/core_engine/small/zalek_test_engine.xml:4
 msgid "Core Systems (Engine)"
-msgstr ""
+msgstr "Sistemi Principali (Motore)"
 
 #: dat/outfits/core_engine/dummy_engine.xml:9
 msgid ""
 "This is a dummy engine for use in missions only, which does nothing. DO NOT "
 "BUY."
 msgstr ""
+"Questo è un motore fittizio da usarsi soltanto durante le missioni, che non "
+"fa nulla. NON COMPRARLO."
 
 #: dat/outfits/core_engine/large/beat_up_large_engine.xml:2
 msgid "Beat Up Large Engine"
-msgstr ""
+msgstr "Grosso Motore Devastato"
 
 #: dat/outfits/core_engine/large/beat_up_large_engine.xml:9
 #: dat/outfits/core_engine/medium/beat_up_medium_engine.xml:9
@@ -2731,10 +2794,13 @@ msgid ""
 "Clogged, corroded and cracked in every way possible while still remaining in "
 "functional condition, this engine really belongs on the scrap heap."
 msgstr ""
+"Intasato, corroso e crepato in ogni possibile maniera, pur restando in "
+"condizioni funzionanti, questo motore appartiene veramente ad una discarica "
+"di rottami."
 
 #: dat/outfits/core_engine/large/krain_remige_engine.xml:2
 msgid "Krain Remige Engine"
-msgstr ""
+msgstr "Motore Krain Remige"
 
 #: dat/outfits/core_engine/large/krain_remige_engine.xml:9
 msgid ""
@@ -2743,10 +2809,15 @@ msgid ""
 "performance exceeding most other cruiser engines in every respect, though "
 "its tuning renders it ill-suited to heavier vessels."
 msgstr ""
+"Il Remige è stato sviluppato dalle industrie Krain esclusivamente per "
+"l'incrociatore usato come loro astronave ammiraglia, il Falco. Ottimizzato "
+"per le necessità del Falco, il Remige eroga prestazioni superiori, sotto "
+"tutti i punti di vista, rispetto agli altri motori per incrociatori, anche "
+"se la sua messa a punto lo rende poco adatto ad astronavi più pesanti."
 
 #: dat/outfits/core_engine/large/melendez_mammoth_xl_engine.xml:2
 msgid "Melendez Mammoth XL Engine"
-msgstr ""
+msgstr "Motore Melendez Mammut XL "
 
 #: dat/outfits/core_engine/large/melendez_mammoth_xl_engine.xml:10
 msgid ""
@@ -2755,10 +2826,15 @@ msgid ""
 "the galaxy, whether in the form of bulk freight or as the primary engine of "
 "a fully-equipped battlecruiser."
 msgstr ""
+"Il Mammut XL è il motore più grande prodotto dalle industrie Melendez, ha "
+"una veramente limitata concorrenza quando si tratta di muovere una massa "
+"enorme per la galassia, sia essa sotto forma di voluminoso carico o che sia "
+"usato come motore principale di un incrociatore da battaglia completamente "
+"equipaggiato."
 
 #: dat/outfits/core_engine/large/nexus_bolt_3500_engine.xml:2
 msgid "Nexus Bolt 3500 Engine"
-msgstr ""
+msgstr "Motore Nexus Bolt 3500"
 
 #: dat/outfits/core_engine/large/nexus_bolt_3500_engine.xml:9
 msgid ""
@@ -2766,10 +2842,13 @@ msgid ""
 "Like most Nexus engines, it doesn't excel in speed, but its low power "
 "consumption makes it an attractive option for some pilots."
 msgstr ""
+"Il Bolt 3500 è un motore raramente utilizzato, progettato per incrociatori. "
+"Come la maggior parte dei motori Nexus, non eccelle in velocità, ma il suo "
+"basso consumo energetico lo rende un'opzione interessante per alcuni piloti."
 
 #: dat/outfits/core_engine/large/tricon_typhoon_engine.xml:2
 msgid "Tricon Typhoon Engine"
-msgstr ""
+msgstr "Motore Tricon Tifone"
 
 #: dat/outfits/core_engine/large/tricon_typhoon_engine.xml:9
 msgid ""
@@ -2778,10 +2857,14 @@ msgid ""
 "of many captains, though its high power consumption limits it to ships with "
 "powerful reactors."
 msgstr ""
+"L'ideazione dei motori Tifone è stato un progetto prestigioso per Tricon. "
+"Fornendo agli incrociatori una maneggevolezza e una velocità formidabili, è "
+"il preferito di molti capitani, anche se il suo elevato consumo energetico "
+"lo confini all'uso solo su astronavi con potenti reattori."
 
 #: dat/outfits/core_engine/large/tricon_typhoon_ii_engine.xml:2
 msgid "Tricon Typhoon II Engine"
-msgstr ""
+msgstr "Motore Tricon Tifone II"
 
 #: dat/outfits/core_engine/large/tricon_typhoon_ii_engine.xml:10
 msgid ""
@@ -2790,10 +2873,15 @@ msgid ""
 "markedly higher than anything in its class, but most captains are willing to "
 "make the trade for superior manoeuvrability"
 msgstr ""
+"Il più grande motore Tricon in produzione, il Tifone II ostenta "
+"sorprendentemente elevate prestazioni per un motore adatto per le principali "
+"astronavi. Il suo consumo energetico è nettamente il più alto nella sua "
+"classe, ma la maggior parte dei capitani sono disposti a fare questo cambio "
+"per avere una maggior manovrabilità"
 
 #: dat/outfits/core_engine/large/unicorp_eagle_7000_engine.xml:2
 msgid "Unicorp Eagle 7000 Engine"
-msgstr ""
+msgstr "Motore Unicorp Aquila 7000"
 
 #: dat/outfits/core_engine/large/unicorp_eagle_7000_engine.xml:10
 msgid ""
@@ -2803,14 +2891,21 @@ msgid ""
 "and its efficiency makes it an attractive option for heavy cruisers that "
 "need as much battery power for their weapons as possible."
 msgstr ""
+"Il motore Aquila 7000 è il più grande e a maggior capacità prodotto delle "
+"industrie Unicorp, anche se probabilmente non è un modello per astronavi "
+"ammiraglia. È abbastanza a buon mercato e questo lo rende interessante per "
+"capitani con un budget limitato se la loro richiesta di prestazioni non è "
+"troppo elevata; la sua efficienza lo rende appetibile per incrociatori "
+"pesanti che necessitano che la maggior parte possibile dell'energia prodotta "
+"dalle batterie sia destinata alle armi."
 
 #: dat/outfits/core_engine/medium/beat_up_medium_engine.xml:2
 msgid "Beat Up Medium Engine"
-msgstr ""
+msgstr "Medio Motore Devastato"
 
 #: dat/outfits/core_engine/medium/krain_patagium_engine.xml:2
 msgid "Krain Patagium Engine"
-msgstr ""
+msgstr "Motore Krain Patagio"
 
 #: dat/outfits/core_engine/medium/krain_patagium_engine.xml:10
 msgid ""
@@ -2819,10 +2914,15 @@ msgid ""
 "terms of maximum speed and manouverability, the engine is not adequate for "
 "most other destroyers due to their higher mass."
 msgstr ""
+"Il Patagio è un motore per cacciatorpediniere sviluppato dalle industrie "
+"Krain per essere utilizzato sul Ponte Stellare. Anche se le sue prestazioni "
+"eccedono quelle degli altri motori per cacciatorpediniere in termini di "
+"velocità massima e manovrabilità, il motore non è adeguato per la maggior "
+"parte degli altri cacciatorpediniere a causa della sua maggiore massa."
 
 #: dat/outfits/core_engine/medium/melendez_buffalo_xl_engine.xml:2
 msgid "Melendez Buffalo XL Engine"
-msgstr ""
+msgstr "Motore Melendez Bufalo XL"
 
 #: dat/outfits/core_engine/medium/melendez_buffalo_xl_engine.xml:10
 msgid ""
@@ -2831,10 +2931,15 @@ msgid ""
 "in its size class, and more than a few combat vessels rely on it to move "
 "them and their arsenals into battle."
 msgstr ""
+"Il Buffalo XL è un motore basilare per le astronavi cargo di media "
+"grandezza, particolarmente quelle che trasportano carichi consistenti. La "
+"sua notevole potenza lascia poca concorrenza in questa classe di astronavi e "
+"più di qualche astronave da combattimento si affida ad esso per muoverle "
+"insieme al loro arsenale nelle battaglie."
 
 #: dat/outfits/core_engine/medium/nexus_arrow_700_engine.xml:2
 msgid "Nexus Arrow 700 Engine"
-msgstr ""
+msgstr "Motore Nexus Freccia 700"
 
 #: dat/outfits/core_engine/medium/nexus_arrow_700_engine.xml:9
 msgid ""
@@ -2842,10 +2947,13 @@ msgid ""
 "giving captains decent manouverability without leeching too much off of the "
 "ship's reactors."
 msgstr ""
+"La Freccia 700 è un motore per Corvetta ad un prezzo rispettabile, fornendo "
+"ai capitani una manovrabilità decente senza sottrarre troppo ai reattori "
+"dell'astronave."
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_engine.xml:2
 msgid "Tricon Cyclone Engine"
-msgstr ""
+msgstr "Motore Tricon Ciclone"
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_engine.xml:9
 msgid ""
@@ -2853,10 +2961,13 @@ msgid ""
 "engines with superb performance. Many large navies and wealthier mercenaries "
 "employ the Cyclone in their corvettes."
 msgstr ""
+"Il motore Ciclone della Tricon tiene alta la reputazione della corporazione "
+"per i motori di prima qualità con prestazioni superbe. Molti astronauti e i "
+"più ricci mercenari utilizzano il Ciclone nelle loro Corvette."
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_ii_engine.xml:2
 msgid "Tricon Cyclone II Engine"
-msgstr ""
+msgstr "Motore Tricon Ciclone II"
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_ii_engine.xml:10
 msgid ""
@@ -2865,10 +2976,15 @@ msgid ""
 "than doubling the engine's mass capacity. Its high power consumption is "
 "typically gladly written off given its exemplary performance."
 msgstr ""
+"Un motore preferito dai capitani di cacciatorpediniere e astronavi cargo che "
+"puntano tutto sui tempi di consegna, il Ciclone II mantiene la maggior parte "
+"delle prestazioni del motore Ciclone originale, pur più che raddoppiando la "
+"capacità di massa spostabile dal motore. Il suo alto consumo energetico non "
+"viene preso in considerazione grazie alle sue prestazioni ineccepibili."
 
 #: dat/outfits/core_engine/medium/unicorp_falcon_1300_engine.xml:2
 msgid "Unicorp Falcon 1300 Engine"
-msgstr ""
+msgstr "Motore Unicorp Falcone 1300"
 
 #: dat/outfits/core_engine/medium/unicorp_falcon_1300_engine.xml:10
 msgid ""
@@ -2877,14 +2993,19 @@ msgid ""
 "Destroyer pilots who prefer a more efficient engine over the fastest engine "
 "available."
 msgstr ""
+"Il Falcone 1300 è un motore comune di bassa potenza e pesantezza media. È "
+"comunemente utilizzato dai piloti di astronavi cargo civili che non possono "
+"permettersi qualcosa di meglio, ma anche dai piloti di cacciatorpediniere "
+"che preferiscono un motore più efficiente rispetto a quelli più veloci "
+"attualmente disponibili."
 
 #: dat/outfits/core_engine/small/beat_up_small_engine.xml:2
 msgid "Beat Up Small Engine"
-msgstr ""
+msgstr "Piccolo Motore Devastato"
 
 #: dat/outfits/core_engine/small/melendez_ox_xl_engine.xml:2
 msgid "Melendez Ox XL Engine"
-msgstr ""
+msgstr "Motore Melendez Ox XL"
 
 #: dat/outfits/core_engine/small/melendez_ox_xl_engine.xml:10
 msgid ""
@@ -2892,10 +3013,14 @@ msgid ""
 "excels at enabling merchants to haul moderate amounts of cargo from system "
 "to system with minimal refuelling stops."
 msgstr ""
+"Tra i motori più potenti disponibili per piccole astronavi, il Ox XL eccelle "
+"nel permettere ai mercanti di trasportare quantitativi moderati di carico "
+"tra i sistemi con un numero di soste minimo per il rifornimento di "
+"carburante."
 
 #: dat/outfits/core_engine/small/nexus_dart_150_engine.xml:2
 msgid "Nexus Dart 150 Engine"
-msgstr ""
+msgstr "Motore Nexus Dardo 150"
 
 #: dat/outfits/core_engine/small/nexus_dart_150_engine.xml:9
 msgid ""
@@ -2904,10 +3029,14 @@ msgid ""
 "reasonable price. A very popular engine among civilian and military users "
 "alike."
 msgstr ""
+"Il Dardo 150 è un motore completo per astronavi leggere. Anche se non "
+"eccelle in velocità, offre una buona manovrabilità ed efficienza energetica "
+"per un prezzo ragionevole. Un motore veramente popolare per utenti civili e "
+"militari."
 
 #: dat/outfits/core_engine/small/tricon_zephyr_engine.xml:2
 msgid "Tricon Zephyr Engine"
-msgstr ""
+msgstr "Motore Tricon Zefiro"
 
 #: dat/outfits/core_engine/small/tricon_zephyr_engine.xml:9
 msgid ""
@@ -2916,11 +3045,16 @@ msgid ""
 "caveat of markedly increased power consumption, but those flying with Tricon "
 "engines can usually afford the requisite reactor upgrades."
 msgstr ""
+"Per piloti di astronavi leggere che richiedono prestazioni senza rivali, lo "
+"Zefiro della Tricon è il motore utilizzato. È il migliore per maneggevolezza "
+"nella sua classe, avvertendo però che il consumo energetico è decisamente "
+"più alto, ma coloro che normalmente scelgono motori Tricon possono "
+"permettersi l'acquisto di un aggiornamento del reattore."
 
 #: dat/outfits/core_engine/small/tricon_zephyr_ii_engine.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:220
 msgid "Tricon Zephyr II Engine"
-msgstr ""
+msgstr "Motore Tricon Zefiro II"
 
 #: dat/outfits/core_engine/small/tricon_zephyr_ii_engine.xml:10
 msgid ""
@@ -2929,10 +3063,15 @@ msgid ""
 "Its performance has not gone unnoticed by merchants either, resulting in its "
 "use for lightweight, time-critical shipping."
 msgstr ""
+"Una versione più grande dell'originale Zefiro della Tricon, pensato per "
+"caccia più pesanti; lo Zefiro II permette ai caccia pesanti e ai bombardieri "
+"di volare come se fossero delle astronavi di pattugliamento. Le sue "
+"prestazioni non sono rimaste inosservate neppure dai mercanti e per questo "
+"viene anche usato per consegne leggere e in tempi ristretti."
 
 #: dat/outfits/core_engine/small/unicorp_hawk_350_engine.xml:2
 msgid "Unicorp Hawk 350 Engine"
-msgstr ""
+msgstr "Motore Unicorp Sparviero 350"
 
 #: dat/outfits/core_engine/small/unicorp_hawk_350_engine.xml:10
 msgid ""
@@ -2940,10 +3079,13 @@ msgid ""
 "modest energy consumption allows it to be equipped on most vessels without "
 "requiring reactor upgrades."
 msgstr ""
+"Lo Sparviero 350 è destinato a caccia pesanti e astronavi cargo leggere. Il "
+"suo consumo energetico modesto gli permette di essere installato sulla "
+"maggior parte delle astronavi senza la necessità di aggiornare il reattore."
 
 #: dat/outfits/core_engine/small/zalek_test_engine.xml:2
 msgid "Za'lek Test Engine"
-msgstr ""
+msgstr "Motore di Prova Za'lek"
 
 #: dat/outfits/core_engine/small/zalek_test_engine.xml:10
 msgid ""
@@ -3568,7 +3710,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/hyena_dock.xml:2
 msgid "Hyena Dock"
-msgstr ""
+msgstr "Alloggiamento di Espansione per Iena"
 
 #: dat/outfits/fighter_bays/hyena_dock.xml:10
 msgid ""
@@ -3576,6 +3718,9 @@ msgid ""
 "all the amenities necessary for the maintenance and operation of the "
 "interceptors."
 msgstr ""
+"Questo alloggiamento di espansione permette alla tua astronave di portare "
+"una coppia di intercettori Iena. È fornito con tutte le amenità necessarie "
+"per la manutenzione e l'operatività degli intercettori."
 
 #: dat/outfits/fighter_bays/lancelot_bay.xml:2
 msgid "Lancelot Bay"
@@ -3707,6 +3852,9 @@ msgid ""
 "comes with all the devices required for the maintenance and flight of the "
 "fighters."
 msgstr ""
+"Questo alloggiamento di espansione permette alla tua astronave di portare "
+"una coppia di intercettori Thurion. È fornito con tutti i dispositivi "
+"necessari per la manutenzione e il volo dei caccia."
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_bay.xml:2
 msgid "Za'lek Bomber Drone Bay"
@@ -66857,11 +67005,8 @@ msgid "Deliver Love"
 msgstr ""
 
 #: dat/missions/neutral/foodbiz/deliverlove.lua:70
-#, fuzzy
-#| msgid "Destroy the practice drone near {destpnt} in the {sys} system"
 msgid "Deliver love letters to {pnt} in the {sys} system."
-msgstr ""
-"Distruggi il drone d'esercitazione che è vicino a {destpnt} nel sistema {sys}"
+msgstr "Consegna una lettera d'amore su {destpnt} nel sistema {sys}."
 
 #. set up hooks
 #: dat/missions/neutral/foodbiz/deliverlove.lua:85
@@ -76056,7 +76201,7 @@ msgstr ""
 #. the probability of an ambush goes up when you cross a system without meeting any ennemy
 #: dat/missions/shark/sh02_tapping.lua:110
 msgid "Time to go back to Alteris"
-msgstr "È ora di tornare su Alteris."
+msgstr "È ora di tornare su Alteris"
 
 #: dat/missions/shark/sh02_tapping.lua:110
 msgid ""
@@ -90514,11 +90659,11 @@ msgstr ""
 #. luacheck: globals bonus_mod effect_name damage_mod base_duration
 #: dat/outfits/lib/bioplasma.lua:49
 msgid " [Corrosion II]"
-msgstr ""
+msgstr " [Corrosione II]"
 
 #: dat/outfits/lib/bioplasma.lua:53
 msgid " [Corrosion I]"
-msgstr ""
+msgstr " [Corrosione I]"
 
 #. Learned at 3
 #: dat/outfits/lib/bioplasma.lua:58
@@ -110192,7 +110337,7 @@ msgstr "Non è ancora stata implementata la creazione dell'arma di tipo '%s'!"
 msgid "Trying to create a Weapon from a non-Weapon type Outfit"
 msgstr ""
 "Tentativo di creare un'arma da un equipaggiamento di tipo non adatto per le "
-"armi."
+"armi"
 
 #: src/weapon.c:2022
 msgid "Trying to create a Beam Weapon from a non-beam outfit."
