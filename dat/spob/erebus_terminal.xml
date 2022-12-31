@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Erebus Terminal">
+ <pos x="-6229.859988" y="5942.327988"/>
+ <GFX>
+  <space>003.webp</space>
+  <exterior>station05.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <base>50.000000</base>
+  <bonus>25.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>7800</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>Erebus station was established to </description>
+  <bar>(null)</bar>
+ </general>
+ <tags>
+  <tag>military</tag>
+  <tag>restricted</tag>
+  <tag>station</tag>
+ </tags>
+</spob>

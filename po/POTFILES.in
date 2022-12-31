@@ -854,6 +854,7 @@ dat/spob/ember.xml
 dat/spob/emperors_fist.xml
 dat/spob/emperors_wrath.xml
 dat/spob/eneguoz_ii.xml
+dat/spob/erebus_terminal.xml
 dat/spob/eridani_ii.xml
 dat/spob/eridani_iii.xml
 dat/spob/eryla.xml
@@ -993,6 +994,8 @@ dat/spob/hs5.xml
 dat/spob/hs51.xml
 dat/spob/hs54.xml
 dat/spob/huanxi.xml
+dat/spob/hubfar_i.xml
+dat/spob/hubfar_station.xml
 dat/spob/humdrum_i.xml
 dat/spob/humdrum_ii.xml
 dat/spob/humdrum_iii.xml
@@ -1134,6 +1137,9 @@ dat/spob/maatsu.xml
 dat/spob/madeleine_station.xml
 dat/spob/madria.xml
 dat/spob/magellan.xml
+dat/spob/majestika_ii.xml
+dat/spob/majestika_iv.xml
+dat/spob/majestika_prime.xml
 dat/spob/malebolge.xml
 dat/spob/malebolge_iii.xml
 dat/spob/malebolge_iv.xml
@@ -2590,6 +2596,7 @@ dat/events/neutral/baron_flintley.lua
 dat/events/neutral/baron_prowl.lua
 dat/events/neutral/derelict.lua
 dat/events/neutral/kidnapped.lua
+dat/events/neutral/majestika_stowaway.lua
 dat/events/neutral/shadow_comm.lua
 dat/events/neutral/shadow_comm2.lua
 dat/events/neutral/shiplover.lua
@@ -2817,6 +2824,7 @@ dat/missions/neutral/foodbiz/delivercake.lua
 dat/missions/neutral/foodbiz/deliverlove.lua
 dat/missions/neutral/kidnapped/traffic_00.lua
 dat/missions/neutral/kidnapped/traffic_01.lua
+dat/missions/neutral/majestika_stowaway.lua
 dat/missions/neutral/nebu_satellite.lua
 dat/missions/neutral/oldwoman.lua
 dat/missions/neutral/patrol.lua
