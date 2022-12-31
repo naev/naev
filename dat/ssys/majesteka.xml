@@ -9,9 +9,9 @@
  <pos x="42.243987" y="-420.485787"/>
  <spobs>
   <spob>Erebus Terminal</spob>
-  <spob>Majestika II</spob>
-  <spob>Majestika IV</spob>
-  <spob>Majestika Prime</spob>
+  <spob>Majesteka II</spob>
+  <spob>Majesteka IV</spob>
+  <spob>Majesteka Prime</spob>
  </spobs>
  <jumps>
   <jump target="Hubfar">

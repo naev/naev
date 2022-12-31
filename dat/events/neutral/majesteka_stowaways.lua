@@ -1,21 +1,21 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<event name="Majestika Stowaways Aboard">
+<event name="Majesteka Stowaways Aboard">
  <location>land</location>
  <chance>100</chance>
- <cond>spob.cur()==spob.get("Majestika II")</cond>
+ <cond>spob.cur()==spob.get("Majesteka II")</cond>
  <unique />
 </event>
 --]]
 --[[
-   Some kids sneak onto your ship if you land on Majestika II.
+   Some kids sneak onto your ship if you land on Majesteka II.
 --]]
 local neu = require "common.neutral"
 local vn = require "vn"
 local tut = require "common.tutorial"
 local fmt = require "format"
 
-local stowaway_spob = spob.get("Majestika II")
+local stowaway_spob = spob.get("Majesteka II")
 
 function create ()
    hook.takeoff("takeoff")
@@ -105,7 +105,7 @@ They quickly change the topic.
    vn.na(_([[You decide to take the orphans to a better place and give them a promising future. However, first things first, you decide to wash them down and give them some of your old clothes. Last thing you want to get is an infestation of space lice.]]))
    vn.na(_([[Once you get hygiene out of the way, you give them some drawing utensils to keep them distracted while you fly them to a better home.]]))
    vn.func( function ()
-      naev.missionStart("Majestika Stowaways")
+      naev.missionStart("Majesteka Stowaways")
       cleanup = true
    end )
 

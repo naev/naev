@@ -1,16 +1,16 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<mission name="Majestika Stowaways">
+<mission name="Majesteka Stowaways">
  <unique />
  <chance>0</chance>
  <location>None</location>
  <notes>
-  <done_evt name="Majestika Stowaways Aboard">Triggers</done_evt>
+  <done_evt name="Majesteka Stowaways Aboard">Triggers</done_evt>
  </notes>
 </mission>
 --]]
 --[[
-   Majestika Stowaways
+   Majesteka Stowaways
 
    Player has to find a good home for the pair of orphans that snuck into their ship.
 --]]
@@ -20,8 +20,8 @@ local vn = require "vn"
 local ant = require "common.antlejos"
 local tut = require "common.tutorial"
 
-local title = _([[Majestika Stowaways]])
-local stowaway_spob, stowaway_sys = spob.get("Majestika II")
+local title = _([[Majesteka Stowaways]])
+local stowaway_spob, stowaway_sys = spob.getS("Majesteka II")
 local reward = outfit.get("Pilot Doll")
 
 function create ()
