@@ -45,7 +45,7 @@ static int factionL_enemies( lua_State *L );
 static int factionL_allies( lua_State *L );
 static int factionL_logo( lua_State *L );
 static int factionL_colour( lua_State *L );
-static int factionL_isknown( lua_State *L );
+static int factionL_isKnown( lua_State *L );
 static int factionL_setKnown( lua_State *L );
 static int factionL_isInvisible( lua_State *L );
 static int factionL_isStatic( lua_State *L );
@@ -74,7 +74,7 @@ static const luaL_Reg faction_methods[] = {
    { "usesHiddenJumps", factionL_usesHiddenJumps },
    { "logo", factionL_logo },
    { "colour", factionL_colour },
-   { "known", factionL_isknown },
+   { "known", factionL_isKnown },
    { "setKnown", factionL_setKnown },
    { "invisible", factionL_isInvisible },
    { "static", factionL_isStatic },
@@ -555,7 +555,7 @@ static int factionL_colour( lua_State *L )
  *    @luatreturn boolean true if the player knows the faction.
  * @luafunc known
  */
-static int factionL_isknown( lua_State *L )
+static int factionL_isKnown( lua_State *L )
 {
    int fac = luaL_validfaction(L, 1);
    lua_pushboolean(L, faction_isKnown(fac));
