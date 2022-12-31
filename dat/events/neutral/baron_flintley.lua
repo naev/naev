@@ -1,15 +1,15 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Flintley">
-  <location>land</location>
-  <chance>100</chance>
-  <cond>player.misnActive("Baron") == false and spob.cur() == spob.get("Tau Station") and player.misnDone("Prince")</cond>
-  <notes>
-   <done_misn name="Prince"/>
-   <campaign>Baron Sauterfeldt</campaign>
-  </notes>
- </event>
- --]]
+ <location>land</location>
+ <chance>100</chance>
+ <cond>player.misnActive("Baron") == false and spob.cur() == spob.get("Tau Station") and player.misnDone("Prince")</cond>
+ <notes>
+  <done_misn name="Prince"/>
+  <campaign>Baron Sauterfeldt</campaign>
+ </notes>
+</event>
+--]]
 --[[
 -- Flintley Event for the Baron mission string. Only used when NOT doing any Baron missions.
 --]]
