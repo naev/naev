@@ -102,6 +102,8 @@ They quickly change the topic.
    vn.done()
 
    vn.label("03_goodhome")
+   vn.na(_([[You decide to take the orphans to a better place and give them a promising future. However, first things first, you decide to wash them down and give them some of your old clothes. Last thing you want to get is an infestation of space lice.]]))
+   vn.na(_([[Once you get hygiene out of the way, you give them some drawing utensils to keep them distracted while you fly them to a better home.]]))
    vn.func( function ()
       naev.missionStart("Majestika Stowaways")
       cleanup = true
