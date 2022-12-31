@@ -437,7 +437,7 @@ static void sysedit_btnNewAsteroids( unsigned int wid_unused, const char *unused
    dialogue_addChoice( title, caption, opts[1] );
    ret = dialogue_runChoice();
    if (ret==NULL)
-      ret = opts[0];
+      ret = strdup(opts[0]);
 
    if (strcmp(ret, opts[0])==0) {
       AsteroidAnchor *ast = &array_grow( &sysedit_sys->asteroids );
@@ -462,6 +462,9 @@ static void sysedit_btnNewAsteroids( unsigned int wid_unused, const char *unused
 
    if (conf.devautosave)
       dsys_saveSystem( sysedit_sys );
+
+   /* Must free. */
+   free(ret);
 }
 
 static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
