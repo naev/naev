@@ -31,11 +31,6 @@ local vn = require "vn"
 local targetworld, targetworld_sys = spob.getS("Halir")
 
 function create ()
-   --makes sure pilot is not currently on Halir
-   if targetworld == spob.cur() then
-      misn.finish(false)
-   end
-
    -- Note: this mission does not make any system claims.
    misn.setNPC( emp.czesc.name, emp.czesc.portrait, emp.czesc.description )
 end
