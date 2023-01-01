@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-29 17:46+0900\n"
-"PO-Revision-Date: 2022-12-31 22:49+0000\n"
+"PO-Revision-Date: 2023-01-01 20:49+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev-0-10-x/"
 "it/>\n"
@@ -3094,6 +3094,11 @@ msgid ""
 "scientists to test new refrigeration and propulsion systems. These engines "
 "are very often modded by students, which makes them unreliable."
 msgstr ""
+"Creato dai costruttori Za'lek, questo motore non aspira ad essere "
+"efficiente. Il suo obiettivo è quello di essere facilmente modificabile per "
+"permettere agli scienziati Za'lek di testare nuovi sistemi di refrigerazione "
+"e propulsione. Questi motori sono spesso modificati dagli studenti e per "
+"questo diventano inaffidabili."
 
 #: dat/outfits/core_hull/dummy_plating.xml:2
 msgid "Dummy Plating"
@@ -3131,6 +3136,8 @@ msgid ""
 "This is a dummy hull for use in missions only, which does nothing. DO NOT "
 "BUY."
 msgstr ""
+"Questa è una fusoliera fittizia da usarsi soltanto durante le missioni, che "
+"non fa nulla. NON COMPRARLO."
 
 #: dat/outfits/core_hull/large/patchwork_heavy_plating.xml:2
 msgid "Patchwork Heavy Plating"
@@ -3414,6 +3421,8 @@ msgid ""
 "This is a dummy core system for use in missions only, which does nothing. DO "
 "NOT BUY."
 msgstr ""
+"Questo è un sistema principale fittizio da usarsi soltanto durante le "
+"missioni, che non fa nulla, NON COMPRARLO."
 
 #: dat/outfits/core_system/large/milspec_orion_8601_core_system.xml:2
 msgid "Milspec Orion 8601 Core System"
@@ -3649,7 +3658,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/drone_bay.xml:2
 msgid "Drone Bay"
-msgstr ""
+msgstr "Hangar per Droni"
 
 #: dat/outfits/fighter_bays/drone_bay.xml:11
 msgid ""
@@ -3681,7 +3690,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/fidelity_bay.xml:2
 msgid "Fidelity Bay"
-msgstr ""
+msgstr "Hangar per Fedeltà"
 
 #: dat/outfits/fighter_bays/fidelity_bay.xml:8
 msgid "You need at least 50 reputation with House Sirius."
@@ -3699,7 +3708,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/hyena_bay.xml:2
 msgid "Hyena Bay"
-msgstr ""
+msgstr "Hangar per Iena"
 
 #: dat/outfits/fighter_bays/hyena_bay.xml:10
 msgid ""
@@ -3724,7 +3733,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/lancelot_bay.xml:2
 msgid "Lancelot Bay"
-msgstr ""
+msgstr "Hangar per Lancillotto"
 
 #: dat/outfits/fighter_bays/lancelot_bay.xml:10
 msgid ""
@@ -3790,7 +3799,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/sirius_shaman_bay.xml:2
 msgid "Sirius Shaman Bay"
-msgstr ""
+msgstr "Hangar per Sciamano di Sirio"
 
 #: dat/outfits/fighter_bays/sirius_shaman_bay.xml:8
 msgid "You need at least 50 reputation with the Sirius."
@@ -4302,7 +4311,7 @@ msgstr ""
 
 #: dat/outfits/maps/localmap.xml:6
 msgid "This map contains information about the local system."
-msgstr ""
+msgstr "Questa mappa contiene informazioni dello spazio circostante."
 
 #: dat/outfits/maps/map_collective_space.xml:2
 msgid "Map: Collective Space"
@@ -4580,6 +4589,8 @@ msgstr ""
 #: dat/outfits/misc/heavy_combat_vessel_license.xml:9
 msgid "This license will authorize you to buy cruiser and carrier-class ships."
 msgstr ""
+"Questa licenza ti autorizza a comprare astronavi della classe incrociatore e "
+"portaastronavi."
 
 #: dat/outfits/misc/heavy_weapon_license.xml:2
 msgid "Heavy Weapon License"
@@ -4590,6 +4601,8 @@ msgid ""
 "This license will authorize you to buy and use heavy weapons like the heavy "
 "ion turret."
 msgstr ""
+"Questa licenza ti autorizza a comprare e usare armamenti pesanti come "
+"torretta pesante a ioni."
 
 #: dat/outfits/misc/large_civilian_vessel_license.xml:2
 msgid "Large Civilian Vessel License"
@@ -4598,6 +4611,8 @@ msgstr ""
 #: dat/outfits/misc/large_civilian_vessel_license.xml:7
 msgid "This license will authorize you to buy freighter-class ships."
 msgstr ""
+"Questa licenza ti autorizza a comprare astronavi della classe astronavi "
+"cargo."
 
 #: dat/outfits/misc/large_civilian_vessel_license.xml:10
 msgid "Large Civilian Vessel"
@@ -4610,6 +4625,8 @@ msgstr ""
 #: dat/outfits/misc/light_combat_vessel_license.xml:7
 msgid "This license will authorize you to buy fighter and bomber class ships."
 msgstr ""
+"Questa licenza ti autorizza a comprare astronavi della classe caccia e "
+"bombardiere."
 
 #: dat/outfits/misc/light_combat_vessel_license.xml:10
 msgid "Light Combat Vessel"
@@ -4623,6 +4640,8 @@ msgstr ""
 msgid ""
 "This license will authorize you to buy destroyer and corvette-class ships."
 msgstr ""
+"Questa licenza ti autorizza a comprare astronavi della classe "
+"cacciatorpediniere e corvetta."
 
 #: dat/outfits/misc/medium_combat_vessel_license.xml:11
 msgid "Medium Combat Vessel"
@@ -26070,11 +26089,11 @@ msgstr ""
 
 #: dat/ai/empire.lua:16 dat/ai/proteron.lua:16
 msgid "\"I'm not interested in your blood money!\""
-msgstr ""
+msgstr "\"Non sono interessato ai tuoi soldi sporchi di sangue!\""
 
 #: dat/ai/empire.lua:17 dat/ai/proteron.lua:17
 msgid "\"All the money in the world won't save you now!\""
-msgstr ""
+msgstr "\"Tutti i soldi del mondo ora non ti salveranno!\""
 
 #: dat/ai/empire.lua:20 dat/ai/soromid.lua:20
 msgid "There is no room in this universe for scum like you!"
@@ -26373,6 +26392,7 @@ msgstr ""
 #: dat/ai/pirate.lua:27
 msgid "\"Your money or your life. {credits} and make the choice quickly.\""
 msgstr ""
+"\"I tuoi soldi o la tua vita. {credits} e fai la tua scelta velocemente.\""
 
 #: dat/ai/pirate.lua:28
 msgid "\"Money talks bub. {credits} up front or get off my channel.\""
@@ -26407,7 +26427,7 @@ msgstr ""
 
 #: dat/ai/pirate.lua:37
 msgid "\"Shut up and give me your money! {credits} now.\""
-msgstr ""
+msgstr "\"Stai zitto e consegnami i tuoi soldi! {credits} ora.\""
 
 #: dat/ai/pirate.lua:38
 msgid "\"You give me {credits} and I'll act like I never saw you.\""
@@ -26439,7 +26459,7 @@ msgstr ""
 
 #: dat/ai/pirate.lua:46
 msgid "\"Shut up and give us your money! {credits} now.\""
-msgstr ""
+msgstr "\"Stai zitto e consegnaci i tuoi soldi! {credits} ora.\""
 
 #: dat/ai/pirate.lua:47
 msgid "\"You give us {credits} and we'll act like we never saw you.\""
@@ -26809,7 +26829,7 @@ msgstr ""
 #. Settings
 #: dat/ai/sirius.lua:12
 msgid "\"Your money is of no interest to me.\""
-msgstr ""
+msgstr "\"Non mi interessano i tuoi soldi.\""
 
 #: dat/ai/sirius.lua:15
 msgid "The universe shall be cleansed of your presence!"
@@ -26945,7 +26965,7 @@ msgstr ""
 
 #: dat/ai/thurion.lua:23
 msgid "\"I have no use for your money.\""
-msgstr ""
+msgstr "\"Non so cosa farmene dei tuoi soldi.\""
 
 #: dat/ai/thurion.lua:24
 msgid "\"Credits are no replacement for a good shield.\""
@@ -27335,7 +27355,7 @@ msgstr ""
 #. Ignore anything that isn't loot from now on
 #: dat/board.lua:286
 msgid "You have {freespace} of free space."
-msgstr ""
+msgstr "Hai {freespace}di spazio libero."
 
 #: dat/board.lua:349
 msgid "Your ship cannibalized {armour:.0f} armour from {plt}."
@@ -27343,7 +27363,7 @@ msgstr ""
 
 #: dat/board.lua:359
 msgid "{cargo} ({credits}/tonne, {tonnes})"
-msgstr ""
+msgstr "{cargo} ({credits}/tonnellate, {tonnes})"
 
 #. forward declaration
 #: dat/board.lua:368
@@ -27360,7 +27380,7 @@ msgstr ""
 
 #: dat/board.lua:375
 msgid "Are you sure you want to get rid of {tonnes} of {cargo}?"
-msgstr ""
+msgstr "Sei sicuro che ti vuoi liberare di {tonnes} di {cargo}?"
 
 #: dat/board.lua:379
 msgid "Bye Bye {cargo}"
@@ -29790,6 +29810,7 @@ msgstr ""
 msgid ""
 "There's no time to lose. You go to the hangar bay and immediately take off."
 msgstr ""
+"Non c'è tempo da perdere. Vai all'hangar di lancio e decolla immediatamente."
 
 #. Spawn FLF ships
 #. Spawn Empire ships
@@ -31339,7 +31360,7 @@ msgstr[1] ""
 
 #: dat/events/minerva/station.lua:216 dat/events/minerva/station.lua:228
 msgid "Trade-in"
-msgstr ""
+msgstr "Scambia-con"
 
 #: dat/events/minerva/station.lua:220
 msgid ""
@@ -41718,7 +41739,7 @@ msgstr ""
 #: dat/gui/brushed.lua:940
 #, lua-format
 msgid "CLASS: %s"
-msgstr ""
+msgstr "CLASSE: %s"
 
 #. Space out the text.
 #. Render dir sprite.
@@ -42006,7 +42027,7 @@ msgstr ""
 
 #: dat/gui/slim.lua:1055
 msgid "CLASS:"
-msgstr ""
+msgstr "CLASSE:"
 
 #: dat/gui/slim.lua:1103 src/info.c:383
 msgid "Pilot:"
@@ -44962,12 +44983,14 @@ msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:130
 msgid "Not enough free space"
-msgstr ""
+msgstr "Spazio libero non sufficiente"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:130
 msgid ""
 "Your ship does not have enough free space. Come back with {tonnes} free."
 msgstr ""
+"La tua astronave non ha sufficiente spazio libero. Ritorna con {tonnes} "
+"liberi."
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:175
 msgid "Go to {sys}, approach {pnt}, and wait for the Phalanx"
@@ -53567,6 +53590,9 @@ msgid ""
 "You don't have enough cargo space to accept this mission. It requires "
 "{tonnes_free} of free space ({tonnes_short} more than you have)."
 msgstr ""
+"Non hai sufficiente spazio di carico per accettare questa missione. "
+"Necessita {tonnes_free} di spazio libero ({tonnes_short} di più di quelle "
+"che hai)."
 
 #. able to accept the mission
 #: dat/missions/empire/es_cargo.lua:112
@@ -63329,6 +63355,8 @@ msgid ""
 "\"You only have {freespace} of free space. You need to be able to carry at "
 "least {neededspace}!\""
 msgstr ""
+"\"Hai soltanto {freespace} di spazio libero. Hai bisogno di poter caricare "
+"almeno {neededspace}!\""
 
 #: dat/missions/neutral/antlejos/ant01.lua:64
 msgid ""
@@ -63514,6 +63542,8 @@ msgid ""
 "You have insufficient free cargo space for the {cargo}. You only have "
 "{freespace} of free space, but you need at least {neededspace}."
 msgstr ""
+"Il tuo spazio libero di carico è insufficiente per il {cargo}. Hai soltanto "
+"{freespace} di spazio libero, ma hai bisogno di almeno {neededspace}."
 
 #: dat/missions/neutral/antlejos/ant02.lua:100
 #: dat/missions/neutral/antlejos/ant03.lua:98
@@ -70432,7 +70462,7 @@ msgstr ""
 
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:46
 msgid "Your cargo hold doesn't have enough free space."
-msgstr ""
+msgstr "La tua capacità di carico non dispone di sufficiente spazio libero."
 
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:52
 msgid "Deliver Cynthia to Zhiru in the Goddard system"
@@ -82040,6 +82070,9 @@ msgid ""
 "cargo, or getting rid of it from the info menu which you can open with "
 "{infokey}.\""
 msgstr ""
+"\"Non disponi di sufficiente spazio libero per aiutarmi. Hai bisogno di "
+"portare {amount} di {cargo}. Crea dello spazio libero vendendo quello che "
+"non ti serve o liberandoti di esso dal menu che puoi aprire con {infokey}\""
 
 #: dat/missions/tutorial/nelly01.lua:152
 msgid ""
@@ -83483,6 +83516,12 @@ msgid ""
 "added to your active missions, which you can review via the Info screen by "
 "pressing {infokey}.\""
 msgstr ""
+"\"Quando selezioni le missioni presta attenzione a quanto pagano. Devi "
+"trovare un equilibrio tra le missioni che sei in grado di completare e "
+"l'essere pagato il più possibile per farle. Una volta che hai scelto una "
+"missione, fai clic sul bottone '#bAccetta Missione#0' in basso a destra e "
+"sarà aggiunta alle tue missioni attive, le quali possono essere riviste "
+"nella schermata Info premendo {infokey}.\""
 
 #: dat/missions/tutorial/tutorial.lua:242
 msgid ""
@@ -83491,6 +83530,10 @@ msgid ""
 "computer. That is why I recommend also checking the spaceport bar often when "
 "travelling.\""
 msgstr ""
+"\"Man mano che aumenti la reputazione con altre fazioni e personaggi, nel "
+"computer delle missioni ti daranno accesso a missioni più complesse e meglio "
+"retribuite. Per questo ti consiglio anche di controllare spesso il bar dello "
+"spazioporto quando viaggi.\""
 
 #: dat/missions/tutorial/tutorial.lua:249
 msgid ""
@@ -83503,6 +83546,15 @@ msgid ""
 "Mule Bulk Cargo Starship. As my previous owner found out, they don't do too "
 "well in combat, however.\""
 msgstr ""
+"Questo è lo spaccio per equipaggiamenti, dove puoi comprare nuovi "
+"equipaggiamenti e migliorare la tua astronave! Puoi dotare la tua astronave "
+"con nuovi armamenti, spazio di carico aggiuntivo, sistemi centrali più "
+"potenti e altro! Qui possono essere comprate anche le mappe regionali che "
+"facilitano l'esplorazione della galassia, come anche le licenze necessarie "
+"per armamenti e astronavi di fascia più alta. Per esempio avrai bisogno di "
+"una Licenza per Grossi Vascelli Civili per acquistare un'astronave di Carico "
+"Voluminoso Mulo della Corporazione Melendez. Comunque, come il mio "
+"precedente possessore ha scoperto, non sono molto adatte in combattimento.\""
 
 #: dat/missions/tutorial/tutorial.lua:250
 msgid ""
@@ -83518,6 +83570,18 @@ msgid ""
 "starmap screen. After buying new outfits make sure to equip them in the "
 "#oEquipment#0 window.\""
 msgstr ""
+"\"Come puoi vedere, una serie di schede nella parte alta dello schermo ti "
+"permette di filtrare per tipo di equipaggiamento: 'W' per armamenti, 'U' per "
+"utilità, 'S' per struttura, 'Core' per gli elementi principali e 'Altro\" "
+"per tutto ciò che è esterno a tali categorie, principalmente mappe regionali "
+"e licenze. Se vedi un equipaggiamento che ti può interessare fai clic su di "
+"esso per vedere le sue informazioni e poi fare clic sul bottone '#bAcquista#"
+"0' per comprarlo o fai clic sul bottone '#bVendi#0' per venderlo se ne "
+"possiedi uno. Pianeti diversi hanno la disponibilità di equipaggiamenti "
+"differenti; se non trovi un equipaggiamento che stai cercando, puoi trovarlo "
+"usando il bottone '#bCerca Equipaggiamento#0' sulla schermata della mappa "
+"stellare. Dopo aver comprato nuovi equipaggiamenti assicurati di montarli "
+"nella finestra #oEquipaggiamenti#0.\""
 
 #: dat/missions/tutorial/tutorial.lua:257
 msgid ""
@@ -83531,6 +83595,15 @@ msgid ""
 "for, you can search for it via the '#bFind Ships#0' button on the starmap "
 "screen.\""
 msgstr ""
+"\"Questo è il cantiere di astronavi, dove puoi acquistare nuove astronavi "
+"sia per sostituire quella attuale che per aggiungerle alla tua flotta! Sulla "
+"parte sinistra dello schermo sono visualizzate le astronavi disponibili sul "
+"pianeta su cui sei attualmente. Fai clic su un'astronave per vederne i "
+"dettagli. Da qui puoi sia comprarla con il bottone '#bAcquista#0' o "
+"scambiarla con la tua astronave attuale usando il bottone '#bScambia-Con#0'. "
+"Pianeti differenti hanno a disposizione astronavi diverse; se non trovi "
+"un'astronave specifica che stai cercando, puoi trovarla usando il bottone '#"
+"bTrova Astronavi#0' presente nella schermata della mappa stellare.\""
 
 #: dat/missions/tutorial/tutorial.lua:258
 msgid ""
@@ -83541,6 +83614,13 @@ msgid ""
 "the different outfits you can equip them with. Note that some ships also "
 "require licenses before you can buy them.\""
 msgstr ""
+"\"Probabilmente non possiedi sufficienti crediti per comprare ora una nuova "
+"astronave, ma più avanti, quando ne avrai accumulati a sufficienza, "
+"probabilmente vorrai sostituire la tua astronave con una migliore, a seconda "
+"del tipo di attività che stai svolgendo. Astronavi diverse hanno differenti "
+"punti di forza e di debolezza che interagiscono con gli equipaggiamenti che "
+"puoi montare su di esse. Notare che alcune astronavi necessitano del "
+"possesso di una licenza prima di poterle acquistare.\""
 
 #. TODO cut up
 #: dat/missions/tutorial/tutorial.lua:266
@@ -83557,6 +83637,20 @@ msgid ""
 "along with the ship, so do keep that in mind if there's an outfit you need "
 "to keep.\""
 msgstr ""
+"\"Questo è la schermata dell'Equipaggiamento, disponibile soltanto sui "
+"pianeti che dispongono di uno spaccio per equipaggiamenti o un cantiere di "
+"astronavi. Qui puoi montare, sulla tua astronave attuale che è l'astronave "
+"che piloti, qualsiasi equipaggiamento hai comprato nello #oSpaccio per "
+"Equipaggiamenti#0. Se, e solamente se, l'attuale pianeta possiede un "
+"cantiere di astronavi, puoi fare la stessa cosa con qualsiasi altra "
+"astronave che possiedi e puoi cambiare quale astronave piloterai tra quelle "
+"in tuo possesso selezionando l'astronave e facendo clic sul bottone '#"
+"bCambia Astronave#0' o facendo #bdoppio clic#0 su di essa. Puoi anche "
+"vendere queste astronavi, ma non la tua attuale, con il bottone '#bVendi "
+"Astronave#0', se decidi di on averne più bisogno. Vendendo un'astronave su "
+"cui sono montati degli equipaggiamenti fai sì che anche questi vengano "
+"venduti con l'astronave, quindi ricordati di questo se c'è un "
+"equipaggiamento che hai bisogno di tenere.\""
 
 #: dat/missions/tutorial/tutorial.lua:267
 msgid ""
@@ -83564,6 +83658,10 @@ msgid ""
 "have weapons equipped, as you will need those later for practicing combat "
 "and flying around space without any weapons can be very risky anyway.\""
 msgstr ""
+"\"Se effettui qualsiasi modifica alla tua astronave ora, assicurati di avere "
+"ancora le armi montate, dato che ne avrai bisogno più tardi per fare pratica "
+"di combattimento e volare nello spazio disarmato può essere molto rischioso."
+"\""
 
 #. TODO cut up
 #: dat/missions/tutorial/tutorial.lua:275
@@ -83578,6 +83676,17 @@ msgid ""
 "the commodity you're buying or selling at once. This will reduce the number "
 "of times you have to click on the Buy and Sell buttons.\""
 msgstr ""
+"\"Questa è la schermata delle Materie Prime, dove puoi acquistarle e "
+"venderle. I prezzi delle materie prime variano tra i pianeti e anche nel "
+"tempo, perciò puoi usare questa schermata per cercare di guadagnare soldi "
+"comprando a prezzi bassi e rivendendo a prezzi più alti. Fai clic su una "
+"materia prima per vedere maggiori dettagli su di essa, in particolare il "
+"prezzo medio per tonnellata e fare clic sui bottoni '#bAcquista#0' e "
+"'#bVendi#0' rispettivamente per acquistare e vendere alcune materie prime. "
+"Qui può essere utile tener premuto i tasti #bShift#0 e/o #bCtrl#0 per "
+"cambiare il modificatore di quante tonnellate di materie prime stai "
+"acquistando o vendendo contemporaneamente. Questo permette di ridurre il "
+"numero di volte che devi fare clic sui bottoni Acquista e Vendi.\""
 
 #: dat/missions/tutorial/tutorial.lua:276
 msgid ""
@@ -83586,6 +83695,11 @@ msgid ""
 "for various price overviews. The news terminal at the bar also includes "
 "price information for specific nearby planets.\""
 msgstr ""
+"\"Se sei insicuro cos'è profittevole da acquistare o vendere, puoi premere "
+"{starmapkey} per visualizzare la mappa stellare e poi fare clic sul bottone "
+"'#bModalità#0' per avere una panoramica dei vari prezzi. Il terminale delle "
+"notizie, presente nel bar, riporta anche le informazioni sui prezzi su "
+"specifici pianeti vicini.\""
 
 #: dat/missions/tutorial/tutorial.lua:311
 msgid ""
@@ -83598,6 +83712,15 @@ msgid ""
 "using the Autonav functionality available on all ships. You can trust me as "
 "I've only had under 4 fatal accidents.\""
 msgstr ""
+"\"{playername}, ben tornato nello spazio! Dopo essere atterrato, il gioco "
+"sarà salvato automaticamente, così non devi preoccuparti di perdere i tuoi "
+"progressi. Ora continueremo a discutere su come muoversi nello spazio. Come "
+"accennato precedentemente, puoi muoverti manualmente, senza problemi. "
+"Tuttavia, spesso vorrai percorrere grandi distanze e navigare ovunque "
+"manualmente può essere un po' noioso. Una buona scelta è quella di delegare "
+"gli spostamenti a me, la tuo IA, usando la funzionalità Autonavigazione "
+"disponibile per tutte le astronavi. Puoi fidarti di me dato che ho avuto "
+"soltanto 4 incidenti fatali.\""
 
 #: dat/missions/tutorial/tutorial.lua:312
 msgid ""
@@ -83611,6 +83734,17 @@ msgid ""
 "in whatever fashion is deemed necessary. This can be configured from your "
 "ship's #oOptions#0 menu, which you can access by pressing {menukey}."
 msgstr ""
+"\"L'Autonavigazione è semplice ed eleganti. È sufficiente premere "
+"{overlaykey} per aprire la mappa di sovrimpressione dell'astronave, #bclic-"
+"destro#0 su qualsiasi locazione, pianeta, astronave o punto di salto "
+"spaziale per portare istantaneamente la tua astronave esattamente qui! Il "
+"viaggio durerà lo stesso tempo, ma la compressione temporale ti permetterà "
+"di allontanarti dai comandi, facendo sì che il tempo sembri trascorrere più "
+"velocemente. E non devi preoccuparti, se qualsiasi pilota ostile viene "
+"rilevato, il sistema di autonavicazione ti avviserà automaticamente in modo "
+"da poter osservare la situazione e adottare le risposte che riterrai più "
+"adeguate. Questo può essere configurato nelle #oOpzioni#0 del menu "
+"dell'astronave a cui puoi accedere premendo {menukey}.\""
 
 #: dat/missions/tutorial/tutorial.lua:313
 msgid ""
@@ -83618,6 +83752,9 @@ msgid ""
 "to see it highlighted on your overlay map which you can activate with "
 "{overlaykey}.\""
 msgstr ""
+"\"Perché non provi ad usare l'Autonavigazione per volare fino a {pnt}? "
+"Dovresti riuscire a vederla evidenziata sulla tua mappa di sovrimpressione "
+"che puoi attivare con {overlaykey}.\""
 
 #: dat/missions/tutorial/tutorial.lua:327
 msgid ""
@@ -83628,6 +83765,13 @@ msgid ""
 "clicking#0 on them, or by selecting them with {targetnextkey} and then "
 "pressing {hailkey}.\""
 msgstr ""
+"\"Ben fatto, {playername}! Come puoi vedere il viaggio ha consumato del "
+"carburante. Consumi carburante ogni volta che effettui un salto spaziale e "
+"puoi fare il pieno di carburante atterrando su un pianeta amico. Se ti "
+"ritrovi in un'emergenza, dovresti anche essere in grado di comprare "
+"carburante da altri piloti nel sistema; chiama un pilota facendo #bdoppio-"
+"clic#0 su di esso o selezionandolo con {targetnextkey} e poi premendo "
+"{hailkey}.\""
 
 #: dat/missions/tutorial/tutorial.lua:328
 msgid ""
@@ -83636,6 +83780,11 @@ msgid ""
 "others; pirates will happily take your offer and may even sell you fuel "
 "afterwards, but many other factions may be less forthcoming.\""
 msgstr ""
+"\"Ah, questo mi fa ricordare: puoi anche cercare di corrompere le astronavi "
+"ostili, come i pirata, chiamandole. La corruzione funziona meglio su alcune "
+"fazioni rispetto ad altre; i pirati prenderanno felicemente la tua offerta e "
+"dopo potrebbero perfino venderti del carburante, ma altre fazioni potrebbero "
+"essere meno disponibili\""
 
 #: dat/missions/tutorial/tutorial.lua:329
 msgid ""
@@ -83647,6 +83796,14 @@ msgid ""
 "head to the nearest planet and check out the spaceport bar to see if anybody "
 "can offer us some work to get started out.\""
 msgstr ""
+"\"Penso che questo sia tutto! Devo dire che tu sei un pilota nato e la tua "
+"nuova astronave ti calza perfettamente! Questo conclude l'esercitazione di "
+"base, ma quando incontrerai nuove cose io apparirò periodicamente. Se "
+"necessiti di un rinfresco delle tue conoscenze o vuoi modificare le mie "
+"impostazione, puoi farlo dal menu #oInfo#O che puoi aprire con {infokey}. "
+"Ora andiamo fuori in cerca di avventure! Ti consiglio di dirigerti verso il "
+"pianeta più vicino e controllare il bar dello spazioporto per vedere se "
+"qualcuno può offrirci qualche lavoro per iniziare.\""
 
 #. Normal finish of the tutorial
 #: dat/missions/tutorial/tutorial.lua:334
@@ -90936,7 +91093,7 @@ msgstr[1] ""
 
 #: dat/outfits/unique/poi_data.lua:16
 msgid "You do not have enough {item} to purchase this item."
-msgstr ""
+msgstr "Non hai sufficienti {item} per acquistare questo elemento."
 
 #: dat/outfits/unique/poi_data.lua:16
 msgid "Encrypted Data Matrices"
@@ -101083,7 +101240,7 @@ msgstr ""
 
 #: src/dev_sysedit.c:1371 src/land.c:1323 src/map.c:341
 msgid "Faction:"
-msgstr ""
+msgstr "Fazione:"
 
 #: src/dev_sysedit.c:1380
 msgid "Population"
@@ -101665,7 +101822,7 @@ msgstr ""
 
 #: src/equipment.c:328
 msgid "Swap Ship"
-msgstr ""
+msgstr "Cambia Astronave"
 
 #: src/equipment.c:332
 msgid "Unequip"
@@ -101795,7 +101952,7 @@ msgstr ""
 #: src/equipment.c:1765 src/info.c:574 src/land.c:1322 src/land_shipyard.c:231
 #: src/map_system.c:655
 msgid "Class:"
-msgstr ""
+msgstr "Classe:"
 
 #: src/equipment.c:1766
 msgid "Acquired Date:"
@@ -102660,7 +102817,7 @@ msgstr ""
 #: src/info.c:385 src/land.c:1326 src/land_outfits.c:427
 #: src/land_shipyard.c:311 src/land_trade.c:91 src/map_find.c:639
 msgid "Money:"
-msgstr ""
+msgstr "Soldi:"
 
 #: src/info.c:386
 msgid "Current Ship:"
@@ -103628,7 +103785,7 @@ msgstr ""
 #: src/land.c:219
 #, c-format
 msgid "You can not swap ships and set %s as an escort!"
-msgstr ""
+msgstr "Non puoi cambiare astronavi e impostare %s come scorta!"
 
 #: src/land.c:231 src/land_shipyard.c:502
 #, c-format
@@ -103662,6 +103819,8 @@ msgid ""
 "Date:\n"
 "Free Space:"
 msgstr ""
+"Data:\n"
+"Spazio Libero:"
 
 #: src/land.c:691
 msgid "Are you sure you want to accept this mission?"
@@ -103712,11 +103871,11 @@ msgstr ""
 #: src/land.c:908
 #, c-format
 msgid "Buy Local Map (%s)"
-msgstr ""
+msgstr "Acquista Mappa dello Spazio Circostante (%s)"
 
 #: src/land.c:990
 msgid "Landing Main"
-msgstr ""
+msgstr "Scheda Principale di Atterraggio"
 
 #: src/land.c:1004 src/map_find.c:1033 src/space.c:174
 msgid "Outfits"
@@ -103738,15 +103897,15 @@ msgstr ""
 #. Player stats.
 #: src/land.c:1321
 msgid "Stationed at:"
-msgstr ""
+msgstr "Attraccato a:"
 
 #: src/land.c:1324
 msgid "Population:"
-msgstr ""
+msgstr "Popolazione:"
 
 #: src/land.c:1325 src/land_trade.c:90
 msgid "Free Space:"
-msgstr ""
+msgstr "Spazio Libero:"
 
 #: src/land.c:1351
 msgid "No refueling services."
@@ -103900,7 +104059,7 @@ msgstr ""
 
 #: src/land_shipyard.c:99
 msgid "Trade-In"
-msgstr ""
+msgstr "Scambia-Con"
 
 #: src/land_shipyard.c:107
 msgid "Find Ships"
@@ -104017,7 +104176,7 @@ msgstr ""
 
 #: src/land_trade.c:90
 msgid "Free Space (fleet):"
-msgstr ""
+msgstr "Spazio Libero (flotta):"
 
 #: src/land_trade.c:92
 msgid "Market Price:"
@@ -104644,11 +104803,11 @@ msgstr ""
 
 #: src/map_system.c:441
 msgid "Faction: Multiple\n"
-msgstr ""
+msgstr "Fazione: Multipla\n"
 
 #: src/map_system.c:447
 msgid "Faction: N/A\n"
-msgstr ""
+msgstr "Fazione: N/A\n"
 
 #. saw them all and all the same
 #: src/map_system.c:450
