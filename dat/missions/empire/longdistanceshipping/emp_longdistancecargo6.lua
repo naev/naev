@@ -31,8 +31,8 @@ local vn = require "vn"
 local targetworld, targetworld_sys = spob.getS("Halir")
 
 function create ()
-   --makes sure pilot is not currently on Gamma Polaris
-   if targetworld ~= spob.cur() then
+   --makes sure pilot is not currently on Halir
+   if targetworld == spob.cur() then
       misn.finish(false)
    end
 
