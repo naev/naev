@@ -9,7 +9,8 @@
  <pos x="471.128752" y="-116.715799"/>
  <spobs>
   <spob>Aluben</spob>
-  <spob>Tenal-P</spob>
+  <spob_virtual>Empire Unpresence</spob_virtual>
+  <spob_virtual>FLF Unpresence</spob_virtual>
   <spob_virtual>Independent All Unpresence (Range 1)</spob_virtual>
  </spobs>
  <jumps>
