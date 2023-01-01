@@ -4,6 +4,7 @@
  <pos x="5099.313287" y="-1559.782213"/>
  <GFX>
   <space>ringworld_destroyed.webp</space>
+  <exterior>uninhabited-rocky-airless-03.webp</exterior>
  </GFX>
  <presence>
   <faction>Derelict</faction>
@@ -14,7 +15,7 @@
  <general>
   <class>4</class>
   <population>0</population>
-  <hide>2.0</hide>
+  <hide>0.500000</hide>
   <services>
    <land/>
   </services>
