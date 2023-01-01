@@ -76,6 +76,7 @@ function accept ()
    misn.osdCreate(_("Dvaered Long Distance Recruitment"), {misn_desc})
 
    -- Set up the goal
+   misn.markerAdd( targetworld, "low" )
    hook.land("land")
    local c = commodity.new( N_("Diplomat"), N_("An Imperial trade representative.") )
    mem.person = misn.cargoAdd( c, 0 )
