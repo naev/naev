@@ -2353,6 +2353,7 @@ static void sysedit_spobGFX( unsigned int wid_unused, const char *wgt )
    j              = 0;
    for (size_t i=0; i<nfiles; i++) {
       PHYSFS_Stat path_stat;
+      const char *filepath;
       snprintf( buf, sizeof(buf), "%s/%s", path, files[i] );
       /* Ignore directories. */
       if (!PHYSFS_stat( buf, &path_stat )) {
@@ -2367,7 +2368,8 @@ static void sysedit_spobGFX( unsigned int wid_unused, const char *wgt )
          continue;
       cells[j].image   = t;
       cells[j].caption = strdup( files[i] );
-      c = strcmp(files[i], land ? p->gfx_exteriorPath : p->gfx_spacePath)==0 ? cOrange : cBlack;
+      filepath = (land ? p->gfx_exteriorPath : p->gfx_spacePath);
+      c = ((filepath==NULL) || !strcmp(files[i], filepath)==0) ? cBlack : cOrange;
       memcpy( &cells[j].bg, &c, sizeof(glColour) );
       j++;
    }
