@@ -15,7 +15,8 @@ Naev planetary classes are based on [Star Trek planetary classes](https://stexpa
 * Class 0: Civilian stations and small outposts
 * Class 1: Major military stations and outposts
 * Class 2: Pirate strongholds
-* Class 3: Collective stations
+* Class 3: Robotic stations
+* Class 4: Artificial ecosystems such as ringworlds or discworlds
 
 #### Planet classes:
 
