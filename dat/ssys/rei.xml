@@ -16,6 +16,10 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Pike">
+   <autopos/>
+   <hide>0.500000</hide>
+  </jump>
  </jumps>
  <asteroids>
   <asteroid>

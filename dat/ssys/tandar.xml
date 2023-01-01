@@ -9,7 +9,7 @@
   <interference>15.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="192.194236" y="860.991280"/>
+ <pos x="178.027569" y="840.991280"/>
  <spobs>
   <spob>Benedict</spob>
   <spob>Jacqueline</spob>
@@ -18,6 +18,10 @@
   <spob>Tandar Ia</spob>
  </spobs>
  <jumps>
+  <jump target="Ariadus">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Corvus">
    <autopos/>
    <hide>1.000000</hide>

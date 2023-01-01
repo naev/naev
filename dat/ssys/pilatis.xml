@@ -9,7 +9,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="290.418179" y="352.377424"/>
+ <pos x="274.445957" y="364.877424"/>
  <spobs>
   <spob>Pilatis I</spob>
   <spob>Pilatis II</spob>
@@ -25,6 +25,11 @@
   <jump target="Draconis">
    <autopos/>
    <hide>0.000000</hide>
+  </jump>
+  <jump target="Dune">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Halo">
    <autopos/>

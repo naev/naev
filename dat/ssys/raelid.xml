@@ -15,10 +15,6 @@
   <spob_virtual>FLF Small</spob_virtual>
  </spobs>
  <jumps>
-  <jump target="Arcanis">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
   <jump target="Sonas">
    <autopos/>
    <hide>1.000000</hide>

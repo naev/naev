@@ -9,7 +9,7 @@
   <interference>15.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="442.497551" y="909.518555"/>
+ <pos x="412.597860" y="927.844172"/>
  <spobs>
   <spob>Calvin</spob>
   <spob>Mendez</spob>
@@ -20,6 +20,10 @@
   <jump target="Bonanza">
    <autopos/>
    <hide>0.000000</hide>
+  </jump>
+  <jump target="Malebolge">
+   <autopos/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Pisces Prime">
    <autopos/>

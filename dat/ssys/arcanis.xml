@@ -15,10 +15,6 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Raelid">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
   <jump target="Sigur">
    <autopos/>
    <hidden/>

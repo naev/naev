@@ -6,13 +6,18 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="171.707170" y="352.867947"/>
+ <pos x="172.707170" y="367.867947"/>
  <spobs>
   <spob>Arrakis</spob>
   <spob>Nixa</spob>
   <spob>Vert</spob>
  </spobs>
  <jumps>
+  <jump target="Coriolis">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Eridani">
    <autopos/>
    <hide>1.000000</hide>
@@ -23,6 +28,11 @@
   </jump>
   <jump target="Halo">
    <pos x="3965.097264" y="15285.574336"/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Pilatis">
+   <autopos/>
+   <hidden/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

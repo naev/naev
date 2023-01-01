@@ -9,7 +9,7 @@
   <interference>15.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="99.753865" y="902.858423"/>
+ <pos x="115.020532" y="890.025090"/>
  <spobs>
   <spob>Ariadus II</spob>
   <spob>Ariadus IV</spob>
@@ -23,6 +23,10 @@
  </spobs>
  <jumps>
   <jump target="Amatiri">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Tandar">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
