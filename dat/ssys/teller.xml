@@ -14,6 +14,10 @@
   <spob>Sanchez</spob>
  </spobs>
  <jumps>
+  <jump target="Brumeria">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Fern">
    <autopos/>
    <hide>1.000000</hide>
