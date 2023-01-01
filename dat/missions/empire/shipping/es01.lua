@@ -39,7 +39,7 @@ function create ()
    end
 
    -- Bar NPC
-   misn.setNPC( emp.soldner.name, emp.soldner.portrait, emp.soldner.desc )
+   misn.setNPC( emp.soldner.name, emp.soldner.portrait, emp.soldner.description )
 end
 
 function accept ()
