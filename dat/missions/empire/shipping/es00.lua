@@ -28,14 +28,15 @@ local emp = require "common.empire"
 local vn = require "vn"
 
 function create ()
-   -- Target destination
+   -- Planet targets
    mem.dest,mem.destsys = spob.getLandable( faction.get("Frontier") )
-   mem.ret,mem.retsys   = spob.getLandable( "Halir" )
-   if mem.dest == nil or mem.ret == nil or not misn.claim(mem.destsys) then
+   mem.ret,mem.retsys   = spob.getS( "Halir" )
+   -- Must claim system
+   if mem.dest == nil or not misn.claim(mem.destsys) then
       misn.finish(false)
    end
 
-   -- Spaceport bar stuff
+   -- Bar NPC
    misn.setNPC( _("Commander"), emp.soldner.portrait, _("You see an Empire Commander. He seems to have noticed you.") )
 end
 
