@@ -220,6 +220,8 @@ const char* spob_getClassName( const char *class )
       return _("Pirate Station");
    else if (strcmp(class,"3")==0)
       return _("Robotic Station");
+   else if (strcmp(class,"4")==0)
+      return _("Artificial Ecosystem");
    else if (strcmp(class,"A")==0)
       return _("Geothermal");
    else if (strcmp(class,"B")==0)
