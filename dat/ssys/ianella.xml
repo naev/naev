@@ -7,7 +7,14 @@
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
  <pos x="186.693311" y="-457.688706"/>
- <spobs/>
+ <spobs>
+  <spob>Ianella I</spob>
+  <spob>Ianella I-a</spob>
+  <spob>Ianella I-b</spob>
+  <spob>Ianella I-c</spob>
+  <spob>Ianella III</spob>
+  <spob>Ianella IV</spob>
+ </spobs>
  <jumps>
   <jump target="Poltergeist">
    <autopos/>
@@ -22,4 +29,16 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeA-poor</group>
+   <radius>4000.000000</radius>
+   <pos x="-7949.152921" y="-1508.295897"/>
+   <density>3.000000</density>
+  </asteroid>
+  <exclusion>
+   <radius>2500.000000</radius>
+   <pos x="-7634.849681" y="-1600.738026"/>
+  </exclusion>
+ </asteroids>
 </ssys>

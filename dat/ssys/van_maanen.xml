@@ -8,8 +8,8 @@
  </general>
  <pos x="257.278798" y="-336.587504"/>
  <spobs>
-  <spob>Maanen's Moon</spob>
   <spob>Maanen</spob>
+  <spob>Maanen's Moon</spob>
  </spobs>
  <jumps>
   <jump target="Kruger">

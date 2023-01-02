@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Ianella I-a">
+ <pos x="-6994.255636" y="-1481.368811"/>
+ <GFX>
+  <space>moon-C01.webp</space>
+  <exterior>uninhabited-rocky-airless-01.webp</exterior>
+ </GFX>
+ <general>
+  <class>C</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>The only moon of Ianella to have a landable surface, Ianella I-a would have been colonized by now if it had not been skimming the surface of Ianella I's ionosphere. Constant electrical storms and extreme static electricity would make living on Ianella I-a be a never ending cycle of repairing broken electrical components. Combined with the lack of atmosphere and necessity to have active life support systems, living on Ianella I-a would amount to never knowing when your life systems would fail, condemning you to slow suffocation.</description>
+ </general>
+</spob>
