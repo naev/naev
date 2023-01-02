@@ -5171,7 +5171,7 @@ static int pilotL_hailPlayer( lua_State *L )
  */
 static int pilotL_msg( lua_State *L )
 {
-   Pilot *p, *receiver=NULL;
+   Pilot *p;
    const char *type;
    unsigned int data;
 
@@ -5183,13 +5183,13 @@ static int pilotL_msg( lua_State *L )
    data = lua_gettop(L) > 3 ? 4 : 0;
 
    if (!lua_istable(L,2)) {
-      receiver = luaL_validpilot(L,2);
+      Pilot *receiver = luaL_validpilot(L,2);
       pilot_msg(p, receiver, type, data);
    }
    else {
       lua_pushnil(L);
       while (lua_next(L, 2) != 0) {
-         receiver = luaL_validpilot(L,-1);
+         Pilot *receiver = luaL_validpilot(L,-1);
          pilot_msg(p, receiver, type, data);
          lua_pop(L, 1);
       }
