@@ -53,7 +53,7 @@ local function spob_goodness( s )
    end
 
    local t = s:tags()
-   if t.restricted or t.prison or t.ruined then
+   if t.restricted or t.prison or t.ruined or t.refugee then
       return -1, "#r".._("Poor environment for kids").."#0"
    end
 
