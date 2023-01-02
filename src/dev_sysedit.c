@@ -73,7 +73,8 @@ static Select_t *sysedit_select  = NULL; /**< Current system selection. */
 static int sysedit_nselect       = 0; /**< Number of selections in current system. */
 static int sysedit_mselect       = 0; /**< Memory allocated for selections. */
 static Select_t sysedit_tsel;         /**< Temporary selection. */
-static int  sysedit_tadd         = 0; /**< Add to selection. */
+static int sysedit_tadd          = 0; /**< Add to selection. */
+static char** sysedit_tagslist    = NULL; /**< List of existing tags. */
 
 /*
  * System editor stuff.
@@ -132,6 +133,10 @@ static void sysedit_btnTechEdit( unsigned int wid, const char *unused );
 static void sysedit_genTechList( unsigned int wid );
 static void sysedit_btnAddTech( unsigned int wid, const char *unused );
 static void sysedit_btnRmTech( unsigned int wid, const char *unused );
+static void sysedit_btnTagsEdit( unsigned int wid, const char *unused );
+static void sysedit_genTagsList( unsigned int wid );
+static void sysedit_btnAddTag( unsigned int wid, const char *unused );
+static void sysedit_btnRmTag( unsigned int wid, const char *unused );
 static void sysedit_btnAddService( unsigned int wid, const char *unused );
 static void sysedit_btnRmService( unsigned int wid, const char *unused );
 static void sysedit_spobGFX( unsigned int wid_unused, const char *wgt );
@@ -348,6 +353,11 @@ static void sysedit_editPntClose( unsigned int wid, const char *unused )
    p->presence.bonus = atof(window_getInput( sysedit_widEdit, "inpPresenceBonus" ));
    p->presence.range = atoi(window_getInput( sysedit_widEdit, "inpPresenceRange" ));
    p->hide           = atof(window_getInput( sysedit_widEdit, "inpHide" ));
+
+   for (int i=0; i<array_size(sysedit_tagslist); i++)
+      free( sysedit_tagslist[i] );
+   array_free( sysedit_tagslist );
+   sysedit_tagslist = NULL;
 
    /* Have to recompute presences if stuff changed. */
    space_reconstructPresences();
@@ -1462,6 +1472,8 @@ static void sysedit_editPnt (void)
          "btnAddService", _("Add Service"), sysedit_btnAddService );
    window_addButton( wid, -20 - bw - 15, 35 + BUTTON_HEIGHT, bw, BUTTON_HEIGHT,
          "btnEditTech", _("Edit Tech"), sysedit_btnTechEdit );
+   window_addButton( wid, -20, 35 + BUTTON_HEIGHT, bw, BUTTON_HEIGHT,
+         "btnEditTags", _("Edit Tags"), sysedit_btnTagsEdit );
    window_addButton( wid, -20 - bw*3 - 15*3, 20, bw, BUTTON_HEIGHT,
          "btnDesc", _("Description"), sysedit_spobDesc );
    window_addButton( wid, -20 - bw*2 - 15*2, 20, bw, BUTTON_HEIGHT,
@@ -2212,6 +2224,182 @@ static void sysedit_btnRmTech( unsigned int wid, const char *unused )
 
    /* Regenerate the list. */
    sysedit_genTechList( wid );
+}
+
+
+/**
+ * @brief Edits a spob's tags.
+ */
+static void sysedit_btnTagsEdit( unsigned int wid, const char *unused )
+{
+   (void) unused;
+   int y, w, bw;
+
+   /* Create the window. */
+   wid = window_create( "wdwSpobTagsEditor", _("Spob Tags Editor"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+   window_setCancel( wid, window_close );
+
+   w = (SYSEDIT_EDIT_WIDTH - 40 - 15) / 2.;
+   bw = (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4.;
+
+   /* Close button. */
+   window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT,
+         "btnClose", _("Close"), window_close );
+   y = 20 + BUTTON_HEIGHT + 15;
+
+   /* Remove button. */
+   window_addButton( wid, -20-(w+15), y, w, BUTTON_HEIGHT,
+         "btnRm", _("Rm Tag"), sysedit_btnRmTag );
+
+   /* Add button. */
+   window_addButton( wid, -20, y, w, BUTTON_HEIGHT,
+         "btnAdd", _("Add Tag"), sysedit_btnAddTag );
+
+   /* Generate list of tags. */
+   if (sysedit_tagslist == NULL) {
+      Spob *spob_all = spob_getAll();
+      sysedit_tagslist = array_create( char* );
+      for (int i=0; i<array_size(spob_all); i++) {
+         Spob *s = &spob_all[i];
+         for (int j=0; j<array_size(s->tags); j++) {
+            char *t = s->tags[j];
+            int found = 0;
+            for (int k=0; k<array_size(sysedit_tagslist); k++)
+               if (strcmp(sysedit_tagslist[k], t)==0) {
+                  found = 1;
+                  break;
+               }
+            if (!found)
+               array_push_back( &sysedit_tagslist, strdup(t) );
+         }
+      }
+      qsort( sysedit_tagslist, array_size(sysedit_tagslist), sizeof(char*), strsort );
+   }
+
+   sysedit_genTagsList( wid );
+}
+
+/**
+ * @brief Generates the spob tech list.
+ */
+static void sysedit_genTagsList( unsigned int wid )
+{
+   Spob *p;
+   char **have, **lack;
+   int n, x, y, w, h, hpos, lpos, empty;
+
+   hpos = lpos = -1;
+
+   /* Destroy if exists. */
+   if (widget_exists( wid, "lstTagsHave" ) &&
+         widget_exists( wid, "lstTagsLacked" )) {
+      hpos = toolkit_getListPos( wid, "lstTagsHave" );
+      lpos = toolkit_getListPos( wid, "lstTagsLacked" );
+      window_destroyWidget( wid, "lstTagsHave" );
+      window_destroyWidget( wid, "lstTagsLacked" );
+   }
+
+   p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
+   w = (SYSEDIT_EDIT_WIDTH - 40 - 15) / 2.;
+   x = -20 - w - 15;
+   y = 20 + BUTTON_HEIGHT * 2 + 30;
+   h = SYSEDIT_EDIT_HEIGHT - y - 30;
+
+   /* Get all the techs the spob has. */
+   n = array_size(p->tags);
+   if (n>0) {
+      have = malloc( n * sizeof(char*) );
+      for (int i=0; i<n; i++)
+         have[i] = strdup(p->tags[i]);
+      empty = 0;
+   }
+   else {
+      have = malloc( sizeof(char*) );
+      have[n++] = strdup(_("None"));
+      empty = 1;
+   }
+
+   /* Add list. */
+   window_addList( wid, x, y, w, h, "lstTagsHave", have, n, 0, NULL, sysedit_btnRmTag );
+   x += w + 15;
+
+   /* Omit the techs that the spob already has from the list.  */
+   n = 0;
+   lack = malloc( array_size(sysedit_tagslist) * sizeof(char*) );
+   for (int i=0; i<array_size(sysedit_tagslist); i++) {
+      char *t = sysedit_tagslist[i];
+      if (empty)
+         lack[n++] = strdup(t);
+      else {
+         int found = 0;
+         for (int j=0; j<array_size(p->tags); j++)
+            if (strcmp( p->tags[j], t )==0) {
+               found = 1;
+               break;
+            }
+         if (!found)
+            lack[n++] = strdup( t );
+      }
+   }
+
+   /* Add list. */
+   window_addList( wid, x, y, w, h, "lstTagsLacked", lack, n, 0, NULL, sysedit_btnAddTag );
+
+   /* Restore positions. */
+   if (hpos != -1 && lpos != -1) {
+      toolkit_setListPos( wid, "lstTagsHave", hpos );
+      toolkit_setListPos( wid, "lstTagsLacked", lpos );
+   }
+}
+
+/**
+ * @brief Adds a tech to a spob.
+ */
+static void sysedit_btnAddTag( unsigned int wid, const char *unused )
+{
+   (void) unused;
+   const char *selected;
+   Spob *p;
+
+   selected = toolkit_getList( wid, "lstTagsLacked" );
+   if ((selected == NULL) || (strcmp(selected,_("None"))==0))
+      return;
+
+   p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
+   if (p->tags == NULL)
+      p->tags = array_create( char* );
+   array_push_back( &p->tags, strdup(selected) );
+
+   /* Regenerate the list. */
+   sysedit_genTagsList( wid );
+}
+
+/**
+ * @brief Removes a tech from a spob.
+ */
+static void sysedit_btnRmTag( unsigned int wid, const char *unused )
+{
+   (void) unused;
+   const char *selected;
+   Spob *p;
+   int i;
+
+   selected = toolkit_getList( wid, "lstTagsHave" );
+   if ((selected == NULL) || (strcmp(selected,_("None"))==0))
+      return;
+
+   p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
+
+   for (i=0; i<array_size(p->tags); i++)
+      if (strcmp( selected, p->tags[i] )==0)
+         break;
+   if (i >= array_size(p->tags))
+      return;
+   free( p->tags[i] );
+   array_erase( &p->tags, &p->tags[i], &p->tags[i+1] );
+
+   /* Regenerate the list. */
+   sysedit_genTagsList( wid );
 }
 
 /**
