@@ -33,7 +33,7 @@
   <asteroid>
    <group>typeC-poor</group>
    <radius>6000.000000</radius>
-   <pos x="-3715.012649" y="-2603.456884"/>
+   <pos x="-3715.012649" y="-2669.704257"/>
    <density>0.400000</density>
   </asteroid>
  </asteroids>
