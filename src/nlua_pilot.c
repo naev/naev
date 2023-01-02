@@ -74,6 +74,7 @@ static int pilotL_getEnemies( lua_State *L );
 static int pilotL_getVisible( lua_State *L );
 static int pilotL_getInrange( lua_State *L );
 static int pilotL_eq( lua_State *L );
+static int pilotL_tostring( lua_State *L );
 static int pilotL_name( lua_State *L );
 static int pilotL_id( lua_State *L );
 static int pilotL_exists( lua_State *L );
@@ -229,7 +230,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "getVisible", pilotL_getVisible },
    { "getInrange", pilotL_getInrange },
    { "__eq", pilotL_eq },
-   { "__tostring", pilotL_name },
+   { "__tostring", pilotL_tostring },
    /* Info. */
    { "name", pilotL_name },
    { "id", pilotL_id },
@@ -1186,6 +1187,26 @@ static int pilotL_eq( lua_State *L )
    LuaPilot p1 = luaL_checkpilot(L,1);
    LuaPilot p2 = luaL_checkpilot(L,2);
    lua_pushboolean(L, p1 == p2);
+   return 1;
+}
+
+/**
+ * @brief Gets the pilot's current (translated) name or notes it is inexistent.
+ *
+ * @usage tostring(p)
+ *
+ *    @luatparam Pilot p Pilot to convert to string.
+ *    @luatreturn string The current name of the pilot or "(inexistent pilot)" if not existent.
+ * @luafunc name
+ */
+static int pilotL_tostring( lua_State *L )
+{
+   LuaPilot lp = luaL_checkpilot( L, 1 );
+   Pilot *p = pilot_get(lp);
+   if (p!=NULL)
+      lua_pushstring(L,p->name);
+   else
+      lua_pushstring(L,"(inexistent pilot)");
    return 1;
 }
 
