@@ -1134,6 +1134,8 @@ dat/spob/lorelei.xml
 dat/spob/lugun.xml
 dat/spob/luna_skona.xml
 dat/spob/luxsor.xml
+dat/spob/maanen.xml
+dat/spob/maanens_moon.xml
 dat/spob/maatsu.xml
 dat/spob/madeleine_station.xml
 dat/spob/madria.xml
@@ -3160,6 +3162,7 @@ dat/spob/lua/lib/hypergate.lua
 dat/spob/lua/lib/spob.lua
 dat/spob/lua/lib/wormhole.lua
 dat/spob/lua/lowclass.lua
+dat/spob/lua/maanans_moon.lua
 dat/spob/lua/pirate_clanworld.lua
 dat/spob/lua/poller_mass.lua
 dat/spob/lua/proteron_mil_restricted.lua

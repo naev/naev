@@ -11,6 +11,7 @@
  <jumps>
   <jump target="Guntesh">
    <autopos/>
+   <exitonly/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Wunomi">
