@@ -408,8 +408,10 @@ static void sysedit_btnNewSpob( unsigned int wid_unused, const char *unused )
    /* Update economy due to galaxy modification. */
    economy_execQueued();
 
-   if (conf.devautosave)
+   if (conf.devautosave) {
+      dsys_saveSystem( sysedit_sys );
       dpl_saveSpob( p );
+   }
 
    /* Reload graphics. */
    space_gfxLoad( sysedit_sys );
@@ -509,6 +511,7 @@ static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
 
          p->name = name;
          window_modifyText( sysedit_widEdit, "txtName", p->name );
+         dsys_saveSystem( sysedit_sys );
          dpl_saveSpob( p );
       }
    }
@@ -1090,9 +1093,12 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             }
             sysedit_drag      = 0;
 
-            if (conf.devautosave)
+            if (conf.devautosave) {
+               dsys_saveSystem( sysedit_sys );
                for (int i=0; i<sysedit_nselect; i++)
-                  dpl_saveSpob(sysedit_sys->spobs[ sysedit_select[i].u.spob ]);
+                  if (sysedit_select[i].type == SELECT_SPOB)
+                     dpl_saveSpob( sys->spobs[ sysedit_select[i].u.spob ] );
+            }
          }
          if (sysedit_dragSel) {
             if ((SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD) &&
@@ -1107,10 +1113,12 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             sysedit_dragSel   = 0;
 
             /* Save all spobs in our selection - their positions might have changed. */
-            if (conf.devautosave)
+            if (conf.devautosave) {
+               dsys_saveSystem( sysedit_sys );
                for (int i=0; i<sysedit_nselect; i++)
                   if (sysedit_select[i].type == SELECT_SPOB)
                      dpl_saveSpob( sys->spobs[ sysedit_select[i].u.spob ] );
+            }
          }
          break;
 
