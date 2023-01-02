@@ -1,5 +1,6 @@
 * 0.11.0 (unreleased)
    * Moved many missions to the vn system
+   * Make it explicit when all the escorts have jumped or landed
    * diy-nerds: improved reward
 
 * 0.10.2 (unreleased)
