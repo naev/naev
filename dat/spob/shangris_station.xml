@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Shangris Station">
+ <pos x="13172.960754" y="425.307879"/>
+ <GFX>
+  <space>station-fleetbase4.webp</space>
+  <exterior>mining6.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Independent</faction>
+  <base>60.000000</base>
+  <bonus>20.000000</bonus>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>35700</population>
+  <hide>0.200000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>(null)</description>
+  <bar>(null)</bar>
+ </general>
+ <tech>
+  <item>Hulls Medium</item>
+  <item>Hulls High</item>
+  <item>Systems Medium</item>
+  <item>Engines Medium</item>
+  <item>Engines High</item>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Kinetic 2</item>
+  <item>Kinetic 3</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Star Maps</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Heavy Civilian Combat Ships</item>
+  <item>Criminal Outfits</item>
+ </tech>
+ <tags>
+  <tag>criminal</tag>
+  <tag>trade</tag>
+  <tag>station</tag>
+ </tags>
+</spob>
