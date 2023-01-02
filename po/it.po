@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-28 00:18+0900\n"
-"PO-Revision-Date: 2023-01-01 20:52+0000\n"
+"PO-Revision-Date: 2023-01-02 21:48+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -2772,7 +2772,7 @@ msgstr "Motore Fittizio"
 #: dat/outfits/core_engine/small/unicorp_hawk_350_engine.xml:4
 #: dat/outfits/core_engine/small/zalek_test_engine.xml:4
 msgid "Core Systems (Engine)"
-msgstr "Sistemi Principali (Motore)"
+msgstr "Sistemi Essenziali (Motore)"
 
 #: dat/outfits/core_engine/dummy_engine.xml:9
 msgid ""
@@ -3101,7 +3101,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/dummy_plating.xml:2
 msgid "Dummy Plating"
-msgstr ""
+msgstr "Rivestimento Fittizio"
 
 #: dat/outfits/core_hull/dummy_plating.xml:4
 #: dat/outfits/core_hull/large/patchwork_heavy_plating.xml:4
@@ -3128,7 +3128,7 @@ msgstr ""
 #: dat/outfits/core_hull/small/unicorp_d2_light_plating.xml:4
 #: dat/outfits/core_hull/small/unicorp_d4_light_plating.xml:4
 msgid "Core Systems (Hull)"
-msgstr ""
+msgstr "Sistemi Essenziali (Fusoliera)"
 
 #: dat/outfits/core_hull/dummy_plating.xml:9
 msgid ""
@@ -3140,7 +3140,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/large/patchwork_heavy_plating.xml:2
 msgid "Patchwork Heavy Plating"
-msgstr ""
+msgstr "Rivestimento Pesante Patchwork"
 
 #: dat/outfits/core_hull/large/patchwork_heavy_plating.xml:10
 #: dat/outfits/core_hull/medium/patchwork_medium_plating.xml:10
@@ -3149,10 +3149,13 @@ msgid ""
 "On the plus side, it keeps air from venting into space. But that's about it. "
 "This kind of hull maintenance is simply unacceptable."
 msgstr ""
+"La parte positiva è che impedisce all'aria di disperdersi nello spazio. Ma "
+"questo è tutto. Questo tipo di manutenzione delle fusoliere è semplicemente "
+"inaccettabile."
 
 #: dat/outfits/core_hull/large/rs_large_cargo_hull.xml:2
 msgid "Red Star Large Cargo Hull"
-msgstr ""
+msgstr "Fusoliera Grande per Cargo Stella Rossa"
 
 #: dat/outfits/core_hull/large/rs_large_cargo_hull.xml:10
 msgid ""
@@ -3163,10 +3166,17 @@ msgid ""
 "scrambler systems allow even the largest ships a chance to turn away "
 "missiles."
 msgstr ""
+"La Stella Rossa Imperiale è specializzata per compiere missioni di soccorso "
+"in aree colpite da guerre, pirateria e malattie. Sviluppate recentemente "
+"dall'organizzazione fanno parte di una serie di fusoliere per cargo "
+"specializzate e pensate per massimizzare le probabilità che i rifornimenti e "
+"il personali arrivino in modo affidabile dove sono maggiormente necessari. I "
+"sistemi integrati di disturbo permettono anche alle astronavi più grandi di "
+"avere una possibilità di deviare i missili."
 
 #: dat/outfits/core_hull/large/sk_heavy_combat_plating.xml:2
 msgid "S&K Heavy Combat Plating"
-msgstr ""
+msgstr "Rivestimento Pesante di Combattimento S&K"
 
 #: dat/outfits/core_hull/large/sk_heavy_combat_plating.xml:10
 msgid ""
@@ -3174,10 +3184,13 @@ msgid ""
 "prolonged battle. Quite a few captains and their crews owe their lives to "
 "this armour configuration."
 msgstr ""
+"Questo rivestimento pesante sviluppato dalle industrie Schafer & Kane può "
+"resistere a battaglie prolungare. Un bel po' di capitani e i loro equipaggi "
+"devono le loro vite a questa configurazione di armatura."
 
 #: dat/outfits/core_hull/large/sk_large_cargo_hull.xml:2
 msgid "S&K Large Cargo Hull"
-msgstr ""
+msgstr "Fusoliera Grande di Cargo S&K"
 
 #: dat/outfits/core_hull/large/sk_large_cargo_hull.xml:10
 msgid ""
@@ -3185,10 +3198,14 @@ msgid ""
 "defensive alloys, which allows it to free up even more space for cargo "
 "without sacrificing too much durability."
 msgstr ""
+"Questa fusoliera per cargo prodotta dalle industrie Schafer & Kane fa uso di "
+"leghe d'avanguardia pensate per scopi difensivi che permettono anche di "
+"liberare più spazio per il trasporto merci senza sacrificare troppo la "
+"solidità."
 
 #: dat/outfits/core_hull/large/sk_superheavy_combat_plating.xml:2
 msgid "S&K Superheavy Combat Plating"
-msgstr ""
+msgstr "Rivestimento Superpesante di Combattimento S&K"
 
 #: dat/outfits/core_hull/large/sk_superheavy_combat_plating.xml:10
 msgid ""
@@ -3196,6 +3213,10 @@ msgid ""
 "modification from Schafer & Kane Industries is generally found only on "
 "important capital ships."
 msgstr ""
+"Considerata la migliore configurazione di rivestimento di base presente sul "
+"mercato, questa modifica della fusoliera prodotta dalle industrie Schafer & "
+"Kane è generalmente presente soltanto sulle astronavi principali più "
+"importanti."
 
 #: dat/outfits/core_hull/large/unicorp_d48_heavy_plating.xml:2
 msgid "Unicorp D-48 Heavy Plating"
@@ -3236,7 +3257,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/medium/rs_medium_cargo_hull.xml:2
 msgid "Red Star Medium Cargo Hull"
-msgstr ""
+msgstr "Fusoliera Media per Cargo Stella Rossa"
 
 #: dat/outfits/core_hull/medium/rs_medium_cargo_hull.xml:10
 msgid ""
@@ -3248,6 +3269,15 @@ msgid ""
 "missiles, especially torpedoes, and compel enemy turrets to track just that "
 "little bit slower."
 msgstr ""
+"La Stella Rossa Imperiale è specializzata per compiere missioni di soccorso "
+"in aree colpite da guerre, pirateria e malattie. Sviluppate recentemente "
+"dall'organizzazione fanno parte di una serie di fusoliere per cargo "
+"specializzate e pensate per massimizzare le probabilità che i rifornimenti e "
+"il personali arrivino in modo affidabile dove sono maggiormente necessari. I "
+"sistemi alimentati di disturbo permettono alle astronavi di dimensioni medie "
+"di deviare in modo più efficiente gli attacchi di missili teleguidati, "
+"specialmente torpedini e far sì che le torrette nemiche siano rallentate un "
+"pochino nel tracciare il bersaglio."
 
 #: dat/outfits/core_hull/medium/sk_medium_cargo_hull.xml:2
 msgid "S&K Medium Cargo Hull"
@@ -3319,7 +3349,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/small/rs_small_cargo_hull.xml:2
 msgid "Red Star Small Cargo Hull"
-msgstr ""
+msgstr "Fusoliera Piccola per Cargo Stella Rossa"
 
 #: dat/outfits/core_hull/small/rs_small_cargo_hull.xml:10
 msgid ""
@@ -3331,6 +3361,15 @@ msgid ""
 "allowing small ships to more effectively run blockades by pirates and "
 "privateers."
 msgstr ""
+"La Stella Rossa Imperiale è specializzata per compiere missioni di soccorso "
+"in aree colpite da guerre, pirateria e malattie. Sviluppate recentemente "
+"dall'organizzazione fanno parte di una serie di fusoliere per cargo "
+"specializzate e pensate per massimizzare le probabilità che i rifornimenti e "
+"il personali arrivino in modo affidabile dove sono maggiormente necessari. I "
+"sistemi di disturbo integrati nella fusoliera aiutano a deviare gli effetti "
+"di missili e il tracciamento delle torrette, permettendo alle astronavi di "
+"piccole dimensioni di sorpassare più efficacemente gli embarghi di pirati e "
+"corsari."
 
 #: dat/outfits/core_hull/small/sk_light_combat_plating.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:228
@@ -3414,14 +3453,14 @@ msgstr ""
 #: dat/outfits/core_system/small/unicorp_pt68_core_system.xml:4
 #: dat/outfits/unique/homebrew_processing_unit.xml:6
 msgid "Core Systems (System)"
-msgstr ""
+msgstr "Sistemi Essenziali (Sistema)"
 
 #: dat/outfits/core_system/dummy_systems.xml:9
 msgid ""
 "This is a dummy core system for use in missions only, which does nothing. DO "
 "NOT BUY."
 msgstr ""
-"Questo è un sistema principale fittizio da usarsi soltanto durante le "
+"Questo è un sistema essenziale fittizio da usarsi soltanto durante le "
 "missioni, che non fa nulla, NON COMPRARLO."
 
 #: dat/outfits/core_system/large/milspec_orion_8601_core_system.xml:2
