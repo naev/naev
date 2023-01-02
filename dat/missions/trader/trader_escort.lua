@@ -43,7 +43,7 @@ piracyrisk[4] = _("#nPiracy Risk:#0 High")
 
 function create()
    --This mission does not make any system claims
-   mem.destspob, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute()
+   mem.destspob, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute( 1 )
 
    if mem.destspob == nil then
       misn.finish(false)
@@ -152,7 +152,7 @@ function trader_create( p )
       p:cargoRm( c.name, c.q )
    end
    p:cargoAdd( mem.cargo, p:cargoFree() )
-   p:rename(_("Convoy"))
+   p:rename(_("Convoy ")..p:ship():name())
 end
 
 local last_spammed = 0

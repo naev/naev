@@ -28,18 +28,14 @@ local vn = require "vn"
 local vntk = require "vntk"
 
 function create ()
-   -- Note: this mission does not make any system claims.
-
    -- Planet targets
-   mem.pickup,mem.pickupsys  = spob.getLandable( "Selphod" )
-   mem.dest,mem.destsys      = spob.getLandable( "Cerberus" )
-   mem.ret,mem.retsys        = spob.getLandable( "Halir" )
-   if mem.pickup==nil or mem.dest==nil or mem.ret==nil then
-      misn.finish(false)
-   end
+   mem.pickup,mem.pickupsys  = spob.getS( "Selphod" )
+   mem.dest,mem.destsys      = spob.getS( "Cerberus" )
+   mem.ret,mem.retsys        = spob.getS( "Halir" )
+   -- Note: this mission does not make any system claims
 
    -- Bar NPC
-   misn.setNPC( emp.soldner.name, emp.soldner.portrait, emp.soldner.desc )
+   misn.setNPC( emp.soldner.name, emp.soldner.portrait, emp.soldner.description )
 end
 
 function accept ()

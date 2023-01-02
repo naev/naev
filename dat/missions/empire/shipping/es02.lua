@@ -45,18 +45,15 @@ local destsys     = system.get( "Slaccid" )
 local log_text_fail = _([[You failed in your attempt to rescue a VIP for the Empire. Meet with Commander Soldner on Halir to try again.]])
 
 function create ()
-   -- Target destination
-   mem.ret, mem.retsys  = spob.getLandable( "Halir" )
-   if mem.ret== nil then
-      misn.finish(false)
-   end
+   -- Planet targets
+   mem.ret, mem.retsys  = spob.getS( "Halir" )
 
    -- Must claim system
    if not misn.claim( destsys ) then
       misn.finish(false)
    end
 
-   -- Add NPC.
+   -- Bar NPC
    misn.setNPC( emp.soldner.name, emp.soldner.portrait, _("Commander Soldner is waiting for you.") )
 end
 

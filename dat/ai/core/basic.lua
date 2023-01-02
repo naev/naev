@@ -404,7 +404,7 @@ function __choose_land_target ( target )
    return target
 end
 
-function land ( target )
+function land( target )
    local planet = __choose_land_target ( target )
    ai.pushsubtask( "_landgo", planet )
 end

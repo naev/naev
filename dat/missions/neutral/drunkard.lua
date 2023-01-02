@@ -41,11 +41,8 @@ function create ()
    misn.setNPC( npc_name, npc_portrait, _("You see a drunkard at the bar mumbling about how he was so close to getting his break.") )  -- creates the drunkard at the bar
 
    -- Planets
-   mem.pickupWorld, mem.pickupSys  = spob.getLandable("INSS-2")
-   mem.delivWorld, mem.delivSys    = spob.getLandable("Darkshed")
-   if mem.pickupWorld == nil or mem.delivWorld == nil then -- Must be landable
-      misn.finish(false)
-   end
+   mem.pickupWorld, mem.pickupSys  = spob.getS("INSS-2")
+   mem.delivWorld, mem.delivSys    = spob.getS("Darkshed")
    mem.origWorld, mem.origSys      = spob.cur()
 end
 

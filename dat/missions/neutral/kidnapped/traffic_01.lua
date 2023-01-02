@@ -83,6 +83,7 @@ function accept ()
    vn.label("accept")
    w(_([[The woman calms down as you signal your willingness to help. "Oh, thank goodness! I was told where he usually hangs around. Please take me there and tell him that I have to talk to him.
 And please hurry. Someone was sent to assassinate him. I don't have much to give, but whatever I have saved, you can have."]]) )
+   vn.func( function () accepted = true end )
 
    vn.run()
 

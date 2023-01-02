@@ -98,6 +98,10 @@ function accept ()
    father(fmt.f(_([[Approaching him, he hands you a paper. It offers a {credits} reward for the finding of a "Cynthia" person.
 "That's my girl. She disappeared quite a few decaperiods ago. We managed to track her down to here, but where she went afterwards remains a mystery. We know she was kidnapped, but if you know anything…" The man begins to cry. "Have you seen any trace of her?"]]),
       {credits=fmt.credits(reward)}))
+   vn.menu{
+      {_([[Help]]), "accept"},
+      {_([[Leave]]), "decline"},
+   }
 
    vn.label("decline")
    vn.done()
@@ -164,6 +168,11 @@ function land ()
       vn.transition()
 
       cynthia(_([[After chasing Cynthia through most of the station, you find her curled up at the end of a hall, crying. As you approach, she screams, "Why can't you leave me alone? I don't want to go back to my terrible parents!" Will you take her anyway?]]))
+
+      vn.menu{
+         {_("Take her"), "take"},
+         {_("Do not take her"), "notake"},
+      }
 
       vn.label("take")
       cynthia(_([[Cynthia stops crying and proceeds to hide in the farthest corner of your ship. Attempts to talk to her end up fruitless.]]))

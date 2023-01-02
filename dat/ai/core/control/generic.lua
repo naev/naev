@@ -204,6 +204,7 @@ function handle_messages( si, dopush )
    local l = p:leader()
    for i, msg in ipairs(ai.messages()) do
       local sender, msgtype, data = msg[1], msg[2], msg[3]
+
       -- This is the case that the message is being sent from the environment, such as asteroids
       if sender==nil then
          -- Asteroid was blown up with mining tools
@@ -224,8 +225,8 @@ function handle_messages( si, dopush )
          end
       else
 
-         -- Special case leader is gone but we want to follow, so e ignore if they're non-existent.
-         if sender == l then
+         -- Special case leader is gone but we want to follow, so we ignore if they're non-existent.
+         if l==nil or sender==l then
             if msgtype == "hyperspace" then
                if dopush then
                   ai.pushtask("hyperspace", data)

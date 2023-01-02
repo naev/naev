@@ -36,8 +36,8 @@ function create ()
    misn.setNPC( _("Za'lek Scientist"), npc_portrait, _("This Za'lek scientist seems to be looking for someone.") )  -- creates the scientist at the bar
 
    -- Planets
-   mem.pickupWorld, mem.pickupSys  = spob.getLandable("Vilati Vilata")
-   mem.delivWorld, mem.delivSys    = spob.getLandable("Oberon")
+   mem.pickupWorld, mem.pickupSys  = spob.getS("Vilati Vilata")
+   mem.delivWorld, mem.delivSys    = spob.getS("Oberon")
    -- Have to claim so Logan doesn't get cleared upon takeoff at destination
    if not misn.claim( mem.delivSys ) then
       misn.finish(false)
