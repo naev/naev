@@ -175,11 +175,25 @@ function _escort_e_attacked( p, attacker )
    end
 end
 
+local function escorts_left ()
+   local left = 0
+   for k,v in ipairs(escort.pilots()) do
+      if v:exists() then
+         left = left+1
+      end
+   end
+   return left
+end
+
 function _escort_e_land( p, landed_spob )
    if landed_spob == mem._escort.destspob then
       table.insert( exited, p )
       if p:exists() then
          player.msg( "#g"..fmt.f(_("{plt} has landed on {pnt}."), {plt=p, pnt=landed_spob} ).."#0" )
+      end
+
+      if escorts_left() <= 1 then
+         player.msg("#g"..fmt.f(_("All escorts have landed on {pnt}."), {pnt=landed_spob}).."#0")
       end
    else
       _escort_e_death( p )
@@ -191,6 +205,10 @@ function _escort_e_jump( p, j )
       table.insert( exited, p )
       if p:exists() then
          player.msg( "#g"..fmt.f(_("{plt} has jumped to {sys}."), {plt=p, sys=j:dest()} ).."#0" )
+      end
+
+      if escorts_left() <= 1 then
+         player.msg("#g"..fmt.f(_("All escorts have jumped to {sys}. Follow them."), {sys=j:dest()}).."#0")
       end
    else
       _escort_e_death( p )
