@@ -7,9 +7,16 @@
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
  <pos x="234.767351" y="-394.576052"/>
- <spobs/>
+ <spobs>
+  <spob>Tepdania Customs</spob>
+  <spob>Tepdania Prime</spob>
+ </spobs>
  <jumps>
   <jump target="Ianella">
+   <pos x="8277.695175" y="-12354.264040"/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Poltergeist">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
@@ -22,4 +29,12 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeA-poor</group>
+   <radius>3500.000000</radius>
+   <pos x="-7314.814066" y="3036.337914"/>
+   <density>1.200000</density>
+  </asteroid>
+ </asteroids>
 </ssys>

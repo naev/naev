@@ -16,10 +16,6 @@
   <spob>Ianella IV</spob>
  </spobs>
  <jumps>
-  <jump target="Poltergeist">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
   <jump target="Tepdania">
    <autopos/>
    <hide>1.000000</hide>
