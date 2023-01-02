@@ -224,7 +224,7 @@ function handle_messages( si, dopush )
          end
       else
 
-         -- Special case leader is gone but we want to follow, so e ignore if they're non-existent.
+         -- Special case leader is gone but we want to follow, so we ignore if they're non-existent.
          if sender == l then
             if msgtype == "hyperspace" then
                if dopush then
