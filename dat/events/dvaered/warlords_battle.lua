@@ -152,10 +152,12 @@ local function getLeader(list)
    local p = chooseInList(list)
    if p == nil or not p:exists() then
       return nil
-   elseif p:leader() == nil or not p:leader():exists() then
+   end
+   local l = p:leader()
+   if l==nil then
       return p
    else
-      return p:leader()
+      return l
    end
 end
 
