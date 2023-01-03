@@ -7,7 +7,12 @@
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
  <pos x="121.301278" y="-264.250346"/>
- <spobs/>
+ <spobs>
+  <spob>Wunomi I</spob>
+  <spob>Wunomi I-a</spob>
+  <spob>Wunomi's Moon</spob>
+  <spob>Wunomi's World</spob>
+ </spobs>
  <jumps>
   <jump target="Groombridge">
    <autopos/>

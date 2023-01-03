@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Wunomi I-a">
+ <pos x="-8385.851633" y="-2044.958757"/>
+ <GFX>
+  <space>moon-D02.webp</space>
+  <exterior>uninhabited-rocky-airless-00.webp</exterior>
+ </GFX>
+ <general>
+  <class>D</class>
+  <population>0</population>
+  <hide>0.300000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>A small and dusty moon with no discernible atmosphere. There is a small mining facility that is used to obtain materials for construction and operations on Wunomi's World, but there are no resources useful enough to export to other systems.</description>
+ </general>
+</spob>
