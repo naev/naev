@@ -107,8 +107,16 @@ He chuckles slightly.]]))
    hook.enter( "enter" )
 end
 
+local heartbeat_state = 0
 function land ()
    if mem.state~=2 or spob.cur() ~= mainpnt then
+      if heartbeat_state > 0 then
+         lmisn.fail(_("You were supposed to eliminate the hostiles!"))
+      end
+      if mem.hook_heartbeat then
+         hook.rm( mem.hook_heartbeat )
+         mem.hook_heartbeat = nil
+      end
       return
    end
 
@@ -132,7 +140,6 @@ He rubs his temples.]]))
 end
 
 -- Set up the enemies
-local heartbeat_state = 0
 function enter ()
    if system.cur() ~= mainsys then
       if mem.state==1 and heartbeat_state > 0 then
@@ -141,7 +148,7 @@ function enter ()
       return
    end
 
-   hook.timer( 90, "heartbeat" )
+   mem.hook_heartbeat = hook.timer( 90, "heartbeat" )
 end
 
 local badguys
