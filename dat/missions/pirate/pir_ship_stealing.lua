@@ -165,7 +165,7 @@ function accept()
 
    vn.clear()
    vn.scene()
-   local p = vn.newCharacter( _("Pirate Informer"), {image=portrait.getFulLPath(pir_portrait)} )
+   local p = vn.newCharacter( _("Pirate Informer"), {image=portrait.getFullPath(pir_portrait)} )
    vn.transition()
 
    p(fmt.f(_([["Hi, pilot. I have the location and security codes of an unattended {fct} {class}. Maybe it interests you, who knows?

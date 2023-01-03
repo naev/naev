@@ -239,7 +239,7 @@ struct StarSystem_ {
    char* name;             /**< star system name */
    vec2 pos;               /**< Position */
    int stars;              /**< Amount of "stars" it has. */
-   double interference;    /**< in % @todo implement interference. */
+   double interference;    /**< Modifies global ew with a factor of 1/(1+interference/100). So 100 would half visibility. */
    double nebu_hue;        /**< Hue of the nebula (0. - 1.) */
    double nebu_density;    /**< Nebula density (0. - 1000.) */
    double nebu_volatility; /**< Damage per second. */
