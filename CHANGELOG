@@ -2,6 +2,7 @@
    * Fixed escorts sometimes not following their leader and landing
    * Fixed autonav always wanting to go to the edge of jump points
    * taiomi: fixed some claims
+   * zbh03: landing when hostiles spawned will fail the mission
 
 * 0.10.1
    * Fixed many stations not marked as stations
