@@ -90,7 +90,10 @@ void player_autonavStart (void)
 
    dest = map_getDestination(NULL);
    player_message(_("#oAutonav: travelling to %s."), (sys_isKnown(dest) ? _(dest->name) : _("Unknown")) );
-   player.autonav = AUTONAV_JUMP_APPROACH;
+   if (space_canHyperspace(player.p))
+      player.autonav = AUTONAV_JUMP_BRAKE;
+   else
+      player.autonav = AUTONAV_JUMP_APPROACH;
 }
 
 /**

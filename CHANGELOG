@@ -5,6 +5,7 @@
 
 * 0.10.2 (unreleased)
    * Fixed escorts sometimes not following their leader and landing
+   * Fixed autonav always wanting to go to the edge of jump points
    * taiomi: fixed some claims
 
 * 0.10.1
