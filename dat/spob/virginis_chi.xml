@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Virginis Chi">
+ <pos x="6164.686068" y="-6808.757747"/>
+ <GFX>
+  <space>J06.webp</space>
+  <exterior>zalek_station1.webp</exterior>
+ </GFX>
+ <general>
+  <class>J</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

@@ -1533,6 +1533,7 @@ dat/spob/soromid_wards_beta.xml
 dat/spob/soromid_wards_gamma.xml
 dat/spob/soros_station.xml
 dat/spob/sorrow_ii.xml
+dat/spob/spica.xml
 dat/spob/sroolu.xml
 dat/spob/stalwart_station.xml
 dat/spob/starlight_end_i.xml
@@ -1703,6 +1704,11 @@ dat/spob/vilati_vilata.xml
 dat/spob/vino.xml
 dat/spob/vinooso.xml
 dat/spob/violin_station.xml
+dat/spob/virginis_alpha.xml
+dat/spob/virginis_beta.xml
+dat/spob/virginis_chi.xml
+dat/spob/virginis_eta.xml
+dat/spob/virginis_lambda.xml
 dat/spob/vlexair.xml
 dat/spob/vlexon_i.xml
 dat/spob/vlexon_ii.xml

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Spica">
+ <pos x="-2978.690838" y="-1001.456402"/>
+ <GFX>
+  <space>K06.webp</space>
+  <exterior>desertic3.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <base>70.000000</base>
+  <bonus>30.000000</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>K</class>
+  <population>9.4e+07</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Spica is an old well-off colony that was established near the end of the second growth. The many cities littered on the surface boast complex local traditions and fierce rivalries with one and other. One slip up with traditions can easily stir up problem with the locals, and the locals tend to hold long grudges.
+The planet itself is very arid, with large temperature swings during the long days. The locals are used to living with the rhythm of the planet, only going out when the temperature permits, and sticking to the specially insulated installations when the temperature goes sour, just like the Spica Blossom plants that use a similar technique to survive in the local environment.</description>
+  <bar>The bar boasts a diversity of local drinks with in-depth explanations of their origins and histories. You would swear that a couple are the same drink with different names, but you're pretty sure that if you point it out you'll start a riot. The people seem friendly enough, but they all seem to keep their distance with newcomers.</bar>
+ </general>
+ <tech>
+  <item>Systems Low</item>
+  <item>Hulls Low</item>
+  <item>Hulls Medium</item>
+  <item>Engines Low</item>
+  <item>Engines Medium</item>
+  <item>Heavy Weapons 1</item>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Low Tech Upgrades</item>
+ </tech>
+ <tags>
+  <tag>old</tag>
+ </tags>
+</spob>

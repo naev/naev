@@ -7,7 +7,14 @@
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
  <pos x="164.413153" y="-332.878759"/>
- <spobs/>
+ <spobs>
+  <spob>Spica</spob>
+  <spob>Virginis Alpha</spob>
+  <spob>Virginis Beta</spob>
+  <spob>Virginis Chi</spob>
+  <spob>Virginis Eta</spob>
+  <spob>Virginis Lambda</spob>
+ </spobs>
  <jumps>
   <jump target="Poltergeist">
    <autopos/>
