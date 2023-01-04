@@ -403,10 +403,14 @@ static void sysedit_btnNewSpob( unsigned int wid_unused, const char *unused )
    /* Base spob data off another. */
    b                    = spob_get( space_getRndSpob(0, 0, NULL) );
    p->class             = strdup( b->class );
-   p->gfx_spacePath     = strdup( b->gfx_spacePath );
-   p->gfx_spaceName     = strdup( b->gfx_spaceName );
-   p->gfx_exterior      = strdup( b->gfx_exterior );
-   p->gfx_exteriorPath  = strdup( b->gfx_exteriorPath );
+   if (p->gfx_spacePath != NULL;
+      p->gfx_spacePath     = strdup( b->gfx_spacePath );
+   if (p->gfx_spaceName != NULL)
+      p->gfx_spaceName     = strdup( b->gfx_spaceName );
+   if (p->gfx_exterior != NULL)
+      p->gfx_exterior      = strdup( b->gfx_exterior );
+   if (p->gfx_exteriorPath != NULL)
+      p->gfx_exteriorPath  = strdup( b->gfx_exteriorPath );
    p->pos.x             = sysedit_xpos / sysedit_zoom;
    p->pos.y             = sysedit_ypos / sysedit_zoom;
    p->hide              = HIDE_DEFAULT_SPOB;
