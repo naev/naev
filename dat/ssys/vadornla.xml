@@ -7,7 +7,10 @@
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
  <pos x="105.613780" y="-469.905110"/>
- <spobs/>
+ <spobs>
+  <spob>Eta Vadornia</spob>
+  <spob>Kappa Vadornia</spob>
+ </spobs>
  <jumps>
   <jump target="Hubfar">
    <autopos/>
@@ -18,4 +21,16 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeA-poor</group>
+   <radius>8000.000000</radius>
+   <pos x="-26.786657" y="159.005837"/>
+   <density>3.000000</density>
+  </asteroid>
+  <exclusion>
+   <radius>7000.000000</radius>
+   <pos x="5.161343" y="-0.734163"/>
+  </exclusion>
+ </asteroids>
 </ssys>
