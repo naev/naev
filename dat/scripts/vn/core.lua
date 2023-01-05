@@ -976,6 +976,7 @@ function vn.StateMenu:_keypressed( key )
    if n==0 then n = n + 10 end
    if n > #self._items then return false end
    self:_choose(n)
+   return true
 end
 function vn.StateMenu:_choose( n )
    vn._sfx.ui.option:play()
