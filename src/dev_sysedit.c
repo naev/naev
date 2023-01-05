@@ -381,6 +381,7 @@ static void sysedit_btnNewSpob( unsigned int wid_unused, const char *unused )
    (void) unused;
    Spob *p, *b;
    char *name;
+   int good;
 
    /* Get new name. */
    name = dialogue_inputRaw( _("New Spob Creation"), 1, 32, _("What do you want to name the new spob?") );
@@ -401,16 +402,19 @@ static void sysedit_btnNewSpob( unsigned int wid_unused, const char *unused )
    p->name  = name;
 
    /* Base spob data off another. */
-   b                    = spob_get( space_getRndSpob(0, 0, NULL) );
+   good = 0;
+   while (!good) {
+      b = spob_get( space_getRndSpob(0, 0, NULL) );
+      good = !((b->class==NULL) ||
+            (b->gfx_spacePath==NULL) || (b->gfx_spaceName==NULL) ||
+            (b->gfx_exterior==NULL) || (b->gfx_exteriorPath==NULL));
+
+   }
    p->class             = strdup( b->class );
-   if (p->gfx_spacePath != NULL)
-      p->gfx_spacePath     = strdup( b->gfx_spacePath );
-   if (p->gfx_spaceName != NULL)
-      p->gfx_spaceName     = strdup( b->gfx_spaceName );
-   if (p->gfx_exterior != NULL)
-      p->gfx_exterior      = strdup( b->gfx_exterior );
-   if (p->gfx_exteriorPath != NULL)
-      p->gfx_exteriorPath  = strdup( b->gfx_exteriorPath );
+   p->gfx_spacePath     = strdup( b->gfx_spacePath );
+   p->gfx_spaceName     = strdup( b->gfx_spaceName );
+   p->gfx_exterior      = strdup( b->gfx_exterior );
+   p->gfx_exteriorPath  = strdup( b->gfx_exteriorPath );
    p->pos.x             = sysedit_xpos / sysedit_zoom;
    p->pos.y             = sysedit_ypos / sysedit_zoom;
    p->hide              = HIDE_DEFAULT_SPOB;
