@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-29 17:46+0900\n"
-"PO-Revision-Date: 2023-01-02 21:48+0000\n"
+"PO-Revision-Date: 2023-01-06 01:56+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev-0-10-x/"
 "it/>\n"
@@ -3191,7 +3191,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/large/sk_large_cargo_hull.xml:2
 msgid "S&K Large Cargo Hull"
-msgstr "Fusoliera Grande di Cargo S&K"
+msgstr "Fusoliera S&K per Cargo Grande"
 
 #: dat/outfits/core_hull/large/sk_large_cargo_hull.xml:10
 msgid ""
@@ -3221,7 +3221,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/large/unicorp_d48_heavy_plating.xml:2
 msgid "Unicorp D-48 Heavy Plating"
-msgstr ""
+msgstr "Rivestimento Unicorp D-48 Pesante"
 
 #: dat/outfits/core_hull/large/unicorp_d48_heavy_plating.xml:9
 msgid ""
@@ -3229,10 +3229,13 @@ msgid ""
 "weapons, with most seasoned captains opting for a heavier, more advanced "
 "plating."
 msgstr ""
+"Sebbene sia una progettazione di tutto rispetto, il rivestimento D-48 è "
+"surclassato dagli armamenti moderni pesanti, i capitani con maggior anni di "
+"esperienza preferiscono un rivestimento più pesante e più evoluto."
 
 #: dat/outfits/core_hull/large/unicorp_d68_heavy_plating.xml:2
 msgid "Unicorp D-68 Heavy Plating"
-msgstr ""
+msgstr "Rivestimento Unicorp D-68 Pesante"
 
 #: dat/outfits/core_hull/large/unicorp_d68_heavy_plating.xml:10
 msgid ""
@@ -3240,10 +3243,13 @@ msgid ""
 "weapons, with most seasoned captains opting for a heavier, more advanced "
 "plating."
 msgstr ""
+"Sebbene sia una progettazione di tutto rispetto, il rivestimento D-68 è "
+"surclassato dagli armamenti moderni pesanti, i capitani con maggior anni di "
+"esperienza preferiscono un rivestimento più pesante e più evoluto."
 
 #: dat/outfits/core_hull/medium/nexus_medium_stealth_plating.xml:2
 msgid "Nexus Medium Stealth Plating"
-msgstr ""
+msgstr "Rivestimento Nexus per Invisibilità Medio"
 
 #: dat/outfits/core_hull/medium/nexus_medium_stealth_plating.xml:9
 msgid ""
@@ -3251,10 +3257,13 @@ msgid ""
 "but Nexus Shipyards have nevertheless developed a hull modification that "
 "helps in this area"
 msgstr ""
+"Le astronavi di media taglia non sono in grado di restare non rilevabili, "
+"ma, ciononostante, i Cantieri di Astronavi Nexus hanno sviluppato una "
+"fusoliera modificata per offrire una mitigazione sotto questo aspetto"
 
 #: dat/outfits/core_hull/medium/patchwork_medium_plating.xml:2
 msgid "Patchwork Medium Plating"
-msgstr ""
+msgstr "Rivestimento Patchwork Medio"
 
 #: dat/outfits/core_hull/medium/rs_medium_cargo_hull.xml:2
 msgid "Red Star Medium Cargo Hull"
@@ -3282,17 +3291,19 @@ msgstr ""
 
 #: dat/outfits/core_hull/medium/sk_medium_cargo_hull.xml:2
 msgid "S&K Medium Cargo Hull"
-msgstr ""
+msgstr "Fusoliera S&K per Cargo Medio"
 
 #: dat/outfits/core_hull/medium/sk_medium_cargo_hull.xml:10
 msgid ""
 "Schafer & Kane Industries have developed a hull modification that provides "
 "both ample cargo space and protection."
 msgstr ""
+"Le industrie Schafer & Kane hanno sviluppato una fusoliera modificata che "
+"offre sia uno spazio di carico ampio che protezione."
 
 #: dat/outfits/core_hull/medium/sk_medium_combat_plating.xml:2
 msgid "S&K Medium Combat Plating"
-msgstr ""
+msgstr "Rivestimento S&K di Combattimento Medio"
 
 #: dat/outfits/core_hull/medium/sk_medium_combat_plating.xml:9
 msgid ""
@@ -3300,10 +3311,13 @@ msgid ""
 "combat plating provides ample protection utilizing the latest in defensive "
 "materials."
 msgstr ""
+"Progettato per corvette e vascelli di simili dimensioni, il rivestimento di "
+"combattimento medio della Schafer & Kane fornisce protezione utilizzando i "
+"più moderni materiali per la difesa."
 
 #: dat/outfits/core_hull/medium/sk_mediumheavy_combat_plating.xml:2
 msgid "S&K Medium-Heavy Combat Plating"
-msgstr ""
+msgstr "Rivestimento S&K di Combattimento Medio-Pesante"
 
 #: dat/outfits/core_hull/medium/sk_mediumheavy_combat_plating.xml:10
 msgid ""
@@ -3311,20 +3325,26 @@ msgid ""
 "heavy combat plating provides excellent protection from everything save "
 "capital-class threats."
 msgstr ""
+"Progettato per cacciatorpediniere e vascelli di simili dimensioni, il "
+"rivestimento da combattimento medio-pesante della Schafer & Kane offre "
+"un'eccellente protezione da tutto tranne che le minacce di categoria più "
+"alta."
 
 #: dat/outfits/core_hull/medium/unicorp_d12_medium_plating.xml:2
 msgid "Unicorp D-12 Medium Plating"
-msgstr ""
+msgstr "Rivestimento Unicorp D-12 Medio"
 
 #: dat/outfits/core_hull/medium/unicorp_d12_medium_plating.xml:9
 msgid ""
 "D-12 plating provides a serviceable layer of armour to medium ships, and "
 "doesn't weigh too much."
 msgstr ""
+"Il rivestimento D-12 fornisce uno strato d'armatura efficiente alle "
+"astronavi di media grandezza e non ha un peso eccessivo."
 
 #: dat/outfits/core_hull/medium/unicorp_d24_medium_plating.xml:2
 msgid "Unicorp D-24 Medium Plating"
-msgstr ""
+msgstr "Rivestimento Unicorp D-24 Medio"
 
 #: dat/outfits/core_hull/medium/unicorp_d24_medium_plating.xml:10
 msgid ""
@@ -3332,10 +3352,13 @@ msgid ""
 "thicker and built atop an enlarged superstructure, increasing mass, armour, "
 "and cargo capacity."
 msgstr ""
+"Il rivestimento D-24 della Unicorp è simile al rivestimento D-12, ma le "
+"piastre dell'armatura sono più spesse e piazzate su una superstruttura "
+"ingrandita, incrementando così la massa, l'armatura e la capacità di carico."
 
 #: dat/outfits/core_hull/small/nexus_light_stealth_plating.xml:2
 msgid "Nexus Light Stealth Plating"
-msgstr ""
+msgstr "Rivestimento Nexus per Invisibilità Leggero"
 
 #: dat/outfits/core_hull/small/nexus_light_stealth_plating.xml:10
 msgid ""
@@ -3343,10 +3366,13 @@ msgid ""
 "Plating configuration features the latest in sensor-absorbing materials and "
 "geometry."
 msgstr ""
+"Progettato per le astronavi militari da ricognizione e pattugliamento, la "
+"conformazione del Rivestimento Nexus per Invisibilità Leggero offre i più "
+"moderni materiali e geometrie per non essere intercettati dai sensori."
 
 #: dat/outfits/core_hull/small/patchwork_light_plating.xml:2
 msgid "Patchwork Light Plating"
-msgstr ""
+msgstr "Rivestimento Patchwork Leggero"
 
 #: dat/outfits/core_hull/small/rs_small_cargo_hull.xml:2
 msgid "Red Star Small Cargo Hull"
@@ -3375,7 +3401,7 @@ msgstr ""
 #: dat/outfits/core_hull/small/sk_light_combat_plating.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:228
 msgid "S&K Light Combat Plating"
-msgstr ""
+msgstr "Rivestimento S&K da Combattimento Leggero"
 
 #: dat/outfits/core_hull/small/sk_light_combat_plating.xml:10
 msgid ""
@@ -3383,10 +3409,14 @@ msgid ""
 "Combat Plating configuration is a product made for fighters and bombers, "
 "providing optimum protection."
 msgstr ""
+"Le industrie Schafer & Kane normalmente costruiscono per astronavi più "
+"grandi, ma la configurazione del Rivestimento di Combattimento Leggero è un "
+"prodotto realizzato per caccia e bombardieri che fornisce un'ottima "
+"protezione."
 
 #: dat/outfits/core_hull/small/sk_small_cargo_hull.xml:2
 msgid "S&K Small Cargo Hull"
-msgstr ""
+msgstr "Fusoliera S&K per Cargo Piccolo"
 
 #: dat/outfits/core_hull/small/sk_small_cargo_hull.xml:10
 msgid ""
@@ -3394,10 +3424,14 @@ msgid ""
 "Schafer & Kane Industries provides an impressive amount of cargo space "
 "without compromising the hull's integrity."
 msgstr ""
+"Anche se è un investimento costoso per piccoli trasportatori, questa "
+"fusoliera modificata dalle industrie Schafer & Kane fornisce una quantità "
+"impressionante di spazio di carico senza compromettere l'integrità della "
+"fusoliera."
 
 #: dat/outfits/core_hull/small/sk_ultralight_combat_plating.xml:2
 msgid "S&K Ultralight Combat Plating"
-msgstr ""
+msgstr "Rivestimento S&K di Combattimento Ultraleggero"
 
 #: dat/outfits/core_hull/small/sk_ultralight_combat_plating.xml:9
 msgid ""
@@ -3405,30 +3439,41 @@ msgid ""
 "Ultralight Combat Plating configuration is a product made for light fighters "
 "and in-system patrol craft, providing optimum protection."
 msgstr ""
+"Le industrie Schafer & Kane costruiscono normalmente per astronavi più "
+"grandi, ma la configurazione del Rivestimento S&K di Combattimento "
+"Ultraleggero è un prodotto realizzato per caccia leggeri e astronavi per il "
+"pattugliamento all'interno di un sistema solare che forniscono un'ottima "
+"protezione."
 
 #: dat/outfits/core_hull/small/unicorp_d2_light_plating.xml:2
 msgid "Unicorp D-2 Light Plating"
-msgstr ""
+msgstr "Rivestimento Unicorp D-2 Leggero"
 
 #: dat/outfits/core_hull/small/unicorp_d2_light_plating.xml:9
 msgid ""
 "Commonly found on civilian vessels, the D-2 plating is popular with ship "
 "manufacturers due to its low cost and adequate, if uninspiring performance."
 msgstr ""
+"Usato normalmente nelle astronavi civili, il rivestimento D-2 è apprezzato "
+"tra i costruttori di astronavi grazie al suo basso costo e le sue "
+"prestazioni adeguate, anche se non esaltanti."
 
 #: dat/outfits/core_hull/small/unicorp_d4_light_plating.xml:2
 msgid "Unicorp D-4 Light Plating"
-msgstr ""
+msgstr "Rivestimento Unicorp D-4 Leggero"
 
 #: dat/outfits/core_hull/small/unicorp_d4_light_plating.xml:10
 msgid ""
 "Commonly found on civilian vessels, the D-4 plating is popular with ship "
 "manufacturers due to its low cost and adequate, if uninspiring performance."
 msgstr ""
+"Usato normalmente nelle astronavi civili, il rivestimento D-4 è apprezzato "
+"tra i costruttori di astronavi grazie al suo basso costo e le sue "
+"prestazioni adeguate, anche se non esaltanti."
 
 #: dat/outfits/core_system/dummy_systems.xml:2
 msgid "Dummy Systems"
-msgstr ""
+msgstr "Sistemi Fittizi"
 
 #: dat/outfits/core_system/dummy_systems.xml:4
 #: dat/outfits/core_system/large/milspec_orion_8601_core_system.xml:4
@@ -4734,7 +4779,7 @@ msgstr ""
 
 #: dat/outfits/structure/adaptive_stealth_plating.xml:2
 msgid "Adaptive Stealth Plating"
-msgstr ""
+msgstr "Rivestimento per Invisibilità Adattivo"
 
 #: dat/outfits/structure/adaptive_stealth_plating.xml:11
 msgid ""
