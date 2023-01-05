@@ -289,7 +289,9 @@ function luatk.keypressed( key )
    for _k,wgt in ipairs(wdw._widgets) do
       -- TODO proper focus model
       if wgt.keypressed then
-         wgt:keypressed( key )
+         if wgt:keypressed( key ) then
+            return true
+         end
       end
    end
 
@@ -307,9 +309,13 @@ function luatk.textinput( str )
    for _k,wgt in ipairs(wdw._widgets) do
       -- TODO proper focus model
       if wgt.textinput then
-         wgt:textinput( str )
+         if wgt:textinput( str ) then
+            return true
+         end
       end
    end
+
+   return false
 end
 
 --[[
@@ -1036,10 +1042,12 @@ function luatk.Input:keypressed( key )
       self.cursor = utf8.len(self.str)
       self.timer = 0
    end
+   return true
 end
 function luatk.Input:textinput( str )
    self.str = self.str or ""
    self:_addStr( str )
+   return true
 end
 
 --[[
