@@ -403,7 +403,7 @@ static void sysedit_btnNewSpob( unsigned int wid_unused, const char *unused )
    /* Base spob data off another. */
    b                    = spob_get( space_getRndSpob(0, 0, NULL) );
    p->class             = strdup( b->class );
-   if (p->gfx_spacePath != NULL;
+   if (p->gfx_spacePath != NULL)
       p->gfx_spacePath     = strdup( b->gfx_spacePath );
    if (p->gfx_spaceName != NULL)
       p->gfx_spaceName     = strdup( b->gfx_spaceName );
