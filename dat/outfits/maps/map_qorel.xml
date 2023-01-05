@@ -50,7 +50,9 @@
    <jump>Effetey</jump>
   </sys>
   <sys name="Gremlin"/>
-  <sys name="Pas"/>
+  <sys name="Pas">
+   <spob>Shangris Station</spob>
+  </sys>
   <sys name="Provectus Nova">
    <spob>Provectus Nova I</spob>
    <spob>Provectus Nova Ia</spob>
@@ -68,5 +70,6 @@
    <spob>Shiarta</spob>
   </sys>
   <sys name="Acheron"/>
+  <sys name="Wochii"/>
  </specific>
 </outfit>
