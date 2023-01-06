@@ -52,6 +52,7 @@ local function updater0100( did090 )
    They stare at you for a few seconds.
    "Say, now that I can see you, you look very familiar. You wouldn't be related my late previous owner? Terrible what happened…"]]),{playername=player.name()}))
       sai(_([["I'm sure you have many questions about the update, but first, would you like to give me a name?"]]))
+      vn.label("rename")
       local ainame
       luatk.vn( function ()
          luatk.msgInput( _("Name Ship AI"), _("Please enter a name for your Ship AI"), 50, function( str )
@@ -64,15 +65,24 @@ local function updater0100( did090 )
                   vn.jump("specialname")
                   return
                end
+               vn.jump("gavename")
+               return
             end
-            vn.jump("gavename")
+            vn.jump("noname")
          end )
       end )
       vn.label("specialname")
       sai( function () return tut.specialnames[ string.upper(ainame) ] end )
 
+      vn.label("noname")
+      sai(_([["You haven't given me a name. I will be continued to be called 'Ship AI' or SAI for short. Is that OK?"]]))
+      vn.menu{
+         {_([["'Ship AI' is fine"]]), "gavename"},
+         {_("Rename"), "rename"},
+      }
+
       vn.label("gavename")
-      sai( function () return fmt.f(_([["Great! I'll use the name {ainame} from now on. If you want to change it, you can do so from the #oInformation#0 menu which you open with {infokey} by clicking on the '#oShip AI#0' button. From there you can also access explanations and change tutorial options."]]), {ainame=ainame, infokey=tut.getKey("info")}) end )
+      sai( function () return fmt.f(_([["Great! I'll use the name {ainame} from now on. If you want to change it, you can do so from the #oInformation#0 menu which you open with {infokey} by clicking on the '#oShip AI#0' button. From there you can also access explanations and change tutorial options."]]), {ainame=tut.ainame(), infokey=tut.getKey("info")}) end )
    else
       vn.na(fmt.f(_([["Your ship AI {shipai} materializes before you."]]),
          {shipai=tut.ainame()}))
