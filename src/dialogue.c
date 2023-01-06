@@ -999,8 +999,11 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
 
    /* Increment dialogues. */
    dialogue_open++;
-
    *loop_done = 0;
+
+   /* Flush events so SDL_LOOPDONE doesn't propagate. */
+   SDL_FlushEvent( SDL_LOOPDONE );
+
    while (!(*loop_done) && toolkit_isOpen() && !naev_isQuit()) {
       SDL_Event event;
       unsigned int t;
