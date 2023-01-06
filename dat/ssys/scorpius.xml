@@ -7,7 +7,11 @@
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
  <pos x="209.020121" y="-252.571092"/>
- <spobs/>
+ <spobs>
+  <spob>Scorpii Omega-1</spob>
+  <spob>Scorpii Omega-2</spob>
+  <spob>Scorpii Station</spob>
+ </spobs>
  <jumps>
   <jump target="Guntesh">
    <autopos/>
