@@ -14,6 +14,8 @@ function prefix.prefix( fct )
       return require("common.soromid").prefix
    elseif fct == faction.get("Sirius") then
       return require("common.sirius").prefix
+   elseif fct == faction.get("Frontier") then
+      return require("common.frontier").prefix
    elseif inlist( pir.factions, fct ) then
       return pir.prefix( fct )
    end
