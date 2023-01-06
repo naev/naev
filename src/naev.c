@@ -433,6 +433,7 @@ int main( int argc, char** argv )
    while (!quit) {
       while (!quit && SDL_PollEvent(&event)) { /* event loop */
          if (event.type == SDL_QUIT) {
+            SDL_FlushEvent( SDL_QUIT ); /* flush event to prevent it from quitting when lagging a bit. */
             if (quit || menu_askQuit()) {
                quit = 1; /* quit is handled here */
                break;
