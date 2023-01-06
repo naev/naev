@@ -3906,6 +3906,9 @@ static Spob* player_parse( xmlNodePtr parent )
    player_warp( pnt->pos.x + r*cos(a), pnt->pos.y + r*sin(a) );
    player.p->solid->dir = RNG(0,359) * M_PI/180.;
 
+   /* Initialize outfits. */
+   pilot_outfitLInitAll( player.p );
+
    /* initialize the system */
    space_init( sys->name, 0 );
    map_clear(); /* sets the map up */
