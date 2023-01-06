@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-12-29 17:46+0900\n"
+"POT-Creation-Date: 2023-01-06 22:54+0900\n"
 "PO-Revision-Date: 2022-11-03 09:03+0000\n"
 "Last-Translator: Anthony Gregory Souza dos Santos "
 "<antonigregorysouza123@gmail.com>\n"
@@ -2087,7 +2087,7 @@ msgstr ""
 #: dat/factions/zalek.xml:2 dat/ssys/zalek.xml:2
 #: dat/events/dvaered/fwB_repay.lua:90 dat/missions/minerva/pirate2.lua:178
 #: dat/missions/minerva/pirate5.lua:243
-#: dat/missions/zalek/blackhole/zbh03.lua:154
+#: dat/missions/zalek/blackhole/zbh03.lua:161
 #: dat/missions/zalek/particlephysics/zpp03.lua:134
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:90
 #: dat/scripts/common/nebu_research.lua:35
@@ -26883,7 +26883,7 @@ msgstr ""
 #. This is the case that the message is being sent from the environment, such as asteroids
 #. Asteroid was blown up with mining tools
 #. Some signal was detected
-#. Special case leader is gone but we want to follow, so e ignore if they're non-existent.
+#. Special case leader is gone but we want to follow, so we ignore if they're non-existent.
 #. Skip message from nonexistent sender
 #. Below we only handle if they came from allies
 #. (So far, only allies would send in the first place, but this check future-proofs things.
@@ -28829,7 +28829,7 @@ msgstr ""
 #: src/info.c:437 src/info.c:538 src/info.c:949 src/info.c:1313 src/input.c:524
 #: src/land.c:877 src/land_outfits.c:442 src/land_outfits.c:694
 #: src/land_shipyard.c:133 src/land_shipyard.c:222 src/land_trade.c:85
-#: src/land_trade.c:87 src/land_trade.c:153 src/load.c:531 src/load.c:612
+#: src/land_trade.c:87 src/land_trade.c:153 src/load.c:531 src/load.c:610
 #: src/map.c:727 src/map.c:780 src/map.c:1959 src/map_find.c:697
 #: src/map_system.c:647
 #, c-format
@@ -29797,8 +29797,8 @@ msgstr ""
 #: src/map.c:589 src/map.c:595 src/map.c:601 src/map.c:607 src/map.c:613
 #: src/map.c:619 src/map.c:1920 src/map.c:2213 src/map_overlay.c:227
 #: src/map_system.c:475 src/outfit.c:301 src/outfit.c:320 src/outfit.c:923
-#: src/player.c:2064 src/player_autonav.c:92 src/player_autonav.c:225
-#: src/player_autonav.c:475 src/player_autonav.c:502 src/plugin.c:154
+#: src/player.c:2064 src/player_autonav.c:92 src/player_autonav.c:228
+#: src/player_autonav.c:478 src/player_autonav.c:505 src/plugin.c:154
 #: src/plugin.c:156 src/plugin.c:158 src/ship.c:212
 #, c-format
 msgid "Unknown"
@@ -30794,7 +30794,7 @@ msgid "unknown tradein type"
 msgstr ""
 
 #: dat/events/dvaered/totoran.lua:227
-#: dat/missions/empire/collective/ec03.lua:51 src/load.c:600 src/map_find.c:396
+#: dat/missions/empire/collective/ec03.lua:51 src/map_find.c:396
 #, c-format, lua-format
 msgid "%s (%s)"
 msgstr ""
@@ -30803,7 +30803,7 @@ msgstr ""
 #: dat/events/minerva/station.lua:330
 #: dat/events/neutral/travelling_merchant.lua:328
 #: dat/events/neutral/travelling_merchant.lua:364
-#: dat/events/neutral/travelling_merchant.lua:383 src/load.c:545 src/load.c:626
+#: dat/events/neutral/travelling_merchant.lua:383 src/load.c:545 src/load.c:624
 msgid "Back"
 msgstr ""
 
@@ -39161,11 +39161,11 @@ msgstr ""
 msgid "Rename Ship AI"
 msgstr ""
 
-#: dat/events/shipai.lua:52 dat/events/updater.lua:95
+#: dat/events/shipai.lua:52 dat/events/updater.lua:105
 msgid "Enable tutorial hints"
 msgstr ""
 
-#: dat/events/shipai.lua:54 dat/events/updater.lua:96
+#: dat/events/shipai.lua:54 dat/events/updater.lua:106
 msgid "Disable tutorial hints"
 msgstr ""
 
@@ -42158,16 +42158,33 @@ msgid ""
 msgstr ""
 
 #. TODO integrate into vn
-#: dat/events/updater.lua:57 dat/missions/tutorial/tutorial.lua:54
+#: dat/events/updater.lua:58 dat/missions/tutorial/tutorial.lua:54
 msgid "Name Ship AI"
 msgstr ""
 
-#: dat/events/updater.lua:57 dat/missions/tutorial/tutorial.lua:54
+#: dat/events/updater.lua:58 dat/missions/tutorial/tutorial.lua:54
 msgid "Please enter a name for your Ship AI"
 msgstr ""
 
 #. Can't use rename here
-#: dat/events/updater.lua:73
+#: dat/events/updater.lua:76 dat/missions/tutorial/tutorial.lua:83
+msgid ""
+"\"You haven't given me a name. I will be continued to be called 'Ship AI' or "
+"SAI for short. Is that OK?\""
+msgstr ""
+
+#: dat/events/updater.lua:78 dat/missions/tutorial/tutorial.lua:85
+msgid "\"'Ship AI' is fine\""
+msgstr ""
+
+#: dat/events/updater.lua:79 dat/missions/tutorial/tutorial.lua:77
+#: dat/missions/tutorial/tutorial.lua:86 src/dev_sysedit.c:237
+#: src/dev_sysedit.c:1365 src/dev_uniedit.c:228 src/dev_uniedit.c:1776
+#: src/equipment.c:386
+msgid "Rename"
+msgstr ""
+
+#: dat/events/updater.lua:83
 msgid ""
 "\"Great! I'll use the name {ainame} from now on. If you want to change it, "
 "you can do so from the #oInformation#0 menu which you open with {infokey} by "
@@ -42175,11 +42192,11 @@ msgid ""
 "explanations and change tutorial options.\""
 msgstr ""
 
-#: dat/events/updater.lua:75
+#: dat/events/updater.lua:85
 msgid "\"Your ship AI {shipai} materializes before you.\""
 msgstr ""
 
-#: dat/events/updater.lua:77
+#: dat/events/updater.lua:87
 msgid ""
 "\"It seems like there has been a significant update to the game!\n"
 "Many of the new features come with small tutorials in form of missions. I "
@@ -42187,7 +42204,7 @@ msgid ""
 "cover some of the features that you may miss.\""
 msgstr ""
 
-#: dat/events/updater.lua:82
+#: dat/events/updater.lua:92
 msgid ""
 "\"With the update, a lot of new mechanics and features have been changed. "
 "The largest change includes a revamp of #oElectronic Warfare#0, which now "
@@ -42197,7 +42214,7 @@ msgid ""
 "area nearby.\""
 msgstr ""
 
-#: dat/events/updater.lua:85
+#: dat/events/updater.lua:95
 msgid ""
 "\"Asteroids have been completely reworked. They no longer explode randomly "
 "and asteroid fields can spawn different types of asteroids. While it is "
@@ -42205,7 +42222,7 @@ msgid ""
 "will help you mine them and give you access to more rare rewards.\""
 msgstr ""
 
-#: dat/events/updater.lua:86
+#: dat/events/updater.lua:96
 msgid ""
 "\"You may have also noticed that there has been a major change in outfits. "
 "Lots of outfits have been removed, added, or renamed, leading to a loss of "
@@ -42214,7 +42231,7 @@ msgid ""
 "to be flying a poorly equipped ship in space!\""
 msgstr ""
 
-#: dat/events/updater.lua:88
+#: dat/events/updater.lua:98
 msgid ""
 "\"Bioships have also been reworked completely. Similar to the old ships, "
 "they gain ranks through experience. However, instead of the ranks being on a "
@@ -42224,7 +42241,7 @@ msgid ""
 "of the bioship.\""
 msgstr ""
 
-#: dat/events/updater.lua:90
+#: dat/events/updater.lua:100
 msgid ""
 "\"This update also provides significant modernization of the engine and many "
 "other features. To list a few, the star map is larger and you can save "
@@ -42235,14 +42252,14 @@ msgid ""
 "#oOptions#0 menu, so make sure to check that if interested.\""
 msgstr ""
 
-#: dat/events/updater.lua:93
+#: dat/events/updater.lua:103
 msgid ""
 "\"With that said, would you like me to provide small, in-game advice as you "
 "do things throughout the game? Some might refer to things you are already "
 "familiar with, but it could help you learn new things.\""
 msgstr ""
 
-#: dat/events/updater.lua:100 dat/events/updater.lua:197
+#: dat/events/updater.lua:110 dat/events/updater.lua:207
 msgid ""
 "\"Great! I'll be giving you short hints as you do things through the game. "
 "If you want to change my settings or turn off the hints, please do so from "
@@ -42250,7 +42267,7 @@ msgid ""
 "{infokey}. Now, let's go adventuring!\""
 msgstr ""
 
-#: dat/events/updater.lua:107
+#: dat/events/updater.lua:117
 msgid ""
 "\"OK, I will not be giving you any hints. If you want to change my settings, "
 "turn on the hints, or get information and advice, please do so from the "
@@ -42258,7 +42275,7 @@ msgid ""
 "{infokey}. Now, let's go adventuring!\""
 msgstr ""
 
-#: dat/events/updater.lua:109
+#: dat/events/updater.lua:119
 msgid ""
 "\"And that is all! If you want to brush on game mechanics or get more hints, "
 "remember you can get in touch with me directly by clicking the '#oShip AI#0' "
@@ -42280,42 +42297,42 @@ msgstr ""
 #. Run on saves older than 0.9.0
 #. Run on saves older than 0.10.0
 #. Note that games before 0.10.0 will have lastplayed set days from the unix epoch
-#: dat/events/updater.lua:185
+#: dat/events/updater.lua:195
 msgid "Your ship AI, {ainame}, materializes in front of you."
 msgstr ""
 
-#: dat/events/updater.lua:187
+#: dat/events/updater.lua:197
 msgid ""
 "\"Welcome back, {player}! My ship logs indicate that you have not played "
 "Naev in quite a long time!\""
 msgstr ""
 
-#: dat/events/updater.lua:189
+#: dat/events/updater.lua:199
 msgid ""
 "\"With that said, would you like me to reset the in-game advice as you do "
 "things throughout the game? Some might refer to things you are already "
 "familiar with, but it could help you learn new things.\""
 msgstr ""
 
-#: dat/events/updater.lua:191
+#: dat/events/updater.lua:201
 msgid "Reset and enable tutorial hints"
 msgstr ""
 
-#: dat/events/updater.lua:192
+#: dat/events/updater.lua:202
 msgid "Leave as is (hints are {state})"
 msgstr ""
 
-#: dat/events/updater.lua:192
+#: dat/events/updater.lua:202
 msgid "off"
 msgstr ""
 
-#: dat/events/updater.lua:192
+#: dat/events/updater.lua:202
 #, fuzzy
 #| msgid "ion"
 msgid "on"
 msgstr "Íon"
 
-#: dat/events/updater.lua:205
+#: dat/events/updater.lua:215
 msgid ""
 "\"OK, I will not be resetting the hints, and leave them as is. If you want "
 "to change my settings, turn on the hints, or get information and advice, "
@@ -43453,7 +43470,7 @@ msgstr ""
 msgid "Time:"
 msgstr ""
 
-#: dat/gui/slim.lua:1103 src/load.c:746
+#: dat/gui/slim.lua:1103 src/load.c:744
 msgid "Credits:"
 msgstr ""
 
@@ -65421,7 +65438,7 @@ msgstr ""
 #: dat/missions/tutorial/nelly03.lua:160
 #: dat/missions/zalek/blackhole/zbh02.lua:90
 #: dat/missions/zalek/blackhole/zbh03.lua:103
-#: dat/missions/zalek/blackhole/zbh03.lua:186
+#: dat/missions/zalek/blackhole/zbh03.lua:193
 #: dat/missions/zalek/blackhole/zbh04.lua:88
 #: dat/missions/zalek/blackhole/zbh05.lua:98
 #: dat/missions/zalek/blackhole/zbh06.lua:76
@@ -84610,22 +84627,6 @@ msgstr ""
 msgid "Continue with '{ainame}'"
 msgstr ""
 
-#: dat/missions/tutorial/tutorial.lua:77 dat/missions/tutorial/tutorial.lua:86
-#: src/dev_sysedit.c:237 src/dev_sysedit.c:1365 src/dev_uniedit.c:228
-#: src/dev_uniedit.c:1776 src/equipment.c:386
-msgid "Rename"
-msgstr ""
-
-#: dat/missions/tutorial/tutorial.lua:83
-msgid ""
-"\"You haven't given me a name. I will be continued to be called 'Ship AI' or "
-"SAI for short. Is that OK?\""
-msgstr ""
-
-#: dat/missions/tutorial/tutorial.lua:85
-msgid "\"'Ship AI' is fine\""
-msgstr ""
-
 #: dat/missions/tutorial/tutorial.lua:90
 msgid ""
 "\"OK! Pleased to meet you {playername}. If you change your mind about my "
@@ -85852,11 +85853,11 @@ msgstr ""
 
 #. All gone
 #: dat/missions/zalek/blackhole/zbh02.lua:228
-#: dat/missions/zalek/blackhole/zbh03.lua:152
-#: dat/missions/zalek/blackhole/zbh03.lua:170
-#: dat/missions/zalek/blackhole/zbh03.lua:173
-#: dat/missions/zalek/blackhole/zbh03.lua:179
-#: dat/missions/zalek/blackhole/zbh03.lua:199
+#: dat/missions/zalek/blackhole/zbh03.lua:159
+#: dat/missions/zalek/blackhole/zbh03.lua:177
+#: dat/missions/zalek/blackhole/zbh03.lua:180
+#: dat/missions/zalek/blackhole/zbh03.lua:186
+#: dat/missions/zalek/blackhole/zbh03.lua:206
 #: dat/missions/zalek/blackhole/zbh04.lua:159
 #: dat/missions/zalek/blackhole/zbh04.lua:197
 #: dat/missions/zalek/blackhole/zbh06.lua:171
@@ -85945,7 +85946,7 @@ msgstr ""
 #. mission details
 #: dat/missions/zalek/blackhole/zbh03.lua:94
 #: dat/missions/zalek/blackhole/zbh03.lua:101
-#: dat/missions/zalek/blackhole/zbh03.lua:184
+#: dat/missions/zalek/blackhole/zbh03.lua:191
 msgid "Black Hole Scouting"
 msgstr ""
 
@@ -85959,13 +85960,22 @@ msgstr ""
 msgid "Scout around ({sys} system)"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh03.lua:119
+#. Set up the enemies
+#: dat/missions/zalek/blackhole/zbh03.lua:114
+#: dat/missions/zalek/blackhole/zbh03.lua:146
+#: dat/missions/zalek/blackhole/zbh06.lua:113
+#: dat/missions/zalek/blackhole/zbh10.lua:89
+#: dat/missions/zalek/blackhole/zbh10.lua:146
+msgid "You were supposed to eliminate the hostiles!"
+msgstr ""
+
+#: dat/missions/zalek/blackhole/zbh03.lua:127
 msgid ""
 "Zach is waiting for you at the docks as your ship lands. He immediately "
 "comes over to you."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh03.lua:120
+#: dat/missions/zalek/blackhole/zbh03.lua:128
 msgid ""
 "\"Are you OK? What the hell were those guys? They were clearly Za'lek "
 "vessels, but who could be in charge of them? The research here was approved "
@@ -85975,53 +85985,45 @@ msgid ""
 "He rubs his temples."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh03.lua:122
+#: dat/missions/zalek/blackhole/zbh03.lua:130
 msgid ""
 "\"I'm going to have to rethink everything from the beginning, and try to "
 "make some sense out of this. Meet me up in the spaceport, I should hopefully "
 "have some idea on our next steps.\""
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh03.lua:130
+#: dat/missions/zalek/blackhole/zbh03.lua:138
 msgid ""
 "During a patrol of the {sys} system, you were attacked by some unidentified "
 "Za'lek forces. You were able to destroy them, but have not yet found out "
 "what is going on at {pnt}."
 msgstr ""
 
-#. Set up the enemies
-#: dat/missions/zalek/blackhole/zbh03.lua:139
-#: dat/missions/zalek/blackhole/zbh06.lua:113
-#: dat/missions/zalek/blackhole/zbh10.lua:89
-#: dat/missions/zalek/blackhole/zbh10.lua:146
-msgid "You were supposed to eliminate the hostiles!"
-msgstr ""
-
-#: dat/missions/zalek/blackhole/zbh03.lua:152
+#: dat/missions/zalek/blackhole/zbh03.lua:159
 msgid "Zach: I've detected some incoming ships from {sys}!"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh03.lua:170
+#: dat/missions/zalek/blackhole/zbh03.lua:177
 msgid "Zach: It looks like they are coming to {pnt}!"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh03.lua:173
+#: dat/missions/zalek/blackhole/zbh03.lua:180
 msgid "This is {pnt}. Please state your purpose."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh03.lua:176
+#: dat/missions/zalek/blackhole/zbh03.lua:183
 msgid "You should have left when you had a chance Zach!"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh03.lua:179
+#: dat/missions/zalek/blackhole/zbh03.lua:186
 msgid "Zach: It looks like they're hostile, engage the enemy!"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh03.lua:185
+#: dat/missions/zalek/blackhole/zbh03.lua:192
 msgid "Eliminate hostiles in {sys}"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh03.lua:199
+#: dat/missions/zalek/blackhole/zbh03.lua:206
 #: dat/missions/zalek/blackhole/zbh06.lua:201
 msgid "Zach: It looks like the coast is clear. Come back to {pnt}."
 msgstr ""
@@ -102456,7 +102458,7 @@ msgstr ""
 #. Update text.
 #. Text.
 #: src/dev_sysedit.c:1359 src/dev_uniedit.c:1774 src/dev_uniedit.c:2058
-#: src/equipment.c:1761 src/info.c:572 src/load.c:731
+#: src/equipment.c:1761 src/info.c:572 src/load.c:729
 msgid "Name:"
 msgstr ""
 
@@ -102584,7 +102586,7 @@ msgid "Add Asteroid"
 msgstr ""
 
 #: src/dev_sysedit.c:1663 src/dev_sysedit.c:1806 src/info.c:1612 src/load.c:551
-#: src/load.c:632
+#: src/load.c:630
 msgid "Delete"
 msgstr ""
 
@@ -102898,7 +102900,7 @@ msgid_plural "Input must be at least %d characters long!"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/dialogue.c:1058
+#: src/dialogue.c:1061
 msgid "Dialogue counter not in sync!"
 msgstr ""
 
@@ -104034,7 +104036,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: src/info.c:384 src/load.c:740
+#: src/info.c:384 src/load.c:738
 msgid "Date:"
 msgstr ""
 
@@ -104111,7 +104113,7 @@ msgstr ""
 msgid "Select GUI"
 msgstr ""
 
-#: src/info.c:520 src/load.c:549 src/load.c:630 src/menu.c:452
+#: src/info.c:520 src/load.c:549 src/load.c:628 src/menu.c:452
 msgid "Load"
 msgstr ""
 
@@ -105518,7 +105520,7 @@ msgstr ""
 msgid "Load Pilot"
 msgstr ""
 
-#: src/load.c:518
+#: src/load.c:518 src/load.c:599
 #, c-format
 msgid "%s (#r%s#0)"
 msgstr ""
@@ -105545,111 +105547,111 @@ msgstr ""
 msgid "Load Snapshot"
 msgstr ""
 
-#: src/load.c:628
+#: src/load.c:626
 msgid "Save As"
 msgstr ""
 
-#: src/load.c:666
+#: src/load.c:664
 msgid "Save game"
 msgstr ""
 
-#: src/load.c:666
+#: src/load.c:664
 msgid "Please give the new snapshot a name:"
 msgstr ""
 
-#: src/load.c:672 src/player.c:258
+#: src/load.c:670 src/player.c:258
 msgid "Overwrite"
 msgstr ""
 
-#: src/load.c:673
+#: src/load.c:671
 #, c-format
 msgid "You already have a snapshot named '%s'. Overwrite?"
 msgstr ""
 
-#: src/load.c:681
+#: src/load.c:679
 msgid ""
 "Failed to save the game! You should exit and check the log to see what "
 "happened and then file a bug report!"
 msgstr ""
 
-#: src/load.c:724
+#: src/load.c:722
 #, c-format
 msgid "%s (options)"
 msgstr ""
 
-#: src/load.c:727
+#: src/load.c:725
 #, c-format
 msgid "%s (this save)"
 msgstr ""
 
-#: src/load.c:733
+#: src/load.c:731
 msgid "Version:"
 msgstr ""
 
-#: src/load.c:738
+#: src/load.c:736
 msgid "Difficulty:"
 msgstr ""
 
-#: src/load.c:742
+#: src/load.c:740
 msgid "Chapter:"
 msgstr ""
 
-#: src/load.c:744
+#: src/load.c:742
 msgid "Spob:"
 msgstr ""
 
-#: src/load.c:748
+#: src/load.c:746
 msgid "Ship Name:"
 msgstr ""
 
-#: src/load.c:750
+#: src/load.c:748
 msgid "Ship Model:"
 msgstr " Modelo de nave:"
 
-#: src/load.c:792 src/load.c:948
+#: src/load.c:790 src/load.c:946 src/load.c:981
 #, c-format
 msgid "Unable to delete %s"
 msgstr ""
 
-#: src/load.c:940 src/load.c:977
+#: src/load.c:938 src/load.c:975
 msgid "Permanently Delete?"
 msgstr ""
 
-#: src/load.c:941
+#: src/load.c:939
 #, c-format
 msgid ""
 "Are you sure you want to permanently delete the character '%s'?\n"
 "#rThis is an undoable action!#0"
 msgstr ""
 
-#: src/load.c:951
+#: src/load.c:949 src/load.c:989
 #, c-format
 msgid "Unable to delete '%s' directory"
 msgstr ""
 
-#: src/load.c:978
+#: src/load.c:976
 #, c-format
 msgid ""
 "Are you sure you want to permanently delete the snapshot '%s'?\n"
 "#rThis is an undoable action!#0"
 msgstr ""
 
-#: src/load.c:1050 src/load.c:1112
+#: src/load.c:1059 src/load.c:1121
 msgid "Saved game file seems to have been deleted."
 msgstr ""
 
-#: src/load.c:1073 src/load.c:1231
+#: src/load.c:1082 src/load.c:1240
 #, c-format
 msgid "Saved game '%s' invalid!"
 msgstr ""
 
 #. Welcome message - must be before space_init.
-#: src/load.c:1166 src/player.c:319
+#: src/load.c:1175 src/player.c:319
 #, c-format
 msgid "#gWelcome to %s!"
 msgstr ""
 
-#: src/load.c:1179
+#: src/load.c:1188
 msgid "Old version detected. Sanitizing ships for slots"
 msgstr ""
 
@@ -109624,152 +109626,152 @@ msgstr ""
 msgid "Could not find a suitable spob. Choosing a random spob."
 msgstr ""
 
-#: src/player.c:3948
+#: src/player.c:3951
 #, c-format
 msgid "Mission '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3973
+#: src/player.c:3976
 #, c-format
 msgid "Event '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3998
+#: src/player.c:4001
 msgid "License node is missing name."
 msgstr ""
 
-#: src/player.c:4025
+#: src/player.c:4028
 msgid "Inventory item node is missing name."
 msgstr ""
 
-#: src/player.c:4061
+#: src/player.c:4064
 #, c-format
 msgid "Fleet ship '%s' is deployed despite not being marked for deployal!"
 msgstr ""
 
-#: src/player.c:4065
+#: src/player.c:4068
 #, c-format
 msgid "Fleet ship '%s' is deployed despite not being space worthy!"
 msgstr ""
 
-#: src/player.c:4070
+#: src/player.c:4073
 #, c-format
 msgid "Escort has invalid type '%s'."
 msgstr ""
 
-#: src/player.c:4121 src/player.c:4302
+#: src/player.c:4124 src/player.c:4305
 #, c-format
 msgid "Unknown ship class '%s' when parsing 'ships_destroyed' node!"
 msgstr ""
 
-#: src/player.c:4140
+#: src/player.c:4143
 #, c-format
 msgid ""
 "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to "
 "stock."
 msgstr ""
 
-#: src/player.c:4148
+#: src/player.c:4151
 #, c-format
 msgid "Outfit '%s' does not fit on player's pilot '%s', adding to stock."
 msgstr ""
 
-#: src/player.c:4168
+#: src/player.c:4171
 msgid "Empty ship slot node found, skipping."
 msgstr ""
 
-#: src/player.c:4223
+#: src/player.c:4226
 #, c-format
 msgid "Ignoring player-owned ship '%s': duplicate of player's current ship."
 msgstr ""
 
-#: src/player.c:4232
+#: src/player.c:4235
 #, c-format
 msgid "Player ship '%s' not found!"
 msgstr ""
 
-#: src/player.c:4320 src/player.c:4338 src/player.c:4356 src/player.c:4373
+#: src/player.c:4323 src/player.c:4341 src/player.c:4359 src/player.c:4376
 #, c-format
 msgid "Save has unknown '%s' tag!"
 msgstr ""
 
-#: src/player.c:4325
+#: src/player.c:4328
 msgid "Outfit slot out of range, not adding to ship."
 msgstr ""
 
-#: src/player.c:4343 src/player.c:4361
+#: src/player.c:4346 src/player.c:4364
 msgid "Outfit slot out of range, not adding."
 msgstr ""
 
-#: src/player.c:4394
+#: src/player.c:4397
 #, c-format
 msgid "Unknown commodity '%s' detected, removing."
 msgstr ""
 
-#: src/player.c:4401
+#: src/player.c:4404
 #, c-format
 msgid ""
 "Adding cargo '%s' to ship '%s' that is not a mission cargo with quantity=0!"
 msgstr ""
 
-#: src/player.c:4419
+#: src/player.c:4422
 #, c-format
 msgid ""
 "Player ship '%s' failed slot validity check , removing all outfits and "
 "adding to stock."
 msgstr ""
 
-#: src/player.c:4464
+#: src/player.c:4467
 #, c-format
 msgid ""
 "Player ship '%s' has unknown node '%s' in 'weaponsets' (expected "
 "'weaponset')."
 msgstr ""
 
-#: src/player.c:4472
+#: src/player.c:4475
 #, c-format
 msgid "Player ship '%s' missing 'id' tag for weapon set."
 msgstr ""
 
-#: src/player.c:4476
+#: src/player.c:4479
 #, c-format
 msgid "Player ship '%s' has invalid weapon set id '%d' [max %d]."
 msgstr ""
 
-#: src/player.c:4497
+#: src/player.c:4500
 #, c-format
 msgid "Player ship '%s' missing 'type' tag for weapon set."
 msgstr ""
 
-#: src/player.c:4510
+#: src/player.c:4513
 #, c-format
 msgid ""
 "Player ship '%s' has unknown 'weaponset' child node '%s' (expected 'weapon')."
 msgstr ""
 
-#: src/player.c:4518
+#: src/player.c:4521
 #, c-format
 msgid "Player ship '%s' missing 'level' tag for weapon set weapon."
 msgstr ""
 
-#: src/player.c:4523
+#: src/player.c:4526
 #, c-format
 msgid "Player ship '%s' has invalid weapon id %d [max %d]."
 msgstr ""
 
-#: src/player.c:4570
+#: src/player.c:4573
 msgid "You have destealthed."
 msgstr ""
 
-#: src/player.c:4576
+#: src/player.c:4579
 msgid "You have entered stealth mode."
 msgstr ""
 
-#: src/player.c:4581
+#: src/player.c:4584
 msgid "Unable to stealth: missiles locked on!"
 msgstr ""
 
-#: src/player.c:4583
+#: src/player.c:4586
 msgid "Unable to stealth: other pilots nearby!"
 msgstr ""
 
@@ -109786,73 +109788,73 @@ msgstr ""
 msgid "#oAutonav: travelling to %s."
 msgstr ""
 
-#: src/player_autonav.c:175
+#: src/player_autonav.c:178
 msgid "#oAutonav: heading to target position."
 msgstr ""
 
-#: src/player_autonav.c:177
+#: src/player_autonav.c:180
 msgid "position"
 msgstr ""
 
-#: src/player_autonav.c:206
+#: src/player_autonav.c:209
 #, c-format
 msgid "#oAutonav: landing on #%c%s#0."
 msgstr ""
 
-#: src/player_autonav.c:210
+#: src/player_autonav.c:213
 #, c-format
 msgid "#oAutonav: approaching #%c%s#0."
 msgstr ""
 
-#: src/player_autonav.c:225
+#: src/player_autonav.c:228
 #, c-format
 msgid "#oAutonav: following %s."
 msgstr ""
 
-#: src/player_autonav.c:247
+#: src/player_autonav.c:250
 #, c-format
 msgid "#oAutonav: boarding %s."
 msgstr ""
 
-#: src/player_autonav.c:311
+#: src/player_autonav.c:314
 #, c-format
 msgid "#rAutonav: aborted due to '%s'!"
 msgstr ""
 
-#: src/player_autonav.c:313
+#: src/player_autonav.c:316
 msgid "#rAutonav: aborted!"
 msgstr ""
 
-#: src/player_autonav.c:322
+#: src/player_autonav.c:325
 msgid "#oAutonav: aborting hyperspace sequence."
 msgstr ""
 
-#: src/player_autonav.c:415
+#: src/player_autonav.c:418
 msgid "#oAutonav: arrived at position."
 msgstr ""
 
-#: src/player_autonav.c:425
+#: src/player_autonav.c:428
 #, c-format
 msgid "#oAutonav: arrived at #%c%s#0."
 msgstr ""
 
 #. TODO : handle the different reasons: pilot is too far, jumped, landed or died.
-#: src/player_autonav.c:474
+#: src/player_autonav.c:477
 #, c-format
 msgid "#oAutonav: following target %s has been lost."
 msgstr ""
 
 #. TODO : handle the different reasons: pilot is too far, jumped, landed or died.
-#: src/player_autonav.c:501
+#: src/player_autonav.c:504
 #, c-format
 msgid "#oAutonav: boarding target %s has been lost."
 msgstr ""
 
-#: src/player_autonav.c:779
+#: src/player_autonav.c:782
 msgid "Target changed to current system"
 msgstr ""
 
-#: src/player_autonav.c:783
+#: src/player_autonav.c:786
 msgid "Not enough fuel for autonav to continue"
 msgstr ""
 
