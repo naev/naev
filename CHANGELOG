@@ -1,6 +1,8 @@
 * 0.10.2 (unreleased)
    * Fixed escorts sometimes not following their leader and landing
    * Fixed autonav always wanting to go to the edge of jump points
+   * Fixed crash when causing multiple dialogues to run in the background
+   * Fixed outfit lua being called before initialization
    * taiomi: fixed some claims
    * zbh03: landing when hostiles spawned will fail the mission
 
