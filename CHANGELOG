@@ -5,6 +5,7 @@
    * Fixed outfit lua being called before initialization
    * Fixed not giving the AI a name when updating a save breaking the updater script
    * Fixed deleting last snapshot of a save switching to another pilot's saves
+   * Fixed saves and snapshots not displaying correct name with version mismatch
    * taiomi: fixed some claims
    * zbh03: landing when hostiles spawned will fail the mission
 
