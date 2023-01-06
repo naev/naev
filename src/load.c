@@ -965,7 +965,7 @@ static void load_menu_delete( unsigned int wdw, const char *str )
 static void load_snapshot_menu_delete( unsigned int wdw, const char *str )
 {
    unsigned int wid;
-   int pos;
+   int pos, last_save;
 
    wid = window_get( "wdwLoadSnapshotMenu" );
 
@@ -979,7 +979,17 @@ static void load_snapshot_menu_delete( unsigned int wdw, const char *str )
       return;
 
    /* Remove it. */
-   PHYSFS_delete( load_player->saves[pos].path );
+   if (!PHYSFS_delete( load_player->saves[pos].path ))
+      dialogue_alert( _("Unable to delete %s"), load_player->saves[pos].path );
+   last_save = (array_size(load_player->saves) <= 1);
+
+   /* Delete directory if all are gone. */
+   if (last_save) {
+      char path[PATH_MAX];
+      snprintf(path, sizeof(path), "saves/%s", load_player->name);
+      if (!PHYSFS_delete( path ))
+         dialogue_alert( _("Unable to delete '%s' directory"), load_player->name );
+   }
 
    load_refresh();
 
@@ -990,7 +1000,8 @@ static void load_snapshot_menu_delete( unsigned int wdw, const char *str )
       load_menu_close( wid, str );
       load_loadGameMenu();
    }
-   load_loadSnapshotMenu( selected_player, 1 );
+   if (!last_save)
+      load_loadSnapshotMenu( selected_player, 1 );
 }
 
 static void load_compatSlots (void)
