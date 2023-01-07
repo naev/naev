@@ -43,7 +43,7 @@ local empireAttack, empireRetreat -- Forward-declared functions
 function create ()
    local missys = {misn_target}
    if not misn.claim(missys) then
-      abort()
+      misn.finish(false)
    end
 
    -- Intro text

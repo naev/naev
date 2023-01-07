@@ -40,7 +40,7 @@ local moveSwarm -- Forward-declared functions
 function create ()
     local missys = {misn_target}
     if not misn.claim(missys) then
-        abort()
+        misn.finish(false)
     end
 
    misn.setNPC( _("Dimitri"), "empire/unique/dimitri.webp", _("You notice Lt. Commander Dimitri at one of the booths.") )

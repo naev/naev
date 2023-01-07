@@ -160,7 +160,7 @@ end
            return false
        end )
 
-   if #spobs == 0 then abort() end -- In case no suitable spobs are in range.
+   if #spobs == 0 then misn.finish(false) end -- In case no suitable spobs are in range.
 
    local index = rnd.rnd(1, #spobs)
    destspob = spobs[index][1]
