@@ -78,7 +78,6 @@ Without further ado, and without so much as formally asking for the favour, Harr
    player.unboard()
 
    hook.land("land")
-   hook.takeoff("takeoff")
    hook.enter("enter")
 end
 
