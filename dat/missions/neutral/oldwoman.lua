@@ -56,7 +56,7 @@ function create ()
           return false
       end )
 
-   if #planets == 0 then abort() end -- In case no suitable planets are in range.
+   if #planets == 0 then misn.finish(false) end -- In case no suitable planets are in range.
 
    local index = rnd.rnd(1, #planets)
    mem.destplanet = planets[index][1]
