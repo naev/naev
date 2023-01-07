@@ -693,6 +693,8 @@ dat/spob/bastion_station.xml
 dat/spob/bedimann_shipyards.xml
 dat/spob/beeklo_ii.xml
 dat/spob/beene.xml
+dat/spob/behar_prime.xml
+dat/spob/behar_station.xml
 dat/spob/behemoth.xml
 dat/spob/belltower_station.xml
 dat/spob/benedict.xml
@@ -1604,6 +1606,9 @@ dat/spob/telika_station.xml
 dat/spob/tenalp.xml
 dat/spob/tepdania_customs.xml
 dat/spob/tepdania_prime.xml
+dat/spob/tepvin_gamma.xml
+dat/spob/tepvin_lambda.xml
+dat/spob/tepvins_point.xml
 dat/spob/terminus.xml
 dat/spob/tesla_station.xml
 dat/spob/thaddius_station.xml

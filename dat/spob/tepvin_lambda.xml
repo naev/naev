@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Tepvin Lambda">
+ <pos x="-8352.728898" y="5826.078995"/>
+ <GFX>
+  <space>I01.webp</space>
+  <exterior>oceanic.webp</exterior>
+ </GFX>
+ <general>
+  <class>J</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

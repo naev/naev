@@ -7,7 +7,11 @@
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
  <pos x="280.893785" y="28.748130"/>
- <spobs/>
+ <spobs>
+  <spob>Tepvin Gamma</spob>
+  <spob>Tepvin Lambda</spob>
+  <spob>Tepvin's Point</spob>
+ </spobs>
  <jumps>
   <jump target="Salvador">
    <autopos/>
@@ -22,4 +26,11 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeA-poor</group>
+   <radius>2500.000000</radius>
+   <pos x="3250.627622" y="-4617.708624"/>
+  </asteroid>
+ </asteroids>
 </ssys>

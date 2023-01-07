@@ -7,7 +7,10 @@
   <nebula volatility="3.100000">250.000000</nebula>
  </general>
  <pos x="471.335013" y="-204.056462"/>
- <spobs/>
+ <spobs>
+  <spob>Behar Prime</spob>
+  <spob>Behar Station</spob>
+ </spobs>
  <jumps>
   <jump target="Doeston">
    <autopos/>
