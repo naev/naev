@@ -191,7 +191,7 @@ function drone_board ()
    vn.na(_([[You access the amplifier's control panel and jack in.]]))
 
    -- TODO maybe do another minigame?
-   sokoban.vn{ levels={6,7}, header="Amplifier Control Panel"}
+   sokoban.vn{ levels={6,7}, header=_("Amplifier Control Panel") }
    vn.func( function ()
       if sokoban.completed() then
          mem.state = 2

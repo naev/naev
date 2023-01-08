@@ -201,7 +201,7 @@ function drone_board ()
 
    vn.na(_([[You access the drone control panel and jack into the black box.]]))
 
-   sokoban.vn{ levels={4,5}, header="Drone Black Box"}
+   sokoban.vn{ levels={4,5}, header=_("Drone Black Box") }
    vn.func( function ()
       if sokoban.completed() then
          mem.state = 2
