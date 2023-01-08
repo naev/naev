@@ -8,7 +8,6 @@
   <gfx_store>map_sector_01.webp</gfx_store>
  </general>
  <specific type="map">
-  <sys name="Zacron"/>
   <sys name="Tuoladis">
    <jump>Surano</jump>
   </sys>
@@ -18,25 +17,13 @@
   <sys name="Guntesh">
    <jump>Kruger</jump>
   </sys>
-  <sys name="Kruger">
-   <jump>Guntesh</jump>
+  <sys name="Tau Ceti"/>
+  <sys name="Akodu">
+   <spob>Tenal-P</spob>
   </sys>
-  <sys name="Cebus"/>
-  <sys name="Carnis Minor">
-   <jump>Tau Ceti</jump>
-  </sys>
-  <sys name="Tau Ceti">
-   <jump>Carnis Minor</jump>
-  </sys>
-  <sys name="Akodu"/>
   <sys name="Qellan"/>
-  <sys name="Toaxis"/>
   <sys name="Aneel Azi">
-   <jump>Hephaestus</jump>
    <spob>Edergast</spob>
-  </sys>
-  <sys name="Hephaestus">
-   <jump>Aneel Azi</jump>
   </sys>
   <sys name="Atlantis">
    <spob>Atlantis I</spob>
@@ -44,6 +31,16 @@
   <sys name="Doeston">
    <spob>Cerberus</spob>
    <spob>Doeston Prime</spob>
+  </sys>
+  <sys name="Cebus"/>
+  <sys name="Kruger">
+   <jump>Guntesh</jump>
+  </sys>
+  <sys name="Raelid">
+   <spob>Marius Station</spob>
+   <spob>Raelid II</spob>
+   <spob>Raelid Prime</spob>
+   <spob>Raelid Outpost</spob>
   </sys>
  </specific>
 </outfit>
