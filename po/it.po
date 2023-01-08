@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-01-06 22:54+0900\n"
+"POT-Creation-Date: 2023-01-08 22:35+0900\n"
 "PO-Revision-Date: 2023-01-06 22:50+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev-0-10-x/"
@@ -3605,9 +3605,9 @@ msgid ""
 "PT-2200 nevertheless offers acceptable performance for capital ships at a "
 "fraction of its competitors' prices."
 msgstr ""
-"Criticato da alcuni come nulla di più di un cluster di sistemi PT-400, il PT-"
-"2200 offre in ogni caso prestazioni accettabili per le astronavi principali "
-"ad una frazione del prezzo della concorrenza."
+"Criticato da alcuni come nulla di più di un cluster di sistemi PT-400, il "
+"PT-2200 offre in ogni caso prestazioni accettabili per le astronavi "
+"principali ad una frazione del prezzo della concorrenza."
 
 #: dat/outfits/core_system/large/unicorp_pt500_core_system.xml:2
 msgid "Unicorp PT-500 Core System"
@@ -3619,9 +3619,9 @@ msgid ""
 "PT-500 nevertheless offers acceptable performance for light cruisers at a "
 "fraction of its competitors' prices."
 msgstr ""
-"Criticato da alcuni come nulla di più di un cluster di sistemi PT-310, il PT-"
-"500 offre in ogni caso prestazioni accettabili per incrociatori leggeri ad "
-"una frazione del prezzo della concorrenza."
+"Criticato da alcuni come nulla di più di un cluster di sistemi PT-310, il "
+"PT-500 offre in ogni caso prestazioni accettabili per incrociatori leggeri "
+"ad una frazione del prezzo della concorrenza."
 
 #: dat/outfits/core_system/medium/milspec_orion_4801_core_system.xml:2
 msgid "Milspec Orion 4801 Core System"
@@ -87067,6 +87067,10 @@ msgid ""
 "yourself."
 msgstr ""
 
+#: dat/missions/zalek/blackhole/zbh11.lua:260
+msgid "Drone Control Panel"
+msgstr ""
+
 #: dat/missions/zalek/blackhole/zbh11.lua:276
 msgid ""
 "As you are finally able to access the data, you see Zach was peering over "
@@ -89292,6 +89296,10 @@ msgid ""
 "take a shot at it.\""
 msgstr ""
 
+#: dat/missions/zalek/particlephysics/zpp02.lua:147
+msgid "Drone Memory Banks"
+msgstr ""
+
 #: dat/missions/zalek/particlephysics/zpp02.lua:158
 msgid ""
 "\"It seems like the interface hasn't been unlocked. Talk to me if you want "
@@ -89450,6 +89458,11 @@ msgstr ""
 msgid "You access the drone control panel and jack into the black box."
 msgstr ""
 
+#: dat/missions/zalek/particlephysics/zpp03.lua:204
+#: dat/missions/zalek/particlephysics/zpp03.lua:225
+msgid "Drone Black Box"
+msgstr ""
+
 #: dat/missions/zalek/particlephysics/zpp03.lua:216
 msgid ""
 "You manage to recover the entire black box intact and load the information "
@@ -89458,10 +89471,6 @@ msgstr ""
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:220
 msgid "You failed to access the black box."
-msgstr ""
-
-#: dat/missions/zalek/particlephysics/zpp03.lua:225
-msgid "Drone Black Box"
 msgstr ""
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:225
@@ -89737,6 +89746,10 @@ msgid "You access the amplifier's control panel and jack in."
 msgstr ""
 
 #. TODO maybe do another minigame?
+#: dat/missions/zalek/particlephysics/zpp05.lua:194
+msgid "Amplifier Control Panel"
+msgstr ""
+
 #: dat/missions/zalek/particlephysics/zpp05.lua:208
 msgid "You manage to adjust the settings and the amplifier turns on again."
 msgstr ""
@@ -94919,7 +94932,7 @@ msgstr ""
 #. return false
 #. end )
 #.
-#. if #spobs == 0 then abort() end -- In case no suitable spobs are in range.
+#. if #spobs == 0 then misn.finish(false) end -- In case no suitable spobs are in range.
 #.
 #. local index = rnd.rnd(1, #spobs)
 #. destspob = spobs[index][1]
