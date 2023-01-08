@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-01-08 22:35+0900\n"
-"PO-Revision-Date: 2023-01-08 13:35+0000\n"
+"PO-Revision-Date: 2023-01-08 20:50+0000\n"
 "Last-Translator: Jérémie Guegain <Mirejai@users.noreply.hosted.weblate.org>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev-0-10-x/"
 "fr/>\n"
@@ -25991,7 +25991,7 @@ msgstr ""
 
 #: dat/ai/frontier_police.lua:15
 msgid "\"The Frontier does not lower itself to common scum.\""
-msgstr ""
+msgstr "\"La Frontière ne s'abaisse pas au niveau du commun des mortels.\""
 
 #: dat/ai/frontier_police.lua:18
 msgid "Alea iacta est!"
@@ -26022,11 +26022,11 @@ msgstr "\"Mare magno turbantibus. Ce sont vos problèmes, pas les miens.\""
 #. Handle bribing
 #: dat/ai/frontier_police.lua:85
 msgid "\"For {credits} I'll let your grievances slide.\""
-msgstr ""
+msgstr "\"Pour {credits} je laisserai passer vos griefs.\""
 
 #: dat/ai/frontier_police.lua:86
 msgid "\"Now get out of my sight and don't cause any more trouble.\""
-msgstr ""
+msgstr "\"Maintenant disparaissez de ma vue et ne causez plus de problèmes.\""
 
 #: dat/ai/goddard.lua:14
 msgid "\"House Goddard does not lower itself to common scum.\""
@@ -26051,6 +26051,8 @@ msgstr "Parasite !"
 #: dat/ai/goddard.lua:71
 msgid "\"I could do you the favour of refueling for the price of {credits}.\""
 msgstr ""
+"\"Je peux vous faire la faveur de vous ravitailler pour la somme de "
+"{credits}.\""
 
 #: dat/ai/mercenary.lua:12
 msgid "\"I'm afraid you can't make it worth my while.\""
@@ -26082,10 +26084,8 @@ msgstr ""
 
 #. Set up bribes
 #: dat/ai/mercenary.lua:74
-#, fuzzy
-#| msgid "You owe me 20 credits!"
 msgid "\"Your life is worth {credits} to me.\""
-msgstr "Tu me dois 20 balles !"
+msgstr "\"Pour moi votre vie vaut {credits}.\""
 
 #: dat/ai/mercenary.lua:75
 msgid "\"Beat it.\""
@@ -26094,7 +26094,7 @@ msgstr "\"Dégagez.\""
 #. Communication stuff
 #: dat/ai/miner.lua:39
 msgid "\"I don't want any problems.\""
-msgstr ""
+msgstr "\"Je ne veux pas avoir de problèmes.\""
 
 #. No idle function, ship won't react until it detects enemies
 #.
@@ -26144,6 +26144,8 @@ msgid ""
 "\"So this is the part where you pay up or get shot up. Your choice. What'll "
 "be, {credits} or…\""
 msgstr ""
+"\"C'est donc la partie où vous payez ou vous vous faites tirer dessus. Vous "
+"choisissez. {credits} ou…\""
 
 #: dat/ai/pirate.lua:34
 msgid "\"It'll cost you {credits} for me to ignore your pile of rubbish.\""
@@ -26153,6 +26155,7 @@ msgstr ""
 #: dat/ai/pirate.lua:35
 msgid "\"I'm in a good mood so I'll let you go for {credits}.\""
 msgstr ""
+"\"Je suis de bonne humeur alors je vous laisserai partir pour {credits}.\""
 
 #: dat/ai/pirate.lua:36
 msgid "\"Send me {credits} or you're dead.\""
@@ -26165,6 +26168,7 @@ msgstr "\"Ferme ta gueule et donne ton fric ! {credits} ! Maintenant !\""
 #: dat/ai/pirate.lua:38
 msgid "\"You give me {credits} and I'll act like I never saw you.\""
 msgstr ""
+"\"Si vous me donnez {credits} j'agirai comme si je ne vous avait jamais vu.\""
 
 #: dat/ai/pirate.lua:39
 msgid ""
@@ -26179,38 +26183,48 @@ msgid ""
 "\"Pay up or don't. {credits} now just means I'll wait till later to collect "
 "the rest.\""
 msgstr ""
+"\"Payez ou non. {credits} maintenant signifie juste que j'attendrai plus "
+"tard pour récupérer le reste.\""
 
 #: dat/ai/pirate.lua:43
 msgid "\"It'll cost you {credits} for us to ignore your pile of rubbish.\""
 msgstr ""
+"\"Tu me files {credits} et je t'ignore toi et le déchet que tu pilotes.\""
 
 #: dat/ai/pirate.lua:44
 msgid "\"We're in a good mood so we'll let you go for {credits}.\""
 msgstr ""
+"\"Nous sommes de bonne humeur, alors cela ne vous coûtera que {credits} pour "
+"qu'on vous laisse partir.\""
 
 #: dat/ai/pirate.lua:45
 msgid "\"Send us {credits} or you're dead.\""
-msgstr ""
+msgstr "\"Envoyez nous {credits} sinon vous êtes mort.\""
 
 #: dat/ai/pirate.lua:46
 msgid "\"Shut up and give us your money! {credits} now.\""
-msgstr ""
+msgstr "\"Taisez vous et donnez nous notre argent ! {credits} maintenant.\""
 
 #: dat/ai/pirate.lua:47
 msgid "\"You give us {credits} and we'll act like we never saw you.\""
 msgstr ""
+"\"Donnez nous {credits} et nous ferons comme si on ne vous avez jamais vu.\""
 
 #: dat/ai/pirate.lua:48
 msgid ""
 "\"If you're willing to negotiate we'll gladly take {credits} to not kill you."
 "\""
 msgstr ""
+"\"Nous sommes prêts à entrer en pourparlers. Pour {credits} nous pourrons "
+"nous persuader de ne pas vous tuer.\""
 
 #: dat/ai/pirate.lua:49
 msgid ""
 "\"Pay up or don't. {credits} now just means we'll wait till later to collect "
 "the rest.\""
 msgstr ""
+"\"Payez ou non. {credits} maintenant signifie juste que nous attendrons plus "
+"tard pour récupérer le reste.\""
 
 #: dat/ai/pirate.lua:52
 msgid "\"You're lucky I'm so kind.\""
@@ -26239,15 +26253,15 @@ msgstr "C'est mon jour de chance !"
 
 #: dat/ai/pirate.lua:58
 msgid "\"And I didn't even have to kill anyone!\""
-msgstr ""
+msgstr "\"Et je n'aurai eu à tué personne !\""
 
 #: dat/ai/pirate.lua:59
 msgid "\"See, this is how we become friends.\""
-msgstr ""
+msgstr "\"Voyez, c'est comme cela que l'on deviens amis.\""
 
 #: dat/ai/pirate.lua:60
 msgid "\"Now if I kill you it'll be just for fun!\""
-msgstr ""
+msgstr "\"Maintenant si je vous tue ce sera juste par plaisir !\""
 
 #: dat/ai/pirate.lua:61
 msgid "\"You just made a good financial decision today.\""
@@ -26262,6 +26276,8 @@ msgid ""
 "\"Something feels strange. It's almost as if my urge to kill you has "
 "completely dissipated.\""
 msgstr ""
+"\"C'est bizarre. C'est comme si mon envie de tuer avait complètement "
+"disparue.\""
 
 #: dat/ai/pirate.lua:64
 msgid "\"Can I keep shooting you anyhow? No? You sure? Fine.\""
