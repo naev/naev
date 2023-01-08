@@ -11,6 +11,10 @@
   <spob_virtual>Pirate All Unpresence</spob_virtual>
  </spobs>
  <jumps>
+  <jump target="Aneel Azi">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Anger">
    <autopos/>
    <hidden/>
