@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Behar Station">
+ <display>Ruined Shipyard</display>
  <pos x="3787.559470" y="1829.583812"/>
  <GFX>
   <space>station-destroyed3.webp</space>
-  <exterior>station05.webp</exterior>
+  <exterior>station04.webp</exterior>
  </GFX>
  <presence>
   <faction>Derelict</faction>
