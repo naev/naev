@@ -3418,7 +3418,7 @@ void space_renderOverlay( const double dt )
    background_renderOverlay( dt );
 
    if ((cur_system->nebu_density > 0.) &&
-         !menu_isOpen( MENU_MAIN ))
+         !menu_isOpen( MENU_MAIN ) && !menu_isOpen( MENU_EDITORS ))
       nebu_renderOverlay(dt);
 }
 
