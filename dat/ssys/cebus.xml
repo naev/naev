@@ -9,6 +9,14 @@
  <pos x="315.367396" y="-150.632289"/>
  <spobs/>
  <jumps>
+  <jump target="Carnis Minor">
+   <autopos/>
+   <hide>0.300000</hide>
+  </jump>
+  <jump target="Kruger's Pocket">
+   <autopos/>
+   <hide>0.300000</hide>
+  </jump>
   <jump target="Ross">
    <autopos/>
    <hide>1.000000</hide>

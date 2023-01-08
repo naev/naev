@@ -17,6 +17,10 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Kruger's Pocket">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Van Maanen">
    <autopos/>
    <hide>1.000000</hide>
