@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-01-06 22:54+0900\n"
-"PO-Revision-Date: 2023-01-07 18:47+0000\n"
+"PO-Revision-Date: 2023-01-08 13:35+0000\n"
 "Last-Translator: Jérémie Guegain <Mirejai@users.noreply.hosted.weblate.org>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev-0-10-x/"
 "fr/>\n"
@@ -138,7 +138,7 @@ msgstr "mot de passe invalide"
 
 #: physfs.c:30
 msgid "app callback reported error"
-msgstr ""
+msgstr "erreur signalée par le callback de l'application"
 
 #: dat/intro:2
 msgid ""
@@ -2546,12 +2546,12 @@ msgstr ""
 #: dat/outfits/bioship/skills/corrosion_i.xml:2
 #: dat/scripts/bioship/skills.lua:248
 msgid "Corrosion I"
-msgstr ""
+msgstr "Corrosion I"
 
 #: dat/outfits/bioship/skills/corrosion_ii.xml:2
 #: dat/scripts/bioship/skills.lua:271
 msgid "Corrosion II"
-msgstr ""
+msgstr "Corrosion II"
 
 #: dat/outfits/bioship/skills/enhanced_smell.xml:2
 #: dat/scripts/bioship/skills.lua:317
@@ -2565,16 +2565,23 @@ msgid ""
 "output is significantly increased. Armour damage is needed to enter the "
 "trance-like state."
 msgstr ""
+"Grâce à une manipulation minutieuse effectué sur le cortex cérébral, le "
+"vaisseau biologique peut passer dans état primitif de rage féroce dans "
+"laquelle les armes en position avant ou montées sur tourelle ont une "
+"puissance accrue. Des dégâts de coque sont requis pour entrer dans cet état "
+"de transe."
 
 #: dat/outfits/bioship/skills/feral_rage_i.xml:11
 #: dat/outfits/bioship/skills/feral_rage_ii.xml:11
 msgid "Active for 5 seconds since armour was last damaged."
 msgstr ""
+"Actif pour les 5 secondes qui suivent les derniers dégâts subits par la "
+"coque."
 
 #: dat/outfits/bioship/skills/feral_rage_ii.xml:2
 #: dat/scripts/bioship/skills.lua:216
 msgid "Feral Rage II"
-msgstr ""
+msgstr "Rage Féroce II"
 
 #: dat/outfits/bioship/skills/feral_rage_ii.xml:9
 msgid ""
@@ -2584,11 +2591,17 @@ msgid ""
 "trance-like state. Further coupling with the cerebellum allows the trance to "
 "also increase the ship agility temporarily."
 msgstr ""
+"Grâce à une manipulation minutieuse effectué sur le cortex cérébral, le "
+"vaisseau biologique peut passer dans état primitif de rage féroce dans "
+"laquelle les armes en position avant ou montées sur tourelle ont une "
+"puissance accrue. Des dégâts de coque sont requis pour entrer dans cet état "
+"de transe. Un couplage additionnel avec le cervelet permet à la transe "
+"d'améliorer temporairement l'agilité du vaisseau."
 
 #: dat/outfits/bioship/skills/feral_rage_iii.xml:2
 #: dat/scripts/bioship/skills.lua:233
 msgid "Feral Rage III"
-msgstr ""
+msgstr "Rage Féroce III"
 
 #: dat/outfits/bioship/skills/feral_rage_iii.xml:9
 msgid ""
@@ -2599,37 +2612,47 @@ msgid ""
 "is induced automaticalyl upon armour damage, but can also be manually "
 "triggered through focusing."
 msgstr ""
+"Grâce à une manipulation minutieuse effectué sur le cortex cérébral, le "
+"vaisseau biologique peut passer dans état primitif de rage féroce dans "
+"laquelle les armes en position avant ou montées sur tourelle ont une "
+"puissance accrue. Un couplage additionnel avec le cervelet permet "
+"d'améliorer temporairement l'agilité du vaisseau. La transe commence "
+"automatiquement lorsque la coque prend des dégâts, mais peut aussi être "
+"déclenché manuellement en se concentrant."
 
 #: dat/outfits/bioship/skills/feral_rage_iii.xml:11
 msgid ""
 "Active for 7 seconds since armour was last damaged, or can be manually "
 "toggled with a 30 second cooldown."
 msgstr ""
+"Actif pour les 5 secondes qui suivent les derniers dégâts subits par la "
+"coque, ou peut être activé manuellement avec un temps d'attente de 30 "
+"secondes."
 
 #: dat/outfits/bioship/skills/fuel_bladder.xml:2
 #: dat/scripts/bioship/skills.lua:301
 msgid "Fuel Bladder"
-msgstr ""
+msgstr "Réservoir de carburant"
 
 #: dat/outfits/bioship/skills/hard_shell.xml:2
 #: dat/scripts/bioship/skills.lua:170
 msgid "Hard Shell"
-msgstr ""
+msgstr "Coque dure"
 
 #: dat/outfits/bioship/skills/hunters_instinct.xml:2
 #: dat/scripts/bioship/skills.lua:125
 msgid "Hunter's Instinct"
-msgstr ""
+msgstr "Instinct de chasseur"
 
 #: dat/outfits/bioship/skills/natural_healing_i.xml:2
 #: dat/scripts/bioship/skills.lua:162
 msgid "Natural Healing I"
-msgstr ""
+msgstr "Régénération Naturelle I"
 
 #: dat/outfits/bioship/skills/natural_healing_ii.xml:2
 #: dat/scripts/bioship/skills.lua:178
 msgid "Natural Healing II"
-msgstr ""
+msgstr "Régénération Naturelle II"
 
 #: dat/outfits/bioship/skills/plasma_burst.xml:2
 #: dat/scripts/bioship/skills.lua:279
@@ -2639,25 +2662,27 @@ msgstr ""
 #: dat/outfits/bioship/skills/plasma_burst.xml:11
 msgid "Deals 300 plasma damage to all hostile ships in 200 range."
 msgstr ""
+"Inflige 300 dégâts de plasma à tous les vaisseaux hostiles dans un rayon de "
+"200."
 
 #: dat/outfits/bioship/skills/reflective_shell.xml:2
 #: dat/scripts/bioship/skills.lua:186
 msgid "Reflective Shell"
-msgstr ""
+msgstr "Coque Réfléchissante"
 
 #: dat/outfits/bioship/skills/reflective_shell.xml:11
 msgid "Reflect 5% of damage back to attackers."
-msgstr ""
+msgstr "Renvoie 5% des dommages reçus aux attaquants."
 
 #: dat/outfits/bioship/skills/silence.xml:2 dat/scripts/bioship/skills.lua:141
 msgid "Silence"
-msgstr ""
+msgstr "Silence"
 
 #: dat/outfits/bioship/skills/the_bite.xml:2 dat/scripts/bioship/skills.lua:21
 #, fuzzy
 #| msgid "Frontier"
 msgid "The Bite"
-msgstr "Frontière"
+msgstr "La morsure"
 
 #: dat/outfits/bioship/skills/the_bite_blood_lust.xml:2
 msgid "The Bite - Blood Lust"
@@ -2669,7 +2694,7 @@ msgstr ""
 
 #: dat/outfits/bioship/skills/tracking_antennae.xml:2
 msgid "Tracking Antennae"
-msgstr ""
+msgstr "Antenne De Traçage"
 
 #: dat/outfits/bioship/skills/tunnelling_organ.xml:2
 #: dat/scripts/bioship/skills.lua:325
@@ -2678,11 +2703,11 @@ msgstr ""
 
 #: dat/outfits/bioship/skills/wanderer.xml:2 dat/scripts/bioship/skills.lua:94
 msgid "Wanderer"
-msgstr ""
+msgstr "Vagabond"
 
 #: dat/outfits/core_engine/dummy_engine.xml:2
 msgid "Dummy Engine"
-msgstr ""
+msgstr "Moteur Factice"
 
 #: dat/outfits/core_engine/dummy_engine.xml:4
 #: dat/outfits/core_engine/large/beat_up_large_engine.xml:4
@@ -2707,17 +2732,19 @@ msgstr ""
 #: dat/outfits/core_engine/small/unicorp_hawk_350_engine.xml:4
 #: dat/outfits/core_engine/small/zalek_test_engine.xml:4
 msgid "Core Systems (Engine)"
-msgstr ""
+msgstr "Systèmes Principaux (Moteur)"
 
 #: dat/outfits/core_engine/dummy_engine.xml:9
 msgid ""
 "This is a dummy engine for use in missions only, which does nothing. DO NOT "
 "BUY."
 msgstr ""
+"C'est un moteur factice pour être utiliser en missions uniquement, il ne "
+"fait rien. NE L'ACHETEZ PAS."
 
 #: dat/outfits/core_engine/large/beat_up_large_engine.xml:2
 msgid "Beat Up Large Engine"
-msgstr ""
+msgstr "Gros Moteur Dépassé"
 
 #: dat/outfits/core_engine/large/beat_up_large_engine.xml:9
 #: dat/outfits/core_engine/medium/beat_up_medium_engine.xml:9
@@ -2726,10 +2753,12 @@ msgid ""
 "Clogged, corroded and cracked in every way possible while still remaining in "
 "functional condition, this engine really belongs on the scrap heap."
 msgstr ""
+"Fracturé, abîmé et usé par le temps de toutes les manières possibles mais "
+"toujours dans un état fonctionnel, ce moteur devrait être mit au rebut."
 
 #: dat/outfits/core_engine/large/krain_remige_engine.xml:2
 msgid "Krain Remige Engine"
-msgstr ""
+msgstr "Moteur Krain Remige"
 
 #: dat/outfits/core_engine/large/krain_remige_engine.xml:9
 msgid ""
@@ -2738,10 +2767,14 @@ msgid ""
 "performance exceeding most other cruiser engines in every respect, though "
 "its tuning renders it ill-suited to heavier vessels."
 msgstr ""
+"Le Remige a été développé par les Industries Krain exclusivement pour leurs "
+"croiseur phare le Kestrel. Optimisé pour ses besoins, le Remige fournit des "
+"performances dépassant le gros des autres moteurs de croiseur. Toutefois, "
+"ses réglages le rendent inadapté pour des vaisseaux plus lourd."
 
 #: dat/outfits/core_engine/large/melendez_mammoth_xl_engine.xml:2
 msgid "Melendez Mammoth XL Engine"
-msgstr ""
+msgstr "Moteur Melendez Mammoth XL"
 
 #: dat/outfits/core_engine/large/melendez_mammoth_xl_engine.xml:10
 msgid ""
@@ -2750,10 +2783,14 @@ msgid ""
 "the galaxy, whether in the form of bulk freight or as the primary engine of "
 "a fully-equipped battlecruiser."
 msgstr ""
+"Le plus gros moteur que Melendez produit, le Mammoth XL n'a pas son égal "
+"lorsqu'il s'agit de transporter des poids importants que ce soit dans le "
+"transport de marchandises ou comme moteur de vaisseau de guerre entièrement "
+"équipé."
 
 #: dat/outfits/core_engine/large/nexus_bolt_3500_engine.xml:2
 msgid "Nexus Bolt 3500 Engine"
-msgstr ""
+msgstr "Moteur Nexus Bolt 3500"
 
 #: dat/outfits/core_engine/large/nexus_bolt_3500_engine.xml:9
 msgid ""
@@ -2761,10 +2798,13 @@ msgid ""
 "Like most Nexus engines, it doesn't excel in speed, but its low power "
 "consumption makes it an attractive option for some pilots."
 msgstr ""
+"Le Bolt 3500 est un moteur peu utilisé fait pour les croiseurs. Comme le "
+"gros des moteurs Nexus, il n'excelle pas en vitesse, mais sa faible "
+"consommation d'énergie le rend avantageux pour certains pilotes."
 
 #: dat/outfits/core_engine/large/tricon_typhoon_engine.xml:2
 msgid "Tricon Typhoon Engine"
-msgstr ""
+msgstr "Moteur Tricon Typhoon"
 
 #: dat/outfits/core_engine/large/tricon_typhoon_engine.xml:9
 msgid ""
@@ -2773,6 +2813,10 @@ msgid ""
 "of many captains, though its high power consumption limits it to ships with "
 "powerful reactors."
 msgstr ""
+"Le développement du Typhoon était en prestigieux projet pour Tricon. "
+"Fournissant les croiseurs en superbe maniabilité et vitesse, il est le "
+"favori de bien des capitaines, malgrès que sa haute consommation d'énergie "
+"le limite à des vaisseaux équipés de réacteurs puissants."
 
 #: dat/outfits/core_engine/large/tricon_typhoon_ii_engine.xml:2
 msgid "Tricon Typhoon II Engine"
@@ -5617,6 +5661,12 @@ msgid ""
 "garbage they're getting on their sensors, you will have already made your "
 "escape! Fly safe, fly Milspec."
 msgstr ""
+"Votre travail nécessite t'il de vous aventurer dans des territoires "
+"dangereux ? Faites vous face à une opposition que vos boucliers ne peuvent "
+"supporter ? Le brouilleur Milspec U-9 \"Magus\" est ce qu'il vous faut ! "
+"Pressez un bouton et vous lâcherez vos poursuivants. Le temps que vos "
+"ennemis est compris les artefacts sur leurs senseurs, vous vous serez "
+"échappé ! Volez sûr, volez Milspec."
 
 #: dat/outfits/utility/milspec_scrambler.xml:2
 msgid "Milspec Scrambler"
@@ -6166,7 +6216,7 @@ msgstr ""
 
 #: dat/outfits/weapons/plasma_cannon.xml:2
 msgid "Plasma Cannon"
-msgstr ""
+msgstr "Canon à Plasma"
 
 #: dat/outfits/weapons/plasma_cannon.xml:9
 msgid ""
@@ -6178,7 +6228,7 @@ msgstr ""
 
 #: dat/outfits/weapons/plasma_cluster_cannon.xml:2
 msgid "Plasma Cluster Cannon"
-msgstr ""
+msgstr "Canon à Amas de Plasma"
 
 #: dat/outfits/weapons/plasma_cluster_cannon.xml:9
 msgid ""
@@ -6190,6 +6240,14 @@ msgid ""
 "medium mounts, but this also means biological Soromid ships are able to "
 "handle its computational load despite being a synthetic construct."
 msgstr ""
+"Le Canon à amas de plasma est une refonte du design standard du Canon à "
+"Plasma. En confinant un amas massif de plasma surchauffé dans un petit "
+"espace à l'intérieur d'un \"bouclier à membrane\", l'impact créé de larges "
+"explosions qui viennent à bout de même les coques les plus solides. Le point "
+"négatif de ce design est qu'il requiert beaucoup de place, ce qui limite son "
+"utilisation à des montures moyennes, mais cela signifie aussi qu'il permet "
+"aux vaisseaux biologiques Soromod d'encaisser sa charge de calcul malgré sa "
+"construction synthétique."
 
 #: dat/outfits/weapons/plasma_turret_mk1.xml:2
 msgid "Plasma Turret MK1"
@@ -29231,10 +29289,14 @@ msgstr ""
 #: dat/events/dvaered/warlord_propaganda.lua:56
 msgid "\"Very well, citizen. I am sure you will help us at the office a lot.\""
 msgstr ""
+"\"Très bien citoyen. Je suis certain que vous nous serez d'une grande aide "
+"au bureau.\""
 
 #: dat/events/dvaered/warlord_propaganda.lua:61
 msgid "\"I simply got hit multiple times by someone. Isn't that obvious?\""
 msgstr ""
+"\"J'ai simplement été touché plusieurs fois par quelqu'un. N'est ce pas "
+"évident ?\""
 
 #: dat/events/dvaered/warlord_propaganda.lua:65
 msgid ""
@@ -29243,6 +29305,10 @@ msgid ""
 "declare war to their rivals if they were offended or in order to conquer "
 "their planets.\""
 msgstr ""
+"\"Les seigneurs de guerre, comme vous le savez, sont des généraux compétents "
+"qui se sont vu confier la souveraineté régalienne dans les systèmes Dvaered. "
+"Les seigneurs de guerre sont autorisés à déclarer la guerre à leurs rivaux "
+"s'ils ont été offensés ou pour conquérir leurs planètes.\""
 
 #: dat/events/dvaered/warlord_propaganda.lua:66
 msgid ""
@@ -29253,6 +29319,13 @@ msgid ""
 "strategic reasons, it is necessary for each warlord to keep the support of "
 "the planet's population.\""
 msgstr ""
+"\"Je n'expliquerai pas en détail comment les guerres internes des Dvaered "
+"fonctionnent, mais vous devez savoir qu'elles sont souvent divisées en une "
+"campagne spatiale et une terrestre. La campagne spatiale ne généralement que "
+"quelques périodes, tandis que celles terrestres peuvent durer un cycle "
+"entier. Lors des campagnes terrestres, pour plusieurs raisons stratégiques, "
+"il est requis pour chaque seigneur de maintenir le support de la population "
+"locale.\""
 
 #: dat/events/dvaered/warlord_propaganda.lua:67
 msgid ""
@@ -29261,12 +29334,19 @@ msgid ""
 "tonnes of propaganda flyers in the atmosphere of a given planet. And the "
 "more tonnes of flyers you can carry, the more you will get paid.\""
 msgstr ""
+"\"C'est là que les pilotes privés sont utilisés : un seigneur de guerre peut "
+"réclamer auprès du Bureau Des Affaires Des Seigneurs De Guerre de recruter "
+"un pilote privé de sorte à répandre des tractes de propagande sur une "
+"planète donnée. Le plus de tractes vous transporterez, le plus vous serez "
+"payé.\""
 
 #: dat/events/dvaered/warlord_propaganda.lua:68
 msgid ""
 "\"On the technical point of view, all you have to do is to fly over the "
 "planet, and the posters will be automatically dropped.\""
 msgstr ""
+"\"D'un point de vu technique, tout ce que vous aurez à faire c'est de voler "
+"autour d'une planète, les tractes seront automatiquement lâchés.\""
 
 #: dat/events/dvaered/warlord_propaganda.lua:69
 msgid ""
@@ -29276,6 +29356,11 @@ msgid ""
 "take one of these missions. What is more, landing on the planet where you "
 "just dropped your posters is not an option.\""
 msgstr ""
+"\"Toutefois, vous devez être averti qu'après cela, le rival du seigneur qui "
+"aura dirigé l'opération, et sûrement ses alliés, enverrons probablement "
+"leurs vaisseaux après vous. Vous devez donc être près à repousser les "
+"attaques de Vendettas si vous prenez une de ces missions. En plus, atterrir "
+"sur une des planètes où vous avez largué des tractes n'est pas une option.\""
 
 #: dat/events/dvaered/warlord_propaganda.lua:70
 msgid ""
@@ -29286,6 +29371,12 @@ msgid ""
 "\"Once you get out of the system, you have nothing to fear from Dvaered "
 "patrol ships anymore, even if you go back to the afterwards.\""
 msgstr ""
+"\"Notez aussi que seul les vaisseaux du \"mauvais\" seigneur vous "
+"pourchasserons, et seulement dans le système où vous aurez accompli la "
+"mission. Précisons qu'il vous est tout à fait autorisé de détruire ces "
+"navires, cela étant dans le cadre d'une honorable guerre entre seigneur.\"\n"
+"\"Une fois que vous aurez quitté le système, vous n'aurez plus rien à "
+"craindre des patrouilles Dvaered, même si vous revenez sur vos pas.\""
 
 #. Manage acceptance and refusal
 #.
@@ -29316,10 +29407,8 @@ msgstr "Chefs De Guerre"
 
 #. Spawns a merchant ship that explains what happens
 #: dat/events/dvaered/warlords_battle.lua:82
-#, fuzzy
-#| msgid "Trader"
 msgid "Trader {ship}"
-msgstr "Marchand"
+msgstr "Marchand {ship}"
 
 #: dat/events/dvaered/warlords_battle.lua:93
 msgid "A battle is about to begin"
@@ -29359,10 +29448,8 @@ msgstr ""
 
 #. Returns leader of fleet
 #: dat/events/dvaered/warlords_battle.lua:174
-#, fuzzy
-#| msgid "Trader"
 msgid "Invader"
-msgstr "Marchand"
+msgstr "Envahisseur"
 
 #. some transport ships
 #. The transport ships tend to run away
@@ -29370,7 +29457,7 @@ msgstr "Marchand"
 #. mass of the player's victims
 #: dat/events/dvaered/warlords_battle.lua:230
 msgid "Local Warlord's Force"
-msgstr ""
+msgstr "Force du seigneur de guerre local"
 
 #. The heaviest ships will surround the leader
 #. mass of the player's victims
@@ -29394,7 +29481,7 @@ msgstr ""
 #. Set an info button up
 #: dat/events/escort_settings.lua:24
 msgid "Escort AI"
-msgstr ""
+msgstr "Escorte IA"
 
 #. Hooks are cleared upon entering, so we have to readd the hook each time
 #. Set up hook for all newly created pilots
@@ -29404,49 +29491,47 @@ msgstr ""
 #. variables overwritten.
 #: dat/events/escort_settings.lua:68
 msgid "Hyper-Offensive"
-msgstr ""
+msgstr "Hyper-Offensif"
 
 #: dat/events/escort_settings.lua:74
 msgid "Offensive"
-msgstr ""
+msgstr "Offensif"
 
 #: dat/events/escort_settings.lua:86
 msgid "Defensive"
-msgstr ""
+msgstr "Défensif"
 
 #: dat/events/escort_settings.lua:92
 msgid "Hyper-Defensive"
-msgstr ""
+msgstr "Hyper-Défensif"
 
 #: dat/events/escort_settings.lua:98
 msgid "Custom"
-msgstr ""
+msgstr "Personnalisé"
 
 #: dat/events/escort_settings.lua:121
 msgid "Escort Manager"
-msgstr ""
+msgstr "Gestionnaire d’escorte"
 
 #: dat/events/escort_settings.lua:129
 msgid "#nAggressive:#0 escorts seek out hostiles"
-msgstr ""
+msgstr "#nAgressif :#0 l'escorte cherche les hostiles"
 
 #: dat/events/escort_settings.lua:131
 msgid "Engage distance:"
-msgstr ""
+msgstr "Distance d'engagement :"
 
 #: dat/events/escort_settings.lua:132
-#, fuzzy
-#| msgid "Nebula Sensor Suit"
 msgid "Return distance:"
-msgstr "Combinaison de Capteur de Nébuleuse"
+msgstr "Distance de retour :"
 
 #: dat/events/escort_settings.lua:141
 msgid "Armour to return to mothership at (only fighters):"
-msgstr ""
+msgstr "Armure pour retourner au vaisseau-mère (chasseur uniquement) :"
 
 #: dat/events/escort_settings.lua:148
 msgid "Profiles:"
-msgstr ""
+msgstr "Profils :"
 
 #. Save as variables
 #.
@@ -29480,13 +29565,15 @@ msgstr "Patrouille de la frontière"
 #. Ship broadcasts an SOS every 10 seconds, until boarded or destroyed.
 #: dat/events/flf/derelict.lua:82
 msgid "SOS. This is {plt}. Primary systems down. Requesting assistance."
-msgstr ""
+msgstr "SOS. Ici {plt}. Les principaux systèmes sont HS. Requerrons assistance."
 
 #. Ship broadcasts an SOS every 10 seconds, until boarded or destroyed.
 #: dat/events/flf/derelict.lua:88
 msgid ""
 "Calling all ships. This is {plt}. Engines down, ship damaged. Please help."
 msgstr ""
+"Appel à tous les vaisseaux. Ici {plt}. Les moteurs sont coupés, le vaisseau "
+"est endommagé. Aidez moi."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -29511,7 +29598,7 @@ msgstr ""
 #: dat/events/flf/flf_catastrophe.lua:60 dat/events/flf/flf_catastrophe.lua:62
 #: dat/events/flf/flf_catastrophe.lua:63
 msgid "Catastrophe Looms"
-msgstr ""
+msgstr "Catastrophe Imminente"
 
 #: dat/events/flf/flf_catastrophe.lua:57
 msgid ""
@@ -29519,6 +29606,9 @@ msgid ""
 "wrong. Everyone is frantic and you sense dread around your comrades. You are "
 "about to ask around when Benito approaches."
 msgstr ""
+"Alors que vous rentrez dans le bar sur Sindbad, vous remarquez immédiatement "
+"que quelque chose ne va pas. Tout le monde est frénétique et vous sentez la "
+"peur dans vos camarades. Vous alliez demander quoi mais Benito approche."
 
 #: dat/events/flf/flf_catastrophe.lua:58
 msgid ""
@@ -29531,6 +29621,14 @@ msgid ""
 "and told the Empire where our base is, and they even told them where our "
 "hidden jumps are! This is terrible!\""
 msgstr ""
+"\"{player}, c'est affreux,\" dit-elle avec la peur dans ses yeux. \"Ils nous "
+"ont trouvé. Ce maudit Empire nous a trouvé ! Je vais être franche, je ne "
+"sais pas si nous allons survivre à ça.\" Vous hésitez un moment. Non, cela "
+"ne peut être vrai ! Ce doit être une erreur ! Comment le FLF pourrait ils se "
+"terminer de cette manière ? Maintenant le choc laisse place au sens.\n"
+"\t\"Ce sont ces foutus traitres ! \" continue Benito. \"L'un d'eux a informé "
+"l'Empire de l'emplacement de notre base et même de nos points de saut "
+"secrets ! C'est terrible !\""
 
 #: dat/events/flf/flf_catastrophe.lua:60
 msgid ""
