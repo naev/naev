@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-28 00:18+0900\n"
-"PO-Revision-Date: 2023-01-06 22:51+0000\n"
+"PO-Revision-Date: 2023-01-08 20:50+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -4197,7 +4197,7 @@ msgstr ""
 
 #: dat/outfits/intrinsic/machiavellian_fortune.xml:2
 msgid "Machiavellian Fortune"
-msgstr ""
+msgstr "Fortuna Macchiavellica"
 
 #: dat/outfits/intrinsic/machiavellian_fortune.xml:7
 msgid ""
@@ -4205,34 +4205,42 @@ msgid ""
 "ahead of it. It is possible to build dams and walls to try to contain the "
 "flow, but there is no way to prevent the water from hitting."
 msgstr ""
+"La Fortuna è come un fiume impetuoso che spinge datanti a sé un "
+"impenetrabile muro d'acqua. È possibile costruire dighe e muri per cercare "
+"di contenere il flusso, ma non c'è modo di impedire all'acqua di colpire."
 
 #: dat/outfits/intrinsic/machiavellian_necessity.xml:2
 msgid "Machiavellian Necessity"
-msgstr ""
+msgstr "Necessità Macchivellica"
 
 #: dat/outfits/intrinsic/machiavellian_necessity.xml:7
 msgid ""
 "In order to achieve goals, decisiveness becomes a necessity. A quick strike "
 "can determine the outcome of an encounter."
 msgstr ""
+"Per raggiungere gli obiettivi, la determinazione diventa una necessità. Un "
+"attacco veloce può determinare il risultato di un incontro."
 
 #: dat/outfits/intrinsic/machiavellian_virtue.xml:2
 msgid "Machiavellian Virtue"
-msgstr ""
+msgstr "Virtù Macchiavellica"
 
 #: dat/outfits/intrinsic/machiavellian_virtue.xml:7
 msgid ""
 "Virtue is the bulwark against the fickle whims of fortune. One can master "
 "their own will by mastering their own character."
 msgstr ""
+"La Virtù è l'argine contro i capricci incostanti della fortuna. Si può "
+"padroneggiare la propria volontà tenendo sotto controllo il proprio "
+"carattere."
 
 #: dat/outfits/intrinsic/port_and_polish.xml:2
 msgid "Port & Polish"
-msgstr ""
+msgstr "Trasferimento & Ripulitura"
 
 #: dat/outfits/launchers/convulsion_launcher.xml:2
 msgid "Convulsion Launcher"
-msgstr ""
+msgstr "Lanciarazzi Scompiglio"
 
 #: dat/outfits/launchers/convulsion_launcher.xml:10
 msgid ""
@@ -4240,10 +4248,13 @@ msgid ""
 "destructive power. While it does little damage to physical objects it is "
 "quite effective at disrupting shields."
 msgstr ""
+"Il missile intercettore della classe Thurion ha come fine l'alta agilità "
+"piuttosto che il potere distruttivo. Sebbene procuri piccoli danni agli "
+"oggetti fisici è abbastanza efficace nel togliere potenza agli scudi."
 
 #: dat/outfits/launchers/electron_burst_cannon.xml:2
 msgid "Electron Burst Cannon"
-msgstr ""
+msgstr "Cannone a Raffica di Elettroni"
 
 #: dat/outfits/launchers/electron_burst_cannon.xml:10
 msgid ""
@@ -4253,10 +4264,16 @@ msgid ""
 "developed by the Za'lek to be used by their heavier droness to supplement "
 "the short range and high damage of their beams."
 msgstr ""
+"Questa poderosa arma energetica è fatta per bombardare un bersaglio da "
+"grande distanza tramite raffiche di ioni, che causano danni massacranti agli "
+"scudi del bersaglio e ai sistemi elettrici e che possono di fatto lasciare "
+"un'astronave senza difese. È stata costruita dagli Za'lek per essere usata "
+"dai loro droni più pesanti per integrare i loro disintegratori di corto "
+"raggio e alto danno."
 
 #: dat/outfits/launchers/emp_grenade_launcher.xml:2
 msgid "EMP Grenade Launcher"
-msgstr ""
+msgstr "Lanciagranate EMP"
 
 #: dat/outfits/launchers/emp_grenade_launcher.xml:9
 msgid ""
@@ -4266,10 +4283,16 @@ msgid ""
 "EM pulses rarely destroy the ship, leaving it floating disabled in space. "
 "These are favoured by traders for keeping pirates at bay."
 msgstr ""
+"Questo lanciatore può sparare granate EMP in qualsiasi direzione usando un "
+"sistema di guida interno impareggiabile. Le granate rilasciano un impulso "
+"elettromagnetico che rapidamente disabilita l'elettronica delle astronavi "
+"nemiche. Utile per catturare le astronavi intatte; l'impulso EM raramente "
+"distrugge l'astronave, lasciandola fluttuare nello spazio disabilitata. "
+"Quest'arma è la favorita dai mercanti per tenere a bada i pirati."
 
 #: dat/outfits/launchers/enygma_systems_huntsman_launcher.xml:2
 msgid "Enygma Systems Huntsman Launcher"
-msgstr ""
+msgstr "Lanciarazzi Cacciatore di Sistemi Enigma"
 
 #: dat/outfits/launchers/enygma_systems_huntsman_launcher.xml:10
 msgid ""
@@ -4278,10 +4301,15 @@ msgid ""
 "insufficient, they redisgned Unicorp's Caesar IV torpedo as a heavy EMP "
 "weapon, capable of rapidly frying the systems of even the largest warships."
 msgstr ""
+"I Sistemi Enigma hanno scoperto che esisteva una nicchia non sfruttata per "
+"disabilitare gli armamenti per le astronavi da guerra più grandi. Ritenendo "
+"inadeguati i missili Medusa e gli armamenti a ioni, hanno riprogettato i "
+"siluri Cesare IV della Unicorp come un armamento EMP pesante capace di "
+"friggere rapidamente i sistemi anche delle astronavi da guerra più grandi."
 
 #: dat/outfits/launchers/enygma_systems_spearhead_launcher.xml:2
 msgid "Enygma Systems Spearhead Launcher"
-msgstr ""
+msgstr "Lanciarazzi a Punta di Lancia di Sistemi Enigma"
 
 #: dat/outfits/launchers/enygma_systems_spearhead_launcher.xml:9
 msgid ""
@@ -4292,6 +4320,13 @@ msgid ""
 "The Spearhead's limited agility make it primarily suited to fighting "
 "corvette class ships or heavier."
 msgstr ""
+"Il missile rompiscudo della classe a Punta di Lancia è uno dei più "
+"specializzati pezzi hardware di Sistemi Enigma. La sua unica funzione è "
+"quella di provocare danni massivi alle schermature. Utilizza una testata a "
+"emissione energetica speciale che è pienamente efficace nel togliere potenza "
+"agli scudi, ma ha pochi effetti sugli oggetti fisici. La limitata agilità "
+"dei missili a Punta di Lancia li rende principalmente adatti ad essere "
+"impiegati nelle battaglie contro astronavi di classe corvetta o più pesanti."
 
 #: dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml:2
 msgid "Enygma Systems Turreted Fury Launcher"
