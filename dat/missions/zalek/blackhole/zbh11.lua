@@ -257,7 +257,7 @@ function board_drone ()
    vn.transition( zbh.zach.transition )
    vn.na(_([[You hook up to the damage drone and are able to access the control panel. Since Zach seems to be distracted, it seems like you have to access it yourself.]]))
 
-   sokoban.vn{ levels={8,9}, header="Drone Control Panel"}
+   sokoban.vn{ levels={8,9}, header=_("Drone Control Panel") }
    vn.func( function ()
       if sokoban.completed() then
          mem.state = 2
