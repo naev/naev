@@ -61,16 +61,16 @@ To create a standard two-way jump lane between two systems:
 Asteroid fields are zones of floating objects within systems. They differ from spobs in that they are defined as circular areas rather than single points with graphics. Asteroids also interact with ship weapons fire and often generate commodity pickups when destroyed.
 
 Asteroid data files are found in `/asteroids/types/`. These files are in .XML format and contain the following fields:
-	* `<scanned>`: Text string shown to the player upon entering range of their asteroid scanner outfit.
-	* `<gfx>`: Possible graphics for this asteroid. Multiple graphics can be referenced, one per `<gfx>` tag, to increase the variety of visuals.
-	* `<armor_min>` and `<armor_max>`: Defines a range of armor values for asteroids to spawn with. Higher values mean more damage must be dealt to destroy an asteroid.
-	* `<absorb>`: Defines the asteroid's damage reduction before applying weapons' armor penetration stats.
-	* `<commodity>`: Lists which commodity pickups and quantities thereof can spawn upon destruction of the asteroid.
-		* `<name>`: Name of commodity.
-		* `<quantity>`: Maximum quantity of commodity pickups
+* `<scanned>`: Text string shown to the player upon entering range of their asteroid scanner outfit.
+* `<gfx>`: Possible graphics for this asteroid. Multiple graphics can be referenced, one per `<gfx>` tag, to increase the variety of visuals.
+* `<armor_min>` and `<armor_max>`: Defines a range of armor values for asteroids to spawn with. Higher values mean more damage must be dealt to destroy an asteroid.
+* `<absorb>`: Defines the asteroid's damage reduction before applying weapons' armor penetration stats.
+* `<commodity>`: Lists which commodity pickups and quantities thereof can spawn upon destruction of the asteroid.
+	* `<name>`: Name of commodity.
+	* `<quantity>`: Maximum quantity of commodity pickups
 
-The following process will let you create an asteroid field in your `<ssys>` .XML file:
+This process will let you create an asteroid field in your `<ssys>` .XML file:
 1) Place graphics for your asteroids, in .WEBP format, to `/gfx/spob/space/asteroid/`;
 2) Write asteroid data files, in .XML format, to `/asteroids/types/`;
 3) Write an asteroid group list, in .XML format, to `/asteroids/groups/`.
-4) In your `<ssys>` .XML file, use the `<asteroid>` field and subfields as shown above. `<pos>` and `<radius>` define the position and size of your field. `<group>` and `<density>` define which asteroid group and how many asteroids appear in your field.
+4) In your `<ssys>` .XML file, use the `<asteroid>` field and subfields above to tell the game what asteroids the field will be made of. `<pos>` and `<radius>` define the position and size of your field. `<group>` and `<density>` define which asteroid group and how many asteroids appear in your field.

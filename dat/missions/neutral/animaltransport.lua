@@ -46,7 +46,7 @@ function create ()
       end )
 
    if #planets == 0 then
-      abort()
+      misn.finish(false)
    end
 
    local index = rnd.rnd(1, #planets)

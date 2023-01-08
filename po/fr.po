@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-28 00:18+0900\n"
-"PO-Revision-Date: 2022-11-05 20:02+0000\n"
-"Last-Translator: Jérémie Guegain <mirejai@orange.fr>\n"
+"PO-Revision-Date: 2023-01-07 18:47+0000\n"
+"Last-Translator: Jérémie Guegain <Mirejai@users.noreply.hosted.weblate.org>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14.2\n"
+"X-Generator: Weblate 4.15.1-dev\n"
 
 #: physfs.c:1
 msgid "no error"
@@ -117,7 +117,7 @@ msgstr "nom de fichier interdit ou dangereux"
 
 #: physfs.c:25
 msgid "tried to modify a file the OS needs"
-msgstr ""
+msgstr "a essayé de modifier un fichier dont le système d'exploitation a besoin"
 
 #: physfs.c:26
 msgid "directory isn't empty"
@@ -125,7 +125,7 @@ msgstr "le dossier n'est pas vide"
 
 #: physfs.c:27
 msgid "OS reported an error"
-msgstr ""
+msgstr "le système d'exploitation a signalé une erreur"
 
 #: physfs.c:28
 msgid "duplicate resource"
@@ -1302,6 +1302,13 @@ msgid ""
 "a surge in demand throughout the galaxy, especially in cryptographic and "
 "security applications."
 msgstr ""
+"Connu originalement comme le minerai fantôme à cause du fait qu'il était "
+"difficilement détectable même avec l’œil le plus fin jusqu'à l'apparition de "
+"la photographie quantique, cela étant due à sa faible teneur en matière "
+"standard. Alors qu'il était prisé dans les création artistique, ses "
+"propriétés quantiques et quasi-matière ont menées à une inondation de "
+"demandes à travers la galaxie, en particulier dans les application "
+"cryptographique et sécuritaire."
 
 #: dat/commodities/water.xml:3
 msgid "Water"
@@ -1343,7 +1350,7 @@ msgstr "briseur d'armure"
 
 #: dat/damagetype/emp.xml:2
 msgid "emp"
-msgstr ""
+msgstr "IEM"
 
 #: dat/damagetype/explosion_splash.xml:2
 msgid "explosion_splash"
@@ -1354,10 +1361,8 @@ msgid "impact"
 msgstr "impact"
 
 #: dat/damagetype/ion.xml:2
-#, fuzzy
-#| msgid "Diamond"
 msgid "ion"
-msgstr "Diamant"
+msgstr "ion"
 
 #: dat/damagetype/nebula.xml:2
 msgid "nebula"
@@ -1393,10 +1398,8 @@ msgid "Makes the game significantly harder for the player."
 msgstr "Rend le jeu largement plus dur pour le joueur."
 
 #: dat/difficulty/slow_mode.xml:2
-#, fuzzy
-#| msgid "   * Ship Models"
 msgid "Slow Mode"
-msgstr "   * Modèles de vaisseau"
+msgstr "Mode Lent"
 
 #: dat/difficulty/slow_mode.xml:3
 msgid ""
@@ -1426,7 +1429,7 @@ msgstr ""
 
 #: dat/effects/ambush_hunter.xml:3
 msgid "The ship has caught other ships by surprise!"
-msgstr ""
+msgstr "Le vaisseau à pris les autres par surprise !"
 
 #: dat/effects/antimatter_taint.xml:2
 msgid "Antimatter Taint"
@@ -1452,7 +1455,7 @@ msgstr "Soif de sang"
 
 #: dat/effects/bloodlust.xml:3
 msgid "The ship has had a taste of blood and wants more!"
-msgstr ""
+msgstr "Le vaisseau a eu le goût du sang et en veut plus !"
 
 #: dat/effects/crippling_plasma.xml:2
 #: dat/outfits/bioship/skills/crippling_plasma.xml:2
@@ -1501,19 +1504,19 @@ msgstr "Rage sauvage I"
 
 #: dat/effects/hypergate_enter.xml:2
 msgid "Hypergate Enter"
-msgstr ""
+msgstr "Entrée d'Hyperportail"
 
 #: dat/effects/hypergate_enter.xml:3
 msgid "Entering a hypergate!"
-msgstr ""
+msgstr "Passage en hyperespace !"
 
 #: dat/effects/hypergate_exit.xml:2
 msgid "Hypergate Exit"
-msgstr ""
+msgstr "Sortie d'Hyperportail"
 
 #: dat/effects/hypergate_exit.xml:3
 msgid "Exitting a hypergate!"
-msgstr ""
+msgstr "Sortie d'hyperespace !"
 
 #: dat/effects/paralyzing_plasma.xml:2
 #: dat/outfits/bioship/skills/paralyzing_plasma.xml:2
@@ -1531,7 +1534,7 @@ msgstr "Brûlure plasma"
 
 #: dat/effects/plasma_burn.xml:3 dat/effects/plasma_burn_ii.xml:3
 msgid "Plasma is burning the ship!"
-msgstr ""
+msgstr "Le plasma brûle le navire !"
 
 #: dat/effects/plasma_burn_ii.xml:2
 msgid "Plasma Burn II"
@@ -1555,13 +1558,11 @@ msgstr ""
 
 #: dat/effects/shieldboost.xml:2
 msgid "Shield Boost"
-msgstr ""
+msgstr "Boost des Boucliers"
 
 #: dat/effects/shieldboost.xml:3
-#, fuzzy
-#| msgid "Seems you're being shot at."
 msgid "Shields are being boosted."
-msgstr "J'ai l'impression que vous être en train de vous faire attaquer."
+msgstr "Les boucliers sont en train d'être boostées."
 
 #: dat/effects/wormhole_enter.xml:2
 msgid "Wormhole Enter"
@@ -1672,17 +1673,19 @@ msgstr "Vagabond"
 
 #: dat/factions/dreamer_clan.xml:2
 msgid "Dreamer Clan"
-msgstr ""
+msgstr "Le Clan des Rêveurs"
 
 #: dat/factions/dreamer_clan.xml:5
 msgid "Dreamer Pirate Clan"
-msgstr ""
+msgstr "Le Clan Pirate Des Rêveurs"
 
 #: dat/factions/dreamer_clan.xml:12
 msgid ""
 "The Dreamer Pirate Clan consists largely of disgruntled pirates from the "
 "Frontier, fed up with both the FLF and Dvaered terrorism, and Empire tyranny."
 msgstr ""
+"Le clan pirate des Rêveurs se compose largement de pirates de la Frontière "
+"lassés autant du terrorisme FLF et Dvaered que de la tyrannie de l'Empire."
 
 #: dat/factions/dummy.xml:2
 msgid "Dummy"
@@ -1970,7 +1973,7 @@ msgstr "Protéron"
 
 #: dat/factions/proteron.xml:5
 msgid "Fallen House Proteron"
-msgstr ""
+msgstr "Maison Perdue De Protéron"
 
 #: dat/factions/proteron.xml:11
 msgid ""
@@ -1978,6 +1981,9 @@ msgid ""
 "attack the Emperor himself. This caused the Incident and left the universe "
 "irreversibly ravaged."
 msgstr ""
+"La Maison Perdue De Protéron était une importante maison impérial qui a "
+"décidé de bouger et d'attaquer l'Empereur lui même. C'est ce qui a causé "
+"l'Incident et laissé l'univers irrémédiablement ravagé."
 
 #: dat/factions/raven_clan.xml:2
 msgid "Raven Clan"
@@ -2169,7 +2175,7 @@ msgstr ""
 #: dat/outfits/accessory/ugly_statue.xml:5
 #: dat/outfits/accessory/vacuum_cleaner.xml:5 dat/slots/accessory.xml:3
 msgid "Accessory"
-msgstr ""
+msgstr "Accessoire"
 
 #: dat/outfits/accessory/air_freshener.xml:11
 msgid ""
@@ -2181,18 +2187,21 @@ msgstr ""
 
 #: dat/outfits/accessory/black_cat_doll.xml:2
 msgid "Black Cat Doll"
-msgstr ""
+msgstr "Poupée Chat Noir"
 
 #: dat/outfits/accessory/black_cat_doll.xml:11
 msgid ""
 "A crude doll of a black cat made from authentic \"Felis catus\" fur you made "
 "that was all over your ship. It's quite cute."
 msgstr ""
+"Une poupée grossière en forme de chat noir que vous avez fait avec de l’"
+"authentique fourrure de \"Felis catus\" qui étaient partout dans votre "
+"vaisseau. C'est assez mignon."
 
 #: dat/outfits/accessory/black_cat_doll.xml:13
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:11
 msgid "#pOnly active when in stealth.#0"
-msgstr ""
+msgstr "#pUniquement activé en mode furtif.#0"
 
 #: dat/outfits/accessory/broken_nebular_shielding_prototype.xml:2
 msgid "Broken Nebular Shielding Prototype"
@@ -2223,7 +2232,7 @@ msgstr ""
 
 #: dat/outfits/accessory/dv_handbook.xml:2
 msgid "Handbook for Dvaered Good Manners"
-msgstr ""
+msgstr "Livre De Poche Sur Les Bonnes Manières Dvaered"
 
 #: dat/outfits/accessory/dv_handbook.xml:11
 msgid ""
@@ -2236,6 +2245,14 @@ msgid ""
 "highest ranks\" -- Colonel Urnus, Executive Office Manager at the High "
 "Command"
 msgstr ""
+"Quand un gentilhomme utilise-t-il la tête d'un autre gentilhomme comme "
+"trophée dans sa salle de bain ? Et quand vaut-il mieux l'utiliser comme "
+"tasse ? Quand est ce autorisé de brûler la maison de l'une de ses victimes ? "
+"Et quand est ce une grossière erreur ? Lord Chainsaw, l'un des plus grand "
+"seigneur de guerre de notre temps, répond à toutes ces questions dans ce "
+"livre indispensable. \"Ce livre m'a permit de rapidement faire mon chemin et "
+"de grimper dans les plus hauts rangs\" -- Colonel Urnus, Officier "
+"Gestionnaire Exécutif du Haut Commandement"
 
 #: dat/outfits/accessory/fuzzy_dice.xml:2
 msgid "Fuzzy Dice"
@@ -2280,7 +2297,7 @@ msgstr ""
 
 #: dat/outfits/accessory/love_letter.xml:2
 msgid "Love Letter"
-msgstr ""
+msgstr "Lettre d'Amour"
 
 #: dat/outfits/accessory/love_letter.xml:11
 msgid ""

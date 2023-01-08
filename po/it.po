@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-12-28 00:18+0900\n"
-"PO-Revision-Date: 2023-01-06 01:53+0000\n"
+"PO-Revision-Date: 2023-01-06 22:51+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -821,7 +821,7 @@ msgstr "ADMONISHER"
 
 #: artwork/gfx/loading/admonisher_pirate.webp.txt:1
 msgid "PIRATE ADMONISHER"
-msgstr "SORVEGLIANTE PIRATESCO"
+msgstr "SORVEGLIANTE PIRATA"
 
 #: artwork/gfx/loading/ancestor.webp.txt:1
 msgid "ANCESTOR"
@@ -829,7 +829,7 @@ msgstr "PROGENITORE"
 
 #: artwork/gfx/loading/ancestor_pirate.webp.txt:1
 msgid "PIRATE ANCESTOR"
-msgstr "PROGENITORE PIRATESCO"
+msgstr "PROGENITORE PIRATA"
 
 #: artwork/gfx/loading/dalton.webp.txt:1
 msgid "DALTON"
@@ -905,7 +905,7 @@ msgstr "RINOCERONTE"
 
 #: artwork/gfx/loading/rhino_pirate.webp.txt:1
 msgid "PIRATE RHINO"
-msgstr "RINOCERONTE PIRATESCO"
+msgstr "RINOCERONTE PIRATA"
 
 #: artwork/gfx/loading/schroedinger.webp.txt:1
 msgid "SCHROEDINGER"
@@ -925,7 +925,7 @@ msgstr "SQUALO IMPERIALE"
 
 #: artwork/gfx/loading/shark_pirate.webp.txt:1
 msgid "PIRATE SHARK"
-msgstr "SQUALO PIRATESCO"
+msgstr "SQUALO PIRATA"
 
 #: artwork/gfx/loading/sting.webp.txt:1
 msgid "ZA'LEK STING"
@@ -937,7 +937,7 @@ msgstr "VENDETTA"
 
 #: artwork/gfx/loading/vendetta_pirate.webp.txt:1
 msgid "PIRATE VENDETTA"
-msgstr "VENDETTA PIRATESCA"
+msgstr "VENDETTA PIRATA"
 
 #: artwork/gfx/loading/vigilance.webp.txt:1
 msgid "VIGILANCE"
@@ -3510,7 +3510,7 @@ msgstr ""
 
 #: dat/outfits/core_system/large/milspec_orion_8601_core_system.xml:2
 msgid "Milspec Orion 8601 Core System"
-msgstr ""
+msgstr "Sistema Essenziale Milspec Orion 8601"
 
 #: dat/outfits/core_system/large/milspec_orion_8601_core_system.xml:9
 msgid ""
@@ -3520,10 +3520,16 @@ msgid ""
 "capital ships, providing superior performance in every field. Fly safe, fly "
 "Milspec."
 msgstr ""
+"Milspec costruisce hardware ad alte prestazioni per la tua astronave per "
+"assicurarsi che tu sia sempre preparato in maniera ottimale ad affrontare i "
+"pericoli che puoi incontrare nell'universo durante i tuoi viaggi. Il sistema "
+"essenziale Orion 8601 è una soluzione di fascia alta per le astronavi "
+"principali che fornisce prestazioni superiori in ogni campo. Vola in "
+"sicurezza, vola con Milspec."
 
 #: dat/outfits/core_system/large/milspec_orion_9901_core_system.xml:2
 msgid "Milspec Orion 9901 Core System"
-msgstr ""
+msgstr "Sistema Essenziale Milspec Orion 9901"
 
 #: dat/outfits/core_system/large/milspec_orion_9901_core_system.xml:10
 msgid ""
@@ -3533,10 +3539,16 @@ msgid ""
 "capital ships, providing superior performance in every field. Fly safe, fly "
 "Milspec."
 msgstr ""
+"Milspec costruisce hardware ad alte prestazioni per la tua astronave per "
+"assicurarsi che tu sia sempre preparato in maniera ottimale ad affrontare i "
+"pericoli che puoi incontrare nell'universo durante i tuoi viaggi. Il sistema "
+"essenziale Orion 9901 è una soluzione di fascia alta per le astronavi "
+"principali che fornisce prestazioni superiori in ogni campo. Vola in "
+"sicurezza, vola con Milspec."
 
 #: dat/outfits/core_system/large/milspec_thalos_8502_core_system.xml:2
 msgid "Milspec Thalos 8502 Core System"
-msgstr ""
+msgstr "Sistema Essenziale Milspec Thalos 8502"
 
 #: dat/outfits/core_system/large/milspec_thalos_8502_core_system.xml:9
 msgid ""
@@ -3545,10 +3557,15 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
+"Milspec sa che un'astronave è solamente la somma delle sue parti, questo "
+"significa che più parti ci sono e migliore è l'astronave. Il Thalos 8502 "
+"fornisce controlli ragguardevoli per sottosistemi pur mantenendo gli alti "
+"standard energetici e di schermatura di cui Milspec va orgogliosa. Vola in "
+"sicurezza, vola con Milspec."
 
 #: dat/outfits/core_system/large/milspec_thalos_9802_core_system.xml:2
 msgid "Milspec Thalos 9802 Core System"
-msgstr ""
+msgstr "Sistema Essenziale Milspec Thalos 9802"
 
 #: dat/outfits/core_system/large/milspec_thalos_9802_core_system.xml:10
 msgid ""
@@ -3557,10 +3574,15 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
+"Milspec sa che un'astronave è solamente la somma delle sue parti, questo "
+"significa che più parti ci sono e migliore è l'astronave. Il Thalos 9802 "
+"fornisce controlli ragguardevoli per sottosistemi pur mantenendo gli alti "
+"standard energetici e di schermatura di cui Milspec va orgogliosa. Vola in "
+"sicurezza, vola con Milspec."
 
 #: dat/outfits/core_system/large/previous_generation_large_systems.xml:2
 msgid "Previous Generation Large Systems"
-msgstr ""
+msgstr "Grandi Sistemi della Generazione Precedente"
 
 #: dat/outfits/core_system/large/previous_generation_large_systems.xml:9
 #: dat/outfits/core_system/medium/previous_generation_medium_systems.xml:9
@@ -3569,10 +3591,13 @@ msgid ""
 "A jury-rigged mess of processors and generators that most captains wouldn't "
 "be seen dead having installed on their ship."
 msgstr ""
+"Un accrocchio disordinato di processori e generatori che la maggior parte "
+"dei capitani non vorrebbe vedere neanche morto installati sulla propria "
+"astronave."
 
 #: dat/outfits/core_system/large/unicorp_pt2200_core_system.xml:2
 msgid "Unicorp PT-2200 Core System"
-msgstr ""
+msgstr "Sistema Essenziale Unicorp PT-2200"
 
 #: dat/outfits/core_system/large/unicorp_pt2200_core_system.xml:10
 msgid ""
@@ -3580,10 +3605,13 @@ msgid ""
 "PT-2200 nevertheless offers acceptable performance for capital ships at a "
 "fraction of its competitors' prices."
 msgstr ""
+"Criticato da alcuni come nulla di più di un cluster di sistemi PT-400, il PT-"
+"2200 offre in ogni caso prestazioni accettabili per le astronavi principali "
+"ad una frazione del prezzo della concorrenza."
 
 #: dat/outfits/core_system/large/unicorp_pt500_core_system.xml:2
 msgid "Unicorp PT-500 Core System"
-msgstr ""
+msgstr "Sistema Essenziale Unicorp PT-500"
 
 #: dat/outfits/core_system/large/unicorp_pt500_core_system.xml:9
 msgid ""
@@ -3591,10 +3619,13 @@ msgid ""
 "PT-500 nevertheless offers acceptable performance for light cruisers at a "
 "fraction of its competitors' prices."
 msgstr ""
+"Criticato da alcuni come nulla di più di un cluster di sistemi PT-310, il PT-"
+"500 offre in ogni caso prestazioni accettabili per incrociatori leggeri ad "
+"una frazione del prezzo della concorrenza."
 
 #: dat/outfits/core_system/medium/milspec_orion_4801_core_system.xml:2
 msgid "Milspec Orion 4801 Core System"
-msgstr ""
+msgstr "Sistema Essenziale Milspec Orion 4801"
 
 #: dat/outfits/core_system/medium/milspec_orion_4801_core_system.xml:9
 msgid ""
@@ -3603,10 +3634,15 @@ msgid ""
 "you on your travels. The Orion 4801 core system is affordable yet capable, "
 "recommended for the discerning captain. Fly safe, fly Milspec."
 msgstr ""
+"Milspec costruisce hardware ad alte prestazioni per la tua astronave per "
+"assicurarsi che tu sia sempre preparato in maniera ottimale ad affrontare i "
+"pericoli che puoi incontrare nell'universo durante i tuoi viaggi. Il sistema "
+"essenziale Orion 4801 è una soluzione a buon prezzo ma adeguata, consigliato "
+"per i capitani esigenti. Vola in sicurezza, vola con Milspec."
 
 #: dat/outfits/core_system/medium/milspec_orion_5501_core_system.xml:2
 msgid "Milspec Orion 5501 Core System"
-msgstr ""
+msgstr "Sistema Essenziale Milspec Orion 5501"
 
 #: dat/outfits/core_system/medium/milspec_orion_5501_core_system.xml:10
 msgid ""
@@ -3616,10 +3652,16 @@ msgid ""
 "medium ships, providing superior performance in every field. Fly safe, fly "
 "Milspec."
 msgstr ""
+"Milspec costruisce hardware ad alte prestazioni per la tua astronave per "
+"assicurarsi che tu sia sempre preparato in maniera ottimale ad affrontare i "
+"pericoli che puoi incontrare nell'universo durante i tuoi viaggi. Il sistema "
+"essenziale Orion 5501 è una soluzione di fascia alta per le astronavi "
+"principali che fornisce prestazioni superiori in ogni campo. Vola in "
+"sicurezza, vola con Milspec."
 
 #: dat/outfits/core_system/medium/milspec_thalos_4702_core_system.xml:2
 msgid "Milspec Thalos 4702 Core System"
-msgstr ""
+msgstr "Sistema Essenziale Milspec Thalos 4702"
 
 #: dat/outfits/core_system/medium/milspec_thalos_4702_core_system.xml:9
 msgid ""
@@ -3628,10 +3670,15 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
+"Milspec sa che un'astronave è solamente la somma delle sue parti, questo "
+"significa che più parti ci sono e migliore è l'astronave. Il Thalos 4702 "
+"fornisce controlli ragguardevoli per sottosistemi pur mantenendo gli alti "
+"standard energetici e di schermatura di cui Milspec va orgogliosa. Vola in "
+"sicurezza, vola con Milspec."
 
 #: dat/outfits/core_system/medium/milspec_thalos_5402_core_system.xml:2
 msgid "Milspec Thalos 5402 Core System"
-msgstr ""
+msgstr "Sistema Essenziale Milspec Thalos 5402"
 
 #: dat/outfits/core_system/medium/milspec_thalos_5402_core_system.xml:10
 msgid ""
@@ -3640,24 +3687,32 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
+"Milspec sa che un'astronave è solamente la somma delle sue parti, questo "
+"significa che più parti ci sono e migliore è l'astronave. Il Thalos 5402 "
+"fornisce controlli ragguardevoli per sottosistemi pur mantenendo gli alti "
+"standard energetici e di schermatura di cui Milspec va orgogliosa. Vola in "
+"sicurezza, vola con Milspec."
 
 #: dat/outfits/core_system/medium/previous_generation_medium_systems.xml:2
 msgid "Previous Generation Medium Systems"
-msgstr ""
+msgstr "Medi Sistemi della Generazione Precedente"
 
 #: dat/outfits/core_system/medium/unicorp_pt200_core_system.xml:2
 msgid "Unicorp PT-200 Core System"
-msgstr ""
+msgstr "Sistema Essenziale Unicorp PT-200"
 
 #: dat/outfits/core_system/medium/unicorp_pt200_core_system.xml:9
 msgid ""
 "Continuing Unicorp's PT series of core systems in the medium ship category, "
 "the PT-200 gives acceptable performance for an acceptable price."
 msgstr ""
+"Proseguendo le serie di sistemi essenziali PT della Unicorp nella categoria "
+"di astronavi di medie dimensioni, il PT-200 offre prestazioni accettabili "
+"per un prezzo accettabile."
 
 #: dat/outfits/core_system/medium/unicorp_pt310_core_system.xml:2
 msgid "Unicorp PT-310 Core System"
-msgstr ""
+msgstr "Sistema Essenziale Unicorp PT-310"
 
 #: dat/outfits/core_system/medium/unicorp_pt310_core_system.xml:10
 msgid ""
@@ -3665,10 +3720,13 @@ msgid ""
 "all respects. Its considerably higher mass restricts its use to larger "
 "medium vessels such as destroyers."
 msgstr ""
+"Una variante pesante del PT-200, il PT-310 surclassa il suo predecessore in "
+"tutti gli aspetti. La sua considerevole elevata massa ne limita l'uso ad "
+"astronavi medio larghe come i cacciatorpediniere."
 
 #: dat/outfits/core_system/small/milspec_orion_2301_core_system.xml:2
 msgid "Milspec Orion 2301 Core System"
-msgstr ""
+msgstr "Sistema Essenziale Milspec Orion 2301"
 
 #: dat/outfits/core_system/small/milspec_orion_2301_core_system.xml:9
 msgid ""
@@ -3677,11 +3735,16 @@ msgid ""
 "you on your travels. The Orion 2301 core system is affordable yet capable, "
 "recommended for the beginning captain. Fly safe, fly Milspec."
 msgstr ""
+"Milspec costruisce hardware ad alte prestazioni per la tua astronave per "
+"assicurarsi che tu sia sempre preparato in maniera ottimale ad affrontare i "
+"pericoli che puoi incontrare nell'universo durante i tuoi viaggi. Il sistema "
+"essenziale Orion 2301 è una soluzione a buon prezzo ma adeguata, consigliato "
+"per i capitani esordienti. Vola in sicurezza, vola con Milspec."
 
 #: dat/outfits/core_system/small/milspec_orion_3701_core_system.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:224
 msgid "Milspec Orion 3701 Core System"
-msgstr ""
+msgstr "Sistema Essenziale Milspec Orion 3701"
 
 #: dat/outfits/core_system/small/milspec_orion_3701_core_system.xml:10
 msgid ""
@@ -3691,10 +3754,16 @@ msgid ""
 "small ships, providing superior performance in every field. Fly safe, fly "
 "Milspec."
 msgstr ""
+"Milspec costruisce hardware ad alte prestazioni per la tua astronave per "
+"assicurarsi che tu sia sempre preparato in maniera ottimale ad affrontare i "
+"pericoli che puoi incontrare nell'universo durante i tuoi viaggi. Il sistema "
+"essenziale Orion 3701 è una soluzione di fascia alta per le astronavi "
+"principali che fornisce prestazioni superiori in ogni campo. Vola in "
+"sicurezza, vola con Milspec."
 
 #: dat/outfits/core_system/small/milspec_thalos_2202_core_system.xml:2
 msgid "Milspec Thalos 2202 Core System"
-msgstr ""
+msgstr "Sistema Essenziale Milspec Thalos 2202"
 
 #: dat/outfits/core_system/small/milspec_thalos_2202_core_system.xml:9
 msgid ""
@@ -3703,10 +3772,15 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
+"Milspec sa che un'astronave è solamente la somma delle sue parti, questo "
+"significa che più parti ci sono e migliore è l'astronave. Il Thalos 2202 "
+"fornisce controlli ragguardevoli per sottosistemi pur mantenendo gli alti "
+"standard energetici e di schermatura di cui Milspec va orgogliosa. Vola in "
+"sicurezza, vola con Milspec."
 
 #: dat/outfits/core_system/small/milspec_thalos_3602_core_system.xml:2
 msgid "Milspec Thalos 3602 Core System"
-msgstr ""
+msgstr "Sistema Essenziale Milspec Thalos 3602"
 
 #: dat/outfits/core_system/small/milspec_thalos_3602_core_system.xml:10
 msgid ""
@@ -3715,30 +3789,39 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
+"Milspec sa che un'astronave è solamente la somma delle sue parti, questo "
+"significa che più parti ci sono e migliore è l'astronave. Il Thalos 3602 "
+"fornisce controlli ragguardevoli per sottosistemi pur mantenendo gli alti "
+"standard energetici e di schermatura di cui Milspec va orgogliosa. Vola in "
+"sicurezza, vola con Milspec."
 
 #: dat/outfits/core_system/small/previous_generation_small_systems.xml:2
 msgid "Previous Generation Small Systems"
-msgstr ""
+msgstr "Piccoli Sistemi della Generazione Precedente"
 
 #: dat/outfits/core_system/small/unicorp_pt16_core_system.xml:2
 msgid "Unicorp PT-16 Core System"
-msgstr ""
+msgstr "Sistema Essenziale Unicorp PT-16"
 
 #: dat/outfits/core_system/small/unicorp_pt16_core_system.xml:9
 msgid ""
 "The PT-16 is a modest but to-spec core system offering reasonable, all-round "
 "performance for small vessels."
 msgstr ""
+"Il PT-16 è modesto ma all'altezza delle specifiche per un sistema essenziale "
+"che offra ragionevoli e versatili prestazioni per piccole astronavi."
 
 #: dat/outfits/core_system/small/unicorp_pt68_core_system.xml:2
 msgid "Unicorp PT-68 Core System"
-msgstr ""
+msgstr "Sistema Essenziale Unicorp PT-68"
 
 #: dat/outfits/core_system/small/unicorp_pt68_core_system.xml:10
 msgid ""
 "The PT-68 is an economical core system providing decent performance to small-"
 "to-medium vessels."
 msgstr ""
+"Il PT-68 è un sistema essenziale economico che fornisce prestazioni decenti "
+"per astronavi di piccole a medie dimensioni."
 
 #: dat/outfits/fighter_bays/drone_bay.xml:2
 msgid "Drone Bay"
@@ -3752,10 +3835,15 @@ msgid ""
 "maintenance. All the tools needed to take care of them are provided with the "
 "bay."
 msgstr ""
+"L'hangar per Droni Caccia utilizza tecnologie avanzate della Collettività "
+"per sostenere un gruppo di tre Droni Caccia. Non necessitando di piloti, i "
+"Droni Caccia sono un approccio più sicuro nelle situazioni pericolose. In "
+"ogni caso necessitano di una manutenzione accurata. Tutte le attrezzature "
+"necessarie per la loro assistenza sono fornite con l'hangar."
 
 #: dat/outfits/fighter_bays/empire_lancelot_bay.xml:2
 msgid "Empire Lancelot Bay"
-msgstr ""
+msgstr "Hangar per Lancillotto Imperiale"
 
 #: dat/outfits/fighter_bays/empire_lancelot_bay.xml:8
 #: dat/ships/empire/empire_pacifier.xml:19
@@ -3800,6 +3888,10 @@ msgid ""
 "interceptors that can be operated. It comes with all the amenities necessary "
 "for the maintenance and operation of the interceptors."
 msgstr ""
+"Questo hangar è un'espansione del popolare Alloggiamento di Espansione per "
+"Iena, raddoppiando la quantità di intercettori Iena che possono essere "
+"gestiti. Viene fornito con tutte le comodità necessarie per la manutenzione "
+"e il funzionamento degli intercettori."
 
 #: dat/outfits/fighter_bays/hyena_dock.xml:2
 msgid "Hyena Dock"
@@ -3831,7 +3923,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/pirate_hyena_bay.xml:2
 msgid "Pirate Hyena Bay"
-msgstr ""
+msgstr "Hangar per Iena Pirata"
 
 #: dat/outfits/fighter_bays/pirate_hyena_bay.xml:10
 msgid ""
@@ -3840,10 +3932,16 @@ msgid ""
 "for the maintenance and operation of the interceptors. The Pirate Hyenas can "
 "also assist in ship scavenging and looting."
 msgstr ""
+"Questo hangar è un'espansione del popolare Alloggiamento di Espansione per "
+"Iena Pirata, raddoppiando la quantità di intercettori Iena che possono "
+"essere gestiti. Viene fornito con tutte le comodità necessarie per la "
+"manutenzione e il funzionamento degli intercettori. Gli Iena Pirata possono "
+"anche dare assistenza nelle operazioni di ricerca e saccheggio delle "
+"astronavi."
 
 #: dat/outfits/fighter_bays/pirate_hyena_dock.xml:2
 msgid "Pirate Hyena Dock"
-msgstr ""
+msgstr "Alloggiamento di Espansione per Iena Pirata"
 
 #: dat/outfits/fighter_bays/pirate_hyena_dock.xml:10
 msgid ""
@@ -3852,6 +3950,11 @@ msgid ""
 "the interceptors. The Pirate Hyenas can assist in ship scavenging and "
 "looting."
 msgstr ""
+"Questo alloggiamento di espansione permette alla tua astronave di portare un "
+"paio di intercettori Iena Pirata. Viene fornito con tutte le comodità "
+"necessarie per la manutenzione e il funzionamento degli intercettori. Gli "
+"Iena Pirata possono anche dare assistenza nelle operazioni di ricerca e "
+"saccheggio delle astronavi."
 
 #: dat/outfits/fighter_bays/proteron_dalton_bay.xml:2
 msgid "Proteron Dalton Bay"
@@ -3895,10 +3998,13 @@ msgid ""
 "bombers. It comes with all the devices required for the maintenance and "
 "flight of the bombers."
 msgstr ""
+"L'hangar per caccia permette alle tue astronavi di trasportare un paio di "
+"bombardieri della classe Sciamano di Sirio. È fornito di tutti i dispositivi "
+"necessari per la manutenzione e il volo dei bombardieri."
 
 #: dat/outfits/fighter_bays/soromid_brigand_bay.xml:2
 msgid "Soromid Brigand Bay"
-msgstr ""
+msgstr "Hangar per Brigante Soromid"
 
 #: dat/outfits/fighter_bays/soromid_brigand_bay.xml:8
 #: dat/ships/soromid/soromid_nyx.xml:17
@@ -3911,10 +4017,13 @@ msgid ""
 "class fighters. It comes with all the devices required for the maintenance "
 "and flight of the fighters."
 msgstr ""
+"Questo hangar dei caccia permette alla tua astronave di portare una "
+"tripletta di caccia di classe Brigante Soromid. È fornito con tutti i "
+"dispositivi necessari per la manutenzione e il volo dei caccia."
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_bay.xml:2
 msgid "Thurion Perspicacity Bay"
-msgstr ""
+msgstr "Hangar per Perspicacia Thurion"
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_bay.xml:8
 #: dat/ships/thurion/thurion_apprehension.xml:20
@@ -3928,10 +4037,13 @@ msgid ""
 "comes with all the devices required for the maintenance and flight of the "
 "fighters."
 msgstr ""
+"Questo hangar permette alla tua astronave di portare quattro caccia di "
+"classe Perspicacia Thurion. È fornito con tutti i dispositivi necessari per "
+"la manutenzione e il volo dei caccia."
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_dock.xml:2
 msgid "Thurion Perspicacity Dock"
-msgstr ""
+msgstr "Alloggiamento di Espansione per Perspicacia Thurion"
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_dock.xml:8
 #: dat/ships/thurion/thurion_ingenuity.xml:19
@@ -3951,7 +4063,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_bay.xml:2
 msgid "Za'lek Bomber Drone Bay"
-msgstr ""
+msgstr "Hangar per Droni Bombardiere Za'lek"
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_bay.xml:8
 #: dat/outfits/fighter_bays/zalek_light_drone_bay.xml:8
@@ -3966,10 +4078,14 @@ msgid ""
 "danger. It comes with all the devices required for the maintenance and "
 "flight of the drones."
 msgstr ""
+"Questo hangar può far decollare due droni bombardiere in grado di bombardare "
+"un'astronave principale nemica fino alla capitolazione senza che l'astronave "
+"madre sia mai stata in pericolo. È fornito con tutti i dispositivi necessari "
+"per la manutenzione e il volo dei droni."
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_mini_bay.xml:2
 msgid "Za'lek Bomber Drone Mini Bay"
-msgstr ""
+msgstr "Mini Hangar per Droni Bombardiere Za'lek"
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_mini_bay.xml:8
 #: dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml:8
@@ -3984,10 +4100,14 @@ msgid ""
 "danger. It comes with all the devices required for the maintenance and "
 "flight of the drones."
 msgstr ""
+"Questo hangar può far decollare un drone bombardiere in grado di bombardare "
+"un'astronave principale nemica fino alla capitolazione senza che l'astronave "
+"madre sia mai stata in pericolo. È fornito con tutti i dispositivi necessari "
+"per la manutenzione e il volo dei droni."
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml:2
 msgid "Za'lek Heavy Drone Bay"
-msgstr ""
+msgstr "Hangar per Droni Za'lek Pesanti"
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml:8
 #: dat/ships/zalek/zalek_mammon.xml:23
@@ -4000,10 +4120,13 @@ msgid ""
 "the biggest ships in packs. It comes with all the devices required for the "
 "maintenance and flight of the drones."
 msgstr ""
+"Questo hangar può far decollare un intero squadrone di droni in grado di "
+"combattere in branco tutto tranne le astronavi più grandi. È fornito con "
+"tutti i dispositivi necessari per la manutenzione e il volo dei droni."
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml:2
 msgid "Za'lek Heavy Drone Mini Bay"
-msgstr ""
+msgstr "Mini Hangar per Droni Za'lek Pesanti"
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml:8
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:8
@@ -4017,10 +4140,13 @@ msgid ""
 "punch. It comes with all the devices required for the maintenance and flight "
 "of the drones."
 msgstr ""
+"Questo hangar può far decollare tre droni pesanti, fornendo all'astronave "
+"madre una buona dose di attacco. È fornito con tutti i dispositivi necessari "
+"per la manutenzione e il volo dei droni."
 
 #: dat/outfits/fighter_bays/zalek_light_drone_bay.xml:2
 msgid "Za'lek Light Drone Bay"
-msgstr ""
+msgstr "Hangar per Droni Za'lek Leggeri"
 
 #: dat/outfits/fighter_bays/zalek_light_drone_bay.xml:13
 msgid ""
@@ -4029,10 +4155,14 @@ msgid ""
 "comes with all the devices required for the maintenance and flight of the "
 "drones."
 msgstr ""
+"Questo hangar è stato creato per far decollare uno sciame di Droni Za'lek "
+"Leggeri. I droni sono sacrificabili, ma in numeri elevati sono eccellenti "
+"per eliminare astronavi nemiche leggere. È fornito con tutti i dispositivi "
+"necessari per la manutenzione e il volo dei droni."
 
 #: dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml:2
 msgid "Za'lek Light Drone Mini Bay"
-msgstr ""
+msgstr "Mini Hangar per Droni Za'lek Leggeri"
 
 #: dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml:13
 msgid ""
@@ -4041,11 +4171,15 @@ msgid ""
 "comes with all the devices required for the maintenance and flight of the "
 "drones."
 msgstr ""
+"Questo hangar è stato creato per far decollare un quartetto di Droni Za'lek "
+"Leggeri. I droni sono sacrificabili, ma in numeri elevati sono eccellenti "
+"per eliminare astronavi nemiche leggere. È fornito con tutti i dispositivi "
+"necessari per la manutenzione e il volo dei droni."
 
 #: dat/outfits/intrinsic/gauntlet_deluxe.xml:2
 #: dat/events/dvaered/totoran.lua:184
 msgid "Gauntlet Deluxe"
-msgstr ""
+msgstr "Ordalia di Lusso"
 
 #: dat/outfits/intrinsic/gauntlet_deluxe.xml:7
 msgid ""
@@ -4055,6 +4189,11 @@ msgid ""
 "of the service itself. Due to the nature of the service, only one can be "
 "applied to each ship."
 msgstr ""
+"Il servizio \"Ordalia di Lusso\" fornisce una completa miglioria e "
+"ristrutturazione dei circuiti del sistema di armamento anteriore. Queste "
+"ottimizzazioni sono in grado di incrementare leggermente la potenza senza "
+"nessun inconveniente significativo oltre all'alto coso del servizio. Data la "
+"natura del servizio è possibile applicarne soltanto uno per ogni astronave."
 
 #: dat/outfits/intrinsic/machiavellian_fortune.xml:2
 msgid "Machiavellian Fortune"
@@ -7321,7 +7460,7 @@ msgstr ""
 
 #: dat/ships/pirate/pirate_admonisher.xml:2
 msgid "Pirate Admonisher"
-msgstr "Sorvegliante Piratesca"
+msgstr "Sorvegliante Pirata"
 
 #: dat/ships/pirate/pirate_admonisher.xml:18
 #: dat/ships/pirate/pirate_ancestor.xml:15 dat/ships/pirate/pirate_hyena.xml:16
@@ -7344,7 +7483,7 @@ msgstr ""
 
 #: dat/ships/pirate/pirate_ancestor.xml:2
 msgid "Pirate Ancestor"
-msgstr "Progenitore Piratesco"
+msgstr "Progenitore Pirata"
 
 #: dat/ships/pirate/pirate_ancestor.xml:16
 msgid ""
@@ -7370,7 +7509,7 @@ msgstr ""
 
 #: dat/ships/pirate/pirate_kestrel.xml:2
 msgid "Pirate Kestrel"
-msgstr "Falco Piratesco"
+msgstr "Falco Pirata"
 
 #: dat/ships/pirate/pirate_kestrel.xml:17
 msgid ""
@@ -7403,7 +7542,7 @@ msgstr ""
 
 #: dat/ships/pirate/pirate_rhino.xml:2
 msgid "Pirate Rhino"
-msgstr "Rinoceronte Piratesco"
+msgstr "Rinoceronte Pirata"
 
 #: dat/ships/pirate/pirate_rhino.xml:18
 msgid ""
@@ -7414,7 +7553,7 @@ msgstr ""
 
 #: dat/ships/pirate/pirate_shark.xml:2
 msgid "Pirate Shark"
-msgstr "Squalo Piratesco"
+msgstr "Squalo Pirata"
 
 #: dat/ships/pirate/pirate_shark.xml:18
 msgid ""
@@ -7438,7 +7577,7 @@ msgstr ""
 
 #: dat/ships/pirate/pirate_vendetta.xml:2
 msgid "Pirate Vendetta"
-msgstr "Vendetta Piratesca"
+msgstr "Vendetta Pirata"
 
 #: dat/ships/pirate/pirate_vendetta.xml:17
 msgid ""
@@ -75756,8 +75895,8 @@ msgid ""
 "Buy a Shark (but not a Pirate Shark), then fly to the {sys} system and land "
 "on {pnt}"
 msgstr ""
-"Compra uno Squalo (ma non uno Squalo Piratesco), poi vola fino al sistema "
-"{sys} e atterra su {pnt}"
+"Compra uno Squalo (ma non uno Squalo Pirata), poi vola fino al sistema {sys} "
+"e atterra su {pnt}"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:92
 msgid "Go to {sys} and kill the pirate with your Shark"

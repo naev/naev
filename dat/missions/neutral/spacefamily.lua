@@ -100,8 +100,12 @@ function land()
          vn.na(_([[You land at your final stop in your quest to take the space family home, and not a moment too soon, for both you and Harrus. Harrus stomps off your ship without so much as a farewell, his wife and children in tow, and you are just as happy to see them gone.
     Surveying your now deserted quarters, you are appalled at how much damage the temporary inhabitants have managed to do along the way. You console yourself with the thought that at least you'll have something to do during the dull periods in hyperspace and turn to tend to your ships needs, when your eye falls on a small box that you don't remember seeing here before.]]))
          vn.sfxVictory()
+         vn.func( function ()
+            player.pay( reward )
+         end )
          vn.na(_([[Inside the box, you find a sum of credits and a note written in neat, feminine handwriting that says, "Sorry for the trouble."]]).."\n\n"..fmt.reward(reward) ) -- Final message
-         player.pay( reward )
+
+         vn.run()
 
          der.addMiscLog(fmt.f(_([[You rescued a bad-tempered man and his family who were stranded aboard their ship. After a lot of annoying complaints, the man and his family finally left your ship on {pnt} ({sys}), the man's wife leaving a generous payment for the trouble.]]), {pnt=spob.cur(), sys=system.cur()}))
 
