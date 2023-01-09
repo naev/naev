@@ -9,6 +9,10 @@
  <pos x="-286.764052" y="-295.569978"/>
  <spobs/>
  <jumps>
+  <jump target="Attaria">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Ux">
    <autopos/>
    <hide>1.000000</hide>

@@ -12,6 +12,10 @@
   <spob>Niflheim</spob>
  </spobs>
  <jumps>
+  <jump target="Attaria">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Overture">
    <autopos/>
    <hide>1.000000</hide>

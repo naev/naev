@@ -13,15 +13,15 @@
   <spob>Outbound Station</spob>
  </spobs>
  <jumps>
+  <jump target="Attaria">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Hargen">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Olympus">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Vega">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

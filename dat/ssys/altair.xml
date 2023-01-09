@@ -6,14 +6,18 @@
   <interference>26.100000</interference>
   <nebula volatility="13.200000" hue="285.000000">500.000000</nebula>
  </general>
- <pos x="506.055248" y="100.223723"/>
+ <pos x="516.055248" y="128.557056"/>
  <spobs/>
  <jumps>
-  <jump target="Attaria">
+  <jump target="Deneb">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Qellan">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Vega">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

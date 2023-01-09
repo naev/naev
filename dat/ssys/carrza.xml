@@ -9,10 +9,6 @@
  <pos x="472.914817" y="7.335556"/>
  <spobs/>
  <jumps>
-  <jump target="Attaria">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
   <jump target="Barnard's Star">
    <autopos/>
    <hidden/>
@@ -21,6 +17,10 @@
   <jump target="Midoros">
    <autopos/>
    <hidden/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Vega">
+   <autopos/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

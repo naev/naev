@@ -11,11 +11,11 @@
   <spob>Tenal-P</spob>
  </spobs>
  <jumps>
-  <jump target="Attaria">
+  <jump target="Santoros">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Santoros">
+  <jump target="Vega">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
