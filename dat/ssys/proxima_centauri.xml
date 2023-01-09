@@ -8,6 +8,8 @@
  </general>
  <pos x="726.959858" y="-204.004838"/>
  <spobs>
+  <spob>Proxima Centauri c</spob>
+  <spob>Tuomi's Orb</spob>
   <spob_virtual>Pirate All Unpresence (Range 1)</spob_virtual>
  </spobs>
  <jumps>

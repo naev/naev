@@ -8,6 +8,12 @@
  </general>
  <pos x="538.539598" y="-168.551712"/>
  <spobs>
+  <spob>Gliese I</spob>
+  <spob>Gliese II</spob>
+  <spob>Gliese II-a</spob>
+  <spob>Gliese III</spob>
+  <spob>Gliese IV</spob>
+  <spob>Gliese VI</spob>
   <spob_virtual>Empire Unpresence</spob_virtual>
   <spob_virtual>Independent All Unpresence</spob_virtual>
  </spobs>

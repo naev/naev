@@ -945,6 +945,13 @@ dat/spob/gilligans_tomb.xml
 dat/spob/ginger_ii.xml
 dat/spob/ginger_iii.xml
 dat/spob/ginni.xml
+dat/spob/gliese_i.xml
+dat/spob/gliese_ii.xml
+dat/spob/gliese_iia.xml
+dat/spob/gliese_iii.xml
+dat/spob/gliese_iv.xml
+dat/spob/gliese_v.xml
+dat/spob/gliese_vi.xml
 dat/spob/goddard_iii.xml
 dat/spob/goddard_iv.xml
 dat/spob/godtra.xml
@@ -1375,6 +1382,7 @@ dat/spob/procyon_shipyards.xml
 dat/spob/protera_sigma.xml
 dat/spob/provectus_nova_i.xml
 dat/spob/provectus_nova_ia.xml
+dat/spob/proxima_centauri_c.xml
 dat/spob/prp1.xml
 dat/spob/prp2.xml
 dat/spob/prp3.xml
@@ -1660,6 +1668,7 @@ dat/spob/tuhalar.xml
 dat/spob/tulla.xml
 dat/spob/tummalin.xml
 dat/spob/tumut.xml
+dat/spob/tuomis_orb.xml
 dat/spob/turawee.xml
 dat/spob/turnpike_station.xml
 dat/spob/tuur.xml
