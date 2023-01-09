@@ -2,11 +2,11 @@
 <spob name="Lirith">
  <pos x="-1500.746393" y="1973.038112"/>
  <GFX>
-  <space>moon-O00.webp</space>
+  <space>moon-J00.webp</space>
   <exterior>aquatic2.webp</exterior>
  </GFX>
  <general>
-  <class>A</class>
+  <class>J</class>
   <population>0</population>
   <hide>0.100000</hide>
   <services/>
