@@ -20,7 +20,7 @@
   </jump>
   <jump target="Kruger's Pocket">
    <autopos/>
-   <hide>0.300000</hide>
+   <hide>0.100000</hide>
   </jump>
   <jump target="Wunomi">
    <autopos/>
