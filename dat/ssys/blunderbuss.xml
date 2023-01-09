@@ -13,6 +13,7 @@
   <spob>Greis</spob>
   <spob>Onar</spob>
   <spob>Utsuwa</spob>
+  <spob_virtual>Miner Local</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Ogat">

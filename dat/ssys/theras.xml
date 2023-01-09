@@ -3,7 +3,7 @@
  <general>
   <radius>17500.000000</radius>
   <stars>400</stars>
-  <interference>5.882353</interference>
+  <interference>5.882350</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos x="582.526674" y="-625.194582"/>
@@ -14,6 +14,7 @@
   <spob>Theras IV</spob>
   <spob_virtual>Dvaered Small</spob_virtual>
   <spob_virtual>FLF Small</spob_virtual>
+  <spob_virtual>Miner Local</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Dakron">

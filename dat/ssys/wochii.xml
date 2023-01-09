@@ -7,7 +7,9 @@
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
  <pos x="159.792022" y="-524.244776"/>
- <spobs/>
+ <spobs>
+  <spob_virtual>Miner Small</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Blacin">
    <pos x="-5206.390140" y="-3865.048540"/>
