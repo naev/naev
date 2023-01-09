@@ -1709,7 +1709,7 @@ static void sysedit_editAsteroids (void)
 
 static void sysedit_genAsteroidsList( unsigned int wid )
 {
-   int hpos, apos;
+   int hpos, apos, nhave, navail;
    int x, y, w, h;
    AsteroidAnchor *ast = &sysedit_sys->asteroids[ sysedit_select[0].u.asteroid ];
    const AsteroidTypeGroup *astgroups;
@@ -1731,19 +1731,29 @@ static void sysedit_genAsteroidsList( unsigned int wid )
    h = 200;
 
    /* Find and add used asteroids. */
-   have = malloc( sizeof(char*) * array_size(ast->groups) );
-   for (int i=0; i<array_size(ast->groups); i++)
-      have[i] = strdup( ast->groups[i]->name );
-   window_addList( wid, x, y, w, h, "lstAsteroidsHave", have, array_size(ast->groups), 0, NULL, sysedit_btnRmAsteroid );
+   nhave = array_size(ast->groups);
+   if (nhave > 0) {
+      have = malloc( sizeof(char*) * nhave );
+      for (int i=0; i<nhave; i++)
+         have[i] = strdup( ast->groups[i]->name );
+   }
+   else
+      have = NULL;
+   window_addList( wid, x, y, w, h, "lstAsteroidsHave", have, nhave, 0, NULL, sysedit_btnRmAsteroid );
    x += w + 15;
 
    /* Load all asteroid types. */
    astgroups = astgroup_getAll();
-   available = malloc( sizeof(char*) * array_size(astgroups) );
-   for (int i=0; i<array_size(astgroups); i++)
-      available[i] = strdup( astgroups[i].name );
-   qsort( available, array_size(astgroups), sizeof(char*), strsort );
-   window_addList( wid, x, y, w, h, "lstAsteroidsAvailable", available, array_size(astgroups), 0, NULL, sysedit_btnAddAsteroid );
+   navail = array_size(astgroups);
+   if (navail > 0) {
+      available = malloc( sizeof(char*) * navail );
+      for (int i=0; i<navail; i++)
+         available[i] = strdup( astgroups[i].name );
+      qsort( available, navail, sizeof(char*), strsort );
+   }
+   else
+      available = NULL;
+   window_addList( wid, x, y, w, h, "lstAsteroidsAvailable", available, navail, 0, NULL, sysedit_btnAddAsteroid );
 
    /* Restore positions. */
    if (hpos != -1 && apos != -1) {
