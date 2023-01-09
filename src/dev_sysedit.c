@@ -137,6 +137,7 @@ static void sysedit_btnTagsEdit( unsigned int wid, const char *unused );
 static void sysedit_genTagsList( unsigned int wid );
 static void sysedit_btnAddTag( unsigned int wid, const char *unused );
 static void sysedit_btnRmTag( unsigned int wid, const char *unused );
+static void sysedit_btnTagsClose( unsigned int wid, const char *unused );
 static void sysedit_btnAddService( unsigned int wid, const char *unused );
 static void sysedit_btnRmService( unsigned int wid, const char *unused );
 static void sysedit_spobGFX( unsigned int wid_unused, const char *wgt );
@@ -2255,14 +2256,14 @@ static void sysedit_btnTagsEdit( unsigned int wid, const char *unused )
 
    /* Create the window. */
    wid = window_create( "wdwSpobTagsEditor", _("Spob Tags Editor"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
-   window_setCancel( wid, window_close );
+   window_setCancel( wid, sysedit_btnTagsClose );
 
    w = (SYSEDIT_EDIT_WIDTH - 40 - 15) / 2.;
    bw = (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4.;
 
    /* Close button. */
    window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT,
-         "btnClose", _("Close"), window_close );
+         "btnClose", _("Close"), sysedit_btnTagsClose );
    y = 20 + BUTTON_HEIGHT + 15;
 
    /* Remove button. */
@@ -2295,6 +2296,21 @@ static void sysedit_btnTagsEdit( unsigned int wid, const char *unused )
    }
 
    sysedit_genTagsList( wid );
+}
+
+/*
+ * Tags are closed so update tags.
+ */
+static void sysedit_btnTagsClose( unsigned int wid, const char *unused )
+{
+   char buf[STRMAX_SHORT];
+   Spob *p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
+   int l = scnprintf( buf, sizeof(buf), "#n%s#0", _("Tags:") );
+   for (int i=0; i<array_size(p->tags); i++)
+      l += scnprintf( &buf[l], sizeof(buf)-l, "%s %s", ((i>0) ? "," : ""), p->tags[i] );
+   window_modifyText( sysedit_widEdit, "txtTags", buf );
+
+   window_close( wid, unused );
 }
 
 /**
