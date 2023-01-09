@@ -7,28 +7,28 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="566.721956" y="635.438516"/>
+ <pos x="588.388623" y="528.771849"/>
  <spobs>
   <spob>Point Zero 0</spob>
   <spob>Point Zero Station</spob>
   <spob>Warei</spob>
  </spobs>
  <jumps>
+  <jump target="Father's Pride">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
   <jump target="Gewirn">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Jommel">
+  <jump target="Ivella">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Sarcophagus">
+  <jump target="Thirty Stars">
    <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Uridhrion">
-   <autopos/>
-   <hide>1.000000</hide>
+   <hide>0.000000</hide>
   </jump>
  </jumps>
 </ssys>

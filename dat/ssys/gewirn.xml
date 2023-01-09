@@ -6,7 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="592.274543" y="530.036961"/>
+ <pos x="572.274543" y="622.536961"/>
  <spobs>
   <spob>Charcoal</spob>
   <spob>Gewirn IV</spob>
@@ -14,11 +14,7 @@
   <spob_virtual>Trade Lane (Soromid)</spob_virtual>
  </spobs>
  <jumps>
-  <jump target="Father's Pride">
-   <autopos/>
-   <hide>0.000000</hide>
-  </jump>
-  <jump target="Ivella">
+  <jump target="Jommel">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
@@ -26,9 +22,13 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Thirty Stars">
+  <jump target="Sarcophagus">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Uridhrion">
+   <autopos/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

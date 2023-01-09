@@ -11,15 +11,15 @@
   <spob>Charred</spob>
  </spobs>
  <jumps>
-  <jump target="Gewirn">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
   <jump target="Octantis">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Percival">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Point Zero">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

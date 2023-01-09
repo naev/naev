@@ -17,16 +17,16 @@
   <spob_virtual>Trade Lane (Soromid)</spob_virtual>
  </spobs>
  <jumps>
-  <jump target="Gewirn">
-   <autopos/>
-   <hide>0.000000</hide>
-  </jump>
   <jump target="Hatter">
    <autopos/>
    <hide>0.000000</hide>
   </jump>
+  <jump target="Point Zero">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
   <jump target="Shikima">
-   <pos x="-20143.133265" y="-21795.269630"/>
+   <pos x="-9941.037874" y="-15170.532363"/>
    <hide>0.000000</hide>
   </jump>
  </jumps>
