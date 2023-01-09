@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Deneb III-a">
+ <pos x="-1368.143516" y="4511.175917"/>
+ <GFX>
+  <space>D05.webp</space>
+  <exterior>uninhabited-rocky-airless-02.webp</exterior>
+ </GFX>
+ <general>
+  <class>R</class>
+  <population>0</population>
+  <hide>0.200000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>Originally a moon of Deneb III, Deneb III-a seems to have been blown away from its orbit and is now a rogue planet, likely to leave the system in the next few hundred cycles. The surface of the planet seems extremely damaged, with odd crystaline formations appearing here and there, likely from some sort of reaction with the Nebula.</description>
+ </general>
+</spob>
