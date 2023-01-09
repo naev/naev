@@ -386,8 +386,8 @@ static void safelanes_initStacks_vertex (void)
       }
       array_push_back( &sys_to_first_vertex, array_size(vertex_stack) );
    }
-   array_shrink( &vertex_stack );
-   array_shrink( &sys_to_first_vertex );
+   //array_shrink( &vertex_stack );
+   //array_shrink( &sys_to_first_vertex );
 
    vertex_fmask = calloc( array_size(vertex_stack), sizeof(FactionMask) );
 }
