@@ -1133,6 +1133,7 @@ dat/spob/lazuli_iii.xml
 dat/spob/leo.xml
 dat/spob/leszec.xml
 dat/spob/leviathan.xml
+dat/spob/levo.xml
 dat/spob/limbo_i.xml
 dat/spob/limbo_ii.xml
 dat/spob/lirith.xml
@@ -1986,6 +1987,7 @@ dat/ssys/gilligans_memory.xml
 dat/ssys/gilligans_tomb.xml
 dat/ssys/ginger.xml
 dat/ssys/gliese.xml
+dat/ssys/gliese_minor.xml
 dat/ssys/goddard.xml
 dat/ssys/gold.xml
 dat/ssys/gorman.xml
@@ -2049,6 +2051,7 @@ dat/ssys/lalande.xml
 dat/ssys/lapis.xml
 dat/ssys/lazuli.xml
 dat/ssys/leporis.xml
+dat/ssys/levo.xml
 dat/ssys/limbo.xml
 dat/ssys/logania.xml
 dat/ssys/longbow.xml

@@ -23,5 +23,9 @@
    <pos x="-19820.237648" y="200.204296"/>
    <hide>0.000000</hide>
   </jump>
+  <jump target="Thorndyke">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
  </jumps>
 </ssys>
