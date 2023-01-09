@@ -144,7 +144,7 @@ They scratch their head.]]))
          talked_once = true
       end
 
-      sokoban.vn{ levels={1,2,3}, header="Drone Memory Banks"}
+      sokoban.vn{ levels={1,2,3}, header=_("Drone Memory Banks") }
       vn.func( function ()
          if sokoban.completed() then
             mem.state = 2
