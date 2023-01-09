@@ -7,7 +7,10 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos x="535.370455" y="491.018111"/>
- <spobs/>
+ <spobs>
+  <spob>Octantis I</spob>
+  <spob>Wyrmwood</spob>
+ </spobs>
  <jumps>
   <jump target="Struve">
    <autopos/>
@@ -18,4 +21,12 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeB-standard</group>
+   <group>typeC-poor</group>
+   <radius>5000.000000</radius>
+   <pos x="0.000000" y="0.000000"/>
+  </asteroid>
+ </asteroids>
 </ssys>
