@@ -82,7 +82,7 @@ misn_title = {
    _("Dangerous Dead or Alive Bounty in {sys}"),
 }
 
-mem.misn_desc = _([[The pirate known as {pirname} was recently seen in the {sys} system. {fct} authorities want this pirate dead or alive. {pirname} is believed to be flying a {shipclass}-class ship.
+mem.misn_desc = _([[The pirate known as {pirname} was recently seen in the {sys} system. {fct} authorities want this pirate dead or alive. {pirname} is believed to be flying a {shipclass}-class ship. The pirate may disappear if you take too long to reach the {sys} system.
 
 #nTarget:#0 {pirname} ({shipclass}-class ship)
 #nWanted:#0 Dead or Alive
@@ -126,10 +126,7 @@ function create ()
    mem.missys = systems[ rnd.rnd( 1, #systems ) ]
    if not misn.claim( mem.missys, false, true ) then misn.finish( false ) end
 
-   mem.jumps_permitted = system.cur():jumpDist(mem.missys) + rnd.rnd( 5 )
-   if rnd.rnd() < 0.05 then
-      mem.jumps_permitted = mem.jumps_permitted - 1
-   end
+   mem.jumps_permitted = system.cur():jumpDist(mem.missys) + rnd.rnd(3,5)
 
    local num_pirates = pir.systemPresence( mem.missys )
    if num_pirates <= 50 then
