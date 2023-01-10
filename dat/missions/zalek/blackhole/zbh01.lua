@@ -3,7 +3,7 @@
 <mission name="Za'lek Black Hole 1">
  <unique />
  <priority>4</priority>
- <chance>20</chance>
+ <chance>30</chance>
  <faction>Za'lek</faction>
  <cond>faction.playerStanding("Za'lek") &gt;= 0</cond>
  <location>Bar</location>
