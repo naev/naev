@@ -120,7 +120,7 @@ function create ()
       misn.finish( false )
    end
 
-   mem.jumps_permitted = system.cur():jumpDist(mem.missys) + 3
+   mem.jumps_permitted = math.huge --system.cur():jumpDist(mem.missys) + 3
    mem.hostiles = {}
    mem.hostiles_encountered = false
 
