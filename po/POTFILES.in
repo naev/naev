@@ -2445,6 +2445,9 @@ dat/tech/raven_clan_tech.xml
 dat/tech/sirius_elite_outfits.xml
 dat/tech/sirius_military_outfits.xml
 dat/tech/sirius_military_ships.xml
+dat/tech/sirius_ships_large.xml
+dat/tech/sirius_ships_medium.xml
+dat/tech/sirius_ships_small.xml
 dat/tech/soromid_elite_outfits.xml
 dat/tech/soromid_military_ships.xml
 dat/tech/soromid_ships_large.xml
