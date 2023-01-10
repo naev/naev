@@ -7,7 +7,9 @@
       * Make it explicit when all the escorts have jumped or landed
    * New Content
       * 1 new mission
-      * Many new systems and spobs
+      * Many, many new systems and spobs
+   * Fixes
+      * Fixed many corner case crashes in the editor
 
 * 0.10.2 (unreleased)
    * Fixed escorts sometimes not following their leader and landing
