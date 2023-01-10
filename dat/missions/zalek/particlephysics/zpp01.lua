@@ -3,7 +3,7 @@
 <mission name="Za'lek Particle Physics 1">
  <unique />
  <priority>4</priority>
- <chance>20</chance>
+ <chance>30</chance>
  <faction>Za'lek</faction>
  <location>Bar</location>
  <cond>spob.cur() ~= spob.get("Katar I") and faction.playerStanding("Za'lek") &gt;= 0</cond>
@@ -21,7 +21,6 @@
 local vn = require "vn"
 local fmt = require "format"
 local zpp = require "common.zalek_physics"
-
 
 local reward = zpp.rewards.zpp01
 local destpnt, destsys = spob.getS("Katar I")

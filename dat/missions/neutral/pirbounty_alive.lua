@@ -66,7 +66,7 @@ misn_title = {
    _("Dangerous Alive Bounty in {sys}"),
 }
 
-mem.misn_desc = _([[The pirate known as {pirname} was recently seen in the {sys} system. {fct} authorities want this pirate alive. {pirname} is believed to be flying a {shipclass}-class ship.
+mem.misn_desc = _([[The pirate known as {pirname} was recently seen in the {sys} system. {fct} authorities want this pirate alive. {pirname} is believed to be flying a {shipclass}-class ship. The pirate may disappear if you take too long to reach the {sys} system.
 
 #nTarget:#0 {pirname} ({shipclass}-class ship)
 #nWanted:#0 Alive
