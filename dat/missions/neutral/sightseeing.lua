@@ -149,7 +149,7 @@ function accept ()
       fmt.f(_("Return to {pnt} in the {sys} system and collect your pay"), {pnt=mem.startingplanet, sys=mem.startingsystem} ),
    } )
    local c = commodity.new( N_("Sightseers"), N_("A bunch of sightseeing civilians.") )
-   mem.civs = misn.cargoAdd( c, 0 )
+   misn.cargoAdd( c, 0 )
    mem.job_done = false
 
    hook.enter( "enter" )
@@ -188,8 +188,6 @@ end
 function land ()
    jumpout()
    if mem.job_done and spob.cur() == mem.startingplanet then
-      misn.cargoRm( mem.civs )
-
       local reward
       if mem.nolux then
          reward = mem.credits_nolux
