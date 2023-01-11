@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-01-08 22:35+0900\n"
+"POT-Creation-Date: 2023-01-10 23:36+0900\n"
 "PO-Revision-Date: 2023-01-08 20:50+0000\n"
 "Last-Translator: Jérémie Guegain <Mirejai@users.noreply.hosted.weblate.org>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev-0-10-x/"
@@ -43924,7 +43924,7 @@ msgstr ""
 #: dat/missions/neutral/patrol.lua:62
 #: dat/missions/neutral/pirbounty_dead.lua:100
 #: dat/missions/neutral/sightseeing.lua:147 dat/missions/pirate/patrol.lua:52
-#: dat/missions/pirate/pir_hit.lua:132
+#: dat/missions/pirate/pir_hit.lua:129
 #: dat/missions/pirate/pir_hit_intro.lua:129
 #: dat/missions/proteron/dissbounty_dead.lua:73
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:117
@@ -68606,7 +68606,7 @@ msgstr ""
 #. Nothing to do.
 #: dat/missions/neutral/patrol.lua:58
 #: dat/missions/neutral/pirbounty_dead.lua:95 dat/missions/pirate/patrol.lua:48
-#: dat/missions/pirate/pir_hit.lua:176
+#: dat/missions/pirate/pir_hit.lua:173
 #: dat/missions/pirate/pir_hit_intro.lua:166
 #: dat/missions/proteron/dissbounty_dead.lua:68
 #, fuzzy
@@ -68625,6 +68625,7 @@ msgid "Land in {fct} territory to collect your pay"
 msgstr "Atterrissez n'importe où pour toucher votre paie"
 
 #. Get the number of enemies in a particular system
+#. system.cur():jumpDist(mem.missys) + 3
 #. Faction prefix
 #. Set mission details
 #: dat/missions/neutral/patrol.lua:144 dat/missions/pirate/patrol.lua:63
@@ -68649,7 +68650,7 @@ msgstr ""
 #. Faction prefix
 #. Set mission details
 #: dat/missions/neutral/patrol.lua:152
-#: dat/missions/neutral/pirbounty_dead.lua:168
+#: dat/missions/neutral/pirbounty_dead.lua:165
 #: dat/missions/neutral/seek_n_destroy.lua:204
 msgid "#nReputation Gained:#0 {fct}"
 msgstr ""
@@ -68667,7 +68668,7 @@ msgstr ""
 
 #. Nothing to do.
 #: dat/missions/neutral/patrol.lua:215
-#: dat/missions/neutral/pirbounty_dead.lua:234
+#: dat/missions/neutral/pirbounty_dead.lua:231
 #: dat/missions/neutral/sightseeing.lua:200
 msgid "Mission Completed"
 msgstr ""
@@ -68848,7 +68849,8 @@ msgstr "Aller au système suivant"
 msgid ""
 "The pirate known as {pirname} was recently seen in the {sys} system. {fct} "
 "authorities want this pirate alive. {pirname} is believed to be flying a "
-"{shipclass}-class ship.\n"
+"{shipclass}-class ship. The pirate may disappear if you take too long to "
+"reach the {sys} system.\n"
 "\n"
 "#nTarget:#0 {pirname} ({shipclass}-class ship)\n"
 "#nWanted:#0 Alive\n"
@@ -68871,7 +68873,7 @@ msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:104
 #: dat/missions/neutral/seek_n_destroy.lua:224
-#: dat/missions/pirate/pir_hit.lua:133
+#: dat/missions/pirate/pir_hit.lua:130
 #: dat/missions/pirate/pir_hit_intro.lua:130
 msgid "Kill {plt}"
 msgstr ""
@@ -69091,7 +69093,8 @@ msgstr ""
 msgid ""
 "The pirate known as {pirname} was recently seen in the {sys} system. {fct} "
 "authorities want this pirate dead or alive. {pirname} is believed to be "
-"flying a {shipclass}-class ship.\n"
+"flying a {shipclass}-class ship. The pirate may disappear if you take too "
+"long to reach the {sys} system.\n"
 "\n"
 "#nTarget:#0 {pirname} ({shipclass}-class ship)\n"
 "#nWanted:#0 Dead or Alive\n"
@@ -69123,16 +69126,16 @@ msgstr ""
 msgid "Land in {fct} territory to collect your bounty"
 msgstr "Atterrissez n'importe où pour toucher votre paie"
 
-#: dat/missions/neutral/pirbounty_dead.lua:251
+#: dat/missions/neutral/pirbounty_dead.lua:248
 msgid "Captured Alive"
 msgstr ""
 
 #. Stop it from coming back
-#: dat/missions/neutral/pirbounty_dead.lua:260
+#: dat/missions/neutral/pirbounty_dead.lua:257
 msgid "Capture Failed"
 msgstr ""
 
-#: dat/missions/neutral/pirbounty_dead.lua:345
+#: dat/missions/neutral/pirbounty_dead.lua:342
 msgid "A Smaller Reward"
 msgstr ""
 
@@ -69158,7 +69161,7 @@ msgstr ""
 #. Shark Common Functions
 #.
 #. --
-#: dat/missions/neutral/pirbounty_dead.lua:446 dat/scripts/common/shark.lua:9
+#: dat/missions/neutral/pirbounty_dead.lua:443 dat/scripts/common/shark.lua:9
 msgid "Wanted Pirate"
 msgstr "Pirate Recherché"
 
@@ -74082,27 +74085,28 @@ msgstr "Aller au système suivant"
 #. No enemy presence nearby
 #. Should not happen, but putting this here just in case.
 #. Set mission details
-#: dat/missions/pirate/pir_hit.lua:115
+#: dat/missions/pirate/pir_hit.lua:112
 msgid ""
 "A meddlesome {fct} pilot known as {plt} was recently seen in the {sys} "
 "system. Local crime lords want this pilot dead. {plt} is known to be flying "
-"a {shipclass}-class ship.{msg}"
+"a {shipclass}-class ship. The pilot may disappear if you take too long to "
+"reach the {sys} system.{msg}"
 msgstr ""
 
 #. We're not on a pirate stronghold, so include a clear warning that the
 #. mission is in fact illegal.
-#: dat/missions/pirate/pir_hit.lua:119
+#: dat/missions/pirate/pir_hit.lua:116
 msgid ""
 "#rWARNING:#0 This mission is illegal and will get you in trouble with the "
 "authorities!"
 msgstr ""
 
-#: dat/missions/pirate/pir_hit.lua:131
+#: dat/missions/pirate/pir_hit.lua:128
 msgid "Assassination"
 msgstr ""
 
 #. Nothing to do.
-#: dat/missions/pirate/pir_hit.lua:236
+#: dat/missions/pirate/pir_hit.lua:233
 #: dat/missions/proteron/dissbounty_dead.lua:67
 msgid "Another pilot eliminated your target."
 msgstr ""
@@ -74111,7 +74115,7 @@ msgstr ""
 #. House Sirius does not have a Destroyer class ship
 #. Set up the ship, credits, and reputation based on the level.
 #. Spawn the ship at the location param.
-#: dat/missions/pirate/pir_hit.lua:243 dat/missions/pirate/pir_hit.lua:569
+#: dat/missions/pirate/pir_hit.lua:240 dat/missions/pirate/pir_hit.lua:566
 #: dat/missions/pirate/pir_hit_intro.lua:207
 #: dat/missions/pirate/pir_hit_intro.lua:218
 msgid "Target got away."
@@ -74119,7 +74123,7 @@ msgstr ""
 
 #. Use a dynamic faction so they don't get killed
 #. Succeed the mission
-#: dat/missions/pirate/pir_hit.lua:591
+#: dat/missions/pirate/pir_hit.lua:588
 msgid ""
 "MISSION SUCCESS! Pay of {credits} has been transferred into your account."
 msgstr ""
@@ -74993,7 +74997,8 @@ msgstr ""
 #: dat/missions/proteron/dissbounty_dead.lua:111
 msgid ""
 "A political dissident was recently seen in the {sys} system. {fct} "
-"authorities want this dissident dead or alive."
+"authorities want this dissident dead or alive. The dissident may disappear "
+"you take too long to reach the {sys} system."
 msgstr ""
 
 #: dat/missions/proteron/dissbounty_dead.lua:120
