@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-01-10 23:55+0900\n"
-"PO-Revision-Date: 2022-11-06 09:03+0000\n"
+"PO-Revision-Date: 2023-01-11 16:50+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: Portuguese (Portugal) <https://hosted.weblate.org/projects/"
 "naev/naev/pt_PT/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14.2\n"
+"X-Generator: Weblate 4.15.1-dev\n"
 
 #: physfs.c:1
 msgid "no error"
@@ -540,11 +540,10 @@ msgid "   * Sprite gimp script"
 msgstr "   * Script Gimp para sprites"
 
 #: dat/AUTHORS:92
-#, fuzzy
 msgid "   Although not used directly, it helped create our own sprite script."
 msgstr ""
-"   Embora não ter sido usado diretamente, ajudou a criar o nosso próprio "
-"script para sprites."
+"   Embora não seja usado diretamente, ajudou a criar nosso próprio script de "
+"sprite."
 
 #: dat/AUTHORS:94
 msgid "J.C. Wilk"
@@ -581,13 +580,10 @@ msgid "   * Much artwork"
 msgstr "   Muito trabalho artístico"
 
 #: dat/AUTHORS:103
-#, fuzzy
-#| msgid ""
-#| "   Talented artist, one of the first in creating custom naev content."
 msgid "   Talented artist, one of the first in creating custom Naev content."
 msgstr ""
-"   Artista talentoso, um dos primeiros a criar conteúdo personalizado para "
-"naev."
+"   Artista talentoso, um dos primeiros na criação de conteúdo personalizado "
+"da Naev."
 
 #: dat/AUTHORS:105
 msgid "Camilo Polymeris <cpolymeris@gmx.net>"
@@ -1359,10 +1355,8 @@ msgid "Makes the game significantly harder for the player."
 msgstr "Torna o jogo significativamente mais difícil para o jogador."
 
 #: dat/difficulty/slow_mode.xml:2
-#, fuzzy
-#| msgid "   * Ship Models"
 msgid "Slow Mode"
-msgstr "   * Modelos das naves"
+msgstr "Modo Lento"
 
 #: dat/difficulty/slow_mode.xml:3
 msgid ""
@@ -28750,7 +28744,7 @@ msgstr ""
 #. Credits
 #: dat/board.lua:116
 msgid "Credits"
-msgstr ""
+msgstr "Créditos"
 
 #: dat/board.lua:120
 msgid ""
@@ -63249,7 +63243,7 @@ msgstr ""
 #: dat/missions/minerva/pirate2.lua:90
 msgctxt "OSD Title"
 msgid "Za'lek Scout Drone"
-msgstr ""
+msgstr "Drone Batedor Za'lek"
 
 #: dat/missions/minerva/pirate2.lua:91
 msgid "Destroy the scout drone with Dvaered weapons"
@@ -64775,7 +64769,7 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant01.lua:76
 #: dat/missions/zalek/zlk_cargorun.lua:123
 msgid "Equipment"
-msgstr ""
+msgstr "Equipamento"
 
 #: dat/missions/neutral/antlejos/ant01.lua:76
 msgid "Some fancy equipment. You are not sure what it is for."
@@ -97289,7 +97283,7 @@ msgstr ""
 #: dat/scripts/pilotname/pirate.lua:87
 msgctxt "name"
 msgid "Iron"
-msgstr ""
+msgstr "Ferro"
 
 #: dat/scripts/pilotname/pirate.lua:88
 msgid "Justice"
@@ -100608,12 +100602,12 @@ msgstr ""
 #: src/SDL_keynames.h:143
 msgctxt "keyname"
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 #: src/SDL_keynames.h:144
 msgctxt "keyname"
 msgid "Select"
-msgstr ""
+msgstr "Selecionar"
 
 #: src/SDL_keynames.h:145
 msgctxt "keyname"
@@ -105539,10 +105533,8 @@ msgid "Ship Name:"
 msgstr ""
 
 #: src/load.c:748
-#, fuzzy
-#| msgid "   * Ship Models"
 msgid "Ship Model:"
-msgstr "   * Modelos das naves"
+msgstr " Modelo de nave:"
 
 #: src/load.c:790 src/load.c:946 src/load.c:981
 #, c-format
