@@ -163,7 +163,7 @@ function heartbeat ()
    if stage==0 then
       pilot.comm(_("Noona"), _("I've sent you the drone positions, please get close to investigate."))
       stage = 1
-   elseif stage==1 and  pdis:pos():dist( player.pilot():pos() ) < 500 then
+   elseif stage==1 and pdis:pos():dist( player.pilot():pos() ) < 500 then
       pilot.comm(_("Noona"), _("That is weird, maybe a firmware bug? Wait… I'm detecting a power fluctuation!"))
       stage = 2
    elseif stage==2 then
