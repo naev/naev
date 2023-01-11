@@ -24,7 +24,6 @@ local fmt = require "format"
 local zpp = require "common.zalek_physics"
 local sokoban = require "minigames.sokoban"
 
-
 local reward = zpp.rewards.zpp03
 local mainpnt, mainsys = spob.getS("Katar I")
 
@@ -160,10 +159,12 @@ function enter ()
 end
 
 function heartbeat ()
+   if not pdis or not pdis:exists() then return end
+
    if stage==0 then
       pilot.comm(_("Noona"), _("I've sent you the drone positions, please get close to investigate."))
       stage = 1
-   elseif stage==1 and  pdis:pos():dist( player.pilot():pos() ) < 500 then
+   elseif stage==1 and pdis:pos():dist( player.pilot():pos() ) < 500 then
       pilot.comm(_("Noona"), _("That is weird, maybe a firmware bug? Wait… I'm detecting a power fluctuation!"))
       stage = 2
    elseif stage==2 then
