@@ -641,7 +641,6 @@ int mission_linkCargo( Mission* misn, unsigned int cargo_id )
    if (misn->cargo == NULL)
       misn->cargo = array_create( unsigned int );
    array_push_back( &misn->cargo, cargo_id );
-
    return 0;
 }
 
@@ -667,7 +666,6 @@ int mission_unlinkCargo( Mission* misn, unsigned int cargo_id )
 
    /* shrink cargo size. */
    array_erase( &misn->cargo, &misn->cargo[i], &misn->cargo[i+1] );
-
    return 0;
 }
 

@@ -161,17 +161,6 @@ static int hookL_rm( lua_State *L )
    if (h < 0)
       return 0;
    hook_rm( (unsigned int) h );
-
-   /* Clean up hook data. */
-   nlua_getenv(L, __NLUA_CURENV, "mem");/* t */
-   lua_getfield(L, -1, "__hook_arg");   /* t, t */
-   if (!lua_isnil(L,-1)) {
-      lua_pushnumber( L, h );           /* t, t, n */
-      lua_pushnil( L );                 /* t, t, n, nil */
-      lua_settable( L, -3 );            /* t, t */
-   }
-   lua_pop( L, 2 );                     /* */
-
    return 0;
 }
 
