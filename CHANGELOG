@@ -6,7 +6,7 @@
    * Fixed not giving the AI a name when updating a save breaking the updater script
    * Fixed deleting last snapshot of a save switching to another pilot's saves
    * Fixed saves and snapshots not displaying correct name with version mismatch
-   * Fixed crash when deleting Lua-side fonts
+   * Fixed crash when deleting Lua-side fonts, should fix crash with POI
    * Set windows compatibility mode to Windows 7 when cross-compiling
    * legacy gui: fixed line artefacts near fuel / energy bars
    * patrol: don't have an invisible time limit to reach the system anymore
