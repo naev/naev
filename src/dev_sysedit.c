@@ -137,6 +137,7 @@ static void sysedit_btnTagsEdit( unsigned int wid, const char *unused );
 static void sysedit_genTagsList( unsigned int wid );
 static void sysedit_btnAddTag( unsigned int wid, const char *unused );
 static void sysedit_btnRmTag( unsigned int wid, const char *unused );
+static void sysedit_btnNewTag( unsigned int wid, const char *unused );
 static void sysedit_btnTagsClose( unsigned int wid, const char *unused );
 static void sysedit_btnAddService( unsigned int wid, const char *unused );
 static void sysedit_btnRmService( unsigned int wid, const char *unused );
@@ -2274,6 +2275,10 @@ static void sysedit_btnTagsEdit( unsigned int wid, const char *unused )
    window_addButton( wid, -20, y, w, BUTTON_HEIGHT,
          "btnAdd", _("Add Tag"), sysedit_btnAddTag );
 
+   /* New tag. */
+   window_addButton( wid, -20-(w+15), 20, w, BUTTON_HEIGHT,
+         "btnNew", _("New Tag"), sysedit_btnNewTag );
+
    /* Generate list of tags. */
    if (sysedit_tagslist == NULL) {
       Spob *spob_all = spob_getAll();
@@ -2431,6 +2436,27 @@ static void sysedit_btnRmTag( unsigned int wid, const char *unused )
       return;
    free( p->tags[i] );
    array_erase( &p->tags, &p->tags[i], &p->tags[i+1] );
+
+   /* Regenerate the list. */
+   sysedit_genTagsList( wid );
+}
+
+/**
+ * @brief Adds a tech to a spob.
+ */
+static void sysedit_btnNewTag( unsigned int wid, const char *unused )
+{
+   (void) unused;
+   Spob *s;
+
+   char *tag = dialogue_input( _("Add New Spob Tag"), 1, 128, _("Please write the new tag to add to the spob.") );
+   if (tag==NULL)
+      return;
+
+   s = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
+   if (s->tags == NULL)
+      s->tags = array_create( char* );
+   array_push_back( &s->tags, tag ); /* gets freed later */
 
    /* Regenerate the list. */
    sysedit_genTagsList( wid );

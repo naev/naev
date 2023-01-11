@@ -2329,7 +2329,7 @@ static void uniedit_btnRmTag( unsigned int wid, const char *unused )
 }
 
 /**
- * @brief Adds a tech to a spob.
+ * @brief Adds a tech to a system.
  */
 static void uniedit_btnNewTag( unsigned int wid, const char *unused )
 {
