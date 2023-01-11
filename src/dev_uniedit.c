@@ -1910,6 +1910,14 @@ static void uniedit_editSys (void)
    window_setInputFilter( wid, "inpHue", INPUT_FILTER_NUMBER );
    x += 50 + 12;
 
+   /* Tags. */
+   x = 20;
+   y -= gl_defFont.h + 15;
+   l = scnprintf( buf, sizeof(buf), "#n%s#0", _("Tags: ") );
+   for (int i=0; i<array_size(sys->tags); i++)
+      l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", (i==0)?"":_(", "), sys->tags[i] );
+   window_addText( wid, x, y, UNIEDIT_EDIT_WIDTH-40, 20, 0, "txtTags", NULL, NULL, buf );
+
    /* Load values */
    snprintf( buf, sizeof(buf), "%g", sys->radius );
    window_setInput( wid, "inpRadius", buf );
@@ -1943,7 +1951,7 @@ static void uniedit_editGenList( unsigned int wid )
    if (widget_exists( wid, "lstSpobs" ))
       window_destroyWidget( wid, "lstSpobs" );
 
-   y = -175;
+   y = -180;
 
    /* Check to see if it actually has virtual spobs. */
    sys   = uniedit_sys[0];
