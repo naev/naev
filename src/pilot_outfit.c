@@ -1195,7 +1195,7 @@ static const char* pilot_outfitLDescExtra( const Pilot *p, const Outfit *o )
       return descextra;
    }
    de = luaL_checkstring( naevL, -1 );
-   strncpy( descextra, de, sizeof(descextra) );
+   strncpy( descextra, de, sizeof(descextra)-1 );
    lua_pop( naevL, 1 );
    return descextra;
 }
