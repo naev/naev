@@ -68,8 +68,8 @@ int pilot_cargoMoveRaw( Pilot *dest, Pilot *src )
    for (int i=array_size(src->commodities)-1; i>=0; i--) {
       const PilotCommodity *pc = &src->commodities[i];
       pilot_cargoAddRaw( dest, pc->commodity, pc->quantity, pc->id );
-      pilot_cargoRmRaw( src, pc->commodity, pc->quantity, 1 );
    }
+   pilot_cargoRmAll( src, 1 );
    /* Clean src. */
    array_free(src->commodities);
    src->commodities  = NULL;
@@ -243,12 +243,9 @@ unsigned int pilot_addMissionCargo( Pilot* pilot, const Commodity* cargo, int qu
    /* Check for collisions with pilot and set ID generator to the max. */
    max_id = 0;
    for (int i=0; i<array_size(pilot->commodities); i++)
-      if (pilot->commodities[i].id > max_id)
-         max_id = pilot->commodities[i].id;
-   if (max_id >= id) {
-      mission_cargo_id = max_id;
-      id = ++mission_cargo_id;
-   }
+      max_id = MAX( max_id, pilot->commodities[i].id );
+   if (max_id >= id)
+      id = mission_cargo_id = max_id+1;
 
    /* Add the cargo. */
    pilot_cargoAdd( pilot, cargo, quantity, id );
