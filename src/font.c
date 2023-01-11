@@ -1745,9 +1745,9 @@ void gl_freeFont( glFont* font )
    gl_vboDestroy(stsh->vbo_vert);
    free(stsh->vbo_tex_data);
    free(stsh->vbo_vert_data);
-#if DEBUGGING
+
    memset( stsh, 0, sizeof(glFontStash) );
-#endif /* DEBUGGING */
+   /* TODO handle empty font stashes accumulating. */
 }
 
 /**
