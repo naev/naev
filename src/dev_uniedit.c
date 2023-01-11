@@ -100,6 +100,7 @@ static int uniedit_tadd       = 0;  /**< Temporarily clicked system should be ad
 static double uniedit_mx      = 0.; /**< X mouse position. */
 static double uniedit_my      = 0.; /**< Y mouse position. */
 static double uniedit_dt      = 0.; /**< Deltatick. */
+static char** uniedit_tagslist = NULL; /**< List of tags. */
 
 static map_find_t *found_cur  = NULL;  /**< Pointer to found stuff. */
 static int found_ncur         = 0;     /**< Number of found stuff. */
@@ -136,6 +137,12 @@ static void uniedit_newSys( double x, double y );
 static void uniedit_toggleJump( StarSystem *sys );
 static void uniedit_jumpAdd( StarSystem *sys, StarSystem *targ );
 static void uniedit_jumpRm( StarSystem *sys, StarSystem *targ );
+/* Tags. */
+static void uniedit_btnEditTags( unsigned int wid, const char *unused );
+static void uniedit_genTagsList( unsigned int wid );
+static void uniedit_btnAddTag( unsigned int wid, const char *unused );
+static void uniedit_btnRmTag( unsigned int wid, const char *unused );
+static void uniedit_btnTagsClose( unsigned int wid, const char *unused );
 /* Custom system editor widget. */
 static void uniedit_buttonZoom( unsigned int wid, const char* str );
 static void uniedit_render( double bx, double by, double w, double h, void *data );
@@ -1982,8 +1989,12 @@ static void uniedit_editGenList( unsigned int wid )
       window_addButton( wid, -20, y+3, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnRmSpob", _("Remove"), uniedit_btnEditRmSpob );
    if (!widget_exists( wid, "btnAddSpob" ))
-      window_addButton( wid, -40-BUTTON_WIDTH, y+3, BUTTON_WIDTH, BUTTON_HEIGHT,
+      window_addButton( wid, -20-(20+BUTTON_WIDTH), y+3, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnAddSpob", _("Add"), uniedit_btnEditAddSpob );
+
+   if (!widget_exists( wid, "btnEditTags" ))
+      window_addButton( wid, -20-(20+BUTTON_WIDTH)*2, y+3, BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnEditTags", _("Edit Tags"), uniedit_btnEditTags );
 }
 
 /**
@@ -2121,6 +2132,195 @@ static void uniedit_btnEditAddSpobAdd( unsigned int wid, const char *unused )
 
    /* Close the window. */
    window_close( wid, unused );
+}
+
+/**
+ * @brief Edits a spob's tags.
+ */
+static void uniedit_btnEditTags( unsigned int wid, const char *unused )
+{
+   (void) unused;
+   int y, w, bw;
+
+   /* Create the window. */
+   wid = window_create( "wdwSystemTagsEditor", _("System Tags Editor"), -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
+   window_setCancel( wid, uniedit_btnTagsClose );
+
+   w = (UNIEDIT_EDIT_WIDTH - 40 - 15) / 2.;
+   bw = (UNIEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4.;
+
+   /* Close button. */
+   window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT,
+         "btnClose", _("Close"), uniedit_btnTagsClose );
+   y = 20 + BUTTON_HEIGHT + 15;
+
+   /* Remove button. */
+   window_addButton( wid, -20-(w+15), y, w, BUTTON_HEIGHT,
+         "btnRm", _("Rm Tag"), uniedit_btnRmTag );
+
+   /* Add button. */
+   window_addButton( wid, -20, y, w, BUTTON_HEIGHT,
+         "btnAdd", _("Add Tag"), uniedit_btnAddTag );
+
+   /* Generate list of tags. */
+   if (uniedit_tagslist == NULL) {
+      StarSystem *systems_all = system_getAll();
+      uniedit_tagslist = array_create( char* );
+      for (int i=0; i<array_size(systems_all); i++) {
+         StarSystem *s = &systems_all[i];
+         for (int j=0; j<array_size(s->tags); j++) {
+            char *t = s->tags[j];
+            int found = 0;
+            for (int k=0; k<array_size(uniedit_tagslist); k++)
+               if (strcmp(uniedit_tagslist[k], t)==0) {
+                  found = 1;
+                  break;
+               }
+            if (!found)
+               array_push_back( &uniedit_tagslist, strdup(t) );
+         }
+      }
+      qsort( uniedit_tagslist, array_size(uniedit_tagslist), sizeof(char*), strsort );
+   }
+
+   uniedit_genTagsList( wid );
+}
+
+/*
+ * Tags are closed so update tags.
+ */
+static void uniedit_btnTagsClose( unsigned int wid, const char *unused )
+{
+   char buf[STRMAX_SHORT];
+   StarSystem *s = uniedit_sys[0];
+   int l = scnprintf( buf, sizeof(buf), "#n%s#0", _("Tags: ") );
+   for (int i=0; i<array_size(s->tags); i++)
+      l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", ((i>0) ? _(", ") : ""), s->tags[i] );
+   window_modifyText( uniedit_widEdit, "txtTags", buf );
+
+   window_close( wid, unused );
+}
+
+/**
+ * @brief Generates the spob tech list.
+ */
+static void uniedit_genTagsList( unsigned int wid )
+{
+   StarSystem *s;
+   char **have, **lack;
+   int n, x, y, w, h, hpos, lpos, empty;
+
+   hpos = lpos = -1;
+
+   /* Destroy if exists. */
+   if (widget_exists( wid, "lstTagsHave" ) &&
+         widget_exists( wid, "lstTagsLacked" )) {
+      hpos = toolkit_getListPos( wid, "lstTagsHave" );
+      lpos = toolkit_getListPos( wid, "lstTagsLacked" );
+      window_destroyWidget( wid, "lstTagsHave" );
+      window_destroyWidget( wid, "lstTagsLacked" );
+   }
+
+   s = uniedit_sys[0];
+   w = (UNIEDIT_EDIT_WIDTH - 40 - 15) / 2.;
+   x = -20 - w - 15;
+   y = 20 + BUTTON_HEIGHT * 2 + 30;
+   h = UNIEDIT_EDIT_HEIGHT - y - 30;
+
+   /* Get all the techs the spob has. */
+   n = array_size(s->tags);
+   if (n>0) {
+      have = malloc( n * sizeof(char*) );
+      for (int i=0; i<n; i++)
+         have[i] = strdup(s->tags[i]);
+      empty = 0;
+   }
+   else {
+      have = malloc( sizeof(char*) );
+      have[n++] = strdup(_("None"));
+      empty = 1;
+   }
+
+   /* Add list. */
+   window_addList( wid, x, y, w, h, "lstTagsHave", have, n, 0, NULL, uniedit_btnRmTag );
+   x += w + 15;
+
+   /* Omit the techs that the spob already has from the list.  */
+   n = 0;
+   lack = malloc( array_size(uniedit_tagslist) * sizeof(char*) );
+   for (int i=0; i<array_size(uniedit_tagslist); i++) {
+      char *t = uniedit_tagslist[i];
+      if (empty)
+         lack[n++] = strdup(t);
+      else {
+         int found = 0;
+         for (int j=0; j<array_size(s->tags); j++)
+            if (strcmp( s->tags[j], t )==0) {
+               found = 1;
+               break;
+            }
+         if (!found)
+            lack[n++] = strdup( t );
+      }
+   }
+
+   /* Add list. */
+   window_addList( wid, x, y, w, h, "lstTagsLacked", lack, n, 0, NULL, uniedit_btnAddTag );
+
+   /* Restore positions. */
+   if (hpos != -1 && lpos != -1) {
+      toolkit_setListPos( wid, "lstTagsHave", hpos );
+      toolkit_setListPos( wid, "lstTagsLacked", lpos );
+   }
+}
+
+/**
+ * @brief Adds a tech to a spob.
+ */
+static void uniedit_btnAddTag( unsigned int wid, const char *unused )
+{
+   (void) unused;
+   const char *selected;
+   StarSystem *s;
+
+   selected = toolkit_getList( wid, "lstTagsLacked" );
+   if ((selected == NULL) || (strcmp(selected,_("None"))==0))
+      return;
+
+   s = uniedit_sys[0];
+   if (s->tags == NULL)
+      s->tags = array_create( char* );
+   array_push_back( &s->tags, strdup(selected) );
+
+   /* Regenerate the list. */
+   uniedit_genTagsList( wid );
+}
+
+/**
+ * @brief Removes a tech from a spob.
+ */
+static void uniedit_btnRmTag( unsigned int wid, const char *unused )
+{
+   (void) unused;
+   const char *selected;
+   StarSystem *s;
+   int i;
+
+   selected = toolkit_getList( wid, "lstTagsHave" );
+   if ((selected == NULL) || (strcmp(selected,_("None"))==0))
+      return;
+
+   s = uniedit_sys[0];
+   for (i=0; i<array_size(s->tags); i++)
+      if (strcmp( selected, s->tags[i] )==0)
+         break;
+   if (i >= array_size(s->tags))
+      return;
+   free( s->tags[i] );
+   array_erase( &s->tags, &s->tags[i], &s->tags[i+1] );
+
+   /* Regenerate the list. */
+   uniedit_genTagsList( wid );
 }
 
 /**
