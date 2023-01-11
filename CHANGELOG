@@ -14,6 +14,7 @@
    * zbh03: landing when hostiles spawned will fail the mission
    * bounties: mention there is a time limit to reach the system, not made explicit though
    * zpp01, zbh01: bumped chance to 30%
+   * poi_intro: can't board nelly again
 
 * 0.10.1
    * Fixed many stations not marked as stations

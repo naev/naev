@@ -554,6 +554,7 @@ She rubs the cheese to her face.]]))
    -- Let her fly away
    nelly:setHilight(false)
    nelly:control(false)
+   nelly:setActiveBoard(false)
 
    pilot.toggleSpawn(true) -- Re-enable spawns
    player.unboard()
