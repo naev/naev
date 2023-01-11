@@ -24,7 +24,6 @@ local fmt = require "format"
 local zpp = require "common.zalek_physics"
 local sokoban = require "minigames.sokoban"
 
-
 local reward = zpp.rewards.zpp03
 local mainpnt, mainsys = spob.getS("Katar I")
 
@@ -160,6 +159,8 @@ function enter ()
 end
 
 function heartbeat ()
+   if not pdis or not pdis:exists() then return end
+
    if stage==0 then
       pilot.comm(_("Noona"), _("I've sent you the drone positions, please get close to investigate."))
       stage = 1
