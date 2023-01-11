@@ -6,7 +6,7 @@
    * Fixed not giving the AI a name when updating a save breaking the updater script
    * Fixed deleting last snapshot of a save switching to another pilot's saves
    * Fixed saves and snapshots not displaying correct name with version mismatch
-   * Fixed crash when deleting Lua-side fonts
+   * Fixed crash when deleting Lua-side fonts, should fix crash with POI
    * Fixed swapping ships with mission cargo sharing name with other cargo can lead to wrong cargo getting duplicated
    * Set windows compatibility mode to Windows 7 when cross-compiling
    * legacy gui: fixed line artefacts near fuel / energy bars
@@ -16,6 +16,7 @@
    * zbh03: landing when hostiles spawned will fail the mission
    * bounties: mention there is a time limit to reach the system, not made explicit though
    * zpp01, zbh01: bumped chance to 30%
+   * poi_intro: can't board nelly again
 
 * 0.10.1
    * Fixed many stations not marked as stations
