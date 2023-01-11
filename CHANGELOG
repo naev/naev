@@ -12,6 +12,7 @@
    * Fixed deleting last snapshot of a save switching to another pilot's saves
    * Fixed saves and snapshots not displaying correct name with version mismatch
    * Set windows compatibility mode to Windows 7 when cross-compiling
+   * legacy gui: fixed line artefacts near fuel / energy bars
    * patrol: don't have an invisible time limit to reach the system anymore
    * taiomi: fixed some claims
    * zbh03: landing when hostiles spawned will fail the mission
