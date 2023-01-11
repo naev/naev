@@ -142,6 +142,7 @@ static void uniedit_btnEditTags( unsigned int wid, const char *unused );
 static void uniedit_genTagsList( unsigned int wid );
 static void uniedit_btnAddTag( unsigned int wid, const char *unused );
 static void uniedit_btnRmTag( unsigned int wid, const char *unused );
+static void uniedit_btnNewTag( unsigned int wid, const char *unused );
 static void uniedit_btnTagsClose( unsigned int wid, const char *unused );
 /* Custom system editor widget. */
 static void uniedit_buttonZoom( unsigned int wid, const char* str );
@@ -2162,6 +2163,10 @@ static void uniedit_btnEditTags( unsigned int wid, const char *unused )
    window_addButton( wid, -20, y, w, BUTTON_HEIGHT,
          "btnAdd", _("Add Tag"), uniedit_btnAddTag );
 
+   /* New tag. */
+   window_addButton( wid, -20-(w+15), 20, w, BUTTON_HEIGHT,
+         "btnNew", _("New Tag"), uniedit_btnNewTag );
+
    /* Generate list of tags. */
    if (uniedit_tagslist == NULL) {
       StarSystem *systems_all = system_getAll();
@@ -2318,6 +2323,27 @@ static void uniedit_btnRmTag( unsigned int wid, const char *unused )
       return;
    free( s->tags[i] );
    array_erase( &s->tags, &s->tags[i], &s->tags[i+1] );
+
+   /* Regenerate the list. */
+   uniedit_genTagsList( wid );
+}
+
+/**
+ * @brief Adds a tech to a spob.
+ */
+static void uniedit_btnNewTag( unsigned int wid, const char *unused )
+{
+   (void) unused;
+   StarSystem *s;
+
+   char *tag = dialogue_input( _("Add New System Tag"), 1, 128, _("Please write the new tag to add to the system.") );
+   if (tag==NULL)
+      return;
+
+   s = uniedit_sys[0];
+   if (s->tags == NULL)
+      s->tags = array_create( char* );
+   array_push_back( &s->tags, tag ); /* gets freed later */
 
    /* Regenerate the list. */
    uniedit_genTagsList( wid );
