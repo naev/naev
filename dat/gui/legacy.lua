@@ -45,11 +45,16 @@ function create()
 
    -- Load graphics
    local base = "gfx/gui/legacy/"
-   frame    = tex.open( base .. "minimal.png" )
-   energy   = tex.open( base .. "minimal_energy.png" )
-   fuel     = tex.open( base .. "minimal_fuel.png" )
-   gui.targetSpobGFX( tex.open( base .. "minimal_planet.png", 2, 2 ) )
-   gui.targetPilotGFX( tex.open( base .. "minimal_pilot.png", 2, 2 ) )
+   local function tex_open( name, sx, sy )
+      local t = tex.open( base .. name, sx, sy )
+      t:setWrap( "clamp" )
+      return t
+   end
+   frame    = tex_open( "minimal.png" )
+   energy   = tex_open( "minimal_energy.png" )
+   fuel     = tex_open( "minimal_fuel.png" )
+   gui.targetSpobGFX( tex_open( "minimal_planet.png", 2, 2 ) )
+   gui.targetPilotGFX( tex_open( "minimal_pilot.png", 2, 2 ) )
 
    -- OSD
    gui.osdInit( 30, screen_h-90, 150, 300 )
