@@ -265,8 +265,7 @@ function cutscene_start ()
    pp:setNoLand(true)
 
    -- TODO better music
-   music.stop()
-   var.push( "music_off", true )
+   music.stop(true)
    lmusic.play( "snd/music/empire2.ogg" )
 end
 
@@ -595,7 +594,6 @@ local sfx
 function cutscene_cleanup ()
    setHide( false )
 
-   var.pop( "music_off" )
    music.play()
 
    -- Chapter 1 message

@@ -9,6 +9,8 @@
    * Fixed crash when deleting Lua-side fonts, should fix crash with POI
    * Fixed swapping ships with mission cargo sharing name with other cargo can lead to wrong cargo getting duplicated
    * Fixed original music at Research Post Sigma-13
+   * Fixed music stopping after playing once in new games
+   * Change music API to make it explicit you can temporarily disable the music engine
    * Set windows compatibility mode to Windows 7 when cross-compiling
    * legacy gui: fixed line artefacts near fuel / energy bars
    * pulse_scanner: fix potential error on init

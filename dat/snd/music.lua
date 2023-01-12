@@ -10,7 +10,7 @@ Valid parameters:
 local audio = require "love.audio"
 local last_track -- last played track name
 local tracks = {} -- currently playing tracks (including fading)
-local music_stopped = false -- whether or not it is stopped
+local music_off = false -- disabled picking or changing music
 local music_situation -- current running situation
 local music_played = 0 -- elapsed play time for the current situation
 local music_vol = naev.conf().music -- music global volume
@@ -428,11 +428,6 @@ function choose_table.combat ()
 end
 
 function choose( str )
-   -- Don't change or play music if a mission or event doesn't want us to
-   if var.peek( "music_off" ) then
-      return
-   end
-
    -- Allow restricting play of music until a song finishes
    if var.peek( "music_wait" ) then
       if tracks_playing() then
@@ -563,7 +558,7 @@ function update( dt )
    end
 
    -- Not going to do anything
-   if music_stopped then
+   if music_off then
       return
    end
 
@@ -601,7 +596,7 @@ function update( dt )
 end
 
 function play( song )
-   music_stopped = false
+   music_off = false
    if song then
       tracks_add( song, "custom" )
       return
@@ -613,14 +608,18 @@ function play( song )
    end
 end
 
-function stop ()
+function stop( disable )
    tracks_stop()
-   music_stopped = true
+   if disable then
+      music_off = true
+   end
 end
 
-function pause ()
+function pause( disable )
    tracks_pause()
-   music_stopped = true
+   if disable then
+      music_off = true
+   end
 end
 
 function info ()
