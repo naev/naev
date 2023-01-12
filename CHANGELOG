@@ -3,7 +3,7 @@
    * Make it explicit when all the escorts have jumped or landed
    * diy-nerds: improved reward
 
-* 0.10.2 (unreleased)
+* 0.10.2
    * Fixed escorts sometimes not following their leader and landing
    * Fixed autonav always wanting to go to the edge of jump points
    * Fixed crash when causing multiple dialogues to run in the background
