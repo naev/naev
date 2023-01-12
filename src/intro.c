@@ -461,7 +461,7 @@ int intro_display( const char *text, const char *mus )
    gl_freeTexture( transition.tex );
 
    /* Stop music, normal music will start shortly after. */
-   music_stop();
+   music_stop(0);
 
    /* Clean up after the introduction. */
    intro_cleanup();

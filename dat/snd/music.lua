@@ -10,7 +10,7 @@ Valid parameters:
 local audio = require "love.audio"
 local last_track -- last played track name
 local tracks = {} -- currently playing tracks (including fading)
-local music_stopped = false -- whether or not it is stopped
+local music_off = false -- disabled picking or changing music
 local music_situation -- current running situation
 local music_played = 0 -- elapsed play time for the current situation
 local music_vol = naev.conf().music -- music global volume
@@ -114,7 +114,7 @@ local planet_songs = {
    ["Research Post Sigma-13"] = function ()
          if not diff.isApplied("sigma13_fixed1") and
             not diff.isApplied("sigma13_fixed2") then
-            return {"landing_sinister.ogg"}
+            return "landing_sinister.ogg"
          end
       end,
 }
@@ -186,7 +186,11 @@ function choose_table.land ()
       if type(override)=="function" then
          local song = override()
          if song then
-            tracks_add( song, "land", params )
+            if type(song)=="table" then
+               tracks_add( song[ rnd.rnd(1, #song) ], "land", params )
+            else
+               tracks_add( song, "land", params )
+            end
             return true
          end
       else
@@ -210,7 +214,7 @@ function choose_table.land ()
       end
    end
 
-   tracks_add( music_list[ rnd.rnd(1, #music_list) ], "land", params )
+   tracks_add( music_list[ rnd.rnd(1,#music_list) ], "land", params )
    return true
 end
 
@@ -263,7 +267,7 @@ function choose_table.ambient ()
    -- System
    local override = system_ambient_songs[ sys:nameRaw() ]
    if override then
-      tracks_add( override[ rnd.rnd(1, #override) ], "ambient" )
+      tracks_add( override[ rnd.rnd(1,#override) ], "ambient" )
       return true
    end
 
@@ -428,11 +432,6 @@ function choose_table.combat ()
 end
 
 function choose( str )
-   -- Don't change or play music if a mission or event doesn't want us to
-   if var.peek( "music_off" ) then
-      return
-   end
-
    -- Allow restricting play of music until a song finishes
    if var.peek( "music_wait" ) then
       if tracks_playing() then
@@ -563,7 +562,7 @@ function update( dt )
    end
 
    -- Not going to do anything
-   if music_stopped then
+   if music_off then
       return
    end
 
@@ -601,7 +600,7 @@ function update( dt )
 end
 
 function play( song )
-   music_stopped = false
+   music_off = false
    if song then
       tracks_add( song, "custom" )
       return
@@ -613,14 +612,18 @@ function play( song )
    end
 end
 
-function stop ()
+function stop( disable )
    tracks_stop()
-   music_stopped = true
+   if disable then
+      music_off = true
+   end
 end
 
-function pause ()
+function pause( disable )
    tracks_pause()
-   music_stopped = true
+   if disable then
+      music_off = true
+   end
 end
 
 function info ()
