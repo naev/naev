@@ -186,7 +186,11 @@ function choose_table.land ()
       if type(override)=="function" then
          local song = override()
          if song then
-            tracks_add( song[ rnd.rnd(1, #song) ], "land", params )
+            if type(song)=="table" then
+               tracks_add( song[ rnd.rnd(1, #song) ], "land", params )
+            else
+               tracks_add( song, "land", params )
+            end
             return true
          end
       else
