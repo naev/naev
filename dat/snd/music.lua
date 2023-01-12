@@ -186,7 +186,7 @@ function choose_table.land ()
       if type(override)=="function" then
          local song = override()
          if song then
-            tracks_add( song, "land", params )
+            tracks_add( song[ rnd.rnd(1, #song) ], "land", params )
             return true
          end
       else
@@ -210,7 +210,7 @@ function choose_table.land ()
       end
    end
 
-   tracks_add( music_list[ rnd.rnd(1, #music_list) ], "land", params )
+   tracks_add( music_list[ rnd.rnd(1,#music_list) ], "land", params )
    return true
 end
 
@@ -263,7 +263,7 @@ function choose_table.ambient ()
    -- System
    local override = system_ambient_songs[ sys:nameRaw() ]
    if override then
-      tracks_add( override[ rnd.rnd(1, #override) ], "ambient" )
+      tracks_add( override[ rnd.rnd(1,#override) ], "ambient" )
       return true
    end
 
