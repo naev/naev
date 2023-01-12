@@ -114,7 +114,7 @@ local planet_songs = {
    ["Research Post Sigma-13"] = function ()
          if not diff.isApplied("sigma13_fixed1") and
             not diff.isApplied("sigma13_fixed2") then
-            return {"landing_sinister.ogg"}
+            return "landing_sinister.ogg"
          end
       end,
 }
