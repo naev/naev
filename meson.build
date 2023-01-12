@@ -1,5 +1,5 @@
 project('naev', 'c',
-   version : '0.10.1',
+   version : '0.10.2',
    default_options : [
       'warning_level=2',
       'optimization=g',
@@ -8,7 +8,7 @@ project('naev', 'c',
    ],
    meson_version: '>=0.53.0')
 
-copyright_year = 2022
+copyright_year = 2023
 
 if meson.version().startswith('0.53.') or meson.version().startswith('0.54.')
    warning('This version of Meson is nearly too old to work, but partially supported for subproject-free builds (e.g., for distro packages). In most cases you will need to upgrade Meson or use the included meson.sh wrapper script.')

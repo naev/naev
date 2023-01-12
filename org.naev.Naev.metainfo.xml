@@ -40,6 +40,9 @@
   </categories>
 
   <releases>
+    <release version="0.10.2" type="stable" date="2023-01-12">
+      <url>https://naev.org/blarg/2023-01-12_0.10.2/</url>
+    </release>
     <release version="0.10.1" type="stable" date="2022-12-29">
       <url>https://naev.org/blarg/2022-12-29_0.10.1/</url>
     </release>
