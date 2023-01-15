@@ -19,7 +19,6 @@ local vntk = require "vntk"
 local lmisn = require "lmisn"
 local der = require "common.derelict"
 
-
 function create ()
    mem.destpnt, mem.destsys = lmisn.getRandomSpobAtDistance( system.cur(), 0, 5, "Independent" )
 
@@ -94,13 +93,13 @@ function land ()
 
    vn.clear()
    vn.scene()
-   vn.na(_([[Soon after you land the crew you rescued from the derelict burst out of the ship in joy. After a short while the captain comes over to you and gives you the credits you were promised.]])
-      .. "\n\n"
-      .. fmt.reward(mem.reward_amount))
+   vn.sfxMoney()
    vn.func( function ()
       player.pay( mem.reward_amount )
    end )
-   vn.sfxVictory()
+   vn.na(_([[Soon after you land the crew you rescued from the derelict burst out of the ship in joy. After a short while the captain comes over to you and gives you the credits you were promised.]])
+      .. "\n\n"
+      .. fmt.reward(mem.reward_amount))
    vn.run()
 
    der.addMiscLog(fmt.f(_([[You rescued the crew of a derelict ship and returned them safely to {pnt} ({sys}).]]), {pnt=spob.cur(), sys=system.cur()}))
