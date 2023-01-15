@@ -1907,6 +1907,7 @@ void spob_updateLand( Spob *p )
       if (nlua_pcall( p->lua_env, 0, 2 )) {
          WARN(_("Spob '%s' failed to run '%s':\n%s"), p->name, "can_land", lua_tostring(naevL,-1));
          lua_pop(naevL,1);
+         return;
       }
 
       p->can_land = lua_toboolean(naevL,-2);
@@ -1924,6 +1925,9 @@ void spob_updateLand( Spob *p )
    }
 }
 
+/**
+ * @brief Initializes the memory fo a spob.
+ */
 void spob_luaInitMem( const Spob *spob )
 {
    if (spob->lua_mem != LUA_NOREF) {
