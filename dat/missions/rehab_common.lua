@@ -112,9 +112,12 @@ end
 
 -- On abort, reset reputation.
 function abort()
-    -- Reapply the original negative reputation.
-    mem.fac:modPlayerRaw(mem.rep)
+   -- Have to remove hook first or applied infinitely
+   hook.rm( mem.standhook )
 
-    vntk.msg(fmt.f(_("{fct} Rehabilitation Canceled"), {fct=mem.fac}), _([[You have committed another offense against this faction! Your rehabilitation procedure has been canceled, and your reputation is once again tarnished. You may start another rehabilitation procedure at a later time.]]))
-    misn.finish(false)
+   -- Reapply the original negative reputation.
+   mem.fac:modPlayerRaw(mem.rep)
+
+   vntk.msg(fmt.f(_("{fct} Rehabilitation Canceled"), {fct=mem.fac}), _([[You have committed another offense against this faction! Your rehabilitation procedure has been canceled, and your reputation is once again tarnished. You may start another rehabilitation procedure at a later time.]]))
+   misn.finish(false)
 end

@@ -1353,9 +1353,8 @@ static void mission_menu_update( unsigned int wid, const char *str )
 static void mission_menu_abort( unsigned int wid, const char *str )
 {
    (void) str;
-   int pos;
+   int pos, ret;
    Mission *misn;
-   int ret;
 
    if (!dialogue_YesNo( _("Abort Mission"),
             _("Are you sure you want to abort this mission?") ))

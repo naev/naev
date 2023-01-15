@@ -13,6 +13,8 @@
 
 * 0.10.3 (unreleased)
    * Fixed escorts always being set to aggressive when loading a save
+   * derelict_rescue: play money sound instead of victory sound on completion
+   * rehab: fixed crash when abborting rehabilitation missions
 
 * 0.10.2
    * Fixed escorts sometimes not following their leader and landing
