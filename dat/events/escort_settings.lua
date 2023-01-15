@@ -14,7 +14,10 @@ local profile, aggressive, enemyclose, returndist, armourrun
 function create ()
    -- Load variables
    profile    = var.peek( "escortai_profile" ) or "Default"
-   aggressive = var.peek( "escortai_aggressive" ) or true
+   aggressive = var.peek( "escortai_aggressive" )
+   if aggressive == nil then
+      aggressive = true
+   end
    enemyclose = var.peek( "escortai_enemyclose" ) or 2e3
    returndist = var.peek( "escortai_returndist" ) or 5e3
    armourrun  = var.peek( "escortai_armourrun" ) or 30
