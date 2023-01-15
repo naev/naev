@@ -15,6 +15,7 @@
    * Fixed escorts always being set to aggressive when loading a save
    * derelict_rescue: play money sound instead of victory sound on completion
    * rehab: fixed crash when abborting rehabilitation missions
+   * foundation station, efferey: fixed not using pirate landing script
 
 * 0.10.2
    * Fixed escorts sometimes not following their leader and landing
