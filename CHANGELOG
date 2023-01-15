@@ -3,6 +3,9 @@
    * Make it explicit when all the escorts have jumped or landed
    * diy-nerds: improved reward
 
+* 0.10.3 (unreleased)
+   * Fixed escorts always being set to aggressive when loading a save
+
 * 0.10.2
    * Fixed escorts sometimes not following their leader and landing
    * Fixed autonav always wanting to go to the edge of jump points
