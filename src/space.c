@@ -1930,10 +1930,8 @@ void spob_updateLand( Spob *p )
  */
 void spob_luaInitMem( const Spob *spob )
 {
-   if (spob->lua_mem != LUA_NOREF) {
-      lua_rawgeti( naevL, LUA_REGISTRYINDEX, spob->lua_mem );
-      nlua_setenv( naevL, spob->lua_env, "mem" );
-   }
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, spob->lua_mem );
+   nlua_setenv( naevL, spob->lua_env, "mem" );
 }
 
 /**
@@ -1951,7 +1949,7 @@ int spob_luaInit( Spob *spob )
       luaL_unref( naevL, LUA_REGISTRYINDEX, (x) ); \
       (x) = LUA_NOREF; \
    } } while (0)
-   spob->lua_env     = LUA_NOREF;
+   spob->lua_env = LUA_NOREF; /* Just a pointer to some Lua index. */
    UNREF( spob->lua_init );
    UNREF( spob->lua_load );
    UNREF( spob->lua_unload );
@@ -2008,6 +2006,7 @@ int spob_luaInit( Spob *spob )
       if (nlua_pcall( spob->lua_env, 1, 0 )) {
          WARN(_("Spob '%s' failed to run '%s':\n%s"), spob->name, "init", lua_tostring(naevL,-1));
          lua_pop(naevL,1);
+         return -1;
       }
    }
 
@@ -2025,6 +2024,7 @@ void spob_gfxLoad( Spob *spob )
       if (nlua_pcall( spob->lua_env, 0, 2 )) {
          WARN(_("Spob '%s' failed to run '%s':\n%s"), spob->name, "load", lua_tostring(naevL,-1));
          lua_pop(naevL,1);
+         return;
       }
       if (lua_istex(naevL,-2)) {
          if (spob->gfx_space)
