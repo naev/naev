@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-01-10 23:36+0900\n"
-"PO-Revision-Date: 2023-01-11 16:50+0000\n"
-"Last-Translator: ssantos <ssantos@web.de>\n"
+"PO-Revision-Date: 2023-01-15 16:49+0000\n"
+"Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Portugal) <https://hosted.weblate.org/projects/"
 "naev/naev-0-10-x/pt_PT/>\n"
 "Language: pt_PT\n"
@@ -4439,30 +4439,17 @@ msgid "TeraCom Mace Launcher"
 msgstr "Lançador de Forguetes Maça TeraCom"
 
 #: dat/outfits/launchers/teracom_mace_launcher.xml:9
-#, fuzzy
-#| msgid ""
-#| "The Mace class unguided rocket is a cheap, expendable weapon used to "
-#| "boost peak firepower in tight situations. It is far better at dealing "
-#| "damage to light targets than most fighter sized energy cannons, but comes "
-#| "with the disadvantage of running out of ammunition after only a short "
-#| "time of fire.\n"
-#| "\n"
-#| "TeraCom's Mace launcher uses an advanced reload mechanism that allows the "
-#| "launcher to fire more rockets in less time."
 msgid ""
 "The Mace class unguided rocket is a cheap, expendable weapon used to boost "
 "peak firepower in tight situations. It is far better at dealing damage to "
 "light targets than most fighter sized energy cannons, but comes with the "
 "disadvantage of running out of ammunition after only a short time of fire."
 msgstr ""
-"O foguete tipo Maça não-guiado é uma arma barata e descartável utilizada "
-"para aumentar o poder de fogo de pico em situações críticas. É muito melhor "
-"em causar danos à alvos rápidos que a maioria dos canhões de energia "
-"destinados a caças, mas vem com a desvantagem de ficar sem munições após "
-"apenas um curto ciclo de disparo.\n"
-"\n"
-"O lançador de Forguete Maça da TeraCom utiliza um mecanismo avançado de "
-"recarga que permite ao lançador disparar mais foguetes em menos tempo."
+"O foguetão da classe Mace não guiado é uma arma barata e descartável usada "
+"para aumentar o poder de fogo em situações difíceis. É muito melhor a causar "
+"dano em alvos ligeiros do que a maioria dos canhões de energia do tamanho de "
+"caças, mas tem a desvantagem de ficar sem munições após um curto período de "
+"tempo de disparo."
 
 #: dat/outfits/launchers/teracom_medusa_launcher.xml:2
 msgid "TeraCom Medusa Launcher"
@@ -6818,7 +6805,7 @@ msgstr ""
 
 #: dat/outfits/weapons/heavy_ion_cannon.xml:2
 msgid "Heavy Ion Cannon"
-msgstr "Canhão de Íons Pesado"
+msgstr "Canhão de iões pesado"
 
 #: dat/outfits/weapons/heavy_ion_cannon.xml:9
 msgid ""
@@ -6827,10 +6814,10 @@ msgid ""
 "weapons on specialized capture teams, but the design is licensed for public "
 "use as well."
 msgstr ""
-"O Canhão de Íons Pesado faz um trabalho muito melhor em desativar naves do "
-"que o modelo padrão, mas requer um espaço de monta médio. A maioria dos "
-"militares emprega essas armas em equipas especializadas de captura, mas o "
-"projeto é licenciado para uso público também."
+"O canhão de iões pesado faz um trabalho muito melhor em desativar naves do "
+"que o modelo padrão, mas requer uma montagem média. A maioria dos militares "
+"emprega estas armas em equipas de captura especializadas, mas o seu desenho "
+"também é licenciado para utilização pública."
 
 #: dat/outfits/weapons/heavy_ion_turret.xml:2
 msgid "Heavy Ion Turret"
@@ -6910,7 +6897,7 @@ msgstr ""
 
 #: dat/outfits/weapons/ion_cannon.xml:2
 msgid "Ion Cannon"
-msgstr "Canhão Iônico"
+msgstr "Canhão de iões"
 
 #: dat/outfits/weapons/ion_cannon.xml:8
 msgid ""
@@ -6920,11 +6907,11 @@ msgid ""
 "allows it to be mounted on small craft. This makes the Ion Cannon one of the "
 "most popular weapons for weaker pirates."
 msgstr ""
-"Canhões Iônicos são primariamente armas não letais feitas para causar curtos "
-"nos sistemas internos de naves e desativá-los sem matar a tripulação no "
-"processo. O Canhão de Íons padrão é o projeto mais básico e compacto, o que "
-"permite a sua montagem em pequenas naves.Por isso, é uma das armas mais "
-"populares para os piratas mais fracos."
+"Os canhões de iões são principalmente armas não letais projetadas para "
+"causar curto-circuito nos sistemas internos da nave e desativá-la sem matar "
+"a tripulação nesse processo. O canhão de iões padrão é o modelo mais básico "
+"e compacto, o que permite que seja montado em pequenas naves. Isto torna o "
+"canhão de iões uma das armas mais populares para piratas mais fracos."
 
 #: dat/outfits/weapons/laser_cannon_mk1.xml:2
 msgid "Laser Cannon MK1"
@@ -7435,8 +7422,8 @@ msgid ""
 "enemy combatants functionally helpless."
 msgstr ""
 "A maior arma do território Sirius, o poderoso canhão Tesla utiliza "
-"princípios semelhantes aos dos canhões de ións mais comuns, mas tem como "
-"alvo de forma ainda mais específica os sistemas eléctricos de uma nave, "
+"princípios semelhantes aos dos canhões de iões mais comuns, mas tem como "
+"alvo de forma ainda mais específica os sistemas elétricos de uma nave, "
 "particularmente os seus reatores. Embora faça poucos danos devido ao seu "
 "tamanho, em combates prolongados, esta arma pode deixar os inimigos "
 "funcionalmente indefesos."
@@ -30778,7 +30765,7 @@ msgstr ""
 #: dat/missions/empire/collective/ec03.lua:51 src/map_find.c:396
 #, c-format, lua-format
 msgid "%s (%s)"
-msgstr ""
+msgstr "%s (%s)"
 
 #: dat/events/dvaered/totoran.lua:230 dat/events/minerva/station.lua:230
 #: dat/events/minerva/station.lua:330
@@ -30786,7 +30773,7 @@ msgstr ""
 #: dat/events/neutral/travelling_merchant.lua:364
 #: dat/events/neutral/travelling_merchant.lua:383 src/load.c:545 src/load.c:624
 msgid "Back"
-msgstr ""
+msgstr "Voltar"
 
 #: dat/events/dvaered/totoran.lua:235
 msgid ""
@@ -30893,6 +30880,8 @@ msgid ""
 "\"Ah! I knew it! you refuse because I said it is dangerous! You're a coward, "
 "as shown by the disturbing absence of bruises on your face!\""
 msgstr ""
+"\"Ah! eu sabia! Recusas porque eu disse que era perigoso! És cobarde, como "
+"demonstra a perturbadora ausência de hematomas na tua cara!\""
 
 #: dat/events/dvaered/warlord_propaganda.lua:56
 msgid "\"Very well, citizen. I am sure you will help us at the office a lot.\""
@@ -34169,7 +34158,7 @@ msgstr ""
 
 #: dat/events/neutral/shiplover.lua:346 dat/missions/minerva/maikki2.lua:190
 msgid "\"Yes!\""
-msgstr ""
+msgstr "\"Sim!\""
 
 #: dat/events/neutral/shiplover.lua:347 dat/missions/minerva/kex4.lua:143
 msgid "\"No.\""
@@ -34401,7 +34390,7 @@ msgstr ""
 #: dat/events/neutral/travelling_merchant.lua:270
 msgctxt "not to come"
 msgid "\"Yes\""
-msgstr ""
+msgstr "\"Sim"
 
 #: dat/events/neutral/travelling_merchant.lua:271 dat/events/pers/indep.lua:74
 #: dat/events/taiomi/intro.lua:202 dat/missions/minerva/maikki2.lua:459
@@ -34411,7 +34400,7 @@ msgstr ""
 
 #: dat/events/neutral/travelling_merchant.lua:275
 msgid "\"I knew it! I would never forget that smell in a lifetime.\""
-msgstr ""
+msgstr "\"Eu sabia! Jamais esqueceria esse cheiro na vida.\""
 
 #: dat/events/neutral/travelling_merchant.lua:279
 msgid "\"Hah, I can clearly see through your lies. You can't fool my nose!\""
@@ -41551,7 +41540,7 @@ msgstr ""
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:72
 #: dat/missions/tutorial/nelly01.lua:161
 msgid "\"Yes\""
-msgstr ""
+msgstr "\"Sim\""
 
 #: dat/events/taiomi/system.lua:640
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:73
@@ -41565,7 +41554,7 @@ msgstr ""
 
 #: dat/events/taiomi/system.lua:645
 msgid "\"I knew it!\""
-msgstr ""
+msgstr "\"Eu sabia!\""
 
 #: dat/events/taiomi/system.lua:648
 msgid "\"If you don't eat potatoes, are you not human?\""
@@ -52551,16 +52540,16 @@ msgstr ""
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:391
 #: dat/scripts/luatk/core.lua:1095 dat/scripts/vntk.lua:74 src/dialogue.c:384
 msgid "Yes"
-msgstr ""
+msgstr "Sim"
 
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:392
 #: dat/scripts/luatk/core.lua:1101 dat/scripts/vntk.lua:75 src/dialogue.c:386
 msgid "No"
-msgstr ""
+msgstr "Não"
 
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:393
 msgid "I couldn't care less"
-msgstr ""
+msgstr "Não me importo"
 
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:397
 msgid ""
@@ -54931,28 +54920,28 @@ msgstr ""
 #: dat/missions/neutral/cargo.lua:42 dat/missions/neutral/cargo_rush.lua:50
 #: dat/missions/trader/trader_escort.lua:39
 msgid "#nPiracy Risk:#0 None"
-msgstr ""
+msgstr "#nRisco de pirataria:#0 nenhum"
 
 #: dat/missions/empire/es_cargo.lua:27
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:29
 #: dat/missions/neutral/cargo.lua:43 dat/missions/neutral/cargo_rush.lua:51
 #: dat/missions/trader/trader_escort.lua:40
 msgid "#nPiracy Risk:#0 Low"
-msgstr ""
+msgstr "#nRisco de pirataria:#0 baixo"
 
 #: dat/missions/empire/es_cargo.lua:28
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:30
 #: dat/missions/neutral/cargo.lua:44 dat/missions/neutral/cargo_rush.lua:52
 #: dat/missions/trader/trader_escort.lua:41
 msgid "#nPiracy Risk:#0 Medium"
-msgstr ""
+msgstr "#nRisco de pirataria:#0 médio"
 
 #: dat/missions/empire/es_cargo.lua:29
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:31
 #: dat/missions/neutral/cargo.lua:45 dat/missions/neutral/cargo_rush.lua:53
 #: dat/missions/trader/trader_escort.lua:42
 msgid "#nPiracy Risk:#0 High"
-msgstr ""
+msgstr "#nRisco de pirataria:#0 alto"
 
 #.
 #. --    Empire shipping missions are always timed, but quite lax on the schedules
@@ -54967,11 +54956,11 @@ msgstr ""
 #. Choose amount of cargo and mission reward. This depends on the mission tier.
 #: dat/missions/empire/es_cargo.lua:85
 msgid "Cargo transport to {pnt} in {sys} ({tonnes})"
-msgstr ""
+msgstr "Transporte de carga para {pnt} em {sys} ({tonnes})"
 
 #: dat/missions/empire/es_cargo.lua:88
 msgid "Official Empire cargo transport to {pnt} in the {sys} system."
-msgstr ""
+msgstr "Transporte de carga oficial do Império para {pnt} no sistema {sys}."
 
 #. Mission is accepted
 #. Set up passenger details so player cannot keep trying to get a better outcome
@@ -54983,7 +54972,7 @@ msgstr ""
 #: dat/missions/pirate/contraband.lua:159 dat/missions/sirius/srs_ferry.lua:185
 #: dat/missions/trader/anxiousmerchant.lua:84
 msgid "Too slow"
-msgstr ""
+msgstr "Demasiado lento"
 
 #: dat/missions/empire/es_cargo.lua:97
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:97
@@ -54994,6 +54983,8 @@ msgid ""
 "{time} for your ship to reach {pnt}, missing the deadline. Accept the "
 "mission anyway?"
 msgstr ""
+"Esta remessa deve ser entregue em {time_limit}, mas levará pelo menos {time} "
+"para chegares a {pnt}, ultrapassando o prazo. Aceitar a missão mesmo assim?"
 
 #. Mission is accepted
 #. Create the mission
@@ -55011,7 +55002,7 @@ msgstr ""
 #: dat/missions/neutral/cargo.lua:99 dat/missions/neutral/cargo_rush.lua:127
 #: dat/missions/pirate/contraband.lua:166
 msgid "No room in ship"
-msgstr ""
+msgstr "Não há espaço na nave"
 
 #: dat/missions/empire/es_cargo.lua:104
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:104
@@ -55021,6 +55012,8 @@ msgid ""
 "You don't have enough cargo space to accept this mission. It requires "
 "{tonnes_free} of free space ({tonnes_short} more than you have)."
 msgstr ""
+"Não tens espaço suficiente para aceitar esta missão. Esta requer "
+"{tonnes_free} de espaço livre ({tonnes_short} mais do que o que tens)."
 
 #. able to accept the mission
 #: dat/missions/empire/es_cargo.lua:112
@@ -55028,7 +55021,7 @@ msgstr ""
 #: dat/missions/pirate/contraband.lua:175 dat/missions/zalek/zlk_test.lua:99
 #: dat/missions/zalek/zlk_test.lua:100
 msgid "Mission Accepted"
-msgstr ""
+msgstr "Missão aceite"
 
 #: dat/missions/empire/es_cargo.lua:113
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:113
@@ -66108,21 +66101,21 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant_supplies.lua:59
 msgctxt "adj delivery"
 msgid "Small"
-msgstr ""
+msgstr "Pequena"
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:61
 msgctxt "adj delivery"
 msgid "Medium"
-msgstr ""
+msgstr "Média"
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:63
 msgctxt "adj delivery"
 msgid "Large"
-msgstr ""
+msgstr "Grande"
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:65
 msgid "#oANTLEJOS:#0 {adj} delivery of supplies from {pnt} ({sys} system)"
-msgstr ""
+msgstr "#oANTLEJOS:#0 {adj} entrega de suprimentos de {pnt} (sistema {sys})"
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:69
 msgid ""
@@ -66130,6 +66123,9 @@ msgid ""
 "further accelerate the terraforming. Note that protestors from the PUAAA are "
 "expected to show up.\n"
 msgstr ""
+"Carrega {cargo} em {pnt} no sistema {sys} e leva essa carga para {retpnt} "
+"para acelerar ainda mais a terraformação. Nota que é provável os "
+"manifestantes do PUAAA aparecerem.\n"
 
 #. The price of each artefact will always be 15% of this, so at most the player will be paid 85% and at least 55%.
 #. --
@@ -66184,33 +66180,33 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant_supplies.lua:71
 #: dat/scripts/common/cargo.lua:227
 msgid "#nCargo:#0 {cargo} ({mass})"
-msgstr ""
+msgstr "#nCarga:#0 {cargo} ({mass})"
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:72
 #: dat/scripts/common/cargo.lua:235
 msgid "#nJumps:#0 {jumps}"
 msgid_plural "#nJumps:#0 {jumps}"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "#nSaltos:#0 {saltos}"
+msgstr[1] "#nSaltos:#0 {saltos}"
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:73
 #: dat/scripts/common/cargo.lua:237
 msgid "#nTravel distance:#0 {dist}"
 msgid_plural "#nTravel distance:#0 {dist}"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "#nDistância de viagem:#0 {dist}"
+msgstr[1] "#nDistância de viagem:#0 {dist}"
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:75
 msgid "#nSupplies at Antlejos V:#0 {total}"
-msgstr ""
+msgstr "#nSuprimentos em Antlejos V:#0 {total}"
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:80
 msgid "#nSupplies until next upgrade:#0 {needed}"
-msgstr ""
+msgstr "#nSuprimentos até a próxima atualização:#0 {needed}"
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:89
 msgid "Supplies for Antlejos"
-msgstr ""
+msgstr "Suprimentos para Antlejos"
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:109
 msgid "The volunteers load the equipment onto your ship and get onboard."
@@ -70852,6 +70848,9 @@ msgid ""
 "She cackles maniacally.\n"
 "\"Nice to meet you! My name is Nelly!\""
 msgstr ""
+"\"Como é que é ser humilhado pelos meus poderes mentais!\"\n"
+"Ela cacareja maniacamente.\n"
+"\"Prazer em conhecer-te! O meu nome é Nelly\"!\""
 
 #: dat/missions/neutral/poi_intro.lua:222
 msgid ""
@@ -73545,7 +73544,7 @@ msgstr ""
 #: dat/missions/pirate/blackcat.lua:265
 msgctxt "blackcat"
 msgid "\"Yes.\""
-msgstr ""
+msgstr "\"Sim.\""
 
 #: dat/missions/pirate/blackcat.lua:266
 msgctxt "blackcat"
@@ -83463,7 +83462,7 @@ msgstr ""
 #. Sells a particular outfit
 #: dat/missions/tutorial/nelly01.lua:103
 msgid "You see a young individual sitting alone at a table."
-msgstr ""
+msgstr "Vês alguém jovem sentado sozinho à mesa."
 
 #. Check to see if truly accepted
 #. Update objectives
@@ -83471,12 +83470,14 @@ msgstr ""
 #: dat/missions/tutorial/nelly02.lua:196 dat/missions/tutorial/nelly02.lua:224
 #: dat/missions/tutorial/nelly02.lua:313 dat/missions/tutorial/nelly02.lua:395
 msgid "Helping Nelly Out"
-msgstr ""
+msgstr "Ajudando a Nelly"
 
 #: dat/missions/tutorial/nelly01.lua:106
 msgid ""
 "Help Nelly deliver {tonnes} of {cargo} to {destpnt} in the {destsys} system."
 msgstr ""
+"Ajuda a Nelly a entregar {tonnes} de {cargo} para {destpnt} no sistema "
+"{destsys}."
 
 #: dat/missions/tutorial/nelly01.lua:119
 msgid ""
@@ -83487,6 +83488,11 @@ msgid ""
 "to help me take the cargo there and come back? I'll pay you your fair share."
 "\""
 msgstr ""
+"A Nelly ilumina-se quando te aproximas dela.\n"
+"\"Olá novamente! Estou um pouco desarrumada. Sabes, era suposto eu entregar "
+"alguma {carga} em {pnt} no sistema {sys}, mas a minha nave avariou-se e acho "
+"que não vou conseguir entregá-la nos próximos tempos. Estarias disposto a "
+"ajudar-me a levar a carga para lá e a regressar? Pago-te a uma parte justa.\""
 
 #: dat/missions/tutorial/nelly01.lua:123
 msgid ""
@@ -83497,12 +83503,20 @@ msgid ""
 "any time soon. Would you be willing to help me take the cargo there and come "
 "back? I'll pay you your fair share.\""
 msgstr ""
+"Ela ilumina-se quando te aproxima dela.\n"
+"\"Digamos, pareces um piloto com uma nave a funcionar. Estou um pouco "
+"confusa. Sabes, era suposto eu entregar alguma {carga} em {pnt} no sistema "
+"{sys}, mas a minha nave avariou-se e acho que não vou conseguir entregá-la "
+"tão cedo. Estarias disposto a ajudar-me a levar a carga para lá e a "
+"regressar? Pago-te uma parte justa.\""
 
 #: dat/missions/tutorial/nelly01.lua:134
 msgid ""
 "They look dejected.\n"
 "\"That's a shame. If you change your mind I'll be waiting here.\""
 msgstr ""
+"Parece desanimada.\n"
+"\"É uma pena. Se mudares de ideias, estarei aqui à espera.\""
 
 #: dat/missions/tutorial/nelly01.lua:139
 msgid ""
@@ -83511,12 +83525,18 @@ msgid ""
 "cargo, or getting rid of it from the info menu which you can open with "
 "{infokey}.\""
 msgstr ""
+"\"Não tens espaço livre suficiente para me ajudares. Terás de levar {amount} "
+"de {carga}. Por favor, arranja algum espaço livre, vendendo alguma carga não "
+"desejada, ou deitando-a fora no menu de informação que podes abrir com "
+"{infokey}.\""
 
 #: dat/missions/tutorial/nelly01.lua:152
 msgid ""
 "\"Great! I'll have the dock workers load up your ship and we can be off. "
 "This should be a piece of cake.\""
 msgstr ""
+"\"Ótimo! Vou pedir aos trabalhadores da doca que carreguem a tua nave e "
+"podemos partir. Isto deve ser canja.\""
 
 #: dat/missions/tutorial/nelly01.lua:154
 msgid ""
@@ -83526,6 +83546,11 @@ msgid ""
 "   They cock their head a bit at you.\n"
 "   \"Say, you wouldn't happen to be a novice pilot?\""
 msgstr ""
+"\"Ótimo! Chamo-me Nelly. Fico feliz em conhecer-te. Vou pedir aos "
+"estivadores que carreguem a tua nave e podemos partir. Isso deve ser fácil.\""
+"\n"
+"   Eles inclinam a cabeça um pouco para ti.\n"
+"   \"Por acaso não és um piloto novato?\""
 
 #: dat/missions/tutorial/nelly01.lua:166
 msgid ""
@@ -83536,21 +83561,30 @@ msgid ""
 "that will help you get the directions to {sys}. You can buy it at the main "
 "landing window or the outfiting window. Anyway, Let's get going!\""
 msgstr ""
+"\"Eu sabia! Pareces ter uma aura agradável e fresca ao teu redor. Lembras-me "
+"quando eu estava a aprender. Começar pode ser um pouco complicado, por isso "
+"espero que não te importes se eu te der alguns conselhos.\"\n"
+"   \"Para começar, se ainda não o fizeste, deves comprar um #oMapa local#0 "
+"que te ajudará a obter as direções para {sys}. Podes comprá-lo na janela "
+"principal de desembarque ou na janela de equipamento. De qualquer forma, "
+"vamos lá!\""
 
 #: dat/missions/tutorial/nelly01.lua:171
 msgid ""
 "\"Weird. I could have sworn you had some sort of new pilot aura around you. "
 "Must have been my imagination. Let's get going!\""
 msgstr ""
+"\"Estranho. Podia jurar que tinhas uma espécie de aura de um piloto novo à "
+"tua volta. Deve ter sido imaginação minha. Vamos andando!\""
 
 #: dat/missions/tutorial/nelly01.lua:188
 msgid "Deliver cargo to {pnt} in {sys}"
-msgstr ""
+msgstr "Entregar a carga a {pnt} em {sys}"
 
 #: dat/missions/tutorial/nelly01.lua:189 dat/missions/tutorial/nelly02.lua:226
 #: dat/missions/tutorial/nelly02.lua:397
 msgid "Return to {pnt} in {sys}"
-msgstr ""
+msgstr "Voltar a {pnt} em {sys}"
 
 #. Delivered Cargo
 #: dat/missions/tutorial/nelly01.lua:211
@@ -83558,6 +83592,8 @@ msgid ""
 "You land on {pnt} and the dockworkers offload your cargo. This delivery "
 "stuff is quite easy."
 msgstr ""
+"Aterras em {pnt} e os estivadores descarregam a tua carga. Esta entrega é "
+"muito fácil."
 
 #: dat/missions/tutorial/nelly01.lua:212
 msgid ""
@@ -85712,7 +85748,7 @@ msgstr ""
 #: dat/missions/zalek/blackhole/zbh02.lua:116
 msgctxt "to Evil PI 1"
 msgid "\"Yes.\""
-msgstr ""
+msgstr "\"Sim.\""
 
 #: dat/missions/zalek/blackhole/zbh02.lua:117
 msgctxt "to Evil PI 1"
@@ -85741,7 +85777,7 @@ msgstr ""
 #: dat/missions/zalek/blackhole/zbh02.lua:133
 msgctxt "to Evil PI 2"
 msgid "\"Yes.\""
-msgstr ""
+msgstr "\"Sim.\""
 
 #: dat/missions/zalek/blackhole/zbh02.lua:134
 msgctxt "to Evil PI 2"
@@ -88128,6 +88164,7 @@ msgid ""
 "You see a young scientist talking with some pilots, apparently without "
 "success."
 msgstr ""
+"Vês um jovem cientista a falar com alguns pilotos, aparentemente sem sucesso."
 
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:56
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:133
@@ -93840,7 +93877,7 @@ msgstr ""
 
 #: dat/scripts/common/cargo.lua:244
 msgid "#nTime limit:#0 {deadline}"
-msgstr ""
+msgstr "#nLimite de tempo:#0 {deadline}"
 
 #.
 #. Helper for census missions (where the player has to get in range
@@ -100102,182 +100139,182 @@ msgstr ""
 #: src/SDL_keynames.h:28
 msgctxt "keyname"
 msgid "A"
-msgstr ""
+msgstr "A"
 
 #: src/SDL_keynames.h:29
 msgctxt "keyname"
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: src/SDL_keynames.h:30
 msgctxt "keyname"
 msgid "C"
-msgstr ""
+msgstr "C"
 
 #: src/SDL_keynames.h:31
 msgctxt "keyname"
 msgid "D"
-msgstr ""
+msgstr "D"
 
 #: src/SDL_keynames.h:32
 msgctxt "keyname"
 msgid "E"
-msgstr ""
+msgstr "E"
 
 #: src/SDL_keynames.h:33
 msgctxt "keyname"
 msgid "F"
-msgstr ""
+msgstr "F"
 
 #: src/SDL_keynames.h:34
 msgctxt "keyname"
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #: src/SDL_keynames.h:35
 msgctxt "keyname"
 msgid "H"
-msgstr ""
+msgstr "H"
 
 #: src/SDL_keynames.h:36
 msgctxt "keyname"
 msgid "I"
-msgstr ""
+msgstr "I"
 
 #: src/SDL_keynames.h:37
 msgctxt "keyname"
 msgid "J"
-msgstr ""
+msgstr "J"
 
 #: src/SDL_keynames.h:38
 msgctxt "keyname"
 msgid "K"
-msgstr ""
+msgstr "K"
 
 #: src/SDL_keynames.h:39
 msgctxt "keyname"
 msgid "L"
-msgstr ""
+msgstr "L"
 
 #: src/SDL_keynames.h:40
 msgctxt "keyname"
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #: src/SDL_keynames.h:41
 msgctxt "keyname"
 msgid "N"
-msgstr ""
+msgstr "N"
 
 #: src/SDL_keynames.h:42
 msgctxt "keyname"
 msgid "O"
-msgstr ""
+msgstr "O"
 
 #: src/SDL_keynames.h:43
 msgctxt "keyname"
 msgid "P"
-msgstr ""
+msgstr "P"
 
 #: src/SDL_keynames.h:44
 msgctxt "keyname"
 msgid "Q"
-msgstr ""
+msgstr "Q"
 
 #: src/SDL_keynames.h:45
 msgctxt "keyname"
 msgid "R"
-msgstr ""
+msgstr "R"
 
 #: src/SDL_keynames.h:46
 msgctxt "keyname"
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: src/SDL_keynames.h:47
 msgctxt "keyname"
 msgid "T"
-msgstr ""
+msgstr "T"
 
 #: src/SDL_keynames.h:48
 msgctxt "keyname"
 msgid "U"
-msgstr ""
+msgstr "U"
 
 #: src/SDL_keynames.h:49
 msgctxt "keyname"
 msgid "V"
-msgstr ""
+msgstr "V"
 
 #: src/SDL_keynames.h:50
 msgctxt "keyname"
 msgid "W"
-msgstr ""
+msgstr "W"
 
 #: src/SDL_keynames.h:51
 msgctxt "keyname"
 msgid "X"
-msgstr ""
+msgstr "X"
 
 #: src/SDL_keynames.h:52
 msgctxt "keyname"
 msgid "Y"
-msgstr ""
+msgstr "Y"
 
 #: src/SDL_keynames.h:53
 msgctxt "keyname"
 msgid "Z"
-msgstr ""
+msgstr "Z"
 
 #: src/SDL_keynames.h:54
 msgctxt "keyname"
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: src/SDL_keynames.h:55
 msgctxt "keyname"
 msgid "2"
-msgstr ""
+msgstr "2"
 
 #: src/SDL_keynames.h:56
 msgctxt "keyname"
 msgid "3"
-msgstr ""
+msgstr "3"
 
 #: src/SDL_keynames.h:57
 msgctxt "keyname"
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: src/SDL_keynames.h:58
 msgctxt "keyname"
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: src/SDL_keynames.h:59
 msgctxt "keyname"
 msgid "6"
-msgstr ""
+msgstr "6"
 
 #: src/SDL_keynames.h:60
 msgctxt "keyname"
 msgid "7"
-msgstr ""
+msgstr "7"
 
 #: src/SDL_keynames.h:61
 msgctxt "keyname"
 msgid "8"
-msgstr ""
+msgstr "8"
 
 #: src/SDL_keynames.h:62
 msgctxt "keyname"
 msgid "9"
-msgstr ""
+msgstr "9"
 
 #: src/SDL_keynames.h:63
 msgctxt "keyname"
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: src/SDL_keynames.h:64 src/SDL_keynames.h:165
 msgctxt "keyname"
@@ -100287,7 +100324,7 @@ msgstr ""
 #: src/SDL_keynames.h:65
 msgctxt "keyname"
 msgid "Escape"
-msgstr ""
+msgstr "Escape"
 
 #: src/SDL_keynames.h:66
 msgctxt "keyname"
@@ -100302,72 +100339,72 @@ msgstr ""
 #: src/SDL_keynames.h:68
 msgctxt "keyname"
 msgid "Space"
-msgstr ""
+msgstr "Espaço"
 
 #: src/SDL_keynames.h:69
 msgctxt "keyname"
 msgid "-"
-msgstr ""
+msgstr "-"
 
 #: src/SDL_keynames.h:70
 msgctxt "keyname"
 msgid "="
-msgstr ""
+msgstr "="
 
 #: src/SDL_keynames.h:71
 msgctxt "keyname"
 msgid "["
-msgstr ""
+msgstr "["
 
 #: src/SDL_keynames.h:72
 msgctxt "keyname"
 msgid "]"
-msgstr ""
+msgstr "]"
 
 #: src/SDL_keynames.h:73
 msgctxt "keyname"
 msgid "\\"
-msgstr ""
+msgstr "\\"
 
 #: src/SDL_keynames.h:74
 msgctxt "keyname"
 msgid "#"
-msgstr ""
+msgstr "#"
 
 #: src/SDL_keynames.h:75
 msgctxt "keyname"
 msgid ";"
-msgstr ""
+msgstr ";"
 
 #: src/SDL_keynames.h:76
 msgctxt "keyname"
 msgid "'"
-msgstr ""
+msgstr "'"
 
 #: src/SDL_keynames.h:77
 msgctxt "keyname"
 msgid "`"
-msgstr ""
+msgstr "`"
 
 #: src/SDL_keynames.h:78
 msgctxt "keyname"
 msgid "("
-msgstr ""
+msgstr "("
 
 #: src/SDL_keynames.h:79
 msgctxt "keyname"
 msgid ")"
-msgstr ""
+msgstr ")"
 
 #: src/SDL_keynames.h:80
 msgctxt "keyname"
 msgid "."
-msgstr ""
+msgstr "."
 
 #: src/SDL_keynames.h:81
 msgctxt "keyname"
 msgid "/"
-msgstr ""
+msgstr "/"
 
 #: src/SDL_keynames.h:82
 msgctxt "keyname"
@@ -100377,152 +100414,152 @@ msgstr ""
 #: src/SDL_keynames.h:83
 msgctxt "keyname"
 msgid "F1"
-msgstr ""
+msgstr "F1"
 
 #: src/SDL_keynames.h:84
 msgctxt "keyname"
 msgid "F2"
-msgstr ""
+msgstr "F2"
 
 #: src/SDL_keynames.h:85
 msgctxt "keyname"
 msgid "F3"
-msgstr ""
+msgstr "F3"
 
 #: src/SDL_keynames.h:86
 msgctxt "keyname"
 msgid "F4"
-msgstr ""
+msgstr "F4"
 
 #: src/SDL_keynames.h:87
 msgctxt "keyname"
 msgid "F5"
-msgstr ""
+msgstr "F5"
 
 #: src/SDL_keynames.h:88
 msgctxt "keyname"
 msgid "F6"
-msgstr ""
+msgstr "F6"
 
 #: src/SDL_keynames.h:89
 msgctxt "keyname"
 msgid "F7"
-msgstr ""
+msgstr "F7"
 
 #: src/SDL_keynames.h:90
 msgctxt "keyname"
 msgid "F8"
-msgstr ""
+msgstr "F8"
 
 #: src/SDL_keynames.h:91
 msgctxt "keyname"
 msgid "F9"
-msgstr ""
+msgstr "F9"
 
 #: src/SDL_keynames.h:92
 msgctxt "keyname"
 msgid "F10"
-msgstr ""
+msgstr "F10"
 
 #: src/SDL_keynames.h:93
 msgctxt "keyname"
 msgid "F11"
-msgstr ""
+msgstr "F11"
 
 #: src/SDL_keynames.h:94
 msgctxt "keyname"
 msgid "F12"
-msgstr ""
+msgstr "F12"
 
 #: src/SDL_keynames.h:95
 msgctxt "keyname"
 msgid "PrintScreen"
-msgstr ""
+msgstr "PrintScreen"
 
 #: src/SDL_keynames.h:96
 msgctxt "keyname"
 msgid "ScrollLock"
-msgstr ""
+msgstr "ScrollLock"
 
 #: src/SDL_keynames.h:97
 msgctxt "keyname"
 msgid "Pause"
-msgstr ""
+msgstr "Pause"
 
 #: src/SDL_keynames.h:98
 msgctxt "keyname"
 msgid "Insert"
-msgstr ""
+msgstr "Insert"
 
 #: src/SDL_keynames.h:99
 msgctxt "keyname"
 msgid "Home"
-msgstr ""
+msgstr "Home"
 
 #: src/SDL_keynames.h:100
 msgctxt "keyname"
 msgid "PageUp"
-msgstr ""
+msgstr "PageUp"
 
 #: src/SDL_keynames.h:101
 msgctxt "keyname"
 msgid "Delete"
-msgstr ""
+msgstr "Delete"
 
 #: src/SDL_keynames.h:102
 msgctxt "keyname"
 msgid "End"
-msgstr ""
+msgstr "End"
 
 #: src/SDL_keynames.h:103
 msgctxt "keyname"
 msgid "PageDown"
-msgstr ""
+msgstr "PageDown"
 
 #: src/SDL_keynames.h:104
 msgctxt "keyname"
 msgid "Right"
-msgstr ""
+msgstr "Direita"
 
 #: src/SDL_keynames.h:105
 msgctxt "keyname"
 msgid "Left"
-msgstr ""
+msgstr "Esquerda"
 
 #: src/SDL_keynames.h:106
 msgctxt "keyname"
 msgid "Down"
-msgstr ""
+msgstr "Para baixo"
 
 #: src/SDL_keynames.h:107
 msgctxt "keyname"
 msgid "Up"
-msgstr ""
+msgstr "Para cima"
 
 #: src/SDL_keynames.h:108
 msgctxt "keyname"
 msgid "Numlock"
-msgstr ""
+msgstr "Numlock"
 
 #: src/SDL_keynames.h:109
 msgctxt "keyname"
 msgid "Keypad /"
-msgstr ""
+msgstr "/ do teclado numérico"
 
 #: src/SDL_keynames.h:110
 msgctxt "keyname"
 msgid "Keypad *"
-msgstr ""
+msgstr "* do teclado numérico"
 
 #: src/SDL_keynames.h:111
 msgctxt "keyname"
 msgid "Keypad -"
-msgstr ""
+msgstr "- do teclado numérico"
 
 #: src/SDL_keynames.h:112
 msgctxt "keyname"
 msgid "Keypad +"
-msgstr ""
+msgstr "+ do teclado numérico"
 
 #: src/SDL_keynames.h:113
 msgctxt "keyname"
@@ -100532,57 +100569,57 @@ msgstr ""
 #: src/SDL_keynames.h:114
 msgctxt "keyname"
 msgid "Keypad 1"
-msgstr ""
+msgstr "1 do teclado numérico"
 
 #: src/SDL_keynames.h:115
 msgctxt "keyname"
 msgid "Keypad 2"
-msgstr ""
+msgstr "2 do teclado numérico"
 
 #: src/SDL_keynames.h:116
 msgctxt "keyname"
 msgid "Keypad 3"
-msgstr ""
+msgstr "3 do teclado numérico"
 
 #: src/SDL_keynames.h:117
 msgctxt "keyname"
 msgid "Keypad 4"
-msgstr ""
+msgstr "4 do teclado numérico"
 
 #: src/SDL_keynames.h:118
 msgctxt "keyname"
 msgid "Keypad 5"
-msgstr ""
+msgstr "5 do teclado numérico"
 
 #: src/SDL_keynames.h:119
 msgctxt "keyname"
 msgid "Keypad 6"
-msgstr ""
+msgstr "6 do teclado numérico"
 
 #: src/SDL_keynames.h:120
 msgctxt "keyname"
 msgid "Keypad 7"
-msgstr ""
+msgstr "7 do teclado numérico"
 
 #: src/SDL_keynames.h:121
 msgctxt "keyname"
 msgid "Keypad 8"
-msgstr ""
+msgstr "8 do teclado numérico"
 
 #: src/SDL_keynames.h:122
 msgctxt "keyname"
 msgid "Keypad 9"
-msgstr ""
+msgstr "9 do teclado numérico"
 
 #: src/SDL_keynames.h:123
 msgctxt "keyname"
 msgid "Keypad 0"
-msgstr ""
+msgstr "0 do teclado numérico"
 
 #: src/SDL_keynames.h:124
 msgctxt "keyname"
 msgid "Keypad ."
-msgstr ""
+msgstr ". do teclado numérico"
 
 #: src/SDL_keynames.h:126
 msgctxt "keyname"
@@ -100597,67 +100634,67 @@ msgstr ""
 #: src/SDL_keynames.h:128
 msgctxt "keyname"
 msgid "Keypad ="
-msgstr ""
+msgstr "= do teclado numérico"
 
 #: src/SDL_keynames.h:129
 msgctxt "keyname"
 msgid "F13"
-msgstr ""
+msgstr "F13"
 
 #: src/SDL_keynames.h:130
 msgctxt "keyname"
 msgid "F14"
-msgstr ""
+msgstr "F14"
 
 #: src/SDL_keynames.h:131
 msgctxt "keyname"
 msgid "F15"
-msgstr ""
+msgstr "F15"
 
 #: src/SDL_keynames.h:132
 msgctxt "keyname"
 msgid "F16"
-msgstr ""
+msgstr "F16"
 
 #: src/SDL_keynames.h:133
 msgctxt "keyname"
 msgid "F17"
-msgstr ""
+msgstr "F17"
 
 #: src/SDL_keynames.h:134
 msgctxt "keyname"
 msgid "F18"
-msgstr ""
+msgstr "F18"
 
 #: src/SDL_keynames.h:135
 msgctxt "keyname"
 msgid "F19"
-msgstr ""
+msgstr "F19"
 
 #: src/SDL_keynames.h:136
 msgctxt "keyname"
 msgid "F20"
-msgstr ""
+msgstr "F20"
 
 #: src/SDL_keynames.h:137
 msgctxt "keyname"
 msgid "F21"
-msgstr ""
+msgstr "F21"
 
 #: src/SDL_keynames.h:138
 msgctxt "keyname"
 msgid "F22"
-msgstr ""
+msgstr "F22"
 
 #: src/SDL_keynames.h:139
 msgctxt "keyname"
 msgid "F23"
-msgstr ""
+msgstr "F23"
 
 #: src/SDL_keynames.h:140
 msgctxt "keyname"
 msgid "F24"
-msgstr ""
+msgstr "F24"
 
 #: src/SDL_keynames.h:141
 msgctxt "keyname"
@@ -100692,52 +100729,52 @@ msgstr ""
 #: src/SDL_keynames.h:147
 msgctxt "keyname"
 msgid "Undo"
-msgstr ""
+msgstr "Desfazer"
 
 #: src/SDL_keynames.h:148
 msgctxt "keyname"
 msgid "Cut"
-msgstr ""
+msgstr "Cortar"
 
 #: src/SDL_keynames.h:149
 msgctxt "keyname"
 msgid "Copy"
-msgstr ""
+msgstr "Copiar"
 
 #: src/SDL_keynames.h:150
 msgctxt "keyname"
 msgid "Paste"
-msgstr ""
+msgstr "Colar"
 
 #: src/SDL_keynames.h:151
 msgctxt "keyname"
 msgid "Find"
-msgstr ""
+msgstr "Procurar"
 
 #: src/SDL_keynames.h:152
 msgctxt "keyname"
 msgid "Mute"
-msgstr ""
+msgstr "Sem som"
 
 #: src/SDL_keynames.h:153
 msgctxt "keyname"
 msgid "VolumeUp"
-msgstr ""
+msgstr "Aumentar volume"
 
 #: src/SDL_keynames.h:154
 msgctxt "keyname"
 msgid "VolumeDown"
-msgstr ""
+msgstr "Diminuir volume"
 
 #: src/SDL_keynames.h:156
 msgctxt "keyname"
 msgid "Keypad ,"
-msgstr ""
+msgstr ", do teclado numérico"
 
 #: src/SDL_keynames.h:157
 msgctxt "keyname"
 msgid "Keypad = (AS400)"
-msgstr ""
+msgstr "= do teclado numérico (AS400)"
 
 #: src/SDL_keynames.h:160
 msgctxt "keyname"
@@ -100747,7 +100784,7 @@ msgstr ""
 #: src/SDL_keynames.h:161
 msgctxt "keyname"
 msgid "SysReq"
-msgstr ""
+msgstr "SysReq"
 
 #: src/SDL_keynames.h:162
 msgctxt "keyname"
@@ -100802,7 +100839,7 @@ msgstr ""
 #: src/SDL_keynames.h:174
 msgctxt "keyname"
 msgid "Keypad 000"
-msgstr ""
+msgstr "000 do teclado numérico"
 
 #: src/SDL_keynames.h:175
 msgctxt "keyname"
@@ -100827,22 +100864,22 @@ msgstr ""
 #: src/SDL_keynames.h:179
 msgctxt "keyname"
 msgid "Keypad ("
-msgstr ""
+msgstr "( do teclado numérico"
 
 #: src/SDL_keynames.h:180
 msgctxt "keyname"
 msgid "Keypad )"
-msgstr ""
+msgstr ") do teclado numérico"
 
 #: src/SDL_keynames.h:181
 msgctxt "keyname"
 msgid "Keypad {"
-msgstr ""
+msgstr "{ do teclado numérico"
 
 #: src/SDL_keynames.h:182
 msgctxt "keyname"
 msgid "Keypad }"
-msgstr ""
+msgstr "} do teclado numérico"
 
 #: src/SDL_keynames.h:183
 msgctxt "keyname"
@@ -100857,102 +100894,102 @@ msgstr "Backspace do teclado numérico"
 #: src/SDL_keynames.h:185
 msgctxt "keyname"
 msgid "Keypad A"
-msgstr ""
+msgstr "A do teclado numérico"
 
 #: src/SDL_keynames.h:186
 msgctxt "keyname"
 msgid "Keypad B"
-msgstr ""
+msgstr "B do teclado numérico"
 
 #: src/SDL_keynames.h:187
 msgctxt "keyname"
 msgid "Keypad C"
-msgstr ""
+msgstr "C do teclado numérico"
 
 #: src/SDL_keynames.h:188
 msgctxt "keyname"
 msgid "Keypad D"
-msgstr ""
+msgstr "D do teclado numérico"
 
 #: src/SDL_keynames.h:189
 msgctxt "keyname"
 msgid "Keypad E"
-msgstr ""
+msgstr "E do teclado numérico"
 
 #: src/SDL_keynames.h:190
 msgctxt "keyname"
 msgid "Keypad F"
-msgstr ""
+msgstr "F do teclado numérico"
 
 #: src/SDL_keynames.h:191
 msgctxt "keyname"
 msgid "Keypad XOR"
-msgstr ""
+msgstr "XOR do teclado numérico"
 
 #: src/SDL_keynames.h:192
 msgctxt "keyname"
 msgid "Keypad ^"
-msgstr ""
+msgstr "^ do teclado numérico"
 
 #: src/SDL_keynames.h:193
 msgctxt "keyname"
 msgid "Keypad %"
-msgstr ""
+msgstr "% do teclado numérico"
 
 #: src/SDL_keynames.h:194
 msgctxt "keyname"
 msgid "Keypad <"
-msgstr ""
+msgstr "< do teclado numérico"
 
 #: src/SDL_keynames.h:195
 msgctxt "keyname"
 msgid "Keypad >"
-msgstr ""
+msgstr "> do teclado numérico"
 
 #: src/SDL_keynames.h:196
 msgctxt "keyname"
 msgid "Keypad &"
-msgstr ""
+msgstr "& do teclado numérico"
 
 #: src/SDL_keynames.h:197
 msgctxt "keyname"
 msgid "Keypad &&"
-msgstr ""
+msgstr "&& do teclado numérico"
 
 #: src/SDL_keynames.h:198
 msgctxt "keyname"
 msgid "Keypad |"
-msgstr ""
+msgstr "| do teclado numérico"
 
 #: src/SDL_keynames.h:199
 msgctxt "keyname"
 msgid "Keypad ||"
-msgstr ""
+msgstr "|| do teclado numérico"
 
 #: src/SDL_keynames.h:200
 msgctxt "keyname"
 msgid "Keypad :"
-msgstr ""
+msgstr ": do teclado numérico"
 
 #: src/SDL_keynames.h:201
 msgctxt "keyname"
 msgid "Keypad #"
-msgstr ""
+msgstr "# do teclado numérico"
 
 #: src/SDL_keynames.h:202
 msgctxt "keyname"
 msgid "Keypad Space"
-msgstr ""
+msgstr "Espaço do teclado numérico"
 
 #: src/SDL_keynames.h:203
 msgctxt "keyname"
 msgid "Keypad @"
-msgstr ""
+msgstr "@ do teclado numérico"
 
 #: src/SDL_keynames.h:204
 msgctxt "keyname"
 msgid "Keypad !"
-msgstr ""
+msgstr "! do teclado numérico"
 
 #: src/SDL_keynames.h:205
 msgctxt "keyname"
@@ -101027,17 +101064,17 @@ msgstr ""
 #: src/SDL_keynames.h:220
 msgctxt "keyname"
 msgid "Left Ctrl"
-msgstr ""
+msgstr "Ctrl esquerdo"
 
 #: src/SDL_keynames.h:221
 msgctxt "keyname"
 msgid "Left Shift"
-msgstr ""
+msgstr "Shift esquerdo"
 
 #: src/SDL_keynames.h:222
 msgctxt "keyname"
 msgid "Left Alt"
-msgstr ""
+msgstr "Alt esquerdo"
 
 #: src/SDL_keynames.h:223
 msgctxt "keyname"
@@ -101047,17 +101084,17 @@ msgstr ""
 #: src/SDL_keynames.h:224
 msgctxt "keyname"
 msgid "Right Ctrl"
-msgstr ""
+msgstr "Ctrl direito"
 
 #: src/SDL_keynames.h:225
 msgctxt "keyname"
 msgid "Right Shift"
-msgstr ""
+msgstr "Shift direito"
 
 #: src/SDL_keynames.h:226
 msgctxt "keyname"
 msgid "Right Alt"
-msgstr ""
+msgstr "Alt direito"
 
 #: src/SDL_keynames.h:227
 msgctxt "keyname"
@@ -101102,7 +101139,7 @@ msgstr ""
 #: src/SDL_keynames.h:238
 msgctxt "keyname"
 msgid "WWW"
-msgstr ""
+msgstr "WWW"
 
 #: src/SDL_keynames.h:239
 msgctxt "keyname"
@@ -101112,7 +101149,7 @@ msgstr ""
 #: src/SDL_keynames.h:240
 msgctxt "keyname"
 msgid "Calculator"
-msgstr ""
+msgstr "Calculadora"
 
 #: src/SDL_keynames.h:241
 msgctxt "keyname"
@@ -101192,7 +101229,7 @@ msgstr ""
 #: src/SDL_keynames.h:256
 msgctxt "keyname"
 msgid "Sleep"
-msgstr ""
+msgstr "Adormecer"
 
 #. error has occurred
 #: src/ai.c:420
@@ -102450,39 +102487,39 @@ msgstr ""
 #: src/dev_sysedit.c:1359 src/dev_uniedit.c:1774 src/dev_uniedit.c:2058
 #: src/equipment.c:1761 src/info.c:572 src/load.c:729
 msgid "Name:"
-msgstr ""
+msgstr "Nome:"
 
 #: src/dev_sysedit.c:1367
 msgid "Faction"
-msgstr ""
+msgstr "Fação"
 
 #: src/dev_sysedit.c:1371 src/land.c:1323 src/map.c:341
 msgid "Faction:"
-msgstr ""
+msgstr "Fação:"
 
 #: src/dev_sysedit.c:1380
 msgid "Population"
-msgstr ""
+msgstr "População"
 
 #: src/dev_sysedit.c:1388
 msgid "Class"
-msgstr ""
+msgstr "Classe"
 
 #: src/dev_sysedit.c:1395
 msgid "Lua"
-msgstr ""
+msgstr "Lua"
 
 #: src/dev_sysedit.c:1404
 msgid "Base Presence"
-msgstr ""
+msgstr "Presença base"
 
 #: src/dev_sysedit.c:1412
 msgid "Bonus Presence"
-msgstr ""
+msgstr "Presença bónus"
 
 #: src/dev_sysedit.c:1420
 msgid "Range"
-msgstr ""
+msgstr "Alcance"
 
 #: src/dev_sysedit.c:1430
 msgid "hide"
@@ -102545,40 +102582,40 @@ msgstr ""
 
 #: src/dev_sysedit.c:1620
 msgid "Density: "
-msgstr ""
+msgstr "Densidade: "
 
 #: src/dev_sysedit.c:1626 src/dev_sysedit.c:1797
 msgid "Radius: "
-msgstr "Radio"
+msgstr "Raio: "
 
 #: src/dev_sysedit.c:1633
 msgid "Max Speed: "
-msgstr ""
+msgstr "Velocidade máxima: "
 
 #: src/dev_sysedit.c:1639
 msgid "Thrust: "
-msgstr ""
+msgstr "Impulso:"
 
 #: src/dev_sysedit.c:1653 src/dev_uniedit.c:398 src/map.c:888
 msgid "Asteroids"
-msgstr ""
+msgstr "Asteróides"
 
 #: src/dev_sysedit.c:1655
 msgid "Available"
-msgstr ""
+msgstr "Disponível"
 
 #: src/dev_sysedit.c:1659
 msgid "Rm Asteroid"
-msgstr ""
+msgstr "Remover asteroide"
 
 #: src/dev_sysedit.c:1661
 msgid "Add Asteroid"
-msgstr ""
+msgstr "Adicionar asteróide"
 
 #: src/dev_sysedit.c:1663 src/dev_sysedit.c:1806 src/info.c:1612 src/load.c:551
 #: src/load.c:630
 msgid "Delete"
-msgstr ""
+msgstr "Eliminar"
 
 #: src/dev_sysedit.c:1748
 msgid "Remove Asteroid Field"
@@ -103439,29 +103476,29 @@ msgstr ""
 #. Display widget.
 #: src/equipment.c:2315
 msgid "Ship Sold"
-msgstr ""
+msgstr "Nave vendida"
 
 #: src/equipment.c:2316
 #, c-format
 msgid "You have sold your ship %s for %s."
-msgstr ""
+msgstr "Vendeste a tua nave %s por %s."
 
 #: src/equipment.c:2340 src/player.c:392
 msgid "Ship Name"
-msgstr ""
+msgstr "Nome da nave"
 
 #: src/equipment.c:2341
 #, c-format
 msgid "Please enter a new name for your %s:"
-msgstr ""
+msgstr "Introduz um novo nome para a tua %s:"
 
 #: src/equipment.c:2349
 msgid "Name Collision"
-msgstr ""
+msgstr "Colisão de nomes"
 
 #: src/equipment.c:2350 src/player.c:419
 msgid "Please do not give the ship the same name as another of your ships."
-msgstr ""
+msgstr "Não atribuas à nave o mesmo nome de outra das tuas naves."
 
 #: src/escort.c:248
 #, c-format
@@ -103492,27 +103529,27 @@ msgstr ""
 
 #: src/escort.c:366
 msgid "Hold Position"
-msgstr ""
+msgstr "Manter posição"
 
 #: src/escort.c:367
 msgid "Return To Ship"
-msgstr ""
+msgstr "Regressar à nave"
 
 #: src/escort.c:368
 msgid "Clear Orders"
-msgstr ""
+msgstr "Limpar ordens"
 
 #: src/escort.c:377
 msgid "Escort Orders"
-msgstr ""
+msgstr "Ordens de escolta"
 
 #: src/escort.c:378
 msgid "Select the order to give to this escort."
-msgstr ""
+msgstr "Seleciona a ordem a dar a esta escolta."
 
 #: src/escort.c:422
 msgid "#gEscorts: #0Jumping."
-msgstr ""
+msgstr "#gEscoltas: #0a saltar."
 
 #: src/event.c:221
 #, c-format
@@ -103993,23 +104030,23 @@ msgstr ""
 
 #: src/info.c:59
 msgid "Main"
-msgstr ""
+msgstr "Principal"
 
 #: src/info.c:60 src/map_find.c:970
 msgid "Ship"
-msgstr ""
+msgstr "Nave"
 
 #: src/info.c:61
 msgid "Weapons"
-msgstr ""
+msgstr "Armas"
 
 #: src/info.c:62
 msgid "Cargo"
-msgstr ""
+msgstr "Carga"
 
 #: src/info.c:63 src/land.c:999 src/space.c:172
 msgid "Missions"
-msgstr ""
+msgstr "Missões"
 
 #: src/info.c:64
 msgid "Standings"
@@ -104028,108 +104065,110 @@ msgstr ""
 
 #: src/info.c:384 src/load.c:738
 msgid "Date:"
-msgstr ""
+msgstr "Data:"
 
 #: src/info.c:385 src/land.c:1326 src/land_outfits.c:427
 #: src/land_shipyard.c:311 src/land_trade.c:91 src/map_find.c:639
 msgid "Money:"
-msgstr ""
+msgstr "Dinheiro:"
 
 #: src/info.c:386
 msgid "Current Ship:"
-msgstr ""
+msgstr "Nave atual:"
 
 #: src/info.c:388
 msgid "Cargo (fleet):"
-msgstr ""
+msgstr "Carga (frota):"
 
 #: src/info.c:389
 msgid "Time played:"
-msgstr ""
+msgstr "Tempo a jogar:"
 
 #: src/info.c:390
 msgid "Times died:"
-msgstr ""
+msgstr "Número de mortes:"
 
 #: src/info.c:391
 msgid "Times jumped:"
-msgstr ""
+msgstr "Saltos dados:"
 
 #: src/info.c:392
 msgid "Times landed:"
-msgstr ""
+msgstr "Aterragens feitas:"
 
 #: src/info.c:393
 msgid "Damage done:"
-msgstr ""
+msgstr "Danos causados:"
 
 #: src/info.c:394
 msgid "Damage taken:"
-msgstr ""
+msgstr "Danos sofridos:"
 
 #: src/info.c:395
 msgid "Ships destroyed:"
-msgstr ""
+msgstr "Naves destruídas:"
 
 #: src/info.c:428
 msgid "Set GUI"
-msgstr ""
+msgstr "Configurar GUI"
 
 #: src/info.c:445
 msgid "License: "
-msgstr ""
+msgstr "Licença: "
 
 #: src/info.c:452
 #, c-format
 msgid "%s (%d)"
-msgstr ""
+msgstr "%s (%d)"
 
 #: src/info.c:457
 msgid "Inventory"
-msgstr ""
+msgstr "Inventário"
 
 #: src/info.c:496
 msgid "No GUI available."
-msgstr ""
+msgstr "Nenhuma GUI disponível."
 
 #: src/info.c:497
 msgid ""
 "There are no GUI available, this means something went wrong somewhere. "
 "Inform the Naev maintainer."
 msgstr ""
+"Não há GUI disponível, isso significa que algo correu mal. Informa o "
+"programador do Naev."
 
 #. window
 #: src/info.c:502
 msgid "Select GUI"
-msgstr ""
+msgstr "Selecionar GUI"
 
 #: src/info.c:520 src/load.c:549 src/load.c:628 src/menu.c:452
 msgid "Load"
-msgstr ""
+msgstr "Carregar"
 
 #: src/info.c:591
 msgid "Stats:"
-msgstr ""
+msgstr "Estatísticas:"
 
 #: src/info.c:626 src/land_shipyard.c:257 src/map_system.c:663
 #, c-format
 msgid "%.0f kN/tonne"
-msgstr ""
+msgstr "%.0f kN/tonelada"
 
 #: src/info.c:628
 #, c-format
 msgid "%.0f m/s (max %.0f m/s)"
-msgstr ""
+msgstr "%.0f m/s (máx %.0f m/s)"
 
 #: src/info.c:631 src/land_shipyard.c:267 src/map_system.c:667
 #, c-format
 msgid "%.0f deg/s"
-msgstr ""
+msgstr "%.0f graus/s"
 
 #: src/info.c:637 src/info.c:639 src/info.c:641
 #, c-format
 msgid "%.0f / %.0f MJ (%.1f MW)"
-msgstr ""
+msgstr "%.0f / %.0f MJ (%.1f MW)"
 
 #: src/info.c:679
 msgid "Current Weapon Set Settings"
@@ -104197,11 +104236,11 @@ msgstr ""
 
 #: src/info.c:963
 msgid " [#bMission#0]"
-msgstr ""
+msgstr " [#bMissão#0]"
 
 #: src/info.c:964
 msgid " (#rillegal#0)"
-msgstr ""
+msgstr " (#ilegal#0)"
 
 #: src/info.c:1007
 msgid "Carried by the following ships in your fleet:\n"
@@ -104213,6 +104252,8 @@ msgid ""
 "\n"
 "   - %s (%d)"
 msgstr ""
+"\n"
+"   - %s (%d)"
 
 #: src/info.c:1016
 msgid "Illegalized by the following factions:\n"
@@ -104224,38 +104265,40 @@ msgid ""
 "\n"
 "   - %s"
 msgstr ""
+"\n"
+"   - %s"
 
 #: src/info.c:1052 src/info.c:1360
 msgid "Abort Mission"
-msgstr ""
+msgstr "Abortar a missão"
 
 #: src/info.c:1053 src/info.c:1361
 msgid "Are you sure you want to abort this mission?"
-msgstr ""
+msgstr "Tens a certeza que queres abortar esta missão?"
 
 #: src/info.c:1071
 #, c-format
 msgid "Cargo '%d' does not belong to any active mission."
-msgstr ""
+msgstr "A carga \"%d\" não pertence a nenhuma missão ativa."
 
 #: src/info.c:1245
 #, c-format
 msgid "You can have a maximum reputation of %.0f%% with this faction."
-msgstr ""
+msgstr "Podes ter uma reputação máxima de %.0f%% com esta facão."
 
 #: src/info.c:1267
 msgid "Abort"
-msgstr ""
+msgstr "Abortar"
 
 #: src/info.c:1273
 msgid "#nReward:#0"
-msgstr ""
+msgstr "#nRecompensa:#0"
 
 #. no missions
 #. Make sure you have missions.
 #: src/info.c:1312 src/land.c:687 src/land.c:749 src/land.c:784
 msgid "No Missions"
-msgstr ""
+msgstr "Sem missões"
 
 #: src/info.c:1314
 msgid "You currently have no active missions."
@@ -104991,40 +105034,40 @@ msgstr ""
 #: src/land.c:207
 #, c-format
 msgid "You're already onboard the %s."
-msgstr ""
+msgstr "Já estás a bordo de %s."
 
 #: src/land.c:213
 #, c-format
 msgid "You can not pilot the %s! The ship can only be used as an escort."
-msgstr ""
+msgstr "Não podes pilotar %s! A nave só pode ser usada como escolta."
 
 #: src/land.c:219
 #, c-format
 msgid "You can not swap ships and set %s as an escort!"
-msgstr ""
+msgstr "Não podes trocar de nave e definir %s como escolta!"
 
 #: src/land.c:231 src/land_shipyard.c:502
 #, c-format
 msgid "You have %d tonne more cargo than the new ship can hold."
 msgid_plural "You have %d tonnes more cargo than the new ship can hold."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Tens %d tonelada a mais de carga do que a nova nave pode conter."
+msgstr[1] "Tens %d toneladas a mais de carga do que a nova nave pode conter."
 
 #: src/land.c:239
 msgid "You have deployed fighters."
-msgstr ""
+msgstr "Enviaste caças."
 
 #: src/land.c:352
 msgid "Approach"
-msgstr ""
+msgstr "Abordar"
 
 #: src/land.c:413 src/land.c:419
 msgid "News"
-msgstr ""
+msgstr "Notícias"
 
 #: src/land.c:618 src/land.c:690
 msgid "Accept Mission"
-msgstr ""
+msgstr "Aceitar missão"
 
 #: src/land.c:621 src/map.c:384
 msgid "Autonav"
@@ -105035,10 +105078,12 @@ msgid ""
 "Date:\n"
 "Free Space:"
 msgstr ""
+"Data:\n"
+"Espaço livre:"
 
 #: src/land.c:691
 msgid "Are you sure you want to accept this mission?"
-msgstr ""
+msgstr "Tens a certeza de que queres aceitar esta missão?"
 
 #: src/land.c:778
 #, c-format
@@ -105049,11 +105094,15 @@ msgid_plural ""
 "%s\n"
 "%d Tonnes"
 msgstr[0] ""
+"%s\n"
+"%d tonelada"
 msgstr[1] ""
+"%s\n"
+"%d toneladas"
 
 #: src/land.c:787
 msgid "There are no missions available here."
-msgstr ""
+msgstr "Não há missões disponíveis aqui."
 
 #: src/land.c:797
 #, c-format
@@ -105061,31 +105110,33 @@ msgid ""
 "%s\n"
 "#nReward:#0 %s"
 msgstr ""
+"%s\n"
+"#nRecompensa:#0 %s"
 
 #: src/land.c:842 src/land.c:897
 #, c-format
 msgid "Outfit '%s' does not exist!"
-msgstr ""
+msgstr "O equipamento \"%s\" não existe!"
 
 #: src/land.c:875
 #, c-format
 msgid "%s (%s-class)"
-msgstr ""
+msgstr "%s (classe-%s)"
 
 #: src/land.c:879
 #, c-format
 msgid "roughly %s"
-msgstr ""
+msgstr "%s aproximadamente"
 
 #: src/land.c:886 src/load.c:350 src/load.c:354 src/map.c:803 src/map.c:817
 #: src/map.c:824 src/map.c:855 src/map.c:877
 msgid ", "
-msgstr ""
+msgstr ", "
 
 #: src/land.c:908
 #, c-format
 msgid "Buy Local Map (%s)"
-msgstr ""
+msgstr "Comprar mapa local (%s)"
 
 #: src/land.c:990
 msgid "Landing Main"
@@ -105097,7 +105148,7 @@ msgstr ""
 
 #: src/land.c:1009 src/space.c:175
 msgid "Shipyard"
-msgstr ""
+msgstr "Estaleiro"
 
 #: src/land.c:1015
 msgctxt "service"
@@ -105106,46 +105157,49 @@ msgstr "Equipamento"
 
 #: src/land.c:1020 src/space.c:173
 msgid "Commodity"
-msgstr ""
+msgstr "Produto"
 
 #. Player stats.
 #: src/land.c:1321
 msgid "Stationed at:"
-msgstr ""
+msgstr "Estacionado em:"
 
 #: src/land.c:1324
 msgid "Population:"
-msgstr ""
+msgstr "População:"
 
 #: src/land.c:1325 src/land_trade.c:90
 msgid "Free Space:"
-msgstr ""
+msgstr "Espaço livre:"
 
 #: src/land.c:1351
 msgid "No refueling services."
-msgstr ""
+msgstr "Sem serviços de reabastecimento."
 
 #: src/land.c:1355
 msgid "Game will not be saved."
-msgstr ""
+msgstr "O jogo não será guardado."
 
 #: src/land.c:1499 src/land.c:1504
 msgid "Fleet not fit for flight"
-msgstr ""
+msgstr "Frota não apta para voar"
 
 #: src/land.c:1499
 msgid "You lack the fleet capacity to take off with all selected ships."
 msgstr ""
+"Falta-te a capacidade na frota para descolar com todas as naves selecionadas."
 
 #: src/land.c:1504
 msgid ""
 "The following ships in your fleet are not space worthy, are you sure you "
 "want to take off without them?"
 msgstr ""
+"As seguintes naves da tua frota não são aptas para o espaço, tens a certeza "
+"que queres descolar sem elas?"
 
 #: src/land.c:1514
 msgid "Ship not fit for flight"
-msgstr ""
+msgstr "Nave não apta para voar"
 
 #. Only save when the player shouldn't get stranded.
 #. must be before cleaning up spob
@@ -105508,16 +105562,16 @@ msgstr ""
 #. window
 #: src/load.c:504
 msgid "Load Pilot"
-msgstr ""
+msgstr "Carregar piloto"
 
 #: src/load.c:518 src/load.c:599
 #, c-format
 msgid "%s (#r%s#0)"
-msgstr ""
+msgstr "%s (#r%s#0)"
 
 #: src/load.c:547
 msgid "Snapshots"
-msgstr ""
+msgstr "Instantâneos"
 
 #. TODO we should print the full OS path if possible here.
 #: src/load.c:555
@@ -105526,65 +105580,70 @@ msgid ""
 "Naev has detected saves in pre-0.10.0 format, and has automatically migrated "
 "them to the new format. Old saves have been backed up at '%s'."
 msgstr ""
+"O Naev detetou jogos guardados no formato pré-0.10.0 e migrou-os "
+"automaticamente para o novo formato. Foi feita uma cópia de segurança dos "
+"jogos guardados antigos em '%s'."
 
 #: src/load.c:580
 #, c-format
 msgid "Player '%s' not found in list of saves!"
-msgstr ""
+msgstr "O jogador \"%s\" não foi encontrado na lista de jogos guardados!"
 
 #. window
 #: src/load.c:586
 msgid "Load Snapshot"
-msgstr ""
+msgstr "Carregar instantâneo"
 
 #: src/load.c:626
 msgid "Save As"
-msgstr ""
+msgstr "Guardar como"
 
 #: src/load.c:664
 msgid "Save game"
-msgstr ""
+msgstr "Guardar jogo"
 
 #: src/load.c:664
 msgid "Please give the new snapshot a name:"
-msgstr ""
+msgstr "Atribui um nome ao novo instantâneo:"
 
 #: src/load.c:670 src/player.c:258
 msgid "Overwrite"
-msgstr ""
+msgstr "Substituir"
 
 #: src/load.c:671
 #, c-format
 msgid "You already have a snapshot named '%s'. Overwrite?"
-msgstr ""
+msgstr "Já tens um instantâneo com o nome \"%s\". Queres substituí-lo?"
 
 #: src/load.c:679
 msgid ""
 "Failed to save the game! You should exit and check the log to see what "
 "happened and then file a bug report!"
 msgstr ""
+"Ocorreu uma falha ao guardar o jogo! Deves sair e verificar o registo para "
+"ver o que aconteceu e, em seguida, enviar um relatório de erro!"
 
 #: src/load.c:722
 #, c-format
 msgid "%s (options)"
-msgstr ""
+msgstr "%s (opções)"
 
 #: src/load.c:725
 #, c-format
 msgid "%s (this save)"
-msgstr ""
+msgstr "%s (jogo atual guardado)"
 
 #: src/load.c:731
 msgid "Version:"
-msgstr ""
+msgstr "Versão:"
 
 #: src/load.c:736
 msgid "Difficulty:"
-msgstr ""
+msgstr "Dificuldade:"
 
 #: src/load.c:740
 msgid "Chapter:"
-msgstr ""
+msgstr "Capítulo:"
 
 #: src/load.c:742
 msgid "Spob:"
@@ -105592,20 +105651,20 @@ msgstr ""
 
 #: src/load.c:746
 msgid "Ship Name:"
-msgstr ""
+msgstr "Nome da nave:"
 
 #: src/load.c:748
 msgid "Ship Model:"
-msgstr " Modelo de nave:"
+msgstr "Modelo da nave:"
 
 #: src/load.c:790 src/load.c:946 src/load.c:981
 #, c-format
 msgid "Unable to delete %s"
-msgstr ""
+msgstr "Não foi possível eliminar %s"
 
 #: src/load.c:938 src/load.c:975
 msgid "Permanently Delete?"
-msgstr ""
+msgstr "Eliminar permanentemente?"
 
 #: src/load.c:939
 #, c-format
@@ -105613,11 +105672,13 @@ msgid ""
 "Are you sure you want to permanently delete the character '%s'?\n"
 "#rThis is an undoable action!#0"
 msgstr ""
+"Tens a certeza que queres eliminar permanentemente o personagem '%s'?\n"
+"#rIsto é uma ação irreversível!#0"
 
 #: src/load.c:949 src/load.c:989
 #, c-format
 msgid "Unable to delete '%s' directory"
-msgstr ""
+msgstr "Não foi possível eliminar o diretório \"%s\""
 
 #: src/load.c:976
 #, c-format
@@ -105625,21 +105686,23 @@ msgid ""
 "Are you sure you want to permanently delete the snapshot '%s'?\n"
 "#rThis is an undoable action!#0"
 msgstr ""
+"Tens a certeza que queres eliminar permanentemente o instantâneo \"%s\"?\n"
+"#rEsta ação não pode ser desfeita!#0"
 
 #: src/load.c:1059 src/load.c:1121
 msgid "Saved game file seems to have been deleted."
-msgstr ""
+msgstr "O ficheiro do jogo guardado parece ter sido eliminado."
 
 #: src/load.c:1082 src/load.c:1240
 #, c-format
 msgid "Saved game '%s' invalid!"
-msgstr ""
+msgstr "O jogo guardado \"%s\" é inválido!"
 
 #. Welcome message - must be before space_init.
 #: src/load.c:1175 src/player.c:319
 #, c-format
 msgid "#gWelcome to %s!"
-msgstr ""
+msgstr "#gBem-vindo a %s!"
 
 #: src/load.c:1188
 msgid "Old version detected. Sanitizing ships for slots"
@@ -105714,8 +105777,8 @@ msgstr ""
 #, c-format
 msgid "%d jump"
 msgid_plural "%d jumps"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d salto"
+msgstr[1] "%d saltos"
 
 #: src/map.c:491
 msgid "Autonav: "
@@ -106015,11 +106078,11 @@ msgstr ""
 
 #: src/map_system.c:441
 msgid "Faction: Multiple\n"
-msgstr ""
+msgstr "Fação: múltiplos\n"
 
 #: src/map_system.c:447
 msgid "Faction: N/A\n"
-msgstr ""
+msgstr "Fação: n/a\n"
 
 #. saw them all and all the same
 #: src/map_system.c:450
@@ -106211,7 +106274,7 @@ msgstr "Menu principal"
 
 #: src/menu.c:233
 msgid "Load Game"
-msgstr ""
+msgstr "Carregar jogo"
 
 #: src/menu.c:236
 msgid "New Game"
@@ -106249,34 +106312,36 @@ msgstr "Retomar"
 
 #: src/menu.c:452
 msgid "Load / Save"
-msgstr ""
+msgstr "Carregar / guardar"
 
 #: src/menu.c:461
 msgid "Exit to Title"
-msgstr "Sair para o menu principal"
+msgstr "Sair para o ecrã principal"
 
 #: src/menu.c:499
 msgid "Small menu does not exist."
-msgstr ""
+msgstr "O menu pequeno não existe."
 
 #. Stop player sounds because sometimes they hang.
 #: src/menu.c:542
 msgid "Exited game."
-msgstr "Saiu do jogo."
+msgstr "Saíste do jogo."
 
 #: src/menu.c:563
 msgid "Exit to Menu?"
-msgstr ""
+msgstr "Sair para o menu?"
 
 #: src/menu.c:563
 msgid ""
 "Are you sure you wish to exit to menu right now? The game #rwill not be "
 "saved#0 since last time you landed!"
 msgstr ""
+"Tens a certeza que queres sair agora mesmo para o menu? O jogo decorrido "
+"depois da tua última aterragem num planeta #rnão será guardado#0!"
 
 #: src/menu.c:626
 msgid "Death"
-msgstr ""
+msgstr "Morte"
 
 #: src/menu.c:633
 msgid "Continue"
@@ -106292,11 +106357,11 @@ msgstr "Sair do Naev"
 
 #: src/menu.c:695
 msgid "Are you sure you want to quit Naev?"
-msgstr "Tem certeza de que deseja sair do Naev?"
+msgstr "Tens a certeza que queres sair do Naev?"
 
 #: src/menu.c:733
 msgid "Universe Map"
-msgstr ""
+msgstr "Mapa do Universo"
 
 #: src/menu.c:736
 msgid "Map Outfits"
@@ -106304,7 +106369,7 @@ msgstr ""
 
 #: src/menu.c:739
 msgid "Exit to Main Menu"
-msgstr ""
+msgstr "Sair para o menu principal"
 
 #: src/mission.c:104 src/nlua_player.c:1489 src/nlua_player.c:1515
 #, c-format
@@ -107385,7 +107450,7 @@ msgstr ""
 #: src/nlua_player.c:1160 src/nlua_player.c:1204
 #, c-format
 msgid "Player does not own a ship named '%s'"
-msgstr ""
+msgstr "O jogador não tem uma nave com o nome \"%s\""
 
 #: src/nlua_player.c:1553 src/nlua_player.c:1575
 #, c-format
@@ -107836,11 +107901,11 @@ msgstr ""
 
 #: src/opengl.c:384 src/opengl.c:386
 msgid "yes"
-msgstr ""
+msgstr "sim"
 
 #: src/opengl.c:384 src/opengl.c:386
 msgid "no"
-msgstr ""
+msgstr "não"
 
 #: src/opengl.c:386
 #, c-format
@@ -107944,19 +108009,19 @@ msgstr[1] ""
 
 #: src/options.c:53
 msgid "Gameplay"
-msgstr ""
+msgstr "Jogabilidade"
 
 #: src/options.c:54
 msgid "Video"
-msgstr ""
+msgstr "Vídeo"
 
 #: src/options.c:55
 msgid "Audio"
-msgstr ""
+msgstr "Áudio"
 
 #: src/options.c:56
 msgid "Input"
-msgstr ""
+msgstr "Entrada"
 
 #: src/options.c:57
 msgid "Plugins"
@@ -107968,31 +108033,31 @@ msgstr ""
 
 #: src/options.c:239
 msgid "system"
-msgstr ""
+msgstr "sistema"
 
 #: src/options.c:279 src/options.c:653 src/options.c:970 src/options.c:1284
 msgid "Defaults"
-msgstr ""
+msgstr "Padrões"
 
 #: src/options.c:289
 msgid "Config Path: "
-msgstr ""
+msgstr "Caminho da configuração: "
 
 #: src/options.c:298
 msgid "Language:"
-msgstr ""
+msgstr "Idioma:"
 
 #: src/options.c:331
 msgid "Difficulty (this save):"
-msgstr ""
+msgstr "Dificuldade (jogo atual guardado):"
 
 #: src/options.c:333
 msgid "Difficulty (global):"
-msgstr ""
+msgstr "Dificuldade (global):"
 
 #: src/options.c:342
 msgid "Compilation Flags:"
-msgstr ""
+msgstr "Bandeiras de compilação:"
 
 #: src/options.c:379
 msgid "Stop Speedup At:"
@@ -108122,11 +108187,11 @@ msgstr ""
 
 #: src/options.c:851
 msgid "WASD"
-msgstr ""
+msgstr "WASD"
 
 #: src/options.c:852
 msgid "Arrow Keys"
-msgstr ""
+msgstr "Teclas de seta"
 
 #: src/options.c:856
 msgid "Restore Defaults"
@@ -108146,46 +108211,43 @@ msgid "Keybindings restored to defaults."
 msgstr ""
 
 #: src/options.c:893
-#, fuzzy
-#| msgid "Engine Reroute"
 msgid "Engine Volume"
-msgstr "Redirecionamento de Motor"
+msgstr "Volume do motor"
 
 #: src/options.c:897 src/options.c:943
-#, fuzzy, c-format
-#| msgid "%s: Cost"
+#, c-format
 msgid "%s: %s"
-msgstr "%s: Custo"
+msgstr "%s: %s"
 
 #: src/options.c:897 src/options.c:943
 msgid "Muted"
-msgstr ""
+msgstr "Sem som"
 
 #. -48 dB minimum divided by logarithm of volume floor.
 #: src/options.c:900 src/options.c:946
 #, c-format
 msgid "%s: %.2f (%.0f dB)"
-msgstr ""
+msgstr "%s: %.2f (%.0f dB)"
 
 #: src/options.c:939
 msgid "Music Volume"
-msgstr ""
+msgstr "Volume da música"
 
 #: src/options.c:939
 msgid "Sound Volume"
-msgstr ""
+msgstr "Volume do som"
 
 #: src/options.c:976
 msgid "Disable all sound/music"
-msgstr ""
+msgstr "Desativar todos os sons/músicas"
 
 #: src/options.c:980
 msgid "EFX (More CPU)"
-msgstr ""
+msgstr "EFX (mais CPU)"
 
 #: src/options.c:986
 msgid "Volume Levels:"
-msgstr ""
+msgstr "Níveis de volume:"
 
 #: src/options.c:1185
 #, c-format
@@ -108214,93 +108276,93 @@ msgstr ""
 
 #: src/options.c:1291
 msgid "Resolution:"
-msgstr ""
+msgstr "Resolução:"
 
 #: src/options.c:1296
 msgid "Fullscreen"
-msgstr ""
+msgstr "Ecrã inteiro"
 
 #: src/options.c:1362
 msgid "FPS Control:"
-msgstr ""
+msgstr "Controlo de FPS:"
 
 #: src/options.c:1364
 msgid "FPS Limit"
-msgstr ""
+msgstr "Limite de FPS"
 
 #: src/options.c:1374
 msgid "Show FPS"
-msgstr ""
+msgstr "Mostrar FPS"
 
 #: src/options.c:1383
 msgid "OpenGL:"
-msgstr ""
+msgstr "OpenGL:"
 
 #: src/options.c:1386
 msgid "Vertical Sync"
-msgstr ""
+msgstr "Sincronização vertical"
 
 #: src/options.c:1391
 msgid "Features:"
-msgstr ""
+msgstr "Funcionalidades:"
 
 #: src/options.c:1394
 msgid "Minimize on focus loss"
-msgstr ""
+msgstr "Minimizar ao perder o foco"
 
 #: src/options.c:1397
 msgid "Colorblind mode"
-msgstr ""
+msgstr "Modo daltónico"
 
 #: src/options.c:1401
 msgid "Health bars for pilots"
-msgstr ""
+msgstr "Barras de vida para os pilotos"
 
 #: src/options.c:1435
 msgid "GUI:"
-msgstr ""
+msgstr "GUI:"
 
 #: src/options.c:1438
 msgid "Bigger icons"
-msgstr ""
+msgstr "Ícones maiores"
 
 #: src/options.c:1454
 msgid "#rRestart Naev for changes to take effect.#0"
-msgstr ""
+msgstr "#rReinicia o Naev para que as alterações surtam efeito.#0"
 
 #: src/options.c:1484
 msgid "Height/Width invalid. Should be formatted like 1024x768."
-msgstr ""
+msgstr "Altura/largura inválida. Deve ser formatado como 1024x768."
 
 #: src/options.c:1582
 msgid "Resolution can't be changed while maximized."
-msgstr ""
+msgstr "A resolução não pode ser alterada enquanto a janela estiver maximizada."
 
 #: src/options.c:1586
 msgid "Keep Video Settings"
-msgstr ""
+msgstr "Manter configurações de vídeo"
 
 #: src/options.c:1587
 #, c-format
 msgid "Do you want to keep running at %dx%d %s?"
-msgstr ""
+msgstr "Queres continuar a executar em %dx%d %s?"
 
 #: src/options.c:1588 src/options.c:1594
 msgid "fullscreen"
-msgstr ""
+msgstr "Ecrã inteiro"
 
 #: src/options.c:1588 src/options.c:1594
 msgid "windowed"
-msgstr ""
+msgstr "janela"
 
 #: src/options.c:1592
 msgid "Video Settings Restored"
-msgstr ""
+msgstr "Configurações de vídeo restauradas"
 
 #: src/options.c:1593
 #, c-format
 msgid "Resolution reset to %dx%d %s."
-msgstr ""
+msgstr "Resolução reposta para %dx%d %s."
 
 #: src/options.c:1671
 #, c-format
@@ -108354,26 +108416,26 @@ msgstr ""
 #: src/options.c:1850
 msgctxt "plugins"
 msgid "Name:"
-msgstr ""
+msgstr "Nome:"
 
 #: src/options.c:1852
 msgctxt "plugins"
 msgid "Author(s):"
-msgstr ""
+msgstr "Autor(es):"
 
 #: src/options.c:1854
 msgctxt "plugins"
 msgid "Version:"
-msgstr ""
+msgstr "Versão:"
 
 #: src/options.c:1856
 msgctxt "plugins"
 msgid "Description:"
-msgstr ""
+msgstr "Descrição:"
 
 #: src/options.c:1859
 msgid "Total Conversion"
-msgstr ""
+msgstr "Conversão total"
 
 #: src/outfit.c:122
 #, c-format
@@ -108382,15 +108444,15 @@ msgstr ""
 
 #: src/outfit.c:314
 msgid "Small"
-msgstr ""
+msgstr "Pequeno"
 
 #: src/outfit.c:316
 msgid "Medium"
-msgstr ""
+msgstr "Médio"
 
 #: src/outfit.c:318
 msgid "Large"
-msgstr ""
+msgstr "Grande"
 
 #: src/outfit.c:398
 #, c-format
@@ -108442,7 +108504,7 @@ msgstr ""
 
 #: src/outfit.c:893 src/outfit.c:920
 msgid "Local Map"
-msgstr ""
+msgstr "Mapa local"
 
 #: src/outfit.c:894 src/outfit.c:921
 msgid "GUI"
@@ -108450,7 +108512,7 @@ msgstr ""
 
 #: src/outfit.c:895 src/outfit.c:922
 msgid "License"
-msgstr ""
+msgstr "Licença"
 
 #: src/outfit.c:912
 msgid "Bolt Weapon"
@@ -108467,19 +108529,19 @@ msgstr ""
 
 #: src/outfit.c:919
 msgid "Map"
-msgstr ""
+msgstr "Mapa"
 
 #: src/outfit.c:934
 msgid "Unguided"
-msgstr ""
+msgstr "Não guiado"
 
 #: src/outfit.c:935
 msgid "Seek"
-msgstr ""
+msgstr "Guiado"
 
 #: src/outfit.c:936
 msgid "Smart"
-msgstr ""
+msgstr "Inteligente"
 
 #: src/outfit.c:940
 #, c-format
@@ -108540,7 +108602,7 @@ msgstr ""
 #: src/outfit.c:1364 src/outfit.c:1517 src/outfit.c:1717
 #, c-format
 msgid "%s [%s]"
-msgstr ""
+msgstr "%s [%s]"
 
 #: src/outfit.c:1367 src/outfit.c:1520 src/outfit.c:1720
 #, c-format
@@ -108548,6 +108610,8 @@ msgid ""
 "\n"
 "     %.0f%% vs armour"
 msgstr ""
+"\n"
+"     %.0f%% vs blindagem"
 
 #: src/outfit.c:1368 src/outfit.c:1521 src/outfit.c:1721
 #, c-format
@@ -108555,6 +108619,8 @@ msgid ""
 "\n"
 "     %.0f%% vs shield"
 msgstr ""
+"\n"
+"     %.0f%% vs escudo"
 
 #: src/outfit.c:1369 src/outfit.c:1522 src/outfit.c:1722
 #, c-format
@@ -108562,6 +108628,8 @@ msgid ""
 "\n"
 "     %.0f%% knockback"
 msgstr ""
+"\n"
+"     %.0f%% coice"
 
 #: src/outfit.c:1370 src/outfit.c:1523 src/outfit.c:1723 src/outfit.c:1909
 #: src/outfit.c:1974
@@ -108570,6 +108638,8 @@ msgid ""
 "\n"
 "%.0f CPU"
 msgstr ""
+"\n"
+"%.0f CPU"
 
 #: src/outfit.c:1371 src/outfit.c:1524 src/outfit.c:1724 src/outfit.c:1844
 #: src/outfit.c:1910 src/outfit.c:1975
@@ -108578,6 +108648,8 @@ msgid ""
 "\n"
 "%.0f Mass"
 msgstr ""
+"\n"
+"%.0f massa"
 
 #: src/outfit.c:1372 src/outfit.c:1525 src/outfit.c:1742
 #, c-format
@@ -108585,6 +108657,8 @@ msgid ""
 "\n"
 "%.0f%% Penetration"
 msgstr ""
+"\n"
+"%.0f%% penetração"
 
 #: src/outfit.c:1373 src/outfit.c:1743
 #, c-format
@@ -108592,6 +108666,8 @@ msgid ""
 "\n"
 "%.2f DPS [%.0f Damage]"
 msgstr ""
+"\n"
+"%.2f DPS [%.0f dano]"
 
 #: src/outfit.c:1375
 #, c-format
@@ -108606,6 +108682,8 @@ msgid ""
 "\n"
 "%.1f Shots Per Second"
 msgstr ""
+"\n"
+"%.1f disparos por segundo"
 
 #: src/outfit.c:1378 src/outfit.c:1760
 #, c-format
@@ -108613,6 +108691,8 @@ msgid ""
 "\n"
 "%.1f EPS [%.0f Energy]"
 msgstr ""
+"\n"
+"%.1f EPS [%.0f energia]"
 
 #: src/outfit.c:1380 src/outfit.c:1534
 #, c-format
@@ -108620,6 +108700,8 @@ msgid ""
 "\n"
 "%s Range"
 msgstr ""
+"\n"
+"%s alcance"
 
 #: src/outfit.c:1381 src/outfit.c:1756
 #, c-format
@@ -108627,6 +108709,8 @@ msgid ""
 "\n"
 "%.0f Speed"
 msgstr ""
+"\n"
+"%.0f velocidade"
 
 #: src/outfit.c:1382 src/outfit.c:1535
 #, c-format
@@ -108676,6 +108760,8 @@ msgid ""
 "\n"
 "%.2f DPS [%s]"
 msgstr ""
+"\n"
+"%.2f DPS [%s]"
 
 #: src/outfit.c:1529
 #, c-format
@@ -108690,6 +108776,8 @@ msgid ""
 "\n"
 "%.1f EPS"
 msgstr ""
+"\n"
+"%.1f EPS"
 
 #: src/outfit.c:1531
 #, c-format
@@ -108697,11 +108785,13 @@ msgid ""
 "\n"
 "%.1f Duration"
 msgstr ""
+"\n"
+"%.1f duração"
 
 #: src/outfit.c:1532
 #, c-format
 msgid " (%.1f minimum)"
-msgstr ""
+msgstr " (%.1f mínimo)"
 
 #: src/outfit.c:1533
 #, c-format
@@ -108709,6 +108799,8 @@ msgid ""
 "\n"
 "%.1f Cooldown"
 msgstr ""
+"\n"
+"%.1f arrefecimento"
 
 #: src/outfit.c:1687
 #, c-format
