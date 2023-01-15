@@ -100,6 +100,17 @@ function luaspob.can_land ()
 end
 
 function luaspob.comm ()
+   print("luaspob.comm( "..tostring(mem.spob).." )")
+   for i,k in ipairs{"std_land", "std_bribe", "std_dangerous",
+         "msg_bribed", "msg_denied", "msg_notyet", "msg_granted",
+         "msg_cantbribe", "msg_trybribe", "msg_dangerous"} do
+      local v = mem[k]
+      if type(v)=="table" then
+         v = v[1]
+      end
+      print(string.format(" mem.%s = %s",k,v))
+   end
+
    local fct = mem.spob:faction()
    vn.clear()
    vn.scene()
