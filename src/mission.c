@@ -61,6 +61,7 @@ static int mission_init( Mission* mission, const MissionData* misn, int genid, i
 static void mission_freeData( MissionData* mission );
 /* Matching. */
 static int mission_compare( const void* arg1, const void* arg2 );
+static int mission_meetConditionals( const MissionData *misn );
 static int mission_meetReq( const MissionData *misn, int faction,
       const Spob *pnt, const StarSystem *sys );
 static int mission_matchFaction( const MissionData* misn, int faction );
@@ -216,6 +217,51 @@ int mission_alreadyRunning( const MissionData* misn )
    return n;
 }
 
+static int mission_meetConditionals( const MissionData *misn )
+{
+   /* If chapter, must match chapter. */
+   if (misn->avail.chapter_re != NULL) {
+      pcre2_match_data *match_data = pcre2_match_data_create_from_pattern( misn->avail.chapter_re, NULL );
+      int rc = pcre2_match( misn->avail.chapter_re, (PCRE2_SPTR)player.chapter, strlen(player.chapter), 0, 0, match_data, NULL );
+      pcre2_match_data_free( match_data );
+      if (rc < 0) {
+         switch (rc) {
+            case PCRE2_ERROR_NOMATCH:
+               return -1;
+            default:
+               WARN(_("Matching error %d"), rc );
+               break;
+         }
+      }
+      else if (rc == 0)
+         return 1;
+   }
+
+   /* Must not be already done or running if unique. */
+   if (mis_isFlag(misn,MISSION_UNIQUE) &&
+         (player_missionAlreadyDone( mission_getID(misn->name) ) ||
+          mission_alreadyRunning(misn)))
+      return 1;
+
+   /* Must meet Lua condition. */
+   if (misn->avail.cond != NULL) {
+      int c = cond_check(misn->avail.cond);
+      if (c < 0) {
+         WARN(_("Conditional for mission '%s' failed to run"), misn->name);
+         return 1;
+      }
+      else if (!c)
+         return 1;
+   }
+
+   /* Must meet previous mission requirements. */
+   if ((misn->avail.done != NULL) &&
+         (player_missionAlreadyDone( mission_getID(misn->avail.done) ) == 0))
+      return 1;
+
+  return 0;
+}
+
 /**
  * @brief Checks to see if a mission meets the requirements.
  *
@@ -243,51 +289,11 @@ static int mission_meetReq( const MissionData *misn, int faction,
    if ((misn->avail.system != NULL) && (sys==NULL || (strcmp(misn->avail.system,sys->name)!=0)))
       return 0;
 
-   /* If chapter, must match chapter. */
-   if (misn->avail.chapter_re != NULL) {
-      pcre2_match_data *match_data = pcre2_match_data_create_from_pattern( misn->avail.chapter_re, NULL );
-      int rc = pcre2_match( misn->avail.chapter_re, (PCRE2_SPTR)player.chapter, strlen(player.chapter), 0, 0, match_data, NULL );
-      pcre2_match_data_free( match_data );
-      if (rc < 0) {
-         switch (rc) {
-            case PCRE2_ERROR_NOMATCH:
-               return 0;
-            default:
-               WARN(_("Matching error %d"), rc );
-               break;
-         }
-      }
-      else if (rc == 0)
-         return 0;
-   }
-
    /* Match faction. */
    if ((faction >= 0) && !mission_matchFaction(misn,faction))
       return 0;
 
-   /* Must not be already done or running if unique. */
-   if (mis_isFlag(misn,MISSION_UNIQUE) &&
-         (player_missionAlreadyDone( mission_getID(misn->name) ) ||
-          mission_alreadyRunning(misn)))
-      return 0;
-
-   /* Must meet Lua condition. */
-   if (misn->avail.cond != NULL) {
-      int c = cond_check(misn->avail.cond);
-      if (c < 0) {
-         WARN(_("Conditional for mission '%s' failed to run"), misn->name);
-         return 0;
-      }
-      else if (!c)
-         return 0;
-   }
-
-   /* Must meet previous mission requirements. */
-   if ((misn->avail.done != NULL) &&
-         (player_missionAlreadyDone( mission_getID(misn->avail.done) ) == 0))
-      return 0;
-
-  return 1;
+   return !mission_meetConditionals( misn );
 }
 
 /**
@@ -355,6 +361,24 @@ int mission_start( const char *name, unsigned int *id )
       mission_cleanup( &mission ); /* Clean up in case not accepted. */
 
    return ret;
+}
+
+/**
+ * @brief Tests the conditionals of a mission.
+ *
+ *    @param name Name of the mission to test.
+ *    @return -1 on error, 0 on mission conditionals passing, >0 otherwise.
+ */
+int mission_test( const char *name )
+{
+   const MissionData *mdat;
+
+   /* Try to get the mission. */
+   mdat = mission_get( mission_getID(name) );
+   if (mdat == NULL)
+      return -1;
+
+   return mission_meetConditionals( mdat );
 }
 
 /**

@@ -49,6 +49,7 @@ static int naevL_keyDisableAll( lua_State *L );
 static int naevL_eventStart( lua_State *L );
 static int naevL_eventReload( lua_State *L );
 static int naevL_missionStart( lua_State *L );
+static int naevL_missionTest( lua_State *L );
 static int naevL_missionReload( lua_State *L );
 static int naevL_shadersReload( lua_State *L );
 static int naevL_isSimulation( lua_State *L );
@@ -83,6 +84,7 @@ static const luaL_Reg naev_methods[] = {
    { "eventStart", naevL_eventStart },
    { "eventReload", naevL_eventReload },
    { "missionStart", naevL_missionStart },
+   { "missionTest", naevL_missionTest },
    { "missionReload", naevL_missionReload },
    { "shadersReload", naevL_shadersReload },
    { "isSimulation", naevL_isSimulation },
@@ -353,6 +355,22 @@ static int naevL_missionStart( lua_State *L )
    lua_pushboolean( L, (ret==0) || (ret==3) );
    lua_pushboolean( L, (ret==3) );
    return 2;
+}
+
+/**
+ * @brief Tests a missions conditionals to see if it can be started by the player.
+ *
+ * Note that this tests the Lua conditionals, not the create function, so it may be possible that even though naev.missionTest returns true, the player can still not start the mission.
+ *
+ * @usage naev.missionTest( "Some Mission" )
+ *    @luatparam string misnname Name of the mision to test.
+ *    @luatreturn boolean true if the mission can be can be started, or false otherwise.
+ * @luafunc missionTest
+ */
+static int naevL_missionTest( lua_State *L )
+{
+   lua_pushboolean( L, mission_test( luaL_checkstring(L, 1) ) );
+   return 1;
 }
 
 /**

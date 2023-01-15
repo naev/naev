@@ -118,6 +118,7 @@ Mission* missions_genList( int *n, int faction,
 int mission_accept( Mission* mission ); /* player accepted mission for computer/bar */
 void missions_run( MissionAvailability loc, int faction, const Spob *pnt, const StarSystem *sys );
 int mission_start( const char *name, unsigned int *id );
+int mission_test( const char *name );
 
 /*
  * misc
