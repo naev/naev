@@ -153,7 +153,7 @@ SHADERS = [
       vs_path = "stars.vert",
       fs_path = "stars.frag",
       attributes = ["vertex", "brightness"],
-      uniforms = ["projection", "star_xy", "dims", "xy", "use_lines"],
+      uniforms = ["projection", "star_xy", "dims", "xy", "use_lines", "dim"],
       subroutines = {},
    ),
    Shader(
