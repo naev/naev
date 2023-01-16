@@ -1,5 +1,6 @@
 * 0.10.3 (unreleased)
    * Fixed escorts always being set to aggressive when loading a save
+   * Made space dust a bit less bright when it starts turning into lines
    * derelict_rescue: play money sound instead of victory sound on completion
    * rehab: fixed crash when abborting rehabilitation missions
    * foundation station, efferey: fixed not using pirate landing script
