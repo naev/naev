@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-01-10 23:55+0900\n"
-"PO-Revision-Date: 2023-01-08 20:50+0000\n"
+"PO-Revision-Date: 2023-01-17 01:58+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -4330,7 +4330,7 @@ msgstr ""
 
 #: dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml:2
 msgid "Enygma Systems Turreted Fury Launcher"
-msgstr ""
+msgstr "Torretta Lanciarazzi Furore di Sistemi Enigma"
 
 #: dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml:9
 msgid ""
@@ -4338,10 +4338,14 @@ msgid ""
 "steep price, but Fury missiles can be a powerful means of discouraging "
 "pirate fighters and an effective means of defending against hostile bombers."
 msgstr ""
+"Sistemi Enigma ha costruito un lanciarazzi Furore montato su torretta. Il "
+"prezzo è elevato, ma i missili Furore possono essere un mezzo efficace per "
+"scoraggiare i caccia dei pirati e un mezzo efficiente per difendersi contro "
+"i bombardieri ostili."
 
 #: dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml:2
 msgid "Enygma Systems Turreted Headhunter Launcher"
-msgstr ""
+msgstr "Torretta Lanciarazzi Cacciatore di Teste di Sistemi Enigma"
 
 #: dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml:9
 msgid ""
@@ -4350,10 +4354,15 @@ msgid ""
 "bombers. The punch of the Headhunter missile combined with Enygma Systems' "
 "swivel mounted launcher can effectively compensate for any blind spots."
 msgstr ""
+"Questi lanciarazzi montati su torretta sono alcune volte impiegati dai "
+"capitani di incrociatori la cui nave non è sufficientemente manovrabile per "
+"combattere efficacemente caccia e bombardieri nemici. La potenza del missile "
+"Cacciatore di Teste combinato con il lanciarazzi girevole di Sistemi Enigma "
+"può compensare efficacemente per qualsiasi punto cieco."
 
 #: dat/outfits/launchers/repeating_banshee_launcher.xml:2
 msgid "Repeating Banshee Launcher"
-msgstr ""
+msgstr "Lanciarazzi Banshee a Ripetizione"
 
 #: dat/outfits/launchers/repeating_banshee_launcher.xml:11
 msgid ""
@@ -4362,10 +4371,15 @@ msgid ""
 "fire rate. The ammo storage is short, but it can be anticipated that either "
 "the bomber or its target will have been destroyed before it is empty."
 msgstr ""
+"Progettato dalla Casata Dvaered per equipaggiare le proprie astronavi "
+"Progenitore, questo lanciarazzi è munito di un sistema di ricarica avanzato, "
+"ma molto pesante, per una rapidità di fuoco impareggiabile. Il deposito per "
+"le munizioni è limitato, ma è prevedibile che il bombardiere o il suo "
+"bersaglio saranno distrutti prima che si sia svuotato."
 
 #: dat/outfits/launchers/shatterer_launcher.xml:2
 msgid "Shatterer Launcher"
-msgstr ""
+msgstr "Lanciarazzi Frantumatore"
 
 #: dat/outfits/launchers/shatterer_launcher.xml:10
 msgid ""
@@ -4374,6 +4388,10 @@ msgid ""
 "sheer numbers that the Collective could bring to bear makes this weapon "
 "dangerous."
 msgstr ""
+"Quest'arma, basata su un missile Furore, è usata dai droni pesanti della "
+"Collettività come strumento per bombardamenti contro bersagli di grandi "
+"dimensioni. Sebbene sia scarso individualmente, la mera numerosità che la "
+"Collettività può mettere insieme rende pericolosa quest'arma."
 
 #: dat/outfits/launchers/space_mine_layer.xml:2
 msgid "Space Mine Layer"
@@ -6399,7 +6417,7 @@ msgstr ""
 
 #: dat/outfits/weapons/ion_cannon.xml:2
 msgid "Ion Cannon"
-msgstr ""
+msgstr "Cannone a Ioni"
 
 #: dat/outfits/weapons/ion_cannon.xml:8
 msgid ""
@@ -6898,7 +6916,7 @@ msgstr ""
 
 #: dat/ships/dvaered/dvaered_ancestor.xml:2
 msgid "Dvaered Ancestor"
-msgstr ""
+msgstr "Progenitore Dvaered"
 
 #: dat/ships/dvaered/dvaered_ancestor.xml:18
 #: dat/ships/dvaered/dvaered_vendetta.xml:19
@@ -76001,6 +76019,8 @@ msgid ""
 "You helped Nexus Shipyards demonstrate the capabilities of their ships by "
 "destroying a Pirate Ancestor."
 msgstr ""
+"Hai aiutato il Cantiere di Astronavi Nexus a dimostrare le capacità delle "
+"loro astronavi distruggendo un Progenitore Pirata."
 
 #. jumping out the system
 #. You were supposed to kill him, not to go away !
