@@ -321,7 +321,7 @@ end
 
 --[[
 Takes data to the player.
-   @tparam integer amount Amount to give to the player.
+   @tparam integer amount Amount to take from the player.
    @treturn integer Amount actually added.
 --]]
 function poi.data_take( amount )
