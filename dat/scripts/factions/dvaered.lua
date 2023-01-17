@@ -6,9 +6,9 @@ return {
    cap_misn_def   = 40,
    cap_misn_var   = "_fcap_dvaered",
    cap_tags       = {
-      --["dva_cap_ch01_sml"] = { val=1, max=50 },
-      --["dva_cap_ch01_med"] = { val=3, max=50 },
-      --["dva_cap_ch01_lrg"] = { val=5, max=50 },
+      ["dva_cap_ch01_sml"] = { val=1, max=50 },
+      ["dva_cap_ch01_med"] = { val=3, max=50 },
+      ["dva_cap_ch01_lrg"] = { val=5, max=50 },
    },
    -- Based on feudal hierarchy
    text = {

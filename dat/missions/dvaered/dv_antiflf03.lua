@@ -13,6 +13,9 @@
   <campaign>Doom the FLF</campaign>
   <provides name="The FLF is dead"/>
  </notes>
+ <tags>
+  <tag>dva_cap_ch01_lrg</tag>
+ </tags>
 </mission>
 --]]
 --[[
@@ -170,7 +173,6 @@ function land()
         tk.msg(_("FLF base? What FLF base?"), _([[Colonel Urnus returns to his seat.
     "Let me tell you one thing, though. I doubt we've quite seen the last of the FLF. We may have dealt them a mortal blow by taking out their hidden base, but as long as rebel sentiment runs high among the Frontier worlds, they will rear their ugly heads again. That means my job isn't over, and maybe it means yours isn't either. Perhaps in the future we'll work together again - but this time it won't be just about removing a threat on our doorstep." Urnus smiles grimly. "It will be about rooting out the source of the problem once and for all."
     As you walk the corridor that leads out of the military complex, the Star of Valor glinting on your lapel, you find yourself thinking about what your decisions might ultimately lead to. Colonel Urnus hinted at war on the Frontier, and he also indicated that you would be involved. While the Dvaered have been treating you as well as can be expected from a military regime, perhaps you might want to reconsider your allegiance when the time comes...]]))
-        dv.modReputation( 5 )
         faction.get("Dvaered"):modPlayerSingle(10)
         player.pay(1e6)
         player.outfitAdd("Star of Valor")
