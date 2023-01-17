@@ -16,7 +16,7 @@ local cap_tags_list = {
 
 local function compute_capacity( data )
    local cap = 0
-   for j,t in ipairs(data.tags) do
+   for t,j in pairs(data.tags) do
       cap = cap + (cap_tags_list[t] or 0)
    end
    return cap
