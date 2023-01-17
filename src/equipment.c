@@ -1524,6 +1524,8 @@ static int equipment_filter( const Outfit *o ) {
          return 0;
 
       case 2: /* Fits currently selected ship. */
+         if (eq_wgt.selected==NULL)
+            return 1;
          p = eq_wgt.selected->p;
          if (p==NULL)
             return 1;
