@@ -1,4 +1,4 @@
-* 0.10.3 (unreleased)
+* 0.10.3
    * Fixed crash when using fits currently selected ship outfit filter
    * Fixed escorts always being set to aggressive when loading a save
    * Fixed Dvaered standing cap increase being lost after loading game
