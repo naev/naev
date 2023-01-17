@@ -148,7 +148,7 @@ void background_moveDust( double x, double y )
 void background_renderDust( const double dt )
 {
    (void) dt;
-   GLfloat x, y, h, w;
+   GLfloat x, y, h, w, m;
    double z;
    mat4 projection;
    int points = 1;
@@ -156,6 +156,7 @@ void background_renderDust( const double dt )
    /* Do some scaling for now. */
    z = cam_getZoom();
    z = 1. * (1. - conf.zoom_stars) + z * conf.zoom_stars;
+   m = 1.;
    projection = gl_view_matrix;
    mat4_translate( &projection, SCREEN_W/2., SCREEN_H/2., 0 );
    mat4_scale( &projection, z, z, 1 );
@@ -171,7 +172,7 @@ void background_renderDust( const double dt )
 
       if (pilot_isFlag(player.p,PILOT_HYPERSPACE)) { /* hyperspace fancy effects */
          /* lines get longer the closer we are to finishing the jump */
-         GLfloat m = MAX( 0, HYPERSPACE_STARS_BLUR-player.p->ptimer );
+         m = MAX( 0, HYPERSPACE_STARS_BLUR-player.p->ptimer );
          m /= HYPERSPACE_STARS_BLUR;
          m *= HYPERSPACE_STARS_LENGTH;
          if (m > 1.) {
@@ -186,8 +187,8 @@ void background_renderDust( const double dt )
           * speed just so happens to make very short lines. A 5px minimum
           * is long enough to (mostly) alleviate the flickering. */
          /* TODO don't use GL_LINES. */
-         GLfloat m = MAX( 5., dt_mod * vmod/25. - 20 );
          double angle = atan2( dy, dx );
+         m = MAX( 5., dt_mod * vmod/25. - 20 );
          x = m * cos( angle );
          y = m * sin( angle );
          points = 0;
@@ -206,6 +207,7 @@ void background_renderDust( const double dt )
    glUniform2f(shaders.stars.star_xy, star_x, star_y);
    glUniform3f(shaders.stars.dims, w, h, 1. / gl_screen.scale);
    glUniform1i(shaders.stars.use_lines, !points);
+   glUniform1f(shaders.stars.dim, CLAMP(0.5, 1., 1.-(m-1.)/25.) );
 
    /* Vertices. */
    glEnableVertexAttribArray( shaders.stars.vertex );
