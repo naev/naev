@@ -1,6 +1,7 @@
 * 0.10.3 (unreleased)
    * Fixed crash when using fits currently selected ship outfit filter
    * Fixed escorts always being set to aggressive when loading a save
+   * Fixed Dvaered standing cap increase being lost after loading game
    * Made space dust a bit less bright when it starts turning into lines
    * derelict_rescue: play money sound instead of victory sound on completion
    * rehab: fixed crash when aborting rehabilitation missions
