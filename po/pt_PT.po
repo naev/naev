@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-01-10 23:55+0900\n"
-"PO-Revision-Date: 2023-01-15 16:50+0000\n"
+"PO-Revision-Date: 2023-01-17 21:49+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Portugal) <https://hosted.weblate.org/projects/"
 "naev/naev/pt_PT/>\n"
@@ -46,11 +46,11 @@ msgstr "argv[0] é NULL"
 
 #: physfs.c:7
 msgid "unsupported"
-msgstr "sem suporte"
+msgstr "não suportado"
 
 #: physfs.c:8
 msgid "past end of file"
-msgstr "fim do ficheiro passado"
+msgstr "fim do ficheiro ultrapassado"
 
 #: physfs.c:9
 msgid "files still open"
@@ -58,7 +58,7 @@ msgstr "ficheiros ainda abertos"
 
 #: physfs.c:10
 msgid "invalid argument"
-msgstr "argumento inválido "
+msgstr "argumento inválido"
 
 #: physfs.c:11
 msgid "not mounted"
@@ -70,7 +70,7 @@ msgstr "não encontrado"
 
 #: physfs.c:13
 msgid "symlinks are forbidden"
-msgstr "ligações simbólicas são proíbidas"
+msgstr "ligações simbólicas são proibidas"
 
 #: physfs.c:14
 msgid "write directory is not set"
@@ -118,15 +118,15 @@ msgstr "nome de ficheiro ilegal ou inseguro"
 
 #: physfs.c:25
 msgid "tried to modify a file the OS needs"
-msgstr "tentou modificar um ficheiro que o Sistema Operacional necessita"
+msgstr "tentou alterar um ficheiro que o sistema operativo necessita"
 
 #: physfs.c:26
 msgid "directory isn't empty"
-msgstr "diretório não vazio"
+msgstr "diretório não está vazio"
 
 #: physfs.c:27
 msgid "OS reported an error"
-msgstr "O sistema operativo informou um erro"
+msgstr "O sistema operativo reportou um erro"
 
 #: physfs.c:28
 msgid "duplicate resource"
@@ -3772,7 +3772,7 @@ msgstr "Baia de Lancelots Imperiais"
 #: dat/outfits/fighter_bays/empire_lancelot_bay.xml:8
 #: dat/ships/empire/empire_pacifier.xml:19
 msgid "You need at least 50 reputation with the Empire."
-msgstr "Precisa de pelo menos 50 pontos de reputação com o Império."
+msgstr "Requer 50 de reputação com o Império."
 
 #: dat/outfits/fighter_bays/empire_lancelot_bay.xml:13
 msgid ""
@@ -3790,7 +3790,7 @@ msgstr "Baia de Fidelidade"
 
 #: dat/outfits/fighter_bays/fidelity_bay.xml:8
 msgid "You need at least 50 reputation with House Sirius."
-msgstr "Precisa de ao menos 50 pontos de reputação com a Casa Sirius."
+msgstr "Requer 50 de reputação com a Casa Sirius."
 
 #: dat/outfits/fighter_bays/fidelity_bay.xml:13
 msgid ""
@@ -3924,7 +3924,7 @@ msgstr "Baia de Xamã Sirius"
 
 #: dat/outfits/fighter_bays/sirius_shaman_bay.xml:8
 msgid "You need at least 50 reputation with the Sirius."
-msgstr "Precisa de ao menos 50 pontos de reputação com a Casa Sirius."
+msgstr "Requer 50 de reputação com a Casa Sirius."
 
 #: dat/outfits/fighter_bays/sirius_shaman_bay.xml:13
 msgid ""
@@ -3943,7 +3943,7 @@ msgstr "Baia de Salteador Soromid"
 #: dat/outfits/fighter_bays/soromid_brigand_bay.xml:8
 #: dat/ships/soromid/soromid_nyx.xml:17
 msgid "You need at least 50 reputation with the Soromid."
-msgstr "Precisa de ao menos 50 pontos de reputação com os Soromids."
+msgstr "Requer 50 de reputação com os Soromids."
 
 #: dat/outfits/fighter_bays/soromid_brigand_bay.xml:13
 msgid ""
@@ -3963,7 +3963,7 @@ msgstr "Baia de Perspicácia Thurion"
 #: dat/ships/thurion/thurion_apprehension.xml:20
 #: dat/ships/thurion/thurion_taciturnity.xml:19
 msgid "You need at least 50 reputation with the Thurion."
-msgstr "Precisa de ao menos 50 pontos de reputação com os Thurion."
+msgstr "Requer 50 de reputação com os Thurion."
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_bay.xml:13
 msgid ""
@@ -3983,7 +3983,7 @@ msgstr "Doca Perspicácia Thurion"
 #: dat/ships/thurion/thurion_ingenuity.xml:19
 #: dat/ships/thurion/thurion_scintillation.xml:20
 msgid "You need at least 30 reputation with the Thurion."
-msgstr "Precisa de ao menos 30 pontos de reputação com os Thurion."
+msgstr "Requer 30 de reputação com os Thurion."
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_dock.xml:13
 msgid ""
@@ -4002,7 +4002,7 @@ msgstr "Baia de Drones Bombardeiros Za'lek"
 #: dat/outfits/fighter_bays/zalek_light_drone_bay.xml:8
 #: dat/ships/zalek/zalek_demon.xml:19
 msgid "You need at least 50 reputation with House Za'lek."
-msgstr "Precisa de ao menos 50 pontos de reputação a Casa Za'Lek."
+msgstr "Requer 50 de reputação com a Casa Za'Lek."
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_bay.xml:13
 msgid ""
@@ -4024,7 +4024,7 @@ msgstr "Mini Baia de Drones Bombardeiros Za'lek"
 #: dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml:8
 #: dat/outfits/launchers/zalek_hunter_launcher.xml:8
 msgid "You need at least 30 reputation with House Za'lek."
-msgstr "Precisa de ao menos 30 pontos de reputação a Casa Za'Lek."
+msgstr "Requer 30 de reputação com a Casa Za'Lek."
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_mini_bay.xml:13
 msgid ""
@@ -4045,7 +4045,7 @@ msgstr "Baia de Drones Pesados Za'lek"
 #: dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml:8
 #: dat/ships/zalek/zalek_mammon.xml:23
 msgid "You need at least 60 reputation with House Za'lek."
-msgstr "Precisa de ao menos 60 pontos de reputação a Casa Za'Lek."
+msgstr "Requer 60 de reputação com a Casa Za'Lek."
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml:13
 msgid ""
@@ -4065,7 +4065,7 @@ msgstr "Mini Baia de Drones Pesados Za'lek"
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:8
 #: dat/ships/zalek/zalek_sting.xml:19
 msgid "You need at least 40 reputation with House Za'lek."
-msgstr "Precisa de ao menos 40 pontos de reputação a Casa Za'Lek."
+msgstr "Requer 40 de reputação com a Casa Za'Lek."
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml:13
 msgid ""
@@ -4457,17 +4457,6 @@ msgid "TeraCom Medusa Launcher"
 msgstr "Lançador de Mísseis Medusa TeraCom"
 
 #: dat/outfits/launchers/teracom_medusa_launcher.xml:9
-#, fuzzy
-#| msgid ""
-#| "The Medusa class EMP cruise missile is a nonlethal weapon designed to "
-#| "knock out a ship's internal systems, rendering it harmless and ready for "
-#| "boarding. The warhead does only limited damage, so even lightly armoured "
-#| "targets can effectively be disabled with this weapon. However, the Medusa "
-#| "is not the most agile missile on the market.\n"
-#| "\n"
-#| "TeraCom has built a highly efficient Medusa launcher, capable of locking "
-#| "on and firing faster than the standard specification, and holding a "
-#| "greater amount in the magazine as well."
 msgid ""
 "The Medusa class EMP cruise missile is a nonlethal weapon designed to knock "
 "out a ship's internal systems, rendering it harmless and ready for boarding. "
@@ -4475,15 +4464,11 @@ msgid ""
 "effectively be disabled with this weapon. However, the Medusa is not the "
 "most agile missile on the market."
 msgstr ""
-"O míssil de cruzeiro EMP tipo Medusa é uma arma não letal concebida para "
-"desativar os sistemas internos de uma nave, tornando-a inofensiva e pronto "
-"para ser abordada. A ogiva apenas causa danos limitados, então mesmo alvos "
-"levemente blindados podem ser efetivamente desativados com esta arma. No "
-"entanto, a Medusa não é o míssil mais ágil do mercado.\n"
-"\n"
-"A TeraCom construiu um lançador Medusa altamente eficiente, capaz de travar "
-"e disparar mais rapidamente do que a especificação padrão, e de ter também "
-"uma quantidade maior de munições."
+"O míssil de cruzeiro EMP da classe Medusa é uma arma não letal concebida "
+"para desativar os sistemas internos de uma nave, tornando-a inofensiva e "
+"pronta para ser abordada. A ogiva apenas causa danos limitados, por isso "
+"mesmo os alvos com blindagem ligeira podem ser desativados com esta arma. No "
+"entanto a Medusa não é o míssil mais ágil do mercado."
 
 #: dat/outfits/launchers/teracom_vengeance_launcher.xml:2
 msgid "TeraCom Vengeance Launcher"
@@ -5838,12 +5823,12 @@ msgstr ""
 
 #: dat/outfits/utility/boarding_androids_mk1.xml:2
 msgid "Boarding Androids MK1"
-msgstr "Andróides de Abordagem Mk 1"
+msgstr "Andróides de assalto MK 1"
 
 #: dat/outfits/utility/boarding_androids_mk1.xml:4
 #: dat/outfits/utility/boarding_androids_mk2.xml:4
 msgid "Boarding Androids"
-msgstr "Andróides de Abordagem"
+msgstr "Andróides de assalto"
 
 #: dat/outfits/utility/boarding_androids_mk1.xml:9
 msgid ""
@@ -5852,14 +5837,14 @@ msgid ""
 "torch/can opener/spatula, the Boarding Android is ready for any situation, "
 "be it tactical or culinary."
 msgstr ""
-"O Andróide de Abordagem Asimov Destructicorp é o que há de mais novo no ramo "
-"de aquisição robótica hostil. Equipado com um multifuncional canhão de "
-"plasma/tocha de corte/abridor de lata/espátula, o Andróide de Abordagem está "
+"O Andróide de assalto Asimov Destructicorp é o que há de mais novo no ramo "
+"de aquisição robótica hostil. Equipado com um multifuncional detonador de "
+"plasma/tocha de corte/abridor de lata/espátula, o Andróide de assalto está "
 "pronto para qualquer situação, seja tática ou culinária."
 
 #: dat/outfits/utility/boarding_androids_mk2.xml:2
 msgid "Boarding Androids MK2"
-msgstr "Andróides de Abordagem MK2"
+msgstr "Andróides de assalto MK2"
 
 #: dat/outfits/utility/boarding_androids_mk2.xml:9
 msgid ""
@@ -5867,8 +5852,9 @@ msgid ""
 "sported by its predecessor, additionally including scissor-hands and a "
 "sewing needle."
 msgstr ""
-"O Andróide de Abordagem MK2 melhora a larga variedade de ferramentas usadas "
-"por seu predecessor, inclundo além deles mãos de tesoura e agulha de costura."
+"O Andróide de assalto MK2 melhora a larga variedade de ferramentas usadas "
+"pelo seu predecessor, incluindo além destes mãos de tesoura e agulha de "
+"costura."
 
 #: dat/outfits/utility/camouflage_burster.xml:2
 msgid "Camouflage Burster"
@@ -6026,7 +6012,7 @@ msgstr "IA de Combate Colméia"
 
 #: dat/outfits/utility/combatai/hive_combat_ai.xml:10
 msgid "You need at least 10 reputation with House Za'lek."
-msgstr "Precisa de ao menos 10 pontos de reputação com a Casa Za'lek."
+msgstr "Requer 10 de reputação com a Casa Za'lek."
 
 #: dat/outfits/utility/combatai/hive_combat_ai.xml:13
 msgid ""
@@ -7151,7 +7137,7 @@ msgstr ""
 
 #: dat/outfits/weapons/plasma_blaster_mk1.xml:2
 msgid "Plasma Blaster MK1"
-msgstr "Canhão de Plasma MK1"
+msgstr "Detonador de Plasma MK1"
 
 #: dat/outfits/weapons/plasma_blaster_mk1.xml:8
 msgid ""
@@ -7159,13 +7145,13 @@ msgid ""
 "damaging armour, but less effective against shields. This weapon is often "
 "used by bounty hunters and mercenaries for its high killing potential."
 msgstr ""
-"Dispara plasma superaquecido muito eficaz em danificar blindagem, mas nem "
-"tanto contra escudos. A arma é frequentemente usada por caçadores de "
-"recompensa e mercenários pelo seu grande potencial de abate."
+"O Detonador de Plasma dispara plasma superaquecido muito eficaz em danificar "
+"blindagem, mas nem tanto contra escudos. A arma é frequentemente usada por "
+"caçadores de recompensa e mercenários pelo seu grande potencial mortífero."
 
 #: dat/outfits/weapons/plasma_blaster_mk2.xml:2
 msgid "Plasma Blaster MK2"
-msgstr "Disparador de Plasma MK2"
+msgstr "Detonador de Plasma MK2"
 
 #: dat/outfits/weapons/plasma_blaster_mk2.xml:9
 msgid ""
@@ -7174,10 +7160,11 @@ msgid ""
 "Its power is substantial enough that it even gets used by some militaries, "
 "typically in combination with anti-shield weaponry."
 msgstr ""
-"Uma versão de alta potência do Disparador de Plasma MK1, suficientemente "
-"potente para derrubar todos os naves piratas, exceto as mais pesadas. O seu "
-"poder é substancial o suficiente para ser utilizado por alguns militares, "
-"tipicamente em combinação com armamento anti-escudo."
+"O Detonador de Plasma MK2 é uma versão de alta potência do Detonador de "
+"Plasma MK1, suficientemente potente para derrubar todas as naves piratas, "
+"exceto as mais pesadas. O seu poder é substancialmente suficiente para ser "
+"utilizado por alguns militares, tipicamente em combinação com armamento anti-"
+"escudo."
 
 #: dat/outfits/weapons/plasma_cannon.xml:2
 msgid "Plasma Cannon"
@@ -7190,7 +7177,7 @@ msgid ""
 "engineering complexities of fitting such a powerful weapon into a small slot "
 "lead to much higher dependence on guidance from the ship's central computer."
 msgstr ""
-"O Canhão de Plasma é uma versão em maior escala do projeto do Disparador de "
+"O Canhão de Plasma é uma versão em maior escala do projeto do Detonador de "
 "Plasma para uso em Corvetas. Consegue causar um impacto distintamente "
 "superior, mas as complexidades de engenharia envolvidas em pôr uma arma tão "
 "poderosa num espaço tão pequeno levou a uma dependência muito maior do "
@@ -7231,10 +7218,10 @@ msgid ""
 "among inexperienced mercenaries who are not as well-practiced at aiming as "
 "the pros."
 msgstr ""
-"A Torreta de Plasma usa um Disparador de Plasma como base. O seu curto "
-"alcance torna-a inadequada para a defesa, razaõ que a torna impopular entre "
-"comerciantes e mercadores, mas encontrou um nicho entre mercenários "
-"inexperientes que não tem tão boa mira quanto profissionais."
+"A Torreta de Plasma usa um detonador de plasma como base. O seu curto "
+"alcance torna-a inadequada para a defesa, é por essa razão que é impopular "
+"entre comerciantes e mercadores, mas encontrou um nicho entre mercenários "
+"inexperientes que não têm uma boa mira quanto os profissionais."
 
 #: dat/outfits/weapons/plasma_turret_mk2.xml:2
 msgid "Plasma Turret MK2"
@@ -7326,12 +7313,12 @@ msgid ""
 "drain a target's shields, paving the way for other weapons to deliver the "
 "finishing blow."
 msgstr ""
-"O Modelo Navalha civíl aperfeçoado traz maior eficácia comparado com seu "
-"antecessor, e tem menos dificuldade em sobrecaregar escudos de nível "
-"capital.\n"
+"O modelo civil aperfeiçoado Navalha traz maior eficácia comparado com seu "
+"antecessor, e tem menos dificuldade em sobrecarregar escudos de naves "
+"capitais.\n"
 "Assim como no caso do modelo básico, o Navalha MK2 é melhor aproveitado para "
-"drenar os escudos do alvo. abrindo caminho para que outras armas desfiram o "
-"golpe final."
+"drenar os escudos de um objetivo, abrindo caminho para que outras armas "
+"desfiram o golpe final."
 
 #: dat/outfits/weapons/razor_turret_mk1.xml:2
 msgid "Razor Turret MK1"
@@ -7582,7 +7569,7 @@ msgstr "Ancestral Dvaered"
 #: dat/ships/dvaered/dvaered_ancestor.xml:18
 #: dat/ships/dvaered/dvaered_vendetta.xml:19
 msgid "You need at least 30 reputation with House Dvaered."
-msgstr "Precisa de pelo menos 30 pontos de reputação com a Casa Dvaered."
+msgstr "Requer 30 de reputação com a Casa Dvaered."
 
 #: dat/ships/dvaered/dvaered_ancestor.xml:19
 msgid ""
@@ -7600,7 +7587,7 @@ msgstr "Arsenal Dvaered"
 #: dat/ships/dvaered/dvaered_arsenal.xml:21
 #: dat/ships/dvaered/dvaered_retribution.xml:19
 msgid "You need at least 60 reputation with House Dvaered."
-msgstr "Precisa de pelo menos 60 pontos de reputação com a Casa Dvaered."
+msgstr "Requer 60 de reputação com a Casa Dvaered."
 
 #: dat/ships/dvaered/dvaered_arsenal.xml:22
 msgid ""
@@ -7626,7 +7613,7 @@ msgstr "Goddard Dvaered"
 
 #: dat/ships/dvaered/dvaered_goddard.xml:21
 msgid "You need at least 70 reputation with House Dvaered."
-msgstr "Precisa de pelo menos 70 pontos de reputação com a Casa Dvaered."
+msgstr "Requer 70 de reputação com a Casa Dvaered."
 
 #: dat/ships/dvaered/dvaered_goddard.xml:22
 msgid ""
@@ -7652,7 +7639,7 @@ msgstr "Falange Dvaered"
 
 #: dat/ships/dvaered/dvaered_phalanx.xml:19
 msgid "You need at least 40 reputation with House Dvaered."
-msgstr "Precisa de pelo menos 40 pontos de reputação com a Casa Dvaered."
+msgstr "Requer 40 de reputação com a Casa Dvaered."
 
 #: dat/ships/dvaered/dvaered_phalanx.xml:20
 msgid ""
@@ -7704,7 +7691,7 @@ msgstr "Vigilância Dvaered"
 
 #: dat/ships/dvaered/dvaered_vigilance.xml:18
 msgid "You need at least 50 reputation with House Dvaered."
-msgstr "Precisa de pelo menos 50 pontos de reputação com a Casa Dvaered."
+msgstr "Requer 50 de reputação com a Casa Dvaered."
 
 #: dat/ships/dvaered/dvaered_vigilance.xml:19
 msgid ""
@@ -7733,7 +7720,7 @@ msgstr "Estaleiros Nexo"
 
 #: dat/ships/empire/empire_admonisher.xml:21
 msgid "You need at least 40 reputation with the Empire."
-msgstr "Precisa de pelo menos 40 pontos de reputação com o Império."
+msgstr "Requer 40 de reputação com o Império."
 
 #: dat/ships/empire/empire_admonisher.xml:22
 msgid ""
@@ -7752,7 +7739,7 @@ msgstr "Hawking Imperial"
 #: dat/ships/empire/empire_hawking.xml:22
 #: dat/ships/empire/empire_rainmaker.xml:23
 msgid "You need at least 60 reputation with the Empire."
-msgstr "Precisa de pelo menos 60 pontos de reputação com o Império."
+msgstr "Requer 60 de reputação com o Império."
 
 #: dat/ships/empire/empire_hawking.xml:23
 msgid ""
@@ -7770,7 +7757,7 @@ msgstr "Lancelot Imperial"
 
 #: dat/ships/empire/empire_lancelot.xml:19
 msgid "You need at least 30 reputation with the Empire."
-msgstr "Precisa de pelo menos 30 pontos de reputação com o Império."
+msgstr "Requer 30 de reputação com o Império."
 
 #: dat/ships/empire/empire_lancelot.xml:20
 msgid ""
@@ -7802,7 +7789,7 @@ msgstr "Mediador Imperial"
 
 #: dat/ships/empire/empire_peacemaker.xml:21
 msgid "You need at least 70 reputation with the Empire."
-msgstr "Precisa de pelo menos 70 pontos de reputação com o Império."
+msgstr "Requer 70 de reputação com o Império."
 
 #: dat/ships/empire/empire_peacemaker.xml:22
 msgid ""
@@ -7850,7 +7837,7 @@ msgstr "Tubarão Imperial"
 
 #: dat/ships/empire/empire_shark.xml:20
 msgid "You need at least 20 reputation with the Empire."
-msgstr "Precisa de pelo menos 20 pontos de reputação com o Império."
+msgstr "Requer 20 de reputação com o Império."
 
 #: dat/ships/empire/empire_shark.xml:21
 msgid ""
@@ -8255,7 +8242,7 @@ msgstr ""
 
 #: dat/ships/neutral/shark.xml:2 dat/scripts/pilotname/generic.lua:77
 msgid "Shark"
-msgstr ""
+msgstr "Tubarão"
 
 #: dat/ships/neutral/shark.xml:18
 msgid ""
@@ -8535,10 +8522,8 @@ msgstr "Arquimedes Proteron"
 
 #: dat/ships/proteron/proteron_archimedes.xml:21
 #: dat/ships/proteron/proteron_watson.xml:21
-#, fuzzy
-#| msgid "You need at least 70 reputation with the Soromid."
 msgid "You need at least 70 reputation with the Proteron."
-msgstr "Precisa de pelo menos 70 pontos de reputação com o Soromidos."
+msgstr "Requer 70 de reputação com o Proteron."
 
 #: dat/ships/proteron/proteron_archimedes.xml:22
 msgid ""
@@ -8556,10 +8541,8 @@ msgid "Proteron Dalton"
 msgstr "Watson Proteron"
 
 #: dat/ships/proteron/proteron_dalton.xml:19
-#, fuzzy
-#| msgid "You need at least 20 reputation with the Soromid."
 msgid "You need at least 20 reputation with the Proteron."
-msgstr "Precisa de pelo menos 20 pontos de reputação com o Soromidas."
+msgstr "Requer 20 de reputação com os Proteron."
 
 #: dat/ships/proteron/proteron_dalton.xml:20
 #, fuzzy
@@ -8633,10 +8616,8 @@ msgid "Proteron Hippocrates"
 msgstr "Watson Proteron"
 
 #: dat/ships/proteron/proteron_hippocrates.xml:21
-#, fuzzy
-#| msgid "You need at least 50 reputation with the Soromid."
 msgid "You need at least 50 reputation with the Proteron."
-msgstr "Precisa de ao menos 50 pontos de reputação com os Soromids."
+msgstr "Requer 50 de reputação com os Proteron."
 
 #: dat/ships/proteron/proteron_hippocrates.xml:22
 msgid ""
@@ -8654,10 +8635,8 @@ msgid "Proteron Pythagoras"
 msgstr "Kahan Proteron"
 
 #: dat/ships/proteron/proteron_pythagoras.xml:20
-#, fuzzy
-#| msgid "You need at least 60 reputation with the Soromid."
 msgid "You need at least 60 reputation with the Proteron."
-msgstr "Precisa de pelo menos 60 pontos de reputação com o Soromidas."
+msgstr "Requer 60 de reputação com os Proteron."
 
 #: dat/ships/proteron/proteron_pythagoras.xml:21
 msgid ""
@@ -8689,7 +8668,7 @@ msgstr "Divinidade Sirius"
 
 #: dat/ships/sirius/sirius_divinity.xml:17 dat/ships/sirius/sirius_dogma.xml:17
 msgid "You need at least 70 reputation with House Sirius."
-msgstr "Precisa de ao menos 70pontos de reputação com a Casa Sirius."
+msgstr "Requer 70 de reputação com a Casa Sirius."
 
 #: dat/ships/sirius/sirius_divinity.xml:18
 msgid ""
@@ -8726,7 +8705,7 @@ msgstr "Fidelidade Sirius"
 
 #: dat/ships/sirius/sirius_fidelity.xml:16
 msgid "You need at least 20 reputation with House Sirius."
-msgstr "Precisa de pelo menos 20 pontos de reputação com a Casa Sirius."
+msgstr "Requer 20 de reputação com a Casa Sirius."
 
 #: dat/ships/sirius/sirius_fidelity.xml:17
 msgid ""
@@ -8744,7 +8723,7 @@ msgstr "Sermonista Sirius"
 
 #: dat/ships/sirius/sirius_preacher.xml:16
 msgid "You need at least 40 reputation with House Sirius."
-msgstr "Precisa de pelo menos 40 pontos de reputação com a Casa Sirius."
+msgstr "Requer 40 de reputação com a Casa Sirius."
 
 #: dat/ships/sirius/sirius_preacher.xml:17
 msgid ""
@@ -8762,7 +8741,7 @@ msgstr "Providência Sírius"
 
 #: dat/ships/sirius/sirius_providence.xml:21
 msgid "You need at least 60 reputation with House Sirius."
-msgstr "Precisa de pelo menos 60 pontos de reputação com a Casa Sirius."
+msgstr "Requer 60 de reputação com a Casa Sirius."
 
 #: dat/ships/sirius/sirius_providence.xml:22
 msgid ""
@@ -8782,7 +8761,7 @@ msgstr "Xamã Sirius"
 
 #: dat/ships/sirius/sirius_shaman.xml:16
 msgid "You need at least 30 reputation with House Sirius."
-msgstr "Precisa de pelo menos 30 pontos de reputação com a Casa Sirius."
+msgstr "Requer 30 de reputação com a Casa Sirius."
 
 #: dat/ships/sirius/sirius_shaman.xml:17
 msgid ""
@@ -8805,7 +8784,7 @@ msgstr "Bio-Porta Naves"
 
 #: dat/ships/soromid/soromid_arx.xml:23 dat/ships/soromid/soromid_vox.xml:20
 msgid "You need at least 70 reputation with the Soromid."
-msgstr "Precisa de pelo menos 70 pontos de reputação com o Soromidos."
+msgstr "Requer 70 de reputação com os Soromid."
 
 #: dat/ships/soromid/soromid_arx.xml:24
 msgid ""
@@ -8832,7 +8811,7 @@ msgstr ""
 
 #: dat/ships/soromid/soromid_brigand.xml:16
 msgid "You need at least 20 reputation with the Soromid."
-msgstr "Precisa de pelo menos 20 pontos de reputação com o Soromidas."
+msgstr "Requer 20 de reputação com os Soromid."
 
 #: dat/ships/soromid/soromid_brigand.xml:17
 msgid ""
@@ -8856,7 +8835,7 @@ msgstr "Bio-Cargueiro"
 
 #: dat/ships/soromid/soromid_copia.xml:23 dat/ships/soromid/soromid_ira.xml:21
 msgid "You need at least 60 reputation with the Soromid."
-msgstr "Precisa de pelo menos 60 pontos de reputação com o Soromidas."
+msgstr "Requer 60 de reputação com os Soromid."
 
 #: dat/ships/soromid/soromid_copia.xml:24
 msgid ""
@@ -8900,7 +8879,7 @@ msgstr "Bio-Bombardeiro"
 #: dat/ships/soromid/soromid_marauder.xml:17
 #: dat/ships/soromid/soromid_reaver.xml:16
 msgid "You need at least 30 reputation with the Soromid."
-msgstr "Precisa de pelo menos 30 pontos de reputação com o Soromidas."
+msgstr "Requer 30 de reputação com os Soromid."
 
 #: dat/ships/soromid/soromid_marauder.xml:18
 msgid ""
@@ -8939,7 +8918,7 @@ msgstr "Ódio Soromida"
 
 #: dat/ships/soromid/soromid_odium.xml:18
 msgid "You need at least 40 reputation with the Soromid."
-msgstr "Precisa de pelo menos 40 pontos de reputação com o Soromidas."
+msgstr "Requer 40 de reputação com os Soromid."
 
 #: dat/ships/soromid/soromid_odium.xml:19
 msgid ""
@@ -9009,7 +8988,7 @@ msgstr "Certeza Túrion"
 
 #: dat/ships/thurion/thurion_certitude.xml:21
 msgid "You need at least 70 reputation with the Thurion."
-msgstr "Precisa de ao menos 70 pontos de reputação com os Thurion."
+msgstr "Requer 70 de reputação com os Thurion."
 
 #: dat/ships/thurion/thurion_ingenuity.xml:2
 msgid "Thurion Ingenuity"
@@ -9038,7 +9017,7 @@ msgstr "Perspicácia Túrion"
 
 #: dat/ships/thurion/thurion_perspicacity.xml:21
 msgid "You need at least 20 reputation with the Thurion."
-msgstr "Precisa de ao menos 30 pontos de reputação com os Túrion."
+msgstr "Requer 20 de reputação com os Thurion."
 
 #: dat/ships/thurion/thurion_perspicacity.xml:22
 msgid ""
@@ -9080,7 +9059,7 @@ msgstr "Virtuosidade Túrion"
 
 #: dat/ships/thurion/thurion_virtuosity.xml:21
 msgid "You need at least 40 reputation with the Thurion."
-msgstr "Precisa de pelo menos 40 pontos de reputação com o Túrion."
+msgstr "Requer 40 de reputação com os Thurion."
 
 #: dat/ships/thurion/thurion_virtuosity.xml:22
 msgid ""
@@ -9122,7 +9101,7 @@ msgstr "Diabo Za'Lek"
 
 #: dat/ships/zalek/zalek_diablo.xml:19 dat/ships/zalek/zalek_mephisto.xml:17
 msgid "You need at least 70 reputation with House Za'lek."
-msgstr "Precisa de pelo menos 70 pontos de reputação com a Casa Za'lek."
+msgstr "Requer 70 de reputação com a Casa Za'lek."
 
 #: dat/ships/zalek/zalek_diablo.xml:20
 msgid ""
@@ -10774,11 +10753,11 @@ msgid ""
 "temperature, that's not to say you can't get a mean Pan-Galactic Gargle "
 "Blaster."
 msgstr ""
-"O Bar Espaçoporto de Ammu, conhecido como'' O Dissipador'' devido às suas "
-"temperaturas frias, é um contraste com o resto da estação, embora fosse "
+"O Bar do Porto Espacial de Ammu, conhecido como \"O Dissipador\" devido às "
+"suas temperaturas frias, é um contraste com o resto da estação, embora fosse "
 "considerado como relativamente quente na maioria dos planetas. Mais "
-"conhecido por sua temperatura, isso não quer dizer que não se consiga provar "
-"um forte drink chamado Detonador de Gargarejo Pan-Galático."
+"conhecido pela sua temperatura, isso não quer dizer que não se consiga "
+"provar uma bebida forte chamada Detonador de Trago Pan-Galático."
 
 #: dat/spob/amphion.xml:2
 msgid "Amphion"
@@ -28443,62 +28422,62 @@ msgstr ""
 
 #: dat/ai/zalek.lua:32
 msgid "You just made a big mistake!"
-msgstr ""
+msgstr "Cometeste um grande erro!"
 
 #: dat/ai/zalek.lua:33
 msgid "Our technology will fix your attitude!"
-msgstr ""
+msgstr "A nossa tecnologia vai corrigir a tua atitude!"
 
 #: dat/ai/zalek.lua:34
 msgid "You wanna do this? Have it your way."
-msgstr ""
+msgstr "Queres fazer isto? Faço à tua maneira."
 
 #: dat/ai/zalek.lua:37
 msgid "ENGAGING OFFENSIVE PROTOCOLS."
-msgstr ""
+msgstr "ATIVANDO PROTOCOLOS OFENSIVOS."
 
 #: dat/ai/zalek.lua:38
 msgid "EXTERMINATING HOSTILES."
-msgstr ""
+msgstr "EXTERMINANDO HOSTIS."
 
 #: dat/ai/zalek.lua:39
 msgid "COMBAT PROTOCOLS INITIATED."
-msgstr ""
+msgstr "PROTOCOLOS DE COMBATE INICIADOS."
 
 #: dat/ai/zalek.lua:42
 msgid "ENGAGING DEFENSIVE PROTOCOLS."
-msgstr ""
+msgstr "ATIVANDO PROTOCOLOS DEFENSIVOS."
 
 #. See if a drone
 #: dat/ai/zalek.lua:55
 msgid "\"ACCESS DENIED."
-msgstr ""
+msgstr "ACESSO NEGADO."
 
 #: dat/ai/zalek.lua:58
 msgid "COMMENCING SCAN PROCEDURE."
-msgstr ""
+msgstr "A INICIAR O PROCEDIMENTO DE VARREDURA."
 
 #: dat/ai/zalek.lua:59
 msgid "SCAN COMPLETED."
-msgstr ""
+msgstr "VARREDURA CONCLUÍDA."
 
 #: dat/ai/zalek.lua:60
 msgid "ILLEGAL OBJECTS DETECTED! RESISTANCE IS FUTILE!"
-msgstr ""
+msgstr "OBJETOS ILEGAIS DETETADOS! A RESISTÊNCIA É INÚTIL!"
 
 #. Most likely no chance to refuel
 #: dat/ai/zalek.lua:116
 msgid "\"I will agree to refuel your ship for {credits}.\""
-msgstr ""
+msgstr "\"Aceitarei reabastecer a tua nave por {credits}.\""
 
 #. See if can be bribed
 #: dat/ai/zalek.lua:124
 msgid "\"We will agree to end the battle for {credits}.\""
-msgstr ""
+msgstr "\"Concordaremos em terminar a batalha por {credits}.\""
 
 #: dat/ai/zalek.lua:125
 msgid "\"Temporarily stopping fire.\""
-msgstr ""
+msgstr "\"Parar temporariamente o fogo.\""
 
 #. Only 50% of actually taunting.
 #.
@@ -28509,21 +28488,22 @@ msgstr ""
 #. First check, make sure required slots are equipped
 #: dat/autoequip.lua:19
 msgid "Missing Required Outfits"
-msgstr ""
+msgstr "Faltam equipamentos obrigatórios"
 
 #: dat/autoequip.lua:19
 msgid "Please equip all required outfit slots first!"
-msgstr ""
+msgstr "Por favor, coloca primeiro nos espaços os equipamentos necessários!"
 
 #. Make sure
 #: dat/autoequip.lua:24
 msgid "Autoequip Confirmation"
-msgstr ""
+msgstr "Confirmação equipamento automático"
 
 #: dat/autoequip.lua:24
 msgid ""
 "This will re-equip your current pilot, are you sure you want to continue?"
 msgstr ""
+"Isto irá re-equipar o teu piloto atual, tens a certeza que quer continuar?"
 
 #. Remove all non-cores from the ship and add to inventory
 #. Store and remove old
@@ -28536,13 +28516,15 @@ msgstr ""
 #. Report success or failure
 #: dat/autoequip.lua:72
 msgid "Autoequipper Failure!"
-msgstr ""
+msgstr "Falha ao equipar automaticamente!"
 
 #: dat/autoequip.lua:72
 msgid ""
 "Autoequipper failed to equip! Please make sure that the equipped required "
 "outfits are adequate for this ship."
 msgstr ""
+"O equipador automático não conseguiu equipar! Certifica-te que os "
+"equipamentos necessários são adequados para esta nave."
 
 #.
 #. Default background
@@ -28701,6 +28683,8 @@ msgid ""
 "\n"
 "#rCosts {credits} ({sbonus}%#r from crew strength) to extract!#0"
 msgstr ""
+"\n"
+"#rCusta {credits} ({sbonus}%#r da força da tripulação) para extrair!#0"
 
 #: dat/board.lua:56
 msgid ""
@@ -28709,24 +28693,34 @@ msgid ""
 "{stype}\n"
 "{desc}"
 msgstr ""
+"{name}{sprice}\n"
+"{slotsize} {slottype}#0 espaço{sprop}\n"
+"{stype}\n"
+"{desc}"
 
 #: dat/board.lua:84
 msgid ""
 "{name}\n"
 "{desc}"
 msgstr ""
+"{name}\n"
+"{desc}"
 
 #: dat/board.lua:87
 msgid ""
 "\n"
 "#rIllegalized by the following factions:\n"
 msgstr ""
+"\n"
+"#rIlegalizado pelas seguintes fações:\n"
 
 #: dat/board.lua:90
 msgid ""
 "\n"
 "   - {fct}"
 msgstr ""
+"\n"
+"   - {fct}"
 
 #. Credits
 #: dat/board.lua:116
@@ -28738,19 +28732,24 @@ msgid ""
 "Credits\n"
 "Used as the main form of currency throughout the galaxy."
 msgstr ""
+"Créditos\n"
+"Usados como a principal forma de moeda em toda a galáxia."
 
 #. Fuel
 #. Strafer stops following the player
 #. Add some fuel, far away so that no npc gathers it
 #: dat/board.lua:130 dat/missions/dvaered/frontier_war/fw02_escape.lua:627
 msgid "Fuel"
-msgstr ""
+msgstr "Combustível"
 
 #: dat/board.lua:134
 msgid ""
 "Fuel\n"
 "Necessary for the activation of jump drives that allow inter-system travel."
 msgstr ""
+"Combustível\n"
+"Necessário para a ativação dos controladores de salto que permitem viagens "
+"entre sistemas."
 
 #. Steal outfits before cargo, since they are always considered "special"
 #. Skips locked outfits
@@ -28764,40 +28763,41 @@ msgstr ""
 #. Ignore anything that isn't loot from now on
 #: dat/board.lua:286
 msgid "You have {freespace} of free space."
-msgstr ""
+msgstr "Tens {freespace} de espaço livre."
 
 #: dat/board.lua:349
 msgid "Your ship cannibalized {armour:.0f} armour from {plt}."
-msgstr ""
+msgstr "A tua nave canibalizou {armour:.0f} de blindagem de {plt}."
 
 #: dat/board.lua:359
 msgid "{cargo} ({credits}/tonne, {tonnes})"
-msgstr ""
+msgstr "{cargo} ({credits}/tonelada, {tonnes})"
 
 #. forward declaration
 #: dat/board.lua:368
 msgid "Jettison {cargo}"
-msgstr ""
+msgstr "Deitar fora {cargo}"
 
 #: dat/board.lua:369
 msgid "How many tonnes of {cargo} do you wish to jettison?"
-msgstr ""
+msgstr "Quantas toneladas de {cargo} queres deitar fora?"
 
 #: dat/board.lua:374
 msgid "Jettison {cargo}?"
-msgstr ""
+msgstr "Deitar fora {cargo}?"
 
 #: dat/board.lua:375
 msgid "Are you sure you want to get rid of {tonnes} of {cargo}?"
-msgstr ""
+msgstr "Tens a certeza que queres deitar fora {tonnes} de {cargo}?"
 
 #: dat/board.lua:379
 msgid "Bye Bye {cargo}"
-msgstr ""
+msgstr "Adeus {cargo}"
 
 #: dat/board.lua:380
 msgid "You dump {tonnes} of {cargo} out the airlock of your ship."
 msgstr ""
+"Despejaste {tonnes} de {carga} para fora da câmara de vácuo da tua nave."
 
 #. Speed Lights
 #. Update the editor window.
@@ -28819,16 +28819,16 @@ msgstr ""
 #: src/map_system.c:647
 #, c-format
 msgid "None"
-msgstr ""
+msgstr "Nenhuma"
 
 #. Add manage cargo button if applicable
 #: dat/board.lua:405 dat/board.lua:461
 msgid "Manage Cargo"
-msgstr ""
+msgstr "Gerir carga"
 
 #: dat/board.lua:407
 msgid "Select cargo to jettison:"
-msgstr ""
+msgstr "Seleciona a carga a deitar fora:"
 
 #. Destroy if exists
 #: dat/board.lua:410 dat/board.lua:453 dat/comm.lua:171
@@ -28844,65 +28844,67 @@ msgstr ""
 #: src/info.c:1610 src/land_outfits.c:166 src/map.c:376 src/map_find.c:1022
 #: src/map_system.c:202
 msgid "Close"
-msgstr ""
+msgstr "Fechar"
 
 #: dat/board.lua:413 src/info.c:916
 msgid "Jettison"
-msgstr ""
+msgstr "Deitar fora"
 
 #: dat/board.lua:454
 msgid "Loot"
-msgstr ""
+msgstr "Saquear"
 
 #: dat/board.lua:455
 msgid "Loot All"
-msgstr ""
+msgstr "Saquear tudo"
 
 #: dat/board.lua:457
 msgid "Cannibalize"
-msgstr ""
+msgstr "Canibalizar"
 
 #: dat/board.lua:466
 msgid "Boarding {plt}"
-msgstr ""
+msgstr "A assaltar {plt}"
 
 #. Moolah
 #. Will go negative with loot_mod
 #: dat/board.lua:503
 msgid "You looted {creds} from {plt}."
-msgstr ""
+msgstr "Saqueaste {creds} de {plt}."
 
 #. Unable to loot anything
 #: dat/board.lua:512
 msgid "Fuel Tank Full"
-msgstr ""
+msgstr "Tanque de combustível cheio"
 
 #: dat/board.lua:512
 msgid "Your fuel tanks are already full!"
-msgstr ""
+msgstr "Os teus tanques de combustível já estão cheios!"
 
 #: dat/board.lua:518
 msgid "You looted {amount} fuel from {plt}."
-msgstr ""
+msgstr "Saqueaste {amount} de combustível de {plt}."
 
 #. Looted all the fuel
 #: dat/board.lua:529
 msgid "Extract {outfit}?"
-msgstr ""
+msgstr "Extrair {outfit}?"
 
 #: dat/board.lua:530
 msgid ""
 "It will cost #r{credits}#0 in repairs to successfully extract the {outfit}. "
 "You have {playercreds}. Extract the {outfit}?"
 msgstr ""
+"Vai-te custar #r{credits}#0 em reparações para extrair com sucesso {outfit}. "
+"Tens {playercreds}. Extrair {outfit}?"
 
 #: dat/board.lua:534 dat/spob/lua/lib/hypergate.lua:303 src/map_system.c:1037
 msgid "Insufficient Credits"
-msgstr ""
+msgstr "Créditos insuficientes"
 
 #: dat/board.lua:534
 msgid "You lack #r{diff}#0 to be able to extract the {outfit}."
-msgstr ""
+msgstr "Falta-te #r{diff}#0 para poderes extrair {outfit}."
 
 #. Soft warning
 #: dat/board.lua:539 dat/board.lua:551
@@ -30368,7 +30370,7 @@ msgstr ""
 #. Ambusher was boarded: start the Dvaered Base mission
 #: dat/events/dvaered/fwD_hitman.lua:117
 msgid "Boarding aborted"
-msgstr ""
+msgstr "Assalto abortado"
 
 #: dat/events/dvaered/fwD_hitman.lua:117
 msgid ""
@@ -35154,6 +35156,9 @@ msgid ""
 "the Doranthex Lava Room charmed our reviewer, but if you care for ambiance, "
 "don't miss the Goddard Bar."
 msgstr ""
+"Onde se pode obter o melhor detonador de tragos?  A famosa lista de bebidas "
+"exóticas na Sala de Lava de Doranthex encantou o nosso revisor, mas se "
+"gostas de ambiente, não percas o Goddard Bar."
 
 #: dat/events/news/generic.lua:79
 msgid "RIP: The Floating Vagabond"
@@ -40930,6 +40935,12 @@ msgid ""
 "violent humans. Those who tried to communicate with them are now dust in "
 "space. The only things they understand are blaster fire and carnage.\""
 msgstr ""
+"Fazem uma breve pausa.\n"
+"\"No início, houve quem pensasse que a convivência era uma possibilidade, "
+"embora ao longo do tempo se tenha demonstrado que não passa de um ideal "
+"utópico. A coexistência não é possível com a rápida reprodução de humanos "
+"violentos. Aqueles que tentaram comunicar com eles agora são pó no espaço. "
+"As únicas coisas que entendem são fogo de detonação e carnificina.\""
 
 #: dat/events/taiomi/system.lua:302
 msgid ""
@@ -42741,7 +42752,7 @@ msgstr ""
 
 #: dat/factions/spawn/trader.lua:30
 msgid "Trader Shark"
-msgstr ""
+msgstr "Tubarão Comerciante"
 
 #. Doubles the credits of the pilot
 #. @brief Spawns a small trade fleet.
@@ -46535,7 +46546,7 @@ msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:359
 msgid "Boarding"
-msgstr ""
+msgstr "Assalto"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:359
 msgid ""
@@ -49764,12 +49775,12 @@ msgstr ""
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:129
 #: dat/missions/minerva/kex3.lua:399
 msgid "5…"
-msgstr ""
+msgstr "5…"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:130
 #: dat/missions/minerva/kex3.lua:400
 msgid "4…"
-msgstr ""
+msgstr "4…"
 
 #. don't load into the race
 #. take off and start the race!
@@ -49784,17 +49795,17 @@ msgstr ""
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:131
 #: dat/missions/minerva/kex3.lua:401 dat/missions/neutral/race_qex.lua:292
 msgid "3…"
-msgstr ""
+msgstr "3…"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:132
 #: dat/missions/minerva/kex3.lua:402 dat/missions/neutral/race_qex.lua:294
 msgid "2…"
-msgstr ""
+msgstr "2…"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:133
 #: dat/missions/minerva/kex3.lua:403 dat/missions/neutral/race_qex.lua:295
 msgid "1…"
-msgstr ""
+msgstr "1…"
 
 #. TODO play countdown sound
 #. TODO play sound and cooler text
@@ -49836,45 +49847,40 @@ msgstr ""
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:334
 #, lua-format
 msgid "%.1f seconds"
-msgstr ""
+msgstr "%.1f segundos"
 
 #. Store all the stuff the pilot killed
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:359
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:380
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:399
-#, fuzzy, lua-format
-#| msgid "Bio-Corvette"
+#, lua-format
 msgid "Corvette %d%%"
-msgstr "Bio-Corveta"
+msgstr "Corveta %d%%"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:361
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:401
-#, fuzzy, lua-format
-#| msgid "Bio-Destroyer"
+#, lua-format
 msgid "Destroyer %d%%"
-msgstr "Bio-Contratorpedeiro"
+msgstr "Contratorpedeiro %d%%"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:363
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:382
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:403
-#, fuzzy, lua-format
-#| msgid "Bio-Cruiser"
+#, lua-format
 msgid "Cruiser %d%%"
-msgstr "Bio-Cruzador"
+msgstr "Cruzador %d%%"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:365
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:384
-#, fuzzy, lua-format
-#| msgid "Bio-Carrier"
+#, lua-format
 msgid "Carrier %d%%"
-msgstr "Bio-Porta Naves"
+msgstr "Porta-aviões %d%%"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:367
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:386
-#, fuzzy, lua-format
-#| msgid "Bio-Battleship"
+#, lua-format
 msgid "Battleship %d%%"
-msgstr "Bio-Nave de Batalha"
+msgstr "Couraçado %d%%"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:370
 #, lua-format
@@ -49889,16 +49895,15 @@ msgstr ""
 #. I'd love to see someone take down a kestrel in a fighter
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:376
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:395
-#, fuzzy, lua-format
-#| msgid "Fighter Bays"
+#, lua-format
 msgid "Fighter %d%%"
-msgstr "Baías de Caça"
+msgstr "Caça %d%%"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:378
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:397
 #, lua-format
 msgid "Bomber %d%%"
-msgstr ""
+msgstr "Bombardeiro %d%%"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:389
 #, lua-format
@@ -49934,7 +49939,7 @@ msgstr ""
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:423
 #, lua-format
 msgid "TOTAL %d (#g+%d#0)"
-msgstr ""
+msgstr "TOTAL %d (#g+%d#0)"
 
 #. TODO add sound
 #. TODO Cooler animation or something
@@ -50804,6 +50809,9 @@ msgid ""
 "impressive. I think you owned the right to get destroyed by Blue Belly "
 "Billy's Blasters!\""
 msgstr ""
+"\"Uau! Superaste o desafio Corredor para o Inferno! Isso é bastante "
+"impressionante. Acho que tinhas o direito de ser destruído pelos detonadores "
+"do Blue Belly Billy!\""
 
 #: dat/missions/dvaered/recruitment/dv_bikers.lua:667
 msgid ""
@@ -50949,20 +50957,24 @@ msgstr ""
 msgid ""
 "Nelly has noticed you. Wait? Is she trying to infuse a sausage in her Vodka?"
 msgstr ""
+"A Nelly reparou em ti. Espera! Ela está a tentar diluir uma salsicha na "
+"vodka dela?"
 
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:47
 msgid "Wait? Is this woman trying to infuse a sausage in her Vodka?"
-msgstr ""
+msgstr "Espera! Esta mulher está a tentar diluir uma salsicha na vodka dela?"
 
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:59
 msgid ""
 "\"Hi, {player}! How do you do? How long have you been here in Dvaered space? "
 "Not so long, eh?\""
 msgstr ""
+"\"Olá, {player}! Como estás? Há quanto tempo estás aqui no espaço de "
+"Dvaered? Não muito, pois não?\""
 
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:61
 msgid "\"Hi, I'm Nelly! Oh! I guess you are new to Dvaered space, right?\""
-msgstr ""
+msgstr "\"Olá, sou a Nelly! Oh! Acho que és novo no espaço Dvaered, certo?\""
 
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:66
 msgid ""
@@ -50970,6 +50982,9 @@ msgid ""
 "\"Do you want a good tip from an old skipper who has been sailing among the "
 "stars for cycles?\""
 msgstr ""
+"A Nelly coloca as mãos na mesa e levanta-se.\n"
+"\"Queres uma boa dica de uma velha capitã que tem navegado entre as estrelas "
+"durante ciclos?\""
 
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:68
 msgid ""
@@ -50979,10 +50994,15 @@ msgid ""
 "It's not dangerous, the pay is decent, and it does not put you in trouble "
 "with any other faction. Do you want me to explain?\""
 msgstr ""
+"Um sorriso aparece no rosto dela e ela senta-se novamente.\n"
+"\"Ok, estou a brincar. Não sou uma velha capitã. No entanto, ainda encontrei "
+"uma boa maneira de ganhar dinheiro fazendo missões para os Dvaered.\n"
+"Não é perigoso, o pagamento é decente, e não te coloca em problemas com "
+"nenhuma outra fação. Queres que te explique?\""
 
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:77
 msgid "\"As you wish.\""
-msgstr ""
+msgstr "\"Como queiras\""
 
 #. Just in case
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:82
@@ -50996,6 +51016,15 @@ msgid ""
 "control that they actually protect the trade lanes. That is why they need "
 "private pilots, like us, to count Dvaered ships.\""
 msgstr ""
+"\"Vou dizer-te o que eu entendi.\n"
+"A maioria das naves de guerra Dvaered que vês lá fora pertencem a exércitos "
+"privados, que obedecem aos generais, chamados \"Senhores da Guerra\". Estes "
+"Senhores da Guerra têm muitos privilégios, mas também têm algumas "
+"obrigações. Uma dessas obrigações é patrulhar rotas em todos os mundos que "
+"possuem.\n"
+"Mas como os Dvaered são um pouco... primitivos, a sua administração não é "
+"capaz de controlar se eles realmente protegem as rotas comerciais. É por "
+"isso que precisam de pilotos privados, como nós, para contar naves Dvaered.\""
 
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:85
 msgid ""
@@ -51007,6 +51036,14 @@ msgid ""
 "Once you have seen enough ships, you can land on any Dvaered-controlled "
 "planet to transmit your data and collect your pay.\""
 msgstr ""
+"\"É assim que funciona: simplesmente precisas de navegar num determinado "
+"sistema estelar e entrar no alcance do sensor de um determinado número de "
+"naves Dvaered. Os dados são adquiridos e processados automaticamente.\n"
+"As autoridades de Dvaered podem então deduzir dos IDs do transponder qual a "
+"nave que pertence a que senhor da guerra.\n"
+"Depois de veres naves suficientes, podes aterrar em qualquer planeta "
+"controlado pelos Dvaered para transmitir os teus dados e receber o teu "
+"pagamento.\""
 
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:88
 msgid ""
@@ -51016,24 +51053,29 @@ msgid ""
 "what? I can transfer mine to you. I needed to abort it anyways because this "
 "freaking sausage has not finished infusing yet!\""
 msgstr ""
+"\"A última que escolhi aconteceu em {system}, tens que chegar ao alcance de "
+"{nb} naves e o pagamento é {créditos}. Estas missões aparecem no computador "
+"da missão para os pilotos que o solicitaram às autoridades. Mas , queres "
+"saber? Posso transferir o meu para ti. Eu precisava abortar de qualquer "
+"forma porque esta maldita salsicha ainda não se diluiu!\""
 
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:90
 msgid "Accept the mission"
-msgstr ""
+msgstr "Aceitar a missão"
 
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:91
 msgid "Refuse the mission"
-msgstr ""
+msgstr "Recusar a missão"
 
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:96
 msgid "\"Good luck with that mission, then!\""
-msgstr ""
+msgstr "\"Boa sorte com essa missão, então!\""
 
 #. Check to see if truly accepted
 #. Create NPC for casual chatting
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:109
 msgid "Nelly is still there."
-msgstr ""
+msgstr "A Nelly ainda está lá."
 
 #. Enters in the mission's system
 #. Note: there is no test on the player leaving the system before having scanned enough ships.
@@ -51044,7 +51086,7 @@ msgstr ""
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:136
 #: dat/missions/dvaered/recruitment/dv_propaganda.lua:176
 msgid "Reward"
-msgstr ""
+msgstr "Recompensa"
 
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:136
 msgid ""
@@ -51052,34 +51094,42 @@ msgid ""
 "unlock for you the Dvaered Census missions, that you can now find at the "
 "mission computer under the label {label}."
 msgstr ""
+"Aterras e transmites um bloco de dados ao oficial de ligação local dos "
+"Dvaered. Desbloqueiam para ti as missões do recenseamento Dvaered, que agora "
+"podes encontrar no computador da missão sob a etiqueta {label}."
 
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:140
 msgid ""
 "You accomplished a patrol census mission for the Dvaered. They seem disposed "
 "to entrust you with more missions of that kind in the future."
 msgstr ""
+"Cumpriste uma missão de recenseamento para os Dvaered. Parecem dispostos a "
+"confiar-te mais missões deste tipo futuramente."
 
 #. Recursivity 1 s
 #. Facultative talk to Nelly
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:170
 msgid "How did you end up in Dvaered Space?"
-msgstr ""
+msgstr "Como é que acabaste em no espaço Dvaered?"
 
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:171
 msgid "Isn't it a bit odd, how the Dvaered society works, with those Warlords?"
 msgstr ""
+"Não é um pouco estranho, como funciona a sociedade Dvaered, com aqueles "
+"senhores da guerra?"
 
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:172
 msgid "Suggest Nelly to prick the sausage with a fork to infuse it quicker"
 msgstr ""
+"Sugerir à Nelly picar a salsicha com um garfo para a diluir mais rapidamente"
 
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:173
 msgid "Leave Nelly"
-msgstr ""
+msgstr "Deixar a Nelly"
 
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:176
 msgid "\"How do you do?\""
-msgstr ""
+msgstr "\"Como estás?\""
 
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:180
 msgid ""
@@ -51092,12 +51142,23 @@ msgid ""
 "A kid shot the ball in the wrong direction, and it crashed into the side of "
 "my poor Llama, breaking through the plating!\""
 msgstr ""
+"\"Ah, sim. Longa história.\"\n"
+"A Nelly levanta os olhos e deixa o seu olhar vaguear no teto sujo.\n"
+"\"Tinha acabado de aterrar em Brooks, em Arcturus, sabes? Por alguma razão, "
+"há lá muitas vezes crianças a jogar futebol no porto espacial. Enquanto os "
+"trabalhadores descarregavam as mercadorias da minha nave, perguntava-me "
+"porque nunca tinha havido um acidente com aquelas crianças. E de repente, "
+"ocorreu um acidente!\n"
+"Um miúdo atirou a bola na direção errada e bateu no lado do meu pobre Llama, "
+"quebrando o prato!\""
 
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:185
 msgid ""
 "If a soccer ball can break through your ship, what will happen with a "
 "blaster?"
 msgstr ""
+"Se uma bola de futebol pode atravessar a tua nave, o que acontece com um "
+"detonador?"
 
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:186
 msgid "Was it easy to repair?"
@@ -66199,13 +66260,13 @@ msgstr ""
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:130
 msgid "You delivered {amount} of {cargo} to {pnt} for terraforming."
-msgstr ""
+msgstr "Entregaste {amount} de {cargo} a {pnt} para terraformação."
 
 #. Level up antlejos as necessary
 #. TODO better messages
 #: dat/missions/neutral/antlejos/ant_supplies.lua:138
 msgid "Terraforming Progress"
-msgstr ""
+msgstr "Progresso da terraformação"
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:138
 msgid ""
@@ -66417,7 +66478,7 @@ msgstr ""
 #. get the drink
 #: dat/missions/neutral/aristodrink.lua:162
 msgid "This is it!"
-msgstr ""
+msgstr "É isto!"
 
 #: dat/missions/neutral/aristodrink.lua:178
 msgid ""
@@ -66489,25 +66550,29 @@ msgstr ""
 #: dat/missions/neutral/cargo.lua:35
 msgid "Small shipment of {amount} of {cargo} to {pnt} in the {sys} system."
 msgstr ""
+"Pequeno carregamento de {amount} de {cargo} para {pnt} no sistema {sys} ."
 
 #: dat/missions/neutral/cargo.lua:36
 msgid "Medium shipment of {amount} of {cargo} to {pnt} in the {sys} system."
-msgstr ""
+msgstr "Carregamento médio de {amount} de {cargo} para {pnt} no sistema {sys}."
 
 #: dat/missions/neutral/cargo.lua:37
 msgid ""
 "Sizable cargo delivery of {amount} of {cargo} to {pnt} in the {sys} system."
 msgstr ""
+"Grande carregamento de {amount} de {cargo} para {pnt} no sistema {sys} ."
 
 #: dat/missions/neutral/cargo.lua:38
 msgid ""
 "Large cargo delivery of {amount} of {cargo} to {pnt} in the {sys} system."
 msgstr ""
+"Enorme carregamento de {amount} de {cargo} para {pnt} no sistema {sys} ."
 
 #: dat/missions/neutral/cargo.lua:39
 msgid ""
 "Bulk freight delivery of {amount} of {cargo} to {pnt} in the {sys} system."
 msgstr ""
+"Carregamento gigante de {amount} de {cargo} para {pnt} no sistema {sys} ."
 
 #. =Landing=--
 #: dat/missions/neutral/cargo.lua:49 dat/missions/neutral/cargo_rush.lua:58
@@ -66516,6 +66581,9 @@ msgid ""
 "workers. The job takes inordinately long to complete, and the leader pays "
 "you #g{credits}#0 without speaking a word."
 msgstr ""
+"Os contentores de {cargo} são transportados da tua nave por um grupo de "
+"trabalhadores mal-humorados. O trabalho leva um tempo excessivo a ser "
+"concluído e o líder paga-te #g{credits}#0 sem dizer uma palavra."
 
 #: dat/missions/neutral/cargo.lua:50 dat/missions/neutral/cargo_rush.lua:59
 msgid ""
@@ -66523,6 +66591,10 @@ msgid ""
 "vessel. Before you can even collect your thoughts, one of the workers "
 "presses a credit chip worth #g{credits}#0 in your hand and departs."
 msgstr ""
+"Pouco depois de aterrares, uma equipa retira à pressa os contentores de "
+"{carga} da tua nave. Antes mesmo de poderes ordenar os teus pensamentos, um "
+"dos trabalhadores põe uma ficha de crédito no valor de #g{credits}#0 na tua "
+"mão e vai embora."
 
 #: dat/missions/neutral/cargo.lua:51 dat/missions/neutral/cargo_rush.lua:60
 msgid ""
@@ -66530,6 +66602,9 @@ msgid ""
 "dockworkers. Still, they make fairly good time, delivering your pay of "
 "#g{credits}#0 upon completion of the job."
 msgstr ""
+"Os contentores de {cargo} são descarregados por um grupo de estivadores "
+"esgotados. Ainda assim, fazem-no depressa, entregando o teu salário de "
+"#g{credits}#0 após a conclusão do trabalho."
 
 #: dat/missions/neutral/cargo.lua:52 dat/missions/neutral/cargo_rush.lua:61
 msgid ""
@@ -66537,6 +66612,9 @@ msgid ""
 "supervised by a human overseer, who hands you your pay of #g{credits}#0 when "
 "they finish."
 msgstr ""
+"Os contentores de {cargo} são descarregados por uma equipa de drones "
+"robóticos supervisionados por um humano, que te entrega #g{credits}#0 quando "
+"terminam."
 
 #. Create the mission
 #. Note: this mission does not make any system claims.
@@ -66546,24 +66624,24 @@ msgstr ""
 #. Note: Pay is independent from amount by design! Not all deals are equally attractive!
 #: dat/missions/neutral/cargo.lua:88
 msgid "Shipment to {pnt} in {sys} ({tonnes})"
-msgstr ""
+msgstr "Carregamento para {pnt} em {sys} ({tonnes})"
 
 #: dat/missions/neutral/cargo.lua:106
 msgid "Cargo mission"
-msgstr ""
+msgstr "Missão de carga"
 
 #: dat/missions/neutral/cargo.lua:106
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:106
 #: dat/missions/zalek/zlk_test.lua:102
 msgid "Fly to {pnt} in the {sys} system"
-msgstr ""
+msgstr "Voa para {pnt} no sistema {sys}"
 
 #. Land hook
 #. Semi-random message.
 #: dat/missions/neutral/cargo.lua:115
 #: dat/missions/neutral/commodity_run.lua:139
 msgid "Delivery success!"
-msgstr ""
+msgstr "Sucesso na entrega!"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -66593,47 +66671,53 @@ msgstr ""
 #. Note: indexed from 0, to match mission tiers.
 #: dat/missions/neutral/cargo_rush.lua:35
 msgid "Courier transport to {pnt} in {sys} ({tonnes})"
-msgstr ""
+msgstr "Transporte por correio para {pnt} em {sys} ({tonnes})"
 
 #: dat/missions/neutral/cargo_rush.lua:36
 msgid "Priority shipment to {pnt} in {sys} ({tonnes})"
-msgstr ""
+msgstr "Carregamento prioritário para {pnt} em {sys} ({tonnes})"
 
 #: dat/missions/neutral/cargo_rush.lua:37
 msgid "Pressing cargo delivery to {pnt} in {sys} ({tonnes})"
-msgstr ""
+msgstr "Carregamento premente para {pnt} em {sys} ({tonnes})"
 
 #: dat/missions/neutral/cargo_rush.lua:38
 msgid "Urgent cargo delivery to {pnt} in {sys} ({tonnes})"
-msgstr ""
+msgstr "Carregamento urgente para {pnt} em {sys} ({tonnes})"
 
 #: dat/missions/neutral/cargo_rush.lua:39
 msgid "Emergency cargo delivery to {pnt} in {sys} ({tonnes})"
-msgstr ""
+msgstr "Carregamento de emergência para {pnt} em {sys} ({tonnes})"
 
 #. Note: indexed from 0, to match mission tiers.
 #: dat/missions/neutral/cargo_rush.lua:43
 msgid "Courier transport of {amount} of {cargo} to {pnt} in the {sys} system."
 msgstr ""
+"Transporte por correio de {amount} de {cargo} para {pnt} no sistema {sys}."
 
 #: dat/missions/neutral/cargo_rush.lua:44
 msgid "Priority shipment of {amount} of {cargo} to {pnt} in the {sys} system."
 msgstr ""
+"Carregamento prioritário de {amount} de {cargo} para {pnt} no sistema {sys}."
 
 #: dat/missions/neutral/cargo_rush.lua:45
 msgid ""
 "Pressing cargo delivery of {amount} of {cargo} to {pnt} in the {sys} system."
 msgstr ""
+"Carregamento premente de {amount} de {cargo} para {pnt} no sistema {sys}."
 
 #: dat/missions/neutral/cargo_rush.lua:46
 msgid ""
 "Urgent cargo delivery of {amount} of {cargo} to {pnt} in the {sys} system."
 msgstr ""
+"Carregamento urgente de {amount} de {cargo} para {pnt} no sistema {sys}."
 
 #: dat/missions/neutral/cargo_rush.lua:47
 msgid ""
 "Emergency cargo delivery of {amount} of {cargo} to {pnt} in the {sys} system."
 msgstr ""
+"Carregamento de emergência de {amount} de {cargo} para {pnt} no sistema "
+"{sys}."
 
 #: dat/missions/neutral/cargo_rush.lua:65
 msgid ""
@@ -66641,6 +66725,10 @@ msgid ""
 "workers. They are not happy that they have to work overtime because you were "
 "late. You are paid only {credits} of the {reward} you were promised."
 msgstr ""
+"Os contentores de {cargo} são retirados da tua nave por um grupo de "
+"trabalhadores mal-humorados. Não estão contentes por terem de fazer horas "
+"extra porque te atrasaste. Só de pagam {credits} de {reward} que te "
+"prometeram."
 
 #: dat/missions/neutral/cargo_rush.lua:66
 msgid ""
@@ -66648,6 +66736,10 @@ msgid ""
 "vessel. Your late arrival is stretching quite a few schedules! Your pay is "
 "only {credits} instead of {reward} because of that."
 msgstr ""
+"Pouco depois de aterrares, uma equipa retira a toda a pressa os contentores "
+"de {carga} para fora da tua nave. A tua chegada tardia está a alterar alguns "
+"horários! O teu pagamento é de apenas {credits} em vez de {reward} por causa "
+"disso."
 
 #: dat/missions/neutral/cargo_rush.lua:67
 msgid ""
@@ -66655,10 +66747,13 @@ msgid ""
 "dockworkers. You missed the deadline, so your reward is only {credits} "
 "instead of the {reward} you were hoping for."
 msgstr ""
+"Os contentores de {cargo} são descarregados por um grupo de estivadores "
+"esgotados. Ultrapassaste o prazo, por isso a tua recompensa é apenas "
+"{credits} em vez de {reward} que esperavas."
 
 #: dat/missions/neutral/cargo_rush.lua:142
 msgid "Unknown route"
-msgstr ""
+msgstr "Rota desconhecida"
 
 #: dat/missions/neutral/cargo_rush.lua:143
 msgid ""
@@ -66666,16 +66761,20 @@ msgid ""
 "maps, spending time searching for unknown jumps, or taking a route longer "
 "than {jumps} may cause you to miss the deadline. Accept the mission anyway?"
 msgstr ""
+"A rota mais rápida para {pnt} não é conhecida atualmente. Aterrares para "
+"comprar mapas, gastares tempo à procura de saltos desconhecidos ou fazer uma "
+"rota mais longa do que {jumps} pode fazer com que ultrapasses o prazo. "
+"Queres aceitar a missão?"
 
 #: dat/missions/neutral/cargo_rush.lua:183
 #: dat/missions/neutral/cargo_rush.lua:191
 msgid "Rush cargo mission"
-msgstr ""
+msgstr "Missão de carga apressada"
 
 #. Case missed second deadline
 #: dat/missions/neutral/cargo_rush.lua:186
 msgid "The delivery to {sys} has been canceled! You were too late."
-msgstr ""
+msgstr "A entrega para {sys} foi cancelada! Chegaste demasiado tarde."
 
 #. Case missed first deadline
 #: dat/missions/neutral/cargo_rush.lua:190
@@ -66683,6 +66782,9 @@ msgid ""
 "Fly to {pnt} in the {sys} system\n"
 "(deadline missed, but you can still make a late delivery if you hurry)"
 msgstr ""
+"Voa para {pnt} no sistema {sys}\n"
+"(prazo não cumprido, mas ainda podes fazer uma entrega tardia se te "
+"apressares)"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -66717,7 +66819,7 @@ msgstr ""
 #. Mission Details
 #: dat/missions/neutral/commodity_run.lua:37
 msgid "{cargo} Delivery"
-msgstr ""
+msgstr "Entrega de {cargo}"
 
 #: dat/missions/neutral/commodity_run.lua:38
 msgid ""
@@ -66725,6 +66827,9 @@ msgid ""
 "Go to any planet which sells this commodity and bring as much of it back as "
 "possible."
 msgstr ""
+"{pnt} tem uma oferta insuficiente de {cargo} para satisfazer a procura "
+"atual. Vai a qualquer planeta que venda esta mercadoria e traz a maior "
+"quantidade possível."
 
 #: dat/missions/neutral/commodity_run.lua:41
 msgid ""
@@ -66732,6 +66837,9 @@ msgid ""
 "several different workers double-check the register to confirm the amount, "
 "you are paid {credits} and summarily dismissed."
 msgstr ""
+"Os contentores de {cargo} são transportados da tua nave e contabilizados. "
+"Depois de vários trabalhadores diferentes verificarem o registo para "
+"confirmar o valor, pagam-te {credits} e és dispensado sem demoras."
 
 #: dat/missions/neutral/commodity_run.lua:42
 msgid ""
@@ -66739,6 +66847,9 @@ msgid ""
 "readied for distribution. The delivery manager thanks you with a credit chip "
 "worth {credits}."
 msgstr ""
+"Os contentores de {cargo} são descarregados, rotulados e preparados para "
+"distribuição. O gestor de entregas agradece-te com uma ficha de créditos no "
+"valor de {credits}."
 
 #: dat/missions/neutral/commodity_run.lua:43
 msgid ""
@@ -66746,16 +66857,22 @@ msgid ""
 "dockworkers who are in no rush to finish, eventually delivering {credits} "
 "after the number of tonnes is determined."
 msgstr ""
+"Os contentores de {cargo} são descarregados da tua nave por uma equipa de "
+"estivadores que não têm pressa em terminar, acabando por te entregarem "
+"{credits} após apurarem do número de toneladas."
 
 #: dat/missions/neutral/commodity_run.lua:44
 msgid ""
 "The containers of {cargo} are unloaded by robotic drones that scan and tally "
 "the contents. The human overseer hands you {credits} when they finish."
 msgstr ""
+"Os contentores de {cargo} são descarregados por drones robóticos que "
+"digitalizam e quantificam o conteúdo. O supervisor humano entrega-te "
+"{credits} após terminarem."
 
 #: dat/missions/neutral/commodity_run.lua:47
 msgid "Commodity Delivery"
-msgstr ""
+msgstr "Entrega de mercadorias"
 
 #. A script may require "missions.neutral.commodity_run" and override this
 #. with a table of (raw) commodity names to choose from.
@@ -66767,15 +66884,15 @@ msgstr ""
 #: dat/missions/neutral/commodity_run.lua:102
 #: dat/missions/neutral/wastedump.lua:81
 msgid "{credits} per tonne"
-msgstr ""
+msgstr "{credits} por tonelada"
 
 #: dat/missions/neutral/commodity_run.lua:113
 msgid "Buy as much {cargo} as possible"
-msgstr ""
+msgstr "Compra o máximo de {cargo} possível"
 
 #: dat/missions/neutral/commodity_run.lua:114
 msgid "Take the {cargo} to {pnt} in the {sys} system"
-msgstr ""
+msgstr "Leva {cargo} para {pnt} no sistema {sys}"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -66800,11 +66917,11 @@ msgstr ""
 #. Non-persistent state
 #: dat/missions/neutral/crimelord.lua:32
 msgid "A detective"
-msgstr ""
+msgstr "Um detetive"
 
 #: dat/missions/neutral/crimelord.lua:38
 msgid "A private detective is signalling you to come speak with him."
-msgstr ""
+msgstr "Um detetive privado está a fazer-te sinal para ires falar com ele."
 
 #. Note: this mission does not make any system claims.
 #: dat/missions/neutral/crimelord.lua:48
@@ -66842,7 +66959,7 @@ msgstr ""
 
 #: dat/missions/neutral/crimelord.lua:75 dat/missions/neutral/crimelord.lua:79
 msgid "Crimelord"
-msgstr ""
+msgstr "Senhor do Crime"
 
 #: dat/missions/neutral/crimelord.lua:76
 msgid "A generous compensation"
@@ -82553,10 +82670,8 @@ msgid "It's not holding together!"
 msgstr ""
 
 #: dat/missions/taiomi/taiomi10.lua:459
-#, fuzzy
-#| msgid "Active Plating"
 msgid "Activating!"
-msgstr "Revestimento Ativo"
+msgstr "A ativar!"
 
 #: dat/missions/taiomi/taiomi10.lua:527
 msgid "Power………………………………check."
@@ -93709,7 +93824,7 @@ msgstr ""
 
 #: dat/scripts/bioship/skills.lua:320
 msgid "Increases boarding loot bonus by 100%."
-msgstr ""
+msgstr "Aumenta o bónus de assalto em 100%."
 
 #: dat/scripts/bioship/skills.lua:328
 msgid ""
@@ -101479,7 +101594,7 @@ msgstr ""
 #: src/board.c:185
 #, c-format
 msgid "#oBoarding ship #%c%s#0."
-msgstr ""
+msgstr "#oA assaltar a nave #%c%s#0."
 
 #: src/board.c:272
 #, c-format
@@ -102524,7 +102639,7 @@ msgstr "Velocidade máxima: "
 
 #: src/dev_sysedit.c:1639
 msgid "Thrust: "
-msgstr "Impulso:"
+msgstr "Impulso: "
 
 #: src/dev_sysedit.c:1653 src/dev_uniedit.c:419 src/map.c:888
 msgid "Asteroids"
@@ -102576,15 +102691,15 @@ msgstr ""
 
 #: src/dev_sysedit.c:1870
 msgid "Properties"
-msgstr ""
+msgstr "Propriedades"
 
 #: src/dev_sysedit.c:1877
 msgid "Landing Description"
-msgstr ""
+msgstr "Descrição da aterragem"
 
 #: src/dev_sysedit.c:1889
 msgid "Bar Description"
-msgstr ""
+msgstr "Descrição do bar"
 
 #. Create the window.
 #: src/dev_sysedit.c:2057
@@ -102593,16 +102708,16 @@ msgstr ""
 
 #: src/dev_sysedit.c:2070
 msgid "Rm Tech"
-msgstr ""
+msgstr "Rem tecn"
 
 #: src/dev_sysedit.c:2074
 msgid "Add Tech"
-msgstr ""
+msgstr "Adi tecn"
 
 #. Create the window.
 #: src/dev_sysedit.c:2221
 msgid "Modify Faction"
-msgstr ""
+msgstr "Alterar facão"
 
 #: src/dev_sysedit.c:2256 src/dev_uniedit.c:439
 msgid "Set"
@@ -102616,49 +102731,49 @@ msgstr ""
 
 #: src/dev_sysedit.c:2341
 msgid "Apply"
-msgstr ""
+msgstr "Aplicar"
 
 #: src/dev_sysedit.c:2355
 #, c-format
 msgid "Unable to check file type for '%s'!"
-msgstr ""
+msgstr "Não foi possível verificar o tipo de ficheiro para '%s'!"
 
 #. Create the window.
 #: src/dev_uniedit.c:193
 msgid "Universe Editor"
-msgstr ""
+msgstr "Editor do Universo"
 
 #: src/dev_uniedit.c:218
 msgid "Save All"
-msgstr ""
+msgstr "Guardar tudo"
 
 #: src/dev_uniedit.c:223
 msgid "View Mode"
-msgstr ""
+msgstr "Modo de visualização"
 
 #: src/dev_uniedit.c:228
 msgid "Jump"
-msgstr ""
+msgstr "Salto"
 
 #: src/dev_uniedit.c:243
 msgid "New Sys"
-msgstr ""
+msgstr "Novo sistema"
 
 #: src/dev_uniedit.c:248
 msgid "Open"
-msgstr ""
+msgstr "Abrir"
 
 #: src/dev_uniedit.c:253 src/map.c:381 src/map_find.c:1020
 msgid "Find"
-msgstr ""
+msgstr "Procurar"
 
 #: src/dev_uniedit.c:262
 msgid "Nebula:"
-msgstr ""
+msgstr "Nebulosa:"
 
 #: src/dev_uniedit.c:268 src/map.c:355
 msgid "Presence:"
-msgstr ""
+msgstr "Presença:"
 
 #. Create the window.
 #: src/dev_uniedit.c:410
@@ -102701,33 +102816,33 @@ msgstr ""
 #: src/dev_uniedit.c:887
 #, c-format
 msgid "Background: %s"
-msgstr ""
+msgstr "Fundo: %s"
 
 #: src/dev_uniedit.c:897
 #, c-format
 msgid "Density: %g"
-msgstr ""
+msgstr "Densidade: %g"
 
 #. Count spobs.
 #: src/dev_uniedit.c:956
 #, c-format
 msgid "Total: %.0f"
-msgstr ""
+msgstr "Total: %.0f"
 
 #: src/dev_uniedit.c:1289
 #, c-format
 msgid "The Star System '%s' already exists!"
-msgstr ""
+msgstr "O sistema estelar '%s' já existe!"
 
 #. Get name.
 #: src/dev_uniedit.c:1324
 msgid "Rename Star System"
-msgstr ""
+msgstr "Renomear sistema estelar"
 
 #: src/dev_uniedit.c:1324
 #, c-format
 msgid "What do you want to rename #r%s#0?"
-msgstr ""
+msgstr "Para que nome queres alterar #r%s#0?"
 
 #: src/dev_uniedit.c:1329
 msgid "Cancel batch renaming?"
@@ -102740,7 +102855,7 @@ msgstr ""
 #. Get name.
 #: src/dev_uniedit.c:1376
 msgid "New Star System Creation"
-msgstr ""
+msgstr "Criação de um novo sistema estelar"
 
 #: src/dev_uniedit.c:1376
 msgid "What do you want to name the new system?"
@@ -102805,27 +102920,27 @@ msgstr ""
 
 #: src/dev_uniedit.c:1858
 msgid "Stars"
-msgstr ""
+msgstr "Estrelas"
 
 #: src/dev_uniedit.c:1866
 msgid "Interference"
-msgstr ""
+msgstr "Interferência"
 
 #: src/dev_uniedit.c:1877
 msgid "Nebula"
-msgstr ""
+msgstr "Nebulosa"
 
 #: src/dev_uniedit.c:1885
 msgid "Volatility"
-msgstr ""
+msgstr "Volatilidade"
 
 #: src/dev_uniedit.c:1893
 msgid "Hue"
-msgstr ""
+msgstr "Matiz"
 
 #: src/dev_uniedit.c:1966 src/dev_uniedit.c:2070
 msgid "Add"
-msgstr ""
+msgstr "Adicionar"
 
 #: src/dev_uniedit.c:2023
 #, c-format
@@ -103006,7 +103121,7 @@ msgstr ""
 #: src/equipment.c:320 src/land.c:349 src/land.c:615 src/land.c:1341
 #: src/land_outfits.c:161 src/land_shipyard.c:95 src/land_trade.c:73
 msgid "Take Off"
-msgstr ""
+msgstr "Descolar"
 
 #. Check if player really wants to sell.
 #: src/equipment.c:324 src/equipment.c:2297
@@ -103988,7 +104103,7 @@ msgstr "Missões"
 
 #: src/info.c:64
 msgid "Standings"
-msgstr ""
+msgstr "Posicionamentos"
 
 #: src/info.c:65
 msgid "Ship log"
@@ -104572,11 +104687,11 @@ msgstr ""
 #. Space Navigation
 #: src/input.c:91
 msgid "Autonavigation On"
-msgstr ""
+msgstr "Navegação automática ativada"
 
 #: src/input.c:91
 msgid "Initializes the autonavigation system."
-msgstr ""
+msgstr "Inicializa o sistema de navegação automática."
 
 #: src/input.c:92
 msgid "Target Spob"
@@ -105009,7 +105124,7 @@ msgstr "Aceitar missão"
 
 #: src/land.c:621 src/map.c:384
 msgid "Autonav"
-msgstr ""
+msgstr "Autonav"
 
 #: src/land.c:628
 msgid ""
@@ -105687,7 +105802,7 @@ msgstr ""
 
 #: src/map.c:348
 msgid "Standing:"
-msgstr ""
+msgstr "Posicionamento:"
 
 #: src/map.c:362
 msgid "Space Objects:"
@@ -105720,7 +105835,7 @@ msgstr[1] "%d saltos"
 
 #: src/map.c:491
 msgid "Autonav: "
-msgstr ""
+msgstr "Autonav: "
 
 #: src/map.c:562
 #, c-format
@@ -105809,48 +105924,48 @@ msgstr "Viagem (padrão)"
 #: src/map.c:2133
 #, c-format
 msgid "%s: Cost"
-msgstr "%s: Custo"
+msgstr "%s: custo"
 
 #: src/map.c:2134
 #, c-format
 msgid "%s: Trade"
-msgstr "%s: Comércio"
+msgstr "%s: comércio"
 
 #: src/map.c:2190
 msgid "Normal View"
-msgstr "Visualização Normal"
+msgstr "Vista normal"
 
 #: src/map.c:2190
 msgid "Minimal View"
-msgstr "Visualização Mínima"
+msgstr "Vista mínima"
 
 #: src/map.c:2213
 msgid "Add System Note"
-msgstr ""
+msgstr "Adicionar nota ao sistema"
 
 #: src/map.c:2213
 #, c-format
 msgid "Write a note about the #o%s#0 system:"
-msgstr ""
+msgstr "Escreve uma nota sobre o sistema #o%s#0:"
 
 #: src/map.c:3105
 #, c-format
 msgid "Loaded %d map decorator in %.3f s"
 msgid_plural "Loaded %d map decorators in %.3f s"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Carregado %d decorador de mapa em %.3f s"
+msgstr[1] "Carregados %d decoradores de mapa em %.3f s"
 
 #: src/map.c:3108
 #, c-format
 msgid "Loaded %d map decorator"
 msgid_plural "Loaded %d map decorators"
-msgstr[0] "Carregado decorador de mapa %d"
-msgstr[1] "%d decoradores de mapa carregados"
+msgstr[0] "Carregado %d decorador de mapa"
+msgstr[1] "Carregados %d decoradores de mapa"
 
 #: src/map.c:3124
 #, c-format
 msgid "Malformed %s file: missing root element 'decorator'"
-msgstr ""
+msgstr "Ficheiro %s malformado: elemento raiz 'decorator' ausente"
 
 #: src/map.c:3145
 #, c-format
@@ -105865,7 +105980,7 @@ msgstr "O decorador de mapa tem um nó desconhecido '%s'."
 #. Create window.
 #: src/map_find.c:197 src/map_find.c:740 src/map_find.c:873
 msgid "Search Results"
-msgstr "Procurar Resultados"
+msgstr "Procurar resultados"
 
 #: src/map_find.c:211
 msgid "Select"
@@ -105873,11 +105988,11 @@ msgstr "Selecionar"
 
 #: src/map_find.c:291
 msgid "Jump to first system not found!"
-msgstr "Ir para o primeiro sistema não encontrado!"
+msgstr "Salto para o primeiro sistema não encontrado!"
 
 #: src/map_find.c:327
 msgid "Matching jumps not found, something is up..."
-msgstr "Saltos correspondentes não encontrados, algo está acontecendo..."
+msgstr "Saltos correspondentes não encontrados, passa-se alguma coisa..."
 
 #: src/map_find.c:386
 msgid "unknown route"
@@ -105887,56 +106002,56 @@ msgstr "rota desconhecida"
 #, c-format
 msgid "%d jump, %.0fk distance"
 msgid_plural "%d jumps, %.0fk distance"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d salto, %.0fk distância"
+msgstr[1] "%d saltos, %.0fk distância"
 
 #: src/map_find.c:399
 #, c-format
 msgid "#%c%s%s (%s, %s)"
-msgstr ""
+msgstr "#%c%s%s (%s, %s)"
 
 #: src/map_find.c:742
 #, c-format
 msgid "Search results for outfits matching '%s':"
-msgstr ""
+msgstr "Resultados da pesquisa para equipamentos que correspondem a '%s':"
 
 #: src/map_find.c:874
 #, c-format
 msgid "Search results for ships matching '%s':"
-msgstr ""
+msgstr "Resultados da pesquisa para naves que correspondem a '%s':"
 
 #: src/map_find.c:958
 msgid "System"
-msgstr ""
+msgstr "Sistema"
 
 #: src/map_find.c:962 src/map_find.c:1030
 msgid "Space Objects"
-msgstr ""
+msgstr "Objetos espaciais"
 
 #: src/map_find.c:966
 msgid "Outfit"
-msgstr ""
+msgstr "Equipamento"
 
 #: src/map_find.c:976
 #, c-format
 msgid "%s matching '%s' not found!"
-msgstr ""
+msgstr "%s que corresponde a '%s' não foi encontrado!"
 
 #: src/map_find.c:1000
 msgid "Find…"
-msgstr ""
+msgstr "Pesquisar…"
 
 #: src/map_find.c:1010
 msgid "Enter keyword to search for:"
-msgstr ""
+msgstr "Introduz a palavra-chave a pesquisar:"
 
 #: src/map_find.c:1027
 msgid "Systems"
-msgstr ""
+msgstr "Sistemas"
 
 #: src/map_find.c:1036
 msgid "Ships"
-msgstr ""
+msgstr "Naves"
 
 #: src/map_overlay.c:708
 msgid "TARGET"
@@ -105944,79 +106059,79 @@ msgstr ""
 
 #: src/map_system.c:205
 msgid "Buy commodity price info"
-msgstr ""
+msgstr "Comprar info de preços de mercadorias"
 
 #: src/map_system.c:311
 #, c-format
 msgid "No gfx for %s…"
-msgstr ""
+msgstr "Sem gfx para %s…"
 
 #. no nebula or star images - probably due to nebula
 #: src/map_system.c:357 src/map_system.c:359
 msgid "Obscured by the nebula"
-msgstr ""
+msgstr "Obscurecido pela nebulosa"
 
 #: src/map_system.c:392
 #, c-format
 msgid "System: %s\n"
-msgstr ""
+msgstr "Sistema: %s\n"
 
 #. display sun information
 #: src/map_system.c:394
 #, c-format
 msgid "%d-star system\n"
 msgid_plural "%d-star system\n"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "sistema estelar-%d\n"
+msgstr[1] "sistemas estelares-%d\n"
 
 #: src/map_system.c:400
 msgid "Nebula: Volatile, "
-msgstr ""
+msgstr "Nebulosa: volátil, "
 
 #: src/map_system.c:402
 msgid "Nebula: Dangerous, "
-msgstr ""
+msgstr "Nebulosa: perigosa, "
 
 #: src/map_system.c:404
 msgid "Nebula: Unstable, "
-msgstr ""
+msgstr "Nebulosa: instável, "
 
 #: src/map_system.c:406
 msgid "Nebula: Stable, "
-msgstr ""
+msgstr "Nebulosa: estável, "
 
 #: src/map_system.c:410
 msgid "Dense\n"
-msgstr ""
+msgstr "Densa\n"
 
 #: src/map_system.c:412
 msgid "Light\n"
-msgstr ""
+msgstr "Ligeira\n"
 
 #: src/map_system.c:414
 msgid "Medium\n"
-msgstr ""
+msgstr "Média\n"
 
 #: src/map_system.c:416
 msgid "Nebula: None\n"
-msgstr ""
+msgstr "Nebulosa: nenhuma\n"
 
 #: src/map_system.c:421
 msgid "Interference: Dense\n"
-msgstr ""
+msgstr "Interferência: densa\n"
 
 #: src/map_system.c:423
 msgid "Interference: Light\n"
-msgstr ""
+msgstr "Interferência: ligeira\n"
 
 #: src/map_system.c:432
 #, c-format
 msgid "Asteroid field density: %.2g\n"
-msgstr ""
+msgstr "Densidade do campo de asteroides: %.2g\n"
 
 #: src/map_system.c:441
 msgid "Faction: Multiple\n"
-msgstr "Fação: múltiplos\n"
+msgstr "Fação: múltiplas\n"
 
 #: src/map_system.c:447
 msgid "Faction: N/A\n"
@@ -106029,19 +106144,21 @@ msgid ""
 "Faction: %s\n"
 "Standing: %s\n"
 msgstr ""
+"Fação: %s\n"
+"Posicionamento: %s\n"
 
 #: src/map_system.c:477
 msgid "Presence: N/A\n"
-msgstr ""
+msgstr "Presença: n/a\n"
 
 #. First jump
 #: src/map_system.c:486
 msgid "   Jump points to:\n"
-msgstr ""
+msgstr "   Pontos de salto para:\n"
 
 #: src/map_system.c:490
 msgid "     Unknown system\n"
-msgstr ""
+msgstr "     Sistema desconhecido\n"
 
 #: src/map_system.c:507
 #, c-format
@@ -106052,158 +106169,158 @@ msgstr ""
 
 #: src/map_system.c:509
 msgid "No space port here\n"
-msgstr ""
+msgstr "Não há porto espacial aqui\n"
 
 #: src/map_system.c:511
 msgid "You can land here\n"
-msgstr ""
+msgstr "Podes aterrar aqui.\n"
 
 #: src/map_system.c:513
 msgid "Not advisable to land here\n"
-msgstr ""
+msgstr "Não é aconselhável aterrar aqui.\n"
 
 #: src/map_system.c:515
 msgid "You cannot land here\n"
-msgstr ""
+msgstr "Não podes aterrar aqui\n"
 
 #. Add a description
 #: src/map_system.c:521
 msgid "No description available"
-msgstr ""
+msgstr "Sem descrição disponível"
 
 #: src/map_system.c:526
 msgid "This system is landable"
-msgstr ""
+msgstr "Pode-se aterrar neste sistema"
 
 #: src/map_system.c:526
 msgid "This system is not landable"
-msgstr ""
+msgstr "Não se pode aterrar neste sistema"
 
 #: src/map_system.c:527
 msgid "This system is inhabited"
-msgstr ""
+msgstr "Este sistema está inabitado"
 
 #: src/map_system.c:527
 msgid "This system is not inhabited"
-msgstr ""
+msgstr "Este sistema não está habitado"
 
 #: src/map_system.c:528
 msgid "You can refuel here"
-msgstr ""
+msgstr "Podes reabastecer aqui"
 
 #: src/map_system.c:528
 msgid "You cannot refuel here"
-msgstr ""
+msgstr "Não podes reabastecer aqui"
 
 #: src/map_system.c:529
 msgid "This system has a bar"
-msgstr ""
+msgstr "Este sistema tem um bar"
 
 #: src/map_system.c:529
 msgid "This system does not have a bar"
-msgstr ""
+msgstr "Este sistema não tem um bar"
 
 #: src/map_system.c:530
 msgid "This system offers missions"
-msgstr ""
+msgstr "Este sistema oferece missões"
 
 #: src/map_system.c:530
 msgid "This system does not offer missions"
-msgstr ""
+msgstr "Este sistema não oferece missões"
 
 #: src/map_system.c:531
 msgid "This system has a trade outlet"
-msgstr ""
+msgstr "Este sistema tem um ponto de venda comercial"
 
 #: src/map_system.c:531
 msgid "This system does not have a trade outlet"
-msgstr ""
+msgstr "Este sistema não tem um ponto de venda comercial"
 
 #: src/map_system.c:532
 msgid "This system sells ship equipment"
-msgstr ""
+msgstr "Este sistema vende equipamentos para naves"
 
 #: src/map_system.c:532
 msgid "This system does not sell ship equipment"
-msgstr ""
+msgstr "Este sistema não vende equipamentos para naves"
 
 #: src/map_system.c:533
 msgid "This system sells ships"
-msgstr ""
+msgstr "Este sistema vende naves"
 
 #: src/map_system.c:533
 msgid "This system does not sell ships"
-msgstr ""
+msgstr "Este sistema não vende naves"
 
 #: src/map_system.c:710
 #, c-format
 msgid "#nYou have:#0 %d tonne, purchased at %s/t\n"
 msgid_plural "#nYou have:#0 %d tonnes, purchased at %s/t\n"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "#nTens:#0 %d tonelada, comprada a %s/t\n"
+msgstr[1] "#nTens:#0 %d toneladas, compradas a %s/t\n"
 
 #: src/map_system.c:716
 #, c-format
 msgid "#nYou have:#0 %d tonne\n"
 msgid_plural "#nYou have:#0 %d tonnes\n"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "#nTens:#0 %d tonelada\n"
+msgstr[1] "#nTens:#0 %d toneladas\n"
 
 #: src/map_system.c:720
 msgid "Average price seen here:"
-msgstr ""
+msgstr "Preço médio visto aqui:"
 
 #: src/map_system.c:722
 msgid "Average price seen everywhere:"
-msgstr ""
+msgstr "Preço médio visto em todo o lado:"
 
 #: src/map_system.c:727
 msgid "Unexpected call to map_system_array_update\n"
-msgstr ""
+msgstr "Chamada inesperada para map_system_array_update\n"
 
 #. no route
 #: src/map_system.c:1025
 msgid "Unavailable"
-msgstr ""
+msgstr "Não disponível"
 
 #: src/map_system.c:1025
 #, c-format
 msgid "Commodity prices for %s are not available here at the moment."
-msgstr ""
+msgstr "Os preços de %s não estão disponíveis aqui neste momento."
 
 #: src/map_system.c:1037
 #, c-format
 msgid "You need %s to purchase this information."
-msgstr ""
+msgstr "Precisas de %s para comprar estas informações."
 
 #: src/map_system.c:1039
 msgid "No commodities sold here"
-msgstr ""
+msgstr "Não se vendem mercadorias aqui"
 
 #: src/map_system.c:1039
 msgid "There are no commodities sold here."
-msgstr ""
+msgstr "Não há mercadorias vendidas aqui."
 
 #: src/map_system.c:1041
 msgid "Already Up-to-date"
-msgstr ""
+msgstr "Já atualizado"
 
 #: src/map_system.c:1041
 msgid "You have newer information that what is available."
-msgstr ""
+msgstr "Tens informação mais recente do que a que está disponível."
 
 #: src/map_system.c:1043
 msgid "Purchase commodity prices?"
-msgstr ""
+msgstr "Comprar preços de mercadorias?"
 
 #: src/map_system.c:1043
 #, c-format
 msgid "Purchase %g period old pricing information for %s for %s?"
-msgstr ""
+msgstr "Comprar informação sobre preços antigos do período %g para %s por %s?"
 
 #: src/menu.c:173
 msgid "Menu main is already open."
-msgstr ""
+msgstr "O menu principal já está aberto."
 
 #. create menu window
 #: src/menu.c:224 src/menu.c:640
@@ -106303,7 +106420,7 @@ msgstr "Mapa do Universo"
 
 #: src/menu.c:736
 msgid "Map Outfits"
-msgstr ""
+msgstr "Equipamentos de mapas"
 
 #: src/menu.c:739
 msgid "Exit to Main Menu"
@@ -106312,11 +106429,11 @@ msgstr "Sair para o menu principal"
 #: src/mission.c:104 src/nlua_player.c:1499 src/nlua_player.c:1525
 #, c-format
 msgid "Mission '%s' not found in stack"
-msgstr ""
+msgstr "Missão '%s' não encontrada na pilha"
 
 #: src/mission.c:156
 msgid "No description."
-msgstr ""
+msgstr "Sem descrição."
 
 #: src/mission.c:170
 #, c-format
@@ -106325,6 +106442,9 @@ msgid ""
 "%s\n"
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
+"Erro ao carregar o ficheiro da missão: %s\n"
+"%s\n"
+"Provavelmente o ficheiro Lua tem sintaxe imprópria, verifica"
 
 #: src/mission.c:278
 #, c-format
@@ -107441,7 +107561,7 @@ msgstr ""
 #: src/nlua_safelanes.c:101
 #, c-format
 msgid "Unknown standing type '%s'!"
-msgstr ""
+msgstr "Tipo de posicionamento '%s' desconhecido!"
 
 #: src/nlua_safelanes.c:115 src/nlua_spob.c:181
 msgid "Spob is invalid"
@@ -108007,90 +108127,90 @@ msgstr ""
 
 #: src/options.c:391
 msgid "Settings:"
-msgstr ""
+msgstr "Configurações:"
 
 #: src/options.c:395
 msgid "Enable manual zoom control"
-msgstr ""
+msgstr "Ativar o controlo manual do zoom"
 
 #: src/options.c:398
 msgid "Enable double-tap afterburn/cooldown"
-msgstr ""
+msgstr "Ativar pós-combustão/resfriamento de toque duplo"
 
 #: src/options.c:401
 msgid "Enable mouse-flying (toggle with middle click)"
-msgstr ""
+msgstr "Ativar o voo com o rato (alternar com o botão central do rato)"
 
 #: src/options.c:404
 msgid "Enable mouse-flying thrust control"
-msgstr ""
+msgstr "Ativar o controlo de impulso de voo com o rato"
 
 #: src/options.c:407
 msgid "Enable saved game compression"
-msgstr ""
+msgstr "Ativar a compressão do jogo guardado"
 
 #: src/options.c:409
 msgid "Visible Messages"
-msgstr ""
+msgstr "Mensagens visíveis"
 
 #: src/options.c:415
 msgid "Max Time Compression Factor"
-msgstr ""
+msgstr "Fator de compressão do tempo máximo"
 
 #: src/options.c:605
 #, c-format
 msgid "Enemy Presence"
-msgstr ""
+msgstr "Presença inimiga"
 
 #: src/options.c:607
 #, c-format
 msgid "Enemy within %s distance"
-msgstr ""
+msgstr "Inimigo dentro de um distância de %s"
 
 #: src/options.c:609
 #, c-format
 msgid "%.0f%% Shield"
-msgstr ""
+msgstr "%.0f%% escudo"
 
 #: src/options.c:611
 #, c-format
 msgid "Armour Damage"
-msgstr ""
+msgstr "Danos na blindagem"
 
 #: src/options.c:656
 msgid "Set Key"
-msgstr ""
+msgstr "Definir tecla"
 
 #: src/options.c:701
 #, c-format
 msgid "any+"
-msgstr ""
+msgstr "qualquer+"
 
 #: src/options.c:706
 msgid "shift+"
-msgstr ""
+msgstr "shift+"
 
 #: src/options.c:708
 msgid "ctrl+"
-msgstr ""
+msgstr "ctrl+"
 
 #: src/options.c:710
 msgid "alt+"
-msgstr ""
+msgstr "alt+"
 
 #: src/options.c:712
 msgid "meta+"
-msgstr ""
+msgstr "meta+"
 
 #: src/options.c:802
 #, c-format
 msgid "keyboard:   %s%s%c"
-msgstr ""
+msgstr "teclado:   %s%s%c"
 
 #: src/options.c:807
 #, c-format
 msgid "keyboard:   %s%s%s"
-msgstr ""
+msgstr "teclado:   %s%s%s"
 
 #: src/options.c:813
 #, c-format
@@ -108137,20 +108257,20 @@ msgstr "Teclas de seta"
 
 #: src/options.c:856
 msgid "Restore Defaults"
-msgstr ""
+msgstr "Repor originais"
 
 #: src/options.c:857
 msgid "Which layout do you want to use?"
-msgstr ""
+msgstr "Que disposição de teclas queres usar?"
 
 #. Alert user it worked.
 #: src/options.c:886
 msgid "Defaults Restored"
-msgstr ""
+msgstr "Valores originais restaurados"
 
 #: src/options.c:886
 msgid "Keybindings restored to defaults."
-msgstr ""
+msgstr "Atalhos de teclas originais restaurados."
 
 #: src/options.c:893
 msgid "Engine Volume"
@@ -108197,24 +108317,29 @@ msgid ""
 "Key '%s' overlaps with key '%s' that was just set. You may want to correct "
 "this."
 msgstr ""
+"A tecla '%s' sobrepõe-se à tecla '%s' que acabou de ser definida. É melhor "
+"corrigir isto."
 
 #: src/options.c:1218
 msgid "Set Keybinding"
-msgstr ""
+msgstr "Definir atalho de teclado"
 
 #: src/options.c:1225
 msgid ""
 "To use a modifier key hit that key twice in a row, otherwise it will "
 "register as a modifier. To set with any modifier click the checkbox."
 msgstr ""
+"Para usar uma tecla modificadora, pressione essa tecla duas vezes seguidas, "
+"caso contrário, ela será registada como um modificador. Para definir com "
+"qualquer modificador, clique na caixa de seleção."
 
 #: src/options.c:1234
 msgid "Unset"
-msgstr ""
+msgstr "Não definido"
 
 #: src/options.c:1238
 msgid "Set any modifier"
-msgstr ""
+msgstr "Define qualquer modificador"
 
 #: src/options.c:1291
 msgid "Resolution:"
@@ -108309,51 +108434,51 @@ msgstr "Resolução reposta para %dx%d %s."
 #: src/options.c:1671
 #, c-format
 msgid "Scaling: %.1fx"
-msgstr ""
+msgstr "Escala: %.1fx"
 
 #: src/options.c:1689
 #, c-format
 msgid "Far Zoom: %.1fx"
-msgstr ""
+msgstr "Zoom distante: %.1fx"
 
 #: src/options.c:1711
 #, c-format
 msgid "Near Zoom: %.1fx"
-msgstr ""
+msgstr "Zoom próximo: %.1fx"
 
 #: src/options.c:1732
 #, c-format
 msgid "Gamma: %.1f"
-msgstr ""
+msgstr "Gama: %.1f"
 
 #: src/options.c:1748
 #, c-format
 msgid "BG (Stars, etc.) brightness: %.0f%%"
-msgstr ""
+msgstr "Fundo (estrelas, etc.) luminosidade: %.0f%%"
 
 #: src/options.c:1763
 #, c-format
 msgid "Nebula non-uniformity: %.0f%%"
-msgstr ""
+msgstr "Não uniformidade da nebulosa: %.0f%%"
 
 #: src/options.c:1778
 #, c-format
 msgid "Jump Brightness: %.0f%%"
-msgstr ""
+msgstr "Brilho do salto: %.0f%%"
 
 #: src/options.c:1793
 #, c-format
 msgid "Map Overlay Opacity: %.0f%%"
-msgstr ""
+msgstr "Opacidade da sobreposição do mapa: %.0f%%"
 
 #. Text stuff.
 #: src/options.c:1818
 msgid "Plugins Directory: "
-msgstr ""
+msgstr "Diretório de plug-ins: "
 
 #: src/options.c:1827
 msgid "No Plugins Found"
-msgstr ""
+msgstr "Não foram encontrados plug-ins"
 
 #: src/options.c:1850
 msgctxt "plugins"
@@ -108382,7 +108507,7 @@ msgstr "Conversão total"
 #: src/outfit.c:122
 #, c-format
 msgid "Outfit '%s' not found in stack."
-msgstr ""
+msgstr "Equipamento \"%s\" não encontrado na pilha."
 
 #: src/outfit.c:314
 msgid "Small"
@@ -108402,15 +108527,17 @@ msgid ""
 "\n"
 "#%c%s #%c%s #0slot"
 msgstr ""
+"\n"
+"#%c%s #%c%s #0slot"
 
 #: src/outfit.c:425
 #, c-format
 msgid "'%s' does not match any outfit slot sizes."
-msgstr ""
+msgstr "'%s' não corresponde a nenhum tamanho de espaço de equipamento."
 
 #: src/outfit.c:882
 msgid "NULL"
-msgstr ""
+msgstr "NULO"
 
 #: src/outfit.c:883
 msgid "Bolt Cannon"
@@ -108438,11 +108565,11 @@ msgstr ""
 
 #: src/outfit.c:889
 msgid "Ship Modification"
-msgstr ""
+msgstr "Modificação de nave"
 
 #: src/outfit.c:891 src/outfit.c:918
 msgid "Fighter Bay"
-msgstr ""
+msgstr "Baía de caças"
 
 #: src/outfit.c:893 src/outfit.c:920
 msgid "Local Map"
@@ -108450,7 +108577,7 @@ msgstr "Mapa local"
 
 #: src/outfit.c:894 src/outfit.c:921
 msgid "GUI"
-msgstr ""
+msgstr "GUI"
 
 #: src/outfit.c:895 src/outfit.c:922
 msgid "License"
@@ -108493,25 +108620,25 @@ msgstr ""
 #: src/outfit.c:1076
 #, c-format
 msgid "Invalid outfit type: '%s'"
-msgstr ""
+msgstr "Tipo de equipamento inválido: \"%s\""
 
 #: src/outfit.c:1089
 msgid "Can mine uncommon and rare minerals"
-msgstr ""
+msgstr "Pode extrair minerais raros e incomuns"
 
 #: src/outfit.c:1091
 msgid "Can mine uncommon minerals"
-msgstr ""
+msgstr "Pode minar minerais incomuns"
 
 #: src/outfit.c:1131
 #, c-format
 msgid "Unknown damage type '%s'"
-msgstr ""
+msgstr "Tipo de dano desconhecido \"%s\""
 
 #: src/outfit.c:1134
 #, c-format
 msgid "Damage has unknown node '%s'"
-msgstr ""
+msgstr "O dano tem nó desconhecido \"%s\""
 
 #: src/outfit.c:1162
 #, c-format
@@ -108520,11 +108647,14 @@ msgid ""
 "                Please use the script 'polygon_from_sprite.py' that can be "
 "found in Naev's artwork repo."
 msgstr ""
+"%s xml de polígono de colisão não existe!\n"
+"                Por favor use o script \"polygon_from_sprite.py\" que pode "
+"ser encontrado no repositório de arte do Naev."
 
 #: src/outfit.c:1268 src/outfit.c:1615
 #, c-format
 msgid "Outfit '%s' has invalid blowup property: '%s'"
-msgstr ""
+msgstr "O equipamento \"%s\" tem a propriedade de explosão inválida: \"%s\""
 
 #: src/outfit.c:1294 src/outfit.c:1643
 #, c-format
@@ -108532,6 +108662,8 @@ msgid ""
 "Outfit '%s': the number of collision polygons is wrong.\n"
 "                     npolygon = %i and sx*sy = %i"
 msgstr ""
+"O equipamento \"%s\": o número de polígonos de colisão está errado.\n"
+"                     npolygon = %i e sx*sy = %i"
 
 #: src/outfit.c:1338 src/outfit.c:1502 src/outfit.c:1699 src/outfit.c:1832
 #: src/outfit.c:1901 src/outfit.c:1967 src/outfit.c:2049 src/outfit.c:2067
@@ -108539,7 +108671,7 @@ msgstr ""
 #: src/outfit.c:2457
 #, c-format
 msgid "Outfit '%s' has unknown node '%s'"
-msgstr ""
+msgstr "O equipamento \"%s\" tem o nó desconhecido \"%s\""
 
 #: src/outfit.c:1364 src/outfit.c:1517 src/outfit.c:1717
 #, c-format
@@ -108617,6 +108749,8 @@ msgid ""
 "\n"
 "%.2f Disable/s [%.0f Disable]"
 msgstr ""
+"\n"
+"%.2f inativar/s [%.0f inativar]"
 
 #: src/outfit.c:1377 src/outfit.c:1747
 #, c-format
@@ -108667,6 +108801,8 @@ msgid ""
 "\n"
 "%.1f Degree Dispersion"
 msgstr ""
+"\n"
+"%.1f graus de dispersão"
 
 #: src/outfit.c:1385 src/outfit.c:1537 src/outfit.c:1737
 #, c-format
@@ -108674,6 +108810,8 @@ msgid ""
 "\n"
 "%.1f Degree Swivel"
 msgstr ""
+"\n"
+"%.1f graus de rotação"
 
 #: src/outfit.c:1386 src/outfit.c:1729 src/outfit.c:1735
 #, c-format
@@ -108681,6 +108819,8 @@ msgid ""
 "\n"
 "%s Optimal Tracking"
 msgstr ""
+"\n"
+"%s rastreamento ideal"
 
 #: src/outfit.c:1387 src/outfit.c:1730 src/outfit.c:1736
 #, c-format
@@ -108688,6 +108828,8 @@ msgid ""
 "\n"
 "%s Minimal Tracking"
 msgstr ""
+"\n"
+"%s rastreamento mínimo"
 
 #: src/outfit.c:1391 src/outfit.c:1541 src/outfit.c:1928 src/outfit.c:1981
 #: src/outfit.c:2082 src/outfit.c:2119 src/outfit.c:2151 src/outfit.c:2192
@@ -108711,6 +108853,8 @@ msgid ""
 "\n"
 "%.0f Disable/s"
 msgstr ""
+"\n"
+"%.0f inativar/s"
 
 #: src/outfit.c:1530 src/outfit.c:1915
 #, c-format
@@ -108761,6 +108905,8 @@ msgid ""
 "\n"
 "%.1f Second Lock-on"
 msgstr ""
+"\n"
+"%.1f segundos para fixar alvo"
 
 #: src/outfit.c:1728
 #, c-format
@@ -108768,6 +108914,8 @@ msgid ""
 "\n"
 "%.1f Second In-Flight Calibration"
 msgstr ""
+"\n"
+"%.1f segundos para calibração em voo"
 
 #: src/outfit.c:1733
 msgid ""
@@ -108781,6 +108929,8 @@ msgid ""
 "\n"
 "Holds %d ammo"
 msgstr ""
+"\n"
+"Aloja %d munições"
 
 #: src/outfit.c:1745
 #, c-format
@@ -108788,6 +108938,8 @@ msgid ""
 "\n"
 "%.1f Disable/s [%.0f Disable]"
 msgstr ""
+"\n"
+"%.1f inativar/s [%.0f inativar]"
 
 #: src/outfit.c:1748
 #, c-format
@@ -108795,6 +108947,8 @@ msgid ""
 "\n"
 "%s Range [%.1f duration]"
 msgstr ""
+"\n"
+"%s alcance [%.1f duração]"
 
 #: src/outfit.c:1751
 #, c-format
@@ -108802,6 +108956,8 @@ msgid ""
 "\n"
 "%.0f Initial Speed (%.0f Thrust)"
 msgstr ""
+"\n"
+"%.0f velocidade inicial (%.0f impulso)"
 
 #: src/outfit.c:1753
 #, c-format
@@ -108809,6 +108965,8 @@ msgid ""
 "\n"
 "%.0f Thrust"
 msgstr ""
+"\n"
+"%.0f impulso"
 
 #: src/outfit.c:1758
 #, c-format
@@ -108816,6 +108974,8 @@ msgid ""
 "\n"
 "%.0f Maximum Speed"
 msgstr ""
+"\n"
+"%.0f velocidade máxima"
 
 #: src/outfit.c:1759 src/outfit.c:1978
 #, c-format
@@ -108823,6 +108983,8 @@ msgid ""
 "\n"
 "%.1f Seconds to Reload"
 msgstr ""
+"\n"
+"%.1f segundos para recarregar"
 
 #: src/outfit.c:1761
 #, c-format
@@ -108851,11 +109013,13 @@ msgid ""
 "\n"
 "#rActivated Outfit#0"
 msgstr ""
+"\n"
+"#rEquipamento ativado#0"
 
 #: src/outfit.c:1842
 #, c-format
 msgid " #r(%.1f s Cooldown)#0"
-msgstr ""
+msgstr " #r(%.1f s arrefecimento)#0"
 
 #: src/outfit.c:1843
 #, c-format
@@ -108863,12 +109027,16 @@ msgid ""
 "\n"
 "%+.0f CPU"
 msgstr ""
+"\n"
+"%+.0f CPU"
 
 #: src/outfit.c:1911
 msgid ""
 "\n"
 "Only one can be equipped"
 msgstr ""
+"\n"
+"Só um pode ser equipado"
 
 #: src/outfit.c:1912
 #, c-format
@@ -108876,6 +109044,8 @@ msgid ""
 "\n"
 "%.0f Maximum Effective Mass"
 msgstr ""
+"\n"
+"%.0f Massa efetiva máxima"
 
 #: src/outfit.c:1913
 #, c-format
@@ -108883,6 +109053,8 @@ msgid ""
 "\n"
 "%.0f%% Thrust"
 msgstr ""
+"\n"
+"%.0f%% impulso"
 
 #: src/outfit.c:1914
 #, c-format
@@ -108890,6 +109062,8 @@ msgid ""
 "\n"
 "%.0f%% Maximum Speed"
 msgstr ""
+"\n"
+"%.0f%% velocidade máxima"
 
 #: src/outfit.c:1916
 #, c-format
@@ -108904,6 +109078,8 @@ msgid ""
 "\n"
 "%.1f Seconds Per Launch"
 msgstr ""
+"\n"
+"%.1f segundos por lançamento"
 
 #: src/outfit.c:1977
 #, c-format
@@ -108911,11 +109087,13 @@ msgid ""
 "\n"
 "Holds %d ships"
 msgstr ""
+"\n"
+"Alberga %d naves"
 
 #: src/outfit.c:2021
 #, c-format
 msgid "Map '%s' has invalid system '%s'"
-msgstr ""
+msgstr "O mapa '%s' tem o sistema inválido '%s'"
 
 #: src/outfit.c:2038
 #, c-format
@@ -109500,14 +109678,14 @@ msgstr ""
 #: src/player.c:2055
 #, c-format
 msgid "#oAutonav arrived at the %s system."
-msgstr ""
+msgstr "#oAutonav chegou ao sistema %s."
 
 #: src/player.c:2061
 #, c-format
 msgid "#oAutonav continuing until %s (%d jump left)."
 msgid_plural "#oAutonav continuing until %s (%d jumps left)."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "#oAutonav continua até %s (%d salto restante)."
+msgstr[1] "#oAutonav continua até %s (%d saltos restantes)."
 
 #. in case the crap system breaks :)
 #: src/player.c:2316
@@ -109801,7 +109979,7 @@ msgstr ""
 
 #: src/player_autonav.c:79
 msgid "#rNot enough fuel to jump for autonav."
-msgstr ""
+msgstr "#rSem combustível suficiente para o autonav realizar saltos."
 
 #: src/player_autonav.c:84
 msgid "#rHyperspace drive is offline."
@@ -109810,81 +109988,81 @@ msgstr ""
 #: src/player_autonav.c:92
 #, c-format
 msgid "#oAutonav: travelling to %s."
-msgstr ""
+msgstr "#oAutonav: a viajar para %s."
 
 #: src/player_autonav.c:178
 msgid "#oAutonav: heading to target position."
-msgstr ""
+msgstr "#oAutonav: a ir para a posição de destino."
 
 #: src/player_autonav.c:180
 msgid "position"
-msgstr ""
+msgstr "posição"
 
 #: src/player_autonav.c:209
 #, c-format
 msgid "#oAutonav: landing on #%c%s#0."
-msgstr ""
+msgstr "#oAutonav: a aterrar em #%c%s#0."
 
 #: src/player_autonav.c:213
 #, c-format
 msgid "#oAutonav: approaching #%c%s#0."
-msgstr ""
+msgstr "#oAutonav: aproximando-se de #%c%s#0."
 
 #: src/player_autonav.c:228
 #, c-format
 msgid "#oAutonav: following %s."
-msgstr ""
+msgstr "#oAutonav: seguindo %s."
 
 #: src/player_autonav.c:250
 #, c-format
 msgid "#oAutonav: boarding %s."
-msgstr ""
+msgstr "#oAutonav: a assaltar %s."
 
 #: src/player_autonav.c:314
 #, c-format
 msgid "#rAutonav: aborted due to '%s'!"
-msgstr ""
+msgstr "#rAutonav: abortado devido a '%s'!"
 
 #: src/player_autonav.c:316
 msgid "#rAutonav: aborted!"
-msgstr ""
+msgstr "#rAutonav: abortado!"
 
 #: src/player_autonav.c:325
 msgid "#oAutonav: aborting hyperspace sequence."
-msgstr ""
+msgstr "#oAutonav: abortando a sequência do hiperespaço."
 
 #: src/player_autonav.c:418
 msgid "#oAutonav: arrived at position."
-msgstr ""
+msgstr "#oAutonav: chegou à posição."
 
 #: src/player_autonav.c:428
 #, c-format
 msgid "#oAutonav: arrived at #%c%s#0."
-msgstr ""
+msgstr "#oAutonav: chegou a #%c%s#0."
 
 #. TODO : handle the different reasons: pilot is too far, jumped, landed or died.
 #: src/player_autonav.c:477
 #, c-format
 msgid "#oAutonav: following target %s has been lost."
-msgstr ""
+msgstr "#oAutonav: o alvo %s seguido foi perdido."
 
 #. TODO : handle the different reasons: pilot is too far, jumped, landed or died.
 #: src/player_autonav.c:504
 #, c-format
 msgid "#oAutonav: boarding target %s has been lost."
-msgstr ""
+msgstr "#oAutonav: o alvo de assalto %s foi perdido."
 
 #: src/player_autonav.c:782
 msgid "Target changed to current system"
-msgstr ""
+msgstr "Alvo alterado para sistema atual"
 
 #: src/player_autonav.c:786
 msgid "Not enough fuel for autonav to continue"
-msgstr ""
+msgstr "Não há combustível suficiente para o autonav continuar"
 
 #: src/player_fleet.c:58
 msgid "Not Enough Cargo Space"
-msgstr ""
+msgstr "Espaço de carga insuficiente"
 
 #: src/player_fleet.c:58
 #, c-format
@@ -109892,31 +110070,36 @@ msgid ""
 "Your ship '%s' has %s of cargo but there is only %s of free space in the "
 "rest of the fleet. Get rid of %s of cargo to shrink your fleet?"
 msgstr ""
+"A sua nave '%s' tem %s de carga, mas só existe %s de espaço livre no resto "
+"da frota. Queres livrar-te de %s de carga para reduzir a tua frota?"
 
 #: src/player_fleet.c:76
 #, c-format
 msgid "Player deployed ship '%s' not found in escort list!"
 msgstr ""
+"A nave implantada pelo jogador '%s' não foi encontrada na lista de escolta!"
 
 #: src/player_fleet.c:218
 #, c-format
 msgid "Failure to add cargo '%s' to player fleeet. Only %d of %d added."
 msgstr ""
+"Ocorreu uma falha ao adicionar a carga '%s' à frota do jogador. Só foi "
+"adicionado %d de %d."
 
 #: src/player_gui.c:71
 #, c-format
 msgid "GUI '%s' does not exist as a file: '%s' not found."
-msgstr ""
+msgstr "O GUI '%s' não existe como um ficheiro: '%s' não encontrado."
 
 #: src/plugin.c:48
 #, c-format
 msgid "Plugin '%s' has no name!"
-msgstr ""
+msgstr "O plugin '%s' não tem nome!"
 
 #: src/plugin.c:86
 #, c-format
 msgid "Plugin '%s' has unknown metadata node '%s'!"
-msgstr ""
+msgstr "O plugin '%s' tem um nó de metadados desconhecido '%s'!"
 
 #: src/plugin.c:134
 #, c-format
@@ -109947,98 +110130,101 @@ msgstr[1] ""
 
 #: src/save.c:147
 msgid "Trying to save game data"
-msgstr ""
+msgstr "A tentar guardar os dados do jogo"
 
 #: src/save.c:177
 msgid "Aborting save…"
-msgstr ""
+msgstr "A abortar guardar o jogo…"
 
 #: src/save.c:189
 msgid ""
 "Failed to write saved game!  You'll most likely have to restore it by "
 "copying your backup saved game over your current saved game."
 msgstr ""
+"Ocorreu uma falha ao gravar o jogo guardado!  Provavelmente terás que "
+"restaurá-lo copiando a cópia de segurança do teu jogo guardado sobre o jogo "
+"guardado atual."
 
 #: src/save.c:211
 #, c-format
 msgid "Unable to reload save for '%s'!"
-msgstr "Impossível carregar novamente o jogo salvo em '%s'!"
+msgstr "Impossível carregar novamente o jogo guardado em '%s'!"
 
 #: src/ship.c:77
 #, c-format
 msgid "Ship %s does not exist"
-msgstr ""
+msgstr "A nave %s não existe"
 
 #: src/ship.c:182
 msgid "Yacht"
-msgstr ""
+msgstr "Iate"
 
 #: src/ship.c:184
 msgid "Courier"
-msgstr ""
+msgstr "Mensageiro"
 
 #: src/ship.c:186
 msgid "Freighter"
-msgstr ""
+msgstr "Cargueiro"
 
 #: src/ship.c:188
 msgid "Armoured Transport"
-msgstr ""
+msgstr "Transporte blindado"
 
 #: src/ship.c:190
 msgid "Bulk Freighter"
-msgstr ""
+msgstr "Cargueiro grande"
 
 #: src/ship.c:193
 msgid "Scout"
-msgstr ""
+msgstr "Explorador"
 
 #: src/ship.c:195
 msgid "Interceptor"
-msgstr ""
+msgstr "Interceptor"
 
 #: src/ship.c:197
 msgid "Fighter"
-msgstr ""
+msgstr "Caça"
 
 #: src/ship.c:199
 msgid "Bomber"
-msgstr ""
+msgstr "Bombardeiro"
 
 #: src/ship.c:201
 msgid "Corvette"
-msgstr ""
+msgstr "Corveta"
 
 #: src/ship.c:203
 msgid "Destroyer"
-msgstr ""
+msgstr "Contratorpedeiro"
 
 #: src/ship.c:205
 msgid "Cruiser"
-msgstr ""
+msgstr "Cruzador"
 
 #: src/ship.c:207
 msgid "Battleship"
-msgstr ""
+msgstr "Couraçado"
 
 #: src/ship.c:209
 msgid "Carrier"
-msgstr ""
+msgstr "Porta-aviões"
 
 #: src/ship.c:360
 #, c-format
 msgid "Unable to create ship '%s' targeting surface."
-msgstr ""
+msgstr "Não foi possível criar a superfície de mira da nave '%s'."
 
 #: src/ship.c:411
 #, c-format
 msgid "Unable to open '%s' for reading!"
-msgstr ""
+msgstr "Não é possível abrir '%s' para leitura!"
 
 #: src/ship.c:496
 #, c-format
 msgid "Ship '%s' does not have an engine sprite (%s)."
-msgstr ""
+msgstr "A nave '%s' não tem um sprite de motor (%s)."
 
 #: src/ship.c:524
 #, c-format
@@ -110183,55 +110369,55 @@ msgstr ""
 
 #: src/shiplog.c:657
 msgid "Empty"
-msgstr ""
+msgstr "Vazio"
 
 #: src/shipstats.c:84
 msgid "Speed"
-msgstr ""
+msgstr "Velocidade"
 
 #: src/shipstats.c:85
 msgid "Turn"
-msgstr ""
+msgstr "Viragem"
 
 #: src/shipstats.c:86
 msgid "Thrust"
-msgstr ""
+msgstr "Impulso"
 
 #: src/shipstats.c:87
 msgid "Cargo Space"
-msgstr ""
+msgstr "Espaço de carga"
 
 #: src/shipstats.c:88
 msgid "Fuel Cpacity"
-msgstr ""
+msgstr "Capacidade de combustível"
 
 #: src/shipstats.c:89
 msgid "Armour Strength"
-msgstr ""
+msgstr "Resistência da blindagem"
 
 #: src/shipstats.c:90
 msgid "Armour Regeneration"
-msgstr ""
+msgstr "Regeneração da blindagem"
 
 #: src/shipstats.c:91
 msgid "Shield Strength"
-msgstr ""
+msgstr "Resistência do escudo"
 
 #: src/shipstats.c:92
 msgid "Shield Regeneration"
-msgstr ""
+msgstr "Regeneração do escudo"
 
 #: src/shipstats.c:93
 msgid "Energy Capacity"
-msgstr ""
+msgstr "Capacidade de energia"
 
 #: src/shipstats.c:94
 msgid "Energy Regeneration"
-msgstr ""
+msgstr "Regeneração de energia"
 
 #: src/shipstats.c:95 src/shipstats.c:168
 msgid "CPU Capacity"
-msgstr ""
+msgstr "Capacidade da CPU"
 
 #: src/shipstats.c:96
 msgid "Ability Cooldown"
@@ -110239,59 +110425,59 @@ msgstr ""
 
 #: src/shipstats.c:98
 msgid "Jump Time"
-msgstr ""
+msgstr "Tempo de salto"
 
 #: src/shipstats.c:99
 msgid "Landing Time"
-msgstr ""
+msgstr "Tempo de aterragem"
 
 #: src/shipstats.c:100
 msgid "Cargo Inertia"
-msgstr ""
+msgstr "Inércia da carga"
 
 #: src/shipstats.c:102
 msgid "Concealment"
-msgstr ""
+msgstr "Ocultação"
 
 #: src/shipstats.c:103
 msgid "Evasion"
-msgstr ""
+msgstr "Evasão"
 
 #: src/shipstats.c:105
 msgid "Detection"
-msgstr ""
+msgstr "Deteção"
 
 #: src/shipstats.c:106
 msgid "Tracking"
-msgstr ""
+msgstr "Rastreamento"
 
 #: src/shipstats.c:107
 msgid "Jump Detection"
-msgstr ""
+msgstr "Deteção de saltos"
 
 #: src/shipstats.c:108
 msgid "Stealth Discovered Speed"
-msgstr ""
+msgstr "Velocidade descoberta de invisibilidade"
 
 #: src/shipstats.c:109
 msgid "Scanned Speed"
-msgstr ""
+msgstr "Velocidade de varredura"
 
 #: src/shipstats.c:111
 msgid "Fire Rate (Launcher)"
-msgstr ""
+msgstr "Cadência de disparo (lançador)"
 
 #: src/shipstats.c:112
 msgid "Launch Range"
-msgstr ""
+msgstr "Alcance de lançamento"
 
 #: src/shipstats.c:113
 msgid "Damage (Launcher)"
-msgstr ""
+msgstr "Dano (lançador)"
 
 #: src/shipstats.c:114
 msgid "Ammo Capacity"
-msgstr ""
+msgstr "Capacidade de munições"
 
 #: src/shipstats.c:115
 msgid "Launch Lock-on"
@@ -110299,11 +110485,11 @@ msgstr ""
 
 #: src/shipstats.c:116
 msgid "Launch Calibration"
-msgstr ""
+msgstr "Calibração de lançamento"
 
 #: src/shipstats.c:117
 msgid "Ammo Reload Rate"
-msgstr ""
+msgstr "Cadência de recarga de munições"
 
 #: src/shipstats.c:119
 msgid "Fighter Damage"
@@ -110331,107 +110517,108 @@ msgstr ""
 
 #: src/shipstats.c:126
 msgid "Heat (Cannon)"
-msgstr ""
+msgstr "Calor (canhão)"
 
 #: src/shipstats.c:127
 msgid "Damage (Cannon)"
-msgstr ""
+msgstr "Dano (canhão)"
 
 #: src/shipstats.c:128
 msgid "Fire Rate (Cannon)"
-msgstr ""
+msgstr "Cadência de disparo (canhão)"
 
 #: src/shipstats.c:129
 msgid "Energy Usage (Cannon)"
-msgstr ""
+msgstr "Utilização de energia (canhão)"
 
 #: src/shipstats.c:130
 msgid "Damage as Disable (Cannon)"
-msgstr ""
+msgstr "Dano para inativar (canhão)"
 
 #: src/shipstats.c:132
 msgid "Heat (Turret)"
-msgstr ""
+msgstr "Calor (torreta)"
 
 #: src/shipstats.c:133
 msgid "Damage (Turret)"
-msgstr ""
+msgstr "Dano (torreta)"
 
 #: src/shipstats.c:134
 msgid "Tracking (Turret)"
-msgstr ""
+msgstr "Rastreio (torreta)"
 
 #: src/shipstats.c:135
 msgid "Fire Rate (Turret)"
-msgstr ""
+msgstr "Cadência de disparo (torreta)"
 
 #: src/shipstats.c:136
 msgid "Energy Usage (Turret)"
-msgstr ""
+msgstr "Utilização de energia (torreta)"
 
 #: src/shipstats.c:137
 msgid "Damage as Disable (Turret)"
-msgstr ""
+msgstr "Dano para inativar (torreta)"
 
 #: src/shipstats.c:139
 msgid "Heat Dissipation"
-msgstr ""
+msgstr "Dissipação de calor"
 
 #: src/shipstats.c:140
 msgid "Stress Dissipation"
-msgstr ""
+msgstr "Dissipação de estresse"
 
 #: src/shipstats.c:141
 msgid "Crew"
-msgstr ""
+msgstr "Tripulação"
 
 #: src/shipstats.c:142
 msgid "Ship Mass"
-msgstr ""
+msgstr "Massa da nave"
 
 #: src/shipstats.c:143 src/shipstats.c:169
 msgid "Engine Mass Limit"
-msgstr ""
+msgstr "Limite de massa do motor"
 
 #: src/shipstats.c:144
 msgid "Boarding Bonus"
-msgstr ""
+msgstr "Bónus de assalto"
 
 #: src/shipstats.c:145
 msgid "Time Constant"
-msgstr ""
+msgstr "Constante de tempo"
 
 #: src/shipstats.c:146
 msgid "Action Speed"
-msgstr ""
+msgstr "Velocidade de ação"
 
 #: src/shipstats.c:147
 msgid "Ship Cooldown Time"
-msgstr ""
+msgstr "Tempo de arrefecimento da nave"
 
 #: src/shipstats.c:148
 msgid "Jump Distance"
-msgstr ""
+msgstr "Distância de salto"
 
 #: src/shipstats.c:149
 msgid "Jump Warmup"
-msgstr ""
+msgstr "Preparação de salto"
 
 #: src/shipstats.c:150
 msgid "Mining Bonus"
-msgstr ""
+msgstr "Bónus de mineração"
 
 #: src/shipstats.c:152
+#, fuzzy
 msgid "kN/tonne Thrust"
-msgstr ""
+msgstr "kN/tonelada de impulso"
 
 #: src/shipstats.c:153
 msgid "deg/s Turn Rate"
-msgstr ""
+msgstr "graus/s taxa de viragem"
 
 #: src/shipstats.c:154
 msgid "m/s Maximum Speed"
-msgstr ""
+msgstr "m/s velocidade máxima"
 
 #: src/shipstats.c:155
 msgid "MJ Energy Capacity"
@@ -110479,23 +110666,23 @@ msgstr ""
 
 #: src/shipstats.c:170
 msgid "Fuel Regeneration"
-msgstr ""
+msgstr "Regeneração de combustível"
 
 #: src/shipstats.c:171
 msgid "Asteroid Scanner Range"
-msgstr ""
+msgstr "Alcance da varredura de asteroides"
 
 #: src/shipstats.c:172
 msgid "Nebula Visibility"
-msgstr ""
+msgstr "Visibilidade da nebulosa"
 
 #: src/shipstats.c:174
 msgid "Damage Absorption"
-msgstr ""
+msgstr "Absorção de danos"
 
 #: src/shipstats.c:176
 msgid "Nebula Resistance"
-msgstr ""
+msgstr "Resistência da nebulosa"
 
 #: src/shipstats.c:177
 msgid "Missile jamming chance"
