@@ -2950,6 +2950,8 @@ int* player_missionsDoneList (void)
  */
 void player_eventFinished( int id )
 {
+   HookParam h[2];
+
    /* Make sure not already done. */
    if (player_eventAlreadyDone(id))
       return;
@@ -2960,6 +2962,13 @@ void player_eventFinished( int id )
    array_push_back( &events_done, id );
 
    qsort( events_done, array_size(events_done), sizeof(int), cmp_int );
+
+   /* Run the completion hook. */
+   event_toLuaTable( naevL, id ); /* Push to stack. */
+   h[0].type = HOOK_PARAM_REF;
+   h[0].u.ref = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* Pops from stack. */
+   h[1].type = HOOK_PARAM_SENTINEL;
+   hooks_runParam( "event_done", h );
 }
 
 /**

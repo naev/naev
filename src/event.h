@@ -68,3 +68,4 @@ int event_testClaims( unsigned int eventid, int sys );
  * Misc.
  */
 int event_alreadyRunning( int data );
+void event_toLuaTable( lua_State *L, int eventid );

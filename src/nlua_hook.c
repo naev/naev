@@ -61,6 +61,7 @@ static int hookL_renderbg( lua_State *L );
 static int hookL_renderfg( lua_State *L );
 static int hookL_rendertop( lua_State *L );
 static int hookL_mission_done( lua_State *L );
+static int hookL_event_done( lua_State *L );
 static int hookL_standing( lua_State *L );
 static int hookL_discover( lua_State *L );
 static int hookL_asteroidScan( lua_State *L );
@@ -98,6 +99,7 @@ static const luaL_Reg hookL_methods[] = {
    { "renderfg", hookL_renderfg },
    { "rendertop", hookL_rendertop },
    { "mission_done", hookL_mission_done },
+   { "event_done", hookL_event_done },
    { "standing", hookL_standing },
    { "discover", hookL_discover },
    { "asteroid_scan", hookL_asteroidScan },
@@ -898,7 +900,7 @@ static int hookL_rendertop( lua_State *L )
 }
 
 /**
- * @brief Hook that runs when a mission is complete. The entire mission information table is passed similar to player.misnDoneList().
+ * @brief Hook that runs when a mission is complete. The entire mission information table is passed similar to player.evtDoneList().
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
@@ -908,6 +910,21 @@ static int hookL_rendertop( lua_State *L )
 static int hookL_mission_done( lua_State *L )
 {
    unsigned int h = hookL_generic( L, "mission_done", 0., 1, 0, 2 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+
+/**
+ * @brief Hook that runs when a event is complete. The entire event information table is passed similar to player.evtDoneList().
+ *
+ *    @luatparam string funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luatreturn number Hook identifier.
+ * @luafunc event_done
+ */
+static int hookL_event_done( lua_State *L )
+{
+   unsigned int h = hookL_generic( L, "event_done", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
