@@ -891,3 +891,25 @@ int event_reload( const char *name )
       *temp = save;
    return res;
 }
+
+void event_toLuaTable( lua_State *L, int eventid )
+{
+   const EventData *data = &event_data[ eventid ];
+
+   lua_newtable(L);
+
+   lua_pushstring(L, data->name);
+   lua_setfield(L,-2,"name");
+
+   lua_pushboolean(L, data->flags & EVENT_FLAG_UNIQUE);
+   lua_setfield(L,-2,"unique");
+
+   /*
+   lua_newtable(L);
+   for (int j=0; j<array_size(data->tags); j++) {
+      lua_pushboolean(L,1);
+      lua_setfield(L,-2,data->tags[j]);
+   }
+   lua_setfield(L,-2,"tags");
+   */
+}

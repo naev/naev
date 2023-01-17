@@ -113,6 +113,7 @@ static int playerL_misnDone( lua_State *L );
 static int playerL_misnDoneList( lua_State *L );
 static int playerL_evtActive( lua_State *L );
 static int playerL_evtDone( lua_State *L );
+static int playerL_evtDoneList( lua_State *L );
 /* Fleet stuff. */
 static int playerL_fleetList( lua_State *L );
 static int playerL_fleetCargoFree( lua_State *L );
@@ -191,6 +192,7 @@ static const luaL_Reg playerL_methods[] = {
    { "misnDoneList", playerL_misnDoneList },
    { "evtActive", playerL_evtActive },
    { "evtDone", playerL_evtDone },
+   { "evtDoneList", playerL_evtDoneList },
    { "fleetList", playerL_fleetList },
    { "fleetCargoFree", playerL_fleetCargoFree },
    { "fleetCargoUsed", playerL_fleetCargoUsed },
@@ -1586,6 +1588,23 @@ static int playerL_evtDone( lua_State *L )
       return 0;
    }
    lua_pushboolean( L, player_eventAlreadyDone( id ) );
+   return 1;
+}
+
+/**
+ * @brief Gets a list of all the events the player has done.
+ *
+ *    @luatreturn table List of all the events the player has done.
+ * @luafunc evtDoneList
+ */
+static int playerL_evtDoneList( lua_State *L )
+{
+   int *done = player_eventsDoneList();
+   lua_newtable(L);
+   for (int i=0; i<array_size(done); i++) {
+      event_toLuaTable( L, done[i] );
+      lua_rawseti(L,-2,i+1);
+   }
    return 1;
 }
 
