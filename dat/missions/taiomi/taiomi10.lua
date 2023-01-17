@@ -5,6 +5,9 @@
  <chance>0</chance>
  <location>None</location>
  <done>Taiomi 9</done>
+ <tags>
+  <tag>fleetcap_10</tag>
+ </tags>
  <notes>
   <campaign>Taiomi</campaign>
  </notes>
