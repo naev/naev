@@ -44,7 +44,7 @@ local function recalculate( domsg )
 
    local inc = cap-cur
    if domsg and inc > 0 then
-      player.msg(fmt.f("#g".._("Fleet capacityincreased to {val}!").."#0",{val=inc}))
+      player.msg(fmt.f("#g".._("Fleet capacity increased to {val}!").."#0",{val=cap}))
    end
 end
 
