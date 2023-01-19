@@ -3226,7 +3226,7 @@ dat/spob/lua/lib/hypergate.lua
 dat/spob/lua/lib/spob.lua
 dat/spob/lua/lib/wormhole.lua
 dat/spob/lua/lowclass.lua
-dat/spob/lua/maanans_moon.lua
+dat/spob/lua/maanens_moon.lua
 dat/spob/lua/pirate_clanworld.lua
 dat/spob/lua/poller_mass.lua
 dat/spob/lua/proteron_mil_restricted.lua

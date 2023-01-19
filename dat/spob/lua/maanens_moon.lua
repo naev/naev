@@ -7,8 +7,8 @@ mem.params = {
       _("Permisson to land granted."),
    },
    msg_notyet = {
-      _("Access to Maanan's Moon denied."),
-      _("You need special clearance to land on Maanan's Moon."),
+      _("Access to Maanen's Moon denied."),
+      _("You need special clearance to land on Maanen's Moon."),
    },
    msg_cantbribe = {
       _([["Don't attempt to bribe an Empire official, pilot."]]),
