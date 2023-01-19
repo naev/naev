@@ -2925,6 +2925,7 @@ dat/missions/pirate/contraband.lua
 dat/missions/pirate/contraband_cake.lua
 dat/missions/pirate/hitman.lua
 dat/missions/pirate/hitman2.lua
+dat/missions/pirate/lucas/lucas01.lua
 dat/missions/pirate/patrol.lua
 dat/missions/pirate/pir_clan_cargo.lua
 dat/missions/pirate/pir_hit.lua
@@ -3070,6 +3071,7 @@ dat/scripts/common/ferals.lua
 dat/scripts/common/frontier.lua
 dat/scripts/common/frontier_war.lua
 dat/scripts/common/gauntlet.lua
+dat/scripts/common/lucas.lua
 dat/scripts/common/minerva.lua
 dat/scripts/common/nebu_research.lua
 dat/scripts/common/nebula.lua
