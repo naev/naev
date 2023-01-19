@@ -77,7 +77,7 @@ function create ()
    vn.disappear( sai, tut.shipai.transition )
    vn.sfxVictory()
    vn.na(_([[You explore the rest of the station, but other than the eerie nebula crystals piercing and growing throughout the hull, you find nothing else of interest.]]))
-   vn.done( tut.shipai.transition )
+   vn.done()
 
    vn.label("notenough_sai")
    sai(_([["Let me see if I remember what went into it. It was a data-whatyacallem… … …data matrices! That is it. We'll need data matrices if we wish to activate the terminal."]]))
@@ -91,6 +91,7 @@ function create ()
    vn.run()
 
    if inserted then
+      var.pop("arandon_station_intro") -- clean up vars we don't care about anymore
       neu.addMiscLog(fmt.f(_([[You found a crusty old terminal on {spob}. You were able to activate it using an encrypted data matrix and your Ship AI was able to recover some information on fleet formations.]]),
          {spob=spob.cur()}))
       evt.finish(true)
