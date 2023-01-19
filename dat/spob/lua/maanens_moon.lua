@@ -2,7 +2,7 @@ local luaspob = require "spob.lua.lib.spob"
 
 mem.params = {
    std_land = 50,
-   std_bribe = 10,
+   std_bribe = 0,
    msg_granted = {
       _("Permisson to land granted."),
    },
