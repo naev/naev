@@ -40,6 +40,7 @@ static int hookL_jumpout( lua_State *L );
 static int hookL_jumpin( lua_State *L );
 static int hookL_enter( lua_State *L );
 static int hookL_hail( lua_State *L );
+static int hookL_hail_spob( lua_State *L );
 static int hookL_board( lua_State *L );
 static int hookL_timer( lua_State *L );
 static int hookL_date( lua_State *L );
@@ -78,6 +79,7 @@ static const luaL_Reg hookL_methods[] = {
    { "jumpin", hookL_jumpin },
    { "enter", hookL_enter },
    { "hail", hookL_hail },
+   { "hail_spob", hookL_hail_spob },
    { "board", hookL_board },
    { "timer", hookL_timer },
    { "date", hookL_date },
@@ -459,6 +461,23 @@ static int hookL_jumpin( lua_State *L )
 static int hookL_enter( lua_State *L )
 {
    unsigned int h = hookL_generic( L, "enter", 0., 1, 0, 2 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+
+/**
+ * @brief Hooks the function to the player hailing any spob.
+ *
+ * The hook receives a single parameter which is the spob being hailed.
+ *
+ *    @luatparam string funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luatreturn number Hook identifier.
+ * @luafunc hail_spob
+ */
+static int hookL_hail_spob( lua_State *L )
+{
+   unsigned int h = hookL_generic( L, "hail_spob", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }

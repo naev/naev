@@ -117,11 +117,11 @@ int comm_openPilot( unsigned int pilot )
    comm_commClose = 0;
 
    /* Run specific hail hooks on hailing pilot. */
-   HookParam hparam[] = {
-      { .type = HOOK_PARAM_PILOT,
-         .u = { .lp = p->id } },
-      { .type = HOOK_PARAM_SENTINEL } };
    if (pilot_canTarget( p )) {
+      HookParam hparam[] = {
+         { .type = HOOK_PARAM_PILOT,
+            .u = { .lp = p->id } },
+         { .type = HOOK_PARAM_SENTINEL } };
       hooks_runParam( "hail", hparam );
       pilot_runHook( p, PILOT_HOOK_HAIL );
    }
@@ -141,7 +141,6 @@ int comm_openPilot( unsigned int pilot )
 
    /* Close window if necessary. */
    if (comm_commClose) {
-      p  = NULL;
       comm_spob = NULL;
       comm_commClose = 0;
       return 0;
@@ -191,6 +190,23 @@ int comm_openSpob( Spob *spob )
    /* Must not be disabled. */
    if (!spob_hasService(spob, SPOB_SERVICE_INHABITED)) {
       player_message(_("%s does not respond."), spob_name(spob));
+      return 0;
+   }
+
+   /* Don't close automatically. */
+   comm_commClose = 0;
+
+   /* Run hail_spob hook. */
+   HookParam hparam[] = {
+      { .type = HOOK_PARAM_SPOB,
+         .u = { .la = spob_index( spob ) } },
+      { .type = HOOK_PARAM_SENTINEL } };
+   hooks_runParam( "hail_spob", hparam );
+
+   /* Close window if necessary. */
+   if (comm_commClose) {
+      comm_spob = NULL;
+      comm_commClose = 0;
       return 0;
    }
 
