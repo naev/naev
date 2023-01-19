@@ -522,17 +522,18 @@ static void map_system_render( double bx, double by, double w, double h, void *d
 
          /* show some additional information */
          infocnt += scnprintf( &infobuf[infocnt], sizeof(infobuf)-infocnt, "%s\n"
-               "%s\n%s\n%s\n%s\n%s\n%s\n%s",
-               spob_hasService( p, SPOB_SERVICE_LAND) ? _("This system is landable") : _("This system is not landable"),
-               spob_hasService( p, SPOB_SERVICE_INHABITED) ? _("This system is inhabited") : _("This system is not inhabited"),
+               "%s\n%s%s%s%s",
+               /* Redundant information. */
+               //spob_hasService( p, SPOB_SERVICE_LAND) ? _("This system is landable") : _("This system is not landable"),
+               //spob_hasService( p, SPOB_SERVICE_INHABITED) ? _("This system is inhabited") : _("This system is not inhabited"),
                spob_hasService( p, SPOB_SERVICE_REFUEL) ? _("You can refuel here") : _("You cannot refuel here"),
                spob_hasService( p, SPOB_SERVICE_BAR) ? _("This system has a bar") : _("This system does not have a bar"),
                spob_hasService( p, SPOB_SERVICE_MISSIONS) ? _("This system offers missions") : _("This system does not offer missions"),
-               spob_hasService( p, SPOB_SERVICE_COMMODITY) ? _("This system has a trade outlet") : _("This system does not have a trade outlet"),
-               spob_hasService( p, SPOB_SERVICE_OUTFITS) ? _("This system sells ship equipment") : _("This system does not sell ship equipment"),
-               spob_hasService( p, SPOB_SERVICE_SHIPYARD) ? _("This system sells ships") : _("This system does not sell ships"));
-         if (p->bar_description && spob_hasService( p, SPOB_SERVICE_BAR ))
-            infocnt += scnprintf( &infobuf[infocnt], sizeof(infobuf)-infocnt, "\n\n%s", _(p->bar_description) );
+               spob_hasService( p, SPOB_SERVICE_COMMODITY) ? "" : _("\nThis system does not have a trade outlet"),
+               spob_hasService( p, SPOB_SERVICE_OUTFITS) ? "" : _("\nThis system does not sell ship equipment"),
+               spob_hasService( p, SPOB_SERVICE_SHIPYARD) ? "" : _("\nThis system does not sell ships"));
+         //if (p->bar_description && spob_hasService( p, SPOB_SERVICE_BAR ))
+         //   infocnt += scnprintf( &infobuf[infocnt], sizeof(infobuf)-infocnt, "\n\n%s", _(p->bar_description) );
       }
 
       txtHeight = gl_printHeightRaw( &gl_smallFont, (w - nameWidth-pitch-60)/2, buf );
