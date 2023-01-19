@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-01-10 23:55+0900\n"
-"PO-Revision-Date: 2023-01-15 16:50+0000\n"
+"PO-Revision-Date: 2023-01-17 21:49+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
 "naev/pt_BR/>\n"
@@ -58,7 +58,7 @@ msgstr "arquivos ainda abertos"
 
 #: physfs.c:10
 msgid "invalid argument"
-msgstr "argumento inválido "
+msgstr "argumento inválido"
 
 #: physfs.c:11
 msgid "not mounted"
@@ -70,7 +70,7 @@ msgstr "não encontrado"
 
 #: physfs.c:13
 msgid "symlinks are forbidden"
-msgstr "ligações simbólicas são proíbidas"
+msgstr "ligações simbólicas são proibidas"
 
 #: physfs.c:14
 msgid "write directory is not set"
@@ -5884,7 +5884,8 @@ msgid ""
 "sewing needle."
 msgstr ""
 "O Andróide de Abordagem MK2 melhora a larga variedade de ferramentas usadas "
-"por seu predecessor, inclundo além deles mãos de tesoura e agulha de costura."
+"por seu predecessor, incluindo além deles mãos de tesoura e agulha de "
+"costura."
 
 #: dat/outfits/utility/camouflage_burster.xml:2
 msgid "Camouflage Burster"
@@ -7248,7 +7249,7 @@ msgid ""
 "the pros."
 msgstr ""
 "A Torreta de Plasma usa um Disparador de Plasma como base. O seu curto "
-"alcance torna-a inadequada para a defesa, razaõ que a torna impopular entre "
+"alcance torna-a inadequada para a defesa, razão que a torna impopular entre "
 "comerciantes e mercadores, mas encontrou um nicho entre mercenários "
 "inexperientes que não tem tão boa mira quanto profissionais."
 
@@ -9055,7 +9056,7 @@ msgstr "Perspicácia Túrion"
 
 #: dat/ships/thurion/thurion_perspicacity.xml:21
 msgid "You need at least 20 reputation with the Thurion."
-msgstr "Você precisa de ao menos 30 pontos de reputação com os Túrion."
+msgstr "Você precisa de ao menos 20 pontos de reputação com os Túrion."
 
 #: dat/ships/thurion/thurion_perspicacity.xml:22
 msgid ""
@@ -10790,7 +10791,7 @@ msgid ""
 "temperature, that's not to say you can't get a mean Pan-Galactic Gargle "
 "Blaster."
 msgstr ""
-"O Bar Espaçoporto de Ammu, conhecido como'' O Dissipador'' devido às suas "
+"O Bar Espaçoporto de Ammu, conhecido como \"O Dissipador\" devido às suas "
 "temperaturas frias, é um contraste com o resto da estação, embora fosse "
 "considerado como relativamente quente na maioria dos planetas. Mais "
 "conhecido por sua temperatura, isso não quer dizer que não se consiga provar "

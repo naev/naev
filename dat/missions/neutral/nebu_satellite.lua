@@ -61,18 +61,21 @@ end
 
 
 function accept ()
+   local accepted = false
+
    vn.clear()
    vn.scene()
    local sci = vn.newCharacter( npc_name, {image=npc_image} )
    vn.transition()
    sci(_([[You approach the scientists. They seem a bit nervous and one mutters something about whether it's a good idea or not. Eventually one of them comes up to you.
-    "Hello Captain, we're looking for a ship to take us into the Sol Nebula. Would you be willing to take us there?"]]))
+"Hello Captain, we're looking for a ship to take us into the Sol Nebula. Would you be willing to take us there?"]]))
    vn.menu{
       {_([[Accept]]), "accept"},
       {_([[Refuse]]), "refuse"},
    }
 
    vn.label("refuse")
+   vn.done()
 
    vn.label("nospace")
    vn.na(fmt.f(_([["You need an additional {space} of free cargo space to accept this mission!"]]),
@@ -83,13 +86,18 @@ function accept ()
    vn.func( function ()
       if player.pilot():cargoFree() < cargo_space then
          vn.jump("nospace")
+         return
       end
+      accepted = true
    end )
    vn.na(fmt.f(_([["We had a trip scheduled with a space trader, but they backed out at the last minute. So we were stuck here until you came. We've got a research probe that we want to release into the {sys} system to monitor the Nebula's growth rate. The probe launch procedure is pretty straightforward and shouldn't have any complications."
 He takes a deep breath, "We hope to be able to find out more secrets of the Sol Nebula so mankind can once again regain its lost heritage. So far, the radiation and volatility of the deeper areas haven't been very kind to our instruments. That's why we designed this probe we're going to launch."]]),
       {sys=mem.satellite_sys}))
    vn.na(fmt.f(_([["The plan is for you to take us to {sys} so we can launch the probe, and then return us to our home at {home_pnt} in the {home_sys} system. If all goes well, the probe will automatically send us the data we need. You'll be paid {credits} when we arrive."]]),
       {sys=mem.satellite_sys, home_pnt=mem.homeworld, home_sys=mem.homeworld_sys, credits=fmt.credits(credits)}))
+   vn.run()
+
+   if not accepted then return end
 
    -- Add cargo
    local c = commodity.new( N_("Satellite"), N_("A small space probe loaded with sensors for exploring the depths of the nebula.") )
