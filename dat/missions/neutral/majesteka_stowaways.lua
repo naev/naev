@@ -27,7 +27,7 @@ local reward = outfit.get("Pilot Doll")
 function create ()
    misn.accept()
    misn.setTitle( title )
-   misn.setDesc(fmt.f(_([[You have to find a good home for a pair of orphans that snuck unto your ship when you landed on {spob} in the {sys} system.]]),
+   misn.setDesc(fmt.f(_([[You have to find a good home for a pair of orphans that sneaked unto your ship when you landed on {spob} in the {sys} system.]]),
       {spob=stowaway_spob, sys=stowaway_sys}))
    misn.setReward(_([[A good life for the pair of orphans.]]))
    misn.osdCreate( title,{
@@ -36,7 +36,7 @@ function create ()
    mem.hook_land = hook.land("land")
 
    -- Add the cargo
-   local c = commodity.new( N_("Orphans"), N_("") )
+   local c = commodity.new( N_("Orphans"), N_("A pair of orphans looking for a better life.") )
    mem.cargo = misn.cargoAdd( c, 0 )
 
    mem.visited = {}
