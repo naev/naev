@@ -30,6 +30,7 @@ local reward = 300e3
 
 local target -- Non-persistent state
 
+local title = _("The Macho Teenager")
 local npc_name = _("A middle-aged man")
 local npc_portrait = "neutral/unique/middleaged.webp"
 local npc_image = portrait.getFullPath( npc_portrait )
@@ -67,9 +68,10 @@ function accept ()
    if not accepted then return end
 
    misn.accept()
+   misn.setTitle(title)
    misn.setDesc(fmt.f(_("A disgruntled parent has asked you to fetch his son and his son's girlfriend, who have taken a yacht and are joyriding it in the {sys} system."), {sys=mem.cursys}))
    misn.setReward(_("You will be compensated for your efforts."))
-   misn.osdCreate(_("The macho teenager"), {
+   misn.osdCreate(title, {
       _("Disable Gawain Credence"),
       fmt.f(_("Bring the teenagers back to planet {pnt}"), {pnt=mem.curplanet}),
    })
