@@ -11,6 +11,9 @@
    * Fixes
       * Fixed many corner case crashes in the editor
 
+* 0.10.4 (unreleased)
+   * Fixed multiple mission_done hooks not passing parameter correctly.
+
 * 0.10.3
    * Fixed crash when using fits currently selected ship outfit filter
    * Fixed escorts always being set to aggressive when loading a save
