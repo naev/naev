@@ -926,7 +926,7 @@ void event_toLuaTable( lua_State *L, int eventid )
    lua_pushstring(L, data->name);
    lua_setfield(L,-2,"name");
 
-   lua_pushboolean(L, data->flags & EVENT_FLAG_UNIQUE);
+   lua_pushboolean(L, (data->flags & EVENT_FLAG_UNIQUE));
    lua_setfield(L,-2,"unique");
 
    lua_newtable(L);
