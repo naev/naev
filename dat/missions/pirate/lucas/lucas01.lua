@@ -49,6 +49,8 @@ local first_spob, first_sys
 local last_spob, last_sys = spob.getS("Maanen's Moon")
 
 function create ()
+   misn.finish(false)
+
    -- Get closest refugee planet
    local candidates = lmisn.getSpobAtDistance( nil, 0, math.huge, nil, false, function( s )
       return s:tags().refugee
