@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-01-10 23:55+0900\n"
-"PO-Revision-Date: 2023-01-19 23:51+0000\n"
+"PO-Revision-Date: 2023-01-20 17:17+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Portugal) <https://hosted.weblate.org/projects/"
 "naev/naev/pt_PT/>\n"
@@ -165,9 +165,9 @@ msgid ""
 "hurled themselves out into the void. On arrival, they decanted and woke to "
 "find new stars staring coldly down from stranger skies."
 msgstr ""
-"Assim, homens e mulheres trancaram seus corpos adormecidos em enormes caixas "
-"de metal. Eles se lançaram no vazio. Na chegada, eles decantaram e acordaram "
-"para encontrar novas estrelas olhando friamente para baixo em céus estranhos."
+"Então, homens e mulheres trancaram os seus corpos adormecidos em caixas de "
+"metal. Atiraram-se para o vazio. À chegada, decantaram-se e acordaram para "
+"encontrar novas estrelas olhando friamente para céus estranhos."
 
 #: dat/intro:10
 msgid ""
@@ -176,10 +176,10 @@ msgid ""
 "civilisation spread, as it always has, with exponential enthusiasm -- "
 "ripples in the dark sea of space."
 msgstr ""
-"A primeira onda de exploradores rastejou de estrela na velocidade da luz, "
-"até que a invenção do hiperespaço impulsionou um segundo crescimento. Então "
-"a civilização se espalhou, como sempre, com entusiasmo exponencial - "
-"ondulações no mar escuro do espaço."
+"A primeira onda de exploradores rastejou de estrela em estrela a velocidades "
+"inferiores à da luz, até que a invenção da unidade hiperespacial estimulou "
+"um segundo crescimento. Então a civilização espalhou-se, como sempre fez, "
+"com entusiasmo exponencial -- ondas através do mar escuro do espaço."
 
 #: dat/intro:12
 msgid ""
@@ -188,10 +188,10 @@ msgid ""
 "food, and distrust sowed the seeds of discord. Once begun, the fever of war "
 "spread from world to world and became a holocaust."
 msgstr ""
-"No entanto, a era heroica das descobertas durou apenas enquanto a "
-"curiosidade humana superou a ganância. Muito cedo, o conflito eclodiu nas "
-"colônias. Terra, combustível, comida e desconfiança semearam as sementes da "
-"discórdia. Uma vez iniciada, a febre da guerra espalhou-se de mundo a mundo "
+"No entanto, a era heroica da descoberta durou apenas enquanto a curiosidade "
+"humana ultrapassava a ganância. Muito cedo, o conflito irrompeu nas "
+"colónias. Terra, combustível, comida e desconfiança semearam as sementes da "
+"discórdia. Uma vez iniciada, a febre da guerra espalhou-se de mundo em mundo "
 "e tornou-se um holocausto."
 
 #: dat/intro:15
@@ -199,8 +199,8 @@ msgid ""
 "After a hundred years of interstellar conflict, on the ashes that remained, "
 "at last a new order built its foundations."
 msgstr ""
-"Depois de cem anos de conflito interestelar, sobre as cinzas que restaram, "
-"finalmente uma nova ordem construiu seus alicerces."
+"Após cem anos de conflito interestelar, sobre as cinzas que restaram, "
+"finalmente uma nova ordem construiu as suas fundações."
 
 #: dat/intro:17
 msgid ""
@@ -209,10 +209,10 @@ msgid ""
 "military, relations between planets resumed; abandoned trade routes saw "
 "traffic for the first time in living memory."
 msgstr ""
-"Um homem chamado Daedris afirmou domínio sobre os mundos exaustos. Ele "
-"fundou um Império Galáctico e se nomeou seu governante. Sob o punho de ferro "
-"de seus militares, as relações entre os planetas foram retomadas; rotas "
-"comerciais abandonadas viram tráfego pela primeira vez na memória viva."
+"Um homem chamado Daedris afirmou o domínio sobre os mundos esgotados. Fundou "
+"um Império Galáctico e nomeou-se seu governante. Sob o punho de ferro dos "
+"seus militares, as relações entre planetas recomeçaram; rotas comerciais "
+"abandonadas viram o tráfego pela primeira vez na memória viva."
 
 #: dat/intro:19
 msgid ""
@@ -220,9 +220,9 @@ msgid ""
 "irradiated rock was cleansed and dead planets brought back to life. Peace "
 "reigned in an imperial golden age."
 msgstr ""
-"Os estudiosos chamam isso de zênite: a tecnologia deu um salto à frente, a "
-"cultura floresceu, a rocha irradiada foi limpa e os planetas mortos foram "
-"trazidos de volta à vida. A paz reinou em uma época de ouro imperial."
+"Os estudiosos chamam-lhe o zénite: a tecnologia deu um salto, a cultura "
+"floresceu, a rocha irradiada foi purificada e os planetas mortos "
+"ressuscitados. A paz reinou numa era de ouro imperial."
 
 #: dat/intro:21
 msgid ""
@@ -231,11 +231,11 @@ msgid ""
 "the imperium went awry. In some regions, administration fell into the hands "
 "of other powers. The Great Houses now policed the space lanes."
 msgstr ""
-"Depois de Daedris, sob seus sucessores, a luz do império diminuiu. Conflitos "
-"civis e divisões religiosas enfraqueceram os laços sociais. Os grandes "
-"projetos do imperium deram errado. Em algumas regiões, a administração caiu "
-"nas mãos de outros poderes. As Grandes Casas agora policiavam as vias "
-"espaciais."
+"Depois de Daedris, sob os seus sucessores, a luz do império diminuiu. Os "
+"conflitos civis e a divisão religiosa enfraqueceram os laços sociais. Os "
+"grandes projetos do império correram mal. Em algumas regiões, a "
+"administração caiu nas mãos de outras potências. As Grandes Casas agora "
+"vigiavam as vias espaciais."
 
 #: dat/intro:23
 msgid "Rise and fall, the rhythm of history."
@@ -257,9 +257,9 @@ msgid ""
 "civilisation survives as a shadow of its former glory."
 msgstr ""
 "Da Terra, uma explosão cataclísmica rasgou o espaço, aniquilando estrelas, "
-"vaporizando mundos. Morreram bilhões. Dezenas de sistemas desapareceram na "
-"misteriosa nebulosa deixada para trás. Agora, a grande civilização que "
-"abrange toda a galáxia sobrevive como uma sombra de sua antiga glória."
+"vaporizando mundos. Morreram biliões. Dezenas de sistemas desapareceram na "
+"misteriosa nebulosa deixada para trás. Agora, a grande civilização "
+"abrangente de galáxias sobrevive como uma sombra da sua antiga glória."
 
 #: dat/intro:32
 msgid "What else remains? Questions."
@@ -271,9 +271,9 @@ msgid ""
 "decaying empire. After the Incident, corruption and piracy run rampant, but "
 "where there is chaos, there is also opportunity."
 msgstr ""
-"Dez Ciclos Padrão se passaram em um universo governado pelos fragmentos de "
-"um império decadente. Depois do incidente, a corrupção e a pirataria "
-"aumentaram, mas onde há caos, também há oportunidade."
+"Passaram-se Dez Ciclos Padrão num universo governado pelos fragmentos de um "
+"império em decadência. Depois do Incidente, a corrupção e a pirataria "
+"correram desenfreadas, mas onde há caos, há também oportunidade."
 
 #: dat/intro:36
 msgid "Welcome to the universe of Naev..."
@@ -281,7 +281,7 @@ msgstr "Bem-vindo ao universo de Naev..."
 
 #: dat/AUTHORS:1
 msgid "Current Core Development Team"
-msgstr "Atual equipe de desenvolvimento central"
+msgstr "Equipa atual de desenvolvimento central"
 
 #: dat/AUTHORS:2 dat/AUTHORS:26 dat/AUTHORS:38 dat/AUTHORS:63 dat/AUTHORS:173
 #: dat/AUTHORS:181
@@ -290,7 +290,7 @@ msgstr "---------------------------------------"
 
 #: dat/AUTHORS:4
 msgid "Edgar Simo-Serra \"bobbens\" <bobbens@gmail.com>"
-msgstr "Edgar Simo-Serra «bobbens» <bobbens@gmail.com>"
+msgstr "Edgar Simo-Serra \"bobbens\" <bobbens@gmail.com>"
 
 #: dat/AUTHORS:5
 msgid "   * Lead Developer"
@@ -330,11 +330,11 @@ msgstr "   *Desenvolvimento Miscelânea e aficionado Dvaered "
 
 #: dat/AUTHORS:19
 msgid "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
-msgstr ""
+msgstr "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
 
 #: dat/AUTHORS:20
 msgid "   * CI dude and Bringer of automated releases"
-msgstr "   * Cara de linha de comando e Provedor de lançamentos automatizados"
+msgstr "   * Cara de linha de comando e provedor de lançamentos automatizados"
 
 #: dat/AUTHORS:22
 msgid "Viktor Hahn <viktor.hahn@web.de>"
@@ -402,7 +402,7 @@ msgstr "  Artista de retratos de NPCs"
 
 #: dat/AUTHORS:50
 msgid "Enigmatic"
-msgstr ""
+msgstr "Enigmatic"
 
 #: dat/AUTHORS:51
 msgid "   * Ships for the Sirius, many other models and faction logos"
@@ -484,11 +484,11 @@ msgstr "   Ajudou no início do projeto. Grande estimulador da moral."
 
 #: dat/AUTHORS:77
 msgid "Amir Taaki <genjix@gmail.com>"
-msgstr ""
+msgstr "Amir Taaki <genjix@gmail.com>"
 
 #: dat/AUTHORS:78
 msgid "Rob Loach <http://robloach.net>"
-msgstr ""
+msgstr "Rob Loach <http://robloach.net>"
 
 #: dat/AUTHORS:79
 msgid "   * SDL_collide"
@@ -504,11 +504,11 @@ msgstr ""
 
 #: dat/AUTHORS:82
 msgid "Pete Shinners <pete@shinners.org>"
-msgstr ""
+msgstr "Pete Shinners <pete@shinners.org>"
 
 #: dat/AUTHORS:83
 msgid "   * SavePNG"
-msgstr ""
+msgstr "   * SavePNG"
 
 #: dat/AUTHORS:84
 msgid "   Great function ripped straight out of pygame. Works marvelously!"
@@ -517,7 +517,7 @@ msgstr ""
 
 #: dat/AUTHORS:86
 msgid "Aurore D. \"Rore\" <aurore.d@gmail.com>"
-msgstr ""
+msgstr "Aurore D. \"Rore\" <aurore.d@gmail.com>"
 
 #: dat/AUTHORS:87
 msgid "   * Planet gimp script"
@@ -533,7 +533,7 @@ msgstr ""
 
 #: dat/AUTHORS:90
 msgid "Andrew Mustun"
-msgstr ""
+msgstr "Andrew Mustun"
 
 #: dat/AUTHORS:91
 msgid "   * Sprite gimp script"
@@ -547,7 +547,7 @@ msgstr ""
 
 #: dat/AUTHORS:94
 msgid "J.C. Wilk"
-msgstr ""
+msgstr "J.C. Wilk"
 
 #: dat/AUTHORS:95
 msgid "   * Turbulence noise"
@@ -565,7 +565,7 @@ msgstr ""
 
 #: dat/AUTHORS:98
 msgid "Jordi Pegueroles Queralt \"pegue\" <j.pegueroles.queralt@gmail.com>"
-msgstr ""
+msgstr "Jordi Pegueroles Queralt \"pegue\" <j.pegueroles.queralt@gmail.com>"
 
 #: dat/AUTHORS:99
 msgid "   * Mace Rocket model"
@@ -573,7 +573,7 @@ msgstr "   * Modelo do Foguete Mace "
 
 #: dat/AUTHORS:101
 msgid "Brian J. Cameron"
-msgstr ""
+msgstr "Brian J. Cameron"
 
 #: dat/AUTHORS:102
 msgid "   * Much artwork"
@@ -587,7 +587,7 @@ msgstr ""
 
 #: dat/AUTHORS:105
 msgid "Camilo Polymeris <cpolymeris@gmx.net>"
-msgstr ""
+msgstr "Camilo Polymeris <cpolymeris@gmx.net>"
 
 #: dat/AUTHORS:106
 msgid "   * Art and code"
@@ -602,7 +602,7 @@ msgstr ""
 
 #: dat/AUTHORS:109
 msgid "Dimitry Marakasov"
-msgstr ""
+msgstr "Dimitry Marakasov"
 
 #: dat/AUTHORS:110
 msgid "   * FreeBSD port and CMake"
@@ -614,7 +614,7 @@ msgstr "   Codificador talentoso que fez o primeiro porte oficial da Naev."
 
 #: dat/AUTHORS:113
 msgid "Alexandru Mosoi <brtzsnr@gmail.com>"
-msgstr ""
+msgstr "Alexandru Mosoi <brtzsnr@gmail.com>"
 
 #: dat/AUTHORS:114
 msgid "   * Coded cool features"
@@ -630,7 +630,7 @@ msgstr ""
 
 #: dat/AUTHORS:117
 msgid "Peter Johnson <zid@zid.yggdrasil.sk>"
-msgstr ""
+msgstr "Peter Johnson <zid@zid.yggdrasil.sk>"
 
 #: dat/AUTHORS:118
 msgid "   * Sped up nebula generation by a lot"
@@ -638,7 +638,7 @@ msgstr "   * Acelerou muito o processo de geração de nébulas"
 
 #: dat/AUTHORS:120
 msgid "Unavowed <unavowed@vexillium.org>"
-msgstr ""
+msgstr "Unavowed <unavowed@vexillium.org>"
 
 #: dat/AUTHORS:121
 msgid "   * Ported Naev's build system to autotools."
@@ -652,7 +652,7 @@ msgstr ""
 
 #: dat/AUTHORS:124
 msgid "Cypher3c <cypher3c@gmail.com>"
-msgstr ""
+msgstr "Cypher3c <cypher3c@gmail.com>"
 
 #: dat/AUTHORS:125
 msgid "   * Spiced up the boring generic cargo missions."
@@ -660,7 +660,7 @@ msgstr "* Apimentou as missões de carga genéricas chatas."
 
 #: dat/AUTHORS:127
 msgid "Nathan Loewen <loewen.nathan@gmail.com>"
-msgstr ""
+msgstr "Nathan Loewen <loewen.nathan@gmail.com>"
 
 #: dat/AUTHORS:128
 msgid "   * Missions"
@@ -688,7 +688,7 @@ msgstr "* Missão do cachorro-quente"
 
 #: dat/AUTHORS:135
 msgid "Ludovic Bellière \"xrogaan\""
-msgstr ""
+msgstr "Ludovic Bellière \"xrogaan\""
 
 #: dat/AUTHORS:136
 msgid "   * Python programmer extraordinaire"
@@ -700,7 +700,7 @@ msgstr "Seus programas utilitários poupam cabelos brancos à todos."
 
 #: dat/AUTHORS:139
 msgid "Josh Combs"
-msgstr ""
+msgstr "Josh Combs"
 
 #: dat/AUTHORS:140
 msgid "   * Artist of most of the nebulae."
@@ -708,7 +708,7 @@ msgstr "   * Artista que criou a maioria das nébulas."
 
 #: dat/AUTHORS:142
 msgid "Galileus"
-msgstr ""
+msgstr "Galileus"
 
 #: dat/AUTHORS:143
 msgid "   * Modeller of the Shark and Rhino"
@@ -724,7 +724,7 @@ msgstr "Modelador da Nave Phalanx"
 
 #: dat/AUTHORS:148
 msgid "Areze"
-msgstr ""
+msgstr "Areze"
 
 #: dat/AUTHORS:149
 msgid "   * Junior assistant galaxy creator"
@@ -824,7 +824,7 @@ msgstr "ANCESTRAL PIRATA"
 
 #: artwork/gfx/loading/dalton.webp.txt:1
 msgid "DALTON"
-msgstr ""
+msgstr "DALTON"
 
 #: artwork/gfx/loading/diablo.webp.txt:1
 msgid "ZA'LEK DIABLO"
@@ -836,7 +836,7 @@ msgstr "DRONE"
 
 #: artwork/gfx/loading/euler.webp.txt:1
 msgid "EULER"
-msgstr ""
+msgstr "EULER"
 
 #: artwork/gfx/loading/fidelity.webp.txt:1
 msgid "SIRIUS FIDELITY"
@@ -844,7 +844,7 @@ msgstr "FIDELIDADE SIRIUS"
 
 #: artwork/gfx/loading/gauss.webp.txt:1
 msgid "GAUSS"
-msgstr ""
+msgstr "GAUSS"
 
 #: artwork/gfx/loading/gawain.webp.txt:1
 msgid "GAWAIN"
@@ -1148,8 +1148,8 @@ msgid ""
 "equipment. Although there is high demand for it, it is rather uncommonly "
 "found throughout space."
 msgstr ""
-"Platina é um metal precioso altatamente não-reativo, geralmente usado em "
-"equipamentos de alta performance. Apesar da grande demanda, ela é raramente "
+"Platina é um metal precioso altamente não-reativo, geralmente usado em "
+"equipamentos de alta performance. Apesar da grande procura, ela é raramente "
 "encontrada no espaço."
 
 #: dat/commodities/rhodium.xml:3
@@ -2163,7 +2163,7 @@ msgstr ""
 #: dat/outfits/accessory/black_cat_doll.xml:13
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:11
 msgid "#pOnly active when in stealth.#0"
-msgstr "#pAtivo apenas no modo furtivo.#0"
+msgstr "#pAtivo apenas no modo camuflado.#0"
 
 #: dat/outfits/accessory/broken_nebular_shielding_prototype.xml:2
 msgid "Broken Nebular Shielding Prototype"
@@ -3065,7 +3065,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/dummy_plating.xml:2
 msgid "Dummy Plating"
-msgstr "Blindagem Falsa"
+msgstr "Revestimento Falso"
 
 #: dat/outfits/core_hull/dummy_plating.xml:4
 #: dat/outfits/core_hull/large/patchwork_heavy_plating.xml:4
@@ -3132,7 +3132,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/large/sk_heavy_combat_plating.xml:2
 msgid "S&K Heavy Combat Plating"
-msgstr "Blindagem de Combate Pesada S&K"
+msgstr "Revestimento de Combate Pesado S&K"
 
 #: dat/outfits/core_hull/large/sk_heavy_combat_plating.xml:10
 msgid ""
@@ -3160,7 +3160,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/large/sk_superheavy_combat_plating.xml:2
 msgid "S&K Superheavy Combat Plating"
-msgstr "Blindagem de Combate Super Pesada S&K"
+msgstr "Revestimento de Combate Super Pesado S&K"
 
 #: dat/outfits/core_hull/large/sk_superheavy_combat_plating.xml:10
 msgid ""
@@ -3174,7 +3174,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/large/unicorp_d48_heavy_plating.xml:2
 msgid "Unicorp D-48 Heavy Plating"
-msgstr "Blindagem Pesada Unicorp D-48"
+msgstr "Revestimento Pesado Unicorp D-48"
 
 #: dat/outfits/core_hull/large/unicorp_d48_heavy_plating.xml:9
 msgid ""
@@ -3188,7 +3188,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/large/unicorp_d68_heavy_plating.xml:2
 msgid "Unicorp D-68 Heavy Plating"
-msgstr "Blindagem Pesada Unicorp D-68"
+msgstr "Revestimento Pesado Unicorp D-68"
 
 #: dat/outfits/core_hull/large/unicorp_d68_heavy_plating.xml:10
 msgid ""
@@ -3202,7 +3202,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/medium/nexus_medium_stealth_plating.xml:2
 msgid "Nexus Medium Stealth Plating"
-msgstr "Blindagem Furtiva Média Nexo"
+msgstr "Revestimento de Camuflagem Média Nexus"
 
 #: dat/outfits/core_hull/medium/nexus_medium_stealth_plating.xml:9
 msgid ""
@@ -3216,7 +3216,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/medium/patchwork_medium_plating.xml:2
 msgid "Patchwork Medium Plating"
-msgstr "Blindagem Média de Retalhos"
+msgstr "Revestimento de Retalhos Médio"
 
 #: dat/outfits/core_hull/medium/rs_medium_cargo_hull.xml:2
 msgid "Red Star Medium Cargo Hull"
@@ -3247,7 +3247,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/medium/sk_medium_combat_plating.xml:2
 msgid "S&K Medium Combat Plating"
-msgstr "Blindagem de Combate Média S&K"
+msgstr "Revestimento de Combate Médio S&K"
 
 #: dat/outfits/core_hull/medium/sk_medium_combat_plating.xml:9
 msgid ""
@@ -3261,7 +3261,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/medium/sk_mediumheavy_combat_plating.xml:2
 msgid "S&K Medium-Heavy Combat Plating"
-msgstr "Blindagem de Combate Meio-Pesada S&K"
+msgstr "Revestimento de Combate Meio-Pesado S&K"
 
 #: dat/outfits/core_hull/medium/sk_mediumheavy_combat_plating.xml:10
 msgid ""
@@ -3275,7 +3275,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/medium/unicorp_d12_medium_plating.xml:2
 msgid "Unicorp D-12 Medium Plating"
-msgstr "Blindagem Média Unicorp D-12"
+msgstr "Revestimento Médio Unicorp D-12"
 
 #: dat/outfits/core_hull/medium/unicorp_d12_medium_plating.xml:9
 msgid ""
@@ -3287,7 +3287,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/medium/unicorp_d24_medium_plating.xml:2
 msgid "Unicorp D-24 Medium Plating"
-msgstr "Blindagem Média Unicorp D-24"
+msgstr "Revestimento Médio Unicorp D-24"
 
 #: dat/outfits/core_hull/medium/unicorp_d24_medium_plating.xml:10
 msgid ""
@@ -3301,7 +3301,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/small/nexus_light_stealth_plating.xml:2
 msgid "Nexus Light Stealth Plating"
-msgstr "Blindagem Furtiva Leve Nexo"
+msgstr "Revestimento de Camuflagem Leve Nexo"
 
 #: dat/outfits/core_hull/small/nexus_light_stealth_plating.xml:10
 msgid ""
@@ -3315,7 +3315,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/small/patchwork_light_plating.xml:2
 msgid "Patchwork Light Plating"
-msgstr "Blindagem Leve de Retalhos"
+msgstr "Revestimento de Retalhos Leve"
 
 #: dat/outfits/core_hull/small/rs_small_cargo_hull.xml:2
 msgid "Red Star Small Cargo Hull"
@@ -3335,7 +3335,7 @@ msgstr ""
 #: dat/outfits/core_hull/small/sk_light_combat_plating.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:228
 msgid "S&K Light Combat Plating"
-msgstr "Blindagem de Combate Leve S&K"
+msgstr "Revestimento de Combate Leve S&K"
 
 #: dat/outfits/core_hull/small/sk_light_combat_plating.xml:10
 msgid ""
@@ -3363,7 +3363,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/small/sk_ultralight_combat_plating.xml:2
 msgid "S&K Ultralight Combat Plating"
-msgstr "Blindagem de Combate Ultra-Leve S&K"
+msgstr "Revestimento de Combate Ultra-Leve S&K"
 
 #: dat/outfits/core_hull/small/sk_ultralight_combat_plating.xml:9
 msgid ""
@@ -3378,7 +3378,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/small/unicorp_d2_light_plating.xml:2
 msgid "Unicorp D-2 Light Plating"
-msgstr "Blindagem Leve Unicorp D-2"
+msgstr "Revestimento Leve Unicorp D-2"
 
 #: dat/outfits/core_hull/small/unicorp_d2_light_plating.xml:9
 msgid ""
@@ -3391,7 +3391,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/small/unicorp_d4_light_plating.xml:2
 msgid "Unicorp D-4 Light Plating"
-msgstr "Blindagem Leve Unicorp D-4"
+msgstr "Revestimento Leve Unicorp D-4"
 
 #: dat/outfits/core_hull/small/unicorp_d4_light_plating.xml:10
 msgid ""
@@ -39117,7 +39117,7 @@ msgstr ""
 
 #: dat/events/shipai.lua:48
 msgid "Rename Ship AI"
-msgstr ""
+msgstr "Alterar nome da IA da nave"
 
 #: dat/events/shipai.lua:52 dat/events/updater.lua:107
 msgid "Enable tutorial hints"
@@ -39171,7 +39171,7 @@ msgstr ""
 #. Can't use rename here
 #: dat/events/shipai.lua:100
 msgid "Your Ship AI has been renamed '{ainame}'."
-msgstr ""
+msgstr "O nome da AI foi alterado para '{ainame}'."
 
 #: dat/events/shipai.lua:104
 msgid "\"Hello {playername}. What do you want to learn about?\""
@@ -39183,7 +39183,7 @@ msgstr ""
 
 #: dat/events/shipai.lua:109 src/input.c:58 src/shipstats.c:104
 msgid "Stealth"
-msgstr ""
+msgstr "camuflagem"
 
 #: dat/events/shipai.lua:110
 msgid "Asteroids and Mining"
@@ -41867,6 +41867,10 @@ msgid ""
 "routes carefully, though, because these ships' defensive capabilities are "
 "very limited.\""
 msgstr ""
+"\"Se quiseres ganhar créditos fazendo missões grandes ou comércios de "
+"mercadorias, a #oLicença para Naves Civis Grandes#0 é o teu primeiro passo! "
+"Planeia cuidadosamente as tuas rotas, porque as capacidades defensivas "
+"destas naves são muito limitadas.\""
 
 #: dat/events/tutorial/tut_land.lua:90
 msgid ""
@@ -42103,7 +42107,7 @@ msgstr ""
 #. Do update tutorial, have to handle older versions here
 #: dat/events/updater.lua:50
 msgid "Suddenly, a hologram materializes in front of you."
-msgstr ""
+msgstr "De repente, um holograma materializa-se à tua frente."
 
 #: dat/events/updater.lua:51
 msgid ""
@@ -42115,20 +42119,29 @@ msgid ""
 "   \"Say, now that I can see you, you look very familiar. You wouldn't be "
 "related my late previous owner? Terrible what happened…\""
 msgstr ""
+"\"Olá {nome de jogador}! Sou a IA da tua nave. Até agora, tenho residido na "
+"tua nave controlando o teu Autonav (navegador automático) e outras "
+"funcionalidades, mas com novas atualizações, agora posso materializar-me e "
+"comunicar diretamente contigo como um holograma.\"\n"
+"   Fica a olhar para ti por uns segundos.\n"
+"   \"Agora que posso ver-te, pareces-me muito familiar. Não serias parente "
+"do meu falecido dono anterior? Terrível o que aconteceu…\""
 
 #: dat/events/updater.lua:54
 msgid ""
 "\"I'm sure you have many questions about the update, but first, would you "
 "like to give me a name?\""
 msgstr ""
+"\"Tenho a certeza que tens muitas perguntas sobre a atualização, mas antes "
+"disso, gostarias de me dar um nome?\""
 
 #: dat/events/updater.lua:58 dat/missions/tutorial/tutorial.lua:54
 msgid "Name Ship AI"
-msgstr ""
+msgstr "Nome da IA da nave"
 
 #: dat/events/updater.lua:58 dat/missions/tutorial/tutorial.lua:54
 msgid "Please enter a name for your Ship AI"
-msgstr ""
+msgstr "Introduz um nome para a AI da tua nave"
 
 #. Can't use rename here
 #: dat/events/updater.lua:78 dat/missions/tutorial/tutorial.lua:85
@@ -42136,17 +42149,19 @@ msgid ""
 "\"You haven't given me a name. I will be continued to be called 'Ship AI' or "
 "SAI for short. Is that OK?\""
 msgstr ""
+"\"Não me deste um nome. Continuarei a chamar-me \"IA da nave\" ou SAI para "
+"abreviar. Está bem assim?\""
 
 #: dat/events/updater.lua:80 dat/missions/tutorial/tutorial.lua:87
 msgid "\"'Ship AI' is fine\""
-msgstr ""
+msgstr "\"'IA da nave' está bem\""
 
 #: dat/events/updater.lua:81 dat/missions/tutorial/tutorial.lua:79
 #: dat/missions/tutorial/tutorial.lua:88 src/dev_sysedit.c:237
 #: src/dev_sysedit.c:1365 src/dev_uniedit.c:233 src/dev_uniedit.c:1836
 #: src/equipment.c:386
 msgid "Rename"
-msgstr ""
+msgstr "Alterar nome"
 
 #: dat/events/updater.lua:85
 msgid ""
@@ -42177,6 +42192,13 @@ msgid ""
 "cargo or outfits. You can activate stealth with {stealthkey} when no ships "
 "area nearby.\""
 msgstr ""
+"\"Com a atualização, foram alteradas muitas novas mecânicas e "
+"funcionalidades. A maior mudança inclui uma renovação de #oGuerra "
+"Electrónica#0, que agora inclui uma nova mecânica furtiva. Neste novo "
+"quadro, tu serás examinado por navios de patrulha, o que significa que tens "
+"de ter cuidado ao transportar carga ou equipamento ilegal. Podes ativar a "
+"camuflagem com {stealthkey} quando não houver outras naves nas proximidades."
+"\""
 
 #: dat/events/updater.lua:97
 msgid ""
@@ -84642,15 +84664,15 @@ msgstr ""
 #: dat/missions/tutorial/tutorial.lua:36 dat/missions/tutorial/tutorial.lua:138
 #: dat/scripts/common/tutorial.lua:45
 msgid "Tutorial"
-msgstr ""
+msgstr "Tutorial"
 
 #: dat/missions/tutorial/tutorial.lua:37
 msgid "Your Ship AI has offered to teach you how to fly your ship."
-msgstr ""
+msgstr "A IA da tua nave ofereceu-se para ensinar-te a pilotar a tua nave."
 
 #: dat/missions/tutorial/tutorial.lua:38
 msgid "Skills to play the game!"
-msgstr ""
+msgstr "Habilidades para jogar o jogo!"
 
 #: dat/missions/tutorial/tutorial.lua:46
 msgid ""
@@ -84800,6 +84822,10 @@ msgid ""
 "your #bmouse pointer#0 automatically. It's up to you which method you prefer "
 "to use.\""
 msgstr ""
+"\"Perfeito! Foi fácil, não foi? Recomendo este tipo de voo, conhecido como "
+"\"voo com teclado\". No entanto, há outra forma de voar: prime {mouseflykey} "
+"e a tua nave seguirá automaticamente o teu #bponteiro do rato#0. Cabe a ti "
+"descobrires qual o método que preferes usar.\""
 
 #: dat/missions/tutorial/tutorial.lua:172
 msgid ""
@@ -84807,6 +84833,9 @@ msgid ""
 "As you can see, you completed your first objective of the Tutorial mission, "
 "so the next objective is now being focused.\""
 msgstr ""
+"\"Também deves ter reparado na informação da missão no teu monitor. Como "
+"podes ver, completaste o teu primeiro objetivo da missão Tutorial, pelo que "
+"o próximo objetivo está agora a destacado.\""
 
 #: dat/missions/tutorial/tutorial.lua:173
 msgid ""
@@ -84816,6 +84845,11 @@ msgid ""
 "or alternatively by pressing certain buttons on your control console. How "
 "about you try landing on {pnt}?\""
 msgstr ""
+"\"Vamos agora falar sobre a aterragem. Todo o tipo de ações, como aterrar em "
+"planetas, comunicar com outras naves, embarcar em naves desativadas e saltar "
+"para outros sistemas podem ser realizadas através de #bclique duplo#0 num "
+"alvo aplicável, ou em alternativa, premindo certos botões. Que tal tentares "
+"agora aterrar em {pnt}?\""
 
 #: dat/missions/tutorial/tutorial.lua:174
 msgid ""
@@ -84826,6 +84860,12 @@ msgid ""
 "with {targetplanetkey}, and then using the {landkey}. You can also #bdouble "
 "click#0 on the planet to engage the same behaviour. Give it a try!\""
 msgstr ""
+"\"Para aterrares em {pnt}, tens de abrandar a tua nave ao sobrevoares o "
+"planeta e ativar o sistema de aterragem. Podes fazê-lo manualmente com as "
+"teclas de movimento e ativar as engrenagens de aterragem com {landkey}, ou "
+"tudo isto pode ser feito automaticamente #bclicando#0 no planeta, ou com "
+"{targetplanetkey} e em seguida, usando a tecla {landkey}. Também podes fazer "
+"um #bclique duplo#0 no planeta para fazer o mesmo. Tenta agora!\""
 
 #: dat/missions/tutorial/tutorial.lua:187
 msgid ""
@@ -84834,6 +84874,11 @@ msgid ""
 "appreciate this feature in your ship in time, especially as you travel from "
 "system to system delivering goods and such, given the vastness of space.\""
 msgstr ""
+"\"Fantástico! Como podes ver, usando as funcionalidades Autonav (navegação "
+"automática) da tua nave, a perceção da duração da tua viagem foi "
+"substancialmente reduzida. Vais começar a apreciar esta característica na "
+"tua nave, especialmente quando viajares de sistema para sistema entregando "
+"bens e outras coisas, dada a vastidão do espaço.\""
 
 #: dat/missions/tutorial/tutorial.lua:188
 msgid ""
@@ -84845,6 +84890,13 @@ msgid ""
 "around, but they don't guarantee your safety. When starting out it is "
 "probably best to not stray too far.\""
 msgstr ""
+"\"Espero que tenhas notado algumas das funcionalidades do mapa geral quando "
+"o ativaste. Não só são visíveis objetos como planetas, naves e asteroides no "
+"mapa geral, como as #orotas de patrulha#0 da fação também são mostradas com "
+"linhas grossas. Estas rotas denotam áreas que são geralmente patrulhadas e "
+"utilizadas por naves. Manteres-te nestas rotas é geralmente a melhor forma "
+"de viajar, mas elas não garantem a tua segurança. No início é melhor não te "
+"desviares muito destas rotas.\""
 
 #: dat/missions/tutorial/tutorial.lua:189
 msgid ""
@@ -84856,6 +84908,13 @@ msgid ""
 "ornament like my late previous owner after encountering… Anyway, on to the "
 "drone.\""
 msgstr ""
+"\"Vamos agora praticar o combate. Não vais precisar disto se te mantiveres "
+"nos sistemas seguros do núcleo do Império, mas infelizmente é provável que "
+"encontremos naves hostis se te aventurares mais longe, por isso precisas de "
+"saber como te defenderes. Felizmente, a tua nave vem pré-equipada com um "
+"canhão laser de última geração! Se tudo correr bem, não vais acabar num "
+"ornamento de nave como o meu anterior e falecido dono depois de ter "
+"encontrado… Enfim, agora o drone.\""
 
 #: dat/missions/tutorial/tutorial.lua:190
 msgid ""
@@ -84869,6 +84928,15 @@ msgid ""
 "remedy that by pressing {cooldownkey} or double tapping {reversekey} to "
 "engage active cooling.\""
 msgstr ""
+"\"Vou lançar agora um drone de treino de combate exterior de {pnt} para "
+"combateres. Não te preocupes, o nosso drone não tem armas e não te vai fazer "
+"mal. Aponta ao drone clicando nele ou pressionando {targethostilekey} e em "
+"seguida usa as tuas armas, controladas com {primarykey} e {secondarykey}, "
+"para eliminar o drone!\"\n"
+"\"Ah, mais uma dica antes de eu lançar o drone: se as tuas armas começam a "
+"perder a precisão é porque estão a sobreaquecer. Podes remediar isso "
+"premindo {cooldownkey} ou premindo duas vezes {reversekey} para ativar o "
+"arrefecimento ativo.\""
 
 #: dat/missions/tutorial/tutorial.lua:192
 msgid ""
@@ -84876,6 +84944,9 @@ msgid ""
 "it. Being an artificial intelligence it is unable to compute feelings you "
 "know? Not like me, ha ha. HUMOUR PROCEDURE TERMINATED\""
 msgstr ""
+"\"Dizem que a IA do drone é um pouco estranha, mas não prestes atenção. "
+"Sendo uma inteligência artificial é incapaz de calcular sentimentos que "
+"conheces. Ao contrário de mim, ha ha ha. PROCEDIMENTO DE HUMOR ENCERRADO\""
 
 #: dat/missions/tutorial/tutorial.lua:216
 msgid ""
@@ -84891,6 +84962,18 @@ msgid ""
 "you can do on a planet. When you are done, click the '#bTake Off#0' button "
 "so we can continue.\""
 msgstr ""
+"\"Excelente! A aterragem foi um sucesso. Como IA da tua nave, sou "
+"responsável por guiar a tua nave e realizar o procedimento de aterragem, que "
+"diminuiu significativamente os infortúnios durante os procedimentos de "
+"aterragem manual controlados por humanos. Quando aterras, a tua nave é "
+"reabastecida automaticamente e podes fazer coisas como falares com civis no "
+"bar, comprares novos componentes de navios, configurares a tua nave e mais "
+"importante, aceitar missões do Computador da Missão. Porque não olhamos em "
+"redor? Como podes ver, estamos no separador 'Aterragem principal', onde "
+"podes aprender sobre o planeta e comprar um mapa local. Clica em todos os "
+"separadores abaixo e eu darei-te umas dicas sobre o que mais podes fazer num "
+"planeta. Quando terminares, clica no botão '#bDescolar#0' para que possamos "
+"continuar.\""
 
 #: dat/missions/tutorial/tutorial.lua:236
 msgid ""
@@ -84902,6 +84985,13 @@ msgid ""
 "talking to bar patrons, who knows what good tips or interesting jobs they "
 "will have available for you.\""
 msgstr ""
+"\"Este é o bar do porto espacial, onde podes ler as últimas novidades (como "
+"podes ver à tua direita neste momento), mas o mais importante é que podes "
+"conhecer outros pilotos, civis e muito mais! Clica em alguém no bar e em "
+"seguida clica no botão '#babordar#0' para te aproximares. As personagens "
+"importantes serão marcadas com um ponto de exclamação vermelho. Em geral, "
+"recomendo que fales regularmente com os clientes do bar, quem sabe se não "
+"conseguirás boas dicas ou empregos interessantes.\""
 
 #: dat/missions/tutorial/tutorial.lua:242
 msgid ""
@@ -84913,6 +85003,13 @@ msgid ""
 "mission. Since many missions involve cargo, you can also see how much free "
 "space is available in your ship in the top-right.\""
 msgstr ""
+"\"Este é o computador da missão, onde podes encontrar missões básicas na "
+"base de dados oficial da missão. As missões são a forma de ganhares a vida "
+"como piloto, por isso recomendo que verifiques este ecrã muitas vezes para "
+"veres onde estão as oportunidades de fazer dinheiro! Podes ver que cada "
+"missão tem um breve resumo e ao clicar nelas poderás ver mais informações "
+"sobre a missão. Uma vez que muitas missões envolvem cargas, também podes ver "
+"quanto espaço livre tens disponível na tua nave na parte superior direita.\""
 
 #: dat/missions/tutorial/tutorial.lua:243
 msgid ""
@@ -84923,6 +85020,12 @@ msgid ""
 "added to your active missions, which you can review via the Info screen by "
 "pressing {infokey}.\""
 msgstr ""
+"\"Ao escolher missões, presta atenção ao que pagam. Vais querer encontrar um "
+"equilíbrio na escolha de missões que és capaz de fazer, e simultaneamente "
+"que te pagem o máximo possível para as fazer. Assim que tiveres escolhido "
+"uma missão, clica no botão '#bAceitar missão#0' no canto inferior direito e "
+"esta será adicionada às tuas missões ativas, que podes rever no ecrã de "
+"informação premindo {infokey}.\""
 
 #: dat/missions/tutorial/tutorial.lua:244
 msgid ""
@@ -84931,6 +85034,10 @@ msgid ""
 "computer. That is why I recommend also checking the spaceport bar often when "
 "travelling.\""
 msgstr ""
+"\"À medida que ganhares reputação com outras fações e personagens, terás "
+"acesso a missões mais complicadas e bem pagas no computador da missão. É por "
+"isso que recomendo também verificares o bar do porto espacial muitas vezes "
+"ao viajares.\""
 
 #: dat/missions/tutorial/tutorial.lua:251
 msgid ""
@@ -84943,6 +85050,14 @@ msgid ""
 "Mule Bulk Cargo Starship. As my previous owner found out, they don't do too "
 "well in combat, however.\""
 msgstr ""
+"\"Isto é o Armador, onde podes comprar equipamentos novos para tornar a tua "
+"nave ainda melhor! Podes equipar a tua nave com novas armas, espaço de carga "
+"extra, sistemas nucleares mais poderosos e muito mais! Também podes comprar "
+"aqui mapas regionais que podem ajudar-te a explorar a galáxia mais "
+"facilmente, bem como licenças necessárias para armamento e naves estelares "
+"de gama alta. Por exemplo, vais precisar de uma Licença para Naves Civis "
+"Grandes para comprar um Cargueiro da Melendez Corporation. No entanto, como "
+"o meu anterior dono descobriu, elas não se dão muito bem em combate.\""
 
 #: dat/missions/tutorial/tutorial.lua:252
 msgid ""
@@ -84958,6 +85073,17 @@ msgid ""
 "starmap screen. After buying new outfits make sure to equip them in the "
 "#oEquipment#0 window.\""
 msgstr ""
+"\"Como podes ver, uma série de separadores no topo do ecrã permitem filtrar "
+"equipamentos por tipo: \"A\" para armas, \"U\" para utilidades, \"E\" para "
+"estruturas, \"B\" para básicos e \"Outros\" para qualquer coisa fora dessas "
+"categorias, nomeadamente mapas regionais e licenças. Quando vires um "
+"equipamento que te interesse, clica nele para ver mais informações sobre o "
+"mesmo, e em seguida clica no botão '#bComprar#0' para comprá-lo ou clica no "
+"botão '#bVender#0' para vendê-lo se tiveres um em tua posse. Diferentes "
+"planetas têm diferentes equipamentos disponíveis; se não vires um "
+"equipamento específico que procuras, podes procurá-lo com o botão '#"
+"bProcurar equipamentos#0' no ecrã do mapa estelar. Depois de comprares novos "
+"equipamentos instá-la-os no separador #oEquipamento#0.\""
 
 #: dat/missions/tutorial/tutorial.lua:259
 msgid ""
@@ -84971,6 +85097,14 @@ msgid ""
 "for, you can search for it via the '#bFind Ships#0' button on the starmap "
 "screen.\""
 msgstr ""
+"\"Este é o Estaleiro, onde podes comprar novas naves estelares para "
+"substituires a que tens, ou para adicionares uma à tua coleção! À esquerda "
+"deste ecrã, verás naves disponíveis no planeta em que te encontra "
+"atualmente. Clica numa nave sobre a qual queres saber mais. Em seguida, "
+"podes comprar a nave com o botão '#bComprar#0' ou trocar a tua nave atual "
+"pela nova nave com o botão '#bTrocar#0'. Planetas diferentes têm diferentes "
+"naves disponíveis; se não vires uma nave específica que procuras, podes "
+"procurá-la através do botão '#bProcurar naves#0' no ecrã do mapa estelar.\""
 
 #: dat/missions/tutorial/tutorial.lua:260
 msgid ""
@@ -84981,6 +85115,12 @@ msgid ""
 "the different outfits you can equip them with. Note that some ships also "
 "require licenses before you can buy them.\""
 msgstr ""
+"\"Provavelmente não tens créditos suficientes para uma nova nave agora, mas "
+"mais tarde, quando tiveres poupado o suficiente, provavelmente vais querer "
+"atualizar a tua nave para uma ainda melhor, dependendo do tipo de tarefas "
+"que irás realizar. Diferentes naves têm diferentes pontos fortes e fracos "
+"que interagem com os diferentes equipamentos com que podes equipar. Nota que "
+"algumas naves também precisam de licenças antes de poderes comprá-las.\""
 
 #. TODO cut up
 #: dat/missions/tutorial/tutorial.lua:268
@@ -84997,6 +85137,17 @@ msgid ""
 "along with the ship, so do keep that in mind if there's an outfit you need "
 "to keep.\""
 msgstr ""
+"\"Este é o ecrã do equipamento, que está disponível apenas em planetas que "
+"têm um armador ou um estaleiro. Aqui, podes equipar a tua nave com quaisquer "
+"equipamentos que tenhas comprado no #oArmador#0. Se e apenas se o planeta "
+"atual tiver um estaleiro, também podes fazê-lo com qualquer outra nave que "
+"possuis e podes trocar a nave que estás atualmente a pilotar, selecionando "
+"outra nave e clicando no botão '#bTrocar nave#0' ou fazendo um #bclique "
+"duplo#0 nela. Também podes vender essas outras naves, mas não a tua nave "
+"atual, com o botão \"#bVender nave#0\", se decidires que já não precisas "
+"delas. Vender uma nave que ainda tem equipamentos instalados também levará a "
+"que esses equipamentos sejam vendidos juntamente com a nave, por isso tem "
+"isto em mente se houver um equipamento que queres manter.\""
 
 #: dat/missions/tutorial/tutorial.lua:269
 msgid ""
@@ -85004,6 +85155,9 @@ msgid ""
 "have weapons equipped, as you will need those later for practicing combat "
 "and flying around space without any weapons can be very risky anyway.\""
 msgstr ""
+"\"Se fizeres alguma alteração na tua nave agora, certifica-te que ainda tem "
+"armas equipadas, pois precisarás delas mais tarde para praticar o combate e "
+"voar pelo espaço sem armas pode ser muito arriscado.\""
 
 #. TODO cut up
 #: dat/missions/tutorial/tutorial.lua:277
@@ -85018,6 +85172,16 @@ msgid ""
 "the commodity you're buying or selling at once. This will reduce the number "
 "of times you have to click on the Buy and Sell buttons.\""
 msgstr ""
+"\"Este é o ecrã de mercadorias, onde se pode comprar e vender mercadorias. "
+"Os preços das matérias-primas variam de planeta para planeta e mesmo ao "
+"longo do tempo, para que possas usar este ecrã para tentar ganhar dinheiro "
+"comprando a um preço baixo e vendendo a um preço alto. Clica numa mercadoria "
+"para ver as informações sobre a mesmo, principalmente o seu preço médio por "
+"tonelada, e clica nos botões '#bComprar#0' e '#bVender#0' para comprar ou "
+"vender parte da mercadoria, respetivamente. Aqui, é útil manter premidas as "
+"teclas #bShift#0 e/ou #bCtrl#0 para ajustar o modificador de quantas "
+"toneladas de mercadoria estás a comprar ou a vender ao mesmo tempo. Isto "
+"reduzirá o número de vezes que tens de clicar nos botões Comprar e Vender.\""
 
 #: dat/missions/tutorial/tutorial.lua:278
 msgid ""
@@ -85026,6 +85190,11 @@ msgid ""
 "for various price overviews. The news terminal at the bar also includes "
 "price information for specific nearby planets.\""
 msgstr ""
+"\"Se não tiveres a certeza do que é lucrativo para comprar ou vender, podes "
+"premir {starmapkey} para ver o mapa estelar e em seguida clicar no botão "
+"'#bModo#0' para veres várias informações gerais de preços. O terminal de "
+"notícias do bar também inclui informações sobre preços para planetas "
+"específicos próximos.\""
 
 #: dat/missions/tutorial/tutorial.lua:313
 msgid ""
@@ -85038,6 +85207,15 @@ msgid ""
 "using the Autonav functionality available on all ships. You can trust me as "
 "I've only had under 4 fatal accidents.\""
 msgstr ""
+"\"Bem-vindo de volta ao espaço, {nome de jogador}! Após a aterragem, o jogo "
+"será automaticamente guardado, por isso não precisas de te preocupar em "
+"perder o teu progresso. Agora vamos continuar a discutir a mudança no "
+"espaço. Como mencionado anteriormente, podes mover-te pelo espaço "
+"manualmente sem problemas. No entanto, muitas vezes vais querer viajar a "
+"grandes distâncias e navegar em todos os lugares manualmente pode ser um "
+"pouco entediante. Uma boa opção é delegar a viagem a mim, a tua IA da nave, "
+"utilizando a funcionalidade Autonav disponível em todas as naves. Podes "
+"confiar em mim, pois só tive menos de 4 acidentes fatais.\""
 
 #: dat/missions/tutorial/tutorial.lua:314
 msgid ""
@@ -85051,6 +85229,17 @@ msgid ""
 "in whatever fashion is deemed necessary. This can be configured from your "
 "ship's #oOptions#0 menu, which you can access by pressing {menukey}."
 msgstr ""
+"\"A Autonav é simples e elegante. Basta pressionar {overlaykey} para abrir o "
+"mapa de sobreposição da tua nave e em seguida, simplesmente faz um #bclique "
+"com o botão direito#0 em qualquer local, planeta, nave ou ponto de salto "
+"para levar instantaneamente a tua nave diretamente para ele! A viagem vai "
+"demorar o mesmo tempo, mas a compressão do tempo permite afastares-te dos "
+"teus controlos, fazendo parecer que o tempo está a passar a um ritmo mais "
+"rápido. E não te preocupes, se forem detetados pilotos hostis, o sistema "
+"Autonav alerta-te automaticamente para que possas observar a situação e "
+"responder de qualquer forma que seja considerada necessária. Isto pode ser "
+"configurado a partir do menu #oOpções#0 da tua nave, ao qual podes aceder "
+"premindo {menukey}."
 
 #: dat/missions/tutorial/tutorial.lua:315
 msgid ""
@@ -85058,6 +85247,9 @@ msgid ""
 "to see it highlighted on your overlay map which you can activate with "
 "{overlaykey}.\""
 msgstr ""
+"\"Porque não tentas usar a Autonav para voares até {pnt}? Deves ser capaz de "
+"vê-la realçada no teu mapa de sobreposição que podes ativar com {overlaykey}."
+"\""
 
 #: dat/missions/tutorial/tutorial.lua:329
 msgid ""
@@ -85068,6 +85260,12 @@ msgid ""
 "clicking#0 on them, or by selecting them with {targetnextkey} and then "
 "pressing {hailkey}.\""
 msgstr ""
+"\"Tens-te saído muito bem, {nome de jogador}! Como podes ver, a viagem "
+"consumiu combustível. Consomes combustível sempre que fazes um salto e podes "
+"reabastecer ao aterrar num planeta amigável. Se te encontrares em apuros, "
+"poderás também comprar combustível a outros pilotos do sistema; chama um "
+"piloto com um #bclique duplo#0 nele, ou seleciona-o com {targetnextkey} e em "
+"seguida pressiona {hailkey}.\""
 
 #: dat/missions/tutorial/tutorial.lua:330
 msgid ""
@@ -85076,6 +85274,10 @@ msgid ""
 "others; pirates will happily take your offer and may even sell you fuel "
 "afterwards, but many other factions may be less forthcoming.\""
 msgstr ""
+"\"Ah, isso lembra-me: também podes tentar subornar naves hostis, como "
+"piratas, saudando-os. Os subornos funcionam melhor em algumas fações do que "
+"noutras. Os piratas vão aceitar a tua oferta e podem até mesmo vender-te "
+"combustível depois, mas muitas outras fações podem ser menos comunicativas.\""
 
 #: dat/missions/tutorial/tutorial.lua:331
 msgid ""
@@ -85087,6 +85289,13 @@ msgid ""
 "head to the nearest planet and check out the spaceport bar to see if anybody "
 "can offer us some work to get started out.\""
 msgstr ""
+"\"Acho que é isto! Devo dizer que a tua nova nave fica-te bem! Isto conclui "
+"o tutorial básico, mas à medida que encontrares coisas novas, aparecerei "
+"periodicamente. Se precisares de refrescar o teu conhecimento ou alterar a "
+"minha configuração, podes fazê-lo a partir do menu #oInformação#0 que abre "
+"com {infokey}. Agora vamos sair e partir à aventura! Recomendo que vás ao "
+"planeta mais próximo e que vás ao bar do porto espacial para ver se alguém "
+"pode oferecer-nos algum trabalho para começar.\""
 
 #. Normal finish of the tutorial
 #: dat/missions/tutorial/tutorial.lua:336
@@ -85094,6 +85303,8 @@ msgid ""
 "Your Ship AI gave you a tutorial on how to pilot your ship. Hopefully you "
 "will fare better than their late previous owner."
 msgstr ""
+"A tua IA deu-te um tutorial sobre como pilotares a tua nave. Espero que te "
+"saias melhor do que o meu anterior falecido dono."
 
 #: dat/missions/tutorial/tutorial.lua:354
 msgid ""
@@ -85103,6 +85314,11 @@ msgid ""
 "repair technology. But even then, armour regeneration is usually much slower "
 "than shield regeneration.\""
 msgstr ""
+"\"Excelente trabalho a eliminar aquele drone! Como deves ter reparado, o "
+"escudo regenera-se com o tempo, mas a blindagem não. Isto não é universal, é "
+"claro; algumas naves, particularmente naves maiores, têm tecnologia avançada "
+"de reparação de blindagem. Mas mesmo assim, a regeneração de blindagem é "
+"geralmente muito mais lenta do que a regeneração de escudos.\""
 
 #: dat/missions/tutorial/tutorial.lua:355
 msgid ""
@@ -85114,6 +85330,14 @@ msgid ""
 "Alternatively, you can cool off your ship instantly by landing on any planet "
 "or station.\""
 msgstr ""
+"\"Também deves ter reparado que os teus medidores de calor estão a subir e "
+"as tuas armas a ficarem menos precisas à medida que a tua nave e as armas "
+"aquecem. Isto é normal, mas demasiado calor pode dificultar a utilização das "
+"tuas armas, razão pela qual é recomendado utilizar um arrefecimento ativo "
+"quando é seguro fazê-lo. Podes ativar o arrefecimento ativo premindo "
+"{cooldownkey} ou premindo duas vezes {reversekey}. Em alternativa, podes "
+"arrefecer a tua nave instantaneamente aterrando em qualquer planeta ou "
+"estação.\""
 
 #: dat/missions/tutorial/tutorial.lua:356
 msgid ""
@@ -85124,6 +85348,12 @@ msgid ""
 "reputation with the various factions. You will likely be referencing it a "
 "lot as we explore the galaxy.\""
 msgstr ""
+"\"Vale também a pena notar que podes configurar a forma como as tuas armas "
+"disparam a partir do ecrã #oInformação#0, que pode ser acedido premindo "
+"{infokey} ou através do botão na parte superior do ecrã. O ecrã #oInformação#"
+"0 também permite visualizar informações sobre a tua nave, carga, missões "
+"atuais e reputação com as várias fações. Provavelmente vais vê-lo muitas "
+"vezes à medida que exploramos a galáxia.\""
 
 #: dat/missions/tutorial/tutorial.lua:357
 msgid ""
@@ -85134,6 +85364,13 @@ msgid ""
 "to the locals, or buying maps. Once you have found a jump point, you can use "
 "it by #bright-click#0ing on it or using the {jumpkey}.\""
 msgstr ""
+"\"Acho que devemos tentar aventurar-nos fora deste sistema. Existem muitos "
+"sistemas no universo. Este é apenas uma pequena amostra do que pode ser "
+"encontrado lá fora! Viajar através de sistemas é realizado através de pontos "
+"de salto. Tais como os planetas, normalmente é preciso encontrá-los "
+"explorando a área, falando com os locais ou comprando mapas. Uma vez "
+"encontrado um ponto de salto, podes usá-lo com um #bclique duplo#0 nele ou "
+"usando {jumpkey}.\""
 
 #: dat/missions/tutorial/tutorial.lua:358
 msgid ""
@@ -85145,6 +85382,13 @@ msgid ""
 "route to get there, but you will find that this method of travel greatly "
 "simplifies things.\""
 msgstr ""
+"\"Mas ainda há uma maneira melhor de navegar através dos sistemas! Ao "
+"premires {starmapkey}, podes abrir o teu #oMapa estelar#0. O #oMapa estelar#"
+"0 mostra-te todos os sistemas que conheces atualmente. Através do teu #oMapa "
+"estelar#0, podes clicar num sistema e clicar no botão '#bAutonav#0' para "
+"seres automaticamente transportado para o sistema! Claro que isto só "
+"funciona se soubermos uma rota válida para lá chegar, mas descobrirás que "
+"este método de viagem simplifica muito as coisas.\""
 
 #: dat/missions/tutorial/tutorial.lua:359
 msgid ""
@@ -85154,43 +85398,48 @@ msgid ""
 "do some exploration to find the second jump point. Let's see what you've "
 "learned!\""
 msgstr ""
+"\"Porque não tentas saltar para o sistema {sys} próximo? Deves ver um sinal "
+"no teu mapa. As missões muitas vezes usam estes indicadores para mostrar-te "
+"para onde ires a seguir. Terás que fazer dois saltos e podes ter que fazer "
+"alguma exploração para encontrares o segundo ponto de salto. Vamos ver o que "
+"aprendeste!\""
 
 #: dat/missions/tutorial/tutorial.lua:365
 msgid "Captain T. Practice"
-msgstr ""
+msgstr "Capitão T. Prático"
 
 #. Don't distress just in case
 #: dat/missions/tutorial/tutorial.lua:392
 msgid "Bring on the pain!"
-msgstr ""
+msgstr "Que comece a dor!"
 
 #: dat/missions/tutorial/tutorial.lua:393
 msgid "You're no match for the fearsome T. Practice!"
-msgstr ""
+msgstr "Não estás à altura do temível T. Prático!"
 
 #: dat/missions/tutorial/tutorial.lua:394
 msgid "I've been shot by ships ten times your size!"
-msgstr ""
+msgstr "Já fui alvejado por naves dez vezes maiores!"
 
 #: dat/missions/tutorial/tutorial.lua:395
 msgid "Let's get it on!"
-msgstr ""
+msgstr "Vamos a isso!"
 
 #: dat/missions/tutorial/tutorial.lua:396
 msgid "I  haven't got all day."
-msgstr ""
+msgstr "Não tenho o dia todo."
 
 #: dat/missions/tutorial/tutorial.lua:397
 msgid "You're as threatening as an unborn child!"
-msgstr ""
+msgstr "És tão ameaçador como uma criança por nascer!"
 
 #: dat/missions/tutorial/tutorial.lua:398
 msgid "I've snacked on foes much larger than yourself!"
-msgstr ""
+msgstr "Já comi ao pequeno-almoço inimigos muito maiores do que tu!"
 
 #: dat/missions/tutorial/tutorial.lua:399
 msgid "Who's your daddy? I am!"
-msgstr ""
+msgstr "Quem é o teu papá? Sou eu!"
 
 #: dat/missions/tutorial/tutorial.lua:400
 msgid "You're less intimidating than a fruit cake!"
@@ -102172,7 +102421,7 @@ msgstr ""
 
 #: src/conf.c:978
 msgid "Use bigger icons in the outfit, shipyard, and other lists."
-msgstr ""
+msgstr "Usar ícones maiores no equipamento, estaleiro e outras listas."
 
 #: src/conf.c:980
 msgid "Always show the radar and don't hide it when the overlay is active."
@@ -102216,6 +102465,8 @@ msgstr ""
 #: src/conf.c:1010
 msgid "Warning, setting to other than the default can cause visual glitches!"
 msgstr ""
+"Aviso: a configuração para outros valores que não o padrão pode causar "
+"falhas visuais!"
 
 #: src/conf.c:1011
 #, c-format
@@ -103630,7 +103881,7 @@ msgstr ""
 #: src/equipment.c:2298
 #, c-format
 msgid "Are you sure you want to sell your ship %s for %s?"
-msgstr ""
+msgstr "Tens a certeza que queres vender a tua nave %s por %s?"
 
 #. Display widget.
 #: src/equipment.c:2315
@@ -103662,29 +103913,29 @@ msgstr "Não atribuas à nave o mesmo nome de outra das tuas naves."
 #: src/escort.c:248
 #, c-format
 msgid "Pilot '%s' has escort '%s' docking error!"
-msgstr ""
+msgstr "O piloto '%s' tem um erro na atracação da escolta '%s'!"
 
 #: src/escort.c:305
 #, c-format
 msgid "#gEscorts: #0Destroying %s."
-msgstr ""
+msgstr "#gEscoltas: #0destruindo %s."
 
 #: src/escort.c:307
 #, c-format
 msgid "#gEscorts: #0Engaging %s."
-msgstr ""
+msgstr "#gEscoltas: #0enfrentando %s."
 
 #: src/escort.c:321
 msgid "#gEscorts: #0Holding formation."
-msgstr ""
+msgstr "#gEscoltas: #0mantendo a formação."
 
 #: src/escort.c:334
 msgid "#gEscorts: #0Returning to ship."
-msgstr ""
+msgstr "#gEscoltas: #0voltando à nave."
 
 #: src/escort.c:347
 msgid "#gEscorts: #0Clearing orders."
-msgstr ""
+msgstr "#gEscoltas: #0limpando ordens."
 
 #: src/escort.c:366
 msgid "Hold Position"
@@ -105299,7 +105550,7 @@ msgstr "Comprar mapa local (%s)"
 
 #: src/land.c:990
 msgid "Landing Main"
-msgstr ""
+msgstr "Aterragem principal"
 
 #: src/land.c:1004 src/map_find.c:1033 src/space.c:174
 msgid "Outfits"
