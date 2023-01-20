@@ -233,3 +233,21 @@ const char* num2strU( double n, int decimals )
    num2str( num2strU_buf, n, decimals );
    return num2strU_buf;
 }
+
+/**
+ * @brief Prints to stderr with line numbers.
+ *
+ *    @param str String to print.
+ */
+void print_with_line_numbers( const char *str )
+{
+   int counter = 0;
+   logprintf( stderr, 0, "%03d: ", ++counter );
+   for (int i=0; str[i] != '\0'; i++) {
+      if (str[i]=='\n')
+         logprintf( stderr, 0, "\n%03d: ", ++counter );
+      else //if (str[i]!='\n')
+         logprintf( stderr, 0, "%c", str[i] );
+   }
+   logprintf( stderr, 0, "\n" );
+}

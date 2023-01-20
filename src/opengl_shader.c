@@ -19,7 +19,6 @@
 /*
  * Prototypes.
  */
-static void print_with_line_numbers( const char *str );
 static char* gl_shader_preprocess( size_t *size, const char *fbuf, size_t fbufsize, const char *prepend, const char *filename );
 static char* gl_shader_loadfile( const char *filename, size_t *size, const char *prepend );
 static GLuint gl_shader_compile( GLuint type, const char *buf,
@@ -142,18 +141,6 @@ static char* gl_shader_preprocess( size_t *size, const char *fbuf, size_t fbufsi
 
    *size = bufsize;
    return buf;
-}
-
-static void print_with_line_numbers( const char *str )
-{
-   int counter = 0;
-   for (int i=0; str[i] != '\0'; i++) {
-      if ((i==0) || (str[i]=='\n'))
-         logprintf( stderr, 0, "\n%03d: ", ++counter );
-      if (str[i]!='\n')
-         logprintf( stderr, 0, "%c", str[i] );
-   }
-   logprintf( stderr, 0, "\n" );
 }
 
 /**

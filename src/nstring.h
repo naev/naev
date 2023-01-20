@@ -38,3 +38,5 @@ int strsort_reverse( const void *p1, const void *p2 );
 #define NUM2STRLEN   16
 int num2str( char dest[NUM2STRLEN], double n, int decimals );
 const char* num2strU( double n, int decimals );
+
+void print_with_line_numbers( const char *str );
