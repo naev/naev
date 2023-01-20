@@ -5,6 +5,12 @@
  <chance>20</chance>
  <location>Bar</location>
  <cond>
+   -- Required to bribe Maanen's Moon
+   if faction.get("Empire"):playerStanding() &lt; 0 then
+      return false
+   end
+
+   -- Should start at a normal planet
    local t = spob.cur():tags
    if t.refugee or t.station then
       return false
@@ -17,7 +23,7 @@
          dist = math.min( dist, v:system():jumpDist() )
       end
    end
-   return dist < 6
+   return dist &lt; 6
  </cond>
  <notes>
   <tier>1</tier>
@@ -143,7 +149,7 @@ function land ()
       vn.run()
 
       misn.osdCreate(_(title), {
-         fmt.f(_([[Search for the family at {pnt} ({sys} system)]]),
+         fmt.f(_([[Search for the family at {pnt} ({sys} system, bribe if necessary)]]),
             {pnt=last_spob, sys=last_sys}),
          fmt.f(_([[Return to {pnt} ({sys} system)]]),
             {pnt=mem.return_spob, sys=mem.return_sys}),
@@ -155,7 +161,7 @@ function land ()
       vn.clear()
       vn.scene()
 
-      vn.na(fmt.f(_([[You manage to land on {spb}]]),
+      vn.na(fmt.f(_([[You manage to land on {spb}.]]),
          {spb=spb}))
 
       mg.vn()
