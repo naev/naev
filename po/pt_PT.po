@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-01-10 23:55+0900\n"
 "PO-Revision-Date: 2023-01-21 00:27+0000\n"
-"Last-Translator: SC <lalocas@protonmail.com>\n"
+"Last-Translator: Festerdam <festerdam@posteo.net>\n"
 "Language-Team: Portuguese (Portugal) <https://hosted.weblate.org/projects/"
 "naev/naev/pt_PT/>\n"
 "Language: pt_PT\n"
@@ -625,8 +625,8 @@ msgid ""
 "   First non-bobbens coder to make serious commits! Like the reason the maps "
 "are all over or the faction in the maps."
 msgstr ""
-"   Primeiro programador não bobbens a fazer commits sérios! Como a razão "
-"pela qual os mapas estão em tudo quanto é lugar ou a facção nos mapas."
+"   O primeiro programador, sem ser o bobbens, a fazer commits sérios! Como a "
+"razão de todos os mapas estarem ???? ou a fação nos mapas."
 
 #: dat/AUTHORS:117
 msgid "Peter Johnson <zid@zid.yggdrasil.sk>"
@@ -704,7 +704,7 @@ msgstr "Josh Combs"
 
 #: dat/AUTHORS:140
 msgid "   * Artist of most of the nebulae."
-msgstr "   * Artista que criou a maioria das nébulas."
+msgstr "   * Artista da maioria das nébulas."
 
 #: dat/AUTHORS:142
 msgid "Galileus"
@@ -776,7 +776,7 @@ msgstr "   * Diário de bordo do navio"
 
 #: dat/AUTHORS:167
 msgid "   * Solar system information screen"
-msgstr "Tela de informação do sistema solar"
+msgstr "   * Ecrã de informação do sistema planetário"
 
 #: dat/AUTHORS:169
 msgid "Music by Matthew Pablo"
