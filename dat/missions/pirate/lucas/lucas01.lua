@@ -11,15 +11,15 @@
    end
 
    -- Should start at a normal planet
-   local t = spob.cur():tags
+   local t = spob.cur():tags()
    if t.refugee or t.station then
       return false
    end
 
    -- Distance to closest refugee planet
    local dist = math.huge
-   for k,v in ipairs(spob.getAll())
-      if v:tags().refugee
+   for k,v in ipairs(spob.getAll()) do
+      if v:tags().refugee then
          dist = math.min( dist, v:system():jumpDist() )
       end
    end
