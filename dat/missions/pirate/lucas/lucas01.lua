@@ -16,14 +16,16 @@
       return false
    end
 
-   -- Distance to closest refugee planet
+   -- Within 6 jumps of a refugee spob
    local dist = math.huge
    for k,v in ipairs(spob.getAll()) do
       if v:tags().refugee then
-         dist = math.min( dist, v:system():jumpDist() )
+         if v:system():jumpDist() &lt; 6 then
+            return true
+         end
       end
    end
-   return dist &lt; 6
+   return false
  </cond>
  <notes>
   <tier>1</tier>
