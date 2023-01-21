@@ -20,11 +20,20 @@
    <refuel/>
    <bar/>
    <missions/>
+   <commodity/>
+   <outfits/>
   </services>
   <commodities/>
   <description>Gordon's Exchange is one of the few stations owned and operated by traders. It is here that most of the deals are made and ore shipped. It is a bustling, modern facility, and there are always things for weary traveller to do.</description>
   <bar>The bar has some classy music playing in the background over the chatter of businessmen going about their jobs. The sounds of a modern economy.</bar>
  </general>
+ <tech>
+  <item>Engines Cargo</item>
+  <item>Hulls Cargo</item>
+  <item>Laser 1</item>
+  <item>Kinetic 1</item>
+  <item>Star Maps</item>
+ </tech>
  <tags>
   <tag>trade</tag>
   <tag>station</tag>
