@@ -36,4 +36,7 @@
    <pos x="4000.000000" y="6000.000000"/>
   </asteroid>
  </asteroids>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

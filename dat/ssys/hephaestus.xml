@@ -25,4 +25,7 @@
    <pos x="-2000.000000" y="-2000.000000"/>
   </asteroid>
  </asteroids>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

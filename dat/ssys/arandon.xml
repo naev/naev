@@ -38,4 +38,7 @@
    <maxspeed>40.000000</maxspeed>
   </asteroid>
  </asteroids>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>
