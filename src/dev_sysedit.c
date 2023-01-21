@@ -2458,6 +2458,9 @@ static void sysedit_btnNewTag( unsigned int wid, const char *unused )
       s->tags = array_create( char* );
    array_push_back( &s->tags, tag ); /* gets freed later */
 
+   /* Also add to list of all tags. */
+   array_push_back( &sysedit_tagslist, strdup(tag) );
+
    /* Regenerate the list. */
    sysedit_genTagsList( wid );
 }
