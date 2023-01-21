@@ -4,14 +4,14 @@ local vni = require "vnimage"
 local tut = require "common.tutorial"
 local poi = require "common.poi"
 
-local reward = outfit.get("Veil of Penelope")
+local misnvar = "proteron_agent"
 
 return function ( mem )
    -- Must be locked
    if not mem.locked then return end
 
    -- Already done
-   if player.numOutfit( reward ) > 0 then
+   if var.peek( misnvar ) then
       return
    end
 
@@ -85,13 +85,16 @@ return function ( mem )
          sai(_([["I see. Maybe you should continue exploring the ship. There might be something of use that the ship scanner has not been able to pick up."]]))
          vn.disappear( sai, tut.shipai.transition )
 
-         vn.na(fmt.f(_([[Following {shipai}'s advice, you continue to explore the ship and eventually reach the systems room. You notice there seems to be a device interfering with the radiation emitted. You can't tell who made it, but it seems that it was likely the main reason that the derelict was so hard to find. You manage to dislodge it to take it back to your ship for further analysis.]]),{shipai=tut.ainame()}))
+         local reward = poi.data_str(1)
+         vn.na(fmt.f(_([[Following {shipai}'s advice, you continue to explore the ship and eventually reach the systems room. Going over the systems, it seems like you can recover a {reward}, which you promptly do so.]]),
+            {shipai=tut.ainame(), reward=reward}))
 
          vn.na(fmt.reward(reward))
 
          vn.func( function ()
-            player.outfitAdd( reward )
-            poi.log(fmt.f(_([[You found a derelict ship in the {sys} system with corrupted information about an agent. You also were able to find a strange device called {reward} from the ship.]]),
+            var.push( misnvar, true )
+            poi.data_give(1)
+            poi.log(fmt.f(_([[You found a derelict ship in the {sys} system with corrupted information about an agent. You also were able to recover {reward} from the ship.]]),
                {sys=mem.sys, reward=reward}))
          end )
       end,
