@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-01-10 23:55+0900\n"
-"PO-Revision-Date: 2023-01-21 23:27+0000\n"
+"PO-Revision-Date: 2023-01-22 09:30+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Portugal) <https://hosted.weblate.org/projects/"
 "naev/naev/pt_PT/>\n"
@@ -953,7 +953,7 @@ msgstr ""
 
 #: dat/commodities/diamond.xml:3 dat/scripts/pilotname/generic.lua:29
 msgid "Diamond"
-msgstr "Diamante"
+msgstr "Diamantes"
 
 #: dat/commodities/diamond.xml:4
 msgid ""
@@ -1685,7 +1685,7 @@ msgid ""
 "proud and formed by a coalition of many powerful warlords."
 msgstr ""
 "A Casa Dvaered é uma das mais antigas Grandes Casas do Império. Eles são "
-"orgulhosos e formados por uma coalizão de poderosos senhores da guerra."
+"orgulhosos e formados por uma coligação de poderosos senhores da guerra."
 
 #: dat/factions/empire.xml:2 dat/scripts/common/empire.lua:15
 #: dat/scripts/common/empire.lua:20
@@ -1743,13 +1743,13 @@ msgid ""
 "The Frontier Alliance is formed by the survivors of the initial attempts of "
 "Human expansion into space."
 msgstr ""
-"A aliança da Fronteira é formada por sobreviventes das tentativas iniciais "
+"A Aliança da Fronteira é formada por sobreviventes das tentativas iniciais "
 "de expansão humana no espaço."
 
 #: dat/factions/goddard.xml:2 dat/ships/neutral/goddard.xml:2
 #: dat/ssys/goddard.xml:2 dat/events/dvaered/fwB_repay.lua:89
 msgid "Goddard"
-msgstr ""
+msgstr "Goddard"
 
 #: dat/factions/goddard.xml:7 dat/ships/dvaered/dvaered_goddard.xml:18
 #: dat/ships/neutral/goddard.xml:17 dat/events/dvaered/fwB_repay.lua:74
@@ -1761,8 +1761,8 @@ msgid ""
 "House Goddard is a minor house wedged between the Empire and Dvaered. They "
 "are one of the main fabricators of ships for the Dvaered."
 msgstr ""
-"A Casa Goddard é uma casa menor prensada entre o Império e os Dvaered. Eles "
-"são os principais fabricantes de naves para os Dvaered."
+"A Casa Goddard é uma casa menor entre o Império e os Dvaered. Eles são os "
+"principais fabricantes de naves para os Dvaered."
 
 #.
 #. if gauntlet_subtype == newsubtype then
@@ -1810,9 +1810,9 @@ msgid ""
 "aggressive and will attack most vessels unprovoked. Even the pirate clans "
 "have difficulty in dealing with them."
 msgstr ""
-"Piratas Saqueadores são so mais baixos e vis entre os piratas. Eles são "
-"extremamente agressivos e atacarão a maioria das naves sem nenhuma "
-"provocação. Mesmo os clãs piratas tem dificuldade em lidar com eles."
+"Os Piratas Saqueadores são os piratas mais baixos e vis. São extremamente "
+"agressivos e atacarão a maioria das naves sem provocação. Até os clãs "
+"piratas têm dificuldade em lidar com eles."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -1898,7 +1898,7 @@ msgstr "Mineirador"
 
 #: dat/factions/nasin.xml:2
 msgid "Nasin"
-msgstr ""
+msgstr "Nasin"
 
 #: dat/factions/pirate.xml:6
 msgid "Galactic Space Pirates"
@@ -1910,7 +1910,7 @@ msgid ""
 "affiliated with any particular clan. Due to their disorganized nature, they "
 "tend to respect the clans they operate near."
 msgstr ""
-"Os Piratas Espaciais Galaláticos são compostos por naves piratas "
+"Os Piratas Espaciais Galáticos são compostos por naves piratas "
 "independentes, não afiliadas com um clã específico. Dada sua natureza "
 "desorganizada, eles tendem a respeitar clãs próximos de suas áreas de "
 "atuação."
@@ -1923,7 +1923,7 @@ msgstr ""
 #: dat/ships/proteron/proteron_pythagoras.xml:17
 #: dat/ships/proteron/proteron_watson.xml:18
 msgid "Proteron"
-msgstr ""
+msgstr "Proteron"
 
 #: dat/factions/proteron.xml:5
 msgid "Fallen House Proteron"
@@ -1937,7 +1937,7 @@ msgid ""
 msgstr ""
 "A Casa Caída Proteron era uma Grande Casa que decidiu se mobilizar e atacar "
 "o próprio Imperador. Isto causou o Incidente e deixou o universo "
-"irreversívelmente devastado."
+"irreversivelmente devastado."
 
 #: dat/factions/raven_clan.xml:2
 msgid "Raven Clan"
@@ -1981,7 +1981,7 @@ msgstr ""
 #: dat/scripts/common/achack.lua:4 dat/scripts/common/sirius.lua:11
 #: dat/scripts/common/sirius.lua:17
 msgid "Sirius"
-msgstr ""
+msgstr "Sirius"
 
 #: dat/factions/sirius.xml:7 dat/events/dvaered/fwB_repay.lua:72
 msgid "House Sirius"
@@ -1992,8 +1992,8 @@ msgid ""
 "House Sirius is defined by its state religion more than anything else, with "
 "Sirichana as the focus of worship."
 msgstr ""
-"A Casa Sirius é definida por sua religião estatal mais do que qualquer outra "
-"coisa, com Sirichana como foco de adoração."
+"A Casa Sirius é definida pela sua religião estatal mais do que qualquer "
+"outra coisa, com Sirichana como foco de adoração."
 
 #: dat/factions/soromid.xml:2 dat/ships/feral_bioship/kauweke.xml:23
 #: dat/ships/feral_bioship/nohinohi.xml:16
@@ -2005,7 +2005,7 @@ msgstr ""
 #: dat/ships/soromid/soromid_nyx.xml:14 dat/ships/soromid/soromid_odium.xml:15
 #: dat/ships/soromid/soromid_reaver.xml:13 dat/ships/soromid/soromid_vox.xml:17
 msgid "Soromid"
-msgstr ""
+msgstr "Soromid"
 
 #: dat/factions/soromid.xml:11
 msgid ""
@@ -2019,11 +2019,11 @@ msgstr ""
 
 #: dat/factions/strangelove.xml:2
 msgid "Strangelove"
-msgstr ""
+msgstr "Strangelove"
 
 #: dat/factions/thurion.xml:2
 msgid "Thurion"
-msgstr ""
+msgstr "Thurion"
 
 #: dat/factions/thurion.xml:10
 msgid ""
@@ -2092,7 +2092,7 @@ msgstr ""
 #: dat/scripts/common/zalek_blackhole.lua:89
 #: dat/scripts/common/zalek_physics.lua:32
 msgid "Za'lek"
-msgstr ""
+msgstr "Za'lek"
 
 #: dat/factions/zalek.xml:7
 msgid "House Za'lek"
@@ -10154,7 +10154,7 @@ msgstr "S"
 
 #: dat/spob/akrikos.xml:2
 msgid "Akrikos"
-msgstr ""
+msgstr "Akrikos"
 
 #: dat/spob/akrikos.xml:9 dat/spob/allous_ii.xml:9 dat/spob/aluben.xml:9
 #: dat/spob/apez_ii.xml:9 dat/spob/arai.xml:9 dat/spob/babylon_iia.xml:9
@@ -11778,11 +11778,11 @@ msgid ""
 "little in the way of the bustle and fuss of other, more core, planets. It is "
 "not uncommon for people to migrate here looking for a calmer lifestyle."
 msgstr ""
-"Bentin é um dos principais mundos agrícolas do Império. Ele cultiva a "
-"maioria das culturas que estão destinadas aos sistemas ocidentais. É um "
-"mundo tranquilo, com pouco em se tratando de agitação e da agitação de "
-"outros planetas mais centrais. Não é incomum as pessoas migrarem para cá em "
-"busca de um estilo de vida mais calmo."
+"Bentin é um dos principais mundos agrícolas do Império. Nele se cultiva a "
+"maioria dos produtos agrícolas que estão destinados aos sistemas ocidentais. "
+"É um mundo tranquilo, sem a agitação e confusão de outros planetas mais "
+"centrais. Não é raro as pessoas migrarem para aqui à procura de um estilo de "
+"vida mais calmo."
 
 #: dat/spob/benteen.xml:27
 msgid ""
@@ -11790,8 +11790,8 @@ msgid ""
 "is fine and the locals seem friendly enough. Mostly harmless."
 msgstr ""
 "O bar é um lugar para relaxar após uma longa viagem ou um dia de trabalho "
-"duro. A cerveja é boa e os moradores parecem bastante amigáveis. Em grande "
-"parte inoftensivos."
+"duro. A cerveja é boa e os habitantes locais parecem suficientemente "
+"simpáticos. Na sua maioria, inofensivos."
 
 #: dat/spob/berkhere.xml:2
 msgid "Berkhere"
@@ -22507,7 +22507,7 @@ msgstr ""
 
 #: dat/spob/vinooso.xml:2
 msgid "Vinooso"
-msgstr ""
+msgstr "Vinooso"
 
 #: dat/spob/vinooso.xml:26
 msgid ""
@@ -22529,7 +22529,7 @@ msgstr ""
 
 #: dat/spob/violin_station.xml:2
 msgid "Violin Station"
-msgstr ""
+msgstr "Estação Violin"
 
 #: dat/spob/violin_station.xml:24
 msgid ""
@@ -22541,7 +22541,7 @@ msgstr ""
 
 #: dat/spob/vlexair.xml:2
 msgid "Vlexair"
-msgstr ""
+msgstr "Vlexair"
 
 #: dat/spob/vlexair.xml:26
 msgid ""
@@ -22560,19 +22560,19 @@ msgstr ""
 
 #: dat/spob/vlexon_i.xml:2
 msgid "Vlexon I"
-msgstr ""
+msgstr "Vlexon I"
 
 #: dat/spob/vlexon_ii.xml:2
 msgid "Vlexon II"
-msgstr ""
+msgstr "Vlexon II"
 
 #: dat/spob/voproid_prime.xml:2
 msgid "Voproid Prime"
-msgstr ""
+msgstr "Voproid Prime"
 
 #: dat/spob/vorca.xml:2
 msgid "Vorca"
-msgstr ""
+msgstr "Vorca"
 
 #: dat/spob/vorca.xml:30
 msgid ""
@@ -22598,7 +22598,7 @@ msgstr ""
 
 #: dat/spob/vracha.xml:2
 msgid "Vracha"
-msgstr ""
+msgstr "Vracha"
 
 #: dat/spob/vracha.xml:24
 msgid ""
@@ -22616,7 +22616,7 @@ msgstr ""
 
 #: dat/spob/vuere.xml:2
 msgid "Vuere"
-msgstr ""
+msgstr "Vuere"
 
 #: dat/spob/vuere.xml:27
 msgid ""
@@ -22640,7 +22640,7 @@ msgstr ""
 
 #: dat/spob/wagenni.xml:2
 msgid "Wagenni"
-msgstr ""
+msgstr "Wagenni"
 
 #: dat/spob/wagenni.xml:27
 msgid ""
@@ -22662,7 +22662,7 @@ msgstr ""
 
 #: dat/spob/wahri.xml:2 dat/ssys/wahri.xml:2
 msgid "Wahri"
-msgstr ""
+msgstr "Wahri"
 
 #: dat/spob/wahri.xml:28
 msgid ""
@@ -22680,15 +22680,15 @@ msgstr ""
 
 #: dat/spob/wahri_iii.xml:2
 msgid "Wahri III"
-msgstr ""
+msgstr "Wahri III"
 
 #: dat/spob/wahri_iv.xml:2
 msgid "Wahri IV"
-msgstr ""
+msgstr "Wahri IV"
 
 #: dat/spob/wakan.xml:2
 msgid "Wa'kan"
-msgstr ""
+msgstr "Wa'kan"
 
 #: dat/spob/wakan.xml:24
 msgid ""
@@ -22699,7 +22699,7 @@ msgstr ""
 
 #: dat/spob/waldar.xml:2
 msgid "Waldar"
-msgstr ""
+msgstr "Waldar"
 
 #: dat/spob/waldar.xml:28
 msgid ""
@@ -22740,7 +22740,7 @@ msgstr ""
 
 #: dat/spob/warei.xml:2
 msgid "Warei"
-msgstr ""
+msgstr "Warei"
 
 #: dat/spob/warei.xml:27
 msgid ""
@@ -22761,7 +22761,7 @@ msgstr ""
 
 #: dat/spob/warnecke.xml:2
 msgid "Warnecke"
-msgstr ""
+msgstr "Warnecke"
 
 #: dat/spob/warnecke.xml:28
 msgid ""
@@ -22781,15 +22781,15 @@ msgstr ""
 
 #: dat/spob/warnecke_i.xml:2
 msgid "Warnecke I"
-msgstr ""
+msgstr "Warnecke I"
 
 #: dat/spob/warnecke_ii.xml:2
 msgid "Warnecke II"
-msgstr ""
+msgstr "Warnecke II"
 
 #: dat/spob/waterhole.xml:2 dat/ssys/waterhole.xml:2
 msgid "Waterhole"
-msgstr ""
+msgstr "Waterhole"
 
 #: dat/spob/waterholes_moon.xml:2
 msgid "Waterhole's Moon"
@@ -22817,7 +22817,7 @@ msgstr ""
 
 #: dat/spob/wayline.xml:2
 msgid "Wayline"
-msgstr ""
+msgstr "Wayline"
 
 #: dat/spob/wayline.xml:23
 msgid ""
@@ -22829,15 +22829,15 @@ msgstr ""
 
 #: dat/spob/wayline_m1.xml:2
 msgid "Wayline m1"
-msgstr ""
+msgstr "Wayline m1"
 
 #: dat/spob/wayline_m2.xml:2
 msgid "Wayline m2"
-msgstr ""
+msgstr "Wayline m2"
 
 #: dat/spob/wellen.xml:2
 msgid "Wellen"
-msgstr ""
+msgstr "Wellen"
 
 #: dat/spob/wellen.xml:28
 msgid ""
@@ -22860,7 +22860,7 @@ msgstr ""
 
 #: dat/spob/werlen.xml:2
 msgid "Werlen"
-msgstr ""
+msgstr "Werlen"
 
 #: dat/spob/werlen.xml:27
 msgid ""
@@ -22879,7 +22879,7 @@ msgstr ""
 
 #: dat/spob/westeros_station.xml:2
 msgid "Westeros Station"
-msgstr ""
+msgstr "Estação Westeros"
 
 #: dat/spob/westeros_station.xml:25
 msgid ""
@@ -22896,7 +22896,7 @@ msgstr ""
 
 #: dat/spob/wigheta.xml:2
 msgid "Wigheta"
-msgstr ""
+msgstr "Wigheta"
 
 #: dat/spob/wigheta.xml:26
 msgid ""
@@ -22919,7 +22919,7 @@ msgstr ""
 
 #: dat/spob/wikon.xml:2
 msgid "Wikon"
-msgstr ""
+msgstr "Wikon"
 
 #: dat/spob/wikon.xml:29
 msgid ""
@@ -22940,7 +22940,7 @@ msgstr ""
 
 #: dat/spob/wildwood_station.xml:2
 msgid "Wildwood Station"
-msgstr ""
+msgstr "Estação Wildwood"
 
 #: dat/spob/wildwood_station.xml:25
 msgid ""
@@ -22961,19 +22961,19 @@ msgstr ""
 
 #: dat/spob/wolf_i.xml:2
 msgid "Wolf I"
-msgstr ""
+msgstr "Wolf I"
 
 #: dat/spob/wolf_ii.xml:2
 msgid "Wolf II"
-msgstr ""
+msgstr "Wolf II"
 
 #: dat/spob/wolf_vii.xml:2
 msgid "Wolf VII"
-msgstr ""
+msgstr "Wolf VII"
 
 #: dat/spob/wonclock.xml:2
 msgid "Wonclock"
-msgstr ""
+msgstr "Wonclock"
 
 #: dat/spob/wonclock.xml:28
 msgid ""
@@ -22995,7 +22995,7 @@ msgstr ""
 
 #: dat/spob/worgen.xml:2
 msgid "Worgen"
-msgstr ""
+msgstr "Worgen"
 
 #: dat/spob/wormhole_ngc13674.xml:2
 msgid "Wormhole NGC-13674"
@@ -23033,7 +23033,7 @@ msgstr ""
 
 #: dat/spob/worscha.xml:2
 msgid "Worscha"
-msgstr ""
+msgstr "Worscha"
 
 #: dat/spob/worscha.xml:29
 msgid ""
@@ -23053,7 +23053,7 @@ msgstr ""
 
 #: dat/spob/wsthvn_d1.xml:2
 msgid "WSTHVN D-1"
-msgstr ""
+msgstr "WSTHVN D-1"
 
 #: dat/spob/wsthvn_p1.xml:2
 msgid "WSTHVN P-1"
@@ -23061,11 +23061,11 @@ msgstr ""
 
 #: dat/spob/xavier.xml:2 dat/ssys/xavier.xml:2
 msgid "Xavier"
-msgstr ""
+msgstr "Xavier"
 
 #: dat/spob/yak_station.xml:2
 msgid "Yak Station"
-msgstr ""
+msgstr "Estação Yak"
 
 #: dat/spob/yak_station.xml:25
 msgid ""
@@ -23089,7 +23089,7 @@ msgstr ""
 
 #: dat/spob/yaroslav_farming_station.xml:2
 msgid "Yaroslav Farming Station"
-msgstr ""
+msgstr "Estação Yaroslav Farming"
 
 #: dat/spob/yaroslav_farming_station.xml:24
 msgid ""
@@ -23108,7 +23108,7 @@ msgstr ""
 
 #: dat/spob/yrina.xml:2
 msgid "Yrina"
-msgstr ""
+msgstr "Yrina"
 
 #: dat/spob/yrina.xml:26
 msgid ""
@@ -23131,7 +23131,7 @@ msgstr ""
 
 #: dat/spob/zaals.xml:2
 msgid "Zaals"
-msgstr ""
+msgstr "Zaals"
 
 #: dat/spob/zaals.xml:28
 msgid ""
@@ -23154,7 +23154,7 @@ msgstr ""
 
 #: dat/spob/zabween.xml:2
 msgid "Zabween"
-msgstr ""
+msgstr "Zabween"
 
 #: dat/spob/zabween.xml:28
 msgid ""
@@ -23176,7 +23176,7 @@ msgstr ""
 
 #: dat/spob/zalebus.xml:2
 msgid "Zalebus"
-msgstr ""
+msgstr "Zalebus"
 
 #: dat/spob/zalebus.xml:29
 msgid ""
@@ -23195,15 +23195,15 @@ msgstr ""
 
 #: dat/spob/zalek_ii.xml:2
 msgid "Za'lek II"
-msgstr ""
+msgstr "Za'lek II"
 
 #: dat/spob/zalek_iv.xml:2
 msgid "Za'lek IV"
-msgstr ""
+msgstr "Za'lek IV"
 
 #: dat/spob/zaren.xml:2
 msgid "Zaren"
-msgstr ""
+msgstr "Zaren"
 
 #: dat/spob/zaren.xml:25
 msgid ""
@@ -23214,7 +23214,7 @@ msgstr ""
 
 #: dat/spob/zazarin.xml:2
 msgid "Zazarin"
-msgstr ""
+msgstr "Zazarin"
 
 #: dat/spob/zazarin.xml:27
 msgid ""
@@ -23237,7 +23237,7 @@ msgstr ""
 
 #: dat/spob/zembla_shakar.xml:2
 msgid "Zembla Shakar"
-msgstr ""
+msgstr "Zembla Shakar"
 
 #: dat/spob/zembla_shakar.xml:28
 msgid ""
@@ -23257,11 +23257,11 @@ msgstr ""
 
 #: dat/spob/zemur_iii.xml:2
 msgid "Zemur III"
-msgstr ""
+msgstr "Zemur III"
 
 #: dat/spob/zeo.xml:2
 msgid "Zeo"
-msgstr ""
+msgstr "Zeo"
 
 #: dat/spob/zeo.xml:26
 msgid ""
@@ -23282,7 +23282,7 @@ msgstr ""
 
 #: dat/spob/zepei.xml:2
 msgid "Zepei"
-msgstr ""
+msgstr "Zepei"
 
 #: dat/spob/zepei.xml:27
 msgid ""
@@ -23303,19 +23303,19 @@ msgstr ""
 
 #: dat/spob/zeroeleven.xml:2
 msgid "Zero-Eleven"
-msgstr ""
+msgstr "Zero-Eleven"
 
 #: dat/spob/zerofive.xml:2
 msgid "Zero-Five"
-msgstr ""
+msgstr "Zero-Five"
 
 #: dat/spob/zeroone.xml:2
 msgid "Zero-One"
-msgstr ""
+msgstr "Zero-One"
 
 #: dat/spob/zesta.xml:2
 msgid "Zesta"
-msgstr ""
+msgstr "Zesta"
 
 #: dat/spob/zesta.xml:24
 msgid ""
@@ -23327,11 +23327,11 @@ msgstr ""
 
 #: dat/spob/zethus.xml:2
 msgid "Zethus"
-msgstr ""
+msgstr "Zethus"
 
 #: dat/spob/zhang_lu.xml:2
 msgid "Zhang Lu"
-msgstr ""
+msgstr "Zhang Lu"
 
 #: dat/spob/zhang_lu.xml:27
 msgid ""
@@ -23354,7 +23354,7 @@ msgstr ""
 
 #: dat/spob/zhiru.xml:2
 msgid "Zhiru"
-msgstr ""
+msgstr "Zhiru"
 
 #: dat/spob/zhiru.xml:28
 msgid ""
@@ -23377,19 +23377,19 @@ msgstr ""
 
 #: dat/spob/zintar_iv.xml:2
 msgid "Zintar IV"
-msgstr ""
+msgstr "Zintar IV"
 
 #: dat/spob/zintar_v.xml:2
 msgid "Zintar V"
-msgstr ""
+msgstr "Zintar V"
 
 #: dat/spob/ziz.xml:2
 msgid "Ziz"
-msgstr ""
+msgstr "Ziz"
 
 #: dat/spob/zuner.xml:2
 msgid "Zuner"
-msgstr ""
+msgstr "Zuner"
 
 #: dat/spob/zuner.xml:27
 msgid ""
@@ -31077,7 +31077,7 @@ msgstr ""
 #. Set an info button up
 #: dat/events/escort_settings.lua:24
 msgid "Escort AI"
-msgstr ""
+msgstr "IA da escolta"
 
 #. Hooks are cleared upon entering, so we have to readd the hook each time
 #. Set up hook for all newly created pilots
@@ -36456,7 +36456,7 @@ msgstr ""
 #. Add tag-appropriate descriptions
 #: dat/events/npc/empire.lua:134
 msgid "Empire Citizen"
-msgstr ""
+msgstr "Cidadão do Império"
 
 #. local fmt = require "format"
 #. State. Nothing persists.
@@ -36569,7 +36569,7 @@ msgstr ""
 #. State. Nothing persists.
 #: dat/events/npc/frontier.lua:10
 msgid "A citizen of the Frontier."
-msgstr ""
+msgstr "Cidadão da Fronteira."
 
 #: dat/events/npc/frontier.lua:11
 msgid "An individual that has a solemn gaze."
@@ -37445,7 +37445,7 @@ msgstr ""
 #. Add tag-appropriate descriptions
 #: dat/events/npc/proteron.lua:79
 msgid "Proteron Citizen"
-msgstr ""
+msgstr "Cidadão de Proteron"
 
 #. local fmt = require "format"
 #. State. Nothing persists.
@@ -41850,6 +41850,13 @@ msgid ""
 "attacked. Using proper settings can minimize the amount of orders you have "
 "to give your escorts!\""
 msgstr ""
+"\"Além de dar ordens diretas às tuas escoltas, também podes controlar como "
+"se comportam utilizando o botão 'IA da escolta' acessível a partir do "
+"separador #oPrincipal#0 do menu #oInformações#0 acessível com {infokey}. "
+"Podes configurar uma série de comportamentos desde abordar todos os hostis "
+"até apenas defender quando as escoltas for atacadas diretamente. A "
+"utilização de configurações adequadas pode minimizar a quantidade de ordens "
+"que tens de dar às tuas escoltas!\""
 
 #: dat/events/tutorial/tut_land.lua:62
 msgid ""
@@ -42855,54 +42862,54 @@ msgstr "Tubarão Comerciante"
 #. Text stuff
 #: dat/factions/standing/lib/base.lua:37
 msgid "Legend"
-msgstr ""
+msgstr "Lenda"
 
 #: dat/factions/standing/lib/base.lua:38
 msgid "Hero"
-msgstr ""
+msgstr "Herói"
 
 #: dat/factions/standing/lib/base.lua:39
 msgid "Comrade"
-msgstr ""
+msgstr "Camarada"
 
 #: dat/factions/standing/lib/base.lua:40
 msgid "Ally"
-msgstr ""
+msgstr "Aliado"
 
 #: dat/factions/standing/lib/base.lua:41
 msgid "Partner"
-msgstr ""
+msgstr "Parceiro"
 
 #: dat/factions/standing/lib/base.lua:42
 msgid "Associate"
-msgstr ""
+msgstr "Associado"
 
 #: dat/factions/standing/lib/base.lua:44 dat/scripts/factions/zalek.lua:27
 msgid "Outlaw"
-msgstr ""
+msgstr "Bandido"
 
 #: dat/factions/standing/lib/base.lua:45
 msgid "Criminal"
-msgstr ""
+msgstr "Criminoso"
 
 #: dat/factions/standing/lib/base.lua:46 dat/scripts/factions/dvaered.lua:22
 #: dat/scripts/factions/sirius.lua:22 dat/scripts/factions/zalek.lua:28
 msgid "Enemy"
-msgstr ""
+msgstr "Inimigo"
 
 #: dat/factions/standing/lib/base.lua:48
 msgid "Friendly"
-msgstr ""
+msgstr "Amigável"
 
 #: dat/factions/standing/lib/base.lua:50 dat/scripts/common/comm.lua:28
 msgid "Hostile"
-msgstr ""
+msgstr "Hostil"
 
 #. stolen from scripts/vn.lua
 #: dat/factions/standing/lib/base.lua:51 dat/scripts/common/comm.lua:24
 #: dat/scripts/factions/dvaered.lua:27
 msgid "Bribed"
-msgstr ""
+msgstr "Subornado"
 
 #.
 #. Clamps a value x between low and high.
@@ -42971,35 +42978,35 @@ msgstr ""
 #. Standing value threshold between neutral and friendly.
 #: dat/factions/standing/lib/pirate.lua:26
 msgid "Clan Legend"
-msgstr ""
+msgstr "Lenda do clã"
 
 #: dat/factions/standing/lib/pirate.lua:27
 msgid "Clan Lord"
-msgstr ""
+msgstr "Senhor do clã"
 
 #: dat/factions/standing/lib/pirate.lua:28
 msgid "Clan Warrior"
-msgstr ""
+msgstr "Guerreiro do clã"
 
 #: dat/factions/standing/lib/pirate.lua:29
 msgid "Clan Plunderer"
-msgstr ""
+msgstr "Saqueador do clã"
 
 #: dat/factions/standing/lib/pirate.lua:30
 msgid "Clan Thug"
-msgstr ""
+msgstr "Rufia do clã"
 
 #: dat/factions/standing/lib/pirate.lua:31 dat/factions/standing/pirate.lua:8
 msgid "Common Thief"
-msgstr ""
+msgstr "Ladrão comum"
 
 #: dat/factions/standing/lib/pirate.lua:32 dat/factions/standing/pirate.lua:9
 msgid "Normie"
-msgstr ""
+msgstr "Ovelhinha"
 
 #: dat/factions/standing/lib/pirate.lua:34
 msgid "Paid Off"
-msgstr ""
+msgstr "Pagou"
 
 #. Override hit function
 #. Get the maximum player value with any pirate clan
@@ -43010,11 +43017,11 @@ msgstr ""
 #. Can't get friendly
 #: dat/factions/standing/marauder.lua:8
 msgid "Ignored"
-msgstr ""
+msgstr "Ignorado"
 
 #: dat/factions/standing/marauder.lua:9
 msgid "Potential Victim"
-msgstr ""
+msgstr "Potencial vítima"
 
 #. Doesn't change through hits
 #. Nasin faction standing script
@@ -43024,7 +43031,7 @@ msgstr ""
 #. Pirate faction standing script
 #: dat/factions/standing/pirate.lua:7
 msgid "Respected"
-msgstr ""
+msgstr "Respeitado"
 
 #. Doesn't change through hits
 #. Black Lotus faction standing script
@@ -43090,7 +43097,7 @@ msgstr "nenhuma"
 #. Handling turret tracking.
 #: dat/gui/brushed.lua:304 dat/gui/slim.lua:646
 msgid "Too big!"
-msgstr ""
+msgstr "Demasiado grande!"
 
 #. Table for convenience.
 #. "Spaceport" is nicer than "Land"
@@ -43127,7 +43134,7 @@ msgstr ""
 #. "Spaceport" is nicer than "Land"
 #: dat/gui/brushed.lua:374 dat/gui/slim.lua:378
 msgid "Spaceport"
-msgstr ""
+msgstr "Porto espacial"
 
 #. Center
 #. Time
@@ -43161,7 +43168,7 @@ msgstr ""
 #. Render planet image.
 #: dat/gui/brushed.lua:935 dat/gui/slim.lua:923 dat/gui/slim.lua:1053
 msgid "TARGETED"
-msgstr ""
+msgstr "FIXADO"
 
 #: dat/gui/brushed.lua:938
 #, lua-format
@@ -66318,8 +66325,8 @@ msgstr "#nCarga:#0 {cargo} ({mass})"
 #: dat/scripts/common/cargo.lua:235
 msgid "#nJumps:#0 {jumps}"
 msgid_plural "#nJumps:#0 {jumps}"
-msgstr[0] "#nSaltos:#0 {saltos}"
-msgstr[1] "#nSaltos:#0 {saltos}"
+msgstr[0] "#nSaltos:#0 {jumps}"
+msgstr[1] "#nSaltos:#0 {jumps}"
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:73
 #: dat/scripts/common/cargo.lua:237
@@ -104620,11 +104627,11 @@ msgstr "Tempo a jogar:"
 
 #: src/info.c:390
 msgid "Times died:"
-msgstr "Vezes morto:"
+msgstr "Nº vezes morto:"
 
 #: src/info.c:391
 msgid "Times jumped:"
-msgstr "Saltos dados:"
+msgstr "Saltos feitos:"
 
 #: src/info.c:392
 msgid "Times landed:"
@@ -106009,7 +106016,7 @@ msgstr "Preço médio galáctico:"
 
 #: src/land_trade.c:95
 msgid "Purchased for:"
-msgstr ""
+msgstr "Comprado por:"
 
 #: src/land_trade.c:211
 msgid "No commodities available."
