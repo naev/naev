@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-01-10 23:55+0900\n"
-"PO-Revision-Date: 2023-01-22 09:30+0000\n"
+"PO-Revision-Date: 2023-01-22 23:29+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Portugal) <https://hosted.weblate.org/projects/"
 "naev/naev/pt_PT/>\n"
@@ -2639,8 +2639,8 @@ msgid ""
 "Active for 7 seconds since armour was last damaged, or can be manually "
 "toggled with a 30 second cooldown."
 msgstr ""
-"Ativo por 7 segundos a partir do último dano à blindagem, ou pode ser "
-"manualmente alternado com uma espera de 30 segundos."
+"Ativo por 7 segundos a partir do último dano à blindagem ou pode ser "
+"manualmente alternado com um arrefecimento de 30 segundos."
 
 #: dat/outfits/bioship/skills/fuel_bladder.xml:2
 #: dat/scripts/bioship/skills.lua:301
@@ -5657,8 +5657,8 @@ msgid ""
 "Activates for 5 seconds with a 15 second cooldown period.\n"
 "#pCan be used for tracking anomaly signals.#0"
 msgstr ""
-"Fica ativo por 5 segundos com um periodo de espera de 15 segundos.\n"
-"#pPode ser usado para rastrear sinais anômalos.#0"
+"Fica ativo por 5 segundos com um período de arrefecimento de 15 segundos.\n"
+"#pPode ser usado para rastrear sinais anómalos.#0"
 
 #: dat/outfits/unique/valkyrie_beam.xml:2
 msgid "Valkyrie Beam"
@@ -5777,9 +5777,9 @@ msgid ""
 "by 20%."
 msgstr ""
 "Incorre numa grande quantidade de danos aos escudo e blindagem ao longo do "
-"tempo, e desliga-se automaticamente quando a integridade do casco é inferior "
-"a 30%. Após utilização, há um período de espera de 8 segundos, durante o "
-"qual o movimento e os danos são reduzidos em 20%."
+"tempo e desliga-se automaticamente quando a integridade do casco é inferior "
+"a 30%. Após utilização, há um período de arrefecimento de 8 segundos, "
+"durante o qual o movimento e os danos são reduzidos em 20%."
 
 #: dat/outfits/utility/blink_drive.xml:2 dat/outfits/utility/blink_drive.xml:4
 #: dat/outfits/utility/evasive_blink_thruster.xml:4
@@ -5877,8 +5877,8 @@ msgid ""
 "8 second duration with 30 second cooldown. Will not activate if the ship is "
 "unable to stealth with the bonus."
 msgstr ""
-"8 segundos de duração com uma espera de 30 segundos. Não será ativado se a "
-"navio for incapaz de se esconder com o bónus."
+"8 segundos de duração com um arrefecimento de 30 segundos. Não será ativado "
+"se a nave for incapaz de se camuflar com o bónus."
 
 #: dat/outfits/utility/cloaking_device.xml:2
 #: dat/outfits/utility/cloaking_device.xml:4
@@ -6140,13 +6140,13 @@ msgid ""
 "disproportionally high and the outfit can't be active for more than a "
 "certain period of time before needing entering a cooldown cycle."
 msgstr ""
-"Este equipamento fornece um roteamento alternativo de energia auxiliar entre "
-"o reator da nave e o sistema de escudos. Quando ativado, este aparelho "
-"aumenta drasticamente a regeneração do escudo da nave ao transferir energia "
-"bruta diretamente para os capacitores do escudo. O processo é muito "
-"ineficiente, portanto a utilização de energia é desproporcionalmente elevada "
-"e o equipamento não pode estar ativo durante mais do que um determinado "
-"período de tempo antes de necessitar de entrar num ciclo de resfriamento."
+"Esta peça de equipamento fornece um desvio de energia auxiliar entre o "
+"reator da nave e o sistema de escudos. Quando ativado, este dispositivo "
+"aumenta drasticamente a regeneração do escudo da nave, despejando energia "
+"bruta diretamente nos condensadores do escudo. O processo é muito "
+"ineficiente, por isso o uso de energia é desproporcionalmente alto e o "
+"equipamento não pode estar ativo por mais de um determinado período de tempo "
+"antes de precisar entrar num ciclo de arrefecimento."
 
 #: dat/outfits/utility/emergency_shield_booster.xml:10
 msgid ""
@@ -6154,7 +6154,7 @@ msgid ""
 "of 8 seconds. Uses 3 MJ of energy for each MJ of shield recovered."
 msgstr ""
 "Aumenta a regeneração dos escudos em 500%. Ativo durante 4 segundos, com um "
-"resfriamento de 8 segundos. Utiliza 3 MJ de energia para cada MJ de escudo "
+"arrefecimento de 8 segundos. Utiliza 3 MJ de energia para cada MJ de escudo "
 "recuperado."
 
 #: dat/outfits/utility/emergency_stasis_inducer.xml:2
@@ -6184,7 +6184,7 @@ msgstr ""
 #: dat/outfits/utility/emergency_stasis_inducer.xml:10
 msgid "Triggered on armour damage. Lasts 3 seconds with 8 seconds cooldown."
 msgstr ""
-"Ativado por danos na blindagem. Dura 3 segundos com um resfriamento de 8 "
+"Ativado por danos na blindagem. Dura 3 segundos com um arrefecimento de 8 "
 "segundos."
 
 #: dat/outfits/utility/evasive_blink_thruster.xml:2
@@ -6369,10 +6369,10 @@ msgid ""
 "and turn penalty during cooldown. Performance degrades over 6000 tonnes of "
 "mass."
 msgstr ""
-"Aquece por 2 segundos e \"pisca\" a nave 2000 unidades na direção aproximada "
-"apontada pelo nariz da nave. Só pode ser usado uma vez a cada 8 segundos e "
-"resulta numa penalidade de 20% de empuxo e viragem durante o resfriamento. A "
-"performance decai quando a massa é maior que 600 toneladas."
+"Aquece por 2 segundos e depois pisca 2000 unidades aproximadamente na "
+"direção que está virado. Só pode ser executado uma vez a cada 8 segundos e "
+"incorre numa penalidade de 20% de impulso e de rotação durante o "
+"arrefecimento. O desempenho degrada mais de 6000 toneladas de massa."
 
 #: dat/outfits/utility/jump_scanner.xml:2
 msgid "Jump Scanner"
@@ -6481,7 +6481,7 @@ msgstr ""
 
 #: dat/outfits/utility/neural_accelerator_interface.xml:12
 msgid "Active for 5 seconds with a cooldown of 20 seconds."
-msgstr "Ativo durante 5 segundos com um resfriamento de 20 segundos."
+msgstr "Ativo durante 5 segundos com um arrefecimento de 20 segundos."
 
 #: dat/outfits/utility/sensor_array.xml:2
 msgid "Sensor Array"
@@ -7948,15 +7948,15 @@ msgid ""
 "Goddard though, the electronics are manufactured by House Dvaered, making it "
 "considerably inferior in that area."
 msgstr ""
-"Normalmente apelidado de \"Pequeno Goddard\" o Ancestral tem suas raízes nas "
-"máquinas voadoras primitivas usadas pelos humans muitas eras atrás. Ao "
-"contrário da Goddard, porém, os sistemas eletrônicos são fabricados pela "
-"Casa Dvaered, tornando a nave considerávelmente inferior neste aspeto."
+"Normalmente apelidado de \"Pequeno Goddard\", o Ancestral também tem as suas "
+"raízes nas máquinas voadoras primitivas usadas pelos homens há muitos anos. "
+"No entanto, ao contrário do Goddard, os aparelhos eletrónicos são fabricados "
+"pela House Dvaered, tornando-a consideravelmente inferior nessa área."
 
 #: dat/ships/neutral/gawain.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:180
 #: dat/missions/flf/dvk/flf_dvk06.lua:163
 msgid "Gawain"
-msgstr ""
+msgstr "Gawain"
 
 #: dat/ships/neutral/gawain.xml:8
 msgid "Luxury Yacht"
@@ -7971,10 +7971,10 @@ msgid ""
 "relative fragility."
 msgstr ""
 "A Gawain é uma nave muito moderna, superando quase todas as outras "
-"atualmente em produção. Altamente dependente de técnologias inicialmente "
+"atualmente em produção. Altamente dependente de tecnologias inicialmente "
 "implementadas no Lancelot e largamente usada como nave desportiva por ser "
 "extremamente manobrável, as Gawain raramente sobrevivem a situações de "
-"combate por ter mínimo espaço para armas e ser relativamente frágil."
+"combate por terem pouco espaço para armas e ser relativamente frágil."
 
 #: dat/ships/neutral/goddard.xml:19
 msgid ""
@@ -7984,15 +7984,15 @@ msgid ""
 "specialization and improvements on the original design have kept it very "
 "competitive in the market. It's a classic of space."
 msgstr ""
-"Projetada pelo gênio excêntrico Eduard Manuel Goddard, a Nave de Batalha "
-"Goddard lançou a Casa Goddard em direção a fama e fortuna. A fabricação é "
-"totalmente feita em Zhiru no sistema Goddard. Com o tempo, especializações e "
-"melhorias no projeto original mantiveram a nave muito competitiva no "
-"mercado. Um clássico do espaço."
+"Projetada pelo génio excêntrico Eduard Manuel Goddard, a Nave de Batalha "
+"Goddard lançou a Casa Goddard em direção à fama e fortuna. É produzida em "
+"Zhiru no sistema Goddard. Com o tempo, as especializações e melhorias no "
+"projeto original mantiveram a nave muito competitiva no mercado. Um clássico "
+"do espaço."
 
 #: dat/ships/neutral/hawking.xml:2
 msgid "Hawking"
-msgstr ""
+msgstr "Hawking"
 
 #: dat/ships/neutral/hawking.xml:20
 msgid ""
@@ -8002,10 +8002,10 @@ msgid ""
 "second only to the flagship of House Goddard, though its narrower frame "
 "allows it to present a smaller target to the enemy."
 msgstr ""
-"O Hawking é a nave principal dos Estaleiros Nexo. Um grande cruzador "
-"projetado para missões prolongadas, é amplamente utilizado pelo Império para "
-"exercer controle sobre os seus territórios. Em termos de poder de fogo "
-"bruto, o Hawking é apenas a segunda nave principal da Casa Goddard, embora o "
+"A Hawking é a nave principal dos Estaleiros Nexo. Um grande cruzador "
+"projetado para missões prolongadas. É amplamente utilizada pelo Império para "
+"exercer controlo sobre os seus territórios. Em termos de poder de fogo "
+"bruto, a Hawking é apenas a segunda nave principal da Casa Goddard, embora a "
 "sua estrutura mais estreita lhe permita apresentar um alvo menor ao inimigo."
 
 #: dat/ships/neutral/hyena.xml:2
@@ -8027,10 +8027,10 @@ msgid ""
 "and unruly pilots."
 msgstr ""
 "Produto chave da Aerosys, a Hiena tornou-se rapidamente também a favorita "
-"dos grupos guerrilheiros e paramilitares em todos os lugares. O seu empuxo "
+"dos grupos guerrilheiros e paramilitares em todos os lugares. O seu impulso "
 "excelente combinado com um tempo de reação rápido permite que as reservas de "
-"energia do oponente sejam desperdiçadas enquanto eles se desgastam. Embora a "
-"Aerosys afirme que os suas naves só são vendidas a pilotos respeitáveis, "
+"energia do oponente sejam desperdiçadas enquanto elas se desgastam. Embora "
+"Aerosys afirme que as suas naves só são vendidas a pilotos respeitáveis, "
 "suspeita-se que vendem a qualquer pessoa disposta a pagar, pois parece que "
 "há inúmeras Hienas entre as fileiras dos pilotos mais notórios e "
 "indisciplinados."
@@ -8051,8 +8051,8 @@ msgid ""
 "firepower with state-of-the-art electronics, making for a truly fearsome "
 "ship in the hands of an able captain."
 msgstr ""
-"A nave que, sozinha, colocou as Indústrias Krain no mapa, o Francelho foi "
-"projetado para ser um elegante cruzador de assalto pesado. Geralmente mais "
+"A nave que, sozinha, colocou as Indústrias Krain no mapa, a Francelho foi "
+"projetada para ser um elegante cruzador de assalto pesado. Geralmente mais "
 "frágil do que outros cruzadores, consegue combinar excelente manobrabilidade "
 "e poder de fogo com eletrónica de última geração, resultando numa nave "
 "verdadeiramente assustadora nas mãos de um capitão hábil."
@@ -8065,7 +8065,7 @@ msgstr "Coala"
 #: dat/ships/neutral/mule.xml:15 dat/ships/neutral/quicksilver.xml:15
 #: dat/ships/neutral/rhino.xml:16 dat/ships/neutral/zebra.xml:19
 msgid "Melendez Corp."
-msgstr ""
+msgstr "Melendez Corp."
 
 #: dat/ships/neutral/koala.xml:15
 msgid ""
@@ -8073,9 +8073,10 @@ msgid ""
 "weapon space but a decent amount of cargo space. Good for the entrepreneur "
 "working looking to turn a profit while making their way across the stars."
 msgstr ""
-"O Coala é o seu nave de carga padrão. É uma nave pequena com pouco espaço "
-"para armas, mas com um espaço de carga decente. Bom para o empresário que "
-"trabalha procurando lucrar enquanto viaja pelas estrelas."
+"A Koala é a tua nave de carga padrão. É uma pequena nave com pouco espaço de "
+"armamento, mas uma quantidade decente de espaço de carga. Bom para o "
+"empresário que trabalha procurando obter lucro enquanto atravessa as "
+"estrelas."
 
 #: dat/ships/neutral/lancelot.xml:2
 msgid "Lancelot"
@@ -8095,7 +8096,7 @@ msgstr ""
 "existência foi revelada durante um voo de teste abortado. Agora, está "
 "disponível uma versão modificada para civis, embora não corresponda "
 "exatamente às especificações originais. É utilizada por agências de "
-"segurança em toda a galáxia pela sua confiabilidade disponibilidade."
+"segurança em toda a galáxia pela sua fiabilidade e disponibilidade."
 
 #: dat/ships/neutral/llama.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:180
 #: dat/missions/flf/dvk/flf_dvk06.lua:163
@@ -8110,10 +8111,10 @@ msgid ""
 "first used by aristocracy and now used by everyone who cannot afford better."
 msgstr ""
 "Uma das naves mais utilizadas na galáxia. Famosa pela sua estabilidade e "
-"teimosia. O projeto não foi muito modificado desde a sua criação há muitos, "
-"muitos ciclos atrás. Foi uma das primeiras naves espaciais de uso civil, "
-"inicialmente utilizada pela aristocracia e agora utilizada por todos os que "
-"não se podem dar ao luxo de algo melhor."
+"teimosia. O projeto não foi muito alterado desde a sua criação há muitos, "
+"muitos ciclos atrás. Foi uma das primeiras naves espaciais de utilização "
+"civil, inicialmente utilizada pela aristocracia e agora utilizada por todos "
+"os que não se podem dar ao luxo de algo melhor."
 
 #: dat/ships/neutral/mule.xml:2
 msgid "Mule"
@@ -8127,9 +8128,9 @@ msgid ""
 "so avoiding dangerous systems is strongly advised."
 msgstr ""
 "Um cargueiro pesado especializado no transporte de carga por toda a galáxia. "
-"Também tem alojamento suficiente para passageiros, dependendo do modelo, "
-"permitindo cruzeiros agradáveis. A Mula é um alvo favorito de piratas, então "
-"evitar teritórios perigosos é aconselhável."
+"Também tem espaço suficiente para passageiros, dependendo do modelo, "
+"permitindo fazer cruzeiros agradáveis. A Mula é um alvo favorito de piratas, "
+"por isso é aconselhável evitar territórios perigosos."
 
 #: dat/ships/neutral/pacifier.xml:2
 msgid "Pacifier"
@@ -8144,9 +8145,9 @@ msgid ""
 msgstr ""
 "O Pacifcador é um dos projetos mais antigos e confiáveis dos Estaleiros "
 "Nexo. Foi projetado principalmente como uma nave de patrulhamento de "
-"fronteira e, como tal, é capaz de suportar uma grande quantidade de punição "
-"vinda de grupos de saque.O Pacificador possui alta capacidade de combustível "
-"para facilitar longas rotas de patrulha."
+"fronteira e por isso é capaz de suportar uma grande quantidade de punição "
+"por grupos saqueadores. O Pacificador conta com uma grande capacidade de "
+"combustível para facilitar longas rotas de patrulha."
 
 #: dat/ships/neutral/phalanx.xml:2
 msgid "Phalanx"
@@ -8160,9 +8161,9 @@ msgid ""
 "it with turrets."
 msgstr ""
 "A Falange é, pelos padrões Dvaered, uma corveta rápida que pode ser usada "
-"como plataforma de mísseis; o fato que manobra mal também é construção "
-"padrão Dvaered. A sua alta blindagem torna-a uma corveta capaz, desde que "
-"seja equipada com torretas."
+"como plataforma de mísseis, que manobra mal, sendo este o padrão Dvaered. A "
+"sua alta blindagem torna-a uma corveta capaz, desde que seja equipada com "
+"torretas."
 
 #: dat/ships/neutral/quicksilver.xml:2
 msgid "Quicksilver"
@@ -8194,12 +8195,12 @@ msgstr ""
 "ao transporte de mercadorias de alto valor e alto risco. Embora tenha uma "
 "densidade de carga muito inferior à dos cargueiros dedicados, protege-se de "
 "forma extremamente eficaz. Os seus compartimentos modulares permitem-lhe "
-"funcionar como transporte de tropas, um fato reconhecido por exércitos "
+"funcionar como transporte de tropas, um facto reconhecido por exércitos "
 "modernos."
 
 #: dat/ships/neutral/schroedinger.xml:2
 msgid "Schroedinger"
-msgstr ""
+msgstr "Schroedinger"
 
 #: dat/ships/neutral/schroedinger.xml:15
 #: dat/ships/sirius/sirius_divinity.xml:14 dat/ships/sirius/sirius_dogma.xml:14
@@ -8221,8 +8222,8 @@ msgid ""
 msgstr ""
 "O Schroedinger é utilizado principalmente como nave de reconhecimento. "
 "Requer uma tripulação mínima devido aos seus avançados subsistemas de "
-"automação, e os seus tanques de combustível proprietários permitem-lhe ter "
-"um alcance muito maior do que a maioria das naves. A desvantagem é ser "
+"automação. Os seus tanques de combustível proprietários permitem-lhe ter um "
+"alcance muito maior do que a maioria das naves. A desvantagem é ser "
 "extremamente vulnerável a ataques devido à sua blindagem leve e ao pouco "
 "espaço de armas. Está também equipada com um par de motores Eraedon, o que a "
 "torna altamente manobrável."
@@ -8238,7 +8239,7 @@ msgid ""
 "relative, the Lancelot, it's still an effective addition to any fleet."
 msgstr ""
 "Um novo projeto dos Estaleiros Nexo, o Tubarão é um caça ágil e leve, "
-"projetado para patrulhamento intrasistema. Embora não seja tão capaz como o "
+"projetado para patrulhar um sistema local. Embora não seja tão capaz como o "
 "seu parente maior, o Lancelote, o Tubarão é uma adição efetiva a qualquer "
 "frota."
 
@@ -8253,10 +8254,10 @@ msgid ""
 "comparable maximum speed. It's low mass comes at the cost of reduced "
 "structural space."
 msgstr ""
-"A Ponte Estlar é a mais recente nave projetada pela Krain Industries. É um "
+"A Ponte Estelar é a mais recente nave projetada pela Krain Industries. É um "
 "contratorpedeiro leve que alcança a mesma manobrabilidade que uma corveta e "
-"velocidade máxima comparável. A sua baixa massa vem às custas de um espaço "
-"estrutural reduzido."
+"com velocidade máxima comparável. A sua baixa massa deve-se à custa de um "
+"espaço estrutural reduzido."
 
 #: dat/ships/neutral/vendetta.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:217
@@ -8273,11 +8274,11 @@ msgid ""
 "other hand it has a  truly fearsome barrage it can unleash that has "
 "precisely the power to transform extended battles into short fights."
 msgstr ""
-"A Vingança exibe muito bem a filosofia da Casa Dvaered. Dê a uma nave muitas "
-"armas intimidantes, revista com blindagem pesada e negligencie a eletrónica."
+"A Vingança exibe muito bem a filosofia da Casa Dvaered. Dá a uma nave muitas "
+"armas intimidantes, revista com blindagem pesada e negligencia a eletrónica. "
 "Por causa disso, esta nave é mais adequada para combates curtos do que para "
 "batalhas prolongadas, pois possui uma regeneração de energia inferior à de "
-"outros naves da sua categoria. Por outro lado, tem uma barragem "
+"outras naves da sua categoria. Por outro lado, tem uma barragem "
 "verdadeiramente temível que pode desencadear e que tem precisamente o poder "
 "de transformar batalhas prolongadas em lutas curtas."
 
@@ -8294,12 +8295,12 @@ msgid ""
 msgstr ""
 "A Vigilância é a encarnação da filosofia de Dvaered. Apresentando imensas "
 "reservas de energia e seis pontos fixos para armas, foi projetada para "
-"atingir o mais fortemente possível com armas de proa. Dadas as suas origens "
+"atingir o mais fortemente possível com armas na proa. Dadas as suas origens "
 "Dvaered, possui tecnologia inferior às naves equivalentes."
 
 #: dat/ships/neutral/zebra.xml:2
 msgid "Zebra"
-msgstr ""
+msgstr "Zebra"
 
 #: dat/ships/neutral/zebra.xml:21
 msgid ""
@@ -8308,10 +8309,10 @@ msgid ""
 "traders. The Zebra offers an unmatched cargo density with reasonable "
 "protection."
 msgstr ""
-"O cargueiro Zebra é o maior de todos os cargueiros produzidos pela Melendez, "
-"e uma das naves mais desejados por todos os comerciantes civis "
-"independentes. O Zebra oferece uma densidade de carga inigualável com uma "
-"proteção razoável."
+"O cargueiro Zebra é o maior de todos os cargueiros produzidos pela Melendez "
+"e é uma das naves mais desejadas por todos os comerciantes civis "
+"independentes. Oferece uma densidade de carga inigualável com uma proteção "
+"razoável."
 
 #: dat/ships/pirate/pirate_admonisher.xml:2
 msgid "Pirate Admonisher"
@@ -8405,20 +8406,20 @@ msgid ""
 "minorly sacrificing protection."
 msgstr ""
 "Baseando-se no já capaz chassi Falange, os engenheiros da Caveira e Ossos "
-"melhoraram substancialmente o desempenho do nave, ao mesmo tempo que apenas "
+"melhoraram substancialmente o desempenho da nave, ao mesmo tempo que apenas "
 "sacrificaram ligeiramente a proteção."
 
 #: dat/ships/pirate/pirate_revenant.xml:2
-#, fuzzy
-#| msgid "Pirate Hyena"
 msgid "Pirate Revenant"
-msgstr "Hiena Pirata"
+msgstr "Pirata Renascido"
 
 #: dat/ships/pirate/pirate_revenant.xml:19
 msgid ""
 "As Skull and Bones does not have the technology to grow new bioships from "
 "scratch they salvage stolen Soromid ships and abducted feral bioships."
 msgstr ""
+"Como a Crânio e Ossos não tem tecnologia para criar novas bionaves do zero, "
+"eles recuperam naves Soromid roubadas e bionaves selvagens raptadas."
 
 #: dat/ships/pirate/pirate_rhino.xml:2
 msgid "Pirate Rhino"
@@ -8430,10 +8431,10 @@ msgid ""
 "manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay "
 "and durability, the Rhino has become an excellent scavenger ship."
 msgstr ""
-"A tradicional modificação do Caveira e Ossos deixou o Rinoceronte "
+"A tradicional modificação da Crânio e Ossos deixou o Rinoceronte "
 "substancialmente mais manobrável, embora um pouco menos blindado. "
 "Aproveitando seu grande compartimento de carga e durabilidade, o Rinoceronte "
-"tornou-se uma excelente nave de vasculhagem."
+"tornou-se uma excelente nave necrófaga."
 
 #: dat/ships/pirate/pirate_shark.xml:2
 msgid "Pirate Shark"
@@ -8447,7 +8448,7 @@ msgid ""
 "firepower to bear."
 msgstr ""
 "O ágil Turbarão dos Estaleiros Nexo provou ser uma excelente tela para os "
-"técnicos da Caveira e Ossos. Equipado com um ponto fixo de arma adicional, o "
+"técnicos do Crânio e Ossos. Equipado com um ponto fixo de arma adicional, a "
 "sua manobrabilidade sofre um mínimo para apresentar o máximo de poder de "
 "fogo."
 
@@ -8481,12 +8482,13 @@ msgid ""
 "reactor goes nova, destroying the ship. You hope it won't happen to you if "
 "you get in one."
 msgstr ""
-"O Vingança Pirata é ainda mais intimidante do que o seu equivalente de "
-"fábrica. Foram feitos ajustes finos ao estilo pirata de voar. Parte da "
-"blindagem foi removidas para dar mais espaço para pilhagem, enquanto que o "
-"reator foi adulterado por um técnico naval duvidoso. A nave ficour "
+"A Vingança Pirata é ainda mais intimidante do que o seu equivalente de "
+"fábrica. Foram feitos pequenos ajustes ao estilo pirata de voar. Parte da "
+"blindagem foi removida para dar mais espaço para pilhagem, enquanto que o "
+"reator foi adulterado por um técnico naval duvidoso. A nave ficou "
 "substancialmente melhor que a original, mas de vez em quando o reator "
-"explode, destruindo o nave. Tomara que não aconteça se estiver pilotanto um."
+"explode, destruindo a nave. Oxalá que não aconteça se estiveres a pilotar "
+"uma."
 
 #: dat/ships/pirate/pirate_zebra.xml:2
 msgid "Pirate Zebra"
@@ -8500,6 +8502,12 @@ msgid ""
 "significantly lower. The pirate version of the Zebra is nevertheless used as "
 "freighter occasionally."
 msgstr ""
+"O Zebra, um dos maiores cargueiros disponíveis para comerciantes civis "
+"independentes, foi reformado pela Crânio e Ossos para servir como "
+"transportador. Grandes porções dos compartimentos de carga foram "
+"reaproveitadas como hangares, por isso a capacidade de carga é "
+"significativamente menor. A versão pirata do Zebra é, no entanto, usada "
+"ocasionalmente como cargueiro."
 
 #: dat/ships/proteron/proteron_archimedes.xml:2
 msgid "Proteron Archimedes"
@@ -8528,14 +8536,6 @@ msgid "You need at least 20 reputation with the Proteron."
 msgstr "Requer 20 de reputação com os Proteron."
 
 #: dat/ships/proteron/proteron_dalton.xml:20
-#, fuzzy
-#| msgid ""
-#| "While smaller and less intimidating than its bigger siblings in the "
-#| "Proteron arsenal, a pack of Derivatives is still a foe to be reckoned "
-#| "with. True to its name, it's the latest in a long line of largely carrier-"
-#| "based fighters. Packing relatively little firepower, they're ill-suited "
-#| "to duelling, but a carrier group unleashing several squadrons has been "
-#| "known to turn the tide of battle on many occasions."
 msgid ""
 "While smaller and less intimidating than its bigger siblings in the Proteron "
 "arsenal, a pack of Daltons is still a foe to be reckoned with. It's the "
@@ -8545,18 +8545,18 @@ msgid ""
 "suited to duelling, but a carrier group unleashing several squadrons has "
 "been known to turn the tide of battle on many occasions."
 msgstr ""
-"Embora menor e menos intimidante do que os seus irmãos maiores no arsenal "
-"Proteron, um bando de Derivados ainda é um inimigo que deve ser considerado. "
-"Fiel ao seu nome, é o mais recente de uma longa linhagem de caças largamente "
-"baseados em porta-naves. Contendo poder de fogo relativamente baixo, eles "
-"são inadequados para duelos, mas um grupo de porta-naves liberando vários "
-"esquadrões tem a reputação de virar a maré das batalhas em muitas ocasiões."
+"Embora menor e menos intimidante do que os seus irmãos maiores no arsenal de "
+"Proteron, um bando de Daltons ainda é um inimigo a ser considerado. É o "
+"último de uma longa linhagem de intercetores baseados em porta-aviões. A "
+"armadura do Dalton pode ser retraída e funciona como caixa de carga para um "
+"manuseamento e armazenamento mais convenientes. Com relativamente pouco "
+"poder de fogo, eles não são adequados para duelos, mas um grupo de porta-"
+"aviões que desencadeou vários esquadrões é conhecido por mudar a maré da "
+"batalha em muitas ocasiões."
 
 #: dat/ships/proteron/proteron_euler.xml:2
-#, fuzzy
-#| msgid "Proteron Derivative"
 msgid "Proteron Euler"
-msgstr "Derivativo Proteron"
+msgstr "Proteron Euler"
 
 #: dat/ships/proteron/proteron_euler.xml:16
 msgid ""
@@ -8566,12 +8566,15 @@ msgid ""
 "reconnaissance vessel. Not geared for combat, this ship relies on stealth "
 "and speed to avoid hostiles."
 msgstr ""
+"O Proteron escolheu as suas batalhas cuidadosamente, pois as suas lentas "
+"naves capitais não conseguem retirar-se facilmente de uma batalha. Assim, "
+"possuem uma grande frota de naves de reconhecimento, sendo Euler a nave "
+"principal de reconhecimento utilizada. Não está orientada para o combate, "
+"esta nave depende de discrição e velocidade para evitar naves hostis."
 
 #: dat/ships/proteron/proteron_gauss.xml:2
-#, fuzzy
-#| msgid "Proteron Watson"
 msgid "Proteron Gauss"
-msgstr "Watson Proteron"
+msgstr "Proteron Gauss"
 
 #: dat/ships/proteron/proteron_gauss.xml:18
 msgid ""
@@ -8580,10 +8583,10 @@ msgid ""
 "combat vessel. While possessing fewer weapon mounts than the Pacifier, it "
 "makes up for it with its lower mass and expanded structural space."
 msgstr ""
-"O Gauss é uma nave de vanguarda. O projeto foi concluído pouco antes do "
-"Incidente, e o plano era torna-la a principal nave de combate dos militares "
-"Proteron. Apesar de ter menos pontos fixos de armas que o Pacificador, isto "
-"é compensado por sua massa inferior e espaço estrutural expandido."
+"A Gauss é uma nave de vanguarda. O projeto foi concluído pouco antes do "
+"Incidente e o plano era torna-la a principal nave de combate dos militares "
+"Proteron. Apesar de ter menos pontos fixos para armas que o Pacificador, "
+"isto é compensado por sua massa inferior e espaço estrutural expandido."
 
 #: dat/ships/proteron/proteron_hippocrates.xml:2
 msgid "Proteron Hippocrates"
@@ -8601,6 +8604,12 @@ msgid ""
 "fleets. The Hippocrates can also be used as missile platform using the "
 "hangar bay to store additional ammo crates."
 msgstr ""
+"Como Proteron só usa caças baseados em porta-aviões, as pequenas frotas "
+"carecem de apoio de caças. Para compensar esta questão, o Hipócrates foi "
+"desenvolvido, um porta-aviões ultra ligeiro especializado para fornecer "
+"apoio de caça às frotas de invasão de Proteron. O Hipócrates também pode ser "
+"usado como plataforma de mísseis usando o hangar para armazenar caixas de "
+"munições adicionais."
 
 #: dat/ships/proteron/proteron_pythagoras.xml:2
 msgid "Proteron Pythagoras"
@@ -8618,6 +8627,11 @@ msgid ""
 "the defence of the enemy trying to find a weak spot for the heavy Proteron "
 "fleets to break through."
 msgstr ""
+"Enquanto Proteron depende principalmente de naves de capitais pesadas e "
+"poderosas, as Pitágoras são uma exceção. É um cruzador leve e rápido muitas "
+"vezes implantado em pequenas escaramuças contra naves de tamanho médio. "
+"Normalmente pode ser encontrada a testar a defesa do inimigo tentando "
+"encontrar um ponto fraco para as pesadas frotas de Proteron atravessarem."
 
 #: dat/ships/proteron/proteron_watson.xml:2
 msgid "Proteron Watson"
@@ -8629,9 +8643,9 @@ msgid ""
 "mobile launch base as well as a command and control unit, this vessel co-"
 "ordinates the rest of the fleet in the fight for dominance over the galaxy."
 msgstr ""
-"O coração da frota de batalha de Proteron é formado pelos Watson. Atuando "
+"O coração da frota de batalha de Proteron é formado pelas Watson. Atuando "
 "como uma base de lançamento móvel, bem como uma unidade de comando e "
-"controle, esta nave coordena o resto da frota na luta pelo domínio da "
+"controlo, esta nave coordena o resto da frota na luta pelo domínio da "
 "galáxia."
 
 #: dat/ships/sirius/sirius_divinity.xml:2
@@ -8650,11 +8664,11 @@ msgid ""
 "multitude of fighters gives it unparalleled flexibility in combat, serving "
 "as a key logistical vessel in any sizable fleet."
 msgstr ""
-"Embora se diga que o Dogma constitui o núcleo de qualquer frota Siriana, "
-"poucos pilotos de combate descartariam o significado do Divindade. Embora "
-"não seja excepcionalmente formidável em combate direto, a capacidade da "
-"Divindade de pôr em no campo de batalha uma multidão de caças dá-lhe uma "
-"flexibilidade sem igual no combate, servindo como um navio logístico chave "
+"Embora se diga que a Dogma constitui o núcleo de qualquer frota Siriana, "
+"poucos pilotos de combate descartariam o significado da Divindade. Embora "
+"não seja excecionalmente formidável em combate direto, a capacidade da "
+"Divindade de pôr no campo de batalha uma multidão de caças dá-lhe uma "
+"flexibilidade sem igual no combate, servindo como uma nave logística chave "
 "em qualquer frota de tamanho considerável."
 
 #: dat/ships/sirius/sirius_dogma.xml:2
@@ -8667,9 +8681,9 @@ msgid ""
 "Trimmed in gold and silver and fielding a large array of weapons, the Dogma "
 "is seldom surpassed in either prestige or military might."
 msgstr ""
-"A espinha dorsal da frota da Casa Sirius, o Dogma, é um espectáculo a "
-"contemplar. Decorado em ouro e prata e com uma grande variedade de armas, o "
-"Dogma raramente é superado, seja em prestígio seja em poderio militar."
+"A espinha dorsal da frota da Casa Sirius, a Dogma é um espetáculo a "
+"contemplar. Decorada com ouro e prata e com uma grande variedade de armas, a "
+"Dogma raramente é superada, seja em prestígio seja em poderio militar."
 
 #: dat/ships/sirius/sirius_fidelity.xml:2
 msgid "Sirius Fidelity"
@@ -8722,10 +8736,10 @@ msgid ""
 "transport pilgrims, even though most Sirii dislike these overcrowded mass "
 "transports."
 msgstr ""
-"O Providence é o cargueiro da Casa Sirius e é utilizado principalmente para "
+"O Providência é o cargueiro da Casa Sirius e é utilizado principalmente para "
 "o transporte de grandes quantidades de suprimentos. Alguns também "
 "transportam peregrinos, embora a maioria dos Sirii não goste destes "
-"transportes de massa superlotados."
+"transportes em massa superlotados."
 
 #: dat/ships/sirius/sirius_shaman.xml:2
 msgid "Sirius Shaman"
@@ -8742,13 +8756,13 @@ msgid ""
 "missile platform, few enemies escape the reach of the Shaman."
 msgstr ""
 "Embora a sua forma perfil relativamente possa fazer o Xamã ser confundido "
-"com um caça leve, ele é tudo menos isso. Na verdade uma plataforma de "
-"mísseis leve constuída especialmente para este fim, poucos inimigos escapam "
-"ao alcance do Xamã."
+"com um caça leve, ele é tudo menos isso. Como plataforma leve de mísseis "
+"construída especialmente para este fim, poucos inimigos escapam ao alcance "
+"do Xamã."
 
 #: dat/ships/soromid/soromid_arx.xml:2
 msgid "Soromid Arx"
-msgstr "Arx Soromida"
+msgstr "Arx Soromid"
 
 #: dat/ships/soromid/soromid_arx.xml:9
 msgid "Bio-Carrier"
@@ -8766,11 +8780,11 @@ msgid ""
 "Arx tends to be a more lightweight carrier than is typically found in non-"
 "Soromid fleets, without sacrificing carrying capacity."
 msgstr ""
-"O Arx Soromido está normalmente presente nas frotas de Soromidas como um "
+"O Arx Soromida está normalmente presente nas frotas de Soromidas como um "
 "nave de comando e porta-caças. As suas propriedades únicas permitem-lhe "
 "aumentar o poderio das naves transportadas, o que compensa facilmente o seu "
 "reduzido número de pontos fixos. O Arx tende a ser um porta-naves mais leve "
-"do que é tipicamente encontrado em frotas não-Soromidas, sem sacrificar a "
+"do que é tipicamente encontrado em frotas não Soromidas, sem sacrificar a "
 "sua capacidade de transporte."
 
 #: dat/ships/soromid/soromid_brigand.xml:2
@@ -8779,7 +8793,7 @@ msgstr "Bandido Soromida"
 
 #: dat/ships/soromid/soromid_brigand.xml:9
 msgid "Bio-Interceptor"
-msgstr ""
+msgstr "Bio-Interceptor"
 
 #: dat/ships/soromid/soromid_brigand.xml:16
 msgid "You need at least 20 reputation with the Soromid."
@@ -9183,7 +9197,7 @@ msgid ""
 "However, the standard strategy is to rely on drones for fighting while "
 "making a getaway."
 msgstr ""
-"Enquanto House Za'lek depende de drones para quase tudo, o seu combustível "
+"Enquanto a Casa Za'lek depende de drones para quase tudo, o seu combustível "
 "limitado deles torna-os inadequados para realizar transportes de longa "
 "distância. Para superar esta limitação, foi desenvolvido o Cargueiro Mammon. "
 "Tem grandes quantidades de espaço de armazenamento, capaz de comportar "
@@ -20776,12 +20790,21 @@ msgid ""
 "popular pastime here, with the valuable minerals hiding beneath the ice "
 "sheets."
 msgstr ""
+"Apesar de Stormgard ser um ambiente áspero e gelado, é um mundo densamente "
+"povoado. Isto porque vários elementos da família do imperador fizeram deste "
+"mundo a sua casa e isso significa inevitavelmente que os burocratas "
+"imperiais, cortesãos e parasitas em geral também se vão mudar para cá. A "
+"indústria é um passatempo popular aqui, com os minerais valiosos escondidos "
+"por baixo dos lençóis de gelo."
 
 #: dat/spob/stormgard.xml:29
 msgid ""
 "This bar is warm and cozy despite the howling winds outside. Windows show "
 "off the breathtaking view of the sunlight reflecting off the ice crystals."
 msgstr ""
+"Este bar é quente e acolhedor, apesar dos ventos uivantes que sopram lá "
+"fora. As janelas mostram uma vista deslumbrante da luz do sol que reflete os "
+"cristais de gelo."
 
 #: dat/spob/stormy.xml:2
 msgid "Stormy"
@@ -23535,23 +23558,23 @@ msgstr ""
 
 #: dat/spob_virtual/tradelane_dvaered.xml:2
 msgid "Trade Lane (Dvaered)"
-msgstr ""
+msgstr "Corredor comercial (Dvaered)"
 
 #: dat/spob_virtual/tradelane_empire.xml:2
 msgid "Trade Lane (Empire)"
-msgstr ""
+msgstr "Corredor comercial (Império)"
 
 #: dat/spob_virtual/tradelane_sirius.xml:2
 msgid "Trade Lane (Sirius)"
-msgstr ""
+msgstr "Corredor comercial (Sirius)"
 
 #: dat/spob_virtual/tradelane_soromid.xml:2
 msgid "Trade Lane (Soromid)"
-msgstr ""
+msgstr "Corredor comercial (Soromid)"
 
 #: dat/spob_virtual/tradelane_zalek.xml:2
 msgid "Trade Lane (Za'lek)"
-msgstr ""
+msgstr "Corredor comercial (Za'lek)"
 
 #: dat/spob_virtual/trader_area.xml:2
 msgid "Trader Area"
@@ -23587,19 +23610,19 @@ msgstr ""
 
 #: dat/ssys/acheron.xml:2
 msgid "Acheron"
-msgstr ""
+msgstr "Acheron"
 
 #: dat/ssys/adraia.xml:2
 msgid "Adraia"
-msgstr ""
+msgstr "Adraia"
 
 #: dat/ssys/adran.xml:2
 msgid "Adran"
-msgstr ""
+msgstr "Adran"
 
 #: dat/ssys/aesir.xml:2
 msgid "Aesir"
-msgstr ""
+msgstr "Aesir"
 
 #: dat/ssys/aesir.xml:4
 msgid "#pSirius Homeworld#0"
@@ -23607,35 +23630,35 @@ msgstr ""
 
 #: dat/ssys/aesria.xml:2
 msgid "Aesria"
-msgstr ""
+msgstr "Aesria"
 
 #: dat/ssys/aet.xml:2
 msgid "Aet"
-msgstr ""
+msgstr "Aet"
 
 #: dat/ssys/akodu.xml:2
 msgid "Akodu"
-msgstr ""
+msgstr "Akodu"
 
 #: dat/ssys/akra.xml:2
 msgid "Akra"
-msgstr ""
+msgstr "Akra"
 
 #: dat/ssys/allous.xml:2
 msgid "Allous"
-msgstr ""
+msgstr "Allous"
 
 #: dat/ssys/alteris.xml:2
 msgid "Alteris"
-msgstr ""
+msgstr "Alteris"
 
 #: dat/ssys/amaroq.xml:2
 msgid "Amaroq"
-msgstr ""
+msgstr "Amaroq"
 
 #: dat/ssys/amatiri.xml:2
 msgid "Amatiri"
-msgstr ""
+msgstr "Amatiri"
 
 #: dat/ssys/amatiri.xml:6 dat/ssys/ariadus.xml:6 dat/ssys/bonanza.xml:6
 #: dat/ssys/fertile_crescent.xml:6 dat/ssys/hasselt.xml:6 dat/ssys/kansas.xml:6
@@ -23651,39 +23674,39 @@ msgstr ""
 
 #: dat/ssys/anarbalis.xml:2
 msgid "Anarbalis"
-msgstr ""
+msgstr "Anarbalis"
 
 #: dat/ssys/andee.xml:2
 msgid "Andee"
-msgstr ""
+msgstr "Andee"
 
 #: dat/ssys/andres.xml:2
 msgid "Andres"
-msgstr ""
+msgstr "Andres"
 
 #: dat/ssys/aneel_azi.xml:2
 msgid "Aneel Azi"
-msgstr ""
+msgstr "Aneel Azi"
 
 #: dat/ssys/anger.xml:2
 msgid "Anger"
-msgstr ""
+msgstr "Ira"
 
 #: dat/ssys/anku.xml:2
 msgid "An'ku"
-msgstr ""
+msgstr "An'ku"
 
 #: dat/ssys/anrique.xml:2
 msgid "Anrique"
-msgstr ""
+msgstr "Anrique"
 
 #: dat/ssys/antares.xml:2
 msgid "Antares"
-msgstr ""
+msgstr "Antares"
 
 #: dat/ssys/antlejos.xml:2
 msgid "Antlejos"
-msgstr ""
+msgstr "Antlejos"
 
 #. subtitle = _("None"),
 #. PlasmaStorm = {
@@ -23725,15 +23748,15 @@ msgstr ""
 
 #: dat/ssys/apez.xml:2
 msgid "Apez"
-msgstr ""
+msgstr "Apez"
 
 #: dat/ssys/apik.xml:2
 msgid "Apik"
-msgstr ""
+msgstr "Apik"
 
 #: dat/ssys/arandon.xml:2
 msgid "Arandon"
-msgstr ""
+msgstr "Arandon"
 
 #: dat/ssys/arcanis.xml:2
 msgid "Arcanis"
@@ -23741,11 +23764,11 @@ msgstr ""
 
 #: dat/ssys/arcturus.xml:2
 msgid "Arcturus"
-msgstr ""
+msgstr "Arcturus"
 
 #: dat/ssys/ariadus.xml:2
 msgid "Ariadus"
-msgstr ""
+msgstr "Ariadus"
 
 #: dat/ssys/armorhead.xml:2
 msgid "Armorhead"
@@ -23753,7 +23776,7 @@ msgstr ""
 
 #: dat/ssys/atlantis.xml:2
 msgid "Atlantis"
-msgstr ""
+msgstr "Atlantis"
 
 #: dat/ssys/auger.xml:2
 msgid "Auger"
@@ -23761,7 +23784,7 @@ msgstr ""
 
 #: dat/ssys/awowa.xml:2
 msgid "Awowa"
-msgstr ""
+msgstr "Awowa"
 
 #: dat/ssys/babylon.xml:2
 msgid "Babylon"
@@ -23769,7 +23792,7 @@ msgstr "Babilónia"
 
 #: dat/ssys/baf.xml:2
 msgid "Baf"
-msgstr ""
+msgstr "Baf"
 
 #: dat/ssys/baf.xml:4
 msgid "#oRestricted#0"
@@ -23785,27 +23808,27 @@ msgstr ""
 
 #: dat/ssys/bedimann.xml:2
 msgid "Bedimann"
-msgstr ""
+msgstr "Bedimann"
 
 #: dat/ssys/beeklo.xml:2
 msgid "Beeklo"
-msgstr ""
+msgstr "Beeklo"
 
 #: dat/ssys/behar.xml:2
 msgid "Behar"
-msgstr ""
+msgstr "Behar"
 
 #: dat/ssys/blacin.xml:2
 msgid "Blacin"
-msgstr ""
+msgstr "Blacin"
 
 #: dat/ssys/blackwell.xml:2
 msgid "Blackwell"
-msgstr ""
+msgstr "Blackwell"
 
 #: dat/ssys/blunderbuss.xml:2
 msgid "Blunderbuss"
-msgstr ""
+msgstr "Blunderbuss"
 
 #: dat/ssys/bonanza.xml:2
 msgid "Bonanza"
@@ -23817,15 +23840,15 @@ msgstr ""
 
 #: dat/ssys/borla.xml:2
 msgid "Borla"
-msgstr ""
+msgstr "Borla"
 
 #: dat/ssys/botarn.xml:2
 msgid "Botarn"
-msgstr ""
+msgstr "Botarn"
 
 #: dat/ssys/brendon.xml:2
 msgid "Brendon"
-msgstr ""
+msgstr "Brendon"
 
 #: dat/ssys/brimstone.xml:2
 msgid "Brimstone"
@@ -23833,27 +23856,27 @@ msgstr "Brimstone"
 
 #: dat/ssys/brumerebus.xml:2
 msgid "Brumerebus"
-msgstr ""
+msgstr "Brumerebus"
 
 #: dat/ssys/c00.xml:2
 msgid "C-00"
-msgstr ""
+msgstr "C-00"
 
 #: dat/ssys/c14.xml:2
 msgid "C-14"
-msgstr ""
+msgstr "C-14"
 
 #: dat/ssys/c28.xml:2
 msgid "C-28"
-msgstr ""
+msgstr "C-28"
 
 #: dat/ssys/c43.xml:2
 msgid "C-43"
-msgstr ""
+msgstr "C-43"
 
 #: dat/ssys/c59.xml:2
 msgid "C-59"
-msgstr ""
+msgstr "C-59"
 
 #: dat/ssys/capricorn.xml:2
 msgid "Capricorn"
@@ -23861,23 +23884,23 @@ msgstr "Capricórnio"
 
 #: dat/ssys/castellan.xml:2
 msgid "Castellan"
-msgstr ""
+msgstr "Castellan"
 
 #: dat/ssys/chloe.xml:2
 msgid "Chloe"
-msgstr ""
+msgstr "Chloe"
 
 #: dat/ssys/chraan.xml:2
 msgid "Chraan"
-msgstr ""
+msgstr "Chraan"
 
 #: dat/ssys/churchill.xml:2
 msgid "Churchill"
-msgstr ""
+msgstr "Churchill"
 
 #: dat/ssys/cleai.xml:2
 msgid "Cleai"
-msgstr ""
+msgstr "Cleai"
 
 #: dat/ssys/copernicus.xml:2
 msgid "Copernicus"
@@ -23889,11 +23912,11 @@ msgstr "Corinto"
 
 #: dat/ssys/coriolis.xml:2
 msgid "Coriolis"
-msgstr ""
+msgstr "Coriolis"
 
 #: dat/ssys/corvus.xml:2
 msgid "Corvus"
-msgstr ""
+msgstr "Corvus"
 
 #. Create the OSD
 #: dat/ssys/crimson_gauntlet.xml:2 dat/events/dvaered/totoran.lua:141
@@ -23903,19 +23926,19 @@ msgstr "Manopla Carmesim"
 
 #: dat/ssys/cygnus.xml:2
 msgid "Cygnus"
-msgstr ""
+msgstr "Cygnus"
 
 #: dat/ssys/daan.xml:2
 msgid "Daan"
-msgstr ""
+msgstr "Daan"
 
 #: dat/ssys/dakron.xml:2
 msgid "Dakron"
-msgstr ""
+msgstr "Dakron"
 
 #: dat/ssys/daled.xml:2
 msgid "Daled"
-msgstr ""
+msgstr "Daled"
 
 #: dat/ssys/daled.xml:6 dat/ssys/defa.xml:6 dat/ssys/fried.xml:5
 #: dat/ssys/gold.xml:6 dat/ssys/kretogg.xml:6 dat/ssys/mason.xml:6
@@ -23927,11 +23950,11 @@ msgstr ""
 
 #: dat/ssys/damien.xml:2
 msgid "Damien"
-msgstr ""
+msgstr "Damien"
 
 #: dat/ssys/daravon.xml:2
 msgid "Daravon"
-msgstr ""
+msgstr "Daravon"
 
 #: dat/ssys/darkstone.xml:2
 msgid "Darkstone"
@@ -23939,47 +23962,47 @@ msgstr ""
 
 #: dat/ssys/defa.xml:2
 msgid "Defa"
-msgstr ""
+msgstr "Defa"
 
 #: dat/ssys/delta_pavonis.xml:2
 msgid "Delta Pavonis"
-msgstr ""
+msgstr "Delta Pavonis"
 
 #: dat/ssys/delta_polaris.xml:2
 msgid "Delta Polaris"
-msgstr ""
+msgstr "Delta Polaris"
 
 #: dat/ssys/dendria.xml:2
 msgid "Dendria"
-msgstr ""
+msgstr "Dendria"
 
 #: dat/ssys/diadem.xml:2
 msgid "Diadem"
-msgstr ""
+msgstr "Diadem"
 
 #: dat/ssys/doeston.xml:2
 msgid "Doeston"
-msgstr ""
+msgstr "Doeston"
 
 #: dat/ssys/dohriabi.xml:2
 msgid "Dohriabi"
-msgstr ""
+msgstr "Dohriabi"
 
 #: dat/ssys/doowa.xml:2
 msgid "Doowa"
-msgstr ""
+msgstr "Doowa"
 
 #: dat/ssys/doranthex.xml:2
 msgid "Doranthex"
-msgstr ""
+msgstr "Doranthex"
 
 #: dat/ssys/draconis.xml:2
 msgid "Draconis"
-msgstr ""
+msgstr "Draconis"
 
 #: dat/ssys/draygar.xml:2
 msgid "Draygar"
-msgstr ""
+msgstr "Draygar"
 
 #: dat/ssys/druid.xml:2
 msgid "Druid"
@@ -23987,7 +24010,7 @@ msgstr ""
 
 #: dat/ssys/druss.xml:2
 msgid "Druss"
-msgstr ""
+msgstr "Druss"
 
 #: dat/ssys/dune.xml:2
 msgid "Dune"
@@ -23995,11 +24018,11 @@ msgstr ""
 
 #: dat/ssys/duros.xml:2
 msgid "Duros"
-msgstr ""
+msgstr "Duros"
 
 #: dat/ssys/dvaer.xml:2
 msgid "Dvaer"
-msgstr ""
+msgstr "Dvaer"
 
 #: dat/ssys/dvaer.xml:4
 msgid "#pDvaered Homeworld#0"
@@ -24007,47 +24030,47 @@ msgstr ""
 
 #: dat/ssys/effetey.xml:2
 msgid "Effetey"
-msgstr ""
+msgstr "Effetey"
 
 #: dat/ssys/eiderdown.xml:2
 msgid "Eiderdown"
-msgstr ""
+msgstr "Eiderdown"
 
 #: dat/ssys/eisenhorn.xml:2
 msgid "Eisenhorn"
-msgstr ""
+msgstr "Eisenhorn"
 
 #: dat/ssys/ekkodu.xml:2
 msgid "Ekkodu"
-msgstr ""
+msgstr "Ekkodu"
 
 #: dat/ssys/ekta.xml:2
 msgid "Ekta"
-msgstr ""
+msgstr "Ekta"
 
 #: dat/ssys/elixir.xml:2
 msgid "Elixir"
-msgstr ""
+msgstr "Elixir"
 
 #: dat/ssys/elza.xml:2
 msgid "Elza"
-msgstr ""
+msgstr "Elza"
 
 #: dat/ssys/eneguoz.xml:2
 msgid "Eneguoz"
-msgstr ""
+msgstr "Eneguoz"
 
 #: dat/ssys/eridani.xml:2
 msgid "Eridani"
-msgstr ""
+msgstr "Eridani"
 
 #: dat/ssys/esker.xml:2
 msgid "Esker"
-msgstr ""
+msgstr "Esker"
 
 #: dat/ssys/euler.xml:2
 msgid "Euler"
-msgstr ""
+msgstr "Euler"
 
 #: dat/ssys/euler.xml:6 dat/ssys/mirror.xml:6 dat/ssys/narousse.xml:6
 #: dat/ssys/ngc10081.xml:6 dat/ssys/ngc10653.xml:6 dat/ssys/ngc11050.xml:6
@@ -24063,7 +24086,7 @@ msgstr ""
 
 #: dat/ssys/farizel.xml:2
 msgid "Farizel"
-msgstr ""
+msgstr "Farizel"
 
 #: dat/ssys/fathers_pride.xml:2
 msgid "Father's Pride"
@@ -24075,7 +24098,7 @@ msgstr ""
 
 #: dat/ssys/felzen.xml:2
 msgid "Felzen"
-msgstr ""
+msgstr "Felzen"
 
 #: dat/ssys/fern.xml:2
 msgid "Fern"
@@ -24087,7 +24110,7 @@ msgstr ""
 
 #: dat/ssys/feye.xml:2 dat/events/discovery.lua:63
 msgid "Feye"
-msgstr ""
+msgstr "Feye"
 
 #: dat/ssys/feye.xml:4
 msgid "#pSoromid Homeworld#0"
@@ -24095,15 +24118,15 @@ msgstr ""
 
 #: dat/ssys/fidelis.xml:2
 msgid "Fidelis"
-msgstr ""
+msgstr "Fidelis"
 
 #: dat/ssys/firk.xml:2
 msgid "Firk"
-msgstr ""
+msgstr "Firk"
 
 #: dat/ssys/flok.xml:2
 msgid "Flok"
-msgstr ""
+msgstr "Flok"
 
 #: dat/ssys/flow.xml:2
 msgid "Flow"
@@ -24111,7 +24134,7 @@ msgstr ""
 
 #: dat/ssys/forlat.xml:2
 msgid "Forlat"
-msgstr ""
+msgstr "Forlat"
 
 #: dat/ssys/fortitude.xml:2
 msgid "Fortitude"
@@ -24123,11 +24146,11 @@ msgstr ""
 
 #: dat/ssys/frolina.xml:2
 msgid "Frolina"
-msgstr ""
+msgstr "Frolina"
 
 #: dat/ssys/fulcrum.xml:2
 msgid "Fulcrum"
-msgstr ""
+msgstr "Fulcrum"
 
 #: dat/ssys/fury.xml:2
 msgid "Fury"
@@ -24135,11 +24158,11 @@ msgstr ""
 
 #: dat/ssys/gamel.xml:2
 msgid "Gamel"
-msgstr ""
+msgstr "Gamel"
 
 #: dat/ssys/gamma_polaris.xml:2
 msgid "Gamma Polaris"
-msgstr ""
+msgstr "Gamma Polaris"
 
 #: dat/ssys/gamma_polaris.xml:5
 msgid "#pEmpire Homeworld#0"
@@ -24147,19 +24170,19 @@ msgstr ""
 
 #: dat/ssys/gammacron.xml:2
 msgid "Gammacron"
-msgstr ""
+msgstr "Gammacron"
 
 #: dat/ssys/ganth.xml:2
 msgid "Ganth"
-msgstr ""
+msgstr "Ganth"
 
 #: dat/ssys/garten.xml:2
 msgid "Garten"
-msgstr ""
+msgstr "Garten"
 
 #: dat/ssys/gewirn.xml:2
 msgid "Gewirn"
-msgstr ""
+msgstr "Gewirn"
 
 #: dat/ssys/gilligans_light.xml:2
 msgid "Gilligan's Light"
@@ -24171,15 +24194,15 @@ msgstr ""
 
 #: dat/ssys/gorman.xml:2
 msgid "Gorman"
-msgstr ""
+msgstr "Gorman"
 
 #: dat/ssys/gremlin.xml:2
 msgid "Gremlin"
-msgstr ""
+msgstr "Gremlin"
 
 #: dat/ssys/griffin.xml:2
 msgid "Griffin"
-msgstr ""
+msgstr "Griffin"
 
 #: dat/ssys/gruz.xml:2
 msgid "Gruz"
@@ -24191,55 +24214,55 @@ msgstr ""
 
 #: dat/ssys/gyrios.xml:2
 msgid "Gyrios"
-msgstr ""
+msgstr "Gyrios"
 
 #: dat/ssys/hades.xml:2
 msgid "Hades"
-msgstr ""
+msgstr "Hades"
 
 #: dat/ssys/hadosh.xml:2
 msgid "Hadosh"
-msgstr ""
+msgstr "Hadosh"
 
 #: dat/ssys/haered.xml:2
 msgid "Haered"
-msgstr ""
+msgstr "Haered"
 
 #: dat/ssys/hakoi.xml:2
 msgid "Hakoi"
-msgstr ""
+msgstr "Hakoi"
 
 #: dat/ssys/haleb.xml:2
 msgid "Haleb"
-msgstr ""
+msgstr "Haleb"
 
 #: dat/ssys/halo.xml:2
 msgid "Halo"
-msgstr ""
+msgstr "Halo"
 
 #: dat/ssys/hargen.xml:2
 msgid "Hargen"
-msgstr ""
+msgstr "Hargen"
 
 #: dat/ssys/hasselt.xml:2
 msgid "Hasselt"
-msgstr ""
+msgstr "Hasselt"
 
 #: dat/ssys/hatter.xml:2
 msgid "Hatter"
-msgstr ""
+msgstr "Hatter"
 
 #: dat/ssys/hekaras.xml:2
 msgid "Hekaras"
-msgstr ""
+msgstr "Hekaras"
 
 #: dat/ssys/hephaestus.xml:2
 msgid "Hephaestus"
-msgstr ""
+msgstr "Hephaestus"
 
 #: dat/ssys/herakin.xml:2
 msgid "Herakin"
-msgstr ""
+msgstr "Herakin"
 
 #: dat/ssys/hideyoshis_star.xml:2
 msgid "Hideyoshi's Star"
@@ -24247,11 +24270,11 @@ msgstr ""
 
 #: dat/ssys/humdrum.xml:2
 msgid "Humdrum"
-msgstr ""
+msgstr "Humdrum"
 
 #: dat/ssys/hystera.xml:2
 msgid "Hystera"
-msgstr ""
+msgstr "Hystera"
 
 #: dat/ssys/infinity.xml:2
 msgid "Infinity"
@@ -24267,107 +24290,107 @@ msgstr ""
 
 #: dat/ssys/jackson.xml:2
 msgid "Jackson"
-msgstr ""
+msgstr "Jackson"
 
 #: dat/ssys/jade.xml:2
 msgid "Jade"
-msgstr ""
+msgstr "Jade"
 
 #: dat/ssys/jervis.xml:2
 msgid "Jervis"
-msgstr ""
+msgstr "Jervis"
 
 #: dat/ssys/jommel.xml:2
 msgid "Jommel"
-msgstr ""
+msgstr "Jommel"
 
 #: dat/ssys/kansas.xml:2
 msgid "Kansas"
-msgstr ""
+msgstr "Kansas"
 
 #: dat/ssys/karman.xml:2
 msgid "Karman"
-msgstr ""
+msgstr "Karman"
 
 #: dat/ssys/katami.xml:2
 msgid "Katami"
-msgstr ""
+msgstr "Katami"
 
 #: dat/ssys/kelvos.xml:2
 msgid "Kelvos"
-msgstr ""
+msgstr "Kelvos"
 
 #: dat/ssys/khaas.xml:2
 msgid "Khaas"
-msgstr ""
+msgstr "Khaas"
 
 #: dat/ssys/kiwi.xml:2
 msgid "Kiwi"
-msgstr ""
+msgstr "Kiwi"
 
 #: dat/ssys/klantar.xml:2
 msgid "Klantar"
-msgstr ""
+msgstr "Klantar"
 
 #: dat/ssys/klintus.xml:2
 msgid "Klintus"
-msgstr ""
+msgstr "Klintus"
 
 #: dat/ssys/klunzar.xml:2
 msgid "Klunzar"
-msgstr ""
+msgstr "Klunzar"
 
 #: dat/ssys/knave.xml:2 dat/scripts/pilotname/pirate.lua:359
 msgid "Knave"
-msgstr ""
+msgstr "Knave"
 
 #: dat/ssys/kobopos.xml:2
 msgid "Kobopos"
-msgstr ""
+msgstr "Kobopos"
 
 #: dat/ssys/kohler.xml:2
 msgid "Kohler"
-msgstr ""
+msgstr "Kohler"
 
 #: dat/ssys/koralis.xml:2
 msgid "Koralis"
-msgstr ""
+msgstr "Koralis"
 
 #: dat/ssys/korifa.xml:2
 msgid "Korifa"
-msgstr ""
+msgstr "Korifa"
 
 #: dat/ssys/korma.xml:2
 msgid "Korma"
-msgstr ""
+msgstr "Korma"
 
 #: dat/ssys/kraft.xml:2
 msgid "Kraft"
-msgstr ""
+msgstr "Kraft"
 
 #: dat/ssys/kretogg.xml:2 dat/events/discovery.lua:119
 msgid "Kretogg"
-msgstr ""
+msgstr "Kretogg"
 
 #: dat/ssys/ksher.xml:2
 msgid "Ksher"
-msgstr ""
+msgstr "Ksher"
 
 #: dat/ssys/kyo.xml:2
 msgid "Kyo"
-msgstr ""
+msgstr "Kyo"
 
 #: dat/ssys/lapis.xml:2
 msgid "Lapis"
-msgstr ""
+msgstr "Lapis"
 
 #: dat/ssys/lazuli.xml:2
 msgid "Lazuli"
-msgstr ""
+msgstr "Lazuli"
 
 #: dat/ssys/limbo.xml:2
 msgid "Limbo"
-msgstr ""
+msgstr "Limbo"
 
 #: dat/ssys/longbow.xml:2
 msgid "Longbow"
@@ -24375,51 +24398,51 @@ msgstr ""
 
 #: dat/ssys/machea.xml:2
 msgid "Machea"
-msgstr ""
+msgstr "Machea"
 
 #: dat/ssys/marat.xml:2
 msgid "Marat"
-msgstr ""
+msgstr "Marat"
 
 #: dat/ssys/margarita.xml:2
 msgid "Margarita"
-msgstr ""
+msgstr "Margarita"
 
 #: dat/ssys/maron.xml:2
 msgid "Maron"
-msgstr ""
+msgstr "Maron"
 
 #: dat/ssys/mason.xml:2
 msgid "Mason"
-msgstr ""
+msgstr "Mason"
 
 #: dat/ssys/massia.xml:2
 msgid "Massia"
-msgstr ""
+msgstr "Massia"
 
 #: dat/ssys/maus.xml:2
 msgid "Maus"
-msgstr ""
+msgstr "Maus"
 
 #: dat/ssys/merisi.xml:2
 msgid "Merisi"
-msgstr ""
+msgstr "Merisi"
 
 #: dat/ssys/metsys.xml:2
 msgid "Metsys"
-msgstr ""
+msgstr "Metsys"
 
 #: dat/ssys/mida.xml:2
 msgid "Mida"
-msgstr ""
+msgstr "Mida"
 
 #: dat/ssys/midoros.xml:2
 msgid "Midoros"
-msgstr ""
+msgstr "Midoros"
 
 #: dat/ssys/millstone.xml:2
 msgid "Millstone"
-msgstr ""
+msgstr "Millstone"
 
 #: dat/ssys/mirror.xml:2
 msgid "Mirror"
@@ -24427,15 +24450,15 @@ msgstr ""
 
 #: dat/ssys/mizar.xml:2
 msgid "Mizar"
-msgstr ""
+msgstr "Mizar"
 
 #: dat/ssys/modus_manis.xml:2
 msgid "Modus Manis"
-msgstr ""
+msgstr "Modus Manis"
 
 #: dat/ssys/monogram.xml:2
 msgid "Monogram"
-msgstr ""
+msgstr "Monogram"
 
 #: dat/ssys/moor.xml:2
 msgid "Moor"
@@ -24443,7 +24466,7 @@ msgstr ""
 
 #: dat/ssys/moordra.xml:2
 msgid "Moordra"
-msgstr ""
+msgstr "Moordra"
 
 #: dat/ssys/muirat.xml:2
 msgid "Muirat"
@@ -24451,143 +24474,143 @@ msgstr ""
 
 #: dat/ssys/mural.xml:2
 msgid "Mural"
-msgstr ""
+msgstr "Mural"
 
 #: dat/ssys/muran.xml:2
 msgid "Muran"
-msgstr ""
+msgstr "Muran"
 
 #: dat/ssys/myad.xml:2
 msgid "Myad"
-msgstr ""
+msgstr "Myad"
 
 #: dat/ssys/narousse.xml:2
 msgid "Narousse"
-msgstr ""
+msgstr "Narousse"
 
 #: dat/ssys/nartur.xml:2
 msgid "Nartur"
-msgstr ""
+msgstr "Nartur"
 
 #: dat/ssys/nasona.xml:2
 msgid "Nasona"
-msgstr ""
+msgstr "Nasona"
 
 #: dat/ssys/nava.xml:2
 msgid "Nava"
-msgstr ""
+msgstr "Nava"
 
 #: dat/ssys/neexi.xml:2
 msgid "Neexi"
-msgstr ""
+msgstr "Neexi"
 
 #: dat/ssys/neon.xml:2
 msgid "Neon"
-msgstr ""
+msgstr "Neon"
 
 #: dat/ssys/newmarch.xml:2
 msgid "Newmarch"
-msgstr ""
+msgstr "Newmarch"
 
 #: dat/ssys/ngc1001.xml:2
 msgid "NGC-1001"
-msgstr ""
+msgstr "NGC-1001"
 
 #: dat/ssys/ngc10081.xml:2
 msgid "NGC-10081"
-msgstr ""
+msgstr "NGC-10081"
 
 #: dat/ssys/ngc10180.xml:2
 msgid "NGC-10180"
-msgstr ""
+msgstr "NGC-10180"
 
 #: dat/ssys/ngc10284.xml:2
 msgid "NGC-10284"
-msgstr ""
+msgstr "NGC-10284"
 
 #: dat/ssys/ngc10452.xml:2
 msgid "NGC-10452"
-msgstr ""
+msgstr "NGC-10452"
 
 #: dat/ssys/ngc10653.xml:2
 msgid "NGC-10653"
-msgstr ""
+msgstr "NGC-10653"
 
 #: dat/ssys/ngc10789.xml:2
 msgid "NGC-10789"
-msgstr ""
+msgstr "NGC-10789"
 
 #: dat/ssys/ngc10907.xml:2
 msgid "NGC-10907"
-msgstr ""
+msgstr "NGC-10907"
 
 #: dat/ssys/ngc1098.xml:2
 msgid "NGC-1098"
-msgstr ""
+msgstr "NGC-1098"
 
 #: dat/ssys/ngc11050.xml:2
 msgid "NGC-11050"
-msgstr ""
+msgstr "NGC-11050"
 
 #: dat/ssys/ngc11231.xml:2
 msgid "NGC-11231"
-msgstr ""
+msgstr "NGC-11231"
 
 #: dat/ssys/ngc11444.xml:2
 msgid "NGC-11444"
-msgstr ""
+msgstr "NGC-11444"
 
 #: dat/ssys/ngc11718.xml:2
 msgid "NGC-11718"
-msgstr ""
+msgstr "NGC-11718"
 
 #: dat/ssys/ngc11935.xml:2
 msgid "NGC-11935"
-msgstr ""
+msgstr "NGC-11935"
 
 #: dat/ssys/ngc12056.xml:2
 msgid "NGC-12056"
-msgstr ""
+msgstr "NGC-12056"
 
 #: dat/ssys/ngc12108.xml:2
 msgid "NGC-12108"
-msgstr ""
+msgstr "NGC-12108"
 
 #: dat/ssys/ngc12261.xml:2
 msgid "NGC-12261"
-msgstr ""
+msgstr "NGC-12261"
 
 #: dat/ssys/ngc12654.xml:2
 msgid "NGC-12654"
-msgstr ""
+msgstr "NGC-12654"
 
 #: dat/ssys/ngc12882.xml:2
 msgid "NGC-12882"
-msgstr ""
+msgstr "NGC-12882"
 
 #: dat/ssys/ngc1292.xml:2
 msgid "NGC-1292"
-msgstr ""
+msgstr "NGC-1292"
 
 #: dat/ssys/ngc1317.xml:2
 msgid "NGC-1317"
-msgstr ""
+msgstr "NGC-1317"
 
 #: dat/ssys/ngc13322.xml:2
 msgid "NGC-13322"
-msgstr ""
+msgstr "NGC-13322"
 
 #: dat/ssys/ngc13564.xml:2
 msgid "NGC-13564"
-msgstr ""
+msgstr "NGC-13564"
 
 #: dat/ssys/ngc13674.xml:2
 msgid "NGC-13674"
-msgstr ""
+msgstr "NGC-13674"
 
 #: dat/ssys/ngc13747.xml:2
 msgid "NGC-13747"
-msgstr ""
+msgstr "NGC-13747"
 
 #: dat/ssys/ngc13798.xml:2
 msgid "NGC-13798"
@@ -24595,243 +24618,243 @@ msgstr ""
 
 #: dat/ssys/ngc14337.xml:2
 msgid "NGC-14337"
-msgstr ""
+msgstr "NGC-14337"
 
 #: dat/ssys/ngc14430.xml:2
 msgid "NGC-14430"
-msgstr ""
+msgstr "NGC-14430"
 
 #: dat/ssys/ngc14479.xml:2
 msgid "NGC-14479"
-msgstr ""
+msgstr "NGC-14479"
 
 #: dat/ssys/ngc14549.xml:2
 msgid "NGC-14549"
-msgstr ""
+msgstr "NGC-14549"
 
 #: dat/ssys/ngc14676.xml:2
 msgid "NGC-14676"
-msgstr ""
+msgstr "NGC-14676"
 
 #: dat/ssys/ngc1562.xml:2
 msgid "NGC-1562"
-msgstr ""
+msgstr "NGC-1562"
 
 #: dat/ssys/ngc15670.xml:2
 msgid "NGC-15670"
-msgstr ""
+msgstr "NGC-15670"
 
 #: dat/ssys/ngc18269.xml:2
 msgid "NGC-18269"
-msgstr ""
+msgstr "NGC-18269"
 
 #: dat/ssys/ngc1872.xml:2
 msgid "NGC-1872"
-msgstr ""
+msgstr "NGC-1872"
 
 #: dat/ssys/ngc1931.xml:2
 msgid "NGC-1931"
-msgstr ""
+msgstr "NGC-1931"
 
 #: dat/ssys/ngc20489.xml:2
 msgid "NGC-20489"
-msgstr ""
+msgstr "NGC-20489"
 
 #: dat/ssys/ngc2175.xml:2
 msgid "NGC-2175"
-msgstr ""
+msgstr "NGC-2175"
 
 #: dat/ssys/ngc2232.xml:2
 msgid "NGC-2232"
-msgstr ""
+msgstr "NGC-2232"
 
 #: dat/ssys/ngc22375.xml:2
 msgid "NGC-22375"
-msgstr ""
+msgstr "NGC-22375"
 
 #: dat/ssys/ngc23.xml:2
 msgid "NGC-23"
-msgstr ""
+msgstr "NGC-23"
 
 #: dat/ssys/ngc2601.xml:2
 msgid "NGC-2601"
-msgstr ""
+msgstr "NGC-2601"
 
 #: dat/ssys/ngc2836.xml:2
 msgid "NGC-2836"
-msgstr ""
+msgstr "NGC-2836"
 
 #: dat/ssys/ngc2948.xml:2
 msgid "NGC-2948"
-msgstr ""
+msgstr "NGC-2948"
 
 #: dat/ssys/ngc2954.xml:2
 msgid "NGC-2954"
-msgstr ""
+msgstr "NGC-2954"
 
 #: dat/ssys/ngc3219.xml:2
 msgid "NGC-3219"
-msgstr ""
+msgstr "NGC-3219"
 
 #: dat/ssys/ngc3371.xml:2
 msgid "NGC-3371"
-msgstr ""
+msgstr "NGC-3371"
 
 #: dat/ssys/ngc344.xml:2
 msgid "NGC-344"
-msgstr ""
+msgstr "NGC-344"
 
 #: dat/ssys/ngc3858.xml:2
 msgid "NGC-3858"
-msgstr ""
+msgstr "NGC-3858"
 
 #: dat/ssys/ngc4087.xml:2
 msgid "NGC-4087"
-msgstr ""
+msgstr "NGC-4087"
 
 #: dat/ssys/ngc4131.xml:2
 msgid "NGC-4131"
-msgstr ""
+msgstr "NGC-4131"
 
 #: dat/ssys/ngc4363.xml:2
 msgid "NGC-4363"
-msgstr ""
+msgstr "NGC-4363"
 
 #: dat/ssys/ngc4746.xml:2
 msgid "NGC-4746"
-msgstr ""
+msgstr "NGC-4746"
 
 #: dat/ssys/ngc4771.xml:2
 msgid "NGC-4771"
-msgstr ""
+msgstr "NGC-4771"
 
 #: dat/ssys/ngc5240.xml:2
 msgid "NGC-5240"
-msgstr ""
+msgstr "NGC-5240"
 
 #: dat/ssys/ngc5362.xml:2
 msgid "NGC-5362"
-msgstr ""
+msgstr "NGC-5362"
 
 #: dat/ssys/ngc5483.xml:2
 msgid "NGC-5483"
-msgstr ""
+msgstr "NGC-5483"
 
 #: dat/ssys/ngc5838.xml:2
 msgid "NGC-5838"
-msgstr ""
+msgstr "NGC-5838"
 
 #: dat/ssys/ngc6057.xml:2
 msgid "NGC-6057"
-msgstr ""
+msgstr "NGC-6057"
 
 #: dat/ssys/ngc6901.xml:2
 msgid "NGC-6901"
-msgstr ""
+msgstr "NGC-6901"
 
 #: dat/ssys/ngc7061.xml:2
 msgid "NGC-7061"
-msgstr ""
+msgstr "NGC-7061"
 
 #: dat/ssys/ngc7078.xml:2
 msgid "NGC-7078"
-msgstr ""
+msgstr "NGC-7078"
 
 #: dat/ssys/ngc728.xml:2
 msgid "NGC-728"
-msgstr ""
+msgstr "NGC-728"
 
 #: dat/ssys/ngc7319.xml:2
 msgid "NGC-7319"
-msgstr ""
+msgstr "NGC-7319"
 
 #: dat/ssys/ngc7402.xml:2
 msgid "NGC-7402"
-msgstr ""
+msgstr "NGC-7402"
 
 #: dat/ssys/ngc7533.xml:2
 msgid "NGC-7533"
-msgstr ""
+msgstr "NGC-7533"
 
 #: dat/ssys/ngc7784.xml:2
 msgid "NGC-7784"
-msgstr ""
+msgstr "NGC-7784"
 
 #: dat/ssys/ngc7786.xml:2
 msgid "NGC-7786"
-msgstr ""
+msgstr "NGC-7786"
 
 #: dat/ssys/ngc8338.xml:2
 msgid "NGC-8338"
-msgstr ""
+msgstr "NGC-8338"
 
 #: dat/ssys/ngc8468.xml:2
 msgid "NGC-8468"
-msgstr ""
+msgstr "NGC-8468"
 
 #: dat/ssys/ngc9017.xml:2
 msgid "NGC-9017"
-msgstr ""
+msgstr "NGC-9017"
 
 #: dat/ssys/ngc902.xml:2
 msgid "NGC-902"
-msgstr ""
+msgstr "NGC-902"
 
 #: dat/ssys/ngc9415.xml:2
 msgid "NGC-9415"
-msgstr ""
+msgstr "NGC-9415"
 
 #: dat/ssys/ngc9607.xml:2
 msgid "NGC-9607"
-msgstr ""
+msgstr "NGC-9607"
 
 #: dat/ssys/ngc9654.xml:2
 msgid "NGC-9654"
-msgstr ""
+msgstr "NGC-9654"
 
 #: dat/ssys/ngc9897.xml:2
 msgid "NGC-9897"
-msgstr ""
+msgstr "NGC-9897"
 
 #: dat/ssys/ngcg5882.xml:2
 msgid "NGCG-5882"
-msgstr ""
+msgstr "NGCG-5882"
 
 #: dat/ssys/niger.xml:2
 msgid "Niger"
-msgstr ""
+msgstr "Niger"
 
 #: dat/ssys/nixon.xml:2
 msgid "Nixon"
-msgstr ""
+msgstr "Nixon"
 
 #: dat/ssys/norn.xml:2
 msgid "Norn"
-msgstr ""
+msgstr "Norn"
 
 #: dat/ssys/norpin.xml:2
 msgid "Norpin"
-msgstr ""
+msgstr "Norpin"
 
 #: dat/ssys/nougat.xml:2
 msgid "Nougat"
-msgstr ""
+msgstr "Nougat"
 
 #: dat/ssys/nunavut.xml:2
 msgid "Nunavut"
-msgstr ""
+msgstr "Nunavut"
 
 #: dat/ssys/octantis.xml:2
 msgid "Octantis"
-msgstr ""
+msgstr "Octantis"
 
 #: dat/ssys/octavian.xml:2
 msgid "Octavian"
-msgstr ""
+msgstr "Octavian"
 
 #: dat/ssys/ogat.xml:2
 msgid "Ogat"
-msgstr ""
+msgstr "Ogat"
 
 #: dat/ssys/olympus.xml:2
 msgid "Olympus"
@@ -24839,15 +24862,15 @@ msgstr ""
 
 #: dat/ssys/opal.xml:2
 msgid "Opal"
-msgstr ""
+msgstr "Opal"
 
 #: dat/ssys/oriantis.xml:2
 msgid "Oriantis"
-msgstr ""
+msgstr "Oriantis"
 
 #: dat/ssys/orion.xml:2
 msgid "Orion"
-msgstr ""
+msgstr "Orion"
 
 #: dat/ssys/overture.xml:2
 msgid "Overture"
@@ -24855,15 +24878,15 @@ msgstr ""
 
 #: dat/ssys/palin.xml:2
 msgid "Palin"
-msgstr ""
+msgstr "Palin"
 
 #: dat/ssys/palovi.xml:2
 msgid "Palovi"
-msgstr ""
+msgstr "Palovi"
 
 #: dat/ssys/paradox.xml:2
 msgid "Paradox"
-msgstr ""
+msgstr "Paradox"
 
 #: dat/ssys/pas.xml:2
 msgid "Pas"
@@ -24871,43 +24894,43 @@ msgstr ""
 
 #: dat/ssys/pastor.xml:2
 msgid "Pastor"
-msgstr ""
+msgstr "Pastor"
 
 #: dat/ssys/pellmell.xml:2
 msgid "Pellmell"
-msgstr ""
+msgstr "Pellmell"
 
 #: dat/ssys/penn.xml:2
 msgid "Penn"
-msgstr ""
+msgstr "Penn"
 
 #: dat/ssys/peogas.xml:2
 msgid "Peogas"
-msgstr ""
+msgstr "Peogas"
 
 #: dat/ssys/percival.xml:2
 msgid "Percival"
-msgstr ""
+msgstr "Percival"
 
 #: dat/ssys/perhelion.xml:2
 msgid "Perhelion"
-msgstr ""
+msgstr "Perhelion"
 
 #: dat/ssys/peter.xml:2
 msgid "Peter"
-msgstr ""
+msgstr "Peter"
 
 #: dat/ssys/pike.xml:2
 msgid "Pike"
-msgstr ""
+msgstr "Pike"
 
 #: dat/ssys/pilatis.xml:2
 msgid "Pilatis"
-msgstr ""
+msgstr "Pilatis"
 
 #: dat/ssys/pisces_prime.xml:2
 msgid "Pisces Prime"
-msgstr ""
+msgstr "Pisces Prime"
 
 #: dat/ssys/point_zero.xml:2
 msgid "Point Zero"
@@ -24915,111 +24938,111 @@ msgstr ""
 
 #: dat/ssys/polack.xml:2
 msgid "Polack"
-msgstr ""
+msgstr "Polack"
 
 #: dat/ssys/polaris.xml:2
 msgid "Polaris"
-msgstr ""
+msgstr "Polaris"
 
 #: dat/ssys/poller.xml:2
 msgid "Poller"
-msgstr ""
+msgstr "Poller"
 
 #: dat/ssys/poltergeist.xml:2
 msgid "Poltergeist"
-msgstr ""
+msgstr "Poltergeist"
 
 #: dat/ssys/pontus.xml:2
 msgid "Pontus"
-msgstr ""
+msgstr "Pontus"
 
 #: dat/ssys/porro.xml:2
 msgid "Porro"
-msgstr ""
+msgstr "Porro"
 
 #: dat/ssys/possum.xml:2
 msgid "Possum"
-msgstr ""
+msgstr "Possum"
 
 #: dat/ssys/procyon.xml:2
 msgid "Procyon"
-msgstr ""
+msgstr "Procyon"
 
 #: dat/ssys/protera.xml:2
 msgid "Protera"
-msgstr ""
+msgstr "Protera"
 
 #: dat/ssys/provectus_nova.xml:2
 msgid "Provectus Nova"
-msgstr ""
+msgstr "Provectus Nova"
 
 #: dat/ssys/pso.xml:2
 msgid "PSO"
-msgstr ""
+msgstr "PSO"
 
 #: dat/ssys/pudas.xml:2
 msgid "Pudas"
-msgstr ""
+msgstr "Pudas"
 
 #: dat/ssys/pultatis.xml:2
 msgid "Pultatis"
-msgstr ""
+msgstr "Pultatis"
 
 #: dat/ssys/qellan.xml:2
 msgid "Qellan"
-msgstr ""
+msgstr "Qellan"
 
 #: dat/ssys/qex.xml:2
 msgid "Qex"
-msgstr ""
+msgstr "Qex"
 
 #: dat/ssys/qorel.xml:2
 msgid "Qorel"
-msgstr ""
+msgstr "Qorel"
 
 #: dat/ssys/quai.xml:2
 msgid "Quai"
-msgstr ""
+msgstr "Quai"
 
 #: dat/ssys/qulam.xml:2
 msgid "Qulam"
-msgstr ""
+msgstr "Qulam"
 
 #: dat/ssys/radix.xml:2
 msgid "Radix"
-msgstr ""
+msgstr "Radix"
 
 #: dat/ssys/raelid.xml:2
 msgid "Raelid"
-msgstr ""
+msgstr "Raelid"
 
 #: dat/ssys/ram.xml:2
 msgid "Ram"
-msgstr ""
+msgstr "Ram"
 
 #: dat/ssys/rauthia.xml:2
 msgid "Rauthia"
-msgstr ""
+msgstr "Rauthia"
 
 #: dat/ssys/regas.xml:2
 msgid "Regas"
-msgstr ""
+msgstr "Regas"
 
 #: dat/ssys/regulus.xml:2
 msgid "Regulus"
-msgstr ""
+msgstr "Regulus"
 
 #: dat/ssys/rei.xml:2
 msgid "Rei"
-msgstr ""
+msgstr "Rei"
 
 #: dat/ssys/reptile.xml:2
 msgid "Reptile"
-msgstr ""
+msgstr "Reptile"
 
 #: dat/ssys/rhu.xml:2
 msgid "Rhu"
-msgstr ""
+msgstr "Rhu"
 
 #: dat/ssys/rockbed.xml:2
 msgid "Rockbed"
@@ -25027,11 +25050,11 @@ msgstr ""
 
 #: dat/ssys/rotide.xml:2
 msgid "Rotide"
-msgstr ""
+msgstr "Rotide"
 
 #: dat/ssys/ruadan.xml:2
 msgid "Ruadan"
-msgstr ""
+msgstr "Ruadan"
 
 #: dat/ssys/ruadan.xml:4
 msgid "#pZa'lek Homeworld#0"
@@ -25039,103 +25062,103 @@ msgstr ""
 
 #: dat/ssys/ruttwi.xml:2
 msgid "Ruttwi"
-msgstr ""
+msgstr "Ruttwi"
 
 #: dat/ssys/ryder.xml:2
 msgid "Ryder"
-msgstr ""
+msgstr "Ryder"
 
 #: dat/ssys/sagittarius_prime.xml:2
 msgid "Sagittarius Prime"
-msgstr ""
+msgstr "Sagittarius Prime"
 
 #: dat/ssys/salvador.xml:2
 msgid "Salvador"
-msgstr ""
+msgstr "Salvador"
 
 #: dat/ssys/sarcophagus.xml:2
 msgid "Sarcophagus"
-msgstr ""
+msgstr "Sarcophagus"
 
 #: dat/ssys/sarrii.xml:2
 msgid "Sarrii"
-msgstr ""
+msgstr "Sarrii"
 
 #: dat/ssys/scarlet.xml:2
 msgid "Scarlet"
-msgstr ""
+msgstr "Scarlet"
 
 #: dat/ssys/seelie.xml:2
 msgid "Seelie"
-msgstr ""
+msgstr "Seelie"
 
 #: dat/ssys/seiben.xml:2
 msgid "Seiben"
-msgstr ""
+msgstr "Seiben"
 
 #: dat/ssys/seifer.xml:2
 msgid "Seifer"
-msgstr ""
+msgstr "Seifer"
 
 #: dat/ssys/senara.xml:2
 msgid "Senara"
-msgstr ""
+msgstr "Senara"
 
 #: dat/ssys/seport.xml:2
 msgid "Seport"
-msgstr ""
+msgstr "Seport"
 
 #: dat/ssys/seran.xml:2
 msgid "Seran"
-msgstr ""
+msgstr "Seran"
 
 #: dat/ssys/sergio_vix.xml:2
 msgid "Sergio Vix"
-msgstr ""
+msgstr "Sergio Vix"
 
 #: dat/ssys/severus.xml:2
 msgid "Severus"
-msgstr ""
+msgstr "Severus"
 
 #: dat/ssys/shakar.xml:2
 msgid "Shakar"
-msgstr ""
+msgstr "Shakar"
 
 #: dat/ssys/sheffield.xml:2
 msgid "Sheffield"
-msgstr ""
+msgstr "Sheffield"
 
 #: dat/ssys/shickhaw.xml:2
 msgid "Shickhaw"
-msgstr ""
+msgstr "Shickhaw"
 
 #: dat/ssys/shikima.xml:2
 msgid "Shikima"
-msgstr ""
+msgstr "Shikima"
 
 #: dat/ssys/shinnok.xml:2
 msgid "Shinnok"
-msgstr ""
+msgstr "Shinnok"
 
 #: dat/ssys/sigur.xml:2
 msgid "Sigur"
-msgstr ""
+msgstr "Sigur"
 
 #: dat/ssys/sikh.xml:2
 msgid "Sikh"
-msgstr ""
+msgstr "Sikh"
 
 #: dat/ssys/sirou.xml:2
 msgid "Sirou"
-msgstr ""
+msgstr "Sirou"
 
 #: dat/ssys/slaccid.xml:2
 msgid "Slaccid"
-msgstr ""
+msgstr "Slaccid"
 
 #: dat/ssys/sleuth.xml:2
 msgid "Sleuth"
-msgstr ""
+msgstr "Sleuth"
 
 #. event ends on player leaving the system or landing
 #.
@@ -25166,27 +25189,27 @@ msgstr ""
 #. --
 #: dat/ssys/sol.xml:2 dat/events/discovery.lua:25
 msgid "Sol"
-msgstr ""
+msgstr "Sol"
 
 #: dat/ssys/solene.xml:2
 msgid "Solene"
-msgstr ""
+msgstr "Solene"
 
 #: dat/ssys/sollav.xml:2
 msgid "Sollav"
-msgstr ""
+msgstr "Sollav"
 
 #: dat/ssys/somard.xml:2
 msgid "Somard"
-msgstr ""
+msgstr "Somard"
 
 #: dat/ssys/sonas.xml:2
 msgid "Sonas"
-msgstr ""
+msgstr "Sonas"
 
 #: dat/ssys/sorrow.xml:2
 msgid "Sorrow"
-msgstr ""
+msgstr "Sorrow"
 
 #: dat/ssys/south_bell.xml:2
 msgid "South Bell"
@@ -25202,15 +25225,15 @@ msgstr ""
 
 #: dat/ssys/stelman.xml:2
 msgid "Stelman"
-msgstr ""
+msgstr "Stelman"
 
 #: dat/ssys/sten.xml:2
 msgid "Sten"
-msgstr ""
+msgstr "Sten"
 
 #: dat/ssys/stint.xml:2
 msgid "Stint"
-msgstr ""
+msgstr "Stint"
 
 #: dat/ssys/stone_table.xml:2
 msgid "Stone Table"
@@ -25222,33 +25245,33 @@ msgstr ""
 
 #: dat/ssys/suk.xml:2
 msgid "Suk"
-msgstr ""
+msgstr "Suk"
 
 #: dat/ssys/sultan.xml:2
 msgid "Sultan"
-msgstr ""
+msgstr "Sultan"
 
 #: dat/ssys/suna.xml:2
 msgid "Suna"
-msgstr ""
+msgstr "Suna"
 
 #: dat/ssys/surano.xml:2
 msgid "Surano"
-msgstr ""
+msgstr "Surano"
 
 #: dat/ssys/sylph.xml:2
 msgid "Sylph"
-msgstr ""
+msgstr "Sylph"
 
 #: dat/ssys/symm.xml:2
 msgid "Symm"
-msgstr ""
+msgstr "Symm"
 
 #. Odin's raven
 #: dat/ssys/taiomi.xml:2 dat/events/discovery.lua:77
 #: dat/scripts/common/taiomi.lua:39
 msgid "Taiomi"
-msgstr ""
+msgstr "Taiomi"
 
 #: dat/ssys/taiomi.xml:5
 msgid "#pShip Graveyard#0"
@@ -25256,39 +25279,39 @@ msgstr ""
 
 #: dat/ssys/tandar.xml:2
 msgid "Tandar"
-msgstr ""
+msgstr "Tandar"
 
 #: dat/ssys/tarmak.xml:2
 msgid "Tarmak"
-msgstr ""
+msgstr "Tarmak"
 
 #: dat/ssys/tarsus.xml:2
 msgid "Tarsus"
-msgstr ""
+msgstr "Tarsus"
 
 #: dat/ssys/tartan.xml:2
 msgid "Tartan"
-msgstr ""
+msgstr "Tartan"
 
 #: dat/ssys/taxumi.xml:2
 msgid "Taxumi"
-msgstr ""
+msgstr "Taxumi"
 
 #: dat/ssys/telika.xml:2
 msgid "Telika"
-msgstr ""
+msgstr "Telika"
 
 #: dat/ssys/teller.xml:2
 msgid "Teller"
-msgstr ""
+msgstr "Teller"
 
 #: dat/ssys/tempus.xml:2
 msgid "Tempus"
-msgstr ""
+msgstr "Tempus"
 
 #: dat/ssys/theras.xml:2
 msgid "Theras"
-msgstr ""
+msgstr "Theras"
 
 #: dat/ssys/thirty_stars.xml:2
 msgid "Thirty Stars"
@@ -25296,67 +25319,67 @@ msgstr ""
 
 #: dat/ssys/thorndyke.xml:2
 msgid "Thorndyke"
-msgstr ""
+msgstr "Thorndyke"
 
 #: dat/ssys/tide.xml:2
 msgid "Tide"
-msgstr ""
+msgstr "Tide"
 
 #: dat/ssys/titus.xml:2
 msgid "Titus"
-msgstr ""
+msgstr "Titus"
 
 #: dat/ssys/toaxis.xml:2
 msgid "Toaxis"
-msgstr ""
+msgstr "Toaxis"
 
 #: dat/ssys/tobanna.xml:2
 msgid "Tobanna"
-msgstr ""
+msgstr "Tobanna"
 
 #: dat/ssys/tomas.xml:2
 msgid "Tomas"
-msgstr ""
+msgstr "Tomas"
 
 #: dat/ssys/torg.xml:2
 msgid "Torg"
-msgstr ""
+msgstr "Torg"
 
 #: dat/ssys/tormulex.xml:2
 msgid "Tormulex"
-msgstr ""
+msgstr "Tormulex"
 
 #: dat/ssys/toros.xml:2
 msgid "Toros"
-msgstr ""
+msgstr "Toros"
 
 #: dat/ssys/toxin.xml:2
 msgid "Toxin"
-msgstr ""
+msgstr "Toxin"
 
 #: dat/ssys/trask.xml:2
 msgid "Trask"
-msgstr ""
+msgstr "Trask"
 
 #: dat/ssys/triap.xml:2
 msgid "Triap"
-msgstr ""
+msgstr "Triap"
 
 #: dat/ssys/trohem.xml:2
 msgid "Trohem"
-msgstr ""
+msgstr "Trohem"
 
 #: dat/ssys/tuoladis.xml:2
 msgid "Tuoladis"
-msgstr ""
+msgstr "Tuoladis"
 
 #: dat/ssys/uhriabi.xml:2
 msgid "Uhriabi"
-msgstr ""
+msgstr "Uhriabi"
 
 #: dat/ssys/ulysses.xml:2
 msgid "Ulysses"
-msgstr ""
+msgstr "Ulysses"
 
 #: dat/ssys/undergate.xml:2
 msgid "Undergate"
@@ -25364,124 +25387,124 @@ msgstr ""
 
 #: dat/ssys/unicorn.xml:2
 msgid "Unicorn"
-msgstr ""
+msgstr "Unicorn"
 
 #: dat/ssys/urbanus.xml:2
 msgid "Urbanus"
-msgstr ""
+msgstr "Urbanus"
 
 #: dat/ssys/urdads.xml:2
 msgid "Urdads"
-msgstr ""
+msgstr "Urdads"
 
 #: dat/ssys/uridhrion.xml:2
 msgid "Uridhrion"
-msgstr ""
+msgstr "Uridhrion"
 
 #: dat/ssys/ux.xml:2
 msgid "Ux"
-msgstr ""
+msgstr "Ux"
 
 #: dat/ssys/valerie.xml:2
 msgid "Valerie"
-msgstr ""
+msgstr "Valerie"
 
 #: dat/ssys/valur_gem.xml:2
 msgid "Valur Gem"
-msgstr ""
+msgstr "Valur Gem"
 
 #: dat/ssys/vandal.xml:2
 msgid "Vandal"
-msgstr ""
+msgstr "Vandal"
 
 #: dat/ssys/vanir.xml:2
 msgid "Vanir"
-msgstr ""
+msgstr "Vanir"
 
 #: dat/ssys/vauban.xml:2
 msgid "Vauban"
-msgstr ""
+msgstr "Vauban"
 
 #: dat/ssys/vean.xml:2
 msgid "Vean"
-msgstr ""
+msgstr "Vean"
 
 #: dat/ssys/vedalus.xml:2
 msgid "Vedalus"
-msgstr ""
+msgstr "Vedalus"
 
 #: dat/ssys/vega.xml:2
 msgid "Vega"
-msgstr ""
+msgstr "Vega"
 
 #: dat/ssys/verex.xml:2
 msgid "Verex"
-msgstr ""
+msgstr "Verex"
 
 #: dat/ssys/vlexon.xml:2
 msgid "Vlexon"
-msgstr ""
+msgstr "Vlexon"
 
 #: dat/ssys/volus.xml:2
 msgid "Volus"
-msgstr ""
+msgstr "Volus"
 
 #: dat/ssys/voproid.xml:2
 msgid "Voproid"
-msgstr ""
+msgstr "Voproid"
 
 #: dat/ssys/vost.xml:2
 msgid "Vost"
-msgstr ""
+msgstr "Vost"
 
 #: dat/ssys/westhaven.xml:2
 msgid "Westhaven"
-msgstr ""
+msgstr "Westhaven"
 
 #: dat/ssys/willow.xml:2 dat/scripts/pilotname/pirate.lua:494
 msgid "Willow"
-msgstr ""
+msgstr "Willow"
 
 #: dat/ssys/wolf.xml:2 dat/scripts/pilotname/generic.lua:94
 #: dat/scripts/pilotname/pirate.lua:497
 msgid "Wolf"
-msgstr ""
+msgstr "Wolf"
 
 #: dat/ssys/woreck.xml:2
 msgid "Woreck"
-msgstr ""
+msgstr "Woreck"
 
 #: dat/ssys/xeric.xml:2
 msgid "Xeric"
-msgstr ""
+msgstr "Xeric"
 
 #: dat/ssys/yarn.xml:2
 msgid "Yarn"
-msgstr ""
+msgstr "Yarn"
 
 #: dat/ssys/zacron.xml:2
 msgid "Zacron"
-msgstr ""
+msgstr "Zacron"
 
 #: dat/ssys/zemur.xml:2
 msgid "Zemur"
-msgstr ""
+msgstr "Zemur"
 
 #: dat/ssys/zerantix.xml:2
 msgid "Zerantix"
-msgstr ""
+msgstr "Zerantix"
 
 #: dat/ssys/zied.xml:2
 msgid "Zied"
-msgstr ""
+msgstr "Zied"
 
 #: dat/ssys/zintar.xml:2
 msgid "Zintar"
-msgstr ""
+msgstr "Zintar"
 
 #: dat/ssys/zylex.xml:2
 msgid "Zylex"
-msgstr ""
+msgstr "Zylex"
 
 #: dat/start.xml:3
 msgid "Sea of Darkness"
@@ -25493,7 +25516,7 @@ msgstr ""
 
 #: dat/start.xml:5
 msgid "Your first space-worthy ship!"
-msgstr ""
+msgstr "A tua primeira nave digna do espaço!"
 
 #: dat/unidiff/antlejosv_1.xml:4
 msgid ""
@@ -25577,13 +25600,13 @@ msgstr ""
 #: dat/unidiff/hypergates_3.xml:15 dat/unidiff/hypergates_3.xml:20
 #: dat/unidiff/hypergates_3.xml:25 dat/unidiff/hypergates_3.xml:30
 msgid "Hypergate"
-msgstr ""
+msgstr "Hiperportal"
 
 #: dat/unidiff/hypergates_3.xml:7 dat/unidiff/hypergates_3.xml:12
 #: dat/unidiff/hypergates_3.xml:17 dat/unidiff/hypergates_3.xml:22
 #: dat/unidiff/hypergates_3.xml:27 dat/unidiff/hypergates_3.xml:32
 msgid "active"
-msgstr ""
+msgstr "ativo"
 
 #: dat/unidiff/sigma13_fixed1.xml:4
 msgid ""
@@ -26126,7 +26149,7 @@ msgstr ""
 #: dat/ai/feralbioship.lua:10 dat/missions/dvaered/gauntlet/gauntlet.lua:295
 #: dat/missions/minerva/kex5.lua:294 dat/missions/tutorial/nelly02.lua:246
 msgid "No response."
-msgstr ""
+msgstr "Sem resposta."
 
 #. This is the amount of waypoints the pilot will pass through before leaving the system
 #. [[
@@ -27294,7 +27317,7 @@ msgstr ""
 #. Send a message if applicable
 #: dat/ai/core/misc/scans.lua:57
 msgid "Prepare to be scanned."
-msgstr ""
+msgstr "Prepara-te para ser inspecionado."
 
 #.
 #. -- Tries to get close to scan the enemy
@@ -27311,7 +27334,7 @@ msgstr ""
 #. Small faction hit
 #: dat/ai/core/misc/scans.lua:103
 msgid "Thank you for your cooperation."
-msgstr ""
+msgstr "Obrigado pela tua cooperação."
 
 #. Tell friends about the scanning
 #. Get stats about the enemy
@@ -27346,7 +27369,7 @@ msgstr ""
 #. Bioships
 #: dat/ai/core/setup.lua:26
 msgid "Unknown outfit"
-msgstr ""
+msgstr "Equipamento desconhecido"
 
 #. Default task to run when idle
 #. Get a random asteroid in the system (or current mining field)
@@ -27415,7 +27438,7 @@ msgstr ""
 #. Handle refueling
 #: dat/ai/dvaered.lua:72
 msgid "\"You are not worthy of my attention.\""
-msgstr ""
+msgstr "\"Não és digno da minha atenção.\""
 
 #: dat/ai/dvaered.lua:75 dat/ai/frontier_police.lua:76
 msgid "\"For you I could make an exception for {credits}.\""
@@ -29811,7 +29834,7 @@ msgstr ""
 #: src/plugin.c:156 src/plugin.c:158 src/ship.c:212
 #, c-format
 msgid "Unknown"
-msgstr ""
+msgstr "Desconhecido"
 
 #. These are currently the only systems from which the player can
 #. enter the nebula
@@ -30377,7 +30400,7 @@ msgstr ""
 #. Ambusher is death: event failed
 #: dat/events/dvaered/fwD_hitman.lua:111
 msgid "Target destroyed"
-msgstr ""
+msgstr "Alvo destruído"
 
 #: dat/events/dvaered/fwD_hitman.lua:111
 msgid ""
@@ -31448,7 +31471,7 @@ msgstr ""
 #. --
 #: dat/events/hypergate.lua:21
 msgid "Hypergate event run with no target!"
-msgstr ""
+msgstr "Evento de hiperportal executado sem alvo!"
 
 #. Teleport right away because we do some tricks.
 #. Note that this might interfere with missions that run code right away when entering a system with hooks
@@ -34164,7 +34187,7 @@ msgstr "\"Sim!\""
 
 #: dat/events/neutral/shiplover.lua:347 dat/missions/minerva/kex4.lua:143
 msgid "\"No.\""
-msgstr ""
+msgstr "\"Não.\""
 
 #: dat/events/neutral/shiplover.lua:351
 msgid "\"Oh well, your loss!\""
@@ -34387,7 +34410,7 @@ msgstr ""
 #: dat/events/neutral/travelling_merchant.lua:270
 msgctxt "not to come"
 msgid "\"No\""
-msgstr ""
+msgstr "\"Não\""
 
 #: dat/events/neutral/travelling_merchant.lua:271
 msgctxt "not to come"
@@ -36198,7 +36221,7 @@ msgstr ""
 
 #: dat/events/npc/empire.lua:12
 msgid "You see a civilian staring blankly at a table."
-msgstr ""
+msgstr "Vês um civil olhando fixamente para uma mesa."
 
 #: dat/events/npc/empire.lua:13
 msgid "A civilian is swishing their drink."
@@ -39197,31 +39220,31 @@ msgstr "O nome da IA foi alterado para '{ainame}'."
 
 #: dat/events/shipai.lua:104
 msgid "\"Hello {playername}. What do you want to learn about?\""
-msgstr ""
+msgstr "\"Olá {playername}. Sobre o que queres aprender?\""
 
 #: dat/events/shipai.lua:107
 msgid "Weapon Sets"
-msgstr ""
+msgstr "Conjuntos de armas"
 
 #: dat/events/shipai.lua:109 src/input.c:58 src/shipstats.c:104
 msgid "Stealth"
-msgstr "camuflagem"
+msgstr "Camuflagem"
 
 #: dat/events/shipai.lua:110
 msgid "Asteroids and Mining"
-msgstr ""
+msgstr "Asteroides e mineração"
 
 #: dat/events/shipai.lua:114
 msgid "Illegality and Smuggling"
-msgstr ""
+msgstr "Ilegalidade e contrabando"
 
 #: dat/events/shipai.lua:117
 msgid "Bioships"
-msgstr ""
+msgstr "Bionaves"
 
 #: dat/events/shipai.lua:120
 msgid "Fleets"
-msgstr ""
+msgstr "Frotas"
 
 #: dat/events/shipai.lua:126
 msgid ""
@@ -39241,6 +39264,12 @@ msgid ""
 "- #oAbilities - Toggled#0: activating the hotkey will toggle the state of "
 "the outfits"
 msgstr ""
+"\"Existem três tipos diferentes de conjuntos de armas:\n"
+"- #oArmas - Trocadas#0: ativar a tecla de atalho definirá as tuas armas "
+"primárias e secundárias\n"
+"- #oArmas - Instantâneas#0: ativar a tecla de atalho irá disparar as armas\n"
+"- #oHabilidades - Alternadas#0: ativar a tecla de atalho alternará o estado "
+"dos equipamentos"
 
 #: dat/events/shipai.lua:131
 msgid ""
@@ -39476,6 +39505,12 @@ msgid ""
 "will your ship be cool, it will also have replenished all ammunition and "
 "fighters.\""
 msgstr ""
+"\"Quando a tua nave ou armas ficam muito quentes, geralmente é uma boa ideia "
+"realizar um arrefecimento ativo quando for seguro. Podes arrefecimer "
+"ativamente com {cooldownkey} ou pressionando duas vezes {reversekey}. A "
+"quantidade necessária para o tempo de arrefecimento depende do tamanho da "
+"nave, mas quando terminar, a tua nave não ficará apenas fria, mas também "
+"terá reabastecido todas as munições e caças.\""
 
 #: dat/events/shipai.lua:213
 msgid ""
@@ -39897,7 +39932,7 @@ msgstr ""
 
 #: dat/events/soromid/ferals.lua:121
 msgid "You have detected an unknown signal!"
-msgstr ""
+msgstr "Detetaste um sinal desconhecido!"
 
 #. Just try to go to the next system
 #: dat/events/soromid/ferals.lua:169
@@ -41561,11 +41596,11 @@ msgstr "\"Sim\""
 #: dat/missions/minerva/maikki2.lua:192 dat/missions/neutral/reynir.lua:72
 #: dat/missions/tutorial/nelly01.lua:162
 msgid "\"No\""
-msgstr ""
+msgstr "\"Não\""
 
 #: dat/events/taiomi/system.lua:641
 msgid "\"What is a potato?\""
-msgstr ""
+msgstr "\"O que é uma batata?\""
 
 #: dat/events/taiomi/system.lua:645
 msgid "\"I knew it!\""
@@ -43089,7 +43124,7 @@ msgstr "Respeitado"
 #: dat/gui/slim.lua:1082 dat/gui/slim.lua:1100 dat/gui/slim.lua:1139
 #: dat/gui/slim.lua:1140
 msgid "none"
-msgstr "nenhuma"
+msgstr "nenhum"
 
 #. Overheat or ammo capacity
 #. Refire indicator
@@ -43488,7 +43523,7 @@ msgstr "Créditos:"
 
 #: dat/gui/slim.lua:1104
 msgid "Nav:"
-msgstr "Nav:"
+msgstr "Navegação:"
 
 #: dat/gui/slim.lua:1104 src/equipment.c:1789 src/info.c:387 src/info.c:589
 #: src/land_shipyard.c:301 src/map_system.c:679
@@ -43497,7 +43532,7 @@ msgstr "Combustível:"
 
 #: dat/gui/slim.lua:1105
 msgid "WSet:"
-msgstr ""
+msgstr "Conjunto de armas:"
 
 #: dat/gui/slim.lua:1105 src/info.c:388
 msgid "Cargo:"
@@ -49581,7 +49616,7 @@ msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:378
 msgid "Target "
-msgstr ""
+msgstr "Alvo "
 
 #. Just in case
 #. Remember which joy cries have been used  /!\ this should have the same length as joy /!#. Timer and messages
@@ -50045,7 +50080,7 @@ msgstr ""
 #: dat/missions/dvaered/gauntlet/gui.lua:227
 #: dat/missions/neutral/race_qex.lua:128
 msgid "Not Spaceworthy!"
-msgstr ""
+msgstr "Não digna do espaço!"
 
 #: dat/missions/dvaered/gauntlet/gui.lua:227
 msgid ""
@@ -62653,7 +62688,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:683
 msgid "Unknown Voice"
-msgstr ""
+msgstr "Voz desconhecida"
 
 #. Really slow fade in so the player stops mashing keys due to combat (keypresses aren't processed in animations)
 #: dat/missions/minerva/maikki2.lua:685
@@ -67167,11 +67202,11 @@ msgstr ""
 #: dat/missions/neutral/derelict_rescue.lua:46
 #: dat/missions/tutorial/nelly01.lua:129 dat/missions/tutorial/nelly03.lua:93
 msgid "Help them out"
-msgstr ""
+msgstr "Ajudar"
 
 #: dat/missions/neutral/derelict_rescue.lua:47
 msgid "Refuse to help"
-msgstr ""
+msgstr "Recusar ajudar"
 
 #: dat/missions/neutral/derelict_rescue.lua:51
 msgid "You refuse to help them and leave them to the mercy of the stars."
@@ -73673,7 +73708,7 @@ msgstr "\"Sim.\""
 #: dat/missions/pirate/blackcat.lua:266
 msgctxt "blackcat"
 msgid "\"No (lie).\""
-msgstr ""
+msgstr "\"Não (mentira).\""
 
 #: dat/missions/pirate/blackcat.lua:271
 msgid ""
@@ -83539,7 +83574,7 @@ msgstr ""
 #. Sells a particular outfit
 #: dat/missions/tutorial/nelly01.lua:103
 msgid "You see a young individual sitting alone at a table."
-msgstr "Vês alguém jovem sentado sozinho à mesa."
+msgstr "Vês uma jovem sentada sozinha numa mesa."
 
 #. Check to see if truly accepted
 #. Update objectives
@@ -83567,9 +83602,9 @@ msgid ""
 msgstr ""
 "A Nelly ilumina-se quando te aproximas dela.\n"
 "\"Olá novamente! Estou um pouco desarrumada. Sabes, era suposto eu entregar "
-"alguma {cargo} em {pnt} no sistema {sys}, mas a minha nave avariou-se e acho "
-"que não vou conseguir entregá-la nos próximos tempos. Estarias disposto a "
-"ajudar-me a levar a carga para lá e a regressar? Pago-te a uma parte justa.\""
+"{cargo} em {pnt} no sistema {sys}, mas a minha nave avariou-se e acho que "
+"não vou conseguir fazer a entrega tão cedo. Estarias disposto a ajudar-me a "
+"levar a carga para lá e a regressar? Pago-te a uma parte justa.\""
 
 #: dat/missions/tutorial/nelly01.lua:123
 msgid ""
@@ -83580,12 +83615,12 @@ msgid ""
 "any time soon. Would you be willing to help me take the cargo there and come "
 "back? I'll pay you your fair share.\""
 msgstr ""
-"Ela ilumina-se quando te aproxima dela.\n"
-"\"Digamos, pareces um piloto com uma nave a funcionar. Estou um pouco "
-"confusa. Sabes, era suposto eu entregar alguma {cargo} em {pnt} no sistema "
-"{sys}, mas a minha nave avariou-se e acho que não vou conseguir entregá-la "
-"tão cedo. Estarias disposto a ajudar-me a levar a carga para lá e a "
-"regressar? Pago-te uma parte justa.\""
+"Ela ilumina-se quando te aproximas dela.\n"
+"\"Pareces um piloto com uma nave a funcionar. Estou um pouco confusa. Sabes, "
+"era suposto eu entregar {cargo} em {pnt} no sistema {sys}, mas a minha nave "
+"avariou-se e acho que não vou conseguir fazer a entrega tão cedo. Estarias "
+"disposto a ajudar-me a levar a carga lá e a regressar? Pago-te uma parte "
+"justa.\""
 
 #: dat/missions/tutorial/nelly01.lua:134
 msgid ""
@@ -83626,7 +83661,7 @@ msgstr ""
 "\"Ótimo! Chamo-me Nelly. Fico feliz em conhecer-te. Vou pedir aos "
 "estivadores que carreguem a tua nave e podemos partir. Isso deve ser fácil.\""
 "\n"
-"   Eles inclinam a cabeça um pouco para ti.\n"
+"   Notas que eles não pensam o mesmo pelo movimento que fazem com a cabeça.\n"
 "   \"Por acaso não és um piloto novato?\""
 
 #: dat/missions/tutorial/nelly01.lua:166
@@ -83678,14 +83713,17 @@ msgid ""
 "take down ships non-lethally, #oion damage#0 is your best bet. Here, I'll "
 "forward you {credits}. Do you need help buying and equipping the outfit?\""
 msgstr ""
+"\"Ouvi dizer que este lugar vende o #oCanhão de Iões#0. Se quiseres derrubar "
+"naves de forma não letal, o #odano de iões#0 é a melhor aposta. Aqui, pega "
+"em {credits}. Precisas de ajuda para comprar e instalar o equipamento?\""
 
 #: dat/missions/tutorial/nelly01.lua:217
 msgid "Get useful advice"
-msgstr ""
+msgstr "Obter conselhos úteis"
 
 #: dat/missions/tutorial/nelly01.lua:218
 msgid "Buy the outfit alone"
-msgstr ""
+msgstr "Comprar o equipamento sozinho"
 
 #: dat/missions/tutorial/nelly01.lua:222
 msgid ""
@@ -83693,19 +83731,24 @@ msgid ""
 "Tab#0 and make sure to equip it at the #oEquipment Tab#0 before taking off. "
 "Once you get that done, let's head back to {pnt} in {sys}.\""
 msgstr ""
+"\"OK! Estás a tomar a iniciativa. Compra o {outfit} no separador #oOutfits#0 "
+"e certifica-te de instalá-lo no separador #oEquipamento#0 antes de descolar. "
+"Depois de fazeres isso, vamos voltar para {pnt} em {sys}.\""
 
 #: dat/missions/tutorial/nelly01.lua:229
 msgid ""
 "\"OK! I'll guide you through it. For now, please go to the #oOutfits Tab#0 "
 "of the landing window.\""
 msgstr ""
+"\"OK! Vou guiar-te. Por enquanto, vai ao separador #oEquipamentos#0 da "
+"janela de aterragem.\""
 
 #. Get rid of cargo
 #. Hook the outfits
 #. Finished mission
 #: dat/missions/tutorial/nelly01.lua:254
 msgid "\"We made it! A job well done. Here let me pay you what I promised you."
-msgstr ""
+msgstr "\"Conseguimos! Um trabalho bem feito. Deixa-me pagar-te o que prometi."
 
 #. Rewards
 #: dat/missions/tutorial/nelly01.lua:260
@@ -83719,22 +83762,35 @@ msgid ""
 "\"Anyway, see you around! Make sure to check the spaceport bar whenever you "
 "land for new missions!\""
 msgstr ""
+"\"Agora é hora de voltar para minha nave. Espero que já esteja consertada. "
+"Se quiseres fazer mais missões de carga para ganhar alguns créditos fáceis, "
+"recomendo que dês uma olhada no computador da missão, que deve estar "
+"disponível na maioria dos planetas como aqui. Às vezes, também encontrarás "
+"personagens interessantes no bar do porto espacial, que oferecem missões "
+"interessantes.\"\n"
+"Eles sorriem para ti.\n"
+"\"De qualquer forma, vejo-te por aí! Certifica-te de visitar o bar do porto "
+"espacial sempre que aterrares para obteres novas missões!\""
 
 #: dat/missions/tutorial/nelly01.lua:264
 msgid ""
 "\"Oh, and don't forget to sell the ore you got from the derelict at the "
 "commodity exchange!\""
 msgstr ""
+"\"Ah, e não te esqueças de vender o minério que conseguiste da nave "
+"abandonada na área comercial!\""
 
 #: dat/missions/tutorial/nelly01.lua:269
 msgid "You helped Nelly complete a delivery mission."
-msgstr ""
+msgstr "Ajudaste a Nelly a completar uma missão de entrega."
 
 #: dat/missions/tutorial/nelly01.lua:302
 msgid ""
 "After the dock workers load the cargo on your ship, you take off with Nelly "
 "aboard. On to {sys}!"
 msgstr ""
+"Depois dos estivadores carregarem a carga na tua nave, partes com a Nelly a "
+"bordo. Para {sys}!"
 
 #: dat/missions/tutorial/nelly01.lua:303
 msgid ""
@@ -83742,18 +83798,21 @@ msgid ""
 "\"Say, are you familiar with the information window? It shows all the "
 "important things about your ship and current missions.\""
 msgstr ""
+"Logo após a descolagem, a Nelly começa a falar.\n"
+"\"Diz-me, estás familiarizado com a janela de informações? Ela mostra todas "
+"as coisas importantes sobre a tua nave e missões atuais.\""
 
 #: dat/missions/tutorial/nelly01.lua:306
 msgid "Hear about the Info window"
-msgstr ""
+msgstr "Ouvir sobre a janela de informação"
 
 #: dat/missions/tutorial/nelly01.lua:307 dat/missions/tutorial/nelly02.lua:542
 msgid "Already know"
-msgstr ""
+msgstr "Já sei sobre isso"
 
 #: dat/missions/tutorial/nelly01.lua:311
 msgid "\"OK, great! Then let's get going!\""
-msgstr ""
+msgstr "\"OK, ótimo! Então vamos andando!\""
 
 #: dat/missions/tutorial/nelly01.lua:315
 msgid ""
@@ -83761,11 +83820,14 @@ msgid ""
 "managing your ship and finding out where to go. Try opening the info menu "
 "with {infokey} and I will show you around it.\""
 msgstr ""
+"\"A janela de informações, que podes abrir com {infokey} é fundamental para "
+"gerir a tua nave e descobrir para onde ir. Tenta abrir o menu de informações "
+"com {infokey} e eu mostrarei-te como funciona.\""
 
 #. Much more visible
 #: dat/missions/tutorial/nelly01.lua:345
 msgid "After you enter the system, Nelly points something out on the radar."
-msgstr ""
+msgstr "Depois de entrares no sistema, a Nelly aponta para algo no radar."
 
 #. TODO autoboard!
 #: dat/missions/tutorial/nelly01.lua:347
@@ -83776,6 +83838,11 @@ msgid ""
 "autonav system to board the ship. You can toggle the overlay to see exactly "
 "where the ship is with {overlaykey}.\""
 msgstr ""
+"\"Olha para aquilo. Um Koala abandonado está por perto. Pode haver algo "
+"interessante nele! Devíamos abordá-lo. Experimenta fazer um #oclique duplo#0 "
+"nele ou seleciona o Koala e prime {boardkey}. Isso deve permitir que o teu "
+"sistema de Autonav embarque na nave. Podes alternar a sobreposição para ver "
+"exatamente onde a nave está com {overlaykey}.\""
 
 #. TODO maybe explain better boarding window when done
 #: dat/missions/tutorial/nelly01.lua:357
@@ -83786,6 +83853,11 @@ msgid ""
 "there is still lots of ore cargo available on the ship. You quickly load as "
 "much as you can onto your ship before you depart."
 msgstr ""
+"Entras na nave abandonada que é estranhamente silenciosa. Um grande buraco "
+"na sala de máquinas indica que provavelmente o motor central explodiu, "
+"forçando a tripulação a abandonar a nave. Embora não encontres nada de valor "
+"significativo, ainda há muita carga de minério disponível na nave. Carregas "
+"rapidamente o máximo que podes na tua nave antes de partires."
 
 #: dat/missions/tutorial/nelly01.lua:359
 msgid ""
@@ -83794,10 +83866,14 @@ msgid ""
 "as easy as this and sometimes bad things can happen. We should head to {pnt} "
 "that should be nearby now.\""
 msgstr ""
+"\"Parece que conseguiste muito minério lá. Isso deve render um bom dinheiro "
+"num planeta com área comercial. Nem sempre é fácil embarcar em naves "
+"abandonadas como hoje e às vezes podem acontecer coisas ruins. Devemos ir a "
+"{pnt} que deve estar perto agora.\""
 
 #: dat/missions/tutorial/nelly01.lua:371
 msgid "Nelly: \"Try opening the info menu with {infokey}.\""
-msgstr ""
+msgstr "Nelly: \"Tenta abrir o menu de informações com a tecla {infokey}.\""
 
 #: dat/missions/tutorial/nelly01.lua:394
 msgid ""
@@ -83806,6 +83882,10 @@ msgid ""
 "to the #oMissions#0 tab. Feel free to click the other tabs for more "
 "information.\""
 msgstr ""
+"\"Ah, o menu de informações em toda a sua glória. Na janela principal, podes "
+"ver as estatísticas gerais do teu jogo e informações sobre a licença. Tenta "
+"navegar até ao separador #oMissões#0. Está à vontade para clicar nos outros "
+"separadores para obter mais informações.\""
 
 #. TODO not sure we need more message annoyances here
 #: dat/missions/tutorial/nelly01.lua:417
@@ -83813,6 +83893,8 @@ msgid ""
 "\"The #oShip Info#0 tab contains information relevant to your ship including "
 "all active bonuses and equipped outfits.\""
 msgstr ""
+"\"O separador #oNave#0 contém informações relevantes para a tua nave, "
+"incluindo todos os bónus ativos e equipamentos instalados.\""
 
 #: dat/missions/tutorial/nelly01.lua:424
 msgid ""
@@ -83827,6 +83909,16 @@ msgid ""
 "- #oAbilities - Toggled#0: toggles the state of the non-weapon outfits in "
 "the set.\""
 msgstr ""
+"\"Em #oArmas#0 podes alterar os conjuntos de armas da nave atual. Existem "
+"três tipos de conjuntos de armas:\n"
+"- #oArmas - Trocadas#0: quando ativado, define as armas que deves ter com a "
+"tecla de arma principal {keyprimary} e a tecla de arma secundária "
+"{keysecondary}.\n"
+"- #oArmas - Instantâneas#0: dispara imediatamente o conjunto de armas quando "
+"a tecla é pressionada. Para ativar isto para um conjunto tens de ativar a "
+"opção #oAtivar modo instantâneo#0.\n"
+"- #oHabilidades - Alternadas#0: alterna o estado dos equipamentos que não "
+"sejam armas no conjunto.\""
 
 #: dat/missions/tutorial/nelly01.lua:434
 msgid ""
@@ -83835,6 +83927,10 @@ msgid ""
 "#ojettison#0 cargo you want to get rid of. Be careful though: jettisoning "
 "mission cargo will forfeit the mission.\""
 msgstr ""
+"\"Aqui, na informação sobre a #oCarga#0 podes ver a carga que transportas. "
+"Isto inclui informações importantes como o estatuto jurídico. Além disso, "
+"podes #oDeitar fora#0 a carga que já não queres. Tem cuidado: se deitares "
+"fora carga de uma missão vais perder essa missão.\""
 
 #: dat/missions/tutorial/nelly01.lua:441
 msgid ""
@@ -83844,6 +83940,11 @@ msgid ""
 "Make sure this mission is selected and try setting a route to {destsys} is "
 "marked on your map.\""
 msgstr ""
+"\"O separador da #oMissão#0 mostra informações de todas as missões "
+"atualmente aceites. A seleção de cada missão centrará o mapa nos marcadores "
+"da missão, se disponível. Clicar em sistemas aqui também permite definir "
+"rotas diretamente. Certifica-te que esta missão está selecionada e tenta "
+"definir uma rota para {destsys} marcada no teu mapa.\""
 
 #. Clear it right away if the player closes the window
 #: dat/missions/tutorial/nelly01.lua:456
@@ -83852,6 +83953,10 @@ msgid ""
 "other tabs in the Info window to get more explanations. When you are done, "
 "close the info window and let us head to our goal!\""
 msgstr ""
+"\"Ótimo! Agora estamos todos preparados para nos dirigirmos para o nosso "
+"sistema alvo. Podes clicar em outros separadores na janela de Informações "
+"para obter mais explicações. Quando tiveres terminado, fecha a janela de "
+"informação e vamos para o nosso objetivo!\""
 
 #: dat/missions/tutorial/nelly01.lua:469
 msgid ""
@@ -83859,6 +83964,9 @@ msgid ""
 "different known factions in the universe. Not everyone is as friendly as me "
 "out there!\""
 msgstr ""
+"\"A informação de #oPosicionamento#0 indica a tua posição atual com as "
+"diferentes fações conhecidas no universo. Nem todos são tão amigáveis como "
+"eu!\""
 
 #: dat/missions/tutorial/nelly01.lua:476
 msgid ""
@@ -83867,6 +83975,11 @@ msgid ""
 "on and it comes really in handy. You can also keep a diary and add custom "
 "entries to keep track of what you have done or are doing.\""
 msgstr ""
+"\"O separador #oRegisto da nave#0 é uma boa maneira de rever missões e "
+"tarefas que completaste. Às vezes, esqueço o que fiz e com quem me devo "
+"encontrar, por isso é muito útil. Também podes manter um diário e adicionar "
+"entradas personalizadas para manter o controlo do que fizeste ou estás a "
+"fazer.\""
 
 #: dat/missions/tutorial/nelly01.lua:483
 msgid ""
@@ -83874,6 +83987,9 @@ msgid ""
 "for the #o{outfit}#0 and either #oright-click on it#0 or click on it and "
 "click the buy button to buy it.\""
 msgstr ""
+"\"Aqui podes ver todos os equipamentos disponíveis para venda neste planeta. "
+"Procura o #o{outfit}#0 e #oclica com o botão direito nele#0 ou clica nele e "
+"clica no botão 'Comprar' para comprá-lo.\""
 
 #: dat/missions/tutorial/nelly01.lua:498
 msgid ""
@@ -83881,6 +83997,9 @@ msgid ""
 "sell most outfits back for the price you bought them at. Please try to buy a "
 "#o{tobuy}#0. It should come in handy later.\""
 msgstr ""
+"\"Compraste #o{bought}#0 em vez de #o{tobuy}#0! Não te preocupes, podes "
+"vender a maioria dos equipamentos de volta pelo preço que compraste. Tenta "
+"comprar #o{tobuy}#0. Vai-te ser útil mais tarde.\""
 
 #: dat/missions/tutorial/nelly01.lua:502
 msgid ""
@@ -83888,6 +84007,9 @@ msgid ""
 "To be able to use it, please navigate to the #oEquipment Tab#0 of the "
 "landing window.\""
 msgstr ""
+"\"Ótimo! Compraste #o{bought}#0. Os equipamentos não são instalados "
+"imediatamente. Para poderes usá-lo, vai ao separador #oEquipamento#0 da "
+"janela de aterragem.\""
 
 #: dat/missions/tutorial/nelly01.lua:511
 msgid ""
@@ -84824,7 +84946,7 @@ msgstr "Destrói o drone de treino perto do sistema {destpnt} no sistema {sys}"
 
 #: dat/missions/tutorial/tutorial.lua:143
 msgid "Jump to a nearby system by using your starmap"
-msgstr "Salta para um sistema próximo usando o teu mapa estelar"
+msgstr "Salta para um sistema próximo usando o mapa estelar"
 
 #. Set stuff known as necessary
 #. Have to be in the mission system
@@ -85096,9 +85218,8 @@ msgstr ""
 "para comprá-lo ou clica no botão '#bVender#0' para vendê-lo se tiveres um em "
 "tua posse. Diferentes planetas têm diferentes equipamentos disponíveis. Se "
 "não vires um equipamento específico que procuras, podes procurá-lo com o "
-"botão '#bProcurar equipamentos#0' no ecrã do mapa estelar. Depois de "
-"comprares novos equipamentos podes instalá-los no separador #oEquipamento#0."
-"\""
+"botão '#bPesquisar#0' no ecrã do mapa estelar. Depois de comprares novos "
+"equipamentos podes instalá-los no separador #oEquipamento#0.\""
 
 #: dat/missions/tutorial/tutorial.lua:259
 msgid ""
@@ -85277,8 +85398,8 @@ msgstr ""
 "\"Tens-te saído muito bem, {playername}! Como podes ver, a viagem consumiu "
 "combustível. Consomes combustível sempre que fazes um salto e podes "
 "reabastecer ao aterrar num planeta amigável. Se te encontrares em apuros, "
-"poderás também comprar combustível a outros pilotos do sistema; chama um "
-"piloto com um #bclique duplo#0 nele, ou seleciona-o com {targetnextkey} e em "
+"poderás também comprar combustível a outros pilotos do sistema. Chama um "
+"piloto com um #bclique duplo#0 nele ou seleciona-o com {targetnextkey} e em "
 "seguida pressiona {hailkey}.\""
 
 #: dat/missions/tutorial/tutorial.lua:330
@@ -85303,13 +85424,13 @@ msgid ""
 "head to the nearest planet and check out the spaceport bar to see if anybody "
 "can offer us some work to get started out.\""
 msgstr ""
-"\"Acho que é isto! Devo dizer que a tua nova nave fica-te bem! Isto conclui "
+"\"Acho que é tudo! Devo dizer que a tua nova nave fica-te bem! Isto conclui "
 "o tutorial básico, mas à medida que encontrares coisas novas, aparecerei "
 "periodicamente. Se precisares de refrescar o teu conhecimento ou alterar a "
 "minha configuração, podes fazê-lo a partir do menu #oInformação#0 que abre "
-"com {infokey}. Agora vamos sair e partir à aventura! Recomendo que vás ao "
-"planeta mais próximo e que vás ao bar do porto espacial para ver se alguém "
-"pode oferecer-nos algum trabalho para começar.\""
+"com {infokey}. Agora vamos sair e partir à aventura! Recomendo que aterres "
+"no planeta mais próximo e que vás ao bar do porto espacial para ver se "
+"alguém pode oferecer-te algum trabalho para começar.\""
 
 #. Normal finish of the tutorial
 #: dat/missions/tutorial/tutorial.lua:336
@@ -85329,10 +85450,10 @@ msgid ""
 "than shield regeneration.\""
 msgstr ""
 "\"Excelente trabalho a eliminar aquele drone! Como deves ter reparado, o "
-"escudo regenera-se com o tempo, mas a blindagem não. Isto não é universal, é "
-"claro; algumas naves, particularmente naves maiores, têm tecnologia avançada "
-"de reparação de blindagem. Mas mesmo assim, a regeneração de blindagem é "
-"geralmente muito mais lenta do que a regeneração de escudos.\""
+"escudo regenera-se com o tempo, mas a blindagem não. Claro que isto não é "
+"universal. Algumas naves, particularmente naves maiores, têm tecnologia "
+"avançada de reparação de blindagem. Mas mesmo assim, a regeneração de "
+"blindagem é geralmente muito mais lenta do que a regeneração de escudos.\""
 
 #: dat/missions/tutorial/tutorial.lua:355
 msgid ""
@@ -85380,11 +85501,11 @@ msgid ""
 msgstr ""
 "\"Acho que devemos tentar aventurar-nos fora deste sistema. Existem muitos "
 "sistemas no universo. Este é apenas uma pequena amostra do que pode ser "
-"encontrado lá fora! Viajar através de sistemas é realizado através de pontos "
-"de salto. Tais como os planetas, normalmente é preciso encontrá-los "
-"explorando a área, falando com os locais ou comprando mapas. Uma vez "
-"encontrado um ponto de salto, podes usá-lo com um #bclique duplo#0 nele ou "
-"usando {jumpkey}.\""
+"encontrado lá fora! Podes viajar através de sistemas através dos pontos de "
+"salto. Tais como os planetas, normalmente é preciso encontrá-los explorando "
+"a área, falando com os locais ou comprando mapas. Uma vez encontrado um "
+"ponto de salto, podes usá-lo com um #bclique duplo#0 nele ou usando "
+"{jumpkey}.\""
 
 #: dat/missions/tutorial/tutorial.lua:358
 msgid ""
@@ -85397,12 +85518,12 @@ msgid ""
 "simplifies things.\""
 msgstr ""
 "\"Mas ainda há uma maneira melhor de navegar através dos sistemas! Ao "
-"premires {starmapkey}, podes abrir o teu #oMapa estelar#0. O #oMapa estelar#"
-"0 mostra-te todos os sistemas que conheces atualmente. Através do teu #oMapa "
-"estelar#0, podes clicar num sistema e clicar no botão '#bAutonav#0' para "
-"seres automaticamente transportado para o sistema! Claro que isto só "
-"funciona se soubermos uma rota válida para lá chegar, mas descobrirás que "
-"este método de viagem simplifica muito as coisas.\""
+"premires {starmapkey}, podes abrir o teu #oMapa estelar#0. Ele mostra-te "
+"todos os sistemas que conheces atualmente. Através do teu #oMapa estelar#0, "
+"podes clicar num sistema e clicar no botão '#bAutonav#0' para seres "
+"automaticamente transportado para o sistema! Claro que isto só funciona se "
+"soubermos uma rota válida para lá chegar, mas descobrirás que este método de "
+"viagem simplifica muito as coisas.\""
 
 #: dat/missions/tutorial/tutorial.lua:359
 msgid ""
@@ -85412,11 +85533,11 @@ msgid ""
 "do some exploration to find the second jump point. Let's see what you've "
 "learned!\""
 msgstr ""
-"\"Porque não tentas saltar para o sistema {sys} próximo? Deves ver um sinal "
-"no teu mapa. As missões muitas vezes usam estes indicadores para mostrar-te "
-"para onde ires a seguir. Terás que fazer dois saltos e podes ter que fazer "
-"alguma exploração para encontrares o segundo ponto de salto. Vamos ver o que "
-"aprendeste!\""
+"\"Porque não tentas saltar para o sistema {sys} que fica perto daqui? Deves "
+"poder ver um sinal no teu mapa. As missões muitas vezes usam estes "
+"indicadores para mostrar-te para onde deves ir a seguir. Terás que fazer "
+"dois saltos e podes ter que fazer alguma exploração para encontrares o "
+"segundo ponto de salto. Vamos ver o que aprendeste!\""
 
 #: dat/missions/tutorial/tutorial.lua:365
 msgid "Captain T. Practice"
@@ -86172,7 +86293,7 @@ msgstr "\"Sim.\""
 #: dat/missions/zalek/blackhole/zbh02.lua:117
 msgctxt "to Evil PI 1"
 msgid "\"No.\" (Lie)"
-msgstr ""
+msgstr "\"Não.\" (mentir)"
 
 #: dat/missions/zalek/blackhole/zbh02.lua:121
 msgid ""
@@ -86201,7 +86322,7 @@ msgstr "\"Sim.\""
 #: dat/missions/zalek/blackhole/zbh02.lua:134
 msgctxt "to Evil PI 2"
 msgid "\"No.\""
-msgstr ""
+msgstr "\"Não.\""
 
 #: dat/missions/zalek/blackhole/zbh02.lua:140
 msgid ""
@@ -86727,7 +86848,7 @@ msgstr ""
 
 #: dat/missions/zalek/blackhole/zbh04.lua:258
 msgid "Zach: Try opening a communication channel with it."
-msgstr ""
+msgstr "Zach: Tenta abrir um canal de comunicação com ele."
 
 #. Make leader head towards planet
 #. Fleets should have leaders with different speeds or they clump together
@@ -96614,7 +96735,7 @@ msgstr ""
 #: dat/scripts/love.lua:221
 #, lua-format
 msgid "'%s' is an unknown filetype '%s'"
-msgstr ""
+msgstr "'%s' é um tipo de ficheiro desconhecido '%s'"
 
 #: dat/scripts/love.lua:229
 #, lua-format
@@ -97221,219 +97342,219 @@ msgstr ""
 #. way that works less well as a name.
 #: dat/scripts/pilotname/generic.lua:8
 msgid "Aurochs"
-msgstr ""
+msgstr "Auroque"
 
 #: dat/scripts/pilotname/generic.lua:9 dat/scripts/pilotname/pirate.lua:237
 msgid "Axis"
-msgstr ""
+msgstr "Eixo"
 
 #: dat/scripts/pilotname/generic.lua:10
 msgid "Bear"
-msgstr ""
+msgstr "Urso"
 
 #: dat/scripts/pilotname/generic.lua:11
 msgid "Beetle"
-msgstr ""
+msgstr "Escaravelho"
 
 #: dat/scripts/pilotname/generic.lua:13 dat/scripts/pilotname/pirate.lua:249
 msgid "Blizzard"
-msgstr ""
+msgstr "Tempestade"
 
 #: dat/scripts/pilotname/generic.lua:14 dat/scripts/pilotname/pirate.lua:250
 msgid "Blood"
-msgstr ""
+msgstr "Sangue"
 
 #: dat/scripts/pilotname/generic.lua:15 dat/scripts/pilotname/pirate.lua:194
 msgid "Blue"
-msgstr ""
+msgstr "Azul"
 
 #: dat/scripts/pilotname/generic.lua:16
 msgid "Boa"
-msgstr ""
+msgstr "Jiboia"
 
 #: dat/scripts/pilotname/generic.lua:17
 msgid "Boulder"
-msgstr ""
+msgstr "Penhasco"
 
 #: dat/scripts/pilotname/generic.lua:18
 msgid "Bullet"
-msgstr ""
+msgstr "Bala"
 
 #: dat/scripts/pilotname/generic.lua:19 dat/scripts/pilotname/pirate.lua:263
 msgid "Chainsaw"
-msgstr ""
+msgstr "Motoserra"
 
 #: dat/scripts/pilotname/generic.lua:20 dat/scripts/pilotname/pirate.lua:269
 msgid "Claw"
-msgstr ""
+msgstr "Garra"
 
 #: dat/scripts/pilotname/generic.lua:21
 msgid "Cluster"
-msgstr ""
+msgstr "Aglomerado"
 
 #: dat/scripts/pilotname/generic.lua:22 dat/scripts/pilotname/pirate.lua:275
 msgid "Cougar"
-msgstr ""
+msgstr "Puma"
 
 #: dat/scripts/pilotname/generic.lua:23 dat/scripts/pilotname/pirate.lua:37
 #: dat/scripts/pilotname/pirate.lua:276
 msgid "Crisis"
-msgstr ""
+msgstr "Crise"
 
 #: dat/scripts/pilotname/generic.lua:25
 msgid "Dart"
-msgstr ""
+msgstr "Dardo"
 
 #: dat/scripts/pilotname/generic.lua:26 dat/scripts/pilotname/pirate.lua:283
 msgctxt "name"
 msgid "Death"
-msgstr ""
+msgstr "Morte"
 
 #: dat/scripts/pilotname/generic.lua:27 dat/scripts/pilotname/pirate.lua:284
 msgid "Deity"
-msgstr ""
+msgstr "Deidade"
 
 #: dat/scripts/pilotname/generic.lua:28 dat/scripts/pilotname/pirate.lua:285
 #: src/space.c:262
 msgid "Demon"
-msgstr ""
+msgstr "Demónio"
 
 #: dat/scripts/pilotname/generic.lua:30
 msgid "Dire Wolf"
-msgstr ""
+msgstr "Lobo Feroz"
 
 #: dat/scripts/pilotname/generic.lua:31 dat/scripts/pilotname/pirate.lua:294
 msgid "Dragon"
-msgstr ""
+msgstr "Dragão"
 
 #: dat/scripts/pilotname/generic.lua:32 dat/scripts/pilotname/pirate.lua:299
 msgid "Eagle"
-msgstr ""
+msgstr "Água"
 
 #: dat/scripts/pilotname/generic.lua:33
 msgid "Earthquake"
-msgstr ""
+msgstr "Terramoto"
 
 #: dat/scripts/pilotname/generic.lua:34
 msgid "Electron"
-msgstr ""
+msgstr "Eletrão"
 
 #: dat/scripts/pilotname/generic.lua:35
 msgid "Falcon"
-msgstr ""
+msgstr "Falcão"
 
 #: dat/scripts/pilotname/generic.lua:36 dat/scripts/pilotname/pirate.lua:306
 msgid "Fang"
-msgstr ""
+msgstr "Presa"
 
 #: dat/scripts/pilotname/generic.lua:37
 msgid "Fire"
-msgstr ""
+msgstr "Fogo"
 
 #: dat/scripts/pilotname/generic.lua:38 dat/scripts/pilotname/pirate.lua:309
 msgid "Fox"
-msgstr ""
+msgstr "Raposa"
 
 #: dat/scripts/pilotname/generic.lua:39
 msgid "Glory"
-msgstr ""
+msgstr "Glória"
 
 #: dat/scripts/pilotname/generic.lua:40 dat/scripts/pilotname/pirate.lua:322
 msgid "Hammer"
-msgstr ""
+msgstr "Martelo"
 
 #: dat/scripts/pilotname/generic.lua:42
 msgid "Hornet"
-msgstr ""
+msgstr "Moscardo"
 
 #: dat/scripts/pilotname/generic.lua:43 dat/scripts/pilotname/pirate.lua:328
 msgctxt "name"
 msgid "Hunter"
-msgstr ""
+msgstr "Caçador"
 
 #: dat/scripts/pilotname/generic.lua:44
 msgid "Hurricane"
-msgstr ""
+msgstr "Furacão"
 
 #: dat/scripts/pilotname/generic.lua:45
 msgid "Ice"
-msgstr ""
+msgstr "Gelo"
 
 #: dat/scripts/pilotname/generic.lua:46
 msgid "Ion"
-msgstr ""
+msgstr "Ião"
 
 #: dat/scripts/pilotname/generic.lua:47 dat/scripts/pilotname/pirate.lua:366
 msgid "Lantern"
-msgstr ""
+msgstr "Lanterna"
 
 #: dat/scripts/pilotname/generic.lua:48
 msgid "Leopard"
-msgstr ""
+msgstr "Leopardo"
 
 #: dat/scripts/pilotname/generic.lua:49
 msgid "Light"
-msgstr ""
+msgstr "Luz"
 
 #: dat/scripts/pilotname/generic.lua:50
 msgid "Lion"
-msgstr ""
+msgstr "Leão"
 
 #: dat/scripts/pilotname/generic.lua:51
 msgid "Lizard"
-msgstr ""
+msgstr "Lagarto"
 
 #: dat/scripts/pilotname/generic.lua:52
 msgid "Mammoth"
-msgstr ""
+msgstr "Mamute"
 
 #: dat/scripts/pilotname/generic.lua:53
 msgid "Mantis"
-msgstr ""
+msgstr "Louva-a-deus"
 
 #: dat/scripts/pilotname/generic.lua:54 dat/scripts/pilotname/pirate.lua:377
 msgid "Mech"
-msgstr ""
+msgstr "Meca"
 
 #: dat/scripts/pilotname/generic.lua:55 dat/scripts/pilotname/pirate.lua:382
 msgid "Mosquito"
-msgstr ""
+msgstr "Mosquito"
 
 #: dat/scripts/pilotname/generic.lua:56
 msgid "Neutron"
-msgstr ""
+msgstr "Neutrão"
 
 #: dat/scripts/pilotname/generic.lua:57 dat/scripts/pilotname/pirate.lua:394
 msgid "Nova"
-msgstr ""
+msgstr "Nova"
 
 #: dat/scripts/pilotname/generic.lua:58
 msgid "Orca"
-msgstr ""
+msgstr "Orca"
 
 #: dat/scripts/pilotname/generic.lua:59 dat/scripts/pilotname/pirate.lua:401
 msgid "Panther"
-msgstr ""
+msgstr "Pantera"
 
 #: dat/scripts/pilotname/generic.lua:60 dat/scripts/pilotname/pirate.lua:405
 msgid "Peril"
-msgstr ""
+msgstr "Perigo"
 
 #: dat/scripts/pilotname/generic.lua:61
 msgid "Photon"
-msgstr ""
+msgstr "Fotão"
 
 #: dat/scripts/pilotname/generic.lua:62 dat/scripts/pilotname/pirate.lua:412
 msgid "Pride"
-msgstr ""
+msgstr "Orgulho"
 
 #: dat/scripts/pilotname/generic.lua:63
 msgid "Proton"
-msgstr ""
+msgstr "Protão"
 
 #: dat/scripts/pilotname/generic.lua:64 dat/scripts/pilotname/pirate.lua:416
 msgid "Python"
-msgstr ""
+msgstr "Pitão"
 
 #: dat/scripts/pilotname/generic.lua:65 dat/scripts/pilotname/pirate.lua:422
 msgid "Raven"
@@ -97441,310 +97562,310 @@ msgstr "Corvo"
 
 #: dat/scripts/pilotname/generic.lua:66
 msgid "Rebirth"
-msgstr ""
+msgstr "Renascimento"
 
 #: dat/scripts/pilotname/generic.lua:67 dat/scripts/pilotname/pirate.lua:213
 msgid "Red"
-msgstr ""
+msgstr "Roxo"
 
 #: dat/scripts/pilotname/generic.lua:68
 msgid "Raptor"
-msgstr ""
+msgstr "Rapina"
 
 #: dat/scripts/pilotname/generic.lua:69
 msgid "Rex"
-msgstr ""
+msgstr "Rex"
 
 #: dat/scripts/pilotname/generic.lua:70
 msgid "Rocket"
-msgstr ""
+msgstr "Foguete"
 
 #: dat/scripts/pilotname/generic.lua:71
 msgctxt "name"
 msgid "Rogue"
-msgstr ""
+msgstr "Vigarista"
 
 #: dat/scripts/pilotname/generic.lua:72
 msgid "Saber"
-msgstr ""
+msgstr "Sabre"
 
 #: dat/scripts/pilotname/generic.lua:73
 msgid "Scorpion"
-msgstr ""
+msgstr "Escopião"
 
 #: dat/scripts/pilotname/generic.lua:74 dat/scripts/pilotname/pirate.lua:436
 msgid "Scythe"
-msgstr ""
+msgstr "Foice"
 
 #: dat/scripts/pilotname/generic.lua:75 dat/scripts/pilotname/pirate.lua:441
 msgid "Serpent"
-msgstr ""
+msgstr "Serpente"
 
 #: dat/scripts/pilotname/generic.lua:76
 msgctxt "name"
 msgid "Shadow"
-msgstr ""
+msgstr "Sombra"
 
 #: dat/scripts/pilotname/generic.lua:78
 msgid "Star Killer"
-msgstr ""
+msgstr "Assassino de Estrelas"
 
 #: dat/scripts/pilotname/generic.lua:79 dat/scripts/pilotname/pirate.lua:451
 msgid "Spade"
-msgstr ""
+msgstr "Pá"
 
 #: dat/scripts/pilotname/generic.lua:80 dat/scripts/pilotname/pirate.lua:454
 msgid "Spider"
-msgstr ""
+msgstr "Aranha"
 
 #: dat/scripts/pilotname/generic.lua:81
 msgid "Talon"
-msgstr ""
+msgstr "Unha"
 
 #: dat/scripts/pilotname/generic.lua:82 dat/scripts/pilotname/pirate.lua:470
 msgid "Thunder"
-msgstr ""
+msgstr "Trovão"
 
 #: dat/scripts/pilotname/generic.lua:83
 msgid "Tiger"
-msgstr ""
+msgstr "Tigre"
 
 #: dat/scripts/pilotname/generic.lua:84
 msgid "Torch"
-msgstr ""
+msgstr "Tocha"
 
 #: dat/scripts/pilotname/generic.lua:85
 msgid "Tsunami"
-msgstr ""
+msgstr "Maremoto"
 
 #: dat/scripts/pilotname/generic.lua:86
 msgid "Turtle"
-msgstr ""
+msgstr "Tartaruga"
 
 #: dat/scripts/pilotname/generic.lua:87
 msgid "Typhoon"
-msgstr ""
+msgstr "Tufão"
 
 #: dat/scripts/pilotname/generic.lua:88 dat/scripts/pilotname/pirate.lua:484
 msgid "Velocity"
-msgstr ""
+msgstr "Velocidade"
 
 #: dat/scripts/pilotname/generic.lua:89 dat/scripts/pilotname/pirate.lua:485
 msgid "Vengeance"
-msgstr ""
+msgstr "Vingança"
 
 #: dat/scripts/pilotname/generic.lua:90 dat/scripts/pilotname/pirate.lua:486
 msgid "Void"
-msgstr ""
+msgstr "Vazio"
 
 #: dat/scripts/pilotname/generic.lua:91
 msgid "Wasp"
-msgstr ""
+msgstr "Vespa"
 
 #: dat/scripts/pilotname/generic.lua:92 dat/scripts/pilotname/pirate.lua:495
 msgid "Wind"
-msgstr ""
+msgstr "Vento"
 
 #: dat/scripts/pilotname/generic.lua:93
 msgid "Wing"
-msgstr ""
+msgstr "Asa"
 
 #: dat/scripts/pilotname/generic.lua:95
 msgid "Wraith"
-msgstr ""
+msgstr "Espectro"
 
 #: dat/scripts/pilotname/generic.lua:96 dat/scripts/pilotname/pirate.lua:505
 msgid "Zombie"
-msgstr ""
+msgstr "Morto-vivo"
 
 #.
 #. -- @brief Generates generic pilot names
 #. --
 #: dat/scripts/pilotname/generic.lua:115
 msgid "{letter}-{number}"
-msgstr ""
+msgstr "{letter}-{number}"
 
 #: dat/scripts/pilotname/generic.lua:118
 msgid "{name} {suffix}"
-msgstr ""
+msgstr "{name} {suffix}"
 
 #. For translation, just transliterate if necessary.
 #: dat/scripts/pilotname/pirate.lua:5
 msgid "Das"
-msgstr ""
+msgstr "Das"
 
 #: dat/scripts/pilotname/pirate.lua:6
 msgid "Der"
-msgstr ""
+msgstr "Der"
 
 #: dat/scripts/pilotname/pirate.lua:7
 msgid "Kono"
-msgstr ""
+msgstr "Kono"
 
 #: dat/scripts/pilotname/pirate.lua:8
 msgid "La"
-msgstr ""
+msgstr "La"
 
 #: dat/scripts/pilotname/pirate.lua:9
 msgid "Le"
-msgstr ""
+msgstr "Le"
 
 #: dat/scripts/pilotname/pirate.lua:10
 msgid "The"
-msgstr ""
+msgstr "O"
 
 #: dat/scripts/pilotname/pirate.lua:11
 msgid "Ye"
-msgstr ""
+msgstr "Ye"
 
 #: dat/scripts/pilotname/pirate.lua:14
 msgid "Aerobic"
-msgstr ""
+msgstr "Aeróbico"
 
 #: dat/scripts/pilotname/pirate.lua:15
 msgid "Aku No"
-msgstr ""
+msgstr "Aku No"
 
 #: dat/scripts/pilotname/pirate.lua:16
 msgid "Amai"
-msgstr ""
+msgstr "Amai"
 
 #: dat/scripts/pilotname/pirate.lua:17
 msgid "Ancient"
-msgstr ""
+msgstr "Antigo"
 
 #: dat/scripts/pilotname/pirate.lua:18
 msgid "Astro"
-msgstr ""
+msgstr "Astro"
 
 #: dat/scripts/pilotname/pirate.lua:19
 msgid "Baggy"
-msgstr ""
+msgstr "Largo"
 
 #: dat/scripts/pilotname/pirate.lua:20
 msgid "Bakana"
-msgstr ""
+msgstr "Bacana"
 
 #: dat/scripts/pilotname/pirate.lua:21
 msgid "Bald"
-msgstr ""
+msgstr "Calvo"
 
 #: dat/scripts/pilotname/pirate.lua:22
 msgid "Beautiful"
-msgstr ""
+msgstr "Bonito"
 
 #: dat/scripts/pilotname/pirate.lua:23
 msgctxt "name"
 msgid "Benevolent"
-msgstr ""
+msgstr "Benevolente"
 
 #: dat/scripts/pilotname/pirate.lua:24
 msgid "Bedrohliche"
-msgstr ""
+msgstr "Ameaça"
 
 #: dat/scripts/pilotname/pirate.lua:25
 msgid "Big"
-msgstr ""
+msgstr "Grande"
 
 #: dat/scripts/pilotname/pirate.lua:26
 msgid "Big Bad"
-msgstr ""
+msgstr "Grande Mal"
 
 #: dat/scripts/pilotname/pirate.lua:27
 msgid "Bloody"
-msgstr ""
+msgstr "Sangrento"
 
 #: dat/scripts/pilotname/pirate.lua:28
 msgid "Bright"
-msgstr ""
+msgstr "Brilhante"
 
 #: dat/scripts/pilotname/pirate.lua:29
 msgid "Brooding"
-msgstr ""
+msgstr "Melancólico"
 
 #: dat/scripts/pilotname/pirate.lua:30
 msgid "BT"
-msgstr ""
+msgstr "BT"
 
 #: dat/scripts/pilotname/pirate.lua:31
 msgid "Bureina"
-msgstr ""
+msgstr "Bureina"
 
 #: dat/scripts/pilotname/pirate.lua:32
 msgid "Caped"
-msgstr ""
+msgstr "Capado"
 
 #: dat/scripts/pilotname/pirate.lua:33
 msgid "Citrus"
-msgstr ""
+msgstr "Cítricos"
 
 #: dat/scripts/pilotname/pirate.lua:34
 msgid "Clustered"
-msgstr ""
+msgstr "Agrupa"
 
 #: dat/scripts/pilotname/pirate.lua:35
 msgid "Cocky"
-msgstr ""
+msgstr "Galito"
 
 #: dat/scripts/pilotname/pirate.lua:36
 msgid "Creamy"
-msgstr ""
+msgstr "Cremoso"
 
 #: dat/scripts/pilotname/pirate.lua:38
 msgid "Crusty"
-msgstr ""
+msgstr "Crocante"
 
 #: dat/scripts/pilotname/pirate.lua:39
 msgid "Dark"
-msgstr ""
+msgstr "Escuro"
 
 #: dat/scripts/pilotname/pirate.lua:40
 msgid "Deadly"
-msgstr ""
+msgstr "Mortal"
 
 #: dat/scripts/pilotname/pirate.lua:41
 msgid "Deathly"
-msgstr ""
+msgstr "Mortífero"
 
 #: dat/scripts/pilotname/pirate.lua:42
 msgid "Defiant"
-msgstr ""
+msgstr "Desafiante"
 
 #: dat/scripts/pilotname/pirate.lua:43
 msgid "Delicious"
-msgstr ""
+msgstr "Delicioso"
 
 #: dat/scripts/pilotname/pirate.lua:44
 msgid "Despicable"
-msgstr ""
+msgstr "Desprezível"
 
 #: dat/scripts/pilotname/pirate.lua:45
 msgid "Destructive"
-msgstr ""
+msgstr "Destrutivo"
 
 #: dat/scripts/pilotname/pirate.lua:46
 msgid "Diligent"
-msgstr ""
+msgstr "Diligente"
 
 #: dat/scripts/pilotname/pirate.lua:47
 msgid "Drunk"
-msgstr ""
+msgstr "Bêbado"
 
 #: dat/scripts/pilotname/pirate.lua:48
 msgid "Egotistical"
-msgstr ""
+msgstr "Egoísta"
 
 #: dat/scripts/pilotname/pirate.lua:49
 msgid "Electromagnetic"
-msgstr ""
+msgstr "Eletromagnético"
 
 #: dat/scripts/pilotname/pirate.lua:50
 msgid "Erroneous"
-msgstr ""
+msgstr "Erróneo"
 
 #: dat/scripts/pilotname/pirate.lua:51
 msgid "Escaped"
-msgstr ""
+msgstr "Escapado"
 
 #: dat/scripts/pilotname/pirate.lua:52
 msgid "Eternal"
@@ -97752,139 +97873,139 @@ msgstr "Eterno"
 
 #: dat/scripts/pilotname/pirate.lua:53
 msgid "Evil"
-msgstr ""
+msgstr "Maligno"
 
 #: dat/scripts/pilotname/pirate.lua:54
 msgid "Fallen"
-msgstr ""
+msgstr "Caído"
 
 #: dat/scripts/pilotname/pirate.lua:55
 msgid "Fearless"
-msgstr ""
+msgstr "Intrépido"
 
 #: dat/scripts/pilotname/pirate.lua:56
 msgid "Fearsome"
-msgstr ""
+msgstr "Terrível"
 
 #: dat/scripts/pilotname/pirate.lua:57
 msgid "Filthy"
-msgstr ""
+msgstr "Sujo"
 
 #: dat/scripts/pilotname/pirate.lua:58
 msgid "Flightless"
-msgstr ""
+msgstr "Incapacitado"
 
 #: dat/scripts/pilotname/pirate.lua:59
 msgid "Flying"
-msgstr ""
+msgstr "Voador"
 
 #: dat/scripts/pilotname/pirate.lua:60
 msgid "Foreboding"
-msgstr ""
+msgstr "Percursor"
 
 #: dat/scripts/pilotname/pirate.lua:61
 msgid "Fuketeru"
-msgstr ""
+msgstr "Fogueteiro"
 
 #: dat/scripts/pilotname/pirate.lua:62
 msgid "Full-Motion"
-msgstr ""
+msgstr "Sempre a Abrir"
 
 #: dat/scripts/pilotname/pirate.lua:63
 msgid "Furchtlose"
-msgstr ""
+msgstr "Doido Varrido"
 
 #: dat/scripts/pilotname/pirate.lua:64
 msgid "General"
-msgstr ""
+msgstr "General"
 
 #: dat/scripts/pilotname/pirate.lua:65
 msgid "Gigantic"
-msgstr ""
+msgstr "Gigantesco"
 
 #: dat/scripts/pilotname/pirate.lua:66
 msgid "Glittery"
-msgstr ""
+msgstr "Abrilhantador"
 
 #: dat/scripts/pilotname/pirate.lua:67
 msgid "Glorious"
-msgstr ""
+msgstr "Glorioso"
 
 #: dat/scripts/pilotname/pirate.lua:68
 msgid "Great"
-msgstr ""
+msgstr "Fantástico"
 
 #: dat/scripts/pilotname/pirate.lua:69
 msgid "Groß"
-msgstr ""
+msgstr "Garganta"
 
 #: dat/scripts/pilotname/pirate.lua:70
 msgid "Grumpy"
-msgstr ""
+msgstr "Rabugento"
 
 #: dat/scripts/pilotname/pirate.lua:71
 msgid "Hairy"
-msgstr ""
+msgstr "Peludo"
 
 #: dat/scripts/pilotname/pirate.lua:72
 msgid "Hammy"
-msgstr ""
+msgstr "Presunto"
 
 #: dat/scripts/pilotname/pirate.lua:73
 msgid "Handsome"
-msgstr ""
+msgstr "Charmoso"
 
 #: dat/scripts/pilotname/pirate.lua:74
 msgid "Happy"
-msgstr ""
+msgstr "Alegre"
 
 #: dat/scripts/pilotname/pirate.lua:75
 msgid "Hashitteru"
-msgstr ""
+msgstr "Aéreo"
 
 #: dat/scripts/pilotname/pirate.lua:76
 msgid "Hellen"
-msgstr ""
+msgstr "Helena"
 
 #: dat/scripts/pilotname/pirate.lua:77
 msgid "Hen'na"
-msgstr ""
+msgstr "Erva"
 
 #: dat/scripts/pilotname/pirate.lua:78
 msgid "Hidoi"
-msgstr ""
+msgstr "Aiquedoi"
 
 #: dat/scripts/pilotname/pirate.lua:79
 msgid "Hilarious"
-msgstr ""
+msgstr "Hilariante"
 
 #: dat/scripts/pilotname/pirate.lua:80
 msgid "Hitori No"
-msgstr ""
+msgstr "Aquinão"
 
 #: dat/scripts/pilotname/pirate.lua:81
 msgid "Horrible"
-msgstr ""
+msgstr "Horrível"
 
 #: dat/scripts/pilotname/pirate.lua:82
 msgid "IDS"
-msgstr ""
+msgstr "Quéquefoi"
 
 #: dat/scripts/pilotname/pirate.lua:83
 msgid "Imperial"
-msgstr ""
+msgstr "Imperial"
 
 #: dat/scripts/pilotname/pirate.lua:84
 msgid "Impressive"
-msgstr ""
+msgstr "Impressionante"
 
 #: dat/scripts/pilotname/pirate.lua:85
 msgid "Insatiable"
-msgstr ""
+msgstr "Insaciável"
 
 #: dat/scripts/pilotname/pirate.lua:86
 msgid "Ionic"
-msgstr ""
+msgstr "Iónico"
 
 #: dat/scripts/pilotname/pirate.lua:87
 msgctxt "name"
@@ -97893,777 +98014,777 @@ msgstr "Ferro"
 
 #: dat/scripts/pilotname/pirate.lua:88
 msgid "Justice"
-msgstr ""
+msgstr "Justiça"
 
 #: dat/scripts/pilotname/pirate.lua:89
 msgid "Kakkowarui"
-msgstr ""
+msgstr "Kéquefoi"
 
 #: dat/scripts/pilotname/pirate.lua:90
 msgid "Koronderu"
-msgstr ""
+msgstr "Jáfui"
 
 #: dat/scripts/pilotname/pirate.lua:91
 msgid "Kowai"
-msgstr ""
+msgstr "Quinami"
 
 #: dat/scripts/pilotname/pirate.lua:92
 msgid "Lesser"
-msgstr ""
+msgstr "Menor"
 
 #: dat/scripts/pilotname/pirate.lua:93
 msgid "Lightspeed"
-msgstr ""
+msgstr "Velocidade da Luz"
 
 #: dat/scripts/pilotname/pirate.lua:94
 msgid "Lone"
-msgstr ""
+msgstr "Solitário"
 
 #: dat/scripts/pilotname/pirate.lua:95
 msgid "Loud"
-msgstr ""
+msgstr "Ruidoso"
 
 #: dat/scripts/pilotname/pirate.lua:96
 msgid "Lovely"
-msgstr ""
+msgstr "Amoroso"
 
 #: dat/scripts/pilotname/pirate.lua:97
 msgid "Lustful"
-msgstr ""
+msgstr "Luxurioso"
 
 #: dat/scripts/pilotname/pirate.lua:98
 msgid "Mächtige"
-msgstr ""
+msgstr "Masnãoseivoar"
 
 #: dat/scripts/pilotname/pirate.lua:99
 msgid "Malodorous"
-msgstr ""
+msgstr "Malcriado"
 
 #: dat/scripts/pilotname/pirate.lua:100
 msgid "Messy"
-msgstr ""
+msgstr "Desordenado"
 
 #: dat/scripts/pilotname/pirate.lua:101
 msgid "Mighty"
-msgstr ""
+msgstr "Poderoso"
 
 #: dat/scripts/pilotname/pirate.lua:102
 msgid "Mijikai"
-msgstr ""
+msgstr "Bebeágua"
 
 #: dat/scripts/pilotname/pirate.lua:103
 msgid "Morbid"
-msgstr ""
+msgstr "Mórbido"
 
 #: dat/scripts/pilotname/pirate.lua:104
 msgid "Mukashi No"
-msgstr ""
+msgstr "Jáfui"
 
 #: dat/scripts/pilotname/pirate.lua:105
 msgid "Murderous"
-msgstr ""
+msgstr "Troglodita"
 
 #: dat/scripts/pilotname/pirate.lua:106
 msgid "Nai"
-msgstr ""
+msgstr "Fecheiatasca"
 
 #: dat/scripts/pilotname/pirate.lua:107
 msgid "Naïve"
-msgstr ""
+msgstr "Ingénuo"
 
 #: dat/scripts/pilotname/pirate.lua:108
 msgid "Neutron-Accelerated"
-msgstr ""
+msgstr "Acelerado"
 
 #: dat/scripts/pilotname/pirate.lua:109
 msgid "New"
-msgstr ""
+msgstr "Novo"
 
 #: dat/scripts/pilotname/pirate.lua:110
 msgid "Night's"
-msgstr ""
+msgstr "Noite"
 
 #: dat/scripts/pilotname/pirate.lua:111
 msgid "Nimble"
-msgstr ""
+msgstr "Ágil"
 
 #: dat/scripts/pilotname/pirate.lua:112
 msgid "Ninkyōna"
-msgstr ""
+msgstr "Ninguém"
 
 #: dat/scripts/pilotname/pirate.lua:113
 msgid "No Good"
-msgstr ""
+msgstr "Nadadebom"
 
 #: dat/scripts/pilotname/pirate.lua:114
 msgid "Numb"
-msgstr ""
+msgstr "Entorpecido"
 
 #: dat/scripts/pilotname/pirate.lua:115
 msgid "Oishī"
-msgstr ""
+msgstr "Napercebo"
 
 #: dat/scripts/pilotname/pirate.lua:116
 msgid "Ōkina"
-msgstr ""
+msgstr "Tambémnapercebo"
 
 #: dat/scripts/pilotname/pirate.lua:117
 msgid "Old"
-msgstr ""
+msgstr "Antigo"
 
 #: dat/scripts/pilotname/pirate.lua:118
 msgid "Oshirisu No"
-msgstr ""
+msgstr "Vaiverseestouali"
 
 #: dat/scripts/pilotname/pirate.lua:119
 msgid "Oyoideru"
-msgstr ""
+msgstr "Nãoseidenada"
 
 #: dat/scripts/pilotname/pirate.lua:120
 msgid "Pale"
-msgstr ""
+msgstr "Pálido"
 
 #: dat/scripts/pilotname/pirate.lua:121
 msgid "Perilous"
-msgstr ""
+msgstr "Perigosinho"
 
 #: dat/scripts/pilotname/pirate.lua:122
 msgid "Pirate's"
-msgstr ""
+msgstr "Piratinha"
 
 #: dat/scripts/pilotname/pirate.lua:123
 msgid "Pocket"
-msgstr ""
+msgstr "Bolso"
 
 #: dat/scripts/pilotname/pirate.lua:124
 msgid "Princeless"
-msgstr ""
+msgstr "Sem Preço"
 
 #: dat/scripts/pilotname/pirate.lua:125
 msgid "Psychic"
-msgstr ""
+msgstr "Psíquico"
 
 #: dat/scripts/pilotname/pirate.lua:126
 msgid "Raging"
-msgstr ""
+msgstr "Enfurecido"
 
 #: dat/scripts/pilotname/pirate.lua:127
 msgid "Reclusive"
-msgstr ""
+msgstr "Reclusivo"
 
 #: dat/scripts/pilotname/pirate.lua:128
 msgid "Relentless"
-msgstr ""
+msgstr "Implacável"
 
 #: dat/scripts/pilotname/pirate.lua:129
 msgid "Rostige"
-msgstr ""
+msgstr "Batatasamurro"
 
 #: dat/scripts/pilotname/pirate.lua:130
 msgid "Rough"
-msgstr ""
+msgstr "Áspero"
 
 #: dat/scripts/pilotname/pirate.lua:131
 msgid "Ruthless"
-msgstr ""
+msgstr "Cilindro"
 
 #: dat/scripts/pilotname/pirate.lua:132
 msgid "Saccharin"
-msgstr ""
+msgstr "Sacarina"
 
 #: dat/scripts/pilotname/pirate.lua:133
 msgid "Salty"
-msgstr ""
+msgstr "Salgado"
 
 #: dat/scripts/pilotname/pirate.lua:134
 msgid "Samui"
-msgstr ""
+msgstr "Jásumidaqui"
 
 #: dat/scripts/pilotname/pirate.lua:135
 msgid "Satanic"
-msgstr ""
+msgstr "Satánico"
 
 #: dat/scripts/pilotname/pirate.lua:136
 msgid "Secluded"
-msgstr ""
+msgstr "Triciclo"
 
 #: dat/scripts/pilotname/pirate.lua:137
 msgid "Seltsame"
-msgstr ""
+msgstr "Nãovinada"
 
 #: dat/scripts/pilotname/pirate.lua:138
 msgid "Serial"
-msgstr ""
+msgstr "Matador de Cereais"
 
 #: dat/scripts/pilotname/pirate.lua:139
 msgid "Sharing"
-msgstr ""
+msgstr "Partilhador"
 
 #: dat/scripts/pilotname/pirate.lua:140
 msgid "Silly"
-msgstr ""
+msgstr "Tonto"
 
 #: dat/scripts/pilotname/pirate.lua:141
 msgid "Single"
-msgstr ""
+msgstr "Solteiro"
 
 #: dat/scripts/pilotname/pirate.lua:142
 msgid "Sleepy"
-msgstr ""
+msgstr "Sonolento"
 
 #: dat/scripts/pilotname/pirate.lua:143
 msgid "Slimy"
-msgstr ""
+msgstr "Baboso"
 
 #: dat/scripts/pilotname/pirate.lua:144
 msgid "Smelly"
-msgstr ""
+msgstr "Fedorento"
 
 #: dat/scripts/pilotname/pirate.lua:145
 msgid "Solar"
-msgstr ""
+msgstr "Queimado"
 
 #: dat/scripts/pilotname/pirate.lua:146
 msgid "Space"
-msgstr ""
+msgstr "Espaçoso"
 
 #: dat/scripts/pilotname/pirate.lua:147
 msgid "Stained"
-msgstr ""
+msgstr "Manchado"
 
 #: dat/scripts/pilotname/pirate.lua:148
 msgid "Static"
-msgstr ""
+msgstr "Estático"
 
 #: dat/scripts/pilotname/pirate.lua:149
 msgid "Steel"
-msgstr ""
+msgstr "Aço"
 
 #: dat/scripts/pilotname/pirate.lua:150
 msgid "Strange"
-msgstr ""
+msgstr "Estranho"
 
 #: dat/scripts/pilotname/pirate.lua:151
 msgid "Strawhat"
-msgstr ""
+msgstr "Boné"
 
 #: dat/scripts/pilotname/pirate.lua:152
 msgid "Sukina"
-msgstr ""
+msgstr "Limpopó"
 
 #: dat/scripts/pilotname/pirate.lua:153
 msgid "Super"
-msgstr ""
+msgstr "Mercador"
 
 #: dat/scripts/pilotname/pirate.lua:154
 msgid "Sweaty"
-msgstr ""
+msgstr "Suado"
 
 #: dat/scripts/pilotname/pirate.lua:155
 msgid "Sweet"
-msgstr ""
+msgstr "Doce"
 
 #: dat/scripts/pilotname/pirate.lua:156
 msgid "Tall"
-msgstr ""
+msgstr "Alto"
 
 #: dat/scripts/pilotname/pirate.lua:157
 msgid "Takai"
-msgstr ""
+msgstr "Estácáestá"
 
 #: dat/scripts/pilotname/pirate.lua:158
 msgid "Terrible"
-msgstr ""
+msgstr "Terrível"
 
 #: dat/scripts/pilotname/pirate.lua:159
 msgid "Tired"
-msgstr ""
+msgstr "Cansado"
 
 #: dat/scripts/pilotname/pirate.lua:160
 msgid "Toothless"
-msgstr ""
+msgstr "Desdentado"
 
 #: dat/scripts/pilotname/pirate.lua:161
 msgid "Tropical"
-msgstr ""
+msgstr "Tropicaliente"
 
 #: dat/scripts/pilotname/pirate.lua:162
 msgid "Tsukareteru"
-msgstr ""
+msgstr "Tásaquitásalevar"
 
 #: dat/scripts/pilotname/pirate.lua:163
 msgid "Typical"
-msgstr ""
+msgstr "Típico"
 
 #: dat/scripts/pilotname/pirate.lua:164
 msgid "Ultimate"
-msgstr ""
+msgstr "Último"
 
 #: dat/scripts/pilotname/pirate.lua:165
 msgid "Umai"
-msgstr ""
+msgstr "Mil Folhas"
 
 #: dat/scripts/pilotname/pirate.lua:166
 msgid "Uncombed"
-msgstr ""
+msgstr "Despenteado"
 
 #: dat/scripts/pilotname/pirate.lua:167
 msgid "Undead"
-msgstr ""
+msgstr "Desmorto"
 
 #: dat/scripts/pilotname/pirate.lua:168
 msgid "Unersättliche"
-msgstr ""
+msgstr "Leite Creme"
 
 #: dat/scripts/pilotname/pirate.lua:169
 msgid "Unhealthy"
-msgstr ""
+msgstr "Insalubre"
 
 #: dat/scripts/pilotname/pirate.lua:170
 msgid "Unreal"
-msgstr ""
+msgstr "Irreal"
 
 #: dat/scripts/pilotname/pirate.lua:171
 msgid "Unsightly"
-msgstr ""
+msgstr "Antiestético"
 
 #: dat/scripts/pilotname/pirate.lua:172
 msgid "Urusai"
-msgstr ""
+msgstr "Pastel"
 
 #: dat/scripts/pilotname/pirate.lua:173
 msgid "Utsukushī"
-msgstr ""
+msgstr "Pastel de Carne"
 
 #: dat/scripts/pilotname/pirate.lua:174
 msgid "Vengeful"
-msgstr ""
+msgstr "Vingador"
 
 #: dat/scripts/pilotname/pirate.lua:175
 msgid "Very Bad"
-msgstr ""
+msgstr "Péssimo"
 
 #: dat/scripts/pilotname/pirate.lua:176
 msgctxt "name"
 msgid "Violent"
-msgstr ""
+msgstr "Violento"
 
 #: dat/scripts/pilotname/pirate.lua:177
 msgid "Warui"
-msgstr ""
+msgstr "Bolacha"
 
 #: dat/scripts/pilotname/pirate.lua:178
 msgid "Weeping"
-msgstr ""
+msgstr "Choramingas"
 
 #: dat/scripts/pilotname/pirate.lua:179
 msgid "Wild"
-msgstr ""
+msgstr "Selvagem"
 
 #: dat/scripts/pilotname/pirate.lua:180
 msgid "Winged"
-msgstr ""
+msgstr "Mosquito"
 
 #: dat/scripts/pilotname/pirate.lua:181
 msgid "Wretched"
-msgstr ""
+msgstr "Miserável"
 
 #: dat/scripts/pilotname/pirate.lua:182
 msgid "Yaseteru"
-msgstr ""
+msgstr "Amor Perfeito"
 
 #: dat/scripts/pilotname/pirate.lua:183
 msgid "Yasui"
-msgstr ""
+msgstr "Sopa"
 
 #: dat/scripts/pilotname/pirate.lua:184
 msgid "Yasashī"
-msgstr ""
+msgstr "Massa"
 
 #: dat/scripts/pilotname/pirate.lua:185
 msgid "Yummy"
-msgstr ""
+msgstr "Fala um Parafuso"
 
 #: dat/scripts/pilotname/pirate.lua:188
 msgid "Akai"
-msgstr ""
+msgstr "Sem Côdea"
 
 #: dat/scripts/pilotname/pirate.lua:189
 msgid "Amarillo"
-msgstr ""
+msgstr "Amarelo"
 
 #: dat/scripts/pilotname/pirate.lua:190
 msgid "Aoi"
-msgstr ""
+msgstr "Quem"
 
 #: dat/scripts/pilotname/pirate.lua:191
 msgid "Azul"
-msgstr ""
+msgstr "Azul"
 
 #: dat/scripts/pilotname/pirate.lua:192
 msgid "Blau"
-msgstr ""
+msgstr "Bolor"
 
 #: dat/scripts/pilotname/pirate.lua:193
 msgid "Bleu"
-msgstr ""
+msgstr "Céu"
 
 #: dat/scripts/pilotname/pirate.lua:195
 msgid "Chairo No"
-msgstr ""
+msgstr "Cadeira"
 
 #: dat/scripts/pilotname/pirate.lua:196
 msgid "Crimson"
-msgstr ""
+msgstr "Carmesim"
 
 #: dat/scripts/pilotname/pirate.lua:197
 msgid "Cyan"
-msgstr ""
+msgstr "Ciano"
 
 #: dat/scripts/pilotname/pirate.lua:198
 msgid "Gelb"
-msgstr ""
+msgstr "Gorduroso"
 
 #: dat/scripts/pilotname/pirate.lua:199
 msgid "Gin'iro No"
-msgstr ""
+msgstr "Euselechinês"
 
 #: dat/scripts/pilotname/pirate.lua:200
 msgid "Golden"
-msgstr ""
+msgstr "Dourado"
 
 #: dat/scripts/pilotname/pirate.lua:201
 msgid "Gray"
-msgstr ""
+msgstr "Cinzento"
 
 #: dat/scripts/pilotname/pirate.lua:202
 msgid "Green"
-msgstr ""
+msgstr "Verde"
 
 #: dat/scripts/pilotname/pirate.lua:203
 msgid "Grün"
-msgstr ""
+msgstr "Lambisgóia"
 
 #: dat/scripts/pilotname/pirate.lua:204
 msgid "Haiiro No"
-msgstr ""
+msgstr "Táqueto"
 
 #: dat/scripts/pilotname/pirate.lua:205
 msgid "Kiiroi"
-msgstr ""
+msgstr "Cimbalino"
 
 #: dat/scripts/pilotname/pirate.lua:206
 msgid "Kin'iro No"
-msgstr ""
+msgstr "Carioca"
 
 #: dat/scripts/pilotname/pirate.lua:207
 msgid "Kuroi"
-msgstr ""
+msgstr "Meia de Leite"
 
 #: dat/scripts/pilotname/pirate.lua:208
 msgid "Mauve"
-msgstr ""
+msgstr "Garoto"
 
 #: dat/scripts/pilotname/pirate.lua:209
 msgid "Midori No"
-msgstr ""
+msgstr "Abatanado"
 
 #: dat/scripts/pilotname/pirate.lua:210
 msgid "Murasaki No"
-msgstr ""
+msgstr "Pneu"
 
 #: dat/scripts/pilotname/pirate.lua:211
 msgid "Pink"
-msgstr ""
+msgstr "Rosa"
 
 #: dat/scripts/pilotname/pirate.lua:212
 msgid "Purple"
-msgstr ""
+msgstr "Violeta"
 
 #: dat/scripts/pilotname/pirate.lua:214
 msgid "Roho"
-msgstr ""
+msgstr "Roxo"
 
 #: dat/scripts/pilotname/pirate.lua:215
 msgid "Schwarz"
-msgstr ""
+msgstr "Nãoseialemão"
 
 #: dat/scripts/pilotname/pirate.lua:216
 msgid "Shiroi"
-msgstr ""
+msgstr "Tosta Mista"
 
 #: dat/scripts/pilotname/pirate.lua:217
 msgid "Silver"
-msgstr ""
+msgstr "Prata"
 
 #: dat/scripts/pilotname/pirate.lua:218
 msgid "Violet"
-msgstr ""
+msgstr "Violeta"
 
 #: dat/scripts/pilotname/pirate.lua:219
 msgid "Yellow"
-msgstr ""
+msgstr "Amarelado"
 
 #: dat/scripts/pilotname/pirate.lua:222
 msgid "1024"
-msgstr ""
+msgstr "1024"
 
 #: dat/scripts/pilotname/pirate.lua:223
 msgid "Aku"
-msgstr ""
+msgstr "Santinho"
 
 #: dat/scripts/pilotname/pirate.lua:224
 msgid "Akuma"
-msgstr ""
+msgstr "Sãomilescudos"
 
 #: dat/scripts/pilotname/pirate.lua:225
 msgid "Alphabet Soup"
-msgstr ""
+msgstr "Sopa do Alfabeto"
 
 #: dat/scripts/pilotname/pirate.lua:226
 msgid "Amigo"
-msgstr ""
+msgstr "Amigo"
 
 #: dat/scripts/pilotname/pirate.lua:227
 msgid "Angel"
-msgstr ""
+msgstr "Anjo"
 
 #: dat/scripts/pilotname/pirate.lua:228
 msgid "Angle Grinder"
-msgstr ""
+msgstr "Ângulo"
 
 #: dat/scripts/pilotname/pirate.lua:229
 msgid "Anvil"
-msgstr ""
+msgstr "Bigorna"
 
 #: dat/scripts/pilotname/pirate.lua:230
 msgid "Ari"
-msgstr ""
+msgstr "Vassoura"
 
 #: dat/scripts/pilotname/pirate.lua:231
 msgid "Arrow"
-msgstr ""
+msgstr "Seta"
 
 #: dat/scripts/pilotname/pirate.lua:232
 msgctxt "name"
 msgid "Ass"
-msgstr ""
+msgstr "Rabo"
 
 #: dat/scripts/pilotname/pirate.lua:233
 msgid "Atama"
-msgstr ""
+msgstr "Queijo"
 
 #: dat/scripts/pilotname/pirate.lua:234
 msgid "Aunt"
-msgstr ""
+msgstr "Tia"
 
 #: dat/scripts/pilotname/pirate.lua:235
 msgid "Auster"
-msgstr ""
+msgstr "Austero"
 
 #: dat/scripts/pilotname/pirate.lua:236
 msgid "Avenger"
-msgstr ""
+msgstr "Foge"
 
 #: dat/scripts/pilotname/pirate.lua:238
 msgid "Baka"
-msgstr ""
+msgstr "Burro"
 
 #: dat/scripts/pilotname/pirate.lua:239
 msgid "Bakemono"
-msgstr ""
+msgstr "Mono"
 
 #: dat/scripts/pilotname/pirate.lua:240
 msgid "Band Saw"
-msgstr ""
+msgstr "Serradura"
 
 #: dat/scripts/pilotname/pirate.lua:241
 msgid "Bat"
-msgstr ""
+msgstr "Baba de Camelo"
 
 #: dat/scripts/pilotname/pirate.lua:242
 msgid "Beard"
-msgstr ""
+msgstr "Barba"
 
 #: dat/scripts/pilotname/pirate.lua:243
 msgid "Belt Sander"
-msgstr ""
+msgstr "Cinto"
 
 #: dat/scripts/pilotname/pirate.lua:244
 msgid "Bench Grinder"
-msgstr ""
+msgstr "Amolador"
 
 #: dat/scripts/pilotname/pirate.lua:245
 msgid "Bengoshi"
-msgstr ""
+msgstr "Arroz Doce"
 
 #: dat/scripts/pilotname/pirate.lua:247
 msgid "Blarg"
-msgstr ""
+msgstr "Bola de Berlim"
 
 #: dat/scripts/pilotname/pirate.lua:248
 msgid "Blitzschneider"
-msgstr ""
+msgstr "Bomboca"
 
 #: dat/scripts/pilotname/pirate.lua:251
 msgid "Blunder"
-msgstr ""
+msgstr "Compota"
 
 #: dat/scripts/pilotname/pirate.lua:252
 msgid "Boot"
-msgstr ""
+msgstr "Arrancador"
 
 #: dat/scripts/pilotname/pirate.lua:253
 msgid "Bobber"
-msgstr ""
+msgstr "Aletria"
 
 #: dat/scripts/pilotname/pirate.lua:254
 msgid "Bolt Cutter"
-msgstr ""
+msgstr "Saca Rabos"
 
 #: dat/scripts/pilotname/pirate.lua:255
 msgid "Bōshi"
-msgstr ""
+msgstr "Bilharaco"
 
 #: dat/scripts/pilotname/pirate.lua:256
 msgid "Brain"
-msgstr ""
+msgstr "Cérebro"
 
 #: dat/scripts/pilotname/pirate.lua:257
 msgid "Breeze"
-msgstr ""
+msgstr "Brisa"
 
 #: dat/scripts/pilotname/pirate.lua:258
 msgid "Bride"
-msgstr ""
+msgstr "Noiva"
 
 #: dat/scripts/pilotname/pirate.lua:259
 msgid "Brigand"
-msgstr ""
+msgstr "Foragido"
 
 #: dat/scripts/pilotname/pirate.lua:260
 msgid "Bulk"
-msgstr ""
+msgstr "Barrete"
 
 #: dat/scripts/pilotname/pirate.lua:261
 msgid "Burglar"
-msgstr ""
+msgstr "Ladrão"
 
 #: dat/scripts/pilotname/pirate.lua:262
 msgid "Cane"
-msgstr ""
+msgstr "Bastão"
 
 #: dat/scripts/pilotname/pirate.lua:265
 msgid "Cheese Grater"
-msgstr ""
+msgstr "Ralador"
 
 #: dat/scripts/pilotname/pirate.lua:266
 msgid "Chi"
-msgstr ""
+msgstr "Cavaco"
 
 #: dat/scripts/pilotname/pirate.lua:267
 msgid "Chicken"
-msgstr ""
+msgstr "Galinha"
 
 #: dat/scripts/pilotname/pirate.lua:268
 msgid "Circle"
-msgstr ""
+msgstr "Círculo"
 
 #: dat/scripts/pilotname/pirate.lua:270
 msgid "Claw Hammer"
-msgstr ""
+msgstr "Picareta"
 
 #: dat/scripts/pilotname/pirate.lua:271
 msgid "Club"
-msgstr ""
+msgstr "Bastão"
 
 #: dat/scripts/pilotname/pirate.lua:272
 msgid "Coconut"
-msgstr ""
+msgstr "Coco"
 
 #: dat/scripts/pilotname/pirate.lua:273
 msgid "Coot"
-msgstr ""
+msgstr "Fogaça"
 
 #: dat/scripts/pilotname/pirate.lua:274
 msgid "Corsair"
-msgstr ""
+msgstr "Corsário"
 
 #: dat/scripts/pilotname/pirate.lua:278
 msgid "Crowbar"
-msgstr ""
+msgstr "Pé de Cabra"
 
 #: dat/scripts/pilotname/pirate.lua:279
 msgid "Crusader"
-msgstr ""
+msgstr "Cruzeiro"
 
 #: dat/scripts/pilotname/pirate.lua:280
 msgid "Curse"
-msgstr ""
+msgstr "Maldição"
 
 #: dat/scripts/pilotname/pirate.lua:282
 msgid "Darkness"
-msgstr ""
+msgstr "Obscuridade"
 
 #: dat/scripts/pilotname/pirate.lua:286
 msgid "Destruction"
-msgstr ""
+msgstr "Destruição"
 
 #: dat/scripts/pilotname/pirate.lua:287
 msgid "Devil"
-msgstr ""
+msgstr "Diabinho"
 
 #: dat/scripts/pilotname/pirate.lua:288
 msgid "Dictator"
-msgstr ""
+msgstr "Ditador"
 
 #: dat/scripts/pilotname/pirate.lua:289
 msgid "Disaster"
-msgstr ""
+msgstr "Desastre"
 
 #: dat/scripts/pilotname/pirate.lua:290
 msgid "Discord"
-msgstr ""
+msgstr "Discórdia"
 
 #: dat/scripts/pilotname/pirate.lua:291
 msgid "Donkey"
-msgstr ""
+msgstr "Burro"
 
 #: dat/scripts/pilotname/pirate.lua:292
 msgid "Doom"
-msgstr ""
+msgstr "Perdição"
 
 #: dat/scripts/pilotname/pirate.lua:293
 msgid "Drache"
-msgstr ""
+msgstr "Nabada"
 
 #: dat/scripts/pilotname/pirate.lua:295
 msgid "Dread"
-msgstr ""
+msgstr "Pavor"
 
 #: dat/scripts/pilotname/pirate.lua:296
 msgid "Drifter"
-msgstr ""
+msgstr "Vagabundo"
 
 #: dat/scripts/pilotname/pirate.lua:297
 msgid "Drill Press"
-msgstr ""
+msgstr "Berbequim"
 
 #: dat/scripts/pilotname/pirate.lua:298
 msgid "Duckling"
-msgstr ""
+msgstr "Pato"
 
 #: dat/scripts/pilotname/pirate.lua:300
 msgid "Eggplant"
-msgstr ""
+msgstr "Erva Daninha"
 
 #: dat/scripts/pilotname/pirate.lua:301
 msgid "Ego"
-msgstr ""
+msgstr "Carrela"
 
 #: dat/scripts/pilotname/pirate.lua:302
 msgid "Electricity"
-msgstr ""
+msgstr "Eletricidade"
 
 #: dat/scripts/pilotname/pirate.lua:303
 msgid "Emperor"
@@ -98671,723 +98792,723 @@ msgstr "Imperador"
 
 #: dat/scripts/pilotname/pirate.lua:304
 msgid "Energy-Volt"
-msgstr ""
+msgstr "Energía-Volta"
 
 #: dat/scripts/pilotname/pirate.lua:305
 msgid "Engine"
-msgstr ""
+msgstr "Motor"
 
 #: dat/scripts/pilotname/pirate.lua:307
 msgid "Flare"
-msgstr ""
+msgstr "Toucinho"
 
 #: dat/scripts/pilotname/pirate.lua:308
 msgid "Flash"
-msgstr ""
+msgstr "Paralelo"
 
 #: dat/scripts/pilotname/pirate.lua:310
 msgid "Friend"
-msgstr ""
+msgstr "Amigalhaço"
 
 #: dat/scripts/pilotname/pirate.lua:311
 msgid "Fugitive"
-msgstr ""
+msgstr "Chico Esperto"
 
 #: dat/scripts/pilotname/pirate.lua:312
 msgid "Gaki"
-msgstr ""
+msgstr "Gandulas"
 
 #: dat/scripts/pilotname/pirate.lua:313
 msgid "Geschützturmdrehbank"
-msgstr ""
+msgstr "Complicómetro"
 
 #: dat/scripts/pilotname/pirate.lua:314
 msgid "Giant"
-msgstr ""
+msgstr "Gigante"
 
 #: dat/scripts/pilotname/pirate.lua:315
 msgid "Gift"
-msgstr ""
+msgstr "Presente"
 
 #: dat/scripts/pilotname/pirate.lua:316
 msgid "Gohan"
-msgstr ""
+msgstr "Palito"
 
 #: dat/scripts/pilotname/pirate.lua:317
 msgid "Goose"
-msgstr ""
+msgstr "Ganso"
 
 #: dat/scripts/pilotname/pirate.lua:318
 msgid "Gorilla"
-msgstr ""
+msgstr "Gorila"
 
 #: dat/scripts/pilotname/pirate.lua:319
 msgid "Gun"
-msgstr ""
+msgstr "Arma"
 
 #: dat/scripts/pilotname/pirate.lua:320
 msgid "Hae"
-msgstr ""
+msgstr "Bicicleta"
 
 #: dat/scripts/pilotname/pirate.lua:321
 msgid "Hamburger"
-msgstr ""
+msgstr "Salada"
 
 #: dat/scripts/pilotname/pirate.lua:323
 msgid "Headache"
-msgstr ""
+msgstr "Dor de Cabeça"
 
 #: dat/scripts/pilotname/pirate.lua:324
 msgid "Hex"
-msgstr ""
+msgstr "Embrulho"
 
 #: dat/scripts/pilotname/pirate.lua:325
 msgid "Hikari"
-msgstr ""
+msgstr "Alfinete"
 
 #: dat/scripts/pilotname/pirate.lua:326
 msgid "Horobi"
-msgstr ""
+msgstr "Pé Descalço"
 
 #: dat/scripts/pilotname/pirate.lua:327
 msgid "Horror"
-msgstr ""
+msgstr "Que Horror"
 
 #: dat/scripts/pilotname/pirate.lua:329
 msgid "Husband"
-msgstr ""
+msgstr "Marido"
 
 #: dat/scripts/pilotname/pirate.lua:330
 msgid "Ichigo"
-msgstr ""
+msgstr "Boneco de Neve"
 
 #: dat/scripts/pilotname/pirate.lua:331
 msgid "Id"
-msgstr ""
+msgstr "Tropeço"
 
 #: dat/scripts/pilotname/pirate.lua:332
 msgid "Impact Wrench"
-msgstr ""
+msgstr "Marreta"
 
 #: dat/scripts/pilotname/pirate.lua:333
 msgid "Inazuma"
-msgstr ""
+msgstr "Guna"
 
 #: dat/scripts/pilotname/pirate.lua:334
 msgid "Ionizer"
-msgstr ""
+msgstr "Labrego"
 
 #: dat/scripts/pilotname/pirate.lua:335
 msgid "Ishi"
-msgstr ""
+msgstr "Mariachi"
 
 #: dat/scripts/pilotname/pirate.lua:336
 msgid "Itoyōji"
-msgstr ""
+msgstr "Sem Medo"
 
 #: dat/scripts/pilotname/pirate.lua:337
 msgid "Jalapeño"
-msgstr ""
+msgstr "Orelhas"
 
 #: dat/scripts/pilotname/pirate.lua:338
 msgid "Jigsaw"
-msgstr ""
+msgstr "Mijão"
 
 #: dat/scripts/pilotname/pirate.lua:339
 msgid "Jishin"
-msgstr ""
+msgstr "Mafarrico"
 
 #: dat/scripts/pilotname/pirate.lua:340
 msgid "Jinx"
-msgstr ""
+msgstr "Patinho"
 
 #: dat/scripts/pilotname/pirate.lua:341
 msgid "Ka"
-msgstr ""
+msgstr "Enormiço"
 
 #: dat/scripts/pilotname/pirate.lua:342
 msgid "Kailan"
-msgstr ""
+msgstr "Naifas"
 
 #: dat/scripts/pilotname/pirate.lua:343
 msgid "Kaji"
-msgstr ""
+msgstr "Bués"
 
 #: dat/scripts/pilotname/pirate.lua:344
 msgid "Kamakiri"
-msgstr ""
+msgstr "Relógio de Pulso"
 
 #: dat/scripts/pilotname/pirate.lua:345
 msgid "Kame"
-msgstr ""
+msgstr "Maçaneta"
 
 #: dat/scripts/pilotname/pirate.lua:346
 msgid "Kami"
-msgstr ""
+msgstr "Manco"
 
 #: dat/scripts/pilotname/pirate.lua:347
 msgid "Kamikaze"
-msgstr ""
+msgstr "Suicida"
 
 #: dat/scripts/pilotname/pirate.lua:348
 msgid "Kappa"
-msgstr ""
+msgstr "Gabardine"
 
 #: dat/scripts/pilotname/pirate.lua:349
 msgid "Karaoke"
-msgstr ""
+msgstr "Caraocas"
 
 #: dat/scripts/pilotname/pirate.lua:350
 msgid "Katana"
-msgstr ""
+msgstr "Catana"
 
 #: dat/scripts/pilotname/pirate.lua:351
 msgid "Kaze"
-msgstr ""
+msgstr "Navalhas"
 
 #: dat/scripts/pilotname/pirate.lua:352
 msgid "Keel"
-msgstr ""
+msgstr "Rapatudo"
 
 #: dat/scripts/pilotname/pirate.lua:354
 msgid "Killer"
-msgstr ""
+msgstr "Estripador"
 
 #: dat/scripts/pilotname/pirate.lua:355
 msgid "Kirin"
-msgstr ""
+msgstr "Pé de Vento"
 
 #: dat/scripts/pilotname/pirate.lua:356
 msgid "Kitchen Knife"
-msgstr ""
+msgstr "Faca de Cozinha"
 
 #: dat/scripts/pilotname/pirate.lua:357
 msgid "Kitsune"
-msgstr ""
+msgstr "Lambão"
 
 #: dat/scripts/pilotname/pirate.lua:358
 msgid "Kitten"
-msgstr ""
+msgstr "Gatinho"
 
 #: dat/scripts/pilotname/pirate.lua:360
 msgid "Knife"
-msgstr ""
+msgstr "Navalha"
 
 #: dat/scripts/pilotname/pirate.lua:361
 msgid "Knight"
-msgstr ""
+msgstr "Cavaleiro"
 
 #: dat/scripts/pilotname/pirate.lua:362
 msgid "Kōmori"
-msgstr ""
+msgstr "Croquete"
 
 #: dat/scripts/pilotname/pirate.lua:363
 msgid "Kumo"
-msgstr ""
+msgstr "Rissol"
 
 #: dat/scripts/pilotname/pirate.lua:364
 msgid "Lance"
-msgstr ""
+msgstr "Camarão"
 
 #: dat/scripts/pilotname/pirate.lua:367
 msgid "Lawyer"
-msgstr ""
+msgstr "Advogado"
 
 #: dat/scripts/pilotname/pirate.lua:368
 msgid "League"
-msgstr ""
+msgstr "Liga"
 
 #: dat/scripts/pilotname/pirate.lua:369
 msgid "Lust"
-msgstr ""
+msgstr "Luxúria"
 
 #: dat/scripts/pilotname/pirate.lua:370
 msgid "Madōshi"
-msgstr ""
+msgstr "Manco"
 
 #: dat/scripts/pilotname/pirate.lua:371
 msgid "Magician"
-msgstr ""
+msgstr "Mago"
 
 #: dat/scripts/pilotname/pirate.lua:372
 msgid "Mahō"
-msgstr ""
+msgstr "Maneta"
 
 #: dat/scripts/pilotname/pirate.lua:373
 msgid "Maize"
-msgstr ""
+msgstr "Perneta"
 
 #: dat/scripts/pilotname/pirate.lua:374
 msgid "Mangaka"
-msgstr ""
+msgstr "Sem Olho"
 
 #: dat/scripts/pilotname/pirate.lua:375
 msgid "Mangekyō"
-msgstr ""
+msgstr "Rasteirinho"
 
 #: dat/scripts/pilotname/pirate.lua:376
 msgid "Mango"
-msgstr ""
+msgstr "Pessegueiro"
 
 #: dat/scripts/pilotname/pirate.lua:378
 msgid "Melon"
-msgstr ""
+msgstr "Melão"
 
 #: dat/scripts/pilotname/pirate.lua:379
 msgid "Mind"
-msgstr ""
+msgstr "Mente"
 
 #: dat/scripts/pilotname/pirate.lua:380
 msgid "Model"
-msgstr ""
+msgstr "Modelo"
 
 #: dat/scripts/pilotname/pirate.lua:381
 msgid "Monster"
-msgstr ""
+msgstr "Monstro"
 
 #: dat/scripts/pilotname/pirate.lua:383
 msgid "Moustache"
-msgstr ""
+msgstr "Bigodes"
 
 #: dat/scripts/pilotname/pirate.lua:384
 msgid "Mugi"
-msgstr ""
+msgstr "Fungo"
 
 #: dat/scripts/pilotname/pirate.lua:385
 msgid "Nanika"
-msgstr ""
+msgstr "Cepa Torta"
 
 #: dat/scripts/pilotname/pirate.lua:386
 msgid "Neckbeard"
-msgstr ""
+msgstr "Colarinhos"
 
 #: dat/scripts/pilotname/pirate.lua:387
 msgid "Necromancer"
-msgstr ""
+msgstr "Toureiro"
 
 #: dat/scripts/pilotname/pirate.lua:388
 msgid "Neko"
-msgstr ""
+msgstr "Trinca Espinhas"
 
 #: dat/scripts/pilotname/pirate.lua:389
 msgid "Nezumi"
-msgstr ""
+msgstr "Joaninha"
 
 #: dat/scripts/pilotname/pirate.lua:390
 msgid "Night"
-msgstr ""
+msgstr "Noite"
 
 #: dat/scripts/pilotname/pirate.lua:391
 msgid "Niku"
-msgstr ""
+msgstr "Bazadaqui"
 
 #: dat/scripts/pilotname/pirate.lua:392
 msgid "Ninja"
-msgstr ""
+msgstr "Ninja"
 
 #: dat/scripts/pilotname/pirate.lua:393
 msgid "Niwatori"
-msgstr ""
+msgstr "Espinhoso"
 
 #: dat/scripts/pilotname/pirate.lua:395
 msgid "Ogre"
-msgstr ""
+msgstr "Tropeça"
 
 #: dat/scripts/pilotname/pirate.lua:396
 msgctxt "name"
 msgid "Oni"
-msgstr ""
+msgstr "Ohnao"
 
 #: dat/scripts/pilotname/pirate.lua:397
 msgid "Onion"
-msgstr ""
+msgstr "Cebolas"
 
 #: dat/scripts/pilotname/pirate.lua:398
 msgid "Osiris"
-msgstr ""
+msgstr "Orelhudo"
 
 #: dat/scripts/pilotname/pirate.lua:399
 msgctxt "name"
 msgid "Outlaw"
-msgstr ""
+msgstr "Vale-tudo"
 
 #: dat/scripts/pilotname/pirate.lua:400
 msgid "Oyster"
-msgstr ""
+msgstr "Ostra"
 
 #. Console-main.
 #: dat/scripts/pilotname/pirate.lua:402 src/input.c:126
 msgid "Paste"
-msgstr ""
+msgstr "Pasta"
 
 #: dat/scripts/pilotname/pirate.lua:403
 msgid "Pea"
-msgstr ""
+msgstr "Guisado"
 
 #: dat/scripts/pilotname/pirate.lua:404
 msgid "Peapod"
-msgstr ""
+msgstr "Ovo Podre"
 
 #: dat/scripts/pilotname/pirate.lua:406
 msgid "Pickaxe"
-msgstr ""
+msgstr "Machado"
 
 #: dat/scripts/pilotname/pirate.lua:407
 msgid "Pipe Wrench"
-msgstr ""
+msgstr "Fechaduras"
 
 #: dat/scripts/pilotname/pirate.lua:408
 msgid "Pitchfork"
-msgstr ""
+msgstr "Forquilha"
 
 #: dat/scripts/pilotname/pirate.lua:409
 msgid "Politician"
-msgstr ""
+msgstr "Político"
 
 #: dat/scripts/pilotname/pirate.lua:410
 msgid "Potato"
-msgstr ""
+msgstr "Batata"
 
 #: dat/scripts/pilotname/pirate.lua:411
 msgid "Potter"
-msgstr ""
+msgstr "Oleiro"
 
 #: dat/scripts/pilotname/pirate.lua:413
 msgid "Princess"
-msgstr ""
+msgstr "Princesa"
 
 #: dat/scripts/pilotname/pirate.lua:414
 msgid "Pulse"
-msgstr ""
+msgstr "Pulso"
 
 #: dat/scripts/pilotname/pirate.lua:415
 msgid "Puppy"
-msgstr ""
+msgstr "Cãozinho"
 
 #: dat/scripts/pilotname/pirate.lua:417
 msgid "Raigeki"
-msgstr ""
+msgstr "Táquetoaí"
 
 #: dat/scripts/pilotname/pirate.lua:419
 msgid "Rat"
-msgstr ""
+msgstr "Rato"
 
 #: dat/scripts/pilotname/pirate.lua:420
 msgid "Ratte"
-msgstr ""
+msgstr "Toupeira"
 
 #: dat/scripts/pilotname/pirate.lua:421
 msgid "Ravager"
-msgstr ""
+msgstr "Devastador"
 
 #: dat/scripts/pilotname/pirate.lua:423
 msgid "Reaver"
-msgstr ""
+msgstr "Barata"
 
 #: dat/scripts/pilotname/pirate.lua:424
 msgid "Recluse"
-msgstr ""
+msgstr "Recluso"
 
 #: dat/scripts/pilotname/pirate.lua:425
 msgid "Rice"
-msgstr ""
+msgstr "Arroz"
 
 #: dat/scripts/pilotname/pirate.lua:426
 msgid "Ring"
-msgstr ""
+msgstr "Alho"
 
 #: dat/scripts/pilotname/pirate.lua:427
 msgid "River"
-msgstr ""
+msgstr "Rio"
 
 #: dat/scripts/pilotname/pirate.lua:428
 msgid "Roba"
-msgstr ""
+msgstr "Avental"
 
 #: dat/scripts/pilotname/pirate.lua:429
 msgid "Rōjin"
-msgstr ""
+msgstr "Luvas"
 
 #: dat/scripts/pilotname/pirate.lua:430
 msgid "Rubber Mallet"
-msgstr ""
+msgstr "Gomas"
 
 #: dat/scripts/pilotname/pirate.lua:431
 msgid "Ryū"
-msgstr ""
+msgstr "Rabanadas"
 
 #: dat/scripts/pilotname/pirate.lua:432
 msgid "Sakura"
-msgstr ""
+msgstr "Sangria"
 
 #: dat/scripts/pilotname/pirate.lua:433
 msgid "Salad"
-msgstr ""
+msgstr "Insosso"
 
 #: dat/scripts/pilotname/pirate.lua:434
 msgid "Samurai"
-msgstr ""
+msgstr "Samurai"
 
 #: dat/scripts/pilotname/pirate.lua:435
 msgid "Sasori"
-msgstr ""
+msgstr "Sêmolas"
 
 #: dat/scripts/pilotname/pirate.lua:437
 msgid "Sea"
-msgstr ""
+msgstr "Mar"
 
 #: dat/scripts/pilotname/pirate.lua:438
 msgid "Seaweed"
-msgstr ""
+msgstr "Algas"
 
 #: dat/scripts/pilotname/pirate.lua:439
 msgid "Seijika"
-msgstr ""
+msgstr "Serapilheira"
 
 #: dat/scripts/pilotname/pirate.lua:440
 msgid "Sentinel"
-msgstr ""
+msgstr "Sentinela"
 
 #: dat/scripts/pilotname/pirate.lua:443
 msgid "Shinigami"
-msgstr ""
+msgstr "Sofá"
 
 #: dat/scripts/pilotname/pirate.lua:444
 msgid "Shinobi"
-msgstr ""
+msgstr "Peneira"
 
 #: dat/scripts/pilotname/pirate.lua:445
 msgid "Shock"
-msgstr ""
+msgstr "Para-choques"
 
 #: dat/scripts/pilotname/pirate.lua:446
 msgid "Shovel"
-msgstr ""
+msgstr "Picadeira"
 
 #: dat/scripts/pilotname/pirate.lua:447
 msgid "Shujin"
-msgstr ""
+msgstr "Rolhas"
 
 #: dat/scripts/pilotname/pirate.lua:448
 msgid "Siren"
-msgstr ""
+msgstr "Sirene"
 
 #: dat/scripts/pilotname/pirate.lua:449
 msgid "Slayer"
-msgstr ""
+msgstr "Exterminador"
 
 #: dat/scripts/pilotname/pirate.lua:450
 msgid "Space Dog"
-msgstr ""
+msgstr "Cão Espacial"
 
 #: dat/scripts/pilotname/pirate.lua:452
 msgid "Spaghetti"
-msgstr ""
+msgstr "Esparguete"
 
 #: dat/scripts/pilotname/pirate.lua:453
 msgid "Spaghetti Monster"
-msgstr ""
+msgstr "Monstro da Esparguete"
 
 #: dat/scripts/pilotname/pirate.lua:455
 msgid "Squeegee"
-msgstr ""
+msgstr "Tambor"
 
 #: dat/scripts/pilotname/pirate.lua:456
 msgid "Staple Gun"
-msgstr ""
+msgstr "Agrafador"
 
 #: dat/scripts/pilotname/pirate.lua:457
 msgid "Stern"
-msgstr ""
+msgstr "Austero"
 
 #: dat/scripts/pilotname/pirate.lua:458
 msgid "Stir-fry"
-msgstr ""
+msgstr "Salteado"
 
 #: dat/scripts/pilotname/pirate.lua:459
 msgid "Storm"
-msgstr ""
+msgstr "Tormenta"
 
 #: dat/scripts/pilotname/pirate.lua:460
 msgid "Supernova"
-msgstr ""
+msgstr "Supernova"
 
 #: dat/scripts/pilotname/pirate.lua:461
 msgid "Surströmming"
-msgstr ""
+msgstr "Nãopercebi"
 
 #: dat/scripts/pilotname/pirate.lua:462
 msgid "Table Saw"
-msgstr ""
+msgstr "Tábua"
 
 #: dat/scripts/pilotname/pirate.lua:463
 msgid "Tallman"
-msgstr ""
+msgstr "Poste"
 
 #: dat/scripts/pilotname/pirate.lua:464
 msgid "Tanoshimi"
-msgstr ""
+msgstr "Espanta-Moscas"
 
 #: dat/scripts/pilotname/pirate.lua:465
 msgid "Tatsumaki"
-msgstr ""
+msgstr "Espantalho"
 
 #: dat/scripts/pilotname/pirate.lua:466
 msgid "Tegami"
-msgstr ""
+msgstr "Tiracolos"
 
 #: dat/scripts/pilotname/pirate.lua:467
 msgid "Teineigo"
-msgstr ""
+msgstr "Bolorento"
 
 #: dat/scripts/pilotname/pirate.lua:468
 msgid "Tenkūryū"
-msgstr ""
+msgstr "Raspador"
 
 #: dat/scripts/pilotname/pirate.lua:469
 msgid "Terror"
-msgstr ""
+msgstr "Agarrado"
 
 #: dat/scripts/pilotname/pirate.lua:471
 msgid "Tomodachi"
-msgstr ""
+msgstr "Dentadura"
 
 #: dat/scripts/pilotname/pirate.lua:472
 msgid "Tooth"
-msgstr ""
+msgstr "Dentes"
 
 #: dat/scripts/pilotname/pirate.lua:473
 msgctxt "name"
 msgid "Tora"
-msgstr ""
+msgstr "Calçadeira"
 
 #: dat/scripts/pilotname/pirate.lua:474
 msgctxt "name"
 msgid "Tori"
-msgstr ""
+msgstr "Bucha"
 
 #: dat/scripts/pilotname/pirate.lua:475
 msgid "Treasure Hunter"
-msgstr ""
+msgstr "Caçador de Tesouros"
 
 #: dat/scripts/pilotname/pirate.lua:476
 msgid "Tree"
-msgstr ""
+msgstr "Árvore"
 
 #: dat/scripts/pilotname/pirate.lua:477
 msgid "Tsuchi"
-msgstr ""
+msgstr "Alfinete"
 
 #: dat/scripts/pilotname/pirate.lua:478
 msgid "Tumbler"
-msgstr ""
+msgstr "Acrobata"
 
 #: dat/scripts/pilotname/pirate.lua:479
 msgid "Turret Lathe"
-msgstr ""
+msgstr "Torneiro"
 
 #: dat/scripts/pilotname/pirate.lua:480
 msgid "Twilight"
-msgstr ""
+msgstr "Crepúsculo"
 
 #: dat/scripts/pilotname/pirate.lua:481
 msgid "Tyrant"
-msgstr ""
+msgstr "Tirano"
 
 #: dat/scripts/pilotname/pirate.lua:482
 msgid "Umi"
-msgstr ""
+msgstr "Carpinteiro"
 
 #: dat/scripts/pilotname/pirate.lua:483
 msgid "Urchin"
-msgstr ""
+msgstr "Andaimes"
 
 #: dat/scripts/pilotname/pirate.lua:487
 msgid "Vomit"
-msgstr ""
+msgstr "Vómito"
 
 #: dat/scripts/pilotname/pirate.lua:488
 msgid "Wache"
-msgstr ""
+msgstr "Chaves"
 
 #: dat/scripts/pilotname/pirate.lua:489
 msgid "Watcher"
-msgstr ""
+msgstr "Olheiro"
 
 #: dat/scripts/pilotname/pirate.lua:490
 msgid "Wedge"
-msgstr ""
+msgstr "Esquinas"
 
 #: dat/scripts/pilotname/pirate.lua:491
 msgid "Widget"
-msgstr ""
+msgstr "Telemóvel"
 
 #: dat/scripts/pilotname/pirate.lua:492
 msgid "Widow"
-msgstr ""
+msgstr "Viúva"
 
 #: dat/scripts/pilotname/pirate.lua:493
 msgid "Wight"
-msgstr ""
+msgstr "Criatura"
 
 #: dat/scripts/pilotname/pirate.lua:496
 msgid "Wizard"
-msgstr ""
+msgstr "Feiticeiro"
 
 #: dat/scripts/pilotname/pirate.lua:498
 msgid "Yakuza"
-msgstr ""
+msgstr "Mafioso"
 
 #: dat/scripts/pilotname/pirate.lua:499
 msgid "Yama"
-msgstr ""
+msgstr "Camelo"
 
 #: dat/scripts/pilotname/pirate.lua:500
 msgid "Yami"
-msgstr ""
+msgstr "Pinga Amor"
 
 #: dat/scripts/pilotname/pirate.lua:501
 msgid "Yarou"
-msgstr ""
+msgstr "Metralhadora"
 
 #: dat/scripts/pilotname/pirate.lua:502
 msgid "Yasai"
-msgstr ""
+msgstr "Paliteiro"
 
 #: dat/scripts/pilotname/pirate.lua:503
 msgid "Yatsu"
-msgstr ""
+msgstr "Fumegas"
 
 #: dat/scripts/pilotname/pirate.lua:504
 msgid "Youma"
-msgstr ""
+msgstr "Malagueta"
 
 #.
 #. -- @brief Generates pirate names
 #. --
 #: dat/scripts/pilotname/pirate.lua:520
 msgid "{article} {actor}"
-msgstr ""
+msgstr "{article} {actor}"
 
 #: dat/scripts/pilotname/pirate.lua:522
 msgid "{colour} {actor}"
-msgstr ""
+msgstr "{colour} {actor}"
 
 #: dat/scripts/pilotname/pirate.lua:524
 msgid "{descriptor} {actor}"
-msgstr ""
+msgstr "{descriptor} {actor}"
 
 #: dat/scripts/pilotname/pirate.lua:526
 msgid "{article} {descriptor} {actor}"
-msgstr ""
+msgstr "{article} {descriptor} {actor}"
 
 #: dat/scripts/pilotname/pirate.lua:528
 msgid "{article} {colour} {actor}"
-msgstr ""
+msgstr "{article} {colour} {actor}"
 
 #: dat/scripts/pilotname/pirate.lua:530
 msgid "{article} {descriptor} {colour} {actor}"
-msgstr ""
+msgstr "{article} {descriptor} {colour} {actor}"
 
 #.
 #. -- @brief Encodes a number as a roman numeral.
@@ -100402,6 +100523,8 @@ msgid ""
 "\n"
 "The destination is unknown!"
 msgstr ""
+"\n"
+"O destino é desconhecido!"
 
 #: dat/spob/lua/lib/hypergate.lua:296
 msgid "Jump to {sysname}?"
@@ -102038,11 +102161,11 @@ msgstr ""
 
 #: src/board.c:132 src/player.c:1764
 msgid "You need a target to board first!"
-msgstr ""
+msgstr "Precisas de um alvo para abordar primeiro!"
 
 #: src/board.c:142
 msgid "Target ship can not be boarded."
-msgstr ""
+msgstr "A nave-alvo não pode ser embarcada."
 
 #: src/board.c:146
 msgid "You cannot board a ship that isn't disabled!"
@@ -102050,11 +102173,11 @@ msgstr ""
 
 #: src/board.c:150
 msgid "Your target cannot be boarded again."
-msgstr ""
+msgstr "O teu alvo não pode ser abordado novamente."
 
 #: src/board.c:156
 msgid "You are too far away to board your target."
-msgstr ""
+msgstr "Estás demasiado longe para embarcar no teu alvo."
 
 #: src/board.c:161
 msgid "You are going too fast to board the ship."
@@ -102096,7 +102219,7 @@ msgstr ""
 
 #: src/comm.c:88
 msgid "#rTarget is out of communications range"
-msgstr ""
+msgstr "#rO alvo está fora do alcance de comunicações"
 
 #: src/comm.c:94
 #, c-format
@@ -103086,7 +103209,7 @@ msgstr ""
 #: src/dev_sysedit.c:1532
 #, c-format
 msgid "Target: "
-msgstr ""
+msgstr "Alvo: "
 
 #: src/dev_sysedit.c:1552
 msgid "Hidden"
@@ -103245,7 +103368,7 @@ msgstr "Abrir"
 
 #: src/dev_uniedit.c:253 src/map.c:381 src/map_find.c:1020
 msgid "Find"
-msgstr "Procurar"
+msgstr "Pesquisar"
 
 #: src/dev_uniedit.c:262
 msgid "Nebula:"
@@ -103871,7 +103994,7 @@ msgstr[1] "toneladas"
 #: src/equipment.c:1830 src/info.c:624
 #, c-format
 msgid "%s average"
-msgstr "%s de média"
+msgstr "%s em média"
 
 #: src/equipment.c:1832
 #, c-format
@@ -104591,7 +104714,7 @@ msgstr "Missões"
 
 #: src/info.c:64
 msgid "Standings"
-msgstr "Posicionamentos"
+msgstr "Posicionamento"
 
 #: src/info.c:65
 msgid "Ship log"
@@ -104963,7 +105086,7 @@ msgstr "Tenta entrar no modo camuflado."
 #. Targeting
 #: src/input.c:60
 msgid "Target Next"
-msgstr "Próximo alvo"
+msgstr "Fixar alvo seguinte"
 
 #: src/input.c:60
 msgid "Cycles through ship targets."
@@ -104971,7 +105094,7 @@ msgstr "Percorre todos os alvos da nave, um a um."
 
 #: src/input.c:61
 msgid "Target Previous"
-msgstr "Alvo anterior"
+msgstr "Fixar alvo anterior"
 
 #: src/input.c:61
 msgid "Cycles backwards through ship targets."
@@ -104979,7 +105102,7 @@ msgstr "Percorre todos os alvos da nave, um a um, mas no sentido inverso."
 
 #: src/input.c:62
 msgid "Target Nearest"
-msgstr "Alvo mais próximo"
+msgstr "Fixar alvo mais próximo"
 
 #: src/input.c:62
 msgid "Targets the nearest non-disabled ship."
@@ -104987,7 +105110,7 @@ msgstr "Fixa na nave não-desativada mais próxima."
 
 #: src/input.c:63
 msgid "Target Next Hostile"
-msgstr "Próximo alvo hostil"
+msgstr "Fixar alvo hostil seguinte"
 
 #: src/input.c:63
 msgid "Cycles through hostile ship targets."
@@ -104995,7 +105118,7 @@ msgstr "Percorre todas as naves hostis uma a uma."
 
 #: src/input.c:64
 msgid "Target Previous Hostile"
-msgstr "Alvo anterior hostil"
+msgstr "Fixar alvo hostil anterior"
 
 #: src/input.c:64
 msgid "Cycles backwards through hostile ship targets."
@@ -105004,7 +105127,7 @@ msgstr ""
 
 #: src/input.c:65
 msgid "Target Nearest Hostile"
-msgstr "Alvo mais próximo hostil"
+msgstr "Fixar alvo hostil mais próximo"
 
 #: src/input.c:65
 msgid "Targets the nearest hostile ship."
@@ -105012,11 +105135,13 @@ msgstr "Fixa a nave hostil mais próxima."
 
 #: src/input.c:66
 msgid "Clear Target"
-msgstr "Limpar alvo"
+msgstr "Limpar alvo fixado"
 
 #: src/input.c:66
 msgid "Clears the currently-targeted ship, spob or jump point."
 msgstr ""
+"Limpa o alto fixado atualmente, seja uma nave, objeto no espaço ou ponto de "
+"salto."
 
 #. Fighting
 #: src/input.c:68
@@ -105029,7 +105154,7 @@ msgstr "Dispara as armas principais."
 
 #: src/input.c:69
 msgid "Face Target"
-msgstr "Direcionar para o alvo"
+msgstr "Direcionar para o alvo fixado"
 
 #: src/input.c:69
 msgid ""
@@ -105041,11 +105166,11 @@ msgstr ""
 
 #: src/input.c:70
 msgid "Board Target"
-msgstr "Abordar alvo"
+msgstr "Abordar alvo fixado"
 
 #: src/input.c:70
 msgid "Attempts to board the targeted ship."
-msgstr "Tenta assaltar a nave alvo."
+msgstr "Tenta assaltar a nave alvo fixada."
 
 #. Secondary Weapons
 #: src/input.c:72
@@ -105216,141 +105341,144 @@ msgstr ""
 
 #: src/input.c:94
 msgid "Target Jumpgate"
-msgstr ""
+msgstr "Fixar portal de salto"
 
 #: src/input.c:94
 msgid "Cycles through jump points."
-msgstr ""
+msgstr "Fixa os pontos de salto, percorrendo-os um a um."
 
 #: src/input.c:95 src/map.c:249 src/outfit.c:892
 msgid "Star Map"
-msgstr ""
+msgstr "Mapa estelar"
 
 #: src/input.c:95
 msgid "Opens the star map."
-msgstr ""
+msgstr "Abre o mapa estelar."
 
 #: src/input.c:96
 msgid "Initiate Jump"
-msgstr ""
+msgstr "Iniciar salto"
 
 #: src/input.c:96
 msgid "Attempts to jump via a jump point."
-msgstr ""
+msgstr "Tenta saltar através de um ponto de salto."
 
 #: src/input.c:97
 msgid "Overlay Map"
-msgstr ""
+msgstr "Mapa sobreposto"
 
 #: src/input.c:97
 msgid "Opens the in-system overlay map."
-msgstr ""
+msgstr "Mostra o mapa sobreposto no centro do ecrã."
 
 #: src/input.c:98
 msgid "Mouse Flight"
-msgstr ""
+msgstr "Voar com o rato"
 
 #: src/input.c:98
 msgid "Toggles mouse flying."
 msgstr ""
+"Alterna o modo de voo com o rato, no qual a nave se dirige para onde está o "
+"ponteiro do rato ou o modo normal com as teclas."
 
 #: src/input.c:99
 msgid "Active Cooldown"
-msgstr ""
+msgstr "Arrefecimento ativo"
 
 #: src/input.c:99
 msgid "Begins active cooldown."
-msgstr ""
+msgstr "Inicia o arrefecimento ativo."
 
 #. Communication
 #: src/input.c:101
 msgid "Log Scroll Up"
-msgstr ""
+msgstr "Deslocar registo para cima"
 
 #: src/input.c:101
 msgid "Scrolls the log upwards."
-msgstr ""
+msgstr "Percorre o registo para cima."
 
 #: src/input.c:102
 msgid "Log Scroll Down"
-msgstr ""
+msgstr "Deslocar registo para baixo"
 
 #: src/input.c:102
 msgid "Scrolls the log downwards."
-msgstr ""
+msgstr "Percorre o registo para baixo."
 
 #: src/input.c:103
 msgid "Hail Target"
-msgstr ""
+msgstr "Saudar o alvo fixado"
 
 #: src/input.c:103
 msgid "Attempts to initialize communication with the targeted ship."
-msgstr ""
+msgstr "Tenta inicializar a comunicação com a nave alvo fixada."
 
 #: src/input.c:104
 msgid "Autohail"
-msgstr ""
+msgstr "Saudar automaticamente"
 
 #: src/input.c:104
 msgid "Automatically initialize communication with a ship that is hailing you."
 msgstr ""
+"Inicializa automaticamente a comunicação com a nave que te está a saudar."
 
 #. Misc.
 #: src/input.c:106
 msgid "Radar Zoom In"
-msgstr ""
+msgstr "Ampliar radar"
 
 #: src/input.c:106
 msgid "Zooms in on the radar."
-msgstr ""
+msgstr "Aumenta a visualização do radar."
 
 #: src/input.c:107
 msgid "Radar Zoom Out"
-msgstr ""
+msgstr "Afastar radar"
 
 #: src/input.c:107
 msgid "Zooms out on the radar."
-msgstr ""
+msgstr "Diminui a visualização do radar."
 
 #: src/input.c:108
 msgid "Screenshot"
-msgstr ""
+msgstr "Capturar ecrã"
 
 #: src/input.c:108
 msgid "Takes a screenshot."
-msgstr ""
+msgstr "Tira uma fotografia do ecrã."
 
 #: src/input.c:109
 msgid "Toggle Fullscreen"
-msgstr ""
+msgstr "Alternar ecrã completo"
 
 #: src/input.c:109
 msgid "Toggles between windowed and fullscreen mode."
-msgstr ""
+msgstr "Alterna entre o modo em janela e o modo ecrã inteiro."
 
 #: src/input.c:110
 msgid "Pause"
-msgstr ""
+msgstr "Pausar"
 
 #: src/input.c:110
 msgid "Pauses the game."
-msgstr ""
+msgstr "Pausa o jogo."
 
 #: src/input.c:111
 msgid "Toggle Speed"
-msgstr ""
+msgstr "Alternar velocidade"
 
 #: src/input.c:111
 msgid "Toggles speed modifier."
-msgstr ""
+msgstr "Alterna o modificador de velocidade."
 
 #: src/input.c:112
 msgid "Small Menu"
-msgstr ""
+msgstr "Menu pequeno"
 
 #: src/input.c:112
 msgid "Opens the small in-game menu."
-msgstr ""
+msgstr "Abre o menu pequeno dentro do jogo."
 
 #: src/input.c:113
 msgid "Information Menu"
@@ -105362,229 +105490,235 @@ msgstr "Abre o menu de informações."
 
 #: src/input.c:114
 msgid "Opens the Lua console."
-msgstr ""
+msgstr "Abre a consola Lua."
 
 #: src/input.c:115
 msgid "Switch Tab 1"
-msgstr ""
+msgstr "Mudar para a aba 1"
 
 #: src/input.c:115
 msgid "Switches to tab 1."
-msgstr ""
+msgstr "Muda para a aba 1."
 
 #: src/input.c:116
 msgid "Switch Tab 2"
-msgstr ""
+msgstr "Mudar para a aba 2"
 
 #: src/input.c:116
 msgid "Switches to tab 2."
-msgstr ""
+msgstr "Muda para a aba 2."
 
 #: src/input.c:117
 msgid "Switch Tab 3"
-msgstr ""
+msgstr "Mudar para a aba 3"
 
 #: src/input.c:117
 msgid "Switches to tab 3."
-msgstr ""
+msgstr "Muda para a aba 3."
 
 #: src/input.c:118
 msgid "Switch Tab 4"
-msgstr ""
+msgstr "Mudar para a aba 4"
 
 #: src/input.c:118
 msgid "Switches to tab 4."
-msgstr ""
+msgstr "Muda para a aba 4."
 
 #: src/input.c:119
 msgid "Switch Tab 5"
-msgstr ""
+msgstr "Mudar para a aba 5"
 
 #: src/input.c:119
 msgid "Switches to tab 5."
-msgstr ""
+msgstr "Muda para a aba 5."
 
 #: src/input.c:120
 msgid "Switch Tab 6"
-msgstr ""
+msgstr "Mudar para a aba 6"
 
 #: src/input.c:120
 msgid "Switches to tab 6."
-msgstr ""
+msgstr "Muda para a aba 6."
 
 #: src/input.c:121
 msgid "Switch Tab 7"
-msgstr ""
+msgstr "Mudar para a aba 7"
 
 #: src/input.c:121
 msgid "Switches to tab 7."
-msgstr ""
+msgstr "Muda para a aba 7."
 
 #: src/input.c:122
 msgid "Switch Tab 8"
-msgstr ""
+msgstr "Mudar para a aba 8"
 
 #: src/input.c:122
 msgid "Switches to tab 8."
-msgstr ""
+msgstr "Muda para a aba 8."
 
 #: src/input.c:123
 msgid "Switch Tab 9"
-msgstr ""
+msgstr "Mudar para a aba 9"
 
 #: src/input.c:123
 msgid "Switches to tab 9."
-msgstr ""
+msgstr "Muda para a aba 9."
 
 #: src/input.c:124
 msgid "Switch Tab 0"
-msgstr ""
+msgstr "Mudar para a aba 0"
 
 #: src/input.c:124
 msgid "Switches to tab 0."
-msgstr ""
+msgstr "Muda para a aba 0."
 
 #: src/input.c:126
 msgid "Paste from the operating system's clipboard."
-msgstr ""
+msgstr "Cola da área de transferência do sistema operativo."
 
 #: src/input.c:401
 #, c-format
 msgid "Keyname '%s' doesn't match any key."
-msgstr ""
+msgstr "O nome da tecla '%s' não corresponde a nenhuma tecla."
 
 #: src/input.c:425
 #, c-format
 msgid "Unable to set keybinding '%s', that command doesn't exist"
 msgstr ""
+"Não foi possível definir a combinação de teclas '%s', esse comando não existe"
 
 #: src/input.c:447
 #, c-format
 msgid "Unable to get keybinding '%s', that command doesn't exist"
 msgstr ""
+"Não foi possível obter a combinação de teclas '%s', esse comando não existe"
 
 #: src/input.c:468 src/options.c:797
 #, c-format
 msgid "Not bound"
-msgstr ""
+msgstr "Não está configurado"
 
 #: src/input.c:486
 #, c-format
 msgid "joy button %d"
-msgstr ""
+msgstr "botão do joystick %d"
 
 #: src/input.c:490
 #, c-format
 msgid "joy hat %d up"
-msgstr ""
+msgstr "direcionar joystick para cima %d"
 
 #: src/input.c:494
 #, c-format
 msgid "joy hat %d down"
-msgstr ""
+msgstr "direcionar joystick para baixo %d"
 
 #: src/input.c:498
 #, c-format
 msgid "joy hat %d left"
-msgstr ""
+msgstr "direcionar joystick para esquerda %d"
 
 #: src/input.c:502
 #, c-format
 msgid "joy hat %d right"
-msgstr ""
+msgstr "direcionar joystick para direita %d"
 
 #: src/input.c:506
 #, c-format
 msgid "joy axis %d-"
-msgstr ""
+msgstr "eixo do joystick %d-"
 
 #: src/input.c:510
 #, c-format
 msgid "joy axis %d+"
-msgstr ""
+msgstr "eixo do joystick %d+"
 
 #: src/input.c:525
 msgid "Ctrl"
-msgstr ""
+msgstr "Ctrl"
 
 #: src/input.c:526
 msgid "Shift"
-msgstr ""
+msgstr "Shift"
 
 #: src/input.c:527
 msgid "Alt"
-msgstr ""
+msgstr "Alt"
 
 #: src/input.c:528
 msgid "Meta"
-msgstr ""
+msgstr "Meta"
 
 #: src/input.c:529
 msgid "Any"
-msgstr ""
+msgstr "Qualquer"
 
 #: src/input.c:530 src/opengl_tex.c:653
 msgid "unknown"
-msgstr ""
+msgstr "desconhecido"
 
 #: src/input.c:592
 #, c-format
 msgid "Unable to get keybinding description '%s', that command doesn't exist"
 msgstr ""
+"Não foi possível obter a descrição da combinação de teclas '%s', esse "
+"comando não existe"
 
 #. Scrolling is happening faster than fading...
 #: src/intro.c:190
 msgid "Intro scrolling too fast!"
-msgstr ""
+msgstr "Deslocação da introdução demasiado rápida!"
 
 #: src/intro.c:377
 msgid "Tried to fade out without an image."
-msgstr ""
+msgstr "Tentou-se desvanecer sem imagem."
 
 #: src/joystick.c:46
 #, c-format
 msgid "Joystick '%s' not found, using default joystick '%s'"
 msgstr ""
+"Joystick '%s' não foi encontrado, utilizando o joystick predefinido '%s'"
 
 #: src/joystick.c:63
 #, c-format
 msgid "Joystick of index number %d does not exist, switching to default 0"
 msgstr ""
+"O joystick do número de índice %d não existe, mudando para o predefinido 0"
 
 #: src/joystick.c:78
 #, c-format
 msgid "Error opening joystick %d [%s]"
-msgstr ""
+msgstr "Erro ao abrir o joystick %d [%s]"
 
 #: src/joystick.c:81
 #, c-format
 msgid "Using joystick %d - %s"
-msgstr ""
+msgstr "Usando o joystick %d - %s"
 
 #: src/joystick.c:82
 #, c-format
 msgid "   with %d axes, %d buttons, %d balls and %d hats"
-msgstr ""
+msgstr "   com %d eixos, %d botões, %d bolas e %d posições"
 
 #: src/joystick.c:112
 #, c-format
 msgid "Unable to initialize force feedback: %s"
-msgstr ""
+msgstr "Incapaz de inicializar a retroalimentação de força (force feedback): %s"
 
 #: src/joystick.c:124
 msgid "   force feedback enabled"
-msgstr ""
+msgstr "   retroalimentacão de força (force feedback) ativada"
 
 #: src/joystick.c:135
 #, c-format
 msgid "%d joystick detected"
 msgid_plural "%d joysticks detected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d joystick detetado"
+msgstr[1] "%d joystick detetados"
 
 #: src/joystick.c:152
 msgid "Unable to initialize the joystick subsystem"
-msgstr ""
+msgstr "Não é possível inicializar o subsistema do joystick"
 
 #. Already onboard.
 #: src/land.c:207
@@ -105786,7 +105920,7 @@ msgstr "Comprar"
 
 #: src/land_outfits.c:179
 msgid "Find Outfits"
-msgstr "Procurar equipamentos"
+msgstr "Pesquisar"
 
 #: src/land_outfits.c:322
 msgid "Other"
@@ -105887,7 +106021,7 @@ msgstr "Trocar"
 
 #: src/land_shipyard.c:107
 msgid "Find Ships"
-msgstr "Procurar naves"
+msgstr "Pesquisar naves"
 
 #: src/land_shipyard.c:233 src/map_system.c:657
 msgid "Fabricator:"
@@ -106488,7 +106622,7 @@ msgstr "O decorador de mapa tem um nó desconhecido '%s'."
 #. Create window.
 #: src/map_find.c:197 src/map_find.c:740 src/map_find.c:873
 msgid "Search Results"
-msgstr "Procurar resultados"
+msgstr "Pesquisar resultados"
 
 #: src/map_find.c:211
 msgid "Select"
@@ -106563,7 +106697,7 @@ msgstr "Naves"
 
 #: src/map_overlay.c:708
 msgid "TARGET"
-msgstr ""
+msgstr "ALVO"
 
 #: src/map_system.c:205
 msgid "Buy commodity price info"
@@ -108498,22 +108632,22 @@ msgstr "não"
 #: src/opengl.c:386
 #, c-format
 msgid "vsync: %s"
-msgstr ""
+msgstr "vsync: %s"
 
 #: src/opengl.c:387 src/sound.c:478
 #, c-format
 msgid "Renderer: %s"
-msgstr ""
+msgstr "Renderizador: %s"
 
 #: src/opengl.c:388
 #, c-format
 msgid "Version: %s"
-msgstr ""
+msgstr "Versão: %s"
 
 #: src/opengl.c:392
 #, c-format
 msgid "Missing texture units (%d required, %d found)"
-msgstr ""
+msgstr "Faltam unidades de textura (%d necessárias, %d encontradas)"
 
 #: src/opengl.c:395
 #, c-format
@@ -108705,7 +108839,7 @@ msgstr "Danos na blindagem"
 
 #: src/options.c:656
 msgid "Set Key"
-msgstr "Definir tecla"
+msgstr "Configurar teclas"
 
 #: src/options.c:701
 #, c-format
@@ -108731,12 +108865,12 @@ msgstr "meta+"
 #: src/options.c:802
 #, c-format
 msgid "keyboard:   %s%s%c"
-msgstr "teclado:   %s%s%c"
+msgstr "Teclas:   %s%s%c"
 
 #: src/options.c:807
 #, c-format
 msgid "keyboard:   %s%s%s"
-msgstr "teclado:   %s%s%s"
+msgstr "Teclas:   %s%s%s"
 
 #: src/options.c:813
 #, c-format
@@ -108848,24 +108982,24 @@ msgstr ""
 
 #: src/options.c:1218
 msgid "Set Keybinding"
-msgstr "Definir atalho de teclado"
+msgstr "Configurar teclas de atalho"
 
 #: src/options.c:1225
 msgid ""
 "To use a modifier key hit that key twice in a row, otherwise it will "
 "register as a modifier. To set with any modifier click the checkbox."
 msgstr ""
-"Para usar uma tecla modificadora, pressione essa tecla duas vezes seguidas, "
+"Para usar uma tecla modificadora, pressiona essa tecla duas vezes seguidas, "
 "caso contrário, ela será registada como um modificador. Para definir com "
-"qualquer modificador, clique na caixa de seleção."
+"qualquer modificador, clica na caixa de seleção."
 
 #: src/options.c:1234
 msgid "Unset"
-msgstr "Não definido"
+msgstr "Não usar atalho"
 
 #: src/options.c:1238
 msgid "Set any modifier"
-msgstr "Define qualquer modificador"
+msgstr "Aplicar qualquer modificador"
 
 #: src/options.c:1291
 msgid "Resolution:"
@@ -110010,7 +110144,7 @@ msgstr "!! Tripulação insuficiente"
 #. String is empty so no errors encountered
 #: src/pilot_outfit.c:589
 msgid "Spaceworthy"
-msgstr ""
+msgstr "Digna do espaço"
 
 #: src/pilot_outfit.c:591
 msgid "Escort only"
@@ -110056,15 +110190,15 @@ msgstr "Não utilizado"
 
 #: src/pilot_weapon.c:387
 msgid "Weapons - Switched"
-msgstr ""
+msgstr "Armas - Trocadas"
 
 #: src/pilot_weapon.c:388
 msgid "Weapons - Instant"
-msgstr ""
+msgstr "Armas - Instantâneas"
 
 #: src/pilot_weapon.c:389
 msgid "Abilities - Toggled"
-msgstr ""
+msgstr "Habilidades - Alternadas"
 
 #: src/pilot_weapon.c:1194
 #, c-format
@@ -110565,12 +110699,12 @@ msgstr "#oAutonav: abortando a sequência do hiperespaço."
 
 #: src/player_autonav.c:418
 msgid "#oAutonav: arrived at position."
-msgstr "#oAutonav: chegou à posição."
+msgstr "#oAutonav: chegaste à posição."
 
 #: src/player_autonav.c:428
 #, c-format
 msgid "#oAutonav: arrived at #%c%s#0."
-msgstr "#oAutonav: chegou a #%c%s#0."
+msgstr "#oAutonav: chegaste a #%c%s#0."
 
 #. TODO : handle the different reasons: pilot is too far, jumped, landed or died.
 #: src/player_autonav.c:477
@@ -111532,11 +111666,11 @@ msgstr "Pelágico"
 
 #: src/space.c:254
 msgid "Glaciated"
-msgstr "Glaciado"
+msgstr "Glacial"
 
 #: src/space.c:258
 msgid "Rogue"
-msgstr ""
+msgstr "Vadio"
 
 #: src/space.c:260
 msgid "Ultragiants"
