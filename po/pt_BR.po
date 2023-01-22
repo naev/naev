@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-01-10 23:55+0900\n"
-"PO-Revision-Date: 2023-01-17 21:49+0000\n"
+"PO-Revision-Date: 2023-01-21 23:27+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
 "naev/pt_BR/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.15.1-dev\n"
+"X-Generator: Weblate 4.15.1\n"
 
 #: physfs.c:1
 msgid "no error"
@@ -1149,7 +1149,7 @@ msgid ""
 "equipment. Although there is high demand for it, it is rather uncommonly "
 "found throughout space."
 msgstr ""
-"Platina é um metal precioso altatamente não-reativo, geralmente usado em "
+"Platina é um metal precioso altamente não-reativo, geralmente usado em "
 "equipamentos de alta performance. Apesar da grande demanda, ela é raramente "
 "encontrada no espaço."
 
@@ -1295,9 +1295,9 @@ msgid ""
 "demand has seen record prices of Yttrium since the Incident. Economists "
 "believe this is a key indicator of rough times ahead."
 msgstr ""
-"Com um papel crítico em técnologias de laser e iluminação, a demanda "
+"Com um papel crítico em tecnologias de laser e iluminação, a demanda "
 "constante mostrou preços recorde para o Itrio desde o Incidente. Economistas "
-"acreditam que esté é um indicador chave nos tempos difíceis que estão por "
+"acreditam que este é um indicador chave nos tempos difíceis que estão por "
 "vir."
 
 #: dat/damagetype/armourbreaker.xml:2
@@ -6399,7 +6399,7 @@ msgid ""
 "responsive again."
 msgstr ""
 "O Motor de Piscada Hiperbólico for projetado para, aparentemente, responder "
-"a pegunta: Quanta massa pode ser movida por uma dobra espaço-temporal?\n"
+"a pergunta: quanta massa pode ser movida por uma dobra espaço-temporal?\n"
 "Não há uma preocupação com um controle preciso das operações de dobra, sendo "
 "o foco o maior desempenho possível. Devido a forte interferência causada nos "
 "sistemas da nave, assim como na tripulação, após cada \"piscada\" a nave "
@@ -6412,10 +6412,10 @@ msgid ""
 "and turn penalty during cooldown. Performance degrades over 6000 tonnes of "
 "mass."
 msgstr ""
-"Aquece por 2 segundos e \"pisca\" a nave 2000 unidades na direção aproximada "
-"apontada pelo nariz da nave. Só pode ser usado uma vez a cada 8 segundos e "
-"resulta em uma penalidade de 20% de empuxo e viragem durante o resfriamento. "
-"A performance decai quando a massa é maior que 600 toneladas."
+"Aquece por 2 segundos e depois pisca 2000 unidades aproximadamente na "
+"direção em que estás. Só pode ser executado uma vez a cada 8 segundos e "
+"incorre em 20% de impulso e penalidade de rotação durante o resfriamento. O "
+"rendimento é reduzido a partir das 6000 toneladas de massa."
 
 #: dat/outfits/utility/jump_scanner.xml:2
 msgid "Jump Scanner"
@@ -9563,7 +9563,7 @@ msgstr "Ábaco"
 #: dat/spob/verex_i.xml:9 dat/spob/vlexon_ii.xml:9 dat/spob/wolf_i.xml:9
 #: dat/spob/zeroeleven.xml:9 dat/spob/zesta.xml:15
 msgid "A"
-msgstr ""
+msgstr "A"
 
 #: dat/spob/abacus.xml:25
 msgid ""
@@ -9596,7 +9596,7 @@ msgstr ""
 #: dat/spob/vinooso.xml:42 dat/spob/vracha.xml:29 dat/spob/warnecke.xml:61
 #: dat/spob/wigheta.xml:31 dat/spob/wonclock.xml:48 dat/spob/zhiru.xml:46
 msgid "research"
-msgstr "pesquisa"
+msgstr "investigação"
 
 #: dat/spob/abacus.xml:29 dat/spob/adrian.xml:29 dat/spob/ahmed.xml:43
 #: dat/spob/andors.xml:42 dat/spob/arrakis.xml:30 dat/spob/atalanta.xml:41
@@ -9642,7 +9642,7 @@ msgstr "Adham"
 #: dat/spob/wsthvn_p1.xml:9 dat/spob/yrina.xml:15 dat/spob/zaals.xml:16
 #: dat/spob/zerofive.xml:9
 msgid "P"
-msgstr ""
+msgstr "P"
 
 #: dat/spob/adham.xml:23
 msgid ""
@@ -9717,7 +9717,7 @@ msgstr "Aera"
 #: dat/spob/ux_vii.xml:9 dat/spob/vanir_ii.xml:9 dat/spob/vauban_i1.xml:9
 #: dat/spob/zethus.xml:9 dat/spob/zintar_v.xml:9
 msgid "I"
-msgstr ""
+msgstr "I"
 
 #: dat/spob/aera.xml:24
 msgid ""
@@ -9798,7 +9798,7 @@ msgstr "Agino"
 #: dat/spob/zembla_shakar.xml:16 dat/spob/zeo.xml:15 dat/spob/zhiru.xml:15
 #: dat/spob/zuner.xml:16
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #: dat/spob/agino.xml:27
 msgid ""
@@ -9870,7 +9870,7 @@ msgstr "Ahmed"
 #: dat/spob/rogan.xml:16 dat/spob/sroolu.xml:15 dat/spob/tartarus.xml:15
 #: dat/spob/verex_iii.xml:9 dat/spob/vlexon_i.xml:9 dat/spob/zemur_iii.xml:9
 msgid "H"
-msgstr ""
+msgstr "H"
 
 #: dat/spob/ahmed.xml:26
 msgid ""
@@ -12012,7 +12012,7 @@ msgstr ""
 "Buói nunca foi uma colônia muito respeitável. Foi colonizado na esperança de "
 "que o mundo pudesse ser terraformado em um bom planeta residencial de classe "
 "M, mas a corrupção e a má administração persistentes fizeram com que o "
-"esforço fracassase. Agora, o ecossistema do planeta foi desorganizado de "
+"esforço fracassasse. Agora, o ecossistema do planeta foi desorganizado de "
 "forma terminal, fazendo com que a maior parte da superfície se transformasse "
 "em deserto."
 
