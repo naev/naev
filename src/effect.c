@@ -342,7 +342,7 @@ int effect_add( Effect **efxlist, const EffectData *efx, double duration, double
    }
 
    /* Sort and update. */
-   qsort( efxlist, array_size(efxlist), sizeof(Effect), effect_cmpTimer );
+   qsort( *efxlist, array_size(*efxlist), sizeof(Effect), effect_cmpTimer );
    gui_updateEffects();
    return 0;
 }
