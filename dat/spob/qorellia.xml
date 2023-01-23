@@ -14,7 +14,7 @@
  </presence>
  <general>
   <class>G</class>
-  <population>7500</population>
+  <population>750000</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -25,7 +25,7 @@
    <blackmarket/>
   </services>
   <commodities/>
-  <description>A minor clan world in control of the whole Qorel Expanse, Qorellia might be seen as a civilian hub if only its traffic didn't entirely consist of pirate ships.</description>
+  <description>A minor clan world in control of the whole Qorel Tunnel, Qorellia might be seen as a civilian hub if only its traffic didn't entirely consist of pirate ships.</description>
   <bar>A standard pirate bar, with the exception of the local militia making sure no troublemaker stays unharmed.</bar>
  </general>
  <tech>
