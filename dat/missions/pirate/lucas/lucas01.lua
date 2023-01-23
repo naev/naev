@@ -84,7 +84,7 @@ function accept ()
    vn.clear()
    vn.scene()
    local lucas = lcs.vn_lucas()
-   vn.transition()
+   vn.transition( lcs.lucas.transition )
    vn.na(_([[You approach the stressed out individual gnawing at their nails at the bar.]]))
    lucas(_([["Say, you wouldn't be able to help me find my family? I'll pay, I promise!"]]))
    vn.menu{
@@ -94,7 +94,7 @@ function accept ()
 
    vn.label("refuse")
    lucas(_([[They go back to chewing their nails.]]))
-   vn.done()
+   vn.done( lcs.lucas.transition )
 
    vn.label("accept")
    vn.func( function ()
@@ -110,6 +110,7 @@ function accept ()
       {spb=first_spob, sys=first_sys}))
    vn.na(_([[They hand you an old locket that looks like is missing half of it. It is fairly simple and made of some resistant metal alloy, but bears signs of heavy use.]]))
    lucas(_([["I'll be waiting here."]]))
+   vn.done( lcs.lucas.transition )
    vn.run()
 
    if not accepted then return end
@@ -163,22 +164,31 @@ function land ()
       vn.clear()
       vn.scene()
 
-      vn.na(fmt.f(_([[You manage to land on {spb}.]]),
+      vn.na(fmt.f(_([[You manage to land on {spb}. Although things are quite quiet and clean around the spaceport, it all takes a turn for the worse once you pass the checkpoints and head into the slums towards the location you were given.]]),
          {spb=spb}))
-
+      vn.na(_([[The atmosphere is dark, almost oppressive, and you feel like you are given many stares by the locals. It seems likely that they do not get many visitors.]]))
+      vn.na(_([[Eventually you get to the cell you were told about. It seems to be locked. You see take a look to see if you can override it.]]))
       mg.vn()
       vn.func( function ()
          if mg.completed() then
             misn.osdActive(2)
             mem.markerMove( mem.mrk, mem.return_spob )
-            mem.stage=1
+            mem.stage=2
+            local c = commodity.new( N_("Lucas' Father"), N_("A very weakened old man.") )
+            mem.cargo_person = misn.cargoAdd( c, 0 )
          else
             vn.jump("failed")
+            return
          end
       end )
+      vn.na(_([[You open the cell and find yourself with a very weakened old man. At first they are scared to death, believing you have come to take their meager possessions or their life, however, you are able to calm them down when you mention that Lucas sent you, and pass out.]]))
+      vn.na(_([[You quickly look around to see if there is anyone else there. Once you confirm that the man is the only person you pick them up and make your way back to the spaceport. Likely due to malnourishment, the old man is a much lighter load than you had expected. On the way back, surprisingly enough, people seem to take less notice of you than when you came in.]]))
+      vn.na(_([[Eventually you reach the spaceport checkpoint. The guards raise an eyebrow at the old man you're carrying, but once you show them the receipt of your spaceship, the let you through.]]))
+      vn.na(_([[The old man is in not very good shape and seems to fall into a deep slumber when you set them aboard the ship, would be best to try to head back to Lucas as soon as possible.]]))
+      vn.done()
 
       vn.label("failed")
-      vn.na(_([[]]))
+      vn.na(_([[You fail to override the cell. As you are attracting too much suspicion, you decide to head back to the spaceport area. You'll have to come back if you want to try again.]]))
       vn.done()
 
       vn.run()
@@ -187,17 +197,25 @@ function land ()
       vn.clear()
       vn.scene()
       local lucas = lcs.vn_lucas()
-      lucas(_([[]]))
+      vn.transition( lcs.lucas. transition )
+      vn.na(_([[You land and quickly go find Lucas, who then follows you back to your ship.]]))
+      lucas(_([[When Lucas sees the old man, his eyes tear up and he kneels to take a closer look.
+"Dear old man, what have they done to you?"]]))
+      lucas(_([[Still kneeling, Lucas shuffles forward and emotively hugs the old man. Probably not the reunion they were looking for, but better than nothing nonetheless.]]))
+      lucas(_([[After a solemn while, Lucas kisses the old man on the check and turns to you.
+"Thank you for what you've done. I think I can take care of it from now on. I have to see what happened to the others."]]))
+      vn.na(_([[You help Lucas take the old man off the ship. Lucas thanks you fervently for all you've done and hands you a credit chip. He then heads off with his father towards the nearest medical center.]]))
 
       vn.sfxVictory()
       vn.func( function ()
          player.pay( reward )
+         var.push( "lucas01_done", time.get() )
       end )
       vn.na(fmt.reward(reward))
 
+      vn.done( lcs.lucas.transition )
       vn.run()
 
+      misn.finish(true)
    end
-
-   misn.finish(true)
 end
