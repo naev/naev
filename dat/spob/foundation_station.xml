@@ -14,17 +14,18 @@
  </presence>
  <general>
   <class>2</class>
-  <population>15000</population>
+  <population>5000</population>
   <hide>0.800000</hide>
   <services>
    <land/>
    <refuel/>
    <missions/>
+   <commodity/>
    <outfits/>
    <blackmarket/>
   </services>
   <commodities/>
-  <description>Foundation Station is the northern refuel point of the Qorel Tunnel. As with all pirate outposts, it also serves as a trading post in which loot is exchanged.</description>
+  <description>Foundation Station is the northern refuel point of the Qorel Tunnel and strengthen the ties between the Wild Ones clan and Raven clan. As with all pirate outposts, it also serves as a trading post in which loot is exchanged, and offers some simple outfitting.</description>
  </general>
  <tech>
   <item>Pirate Maps</item>
