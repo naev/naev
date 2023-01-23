@@ -345,10 +345,12 @@ static int load_compatibilityTest( const nsave_t *ns )
          break;
 
       case SAVE_COMPATIBILITY_PLUGINS:
+         buf[0] = '\0';
          l = 0;
          for (int i=0; i<array_size(ns->plugins); i++)
             l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", (l>0)?_(", "):"#r", ns->plugins[i] );
          l += scnprintf( &buf[l], sizeof(buf)-l, "#0" );
+         buf2[0] = '\0';
          l = 0;
          for (int i=0; i<array_size(plugins); i++)
             l += scnprintf( &buf2[l], sizeof(buf2)-l, "%s%s", (l>0)?_(", "):"", plugin_name(&plugins[i]) );

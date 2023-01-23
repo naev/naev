@@ -18,6 +18,7 @@
       * Fixed many corner case crashes in the editor
 
 * 0.10.4 (unreleased)
+   * Fixed crashes related to multiple effects being active at once
    * Fixed multiple mission_done hooks not passing parameter correctly.
 
 * 0.10.3
