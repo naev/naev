@@ -12,7 +12,7 @@
 
    -- Should start at a normal planet
    local t = spob.cur():tags()
-   if t.refugee or t.station then
+   if t.refugee or t.station or t.restricted then
       return false
    end
 
@@ -204,7 +204,7 @@ function land ()
       lucas(_([[Still kneeling, Lucas shuffles forward and emotively hugs the old man. Probably not the reunion they were looking for, but better than nothing nonetheless.]]))
       lucas(_([[After a solemn while, Lucas kisses the old man on the check and turns to you.
 "Thank you for what you've done. I think I can take care of it from now on. I have to see what happened to the others."]]))
-      vn.na(_([[You help Lucas take the old man off the ship. Lucas thanks you fervently for all you've done and hands you a credit chip. He then heads off with his father towards the nearest medical center.]]))
+      vn.na(_([[You help Lucas take the old man off the ship, and also return the locket. Lucas thanks you fervently for all you've done and hands you a credit chip. He then heads off with his father towards the nearest medical center.]]))
 
       vn.sfxVictory()
       vn.func( function ()
