@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-01-10 23:55+0900\n"
-"PO-Revision-Date: 2023-01-22 23:29+0000\n"
+"PO-Revision-Date: 2023-01-23 23:49+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Portugal) <https://hosted.weblate.org/projects/"
 "naev/naev/pt_PT/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.15.1\n"
+"X-Generator: Weblate 4.16-dev\n"
 
 #: physfs.c:1
 msgid "no error"
@@ -7715,9 +7715,9 @@ msgid ""
 "function to a standard Admonisher, but with slightly better armour, shields, "
 "and heat dissipation."
 msgstr ""
-"Está versão militar do Admoestador é praticamente idêntica em função à "
-"versão padrão, mas possui blindagem, escudos e dissipação de calor "
-"ligeiramente melhores."
+"Esta versão militar do Admoestador é praticamente idêntica em "
+"funcionalidades à versão base, mas tem blindagem, escudos e dissipação de "
+"calor ligeiramente melhores."
 
 #: dat/ships/empire/empire_hawking.xml:2
 msgid "Empire Hawking"
@@ -7734,8 +7734,8 @@ msgid ""
 "to a standard Hawking, but with slightly better armour, shields, and heat "
 "dissipation."
 msgstr ""
-"Está versão militar do Hawking é praticamente idêntica em função à versão "
-"padrão, mas possui blindagem, escudos e dissipação de calor ligeiramente "
+"Esta versão militar do Hawking é praticamente idêntica em funcionalidades à "
+"versão base, mas tem blindagem, escudos e dissipação de calor ligeiramente "
 "melhores."
 
 #: dat/ships/empire/empire_lancelot.xml:2
@@ -7752,8 +7752,8 @@ msgid ""
 "to a standard Lancelot, but with slightly better armour, shields, and heat "
 "dissipation."
 msgstr ""
-"Está versão militar do Lancelot é praticamente idêntica em função à versão "
-"padrão, mas possui blindagem, escudos e dissipação de calor ligeiramente "
+"Esta versão militar do Lancelot é praticamente idêntica em funcionalidades à "
+"versão base, mas tem blindagem, escudos e dissipação de calor ligeiramente "
 "melhores."
 
 #: dat/ships/empire/empire_pacifier.xml:2
@@ -7766,9 +7766,9 @@ msgid ""
 "to a standard Pacifier, but with slightly better armour, shields, and heat "
 "dissipation."
 msgstr ""
-"Está versão militar do Pacificador é praticamente idêntica em função à "
-"versão padrão, mas possui blindagem, escudos e dissipação de calor "
-"ligeiramente melhores."
+"Esta versão militar do Pacificador é praticamente idêntica em "
+"funcionalidades à versão base, mas tem blindagem, escudos e dissipação de "
+"calor ligeiramente melhores."
 
 #: dat/ships/empire/empire_peacemaker.xml:2
 msgid "Empire Peacemaker"
@@ -7811,12 +7811,12 @@ msgstr ""
 "O Criador de Chuva é o maior cargueiro utilizado pelo Império. É capaz de "
 "transportar grandes quantidades de material através de território perigoso, "
 "uma vez que pequenos grupos de piratas não são uma ameaça devido à sua "
-"pesada blindagem. Seu nome surgiu quando, pouco depois do Incidente, foram "
+"pesada blindagem. O seu nome surgiu quando, pouco depois do Incidente, foram "
 "utilizados para entregar mantimentos a mundos famintos e isolados, fazendo "
-"vôos baixos na atmosfera com os compartimentos de carga abertos, resultando "
-"numa chuva literal de mantimentos. Após os eventos, foi aprovado um "
-"formulário oficial de mudança de nome da nave EE-1891-392 e Criador de Chuva "
-"tornou-se o nome oficial da nave."
+"voos baixos na atmosfera com os compartimentos de carga abertos, resultando "
+"numa chuva de mantimentos. Após estes eventos, foi aprovado um formulário "
+"oficial de mudança de nome da nave EE-1891-392 e Criador de Chuva tornou-se "
+"o nome oficial da nave."
 
 #: dat/ships/empire/empire_shark.xml:2
 msgid "Empire Shark"
@@ -7833,8 +7833,8 @@ msgid ""
 "heat dissipation. The military-grade materials used also result in the ship "
 "being slightly lighter than its generic counterpart."
 msgstr ""
-"Está versão militar do Tubarão é praticamente idêntica em função à versão "
-"padrão, mas possui blindagem, escudos e dissipação de calor ligeiramente "
+"Esta versão militar do Tubarão é praticamente idêntica em funcionalidades à "
+"versão base, mas tem blindagem, escudos e dissipação de calor ligeiramente "
 "melhores. Os materiais de nível militar também fazem com que seja mais leve "
 "que a versão genérica."
 
@@ -11878,14 +11878,14 @@ msgid ""
 "nostalgia to all those who were able to visit Earth before the Incident. "
 "However, some people avoid it for exactly the same reason…"
 msgstr ""
-"Bolero é um dos planetas mais bem sucedidos do Império. A população é "
-"próspera e bem sucedida, e as condições do planeta são suaves. Embora ainda "
-"seja tratado como uma espécie de remanso devido à sua localização, está se "
-"tornando cada vez mais importante na política imperial. Grande parte da "
-"popularidade de Bolero vem de seu clima semelhante à Terra, dando uma "
-"sensação reconfortante de nostalgia a todos aqueles que foram capazes de "
-"visitar a Terra antes do Incidente. No entanto, algumas pessoas evitam "
-"Bolero exatamente pela mesma razão…"
+"Bolero é um dos planetas de maior sucesso do Império. A população é próspera "
+"e bem-sucedida e as condições do planeta são amenas. Embora ainda seja "
+"tratado como algo atrasado devido à sua localização, está a tornar-se cada "
+"vez mais importante na política imperial. Grande parte da popularidade de "
+"Bolero provém do seu clima semelhante ao da Terra, dando uma sensação "
+"reconfortante de nostalgia a todos aqueles que puderam visitar a Terra antes "
+"do Incidente. No entanto, algumas pessoas evitam-no exatamente pelo mesmo "
+"motivo…"
 
 #: dat/spob/bolero.xml:30
 msgid ""
@@ -25917,7 +25917,7 @@ msgstr ""
 #: dat/ai/independent.lua:42 dat/ai/mercenary.lua:68 dat/ai/miner.lua:35
 #: dat/ai/proteron_dissident.lua:34 dat/ai/thurion.lua:74 dat/ai/trader.lua:55
 msgid "\"I'll supply your ship with fuel for {credits}.\""
-msgstr ""
+msgstr "\"Posso fornecer combustível por {credits}.\""
 
 #. Set up potential advertiser messages in msg variable
 #. Faction specific messages
@@ -26716,7 +26716,7 @@ msgstr ""
 #. See if finished refueling
 #: dat/ai/core/basic.lua:908
 msgid "Finished fuel transfer."
-msgstr ""
+msgstr "Transferência de combustível terminada."
 
 #. Untarget
 #. Try to board
@@ -27795,7 +27795,7 @@ msgstr ""
 
 #: dat/ai/pirate.lua:27
 msgid "\"Your money or your life. {credits} and make the choice quickly.\""
-msgstr ""
+msgstr "\"O teu dinheiro ou a tua vida. {credits} e escolhe depressa.\""
 
 #: dat/ai/pirate.lua:28
 msgid "\"Money talks bub. {credits} up front or get off my channel.\""
@@ -27929,6 +27929,8 @@ msgid ""
 "\"Something feels strange. It's almost as if my urge to kill you has "
 "completely dissipated.\""
 msgstr ""
+"\"Algo parece estranho. É quase como se a minha vontade de vos matar se "
+"tivesse dissipado completamente.\""
 
 #: dat/ai/pirate.lua:64
 msgid "\"Can I keep shooting you anyhow? No? You sure? Fine.\""
@@ -28763,8 +28765,8 @@ msgid ""
 "Necessary for the activation of jump drives that allow inter-system travel."
 msgstr ""
 "Combustível\n"
-"Necessário para a ativação dos controladores de salto que permitem viagens "
-"entre sistemas."
+"Necessário para a ativação dos motores de salto que permitem viagens entre "
+"sistemas."
 
 #. Steal outfits before cargo, since they are always considered "special"
 #. Skips locked outfits
@@ -28834,7 +28836,7 @@ msgstr ""
 #: src/map_system.c:647
 #, c-format
 msgid "None"
-msgstr "Nenhuma"
+msgstr "Nada"
 
 #. Add manage cargo button if applicable
 #: dat/board.lua:405 dat/board.lua:461
@@ -28969,7 +28971,6 @@ msgstr ""
 "detritos flutuantes.\""
 
 #: dat/comm.lua:133
-#, fuzzy
 msgid ""
 "{msg}\n"
 "\n"
@@ -28983,12 +28984,12 @@ msgid_plural ""
 msgstr[0] ""
 "{msg}\n"
 "\n"
-"Esta ação irá subornar {n} {fct_list} piloto.\n"
+"Esta ação irá subornar {n} piloto da fação {fct_list}.\n"
 "Tens {credits}. Pagar #r{price}#0?"
 msgstr[1] ""
 "{msg}\n"
 "\n"
-"Esta ação irá subornar {n} {fct_list} pilotos.\n"
+"Esta ação irá subornar {n} pilotos da fação {fct_list}.\n"
 "Tens {credits}. Pagar #r{price}#0?"
 
 #: dat/comm.lua:142
@@ -29024,11 +29025,10 @@ msgstr "Subornar"
 #. global
 #. global
 #: dat/comm.lua:185 dat/comm.lua:194
-#, fuzzy
 msgid "Bribe {n} nearby {fct_list} pilot"
 msgid_plural "Bribe {n} nearby {fct_list} pilots"
-msgstr[0] "Subornar {n} piloto {fct_list} nas redondezas"
-msgstr[1] "Subornar {n} pilotos {fct_list} nas redondezas"
+msgstr[0] "Subornar {n} piloto da fação {fct_list} nas redondezas"
+msgstr[1] "Subornar {n} pilotos da fação {fct_list} nas redondezas"
 
 #: dat/comm.lua:204
 msgid "Bribe fleet ({n} pilot)"
@@ -29105,7 +29105,7 @@ msgstr "\"Desculpa, agora estou ocupado.\""
 
 #: dat/comm.lua:406
 msgid "\"What part of 'on my way' don't you understand?\""
-msgstr "\"Que parte de 'no meu caminho' não entendes?\""
+msgstr "\"Que parte de 'estou a caminho' não entendeste?\""
 
 #: dat/comm.lua:410
 msgid "Pilot is already refueling you."
@@ -29146,7 +29146,7 @@ msgstr ""
 
 #: dat/comm.lua:499
 msgid "\"On my way.\""
-msgstr ""
+msgstr "\"Estou a caminho.\""
 
 #. Some compatibility with Lua 5.2
 #. luacheck: globals table (Pairity with newer versions)
@@ -33051,6 +33051,20 @@ msgid ""
 "large. A face peeps down at you from the height of eternity.\n"
 "    \"Everything all right in there?\""
 msgstr ""
+"Quando sais da tua nave, a luz do sol cintila repentinamente. A estrela "
+"local no céu fica azul, depois um roxo profundo e depois escurece. O planeta "
+"inteiro mergulha na escuridão.\n"
+"    Então uma voz fala, mais alto do que um terramoto. Parece ecoar dentro "
+"dos teus ossos e do centro da galáxia. Ouves \"Oh raios…\"\n"
+"    Outra voz ri musicalmente, como se o próprio mundo cantasse. \"Bobbens, "
+"acabaste de destruir o universo, novamente?\"\n"
+"    \"Mmmm, espera\", a primeira voz resmunga. \"…SIGSEGV… libc start "
+"main+0xe5… ah ha! Aí está o problema.\" Sentes algo fundamental no tecido da "
+"mudança da realidade. A sensação é como espirrar e soluçar ao mesmo tempo. "
+"\"Pronto, isso deve resolver o problema.\"\n"
+"    Uma janela abre-se na escuridão, infinitamente distante e infinitamente "
+"grande. Um rosto espreita-te do alto da eternidade.\n"
+"    \"Tudo bem aí?\""
 
 #. yes/no choice
 #. If yes, the voice of the creator speaks to you:
@@ -33070,6 +33084,19 @@ msgid ""
 "smiles.\n"
 "    \"OK then. Pushed. And we're back in 3... 2... 1...\""
 msgstr ""
+"\"Bom, bom. Desculpa pelo inconveniente. Por favor, não te preocupes, vou "
+"ter a realidade recarregada novamente em apenas um segundo.\n"
+"    O criador vira-se para ir, e depois faz uma pausa.\n"
+"    \"A propósito, estamos a trabalhar arduamente para melhorar a vida, o "
+"universo e tudo isso, mas estamos com poucas mãos… Se gostas desta "
+"existência mas achas que os detalhes podem ser melhorados, a equipa de "
+"criação do universo precisa da tua ajuda. Ficaríamos especialmente felizes "
+"em ver-te se tiveres alguma habilidade especial em desenhar planetas, "
+"desenhar naves, escrever as leis subjacentes da natureza ou compor a música "
+"das esferas. Para obter informações sobre como contribuir, basta apontar o "
+"seu navegador web de realidade para naev.org\"\n"
+"    O relojoeiro levanta os olhos para além da sua referência e sorri.\n"
+"    \"Ok, então. Empurrado. E voltamos em 3… 2… 1…\""
 
 #. If no, the voice of the creator speaks to you:
 #: dat/events/naev_needs_YOU.lua:39
@@ -33087,20 +33114,32 @@ msgid ""
 "smiles.\n"
 "    \"OK then. Pushed. And we're back in 3... 2... 1...\""
 msgstr ""
+"\"Desculpa por isso. Estamos a trabalhar arduamente para melhorar a vida, o "
+"universo e tudo isso, mas a equipa está com poucas mãos… Não te preocupes, "
+"vou ter a realidade recarregada novamente em apenas um segundo.\n"
+"    O criador vira-se para ir e depois faz uma pausa.\n"
+"    \"Digo-te uma coisa: a equipa de criação do universo precisa da tua "
+"ajuda. Se tiveres alguma habilidade especial em desenhar planetas, projetar "
+"naves, escrever as leis subjacentes da natureza ou compor a música das "
+"esferas, ficaríamos especialmente felizes em ver-te. Para obter informações "
+"sobre como contribuires, basta apontar o teu navegador web de realidade para "
+"naev.org\"\n"
+"    O relojoeiro levanta os olhos para além da sua referência e sorri.\n"
+"    \"Ok, então. Empurrado. E voltamos em 3… 2… 1…\""
 
 #. Create an eerie atmosphere by cutting off the background music and substituting something spooky
 #. disabled until difficulties with the music API are sorted out
 #. The big programmer in the sky looks in to ask the player a question
 #: dat/events/naev_needs_YOU.lua:53
 msgid "Naev received SIGSEGV (address not mapped to object)!"
-msgstr ""
+msgstr "Naev recebeu SIGSEGV (endereço não mapeado para o objeto)!"
 
 #. if the answer is 'yes'
 #. Mission ends with a little comment after blasting off.
 #. hook.takeoff( "enter_system" )
 #: dat/events/naev_needs_YOU.lua:54 dat/events/naev_needs_YOU.lua:60
 msgid "The voice of the creator"
-msgstr ""
+msgstr "A voz do criador"
 
 #. if the answer is 'no', not much different from 'yes'
 #. Mission ends with a little comment after blasting off.
@@ -33137,7 +33176,7 @@ msgstr ""
 #. Cancel autonav.
 #: dat/events/neutral/animaltrouble.lua:30
 msgid "Panic!"
-msgstr ""
+msgstr "Pânico!"
 
 #: dat/events/neutral/animaltrouble.lua:30
 msgid ""
@@ -36225,7 +36264,7 @@ msgstr "Vês um civil olhando fixamente para uma mesa."
 
 #: dat/events/npc/empire.lua:13
 msgid "A civilian is swishing their drink."
-msgstr ""
+msgstr "Um civil está a abanar a sua bebida."
 
 #: dat/events/npc/empire.lua:14
 msgid "An individual is sitting idly at the bar."
@@ -39049,11 +39088,11 @@ msgstr ""
 
 #: dat/events/poi.lua:135
 msgid "Ignore."
-msgstr ""
+msgstr "Ignorar."
 
 #: dat/events/poi.lua:144
 msgid "You ignore the information."
-msgstr ""
+msgstr "Ignoras a informação."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -39073,7 +39112,7 @@ msgstr ""
 #. TODO change this when something can make them non-hostile
 #: dat/events/proteron/blockade.lua:76
 msgid "Unknown vessel trying to breach blockade. All ships engage!"
-msgstr ""
+msgstr "Nave desconhecida a tentar furar o bloqueio. Todas as naves ataquem!"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -39094,18 +39133,24 @@ msgid ""
 "WARNING: Entering militarized zone. Unauthorized access will be met with "
 "force."
 msgstr ""
+"AVISO: a entrar em zona militarizada. O acesso não autorizado será abordado "
+"com força."
 
 #: dat/events/restricted.lua:46
 msgid ""
 "WARNING: YOU HAVE ENTERED A RESTRICTED ZONE. LEAVE IMMEDIATELY OR FACE THE "
 "CONSEQUENCES."
 msgstr ""
+"ATENÇÃO: ENTROU NUMA ZONA RESTRITA. SAIA IMEDIATAMENTE OU ENFRENTARÁ AS "
+"CONSEQUÊNCIAS."
 
 #: dat/events/restricted.lua:47
 msgid ""
 "WARNING: This is a restricted military system. Unauthorized ships will be "
 "shot on sight."
 msgstr ""
+"AVISO: isto é um sistema militar restrito. As naves não autorizadas serão "
+"abatidas sem aviso."
 
 #. Gneeric message
 #: dat/events/restricted.lua:54
@@ -39113,11 +39158,13 @@ msgid ""
 "WARNING: Unauthorized entry to restricted area will be met with force. Leave "
 "immediately."
 msgstr ""
+"AVISO: a entrada não autorizada em área restrita será respondida com força. "
+"Retire-se imediatamente."
 
 #. Probably going to die but be nice and add reset autonav the first time
 #: dat/events/restricted.lua:69
 msgid "{faction} Message Buoy"
-msgstr ""
+msgstr "Boia de mensagem {faction}"
 
 #. Keep on repeating as the spawn
 #.
@@ -39581,11 +39628,11 @@ msgstr "Hostilidade encontrada no sistema {sys}"
 
 #: dat/events/shiplog.lua:44
 msgid "Jumped from the {1} system to the {2} system"
-msgstr "Saltou do sistema {1} para o sistema {2}"
+msgstr "Saltaste do sistema {1} para o sistema {2}"
 
 #: dat/events/shiplog.lua:53
 msgid "Landed on {pnt} in the {sys} system"
-msgstr "Aterrou em {pnt} no sistema {sys}"
+msgstr "Aterraste em {pnt} no sistema {sys}"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -41172,6 +41219,13 @@ msgid ""
 "field, that coupled with intense magnetic distortions, causes a reversible "
 "born entanglement phenomena to occur.\""
 msgstr ""
+"\"Fiz uma análise aprofundada e a recuperação dos documentos que me "
+"trouxeste. É tudo muito mais simples do que esperava. Talvez tivesse "
+"sobrestimado a capacidade técnica humana. Esperava que os hiperportais "
+"fossem derivados dos motores de salto, mas parece que é uma mecânica "
+"completamente diferente. Os motores de salto realizam uma distorção local do "
+"campo Rayleigh-McKenneth, que juntamente com intensas distorções magnéticas, "
+"provocam um reversível fenómeno de emaranhamento reversível.\""
 
 #: dat/events/taiomi/system.lua:416
 msgid ""
@@ -43124,7 +43178,7 @@ msgstr "Respeitado"
 #: dat/gui/slim.lua:1082 dat/gui/slim.lua:1100 dat/gui/slim.lua:1139
 #: dat/gui/slim.lua:1140
 msgid "none"
-msgstr "nenhum"
+msgstr "nada"
 
 #. Overheat or ammo capacity
 #. Refire indicator
@@ -43419,7 +43473,7 @@ msgstr ""
 #. Missile lock warning
 #: dat/gui/slim.lua:201
 msgid "Warning - Missile Lock-on Detected"
-msgstr ""
+msgstr "Aviso - detetado míssil fixado em ti"
 
 #. Colour the planet name based on friendliness.
 #: dat/gui/slim.lua:410
@@ -45474,7 +45528,7 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_05.lua:246
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:59
 msgid "Return to {pnt} in the {sys} system"
-msgstr ""
+msgstr "Regressa a {pnt} no sistema {sys}"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:94
 msgid ""
@@ -50358,6 +50412,8 @@ msgid ""
 "Destroy the 3 targets \n"
 " ({time} s remaining)"
 msgstr ""
+"Destrói os 3 alvos \n"
+" ({time} seg restantes)"
 
 #: dat/missions/dvaered/recruitment/dv_bikers.lua:167
 #: dat/missions/dvaered/recruitment/dv_bikers.lua:488
@@ -53929,7 +53985,7 @@ msgstr ""
 
 #: dat/missions/empire/collective/ec02.lua:69
 msgid "Return to {pnt} with your findings"
-msgstr ""
+msgstr "Regressa a {pnt} com as tuas descobertas"
 
 #: dat/missions/empire/collective/ec02.lua:72
 msgid ""
@@ -54041,8 +54097,8 @@ msgstr[1] ""
 #, lua-format
 msgid "%d remaining"
 msgid_plural "%d remaining"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d restante"
+msgstr[1] "%d restantes"
 
 #: dat/missions/empire/collective/ec03.lua:57
 msgid "You see Lt. Commander Dimitri at the bar, as usual."
@@ -54099,7 +54155,7 @@ msgstr ""
 #: dat/missions/tutorial/nelly02.lua:314
 #: dat/missions/zalek/blackhole/zbh10.lua:317
 msgid "Return to {pnt}"
-msgstr ""
+msgstr "Regressa a {pnt}"
 
 #: dat/missions/empire/collective/ec03.lua:121
 msgid ""
@@ -54474,13 +54530,13 @@ msgstr ""
 #: dat/missions/empire/collective/ec05.lua:170
 #: dat/missions/empire/collective/ec05.lua:353
 msgid "Mission Failure: Return to base."
-msgstr ""
+msgstr "Missão falhada: regressa à base."
 
 #: dat/missions/empire/collective/ec05.lua:171
 #: dat/missions/empire/collective/ec05.lua:347
 #: dat/missions/empire/collective/ec05.lua:357
 msgid "Return to base at {pnt} in {sys}"
-msgstr ""
+msgstr "Regressa à base em {pnt} no sistema {sys}"
 
 #. Little talk when ESS Trinity is encountered.
 #. Empire talks about arresting
@@ -54555,7 +54611,7 @@ msgstr ""
 #. Got killed
 #: dat/missions/empire/collective/ec05.lua:343
 msgid "Mission Success: Return to base."
-msgstr ""
+msgstr "Missão cumprida: regressa à base."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -55054,7 +55110,7 @@ msgstr "Missão aceite"
 #: dat/missions/empire/es_cargo.lua:112
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:113
 msgid "The Empire workers load the {tonnes} of {cargo} onto your ship."
-msgstr ""
+msgstr "Os trabalhadores do Império carregam {tonnes} de {cargo} na tua nave."
 
 #. only hook after accepting
 #. 100STU per tick
@@ -55075,12 +55131,12 @@ msgstr ""
 #: dat/missions/neutral/cargo_rush.lua:166
 #: dat/missions/pirate/contraband.lua:186
 msgid "Successful Delivery"
-msgstr ""
+msgstr "Entrega cumprida"
 
 #: dat/missions/empire/es_cargo.lua:123
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:127
 msgid "The Empire workers unload the {cargo} at the docks."
-msgstr ""
+msgstr "Os trabalhadores do Império descarregam {cargo} nas docas."
 
 #. increase faction
 #. Date hook
@@ -55094,6 +55150,8 @@ msgid ""
 "Fly to {pnt} in the {sys} system before {time_limit}\n"
 "({time} remaining)"
 msgstr ""
+"Voa para {pnt} no sistema {sys} antes do {time_limit}\n"
+"(restam {time})"
 
 #. Repeatable Empire mission prefix
 #: dat/missions/empire/es_cargo.lua:147 dat/scripts/common/empire.lua:15
@@ -55720,11 +55778,11 @@ msgstr ""
 
 #: dat/missions/empire/shipping/es00.lua:122
 msgid "Return to {pnt} in the {sys} system to report what happened."
-msgstr ""
+msgstr "Regressa a {pnt} no sistema {sys} para relatar o que aconteceu."
 
 #: dat/missions/empire/shipping/es00.lua:124
 msgid "Return to {pnt} in the {sys} system to report what happened"
-msgstr ""
+msgstr "Regressa a {pnt} no sistema {sys} para relatar o que aconteceu"
 
 #. Prevent players from saving on the destination planet
 #. We'll take off right away again
@@ -56139,7 +56197,7 @@ msgstr ""
 #: dat/missions/empire/shipping/es02.lua:254
 #: dat/missions/empire/shipping/es02.lua:256
 msgid "Return to {pnt} in the {sys} system with the VIP"
-msgstr ""
+msgstr "Regressa a {pnt} no sistema {sys} com o VIP"
 
 #. Force unboard
 #. Notify of death
@@ -60845,7 +60903,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:134
 msgid "Offer to help her"
-msgstr ""
+msgstr "Oferecer ajuda"
 
 #: dat/missions/minerva/maikki1.lua:135 dat/missions/minerva/maikki2.lua:173
 #: dat/missions/tutorial/nelly01.lua:130 dat/missions/tutorial/nelly02.lua:118
@@ -60856,7 +60914,7 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:63
 #: dat/missions/zalek/neburesearch/neburesearch_05.lua:65
 msgid "Decline to help"
-msgstr ""
+msgstr "Recusar ajudar"
 
 #: dat/missions/minerva/maikki1.lua:138 dat/missions/minerva/maikki2.lua:176
 msgid ""
@@ -61760,7 +61818,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:909
 msgid "Return to {name} in the {sys} system"
-msgstr ""
+msgstr "Regressa a {name} no sistema {sys}"
 
 #. Clear scavengers if exist
 #. Unboard
@@ -65589,7 +65647,7 @@ msgstr ""
 #: dat/missions/zalek/blackhole/zbh10.lua:80
 #: dat/missions/zalek/blackhole/zbh11.lua:202
 msgid "Return to {pnt} ({sys} system)"
-msgstr ""
+msgstr "Regressa a {pnt} (sistema {sys})"
 
 #. Land hook.
 #: dat/missions/neutral/antlejos/ant06.lua:102
@@ -66865,8 +66923,8 @@ msgid ""
 msgstr ""
 "Os contentores de {cargo} são retirados da tua nave por um grupo de "
 "trabalhadores mal-humorados. Não estão contentes por terem de fazer horas "
-"extra porque te atrasaste. Só de pagam {credits} de {reward} que te "
-"prometeram."
+"extra porque te atrasaste. Por causa disso só te pagam {credits} dos {reward}"
+" que te prometeram."
 
 #: dat/missions/neutral/cargo_rush.lua:66
 msgid ""
@@ -67419,7 +67477,7 @@ msgstr ""
 #: dat/missions/shadow/shadowrun.lua:145 dat/missions/shadow/shadowrun.lua:152
 #: dat/missions/sirius/srs_ferry.lua:336
 msgid "You have {time} remaining"
-msgstr ""
+msgstr "Restam-te {time}"
 
 #. invoked upon landing (stage 1: cart the nerds to mem.destPlanet)
 #. in time, right planet
@@ -67774,6 +67832,16 @@ msgid ""
 "next thing I knew, I was wakin' up with water splashed on my face, bein' "
 "tellered I gots in the hock, and they gots me ship, ye know?"
 msgstr ""
+"Bem, ocasionalmente ela precisa de algumas coisas enviadas que não pode "
+"simplesmente pedir ao seu motorista para ir buscá-la. Por isso ela pede-me "
+"para ir buscar este pacote. Não sei o que é. Não faço perguntas. Ela não me "
+"diz. É assim que ela gosta. Mas eu tinha acabado de sair desta corrida de 72 "
+"horas pelo espaço infestado de piratas e estava em pulgas sem uma escotilha "
+"para sair. Por isso decidi tomar uma bebida ou duas e cair no feno. Acontece "
+"que aqueles bêbados tiveram uma pequena procriação e se transformaram em "
+"três ou doze. Talvez vinte. Eu não sei, mas eles não pareciam gostar muito "
+"do meu jogo, quando dei por mim, eu estava acordando com água no meu rosto, "
+"sendo avisado que estava preso e eles ficaram com a minha nave, sabes?"
 
 #: dat/missions/neutral/drunkard.lua:78
 msgid ""
@@ -69577,8 +69645,8 @@ msgstr ""
 #, lua-format
 msgid "Go to indicated point (%d remaining)"
 msgid_plural "Go to indicated point (%d remaining)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Vai ao ponto indicado (resta %d)"
+msgstr[1] "Vai ao ponto indicado (restam %d)"
 
 #: dat/missions/neutral/patrol.lua:171 dat/missions/neutral/patrol.lua:302
 msgid "Patrol"
@@ -72877,10 +72945,10 @@ msgid ""
 "#nAttractions:#0 {amount}\n"
 "#nPreferred Ship:#0 Luxury Yacht-class"
 msgstr ""
-"Vários passageiros querem sair do mundo e fazer um passeio turístico. Navega "
-"para {amount} atrações específicas no sistema {sys}. Uma vez feita a visita, "
-"traz de volta os passageiros a {retspob} (sistema {retsys}). O pagamento "
-"será reduzido se não for numa nave preferencial.\n"
+"Vários passageiros querem sair do planeta e fazer um passeio turístico. "
+"Navega para {amount} atrações específicas no sistema {sys}. Uma vez feita a "
+"visita, traz de volta os passageiros a {retspob} (sistema {retsys}). O "
+"pagamento será reduzido se não for numa nave preferencial.\n"
 "\n"
 "#nAtrações:#0 {amount}\n"
 "#nNave preferencial:#0 Iate da classe luxo"
@@ -72929,6 +72997,7 @@ msgstr ""
 #: dat/missions/neutral/sightseeing.lua:254
 msgid "All attractions visited. Return to {pnt} and collect your pay."
 msgstr ""
+"Todas as atrações foram visitadas. Regressa a {pnt} e recebe o teu pagamento."
 
 #. Remove existing marks
 #. Add new marks
@@ -73341,6 +73410,8 @@ msgid ""
 "The waste containers are loaded onto your ship and you are paid {credits}. "
 "You begin to wonder if accepting this job was really a good idea."
 msgstr ""
+"Os contentores de resíduos são carregados na tua nave e pagam-te {credits}. "
+"Começas a perguntar-te se foi realmente uma boa ideia aceitar este trabalho."
 
 #: dat/missions/neutral/wastedump.lua:32
 msgid ""
@@ -73348,6 +73419,9 @@ msgid ""
 "hastily hand you a credit chip containing {credits}. Smelling the garbage, "
 "you immediately regret taking the job."
 msgstr ""
+"Os trabalhadores enchem o teu porão de carga com o máximo de lixo possível, "
+"depois entregam-te à pressa uma ficha de créditos contendo {credits}. "
+"Cheirando o lixo, arrependes-te imediatamente de ter aceite o trabalho."
 
 #: dat/missions/neutral/wastedump.lua:33
 msgid ""
@@ -73356,32 +73430,42 @@ msgid ""
 "you, it's too late to back down; you're stuck with this garbage until you "
 "can find some place to get rid of it."
 msgstr ""
+"O teu porão está cheio de lixo e recebes {credits}. No momento em que o "
+"fedor insuportável que emana do compartimento de carga chega até ti, é tarde "
+"demais para recuares. Estás preso a este lixo até encontrares algum lugar "
+"para te livrares dele."
 
 #: dat/missions/neutral/wastedump.lua:37
 msgid "You drop the garbage off, relieved to have it out of your ship."
-msgstr ""
+msgstr "Deixas fora o lixo e ficas aliviado por tê-lo fora da tua nave."
 
 #: dat/missions/neutral/wastedump.lua:38
 msgid ""
 "You finally drop off the garbage and proceed to disinfect yourself and your "
 "cargo hold to the best of your ability."
 msgstr ""
+"Finalmente deixas fora o lixo e continuas a desinfetar-te a ti e ao teu "
+"porão de carga o melhor que podes."
 
 #: dat/missions/neutral/wastedump.lua:39
 msgid "Finally, the garbage leaves your ship and you breathe a sigh of relief."
-msgstr ""
+msgstr "Finalmente, o lixo sai da tua nave e suspiras de alívio."
 
 #: dat/missions/neutral/wastedump.lua:40
 msgid ""
 "Wrinkling your nose in disgust, you finally rid yourself of the waste "
 "containers you have been charged with disposing of."
 msgstr ""
+"Enrugando o nariz com nojo, finalmente livraste-te dos contentores de lixo "
+"de que foste encarregado de descarregar."
 
 #: dat/missions/neutral/wastedump.lua:44
 msgid ""
 "Sick and tired of smelling garbage, you illegally jettison the waste "
 "containers into space, hoping that no one notices."
 msgstr ""
+"Farto e cansado de cheirar lixo, despejas ilegalmente os contentores de lixo "
+"no espaço, esperando que ninguém repare."
 
 #: dat/missions/neutral/wastedump.lua:45
 msgid ""
@@ -73389,12 +73473,17 @@ msgid ""
 "bother to go to and simply jettison the containers of waste. You hope you "
 "don't get caught."
 msgstr ""
+"Decides que o local de despejo de resíduos mais próximo é muito longe para "
+"te dares ao trabalho de ir lá e simplesmente deitas fora os contentores de "
+"lixo. Esperas que não sejas apanhado."
 
 #: dat/missions/neutral/wastedump.lua:46
 msgid ""
 "You dump the waste containers into space illegally, noting that you should "
 "make sure not to get caught by authorities."
 msgstr ""
+"Despejas os contentores de resíduos ilegalmente no espaço, certificando-te "
+"que não podes ser visto pelas autoridades."
 
 #. List of possible waste dump planets.
 #. failed to create
@@ -73402,7 +73491,7 @@ msgstr ""
 #. Set mission details
 #: dat/missions/neutral/wastedump.lua:79 dat/missions/neutral/wastedump.lua:98
 msgid "Waste Dump"
-msgstr ""
+msgstr "Despejo de resíduos"
 
 #: dat/missions/neutral/wastedump.lua:80
 msgid ""
@@ -73411,30 +73500,38 @@ msgid ""
 "any attempt to illegally get rid of the waste will be severely punished if "
 "you are caught."
 msgstr ""
+"Carrega o máximo de contentores de resíduos que a tua nave puder guardar e "
+"deixa-os em qualquer instalação de recolha de lixo autorizada. Serás pago "
+"imediatamente, mas qualquer tentativa de te livrares ilegalmente dos "
+"resíduos será severamente punida se fores apanhado."
 
 #: dat/missions/neutral/wastedump.lua:92
 msgid "Waste Containers Loaded"
-msgstr ""
+msgstr "Contentores de resíduos carregados"
 
 #: dat/missions/neutral/wastedump.lua:94
 msgid "Waste Containers"
-msgstr ""
+msgstr "Contentores de resíduos"
 
 #: dat/missions/neutral/wastedump.lua:94
 msgid ""
 "A bunch of waste containers leaking all sorts of indescribable liquids. You "
 "hope they don't leak onto your ship."
 msgstr ""
+"Um monte de contentores de resíduos a vazar todo o tipo de líquidos "
+"indescritíveis. Esperas que não hajam fugas para a tua nave."
 
 #: dat/missions/neutral/wastedump.lua:98
 msgid ""
 "Land on any garbage collection facility (indicated on your map) to drop off "
 "the Waste Containers"
 msgstr ""
+"Aterra em qualquer instalação de recolha de lixo (indicada no teu mapa) para "
+"deixar os contentores de lixo"
 
 #: dat/missions/neutral/wastedump.lua:108
 msgid "No More Garbage"
-msgstr ""
+msgstr "Chega de lixo"
 
 #: dat/missions/neutral/wastedump.lua:121
 msgid ""
@@ -74556,7 +74653,7 @@ msgstr ""
 
 #: dat/missions/pirate/hitman.lua:86 dat/missions/pirate/hitman2.lua:84
 msgid "Return to {pnt} in the {sys} system for payment"
-msgstr ""
+msgstr "Regressa a {pnt} no sistema {sys} para receberes o pagamento"
 
 #. Set hooks
 #. Entering a system
@@ -74895,6 +74992,8 @@ msgid ""
 "#rWARNING:#0 This mission is illegal and will get you in trouble with the "
 "authorities!"
 msgstr ""
+"#rAVISO:#0 esta missão é ilegal e vai meter-te em sarilhos com as "
+"autoridades!"
 
 #: dat/missions/pirate/pir_hit.lua:128
 msgid "Assassination"
@@ -75022,7 +75121,7 @@ msgstr ""
 #. Nothing to do.
 #: dat/missions/pirate/pir_hit_intro.lua:201
 msgid "Target eliminated! Return to {pnt} ({sys} system)."
-msgstr ""
+msgstr "Alvo eliminado! Regressa a {pnt} (sistema {sys})."
 
 #. Use a dynamic faction so they don't get killed
 #: dat/missions/pirate/pir_hit_intro.lua:247
@@ -78717,7 +78816,7 @@ msgstr ""
 #. Warn the player if fuel is not sufficient
 #: dat/missions/sirius/achack/achack02.lua:158
 msgid "Fuel Warning"
-msgstr ""
+msgstr "Aviso de combustível"
 
 #: dat/missions/sirius/achack/achack02.lua:158
 msgid ""
@@ -78860,7 +78959,7 @@ msgstr ""
 
 #: dat/missions/sirius/achack/achack03.lua:61
 msgid "Return to Joanne on {pnt} ({sys})"
-msgstr ""
+msgstr "Regressa a Joanne em {pnt} (sistema {sys})"
 
 #. Jump-out hook.
 #. Enter hook.
@@ -79249,7 +79348,7 @@ msgstr ""
 
 #: dat/missions/sirius/achack/achack04.lua:113
 msgid "Return to {pnt} ({sys})"
-msgstr ""
+msgstr "Regressa a {pnt} (sistema {sys})"
 
 #: dat/missions/sirius/achack/achack04.lua:115
 #: dat/missions/sirius/achack/achack04.lua:139
@@ -80465,7 +80564,7 @@ msgstr ""
 #: dat/missions/taiomi/taiomi01.lua:61 dat/missions/taiomi/taiomi02.lua:71
 #: dat/missions/taiomi/taiomi03.lua:52 dat/missions/taiomi/taiomi04.lua:79
 msgid "Return to the {spobname} ({spobsys})"
-msgstr ""
+msgstr "Regressa a {spobname} ({spobsys})"
 
 #. Only interested at first
 #: dat/missions/taiomi/taiomi01.lua:95
@@ -81397,7 +81496,7 @@ msgstr ""
 
 #: dat/missions/taiomi/taiomi05.lua:377
 msgid "Return to {base} ({basesys})?"
-msgstr ""
+msgstr "Regressar a {base} ({basesys})?"
 
 #. vn.music("") -- TODO some anticipation music or something
 #: dat/missions/taiomi/taiomi05.lua:401
@@ -81646,7 +81745,7 @@ msgstr ""
 #: dat/missions/taiomi/taiomi06.lua:36 dat/missions/taiomi/taiomi07.lua:63
 #: dat/missions/taiomi/taiomi07.lua:75
 msgid "Return to {base} ({basesys})"
-msgstr ""
+msgstr "Regressa a {base} ({basesys})"
 
 #. Mission details
 #: dat/missions/taiomi/taiomi06.lua:53
@@ -82061,7 +82160,7 @@ msgstr ""
 
 #: dat/missions/taiomi/taiomi08.lua:58
 msgid "Return to {spobname} ({spobsys})"
-msgstr ""
+msgstr "Regressa a {spobname} ({spobsys})"
 
 #: dat/missions/taiomi/taiomi08.lua:59
 msgid "[Optional] Steal {cargo}"
@@ -82432,7 +82531,7 @@ msgstr ""
 
 #: dat/missions/taiomi/taiomi09.lua:279
 msgid "Return to {spob} ({sys})"
-msgstr ""
+msgstr "Regressa a {spob} ({sys})"
 
 #. dynamic faction gives no faction hits, good I guess?
 #. positions chosen so that hopefully the player doesn't fight them all at once
@@ -83367,7 +83466,7 @@ msgstr ""
 #: dat/missions/trader/anxiousmerchant.lua:177
 msgid ""
 "Drop off the goods at {pnt} in the {sys} system (You have {time} remaining)"
-msgstr ""
+msgstr "Deixa a mercadoria em {pnt} no sistema {sys} (Restam-te {time})"
 
 #. missed deadline
 #: dat/missions/trader/anxiousmerchant.lua:179
@@ -83696,7 +83795,7 @@ msgstr "Entregar a carga a {pnt} em {sys}"
 #: dat/missions/tutorial/nelly01.lua:189 dat/missions/tutorial/nelly02.lua:226
 #: dat/missions/tutorial/nelly02.lua:397
 msgid "Return to {pnt} in {sys}"
-msgstr "Voltar a {pnt} em {sys}"
+msgstr "Regressa a {pnt} em {sys}"
 
 #. Delivered Cargo
 #: dat/missions/tutorial/nelly01.lua:211
@@ -83762,15 +83861,14 @@ msgid ""
 "\"Anyway, see you around! Make sure to check the spaceport bar whenever you "
 "land for new missions!\""
 msgstr ""
-"\"Agora é hora de voltar para minha nave. Espero que já esteja consertada. "
-"Se quiseres fazer mais missões de carga para ganhar alguns créditos fáceis, "
+"\"Agora é hora de voltar para minha nave. Espero que já esteja reparada. Se "
+"quiseres fazer mais missões de carga para ganhar alguns créditos fáceis, "
 "recomendo que dês uma olhada no computador da missão, que deve estar "
-"disponível na maioria dos planetas como aqui. Às vezes, também encontrarás "
-"personagens interessantes no bar do porto espacial, que oferecem missões "
-"interessantes.\"\n"
-"Eles sorriem para ti.\n"
-"\"De qualquer forma, vejo-te por aí! Certifica-te de visitar o bar do porto "
-"espacial sempre que aterrares para obteres novas missões!\""
+"disponível na maioria dos planetas como este. Às vezes, também encontrarás "
+"personagens no bar do porto espacial, que oferecem missões interessantes.\"\n"
+"Dirige-te um sorriso.\n"
+"\"De qualquer forma, vejo-te por aí! Não te esqueças de visitar o bar do "
+"porto espacial sempre que aterrares para obteres novas missões!\""
 
 #: dat/missions/tutorial/nelly01.lua:264
 msgid ""
@@ -84020,6 +84118,13 @@ msgid ""
 "also right click on an outfit to have it directly be assigned to the "
 "smallest free slot it fits into. Try to equip the #o{outfit}#0 now.\""
 msgstr ""
+"\"O separador #oEquipmento#0 permite lidar com as tuas naves e os teus "
+"equipamentos. PodeW ter mais de uma nave e alternar entre elas livremente. "
+"Tenta instalar #o{outfit}#0 num espaço de armas clicando primeiro no "
+"equipamento e, em seguida, clica com o botão direito do rato no espaço que "
+"quiseres. Se tiveres espaços livres, também podes clicar com o botão direito "
+"num equipamento para que este seja instalado no menor espaço livre em que "
+"este se encaixa. Tenta equipar #o{outfit }#0 agora.\""
 
 #: dat/missions/tutorial/nelly01.lua:530
 msgid ""
@@ -84029,6 +84134,12 @@ msgid ""
 "that. You can check by opening the #oInfo Window#0 with {infokey}. Check to "
 "make sure that is set up and let us go back to {pnt} in {sys}.\""
 msgstr ""
+"\"Ótimo! Agora tens #o{outfit}#0 instalado. Se a tua nave estiver "
+"configurada para lidar automaticamente com armas, ela deve ser atribuída a "
+"uma arma primária. Caso contrário, terás que atribuir #o{outfit}# 0 a um "
+"conjunto de armas para que possas usá-lo. Podes verificar abrindo a #ojanela "
+"de Informações#0 com {infokey}. Confirma se está instalado e vamos voltar "
+"para {pnt} em {sys}.\""
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -84134,16 +84245,16 @@ msgstr ""
 #. Check for asteroid fields
 #: dat/missions/tutorial/nelly02.lua:100 dat/missions/tutorial/nelly03.lua:80
 msgid "You see Nelly motioning to you at a table."
-msgstr ""
+msgstr "Vês a Nelly sentada numa mesa gesticulando para ti."
 
 #. Check to see if truly accepted
 #: dat/missions/tutorial/nelly02.lua:102 dat/missions/tutorial/nelly03.lua:155
 msgid "Helping Nelly Out… Again"
-msgstr ""
+msgstr "Ajudando a Nelly… novamente"
 
 #: dat/missions/tutorial/nelly02.lua:103
 msgid "Help Nelly fix their ship."
-msgstr ""
+msgstr "Ajudar a Nelly a reparar a nave."
 
 #: dat/missions/tutorial/nelly02.lua:114
 msgid ""
@@ -84153,16 +84264,23 @@ msgid ""
 "spinning around in circles! You have an Ion Cannon, do you? Could you help "
 "me disable my ship and get it back?\""
 msgstr ""
+"A Nelly ilumina-se quando te aproximas.\n"
+"\"Ei, eu pensei que era capaz de pôr a minha nave a funcionar, mas antes de "
+"eu puder entrar e fazer um teste, deu para o torto e agora está a rodopiar "
+"em círculos! Tens um canhão de iões, não? Podes ajudar-me a desativar a "
+"minha nave e a recuperá-la?\""
 
 #: dat/missions/tutorial/nelly02.lua:117
 msgid "Help them with their ship"
-msgstr ""
+msgstr "Ajudá-la a recuperar a nave"
 
 #: dat/missions/tutorial/nelly02.lua:122 dat/missions/tutorial/nelly03.lua:98
 msgid ""
 "They look dejected.\n"
 "\"I guess I'll have to see if there is any other way to solve my problem.\""
 msgstr ""
+"Ela parece desanimada.\n"
+"\"Acho que vou ter que procurar outra forma de resolver o meu problema.\""
 
 #: dat/missions/tutorial/nelly02.lua:128
 msgid ""
@@ -84171,6 +84289,10 @@ msgid ""
 "autonav locked me out and my ship took off without anyone in it! Now it's "
 "flying around in circles outside of {pnt}!\""
 msgstr ""
+"\"Obrigado pela ajuda novamente. Então, enquanto eu estava a preparar-me "
+"para descolar na minha nave, ouvi um barulho estranho lá fora e quando fui "
+"ver o que se passava, o Autonav bloqueou-me e a minha nave descolou sem "
+"ninguém a bordo! Agora está a voar em círculos perto de {pnt}!\""
 
 #. Sells Outfits
 #. Sells a particular outfit
@@ -84181,6 +84303,10 @@ msgid ""
 "your active weapon set or as an instant fire weapon set and let's go get my "
 "ship back!\""
 msgstr ""
+"\"Parece que já tens algumas armas incapacitantes instaladas. Confirma se "
+"elas estão definidas na janela de informações como a arma primária ou "
+"secundária no conjunto de armas ativo ou como conjunto de armas de disparo "
+"instantâneo e vamos recuperar minha nave!\""
 
 #: dat/missions/tutorial/nelly02.lua:167
 msgid ""
@@ -84188,6 +84314,9 @@ msgid ""
 "Why don't you try to equip #o{outfitname}#0 before we head out? We want to "
 "disable my ship, not destroy it!\""
 msgstr ""
+"\"Parece que tens algumas armas incapacitantes, mas não as tens instaladas. "
+"Porque não tentas instalar o #o{outfitname}#0 antes de partirmos? Queremos "
+"desativar minha nave, não destruí-la!\""
 
 #: dat/missions/tutorial/nelly02.lua:170
 msgid ""
@@ -84197,6 +84326,10 @@ msgid ""
 "such as #o{nearplanet}#0. You can check what services are available when you "
 "select the planet, or from the map.\""
 msgstr ""
+"\"Parece que este planeta não tem #oarmador#0 nem #oestaleiro#0, por isso "
+"não poderás trocar o teu equipamento atual. Tenta ir a um planeta próximo "
+"com um #oarmador#0 ou um #oestaleiro#0 como o planeta #o{nearplanet}#0. "
+"Podes ver que serviços estão disponíveis ao selecionar o planeta no mapa.\""
 
 #: dat/missions/tutorial/nelly02.lua:173
 msgid ""
@@ -84205,41 +84338,51 @@ msgid ""
 "should have #o{outfitname}#0 for sale. You should buy and equip one before "
 "trying to disable my ship!\""
 msgstr ""
+"\"Parece que não tens nenhuma arma incapacitante. Lembra-te, tens que "
+"desativar a minha nave e não destruí-la! Acho que o planeta #o{nearplanet}#0 "
+"nas proximidades tem o #o{outfitname}#0 à venda. Precisas de comprar e "
+"instalar um antes de tentar desativar a minha nave!\""
 
 #. Check to see if truly accepted
 #: dat/missions/tutorial/nelly02.lua:189
 msgid "Equip a weapon with disable damage"
-msgstr ""
+msgstr "Instala uma arma com dano incapacitante"
 
 #: dat/missions/tutorial/nelly02.lua:192
 msgid "Buy and equip a weapon with disable damage"
-msgstr ""
+msgstr "Compra e instala uma arma com dano incapacitante"
 
 #: dat/missions/tutorial/nelly02.lua:195
 msgid "Disable and board Nelly's ship in {sys}"
-msgstr ""
+msgstr "Inativa e embarca na nave de Nelly em {sys}"
 
 #: dat/missions/tutorial/nelly02.lua:213
 msgid ""
 "\"You have equipped a #o{outfitname}#0 with disable damage. Looks like "
 "you'll be able to safely disable my rampant ship!\""
 msgstr ""
+"\"Instalaste um #o{outfitname}#0 com dano incapacitante. Parece que serás "
+"capaz de incapacitar a minha nave descontrolada com segurança!\""
 
 #: dat/missions/tutorial/nelly02.lua:269
 msgid "Noisy Pacifier"
-msgstr ""
+msgstr "Pacificador Ruidoso"
 
 #: dat/missions/tutorial/nelly02.lua:299
 msgid ""
 "Nelly: \"You disabled it! Now get on top of the ship and board it with "
 "{boardkey}!\""
 msgstr ""
+"Nelly: \"Desativaste-a! Agora posiciona a tua nave por cima da minha nave e "
+"embarca nela com a tecla {boardkey}!\""
 
 #: dat/missions/tutorial/nelly02.lua:307
 msgid ""
 "You board Nelly's ship and quickly go to the control panel to turn off the "
 "autonav."
 msgstr ""
+"Entras na nave da Nelly e rapidamente vais ao painel de controlo para "
+"desligar o autonav."
 
 #: dat/missions/tutorial/nelly02.lua:308
 msgid ""
@@ -84247,6 +84390,9 @@ msgid ""
 "like this has happened to me! Let me bring the ship back to {pnt} and meet "
 "me at the spaceport bar for your reward.\""
 msgstr ""
+"\"Odeio quando isto acontece. Quer dizer… é a primeira vez que passo por "
+"isto! Deixa-me trazer a nave de volta para {pnt} e encontramo-nos no bar do "
+"porto espacial para receberes a recompensa.\""
 
 #. Have the ship go back
 #. Faster again
@@ -84256,10 +84402,13 @@ msgid ""
 "Although the mission has been aborted, you can still repeat it from the "
 "beginning by finding Nelly at a spaceport bar to try again."
 msgstr ""
+"#rMISSÃO FALHADA: não era suposto destruíres a nave da Nelly!\n"
+"Embora a missão tenha sido abortada, ainda podes repeti-la desde o início. "
+"Só tens de encontrar a Nelly num bar espacial para tentar novamente."
 
 #: dat/missions/tutorial/nelly02.lua:341
 msgid "Nelly is motioning you to come join her at the table."
-msgstr ""
+msgstr "A Nelly está a fazer-te sinal para te juntares à mesa dela."
 
 #: dat/missions/tutorial/nelly02.lua:348
 msgid ""
@@ -84267,20 +84416,28 @@ msgid ""
 "some sort of argument with the person in charge. After a bit you see they "
 "exchange something and she comes back with a grin on her face."
 msgstr ""
+"Mal aterras, a Nelly vai rapidamente ao armador e parece ter algum tipo de "
+"discussão com o responsável. Após algum tempo, vês que trocam alguma coisa e "
+"ela volta com um sorriso na cara."
 
 #: dat/missions/tutorial/nelly02.lua:349
 msgid ""
 "\"Got the parts! Cheaper than I expected too. Hopefully this will bring an "
 "end to my ship troubles. Let's go back to #o{pnt}#0 in #o{sys}#0!\""
 msgstr ""
+"\"Tenho as peças! Ficou mais barato do que esperava. Espero que isto acabe "
+"com os meus problemas com a nave. Vamos lá regressar a #o{pnt}#0 em "
+"#o{sys}#0!\""
 
 #: dat/missions/tutorial/nelly02.lua:353
 msgid "Jumpdrive Repair Parts"
-msgstr ""
+msgstr "Peças de reparação do motor de salto"
 
 #: dat/missions/tutorial/nelly02.lua:353
 msgid "Spare parts that can be used to break a ship's broken jumpdrive."
 msgstr ""
+"Peças sobresselentes que podem ser usadas para reparar o motor de salto de "
+"um nave avariada."
 
 #. Finished mission
 #: dat/missions/tutorial/nelly02.lua:365
@@ -84288,6 +84445,8 @@ msgid ""
 "\"We finally made it. Nothing ever comes really easy does it? Ah, before I "
 "forget, let me reward you for your troubles.\""
 msgstr ""
+"\"Finalmente conseguimos. Nada é realmente fácil, pois não? Ah, antes que me "
+"esqueça, deixa-me recompensar-te pelos teus problemas.\""
 
 #. Rewards
 #: dat/missions/tutorial/nelly02.lua:371
@@ -84296,14 +84455,17 @@ msgid ""
 "space. Have fun!\"\n"
 "She runs off to where here ship is stored with the repair parts in hand."
 msgstr ""
+"\"Vou arranjar a minha nave e espero que da próxima vez que a encontrarmos "
+"seja no espaço. Diverte-te!\"\n"
+"Ela sai a correr para a nave dela com as peças de reparação na mão."
 
 #: dat/missions/tutorial/nelly02.lua:376
 msgid "You helped Nelly repair her ship."
-msgstr ""
+msgstr "Ajudaste a Nelly a reparar a nave."
 
 #: dat/missions/tutorial/nelly02.lua:387
 msgid "As you approach her you can see she is a bit flustered."
-msgstr ""
+msgstr "Ao aproximares-te dela notas que está um pouco nervosa."
 
 #: dat/missions/tutorial/nelly02.lua:388
 msgid ""
@@ -84313,6 +84475,12 @@ msgid ""
 "hectaperiod if I want it delivered. However, I was able to find that they "
 "seem to have replacements on #o{destpnt}#0 in #o{destsys}#0.\""
 msgstr ""
+"\"Verifiquei a minha nave outra vez e parece que não foi apenas uma avaria "
+"do autonav, o dispositivo de salto fritou! Preciso de uma peça "
+"sobressalente, mas eles não parecem ter nenhuma aqui e disseram-me que vou "
+"ter de esperar pelo menos um hectaperíodo se quiser que me a entreguem. No "
+"entanto, consegui descobrir que parecem ter substituições em #o{destpnt}#0 "
+"em #o{destsys}#0.\""
 
 #: dat/missions/tutorial/nelly02.lua:389
 msgid ""
@@ -84321,17 +84489,23 @@ msgid ""
 "\"Come on, let's head to #o{destpnt}#0 to grab a spare part so I can finally "
 "get my ship off the ground.\""
 msgstr ""
+"Antes que possas responder, ela agarra-te no braço e puxa-te em direção à "
+"tua nave.\n"
+"\"Anda, vamos a #o{destpnt}#0 arranjar uma peça sobressalente para que eu "
+"possa finalmente tirar a minha nave do chão.\""
 
 #: dat/missions/tutorial/nelly02.lua:391
 msgid ""
 "Looks like you'll have to do another round trip if you want to get paid."
 msgstr ""
+"Parece que terás que fazer outra viagem de ida e volta se quiseres receber o "
+"pagamento."
 
 #. Spawn pirates
 #. Ignore vulnerability
 #: dat/missions/tutorial/nelly02.lua:426
 msgid "Nelly: \"Wait, are those pirates coming our way?\""
-msgstr ""
+msgstr "Nelly: \"Espera, aqueles piratas estão a vir na nossa direção?\""
 
 #: dat/missions/tutorial/nelly02.lua:441
 msgid ""
@@ -84339,6 +84513,9 @@ msgid ""
 "would say run, but I don't think we'll be able to outrun them. I think that "
 "bribing them may be the only way out.\""
 msgstr ""
+"\"Parece que fomos vistos por um trio de Hienas Piratas. Normalmente diria "
+"para fugirmos, mas acho que não vamos conseguir ultrapassá-los. Creio que a "
+"única saída é tentar suborná-los.\""
 
 #: dat/missions/tutorial/nelly02.lua:442
 msgid ""
@@ -84347,60 +84524,69 @@ msgid ""
 "be expensive, it beats getting blown to bits. Try targetting the nearest "
 "enemy with {targetkey}, hailing them with {hailkey}, and bribing them!\""
 msgstr ""
+"\"Se fixares um pirata e os saudares com a tecla {hailkey}, deves ter a "
+"opção de suborná-los se forem hostis. Embora possa ser caro, é melhor do que "
+"explodir em pedaços. Tenta fixar o inimigo mais próximo com a tecla "
+"{targetkey}, saudando-os com a tecla {hailkey} e subornando-os!\""
 
 #: dat/missions/tutorial/nelly02.lua:444
 msgid ""
 "\"It looks like you won't have enough money to bribe them. Here, take "
 "#g{credits}#0, that should be enough hopefully.\""
 msgstr ""
+"\"Parece que não tens dinheiro suficiente para suborná-los. Toma #g{credits}#"
+"0. Deve ser o suficiente, espero eu.\""
 
 #: dat/missions/tutorial/nelly02.lua:451
 msgid "Hail and bribe the pirates"
-msgstr ""
+msgstr "Chamar e subornar os piratas"
 
 #: dat/missions/tutorial/nelly02.lua:479
 msgid "Nelly: \"Now we should be able to get out of here safely.\""
-msgstr ""
+msgstr "Nelly: \"Agora devemos ser capazes de sair daqui em segurança.\""
 
 #: dat/missions/tutorial/nelly02.lua:488
 msgid "Nelly: \"I guess that's another way of doing it.\""
-msgstr ""
+msgstr "Nelly: \"Acho que essa é outra forma de o fazer.\""
 
 #: dat/missions/tutorial/nelly02.lua:491
 msgid "Nelly: \"You only bribed some pilots, try to bribe them all!\""
-msgstr ""
+msgstr "Nelly: \"Só subornaste alguns pilotos, tenta suborná-los a todos!\""
 
 #: dat/missions/tutorial/nelly02.lua:493
 msgid ""
 "Nelly: \"Quickly! Target the hostile pirates with {targetkey} and bribe them "
 "by hailing them with {hailkey}!\""
 msgstr ""
+"Nelly: \"Rápido! Fixa os piratas hostis com {targetkey} e suborna-os "
+"chamando-os com {hailkey}!\""
 
 #: dat/missions/tutorial/nelly02.lua:511
 msgid "I know you're out there Nelly. Please come forward voluntarily."
-msgstr ""
+msgstr "Sei que estás por aí, Nelly. Por favor, apresenta-te voluntariamente."
 
 #: dat/missions/tutorial/nelly02.lua:512
 msgid "Stop hiding Nelly, you know this is futile."
-msgstr ""
+msgstr "Para de te esconderes Nelly, sabes que isso é inútil."
 
 #: dat/missions/tutorial/nelly02.lua:513
 msgid "Let us face this like adults, Nelly."
-msgstr ""
+msgstr "Vamos encarar isto como adultos, Nelly."
 
 #: dat/missions/tutorial/nelly02.lua:514
 msgid "Nelly, if you come out now I would hold this against you."
-msgstr ""
+msgstr "Nelly, se saíres agora, vou ter em conta isso."
 
 #: dat/missions/tutorial/nelly02.lua:515
 msgid ""
 "You're seriously going to make me have to scan the entire universe to find "
 "you Nelly?"
 msgstr ""
+"Vais mesmo obrigar-me a sondar o universo inteiro para te encontrar, Nelly?"
 
 #: dat/missions/tutorial/nelly02.lua:516
 msgid "Just come on out and let's get this over with, Nelly."
-msgstr ""
+msgstr "Sai e vamos acabar com isto, Nelly."
 
 #: dat/missions/tutorial/nelly02.lua:536
 msgid ""
@@ -84410,10 +84596,16 @@ msgid ""
 "\"Looks like we're going to have to avoid her for now. You know how "
 "electronic warfare works?\""
 msgstr ""
+"Nelly parece ficar um pouco nervosa ao ver o pacificador aparecer no ecrã.\n"
+"\"Espera, parece a Robin. Raios, acho que não cheguei a pagar-lhe, pois não?"
+"\"\n"
+"Franze a testa.\n"
+"\"Vamos ter que evitá-la por enquanto. Sabes como funciona a guerra "
+"eletrónica?\""
 
 #: dat/missions/tutorial/nelly02.lua:541 dat/missions/tutorial/nelly02.lua:560
 msgid "Learn about Electronic Warfare"
-msgstr ""
+msgstr "Aprender sobre guerra eletrónica"
 
 #: dat/missions/tutorial/nelly02.lua:546
 msgid ""
@@ -84422,6 +84614,10 @@ msgid ""
 "detected. Smaller ships like yachts or interceptors are much harder to "
 "detect than carriers or battleship.\""
 msgstr ""
+"\"Vou tentar ser breve. Os sensores da nave são baseados na deteção de "
+"anomalias gravitacionais, por isso a massa de uma nave desempenha um papel "
+"crítico na deteção. Naves mais pequenas, como iates ou intercetores, são "
+"muito mais difíceis de detetar do que os porta-aviões ou couraçados.\""
 
 #: dat/missions/tutorial/nelly02.lua:547
 msgctxt "Nelly"
@@ -84435,6 +84631,13 @@ msgid ""
 "- #oStealth#0 determines the distance at which the ship is undetected when "
 "in stealth mode\""
 msgstr ""
+"\"Cada nave tem três estatísticas importantes de guerra eletrónica:\n"
+"- #oDeteção#0 determina a distância a que uma nave aparece no radar.\n"
+"- #oEvasão#0 determina a distância a que uma nave é totalmente detetada "
+"completamente, ou seja, o tipo de nave e a fação são visíveis. Também "
+"desempenha um papel na forma como os mísseis e as armas rastreiam a nave.\n"
+"- #oCamuflagem#0 determina a distância a que a nave não é detetada quando "
+"está no modo de camuflagem\""
 
 #: dat/missions/tutorial/nelly02.lua:551
 msgid ""
@@ -84443,6 +84646,11 @@ msgid ""
 "ships. However, if a ship gets within the #ostealth#0 distance of your ship, "
 "it will slowly uncover you.\""
 msgstr ""
+"\"Podes ativar o modo de camuflagem com {stealthkey} quando estiveres longe "
+"o suficiente de outras naves. Quando estiveres camuflado, a tua nave será "
+"completamente invisível para todas as naves. No entanto, se uma nave se "
+"aproximar da distância de #ocamuflagem#0 da tua nave, irá lentamente "
+"descobrir-te.\""
 
 #: dat/missions/tutorial/nelly02.lua:552
 msgid ""
@@ -84450,6 +84658,9 @@ msgid ""
 "your ship heavily to mask your gravitational presence. This also has the "
 "effect of letting you jump out from jumpoints further away.\""
 msgstr ""
+"\"Além de tornar a tua nave invisível para outras naves, a #ocamuflagem#0 "
+"abranda fortemente a tua nave para mascarar a tua presença gravitacional. "
+"Isto também tem o efeito de deixar-te sair de pontos de salto mais longe.\""
 
 #: dat/missions/tutorial/nelly02.lua:553
 msgid ""
@@ -84458,6 +84669,11 @@ msgid ""
 "to scan depends on the mass of the ship. If you don't want to be scanned, I "
 "recommend you to rely on stealth as much as possible.\""
 msgstr ""
+"\"Quando não camuflada, as naves podem fixar a tua nave para fazer uma "
+"varredura. Isto pode descobrir informações indesejadas, como carga ou "
+"equipamentos ilegais. O tempo para varrer depende da massa da nave. Se não "
+"queres ser varrido, recomendo que confies no modo camuflado o máximo "
+"possível.\""
 
 #: dat/missions/tutorial/nelly02.lua:554
 msgid ""
@@ -84468,39 +84684,48 @@ msgid ""
 "to the jump point. It shouldn't be hard, but be careful not to get close to "
 "them!\""
 msgstr ""
+"\"Para evitar ser visto por {plt}, deves primeiro afastares-te das naves "
+"próximas e camuflar-te com {stealthkey}. Em seguida, evita outras naves "
+"utilizando o mapa sobreposto que podes abrir com {overlaykey}, onde o raio "
+"de deteção será mostrado em círculos vermelhos. Em seguida, deves ser capaz "
+"de voar ao redor de {plt} e chegar ao ponto de salto. Não deve ser difícil, "
+"mas tem cuidado para não chegares perto deles!\""
 
 #: dat/missions/tutorial/nelly02.lua:558
 msgid "\"You sure you know how to avoid them? It can be a bit tricky.\""
 msgstr ""
+"\"Tens certeza que sabes como evitá-los? Pode ser um pouco complicado.\""
 
 #: dat/missions/tutorial/nelly02.lua:561
 msgid "\"Call me Dr. Electronic Warfare\""
-msgstr ""
+msgstr "\"Chama-me Dr. Guerra Eletrónica\""
 
 #: dat/missions/tutorial/nelly02.lua:565
 msgid ""
 "\"Great! Avoid getting scanned by them and let's head off to {pnt} in {sys}!"
 "\""
-msgstr ""
+msgstr "\"Ótimo! Evita ser varrido por eles e vamos para {pnt} em {sys}!\""
 
 #: dat/missions/tutorial/nelly02.lua:571
 msgid "Avoid Nelly's ex-colleague by using stealth with {stealthkey}"
-msgstr ""
+msgstr "Evita a ex-colega da Nelly usando a camuflagem com {stealthkey}"
 
 #. Spotter lost track of them
 #: dat/missions/tutorial/nelly02.lua:589
 msgid "Nelly: \"Phew, it seems like they lost track of us.\""
-msgstr ""
+msgstr "Nelly: \"Ufa, parece que no perdeu de vista.\""
 
 #: dat/missions/tutorial/nelly02.lua:594
 msgid "You won't get away this time Nelly!"
-msgstr ""
+msgstr "Desta vez não vais conseguir escapar Nelly!"
 
 #: dat/missions/tutorial/nelly02.lua:603
 msgid ""
 "Nelly: \"They found us and are scanning us. Quickly try to stealth with "
 "{stealthkey}!\""
 msgstr ""
+"Nelly: \"Encontraram-nos e estão a varrer-nos. Ativa rapidamente a "
+"camuflagem com {stealthkey}!\""
 
 #: dat/missions/tutorial/nelly03.lua:90
 msgid ""
@@ -84512,6 +84737,14 @@ msgid ""
 "alternative to getting supplies, and I was wondering if you could help me "
 "get some supplies to repair my ship?\""
 msgstr ""
+"A Nelly está coberta de óleo e tem um cheiro um pouco esquisito.\n"
+"\"Ei, está tudo bem? Por acaso não estás livre? Estava a tentar reparar a "
+"minha nave seguindo este manual 'Guia à prova de enganos para Reparação de "
+"Naves', mas acontece que o revestimento do casco que encontrei no lixo é "
+"mais difícil de usar do que eu esperava. No entanto, no apêndice menciona "
+"que a exploração mineira é uma alternativa gratuita à obtenção de "
+"mantimentos. Estava a pensar. Será que me poderias ajudar a obter alguns "
+"mantimentos para reparar a minha nave?\""
 
 #: dat/missions/tutorial/nelly03.lua:104
 msgid ""
@@ -84523,19 +84756,27 @@ msgid ""
 "should put warnings on the gravy packets or have a gravy detector system on "
 "the ship controls to not have this problem!\""
 msgstr ""
+"\"Ótimo! Juro que desta vez a culpa não foi totalmente minha. Sabes, estava "
+"apenas a tratar da minha própria vida, comendo pacotes de molho de ervilhas "
+"enquanto orbitava {pnt}, mas sobreaqueci-os, e acidentalmente esguichei "
+"molho por todo o controlo da nave, o que fez com que esta se acelerasse e "
+"batesse na nave {ship}! Tive sorte de não terem reparado, mas isso fez com "
+"que metade da minha nave ficasse amolgada! Deviam mesmo colocar avisos nos "
+"pacotes de molho ou ter um sistema de deteção de molho nos controlos das "
+"naves para isto não acontecer!\""
 
 #: dat/missions/tutorial/nelly03.lua:107
 msgid "Tell them how to use the ship safety lock"
-msgstr ""
+msgstr "Diz-lhe como usar o bloqueio de segurança da nave"
 
 #: dat/missions/tutorial/nelly03.lua:108
 msgid "Ask about how they plan to repair the ship"
-msgstr ""
+msgstr "Pergunta como planeia reparar a nave"
 
 #: dat/missions/tutorial/nelly03.lua:109
 #: dat/missions/zalek/blackhole/zbh09.lua:77
 msgid "Stay silent"
-msgstr ""
+msgstr "Permanecer em silêncio"
 
 #: dat/missions/tutorial/nelly03.lua:113
 msgid ""
@@ -84543,6 +84784,9 @@ msgid ""
 "controls temporarily that should be used when eating or just idling around. "
 "They listen to you intently."
 msgstr ""
+"Explicas como as naves têm um bloqueio de segurança que pode ser ativado "
+"para desativar temporariamente os controlos que devem ser utilizados quando "
+"se come ou apenas se anda de um lado para o outro. Ela ouve-te atentamente."
 
 #: dat/missions/tutorial/nelly03.lua:114
 msgid ""
@@ -84550,12 +84794,18 @@ msgid ""
 "drying out. I have never used it for anything else. It makes some wicked "
 "dried Pastor Reaper peppers. I'll have to look into that.\""
 msgstr ""
+"\"Referes-te à grande alavanca laranja? Utilizo-a para pendurar vegetais que "
+"estou a secar. Nunca a usei para mais nada. Faz algumas pimentas secas muito "
+"picantes e maradas. Terei de investigar isso.\""
 
 #: dat/missions/tutorial/nelly03.lua:118
+#, fuzzy
 msgid ""
 "\"Oh, right over here on this page! It goes all over the different standard "
 "Llama configurations and how to troubleshoot all these different things.\""
 msgstr ""
+"\"Oh, aqui mesmo nesta página! Percorre todas as diferentes configurações "
+"padrão da Llama e como resolver todos estes problemas diferentes\"."
 
 #: dat/missions/tutorial/nelly03.lua:119
 msgid ""
@@ -84564,6 +84814,10 @@ msgid ""
 "professionals and not attempt what is written there without supervision. "
 "However, you don't think it will do much good to point that out to Nelly."
 msgstr ""
+"Ignorando as grandes quantidades de manchas de molho na página que ela te "
+"mostra, vê-se um grande aviso no topo que diz para deixar a reparação de "
+"naves aos profissionais e não tentar o que lá está escrito sem supervisão. "
+"No entanto, não achas valer a pena dizer isso à Nelly."
 
 #: dat/missions/tutorial/nelly03.lua:124
 msgid ""
@@ -84571,6 +84825,9 @@ msgid ""
 "here in {sys}! You just have to take us there, and get some materials from "
 "it and we should all be set!\""
 msgstr ""
+"\"De qualquer modo, se a minha informação estiver correta, deve haver um "
+"campo de asteroides aqui mesmo em {sys}! Só tens de me levar até lá, obter "
+"alguns materiais dele e estaremos preparados!\""
 
 #: dat/missions/tutorial/nelly03.lua:127
 msgid ""
@@ -84578,6 +84835,9 @@ msgid ""
 "the {sys} system! You just have to take us there, and get some materials "
 "from it and we should all be set!\""
 msgstr ""
+"\"De qualquer modo, se a minha informação estiver correta, deve haver um "
+"campo de asteroides no sistema {sys}! Só tens de me levar até lá, obter "
+"alguns materiais dele e estaremos preparados!\""
 
 #: dat/missions/tutorial/nelly03.lua:130
 msgid ""
@@ -84586,28 +84846,38 @@ msgid ""
 "notes to systems from the system map which you can access with the {mapkey}. "
 "You should try it out.\""
 msgstr ""
+"\"Aprendi recentemente sobre a funcionalidade de notas no mapa do sistema. É "
+"muito útil para escrever onde existem bons asteroides! Podes adicionar notas "
+"aos sistemas a partir do mapa do sistema, que pode aceder com {mapkey}. "
+"Experimenta.\""
 
 #: dat/missions/tutorial/nelly03.lua:133
 msgid ""
 "\"One second. I have to… uh… go to the bathroom before we can be off!\"\n"
 "She runs off out of the spaceport bar."
 msgstr ""
+"\"Um segundo. Tenho de… uh… ir à casa de banho antes de sairmos\"!\n"
+"Ela sai a correr do bar."
 
 #: dat/missions/tutorial/nelly03.lua:135
 msgid ""
 "You wait, and after what seems to be quite a while, she comes back. Wait, is "
 "she covered in more grease than before!?"
 msgstr ""
+"Esperas e depois do que parece ser um bom tempo, ela volta. Espera, ela está "
+"coberta de mais óleo do que antes??"
 
 #: dat/missions/tutorial/nelly03.lua:136
 msgid "\"All set, ready to go!\""
-msgstr ""
+msgstr "\"Tudo pronto, vamos lá!\""
 
 #: dat/missions/tutorial/nelly03.lua:137
 msgid ""
 "You go with her to the spaceport docks to board your ship, she seems a bit "
 "more giddy than usual."
 msgstr ""
+"Vais com ela para as docas do porto espacial para embarcar na tua nave, ela "
+"parece um pouco mais tonta do que o habitual."
 
 #: dat/missions/tutorial/nelly03.lua:138
 msgid ""
@@ -84618,6 +84888,12 @@ msgid ""
 "explanation, only to find her beaming radiantly, likely very proud of her "
 "modification. You give up scolding and gesture towards the 'Drillmaster'."
 msgstr ""
+"Chegas à nave e a primeira coisa que notas imediatamente é que alguém "
+"colocou um enorme berbequim na tua nave e que tem escrito no lado em "
+"marcador permanente \"FURA-TUDO 5000\". Tem também algumas chamas infantis "
+"desenhadas nele. Ficas espantado por não cair e viras-te para Nelly para "
+"pedir uma explicação, apenas para a encontrares radiante, provavelmente "
+"muito orgulhosa da sua alteração. Desistes de a repreender."
 
 #: dat/missions/tutorial/nelly03.lua:139
 msgid ""
@@ -84629,10 +84905,19 @@ msgid ""
 "scanner, so we will have to eyeball it, but I'm great at that! Leave it to "
 "me.\""
 msgstr ""
+"\"Não é incrível! Acho que precisaríamos de algum equipamento de perfuração "
+"para conseguir chegar aos materiais no asteroide! Sabes que as armas normais "
+"não são capazes de extrair materiais corretamente, certo? Normalmente temos "
+"de usar algo como uma {tool1}, ou melhor ainda, uma {tool2}! No entanto, "
+"tenho a certeza de que deve funcionar tão bem ou melhor! Não consegui "
+"encaixar um scanner de asteroides, então teremos que avaliar à vista, mas eu "
+"sou ótima nisso! Deixa comigo.\""
 
 #: dat/missions/tutorial/nelly03.lua:141
 msgid "\"Time is credits or so they say, so let's go drill some asteroids!\""
 msgstr ""
+"\"Tempo é crédito ou é o que dizem, então vamos lá perfurar alguns "
+"asteroides!\""
 
 #: dat/missions/tutorial/nelly03.lua:142
 msgid ""
@@ -84640,34 +84925,41 @@ msgid ""
 "but worst comes to worst, you expect to be able to blast asteroids apart, "
 "which might work better."
 msgstr ""
+"Não esperas que o \"FURA-TUDO 5000\" sobreviva à descolagem, mas o pior é "
+"que se espera que ELE seja capaz de destruir asteroides, o que pode "
+"funcionar melhor."
 
 #: dat/missions/tutorial/nelly03.lua:158
 msgid "Go to an asteroid field in the {sys} system"
-msgstr ""
+msgstr "Vai a um campo de asteroides no sistema {sys}"
 
 #: dat/missions/tutorial/nelly03.lua:159
 msgid "Get close and match speeds to an asteroid and mine it"
-msgstr ""
+msgstr "Aproxima-te e iguala a velocidade de um asteroide e minera-o"
 
 #: dat/missions/tutorial/nelly03.lua:164
 msgid ""
 "Help Nelly do some ad-hoc repairs on their ship by getting some materials "
 "from asteroids. There is no way this can go wrong, is there?"
 msgstr ""
+"Ajuda a Nelly a fazer algumas reparações na sua nave, obtendo alguns "
+"materiais de asteroides. Não há forma de isto correr mal, pois não?"
 
 #: dat/missions/tutorial/nelly03.lua:183
 msgid "Nelly: \"{msg}\""
-msgstr ""
+msgstr "Nelly: \"{msg}\""
 
 #: dat/missions/tutorial/nelly03.lua:194
 msgid "You approach the asteroid, Nelly seems a bit nervous."
-msgstr ""
+msgstr "Aproximas-te do asteroide e a Nelly parece um pouco nervosa."
 
 #: dat/missions/tutorial/nelly03.lua:195
 msgid ""
 "\"Time for the big moment! I've never actually tried the 'DRILLMASTER 5000'. "
 "This is like a maiden's voyage!\""
 msgstr ""
+"\"Hora do grande momento! Nunca experimentei o 'FURA-TUDO 5000'. Isto é como "
+"uma viagem inaugural!\""
 
 #: dat/missions/tutorial/nelly03.lua:196
 msgid ""
@@ -84676,41 +84968,52 @@ msgid ""
 "when the blue scanning thing is inside the red optimal target zone. I guess "
 "this is easier shown then done. Let me start it up and go ahead and try it!\""
 msgstr ""
+"\"Quando eu o ativar, verás a interface de perfuração. Irá começar parado e "
+"terás de premir qualquer tecla para que comece. Terás de premir o gatilho "
+"quando a coisa de varredura azul estiver dentro da zona alvo ótima vermelha. "
+"Acho que isto é mais fácil de mostrar do que de fazer. Deixa-me ligá-lo e "
+"experimentá-lo!\""
 
 #: dat/missions/tutorial/nelly03.lua:216
 msgid ""
 "\"You have to try to time it a bit better. We won't get the best minerals "
 "otherwise! Try again!\""
 msgstr ""
+"\"Tens de tentar cronometrar um pouco melhor. Caso contrário não "
+"conseguiremos os melhores minerais! Tenta novamente!\""
 
 #: dat/missions/tutorial/nelly03.lua:220
 msgid ""
 "\"You still don't have the timing down, but I think we have enough materials "
 "for now. Do you want to try again?\""
 msgstr ""
+"\"Ainda não tens a coordenação certa, mas acho que para já temos material "
+"suficiente. Queres tentar de novo?\""
 
 #: dat/missions/tutorial/nelly03.lua:222
 msgid "Try again!"
-msgstr ""
+msgstr "Tentar novamente!"
 
 #: dat/missions/tutorial/nelly03.lua:223
 msgid "Enough."
-msgstr ""
+msgstr "Já chega."
 
 #: dat/missions/tutorial/nelly03.lua:227
 msgid "\"Great job! You really nailed it!\""
-msgstr ""
+msgstr "\"Excelente trabalho! Conseguiste mesmo!\""
 
 #: dat/missions/tutorial/nelly03.lua:229
 msgid ""
 "\"With all the materials we got, I should be able to repair the ship no "
 "problem. Take us back to {pnt}!\""
 msgstr ""
+"\"Com todos os materiais que temos, devo ser capaz de reparar a nave sem "
+"problemas. Leva-me de volta a {pnt}!\""
 
 #. Fill cargo hold
 #: dat/missions/tutorial/nelly03.lua:241
 msgid "You have obtained {mass} of {cargo}!"
-msgstr ""
+msgstr "Obtiveste {mass} de {cargo}!"
 
 #: dat/missions/tutorial/nelly03.lua:243
 msgid ""
@@ -84718,6 +85021,9 @@ msgid ""
 "the hull and see what is left of the 'Drillmaster' is left as an irreparable "
 "damaged mess that you have no choice to leave behind."
 msgstr ""
+"Parece que foi mesmo a tempo, porque enquanto a Nelly fala, ouve-se um "
+"ranger no casco e vê-se o que resta do \"FURA-TUDO 5000\" como uma confusão "
+"irreparável que ficas sem escolha senão deixá-lo para trás."
 
 #: dat/missions/tutorial/nelly03.lua:244
 msgid ""
@@ -84727,21 +85033,30 @@ msgid ""
 "\"Oh well, I found that in an Imperial garbage dump anyway. Although I was "
 "pretty proud of the flames I drew on it…\""
 msgstr ""
+"\"FURA-TUDO, nós mal te conhecíamos\".\n"
+"Ela faz uma pequena reverência aos escombros antes de voltar ao seu \"eu\" "
+"feliz.\n"
+"\"Bem, de qualquer modo encontrei-o num depósito de lixo Imperial. Embora "
+"estivesse bastante orgulhosa das chamas que desenhei nele…\""
 
 #: dat/missions/tutorial/nelly03.lua:247
 msgid "\"On to {pnt}!\""
-msgstr ""
+msgstr "\"Para {pnt}!\""
 
 #: dat/missions/tutorial/nelly03.lua:261
 msgid ""
 "I've marked an asteroid field on your overlay. Use {overlaykey} to check it!"
 msgstr ""
+"Marquei um campo de asteroides no mapa sobreposto. Usa {overlaykey} para o "
+"ver!"
 
 #: dat/missions/tutorial/nelly03.lua:270
 msgid ""
 "Get close to an asteroid try to stop ontop of it. I want to try the "
 "Drillmaster!"
 msgstr ""
+"Chega perto de um asteroide e tenta parar em cima dele. Quero experimentar o "
+"FURA-TUDO!"
 
 #. Get rid of the asteroid
 #. We're done here
@@ -84750,10 +85065,12 @@ msgstr ""
 msgid ""
 "\"Great! That was awesome. Now it is my time to shine and repair my ship!\""
 msgstr ""
+"\"Isto foi fantástico! Agora é a minha hora de brilhar e reparar a minha "
+"nave!\""
 
 #: dat/missions/tutorial/nelly03.lua:299
 msgid "\"Here, let me transfer a nice reward for you!\""
-msgstr ""
+msgstr "\"Toma, deixa-me transferir uma bela recompensa para ti!\""
 
 #. Rewards
 #: dat/missions/tutorial/nelly03.lua:306
@@ -84762,6 +85079,9 @@ msgid ""
 "but I'm really bad at finding out the most expensive place to make money. "
 "Maybe you are better?\""
 msgstr ""
+"\"Também podes ficar com a {cargo} extra que conseguimos. Recomendo vendê-"
+"la, mas sou muito má em descobrir o lugar mais caro para ganhar dinheiro. "
+"Talvez sejas melhor nessa área?\""
 
 #: dat/missions/tutorial/nelly03.lua:309
 msgid ""
@@ -84769,10 +85089,14 @@ msgid ""
 "the reparations. Hopefully she'll be able to pull this off, but it's best "
 "for her to try herself."
 msgstr ""
+"Com alguns materiais em mãos, ela corre em direção ao seu Llama amolgado "
+"para iniciar as reparações. Esperemos que ela seja capaz de fazer isso. É "
+"melhor para ela tentar por si própria."
 
 #: dat/missions/tutorial/nelly03.lua:313
 msgid "You helped Nelly get materials from asteroids to repair her ship."
 msgstr ""
+"Ajudas-te a Nelly a obter materiais de asteroides para reparar a sua nave."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -84791,7 +85115,7 @@ msgstr ""
 #. Forward-declared functions
 #: dat/missions/tutorial/tutorial.lua:32
 msgid "Warning: 'Tutorial' mission was unable to claim system {sys}!"
-msgstr ""
+msgstr "Aviso: a missão 'Tutorial' não conseguiu reclamar o sistema {sys}!"
 
 #. We mark as clear anyway, but this is not good
 #. Mark os completed
@@ -89589,7 +89913,7 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:167
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:172
 msgid "Return to your ship"
-msgstr ""
+msgstr "Regressa à tua nave"
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:156
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:162
@@ -89613,7 +89937,7 @@ msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:192
 msgid "You return to your ship."
-msgstr ""
+msgstr "Regressaste à tua nave."
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:199
 msgid ""
@@ -90904,7 +91228,7 @@ msgstr ""
 #: dat/missions/zalek/particlephysics/zpp03.lua:82
 #: dat/missions/zalek/particlephysics/zpp05.lua:80
 msgid "Return to Katar I"
-msgstr ""
+msgstr "Regressa a Katar I"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:101
 msgid "You land and find Noona waiting outside your ship expectantly."
@@ -91577,7 +91901,7 @@ msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:122
 msgid "Return to the {sys} system to the trader on {pnt}"
-msgstr ""
+msgstr "Regressa ao sistema {sys} ao comerciante em {pnt}."
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:133
 msgid ""
@@ -91588,7 +91912,7 @@ msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:139
 msgid "Return to the {sys} system and deliver to Dr. Geller on {pnt}"
-msgstr ""
+msgstr "Regressa ao sistema {sys} e faz a entrega ao Dr. Geller em {pnt}."
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:153
 msgid ""
@@ -97183,7 +97507,7 @@ msgstr ""
 #. Shots
 #: dat/scripts/minigames/mining/core.lua:294
 msgid "MINING COMPLETED"
-msgstr ""
+msgstr "MINERAÇÃO TERMINADA"
 
 #: dat/scripts/minigames/mining/core.lua:300
 msgid "ACQUIRED:"
@@ -99139,7 +99463,7 @@ msgstr "Ostra"
 #. Console-main.
 #: dat/scripts/pilotname/pirate.lua:402 src/input.c:126
 msgid "Paste"
-msgstr "Pasta"
+msgstr "Colar"
 
 #: dat/scripts/pilotname/pirate.lua:403
 msgid "Pea"
@@ -100580,7 +100904,7 @@ msgstr "\"Estás autorizado a aterrar.\""
 
 #: dat/spob/lua/lib/spob.lua:41
 msgid "\"Proceed to land.\""
-msgstr "\"Prossegue a aterragem.\""
+msgstr "\"Prossegue com a aterragem.\""
 
 #: dat/spob/lua/lib/spob.lua:42
 msgid "\"Landing authorized.\""
@@ -103572,7 +103896,7 @@ msgstr ""
 #. create the window
 #: src/dialogue.c:149 src/options.c:177
 msgid "Warning"
-msgstr ""
+msgstr "Aviso"
 
 #: src/dialogue.c:414
 msgid "Unknown button clicked in YesNo dialogue!"
@@ -103610,11 +103934,11 @@ msgstr ""
 #: src/difficulty.c:202
 #, c-format
 msgid "Difficulty %s"
-msgstr ""
+msgstr "Dificuldade: %s"
 
 #: src/difficulty.c:206
 msgid "This difficulty applies the following effect to the player ships:"
-msgstr ""
+msgstr "Esta dificuldade aplica os seguintes efeitos às naves do jogador:"
 
 #: src/economy.c:139
 #, c-format
@@ -104106,11 +104430,11 @@ msgstr "Tens a certeza que queres remover todo o equipamento da tua nave?"
 
 #: src/equipment.c:2155 src/land.c:238
 msgid "Recall Fighters"
-msgstr ""
+msgstr "Recolher caças"
 
 #: src/equipment.c:2155 src/land.c:238
 msgid "This action will recall your deployed fighters. Is that OK?"
-msgstr ""
+msgstr "Esta ação irá chamar os teus caças destacados de volta. Confirmas?"
 
 #: src/equipment.c:2232 src/land.c:1647
 #, c-format
@@ -104130,7 +104454,7 @@ msgstr "'%s' não tem a função 'autoequip' obrigatória válida!"
 #: src/equipment.c:2258
 #, c-format
 msgid "'%s' failed to run required 'autoequip' function: %s"
-msgstr ""
+msgstr "%s' não conseguiu executar a função 'autoequipar' necessária: %s"
 
 #: src/equipment.c:2298
 #, c-format
@@ -105140,7 +105464,7 @@ msgstr "Limpar alvo fixado"
 #: src/input.c:66
 msgid "Clears the currently-targeted ship, spob or jump point."
 msgstr ""
-"Limpa o alto fixado atualmente, seja uma nave, objeto no espaço ou ponto de "
+"Limpa o alvo fixado atualmente, seja uma nave, objeto no espaço ou ponto de "
 "salto."
 
 #. Fighting
@@ -106061,7 +106385,7 @@ msgstr "%.0f MJ (%.1f MW)"
 
 #: src/land_shipyard.c:305 src/map_system.c:680
 msgid "Fuel Use:"
-msgstr "Utilização de combustível:"
+msgstr "Uso de combustível:"
 
 #: src/land_shipyard.c:411 src/land_shipyard.c:559 src/land_shipyard.c:565
 #: src/land_shipyard.c:571
@@ -106414,12 +106738,12 @@ msgstr ""
 #: src/log.h:18
 #, c-format
 msgid "WARNING %s:%d [%s]: "
-msgstr ""
+msgstr "AVISO %s:%d [%s]: "
 
 #: src/log.h:20
 #, c-format
 msgid "Warning: [%s] "
-msgstr ""
+msgstr "Aviso: [%s] "
 
 #: src/log.h:22
 #, c-format
@@ -106481,7 +106805,7 @@ msgid ""
 "Positive/blue indicate profit while negative/orange values indicate loss "
 "when sold at the corresponding system."
 msgstr ""
-"A mostrar preços de: %s relativos a %s:\n"
+"A mostrar preços de: %s relativos a: %s.\n"
 "Os valores positivos/azuis indicam lucro e os valores negativos/laranja "
 "indicam perda quando vendidos no sistema correspondente."
 
@@ -108783,7 +109107,7 @@ msgstr "Bandeiras de compilação:"
 
 #: src/options.c:379
 msgid "Stop Speedup At:"
-msgstr "Parar aceleração quando:"
+msgstr "Parar aceleração do tempo quando:"
 
 #: src/options.c:391
 msgid "Settings:"
@@ -108825,7 +109149,7 @@ msgstr "Presença inimiga"
 #: src/options.c:607
 #, c-format
 msgid "Enemy within %s distance"
-msgstr "Inimigo a uma distância de %s"
+msgstr "Inimigo está a uma distância de %s"
 
 #: src/options.c:609
 #, c-format
@@ -109011,7 +109335,7 @@ msgstr "Ecrã inteiro"
 
 #: src/options.c:1362
 msgid "FPS Control:"
-msgstr "Controlo de FPS:"
+msgstr "FPS:"
 
 #: src/options.c:1364
 msgid "FPS Limit"
@@ -109188,7 +109512,7 @@ msgid ""
 "#%c%s #%c%s #0slot"
 msgstr ""
 "\n"
-"#%c%s #%c%s #0slot"
+"Espaço #%c%s #%c%s #0"
 
 #: src/outfit.c:425
 #, c-format
@@ -110160,7 +110484,7 @@ msgstr "Nada selecionado."
 
 #: src/pilot_outfit.c:636
 msgid "Does not fit slot."
-msgstr ""
+msgstr "Não cabe no espaço."
 
 #: src/pilot_outfit.c:639
 msgid "Already have an outfit of this type installed"
@@ -110633,7 +110957,7 @@ msgstr ""
 
 #: src/player.c:4579
 msgid "You have entered stealth mode."
-msgstr ""
+msgstr "Entraste no modo camuflado."
 
 #: src/player.c:4584
 msgid "Unable to stealth: missiles locked on!"
@@ -111019,7 +111343,7 @@ msgstr[1] ""
 
 #: src/shiplog.c:185
 msgid "Warning - log not found: creating it"
-msgstr ""
+msgstr "Aviso - registo não encontrado: a criá-lo"
 
 #: src/shiplog.c:186
 msgid "Please report this log as an error to github.com/naev"
