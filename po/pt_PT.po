@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-01-10 23:36+0900\n"
-"PO-Revision-Date: 2023-01-23 23:49+0000\n"
+"PO-Revision-Date: 2023-01-25 04:48+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Portugal) <https://hosted.weblate.org/projects/"
 "naev/naev-0-10-x/pt_PT/>\n"
@@ -302,7 +302,7 @@ msgstr "Bas Fournier \"BTAxis\" <btaxis@gmail.com>"
 
 #: dat/AUTHORS:8
 msgid "   * Story Writer and Misc. Development"
-msgstr "   * Roteiro e desenvolvimento variado"
+msgstr "   * Roteiro e outros desenvolvimentos"
 
 #: dat/AUTHORS:10
 msgid "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
@@ -310,7 +310,7 @@ msgstr "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
 
 #: dat/AUTHORS:11
 msgid "   * Misc. Development and Lua unifier"
-msgstr "   * Desenvolvimento miscelânea e unificador Lua"
+msgstr "   * Outros desenvolvimentos e unificador Lua"
 
 #: dat/AUTHORS:13
 msgid "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
@@ -318,7 +318,7 @@ msgstr "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
 
 #: dat/AUTHORS:14
 msgid "   * Code Carnage and Bug Beating"
-msgstr "   * Carnificina de Código e Pancadaria de Bugs"
+msgstr "   * Carnificina de código e eliminador de erros"
 
 #: dat/AUTHORS:16
 msgid "nenau"
@@ -334,7 +334,8 @@ msgstr "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
 
 #: dat/AUTHORS:20
 msgid "   * CI dude and Bringer of automated releases"
-msgstr "   * Cara de linha de comando e provedor de lançamentos automatizados"
+msgstr ""
+"   * Tipo da linha de comandos e fornecedor de lançamentos automatizados"
 
 #: dat/AUTHORS:22
 msgid "Viktor Hahn <viktor.hahn@web.de>"
@@ -346,7 +347,7 @@ msgstr "   * Modelagem 3D"
 
 #: dat/AUTHORS:25
 msgid "Past Development Team"
-msgstr "Equipa de Desenvolvimento Anterior"
+msgstr "Equipa de desenvolvimento anterior"
 
 #: dat/AUTHORS:28
 msgid "Nikola Whallon <6.saturn.6@gmail.com>"
@@ -370,7 +371,7 @@ msgstr "Layla and Emmy \"The Diligent Circle\" <diligentcircle@riseup.net>"
 
 #: dat/AUTHORS:37
 msgid "Major Contributors"
-msgstr "Principais Colaboradores"
+msgstr "Principais colaboradores"
 
 #: dat/AUTHORS:40
 msgid "Josiah Schwartfeger"
@@ -378,7 +379,7 @@ msgstr "Josiah Schwartfeger"
 
 #: dat/AUTHORS:41
 msgid "   * Graphic Designer and Modeller"
-msgstr "   * Designer Gráfico e Modelagem"
+msgstr "   * Designer gráfico e modelagem"
 
 #: dat/AUTHORS:43
 msgid "Elderman"
@@ -386,7 +387,7 @@ msgstr "Elderman"
 
 #: dat/AUTHORS:44
 msgid "   * Mission Development"
-msgstr "   * Desenvolvimento de Missões"
+msgstr "   * Desenvolvimento de missões"
 
 #: dat/AUTHORS:45
 msgid "   The first non-bobbens mission developer!"
@@ -406,7 +407,7 @@ msgstr "Enigmatic"
 
 #: dat/AUTHORS:51
 msgid "   * Ships for the Sirius, many other models and faction logos"
-msgstr "   * Naves para os Sirius, muitos outros modelos e logotipos de facção"
+msgstr "   * Naves para os Sirius, muitos outros modelos e logótipos de fações"
 
 #: dat/AUTHORS:53
 msgid "Felix Schneider \"Scaatis\" <fsfuenf@gmail.com>"
@@ -414,7 +415,7 @@ msgstr "Felix Schneider \"Scaatis\" <fsfuenf@gmail.com>"
 
 #: dat/AUTHORS:54
 msgid "   * Naev logo, Lua GUI development"
-msgstr "   * Logtipo Naev, Programador da interface gráfica em Lua"
+msgstr "   * Logótipo do Naev, programador da interface gráfica em Lua"
 
 #: dat/AUTHORS:56
 msgid "M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>"
@@ -430,7 +431,7 @@ msgstr "Askyel"
 
 #: dat/AUTHORS:60
 msgid "   * Composer of nearly an hour of Naev-exclusive music."
-msgstr "   * Compositor de quase uma hora de música exclusiva para Naev."
+msgstr "   * Compositor de quase uma hora de música exclusiva para o Naev."
 
 #: dat/AUTHORS:62
 msgid "Contributions"
@@ -472,7 +473,7 @@ msgstr "Joel Hans <wolorf@gmail.com>"
 
 #: dat/AUTHORS:73
 msgid "   * Planet Graphics"
-msgstr "   * Gráfico dos Planetas"
+msgstr "   * Imagens dos planetas"
 
 #: dat/AUTHORS:74
 msgid "   * Render Script"
@@ -499,8 +500,8 @@ msgid ""
 "   Although we don't use the SDL_collide library itself, it was "
 "inspirational for Naev's own collision routines."
 msgstr ""
-"   Embora não usarmos a biblioteca SDL_collide em si, foi uma inspiração "
-"para as próprias rotinas de colisão de Naev."
+"   Embora não usemos a biblioteca SDL_collide em si mesma, foi uma "
+"inspiração para as próprias rotinas de colisão do Naev."
 
 #: dat/AUTHORS:82
 msgid "Pete Shinners <pete@shinners.org>"
@@ -521,14 +522,14 @@ msgstr "Aurore D. \"Rore\" <aurore.d@gmail.com>"
 
 #: dat/AUTHORS:87
 msgid "   * Planet gimp script"
-msgstr "   * Script planetário Gimp"
+msgstr "   * Script planetário do Gimp"
 
 #: dat/AUTHORS:88
 msgid ""
 "   Saved a lot of trouble by allowing us to quickly create space planet "
 "graphics."
 msgstr ""
-"   Evitou muitos problemas ao nos permitir criar rapidamente gráficos de "
+"   Evitou muitos problemas ao nos permitir criar rapidamente imagens de "
 "planetas espaciais."
 
 #: dat/AUTHORS:90
@@ -537,13 +538,13 @@ msgstr "Andrew Mustun"
 
 #: dat/AUTHORS:91
 msgid "   * Sprite gimp script"
-msgstr "   * Script Gimp para sprites"
+msgstr "   * Script do Gimp para sprites"
 
 #: dat/AUTHORS:92
 msgid "   Although not used directly, it helped create our own sprite script."
 msgstr ""
-"   Embora não seja usado diretamente, ajudou a criar nosso próprio script de "
-"sprite."
+"   Embora não seja usado diretamente, ajudou a criar o nosso próprio script "
+"de sprites."
 
 #: dat/AUTHORS:94
 msgid "J.C. Wilk"
@@ -559,9 +560,9 @@ msgid ""
 "turbulence noise seemed to do everything perfectly where we screwed up. With "
 "heavy optimization the code was introduced to Naev."
 msgstr ""
-"   Após o terrível fracasso de nossa própria tentativa de fractal de plasma, "
-"o ruído de turbulência do TCOD parecia fazer tudo perfeitamente onde "
-"erramos. Com uma otimização pesada, o código foi apresentado a Naev."
+"   Após o terrível fracasso da nossa própria tentativa de fractais de "
+"plasma, o ruído de turbulência do TCOD parecia fazer tudo de forma perfeita "
+"onde erramos. Com uma otimização pesada, o código foi introduzido no Naev."
 
 #: dat/AUTHORS:98
 msgid "Jordi Pegueroles Queralt \"pegue\" <j.pegueroles.queralt@gmail.com>"
@@ -569,7 +570,7 @@ msgstr "Jordi Pegueroles Queralt \"pegue\" <j.pegueroles.queralt@gmail.com>"
 
 #: dat/AUTHORS:99
 msgid "   * Mace Rocket model"
-msgstr "   * Modelo do Foguete Mace"
+msgstr "   * Modelo do Foguete Bastão"
 
 #: dat/AUTHORS:101
 msgid "Brian J. Cameron"
@@ -583,7 +584,7 @@ msgstr "   Muito trabalho artístico"
 msgid "   Talented artist, one of the first in creating custom Naev content."
 msgstr ""
 "   Artista talentoso, um dos primeiros na criação de conteúdo personalizado "
-"da Naev."
+"do Naev."
 
 #: dat/AUTHORS:105
 msgid "Camilo Polymeris <cpolymeris@gmx.net>"
@@ -597,7 +598,7 @@ msgstr "   * Arte e programação"
 msgid ""
 "   Great to see someone else working on Naev code and Lua documentation."
 msgstr ""
-"   É bom ver mais alguém a trabalhar no código de Naev e na sua documentação "
+"   É bom ver mais alguém a trabalhar no código do Naev e na sua documentação "
 "Lua."
 
 #: dat/AUTHORS:109
@@ -606,11 +607,12 @@ msgstr "Dimitry Marakasov"
 
 #: dat/AUTHORS:110
 msgid "   * FreeBSD port and CMake"
-msgstr "   *Porte FreeBSD e CMake"
+msgstr "   *Portabilidade para FreeBSD e CMake"
 
 #: dat/AUTHORS:111
 msgid "   Talented coder who did the first official port of Naev."
-msgstr "   Codificador talentoso que fez o primeiro porte oficial da Naev."
+msgstr ""
+"   Codificador talentoso que fez a primeira portabilidade oficial do Naev."
 
 #: dat/AUTHORS:113
 msgid "Alexandru Mosoi <brtzsnr@gmail.com>"
@@ -626,7 +628,7 @@ msgid ""
 "are all over or the faction in the maps."
 msgstr ""
 "   O primeiro programador, sem ser o bobbens, a fazer commits sérios! Como a "
-"razão de todos os mapas estarem ???? ou a fação nos mapas."
+"razão de todos os mapas estarem em todo o lado e as fações nos mapas."
 
 #: dat/AUTHORS:117
 msgid "Peter Johnson <zid@zid.yggdrasil.sk>"
@@ -657,7 +659,7 @@ msgstr "Cypher3c <cypher3c@gmail.com>"
 
 #: dat/AUTHORS:125
 msgid "   * Spiced up the boring generic cargo missions."
-msgstr "   * Apimentou as missões de carga genéricas chatas."
+msgstr "   * Apimentou as missões de carga genéricas e chatas."
 
 #: dat/AUTHORS:127
 msgid "Nathan Loewen <loewen.nathan@gmail.com>"
@@ -673,7 +675,7 @@ msgstr "   * Apoio variado na programação"
 
 #: dat/AUTHORS:131
 msgid "Fisherman"
-msgstr "Pescador"
+msgstr "Fisherman"
 
 #: dat/AUTHORS:132
 msgid ""
@@ -697,7 +699,7 @@ msgstr "   * Programador de Python extraordinário"
 
 #: dat/AUTHORS:137
 msgid "His utilities save gray hairs for everyone."
-msgstr "Seus programas utilitários poupam cabelos brancos à todos."
+msgstr "Os seus programas utilitários poupam cabelos brancos a todos."
 
 #: dat/AUTHORS:139
 msgid "Josh Combs"
@@ -737,7 +739,7 @@ msgstr "Old Man <oldtopman@gmail.com>"
 
 #: dat/AUTHORS:152
 msgid "   * Desura Maintainer"
-msgstr "   * Mantenedor da plataforma Desura"
+msgstr "   * Responsável da plataforma Desura"
 
 #: dat/AUTHORS:154
 msgid "NeD"
@@ -885,7 +887,7 @@ msgstr "PACIFICADOR IMPERIAL"
 
 #: artwork/gfx/loading/preacher.webp.txt:1
 msgid "SIRIUS PREACHER"
-msgstr "SERMONISTA SIRIUS"
+msgstr "PREGADOR SIRIUS"
 
 #: artwork/gfx/loading/quicksilver.webp.txt:1
 msgid "QUICKSILVER"
@@ -925,15 +927,15 @@ msgstr "FERRÃO ZA'LEK"
 
 #: artwork/gfx/loading/vendetta.webp.txt:1
 msgid "VENDETTA"
-msgstr "VINGANÇA"
+msgstr "VENDETTA"
 
 #: artwork/gfx/loading/vendetta_pirate.webp.txt:1
 msgid "PIRATE VENDETTA"
-msgstr "VINGANÇA PIRATA"
+msgstr "VENDETTA PIRATA"
 
 #: artwork/gfx/loading/vigilance.webp.txt:1
 msgid "VIGILANCE"
-msgstr "VIGILÂNCIA"
+msgstr "VIGILANCE"
 
 #: dat/commodities/clay.xml:3
 msgid "Clay"
@@ -948,7 +950,7 @@ msgid ""
 msgstr ""
 "A argila extraída de asteroides tende a ter propriedades diferentes das "
 "encontradas em corpos planetários e tem uma grande variedade de utilizações, "
-"tais como material de escudos ou construção. Dependendo da precedência da "
+"tais como material para escudos ou construção. Dependendo da origem da "
 "argila, pode ter muitas composições e propriedades materiais diferentes."
 
 #: dat/commodities/diamond.xml:3 dat/scripts/pilotname/generic.lua:29
@@ -965,10 +967,10 @@ msgid ""
 "once was."
 msgstr ""
 "O diamante é outra forma de grafite que foi cristalizada devido à pressão "
-"intensa e o calor nas profundezas da superfície de alguns tipos de planetas. "
-"O material é útil em algumas aplicações de corte devido à sua dureza e é "
-"muitas usado em aplicações decorativas, mas o diamante é agora fácil de "
-"produzir sinteticamente e não é tão procurado como foi outrora."
+"intensa e ao calor nas profundezas da superfície de alguns tipos de "
+"planetas. O material é útil em algumas aplicações de corte devido à sua "
+"dureza e é muitas vezes usado em aplicações decorativas. Agora o diamante é "
+"fácil de produzir sinteticamente e não é tão procurado como foi outrora."
 
 #: dat/commodities/food.xml:3
 msgid "Food"
@@ -980,9 +982,9 @@ msgid ""
 "meals are rich in nutrients and able to last many cycles in their vacuum-"
 "sealed packaging."
 msgstr ""
-"Evoluindo das rações militares do passado antigo, as refeições embaladas "
-"modernas são ricas em nutrientes e capazes de durar muitos ciclos nas suas "
-"embalagens seladas a vácuo."
+"Evoluídas das rações militares do passado, as refeições modernas embaladas "
+"são ricas em nutrientes e capazes de durar muitos ciclos nas suas embalagens "
+"seladas a vácuo."
 
 #: dat/commodities/gold.xml:3 dat/ssys/gold.xml:2
 msgid "Gold"
@@ -996,9 +998,9 @@ msgid ""
 "such as jewelry."
 msgstr ""
 "O ouro é valorizado pela sua combinação de resistência à corrosão e "
-"condutividade, que é usada para melhorar o tempo de vida da eletrónica, "
-"embora a sua aplicação mais exigente seja como componente em artigos "
-"decorativos, como a joalharia."
+"condutividade, que é usada para melhorar o tempo de vida de componentes "
+"eletrónicos, embora a sua aplicação mais exigente seja como componente em "
+"artigos decorativos, como a joalharia."
 
 #: dat/commodities/industrial_goods.xml:3
 msgid "Industrial Goods"
@@ -1021,8 +1023,8 @@ msgid ""
 "production processes. Despite the wide availability in asteroids, there is "
 "always significant demand for more."
 msgstr ""
-"O ferro desempenha um papel fundamental em muitos processos de produção "
-"química e material diferentes. Apesar da grande disponibilidade em "
+"O ferro desempenha um papel fundamental em muitos processos diferentes de "
+"produção química e de materiais. Apesar da sua grande disponibilidade em "
 "asteroides, há sempre uma procura significativa por mais."
 
 #: dat/commodities/kermite.xml:3
@@ -1038,12 +1040,12 @@ msgid ""
 "generators, practically ensuring their widespread demand throughout the "
 "universe."
 msgstr ""
-"Embora um dos materiais mais raros encontrados em asteroides, Kermita "
-"assegurou um núcleo fundamental que muitas aplicações tecnológicas "
-"diferentes devido aos efeitos de flexão do espaço-tempo quando sujeito a "
-"combinações particulares de pressão e radiação. É normalmente usada em "
-"certos tipos de geradores de escudos, praticamente garantindo a sua procura "
-"generalizada em todo o universo."
+"Embora seja um dos materiais mais raros encontrados em asteroides, a kermita "
+"assegurou um núcleo fundamental em muitas aplicações tecnológicas diferentes "
+"devido aos efeitos de flexão do espaço-tempo quando sujeita a combinações "
+"particulares de pressão e radiação. É normalmente usada em certos tipos de "
+"geradores de escudos, praticamente garantindo a sua procura generalizada em "
+"todo o universo."
 
 #: dat/commodities/luxury_goods.xml:3
 msgid "Luxury Goods"
@@ -1059,9 +1061,7 @@ msgstr "Medicamentos"
 
 #: dat/commodities/medicine.xml:4
 msgid "An assortment of medicines suitable for curing all sorts of ailments."
-msgstr ""
-"Tipos variados de medicamentos apropriados para curar todos os tipos de "
-"doenças."
+msgstr "Um sortido de medicamentos adequados para curar todo o tipo de doenças."
 
 #: dat/commodities/nebula_crystals.xml:3
 msgid "Nebula Crystals"
@@ -1074,10 +1074,10 @@ msgid ""
 "you think you can hear noises coming from them. However, your scanners don't "
 "show anything out of the ordinary."
 msgstr ""
-"Não é exatamente claro o processo pelo qual estes cristais são formados, mas "
-"encontram-se nas profundezas da nebulosa. São estranhamente quentes ao toque "
-"e às vezes parece que é possível ouvir sons vindos deles. Porém, os sensores "
-"não mostram nada anormal."
+"Não se sabe exatamente como se formam estes cristais, mas podem ser "
+"encontrados nas profundezas da nebulosa. São estranhamente quentes ao toque "
+"e às vezes parece que é possível ouvir sons provenientes deles. Porém, os "
+"sensores não mostram nada de anormal."
 
 #: dat/commodities/neodymium.xml:3
 msgid "Neodymium"
@@ -1122,7 +1122,7 @@ msgid ""
 "terraforming, for which immense amounts are needed."
 msgstr ""
 "Embora usada principalmente para decorações na história antiga, a procura "
-"por Olivina está a aumentar em termos de utilidade para o aumento das "
+"por olivina está a aumentar em termos de utilidade para o aumento das "
 "intempéries e terraformação, para as quais são necessárias imensas "
 "quantidades."
 
@@ -1135,9 +1135,9 @@ msgid ""
 "Ore is a key material in many industries. Smelted into metals, without ore, "
 "the ship-building industry and many others would grind to a halt."
 msgstr ""
-"Os minérios são um material chave em muitas indústrias. Fundidos em metais, "
-"sem minérios, a indústria de construção aeronaval e muitos outros iriam "
-"paralizar."
+"Os minérios são um material chave em muitas indústrias. Fundidos em forma de "
+"metais, sem minérios a indústria de construção aeronaval e muitos outras "
+"ficariam paralisadas."
 
 #: dat/commodities/platinum.xml:3
 msgid "Platinum"
@@ -1149,9 +1149,9 @@ msgid ""
 "equipment. Although there is high demand for it, it is rather uncommonly "
 "found throughout space."
 msgstr ""
-"A platina é um metal precioso altamente não reativo, normalmente usada em "
-"equipamentos de alta qualidade. Embora haja uma grande procura, é um pouco "
-"rara em todo o espaço."
+"A platina é um metal precioso muito pouco reativo, que se utiliza "
+"normalmente em equipamentos de alta qualidade. Embora haja uma grande "
+"procura, é raramente encontrada no espaço."
 
 #: dat/commodities/rhodium.xml:3
 msgid "Rhodium"
@@ -1165,7 +1165,7 @@ msgid ""
 "older technologies still require Rhodium and are the backbone of the market "
 "demand."
 msgstr ""
-"Embora a resistência à corrosão de ródio tenha sido tradicionalmente muito "
+"Embora a resistência à corrosão do ródio tenha sido tradicionalmente muito "
 "importante em muitas ligas metálicas, a ampla disponibilidade de novos "
 "materiais cerâmicos e de radiação tem levado a uma diminuição da procura. No "
 "entanto, as tecnologias de baixa gama e mais antigas continuam a necessitar "
@@ -1173,7 +1173,7 @@ msgstr ""
 
 #: dat/commodities/silicate.xml:3
 msgid "Silicate"
-msgstr "Silicatos"
+msgstr "Silicato"
 
 #: dat/commodities/silicate.xml:4
 msgid ""
@@ -1181,9 +1181,9 @@ msgid ""
 "to their versalitility they are commonly used in manufacturing of many "
 "different fundamental components to space-faring life."
 msgstr ""
-"Os silicatos cobrem um conjunto diversificado de materiais, incluindo sílica "
-"e quartzo. Devido à sua versatilidade, são normalmente utilizados no fabrico "
-"de muitos componentes diferentes e fundamentais para a vida no espaço."
+"O silicato cobrem um conjunto diversificado de materiais, incluindo sílica e "
+"quartzo. Devido à sua versatilidade, é normalmente utilizado no fabrico de "
+"muitos componentes diferentes e fundamentais para a vida no espaço."
 
 #: dat/commodities/space_moss.xml:3
 msgid "Space Moss"
@@ -1239,7 +1239,7 @@ msgid ""
 "applications, from sub-space sensors to reinforced armours, leading to a "
 "constant and large demand for it."
 msgstr ""
-"A Terita é um composto extremamente raro que é formado principalmente "
+"A terita é um composto extremamente raro que é formado principalmente "
 "através de radiação extrema. Embora existam múltiplas teorias, a dominante "
 "especula que se trata de uma projeção quase-matéria de radiação auto-"
 "interferencial. No entanto, mesmo sem compreender a física exata por trás "
@@ -1250,7 +1250,7 @@ msgstr ""
 
 #: dat/commodities/vixilium.xml:3
 msgid "Vixilium"
-msgstr "Vixilio"
+msgstr "Vixílio"
 
 #: dat/commodities/vixilium.xml:4
 msgid ""
@@ -1261,9 +1261,9 @@ msgid ""
 "a surge in demand throughout the galaxy, especially in cryptographic and "
 "security applications."
 msgstr ""
-"Originalmente conhecido como Minério Fantasma, dado o quão difícil era "
-"originalmente para os sensores e mesmo a olho nu detetar até ao advento da "
-"fotografia quântica, devido à baixa presença de matéria padrão. Embora "
+"Originalmente era conhecido como o \"minério fantasma\", por ser tão difícil "
+"detetá-lo com sensores e mesmo a olho nu até ao advento da fotografia "
+"quântica, devido à baixa presença de matéria padrão. Embora o vixílio seja "
 "valorizado na criação artística, as soberbas propriedades quânticas e quase-"
 "matéria levaram a um aumento da procura em toda a galáxia, especialmente em "
 "aplicações criptográficas e de segurança."
@@ -1288,7 +1288,7 @@ msgstr ""
 
 #: dat/commodities/yttrium.xml:3
 msgid "Yttrium"
-msgstr "Itrio"
+msgstr "Ítrio"
 
 #: dat/commodities/yttrium.xml:4
 msgid ""
@@ -1297,21 +1297,21 @@ msgid ""
 "believe this is a key indicator of rough times ahead."
 msgstr ""
 "Desempenhando um papel crítico nas tecnologias de iluminação e laser, a "
-"procura constante tem registado preços recorde de Itrio desde o Incidente. "
-"Os economistas acreditam que este é um indicador chave dos tempos difíceis "
-"que se avizinham."
+"procura constante de ítrio tem registado preços recorde desde o Incidente. "
+"Os economistas acreditam que este é um indicador dos tempos difíceis que se "
+"avizinham."
 
 #: dat/damagetype/armourbreaker.xml:2
 msgid "armourbreaker"
-msgstr "destrói_blindagem"
+msgstr "destrói blindagem"
 
 #: dat/damagetype/emp.xml:2
 msgid "emp"
-msgstr "pulso_eletromagnético"
+msgstr "pulso eletromagnético"
 
 #: dat/damagetype/explosion_splash.xml:2
 msgid "explosion_splash"
-msgstr "explosão_esparrinha"
+msgstr "explosão esparrinha"
 
 #: dat/damagetype/impact.xml:2
 msgid "impact"
@@ -1327,7 +1327,7 @@ msgstr "nebulosa"
 
 #: dat/damagetype/shieldbreaker.xml:2
 msgid "shieldbreaker"
-msgstr "destrói_escudos"
+msgstr "destrói escudos"
 
 #: dat/difficulty/default.xml:2 dat/events/escort_settings.lua:80
 #: src/dev_uniedit.c:394
@@ -1365,7 +1365,7 @@ msgid ""
 "Makes gameplay run at half speed. Useful if you have difficulties with "
 "reaction times."
 msgstr ""
-"Faz o jogo rodar a metade da velocidade. Útil se tiveres dificuldades com "
+"Executa o jogo a metade da velocidade. Útil se tiveres dificuldades com "
 "tempos de reação."
 
 #: dat/difficulty/story_mode.xml:2
@@ -1404,7 +1404,7 @@ msgstr "Salto"
 
 #: dat/effects/blink.xml:3
 msgid "Your ship just blinked!"
-msgstr "Sua nave acabou de saltar!"
+msgstr "A tua nave acabou de saltar!"
 
 #: dat/effects/bloodlust.xml:2 dat/scripts/bioship/skills.lua:42
 msgid "Blood Lust"
@@ -1422,11 +1422,11 @@ msgstr "Plasma incapacitante"
 
 #: dat/effects/crippling_plasma.xml:3
 msgid "Plasma is interfering with the weapon systems!"
-msgstr "Plasma está interferindo com os sistemas de armas!"
+msgstr "O plasma está a interferir com os sistemas de armas!"
 
 #: dat/effects/ethereal.xml:2
 msgid "Ethereal"
-msgstr "Etéreo"
+msgstr "Etérea"
 
 #: dat/effects/ethereal.xml:3
 msgid "Ship is ethereal."
@@ -1466,33 +1466,33 @@ msgstr "Entrando num hiperportal!"
 
 #: dat/effects/hypergate_exit.xml:2
 msgid "Hypergate Exit"
-msgstr "Sair de Hiperportal"
+msgstr "Sair de hiperportal"
 
 #: dat/effects/hypergate_exit.xml:3
 msgid "Exitting a hypergate!"
-msgstr "Saindo de hiperportal!"
+msgstr "Saindo de um hiperportal!"
 
 #: dat/effects/paralyzing_plasma.xml:2
 #: dat/outfits/bioship/skills/paralyzing_plasma.xml:2
 #: dat/scripts/bioship/skills.lua:255
 msgid "Paralyzing Plasma"
-msgstr "Plasma Paralizante"
+msgstr "Plasma paralisante"
 
 #: dat/effects/paralyzing_plasma.xml:3
 msgid "Plasma is slowing the ship down!"
-msgstr "Plasma está desacelerando a nave!"
+msgstr "O plasma está a desacelerar a nave!"
 
 #: dat/effects/plasma_burn.xml:2
 msgid "Plasma Burn"
-msgstr "Queimadura de Plasma"
+msgstr "Queimadura de plasma"
 
 #: dat/effects/plasma_burn.xml:3 dat/effects/plasma_burn_ii.xml:3
 msgid "Plasma is burning the ship!"
-msgstr "Plasma está queimando a nave!"
+msgstr "O plasma está a queimar a nave!"
 
 #: dat/effects/plasma_burn_ii.xml:2
 msgid "Plasma Burn II"
-msgstr "Queimadura de Plasma II"
+msgstr "Queimadura de plasma II"
 
 #: dat/effects/ride_of_the_valkyries.xml:2
 msgid "Ride of the Valkyries"
@@ -1500,39 +1500,39 @@ msgstr "Cavalgada das Valquírias"
 
 #: dat/effects/ride_of_the_valkyries.xml:3
 msgid "The Valkyrie beam is draining your shields!"
-msgstr "O Raio Valquíria está drenando seus escudos!"
+msgstr "O Raio Valquíria está a drenar os teus escudos!"
 
 #: dat/effects/shieldaura.xml:2
 msgid "Shield Aura"
-msgstr "Aura de Escudo"
+msgstr "Aura de escudo"
 
 #: dat/effects/shieldaura.xml:3
 msgid "Under the effects of a shield aura."
-msgstr "Sob efeito da aura de escudo."
+msgstr "Sob o efeito da aura de escudo."
 
 #: dat/effects/shieldboost.xml:2
 msgid "Shield Boost"
-msgstr "Reforço de Escudo"
+msgstr "Reforço de escudo"
 
 #: dat/effects/shieldboost.xml:3
 msgid "Shields are being boosted."
-msgstr "Escudos estão sendo potencializados."
+msgstr "Os escudos estão a ser reforçados."
 
 #: dat/effects/wormhole_enter.xml:2
 msgid "Wormhole Enter"
-msgstr "Entrar em Buraco de Minhoca"
+msgstr "Entrar num buraco de minhoca"
 
 #: dat/effects/wormhole_enter.xml:3
 msgid "Entering a wormhole!"
-msgstr "Entrando num Buraco de Minhoca!"
+msgstr "Entrando num buraco de minhoca!"
 
 #: dat/effects/wormhole_exit.xml:2
 msgid "Wormhole Exit"
-msgstr "Sair de Buraco de Minhoca"
+msgstr "Sair de um buraco de minhoca"
 
 #: dat/effects/wormhole_exit.xml:3
 msgid "Exiting a wormhole!"
-msgstr "Saindo do Buraco de Minhoca!"
+msgstr "Saindo de um buraco de minhoca!"
 
 #: dat/factions/black_lotus.xml:2
 msgid "Black Lotus"
@@ -1540,15 +1540,15 @@ msgstr "Lótus Preto"
 
 #: dat/factions/black_lotus.xml:5
 msgid "Black Lotus Pirate Clan"
-msgstr "Clã Pirata Lótus Preto"
+msgstr "Clã Pirata do Lótus Preto"
 
 #: dat/factions/black_lotus.xml:12
 msgid ""
 "The Black Lotus Pirate Clan is a fiercely organized pirate clan located "
 "between the Za'lek and Sirius space. Organized crime at its finest."
 msgstr ""
-"O Clã Pirata Lótus Preto é um clã ferozmente organizado localizado entre as "
-"regiões dos Za'lek e Sirius. A nata da nata do crime organizado."
+"O Clã Pirata do Lótus Preto é um clã ferozmente organizado localizado entre "
+"as regiões dos Za'lek e Sirius. A nata do crime organizado."
 
 #: dat/factions/collective.xml:2
 msgid "Collective"
@@ -1637,13 +1637,13 @@ msgid ""
 "The Dreamer Pirate Clan consists largely of disgruntled pirates from the "
 "Frontier, fed up with both the FLF and Dvaered terrorism, and Empire tyranny."
 msgstr ""
-"O Clã Pirata Sonhador consiste em sua maior parte de piratas desiludidos da "
-"fronteira, cansados do terroismo tanto da FLF quanto Dvaered, assim como da "
-"tirania do Império."
+"O Clã Pirata Sonhador é consistido em grande parte por piratas desiludidos "
+"da Fronteira, cansados do terrorismo tanto da FLF quanto Dvaered, assim como "
+"da tirania do Império."
 
 #: dat/factions/dummy.xml:2
 msgid "Dummy"
-msgstr ""
+msgstr "Simulado"
 
 #. Add the Cargo
 #. Ship to go back to
@@ -1666,7 +1666,7 @@ msgstr ""
 #: dat/missions/minerva/kex3.lua:371 dat/scripts/common/dvaered.lua:14
 #: dat/scripts/common/dvaered.lua:19
 msgid "Dvaered"
-msgstr ""
+msgstr "Dvaered"
 
 #: dat/factions/dvaered.xml:7 dat/ships/dvaered/dvaered_ancestor.xml:15
 #: dat/ships/dvaered/dvaered_arsenal.xml:18
@@ -1894,7 +1894,7 @@ msgstr "Mercenário"
 
 #: dat/factions/miner.xml:2
 msgid "Miner"
-msgstr "Mineirador"
+msgstr "Minerador"
 
 #: dat/factions/nasin.xml:2
 msgid "Nasin"
@@ -1911,8 +1911,8 @@ msgid ""
 "tend to respect the clans they operate near."
 msgstr ""
 "Os Piratas Espaciais Galáticos são compostos por naves piratas "
-"independentes, não afiliadas com um clã específico. Dada sua natureza "
-"desorganizada, eles tendem a respeitar clãs próximos de suas áreas de "
+"independentes, não afiliadas com um clã específico. Dada a sua natureza "
+"desorganizada, eles tendem a respeitar clãs próximos das suas áreas de "
 "atuação."
 
 #: dat/factions/proteron.xml:2 dat/ships/proteron/proteron_archimedes.xml:18
@@ -1935,7 +1935,7 @@ msgid ""
 "attack the Emperor himself. This caused the Incident and left the universe "
 "irreversibly ravaged."
 msgstr ""
-"A Casa Caída Proteron era uma Grande Casa que decidiu se mobilizar e atacar "
+"A Casa Caída Proteron era uma Grande Casa que decidiu mobilizar-se e atacar "
 "o próprio Imperador. Isto causou o Incidente e deixou o universo "
 "irreversivelmente devastado."
 
@@ -2013,9 +2013,9 @@ msgid ""
 "themselves in order to survive a pandemic. They now openly embrace their "
 "human transcendence as a sign of strength."
 msgstr ""
-"Os Soromid consistem de indivíduos que foram forçados a modificarem-se "
-"geneticamente para sobreviver a uma pandemia. Eles agora aceitam abertamente "
-"sua transcendência humana como um símbolo de força."
+"Os Soromid são indivíduos que foram forçados a modificarem-se geneticamente "
+"para sobreviver a uma pandemia. Eles agora aceitam abertamente a sua "
+"transcendência humana como um símbolo de força."
 
 #: dat/factions/strangelove.xml:2
 msgid "Strangelove"
@@ -2030,7 +2030,7 @@ msgid ""
 "The Thurion are a mysterious faction located deep in the Nebula. They seem "
 "to be out of touch with the external world."
 msgstr ""
-"Os Thurion são uma facção misteriosa localizada nas profundezas da Nebulosa. "
+"Os Thurion são uma fação misteriosa localizada nas profundezas da Nebulosa. "
 "Eles parecem estar desconectados do mundo exterior."
 
 #: dat/factions/trader.xml:2
@@ -2049,7 +2049,7 @@ msgstr "Guilda dos Mercadores Espaciais"
 
 #: dat/factions/traders_guild.xml:10
 msgid "TODO we have to make these guys more interesting."
-msgstr "POR FAZER temos que tornar esses caras mais interessantes."
+msgstr "POR FAZER temos que tornar esses tipos mais interessantes."
 
 #: dat/factions/wild_ones.xml:2
 msgid "Wild Ones"
@@ -2065,7 +2065,7 @@ msgid ""
 "that control the Haven sector between Empire and Soromid territories."
 msgstr ""
 "O Clã Pirata Os Selvagens é um bando violento e desorganizado que controla o "
-"setor Haven entre os territórios Imperial e Soromid."
+"setor Santuário entre os territórios Imperial e Soromid."
 
 #. Gets reset on enter system
 #. Must be goal system
@@ -2104,7 +2104,7 @@ msgid ""
 "a secretive Great House, but they have recently become much more open."
 msgstr ""
 "A Casa Za'lek é o coração científico do Império. Até pouco tempo atrás eram "
-"uma Grande Casa sigilosa, mas tornaram-se muito mais abertos recentemente."
+"uma Grande Casa secreta, mas tornaram-se muito mais abertos recentemente."
 
 #: dat/outfits/accessory/air_freshener.xml:2
 msgid "Air Freshener"
@@ -2140,10 +2140,10 @@ msgid ""
 "modern ships' powerful filtration systems, these days they are entirely "
 "cosmetic."
 msgstr ""
-"Aparentemente purificadores de ar foram usados tradicionalmente em veículos "
-"humans como enfeites. Costumavam ser perfumados mas, já que estes perfumes "
-"não tem nenhum impacto devido aos poderosos sistemas de filtragem das naves "
-"modernas, atualmente eles são inteiramente decorativos."
+"Aparentemente os purificadores de ar foram usados tradicionalmente em "
+"veículos humanos como adornos. Costumavam ser perfumados mas, já que estes "
+"perfumes não têm nenhum impacto devido aos poderosos sistemas de filtragem "
+"das naves modernas, atualmente são meramente decorativos."
 
 #: dat/outfits/accessory/black_cat_doll.xml:2
 msgid "Black Cat Doll"
@@ -2154,9 +2154,9 @@ msgid ""
 "A crude doll of a black cat made from authentic \"Felis catus\" fur you made "
 "that was all over your ship. It's quite cute."
 msgstr ""
-"Um boneco artesanal rudimentar de um gato preto feito por você com autêntica "
-"pelagem de \"Felis catus\" que estava espalhada por toda a sua nave. É bem "
-"bonitinho."
+"Um boneco artesanal rudimentar de um gato preto feito por ti com autêntica "
+"pelagem de \"felis catus\" que estava espalhada por toda a tua nave. É "
+"bastante fofinho."
 
 #: dat/outfits/accessory/black_cat_doll.xml:13
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:11
@@ -2175,9 +2175,9 @@ msgid ""
 "radiation into space."
 msgstr ""
 "Um protótipo danificado para um aparelho de escudo inovador que supostamente "
-"permite viajar para dentro da Nebulosa Sol. Porém, devido a um mal "
-"funcionamento você quase morreu. Por outro lado ele parece absorver energia "
-"danosa e emitir radiação de calor para o espaço."
+"permite viajar para dentro da Nebulosa Sol. Porém, devido ao mau "
+"funcionamento quase morreste. Por outro lado ele parece absorver energia "
+"nociva e emitir radiação térmica para o espaço."
 
 #: dat/outfits/accessory/commemorative_stein.xml:2
 msgid "Commemorative Stein"
@@ -2193,13 +2193,13 @@ msgid ""
 "there is an inscription saying \"Screw the PUAAA, long live the Hero of "
 "Antlejos!\" with an illegible signature."
 msgstr ""
-"Esta é uma caneca que celebra a terraformação e fundação de uma colônia "
+"Esta é uma caneca que celebra a terraformação e fundação de uma colónia "
 "permanente em Antlejos V. A caneca é ricamente entalhada com o que parecem "
-"ser cenas da curta história da colônia. Consegue discernir o que parecem ser "
-"alguns indivíduos praticando luta-livre, montes de máquinário pesado, e "
-"pessoas fazendo um tipo de dança circular. Isto tudo aconteceu? No fundo há "
-"uma inscrição dizendo \"Dane-se a PUAAA, vida longa ao Herói de Antlejos!\" "
-"com uma assinatura ilegível."
+"serem cenas da curta história da colónia. Consegue-se discernir o que "
+"parecem ser alguns indivíduos a praticar luta-livre, montes de maquinaria "
+"pesada e pessoas a fazer um tipo de dança circular. Isto aconteceu? No fundo "
+"há uma inscrição dizendo \"Dane-se a PUAAA, vida longa ao Herói de Antlejos!"
+"\" com uma assinatura ilegível."
 
 #: dat/outfits/accessory/dv_handbook.xml:2
 msgid "Handbook for Dvaered Good Manners"
@@ -2216,13 +2216,14 @@ msgid ""
 "highest ranks\" -- Colonel Urnus, Executive Office Manager at the High "
 "Command"
 msgstr ""
-"Quando um cavalheiro usa a cabeça de outro como troféu em seu banheiro? E "
-"quando é mais apropriado usa-la como uma caneca? Quando é permitido "
-"incendiar a casa de uma de suas vítimas? E quando isso é uma gafe absoluta? "
-"Lorde Motoserra, um dos mais bem-sucedidos Senhores da Guerra de nosso "
-"tempo, responde estas espinhosas questões e muitas outras neste livreto "
-"essêncial. \"Este livro me permitiu rapidamente galgar até as patentes mais "
-"altas\" -- Coronel Urnus, Gerente do Escritório Executivo no Alto Comando"
+"Quando é que um cavalheiro usa a cabeça de outro como troféu na sua casa de "
+"banho? E quando é mais apropriado usá-la como uma caneca? Quando é que é "
+"permitido incendiar a casa de uma das suas vítimas? E quando isso é uma gafe "
+"absoluta? Lorde Motoserra, um dos mais bem-sucedidos Senhores da Guerra de "
+"nosso tempo, responde estas espinhosas questões e muitas outras neste "
+"livreco essencial. \"Este livro permitiu-me rapidamente galgar até às "
+"patentes mais altas\" -- Coronel Urnus, Gerente do Escritório Executivo no "
+"Alto Comando"
 
 #: dat/outfits/accessory/fuzzy_dice.xml:2
 msgid "Fuzzy Dice"
@@ -2235,9 +2236,9 @@ msgid ""
 "belonged to starship pilot Mireia, who was famous for recovering artefacts "
 "from the Nebula before she disappeared mysteriously."
 msgstr ""
-"Um par de dados felpudos que pode ser pendurado em sua nave. Aparentemente "
-"eles devem trazer boa sorte. Diz-se que este par em particular pertenceu a "
-"piloto espacial Mireia, famosa por recuperar artefatos da Nebulosa antes de "
+"Um par de dados felpudos que pode ser pendurado na tua nave. Aparentemente "
+"eles devem trazer boa sorte. Diz-se que este par em particular pertenceu à "
+"piloto espacial Mireia, famosa por recuperar artefactos da Nebulosa antes de "
 "desaparecer misteriosamente."
 
 #: dat/outfits/accessory/fuzzy_dice.xml:12
@@ -2265,9 +2266,9 @@ msgid ""
 "and is full of confetti. You're not sure what to do with it, but it might "
 "liven up the ship."
 msgstr ""
-"A bota esquerda de um oficial Imperial de alta patente. Não serve em você e "
-"está cheia de confetes. Não sabe ao certo o que fazer com ela, mas poderia "
-"alegrar a nave."
+"A bota esquerda de um oficial Imperial de alta patente. Não te serve e está "
+"cheia de confeites. Não sabes ao certo o que fazer com ela, mas pode dar um "
+"ambiente alegre à nave."
 
 #: dat/outfits/accessory/left_boot.xml:13
 msgid "#pSmells funky.#0"
@@ -2284,10 +2285,9 @@ msgid ""
 "fairly certain that you did a favour in not delivering it. At least it makes "
 "your ship look cuter."
 msgstr ""
-"Uma carta de amor perdida que você deveria entregar, mas ao ler a primeira "
-"linha \"Minhas empurradinhas, que desejosas são adentro puxadinhas...\" você "
-"tem plena certeza que fez um favor em não entrega-la. Pelo menos ela "
-"embeleza a nave."
+"Uma carta de amor perdida que devias ter entregue, mas ao leres a primeira "
+"linha \"Paresses um elicopetero... jira e boua...\" tens plena certeza que "
+"fizeste um favor em não entregá-la. Pelo menos ela embeleza a nave."
 
 #: dat/outfits/accessory/love_letter.xml:13
 msgid "#rLove is in the air.#0"
@@ -2336,8 +2336,8 @@ msgid ""
 "A mock-up of a satellite you helped launch into the Nebula. It even has cute "
 "blinking lights!"
 msgstr ""
-"Maquete de um satélite que você ajudou a lançar na Nebulosa. Tem até luzes "
-"piscantes adoráveis!"
+"Uma maqueta de um satélite que ajudaste a lançar na Nebulosa. Tem até luzes "
+"adoráveis que piscam!"
 
 #: dat/outfits/accessory/star_of_valor.xml:2
 msgid "Star of Valor"
@@ -2348,20 +2348,20 @@ msgid ""
 "A shiny medal for your contribution to the Dvaered cause. On the back it "
 "says \"not for rectal use\". Wait, what?"
 msgstr ""
-"Uma medalha brilhante por sua contribuição para a causa Dvaraed. Atrás diz "
-"\"não indicado para uso retal\". Espere, o quê?"
+"Uma medalha brilhante pela tua contribuição para a causa Dvaraed. Atrás diz "
+"\"não indicado para uso retal\". Espera... o quê?"
 
 #: dat/outfits/accessory/swamp_bombing.xml:2
 msgid "Swamp Bombing"
-msgstr "Bombardeio de Pântano"
+msgstr "Bomba de Pântano"
 
 #: dat/outfits/accessory/swamp_bombing.xml:11
 msgid ""
 "A fairly mediocre cocktail that you don't intend to drink. At least it looks "
 "good as an accessory."
 msgstr ""
-"Um coquetel bastante medíocre que você não pretende beber. Pelo menos é "
-"bonito como acessório."
+"Um cocktail bastante medíocre que não pretendes beber. Pelo menos é bonito "
+"como acessório."
 
 #: dat/outfits/accessory/toy_drone.xml:2
 msgid "Toy Drone"
@@ -2389,7 +2389,7 @@ msgid ""
 "high acceleration?"
 msgstr ""
 "Uma carta #oHiena#0 do jogo de cartas colecionáveis, de raridade comum. "
-"Descreve em detalhes todas as estatísticas importantes da Hiena. Sabia que "
+"Descreve em detalhes todas as estatísticas importantes da Hiena. Sabias que "
 "os primeiros modelos da Hiena causavam tanta tensão nos pilotos que eles "
 "podiam ser esmagados durante grandes acelerações?"
 
@@ -2403,13 +2403,13 @@ msgid ""
 "going into the important details of the ship, it just shows a high "
 "definition holographic rendition of the supposed Golden Llama."
 msgstr ""
-"Uma carta colecionável #oLhama Dourada#0 de raridade #prara#0. Ao invés de "
-"esmiuçar os detalhes importantes da nave, mostra apenas uma representação "
-"holográfica em alta definição da suposta Lhama Dourada."
+"Uma carta colecionável #oLhama Dourada#0 e #prara#0. Ao invés de esmiuçar os "
+"detalhes importantes da nave, mostra apenas uma representação holográfica em "
+"alta definição da suposta Lhama Dourada."
 
 #: dat/outfits/accessory/trading_card_uncommon.xml:2
 msgid "Trading Card (Uncommon)"
-msgstr "Carta Colecinável (Incomum)"
+msgstr "Carta Colecionável (Incomum) "
 
 #: dat/outfits/accessory/trading_card_uncommon.xml:11
 msgid ""
@@ -2419,10 +2419,10 @@ msgid ""
 "allowing the crew to man it past damage that would usually incapacitate "
 "normal ships?"
 msgstr ""
-"Uma carta colecionável #oVigilância Dvaered#0 de raridade #bincomum#0. "
-"Descreve em detalhes todas as estatísticas importantes da Vigilância "
-"Dvaered. Sabia que a Vigilância tem sistemas de suporte de vida triplamente "
-"redundantes, permitindo que a tripulação a opere além de níveis de dano que "
+"O #oVigilance Dvaered#0 é uma carta colecionável de raridade #bincomum#0. "
+"Descreve em detalhes todas as estatísticas importantes da Vigilance Dvaered. "
+"A Vigilance tem sistemas de suporte de vida triplamente redundantes, "
+"permitindo que a tripulação a opere para além dos níveis de danos que "
 "incapacitariam naves normais?"
 
 #: dat/outfits/accessory/ugly_statue.xml:2
@@ -2437,11 +2437,11 @@ msgid ""
 "ukulele and its head bobbles around with the ship acceleration. How "
 "tasteful..."
 msgstr ""
-"Uma estátua dada a você pelo Barão Sautfeldt por seu belo trabalho. Você "
-"seria mais grato se ele não tivesse mencionado que sua amante o estava "
-"obrigando a se livrar da peça. A estátua parece retratar um lagostim "
-"vestindo uma gravata borboleta tocando um ukulele e a cabeça dele balança "
-"conforme a nave acelera. Que bom gosto..."
+"Uma estátua dada pelo Barão Sauterfeldt pelo teu belo trabalho. Sentir-te-"
+"ias mais grato se ele não tivesse mencionado que a amante o estava a "
+"obrigálo a desfazer-se da estátua. Parece retratar um camarão usando uma "
+"gravata borboleta tocando um ukulele e a sua cabeça balança ao redor com a "
+"aceleração da nave. Que bom gosto..."
 
 #: dat/outfits/accessory/vacuum_cleaner.xml:2
 msgid "Vacuum Cleaner?"
@@ -2455,9 +2455,9 @@ msgid ""
 "outfit's real name."
 msgstr ""
 "Encontrado num caça dos Quatro Ventos que levava um raio Ragnarok. Parece "
-"aumentar a performance do seu motor quando a massa da nave está alta. "
-"Certamente não é um aspirador de pó de verdade, mas você não sabe o nome "
-"real deste equipamento."
+"aumentar a performance do seu motor quando a massa da nave é alta. "
+"Certamente não é um aspirador de pó verdadeiro, mas não sabes o nome real "
+"deste equipamento."
 
 #: dat/outfits/bioship/skills/adaptive_jump.xml:2
 #: dat/scripts/bioship/skills.lua:309
@@ -2514,7 +2514,7 @@ msgid ""
 "adrenaline from raw energy, allowing the ship to temporarily have augmented "
 "movement."
 msgstr ""
-"O orgão da bionave glândula adrenal é capaz de gerar quantidades imensas de "
+"O órgão da bionave glândula adrenal é capaz de gerar quantidades imensas de "
 "adrenalina a partir de energia bruta, permitindo que a nave tenha um aumento "
 "temporário de movimento."
 
@@ -2531,7 +2531,7 @@ msgstr "Glândula Adrenal III"
 #: dat/outfits/bioship/skills/adrenaline_hormones.xml:2
 #: dat/scripts/bioship/skills.lua:208
 msgid "Adrenaline Hormones"
-msgstr "Hormônios de Adrenalina"
+msgstr "Hormonas de Adrenalina"
 
 #. Health tree
 #. For everyone!
@@ -2547,7 +2547,7 @@ msgstr "Abdómen Volumoso"
 #: dat/outfits/bioship/skills/cargo_sacs.xml:2
 #: dat/scripts/bioship/skills.lua:294
 msgid "Cargo Sacs"
-msgstr "Bolsões de Carga"
+msgstr "Sacos de Carga"
 
 #. Stealth skill tree
 #. For up to destroyer
@@ -2584,8 +2584,8 @@ msgid ""
 msgstr ""
 "Mediante cuidadosa manipulação do tronco cerebral, a bionave pode ser "
 "induzida a um estado primitivo de fúria selvagem na qual o rendimento das "
-"armas de proa e torretas é signficativamente aumentado. É necessário dano a "
-"blindagem para entrar neste estado semelhante a um transe."
+"armas de proa e torretas é significativamente aumentado. Para entrar neste "
+"estado semelhante a um transe é necessário que a blindagem esteja danificada."
 
 #: dat/outfits/bioship/skills/feral_rage_i.xml:11
 #: dat/outfits/bioship/skills/feral_rage_ii.xml:11
@@ -2607,10 +2607,10 @@ msgid ""
 msgstr ""
 "Mediante cuidadosa manipulação do tronco cerebral, a bionave pode ser "
 "induzida a um estado primitivo de fúria selvagem na qual o rendimento das "
-"armas de proa e torretas é signficativamente aumentado. É necessário dano a "
-"blindagem para entrar neste estado semelhante a um transe. Acoplagem "
-"adicional com o Cerebelo permite ao transe também aumentar temporáriamente a "
-"agilidade da nave."
+"armas de proa e torretas é significativamente aumentado. Para entrar neste "
+"estado semelhante a um transe é necessário que a blindagem esteja "
+"danificada. A acoplagem adicional com o cerebelo permite ao transe também "
+"aumentar temporariamente a agilidade da nave."
 
 #: dat/outfits/bioship/skills/feral_rage_iii.xml:2
 #: dat/scripts/bioship/skills.lua:233
@@ -2628,11 +2628,11 @@ msgid ""
 msgstr ""
 "Mediante cuidadosa manipulação do tronco cerebral, a bionave pode ser "
 "induzida a um estado primitivo de fúria selvagem na qual o rendimento das "
-"armas de proa e torretas é signficativamente aumentado. É necessário dano a "
-"blindagem para entrar neste estado semelhante a um transe. Acoplagem "
-"adicional com o cerebelo permite ao transe também aumentar temporáriamente a "
-"agilidade da nave. O transe é induzido automaticamente por dano à blindagem, "
-"mas pode ser ativado por concentração."
+"armas de proa e torretas é significativamente aumentado. Para entrar neste "
+"estado semelhante a um transe é necessário que a blindagem esteja "
+"danificada. A acoplagem adicional com o cerebelo permite ao transe também "
+"aumentar temporariamente a agilidade da nave. O transe é induzido "
+"automaticamente por dano na blindagem, mas pode ser ativado por concentração."
 
 #: dat/outfits/bioship/skills/feral_rage_iii.xml:11
 msgid ""
@@ -2670,20 +2670,22 @@ msgstr "Cura Natural II"
 #: dat/outfits/bioship/skills/plasma_burst.xml:2
 #: dat/scripts/bioship/skills.lua:279
 msgid "Plasma Burst"
-msgstr ""
+msgstr "Salva de Plasma"
 
 #: dat/outfits/bioship/skills/plasma_burst.xml:11
 msgid "Deals 300 plasma damage to all hostile ships in 200 range."
 msgstr ""
+"Causa 300 de dano de plasma em todas as naves hostis num raio de alcance de "
+"200."
 
 #: dat/outfits/bioship/skills/reflective_shell.xml:2
 #: dat/scripts/bioship/skills.lua:186
 msgid "Reflective Shell"
-msgstr ""
+msgstr "Concha Refletora"
 
 #: dat/outfits/bioship/skills/reflective_shell.xml:11
 msgid "Reflect 5% of damage back to attackers."
-msgstr ""
+msgstr "Reflete 5% dos danos de volta para os atacantes."
 
 #: dat/outfits/bioship/skills/silence.xml:2 dat/scripts/bioship/skills.lua:141
 msgid "Silence"
@@ -2708,7 +2710,7 @@ msgstr "Antenas Rastreadoras"
 #: dat/outfits/bioship/skills/tunnelling_organ.xml:2
 #: dat/scripts/bioship/skills.lua:325
 msgid "Tunnelling Organ"
-msgstr "Orgâo de Tunelamento"
+msgstr "Órgão de Tunelamento"
 
 #: dat/outfits/bioship/skills/wanderer.xml:2 dat/scripts/bioship/skills.lua:94
 msgid "Wanderer"
@@ -2716,7 +2718,7 @@ msgstr "Andarilho"
 
 #: dat/outfits/core_engine/dummy_engine.xml:2
 msgid "Dummy Engine"
-msgstr "Motor Falso"
+msgstr "Motor Simulado"
 
 #: dat/outfits/core_engine/dummy_engine.xml:4
 #: dat/outfits/core_engine/large/beat_up_large_engine.xml:4
@@ -2748,8 +2750,8 @@ msgid ""
 "This is a dummy engine for use in missions only, which does nothing. DO NOT "
 "BUY."
 msgstr ""
-"Este é um motor falso para uso em missões apenas, e que não faz nada. NÃO "
-"COMPRE."
+"Isto é um motor simulado para ser utilizado apenas em missões e que não faz "
+"nada. NÃO COMPRAR."
 
 #: dat/outfits/core_engine/large/beat_up_large_engine.xml:2
 msgid "Beat Up Large Engine"
@@ -2762,8 +2764,9 @@ msgid ""
 "Clogged, corroded and cracked in every way possible while still remaining in "
 "functional condition, this engine really belongs on the scrap heap."
 msgstr ""
-"Entupido, corroído e trincado de todas as formas possíveis permanecendo em "
-"condições de funcionamento, este motor realmente pertence à pilha de sucata."
+"Entupido, corroído e rachado de todas as maneiras possíveis enquanto ainda "
+"está em condições funcionais, este motor pertence realmente a um monte de "
+"sucata."
 
 #: dat/outfits/core_engine/large/krain_remige_engine.xml:2
 msgid "Krain Remige Engine"
@@ -2777,9 +2780,9 @@ msgid ""
 "its tuning renders it ill-suited to heavier vessels."
 msgstr ""
 "O Remige foi desenvolvido pelas Indústrias Krain exclusivamente para seu "
-"crusador principal, o Kestrel. Otimizado para as necessidades do Kestrel, o "
+"cruzador principal, o Kestrel. Otimizado para as necessidades do Kestrel, o "
 "Remige oferece performance acima da maioria dos outros motores para "
-"cruzadores em todos os aspectos, ainda que sua regulagem o torne impróprio "
+"cruzadores em todos os aspetos, ainda que a sua regulação o torne impróprio "
 "para naves mais pesadas."
 
 #: dat/outfits/core_engine/large/melendez_mammoth_xl_engine.xml:2
@@ -2794,9 +2797,9 @@ msgid ""
 "a fully-equipped battlecruiser."
 msgstr ""
 "O maior motor produzido pela Melendez, o Mamute EG tem muito pouca "
-"competição quando se trata de mover objetos massivos através da galaxia, "
-"seja em forma de cargas à granel ou como motor primário de um Cruzador de "
-"Batalha totalmente equipado."
+"competição quando se trata de mover objetos massivos através da galáxia, "
+"seja em forma de cargas a granel ou como motor primário de um cruzador de "
+"batalha totalmente equipado."
 
 #: dat/outfits/core_engine/large/nexus_bolt_3500_engine.xml:2
 msgid "Nexus Bolt 3500 Engine"
@@ -2808,9 +2811,9 @@ msgid ""
 "Like most Nexus engines, it doesn't excel in speed, but its low power "
 "consumption makes it an attractive option for some pilots."
 msgstr ""
-"O Raio 3500 é um motor um tanto raramente usado projetado para cruzadores. "
-"Como a maioria dos motores Nexus, seu ponto forte não é velocidade mas o "
-"baioo consumo de energia o torna uma opção atraente para alguns pilotos."
+"O Raio 3500 é um motor raramente usado projetado para cruzadores. Como a "
+"maioria dos motores Nexus, o seu ponto forte não é velocidade mas o baixo "
+"consumo de energia o que o torna uma opção atraente para alguns pilotos."
 
 #: dat/outfits/core_engine/large/tricon_typhoon_engine.xml:2
 msgid "Tricon Typhoon Engine"
@@ -2823,9 +2826,9 @@ msgid ""
 "of many captains, though its high power consumption limits it to ships with "
 "powerful reactors."
 msgstr ""
-"O Desenvolvimento do motor Tufão é uma espécie de projeto de prestígio para "
-"a Tricon. Oferecendo a crusadores soberba manobrabilidade e velocidade, ele "
-"é um favorito de muitos capitães, ainda que seu alto consumo de energia o "
+"O desenvolvimento do motor Tufão é uma espécie de projeto de prestígio para "
+"a Tricon. Oferecendo a cruzadores uma soberba manobrabilidade e velocidade, "
+"é um favorito de muitos capitães, ainda que o seu alto consumo de energia o "
 "limite a naves com poderosos reatores."
 
 #: dat/outfits/core_engine/large/tricon_typhoon_ii_engine.xml:2
@@ -2840,9 +2843,10 @@ msgid ""
 "make the trade for superior manoeuvrability"
 msgstr ""
 "O maior motor Tricon em produção, o Tufão II ostenta uma performance "
-"surprendentemente alta para um motor de nave capital. Seu consumo de energia "
-"é nitidamente mais alto que qualquer outro no segmento, mas a maioria dos "
-"capitães está disposto a ao sacrifício para ter manobrabilidade superior"
+"surpreendentemente alta para um motor de nave capital. O seu consumo de "
+"energia é nitidamente mais alto do que qualquer outro no segmento, mas a "
+"maioria dos capitães está disposta a ao sacrifício para ter uma "
+"manobrabilidade superior"
 
 #: dat/outfits/core_engine/large/unicorp_eagle_7000_engine.xml:2
 msgid "Unicorp Eagle 7000 Engine"
@@ -2856,11 +2860,11 @@ msgid ""
 "and its efficiency makes it an attractive option for heavy cruisers that "
 "need as much battery power for their weapons as possible."
 msgstr ""
-"O Águia 7000 é maior motor Unicorp e de maior capacidade, ainda que talvez "
-"não seja um modelo principal. Seu preço relativamente baixo é atraente para "
-"capitães com um orçamento limitado se as exigências de performance não forem "
-"muito grandes, e sua eficiência o torna uma opção atraente para cruzadores "
-"pesados que precisam do máximo da energia de sua bateria para armas quanto "
+"O Águia 7000 é maior motor Unicorp e de maior capacidade, ainda que não seja "
+"o modelo principal. O seu preço relativamente baixo é atraente para capitães "
+"com um orçamento limitado se as exigências de performance não forem muito "
+"grandes. A sua eficiência torna-o uma opção atraente para cruzadores pesados "
+"que precisam do máximo da energia das suas baterias para armas quanto "
 "possível."
 
 #: dat/outfits/core_engine/medium/beat_up_medium_engine.xml:2
@@ -2878,14 +2882,15 @@ msgid ""
 "terms of maximum speed and manouverability, the engine is not adequate for "
 "most other destroyers due to their higher mass."
 msgstr ""
-"O Patágio é um motor para destruidor desenvolvido pelas Indústrias Krain ser "
-"utilizado no Ponte Estelar. Embora o seu desempenho exceda outros motores da "
-"classe em termos de velocidade máxima e manobrabilidade, o motor não é "
-"adequado para a maioria dos outros destruidores devido à sua maior massa."
+"O Patágio é um motor de contratorpedeiro desenvolvido pelas Indústrias Krain "
+"para ser utilizado no Ponte Estelar. Embora o seu desempenho exceda outros "
+"motores da classe em termos de velocidade máxima e manobrabilidade, o motor "
+"não é adequado para a maioria dos outros contratorpedeiros devido à sua "
+"maior massa."
 
 #: dat/outfits/core_engine/medium/melendez_buffalo_xl_engine.xml:2
 msgid "Melendez Buffalo XL Engine"
-msgstr "Motor Melendez Búfalo EG"
+msgstr "Motor Melendez Búfalo XL"
 
 #: dat/outfits/core_engine/medium/melendez_buffalo_xl_engine.xml:10
 msgid ""
@@ -2894,11 +2899,11 @@ msgid ""
 "in its size class, and more than a few combat vessels rely on it to move "
 "them and their arsenals into battle."
 msgstr ""
-"O Búfalo EG é um componente vital entre cargueiros de médio porte, "
-"particularmente aqueles transportando cargas densas. Sua potência "
-"considerável deixa poucos competidores na sua classe de tamanho, e bem mais "
-"do que apenas algumas naves de combate dependem dele para entrarem em "
-"batalha levando seus arsenais."
+"O Buffalo XL é um item básico entre os cargueiros de médio porte, "
+"principalmente aqueles que transportam cargas densas. A sua potência "
+"considerável deixa-o com poucos concorrentes na sua classe de tamanho e mais "
+"do que algumas naves de combate dependem deles para movê-los junto com os "
+"seus arsenais para a batalha."
 
 #: dat/outfits/core_engine/medium/nexus_arrow_700_engine.xml:2
 msgid "Nexus Arrow 700 Engine"
@@ -2910,9 +2915,9 @@ msgid ""
 "giving captains decent manouverability without leeching too much off of the "
 "ship's reactors."
 msgstr ""
-"O Flecha 700 é um respeitável motor para Corvetas por um preço respeitável, "
-"oferecendo a capitães manobrabilidade decente sem drenar demais os reatores "
-"da nave."
+"O Flecha 700 é um respeitável motor para corvetas por um preço respeitável, "
+"oferecendo aos capitães a manobrabilidade decente sem drenar demasiado os "
+"reatores da nave."
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_engine.xml:2
 msgid "Tricon Cyclone Engine"
@@ -2924,9 +2929,9 @@ msgid ""
 "engines with superb performance. Many large navies and wealthier mercenaries "
 "employ the Cyclone in their corvettes."
 msgstr ""
-"O motor Cyclone da Tricon mantém a reputação da empresa no segmento de "
+"O motor Ciclone da Tricon mantém a reputação da empresa no segmento de "
 "motores de alto nível com um desempenho soberbo. Muitas grandes marinhas e "
-"mercenários mais ricos utilizam o Ciclones em suas corvetas."
+"mercenários mais ricos utilizam o Ciclone nas suas corvetas."
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_ii_engine.xml:2
 msgid "Tricon Cyclone II Engine"
@@ -2939,10 +2944,10 @@ msgid ""
 "than doubling the engine's mass capacity. Its high power consumption is "
 "typically gladly written off given its exemplary performance."
 msgstr ""
-"Um motor preferido de capitães de contratorpedeiro e aqueles focados em "
+"Um motor preferido de capitães de contratorpedeiro e aqueles focados no "
 "tempo, o Ciclone II mantém a maior parte da performance original enquanto "
 "leva a capacidade de massa além do dobro da original. O grande consumo de "
-"energia é tipica e alegremente aceito de bom grado, dada a sua performance "
+"energia é típico e alegremente aceite de bom grado, dada a sua performance "
 "exemplar."
 
 #: dat/outfits/core_engine/medium/unicorp_falcon_1300_engine.xml:2
@@ -2956,10 +2961,10 @@ msgid ""
 "Destroyer pilots who prefer a more efficient engine over the fastest engine "
 "available."
 msgstr ""
-"O Falcão 1300 é um motor padrão de baixa potência, com massa mediana para "
-"pesada. É normalmente usado por pilotos de cargueiros civis que não "
-"conseguem pagar por algo melhor assim como por pilotos de contratorpedeiro "
-"que preferem um motor mais eficiente e não o mais veloz possível."
+"O Falcão 1300 é um motor padrão de baixa potência, com massa mediana-pesada. "
+"É normalmente usado por pilotos de cargueiros civis que não conseguem pagar "
+"por algo melhor assim como por pilotos de contratorpedeiros que preferem um "
+"motor mais eficiente e não o mais veloz possível."
 
 #: dat/outfits/core_engine/small/beat_up_small_engine.xml:2
 msgid "Beat Up Small Engine"
@@ -2976,9 +2981,8 @@ msgid ""
 "to system with minimal refuelling stops."
 msgstr ""
 "Figurando entre os motores mais potentes disponíveis para naves pequenas, o "
-"Boi EG destaca-se por permitir que mercadores transportem quantidades "
-"moderadas de carga entre sistemas com o mínimo de paradas para "
-"reabastecimento."
+"Boi EG destaca-se por permitir que os mercadores transportem quantidades "
+"moderadas de carga entre sistemas com o mínimo de paragens para reabaster."
 
 #: dat/outfits/core_engine/small/nexus_dart_150_engine.xml:2
 msgid "Nexus Dart 150 Engine"
@@ -2991,10 +2995,10 @@ msgid ""
 "reasonable price. A very popular engine among civilian and military users "
 "alike."
 msgstr ""
-"O Dardo 150 é um motor bem equilibrado para naves leves. Ainda que não se "
-"destaque em velocidade, ele oferece boa manobrabilidade e eficiência de "
-"energia por um preço razoavel. Um motor muito popular entre utilizadores "
-"tanto militares quanto civis."
+"O Dardo 150 é um motor bem equilibrado para naves ligeiras. Ainda que não se "
+"destaque em velocidade, oferece boa manobrabilidade e eficiência de energia "
+"por um preço razoável. Um motor muito popular entre utilizadores, tanto "
+"militares quanto civis."
 
 #: dat/outfits/core_engine/small/tricon_zephyr_engine.xml:2
 msgid "Tricon Zephyr Engine"
@@ -3007,11 +3011,10 @@ msgid ""
 "caveat of markedly increased power consumption, but those flying with Tricon "
 "engines can usually afford the requisite reactor upgrades."
 msgstr ""
-"Para pilotos de naves leves que exigem performance sem par, o Zéfiro da "
-"Tricon é o motor ideal. Sua manobrabilidade excepcional no segmento tem o "
-"inconveniente de um consumo claramente maior de energia, mas aqueles que "
-"voam com os motores Tricon geralmente podem pagar pelas melhorias de reator "
-"requeridas."
+"Para pilotos de naves ligeiras que exigem performance sem paralelo, o Zéfiro "
+"da Tricon é o motor ideal. A sua manobrabilidade excecional no segmento tem "
+"o inconveniente de consumir mais energia, mas aqueles que voam com os "
+"motores Tricon geralmente podem pagar pelas melhorias requeridas de reatores."
 
 #: dat/outfits/core_engine/small/tricon_zephyr_ii_engine.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:220
@@ -3026,10 +3029,10 @@ msgid ""
 "use for lightweight, time-critical shipping."
 msgstr ""
 "Uma versão maior do Zéfiro original da Tricon destinada a caças pesados, o "
-"Zéfiro II oferece à essas máquinas, assim como bombardeiros a capacidade de "
-"moverem-se como naves batedoras. Sua performance não passou despercebida por "
-"mercadores também, resultando em seu uso para transporte de cargas leves de "
-"tempo crítico."
+"Zéfiro II oferece a caças pesados, assim como bombardeiros, a capacidade de "
+"moverem-se como naves batedoras. A sua performance não passou despercebida "
+"por mercadores também, resultando na sua utilização para transporte urgente "
+"de cargas leves."
 
 #: dat/outfits/core_engine/small/unicorp_hawk_350_engine.xml:2
 msgid "Unicorp Hawk 350 Engine"
@@ -3041,7 +3044,7 @@ msgid ""
 "modest energy consumption allows it to be equipped on most vessels without "
 "requiring reactor upgrades."
 msgstr ""
-"O Gavião 350 é destinado a caças pesados e cargueiros leves. O consumo de "
+"O Gavião 350 é destinado a caças pesados e cargueiros ligeiros. O consumo de "
 "energia modesto permite que seja equipado na maioria das naves sem exigir "
 "melhorias no reator."
 
@@ -3057,13 +3060,13 @@ msgid ""
 "are very often modded by students, which makes them unreliable."
 msgstr ""
 "Construido por fabricantes Za'lek, este motor não tem por objetivo ser "
-"eficiente. A meta é ser facilmente modificavel para que cientistas Za'lek "
+"eficiente. A meta é ser facilmente modificável para que os cientistas Za'lek "
 "possam testar novos sistemas de refrigeração e propulsão. Estes motores são "
 "frequentemente modificados por estudantes, o que os torna pouco confiáveis."
 
 #: dat/outfits/core_hull/dummy_plating.xml:2
 msgid "Dummy Plating"
-msgstr "Revestimento Falso"
+msgstr "Revestimento Simulado"
 
 #: dat/outfits/core_hull/dummy_plating.xml:4
 #: dat/outfits/core_hull/large/patchwork_heavy_plating.xml:4
@@ -3097,8 +3100,8 @@ msgid ""
 "This is a dummy hull for use in missions only, which does nothing. DO NOT "
 "BUY."
 msgstr ""
-"Este é um casco falso para uso apenas em missões, e não tem utilidade. NÃO "
-"COMPRE."
+"Isto é um casco simulado para ser utilizado apenas em missões e que não faz "
+"nada. NÃO COMPRAR."
 
 #: dat/outfits/core_hull/large/patchwork_heavy_plating.xml:2
 msgid "Patchwork Heavy Plating"
@@ -3111,8 +3114,8 @@ msgid ""
 "On the plus side, it keeps air from venting into space. But that's about it. "
 "This kind of hull maintenance is simply unacceptable."
 msgstr ""
-"Como vantagem, está blindagem impede que o ar escape para o espaço, mas é so "
-"isso. Esse tipo de manutenção de casco é simplesmente inaceitavel."
+"Como vantagem, esta blindagem impede que o ar escape para o espaço, mas é só "
+"isso. Este tipo de manutenção de casco é simplesmente inaceitável."
 
 #: dat/outfits/core_hull/large/rs_large_cargo_hull.xml:2
 msgid "Red Star Large Cargo Hull"
@@ -3402,7 +3405,7 @@ msgstr ""
 
 #: dat/outfits/core_system/dummy_systems.xml:2
 msgid "Dummy Systems"
-msgstr "Sistemas Falsos"
+msgstr "Sistemas Simulados"
 
 #: dat/outfits/core_system/dummy_systems.xml:4
 #: dat/outfits/core_system/large/milspec_orion_8601_core_system.xml:4
@@ -3434,8 +3437,8 @@ msgid ""
 "This is a dummy core system for use in missions only, which does nothing. DO "
 "NOT BUY."
 msgstr ""
-"Este é um sistema principal falso para uso apenas em missões, que não tem "
-"utilidade. NÃO COMPRE."
+"Isto é um sistema simulado para ser utilizado apenas em missões e que não "
+"faz nada. NÃO COMPRAR."
 
 #: dat/outfits/core_system/large/milspec_orion_8601_core_system.xml:2
 msgid "Milspec Orion 8601 Core System"
@@ -3764,7 +3767,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/empire_lancelot_bay.xml:2
 msgid "Empire Lancelot Bay"
-msgstr "Baia de Lancelots Imperiais"
+msgstr "Baía Lancelot Imperial"
 
 #: dat/outfits/fighter_bays/empire_lancelot_bay.xml:8
 #: dat/ships/empire/empire_pacifier.xml:19
@@ -3777,7 +3780,7 @@ msgid ""
 "fighters. It comes with all the devices required for the maintenance and "
 "flight of the fighters."
 msgstr ""
-"Esta baia de caças permite que sua nave transporte um par de caças do tipo "
+"Esta baía de caças permite que a tua nave transporte um par de caças do tipo "
 "Lancelot Imperial. Inclui todos os aparelhos necessários à manutenção e voo "
 "dos caças."
 
@@ -3829,7 +3832,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/lancelot_bay.xml:2
 msgid "Lancelot Bay"
-msgstr "Baia de Lancelot"
+msgstr "Baía Lancelot"
 
 #: dat/outfits/fighter_bays/lancelot_bay.xml:10
 msgid ""
@@ -4207,12 +4210,12 @@ msgid ""
 "EM pulses rarely destroy the ship, leaving it floating disabled in space. "
 "These are favoured by traders for keeping pirates at bay."
 msgstr ""
-"Este lançador pode disparar granadas PEM em qualquer direcção utilizando um "
-"sistema único de orientação interna. As granadas liberam um impulso "
-"electromagnético, desativando rapidamente a electrónica dos naves inimigos. "
-"Útil para levar naves sem destrui-las; os impulsos EM raramente destroem a "
-"nave, deixando-a a flutuar desativada no espaço. Um favorito de comerciantes "
-"por manterem os piratas à distância."
+"Este lançador pode disparar granadas PEM em qualquer direção utilizando um "
+"sistema único de orientação interna. As granadas libertam um impulso "
+"eletromagnético, desativando rapidamente a eletrónica das naves inimigas. "
+"Útil para capturar naves, os impulsos EM raramente destroem a nave, deixando-"
+"a a flutuar desativada no espaço. Os comerciantes preferem-nas porque mantém "
+"os piratas à distância."
 
 #: dat/outfits/launchers/enygma_systems_huntsman_launcher.xml:2
 msgid "Enygma Systems Huntsman Launcher"
@@ -4430,7 +4433,7 @@ msgstr ""
 
 #: dat/outfits/launchers/teracom_mace_launcher.xml:2
 msgid "TeraCom Mace Launcher"
-msgstr "Lançador de Forguetes Maça TeraCom"
+msgstr "Lançador de Foguetes Bastão TeraCom"
 
 #: dat/outfits/launchers/teracom_mace_launcher.xml:9
 msgid ""
@@ -5613,7 +5616,7 @@ msgstr "Escaneador de Pulso"
 #: dat/outfits/unique/pulse_scanner.xml:6
 #: dat/outfits/utility/sensor_array.xml:4 dat/events/shipai.lua:108
 msgid "Electronic Warfare"
-msgstr "Guerra Electrónica"
+msgstr "Guerra eletrónica"
 
 #: dat/outfits/unique/pulse_scanner.xml:11
 msgid ""
@@ -7381,9 +7384,9 @@ msgid ""
 "the shields from those who would stand against House Sirius. It is commonly "
 "found on Sirius Preachers and other Corvettes."
 msgstr ""
-"O Fatiadoré uma versão de alta potência da Navalha, excelente para retirar "
-"escudos daqueles que se oponham à Casa Sirius. Encontra-se normalmente em "
-"Sermonistas Sirius e outras Corvetas."
+"O Fatiador é uma versão de alta potência da Navalha, excelente para retirar "
+"escudos daqueles que se oponham à Casa Sirius. Encontra-se normalmente no "
+"Pregador Sirius e outras corvetas."
 
 #: dat/outfits/weapons/tesla_cannon.xml:2
 msgid "Tesla Cannon"
@@ -7466,7 +7469,7 @@ msgstr ""
 
 #: dat/ships/collective/drone.xml:2 dat/missions/minerva/pirate1.lua:170
 msgid "Drone"
-msgstr ""
+msgstr "Drone"
 
 #: dat/ships/collective/drone.xml:9 dat/ships/collective/drone_hyena.xml:13
 #: dat/ships/zalek/zalek_drone_light.xml:8
@@ -7646,7 +7649,7 @@ msgstr ""
 #: dat/ships/dvaered/dvaered_vendetta.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:214
 msgid "Dvaered Vendetta"
-msgstr "Vingança Dvaered"
+msgstr "Vendetta Dvaered"
 
 #: dat/ships/dvaered/dvaered_vendetta.xml:20
 msgid ""
@@ -7654,12 +7657,12 @@ msgid ""
 "weight on the structure has been optimized in order to allow embarking more "
 "payload."
 msgstr ""
-"Nesta versão militarizada da Vingança, a distribuição de peso na estrutura "
-"foi otimizada para permitir que mais carga útil fosse embarcada."
+"Nesta versão militarizada da Vendetta, a distribuição de peso na estrutura "
+"foi otimizada para permitir embarcar mais carga útil."
 
 #: dat/ships/dvaered/dvaered_vigilance.xml:2
 msgid "Dvaered Vigilance"
-msgstr "Vigilância Dvaered"
+msgstr "Vigilance Dvaered"
 
 #: dat/ships/dvaered/dvaered_vigilance.xml:18
 msgid "You need at least 50 reputation with House Dvaered."
@@ -7670,7 +7673,7 @@ msgid ""
 "This military grade version of the Vigilance has an optimized weight "
 "distribution allowing it to carry more payload."
 msgstr ""
-"Esta versão militar da Vigilância tem uma distribuição de peso otimizada que "
+"Esta versão militar da Vigilance tem uma distribuição de peso otimizada que "
 "permite transportar mais carga útil."
 
 #: dat/ships/empire/empire_admonisher.xml:2
@@ -7825,7 +7828,7 @@ msgstr ""
 
 #: dat/ships/feral_bioship/kauweke.xml:2
 msgid "Kauweke"
-msgstr ""
+msgstr "Kauweke"
 
 #: dat/ships/feral_bioship/kauweke.xml:12
 msgid "Elder Feral Bioship"
@@ -7838,7 +7841,7 @@ msgstr "Ainda por fazer..."
 
 #: dat/ships/feral_bioship/nohinohi.xml:2
 msgid "Nohinohi"
-msgstr ""
+msgstr "Nohinohi"
 
 #: dat/ships/feral_bioship/nohinohi.xml:12
 #: dat/ships/soromid/soromid_reaver.xml:9
@@ -7863,7 +7866,7 @@ msgstr ""
 
 #: dat/ships/feral_bioship/taitamariki.xml:2
 msgid "Taitamariki"
-msgstr ""
+msgstr "Taitamariki"
 
 #: dat/ships/feral_bioship/taitamariki.xml:12
 #: dat/ships/pirate/pirate_revenant.xml:9 dat/ships/soromid/soromid_odium.xml:9
@@ -7872,7 +7875,7 @@ msgstr "Bio-Corveta"
 
 #: dat/ships/misc/onewing_goddard.xml:2 dat/spob/onewing_goddard.xml:2
 msgid "One-Wing Goddard"
-msgstr ""
+msgstr "Goddard de Uma-Asa"
 
 #: dat/ships/misc/onewing_goddard.xml:9 dat/ships/misc/raelid_outpost.xml:9
 #: dat/ships/misc/raglan_outpost.xml:9 dat/ships/misc/sindbad.xml:9
@@ -7889,7 +7892,7 @@ msgstr "Estação"
 #: src/land_trade.c:208 src/land_trade.c:209 src/map.c:655 src/map.c:656
 #: src/outfit.c:293 src/outfit.c:312
 msgid "N/A"
-msgstr "N/D"
+msgstr "N/A"
 
 #: dat/ships/misc/onewing_goddard.xml:13 dat/ships/misc/raelid_outpost.xml:13
 #: dat/ships/misc/raglan_outpost.xml:13 dat/ships/misc/sindbad.xml:13
@@ -7906,7 +7909,7 @@ msgstr "Posto Avançado Raglan"
 
 #: dat/ships/misc/sindbad.xml:2 dat/spob/sindbad.xml:2
 msgid "Sindbad"
-msgstr ""
+msgstr "Sindbad"
 
 #: dat/ships/neutral/admonisher.xml:2
 msgid "Admonisher"
@@ -7919,7 +7922,7 @@ msgid ""
 "Overall a very solid combat ship."
 msgstr ""
 "Uma nave de combate muito versátil. A Nexo define o Admoestador como um meio-"
-"termo entre a robustez do Pacificador e a agilidade do Lancelot. No geral, "
+"termo entre a robustez do Pacificador e a agilidade do Lancelot. No geral é "
 "uma nave de combate muito sólida."
 
 #: dat/ships/neutral/ancestor.xml:2
@@ -8044,7 +8047,7 @@ msgstr ""
 
 #: dat/ships/neutral/koala.xml:2
 msgid "Koala"
-msgstr "Coala"
+msgstr "Koala"
 
 #: dat/ships/neutral/koala.xml:14 dat/ships/neutral/llama.xml:16
 #: dat/ships/neutral/mule.xml:15 dat/ships/neutral/quicksilver.xml:15
@@ -8065,7 +8068,7 @@ msgstr ""
 
 #: dat/ships/neutral/lancelot.xml:2
 msgid "Lancelot"
-msgstr "Lancelote"
+msgstr "Lancelot"
 
 #: dat/ships/neutral/lancelot.xml:17
 msgid ""
@@ -8076,7 +8079,7 @@ msgid ""
 "is used by security agencies all over the galaxy for its reliability and "
 "availability."
 msgstr ""
-"Um dos premiados caças pesados dos Estaleiros Nexus. O Lancelote era "
+"Um dos premiados caças pesados dos Estaleiros Nexus. O Lancelot era "
 "originalmente um projeto secreto para o exército do Império, mas a sua "
 "existência foi revelada durante um voo de teste abortado. Agora, está "
 "disponível uma versão modificada para civis, embora não corresponda "
@@ -8086,7 +8089,7 @@ msgstr ""
 #: dat/ships/neutral/llama.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:180
 #: dat/missions/flf/dvk/flf_dvk06.lua:163
 msgid "Llama"
-msgstr "Lhama"
+msgstr "Llama"
 
 #: dat/ships/neutral/llama.xml:17
 msgid ""
@@ -8225,7 +8228,7 @@ msgid ""
 msgstr ""
 "Um novo projeto dos Estaleiros Nexo, o Tubarão é um caça ágil e leve, "
 "projetado para patrulhar um sistema local. Embora não seja tão capaz como o "
-"seu parente maior, o Lancelote, o Tubarão é uma adição efetiva a qualquer "
+"seu parente maior, o Lancelot, o Tubarão é uma adição efetiva a qualquer "
 "frota."
 
 #: dat/ships/neutral/starbridge.xml:2
@@ -8247,7 +8250,7 @@ msgstr ""
 #: dat/ships/neutral/vendetta.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:217
 msgid "Vendetta"
-msgstr "Vingança"
+msgstr "Vendetta"
 
 #: dat/ships/neutral/vendetta.xml:17
 msgid ""
@@ -8259,17 +8262,17 @@ msgid ""
 "other hand it has a  truly fearsome barrage it can unleash that has "
 "precisely the power to transform extended battles into short fights."
 msgstr ""
-"A Vingança exibe muito bem a filosofia da Casa Dvaered. Dá a uma nave muitas "
-"armas intimidantes, revista com blindagem pesada e negligencia a eletrónica. "
-"Por causa disso, esta nave é mais adequada para combates curtos do que para "
-"batalhas prolongadas, pois possui uma regeneração de energia inferior à de "
-"outras naves da sua categoria. Por outro lado, tem uma barragem "
-"verdadeiramente temível que pode desencadear e que tem precisamente o poder "
-"de transformar batalhas prolongadas em lutas curtas."
+"A Vendetta mostra muito bem a filosofia da Casa Dvaered. Dá a uma nave "
+"muitas armas intimidantes, coberta com blindagem pesada e negligenciando a "
+"eletrónica. Por causa disso, esta nave é mais adequada a combates curtos do "
+"que a batalhas prolongadas, pois tem uma regeneração de energia inferior à "
+"de outras naves da sua categoria. Por outro lado, pode desencadear uma "
+"barragem verdadeiramente temível e que tem precisamente o poder de "
+"transformar batalhas prolongadas em lutas curtas."
 
 #: dat/ships/neutral/vigilance.xml:2
 msgid "Vigilance"
-msgstr "Vigilância"
+msgstr "Vigilance"
 
 #: dat/ships/neutral/vigilance.xml:16
 msgid ""
@@ -8278,7 +8281,7 @@ msgid ""
 "possible with forward weapons. Given its Dvaered origins, it possesses "
 "inferior technology relative to its counterparts."
 msgstr ""
-"A Vigilância é a encarnação da filosofia de Dvaered. Apresentando imensas "
+"A Vigilance é a encarnação da filosofia de Dvaered. Apresentando imensas "
 "reservas de energia e seis pontos fixos para armas, foi projetada para "
 "atingir o mais fortemente possível com armas na proa. Dadas as suas origens "
 "Dvaered, possui tecnologia inferior às naves equivalentes."
@@ -8455,7 +8458,7 @@ msgstr ""
 
 #: dat/ships/pirate/pirate_vendetta.xml:2
 msgid "Pirate Vendetta"
-msgstr "Vingança Pirata"
+msgstr "Vendetta Pirata"
 
 #: dat/ships/pirate/pirate_vendetta.xml:17
 msgid ""
@@ -8467,13 +8470,13 @@ msgid ""
 "reactor goes nova, destroying the ship. You hope it won't happen to you if "
 "you get in one."
 msgstr ""
-"A Vingança Pirata é ainda mais intimidante do que o seu equivalente de "
-"fábrica. Foram feitos pequenos ajustes ao estilo pirata de voar. Parte da "
-"blindagem foi removida para dar mais espaço para pilhagem, enquanto que o "
-"reator foi adulterado por um técnico naval duvidoso. A nave ficou "
+"A Vendetta Pirata é ainda mais intimidante do que a versão base. Foram "
+"feitos pequenos ajustes ao estilo de voar dos piratas. Parte da blindagem "
+"foi removida para dar mais espaço para armazenar as pilhagens, enquanto que "
+"o reator foi adulterado por um técnico naval duvidoso. A nave ficou "
 "substancialmente melhor que a original, mas de vez em quando o reator "
-"explode, destruindo a nave. Oxalá que não aconteça se estiveres a pilotar "
-"uma."
+"explode, destruindo a nave. Oxalá que isso não aconteça se estiveres a "
+"pilotar uma."
 
 #: dat/ships/pirate/pirate_zebra.xml:2
 msgid "Pirate Zebra"
@@ -8690,7 +8693,7 @@ msgstr ""
 
 #: dat/ships/sirius/sirius_preacher.xml:2
 msgid "Sirius Preacher"
-msgstr "Sermonista Sirius"
+msgstr "Pregador Sirius"
 
 #: dat/ships/sirius/sirius_preacher.xml:16
 msgid "You need at least 40 reputation with House Sirius."
@@ -8702,13 +8705,13 @@ msgid ""
 "Sirius projects its message and will. Fielding a large array of weaponry, "
 "the Preacher is adept at making converts out of unbelievers."
 msgstr ""
-"O Sermonista, como o seu nome indica, é a principal nave pelo qual a Casa "
+"O Pregador, como o seu nome indica, é a principal nave pelo qual a Casa "
 "Sirius projeta a sua mensagem e vontade. Com uma grande variedade de "
-"armamentos, o Sermonista é hábil em transformar descrentes em devotos."
+"armamentos, o Pregador é hábil em transformar descrentes em devotos."
 
 #: dat/ships/sirius/sirius_providence.xml:2
 msgid "Sirius Providence"
-msgstr "Providência Sírius"
+msgstr "Providência Sirius"
 
 #: dat/ships/sirius/sirius_providence.xml:21
 msgid "You need at least 60 reputation with House Sirius."
@@ -14135,7 +14138,7 @@ msgstr "Forge"
 
 #: dat/spob/fort_sirius.xml:2
 msgid "Fort Sirius"
-msgstr "Fort Sirius"
+msgstr "Forte Sirius"
 
 #: dat/spob/fort_sirius.xml:26
 msgid ""
@@ -15058,7 +15061,7 @@ msgstr ""
 
 #: dat/spob/haven.xml:2 dat/ssys/haven.xml:2
 msgid "Haven"
-msgstr "Haven"
+msgstr "Santuário"
 
 #: dat/spob/heii.xml:2
 msgid "Heii"
@@ -16811,7 +16814,7 @@ msgstr ""
 
 #: dat/spob/marauder_station.xml:2
 msgid "Marauder Station"
-msgstr "Estação Merodeador"
+msgstr "Estação Saqueador"
 
 #: dat/spob/marauder_station.xml:28
 msgid ""
@@ -17654,7 +17657,7 @@ msgstr ""
 #: dat/spob/new_haven.xml:2 dat/ssys/new_haven.xml:2
 #: dat/events/discovery.lua:113
 msgid "New Haven"
-msgstr "New Haven"
+msgstr "Novo Santuário"
 
 #: dat/spob/new_haven.xml:30
 msgid ""
@@ -22459,6 +22462,9 @@ msgid ""
 "military asset, it is well-supplied and cared for, with the staff being "
 "ready at a moment's notice to come to Procyon's aid."
 msgstr ""
+"A Estação Vigilance é o centro de defesa de Procyon. Excecional para um "
+"ativo militar Za'lek, está bem abastecida e cuidada, estando o pessoal "
+"pronto num instante para ajudar Procyon."
 
 #: dat/spob/vigilance_station.xml:28
 msgid "This bar is simple and clean. Every inch a military establishment."
@@ -25444,7 +25450,7 @@ msgstr "Vost"
 
 #: dat/ssys/westhaven.xml:2
 msgid "Westhaven"
-msgstr "Westhaven"
+msgstr "Santuário Ocidental"
 
 #: dat/ssys/willow.xml:2 dat/scripts/pilotname/pirate.lua:494
 msgid "Willow"
@@ -29724,7 +29730,7 @@ msgstr ""
 #. Custom events can handle custom triggers such as nebula systems
 #: dat/events/discovery.lua:195
 msgid "{fname} Territory"
-msgstr ""
+msgstr "Território {fname}"
 
 #. @brief Actually spawns the pilots
 #. Case no pilots
@@ -31579,48 +31585,49 @@ msgstr "Evento de hiperportal executado sem alvo!"
 #: dat/events/hypergate_construction.lua:41
 #: dat/events/hypergate_construction.lua:84
 msgid "Supervisor"
-msgstr ""
+msgstr "Supervisor"
 
 #: dat/events/hypergate_construction.lua:42
 msgid "Boss"
-msgstr ""
+msgstr "Patrão"
 
 #: dat/events/hypergate_construction.lua:43
 msgid "Chief"
-msgstr ""
+msgstr "Chefe"
 
 #: dat/events/hypergate_construction.lua:44
 #: dat/scripts/pilotname/pirate.lua:442
 msgid "Shepherd"
-msgstr ""
+msgstr "Pastor"
 
 #: dat/events/hypergate_construction.lua:45
 msgid "Administrator"
-msgstr ""
+msgstr "Administrador"
 
 #: dat/events/hypergate_construction.lua:49
 msgid "Mineral acquiration skills required. Inquire within."
 msgstr ""
+"São necessárias habilidades de aquisição de minerais. Informe-se no interior."
 
 #: dat/events/hypergate_construction.lua:50
 msgid "Interested in blowing asteroids up? Looking for miners!"
-msgstr ""
+msgstr "Interessado em fazer explodir asteroides? Procuramos mineiros!"
 
 #: dat/events/hypergate_construction.lua:51
 msgid "Seeking mineral gatherers."
-msgstr ""
+msgstr "À procura de coletores de minerais."
 
 #: dat/events/hypergate_construction.lua:52
 msgid "Requiring miners for Sirichana."
-msgstr ""
+msgstr "A precisar de mineiros para Sirichana."
 
 #: dat/events/hypergate_construction.lua:53
 msgid "Mine minerals for the Empire!"
-msgstr ""
+msgstr "Minere minerais para o Império!"
 
 #: dat/events/hypergate_construction.lua:136
 msgid "\"We don't deal with the likes of you!\""
-msgstr ""
+msgstr "\"Não lidamos com pessoas como tu!\""
 
 #: dat/events/hypergate_construction.lua:143
 msgid ""
@@ -31650,7 +31657,7 @@ msgstr ""
 
 #: dat/events/hypergate_construction.lua:188
 msgid "{mineral}: {price}"
-msgstr ""
+msgstr "{mineral}: {price}"
 
 #: dat/events/hypergate_construction.lua:194
 msgid "What do you want to do?"
@@ -33831,7 +33838,7 @@ msgstr "Sistemas de fronteira Sirian"
 
 #: dat/events/neutral/derelict.lua:398
 msgid "Frontier systems"
-msgstr "Sistemas Frontier"
+msgstr "Sistemas Fronteira"
 
 #: dat/events/neutral/derelict.lua:399
 msgid "Imperial Nebula edge"
@@ -34146,13 +34153,13 @@ msgstr[1] ""
 #. Set up NPC and hooks
 #: dat/events/neutral/shiplover.lua:272 dat/events/neutral/shiplover.lua:286
 msgid "Ship Enthusiast"
-msgstr ""
+msgstr "Entusiasta da nave"
 
 #: dat/events/neutral/shiplover.lua:272
 msgid ""
 "You see a surprisingly young individual who is playing with a small ship "
 "model."
-msgstr ""
+msgstr "Vês um jovem que está a brincar com um pequeno modelo de uma nave."
 
 #. First meeting
 #: dat/events/neutral/shiplover.lua:291
@@ -34160,34 +34167,39 @@ msgid ""
 "You approach the individual who is making weird noises, likely imitating "
 "space ship noises, while playing with a space ship toy."
 msgstr ""
+"Aproximas-te do jovem que está a fazer ruídos estranhos, provavelmente "
+"imitando ruídos de naves, enquanto brinca com um brinquedo de uma nave "
+"espacial."
 
 #: dat/events/neutral/shiplover.lua:292
 msgid ""
 "\"Why hello there. How do you like my new limited edition Lancelot figurine?"
 "\""
-msgstr ""
+msgstr "\"Olá. O que achas da minha nova edição limitada da nave Lancelot?\""
 
 #: dat/events/neutral/shiplover.lua:295
 msgid "\"It looks great!\""
-msgstr ""
+msgstr "\"Parece ótima!\""
 
 #: dat/events/neutral/shiplover.lua:296
 msgid "\"It's awful.\""
-msgstr ""
+msgstr "\"É horrível.\""
 
 #: dat/events/neutral/shiplover.lua:297
 msgid "\"Aren't you too young to be here?\""
-msgstr ""
+msgstr "\"Não és demasiado novo para estar aqui?\""
 
 #: dat/events/neutral/shiplover.lua:308
 msgid "\"You know I own a real one.\""
-msgstr ""
+msgstr "\"Sabes... tenho uma verdadeira.\""
 
 #: dat/events/neutral/shiplover.lua:314
 msgid ""
 "\"I know right! It cost me a lot to find it. It was sold out all over! But "
 "it was all worth it in the end.\""
 msgstr ""
+"\"Sei bem! Custou-me muito encontrá-la. Estava esgotada por todo o lado! Mas "
+"valeu a pena.\""
 
 #: dat/events/neutral/shiplover.lua:318
 msgid ""
@@ -34197,12 +34209,19 @@ msgid ""
 "You look closely and indeed are able to see the pilots. The level of detail "
 "is fairly ridiculous."
 msgstr ""
+"\"Não consegues apreciar esta beleza. Vê as curvas! As luzes brilhantes! É "
+"um modelo completo à escala 1/128 anatomicamente correto! Até se podem ver "
+"os pilotos na cabina.\"\n"
+"Olhas de perto e de facto podes ver os pilotos. O nível de detalhe chega a "
+"ser verdadeiramente ridículo."
 
 #: dat/events/neutral/shiplover.lua:323
 msgid ""
 "\"Aren't you too old to be here? It's not like I'm drinking or anything.\"\n"
 "They stick their tongue out at you as they still play with the space ship."
 msgstr ""
+"\"Não és demasiado velho para estar aqui? Não é que eu esteja a beber.\"\n"
+"Ele põe-te a língua de fora enquanto ainda brinca com a nave espacial."
 
 #: dat/events/neutral/shiplover.lua:328
 msgid ""
@@ -34212,6 +34231,12 @@ msgid ""
 "They lift up their toy Lancelot. You can barely make out a golden Efreeti "
 "etched on the side."
 msgstr ""
+"\"A sério? Também é um modelo Sigma-5 do esquadrão Efreeti dourado? Não "
+"sabes o que é isso? Não brinques comigo, é provavelmente apenas mais um "
+"Lancelot produzido em massa sem qualquer história por detrás disso. Este é "
+"uma obra-prima!\"\n"
+"Ele levanta o seu brinquedo Lancelot. Mal se consegue ver um Efreeti dourado "
+"gravado de lado."
 
 #: dat/events/neutral/shiplover.lua:333
 msgid ""
@@ -34219,27 +34244,34 @@ msgid ""
 "I'll ask you a question and if you get it right, I'll give you a nice "
 "reward. What do you say?\""
 msgstr ""
+"\"Sabes que mais, vamos jogar um jogo. Eu conheço TODOS os detalhes de todas "
+"as naves. Vou fazer-te uma pergunta e se acertares dar-te-ei uma bela "
+"recompensa. O que achas?\""
 
 #. Met, didn't play quiz and came back
 #: dat/events/neutral/shiplover.lua:339
 msgid "You once again approach the ship enthusiast."
-msgstr ""
+msgstr "Mais uma vez, aproximas-te do entusiasta da nave."
 
 #: dat/events/neutral/shiplover.lua:340
 msgid ""
 "\"So you're back. Did you change your mind about playing my ship quiz?\""
 msgstr ""
+"\"Então, estás de volta? Mudaste de ideias quanto ao meu jogo sobre naves?\""
 
 #: dat/events/neutral/shiplover.lua:342
 msgid ""
 "You once again approach the ship enthusiast. They seem to move about a lot."
 msgstr ""
+"Mais uma vez, aproximas-te do entusiasta da nave. Ele parece irrequieto."
 
 #: dat/events/neutral/shiplover.lua:343
 msgid ""
 "\"Would you like to play another round of the ship quiz? I think the "
 "question I prepared will stump you completely!\""
 msgstr ""
+"\"Gostarias de jogar mais uma rodada das perguntas sobre naves? Acho que a "
+"pergunta que preparei vai deitar-te ao chão!\""
 
 #: dat/events/neutral/shiplover.lua:346 dat/missions/minerva/maikki2.lua:190
 msgid "\"Yes!\""
@@ -34251,21 +34283,21 @@ msgstr "\"Não.\""
 
 #: dat/events/neutral/shiplover.lua:351
 msgid "\"Oh well, your loss!\""
-msgstr ""
+msgstr "\"Bem, tu é que ficas a perder!\""
 
 #: dat/events/neutral/shiplover.lua:356
 msgid "\"Great! So here it goes. Listen carefully.\""
-msgstr ""
+msgstr "\"Ótimo! Aqui vai. Ouve com atenção.\""
 
 #: dat/events/neutral/shiplover.lua:373
 msgid "\"Great! So take a look at this ship and listen carefully.\""
-msgstr ""
+msgstr "\"Ótimo! Dá uma vista de olhos a esta nave e ouve com atenção.\""
 
 #. Show choices
 #. Give reward
 #: dat/events/neutral/shiplover.lua:413
 msgid "You got the Ship Enthusiast's quiz wrong."
-msgstr ""
+msgstr "Enganaste-te no questionário do Entusiasta da Nave."
 
 #. TODO wrong sound
 #: dat/events/neutral/shiplover.lua:417
@@ -34274,6 +34306,10 @@ msgid ""
 "\"The correct answer was #g{answer}#0! Better luck next time.\"\n"
 "They take their leave."
 msgstr ""
+"Parece presunçoso ao exclamar \"Errado!\".\n"
+"\"A resposta correta é #g{answer}#0! Talvez tenhas melhor sorte na próxima "
+"vez\".\n"
+"E vai-se embora."
 
 #. Non-persistent state
 #. Make sure system isn't claimed, but we don't claim it
@@ -35041,7 +35077,7 @@ msgstr ""
 
 #: dat/events/news/frontier.lua:2
 msgid "News from the Frontier Alliance."
-msgstr ""
+msgstr "Notícias da Aliança da Fronteira."
 
 #: dat/events/news/frontier.lua:5
 msgid "News you can trust."
@@ -38161,6 +38197,8 @@ msgid ""
 "\"Stealth and fake transponders are the best way to move around unnoticed. "
 "Pirate Admonishers are great at the job!\""
 msgstr ""
+"\"Os transponders camuflados e falsos são a melhor forma de te deslocares "
+"sem seres notado. Os admoestadores piratas são exímios!\""
 
 #: dat/events/npc/wild_ones.lua:36
 msgid ""
@@ -39322,6 +39360,12 @@ msgid ""
 "from the '#oWeapons#0' tab of the information window. You have 10 different "
 "weapon sets that can be configured separately for each ship.\""
 msgstr ""
+"\"Uma grande parte do combate é decidido com antecedência pelas classes de "
+"naves e a sua carga. No entanto, uma boa pilotagem pode alterar o desfecho "
+"facilmente. É importante atribuir conjuntos de armas para serem fáceis de "
+"usar. Podes definir conjuntos de armas a partir do separador '#oArmass#0' da "
+"janela de informação. Tens 10 conjuntos de armas diferentes que podem ser "
+"configurados separadamente para cada nave.\""
 
 #: dat/events/shipai.lua:127
 msgid ""
@@ -39333,8 +39377,8 @@ msgid ""
 "the outfits"
 msgstr ""
 "\"Existem três tipos diferentes de conjuntos de armas:\n"
-"- #oArmas - Trocadas#0: ativar a tecla de atalho definirá as tuas armas "
-"primárias e secundárias\n"
+"- #oArmas - Intercambiadas#0: ativar a tecla de atalho definirá as tuas "
+"armas primárias e secundárias\n"
 "- #oArmas - Instantâneas#0: ativar a tecla de atalho irá disparar as armas\n"
 "- #oHabilidades - Alternadas#0: ativar a tecla de atalho alternará o estado "
 "dos equipamentos"
@@ -39890,7 +39934,7 @@ msgstr ""
 
 #: dat/events/sirius/preach.lua:107
 msgid "Someone killed the preacher!"
-msgstr ""
+msgstr "Alguém matou o pregador!"
 
 #. initialize the event
 #. save the current system
@@ -42822,19 +42866,19 @@ msgstr ""
 #. @brief Spawns a small group of miners
 #: dat/factions/spawn/miner.lua:13
 msgid "Miner Llama"
-msgstr ""
+msgstr "Minerador Llama"
 
 #: dat/factions/spawn/miner.lua:15
 msgid "Miner Koala"
-msgstr ""
+msgstr "Minerador Koala"
 
 #: dat/factions/spawn/miner.lua:17
 msgid "Miner Mule"
-msgstr ""
+msgstr "Minerador Mula"
 
 #: dat/factions/spawn/miner.lua:19
 msgid "Miner Rhino"
-msgstr ""
+msgstr "Minerador Rinoceronte"
 
 #. @brief Creation hook.
 #. Create weights for spawn table
@@ -42880,33 +42924,33 @@ msgstr ""
 #: dat/factions/spawn/trader.lua:12 dat/missions/flf/dvk/flf_dvk03.lua:180
 #: dat/missions/flf/dvk/flf_dvk06.lua:163
 msgid "Trader Llama"
-msgstr ""
+msgstr "Comerciante Llama"
 
 #. hook an abstract deciding function to player entering a system when not part of defence
 #. Decides what to do when player either takes off starting planet or jumps into another system
 #: dat/factions/spawn/trader.lua:15 dat/missions/flf/dvk/flf_dvk03.lua:180
 #: dat/missions/flf/dvk/flf_dvk06.lua:163 dat/missions/neutral/dts_02.lua:103
 msgid "Trader Koala"
-msgstr ""
+msgstr "Comerciante Koala"
 
 #: dat/factions/spawn/trader.lua:18
 msgid "Trader Quicksilver"
-msgstr ""
+msgstr "Comerciante Mercúrio"
 
 #. If any pirates still alive, send player back out.
 #. A fellow warrior says hello in passing if player jumps out of the system without landing
 #: dat/factions/spawn/trader.lua:21 dat/missions/flf/dvk/flf_dvk03.lua:180
 #: dat/missions/flf/dvk/flf_dvk06.lua:163 dat/missions/neutral/dts_00.lua:205
 msgid "Trader Mule"
-msgstr ""
+msgstr "Comerciante Mula"
 
 #: dat/factions/spawn/trader.lua:24
 msgid "Trader Zebra"
-msgstr ""
+msgstr "Comerciante Zebra"
 
 #: dat/factions/spawn/trader.lua:27
 msgid "Trader Rhino"
-msgstr ""
+msgstr "Comerciante Rinoceronte"
 
 #: dat/factions/spawn/trader.lua:30
 msgid "Trader Shark"
@@ -43459,11 +43503,11 @@ msgstr "Carga livre:"
 #. Render warnings
 #: dat/gui/legacy.lua:377
 msgid "LOCK-ON DETECTED"
-msgstr ""
+msgstr "FIXAÇÃO EM TI DETETADA"
 
 #: dat/gui/legacy.lua:381
 msgid "VOLATILE ENVIRONMENT DETECTED"
-msgstr ""
+msgstr "AMBIENTE VOLÁTIL DETECTADO"
 
 #.
 #. The new "slim" GUI
@@ -43570,7 +43614,7 @@ msgstr "DIST"
 #. Dir
 #: dat/gui/slim.lua:1022
 msgid "DIR"
-msgstr ""
+msgstr "DIR"
 
 #: dat/gui/slim.lua:1054
 msgid "DISTANCE:"
@@ -43841,7 +43885,7 @@ msgstr ""
 #: dat/missions/neutral/kidnapped/traffic_00.lua:66
 #: dat/missions/neutral/kidnapped/traffic_00.lua:104
 msgid "Fly to the {sys} system and land on planet {pnt}"
-msgstr ""
+msgstr "Voa para o sistema {sys} e aterra no planeta {pnt}"
 
 #: dat/missions/baron/baron_baron.lua:68 dat/missions/baron/baron_prince.lua:60
 #: dat/missions/baron/baron_prince.lua:80
@@ -45250,7 +45294,7 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:117
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:118
 msgid "Fly to the {sys} system"
-msgstr ""
+msgstr "Voa para o sistema {sys}"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:66
 msgid "Wait for the Dvaered military to jump in and attack you"
@@ -49263,7 +49307,7 @@ msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:78
 msgid "Fly to {pnt}"
-msgstr ""
+msgstr "Voa para {pnt}"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:79
 msgid ""
@@ -53980,7 +54024,7 @@ msgstr ""
 
 #: dat/missions/empire/collective/ec02.lua:68
 msgid "Fly to {sys} and land on {pnt}"
-msgstr ""
+msgstr "Voa para {sys} e aterra em {pnt}"
 
 #: dat/missions/empire/collective/ec02.lua:69
 msgid "Return to {pnt} with your findings"
@@ -54243,7 +54287,7 @@ msgstr ""
 #: dat/missions/empire/collective/ec04.lua:63
 #: dat/missions/sirius/achack/achack01.lua:46
 msgid "Fly to {sys}"
-msgstr ""
+msgstr "Voa para {sys}"
 
 #. Handles the Collective encounters.
 #. This mission disables saving, which is dangerous. Should be turned back on ASAP.
@@ -54685,7 +54729,7 @@ msgstr ""
 
 #: dat/missions/empire/collective/ec06.lua:75
 msgid "Fly to {final_sys} via {sys} and meet up with the Imperial fleet"
-msgstr ""
+msgstr "Voa para {final_sys} via {sys} e encontra-te com a frota Imperial"
 
 #: dat/missions/empire/collective/ec06.lua:76
 msgid "Defeat the Starfire"
@@ -57969,7 +58013,7 @@ msgstr ""
 
 #: dat/missions/flf/flf_pre02.lua:188
 msgid "Fly to the {sys} system and land on {pnt}"
-msgstr ""
+msgstr "Voa para o sistema {sys} e aterra em {pnt}"
 
 #: dat/missions/flf/flf_pre02.lua:198
 msgid "End of negotiations"
@@ -66831,8 +66875,8 @@ msgid ""
 "#g{credits}#0 upon completion of the job."
 msgstr ""
 "Os contentores de {cargo} são descarregados por um grupo de estivadores "
-"esgotados. Ainda assim, fazem-no depressa, entregando o teu salário de "
-"#g{credits}#0 após a conclusão do trabalho."
+"esgotados. Ainda assim, fazem-no a correr, entregando-te #g{credits}#0 após "
+"a conclusão do trabalho."
 
 #: dat/missions/neutral/cargo.lua:52 dat/missions/neutral/cargo_rush.lua:61
 msgid ""
@@ -67220,7 +67264,7 @@ msgstr ""
 
 #: dat/missions/neutral/crimelord.lua:81
 msgid "Associate Admonisher"
-msgstr ""
+msgstr "Admoestador Associado"
 
 #: dat/missions/neutral/crimelord.lua:83
 msgid "Associate Pacifier"
@@ -67506,7 +67550,7 @@ msgstr ""
 #: dat/missions/shadow/shadowrun.lua:145 dat/missions/shadow/shadowrun.lua:152
 #: dat/missions/sirius/srs_ferry.lua:348
 msgid "You have {time} remaining"
-msgstr "Restam-te {time}"
+msgstr "Restam {time}"
 
 #. invoked upon landing (stage 1: cart the nerds to mem.destPlanet)
 #. in time, right planet
@@ -68642,7 +68686,7 @@ msgstr ""
 #: dat/missions/neutral/foodbiz/delivercake.lua:55
 #: dat/missions/neutral/foodbiz/deliverlove.lua:73
 msgid "Fly to {pnt} in the {sys} system."
-msgstr ""
+msgstr "Voa para {pnt} no sistema {sys}."
 
 #. set up hooks
 #: dat/missions/neutral/foodbiz/delivercake.lua:66
@@ -73006,7 +73050,7 @@ msgstr ""
 
 #: dat/missions/neutral/sightseeing.lua:68
 msgid "Everyone seems like they're having a good time."
-msgstr ""
+msgstr "Parece que todos se estão a divertir."
 
 #: dat/missions/neutral/sightseeing.lua:69
 msgid "A collective gasp of wonder travels through the cabin."
@@ -77019,7 +77063,7 @@ msgstr ""
 
 #: dat/missions/shadow/shadowvigil.lua:61
 msgid "Fly to the {sys} system."
-msgstr ""
+msgstr "Voa para o sistema {sys}."
 
 #. Delayed claim to let time for the event's claim to disappear
 #. Boarding the Seiryuu at the beginning of the mission
@@ -79835,7 +79879,7 @@ msgstr ""
 
 #: dat/missions/sirius/heretic/heretic1.lua:59
 msgid "Fly to {pnt} in the {sys} system and deliver the message"
-msgstr ""
+msgstr "Voa para {pnt} no sistema {sys} e entrega a mensagem"
 
 #: dat/missions/sirius/heretic/heretic1.lua:62
 msgid "Message"
@@ -79965,7 +80009,7 @@ msgstr ""
 #: dat/missions/sirius/heretic/heretic4.lua:94
 #: dat/missions/sirius/heretic/heretic4.lua:123
 msgid "Nasin Admonisher"
-msgstr ""
+msgstr "Admoestador Nasin"
 
 #: dat/missions/sirius/heretic/heretic2.lua:77
 #: dat/missions/sirius/heretic/heretic3.lua:85
@@ -80598,7 +80642,7 @@ msgstr ""
 #. Date hook
 #: dat/missions/sirius/srs_ferry.lua:345
 msgid "Fly to {pnt} in the {sys} system before {time}"
-msgstr ""
+msgstr "Voa para {pnt} no sistema {sys} antes de {time}"
 
 #: dat/missions/sirius/srs_ferry.lua:349 dat/missions/sirius/srs_ferry.lua:360
 msgid "Pilgrimage transport"
@@ -83609,16 +83653,16 @@ msgstr ""
 #: dat/missions/trader/anxiousmerchant.lua:125
 msgid ""
 "Drop off the goods at {pnt} in the {sys} system (You have {time} remaining)"
-msgstr "Deixa a mercadoria em {pnt} no sistema {sys} (Restam-te {time})"
+msgstr "Deixa a mercadoria em {pnt} no sistema {sys} (restam {time})"
 
 #. missed deadline
 #: dat/missions/trader/anxiousmerchant.lua:127
 msgid "Drop off the goods at {pnt} in the {sys} system (You are late)"
-msgstr ""
+msgstr "Deixa a mercadoria em {pnt} no sistema {sys} (estás atrasado)"
 
 #: dat/missions/trader/anxiousmerchant.lua:131
 msgid "Help the Merchant"
-msgstr ""
+msgstr "Ajuda o comerciante"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -83644,23 +83688,23 @@ msgstr ""
 #. Escort a convoy of traders to a destination--
 #: dat/missions/trader/trader_escort.lua:32
 msgid "Escort a tiny convoy to {pnt} in {sys}"
-msgstr ""
+msgstr "Escolta um pequeno comboio até {pnt} em {sys}"
 
 #: dat/missions/trader/trader_escort.lua:33
 msgid "Escort a small convoy to {pnt} in {sys}"
-msgstr ""
+msgstr "Escolta um pequeno comboio até {pnt} em {sys}"
 
 #: dat/missions/trader/trader_escort.lua:34
 msgid "Escort a medium convoy to {pnt} in {sys}"
-msgstr ""
+msgstr "Escolta um comboio médio até {pnt} em {sys}"
 
 #: dat/missions/trader/trader_escort.lua:35
 msgid "Escort a large convoy to {pnt} in {sys}"
-msgstr ""
+msgstr "Escolta um grande comboio até {pnt} em {sys}"
 
 #: dat/missions/trader/trader_escort.lua:36
 msgid "Escort a huge convoy to {pnt} in {sys}"
-msgstr ""
+msgstr "Escolta um enorme comboio até {pnt} em {sys}"
 
 #. This mission does not make any system claims
 #. have to escort them at least one jump!
@@ -83673,31 +83717,36 @@ msgid ""
 "You must stick with the convoy at all times, waiting to jump or land until "
 "the entire convoy has done so."
 msgstr ""
+"Um comboio de comerciantes precisa de proteção enquanto vão a {pnt} (sistema "
+"{sys}). Deves manter-te sempre com o comboio, à espera de saltar ou aterrar "
+"até que o comboio inteiro o tenha feito."
 
 #: dat/missions/trader/trader_escort.lua:96
 msgid "Not enough fuel"
-msgstr ""
+msgstr "Sem combustível suficiente"
 
 #: dat/missions/trader/trader_escort.lua:96
 msgid ""
 "The destination is {1} away, but you only have enough fuel for {2}. You "
 "cannot stop to refuel. Accept the mission anyway?"
 msgstr ""
+"O destino está a {1} de distância, mas só tens combustível suficiente para "
+"{2}. Não podes parar para reabastecer. Queres aceitar a missão mesmo assim?"
 
 #: dat/missions/trader/trader_escort.lua:102
 msgid "Convoy Escort"
-msgstr ""
+msgstr "Escolta do comboio"
 
 #: dat/missions/trader/trader_escort.lua:103
 msgid "Escort a convoy of traders to {pnt} ({sys} system)"
-msgstr ""
+msgstr "Escolta um comboio de comerciantes para {pnt} (sistema {sys})"
 
 #. Choose convoy
 #. Begin the escort
 #. luacheck: globals success
 #: dat/missions/trader/trader_escort.lua:137
 msgid "Success!"
-msgstr ""
+msgstr "Sucesso!"
 
 #: dat/missions/trader/trader_escort.lua:137
 msgid ""
@@ -83705,11 +83754,13 @@ msgid ""
 "wasn't a single casualty and you are rewarded the full amount of #g{credits}"
 "#0."
 msgstr ""
+"Escoltaste com sucesso o comboio de comércio até ao destino. Não houve uma "
+"única baixa e pagam-te #g{credits}#0."
 
 #. faction.get("Traders Guild"):modPlayer(1)
 #: dat/missions/trader/trader_escort.lua:140
 msgid "Success with Casualties"
-msgstr ""
+msgstr "Sucesso com baixas"
 
 #: dat/missions/trader/trader_escort.lua:140
 msgid ""
@@ -83717,10 +83768,13 @@ msgid ""
 "docked slightly due to the loss of part of the convoy. You receive "
 "#g{credits}#0 of the original promised reward of {reward}."
 msgstr ""
+"Chegaste com o comboio de comércio mais ou menos intacto. O teu pagamento é "
+"ligeiramente reduzido devido à perda de parte do comboio. Recebes "
+"#g{credits}#0 da recompensa original de {reward}."
 
 #: dat/missions/trader/trader_escort.lua:142
 msgid "Success with Heavy Casualties"
-msgstr ""
+msgstr "Sucesso com grandes baixas"
 
 #: dat/missions/trader/trader_escort.lua:142
 msgid ""
@@ -83728,12 +83782,15 @@ msgid ""
 "than nothing. You are paid a steeply discounted amount of #g{credits}#0 from "
 "the {reward} originally promised."
 msgstr ""
+"Chegaste com o que resta do comboio. Não é muito, mas é melhor do que nada. "
+"Pagam-te um valor bastante inferior de #g{credits}#0 do originalmente "
+"prometido de {reward}."
 
 #. Handle the convoy getting attacked.
 #. luacheck: globals trader_attacked
 #: dat/missions/trader/trader_escort.lua:170
 msgid "Convoy ships under attack! Requesting immediate assistance!"
-msgstr ""
+msgstr "Comboio de naves a ser atacado! A pedir assistência imediata!"
 
 #. Make it interesting
 #.
@@ -84147,8 +84204,8 @@ msgid ""
 msgstr ""
 "\"Em #oArmas#0 podes alterar os conjuntos de armas da nave atual. Existem "
 "três tipos de conjuntos de armas:\n"
-"- #oArmas - Trocadas#0: quando ativado, define as armas que deves ter com a "
-"tecla de arma principal {keyprimary} e a tecla de arma secundária "
+"- #oArmas - Intercambiadas#0: quando ativado, define as armas que deves ter "
+"com a tecla de arma principal {keyprimary} e a tecla de arma secundária "
 "{keysecondary}.\n"
 "- #oArmas - Instantâneas#0: dispara imediatamente o conjunto de armas quando "
 "a tecla é pressionada. Para ativar isto para um conjunto tens de ativar a "
@@ -86709,6 +86766,12 @@ msgid ""
 "system, however, I have to stay here and watch {curpnt}. Would you be "
 "willing to bring the {cargo} from {pnt} for {credits}?\""
 msgstr ""
+"\"Ei, tenho a maior parte da estação a funcionar, mas para conseguir o "
+"resto, incluindo o estaleiro, vou precisar de alguns abastecimentos "
+"adicionais, os quais não posso improvisar. Se eu conseguisse obter {amount} "
+"de {cargo}, seria capaz de pôr tudo operacional. Consegui fazer uma "
+"encomenda em {pnt} no sistema {sys}, no entanto, tenho de ficar aqui e "
+"vigiar {curpnt}. Estarias disposto a trazer {cargo} de {pnt} por {credits}?\""
 
 #: dat/missions/zalek/blackhole/zbh02.lua:65
 #: dat/missions/zalek/blackhole/zbh03.lua:79
@@ -86720,7 +86783,7 @@ msgstr ""
 #: dat/missions/zalek/blackhole/zbh11.lua:60
 msgctxt "Zach"
 msgid "\"OK. I'll be here if you change your mind.\""
-msgstr ""
+msgstr "\"Ok, tudo bem. Estarei aqui se mudares de ideias.\""
 
 #: dat/missions/zalek/blackhole/zbh02.lua:69
 msgid ""
@@ -86728,19 +86791,24 @@ msgid ""
 "able to access all the memory logs and recorded data and try to make sense "
 "of what the hell happened here.\""
 msgstr ""
+"\"Obrigado mais uma vez. Assim que tivermos esta estação completamente "
+"operacional, devemos ser capazes de aceder a todos os registos da memória e "
+"dados gravados e tentar dar sentido ao que raio aconteceu aqui.\""
 
 #. Must be accepted beyond this point
 #. mission details
 #: dat/missions/zalek/blackhole/zbh02.lua:80
 #: dat/missions/zalek/blackhole/zbh02.lua:88
 msgid "Repairing Sigma-13"
-msgstr ""
+msgstr "Reparando Sigma-13"
 
 #: dat/missions/zalek/blackhole/zbh02.lua:82
 msgid ""
 "Pick up the necessary supplies at {pnt} in the {sys} system and bring them "
 "back to Zach at {retpnt}."
 msgstr ""
+"Recolhe os materiais necessários no sistema {pnt} e trá-los de volta para "
+"Zach em {retpnt}."
 
 #: dat/missions/zalek/blackhole/zbh02.lua:89
 #: dat/missions/zalek/blackhole/zbh05.lua:97
@@ -86748,11 +86816,11 @@ msgstr ""
 #: dat/missions/zalek/particlephysics/zpp02.lua:86
 #: dat/missions/zalek/particlephysics/zpp04.lua:84
 msgid "Pick up cargo at {pnt} ({sys} system)"
-msgstr ""
+msgstr "Recolhe a carga em {pnt} (sistema {sys})"
 
 #: dat/missions/zalek/blackhole/zbh02.lua:107
 msgid "Za'lek Individual"
-msgstr ""
+msgstr "Indivíduo Za'lek"
 
 #: dat/missions/zalek/blackhole/zbh02.lua:111
 msgid ""
@@ -90686,7 +90754,7 @@ msgstr ""
 #. TODO: nag player if they somehow ditch the prototype after the above scene has played out?
 #: dat/missions/zalek/neburesearch/neburesearch_05.lua:183
 msgid "Fly to the checkpoint in the {sys} system"
-msgstr ""
+msgstr "Voa para o ponto de controlo no sistema {sys}"
 
 #: dat/missions/zalek/neburesearch/neburesearch_05.lua:191
 msgid "Checkpoint"
@@ -93098,6 +93166,10 @@ msgid ""
 "the target{corrosion}, while reducing the targets turn, speed, and thrust by "
 "25% [Paralyzing Plasma], and lowering fire rate by 20% [Crippling Plasma]."
 msgstr ""
+"As queimaduras de plasma proporcionam {damage:.1f} de danos extra durante "
+"{duration} segundos no alvo{corrosion}, reduzindo simultaneamente a rotação, "
+"velocidade e impulso dos alvos em 25% [plasma paralisante] e diminuindo a "
+"taxa de fogo em 20% [plasma incapacitante]."
 
 #. Learned at 2
 #: dat/outfits/lib/bioplasma.lua:60
@@ -93106,12 +93178,17 @@ msgid ""
 "the target{corrosion}, while reducing the targets turn, speed, and thrust by "
 "25% [Paralyzing Plasma]."
 msgstr ""
+"As queimaduras de plasma proporcionam {damage:.1f} de danos extra durante "
+"{duration} segundos no alvo{corrosion}, reduzindo ao mesmo tempo a rotação, "
+"velocidade e impulso dos alvos em 25% [plasma paralisante]."
 
 #: dat/outfits/lib/bioplasma.lua:64
 msgid ""
 "Plasma burns deal an extra {damage:.1f} of damage over {duration} seconds on "
 "the target{corrosion}."
 msgstr ""
+"As queimaduras de plasma proporcionam {damage:.1f} de danos extra durante "
+"{duration} segundos sobre o alvo{corrosion}."
 
 #. Modify by damage
 #.
@@ -99042,7 +99119,7 @@ msgstr "Aletria"
 
 #: dat/scripts/pilotname/pirate.lua:254
 msgid "Bolt Cutter"
-msgstr "Saca Rabos"
+msgstr "Cortador a projéteis"
 
 #: dat/scripts/pilotname/pirate.lua:255
 msgid "Bōshi"
@@ -102046,72 +102123,72 @@ msgstr "! do teclado numérico"
 #: src/SDL_keynames.h:205
 msgctxt "keyname"
 msgid "Keypad MemStore"
-msgstr ""
+msgstr "MemStore do teclado numérico"
 
 #: src/SDL_keynames.h:206
 msgctxt "keyname"
 msgid "Keypad MemRecall"
-msgstr ""
+msgstr "MemRecall do teclado numérico"
 
 #: src/SDL_keynames.h:207
 msgctxt "keyname"
 msgid "Keypad MemClear"
-msgstr ""
+msgstr "MemClear do teclado numérico"
 
 #: src/SDL_keynames.h:208
 msgctxt "keyname"
 msgid "Keypad MemAdd"
-msgstr ""
+msgstr "MemAdd do teclado numérico"
 
 #: src/SDL_keynames.h:209
 msgctxt "keyname"
 msgid "Keypad MemSubtract"
-msgstr ""
+msgstr "MemSubtract do teclado numérico"
 
 #: src/SDL_keynames.h:210
 msgctxt "keyname"
 msgid "Keypad MemMultiply"
-msgstr ""
+msgstr "MemMultiply do teclado numérico"
 
 #: src/SDL_keynames.h:211
 msgctxt "keyname"
 msgid "Keypad MemDivide"
-msgstr ""
+msgstr "MemDivide do teclado numérico"
 
 #: src/SDL_keynames.h:212
 msgctxt "keyname"
 msgid "Keypad +/-"
-msgstr ""
+msgstr "\"+/-\" do teclado numérico"
 
 #: src/SDL_keynames.h:213
 msgctxt "keyname"
 msgid "Keypad Clear"
-msgstr ""
+msgstr "Clear do teclado numérico"
 
 #: src/SDL_keynames.h:214
 msgctxt "keyname"
 msgid "Keypad ClearEntry"
-msgstr ""
+msgstr "ClearEntry do teclado numérico"
 
 #: src/SDL_keynames.h:215
 msgctxt "keyname"
 msgid "Keypad Binary"
-msgstr ""
+msgstr "Binary do teclado numérico"
 
 #: src/SDL_keynames.h:216
 msgctxt "keyname"
 msgid "Keypad Octal"
-msgstr ""
+msgstr "Octal do teclado numérico"
 
 #: src/SDL_keynames.h:217
 msgctxt "keyname"
 msgid "Keypad Decimal"
-msgstr ""
+msgstr "Decimal do teclado numérico"
 
 #: src/SDL_keynames.h:218
 msgctxt "keyname"
 msgid "Keypad Hexadecimal"
-msgstr ""
+msgstr "Hexadecimal do teclado numérico"
 
 #: src/SDL_keynames.h:220
 msgctxt "keyname"
@@ -102131,7 +102208,7 @@ msgstr "Alt esquerdo"
 #: src/SDL_keynames.h:223
 msgctxt "keyname"
 msgid "Left GUI"
-msgstr ""
+msgstr "GUI esquerdo"
 
 #: src/SDL_keynames.h:224
 msgctxt "keyname"
@@ -102151,42 +102228,42 @@ msgstr "Alt direito"
 #: src/SDL_keynames.h:227
 msgctxt "keyname"
 msgid "Right GUI"
-msgstr ""
+msgstr "GUI direito"
 
 #: src/SDL_keynames.h:231
 msgctxt "keyname"
 msgid "ModeSwitch"
-msgstr ""
+msgstr "ModeSwitch"
 
 #: src/SDL_keynames.h:232
 msgctxt "keyname"
 msgid "AudioNext"
-msgstr ""
+msgstr "Áudio seguinte"
 
 #: src/SDL_keynames.h:233
 msgctxt "keyname"
 msgid "AudioPrev"
-msgstr ""
+msgstr "Áudio anteiror"
 
 #: src/SDL_keynames.h:234
 msgctxt "keyname"
 msgid "AudioStop"
-msgstr ""
+msgstr "Parar do Áudio"
 
 #: src/SDL_keynames.h:235
 msgctxt "keyname"
 msgid "AudioPlay"
-msgstr ""
+msgstr "Reproduzir Áudio"
 
 #: src/SDL_keynames.h:236
 msgctxt "keyname"
 msgid "AudioMute"
-msgstr ""
+msgstr "Emudecer Áudio"
 
 #: src/SDL_keynames.h:237
 msgctxt "keyname"
 msgid "MediaSelect"
-msgstr ""
+msgstr "Selecionar Média"
 
 #: src/SDL_keynames.h:238
 msgctxt "keyname"
@@ -102196,7 +102273,7 @@ msgstr "WWW"
 #: src/SDL_keynames.h:239
 msgctxt "keyname"
 msgid "Mail"
-msgstr ""
+msgstr "Email"
 
 #: src/SDL_keynames.h:240
 msgctxt "keyname"
@@ -102206,7 +102283,7 @@ msgstr "Calculadora"
 #: src/SDL_keynames.h:241
 msgctxt "keyname"
 msgid "Computer"
-msgstr ""
+msgstr "Computador"
 
 #: src/SDL_keynames.h:242
 msgctxt "keyname"
@@ -102292,11 +102369,11 @@ msgstr ""
 #: src/ai.c:445
 #, c-format
 msgid "AI Profile '%s' not found, using dummy fallback."
-msgstr ""
+msgstr "Não foi encontrado o perfil de IA '%s'. A usar o básico alternativo."
 
 #: src/ai.c:450
 msgid "Dummy AI Profile not valid! Things are going to break."
-msgstr ""
+msgstr "O perfil básico de IA não é válido! As coisas vão partir-se."
 
 #: src/ai.c:550
 #, c-format
@@ -103174,10 +103251,11 @@ msgstr ""
 msgid ""
 "Whether or not clicking the middle mouse button toggles mouse flying mode."
 msgstr ""
+"Se clicar ou não no botão central do rato alterna o modo de voo com o rato."
 
 #: src/conf.c:1045
 msgid "Mouse-flying thrust control"
-msgstr ""
+msgstr "Controlo de impulso de voo com o rato"
 
 #: src/conf.c:1049
 msgid "Maximum interval to count as a double-click (0 disables)."
@@ -106171,7 +106249,7 @@ msgstr ""
 
 #: src/land.c:691
 msgid "Are you sure you want to accept this mission?"
-msgstr "Tens a certeza de que queres aceitar esta missão?"
+msgstr "Queres aceitar esta missão?"
 
 #: src/land.c:778
 #, c-format
@@ -107694,7 +107772,7 @@ msgstr ""
 
 #: src/naev.c:311
 msgid "Initializing subsystems…"
-msgstr ""
+msgstr "A inicializar os subsistemas…"
 
 #: src/naev.c:319
 msgid "Error initializing joystick input"
@@ -109595,27 +109673,27 @@ msgstr "NULO"
 
 #: src/outfit.c:883
 msgid "Bolt Cannon"
-msgstr ""
+msgstr "Canhão de projéteis"
 
 #: src/outfit.c:884
 msgid "Beam Cannon"
-msgstr ""
+msgstr "Canhão de raios"
 
 #: src/outfit.c:885
 msgid "Bolt Turret"
-msgstr ""
+msgstr "Torreta de projéteis"
 
 #: src/outfit.c:886
 msgid "Beam Turret"
-msgstr ""
+msgstr "Torreta de raios"
 
 #: src/outfit.c:887 src/outfit.c:914
 msgid "Launcher"
-msgstr ""
+msgstr "Lançador"
 
 #: src/outfit.c:888
 msgid "Turret Launcher"
-msgstr ""
+msgstr "Torreta lançadora"
 
 #: src/outfit.c:889
 msgid "Ship Modification"
@@ -109639,16 +109717,16 @@ msgstr "Licença"
 
 #: src/outfit.c:912
 msgid "Bolt Weapon"
-msgstr ""
+msgstr "Arma de projéteis"
 
 #: src/outfit.c:913
 msgid "Beam Weapon"
-msgstr ""
+msgstr "Arma de raios"
 
 #. else if (outfit_isTurret(o))     return N_("Turret");
 #: src/outfit.c:916
 msgid "Modification"
-msgstr ""
+msgstr "Modificação"
 
 #: src/outfit.c:919
 msgid "Map"
@@ -109669,7 +109747,7 @@ msgstr "Inteligente"
 #: src/outfit.c:940
 #, c-format
 msgid "Outfit '%s' is not a launcher outfit"
-msgstr ""
+msgstr "O equipamento '%s' não é um equipamento de lançamento"
 
 #: src/outfit.c:1076
 #, c-format
@@ -109849,7 +109927,7 @@ msgid ""
 "%.1f second heat up"
 msgstr ""
 "\n"
-"%.1f segundos para aquecimento"
+"%.1f aquecimento p/segundo"
 
 #: src/outfit.c:1383
 #, c-format
@@ -109947,13 +110025,13 @@ msgstr ""
 #: src/outfit.c:1687
 #, c-format
 msgid "Ammo '%s' has unknown ai type '%s'."
-msgstr ""
+msgstr "As munições '%s' têm um tipo de IA desconhecido '%s'."
 
 #. Condition for not taking max_speed into account.
 #: src/outfit.c:1711
 #, c-format
 msgid "Max speed of ammo '%s' will be ignored."
-msgstr ""
+msgstr "A velocidade máxima das munições '%s' será ignorada."
 
 #: src/outfit.c:1727
 #, c-format
@@ -110388,7 +110466,7 @@ msgstr "#rA nave sob comando '%s' foi destruída!#0"
 
 #: src/pilot.c:2698 src/pilot.c:2725
 msgid "Strayed too far from jump point: jump aborted."
-msgstr ""
+msgstr "Demasiado longe do ponto de salto: salto abortado."
 
 #: src/pilot.c:2705
 msgid "Afterburner active: jump aborted."
@@ -110474,6 +110552,8 @@ msgstr ""
 #: src/pilot_outfit.c:553
 msgid "!! Not All Core Slots are equipped"
 msgstr ""
+"Nem todos os espaços do núcleo estão equipados! Vai a Equipamento e preenche-"
+"os."
 
 #. CPU.
 #: src/pilot_outfit.c:555
@@ -110529,7 +110609,7 @@ msgstr "!! Consumo de combustível insuficiente"
 
 #: src/pilot_outfit.c:573
 msgid "!! Insufficient Free Cargo Space"
-msgstr "!! Espaço de carga livre insuficiente"
+msgstr "Espaço de carga livre insuficiente!"
 
 #: src/pilot_outfit.c:574
 msgid "!! Insufficient Crew"
@@ -110584,7 +110664,7 @@ msgstr "Não utilizado"
 
 #: src/pilot_weapon.c:387
 msgid "Weapons - Switched"
-msgstr "Armas - Trocadas"
+msgstr "Armas - Intercambiadas"
 
 #: src/pilot_weapon.c:388
 msgid "Weapons - Instant"
@@ -110778,11 +110858,11 @@ msgstr ""
 
 #: src/player.c:2445
 msgid "Mouse flying enabled."
-msgstr ""
+msgstr "Voar com o rato ativado."
 
 #: src/player.c:2451
 msgid "Mouse flying disabled."
-msgstr ""
+msgstr "Voar com o rato desativado."
 
 #: src/player.c:2672 src/player.c:2691
 #, c-format
@@ -111035,7 +111115,7 @@ msgstr ""
 
 #: src/player.c:4586
 msgid "Unable to stealth: other pilots nearby!"
-msgstr ""
+msgstr "Impossível ativar a camuflagem: existem pilotos nas proximidades!"
 
 #: src/player_autonav.c:79
 msgid "#rNot enough fuel to jump for autonav."
