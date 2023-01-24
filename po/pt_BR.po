@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-01-10 23:36+0900\n"
-"PO-Revision-Date: 2023-01-23 23:49+0000\n"
+"PO-Revision-Date: 2023-01-25 04:48+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
 "naev-0-10-x/pt_BR/>\n"
@@ -414,7 +414,7 @@ msgstr "Felix Schneider \"Scaatis\" <fsfuenf@gmail.com>"
 
 #: dat/AUTHORS:54
 msgid "   * Naev logo, Lua GUI development"
-msgstr "   * Logtipo Naev, Desenvolvedor da interface gráfica em Lua"
+msgstr "   * Logotipo Naev, Desenvolvedor da interface gráfica em Lua"
 
 #: dat/AUTHORS:56
 msgid "M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>"
@@ -472,7 +472,7 @@ msgstr "Joel Hans <wolorf@gmail.com>"
 
 #: dat/AUTHORS:73
 msgid "   * Planet Graphics"
-msgstr "   * Gráfico dos Planetas"
+msgstr "   * Imagens dos Planetas"
 
 #: dat/AUTHORS:74
 msgid "   * Render Script"
@@ -528,7 +528,7 @@ msgid ""
 "   Saved a lot of trouble by allowing us to quickly create space planet "
 "graphics."
 msgstr ""
-"   Evitou muitos problemas ao nos permitir criar rapidamente gráficos de "
+"   Evitou muitos problemas ao nos permitir criar rapidamente imagens de "
 "planetas espaciais."
 
 #: dat/AUTHORS:90
@@ -569,7 +569,7 @@ msgstr "Jordi Pegueroles Queralt \"pegue\" <j.pegueroles.queralt@gmail.com>"
 
 #: dat/AUTHORS:99
 msgid "   * Mace Rocket model"
-msgstr "   * Modelo do Foguete Mace "
+msgstr "   * Modelo do Foguete Mace"
 
 #: dat/AUTHORS:101
 msgid "Brian J. Cameron"
@@ -673,7 +673,7 @@ msgstr "* Suporte de codificação variada"
 
 #: dat/AUTHORS:131
 msgid "Fisherman"
-msgstr "Pescador"
+msgstr "Fisherman"
 
 #: dat/AUTHORS:132
 msgid ""
@@ -1137,7 +1137,7 @@ msgid ""
 msgstr ""
 "Minérios são um material chave em muitas indústrias; fundidos em forma de "
 "metais. Sem minérios, a indústria de construção de espaçonaves e muitas "
-"outras ficariam paralizadas."
+"outras ficariam paralisadas."
 
 #: dat/commodities/platinum.xml:3
 msgid "Platinum"
@@ -1287,7 +1287,7 @@ msgstr ""
 
 #: dat/commodities/yttrium.xml:3
 msgid "Yttrium"
-msgstr "Itrio"
+msgstr "Ítrio"
 
 #: dat/commodities/yttrium.xml:4
 msgid ""
@@ -1296,7 +1296,7 @@ msgid ""
 "believe this is a key indicator of rough times ahead."
 msgstr ""
 "Com um papel crítico em tecnologias de laser e iluminação, a demanda "
-"constante mostrou preços recorde para o Itrio desde o Incidente. Economistas "
+"constante mostrou preços recorde para o ítrio desde o Incidente. Economistas "
 "acreditam que este é um indicador chave nos tempos difíceis que estão por "
 "vir."
 
@@ -1479,7 +1479,7 @@ msgstr "Saindo de hiperportal!"
 #: dat/outfits/bioship/skills/paralyzing_plasma.xml:2
 #: dat/scripts/bioship/skills.lua:255
 msgid "Paralyzing Plasma"
-msgstr "Plasma Paralizante"
+msgstr "Plasma Paralisante"
 
 #: dat/effects/paralyzing_plasma.xml:3
 msgid "Plasma is slowing the ship down!"
@@ -1487,7 +1487,7 @@ msgstr "Plasma está desacelerando a nave!"
 
 #: dat/effects/plasma_burn.xml:2
 msgid "Plasma Burn"
-msgstr "Queimadura de Plasma"
+msgstr "Queimadura de plasma"
 
 #: dat/effects/plasma_burn.xml:3 dat/effects/plasma_burn_ii.xml:3
 msgid "Plasma is burning the ship!"
@@ -1495,7 +1495,7 @@ msgstr "Plasma está queimando a nave!"
 
 #: dat/effects/plasma_burn_ii.xml:2
 msgid "Plasma Burn II"
-msgstr "Queimadura de Plasma II"
+msgstr "Queimadura de plasma II"
 
 #: dat/effects/ride_of_the_valkyries.xml:2
 msgid "Ride of the Valkyries"
@@ -1641,12 +1641,12 @@ msgid ""
 "Frontier, fed up with both the FLF and Dvaered terrorism, and Empire tyranny."
 msgstr ""
 "O Clã Pirata Sonhador consiste em sua maior parte de piratas desiludidos da "
-"fronteira, cansados do terroismo tanto da FLF quanto Dvaered, assim como da "
+"fronteira, cansados do terrorismo tanto da FLF quanto Dvaered, assim como da "
 "tirania do Império."
 
 #: dat/factions/dummy.xml:2
 msgid "Dummy"
-msgstr ""
+msgstr "Simulado"
 
 #. Add the Cargo
 #. Ship to go back to
@@ -2412,7 +2412,7 @@ msgstr ""
 
 #: dat/outfits/accessory/trading_card_uncommon.xml:2
 msgid "Trading Card (Uncommon)"
-msgstr "Carta Colecinável (Incomum)"
+msgstr "Carta Colecionável (Incomum)"
 
 #: dat/outfits/accessory/trading_card_uncommon.xml:11
 msgid ""
@@ -2517,7 +2517,7 @@ msgid ""
 "adrenaline from raw energy, allowing the ship to temporarily have augmented "
 "movement."
 msgstr ""
-"O orgão da bionave glândula adrenal é capaz de gerar quantidades imensas de "
+"O órgão da bionave glândula adrenal é capaz de gerar quantidades imensas de "
 "adrenalina a partir de energia bruta, permitindo que a nave tenha um aumento "
 "temporário de movimento."
 
@@ -2587,7 +2587,7 @@ msgid ""
 msgstr ""
 "Mediante cuidadosa manipulação do tronco cerebral, a bionave pode ser "
 "induzida a um estado primitivo de fúria selvagem na qual o rendimento das "
-"armas de proa e torretas é signficativamente aumentado. É necessário dano a "
+"armas de proa e torretas é significativamente aumentado. É necessário dano a "
 "blindagem para entrar neste estado semelhante a um transe."
 
 #: dat/outfits/bioship/skills/feral_rage_i.xml:11
@@ -2610,9 +2610,9 @@ msgid ""
 msgstr ""
 "Mediante cuidadosa manipulação do tronco cerebral, a bionave pode ser "
 "induzida a um estado primitivo de fúria selvagem na qual o rendimento das "
-"armas de proa e torretas é signficativamente aumentado. É necessário dano a "
+"armas de proa e torretas é significativamente aumentado. É necessário dano a "
 "blindagem para entrar neste estado semelhante a um transe. Acoplagem "
-"adicional com o Cerebelo permite ao transe também aumentar temporáriamente a "
+"adicional com o Cerebelo permite ao transe também aumentar temporariamente a "
 "agilidade da nave."
 
 #: dat/outfits/bioship/skills/feral_rage_iii.xml:2
@@ -2631,9 +2631,9 @@ msgid ""
 msgstr ""
 "Mediante cuidadosa manipulação do tronco cerebral, a bionave pode ser "
 "induzida a um estado primitivo de fúria selvagem na qual o rendimento das "
-"armas de proa e torretas é signficativamente aumentado. É necessário dano a "
+"armas de proa e torretas é significativamente aumentado. É necessário dano a "
 "blindagem para entrar neste estado semelhante a um transe. Acoplagem "
-"adicional com o cerebelo permite ao transe também aumentar temporáriamente a "
+"adicional com o cerebelo permite ao transe também aumentar temporariamente a "
 "agilidade da nave. O transe é induzido automaticamente por dano à blindagem, "
 "mas pode ser ativado por concentração."
 
@@ -2713,7 +2713,7 @@ msgstr "Antenas Rastreadoras"
 #: dat/outfits/bioship/skills/tunnelling_organ.xml:2
 #: dat/scripts/bioship/skills.lua:325
 msgid "Tunnelling Organ"
-msgstr "Orgâo de Tunelamento"
+msgstr "Órgão de Tunelamento"
 
 #: dat/outfits/bioship/skills/wanderer.xml:2 dat/scripts/bioship/skills.lua:94
 msgid "Wanderer"
@@ -2782,7 +2782,7 @@ msgid ""
 "its tuning renders it ill-suited to heavier vessels."
 msgstr ""
 "O Remige foi desenvolvido pelas Indústrias Krain exclusivamente para seu "
-"crusador principal, o Kestrel. Otimizado para as necessidades do Kestrel, o "
+"cruzador principal, o Kestrel. Otimizado para as necessidades do Kestrel, o "
 "Remige oferece performance acima da maioria dos outros motores para "
 "cruzadores em todos os aspectos, ainda que sua regulagem o torne impróprio "
 "para naves mais pesadas."
@@ -2799,7 +2799,7 @@ msgid ""
 "a fully-equipped battlecruiser."
 msgstr ""
 "O maior motor produzido pela Melendez, o Mamute EG tem muito pouca "
-"competição quando se trata de mover objetos massivos através da galaxia, "
+"competição quando se trata de mover objetos massivos através da galáxia, "
 "seja em forma de cargas à granel ou como motor primário de um Cruzador de "
 "Batalha totalmente equipado."
 
@@ -2815,7 +2815,7 @@ msgid ""
 msgstr ""
 "O Raio 3500 é um motor um tanto raramente usado projetado para cruzadores. "
 "Como a maioria dos motores Nexus, seu ponto forte não é velocidade mas o "
-"baioo consumo de energia o torna uma opção atraente para alguns pilotos."
+"baixo consumo de energia o torna uma opção atraente para alguns pilotos."
 
 #: dat/outfits/core_engine/large/tricon_typhoon_engine.xml:2
 msgid "Tricon Typhoon Engine"
@@ -2828,8 +2828,8 @@ msgid ""
 "of many captains, though its high power consumption limits it to ships with "
 "powerful reactors."
 msgstr ""
-"O Desenvolvimento do motor Tufão é uma espécie de projeto de prestígio para "
-"a Tricon. Oferecendo a crusadores soberba manobrabilidade e velocidade, ele "
+"O desenvolvimento do motor Tufão é uma espécie de projeto de prestígio para "
+"a Tricon. Oferecendo a cruzadores soberba manobrabilidade e velocidade, ele "
 "é um favorito de muitos capitães, ainda que seu alto consumo de energia o "
 "limite a naves com poderosos reatores."
 
@@ -2845,9 +2845,10 @@ msgid ""
 "make the trade for superior manoeuvrability"
 msgstr ""
 "O maior motor Tricon em produção, o Tufão II ostenta uma performance "
-"surprendentemente alta para um motor de nave capital. Seu consumo de energia "
-"é nitidamente mais alto que qualquer outro no segmento, mas a maioria dos "
-"capitães está disposto a ao sacrifício para ter manobrabilidade superior"
+"surpreendentemente alta para um motor de nave capital. Seu consumo de "
+"energia é nitidamente mais alto que qualquer outro no segmento, mas a "
+"maioria dos capitães está disposto a ao sacrifício para ter manobrabilidade "
+"superior"
 
 #: dat/outfits/core_engine/large/unicorp_eagle_7000_engine.xml:2
 msgid "Unicorp Eagle 7000 Engine"
@@ -2883,10 +2884,11 @@ msgid ""
 "terms of maximum speed and manouverability, the engine is not adequate for "
 "most other destroyers due to their higher mass."
 msgstr ""
-"O Patágio é um motor para destruidor desenvolvido pelas Indústrias Krain ser "
-"utilizado no Ponte Estelar. Embora o seu desempenho exceda outros motores da "
-"classe em termos de velocidade máxima e manobrabilidade, o motor não é "
-"adequado para a maioria dos outros destruidores devido à sua maior massa."
+"O Patágio é um motor para contratorpedeiro desenvolvido pelas Indústrias "
+"Krain ser utilizado no Ponte Estelar. Embora o seu desempenho exceda outros "
+"motores da classe em termos de velocidade máxima e manobrabilidade, o motor "
+"não é adequado para a maioria dos outros contratorpedeiros devido à sua "
+"maior massa."
 
 #: dat/outfits/core_engine/medium/melendez_buffalo_xl_engine.xml:2
 msgid "Melendez Buffalo XL Engine"
@@ -2947,7 +2949,7 @@ msgstr ""
 "Um motor preferido de capitães de contratorpedeiro e aqueles focados em "
 "tempo, o Ciclone II mantém a maior parte da performance original enquanto "
 "leva a capacidade de massa além do dobro da original. O grande consumo de "
-"energia é tipica e alegremente aceito de bom grado, dada a sua performance "
+"energia é típico e alegremente aceito de bom grado, dada a sua performance "
 "exemplar."
 
 #: dat/outfits/core_engine/medium/unicorp_falcon_1300_engine.xml:2
@@ -2998,7 +3000,7 @@ msgid ""
 msgstr ""
 "O Dardo 150 é um motor bem equilibrado para naves leves. Ainda que não se "
 "destaque em velocidade, ele oferece boa manobrabilidade e eficiência de "
-"energia por um preço razoavel. Um motor muito popular entre usuários tanto "
+"energia por um preço razoável. Um motor muito popular entre usuários tanto "
 "militares quanto civis."
 
 #: dat/outfits/core_engine/small/tricon_zephyr_engine.xml:2
@@ -3062,7 +3064,7 @@ msgid ""
 "are very often modded by students, which makes them unreliable."
 msgstr ""
 "Construido por fabricantes Za'lek, este motor não tem por objetivo ser "
-"eficiente. A meta é ser facilmente modificavel para que cientistas Za'lek "
+"eficiente. A meta é ser facilmente modificável para que cientistas Za'lek "
 "possam testar novos sistemas de refrigeração e propulsão. Estes motores são "
 "frequentemente modificados por estudantes, o que os torna pouco confiáveis."
 
@@ -3116,8 +3118,8 @@ msgid ""
 "On the plus side, it keeps air from venting into space. But that's about it. "
 "This kind of hull maintenance is simply unacceptable."
 msgstr ""
-"Como vantagem, está blindagem impede que o ar escape para o espaço, mas é so "
-"isso. Esse tipo de manutenção de casco é simplesmente inaceitavel."
+"Como vantagem, esta blindagem impede que o ar escape para o espaço, mas é só "
+"isso. Esse tipo de manutenção de casco é simplesmente inaceitável."
 
 #: dat/outfits/core_hull/large/rs_large_cargo_hull.xml:2
 msgid "Red Star Large Cargo Hull"
@@ -4439,19 +4441,9 @@ msgstr ""
 
 #: dat/outfits/launchers/teracom_mace_launcher.xml:2
 msgid "TeraCom Mace Launcher"
-msgstr "Lançador de Forguetes Maça TeraCom"
+msgstr "Lançador de Foguetes Maça TeraCom"
 
 #: dat/outfits/launchers/teracom_mace_launcher.xml:9
-#, fuzzy
-#| msgid ""
-#| "The Mace class unguided rocket is a cheap, expendable weapon used to "
-#| "boost peak firepower in tight situations. It is far better at dealing "
-#| "damage to light targets than most fighter sized energy cannons, but comes "
-#| "with the disadvantage of running out of ammunition after only a short "
-#| "time of fire.\n"
-#| "\n"
-#| "TeraCom's Mace launcher uses an advanced reload mechanism that allows the "
-#| "launcher to fire more rockets in less time."
 msgid ""
 "The Mace class unguided rocket is a cheap, expendable weapon used to boost "
 "peak firepower in tight situations. It is far better at dealing damage to "
@@ -4462,10 +4454,7 @@ msgstr ""
 "para aumentar o poder de fogo de pico em situações críticas. É muito melhor "
 "em causar danos à alvos rápidos que a maioria dos canhões de energia "
 "destinados a caças, mas vem com a desvantagem de ficar sem munições após "
-"apenas um curto ciclo de disparo.\n"
-"\n"
-"O lançador de Forguete Maça da TeraCom utiliza um mecanismo avançado de "
-"recarga que permite ao lançador disparar mais foguetes em menos tempo."
+"apenas um curto ciclo de disparo."
 
 #: dat/outfits/launchers/teracom_medusa_launcher.xml:2
 msgid "TeraCom Medusa Launcher"
@@ -7422,7 +7411,7 @@ msgid ""
 "the shields from those who would stand against House Sirius. It is commonly "
 "found on Sirius Preachers and other Corvettes."
 msgstr ""
-"O Fatiadoré uma versão de alta potência da Navalha, excelente para retirar "
+"O Fatiador é uma versão de alta potência da Navalha, excelente para retirar "
 "escudos daqueles que se oponham à Casa Sirius. Encontra-se normalmente em "
 "Sermonistas Sirius e outras Corvetas."
 
