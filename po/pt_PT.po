@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-01-10 23:36+0900\n"
-"PO-Revision-Date: 2023-01-25 04:48+0000\n"
+"PO-Revision-Date: 2023-01-26 01:03+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Portugal) <https://hosted.weblate.org/projects/"
 "naev/naev-0-10-x/pt_PT/>\n"
@@ -3130,6 +3130,13 @@ msgid ""
 "scrambler systems allow even the largest ships a chance to turn away "
 "missiles."
 msgstr ""
+"A Estrela Vermelha Imperial dedica-se aos esforços de socorro em áreas "
+"atingidas pela guerra, pirataria e doenças. Recentemente desenvolvida pela "
+"organização, esta série de cascos de carga especializados destinam-se a "
+"maximizar as probabilidades dos seus abastecimentos e pessoal chegarem em "
+"segurança onde são mais necessários. Os sistemas de distorção "
+"eletromagnética integrados permitem que mesmo as maiores naves tenham a "
+"oportunidade desviarem mísseis dirigidos a elas."
 
 #: dat/outfits/core_hull/large/sk_heavy_combat_plating.xml:2
 msgid "S&K Heavy Combat Plating"
@@ -3141,9 +3148,9 @@ msgid ""
 "prolonged battle. Quite a few captains and their crews owe their lives to "
 "this armour configuration."
 msgstr ""
-"Esta blindagem pesada desenvolvida pelas Indústrias Schafer & Kane pode "
-"suportar batalhas prolongadas. Um bom número de capitães e suas tripulações "
-"devem a vida a esta configuração de blindagem."
+"Este revestimento pesado desenvolvido pelas Indústrias Schafer & Kane pode "
+"suportar batalhas prolongadas. Um bom número de capitães e as suas "
+"tripulações devem a vida a esta configuração de blindagem."
 
 #: dat/outfits/core_hull/large/sk_large_cargo_hull.xml:2
 msgid "S&K Large Cargo Hull"
@@ -3156,8 +3163,8 @@ msgid ""
 "without sacrificing too much durability."
 msgstr ""
 "Este casco de carga das Indústrias Schafer & Kane utiliza ligas metálicas de "
-"ponta, o que permite que ainda mais espaço seja liberado para carga sem "
-"sacrificar muita durabilidade."
+"ponta, o que permite que seja liberado ainda mais espaço para carga sem "
+"sacrificar muito a durabilidade."
 
 #: dat/outfits/core_hull/large/sk_superheavy_combat_plating.xml:2
 msgid "S&K Superheavy Combat Plating"
@@ -3169,7 +3176,7 @@ msgid ""
 "modification from Schafer & Kane Industries is generally found only on "
 "important capital ships."
 msgstr ""
-"Considerada a melhor configuração de blindagem padrão do mercado, está "
+"Considerada a melhor configuração de revestimento padrão do mercado, esta "
 "modificação de casco das Indústrias Schaefer & Kane é geralmente encontrada "
 "apenas em naves capitais importantes."
 
@@ -3183,9 +3190,9 @@ msgid ""
 "weapons, with most seasoned captains opting for a heavier, more advanced "
 "plating."
 msgstr ""
-"Embora seja um projeto respeitável, a blindagem D-48 é superada por armas "
-"pesadas modernas, com a maioria dos capitães experientes optando por "
-"blindagens mais pesadas e avançadas."
+"Embora seja um projeto respeitável, o revestimento D-48 é superado por armas "
+"pesadas modernas, com a maioria dos capitães experientes a optar por "
+"revestimentos mais pesados e avançados."
 
 #: dat/outfits/core_hull/large/unicorp_d68_heavy_plating.xml:2
 msgid "Unicorp D-68 Heavy Plating"
@@ -3197,9 +3204,9 @@ msgid ""
 "weapons, with most seasoned captains opting for a heavier, more advanced "
 "plating."
 msgstr ""
-"Embora seja um projeto respeitável, a blindagem D-68 é superada por armas "
-"pesadas modernas, com a maioria dos capitães experientes optando por "
-"blindagens mais pesadas e avançadas."
+"Embora seja um projeto respeitável, o revestimento D-68 é superado por armas "
+"pesadas modernas, com a maioria dos capitães experientes a optar por "
+"revestimentos mais pesados e avançados."
 
 #: dat/outfits/core_hull/medium/nexus_medium_stealth_plating.xml:2
 msgid "Nexus Medium Stealth Plating"
@@ -3211,9 +3218,9 @@ msgid ""
 "but Nexus Shipyards have nevertheless developed a hull modification that "
 "helps in this area"
 msgstr ""
-"Naves médias geralmente não se importam em permanecer não detectadas, mas os "
-"Estaleiros Nexo ainda assim desenvolveram uma modificação de casco que ajuda "
-"neste quesito"
+"As naves médias geralmente não se importam de permanecerem detetáveis, mas "
+"ainda assim os Estaleiros Nexo desenvolveram uma modificação de casco que "
+"ajuda neste aspeto"
 
 #: dat/outfits/core_hull/medium/patchwork_medium_plating.xml:2
 msgid "Patchwork Medium Plating"
@@ -3233,6 +3240,14 @@ msgid ""
 "missiles, especially torpedoes, and compel enemy turrets to track just that "
 "little bit slower."
 msgstr ""
+"A Estrela Vermelha Imperial dedica-se aos esforços de socorro em áreas "
+"atingidas pela guerra, pirataria e doenças. Recentemente desenvolvida pela "
+"organização, esta série de cascos de carga especializados destinam-se a "
+"maximizar as probabilidades dos seus abastecimentos e pessoal chegarem em "
+"segurança onde são mais necessários. Os sistemas de distorção "
+"eletromagnética integrados permitem que as naves médias resistam com mais "
+"eficiência a ataques de mísseis guiados, especialmente torpedos, e compelem "
+"as torres inimigas a rastrearem um pouco mais devagar."
 
 #: dat/outfits/core_hull/medium/sk_medium_cargo_hull.xml:2
 msgid "S&K Medium Cargo Hull"
@@ -3256,8 +3271,8 @@ msgid ""
 "combat plating provides ample protection utilizing the latest in defensive "
 "materials."
 msgstr ""
-"Projetada para corvetas e naves de dimensões similares, a Blindagem de "
-"Combate Média Schafer e Kane oferece ampla proteção utilizando o que há de "
+"Projetado para corvetas e naves de dimensões similares, o Revestimento de "
+"Combate Médio Schafer e Kane oferece ampla proteção utilizando o que há de "
 "mais recente em materiais defensivos."
 
 #: dat/outfits/core_hull/medium/sk_mediumheavy_combat_plating.xml:2
@@ -3270,9 +3285,9 @@ msgid ""
 "heavy combat plating provides excellent protection from everything save "
 "capital-class threats."
 msgstr ""
-"Projetada para contratorpedeiros e naves de dimensões similares, a Blindagem "
-"de Combate Meio-Pesada Schafer & Kane oferece excelente proteção contra tudo "
-"a não ser ameaças de classe capital."
+"Projetado para contratorpedeiros e naves de dimensões similares, o "
+"Revestimento de Combate Meio-Pesado Schafer & Kane oferece excelente "
+"proteção contra tudo a não ser ameaças de classe capital."
 
 #: dat/outfits/core_hull/medium/unicorp_d12_medium_plating.xml:2
 msgid "Unicorp D-12 Medium Plating"
@@ -3283,8 +3298,8 @@ msgid ""
 "D-12 plating provides a serviceable layer of armour to medium ships, and "
 "doesn't weigh too much."
 msgstr ""
-"A blindagem D-12 oferece uma camada útil de blindagem para naves médias, e "
-"não é muito pesada."
+"O Revestimento D-12 oferece uma camada útil de blindagem a naves médias e "
+"não é muito pesado."
 
 #: dat/outfits/core_hull/medium/unicorp_d24_medium_plating.xml:2
 msgid "Unicorp D-24 Medium Plating"
@@ -3296,9 +3311,9 @@ msgid ""
 "thicker and built atop an enlarged superstructure, increasing mass, armour, "
 "and cargo capacity."
 msgstr ""
-"A blindagem Unicorp D-24 é similar à D-12, mas as placas de blindagem são "
-"mais espessas e construídas sobre uma superestrutura aumentada, fazendo com "
-"que a massa, blindagem e capacidade de carga aumentem."
+"O Revestimento Unicorp D-24 é similar ao Revestimento D-12, mas as placas de "
+"blindagem são mais espessas e construídas sobre uma superestrutura alargada, "
+"fazendo com que a massa, blindagem e capacidade de carga aumentem."
 
 #: dat/outfits/core_hull/small/nexus_light_stealth_plating.xml:2
 msgid "Nexus Light Stealth Plating"
@@ -3310,9 +3325,9 @@ msgid ""
 "Plating configuration features the latest in sensor-absorbing materials and "
 "geometry."
 msgstr ""
-"Projetada para naves militares de reconhecimento e patrulha, a configuração "
-"da Blindagem Furtiva Leve Nexo possuí o mais recente em materiais "
-"absorventes de sensores e geometria."
+"Projetado para naves militares de reconhecimento e patrulha, a configuração "
+"do Revestimento de Camuflagem Leve Nexo conta com o mais recente em "
+"materiais absorventes de sensores e geometria."
 
 #: dat/outfits/core_hull/small/patchwork_light_plating.xml:2
 msgid "Patchwork Light Plating"
@@ -3332,6 +3347,14 @@ msgid ""
 "allowing small ships to more effectively run blockades by pirates and "
 "privateers."
 msgstr ""
+"A Estrela Vermelha Imperial dedica-se aos esforços de socorro em áreas "
+"atingidas pela guerra, pirataria e doenças. Recentemente desenvolvida pela "
+"organização, esta série de cascos de carga especializados destinam-se a "
+"maximizar as probabilidades dos seus abastecimentos e pessoal chegarem em "
+"segurança onde são mais necessários. Este casco integra sistemas de "
+"distorção eletromagnética para ajudar a atenuar os efeitos de mísseis "
+"teleguiados e rastreamento de torres, permitindo que as pequenas naves "
+"executem bloqueios de piratas e corsários com mais eficiência."
 
 #: dat/outfits/core_hull/small/sk_light_combat_plating.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:228
@@ -3345,8 +3368,8 @@ msgid ""
 "providing optimum protection."
 msgstr ""
 "As Indústrias Schafer & Kane geralmente desenvolvem soluções para naves "
-"maiores mas a configuração de Blindagem de Combate Média é um produto feito "
-"para caças e bombardeiros, oferecendo proteção ideal."
+"maiores mas a configuração do Revestimento de Combate Leve é um produto "
+"feito para caças e bombardeiros, oferecendo a proteção ideal."
 
 #: dat/outfits/core_hull/small/sk_small_cargo_hull.xml:2
 msgid "S&K Small Cargo Hull"
@@ -3358,7 +3381,7 @@ msgid ""
 "Schafer & Kane Industries provides an impressive amount of cargo space "
 "without compromising the hull's integrity."
 msgstr ""
-"Ainda que um investimento custoso para pequenos transportadores, esta "
+"Embora seja um investimento caro para pequenos transportadores, esta "
 "modificação de casco das Indústrias Schafer & Kane oferece uma quantidade "
 "impressionante de espaço de carga sem comprometer a integridade do casco."
 
@@ -3373,9 +3396,9 @@ msgid ""
 "and in-system patrol craft, providing optimum protection."
 msgstr ""
 "As Indústrias Schafer & Kane geralmente desenvolvem soluções para naves "
-"maiores, mas a configuração de Blindagem de Ultra-Leve é um produto feito "
-"para caças leves e naves de patrulha intra-sistema, oferecendo proteção "
-"ideal."
+"maiores, mas a configuração do Revestimento de Combate Ultra-Leve S&K é um "
+"produto feito para caças ligeiros e naves de patrulha intra-sistema, "
+"oferecendo a proteção ideal."
 
 #: dat/outfits/core_hull/small/unicorp_d2_light_plating.xml:2
 msgid "Unicorp D-2 Light Plating"
@@ -3386,9 +3409,9 @@ msgid ""
 "Commonly found on civilian vessels, the D-2 plating is popular with ship "
 "manufacturers due to its low cost and adequate, if uninspiring performance."
 msgstr ""
-"Normalmente encontrada em naves civis, a Blindagem D-2 é popular com "
-"fabricantes devido ao baixo custo e proteção adequada, mas não muito "
-"inspiradora."
+"Normalmente encontrado em naves civis, o Revestimento Leve Unicorp D-2 é "
+"popular entre os fabricantes de naves devido ao seu baixo custo e proteção "
+"adequada, mas não muito inspiradora."
 
 #: dat/outfits/core_hull/small/unicorp_d4_light_plating.xml:2
 msgid "Unicorp D-4 Light Plating"
@@ -3399,9 +3422,9 @@ msgid ""
 "Commonly found on civilian vessels, the D-4 plating is popular with ship "
 "manufacturers due to its low cost and adequate, if uninspiring performance."
 msgstr ""
-"Normalmente encontrada em naves civis, a Blindagem D-4 é popular com "
-"fabricantes devido ao baixo custo e proteção adequada, mas não muito "
-"inspiradora."
+"Normalmente encontrado em naves civis, o Revestimento Leve Unicorp D-4 é "
+"popular entre os fabricantes de naves devido ao seu baixo custo e proteção "
+"adequada, mas não muito inspiradora."
 
 #: dat/outfits/core_system/dummy_systems.xml:2
 msgid "Dummy Systems"
@@ -3430,7 +3453,7 @@ msgstr "Sistemas Simulados"
 #: dat/outfits/core_system/small/unicorp_pt16_core_system.xml:4
 #: dat/outfits/core_system/small/unicorp_pt68_core_system.xml:4
 msgid "Core Systems (System)"
-msgstr "Sistemas Principais (Sistema)"
+msgstr "Sistemas Principais (sistema)"
 
 #: dat/outfits/core_system/dummy_systems.xml:9
 msgid ""
@@ -3452,12 +3475,11 @@ msgid ""
 "capital ships, providing superior performance in every field. Fly safe, fly "
 "Milspec."
 msgstr ""
-"A Milspec desenvolve equipamentos de alta performance para sua nave, para "
-"garantir que você está sempre preparado da melhor forma possível para os "
-"perigos que o universo possa pôr em seu caminho durante suas viagens. O "
-"Sistema Principal Orion 8601 é uma solução de ponta para naves capitais, "
-"oferecendo performance superior em todos os aspectos. Voe seguro, voe "
-"Milspec."
+"A Milspec desenvolve equipamentos de alta performance para a tua nave, para "
+"garantir que estás sempre preparado da melhor forma possível para os perigos "
+"que o universo possa pôr no teu caminho durante as tuas viagens. O Sistema "
+"Principal Orion 8601 é uma solução de ponta para naves capitais, oferecendo "
+"performance superior em todos os aspetos. Voa seguro, voa com Milspec."
 
 #: dat/outfits/core_system/large/milspec_orion_9901_core_system.xml:2
 msgid "Milspec Orion 9901 Core System"
@@ -3471,12 +3493,11 @@ msgid ""
 "capital ships, providing superior performance in every field. Fly safe, fly "
 "Milspec."
 msgstr ""
-"A Milspec desenvolve equipamentos de alta performance para sua nave, para "
-"garantir que você está sempre preparado da melhor forma possível para os "
-"perigos que o universo possa pôr em seu caminho durante suas viagens. O "
-"Sistema Principal Orion 9901 é uma solução de ponta para naves capitais, "
-"oferecendo performance superior em todos os aspectos. Voe seguro, voe "
-"Milspec."
+"A Milspec desenvolve equipamentos de alta performance para a tua nave, para "
+"garantir que estás sempre preparado da melhor forma possível para os perigos "
+"que o universo possa pôr no teu caminho durante as tuas viagens. O Sistema "
+"Principal Orion 9901 é uma solução de ponta para naves capitais, oferecendo "
+"performance superior em todos os aspetos. Voa seguro, voa com Milspec."
 
 #: dat/outfits/core_system/large/milspec_thalos_8502_core_system.xml:2
 msgid "Milspec Thalos 8502 Core System"
@@ -3489,10 +3510,10 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
-"A Milspec sabe que uma nave é meramente a soma das suas partes, e isso "
+"A Milspec sabe que uma nave é meramente a soma das suas partes e isso "
 "significa que quanto mais peças, melhor a nave. O Thalos 8502 oferece um "
-"sério controle de subsistemas enquanto mantém o alto padrão de energia e "
-"escudos dos quais a MilSpec se orgulha. Voe seguro, voe Milspec."
+"sério controlo de subsistemas enquanto mantém o alto padrão de energia e "
+"escudos dos quais a MilSpec se orgulha. Voa seguro, voa com Milspec."
 
 #: dat/outfits/core_system/large/milspec_thalos_9802_core_system.xml:2
 msgid "Milspec Thalos 9802 Core System"
@@ -3505,10 +3526,10 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
-"A Milspec sabe que uma nave é meramente a soma das suas partes, e isso "
+"A Milspec sabe que uma nave é meramente a soma das suas partes e isso "
 "significa que quanto mais peças, melhor a nave. O Thalos 9802 oferece um "
-"sério controle de subsistemas enquanto mantém o alto padrão de energia e "
-"escudos dos quais a MilSpec se orgulha. Voe seguro, voe Milspec."
+"sério controlo de subsistemas enquanto mantém o alto padrão de energia e "
+"escudos dos quais a MilSpec se orgulha. Voa seguro, voa com Milspec."
 
 #: dat/outfits/core_system/large/previous_generation_large_systems.xml:2
 msgid "Previous Generation Large Systems"
@@ -3522,7 +3543,7 @@ msgid ""
 "be seen dead having installed on their ship."
 msgstr ""
 "Uma bagunça de processadores e geradores improvisada que muitos capitães não "
-"instalariam em suas naves nem mortos."
+"instalariam nas suas naves nem mortos."
 
 #: dat/outfits/core_system/large/unicorp_pt2200_core_system.xml:2
 msgid "Unicorp PT-2200 Core System"
@@ -3534,9 +3555,9 @@ msgid ""
 "PT-2200 nevertheless offers acceptable performance for capital ships at a "
 "fraction of its competitors' prices."
 msgstr ""
-"Criticado por alguns como nada mais que um conjunto de sistemas PT-400, o "
-"PT-2200 ainda assim oferece performance aceitável para naves capitais por "
-"uma fração do preço dos competidores neste nicho."
+"Criticado por alguns como nada mais que um conjunto de sistemas PT-400, o PT-"
+"2200 ainda assim oferece performance aceitável a naves capitais por uma "
+"fração do preço dos competidores neste nicho."
 
 #: dat/outfits/core_system/large/unicorp_pt500_core_system.xml:2
 msgid "Unicorp PT-500 Core System"
@@ -3548,9 +3569,9 @@ msgid ""
 "PT-500 nevertheless offers acceptable performance for light cruisers at a "
 "fraction of its competitors' prices."
 msgstr ""
-"Criticado por alguns como nada mais que um conjunto de sistemas PT-310, o "
-"PT-500 ainda assim oferece performance aceitável para cruzadores leves por "
-"uma fração do preço dos competidores neste nicho."
+"Criticado por alguns como nada mais que um conjunto de sistemas PT-310, o PT-"
+"500 ainda assim oferece performance aceitável a cruzadores leves por uma "
+"fração do preço dos competidores neste nicho."
 
 #: dat/outfits/core_system/medium/milspec_orion_4801_core_system.xml:2
 msgid "Milspec Orion 4801 Core System"
@@ -3563,11 +3584,11 @@ msgid ""
 "you on your travels. The Orion 4801 core system is affordable yet capable, "
 "recommended for the discerning captain. Fly safe, fly Milspec."
 msgstr ""
-"A Milspec desenvolve equipamentos de alta performance para sua nave, para "
-"garantir que você está sempre preparado da melhor forma possível para os "
-"perigos que o universo possa pôr em seu caminho durante suas viagens. O "
-"Sistema Principal Orion 4801 é acessível mas capaz, recomendado para o "
-"capitão judicioso. Voe seguro, voe Milspec."
+"A Milspec desenvolve equipamentos de alta performance para a tua nave, para "
+"garantir que estás sempre preparado da melhor forma possível para os perigos "
+"que o universo possa pôr no teu caminho durante as tuas viagens. O Sistema "
+"Principal Orion 4801 é acessível mas capaz, recomendado para o capitão "
+"exigente. Voa seguro, voa com Milspec."
 
 #: dat/outfits/core_system/medium/milspec_orion_5501_core_system.xml:2
 msgid "Milspec Orion 5501 Core System"
@@ -3581,12 +3602,11 @@ msgid ""
 "medium ships, providing superior performance in every field. Fly safe, fly "
 "Milspec."
 msgstr ""
-"A Milspec desenvolve equipamentos de alta performance para sua nave, para "
-"garantir que você está sempre preparado da melhor forma possível para os "
-"perigos que o universo possa pôr em seu caminho durante suas viagens. O "
-"Sistema Principal Orion 5501 é uma solução de ponta para naves médias, "
-"oferecendo performance superior em todos os aspectos. Voe seguro, voe "
-"Milspec."
+"A Milspec desenvolve equipamentos de alta performance para a tua nave, para "
+"garantir que estás sempre preparado da melhor forma possível para os perigos "
+"que o universo possa pôr no teu caminho durante as tuas viagens. O Sistema "
+"Principal Orion 5501 é uma solução de ponta para naves médias, oferecendo "
+"performance superior em todos os aspetos. Voa seguro, voa com Milspec."
 
 #: dat/outfits/core_system/medium/milspec_thalos_4702_core_system.xml:2
 msgid "Milspec Thalos 4702 Core System"
@@ -3599,10 +3619,10 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
-"A Milspec sabe que uma nave é meramente a soma das suas partes, e isso "
+"A Milspec sabe que uma nave é meramente a soma das suas partes e isso "
 "significa que quanto mais peças, melhor a nave. O Thalos 4702 oferece um "
-"sério controle de subsistemas enquanto mantém o alto padrão de energia e "
-"escudos dos quais a MilSpec se orgulha. Voe seguro, voe Milspec."
+"sério controlo de subsistemas enquanto mantém o alto padrão de energia e "
+"escudos dos quais a MilSpec se orgulha. Voa seguro, voa com Milspec."
 
 #: dat/outfits/core_system/medium/milspec_thalos_5402_core_system.xml:2
 msgid "Milspec Thalos 5402 Core System"
@@ -3615,10 +3635,10 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
-"A Milspec sabe que uma nave é meramente a soma das suas partes, e isso "
+"A Milspec sabe que uma nave é meramente a soma das suas partes e isso "
 "significa que quanto mais peças, melhor a nave. O Thalos 5402 oferece um "
-"sério controle de subsistemas enquanto mantém o alto padrão de energia e "
-"escudos dos quais a MilSpec se orgulha. Voe seguro, voe Milspec."
+"sério controlo de subsistemas enquanto mantém o alto padrão de energia e "
+"escudos dos quais a MilSpec se orgulha. Voa seguro, voa com Milspec."
 
 #: dat/outfits/core_system/medium/previous_generation_medium_systems.xml:2
 msgid "Previous Generation Medium Systems"
@@ -3647,8 +3667,8 @@ msgid ""
 "medium vessels such as destroyers."
 msgstr ""
 "Uma variante para trabalhos pesados do PT-200, o PT-310 ultrapassa seu "
-"predecessor de todas as formas. Sua massa consideravelmente maior restringe "
-"seu uso a naves médias, como contratorpedeiros."
+"predecessor de todas as formas. A sua massa consideravelmente maior "
+"restringe seu uso a naves médias, como contratorpedeiros."
 
 #: dat/outfits/core_system/small/milspec_orion_2301_core_system.xml:2
 msgid "Milspec Orion 2301 Core System"
@@ -3661,11 +3681,11 @@ msgid ""
 "you on your travels. The Orion 2301 core system is affordable yet capable, "
 "recommended for the beginning captain. Fly safe, fly Milspec."
 msgstr ""
-"A Milspec desenvolve equipamentos de alta performance para sua nave, para "
-"garantir que você está sempre preparado da melhor forma possível para os "
-"perigos que o universo possa pôr em seu caminho durante suas viagens. O "
-"Sistema Principal Orion 2301 é uma solução acessível mas capaz, recomendado "
-"para o capitão iniciante. Voe seguro, voe Milspec."
+"A Milspec desenvolve equipamentos de alta performance para a tua nave, para "
+"garantir que estás sempre preparado da melhor forma possível para os perigos "
+"que o universo possa pôr no teu caminho durante as tuas viagens. O Sistema "
+"Principal Orion 2301 é uma solução acessível mas capaz, recomendado para o "
+"capitão iniciante. Voa seguro, voa com Milspec."
 
 #: dat/outfits/core_system/small/milspec_orion_3701_core_system.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:224
@@ -3680,12 +3700,11 @@ msgid ""
 "small ships, providing superior performance in every field. Fly safe, fly "
 "Milspec."
 msgstr ""
-"A Milspec desenvolve equipamentos de alta performance para sua nave, para "
-"garantir que você está sempre preparado da melhor forma possível para os "
-"perigos que o universo possa pôr em seu caminho durante suas viagens. O "
-"Sistema Principal Orion 5501 é uma solução de ponta para naves pequenas, "
-"oferecendo performance superior em todos os aspectos. Voe seguro, voe "
-"Milspec."
+"A Milspec desenvolve equipamentos de alta performance para a tua nave, para "
+"garantir que estás sempre preparado da melhor forma possível para os perigos "
+"que o universo possa pôr no teu caminho durante as tuas viagens. O Sistema "
+"Principal Orion 5501 é uma solução de ponta para naves pequenas, oferecendo "
+"performance superior em todos os aspetos. Voa seguro, voa com Milspec."
 
 #: dat/outfits/core_system/small/milspec_thalos_2202_core_system.xml:2
 msgid "Milspec Thalos 2202 Core System"
@@ -3698,10 +3717,10 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
-"A Milspec sabe que uma nave é meramente a soma das suas partes, e isso "
+"A Milspec sabe que uma nave é meramente a soma das suas partes e isso "
 "significa que quanto mais peças, melhor a nave. O Thalos 2202 oferece um "
-"sério controle de subsistemas enquanto mantém o alto padrão de energia e "
-"escudos dos quais a MilSpec se orgulha. Voe seguro, voe Milspec."
+"sério controlo de subsistemas enquanto mantém o alto padrão de energia e "
+"escudos dos quais a MilSpec se orgulha. Voa seguro, voa com Milspec."
 
 #: dat/outfits/core_system/small/milspec_thalos_3602_core_system.xml:2
 msgid "Milspec Thalos 3602 Core System"
@@ -3714,10 +3733,10 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
-"A Milspec sabe que uma nave é meramente a soma das suas partes, e isso "
+"A Milspec sabe que uma nave é meramente a soma das suas partes e isso "
 "significa que quanto mais peças, melhor a nave. O Thalos 3602 oferece um "
-"sério controle de subsistemas enquanto mantém o alto padrão de energia e "
-"escudos dos quais a MilSpec se orgulha. Voe seguro, voe Milspec."
+"sério controlo de subsistemas enquanto mantém o alto padrão de energia e "
+"escudos dos quais a MilSpec se orgulha. Voa seguro, voa com Milspec."
 
 #: dat/outfits/core_system/small/previous_generation_small_systems.xml:2
 msgid "Previous Generation Small Systems"
@@ -3744,12 +3763,12 @@ msgid ""
 "The PT-68 is an economical core system providing decent performance to small-"
 "to-medium vessels."
 msgstr ""
-"O PT-68 é um Sistema Principal econômico que oferece performance decente "
+"O PT-68 é um Sistema Principal económico que oferece performance decente "
 "para naves pequenas e médias."
 
 #: dat/outfits/fighter_bays/drone_bay.xml:2
 msgid "Drone Bay"
-msgstr "Baia de Drones"
+msgstr "Baía de Drones"
 
 #: dat/outfits/fighter_bays/drone_bay.xml:11
 msgid ""
@@ -3759,11 +3778,10 @@ msgid ""
 "maintenance. All the tools needed to take care of them are provided with the "
 "bay."
 msgstr ""
-"A Baia de Caças Drones usa tecnologias da Coletividade para manter um grupo "
-"de três Caças Drones. Eles não necessitam de pilotos o que os torna uma "
-"abordagem mais segura em situações perigosas. Porém, eles exigem manutenção "
-"cuidadosa. Todas as ferramentas necessárias para isso são oferecidas com a "
-"baia."
+"A Baía de Drones Caças usa tecnologias da Coletividade para manter um grupo "
+"de três Drones Caças. Não necessitam de pilotos o que os torna uma abordagem "
+"mais segura em situações perigosas. Porém, exigem manutenção cuidadosa. "
+"Todas as ferramentas necessárias para isso são fornecidas com a baía."
 
 #: dat/outfits/fighter_bays/empire_lancelot_bay.xml:2
 msgid "Empire Lancelot Bay"
@@ -3786,7 +3804,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/fidelity_bay.xml:2
 msgid "Fidelity Bay"
-msgstr "Baia de Fidelidade"
+msgstr "Baía Fidelidade"
 
 #: dat/outfits/fighter_bays/fidelity_bay.xml:8
 msgid "You need at least 50 reputation with House Sirius."
@@ -3798,13 +3816,13 @@ msgid ""
 "are stronger when working together in groups. Quite apropos, given Sirian "
 "society."
 msgstr ""
-"Esta baia lança três caças Sirius Fidelidade. Fracos individualmente, eles "
+"Esta baía lança três caças Sirius Fidelidade. Fracos individualmente, eles "
 "são mais fortes trabalhando em grupos. Bem a propósito, considerando a "
 "sociedade Siriana."
 
 #: dat/outfits/fighter_bays/hyena_bay.xml:2
 msgid "Hyena Bay"
-msgstr "Baia de Hiena"
+msgstr "Baía Hiena"
 
 #: dat/outfits/fighter_bays/hyena_bay.xml:10
 msgid ""
@@ -3846,7 +3864,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/pirate_hyena_bay.xml:2
 msgid "Pirate Hyena Bay"
-msgstr "Baia de Hiena Pirata"
+msgstr "Baía Hiena Pirata"
 
 #: dat/outfits/fighter_bays/pirate_hyena_bay.xml:10
 msgid ""
@@ -3881,19 +3899,14 @@ msgid "Proteron Dalton Bay"
 msgstr "Baía Proteron Dalton"
 
 #: dat/outfits/fighter_bays/proteron_dalton_bay.xml:11
-#, fuzzy
-#| msgid ""
-#| "This fighter bay allows your ship to carry a triplet of Proteron "
-#| "Derivative class fighters. It comes with all the devices required for the "
-#| "maintenance and flight of the fighters."
 msgid ""
 "This fighter bay allows your ship to carry four Proteron Dalton class "
 "interceptors. It comes with all the devices required for the maintenance and "
 "flight of the interceptors."
 msgstr ""
-"Esta baia de caças permite que sua nave transporte um trio de caças do tipo "
-"Derivativo Proteron. Inclui todos os aparelhos necessários à manutenção e "
-"voo dos caças."
+"Esta baía de caças permite que a tua nave carregue quatro interceptadores da "
+"classe Proteron Dalton. Ela tem todos os dispositivos necessários para a "
+"manutenção e voo dos interceptadores."
 
 #: dat/outfits/fighter_bays/proteron_dalton_dock.xml:2
 msgid "Proteron Dalton Dock"
@@ -5611,7 +5624,7 @@ msgstr "#rQuente quente quente!#0"
 #: dat/outfits/unique/pulse_scanner.xml:2
 #: dat/missions/neutral/poi_intro.lua:233
 msgid "Pulse Scanner"
-msgstr "Escaneador de Pulso"
+msgstr "Sonda de Pulso"
 
 #: dat/outfits/unique/pulse_scanner.xml:6
 #: dat/outfits/utility/sensor_array.xml:4 dat/events/shipai.lua:108
@@ -5630,15 +5643,15 @@ msgid ""
 "strong enough to pick up nearby faint traces and can be useful for detective "
 "work."
 msgstr ""
-"O Escaneador de Pulso tem uma abordagem alternativa comparado com os "
-"aparelhos de varredura comuns para a detecção de naves. O equipamento é "
-"altamente modificado para não funcionar em regime contínuo, mas gerar um "
-"pulso de sinal extremamente grande e depois analisar as respostas de "
-"reflexão que outras naves dão. como resultado ele é capaz de melhorar "
-"significativamente a capacidade de detecção de uma nave durante curtos "
-"períodos de tempo, embora com o efeito secundário de aumentar a visibilidade "
-"da nave gerando o pulso. Além disso, o pulso é forte o suficiente para "
-"captar sinais vestigiais nas proximidades e pode ser útil para investigações."
+"A Sonda de Pulso tem uma abordagem alternativa comparado com os aparelhos de "
+"sondagem comuns para a deteção de naves. O equipamento é altamente "
+"modificado para não funcionar em regime contínuo, mas sim gerar um pulso de "
+"sinal extremamente grande e depois analisar as respostas de reflexão que "
+"outras naves dão. Como resultado, ele é capaz de melhorar significativamente "
+"a capacidade de deteção de uma nave durante curtos períodos de tempo, embora "
+"com o efeito secundário de aumentar a visibilidade da nave a gerar o pulso. "
+"Além disso, o pulso é forte o suficiente para captar vestígios de sinais nas "
+"proximidades e pode ser útil para investigações."
 
 #: dat/outfits/unique/pulse_scanner.xml:12
 msgid ""
@@ -5712,7 +5725,7 @@ msgstr ""
 
 #: dat/outfits/utility/asteroid_scanner.xml:2
 msgid "Asteroid Scanner"
-msgstr "Scanner de Asteróides"
+msgstr "Sonda de Asteroides"
 
 #: dat/outfits/utility/asteroid_scanner.xml:8
 msgid ""
@@ -5723,12 +5736,12 @@ msgid ""
 "composition via inverse electrical impedance. Of course, that comes at a "
 "price that not just any miner can pay."
 msgstr ""
-"Qualquer scanner pode dar a massa, posição e velocidade de um asteróide. Mas "
-"os mineradores preferem saber o valor do asteróide. Para isso, a Milspec "
-"desenvolveu uma rede de scanners capaz de deduzir a composição da superfície "
-"a partir de espectroscopia, e, o que é mais impressionante, de inferir a "
-"composição interna através de impedância eléctrica inversa. Naturalmente, "
-"isso vem a um preço que não pode ser pago por qualquer minerador."
+"Qualquer sonda pode dar a massa, posição e velocidade de um asteroide. Mas "
+"os mineradores preferem saber o valor do asteroide. Para isso, a Milspec "
+"desenvolveu uma matriz de sondas capaz de deduzir a composição da superfície "
+"a partir de espectroscopia, e o que é mais impressionante, de inferir a "
+"composição interna através de impedância elétrica inversa. Naturalmente, "
+"isso tem um preço que não pode ser pago por qualquer minerador."
 
 #: dat/outfits/utility/berserk_chip.xml:2
 msgid "Berserk Chip"
@@ -6040,7 +6053,7 @@ msgstr ""
 
 #: dat/outfits/utility/combatai/scanning_combat_ai.xml:2
 msgid "Scanning Combat AI"
-msgstr "IA de Combate de Varredura"
+msgstr "IA de Combate de Sondagem"
 
 #: dat/outfits/utility/combatai/scanning_combat_ai.xml:11
 msgid ""
@@ -6201,7 +6214,7 @@ msgstr ""
 
 #: dat/outfits/utility/hidden_jump_scanner.xml:2
 msgid "Hidden Jump Scanner"
-msgstr "Escaneador de Salto Oculto"
+msgstr "Sonda de Salto Oculto"
 
 #: dat/outfits/utility/hidden_jump_scanner.xml:9
 msgid ""
@@ -6211,11 +6224,12 @@ msgid ""
 "needing to recharge, this scanner is capable of discovering jump points that "
 "regular sensors can't detect."
 msgstr ""
-"Um equipamento especializado de tecnologia de sensores que pode escanear o "
+"Um equipamento especializado de tecnologia de sensores que pode sondar o "
 "ambiente circundante em busca de anomalias incomuns no tecido do espaço. "
-"Embora de curto alcance e apenas capaz de escanear durante um período de "
-"tempo limitado antes de precisar de recarregar, este scanner é capaz de "
-"descobrir pontos de salto que os comuns regulares não conseguem detetar."
+"Embora de curto alcance e ser capaz de sondar apenas durante um período de "
+"tempo limitado antes de precisar de recarregar, esta sonda é capaz de "
+"descobrir pontos de salto que as sondas comuns regulares não conseguem "
+"detetar."
 
 #: dat/outfits/utility/hullcoating/faraday_tempest_coating.xml:2
 msgid "Faraday Tempest Coating"
@@ -6364,7 +6378,7 @@ msgstr ""
 
 #: dat/outfits/utility/jump_scanner.xml:2
 msgid "Jump Scanner"
-msgstr "Escaneador de Salto"
+msgstr "Sonda de Salto"
 
 #: dat/outfits/utility/jump_scanner.xml:8
 msgid ""
@@ -6377,14 +6391,14 @@ msgid ""
 "scanner will not detect jump points whose signature differs from the "
 "standard type."
 msgstr ""
-"Este aparelho instala uma matriz secundária de varredyra na nave. A matriz é "
+"Este aparelho instala uma matriz secundária de sondas na nave. A matriz é "
 "programada com as características conhecidas das anomalias espaciais "
-"associadas aos saltos no hiperespaço. Como o scanner detecta um tipo muito "
+"associadas aos saltos no hiperespaço. Como a sonda deteta um tipo muito "
 "específico de assinatura, o seu alcance pode ser facilmente aumentado sem "
-"sacrificar a precisão. Na prática, isto significa que uma nave com um ou "
-"mais destes scanners instalados pode detetar pontos de salto a um maior "
-"alcance. O scanner não detectará pontos de salto cuja assinatura difere do "
-"tipo padrão."
+"sacrificar a precisão. Na prática, isto significa que uma nave com uma ou "
+"mais destas sondas instaladas pode detetar pontos de salto a um maior "
+"alcance. A sonda não detetará pontos de salto cuja assinatura difere do tipo "
+"padrão."
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:2
 msgid "Low Radiation Sensor Modulator"
@@ -6404,12 +6418,12 @@ msgstr ""
 
 #: dat/outfits/utility/milspec_jammer.xml:2
 msgid "Milspec Jammer"
-msgstr "Bloqueador Milspec"
+msgstr "Inibidor Milspec"
 
 #: dat/outfits/utility/milspec_jammer.xml:4
 #: dat/outfits/utility/unicorp_jammer.xml:4
 msgid "Electronic Warfare Jammer"
-msgstr "Bloqueador de Guerra Eletrônica"
+msgstr "Inibidor de Guerra Eletrónica"
 
 #: dat/outfits/utility/milspec_jammer.xml:9
 msgid ""
@@ -6420,21 +6434,21 @@ msgid ""
 "garbage they're getting on their sensors, you will have already made your "
 "escape! Fly safe, fly Milspec."
 msgstr ""
-"Seu trabalho exige que você se aventure em território perigoso? Enfrentando "
-"inimigos que são demais para seus escudos? O bloqueador U-9 \"Magus\" "
-"Milspec é o que você precisa! Faça os cães de caça perderem seu rastro "
-"pressionando um botão. Enquanto os seus inimigos estão ocupados tentando "
-"entender a confusão aparecendo nos sensores, você já terá escapado! Voe com "
-"seguro, voe Milspec."
+"O teu trabalho exige que te aventures em território perigoso? Estás a "
+"enfrentar uma oposição que os teus escudos não aguentam? O Inibidor Milspec "
+"U-9 \"Magus\" é o que precisas! Afasta os cães de caça do teu rasto com o "
+"pressionar de um botão.. Enquanto os teus inimigos ainda estão a tentar "
+"perceber o lixo que estão a apanhar nos sensores, já terás escapado! Voa em "
+"segurança, voa com Milspec."
 
 #: dat/outfits/utility/milspec_scrambler.xml:2
 msgid "Milspec Scrambler"
-msgstr "Embaralhador Milspec"
+msgstr "Distorçor Milspec"
 
 #: dat/outfits/utility/milspec_scrambler.xml:4
 #: dat/outfits/utility/unicorp_scrambler.xml:4
 msgid "Electronic Warfare Scrambler"
-msgstr "Emaranhador de Combate Eletrônico"
+msgstr "Distorçor de Combate Eletrónico"
 
 #: dat/outfits/utility/milspec_scrambler.xml:9
 msgid ""
@@ -6444,10 +6458,10 @@ msgid ""
 "a minimal cost to you or your ship's reactor! Fly safe, fly Milspec."
 msgstr ""
 "A Milspec sabe o que importa quando se está lá fora. O que importa é não ser "
-"atingido! E a melhor maneira de evitar isso é não se tornando um alvo. O "
-"Embaralhador RX 500-C Milspec encobre os sensores dos seus inimigos, a um "
-"custo mínimo para seu bolso ou para o reator da sua nave! Voe com seguro, "
-"voe Milspec."
+"atingido! E a melhor maneira de evitar isso é não te tornares um alvo. O "
+"Distorçor RX 500-C Milspec afeta os sensores dos teus inimigos, a um custo "
+"mínimo para o teu bolso ou para o reator da tua nave! Voa com seguro, voa "
+"com Milspec."
 
 #: dat/outfits/utility/neural_accelerator_interface.xml:2
 msgid "Neural Accelerator Interface"
@@ -6535,9 +6549,9 @@ msgid ""
 "integrated asteroid scanner is just the icing on the cake."
 msgstr ""
 "A Broca de Plasma S&K oferece abordagem alternativa às lanças de mineração "
-"convencionais. Embora exija aproximar-se do asteróide e controles precisos "
+"convencionais. Embora exija a aproximação do asteroide e controlos precisos "
 "para se poder extrair minerais, ela obtém rendimentos significativamente "
-"melhores. Um scanner de asteróides integrado é apenas a cereja no bolo."
+"melhores. Uma sonda de asteroides integrada é apenas a cereja no bolo."
 
 #: dat/outfits/utility/targeting_array.xml:2
 msgid "Targeting Array"
@@ -6580,7 +6594,7 @@ msgstr "Só ativo quando o escudo está acima dos 70%."
 
 #: dat/outfits/utility/unicorp_jammer.xml:2
 msgid "Unicorp Jammer"
-msgstr "Bloqueador Unicorp"
+msgstr "Inibidor Unicorp"
 
 #: dat/outfits/utility/unicorp_jammer.xml:9
 msgid ""
@@ -6591,13 +6605,13 @@ msgid ""
 "effective, but it also uses a lot more power. For this reason, jammer "
 "systems are inactive until needed, and must be activated manually."
 msgstr ""
-"Ao contrário dos sistemas de embaramento de uso geral, bloqueadores são "
-"equipamentos de utilização frequente para combate eletrônico no espaço. Um "
-"bloqueador funciona interferindo ativamente nos sistemas de sensores dos "
-"naves próximas, em vez de modular a assinatura do nave em que está "
-"instalado. Isto é muito mais eficaz, mas também utiliza muito mais energia. "
-"Por este motivo, os sistemas de interferência ficam inativos até serem "
-"necessários, e devem ser ativados manualmente."
+"Ao contrário dos sistemas de distorção eletromagnética de uso geral, os "
+"inibidores são equipamentos de utilização frequente para combate eletrónico "
+"no espaço. Um inibidor funciona interferindo ativamente nos sistemas de "
+"sensores das naves próximas, em vez de modular a assinatura da nave em que "
+"está instalado. Isto é muito mais eficaz, mas também utiliza muito mais "
+"energia. Por este motivo, os sistemas de inibição ficam inativos até serem "
+"necessários e devem ser ativados manualmente."
 
 #: dat/outfits/utility/unicorp_light_afterburner.xml:2
 msgid "Unicorp Light Afterburner"
@@ -6622,7 +6636,7 @@ msgstr "Pós-Combustor Médio Unicorp"
 
 #: dat/outfits/utility/unicorp_scrambler.xml:2
 msgid "Unicorp Scrambler"
-msgstr "Embaralhador Unicorp"
+msgstr "Distorçor Unicorp"
 
 #: dat/outfits/utility/unicorp_scrambler.xml:9
 msgid ""
@@ -6633,12 +6647,11 @@ msgid ""
 "scramblers put a minimal strain on the ship's resources, and are always "
 "active."
 msgstr ""
-"Embaralhadores distorcem a assinatura electromagnética de uma nave, tornando "
-"mais difícil para vários sensores detecta-la. Na prática, aumenta a "
-"distância a que a nave pode ser detectada e escaneada, e torna mais difícil "
-"que mísseis inimigos obtenham mira. O efeito é bastante limitado, mas, "
-"embaralhadores exigem muito pouco dos recursos da nave, e estão sempre "
-"ativos."
+"Distorcem a assinatura eletromagnética de uma nave, tornando mais difícil "
+"para vários sensores detetá-la. Na prática, aumenta a distância a que a nave "
+"pode ser detetada e sondada, dificultando mais a obtenção de mira por parte "
+"dos mísseis inimigos. O efeito é bastante limitado, mas as distorções exigem "
+"muito pouco dos recursos da nave e estão sempre ativas."
 
 #: dat/outfits/utility/weakness_harmonizer_ai.xml:2
 msgid "Weakness Harmonizer AI"
@@ -27308,7 +27321,7 @@ msgstr ""
 #. Send a message if applicable
 #: dat/ai/core/misc/scans.lua:57
 msgid "Prepare to be scanned."
-msgstr "Prepara-te para ser inspecionado."
+msgstr "Prepara-te para ser sondado."
 
 #.
 #. -- Tries to get close to scan the enemy
@@ -28463,11 +28476,11 @@ msgstr "ACESSO NEGADO."
 
 #: dat/ai/zalek.lua:58
 msgid "COMMENCING SCAN PROCEDURE."
-msgstr "A INICIAR O PROCEDIMENTO DE VARREDURA."
+msgstr "A INICIAR O PROCEDIMENTO DE SONDAGEM."
 
 #: dat/ai/zalek.lua:59
 msgid "SCAN COMPLETED."
-msgstr "VARREDURA CONCLUÍDA."
+msgstr "SONDAGEM CONCLUÍDA."
 
 #: dat/ai/zalek.lua:60
 msgid "ILLEGAL OBJECTS DETECTED! RESISTANCE IS FUTILE!"
@@ -39334,7 +39347,7 @@ msgstr "Conjuntos de armas"
 
 #: dat/events/shipai.lua:109 src/input.c:58 src/shipstats.c:104
 msgid "Stealth"
-msgstr "Camuflagem"
+msgstr "camuflagem"
 
 #: dat/events/shipai.lua:110
 msgid "Asteroids and Mining"
@@ -42376,7 +42389,7 @@ msgstr ""
 "\"Com a atualização, foram alteradas muitas novas mecânicas e "
 "funcionalidades. A maior mudança inclui uma renovação da #oguerra eletrónica#"
 "0, que agora inclui uma nova mecânica furtiva. Neste novo quadro, tu serás "
-"examinado por naves de patrulha, o que significa que tens de ter cuidado ao "
+"sondado por naves de patrulha, o que significa que tens de ter cuidado ao "
 "transportar carga ou equipamento ilegal. Podes ativar a camuflagem com "
 "{stealthkey} quando não houver outras naves nas proximidades.\""
 
@@ -55097,7 +55110,7 @@ msgstr ""
 #: dat/missions/trader/anxiousmerchant.lua:69
 #: dat/missions/zalek/zlk_cargorun.lua:46 src/land.c:994
 msgid "Spaceport Bar"
-msgstr "Bar do porto espacial"
+msgstr "bar do porto espacial"
 
 #: dat/missions/empire/emp_cargo00.lua:54
 msgid ""
@@ -63741,6 +63754,10 @@ msgid ""
 "we're going to need you to plant it in a VIP room or some place where we "
 "might catch the mole.\""
 msgstr ""
+"\"Isto é uma porcaria de alta tecnologia que conseguimos de uns cromos. É um "
+"dispositivo de captura de sinal de geração mais recente e deve ser capaz de "
+"contornar a maioria dos inibidores. No entanto, vamos precisar que o plantes "
+"numa sala VIP ou em algum lugar onde possamos apanhar a toupeira.\""
 
 #: dat/missions/minerva/pirate3.lua:144 dat/missions/minerva/pirate3.lua:193
 msgid ""
@@ -63812,6 +63829,10 @@ msgid ""
 "bypass most jammers. However, you're going to have to plant it in a VIP room "
 "or in some place where we might be able to catch the mole.\""
 msgstr ""
+"\"O dispositivo de captação de sinal de alta tecnologia que te dei deve ser "
+"capaz de contornar a maioria dos inibidores. No entanto, vais ter que colocá-"
+"lo num quarto VIP ou em algum lugar onde possamos ser capazes de apanhar a "
+"toupeira.\""
 
 #: dat/missions/minerva/pirate3.lua:194
 msgid ""
@@ -65372,6 +65393,8 @@ msgid ""
 "As soon as your ship alights, Verner and his gang scramble to carefully "
 "unload the {cargo} and start setting it up."
 msgstr ""
+"Assim que a tua nave aterra, os Verner e o seu bando apressam-se para "
+"descarregar cuidadosamente a {cargo} e começam a prepará-la."
 
 #: dat/missions/neutral/antlejos/ant03.lua:114
 msgid ""
@@ -84865,9 +84888,9 @@ msgid ""
 "recommend you to rely on stealth as much as possible.\""
 msgstr ""
 "\"Quando não camuflada, as naves podem fixar a tua nave para fazer uma "
-"varredura. Isto pode descobrir informações indesejadas, como carga ou "
-"equipamentos ilegais. O tempo para varrer depende da massa da nave. Se não "
-"queres ser varrido, recomendo que confies no modo camuflado o máximo "
+"sondagem. Isto pode descobrir informações indesejadas, como carga ou "
+"equipamentos ilegais. O tempo para sondar depende da massa da nave. Se não "
+"queres ser sondado, recomendo que confies no modo camuflado o máximo "
 "possível.\""
 
 #: dat/missions/tutorial/nelly02.lua:554
@@ -84899,7 +84922,7 @@ msgstr "\"Chama-me Dr. Guerra Eletrónica\""
 msgid ""
 "\"Great! Avoid getting scanned by them and let's head off to {pnt} in {sys}!"
 "\""
-msgstr "\"Ótimo! Evita ser varrido por eles e vamos para {pnt} em {sys}!\""
+msgstr "\"Ótimo! Evita ser sondado por eles e vamos para {pnt} em {sys}!\""
 
 #: dat/missions/tutorial/nelly02.lua:571
 msgid "Avoid Nelly's ex-colleague by using stealth with {stealthkey}"
@@ -84919,7 +84942,7 @@ msgid ""
 "Nelly: \"They found us and are scanning us. Quickly try to stealth with "
 "{stealthkey}!\""
 msgstr ""
-"Nelly: \"Encontraram-nos e estão a varrer-nos. Ativa rapidamente a "
+"Nelly: \"Encontraram-nos e estão a sondar-nos. Ativa rapidamente a "
 "camuflagem com {stealthkey}!\""
 
 #: dat/missions/tutorial/nelly03.lua:90
@@ -85105,8 +85128,8 @@ msgstr ""
 "não são capazes de extrair materiais corretamente, certo? Normalmente temos "
 "de usar algo como uma {tool1}, ou melhor ainda, uma {tool2}! No entanto, "
 "tenho a certeza de que deve funcionar tão bem ou melhor! Não consegui "
-"encaixar um scanner de asteroides, então teremos que avaliar à vista, mas eu "
-"sou ótima nisso! Deixa comigo.\""
+"encaixar uma sonda de asteroides, por isso teremos que avaliar visualmente, "
+"mas eu sou ótima nisso! Deixa comigo.\""
 
 #: dat/missions/tutorial/nelly03.lua:141
 msgid "\"Time is credits or so they say, so let's go drill some asteroids!\""
@@ -85165,8 +85188,8 @@ msgid ""
 msgstr ""
 "\"Quando eu o ativar, verás a interface de perfuração. Irá começar parado e "
 "terás de premir qualquer tecla para que comece. Terás de premir o gatilho "
-"quando a coisa de varredura azul estiver dentro da zona alvo ótima vermelha. "
-"Acho que isto é mais fácil de mostrar do que de fazer. Deixa-me ligá-lo e "
+"quando a coisa de sondagem azul estiver dentro da zona ótima vermelha. Acho "
+"que isto é mais fácil de mostrar do que de fazer. Deixa-me ligá-lo e "
 "experimentá-lo!\""
 
 #: dat/missions/tutorial/nelly03.lua:216
@@ -95289,6 +95312,11 @@ msgid ""
 "actually make it harder for them to lock on to your ship by equipping "
 "scramblers or jammers. Scout class ships are also harder to target.\""
 msgstr ""
+"\"Esses sistemas de mísseis modernos! Não podem nem mesmo dispará-los a não "
+"ser que consigas um alvo primeiro! Mas o mesmo se aplica aos teus oponentes. "
+"Na verdade, podes dificultar-lhes que fixem as armas na tua nave, equipando "
+"os distorçores (sistemas de distorção eletromagnética) ou os inibidores. As "
+"naves de classe Explorador também são mais difíceis de atingir.\""
 
 #: dat/scripts/common/npc.lua:66
 msgid ""
@@ -95343,6 +95371,8 @@ msgid ""
 "\"Scramblers and jammers make it harder for missiles to track you. They can "
 "be very handy if your enemies use missiles.\""
 msgstr ""
+"\"Os distorçores e inibidores dificultam a fixação dos misseis inimigos na "
+"tua nave. Podem ser muito úteis se os teus inimigos usarem mísseis.\""
 
 #: dat/scripts/common/npc.lua:74
 msgid ""
@@ -95428,6 +95458,10 @@ msgid ""
 "cloaking? Well, now you do! Small ships majorly benefit from a scrambler or "
 "two; it makes it much easier to dodge those turrets on the larger ships.\""
 msgstr ""
+"\"Sabias que o rastreio automático dos alvos das torres é retardado pela "
+"camuflagem? Bem, agora sabes! As pequenas naves beneficiam sobretudo de um "
+"ou dois distorçores (sistema de distorção eletromagnética). Torna muito mais "
+"fácil esquivares-te a essas torres nas naves maiores.\""
 
 #: dat/scripts/common/npc.lua:84
 msgid ""
@@ -104498,7 +104532,7 @@ msgstr ""
 #: src/equipment.c:1841
 #, c-format
 msgid "%s (%.1f secs for scan)"
-msgstr "%s (%.1f seg p/varredura)"
+msgstr "%s (%.1f seg para sondar)"
 
 #: src/equipment.c:1846 src/equipment.c:1849 src/equipment.c:1852
 #, c-format
@@ -111321,7 +111355,7 @@ msgstr "Explorador"
 
 #: src/ship.c:195
 msgid "Interceptor"
-msgstr "Interceptor"
+msgstr "interceptador"
 
 #: src/ship.c:197
 msgid "Fighter"
@@ -111601,7 +111635,7 @@ msgstr "Velocidade descoberta de invisibilidade"
 
 #: src/shipstats.c:109
 msgid "Scanned Speed"
-msgstr "Velocidade de varredura"
+msgstr "Velocidade da sondagem"
 
 #: src/shipstats.c:111
 msgid "Fire Rate (Launcher)"
@@ -111809,7 +111843,7 @@ msgstr "Regeneração de combustível"
 
 #: src/shipstats.c:171
 msgid "Asteroid Scanner Range"
-msgstr "Alcance da varredura de asteroides"
+msgstr "Alcance da sonda de asteroides"
 
 #: src/shipstats.c:172
 msgid "Nebula Visibility"
