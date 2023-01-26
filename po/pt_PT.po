@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-01-10 23:36+0900\n"
-"PO-Revision-Date: 2023-01-26 01:03+0000\n"
+"PO-Revision-Date: 2023-01-27 00:57+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Portugal) <https://hosted.weblate.org/projects/"
 "naev/naev-0-10-x/pt_PT/>\n"
@@ -8328,7 +8328,7 @@ msgstr "Admoestador Pirata"
 #: dat/ships/pirate/pirate_starbridge.xml:16
 #: dat/ships/pirate/pirate_vendetta.xml:16 dat/ships/pirate/pirate_zebra.xml:20
 msgid "Skull and Bones"
-msgstr "Crânio e Ossos"
+msgstr "Skull & Bones"
 
 #: dat/ships/pirate/pirate_admonisher.xml:19
 msgid ""
