@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-01-10 23:36+0900\n"
-"PO-Revision-Date: 2023-01-28 18:51+0000\n"
+"PO-Revision-Date: 2023-01-29 01:19+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Portugal) <https://hosted.weblate.org/projects/"
 "naev/naev-0-10-x/pt_PT/>\n"
@@ -3177,7 +3177,7 @@ msgid ""
 "important capital ships."
 msgstr ""
 "Considerada a melhor configuração de revestimento padrão do mercado, esta "
-"modificação de casco das Indústrias Schaefer & Kane é geralmente encontrada "
+"modificação de casco das Indústrias Schafer & Kane é geralmente encontrada "
 "apenas em naves capitais importantes."
 
 #: dat/outfits/core_hull/large/unicorp_d48_heavy_plating.xml:2
@@ -10390,10 +10390,10 @@ msgid ""
 "primarily residential and sports no superheavy industry, the wastefulness of "
 "the Dvaered inhabitants more than makes up for that."
 msgstr ""
-"Numa impressionante façanha de de terraformação, os Dvaered transformaram "
-"Aleph de uma classe limítrofe M num deserto árido. Embora o mundo seja "
-"basicamente residencial e não tenha nenhuma indústria pesada, o desperdício "
-"dos habitantes Dvaered compensa de sobremaneira isso."
+"Numa impressionante façanha de terraformação, os Dvaered transformaram Aleph "
+"de uma classe limítrofe M num deserto árido. Embora o mundo seja basicamente "
+"residencial e não tenha nenhuma indústria pesada, o desperdício dos "
+"habitantes Dvaered compensa de sobremaneira isso."
 
 #: dat/spob/aleph.xml:26
 msgid ""
@@ -12654,9 +12654,9 @@ msgid ""
 "system occupies in space, maybe caution is the better part of valour."
 msgstr ""
 "Um bar pequeno, mas claramente com espaço para expandir, algo que o "
-"proprietário já deve estar considerando considerando o quão lotado está. "
-"Dada a posição interessante que este sistema ocupa no espaço, talvez a "
-"cautela seja a melhor parte do valor."
+"proprietário já deve estar considerando o quão lotado está. Dada a posição "
+"interessante que este sistema ocupa no espaço, talvez a cautela seja a "
+"melhor parte do valor."
 
 #: dat/spob/cristen.xml:2
 msgid "Cristen"
@@ -13420,12 +13420,18 @@ msgid ""
 "unfettered. The station is largely ignored at the time being, however, more "
 "and more soldiers are being transferred here."
 msgstr ""
+"A Estação Dumas é uma área de preparação para uma expansão planeada para os "
+"confins sul da galáxia, onde não há força unificada e os piratas vagueiam "
+"sem restrições. A estação é amplamente ignorada neste momento, no entanto "
+"cada vez mais soldados estão a ser transferidos para cá."
 
 #: dat/spob/dumas_station.xml:27
 msgid ""
 "The bar is typical of a Dvaered-style military canteen, i.e. barely "
 "habitable. The station's age does it no favours either."
 msgstr ""
+"O bar é típico de uma cantina militar de estilo Dvaered, ou seja, quase "
+"habitável. A idade da estação também não a favorece."
 
 #: dat/spob/dun_hill.xml:2
 msgid "Dun Hill"
@@ -13439,6 +13445,11 @@ msgid ""
 "to live but, none-the-less, it has valuable resources the Empire would "
 "rather not go without."
 msgstr ""
+"Dun Hill é um daqueles pequenos mundos de mineração considerados totalmente "
+"insignificantes. Na verdade, o mundo não tem personalidade própria, uma vez "
+"que a população é importada de planetas próximos. Não é um lugar agradável "
+"para se viver, mas mesmo assim tem recursos valiosos que o Império não quer "
+"perder."
 
 #: dat/spob/dun_hill.xml:28
 msgid ""
@@ -13446,6 +13457,9 @@ msgid ""
 "Pictures of antique mining equipment hang from the walls. Little else here "
 "is worthy of notice."
 msgstr ""
+"Este bar é frequentado principalmente por mineiros fora de serviço que "
+"tentam relaxar. Há fotografias de equipamento mineiro antigo penduradas nas "
+"paredes. Pouco mais aqui é digno de nota."
 
 #: dat/spob/dundrop_station.xml:2
 msgid "Dundrop Station"
@@ -13458,6 +13472,11 @@ msgid ""
 "bays to store non-perishable goods, however, then they can be the first to "
 "capitalise when a neighbouring planet develops a high demand for them."
 msgstr ""
+"A Estação Dundrop é uma estação orientada para o comércio. Os comerciantes "
+"costumam vir aqui para comprar e vender bens e depois levá-los para outro "
+"lugar. Alguns comerciantes alugam compartimentos de carga para armazenar "
+"bens não perecíveis, no entanto, podem ser os primeiros a capitalizar quando "
+"um planeta vizinho desenvolve uma elevada procura por eles."
 
 #: dat/spob/dundrop_station.xml:28
 msgid ""
@@ -13466,6 +13485,10 @@ msgid ""
 "in absorbing the graphs and charts displayed. There is little room for "
 "social interaction on Dundrop."
 msgstr ""
+"Todas as tabelas deste bar têm vários ecrãs para rastrear informações "
+"económicas para todo o espaço conhecido. Os clientes são maioritariamente "
+"envolvidos na absorção dos gráficos exibidos. Há pouco espaço para interação "
+"social em Dundrop."
 
 #: dat/spob/dunmer.xml:2
 msgid "Dunmer"
@@ -13480,6 +13503,12 @@ msgid ""
 "significantly larger population than Castellan III, due to its much more "
 "pleasant climate."
 msgstr ""
+"Até os Dvaered percebem que nem todos os mundos podem ser dedicados à "
+"indústria. Os alimentos têm de ser cultivados em algum lugar e as estações "
+"de cultivo ainda não são práticas, para os Dvaered, em larga escala. Daí a "
+"colocação de Dunmer para a agricultura. Apesar do seu pequeno tamanho, o "
+"planeta tem uma população significativamente maior do que Castellan III, "
+"devido ao seu clima muito mais agradável."
 
 #: dat/spob/dunmer.xml:26
 msgid ""
@@ -13487,6 +13516,10 @@ msgid ""
 "farmers who maintain the agri-businesses and Dvaered soldiers who function "
 "as a garrison. The bar is lively and friendly, except for the dour soldiers."
 msgstr ""
+"Este bar é povoado por comerciantes que transportam alimentos para Castellan "
+"III e além, agricultores que mantêm os agro-negócios e soldados Dvaered que "
+"funcionam como uma guarnição. O bar é animado e amigável, exceto pelos "
+"soldados sisudos."
 
 #: dat/spob/duran_shipyard.xml:2
 msgid "Duran Shipyard"
@@ -13501,6 +13534,12 @@ msgid ""
 "standing by, Duran Shipyard is an important contributor to the stability in "
 "the region."
 msgstr ""
+"O Estaleiro Duran produz embarcações de apoio leves usadas pela máquina "
+"militar Dvaered. Dispõe ainda de uma linha de naves civis e de carga que "
+"disponibiliza aos retalhistas e aos consumidores. Uma vez que as naves aqui "
+"produzidas estão prontas para o combate e as instalações têm sempre pelo "
+"menos um esquadrão completo a postos, o Estaleiro Duran é um importante "
+"contribuinte para a estabilidade na região."
 
 #: dat/spob/duran_shipyard.xml:27
 msgid ""
@@ -13508,6 +13547,9 @@ msgid ""
 "line. It is quite impressive to see a spacecraft being built, even if it is "
 "only a relatively small one."
 msgstr ""
+"O bar da doca espacial proporciona aos visitantes uma vista sobre parte da "
+"linha de montagem. É impressionante ver uma nave espacial a ser construída, "
+"mesmo que seja apenas uma relativamente pequena."
 
 #: dat/spob/durea.xml:2
 msgid "Durea"
@@ -13523,6 +13565,13 @@ msgid ""
 "grow sparse enough, Durea may well find itself in an economically superior "
 "position."
 msgstr ""
+"Durea não é um lugar muito agradável para se viver, pois orbita a sua "
+"estrela um pouco distante demais para o conforto, o que deixa a maior parte "
+"do planeta coberto de neve e gelo. Apenas uma pequena parte da superfície "
+"descongela o suficiente no verão para operações mineiras, mas apesar disso "
+"as riquezas sob a crosta obrigam uma população resistente a cavar. Na "
+"verdade, se um dia os recursos na galáxia se tornarem escassos o suficiente, "
+"Durea pode muito bem encontrar-se numa posição economicamente superior."
 
 #: dat/spob/durea.xml:26
 msgid ""
@@ -13533,6 +13582,13 @@ msgid ""
 "metropolis planets tend to sport. The liquor served here is often pretty "
 "strong, this is, in no small part, due to the planet's harsh environment."
 msgstr ""
+"Este bar é o modelo padrão que pode ser encontrado em colónias mineiras "
+"impopulares em toda a galáxia. É essencialmente uma unidade habitacional pré-"
+"fabricada normal convertida em bar. Tem todas as comodidades e "
+"características que se pode esperar numa instalação pública, mas não oferece "
+"nenhum dos confortos que os bares em planetas metropolitanos tendem a "
+"oferecer. O licor servido aqui costuma ser bastante forte, isto deve-se em "
+"grande parte devido ao ambiente duro do planeta."
 
 #: dat/spob/duros_i.xml:2
 msgid "Duros I"
@@ -13554,6 +13610,12 @@ msgid ""
 "of life, ranging from vegetation to small hibernating animals. By Dvaered "
 "standards, the planet is not so bad at all."
 msgstr ""
+"Enquanto Durumdra se classifique tecnicamente como um mundo de gelo de "
+"classe P, o lugar pode ser bastante confortável para se viver. Algumas "
+"regiões próximas do equador derretem durante parte do ciclo solar do planeta "
+"e durante este período há uma explosão de vida, que vai desde a vegetação "
+"até pequenos animais em hibernação. Pelos padrões de Dvaered, o planeta não "
+"é assim tão mau."
 
 #: dat/spob/durumdra.xml:28
 msgid ""
@@ -13563,6 +13625,11 @@ msgid ""
 "pricey. Nevertheless, Durumdra has earned itself a footnote in several noted "
 "galactic tourist guides."
 msgstr ""
+"Durumdra não tem muito pelo que se distinguir na galáxia, mas o bar do porto "
+"espacial ajuda bastante. Tem bebidas de toda a galáxia, embora a localização "
+"estranha de Draygar signifique que a maioria delas é bastante cara. No "
+"entanto, Durumdra ganhou uma nota de rodapé em vários guias turísticos "
+"galácticos notáveis."
 
 #: dat/spob/dusk.xml:2
 msgid "Dusk"
@@ -14338,7 +14405,7 @@ msgstr ""
 
 #: dat/spob/fort_voproid.xml:2
 msgid "Fort Voproid"
-msgstr "Fort Voproid"
+msgstr "Forte Voproid"
 
 #: dat/spob/fort_voproid.xml:29
 msgid ""
@@ -27701,7 +27768,7 @@ msgstr "Desfruta dos teus últimos momentos, criminoso!"
 #. From the space pirate shanty
 #: dat/ai/empire.lua:27 dat/ai/pirate.lua:93
 msgid "You dare attack me?!"
-msgstr "Ousas atacar-me?"
+msgstr "Ousas atacar-me?!"
 
 #: dat/ai/empire.lua:28
 msgid "You are no match for the Empire!"
@@ -92380,7 +92447,7 @@ msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:122
 msgid "Return to the {sys} system to the trader on {pnt}"
-msgstr "Regressa ao sistema {sys} ao comerciante em {pnt}."
+msgstr "Regressa ao sistema {sys} ao comerciante em {pnt}"
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:133
 msgid ""
@@ -92391,7 +92458,7 @@ msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:139
 msgid "Return to the {sys} system and deliver to Dr. Geller on {pnt}"
-msgstr "Regressa ao sistema {sys} e faz a entrega ao Dr. Geller em {pnt}."
+msgstr "Regressa ao sistema {sys} e faz a entrega ao Dr. Geller em {pnt}"
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:153
 msgid ""
@@ -109216,12 +109283,12 @@ msgstr "Ocorreu uma falha ao guardar uma mercadoria inválida."
 #, c-format
 msgid "Failed to load nonexistent spob '%s'"
 msgstr ""
-"Ocorreu uma falha ao carregar um spob (objeto espacial) '%s' não existente."
+"Ocorreu uma falha ao carregar um spob (objeto espacial) '%s' não existente"
 
 #: src/nxml_lua.c:457
 #, c-format
 msgid "Failed to load nonexistent system '%s'"
-msgstr "Ocorreu uma falha ao carregar o sistema não existente '%s'."
+msgstr "Ocorreu uma falha ao carregar o sistema não existente '%s'"
 
 #: src/nxml_lua.c:476
 #, c-format
@@ -110867,7 +110934,7 @@ msgstr "!! Consumo de combustível insuficiente"
 
 #: src/pilot_outfit.c:573
 msgid "!! Insufficient Free Cargo Space"
-msgstr "!!  Espaço de carga livre insuficiente"
+msgstr "!! Espaço de carga livre insuficiente"
 
 #: src/pilot_outfit.c:574
 msgid "!! Insufficient Crew"
