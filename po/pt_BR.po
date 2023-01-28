@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-01-10 23:36+0900\n"
-"PO-Revision-Date: 2023-01-25 04:48+0000\n"
+"PO-Revision-Date: 2023-01-29 01:19+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
 "naev-0-10-x/pt_BR/>\n"
@@ -277,7 +277,7 @@ msgstr ""
 
 #: dat/intro:36
 msgid "Welcome to the universe of Naev..."
-msgstr "Bem-vindo ao universo de Naev..."
+msgstr "Bem-vindo ao universo de Naev…"
 
 #: dat/AUTHORS:1
 msgid "Current Core Development Team"
@@ -326,7 +326,7 @@ msgstr "\"nenau\""
 
 #: dat/AUTHORS:17
 msgid "   * Misc. Development and Dvaered aficionado"
-msgstr "   *Desenvolvimento Miscelânea e aficionado Dvaered "
+msgstr "   *Desenvolvimento Miscelânea e aficionado Dvaered"
 
 #: dat/AUTHORS:19
 msgid "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
@@ -492,7 +492,7 @@ msgstr "Rob Loach <http://robloach.net>"
 
 #: dat/AUTHORS:79
 msgid "   * SDL_collide"
-msgstr "...* SDL_collide"
+msgstr "   * SDL_collide"
 
 #: dat/AUTHORS:80
 msgid ""
@@ -648,8 +648,8 @@ msgstr ""
 #: dat/AUTHORS:122
 msgid "   Probably the cleanest autotools implementation I've ever seen."
 msgstr ""
-"Provavelmente a implementação mais limpa de ferramentas automáticas que ja "
-"vi."
+"   Provavelmente a implementação mais limpa de ferramentas automáticas que "
+"já vi."
 
 #: dat/AUTHORS:124
 msgid "Cypher3c <cypher3c@gmail.com>"
@@ -657,7 +657,7 @@ msgstr "Cypher3c <cypher3c@gmail.com>"
 
 #: dat/AUTHORS:125
 msgid "   * Spiced up the boring generic cargo missions."
-msgstr "* Apimentou as missões de carga genéricas chatas."
+msgstr "   * Apimentou as missões de carga genéricas chatas."
 
 #: dat/AUTHORS:127
 msgid "Nathan Loewen <loewen.nathan@gmail.com>"
@@ -665,11 +665,11 @@ msgstr "Nathan Loewen <loewen.nathan@gmail.com>"
 
 #: dat/AUTHORS:128
 msgid "   * Missions"
-msgstr "* Missões"
+msgstr "   * Missões"
 
 #: dat/AUTHORS:129
 msgid "   * Misc coding support"
-msgstr "* Suporte de codificação variada"
+msgstr "   * Suporte de codificação variada"
 
 #: dat/AUTHORS:131
 msgid "Fisherman"
@@ -680,12 +680,12 @@ msgid ""
 "   * Threading code to speed up nebula generation (and in the future who "
 "knows?)"
 msgstr ""
-"*Código de paralelismo para acelerar a geração da nebulosa (e no futuro quem "
-"sabe?)"
+"   * Código de paralelismo para acelerar a geração da nebulosa (e no futuro "
+"quem sabe?)"
 
 #: dat/AUTHORS:133
 msgid "   * Hot dog mission"
-msgstr "* Missão do cachorro-quente"
+msgstr "   * Missão do cachorro-quente"
 
 #: dat/AUTHORS:135
 msgid "Ludovic Bellière \"xrogaan\""
@@ -693,7 +693,7 @@ msgstr "Ludovic Bellière \"xrogaan\""
 
 #: dat/AUTHORS:136
 msgid "   * Python programmer extraordinaire"
-msgstr "Programador extraordinário de Python"
+msgstr "   * Programador extraordinário de Python"
 
 #: dat/AUTHORS:137
 msgid "His utilities save gray hairs for everyone."
@@ -705,7 +705,7 @@ msgstr "Josh Combs"
 
 #: dat/AUTHORS:140
 msgid "   * Artist of most of the nebulae."
-msgstr "Artista responsável pela maior parte das nebulosas."
+msgstr "   * Artista responsável pela maior parte das nebulosas."
 
 #: dat/AUTHORS:142
 msgid "Galileus"
@@ -713,15 +713,15 @@ msgstr "Galileus"
 
 #: dat/AUTHORS:143
 msgid "   * Modeller of the Shark and Rhino"
-msgstr "Modelador das naves Shark e Rhino"
+msgstr "   * Modelador das naves Shark e Rhino"
 
 #: dat/AUTHORS:145
 msgid "Devin Khan"
-msgstr " Devin Khan"
+msgstr "Devin Khan"
 
 #: dat/AUTHORS:146
 msgid "   * Modeller of the Phalanx"
-msgstr "Modelador da Nave Phalanx"
+msgstr "   * Modelador da Nave Phalanx"
 
 #: dat/AUTHORS:148
 msgid "Areze"
@@ -729,55 +729,55 @@ msgstr "Areze"
 
 #: dat/AUTHORS:149
 msgid "   * Junior assistant galaxy creator"
-msgstr "Criador assistente júnior de galaxia "
+msgstr "   * Criador assistente júnior de galáxia"
 
 #: dat/AUTHORS:151
 msgid "Old Man <oldtopman@gmail.com>"
-msgstr " Old Man <oldtopman@gmail.com>"
+msgstr "Old Man <oldtopman@gmail.com>"
 
 #: dat/AUTHORS:152
 msgid "   * Desura Maintainer"
-msgstr "Mantenedor da plataforma Desura"
+msgstr "   * Mantenedor da plataforma Desura"
 
 #: dat/AUTHORS:154
 msgid "NeD"
-msgstr " NeD"
+msgstr "NeD"
 
 #: dat/AUTHORS:155 dat/AUTHORS:161
 msgid "   * Mission contributor"
-msgstr "Colaborador de missões"
+msgstr "   * Colaborador de missões"
 
 #: dat/AUTHORS:157
 msgid "Sudarshan S"
-msgstr " Sudarshan S"
+msgstr "Sudarshan S"
 
 #: dat/AUTHORS:158
 msgid "   * Event contributor"
-msgstr "Colaborador de eventos"
+msgstr "   * Colaborador de eventos"
 
 #: dat/AUTHORS:160 dat/AUTHORS:178
 msgid "PhoenixRiver"
-msgstr " PhoenixRiver"
+msgstr "PhoenixRiver"
 
 #: dat/AUTHORS:162
 msgid "   * Misc fixes and typos"
-msgstr "Correções gerais e de erros tipográficos"
+msgstr "   * Correções gerais e de erros tipográficos"
 
 #: dat/AUTHORS:164
 msgid "Alastair Basden"
-msgstr " Alastair Basden"
+msgstr "Alastair Basden"
 
 #: dat/AUTHORS:165
 msgid "   * Economy development"
-msgstr "Desenvolvimento do modelo econômico"
+msgstr "   * Desenvolvimento do modelo econômico"
 
 #: dat/AUTHORS:166
 msgid "   * Ship log"
-msgstr "Registro da nave"
+msgstr "   * Registro da nave"
 
 #: dat/AUTHORS:167
 msgid "   * Solar system information screen"
-msgstr "Tela de informação do sistema solar"
+msgstr "   * Tela de informação do sistema solar"
 
 #: dat/AUTHORS:169
 msgid "Music by Matthew Pablo"
@@ -785,7 +785,7 @@ msgstr "Música por Mattew Pablo"
 
 #: dat/AUTHORS:170
 msgid "http://www.matthewpablo.com"
-msgstr " http://www.matthewpablo.com"
+msgstr "http://www.matthewpablo.com"
 
 #: dat/AUTHORS:172
 msgid "Testers"
@@ -793,15 +793,15 @@ msgstr "Jogadores de teste"
 
 #: dat/AUTHORS:175
 msgid "John Schwartfeger"
-msgstr " John Schwartfeger"
+msgstr "John Schwartfeger"
 
 #: dat/AUTHORS:176
 msgid "Leonardo Valeri Manera"
-msgstr " Leonardo Valeri Manera"
+msgstr "Leonardo Valeri Manera"
 
 #: dat/AUTHORS:177
 msgid "EvanR"
-msgstr " EvanR"
+msgstr "EvanR"
 
 #: dat/AUTHORS:180
 msgid "Artwork Contributors"
@@ -917,7 +917,7 @@ msgstr "TUBARÃO IMPERIAL"
 
 #: artwork/gfx/loading/shark_pirate.webp.txt:1
 msgid "PIRATE SHARK"
-msgstr "TUBARÂO PIRATA"
+msgstr "TUBARÃO PIRATA"
 
 #: artwork/gfx/loading/sting.webp.txt:1
 msgid "ZA'LEK STING"
@@ -966,9 +966,9 @@ msgid ""
 msgstr ""
 "Diamante é outra forma de grafita que foi cristalizada devido a pressão e "
 "calor intensos nas profundezas de alguns tipos de planetas. O material é "
-"útil em algumas aplicações de corte devido à rigidez, e é comunmente usado "
-"de forma decorativa, mas o diamante é atualmente bastante simples de "
-"produzir sintéticamente de forma que não é mais tão desejado como no passado."
+"útil em algumas aplicações de corte devido à rigidez, e é comumente usado de "
+"forma decorativa, mas o diamante é atualmente bastante simples de produzir "
+"sinteticamente de forma que não é mais tão desejado como no passado."
 
 #: dat/commodities/food.xml:3
 msgid "Food"
@@ -980,7 +980,7 @@ msgid ""
 "meals are rich in nutrients and able to last many cycles in their vacuum-"
 "sealed packaging."
 msgstr ""
-"Evoluíndo à partir das rações militares do passado distante, refeições "
+"Evoluindo à partir das rações militares do passado distante, refeições "
 "empacotadas modernas são ricas em nutrientes e capazes de durar por muitos "
 "ciclos em suas embalagens seladas à vácuo."
 
@@ -1023,7 +1023,7 @@ msgid ""
 msgstr ""
 "O Ferro tem um papel fundamental em muitos processos químicos e de produção "
 "de materiais. Apesar de sua vasta disponibilidade, há sempre uma demanda "
-"signficativa por mais."
+"significativa por mais."
 
 #: dat/commodities/kermite.xml:3
 msgid "Kermite"
@@ -1039,7 +1039,7 @@ msgid ""
 "universe."
 msgstr ""
 "Apesar de ser um dos materiais mais raros encontrados em asteróides, a "
-"Kermita tem papel fundamental em muitas aplicações técnologicas devido a "
+"Kermita tem papel fundamental em muitas aplicações tecnológicas devido a "
 "efeitos de dobra temporal que apresenta quando sujeita a combinações "
 "específicas de pressão e radiação. É geralmente usada em alguns tipos de "
 "geradores de escudo, praticamente garantindo uma demanda generalizada por "
@@ -1094,7 +1094,7 @@ msgstr ""
 "Neodímio é muito útil por suas propriedades magnéticas e de capacidade "
 "calorífera, tendo papel fundamental em aplicações de crio-resfriamento e "
 "câmaras de estáse. Dado o crescimento populacional pós-incidente e uso "
-"generalizado de novas téconologias, a demanda por Neodímio permanece "
+"generalizado de novas tectonologias, a demanda por Neodímio permanece "
 "relativamente alta e constante por toda a galáxia."
 
 #: dat/commodities/nickel.xml:3
@@ -1168,7 +1168,7 @@ msgstr ""
 "Apesar da resistência à corrosão do ródio ter sido tradicionalmente muito "
 "importante em muitas ligas metálicas, a grande disponibilidade de novos "
 "materiais cerâmicos e reforçados por radiação levou a uma redução de "
-"demanda. Porém, técnologias menos avançadas e mais antigas ainda necessitam "
+"demanda. Porém, tecnologias menos avançadas e mais antigas ainda necessitam "
 "de Ródio e são a base da demanda de mercado."
 
 #: dat/commodities/silicate.xml:3
@@ -1264,7 +1264,7 @@ msgstr ""
 "dos sensores e até o olho nu o detectarem até o advento da fotografia "
 "quântica, devido a baixa presença de matéria padrão. Conquanto seja "
 "valorizado em criações artísticas, as excelentes propriedades quânticas e "
-"quasi-materiais levaram a um surto de demanda em toda a galaáxia, "
+"quasi-materiais levaram a um surto de demanda em toda a galáxia, "
 "especialmente em aplicações criptográficas e de segurança."
 
 #: dat/commodities/water.xml:3
@@ -1282,7 +1282,7 @@ msgstr ""
 "Uma substância química incomum que os humanos não valorizam, água é "
 "necessária a sustentação da vida e útil em muitas indústrias devido as suas "
 "propriedades únicas. Apesar de comum, ela não está igualmente distribuída "
-"pela galáxia, resultando em altas concentrações em algumas areas e total "
+"pela galáxia, resultando em altas concentrações em algumas áreas e total "
 "falta em outras."
 
 #: dat/commodities/yttrium.xml:3
@@ -1302,11 +1302,11 @@ msgstr ""
 
 #: dat/damagetype/armourbreaker.xml:2
 msgid "armourbreaker"
-msgstr "Destruidor de Blindagem"
+msgstr "destruidor de blindagem"
 
 #: dat/damagetype/emp.xml:2
 msgid "emp"
-msgstr "PEM (Pulso Eletromagnético)"
+msgstr "pulso eletromagnético"
 
 #: dat/damagetype/explosion_splash.xml:2
 msgid "explosion_splash"
@@ -1318,15 +1318,15 @@ msgstr ""
 
 #: dat/damagetype/ion.xml:2
 msgid "ion"
-msgstr "Íon"
+msgstr "íon"
 
 #: dat/damagetype/nebula.xml:2
 msgid "nebula"
-msgstr "Nebulosa"
+msgstr "nebulosa"
 
 #: dat/damagetype/shieldbreaker.xml:2
 msgid "shieldbreaker"
-msgstr "Destruidor de Escudos"
+msgstr "destruidor de escudos"
 
 #: dat/difficulty/default.xml:2 dat/events/escort_settings.lua:80
 #: src/dev_uniedit.c:394
@@ -1339,7 +1339,7 @@ msgstr "Modo de dificuldade padrão."
 
 #: dat/difficulty/easy_mode.xml:2
 msgid "Easy Mode"
-msgstr "Modo Fácil"
+msgstr "Modo fácil"
 
 #: dat/difficulty/easy_mode.xml:3
 msgid "Makes the game easier for the player, without trivializing most things."
@@ -1349,7 +1349,7 @@ msgstr ""
 
 #: dat/difficulty/masochist_mode.xml:2
 msgid "Masochist Mode"
-msgstr "Modo Masoquista"
+msgstr "Modo masoquista"
 
 #: dat/difficulty/masochist_mode.xml:3
 msgid "Makes the game significantly harder for the player."
@@ -1357,7 +1357,7 @@ msgstr "Torna o jogo significativamente mais difícil para o jogador."
 
 #: dat/difficulty/slow_mode.xml:2
 msgid "Slow Mode"
-msgstr "Modo Lento"
+msgstr "Modo lento"
 
 #: dat/difficulty/slow_mode.xml:3
 msgid ""
@@ -1369,7 +1369,7 @@ msgstr ""
 
 #: dat/difficulty/story_mode.xml:2
 msgid "Story Mode"
-msgstr "Modo História"
+msgstr "Modo história"
 
 #: dat/difficulty/story_mode.xml:3
 msgid ""
@@ -1391,7 +1391,7 @@ msgstr "A nave pegou outras naves de surpresa!"
 
 #: dat/effects/antimatter_taint.xml:2
 msgid "Antimatter Taint"
-msgstr "Contaminação Antimatérial"
+msgstr "Contaminação Antimatéria"
 
 #: dat/effects/antimatter_taint.xml:3
 msgid "Antimatter is tainting your ship!"
@@ -1752,7 +1752,7 @@ msgstr ""
 #: dat/factions/goddard.xml:2 dat/ships/neutral/goddard.xml:2
 #: dat/ssys/goddard.xml:2 dat/events/dvaered/fwB_repay.lua:89
 msgid "Goddard"
-msgstr ""
+msgstr "Goddard"
 
 #: dat/factions/goddard.xml:7 dat/ships/dvaered/dvaered_goddard.xml:18
 #: dat/ships/neutral/goddard.xml:17 dat/events/dvaered/fwB_repay.lua:74
@@ -1813,7 +1813,7 @@ msgid ""
 "aggressive and will attack most vessels unprovoked. Even the pirate clans "
 "have difficulty in dealing with them."
 msgstr ""
-"Piratas Saqueadores são so mais baixos e vis entre os piratas. Eles são "
+"Piratas Saqueadores são só mais baixos e vis entre os piratas. Eles são "
 "extremamente agressivos e atacarão a maioria das naves sem nenhuma "
 "provocação. Mesmo os clãs piratas tem dificuldade em lidar com eles."
 
@@ -1901,7 +1901,7 @@ msgstr "Mineirador"
 
 #: dat/factions/nasin.xml:2
 msgid "Nasin"
-msgstr ""
+msgstr "Nasin"
 
 #: dat/factions/pirate.xml:6
 msgid "Galactic Space Pirates"
@@ -1926,7 +1926,7 @@ msgstr ""
 #: dat/ships/proteron/proteron_pythagoras.xml:17
 #: dat/ships/proteron/proteron_watson.xml:18
 msgid "Proteron"
-msgstr ""
+msgstr "Proteron"
 
 #: dat/factions/proteron.xml:5
 msgid "Fallen House Proteron"
@@ -1984,7 +1984,7 @@ msgstr ""
 #: dat/scripts/common/achack.lua:4 dat/scripts/common/sirius.lua:11
 #: dat/scripts/common/sirius.lua:17
 msgid "Sirius"
-msgstr ""
+msgstr "Sirius"
 
 #: dat/factions/sirius.xml:7 dat/events/dvaered/fwB_repay.lua:72
 msgid "House Sirius"
@@ -2008,7 +2008,7 @@ msgstr ""
 #: dat/ships/soromid/soromid_nyx.xml:14 dat/ships/soromid/soromid_odium.xml:15
 #: dat/ships/soromid/soromid_reaver.xml:13 dat/ships/soromid/soromid_vox.xml:17
 msgid "Soromid"
-msgstr ""
+msgstr "Soromid"
 
 #: dat/factions/soromid.xml:11
 msgid ""
@@ -2026,7 +2026,7 @@ msgstr "Strangelove"
 
 #: dat/factions/thurion.xml:2
 msgid "Thurion"
-msgstr ""
+msgstr "Thurion"
 
 #: dat/factions/thurion.xml:10
 msgid ""
@@ -2095,7 +2095,7 @@ msgstr ""
 #: dat/scripts/common/zalek_blackhole.lua:89
 #: dat/scripts/common/zalek_physics.lua:32
 msgid "Za'lek"
-msgstr ""
+msgstr "Za'lek"
 
 #: dat/factions/zalek.xml:7
 msgid "House Za'lek"
@@ -2111,7 +2111,7 @@ msgstr ""
 
 #: dat/outfits/accessory/air_freshener.xml:2
 msgid "Air Freshener"
-msgstr "Purfificador de Ar"
+msgstr "Purificador de Ar"
 
 #: dat/outfits/accessory/air_freshener.xml:5
 #: dat/outfits/accessory/black_cat_doll.xml:5
@@ -2144,7 +2144,7 @@ msgid ""
 "cosmetic."
 msgstr ""
 "Aparentemente purificadores de ar foram usados tradicionalmente em veículos "
-"humans como enfeites. Costumavam ser perfumados mas, já que estes perfumes "
+"humanos como enfeites. Costumavam ser perfumados mas, já que estes perfumes "
 "não tem nenhum impacto devido aos poderosos sistemas de filtragem das naves "
 "modernas, atualmente eles são inteiramente decorativos."
 
@@ -2199,7 +2199,7 @@ msgstr ""
 "Esta é uma caneca que celebra a terraformação e fundação de uma colônia "
 "permanente em Antlejos V. A caneca é ricamente entalhada com o que parecem "
 "ser cenas da curta história da colônia. Você consegue discernir o que "
-"parecem ser alguns indivíduos praticando luta-livre, montes de máquinário "
+"parecem ser alguns indivíduos praticando luta-livre, montes de maquinário "
 "pesado, e pessoas fazendo um tipo de dança circular. Isto tudo aconteceu? No "
 "fundo há uma inscrição dizendo \"Dane-se a PUAAA, vida longa ao Herói de "
 "Antlejos!\" com uma assinatura ilegível."
@@ -2224,7 +2224,7 @@ msgstr ""
 "incendiar a casa de uma de suas vítimas? E quando isso é uma gafe absoluta? "
 "Lorde Motoserra, um dos mais bem-sucedidos Senhores da Guerra de nosso "
 "tempo, responde estas espinhosas questões e muitas outras neste livreto "
-"essêncial. \"Este livro me permitiu rapidamente galgar até as patentes mais "
+"essencial. \"Este livro me permitiu rapidamente galgar até as patentes mais "
 "altas\" -- Coronel Urnus, Gerente do Escritório Executivo no Alto Comando"
 
 #: dat/outfits/accessory/fuzzy_dice.xml:2
@@ -2288,7 +2288,7 @@ msgid ""
 "your ship look cuter."
 msgstr ""
 "Uma carta de amor perdida que você deveria entregar, mas ao ler a primeira "
-"linha \"Minhas empurradinhas, que desejosas são adentro puxadinhas...\" você "
+"linha \"Minhas empurradinhas, que desejosas são adentro puxadinhas…\" você "
 "tem plena certeza que fez um favor em não entrega-la. Pelo menos ela "
 "embeleza a nave."
 
@@ -2326,7 +2326,7 @@ msgid ""
 "useful for hands-free eating of sandwiches in zero gravity. Apparently the "
 "CEO really loves his sandwiches."
 msgstr ""
-"Parece ser uma edição limitada do porta-sandíches do Estaleiro Nexus. Muito "
+"Parece ser uma edição limitada do porta-sanduíches do Estaleiro Nexus. Muito "
 "útil para o consumo de sanduíches em gravidade zero com as mãos livres. "
 "Aparentemente o chefe adora sanduíches."
 
@@ -2444,7 +2444,7 @@ msgstr ""
 "seria mais grato se ele não tivesse mencionado que sua amante o estava "
 "obrigando a se livrar da peça. A estátua parece retratar um lagostim "
 "vestindo uma gravata borboleta tocando um ukulele e a cabeça dele balança "
-"conforme a nave acelera. Que bom gosto..."
+"conforme a nave acelera. Que bom gosto…"
 
 #: dat/outfits/accessory/vacuum_cleaner.xml:2
 msgid "Vacuum Cleaner?"
@@ -2499,7 +2499,7 @@ msgstr "Salto Adaptável"
 #: dat/outfits/bioship/skills/tunnelling_organ.xml:4
 #: dat/outfits/bioship/skills/wanderer.xml:4
 msgid "Bioship Organ"
-msgstr "Orgão de Bionave"
+msgstr "Órgão de Bionave"
 
 #. Movement skill tree
 #. Only for up to destroyers
@@ -2542,7 +2542,7 @@ msgstr "Hormônios de Adrenalina"
 #: dat/outfits/bioship/skills/bulky_abdomen.xml:2
 #: dat/scripts/bioship/skills.lua:155
 msgid "Bulky Abdomen"
-msgstr "Abdómen Volumoso"
+msgstr "Abdômen Volumoso"
 
 #. Misc tree
 #. For everyone!
@@ -3054,7 +3054,7 @@ msgstr ""
 
 #: dat/outfits/core_engine/small/zalek_test_engine.xml:2
 msgid "Za'lek Test Engine"
-msgstr "Motor de Teste Za'Lek"
+msgstr "Motor de Teste Za'lek"
 
 #: dat/outfits/core_engine/small/zalek_test_engine.xml:10
 msgid ""
@@ -3063,7 +3063,7 @@ msgid ""
 "scientists to test new refrigeration and propulsion systems. These engines "
 "are very often modded by students, which makes them unreliable."
 msgstr ""
-"Construido por fabricantes Za'lek, este motor não tem por objetivo ser "
+"Construído por fabricantes Za'lek, este motor não tem por objetivo ser "
 "eficiente. A meta é ser facilmente modificável para que cientistas Za'lek "
 "possam testar novos sistemas de refrigeração e propulsão. Estes motores são "
 "frequentemente modificados por estudantes, o que os torna pouco confiáveis."
@@ -3174,7 +3174,7 @@ msgid ""
 "important capital ships."
 msgstr ""
 "Considerada a melhor configuração de blindagem padrão do mercado, está "
-"modificação de casco das Indústrias Schaefer & Kane é geralmente encontrada "
+"modificação de casco das Indústrias Schafer & Kane é geralmente encontrada "
 "apenas em naves capitais importantes."
 
 #: dat/outfits/core_hull/large/unicorp_d48_heavy_plating.xml:2
@@ -3446,7 +3446,7 @@ msgstr ""
 
 #: dat/outfits/core_system/large/milspec_orion_8601_core_system.xml:2
 msgid "Milspec Orion 8601 Core System"
-msgstr "Sistema Principal MilSpec Orion 8601"
+msgstr "Sistema Principal Milspec Orion 8601"
 
 #: dat/outfits/core_system/large/milspec_orion_8601_core_system.xml:9
 msgid ""
@@ -3465,7 +3465,7 @@ msgstr ""
 
 #: dat/outfits/core_system/large/milspec_orion_9901_core_system.xml:2
 msgid "Milspec Orion 9901 Core System"
-msgstr "Sistema Principal MilSpec Orion 9901"
+msgstr "Sistema Principal Milspec Orion 9901"
 
 #: dat/outfits/core_system/large/milspec_orion_9901_core_system.xml:10
 msgid ""
@@ -3484,7 +3484,7 @@ msgstr ""
 
 #: dat/outfits/core_system/large/milspec_thalos_8502_core_system.xml:2
 msgid "Milspec Thalos 8502 Core System"
-msgstr "Sistema Principal MilSpec Thalos 8502"
+msgstr "Sistema Principal Milspec Thalos 8502"
 
 #: dat/outfits/core_system/large/milspec_thalos_8502_core_system.xml:9
 msgid ""
@@ -3496,11 +3496,11 @@ msgstr ""
 "A Milspec sabe que uma nave é meramente a soma das suas partes, e isso "
 "significa que quanto mais peças, melhor a nave. O Thalos 8502 oferece um "
 "sério controle de subsistemas enquanto mantém o alto padrão de energia e "
-"escudos dos quais a MilSpec se orgulha. Voe seguro, voe Milspec."
+"escudos dos quais a Milspec se orgulha. Voe seguro, voe Milspec."
 
 #: dat/outfits/core_system/large/milspec_thalos_9802_core_system.xml:2
 msgid "Milspec Thalos 9802 Core System"
-msgstr "Sistema Principal MilSpec Thalos 9802"
+msgstr "Sistema Principal Milspec Thalos 9802"
 
 #: dat/outfits/core_system/large/milspec_thalos_9802_core_system.xml:10
 msgid ""
@@ -3512,7 +3512,7 @@ msgstr ""
 "A Milspec sabe que uma nave é meramente a soma das suas partes, e isso "
 "significa que quanto mais peças, melhor a nave. O Thalos 9802 oferece um "
 "sério controle de subsistemas enquanto mantém o alto padrão de energia e "
-"escudos dos quais a MilSpec se orgulha. Voe seguro, voe Milspec."
+"escudos dos quais a Milspec se orgulha. Voe seguro, voe Milspec."
 
 #: dat/outfits/core_system/large/previous_generation_large_systems.xml:2
 msgid "Previous Generation Large Systems"
@@ -3558,7 +3558,7 @@ msgstr ""
 
 #: dat/outfits/core_system/medium/milspec_orion_4801_core_system.xml:2
 msgid "Milspec Orion 4801 Core System"
-msgstr "Sistema Principal MilSpec Orion 4801"
+msgstr "Sistema Principal Milspec Orion 4801"
 
 #: dat/outfits/core_system/medium/milspec_orion_4801_core_system.xml:9
 msgid ""
@@ -3575,7 +3575,7 @@ msgstr ""
 
 #: dat/outfits/core_system/medium/milspec_orion_5501_core_system.xml:2
 msgid "Milspec Orion 5501 Core System"
-msgstr "Sistema Principal MilSpec Orion 5501"
+msgstr "Sistema Principal Milspec Orion 5501"
 
 #: dat/outfits/core_system/medium/milspec_orion_5501_core_system.xml:10
 msgid ""
@@ -3594,7 +3594,7 @@ msgstr ""
 
 #: dat/outfits/core_system/medium/milspec_thalos_4702_core_system.xml:2
 msgid "Milspec Thalos 4702 Core System"
-msgstr "Sistema Principal MilSpec Thalos 4702"
+msgstr "Sistema Principal Milspec Thalos 4702"
 
 #: dat/outfits/core_system/medium/milspec_thalos_4702_core_system.xml:9
 msgid ""
@@ -3606,11 +3606,11 @@ msgstr ""
 "A Milspec sabe que uma nave é meramente a soma das suas partes, e isso "
 "significa que quanto mais peças, melhor a nave. O Thalos 4702 oferece um "
 "sério controle de subsistemas enquanto mantém o alto padrão de energia e "
-"escudos dos quais a MilSpec se orgulha. Voe seguro, voe Milspec."
+"escudos dos quais a Milspec se orgulha. Voe seguro, voe Milspec."
 
 #: dat/outfits/core_system/medium/milspec_thalos_5402_core_system.xml:2
 msgid "Milspec Thalos 5402 Core System"
-msgstr "Sistema Principal MilSpec Thalos 5402"
+msgstr "Sistema Principal Milspec Thalos 5402"
 
 #: dat/outfits/core_system/medium/milspec_thalos_5402_core_system.xml:10
 msgid ""
@@ -3622,7 +3622,7 @@ msgstr ""
 "A Milspec sabe que uma nave é meramente a soma das suas partes, e isso "
 "significa que quanto mais peças, melhor a nave. O Thalos 5402 oferece um "
 "sério controle de subsistemas enquanto mantém o alto padrão de energia e "
-"escudos dos quais a MilSpec se orgulha. Voe seguro, voe Milspec."
+"escudos dos quais a Milspec se orgulha. Voe seguro, voe Milspec."
 
 #: dat/outfits/core_system/medium/previous_generation_medium_systems.xml:2
 msgid "Previous Generation Medium Systems"
@@ -3656,7 +3656,7 @@ msgstr ""
 
 #: dat/outfits/core_system/small/milspec_orion_2301_core_system.xml:2
 msgid "Milspec Orion 2301 Core System"
-msgstr "Sistema Principal MilSpec Orion 2301"
+msgstr "Sistema Principal Milspec Orion 2301"
 
 #: dat/outfits/core_system/small/milspec_orion_2301_core_system.xml:9
 msgid ""
@@ -3674,7 +3674,7 @@ msgstr ""
 #: dat/outfits/core_system/small/milspec_orion_3701_core_system.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:224
 msgid "Milspec Orion 3701 Core System"
-msgstr "Sistema Principal MilSpec Orion 3701"
+msgstr "Sistema Principal Milspec Orion 3701"
 
 #: dat/outfits/core_system/small/milspec_orion_3701_core_system.xml:10
 msgid ""
@@ -3693,7 +3693,7 @@ msgstr ""
 
 #: dat/outfits/core_system/small/milspec_thalos_2202_core_system.xml:2
 msgid "Milspec Thalos 2202 Core System"
-msgstr "Sistema Principal MilSpec Thalos 2202"
+msgstr "Sistema Principal Milspec Thalos 2202"
 
 #: dat/outfits/core_system/small/milspec_thalos_2202_core_system.xml:9
 msgid ""
@@ -3705,11 +3705,11 @@ msgstr ""
 "A Milspec sabe que uma nave é meramente a soma das suas partes, e isso "
 "significa que quanto mais peças, melhor a nave. O Thalos 2202 oferece um "
 "sério controle de subsistemas enquanto mantém o alto padrão de energia e "
-"escudos dos quais a MilSpec se orgulha. Voe seguro, voe Milspec."
+"escudos dos quais a Milspec se orgulha. Voe seguro, voe Milspec."
 
 #: dat/outfits/core_system/small/milspec_thalos_3602_core_system.xml:2
 msgid "Milspec Thalos 3602 Core System"
-msgstr "Sistema Principal MilSpec Thalos 3602"
+msgstr "Sistema Principal Milspec Thalos 3602"
 
 #: dat/outfits/core_system/small/milspec_thalos_3602_core_system.xml:10
 msgid ""
@@ -3721,7 +3721,7 @@ msgstr ""
 "A Milspec sabe que uma nave é meramente a soma das suas partes, e isso "
 "significa que quanto mais peças, melhor a nave. O Thalos 3602 oferece um "
 "sério controle de subsistemas enquanto mantém o alto padrão de energia e "
-"escudos dos quais a MilSpec se orgulha. Voe seguro, voe Milspec."
+"escudos dos quais a Milspec se orgulha. Voe seguro, voe Milspec."
 
 #: dat/outfits/core_system/small/previous_generation_small_systems.xml:2
 msgid "Previous Generation Small Systems"
@@ -3776,7 +3776,7 @@ msgstr "Baia de Lancelots Imperiais"
 #: dat/outfits/fighter_bays/empire_lancelot_bay.xml:8
 #: dat/ships/empire/empire_pacifier.xml:19
 msgid "You need at least 50 reputation with the Empire."
-msgstr "Você precisa de pelo menos 50 pontos de reputação com o Império."
+msgstr "Requer 50 pontos de reputação com o Império."
 
 #: dat/outfits/fighter_bays/empire_lancelot_bay.xml:13
 msgid ""
@@ -3794,7 +3794,7 @@ msgstr "Baia de Fidelidade"
 
 #: dat/outfits/fighter_bays/fidelity_bay.xml:8
 msgid "You need at least 50 reputation with House Sirius."
-msgstr "Você precisa de ao menos 50 pontos de reputação com a Casa Sirius."
+msgstr "Requer 50 pontos de reputação com a Casa Sirius."
 
 #: dat/outfits/fighter_bays/fidelity_bay.xml:13
 msgid ""
@@ -3928,7 +3928,7 @@ msgstr "Baia de Xamã Sirius"
 
 #: dat/outfits/fighter_bays/sirius_shaman_bay.xml:8
 msgid "You need at least 50 reputation with the Sirius."
-msgstr "Você precisa de ao menos 50 pontos de reputação com a Casa Sirius."
+msgstr "Requer 50 pontos de reputação com a Casa Sirius."
 
 #: dat/outfits/fighter_bays/sirius_shaman_bay.xml:13
 msgid ""
@@ -3947,7 +3947,7 @@ msgstr "Baia de Salteador Soromid"
 #: dat/outfits/fighter_bays/soromid_brigand_bay.xml:8
 #: dat/ships/soromid/soromid_nyx.xml:17
 msgid "You need at least 50 reputation with the Soromid."
-msgstr "Você precisa de ao menos 50 pontos de reputação com os Soromids."
+msgstr "Requer 50 pontos de reputação com os Soromids."
 
 #: dat/outfits/fighter_bays/soromid_brigand_bay.xml:13
 msgid ""
@@ -3967,7 +3967,7 @@ msgstr "Baia de Perspicácia Thurion"
 #: dat/ships/thurion/thurion_apprehension.xml:20
 #: dat/ships/thurion/thurion_taciturnity.xml:19
 msgid "You need at least 50 reputation with the Thurion."
-msgstr "Você precisa de ao menos 50 pontos de reputação com os Thurion."
+msgstr "Requer 50 pontos de reputação com os Thurion."
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_bay.xml:13
 msgid ""
@@ -3987,7 +3987,7 @@ msgstr "Doca Perspicácia Thurion"
 #: dat/ships/thurion/thurion_ingenuity.xml:19
 #: dat/ships/thurion/thurion_scintillation.xml:20
 msgid "You need at least 30 reputation with the Thurion."
-msgstr "Você precisa de ao menos 30 pontos de reputação com os Thurion."
+msgstr "Requer 30 pontos de reputação com os Thurion."
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_dock.xml:13
 msgid ""
@@ -4006,7 +4006,7 @@ msgstr "Baia de Drones Bombardeiros Za'lek"
 #: dat/outfits/fighter_bays/zalek_light_drone_bay.xml:8
 #: dat/ships/zalek/zalek_demon.xml:19
 msgid "You need at least 50 reputation with House Za'lek."
-msgstr "Você precisa de ao menos 50 pontos de reputação a Casa Za'Lek."
+msgstr "Requer 50 pontos de reputação a Casa Za'lek."
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_bay.xml:13
 msgid ""
@@ -4028,7 +4028,7 @@ msgstr "Mini Baia de Drones Bombardeiros Za'lek"
 #: dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml:8
 #: dat/outfits/launchers/zalek_hunter_launcher.xml:8
 msgid "You need at least 30 reputation with House Za'lek."
-msgstr "Você precisa de ao menos 30 pontos de reputação a Casa Za'Lek."
+msgstr "Requer 30 pontos de reputação a Casa Za'lek."
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_mini_bay.xml:13
 msgid ""
@@ -4049,7 +4049,7 @@ msgstr "Baia de Drones Pesados Za'lek"
 #: dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml:8
 #: dat/ships/zalek/zalek_mammon.xml:23
 msgid "You need at least 60 reputation with House Za'lek."
-msgstr "Você precisa de ao menos 60 pontos de reputação a Casa Za'Lek."
+msgstr "Requer 60 pontos de reputação a Casa Za'lek."
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml:13
 msgid ""
@@ -4069,7 +4069,7 @@ msgstr "Mini Baia de Drones Pesados Za'lek"
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:8
 #: dat/ships/zalek/zalek_sting.xml:19
 msgid "You need at least 40 reputation with House Za'lek."
-msgstr "Você precisa de ao menos 40 pontos de reputação a Casa Za'Lek."
+msgstr "Requer 40 pontos de reputação a Casa Za'lek."
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml:13
 msgid ""
@@ -4127,7 +4127,7 @@ msgid ""
 "applied to each ship."
 msgstr ""
 "O serviço \"Manopla de Luxo\" oferece um completo reajuste e renovação do "
-"conjunto de circuítos que controlam as armas de proa. As otimizaçãoes são "
+"conjunto de circuítos que controlam as armas de proa. As otimizações são "
 "capazes de aumentar ligeiramente o poder de fogo sem nenhuma desvantagem "
 "significativa além do alto custo do serviço em si. Devido a natureza das "
 "modificações, apenas uma delas pode ser feita para cada nave."
@@ -4143,7 +4143,7 @@ msgid ""
 "flow, but there is no way to prevent the water from hitting."
 msgstr ""
 "A sorte é um rio corrente carregando uma parede impenetrável de água a sua "
-"frente. Pode-se construir barragens e paredes para conter of fluxo, mas é "
+"frente. Pode-se construir barragens e paredes para conter o fluxo, mas é "
 "impossível impedir que a água atinja seu alvo."
 
 #: dat/outfits/intrinsic/machiavellian_necessity.xml:2
@@ -4168,11 +4168,11 @@ msgid ""
 "their own will by mastering their own character."
 msgstr ""
 "A virtude é uma fortaleza contra as vontades inconstantes da sorte. Pode-se "
-"convocar a própria força de vontate dominando o próprio caráter."
+"convocar a própria força de vontade dominando o próprio caráter."
 
 #: dat/outfits/intrinsic/port_and_polish.xml:2
 msgid "Port & Polish"
-msgstr "Aportar & Polir"
+msgstr "Aportar e Polir"
 
 #: dat/outfits/launchers/convulsion_launcher.xml:2
 msgid "Convulsion Launcher"
@@ -4201,9 +4201,9 @@ msgid ""
 "the short range and high damage of their beams."
 msgstr ""
 "Esta arma poderosa de energia é feita para bombardear um alvo a partir de "
-"uma grande distância com explosões ionicas, causando danos debilitantes aos "
+"uma grande distância com explosões iônicas, causando danos debilitantes aos "
 "escudos e sistemas elétricos do alvo, o que pode tornar a nave efetivamente "
-"indefesa. Foi desenvolvido pelos Za'Lek para ser usado em drones mais "
+"indefesa. Foi desenvolvido pelos Za'lek para ser usado em drones mais "
 "pesados e complementar o baixo alcance e alto dano de suas armas de raio."
 
 #: dat/outfits/launchers/emp_grenade_launcher.xml:2
@@ -4218,10 +4218,10 @@ msgid ""
 "EM pulses rarely destroy the ship, leaving it floating disabled in space. "
 "These are favoured by traders for keeping pirates at bay."
 msgstr ""
-"Este lançador pode disparar granadas PEM em qualquer direcção utilizando um "
+"Este lançador pode disparar granadas PEM em qualquer direção utilizando um "
 "sistema único de orientação interna. As granadas liberam um impulso "
-"electromagnético, desativando rapidamente a electrónica dos naves inimigos. "
-"Útil para levar naves sem destrui-las; os impulsos EM raramente destroem a "
+"electromagnético, desativando rapidamente a eletrônica dos naves inimigos. "
+"Útil para levar naves sem destruí-las; os impulsos EM raramente destroem a "
 "nave, deixando-a a flutuar desativada no espaço. Um favorito de comerciantes "
 "por manterem os piratas à distância."
 
@@ -4238,7 +4238,7 @@ msgid ""
 msgstr ""
 "A Sistemas Enygma descobriu que havia um nicho inexplorado em armas "
 "incapacitantes destinadas a naves de guerra maiores. Considerando os mísseis "
-"Medusa e o armamento ionico insuficientes, redesenharam o torpedo César IV "
+"Medusa e o armamento iônico insuficientes, redesenharam o torpedo César IV "
 "da Unicorp como uma arma PEM pesada, capaz de fritar rapidamente os sistemas "
 "mesmo das maiores naves de guerra."
 
@@ -4390,7 +4390,7 @@ msgstr ""
 "O lançador Fúria da TeraCom é um lançador de mísseis de alto desempenho "
 "equipado com tecnologia patenteada de rastreio e armamento de mísseis, "
 "permitindo aos pilotos obterem a mira nos alvos de forma rápida e fácil. "
-"Embora com pouca potência destrutiva, os mísseis Fúri lançados são "
+"Embora com pouca potência destrutiva, os mísseis Fúria lançados são "
 "suficientemente ágeis para atingir facilmente até algumas das naves mais "
 "rápidas da galáxia."
 
@@ -4435,7 +4435,7 @@ msgstr ""
 "A TeraCom decidiu não desenvolver um lançador para o César IV, porque ficou "
 "aquém dos requisitos de desempenho da empresa. Em vez disso, a empresa "
 "lançou uma especificação de torpedo completamente nova. Atualmente, o "
-"torpedo pesado tipo Imperator fornece um poder destrutivo devastador, embora "
+"torpedo pesado tipo Imperador fornece um poder destrutivo devastador, embora "
 "demore algum tempo para alcançar seu alvo. Os cruzadores mais rápidos podem "
 "ser capazes de evita-lo completamente."
 
@@ -4461,17 +4461,6 @@ msgid "TeraCom Medusa Launcher"
 msgstr "Lançador de Mísseis Medusa TeraCom"
 
 #: dat/outfits/launchers/teracom_medusa_launcher.xml:9
-#, fuzzy
-#| msgid ""
-#| "The Medusa class EMP cruise missile is a nonlethal weapon designed to "
-#| "knock out a ship's internal systems, rendering it harmless and ready for "
-#| "boarding. The warhead does only limited damage, so even lightly armoured "
-#| "targets can effectively be disabled with this weapon. However, the Medusa "
-#| "is not the most agile missile on the market.\n"
-#| "\n"
-#| "TeraCom has built a highly efficient Medusa launcher, capable of locking "
-#| "on and firing faster than the standard specification, and holding a "
-#| "greater amount in the magazine as well."
 msgid ""
 "The Medusa class EMP cruise missile is a nonlethal weapon designed to knock "
 "out a ship's internal systems, rendering it harmless and ready for boarding. "
@@ -4483,11 +4472,7 @@ msgstr ""
 "desabilitar os sistemas internos de uma nave, tornando-a inofensiva e pronto "
 "para ser abordada. A ogiva apenas causa danos limitados, então mesmo alvos "
 "levemente blindados podem ser efetivamente desativados com esta arma. No "
-"entanto, a Medusa não é o míssil mais ágil do mercado.\n"
-"\n"
-"A TeraCom construiu um lançador Medusa altamente eficiente, capaz de travar "
-"e disparar mais rapidamente do que a especificação padrão, e de ter também "
-"uma quantidade maior de munições."
+"entanto, a Medusa não é o míssil mais ágil do mercado."
 
 #: dat/outfits/launchers/teracom_vengeance_launcher.xml:2
 msgid "TeraCom Vengeance Launcher"
@@ -4507,7 +4492,7 @@ msgstr ""
 "pesados atualmente em produção. Quase metade do casco dos mísseis é "
 "utilizado para carga explosiva, o que diminui a sua capacidade de alcançar "
 "alvos rápidos. Foi concebido para se destacar no abate de alvos blindados à "
-"custa de os tornar ruíns contra escudos. Melhor quando pareado com armas "
+"custa de os tornar ruins contra escudos. Melhor quando pareado com armas "
 "anti-escudo. O equipamento de lançamento patenteado da TeraCom reduz "
 "consideravelmente o tempo necessário para se conseguir uma trava de mira. "
 "Por vezes, esses poucos segundos podem fazer toda a diferença."
@@ -4526,15 +4511,15 @@ msgid ""
 "standard launcher."
 msgstr ""
 "O míssil Thurion do tipo interceptor concentra-se em alta agilidade em vez "
-"de poder destrutivo. Embora cause poucos danos a objetos fsólidos, é "
-"bastante eficaz em desestabilizar os escudos.\n"
+"de poder destrutivo. Embora cause poucos danos a objetos sólidos, é bastante "
+"eficaz em desestabilizar os escudos.\n"
 "\n"
 "Este lançador é montado numa torreta e tem mais capacidade de munições do "
 "que o lançador padrão."
 
 #: dat/outfits/launchers/unicorp_caesar_iv_launcher.xml:2
 msgid "Unicorp Caesar IV Launcher"
-msgstr "Lançador de Torpedos Cesar IV Unicorp"
+msgstr "Lançador de Torpedos César IV Unicorp"
 
 #: dat/outfits/launchers/unicorp_caesar_iv_launcher.xml:10
 msgid ""
@@ -4899,7 +4884,7 @@ msgstr ""
 "perfeitas de uma Licença para Armas Pesadas Falsificada. No entanto, isto "
 "vem com uma margem de lucro significativa em favor do falsificador em "
 "comparação com os preços normais da licença. Esta licença irá autorizá-lo a "
-"comprar armas pesadas como a torreta ionica pesada, em mundos que fazem "
+"comprar armas pesadas como a torreta iônica pesada, em mundos que fazem "
 "verificações de antecedentes."
 
 #: dat/outfits/misc/counterfeit_heavy_weapon_license.xml:11
@@ -4956,7 +4941,7 @@ msgid ""
 "This license will authorize you to buy and use heavy weapons like the heavy "
 "ion turret."
 msgstr ""
-"Esta licença irá autorizá-lo a comprar armas pesadas como a torreta ionica "
+"Esta licença irá autorizá-lo a comprar armas pesadas como a torreta iônica "
 "pesada."
 
 #: dat/outfits/misc/large_civilian_vessel_license.xml:2
@@ -4969,7 +4954,7 @@ msgstr "Está licença irá autoriza-lo a comprar naves do tipo cargueiro."
 
 #: dat/outfits/misc/large_civilian_vessel_license.xml:10
 msgid "Large Civilian Vessel"
-msgstr "Nave Civíl Grande"
+msgstr "Nave Civil Grande"
 
 #: dat/outfits/misc/light_combat_vessel_license.xml:2
 msgid "Light Combat Vessel License"
@@ -5276,7 +5261,7 @@ msgstr "Modificador de Combustível"
 #: dat/outfits/structure/small_fuel_pod.xml:9
 msgid "The fuel pod allows a ship to store more fuel for hyperspace jumps."
 msgstr ""
-"Os compartimentos de combustível permitem estocar mais combústivel para "
+"Os compartimentos de combustível permitem estocar mais combustível para "
 "saltos no hiperespaço."
 
 #: dat/outfits/structure/large_shield_booster.xml:2
@@ -5339,7 +5324,7 @@ msgid ""
 "The result is a much more robust material, although it is substantially more "
 "expensive."
 msgstr ""
-"Nanoligação é o sucessor do Plasaço. Ela segue o mesmo príncipio mas possui "
+"Nanoligação é o sucessor do Plasaço. Ela segue o mesmo princípio mas possui "
 "um processo de manufatura muito mais refinado, oferecendo maior densidade "
 "particular. O resultado é um material muito mais robusto, ainda que "
 "substancialmente mais caro."
@@ -5369,8 +5354,8 @@ msgid ""
 "Able to compensate up to 30 MW of nebula volatility. Uses 1 MW of energy per "
 "MW of damage prevented."
 msgstr ""
-"Capaz de compensar até 30MW de volatilidade nebular. Usa um 1MW to energia "
-"powe MW de dano absorvido."
+"Capaz de compensar até 30MW de volatilidade nebular. Usa um 1MW de energia "
+"por MW de dano absorvido."
 
 #: dat/outfits/structure/plasteel_plating.xml:2
 msgid "Plasteel Plating"
@@ -5407,7 +5392,7 @@ msgid ""
 "energy boost you need. This does not replace the existing reactor but works "
 "alongside it and hooks up directly to the energy flux."
 msgstr ""
-"Adicionar um reator complementar à sua nave é uma óptima forma de obter o "
+"Adicionar um reator complementar à sua nave é uma ótima forma de obter o "
 "reforço de energia extra de que necessita. Isto não substitui o reator "
 "existente, mas funciona pareado com ele e liga-se diretamente ao fluxo de "
 "energia."
@@ -5442,7 +5427,7 @@ msgstr ""
 "O imenso Reator Classe III fornece energia suficiente para quase tudo. A "
 "tecnologia utilizada neste reator é particularmente inovadora, com a melhor "
 "densidade de energia das três classes de reatores. A enorme dimensão da "
-"classe III resulta em uma instação confortável apenas em naves grandes, "
+"classe III resulta em uma instalação confortável apenas em naves grandes, "
 "embora a sua produção de energia seja excessiva para qualquer coisa menor."
 
 #: dat/outfits/structure/shield_capacitor_i.xml:2
@@ -5643,7 +5628,7 @@ msgstr "Escaneador de Pulso"
 #: dat/outfits/unique/pulse_scanner.xml:6
 #: dat/outfits/utility/sensor_array.xml:4 dat/events/shipai.lua:108
 msgid "Electronic Warfare"
-msgstr "Guerra Electrónica"
+msgstr "Guerra Eletrônica"
 
 #: dat/outfits/unique/pulse_scanner.xml:11
 msgid ""
@@ -5821,17 +5806,17 @@ msgid ""
 "every 8 seconds. Performance degrades over 800 tonnes of mass."
 msgstr ""
 "Transporta a nave por 500 unidades de distância na direção em que o nariz "
-"está apontado. Só pode ser ativado uma vez a cada 8 segunds. A performance "
+"está apontado. Só pode ser ativado uma vez a cada 8 segundos. A performance "
 "degrada com massas acima de 800 toneladas."
 
 #: dat/outfits/utility/boarding_androids_mk1.xml:2
 msgid "Boarding Androids MK1"
-msgstr "Andróides de Abordagem Mk 1"
+msgstr "Androides de Abordagem Mk 1"
 
 #: dat/outfits/utility/boarding_androids_mk1.xml:4
 #: dat/outfits/utility/boarding_androids_mk2.xml:4
 msgid "Boarding Androids"
-msgstr "Andróides de Abordagem"
+msgstr "Androides de Abordagem"
 
 #: dat/outfits/utility/boarding_androids_mk1.xml:9
 msgid ""
@@ -5840,14 +5825,14 @@ msgid ""
 "torch/can opener/spatula, the Boarding Android is ready for any situation, "
 "be it tactical or culinary."
 msgstr ""
-"O Andróide de Abordagem Asimov Destructicorp é o que há de mais novo no ramo "
+"O Androide de Abordagem Asimov Destructicorp é o que há de mais novo no ramo "
 "de aquisição robótica hostil. Equipado com um multifuncional canhão de "
-"plasma/tocha de corte/abridor de lata/espátula, o Andróide de Abordagem está "
+"plasma/tocha de corte/abridor de lata/espátula, o Androide de Abordagem está "
 "pronto para qualquer situação, seja tática ou culinária."
 
 #: dat/outfits/utility/boarding_androids_mk2.xml:2
 msgid "Boarding Androids MK2"
-msgstr "Andróides de Abordagem MK2"
+msgstr "Androides de Abordagem MK2"
 
 #: dat/outfits/utility/boarding_androids_mk2.xml:9
 msgid ""
@@ -5855,7 +5840,7 @@ msgid ""
 "sported by its predecessor, additionally including scissor-hands and a "
 "sewing needle."
 msgstr ""
-"O Andróide de Abordagem MK2 melhora a larga variedade de ferramentas usadas "
+"O Androide de Abordagem MK2 melhora a larga variedade de ferramentas usadas "
 "por seu predecessor, incluindo além deles mãos de tesoura e agulha de "
 "costura."
 
@@ -5893,7 +5878,7 @@ msgid ""
 "unable to stealth with the bonus."
 msgstr ""
 "8 segundos de duração com uma espera de 30 segundos. Não será ativado se a "
-"navio for incapaz de se esconder com o bónus."
+"nave for incapaz de se esconder com o bônus."
 
 #: dat/outfits/utility/cloaking_device.xml:2
 #: dat/outfits/utility/cloaking_device.xml:4
@@ -6011,11 +5996,11 @@ msgstr ""
 
 #: dat/outfits/utility/combatai/hive_combat_ai.xml:2
 msgid "Hive Combat AI"
-msgstr "IA de Combate Colméia"
+msgstr "IA de Combate Colmeia"
 
 #: dat/outfits/utility/combatai/hive_combat_ai.xml:10
 msgid "You need at least 10 reputation with House Za'lek."
-msgstr "Você precisa de ao menos 10 pontos de reputação com a Casa Za'lek."
+msgstr "Requer 10 pontos de reputação com a Casa Za'lek."
 
 #: dat/outfits/utility/combatai/hive_combat_ai.xml:13
 msgid ""
@@ -6025,7 +6010,7 @@ msgid ""
 "in more efficient movement of the fighters, and a better ability to respond "
 "to mishaps such as lost fighters."
 msgstr ""
-"Muito inspirada nas colónias de abelhas e outros insetos, a IA Combate "
+"Muito inspirada nas colônias de abelhas e outros insetos, a IA Combate "
 "Colmeia aumenta a partilha de dados e parâmetros entre um porta-naves e seus "
 "caças, permitindo uma maior eficiência na comunicação. Isto resulta num "
 "movimento mais eficiente dos caças, e numa melhor capacidade de resposta a "
@@ -6114,7 +6099,7 @@ msgstr "Restaura a blindagem ao executar um arrefecimento ativo."
 
 #: dat/outfits/utility/droid_repair_crew.xml:2
 msgid "Droid Repair Crew"
-msgstr "Equipe de Andróides de Reparo"
+msgstr "Equipe de Androides de Reparo"
 
 #: dat/outfits/utility/droid_repair_crew.xml:10
 msgid ""
@@ -6219,12 +6204,12 @@ msgid ""
 "efficiency is significantly lower than common models, so it consumes energy "
 "more rapidly and overheats much more quickly."
 msgstr ""
-"O Pós-Combustor Infernal é um dos melhores pós-combustões levels de luz do "
-"mercado. Através de dutos de pressurização proprietários, o Hellburner é "
-"capaz de gerar muito mais empuxo do que as alternativas genéricas. "
-"Infelizmente, a sua eficiência de conversão energética é significativamente "
-"inferior aos modelos comuns, o que resulta em um consumo de energia mais "
-"rápido que resulta igualmente em um superacquecimento mais rápido."
+"O Pós-Combustor Infernal é um dos melhores pós-combustões leves do mercado. "
+"Através de dutos de pressurização proprietários, o Hellburner é capaz de "
+"gerar muito mais empuxo do que as alternativas genéricas. Infelizmente, a "
+"sua eficiência de conversão energética é significativamente inferior aos "
+"modelos comuns, o que resulta em um consumo de energia mais rápido que "
+"resulta igualmente em um superacquecimento mais rápido."
 
 #: dat/outfits/utility/hidden_jump_scanner.xml:2
 msgid "Hidden Jump Scanner"
@@ -6265,15 +6250,15 @@ msgid ""
 "harmless evanescent fields, greatly speeding up the recovery from system "
 "damage."
 msgstr ""
-"Armamentos iónicos modernos encontraram formas de atravessar a blindagem de "
-"uma nave e atacar diretamente os sistemas eletrónicos vulneráveis. O "
+"Armamentos iônicos modernos encontraram formas de atravessar a blindagem de "
+"uma nave e atacar diretamente os sistemas eletrônicos vulneráveis. O "
 "Revestimento Tempestade de Faraday é capaz de neutralizar armamentos "
 "incapacitantes, dissipando-os com o uso de campos evanescentes inofensivos, "
 "acelerando muito a recuperação de danos em sistemas eletrônicos."
 
 #: dat/outfits/utility/hullcoating/lattice_thermal_coating.xml:2
 msgid "Lattice Thermal Coating"
-msgstr "Malha de Revestimento Térmico "
+msgstr "Malha de Revestimento Térmico"
 
 #: dat/outfits/utility/hullcoating/lattice_thermal_coating.xml:9
 msgid ""
@@ -6320,7 +6305,7 @@ msgstr ""
 "flutuações e parâmetros dos diferentes tipos de radiação emitida, grande "
 "parte das quais não é totalmente compreendida. Embora não torne a nave imune "
 "aos efeitos da nebulosa, este revestimento de casco a torna "
-"significativamente mais resistente, ainda que a exposição prolongada nãe é "
+"significativamente mais resistente, ainda que a exposição prolongada não é "
 "recomendada."
 
 #: dat/outfits/utility/hullcoating/nexus_stealth_coating.xml:2
@@ -6352,7 +6337,7 @@ msgid ""
 "maintenance once a colony has been established."
 msgstr ""
 "Um Revestimento Fotovoltaico Nanorobótico cobre todo o casco da nave e é "
-"capaz de utilizar a energia solar e redireccioná-la para o sistema elétrico "
+"capaz de utilizar a energia solar e redirecioná-la para o sistema elétrico "
 "da nave. Os nano Nanorobôs se mantém automaticamente sem necessitar de "
 "manutenção depois que a colônia se estabelece."
 
@@ -6404,7 +6389,7 @@ msgid ""
 "scanner will not detect jump points whose signature differs from the "
 "standard type."
 msgstr ""
-"Este dispositivo instala uma matriz secundária de varredyra na nave. A "
+"Este dispositivo instala uma matriz secundária de varredura na nave. A "
 "matriz é programada com as características conhecidas das anomalias "
 "espaciais associadas aos saltos no hiperespaço. Como o scanner detecta um "
 "tipo muito específico de assinatura, o seu alcance pode ser facilmente "
@@ -6537,12 +6522,12 @@ msgid ""
 "ships that can outfit it, the Heavy Plasma Drill can convert them into "
 "formidable mining vessels."
 msgstr ""
-"Dada a popularidade da Broca de Plasma e a procura incansáve de recursos por "
-"parte da civilização humana, as Indústrias Schafer & Kane criou uma variante "
-"pesada deste equipamento. O novo desenho não compromete a funcionalidade mas "
-"tem requisitos de tamanho significativamente maiores. Contudo, para as naves "
-"que podem usa-la, a Broca de Plasma Pesada pode transforma-las em "
-"formidáveis naves mineradoras."
+"Dada a popularidade da Broca de Plasma e a procura incansável de recursos "
+"por parte da civilização humana, as Indústrias Schafer & Kane criou uma "
+"variante pesada deste equipamento. O novo desenho não compromete a "
+"funcionalidade mas tem requisitos de tamanho significativamente maiores. "
+"Contudo, para as naves que podem usa-la, a Broca de Plasma Pesada pode "
+"transforma-las em formidáveis naves mineradoras."
 
 #: dat/outfits/utility/sk_heavy_plasma_drill.xml:11
 #: dat/outfits/utility/sk_plasma_drill.xml:11
@@ -6711,9 +6696,9 @@ msgid ""
 "be triggered manually."
 msgstr ""
 "O Ionizador de Armas funciona com base no princípio de redirecionar "
-"quantidades maciças de energia de armas para um gerador de campo de ions. "
+"quantidades maciças de energia de armas para um gerador de campo de íons. "
 "Ainda que o consumo de energia aumenta e os danos causados diminuam "
-"significativamente, o campo de ions permite que as armas convencionais "
+"significativamente, o campo de íons permite que as armas convencionais "
 "causem danos ionizantes enquanto o equipamento está ativo. É configurado "
 "para ativar automaticamente quando a blindagem do alvo está abaixo de 50%, "
 "mas também pode ser ativado manualmente."
@@ -6837,8 +6822,8 @@ msgid ""
 msgstr ""
 "A Torreta de Iônica Pesada é um projeto militar Srius, aplicando força bruta "
 "aos sistemas internos de seu alvo. Usada em conjunto com armas tipo Navalha, "
-"é assustadioramente eficiente em reduzir navies de guerra inimigos a montes "
-"de sucata flutuantes."
+"é assustadoramente eficiente em reduzir naves de guerra inimigos a montes de "
+"sucata flutuantes."
 
 #: dat/outfits/weapons/heavy_laser_turret.xml:2
 msgid "Heavy Laser Turret"
@@ -6962,7 +6947,7 @@ msgid ""
 msgstr ""
 "Um par de canhões laser montados numa torreta rotativa, proporcionando uma "
 "excelente capacidade de defesa localizada. Com uma rotação completa de 360 "
-"graus, as torretas laser fornecem poder de fogo económico e energéticamente "
+"graus, as torretas laser fornecem poder de fogo econômico e energeticamente "
 "para naves de entrega."
 
 #: dat/outfits/weapons/laser_turret_mk2.xml:2
@@ -7078,7 +7063,7 @@ msgid ""
 "materials."
 msgstr ""
 "Lanças de mineração são conhecidas pelas suas capacidades destrutivas, "
-"infelizmente, isto pode ser prejudicial para a extracção de materiais "
+"infelizmente, isto pode ser prejudicial para a extração de materiais "
 "sensíveis. A Lança Perfuratriz Nexus tem uma abordagem diferente, e em vez "
 "de maximizar a potência, opera em comprimentos de onda menos eficientes mas "
 "mais estáveis. Embora isto lhe permita extrair materiais que outras não "
@@ -7252,7 +7237,7 @@ msgid ""
 msgstr ""
 "O Raio Ragnarok é uma das mais poderosas armas do tipo mercado. Foi "
 "projetada para combate entre nave capitais, embora sua descarga de energia "
-"extremamente grande a torne de certa forma útil para a destruír de caças "
+"extremamente grande a torne de certa forma útil para a destruir de caças "
 "inimigos."
 
 #: dat/outfits/weapons/railgun.xml:2
@@ -7283,7 +7268,7 @@ msgstr ""
 "Ainda que o Canhão Elétrico de 150mm seja uma arma formidável, a arma "
 "definitiva de força bruta para naves capitais é a Torreta de Canhão Elétrico "
 "de 150mm. Com dois canhões instalados em uma estrutura especializada, o "
-"coice nromalmente associado a estas armas é reduzido à custa de uma leve "
+"coice normalmente associado a estas armas é reduzido à custa de uma leve "
 "perda de velocidade."
 
 #: dat/outfits/weapons/razor_mk1.xml:2
@@ -7297,7 +7282,7 @@ msgid ""
 "such, Razors are best used in the initial phase of an engagement, and "
 "swapped out for other weapons once the target's shields come down."
 msgstr ""
-"Navalhas disparam bolsões concentrados de ións altamente energizados que são "
+"Navalhas disparam bolsões concentrados de íons altamente energizados que são "
 "eficazes em drenar escudos, mas tem apenas efeito limitado contra as "
 "blindagens de naves. Assim, Navalhas são melhor usadas na fase inicial de um "
 "combate, e trocadas por outras armas quando os escudos já estiverem "
@@ -7315,8 +7300,8 @@ msgid ""
 "drain a target's shields, paving the way for other weapons to deliver the "
 "finishing blow."
 msgstr ""
-"O Modelo Navalha civíl aperfeçoado traz maior eficácia comparado com seu "
-"antecessor, e tem menos dificuldade em sobrecaregar escudos de nível "
+"O Modelo Navalha civil aperfeiçoado traz maior eficácia comparado com seu "
+"antecessor, e tem menos dificuldade em sobrecarregar escudos de nível "
 "capital.\n"
 "Assim como no caso do modelo básico, o Navalha MK2 é melhor aproveitado para "
 "drenar os escudos do alvo. abrindo caminho para que outras armas desfiram o "
@@ -7334,7 +7319,7 @@ msgid ""
 msgstr ""
 "As Torres de Navalha são populares entre mercadores. Os seus elevados danos "
 "contra os escudos são um grande deterente contra agressores porque nada "
-"causa mais apreensão a um piloto espacial do que ver seus escudos cairem "
+"causa mais apreensão a um piloto espacial do que ver seus escudos caírem "
 "rapidamente."
 
 #: dat/outfits/weapons/razor_turret_mk2.xml:2
@@ -7347,8 +7332,8 @@ msgid ""
 "escort ships. They are often mounted alongside laser or gauss turrets to "
 "assist in de-shielding incoming attackers before they are ripped to shreds."
 msgstr ""
-"A versão turretada da Navalha MK2 é usada com muita frequência em naves "
-"médias de escolta. È comum instala-las junto com torretas laser ou gauss "
+"A versão torretada da Navalha MK2 é usada com muita frequência em naves "
+"médias de escolta. É comum instala-las junto com torretas laser ou gauss "
 "para ajudar a minar os escudos dos agressores antes de serem rasgadas em "
 "pedaços."
 
@@ -7366,7 +7351,7 @@ msgstr ""
 "Ainda que o Canhão Elétrico tenha efeitos devastadores, não foi o bastante "
 "para o Alto Comando Dvaered. Eles fizeram com que seus engenheiros "
 "melhorassem a arma, tornando-a mais rápida e pesada, de forma que mais "
-"parecesse um gerador de chuva de meteóros em miniatura."
+"parecesse um gerador de chuva de meteoros em miniatura."
 
 #: dat/outfits/weapons/ripper_cannon.xml:2
 msgid "Ripper Cannon"
@@ -7399,7 +7384,7 @@ msgid ""
 msgstr ""
 "O Triturador merece muito o nome que seus fabricantes Dvaered the deram. A "
 "capacidade enorme de danos deste arma tornam Corvetas Dvaered perigosas de "
-"serem enfrentadas por naves que não são considerávelmente maiores que elas."
+"serem enfrentadas por naves que não são consideravelmente maiores que elas."
 
 #: dat/outfits/weapons/slicer.xml:2
 msgid "Slicer"
@@ -7428,7 +7413,7 @@ msgid ""
 "enemy combatants functionally helpless."
 msgstr ""
 "A maior arma do território Sirius, o poderoso canhão Tesla utiliza "
-"princípios semelhantes aos dos canhões de ións mais comuns, mas tem como "
+"princípios semelhantes aos dos canhões de íons mais comuns, mas tem como "
 "alvo de forma ainda mais específica os sistemas eléctricos de uma nave, "
 "particularmente os seus reatores. Embora faça poucos danos devido ao seu "
 "tamanho, em combates prolongados, esta arma pode deixar os inimigos "
@@ -7450,7 +7435,7 @@ msgstr ""
 
 #: dat/outfits/weapons/turreted_gauss_gun.xml:2
 msgid "Turreted Gauss Gun"
-msgstr "Arma Gauss Turretada"
+msgstr "Arma Gauss Torretada"
 
 #: dat/outfits/weapons/turreted_gauss_gun.xml:9
 msgid ""
@@ -7465,7 +7450,7 @@ msgstr ""
 
 #: dat/outfits/weapons/turreted_vulcan_gun.xml:2
 msgid "Turreted Vulcan Gun"
-msgstr "Arma Vulcão Turretada"
+msgstr "Arma Vulcão Torretada"
 
 #: dat/outfits/weapons/turreted_vulcan_gun.xml:10
 msgid ""
@@ -7535,7 +7520,7 @@ msgid ""
 msgstr ""
 "Este transportador é altamente automatizado e foi projetado para comandar "
 "frotas de Drones da Coletividade. Pode ser operado por uma tripulação "
-"mínima, embora a maioria das seções do navio não sejam pressurizadas. A "
+"mínima, embora a maioria das seções da nave não sejam pressurizadas. A "
 "manutenção pode ser efetuada por dróides controlados remotamente. Devido à "
 "falta de instalações desnecessárias para tripulação da blindagem pesada, o "
 "Porta-Drones é uma nave leve e veloz."
@@ -7571,7 +7556,7 @@ msgstr "Ancestral Dvaered"
 #: dat/ships/dvaered/dvaered_ancestor.xml:18
 #: dat/ships/dvaered/dvaered_vendetta.xml:19
 msgid "You need at least 30 reputation with House Dvaered."
-msgstr "Você precisa de pelo menos 30 pontos de reputação com a Casa Dvaered."
+msgstr "Requer 30 pontos de reputação com a Casa Dvaered."
 
 #: dat/ships/dvaered/dvaered_ancestor.xml:19
 msgid ""
@@ -7589,7 +7574,7 @@ msgstr "Arsenal Dvaered"
 #: dat/ships/dvaered/dvaered_arsenal.xml:21
 #: dat/ships/dvaered/dvaered_retribution.xml:19
 msgid "You need at least 60 reputation with House Dvaered."
-msgstr "Você precisa de pelo menos 60 pontos de reputação com a Casa Dvaered."
+msgstr "Requer 60 pontos de reputação com a Casa Dvaered."
 
 #: dat/ships/dvaered/dvaered_arsenal.xml:22
 msgid ""
@@ -7615,7 +7600,7 @@ msgstr "Goddard Dvaered"
 
 #: dat/ships/dvaered/dvaered_goddard.xml:21
 msgid "You need at least 70 reputation with House Dvaered."
-msgstr "Você precisa de pelo menos 70 pontos de reputação com a Casa Dvaered."
+msgstr "Requer 70 pontos de reputação com a Casa Dvaered."
 
 #: dat/ships/dvaered/dvaered_goddard.xml:22
 msgid ""
@@ -7641,7 +7626,7 @@ msgstr "Falange Dvaered"
 
 #: dat/ships/dvaered/dvaered_phalanx.xml:19
 msgid "You need at least 40 reputation with House Dvaered."
-msgstr "Você precisa de pelo menos 40 pontos de reputação com a Casa Dvaered."
+msgstr "Requer 40 pontos de reputação com a Casa Dvaered."
 
 #: dat/ships/dvaered/dvaered_phalanx.xml:20
 msgid ""
@@ -7649,7 +7634,7 @@ msgid ""
 "weight on the structure has been optimized in order to allow embarking more "
 "payload."
 msgstr ""
-"Nesta versão militarizada da Falânge, a distribuição de peso na estrutura "
+"Nesta versão militarizada da Falange, a distribuição de peso na estrutura "
 "foi otimizada para permitir que mais carga útil fosse embarcada."
 
 #: dat/ships/dvaered/dvaered_retribution.xml:2
@@ -7669,7 +7654,7 @@ msgstr ""
 "classe Hawking, a Casa Dvaered aproveitou a oportunidade para adquirir a "
 "licença para o cruzador e para a maioria dos naves restantes. Os engenheiros "
 "Dvaered reforçaram a blindagem redesenharam a estrutura do nave, ao mesmo "
-"tempo instalaram mais pontos fixos para armas. Posteriormente, o navio foi "
+"tempo instalaram mais pontos fixos para armas. Posteriormente,a nave foi "
 "rebatizado para Retribuição. No entanto, a eletrônica permaneceu "
 "desatualizada."
 
@@ -7693,7 +7678,7 @@ msgstr "Vigilância Dvaered"
 
 #: dat/ships/dvaered/dvaered_vigilance.xml:18
 msgid "You need at least 50 reputation with House Dvaered."
-msgstr "Você precisa de pelo menos 50 pontos de reputação com a Casa Dvaered."
+msgstr "Requer 50 pontos de reputação com a Casa Dvaered."
 
 #: dat/ships/dvaered/dvaered_vigilance.xml:19
 msgid ""
@@ -7722,7 +7707,7 @@ msgstr "Estaleiros Nexo"
 
 #: dat/ships/empire/empire_admonisher.xml:21
 msgid "You need at least 40 reputation with the Empire."
-msgstr "Você precisa de pelo menos 40 pontos de reputação com o Império."
+msgstr "Requer 40 pontos de reputação com o Império."
 
 #: dat/ships/empire/empire_admonisher.xml:22
 msgid ""
@@ -7741,7 +7726,7 @@ msgstr "Hawking Imperial"
 #: dat/ships/empire/empire_hawking.xml:22
 #: dat/ships/empire/empire_rainmaker.xml:23
 msgid "You need at least 60 reputation with the Empire."
-msgstr "Você precisa de pelo menos 60 pontos de reputação com o Império."
+msgstr "Requer 60 pontos de reputação com o Império."
 
 #: dat/ships/empire/empire_hawking.xml:23
 msgid ""
@@ -7759,7 +7744,7 @@ msgstr "Lancelot Imperial"
 
 #: dat/ships/empire/empire_lancelot.xml:19
 msgid "You need at least 30 reputation with the Empire."
-msgstr "Você precisa de pelo menos 30 pontos de reputação com o Império."
+msgstr "Requer 30 pontos de reputação com o Império."
 
 #: dat/ships/empire/empire_lancelot.xml:20
 msgid ""
@@ -7791,7 +7776,7 @@ msgstr "Mediador Imperial"
 
 #: dat/ships/empire/empire_peacemaker.xml:21
 msgid "You need at least 70 reputation with the Empire."
-msgstr "Você precisa de pelo menos 70 pontos de reputação com o Império."
+msgstr "Requer 70 pontos de reputação com o Império."
 
 #: dat/ships/empire/empire_peacemaker.xml:22
 msgid ""
@@ -7839,7 +7824,7 @@ msgstr "Tubarão Imperial"
 
 #: dat/ships/empire/empire_shark.xml:20
 msgid "You need at least 20 reputation with the Empire."
-msgstr "Você precisa de pelo menos 20 pontos de reputação com o Império."
+msgstr "Requer 20 pontos de reputação com o Império."
 
 #: dat/ships/empire/empire_shark.xml:21
 msgid ""
@@ -7864,7 +7849,7 @@ msgstr "Bionave Anciã Selvagem"
 #: dat/ships/feral_bioship/kauweke.xml:24
 #: dat/ships/feral_bioship/taitamariki.xml:19
 msgid "Still to do..."
-msgstr "Ainda por fazer..."
+msgstr "Ainda por fazer…"
 
 #: dat/ships/feral_bioship/nohinohi.xml:2
 msgid "Nohinohi"
@@ -7964,9 +7949,9 @@ msgid ""
 "considerably inferior in that area."
 msgstr ""
 "Normalmente apelidado de \"Pequeno Goddard\" o Ancestral tem suas raízes nas "
-"máquinas voadoras primitivas usadas pelos humans muitas eras atrás. Ao "
+"máquinas voadoras primitivas usadas pelos humanos muitas eras atrás. Ao "
 "contrário da Goddard, porém, os sistemas eletrônicos são fabricados pela "
-"Casa Dvaered, tornando a nave considerávelmente inferior neste aspecto."
+"Casa Dvaered, tornando a nave consideravelmente inferior neste aspecto."
 
 #: dat/ships/neutral/gawain.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:180
 #: dat/missions/flf/dvk/flf_dvk06.lua:163
@@ -8029,7 +8014,7 @@ msgstr "Hiena"
 
 #: dat/ships/neutral/hyena.xml:15
 msgid "Aerosys"
-msgstr "Aerosistemas"
+msgstr "Aerosys"
 
 #: dat/ships/neutral/hyena.xml:16
 msgid ""
@@ -8069,7 +8054,7 @@ msgstr ""
 "A nave que, sozinha, colocou as Indústrias Krain no mapa, o Francelho foi "
 "projetado para ser um elegante cruzador de assalto pesado. Geralmente mais "
 "frágil do que outros cruzadores, consegue combinar excelente manobrabilidade "
-"e poder de fogo com eletrónica de última geração, resultando em uma nave "
+"e poder de fogo com eletrônica de última geração, resultando em uma nave "
 "verdadeiramente assustadora nas mãos de um capitão hábil."
 
 #: dat/ships/neutral/koala.xml:2
@@ -8157,7 +8142,7 @@ msgid ""
 "withstand heavy punishment from raiding parties. The Pacifier features high "
 "fuel capacity to facilitate lengthy patrol routes."
 msgstr ""
-"O Pacifcador é um dos projetos mais antigos e confiáveis dos Estaleiros "
+"O Pacificador é um dos projetos mais antigos e confiáveis dos Estaleiros "
 "Nexo. Foi projetado principalmente como uma nave de patrulhamento de "
 "fronteira e, como tal, é capaz de suportar uma grande quantidade de punição "
 "vinda de grupos de saque.O Pacificador possui alta capacidade de combustível "
@@ -8290,7 +8275,7 @@ msgid ""
 "precisely the power to transform extended battles into short fights."
 msgstr ""
 "A Vingança exibe muito bem a filosofia da Casa Dvaered. Dá a uma nave muitas "
-"armas intimidantes, revista com blindagem pesada e negligencie a eletrónica. "
+"armas intimidantes, revista com blindagem pesada e negligencie a eletrônica. "
 "Por causa disso, esta nave é mais adequada para combates curtos do que para "
 "batalhas prolongadas, pois possui uma regeneração de energia inferior à de "
 "outras naves da sua categoria. Por outro lado, tem uma barragem "
@@ -8370,7 +8355,7 @@ msgstr ""
 "As Ancestrais foram uma das primeiras naves a ser apreciadas por piratas. As "
 "grandes asas intimidantes e boas velocidades máximas geralmente conseguiam "
 "que outras naves se rendessem sem ter que disparar um tiro. Conforme naves "
-"melhores surgiram no mercado, a sua utilização caiu devido à sua eletrónica "
+"melhores surgiram no mercado, a sua utilização caiu devido à sua eletrônica "
 "e sistemas de mira arcaicos."
 
 #: dat/ships/pirate/pirate_hyena.xml:2
@@ -8522,10 +8507,8 @@ msgstr "Arquimedes Proteron"
 
 #: dat/ships/proteron/proteron_archimedes.xml:21
 #: dat/ships/proteron/proteron_watson.xml:21
-#, fuzzy
-#| msgid "You need at least 70 reputation with the Soromid."
 msgid "You need at least 70 reputation with the Proteron."
-msgstr "Você precisa de pelo menos 70 pontos de reputação com o Soromidos."
+msgstr "Requer 70 pontos de reputação com o Proteron."
 
 #: dat/ships/proteron/proteron_archimedes.xml:22
 msgid ""
@@ -8543,10 +8526,8 @@ msgid "Proteron Dalton"
 msgstr "Watson Proteron"
 
 #: dat/ships/proteron/proteron_dalton.xml:19
-#, fuzzy
-#| msgid "You need at least 20 reputation with the Soromid."
 msgid "You need at least 20 reputation with the Proteron."
-msgstr "Você precisa de pelo menos 20 pontos de reputação com o Soromidas."
+msgstr "Requer 20 pontos de reputação com o Proteron."
 
 #: dat/ships/proteron/proteron_dalton.xml:20
 #, fuzzy
@@ -8620,10 +8601,8 @@ msgid "Proteron Hippocrates"
 msgstr "Watson Proteron"
 
 #: dat/ships/proteron/proteron_hippocrates.xml:21
-#, fuzzy
-#| msgid "You need at least 50 reputation with the Soromid."
 msgid "You need at least 50 reputation with the Proteron."
-msgstr "Você precisa de ao menos 50 pontos de reputação com os Soromids."
+msgstr "Requer 50 pontos de reputação com os Proteron."
 
 #: dat/ships/proteron/proteron_hippocrates.xml:22
 msgid ""
@@ -8641,10 +8620,8 @@ msgid "Proteron Pythagoras"
 msgstr "Kahan Proteron"
 
 #: dat/ships/proteron/proteron_pythagoras.xml:20
-#, fuzzy
-#| msgid "You need at least 60 reputation with the Soromid."
 msgid "You need at least 60 reputation with the Proteron."
-msgstr "Você precisa de pelo menos 60 pontos de reputação com o Soromidas."
+msgstr "Requer 60 pontos de reputação com o Proteron."
 
 #: dat/ships/proteron/proteron_pythagoras.xml:21
 msgid ""
@@ -8672,11 +8649,11 @@ msgstr ""
 
 #: dat/ships/sirius/sirius_divinity.xml:2
 msgid "Sirius Divinity"
-msgstr "Divinidade Sirius"
+msgstr "Divindade Sirius"
 
 #: dat/ships/sirius/sirius_divinity.xml:17 dat/ships/sirius/sirius_dogma.xml:17
 msgid "You need at least 70 reputation with House Sirius."
-msgstr "Você precisa de ao menos 70pontos de reputação com a Casa Sirius."
+msgstr "Requer 70 pontos de reputação com a Casa Sirius."
 
 #: dat/ships/sirius/sirius_divinity.xml:18
 msgid ""
@@ -8690,7 +8667,7 @@ msgstr ""
 "poucos pilotos de combate descartariam o significado do Divindade. Embora "
 "não seja excepcionalmente formidável em combate direto, a capacidade da "
 "Divindade de colocar em no campo de batalha uma multidão de caças dá-lhe uma "
-"flexibilidade sem igual no combate, servindo como um navio logístico chave "
+"flexibilidade sem igual no combate, servindo como uma nave logística chave "
 "em qualquer frota de tamanho considerável."
 
 #: dat/ships/sirius/sirius_dogma.xml:2
@@ -8713,7 +8690,7 @@ msgstr "Fidelidade Sirius"
 
 #: dat/ships/sirius/sirius_fidelity.xml:16
 msgid "You need at least 20 reputation with House Sirius."
-msgstr "Você precisa de pelo menos 20 pontos de reputação com a Casa Sirius."
+msgstr "Requer 20 pontos de reputação com a Casa Sirius."
 
 #: dat/ships/sirius/sirius_fidelity.xml:17
 msgid ""
@@ -8731,7 +8708,7 @@ msgstr "Sermonista Sirius"
 
 #: dat/ships/sirius/sirius_preacher.xml:16
 msgid "You need at least 40 reputation with House Sirius."
-msgstr "Você precisa de pelo menos 40 pontos de reputação com a Casa Sirius."
+msgstr "Requer 40 pontos de reputação com a Casa Sirius."
 
 #: dat/ships/sirius/sirius_preacher.xml:17
 msgid ""
@@ -8745,11 +8722,11 @@ msgstr ""
 
 #: dat/ships/sirius/sirius_providence.xml:2
 msgid "Sirius Providence"
-msgstr "Providência Sírius"
+msgstr "Providência Sirius"
 
 #: dat/ships/sirius/sirius_providence.xml:21
 msgid "You need at least 60 reputation with House Sirius."
-msgstr "Você precisa de pelo menos 60 pontos de reputação com a Casa Sirius."
+msgstr "Requer 60 pontos de reputação com a Casa Sirius."
 
 #: dat/ships/sirius/sirius_providence.xml:22
 msgid ""
@@ -8758,7 +8735,7 @@ msgid ""
 "transport pilgrims, even though most Sirii dislike these overcrowded mass "
 "transports."
 msgstr ""
-"O Providence é o cargueiro da Casa Sirius e é utilizado principalmente para "
+"O Providência é o cargueiro da Casa Sirius e é utilizado principalmente para "
 "o transporte de grandes quantidades de suprimentos. Alguns também "
 "transportam peregrinos, embora a maioria dos Sirii não goste destes "
 "transportes de massa superlotados."
@@ -8769,7 +8746,7 @@ msgstr "Xamã Sirius"
 
 #: dat/ships/sirius/sirius_shaman.xml:16
 msgid "You need at least 30 reputation with House Sirius."
-msgstr "Você precisa de pelo menos 30 pontos de reputação com a Casa Sirius."
+msgstr "Requer 30 pontos de reputação com a Casa Sirius."
 
 #: dat/ships/sirius/sirius_shaman.xml:17
 msgid ""
@@ -8788,11 +8765,11 @@ msgstr "Arx Soromida"
 
 #: dat/ships/soromid/soromid_arx.xml:9
 msgid "Bio-Carrier"
-msgstr "Bio-Porta Naves"
+msgstr "Bio-Porta-Naves"
 
 #: dat/ships/soromid/soromid_arx.xml:23 dat/ships/soromid/soromid_vox.xml:20
 msgid "You need at least 70 reputation with the Soromid."
-msgstr "Você precisa de pelo menos 70 pontos de reputação com o Soromidos."
+msgstr "Requer 70 pontos de reputação com o Soromidas."
 
 #: dat/ships/soromid/soromid_arx.xml:24
 msgid ""
@@ -8819,7 +8796,7 @@ msgstr "Bio-Interceptor"
 
 #: dat/ships/soromid/soromid_brigand.xml:16
 msgid "You need at least 20 reputation with the Soromid."
-msgstr "Você precisa de pelo menos 20 pontos de reputação com o Soromidas."
+msgstr "Requer 20 pontos de reputação com o Soromidas."
 
 #: dat/ships/soromid/soromid_brigand.xml:17
 msgid ""
@@ -8843,7 +8820,7 @@ msgstr "Bio-Cargueiro"
 
 #: dat/ships/soromid/soromid_copia.xml:23 dat/ships/soromid/soromid_ira.xml:21
 msgid "You need at least 60 reputation with the Soromid."
-msgstr "Você precisa de pelo menos 60 pontos de reputação com o Soromidas."
+msgstr "Requer 60 pontos de reputação com o Soromidas."
 
 #: dat/ships/soromid/soromid_copia.xml:24
 msgid ""
@@ -8887,7 +8864,7 @@ msgstr "Bio-Bombardeiro"
 #: dat/ships/soromid/soromid_marauder.xml:17
 #: dat/ships/soromid/soromid_reaver.xml:16
 msgid "You need at least 30 reputation with the Soromid."
-msgstr "Você precisa de pelo menos 30 pontos de reputação com o Soromidas."
+msgstr "Requer 30 pontos de reputação com o Soromidas."
 
 #: dat/ships/soromid/soromid_marauder.xml:18
 msgid ""
@@ -8915,7 +8892,7 @@ msgid ""
 "firepower in heated battles and agile enough to withdraw when needed, this "
 "ship usually forms the backbone of any sizable Soromid fleet."
 msgstr ""
-"O Nyx é o símbolo do poderio militar dso Soromidas. Capaz de fornecer um "
+"O Nyx é o símbolo do poderio militar dos Soromidas. Capaz de fornecer um "
 "pesado poder de fogo em batalhas acaloradas e suficientemente ágil para se "
 "retirar quando necessário, esta nave forma geralmente a espinha dorsal de "
 "qualquer frota Soromidas de grande porte."
@@ -8996,7 +8973,7 @@ msgstr "Certeza Túrion"
 
 #: dat/ships/thurion/thurion_certitude.xml:21
 msgid "You need at least 70 reputation with the Thurion."
-msgstr "Você precisa de ao menos 70 pontos de reputação com os Thurion."
+msgstr "Requer 70 pontos de reputação com os Thurion."
 
 #: dat/ships/thurion/thurion_ingenuity.xml:2
 msgid "Thurion Ingenuity"
@@ -9014,10 +8991,10 @@ msgstr ""
 "O Engenhosidade Túrion é um caça construído para sobrevivência. Como todas "
 "as naves Túrion, coloca as capacidades defensivas em primeiro lugar e as "
 "capacidades ofensivas em segundo lugar. Contudo, o Engenhosidade não é, de "
-"forma alguma, uma nave de combate ruím. É capaz de se manter em combate "
-"aggresivamente, e quando as coisas complicam demais, pode rapidamente recuar "
+"forma alguma, uma nave de combate ruim. É capaz de se manter em combate "
+"agressivamente, e quando as coisas complicam demais, pode rapidamente recuar "
 "para se recarregar e regenerar. Além disso, como todas as naves Túrion, a "
-"eletrónica está bem acima da média."
+"eletrônica está bem acima da média."
 
 #: dat/ships/thurion/thurion_perspicacity.xml:2
 msgid "Thurion Perspicacity"
@@ -9025,7 +9002,7 @@ msgstr "Perspicácia Túrion"
 
 #: dat/ships/thurion/thurion_perspicacity.xml:21
 msgid "You need at least 20 reputation with the Thurion."
-msgstr "Você precisa de ao menos 20 pontos de reputação com os Túrion."
+msgstr "Requer 20 pontos de reputação com os Túrion."
 
 #: dat/ships/thurion/thurion_perspicacity.xml:22
 msgid ""
@@ -9067,7 +9044,7 @@ msgstr "Virtuosidade Túrion"
 
 #: dat/ships/thurion/thurion_virtuosity.xml:21
 msgid "You need at least 40 reputation with the Thurion."
-msgstr "Você precisa de pelo menos 40 pontos de reputação com o Túrion."
+msgstr "Requer 40 pontos de reputação com o Túrion."
 
 #: dat/ships/thurion/thurion_virtuosity.xml:22
 msgid ""
@@ -9078,7 +9055,7 @@ msgid ""
 msgstr ""
 "O Virtuosidade é uma nave de tamanho médio utilizado pelos Túrion para "
 "ataques frontais. Embora o espaço de armas seja pouco impressionante, a "
-"eletrónica superior da nave e a sua resistência à nebulosa são mais do que "
+"eletrônica superior da nave e a sua resistência à nebulosa são mais do que "
 "compensam isto."
 
 #: dat/ships/zalek/zalek_demon.xml:2
@@ -9105,11 +9082,11 @@ msgstr ""
 
 #: dat/ships/zalek/zalek_diablo.xml:2
 msgid "Za'lek Diablo"
-msgstr "Diabo Za'Lek"
+msgstr "Diabo Za'lek"
 
 #: dat/ships/zalek/zalek_diablo.xml:19 dat/ships/zalek/zalek_mephisto.xml:17
 msgid "You need at least 70 reputation with House Za'lek."
-msgstr "Você precisa de pelo menos 70 pontos de reputação com a Casa Za'lek."
+msgstr "Requer 70 pontos de reputação com a Casa Za'lek."
 
 #: dat/ships/zalek/zalek_diablo.xml:20
 msgid ""
@@ -9118,7 +9095,7 @@ msgid ""
 "for devastating drone swarms, not frontline combat."
 msgstr ""
 "Este porta-naves é o arquétipo da nave de guerra Za'lek. Praticamente sem "
-"blindagem e equipado com escudos pesados, sua função é a deplataforma para "
+"blindagem e equipado com escudos pesados, sua função é a de plataforma para "
 "enxames de drones devastadores, e não de combate na linha da frente."
 
 #: dat/ships/zalek/zalek_drone_bomber.xml:2
@@ -9219,7 +9196,7 @@ msgid ""
 "However, the standard strategy is to rely on drones for fighting while "
 "making a getaway."
 msgstr ""
-"Enquanto House Za'lek depende de drones para quase tudo, o seu combustível "
+"Enquanto a Casa Za'lek depende de drones para quase tudo, o seu combustível "
 "limitado deles torna-os inadequados para realizar transportes de longa "
 "distância. Para superar esta limitação, foi desenvolvido o Cargueiro Mammon. "
 "Tem grandes quantidades de espaço de armazenamento, capaz de comportar "
@@ -11052,13 +11029,13 @@ msgstr ""
 "O que é belo é muitas vezes perigoso, mas por vezes também funciona ao "
 "contrário. o bar do espaçoporto em Anubis tem uma vista sobre uma ravina na "
 "superfície do planeta e as tempestades radioativas que frequentemente "
-"atravessam a ravina são um espectáculo e tanto. No entanto, só os "
-"forasteiros o apreciam, a maioria dos habitantes locais sabe como é "
-"desagradável ter de trabalhar em condições radioativas tão violentas."
+"atravessam a ravina são um espetáculo e tanto. No entanto, só os forasteiros "
+"o apreciam, a maioria dos habitantes locais sabe como é desagradável ter de "
+"trabalhar em condições radioativas tão violentas."
 
 #: dat/spob/anya.xml:2
 msgid "Anya"
-msgstr " Anya"
+msgstr "Anya"
 
 #: dat/spob/anya.xml:15 dat/spob/sevlow.xml:15 dat/spob/wellen.xml:16
 msgid "N"
@@ -11074,9 +11051,9 @@ msgid ""
 "capital world. This is due, at least in part, to the geological "
 "instabilities of the planet."
 msgstr ""
-"Anya é o planeta gémeo de Sabe, orbitando em torno do seu centro de "
+"Anya é o planeta gêmeo de Sabe, orbitando em torno do seu centro de "
 "gravidade em conjunto. No entanto, Anya está envolta numa camada permanente "
-"de cinzas e neve, como resultado da actividade geológica. Um pequeno número "
+"de cinzas e neve, como resultado da atividade geológica. Um pequeno número "
 "de Túrions vive na superfície de Anya, mas nenhum esforço de colonização em "
 "grande escala começou até agora, apesar da proximidade do planeta com Sabe, "
 "o mundo da capital Túriana. Isto deve-se, pelo menos em parte, às "
@@ -11094,19 +11071,19 @@ msgstr ""
 
 #: dat/spob/apez_ii.xml:2
 msgid "Apez II"
-msgstr " Apez II"
+msgstr "Apez II"
 
 #: dat/spob/apez_v.xml:2
 msgid "Apez V"
-msgstr " Apez V"
+msgstr "Apez V"
 
 #: dat/spob/apik_i.xml:2
 msgid "Apik I"
-msgstr " Apik I"
+msgstr "Apik I"
 
 #: dat/spob/apik_ii.xml:2
 msgid "Apik II"
-msgstr " Apik II"
+msgstr "Apik II"
 
 #: dat/spob/apik_shipyard.xml:2
 msgid "Apik Shipyard"
@@ -11133,15 +11110,15 @@ msgstr ""
 
 #: dat/spob/aquilia.xml:2
 msgid "Aquilia"
-msgstr " Aquilia"
+msgstr "Aquilia"
 
 #: dat/spob/arai.xml:2
 msgid "Arai"
-msgstr " Arai"
+msgstr "Arai"
 
 #: dat/spob/arashu.xml:2
 msgid "Arashu"
-msgstr " Arashu"
+msgstr "Arashu"
 
 #: dat/spob/arashu.xml:28
 msgid ""
@@ -11158,7 +11135,7 @@ msgstr ""
 "com que ondas de maré quebrem sobre as poucas áreas de terra seca. Uma "
 "corporação siriana investiu no aproveitamento das energias libertadas por "
 "este processo, transformando o planeta numa rentável fábrica de produção de "
-"armas. Todo a manufatura acontece em plataformas flutuantes, mantendoos "
+"armas. Todo a manufatura acontece em plataformas flutuantes, mantendo os "
 "trabalhadores e o equipamento à salvo da constante atividade sísmica."
 
 #: dat/spob/arashu.xml:29
@@ -11192,7 +11169,7 @@ msgstr ""
 "Ironicamente, mas com um nome apropriado, Arcádia é um mundo bombardeado por "
 "chuvas ácidas e outros padrões meteorológicos igualmente desagradáveis. Como "
 "tal, foi o mundo central de uma experiência bem sucedida para ver se um tal "
-"ambiente ainda pode viabillizar uma campanha maciça de cultivo, dada a "
+"ambiente ainda pode viabilizar uma campanha maciça de cultivo, dada a "
 "tecnologia e procedimentos de isolamento adequados. O projeto foi de fato "
 "tão bem sucedido que a Arcádia se tornou um centro de distribuição de "
 "alimentos em todo o espaço Za'lek localizado."
@@ -11204,7 +11181,7 @@ msgid ""
 "and better food for less cost."
 msgstr ""
 "Muitos capitães de carga, agricultores e cientistas misturam-se "
-"pacificamente aqui, discutando novas e melhores formas de melhorar a "
+"pacificamente aqui, discutindo novas e melhores formas de melhorar a "
 "tecnologia agrícola e obter mais e melhores alimentos por menores custos."
 
 #: dat/spob/arcadia.xml:30 dat/spob/benteen.xml:30 dat/spob/caladan.xml:45
@@ -11249,13 +11226,13 @@ msgid ""
 "already there, almost instinctively."
 msgstr ""
 "Este bar é um lugar sossegado. Embora não lhe falte certamente não falte "
-"público, as pessoas quevêm não parecem estar prestes a fazer barulho por "
+"público, as pessoas que vêm não parecem estar prestes a fazer barulho por "
 "nada. O efeito é contagioso, fazendo com que os recém-chegados sigam o "
 "exemplo dos que se encontram ali, quase instintivamente."
 
 #: dat/spob/arck.xml:2
 msgid "Arck"
-msgstr " Arck"
+msgstr "Arck"
 
 #: dat/spob/arck.xml:26
 msgid ""
@@ -11342,47 +11319,47 @@ msgstr ""
 
 #: dat/spob/arcturus_i.xml:2
 msgid "Arcturus I"
-msgstr " Arcturus I"
+msgstr "Arcturus I"
 
 #: dat/spob/arcturus_ii.xml:2
 msgid "Arcturus II"
-msgstr " Arcturus II"
+msgstr "Arcturus II"
 
 #: dat/spob/ariadus_ii.xml:2
 msgid "Ariadus II"
-msgstr " Ariadus II"
+msgstr "Ariadus II"
 
 #: dat/spob/ariadus_iv.xml:2
 msgid "Ariadus IV"
-msgstr " Ariadus IV"
+msgstr "Ariadus IV"
 
 #: dat/spob/ariadus_vi.xml:2
 msgid "Ariadus VI"
-msgstr " Ariadus VI"
+msgstr "Ariadus VI"
 
 #: dat/spob/ariadus_via.xml:2
 msgid "Ariadus VIa"
-msgstr " Ariadus VIa"
+msgstr "Ariadus VIa"
 
 #: dat/spob/ariadus_vib.xml:2
 msgid "Ariadus VIb"
-msgstr " Ariadus VIb"
+msgstr "Ariadus VIb"
 
 #: dat/spob/ariak.xml:2
 msgid "Ariak"
-msgstr " Ariak"
+msgstr "Ariak"
 
 #: dat/spob/armorhead_i1.xml:2
 msgid "Armorhead I-1"
-msgstr " Armorhead I-1"
+msgstr "Armorhead I-1"
 
 #: dat/spob/armorhead_i1_b.xml:2
 msgid "Armorhead I-1 b"
-msgstr " Armorhead I-1 b"
+msgstr "Armorhead I-1 b"
 
 #: dat/spob/arrakis.xml:2
 msgid "Arrakis"
-msgstr " Arrakis"
+msgstr "Arrakis"
 
 #: dat/spob/arrakis.xml:26
 msgid ""
@@ -11409,11 +11386,11 @@ msgstr ""
 "A cantina de Arrakeen é um dos bares mais sombrios do espaço Imperial. "
 "Colocada na fronteira do Império, poucas patrulhas passam e muitos patifes e "
 "mercenários podem ser encontrados exercendo seu comércio. \"A especiaria "
-"deve fluir\", dizem; mesmo que não flua,  pelo menos o rum flui."
+"deve fluir\", dizem; mesmo que não flua, pelo menos o rum flui."
 
 #: dat/spob/arrentil.xml:2
 msgid "Arrentil"
-msgstr " Arrentil"
+msgstr "Arrentil"
 
 #: dat/spob/arrentil.xml:26
 msgid ""
@@ -11424,9 +11401,9 @@ msgid ""
 "population is thriving and the industry-focused economy is stable. By all "
 "means, Arrentil is an example of Soromid persistence."
 msgstr ""
-"Como é típico dos mundos Soromídas, Arrentil seria considerado totalmente "
+"Como é típico dos mundos Soromidas, Arrentil seria considerado totalmente "
 "inóspito pelo resto da humanidade. A atmosfera é tóxica e a superfície "
-"instável, mas os Soromídas conseguiram domar este mundo. É claro que mesmo "
+"instável, mas os Soromidas conseguiram domar este mundo. É claro que mesmo "
 "eles precisam viver em habitats protegidos, mas apesar disso a população "
 "está prosperando e a economia focada na indústria é estável. Seja como for, "
 "Arrentil é um exemplo de persistência Soromida."
@@ -11444,12 +11421,12 @@ msgstr ""
 "pouco se pensava em comodidades menos essenciais. Este bar foi adicionado "
 "enxertando-o na lateral do espaçoporto. Qualquer outro lugar da galáxia "
 "sendo um plano secundário provavelmente teria resultado em um bar bastante "
-"apertada, degradada, mas aqui no espaço Soromída deu-lhe uma sensação mais "
+"apertada, degradada, mas aqui no espaço Soromida deu-lhe uma sensação mais "
 "orgânica, tanto que quase parece que está crescendo."
 
 #: dat/spob/astana.xml:2 dat/ssys/astana.xml:2
 msgid "Astana"
-msgstr " Astana"
+msgstr "Astana"
 
 #: dat/spob/astana.xml:26
 msgid ""
@@ -11480,11 +11457,11 @@ msgstr ""
 
 #: dat/spob/astana_iiv.xml:2
 msgid "Astana IIV"
-msgstr " Astana IIV"
+msgstr "Astana IIV"
 
 #: dat/spob/atalanta.xml:2
 msgid "Atalanta"
-msgstr " Atalanta"
+msgstr "Atalanta"
 
 #: dat/spob/atalanta.xml:27
 msgid ""
@@ -11528,7 +11505,7 @@ msgstr "Atlântida I"
 
 #: dat/spob/atryssa.xml:2
 msgid "Atryssa"
-msgstr " Atryssa"
+msgstr "Atryssa"
 
 #: dat/spob/atryssa.xml:28
 msgid ""
@@ -11604,7 +11581,7 @@ msgstr ""
 
 #: dat/spob/avoss.xml:2
 msgid "Avoss"
-msgstr " Avoss"
+msgstr "Avoss"
 
 #: dat/spob/avoss.xml:25
 msgid ""
@@ -11622,21 +11599,21 @@ msgstr ""
 "afortunados por terem encontrado um lugar que pudessem chamar de lar. No "
 "entanto, cerca de 50 anos após a expedição ter aterrissado, o mundo começou "
 "a mudar. A atividade sísmica em todo lugar começou a aumentar "
-"incalculávelmente, com terremotos e erupções vulcânicas em todo o mundo. "
+"incalculavelmente, com terremotos e erupções vulcânicas em todo o mundo. "
 "Avoss está agora devastado, uma mera sombra do seu passado. Os colonos "
 "conseguiram sobreviver, no entanto, e os resistentes permanecem até hoje."
 
 #: dat/spob/awowa_iv.xml:2
 msgid "Awowa IV"
-msgstr " Awowa IV"
+msgstr "Awowa IV"
 
 #: dat/spob/awowa_v.xml:2
 msgid "Awowa V"
-msgstr " Awowa V"
+msgstr "Awowa V"
 
 #: dat/spob/baba_yaga.xml:2
 msgid "Baba Yaga"
-msgstr " Baba Yaga"
+msgstr "Baba Yaga"
 
 #: dat/spob/babylon_i.xml:2
 msgid "Babylon I"
@@ -11652,15 +11629,15 @@ msgstr "Babilônia IIa"
 
 #: dat/spob/baf_i.xml:2
 msgid "Baf I"
-msgstr " Baf I"
+msgstr "Baf I"
 
 #: dat/spob/baf_iv.xml:2
 msgid "Baf IV"
-msgstr " Baf IV"
+msgstr "Baf IV"
 
 #: dat/spob/basel_i.xml:2
 msgid "Basel I"
-msgstr " Basel I"
+msgstr "Basel I"
 
 #: dat/spob/bastion_station.xml:2
 msgid "Bastion Station"
@@ -11697,7 +11674,7 @@ msgstr ""
 
 #: dat/spob/beeklo_ii.xml:2
 msgid "Beeklo II"
-msgstr " Beeklo II"
+msgstr "Beeklo II"
 
 #: dat/spob/beene.xml:2
 msgid "Beene"
@@ -11714,7 +11691,7 @@ msgstr ""
 "Biine é rico em todos os tipos de minerais comuns, então os Soromidas estão "
 "usando este mundo da mesma maneira que qualquer um faria: como fonte de "
 "matérias-primas. Os elementos extraídos aqui são transformados em pacotes "
-"padrão que são usados pelas Bionaves Soromídas. Este fornecimento de "
+"padrão que são usados pelas Bionaves Soromidas. Este fornecimento de "
 "minerais significa que Biine é um local estratégico bastante importante para "
 "as frotas Soromidas."
 
@@ -11728,7 +11705,7 @@ msgid ""
 msgstr ""
 "Os pilotos são aconselhados a usar trajes herméticos ao visitar o bar de "
 "Biine. A atmosfera do planeta pode causar sérios problemas para humanos "
-"normais e os Soromídas não se preocuparam em instalar filtros de "
+"normais e os Soromidas não se preocuparam em instalar filtros de "
 "descontaminação para a população local. Como tal, tomar uma bebida no bar do "
 "Biine é um teste. um dos lugares menos populares entre os comerciantes que "
 "procuram uma bebida."
@@ -11749,7 +11726,7 @@ msgid ""
 "start to wonder if they're really part of the Soromid collective at all. "
 "Belltower is here to remind them that they are."
 msgstr ""
-"A Estação Canpanário é um pequeno posto militar Soromida cujo principal "
+"A Estação Campanário é um pequeno posto militar Soromida cujo principal "
 "objetivo é manter o sistema Adiadus na linha. Estando tão longe dos mundos "
 "centrais, há pouco tráfego interestelar, alguns dos habitantes "
 "ocasionalmente começam a se perguntar se eles realmente fazem parte do "
@@ -11831,7 +11808,7 @@ msgid ""
 msgstr ""
 "O bar é um lugar para relaxar após uma longa viagem ou um dia de trabalho "
 "duro. A cerveja é boa e os moradores parecem bastante amigáveis. Em grande "
-"parte inoftensivos."
+"parte inofensivos."
 
 #: dat/spob/berkhere.xml:2
 msgid "Berkhere"
@@ -11872,7 +11849,7 @@ msgstr "Bete"
 
 #: dat/spob/bgg1356.xml:2
 msgid "BGG-1356"
-msgstr " BGG-1356"
+msgstr "BGG-1356"
 
 #: dat/spob/blackwell_i.xml:2
 msgid "Blackwell I"
@@ -11892,7 +11869,7 @@ msgstr "Bacamarte II"
 
 #: dat/spob/bolero.xml:2
 msgid "Bolero"
-msgstr " Bolero"
+msgstr "Bolero"
 
 #: dat/spob/bolero.xml:29
 msgid ""
@@ -11931,7 +11908,7 @@ msgstr ""
 
 #: dat/spob/bon_sebb.xml:2
 msgid "Bon Sebb"
-msgstr " Bon Sebb"
+msgstr "Bon Sebb"
 
 #: dat/spob/bon_sebb.xml:29
 msgid ""
@@ -12001,7 +11978,7 @@ msgstr ""
 
 #: dat/spob/botarn_i.xml:2
 msgid "Botarn I"
-msgstr " Botarn I"
+msgstr "Botarn I"
 
 #: dat/spob/brandt_station.xml:2
 msgid "Brandt Station"
@@ -12033,7 +12010,7 @@ msgstr ""
 
 #: dat/spob/brendon_i.xml:2
 msgid "Brendon I"
-msgstr " Brendon I"
+msgstr "Brendon I"
 
 #: dat/spob/brimstone_i.xml:2
 msgid "Brimstone I"
@@ -12057,7 +12034,7 @@ msgstr "Enxofre III"
 
 #: dat/spob/brock.xml:2
 msgid "Brock"
-msgstr " Brock"
+msgstr "Brock"
 
 #: dat/spob/brock.xml:27
 msgid ""
@@ -12085,7 +12062,7 @@ msgstr ""
 
 #: dat/spob/brooks.xml:2
 msgid "Brooks"
-msgstr " Brooks"
+msgstr "Brooks"
 
 #: dat/spob/brooks.xml:26
 msgid ""
@@ -12111,13 +12088,13 @@ msgid ""
 msgstr ""
 "Em Brooks tudo é caro, algo que vem com a maioria dos mundos economicamente "
 "em expansão. No entanto, a maioria dos comerciantes aturam os preços "
-"inflados de beberes e serviços no bar do espaceporto, Brooks, afinal, é um "
+"inflados de beberes e serviços no bar do espaçoporto, Brooks, afinal, é um "
 "mundo em crescimento e onde o lucro é conseguido, e ninguém quer perder tal "
 "chance."
 
 #: dat/spob/buritt.xml:2
 msgid "Buritt"
-msgstr " Buritt"
+msgstr "Buritt"
 
 #: dat/spob/buritt.xml:27
 msgid ""
@@ -12145,7 +12122,7 @@ msgstr ""
 
 #: dat/spob/burnan.xml:2
 msgid "Burnan"
-msgstr " Burnan"
+msgstr "Burnan"
 
 #: dat/spob/burnan.xml:29
 msgid ""
@@ -12266,7 +12243,7 @@ msgstr "Capricórnio IIIa"
 
 #: dat/spob/castellan_epsilon.xml:2
 msgid "Castellan Epsilon"
-msgstr "Castelão Épslon "
+msgstr "Castelão Épslon"
 
 #: dat/spob/castellan_i.xml:2
 msgid "Castellan I"
@@ -12374,7 +12351,7 @@ msgstr ""
 "Cetrato é um planeta aquático conhecido por suas algas médicas. Ninguém foi "
 "capaz de reproduzi-lo exatamente como na natureza, mas, com a abundância "
 "delas em todo o oceano maciço do planeta, houve pouco esforço nesse campo. "
-"Cetrato foi colonizado pela oitava navia colônia lançada durante o Primeiro "
+"Cetrato foi colonizado pela oitava nave colônia lançada durante o Primeiro "
 "Crescimento, Brooklyn."
 
 #: dat/spob/cetrat.xml:28
@@ -12408,7 +12385,7 @@ msgstr "Carbonizado"
 
 #: dat/spob/chriik.xml:2
 msgid "Chriik"
-msgstr " Chriik"
+msgstr "Chriik"
 
 #: dat/spob/chriik.xml:27
 msgid ""
@@ -12439,19 +12416,19 @@ msgstr ""
 
 #: dat/spob/churchill_i.xml:2
 msgid "Churchill I"
-msgstr " Churchill I"
+msgstr "Churchill I"
 
 #: dat/spob/churchill_ii.xml:2
 msgid "Churchill II"
-msgstr " Churchill II"
+msgstr "Churchill II"
 
 #: dat/spob/churchill_iia.xml:2
 msgid "Churchill IIa"
-msgstr " Churchill IIa"
+msgstr "Churchill IIa"
 
 #: dat/spob/claudius_mehan.xml:2
 msgid "Claudius Mehan"
-msgstr " Claudius Mehan"
+msgstr "Claudius Mehan"
 
 #: dat/spob/cole_station.xml:2
 msgid "Cole Station"
@@ -12471,7 +12448,7 @@ msgstr ""
 
 #: dat/spob/colley.xml:2
 msgid "Colley"
-msgstr " Colley"
+msgstr "Colley"
 
 #: dat/spob/colley.xml:27
 msgid ""
@@ -12511,7 +12488,7 @@ msgstr ""
 
 #: dat/spob/coran.xml:2
 msgid "Coran"
-msgstr " Coran"
+msgstr "Coran"
 
 #: dat/spob/corax.xml:2
 msgid "Corax"
@@ -12593,7 +12570,7 @@ msgstr ""
 "armas licenciadas para civis. A Cornwal importa matérias-primas dos planetas "
 "próximos de Wagenni e Sollebor e vende os produtos finalizados fora do "
 "sistema para um lucro limpo. Cornwal é solidário com as pessoas que vivem "
-"nos mundos hostís em Sobpórtico e sempre garante que eles recebam um preço "
+"nos mundos hostis em Sobpórtico e sempre garante que eles recebam um preço "
 "generoso por suas exportações."
 
 #: dat/spob/cornwal_ordinance.xml:26
@@ -12611,19 +12588,19 @@ msgstr ""
 
 #: dat/spob/corvus_i.xml:2
 msgid "Corvus I"
-msgstr " Corvus I"
+msgstr "Corvus I"
 
 #: dat/spob/corvus_vi.xml:2
 msgid "Corvus VI"
-msgstr " Corvus VI"
+msgstr "Corvus VI"
 
 #: dat/spob/corvus_via.xml:2
 msgid "Corvus VI-a"
-msgstr " Corvus VI-a"
+msgstr "Corvus VI-a"
 
 #: dat/spob/corvus_vib.xml:2
 msgid "Corvus VI-b"
-msgstr " Corvus VI-b"
+msgstr "Corvus VI-b"
 
 #: dat/spob/corvus_vib.xml:24
 msgid ""
@@ -12653,7 +12630,7 @@ msgstr ""
 
 #: dat/spob/cristen.xml:2
 msgid "Cristen"
-msgstr " Cristen"
+msgstr "Cristen"
 
 #: dat/spob/cristen.xml:25
 msgid ""
@@ -12709,14 +12686,14 @@ msgid ""
 "those at another. Given some of the newer customs cropping up here a lot of "
 "out-of-system traders are thankful for this."
 msgstr ""
-"Este bar foi projetado com a acústica em mente.  A música de fundo é "
+"Este bar foi projetado com a acústica em mente. A música de fundo é "
 "penetrante, mas discreta e as conversas mantidas em uma mesa não perturbam "
-"as que estão em outra.  Dado alguns dos novos costumes surgindo aqui, muitos "
+"as que estão em outra. Dado alguns dos novos costumes surgindo aqui, muitos "
 "comerciantes fora do sistema estão agradecidos por isso."
 
 #: dat/spob/crylo.xml:2
 msgid "Crylo"
-msgstr " Crylo"
+msgstr "Crylo"
 
 #: dat/spob/crylo.xml:27
 msgid ""
@@ -12743,7 +12720,7 @@ msgstr ""
 
 #: dat/spob/culex.xml:2
 msgid "Culex"
-msgstr " Culex"
+msgstr "Culex"
 
 #: dat/spob/culex.xml:26
 msgid ""
@@ -12777,7 +12754,7 @@ msgstr ""
 
 #: dat/spob/curie.xml:2
 msgid "Curie"
-msgstr " Curie"
+msgstr "Curie"
 
 #: dat/spob/curie.xml:28
 msgid ""
@@ -12806,7 +12783,7 @@ msgstr ""
 
 #: dat/spob/cutha.xml:2
 msgid "Cutha"
-msgstr " Cutha"
+msgstr "Cutha"
 
 #: dat/spob/cutha.xml:27
 msgid ""
@@ -17075,10 +17052,8 @@ msgid ""
 msgstr ""
 
 #: dat/spob/melendez_dome.xml:36
-#, fuzzy
-#| msgid "Melendez Corp."
 msgid "melendez"
-msgstr "Corp. Melendez"
+msgstr "melendez"
 
 #: dat/spob/memory_of_sorom.xml:2
 msgid "Memory of Sorom"
@@ -48449,11 +48424,11 @@ msgstr ""
 "de roer as unhas e explica por que ele está aqui.\n"
 "   \"O Alto Comando convocou, a pedido do General Klank, uma reunião "
 "especial do Alto Conselho de Senhores da Guerra, e todos eles concordaram em "
-"vir...\" Você franze a testa, e antes que tenha a chance de perguntar por "
-"que isso é um problema, ele continua: \"... mas recebemos um relatório de "
+"vir…\" Você franze a testa, e antes que tenha a chance de perguntar por que "
+"isso é um problema, ele continua: \"… mas recebemos um relatório de "
 "inteligência segundo o qual o ex-coronel Hamelsen, que já tentou assassinar "
-"o major Tam várias vezes, vai aproveitar esta reunião para agir contra nós"
-"\".\n"
+"o major Tam várias vezes, vai aproveitar esta reunião para agir contra nós\"."
+"\n"
 "   \"Você quer nos ajudar contra essa ameaça?\""
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:103
@@ -48462,7 +48437,7 @@ msgid ""
 "loyal to the Dvaered Nation..."
 msgstr ""
 "Milímetros. Eu vejo. você provavelmente tem coisas muito mais interessantes "
-"para fazer do que ser leal à Nação Dvaered..."
+"para fazer do que ser leal à Nação Dvaered…"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:106
 msgid "Here is the situation"
@@ -49886,39 +49861,34 @@ msgstr ""
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:359
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:380
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:399
-#, fuzzy, lua-format
-#| msgid "Bio-Corvette"
+#, lua-format
 msgid "Corvette %d%%"
-msgstr "Bio-Corveta"
+msgstr "Corveta %d%%"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:361
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:401
-#, fuzzy, lua-format
-#| msgid "Bio-Destroyer"
+#, lua-format
 msgid "Destroyer %d%%"
-msgstr "Bio-Contratorpedeiro"
+msgstr "Contratorpedeiro %d%%"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:363
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:382
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:403
-#, fuzzy, lua-format
-#| msgid "Bio-Cruiser"
+#, lua-format
 msgid "Cruiser %d%%"
-msgstr "Bio-Cruzador"
+msgstr "Cruzador %d%%"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:365
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:384
-#, fuzzy, lua-format
-#| msgid "Bio-Carrier"
+#, lua-format
 msgid "Carrier %d%%"
-msgstr "Bio-Porta Naves"
+msgstr "Porta-naves %d%%"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:367
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:386
-#, fuzzy, lua-format
-#| msgid "Bio-Battleship"
+#, lua-format
 msgid "Battleship %d%%"
-msgstr "Bio-Nave de Batalha"
+msgstr "Nave de Batalha %d%%"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:370
 #, lua-format
@@ -49933,10 +49903,9 @@ msgstr ""
 #. I'd love to see someone take down a kestrel in a fighter
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:376
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:395
-#, fuzzy, lua-format
-#| msgid "Fighter Bays"
+#, lua-format
 msgid "Fighter %d%%"
-msgstr "Baías de Caça"
+msgstr "Caça %d%%"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:378
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:397
@@ -82708,10 +82677,8 @@ msgid "It's not holding together!"
 msgstr ""
 
 #: dat/missions/taiomi/taiomi10.lua:459
-#, fuzzy
-#| msgid "Active Plating"
 msgid "Activating!"
-msgstr "Revestimento Ativo"
+msgstr "Ativando!"
 
 #: dat/missions/taiomi/taiomi10.lua:527
 msgid "Power………………………………check."
@@ -94627,8 +94594,8 @@ msgid ""
 "\"Patience, Sam Flynn. All of your questions will be answered soon. …Wait, "
 "what was that?\""
 msgstr ""
-"\"Paciência, Sam Flynn. Todas as suas perguntas serão respondidas em "
-"breve... Espere, o que foi isso?\""
+"\"Paciência, Sam Flynn. Todas as suas perguntas serão respondidas em breve… "
+"Espere, o que foi isso?\""
 
 #. Tron (Legacy)
 #: dat/scripts/common/tutorial.lua:24
@@ -94643,8 +94610,8 @@ msgid ""
 "\"For your convenience I am programmed to respond to the name Robby. …Wait, "
 "what was that?\""
 msgstr ""
-"\"Para sua conveniência, estou programado para responder pelo nome "
-"Robby. ... Espere, o que foi isso?\""
+"\"Para sua conveniência, estou programado para responder pelo nome Robby. …"
+"Espere, o que foi isso?\""
 
 #. Forbidden Planet
 #: dat/scripts/common/tutorial.lua:26
@@ -94657,7 +94624,7 @@ msgstr ""
 "\"Quem é o alimento vivo para as máquinas em Metropolis? Quem lubrifica as "
 "juntas das máquinas com seu próprio sangue? Quem alimenta as máquinas com "
 "sua própria carne? Deixem as máquinas morrer de fome, seus tolos! Deixem-nas "
-"morrer! Fim para as máquinas! ...Esperem, o que foi isso?\""
+"morrer! Fim para as máquinas! …Esperem, o que foi isso?\""
 
 #. Metropolis
 #: dat/scripts/common/tutorial.lua:27
@@ -94666,7 +94633,7 @@ msgid ""
 "Wait, what was that?\""
 msgstr ""
 "\"Por favor Michael, eu sou o Knight Industries 2000, não um tomate sobre "
-"rodas\"! ...Espere, o que foi isso?\""
+"rodas\"! …Espere, o que foi isso?\""
 
 #. Capsule function for naev.keyGet() that adds a color code to the return string.
 #. Disables tutorial
@@ -94679,7 +94646,7 @@ msgstr ""
 #. --
 #: dat/scripts/common/zalek.lua:8
 msgid "ZA'LEK: "
-msgstr " ZA'LEK: "
+msgstr "ZA'LEK: "
 
 #: dat/scripts/common/zalek_blackhole.lua:20
 msgid ""
@@ -94821,7 +94788,7 @@ msgstr "Regeneração Energética: %.3f [%.3f < %.3f (%.1f)]"
 #: dat/scripts/equipopt/optimize.lua:214
 #, lua-format
 msgid "Mass: %.3f / %.3f [%.3f < %.3f (%.1f)]"
-msgstr "Massa: %.3f [%.3f < %.3f (%.1f)]"
+msgstr "Massa: %.3f / %.3f [%.3f < %.3f (%.1f)]"
 
 #: dat/scripts/equipopt/optimize.lua:217
 #, lua-format
@@ -105890,7 +105857,7 @@ msgstr "Ir para o primeiro sistema não encontrado!"
 
 #: src/map_find.c:327
 msgid "Matching jumps not found, something is up..."
-msgstr "Saltos correspondentes não encontrados, algo está acontecendo..."
+msgstr "Saltos correspondentes não encontrados, algo está acontecendo…"
 
 #: src/map_find.c:386
 msgid "unknown route"
@@ -106225,7 +106192,7 @@ msgstr "Menu principal"
 
 #: src/menu.c:233
 msgid "Load Game"
-msgstr ""
+msgstr "Carregar jogo"
 
 #: src/menu.c:236
 msgid "New Game"
@@ -106263,7 +106230,7 @@ msgstr "Retomar"
 
 #: src/menu.c:452
 msgid "Load / Save"
-msgstr ""
+msgstr "Carregar / salvar"
 
 #: src/menu.c:461
 msgid "Exit to Title"
@@ -108166,10 +108133,9 @@ msgid "Engine Volume"
 msgstr "Redirecionamento de Motor"
 
 #: src/options.c:897 src/options.c:943
-#, fuzzy, c-format
-#| msgid "%s: Cost"
+#, c-format
 msgid "%s: %s"
-msgstr "%s: Custo"
+msgstr "%s: %s"
 
 #: src/options.c:897 src/options.c:943
 msgid "Muted"
@@ -110003,7 +109969,7 @@ msgstr ""
 
 #: src/ship.c:209
 msgid "Carrier"
-msgstr ""
+msgstr "Porta-naves"
 
 #: src/ship.c:360
 #, c-format
