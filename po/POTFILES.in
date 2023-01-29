@@ -2927,6 +2927,7 @@ dat/missions/pirate/contraband_cake.lua
 dat/missions/pirate/hitman.lua
 dat/missions/pirate/hitman2.lua
 dat/missions/pirate/lucas/lucas01.lua
+dat/missions/pirate/lucas/lucas02.lua
 dat/missions/pirate/patrol.lua
 dat/missions/pirate/pir_clan_cargo.lua
 dat/missions/pirate/pir_hit.lua
