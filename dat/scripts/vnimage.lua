@@ -62,6 +62,50 @@ function vni.generic()
    return vni.genericMale()
 end
 
+local pirate_m = {
+   "pirate/pirate1.webp",
+   "pirate/pirate2.webp",
+   "pirate/pirate3.webp",
+   "pirate/pirate4.webp",
+   "pirate/pirate7.webp",
+   "pirate/pirate8.webp",
+   "pirate/pirate9.webp",
+   "pirate/pirate10.webp",
+   "pirate/pirate11.webp",
+   "pirate/pirate12.webp",
+   "pirate/pirate13.webp",
+   "pirate/pirate_militia1.webp",
+   "pirate/pirate_militia2.webp",
+}
+local pirate_f = {
+   "pirate/pirate2.webp",
+   "pirate/pirate3.webp",
+   "pirate/pirate5.webp",
+   "pirate/pirate6.webp",
+   "pirate/pirate7.webp",
+   "pirate/pirate8.webp",
+   "pirate/pirate9.webp",
+   "pirate/pirate10.webp",
+   "pirate/pirate11.webp",
+   "pirate/pirate13.webp",
+   "pirate/pirate_militia1.webp",
+   "pirate/pirate_militia2.webp",
+}
+function vni.pirateMale()
+   local p = pirate_m[ rnd.rnd(1,#pirate_m) ]
+   return portrait.getFullPath(p), p
+end
+function vni.pirateFemale()
+   local p = pirate_f[ rnd.rnd(1,#pirate_f) ]
+   return portrait.getFullPath(p), p
+end
+function vni.pirate()
+   if rnd.rnd() < 0.5 then
+      return vni.pirateFemale()
+   end
+   return vni.pirateMale()
+end
+
 local sirius_fyrra_m = {
    "sirius/sirius_fyrra_m1.webp",
    "sirius/sirius_fyrra_m2.webp",
