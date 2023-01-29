@@ -19,7 +19,9 @@
 
 * 0.10.4 (unreleased)
    * Fixed crashes related to multiple effects being active at once
-   * Fixed multiple mission_done hooks not passing parameter correctly.
+   * Fixed multiple mission_done hooks not passing parameter correctly
+   * Fixed plugin strings not being initialized with mismatched saves
+   * ec06: made the final battle work much better
 
 * 0.10.3
    * Fixed crash when using fits currently selected ship outfit filter
