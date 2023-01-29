@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-01-10 23:36+0900\n"
-"PO-Revision-Date: 2023-01-29 01:19+0000\n"
+"PO-Revision-Date: 2023-01-30 00:36+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Portugal) <https://hosted.weblate.org/projects/"
 "naev/naev-0-10-x/pt_PT/>\n"
@@ -6725,13 +6725,13 @@ msgid ""
 "automatically activate when the target's armour is below 50%, but can also "
 "be triggered manually."
 msgstr ""
-"O Ionizador de Armas funciona redirecionando quantidades maciças de energia "
-"das armas para um gerador de campo de iões. Ainda que o consumo de energia "
-"aumente e os danos causados diminuam significativamente, o campo de iões "
-"permite que as armas convencionais causem danos ionizantes enquanto o "
-"equipamento está ativo. Está configurado para ativar automaticamente quando "
-"a blindagem do alvo está abaixo de 50%, mas também pode ser ativado "
-"manualmente."
+"O Ionizador de Armas funciona com base no princípio de desviar grandes "
+"quantidades de energia da arma para um gerador de campo iónico. Ainda que o "
+"consumo de energia aumente e os danos causados diminuam significativamente, "
+"o campo de iões permite que as armas convencionais causem danos ionizantes "
+"enquanto o equipamento está ativo. Está configurado para ativar "
+"automaticamente quando a blindagem do alvo estiver abaixo de 50%, mas também "
+"pode ser ativado manualmente."
 
 #: dat/outfits/utility/weapons_ionizer.xml:12
 msgid "Automatically triggers when target armour is below 50%."
@@ -39597,7 +39597,7 @@ msgstr "Conjuntos de armas"
 
 #: dat/events/shipai.lua:109 src/input.c:58 src/shipstats.c:104
 msgid "Stealth"
-msgstr "camuflagem"
+msgstr "Camuflagem"
 
 #: dat/events/shipai.lua:110
 msgid "Asteroids and Mining"
@@ -43990,13 +43990,15 @@ msgstr "Carga:"
 #: dat/missions/baron/baron_baron.lua:37 dat/missions/baron/baron_baron.lua:38
 #: dat/missions/baron/baron_baron.lua:39 dat/missions/baron/baron_baron.lua:40
 msgid "You've been scouted!"
-msgstr ""
+msgstr "Foste avistado!"
 
 #: dat/missions/baron/baron_baron.lua:37
 msgid ""
 "Your viewscreen flashes to life. You're greeted by a nondescript pilot who "
 "doesn't seem to be affiliated with anyone you know."
 msgstr ""
+"O teu ecrã de visualização pisca. És saudado por um piloto desconhecido que "
+"não parece estar afiliado a ninguém que conheças."
 
 #: dat/missions/baron/baron_baron.lua:38
 msgid ""
@@ -44007,6 +44009,11 @@ msgid ""
 "looking for hired help, and you seem like the sort he needs, judging by your "
 "ship.\""
 msgstr ""
+"\"Olá! Represento um homem chamado barão Sauterfeldt. Já ouviu falar dele "
+"nas suas viagens? Não? Bem, suponho que não se pode saber tudo. O meu patrão "
+"é um homem moderadamente influente e… Mas não vou aborrecê-lo com os "
+"detalhes. O que interessa é que o barão Sauterfeldt está à procura de ajuda "
+"e você parece o tipo que ele precisa, a julgar pela sua nave.\""
 
 #: dat/missions/baron/baron_baron.lua:39
 msgid ""
@@ -44016,6 +44023,11 @@ msgid ""
 "if you understand what I mean. So what do you think? Sound like a suitable "
 "job for you? The pay is good, I can assure you that!\""
 msgstr ""
+"Perguntas o que é que o Sr. Sauterfeldt precisa de ti. \"Oh, nada muito "
+"invasivo, garanto-lhe. Sua Senhoria precisa de um mensageiro, nada mais. Erm…"
+" bem… um mensageiro que não pode ser rastreado até ele, se é que entende o "
+"que quero dizer. Então, o que acha? Parece-lhe um trabalho adequado para si? "
+"O pagamento é bom, posso garantir-lhe!\""
 
 #: dat/missions/baron/baron_baron.lua:40
 msgid ""
@@ -44024,6 +44036,10 @@ msgid ""
 "but then again this job sounds like it could get you in trouble with the "
 "authorities. What will you do?"
 msgstr ""
+"Fazes uma pausa por um momento antes de responderes a esta oferta súbita. "
+"Não é todos os dias que vêm ter contigo com trabalho em vez de o procurares, "
+"mas este trabalho parece que te pode meter em sarilhos com as autoridades. O "
+"que vais fazer?"
 
 #. skip back to message if already accepted job
 #: dat/missions/baron/baron_baron.lua:40 dat/missions/minerva/maikki2.lua:785
@@ -44067,6 +44083,9 @@ msgid ""
 "more open-minded. Get out of my sight and never show your face to me again! "
 "You are clearly useless to my employer.\""
 msgstr ""
+"O piloto franze a testa. \"Vejo que o julguei mal. Tinha a certeza que teria "
+"uma mente mais aberta. Saia da minha vista e nunca mais me mostre a cara! É "
+"claramente inútil para o meu patrão.\""
 
 #: dat/missions/baron/baron_baron.lua:49
 msgid ""
@@ -44074,11 +44093,14 @@ msgid ""
 "angrily refused to accept the job. It seems whoever the pilot worked for "
 "won't be contacting you again."
 msgstr ""
+"Foi-te oferecido um trabalho de aspeto duvidoso por um piloto desconhecido, "
+"mas recusaste-te a aceitar o trabalho com raiva. Parece que quem quer que "
+"seja para quem o piloto trabalhe, ele não voltará a contactar-te."
 
 #: dat/missions/baron/baron_baron.lua:55 dat/missions/baron/baron_baron.lua:56
 #: dat/missions/baron/baron_baron.lua:57 dat/missions/baron/baron_baron.lua:58
 msgid "A risky retrieval"
-msgstr ""
+msgstr "Uma recuperação arriscada"
 
 #: dat/missions/baron/baron_baron.lua:55
 msgid ""
@@ -96695,14 +96717,14 @@ msgstr "Saltaste para o sistema errado."
 #. We want to defer it one frame in case an enter hook clears all pilots
 #: dat/scripts/escort.lua:301
 msgid "You jumped before the convoy you were escorting."
-msgstr ""
+msgstr "Saltaste antes do comboio que estavas a escoltar."
 
 #. luacheck: globals _escort_failure
 #: dat/scripts/escort.lua:310
 msgid "You landed before your escort!"
 msgid_plural "You landed before your escorts!"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Aterraste antes da tua escolta!"
+msgstr[1] "Aterraste antes das tuas escoltas!"
 
 #: dat/scripts/escort.lua:311
 msgid ""
@@ -96712,14 +96734,18 @@ msgid_plural ""
 "You landed at the planet before ensuring that your escorts were safe. You "
 "have abandoned your duties, and failed your mission."
 msgstr[0] ""
+"Aterraste no planeta antes de garantires que a tua escolta estava segura. "
+"Abandonaste os teus deveres e falhaste a missão."
 msgstr[1] ""
+"Aterraste no planeta antes de garantires que as tuas escoltas estavam "
+"seguras. Abandonaste os teus deveres e falhaste a missão."
 
 #: dat/scripts/escort.lua:315
 msgid "You have landed, abandoning your mission to protect your escort."
 msgid_plural ""
 "You have landed, abandoning your mission to protect your escorts."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Aterraste, abandonando a tua missão para proteger a tua escolta."
+msgstr[1] "Aterraste, abandonando a tua missão para proteger as tuas escoltas."
 
 #. Maximum change constraints
 #. Maximum change constraints
@@ -96729,23 +96755,23 @@ msgstr[1] ""
 #. Based on feudal hierarchy
 #: dat/scripts/factions/dvaered.lua:15
 msgid "Lord"
-msgstr ""
+msgstr "Lorde"
 
 #: dat/scripts/factions/dvaered.lua:16
 msgid "Liege Lord"
-msgstr ""
+msgstr "Lorde leal"
 
 #: dat/scripts/factions/dvaered.lua:17
 msgid "Esquire"
-msgstr ""
+msgstr "Escudeiro"
 
 #: dat/scripts/factions/dvaered.lua:18
 msgid "Yeoman"
-msgstr ""
+msgstr "Pequeno proprietário"
 
 #: dat/scripts/factions/dvaered.lua:19
 msgid "Bordar"
-msgstr ""
+msgstr "Aldeão"
 
 #: dat/scripts/factions/dvaered.lua:20
 msgid "Vagabond"
@@ -96753,11 +96779,11 @@ msgstr "Vagabundo"
 
 #: dat/scripts/factions/dvaered.lua:21
 msgid "Offender"
-msgstr ""
+msgstr "Infrator"
 
 #: dat/scripts/factions/dvaered.lua:24
 msgid "Amicable"
-msgstr ""
+msgstr "Amigável"
 
 #: dat/scripts/factions/dvaered.lua:25 dat/scripts/factions/soromid.lua:25
 msgid "Indifferent"
@@ -96765,7 +96791,7 @@ msgstr "Indiferente"
 
 #: dat/scripts/factions/dvaered.lua:26
 msgid "Warlike"
-msgstr ""
+msgstr "Guerra"
 
 #. Default
 #. Maximum change constraints
@@ -96781,11 +96807,11 @@ msgstr ""
 #. Based on Zen ranks
 #: dat/scripts/factions/sirius.lua:12
 msgid "Prefect"
-msgstr ""
+msgstr "Prefeito"
 
 #: dat/scripts/factions/sirius.lua:13
 msgid "Adjunct Prefect"
-msgstr ""
+msgstr "Prefeito adjunto"
 
 #: dat/scripts/factions/sirius.lua:14
 msgid "Senior Instructor"
@@ -96805,15 +96831,15 @@ msgstr "Novato"
 
 #: dat/scripts/factions/sirius.lua:18
 msgid "Enlightened"
-msgstr ""
+msgstr "Iluminado"
 
 #: dat/scripts/factions/sirius.lua:19
 msgid "Commoner"
-msgstr ""
+msgstr "Plebeu"
 
 #: dat/scripts/factions/sirius.lua:20
 msgid "Nonbeliever"
-msgstr ""
+msgstr "Não crente"
 
 #: dat/scripts/factions/sirius.lua:21
 msgid "Infidel"
@@ -96821,11 +96847,11 @@ msgstr "Infiel"
 
 #: dat/scripts/factions/sirius.lua:24
 msgid "Compassionate"
-msgstr ""
+msgstr "Compassivo"
 
 #: dat/scripts/factions/sirius.lua:25
 msgid "Unconcerned"
-msgstr ""
+msgstr "Despreocupado"
 
 #: dat/scripts/factions/sirius.lua:26
 msgid "Litigious"
@@ -96833,14 +96859,14 @@ msgstr "Litigioso"
 
 #: dat/scripts/factions/sirius.lua:27
 msgid "Subsidized"
-msgstr ""
+msgstr "Subsidiado"
 
 #. Maximum change constraints
 #. Maximum change constraints
 #. Based on tribal hierarchy
 #: dat/scripts/factions/soromid.lua:15
 msgid "Elder"
-msgstr "Ancão"
+msgstr "Ancião"
 
 #: dat/scripts/factions/soromid.lua:17
 msgid "Hunter"
@@ -96848,11 +96874,11 @@ msgstr "Caçador"
 
 #: dat/scripts/factions/soromid.lua:18
 msgid "Initiate"
-msgstr ""
+msgstr "Iniciante"
 
 #: dat/scripts/factions/soromid.lua:20
 msgid "Despised"
-msgstr ""
+msgstr "Desprezado"
 
 #: dat/scripts/factions/soromid.lua:21
 msgid "Adversary"
@@ -96864,7 +96890,7 @@ msgstr "Inimigo natural"
 
 #: dat/scripts/factions/soromid.lua:24
 msgid "Chivalrous"
-msgstr ""
+msgstr "Cavalheiresco"
 
 #: dat/scripts/factions/soromid.lua:26
 msgid "Violent"
@@ -96891,11 +96917,11 @@ msgstr "Professor assistente"
 
 #: dat/scripts/factions/zalek.lua:22
 msgid "Senior Fellow"
-msgstr ""
+msgstr "Companheiro sénior"
 
 #: dat/scripts/factions/zalek.lua:23
 msgid "Fellow"
-msgstr ""
+msgstr "Companheiro"
 
 #: dat/scripts/factions/zalek.lua:24
 msgid "Independent Researcher"
@@ -96903,11 +96929,11 @@ msgstr "Investigador independente"
 
 #: dat/scripts/factions/zalek.lua:25
 msgid "Learner"
-msgstr ""
+msgstr "Aprendiz"
 
 #: dat/scripts/factions/zalek.lua:26
 msgid "Scorned"
-msgstr ""
+msgstr "Desprezado"
 
 #: dat/scripts/factions/zalek.lua:30
 msgid "Benevolent"
@@ -96923,7 +96949,7 @@ msgstr "Beligerante"
 
 #: dat/scripts/factions/zalek.lua:33
 msgid "Funded"
-msgstr ""
+msgstr "Financiado"
 
 #. --
 #. Functions for adding fleets of pilots.
@@ -103036,7 +103062,7 @@ msgstr "#%c%s#r não responde"
 #: src/comm.c:174
 #, c-format
 msgid "Comm: '%s'"
-msgstr ""
+msgstr "Comunicação: '%s'"
 
 #: src/comm.c:193 src/comm.c:210
 #, c-format
@@ -103089,12 +103115,12 @@ msgstr[1] "%d toneladas"
 #: src/commodity.c:136 src/commodity.c:412
 #, c-format
 msgid "Commodity '%s' not found in stack"
-msgstr ""
+msgstr "Mercadoria '%s' não encontrada na pilha"
 
 #: src/commodity.c:176
 #, c-format
 msgid "Commodity with index %d not found"
-msgstr ""
+msgstr "Mercadoria com índice %d não encontrada"
 
 #: src/commodity.c:274
 #, c-format
@@ -103104,32 +103130,34 @@ msgstr ""
 #: src/commodity.c:347
 #, c-format
 msgid "Commodity '%s' has unknown node '%s'"
-msgstr ""
+msgstr "A mercadoria '%s' tem o nó desconhecido '%s'"
 
 #: src/commodity.c:351
 #, c-format
 msgid "Commodity from %s has invalid or no name"
-msgstr ""
+msgstr "A mercadoria de %s tem um nome inválido ou não tem nome"
 
 #: src/commodity.c:355
 #, c-format
 msgid "No <gfx_store> node found, using default texture for commodity \"%s\""
 msgstr ""
+"Nenhum nó <gfx_store> encontrado, a usar a textura padrão para mercadoria \"%"
+"s\""
 
 #: src/commodity.c:364
 #, c-format
 msgid "Commodity '%s' is setting both 'price' and 'price_ref'."
-msgstr ""
+msgstr "A mercadoria '%s' está a definir 'price' e \"price_ref\"."
 
 #: src/commodity.c:368
 #, c-format
 msgid "Commodity '%s' missing '"
-msgstr ""
+msgstr "Falta a mercadoria '%s'"
 
 #: src/commodity.c:445
 #, c-format
 msgid "Trying to modify temporary commodity '%s'!"
-msgstr ""
+msgstr "A tentar modificar a mercadoria temporária '%s'!"
 
 #: src/commodity.c:500
 #, c-format
@@ -104413,7 +104441,7 @@ msgstr "Esta dificuldade aplica os seguintes efeitos às naves do jogador:"
 #: src/economy.c:139
 #, c-format
 msgid "Price for commodity '%s' not known."
-msgstr ""
+msgstr "Preço para a mercadoria '%s' não conhecido."
 
 #: src/economy.c:149 src/economy.c:216
 #, c-format
@@ -108560,12 +108588,12 @@ msgstr ""
 
 #: src/nlua_commodity.c:139
 msgid "Commodity is invalid."
-msgstr ""
+msgstr "A mercadoria é inválida."
 
 #: src/nlua_commodity.c:221
 #, c-format
 msgid "Commodity '%s' not found!"
-msgstr ""
+msgstr "Mercadoria '%s' não encontrada!"
 
 #: src/nlua_commodity.c:351 src/nlua_commodity.c:387 src/nlua_player.c:1844
 #: src/nlua_player.c:1864
@@ -108857,7 +108885,7 @@ msgstr "#%c%s>#0 %s"
 #: src/nlua_pilot.c:2494 src/nlua_pilot.c:2531
 #, c-format
 msgid "#%cComm %s>#0 \"%s\""
-msgstr ""
+msgstr "#%cComunicação %s>#0 \"%s\""
 
 #: src/nlua_pilot.c:3060 src/nlua_pilot.c:3098 src/nlua_pilot.c:3226
 #, c-format
@@ -108978,6 +109006,8 @@ msgstr ""
 #: src/nlua_player.c:1829
 msgid "Can not teleport the player while the comm is open!"
 msgstr ""
+"Não é possível teletransportar o jogador enquanto a comunicação estiver "
+"aberta!"
 
 #: src/nlua_player.c:1831
 msgid "Can not teleport the player while they are boarded!"
@@ -110493,7 +110523,7 @@ msgid ""
 "Only one can be equipped"
 msgstr ""
 "\n"
-"Só um pode ser equipado"
+"Só pode ser equipado um"
 
 #: src/outfit.c:1912
 #, c-format
@@ -110502,7 +110532,7 @@ msgid ""
 "%.0f Maximum Effective Mass"
 msgstr ""
 "\n"
-"%.0f Massa efetiva máxima"
+"%.0f massa efetiva máxima"
 
 #: src/outfit.c:1913
 #, c-format
@@ -110836,12 +110866,12 @@ msgstr ""
 
 #: src/pilot_ew.c:502
 msgid "You have been uncovered!"
-msgstr ""
+msgstr "Foste descoberto!"
 
 #: src/pilot_ew.c:504
 #, c-format
 msgid "You have uncovered '#%c%s#0'!"
-msgstr ""
+msgstr "Descobriste '#%c%s#0'!"
 
 #: src/pilot_hook.c:72 src/pilot_hook.c:85
 #, c-format
@@ -112381,7 +112411,7 @@ msgstr "Habitado"
 
 #: src/space.c:170
 msgid "Refuel"
-msgstr "Reabastecimento"
+msgstr "Reabastecer"
 
 #: src/space.c:176
 msgid "Blackmarket"
