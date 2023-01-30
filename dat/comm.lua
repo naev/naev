@@ -234,7 +234,7 @@ function comm( plt )
    if mem.comm_custom then
       for k,v in ipairs(mem.comm_custom) do
          vn.label("custom_"..tostring(k))
-         v.setup( vn )
+         v.setup( vn, p )
          vn.jump("menu")
       end
    end

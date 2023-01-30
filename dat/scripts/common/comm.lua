@@ -110,9 +110,11 @@ end
 --[[--
    Sets a custom message and handler for a pilot.
 
+   Important note: the setup function will be called from the comm enivronment. You can not call misn/evt functions or access the memory of a mission or event through this!
+
       @tparam Pilot plt Pilot to set up for.
       @tparam string|function menu Menu message or function returning message or nil.
-      @tparam function setup Function to call to set up the vn nodes when the selected menu option is pressed. Will be passed a local version of the vn library as the single parameter.
+      @tparam function setup Function to call to set up the vn nodes when the selected menu option is pressed. Will be passed a local version of the vn library as the first parameter, and the pilot vn character as the second parameter.
 --]]
 function comm.customComm( plt, menu, setup )
    local m = plt:memory()
