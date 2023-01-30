@@ -107,4 +107,20 @@ function comm.newCharacterSpob( vn_in, spb, bribed )
    return vn.newCharacter( spb:name(), { image=spbgfx } )
 end
 
+--[[--
+   Sets a custom message and handler for a pilot.
+
+      @tparam Pilot plt Pilot to set up for.
+      @tparam string|function menu Menu message or function returning message or nil.
+      @tparam function setup Function to call to set up the vn nodes when the selected menu option is pressed. Will be passed a local version of the vn library as the single parameter.
+--]]
+function comm.customComm( plt, menu, setup )
+   local m = plt:memory()
+   m.comm_custom = m.comm_custom or {}
+   table.insert( m.comm_custom, {
+      menu = menu,
+      setup = setup,
+   } )
+end
+
 return comm

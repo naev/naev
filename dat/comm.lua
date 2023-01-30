@@ -214,9 +214,30 @@ function comm( plt )
       if not hostile and not mem.carried then
          table.insert( opts, 1, {_("Request Fuel"), "refuel"} )
       end
+      if mem.comm_custom then
+         for k,v in ipairs(mem.comm_custom) do
+            local msg = v.menu
+            if type(msg)=="function" then
+               msg = msg()
+            end
+            if msg then
+               table.insert( opts, 1, {msg, "custom_"..tostring(k)} )
+            end
+         end
+      end
       return opts
    end )
 
+   --
+   -- Custom stuff
+   --
+   if mem.comm_custom then
+      for k,v in ipairs(mem.comm_custom) do
+         vn.label("custom_"..tostring(k))
+         v.setup( vn )
+         vn.jump("menu")
+      end
+   end
 
    --
    -- Bribing
