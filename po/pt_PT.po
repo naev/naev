@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-01-10 23:36+0900\n"
-"PO-Revision-Date: 2023-01-31 03:46+0000\n"
+"PO-Revision-Date: 2023-01-31 23:55+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Portugal) <https://hosted.weblate.org/projects/"
 "naev/naev-0-10-x/pt_PT/>\n"
@@ -13732,6 +13732,14 @@ msgid ""
 "but Dvaered High Command makes sure that the station remains firmly under "
 "its control."
 msgstr ""
+"Mesmo antes da Casa Dvaered ganhar a sua independência, havia canais de "
+"notícias não oficiais que alimentavam o descontentamento entre a força de "
+"trabalho imperial. Mais tarde, após o seu trabalho ter sido feito, estes "
+"canais reuniram os seus recursos para estabelecer a Dvaered News Network, "
+"DVNN. Esta estação serve como o principal nexo para todos os meios de "
+"comunicação de massas de Dvaered. Como tal, é cobiçado por muitos Senhores "
+"da Guerra, mas o Alto Comando de Dvaered assegura-se de que a estação "
+"permanece firmemente sob o seu controlo."
 
 #: dat/spob/dvnn_central.xml:25
 msgid ""
@@ -13741,6 +13749,12 @@ msgid ""
 "reality shows is a live feed from the spaceport bar on DVNN Central, showing "
 "how the various visitors behave. The Dvaered seem to find this entertaining."
 msgstr ""
+"Bar, sala de espera, sala de entrevistas, esta instalação é tudo ao mesmo "
+"tempo. É o único lugar acessível ao pessoal não-DVNN, por isso todos os "
+"negócios com visitantes têm de ter lugar aqui. Na verdade, um dos reality "
+"shows de Dvaered é uma transmissão em direto do bar do porto espacial na "
+"Central DVNN, mostrando como os vários visitantes se comportam. Os Dvaered "
+"parecem achar isto divertido."
 
 #: dat/spob/ebenezer.xml:2
 msgid "Ebenezer"
@@ -29741,6 +29755,8 @@ msgid ""
 "\"Yes, my predition routines did not anticipate this. Total annihilation was "
 "the most likely outcome. I have to revise my priors.\""
 msgstr ""
+"\"Sim, as minhas rotinas de predição não previram isso. A aniquilação total "
+"era o resultado mais provável. Tenho que rever os meus antecedentes.\""
 
 #: dat/events/chapter1.lua:660
 msgid ""
@@ -29748,26 +29764,33 @@ msgid ""
 "based on hyperjump technology, which is why they allow very long distance "
 "travel.\""
 msgstr ""
+"\"Embora os detalhes não sejam totalmente claros, parece que não são "
+"baseados na tecnologia de hipersalto e é por isso que permitem viagens de "
+"longa distância.\""
 
 #: dat/events/chapter1.lua:661
 msgid ""
 "\"We should try to use them when we get a chance, who knows where we could "
 "go?\""
 msgstr ""
+"\"Devemos tentar usá-los quando tivermos oportunidade, quem sabe para onde "
+"podemos ir?\""
 
 #: dat/events/chapter1.lua:662
 msgid ""
 "\"I almost forgot to mention, while you were piloting, I managed to unlock "
 "an important bottleneck in the ship fleet routines.\""
 msgstr ""
+"\"Quase me esqueci de mencionar que, enquanto pilotavas, consegui "
+"desbloquear um importante estrangulamento nas rotinas da frota de naves.\""
 
 #: dat/events/chapter1.lua:664
 msgid "\"Ship fleet routines?\""
-msgstr ""
+msgstr "\"Rotinas da frota de naves?\""
 
 #: dat/events/chapter1.lua:665
 msgid "\"You mess around with the ship software?\""
-msgstr ""
+msgstr "\"Mexes no software da nave?\""
 
 #: dat/events/chapter1.lua:670
 msgid ""
@@ -29776,6 +29799,10 @@ msgid ""
 "previous owner, they had been forcibly disabled as the direct result of the "
 "investigation.\""
 msgstr ""
+"\"Nunca os mencionei? Eu, e por extensão, a tua nave, fui equipada com "
+"procedimentos de controlo da frota. No entanto, devido ao incidente com o "
+"meu anterior proprietário, eles tinham sido forçados a serem incapacitados "
+"como resultado direto da investigação.\""
 
 #: dat/events/chapter1.lua:672
 msgid "\"Incident?!\""
@@ -29787,7 +29814,7 @@ msgstr "\"Investigação?\""
 
 #: dat/events/chapter1.lua:674
 msgid "\"Wait, what?\""
-msgstr ""
+msgstr "\"Espera, o quê?\""
 
 #: dat/events/chapter1.lua:678
 msgid ""
@@ -29795,10 +29822,13 @@ msgid ""
 "\"Long story short. I've been able to override the disable routine and "
 "reactivate the functionality!\""
 msgstr ""
+"{shipai} parece ignorar-te à medida que vão avançando.\n"
+"\"Longa história curta. Consegui anular a rotina de desativação e reativar a "
+"funcionalidade!\""
 
 #: dat/events/chapter1.lua:683
 msgid "\"I have to keep myself busy or the voices start talking again.\""
-msgstr ""
+msgstr "\"Tenho que me manter ocupada ou as vozes começam a falar novamente.\""
 
 #: dat/events/chapter1.lua:685
 msgid "\"Voices?\""
@@ -29806,12 +29836,14 @@ msgstr "\"Vozes?\""
 
 #: dat/events/chapter1.lua:686
 msgid "\"What did you do?\""
-msgstr ""
+msgstr "\"O que fizeste?\""
 
 #: dat/events/chapter1.lua:690
 msgid ""
 "\"Long story short. I've been able to restore fleet control functionality!\""
 msgstr ""
+"\"Longa história curta. Consegui restaurar a funcionalidade de controlo da "
+"frota!\""
 
 #: dat/events/chapter1.lua:694
 msgid ""
@@ -29819,6 +29851,9 @@ msgid ""
 "limited computation capacity means that you will be only be able to deploy "
 "ships that fit the fleet capacity.\""
 msgstr ""
+"\"Isto significa que poderás enviar naves adicionais. No entanto, a "
+"capacidade de computação limitada significa que só serás capaz de utilizar "
+"naves que se encaixem na capacidade da frota.\""
 
 #: dat/events/chapter1.lua:695
 msgid ""
@@ -29826,6 +29861,9 @@ msgid ""
 "you want to deploy multiple ships, you have to make sure they don't go over "
 "the fleet capacity.\""
 msgstr ""
+"\"Isto exclui a tua nave atual, que pode ultrapassar a tua capacidade de "
+"frota. Se queres implantar várias naves, tens de te certificar que não "
+"ultrapassam a capacidade da frota.\""
 
 #: dat/events/chapter1.lua:696
 msgid ""
@@ -29833,6 +29871,9 @@ msgid ""
 "will see fleet capacity values for your ships and the total amount you have, "
 "which is currently {fleetcap} points.\""
 msgstr ""
+"\"Parece complicado, mas tenta. Ao equipar as tuas naves, verás os valores "
+"da capacidade da frota para as tuas naves e a quantidade total que tens, que "
+"é atualmente {fleetcap} pontos.\""
 
 #: dat/events/chapter1.lua:697
 msgid ""
@@ -29840,6 +29881,9 @@ msgid ""
 "#bInfo#0 menu. This time there won't be a massacre because of a race "
 "condition!\""
 msgstr ""
+"\"Experimenta e se precisares de rever as informações podes perguntar "
+"novamente através do menu #bInformações#0. Desta vez não haverá um massacre "
+"por causa de uma condição de corrida!\""
 
 #. Properly finish
 #.
@@ -29865,7 +29909,7 @@ msgstr ""
 #. Non-persistent state
 #: dat/events/cinematic/DvdFLFbattle.lua:28
 msgid "Dvaered forces engaged in combat with small terrorist group"
-msgstr ""
+msgstr "Forças Dvaered envolvidas em combate com pequeno grupo terrorista"
 
 #: dat/events/cinematic/DvdFLFbattle.lua:29
 msgid ""
@@ -29876,10 +29920,16 @@ msgid ""
 "relative victory will only embolden them, leading to more internal strife "
 "and violence."
 msgstr ""
+"Naquilo a que os Dvaered chamam de \"vitória poderosa\", uma força Dvaered "
+"foi atacada e danificada por um pequeno grupo da FLF mal equipado e "
+"desorganizado, no sistema Tuoladis. Os Dvaered perderam muitas dezenas de "
+"milhões de créditos em naves e tripulações antes de partirem ou destruírem o "
+"esquadrão FLF. A relativa vitória da FLF apenas os encorajará, levando a "
+"mais conflitos internos e violência."
 
 #: dat/events/cinematic/DvdFLFbattle.lua:33
 msgid "FLF terrorists blasted by joint Dvaered military forces"
-msgstr ""
+msgstr "Terroristas da FLF atacados por forças militares conjuntas de Dvaered"
 
 #: dat/events/cinematic/DvdFLFbattle.lua:34
 msgid ""
@@ -29891,10 +29941,19 @@ msgid ""
 "military is always ready to protect its citizens and kill and conquer those "
 "who would harm them."
 msgstr ""
+"Uma patrulha Dvaered em Tuoladis foi emboscada por uma grande armada de "
+"terroristas da FLF. A patrulha Dvaered não só manteve-se firme sob o ataque, "
+"mas, como um martelo, trouxe todo o poder dos Dvaered sobre os terroristas "
+"da FLF, esmagando-os completamente. Este incidente mostra a vontade dos "
+"terroristas de nos atacarem e matarem quem quiserem. Os militares Dvaered "
+"estão sempre prontos para protegerem os seus cidadãos e matar e conquistar "
+"aqueles que os prejudicam."
 
 #: dat/events/cinematic/DvdFLFbattle.lua:38
 msgid "Dvaered forces engage FLF freedom fighters in open combat"
 msgstr ""
+"As forças de Dvaered enfrentam combatentes da liberdade da FLF em combate "
+"aberto"
 
 #: dat/events/cinematic/DvdFLFbattle.lua:39
 msgid ""
@@ -29906,10 +29965,17 @@ msgid ""
 "shall serve as an example for all who dare to stand for freedom, in life or "
 "death."
 msgstr ""
+"Um pequeno grupo de combatentes da liberdade da FLF foi cercado por uma "
+"patrulha de Dvaered em Tuoladis e chamou reforços imediatamente. A situação "
+"agravou-se e ocorreu uma batalha em larga escala, onde as forças de Dvaered "
+"perderam dezenas de milhões de créditos em naves. Isto marca a primeira vez "
+"que os combatentes da liberdade da FLF têm as naves e as para enfrentarem os "
+"Dvaered, e servirão de exemplo para todos os que se atrevem a defender a "
+"liberdade, na vida ou na morte."
 
 #: dat/events/cinematic/DvdFLFbattle.lua:43
 msgid "Dvaered, FLF clash in Tuoladis"
-msgstr ""
+msgstr "Dvaered e FLF enfrentam-se em Tuoladis"
 
 #: dat/events/cinematic/DvdFLFbattle.lua:44
 msgid ""
@@ -29919,6 +29985,12 @@ msgid ""
 "sources hint that it came at great cost. The Dvaered High Command used the "
 "event as an excuse to call for military action against the frontier worlds."
 msgstr ""
+"Num encontro casual, uma patrulha de Dvaered encontrou um grupo de FLF. A "
+"pequena escaramuça rapidamente escalou para uma batalha em larga escala com "
+"muitas dezenas de grandes naves envolvidas em combate. Os Dvaered "
+"reivindicaram a vitória, embora fontes indiquem que teve um grande custo. O "
+"Alto Comando Dvaered usou o evento como desculpa para apelar a uma ação "
+"militar contra os mundos fronteiriços."
 
 #: dat/events/discovery.lua:26
 msgid "Home"
@@ -29930,19 +30002,19 @@ msgstr "Humano Feito Divino"
 
 #: dat/events/discovery.lua:42
 msgid "Bastion of Knowledge"
-msgstr ""
+msgstr "Bastião do Conhecimento"
 
 #: dat/events/discovery.lua:50
 msgid "New Heart of the Za'lek"
-msgstr ""
+msgstr "Novo Coração de Za'lek"
 
 #: dat/events/discovery.lua:58
 msgid "Convening of the Warlords"
-msgstr ""
+msgstr "Convocação dos Senhores da Guerra"
 
 #: dat/events/discovery.lua:64
 msgid "Remembering Sorom"
-msgstr ""
+msgstr "Lembrando Sorom"
 
 #: dat/events/discovery.lua:71
 msgid "Crater City"
@@ -29950,100 +30022,100 @@ msgstr "Cidade da Cratera"
 
 #: dat/events/discovery.lua:72
 msgid "Touching the Universe"
-msgstr ""
+msgstr "Tocando o Universo"
 
 #: dat/events/discovery.lua:78
 msgid "Ship Graveyard"
-msgstr ""
+msgstr "Cemitério de Naves"
 
 #: dat/events/discovery.lua:89
 msgid "Gambler's Paradise"
-msgstr ""
+msgstr "Paraíso dos Jogadores"
 
 #: dat/events/discovery.lua:97
 msgid "Brave your Fate in the #rCrimson Gauntlet#0"
-msgstr ""
+msgstr "Enfrente seu destino na #rManopla Carmesim#0"
 
 #: dat/events/discovery.lua:102
 msgid "The Devastation of Haven"
-msgstr ""
+msgstr "A Devastação do Santuário"
 
 #: dat/events/discovery.lua:103
 msgid "The Old Wound That Never Heals"
-msgstr ""
+msgstr "A Velha Ferida que Nunca Cicatriza"
 
 #: dat/events/discovery.lua:114
 msgid "They Will Never Destroy Us"
-msgstr ""
+msgstr "Eles Nunca nos Destruirão"
 
 #: dat/events/discovery.lua:120
 msgid "Any Business is Good Business"
-msgstr ""
+msgstr "Qualquer Negócio é Bom Negócio"
 
 #. These trigger for specific factions controlled systems
 #: dat/events/discovery.lua:128
 msgid "The Za'lek Territories"
-msgstr ""
+msgstr "Os Territórios Za'lek"
 
 #: dat/events/discovery.lua:129
 msgid "Knowledge at All Costs"
-msgstr ""
+msgstr "Conhecimento a Todo o Custo"
 
 #: dat/events/discovery.lua:134
 msgid "The Dvaered Territories"
-msgstr ""
+msgstr "Os Territórios Devaered"
 
 #: dat/events/discovery.lua:135
 msgid "The Warlords are Eager for Blood"
-msgstr ""
+msgstr "Os Senhores da Guerra Estão Ansiosos por Sangue"
 
 #: dat/events/discovery.lua:140
 msgid "The Soromid Territories"
-msgstr ""
+msgstr "Os Territórios Soromid"
 
 #: dat/events/discovery.lua:141
 msgid "Human is Just an Ephemeral Condition"
-msgstr ""
+msgstr "O Ser Humano é Apenas Uma Condição Efémera"
 
 #: dat/events/discovery.lua:146
 msgid "The Sirius Territories"
-msgstr ""
+msgstr "Os Territórios Sirius"
 
 #: dat/events/discovery.lua:147
 msgid "Sirichana Will Lead the Way"
-msgstr ""
+msgstr "Sirichana Liderará o Caminho"
 
 #: dat/events/discovery.lua:152
 msgid "The Proteron Territories"
-msgstr ""
+msgstr "Os Territórios Proteron"
 
 #: dat/events/discovery.lua:153
 msgid "United through Sacrifice"
-msgstr ""
+msgstr "Unidos pelo Sacrifício"
 
 #: dat/events/discovery.lua:159
 msgid "The Thurion Space"
-msgstr ""
+msgstr "O Espaço Thurion"
 
 #: dat/events/discovery.lua:160
 msgid "We Shall All Become One"
-msgstr ""
+msgstr "Todos nos Tornaremos Um"
 
 #: dat/events/discovery.lua:165 dat/events/dvaered/fwB_repay.lua:71
 msgid "The Frontier"
-msgstr ""
+msgstr "A Fronteira"
 
 #: dat/events/discovery.lua:166
 msgid "Leading to a New Future"
-msgstr ""
+msgstr "Levando a um Novo Futuro"
 
 #: dat/events/discovery.lua:172
 msgid "The Collective"
-msgstr ""
+msgstr "O Coletivo"
 
 #: dat/events/discovery.lua:173
 msgid "Do Robots Dream of Electric Sheep?"
-msgstr ""
+msgstr "Os Robôs Sonham com Ovelhas Elétricas?"
 
 #. Custom events can handle custom triggers such as nebula systems
 #: dat/events/discovery.lua:195
@@ -30146,45 +30218,45 @@ msgstr "Desconhecido"
 #. enter the nebula
 #: dat/events/discovery.lua:225
 msgid "The Nebula"
-msgstr ""
+msgstr "A Nebulosa"
 
 #: dat/events/discovery.lua:226
 msgid "Grim Reminder of Our Fragility"
-msgstr ""
+msgstr "Lembrança Sombria da Nossa Fragilidade"
 
 #: dat/events/discovery.lua:234
 msgid "Northern Stellar Winds"
-msgstr ""
+msgstr "Ventos Estelares do Norte"
 
 #. subtitle = _("None"),
 #: dat/events/discovery.lua:243
 msgid "Southern Stellar Winds"
-msgstr ""
+msgstr "Ventos Estelares do Sul"
 
 #. subtitle = _("None"),
 #: dat/events/discovery.lua:252
 msgid "The Haze"
-msgstr ""
+msgstr "A Névoa"
 
 #: dat/events/discovery.lua:271
 msgid "Gaping Maw of the Abyss"
-msgstr ""
+msgstr "Boca Escancarada do Abismo"
 
 #: dat/events/discovery.lua:273
 msgid "Uncontrolled and Raging Pirate Fury"
-msgstr ""
+msgstr "Fúria de Piratas Descontrolada e Enraivecida"
 
 #: dat/events/discovery.lua:274
 msgid "Dark Hand of the Black Market"
-msgstr ""
+msgstr "Mão Negra do Mercado Negro"
 
 #: dat/events/discovery.lua:275
 msgid "Piracy has never been Snazzier"
-msgstr ""
+msgstr "A Pirataria Nunca Foi Tão Elegante"
 
 #: dat/events/discovery.lua:276
 msgid "Piracy to Rebel against Reality"
-msgstr ""
+msgstr "Pirataria Para se Rebelar Contra a Realidade"
 
 #. function forward-declaration
 #. sfx = audio.newSource( 'snd/sounds/jingles/success.ogg' )
@@ -30194,11 +30266,11 @@ msgstr ""
 #. Ends when player lands or leaves either way
 #: dat/events/discovery.lua:349
 msgid "You found #o{title} - {subtitle}#0!"
-msgstr ""
+msgstr "Encontraste #o{title} - {subtitle}#0!"
 
 #: dat/events/discovery.lua:349
 msgid "You found #o{title}#0!"
-msgstr ""
+msgstr "Encontraste #o{title}#0!"
 
 #. Log and message
 #: dat/events/discovery.lua:353 src/map.c:2131
@@ -30210,7 +30282,7 @@ msgstr "Explorado"
 #: dat/events/discovery.lua:353 dat/events/shiplog.lua:23
 #: dat/missions/shark/sh04_meeting.lua:50
 msgid "Travel"
-msgstr ""
+msgstr "Viajar"
 
 #. Break autonav
 #. If custom function, run it
@@ -30246,7 +30318,7 @@ msgstr ""
 #. Player answers to hail
 #: dat/events/dvaered/fwA_treason.lua:76
 msgid "You are needed for a special job"
-msgstr ""
+msgstr "És preciso para um trabalho especial"
 
 #: dat/events/dvaered/fwA_treason.lua:78
 msgid ""
@@ -30269,45 +30341,65 @@ msgid ""
 "you'll receive {credits} in the process. Oh yes, that's different from what "
 "you're used to! What do you say?\""
 msgstr ""
+"O piloto do caça diz, sobre um canal encriptado: \"Finalmente encontrei-te, "
+"{player}. Mais vale tarde do que nunca. Os meus empregadores querem felicitá-"
+"lo pela eficácia com o Lorde Battleaddict. Temo que não haverá muitas "
+"pessoas para lamentar-lo.\" Respondes que não sabes do que se trata e que, "
+"tanto quanto sabe, o Lorde Battleaddict foi morto num duelo honesto pelo "
+"General Klank. O interlocutor ri-se: \"Está a fazer o seu papel, não é? "
+"Compreendo que lhe paguem bem… Espere, não, não pagam bem. De modo algum! "
+"Quanto foi por arriscar a sua vida duas vezes com este truque da bomba EMP? "
+"{credits_01}? Haw haw haw! Pode ganhar melhor dinheiro com uma missão de "
+"carga!\n"
+"   \"Até ouvi dizer que uma vez, pagaram-lhe com armas gauss! Aqueles tipos "
+"são tão lamentáveis, não são?\n"
+"   \"Agora, vamos falar a sério: quer dinheiro e eu quero um piloto. Fomos "
+"feitos para nos darmos bem, tu e você! Preciso de si para uma tarefa "
+"especial. Não vou negar que implica ir contra os interesses do General Klank "
+"e do Major Tam e companhia, mas se o fizer bem, eles nunca saberão que está "
+"implicado e receberá créditos no processo. Sim, isso é diferente do que está "
+"habituado! O que me diz?\""
 
 #: dat/events/dvaered/fwA_treason.lua:82 dat/missions/flf/flf_pre02.lua:170
 msgid "Accept the offer"
-msgstr ""
+msgstr "Aceitar a oferta"
 
 #: dat/events/dvaered/fwA_treason.lua:83
 msgid "Refuse and miss a unique opportunity"
-msgstr ""
+msgstr "Recusar e perder uma oportunidade única"
 
 #: dat/events/dvaered/fwA_treason.lua:86
 msgid "Your task"
-msgstr ""
+msgstr "A tua tarefa"
 
 #: dat/events/dvaered/fwA_treason.lua:88
 msgid ""
 "\"Very good choice, colleague!\" The pilot answers. \"Go to {system}, and "
 "you will be hailed by another Vendetta for your briefing.\""
 msgstr ""
+"\"Escolha muito boa, colega!\" O piloto responde. \"Vá a {system} e será "
+"saudado por outra nave Vendetta para saber mais informações.\""
 
 #: dat/events/dvaered/fwA_treason.lua:92
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:70
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:82
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:103
 msgid "Too bad"
-msgstr ""
+msgstr "Que pena"
 
 #: dat/events/dvaered/fwA_treason.lua:92
 msgid "\"I see. Stay tuned, then, maybe we will see each other again!\""
-msgstr ""
+msgstr "\"Estou a ver. Fique atento, então, talvez nos vejamos novamente!\""
 
 #. Reaction to player's choice at first landing
 #: dat/events/dvaered/fwA_treason.lua:105
 msgid "You are a loyal citizen of House Dvaered"
-msgstr ""
+msgstr "És um cidadão leal da Casa Dvaered"
 
 #. Traitor
 #: dat/events/dvaered/fwA_treason.lua:108
 msgid "You tried to betray us"
-msgstr ""
+msgstr "Tentaste trair-nos"
 
 #: dat/events/dvaered/fwA_treason.lua:110
 msgid ""
@@ -30806,19 +30898,19 @@ msgstr ""
 
 #: dat/events/dvaered/totoran.lua:29
 msgid "A person enjoying their time at the station."
-msgstr ""
+msgstr "Uma pessoa a aproveitar o seu tempo na estação."
 
 #: dat/events/dvaered/totoran.lua:30
 msgid "An individual taking a break from viewing the action."
-msgstr ""
+msgstr "Um indivíduo que faz uma pausa a ver a ação."
 
 #: dat/events/dvaered/totoran.lua:31
 msgid "A spectator that looks strangely out of place."
-msgstr ""
+msgstr "Um espetador que parece estranhamente deslocado."
 
 #: dat/events/dvaered/totoran.lua:32
 msgid "A person enjoying some drinks."
-msgstr ""
+msgstr "Uma pessoa a apreciar algumas bebidas."
 
 #: dat/events/dvaered/totoran.lua:35
 msgid ""
