@@ -472,6 +472,10 @@ int ai_pinit( Pilot *p, const char *ai )
    pilot_setFlag(p, PILOT_CREATED_AI);
 
    /* Initialize randomly within a control tick. */
+   /* This doesn't work as nicely as one would expect because the pilot
+    * has no initial task and control ticks get synchronized if you
+    * spawn a bunch at the same time, which is why we add randomness
+    * elsewhere. */
    p->tcontrol = RNGF() * p->ai->control_rate;
 
    return 0;
@@ -754,7 +758,8 @@ void ai_think( Pilot* pilot, const double dt )
          lua_pushnumber( naevL, crate-cur_pilot->tcontrol );
          ai_run(env, 1); /* run control */
       }
-      cur_pilot->tcontrol = crate;
+      /* Try to desync control ticks when possible by adding randomness. */
+      cur_pilot->tcontrol = crate * (0.9+0.2*RNGF());
 
       /* Task may have changed due to control tick. */
       t = ai_curTask( cur_pilot );
