@@ -39,6 +39,9 @@
 local fmt = require "format"
 local vn = require "vn"
 local lcs = require "common.lucas"
+local vni = require "vnimage"
+local pir = require "common.pirate"
+local comm = require "common.comm"
 
 local title = _([[Leaving Society]])
 local reward = 300e3
@@ -51,11 +54,21 @@ local reward = 300e3
 mem.stage = 0
 
 local first_spob, first_sys = spob.getS("Shangris Station")
-local last_spob, last_sys = spob.getS("Efferey")
+local last_spob, last_sys = spob.getS("Qorellia")
 
 function create ()
    misn.finish(false)
    misn.setNPC( lcs.lucas.name, lcs.lucas.portrait, _([[Lucas looks more worn out than before.]]) )
+end
+
+function discover_spob ()
+   if last_spob:known() then
+      misn.osdCreate(_(title), {
+         fmt.f(_([[Take Lucas to {spob} ({sys} system})]]),
+            {spob=last_spob, sys=last_sys}),
+      })
+      mem.mrk = misn.markerAdd( last_spob )
+   end
 end
 
 local talked
@@ -165,12 +178,7 @@ The lean in and whisper to you.
 
    -- If known we skip most of the mission
    if last_spob:known() then
-      mem.stage = 2
-      misn.osdCreate(_(title), {
-         fmt.f(_([[Take Lucas to {spob} ({sys} system})]]),
-            {spob=last_spob, sys=last_sys}),
-      })
-      mem.mrk = misn.markerAdd( last_spob )
+      discover_spob()
       return
    end
 
@@ -181,15 +189,14 @@ The lean in and whisper to you.
    mem.mrk = misn.markerAdd( first_spob )
 end
 
+local pir_portrait, pir_image
 function land ()
    local spb = spob.cur()
    if mem.stage==0 and spb==first_spob then
-      vn.clear()
-      vn.scene()
-
-      vn.run()
-
-      mem.stage = 1
+      pir_image, pir_portrait = vni.pirate()
+      misn.npcAdd( "approach_pirate", _("Shady Individual"), pir_portrait,
+         fmt.f(_("You see a shady individual, maybe they know something about {spob}?"),
+            {spob=last_spob}))
 
    elseif mem.stage==2 and spb==last_spob then
       vn.clear()
@@ -199,4 +206,123 @@ function land ()
 
       misn.finish(true)
    end
+end
+
+function approach_pirate ()
+   vn.clear()
+   vn.scene()
+
+   local p = vn.newCharacter( _(""), {image=pir_image} )
+   p(_([[""]]))
+
+   vn.run()
+
+   misn.markerRm( mem.mrk )
+   mem.mrk = nil
+   mem.stage = 1
+   hook.board( "board_pirate" )
+   hook.hail( "hail_pirate" )
+end
+
+local function valid_pirate( p )
+   local m = p:memory()
+   if not m.natural then
+      return false
+   end
+
+   if not pir.factionIsPirate( p:faction() ) then
+      return false
+   end
+
+   return true
+end
+
+local function got_info ()
+   jump.get( "Pas", "Effetey" ):setKnown(true)
+   misn.osdCreate(_(title), {
+      fmt.f(_([[Explore Qorel Tunnel and find your way to {spob}.]]),
+         {spob=last_spob}),
+   })
+   mem.stage = 2
+   discover_spob()
+   hook.discover( "discover_spob" )
+end
+
+function hail_pirate( p )
+   if not valid_pirate(p) then
+      return
+   end
+
+   local m = p:memory()
+   if m._lucas02_comm then
+      return
+   end
+   comm.customComm( p, function ()
+      if mem.stage>=2 then
+         return nil -- Done already
+      end
+      return fmt.f(_("Ask about {spob}"),{spob=last_spob})
+   end, function ( lvn, vnp )
+      lvn.func( function ()
+         if p:hostile() then
+            vn.jump("lucas02_hostile")
+         end
+      end )
+      local payamount = 500e3
+      vnp(fmt.f(_("I'll tell you for a measly {amount}. What do you say?"),
+         {amount=fmt.credits(payamount)}))
+      lvn.menu{
+         {_([[Pay]]), "lucas02_pay"},
+         {_([[Refuse]]), "menu"},
+      }
+
+      lvn.label("lucas02_broke")
+      vnp(_([[#rYou do not enough enough credits.#0
+"You think I'm going to accept less? Scram poor bum."]]))
+      lvn.jump("menu")
+
+      lvn.label("lucas02_pay")
+      lvn.func( function ()
+         if player.credits() < payamount then
+            lvn.jump("lucas02_broke")
+            return
+         end
+         player.pay(-payamount)
+         mem.stage = 2
+         var.push("lucas02_gotinfo",true)
+      end )
+      vnp(_([["Pleasure doing business with ya."]]))
+      vn.jump("menu")
+
+      lvn.label("lucas02_hostile")
+      vnp(_([["Like I'm going to tell you! You better plead for your life, punk!"]]))
+   end )
+   m._lucas02_comm = true
+
+   -- Should run just after the comm stuff is done
+   hook.timer(-1, "board_done")
+end
+
+function board_done ()
+   if var.peek("lucas02_gotinfo") then
+      got_info()
+      var.pop("lucas02_gotinfo")
+   end
+end
+
+function board_pirate( p )
+   if not valid_pirate(p) then
+      return
+   end
+
+   vn.clear()
+   vn.scene()
+
+   vn.sfxEerie()
+   vn.na(fmt.f(_([[You board the ship with Lucas and through methods you are not particularly proud of, are able to obtain information of a secret jmup likely leading to the Qorel tunnel. You are told that {spob} is somewhere there.]]),
+      {spob=last_spob}))
+
+   vn.run()
+
+   got_info()
 end
