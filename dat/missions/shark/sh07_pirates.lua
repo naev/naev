@@ -148,7 +148,7 @@ He hands you a credit chip and what appears to be a Nexus Shipyards commemorativ
          player.outfitAdd(reward_outfit)
       end )
       vn.sfxVictory()
-      vn.na(fmt.reward(shark.rewards.sh07).."\n"..fmt.reward(reward_outfit))
+      vn.na(fmt.reward(shark.rewards.sh07).."\n"..fmt.reward(_(reward_outfit)))
       vn.done( shark.arnold.transition )
       vn.run()
 
