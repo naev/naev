@@ -109,16 +109,14 @@ end
 
 -- Land hook
 function land()
-   if spob.cur() == mem.destplanet then
-      -- Semi-random message.
-      lmisn.sfxMoney()
-      vntk.msg( _("Delivery success!"), fmt.f(cargo_land[rnd.rnd(1, #cargo_land)], {cargo=_(mem.cargo), credits=fmt.credits(mem.reward)}) )
-      player.pay(mem.reward)
-      pir.reputationNormalMission(rnd.rnd(2,3))
-      misn.finish(true)
+   if spob.cur() ~= mem.destplanet then
+      return
    end
-end
 
-function abort ()
-   misn.finish(false)
+   -- Semi-random message.
+   lmisn.sfxMoney()
+   vntk.msg( _("Delivery success!"), fmt.f(cargo_land[rnd.rnd(1, #cargo_land)], {cargo=_(mem.cargo), credits=fmt.credits(mem.reward)}) )
+   player.pay(mem.reward)
+   pir.reputationNormalMission(rnd.rnd(2,3))
+   misn.finish(true)
 end
