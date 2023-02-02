@@ -33,7 +33,7 @@ local baddie -- Non-persistent state
 -- Mission constants
 local paypla, paysys = spob.getS("Darkshed")
 
-local reward_outfit = "Sandwich Holder"
+local reward_outfit = outfit.get("Sandwich Holder")
 mem.osd_title = _("The Last Detail")
 
 function create ()
