@@ -63,7 +63,7 @@ end
 
 function discover_spob ()
    if last_spob:known() then
-      misn.osdCreate(_(title), {
+      misn.osdCreate(title, {
          fmt.f(_([[Take Lucas to {spob} ({sys} system})]]),
             {spob=last_spob, sys=last_sys}),
       })
@@ -77,7 +77,7 @@ function accept ()
 
    vn.clear()
    vn.scene()
-   local lucas = lcs.vn_lucas()
+   local lucas = vn.newCharacter( lcs.vn_lucas() )
    vn.transition( lcs.lucas.transition )
    -- Change message first time you talk
    if talked then
@@ -182,7 +182,7 @@ The lean in and whisper to you.
       return
    end
 
-   misn.osdCreate(_(title), {
+   misn.osdCreate( title, {
       fmt.f(_([[Try to find hints about {target} at {spob} ({sys} system)]]),
          {spob=first_spob, sys=first_sys, target=last_spob}),
    })
@@ -190,17 +190,21 @@ The lean in and whisper to you.
 end
 
 local pir_portrait, pir_image
+local pir_name = _("Shady Individual")
 function land ()
    local spb = spob.cur()
    if mem.stage==0 and spb==first_spob then
       pir_image, pir_portrait = vni.pirate()
-      misn.npcAdd( "approach_pirate", _("Shady Individual"), pir_portrait,
+      misn.npcAdd( "approach_pirate", pir_name, pir_portrait,
          fmt.f(_("You see a shady individual, maybe they know something about {spob}?"),
             {spob=last_spob}))
 
    elseif mem.stage==2 and spb==last_spob then
       vn.clear()
       vn.scene()
+      local lucas = vn.newCharacter( lcs.vn_lucas() )
+      lucas(_([[]]))
+      vn.transition( lcs.lucas.transition )
 
       vn.run()
 
@@ -211,9 +215,24 @@ end
 function approach_pirate ()
    vn.clear()
    vn.scene()
+   local p = vn.newCharacter( pir_name, {image=pir_image} )
+   vn.transition()
 
-   local p = vn.newCharacter( _(""), {image=pir_image} )
-   p(_([[""]]))
+   vn.na(fmt.f(_([[You approach the shady character, who doesn't seem very keen on your attention, and begin to make some idle conversation in hopes of drawing out information about {spob}.]]),
+      {spob=last_spob}))
+   p(_([[The character is less than cooperative, and seems more interested in getting rid of you than providing any help. It seems to be an exercise in futility.]]))
+   p(_([[Eventually they start ignoring you and go away. Given the amount of people and security on the station, there is not really anything you can do.]]))
+   vn.disappear(p)
+   vn.na(_([[You look around, but it doesn't look like the people here are going to be the most helpful bunch, you'll have to find another way to get the information.]]))
+   local lucas = lcs.vn_lucas()
+   vn.appear( lucas, lcs.lucas.transition )
+   vn.na(_([[You meet up with Lucas, who was also trying to get the information independently, albeit to the same result.]]))
+   lucas(_([[He lets out a large sigh.
+"It doesn't look like we're getting anywhere."]]))
+   lucas(_([[His eyes suddenly light up.
+"Maybe it's a long shot, but the best way to become a pirate is probably to pirate, is it not?"]]))
+   lucas(_([["We should try to get on a pirate ship and parley as the pirates do. I don't think Marauder ships will know anything, so we should try to board a true pirate ship."]]))
+   vn.na(_([[With the next plan of action decided, Lucas heads back to your ship with his head full of dreams of piracy.]]))
 
    vn.run()
 
@@ -222,6 +241,11 @@ function approach_pirate ()
    mem.stage = 1
    hook.board( "board_pirate" )
    hook.hail( "hail_pirate" )
+
+   misn.osdCreate( title, {
+      fmt.f(_([[Obtain information about {spob} from boarding pirate ships]]),
+         {spob=last_spob})
+   })
 end
 
 local function valid_pirate( p )
@@ -230,7 +254,13 @@ local function valid_pirate( p )
       return false
    end
 
-   if not pir.factionIsPirate( p:faction() ) then
+   local pf = p:faction()
+   if not pir.factionIsPirate( pf ) then
+      return false
+   end
+
+   -- Not marauders
+   if pf == faction.get("Marauder") then
       return false
    end
 
@@ -239,7 +269,7 @@ end
 
 local function got_info ()
    jump.get( "Pas", "Effetey" ):setKnown(true)
-   misn.osdCreate(_(title), {
+   misn.osdCreate( title, {
       fmt.f(_([[Explore Qorel Tunnel and find your way to {spob}.]]),
          {spob=last_spob}),
    })
@@ -255,7 +285,7 @@ function hail_pirate( p )
 
    local m = p:memory()
    if m._lucas02_comm then
-      return
+      return -- Already set up
    end
    comm.customComm( p, function ()
       if mem.stage>=2 then
@@ -269,7 +299,7 @@ function hail_pirate( p )
          end
       end )
       local payamount = 500e3
-      vnp(fmt.f(_("I'll tell you for a measly {amount}. What do you say?"),
+      vnp(fmt.f(_("You think us pirates will just tell you anything for money? Well, ye're damn right. I'll tell you for a measly {amount}. What do you say?"),
          {amount=fmt.credits(payamount)}))
       lvn.menu{
          {_([[Pay]]), "lucas02_pay"},
