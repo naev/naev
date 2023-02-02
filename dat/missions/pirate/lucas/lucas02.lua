@@ -44,7 +44,7 @@ local pir = require "common.pirate"
 local comm = require "common.comm"
 
 local title = _([[Leaving Society]])
-local reward = 300e3
+local reward = 600e3
 
 -- Mission stages
 -- 0: just started
@@ -67,6 +67,7 @@ function discover_spob ()
          fmt.f(_([[Take Lucas to {spob} ({sys} system})]]),
             {spob=last_spob, sys=last_sys}),
       })
+      misn.markerRm() -- just in case remove all
       mem.mrk = misn.markerAdd( last_spob )
    end
 end
@@ -81,7 +82,7 @@ function accept ()
    vn.transition( lcs.lucas.transition )
    -- Change message first time you talk
    if talked then
-      vn.na(_([[Will you help out Lucas?]]))
+      vn.na(_([[Will you help Lucas become a pirate?]]))
    else
       talked = true
       vn.na(_([[You approach Lucas who seems to be more on the edge than before.]]))
@@ -130,7 +131,6 @@ The lean in and whisper to you.
       vn.label("cont03")
       lucas(_([["Will you help me become a pirate?"]]))
    end
-   lucas(_([[""]]))
    vn.menu{
       {_([[Accept]]), "accept"},
       {_([[Refuse]]), "refuse"},
@@ -148,6 +148,7 @@ The lean in and whisper to you.
    vn.func( function ()
       accepted = true
       if last_spob:known() then
+         mem.spob_known = true
          vn.jump("pirate_known")
       end
    end )
@@ -203,7 +204,18 @@ function land ()
       vn.clear()
       vn.scene()
       local lucas = vn.newCharacter( lcs.vn_lucas() )
-      lucas(_([[]]))
+      if not mem.spob_known then
+         vn.na(fmt.f(_([[You land on {spob}, which strikes you as a surprisingly normal-looking world. If you didn't know that it was the center of the operations of the Raven Pirate Clan, you would have thought it was just a regular trade world.]]),
+            {spob=last_spob}))
+      end
+      vn.na(_([[You get off your ship with Lucas, whose eyes are sparkling with hopes and dreams.]]))
+      lucas(fmt.f(_([["{spob} at last! I can almost taste the freedom!"]]),
+         {spob=last_spob}))
+      lucas(_([["Thank you for all your help getting me here! Here, let me give you some credits for your troubles."]]))
+      vn.sfxVictory()
+      vn.na(fmt.reward(reward))
+      vn.na(_([[Lucas seems euphoric to get away from the troubles of his past and begin anew. The question that remains unanswered is whether pirate society is truly more free than other societies, or is the problem at core human nature itself.]]))
+      vn.na(_([[You wish him the best and he tells you to look for him next time you are near Raven space.]]))
       vn.transition( lcs.lucas.transition )
 
       vn.run()
