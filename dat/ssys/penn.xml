@@ -22,8 +22,8 @@
    <hide>1.000000</hide>
   </jump>
   <jump target="Teller">
-   <autopos/>
-   <hide>1.000000</hide>
+   <pos x="-4702.906837" y="6772.587943"/>
+   <hide>0.600000</hide>
   </jump>
  </jumps>
  <tags>
