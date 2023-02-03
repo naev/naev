@@ -120,7 +120,7 @@ vec2 cellular2x2x2(vec3 P) {
 // but it has at least half decent performance on a
 // modern GPU. In any case, it beats any software
 // implementation of Worley noise hands down.
-vec2 cellularFast(vec3 P) {
+vec2 cellular(vec3 P) {
 #define K 0.142857142857 // 1/7
 #define Ko 0.428571428571 // 1/2-K/2
 #define K2 0.020408163265306 // 1/(7*7)
