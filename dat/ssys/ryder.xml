@@ -7,7 +7,10 @@
   <nebula volatility="1.300000" hue="270.000000">400.000000</nebula>
  </general>
  <pos x="795.960877" y="-274.986705"/>
- <spobs/>
+ <spobs>
+  <spob>Ryder</spob>
+  <spob>Ryder III</spob>
+ </spobs>
  <jumps>
   <jump target="Anger">
    <autopos/>

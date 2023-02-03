@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Ryder">
+ <pos x="1930.191663" y="2218.611107"/>
+ <GFX>
+  <space>moon-D02.webp</space>
+  <exterior>uninhabited-rocky-magenta-04.webp</exterior>
+ </GFX>
+ <general>
+  <class>D</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>Once a booming developed world, it all ended swiftly with the Incident burning off half off the planet's surface, stripping away the atmosphere and nearly cracking the core. It is not clear if anybody managed to survive, however, the planet is now desolate of any living entities. Yet another uninhabited rock in the void of space.</description>
+ </general>
+ <tags>
+  <tag>ruined</tag>
+ </tags>
+</spob>

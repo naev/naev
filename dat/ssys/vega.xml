@@ -7,7 +7,9 @@
   <nebula volatility="2.600000" hue="270.000000">300.000000</nebula>
  </general>
  <pos x="432.133268" y="62.460978"/>
- <spobs/>
+ <spobs>
+  <spob>Las Vegas</spob>
+ </spobs>
  <jumps>
   <jump target="Akodu">
    <autopos/>

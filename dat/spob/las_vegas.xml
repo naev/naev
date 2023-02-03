@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Las Vegas">
+ <pos x="3376.705562" y="-1425.149496"/>
+ <GFX>
+  <space>D03.webp</space>
+  <exterior>uninhabited-rocky-red-04.webp</exterior>
+ </GFX>
+ <general>
+  <class>D</class>
+  <population>0</population>
+  <hide>0.700000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>Originally a calm and quiet prosperous M-class world, it has now become another world devastated by the Incident. Not only was the entire atmosphere scrubbed off by the Nebula, the brute force of the impact also fractured the planet's surface, exposing and cooling the once molten core to finally kill any forms of life on the planet. Although invisible to the naked eye, your ship's advanced sensors are able to make out faint traces of once bustling cities on the planet's surface.</description>
+ </general>
+ <tags>
+  <tag>ruined</tag>
+ </tags>
+</spob>
