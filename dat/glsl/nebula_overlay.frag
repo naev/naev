@@ -38,7 +38,7 @@ void main (void)
       colour_out = colour * (0.1+0.9*f);
    }
    else {
-      colour_out = vec4(1.0);
+      colour_out = colour;
    }
 
    if (brightness < 1.0) {
