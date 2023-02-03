@@ -35,7 +35,7 @@ function bgshaders.init( shader, scale, params )
       shd.prevcanvas = lg.newCanvas( shd.cw, shd.ch )
    end
 
-   if shd.params.nobright then
+   if not shd.params.nobright then
       shd.bgbright = naev.conf().bg_brightness
    end
 
