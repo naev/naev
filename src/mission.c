@@ -884,10 +884,6 @@ Mission* missions_genList( int *n, int faction,
       if (misn->avail.loc != loc)
          continue;
 
-      /* Must meet requirements. */
-      if (!mission_meetReq( misn, faction, pnt, sys ))
-         continue;
-
       /* Must hit chance. */
       chance = (double)(misn->avail.chance % 100)/100.;
       if (chance == 0.) /* We want to consider 100 -> 100% not 0% */
@@ -898,6 +894,11 @@ Mission* missions_genList( int *n, int faction,
       for (int j=0; j<rep; j++) {
          if (RNGF() > chance)
             continue;
+
+         /* Must meet requirements. */
+         if (!mission_meetReq( misn, faction, pnt, sys ))
+            continue;
+
          m++;
          /* Extra allocation. */
          if (m > alloced) {
