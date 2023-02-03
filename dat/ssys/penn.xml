@@ -15,15 +15,15 @@
   </jump>
   <jump target="Seifer">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>0.800000</hide>
   </jump>
   <jump target="Sorrow">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Teller">
-   <pos x="-4702.906837" y="6772.587943"/>
-   <hide>0.600000</hide>
+   <pos x="-1980.999692" y="9661.404488"/>
+   <hide>0.400000</hide>
   </jump>
  </jumps>
  <tags>

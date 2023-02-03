@@ -11,15 +11,15 @@
  <jumps>
   <jump target="Penn">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>0.800000</hide>
   </jump>
   <jump target="Ryder">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Teller">
-   <autopos/>
-   <hide>1.000000</hide>
+   <pos x="-5181.654740" y="8245.672141"/>
+   <hide>0.500000</hide>
   </jump>
  </jumps>
  <tags>
