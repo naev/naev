@@ -86,7 +86,7 @@ vec2 cellular2x2x2(vec3 P) {
 	vec4 d2 = dx2 * dx2 + dy2 * dy2 + dz2 * dz2; // z+1
 
 	// Sort out the two smallest distances (F1, F2)
-#if 0
+#ifndef CELLULAR_NOISE_ACCURATE
 	// Cheat and sort out only F1
 	d1 = min(d1, d2);
 	d1.xy = min(d1.xy, d1.wz);
@@ -120,7 +120,7 @@ vec2 cellular2x2x2(vec3 P) {
 // but it has at least half decent performance on a
 // modern GPU. In any case, it beats any software
 // implementation of Worley noise hands down.
-vec2 cellular(vec3 P) {
+vec2 cellularFast(vec3 P) {
 #define K 0.142857142857 // 1/7
 #define Ko 0.428571428571 // 1/2-K/2
 #define K2 0.020408163265306 // 1/(7*7)
@@ -235,7 +235,7 @@ vec2 cellular(vec3 P) {
 	vec3 d33 = dx33 * dx33 + dy33 * dy33 + dz33 * dz33;
 
 	// Sort out the two smallest distances (F1, F2)
-#if 0
+#ifndef CELLULAR_NOISE_ACCURATE
 	// Cheat and sort out only F1
 	vec3 d1 = min(min(d11,d12), d13);
 	vec3 d2 = min(min(d21,d22), d23);
