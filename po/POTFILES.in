@@ -2671,6 +2671,7 @@ dat/events/neutral/baron_prowl.lua
 dat/events/neutral/derelict.lua
 dat/events/neutral/kidnapped.lua
 dat/events/neutral/majesteka_stowaways.lua
+dat/events/neutral/poi.lua
 dat/events/neutral/shadow_comm.lua
 dat/events/neutral/shadow_comm2.lua
 dat/events/neutral/shiplover.lua

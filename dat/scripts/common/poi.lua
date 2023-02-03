@@ -6,8 +6,25 @@ local fmt = require "format"
 local luaspfx = require "luaspfx"
 local prob = require "prob"
 local nebula = require "common.nebula"
+local der = require 'common.derelict'
+local vn = require "vn"
 local poi = {}
 
+function poi.test_sys( sys )
+   -- Must be claimable
+   if not naev.claimTest( {sys}, true ) then
+      return
+   end
+
+   -- Want no inhabited spobs
+   for k,p in ipairs(sys:spobs()) do
+      local s = p:services()
+      if s.land and s.inhabited then
+         return false
+      end
+   end
+   return true
+end
 
 --[[--
 Tries to generate a new setting for a point of interest.
@@ -19,23 +36,7 @@ function poi.generate( force )
       return
    end
 
-   local syscand = lmisn.getSysAtDistance( nil, 1, 5, function( sys )
-      -- TODO have systems with higher risk or more abandoned
-
-      -- Must be claimable
-      if not naev.claimTest( {sys}, true ) then
-         return
-      end
-
-      -- Want no inhabited spobs
-      for k,p in ipairs(sys:spobs()) do
-         local s = p:services()
-         if s.land and s.inhabited then
-            return false
-         end
-      end
-      return true
-   end )
+   local syscand = lmisn.getSysAtDistance( nil, 1, 5, poi.test_sys )
 
    -- Didn't find system
    if #syscand<=0 then return end
@@ -132,6 +133,7 @@ function _poi_enter ()
       timer = hook.timer( 5, "_poi_heartbeat_nooutfit" )
    end
 end
+poi.hook_enter = _poi_enter
 
 function _poi_heartbeat_nooutfit ()
    if player.pos():dist( pos ) < 3e3 then
@@ -221,7 +223,7 @@ end
 --[[--
    @brief Cleans up after a point of interest mission.
 --]]
-function poi.misnDone( failed )
+function poi.cleanup( failed )
    system.markerRm( mrk )
    for k,v in ipairs(path_spfx) do
       v:rm()
@@ -335,6 +337,83 @@ Returns a human-readable string for an amount of data.
 --]]
 function poi.data_str( amount )
    return fmt.f(n_("{amount} Encrypted Data Matrix","{amount} Encrypted Data Matrices",amount),{amount=amount})
+end
+
+function poi.board( _p )
+   local failed = false
+
+   vn.clear()
+   vn.scene()
+   vn.sfx( der.sfx.board )
+   vn.music( der.sfx.ambient )
+   vn.transition()
+
+   -- Have to resolve lock or bad thing happens (tm)
+   if mem.locked then
+      local stringguess = require "minigames.stringguess"
+      vn.na(_([[You board the ship and enter the airlock. When you attempt to enter, an authorization prompt opens up. Looking at the make of the ship, it seems heavily reinforced. It looks like you're going to have to break the code to gain complete access to the ship.]]))
+      stringguess.vn()
+      vn.func( function ()
+         if stringguess.completed() then
+            vn.jump("unlocked")
+            return
+         end
+         vn.jump("unlock_failed")
+      end )
+
+      vn.label("unlocked")
+      vn.na(_([[You deftly crack the code and the screen flashes with '#gAUTHORIZATION GRANTED#0'. Time to see what goodness awaits you!]]))
+      vn.jump("reward")
+
+      vn.label("unlock_failed")
+      vn.na(_([[A brief '#rAUTHORIZATION DENIED#0' flashes on the screen and you hear the ship internals groan as the emergency security protocol kicks in and everything gets locked down. It looks like you won't be getting anywhere here; the ship is as good as debris. You have no option but to return dejectedly to your ship. Maybe next time.]]))
+      vn.func( function () failed = true end )
+      vn.done()
+   else
+      vn.na(_([[You board the derelict which seems oddly in pretty good condition. Furthermore, it seems like there is no access lock in place. What a lucky find!]]))
+   end
+
+   vn.label("reward")
+   if mem.reward.type == "function" then
+      local rwd = require( mem.reward.requirename )( mem )
+      if rwd then
+         rwd.func()
+      else -- Failed to get a reward, just default to data
+         mem.reward.type = "data"
+      end
+   end
+   if mem.reward.type == "credits" then
+      local msg = _([[You access the main computer and are able to login to find a hefty amount of credits. This will come in handy.]])
+      msg = msg .. "\n\n" .. fmt.reward(mem.reward.value)
+      vn.na( msg )
+      vn.func( function ()
+         player.pay( mem.reward.value )
+         poi.log(fmt.f(_([[You found a pristine derelict with large amounts of credits in the {sys} system..]]),
+            {sys=mem.poi.sys}))
+      end )
+   elseif mem.reward.type == "data" then
+      local msg = _([[You access the main computer and are able to extract some Encrypted Data Matrices. It does not seem like you can de-encrypt them without damaging them, but they may have some other use.]])
+      msg = msg .. "\n\n" .. fmt.reward(_("Encrypted Data Matrix"))
+      vn.na( msg )
+      vn.func( function ()
+         poi.data_give( 1 )
+         poi.log(fmt.f(_([[You found a pristine derelict with an Encrypted Data Matrix in the {sys} system.]]),
+            {sys=mem.poi.sys}))
+      end )
+   elseif mem.reward.type == "outfit" then
+      local msg = mem.reward.msg or _([[Exploring the cargo bay, you find something that might be of use to you.]])
+      msg = msg .. "\n\n" .. fmt.reward(mem.reward.value)
+      vn.na( msg )
+      vn.func( function ()
+         player.outfitAdd( mem.reward.value )
+      end )
+   end
+   vn.sfxVictory()
+   vn.na(_([[You explore the rest of the ship but do not find anything else of interest. Although the ship is in very good condition, it is still not space-worthy, and there is not anything that you can do with it. You let it rest among the stars.]]))
+   vn.sfx( der.sfx.unboard )
+   vn.run()
+
+   return failed
 end
 
 return poi
