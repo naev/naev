@@ -1,6 +1,14 @@
+--[[
+
+   Simple library to handle common conditional expressions, mainly focused on
+   mission computer missions.
+
+--]]
 local misn_test = {}
 
--- Cargo missions
+--[[--
+   @brief Test for cargo missions.
+--]]
 function misn_test.cargo()
    if not misn_test.computer() then
       return false
@@ -17,7 +25,9 @@ function misn_test.cargo()
    return false
 end
 
--- Less chance on poor or refugee spobs
+--[[--
+   @brief Test for normal mission computer missions.
+--]]
 function misn_test.computer()
    local st = spob.cur():tags()
    local chance = 1
@@ -33,6 +43,9 @@ function misn_test.computer()
    return true
 end
 
+--[[--
+   @brief Test for mercenary missions.
+--]]
 function misn_test.mercenary()
    if player.numOutfit("Mercenary License") <= 0 then
       return false
