@@ -22,10 +22,10 @@ function misn_test.computer()
    local st = spob.cur():tags()
    local chance = 1
    if st.poor then
-      chance = chance * 0.5
+      chance = chance * 0.4
    end
    if st.refugee then
-      chance = chance * 0.5
+      chance = chance * 0.4
    end
    if chance < 1 and rnd.rnd() > chance then
       return false
