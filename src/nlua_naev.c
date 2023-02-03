@@ -475,6 +475,7 @@ static int naevL_conf( lua_State *L )
    PUSH_BOOL( L, "minimize", conf.minimize );
    PUSH_BOOL( L, "colorblind", conf.colorblind );
    PUSH_DOUBLE( L, "bg_brightness", conf.bg_brightness );
+   PUSH_DOUBLE( L, "nebu_nonuniformity", conf.nebu_nonuniformity );
    PUSH_DOUBLE( L, "gamma_correction", conf.gamma_correction );
    PUSH_BOOL( L, "background_fancy", conf.background_fancy );
    PUSH_BOOL( L, "showfps", conf.fps_show );
