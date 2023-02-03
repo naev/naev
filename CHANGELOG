@@ -1,6 +1,7 @@
 * 0.11.0 (unreleased)
    * Gameplay Changes
       * Universe significantly overworked to me more consistent with lore
+      * Planet properties affect quantity of missions available
       * Moved many missions to the vn system
       * diy-nerds: improved reward
    * Quality of Life
