@@ -41,8 +41,8 @@ vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
    /* Create the noise */
    float f;
    f  = (1.0-cellular( uv     ).x) * 0.625;
-   f += (1.0-cellular( uv*2.0 ).x) * 0.375;
-   //f += (1.0-cellular2x2x2( uv*4.0 ).x) * 0.125;
+   f += (1.0-cellular( uv*2.0 ).x) * 0.25;
+   f += (1.0-cellular( uv*4.0 ).x) * 0.125;
 
    vec4 colout = mix( vec4(vec3(0.0),1.0), colour, f );
    if (nonuniformity < 1.0) {
