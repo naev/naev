@@ -2627,6 +2627,7 @@ dat/bkg/nebu_ngc_2440_2.lua
 dat/bkg/nebu_ngc_5189.lua
 dat/bkg/nebu_ngc_6210.lua
 dat/bkg/plasmastorm.lua
+dat/bkg/pso.lua
 dat/bkg/stellarwind.lua
 dat/bkg/taiomi.lua
 dat/board.lua
