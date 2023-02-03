@@ -2,13 +2,24 @@
 <spob name="Gliese V">
  <pos x="187.238109" y="1185.841360"/>
  <GFX>
-  <space>moon-K00.webp</space>
-  <exterior>aquatic.webp</exterior>
+  <space>moon-P02.webp</space>
+  <exterior>snow.webp</exterior>
  </GFX>
+ <presence>
+  <faction>Independent</faction>
+  <base>0.000000</base>
+  <bonus>0.000000</bonus>
+  <range>0</range>
+ </presence>
  <general>
-  <class>K</class>
-  <population>0</population>
+  <class>P</class>
+  <population>500</population>
   <hide>0.200000</hide>
-  <services/>
+  <services>
+   <land/>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>TODO mention it was blown away from Gliese system</description>
  </general>
 </spob>

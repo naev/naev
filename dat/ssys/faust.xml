@@ -6,6 +6,7 @@
   <radius>12500.000000</radius>
   <stars>0</stars>
   <interference>2.439020</interference>
+  <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos x="370.829630" y="-1053.057817"/>
  <spobs>

@@ -18,6 +18,13 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>Nebula Crystal</group>
+   <radius>2500.000000</radius>
+   <pos x="-7220.247986" y="543.115999"/>
+  </asteroid>
+ </asteroids>
  <tags>
   <tag>thenebula</tag>
  </tags>
