@@ -27,6 +27,8 @@
 </event>
 --]]
 --[[
+   Small event that allows the player to do a POI if they don't leave the system.
+   Only triggers with a poi scanner equipped.
 --]]
 local poi = require "common.poi"
 
