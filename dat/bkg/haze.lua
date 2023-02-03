@@ -21,8 +21,8 @@ function background ()
 
 const int ITERATIONS = 5;
 const float SCALAR = 2.0;
-const float SCALE = 900.0;
-const float TIME_SCALE = 50.0;
+const float SCALE = 1.0/900.0;
+const float TIME_SCALE = 1.0/50.0;
 const float VISIBILITY = 400.0;
 
 uniform float u_time = 0.0;
@@ -33,8 +33,8 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    vec3 uv = 100.0 * vec3( %f, %f, %f );
 
    /* Calculate coordinates */
-   uv.xy += ((texture_coords - 0.5) * love_ScreenSize.xy * u_camera.z + u_camera.xy) / SCALE;
-   uv.z += u_time / TIME_SCALE;
+   uv.xy += ((texture_coords - 0.5) * love_ScreenSize.xy * u_camera.z + u_camera.xy) * SCALE;
+   uv.z += u_time * TIME_SCALE;
 
    /* Create the noise */
    float f = 0.0;
