@@ -1780,7 +1780,7 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
    glColour c = { 1., 1., 1., 1. };
 
    /* Add some transparency if stealthed. TODO better effect */
-   if (pilot_isFlag(p, PILOT_STEALTH))
+   if (!pilot_isPlayer(p) && pilot_isFlag(p, PILOT_STEALTH))
       c.a = 0.5;
 
    glBindFramebuffer( GL_FRAMEBUFFER, fbo );
@@ -1867,7 +1867,7 @@ void pilot_render( Pilot *p )
          scale = 1.;
 
       /* Add some transparency if stealthed. TODO better effect */
-      if (pilot_isFlag(p, PILOT_STEALTH))
+      if (!pilot_isPlayer(p) && pilot_isFlag(p, PILOT_STEALTH))
          c.a = 0.5;
 
       /* Render normally. */
