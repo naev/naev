@@ -8,6 +8,7 @@ uniform mat4 projection;
 uniform float horizon;
 uniform float eddy_scale;
 uniform float time;
+in vec4 base_col;
 out vec4 colour_out;
 
 void main(void) {
@@ -23,7 +24,7 @@ void main(void) {
 
    /* Compute hue as in lib/nebula.glsl. */
    hhue = nebula_hue( hue, uv );
-   colour = vec4( hsv2rgb( vec3( hhue, 1.0, 1.0 ) ), 1.0 );
+   colour = base_col;
 
    /* Modify coordinates to be larger and slower. */
    uv.xy = 3.0 * uv.xy + 1000.0; // Scaled/offset from nebula_background
@@ -40,7 +41,7 @@ void main(void) {
    }
 
    if (brightness < 1.0) {
-      vec4 base = vec4( hsv2rgb( vec3(hue, 1.0, 1.0) ), 1.0 );
+      vec4 base = base_col;
       colour_out = mix( base, colour_out, brightness );
    }
 
