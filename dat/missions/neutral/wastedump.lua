@@ -54,6 +54,9 @@ for k,v in ipairs(spob.getAll()) do
       table.insert( dest_planets, v )
    end
 end
+table.sort( dest_planets, function ( a, b )
+   return a:system():jumpDist() < b:system():jumpDist()
+end )
 
 function create ()
    local scur = system.cur()
