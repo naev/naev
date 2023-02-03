@@ -11,7 +11,8 @@ uniform float time;
 in vec4 base_col;
 out vec4 colour_out;
 
-void main(void) {
+void main (void)
+{
    float dist, f, hhue;
    vec3 uv;
    vec4 colour;
