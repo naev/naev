@@ -17,8 +17,7 @@ function background ()
 #include "lib/cellular.glsl"
 
 const int ITERATIONS = 3;
-const float SCALAR = pow(2.0, 3.0/3.0);
-const float SCALE = 1.0/500.0;
+const float SCALE = 1.0/300.0;
 const float TIME_SCALE = 1.0/50.0;
 
 uniform float u_time = 0.0;
@@ -33,11 +32,10 @@ vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
    uv.z += u_time * TIME_SCALE;
 
    /* Create the noise */
-   float f = 0.0;
-   for (int i=0; i<ITERATIONS; i++) {
-      float scale = pow(SCALAR, i);
-		f += abs(0.8-cellular2x2x2( uv * scale ).x) / scale;
-   }
+   float f;
+   f  = (1.0-cellular2x2x2( uv     ).x) * 0.625;
+   f += (1.0-cellular2x2x2( uv*2.0 ).x) * 0.375;
+   //f += (1.0-cellular2x2x2( uv*4.0 ).x) * 0.125;
 
    return mix( vec4(vec3(0.0),1.0), colour, f );
 }
@@ -48,15 +46,14 @@ vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
       self._dt = self._dt + dt
       self:send( "u_time", self._dt )
    end
-   sbg = bgshaders.init( shader_bg, sf )
+   sbg = bgshaders.init( shader_bg, sf, {nobright=true} )
 
    -- Initialize overlay shader
    pixelcode = string.format([[
 #include "lib/cellular.glsl"
 
 const int ITERATIONS = 2;
-const float SCALAR = pow(2.0, 3.0/3.0);
-const float SCALE = 1.0/1000.0;
+const float SCALE = 1.0/600.0;
 const float TIME_SCALE = 1.0/50.0;
 const float VISIBILITY = 900.0;
 
@@ -72,11 +69,9 @@ vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
    uv.z += u_time * TIME_SCALE;
 
    /* Create the noise */
-   float f = 0.0;
-   for (int i=0; i<ITERATIONS; i++) {
-      float scale = pow(SCALAR, i);
-		f += abs(0.8-cellular2x2x2( uv * scale ).x) / scale;
-   }
+   float f;
+   f  = (1.0-cellular2x2x2( uv     ).x) * 0.625;
+   f += (1.0-cellular2x2x2( uv*2.0 ).x) * 0.375;
 
    float dist = length( (texture_coords-0.5)*love_ScreenSize.xy * u_camera.z );
    vec4 colout = mix( vec4(0.0), colour, smoothstep( 0.0, 2.0*VISIBILITY, dist ) );
@@ -90,7 +85,7 @@ vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
       self._dt = self._dt + dt
       self:send( "u_time", self._dt )
    end
-   sov = bgshaders.init( shader_ov, sf )
+   sov = bgshaders.init( shader_ov, sf, {nobright=true} )
 
    -- Set some fancy effects
    --[[
@@ -107,16 +102,16 @@ function renderov( dt )
    local x, y = camera.get():get()
    local z = camera.getZoom()
    local m = 1
-   shader_ov:send( "u_camera", x*m/sf, -y*m/sf, z*sf )
+   shader_ov:send( "u_camera", x*m/sf*0.5, -y*m/sf*0.5, z*sf )
 
-   sov:render( dt, {224/256, 110/256, 22/256, 1.0} )
+   sov:render( dt, {200/255, 32/255, 130/255, 1.0} )
 end
 
 function renderbg( dt )
    local x, y = camera.get():get()
    local z = camera.getZoom()
    local m = 1
-   shader_bg:send( "u_camera", x*m/sf, -y*m/sf, z*sf )
+   shader_bg:send( "u_camera", x*m/sf*0.5, -y*m/sf*0.5, z*sf )
 
-   sbg:render( dt, {224/256, 110/256, 22/256, 1.0} )
+   sbg:render( dt, {200/255, 32/255, 130/255, 1.0} )
 end

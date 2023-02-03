@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ssys name="PSO">
  <general>
+  <background>pso</background>
+  <map_shader>pso_map.frag</map_shader>
   <radius>14500.000000</radius>
-  <stars>400</stars>
+  <stars>0</stars>
   <interference>5.882350</interference>
-  <nebula volatility="0.000000" hue="310.000000">300.000000</nebula>
  </general>
  <pos x="235.552868" y="-1009.095355"/>
  <spobs>
