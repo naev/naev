@@ -3187,6 +3187,7 @@ dat/scripts/minigames/stringguess.lua
 dat/scripts/minigames/stringguess/conf.lua
 dat/scripts/minigames/stringguess/core.lua
 dat/scripts/minigames/stringguess/main.lua
+dat/scripts/misn_test.lua
 dat/scripts/outfits/shaders.lua
 dat/scripts/pilotai.lua
 dat/scripts/pilotname.lua

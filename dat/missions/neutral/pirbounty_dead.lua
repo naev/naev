@@ -2,7 +2,9 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Dead Or Alive Bounty">
  <priority>4</priority>
- <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+ <cond>
+   return require("misn_test").mercenary()
+ </cond>
  <chance>360</chance>
  <location>Computer</location>
  <faction>Dvaered</faction>

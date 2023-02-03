@@ -2,8 +2,10 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Seek And Destroy">
  <priority>4</priority>
- <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
- <chance>875</chance>
+ <cond>
+   require("misn_test").mercenary()
+ </cond>
+ <chance>475</chance>
  <location>Computer</location>
  <faction>Dvaered</faction>
  <faction>Empire</faction>

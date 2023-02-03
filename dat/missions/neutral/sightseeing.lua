@@ -8,7 +8,8 @@
    if not f or not f:tags().generic then
       return false
    end
-   if scur:tags().station then
+   local st = scur:tags()
+   if st.station or st.poor or st.refugee then
       return false
    end
    local sindep = system.cur():presences()["Independent"] or 0

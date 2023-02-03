@@ -3,7 +3,12 @@
 <mission name="Sirius Pilgrimage Transport">
  <priority>3</priority>
  <chance>266</chance>
- <cond>faction.playerStanding("Sirius") &gt; 0</cond>
+ <cond>
+   if faction.playerStanding("Sirius") &lt; 0 then
+      return false
+   end
+   return require("misn_test").computer()
+ </cond>
  <location>Computer</location>
  <faction>Sirius</faction>
  <notes>

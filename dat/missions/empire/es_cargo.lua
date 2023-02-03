@@ -2,7 +2,15 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Empire Shipping">
  <priority>3</priority>
- <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+ <cond>
+   if faction.playerStanding("Empire") &lt; 0 then
+      return false
+   end
+   if var.peek("es_cargo") ~= true then
+      return false
+   end
+   return require("misn_test").computer()
+ </cond>
  <chance>350</chance>
  <done>Empire Recruitment</done>
  <location>Computer</location>

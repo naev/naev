@@ -5,7 +5,12 @@
  <chance>150</chance>
  <location>Computer</location>
  <faction>Dvaered</faction>
- <cond>faction.playerStanding("Dvaered") &gt; 0</cond>
+ <cond>
+   if faction.playerStanding("Dvaered") &lt; 0 then
+      return false
+   end
+   return require("misn_test").computer()
+ </cond>
  <done>Dvaered Census 0</done>
  <notes>
   <campaign>Dvaered Recruitment</campaign>

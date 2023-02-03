@@ -5,14 +5,7 @@
  <chance>960</chance>
  <location>Computer</location>
  <cond>
-   local f = spob.cur():faction()
-   if f then
-      local ft = f:tags()
-      if ft.generic or ft.misn_cargo then
-         return true
-      end
-   end
-   return false
+  require("misn_test").cargo()
  </cond>
  <notes>
   <tier>1</tier>

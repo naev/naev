@@ -2,7 +2,15 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Za'lek Test">
  <priority>3</priority>
- <cond>faction.playerStanding("Za'lek") &gt; 0 and spob.cur():services()["outfits"] ~= nil</cond>
+ <cond>
+   if faction.playerStanding("Za'lek") &lt; 0 then
+      return false
+   end
+   if spob.cur():services()["outfits"] == nil then
+      return false
+   end
+   return require("misn_test").computer()
+ </cond>
  <chance>450</chance>
  <location>Computer</location>
  <faction>Za'lek</faction>
