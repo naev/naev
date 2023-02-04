@@ -5,10 +5,14 @@
   <stars>400</stars>
   <interference>0.000000</interference>
  </general>
- <pos x="1521.150931" y="-749.194104"/>
+ <pos x="1513.150931" y="-653.194104"/>
  <spobs/>
  <jumps>
-  <jump target="Porro">
+  <jump target="Korma">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Muirat">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

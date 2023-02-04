@@ -12,11 +12,15 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Gilligan's Memory">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Korma">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Porro">
+  <jump target="NGC-12108">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

@@ -5,7 +5,7 @@
   <stars>400</stars>
   <interference>0.000000</interference>
  </general>
- <pos x="1390.426786" y="-702.554696"/>
+ <pos x="1376.426786" y="-537.554696"/>
  <spobs>
   <spob>Gorchenchev Shipyards</spob>
   <spob>Lanze</spob>
@@ -14,7 +14,7 @@
   <spob>Margarita IV</spob>
  </spobs>
  <jumps>
-  <jump target="Porro">
+  <jump target="Eiderdown">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

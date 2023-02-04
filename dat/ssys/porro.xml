@@ -5,7 +5,7 @@
   <stars>400</stars>
   <interference>0.000000</interference>
  </general>
- <pos x="1455.050113" y="-668.656729"/>
+ <pos x="1226.050113" y="-604.656729"/>
  <spobs>
   <spob>Porro Farming Station</spob>
   <spob>Porro II</spob>
@@ -13,19 +13,7 @@
   <spob>Waldar</spob>
  </spobs>
  <jumps>
-  <jump target="Korma">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Margarita">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Muirat">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="NGC-12108">
+  <jump target="Churchill">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
