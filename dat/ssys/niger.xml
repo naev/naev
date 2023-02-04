@@ -5,7 +5,7 @@
   <stars>400</stars>
   <interference>0.000000</interference>
  </general>
- <pos x="1162.742433" y="-1050.225219"/>
+ <pos x="1169.964655" y="-845.641886"/>
  <spobs>
   <spob>Brandt Station</spob>
   <spob>Niger I</spob>
@@ -13,7 +13,11 @@
   <spob>Rionna</spob>
  </spobs>
  <jumps>
-  <jump target="Lapis">
+  <jump target="Anarbalis">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Rhu">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
