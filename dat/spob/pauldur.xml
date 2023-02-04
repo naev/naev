@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Pauldur">
- <lua>spob/lua/lowclass.lua</lua>
  <pos x="-7605.964301" y="-7782.151406"/>
  <GFX>
   <space>moon-M06.webp</space>
@@ -8,32 +7,23 @@
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
-  <range>2</range>
+  <base>50</base>
+  <bonus>20</bonus>
+  <range>1</range>
  </presence>
  <general>
   <class>M</class>
-  <population>1.5e+07</population>
+  <population>1.5e+06</population>
   <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>
-   <bar/>
-   <missions/>
    <commodity/>
-   <outfits/>
   </services>
   <commodities/>
-  <description>Pauldur is a small Sirius community, the only inhabited planet in a remote area of Sirius space. Though economically struggling at the best of times, the people here make the most of their situation. Life isn't bad, but it's hard to get the latest fashion items sometimes.</description>
-  <bar>This bar is fairly quiet. Not many people stop by Pauldur who aren't from the moon to begin with, and those who are from here don't usually stop by the spaceport bar.</bar>
+  <description>Although one may expect crime to be lower in a society where weak psychic powers are commonplace, the truth is that it is not much different from the rest of the galaxy. To accommodate the growing penal population, Pauldur was designed as a prison world given the difficulty of access and inhospitality. Although most the planet is inaccessible without high security clearance, the spaceport has modest accommodations for those who get lost or wish to visit their incarcerated relatives.</description>
  </general>
- <tech>
-  <item>Engines Low</item>
-  <item>Engines Medium</item>
-  <item>Laser 1</item>
-  <item>Basic Outfits 1</item>
-  <item>Star Maps</item>
-  <item>Missiles 2</item>
- </tech>
+ <tags>
+  <tag>prison</tag>
+ </tags>
 </spob>
