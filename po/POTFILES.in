@@ -1059,12 +1059,6 @@ dat/spob/inss1.xml
 dat/spob/inss2.xml
 dat/spob/inss3.xml
 dat/spob/isador.xml
-dat/spob/ivy_i.xml
-dat/spob/ivy_ii.xml
-dat/spob/ivy_iii.xml
-dat/spob/ivy_iv.xml
-dat/spob/ivy_primary_hub.xml
-dat/spob/ivy_v.xml
 dat/spob/jaan.xml
 dat/spob/jackson_ii.xml
 dat/spob/jackson_v.xml
@@ -2053,7 +2047,6 @@ dat/ssys/infinity.xml
 dat/ssys/ingot.xml
 dat/ssys/iris.xml
 dat/ssys/ivella.xml
-dat/ssys/ivy.xml
 dat/ssys/jackson.xml
 dat/ssys/jade.xml
 dat/ssys/jervis.xml
