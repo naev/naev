@@ -23,12 +23,12 @@
    <missions/>
   </services>
   <commodities/>
-  <description>The Ulysses system is fairly close to the Sirian core, and the Sirian core always needs more energy. Vao Vos is a hot planet that orbits its sun rather closely, which makes it a suitable place to generate lots of power and package it up into high-efficiency power cells.</description>
+  <description>The Ulysses system is fairly close to the Sirian core, and the Sirian core always needs more energy. Vao Vos is a hot planet that orbits its sun rather closely, which makes it a suitable place to generate lots of power and package it up into high-efficiency power cells.
+Given the inhospitality of the planet, the few who live at Vao Vos are all concentrated in a single heavily-insulated dome. With the spaceport built-in, everything is within a short walking distance.</description>
   <bar>Vao Vos' surface is mostly in a liquid state, even on the dark side. The local colonists have learned to deal with their environment, but many space traders aren't used to conditions like that. This spaceport bar is built right on top of a lava field, or rather, right into it. The facility is partially submerged, which is clearly visible from the viewports. It often makes offworld visitors uneasy, which is undoubtedly what the designers had in mind.</bar>
  </general>
  <tags>
   <tag>industrial</tag>
-  <tag>refuel</tag>
   <tag>poor</tag>
  </tags>
 </spob>

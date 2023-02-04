@@ -14,7 +14,7 @@
  <general>
   <class>M</class>
   <population>1e+08</population>
-  <hide>2.000000</hide>
+  <hide>0.600000</hide>
   <services>
    <land/>
    <refuel/>
@@ -22,7 +22,7 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Though Suoer classifies as a moon, it is technically a sister planet to Esker IV. Its superdense core gives it so much gravity that it significantly affects its primary, so both planets orbit each other. Suoer's high gravity also makes it a comfortable world to live on for humans.</description>
+  <description>Though Suoer classifies as a moon, it is technically a sister planet to Esker IV. Its superdense core gives it so much gravity that it significantly affects its primary, so both planets orbit each other. Suoer's high gravity also makes it a comfortable world to live on for humans. Suoer is well known for its system of universities and research laboratories, many with a focus on material science.</description>
  </general>
  <tech>
   <item>Hulls Low</item>
@@ -35,4 +35,7 @@
   <item>Star Maps</item>
   <item>Basic Civilian Ships</item>
  </tech>
+ <tags>
+  <tag>research</tag>
+ </tags>
 </spob>
