@@ -13,7 +13,7 @@
  </presence>
  <general>
   <class>P</class>
-  <population>1e+05</population>
+  <population>100000</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -34,7 +34,4 @@
   <item>Basic Trade Ships</item>
   <item>Bulk Trade Ships</item>
  </tech>
- <tags>
-  <tag></tag>
- </tags>
 </spob>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Ivy V">
+ <lua>spob/lua/highclass.lua</lua>
  <pos x="0.000000" y="809.000000"/>
  <GFX>
   <space>O00.webp</space>
@@ -13,10 +14,10 @@
  </presence>
  <general>
   <class>O</class>
-  <population>1e+05</population>
+  <population>100000</population>
   <hide>1.000000</hide>
   <services>
-   <land>land_hiclass</land>
+   <land/>
    <refuel/>
    <bar/>
    <commodity/>
