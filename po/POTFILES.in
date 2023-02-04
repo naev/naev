@@ -2696,6 +2696,7 @@ dat/events/news/proteron.lua
 dat/events/news/sirius.lua
 dat/events/news/soromid.lua
 dat/events/news/thurion.lua
+dat/events/news/trader.lua
 dat/events/news/zalek.lua
 dat/events/news/zalek_campaign.lua
 dat/events/npc.lua
