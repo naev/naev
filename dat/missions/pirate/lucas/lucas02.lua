@@ -78,6 +78,7 @@ function accept ()
    vn.scene()
    local lucas = vn.newCharacter( lcs.vn_lucas() )
    vn.transition( lcs.lucas.transition )
+
    -- Change message first time you talk
    if talked then
       vn.na(_([[Will you help Lucas become a pirate?]]))
@@ -195,7 +196,7 @@ function land ()
    local spb = spob.cur()
    if mem.stage==0 and spb==first_spob then
       pir_image, pir_portrait = vni.pirate()
-      misn.npcAdd( "approach_pirate", pir_name, pir_portrait,
+      mem.npc_pir = misn.npcAdd( "approach_pirate", pir_name, pir_portrait,
          fmt.f(_("You see a shady individual, maybe they know something about {spob}?"),
             {spob=last_spob}))
 
@@ -203,6 +204,8 @@ function land ()
       vn.clear()
       vn.scene()
       local lucas = vn.newCharacter( lcs.vn_lucas() )
+      vn.transition( lcs.lucas.transition )
+
       if not mem.spob_known then
          vn.na(fmt.f(_([[You land on {spob}, which strikes you as a surprisingly normal-looking world. If you didn't know that it was the center of the operations of the Raven Pirate Clan, you would have thought it was just a regular trade world.]]),
             {spob=last_spob}))
@@ -245,6 +248,7 @@ function approach_pirate ()
    lucas(_([["We should try to get on a pirate ship and parley as the pirates do. I don't think Marauder ships will know anything, so we should try to board a true pirate ship."]]))
    vn.na(_([[With the next plan of action decided, Lucas heads back to your ship with his head full of dreams of piracy.]]))
 
+   vn.done( lcs.lucas.transition )
    vn.run()
 
    misn.markerRm( mem.mrk )
@@ -252,6 +256,8 @@ function approach_pirate ()
    mem.stage = 1
    hook.board( "board_pirate" )
    hook.hail( "hail_pirate" )
+
+   misn.npcRm( mem.npc_pir )
 
    misn.osdCreate( title, {
       fmt.f(_([[Obtain information about {spob} from boarding pirate ships]]),
@@ -306,7 +312,7 @@ function hail_pirate( p )
    end, function ( lvn, vnp )
       lvn.func( function ()
          if p:hostile() then
-            vn.jump("lucas02_hostile")
+            lvn.jump("lucas02_hostile")
          end
       end )
       local payamount = 500e3
@@ -333,7 +339,7 @@ function hail_pirate( p )
          var.push("lucas02_gotinfo",true)
       end )
       vnp(_([["Pleasure doing business with ya."]]))
-      vn.jump("menu")
+      lvn.jump("menu")
 
       lvn.label("lucas02_hostile")
       vnp(_([["Like I'm going to tell you! You better plead for your life, punk!"]]))
@@ -358,6 +364,7 @@ function board_pirate( p )
 
    vn.clear()
    vn.scene()
+   vn.transition()
 
    vn.sfxEerie()
    vn.na(fmt.f(_([[You board the ship with Lucas and through methods you are not particularly proud of, are able to obtain information of a secret jmup likely leading to the Qorel tunnel. You are told that {spob} is somewhere there.]]),
