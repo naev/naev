@@ -20,6 +20,12 @@ void main (void)
 
    /* Compute coordinates for the noise */
    rel_pos = gl_FragCoord.xy + projection[3].xy;
+   dist = length(rel_pos);
+   if (dist > 2.0*horizon) {
+      colour_out = base_col;
+      return;
+   }
+
    uv.xy = rel_pos / eddy_scale;
    uv.z = time * 0.5;
 
@@ -47,7 +53,6 @@ void main (void)
    }
 
    /* Compute dist and interpolate */
-   dist = length(rel_pos);
    colour_out = mix( colour_out, colour, smoothstep( 0.0, 2.0*horizon, dist ) );
    colour_out.a *= smoothstep( 0.0, horizon, dist );
 }
