@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Ivy IV">
+ <pos x="-1309.000000" y="0.000000"/>
+ <GFX>
+  <space>M02.webp</space>
+  <exterior>forest2.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Trader</faction>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>N</class>
+  <population>4e+06</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Ivy IV was the planet worst impacted by the invasion of the Kudzu and, though nominally the planet is considered a forest planet, it is a distant, tree-varient of the Kudzu that was engineered to grow more slowly but also to absorb almost the entire spectrum of light reaching Ivy IV from its parent star with the hope that the ground-based Kudzu could be retarded in its growth, needless to say that led to it's own problems given that the galaxies market for wood was essentially zero with this single planet creating millions of times more than was necessary. Since that time some degree of control has been achieved over the ecological disasters of the past and the ocean planets of the Ivy system have an abundant supply of material for building ocean going vessels - something tourists revel in in its antiquity.</description>
+  <bar> TODO </bar>
+ </general>
+ <tech>
+  <item>Cargo Trader Outfits</item>
+  <item>Crappy Core Systems</item>
+  <item>Engines Cargo</item>
+  <item>Hulls Cargo</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+ </tech>
+ <tags>
+  <tag>old</tag>
+  <tag>rural</tag>
+  <tag>tourism</tag>
+  <tag>agriculture</tag>
+  <tag>research</tag>
+ </tags>
+</spob>

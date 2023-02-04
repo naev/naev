@@ -1002,6 +1002,9 @@ dat/spob/hekaras_iv.xml
 dat/spob/heronus.xml
 dat/spob/heronus_orbital.xml
 dat/spob/hikatalat.xml
+dat/spob/holly_i.xml
+dat/spob/holly_ii.xml
+dat/spob/holly_iii.xml
 dat/spob/house_zalek_central_station.xml
 dat/spob/hrimfaxi.xml
 dat/spob/hs224.xml
@@ -1056,6 +1059,12 @@ dat/spob/inss1.xml
 dat/spob/inss2.xml
 dat/spob/inss3.xml
 dat/spob/isador.xml
+dat/spob/ivy_i.xml
+dat/spob/ivy_ii.xml
+dat/spob/ivy_iii.xml
+dat/spob/ivy_iv.xml
+dat/spob/ivy_primary_hub.xml
+dat/spob/ivy_v.xml
 dat/spob/jaan.xml
 dat/spob/jackson_ii.xml
 dat/spob/jackson_v.xml
@@ -2034,6 +2043,7 @@ dat/ssys/hephaestus.xml
 dat/ssys/herakin.xml
 dat/ssys/herculis.xml
 dat/ssys/hideyoshis_star.xml
+dat/ssys/holly.xml
 dat/ssys/hubfar.xml
 dat/ssys/humdrum.xml
 dat/ssys/hystera.xml
@@ -2042,6 +2052,7 @@ dat/ssys/infinity.xml
 dat/ssys/ingot.xml
 dat/ssys/iris.xml
 dat/ssys/ivella.xml
+dat/ssys/ivy.xml
 dat/ssys/jackson.xml
 dat/ssys/jade.xml
 dat/ssys/jervis.xml

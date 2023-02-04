@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Ivy V">
+ <pos x="0.000000" y="809.000000"/>
+ <GFX>
+  <space>O00.webp</space>
+  <exterior>aquatic3.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Trader</faction>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>1e+05</population>
+  <hide>1.000000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <bar/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Lying slightly further from the central star of Ivy than Ivy Primary Hub, Ivy V is an unusual "hot" waterworld, this means the atmosphere is rather dense with steam, clouds and crystalline ice as you ascend into the atmosphere and means that it is more of a sauna than your average class O planet. However, this means that it has become a hive of activity in terms of agriculture, in turn this unfortunately later released the dreaded Kudzu; a plant that literally started consuming the planet, covering the ocean with a thick mat of vegetation as well as spreading itself to the other planets of the system. Too late was it realised what was happening and entire colonies were abandoned and in the face of being buried alive. Eventually quarantine measures were put in place and the kudzu was found to be a good staple food stuff, at least as far as humanitarian aid was concerned - the take over of the Ivy system by the Red Star Organisation was, after all this, a forgone conclusion.</description>
+  <bar>Nautical themed with a less than subtle hint of entwining Kudzu the spaceport bar is only lacking in a kraken, though the Kudzu appears to be doing it's best to imitate! Thankfully the decorative artwork is not trying to take over the planet again, unlike the huge variety of foods and drinks that the bar serves made, who'd have guessed it, from Kudzu.</bar>
+ </general>
+ <tech>
+  <item>Cargo Trader Outfits</item>
+  <item>Crappy Core Systems</item>
+  <item>Engines Cargo</item>
+  <item>Hulls Cargo</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+ </tech>
+ <tags>
+  <tag>rich</tag>
+  <tag>rural</tag>
+  <tag>agriculture</tag>
+  <tag>trade</tag>
+  <tag>research</tag>
+ </tags>
+</spob>

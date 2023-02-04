@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Holly">
+ <general>
+  <background>stellarwind</background>
+  <map_shader>stellarwind_map.frag</map_shader>
+  <features>#bStellar Wind (1 fuel regen)#0</features>
+  <radius>20000.000000</radius>
+  <stars>512</stars>
+  <interference>21.314000</interference>
+  <nebula volatility="0.000000">0.000000</nebula>
+ </general>
+ <pos x="42.000000" y="-222.000000"/>
+ <spobs>
+  <spob>Holly I</spob>
+  <spob>Holly II</spob>
+  <spob>Holly III</spob>
+  <spob_virtual>Trade Lane</spob_virtual>
+ </spobs>
+ <jumps>
+  <jump target="Goddard">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
+  <jump target="Ivy">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
+ </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeC-poor</group>
+   <radius>7500.000000</radius>
+   <pos x="0.000000" y="0.000000"/>
+   <density>0.222222</density>
+  </asteroid>
+  <asteroid>
+   <group>typeB-poor</group>
+   <radius>7250.000000</radius>
+   <pos x="0.000000" y="0.000000"/>
+   <density>0.222222</density>
+  </asteroid>
+  <asteroid>
+   <group>typeA-standard</group>
+   <radius>7000.000000</radius>
+   <pos x="0.000000" y="0.000000"/>
+   <density>0.222222</density>
+  </asteroid>
+  <exclusion>
+   <radius>5500.000000</radius>
+   <pos x="0.000000" y="0.000000"/>
+  </exclusion>
+ </asteroids>
+</ssys>

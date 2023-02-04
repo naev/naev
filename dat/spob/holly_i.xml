@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Holly I">
+ <pos x="0.000000" y="5000.000000"/>
+ <GFX>
+  <space>G01.webp</space>
+  <exterior>lava.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Trader</faction>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>F</class>
+  <population>6e+06</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>The Holly system is a one of those statistical flukes that is almost bound to happen somewher in the galaxy. Holly I is one of the trinary planetary system that currently exists here. Scientists have long predicted that the system will become unstable, especially with all the mining activity over the years, but there has been no appreciable change and so the miners continue, many arguing that their activites are actually contributing to the stability here!
+Holly I itself is heavily volcanic and, aside from the extensive mining operations, has little to recommend it, having a largely toxic and corrosive atmosphere, lava flows all over the place, no water, thick clouds and, just to put a real damper on things, frequent and new volcanoes erupting daily. Even the miners consider living here a job, one that is absolutely worth it but few consider bringing family here, never mind starting one.
+Holly I also, along with its siblings Holly II and Holly III, houses the headquarters of the Mining Vrata - the most influential of the mining guilds in the known galaxy.</description>
+  <bar>Largely a dive where people drown their sorrows or celebrate anything they can think of to pass their offhours. The karaoke is, predictably, bad, though, according to the chalked comments on the wall, it is decidedly better than the comedy or poetry sessions!
+Curiously the garden that the bar looks onto is rather artfully designed, making great use of the backdrop of gas clouds, lava and volcanoes while clearly being a contrast to the destructive forces outside the confines of the Mining Vrata Colony.</bar>
+ </general>
+ <tech>
+  <item>Mining Outfits</item>
+  <item>Milspec Impacto-Plastic Coating</item>
+  <item>Mining 1</item>
+  <item>Mining 2</item>
+  <item>Cargo Trader Outfits</item>
+  <item>Crappy Core Systems</item>
+  <item>Engines Cargo</item>
+  <item>Hulls Cargo</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+ </tech>
+ <tags>
+  <tag>old</tag>
+  <tag>rich</tag>
+  <tag>mining</tag>
+  <tag>trade</tag>
+  <tag>immigration</tag>
+ </tags>
+</spob>

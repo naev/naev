@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Holly III">
+ <pos x="4330.000000" y="-2500.000000"/>
+ <GFX>
+  <space>H01.webp</space>
+  <exterior>desertic.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Trader</faction>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>F</class>
+  <population>3e+06</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>The Holly system is a one of those statistical flukes that is almost bound to happen somewher in the galaxy. Holly III is one of the trinary planetary system that currently exists here. Scientists have long predicted that the system will become unstable, especially with all the mining activity over the years, but there has been no appreciable change and so the miners continue, many arguing that their activites are actually contributing to the stability here!
+Holly III, Holly II and Holly I were named by the original mining pioneer who either had no imagination or an obsession and having since never been renamed by the miners that congregate here, possibly as a reminder of the that they should only tally in this system while they make large sums mining the ore-rich surfaces of the planets and then move on lest they also succumb. Due to this concentration of miners, the galaxy's largest mining guild, the Mining Vrata, has its headquarters split across these three similarly volcanic but differently peopled worlds.</description>
+  <bar>As you enter from the near silence of the main concourse you are greated by a wonderfully melodic sound, calming and yet lyrical. The entire bar is made up of small "enclaves" with some sort of sound curtain which lets you overhear a litany of different musical styles as people move in and out of their little, for want of a better word, comfort zones. The bartender is a some sort of robot but seems to have been designed such that the hums of its movements have been tuned so as to create a shifting harmonius cascade as it prepares your order.</bar>
+ </general>
+ <tech>
+  <item>Mining Outfits</item>
+  <item>Milspec Impacto-Plastic Coating</item>
+  <item>Mining 1</item>
+  <item>Mining 2</item>
+  <item>Cargo Trader Outfits</item>
+  <item>Crappy Core Systems</item>
+  <item>Engines Cargo</item>
+  <item>Hulls Cargo</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+ </tech>
+ <tags>
+  <tag>old</tag>
+  <tag>rich</tag>
+  <tag>mining</tag>
+  <tag>trade</tag>
+  <tag>immigration</tag>
+ </tags>
+</spob>

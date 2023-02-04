@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Ivy">
+ <general>
+  <background>plasmastorm</background>
+  <map_shader>plasmastorm_map.frag</map_shader>
+  <features>#pPlasma Storm (-50% energy and -50% stress dissipation)#0</features>
+  <radius>20000.000000</radius>
+  <stars>525</stars>
+  <interference>24.131000</interference>
+  <nebula volatility="0.000000">0.000000</nebula>
+ </general>
+ <pos x="42.000000" y="-256.000000"/>
+ <spobs>
+  <spob>Ivy I</spob>
+  <spob>Ivy II</spob>
+  <spob>Ivy III</spob>
+  <spob>Ivy IV</spob>
+  <spob>Ivy V</spob>
+  <spob>Ivy Primary Hub</spob>
+  <spob_virtual>Trade Lane</spob_virtual>
+ </spobs>
+ <jumps>
+  <jump target="Holly">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
+ </jumps>
+</ssys>

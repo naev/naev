@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Ivy I">
+ <pos x="0.000000" y="5545.000000"/>
+ <GFX>
+  <space>P02.webp</space>
+  <exterior>snow.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Trader</faction>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>P</class>
+  <population>1e+05</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Ivy I</description>
+  <bar> TODO </bar>
+ </general>
+ <tech>
+  <item>Cargo Trader Outfits</item>
+  <item>Crappy Core Systems</item>
+  <item>Engines Cargo</item>
+  <item>Hulls Cargo</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+ </tech>
+ <tags>
+  <tag></tag>
+ </tags>
+</spob>
