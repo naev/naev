@@ -8,34 +8,25 @@
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>50</base>
+  <bonus>20</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>H</class>
-  <population>29000</population>
+  <population>290000</population>
   <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
    <bar/>
    <missions/>
-   <outfits/>
-   <shipyard/>
   </services>
   <commodities/>
   <description>Boowoy was never a very respectable colony. It was settled in the hopes that the world could be terraformed into a nice M class residential planet, but persistent corruption and mismanagement caused the effort to go awry. Now, the planet's ecosystem has been terminally disrupted, causing most of the surface to erode into desert.</description>
   <bar>The locals don't like outsiders, but they keep the spaceport running because being cut off from the galaxy would be fatal for a world so dependent on imports. Nevertheless, the glances you get from the working staff and the local patrons makes it clear they'd prefer it if you weren't here for long, at all.</bar>
  </general>
- <tech>
-  <item>Hulls Low</item>
-  <item>Engines Low</item>
-  <item>Ion 1</item>
-  <item>Kinetic 1</item>
-  <item>Basic Outfits 2</item>
-  <item>Star Maps</item>
-  <item>Bulk Trade Ships</item>
-  <item>Hulls High</item>
- </tech>
+ <tags>
+  <tag>poor</tag>
+ </tags>
 </spob>

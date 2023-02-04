@@ -4,12 +4,12 @@
  <pos x="-6250.670883" y="4135.478736"/>
  <GFX>
   <space>M07.webp</space>
-  <exterior>forest.webp</exterior>
+  <exterior>city1.webp</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>90</base>
+  <bonus>45</bonus>
   <range>2</range>
  </presence>
  <general>
@@ -32,9 +32,10 @@
  <tech>
   <item>Ion 1</item>
   <item>Ion 2</item>
+  <item>Ion 3</item>
   <item>Basic Outfits 1</item>
-  <item>Star Maps</item>
   <item>Basic Outfits 2</item>
+  <item>Star Maps</item>
   <item>Heavy Weapons 1</item>
   <item>High Tech Upgrades 2</item>
   <item>Missiles 2</item>
@@ -42,7 +43,18 @@
   <item>Bulk Trade Ships</item>
   <item>Light Civilian Combat Ships</item>
   <item>Heavy Civilian Combat Ships</item>
+  <item>Sirius Ships Small</item>
+  <item>Sirius Ships Medium</item>
+  <item>Sirius Ships Large</item>
+  <item>Engines Medium</item>
+  <item>Hulls Medium</item>
+  <item>Systems Medium</item>
   <item>Systems High</item>
   <item>Sirius Elite Outfits</item>
  </tech>
+ <tags>
+  <tag>rich</tag>
+  <tag>government</tag>
+  <tag>urban</tag>
+ </tags>
 </spob>

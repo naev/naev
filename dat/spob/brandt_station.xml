@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Brandt Station">
  <lua>spob/lua/sirius_mil_restricted.lua</lua>
- <pos x="25493.195808" y="13169.297828"/>
+ <pos x="23097.095813" y="13116.051161"/>
  <GFX>
   <space>station-battlestation.webp</space>
   <exterior>station05.webp</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>1</class>
-  <population>1000</population>
+  <population>8000</population>
   <hide>2.000000</hide>
   <services>
    <land/>
@@ -22,11 +22,12 @@
    <bar/>
   </services>
   <commodities/>
-  <description>Serving as a local security checkpoint, Brandt Station sports two squadrons of light response ships. The station is mainly responsible for Niger, Lazuli and Anarbalis. The ships here, however, are not equipped to handle the stress of the border conflicts with the Dvaered at Eye of Night.</description>
+  <description>Serving as a local security checkpoint, Brandt Station sports two squadrons of light response ships. The station is mainly responsible for Niger, Lazuli, and Anarbalis. The ships here, however, are not equipped to handle the stress of the border conflicts with the Dvaered at Eye of Night.</description>
   <bar>Curiously, this spacedock bar seems to make no distinction between the three Sirian echelons in any way. However, the soldiers and sailors stationed on Brandt Station all know their place and treat each other accordingly.</bar>
  </general>
  <tags>
   <tag>restricted</tag>
   <tag>station</tag>
+  <tag>military</tag>
  </tags>
 </spob>
