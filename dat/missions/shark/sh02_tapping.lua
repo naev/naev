@@ -12,7 +12,7 @@
  <faction>Goddard</faction>
  <faction>Independent</faction>
  <faction>Soromid</faction>
- <faction>Traders Guild</faction>
+ <faction>Traders Society</faction>
  <faction>Za'lek</faction>
  <notes>
   <campaign>Nexus show their teeth</campaign>

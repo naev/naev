@@ -102,7 +102,7 @@ dat/factions/soromid.xml
 dat/factions/strangelove.xml
 dat/factions/thurion.xml
 dat/factions/trader.xml
-dat/factions/traders_guild.xml
+dat/factions/traders_society.xml
 dat/factions/wild_ones.xml
 dat/factions/zalek.xml
 dat/map_decorator/blackhole.xml
@@ -2780,7 +2780,7 @@ dat/factions/spawn/sirius.lua
 dat/factions/spawn/soromid.lua
 dat/factions/spawn/thurion.lua
 dat/factions/spawn/trader.lua
-dat/factions/spawn/traders_guild.lua
+dat/factions/spawn/traders_society.lua
 dat/factions/spawn/zalek.lua
 dat/factions/standing/collective.lua
 dat/factions/standing/dvaered.lua
@@ -2802,7 +2802,7 @@ dat/factions/standing/sirius.lua
 dat/factions/standing/soromid.lua
 dat/factions/standing/static.lua
 dat/factions/standing/thurion.lua
-dat/factions/standing/trader.lua
+dat/factions/standing/trader_society.lua
 dat/factions/standing/zalek.lua
 dat/gui/brushed.lua
 dat/gui/legacy.lua

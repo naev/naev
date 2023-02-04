@@ -152,7 +152,7 @@ local function updater090 ()
    pir.updateStandings() -- Update pirate/marauder
 
    -- Some previously known factions become unknown
-   faction.get("Traders Guild"):setKnown(false)
+   --faction.get("Traders Guild"):setKnown(false) -- Gone in 0.11.0, replaced with Traders Society
    if not var.peek("disc_collective") then
       faction.get("Collective"):setKnown(false)
    end

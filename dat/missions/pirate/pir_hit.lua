@@ -59,7 +59,7 @@ function create ()
       "Sirius",
       "Soromid",
       "Trader",
-      "Traders Guild",
+      "Traders Society",
       "Za'lek",
    }
 
@@ -247,7 +247,7 @@ function level_setup ()
    local level
    if mem.target_faction == "Independent" then
       level = 1
-   elseif mem.target_faction == "Trader" or mem.target_faction == "Traders Guild" then
+   elseif mem.target_faction == "Trader" or mem.target_faction == "Traders Society" then
       if num_pirates <= 100 then
          level = rnd.rnd( 1, 2 )
       else
@@ -514,7 +514,7 @@ function bounty_setup ()
          credits = 1e6 + rnd.sigma() * 100e3
          reputation = 8
       end
-   elseif mem.target_faction == "Traders Guild" then
+   elseif mem.target_faction == "Traders Society" then
       if mem.level == 1 then
          if rnd.rnd() < 0.5 then
             pship = "Gawain"

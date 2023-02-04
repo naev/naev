@@ -61,7 +61,7 @@ local function spawn_squad ()
    return pilots
 end
 
-local ftradersguild = faction.get("Traders Guild")
+local ftraderssociety = faction.get("Traders Society")
 -- @brief Creation hook.
 function create ( max )
    local weights = {}
@@ -70,5 +70,5 @@ function create ( max )
    weights[ spawn_patrol  ] = 100
    weights[ spawn_squad   ] = math.max(1, -80 + 0.80 * max)
 
-   return scom.init( ftradersguild, weights, max )
+   return scom.init( ftraderssociety, weights, max )
 end

@@ -105,7 +105,7 @@ function trader_death (hook_pilot, hook_attacker, _arg)
    local pp = player.pilot()
 
    if ( hook_pilot:faction() == faction.get("Trader")
-            or hook_pilot:faction() == faction.get("Traders Guild") )
+            or hook_pilot:faction() == faction.get("Traders Society") )
          and ( hook_attacker == pp
             or hook_attacker:leader() == pp ) then
       attack_finished()

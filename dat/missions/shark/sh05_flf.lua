@@ -13,7 +13,7 @@
  <faction>Independent</faction>
  <faction>Sirius</faction>
  <faction>Soromid</faction>
- <faction>Traders Guild</faction>
+ <faction>Traders Society</faction>
  <faction>Za'lek</faction>
  <cond>not diff.isApplied( "flf_dead" )</cond>
  <notes>

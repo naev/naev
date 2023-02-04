@@ -75,7 +75,7 @@ function accept()
    vn.scene()
    local m = vn.newCharacter( npc_name, {image=portrait.getFullPath(npc_portrait)} )
    m(_([[As you sit down, the merchant looks up at you with a panicked expression, "Ahh! What do you want? Can't you see I've enough on my plate as it is?" You tell the merchant to calm down and offer a drink. "Jeez, that's nice of you… Ha, maybe I can get a break today!"]]))
-   m(_([[You grab a couple of drinks and hand one to the slightly more relaxed looking merchant as they start to talk. "So, I work for the Traders Guild. I transport stuff for them and they pay me. Only problem is, I kinda strained my engines running from pirates on the way to the pick-up and now I'm realising that my engines just don't have the speed to get me back to beat the deadline. And to top it all off, I'm late on my bills as is; I can't afford new engines now! It's like I'm in the Sol nebula without a shield generator."]]))
+   m(_([[You grab a couple of drinks and hand one to the slightly more relaxed looking merchant as they start to talk. "So, I work for the Space Traders Society. I transport stuff for them and they pay me. Only problem is, I kinda strained my engines running from pirates on the way to the pick-up and now I'm realising that my engines just don't have the speed to get me back to beat the deadline. And to top it all off, I'm late on my bills as is; I can't afford new engines now! It's like I'm in the Sol nebula without a shield generator."]]))
    m(fmt.f(_([[You attempt to reassure the merchant by telling them that, surely, the company will cut them some slack. "Like hell they will! I've already been scolded by management for this exact same thing before! If I don't get this shipment of {tonnes} of {cargo} to {pnt}… I really need this job, you know? I don't know what to do…" The merchant pauses. "Unless… Say, you wouldn't be able to help me out here, would you? I'd just need you to take the cargo to {pnt} in the {sys} system. Could you? I'll give you the payment for the mission if you do it; it means a lot!"]]),
       {tonnes=fmt.tonnes(mem.cargo_size), cargo=_(mem.cargo), pnt=mem.dest_planet, sys=mem.dest_sys}))
    vn.menu{
@@ -152,18 +152,18 @@ function land()
    vn.transition()
 
    if mem.intime then
-      vn.na(_([[As you touch down at the spaceport you see the Traders Guild depot surrounded by a hustle and bustle. The cargo inspector looks at you with surprise and you explain to him what happened as the cargo is unloaded from your ship. "Wow, thanks for the help! You definitely saved us a ton of grief. Here's your payment. Maybe I can buy you a drink some time!" You laugh and part ways.]]))
+      vn.na(_([[As you touch down at the spaceport you see the Traders Society depot surrounded by a hustle and bustle. The cargo inspector looks at you with surprise and you explain to him what happened as the cargo is unloaded from your ship. "Wow, thanks for the help! You definitely saved us a ton of grief. Here's your payment. Maybe I can buy you a drink some time!" You laugh and part ways.]]))
       vn.sfxVictory()
       vn.func( function ()
-         faction.modPlayerSingle("Traders Guild", 1)
+         faction.modPlayerSingle("Traders Society", 1)
          player.pay(mem.payment)
       end )
       vn.na(fmt.reward(mem.payment))
    else
-      vn.na(_([[Landing at the spaceport you see the Traders Guild depot surrounded by a fraught hum of activity. The cargo inspector looks at you with surprise and then anger, "What the hell is this?! This shipment was supposed to be here ages ago! We've been shifting stuff around to make up for it and then you come waltzing in here… where the hell is the employee who was supposed to deliver this stuff?" A group of workers rushes along with you and the inspector and you as you try to explain what happened. "That fool has been causing us all sorts of problems, and passing on the job to someone as incompetent as you is the last straw! I swear!"]]))
+      vn.na(_([[Landing at the spaceport you see the Traders Society depot surrounded by a fraught hum of activity. The cargo inspector looks at you with surprise and then anger, "What the hell is this?! This shipment was supposed to be here ages ago! We've been shifting stuff around to make up for it and then you come waltzing in here… where the hell is the employee who was supposed to deliver this stuff?" A group of workers rushes along with you and the inspector and you as you try to explain what happened. "That fool has been causing us all sorts of problems, and passing on the job to someone as incompetent as you is the last straw! I swear!"]]))
       vn.na(_([[You wait to one side as the cargo is hauled off your ship at breakneck speed and wonder if you should have just dumped the stuff in space. Just as the last of the cargo is taken off your ship, the inspector, who has clearly cooled off a bit, comes up to you and says "Look, I know you were trying to do us a favour but next time don't bother if you can't make it on time. I'm glad you didn't just dump it all into space like some people have done, but I can't pay you for this." He shakes his head and walks away. "That pilot is so fired…"]]))
       vn.func( function ()
-         faction.modPlayerSingle("Traders Guild", -1)
+         faction.modPlayerSingle("Traders Society", -1)
       end )
    end
 
