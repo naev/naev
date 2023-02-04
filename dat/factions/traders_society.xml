@@ -4,6 +4,7 @@
  <logo>trader</logo>
  <longname>Space Traders Society</longname>
  <player>3</player>
+ <colour>blue</colour>
  <known/>
  <spawn>traders_society</spawn>
  <standing>trader_society</standing>
