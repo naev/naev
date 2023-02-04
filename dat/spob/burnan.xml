@@ -8,8 +8,8 @@
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>90</base>
-  <bonus>45</bonus>
+  <base>90.000000</base>
+  <bonus>45.000000</bonus>
   <range>2</range>
  </presence>
  <general>
