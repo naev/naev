@@ -57,8 +57,6 @@ local first_spob, first_sys
 local last_spob, last_sys = spob.getS("Maanen's Moon")
 
 function create ()
-   misn.finish(false)
-
    -- Get closest refugee planet
    local candidates = lmisn.getSpobAtDistance( nil, 0, math.huge, nil, false, function( s )
       return s:tags().refugee
@@ -83,7 +81,7 @@ function accept ()
 
    vn.clear()
    vn.scene()
-   local lucas = lcs.vn_lucas()
+   local lucas = vn.newCharacter( lcs.vn_lucas() )
    vn.transition( lcs.lucas.transition )
    vn.na(_([[You approach the stressed out individual gnawing at their nails at the bar.]]))
    lucas(_([["Say, you wouldn't be able to help me find my family? I'll pay, I promise!"]]))
@@ -196,7 +194,7 @@ function land ()
    elseif mem.stage==2 and spb==mem.return_spob then
       vn.clear()
       vn.scene()
-      local lucas = lcs.vn_lucas()
+      local lucas = vn.newCharacter( lcs.vn_lucas() )
       vn.transition( lcs.lucas. transition )
       vn.na(_([[You land and quickly go find Lucas, who then follows you back to your ship.]]))
       lucas(_([[When Lucas sees the old man, his eyes tear up and he kneels to take a closer look.
