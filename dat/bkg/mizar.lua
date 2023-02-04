@@ -20,8 +20,8 @@ function background ()
 #include "lib/cellular.glsl"
 
 const int ITERATIONS = 3;
-const float SCALE = 1.0/300.0;
-const float TIME_SCALE = 1.0/50.0;
+const float SCALE = 1.0/250.0;
+const float TIME_SCALE = 1.0/30.0;
 const float nonuniformity = %f;
 
 uniform float u_time = 0.0;
@@ -65,9 +65,10 @@ vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
 #include "lib/cellular.glsl"
 
 const int ITERATIONS = 2;
-const float SCALE = 1.0/600.0;
-const float TIME_SCALE = 1.0/50.0;
-const float VISIBILITY = 900.0;
+const float SCALE = 1.0/500.0;
+const float TIME_SCALE = 1.0/30.0;
+const float VISIBILITY_INNER = 600.0;
+const float VISIBILITY_OUTTER = 1700.0;
 const float nonuniformity = %f;
 
 uniform float u_time = 0.0;
@@ -75,6 +76,10 @@ uniform vec3 u_camera;
 
 vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
+   float dist = length( (texture_coords-0.5)*love_ScreenSize.xy * u_camera.z );
+   if (dist > VISIBILITY_OUTTER)
+      return colour;
+
    vec3 uv = 100.0 * vec3( %f, %f, %f );
 
    /* Calculate coordinates */
@@ -92,12 +97,11 @@ vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
       colout = colour * (0.1+0.9*f);
    }
 
-   float dist = length( (texture_coords-0.5)*love_ScreenSize.xy * u_camera.z );
    if (nonuniformity < 1.0) {
       colout = mix( colour, colout, nonuniformity );
    }
-   colout = mix( vec4(0.0), colout, smoothstep( 0.0, 2.0*VISIBILITY, dist ) );
-   colout.a *= smoothstep( 0.0, VISIBILITY, dist );
+   colout = mix( colout, colour, smoothstep( VISIBILITY_INNER, VISIBILITY_OUTTER, dist ) );
+   colout.a *= smoothstep( 0.0, VISIBILITY_OUTTER, dist );
    return colout;
 }
 ]], nonuninformity, rnd.rnd(), rnd.rnd(), rnd.rnd() )
