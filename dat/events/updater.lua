@@ -14,6 +14,10 @@ local vn  = require 'vn'
 local fmt = require 'format'
 local luatk = require "luatk"
 
+-- Runs on saves older than 0.11.0
+local function updater0110( _did0100, _did090 )
+end
+
 -- Runs on saves older than 0.10.0
 local function updater0100( did090 )
    -- "nelly_met" variable wasn't used in older versions
@@ -175,7 +179,7 @@ function create ()
    end
 
    -- Run on saves older than 0.9.0
-   local did090
+   local did090, did0100
    if not save_version or naev.versionTest( save_version, "0.9.0" ) < 0 then
       updater090()
       didupdate = true
@@ -184,6 +188,12 @@ function create ()
    -- Run on saves older than 0.10.0
    if naev.versionTest( save_version, "0.10.0" ) < 0 then
       updater0100( did090 )
+      didupdate = true
+      did0100 = true
+   end
+   -- Run on saves older than 0.10.0
+   if naev.versionTest( save_version, "0.11.0-alpha.1") < 0 then
+      updater0110( did0100, did090 )
       didupdate = true
    end
 
