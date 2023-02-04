@@ -16,7 +16,7 @@
  </spobs>
  <jumps>
   <jump target="Churchill">
-   <pos x="-12712.101440" y="-29431.191500"/>
+   <pos x="-9902.466534" y="-15405.908775"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Gilligan's Tomb">
@@ -24,7 +24,7 @@
    <hide>0.000000</hide>
   </jump>
   <jump target="Herakin">
-   <pos x="25532.127636" y="-19674.201177"/>
+   <pos x="17781.185034" y="-14440.658736"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Palovi">
