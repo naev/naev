@@ -13,7 +13,7 @@
  </presence>
  <general>
   <class>0</class>
-  <population>5000</population>
+  <population>50000</population>
   <hide>2.000000</hide>
   <services>
    <land/>
@@ -35,6 +35,8 @@
   <item>Basic Outfits 2</item>
   <item>Star Maps</item>
   <item>Missiles 2</item>
+  <item>Ion 1</item>
+  <item>Ion 2</item>
  </tech>
  <tags>
   <tag>station</tag>

@@ -12,7 +12,7 @@
   <range>2</range>
  </presence>
  <general>
-  <class>H</class>
+  <class>M</class>
   <population>3e+06</population>
   <hide>1.000000</hide>
   <services>
@@ -33,4 +33,7 @@
   <item>Basic Outfits 2</item>
   <item>Low Tech Upgrades</item>
  </tech>
+ <tags>
+  <tag>old</tag>
+ </tags>
 </spob>

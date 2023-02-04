@@ -8,13 +8,13 @@
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>120</base>
+  <bonus>60</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>1</class>
-  <population>10000</population>
+  <population>100000</population>
   <hide>2.000000</hide>
   <services>
    <land/>
@@ -23,7 +23,7 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Fort Sirius is the primary military hub of the Sirius army. It serves as the gatekeeper for Aesir, making sure no threats will ever reach Mutris. The station has hundreds of hangars in all sizes, allowing a full contingent to be stationed and ready at all times.</description>
+  <description>Fort Sirius is the primary military hub of the Sirius army. It serves as the gatekeeper for Aesir, making sure no threats will ever reach Mutris. The station has hundreds of hangars in all sizes, allowing a full contingent to be stationed and ready at all times. Large meditation chambers also ensure that the psychic powers of the military are always ready to be deployed.</description>
  </general>
  <tech>
   <item>Systems Low</item>
@@ -43,5 +43,6 @@
  <tags>
   <tag>restricted</tag>
   <tag>station</tag>
+  <tag>military</tag>
  </tags>
 </spob>

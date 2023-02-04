@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Inios Station">
+ <lua>spob/lua/sirius_mil_restricted.lua</lua>
  <pos x="16510.246913" y="862.507713"/>
  <GFX>
   <space>003.webp</space>
@@ -13,7 +14,7 @@
  </presence>
  <general>
   <class>0</class>
-  <population>5000</population>
+  <population>12000</population>
   <hide>2.000000</hide>
   <services>
    <land/>
@@ -39,5 +40,6 @@
  </tech>
  <tags>
   <tag>station</tag>
+  <tag>military</tag>
  </tags>
 </spob>

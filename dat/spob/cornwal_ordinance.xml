@@ -13,8 +13,8 @@
  </presence>
  <general>
   <class>0</class>
-  <population>5000</population>
-  <hide>1.000000</hide>
+  <population>50000</population>
+  <hide>0.800000</hide>
   <services>
    <land/>
    <refuel/>
@@ -33,8 +33,11 @@
   <item>Missiles 2</item>
   <item>Ion 1</item>
   <item>Ion 2</item>
+  <item>Ion 3</item>
  </tech>
  <tags>
   <tag>station</tag>
+  <tag>industrial</tag>
+  <tag>trade</tag>
  </tags>
 </spob>

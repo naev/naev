@@ -8,13 +8,13 @@
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>200.000000</base>
-  <bonus>100.000000</bonus>
+  <base>100.000000</base>
+  <bonus>50.000000</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>2</class>
-  <population>15000</population>
+  <population>150000</population>
   <hide>3.000000</hide>
   <services>
    <land/>
@@ -36,7 +36,6 @@
   <item>Ion 1</item>
   <item>Ion 2</item>
   <item>Ion 3</item>
-  <item>Beam 1</item>
   <item>Sirius Military Outfits</item>
   <item>Sirius Military Ships</item>
   <item>High Tech Upgrades 2</item>
