@@ -32,9 +32,9 @@ void main (void)
    /* Create the noise */
    float f;
    f  = (1.0-cellular( uv     ).x) * 0.625;
-   f += (1.0-cellular( uv*2.0 ).x) * 0.375;
+   f += (1.0-cellular( uv*2.0 ).x) * 0.250;
 
    const vec4 colour = vec4( 200.0/255.0, 32.0/255.0, 130.0/255.0, 1.0 );
-   colour_out =  mix( vec4(0.0), colour, f );
+   colour_out =  mix( vec4(0.0), colour, f+0.125 );
    colour_out *= a * alpha;
 }
