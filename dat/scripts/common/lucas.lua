@@ -3,8 +3,8 @@ local vn = require "vn"
 local lucas = {}
 
 lucas.lucas = {
-   portrait = "zach.webp",
-   image = "zach.webp",
+   portrait = "lucas.webp",
+   image = "lucas.webp",
    name = _("Lucas"),
    colour = nil,
    transition = "hexagon",
