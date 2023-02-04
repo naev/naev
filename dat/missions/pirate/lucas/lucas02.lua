@@ -49,15 +49,13 @@ local reward = 600e3
 -- Mission stages
 -- 0: just started
 -- 1: talked to pirate
--- 2: looted / took from pirate
--- 3: made it to clansworld
+-- 2: looted / took from pirate and found jump (or already known)
 mem.stage = 0
 
 local first_spob, first_sys = spob.getS("Shangris Station")
 local last_spob, last_sys = spob.getS("Qorellia")
 
 function create ()
-   misn.finish(false)
    misn.setNPC( lcs.lucas.name, lcs.lucas.portrait, _([[Lucas looks more worn out than before.]]) )
 end
 
@@ -95,7 +93,7 @@ function accept ()
 
       vn.label("cont01")
       lucas(fmt.f(_([[It takes a while for them to notice your presence, but when they do, they give a half-hearted grin.
-"Hey {playername}."]])
+"Hey {playername}."]]),
          {playername=player.name()}))
       lucas(_([["Aw, screw it. I messed up. I put my faith in the system and got rammed over. They teach us like trash, useless garbage."]]))
       lucas(_([["I thought we was at fault, as if we had done something wrong and had to be punished. However, it was not we who did the wronging."]]))
@@ -179,6 +177,7 @@ The lean in and whisper to you.
 
    -- If known we skip most of the mission
    if last_spob:known() then
+      mem.stage = 2
       discover_spob()
       return
    end
@@ -216,7 +215,7 @@ function land ()
       vn.na(fmt.reward(reward))
       vn.na(_([[Lucas seems euphoric to get away from the troubles of his past and begin anew. The question that remains unanswered is whether pirate society is truly more free than other societies, or is the problem at core human nature itself.]]))
       vn.na(_([[You wish him the best and he tells you to look for him next time you are near Raven space.]]))
-      vn.transition( lcs.lucas.transition )
+      vn.done( lcs.lucas.transition )
 
       vn.run()
 
