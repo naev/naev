@@ -13,15 +13,15 @@
   <spob_virtual>Trade Lane</spob_virtual>
  </spobs>
  <jumps>
+  <jump target="Holly">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
   <jump target="Majesteka">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Overture">
-   <autopos/>
-   <hide>0.000000</hide>
-  </jump>
-  <jump target="Provectus Nova">
    <autopos/>
    <hide>0.000000</hide>
   </jump>

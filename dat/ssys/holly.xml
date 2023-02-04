@@ -5,14 +5,28 @@
   <stars>512</stars>
   <interference>21.314000</interference>
  </general>
- <pos x="308.861883" y="163.295756"/>
+ <pos x="-84.090607" y="-435.376163"/>
  <spobs>
   <spob>Holly I</spob>
   <spob>Holly II</spob>
   <spob>Holly III</spob>
+  <spob>Mining Vrata Guildhouse</spob>
   <spob_virtual>Trade Lane</spob_virtual>
  </spobs>
- <jumps/>
+ <jumps>
+  <jump target="Daan">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
+  <jump target="Provectus Nova">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
+  <jump target="Waterhole">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
+ </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-standard</group>

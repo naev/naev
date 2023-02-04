@@ -5,21 +5,21 @@
   <stars>200</stars>
   <interference>0.000000</interference>
  </general>
- <pos x="-26.590502" y="-421.804482"/>
+ <pos x="-16.868280" y="-434.998926"/>
  <spobs>
   <spob>Efferey</spob>
  </spobs>
  <jumps>
+  <jump target="Daan">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Frolina">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Pas">
-   <autopos/>
-   <hidden/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Provectus Nova">
    <autopos/>
    <hidden/>
    <hide>1.000000</hide>

@@ -6,31 +6,22 @@
   <stars>400</stars>
   <interference>0.000000</interference>
  </general>
- <pos x="-94.289231" y="-423.525617"/>
+ <pos x="-153.317009" y="-423.525617"/>
  <spobs>
   <spob>Provectus Nova I</spob>
   <spob>Provectus Nova Ia</spob>
   <spob_virtual>Trade Lane (Za'lek)</spob_virtual>
  </spobs>
  <jumps>
-  <jump target="Daan">
+  <jump target="Holly">
    <autopos/>
    <hide>0.000000</hide>
-  </jump>
-  <jump target="Effetey">
-   <autopos/>
-   <hidden/>
-   <hide>1.000000</hide>
   </jump>
   <jump target="Limbo">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Pultatis">
-   <autopos/>
-   <hide>0.000000</hide>
-  </jump>
-  <jump target="Waterhole">
    <autopos/>
    <hide>0.000000</hide>
   </jump>

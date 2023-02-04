@@ -14,11 +14,16 @@
    <autopos/>
    <hide>0.000000</hide>
   </jump>
+  <jump target="Effetey">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Gammacron">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Provectus Nova">
+  <jump target="Holly">
    <autopos/>
    <hide>0.000000</hide>
   </jump>
