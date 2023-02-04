@@ -15,7 +15,7 @@
  <general>
   <class>0</class>
   <population>10000</population>
-  <hide>2.000000</hide>
+  <hide>0.800000</hide>
   <services>
    <land/>
    <refuel/>
@@ -28,5 +28,6 @@
  <tags>
   <tag>restricted</tag>
   <tag>station</tag>
+  <tag>military</tag>
  </tags>
 </spob>

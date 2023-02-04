@@ -14,7 +14,7 @@
  </presence>
  <general>
   <class>M</class>
-  <population>3e+09</population>
+  <population>7e+08</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -39,4 +39,7 @@
   <item>Basic Outfits 2</item>
   <item>Star Maps</item>
  </tech>
+ <tags>
+  <tag>immigration</tag>
+ </tags>
 </spob>

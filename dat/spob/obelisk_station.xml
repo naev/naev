@@ -8,14 +8,14 @@
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>150.000000</base>
+  <base>100.000000</base>
   <bonus>50.000000</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>0</class>
-  <population>1000</population>
-  <hide>2.000000</hide>
+  <population>10000</population>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -32,5 +32,6 @@
  <tags>
   <tag>restricted</tag>
   <tag>station</tag>
+  <tag>military</tag>
  </tags>
 </spob>

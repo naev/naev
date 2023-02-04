@@ -3,7 +3,7 @@
  <pos x="3130.903994" y="7507.779985"/>
  <GFX>
   <space>P02.webp</space>
-  <exterior>forest.webp</exterior>
+  <exterior>city2.webp</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
@@ -13,7 +13,7 @@
  </presence>
  <general>
   <class>P</class>
-  <population>1e+09</population>
+  <population>1e+07</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -25,17 +25,21 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Samell is a predominantly industrial world. Heavy industry is often not welcome on densely populated M class planets, so it tends to settle on planets with hostile environments. Samell is no exception to that trend.</description>
+  <description>Samell is a predominantly industrial world. Heavy industry is often not welcome on densely populated M class planets, so it tends to settle on planets with hostile environments. Samell is no exception to that trend. The low temperatures are favourable fabrication processes that require high precision and calibration, allowing them to produce high-end components with relative ease.</description>
   <bar>Whoever designed the spaceport placed the spaceport bar at the outside, adding windows so visitors could look out over the frozen landscape. He didn't realize that the windows would soon become frozen over themselves, making them completely useless.</bar>
  </general>
  <tech>
   <item>Engines Cargo</item>
-  <item>Systems Medium</item>
-  <item>Engines Low</item>
+  <item>Systems Elite</item>
+  <item>Engines Elite</item>
+  <item>Systems Elite</item>
+  <item>Ion 3</item>
   <item>Basic Outfits 1</item>
   <item>Star Maps</item>
-  <item>Missiles 1</item>
   <item>Basic Civilian Ships</item>
   <item>Bulk Trade Ships</item>
  </tech>
+ <tags>
+  <tag>industrial</tag>
+ </tags>
 </spob>

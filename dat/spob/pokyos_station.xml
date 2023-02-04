@@ -13,9 +13,9 @@
   <range>2</range>
  </presence>
  <general>
-  <class>0</class>
-  <population>600</population>
-  <hide>2.000000</hide>
+  <class>1</class>
+  <population>6000</population>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -45,5 +45,6 @@
  <tags>
   <tag>station</tag>
   <tag>restricted</tag>
+  <tag>military</tag>
  </tags>
 </spob>

@@ -13,8 +13,8 @@
  </presence>
  <general>
   <class>0</class>
-  <population>2000</population>
-  <hide>2.000000</hide>
+  <population>9000</population>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -28,6 +28,8 @@
  </general>
  <tech>
   <item>Light Civilian Combat Ships</item>
+  <item>Sirius Ships Small</item>
+  <item>Sirius Ships Medium</item>
  </tech>
  <tags>
   <tag>station</tag>

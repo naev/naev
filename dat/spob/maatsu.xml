@@ -13,7 +13,7 @@
  </presence>
  <general>
   <class>L</class>
-  <population>2e+09</population>
+  <population>2e+08</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -30,7 +30,7 @@
  <tech>
   <item>Hulls Low</item>
   <item>Ion 1</item>
-  <item>Laser 1</item>
+  <item>Ion 2</item>
   <item>Basic Outfits 1</item>
   <item>Star Maps</item>
   <item>Missiles 1</item>
@@ -38,4 +38,8 @@
   <item>Low Tech Upgrades</item>
   <item>Hulls High</item>
  </tech>
+ <tags>
+  <tag>rural</tag>
+  <tag>tourism</tag>
+ </tags>
 </spob>
