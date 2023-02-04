@@ -3,7 +3,7 @@
  <general>
   <radius>15750.000000</radius>
   <stars>400</stars>
-  <interference>5.882350</interference>
+  <interference>13.235288</interference>
   <nebula volatility="0.000000" hue="250.000000">150.000000</nebula>
  </general>
  <pos x="600.339923" y="441.950048"/>

@@ -5,7 +5,7 @@
   <map_shader>pso_map.frag</map_shader>
   <radius>15000.000000</radius>
   <stars>0</stars>
-  <interference>11.000000</interference>
+  <interference>83.000000</interference>
  </general>
  <pos x="312.669925" y="-1109.389445"/>
  <spobs>

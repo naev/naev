@@ -6,7 +6,7 @@
   <features>#bStellar Wind (1 fuel regen)#0</features>
   <radius>28000.000000</radius>
   <stars>100</stars>
-  <interference>33.333300</interference>
+  <interference>50.000000</interference>
  </general>
  <pos x="43.422723" y="591.574002"/>
  <spobs>

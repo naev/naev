@@ -6,7 +6,7 @@
   <features>#rHaze (-50% Shield and Shield Regen)#0</features>
   <radius>23000.000000</radius>
   <stars>400</stars>
-  <interference>15.000000</interference>
+  <interference>33.750000</interference>
  </general>
  <pos x="324.251053" y="1051.556400"/>
  <spobs>

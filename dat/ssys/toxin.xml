@@ -6,7 +6,7 @@
   <features>#pPlasma Storm (-50% energy and -50% stress dissipation)#0</features>
   <radius>10000.000000</radius>
   <stars>400</stars>
-  <interference>25.000000</interference>
+  <interference>56.250000</interference>
  </general>
  <pos x="1504.018489" y="-400.138009"/>
  <spobs/>
