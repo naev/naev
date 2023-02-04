@@ -83,6 +83,7 @@ function accept ()
    vn.scene()
    local lucas = vn.newCharacter( lcs.vn_lucas() )
    vn.transition( lcs.lucas.transition )
+
    vn.na(_([[You approach the stressed out individual gnawing at their nails at the bar.]]))
    lucas(_([["Say, you wouldn't be able to help me find my family? I'll pay, I promise!"]]))
    vn.menu{
@@ -137,6 +138,7 @@ function land ()
    if mem.stage==0 and spb==first_spob then
       vn.clear()
       vn.scene()
+      vn.transition()
 
       vn.na(_([[You land and begin to ask around to see if there are any traces of Lucas family.]]))
       vn.na(fmt.f(_([[As you converse with many of the refugees at {spb}, you begin to appreciate the magnitude of the Incident calamity. Many refugees are missing or searching for family members, with deep psychological scars that are unable to heal.]]),
@@ -155,12 +157,13 @@ function land ()
          fmt.f(_([[Return to {pnt} ({sys} system)]]),
             {pnt=mem.return_spob, sys=mem.return_sys}),
       })
-      mem.markerMove( mem.mrk, last_spob )
+      misn.markerMove( mem.mrk, last_spob )
       mem.stage = 1
 
    elseif mem.stage==1 and spb==last_spob then
       vn.clear()
       vn.scene()
+      vn.transition()
 
       vn.na(fmt.f(_([[You manage to land on {spb}. Although things are quite quiet and clean around the spaceport, it all takes a turn for the worse once you pass the checkpoints and head into the slums towards the location you were given.]]),
          {spb=spb}))
@@ -170,7 +173,7 @@ function land ()
       vn.func( function ()
          if mg.completed() then
             misn.osdActive(2)
-            mem.markerMove( mem.mrk, mem.return_spob )
+            misn.markerMove( mem.mrk, mem.return_spob )
             mem.stage=2
             local c = commodity.new( N_("Lucas' Father"), N_("A very weakened old man.") )
             mem.cargo_person = misn.cargoAdd( c, 0 )
@@ -196,6 +199,7 @@ function land ()
       vn.scene()
       local lucas = vn.newCharacter( lcs.vn_lucas() )
       vn.transition( lcs.lucas. transition )
+
       vn.na(_([[You land and quickly go find Lucas, who then follows you back to your ship.]]))
       lucas(_([[When Lucas sees the old man, his eyes tear up and he kneels to take a closer look.
 "Dear old man, what have they done to you?"]]))
