@@ -3,7 +3,7 @@
    * Make it explicit when all the escorts have jumped or landed
    * diy-nerds: improved reward
 
-* 0.10.4 (unreleased)
+* 0.10.4
    * Fixed crashes related to multiple effects being active at once
    * Fixed multiple mission_done hooks not passing parameter correctly
    * Fixed plugin strings not being initialized with mismatched saves
