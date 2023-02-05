@@ -5,8 +5,10 @@
   <stars>500</stars>
   <interference>0.000000</interference>
  </general>
- <pos x="743.957797" y="-734.460241"/>
- <spobs/>
+ <pos x="722.256408" y="-743.703425"/>
+ <spobs>
+  <spob_virtual>Miner Local</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Haleb">
    <autopos/>
@@ -17,4 +19,11 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeB-rich</group>
+   <radius>3750.000000</radius>
+   <pos x="-1391.194826" y="-14574.421987"/>
+  </asteroid>
+ </asteroids>
 </ssys>
