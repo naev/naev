@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Fernando Station">
+<spob name="Fort Fernando">
  <lua>spob/lua/dvaered_mil_restricted.lua</lua>
  <pos x="12376.160912" y="625.892062"/>
  <GFX>
@@ -41,5 +41,6 @@
  <tags>
   <tag>restricted</tag>
   <tag>station</tag>
+  <tag>military</tag>
  </tags>
 </spob>

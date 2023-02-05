@@ -814,7 +814,7 @@ dat/spob/druss_ii.xml
 dat/spob/druss_iia.xml
 dat/spob/druss_iii.xml
 dat/spob/dun_hill.xml
-dat/spob/dundrop_station.xml
+dat/spob/dundrop_monastery.xml
 dat/spob/dunmer.xml
 dat/spob/duran_shipyard.xml
 dat/spob/durea.xml
@@ -831,7 +831,7 @@ dat/spob/dvaer_prime.xml
 dat/spob/dvaered_high_command.xml
 dat/spob/dvnn_central.xml
 dat/spob/ebenezer.xml
-dat/spob/eclipse_station.xml
+dat/spob/eclipse_citadel.xml
 dat/spob/edergast.xml
 dat/spob/edorn.xml
 dat/spob/eenerim.xml
@@ -861,7 +861,7 @@ dat/spob/ember.xml
 dat/spob/emperors_fist.xml
 dat/spob/emperors_wrath.xml
 dat/spob/eneguoz_ii.xml
-dat/spob/erebus_terminal.xml
+dat/spob/erebus_enclave.xml
 dat/spob/eridani_ii.xml
 dat/spob/eridani_iii.xml
 dat/spob/eryla.xml
@@ -880,9 +880,9 @@ dat/spob/excelcior.xml
 dat/spob/eye_of_night_i.xml
 dat/spob/eye_of_night_ii.xml
 dat/spob/eye_of_night_iii.xml
-dat/spob/facett_outpost.xml
+dat/spob/facett_nest.xml
 dat/spob/fae.xml
-dat/spob/fairfax_station.xml
+dat/spob/fairfax_nest.xml
 dat/spob/falas.xml
 dat/spob/fathers_pride_i.xml
 dat/spob/fathers_pride_ii.xml
@@ -890,7 +890,6 @@ dat/spob/fathers_pride_iii.xml
 dat/spob/faust_iii.xml
 dat/spob/faust_vi.xml
 dat/spob/fd24.xml
-dat/spob/fernando_station.xml
 dat/spob/ferrungir.xml
 dat/spob/feye_i.xml
 dat/spob/feye_iv.xml
@@ -899,10 +898,11 @@ dat/spob/fidelis_iv.xml
 dat/spob/finn.xml
 dat/spob/flach.xml
 dat/spob/folevo.xml
-dat/spob/forbes_station.xml
+dat/spob/forbes_monastary.xml
 dat/spob/forge.xml
 dat/spob/fort_allan.xml
 dat/spob/fort_dumas.xml
+dat/spob/fort_fernando.xml
 dat/spob/fort_sarrii.xml
 dat/spob/fort_sirius.xml
 dat/spob/fort_voproid.xml

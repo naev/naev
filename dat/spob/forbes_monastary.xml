@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Forbes Station">
+<spob name="Forbes Monastary">
  <lua>spob/lua/sirius_mil_restricted.lua</lua>
  <pos x="-941.430646" y="1707.591015"/>
  <GFX>
@@ -14,7 +14,7 @@
  </presence>
  <general>
   <class>1</class>
-  <population>6000</population>
+  <population>16000</population>
   <hide>2.000000</hide>
   <services>
    <land/>

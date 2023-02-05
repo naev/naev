@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Erebus Terminal">
+<spob name="Erebus Enclave">
  <lua>spob/lua/empire_mil_restricted.lua</lua>
  <pos x="-6229.859988" y="5942.327988"/>
  <GFX>
