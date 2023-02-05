@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Westeros Station">
+<spob name="Westeros Nest">
  <pos x="-21014.528804" y="1360.437185"/>
  <GFX>
   <space>station-fleetbase2.webp</space>
@@ -7,8 +7,8 @@
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>33.333333</base>
-  <bonus>16.666667</bonus>
+  <base>33.333300</base>
+  <bonus>16.666700</bonus>
   <range>2</range>
  </presence>
  <general>

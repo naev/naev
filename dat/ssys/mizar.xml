@@ -13,11 +13,11 @@
   <spob>Mizar III</spob>
   <spob>Mizar IV</spob>
   <spob>Mizar VI</spob>
-  <spob>Westeros Station</spob>
+  <spob>Westeros Nest</spob>
  </spobs>
  <jumps>
   <jump target="Hatter">
-   <pos x="-7960.892232" y="-26332.526438"/>
+   <pos x="-7497.160623" y="-20966.489252"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Possum">

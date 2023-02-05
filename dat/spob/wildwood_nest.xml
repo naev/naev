@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Wildwood Station">
+<spob name="Wildwood Nest">
  <pos x="-7343.434885" y="-3353.838054"/>
  <GFX>
   <space>station-commerce3.webp</space>
@@ -13,7 +13,7 @@
  </presence>
  <general>
   <class>1</class>
-  <population>130</population>
+  <population>1300</population>
   <hide>2.000000</hide>
   <services>
    <land/>

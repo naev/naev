@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Slofeldt">
+<spob name="Slofeldt Museum">
  <lua>spob/lua/highclass.lua</lua>
  <pos x="4984.101694" y="5176.465216"/>
  <GFX>
@@ -8,8 +8,8 @@
  </GFX>
  <presence>
   <faction>Independent</faction>
-  <base>16.666667</base>
-  <bonus>8.333333</bonus>
+  <base>16.666700</base>
+  <bonus>8.333330</bonus>
   <range>1</range>
  </presence>
  <general>

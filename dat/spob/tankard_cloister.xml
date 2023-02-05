@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Tankard Station">
- <lua>spob/lua/sirius_mil_restricted.lua</lua>
+<spob name="Tankard Cloister">
  <pos x="-20551.681519" y="12636.184692"/>
  <GFX>
   <space>station-commerce3.webp</space>
@@ -8,8 +7,8 @@
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>33.333333</base>
-  <bonus>16.666667</bonus>
+  <base>33.333300</base>
+  <bonus>16.666700</bonus>
   <range>1</range>
  </presence>
  <general>
@@ -38,8 +37,8 @@
   <item>Missiles 1</item>
  </tech>
  <tags>
-  <tag>restricted</tag>
   <tag>station</tag>
   <tag>trade</tag>
+  <tag>military</tag>
  </tags>
 </spob>

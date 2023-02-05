@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Stalwart Station">
+<spob name="Stalwart Citadel">
  <lua>spob/lua/dvaered_mil_restricted.lua</lua>
  <pos x="24.688611" y="59.531501"/>
  <GFX>
-  <space>station-fleetbase.webp</space>
+  <space>station-dvaered1.webp</space>
   <exterior>station04.webp</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>2</range>
  </presence>
  <general>
-  <class>2</class>
+  <class>1</class>
   <population>12000</population>
   <hide>2.000000</hide>
   <services>
@@ -41,5 +41,6 @@
  <tags>
   <tag>restricted</tag>
   <tag>station</tag>
+  <tag>military</tag>
  </tags>
 </spob>

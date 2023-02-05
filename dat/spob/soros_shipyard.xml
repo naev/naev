@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Soros Station">
+<spob name="Soros Shipyard">
  <pos x="-11638.001887" y="-5124.991657"/>
  <GFX>
   <space>station-shipyard3.webp</space>
@@ -31,7 +31,7 @@
   <item>Basic Trade Ships</item>
  </tech>
  <tags>
-  <tag>industrial</tag>
   <tag>station</tag>
+  <tag>shipbuilding</tag>
  </tags>
 </spob>

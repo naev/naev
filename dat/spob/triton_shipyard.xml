@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Triton Station">
+<spob name="Triton Shipyard">
  <pos x="-589.969301" y="15169.574360"/>
  <GFX>
   <space>station-shipyard.webp</space>
@@ -7,8 +7,8 @@
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>33.333333</base>
-  <bonus>16.666667</bonus>
+  <base>33.333300</base>
+  <bonus>16.666700</bonus>
   <range>1</range>
  </presence>
  <general>
@@ -32,7 +32,7 @@
   <item>Empire Ships Small</item>
  </tech>
  <tags>
-  <tag>industrial</tag>
   <tag>station</tag>
+  <tag>shipbuilding</tag>
  </tags>
 </spob>

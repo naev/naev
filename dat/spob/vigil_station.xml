@@ -8,13 +8,13 @@
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>50.000000</base>
+  <bonus>25.000000</bonus>
   <range>3</range>
  </presence>
  <general>
   <class>1</class>
-  <population>5000</population>
+  <population>500</population>
   <hide>2.000000</hide>
   <services>
    <land/>
