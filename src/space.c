@@ -428,9 +428,12 @@ int spob_rmService( Spob *p, int service )
  */
 int spob_rename( Spob *p, char *newname )
 {
-   for (int i=0; i<array_size(spobname_stack); i++)
-      if (spobname_stack[i] == p->name)
+   for (int i=0; i<array_size(spobname_stack); i++) {
+      if (strcmp(spobname_stack[i], p->name)==0) {
          spobname_stack[i] = newname;
+         break;
+      }
+   }
    free( p->name );
    p->name = newname;
    return 0;
