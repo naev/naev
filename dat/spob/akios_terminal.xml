@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Akios Station">
+<spob name="Akios Terminal">
  <lua>spob/lua/zalek_mil_restricted.lua</lua>
  <pos x="-7481.403716" y="12773.423776"/>
  <GFX>
@@ -13,7 +13,7 @@
   <range>2</range>
  </presence>
  <general>
-  <class>0</class>
+  <class>1</class>
   <population>5500</population>
   <hide>2.000000</hide>
   <services>
@@ -23,7 +23,7 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Akios Station is a Za'lek border station meant to keep the pirates from the Kretogg system out of Za'lek space. Because of the real threat that the loathsome criminals pose to the great house's security, there is (comparatively) little debate over the necessity over this station's existence.</description>
+  <description>Akios Terminal is a Za'lek border station meant to keep the pirates from the Kretogg system out of Za'lek space. Because of the real threat that the loathsome criminals pose to the great house's security, there is (comparatively) little debate over the necessity over this station's existence.</description>
  </general>
  <tech>
   <item>Laser 1</item>
