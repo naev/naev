@@ -43,7 +43,7 @@ local npc2_image = portrait.getFullPath( npc2_portrait )
 local cargoname = N_("Cynthia")
 local cargodesc = N_("A young teenager.")
 local targetworlds = {
-  spob.get("Niflheim"),
+  spob.get("Niflheim Enclave"),
   spob.get("Nova Shakar"),
   spob.get("Selphod"),
   spob.get("Emperor's Fist")
@@ -144,7 +144,7 @@ function land ()
       end
       mem.search_markers = { misn.markerAdd( catchworld ) }
 
-   --If we land on Niflheim, display message, reset target and carry on.
+   --If we land on Niflheim Enclave, display message, reset target and carry on.
    elseif mem.stage == 1 then
       local i = tbl_index( mem.search_pnts, spob.cur() )
       if i == nil then

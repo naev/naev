@@ -22,8 +22,8 @@
    <bar/>
   </services>
   <commodities/>
-  <description>The Sirii have a rather extensive military infrastructure within their borders and Fyruse Station is part of that infrastructure. There's a regular detachment stationed here, making sure that law and order are maintained as well as can reasonably be expected in Esker and its neighbouring systems. Fyruse Station also acts as a border guard for Frontier space, though nobody really believes in the need for such.</description>
-  <bar>As Fyruse Station is a Sirius-only facility, the bar is divided into three sections, one for each echelon. In the rare event that a non-Sirius visitor is allowed on board, they are catered for in the Shaira section.</bar>
+  <description>The Sirii have a rather extensive military infrastructure within their borders and Fyruse Monastery is part of that infrastructure. There's a regular detachment stationed here, making sure that law and order are maintained as well as can reasonably be expected in Esker and its neighbouring systems. Fyruse Monastery also acts as a border guard for Frontier space, though nobody really believes in the need for such.</description>
+  <bar>As Fyruse Monastery is a Sirius-only facility, the bar is divided into three sections, one for each echelon. In the rare event that a non-Sirius visitor is allowed on board, they are catered for in the Shaira section.</bar>
  </general>
  <tags>
   <tag>restricted</tag>

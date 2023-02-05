@@ -31,7 +31,7 @@ local ambushSet -- Forward-declared functions
 -- Mission constants
 local reward = 750e3
 -- This is the route Joanne will take.
-local route = {"Violin Station", "Fyruse Station", "Inios Station", "Tankard Station", "Sroolu"}
+local route = {"Violin Station", "Fyruse Monastery", "Inios Monastery", "Tankard Station", "Sroolu"}
 
 local text4 = _([[You go through the now familiar routine of waiting for Joanne. She soon hails you on the comms.
     "That's it, {player}! This was the final stop. You've been a great help. This isn't a good place to wrap things up though. Tell you what, let's relocate to Sroolu and meet up in the spaceport bar there. I need to give you your payment, of course, but I also want to talk to you for a bit. See you planetside!"

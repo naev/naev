@@ -36,9 +36,9 @@ local system_events = {
    ["Za'lek"] = {
       type = "distance",
       dist = 5e3,
-      pos  = spob.get("House Za'lek Central Station"):pos(),
+      pos  = spob.get("House Za'lek Central"):pos(),
       name = "disc_zalekcentral",
-      title = _("House Za'lek Central Station"),
+      title = _("House Za'lek Central"),
       subtitle = _("Bastion of Knowledge"),
    },
    Ruadan = {

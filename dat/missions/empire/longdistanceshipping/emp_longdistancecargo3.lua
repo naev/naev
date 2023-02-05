@@ -27,7 +27,7 @@ local vntk = require "vntk"
 local lmisn = require "lmisn"
 
 -- Mission constants
-local targetworld, targetworld_sys = spob.getS("Gerhart Station")
+local targetworld, targetworld_sys = spob.getS("Gerhart Central")
 
 function create ()
    -- Note: this mission does not make any system claims.

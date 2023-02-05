@@ -62,7 +62,7 @@ local fzlk = faction.get("Za'lek")
 local hampla, hamsys = spob.getS("Vilati Vilata")
 local reppla, repsys = spob.getS("Dvaer Prime")
 local pripla, prisys = spob.getS("Jorla")
-local zlkpla, zlksys = spob.getS("House Za'lek Central Station")
+local zlkpla, zlksys = spob.getS("House Za'lek Central")
 local intsys = system.get("Poltergeist")
 
 function create()

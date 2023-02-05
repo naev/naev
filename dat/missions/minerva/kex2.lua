@@ -31,7 +31,7 @@ local fmt = require "format"
 mem.misn_state = nil
 local blockade -- Non-persistent state
 
-local targetplanet, targetsys = spob.getS("Niflheim")
+local targetplanet, targetsys = spob.getS("Niflheim Enclave")
 
 local money_reward = minerva.rewards.kex2
 

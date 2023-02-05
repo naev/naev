@@ -39,7 +39,7 @@ local cinema = require "cinema"
 
 -- Mission constants
 local bombMass = 100
-local hampla, hamsys     = spob.getS("Stutee") --Morgan Station
+local hampla, hamsys     = spob.getS("Stutee") --Morgan Citadel
 local sabotpla, sabotsys = spob.getS(fw.wlrd_planet)
 local duelpla, duelsys   = spob.getS("Dvaer Prime")
 local intpla, intsys     = spob.getS("Timu")
