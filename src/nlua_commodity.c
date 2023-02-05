@@ -191,7 +191,7 @@ int lua_iscommodity( lua_State *L, int ind )
  */
 static int commodityL_eq( lua_State *L )
 {
-   Commodity *a, *b;
+   const Commodity *a, *b;
    a = luaL_checkcommodity(L,1);
    b = luaL_checkcommodity(L,2);
    if (a == b)
@@ -255,7 +255,7 @@ static int commodityL_getStandard( lua_State *L )
  */
 static int commodityL_flags( lua_State *L )
 {
-   Commodity *c = luaL_validcommodity(L,1);
+   const Commodity *c = luaL_validcommodity(L,1);
    lua_newtable(L);
 
    lua_pushboolean(L, commodity_isFlag(c,COMMODITY_FLAG_STANDARD));
@@ -285,7 +285,7 @@ static int commodityL_flags( lua_State *L )
  */
 static int commodityL_name( lua_State *L )
 {
-   Commodity *c = luaL_validcommodity(L,1);
+   const Commodity *c = luaL_validcommodity(L,1);
    lua_pushstring(L, _(c->name));
    return 1;
 }
@@ -306,7 +306,7 @@ static int commodityL_name( lua_State *L )
  */
 static int commodityL_nameRaw( lua_State *L )
 {
-   Commodity *c = luaL_validcommodity(L,1);
+   const Commodity *c = luaL_validcommodity(L,1);
    lua_pushstring(L, c->name);
    return 1;
 }
@@ -322,7 +322,7 @@ static int commodityL_nameRaw( lua_State *L )
  */
 static int commodityL_price( lua_State *L )
 {
-   Commodity *c = luaL_validcommodity(L,1);
+   const Commodity *c = luaL_validcommodity(L,1);
    lua_pushnumber(L, c->price);
    return 1;
 }
@@ -339,10 +339,10 @@ static int commodityL_price( lua_State *L )
  */
 static int commodityL_priceAt( lua_State *L )
 {
-   Commodity *c;
-   Spob *p;
-   StarSystem *sys;
-   char *sysname;
+   const Commodity *c;
+   const Spob *p;
+   const StarSystem *sys;
+   const char *sysname;
 
    c = luaL_validcommodity(L,1);
    p = luaL_validspob(L,2);
@@ -374,10 +374,10 @@ static int commodityL_priceAt( lua_State *L )
  */
 static int commodityL_priceAtTime( lua_State *L )
 {
-   Commodity *c;
-   Spob *p;
-   StarSystem *sys;
-   char *sysname;
+   const Commodity *c;
+   const Spob *p;
+   const StarSystem *sys;
+   const char *sysname;
    ntime_t t;
    c = luaL_validcommodity(L,1);
    p = luaL_validspob(L,2);
@@ -419,7 +419,7 @@ static int spob_hasCommodity( const Commodity *c, const Spob *s )
  */
 static int commodityL_canSell( lua_State *L )
 {
-   Commodity *c = luaL_validcommodity(L,1);
+   const Commodity *c = luaL_validcommodity(L,1);
 
    if (commodity_isFlag( c, COMMODITY_FLAG_ALWAYS_CAN_SELL )) {
       lua_pushboolean(L,1);
@@ -427,7 +427,7 @@ static int commodityL_canSell( lua_State *L )
    }
 
    if (lua_issystem(L,2)) {
-      StarSystem *s = luaL_validsystem(L,2);
+      const StarSystem *s = luaL_validsystem(L,2);
       for (int i=0; i<array_size(s->spobs); i++) {
          if (spob_hasCommodity( c, s->spobs[i] )) {
             lua_pushboolean(L,1);
@@ -436,7 +436,7 @@ static int commodityL_canSell( lua_State *L )
       }
    }
    else {
-      Spob *s = luaL_validspob(L,2);
+      const Spob *s = luaL_validspob(L,2);
       lua_pushboolean(L, spob_hasCommodity( c, s ) );
       return 1;
    }
@@ -456,10 +456,10 @@ static int commodityL_canSell( lua_State *L )
  */
 static int commodityL_canBuy( lua_State *L )
 {
-   Commodity *c = luaL_validcommodity(L,1);
+   const Commodity *c = luaL_validcommodity(L,1);
 
    if (lua_issystem(L,2)) {
-      StarSystem *s = luaL_validsystem(L,2);
+      const StarSystem *s = luaL_validsystem(L,2);
       for (int i=0; i<array_size(s->spobs); i++) {
          if (spob_hasCommodity( c, s->spobs[i] )) {
             lua_pushboolean(L,1);
@@ -468,7 +468,7 @@ static int commodityL_canBuy( lua_State *L )
       }
    }
    else {
-      Spob *s = luaL_validspob(L,2);
+      const Spob *s = luaL_validspob(L,2);
       lua_pushboolean(L, spob_hasCommodity( c, s ) );
       return 1;
    }
@@ -486,7 +486,7 @@ static int commodityL_canBuy( lua_State *L )
  */
 static int commodityL_icon( lua_State *L )
 {
-   Commodity *c = luaL_validcommodity(L,1);
+   const Commodity *c = luaL_validcommodity(L,1);
    if (c->gfx_store==NULL)
       return 0;
    lua_pushtex(L,gl_dupTexture(c->gfx_store));
@@ -502,7 +502,7 @@ static int commodityL_icon( lua_State *L )
  */
 static int commodityL_description( lua_State *L )
 {
-   Commodity *c = luaL_validcommodity(L,1);
+   const Commodity *c = luaL_validcommodity(L,1);
    if (c->description==NULL)
       return 0;
    lua_pushstring(L,c->description);
@@ -587,7 +587,7 @@ static int commodityL_illegalto( lua_State *L )
  */
 static int commodityL_illegality( lua_State *L )
 {
-   Commodity *c = luaL_validcommodity(L,1);
+   const Commodity *c = luaL_validcommodity(L,1);
    lua_newtable(L);
    for (int i=0; i<array_size(c->illegalto); i++) {
       lua_pushfaction( L, c->illegalto[i] );

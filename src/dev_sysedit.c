@@ -558,7 +558,7 @@ static void sysedit_btnRemove( unsigned int wid_unused, const char *unused )
          if (sel->type == SELECT_SPOB) {
             Spob *sp = sysedit_sys->spobs[ sel->u.spob ];
             filtered = uniedit_nameFilter( sp->name );
-            asprintf(&file, "dat/spob/%s.xml", filtered);
+            asprintf(&file, "%s/%s.xml", conf.dev_save_spob, filtered);
             remove(file);
 
             free(filtered);

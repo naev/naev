@@ -273,7 +273,7 @@ const char* spob_getClassName( const char *class )
  */
 credits_t spob_commodityPrice( const Spob *p, const Commodity *c )
 {
-   char *sysname = spob_getSystem( p->name );
+   const char *sysname = spob_getSystem( p->name );
    StarSystem *sys = system_get( sysname );
    return economy_getPrice( c, sys, p );
 }
@@ -287,7 +287,7 @@ credits_t spob_commodityPrice( const Spob *p, const Commodity *c )
  */
 credits_t spob_commodityPriceAtTime( const Spob *p, const Commodity *c, ntime_t t )
 {
-   char *sysname = spob_getSystem( p->name );
+   const char *sysname = spob_getSystem( p->name );
    StarSystem *sys = system_get( sysname );
    return economy_getPriceAtTime( c, sys, p, t );
 }
@@ -837,7 +837,7 @@ int space_sysReachable( const StarSystem *sys )
  *
  *    @return 1 if target system is reachable, 0 if it isn't.
  */
-int space_sysReallyReachable( char* sysname )
+int space_sysReallyReachable( const char* sysname )
 {
    StarSystem** path;
 
@@ -1003,7 +1003,7 @@ int spob_hasSystem( const Spob *spb )
  *    @param spobname Spob name to match.
  *    @return Name of the system spob belongs to.
  */
-char* spob_getSystem( const char* spobname )
+const char* spob_getSystem( const char* spobname )
 {
    for (int i=0; i<array_size(spobname_stack); i++)
       if (strcmp(spobname_stack[i],spobname)==0)

@@ -310,7 +310,7 @@ const char *spob_name( const Spob *p );
 int spob_luaInit( Spob *spb );
 void spob_gfxLoad( Spob *p );
 int spob_hasSystem( const Spob *spb );
-char* spob_getSystem( const char* spobname );
+const char* spob_getSystem( const char* spobname );
 Spob* spob_getAll (void);
 Spob* spob_get( const char* spobname );
 Spob* spob_getIndex( int ind );
@@ -408,7 +408,7 @@ StarSystem* system_get( const char* sysname );
 StarSystem* system_getIndex( int id );
 int system_index( const StarSystem *sys );
 int space_sysReachable( const StarSystem *sys );
-int space_sysReallyReachable( char* sysname );
+int space_sysReallyReachable( const char* sysname );
 int space_sysReachableFromSys( const StarSystem *target, const StarSystem *sys );
 char** space_getFactionSpob( int *factions, int landable );
 const char* space_getRndSpob( int landable, unsigned int services,
