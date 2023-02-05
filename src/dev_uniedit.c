@@ -1390,14 +1390,15 @@ static void uniedit_renameSys (void)
 
       /* Change the name. */
       filtered = uniedit_nameFilter(sys->name);
-      asprintf(&oldName, "dat/ssys/%s.xml", filtered);
+      asprintf(&oldName, "%s/%s.xml", conf.dev_save_sys, filtered);
       free(filtered);
 
       filtered = uniedit_nameFilter(name);
-      asprintf(&newName, "dat/ssys/%s.xml", filtered);
+      asprintf(&newName, "%s/%s.xml", conf.dev_save_sys, filtered);
       free(filtered);
 
-      rename(oldName, newName);
+      if (rename(oldName, newName))
+         WARN(_("Failed to rename '%s' to '%s'!"),oldName,newName);
 
       free(oldName);
       free(newName);

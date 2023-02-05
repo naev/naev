@@ -33,6 +33,7 @@ int dpl_saveSpob( const Spob *p )
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
    char *file, *cleanName;
+   int ret = 0;
    const char *lua_default = start_spob_lua_default();
 
    /* Create the writer. */
@@ -152,15 +153,17 @@ int dpl_saveSpob( const Spob *p )
    /* Write data. */
    cleanName = uniedit_nameFilter( p->name );
    asprintf( &file, "%s/%s.xml", conf.dev_save_spob, cleanName );
-   if (xmlSaveFileEnc( file, doc, "UTF-8" ) < 0)
-      WARN("Failed writing '%s'!", file);
+   if (xmlSaveFileEnc( file, doc, "UTF-8" ) < 0) {
+      WARN("Failed to write '%s'!", file);
+      ret = -1;
+   }
 
    /* Clean up. */
    xmlFreeDoc(doc);
    free(cleanName);
    free(file);
 
-   return 0;
+   return ret;
 }
 
 /**

@@ -516,20 +516,22 @@ static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
 
          /* Rename. */
          filtered = uniedit_nameFilter(p->name);
-         asprintf(&oldName, "dat/spob/%s.xml", filtered);
+         asprintf(&oldName, "%s/%s.xml", conf.dev_save_spob, filtered);
          free(filtered);
 
          filtered = uniedit_nameFilter(name);
-         asprintf(&newName, "dat/spob/%s.xml", filtered);
+         asprintf(&newName, "%s/%s.xml", conf.dev_save_spob, filtered);
          free(filtered);
 
-         rename(oldName, newName);
+         if (rename(oldName, newName))
+            WARN(_("Failed to rename '%s' to '%s'!"),oldName,newName);
+
+         /* Clean up. */
+         free(oldName);
+         free(newName);
 
          /* Replace name in stack. */
          spob_rename( p, name );
-
-         free(oldName);
-         free(newName);
 
          //window_modifyText( sysedit_widEdit, "txtName", p->name );
          dsys_saveSystem( sysedit_sys );
