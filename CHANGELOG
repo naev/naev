@@ -4,11 +4,15 @@
       * Planet properties affect quantity of missions available
       * Moved many missions to the vn system
       * Can sometimes find POI events with a pulse scanner equipped when entering systems
+      * Changed the visuals for some of the nebulas
       * diy-nerds: improved reward
    * Quality of Life
       * Make it explicit when all the escorts have jumped or landed
+      * Your ship is no longer translucent when in stealth as it is redundant  with the stealth icon
    * New Content
       * 4 new missions
+         * Nebula refugees
+      * Added the Space Trader Society faction
       * More points of interest
       * Many, many new systems and spobs
    * Engine
@@ -16,6 +20,7 @@
       * Added hook.hail_spob
       * Events support tags
       * Editor supports tags
+      * Library to handel conditionals for mission computer missions
    * Fixes
       * Fixed many corner case crashes in the editor
 
