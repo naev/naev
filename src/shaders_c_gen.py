@@ -393,7 +393,11 @@ def generate_h_file():
     yield f"""
 #pragma once
 
+#include <time.h>
+
 #include "glad.h"
+#include "conf.h"
+#include "log.h"
 
 #define NUM_SHADERS         {num_shaders}
 #define NUM_SIMPLE_SHADERS  {num_simpleshaders}
@@ -476,6 +480,7 @@ const SimpleShader *shaders_getSimple( const char *name )
 }
 
 void shaders_load (void) {
+   Uint32 time = SDL_GetTicks();
 """
 
     for i, shader in enumerate(SHADERS):
@@ -483,6 +488,12 @@ void shaders_load (void) {
         if i != len(SHADERS) - 1:
             yield "\n"
     yield """
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_("Loaded %d Shader in %.3f s", "Loaded %d Shaders in %.3f s", NUM_SHADERS ), NUM_SHADERS, time/1000. );
+   }
+   else
+      DEBUG( n_("Loaded %d Shader", "Loaded %d Shaders", NUM_SHADERS ), NUM_SHADERS );
 }
 
 void shaders_unload (void) {
