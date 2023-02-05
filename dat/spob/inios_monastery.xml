@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Inios Station">
+<spob name="Inios Monastery">
  <lua>spob/lua/sirius_mil_restricted.lua</lua>
  <pos x="16510.246913" y="862.507713"/>
  <GFX>
-  <space>003.webp</space>
+  <space>station-sphere.webp</space>
   <exterior>station04.webp</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>2</range>
  </presence>
  <general>
-  <class>0</class>
+  <class>1</class>
   <population>12000</population>
   <hide>2.000000</hide>
   <services>
@@ -41,5 +41,6 @@
  <tags>
   <tag>station</tag>
   <tag>military</tag>
+  <tag>restricted</tag>
  </tags>
 </spob>

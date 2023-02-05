@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Marauder Station">
+<spob name="Marauder Citadel">
  <lua>spob/lua/dvaered_mil_restricted.lua</lua>
  <pos x="4769.810832" y="3378.616006"/>
  <GFX>
-  <space>002.webp</space>
+  <space>station-dvaered1.webp</space>
   <exterior>station02.webp</exterior>
  </GFX>
  <presence>
@@ -13,7 +13,7 @@
   <range>5</range>
  </presence>
  <general>
-  <class>0</class>
+  <class>1</class>
   <population>15000</population>
   <hide>2.000000</hide>
   <services>
@@ -51,5 +51,6 @@
  <tags>
   <tag>restricted</tag>
   <tag>station</tag>
+  <tag>military</tag>
  </tags>
 </spob>

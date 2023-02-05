@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Heronus Orbital">
+<spob name="Heronus Nidus">
  <lua>spob/lua/soromid_mil_restricted.lua</lua>
  <pos x="-12991.493773" y="17143.680277"/>
  <GFX>
@@ -13,8 +13,8 @@
   <range>2</range>
  </presence>
  <general>
-  <class>0</class>
-  <population>500000</population>
+  <class>1</class>
+  <population>50000</population>
   <hide>2.000000</hide>
   <services>
    <land/>

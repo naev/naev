@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="House Za'lek Central Station">
+<spob name="House Za'lek Central">
  <lua>spob/lua/zalek_mil_restricted.lua</lua>
  <pos x="10464.449053" y="5380.131934"/>
  <GFX>
@@ -13,7 +13,7 @@
   <range>5</range>
  </presence>
  <general>
-  <class>0</class>
+  <class>1</class>
   <population>25000</population>
   <hide>1.600000</hide>
   <services>
