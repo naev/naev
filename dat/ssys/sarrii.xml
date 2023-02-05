@@ -5,23 +5,23 @@
   <stars>400</stars>
   <interference>0.000000</interference>
  </general>
- <pos x="576.272925" y="-1054.863569"/>
+ <pos x="465.856258" y="-952.085791"/>
  <spobs>
-  <spob>Sarrii Station</spob>
+  <spob>Fort Sarrii</spob>
   <spob>Wayline</spob>
   <spob>Wayline m1</spob>
   <spob>Wayline m2</spob>
  </spobs>
  <jumps>
-  <jump target="Felzen">
+  <jump target="Castellan">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Farizel">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Palin">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Peter">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

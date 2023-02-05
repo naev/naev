@@ -13,12 +13,12 @@
  </spobs>
  <jumps>
   <jump target="Kohler">
-   <pos x="-20360.894424" y="-13308.977974"/>
+   <pos x="-14862.362492" y="-13375.225347"/>
    <hidden/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Orion">
-   <autopos/>
+   <pos x="4.897009" y="19024.301455"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Procyon">

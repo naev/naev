@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Corinth Foods">
- <pos x="-25770.227968" y="17754.295875"/>
+ <pos x="-12538.431327" y="14878.975881"/>
  <GFX>
   <space>station-commerce.webp</space>
   <exterior>forest2.webp</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>3</range>
  </presence>
  <general>

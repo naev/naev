@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Vercingetorix">
- <pos x="16688.139634" y="16085.639162"/>
+ <pos x="13707.007864" y="11514.570448"/>
  <GFX>
   <space>X01.webp</space>
   <exterior>gas.webp</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>5</range>
  </presence>
  <general>

@@ -750,7 +750,7 @@ dat/spob/churchill_iia.xml
 dat/spob/claudius_mehan.xml
 dat/spob/cole_outpost.xml
 dat/spob/colley.xml
-dat/spob/coral_station.xml
+dat/spob/coral_cloister.xml
 dat/spob/coran.xml
 dat/spob/corax.xml
 dat/spob/corinth_1.xml
@@ -789,7 +789,7 @@ dat/spob/delta_polaris_ii.xml
 dat/spob/delta_polaris_vi.xml
 dat/spob/deneb_iii.xml
 dat/spob/deneb_iiia.xml
-dat/spob/diabolos.xml
+dat/spob/diabolos_station.xml
 dat/spob/diadem_i.xml
 dat/spob/diadem_ii.xml
 dat/spob/doeston_prime.xml
@@ -813,7 +813,6 @@ dat/spob/drognain.xml
 dat/spob/druss_ii.xml
 dat/spob/druss_iia.xml
 dat/spob/druss_iii.xml
-dat/spob/dumas_station.xml
 dat/spob/dun_hill.xml
 dat/spob/dundrop_station.xml
 dat/spob/dunmer.xml
@@ -903,6 +902,8 @@ dat/spob/folevo.xml
 dat/spob/forbes_station.xml
 dat/spob/forge.xml
 dat/spob/fort_allan.xml
+dat/spob/fort_dumas.xml
+dat/spob/fort_sarrii.xml
 dat/spob/fort_sirius.xml
 dat/spob/fort_voproid.xml
 dat/spob/fortitude_i.xml
@@ -1492,7 +1493,6 @@ dat/spob/sarcophagus_i.xml
 dat/spob/sarcophagus_ii.xml
 dat/spob/sarcophagus_iib.xml
 dat/spob/sarcophagus_v.xml
-dat/spob/sarrii_station.xml
 dat/spob/savoy.xml
 dat/spob/scarlet_ii.xml
 dat/spob/scarlett_iii.xml

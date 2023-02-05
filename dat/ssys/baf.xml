@@ -6,17 +6,25 @@
   <stars>400</stars>
   <interference>0.000000</interference>
  </general>
- <pos x="353.078613" y="-842.112739"/>
+ <pos x="580.967502" y="-1051.807183"/>
  <spobs>
   <spob>BGG-1356</spob>
   <spob>Baf I</spob>
   <spob>Baf IV</spob>
-  <spob>Dumas Station</spob>
+  <spob>Fort Dumas</spob>
   <spob>MGG-1294</spob>
   <spob_virtual>Independent All Unpresence</spob_virtual>
  </spobs>
  <jumps>
-  <jump target="Beeklo">
+  <jump target="Felzen">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Palin">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Peter">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

@@ -5,18 +5,14 @@
   <stars>400</stars>
   <interference>0.000000</interference>
  </general>
- <pos x="467.567901" y="-938.037684"/>
+ <pos x="362.567901" y="-837.037684"/>
  <spobs>
   <spob>Aleph</spob>
   <spob>Beth</spob>
   <spob>Vercingetorix</spob>
  </spobs>
  <jumps>
-  <jump target="Farizel">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Palin">
+  <jump target="Beeklo">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

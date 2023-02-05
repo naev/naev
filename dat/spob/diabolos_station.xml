@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Diabolos">
+<spob name="Diabolos Station">
  <pos x="12182.413409" y="-6354.687071"/>
  <GFX>
   <space>station-sphere.webp</space>
@@ -7,8 +7,8 @@
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>6.666667</base>
-  <bonus>3.333333</bonus>
+  <base>6.666670</base>
+  <bonus>3.333330</bonus>
   <range>1</range>
  </presence>
  <general>

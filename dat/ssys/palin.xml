@@ -19,15 +19,15 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Baf">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Gruz">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Sarrii">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Vandal">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

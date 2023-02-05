@@ -8,6 +8,10 @@
  <pos x="678.526954" y="-1050.094480"/>
  <spobs/>
  <jumps>
+  <jump target="Baf">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Druid">
    <pos x="8880.810551" y="-7925.311697"/>
    <hidden/>
@@ -16,10 +20,6 @@
   <jump target="Felzen">
    <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Sarrii">
-   <autopos/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

@@ -10,7 +10,7 @@
  <spobs>
   <spob>Adham</spob>
   <spob>Beeklo II</spob>
-  <spob>Diabolos</spob>
+  <spob>Diabolos Station</spob>
   <spob>Icarus</spob>
   <spob>Totoran</spob>
   <spob_virtual>Trade Lane (Dvaered)</spob_virtual>
@@ -20,10 +20,6 @@
    <autopos/>
    <hide>0.000000</hide>
   </jump>
-  <jump target="Baf">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
   <jump target="Darkstone">
    <autopos/>
    <hide>0.000000</hide>
@@ -31,6 +27,10 @@
   <jump target="Dvaer">
    <autopos/>
    <hide>0.000000</hide>
+  </jump>
+  <jump target="Vandal">
+   <autopos/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>
