@@ -767,6 +767,8 @@ void uniedit_renderMap( double bx, double by, double w, double h, double x, doub
 
    /* Render system names. */
    map_renderNames( bx, by, x, y, zoom, w, h, 1, 1. );
+
+   glClear( GL_DEPTH_BUFFER_BIT );
 }
 
 /**
