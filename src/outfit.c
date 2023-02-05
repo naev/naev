@@ -2008,7 +2008,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
 
    temp->u.map->systems = array_create(StarSystem*);
-   temp->u.map->spobs  = array_create(Spob*);
+   temp->u.map->spobs   = array_create(Spob*);
    temp->u.map->jumps   = array_create(JumpPoint*);
 
    do {
