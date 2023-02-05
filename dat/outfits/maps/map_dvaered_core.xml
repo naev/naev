@@ -8,6 +8,47 @@
   <gfx_store>map_sector_04.webp</gfx_store>
  </general>
  <specific type="map">
+  <sys name="Beeklo">
+   <jump>Awowa</jump>
+   <jump>Darkstone</jump>
+   <jump>Dvaer</jump>
+   <jump>Vandal</jump>
+   <spob>Adham</spob>
+   <spob>Beeklo II</spob>
+   <spob>Diabolos Station</spob>
+   <spob>Icarus</spob>
+   <spob>Totoran</spob>
+  </sys>
+  <sys name="Urbanus">
+   <jump>Dvaer</jump>
+   <jump>Perhelion</jump>
+   <spob>Onyx Shipyard</spob>
+   <spob>Trincea</spob>
+   <spob>Urbanus Crops</spob>
+   <spob>Urbanus II</spob>
+   <spob>Urbanus III</spob>
+  </sys>
+  <sys name="Perhelion">
+   <jump>Urbanus</jump>
+   <spob>Handalier</spob>
+   <spob>Perhelion Alpha</spob>
+   <spob>Perhelion Beta</spob>
+   <spob>Perhelion Gamma</spob>
+  </sys>
+  <sys name="Vandal">
+   <jump>Beeklo</jump>
+   <spob>Aleph</spob>
+   <spob>Beth</spob>
+   <spob>Vercingetorix</spob>
+  </sys>
+  <sys name="Radix">
+   <jump>Dvaer</jump>
+   <spob>Myuirr Station</spob>
+   <spob>Radix I</spob>
+   <spob>Radix II</spob>
+   <spob>Radix III</spob>
+   <spob>Stutee</spob>
+  </sys>
   <sys name="Dvaer">
    <jump>Beeklo</jump>
    <jump>Radix</jump>
@@ -22,48 +63,13 @@
    <spob>Hypergate Dvaer</spob>
    <spob>Laarss</spob>
   </sys>
-  <sys name="Radix">
-   <jump>Dvaer</jump>
-   <spob>Myuirr Station</spob>
-   <spob>Radix I</spob>
-   <spob>Radix II</spob>
-   <spob>Radix III</spob>
-   <spob>Stutee</spob>
-  </sys>
-  <sys name="Beeklo">
-   <jump>Awowa</jump>
-   <jump>Baf</jump>
-   <jump>Darkstone</jump>
-   <jump>Dvaer</jump>
-   <spob>Adham</spob>
-   <spob>Beeklo II</spob>
-   <spob>Diabolos</spob>
-   <spob>Icarus</spob>
-   <spob>Totoran</spob>
-  </sys>
-  <sys name="Baf">
-   <jump>Beeklo</jump>
-   <spob>BGG-1356</spob>
-   <spob>Baf I</spob>
-   <spob>Baf IV</spob>
-   <spob>Dumas Station</spob>
-   <spob>MGG-1294</spob>
-  </sys>
   <sys name="Awowa">
    <jump>Beeklo</jump>
+   <jump>Ginger</jump>
    <spob>Awowa IV</spob>
    <spob>Awowa V</spob>
    <spob>Odonga</spob>
    <spob>Odonga m1</spob>
-  </sys>
-  <sys name="Urbanus">
-   <jump>Dvaer</jump>
-   <jump>Perhelion</jump>
-   <spob>Onyx Shipyard</spob>
-   <spob>Trincea</spob>
-   <spob>Urbanus Crops</spob>
-   <spob>Urbanus II</spob>
-   <spob>Urbanus III</spob>
   </sys>
   <sys name="Darkstone">
    <jump>Beeklo</jump>
@@ -73,12 +79,12 @@
    <spob>Stalwart Station</spob>
    <spob>Varia</spob>
   </sys>
-  <sys name="Perhelion">
-   <jump>Urbanus</jump>
-   <spob>Handalier</spob>
-   <spob>Perhelion Alpha</spob>
-   <spob>Perhelion Beta</spob>
-   <spob>Perhelion Gamma</spob>
+  <sys name="Ginger">
+   <jump>Awowa</jump>
+   <spob>Buritt</spob>
+   <spob>Ginger II</spob>
+   <spob>Ginger III</spob>
+   <spob>Ullnorn</spob>
   </sys>
  </specific>
 </outfit>
