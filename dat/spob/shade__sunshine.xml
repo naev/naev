@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Shade &amp; Sunshine Station">
+<spob name="Shade &amp; Sunshine">
  <pos x="-5993.939706" y="12577.624148"/>
  <GFX>
   <space>station-agriculture.webp</space>
@@ -7,8 +7,8 @@
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>1</range>
  </presence>
  <general>

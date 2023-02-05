@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Morgan Station">
+<spob name="Morgan Citadel">
  <lua>spob/lua/dvaered_mil_restricted.lua</lua>
  <pos x="2318.658043" y="2318.658043"/>
  <GFX>
-  <space>station-shipyard.webp</space>
+  <space>station-dvaered1.webp</space>
   <exterior>station04.webp</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>76.666667</base>
-  <bonus>38.333333</bonus>
+  <base>76.666700</base>
+  <bonus>38.333300</bonus>
   <range>2</range>
  </presence>
  <general>
-  <class>0</class>
+  <class>1</class>
   <population>75000</population>
   <hide>2.000000</hide>
   <services>

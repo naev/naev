@@ -7,9 +7,9 @@
  </general>
  <pos x="643.583893" y="-722.224133"/>
  <spobs>
+  <spob>Fort Raglan</spob>
   <spob>Haleb IV</spob>
   <spob>Jorlan</spob>
-  <spob>Raglan Outpost</spob>
   <spob_virtual>FLF Small</spob_virtual>
  </spobs>
  <jumps>

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Maus Station">
+<spob name="Fort Maus">
  <lua>spob/lua/dvaered_mil_restricted.lua</lua>
  <pos x="-12143.540902" y="-7680.624142"/>
  <GFX>
-  <space>station-fleetbase3.webp</space>
+  <space>station-dvaered1.webp</space>
   <exterior>station03.webp</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>4</range>
  </presence>
  <general>
-  <class>0</class>
+  <class>1</class>
   <population>10000</population>
   <hide>2.000000</hide>
   <services>
@@ -45,5 +45,6 @@
  <tags>
   <tag>restricted</tag>
   <tag>station</tag>
+  <tag>military</tag>
  </tags>
 </spob>

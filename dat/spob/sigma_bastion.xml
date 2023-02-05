@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Sigma Station">
+<spob name="Sigma Bastion">
  <lua>spob/lua/proteron_mil_restricted.lua</lua>
  <pos x="3150.528370" y="-2234.267876"/>
  <GFX>
@@ -64,5 +64,6 @@
  <tags>
   <tag>restricted</tag>
   <tag>station</tag>
+  <tag>military</tag>
  </tags>
 </spob>

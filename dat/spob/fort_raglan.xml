@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Raglan Outpost">
+<spob name="Fort Raglan">
  <pos x="1830.182334" y="12469.138345"/>
  <GFX>
   <space>station-battlestation.webp</space>
@@ -27,5 +27,6 @@
  </general>
  <tags>
   <tag>station</tag>
+  <tag>military</tag>
  </tags>
 </spob>

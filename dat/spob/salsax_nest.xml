@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Salsax Station">
+<spob name="Salsax Nest">
  <pos x="5891.722356" y="1332.614973"/>
  <GFX>
   <space>station-commerce3.webp</space>
@@ -7,8 +7,8 @@
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>2</range>
  </presence>
  <general>

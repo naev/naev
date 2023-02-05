@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Myuirr Station">
+<spob name="Fort Myuirr">
  <lua>spob/lua/dvaered_mil_restricted.lua</lua>
  <pos x="6203.038328" y="-8375.950143"/>
  <GFX>
@@ -8,12 +8,12 @@
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>6.666667</base>
-  <bonus>3.333333</bonus>
+  <base>6.666670</base>
+  <bonus>3.333330</bonus>
   <range>1</range>
  </presence>
  <general>
-  <class>0</class>
+  <class>1</class>
   <population>500</population>
   <hide>2.000000</hide>
   <services>
@@ -35,5 +35,6 @@
  <tags>
   <tag>restricted</tag>
   <tag>station</tag>
+  <tag>military</tag>
  </tags>
 </spob>

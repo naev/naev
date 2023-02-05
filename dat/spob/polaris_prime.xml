@@ -8,8 +8,8 @@
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>250.000000</base>
-  <bonus>50.000000</bonus>
+  <base>150.000000</base>
+  <bonus>80.000000</bonus>
   <range>3</range>
  </presence>
  <general>
@@ -47,5 +47,6 @@
  <tags>
   <tag>trade</tag>
   <tag>station</tag>
+  <tag>government</tag>
  </tags>
 </spob>

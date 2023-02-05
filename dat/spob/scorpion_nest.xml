@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Scorpion Station">
+<spob name="Scorpion Nest">
  <lua>spob/lua/soromid_mil_restricted.lua</lua>
  <pos x="-11302.327703" y="7269.819086"/>
  <GFX>
@@ -8,13 +8,13 @@
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>2</range>
  </presence>
  <general>
-  <class>0</class>
-  <population>50</population>
+  <class>1</class>
+  <population>500</population>
   <hide>2.000000</hide>
   <services>
    <land/>

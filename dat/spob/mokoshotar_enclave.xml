@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Mokoshotar">
+<spob name="Mokoshotar Enclave">
  <lua>spob/lua/empire_mil_restricted.lua</lua>
  <pos x="-3860.547659" y="3407.931727"/>
  <GFX>
@@ -13,7 +13,7 @@
   <range>4</range>
  </presence>
  <general>
-  <class>0</class>
+  <class>1</class>
   <population>17500</population>
   <hide>2.000000</hide>
   <services>

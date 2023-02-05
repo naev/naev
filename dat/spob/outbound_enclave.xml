@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Outbound Station">
+<spob name="Outbound Enclave">
  <pos x="-1766.596605" y="7508.035569"/>
  <GFX>
   <space>station-commerce3.webp</space>
@@ -7,8 +7,8 @@
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>1</range>
  </presence>
  <general>
@@ -41,5 +41,6 @@
  <tags>
   <tag>trade</tag>
   <tag>station</tag>
+  <tag>military</tag>
  </tags>
 </spob>

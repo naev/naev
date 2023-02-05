@@ -7,9 +7,9 @@
  </general>
  <pos x="209.020121" y="-252.571092"/>
  <spobs>
+  <spob>Scorpii Enclave</spob>
   <spob>Scorpii Omega-1</spob>
   <spob>Scorpii Omega-2</spob>
-  <spob>Scorpii Station</spob>
  </spobs>
  <jumps>
   <jump target="Guntesh">

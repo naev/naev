@@ -9,7 +9,7 @@
  <spobs>
   <spob>Newmarch A-1</spob>
   <spob>Newmarch D-3</spob>
-  <spob>Savoy</spob>
+  <spob>Savoy Terminal</spob>
  </spobs>
  <jumps>
   <jump target="Poller">

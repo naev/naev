@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Raelid Outpost">
+<spob name="Fort Raelid">
  <pos x="3598.832090" y="-4493.722479"/>
  <GFX>
   <space>002.webp</space>
@@ -12,7 +12,7 @@
   <range>2</range>
  </presence>
  <general>
-  <class>0</class>
+  <class>1</class>
   <population>3000</population>
   <hide>2.000000</hide>
   <services>
@@ -36,5 +36,6 @@
  </tech>
  <tags>
   <tag>station</tag>
+  <tag>military</tag>
  </tags>
 </spob>

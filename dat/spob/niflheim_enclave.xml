@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Niflheim">
+<spob name="Niflheim Enclave">
  <pos x="-9965.863598" y="2823.758187"/>
  <GFX>
   <space>station-sphere.webp</space>
@@ -12,9 +12,9 @@
   <range>2</range>
  </presence>
  <general>
-  <class>0</class>
-  <population>3000</population>
-  <hide>2.000000</hide>
+  <class>1</class>
+  <population>6000</population>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

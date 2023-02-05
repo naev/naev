@@ -7,10 +7,10 @@
  </general>
  <pos x="611.047728" y="-829.435703"/>
  <spobs>
+  <spob>Fort Maus</spob>
   <spob>Maus I</spob>
   <spob>Maus II</spob>
   <spob>Maus III</spob>
-  <spob>Maus Station</spob>
   <spob>Megas</spob>
   <spob_virtual>Trade Lane (Dvaered)</spob_virtual>
  </spobs>

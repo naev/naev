@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Moorline Station">
+<spob name="Moorline Cloister">
  <lua>spob/lua/soromid_mil_restricted.lua</lua>
  <pos x="-2730.715876" y="-9072.781321"/>
  <GFX>
@@ -13,7 +13,7 @@
   <range>2</range>
  </presence>
  <general>
-  <class>0</class>
+  <class>1</class>
   <population>1000</population>
   <hide>2.000000</hide>
   <services>

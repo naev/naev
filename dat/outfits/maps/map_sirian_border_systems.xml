@@ -1,6 +1,7 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <outfit name="Map: Sirian Border Systems">
  <general>
+  <rarity>0</rarity>
   <mass>0</mass>
   <price>15000</price>
   <description>This map contains the systems that lead to Sirius controlled space.</description>
@@ -8,24 +9,21 @@
  </general>
  <specific type="map">
   <sys name="Esker">
-   <jump>Nougat</jump>
    <spob>Esker I</spob>
    <spob>Esker II</spob>
    <spob>Esker IV</spob>
-   <spob>Fyruse Station</spob>
+   <spob>Fyruse Monastery</spob>
    <spob>Madria</spob>
    <spob>Suoer</spob>
   </sys>
   <sys name="Eye of Night">
-   <jump>Fidelis</jump>
    <spob>Eye of Night I</spob>
    <spob>Eye of Night II</spob>
    <spob>Eye of Night III</spob>
-   <spob>Inios Station</spob>
+   <spob>Inios Monastery</spob>
    <spob>Traal</spob>
   </sys>
   <sys name="Pike">
-   <jump>Atlantis</jump>
    <spob>Coral Cloister</spob>
    <spob>Ohon</spob>
    <spob>Pike I</spob>

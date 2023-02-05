@@ -7,8 +7,8 @@
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>33.333333</base>
-  <bonus>16.666667</bonus>
+  <base>30.000000</base>
+  <bonus>15.000000</bonus>
   <range>1</range>
  </presence>
  <general>

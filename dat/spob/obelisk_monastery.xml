@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Obelisk Station">
+<spob name="Obelisk Monastery">
  <lua>spob/lua/sirius_mil_restricted.lua</lua>
  <pos x="11385.347075" y="-4070.533010"/>
  <GFX>
@@ -13,7 +13,7 @@
   <range>2</range>
  </presence>
  <general>
-  <class>0</class>
+  <class>1</class>
   <population>10000</population>
   <hide>1.000000</hide>
   <services>
