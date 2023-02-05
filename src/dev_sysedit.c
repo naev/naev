@@ -501,7 +501,7 @@ static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
          Spob *p = sysedit_sys[i].spobs[ sel->u.spob ];
 
          /* Get new name. */
-         name = dialogue_input( _("New Spob Creation"), 1, 32,
+         name = dialogue_input( _("Rename Spob"), 1, 32,
                _("What do you want to rename the spob #r%s#0?"), p->name );
          if (name == NULL)
             continue;
