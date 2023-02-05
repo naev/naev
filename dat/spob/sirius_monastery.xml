@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Fort Sirius">
+<spob name="Sirius Monastery">
  <lua>spob/lua/sirius_mil_restricted.lua</lua>
  <pos x="16942.631753" y="-6095.098630"/>
  <GFX>

@@ -904,8 +904,6 @@ dat/spob/fort_allan.xml
 dat/spob/fort_dumas.xml
 dat/spob/fort_fernando.xml
 dat/spob/fort_sarrii.xml
-dat/spob/fort_sirius.xml
-dat/spob/fort_voproid.xml
 dat/spob/fortitude_i.xml
 dat/spob/fortitude_ii.xml
 dat/spob/fortitude_iii.xml
@@ -1537,6 +1535,7 @@ dat/spob/simoen.xml
 dat/spob/sinass.xml
 dat/spob/sinclair.xml
 dat/spob/sindbad.xml
+dat/spob/sirius_monastery.xml
 dat/spob/sirius_ordnance.xml
 dat/spob/sirius_shipyards.xml
 dat/spob/sirou_alpha.xml
@@ -1752,6 +1751,7 @@ dat/spob/virginis_lambda.xml
 dat/spob/vlexair.xml
 dat/spob/vlexon_i.xml
 dat/spob/vlexon_ii.xml
+dat/spob/voproid_monastery.xml
 dat/spob/voproid_prime.xml
 dat/spob/vorca.xml
 dat/spob/vracha.xml
