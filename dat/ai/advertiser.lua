@@ -38,7 +38,7 @@ local ads_dvaered = {
 local ads_soromid = {
    _("Remember Sorom."),
    _("Special offer on Crow: buy one IR-eye, and the second comes for free!"),
-   _("Looking to modify an entire species? Visit Dr. Hu's Gene Clinic at Point Zero Station!"),
+   _("Looking to modify an entire species? Visit Dr. Hu's Gene Clinic at Point Zero Nidus!"),
    _("Endogenous DNA damage hampering your Gene Drive? Drop by your local Chromosomal Rearrangement Laboratory for a check-up."),
    _("Visit Bohr Laboratory for all your epistatic mutation woes. 10 locations and counting!"),
    _("Worried about your bio-ship adenosine triphosphate output? Leave it to ATP Specialists!"),

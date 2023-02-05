@@ -24,12 +24,15 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Pokyos was built to reinforce the Sirian military in this area of space. It isn't a big station, but it is always fully staffed and has access to the best equipment. Quality over quantity, as they say here.</description>
+  <description>Pokyos Cloister was built to reinforce the Sirian military in this area of space. It isn't a big station, but it is always fully staffed and has access to the best equipment. Quality over quantity, as they say here.</description>
   <bar>There's not much to do here. Military stations are seldom places to sit down and have a chat. At best, you can use the spacedock bar to meet one of the officers on station.</bar>
  </general>
  <tech>
   <item>Hulls Medium</item>
   <item>Engines Medium</item>
+  <item>Systems Medium</item>
+  <item>Ion 1</item>
+  <item>Ion 2</item>
   <item>Ion 3</item>
   <item>Basic Outfits 2</item>
   <item>Star Maps</item>

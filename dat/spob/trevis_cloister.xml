@@ -24,8 +24,8 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Trevis Station is the local law enforcement base. It is fairly small and only has a limited number of ships available, but given how quiet this sector of space is most of the time it can deal with whatever incidents do occur.</description>
-  <bar>Trevis Station is one of those places where young military personnel are stationed to get some field experience under their belt before being sent to the more dangerous systems. Many of them will complain at each other in the bar about how bored they are and how they hope to get a real position sometime soon, but the more experienced soldiers know that few posts are as enviable as the ones on Trevis.</bar>
+  <description>Trevis Cloister is the local law enforcement base. It is fairly small and only has a limited number of ships available, but given how quiet this sector of space is most of the time it can deal with whatever incidents do occur.</description>
+  <bar>Trevis Cloister is one of those places where young military personnel are stationed to get some field experience under their belt before being sent to the more dangerous systems. Many of them will complain at each other in the bar about how bored they are and how they hope to get a real position sometime soon, but the more experienced soldiers know that few posts are as enviable as the ones on Trevis.</bar>
  </general>
  <tech>
   <item>Engines Low</item>

@@ -23,8 +23,8 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Obelisk Station is a military base. It's not so much an active force as a reserve of military strength. Whenever a law enforcement division in this region of space requires backup or heavy firepower for an operation, it is Obelisk Station that provides. Most of the space within the station hull is taken up by ship hangars and service docks.</description>
-  <bar>The spacedock bar on Obelisk Station is primarily used for pilots and crew members to standby as an immediate response team. These people are required to be immediately available in case an emergency pops up. While they are idle, they have access to all sorts of training simulations and recreational venues at this bar.</bar>
+  <description>Obelisk Monastery is a military base. It's not so much an active force as a reserve of military strength. Whenever a law enforcement division in this region of space requires backup or heavy firepower for an operation, it is Obelisk Monastery that provides. Most of the space within the station hull is taken up by ship hangars and service docks.</description>
+  <bar>The spacedock bar on Obelisk Monastery is primarily used for pilots and crew members to standby as an immediate response team. These people are required to be immediately available in case an emergency pops up. While they are idle, they have access to all sorts of training simulations and recreational venues at this bar.</bar>
  </general>
  <tech>
   <item>Sirius Military Ships</item>
