@@ -95,7 +95,7 @@ end
 
 
 function generate_npc ()
-   if spob.cur() == spob.get("Cerberus") then
+   if spob.cur() == spob.get("Cerberus Outpost") then
       misn.npcAdd( "approach_oldman", _("Old Man"), oldman_portrait, _("You see a nonchalant old man sipping on his drink with a carefree aura.") )
       if mem.misn_state==3 or mem.misn_state==4 or mem.bribed_scavengers==true then
          misn.npcAdd( "approach_scavengers", minerva.scavengers.name, minerva.scavengers.portrait, minerva.scavengers.description )

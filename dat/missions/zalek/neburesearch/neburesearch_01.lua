@@ -40,7 +40,7 @@ osd_msg[2] = _("Land on {pnt} in the {sys} system")
 osd_msg[3] = _("Fly back to {pnt} in the {sys} system")
 
 local station = spob.get("PSO Monitor")
-local homeworld = spob.get("Bastion Station")
+local homeworld = spob.get("Bastion Center")
 local t_sys = {
     system.get("Ksher"),
     system.get("Sultan"),

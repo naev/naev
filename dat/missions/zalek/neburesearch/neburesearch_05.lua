@@ -36,7 +36,7 @@ local hasShieldingPrototypeEquipped, beginScan -- Forward-declared functions
 -- Mission constants
 local credits = nebu_research.rewards.credits05
 local homeworld, homeworld_sys = spob.getS("Jorla")
-local dest_planet, dest_sys = spob.getS("Cerberus")
+local dest_planet, dest_sys = spob.getS("Cerberus Outpost")
 local testing_sys = system.get("Nasona")
 local sol_sys = system.get("Sol")
 local osd_title = _("Expert Nebula Research")

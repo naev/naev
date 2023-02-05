@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Cole Station">
+<spob name="Cole Outpost">
  <pos x="4713.068117" y="5484.348194"/>
  <GFX>
   <space>station-commerce3.webp</space>
@@ -14,7 +14,7 @@
  <general>
   <class>0</class>
   <population>2500</population>
-  <hide>0.100000</hide>
+  <hide>0.300000</hide>
   <services>
    <land/>
    <refuel/>

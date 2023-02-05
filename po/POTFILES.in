@@ -610,7 +610,6 @@ dat/spob/allous_citadel.xml
 dat/spob/allous_gg3.xml
 dat/spob/allous_i.xml
 dat/spob/allous_ii.xml
-dat/spob/allous_station.xml
 dat/spob/alpha_aquilea.xml
 dat/spob/alteris_i.xml
 dat/spob/alteris_iv.xml
@@ -661,7 +660,7 @@ dat/spob/arashu.xml
 dat/spob/arcadia.xml
 dat/spob/arch_arai.xml
 dat/spob/arck.xml
-dat/spob/arcturus_gamma.xml
+dat/spob/arcturus_enclave.xml
 dat/spob/arcturus_i.xml
 dat/spob/arcturus_ii.xml
 dat/spob/ariadus_ii.xml
@@ -691,14 +690,14 @@ dat/spob/baf_i.xml
 dat/spob/baf_iv.xml
 dat/spob/barnards_star_ruined_ringworld.xml
 dat/spob/basel_i.xml
-dat/spob/bastion_station.xml
+dat/spob/bastion_center.xml
 dat/spob/bedimann_shipyards.xml
 dat/spob/beeklo_ii.xml
 dat/spob/beene.xml
 dat/spob/behar_prime.xml
 dat/spob/behar_station.xml
 dat/spob/behemoth.xml
-dat/spob/belltower_station.xml
+dat/spob/belltower_nest.xml
 dat/spob/benedict.xml
 dat/spob/benteen.xml
 dat/spob/berkhere.xml
@@ -714,7 +713,7 @@ dat/spob/bonanza_i.xml
 dat/spob/bonanza_ii.xml
 dat/spob/boowoy.xml
 dat/spob/botarn_i.xml
-dat/spob/brandt_station.xml
+dat/spob/brandt_cloister.xml
 dat/spob/brendon_i.xml
 dat/spob/brimstone_i.xml
 dat/spob/brimstone_ia.xml
@@ -728,7 +727,7 @@ dat/spob/burnan.xml
 dat/spob/burnans_moon.xml
 dat/spob/caladan.xml
 dat/spob/calvin.xml
-dat/spob/cantina_station.xml
+dat/spob/cantina_center.xml
 dat/spob/capricorn_ii.xml
 dat/spob/capricorn_iii.xml
 dat/spob/capricorn_iiia.xml
@@ -737,11 +736,11 @@ dat/spob/castellan_i.xml
 dat/spob/castellan_iii.xml
 dat/spob/castellan_vi.xml
 dat/spob/cebus_prime.xml
-dat/spob/cerberus.xml
 dat/spob/cerberus_i.xml
 dat/spob/cerberus_ii.xml
 dat/spob/cerberus_iia.xml
 dat/spob/cerberus_iv.xml
+dat/spob/cerberus_outpost.xml
 dat/spob/cetrat.xml
 dat/spob/charcoal.xml
 dat/spob/charred.xml
@@ -749,7 +748,7 @@ dat/spob/churchill_i.xml
 dat/spob/churchill_ii.xml
 dat/spob/churchill_iia.xml
 dat/spob/claudius_mehan.xml
-dat/spob/cole_station.xml
+dat/spob/cole_outpost.xml
 dat/spob/colley.xml
 dat/spob/coral_station.xml
 dat/spob/coran.xml

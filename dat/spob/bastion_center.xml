@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Bastion Station">
+<spob name="Bastion Center">
  <pos x="-596.226354" y="-3709.852869"/>
  <GFX>
   <space>zalek_station1.webp</space>
@@ -7,12 +7,12 @@
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>450.000000</base>
-  <bonus>50.000000</bonus>
+  <base>150.000000</base>
+  <bonus>80.000000</bonus>
   <range>3</range>
  </presence>
  <general>
-  <class>0</class>
+  <class>1</class>
   <population>4500</population>
   <hide>2.000000</hide>
   <services>

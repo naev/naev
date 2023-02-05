@@ -30,7 +30,7 @@ local vntk = require "vntk"
 function create ()
    -- Planet targets
    mem.pickup,mem.pickupsys  = spob.getS( "Selphod" )
-   mem.dest,mem.destsys      = spob.getS( "Cerberus" )
+   mem.dest,mem.destsys      = spob.getS( "Cerberus Outpost" )
    mem.ret,mem.retsys        = spob.getS( "Halir" )
    -- Note: this mission does not make any system claims
 

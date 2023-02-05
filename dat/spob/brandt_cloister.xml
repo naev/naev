@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Brandt Station">
+<spob name="Brandt Cloister">
  <lua>spob/lua/sirius_mil_restricted.lua</lua>
- <pos x="23097.095813" y="13116.051161"/>
+ <pos x="18091.909156" y="10347.224500"/>
  <GFX>
   <space>station-battlestation.webp</space>
   <exterior>station05.webp</exterior>
@@ -14,7 +14,7 @@
  </presence>
  <general>
   <class>1</class>
-  <population>8000</population>
+  <population>1500</population>
   <hide>2.000000</hide>
   <services>
    <land/>

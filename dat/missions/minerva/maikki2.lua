@@ -20,7 +20,7 @@
 --
 -- 1. Told to try to find who could have been involved and given three places to look at.
 -- Hint 1: Jorla in Regas (University)
--- Hint 2: Cantina Station in Qulam (Trade Hub)
+-- Hint 2: Cantina Center in Qulam (Trade Hub)
 -- Hint 3: Jurai in Hideyoshi's Star (University)
 -- 2. After talking to all three, the player is told to go to Naga in Damien (Underwater University)
 -- 3. Mentions eccentric colleague at Westhaven
@@ -59,7 +59,7 @@ local ecc_portrait = minerva.strangelove.portrait
 
 local hintpnt = {
    "Jorla",
-   "Cantina Station",
+   "Cantina Center",
    "Jurai",
    "Naga",
 }
