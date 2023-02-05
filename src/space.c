@@ -132,6 +132,7 @@ static int system_parseJumps( StarSystem *sys );
 static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys );
 static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys );
 /* misc */
+static int spob_cmp( const void *p1, const void *p2 );
 static int getPresenceIndex( StarSystem *sys, int faction );
 static void system_scheduler( double dt, int init );
 /* Markers. */
@@ -440,6 +441,12 @@ int spob_rename( Spob *p, char *newname )
       WARN(_("Renaming spob '%s', but not found in name stack!"),p->name);
    free( p->name );
    p->name = newname;
+
+   /* Have to sort and reset IDs. */
+   qsort( spob_stack, array_size(spob_stack), sizeof(Spob), spob_cmp );
+   for (int j=0; j<array_size(spob_stack); j++)
+      spob_stack[j].id = j;
+
    return 0;
 }
 
