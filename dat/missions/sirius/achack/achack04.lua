@@ -19,7 +19,7 @@ local fleet = require "fleet"
 require "proximity"
 local srs = require "common.sirius"
 local fmt = require "format"
-local achack = require "achack"
+local achack = require "common.achack"
 
 local bhfleet, harja -- Non-persistent state
 

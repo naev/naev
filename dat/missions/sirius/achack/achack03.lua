@@ -19,7 +19,7 @@
 require "proximity"
 local srs = require "common.sirius"
 local fmt = require "format"
-local achack = require "achack"
+local achack = require "common.achack"
 
 local harja -- Non-persistent state
 
