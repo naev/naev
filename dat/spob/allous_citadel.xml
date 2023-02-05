@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Allous Station">
+<spob name="Allous Citadel">
  <pos x="-5217.423447" y="2985.793974"/>
  <GFX>
   <space>001.webp</space>
@@ -21,7 +21,7 @@
    <bar/>
   </services>
   <commodities/>
-  <description>Despite the name, Allous Station is not a military outpost, it is more of a scientific observation centre and deep-space observatory. Originally it was meant to keep an eye on the high-interference nebula of PSO. Even the Dvaered have a scientific community, and they paid for this station out of their own pockets. Of course, once it was built, there was no longer any need for them to pay for it as numerous warlords, with dreams of intellectualism, are happy to offer their patronage.</description>
+  <description>Despite the name, Allous Citadel is not a military outpost, it is more of a scientific observation centre and deep-space observatory. Originally it was meant to keep an eye on the high-interference nebula of PSO. Even the Dvaered have a scientific community, and they paid for this station out of their own pockets. Of course, once it was built, there was no longer any need for them to pay for it as numerous warlords, with dreams of intellectualism, are happy to offer their patronage.</description>
   <bar>This bar looks like something one would expect from Za'lek space. Scientists and soldiers are interacting with surprising friendliness and conviviality. Of course, the local warlords would, and do, tolerate nothing less.</bar>
  </general>
  <tags>
