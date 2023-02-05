@@ -428,12 +428,16 @@ int spob_rmService( Spob *p, int service )
  */
 int spob_rename( Spob *p, char *newname )
 {
+   int found = 0;
    for (int i=0; i<array_size(spobname_stack); i++) {
       if (strcmp(spobname_stack[i], p->name)==0) {
          spobname_stack[i] = newname;
+         found = 1;
          break;
       }
    }
+   if (!found)
+      WARN(_("Renaming spob '%s', but not found in name stack!"),p->name);
    free( p->name );
    p->name = newname;
    return 0;
