@@ -496,50 +496,51 @@ static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
    (void) unused;
    for (int i=0; i<sysedit_nselect; i++) {
       Select_t *sel = &sysedit_select[i];
-      if (sel->type == SELECT_SPOB) {
-         char *name, *oldName, *newName, *filtered;
-         Spob *p = sysedit_sys[i].spobs[ sel->u.spob ];
+      if (sel->type != SELECT_SPOB)
+         continue;
 
-         /* Get new name. */
-         name = dialogue_input( _("Rename Spob"), 1, 32,
-               _("What do you want to rename the spob #r%s#0?"), p->name );
-         if (name == NULL)
-            continue;
+      char *name, *oldName, *newName, *filtered;
+      Spob *p = sysedit_sys[i].spobs[ sel->u.spob ];
 
-         /* Check for collision. */
-         if (spob_exists( name )) {
-            dialogue_alert( _("Spob by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
-                  name, spob_getSystem( name ) );
-            free(name);
-            continue;
-         }
+      /* Get new name. */
+      name = dialogue_input( _("Rename Spob"), 1, 32,
+            _("What do you want to rename the spob #r%s#0?"), p->name );
+      if (name == NULL)
+         continue;
 
-         /* Rename. */
-         filtered = uniedit_nameFilter(p->name);
-         asprintf(&oldName, "%s/%s.xml", conf.dev_save_spob, filtered);
-         free(filtered);
-
-         filtered = uniedit_nameFilter(name);
-         asprintf(&newName, "%s/%s.xml", conf.dev_save_spob, filtered);
-         free(filtered);
-
-         if (rename(oldName, newName))
-            WARN(_("Failed to rename '%s' to '%s'!"),oldName,newName);
-
-         /* Clean up. */
-         free(oldName);
-         free(newName);
-
-         /* Replace name in stack. */
-         spob_rename( p, name );
-
-         dsys_saveSystem( sysedit_sys );
-         dpl_saveSpob( p );
-
-         /* Rename input if called from edit window. */
-         if (window_existsID( sysedit_widEdit ))
-            window_modifyText( sysedit_widEdit, "txtName", p->name );
+      /* Check for collision. */
+      if (spob_exists( name )) {
+         dialogue_alert( _("Spob by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
+               name, spob_getSystem( name ) );
+         free(name);
+         continue;
       }
+
+      /* Rename. */
+      filtered = uniedit_nameFilter(p->name);
+      asprintf(&oldName, "%s/%s.xml", conf.dev_save_spob, filtered);
+      free(filtered);
+
+      filtered = uniedit_nameFilter(name);
+      asprintf(&newName, "%s/%s.xml", conf.dev_save_spob, filtered);
+      free(filtered);
+
+      if (rename(oldName, newName))
+         WARN(_("Failed to rename '%s' to '%s'!"),oldName,newName);
+
+      /* Clean up. */
+      free(oldName);
+      free(newName);
+
+      /* Replace name in stack. */
+      spob_rename( p, name );
+
+      dsys_saveSystem( sysedit_sys );
+      dpl_saveSpob( p );
+
+      /* Rename input if called from edit window. */
+      if (window_existsID( sysedit_widEdit ))
+         window_modifyText( sysedit_widEdit, "txtName", p->name );
    }
 }
 
