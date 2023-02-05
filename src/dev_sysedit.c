@@ -533,9 +533,12 @@ static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
          /* Replace name in stack. */
          spob_rename( p, name );
 
-         //window_modifyText( sysedit_widEdit, "txtName", p->name );
          dsys_saveSystem( sysedit_sys );
          dpl_saveSpob( p );
+
+         /* Rename input if called from edit window. */
+         if (window_existsID( sysedit_widEdit ))
+            window_modifyText( sysedit_widEdit, "txtName", p->name );
       }
    }
 }
