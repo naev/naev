@@ -525,12 +525,13 @@ static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
 
          rename(oldName, newName);
 
+         /* Replace name in stack. */
+         spob_rename( p, name );
+
          free(oldName);
          free(newName);
-         free(p->name);
 
-         p->name = name;
-         window_modifyText( sysedit_widEdit, "txtName", p->name );
+         //window_modifyText( sysedit_widEdit, "txtName", p->name );
          dsys_saveSystem( sysedit_sys );
          dpl_saveSpob( p );
       }

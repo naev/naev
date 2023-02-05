@@ -420,6 +420,23 @@ int spob_rmService( Spob *p, int service )
 }
 
 /**
+ * @brief Renames a spob.
+ *
+ *    @param p Spob to rename.
+ *    @param newname New name to give the spob.
+ *    @return 0 on success.
+ */
+int spob_rename( Spob *p, char *newname )
+{
+   for (int i=0; i<array_size(spobname_stack); i++)
+      if (spobname_stack[i] == p->name)
+         spobname_stack[i] = newname;
+   free( p->name );
+   p->name = newname;
+   return 0;
+}
+
+/**
  * @brief Distance at which a pilot can jump.
  */
 int space_jumpDistance( const Pilot *p, const JumpPoint *jp )

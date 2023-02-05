@@ -331,6 +331,7 @@ int spob_setFaction( Spob *p, int faction );
 int spob_addCommodity( Spob *p, Commodity *c );
 int spob_addService( Spob *p, int service );
 int spob_rmService( Spob *p, int service );
+int spob_rename( Spob *p, char *newname );
 /* Land related stuff. */
 char spob_getColourChar( const Spob *p );
 const char *spob_getSymbol( const Spob *p );
