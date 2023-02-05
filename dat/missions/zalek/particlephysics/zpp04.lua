@@ -28,7 +28,7 @@ local reward = zpp.rewards.zpp04
 local cargo_name = _("strange container")
 local cargo_amount = 5 -- Amount of cargo to take
 
-local destpnt, destsys = spob.getS( "Thaddius Station" )
+local destpnt, destsys = spob.getS( "Thaddius Terminal" )
 local retpnt, retsys = spob.getS( "Katar I" )
 
 -- TODO redo the portrait

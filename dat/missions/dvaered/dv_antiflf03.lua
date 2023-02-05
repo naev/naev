@@ -35,7 +35,7 @@ local cinema = require "cinema"
 local ai_setup = require "ai.core.setup"
 
 -- Mission constants
-local DVplanet, DVsys = spob.getS("Stalwart Station")
+local DVplanet, DVsys = spob.getS("Stalwart Citadel")
 local basepos = spob.get("Sindbad"):pos()
 
 local base, bomber, bombers, fighterpos, fightersDV, fleetDV, fleetFLF, fleetpos, obstinate, vendetta, vigilance -- Non-persistent state

@@ -29,7 +29,7 @@ local cargo_name = _("Special Supplies")
 local cargo_amount = 150 -- Amount of cargo to take
 
 local retpnt, retsys = spob.getS("Research Post Sigma-13")
-local destpnt, destsys = spob.getS( "Thaddius Station" )
+local destpnt, destsys = spob.getS( "Thaddius Terminal" )
 local atksys = system.get( "NGC-23" )
 
 function create ()

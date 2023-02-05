@@ -25,7 +25,7 @@
    <spob>Draconis Epsilon</spob>
    <spob>Draconis Gamma</spob>
    <spob>Draconis Omega</spob>
-   <spob>Zabween</spob>
+   <spob>Zabween Outpost</spob>
   </sys>
   <sys name="Pilatis">
    <jump>Defa</jump>
@@ -33,7 +33,7 @@
    <spob>Pilatis I</spob>
    <spob>Pilatis II</spob>
    <spob>Pilatis III</spob>
-   <spob>Wildwood Station</spob>
+   <spob>Wildwood Nest</spob>
   </sys>
   <sys name="Defa">
    <jump>Oberon</jump>
