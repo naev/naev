@@ -442,10 +442,8 @@ int spob_rename( Spob *p, char *newname )
    free( p->name );
    p->name = newname;
 
-   /* Have to sort and reset IDs. */
-   qsort( spob_stack, array_size(spob_stack), sizeof(Spob), spob_cmp );
-   for (int j=0; j<array_size(spob_stack); j++)
-      spob_stack[j].id = j;
+   /* Order changed, so no more bsearch for us. */
+   spobstack_changed = 1;
 
    return 0;
 }
