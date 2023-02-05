@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<ship name="Raelid Outpost">
+<ship name="Fort Raelid">
  <points>1000</points>
- <base_type>Raelid Outpost</base_type>
+ <base_type>Fort Raelid</base_type>
  <gfx_space sx="1" sy="1">spob/space/002.webp</gfx_space>
  <gfx_comm>spob/exterior/station02.webp</gfx_comm>
  <GUI>slim</GUI>

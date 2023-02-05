@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <unidiff name="raglan_outpost_death">
  <system name="Haleb">
-  <spob name="Raglan Outpost">remove</spob>
+  <spob name="Fort Raglan">remove</spob>
  </system>
 </unidiff>

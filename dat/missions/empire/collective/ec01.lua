@@ -7,7 +7,7 @@
  <done>Collective Scouting</done>
  <chance>100</chance>
  <location>Bar</location>
- <spob>Omega Station</spob>
+ <spob>Omega Enclave</spob>
  <notes>
   <campaign>Collective</campaign>
  </notes>
@@ -29,7 +29,7 @@ local fmt = require "format"
 local emp = require "common.empire"
 
 -- Mission constants
-local misn_base, misn_base_sys = spob.getS("Omega Station")
+local misn_base, misn_base_sys = spob.getS("Omega Enclave")
 local targsys1 = system.get("C-43")
 local targsys2 = system.get("C-59")
 
@@ -122,7 +122,7 @@ function land()
     "I suppose all went well? Those drones can really give a beating. We'll have the researchers start looking at your logs right away. Meet me in the bar again in a while."]]) )
       player.pay(mem.credits)
       faction.modPlayerSingle("Empire",5)
-      emp.addCollectiveLog( _([[You helped gather intel on the Collective by scanning Collective systems. Lt. Commander Dimitri told you to meet him in the bar again on Omega Station.]]) )
+      emp.addCollectiveLog( _([[You helped gather intel on the Collective by scanning Collective systems. Lt. Commander Dimitri told you to meet him in the bar again on Omega Enclave.]]) )
       misn.finish(true)
    end
 end

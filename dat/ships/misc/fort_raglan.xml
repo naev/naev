@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<ship name="Raglan Outpost">
+<ship name="Fort Raglan">
  <points>1000</points>
- <base_type>Raglan Outpost</base_type>
+ <base_type>Fort Raglan</base_type>
  <gfx_space sx="1" sy="1">spob/space/station-battlestation.webp</gfx_space>
  <gfx_comm>spob/exterior/station05.webp</gfx_comm>
  <GUI>slim</GUI>

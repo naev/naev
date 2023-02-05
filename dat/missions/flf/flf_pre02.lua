@@ -65,7 +65,7 @@ function accept ()
       mem.marker = misn.markerAdd( mem.missys, "low" )
       misn.setReward( _("A chance to make friends with the FLF.") )
 
-      mem.DVplanet, mem.DVsys = spob.getS("Raelid Outpost")
+      mem.DVplanet, mem.DVsys = spob.getS("Fort Raelid")
 
       mem.reinforcements_arrived = false
       mem.dv_ships_left = 0

@@ -7,7 +7,7 @@
  <done>Operation Black Trinity</done>
  <chance>100</chance>
  <location>Bar</location>
- <spob>Omega Station</spob>
+ <spob>Omega Enclave</spob>
  <tags>
   <tag>emp_cap_ch01_lrg</tag>
  </tags>
@@ -34,7 +34,7 @@ local pilotai = require "pilotai"
 local equipopt = require "equipopt"
 
 -- Mission constants
-local misn_base = spob.get("Omega Station")
+local misn_base = spob.get("Omega Enclave")
 local misn_target_sys1 = system.get("C-59")
 local misn_target_sys2 = system.get("C-28")
 local misn_final_sys = system.get("C-00")

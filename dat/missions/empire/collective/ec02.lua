@@ -7,7 +7,7 @@
  <done>Collective Espionage 1</done>
  <chance>100</chance>
  <location>Bar</location>
- <spob>Omega Station</spob>
+ <spob>Omega Enclave</spob>
  <notes>
   <campaign>Collective</campaign>
  </notes>
@@ -31,7 +31,7 @@ local fmt = require "format"
 local cinema = require "cinema"
 
 -- Mission consstants
-local misn_base, misn_base_sys = spob.getS("Omega Station")
+local misn_base, misn_base_sys = spob.getS("Omega Enclave")
 local misn_target, misn_target_sys = spob.getS("Eiroik")
 
 local swarm1, swarm2, swarm3 -- Non-persistent state
@@ -93,7 +93,7 @@ function land()
       faction.modPlayerSingle("Empire",5)
       player.pay( emp.rewards.ec02 )
 
-      emp.addCollectiveLog( _([[You monitored Collective communications for the Empire again, this time while landed on Eiroik. Lt. Commander Dimitri told you to meet him in the bar on Omega Station again later.]]) )
+      emp.addCollectiveLog( _([[You monitored Collective communications for the Empire again, this time while landed on Eiroik. Lt. Commander Dimitri told you to meet him in the bar on Omega Enclave again later.]]) )
 
       misn.finish(true)
    end

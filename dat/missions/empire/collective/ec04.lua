@@ -7,7 +7,7 @@
  <done>Collective Distraction</done>
  <chance>100</chance>
  <location>Land</location>
- <spob>Omega Station</spob>
+ <spob>Omega Enclave</spob>
  <notes>
   <campaign>Collective</campaign>
  </notes>
@@ -34,7 +34,7 @@ local emp = require "common.empire"
 
 -- Mission constants
 local misn_target, misn_target_sys = spob.getS("Eiroik")
-local misn_base, misn_base_sys = spob.getS("Omega Station")
+local misn_base, misn_base_sys = spob.getS("Omega Enclave")
 local credits = emp.rewards.ec04
 
 local fleet1, fleet2, swarm1, swarm2, swarm3 -- Non-persistent state

@@ -7,7 +7,7 @@
  <done>Collective Extraction</done>
  <chance>100</chance>
  <location>Bar</location>
- <spob>Omega Station</spob>
+ <spob>Omega Enclave</spob>
  <notes>
   <campaign>Collective</campaign>
   <tier>4</tier>
@@ -47,7 +47,7 @@ local fmt = require "format"
 local emp = require "common.empire"
 
 -- Mission constants
-local misn_base, misn_base_sys = spob.getS("Omega Station")
+local misn_base, misn_base_sys = spob.getS("Omega Enclave")
 local misn_target_sys = system.get("Rockbed")
 local misn_flee_sys = system.get("Capricorn")
 
@@ -320,13 +320,13 @@ function land ()
     "You weren't supposed to let the Trinity get away! Now we have no cards to play. We must wait for the Collective response or new information before being able to continue. We'll notify you if we have something you can do for us, but for now we just wait."]]) )
          var.push("trinity", true)
          credits = credits / 2
-         emp.addCollectiveLog( _([[You failed to destroy the ESS Trinity, putting a hitch in the Empire's plans. You should meet back with Commodore Keer at the bar on Omega Station; she said that they would notify you if they have something more that you can do.]]) )
+         emp.addCollectiveLog( _([[You failed to destroy the ESS Trinity, putting a hitch in the Empire's plans. You should meet back with Commodore Keer at the bar on Omega Enclave; she said that they would notify you if they have something more that you can do.]]) )
       else
          -- Successfully killed
          tk.msg( _("Mission Accomplished"), fmt.f(_([[You see Commodore Keer with a dozen soldiers waiting for you outside the landing pad.
     "Congratulations on the success, {player}. We never really expected to take Zakred alive. Good riddance. The next step is to begin an all-out attack on Collective territory. Meet up in the bar when you're ready. We'll need all available pilots."]]), {player=player.name()}) )
          var.push("trinity", false)
-         emp.addCollectiveLog( _([[You successfully killed Zakred (a Collective spy) and destroyed the ESS Trinity. Commodore Keer told you to meet her again at the bar on Omega Station for an all-out attack on Collective territory.]]) )
+         emp.addCollectiveLog( _([[You successfully killed Zakred (a Collective spy) and destroyed the ESS Trinity. Commodore Keer told you to meet her again at the bar on Omega Enclave for an all-out attack on Collective territory.]]) )
       end
 
       -- Rewards

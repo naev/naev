@@ -40,7 +40,7 @@ Stages
 2: jumped in and hostile drones spawned
 3: landed on Jurai and head towards Ruadan
 4: can't land message
-5: landed and on Ruadan Station the way to Excelcior
+5: landed and on Ruadan Terminal the way to Excelcior
 6: (second ambush, can be skipped )
 7: landed on Excelcior, on way back
 --]]
@@ -221,7 +221,7 @@ end
 function cannotLand()
     local cur_planet = mem.dest_planet
     mem.stage = 4
-    mem.dest_planet, mem.dest_sys = spob.getS("Ruadan Station")
+    mem.dest_planet, mem.dest_sys = spob.getS("Ruadan Terminal")
     vn.clear()
     vn.scene()
     local mensing = vn.newCharacter( nebu_research.vn_mensing() )

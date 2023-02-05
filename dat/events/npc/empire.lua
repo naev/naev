@@ -82,7 +82,7 @@ local msg_tip = {
 local msg_cond = {
    { npc.test_misnHint("Empire Recruitment"), _([["Have you thought about doing shipping for the Empire? It's great work! You just need to find a recruiter to teach you the ropes."]])},
    { npc.test_misnHint("Empire Shipping 2"), _([["I hear you can get a Heavy Weapons License if you help out the Empire doing special shipping missions."]])},
-   { npc.test_misnHint("Collective Espionage 1"), _([["I've heard that there seems to be lots of combat near Fortitude. You might even be able to help if you make it to Omega Station."]])},
+   { npc.test_misnHint("Collective Espionage 1"), _([["I've heard that there seems to be lots of combat near Fortitude. You might even be able to help if you make it to Omega Enclave."]])},
    { npc.test_misnHint("Operation Cold Metal"), _([["I was getting rid of some documents the other day and found some old document about a project to create a fully autonomous self-replicating armada of robot ships. I wonder what happened with that?"]])},
    { function () return (player.chapter()=="0") end, _([["I hear the Empire is looking for rare minerals in Gamma Polaris. What could they be building?"]])},
    { function () return (player.chapter()~="0") end, _([["Did you see the incredible hypergate at Gamma Polaris? The Empire is still unrivaled by the Great Houses!"]])},

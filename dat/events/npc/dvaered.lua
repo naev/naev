@@ -52,7 +52,7 @@ local msg_lore = {
    _([["Did you watch the bare-hand fight Ironhead VS Dodgeman? It ended at round 11, but Ironhead had no hope anymore after round 5, when he got both his arms torn out. Dodgeman's new cyber mandibles are really incredible!"]]),
    _([["Our Warlord is currently fighting for control over another planet. We all support him unconditionally, of course! Of course…"]]), -- Negative stuff
    _([["To be a good Dvaered, you have to be right, loyal and strong. I guess. At least that's what they say all day on holovision."]]),
-   _([["Do you know the 'Dvaered-Frontier common anti-piracy treaty'? Dvaered High Command sent a huge fleet to the Frontier Council and forced them to sign it. This way, we can pretend our patrols in Frontier space are legal. We even got the right to build Raglan Outpost that way."]]),
+   _([["Do you know the 'Dvaered-Frontier common anti-piracy treaty'? Dvaered High Command sent a huge fleet to the Frontier Council and forced them to sign it. This way, we can pretend our patrols in Frontier space are legal. We even got the right to build Fort Raglan that way."]]),
    _([["They say we are all equal. Only righteousness, loyalty and strength allow us to climb to the top… And probably also being the child of a general could not harm."]]),
    _([["I'm sorry to inform you that Dvaered society is decadent: many generals of the High Command have been helped in their early military career by privileges due to their parents being also generals."]]),
    _([["I've been again caught in a brawl this morning. I'm so tired of being a Dvaered."]]),

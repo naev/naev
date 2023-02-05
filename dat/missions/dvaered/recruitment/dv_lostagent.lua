@@ -55,7 +55,7 @@ local agentPort = "neutral/female1.webp"
 function create()
    mem.flfsys  = system.get("Theras")
    mem.flfoys  = system.get("Haleb") -- Origin of the target
-   mem.duchpnt, mem.duchsys  = spob.getS("Myuirr Station")
+   mem.duchpnt, mem.duchsys  = spob.getS("Fort Myuirr")
 
    if not misn.claim({mem.flfsys,mem.duchsys}) then misn.finish(false) end -- Claim
 

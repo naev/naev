@@ -7,7 +7,7 @@
  <done>Collective Espionage 2</done>
  <chance>100</chance>
  <location>Bar</location>
- <spob>Omega Station</spob>
+ <spob>Omega Enclave</spob>
  <notes>
    <campaign>Collective</campaign>
    <tier>3</tier>
@@ -32,7 +32,7 @@ local emp = require "common.empire"
 
 -- Mission constants
 local dronequota = 5 -- The amount of drones the player must whack to win
-local misn_base = spob.get("Omega Station")
+local misn_base = spob.get("Omega Enclave")
 local misn_target_sys = system.get("C-59")
 
 
@@ -129,7 +129,7 @@ function land()
       player.pay(mem.credits)
       faction.modPlayerSingle("Empire",5)
 
-      emp.addCollectiveLog( _([[You provided a distraction while a commando team was inserted into Eiroik for the Empire to set up more sophisticated surveillance of the Collective. Lt. Commander Dimitri said that they should be back in about 10 periods and that the Empire will probably need your assistance on Omega Station again at that time.]]) )
+      emp.addCollectiveLog( _([[You provided a distraction while a commando team was inserted into Eiroik for the Empire to set up more sophisticated surveillance of the Collective. Lt. Commander Dimitri said that they should be back in about 10 periods and that the Empire will probably need your assistance on Omega Enclave again at that time.]]) )
 
       misn.finish(true)
    end

@@ -7,7 +7,7 @@
  <chance>40</chance>
  <location>Bar</location>
  <done>Empire Shipping 3</done>
- <spob>Omega Station</spob>
+ <spob>Omega Enclave</spob>
  <chapter>[^0]</chapter>
  <notes>
   <campaign>Collective</campaign>
@@ -33,7 +33,7 @@ local emp = require "common.empire"
 -- Mission constants
 local misn_nearby = system.get("Acheron")
 local misn_target = system.get("Merisi")
-local misn_base, misn_base_sys = spob.getS("Omega Station")
+local misn_base, misn_base_sys = spob.getS("Omega Enclave")
 
 local p -- Non-persistent state
 
@@ -136,7 +136,7 @@ function land()
     "Well it seems like the drone has some strange fixation on {sys}. We aren't quite sure what to make of it, but intelligence is working on it. Report back to the bar in a bit and we'll see what we can do about the Collective."]]), {sys=misn_target}) )
       faction.modPlayerSingle("Empire",5)
       player.pay(mem.credits)
-      emp.addCollectiveLog( _([[You scouted out a Collective drone on behalf of the Empire. Lt. Commander Dimitri told you to report back to the bar on Omega Station for your next mission.]]) )
+      emp.addCollectiveLog( _([[You scouted out a Collective drone on behalf of the Empire. Lt. Commander Dimitri told you to report back to the bar on Omega Enclave for your next mission.]]) )
       misn.finish(true)
    end
 end

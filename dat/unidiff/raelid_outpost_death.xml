@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <unidiff name="raelid_outpost_death">
  <system name="Raelid">
-  <spob name="Raelid Outpost">remove</spob>
+  <spob name="Fort Raelid">remove</spob>
  </system>
 </unidiff>
