@@ -204,7 +204,7 @@ function create ()
 #nTarget:#0 {plt} ({shipclass}-class ship)
 #nWanted:#0 Dead or Alive
 #nLast Seen:#0 {sys} system]]),
-         {target_faction=mem.target_faction, plt=mem.name, paying_faction=mem.paying_faction, sys=mem.mysys[1], shipclass=_(ship.get(mem.aship):classDisplay())} )
+         {target_faction=mem.target_faction, plt=mem.name, paying_faction=mem.paying_faction, sys=mem.mysys[1], shipclass=_(ship.get(mem.tgtship):classDisplay())} )
    if not mem.paying_faction:static() then
       desc = desc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
          {fct=mem.paying_faction})
@@ -511,7 +511,7 @@ function space_clue( target )
       p(_("How much money do you have?"))
       vn.menu( function ()
          return {
-            {fmt.f(_([[Pay {amount}]]), mem.price), "pay"},
+            {fmt.f(_([[Pay {amount}]]), {amount=fmt.credits(mem.price)}), "pay"},
             {_([[Give up]]), "giveup"},
             {_([[Threaten the pilot]]), "threaten"},
          }
