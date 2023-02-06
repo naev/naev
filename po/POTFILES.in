@@ -1274,6 +1274,7 @@ dat/spob/new_konnor.xml
 dat/spob/new_mars.xml
 dat/spob/new_phobos.xml
 dat/spob/new_pluto.xml
+dat/spob/new_space_trade_hub.xml
 dat/spob/new_thomas.xml
 dat/spob/newmarch_a1.xml
 dat/spob/newmarch_d3.xml
@@ -1489,6 +1490,10 @@ dat/spob/salsax_nest.xml
 dat/spob/samell.xml
 dat/spob/sanchez.xml
 dat/spob/sander.xml
+dat/spob/santoros_i.xml
+dat/spob/santoros_ia.xml
+dat/spob/santoros_ib.xml
+dat/spob/santoros_ii.xml
 dat/spob/saraab.xml
 dat/spob/sarcophagus_i.xml
 dat/spob/sarcophagus_ii.xml

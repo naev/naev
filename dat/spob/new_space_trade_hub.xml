@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="New Space Trade Hub">
+ <pos x="5215.960226" y="5203.282866"/>
+ <GFX>
+  <space>station-commerce2.webp</space>
+  <exterior>traderoom.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Traders Society</faction>
+  <base>100.000000</base>
+  <bonus>50.000000</bonus>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>150000</population>
+  <hide>0.600000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>The New Space Trade Hub gathers the largest representation of the different organizations of the Space Trade Society. Originally called the Santoros Chapter Station, since the original Space Trade Hub was destroyed in the Incident, it was re-inaugurated as the replacement and renamed the New Space Trade Hub. With the recent expansion, it is now considered the largest free-floating station in the galaxy.
+The station is split into 4 different wings housing the assortment of guilds and unions that belong to the Space Trade Society, and even quite a few that do not. The large number of people working at the station, combined with the constant flux of incoming traders and merchants makes it very lively with trade offers being discussed even in the hallways. Security is provided by the mercenary guild Astra Hominum who make sure that pirates and wanted individuals do not get on station, at least the most obvious ones, anyway.</description>
+  <bar>The bar connects and sprawls through the 4 different station wings, acting as the de facto meeting place for connecting and meeting people. Originally called the Santoros Dining and Drinks, it was renamed along with the station to simply the Forum, given its important functionality as one of the cores of the station. Provided by many of the guilds, the bar features over 17,000 different drinks, making it all but impossible to find ones you truly enjoy, but that doesn't stop everyone from keeping on trying.</bar>
+ </general>
+ <tags>
+  <tag>station</tag>
+  <tag>trade</tag>
+  <tag>new</tag>
+ </tags>
+</spob>
