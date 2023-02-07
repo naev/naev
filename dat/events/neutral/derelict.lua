@@ -392,7 +392,7 @@ function goodevent()
       ["Map: Empire Core"] = _("Empire core systems"),
       ["Map: Za'lek Core"] = _("Za'lek core systems"),
       ["Map: Dvaered Core"] = _("Dvaered core systems"),
-      ["Map: Dvaered-Soromid Trade Route"] = _("Dvaered-Soromid trade route"),
+      ["Map: Empire-Soromid Trade Route"] = _("Dvaered-Soromid trade route"),
       ["Map: Sirius Core"] = _("Sirius core systems"),
       ["Map: Sirian Border Systems"] = _("Sirian border systems"),
       ["Map: The Frontier"] = _("Frontier systems"),
