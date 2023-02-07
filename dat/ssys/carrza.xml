@@ -7,7 +7,9 @@
   <nebula volatility="3.500000" hue="290.000000">500.000000</nebula>
  </general>
  <pos x="472.914817" y="7.335556"/>
- <spobs/>
+ <spobs>
+  <spob>Wormhole Carrza</spob>
+ </spobs>
  <jumps>
   <jump target="Barnard's Star">
    <autopos/>

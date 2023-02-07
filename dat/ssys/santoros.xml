@@ -7,11 +7,11 @@
  </general>
  <pos x="307.665264" y="100.876574"/>
  <spobs>
+  <spob>New Space Trade Hub</spob>
   <spob>Santoros I</spob>
   <spob>Santoros I-a</spob>
   <spob>Santoros I-b</spob>
   <spob>Santoros II</spob>
-  <spob>New Space Trade Hub</spob>
  </spobs>
  <jumps>
   <jump target="Akodu">

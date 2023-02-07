@@ -7,7 +7,9 @@
   <nebula volatility="0.000000" hue="240.000000">150.000000</nebula>
  </general>
  <pos x="332.613810" y="-417.613944"/>
- <spobs/>
+ <spobs>
+  <spob>Wormhole Surano</spob>
+ </spobs>
  <jumps>
   <jump target="Arcanis">
    <autopos/>

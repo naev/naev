@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Wormhole Surano">
+ <display>#bWormhole#0</display>
+ <feature>#bWormhole#0</feature>
+ <lua>spob/lua/wormhole_surano.lua</lua>
+ <marker>spobmarker_wormhole</marker>
+ <pos x="-9633.472109" y="-8269.880355"/>
+ <GFX/>
+ <general>
+  <class>Wormhole</class>
+  <population>0</population>
+  <hide>0.050000</hide>
+  <services>
+   <uninhabited/>
+  </services>
+ </general>
+ <tags>
+  <tag>wormhole</tag>
+ </tags>
+</spob>

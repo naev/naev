@@ -1788,10 +1788,13 @@ dat/spob/wolf_ii.xml
 dat/spob/wolf_vii.xml
 dat/spob/wonclock.xml
 dat/spob/worgen.xml
+dat/spob/wormhole_carrza.xml
 dat/spob/wormhole_ngc13674.xml
 dat/spob/wormhole_ngc15670.xml
 dat/spob/wormhole_ngc1931.xml
 dat/spob/wormhole_ngc4087.xml
+dat/spob/wormhole_rei.xml
+dat/spob/wormhole_surano.xml
 dat/spob/worscha.xml
 dat/spob/wsthvn_d1.xml
 dat/spob/wsthvn_p1.xml
@@ -3260,10 +3263,13 @@ dat/spob/lua/sirius_mil_restricted.lua
 dat/spob/lua/soromid_mil_kataka.lua
 dat/spob/lua/soromid_mil_restricted.lua
 dat/spob/lua/thurion_mil_restricted.lua
+dat/spob/lua/wormhole_carrza.lua
 dat/spob/lua/wormhole_ngc13674.lua
 dat/spob/lua/wormhole_ngc15670.lua
 dat/spob/lua/wormhole_ngc1931.lua
 dat/spob/lua/wormhole_ngc4087.lua
+dat/spob/lua/wormhole_rei.lua
+dat/spob/lua/wormhole_surano.lua
 dat/spob/lua/zalek_mil_restricted.lua
 dat/spob/lua/zalek_mil_ruadan.lua
 src/SDL_keynames.h
