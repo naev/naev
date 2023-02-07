@@ -31,6 +31,9 @@
   <lua>spob/lua/hypergate_ngc14549.lua</lua>
   <tag_add>active</tag_add>
  </spob>
+ <ssys name="Haven">
+  <spob name="Hypergate Haven">add</spob>
+ </ssys>
  <tech name="Pirate Maps">
   <add>Map: Kretogg's Hypergate</add>
  </tech>
