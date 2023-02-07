@@ -54,6 +54,8 @@ function wormhole.load ()
 
       -- Set up background texture
       local _nw, _nh, ns = gfx.dim()
+      -- TODO have this actually render the real background, not just starfield
+      -- so it works properly with Nebulas and other fancy backgrounds
       starfield.init{ seed=sys:nameRaw(), static=true, nolocalstars=true, size=s*ns }
       mem.shader:send( "u_bgtex", starfield.canvas() )
 
