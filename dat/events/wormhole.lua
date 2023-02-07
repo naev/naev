@@ -52,12 +52,10 @@ function update( _dt, real_dt )
 end
 
 function wormhole ()
+   time.inc( time.new( 0, 0, 1000 + 2000*rnd.rnd() ) )
    player.teleport( target )
    local pp = player.pilot()
    pp:setPos( pp:pos() + vec2.newP( 100+100*rnd.rnd(), rnd.angle() ) )
    pp:shipvarPop( "wormhole" ) -- Clear wormhole
    pp:effectAdd("Wormhole Exit")
-
-   -- Increment time
-   time.inc( time.new( 0, 0, 1000 + 2000*rnd.rnd() ) )
 end
