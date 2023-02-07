@@ -1789,6 +1789,7 @@ dat/spob/wolf_vii.xml
 dat/spob/wonclock.xml
 dat/spob/worgen.xml
 dat/spob/wormhole_carrza.xml
+dat/spob/wormhole_ivella.xml
 dat/spob/wormhole_ngc13674.xml
 dat/spob/wormhole_ngc15670.xml
 dat/spob/wormhole_ngc1931.xml
@@ -3264,6 +3265,7 @@ dat/spob/lua/soromid_mil_kataka.lua
 dat/spob/lua/soromid_mil_restricted.lua
 dat/spob/lua/thurion_mil_restricted.lua
 dat/spob/lua/wormhole_carrza.lua
+dat/spob/lua/wormhole_ivella.lua
 dat/spob/lua/wormhole_ngc13674.lua
 dat/spob/lua/wormhole_ngc15670.lua
 dat/spob/lua/wormhole_ngc1931.lua

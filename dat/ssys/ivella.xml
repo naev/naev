@@ -7,7 +7,9 @@
   <nebula volatility="0.600000" hue="250.000000">150.000000</nebula>
  </general>
  <pos x="669.692960" y="516.229045"/>
- <spobs/>
+ <spobs>
+  <spob>Wormhole Ivella</spob>
+ </spobs>
  <jumps>
   <jump target="Point Zero">
    <autopos/>
