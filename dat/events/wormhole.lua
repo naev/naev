@@ -11,7 +11,6 @@ local pp_shaders = require "pp_shaders"
 
 local pixelcode = lf.read( "glsl/love/wormhole_travel.frag" )
 
-
 local target, shader, r
 local sfx = audio.newSource( 'snd/sounds/wormhole.ogg' )
 function create ()
@@ -58,4 +57,7 @@ function wormhole ()
    pp:setPos( pp:pos() + vec2.newP( 100+100*rnd.rnd(), rnd.angle() ) )
    pp:shipvarPop( "wormhole" ) -- Clear wormhole
    pp:effectAdd("Wormhole Exit")
+
+   -- Increment time
+   time.inc( time.new( 0, 0, 1000 + 2000*rnd.rnd() ) )
 end
