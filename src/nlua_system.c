@@ -409,7 +409,6 @@ static int systemL_background( lua_State *L )
  *
  *    @luatparam System s System to get nebula parameters from.
  *    @luatreturn number The density of the system.
- *    @luatreturn number The volatility of the system.
  *    @luatreturn number The amount of nebula damage done per second.
  * @luafunc nebula
  */
