@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Hypergate Haven">
+ <display>Construction</display>
+ <marker>spobmarker_triangle</marker>
+ <pos x="7362.307206" y="7451.702912"/>
+ <GFX>
+  <space>hypergate_early_construction_stage.webp</space>
+ </GFX>
+ <presence>
+  <faction>Wild Ones</faction>
+  <base>20.000000</base>
+  <bonus>10.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>Construct</class>
+  <population>0</population>
+  <hide>0.600000</hide>
+  <services/>
+ </general>
+ <tags>
+  <tag>hypergate</tag>
+ </tags>
+</spob>
