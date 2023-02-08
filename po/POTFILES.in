@@ -1797,6 +1797,7 @@ dat/spob/wormhole_ngc1931.xml
 dat/spob/wormhole_ngc4087.xml
 dat/spob/wormhole_rei.xml
 dat/spob/wormhole_surano.xml
+dat/spob/wormhole_zied.xml
 dat/spob/worscha.xml
 dat/spob/wsthvn_d1.xml
 dat/spob/wsthvn_p1.xml
@@ -3273,6 +3274,7 @@ dat/spob/lua/wormhole_ngc1931.lua
 dat/spob/lua/wormhole_ngc4087.lua
 dat/spob/lua/wormhole_rei.lua
 dat/spob/lua/wormhole_surano.lua
+dat/spob/lua/wormhole_zied.lua
 dat/spob/lua/zalek_mil_restricted.lua
 dat/spob/lua/zalek_mil_ruadan.lua
 src/SDL_keynames.h
