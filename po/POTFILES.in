@@ -2723,6 +2723,7 @@ dat/events/npc/raven_clan.lua
 dat/events/npc/sirius.lua
 dat/events/npc/soromid.lua
 dat/events/npc/thurion.lua
+dat/events/npc/trader.lua
 dat/events/npc/wild_ones.lua
 dat/events/npc/zalek.lua
 dat/events/pers.lua
