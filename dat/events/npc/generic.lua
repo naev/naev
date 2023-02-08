@@ -9,16 +9,6 @@ local jm_chance_max = 0.25
 -- State. Nothing persists.
 local msg_combined
 
-local gfx_list = {
-   "neutral/female1n.webp",
-   "neutral/female2n.webp",
-   "neutral/female2n_nogog.webp",
-   "neutral/female3n.webp",
-   "neutral/female4n.webp",
-   "neutral/male1n.webp",
-   "neutral/male2n.webp",
-}
-
 local desc_list = {
    _("This person seems to be here to relax."),
    _("There is a civilian sitting on one of the tables."),
@@ -175,11 +165,6 @@ return function ()
       local name = _("Civilian")
       local desc = desc_list[ rnd.rnd(1,#desc_list) ]
       local image, prt = vni.generic()
-      -- TODO make this more proper
-      if not fct and rnd.rnd() < 0.3 then
-         prt = gfx_list[ rnd.rnd(1,#gfx_list) ]
-         image = prt
-      end
       local msg, func
       local r = rnd.rnd()
 
