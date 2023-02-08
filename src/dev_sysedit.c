@@ -712,7 +712,9 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
          .u.spob  = i,
       };
       int selected = sysedit_isSelected( &sel );
-      sysedit_renderSprite( p->gfx_space, x, y, p->pos.x, p->pos.y, 0, 0, NULL, selected, p->name );
+      /* TODO handle non-sprite rendering. */
+      if (p->gfx_space != NULL)
+         sysedit_renderSprite( p->gfx_space, x, y, p->pos.x, p->pos.y, 0, 0, NULL, selected, p->name );
    }
 
    /* Render jump points. */
