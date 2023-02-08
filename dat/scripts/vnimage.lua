@@ -28,6 +28,9 @@ local neutral_m = {
    "neutral/miner1.webp",
    "neutral/thief1.webp",
    "neutral/thief2.webp",
+   -- New images
+   {"neutral/male1n.webp"},
+   {"neutral/male2n.webp"},
 }
 local neutral_f = {
    "neutral/female1.webp",
@@ -46,13 +49,25 @@ local neutral_f = {
    "neutral/miner2.webp",
    "neutral/thief3.webp",
    "neutral/thief4.webp",
+   -- New images
+   {"neutral/female1n.webp"},
+   {"neutral/female2n.webp"},
+   {"neutral/female2n_nogog.webp"},
+   {"neutral/female3n.webp"},
+   {"neutral/female4n.webp"},
 }
 function vni.genericMale()
    local p = neutral_m[ rnd.rnd(1,#neutral_m) ]
+   if type(p)=="table" then
+      return p[1], p[1]
+   end
    return portrait.getFullPath(p), p
 end
 function vni.genericFemale()
    local p = neutral_f[ rnd.rnd(1,#neutral_f) ]
+   if type(p)=="table" then
+      return p[1], p[1]
+   end
    return portrait.getFullPath(p), p
 end
 function vni.generic()
