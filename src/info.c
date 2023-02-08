@@ -1121,7 +1121,7 @@ static void info_getDim( unsigned int wid, int *w, int *h, int *lw )
 {
    /* Get the dimensions. */
    window_dimWindow( wid, w, h );
-   *lw = *w-60-BUTTON_WIDTH-120;
+   *lw = *w-60-BUTTON_WIDTH-190;
 }
 
 /**
@@ -1175,7 +1175,7 @@ static void info_openStandings( unsigned int wid )
          &gl_defFont, NULL, NULL );
    window_addText( wid, lw+40, 0, (w-(lw+60)), 20, 1, "txtStanding",
          &gl_defFont, NULL, NULL );
-   window_addText( wid, lw+40, 0, (w-(lw+60)), 300, 0, "txtDescription",
+   window_addText( wid, lw+40, 0, (w-(lw+60)), h-80, 0, "txtDescription",
          &gl_defFont, NULL, NULL );
 
    /* Gets the faction standings. */
@@ -1206,6 +1206,7 @@ static void standings_update( unsigned int wid, const char *str )
    int p, y;
    const glTexture *t;
    int w, h, lw, m, l;
+   const int *flist;
    char buf[STRMAX];
 
    /* Get dimensions. */
@@ -1230,7 +1231,7 @@ static void standings_update( unsigned int wid, const char *str )
    }
 
    /* Modify text. */
-   y -= 20;
+   y -= 10;
    m = round( faction_getPlayer( info_factions[p] ) );
    snprintf( buf, sizeof(buf), "#%c%+d%%#0   [ %s ]",
       faction_getColourChar( info_factions[p] ), m,
@@ -1243,6 +1244,38 @@ static void standings_update( unsigned int wid, const char *str )
    y -= 30;
    l  = scnprintf( buf, sizeof(buf), "%s\n\n", faction_description( info_factions[p] ) );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("You can have a maximum reputation of %.0f%% with this faction."), round(faction_reputationMax( info_factions[p] )) );
+
+   flist = faction_getAllies( info_factions[p] );
+   if (array_size(flist)>0) {
+      int added = 0;
+      for (int i=0; i<array_size(flist); i++) {
+         int f = flist[i];
+         if (faction_isStatic(f) || !faction_isKnown(f) || faction_isInvisible(f) || faction_isDynamic(f))
+            continue;
+
+         if (added==0) {
+            l += scnprintf( &buf[l], sizeof(buf)-l, "\n\n%s", _("Ally Factions:") );
+            added = 1;
+         }
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n- %s", faction_longname( f ) );
+      }
+   }
+   flist = faction_getEnemies( info_factions[p] );
+   if (array_size(flist)>0) {
+      int added = 0;
+      for (int i=0; i<array_size(flist); i++) {
+         int f = flist[i];
+         if (faction_isStatic(f) || !faction_isKnown(f) || faction_isInvisible(f) || faction_isDynamic(f))
+            continue;
+
+         if (added==0) {
+            l += scnprintf( &buf[l], sizeof(buf)-l, "\n\n%s", _("Enemy Factions:") );
+            added = 1;
+         }
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n- %s", faction_longname( f ) );
+      }
+   }
+
    window_modifyText( wid, "txtDescription", buf );
    window_moveWidget( wid, "txtDescription", lw+40, y );
 }
