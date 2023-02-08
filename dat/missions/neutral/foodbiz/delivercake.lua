@@ -52,6 +52,11 @@ function accept()
    paddy(fmt.f(_([[The woman smiles. "Aren't you the pilot that delivered those sweet love letters to me? I think you are! My name is Paddy. Sorry I didn't introduce myself before. I was caught up in the moment; Michal's letters are always very exciting." She blushes. "Anyway, Michal is trying to start a restaurant on {pnt}. Would you be interested in giving him a hand?"]]),
       {pnt=targetworld} ) )
 
+   vn.menu{
+      {_([[Accept]]), "accept"},
+      {_([[Decline]]), "decline"},
+   }
+
    vn.label("decline")
    paddy(_([["Oh, that's too bad. I thought it was such a good idea, too…"]]))
    vn.done()
