@@ -30,7 +30,7 @@ class Shader:
         yield f"   }} {self.name};\n"
 
     def source_chunks(self):
-        gshader = f"\"{self.geom-path}\"" if self.geom_path!=None else "NULL"
+        gshader = f"\"{self.geom_path}\"" if self.geom_path!=None else "NULL"
         yield f"   shaders.{self.name}.program = gl_program_vert_frag(\"{self.vs_path}\", \"{self.fs_path}\", {gshader});\n"
         for attribute in self.attributes:
             yield f"   shaders.{self.name}.{attribute} = glGetAttribLocation(shaders.{self.name}.program, \"{attribute}\");\n"
@@ -162,8 +162,9 @@ SHADERS = [
       vs_path = "dust.vert",
       fs_path = "dust.frag",
       attributes = ["vertex", "brightness"],
-      uniforms = ["projection", "offset_xy", "dims", "xy", "use_lines", "dim"],
+      uniforms = ["projection", "offset_xy", "dims", "screen", "use_lines", "dim"],
       subroutines = {},
+      geom_path = "dust.geom",
    ),
    Shader(
       name = "lines",

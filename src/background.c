@@ -148,14 +148,15 @@ void background_moveDust( double x, double y )
 void background_renderDust( const double dt )
 {
    (void) dt;
-   GLfloat x, y, h, w, m;
-   double z;
+   GLfloat h, w, m;
+   double z, angle;
    mat4 projection;
    int points = 1;
 
    /* Do some scaling for now. */
    z = cam_getZoom();
    m = 1.;
+   angle = 0.;
    projection = gl_view_matrix;
    mat4_translate( &projection, SCREEN_W/2., SCREEN_H/2., 0 );
    mat4_scale( &projection, z, z, 1 );
@@ -175,9 +176,7 @@ void background_renderDust( const double dt )
          m /= HYPERSPACE_DUST_BLUR;
          m *= HYPERSPACE_DUST_LENGTH;
          if (m > 1.) {
-            double angle = atan2( dy, dx );
-            x = m * cos( angle );
-            y = m * sin( angle );
+            angle = atan2( dy, dx );
             points = 0;
          }
       }
@@ -185,11 +184,8 @@ void background_renderDust( const double dt )
          /* Very short lines tend to flicker horribly. A stock Llama at 2x
           * speed just so happens to make very short lines. A 5px minimum
           * is long enough to (mostly) alleviate the flickering. */
-         /* TODO don't use GL_LINES. */
-         double angle = atan2( dy, dx );
+         angle = atan2( dy, dx );
          m = MAX( 5., dt_mod * vmod/25. - 20 );
-         x = m * cos( angle );
-         y = m * sin( angle );
          points = 0;
       }
    }
@@ -204,7 +200,11 @@ void background_renderDust( const double dt )
    glUseProgram(shaders.dust.program);
    gl_uniformMat4(shaders.dust.projection, &projection);
    glUniform2f(shaders.dust.offset_xy, dust_x, dust_y);
-   glUniform3f(shaders.dust.dims, w, h, 1. / gl_screen.scale);
+   if (!points)
+      glUniform3f(shaders.dust.dims, 3, 0.0, 0.0);
+   else
+      glUniform3f(shaders.dust.dims, 3, angle, m);
+   glUniform3f(shaders.dust.screen, w, h, 1. / gl_screen.scale);
    glUniform1i(shaders.dust.use_lines, !points);
    glUniform1f(shaders.dust.dim, CLAMP(0.5, 1., 1.-(m-1.)/25.)*z );
 
@@ -213,22 +213,11 @@ void background_renderDust( const double dt )
    glEnableVertexAttribArray( shaders.dust.brightness );
 
    /* Set up the vertices. */
-   if (points) {
-      gl_vboActivateAttribOffset( dust_vertexVBO, shaders.dust.vertex, 0,
-            2, GL_FLOAT, 6 * sizeof(GLfloat) );
-      gl_vboActivateAttribOffset( dust_vertexVBO, shaders.dust.brightness, 2 * sizeof(GLfloat),
-            1, GL_FLOAT, 6 * sizeof(GLfloat) );
-      glUniform2f(shaders.dust.xy, 0., 0.);
-      glDrawArrays( GL_POINTS, 0, ndust/2 );
-   }
-   else {
-      gl_vboActivateAttribOffset( dust_vertexVBO, shaders.dust.vertex, 0,
-            2, GL_FLOAT, 3 * sizeof(GLfloat) );
-      gl_vboActivateAttribOffset( dust_vertexVBO, shaders.dust.brightness, 2 * sizeof(GLfloat),
-            1, GL_FLOAT, 3 * sizeof(GLfloat) );
-      glUniform2f(shaders.dust.xy, x, y);
-      glDrawArrays( GL_LINES, 0, ndust );
-   }
+   gl_vboActivateAttribOffset( dust_vertexVBO, shaders.dust.vertex, 0,
+         2, GL_FLOAT, 6 * sizeof(GLfloat) );
+   gl_vboActivateAttribOffset( dust_vertexVBO, shaders.dust.brightness, 2 * sizeof(GLfloat),
+         1, GL_FLOAT, 6 * sizeof(GLfloat) );
+   glDrawArrays( GL_POINTS, 0, ndust/2 );
 
    /* Disable vertex array. */
    glDisableVertexAttribArray( shaders.dust.vertex );

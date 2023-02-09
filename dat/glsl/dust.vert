@@ -1,31 +1,22 @@
 uniform mat4 projection;
-
-uniform vec2 offset_xy;
-uniform vec2 xy;
 uniform vec3 dims;
-uniform bool use_lines;
+uniform vec3 screen;
+uniform vec2 offset_xy;
 
 in vec4 vertex;
 in float brightness;
-
-out float brightness_out;
+out float brightness_geom;
+out vec2 radius_geom;
 
 void main(void) {
+   vec4 center = vertex;
+   float b = 1.0/(9.0 - 10.0*brightness);
+   center.xy += offset_xy * b;
+   center.xy = mod(center.xy + screen.xy/2.0, screen.xy) - screen.xy/2.0;
+
+   radius_geom = dims.x * vec2( projection[0][0], projection[1][1] );
+
    /* Calculate position */
-   float b        = 1.0/(9.0 - 10.0*brightness);
-   gl_Position    = vertex;
-   gl_Position.xy+= offset_xy * b;
-
-   /* Check boundaries */
-   gl_Position.xy = mod(gl_Position.xy + dims.xy/2.0, dims.xy) - dims.xy/2.0;
-
-   /* Generate lines. */
-   if (use_lines) {
-      vec2 v = xy * brightness;
-      gl_Position.xy += mod(float(gl_VertexID), 2.0) * v * dims.z;
-   }
-
-   gl_Position = projection * gl_Position;
-
-   brightness_out = brightness;
+   gl_Position = projection * center;
+   brightness_geom = brightness;
 }
