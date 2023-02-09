@@ -16,7 +16,7 @@ void main(void) {
    gl_Position    = vertex;
    gl_Position.xy+= star_xy * b;
 
-   /* check boundaries */
+   /* Check boundaries */
    gl_Position.xy = mod(gl_Position.xy + dims.xy/2.0, dims.xy) - dims.xy/2.0;
 
    /* Generate lines. */
