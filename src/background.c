@@ -201,38 +201,38 @@ void background_renderDust( const double dt )
    h += (h / conf.zoom_far - 1.);
 
    /* Common shader stuff. */
-   glUseProgram(shaders.stars.program);
-   gl_uniformMat4(shaders.stars.projection, &projection);
-   glUniform2f(shaders.stars.star_xy, star_x, star_y);
-   glUniform3f(shaders.stars.dims, w, h, 1. / gl_screen.scale);
-   glUniform1i(shaders.stars.use_lines, !points);
-   glUniform1f(shaders.stars.dim, CLAMP(0.5, 1., 1.-(m-1.)/25.)*z );
+   glUseProgram(shaders.dust.program);
+   gl_uniformMat4(shaders.dust.projection, &projection);
+   glUniform2f(shaders.dust.star_xy, star_x, star_y);
+   glUniform3f(shaders.dust.dims, w, h, 1. / gl_screen.scale);
+   glUniform1i(shaders.dust.use_lines, !points);
+   glUniform1f(shaders.dust.dim, CLAMP(0.5, 1., 1.-(m-1.)/25.)*z );
 
    /* Vertices. */
-   glEnableVertexAttribArray( shaders.stars.vertex );
-   glEnableVertexAttribArray( shaders.stars.brightness );
+   glEnableVertexAttribArray( shaders.dust.vertex );
+   glEnableVertexAttribArray( shaders.dust.brightness );
 
    /* Set up the vertices. */
    if (points) {
-      gl_vboActivateAttribOffset( star_vertexVBO, shaders.stars.vertex, 0,
+      gl_vboActivateAttribOffset( star_vertexVBO, shaders.dust.vertex, 0,
             2, GL_FLOAT, 6 * sizeof(GLfloat) );
-      gl_vboActivateAttribOffset( star_vertexVBO, shaders.stars.brightness, 2 * sizeof(GLfloat),
+      gl_vboActivateAttribOffset( star_vertexVBO, shaders.dust.brightness, 2 * sizeof(GLfloat),
             1, GL_FLOAT, 6 * sizeof(GLfloat) );
-      glUniform2f(shaders.stars.xy, 0., 0.);
+      glUniform2f(shaders.dust.xy, 0., 0.);
       glDrawArrays( GL_POINTS, 0, nstars/2 );
    }
    else {
-      gl_vboActivateAttribOffset( star_vertexVBO, shaders.stars.vertex, 0,
+      gl_vboActivateAttribOffset( star_vertexVBO, shaders.dust.vertex, 0,
             2, GL_FLOAT, 3 * sizeof(GLfloat) );
-      gl_vboActivateAttribOffset( star_vertexVBO, shaders.stars.brightness, 2 * sizeof(GLfloat),
+      gl_vboActivateAttribOffset( star_vertexVBO, shaders.dust.brightness, 2 * sizeof(GLfloat),
             1, GL_FLOAT, 3 * sizeof(GLfloat) );
-      glUniform2f(shaders.stars.xy, x, y);
+      glUniform2f(shaders.dust.xy, x, y);
       glDrawArrays( GL_LINES, 0, nstars );
    }
 
    /* Disable vertex array. */
-   glDisableVertexAttribArray( shaders.stars.vertex );
-   glDisableVertexAttribArray( shaders.stars.brightness );
+   glDisableVertexAttribArray( shaders.dust.vertex );
+   glDisableVertexAttribArray( shaders.dust.brightness );
 
    glUseProgram(0);
 
