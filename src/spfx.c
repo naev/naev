@@ -224,7 +224,7 @@ static int spfx_base_parse( SPFX_Base *temp, const char *filename )
 
    /* Has shaders. */
    if (shadervert != NULL && shaderfrag != NULL) {
-      temp->shader      = gl_program_vert_frag( shadervert, shaderfrag );
+      temp->shader      = gl_program_vert_frag( shadervert, shaderfrag, NULL );
       temp->vertex      = glGetAttribLocation( temp->shader, "vertex");
       temp->projection  = glGetUniformLocation( temp->shader, "projection");
       temp->u_r         = glGetUniformLocation( temp->shader, "u_r" );

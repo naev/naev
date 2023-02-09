@@ -3,12 +3,13 @@
 num_shaders = 0
 
 class Shader:
-    def __init__(self, name, vs_path, fs_path, attributes, uniforms, subroutines):
+    def __init__(self, name, vs_path, fs_path, attributes, uniforms, subroutines, geom_path=None):
         global num_shaders
         num_shaders += 1
         self.name       = name
         self.vs_path    = vs_path
         self.fs_path    = fs_path
+        self.geom_path  = geom_path
         self.attributes = attributes
         self.uniforms   = uniforms
         self.subroutines= subroutines
@@ -29,7 +30,8 @@ class Shader:
         yield f"   }} {self.name};\n"
 
     def source_chunks(self):
-        yield f"   shaders.{self.name}.program = gl_program_vert_frag(\"{self.vs_path}\", \"{self.fs_path}\");\n"
+        gshader = f"\"{self.geom-path}\"" if self.geom_path!=None else "NULL"
+        yield f"   shaders.{self.name}.program = gl_program_vert_frag(\"{self.vs_path}\", \"{self.fs_path}\", {gshader});\n"
         for attribute in self.attributes:
             yield f"   shaders.{self.name}.{attribute} = glGetAttribLocation(shaders.{self.name}.program, \"{attribute}\");\n"
         for uniform in self.uniforms:
@@ -453,7 +455,7 @@ static int shaders_cmp( const void *p1, const void *p2 )
 static int shaders_loadSimple( const char *name, SimpleShader *shd, const char *fs_path )
 {
    shd->name   = name;
-   shd->program = gl_program_vert_frag( "project_pos.vert", fs_path );
+   shd->program = gl_program_vert_frag( "project_pos.vert", fs_path, NULL );
    shd->vertex = glGetAttribLocation( shd->program, "vertex" );
    shd->projection = glGetUniformLocation( shd->program, "projection" );
    shd->color  = glGetUniformLocation( shd->program, "color" );

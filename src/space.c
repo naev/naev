@@ -4425,7 +4425,7 @@ static const MapShader *mapshader_get( const char *name )
    array_push_back( &mapshaders, ms );
 
    ms->name      = strdup( name );
-   ms->program   = gl_program_vert_frag( "system_map.vert", name );
+   ms->program   = gl_program_vert_frag( "system_map.vert", name, NULL );
    ms->vertex    = glGetAttribLocation(  ms->program,  "vertex" );
    ms->projection= glGetUniformLocation( ms->program, "projection" );
    ms->time      = glGetUniformLocation( ms->program, "time" );

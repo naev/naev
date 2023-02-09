@@ -89,7 +89,7 @@ static int effect_parse( EffectData *efx, const char *file )
          xmlr_attr_strd(node,"vertex",vertex);
          if (vertex == NULL)
             vertex = strdup("effect.vert");
-         efx->program   = gl_program_vert_frag( vertex, xml_get(node) );
+         efx->program   = gl_program_vert_frag( vertex, xml_get(node), NULL );
          free( vertex );
          efx->vertex    = glGetAttribLocation( efx->program, "vertex" );
          efx->projection= glGetUniformLocation( efx->program, "projection" );
