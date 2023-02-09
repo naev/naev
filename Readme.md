@@ -18,7 +18,7 @@ accompanying everything from planets to equipment.
 ## DEPENDENCIES
 
 Naev's dependencies are intended to be widely available. In addition to a
-graphics card and driver supporting at least OpenGL 3.1, Naev requires:
+graphics card and driver supporting at least OpenGL 3.2, Naev requires:
 * SDL 2
 * libxml2
 * freetype2
