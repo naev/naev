@@ -135,7 +135,6 @@ typedef struct PlayerConf_s {
    double zoom_far; /**< Maximum in-game zoom to use should be less then zoom_near. */
    double zoom_near; /**< Minimum in-game zoom to use. */
    double zoom_speed; /**< Maximum zoom speed change. */
-   double zoom_stars; /**< How much stars can zoom (modulates zoom_[mix|max]). */
 
    /* Font sizes. */
    int font_size_console; /**< Console monospaced font size. */

@@ -495,7 +495,6 @@ static int naevL_conf( lua_State *L )
    PUSH_DOUBLE( L, "zoom_far", conf.zoom_far );
    PUSH_DOUBLE( L, "zoom_near", conf.zoom_near );
    PUSH_DOUBLE( L, "zoom_speed", conf.zoom_speed );
-   PUSH_DOUBLE( L, "zoom_stars", conf.zoom_stars );
    PUSH_INT( L, "font_size_console", conf.font_size_console );
    PUSH_INT( L, "font_size_intro", conf.font_size_intro );
    PUSH_INT( L, "font_size_def", conf.font_size_def );

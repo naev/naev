@@ -99,9 +99,9 @@ void background_initDust( int n )
 
    /* Calculate star buffer. */
    w  = (SCREEN_W + 2.*STAR_BUF);
-   w += conf.zoom_stars * (w / conf.zoom_far - 1.);
+   w += (w / conf.zoom_far - 1.);
    h  = (SCREEN_H + 2.*STAR_BUF);
-   h += conf.zoom_stars * (h / conf.zoom_far - 1.);
+   h += (h / conf.zoom_far - 1.);
    hw = w / 2.;
    hh = h / 2.;
 
@@ -155,7 +155,6 @@ void background_renderDust( const double dt )
 
    /* Do some scaling for now. */
    z = cam_getZoom();
-   z = 1. * (1. - conf.zoom_stars) + z * conf.zoom_stars;
    m = 1.;
    projection = gl_view_matrix;
    mat4_translate( &projection, SCREEN_W/2., SCREEN_H/2., 0 );
@@ -197,9 +196,9 @@ void background_renderDust( const double dt )
 
    /* Calculate some dimensions. */
    w  = (SCREEN_W + 2.*STAR_BUF);
-   w += conf.zoom_stars * (w / conf.zoom_far - 1.);
+   w += (w / conf.zoom_far - 1.);
    h  = (SCREEN_H + 2.*STAR_BUF);
-   h += conf.zoom_stars * (h / conf.zoom_far - 1.);
+   h += (h / conf.zoom_far - 1.);
 
    /* Common shader stuff. */
    glUseProgram(shaders.stars.program);

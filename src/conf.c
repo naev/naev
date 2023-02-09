@@ -135,7 +135,6 @@ void conf_setDefaults (void)
    conf.zoom_far     = ZOOM_FAR_DEFAULT;
    conf.zoom_near    = ZOOM_NEAR_DEFAULT;
    conf.zoom_speed   = ZOOM_SPEED_DEFAULT;
-   conf.zoom_stars   = 1.;
 
    /* Font sizes. */
    conf.font_size_console = FONT_SIZE_CONSOLE_DEFAULT;
@@ -393,7 +392,6 @@ int conf_loadConfig ( const char* file )
       conf_loadFloat( lEnv, "zoom_far", conf.zoom_far );
       conf_loadFloat( lEnv, "zoom_near", conf.zoom_near );
       conf_loadFloat( lEnv, "zoom_speed", conf.zoom_speed );
-      conf_loadFloat( lEnv, "zoom_stars", conf.zoom_stars );
 
       /* Font size. */
       conf_loadInt( lEnv, "font_size_console", conf.font_size_console );
@@ -999,10 +997,6 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment(_("Zooming speed in factor increments per second"));
    conf_saveFloat("zoom_speed",conf.zoom_speed);
-   conf_saveEmptyLine();
-
-   conf_saveComment(_("Zooming modulation factor for the starry background"));
-   conf_saveFloat("zoom_stars",conf.zoom_stars);
    conf_saveEmptyLine();
 
    /* Fonts. */
