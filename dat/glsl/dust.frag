@@ -1,5 +1,4 @@
 uniform bool use_lines;
-uniform float dim;
 uniform vec3 dims;
 
 in float brightness_frag;
@@ -16,7 +15,6 @@ void main (void) {
          pos.x = length_frag / dims.x - 1.0;
       else
          pos.x = (length_frag-dims.x) / (dims.x+dims.z);
-      colour_out.a *= dim;
    }
 
    colour_out.a *= smoothstep( 0.0, 1.0, 1.0-length(pos) );

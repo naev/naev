@@ -162,7 +162,7 @@ SHADERS = [
       vs_path = "dust.vert",
       fs_path = "dust.frag",
       attributes = ["vertex", "brightness"],
-      uniforms = ["projection", "offset_xy", "dims", "screen", "use_lines", "dim"],
+      uniforms = ["projection", "offset_xy", "dims", "screen", "use_lines"],
       subroutines = {},
       geom_path = "dust.geom",
    ),
