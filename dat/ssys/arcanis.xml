@@ -8,6 +8,7 @@
  </general>
  <pos x="394.290137" y="-340.685870"/>
  <spobs>
+  <spob>Arcania</spob>
   <spob_virtual>Miner Small</spob_virtual>
  </spobs>
  <jumps>
