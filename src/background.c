@@ -200,13 +200,12 @@ void background_renderDust( const double dt )
    glUseProgram(shaders.dust.program);
    gl_uniformMat4(shaders.dust.projection, &projection);
    glUniform2f(shaders.dust.offset_xy, dust_x, dust_y);
-   if (!points)
-      glUniform3f(shaders.dust.dims, 3, 0.0, 0.0);
+   if (points)
+      glUniform3f(shaders.dust.dims, 1. / gl_screen.scale + 1.0, 0., 0.);
    else
-      glUniform3f(shaders.dust.dims, 3, angle, m);
+      glUniform3f(shaders.dust.dims, 1. / gl_screen.scale + 1.0, angle, m);
    glUniform3f(shaders.dust.screen, w, h, 1. / gl_screen.scale);
    glUniform1i(shaders.dust.use_lines, !points);
-   glUniform1f(shaders.dust.dim, CLAMP(0.5, 1., 1.-(m-1.)/25.)*z );
 
    /* Vertices. */
    glEnableVertexAttribArray( shaders.dust.vertex );

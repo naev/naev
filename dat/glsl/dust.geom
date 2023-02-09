@@ -1,14 +1,16 @@
 layout (points) in;
 layout (triangle_strip, max_vertices = 4) out;
 
+uniform mat4 projection;
 uniform vec3 dims;
-uniform vec3 screen;
 uniform bool use_lines;
 
 in float brightness_geom[];
 in vec4 center_geom[];
-in vec2 radius_geom[];
+in float length_geom[];
+in vec2 angle_geom[];
 out float brightness_frag;
+out vec2 pos_frag;
 
 vec4 proj( mat2 R, float x, float y )
 {
@@ -18,40 +20,52 @@ vec4 proj( mat2 R, float x, float y )
 void main ()
 {
    vec4 center = gl_in[0].gl_Position;
-   vec2 r = radius_geom[0];
    brightness_frag = brightness_geom[0];
 
    /* Lines get extended and such. */
    if (use_lines) {
+      vec2 r = dims.xx;
+      float l = length_geom[0];
       float a = dims.y;
-      float l = dims.z * screen.z;
       float c = cos(a);
       float s = sin(a);
-      mat2 R = mat2( c, -s, s, c );
+      mat2 R = mat2( c, s, -s, c );
+      mat2 S = mat2( projection[0][0], 0.0, 0.0, projection[1][1] );
+      mat2 M = S * R;// * S;
 
-      gl_Position = center + proj( R, -r.x,   -r.y );
+      pos_frag = vec2(-1.0, -1.0);
+      gl_Position = center + proj( M, -r.x,   -r.y );
       EmitVertex();
 
-      gl_Position = center + proj( R,  r.x+l, -r.y );
+      pos_frag = vec2(1.0, -1.0);
+      gl_Position = center + proj( M,  r.x-l, -r.y );
       EmitVertex();
 
-      gl_Position = center + proj( R, -r.x,    r.y );
+      pos_frag = vec2(-1.0, 1.0);
+      gl_Position = center + proj( M, -r.x,    r.y );
       EmitVertex();
 
-      gl_Position = center + proj( R,  r.x+l,  r.y );
+      pos_frag = vec2(1.0, 1.0);
+      gl_Position = center + proj( M,  r.x-l,  r.y );
       EmitVertex();
    }
    /* Points are just centered primitives. */
    else {
+      vec2 r = dims.x * vec2( projection[0][0], projection[1][1] );
+
+      pos_frag = vec2(-1.0, -1.0);
       gl_Position = center + vec4(-r.x, -r.y, 0.0, 0.0);
       EmitVertex();
 
+      pos_frag = vec2(1.0, -1.0);
       gl_Position = center + vec4( r.x, -r.y, 0.0, 0.0);
       EmitVertex();
 
+      pos_frag = vec2(-1.0, 1.0);
       gl_Position = center + vec4(-r.x,  r.y, 0.0, 0.0);
       EmitVertex();
 
+      pos_frag = vec2(1.0, 1.0);
       gl_Position = center + vec4( r.x,  r.y, 0.0, 0.0);
       EmitVertex();
    }
