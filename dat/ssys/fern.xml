@@ -2,7 +2,7 @@
 <ssys name="Fern">
  <general>
   <radius>10000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>32.175000</interference>
   <nebula volatility="0.000000">300.000000</nebula>
  </general>

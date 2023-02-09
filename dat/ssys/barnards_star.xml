@@ -2,7 +2,7 @@
 <ssys name="Barnard's Star">
  <general>
   <radius>15000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>29.250000</interference>
   <nebula volatility="0.700000" hue="275.000000">400.000000</nebula>
  </general>

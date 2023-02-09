@@ -2,7 +2,7 @@
 <ssys name="Tide">
  <general>
   <radius>13000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>96.428475</interference>
   <nebula volatility="75.800000" hue="320.000000">800.000000</nebula>
  </general>

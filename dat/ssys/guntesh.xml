@@ -2,7 +2,7 @@
 <ssys name="Guntesh">
  <general>
   <radius>15000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>18.675000</interference>
   <nebula volatility="0.000000" hue="240.000000">100.000000</nebula>
  </general>

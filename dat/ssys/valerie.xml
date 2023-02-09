@@ -2,7 +2,7 @@
 <ssys name="Valerie">
  <general>
   <radius>23100.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
  <pos x="-150.266900" y="-182.390032"/>

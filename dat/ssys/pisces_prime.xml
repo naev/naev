@@ -5,7 +5,7 @@
   <map_shader>haze_map.frag</map_shader>
   <features>#rHaze (-50% Shield and Shield Regen)#0</features>
   <radius>16652.400000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>22.000000</interference>
  </general>
  <pos x="498.760621" y="846.192720"/>

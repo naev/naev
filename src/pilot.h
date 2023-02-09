@@ -23,8 +23,8 @@
 /* Hyperspace parameters. */
 #define HYPERSPACE_ENGINE_DELAY  3. /**< Time to warm up engine (seconds). */
 #define HYPERSPACE_FLY_DELAY     5. /**< Time it takes to hyperspace (seconds). */
-#define HYPERSPACE_STARS_BLUR    3. /**< How long it takes for stars to start blurring (seconds). */
-#define HYPERSPACE_STARS_LENGTH  250 /**< Length the stars blur to at max (pixels). */
+#define HYPERSPACE_DUST_BLUR     3. /**< How long it takes for space dust to start blurring (seconds). */
+#define HYPERSPACE_DUST_LENGTH   250 /**< Length the space dust blur to at max (pixels). */
 #define HYPERSPACE_FADEOUT       1. /**< How long the fade is (seconds). */
 #define HYPERSPACE_FADEIN        1. /**< How long the fade is (seconds). */
 #define HYPERSPACE_THRUST        2000./**< How much thrust you use in hyperspace. */

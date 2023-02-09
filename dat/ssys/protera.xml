@@ -2,7 +2,7 @@
 <ssys name="Protera">
  <general>
   <radius>17500.000000</radius>
-  <stars>100</stars>
+  <spacedust>100</spacedust>
   <interference>35.100000</interference>
  </general>
  <pos x="853.594383" y="566.174569"/>

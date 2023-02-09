@@ -2,7 +2,7 @@
 <ssys name="Oberon">
  <general>
   <radius>13300.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
  <pos x="391.143819" y="462.723008"/>

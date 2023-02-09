@@ -2,7 +2,7 @@
 <ssys name="Eiger">
  <general>
   <radius>15500.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
  <pos x="-538.025730" y="-620.572279"/>

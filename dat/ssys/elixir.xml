@@ -2,7 +2,7 @@
 <ssys name="Elixir">
  <general>
   <radius>15750.000000</radius>
-  <stars>120</stars>
+  <spacedust>120</spacedust>
   <interference>13.235294</interference>
  </general>
  <pos x="140.364926" y="541.115094"/>

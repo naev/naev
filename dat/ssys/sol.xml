@@ -2,7 +2,7 @@
 <ssys name="Sol">
  <general>
   <radius>35000.000000</radius>
-  <stars>500</stars>
+  <spacedust>500</spacedust>
   <interference>122.142825</interference>
   <nebula volatility="242.000000" hue="0.000000">900.000000</nebula>
  </general>

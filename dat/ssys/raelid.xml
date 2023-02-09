@@ -2,7 +2,7 @@
 <ssys name="Raelid">
  <general>
   <radius>17500.000000</radius>
-  <stars>500</stars>
+  <spacedust>500</spacedust>
   <interference>13.235288</interference>
   <nebula volatility="0.000000" hue="240.000000">100.000000</nebula>
  </general>

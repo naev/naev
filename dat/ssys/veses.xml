@@ -2,7 +2,7 @@
 <ssys name="Veses">
  <general>
   <radius>15000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>128.925000</interference>
   <nebula volatility="12.100000" hue="300.000000">500.000000</nebula>
  </general>

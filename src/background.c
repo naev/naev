@@ -171,9 +171,9 @@ void background_renderDust( const double dt )
 
       if (pilot_isFlag(player.p,PILOT_HYPERSPACE)) { /* hyperspace fancy effects */
          /* lines get longer the closer we are to finishing the jump */
-         m = MAX( 0, HYPERSPACE_STARS_BLUR-player.p->ptimer );
-         m /= HYPERSPACE_STARS_BLUR;
-         m *= HYPERSPACE_STARS_LENGTH;
+         m = MAX( 0, HYPERSPACE_DUST_BLUR-player.p->ptimer );
+         m /= HYPERSPACE_DUST_BLUR;
+         m *= HYPERSPACE_DUST_LENGTH;
          if (m > 1.) {
             double angle = atan2( dy, dx );
             x = m * cos( angle );

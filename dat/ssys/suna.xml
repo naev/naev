@@ -2,7 +2,7 @@
 <ssys name="Suna">
  <general>
   <radius>10000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
  <pos x="1197.294084" y="-386.621983"/>

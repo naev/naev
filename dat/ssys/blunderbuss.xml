@@ -2,7 +2,7 @@
 <ssys name="Blunderbuss">
  <general>
   <radius>35000.000000</radius>
-  <stars>500</stars>
+  <spacedust>500</spacedust>
   <interference>0.000000</interference>
  </general>
  <pos x="289.817181" y="-681.670966"/>

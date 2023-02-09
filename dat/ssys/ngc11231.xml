@@ -2,7 +2,7 @@
 <ssys name="NGC-11231">
  <general>
   <radius>15000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
  <pos x="-620.003101" y="-849.545428"/>

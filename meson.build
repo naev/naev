@@ -189,7 +189,7 @@ if buildExec.disabled() == false
    elif get_option('blas') == 'Accelerate'
       blas = dependency('Accelerate', required: true)
    else
-      blas = cc.find_library(get_option('blas'), required: true)
+      blas = cc.find_library('cblas', required: true)
    endif
 
    naev_deps += blas

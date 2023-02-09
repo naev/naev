@@ -4,7 +4,7 @@
   <background>mizar</background>
   <map_shader>mizar_map.frag</map_shader>
   <radius>22575.000000</radius>
-  <stars>0</stars>
+  <spacedust>0</spacedust>
   <interference>47.000000</interference>
  </general>
  <pos x="489.802768" y="676.911652"/>

@@ -1442,7 +1442,7 @@ static void uniedit_newSys( double x, double y )
    sys->name   = name;
    sys->pos.x  = x;
    sys->pos.y  = y;
-   sys->stars  = STARS_DENSITY_DEFAULT;
+   sys->spacedust  = DUST_DENSITY_DEFAULT;
    sys->radius = RADIUS_DEFAULT;
 
    /* Select new system. */
@@ -1912,12 +1912,12 @@ static void uniedit_editSys (void)
    x = 20;
    y -= gl_defFont.h + 15;
 
-   s = _("Stars");
+   s = _("Dust");
    l = gl_printWidthRaw( NULL, s );
-   window_addText( wid, x, y, l, 20, 1, "txtStars",
+   window_addText( wid, x, y, l, 20, 1, "txtDust",
          NULL, NULL, s );
-   window_addInput( wid, x += l + 7, y, 50, 20, "inpStars", 4, 1, NULL );
-   window_setInputFilter( wid, "inpStars", INPUT_FILTER_NUMBER );
+   window_addInput( wid, x += l + 7, y, 50, 20, "inpDust", 4, 1, NULL );
+   window_setInputFilter( wid, "inpDust", INPUT_FILTER_NUMBER );
    x += 50 + 12;
 
    s = _("Interference");
@@ -1966,8 +1966,8 @@ static void uniedit_editSys (void)
    /* Load values */
    snprintf( buf, sizeof(buf), "%g", sys->radius );
    window_setInput( wid, "inpRadius", buf );
-   snprintf( buf, sizeof(buf), "%d", sys->stars );
-   window_setInput( wid, "inpStars", buf );
+   snprintf( buf, sizeof(buf), "%d", sys->spacedust );
+   window_setInput( wid, "inpDust", buf );
    snprintf( buf, sizeof(buf), "%g", sys->interference );
    window_setInput( wid, "inpInterference", buf );
    snprintf( buf, sizeof(buf), "%g", sys->nebu_density );
@@ -2050,7 +2050,7 @@ static void uniedit_editSysClose( unsigned int wid, const char *name )
    scale = atof(window_getInput( wid, "inpRadius" )) / sys->radius;
    sysedit_sysScale(sys, scale);
 
-   sys->stars           = atoi(window_getInput( wid, "inpStars" ));
+   sys->spacedust       = atoi(window_getInput( wid, "inpDust" ));
    sys->interference    = atof(window_getInput( wid, "inpInterference" ));
    sys->nebu_density    = atof(window_getInput( wid, "inpNebula" ));
    sys->nebu_volatility = atof(window_getInput( wid, "inpVolatility" ));

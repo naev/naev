@@ -2,7 +2,7 @@
 <ssys name="Flow">
  <general>
   <radius>13000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>25.000000</interference>
  </general>
  <pos x="799.229169" y="357.341141"/>

@@ -2,7 +2,7 @@
 <ssys name="Herculis">
  <general>
   <radius>15000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>37.575000</interference>
   <nebula volatility="0.000000" hue="250.000000">200.000000</nebula>
  </general>

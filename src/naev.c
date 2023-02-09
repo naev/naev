@@ -780,9 +780,9 @@ void naev_resize (void)
    /* Resize the GL context, etc. */
    gl_resize();
 
-   /* Regenerate the background stars. */
+   /* Regenerate the background space dust. */
    if (cur_system != NULL)
-      background_initDust( cur_system->stars );
+      background_initDust( cur_system->spacedust );
    else
       background_initDust( 1000. ); /* from loadscreen_load */
 

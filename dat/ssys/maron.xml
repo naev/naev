@@ -2,7 +2,7 @@
 <ssys name="Maron">
  <general>
   <radius>13000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>47.000000</interference>
   <nebula volatility="0.250000">300.000000</nebula>
  </general>

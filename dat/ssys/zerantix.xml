@@ -2,7 +2,7 @@
 <ssys name="Zerantix">
  <general>
   <radius>17500.000000</radius>
-  <stars>500</stars>
+  <spacedust>500</spacedust>
   <interference>61.363575</interference>
   <nebula volatility="4.200000" hue="275.000000">500.000000</nebula>
  </general>

@@ -2,7 +2,7 @@
 <ssys name="Antares">
  <general>
   <radius>13000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>58.500000</interference>
   <nebula volatility="31.400000" hue="310.000000">700.000000</nebula>
  </general>

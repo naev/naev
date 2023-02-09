@@ -1581,7 +1581,7 @@ void space_init( const char* sysname, int do_simulate )
       }
       else {
          /* Background is starry */
-         background_initDust( cur_system->stars );
+         background_initDust( cur_system->spacedust );
 
          /* Set up sound. */
          sound_env( SOUND_ENV_NORMAL, 0. );
@@ -2879,7 +2879,7 @@ static int system_parse( StarSystem *sys, const char *filename )
    sys->presence  = array_create( SystemPresence );
    sys->ownerpresence = 0.;
    sys->nebu_hue  = NEBULA_DEFAULT_HUE;
-   sys->stars     = -1;
+   sys->spacedust = -1;
 
    xmlr_attr_strd( parent, "name", sys->name );
 
@@ -2901,7 +2901,11 @@ static int system_parse( StarSystem *sys, const char *filename )
             xmlr_strd( cur, "background", sys->background );
             xmlr_strd( cur, "map_shader", sys->map_shader );
             xmlr_strd( cur, "features", sys->features );
-            xmlr_int( cur, "stars", sys->stars );
+            xmlr_int( cur, "spacedust", sys->spacedust );
+            if (xml_isNode( cur, "stars" )) { /* Rename to "spacedust" in 0.11.0. TODO remove sometime around 0.13.0. */
+               sys->spacedust = xml_getInt(cur);
+               WARN(_("System '%s' is using deprecated field 'stars'. Use 'spacedust' instead!"), sys->name);
+            }
             xmlr_float( cur, "radius", sys->radius );
             if (xml_isNode(cur,"interference")) {
                flags |= FLAG_INTERFERENCESET;
@@ -3005,7 +3009,7 @@ static int system_parse( StarSystem *sys, const char *filename )
 #define MELEMENT(o,s)      if (o) WARN(_("Star System '%s' missing '%s' element"), sys->name, s)
    if (sys->name == NULL) WARN(_("Star System '%s' missing 'name' tag"), sys->name);
    MELEMENT((flags&FLAG_POSSET)==0,"pos");
-   MELEMENT(sys->stars<0,"stars");
+   MELEMENT(sys->spacedust<0,"spacedust");
    MELEMENT(sys->radius==0.,"radius");
    MELEMENT((flags&FLAG_INTERFERENCESET)==0,"inteference");
 #undef MELEMENT

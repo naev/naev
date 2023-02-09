@@ -2,7 +2,7 @@
 <ssys name="Gilligan's Memory">
  <general>
   <radius>28000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
  <pos x="1397.099022" y="-731.623533"/>

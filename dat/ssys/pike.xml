@@ -2,7 +2,7 @@
 <ssys name="Pike">
  <general>
   <radius>17000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
  <pos x="983.843750" y="-330.960503"/>

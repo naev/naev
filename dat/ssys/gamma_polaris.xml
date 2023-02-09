@@ -4,7 +4,7 @@
   <background>nebu_ngc_2440_2</background>
   <features>#pEmpire Homeworld#0</features>
   <radius>30000.000000</radius>
-  <stars>500</stars>
+  <spacedust>500</spacedust>
   <interference>0.000000</interference>
  </general>
  <pos x="44.907428" y="-4.022408"/>

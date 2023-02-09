@@ -2,7 +2,7 @@
 <ssys name="Percival">
  <general>
   <radius>14000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>24.999999</interference>
   <nebula volatility="0.000000">400.000000</nebula>
  </general>

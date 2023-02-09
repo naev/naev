@@ -2,7 +2,7 @@
 <ssys name="Arcanis">
  <general>
   <radius>14000.000000</radius>
-  <stars>500</stars>
+  <spacedust>500</spacedust>
   <interference>24.999999</interference>
   <nebula volatility="0.000000" hue="250.000000">200.000000</nebula>
  </general>

@@ -2,7 +2,7 @@
 <ssys name="Midoros">
  <general>
   <radius>13000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>105.000075</interference>
   <nebula volatility="25.800000" hue="320.000000">700.000000</nebula>
  </general>

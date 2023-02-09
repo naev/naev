@@ -3,7 +3,7 @@
  <general>
   <background>nebu_ngc_2392</background>
   <radius>21500.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>7.000000</interference>
  </general>
  <pos x="77.742629" y="312.428026"/>

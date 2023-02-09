@@ -5,7 +5,7 @@
   <map_shader>plasmastorm_map.frag</map_shader>
   <features>#pPlasma Storm (-50% energy and -50% stress dissipation)#0</features>
   <radius>15000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>56.250000</interference>
  </general>
  <pos x="1225.712250" y="-103.894981"/>

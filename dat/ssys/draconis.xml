@@ -2,7 +2,7 @@
 <ssys name="Draconis">
  <general>
   <radius>31500.000000</radius>
-  <stars>600</stars>
+  <spacedust>600</spacedust>
   <interference>10.000000</interference>
  </general>
  <pos x="258.135376" y="267.315686"/>

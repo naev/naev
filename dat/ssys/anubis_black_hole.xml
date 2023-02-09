@@ -3,7 +3,7 @@
  <general>
   <background>blackhole</background>
   <radius>5000.000000</radius>
-  <stars>0</stars>
+  <spacedust>0</spacedust>
   <interference>0.000000</interference>
  </general>
  <pos x="-491.464409" y="-237.026873"/>

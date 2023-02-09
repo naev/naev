@@ -2,7 +2,7 @@
 <ssys name="Lazuli">
  <general>
   <radius>21000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
  <pos x="1229.501061" y="-1008.969506"/>

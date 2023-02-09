@@ -5,7 +5,7 @@
   <map_shader>stellarwind_map.frag</map_shader>
   <features>#bStellar Wind (1 fuel regen)#0</features>
   <radius>15400.000000</radius>
-  <stars>300</stars>
+  <spacedust>300</spacedust>
   <interference>30.000000</interference>
  </general>
  <pos x="274.445957" y="364.877424"/>

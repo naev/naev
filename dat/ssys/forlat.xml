@@ -2,7 +2,7 @@
 <ssys name="Forlat">
  <general>
   <radius>12000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>24.999975</interference>
  </general>
  <pos x="0.602024" y="672.908867"/>

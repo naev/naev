@@ -2,7 +2,7 @@
 <ssys name="Anger">
  <general>
   <radius>10000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>33.075000</interference>
   <nebula volatility="0.000000">400.000000</nebula>
  </general>

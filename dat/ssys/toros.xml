@@ -2,7 +2,7 @@
 <ssys name="Toros">
  <general>
   <radius>21000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>53.571429</interference>
   <nebula volatility="1.000000">400.000000</nebula>
  </general>

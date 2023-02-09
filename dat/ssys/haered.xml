@@ -2,7 +2,7 @@
 <ssys name="Haered">
  <general>
   <radius>21000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>112.500000</interference>
   <nebula volatility="10.000000" hue="240.000000">400.000000</nebula>
  </general>

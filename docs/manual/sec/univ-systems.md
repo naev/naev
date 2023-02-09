@@ -18,7 +18,7 @@ Each system is represented by a standalone .XML file within the `/ssys/` directo
   * `<name>`: Name of the system. Use this string when referencing this system in other .XML files. This name will also be displayed within the game itself.
   * `<general>`: Includes data defining the size and traits of the system.
     * `<radius>`: Defines the physical dimensions of the system. This value is visualized in game by the scaling of the system travel map, and in the universe editor by a circle seen when editing systems. Jump points with the `<autopos/>` tag will be placed on this circle. System content such as spobs can be placed outside this radius but may be difficult for players to locate or access.
-    * `<stars>`: Defines the density of stars displayed in the system.
+    * `<spacedust>`: Defines the density of space dust displayed in the system.
     * `<interference>`: Influences the sensors of ships in the system. A value greater than 0 will reduce the ranges at which you can detect, identify or destealth other ships. Reduction of detection, evasion, and stealth ranges is computed by the formula $\frac{1}{1+\frac{\text{interference}}{100}}$.
     * `<nebula>`: Reduces visibility when within the system. A value greater than 0 will cause ships, spobs and asteroids to not appear until the player gets close. The rough visibility range is computed from the formula $(1200-\text{nebula}) \cdot \text{ewdetect} + \text{nebuvisibility}$, where ewdetect and nebuvisibility are each ships detection and nebula visibility statistics.
       * `<volatility>`: Damage over time inflicted upon ships travelling in this system. Value is expressed in MJ per second, applied to shields first and armor after.

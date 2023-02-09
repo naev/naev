@@ -2,7 +2,7 @@
 <ssys name="Eridani">
  <general>
   <radius>17500.000000</radius>
-  <stars>500</stars>
+  <spacedust>500</spacedust>
   <interference>13.235294</interference>
  </general>
  <pos x="200.441921" y="292.633380"/>

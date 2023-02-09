@@ -2,7 +2,7 @@
 <ssys name="Akodu">
  <general>
   <radius>24500.000000</radius>
-  <stars>200</stars>
+  <spacedust>200</spacedust>
   <interference>8.325000</interference>
   <nebula volatility="0.000000" hue="240.000000">100.000000</nebula>
  </general>

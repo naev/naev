@@ -2,7 +2,7 @@
 <ssys name="Thorndyke">
  <general>
   <radius>12950.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>6.818181</interference>
  </general>
  <pos x="368.679986" y="589.302191"/>

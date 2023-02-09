@@ -2,7 +2,7 @@
 <ssys name="Toaxis">
  <general>
   <radius>17500.000000</radius>
-  <stars>500</stars>
+  <spacedust>500</spacedust>
   <interference>24.999975</interference>
   <nebula volatility="0.000000" hue="240.000000">150.000000</nebula>
  </general>

@@ -2,7 +2,7 @@
 <ssys name="Druid">
  <general>
   <radius>10000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
  <pos x="842.888231" y="-960.069838"/>

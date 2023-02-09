@@ -2,7 +2,7 @@
 <ssys name="Ruttwi">
  <general>
   <radius>17500.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
  <pos x="1040.951314" y="-884.210477"/>

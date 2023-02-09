@@ -2,7 +2,7 @@
 <ssys name="Arandon">
  <general>
   <radius>14000.000000</radius>
-  <stars>500</stars>
+  <spacedust>500</spacedust>
   <interference>74.999925</interference>
   <nebula volatility="15.600000" hue="270.000000">600.000000</nebula>
  </general>

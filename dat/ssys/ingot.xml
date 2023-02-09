@@ -2,7 +2,7 @@
 <ssys name="Ingot">
  <general>
   <radius>21000.000000</radius>
-  <stars>500</stars>
+  <spacedust>500</spacedust>
   <interference>13.235288</interference>
  </general>
  <pos x="555.473373" y="-557.020919"/>

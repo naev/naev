@@ -2,7 +2,7 @@
 <ssys name="Trohem">
  <general>
   <radius>24500.000000</radius>
-  <stars>200</stars>
+  <spacedust>200</spacedust>
   <interference>22.000000</interference>
  </general>
  <pos x="5.087113" y="-500.872116"/>
