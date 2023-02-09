@@ -7,15 +7,13 @@ uniform vec3 screen;
 uniform bool use_lines;
 
 in float brightness_geom[];
-in vec4 center_geom[];
-in float length_geom[];
-in vec2 angle_geom[];
 out float brightness_frag;
+out float length_frag;
 out vec2 pos_frag;
 
-vec4 proj( mat2 R, float x, float y )
+vec4 proj( mat2 M, float x, float y )
 {
-   return vec4( R*vec2(x, y), 0.0, 0.0 );
+   return vec4( M*vec2(x, y), 0.0, 0.0 );
 }
 
 void main ()
@@ -26,26 +24,30 @@ void main ()
    /* Lines get extended and such. */
    if (use_lines) {
       vec2 r = dims.xx;
-      float l = length_geom[0] * screen.z;
+      float l = dims.z * screen.z;
       float a = dims.y;
       float c = cos(a);
       float s = sin(a);
       mat2 R = mat2( c, s, -s, c );
       mat2 S = mat2( projection[0][0], 0.0, 0.0, projection[1][1] );
-      mat2 M = S * R;// * S;
+      mat2 M = S * R;
 
+      length_frag = r.x*2.0+l;
       pos_frag = vec2(-1.0, -1.0);
       gl_Position = center + proj( M, -r.x-l, -r.y );
       EmitVertex();
 
+      length_frag = 0.0;
       pos_frag = vec2(1.0, -1.0);
       gl_Position = center + proj( M,  r.x,   -r.y );
       EmitVertex();
 
+      length_frag = r.x*2.0+l;
       pos_frag = vec2(-1.0, 1.0);
       gl_Position = center + proj( M, -r.x-l,  r.y );
       EmitVertex();
 
+      length_frag = 0.0;
       pos_frag = vec2(1.0, 1.0);
       gl_Position = center + proj( M,  r.x,    r.y );
       EmitVertex();

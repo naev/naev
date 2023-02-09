@@ -7,16 +7,12 @@ uniform bool use_lines;
 in vec4 vertex;
 in float brightness;
 out float brightness_geom;
-out float length_geom;
 
 void main(void) {
    vec4 center = vertex;
    float b = 1.0/(9.0 - 10.0*brightness);
    center.xy += offset_xy * b;
    center.xy = mod(center.xy + screen.xy/2.0, screen.xy) - screen.xy/2.0;
-
-   if (use_lines)
-      length_geom = dims.z;
 
    /* Calculate position */
    gl_Position = projection * center;
