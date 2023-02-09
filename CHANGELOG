@@ -10,6 +10,7 @@
       * Make it explicit when all the escorts have jumped or landed
       * Your ship is no longer translucent when in stealth as it is redundant with the stealth icon
       * Show enemy/ally factions in the faction standing info window
+      * Space dust is properly antialiased
    * New Content
       * 4 new missions
          * Nebula refugees
