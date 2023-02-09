@@ -160,7 +160,7 @@ SHADERS = [
       vs_path = "dust.vert",
       fs_path = "dust.frag",
       attributes = ["vertex", "brightness"],
-      uniforms = ["projection", "star_xy", "dims", "xy", "use_lines", "dim"],
+      uniforms = ["projection", "offset_xy", "dims", "xy", "use_lines", "dim"],
       subroutines = {},
    ),
    Shader(

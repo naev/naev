@@ -1,6 +1,6 @@
 uniform mat4 projection;
 
-uniform vec2 star_xy;
+uniform vec2 offset_xy;
 uniform vec2 xy;
 uniform vec3 dims;
 uniform bool use_lines;
@@ -14,7 +14,7 @@ void main(void) {
    /* Calculate position */
    float b        = 1.0/(9.0 - 10.0*brightness);
    gl_Position    = vertex;
-   gl_Position.xy+= star_xy * b;
+   gl_Position.xy+= offset_xy * b;
 
    /* Check boundaries */
    gl_Position.xy = mod(gl_Position.xy + dims.xy/2.0, dims.xy) - dims.xy/2.0;
