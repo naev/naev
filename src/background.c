@@ -206,7 +206,7 @@ void background_renderDust( const double dt )
    glUniform2f(shaders.stars.star_xy, star_x, star_y);
    glUniform3f(shaders.stars.dims, w, h, 1. / gl_screen.scale);
    glUniform1i(shaders.stars.use_lines, !points);
-   glUniform1f(shaders.stars.dim, CLAMP(0.5, 1., 1.-(m-1.)/25.) );
+   glUniform1f(shaders.stars.dim, CLAMP(0.5, 1., 1.-(m-1.)/25.)*z );
 
    /* Vertices. */
    glEnableVertexAttribArray( shaders.stars.vertex );
