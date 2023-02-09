@@ -110,23 +110,20 @@ void background_initDust( int n )
    ndust = (unsigned int)(size/(800.*600.));
 
    /* Create data. */
-   dust_vertex = malloc( ndust * sizeof(GLfloat) * 6 );
+   dust_vertex = malloc( ndust * sizeof(GLfloat) * 3 );
 
    for (unsigned int i=0; i < ndust; i++) {
       /* Set the position. */
-      dust_vertex[6*i+0] = RNGF()*w - hw;
-      dust_vertex[6*i+1] = RNGF()*h - hh;
-      dust_vertex[6*i+3] = dust_vertex[6*i+0];
-      dust_vertex[6*i+4] = dust_vertex[6*i+1];
+      dust_vertex[3*i+0] = RNGF()*w - hw;
+      dust_vertex[3*i+1] = RNGF()*h - hh;
       /* Set the colour. */
-      dust_vertex[6*i+2] = RNGF()*0.6 + 0.2;
-      dust_vertex[6*i+5] = dust_vertex[6*i+2];
+      dust_vertex[3*i+2] = RNGF()*0.6 + 0.2;
    }
 
    /* Recreate VBO. */
    gl_vboDestroy( dust_vertexVBO );
    dust_vertexVBO = gl_vboCreateStatic(
-         ndust * sizeof(GLfloat) * 6, dust_vertex );
+         ndust * sizeof(GLfloat) * 3, dust_vertex );
 
    free(dust_vertex);
 }
@@ -214,10 +211,10 @@ void background_renderDust( const double dt )
 
    /* Set up the vertices. */
    gl_vboActivateAttribOffset( dust_vertexVBO, shaders.dust.vertex, 0,
-         2, GL_FLOAT, 6 * sizeof(GLfloat) );
+         2, GL_FLOAT, 3 * sizeof(GLfloat) );
    gl_vboActivateAttribOffset( dust_vertexVBO, shaders.dust.brightness, 2 * sizeof(GLfloat),
-         1, GL_FLOAT, 6 * sizeof(GLfloat) );
-   glDrawArrays( GL_POINTS, 0, ndust/2 );
+         1, GL_FLOAT, 3 * sizeof(GLfloat) );
+   glDrawArrays( GL_POINTS, 0, ndust );
 
    /* Disable vertex array. */
    glDisableVertexAttribArray( shaders.dust.vertex );
