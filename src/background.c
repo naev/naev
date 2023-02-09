@@ -170,19 +170,15 @@ void background_renderDust( const double dt )
       if (pilot_isFlag(player.p,PILOT_HYPERSPACE)) { /* hyperspace fancy effects */
          /* lines get longer the closer we are to finishing the jump */
          m = MAX( 0, HYPERSPACE_DUST_BLUR-player.p->ptimer );
-         m /= HYPERSPACE_DUST_BLUR;
-         m *= HYPERSPACE_DUST_LENGTH;
-         if (m > 1.) {
+         if (m > 0.) {
+            m *= HYPERSPACE_DUST_LENGTH / HYPERSPACE_DUST_BLUR;
             angle = atan2( dy, dx );
             points = 0;
          }
       }
       else if (dt_mod * vmod > 500. ) {
-         /* Very short lines tend to flicker horribly. A stock Llama at 2x
-          * speed just so happens to make very short lines. A 5px minimum
-          * is long enough to (mostly) alleviate the flickering. */
          angle = atan2( dy, dx );
-         m = MAX( 5., dt_mod * vmod/25. - 20 );
+         m = (dt_mod * vmod) / 25. - 20.;
          points = 0;
       }
    }
@@ -200,7 +196,7 @@ void background_renderDust( const double dt )
    if (points)
       glUniform3f(shaders.dust.dims, 1./gl_screen.scale+1.0, 0., 0.);
    else
-      glUniform3f(shaders.dust.dims, 1./gl_screen.scale+1.0, angle, m);
+      glUniform3f(shaders.dust.dims, 1./gl_screen.scale+MAX(0.0,1.0-m/20.), angle, m);
    glUniform3f(shaders.dust.screen, w, h, 1. / gl_screen.scale);
    glUniform1i(shaders.dust.use_lines, !points);
    glUniform1f(shaders.dust.dim, CLAMP(0.5, 1., 1.-(m-1.)/25.) );
