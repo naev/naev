@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Alsafi Ib">
+ <pos x="-8428.487236" y="1723.665452"/>
+ <GFX>
+  <space>moon-A01.webp</space>
+  <exterior>uninhabited-rocky-airless-04.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

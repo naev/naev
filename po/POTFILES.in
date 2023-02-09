@@ -611,6 +611,10 @@ dat/spob/allous_gg3.xml
 dat/spob/allous_i.xml
 dat/spob/allous_ii.xml
 dat/spob/alpha_aquilea.xml
+dat/spob/alsafi_i.xml
+dat/spob/alsafi_ia.xml
+dat/spob/alsafi_ib.xml
+dat/spob/alsafi_ii.xml
 dat/spob/alteris_i.xml
 dat/spob/alteris_iv.xml
 dat/spob/alteris_v.xml
@@ -1452,6 +1456,7 @@ dat/spob/riun.xml
 dat/spob/rockhardt.xml
 dat/spob/rodney.xml
 dat/spob/rogan.xml
+dat/spob/ross_prime.xml
 dat/spob/rostra.xml
 dat/spob/rotide_i.xml
 dat/spob/rotide_ii.xml
@@ -1669,6 +1674,7 @@ dat/spob/torg_i.xml
 dat/spob/torg_iv.xml
 dat/spob/tori.xml
 dat/spob/torloth.xml
+dat/spob/toros_iv.xml
 dat/spob/totoran.xml
 dat/spob/traal.xml
 dat/spob/treacle.xml

@@ -7,7 +7,9 @@
   <nebula volatility="1.000000">400.000000</nebula>
  </general>
  <pos x="607.222605" y="-413.479878"/>
- <spobs/>
+ <spobs>
+  <spob>Toros IV</spob>
+ </spobs>
  <jumps>
   <jump target="Doeston">
    <autopos/>
