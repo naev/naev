@@ -7,7 +7,12 @@
   <nebula volatility="0.000000" hue="245.000000">150.000000</nebula>
  </general>
  <pos x="446.734596" y="290.170090"/>
- <spobs/>
+ <spobs>
+  <spob>Alsafi I</spob>
+  <spob>Alsafi II</spob>
+  <spob>Alsafi Ia</spob>
+  <spob>Alsafi Ib</spob>
+ </spobs>
  <jumps>
   <jump target="Eisenhorn">
    <autopos/>
@@ -18,6 +23,18 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeA-rich</group>
+   <radius>2700.000000</radius>
+   <pos x="-9087.677606" y="2088.575845"/>
+   <density>13.000000</density>
+  </asteroid>
+  <exclusion>
+   <radius>2000.000000</radius>
+   <pos x="-8998.933161" y="2088.575845"/>
+  </exclusion>
+ </asteroids>
  <tags>
   <tag>thenebula</tag>
  </tags>
