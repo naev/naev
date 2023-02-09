@@ -3,6 +3,7 @@ layout (triangle_strip, max_vertices = 4) out;
 
 uniform mat4 projection;
 uniform vec3 dims;
+uniform vec3 screen;
 uniform bool use_lines;
 
 in float brightness_geom[];
@@ -25,7 +26,7 @@ void main ()
    /* Lines get extended and such. */
    if (use_lines) {
       vec2 r = dims.xx;
-      float l = length_geom[0];
+      float l = length_geom[0] * screen.z;
       float a = dims.y;
       float c = cos(a);
       float s = sin(a);
@@ -34,19 +35,19 @@ void main ()
       mat2 M = S * R;// * S;
 
       pos_frag = vec2(-1.0, -1.0);
-      gl_Position = center + proj( M, -r.x,   -r.y );
+      gl_Position = center + proj( M, -r.x-l, -r.y );
       EmitVertex();
 
       pos_frag = vec2(1.0, -1.0);
-      gl_Position = center + proj( M,  r.x-l, -r.y );
+      gl_Position = center + proj( M,  r.x,   -r.y );
       EmitVertex();
 
       pos_frag = vec2(-1.0, 1.0);
-      gl_Position = center + proj( M, -r.x,    r.y );
+      gl_Position = center + proj( M, -r.x-l,  r.y );
       EmitVertex();
 
       pos_frag = vec2(1.0, 1.0);
-      gl_Position = center + proj( M,  r.x-l,  r.y );
+      gl_Position = center + proj( M,  r.x,    r.y );
       EmitVertex();
    }
    /* Points are just centered primitives. */

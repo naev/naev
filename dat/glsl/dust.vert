@@ -16,7 +16,7 @@ void main(void) {
    center.xy = mod(center.xy + screen.xy/2.0, screen.xy) - screen.xy/2.0;
 
    if (use_lines)
-      length_geom = dims.z * screen.z;
+      length_geom = dims.z;
 
    /* Calculate position */
    gl_Position = projection * center;
