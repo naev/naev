@@ -5,7 +5,7 @@
   <spacedust>500</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="722.256408" y="-743.703425"/>
+ <pos x="748.923075" y="-748.703425"/>
  <spobs>
   <spob_virtual>Miner Local</spob_virtual>
  </spobs>
@@ -14,7 +14,7 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Norpin">
+  <jump target="Millstone">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

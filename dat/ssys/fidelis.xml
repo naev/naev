@@ -19,6 +19,10 @@
    <autopos/>
    <hide>0.000000</hide>
   </jump>
+  <jump target="Lynx">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Millstone">
    <autopos/>
    <hide>0.000000</hide>

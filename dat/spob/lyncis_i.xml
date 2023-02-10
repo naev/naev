@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Lyncis I">
+ <pos x="1516.405901" y="6816.105787"/>
+ <GFX>
+  <space>I08.webp</space>
+  <exterior>lava.webp</exterior>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

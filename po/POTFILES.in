@@ -1175,6 +1175,11 @@ dat/spob/lorelei.xml
 dat/spob/lugun.xml
 dat/spob/luna_skona.xml
 dat/spob/luxsor.xml
+dat/spob/lyncis_i.xml
+dat/spob/lyncis_ii.xml
+dat/spob/lyncis_iia.xml
+dat/spob/lyncis_iib.xml
+dat/spob/lyncis_iii.xml
 dat/spob/maanen.xml
 dat/spob/maanens_moon.xml
 dat/spob/maatsu.xml
@@ -1283,6 +1288,7 @@ dat/spob/new_phobos.xml
 dat/spob/new_pluto.xml
 dat/spob/new_space_trade_hub.xml
 dat/spob/new_thomas.xml
+dat/spob/new_xantusia.xml
 dat/spob/newmarch_a1.xml
 dat/spob/newmarch_d3.xml
 dat/spob/niflheim_enclave.xml
@@ -1816,6 +1822,7 @@ dat/spob/wunomis_moon.xml
 dat/spob/wunomis_world.xml
 dat/spob/wyrmwood.xml
 dat/spob/xavier.xml
+dat/spob/xo4.xml
 dat/spob/yak_nest.xml
 dat/spob/yaroslav_farming_station.xml
 dat/spob/yrina.xml

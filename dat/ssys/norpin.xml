@@ -5,7 +5,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="812.515261" y="-708.018609"/>
+ <pos x="830.848594" y="-671.351942"/>
  <spobs>
   <spob>Folevo</spob>
   <spob>New Dortmund</spob>
@@ -14,11 +14,7 @@
   <spob_virtual>FLF Small</spob_virtual>
  </spobs>
  <jumps>
-  <jump target="Millstone">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Slaccid">
+  <jump target="Nougat">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
