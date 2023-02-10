@@ -2,7 +2,7 @@ local head = {
    _("Space Traders Society News Network"),
 }
 local greeting = {
-   _("Traders of the galaxy, nite!"),
+   _("Traders of the galaxy, Unite!"),
 }
 local articles = {
 }
