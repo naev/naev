@@ -49,6 +49,19 @@ local articles = {
       head = N_([[Genetric Board Meets]]),
       body = _([[In the wake of the Yavi Bartolo's departure as CSO of Genetric Technologies, the board of directors will meet today. The group is expected to appoint a new chief science officer.]])
    },
+   {
+      -- Note that Guild from Discworld
+      head = N_([[Space Traders Society Grows to 500]]),
+      body = _([[With the joining of the Guild of Ecdysiasts, Nautchers, Cancanieres, and Exponents of Exotic Dance, the Space Traders Society has now reached 500 member organizations. The official ceremony was held at the New Space Trade Hub to the delight of visitors.]]),
+   },
+   {
+      head = N_([[Astra Vigilis Applicants Hit New Record]]),
+      body = _([[Applicants to the Astra Vigilis mercenary guild have hit a new record, with crowds of candidates amassing at New Xantusia's spaceport. Analysts believe that increasing galaxy insecurity is the lead driver of applications.]]),
+   },
+   {
+      head = N_([[Unrest at new Mining Vrata Quotas]]),
+      body = _([[Given the overexploitation of space resources, the Mining Vrata has posted the new mining quotas for the current cycle. The dismay in miners faces was clearly visible, with one saying "How are we supposed to make a living with this? No wonder everyone is turning to piracy!". Mining Vrata spokesperson was not available for comment.]]),
+   },
    --[[
       Politics
    --]]
