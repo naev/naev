@@ -8,7 +8,6 @@
  * @brief Button widget.
  */
 
-
 /** @cond */
 #include <stdlib.h>
 /** @endcond */
@@ -16,14 +15,12 @@
 #include "nstring.h"
 #include "tk/toolkit_priv.h"
 
-
 static Widget *chk_getWgt( unsigned int wid, const char *name );
 static int chk_key( Widget* chk, SDL_Keycode key, SDL_Keymod mod );
 static int chk_mclick( Widget* chk, int button, int x, int y );
 static void chk_render( Widget* chk, double bx, double by );
 static void chk_cleanup( Widget* chk );
 static void chk_toggleState( Widget *chk );
-
 
 /**
  * @brief Adds a button widget to a window.
@@ -71,7 +68,6 @@ void window_addCheckbox( unsigned int wid,
    toolkit_setPos( wdw, wgt, x, y );
 }
 
-
 /**
  * @brief Gets a widget.
  */
@@ -93,7 +89,6 @@ static Widget *chk_getWgt( unsigned int wid, const char *name )
    return wgt;
 }
 
-
 /**
  * @brief Changes the checkbox caption.
  *
@@ -112,7 +107,6 @@ void window_checkboxCaption( unsigned int wid, const char *name, char *display )
    wgt->dat.chk.display = strdup(display);
 }
 
-
 /**
  * @brief Gets the state of a checkbox.
  *
@@ -127,7 +121,6 @@ int window_checkboxState( unsigned int wid, const char *name )
 
    return wgt->dat.chk.state;
 }
-
 
 /**
  * @brief Sets the checkbox state.
@@ -146,7 +139,6 @@ int window_checkboxSet( unsigned int wid, const char *name, int state )
    return wgt->dat.chk.state;
 }
 
-
 /**
  * @brief Toggles the checkbox. state.
  */
@@ -156,7 +148,6 @@ static void chk_toggleState( Widget *chk )
    if (chk->dat.chk.fptr != NULL)
       chk->dat.chk.fptr( chk->wdw, chk->name );
 }
-
 
 /**
  * @brief Handles input for an button widget.
@@ -176,7 +167,6 @@ static int chk_key( Widget* chk, SDL_Keycode key, SDL_Keymod mod )
    return 0;
 }
 
-
 /**
  * @brief Handles checkbox mouse clicks.
  */
@@ -188,7 +178,6 @@ static int chk_mclick( Widget* chk, int button, int x, int y )
       chk_toggleState( chk );
    return 1;
 }
-
 
 /**
  * @brief Renders a button widget.
@@ -247,7 +236,6 @@ static void chk_render( Widget* chk, double bx, double by )
          by + chk->y + (chk->h - gl_defFont.h)/2.,
          &cFontWhite, -1., chk->dat.chk.display );
 }
-
 
 /**
  * @brief Clean up function for the button widget.
