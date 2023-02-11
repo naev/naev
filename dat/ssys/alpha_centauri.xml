@@ -5,6 +5,7 @@
   <spacedust>400</spacedust>
   <interference>144.450000</interference>
   <nebula volatility="3.900000" hue="320.000000">600.000000</nebula>
+  <nolanes/>
  </general>
  <pos x="814.033246" y="457.439564"/>
  <spobs/>

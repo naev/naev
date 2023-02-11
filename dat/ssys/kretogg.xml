@@ -7,6 +7,7 @@
   <radius>17500.000000</radius>
   <spacedust>400</spacedust>
   <interference>50.000000</interference>
+  <nolanes/>
  </general>
  <pos x="28.337310" y="-1034.000358"/>
  <spobs>

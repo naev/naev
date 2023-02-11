@@ -5,11 +5,13 @@
   <spacedust>400</spacedust>
   <interference>29.250000</interference>
   <nebula volatility="0.700000" hue="275.000000">400.000000</nebula>
+  <nolanes/>
  </general>
  <pos x="461.330827" y="-59.313814"/>
  <spobs>
   <spob>Barnard's Star Ruined Ringworld</spob>
   <spob_virtual>Independent All Unpresence</spob_virtual>
+  <spob_virtual>Trader Unpresence</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Carrza">
