@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Trader Unpresence">
  <presence>
-  <faction>Trader</faction>
+  <faction>Traders Society</faction>
   <base>0.000000</base>
   <bonus>-100000.000000</bonus>
   <range>0</range>
