@@ -8,21 +8,23 @@
       * diy-nerds: improved reward
    * Quality of Life
       * Make it explicit when all the escorts have jumped or landed
-      * Your ship is no longer translucent when in stealth as it is redundant with the stealth icon
+      * Player ship is no longer translucent when in stealth as it is redundant with the stealth icon
       * Show enemy/ally factions in the faction standing info window
       * Space dust is properly antialiased
+      * Minor speed ups to patrol lane computations
    * New Content
       * 4 new missions
          * Nebula refugees
       * Added the Space Trader Society faction
       * More points of interest
-      * Many, many new systems and spobs
+      * Many, many new systems and space objects
    * Engine
       * Map system viewer is more compact
       * Added hook.hail_spob
       * Events support tags
       * Editor supports tags
-      * Library to handel conditionals for mission computer missions
+      * Library to handle conditionals for mission computer missions
+      * Added support for disabling specific patrol lanes from being generated
    * Fixes
       * Fixed many corner case crashes in the editor
 
