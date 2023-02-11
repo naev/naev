@@ -3,8 +3,9 @@
  <general>
   <radius>12000.000000</radius>
   <spacedust>400</spacedust>
-  <interference>96.428475</interference>
+  <interference>96.428500</interference>
   <nebula volatility="51.400000" hue="290.000000">700.000000</nebula>
+  <nolanes/>
  </general>
  <pos x="620.095616" y="-196.984998"/>
  <spobs>
