@@ -3,12 +3,12 @@
  <pos x="-11638.001887" y="-5124.991657"/>
  <GFX>
   <space>station-shipyard3.webp</space>
-  <exterior>station00.webp</exterior>
+  <exterior>traderoom.webp</exterior>
  </GFX>
  <presence>
-  <faction>Trader Society</faction>
-  <base>70</base>
-  <bonus>40</bonus>
+  <faction>Traders Society</faction>
+  <base>70.000000</base>
+  <bonus>40.000000</bonus>
   <range>2</range>
  </presence>
  <general>
@@ -20,8 +20,8 @@
    <refuel/>
    <bar/>
    <missions/>
-   <shipyard/>
    <outfits/>
+   <shipyard/>
   </services>
   <commodities/>
   <description>Although consisting mainly of a shipbuilding factory, Nexus Shipyards HQ also sports an extravagant tower where the executives and marketing work, directly accessible from the spaceport. The lobby is impressive, with marble floors and columns, it is hard to believe that this is a station with such waste of space. There is also a large waiting area and what seems to be some complementary tea for people visiting, and it seems like many people decide to come directly to the Nexus Shipyards HQ to make their ship purchases.</description>
