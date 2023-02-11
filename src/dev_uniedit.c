@@ -66,6 +66,7 @@ typedef enum UniEditViewMode_ {
    UNIEDIT_VIEW_DEFAULT,
    UNIEDIT_VIEW_VIRTUALSPOBS,
    UNIEDIT_VIEW_RADIUS,
+   UNIEDIT_VIEW_NOLANES,
    UNIEDIT_VIEW_BACKGROUND,
    UNIEDIT_VIEW_ASTEROIDS,
    UNIEDIT_VIEW_INTERFERENCE,
@@ -425,16 +426,17 @@ static void uniedit_btnView( unsigned int wid_unused, const char *unused )
    window_setCancel( wid, window_close );
 
    /* Add virtual spob list. */
-   str   = malloc( sizeof(char*) * (array_size(factions)+1) );
+   n     = 9; /* Number of special cases. */
+   str   = malloc( sizeof(char*) * (array_size(factions)+n) );
    str[0]= strdup(_("Default"));
    str[1]= strdup(_("Virtual Spobs"));
    str[2]= strdup(_("System Radius"));
-   str[3]= strdup(_("Background"));
-   str[4]= strdup(_("Asteroids"));
-   str[5]= strdup(_("Interference"));
-   str[6]= strdup(_("Tech"));
-   str[7]= strdup(_("Sum of Presences"));
-   n     = 8; /* Number of special cases. */
+   str[3]= strdup(_("No Lanes"));
+   str[4]= strdup(_("Background"));
+   str[5]= strdup(_("Asteroids"));
+   str[6]= strdup(_("Interference"));
+   str[7]= strdup(_("Tech"));
+   str[8]= strdup(_("Sum of Presences"));
    k     = n;
    for (int i=0; i<array_size(factions); i++) {
       int f = factions[i];
@@ -595,6 +597,28 @@ static void uniedit_renderRadius( double x, double y, double r )
    }
 }
 
+static void uniedit_renderNolanes( double x, double y, double r )
+{
+   const glColour c = { .r=1., .g=1., .b=1., .a=0.3 };
+
+   for (int i=0; i<array_size(systems_stack); i++) {
+      double tx, ty, sr;
+      StarSystem *sys = system_getIndex( i );
+
+      if (!sys_isFlag( sys, SYSTEM_NOLANES ))
+         continue;
+
+      tx = x + sys->pos.x*uniedit_zoom;
+      ty = y + sys->pos.y*uniedit_zoom;
+
+      /* draws the disk representing the faction */
+      sr = 5.*M_PI * uniedit_zoom;
+
+      (void) r;
+      gl_renderCircle( tx, ty, sr, &c, 1 );
+   }
+}
+
 static void uniedit_renderBackground( double x, double y, double r )
 {
    const glColour c = { .r=1., .g=1., .b=1., .a=0.3 };
@@ -732,6 +756,10 @@ void uniedit_renderMap( double bx, double by, double w, double h, double x, doub
 
       case UNIEDIT_VIEW_RADIUS:
          uniedit_renderRadius( x, y, r );
+         break;
+
+      case UNIEDIT_VIEW_NOLANES:
+         uniedit_renderNolanes( x, y, r );
          break;
 
       case UNIEDIT_VIEW_BACKGROUND:
@@ -2440,26 +2468,31 @@ static void uniedit_btnViewModeSet( unsigned int wid, const char *unused )
       return;
    }
    else if (pos==3) {
-      uniedit_viewmode = UNIEDIT_VIEW_BACKGROUND;
+      uniedit_viewmode = UNIEDIT_VIEW_NOLANES;
       window_close( wid, unused );
       return;
    }
    else if (pos==4) {
-      uniedit_viewmode = UNIEDIT_VIEW_ASTEROIDS;
+      uniedit_viewmode = UNIEDIT_VIEW_BACKGROUND;
       window_close( wid, unused );
       return;
    }
    else if (pos==5) {
-      uniedit_viewmode = UNIEDIT_VIEW_INTERFERENCE;
+      uniedit_viewmode = UNIEDIT_VIEW_ASTEROIDS;
       window_close( wid, unused );
       return;
    }
    else if (pos==6) {
-      uniedit_viewmode = UNIEDIT_VIEW_TECH;
+      uniedit_viewmode = UNIEDIT_VIEW_INTERFERENCE;
       window_close( wid, unused );
       return;
    }
    else if (pos==7) {
+      uniedit_viewmode = UNIEDIT_VIEW_TECH;
+      window_close( wid, unused );
+      return;
+   }
+   else if (pos==8) {
       uniedit_viewmode = UNIEDIT_VIEW_PRESENCE_SUM;
       window_close( wid, unused );
       return;
