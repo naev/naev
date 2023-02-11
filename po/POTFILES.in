@@ -1891,6 +1891,7 @@ dat/spob_virtual/tradelane_zalek.xml
 dat/spob_virtual/traders_society_area.xml
 dat/spob_virtual/traders_society_local.xml
 dat/spob_virtual/traders_society_unpresence.xml
+dat/spob_virtual/traders_society_unpresence_range1.xml
 dat/spob_virtual/virtual_sindbad.xml
 dat/spob_virtual/zalek_medium.xml
 dat/spob_virtual/zalek_small.xml
