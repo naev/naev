@@ -129,6 +129,7 @@ static void uniedit_btnEditRmSpob( unsigned int wid, const char *unused );
 static void uniedit_btnEditAddSpob( unsigned int wid, const char *unused );
 static void uniedit_btnEditAddSpobAdd( unsigned int wid, const char *unused );
 static void uniedit_btnViewModeSet( unsigned int wid, const char *unused );
+static void uniedit_chkNolanes( unsigned int wid, const char *wgtname );
 /* System renaming. */
 static int uniedit_checkName( const char *name );
 static void uniedit_renameSys (void);
@@ -1955,6 +1956,13 @@ static void uniedit_editSys (void)
    window_setInputFilter( wid, "inpHue", INPUT_FILTER_NUMBER );
    x += 50 + 12;
 
+   /* Next row. */
+   x = 20;
+   y -= gl_defFont.h + 15;
+
+   s = _("No lanes");
+   window_addCheckbox( wid, x, y, 100, gl_defFont.h, "chkNolanes", s, uniedit_chkNolanes, sys_isFlag( sys, SYSTEM_NOLANES ) );
+
    /* Tags. */
    x = 20;
    y -= gl_defFont.h + 15;
@@ -2467,4 +2475,14 @@ static void uniedit_btnViewModeSet( unsigned int wid, const char *unused )
 
    /* Close the window. */
    window_close( wid, unused );
+}
+
+static void uniedit_chkNolanes( unsigned int wid, const char *wgtname )
+{
+   int s = window_checkboxState( wid, wgtname );
+   StarSystem *sys = uniedit_sys[0];
+   if (s)
+      sys_setFlag( sys, SYSTEM_NOLANES );
+   else
+      sys_rmFlag( sys, SYSTEM_NOLANES );
 }
