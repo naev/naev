@@ -1354,6 +1354,8 @@ dat/spob/p0125.xml
 dat/spob/p2020.xml
 dat/spob/p2021.xml
 dat/spob/p2022.xml
+dat/spob/p5003.xml
+dat/spob/p8493.xml
 dat/spob/p9122.xml
 dat/spob/p9234.xml
 dat/spob/palin_i.xml
@@ -1389,6 +1391,7 @@ dat/spob/pike_i.xml
 dat/spob/pilatis_i.xml
 dat/spob/pilatis_ii.xml
 dat/spob/pilatis_iii.xml
+dat/spob/pirates_cove.xml
 dat/spob/point_zero_0.xml
 dat/spob/point_zero_nidus.xml
 dat/spob/pokyos_cloister.xml
@@ -2158,10 +2161,12 @@ dat/ssys/ngc12056.xml
 dat/ssys/ngc12108.xml
 dat/ssys/ngc12261.xml
 dat/ssys/ngc12654.xml
+dat/ssys/ngc127.xml
 dat/ssys/ngc12882.xml
 dat/ssys/ngc1292.xml
 dat/ssys/ngc1317.xml
 dat/ssys/ngc13322.xml
+dat/ssys/ngc13522.xml
 dat/ssys/ngc13564.xml
 dat/ssys/ngc13674.xml
 dat/ssys/ngc13747.xml
@@ -2174,6 +2179,7 @@ dat/ssys/ngc14676.xml
 dat/ssys/ngc1562.xml
 dat/ssys/ngc15670.xml
 dat/ssys/ngc18269.xml
+dat/ssys/ngc18451.xml
 dat/ssys/ngc1872.xml
 dat/ssys/ngc1931.xml
 dat/ssys/ngc20489.xml
@@ -2193,12 +2199,14 @@ dat/ssys/ngc4087.xml
 dat/ssys/ngc4131.xml
 dat/ssys/ngc4363.xml
 dat/ssys/ngc4746.xml
+dat/ssys/ngc4766.xml
 dat/ssys/ngc4771.xml
 dat/ssys/ngc5240.xml
 dat/ssys/ngc5362.xml
 dat/ssys/ngc5483.xml
 dat/ssys/ngc5838.xml
 dat/ssys/ngc6057.xml
+dat/ssys/ngc6610.xml
 dat/ssys/ngc6901.xml
 dat/ssys/ngc7061.xml
 dat/ssys/ngc7078.xml
@@ -2208,6 +2216,7 @@ dat/ssys/ngc7402.xml
 dat/ssys/ngc7533.xml
 dat/ssys/ngc7784.xml
 dat/ssys/ngc7786.xml
+dat/ssys/ngc8040.xml
 dat/ssys/ngc8338.xml
 dat/ssys/ngc8468.xml
 dat/ssys/ngc9017.xml

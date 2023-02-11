@@ -16,6 +16,10 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="NGC-4766">
+   <autopos/>
+   <hide>0.300000</hide>
+  </jump>
   <jump target="Ruttwi">
    <autopos/>
    <hide>1.000000</hide>

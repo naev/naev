@@ -13,6 +13,10 @@
    <hidden/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="NGC-13522">
+   <pos x="9646.233134" y="-2739.846260"/>
+   <hide>0.200000</hide>
+  </jump>
   <jump target="Peter">
    <pos x="13245.811921" y="9515.248641"/>
    <hidden/>
