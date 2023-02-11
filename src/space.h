@@ -42,6 +42,7 @@
 #define SPOB_NOMISNSPAWN (1<<2) /**< No missions spawn nor trigger on this spob. */
 #define SPOB_UNINHABITED (1<<3) /**< Force spob to be uninhabited. */
 #define SPOB_MARKED      (1<<4) /**< Spob is marked. */
+#define SPOB_NOLANES     (1<<5) /**< Spob doesn't connect with lanes. */
 #define SPOB_RADIUS      (1<<10) /**< Spob has radius defined. */
 #define spob_isFlag(p,f)    ((p)->flags & (f)) /**< Checks spob flag. */
 #define spob_setFlag(p,f)   ((p)->flags |= (f)) /**< Sets a spob flag. */

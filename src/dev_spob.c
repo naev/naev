@@ -115,6 +115,8 @@ int dpl_saveSpob( const Spob *p )
       xmlw_elemEmpty( writer, "nomissionspawn" );
    if (spob_isFlag( p, SPOB_UNINHABITED ))
       xmlw_elemEmpty( writer, "uninhabited" );
+   if (spob_isFlag( p, SPOB_NOLANES ))
+      xmlw_elemEmpty( writer, "nolanes" );
    xmlw_endElem( writer ); /* "services" */
    if (spob_hasService( p, SPOB_SERVICE_LAND )) {
       if (p->presence.faction >= 0) {

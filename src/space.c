@@ -2275,6 +2275,8 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
                      spob->flags |= SPOB_UNINHABITED;
                   else if (xml_isNode(ccur, "blackmarket"))
                      spob->services |= SPOB_SERVICE_BLACKMARKET;
+                  else if (xml_isNode(ccur, "nolanes"))
+                     spob->flags |= SPOB_NOLANES;
                   else
                      WARN(_("Spob '%s' has unknown services tag '%s'"), spob->name, ccur->name);
                } while (xml_nextNode(ccur));

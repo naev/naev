@@ -361,6 +361,8 @@ static void safelanes_initStacks_vertex (void)
 
       for (int i=0; i<array_size(sys->spobs); i++) {
          const Spob *p = sys->spobs[i];
+         if (spob_isFlag( p, SPOB_NOLANES ))
+            continue;
          if (p->presence.base!=0. || p->presence.bonus!=0.) {
             Vertex v = {.system = system, .type = VERTEX_SPOB, .index = i};
             array_push_back( &tmp_spob_indices, array_size(vertex_stack) );
@@ -370,17 +372,18 @@ static void safelanes_initStacks_vertex (void)
 
       for (int i=0; i<array_size(sys->jumps); i++) {
          const JumpPoint *jp = &sys->jumps[i];
-         if (!jp_isFlag( jp, JP_HIDDEN | JP_EXITONLY | JP_NOLANES )) {
-            Vertex v = {.system = system, .type = VERTEX_JUMP, .index = i};
-            array_push_back( &vertex_stack, v );
-            if (jp->targetid < system && jp->returnJump != NULL)
-               for (int j=sys_to_first_vertex[jp->targetid]; j < sys_to_first_vertex[1+jp->targetid]; j++)
-                  if (vertex_stack[j].type == VERTEX_JUMP && jp->returnJump == &jp->target->jumps[vertex_stack[j].index]) {
-                     array_push_back_edge( &tmp_jump_edges, array_size(vertex_stack)-1, j );
-                     break;
-                  }
-         }
+         if (jp_isFlag( jp, JP_HIDDEN | JP_EXITONLY | JP_NOLANES ))
+            continue;
+         Vertex v = {.system = system, .type = VERTEX_JUMP, .index = i};
+         array_push_back( &vertex_stack, v );
+         if (jp->targetid < system && jp->returnJump != NULL)
+            for (int j=sys_to_first_vertex[jp->targetid]; j < sys_to_first_vertex[1+jp->targetid]; j++)
+               if (vertex_stack[j].type == VERTEX_JUMP && jp->returnJump == &jp->target->jumps[vertex_stack[j].index]) {
+                  array_push_back_edge( &tmp_jump_edges, array_size(vertex_stack)-1, j );
+                  break;
+               }
       }
+
       array_push_back( &sys_to_first_vertex, array_size(vertex_stack) );
    }
    //array_shrink( &vertex_stack );
