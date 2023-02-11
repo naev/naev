@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Trader Unpresence">
+<spob name="Traders Society Unpresence">
  <presence>
   <faction>Traders Society</faction>
   <base>0.000000</base>
