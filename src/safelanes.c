@@ -358,6 +358,10 @@ static void safelanes_initStacks_vertex (void)
    tmp_jump_edges = array_create( Edge );
    for (int system=0; system<array_size(systems_stack); system++) {
       const StarSystem *sys = &systems_stack[system];
+      if (sys_isFlag( sys, SYSTEM_NOLANES )) {
+         array_push_back( &sys_to_first_vertex, array_size(vertex_stack) );
+         continue;
+      }
 
       for (int i=0; i<array_size(sys->spobs); i++) {
          const Spob *p = sys->spobs[i];
@@ -459,12 +463,7 @@ static void safelanes_initStacks_faction (void)
       array_push_back( &presence_budget, array_create_size( double, array_size(systems_stack) ) );
       for (int s=0; s<array_size(systems_stack); s++) {
          const StarSystem *sys = &systems_stack[s];
-         double budget;
-         /* Hack to disable the faction from using the system. Ideally we would want to save the computation. TODO fix */
-         if (sys_isFlag( sys, SYSTEM_NOLANES ))
-            budget = 0.;
-         else
-            budget = system_getPresence( sys, faction_stack[fi].id );
+         double budget = system_getPresence( sys, faction_stack[fi].id );
          array_push_back( &presence_budget[fi], budget );
       }
    }
