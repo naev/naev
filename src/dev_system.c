@@ -185,6 +185,8 @@ int dsys_saveSystem( StarSystem *sys )
          xmlw_elemEmpty( writer, "hidden" );
       if (jp_isFlag( jp, JP_EXITONLY ))
          xmlw_elemEmpty( writer, "exitonly" );
+      if (jp_isFlag( jp, JP_NOLANES ))
+         xmlw_elemEmpty( writer, "nolanes" );
       xmlw_elem( writer, "hide", "%f", jp->hide );
       xmlw_endElem( writer ); /* "jump" */
    }

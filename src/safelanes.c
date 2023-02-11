@@ -370,7 +370,7 @@ static void safelanes_initStacks_vertex (void)
 
       for (int i=0; i<array_size(sys->jumps); i++) {
          const JumpPoint *jp = &sys->jumps[i];
-         if (!jp_isFlag( jp, JP_HIDDEN | JP_EXITONLY )) {
+         if (!jp_isFlag( jp, JP_HIDDEN | JP_EXITONLY | JP_NOLANES )) {
             Vertex v = {.system = system, .type = VERTEX_JUMP, .index = i};
             array_push_back( &vertex_stack, v );
             if (jp->targetid < system && jp->returnJump != NULL)

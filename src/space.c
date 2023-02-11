@@ -3215,6 +3215,8 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
          jp_setFlag(j,JP_HIDDEN);
       else if (xml_isNode(cur,"exitonly"))
          jp_setFlag(j,JP_EXITONLY);
+      else if (xml_isNode(cur,"nolanes"))
+         jp_setFlag(j,JP_NOLANES);
       else if (xml_isNode(cur,"hide")) {
          xmlr_float( cur,"hide", j->hide );
       }
