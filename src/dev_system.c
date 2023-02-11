@@ -128,6 +128,8 @@ int dsys_saveSystem( StarSystem *sys )
       xmlw_str( writer, "%f", sys->nebu_density );
       xmlw_endElem( writer ); /* "nebula" */
    }
+   if (sys_isFlag( sys, SYSTEM_NOLANES ))
+      xmlw_elemEmpty( writer, "nolanes" );
    xmlw_endElem( writer ); /* "general" */
 
    /* Position. */
