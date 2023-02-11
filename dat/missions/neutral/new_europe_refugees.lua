@@ -65,6 +65,10 @@ function land ()
 
    local payment = mem.amount * mem.reward
 
+   -- Store total amount of refugees moved
+   local total = var.peek("new_europe_refugees_total") or 0
+   var.push("new_europe_refugees_total", total+mem.amount)
+
    lmisn.sfxMoney()
    player.pay( payment )
    pir.reputationNormalMission(rnd.rnd(2,3))
