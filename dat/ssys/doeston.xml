@@ -10,6 +10,7 @@
  <spobs>
   <spob>Cerberus Outpost</spob>
   <spob>Doeston Prime</spob>
+  <spob_virtual>Pirate All Unpresence (Range 1)</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Arandon">
