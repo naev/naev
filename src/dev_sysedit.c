@@ -1554,6 +1554,19 @@ static void jp_type_check_exit_update( unsigned int wid, const char* str )
 }
 
 /**
+ * @brief Updates the jump point checkboxes.
+ */
+static void jp_type_check_nolanes_update( unsigned int wid, const char* str )
+{
+   int s = window_checkboxState( wid, str );
+   JumpPoint *j = &sysedit_sys->jumps[ sysedit_select[0].u.jump ];
+   if (s)
+      jp_setFlag( j, JP_NOLANES );
+   else
+      jp_rmFlag( j, JP_NOLANES );
+}
+
+/**
  * @brief Edits a jump.
  */
 static void sysedit_editJump (void)
@@ -1596,6 +1609,9 @@ static void sysedit_editJump (void)
    y -= 20;
    window_addCheckbox( wid, x, y, 100, 20,
          "chkExit", _("Exit only"), jp_type_check_exit_update, jp_exit );
+   y -= 20;
+   window_addCheckbox( wid, x, y, 100, 20,
+         "chkNolanes", _("No lanes"), jp_type_check_nolanes_update, jp_isFlag( j, JP_NOLANES ) );
    y -= 30;
 
    s = _("Hide"); /* TODO: if inpType == 0 disable hide box */
