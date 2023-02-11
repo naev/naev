@@ -1291,6 +1291,7 @@ dat/spob/new_thomas.xml
 dat/spob/new_xantusia.xml
 dat/spob/newmarch_a1.xml
 dat/spob/newmarch_d3.xml
+dat/spob/nexus_shipyards_hq.xml
 dat/spob/niflheim_enclave.xml
 dat/spob/niger_i.xml
 dat/spob/niger_ii.xml
@@ -1584,7 +1585,6 @@ dat/spob/soromid_databank.xml
 dat/spob/soromid_wards_alpha.xml
 dat/spob/soromid_wards_beta.xml
 dat/spob/soromid_wards_gamma.xml
-dat/spob/soros_shipyard.xml
 dat/spob/sorrow_ii.xml
 dat/spob/spica.xml
 dat/spob/sroolu.xml
