@@ -18,6 +18,7 @@
   </jump>
   <jump target="NGC-4766">
    <autopos/>
+   <nolanes/>
    <hide>0.300000</hide>
   </jump>
   <jump target="Ruttwi">
