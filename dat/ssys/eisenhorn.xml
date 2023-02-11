@@ -5,9 +5,12 @@
   <spacedust>400</spacedust>
   <interference>35.550000</interference>
   <nebula volatility="2.300000" hue="270.000000">300.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="513.926183" y="195.232933"/>
- <spobs/>
+ <pos x="522.326183" y="242.032933"/>
+ <spobs>
+  <spob_virtual>Traders Society Unpresence</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Alsafi">
    <autopos/>

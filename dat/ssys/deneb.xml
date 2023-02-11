@@ -5,11 +5,13 @@
   <spacedust>400</spacedust>
   <interference>94.725000</interference>
   <nebula volatility="21.300000" hue="310.000000">600.000000</nebula>
+  <nolanes/>
  </general>
  <pos x="536.609182" y="67.782022"/>
  <spobs>
   <spob>Deneb III</spob>
   <spob>Deneb III-a</spob>
+  <spob_virtual>Traders Society Unpresence (Range 1)</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Altair">
