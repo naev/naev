@@ -10,7 +10,9 @@
   <nolanes/>
  </general>
  <pos x="-8.938030" y="922.775840"/>
- <spobs/>
+ <spobs>
+  <spob>P-1587</spob>
+ </spobs>
  <jumps>
   <jump target="NGC-3371">
    <autopos/>

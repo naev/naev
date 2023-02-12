@@ -10,7 +10,9 @@
   <nolanes/>
  </general>
  <pos x="304.211728" y="1108.443674"/>
- <spobs/>
+ <spobs>
+  <spob>P-5717</spob>
+ </spobs>
  <jumps>
   <jump target="Fertile Crescent">
    <pos x="-5043.055667" y="5981.308668"/>

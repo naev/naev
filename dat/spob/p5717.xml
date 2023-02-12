@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="P-5717">
+ <pos x="4729.280180" y="4703.100569"/>
+ <GFX>
+  <space>I03.webp</space>
+  <exterior>lava.webp</exterior>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

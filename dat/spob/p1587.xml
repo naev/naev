@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="P-1587">
+ <pos x="-5635.272211" y="1375.538886"/>
+ <GFX>
+  <space>D00.webp</space>
+  <exterior>forest.webp</exterior>
+ </GFX>
+ <general>
+  <class>D</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>(null)</description>
+ </general>
+</spob>

@@ -9,7 +9,9 @@
   <interference>56.250000</interference>
  </general>
  <pos x="1704.535496" y="-265.631081"/>
- <spobs/>
+ <spobs>
+  <spob>P-9922</spob>
+ </spobs>
  <jumps>
   <jump target="NGC-10081">
    <autopos/>

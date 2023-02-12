@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="P-15919">
+ <pos x="-12114.681576" y="5673.964789"/>
+ <GFX>
+  <space>moon-A00.webp</space>
+  <exterior>desertic2.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.200000</hide>
+  <services/>
+ </general>
+</spob>

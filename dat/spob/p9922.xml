@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="P-9922">
+ <pos x="-2300.255995" y="6862.430386"/>
+ <GFX>
+  <space>moon-Y00.webp</space>
+  <exterior>traderoom.webp</exterior>
+ </GFX>
+ <general>
+  <class>Y</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>(null)</description>
+ </general>
+</spob>

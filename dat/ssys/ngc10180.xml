@@ -8,6 +8,8 @@
  </general>
  <pos x="-9.123692" y="-1186.557437"/>
  <spobs>
+  <spob>P-2317</spob>
+  <spob>P-880</spob>
   <spob_virtual>Pirate All Unpresence (Range 1)</spob_virtual>
  </spobs>
  <jumps>
