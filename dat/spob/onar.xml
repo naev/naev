@@ -36,4 +36,7 @@
   <item>Missiles 2</item>
   <item>Heavy Weapons 1</item>
  </tech>
+ <tags>
+  <tag>research</tag>
+ </tags>
 </spob>

@@ -24,4 +24,8 @@
   <commodities/>
   <description>Originally a small outpost, Tepdania Customs was refurnished into a customs station to control the flux of refugees fleeing from the Incident. However, it's main purpose has been to dissuade refugees from coming into Dvaered territories and push them towards specially designed worlds such as Majestika II. Since it's existance as a customs control, it has built up a reputation as a aggressive and unsympathetic to refugees. Although once sporting nearly a full Dvaered fleet, as the number of refugees have dwindled, so have the resources and the station has vast areas that are more or less abandoned.</description>
  </general>
+ <tags>
+  <tag>station</tag>
+  <tag>military</tag>
+ </tags>
 </spob>

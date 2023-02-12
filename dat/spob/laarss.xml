@@ -14,7 +14,7 @@
  </presence>
  <general>
   <class>G</class>
-  <population>9e+08</population>
+  <population>9e+07</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -39,4 +39,7 @@
   <item>Missiles 1</item>
   <item>Missiles 2</item>
  </tech>
+ <tags>
+ <tag>mining</tag>
+ </tags>
 </spob>

@@ -25,4 +25,8 @@
   <description>The Dvaered are keeping a "rehabilitation facility" here. As you might expect it's a prison, but unlike most Dvaered prisons - which just leave inmates to fend for themselves - this facility is a labour camp, staffed by wardens, guards and overseers for the various subsections. Prisoners never make for very eager workers though, so the actual yield of this facility isn't spectacular.</description>
   <bar>The spaceport bar here has booths where people can have interviews with inmates. They're not used very often. Friends and family of the kind of people who are sent to Leszec tend not to have the resources to make the trip.</bar>
  </general>
+ <tags>
+  <tag>prison</tag>
+  <tag>industrial</tag>
+ </tags>
 </spob>
