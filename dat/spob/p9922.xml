@@ -3,7 +3,7 @@
  <pos x="-2300.255995" y="6862.430386"/>
  <GFX>
   <space>moon-Y00.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <exterior>uninhabited-rocky-magenta-04.webp</exterior>
  </GFX>
  <general>
   <class>Y</class>
@@ -12,6 +12,6 @@
   <services>
    <land/>
   </services>
-  <description>(null)</description>
+  <description>Over the course of time, the planet seems to have synchronized with the plasma storm and seems to be almost an extension of it. The planet's surface is a more or less constant flux of hot plasma that arcs to and from space. You are able to find a small outcropping to land at, which seems mainly safe from the chaotic atmospheric fury, but it is probably not best to idle here.</description>
  </general>
 </spob>
