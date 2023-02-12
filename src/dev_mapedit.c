@@ -88,6 +88,8 @@ static double mapedit_mx      = 0.; /**< X mouse position. */
 static double mapedit_my      = 0.; /**< Y mouse position. */
 static unsigned int mapedit_widLoad = 0; /**< Load Map Outfit wid. */
 static char *mapedit_sLoadMapName = NULL; /**< Loaded Map Outfit. */
+static int mapedit_nospob     = 0; /**< Don't save spobs. */
+static int mapedit_hidden     = 0; /**< Mark hidden jump lanes too. */
 
 /*
  * Universe editor Prototypes.
@@ -107,6 +109,8 @@ static void mapedit_close( unsigned int wid, const char *wgt );
 static void mapedit_btnOpen( unsigned int wid_unused, const char *unused );
 static void mapedit_btnSaveMapAs( unsigned int wid_unused, const char *unused );
 static void mapedit_clear( unsigned int wid_unused, const char *unused );
+static void mapedit_chkSpob( unsigned int wid, const char *wgtname );
+static void mapedit_chkHidden( unsigned int wid, const char *wgtname );
 /* Keybindings handling. */
 static int mapedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 /* Loading of Map files. */
@@ -251,6 +255,18 @@ void mapedit_open( unsigned int wid_unused, const char *unused )
    textPos++;
    linesPos+=curLines+1;
 
+   curLines = 1;
+   mapedit_nospob = 0;
+   window_addCheckbox( wid, -30, -40-textPos*parHeight-linesPos*lineHeight, 170, lineHeight, "chkSpob", _("Ignore Spobs"), mapedit_chkSpob, mapedit_nospob );
+   textPos++;
+   linesPos+=curLines+1;
+
+   curLines = 1;
+   mapedit_nospob = 0;
+   window_addCheckbox( wid, -30, -40-textPos*parHeight-linesPos*lineHeight, 170, lineHeight, "chkHidden", _("Set Hidden Jumps"), mapedit_chkHidden, mapedit_nospob );
+   textPos++;
+   linesPos+=curLines+1;
+
    curLines = 4;
    window_addText( wid, -20, -40-textPos*parHeight-linesPos*lineHeight, 300-20, curLines*lineHeight, 0, "txtSWarning",
          &gl_smallFont, NULL,
@@ -317,6 +333,16 @@ static void mapedit_clear( unsigned int wid, const char *unused )
 
    /* Clear the map. */
    mapedit_deselect();
+}
+
+static void mapedit_chkSpob( unsigned int wid, const char *wgtname )
+{
+   mapedit_nospob = window_checkboxState( wid, wgtname );
+}
+
+static void mapedit_chkHidden( unsigned int wid, const char *wgtname )
+{
+   mapedit_hidden = window_checkboxState( wid, wgtname );
 }
 
 /**
@@ -728,6 +754,10 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, const char *str )
    if (strcmp(save,"None") == 0)
       return;
 
+   /* Reset defaults. */
+   mapedit_nospob = 0;
+   mapedit_hidden = 0;
+
    /* Get position. */
    pos = toolkit_getListPos( wdw, "lstMapOutfits" );
    ns  = &mapList[pos];
@@ -1058,7 +1088,7 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t* ns )
          /* Ignore hidden and exit-only jumps. */
          if (jp_isFlag(&s->jumps[j], JP_EXITONLY ))
             continue;
-         if (jp_isFlag(&s->jumps[j], JP_HIDDEN))
+         if (!mapedit_hidden && jp_isFlag(&s->jumps[j], JP_HIDDEN))
             continue;
          /* This is a normal jump. */
          for (int k=0; k < ns->numSystems; k++) {
@@ -1070,8 +1100,9 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t* ns )
       }
 
       /* Iterate spobs and add them */
-      for (int j=0; j < array_size(s->spobs); j++)
-         xmlw_elem( writer, "spob", "%s", s->spobs[j]->name );
+      if (!mapedit_nospob)
+         for (int j=0; j < array_size(s->spobs); j++)
+            xmlw_elem( writer, "spob", "%s", s->spobs[j]->name );
 
       xmlw_endElem( writer ); /* "sys" */
    }
