@@ -167,27 +167,27 @@ void mapedit_open( unsigned int wid_unused, const char *unused )
    /* Button : reset the current map. */
    buttonHPos = 2;
    window_addButtonKey( wid, -20-(BUTTON_WIDTH+20)*buttonHPos, 20+(BUTTON_HEIGHT+20)*buttonVPos, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClear", "Reset", mapedit_clear, SDLK_r );
+         "btnClear", _("Reset"), mapedit_clear, SDLK_r );
    buttonHPos--;
 
    /* Button : open map file. */
    window_addButtonKey( wid, -20-(BUTTON_WIDTH+20)*buttonHPos, 20+(BUTTON_HEIGHT+20)*buttonVPos, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnOpen", "Open", mapedit_btnOpen, SDLK_o );
+         "btnOpen", _("Open"), mapedit_btnOpen, SDLK_o );
    buttonHPos--;
 
    /* Button : save current map to file. */
    window_addButtonKey( wid, -20-(BUTTON_WIDTH+20)*buttonHPos, 20+(BUTTON_HEIGHT+20)*buttonVPos, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnSaveAs", "Save", mapedit_btnSaveMapAs, SDLK_s );
+         "btnSaveAs", _("Save"), mapedit_btnSaveMapAs, SDLK_s );
    buttonHPos = 0;
    buttonVPos--;
 
    /* Button : exit editor. */
    window_addButtonKey( wid, -20-(BUTTON_WIDTH+20)*buttonHPos, 20+(BUTTON_HEIGHT+20)*buttonVPos, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", "Exit", mapedit_close, SDLK_x );
+         "btnClose", _("Exit"), mapedit_close, SDLK_x );
 
    /* Filename. */
    window_addText( wid, -200, -40-textPos*parHeight-linesPos*lineHeight, 100, lineHeight, 0, "txtSFileName",
-         &gl_smallFont, NULL, "File Name:" );
+         &gl_smallFont, NULL, _("File Name:") );
    window_addInput( wid, -30, -40-textPos*parHeight-linesPos*lineHeight, 170, lineHeight, "inpFileName",
          1024, 1, &gl_smallFont );
    textPos++;
@@ -195,7 +195,7 @@ void mapedit_open( unsigned int wid_unused, const char *unused )
 
    /* Map name. */
    window_addText( wid, -200, -40-textPos*parHeight-linesPos*lineHeight, 100, lineHeight, 0, "txtSMapName",
-         &gl_smallFont, NULL, "Map Name:" );
+         &gl_smallFont, NULL, _("Map Name:") );
    window_addInput( wid, -30, -40-textPos*parHeight-linesPos*lineHeight, 170, lineHeight, "inpMapName",
          1024, 1, &gl_smallFont );
    textPos++;
@@ -204,7 +204,7 @@ void mapedit_open( unsigned int wid_unused, const char *unused )
    /* Map description. */
    curLines = 7;
    window_addText( wid, -20, -40-textPos*parHeight-linesPos*lineHeight, 300-20, lineHeight, 0, "txtSDescription",
-         &gl_smallFont, NULL, "Description:" );
+         &gl_smallFont, NULL, _("Description:") );
    window_addInput( wid, -20, -40-textPos*parHeight-(linesPos+1)*lineHeight, 300-20, curLines*lineHeight, "inpDescription",
          32768, 0, &gl_smallFont );
    textPos++;
@@ -213,7 +213,7 @@ void mapedit_open( unsigned int wid_unused, const char *unused )
    /* Current Map # of systems. */
    curLines = 1;
    window_addText( wid, -20, -40-textPos*parHeight-linesPos*lineHeight, 300-20, 20, 0, "txtSCurrentNumSystems",
-         &gl_smallFont, NULL, "Number of Systems (up to 100):" );
+         &gl_smallFont, NULL, _("Number of Systems (up to 100):") );
    window_addText( wid, -20, -40-textPos*parHeight-linesPos*lineHeight, 60, curLines*lineHeight, 0, "txtCurrentNumSystems",
          &gl_smallFont, NULL, "N/A" );
    textPos++;
@@ -222,16 +222,16 @@ void mapedit_open( unsigned int wid_unused, const char *unused )
    /* Presence. */
    curLines = 5;
    window_addText( wid, -20, -40-textPos*parHeight-linesPos*lineHeight, 300-20, 20, 0, "txtSPresence",
-         &gl_smallFont, NULL, "Presence:" );
+         &gl_smallFont, NULL, _("Presence:") );
    window_addText( wid, -20, -40-textPos*parHeight-(linesPos+1)*lineHeight, 300-20, curLines*lineHeight, 0, "txtPresence",
-         &gl_smallFont, NULL, "No selection" );
+         &gl_smallFont, NULL, _("No selection") );
    textPos++;
    linesPos+=curLines+1;
 
    /* Outift attributes. */
    curLines = 1;
    window_addText( wid, -200, -40-textPos*parHeight-linesPos*lineHeight, 100, 20, 0, "txtSPrice",
-         &gl_smallFont, NULL, "Price:" );
+         &gl_smallFont, NULL, _("Price:") );
    window_addInput( wid, -30, -40-textPos*parHeight-linesPos*lineHeight, 170, lineHeight, "inpPrice",
          64, 1, &gl_smallFont );
    window_setInputFilter( wid, "inpPrice", INPUT_FILTER_NUMBER );
@@ -240,7 +240,7 @@ void mapedit_open( unsigned int wid_unused, const char *unused )
 
    curLines = 1;
    window_addText( wid, -200, -40-textPos*parHeight-linesPos*lineHeight, 100, 20, 0, "txtSGFX",
-         &gl_smallFont, NULL, "Graphics:" );
+         &gl_smallFont, NULL, _("Graphics:") );
    window_addInput( wid, -30, -40-textPos*parHeight-linesPos*lineHeight, 170, lineHeight, "inpGFX",
          64, 1, &gl_smallFont );
    textPos++;
@@ -248,7 +248,7 @@ void mapedit_open( unsigned int wid_unused, const char *unused )
 
    curLines = 1;
    window_addText( wid, -200, -40-textPos*parHeight-linesPos*lineHeight, 100, 20, 0, "txtSRarity",
-         &gl_smallFont, NULL, "Rarity:" );
+         &gl_smallFont, NULL, _("Rarity:") );
    window_addInput( wid, -30, -40-textPos*parHeight-linesPos*lineHeight, 170, lineHeight, "inpRarity",
          64, 1, &gl_smallFont );
    window_setInputFilter( wid, "inpRarity", INPUT_FILTER_NUMBER );
@@ -270,7 +270,7 @@ void mapedit_open( unsigned int wid_unused, const char *unused )
    curLines = 4;
    window_addText( wid, -20, -40-textPos*parHeight-linesPos*lineHeight, 300-20, curLines*lineHeight, 0, "txtSWarning",
          &gl_smallFont, NULL,
-         "Warning: Editor can't (yet) manage which details are mapped within a system. Review its changes before committing." );
+         _("Warning: Editor can't (yet) manage which details are mapped within a system. Review its changes before committing.") );
    textPos++;
    linesPos+=curLines+1;
 
@@ -519,7 +519,7 @@ static void mapedit_deselect (void)
    mapedit_msys   = 0;
 
    /* Change window stuff. */
-   window_modifyText( mapedit_wid, "txtSelected", "No selection" );
+   window_modifyText( mapedit_wid, "txtSelected", _("No selection") );
    window_modifyText( mapedit_wid, "txtCurrentNumSystems", "0" );
 }
 
@@ -593,11 +593,11 @@ void mapedit_selectText (void)
       if (mapedit_iLastClickedSystem != 0) {
          StarSystem *sys = system_getIndex( mapedit_iLastClickedSystem );
          map_updateFactionPresence( mapedit_wid, "txtPresence", sys, 1 );
-         snprintf( &buf[0], sizeof(buf), "Presence (%s)", sys->name );
+         snprintf( &buf[0], sizeof(buf), _("Presence (%s)"), sys->name );
          window_modifyText( mapedit_wid, "txtSPresence", buf );
       } else {
-         window_modifyText( mapedit_wid, "txtSPresence", "Presence" );
-         window_modifyText( mapedit_wid, "txtPresence", "No system yet clicked" );
+         window_modifyText( mapedit_wid, "txtSPresence", _("Presence") );
+         window_modifyText( mapedit_wid, "txtPresence", _("No system yet clicked") );
       }
    }
 }
@@ -677,11 +677,11 @@ void mapedit_loadMapMenu_open (void)
 
    /* Buttons */
    window_addButtonKey( mapedit_widLoad, -20, 20 + BUTTON_HEIGHT+20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnLoad", "Load", mapedit_loadMapMenu_load, SDLK_l );
+         "btnLoad", _("Load"), mapedit_loadMapMenu_load, SDLK_l );
    window_addButton( mapedit_widLoad, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnBack", "Back", mapedit_loadMapMenu_close );
+         "btnBack", _("Back"), mapedit_loadMapMenu_close );
    window_addButton( mapedit_widLoad, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnDelete", "Del", mapedit_loadMapMenu_close );
+         "btnDelete", _("Del"), mapedit_loadMapMenu_close );
 }
 
 /**
@@ -708,14 +708,14 @@ static void mapedit_loadMapMenu_update( unsigned int wdw, const char *str )
 
    /* Display text. */
    snprintf( buf, sizeof(buf),
-         "File Name:\n"
+       _("File Name:\n"
          "   %s\n"
          "Map name:\n"
          "   %s\n"
          "Description:\n"
          "   %s\n"
          "Systems:\n"
-         "   %i",
+         "   %i"),
          ns->fileName, ns->mapName, ns->description, ns->numSystems
    );
 
@@ -1117,7 +1117,7 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t* ns )
    /* Actually write data */
    asprintf( &file, "%s/%s", conf.dev_save_map, ns->fileName );
    if (xmlSaveFileEnc( file, doc, "UTF-8" ) < 0)
-      WARN("Failed writing '%s'!", file);
+      WARN(_("Failed writing '%s'!"), file);
    free( file );
 
    /* Clean up. */
