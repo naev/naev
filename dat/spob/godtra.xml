@@ -13,7 +13,7 @@
  </presence>
  <general>
   <class>M</class>
-  <population>7e+09</population>
+  <population>7e+07</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -40,4 +40,8 @@
   <item>Systems High</item>
   <item>Dvaered Elite Outfits</item>
  </tech>
+ <tags>
+  <tag>agriculture</tag>
+  <tag>industrial</tag>
+ </tags>
 </spob>

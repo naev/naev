@@ -13,7 +13,7 @@
  </presence>
  <general>
   <class>X</class>
-  <population>1e+06</population>
+  <population>7e+05</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -26,4 +26,9 @@
   <description>Haldr ranks quite high on the official list of "most unpleasant inhabited planets in the galaxy", which is compiled at regular intervals by the Gilligan Foundation. Indeed, even the most optimistic space traveller would be hard pressed to find a good reason why anyone would want to come to Haldr, let alone stay there. As it turns out, Dvaered High Command has such a reason: Haldr serves as a training grounds for Dvaered military recruits. Though many an upcoming soldier finds death on the radioactive surface of Haldr, those who survive make for tough fighters indeed.</description>
   <bar>To get into Haldr's bar, you first have to undergo a rigorous decontamination procedure, even when you're coming straight from the spaceport dock. This fact has made more than a few visitors so uneasy that they never want to visit Haldr again.</bar>
  </general>
+ <tags>
+  <tag>military</tag>
+  <tag>poor</tag>
+  <tag>rural</tag>
+ </tags>
 </spob>

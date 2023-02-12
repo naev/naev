@@ -25,4 +25,7 @@
   <description>In an impressive feat of de-terraforming, the Dvaered have transformed Aleph from a borderline class M to a barren wasteland. Though the world is primarily residential and sports no superheavy industry, the wastefulness of the Dvaered inhabitants more than makes up for that.</description>
   <bar>The air in the spaceport bar is stuffy. The air is stuffy everywhere on this planet. No amount of air conditioning and filtering is going to get rid of the staleness completely. The drinks do little to relieve the stuffiness either.</bar>
  </general>
+ <tags>
+  <tag>poor</tag>
+ </tags>
 </spob>

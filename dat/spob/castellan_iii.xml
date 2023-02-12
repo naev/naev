@@ -25,4 +25,8 @@
   <description>Castellan III is, like most Dvaered planets, a mining world and, like most Dvaered mining worlds, the conditions are hellish. The planet has virtually no way to support natural life so it needs a constant stream of resources to support it. The majority of these are food and medical supplies for the miners.</description>
   <bar>Castellan III's bar is surprisingly good. Perhaps it has to do with being a favoured haven for Dvaered officers. Perhaps it's that someone in a position of some power or influence decided that a nice place for the miners to relax and recuperate was a good way to show off their philanthropy. Either way, it's appreciated.</bar>
  </general>
+ <tags>
+  <tag>mining</tag>
+  <tag>poor</tag>
+ </tags>
 </spob>
