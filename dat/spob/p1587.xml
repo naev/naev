@@ -3,7 +3,7 @@
  <pos x="-5635.272211" y="1375.538886"/>
  <GFX>
   <space>D00.webp</space>
-  <exterior>forest.webp</exterior>
+  <exterior>uninhabited-rocky-airless-04.webp</exterior>
  </GFX>
  <general>
   <class>D</class>
@@ -12,6 +12,6 @@
   <services>
    <land/>
   </services>
-  <description>(null)</description>
+  <description>An atmosphere-less amalgam of rock, likely created by the concentration of asteroids that ended up reaching a critical mass becoming stable and having its own gravitational pull. While it is likely that there are rare resources in under the planet's mantle, it is likely much easier to obtain them from the nearby asteroid fields that originally gave birth to this planet.</description>
  </general>
 </spob>
