@@ -9,16 +9,20 @@
  </general>
  <specific type="map">
   <sys name="Terminus">
+   <jump>Acheron</jump>
    <jump>Flok</jump>
    <spob>Foundation Station</spob>
   </sys>
   <sys name="Effetey">
    <jump>Frolina</jump>
+   <jump>Pas</jump>
    <jump>Trohem</jump>
    <spob>Efferey</spob>
   </sys>
   <sys name="Blacin">
+   <jump>Gremlin</jump>
    <jump>Trohem</jump>
+   <jump>Wochii</jump>
   </sys>
   <sys name="Firk">
    <jump>Doowa</jump>
@@ -38,7 +42,9 @@
   </sys>
   <sys name="Qorel">
    <jump>Doowa</jump>
+   <jump>Eneguoz</jump>
    <jump>Trask</jump>
+   <jump>Uhriabi</jump>
    <spob>Qorellia</spob>
   </sys>
   <sys name="Frolina">
@@ -49,8 +55,11 @@
    <jump>Blacin</jump>
    <jump>Effetey</jump>
   </sys>
-  <sys name="Gremlin"/>
+  <sys name="Gremlin">
+   <jump>Blacin</jump>
+  </sys>
   <sys name="Pas">
+   <jump>Effetey</jump>
    <spob>Shangris Station</spob>
   </sys>
   <sys name="Provectus Nova">
@@ -58,18 +67,24 @@
    <spob>Provectus Nova Ia</spob>
   </sys>
   <sys name="Uhriabi">
+   <jump>Qorel</jump>
    <spob>Mugen</spob>
    <spob>Steiner Station</spob>
    <spob>Uhriabi-17</spob>
    <spob>Uhriabi-9</spob>
   </sys>
   <sys name="Eneguoz">
+   <jump>Qorel</jump>
    <spob>Eneguoz II</spob>
    <spob>Oma</spob>
    <spob>Opa</spob>
    <spob>Shiarta</spob>
   </sys>
-  <sys name="Acheron"/>
-  <sys name="Wochii"/>
+  <sys name="Acheron">
+   <jump>Terminus</jump>
+  </sys>
+  <sys name="Wochii">
+   <jump>Blacin</jump>
+  </sys>
  </specific>
 </outfit>
