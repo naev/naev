@@ -7,8 +7,8 @@
  </general>
  <pos x="56.762672" y="-490.558663"/>
  <spobs>
+  <spob>Hubfar Citadel</spob>
   <spob>Hubfar I</spob>
-  <spob>Hubfar Station</spob>
  </spobs>
  <jumps>
   <jump target="Daravon">
