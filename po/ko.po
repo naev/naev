@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-02-12 14:29+0900\n"
+"POT-Creation-Date: 2023-02-12 18:35+0900\n"
 "PO-Revision-Date: 2022-04-08 09:11+0000\n"
 "Last-Translator: 이정희 <daemul72@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/naev/naev/ko/>\n"
@@ -8620,43 +8620,46 @@ msgid ""
 "bar."
 msgstr ""
 
-#: dat/spob/abacus.xml:28 dat/spob/allous_citadel.xml:29 dat/spob/astana.xml:49
-#: dat/spob/curie.xml:48 dat/spob/dono.xml:30 dat/spob/excelcior.xml:56
+#: dat/spob/abacus.xml:28 dat/spob/allous_citadel.xml:29 dat/spob/anecu.xml:39
+#: dat/spob/astana.xml:49 dat/spob/curie.xml:48 dat/spob/dono.xml:30
+#: dat/spob/doranthex_prime.xml:30 dat/spob/excelcior.xml:56
 #: dat/spob/galileo_terminal.xml:31 dat/spob/gastan.xml:32
-#: dat/spob/gerhart_central.xml:47 dat/spob/hznss1.xml:31
-#: dat/spob/jacqueline.xml:30 dat/spob/jorla.xml:46 dat/spob/jurai.xml:45
-#: dat/spob/kanar.xml:42 dat/spob/katar_i.xml:28 dat/spob/lugun.xml:32
-#: dat/spob/medenus_observatory.xml:28 dat/spob/naga.xml:45
-#: dat/spob/neo_pomerania.xml:54 dat/spob/oberon.xml:29 dat/spob/olario.xml:28
-#: dat/spob/olljan.xml:39 dat/spob/prp1.xml:30 dat/spob/prp2.xml:30
-#: dat/spob/prp3.xml:30 dat/spob/prp4.xml:30 dat/spob/pso_monitor.xml:26
-#: dat/spob/rulkar.xml:31 dat/spob/scorch.xml:30
-#: dat/spob/scorpii_enclave.xml:54 dat/spob/sinass.xml:40
-#: dat/spob/soromid_databank.xml:34 dat/spob/soromid_wards_beta.xml:34
-#: dat/spob/soromid_wards_gamma.xml:33 dat/spob/stein.xml:57
-#: dat/spob/stormy.xml:43 dat/spob/suoer.xml:39 dat/spob/telika_keep.xml:30
-#: dat/spob/topkapi_station.xml:28 dat/spob/tumut.xml:27
-#: dat/spob/umbrella_clinic.xml:31 dat/spob/unicorp_orbital.xml:34
-#: dat/spob/vaal.xml:21 dat/spob/vinooso.xml:42 dat/spob/vracha.xml:29
-#: dat/spob/warnecke.xml:61 dat/spob/wigheta.xml:31 dat/spob/wonclock.xml:48
-#: dat/spob/wyrmwood.xml:46 dat/spob/zhiru.xml:46
+#: dat/spob/gerhart_central.xml:47 dat/spob/handalier.xml:31
+#: dat/spob/hznss1.xml:31 dat/spob/jacqueline.xml:30 dat/spob/jorla.xml:46
+#: dat/spob/jurai.xml:45 dat/spob/kanar.xml:42 dat/spob/katar_i.xml:28
+#: dat/spob/lugun.xml:32 dat/spob/medenus_observatory.xml:28
+#: dat/spob/naga.xml:45 dat/spob/neo_pomerania.xml:54 dat/spob/oberon.xml:29
+#: dat/spob/olario.xml:28 dat/spob/olljan.xml:39 dat/spob/onar.xml:40
+#: dat/spob/prp1.xml:30 dat/spob/prp2.xml:30 dat/spob/prp3.xml:30
+#: dat/spob/prp4.xml:30 dat/spob/pso_monitor.xml:26 dat/spob/rulkar.xml:31
+#: dat/spob/scorch.xml:30 dat/spob/scorpii_enclave.xml:54
+#: dat/spob/sinass.xml:40 dat/spob/soromid_databank.xml:34
+#: dat/spob/soromid_wards_beta.xml:34 dat/spob/soromid_wards_gamma.xml:33
+#: dat/spob/stein.xml:57 dat/spob/stormy.xml:43 dat/spob/suoer.xml:39
+#: dat/spob/telika_keep.xml:30 dat/spob/topkapi_station.xml:28
+#: dat/spob/tumut.xml:27 dat/spob/umbrella_clinic.xml:31
+#: dat/spob/unicorp_orbital.xml:34 dat/spob/vaal.xml:21 dat/spob/vinooso.xml:42
+#: dat/spob/vracha.xml:29 dat/spob/warnecke.xml:61 dat/spob/wigheta.xml:31
+#: dat/spob/wonclock.xml:48 dat/spob/wyrmwood.xml:46 dat/spob/zhiru.xml:46
 msgid "research"
 msgstr ""
 
-#: dat/spob/abacus.xml:29 dat/spob/adrian.xml:29 dat/spob/ahmed.xml:43
-#: dat/spob/andors.xml:42 dat/spob/arrakis.xml:30 dat/spob/atalanta.xml:41
-#: dat/spob/avoss.xml:30 dat/spob/benedict.xml:54 dat/spob/benteen.xml:31
-#: dat/spob/caladan.xml:44 dat/spob/cebus_prime.xml:27 dat/spob/colley.xml:31
-#: dat/spob/corax.xml:52 dat/spob/curie.xml:47 dat/spob/dolmen.xml:38
-#: dat/spob/drognain.xml:27 dat/spob/dun_hill.xml:31 dat/spob/durea.xml:30
-#: dat/spob/ebenezer.xml:30 dat/spob/greenberg.xml:31 dat/spob/harnaar.xml:44
-#: dat/spob/haurn.xml:31 dat/spob/huanxi.xml:42 dat/spob/hzmm01.xml:29
-#: dat/spob/ianella_iv.xml:32 dat/spob/impala.xml:26 dat/spob/janko.xml:48
-#: dat/spob/jasmine.xml:29 dat/spob/jeronon.xml:42 dat/spob/kayel.xml:38
-#: dat/spob/koga.xml:30 dat/spob/levo.xml:38 dat/spob/maatsu.xml:42
-#: dat/spob/mendez.xml:31 dat/spob/nappi.xml:29 dat/spob/new_dortmund.xml:45
-#: dat/spob/nonuri.xml:32 dat/spob/oberon.xml:30 dat/spob/oma.xml:30
-#: dat/spob/oring.xml:36 dat/spob/qoral.xml:39 dat/spob/sander.xml:33
+#: dat/spob/abacus.xml:29 dat/spob/adham.xml:27 dat/spob/adrian.xml:29
+#: dat/spob/ahmed.xml:43 dat/spob/andors.xml:42 dat/spob/arrakis.xml:30
+#: dat/spob/atalanta.xml:41 dat/spob/avoss.xml:30 dat/spob/benedict.xml:54
+#: dat/spob/benteen.xml:31 dat/spob/caladan.xml:44 dat/spob/cebus_prime.xml:27
+#: dat/spob/colley.xml:31 dat/spob/corax.xml:52 dat/spob/curie.xml:47
+#: dat/spob/dolmen.xml:38 dat/spob/drognain.xml:27 dat/spob/dun_hill.xml:31
+#: dat/spob/durea.xml:30 dat/spob/ebenezer.xml:30 dat/spob/emperors_fist.xml:30
+#: dat/spob/greenberg.xml:31 dat/spob/greis.xml:38 dat/spob/haldr.xml:32
+#: dat/spob/harnaar.xml:44 dat/spob/haurn.xml:31 dat/spob/huanxi.xml:42
+#: dat/spob/hzmm01.xml:29 dat/spob/ianella_iv.xml:32 dat/spob/impala.xml:26
+#: dat/spob/janko.xml:48 dat/spob/jasmine.xml:29 dat/spob/jeronon.xml:42
+#: dat/spob/kayel.xml:38 dat/spob/koga.xml:30 dat/spob/levo.xml:38
+#: dat/spob/maatsu.xml:42 dat/spob/mendez.xml:31 dat/spob/nanek.xml:46
+#: dat/spob/nappi.xml:29 dat/spob/new_dortmund.xml:45 dat/spob/nonuri.xml:32
+#: dat/spob/oberon.xml:30 dat/spob/oma.xml:30 dat/spob/oring.xml:36
+#: dat/spob/petaat.xml:31 dat/spob/qoral.xml:39 dat/spob/sander.xml:33
 #: dat/spob/selphod.xml:30 dat/spob/simoen.xml:42 dat/spob/stein.xml:55
 #: dat/spob/tori.xml:41 dat/spob/trinel.xml:29 dat/spob/tumut.xml:28
 #: dat/spob/ulios.xml:30 dat/spob/vaal.xml:20 dat/spob/varia.xml:43
@@ -8701,6 +8704,22 @@ msgid ""
 "gladiatorial games. While the landing zone and a small buffer around it is "
 "considered neutral territory, most of the planet's surface is subject to the "
 "destructive sport that is so popular among Totoran's visitors."
+msgstr ""
+
+#: dat/spob/adham.xml:26 dat/spob/agino.xml:50 dat/spob/amphion.xml:30
+#: dat/spob/atalanta.xml:42 dat/spob/bolero.xml:53 dat/spob/cetrat.xml:40
+#: dat/spob/colley.xml:32 dat/spob/em_5.xml:42 dat/spob/excelcior.xml:54
+#: dat/spob/gastan.xml:30 dat/spob/hankies.xml:31 dat/spob/harnaar.xml:45
+#: dat/spob/heii.xml:41 dat/spob/hznss1.xml:32 dat/spob/icarus.xml:26
+#: dat/spob/jaegnhild.xml:37 dat/spob/kanar.xml:44 dat/spob/loramor.xml:39
+#: dat/spob/maatsu.xml:43 dat/spob/mouddar.xml:30 dat/spob/naga.xml:46
+#: dat/spob/rulkar.xml:32 dat/spob/sinclair.xml:45
+#: dat/spob/slofeldt_museum.xml:29 dat/spob/solpere.xml:30
+#: dat/spob/soromid_wards_alpha.xml:31 dat/spob/stein.xml:56
+#: dat/spob/steiner_station.xml:26 dat/spob/tori.xml:42 dat/spob/totoran.xml:45
+#: dat/spob/ururis.xml:39 dat/spob/wunomis_world.xml:53 dat/spob/zaals.xml:45
+#: dat/spob/zepei.xml:40 dat/spob/zhang_lu.xml:41
+msgid "tourism"
 msgstr ""
 
 #: dat/spob/adius.xml:2
@@ -8768,29 +8787,33 @@ msgid ""
 msgstr ""
 
 #: dat/spob/aera.xml:27 dat/spob/ahmed.xml:42 dat/spob/aillis.xml:28
-#: dat/spob/aldernael.xml:38 dat/spob/amhurst.xml:45 dat/spob/andors.xml:41
-#: dat/spob/atalanta.xml:43 dat/spob/avoss.xml:31 dat/spob/beene.xml:41
-#: dat/spob/benedict.xml:53 dat/spob/berkhere.xml:31 dat/spob/corax.xml:51
-#: dat/spob/curie.xml:46 dat/spob/doormat.xml:26 dat/spob/dun_hill.xml:32
-#: dat/spob/durea.xml:29 dat/spob/eiger.xml:29 dat/spob/ekkodu_gamma.xml:33
-#: dat/spob/ember.xml:42 dat/spob/flach.xml:47 dat/spob/gastan.xml:31
-#: dat/spob/hassak.xml:30 dat/spob/holly_i.xml:33 dat/spob/holly_ii.xml:31
-#: dat/spob/holly_iii.xml:31 dat/spob/hzmm01.xml:28 dat/spob/jankelo.xml:36
-#: dat/spob/jeronon.xml:40 dat/spob/jorlan.xml:42 dat/spob/kayel.xml:36
-#: dat/spob/lapra.xml:47 dat/spob/long_rock.xml:29 dat/spob/mugen.xml:29
-#: dat/spob/myonei.xml:45 dat/spob/new_mars.xml:28 dat/spob/nova_shakar.xml:45
-#: dat/spob/paxsor.xml:30 dat/spob/qoral.xml:40 dat/spob/rodney.xml:30
-#: dat/spob/rogan.xml:48 dat/spob/rulkar.xml:30 dat/spob/sander.xml:31
-#: dat/spob/saraab.xml:31 dat/spob/sheik_hall.xml:29 dat/spob/shiarta.xml:38
-#: dat/spob/sollebor.xml:41 dat/spob/stormgard.xml:51 dat/spob/stormy.xml:45
-#: dat/spob/tepdania_prime.xml:42 dat/spob/terminus.xml:30
+#: dat/spob/aldernael.xml:38 dat/spob/ambre.xml:44 dat/spob/amhurst.xml:45
+#: dat/spob/andors.xml:41 dat/spob/anubis.xml:44 dat/spob/atalanta.xml:43
+#: dat/spob/avoss.xml:31 dat/spob/beene.xml:41 dat/spob/benedict.xml:53
+#: dat/spob/berkhere.xml:31 dat/spob/brock.xml:46 dat/spob/castellan_iii.xml:29
+#: dat/spob/corax.xml:51 dat/spob/curie.xml:46 dat/spob/doormat.xml:26
+#: dat/spob/dun_hill.xml:32 dat/spob/durea.xml:29 dat/spob/eiger.xml:29
+#: dat/spob/ekkodu_gamma.xml:33 dat/spob/ember.xml:42 dat/spob/flach.xml:47
+#: dat/spob/gastan.xml:31 dat/spob/golem.xml:51 dat/spob/hassak.xml:30
+#: dat/spob/holly_i.xml:33 dat/spob/holly_ii.xml:31 dat/spob/holly_iii.xml:31
+#: dat/spob/hzmm01.xml:28 dat/spob/jankelo.xml:36 dat/spob/jeronon.xml:40
+#: dat/spob/jorcan.xml:30 dat/spob/jorlan.xml:42 dat/spob/kayel.xml:36
+#: dat/spob/laarss.xml:43 dat/spob/lapra.xml:47 dat/spob/long_rock.xml:29
+#: dat/spob/mugen.xml:29 dat/spob/myonei.xml:45 dat/spob/new_mars.xml:28
+#: dat/spob/nova_shakar.xml:45 dat/spob/odonga_m1.xml:45 dat/spob/omar.xml:36
+#: dat/spob/paxsor.xml:30 dat/spob/qoman.xml:33 dat/spob/qoral.xml:40
+#: dat/spob/ramen.xml:29 dat/spob/rodney.xml:30 dat/spob/rogan.xml:48
+#: dat/spob/rulkar.xml:30 dat/spob/sander.xml:31 dat/spob/saraab.xml:31
+#: dat/spob/sheik_hall.xml:29 dat/spob/shiarta.xml:38 dat/spob/sollebor.xml:41
+#: dat/spob/stormgard.xml:51 dat/spob/stormy.xml:45
+#: dat/spob/tepdania_prime.xml:42 dat/spob/terminus.xml:30 dat/spob/thar.xml:31
 #: dat/spob/torloth.xml:30 dat/spob/trichu.xml:31 dat/spob/trinel.xml:28
-#: dat/spob/tummalin.xml:30 dat/spob/valt.xml:31 dat/spob/vargos_rock.xml:31
-#: dat/spob/vercingetorix.xml:43 dat/spob/vertigo.xml:32
-#: dat/spob/vilati_vilata.xml:42 dat/spob/virginis_alpha.xml:26
-#: dat/spob/wahri.xml:44 dat/spob/wakan.xml:29 dat/spob/warei.xml:37
-#: dat/spob/warnecke.xml:60 dat/spob/werlen.xml:32 dat/spob/yrina.xml:30
-#: dat/spob/zaren.xml:42 dat/spob/zesta.xml:27
+#: dat/spob/tummalin.xml:30 dat/spob/utsuwa.xml:38 dat/spob/valt.xml:31
+#: dat/spob/vargos_rock.xml:31 dat/spob/vercingetorix.xml:43
+#: dat/spob/vertigo.xml:32 dat/spob/vilati_vilata.xml:42
+#: dat/spob/virginis_alpha.xml:26 dat/spob/wahri.xml:44 dat/spob/wakan.xml:29
+#: dat/spob/warei.xml:37 dat/spob/warnecke.xml:60 dat/spob/werlen.xml:32
+#: dat/spob/yrina.xml:30 dat/spob/zaren.xml:42 dat/spob/zesta.xml:27
 msgid "mining"
 msgstr ""
 
@@ -8865,31 +8888,19 @@ msgid ""
 "he has an audiovisual database installed in his head."
 msgstr ""
 
-#: dat/spob/agino.xml:49 dat/spob/atryssa.xml:57 dat/spob/brooks.xml:38
-#: dat/spob/burnan.xml:58 dat/spob/dawn.xml:33 dat/spob/draconis_epsilon.xml:42
-#: dat/spob/edorn.xml:39 dat/spob/eta_vadornia.xml:31 dat/spob/flach.xml:48
-#: dat/spob/halir.xml:50 dat/spob/house_zalek_central.xml:76
-#: dat/spob/idio.xml:31 dat/spob/jaan.xml:38 dat/spob/jaxheen.xml:58
-#: dat/spob/khelim.xml:39 dat/spob/lanze.xml:50 dat/spob/maanens_moon.xml:30
-#: dat/spob/neo_pomerania.xml:52 dat/spob/ruadan_prime.xml:63
-#: dat/spob/stormgard.xml:49 dat/spob/varaati.xml:45 dat/spob/vuere.xml:32
+#: dat/spob/agino.xml:49 dat/spob/arck.xml:30 dat/spob/atryssa.xml:57
+#: dat/spob/brooks.xml:38 dat/spob/burnan.xml:58 dat/spob/dawn.xml:33
+#: dat/spob/draconis_epsilon.xml:42 dat/spob/edorn.xml:39
+#: dat/spob/eta_vadornia.xml:31 dat/spob/flach.xml:48 dat/spob/halir.xml:50
+#: dat/spob/house_zalek_central.xml:76 dat/spob/idio.xml:31
+#: dat/spob/jaan.xml:38 dat/spob/jaxheen.xml:58 dat/spob/khelim.xml:39
+#: dat/spob/lanze.xml:50 dat/spob/maanens_moon.xml:30
+#: dat/spob/neo_pomerania.xml:52 dat/spob/rhaana.xml:29
+#: dat/spob/ruadan_prime.xml:63 dat/spob/stormgard.xml:49
+#: dat/spob/trincea.xml:44 dat/spob/varaati.xml:45 dat/spob/vuere.xml:32
 #: dat/spob/warei.xml:36 dat/spob/wellen.xml:45 dat/spob/zalebus.xml:53
 #: dat/spob/zhiru.xml:45
 msgid "urban"
-msgstr ""
-
-#: dat/spob/agino.xml:50 dat/spob/amphion.xml:30 dat/spob/atalanta.xml:42
-#: dat/spob/bolero.xml:53 dat/spob/cetrat.xml:40 dat/spob/colley.xml:32
-#: dat/spob/em_5.xml:42 dat/spob/excelcior.xml:54 dat/spob/gastan.xml:30
-#: dat/spob/hankies.xml:31 dat/spob/harnaar.xml:45 dat/spob/heii.xml:41
-#: dat/spob/hznss1.xml:32 dat/spob/jaegnhild.xml:37 dat/spob/kanar.xml:44
-#: dat/spob/loramor.xml:39 dat/spob/maatsu.xml:43 dat/spob/mouddar.xml:30
-#: dat/spob/naga.xml:46 dat/spob/rulkar.xml:32 dat/spob/slofeldt_museum.xml:29
-#: dat/spob/solpere.xml:30 dat/spob/soromid_wards_alpha.xml:31
-#: dat/spob/stein.xml:56 dat/spob/steiner_station.xml:26 dat/spob/tori.xml:42
-#: dat/spob/ururis.xml:39 dat/spob/wunomis_world.xml:53 dat/spob/zaals.xml:45
-#: dat/spob/zepei.xml:40 dat/spob/zhang_lu.xml:41
-msgid "tourism"
 msgstr ""
 
 #: dat/spob/ahmed.xml:2
@@ -8941,19 +8952,23 @@ msgid ""
 "dangerous labour."
 msgstr ""
 
-#: dat/spob/aillis.xml:29 dat/spob/amhurst.xml:44 dat/spob/avoss.xml:29
-#: dat/spob/boowoy.xml:30 dat/spob/drognain.xml:28 dat/spob/edorn.xml:37
-#: dat/spob/ekkodu_gamma.xml:31 dat/spob/gennus.xml:38
-#: dat/spob/greenberg.xml:30 dat/spob/hassak.xml:29 dat/spob/hurada.xml:30
-#: dat/spob/jasmine.xml:28 dat/spob/jeronon.xml:43 dat/spob/jorlan.xml:41
-#: dat/spob/maanens_moon.xml:29 dat/spob/magellan.xml:37
-#: dat/spob/majesteka_ii.xml:30 dat/spob/megan_station.xml:30
-#: dat/spob/new_dortmund.xml:44 dat/spob/new_europe.xml:30 dat/spob/nixa.xml:29
-#: dat/spob/nonuri.xml:31 dat/spob/passir.xml:36 dat/spob/semper.xml:43
+#: dat/spob/aillis.xml:29 dat/spob/aleph.xml:29 dat/spob/amhurst.xml:44
+#: dat/spob/avoss.xml:29 dat/spob/boowoy.xml:30 dat/spob/castellan_iii.xml:30
+#: dat/spob/donnar.xml:44 dat/spob/drognain.xml:28 dat/spob/edorn.xml:37
+#: dat/spob/ekkodu_gamma.xml:31 dat/spob/gennus.xml:38 dat/spob/golem.xml:52
+#: dat/spob/greenberg.xml:30 dat/spob/haldr.xml:31 dat/spob/hassak.xml:29
+#: dat/spob/hikatalat.xml:29 dat/spob/hurada.xml:30 dat/spob/jasmine.xml:28
+#: dat/spob/jeronon.xml:43 dat/spob/jorlan.xml:41 dat/spob/maanens_moon.xml:29
+#: dat/spob/magellan.xml:37 dat/spob/majesteka_ii.xml:30
+#: dat/spob/megan_station.xml:30 dat/spob/new_dortmund.xml:44
+#: dat/spob/new_europe.xml:30 dat/spob/nixa.xml:29 dat/spob/nonuri.xml:31
+#: dat/spob/oni.xml:27 dat/spob/passir.xml:36 dat/spob/petaat.xml:30
+#: dat/spob/ramen.xml:30 dat/spob/rhaana.xml:30 dat/spob/semper.xml:43
 #: dat/spob/simoen.xml:43 dat/spob/stella.xml:30 dat/spob/takeru.xml:29
-#: dat/spob/tenalp.xml:27 dat/spob/thymo.xml:38 dat/spob/trichu.xml:33
-#: dat/spob/vaal.xml:19 dat/spob/vao_vos.xml:32 dat/spob/vargos_rock.xml:30
-#: dat/spob/vault.xml:41 dat/spob/vercingetorix.xml:42 dat/spob/vertigo.xml:31
+#: dat/spob/tenalp.xml:27 dat/spob/thymo.xml:38 dat/spob/timu.xml:44
+#: dat/spob/trichu.xml:33 dat/spob/ullnorn.xml:30 dat/spob/vaal.xml:19
+#: dat/spob/vao_vos.xml:32 dat/spob/vargos_rock.xml:30 dat/spob/vault.xml:41
+#: dat/spob/vercingetorix.xml:42 dat/spob/vertigo.xml:31
 #: dat/spob/vlexair.xml:30 dat/spob/vracha.xml:28 dat/spob/vuere.xml:31
 #: dat/spob/wagenni.xml:38 dat/spob/wahri.xml:42 dat/spob/wakan.xml:27
 #: dat/spob/warnecke.xml:59 dat/spob/waterholes_moon.xml:32
@@ -8983,26 +8998,26 @@ msgstr ""
 #: dat/spob/gath_cloister.xml:16 dat/spob/hartwell_nidus.xml:16
 #: dat/spob/heronus_nidus.xml:16 dat/spob/house_zalek_central.xml:16
 #: dat/spob/hs224.xml:15 dat/spob/hs232.xml:15 dat/spob/hs24.xml:15
-#: dat/spob/hs37.xml:15 dat/spob/hs54.xml:15 dat/spob/inios_monastery.xml:16
-#: dat/spob/janus_enclave.xml:16 dat/spob/madeleine_enclave.xml:16
-#: dat/spob/marauder_citadel.xml:16 dat/spob/marius_enclave.xml:16
-#: dat/spob/melendez_dome.xml:15 dat/spob/mokoshotar_enclave.xml:16
-#: dat/spob/monsoon_cloister.xml:16 dat/spob/moorline_cloister.xml:16
-#: dat/spob/morgan_citadel.xml:16 dat/spob/niflheim_enclave.xml:15
-#: dat/spob/ns1.xml:15 dat/spob/ns144.xml:15 dat/spob/ns27.xml:15
-#: dat/spob/ns42.xml:15 dat/spob/ns63.xml:15 dat/spob/obelisk_monastery.xml:16
-#: dat/spob/omega_enclave.xml:16 dat/spob/outbound_enclave.xml:15
-#: dat/spob/pokyos_cloister.xml:16 dat/spob/polaris_prime.xml:16
-#: dat/spob/raptor_nest.xml:16 dat/spob/rikaina.xml:16
-#: dat/spob/ruadan_bastion.xml:16 dat/spob/savoy_terminal.xml:15
-#: dat/spob/scorpion_nest.xml:16 dat/spob/sigma_bastion.xml:16
-#: dat/spob/sirius_monastery.xml:16 dat/spob/sirou_enclave.xml:16
-#: dat/spob/soromid_customs_central.xml:15 dat/spob/soromid_databank.xml:16
-#: dat/spob/stalwart_citadel.xml:16 dat/spob/sy1025.xml:15
-#: dat/spob/sy1206.xml:15 dat/spob/sy159.xml:15 dat/spob/sy19.xml:15
-#: dat/spob/sy237.xml:15 dat/spob/sy256.xml:15 dat/spob/sy314.xml:15
-#: dat/spob/sy413.xml:15 dat/spob/sy612.xml:15 dat/spob/sy894.xml:15
-#: dat/spob/sy920.xml:15 dat/spob/tepdania_customs.xml:15
+#: dat/spob/hs37.xml:15 dat/spob/hs54.xml:15 dat/spob/hubfar_citadel.xml:16
+#: dat/spob/inios_monastery.xml:16 dat/spob/janus_enclave.xml:16
+#: dat/spob/madeleine_enclave.xml:16 dat/spob/marauder_citadel.xml:16
+#: dat/spob/marius_enclave.xml:16 dat/spob/melendez_dome.xml:15
+#: dat/spob/mokoshotar_enclave.xml:16 dat/spob/monsoon_cloister.xml:16
+#: dat/spob/moorline_cloister.xml:16 dat/spob/morgan_citadel.xml:16
+#: dat/spob/niflheim_enclave.xml:15 dat/spob/ns1.xml:15 dat/spob/ns144.xml:15
+#: dat/spob/ns27.xml:15 dat/spob/ns42.xml:15 dat/spob/ns63.xml:15
+#: dat/spob/obelisk_monastery.xml:16 dat/spob/omega_enclave.xml:16
+#: dat/spob/outbound_enclave.xml:15 dat/spob/pokyos_cloister.xml:16
+#: dat/spob/polaris_prime.xml:16 dat/spob/raptor_nest.xml:16
+#: dat/spob/rikaina.xml:16 dat/spob/ruadan_bastion.xml:16
+#: dat/spob/savoy_terminal.xml:15 dat/spob/scorpion_nest.xml:16
+#: dat/spob/sigma_bastion.xml:16 dat/spob/sirius_monastery.xml:16
+#: dat/spob/sirou_enclave.xml:16 dat/spob/soromid_customs_central.xml:15
+#: dat/spob/soromid_databank.xml:16 dat/spob/stalwart_citadel.xml:16
+#: dat/spob/sy1025.xml:15 dat/spob/sy1206.xml:15 dat/spob/sy159.xml:15
+#: dat/spob/sy19.xml:15 dat/spob/sy237.xml:15 dat/spob/sy256.xml:15
+#: dat/spob/sy314.xml:15 dat/spob/sy413.xml:15 dat/spob/sy612.xml:15
+#: dat/spob/sy894.xml:15 dat/spob/sy920.xml:15 dat/spob/tepdania_customs.xml:15
 #: dat/spob/trevis_cloister.xml:16 dat/spob/vigil_station.xml:16
 #: dat/spob/vigilance_center.xml:16 dat/spob/violin_monastery.xml:16
 #: dat/spob/wildwood_nest.xml:15 dat/spob/yak_nest.xml:16
@@ -9033,14 +9048,15 @@ msgstr ""
 #: dat/spob/gath_cloister.xml:40 dat/spob/gorchenchev_shipyards.xml:37
 #: dat/spob/handalier.xml:30 dat/spob/hartwell_nidus.xml:46
 #: dat/spob/heronus.xml:44 dat/spob/heronus_nidus.xml:41
-#: dat/spob/house_zalek_central.xml:74 dat/spob/inios_monastery.xml:44
-#: dat/spob/jade_court.xml:30 dat/spob/janus_enclave.xml:46
-#: dat/spob/kataka.xml:40 dat/spob/lugun.xml:31 dat/spob/maanens_moon.xml:31
-#: dat/spob/madeleine_enclave.xml:44 dat/spob/majesteka_prime.xml:32
-#: dat/spob/marauder_citadel.xml:52 dat/spob/marius_enclave.xml:40
-#: dat/spob/memory_of_sorom.xml:51 dat/spob/mokoshotar_enclave.xml:41
-#: dat/spob/monsoon_cloister.xml:29 dat/spob/moorline_cloister.xml:51
-#: dat/spob/morgan_citadel.xml:48 dat/spob/mutris.xml:51 dat/spob/nolan.xml:27
+#: dat/spob/house_zalek_central.xml:74 dat/spob/hubfar_citadel.xml:31
+#: dat/spob/inios_monastery.xml:44 dat/spob/jade_court.xml:30
+#: dat/spob/janus_enclave.xml:46 dat/spob/kataka.xml:40 dat/spob/lugun.xml:31
+#: dat/spob/maanens_moon.xml:31 dat/spob/madeleine_enclave.xml:44
+#: dat/spob/majesteka_prime.xml:32 dat/spob/marauder_citadel.xml:52
+#: dat/spob/marius_enclave.xml:40 dat/spob/memory_of_sorom.xml:51
+#: dat/spob/mokoshotar_enclave.xml:41 dat/spob/monsoon_cloister.xml:29
+#: dat/spob/moorline_cloister.xml:51 dat/spob/morgan_citadel.xml:48
+#: dat/spob/mutris.xml:51 dat/spob/nolan.xml:27
 #: dat/spob/obelisk_monastery.xml:33 dat/spob/omega_enclave.xml:45
 #: dat/spob/pokyos_cloister.xml:50 dat/spob/priscus.xml:44
 #: dat/spob/raptor_nest.xml:35 dat/spob/rikaina.xml:63
@@ -9065,27 +9081,30 @@ msgstr ""
 #: dat/spob/astana.xml:50 dat/spob/bastion_center.xml:48
 #: dat/spob/bedimann_shipyards.xml:43 dat/spob/belltower_nest.xml:50
 #: dat/spob/brandt_cloister.xml:31 dat/spob/cutha.xml:31
-#: dat/spob/dvaered_high_command.xml:47 dat/spob/ebenezer.xml:29
-#: dat/spob/eclipse_citadel.xml:45 dat/spob/erebus_enclave.xml:30
-#: dat/spob/facett_nest.xml:31 dat/spob/fairfax_nest.xml:41
-#: dat/spob/falas.xml:28 dat/spob/forbes_monastery.xml:35
-#: dat/spob/fort_fernando.xml:44 dat/spob/fort_maus.xml:48
-#: dat/spob/fort_myuirr.xml:38 dat/spob/fort_raelid.xml:39
-#: dat/spob/fort_raglan.xml:30 dat/spob/fort_sarrii.xml:36
-#: dat/spob/fort_shariff.xml:29 dat/spob/fort_tarsus.xml:29
-#: dat/spob/fyruse_monastery.xml:31 dat/spob/gamma_enclave.xml:49
-#: dat/spob/gath_cloister.xml:42 dat/spob/gerhart_central.xml:46
-#: dat/spob/gorchenchev_shipyards.xml:40 dat/spob/hartwell_nidus.xml:47
-#: dat/spob/heronus.xml:45 dat/spob/heronus_nidus.xml:42
-#: dat/spob/house_zalek_central.xml:75 dat/spob/inios_monastery.xml:43
+#: dat/spob/doranthex_prime.xml:31 dat/spob/dvaered_high_command.xml:47
+#: dat/spob/ebenezer.xml:29 dat/spob/eclipse_citadel.xml:45
+#: dat/spob/erebus_enclave.xml:30 dat/spob/facett_nest.xml:31
+#: dat/spob/fairfax_nest.xml:41 dat/spob/falas.xml:28
+#: dat/spob/forbes_monastery.xml:35 dat/spob/fort_allan.xml:30
+#: dat/spob/fort_dumas.xml:35 dat/spob/fort_fernando.xml:44
+#: dat/spob/fort_maus.xml:48 dat/spob/fort_myuirr.xml:38
+#: dat/spob/fort_raelid.xml:39 dat/spob/fort_raglan.xml:30
+#: dat/spob/fort_sarrii.xml:36 dat/spob/fort_shariff.xml:29
+#: dat/spob/fort_tarsus.xml:29 dat/spob/fyruse_monastery.xml:31
+#: dat/spob/gamma_enclave.xml:49 dat/spob/gath_cloister.xml:42
+#: dat/spob/gerhart_central.xml:46 dat/spob/gorchenchev_shipyards.xml:40
+#: dat/spob/haldr.xml:30 dat/spob/hartwell_nidus.xml:47 dat/spob/heronus.xml:45
+#: dat/spob/heronus_nidus.xml:42 dat/spob/house_zalek_central.xml:75
+#: dat/spob/hubfar_citadel.xml:33 dat/spob/inios_monastery.xml:43
 #: dat/spob/janus_enclave.xml:47 dat/spob/kataka.xml:43 dat/spob/lugun.xml:33
 #: dat/spob/madeleine_enclave.xml:45 dat/spob/majesteka_prime.xml:31
 #: dat/spob/marauder_citadel.xml:54 dat/spob/marius_enclave.xml:41
 #: dat/spob/memory_of_sorom.xml:52 dat/spob/mokoshotar_enclave.xml:42
 #: dat/spob/monsoon_cloister.xml:31 dat/spob/moorline_cloister.xml:52
-#: dat/spob/niflheim_enclave.xml:44 dat/spob/obelisk_monastery.xml:35
-#: dat/spob/olario.xml:27 dat/spob/omega_enclave.xml:46
-#: dat/spob/outbound_enclave.xml:44 dat/spob/pokyos_cloister.xml:51
+#: dat/spob/morgan_citadel.xml:50 dat/spob/niflheim_enclave.xml:44
+#: dat/spob/obelisk_monastery.xml:35 dat/spob/olario.xml:27
+#: dat/spob/omega_enclave.xml:46 dat/spob/outbound_enclave.xml:44
+#: dat/spob/phee.xml:41 dat/spob/pokyos_cloister.xml:51
 #: dat/spob/raptor_nest.xml:36 dat/spob/rockhardt.xml:53
 #: dat/spob/ruadan_bastion.xml:55 dat/spob/savoy_terminal.xml:50
 #: dat/spob/scorch.xml:31 dat/spob/scorpion_nest.xml:42
@@ -9096,11 +9115,12 @@ msgstr ""
 #: dat/spob/stalwart_citadel.xml:44 dat/spob/stormy.xml:44
 #: dat/spob/tankard_cloister.xml:42 dat/spob/tanulwa.xml:30
 #: dat/spob/tartarus.xml:30 dat/spob/taxumi_iiia.xml:51
-#: dat/spob/tesla_station.xml:38 dat/spob/trevis_cloister.xml:41
-#: dat/spob/vigil_station.xml:29 dat/spob/vigilance_center.xml:59
-#: dat/spob/violin_monastery.xml:29 dat/spob/voproid_monastery.xml:47
-#: dat/spob/warnecke.xml:62 dat/spob/wigheta.xml:32
-#: dat/spob/wildwood_nest.xml:30 dat/spob/yak_nest.xml:31
+#: dat/spob/tepdania_customs.xml:29 dat/spob/tesla_station.xml:38
+#: dat/spob/trevis_cloister.xml:41 dat/spob/vigil_station.xml:29
+#: dat/spob/vigilance_center.xml:59 dat/spob/violin_monastery.xml:29
+#: dat/spob/voproid_monastery.xml:47 dat/spob/warnecke.xml:62
+#: dat/spob/wigheta.xml:32 dat/spob/wildwood_nest.xml:30
+#: dat/spob/yak_nest.xml:31
 msgid "military"
 msgstr ""
 
@@ -9122,7 +9142,7 @@ msgstr ""
 #: dat/spob/erebus_enclave.xml:32 dat/spob/facett_nest.xml:32
 #: dat/spob/fairfax_nest.xml:42 dat/spob/fd24.xml:26
 #: dat/spob/forbes_monastery.xml:34 dat/spob/fort_allan.xml:29
-#: dat/spob/fort_dumas.xml:35 dat/spob/fort_fernando.xml:43
+#: dat/spob/fort_dumas.xml:36 dat/spob/fort_fernando.xml:43
 #: dat/spob/fort_maus.xml:47 dat/spob/fort_myuirr.xml:37
 #: dat/spob/fort_raelid.xml:38 dat/spob/fort_raglan.xml:29
 #: dat/spob/fort_sarrii.xml:37 dat/spob/fort_secundus.xml:26
@@ -9136,10 +9156,11 @@ msgstr ""
 #: dat/spob/hartwell_nidus.xml:48 dat/spob/heronus_nidus.xml:43
 #: dat/spob/house_zalek_central.xml:77 dat/spob/hs224.xml:30
 #: dat/spob/hs232.xml:30 dat/spob/hs24.xml:30 dat/spob/hs37.xml:30
-#: dat/spob/hs54.xml:30 dat/spob/hurne_monastery.xml:42
-#: dat/spob/hystera_keep.xml:30 dat/spob/hznss1.xml:33 dat/spob/hznss2.xml:29
-#: dat/spob/hznss3.xml:29 dat/spob/inios_monastery.xml:42 dat/spob/inss1.xml:30
-#: dat/spob/inss2.xml:30 dat/spob/inss3.xml:29 dat/spob/jade_court.xml:31
+#: dat/spob/hs54.xml:30 dat/spob/hubfar_citadel.xml:32
+#: dat/spob/hurne_monastery.xml:42 dat/spob/hystera_keep.xml:30
+#: dat/spob/hznss1.xml:33 dat/spob/hznss2.xml:29 dat/spob/hznss3.xml:29
+#: dat/spob/inios_monastery.xml:42 dat/spob/inss1.xml:30 dat/spob/inss2.xml:30
+#: dat/spob/inss3.xml:29 dat/spob/jade_court.xml:31
 #: dat/spob/janus_enclave.xml:48 dat/spob/janus_farming.xml:27
 #: dat/spob/madeleine_enclave.xml:46 dat/spob/manuel_station.xml:50
 #: dat/spob/marauder_citadel.xml:53 dat/spob/marius_enclave.xml:42
@@ -9183,18 +9204,18 @@ msgstr ""
 #: dat/spob/sy894.xml:51 dat/spob/sy920.xml:51 dat/spob/tankard_cloister.xml:40
 #: dat/spob/tau_ceti_station.xml:25 dat/spob/tau_station.xml:31
 #: dat/spob/telika_keep.xml:29 dat/spob/tenalp.xml:28
-#: dat/spob/thaddius_terminal.xml:43 dat/spob/the_crucible.xml:46
-#: dat/spob/the_frontier_council.xml:27 dat/spob/the_wringer.xml:34
-#: dat/spob/three_and_a_half_kings.xml:43 dat/spob/torg_crops.xml:30
-#: dat/spob/trevis_cloister.xml:40 dat/spob/triton_shipyard.xml:35
-#: dat/spob/turnpike_station.xml:40 dat/spob/umbrella_clinic.xml:29
-#: dat/spob/urbanus_crops.xml:30 dat/spob/vigil_station.xml:28
-#: dat/spob/vigilance_center.xml:58 dat/spob/violin_monastery.xml:27
-#: dat/spob/voproid_monastery.xml:49 dat/spob/wardens_end.xml:53
-#: dat/spob/warnecke.xml:58 dat/spob/westeros_nest.xml:29
-#: dat/spob/wildwood_nest.xml:29 dat/spob/wunomis_world.xml:54
-#: dat/spob/yak_nest.xml:29 dat/spob/yaroslav_farming_station.xml:28
-#: dat/spob/zabween_outpost.xml:45
+#: dat/spob/tepdania_customs.xml:28 dat/spob/thaddius_terminal.xml:43
+#: dat/spob/the_crucible.xml:46 dat/spob/the_frontier_council.xml:27
+#: dat/spob/the_wringer.xml:34 dat/spob/three_and_a_half_kings.xml:43
+#: dat/spob/torg_crops.xml:30 dat/spob/trevis_cloister.xml:40
+#: dat/spob/triton_shipyard.xml:35 dat/spob/turnpike_station.xml:40
+#: dat/spob/umbrella_clinic.xml:29 dat/spob/urbanus_crops.xml:30
+#: dat/spob/vigil_station.xml:28 dat/spob/vigilance_center.xml:58
+#: dat/spob/violin_monastery.xml:27 dat/spob/voproid_monastery.xml:49
+#: dat/spob/wardens_end.xml:53 dat/spob/warnecke.xml:58
+#: dat/spob/westeros_nest.xml:29 dat/spob/wildwood_nest.xml:29
+#: dat/spob/wunomis_world.xml:54 dat/spob/yak_nest.xml:29
+#: dat/spob/yaroslav_farming_station.xml:28 dat/spob/zabween_outpost.xml:45
 #, fuzzy
 msgid "station"
 msgstr "투리온의 불꽃"
@@ -9218,21 +9239,20 @@ msgstr "요새"
 #: dat/spob/galileo_terminal.xml:15 dat/spob/gaula_foods.xml:15
 #: dat/spob/gerhart_central.xml:15 dat/spob/gorchenchev_shipyards.xml:16
 #: dat/spob/gordons_exchange.xml:15 dat/spob/grindstone_shipyards.xml:15
-#: dat/spob/hubfar_station.xml:15 dat/spob/hurne_monastery.xml:15
-#: dat/spob/hystera_keep.xml:15 dat/spob/hznss1.xml:15 dat/spob/hznss2.xml:15
-#: dat/spob/hznss3.xml:15 dat/spob/inss1.xml:15 dat/spob/inss2.xml:15
-#: dat/spob/inss3.xml:15 dat/spob/jade_court.xml:16
-#: dat/spob/janus_farming.xml:15 dat/spob/manuel_station.xml:15
-#: dat/spob/mastodon_station.xml:15 dat/spob/medenus_observatory.xml:15
-#: dat/spob/megan_station.xml:15 dat/spob/memory_of_sorom.xml:16
-#: dat/spob/minerva_station.xml:15 dat/spob/mining_vrata_guildhouse.xml:15
-#: dat/spob/new_space_trade_hub.xml:15 dat/spob/nexus_shipyards_hq.xml:15
-#: dat/spob/onewing_goddard.xml:15 dat/spob/onyx_shipyard.xml:15
-#: dat/spob/oort_farming_station.xml:15 dat/spob/opal_station.xml:15
-#: dat/spob/orville_shipyard.xml:15 dat/spob/point_zero_nidus.xml:15
-#: dat/spob/porro_farming_station.xml:15 dat/spob/procyon_shipyards.xml:15
-#: dat/spob/prp1.xml:15 dat/spob/prp2.xml:15 dat/spob/prp3.xml:15
-#: dat/spob/prp4.xml:15 dat/spob/pso_monitor.xml:15
+#: dat/spob/hurne_monastery.xml:15 dat/spob/hystera_keep.xml:15
+#: dat/spob/hznss1.xml:15 dat/spob/hznss2.xml:15 dat/spob/hznss3.xml:15
+#: dat/spob/inss1.xml:15 dat/spob/inss2.xml:15 dat/spob/inss3.xml:15
+#: dat/spob/jade_court.xml:16 dat/spob/janus_farming.xml:15
+#: dat/spob/manuel_station.xml:15 dat/spob/mastodon_station.xml:15
+#: dat/spob/medenus_observatory.xml:15 dat/spob/megan_station.xml:15
+#: dat/spob/memory_of_sorom.xml:16 dat/spob/minerva_station.xml:15
+#: dat/spob/mining_vrata_guildhouse.xml:15 dat/spob/new_space_trade_hub.xml:15
+#: dat/spob/nexus_shipyards_hq.xml:15 dat/spob/onewing_goddard.xml:15
+#: dat/spob/onyx_shipyard.xml:15 dat/spob/oort_farming_station.xml:15
+#: dat/spob/opal_station.xml:15 dat/spob/orville_shipyard.xml:15
+#: dat/spob/point_zero_nidus.xml:15 dat/spob/porro_farming_station.xml:15
+#: dat/spob/procyon_shipyards.xml:15 dat/spob/prp1.xml:15 dat/spob/prp2.xml:15
+#: dat/spob/prp3.xml:15 dat/spob/prp4.xml:15 dat/spob/pso_monitor.xml:15
 #: dat/spob/research_post_sigma13.xml:15 dat/spob/ruadan_terminal.xml:15
 #: dat/spob/salsax_nest.xml:15 dat/spob/scorpii_enclave.xml:15
 #: dat/spob/shade__sunshine.xml:15 dat/spob/shangris_station.xml:15
@@ -9372,16 +9392,18 @@ msgid ""
 msgstr ""
 
 #: dat/spob/aldarus.xml:41 dat/spob/aldous.xml:30 dat/spob/ammu.xml:39
-#: dat/spob/andors_refining.xml:26 dat/spob/arashu.xml:46
-#: dat/spob/arrentil.xml:30 dat/spob/bedimann_shipyards.xml:42
-#: dat/spob/beene.xml:42 dat/spob/cornwal_ordinance.xml:40
-#: dat/spob/edorn.xml:38 dat/spob/ember.xml:41 dat/spob/europea.xml:46
-#: dat/spob/ferrungir.xml:35 dat/spob/flach.xml:49 dat/spob/gaula_foods.xml:30
+#: dat/spob/andors_refining.xml:26 dat/spob/anubis.xml:45
+#: dat/spob/arashu.xml:46 dat/spob/arrentil.xml:30
+#: dat/spob/bedimann_shipyards.xml:42 dat/spob/beene.xml:42
+#: dat/spob/cornwal_ordinance.xml:40 dat/spob/edorn.xml:38
+#: dat/spob/ember.xml:41 dat/spob/europea.xml:46 dat/spob/ferrungir.xml:35
+#: dat/spob/flach.xml:49 dat/spob/gaula_foods.xml:30 dat/spob/godtra.xml:45
 #: dat/spob/griffin_iii.xml:60 dat/spob/heronus.xml:46 dat/spob/hs51.xml:49
 #: dat/spob/ian.xml:44 dat/spob/jankelo.xml:35 dat/spob/jemard.xml:37
 #: dat/spob/jeronon.xml:41 dat/spob/jorlan.xml:43 dat/spob/kanar.xml:43
-#: dat/spob/kaulas.xml:30 dat/spob/larling.xml:35 dat/spob/lorelei.xml:44
-#: dat/spob/myonei.xml:44 dat/spob/neo_pomerania.xml:53
+#: dat/spob/kaulas.xml:30 dat/spob/larling.xml:35 dat/spob/leszec.xml:30
+#: dat/spob/lorelei.xml:44 dat/spob/megas.xml:40 dat/spob/myonei.xml:44
+#: dat/spob/neo_pomerania.xml:53 dat/spob/omar.xml:37
 #: dat/spob/procyon_shipyards.xml:37 dat/spob/rockhardt.xml:54
 #: dat/spob/samell.xml:43 dat/spob/simoen.xml:41 dat/spob/sroolu.xml:36
 #: dat/spob/stormgard.xml:50 dat/spob/trichu.xml:32 dat/spob/vao_vos.xml:31
@@ -9515,9 +9537,10 @@ msgstr ""
 #: dat/spob/kramer.xml:53 dat/spob/minerva_station.xml:50
 #: dat/spob/new_haven.xml:59 dat/spob/pirates_cove.xml:54
 #: dat/spob/qorellia.xml:59 dat/spob/regensburg.xml:28 dat/spob/sanchez.xml:63
-#: dat/spob/shangris_station.xml:53 dat/spob/thaddius_terminal.xml:42
-#: dat/spob/the_crucible.xml:45 dat/spob/the_wringer.xml:33
-#: dat/spob/vorca.xml:59 dat/spob/wardens_end.xml:56
+#: dat/spob/shangris_station.xml:53 dat/spob/sudra.xml:41
+#: dat/spob/thaddius_terminal.xml:42 dat/spob/the_crucible.xml:45
+#: dat/spob/the_wringer.xml:33 dat/spob/vorca.xml:59
+#: dat/spob/wardens_end.xml:56
 msgid "criminal"
 msgstr ""
 
@@ -9727,6 +9750,25 @@ msgid ""
 "freight lines."
 msgstr ""
 
+#: dat/spob/ambre.xml:43 dat/spob/anubis.xml:43 dat/spob/atalanta.xml:40
+#: dat/spob/avoss.xml:28 dat/spob/cetrat.xml:38 dat/spob/dawn.xml:31
+#: dat/spob/dvaer_prime.xml:46 dat/spob/ekkodu_gamma.xml:32
+#: dat/spob/gayathi.xml:28 dat/spob/gilligans_memory.xml:37
+#: dat/spob/holly_i.xml:32 dat/spob/holly_ii.xml:30 dat/spob/holly_iii.xml:30
+#: dat/spob/hubfar_citadel.xml:34 dat/spob/jaegnhild.xml:35
+#: dat/spob/jorlan.xml:40 dat/spob/khelim.xml:38 dat/spob/lapra.xml:46
+#: dat/spob/maanens_moon.xml:32 dat/spob/manis.xml:37
+#: dat/spob/new_dortmund.xml:43 dat/spob/nonuri.xml:30 dat/spob/nor.xml:30
+#: dat/spob/qoman.xml:34 dat/spob/saraab.xml:32 dat/spob/sheik_hall.xml:30
+#: dat/spob/spica.xml:43 dat/spob/stutee.xml:40 dat/spob/tepdania_prime.xml:43
+#: dat/spob/the_frontier_council.xml:28 dat/spob/tori.xml:40
+#: dat/spob/varaati.xml:43 dat/spob/virginis_alpha.xml:28
+#: dat/spob/wardens_end.xml:54 dat/spob/waterholes_moon.xml:31
+#: dat/spob/wunomis_world.xml:51 dat/spob/zabween_outpost.xml:44
+#: dat/spob/zalebus.xml:52 dat/spob/zuner.xml:34
+msgid "old"
+msgstr ""
+
 #: dat/spob/amhurst.xml:2
 msgid "Amhurst"
 msgstr ""
@@ -9756,14 +9798,15 @@ msgstr ""
 #: dat/spob/jaegnhild.xml:38 dat/spob/jankelo.xml:37 dat/spob/jaxheen.xml:59
 #: dat/spob/jorlan.xml:44 dat/spob/kataka.xml:41 dat/spob/khelim.xml:40
 #: dat/spob/lanze.xml:48 dat/spob/lapra.xml:48 dat/spob/larling.xml:36
-#: dat/spob/lorelei.xml:45 dat/spob/manuel_station.xml:51
-#: dat/spob/mining_vrata_guildhouse.xml:45 dat/spob/mk.xml:40
-#: dat/spob/neurri.xml:36 dat/spob/new_space_trade_hub.xml:59
-#: dat/spob/new_xantusia.xml:50 dat/spob/niflheim_enclave.xml:43
-#: dat/spob/nova_shakar.xml:46 dat/spob/opal_station.xml:41
-#: dat/spob/outbound_enclave.xml:42 dat/spob/point_zero_nidus.xml:29
-#: dat/spob/polaris_prime.xml:48 dat/spob/qorellia.xml:60
-#: dat/spob/rockhardt.xml:55 dat/spob/rodney.xml:31 dat/spob/salsax_nest.xml:38
+#: dat/spob/lorelei.xml:45 dat/spob/mannannan.xml:44
+#: dat/spob/manuel_station.xml:51 dat/spob/mining_vrata_guildhouse.xml:45
+#: dat/spob/mk.xml:40 dat/spob/neurri.xml:36
+#: dat/spob/new_space_trade_hub.xml:59 dat/spob/new_xantusia.xml:50
+#: dat/spob/niflheim_enclave.xml:43 dat/spob/nova_shakar.xml:46
+#: dat/spob/opal_station.xml:41 dat/spob/outbound_enclave.xml:42
+#: dat/spob/point_zero_nidus.xml:29 dat/spob/polaris_prime.xml:48
+#: dat/spob/praxis.xml:45 dat/spob/qorellia.xml:60 dat/spob/rockhardt.xml:55
+#: dat/spob/rodney.xml:31 dat/spob/salsax_nest.xml:38
 #: dat/spob/shangris_station.xml:54 dat/spob/soromid_customs_central.xml:29
 #: dat/spob/tankard_cloister.xml:41 dat/spob/topkapi_station.xml:29
 #: dat/spob/turnpike_station.xml:39 dat/spob/unicorp_orbital.xml:33
@@ -9840,15 +9883,16 @@ msgstr ""
 #: dat/spob/ian.xml:43 dat/spob/jaegnhild.xml:36 dat/spob/jaxheen.xml:57
 #: dat/spob/jomos.xml:29 dat/spob/jorla.xml:47 dat/spob/kataka.xml:42
 #: dat/spob/lanze.xml:49 dat/spob/loramor.xml:40
-#: dat/spob/mining_vrata_guildhouse.xml:47 dat/spob/neo_pomerania.xml:55
-#: dat/spob/neurri.xml:35 dat/spob/phosarrus.xml:54 dat/spob/rogan.xml:49
-#: dat/spob/rudderfern.xml:39 dat/spob/sharak.xml:47
-#: dat/spob/soromid_wards_alpha.xml:30 dat/spob/soromid_wards_beta.xml:33
-#: dat/spob/soromid_wards_gamma.xml:32 dat/spob/the_frontier_council.xml:29
-#: dat/spob/turawee.xml:52 dat/spob/ummula.xml:45 dat/spob/urail.xml:40
-#: dat/spob/ururis.xml:38 dat/spob/varaati.xml:44 dat/spob/varia.xml:42
-#: dat/spob/waldar.xml:48 dat/spob/wikon.xml:52 dat/spob/wonclock.xml:47
-#: dat/spob/worscha.xml:47 dat/spob/wyrmwood.xml:45 dat/spob/zalebus.xml:51
+#: dat/spob/mining_vrata_guildhouse.xml:47 dat/spob/nanek.xml:45
+#: dat/spob/neo_pomerania.xml:55 dat/spob/neurri.xml:35
+#: dat/spob/phosarrus.xml:54 dat/spob/rogan.xml:49 dat/spob/rudderfern.xml:39
+#: dat/spob/sharak.xml:47 dat/spob/soromid_wards_alpha.xml:30
+#: dat/spob/soromid_wards_beta.xml:33 dat/spob/soromid_wards_gamma.xml:32
+#: dat/spob/the_frontier_council.xml:29 dat/spob/turawee.xml:52
+#: dat/spob/ummula.xml:45 dat/spob/urail.xml:40 dat/spob/ururis.xml:38
+#: dat/spob/varaati.xml:44 dat/spob/varia.xml:42 dat/spob/waldar.xml:48
+#: dat/spob/wikon.xml:52 dat/spob/wonclock.xml:47 dat/spob/worscha.xml:47
+#: dat/spob/wyrmwood.xml:45 dat/spob/zalebus.xml:51
 #: dat/spob/zembla_shakar.xml:41 dat/spob/zhiru.xml:44 dat/spob/zuner.xml:31
 msgid "rich"
 msgstr ""
@@ -10066,22 +10110,6 @@ msgid ""
 "radioactive conditions."
 msgstr ""
 
-#: dat/spob/anubis.xml:43 dat/spob/atalanta.xml:40 dat/spob/avoss.xml:28
-#: dat/spob/cetrat.xml:38 dat/spob/dawn.xml:31 dat/spob/ekkodu_gamma.xml:32
-#: dat/spob/gayathi.xml:28 dat/spob/gilligans_memory.xml:37
-#: dat/spob/holly_i.xml:32 dat/spob/holly_ii.xml:30 dat/spob/holly_iii.xml:30
-#: dat/spob/jaegnhild.xml:35 dat/spob/jorlan.xml:40 dat/spob/khelim.xml:38
-#: dat/spob/lapra.xml:46 dat/spob/maanens_moon.xml:32 dat/spob/manis.xml:37
-#: dat/spob/new_dortmund.xml:43 dat/spob/nonuri.xml:30 dat/spob/saraab.xml:32
-#: dat/spob/sheik_hall.xml:30 dat/spob/spica.xml:43
-#: dat/spob/tepdania_prime.xml:43 dat/spob/the_frontier_council.xml:28
-#: dat/spob/tori.xml:40 dat/spob/varaati.xml:43 dat/spob/virginis_alpha.xml:28
-#: dat/spob/wardens_end.xml:54 dat/spob/waterholes_moon.xml:31
-#: dat/spob/wunomis_world.xml:51 dat/spob/zabween_outpost.xml:44
-#: dat/spob/zalebus.xml:52 dat/spob/zuner.xml:34
-msgid "old"
-msgstr ""
-
 #: dat/spob/anya.xml:2
 msgid "Anya"
 msgstr ""
@@ -10137,12 +10165,12 @@ msgid ""
 msgstr ""
 
 #: dat/spob/apik_shipyard.xml:49 dat/spob/bedimann_shipyards.xml:45
-#: dat/spob/duran_shipyard.xml:34 dat/spob/gorchenchev_shipyards.xml:39
-#: dat/spob/grindstone_shipyards.xml:36 dat/spob/nexus_shipyards_hq.xml:36
-#: dat/spob/onyx_shipyard.xml:36 dat/spob/orville_shipyard.xml:36
-#: dat/spob/procyon_shipyards.xml:39 dat/spob/sirius_shipyards.xml:34
-#: dat/spob/triton_shipyard.xml:36 dat/spob/warei.xml:39
-#: dat/spob/wigheta.xml:33 dat/spob/zhiru.xml:48
+#: dat/spob/duran_shipyard.xml:34 dat/spob/eist_shipyard.xml:34
+#: dat/spob/gorchenchev_shipyards.xml:39 dat/spob/grindstone_shipyards.xml:36
+#: dat/spob/nexus_shipyards_hq.xml:36 dat/spob/onyx_shipyard.xml:36
+#: dat/spob/orville_shipyard.xml:36 dat/spob/procyon_shipyards.xml:39
+#: dat/spob/sirius_shipyards.xml:34 dat/spob/triton_shipyard.xml:36
+#: dat/spob/warei.xml:39 dat/spob/wigheta.xml:33 dat/spob/zhiru.xml:48
 msgid "shipbuilding"
 msgstr ""
 
@@ -10218,13 +10246,14 @@ msgid ""
 msgstr ""
 
 #: dat/spob/arcadia.xml:30 dat/spob/benteen.xml:30 dat/spob/caladan.xml:45
-#: dat/spob/corinth_foods.xml:28 dat/spob/crylo.xml:41 dat/spob/em_1.xml:43
-#: dat/spob/excelcior.xml:55 dat/spob/freshwater_station.xml:31
-#: dat/spob/gaula.xml:30 dat/spob/gaula_foods.xml:31 dat/spob/haurn.xml:30
-#: dat/spob/huanxi.xml:41 dat/spob/hznss1.xml:30 dat/spob/hznss2.xml:28
-#: dat/spob/hznss3.xml:28 dat/spob/ianella_iv.xml:30 dat/spob/inss1.xml:29
-#: dat/spob/inss2.xml:29 dat/spob/inss3.xml:30 dat/spob/janus_farming.xml:28
-#: dat/spob/kayel.xml:37 dat/spob/mendez.xml:30
+#: dat/spob/corinth_foods.xml:28 dat/spob/crylo.xml:41 dat/spob/dunmer.xml:29
+#: dat/spob/em_1.xml:43 dat/spob/excelcior.xml:55
+#: dat/spob/freshwater_station.xml:31 dat/spob/gaula.xml:30
+#: dat/spob/gaula_foods.xml:31 dat/spob/ginni.xml:42 dat/spob/godtra.xml:44
+#: dat/spob/haurn.xml:30 dat/spob/huanxi.xml:41 dat/spob/hznss1.xml:30
+#: dat/spob/hznss2.xml:28 dat/spob/hznss3.xml:28 dat/spob/ianella_iv.xml:30
+#: dat/spob/inss1.xml:29 dat/spob/inss2.xml:29 dat/spob/inss3.xml:30
+#: dat/spob/janus_farming.xml:28 dat/spob/kayel.xml:37 dat/spob/mendez.xml:30
 #: dat/spob/oort_farming_station.xml:28 dat/spob/percola.xml:38
 #: dat/spob/porro_farming_station.xml:29 dat/spob/priscus.xml:45
 #: dat/spob/reidd.xml:38 dat/spob/rogan.xml:47 dat/spob/sander.xml:32
@@ -10708,9 +10737,10 @@ msgid ""
 "system."
 msgstr ""
 
-#: dat/spob/belltower_nest.xml:51 dat/spob/finn.xml:28 dat/spob/pauldur.xml:27
-#: dat/spob/tanulwa.xml:29 dat/spob/trinel.xml:27 dat/spob/vercingetorix.xml:44
-#: dat/spob/wakan.xml:28 dat/spob/wayline.xml:27 dat/spob/zaren.xml:43
+#: dat/spob/belltower_nest.xml:51 dat/spob/finn.xml:28 dat/spob/leszec.xml:29
+#: dat/spob/oni.xml:26 dat/spob/pauldur.xml:27 dat/spob/tanulwa.xml:29
+#: dat/spob/trinel.xml:27 dat/spob/vercingetorix.xml:44 dat/spob/wakan.xml:28
+#: dat/spob/wayline.xml:27 dat/spob/zaren.xml:43
 msgid "prison"
 msgstr ""
 
@@ -10828,7 +10858,7 @@ msgid ""
 msgstr ""
 
 #: dat/spob/bolero.xml:55 dat/spob/coral_cloister.xml:29
-#: dat/spob/fort_allan.xml:30 dat/spob/majesteka_ii.xml:32
+#: dat/spob/fort_allan.xml:31 dat/spob/majesteka_ii.xml:32
 #: dat/spob/new_space_trade_hub.xml:60 dat/spob/racheka.xml:30
 #: dat/spob/soromid_customs_central.xml:28 dat/spob/vaal.xml:18
 #: dat/spob/valt.xml:30 dat/spob/vennis.xml:38 dat/spob/vorca.xml:55
@@ -11019,7 +11049,8 @@ msgid ""
 "get in the way of the bustle and traffic of the main floor."
 msgstr ""
 
-#: dat/spob/burnan.xml:57 dat/spob/dawn.xml:35 dat/spob/mutris.xml:52
+#: dat/spob/burnan.xml:57 dat/spob/dawn.xml:35 dat/spob/dvaer_prime.xml:47
+#: dat/spob/dvaered_high_command.xml:50 dat/spob/mutris.xml:52
 #: dat/spob/polaris_prime.xml:50 dat/spob/soromid_customs_central.xml:30
 #: dat/spob/soromid_databank.xml:33 dat/spob/the_frontier_council.xml:30
 #: dat/spob/vorca.xml:58 dat/spob/vuere.xml:34
@@ -11712,6 +11743,10 @@ msgid ""
 "fills most of the station's bulk. The second arena is actually space itself. "
 "Gladiators fight in lifesuits on the outer hull of the station, without "
 "lifelines."
+msgstr ""
+
+#: dat/spob/diabolos_station.xml:27
+msgid "tuorism"
 msgstr ""
 
 #: dat/spob/diadem_i.xml:2
@@ -14346,37 +14381,34 @@ msgid ""
 "than by the drinks he serves."
 msgstr ""
 
-#: dat/spob/hubfar_i.xml:2
-msgid "Hubfar I"
+#: dat/spob/hubfar_citadel.xml:2
+#, fuzzy
+#| msgid "Soromid Marauder"
+msgid "Hubfar Citadel"
+msgstr "소로미드 약탈자"
+
+#: dat/spob/hubfar_citadel.xml:27
+msgid ""
+"Originally an Imperial base, it was turned over to the Dvaered as part of "
+"the agreement when House Dvaered was formed. The core of the station follows "
+"traditional Imperial designs, while the additional wings and barracks are "
+"much more functional and crude, breaking the little harmony the original "
+"design had. The citadel is used exert Dvaered influence on the norther "
+"border of Dvaered space and has several large platoons and squadrons ready "
+"to be sent to instill peace at a moments notice."
 msgstr ""
 
-#: dat/spob/hubfar_station.xml:2
-#, fuzzy
-msgid "Hubfar Station"
-msgstr "투리온의 불꽃"
+#: dat/spob/hubfar_citadel.xml:28
+msgid ""
+"Although the bar is in the Imperial part of the station, it has been "
+"reformed from the inside out and rebranded as the Hubfar Beer Garden. There "
+"is always an assortment of merry soldiers munching down on all sorts of "
+"hearty foods with beer constantly flowing. Not a bad place if you are into "
+"that sort of stuff."
+msgstr ""
 
-#. Speed Lights
-#. Update the editor window.
-#. Make sure it's valid.
-#. text
-#: dat/spob/hubfar_station.xml:26 dat/spob/hubfar_station.xml:27
-#: dat/board.lua:387 dat/gui/brushed.lua:871 dat/gui/brushed.lua:880
-#: dat/missions/rehab_common.lua:38 dat/outfits/unique/fuel_recycler.lua:119
-#: dat/scripts/common/poi.lua:194 src/dev_sysedit.c:1415 src/dev_sysedit.c:1934
-#: src/dev_sysedit.c:1935 src/dev_sysedit.c:2042 src/dev_sysedit.c:2056
-#: src/dev_sysedit.c:2082 src/dev_sysedit.c:2103 src/dev_sysedit.c:2180
-#: src/dev_sysedit.c:2197 src/dev_sysedit.c:2236 src/dev_sysedit.c:2259
-#: src/dev_sysedit.c:2382 src/dev_sysedit.c:2429 src/dev_sysedit.c:2452
-#: src/dev_sysedit.c:2515 src/dev_sysedit.c:2573 src/dev_uniedit.c:1822
-#: src/dev_uniedit.c:2053 src/dev_uniedit.c:2122 src/dev_uniedit.c:2318
-#: src/dev_uniedit.c:2365 src/dev_uniedit.c:2388 src/info.c:437 src/info.c:538
-#: src/info.c:949 src/info.c:1346 src/input.c:524 src/land.c:877
-#: src/land_outfits.c:442 src/land_outfits.c:694 src/land_shipyard.c:133
-#: src/land_shipyard.c:222 src/land_trade.c:85 src/land_trade.c:87
-#: src/land_trade.c:153 src/load.c:533 src/load.c:612 src/map.c:727
-#: src/map.c:780 src/map.c:1959 src/map_find.c:697 src/map_system.c:648
-#, c-format
-msgid "None"
+#: dat/spob/hubfar_i.xml:2
+msgid "Hubfar I"
 msgstr ""
 
 #: dat/spob/humdrum_i.xml:2
@@ -21873,7 +21905,7 @@ msgid ""
 "even a jukebox. The few appointments are welded to the floor, and everything "
 "else is either made out of steel or has steel bars covering it. Clearly, "
 "this is a place where fists meet faces. Maybe you shouldn't stay here too "
-"long..."
+"long…"
 msgstr ""
 
 #: dat/spob/ulysses_iii.xml:2
@@ -29349,6 +29381,29 @@ msgstr ""
 
 #: dat/board.lua:380
 msgid "You dump {tonnes} of {cargo} out the airlock of your ship."
+msgstr ""
+
+#. Speed Lights
+#. Update the editor window.
+#. Make sure it's valid.
+#. text
+#: dat/board.lua:387 dat/gui/brushed.lua:871 dat/gui/brushed.lua:880
+#: dat/missions/rehab_common.lua:38 dat/outfits/unique/fuel_recycler.lua:119
+#: dat/scripts/common/poi.lua:194 src/dev_sysedit.c:1415 src/dev_sysedit.c:1934
+#: src/dev_sysedit.c:1935 src/dev_sysedit.c:2042 src/dev_sysedit.c:2056
+#: src/dev_sysedit.c:2082 src/dev_sysedit.c:2103 src/dev_sysedit.c:2180
+#: src/dev_sysedit.c:2197 src/dev_sysedit.c:2236 src/dev_sysedit.c:2259
+#: src/dev_sysedit.c:2382 src/dev_sysedit.c:2429 src/dev_sysedit.c:2452
+#: src/dev_sysedit.c:2515 src/dev_sysedit.c:2573 src/dev_uniedit.c:1822
+#: src/dev_uniedit.c:2053 src/dev_uniedit.c:2122 src/dev_uniedit.c:2318
+#: src/dev_uniedit.c:2365 src/dev_uniedit.c:2388 src/info.c:437 src/info.c:538
+#: src/info.c:949 src/info.c:1346 src/input.c:524 src/land.c:877
+#: src/land_outfits.c:442 src/land_outfits.c:694 src/land_shipyard.c:133
+#: src/land_shipyard.c:222 src/land_trade.c:85 src/land_trade.c:87
+#: src/land_trade.c:153 src/load.c:533 src/load.c:612 src/map.c:727
+#: src/map.c:780 src/map.c:1959 src/map_find.c:697 src/map_system.c:648
+#, c-format
+msgid "None"
 msgstr ""
 
 #. Add manage cargo button if applicable
@@ -116610,6 +116665,10 @@ msgstr ""
 #: dat/outfits/bioship/generate.py:480
 msgid "Immanis Cortex III"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Hubfar Station"
+#~ msgstr "투리온의 불꽃"
 
 #, fuzzy
 #~ msgid "Bastion Station"
