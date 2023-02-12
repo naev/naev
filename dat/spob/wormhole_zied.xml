@@ -4,7 +4,7 @@
  <feature>#bWormhole#0</feature>
  <lua>spob/lua/wormhole_zied.lua</lua>
  <marker>spobmarker_wormhole</marker>
- <pos x="-4947.232438" y="3876.819039"/>
+ <pos x="21.532020" y="-0.614724"/>
  <GFX/>
  <general>
   <class>Wormhole</class>
