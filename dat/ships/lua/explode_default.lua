@@ -20,6 +20,7 @@ function explode_update( p, dt )
       local pos = p:pos() + vec2.newP( mem.r*rnd.rnd(), rnd.angle() )
       local r = mem.r * (0.2 + 0.3 * rnd.rnd())
 
+      -- TODO maybe explosions should be under player when applicable...
       explosion( pos, p:vel(), r, nil, {silent=true} )
    end
 
