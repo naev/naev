@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Sirius Preacher">
+ <lua>ships/lua/sirius.lua</lua>
  <points>60</points>
  <base_type>Preacher</base_type>
  <GFX size="70" sx="10" sy="10">preacher</GFX>
