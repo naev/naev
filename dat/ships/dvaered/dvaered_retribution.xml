@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Dvaered Retribution">
+ <lua>ships/lua/dvaered.lua</lua>
  <points>150</points>
  <base_type>Retribution</base_type>
  <GFX size="128" sx="12" sy="12">retribution_dvaered</GFX>
