@@ -100,13 +100,13 @@ void debris_add( double mass, double r, double px, double py,
 
       /* Get position. */
       d = r/2. * RNG_2SIGMA();
-      a = RNGF()*2*M_PI;
+      a = RNGF()*2.*M_PI;
       npx = px + d*cos(a);
       npy = py + d*sin(a);
 
       /* Get velocity. */
       d = n * RNG_2SIGMA();
-      a = RNGF()*2*M_PI;
+      a = RNGF()*2.*M_PI;
       nvx = vx + d*cos(a);
       nvy = vy + d*sin(a);
 

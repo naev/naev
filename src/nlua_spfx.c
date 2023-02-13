@@ -17,6 +17,7 @@
 
 #include "conf.h"
 #include "camera.h"
+#include "debris.h"
 #include "array.h"
 #include "nlua_audio.h"
 #include "nlua_vec2.h"
@@ -72,6 +73,7 @@ static int spfxL_setPos( lua_State *L );
 static int spfxL_setVel( lua_State *L );
 static int spfxL_sfx( lua_State *L );
 static int spfxL_data( lua_State *L );
+static int spfxL_debris( lua_State *L );
 static const luaL_Reg spfxL_methods[] = {
    { "__gc", spfxL_gc },
    { "__eq", spfxL_eq },
@@ -84,6 +86,7 @@ static const luaL_Reg spfxL_methods[] = {
    { "setVel", spfxL_setVel },
    { "sfx", spfxL_sfx },
    { "data", spfxL_data },
+   { "debris", spfxL_debris },
    {0,0}
 }; /**< SpfxLua methods. */
 
@@ -759,4 +762,23 @@ void spfxL_renderfg (void)
       }
    }
    spfx_unlock();
+}
+
+/**
+ * @brief Creates a cloud of debris.
+ *
+ *    @luatparam number mass Mass of the cloud.
+ *    @luatparam number radius Radius of the cloud.
+ *    @luatparam Vec2 pos Position of the cloud.
+ *    @luatparam Vec2 vel Velocity of the cloud.
+ * @luafunc debris
+ */
+static int spfxL_debris( lua_State *L )
+{
+   double mass = luaL_checknumber( L, 1 );
+   double radius = luaL_checknumber( L, 2 );
+   vec2 *p = luaL_checkvector( L, 3 );
+   vec2 *v = luaL_checkvector( L, 4 );
+   debris_add( mass, radius, p->x, p->y, v->x, v->y );
+   return 0;
 }
