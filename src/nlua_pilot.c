@@ -143,6 +143,7 @@ static int pilotL_outfitAddSlot( lua_State *L );
 static int pilotL_outfitRmSlot( lua_State *L );
 static int pilotL_outfitAddIntrinsic( lua_State *L );
 static int pilotL_outfitRmIntrinsic( lua_State *L );
+static int pilotL_getFuel( lua_State *L );
 static int pilotL_setFuel( lua_State *L );
 static int pilotL_intrinsicReset( lua_State *L );
 static int pilotL_intrinsicSet( lua_State *L );
@@ -324,6 +325,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "outfitRmSlot", pilotL_outfitRmSlot },
    { "outfitAddIntrinsic", pilotL_outfitAddIntrinsic },
    { "outfitRmIntrinsic", pilotL_outfitRmIntrinsic },
+   { "fuel", pilotL_getFuel },
    { "setFuel", pilotL_setFuel },
    { "intrinsicReset", pilotL_intrinsicReset },
    { "intrinsicSet", pilotL_intrinsicSet },
@@ -3307,6 +3309,19 @@ static int pilotL_outfitRmIntrinsic( lua_State *L )
       return 1;
    }
    lua_pushboolean(L,0);
+   return 1;
+}
+
+/**
+ * @brief Gets the amount of fuel the pilot has.
+ *
+ *    @luatreturn number The amount of fuel the pilot has.
+ * @luafunc fuel
+ */
+static int pilotL_getFuel( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   lua_pushnumber(L, p->fuel);
    return 1;
 }
 
