@@ -6,7 +6,7 @@ function explode_init( p )
    local sw, sh = p:ship():dims()
 
    mem.exploded = false
-   mem.dtimer = math.min( 1 + math.sqrt( armour_max * shield_max ) / 500, 3 + math.pow( armour_max * shield_max, 0.4) / 400 )
+   mem.dtimer = math.min( 2 + math.sqrt( armour_max * shield_max ) / 400, 4 + math.pow( armour_max * shield_max, 0.4) / 300 )
    mem.timer = 0
    mem.r = (sw+sh)*0.25 -- Radius
 end
