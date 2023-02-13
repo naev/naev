@@ -681,6 +681,14 @@ static int ship_parse( Ship *temp, const char *filename )
    ss_statsInit( &temp->stats_array );
    temp->dt_default = 1.;
 
+   /* Lua defaults. */
+   temp->lua_env     = LUA_NOREF;
+   temp->lua_init    = LUA_NOREF;
+   temp->lua_cleanup = LUA_NOREF;
+   temp->lua_update  = LUA_NOREF;
+   temp->lua_explode_init = LUA_NOREF;
+   temp->lua_explode_update = LUA_NOREF;
+
    /* Get name. */
    xmlr_attr_strd( parent, "name", temp->name );
    if (temp->name == NULL)

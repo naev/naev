@@ -346,6 +346,9 @@ typedef struct Pilot_ {
    Task* task;       /**< current action */
    unsigned int shoot_indicator; /**< Indicator to inform the AI if a seeker has been shot recently. */
 
+   /* Ship Lua. */
+   int lua_ship_mem; /**< Ship memory. */
+
    /* Misc */
    double comm_msgTimer; /**< Message timer for the comm. */
    double comm_msgWidth; /**< Width of the message. */
