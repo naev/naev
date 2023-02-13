@@ -167,6 +167,15 @@ typedef struct Ship_ {
 
    /* Tags. */
    char **tags;   /**< Ship tags. */
+
+   /* Lua function references. Set to LUA_NOREF if not used. */
+   char *lua_file;   /**< Lua File. */
+   nlua_env lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
+   int lua_init;     /**< Run when pilot enters a system. */
+   int lua_cleanup;  /**< Run when the pilot is erased. */
+   int lua_update;   /**< Run periodically. */
+   int lua_explode_init; /**< Run when starting explosion. */
+   int lua_explode_update; /**< Run when exploding. */
 } Ship;
 
 /*

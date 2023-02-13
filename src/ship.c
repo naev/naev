@@ -22,6 +22,9 @@
 #include "log.h"
 #include "ndata.h"
 #include "nfile.h"
+#include "nlua.h"
+#include "nlua_gfx.h"
+#include "nlua_camera.h"
 #include "nstring.h"
 #include "nxml.h"
 #include "shipstats.h"
@@ -806,6 +809,7 @@ static int ship_parse( Ship *temp, const char *filename )
       xmlr_strd(node,"description",temp->description);
       xmlr_int(node,"points",temp->points);
       xmlr_int(node,"rarity",temp->rarity);
+      xmlr_strd(node,"lua",temp->lua_file);
 
       if (xml_isNode(node,"flags")) {
          xmlNodePtr cur = node->children;
@@ -1034,6 +1038,7 @@ int ships_load (void)
    if (ship_stack == NULL)
       ship_stack = array_create_size(Ship, nfiles);
 
+   /* First pass to load data. */
    for (int i=0; i<nfiles; i++) {
       if (ndata_matchExt( ship_files[i], "xml" )) {
          /* Load the ship. */
@@ -1053,6 +1058,48 @@ int ships_load (void)
 
    /* Shrink stack. */
    array_shrink(&ship_stack);
+
+   /* Second pass to load Lua. */
+   for (int i=0; i<array_size(ship_stack); i++) {
+      Ship *s = &ship_stack[i];
+      if (s->lua_file==NULL)
+         continue;
+
+      nlua_env env;
+      size_t sz;
+      char *dat = ndata_read( s->lua_file, &sz );
+      if (dat==NULL) {
+         WARN(_("Ship '%s' failed to read Lua '%s'!"), s->name, s->lua_file );
+         continue;
+      }
+
+      env = nlua_newEnv();
+      s->lua_env = env;
+      /* TODO limit libraries here. */
+      nlua_loadStandard( env );
+      nlua_loadGFX( env );
+      nlua_loadCamera( env );
+
+      /* Run code. */
+      if (nlua_dobufenv( env, dat, sz, s->lua_file ) != 0) {
+         WARN(_("Ship '%s' Lua error:\n%s"), s->name, lua_tostring(naevL,-1));
+         lua_pop(naevL,1);
+         nlua_freeEnv( s->lua_env );
+         free( dat );
+         s->lua_env = LUA_NOREF;
+         continue;
+      }
+      free( dat );
+
+      /* Check functions as necessary. */
+      s->lua_init       = nlua_refenvtype( env, "init",     LUA_TFUNCTION );
+      s->lua_cleanup    = nlua_refenvtype( env, "cleanup",  LUA_TFUNCTION );
+      s->lua_update     = nlua_refenvtype( env, "update",   LUA_TFUNCTION );
+      s->lua_explode_init = nlua_refenvtype( env, "explode_init", LUA_TFUNCTION );
+      s->lua_explode_update = nlua_refenvtype( env, "explode_update", LUA_TFUNCTION );
+   }
+
+   /* Debugging timings. */
    if (conf.devmode) {
       time = SDL_GetTicks() - time;
       DEBUG( n_( "Loaded %d Ship in %.3f s", "Loaded %d Ships in %.3f s", array_size(ship_stack) ), array_size(ship_stack), time/1000. );
@@ -1123,6 +1170,11 @@ void ships_free (void)
       for (int j=0; j<array_size(s->tags); j++)
          free(s->tags[j]);
       array_free(s->tags);
+
+      /* Free Lua. */
+      nlua_freeEnv( s->lua_env );
+      s->lua_env = LUA_NOREF;
+      free(s->lua_file);
    }
 
    array_free(ship_stack);
