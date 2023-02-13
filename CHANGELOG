@@ -25,6 +25,7 @@
       * Editor supports tags
       * Library to handle conditionals for mission computer missions
       * Added support for disabling specific patrol lanes from being generated
+      * Support for Lua scripting for ships
    * Fixes
       * Fixed many corner case crashes in the editor
 
