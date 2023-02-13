@@ -31,6 +31,7 @@ function explode_update( p, dt )
       local params = {
          penetration = 1,
       }
+      spfx.debris( p:mass(), mem.r, p:pos(), p:vel() )
       explosion( p:pos(), p:vel(), r, d, params )
       p:cargoJet("all")
    end
