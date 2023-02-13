@@ -14065,8 +14065,8 @@ msgstr ""
 
 #: dat/spob/holly_i.xml:25
 msgid ""
-"The Holly system is one of those statistical flukes that is almost bound "
-"to happen somewhere in the galaxy. Holly I is one of the trinary planetary "
+"The Holly system is one of those statistical flukes that is almost bound to "
+"happen somewhere in the galaxy. Holly I is one of the trinary planetary "
 "system that currently exists here. Scientists have long predicted that the "
 "system will become unstable, especially with all the mining activity over "
 "the years, but there has been no appreciable change and so the miners "
@@ -14101,8 +14101,8 @@ msgstr ""
 
 #: dat/spob/holly_ii.xml:25
 msgid ""
-"The Holly system is one of those statistical flukes that is almost bound "
-"to happen somewhere in the galaxy. Holly II is one of the trinary planetary "
+"The Holly system is one of those statistical flukes that is almost bound to "
+"happen somewhere in the galaxy. Holly II is one of the trinary planetary "
 "system that currently exists here. Scientists have long predicted that the "
 "system will become unstable, especially with all the mining activity over "
 "the years, but there has been no appreciable change and so the miners "
@@ -14136,8 +14136,8 @@ msgstr ""
 
 #: dat/spob/holly_iii.xml:25
 msgid ""
-"The Holly system is one of those statistical flukes that is almost bound "
-"to happen somewhere in the galaxy. Holly III is one of the trinary planetary "
+"The Holly system is one of those statistical flukes that is almost bound to "
+"happen somewhere in the galaxy. Holly III is one of the trinary planetary "
 "system that currently exists here. Scientists have long predicted that the "
 "system will become unstable, especially with all the mining activity over "
 "the years, but there has been no appreciable change and so the miners "
