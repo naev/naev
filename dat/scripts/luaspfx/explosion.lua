@@ -49,6 +49,7 @@ local function render( sp, x, y, z )
 end
 
 local function spfx_explosion( pos, vel, size, params )
+   size = size * 2 -- Explosions look much smaller in reality, so we double
    local speed = params.speed or math.max( -0.000940296 * size + 0.719132, 0.2 )
    local sfx
    if not params.silent then
