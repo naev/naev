@@ -2525,9 +2525,9 @@ int outfit_load (void)
    /* Second pass. */
    for (int i=0; i<noutfits; i++) {
       Outfit *o = &outfit_stack[i];
-
       if (o->lua_file==NULL)
          continue;
+
       nlua_env env;
       size_t sz;
       char *dat = ndata_read( o->lua_file, &sz );
@@ -2543,7 +2543,6 @@ int outfit_load (void)
       nlua_loadGFX( env );
       nlua_loadPilotOutfit( env );
       nlua_loadCamera( env );
-      nlua_loadHook( env );
 
       /* Run code. */
       if (nlua_dobufenv( env, dat, sz, o->lua_file ) != 0) {
