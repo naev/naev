@@ -202,6 +202,14 @@ stds.API_pilotoutfit = {globals={
    "update",
    "mem", -- Automatically created using nlua_setenv().
 }}
+stds.API_pilotship = {globals={
+   "init",
+   "cleanup",
+   "update",
+   "explode_init",
+   "explode_update",
+   "mem", -- Automatically created using nlua_setenv().
+}}
 stds.API_mem = {globals={
    "mem",
 }}
@@ -221,7 +229,8 @@ files["dat/gui/*.lua"].std = STANDARD .. GFX .. "+gui+API_gui" .. TK
 files["dat/landing.lua"].std = STANDARD .. "+API_land"
 files["dat/lua-repl/**/*.lua"].only = {}  -- not our code, so shut up, please
 files["dat/missions/**/*.lua"].std = STANDARD .. "+API_misn+misn+hook+camera+tex+bkg+music" .. TK
-files["dat/outfits/**/*.lua"].std = STANDARD .. GFX .. "+API_pilotoutfit+pilotoutfit+camera+hook" -- TODO doesn't really support the full API
+files["dat/outfits/**/*.lua"].std = STANDARD .. GFX .. "+API_pilotoutfit+pilotoutfit+camera" -- TODO doesn't really support the full API
+files["dat/ships/**/*.lua"].std = STANDARD .. GFX .. "+API_pilotship+camera" -- TODO doesn't really support the full API
 files["dat/rescue.lua"].std = STANDARD .. TK .. "+API_rescue"
 files["dat/rep.lua"].std = STANDARD .. TK .. "+tex+colour+bkg+cli+camera+music+linopt"
 files["dat/save_updater.lua"].std = "API_save_updater"

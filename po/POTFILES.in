@@ -3288,6 +3288,7 @@ dat/scripts/vn/transitions.lua
 dat/scripts/vnextras.lua
 dat/scripts/vnimage.lua
 dat/scripts/vntk.lua
+dat/ships/lua/explode_default.lua
 dat/snd/music.lua
 dat/spob/lua/default.lua
 dat/spob/lua/dvaered_mil_dhc.lua
