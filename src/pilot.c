@@ -1715,6 +1715,9 @@ void pilot_dead( Pilot* p, unsigned int killer )
          player_message( _("#rShip under command '%s' was destroyed!#0"), p->name );
       /* PILOT R OFFICIALLY DEADZ0R */
       pilot_setFlag( p, PILOT_DEAD );
+
+      /* Run Lua if applicable. */
+      pilot_shipLExplodeInit( p );
    }
 }
 
@@ -2239,74 +2242,80 @@ void pilot_update( Pilot* pilot, double dt )
    /* he's dead jim */
    else if (pilot_isFlag(pilot,PILOT_DEAD)) {
 
-      /* pilot death sound */
-      if (!pilot_isFlag(pilot,PILOT_DEATH_SOUND) &&
-            (pilot->ptimer < 0.050)) {
-         char buf[16];
-
-         /* Play random explosion sound. */
-         snprintf(buf, sizeof(buf), "explosion%d", RNG(0,2));
-         sound_playPos( sound_get(buf), pilot->solid->pos.x, pilot->solid->pos.y,
-               pilot->solid->vel.x, pilot->solid->vel.y );
-
-         pilot_setFlag(pilot,PILOT_DEATH_SOUND);
+      if (pilot->ship->lua_explode_update != LUA_NOREF) {
+         /* Run Lua if applicable. */
+         pilot_shipLExplodeUpdate( pilot, dt );
       }
-      /* final explosion */
-      else if (!pilot_isFlag(pilot,PILOT_EXPLODED) &&
-            (pilot->ptimer < 0.200)) {
-         Damage dmg;
+      else {
+         /* pilot death sound */
+         if (!pilot_isFlag(pilot,PILOT_DEATH_SOUND) &&
+               (pilot->ptimer < 0.050)) {
+            char buf[16];
 
-         /* Damage from explosion. */
-         a                 = sqrt(pilot->solid->mass);
-         dmg.type          = dtype_get("explosion_splash");
-         dmg.damage        = MAX(0., 2. * (a * (1. + sqrt(pilot->fuel + 1.) / 28.)));
-         dmg.penetration   = 1.; /* Full penetration. */
-         dmg.disable       = 0.;
-         expl_explode( pilot->solid->pos.x, pilot->solid->pos.y,
-               pilot->solid->vel.x, pilot->solid->vel.y,
-               pilot->ship->gfx_space->sw/2./PILOT_SIZE_APPROX + a, &dmg, NULL, EXPL_MODE_SHIP );
-         debris_add( pilot->solid->mass, pilot->ship->gfx_space->sw/2.,
-               pilot->solid->pos.x, pilot->solid->pos.y,
-               pilot->solid->vel.x, pilot->solid->vel.y );
-         pilot_setFlag(pilot,PILOT_EXPLODED);
-         pilot_runHook( pilot, PILOT_HOOK_EXPLODED );
+            /* Play random explosion sound. */
+            snprintf(buf, sizeof(buf), "explosion%d", RNG(0,2));
+            sound_playPos( sound_get(buf), pilot->solid->pos.x, pilot->solid->pos.y,
+                  pilot->solid->vel.x, pilot->solid->vel.y );
 
-         /* We do a check here in case the pilot was regenerated. */
-         if (pilot_isFlag(pilot, PILOT_EXPLODED)) {
-            /* Release cargo */
-            for (int i=0; i<array_size(pilot->commodities); i++)
-               pilot_cargoJet( pilot, pilot->commodities[i].commodity,
-                     pilot->commodities[i].quantity, 1 );
+            pilot_setFlag(pilot,PILOT_DEATH_SOUND);
          }
-      }
-      /* reset random explosion timer */
-      else if (pilot->timer[1] <= 0.) {
-         unsigned int l;
+         /* final explosion */
+         else if (!pilot_isFlag(pilot,PILOT_EXPLODED) &&
+               (pilot->ptimer < 0.200)) {
+            Damage dmg;
 
-         pilot->timer[1] = 0.08 * (pilot->ptimer - pilot->timer[1]) /
-               pilot->ptimer;
+            /* Damage from explosion. */
+            a                 = sqrt(pilot->solid->mass);
+            dmg.type          = dtype_get("explosion_splash");
+            dmg.damage        = MAX(0., 2. * (a * (1. + sqrt(pilot->fuel + 1.) / 28.)));
+            dmg.penetration   = 1.; /* Full penetration. */
+            dmg.disable       = 0.;
+            expl_explode( pilot->solid->pos.x, pilot->solid->pos.y,
+                  pilot->solid->vel.x, pilot->solid->vel.y,
+                  pilot->ship->gfx_space->sw/2./PILOT_SIZE_APPROX + a, &dmg, NULL, EXPL_MODE_SHIP );
+            debris_add( pilot->solid->mass, pilot->ship->gfx_space->sw/2.,
+                  pilot->solid->pos.x, pilot->solid->pos.y,
+                  pilot->solid->vel.x, pilot->solid->vel.y );
+            pilot_setFlag(pilot,PILOT_EXPLODED);
+            pilot_runHook( pilot, PILOT_HOOK_EXPLODED );
 
-         /* random position on ship */
-         a = RNGF()*2.*M_PI;
-         px = VX(pilot->solid->pos) +  cos(a)*RNGF()*pilot->ship->gfx_space->sw/2.;
-         py = VY(pilot->solid->pos) +  sin(a)*RNGF()*pilot->ship->gfx_space->sh/2.;
-         vx = VX(pilot->solid->vel);
-         vy = VY(pilot->solid->vel);
+            /* We do a check here in case the pilot was regenerated. */
+            if (pilot_isFlag(pilot, PILOT_EXPLODED)) {
+               /* Release cargo */
+               for (int i=0; i<array_size(pilot->commodities); i++)
+                  pilot_cargoJet( pilot, pilot->commodities[i].commodity,
+                        pilot->commodities[i].quantity, 1 );
+            }
+         }
+         /* reset random explosion timer */
+         else if (pilot->timer[1] <= 0.) {
+            unsigned int l;
 
-         /* set explosions */
-         l = (pilot->id==PLAYER_ID) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
-         if (RNGF() > 0.8)
-            spfx_add( spfx_get("ExpM"), px, py, vx, vy, l );
-         else
-            spfx_add( spfx_get("ExpS"), px, py, vx, vy, l );
-      }
+            pilot->timer[1] = 0.08 * (pilot->ptimer - pilot->timer[1]) /
+                  pilot->ptimer;
 
-      /* completely destroyed with final explosion */
-      if (pilot_isFlag(pilot,PILOT_DEAD) && (pilot->ptimer < 0.)) {
-         if (pilot->id==PLAYER_ID) /* player.p handled differently */
-            player_destroyed();
-         pilot_delete(pilot);
-         return;
+            /* random position on ship */
+            a = RNGF()*2.*M_PI;
+            px = VX(pilot->solid->pos) +  cos(a)*RNGF()*pilot->ship->gfx_space->sw/2.;
+            py = VY(pilot->solid->pos) +  sin(a)*RNGF()*pilot->ship->gfx_space->sh/2.;
+            vx = VX(pilot->solid->vel);
+            vy = VY(pilot->solid->vel);
+
+            /* set explosions */
+            l = (pilot->id==PLAYER_ID) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
+            if (RNGF() > 0.8)
+               spfx_add( spfx_get("ExpM"), px, py, vx, vy, l );
+            else
+               spfx_add( spfx_get("ExpS"), px, py, vx, vy, l );
+         }
+
+         /* completely destroyed with final explosion */
+         if (pilot_isFlag(pilot,PILOT_DEAD) && (pilot->ptimer < 0.)) {
+            if (pilot->id==PLAYER_ID) /* player.p handled differently */
+               player_destroyed();
+            pilot_delete(pilot);
+            return;
+         }
       }
    }
    else if (pilot_isFlag(pilot, PILOT_NONTARGETABLE)) {
