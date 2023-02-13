@@ -40,6 +40,7 @@ local function render( sp, x, y, z )
    explosion_shader:send( "u_colorsmoke", d.colorsmoke )
    explosion_shader:send( "u_smoke_fade", d.smokefade )
    explosion_shader:send( "u_roll_speed", d.rollspeed )
+   explosion_shader:send( "u_r", d.r )
 
    local s = d.size * z
    local old_shader = lg.getShader()
@@ -67,6 +68,7 @@ local function spfx_explosion( pos, vel, size, params )
    d.colorsmoke = params.colorsmoke or {0.15, 0.15, 0.15, 0.1}
    d.smokefade = params.smokefade or 1.4
    d.rollspeed = params.rollspeed or 1.0
+   d.r      = rnd.rnd()
    if params.volume then
       local ss = s:sfx()
       ss:setVolume( params.volume )
