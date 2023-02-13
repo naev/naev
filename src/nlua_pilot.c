@@ -4121,7 +4121,7 @@ static int pilotL_cargoRmHelper( lua_State *L, int jet )
  *    @luatparam Pilot p The pilot to remove cargo from.
  *    @luatparam Commodity|string cargo Type of cargo to remove, either
  *       as a Commodity object or as the raw (untranslated) name of a
- *       commodity. You can also pass the special value "__all" to
+ *       commodity. You can also pass the special value "all" to
  *       remove all cargo from the pilot, except for mission cargo.
  *    @luatparam number quantity Quantity of the cargo to remove.
  *    @luatreturn number The number of cargo removed.
@@ -4138,7 +4138,7 @@ static int pilotL_cargoRm( lua_State *L )
  *    @luatparam Pilot p The pilot to remove cargo from.
  *    @luatparam Commodity|string cargo Type of cargo to remove, either
  *       as a Commodity object or as the raw (untranslated) name of a
- *       commodity. You can also pass the special value "__all" to
+ *       commodity. You can also pass the special value "all" to
  *       remove all cargo from the pilot, except for mission cargo.
  *    @luatparam number quantity Quantity of the cargo to remove.
  *    @luatreturn number The number of cargo removed.
