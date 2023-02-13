@@ -13,12 +13,12 @@ end
 
 local function exp_params( size )
    return {
-      colorbase = {1.0, 0.2, 0.2, 0.2},
+      colorbase = {0.1, 0.9, 0.1, 0.2},
       smokiness = 0.4,
-      colorsmoke = {0.6, 0.3, 0.3, 0.25},
+      colorsmoke = {0.6, 0.7, 0.1, 0.5},
       smokefade = 1.6,
       rollspeed = 0.3,
-      grain = 0.1 + size*0.001,
+      grain = 0.1 + size*0.0015,
    }
 end
 
