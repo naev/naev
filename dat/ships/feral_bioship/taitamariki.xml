@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Taitamariki">
+ <lua>ships/lua/soromid.lua</lua>
  <points>60</points>
  <base_type>Odium</base_type>
  <GFX>odium_feral</GFX>

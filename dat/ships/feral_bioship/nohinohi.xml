@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Nohinohi">
+ <lua>ships/lua/soromid.lua</lua>
  <points>40</points>
  <base_type>Reaver</base_type>
  <GFX size="68">reaver_feral</GFX>
