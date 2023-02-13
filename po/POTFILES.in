@@ -3617,6 +3617,8 @@ src/pilot_hook.c
 src/pilot_hook.h
 src/pilot_outfit.c
 src/pilot_outfit.h
+src/pilot_ship.c
+src/pilot_ship.h
 src/pilot_weapon.c
 src/pilot_weapon.h
 src/player.c

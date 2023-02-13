@@ -45,6 +45,7 @@
 #include "pause.h"
 #include "player.h"
 #include "player_autonav.h"
+#include "pilot_ship.h"
 #include "rng.h"
 #include "weapon.h"
 
@@ -2510,6 +2511,9 @@ void pilot_update( Pilot* pilot, double dt )
    /* Update the trail. */
    pilot_sample_trails( pilot, 0 );
 
+   /* Update pilot Lua. */
+   pilot_shipLUpdate( pilot, dt );
+
    /* Update outfits if necessary. */
    pilot->otimer += dt;
    while (pilot->otimer >= PILOT_OUTFIT_LUA_UPDATE_DT) {
@@ -2608,10 +2612,11 @@ void pilot_delete( Pilot* p )
    if (pilot_isFlag( p, PILOT_DELETE ))
       return;
 
-   /* Stop all outfits. */
-   pilot_outfitOffAll(p);
+   /* Stop ship stuff. */
+   pilot_shipLCleanup(p);
 
    /* Handle Lua outfits. */
+   pilot_outfitOffAll(p);
    pilot_outfitLCleanup(p);
 
    /* Remove from parent's escort list */
@@ -2962,6 +2967,7 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
 
    /* Defaults. */
    pilot->lua_mem = LUA_NOREF;
+   pilot->lua_ship_mem = LUA_NOREF;
    pilot->autoweap = 1;
    pilot->aimLines = 0;
    pilot->dockpilot = dockpilot;
@@ -3121,6 +3127,7 @@ void pilot_reset( Pilot* pilot )
    pilot->shoot_indicator = 0;
 
    /* Run Lua stuff. */
+   pilot_shipLInit( pilot );
    pilot_outfitLInitAll( pilot );
 }
 
@@ -3185,6 +3192,7 @@ unsigned int pilot_create( const Ship* ship, const char* name, int faction, cons
    pilot_init_trails( p );
 
    /* Run Lua stuff. */
+   pilot_shipLInit( p );
    pilot_outfitLInitAll( p );
 
    /* Pilot creation hook. */
@@ -3327,6 +3335,7 @@ Pilot* pilot_setPlayer( Pilot* after )
    pilot_setFlag( after, PILOT_NOFREE );
 
    /* Run Lua stuff. */
+   pilot_shipLInit( after );
    pilot_outfitLInitAll( after );
 
    return after;
@@ -3531,6 +3540,8 @@ void pilots_free (void)
 
    /* First pass to stop outfits. */
    for (int i=0; i < array_size(pilot_stack); i++) {
+      /* Stop ship stuff. */
+      pilot_shipLCleanup( pilot_stack[i]);
       /* Stop all outfits. */
       pilot_outfitOffAll(pilot_stack[i]);
       /* Handle Lua outfits. */
@@ -3563,6 +3574,8 @@ void pilots_clean( int persist )
       if (p == player.p &&
           (persist && pilot_isFlag(p, PILOT_PERSIST)))
          continue;
+      /* Stop ship stuff. */
+      pilot_shipLCleanup( pilot_stack[i]);
       /* Stop all outfits. */
       pilot_outfitOffAll( p );
       /* Handle Lua outfits. */
