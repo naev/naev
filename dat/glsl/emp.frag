@@ -29,7 +29,7 @@ vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
 
    float r = length(uv);
 
-   vec3 nuv = vec3( 3.0*uv, u_time );
+   vec3 nuv = vec3( 1.0*uv, u_time );
    float n = abs(snoise( nuv ));
    n += 0.5*abs(snoise(2.0*nuv));
    n += 0.25*abs(snoise(4.0*nuv));
