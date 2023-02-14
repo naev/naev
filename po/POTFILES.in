@@ -3295,6 +3295,7 @@ dat/ships/lua/lib/explode.lua
 dat/ships/lua/scavenger.lua
 dat/ships/lua/sirius.lua
 dat/ships/lua/soromid.lua
+dat/ships/lua/thurion.lua
 dat/ships/lua/zalek.lua
 dat/snd/music.lua
 dat/spob/lua/default.lua

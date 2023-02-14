@@ -15,6 +15,7 @@ local function render( sp, x, y, z )
    emp_shader:send( "u_time",  d.timer )
    emp_shader:send( "u_speed", d.speed )
    emp_shader:send( "u_r", d.r )
+   emp_shader:send( "u_grain", d.grain )
 
    local s = d.size * z
    local old_shader = lg.getShader()
@@ -35,6 +36,7 @@ local function spfx_emp( pos, vel, size, params )
    d.timer  = 0
    d.size   = size
    d.speed  = speed
+   d.grain  = params.grain or math.max( 1.0, size/70 )
    d.r      = rnd.rnd()
    if params.volume then
       local ss = s:sfx()

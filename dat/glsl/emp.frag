@@ -6,6 +6,7 @@ uniform float u_time    = 0.0; /**< Elapsed time. */
 uniform float u_r       = 0.0; /**< Random seed. */
 /* Custom stuff. */
 uniform float u_speed   = 1.3; /**< How fast it playes. */
+uniform float u_grain   = 1.0; /**< How grainy it is. */
 
 const float UP          = 0.7; /**< Time spent on creating the explosion vs not doing it. */
 const float MAX         = 0.65;/**< How big the effect can get. */
@@ -29,7 +30,7 @@ vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
 
    float r = length(uv);
 
-   vec3 nuv = vec3( 1.0*uv, u_time );
+   vec3 nuv = vec3( u_grain*uv, u_time );
    float n = abs(snoise( nuv ));
    n += 0.5*abs(snoise(2.0*nuv));
    n += 0.25*abs(snoise(4.0*nuv));

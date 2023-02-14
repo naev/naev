@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Virtuosity">
+ <lua>ships/lua/thurion.lua</lua>
  <points>60</points>
  <base_type>Virtuosity</base_type>
  <GFX size="70">virtuosity</GFX>
