@@ -37,9 +37,10 @@ static void shipLRunWarning( const Pilot *p, const Ship *s, const char *name, co
  */
 int pilot_shipLInit( Pilot *p )
 {
+   pilot_shipLmem( p );
+
    if (p->ship->lua_init == LUA_NOREF)
       return 0;
-   pilot_shipLmem( p );
 
    /* Set up the function: init( p ) */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->ship->lua_init ); /* f */

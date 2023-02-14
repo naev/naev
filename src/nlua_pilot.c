@@ -180,6 +180,7 @@ static int pilotL_points( lua_State *L );
 static int pilotL_idle( lua_State *L );
 static int pilotL_control( lua_State *L );
 static int pilotL_memory( lua_State *L );
+static int pilotL_shipmemory( lua_State *L );
 static int pilotL_ainame( lua_State *L );
 static int pilotL_task( lua_State *L );
 static int pilotL_taskname( lua_State *L );
@@ -349,6 +350,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "idle", pilotL_idle },
    { "control", pilotL_control },
    { "memory", pilotL_memory },
+   { "shipMemory", pilotL_shipmemory },
    { "ainame", pilotL_ainame },
    { "task", pilotL_task },
    { "taskname", pilotL_taskname },
@@ -4490,6 +4492,22 @@ static int pilotL_memory( lua_State *L )
    }
 
    lua_rawgeti( L, LUA_REGISTRYINDEX, p->lua_mem );
+   return 1;
+}
+
+/**
+ * @brief Gets a pilots ship memory table.
+ *
+ * The resulting table is indexable and mutable.
+ *
+ *    @luatparam Pilot p Pilot to get ship memory of.
+ * @luafunc memory
+ */
+static int pilotL_shipmemory( lua_State *L )
+{
+   /* Get the pilot. */
+   Pilot *p  = luaL_validpilot(L,1);
+   lua_rawgeti( L, LUA_REGISTRYINDEX, p->lua_ship_mem );
    return 1;
 }
 
