@@ -15,11 +15,6 @@
 
 static void pilot_shipLmem( Pilot *p )
 {
-   if (p->lua_ship_mem == LUA_NOREF) {
-      lua_newtable( naevL ); /* mem */
-      p->lua_ship_mem = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* */
-   }
-
    /* Set the memory. */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->lua_ship_mem ); /* mem */
    nlua_setenv( naevL, p->ship->lua_env, "mem" );
@@ -37,10 +32,15 @@ static void shipLRunWarning( const Pilot *p, const Ship *s, const char *name, co
  */
 int pilot_shipLInit( Pilot *p )
 {
-   pilot_shipLmem( p );
+   if (p->lua_ship_mem == LUA_NOREF) {
+      lua_newtable( naevL ); /* mem */
+      p->lua_ship_mem = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* */
+   }
 
    if (p->ship->lua_init == LUA_NOREF)
       return 0;
+
+   pilot_shipLmem( p );
 
    /* Set up the function: init( p ) */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->ship->lua_init ); /* f */
