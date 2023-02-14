@@ -984,7 +984,7 @@ vec4 electric2( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords 
    d = r-w;
    colour.a += 0.8*smoothstep( 0.0, w, -d );
 
-   colour.a = pow( colour.a, 2.0 );
+   colour.a = pow( colour.a, 3.0 );
 
    return colour;
 }

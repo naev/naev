@@ -3232,6 +3232,7 @@ dat/scripts/luaspfx/pulse.lua
 dat/scripts/luaspfx/racetrack.lua
 dat/scripts/luaspfx/sfx.lua
 dat/scripts/luaspfx/spacemine.lua
+dat/scripts/luaspfx/spark.lua
 dat/scripts/luaspfx/trail.lua
 dat/scripts/luatk.lua
 dat/scripts/luatk/bezier.lua
