@@ -893,9 +893,9 @@ vec4 sm( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
 vec4 electric( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
    float m = 1.0 / dimensions.x;
-   float progress = fract( u_time*1.3 );
+   float progress = fract( u_time*1.1 );
    vec2 uv = texture_coords*2.0-1.0;
-   float u_r = floor(u_time*1.3);//floor(2.0*u_time);
+   float u_r = floor(u_time*1.1);//floor(2.0*u_time);
 
    colour = vec4( 0.1, 0.7, 0.9, 1.0 );
 
@@ -920,7 +920,7 @@ vec4 electric( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
    const float UP = 0.7;
    const float MAX = 0.65;
 
-   float t = 0.5*smoothstep( 0.0, 1.0, progress / UP );
+   float t = MAX*smoothstep( 0.0, 1.0, progress / UP );
    float mixr = smoothstep( 0.0, 1.0, (progress-UP) / (1.0-UP) );
    float w = 0.3;
    float d, d2;
@@ -929,7 +929,6 @@ vec4 electric( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
    else
       d = abs(sdCircle( uv, MAX - 2.0*mixr ))-w-mixr;
    colour.a *= smoothstep( 0.0, w-0.1, -d ) * n;
-   //colour.a *= smoothstep( 0.0, w-0.1, -d );
 
    w = 0.1;
    if (mixr <= 0.0)
@@ -937,6 +936,53 @@ vec4 electric( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
    else
       d = abs(sdCircle( uv, MAX - 2.0*mixr ))-w-mixr;
    colour.a += smoothstep( 0.0, w, -d );
+
+   colour.a = pow( colour.a, 2.0 );
+
+   return colour;
+}
+
+vec4 electric2( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
+{
+   float m = 1.0 / dimensions.x;
+   float progress = fract( u_time*0.5 );
+   vec2 uv = texture_coords*2.0-1.0;
+   float u_r = floor(u_time*0.5);//floor(2.0*u_time);
+
+   colour = vec4( 0.1, 0.7, 0.9, 1.0 );
+
+   float angle = 2.0*M_PI*random(u_r) + snoise( vec2(0.9*progress,u_r) );
+   float c = cos(angle);
+   float s = sin(angle);
+
+   mat2 R = mat2(c,-s,s,c);
+
+   vec3 nuv = vec3( 4.0*uv, 0.01*u_time );
+   //vec2 nuv = 3.0*uv;
+   float n = abs(snoise( nuv ));
+   n += 0.5*abs(snoise(2.0*nuv));
+   n += 0.25*abs(snoise(4.0*nuv));
+   n = pow(1.0-n,2.0);
+   colour.rgb += 0.3*n;
+
+   float t = mix( -1.0, 1.0, progress );
+   float d;
+
+   float tp = progress*progress;//smoothstep( 0.0, 1.0, progress );
+   float scale = tp*(1.0-tp)*4.0;
+
+   uv = R*uv+vec2(t,0.0);
+
+   float r = length(uv*vec2(1.0,0.7));
+
+   float w = 0.3;
+   d = r-w*scale;
+
+   colour.a *= smoothstep( 0.0, 0.2, -d ) * n;
+
+   w = 0.2*scale;
+   d = r-w;
+   colour.a += 0.8*smoothstep( 0.0, w, -d );
 
    colour.a = pow( colour.a, 2.0 );
 
@@ -971,7 +1017,8 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    //col_out = sdf_notemarker( colour, uv_rel );
    //col_out = sm_highlight( colour, tex, uv, px );
    //col_out = sm( colour, tex, uv, px );
-   col_out = electric( colour, tex, uv, px );
+   //col_out = electric( colour, tex, uv, px );
+   col_out = electric2( colour, tex, uv, px );
 
    return mix( bg(uv), col_out, col_out.a );
 }
