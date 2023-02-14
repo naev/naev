@@ -1,15 +1,6 @@
 local explosion = require "luaspfx.explosion"
 
-function explode_init( p )
-   local s = p:stats()
-   local armour_max, shield_max = s.armour, s.shield
-   local sw, sh = p:ship():dims()
-
-   mem.exploded = false
-   mem.dtimer = math.min( 2 + math.sqrt( armour_max * shield_max ) / 400, 4 + math.pow( armour_max * shield_max, 0.4) / 300 )
-   mem.timer = 0
-   mem.r = (sw+sh)*0.25 -- Radius
-end
+local explib = require "ships.lua.lib.explode"
 
 local function exp_params( size )
    return {
@@ -22,10 +13,9 @@ local function exp_params( size )
    }
 end
 
-function explode_update( p, dt )
-   mem.timer = mem.timer - dt
-   mem.dtimer = mem.dtimer - dt
-   if mem.timer < 0 then
+explode_init, explode_update = explib{
+   dtimer_mod = 1.3, -- slower explosions
+   boom_func = function( p )
       mem.timer = 0.08 * (mem.dtimer - mem.timer) / mem.dtimer
 
       local pos = p:pos() + vec2.newP( mem.r*rnd.rnd(), rnd.angle() )
@@ -37,10 +27,8 @@ function explode_update( p, dt )
       else
          explosion( pos, p:vel(), r*1.2, nil, tmerge( {silent=true}, exp_params(r) ) )
       end
-   end
-
-   if not mem.exploded and mem.dtimer < 0.25 then
-      mem.exploded = true
+   end,
+   exp_func = function( p )
       local a = math.sqrt( p:mass() )
       local r = mem.r * 1.0 + a
       local d = math.max( 0, 2 * (a * (1+math.sqrt(p:fuel()+1)/28)))
@@ -50,9 +38,5 @@ function explode_update( p, dt )
       spfx.debris( p:mass(), mem.r, p:pos(), p:vel() )
       explosion( p:pos(), p:vel(), r, d, tmerge( params, exp_params(r) ) )
       p:cargoJet("all")
-   end
-
-   if mem.dtimer < 0 then
-      p:rm()
-   end
-end
+   end,
+}

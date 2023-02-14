@@ -3290,7 +3290,7 @@ dat/scripts/vnextras.lua
 dat/scripts/vnimage.lua
 dat/scripts/vntk.lua
 dat/ships/lua/dvaered.lua
-dat/ships/lua/explode_default.lua
+dat/ships/lua/lib/explode.lua
 dat/ships/lua/scavenger.lua
 dat/ships/lua/sirius.lua
 dat/ships/lua/soromid.lua
