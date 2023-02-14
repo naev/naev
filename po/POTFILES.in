@@ -3225,6 +3225,7 @@ dat/scripts/luaspfx.lua
 dat/scripts/luaspfx/alert.lua
 dat/scripts/luaspfx/blink.lua
 dat/scripts/luaspfx/core.lua
+dat/scripts/luaspfx/emp.lua
 dat/scripts/luaspfx/explosion.lua
 dat/scripts/luaspfx/pheromones.lua
 dat/scripts/luaspfx/pulse.lua
