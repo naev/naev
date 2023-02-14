@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Za'lek Sting">
+ <lua>ships/lua/zalek.lua</lua>
  <points>70</points>
  <base_type>Sting</base_type>
  <GFX sx="10" sy="10">sting</GFX>
