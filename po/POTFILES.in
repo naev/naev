@@ -257,6 +257,7 @@ dat/outfits/fighter_bays/zalek_light_drone_bay.xml
 dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml
 dat/outfits/flow/internal_flow_amplifier.xml
 dat/outfits/flow/lesser_astral_projection.xml
+dat/outfits/flow/lesser_avatar_of_sirichana.xml
 dat/outfits/flow/small_flow_amplifier.xml
 dat/outfits/flow/small_flow_resonator.xml
 dat/outfits/flow/small_meditation_chamber.xml
@@ -3097,6 +3098,7 @@ dat/outfits/bioship/skills/reflective_shell.lua
 dat/outfits/bioship/skills/the_bite.lua
 dat/outfits/bioship/skills/tunnelling_organ.lua
 dat/outfits/flow/astral_projection.lua
+dat/outfits/flow/avatar_of_sirichana.lua
 dat/outfits/flow/flow_amplifier.lua
 dat/outfits/launchers/space_mine_layer.lua
 dat/outfits/lib/bioplasma.lua
