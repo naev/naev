@@ -3583,8 +3583,6 @@ void pilots_clean( int persist )
       if (p == player.p &&
           (persist && pilot_isFlag(p, PILOT_PERSIST)))
          continue;
-      /* Stop ship stuff. */
-      pilot_shipLCleanup( pilot_stack[i]);
       /* Stop all outfits. */
       pilot_outfitOffAll( p );
       /* Handle Lua outfits. */
