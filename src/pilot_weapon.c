@@ -1081,7 +1081,7 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time, int aim
       pilot_heatAddSlot( p, w );
       if (!outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY )) {
          for (int i=0; i<w->outfit->u.blt.shots; i++)
-            weapon_add( w, w->heat_T, p->solid->dir,
+            weapon_add( w, NULL, w->heat_T, p->solid->dir,
                   &vp, &vv, p, p->target, time, aim );
       }
    }
@@ -1144,7 +1144,7 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time, int aim
       pilot_heatAddSlot( p, w );
       if (!outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY )) {
          for (int i=0; i<w->outfit->u.lau.shots; i++)
-            weapon_add( w, w->heat_T, p->solid->dir,
+            weapon_add( w, NULL, w->heat_T, p->solid->dir,
                   &vp, &vv, p, p->target, time, aim );
       }
 

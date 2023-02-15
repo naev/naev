@@ -115,8 +115,8 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
       const double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time, int aim );
 static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
       const double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time, int aim );
-static Weapon* weapon_create( PilotOutfitSlot* po, double T,
-      const double dir, const vec2* pos, const vec2* vel,
+static Weapon* weapon_create( PilotOutfitSlot* po, const Outfit *ref,
+      double T, const double dir, const vec2* pos, const vec2* vel,
       const Pilot *parent, const unsigned int target, double time, int aim );
 static double weapon_computeTimes( double rdir, double rx, double ry, double dvx, double dvy, double pxv,
       double vmin, double acc, double *tt );
@@ -1823,6 +1823,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
  * @brief Creates a new weapon.
  *
  *    @param po Outfit slot which spawned the weapon.
+ *    @param ref Reference outfit to use, does not have to be the outfit in the slot, but will default to it if set to NULL.
  *    @param T temperature of the shooter.
  *    @param dir Direction the shooter is facing.
  *    @param pos Position of the slot (absolute).
@@ -1833,8 +1834,8 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
  *    @param aim Whether or not to aim.
  *    @return A pointer to the newly created weapon.
  */
-static Weapon* weapon_create( PilotOutfitSlot *po, double T,
-      const double dir, const vec2* pos, const vec2* vel,
+static Weapon* weapon_create( PilotOutfitSlot* po, const Outfit *ref,
+      double T, const double dir, const vec2* pos, const vec2* vel,
       const Pilot* parent, const unsigned int target, double time, int aim )
 {
    double mass, rdir;
@@ -1842,7 +1843,7 @@ static Weapon* weapon_create( PilotOutfitSlot *po, double T,
    AsteroidAnchor *field;
    Asteroid *ast;
    Weapon* w;
-   const Outfit *outfit = po->outfit;
+   const Outfit *outfit = (ref==NULL) ? po->outfit : ref;
 
    /* Create basic features */
    w           = calloc( 1, sizeof(Weapon) );
@@ -1941,6 +1942,7 @@ static Weapon* weapon_create( PilotOutfitSlot *po, double T,
  * @brief Creates a new weapon.
  *
  *    @param po Outfit slot which spawns the weapon.
+ *    @param ref Reference outfit to use for computing damage and properties.
  *    @param T Temperature of the shooter.
  *    @param dir Direction of the shooter.
  *    @param pos Position of the slot (absolute).
@@ -1950,7 +1952,8 @@ static Weapon* weapon_create( PilotOutfitSlot *po, double T,
  *    @param time Expected flight time.
  *    @param aim Whether or not to aim.
  */
-void weapon_add( PilotOutfitSlot *po, const double T, const double dir,
+void weapon_add( PilotOutfitSlot *po, const Outfit *ref,
+      const double T, const double dir,
       const vec2* pos, const vec2* vel,
       const Pilot *parent, unsigned int target, double time, int aim )
 {
@@ -1967,7 +1970,7 @@ void weapon_add( PilotOutfitSlot *po, const double T, const double dir,
 #endif /* DEBUGGING */
 
    layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
-   w     = weapon_create( po, T, dir, pos, vel, parent, target, time, aim );
+   w     = weapon_create( po, ref, T, dir, pos, vel, parent, target, time, aim );
 
    /* set the proper layer */
    switch (layer) {
@@ -2026,7 +2029,7 @@ unsigned int beam_start( PilotOutfitSlot *po,
    }
 
    layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
-   w = weapon_create( po, 0., dir, pos, vel, parent, target, 0., aim );
+   w = weapon_create( po, NULL, 0., dir, pos, vel, parent, target, 0., aim );
    w->ID = ++beam_idgen;
    w->mount = po;
    w->timer2 = 0.;
