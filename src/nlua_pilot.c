@@ -2043,8 +2043,8 @@ static int pilotL_outfitsList( lua_State *L )
    }
 
    lua_newtable( L );
+   int j = 1;
    if (normal) {
-      int j = 1;
       for (int i=0; i<array_size(p->outfits); i++) {
          /* Get outfit. */
          if (p->outfits[i]->outfit == NULL)
@@ -2066,7 +2066,7 @@ static int pilotL_outfitsList( lua_State *L )
    if (intrinsics) {
       for (int i=0; i<array_size(p->outfit_intrinsic); i++) {
          lua_pushoutfit( L, p->outfit_intrinsic[i].outfit );
-         lua_rawseti( L, -2, i+1 );
+         lua_rawseti( L, -2, i++ );
       }
    }
 
