@@ -1,5 +1,22 @@
 local explib = require "ships.lua.lib.explode"
 
+local amp = outfit.get("Internal Flow Amplifier")
+
+function init( p )
+   -- Sirius ships need the Internal Flow Amplifier for now, add if missing
+   -- TODO get rid of the hack
+   local found = false
+   for k,o in ipairs(p:outfitsList("intrinsic")) do
+      if o==amp then
+         found = true
+         break
+      end
+   end
+   if found then return end
+
+   p:outfitAddIntrinsic( amp )
+end
+
 local function exp_params( _size )
    return {
       colorbase = {1.0, 0.8, 0.8, 0.7},
