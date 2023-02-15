@@ -146,7 +146,7 @@ local function land_lab ()
    player.allowSave(false)
    local fct = var.peek( "taiomi_convoy_fct" ) or "Empire"
    local entry
-   local wait = 1
+   local wait = 0
    local function mg_func( label_success, label_failure )
       return function ()
          if mg.completed() then
