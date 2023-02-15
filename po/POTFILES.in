@@ -255,6 +255,7 @@ dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml
 dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml
 dat/outfits/fighter_bays/zalek_light_drone_bay.xml
 dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml
+dat/outfits/flow/small_flow_amplifier.xml
 dat/outfits/intrinsic/gauntlet_deluxe.xml
 dat/outfits/intrinsic/machiavellian_fortune.xml
 dat/outfits/intrinsic/machiavellian_necessity.xml
@@ -3091,6 +3092,7 @@ dat/outfits/bioship/skills/plasma_burst.lua
 dat/outfits/bioship/skills/reflective_shell.lua
 dat/outfits/bioship/skills/the_bite.lua
 dat/outfits/bioship/skills/tunnelling_organ.lua
+dat/outfits/flow/flow_amplifier.lua
 dat/outfits/launchers/space_mine_layer.lua
 dat/outfits/lib/bioplasma.lua
 dat/outfits/lib/mining_drill.lua
@@ -3292,6 +3294,7 @@ dat/scripts/vnimage.lua
 dat/scripts/vntk.lua
 dat/ships/lua/dvaered.lua
 dat/ships/lua/lib/explode.lua
+dat/ships/lua/lib/flow.lua
 dat/ships/lua/scavenger.lua
 dat/ships/lua/sirius.lua
 dat/ships/lua/soromid.lua
