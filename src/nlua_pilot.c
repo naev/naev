@@ -763,11 +763,9 @@ static int pilotL_remove( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
 
-   /* Make sure it's not the player. */
-   if (player.p == p) {
-      NLUA_ERROR( L, _("Trying to remove the bloody player!") );
-      return 0;
-   }
+   /* Player is destroyed. */
+   if (pilot_isPlayer(p))
+      player_destroyed();
 
    /* Deletes the pilot. */
    pilot_delete(p);
