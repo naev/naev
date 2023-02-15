@@ -86,8 +86,8 @@ typedef struct Weapon_ {
    Trail_spfx *trail; /**< Trail graphic if applicable, else NULL. */
 
    /* position update and render */
-   void (*update)(struct Weapon_*, const double, WeaponLayer); /**< Updates the weapon */
-   void (*think)(struct Weapon_*, const double); /**< for the smart missiles */
+   void (*update)(struct Weapon_*, double, WeaponLayer); /**< Updates the weapon */
+   void (*think)(struct Weapon_*, double); /**< for the smart missiles */
 
    WeaponStatus status; /**< Weapon status - to check for jamming */
 } Weapon;
@@ -112,18 +112,18 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
       const Pilot *pilot_target, const vec2 *pos, const vec2 *vel, double dir,
       double swivel, double time );
 static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
-      const double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time, int aim );
+      double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time, int aim );
 static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
-      const double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time, int aim );
+      double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time, int aim );
 static Weapon* weapon_create( PilotOutfitSlot* po, const Outfit *ref,
-      double T, const double dir, const vec2* pos, const vec2* vel,
+      double T, double dir, const vec2* pos, const vec2* vel,
       const Pilot *parent, const unsigned int target, double time, int aim );
 static double weapon_computeTimes( double rdir, double rx, double ry, double dvx, double dvy, double pxv,
       double vmin, double acc, double *tt );
 /* Updating. */
-static void weapon_render( Weapon* w, const double dt );
-static void weapons_updateLayer( const double dt, const WeaponLayer layer );
-static void weapon_update( Weapon* w, const double dt, WeaponLayer layer );
+static void weapon_render( Weapon* w, double dt );
+static void weapons_updateLayer( double dt, const WeaponLayer layer );
+static void weapon_update( Weapon* w, double dt, WeaponLayer layer );
 static void weapon_sample_trail( Weapon* w );
 /* Destruction. */
 static void weapon_destroy( Weapon* w );
@@ -138,15 +138,15 @@ static void weapon_hit( Weapon* w, Pilot* p, vec2* pos );
 static void weapon_miss( Weapon *w );
 static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, vec2* pos );
 static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
-      vec2 pos[2], const double dt );
+      vec2 pos[2], double dt );
 static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
-      vec2 pos[2], const double dt );
+      vec2 pos[2], double dt );
 /* think */
-static void think_seeker( Weapon* w, const double dt );
-static void think_beam( Weapon* w, const double dt );
+static void think_seeker( Weapon* w, double dt );
+static void think_beam( Weapon* w, double dt );
 /* externed */
-void weapon_minimap( const double res, const double w,
-      const double h, const RadarShape shape, double alpha );
+void weapon_minimap( double res, double w,
+      double h, const RadarShape shape, double alpha );
 /* movement. */
 static void weapon_setThrust( Weapon *w, double thrust );
 static void weapon_setTurn( Weapon *w, double turn );
@@ -169,8 +169,8 @@ void weapon_init (void)
  *    @param shape Shape of the minimap.
  *    @param alpha Alpha to draw points at.
  */
-void weapon_minimap( const double res, const double w,
-      const double h, const RadarShape shape, double alpha )
+void weapon_minimap( double res, double w,
+      double h, const RadarShape shape, double alpha )
 {
    int rc, p;
    const glColour *c;
@@ -318,7 +318,7 @@ static void weapon_setTurn( Weapon *w, double turn )
  *    @param w Weapon to do the thinking.
  *    @param dt Current delta tick.
  */
-static void think_seeker( Weapon* w, const double dt )
+static void think_seeker( Weapon* w, double dt )
 {
    double diff;
    Pilot *p;
@@ -436,7 +436,7 @@ static void think_seeker( Weapon* w, const double dt )
  *    @param w Weapon to do the thinking.
  *    @param dt Current delta tick.
  */
-static void think_beam( Weapon* w, const double dt )
+static void think_beam( Weapon* w, double dt )
 {
    Pilot *p, *t;
    AsteroidAnchor *field;
@@ -545,7 +545,7 @@ static void think_beam( Weapon* w, const double dt )
  *
  *    @param dt Current delta tick.
  */
-void weapons_update( const double dt )
+void weapons_update( double dt )
 {
    /* When updating, just mark weapons for deletion. */
    weapons_updateLayer(dt,WEAPON_LAYER_BG);
@@ -562,7 +562,7 @@ void weapons_update( const double dt )
  *    @param dt Current delta tick.
  *    @param layer Layer to update.
  */
-static void weapons_updateLayer( const double dt, const WeaponLayer layer )
+static void weapons_updateLayer( double dt, const WeaponLayer layer )
 {
    Weapon **wlayer;
 
@@ -712,7 +712,7 @@ static void weapons_purgeLayer( Weapon** layer )
  *    @param layer Layer to render.
  *    @param dt Current delta tick.
  */
-void weapons_render( const WeaponLayer layer, const double dt )
+void weapons_render( const WeaponLayer layer, double dt )
 {
    Weapon** wlayer;
 
@@ -733,7 +733,7 @@ void weapons_render( const WeaponLayer layer, const double dt )
       weapon_render( wlayer[i], dt );
 }
 
-static void weapon_renderBeam( Weapon* w, const double dt )
+static void weapon_renderBeam( Weapon* w, double dt )
 {
    double x, y, z;
    mat4 projection;
@@ -789,7 +789,7 @@ static void weapon_renderBeam( Weapon* w, const double dt )
  *    @param w Weapon to render.
  *    @param dt Current delta tick.
  */
-static void weapon_render( Weapon* w, const double dt )
+static void weapon_render( Weapon* w, double dt )
 {
    const glTexture *gfx;
    double x, y, z, r, st;
@@ -948,7 +948,7 @@ static int weapon_checkCanHit( const Weapon* w, const Pilot *p )
  *    @param dt Current delta tick.
  *    @param layer Layer to which the weapon belongs.
  */
-static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
+static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
 {
    int b, psx, psy, n;
    unsigned int coll, usePoly, usePolyW = 1;
@@ -1396,7 +1396,7 @@ static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, vec2* pos 
  *    @param dt Current delta tick.
  */
 static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
-      vec2 pos[2], const double dt )
+      vec2 pos[2], double dt )
 {
    (void) layer;
    Pilot *parent;
@@ -1451,7 +1451,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
  *    @param dt Current delta tick.
  */
 static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
-      vec2 pos[2], const double dt )
+      vec2 pos[2], double dt )
 {
    (void) layer;
    Damage dmg;
@@ -1647,7 +1647,7 @@ static double weapon_computeTimes( double rdir, double rx, double ry, double dvx
  *    @param aim Whether or not to aim.
  */
 static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
-      const double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time, int aim )
+      double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time, int aim )
 {
    vec2 v;
    double mass, rdir, acc, m;
@@ -1727,7 +1727,7 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
  *    @param aim Whether or not to aim.
  */
 static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
-      const double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time, int aim )
+      double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time, int aim )
 {
    (void) T;
    vec2 v;
@@ -1835,7 +1835,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
  *    @return A pointer to the newly created weapon.
  */
 static Weapon* weapon_create( PilotOutfitSlot* po, const Outfit *ref,
-      double T, const double dir, const vec2* pos, const vec2* vel,
+      double T, double dir, const vec2* pos, const vec2* vel,
       const Pilot* parent, const unsigned int target, double time, int aim )
 {
    double mass, rdir;
@@ -1953,7 +1953,7 @@ static Weapon* weapon_create( PilotOutfitSlot* po, const Outfit *ref,
  *    @param aim Whether or not to aim.
  */
 void weapon_add( PilotOutfitSlot *po, const Outfit *ref,
-      const double T, const double dir,
+      double T, double dir,
       const vec2* pos, const vec2* vel,
       const Pilot *parent, unsigned int target, double time, int aim )
 {
@@ -2015,7 +2015,7 @@ void weapon_add( PilotOutfitSlot *po, const Outfit *ref,
  * @sa beam_end
  */
 unsigned int beam_start( PilotOutfitSlot *po,
-      const double dir, const vec2* pos, const vec2* vel,
+      double dir, const vec2* pos, const vec2* vel,
       const Pilot *parent, const unsigned int target, int aim )
 {
    WeaponLayer layer;

@@ -17,15 +17,15 @@ typedef enum { WEAPON_LAYER_BG, WEAPON_LAYER_FG } WeaponLayer;
 /*
  * Addition.
  */
-void weapon_add( PilotOutfitSlot *po, const Outfit *ref, const double T,
-      const double dir, const vec2* pos, const vec2* vel,
+void weapon_add( PilotOutfitSlot *po, const Outfit *ref, double T,
+      double dir, const vec2* pos, const vec2* vel,
       const Pilot *parent, const unsigned int target, double time, int aim );
 
 /*
  * Beam weapons.
  */
 unsigned int beam_start( PilotOutfitSlot *po,
-      const double dir, const vec2* pos, const vec2* vel,
+      double dir, const vec2* pos, const vec2* vel,
       const Pilot *parent, const unsigned int target, int aim );
 void beam_end( const unsigned int parent, unsigned int beam );
 
@@ -40,8 +40,8 @@ void weapon_hitAI( Pilot *p, const Pilot *shooter, double dmg );
 /*
  * Update.
  */
-void weapons_update( const double dt );
-void weapons_render( const WeaponLayer layer, const double dt );
+void weapons_update( double dt );
+void weapons_render( const WeaponLayer layer, double dt );
 
 /*
  * Clean.
