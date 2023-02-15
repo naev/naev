@@ -2066,7 +2066,7 @@ static int pilotL_outfitsList( lua_State *L )
    if (intrinsics) {
       for (int i=0; i<array_size(p->outfit_intrinsic); i++) {
          lua_pushoutfit( L, p->outfit_intrinsic[i].outfit );
-         lua_rawseti( L, -2, i++ );
+         lua_rawseti( L, -2, j++ );
       }
    }
 
