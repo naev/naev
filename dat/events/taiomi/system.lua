@@ -386,7 +386,7 @@ function hail_scavenger ()
          d(fmt.f(_([["The data you collected from the convoys has been very useful. I have started to put together a more concrete plan. However, it seems like there are many references to important documents that seem to be stored away at a {fct} laboratory."]]),
             {fct=faction.get(fct):name()}))
          d(_([["Without access to such documents, I would have to reverse engineer the design and run probabilistic simulations to fill in the remaining details. Such a heuristical process is bound to be error prone and take significant computational resources. The most logical course of action is to attempt to recover the documents."]]))
-         d(fmt.f(_([["I have been able run tracing protocols to determine {lab} in the {labsys} system to be the location with highest probability of containing the required documents. Given your inconspicuous human nature, would you be willing to recover the document for us?"]]),
+         d(fmt.f(_([["I have been able to run tracing protocols to determine {lab} in the {labsys} system to be the location with highest probability of containing the required documents. Given your inconspicuous human nature, would you be willing to recover the document for us?"]]),
             {lab=lab, labsys=labsys}))
          vn.menu{
             {_("Agree to help out."), "03_yes"},
