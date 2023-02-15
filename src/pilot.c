@@ -2621,6 +2621,14 @@ void pilot_delete( Pilot* p )
    if (pilot_isFlag( p, PILOT_DELETE ))
       return;
 
+   /* If the pilot was deleted from Lua, we must run the explosion hook. */
+   if ((p->ship->lua_explode_update != LUA_NOREF) && pilot_isFlag( p, PILOT_DEAD )) {
+      pilot_setFlag( p, PILOT_EXPLODED );
+      pilot_runHook( p, PILOT_HOOK_EXPLODED );
+      if (!pilot_isFlag( p, PILOT_EXPLODED ))
+         return;
+   }
+
    /* Stop ship stuff. */
    pilot_shipLCleanup(p);
 
