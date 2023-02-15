@@ -1334,7 +1334,8 @@ static void weapon_miss( Weapon *w )
       lua_pushpilot(naevL, (parent==NULL) ? 0 : parent->id);
       lua_pushvector(naevL, w->solid->pos);
       lua_pushvector(naevL, w->solid->vel);
-      if (nlua_pcall( w->outfit->lua_env, 3, 0 )) {   /* */
+      lua_pushoutfit(naevL, w->outfit);
+      if (nlua_pcall( w->outfit->lua_env, 4, 0 )) {   /* */
          WARN( _("Outfit '%s' -> '%s':\n%s"), w->outfit->name, "onmiss", lua_tostring(naevL,-1) );
          lua_pop(naevL, 1);
       }
@@ -1960,10 +1961,11 @@ void weapon_add( PilotOutfitSlot *po, const Outfit *ref,
    WeaponLayer layer;
    Weapon *w, **m;
    size_t bufsize;
+   const Outfit *o = (ref==NULL) ? po->outfit : ref;
 
 #if DEBUGGING
-   if (!outfit_isBolt(po->outfit) &&
-         !outfit_isLauncher(po->outfit)) {
+   if (!outfit_isBolt(o) &&
+         !outfit_isLauncher(o)) {
       ERR(_("Trying to create a Weapon from a non-Weapon type Outfit"));
       return;
    }

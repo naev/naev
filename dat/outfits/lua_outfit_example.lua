@@ -134,17 +134,18 @@ function jumpin( _p, _po )
 end
 
 --[[
-   Below are WEAPONS ONLY
+   Below are WEAPONS ONLY. However, they can be triggered by munitions,
+   which share the memory with the ORIGINAL spawning outfit.
 
    Note that these are calculated with particles.
 --]]
 -- Triggered when a particle shot by p impacts the target. p may not exist if
 -- the pilot that shot the weapon ceased to exist.
-function onimpact( _p, _target, _pos, _vel )
+function onimpact( _p, _target, _pos, _vel, _o )
 end
 --- Triggered when a particle times out without hitting a target. p may not
 --exist if the pilot that shot the weapon ceased to exist.
-function onmiss( _p, _pos, _vel )
+function onmiss( _p, _pos, _vel, _o )
 end
 
 --[[
