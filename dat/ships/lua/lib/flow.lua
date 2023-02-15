@@ -121,11 +121,11 @@ function flow.recalculate( p )
    local sm = p:shipMemory()
    local has_amplifier = false
 
-   local fm = flow_mod[ p:ship():nameRaw() ] or 0
+   local fm = flow_mod[ p:ship():nameRaw() ] or 1
    local fb = flow_base[ p:ship():nameRaw() ] or 0
    local fr = flow_regen[ p:ship():nameRaw() ] or 0
    for k,v in ipairs(p:outfitsList()) do
-      fm = fm * (flow_mod[ v:nameRaw() ] or 0)
+      fm = fm * (flow_mod[ v:nameRaw() ] or 1)
       fb = fb + (flow_base[ v:nameRaw() ] or 0)
       fr = fr + (flow_regen[ v:nameRaw() ] or 0)
       if v:tags().flow_amplifier then

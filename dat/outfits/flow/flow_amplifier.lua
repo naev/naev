@@ -4,6 +4,14 @@ function init( p )
    flow.recalculate( p )
 end
 
+function onadd( p )
+   flow.recalculate( p )
+end
+
+function onremove( p )
+   flow.recalculate( p )
+end
+
 function update( p, _po, dt )
    flow.update( p, dt )
 end

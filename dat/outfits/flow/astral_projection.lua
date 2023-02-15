@@ -21,8 +21,7 @@ local function turnon( p, po )
    po:progress(1)
 
    -- Astral proection
-   local s = p:ship()
-   local pos = p:pos() + vec2.newP( 20, s:dir() )
+   local pos = p:pos() + vec2.newP( 20, p:dir() )
    local np = pilot.add( projection, p:faction(), pos, _("Lesser Astral Projection"), {ai="escort"} )
    mem.p = np
    np:setNoDeath( true ) -- Dosen't die
