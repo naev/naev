@@ -314,7 +314,7 @@ local function can_cannibalize ()
    if player.shipvarPeek("cannibal") then
       return true
    end
-   for _k,o in ipairs(pp:outfitsList()) do
+   for _k,o in ipairs(pp:outfitsList("all")) do
       if o:tags().cannibal then
          return true
       end

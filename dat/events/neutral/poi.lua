@@ -16,7 +16,7 @@
 
    -- Must have scanner equipped
    local has_scanner = false
-   for k,v in ipairs(player.pilot():outfitsList()) do
+   for k,v in ipairs(player.pilot():outfitsList("all")) do
       if v:tags().poi_scan then
          has_scanner = true
          break
