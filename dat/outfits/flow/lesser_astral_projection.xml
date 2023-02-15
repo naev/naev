@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Lesser Astral Projection">
+ <general>
+  <typename>Flow Ability</typename>
+  <slot>utility</slot>
+  <size>small</size>
+  <rarity>1</rarity>
+  <mass>0</mass>
+  <price>650000</price>
+  <gfx_store>placeholder.webp</gfx_store>
+  <description>TODO</description>
+  <desc_extra>TODO</desc_extra>
+ </general>
+ <specific type="modification">
+  <lua>outfits/flow/astral_projection.lua</lua>
+ </specific>
+</outfit>

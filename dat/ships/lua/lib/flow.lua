@@ -48,6 +48,11 @@ local flow_mod = {
 }
 flow.list_mod = flow_mod
 
+function flow.get( p )
+   local sm = p:shipMemory()
+   return sm._flow or 0
+end
+
 function flow.max( p )
    local sm = p:shipMemory()
    return sm._flow_base or 0
@@ -58,9 +63,22 @@ function flow.regen( p )
    return sm._flow_regen or 0
 end
 
+function flow.activate( p )
+   local sm = p:shipMemory()
+   local fa = (sm._flow_active or 0)
+   sm._flow_active = fa+1
+end
+
+function flow.deactivate( p )
+   local sm = p:shipMemory()
+   local fa = (sm._flow_active or 0)
+   sm._flow_active = math.max(fa-1)
+end
+
 function flow.reset( p )
    local sm = p:shipMemory()
    sm._flow = 0.5*(sm._flow_base or 0)
+   sm._flow_active = 0
 end
 
 function flow.inc( p, amount )
@@ -82,9 +100,12 @@ function flow.update( p, dt )
    local f = sm._flow or 0
    local cap = 0.5
    if sm._flow < cap*fb then
-      -- Regen when under cap
-      local fr = sm._flow_regen or 0
-      sm._flow = math.min( cap*fb, f + dt*fr )
+      local fa = sm._flow_active or 0
+      if fa <= 0 then
+         -- Regen when under cap and no active on
+         local fr = sm._flow_regen or 0
+         sm._flow = math.min( cap*fb, f + dt*fr )
+      end
    else
       -- Lose 2% a second when over cap
       sm._flow = math.max( cap*fb, f - dt*0.02*fb )
