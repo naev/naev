@@ -124,7 +124,7 @@ function flow.recalculate( p )
    local fm = flow_mod[ p:ship():nameRaw() ] or 1
    local fb = flow_base[ p:ship():nameRaw() ] or 0
    local fr = flow_regen[ p:ship():nameRaw() ] or 0
-   for k,v in ipairs(p:outfitsList()) do
+   for k,v in ipairs(p:outfitsList("all")) do
       fm = fm * (flow_mod[ v:nameRaw() ] or 1)
       fb = fb + (flow_base[ v:nameRaw() ] or 0)
       fr = fr + (flow_regen[ v:nameRaw() ] or 0)

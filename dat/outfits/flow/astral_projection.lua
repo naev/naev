@@ -92,7 +92,7 @@ function ontoggle( p, po, on )
       return turnon( p, po )
    else
       if mem.p then
-         turnoff( po )
+         turnoff( p, po )
          return true
       end
    end
