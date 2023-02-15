@@ -58,8 +58,16 @@ function sell( q )
    --return false, reason
 end
 
--- The init is run when the pilot is created
+-- The init is run when the pilot is created or enters a new system (takeoff/jumpin)
 function init( _p, _po )
+end
+
+-- The function is run when the outfit is added to the pilot
+function onadd( _p, _po )
+end
+
+-- The function is run when the outfit is removed from the pilot
+function onremove( _p, _po )
 end
 
 -- The update function is run periodically every 1/3 seconds
