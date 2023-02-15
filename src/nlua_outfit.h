@@ -8,6 +8,9 @@
 
 #define OUTFIT_METATABLE   "outfit" /**< Outfit metatable identifier. */
 
+/* Helper. */
+#define luaL_optoutfit(L,ind,def)   nluaL_optarg(L,ind,def,luaL_checkoutfit)
+
 /*
  * Library loading
  */
