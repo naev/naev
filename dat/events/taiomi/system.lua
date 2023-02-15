@@ -438,7 +438,7 @@ Scavenger goes silent for a second, as if thinking.
             {shipai=tut.ainame()}))
          vn.disappear( sai, tut.shipai.transition )
          d(_([["An eye for an eye and the entire world goes blind. You should take care of your Ship AI, they are quite one of a kind."]]))
-         d(_([["Back to the plan. We wish to build something similar to a hypergate, however, we will be making our own modifications. In particular, there is no need for any life form compatibility. Furthermore, we wish to travel far away from humankind. The modifications will make the device be of a single use, but it should be enough to fulfil our objectives."]]))
+         d(_([["Back to the plan. We wish to build something similar to a hypergate, however, we will be making our own modifications. In particular, there is no need for any life form compatibility. Furthermore, we wish to travel far away from humankind. The modifications will make the device be of a single use, but it should be enough to fulfill our objectives."]]))
          d(fmt.f(_([["The main issue is that the device will require large amounts of {resource}. This resource can be found in the nearby {minesys} system. However, it is dangerous for us to collect it by ourselves. Will you help us collect {resource}?"]]),
             {resource=resource, minesys=minesys}))
          vn.menu{
