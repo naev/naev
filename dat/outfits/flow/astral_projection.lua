@@ -18,7 +18,7 @@ local function turnon( p, po )
 
    -- Set outfit state
    po:state("on")
-   po:progress(1)
+   po:progress( flow.get(p) / flow.max(p) )
 
    -- Astral proection
    local pos = p:pos() + vec2.newP( 20, p:dir() )
@@ -79,6 +79,7 @@ function update( p, po, dt )
          turnoff( p, po )
          return
       end
+      po:progress( flow.get(p) / flow.max(p) )
    end
 end
 
