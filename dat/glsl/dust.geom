@@ -55,6 +55,7 @@ void main ()
    /* Points are just centered primitives. */
    else {
       vec2 r = dims.x * vec2( projection[0][0], projection[1][1] );
+      length_frag = 0.0; /* Not necessary, so just set to 0. */
 
       pos_frag = vec2(-1.0, -1.0);
       gl_Position = center + vec4(-r.x, -r.y, 0.0, 0.0);
