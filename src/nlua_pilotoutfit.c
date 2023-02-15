@@ -244,6 +244,15 @@ static int poL_clear( lua_State *L )
 
 /**
  * @brief Creates a munition.
+ *
+ *    @luatparam PilotOutfit po Pilot outfit originating the munition.
+ *    @luatparam Pilot p Pilot generating the munition, used for faction and damaging purposes.
+ *    @luatparam Outfit o Outfit to be used as a reference for the munition.
+ *    @luatparam[opt=nil] Pilot t Pilot target to use for aiming and such.
+ *    @luatparam[opt=p:dir()] number dir Direction the munition should face.
+ *    @luatparam[opt=p:pos()] Vec2 pos Position to create the munition at.
+ *    @luatparam[opt=p:vel()] Vec2 vel Initial velocity of the munition. The munition's base velocity gets added to this.
+ * @luafunc munition
  */
 static int poL_munition( lua_State *L )
 {
@@ -252,8 +261,8 @@ static int poL_munition( lua_State *L )
    const Outfit *o = luaL_optoutfit( L, 3, NULL );
    LuaPilot t  = nluaL_optarg( L, 4, p->id, luaL_checkpilot );
    double dir  = luaL_optnumber( L, 5, p->solid->dir );
-   vec2 *vv    = luaL_optvector( L, 6, &p->solid->vel );
-   vec2 *vp    = luaL_optvector( L, 7, &p->solid->pos );
+   vec2 *vp    = luaL_optvector( L, 6, &p->solid->pos );
+   vec2 *vv    = luaL_optvector( L, 7, &p->solid->vel );
 
    weapon_add( po, o, po->heat_T, dir, vp, vv, p, t, 0., 1 );
    return 0;
