@@ -1958,11 +1958,13 @@ void weapon_add( PilotOutfitSlot *po, const double T, const double dir,
    Weapon *w, **m;
    size_t bufsize;
 
+#if DEBUGGING
    if (!outfit_isBolt(po->outfit) &&
          !outfit_isLauncher(po->outfit)) {
       ERR(_("Trying to create a Weapon from a non-Weapon type Outfit"));
       return;
    }
+#endif /* DEBUGGING */
 
    layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
    w     = weapon_create( po, T, dir, pos, vel, parent, target, time, aim );
