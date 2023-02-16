@@ -28,6 +28,7 @@
 #include "nstring.h"
 #include "nlua_pilot.h"
 #include "nlua_vec2.h"
+#include "nlua_outfit.h"
 #include "opengl.h"
 #include "pilot.h"
 #include "player.h"
