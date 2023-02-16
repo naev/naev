@@ -552,7 +552,7 @@ Scavenger goes silent for a second, as if thinking.
       if inprogress then
          d(fmt.f(_([["I need to make some adjustments to your ship. Please land on the {spob}."]]),
             {spob=base}))
-      elseif time.get() < taiomi9done+time.new(0,3,0) or not naev.claimTest( {system.cur(), system.get("Toros")} ) then
+      elseif time.get() < taiomi9done+time.new(0,3,0) or not naev.claimTest( {system.cur(), system.get("Toaxis")} ) then
          d(_([["We are still working on the construction, it is almost ready!"]]))
       else
          d(_([["The construction is finished. Soon we will be leaving behind this galaxy. Such a mix of emotions that my processor core is not very well equipped to handle."]]))
