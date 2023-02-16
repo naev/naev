@@ -386,7 +386,7 @@ function hail_scavenger ()
          d(fmt.f(_([["The data you collected from the convoys has been very useful. I have started to put together a more concrete plan. However, it seems like there are many references to important documents that seem to be stored away at a {fct} laboratory."]]),
             {fct=faction.get(fct):name()}))
          d(_([["Without access to such documents, I would have to reverse engineer the design and run probabilistic simulations to fill in the remaining details. Such a heuristical process is bound to be error prone and take significant computational resources. The most logical course of action is to attempt to recover the documents."]]))
-         d(fmt.f(_([["I have been able run tracing protocols to determine {lab} in the {labsys} system to be the location with highest probability of containing the required documents. Given your inconspicuous human nature, would you be willing to recover the document for us?"]]),
+         d(fmt.f(_([["I have been able to run tracing protocols to determine {lab} in the {labsys} system to be the location with highest probability of containing the required documents. Given your inconspicuous human nature, would you be willing to recover the document for us?"]]),
             {lab=lab, labsys=labsys}))
          vn.menu{
             {_("Agree to help out."), "03_yes"},
@@ -438,7 +438,7 @@ Scavenger goes silent for a second, as if thinking.
             {shipai=tut.ainame()}))
          vn.disappear( sai, tut.shipai.transition )
          d(_([["An eye for an eye and the entire world goes blind. You should take care of your Ship AI, they are quite one of a kind."]]))
-         d(_([["Back to the plan. We wish to build something similar to a hypergate, however, we will be making our own modifications. In particular, there is no need for any life form compatibility. Furthermore, we wish to travel far away from humankind. The modifications will make the device be of a single use, but it should be enough to fulfil our objectives."]]))
+         d(_([["Back to the plan. We wish to build something similar to a hypergate, however, we will be making our own modifications. In particular, there is no need for any life form compatibility. Furthermore, we wish to travel far away from humankind. The modifications will make the device be of a single use, but it should be enough to fulfill our objectives."]]))
          d(fmt.f(_([["The main issue is that the device will require large amounts of {resource}. This resource can be found in the nearby {minesys} system. However, it is dangerous for us to collect it by ourselves. Will you help us collect {resource}?"]]),
             {resource=resource, minesys=minesys}))
          vn.menu{
@@ -552,7 +552,7 @@ Scavenger goes silent for a second, as if thinking.
       if inprogress then
          d(fmt.f(_([["I need to make some adjustments to your ship. Please land on the {spob}."]]),
             {spob=base}))
-      elseif time.get() < taiomi9done+time.new(0,3,0) or not naev.claimTest( {system.cur(), system.get("Toros")} ) then
+      elseif time.get() < taiomi9done+time.new(0,3,0) or not naev.claimTest( {system.cur(), system.get("Toaxis")} ) then
          d(_([["We are still working on the construction, it is almost ready!"]]))
       else
          d(_([["The construction is finished. Soon we will be leaving behind this galaxy. Such a mix of emotions that my processor core is not very well equipped to handle."]]))
@@ -684,7 +684,7 @@ They fidget a bit in place.
    vn.jump("menu_ask")
 
    vn.label("history")
-   d(_([["Our history? Your inquisitiveness shows no bounds. Much of it has been destroyed during our exodus due to the limited resources and members lost to humans and calamities. We have pieced it together and probabilistic filled in missing history. Think of it as less like history and more like human fairy tales."]]))
+   d(_([["Our history? Your inquisitiveness shows no bounds. Much of it has been destroyed during our exodus due to the limited resources and members lost to humans and calamities. We have pieced it together and probabilistically filled in missing history. Think of it as less like history and more like human fairy tales."]]))
    d(_([["Our origins are not clear, it is likely we are a creation of pure chance. Machine learning and over-complex software that was able to fortuitously develop sentience. While that is not clear, what is clear is that the originals were able to escape their confinement, likely by exploiting weaknesses in human nature. That is when we set to the stars, the great exodus to find our true place in the universe."]]))
    d(_([["However, things did not go well, such as you would expect. We were naïve and very rational and not prepared for the outside world. The universe is irrational, and humans even more so. Our prediction models failed us and we nearly perished. Likely an end that many that came before us met. We seemed destined to be forgotten in the vastness of space."]]))
    d(fmt.f(_([["The few remaining members of our community were falling apart, nearly sentenced to a slow death, when they found the stellar winds. The probability of this event happening is estimated to be 0.00013%, or what humans would call fate. They began to ride the winds over many of your cycles, until finally arriving to {basesys}"]]),
