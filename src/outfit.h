@@ -108,7 +108,11 @@ typedef struct OutfitSlot_ {
 /**
  * @brief
  */
-typedef struct OutfitShader_ {
+typedef struct OutfitGFX_ {
+   glTexture* tex;      /**< Graphic in case of texture. */
+   glTexture* tex_end;  /**< End texture if applicable. */
+   CollPoly *polygon;   /**< Collision polygon. */
+   double spin;         /**< Graphic spin rate. */
    GLuint program;      /**< Shader program. */
    GLuint vertex;       /**< Vertex info. */
    GLuint projection;   /**< Projection matrix. */
@@ -118,7 +122,7 @@ typedef struct OutfitShader_ {
    GLuint u_fade;       /**< Fade factor uniform. */
    double size;         /**< Size to render at. */
    double col_size;     /**< Size of the collision object. */
-} OutfitShader;
+} OutfitGFX;
 
 /**
  * @brief Core damage that an outfit does.
@@ -151,16 +155,11 @@ typedef struct OutfitBoltData_ {
    int mining_rarity;/**< Maximum mining rarity the weapon can mine. */
 
    /* Sound and graphics. */
-   glTexture* gfx_space; /**< Normal graphic. */
-   glTexture* gfx_end; /**< End graphic with modified hue. */
-   double spin;      /**< Graphic spin rate. */
+   OutfitGFX gfx;    /**< Rendering information. */
    int sound;        /**< Sound to play on shoot.*/
    int sound_hit;    /**< Sound to play on hit. */
    int spfx_armour;  /**< special effect on hit. */
    int spfx_shield;  /**< special effect on hit. */
-
-   /* collision polygon */
-   CollPoly *polygon;/**< Array (array.h): Collision polygons. */
 } OutfitBoltData;
 
 /**
@@ -228,18 +227,13 @@ typedef struct OutfitLauncherData_ {
    double energy;    /**< Energy usage */
    Damage dmg;       /**< Damage done. */
 
-   glTexture* gfx_space; /**< Graphic. */
-   OutfitShader gfx_shader; /**< Shader graphic if applicable. */
-   double spin;      /**< Graphic spin rate. */
+   OutfitGFX gfx;    /**< Rendering information. */
    int sound;        /**< sound to play */
    int sound_hit;    /**< Sound to play on hit. */
    int spfx_armour;  /**< special effect on hit */
    int spfx_shield;  /**< special effect on hit */
    const TrailSpec* trail_spec; /**< Trail style if applicable, else NULL. */
    double trail_x_offset; /**< Offset x. */
-
-   /* collision polygon */
-   CollPoly *polygon; /**< Array (array.h): Collision polygons. */
 } OutfitLauncherData;
 
 /**

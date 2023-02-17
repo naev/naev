@@ -98,7 +98,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent );
-static int outfit_loadPLG( Outfit *temp, const char *buf, unsigned int bolt );
+static int outfit_loadPLG( Outfit *temp, const char *buf );
 static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node );
 static void sdesc_miningRarity( int *l, Outfit *temp, int rarity );
 
@@ -605,8 +605,8 @@ int outfit_isSecondary( const Outfit* o )
  */
 const glTexture* outfit_gfx( const Outfit* o )
 {
-   if (outfit_isBolt(o)) return o->u.blt.gfx_space;
-   else if (outfit_isLauncher(o)) return o->u.lau.gfx_space;
+   if (outfit_isBolt(o)) return o->u.blt.gfx.tex;
+   else if (outfit_isLauncher(o)) return o->u.lau.gfx.tex;
    return NULL;
 }
 /**
@@ -615,8 +615,8 @@ const glTexture* outfit_gfx( const Outfit* o )
  */
 const CollPoly* outfit_plg( const Outfit* o )
 {
-   if (outfit_isBolt(o)) return o->u.blt.polygon;
-   else if (outfit_isLauncher(o)) return o->u.lau.polygon;
+   if (outfit_isBolt(o)) return o->u.blt.gfx.polygon;
+   else if (outfit_isLauncher(o)) return o->u.lau.gfx.polygon;
    return NULL;
 }
 /**
@@ -771,8 +771,8 @@ double outfit_speed( const Outfit* o )
  */
 double outfit_spin( const Outfit* o )
 {
-   if (outfit_isBolt(o)) return o->u.blt.spin;
-   else if (outfit_isLauncher(o)) return o->u.lau.spin;
+   if (outfit_isBolt(o)) return o->u.blt.gfx.spin;
+   else if (outfit_isLauncher(o)) return o->u.lau.gfx.spin;
    return -1.;
 }
 /**
@@ -1147,14 +1147,23 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
  *
  *    @param temp Outfit to load into.
  *    @param buf Name of the file.
- *    @param bolt 1 if outfit is a Bolt, 0 if it is an Ammo
  */
-static int outfit_loadPLG( Outfit *temp, const char *buf, unsigned int bolt )
+static int outfit_loadPLG( Outfit *temp, const char *buf )
 {
    char *file;
+   OutfitGFX *gfx;
    CollPoly *polygon;
    xmlDocPtr doc;
    xmlNodePtr node, cur;
+
+   if (outfit_isLauncher(temp))
+      gfx = &temp->u.lau.gfx;
+   else if (outfit_isBolt(temp))
+      gfx = &temp->u.blt.gfx;
+   else {
+      WARN(_("Trying to load polygon for non-compatible outfit '%s'!"),temp->name);
+      return -1;
+   }
 
    asprintf( &file, "%s%s.xml", OUTFIT_POLYGON_PATH, buf );
 
@@ -1185,34 +1194,18 @@ that can be found in Naev's artwork repo."), file);
 
    free(file);
 
-   if (bolt) {
-      do { /* load the polygon data */
-         if (xml_isNode(node,"polygons")) {
-            cur = node->children;
-            temp->u.blt.polygon = array_create_size( CollPoly, 36 );
-            do {
-               if (xml_isNode(cur,"polygon")) {
-                  polygon = &array_grow( &temp->u.blt.polygon );
-                  LoadPolygon( polygon, cur );
-               }
-            } while (xml_nextNode(cur));
-         }
-      } while (xml_nextNode(node));
-   }
-   else {
-      do { /* Second case: outfit is an ammo */
-         if (xml_isNode(node,"polygons")) {
-            cur = node->children;
-            temp->u.lau.polygon = array_create_size( CollPoly, 36 );
-            do {
-               if (xml_isNode(cur,"polygon")) {
-                  polygon = &array_grow( &temp->u.lau.polygon );
-                  LoadPolygon( polygon, cur );
-               }
-            } while (xml_nextNode(cur));
-         }
-      } while (xml_nextNode(node));
-   }
+   do { /* load the polygon data */
+      if (xml_isNode(node,"polygons")) {
+         cur = node->children;
+         gfx->polygon = array_create_size( CollPoly, 36 );
+         do {
+            if (xml_isNode(cur,"polygon")) {
+               polygon = &array_grow( &gfx->polygon );
+               LoadPolygon( polygon, cur );
+            }
+         } while (xml_nextNode(cur));
+      }
+   } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
    return 0;
@@ -1224,34 +1217,43 @@ that can be found in Naev's artwork repo."), file);
 static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
 {
    char *type;
+   OutfitGFX *gfx;
+
+   if (outfit_isLauncher(temp))
+      gfx = &temp->u.lau.gfx;
+   else if (outfit_isBolt(temp))
+      gfx = &temp->u.blt.gfx;
+   else {
+      WARN(_("Trying to load graphics for non-compatible outfit '%s'!"),temp->name);
+      return -1;
+   }
 
    /* Comomn properties. */
-   xmlr_attr_float(node, "spin", temp->u.lau.spin);
-   if (temp->u.lau.spin != 0)
+   xmlr_attr_float(node, "spin", gfx->spin);
+   if (gfx->spin != 0)
       outfit_setProp( temp, OUTFIT_PROP_WEAP_SPIN );
 
    /* Split by type. */
    xmlr_attr_strd(node,"type",type);
    if ((type != NULL) && (strcmp(type,"shader")==0)) {
-      OutfitShader *os = &temp->u.lau.gfx_shader;
       char *vertex;
 
       xmlr_attr_strd(node,"vertex",vertex);
       if (vertex == NULL)
          vertex = strdup("project.vert");
-      os->program   = gl_program_vert_frag( vertex, xml_get(node), NULL );
+      gfx->program   = gl_program_vert_frag( vertex, xml_get(node), NULL );
       free( vertex );
-      os->vertex    = glGetAttribLocation(  os->program, "vertex" );
-      os->projection= glGetUniformLocation( os->program, "projection" );
-      os->dimensions= glGetUniformLocation( os->program, "dimensions" );
-      os->u_r       = glGetUniformLocation( os->program, "u_r" );
-      os->u_time    = glGetUniformLocation( os->program, "u_time" );
+      gfx->vertex    = glGetAttribLocation(  gfx->program, "vertex" );
+      gfx->projection= glGetUniformLocation( gfx->program, "projection" );
+      gfx->dimensions= glGetUniformLocation( gfx->program, "dimensions" );
+      gfx->u_r       = glGetUniformLocation( gfx->program, "u_r" );
+      gfx->u_time    = glGetUniformLocation( gfx->program, "u_time" );
 
-      xmlr_attr_float_def(node,"size",os->size,-1.);
-      if (os->size < 0.)
+      xmlr_attr_float_def(node,"size",gfx->size,-1.);
+      if (gfx->size < 0.)
          WARN(_("Outfit '%s' has GFX shader but no 'size' set!"),temp->name);
 
-      xmlr_attr_float_def(node,"col_size",os->col_size,os->size*0.8);
+      xmlr_attr_float_def(node,"col_size",gfx->col_size,gfx->size*0.8);
 
       free(type);
       return 0;
@@ -1263,18 +1265,17 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
    }
 
    /* Load normal graphics. */
-   temp->u.lau.gfx_space = xml_parseTexture( node,
-         OUTFIT_GFX_PATH"space/%s", 6, 6,
+   gfx->tex = xml_parseTexture( node, OUTFIT_GFX_PATH"space/%s", 6, 6,
          OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
    /* Load the collision polygon. */
    char *buf = xml_get(node);
-   outfit_loadPLG( temp, buf, 0 );
+   outfit_loadPLG( temp, buf );
 
    /* Validity check: there must be 1 polygon per sprite. */
-   if (array_size(temp->u.lau.polygon) != 36) {
+   if (array_size(gfx->polygon) != 36) {
       WARN(_("Outfit '%s': the number of collision polygons is wrong.\n \
                npolygon = %i and sx*sy = %i"),
-               temp->name, array_size(temp->u.lau.polygon), 36);
+               temp->name, array_size(gfx->polygon), 36);
    }
 
    return 0;
@@ -1339,29 +1340,11 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
 
       /* Graphics. */
       if (xml_isNode(node,"gfx")) {
-         temp->u.blt.gfx_space = xml_parseTexture( node,
-               OUTFIT_GFX_PATH"space/%s", 6, 6,
-               OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
-         xmlr_attr_strd(node, "spin", buf);
-         if (buf != NULL) {
-            outfit_setProp( temp, OUTFIT_PROP_WEAP_SPIN );
-            temp->u.blt.spin = atof( buf );
-            free(buf);
-         }
-         /* Load the collision polygon. */
-         buf = xml_get(node);
-         outfit_loadPLG( temp, buf, 1 );
-
-         /* Validity check: there must be 1 polygon per sprite. */
-         if (array_size(temp->u.blt.polygon) != 36) {
-            WARN(_("Outfit '%s': the number of collision polygons is wrong.\n \
-                    npolygon = %i and sx*sy = %i"),
-                    temp->name, array_size(temp->u.blt.polygon), 36);
-         }
+         outfit_loadGFX( temp, node );
          continue;
       }
       if (xml_isNode(node,"gfx_end")) {
-         temp->u.blt.gfx_end = xml_parseTexture( node,
+         temp->u.blt.gfx.tex_end = xml_parseTexture( node,
                OUTFIT_GFX_PATH"space/%s", 6, 6,
                OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
          continue;
@@ -1452,7 +1435,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
 
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
-   MELEMENT(temp->u.blt.gfx_space==NULL,"gfx");
+   //MELEMENT(temp->u.blt.gfx_space==NULL,"gfx");
    MELEMENT(temp->u.blt.spfx_shield==-1,"spfx_shield");
    MELEMENT(temp->u.blt.spfx_armour==-1,"spfx_armour");
    MELEMENT((sound_disabled!=0) && (temp->u.blt.sound<0),"sound");
@@ -1816,7 +1799,7 @@ if (o) WARN(_("Outfit '%s' missing '%s' element"), temp->name, s) /**< Define to
    MELEMENT(temp->u.lau.amount==0.,"amount");
    MELEMENT(temp->u.lau.reload_time==0.,"reload_time");
    MELEMENT(temp->u.lau.ammo_mass==0.,"mass");
-   MELEMENT(!outfit_isProp(temp,OUTFIT_PROP_SHOOT_DRY)&&temp->u.lau.gfx_space==NULL,"gfx");
+   //MELEMENT(!outfit_isProp(temp,OUTFIT_PROP_SHOOT_DRY)&&temp->u.lau.gfx_space==NULL,"gfx");
    MELEMENT(!outfit_isProp(temp,OUTFIT_PROP_SHOOT_DRY)&&temp->u.lau.spfx_shield==-1,"spfx_shield");
    MELEMENT(!outfit_isProp(temp,OUTFIT_PROP_SHOOT_DRY)&&temp->u.lau.spfx_armour==-1,"spfx_armour");
    MELEMENT((sound_disabled!=0) && (temp->u.lau.sound<0),"sound");
@@ -2823,21 +2806,21 @@ void outfit_free (void)
 
       if (outfit_isLauncher(o)) {
          /* Free collision polygons. */
-         for (int j=0; j<array_size(o->u.lau.polygon); j++) {
-            free(o->u.lau.polygon[j].x);
-            free(o->u.lau.polygon[j].y);
+         for (int j=0; j<array_size(o->u.lau.gfx.polygon); j++) {
+            free(o->u.lau.gfx.polygon[j].x);
+            free(o->u.lau.gfx.polygon[j].y);
          }
-         array_free(o->u.lau.polygon);
+         array_free(o->u.lau.gfx.polygon);
       }
       /* Type specific. */
       else if (outfit_isBolt(o)) {
-         gl_freeTexture(o->u.blt.gfx_end);
+         gl_freeTexture(o->u.blt.gfx.tex_end);
          /* Free collision polygons. */
-         for (int j=0; j<array_size(o->u.blt.polygon); j++) {
-            free(o->u.blt.polygon[j].x);
-            free(o->u.blt.polygon[j].y);
+         for (int j=0; j<array_size(o->u.blt.gfx.polygon); j++) {
+            free(o->u.blt.gfx.polygon[j].x);
+            free(o->u.blt.gfx.polygon[j].y);
          }
-         array_free(o->u.blt.polygon);
+         array_free(o->u.blt.gfx.polygon);
       }
       else if (outfit_isFighterBay(o))
          free(o->u.bay.ship);

@@ -840,8 +840,8 @@ static void weapon_render( Weapon* w, double dt )
             }
 
             /* Render. */
-            if (outfit_isBolt(w->outfit) && w->outfit->u.blt.gfx_end)
-               gl_renderSpriteInterpolate( gfx, w->outfit->u.blt.gfx_end,
+            if (outfit_isBolt(w->outfit) && w->outfit->u.blt.gfx.tex_end)
+               gl_renderSpriteInterpolate( gfx, w->outfit->u.blt.gfx.tex_end,
                      w->timer / w->life,
                      w->solid->pos.x, w->solid->pos.y,
                      w->sprite % (int)gfx->sx, w->sprite / (int)gfx->sx, &c );
@@ -851,8 +851,8 @@ static void weapon_render( Weapon* w, double dt )
          }
          /* Outfit faces direction. */
          else {
-            if (outfit_isBolt(w->outfit) && w->outfit->u.blt.gfx_end)
-               gl_renderSpriteInterpolate( gfx, w->outfit->u.blt.gfx_end,
+            if (outfit_isBolt(w->outfit) && w->outfit->u.blt.gfx.tex_end)
+               gl_renderSpriteInterpolate( gfx, w->outfit->u.blt.gfx.tex_end,
                      w->timer / w->life,
                      w->solid->pos.x, w->solid->pos.y, w->sx, w->sy, &c );
             else
@@ -974,11 +974,11 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
 
       /* See if the outfit has a collision polygon. */
       if (outfit_isBolt(w->outfit)) {
-         if (array_size(w->outfit->u.blt.polygon) == 0)
+         if (array_size(w->outfit->u.blt.gfx.polygon) == 0)
             usePolyW = 0;
       }
       else if (outfit_isLauncher(w->outfit)) {
-         if (array_size(w->outfit->u.lau.polygon) == 0)
+         if (array_size(w->outfit->u.lau.gfx.polygon) == 0)
             usePolyW = 0;
       }
    }
