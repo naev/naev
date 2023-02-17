@@ -93,12 +93,15 @@ typedef struct Weapon_ {
    WeaponStatus status; /**< Weapon status - to check for jamming */
 } Weapon;
 
+/**
+ * @brief Struct useful for generalization of weapno collisions.
+ */
 typedef struct WeaponCollision_ {
-   const Weapon *w;
-   const OutfitGFX *gfx;
-   int beam;
-   double range;
-   const CollPoly *polygon;
+   const Weapon *w;        /**< Weapon doing the colliding. */
+   const OutfitGFX *gfx;   /**< Graphics of the weapon if applicable. */
+   int beam;               /**< Is the weapon a beam weapon? */
+   double range;           /**< Range of the weapon (or size in the case of GFX). */
+   const CollPoly *polygon;/**< Collision polygon of the weapon if applicable. */
 } WeaponCollision;
 
 /* Weapon layers. */
