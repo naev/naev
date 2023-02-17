@@ -951,6 +951,23 @@ static int weapon_checkCanHit( const Weapon* w, const Pilot *p )
 }
 
 /**
+ * @brief Tests to see if a weapon collides with a ship.
+ */
+static unsigned int weapon_testCollision( Weapon *w, const OutfitGFX *gfx, const Pilot *p, vec2 *crash )
+{
+   if (p->ship->polygon==NULL) {
+      int k = p->ship->gfx_space->sx * p->tsy + p->tsx;
+      return CollidePolygon( &p->ship->polygon[k], &p->solid->pos,
+               gfx->polygon, &w->solid->pos, crash );
+   }
+   else {
+      return CollideSprite( gfx->tex, w->sx, w->sy, &w->solid->pos,
+               p->ship->gfx_space, p->tsx, p->tsy,
+               &p->solid->pos, crash );
+   }
+}
+
+/**
  * @brief Updates an individual weapon.
  *
  *    @param w Weapon to update.
@@ -959,8 +976,8 @@ static int weapon_checkCanHit( const Weapon* w, const Pilot *p )
  */
 static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
 {
-   int b, psx, psy, n;
-   unsigned int coll, usePoly, usePolyW = 1;
+   int b, n;
+   unsigned int usePoly, usePolyW = 1;
    const OutfitGFX *gfx;
    const CollPoly *plg, *polygon;
    vec2 crash[2];
@@ -1001,6 +1018,7 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
    }
 
    for (int i=0; i<array_size(pilot_stack); i++) {
+      unsigned int coll;
       Pilot *p = pilot_stack[i];
 
       /* Ignore pilots being deleted. */
@@ -1009,9 +1027,6 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
 
       if (w->parent == pilot_stack[i]->id)
          continue; /* pilot is self */
-
-      psx = pilot_stack[i]->tsx;
-      psy = pilot_stack[i]->tsy;
 
       /* See if the ship has a collision polygon. */
       usePoly = usePolyW;
@@ -1022,6 +1037,8 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
       if (b) {
          /* Check for collision. */
          if (weapon_checkCanHit(w,p)) {
+            int psx = pilot_stack[i]->tsx;
+            int psy = pilot_stack[i]->tsy;
             if (usePoly) {
                int k = p->ship->gfx_space->sx * psy + psx;
                coll = CollideLinePolygon( &w->solid->pos, w->solid->dir,
@@ -1044,16 +1061,7 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
          isjammed = ((w->status == WEAPON_STATUS_JAMMED) || (w->status == WEAPON_STATUS_JAMMED_SLOWED));
          if ((((pilot_stack[i]->id == w->target) && !isjammed) || isjammed) &&
                weapon_checkCanHit(w,p) ) {
-            if (usePoly) {
-               int k = p->ship->gfx_space->sx * psy + psx;
-               coll = CollidePolygon( &p->ship->polygon[k], &p->solid->pos,
-                        polygon, &w->solid->pos, &crash[0] );
-            }
-            else {
-               coll = CollideSprite( gfx->tex, w->sx, w->sy, &w->solid->pos,
-                        p->ship->gfx_space, psx, psy,
-                        &p->solid->pos, &crash[0] );
-            }
+            coll = weapon_testCollision( w, gfx, p, &crash[0] );
             if (coll) {
                weapon_hit( w, p, &crash[0] );
                return; /* Weapon is destroyed. */
@@ -1063,20 +1071,10 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
       /* unguided weapons hit anything not of the same faction */
       else {
          if (weapon_checkCanHit(w,p)) {
-            if (usePoly) {
-               int k = p->ship->gfx_space->sx * psy + psx;
-               coll = CollidePolygon( &p->ship->polygon[k], &p->solid->pos,
-                        polygon, &w->solid->pos, &crash[0] );
-            }
-            else {
-               coll = CollideSprite( gfx->tex, w->sx, w->sy, &w->solid->pos,
-                        p->ship->gfx_space, psx, psy,
-                        &p->solid->pos, &crash[0] );
-            }
-
+            coll = weapon_testCollision( w, gfx, p, &crash[0] );
             if (coll) {
-            weapon_hit( w, p, &crash[0] );
-            return; /* Weapon is destroyed. */
+               weapon_hit( w, p, &crash[0] );
+               return; /* Weapon is destroyed. */
             }
          }
       }
@@ -1085,6 +1083,7 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
    /* Collide with asteroids*/
    if (outfit_isLauncher(w->outfit) || outfit_isBolt(w->outfit)) {
       for (int i=0; i<array_size(cur_system->asteroids); i++) {
+         unsigned int coll;
          AsteroidAnchor *ast = &cur_system->asteroids[i];
 
          /* Early in-range check with the asteroid field. */
@@ -1130,6 +1129,7 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
 
    else if (b) { /* Beam */
       for (int i=0; i<array_size(cur_system->asteroids); i++) {
+         unsigned int coll;
          AsteroidAnchor *ast = &cur_system->asteroids[i];
 
          /* Early in-range check. */
