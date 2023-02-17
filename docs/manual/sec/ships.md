@@ -67,7 +67,7 @@ Each ship is represented with a stand alone file that has to be located in `ship
     * `weapon`, `utility` and `structure`: Defines whether the outfit slot fits under the Weapon, Utility or Structure columns.
         * `x`, `y`, and `h` (*attributes*) define the origin coordinates of weapon graphics such as projectiles, particles and launched fighters.
         * `size` (*attribute*): Defines the largest size of outfit allowed in the slot. Valid values are `small`, `medium` and `large`.
-        * `prop` (*attribute*): Defines the slot as accepting a particular type of outfit defined by an .XML file in the `slots` folder. The Naev default scenario includes `systems`, `engines` and `hull` values for Core Systems, Engines and Hull outfits which must be filled for a ship to be spaceworthy.
+        * `prop` (*attribute*): Defines the slot as accepting a particular type of outfit defined by an .XML file in the `slots/` directory. The Naev default scenario includes `systems`, `engines`, and `hull` values for Core Systems, Engines, and Hull outfits which must be filled (if they exist) for a ship to be spaceworthy.
         * `exclusive=1` (*attribute*): Restricts the slot to accepting only the outfits defined by the `prop` field.
         * Inserting an outfit's `name` will add it to that outfit slot in the ship's "stock" configuration. This is useful for selling a ship with prefilled core outfits to ensure its spaceworthiness immediately upon purchase.
 * `stats` (*optional*): Defines modifiers applied to all characteristics and outfits on the ship.
