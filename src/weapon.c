@@ -792,7 +792,7 @@ static void weapon_renderBeam( Weapon* w, double dt )
  */
 static void weapon_render( Weapon* w, double dt )
 {
-   const glTexture *gfx;
+   const OutfitGFX *gfx;
    double x, y, z, r, st;
    glColour col, c = { .r=1., .g=1., .b=1. };
 
@@ -807,8 +807,7 @@ static void weapon_render( Weapon* w, double dt )
          if (w->status == WEAPON_STATUS_LOCKING) {
             z = cam_getZoom();
             gl_gameToScreenCoords( &x, &y, w->solid->pos.x, w->solid->pos.y );
-            gfx = outfit_gfx(w->outfit);
-            r = gfx->sw * z * 0.75; /* Assume square. */
+            r = w->outfit->u.lau.gfx.size * z * 0.75; /* Assume square. */
 
             st = 1. - w->timer2 / w->paramf;
             col_blend( &col, &cYellow, &cRed, st );
@@ -828,35 +827,44 @@ static void weapon_render( Weapon* w, double dt )
 
          /* Outfit spins around. */
          if (outfit_isProp(w->outfit, OUTFIT_PROP_WEAP_SPIN)) {
-            /* Check timer. */
-            w->anim -= dt;
-            if (w->anim < 0.) {
-               w->anim = outfit_spin(w->outfit);
-
-               /* Increment sprite. */
-               w->sprite++;
-               if (w->sprite >= gfx->sx*gfx->sy)
-                  w->sprite = 0;
-            }
 
             /* Render. */
-            if (outfit_isBolt(w->outfit) && w->outfit->u.blt.gfx.tex_end)
-               gl_renderSpriteInterpolate( gfx, w->outfit->u.blt.gfx.tex_end,
-                     w->timer / w->life,
-                     w->solid->pos.x, w->solid->pos.y,
-                     w->sprite % (int)gfx->sx, w->sprite / (int)gfx->sx, &c );
-            else
-               gl_renderSprite( gfx, w->solid->pos.x, w->solid->pos.y,
-                     w->sprite % (int)gfx->sx, w->sprite / (int)gfx->sx, &c );
+            if (gfx->tex != NULL) {
+               const glTexture *tex = gfx->tex;
+
+               /* Check timer. */
+               w->anim -= dt;
+               if (w->anim < 0.) {
+                  w->anim = outfit_spin(w->outfit);
+
+                  /* Increment sprite. */
+                  w->sprite++;
+                  if (w->sprite >= tex->sx*tex->sy)
+                     w->sprite = 0;
+               }
+
+               if (gfx->tex_end != NULL)
+                  gl_renderSpriteInterpolate( tex, gfx->tex_end,
+                        w->timer / w->life,
+                        w->solid->pos.x, w->solid->pos.y,
+                        w->sprite % (int)tex->sx, w->sprite / (int)tex->sx, &c );
+               else
+                  gl_renderSprite( tex, w->solid->pos.x, w->solid->pos.y,
+                        w->sprite % (int)tex->sx, w->sprite / (int)tex->sx, &c );
+            }
          }
          /* Outfit faces direction. */
          else {
-            if (outfit_isBolt(w->outfit) && w->outfit->u.blt.gfx.tex_end)
-               gl_renderSpriteInterpolate( gfx, w->outfit->u.blt.gfx.tex_end,
-                     w->timer / w->life,
-                     w->solid->pos.x, w->solid->pos.y, w->sx, w->sy, &c );
-            else
-               gl_renderSprite( gfx, w->solid->pos.x, w->solid->pos.y, w->sx, w->sy, &c );
+            /* Render. */
+            if (gfx->tex != NULL) {
+               const glTexture *tex = gfx->tex;
+               if (gfx->tex_end != NULL)
+                  gl_renderSpriteInterpolate( tex, gfx->tex_end,
+                        w->timer / w->life,
+                        w->solid->pos.x, w->solid->pos.y, w->sx, w->sy, &c );
+               else
+                  gl_renderSprite( tex, w->solid->pos.x, w->solid->pos.y, w->sx, w->sy, &c );
+            }
          }
          break;
 
@@ -953,7 +961,7 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
 {
    int b, psx, psy, n;
    unsigned int coll, usePoly, usePolyW = 1;
-   const glTexture *gfx;
+   const OutfitGFX *gfx;
    const CollPoly *plg, *polygon;
    vec2 crash[2];
    Pilot *const* pilot_stack;
@@ -967,20 +975,14 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
    b     = outfit_isBeam(w->outfit);
    if (!b) {
       gfx = outfit_gfx(w->outfit);
-      gl_getSpriteFromDir( &w->sx, &w->sy, gfx, w->solid->dir );
-      n = gfx->sx * w->sy + w->sx;
+      gl_getSpriteFromDir( &w->sx, &w->sy, gfx->tex, w->solid->dir );
+      n = gfx->tex->sx * w->sy + w->sx;
       plg = outfit_plg(w->outfit);
       polygon = &plg[n];
 
       /* See if the outfit has a collision polygon. */
-      if (outfit_isBolt(w->outfit)) {
-         if (array_size(w->outfit->u.blt.gfx.polygon) == 0)
-            usePolyW = 0;
-      }
-      else if (outfit_isLauncher(w->outfit)) {
-         if (array_size(w->outfit->u.lau.gfx.polygon) == 0)
-            usePolyW = 0;
-      }
+      if (array_size(gfx->polygon) == 0)
+         usePolyW = 0;
    }
    else {
       Pilot *p = pilot_get( w->parent );
@@ -1048,7 +1050,7 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
                         polygon, &w->solid->pos, &crash[0] );
             }
             else {
-               coll = CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
+               coll = CollideSprite( gfx->tex, w->sx, w->sy, &w->solid->pos,
                         p->ship->gfx_space, psx, psy,
                         &p->solid->pos, &crash[0] );
             }
@@ -1067,7 +1069,7 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
                         polygon, &w->solid->pos, &crash[0] );
             }
             else {
-               coll = CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
+               coll = CollideSprite( gfx->tex, w->sx, w->sy, &w->solid->pos,
                         p->ship->gfx_space, psx, psy,
                         &p->solid->pos, &crash[0] );
             }
@@ -1087,7 +1089,7 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
 
          /* Early in-range check with the asteroid field. */
          if ( vec2_dist2( &w->solid->pos, &ast->pos ) >
-              pow2( ast->radius + ast->margin + gfx->sw/2. ))
+              pow2( ast->radius + ast->margin + gfx->size ))
             continue;
 
          for (int j=0; j<ast->nb; j++) {
@@ -1097,7 +1099,7 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
 
             /* In-range check with the actual asteroid. */
             /* This is advantageous because we are going to rotate the polygon afterwards. */
-            if ( vec2_dist2( &w->solid->pos, &a->pos ) > pow2( gfx->sw/2. + a->gfx->sw/2. ) )
+            if ( vec2_dist2( &w->solid->pos, &a->pos ) > pow2( gfx->size ) )
                continue;
 
             /* See if the asteroid has a collision polygon. */
@@ -1114,7 +1116,7 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
                free(rpoly.y);
             }
             else {
-               coll = CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
+               coll = CollideSprite( gfx->tex, w->sx, w->sy, &w->solid->pos,
                                      a->gfx, 0, 0, &a->pos, &crash[0] );
             }
 
@@ -1654,7 +1656,7 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
    vec2 v;
    double mass, rdir, acc, m;
    Pilot *pilot_target;
-   const glTexture *gfx;
+   const OutfitGFX *gfx;
 
    /* Only difference is the direction of fire */
    if ((w->parent!=w->target) && (w->target != 0)) /* Must have valid target */
@@ -1712,7 +1714,8 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
 
    /* Set facing direction. */
    gfx = outfit_gfx( w->outfit );
-   gl_getSpriteFromDir( &w->sx, &w->sy, gfx, w->solid->dir );
+   if (gfx->tex != NULL)
+      gl_getSpriteFromDir( &w->sx, &w->sy, gfx->tex, w->solid->dir );
 }
 
 /**
@@ -1735,7 +1738,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    vec2 v;
    double mass, rdir, m;
    Pilot *pilot_target;
-   const glTexture *gfx;
+   const OutfitGFX *gfx;
 
    /* Only difference is the direction of fire */
    if ((w->parent!=w->target) && (w->target != 0)) /* Must have valid target */
@@ -1814,7 +1817,8 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
 
    /* Set facing direction. */
    gfx = outfit_gfx( w->outfit );
-   gl_getSpriteFromDir( &w->sx, &w->sy, gfx, w->solid->dir );
+   if (gfx->tex != NULL)
+      gl_getSpriteFromDir( &w->sx, &w->sy, gfx->tex, w->solid->dir );
 
    /* Set up trails. */
    if (w->outfit->u.lau.trail_spec != NULL)

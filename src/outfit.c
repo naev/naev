@@ -603,10 +603,10 @@ int outfit_isSecondary( const Outfit* o )
  * @brief Gets the outfit's graphic effect.
  *    @param o Outfit to get information from.
  */
-const glTexture* outfit_gfx( const Outfit* o )
+const OutfitGFX* outfit_gfx( const Outfit* o )
 {
-   if (outfit_isBolt(o)) return o->u.blt.gfx.tex;
-   else if (outfit_isLauncher(o)) return o->u.lau.gfx.tex;
+   if (outfit_isBolt(o)) return &o->u.blt.gfx;
+   else if (outfit_isLauncher(o)) return &o->u.lau.gfx;
    return NULL;
 }
 /**
@@ -1270,6 +1270,7 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
    /* Load the collision polygon. */
    char *buf = xml_get(node);
    outfit_loadPLG( temp, buf );
+   gfx->size = (gfx->tex->sw + gfx->tex->sh)*0.5;
 
    /* Validity check: there must be 1 polygon per sprite. */
    if (array_size(gfx->polygon) != 36) {
