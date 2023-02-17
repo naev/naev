@@ -150,6 +150,8 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
       vec2 pos[2], double dt );
 static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
       vec2 pos[2], double dt );
+static int weapon_testCollision( const WeaponCollision *wc, const glTexture *ctex,
+   int csx, int csy, const vec2 *cpos, const CollPoly *cpol, vec2 crash[2] );
 /* think */
 static void think_seeker( Weapon* w, double dt );
 static void think_beam( Weapon* w, double dt );
@@ -960,8 +962,18 @@ static int weapon_checkCanHit( const Weapon* w, const Pilot *p )
 
 /**
  * @brief Tests to see if a weapon collides with a ship.
+ *
+ *    @param wc Weapon collision data.
+ *    @param ctex Collision target texture.
+ *    @param csx Collision target texture x sprite.
+ *    @param csy Collision target texture y sprite.
+ *    @param cpos Collision target pos.
+ *    @param cpol Collision target collision polygon (NULL if none).
+ *    @param[out] crash Crash location, which is only set if collision is detected.
+ * @return Number of collisions detected (0 to 2)
  */
-static int weapon_testCollision( WeaponCollision *wc, const glTexture *ctex, int csx, int csy, const vec2 *cpos, const CollPoly *cpol, vec2 crash[2] )
+static int weapon_testCollision( const WeaponCollision *wc, const glTexture *ctex,
+   int csx, int csy, const vec2 *cpos, const CollPoly *cpol, vec2 crash[2] )
 {
    const Weapon *w = wc->w;
    if (wc->beam) {
