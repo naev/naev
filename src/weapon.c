@@ -988,9 +988,9 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
       }
    }
    else {
-      if (cpol==NULL) {
+      if ((wc->polygon != NULL) && (cpol!=NULL)) {
          int k = ctex->sx * csy + csx;
-         return CollidePolygon( &cpol[k], cpos, wc->gfx->polygon, &w->solid->pos, crash );
+         return CollidePolygon( &cpol[k], cpos, wc->polygon, &w->solid->pos, crash );
       }
       else {
          return CollideSprite( wc->gfx->tex, w->sx, w->sy, &w->solid->pos,
