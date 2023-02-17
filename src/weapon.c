@@ -1053,7 +1053,7 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
 
       /* Test if hit. */
       if (!weapon_testCollision( &wc, p->ship->gfx_space, p->tsx, p->tsy,
-            &p->solid->pos, p->ship->polygon, &crash[0] ))
+            &p->solid->pos, p->ship->polygon, crash ))
          continue;
 
       /* Handle the hit. */
@@ -1062,7 +1062,7 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
          /* No return because beam can still think, it's not
          * destroyed like the other weapons.*/
       else {
-         weapon_hit( w, p, &crash[0] );
+         weapon_hit( w, p, crash );
          return; /* Weapon is destroyed. */
       }
    }
@@ -1090,12 +1090,12 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
          if ((wc.polygon!=NULL) && (a->polygon->npt!=0)) {
             CollPoly rpoly;
             RotatePolygon( &rpoly, a->polygon, (float) a->ang );
-            coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, &rpoly, &crash[0] );
+            coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, &rpoly, crash );
             free(rpoly.x);
             free(rpoly.y);
          }
          else
-            coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, NULL, &crash[0] );
+            coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, NULL, crash );
 
          /* Missed. */
          if (!coll)
