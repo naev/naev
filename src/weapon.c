@@ -998,7 +998,6 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
 {
    vec2 crash[2];
    WeaponCollision wc;
-   int usePolyW, usePoly;
    Pilot *const* pilot_stack = pilot_getAll();
 
    /* Get the sprite direction to speed up calculations. */
@@ -1011,11 +1010,6 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
       n = wc.gfx->tex->sx * w->sy + w->sx;
       plg = outfit_plg(w->outfit);
       wc.polygon = &plg[n];
-
-      /* See if the outfit has a collision polygon. */
-      if (array_size(wc.gfx->polygon) == 0)
-         usePolyW = 0;
-
       wc.range = 0.; /*< Not beam, so no range. */
    }
    else {
@@ -1045,11 +1039,6 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
 
       if (w->parent == pilot_stack[i]->id)
          continue; /* pilot is self */
-
-      /* See if the ship has a collision polygon. */
-      usePoly = usePolyW;
-      if (array_size(p->ship->polygon) == 0)
-         usePoly = 0;
 
       /* Smart weapons only collide with their target */
       if (weapon_isSmart(w)) {
@@ -1098,15 +1087,10 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
 
          /* In-range check with the actual asteroid. */
          /* This is advantageous because we are going to rotate the polygon afterwards. */
-         if (vec2_dist2( &w->solid->pos, &a->pos ) > pow2( wc.gfx->size ))
+         if (vec2_dist2( &w->solid->pos, &a->pos ) > pow2( wc.gfx->size + wc.range ))
             continue;
 
-         /* See if the asteroid has a collision polygon. */
-         usePoly = usePolyW;
-         if (a->polygon->npt == 0)
-            usePoly = 0;
-
-         if (usePoly) {
+         if ((wc.polygon!=NULL) && (a->polygon->npt!=0)) {
             CollPoly rpoly;
             RotatePolygon( &rpoly, a->polygon, (float) a->ang );
             coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, &rpoly, &crash[0] );
