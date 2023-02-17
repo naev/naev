@@ -1048,18 +1048,22 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
       }
 
       /* Check to see if it can hit. */
-      if (weapon_checkCanHit(w,p)) {
-         int coll = weapon_testCollision( &wc, p->ship->gfx_space, p->tsx, p->tsy, &p->solid->pos, p->ship->polygon, &crash[0] );
-         if (coll) {
-            if (wc.beam)
-               weapon_hitBeam( w, p, layer, crash, dt );
-               /* No return because beam can still think, it's not
-               * destroyed like the other weapons.*/
-            else {
-               weapon_hit( w, p, &crash[0] );
-               return; /* Weapon is destroyed. */
-            }
-         }
+      if (!weapon_checkCanHit(w,p))
+         continue;
+
+      /* Test if hit. */
+      if (!weapon_testCollision( &wc, p->ship->gfx_space, p->tsx, p->tsy,
+            &p->solid->pos, p->ship->polygon, &crash[0] ))
+         continue;
+
+      /* Handle the hit. */
+      if (wc.beam)
+         weapon_hitBeam( w, p, layer, crash, dt );
+         /* No return because beam can still think, it's not
+         * destroyed like the other weapons.*/
+      else {
+         weapon_hit( w, p, &crash[0] );
+         return; /* Weapon is destroyed. */
       }
    }
 
@@ -1093,13 +1097,16 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
          else
             coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, NULL, &crash[0] );
 
-         if (coll) {
-            if (wc.beam)
-               weapon_hitAstBeam( w, a, layer, crash, dt );
-            else {
-               weapon_hitAst( w, a, layer, crash );
-               return; /* Weapon is destroyed. */
-            }
+         /* Missed. */
+         if (!coll)
+            continue;
+
+         /* Handle the hit. */
+         if (wc.beam)
+            weapon_hitAstBeam( w, a, layer, crash, dt );
+         else {
+            weapon_hitAst( w, a, layer, crash );
+            return; /* Weapon is destroyed. */
          }
       }
    }
