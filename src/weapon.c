@@ -988,7 +988,7 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
       }
    }
    else {
-      if ((wc->polygon != NULL) && (cpol!=NULL)) {
+      if ((wc->polygon!=NULL) && (cpol!=NULL)) {
          int k = ctex->sx * csy + csx;
          return CollidePolygon( &cpol[k], cpos, wc->polygon, &w->solid->pos, crash );
       }
@@ -1013,6 +1013,7 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
    Pilot *const* pilot_stack = pilot_getAll();
 
    /* Get the sprite direction to speed up calculations. */
+   wc.w = w;
    wc.beam = outfit_isBeam(w->outfit);
    if (!wc.beam) {
       const CollPoly *plg;
@@ -1022,7 +1023,7 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
       n = wc.gfx->tex->sx * w->sy + w->sx;
       plg = outfit_plg(w->outfit);
       wc.polygon = &plg[n];
-      wc.range = 0.; /*< Not beam, so no range. */
+      wc.range = wc.gfx->size; /* Range is set to size in this case. */
    }
    else {
       Pilot *p = pilot_get( w->parent );
@@ -1039,6 +1040,8 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
          }
          w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
       }
+      wc.gfx = NULL;
+      wc.polygon = NULL;
       wc.range = w->outfit->u.bem.range; /* Set beam range. */
    }
 
@@ -1085,7 +1088,7 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
 
       /* Early in-range check with the asteroid field. */
       if (vec2_dist2( &w->solid->pos, &ast->pos ) >
-            pow2( ast->radius + ast->margin + wc.gfx->size + wc.range ))
+            pow2( ast->radius + ast->margin + wc.range ))
          continue;
 
       for (int j=0; j<ast->nb; j++) {
@@ -1096,7 +1099,7 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
 
          /* In-range check with the actual asteroid. */
          /* This is advantageous because we are going to rotate the polygon afterwards. */
-         if (vec2_dist2( &w->solid->pos, &a->pos ) > pow2( wc.gfx->size + wc.range ))
+         if (vec2_dist2( &w->solid->pos, &a->pos ) > pow2( wc.range ))
             continue;
 
          if ((wc.polygon!=NULL) && (a->polygon->npt!=0)) {
