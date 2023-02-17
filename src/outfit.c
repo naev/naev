@@ -99,6 +99,7 @@ static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent );
 static int outfit_loadPLG( Outfit *temp, const char *buf, unsigned int bolt );
+static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node );
 static void sdesc_miningRarity( int *l, Outfit *temp, int rarity );
 
 static int outfit_cmp( const void *p1, const void *p2 )
@@ -1218,6 +1219,68 @@ that can be found in Naev's artwork repo."), file);
 }
 
 /**
+ * @brief Loads the graphics for an outfit.
+ */
+static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
+{
+   char *type;
+
+   /* Comomn properties. */
+   xmlr_attr_float(node, "spin", temp->u.lau.spin);
+   if (temp->u.lau.spin != 0)
+      outfit_setProp( temp, OUTFIT_PROP_WEAP_SPIN );
+
+   /* Split by type. */
+   xmlr_attr_strd(node,"type",type);
+   if ((type != NULL) && (strcmp(type,"shader")==0)) {
+      OutfitShader *os = &temp->u.lau.gfx_shader;
+      char *vertex;
+
+      xmlr_attr_strd(node,"vertex",vertex);
+      if (vertex == NULL)
+         vertex = strdup("project.vert");
+      os->program   = gl_program_vert_frag( vertex, xml_get(node), NULL );
+      free( vertex );
+      os->vertex    = glGetAttribLocation(  os->program, "vertex" );
+      os->projection= glGetUniformLocation( os->program, "projection" );
+      os->dimensions= glGetUniformLocation( os->program, "dimensions" );
+      os->u_r       = glGetUniformLocation( os->program, "u_r" );
+      os->u_time    = glGetUniformLocation( os->program, "u_time" );
+
+      xmlr_attr_float_def(node,"size",os->size,-1.);
+      if (os->size < 0.)
+         WARN(_("Outfit '%s' has GFX shader but no 'size' set!"),temp->name);
+
+      xmlr_attr_float_def(node,"col_size",os->col_size,os->size*0.8);
+
+      free(type);
+      return 0;
+   }
+   else if (type != NULL) {
+      WARN(_("Outfit '%s' has unknown gfx type '%s'!"), temp->name, type);
+      free(type);
+      return -1;
+   }
+
+   /* Load normal graphics. */
+   temp->u.lau.gfx_space = xml_parseTexture( node,
+         OUTFIT_GFX_PATH"space/%s", 6, 6,
+         OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
+   /* Load the collision polygon. */
+   char *buf = xml_get(node);
+   outfit_loadPLG( temp, buf, 0 );
+
+   /* Validity check: there must be 1 polygon per sprite. */
+   if (array_size(temp->u.lau.polygon) != 36) {
+      WARN(_("Outfit '%s': the number of collision polygons is wrong.\n \
+               npolygon = %i and sx*sy = %i"),
+               temp->name, array_size(temp->u.lau.polygon), 36);
+   }
+
+   return 0;
+}
+
+/**
  * @brief Parses the specific area for a bolt weapon and loads it into Outfit.
  *
  *    @param temp Outfit to finish loading.
@@ -1628,22 +1691,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"energy",temp->u.lau.energy);
       xmlr_float(node,"ammo_mass",temp->u.lau.ammo_mass);
       if (xml_isNode(node,"gfx")) {
-         temp->u.lau.gfx_space = xml_parseTexture( node,
-               OUTFIT_GFX_PATH"space/%s", 6, 6,
-               OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
-         xmlr_attr_float(node, "spin", temp->u.lau.spin);
-         if (temp->u.lau.spin != 0)
-            outfit_setProp( temp, OUTFIT_PROP_WEAP_SPIN );
-         /* Load the collision polygon. */
-         char *buf = xml_get(node);
-         outfit_loadPLG( temp, buf, 0 );
-
-         /* Validity check: there must be 1 polygon per sprite. */
-         if (array_size(temp->u.lau.polygon) != 36) {
-            WARN(_("Outfit '%s': the number of collision polygons is wrong.\n \
-                    npolygon = %i and sx*sy = %i"),
-                    temp->name, array_size(temp->u.lau.polygon), 36);
-         }
+         outfit_loadGFX( temp, node );
          continue;
       }
       if (xml_isNode(node,"spfx_armour")) {

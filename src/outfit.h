@@ -106,6 +106,21 @@ typedef struct OutfitSlot_ {
 } OutfitSlot;
 
 /**
+ * @brief
+ */
+typedef struct OutfitShader_ {
+   GLuint program;      /**< Shader program. */
+   GLuint vertex;       /**< Vertex info. */
+   GLuint projection;   /**< Projection matrix. */
+   GLuint dimensions;   /**< Dimensions of the rendered object. */
+   GLuint u_r;          /**< Random value uniform. */
+   GLuint u_time;       /**< Elapsed time uniform. */
+   GLuint u_fade;       /**< Fade factor uniform. */
+   double size;         /**< Size to render at. */
+   double col_size;     /**< Size of the collision object. */
+} OutfitShader;
+
+/**
  * @brief Core damage that an outfit does.
  */
 typedef struct Damage_ {
@@ -214,6 +229,7 @@ typedef struct OutfitLauncherData_ {
    Damage dmg;       /**< Damage done. */
 
    glTexture* gfx_space; /**< Graphic. */
+   OutfitShader gfx_shader; /**< Shader graphic if applicable. */
    double spin;      /**< Graphic spin rate. */
    int sound;        /**< sound to play */
    int sound_hit;    /**< Sound to play on hit. */
