@@ -977,7 +977,7 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
 {
    const Weapon *w = wc->w;
    if (wc->beam) {
-      if ((wc->polygon!=NULL) && (cpol!=NULL)) {
+      if (cpol!=NULL) {
          int k = ctex->sx * csy + csx;
          return CollideLinePolygon( &w->solid->pos, w->solid->dir,
                wc->range, &cpol[k], cpos, crash);
