@@ -13,7 +13,7 @@
 \usepackage{hyperref}  % for hyperlinks
 \usepackage[a4paper,top=4.2cm,bottom=4.2cm,left=3.5cm,right=3.5cm]{geometry} % for setting page size and margins
 \usepackage{listings}
-\usepackage{xcolor}
+\usepackage[svgnames]{xcolor}
 \usepackage{booktabs}
 
 \makeatletter
@@ -57,6 +57,20 @@
 
 \lstdefinestyle{lua}{
    language=[5.1]Lua,
+}
+
+\lstdefinelanguage{XML}{
+  basicstyle=\ttfamily\footnotesize,
+  morestring=[b]",
+  moredelim=[s][\bfseries\color{Maroon}]{<}{\ },
+  moredelim=[s][\bfseries\color{Maroon}]{</}{>},
+  moredelim=[l][\bfseries\color{Maroon}]{/>},
+  moredelim=[l][\bfseries\color{Maroon}]{>},
+  morecomment=[s]{<?}{?>},
+  morecomment=[s]{<!--}{-->},
+  commentstyle=\color{DarkOliveGreen},
+  stringstyle=\color{blue},
+  identifierstyle=\color{red}
 }
 
 \newunicodechar{✔}{{\checkmark}}

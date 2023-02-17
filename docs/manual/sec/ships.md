@@ -85,57 +85,7 @@ Each ship is represented with a stand alone file that has to be located in `ship
 
 A full example of the \naev starter ship "Llama" is shown below.
 
-```xml
-<?xml version='1.0' encoding='UTF-8'?>
-<ship name="Llama">
- <points>20</points>
- <base_type>Llama</base_type>
- <GFX size="47">llama</GFX>
- <GUI>brushed</GUI>
- <sound>engine</sound>
- <class>Yacht</class>
- <price>120000</price>
- <time_mod>1</time_mod>
- <trail_generator x="-12" y="-16" h="-2">nebula</trail_generator>
- <trail_generator x="-12" y="16" h="-2">nebula</trail_generator>
- <trail_generator x="-12" y="-6" h="0">fire-thin</trail_generator>
- <trail_generator x="-12" y="0" h="0">fire-thin</trail_generator>
- <trail_generator x="-12" y="6" h="0">fire-thin</trail_generator>
- <fabricator>Melendez Corp.</fabricator>
- <description>One of the most widely used ships in the galaxy. Renowned for its stability and stubbornness. The design has not been modified much since its creation many, many cycles ago. It was one of the first civilian use spacecrafts, first used by aristocracy and now used by everyone who cannot afford better.</description>
- <characteristics>
-  <crew>2</crew>
-  <mass>80</mass>
-  <fuel_consumption>100</fuel_consumption>
-  <cargo>15</cargo>
- </characteristics>
- <slots>
-  <weapon size="small" x="7" y="0" h="1" />
-  <weapon size="small" x="-3" y="0" h="2" />
-  <utility size="small" prop="systems">Unicorp PT-16 Core System</utility>
-  <utility size="small" prop="accessory" />
-  <utility size="small" />
-  <utility size="small" />
-  <structure size="small" prop="engines">Nexus Dart 150 Engine</structure>
-  <structure size="small" prop="hull">Unicorp D-2 Light Plating</structure>
-  <structure size="small" />
-  <structure size="small" />
- </slots>
- <stats>
-  <armour>25<armour>
-  <speed_mod>-10</speed_mod>
-  <turn_mod>-10</turn_mod>
-  <cargo_mod>20</cargo_mod>
-  <armour_mod>10</armour_mod>
-  <cargo_inertia>-20</cargo_inertia>
-  <ew_hide>-10</ew_hide>
- </stats>
- <tags>
-  <tag>standard</tag>
-  <tag>transport</tag>
- </tags>
-</ship>
-```
+\lstinputlisting[language=XML]{../../dat/ships/neutral/llama.xml}
 
 ## Ship Graphics
 
