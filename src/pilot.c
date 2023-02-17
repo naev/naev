@@ -38,6 +38,7 @@
 #include "music.h"
 #include "nlua_pilotoutfit.h"
 #include "nlua_vec2.h"
+#include "nlua_outfit.h"
 #include "ndata.h"
 #include "nstring.h"
 #include "ntime.h"
