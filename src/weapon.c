@@ -1043,28 +1043,21 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
       /* Smart weapons only collide with their target */
       if (weapon_isSmart(w)) {
          int isjammed = ((w->status == WEAPON_STATUS_JAMMED) || (w->status == WEAPON_STATUS_JAMMED_SLOWED));
-         if ((((pilot_stack[i]->id == w->target) && !isjammed) || isjammed) &&
-               weapon_checkCanHit(w,p) ) {
-            int coll = weapon_testCollision( &wc, p->ship->gfx_space, p->tsx, p->tsy, &p->solid->pos, p->ship->polygon, &crash[0] );
-            if (coll) {
+         if (!isjammed && (pilot_stack[i]->id != w->target))
+            continue;
+      }
+
+      /* Check to see if it can hit. */
+      if (weapon_checkCanHit(w,p)) {
+         int coll = weapon_testCollision( &wc, p->ship->gfx_space, p->tsx, p->tsy, &p->solid->pos, p->ship->polygon, &crash[0] );
+         if (coll) {
+            if (wc.beam)
+               weapon_hitBeam( w, p, layer, crash, dt );
+               /* No return because beam can still think, it's not
+               * destroyed like the other weapons.*/
+            else {
                weapon_hit( w, p, &crash[0] );
                return; /* Weapon is destroyed. */
-            }
-         }
-      }
-      /* unguided weapons hit anything not of the same faction */
-      else {
-         if (weapon_checkCanHit(w,p)) {
-            int coll = weapon_testCollision( &wc, p->ship->gfx_space, p->tsx, p->tsy, &p->solid->pos, p->ship->polygon, &crash[0] );
-            if (coll) {
-               if (wc.beam)
-                  weapon_hitBeam( w, p, layer, crash, dt );
-                  /* No return because beam can still think, it's not
-                  * destroyed like the other weapons.*/
-               else {
-                  weapon_hit( w, p, &crash[0] );
-                  return; /* Weapon is destroyed. */
-               }
             }
          }
       }
