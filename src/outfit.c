@@ -1796,7 +1796,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing '%s' element"), temp->name, s) /**< Define to help check for data errors. */
    MELEMENT(temp->u.lau.delay==0.,"delay");
-   MELEMENT(temp->cpu==0.,"cpu");
+   //MELEMENT(temp->cpu==0.,"cpu");
    MELEMENT(temp->u.lau.amount==0.,"amount");
    MELEMENT(temp->u.lau.reload_time==0.,"reload_time");
    MELEMENT(temp->u.lau.ammo_mass==0.,"mass");
@@ -2317,6 +2317,10 @@ static int outfit_parse( Outfit* temp, const char* file )
                outfit_setProp(temp, OUTFIT_PROP_SHOOT_DRY);
                continue;
             }
+            if (xml_isNode(cur,"template")) {
+               outfit_setProp(temp, OUTFIT_PROP_TEMPLATE);
+               continue;
+            }
             else if (xml_isNode(cur,"gfx_store")) {
                temp->gfx_store = xml_parseTexture( cur,
                      OUTFIT_GFX_PATH"store/%s", 1, 1, OPENGL_TEX_MIPMAPS );
@@ -2492,13 +2496,15 @@ static int outfit_parse( Outfit* temp, const char* file )
 #define MELEMENT(o,s) \
 if (o) WARN( _("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
    MELEMENT(temp->name==NULL,"name");
-   MELEMENT(temp->slot.type==OUTFIT_SLOT_NULL,"slot");
-   MELEMENT((temp->slot.type!=OUTFIT_SLOT_NA) && (temp->slot.size==OUTFIT_SLOT_SIZE_NA),"size");
-   MELEMENT(temp->gfx_store==NULL,"gfx_store");
+   if (!outfit_isProp(temp,OUTFIT_PROP_TEMPLATE)) {
+      MELEMENT(temp->slot.type==OUTFIT_SLOT_NULL,"slot");
+      MELEMENT((temp->slot.type!=OUTFIT_SLOT_NA) && (temp->slot.size==OUTFIT_SLOT_SIZE_NA),"size");
+      MELEMENT(temp->gfx_store==NULL,"gfx_store");
+      MELEMENT(temp->desc_raw==NULL,"description");
+   }
    /*MELEMENT(temp->mass==0,"mass"); Not really needed */
    MELEMENT(temp->type==0,"type");
    /*MELEMENT(temp->price==0,"price");*/
-   MELEMENT(temp->desc_raw==NULL,"description");
    MELEMENT((temp->cond!=NULL) && (temp->condstr==NULL), "condstr");
    MELEMENT((temp->cond==NULL) && (temp->condstr!=NULL), "cond");
 #undef MELEMENT
@@ -2794,7 +2800,17 @@ void outfit_free (void)
       free( o->filename );
 
       /* Free graphics */
-      gl_freeTexture( (glTexture*) outfit_gfx(o)); /*< This is horrible and I should be ashamed. */
+      const OutfitGFX *gfx = outfit_gfx(o);
+      if (gfx != NULL) {
+         gl_freeTexture( gfx->tex );
+         gl_freeTexture( gfx->tex_end );
+         for (int j=0; j<array_size(gfx->polygon); j++) {
+            free(gfx->polygon[j].x);
+            free(gfx->polygon[j].y);
+         }
+         array_free(gfx->polygon);
+         glDeleteProgram(gfx->program);
+      }
 
       /* Free slot. */
       outfit_freeSlot( &o->slot );
@@ -2805,25 +2821,7 @@ void outfit_free (void)
       /* Free illegality. */
       array_free( o->illegalto );
 
-      if (outfit_isLauncher(o)) {
-         /* Free collision polygons. */
-         for (int j=0; j<array_size(o->u.lau.gfx.polygon); j++) {
-            free(o->u.lau.gfx.polygon[j].x);
-            free(o->u.lau.gfx.polygon[j].y);
-         }
-         array_free(o->u.lau.gfx.polygon);
-      }
-      /* Type specific. */
-      else if (outfit_isBolt(o)) {
-         gl_freeTexture(o->u.blt.gfx.tex_end);
-         /* Free collision polygons. */
-         for (int j=0; j<array_size(o->u.blt.gfx.polygon); j++) {
-            free(o->u.blt.gfx.polygon[j].x);
-            free(o->u.blt.gfx.polygon[j].y);
-         }
-         array_free(o->u.blt.gfx.polygon);
-      }
-      else if (outfit_isFighterBay(o))
+      if (outfit_isFighterBay(o))
          free(o->u.bay.ship);
       else if (outfit_isGUI(o))
          free(o->u.gui.gui);
