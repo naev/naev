@@ -806,7 +806,7 @@ static void weapon_renderBeam( Weapon* w, double dt )
 static void weapon_render( Weapon* w, double dt )
 {
    const OutfitGFX *gfx;
-   double x, y, z, r, st;
+   double x, y, st;
    glColour col, c = { .r=1., .g=1., .b=1. };
 
    /* Don't render destroyed weapons. */
@@ -818,6 +818,7 @@ static void weapon_render( Weapon* w, double dt )
       case OUTFIT_TYPE_LAUNCHER:
       case OUTFIT_TYPE_TURRET_LAUNCHER:
          if (w->status == WEAPON_STATUS_LOCKING) {
+            double r, z;
             z = cam_getZoom();
             gl_gameToScreenCoords( &x, &y, w->solid->pos.x, w->solid->pos.y );
             r = w->outfit->u.lau.gfx.size * z * 0.75; /* Assume square. */
@@ -877,6 +878,42 @@ static void weapon_render( Weapon* w, double dt )
                         w->solid->pos.x, w->solid->pos.y, w->sx, w->sy, &c );
                else
                   gl_renderSprite( tex, w->solid->pos.x, w->solid->pos.y, w->sx, w->sy, &c );
+            }
+            else {
+               double r, z;
+
+               /* Translate coords. */
+               z = cam_getZoom();
+               gl_gameToScreenCoords( &x, &y, w->solid->pos.x, w->solid->pos.y );
+
+               /* Scaled sprite dimensions. */
+               r = gfx->size*z;
+
+               /* Check if inbounds */
+               if ((x < -r) || (x > SCREEN_W+r) ||
+                     (y < -r) || (y > SCREEN_H+r))
+                  return;
+
+               glUseProgram( gfx->program );
+               glUniform2f( gfx->dimensions, r, r );
+               glUniform1f( gfx->u_r, 0. );
+               glUniform1f( gfx->u_time, w->life-w->timer );
+               glUniform1f( gfx->u_fade, 1.0 );
+
+               mat4 projection = gl_view_matrix;
+               mat4_translate( &projection, x, y, 0. );
+               mat4_rotate2d( &projection, w->solid->dir );
+               mat4_scale( &projection, r, r, 1. );
+               gl_uniformMat4(gfx->projection, &projection);
+
+               glEnableVertexAttribArray(gfx->vertex);
+               gl_vboActivateAttribOffset( gl_circleVBO, gfx->vertex, 0, 2, GL_FLOAT, 0 );
+
+               glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+               glDisableVertexAttribArray(gfx->vertex);
+               glUseProgram(0);
+               gl_checkErr();
             }
          }
          break;
@@ -1144,10 +1181,10 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
 
    /* smart weapons also get to think their next move */
    if (weapon_isSmart(w))
-      (*w->think)(w,dt);
+      (*w->think)( w, dt );
 
    /* Update the solid position. */
-   (*w->solid->update)(w->solid, dt);
+   (*w->solid->update)( w->solid, dt );
 
    /* Update the sound. */
    sound_updatePos(w->voice, w->solid->pos.x, w->solid->pos.y,
@@ -1674,10 +1711,8 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
    w->falloff = w->timer - outfit->u.blt.falloff / outfit->u.blt.speed;
    w->solid = solid_create( mass, rdir, pos, &v, SOLID_UPDATE_EULER );
    w->voice = sound_playPos( w->outfit->u.blt.sound,
-         w->solid->pos.x,
-         w->solid->pos.y,
-         w->solid->vel.x,
-         w->solid->vel.y);
+         w->solid->pos.x, w->solid->pos.y,
+         w->solid->vel.x, w->solid->vel.y );
 
    /* Set facing direction. */
    gfx = outfit_gfx( w->outfit );
@@ -1776,11 +1811,9 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
       w->status = WEAPON_STATUS_OK;
 
    /* Play sound. */
-   w->voice    = sound_playPos(w->outfit->u.lau.sound,
-         w->solid->pos.x,
-         w->solid->pos.y,
-         w->solid->vel.x,
-         w->solid->vel.y);
+   w->voice = sound_playPos( w->outfit->u.lau.sound,
+         w->solid->pos.x, w->solid->pos.y,
+         w->solid->vel.x, w->solid->vel.y );
 
    /* Set facing direction. */
    gfx = outfit_gfx( w->outfit );

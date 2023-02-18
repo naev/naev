@@ -10,7 +10,7 @@
   <iflockon>0.3</iflockon>
   <arc>10</arc>
   <trackmin>0</trackmin>
-  <trackmax>1</trackmax>
+  <trackmax>1000</trackmax>
   <ammo_mass>1</ammo_mass>
   <gfx type="shader" size="20" col_size="14">particles/chakra.frag</gfx>
   <sound>missile</sound>
