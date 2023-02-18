@@ -28,7 +28,7 @@ function create ()
 {jumps}]]),
       {spob=mem.dest_spob, sys=mem.dest_sys,
          jumps=fmt.f( n_( "#nJumps:#0 {jumps}", "#nJumps:#0 {jumps}", numjumps ), {jumps=numjumps} )}))
-   misn.setReward( fmt.credits(mem.reward).." per tonne of refugees" )
+   misn.setReward( fmt.f(_("{credits} per tonne of refugees"), {credits=fmt.credits(mem.reward)}) )
    misn.markerAdd( mem.dest_spob, "computer" )
 end
 
@@ -48,7 +48,7 @@ function accept ()
    misn.setReward( fmt.credits(mem.reward*mem.amount) )
 
    misn.osdCreate( _("Refugee Evacuation"), {
-      fmt.f(_("Take the refugees to {spob} ({sys} system"),
+      fmt.f(_("Take the refugees to {spob} ({sys} system)"),
          {spob=mem.dest_spob, sys=mem.dest_sys}),
    } )
 
