@@ -997,7 +997,7 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
          return CollidePolygon( &cpol[k], cpos, wc->polygon, &w->solid->pos, crash );
       }
       /* Case texture on texture collision. */
-      else if (wc->gfx!=NULL) {
+      else if (wc->gfx->tex!=NULL) {
          return CollideSprite( wc->gfx->tex, w->sx, w->sy, &w->solid->pos,
                   ctex, csx, csy, cpos, crash );
       }
@@ -1118,7 +1118,7 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
          if (vec2_dist2( &w->solid->pos, &a->pos ) > pow2( wc.range ))
             continue;
 
-         if ((wc.polygon!=NULL) && (a->polygon->npt!=0)) {
+         if (a->polygon->npt!=0) {
             CollPoly rpoly;
             RotatePolygon( &rpoly, a->polygon, (float) a->ang );
             coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, &rpoly, crash );
