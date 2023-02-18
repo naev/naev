@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Seeking Chakra Small">
+ <general>
+  <template/>
+ </general>
+ <specific type="launcher">
+  <delay>1.5</delay>
+  <reload_time>35</reload_time>
+  <amount>30</amount>
+  <lockon>0.5</lockon>
+  <iflockon>0.8</iflockon>
+  <arc>10</arc>
+  <trackmin>0</trackmin>
+  <trackmax>10000</trackmax>
+  <ammo_mass>0.5</ammo_mass>
+  <gfx type="shader" size="20" col_size="14">particles/chakra.frag</gfx>
+  <sound>missile</sound>
+  <sound_hit>bansheeexp</sound_hit>
+  <spfx_shield>ExpS</spfx_shield>
+  <spfx_armour>ExpM</spfx_armour>
+  <trail_generator x="-7">siriusS</trail_generator>
+  <duration blowup="armour">2</duration>
+  <thrust>900</thrust>
+  <turn>5</turn>
+  <speed_max>1200</speed_max>
+  <resist>35</resist>
+  <damage>
+   <type>ion</type>
+   <penetrate>42</penetrate>
+   <physical>40</physical>
+   <disable>5</disable>
+  </damage>
+  <ai>smart</ai>
+ </specific>
+</outfit>
