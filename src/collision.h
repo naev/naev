@@ -35,6 +35,8 @@ int CollideLineLine( double s1x, double s1y, double e1x, double e1y,
 int CollideLineSprite( const vec2* ap, double ad, double al,
       const glTexture* bt, const int bsx, const int bsy, const vec2* bp,
       vec2 crash[2]);
+int CollideCirclePolygon( const vec2* ap, double ar,
+      const CollPoly* bt, const vec2* bp, vec2 crash[2] );
 int CollideLinePolygon( const vec2* ap, double ad, double al,
       const CollPoly* bt, const vec2* bp, vec2 crash[2] );
 int CollideSpritePolygon( const CollPoly* at, const vec2* ap,

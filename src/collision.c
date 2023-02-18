@@ -18,7 +18,7 @@
 /*
  * Prototypes
  */
-static int pointInPolygon( const CollPoly* at, const vec2* ap,
+static int PointInPolygon( const CollPoly* at, const vec2* ap,
       float x, float y );
 static int LineOnPolygon( const CollPoly* at, const vec2* ap,
       float x1, float y1, float x2, float y2, vec2* crash );
@@ -227,7 +227,7 @@ int CollideSpritePolygon( const CollPoly* at, const vec2* ap,
       for (x=inter_x0; x<=inter_x1; x++) {
          /* compute offsets for surface before pass to TransparentPixel test */
          if ((!gl_isTrans(bt, bbx + x, bby + y))) {
-            if (pointInPolygon( at, ap, (float)x, (float)y )) {
+            if (PointInPolygon( at, ap, (float)x, (float)y )) {
                crash->x = x;
                crash->y = y;
                return 1;
@@ -288,7 +288,7 @@ int CollidePolygon( const CollPoly* at, const vec2* ap,
 
       if ((xabs<inter_x0) || (xabs>inter_x1) ||
           (yabs<inter_y0) || (yabs>inter_y1)) {
-         if (pointInPolygon( at, ap, xabs, yabs )) {
+         if (PointInPolygon( at, ap, xabs, yabs )) {
             crash->x = (int)xabs;
             crash->y = (int)yabs;
             return 1;
@@ -359,7 +359,7 @@ void RotatePolygon( CollPoly* rpolygon, CollPoly* ipolygon, float theta )
  *    @param[in] y Coordinate of point.
  *    @return 1 on collision, 0 else.
  */
-int pointInPolygon( const CollPoly* at, const vec2* ap,
+int PointInPolygon( const CollPoly* at, const vec2* ap,
       float x, float y )
 {
    float vprod, sprod, angle;
@@ -663,14 +663,14 @@ int CollideLinePolygon( const vec2* ap, double ad, double al,
    vectnull( &tmp_crash );
 
    /* Check if the beginning point is inside polygon */
-   if (pointInPolygon( bt, bp, (float) ap->x, (float) ap->y )) {
+   if (PointInPolygon( bt, bp, (float) ap->x, (float) ap->y )) {
       crash[real_hits].x = ap->x;
       crash[real_hits].y = ap->y;
       real_hits++;
    }
 
    /* same thing for end point */
-   if (pointInPolygon( bt, bp, (float) ep[0], (float) ep[1] )) {
+   if (PointInPolygon( bt, bp, (float) ep[0], (float) ep[1] )) {
       crash[real_hits].x = ep[0];
       crash[real_hits].y = ep[1];
       real_hits++;
@@ -699,17 +699,17 @@ int CollideLinePolygon( const vec2* ap, double ad, double al,
          hits++;
 
       /* Top border. */
-      if (CollideLineLine(ap->x, ap->y, ep[0], ep[1],
+      if (!hits && CollideLineLine(ap->x, ap->y, ep[0], ep[1],
             bl[0], tr[1], tr[0], tr[1], &tmp_crash) == 1)
          hits++;
 
       /* Right border. */
-      if (CollideLineLine(ap->x, ap->y, ep[0], ep[1],
+      if (!hits && CollideLineLine(ap->x, ap->y, ep[0], ep[1],
             tr[0], tr[1], tr[0], bl[1], &tmp_crash) == 1)
          hits++;
 
       /* Bottom border. */
-      if ((hits < 2) && CollideLineLine(ap->x, ap->y, ep[0], ep[1],
+      if (!hits && CollideLineLine(ap->x, ap->y, ep[0], ep[1],
             tr[0], bl[1], bl[0], bl[1], &tmp_crash) == 1)
          hits++;
 
@@ -742,6 +742,87 @@ int CollideLinePolygon( const vec2* ap, double ad, double al,
            xi, yi, xip, yip, &tmp_crash) ) {
          crash[real_hits].x = tmp_crash.x;
          crash[real_hits].y = tmp_crash.y;
+         real_hits++;
+         if (real_hits == 2)
+            return 1;
+      }
+   }
+
+   /* Actually missed. */
+   if (real_hits == 0)
+      return 0;
+
+   /* Strange situation, should never happen but just in case we duplicate
+    *  the hit. */
+   if (real_hits == 1) {
+      crash[1].x = crash[0].x;
+      crash[1].y = crash[0].y;
+   }
+
+   /* We hit. */
+   return 1;
+}
+
+/**
+ * @brief Checks to see if a circle collides with a polygon.
+ *
+ * First collisions are detected on all the walls of the polygon's rectangle.
+ *  Then the collisions are tested on every line of the polygon.
+ *
+ *    @param[in] ap Origin of the circle.
+ *    @param[in] ar Radius of the circle.
+ *    @param[in] bt Polygon b.
+ *    @param[in] bp Position in space of polygon b.
+ *    @param[out] crash Position of the collision.
+ *    @return 1 on collision, 0 else.
+ *
+ * @sa CollideCirclePolygon
+ */
+int CollideCirclePolygon( const vec2* ap, double ar,
+      const CollPoly* bt, const vec2* bp, vec2 crash[2] )
+{
+	vec2 p1, p2;
+   int real_hits;
+   vec2 tmp_crash[2];
+
+   real_hits = 0;
+   vectnull( &tmp_crash[0] );
+   vectnull( &tmp_crash[1] );
+
+   /* Set up top right corner of the rectangle. */
+   p1.x = bp->x + (double)bt->xmax;
+   p1.y = bp->y + (double)bt->ymax;
+   /* Set up bottom left corner of the rectangle. */
+   p2.x = bp->x + (double)bt->xmin;
+   p2.y = bp->y + (double)bt->ymin;
+
+   /* Start check for rectangular collisions. */
+   if ((ap->x-ar > p1.x) && (ap->x+ar < p2.x) &&
+         (ap->y-ar > p1.y) && (ap->y+ar < p2.y))
+      return 0;
+
+   /*
+    * Now we check any line of the polygon
+    */
+   p1.x = (double)bt->x[bt->npt-1] + bp->x;
+   p2.x = (double)bt->x[0]         + bp->x;
+   p1.y = (double)bt->y[bt->npt-1] + bp->y;
+   p2.y = (double)bt->y[0]         + bp->y;
+   if (CollideLineCircle( &p1, &p2, ap, ar, tmp_crash )) {
+      crash[real_hits].x = tmp_crash[0].x;
+      crash[real_hits].y = tmp_crash[0].y;
+      real_hits++;
+      if (real_hits == 2)
+         return 1;
+   }
+   for (int i=0; i<=bt->npt-2; i++) {
+      p1.x = (double)bt->x[i]   + bp->x;
+      p2.x = (double)bt->x[i+1] + bp->x;
+      p1.y = (double)bt->y[i]   + bp->y;
+      p2.y = (double)bt->y[i+1] + bp->y;
+		if (CollideLineCircle( &p1, &p2, ap, ar, tmp_crash )) {
+         crash[real_hits].x = tmp_crash[0].x;
+         crash[real_hits].y = tmp_crash[0].y;
          real_hits++;
          if (real_hits == 2)
             return 1;
