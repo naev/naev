@@ -317,7 +317,7 @@ function jumpin()
                {"Pirate Ancestor", "Pirate Hyena", "Pirate Hyena"},
                {"Pirate Ancestor", "Pirate Vendetta", "Pirate Hyena", "Pirate Hyena"}
             }
-            ambush = fleet.add( 1,  ambush_ships[3 - mem.jp2go], "Shadow_pirates", vec2.new(0, 0), _("Pirate Attacker"), {ai="baddie_norun"} )
+            ambush = fleet.add( 1,  ambush_ships[3 - mem.jp2go], shadow.fct_pirates(), vec2.new(0, 0), _("Pirate Attacker"), {ai="baddie_norun"} )
             mem.kills = 0
             for i, j in ipairs(ambush) do
                if j:exists() then
