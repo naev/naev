@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-02-17 15:46-0500\n"
+"POT-Creation-Date: 2023-02-18 08:59-0500\n"
 "PO-Revision-Date: 2022-04-08 09:11+0000\n"
 "Last-Translator: 이정희 <daemul72@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/naev/naev/ko/>\n"
@@ -71890,6 +71890,10 @@ msgid ""
 "{jumps}"
 msgstr ""
 
+#: dat/missions/neutral/new_europe_refugees.lua:31
+msgid "{credits} per tonne of refugees"
+msgstr ""
+
 #: dat/missions/neutral/new_europe_refugees.lua:38
 #, fuzzy
 #| msgid "You don't have enough credits to pay for this pilot's deposit."
@@ -71912,7 +71916,7 @@ msgstr ""
 #: dat/missions/neutral/new_europe_refugees.lua:51
 #, fuzzy
 #| msgid "Frontier systems"
-msgid "Take the refugees to {spob} ({sys} system"
+msgid "Take the refugees to {spob} ({sys} system)"
 msgstr "프론티어 시스템"
 
 #: dat/missions/neutral/new_europe_refugees.lua:55

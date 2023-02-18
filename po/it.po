@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-02-17 15:46-0500\n"
+"POT-Creation-Date: 2023-02-18 08:59-0500\n"
 "PO-Revision-Date: 2023-01-17 21:49+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
@@ -70971,6 +70971,10 @@ msgid ""
 "{jumps}"
 msgstr ""
 
+#: dat/missions/neutral/new_europe_refugees.lua:31
+msgid "{credits} per tonne of refugees"
+msgstr ""
+
 #: dat/missions/neutral/new_europe_refugees.lua:38
 msgid "You don't have enough room on your ship to take any refugees!"
 msgstr ""
@@ -70987,7 +70991,7 @@ msgid "A bunch of poor and ragged looking refugees looking for a better life."
 msgstr ""
 
 #: dat/missions/neutral/new_europe_refugees.lua:51
-msgid "Take the refugees to {spob} ({sys} system"
+msgid "Take the refugees to {spob} ({sys} system)"
 msgstr ""
 
 #: dat/missions/neutral/new_europe_refugees.lua:55

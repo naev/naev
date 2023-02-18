@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-02-17 15:46-0500\n"
+"POT-Creation-Date: 2023-02-18 08:59-0500\n"
 "PO-Revision-Date: 2023-01-31 23:56+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Portugal) <https://hosted.weblate.org/projects/"
@@ -73254,6 +73254,12 @@ msgid ""
 "{jumps}"
 msgstr ""
 
+#: dat/missions/neutral/new_europe_refugees.lua:31
+#, fuzzy
+#| msgid "{credits} per tonne"
+msgid "{credits} per tonne of refugees"
+msgstr "{credits} por tonelada"
+
 #: dat/missions/neutral/new_europe_refugees.lua:38
 #, fuzzy
 #| msgid "You don't have enough money."
@@ -73276,7 +73282,7 @@ msgstr ""
 #: dat/missions/neutral/new_europe_refugees.lua:51
 #, fuzzy
 #| msgid "Take Zach to {pnt} ({sys} system)"
-msgid "Take the refugees to {spob} ({sys} system"
+msgid "Take the refugees to {spob} ({sys} system)"
 msgstr "Leva Zach ao sistema {pnt} ({sys})"
 
 #: dat/missions/neutral/new_europe_refugees.lua:55
