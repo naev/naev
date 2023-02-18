@@ -973,7 +973,7 @@ static int weapon_checkCanHit( const Weapon* w, const Pilot *p )
  *    @param cpos Collision target pos.
  *    @param cpol Collision target collision polygon (NULL if none).
  *    @param[out] crash Crash location, which is only set if collision is detected.
- * @return Number of collisions detected (0 to 2)
+ *    @return Number of collisions detected (0 to 2)
  */
 static int weapon_testCollision( const WeaponCollision *wc, const glTexture *ctex,
    int csx, int csy, const vec2 *cpos, const CollPoly *cpol, vec2 crash[2] )
@@ -991,14 +991,21 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
       }
    }
    else {
+      /* Case full polygon on polygon collision. */
       if ((wc->polygon!=NULL) && (cpol!=NULL)) {
          int k = ctex->sx * csy + csx;
          return CollidePolygon( &cpol[k], cpos, wc->polygon, &w->solid->pos, crash );
       }
-      else {
+      /* Case texture on texture collision. */
+      else if (wc->gfx!=NULL) {
          return CollideSprite( wc->gfx->tex, w->sx, w->sy, &w->solid->pos,
                   ctex, csx, csy, cpos, crash );
       }
+      /* Fallback using simple spherical collision. */
+      else {
+         return CollideCirclePolygon( &w->solid->pos, wc->range, cpol, cpos, crash );
+      }
+      /* TODO case no polygon and circle collision. */
    }
 }
 
@@ -1022,11 +1029,17 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
       const CollPoly *plg;
       int n;
       wc.gfx = outfit_gfx(w->outfit);
-      gl_getSpriteFromDir( &w->sx, &w->sy, wc.gfx->tex, w->solid->dir );
-      n = wc.gfx->tex->sx * w->sy + w->sx;
-      plg = outfit_plg(w->outfit);
-      wc.polygon = &plg[n];
-      wc.range = wc.gfx->size; /* Range is set to size in this case. */
+      if (wc.gfx->tex != NULL) {
+         gl_getSpriteFromDir( &w->sx, &w->sy, wc.gfx->tex, w->solid->dir );
+         n = wc.gfx->tex->sx * w->sy + w->sx;
+         plg = outfit_plg(w->outfit);
+         wc.polygon = &plg[n];
+         wc.range = wc.gfx->size; /* Range is set to size in this case. */
+      }
+      else {
+         wc.polygon = NULL;
+         wc.range = wc.gfx->col_size;
+      }
    }
    else {
       Pilot *p = pilot_get( w->parent );
