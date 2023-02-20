@@ -896,7 +896,7 @@ static void weapon_render( Weapon* w, double dt )
 
                glUseProgram( gfx->program );
                glUniform2f( gfx->dimensions, r, r );
-               glUniform1f( gfx->u_r, 0. );
+               glUniform1f( gfx->u_r, w->r );
                glUniform1f( gfx->u_time, w->life-w->timer );
                glUniform1f( gfx->u_fade, 1.0 );
 
@@ -1862,6 +1862,7 @@ static Weapon* weapon_create( PilotOutfitSlot* po, const Outfit *ref,
    w->outfit   = outfit; /* non-changeable */
    w->update   = weapon_update;
    w->strength = 1.;
+   w->r        = RNGF(); /* Set unique value. */
 
    /* Inform the target. */
    if (!(outfit_isBeam(w->outfit))) {
@@ -1898,7 +1899,6 @@ static Weapon* weapon_create( PilotOutfitSlot* po, const Outfit *ref,
          else if (rdir >= 2.*M_PI)
             rdir -= 2.*M_PI;
          mass = 1.; /**< Needs a mass. */
-         w->r     = RNGF(); /* Set unique value. */
          solid_init( &w->solid, mass, rdir, pos, vel, SOLID_UPDATE_EULER );
          w->think = think_beam;
          w->timer = outfit->u.bem.duration;
