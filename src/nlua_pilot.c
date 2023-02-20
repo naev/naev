@@ -3527,6 +3527,16 @@ static int pilotL_effectGet( lua_State *L )
       lua_pushtex(L,gl_dupTexture(e->data->icon));
       lua_setfield(L,-2,"icon");
 
+      if (e->data->flags & EFFECT_BUFF) {
+         lua_pushboolean(L,1);
+         lua_setfield(L,-2,"buff");
+      }
+
+      if (e->data->flags & EFFECT_DEBUFF) {
+         lua_pushboolean(L,1);
+         lua_setfield(L,-2,"debuff");
+      }
+
       lua_rawseti(L,-2,i+1);
    }
    return 1;
