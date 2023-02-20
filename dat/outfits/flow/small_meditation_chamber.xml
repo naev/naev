@@ -8,7 +8,7 @@
   <price>50000</price>
   <gfx_store>placeholder.webp</gfx_store>
   <description>TODO</description>
-  <desc_extra>TODO</desc_extra>
+  <desc_extra>Provides 50 maximum flow capacity</desc_extra>
  </general>
  <specific type="modification">
  </specific>

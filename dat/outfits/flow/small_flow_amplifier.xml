@@ -9,7 +9,7 @@
   <gfx_store>placeholder.webp</gfx_store>
   <limit>flow_amplifier</limit>
   <description>TODO</description>
-  <desc_extra>TODO</desc_extra>
+  <desc_extra>Provides 50 maximum flow capacity and allows a ship to use flow</desc_extra>
  </general>
  <specific type="modification">
   <lua>outfits/flow/flow_amplifier.lua</lua>
