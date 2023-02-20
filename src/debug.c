@@ -184,6 +184,28 @@ static void debug_sigHandler( int sig )
    /* Always exit. */
    exit(1);
 }
+
+#if HAVE_SIGACTION
+static void debug_sigHandlerWarn( int sig, siginfo_t *info, void *unused )
+#else /* HAVE_SIGACTION */
+static void debug_sigHandlerWarn( int sig )
+#endif /* HAVE_SIGACTION */
+{
+   (void) sig;
+#if HAVE_SIGACTION
+   (void) unused;
+#endif /* HAVE_SIGACTION */
+
+   WARN( _("Naev received %s!"),
+#if HAVE_SIGACTION
+         debug_sigCodeToStr( info->si_signo, info->si_code )
+#else /* HAVE_SIGACTION */
+         debug_sigCodeToStr( sig, 0 )
+#endif /* HAVE_SIGACTION */
+	);
+
+   debug_logBacktrace();
+}
 #endif /* DEBUGGING */
 
 /**
@@ -209,16 +231,18 @@ void debug_sigInit (void)
    sigaction(SIGSEGV, &sa, &so);
    if (so.sa_handler == SIG_IGN)
       DEBUG( str, "SIGSEGV" );
-   sigaction(SIGFPE, &sa, &so);
-   if (so.sa_handler == SIG_IGN)
-      DEBUG( str, "SIGFPE" );
    sigaction(SIGABRT, &sa, &so);
    if (so.sa_handler == SIG_IGN)
       DEBUG( str, "SIGABRT" );
+
+   sa.sa_sigaction = debug_sigHandlerWarn;
+   sigaction(SIGFPE, &sa, &so);
+   if (so.sa_handler == SIG_IGN)
+      DEBUG( str, "SIGFPE" );
 #else /* HAVE_SIGACTION */
    signal( SIGSEGV, debug_sigHandler );
-   signal( SIGFPE,  debug_sigHandler );
    signal( SIGABRT, debug_sigHandler );
+   signal( SIGFPE,  debug_sigHandlerWarn );
 #endif /* HAVE_SIGACTION */
 #endif /* DEBUGGING */
 }
@@ -231,8 +255,8 @@ void debug_sigClose (void)
 {
 #if DEBUGGING
    signal( SIGSEGV, SIG_DFL );
-   signal( SIGFPE,  SIG_DFL );
    signal( SIGABRT, SIG_DFL );
+   signal( SIGFPE,  SIG_DFL );
 #endif /* DEBUGGING */
 }
 
