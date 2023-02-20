@@ -436,7 +436,7 @@ function update_effects()
       if not a then
          a = #effects+1
          effects[ a ] = e
-         e.n = 1
+         e.n = 0
          effects_added[ e.name ] = a
       end
       effects[ a ].n = effects[ a ].n + 1
