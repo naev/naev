@@ -58,33 +58,33 @@ typedef enum WeaponStatus_ {
  * @brief In-game representation of a weapon.
  */
 typedef struct Weapon_ {
-   unsigned int flags; /**< Weapno flags. */
-   Solid *solid; /**< Actually has its own solid :) */
-   unsigned int ID; /**< Only used for beam weapons. */
+   unsigned int flags;  /**< Weapno flags. */
+   Solid solid;         /**< Actually has its own solid :) */
+   unsigned int ID;     /**< Only used for beam weapons. */
 
-   int faction; /**< faction of pilot that shot it */
+   int faction;         /**< faction of pilot that shot it */
    unsigned int parent; /**< pilot that shot it */
    unsigned int target; /**< target to hit, only used by seeking things */
    const Outfit* outfit; /**< related outfit that fired it or whatnot */
 
-   double real_vel; /**< Keeps track of the real velocity. */
-   double dam_mod; /**< Damage modifier. */
+   double real_vel;     /**< Keeps track of the real velocity. */
+   double dam_mod;      /**< Damage modifier. */
    double dam_as_dis_mod; /**< Damage as disable modifier. */
-   int voice; /**< Weapon's voice. */
-   double timer2; /**< Explosion timer for beams, and lockon for ammo. */
-   double paramf; /**< Arbitrary parameter for outfits. */
-   double life; /**< Total life. */
-   double timer; /**< mainly used to see when the weapon was fired */
-   double anim; /**< Used for beam weapon graphics and others. */
-   GLfloat r; /**< Unique random value . */
-   int sprite; /**< Used for spinning outfits. */
+   int voice;           /**< Weapon's voice. */
+   double timer2;       /**< Explosion timer for beams, and lockon for ammo. */
+   double paramf;       /**< Arbitrary parameter for outfits. */
+   double life;         /**< Total life. */
+   double timer;        /**< mainly used to see when the weapon was fired */
+   double anim;         /**< Used for beam weapon graphics and others. */
+   GLfloat r;           /**< Unique random value . */
+   int sprite;          /**< Used for spinning outfits. */
    PilotOutfitSlot *mount; /**< Used for beam weapons. */
-   int lua_mem; /**< Mem table, in case of a Pilot Outfit. */
-   double falloff; /**< Point at which damage falls off. Used to determine slowdown for smart seekers.  */
-   double strength; /**< Calculated with falloff. */
-   int sx; /**< Current X sprite to use. */
-   int sy; /**< Current Y sprite to use. */
-   Trail_spfx *trail; /**< Trail graphic if applicable, else NULL. */
+   int lua_mem;         /**< Mem table, in case of a Pilot Outfit. */
+   double falloff;      /**< Point at which damage falls off. Used to determine slowdown for smart seekers.  */
+   double strength;     /**< Calculated with falloff. */
+   int sx;              /**< Current X sprite to use. */
+   int sy;              /**< Current Y sprite to use. */
+   Trail_spfx *trail;   /**< Trail graphic if applicable, else NULL. */
 
    /* position update and render */
    void (*update)(struct Weapon_*, double, WeaponLayer); /**< Updates the weapon */
