@@ -232,9 +232,22 @@ int nlua_dobufenv( nlua_env env,
                    const char *name )
 {
    int ret;
+
+#if DEBUGGING
+   /* We don't really want to do this, but Lua seems to trigger all sorts of
+    * FPE exceptions on a daily basis.
+    * TODO get rid of if possible. */
+   if (conf.fpu_except)
+      debug_disableFPUExcept();
+#endif /* DEBUGGING */
    ret = luaL_loadbuffer(naevL, buff, sz, name);
    if (ret != 0)
       return ret;
+#if DEBUGGING
+   if (conf.fpu_except)
+      debug_enableFPUExcept();
+#endif /* DEBUGGING */
+
    nlua_pushenv(naevL, env);
    lua_setfenv(naevL, -2);
    ret = nlua_pcall(env, 0, LUA_MULTRET);
@@ -830,6 +843,9 @@ int nlua_pcall( nlua_env env, int nargs, int nresults )
    lua_pushcfunction(naevL, nlua_errTrace);
    lua_insert(naevL, errf);
 
+   /* We don't really want to do this, but Lua seems to trigger all sorts of
+    * FPE exceptions on a daily basis.
+    * TODO get rid of if possible. */
    if (conf.fpu_except)
       debug_disableFPUExcept();
 #else /* DEBUGGING */
