@@ -7,6 +7,9 @@
 #include "shipstats.h"
 #include "rng.h"
 
+#define EFFECT_BUFF     (1<<0)   /**< Effect is a buff. */
+#define EFFECT_DEBUFF   (1<<1)   /**< Effect is a debuff. */
+
 /**
  * @brief Pilot ship effect data.
  */
@@ -16,6 +19,7 @@ typedef struct EffectData_ {
    char *overwrite;     /**< Common string to overwrite when adding. */
    int priority;        /**< Priority of the effect when overwriting. Lower is more important. */
    double duration;     /**< Max duration of the effect. */
+   unsigned int flags;  /**< Flags. */
    ShipStatList *stats; /**< Actual effect. */
    /* Visuals. */
    glTexture *icon;     /**< Effect icon texture. */
@@ -61,6 +65,7 @@ const EffectData *effect_get( const char *name );
 int effect_update( Effect **efxlist, double dt );
 int effect_add( Effect **efxlist, const EffectData *efx, double duration, double scale, unsigned int parent );
 int effect_rm( Effect **efxlist, const EffectData *efx, int all );
+void effect_clearSpecific( Effect **efxlist, int debuffs, int buffs, int others );
 void effect_clear( Effect **efxlist );
 void effect_compute( ShipStats *s, const Effect *efxlist );
 void effect_cleanup( Effect *efxlist );

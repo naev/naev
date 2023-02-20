@@ -4,6 +4,7 @@
  <duration>7.5</duration>
  <overwrite>paralyzing_plasma</overwrite>
  <icon>/gfx/misc/icons/chemical-bolt.webp</icon>
+ <debuff/>
  <stats>
   <turn_mod>-25</turn_mod>
   <speed_mod>-25</speed_mod>

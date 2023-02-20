@@ -5,6 +5,7 @@
  <overwrite>shields</overwrite>
  <icon>/gfx/misc/icons/shieldcomb.webp</icon>
  <!--<shader vertex="effect15x.vert">effects/shieldboost.frag</shader>-->
+ <buff/>
  <stats>
   <shield_regen_mod>30</shield_regen_mod>
  </stats>

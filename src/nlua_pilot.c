@@ -3433,12 +3433,21 @@ static int pilotL_intrinsicGet( lua_State *L )
  * @brief Clears the effect on a pilot.
  *
  *    @luatparam Pilot p Pilot to clear effects of.
+ *    @luatparam boolean keepdebuffs Whether or not to keep debuffs.
+ *    @luatparam boolean keepbuffs Whether or not to keep buffs.
+ *    @luatparam boolean keepothers Whether or not to keep others.
  * @luafunc effectClear
  */
 static int pilotL_effectClear( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
-   effect_clear( &p->effects );
+   int keepdebuffs = lua_toboolean(L,2);
+   int keepbuffs = lua_toboolean(L,3);
+   int keepothers = lua_toboolean(L,4);
+   if (!keepdebuffs && !keepbuffs && !keepothers)
+      effect_clear( &p->effects );
+   else
+      effect_clearSpecific( &p->effects, !keepdebuffs, !keepbuffs, !keepothers );
    pilot_calcStats( p );
    return 0;
 }

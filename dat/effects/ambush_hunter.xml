@@ -4,6 +4,7 @@
  <duration>10</duration>
  <icon>/gfx/misc/icons/hidden.webp</icon>
  <overwrite>ambush_hunter</overwrite>
+ <buff/>
  <stats>
   <fwd_damage>50</fwd_damage>
   <tur_damage>50</tur_damage>

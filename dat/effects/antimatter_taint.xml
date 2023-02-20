@@ -5,6 +5,7 @@
  <overwrite>antimatter_taint</overwrite>
  <icon>/gfx/misc/icons/star-cycle.webp</icon>
  <shader>effects/antimatter_taint.frag</shader>
+ <debuff/>
  <stats>
   <time_speedup>-10</time_speedup>
  </stats>

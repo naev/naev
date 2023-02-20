@@ -80,6 +80,14 @@ static int effect_parse( EffectData *efx, const char *file )
       xmlr_strd(node, "overwrite", efx->overwrite);
       xmlr_int(node, "priority", efx->priority);
       xmlr_float(node, "duration", efx->duration);
+      if (xml_isNode(node,"buff")) {
+         efx->flags |= EFFECT_BUFF;
+         continue;
+      }
+      if (xml_isNode(node,"debuff")) {
+         efx->flags |= EFFECT_DEBUFF;
+         continue;
+      }
       if (xml_isNode(node,"icon")) {
          efx->icon = xml_parseTexture( node, "%s", 1, 1, OPENGL_TEX_MIPMAPS );
          continue;
@@ -377,6 +385,48 @@ int effect_rm( Effect **efxlist, const EffectData *efx, int all )
       ret++;
    }
    return ret;
+}
+
+/**
+ * @brief Clears specific types of effects.
+ *
+ *    @param efxlist List of effects.
+ *    @param debuffs Whether or not to clear debuffs.
+ *    @param buffs Whether or not to clear buffs.
+ *    @param others Whether or not to clear other effects.
+ */
+void effect_clearSpecific( Effect **efxlist, int debuffs, int buffs, int others )
+{
+   for (int i=array_size(*efxlist); i>=0; i++) {
+      const Effect *e = &(*efxlist)[i];
+
+      /* See if should be eliminated. */
+      if (e->data->flags & EFFECT_BUFF) {
+         if (!buffs)
+            continue;
+      }
+      else if (e->data->flags & EFFECT_DEBUFF) {
+         if (!debuffs)
+            continue;
+      }
+      else {
+         if (!others)
+            continue;
+      }
+
+      /* Run Lua if necessary. */
+      if (e->data->lua_remove != LUA_NOREF) {
+         lua_rawgeti(naevL, LUA_REGISTRYINDEX, e->data->lua_remove); /* f */
+         lua_pushpilot(naevL, e->parent);
+         if (nlua_pcall( e->data->lua_env, 1, 0 )) {
+            WARN(_("Effect '%s' failed to run '%s':\n%s"), e->data->name, "remove", lua_tostring(naevL,-1));
+            lua_pop(naevL,1);
+         }
+      }
+
+      /* Clear effect. */
+      array_erase( efxlist, &e[0], &e[1] );
+   }
 }
 
 /**

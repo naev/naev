@@ -4,6 +4,7 @@
  <duration>10</duration>
  <icon>/gfx/misc/icons/delighted.webp</icon>
  <overwrite>bloodlust</overwrite>
+ <buff/>
  <stats>
   <fwd_damage>25</fwd_damage>
   <tur_damage>25</tur_damage>
