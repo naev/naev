@@ -1248,6 +1248,7 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
       gfx->dimensions= glGetUniformLocation( gfx->program, "dimensions" );
       gfx->u_r       = glGetUniformLocation( gfx->program, "u_r" );
       gfx->u_time    = glGetUniformLocation( gfx->program, "u_time" );
+      gfx->u_fade    = glGetUniformLocation( gfx->program, "u_fade" );
 
       xmlr_attr_float_def(node,"size",gfx->size,-1.);
       if (gfx->size < 0.)
