@@ -1,7 +1,7 @@
 --[[
    The new "slim" GUI
 --]]
-
+local flow = require "ships.lua.lib.flow"
 local fmt = require "format"
 local playerform = require "playerform"
 
@@ -20,7 +20,7 @@ local fps_y = 32
 local bgs = {}
 local cols = {}
 local icons = {}
-
+local has_flow
 function create()
 
    --Get player
@@ -51,8 +51,9 @@ function create()
    cols.heat2 = colour.new( 222/255, 51/255, 27/255 )
    cols.afb = colour.new(cols.heat)
    cols.afb:setAlpha(.5)
-   cols.ready = colour.new(14/255,108/255, 114/255 )
+   cols.ready = colour.new( 14/255,108/255, 114/255 )
    cols.temperature = cols.heat
+   cols.flow = colour.new( 189/255, 166/255, 85/255 )
    cols.missile = colour.new(cols.txt_enm)
 
    -- Active outfit bar
@@ -80,6 +81,7 @@ function create()
    icons.energy = tex_open( "energy.webp" )
    icons.speed = tex_open( "speed.png" )
    icons.temperature = tex_open( "heat.png" )
+   icons.flow = tex_open( "energy.webp" ) -- TODO
    icons.shield_sm = tex_open( "shield_sm.png" )
    icons.armour_sm = tex_open( "armour_sm.png" )
    icons.energy_sm = tex_open( "energy_sm.png" )
@@ -94,6 +96,7 @@ function create()
    bgs.energy = tex_open( "bg_energy.png" )
    bgs.speed = tex_open( "bg_speed.png" )
    bgs.temperature = bgs.speed
+   bgs.flow = bgs.speed -- TODO
    bgs.ammo = tex_open( "bg_ammo.png" )
    bgs.heat = tex_open( "bg_heat.png" )
    bgs.ready = tex_open( "bg_ready.png" )
@@ -171,10 +174,15 @@ function create()
    local x_shield = pl_pane_x + 46
    local y_shield = pl_pane_y + 137
 
+   has_flow = (flow.max( pp ) > 0)
+
    bardata = {}
 
    -- Initialize bar data
    local types = { "shield", "armour", "energy", "speed", "temperature" }
+   if has_flow then
+      table.insert( types, "flow" )
+   end
    for k,v in ipairs(types) do
       local bgw, bgh = bgs[v]:dim()
       bardata[v] = {
@@ -751,6 +759,14 @@ function render( dt, dt_mod )
    txt = round(temperature) .. "K"
    temperature = math.max( math.min( (temperature - 250)/1.75, 100 ), 0 )
    render_bar( bardata['temperature'], temperature, txt, cols.txt_bar )
+
+   -- Sirius Flow
+   if has_flow then
+      local f = flow.get(pp)
+      local fm = flow.max(pp)
+      txt = string.format("%.0f / %.0f", f, fm )
+      render_bar( bardata['flow'], f / fm * 100, txt, cols.txt_bar )
+   end
 
    --Weapon bars
    for num, weapon in ipairs(wset) do
