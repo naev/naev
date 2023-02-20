@@ -17,6 +17,7 @@
 
 #include "log.h"
 #include "conf.h"
+#include "debug.h"
 #include "lua_enet.h"
 #include "lutf8lib.h"
 #include "ndata.h"
@@ -828,6 +829,9 @@ int nlua_pcall( nlua_env env, int nargs, int nresults )
    errf = lua_gettop(naevL) - nargs;
    lua_pushcfunction(naevL, nlua_errTrace);
    lua_insert(naevL, errf);
+
+   if (conf.fpu_except)
+      debug_disableFPUExcept();
 #else /* DEBUGGING */
    errf = 0;
 #endif /* DEBUGGING */
@@ -841,6 +845,9 @@ int nlua_pcall( nlua_env env, int nargs, int nresults )
 
 #if DEBUGGING
    lua_remove(naevL, errf);
+
+   if (conf.fpu_except)
+      debug_enableFPUExcept();
 #endif /* DEBUGGING */
 
    return ret;
