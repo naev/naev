@@ -128,7 +128,6 @@ static void debug_backtrace_syminfo_callback( void* data, uintptr_t pc, const ch
    LOGERR( "[%#14"PRIxPTR"] %s at %s:%u %*s| %s(%s+%#"PRIxPTR")", pc, fi->func, fi->file, fi->line, pad, "", addr.dli_fname, symval ? symname : "", offset );
 }
 
-
 /**
  * @brief Callback for handling one frame of a backtrace, after function lookup has failed.
  */
@@ -247,7 +246,6 @@ void debug_sigInit (void)
 #endif /* DEBUGGING */
 }
 
-
 /**
  * @brief Closes the back-tracing signal handler.
  */
@@ -259,7 +257,6 @@ void debug_sigClose (void)
    signal( SIGFPE,  SIG_DFL );
 #endif /* DEBUGGING */
 }
-
 
 /**
  * @brief Does nothing. Calling this tells our debug scripts to stop tracing.
