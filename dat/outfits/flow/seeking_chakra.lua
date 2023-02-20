@@ -20,6 +20,8 @@ function update( _p, po, dt )
    mem.timer = mem.timer - dt
    if mem.timer < 0 then
       po:state("off")
+   else
+      po:progress( mem.timer / cooldown )
    end
 end
 
