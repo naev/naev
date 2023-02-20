@@ -1371,9 +1371,9 @@ static int aiL_getnearestpilot( lua_State *L )
    for (int i=0; i<array_size(pilot_stack); i++) {
       if (pilot_stack[i]->id == cur_pilot->id)
          continue;
-      if (vec2_dist(&pilot_stack[i]->solid->pos, &cur_pilot->solid->pos) > dist)
+      if (vec2_dist(&pilot_stack[i]->solid.pos, &cur_pilot->solid.pos) > dist)
          continue;
-      dist = vec2_dist(&pilot_stack[i]->solid->pos, &cur_pilot->solid->pos);
+      dist = vec2_dist(&pilot_stack[i]->solid.pos, &cur_pilot->solid.pos);
       candidate_id = i;
    }
 
@@ -1403,13 +1403,13 @@ static int aiL_getdistance( lua_State *L )
    /* pilot as parameter */
    else if (lua_ispilot(L,1)) {
       Pilot *p = luaL_validpilot(L,1);
-      v = &p->solid->pos;
+      v = &p->solid.pos;
    }
    /* wrong parameter */
    else
       NLUA_INVALID_PARAMETER(L);
 
-   lua_pushnumber(L, vec2_dist(v, &cur_pilot->solid->pos));
+   lua_pushnumber(L, vec2_dist(v, &cur_pilot->solid.pos));
    return 1;
 }
 
@@ -1430,13 +1430,13 @@ static int aiL_getdistance2( lua_State *L )
    /* pilot as parameter */
    else if (lua_ispilot(L,1)) {
       Pilot *p = luaL_validpilot(L,1);
-      v = &p->solid->pos;
+      v = &p->solid.pos;
    }
    /* wrong parameter */
    else
       NLUA_INVALID_PARAMETER(L);
 
-   lua_pushnumber(L, vec2_dist2(v, &cur_pilot->solid->pos));
+   lua_pushnumber(L, vec2_dist2(v, &cur_pilot->solid.pos));
    return 1;
 }
 
@@ -1459,15 +1459,15 @@ static int aiL_getflybydistance( lua_State *L )
    /* pilot id as parameter */
    else if (lua_ispilot(L,1)) {
       Pilot *p = luaL_validpilot(L,1);
-      v = &p->solid->pos;
+      v = &p->solid.pos;
 
-      /*vec2_cset(&v, VX(pilot->solid->pos) - VX(cur_pilot->solid->pos), VY(pilot->solid->pos) - VY(cur_pilot->solid->pos) );*/
+      /*vec2_cset(&v, VX(pilot->solid.pos) - VX(cur_pilot->solid.pos), VY(pilot->solid.pos) - VY(cur_pilot->solid.pos) );*/
    }
    else
       NLUA_INVALID_PARAMETER(L);
 
-   vec2_cset(&offset_vect, VX(*v) - VX(cur_pilot->solid->pos), VY(*v) - VY(cur_pilot->solid->pos) );
-   vec2_pset(&perp_motion_unit, 1, VANGLE(cur_pilot->solid->vel)+M_PI_2);
+   vec2_cset(&offset_vect, VX(*v) - VX(cur_pilot->solid.pos), VY(*v) - VY(cur_pilot->solid.pos) );
+   vec2_pset(&perp_motion_unit, 1, VANGLE(cur_pilot->solid.vel)+M_PI_2);
    offset_distance = vec2_dot(&perp_motion_unit, &offset_vect);
 
    lua_pushnumber(L, offset_distance);
@@ -1497,30 +1497,30 @@ static int aiL_minbrakedist( lua_State *L )
       Pilot *p = luaL_validpilot(L,1);
 
       /* Set up the vectors. */
-      vec2_cset( &vv, p->solid->vel.x - cur_pilot->solid->vel.x,
-            p->solid->vel.y - cur_pilot->solid->vel.y );
+      vec2_cset( &vv, p->solid.vel.x - cur_pilot->solid.vel.x,
+            p->solid.vel.y - cur_pilot->solid.vel.y );
 
       /* Run the same calculations. */
       time = VMOD(vv) /
-            (cur_pilot->thrust / cur_pilot->solid->mass);
+            (cur_pilot->thrust / cur_pilot->solid.mass);
 
       /* Get relative velocity. */
-      vel = MIN(cur_pilot->speed - VMOD(p->solid->vel), VMOD(vv));
+      vel = MIN(cur_pilot->speed - VMOD(p->solid.vel), VMOD(vv));
       if (vel < 0.)
          vel = 0.;
    }
    /* Simple calculation based on distance. */
    else {
       /* Get current time to reach target. */
-      time = VMOD(cur_pilot->solid->vel) /
-            (cur_pilot->thrust / cur_pilot->solid->mass);
+      time = VMOD(cur_pilot->solid.vel) /
+            (cur_pilot->thrust / cur_pilot->solid.mass);
 
       /* Get velocity. */
-      vel = MIN(cur_pilot->speed,VMOD(cur_pilot->solid->vel));
+      vel = MIN(cur_pilot->speed,VMOD(cur_pilot->solid.vel));
    }
    /* Get distance to brake. */
    dist = vel*(time+1.1*M_PI/cur_pilot->turn) -
-         0.5*(cur_pilot->thrust/cur_pilot->solid->mass)*time*time;
+         0.5*(cur_pilot->thrust/cur_pilot->solid.mass)*time*time;
 
    lua_pushnumber(L, dist); /* return */
    return 1; /* returns one thing */
@@ -1560,9 +1560,9 @@ static int aiL_instantJump( lua_State *L )
  */
 static int aiL_ismaxvel( lua_State *L )
 {
-   //lua_pushboolean(L,(VMOD(cur_pilot->solid->vel) > (cur_pilot->speed-MIN_VEL_ERR)));
-   lua_pushboolean(L,(VMOD(cur_pilot->solid->vel) >
-                   (solid_maxspeed(cur_pilot->solid, cur_pilot->speed, cur_pilot->thrust)-MIN_VEL_ERR)));
+   //lua_pushboolean(L,(VMOD(cur_pilot->solid.vel) > (cur_pilot->speed-MIN_VEL_ERR)));
+   lua_pushboolean(L,(VMOD(cur_pilot->solid.vel) >
+                   (solid_maxspeed(&cur_pilot->solid, cur_pilot->speed, cur_pilot->thrust)-MIN_VEL_ERR)));
    return 1;
 }
 
@@ -1574,7 +1574,7 @@ static int aiL_ismaxvel( lua_State *L )
  */
 static int aiL_isstopped( lua_State *L )
 {
-   lua_pushboolean(L,(VMOD(cur_pilot->solid->vel) < MIN_VEL_ERR));
+   lua_pushboolean(L,(VMOD(cur_pilot->solid.vel) < MIN_VEL_ERR));
    return 1;
 }
 
@@ -1709,12 +1709,12 @@ static int aiL_face( lua_State *L )
    if (lua_ispilot(L,1)) {
       Pilot* p = luaL_validpilot(L,1);
       /* Target vector. */
-      tv = &p->solid->pos;
+      tv = &p->solid.pos;
    }
    else if (lua_isnumber(L,1)) {
       double d = lua_tonumber(L,1);
       if (d < 0.)
-         tv = &cur_pilot->solid->pos;
+         tv = &cur_pilot->solid.pos;
       else
          NLUA_INVALID_PARAMETER(L);
    }
@@ -1744,11 +1744,11 @@ static int aiL_face( lua_State *L )
     *                 |d|     |d|             |d|^2
     */
    /* Velocity vector. */
-   vx = cur_pilot->solid->vel.x;
-   vy = cur_pilot->solid->vel.y;
+   vx = cur_pilot->solid.vel.x;
+   vy = cur_pilot->solid.vel.y;
    /* Direction vector. */
-   dx = tv->x - cur_pilot->solid->pos.x;
-   dy = tv->y - cur_pilot->solid->pos.y;
+   dx = tv->x - cur_pilot->solid.pos.x;
+   dy = tv->y - cur_pilot->solid.pos.y;
    if (vel && (dx || dy)) {
       /* Calculate dot product. */
       double d = (vx * dx + vy * dy) / (dx*dx + dy*dy);
@@ -1762,7 +1762,7 @@ static int aiL_face( lua_State *L )
    }
 
    /* Compensate error and rotate. */
-   diff = angle_diff( cur_pilot->solid->dir, atan2( dy, dx ) );
+   diff = angle_diff( cur_pilot->solid.dir, atan2( dy, dx ) );
 
    /* Make pilot turn. */
    pilot_turn = k_diff * diff;
@@ -1807,12 +1807,12 @@ static int aiL_careful_face( lua_State *L )
    if (lua_ispilot(L,1)) {
       p = luaL_validpilot(L,1);
       /* Target vector. */
-      tv = &p->solid->pos;
+      tv = &p->solid.pos;
    }
    else if (lua_isnumber(L,1)) {
       d = (double)lua_tonumber(L,1);
       if (d < 0.)
-         tv = &cur_pilot->solid->pos;
+         tv = &cur_pilot->solid.pos;
       else
          NLUA_INVALID_PARAMETER(L);
    }
@@ -1828,7 +1828,7 @@ static int aiL_careful_face( lua_State *L )
 
    /* Init the force */
    vec2_cset( &F, 0., 0.) ;
-   vec2_cset( &F1, tv->x - cur_pilot->solid->pos.x, tv->y - cur_pilot->solid->pos.y) ;
+   vec2_cset( &F1, tv->x - cur_pilot->solid.pos.x, tv->y - cur_pilot->solid.pos.y) ;
    dist = VMOD(F1) + 0.1; /* Avoid / 0*/
    vec2_cset( &F1, F1.x * k_goal / dist, F1.y * k_goal / dist) ;
 
@@ -1843,7 +1843,7 @@ static int aiL_careful_face( lua_State *L )
       if (pilot_inRangePilot(cur_pilot, p_i, NULL) != 1) continue;
 
       /* If the enemy is too close, ignore it*/
-      dist = vec2_dist(&p_i->solid->pos, &cur_pilot->solid->pos);
+      dist = vec2_dist(&p_i->solid.pos, &cur_pilot->solid.pos);
       if (dist < 750) continue;
 
       k_mult = pilot_relhp( p_i, cur_pilot ) * pilot_reldps( p_i, cur_pilot );
@@ -1851,15 +1851,15 @@ static int aiL_careful_face( lua_State *L )
       /* Check if friendly or not */
       if (areEnemies(cur_pilot->faction, p_i->faction)) {
          factor = k_enemy * k_mult / (dist*dist*dist);
-         vec2_cset( &F, F.x + factor * (cur_pilot->solid->pos.x - p_i->solid->pos.x),
-                F.y + factor * (cur_pilot->solid->pos.y - p_i->solid->pos.y) );
+         vec2_cset( &F, F.x + factor * (cur_pilot->solid.pos.x - p_i->solid.pos.x),
+                F.y + factor * (cur_pilot->solid.pos.y - p_i->solid.pos.y) );
       }
    }
 
    vec2_cset( &F, F.x + F1.x, F.y + F1.y );
 
    /* Rotate. */
-   diff = angle_diff( cur_pilot->solid->dir, VANGLE(F) );
+   diff = angle_diff( cur_pilot->solid.dir, VANGLE(F) );
 
    /* Make pilot turn. */
    pilot_turn = k_diff * diff;
@@ -1888,12 +1888,12 @@ static int aiL_aim( lua_State *L )
    }
    else {
       Pilot *p = luaL_validpilot(L,1);
-      angle = pilot_aimAngle( cur_pilot, &p->solid->pos, &p->solid->vel );
+      angle = pilot_aimAngle( cur_pilot, &p->solid.pos, &p->solid.vel );
    }
 
    /* Calculate what we need to turn */
    mod = 10.;
-   diff = angle_diff(cur_pilot->solid->dir, angle);
+   diff = angle_diff(cur_pilot->solid.dir, angle);
    pilot_turn = mod * diff;
 
    lua_pushnumber(L, ABS(diff));
@@ -1929,20 +1929,20 @@ static int aiL_iface( lua_State *L )
       if (p == NULL)
          return 0; /* Return silently when attempting to face an invalid pilot. */
       /* Establish the current pilot velocity and position vectors */
-      vec2_cset( &drift, VX(p->solid->vel) - VX(cur_pilot->solid->vel), VY(p->solid->vel) - VY(cur_pilot->solid->vel));
+      vec2_cset( &drift, VX(p->solid.vel) - VX(cur_pilot->solid.vel), VY(p->solid.vel) - VY(cur_pilot->solid.vel));
       /* Establish the in-line coordinate reference */
-      vec2_cset( &reference_vector, VX(p->solid->pos) - VX(cur_pilot->solid->pos), VY(p->solid->pos) - VY(cur_pilot->solid->pos));
+      vec2_cset( &reference_vector, VX(p->solid.pos) - VX(cur_pilot->solid.pos), VY(p->solid.pos) - VY(cur_pilot->solid.pos));
    }
    else {
       /* Establish the current pilot velocity and position vectors */
-      vec2_cset( &drift, -VX(cur_pilot->solid->vel), -VY(cur_pilot->solid->vel));
+      vec2_cset( &drift, -VX(cur_pilot->solid.vel), -VY(cur_pilot->solid.vel));
       /* Establish the in-line coordinate reference */
-      vec2_cset( &reference_vector, VX(*vec) - VX(cur_pilot->solid->pos), VY(*vec) - VY(cur_pilot->solid->pos));
+      vec2_cset( &reference_vector, VX(*vec) - VX(cur_pilot->solid.pos), VY(*vec) - VY(cur_pilot->solid.pos));
    }
 
    /* Break down the the velocity vectors of both craft into UV coordinates */
    vec2_uv(&drift_radial, &drift_azimuthal, &drift, &reference_vector);
-   heading_offset_azimuth = angle_diff(cur_pilot->solid->dir, VANGLE(reference_vector));
+   heading_offset_azimuth = angle_diff(cur_pilot->solid.dir, VANGLE(reference_vector));
 
    /* Now figure out what to do...
     * Are we pointing anywhere inside the correct UV quadrant?
@@ -2008,22 +2008,22 @@ static int aiL_dir( lua_State *L )
    vec = NULL;
    if (lua_ispilot(L,1)) {
       p = luaL_validpilot(L,1);
-      vec2_cset( &tv, VX(p->solid->pos), VY(p->solid->pos) );
+      vec2_cset( &tv, VX(p->solid.pos), VY(p->solid.pos) );
    }
    else if (lua_isvector(L,1))
       vec = lua_tovector(L,1);
    else NLUA_INVALID_PARAMETER(L);
 
-   vec2_cset( &sv, VX(cur_pilot->solid->pos), VY(cur_pilot->solid->pos) );
+   vec2_cset( &sv, VX(cur_pilot->solid.pos), VY(cur_pilot->solid.pos) );
 
    if (vec==NULL) /* target is dynamic */
-      diff = angle_diff(cur_pilot->solid->dir,
+      diff = angle_diff(cur_pilot->solid.dir,
             (n==-1) ? VANGLE(sv) :
             vec2_angle(&sv, &tv));
    else /* target is static */
-      diff = angle_diff( cur_pilot->solid->dir,
-            (n==-1) ? VANGLE(cur_pilot->solid->pos) :
-            vec2_angle(&cur_pilot->solid->pos, vec));
+      diff = angle_diff( cur_pilot->solid.dir,
+            (n==-1) ? VANGLE(cur_pilot->solid.pos) :
+            vec2_angle(&cur_pilot->solid.pos, vec));
 
    /* Return angle in degrees away from target. */
    lua_pushnumber(L, diff);
@@ -2059,20 +2059,20 @@ static int aiL_idir( lua_State *L )
       if (p == NULL)
          return 0; /* Return silently when attempting to face an invalid pilot. */
       /* Establish the current pilot velocity and position vectors */
-      vec2_cset( &drift, VX(p->solid->vel) - VX(cur_pilot->solid->vel), VY(p->solid->vel) - VY(cur_pilot->solid->vel));
+      vec2_cset( &drift, VX(p->solid.vel) - VX(cur_pilot->solid.vel), VY(p->solid.vel) - VY(cur_pilot->solid.vel));
       /* Establish the in-line coordinate reference */
-      vec2_cset( &reference_vector, VX(p->solid->pos) - VX(cur_pilot->solid->pos), VY(p->solid->pos) - VY(cur_pilot->solid->pos));
+      vec2_cset( &reference_vector, VX(p->solid.pos) - VX(cur_pilot->solid.pos), VY(p->solid.pos) - VY(cur_pilot->solid.pos));
    }
    else {
       /* Establish the current pilot velocity and position vectors */
-      vec2_cset( &drift, -VX(cur_pilot->solid->vel), -VY(cur_pilot->solid->vel));
+      vec2_cset( &drift, -VX(cur_pilot->solid.vel), -VY(cur_pilot->solid.vel));
       /* Establish the in-line coordinate reference */
-      vec2_cset( &reference_vector, VX(*vec) - VX(cur_pilot->solid->pos), VY(*vec) - VY(cur_pilot->solid->pos));
+      vec2_cset( &reference_vector, VX(*vec) - VX(cur_pilot->solid.pos), VY(*vec) - VY(cur_pilot->solid.pos));
    }
 
    /* Break down the the velocity vectors of both craft into UV coordinates */
    vec2_uv(&drift_radial, &drift_azimuthal, &drift, &reference_vector);
-   heading_offset_azimuth = angle_diff(cur_pilot->solid->dir, VANGLE(reference_vector));
+   heading_offset_azimuth = angle_diff(cur_pilot->solid.dir, VANGLE(reference_vector));
 
    /* now figure out what to do*/
    /* are we pointing anywhere inside the correct UV quadrant? */
@@ -2108,7 +2108,7 @@ static int aiL_idir( lua_State *L )
  */
 static int aiL_drift_facing( lua_State *L )
 {
-    double drift = angle_diff(VANGLE(cur_pilot->solid->vel), cur_pilot->solid->dir);
+    double drift = angle_diff(VANGLE(cur_pilot->solid.vel), cur_pilot->solid.dir);
     lua_pushnumber(L, drift);
     return 1;
 }
@@ -2123,8 +2123,8 @@ static int aiL_brake( lua_State *L )
 {
    int ret = pilot_brake( cur_pilot );
 
-   pilot_acc = cur_pilot->solid->thrust / cur_pilot->thrust;
-   pilot_turn = cur_pilot->solid->dir_vel / cur_pilot->turn;
+   pilot_acc = cur_pilot->solid.thrust / cur_pilot->thrust;
+   pilot_turn = cur_pilot->solid.dir_vel / cur_pilot->turn;
 
    lua_pushboolean(L, ret);
    return 1;
@@ -2146,7 +2146,7 @@ static int aiL_getnearestspob( lua_State *L )
    for (dist=HUGE_VAL, j=-1, i=0; i<array_size(cur_system->spobs); i++) {
       if (!spob_hasService(cur_system->spobs[i],SPOB_SERVICE_INHABITED))
          continue;
-      d = vec2_dist( &cur_system->spobs[i]->pos, &cur_pilot->solid->pos );
+      d = vec2_dist( &cur_system->spobs[i]->pos, &cur_pilot->solid.pos );
       if ((!areEnemies(cur_pilot->faction,cur_system->spobs[i]->presence.faction)) &&
             (d < dist)) { /* closer friendly spob */
          j = i;
@@ -2345,13 +2345,13 @@ static int aiL_land( lua_State *L )
    }
 
    /* Check distance. */
-   if (vec2_dist2(&cur_pilot->solid->pos,&spob->pos) > pow2(spob->radius)) {
+   if (vec2_dist2(&cur_pilot->solid.pos,&spob->pos) > pow2(spob->radius)) {
       lua_pushboolean(L,0);
       return 1;
    }
 
    /* Check velocity. */
-   if (vec2_odist2( &cur_pilot->solid->vel ) > pow2(MAX_HYPERSPACE_VEL)) {
+   if (vec2_odist2( &cur_pilot->solid.vel ) > pow2(MAX_HYPERSPACE_VEL)) {
       lua_pushboolean(L,0);
       return 1;
    }
@@ -2473,7 +2473,7 @@ static int aiL_nearhyptarget( lua_State *L )
       /* TODO should they try to use systems only with their faction? */
 
       /* Get nearest distance. */
-      dist  = vec2_dist2( &cur_pilot->solid->pos, &jiter->pos );
+      dist  = vec2_dist2( &cur_pilot->solid.pos, &jiter->pos );
       if (dist < mindist) {
          jp       = jiter;
          mindist  = dist;
@@ -2582,13 +2582,13 @@ static int aiL_relvel( lua_State *L )
 
    /* Get the projection of target on current velocity. */
    if (absolute == 0)
-      vec2_cset( &vv, p->solid->vel.x - cur_pilot->solid->vel.x,
-            p->solid->vel.y - cur_pilot->solid->vel.y );
+      vec2_cset( &vv, p->solid.vel.x - cur_pilot->solid.vel.x,
+            p->solid.vel.y - cur_pilot->solid.vel.y );
    else
-      vec2_cset( &vv, p->solid->vel.x, p->solid->vel.y);
+      vec2_cset( &vv, p->solid.vel.x, p->solid.vel.y);
 
-   vec2_cset( &pv, p->solid->pos.x - cur_pilot->solid->pos.x,
-         p->solid->pos.y - cur_pilot->solid->pos.y );
+   vec2_cset( &pv, p->solid.pos.x - cur_pilot->solid.pos.x,
+         p->solid.pos.y - cur_pilot->solid.pos.y );
    dot = vec2_dot( &pv, &vv );
    mod = MAX(VMOD(pv), 1.); /* Avoid /0. */
 
@@ -2631,23 +2631,23 @@ static int aiL_follow_accurate( lua_State *L )
    if (strcmp( method, "absolute" ) == 0)
       angle2 = angle;
    else if (strcmp( method, "keepangle" ) == 0) {
-      vec2_cset( &pv, p->solid->pos.x - target->solid->pos.x,
-            p->solid->pos.y - target->solid->pos.y );
+      vec2_cset( &pv, p->solid.pos.x - target->solid.pos.x,
+            p->solid.pos.y - target->solid.pos.y );
       angle2 = VANGLE(pv);
       }
    else /* method == "velocity" */
-      angle2 = angle + VANGLE( target->solid->vel );
+      angle2 = angle + VANGLE( target->solid.vel );
 
-   vec2_cset( &point, VX(target->solid->pos) + radius * cos(angle2),
-         VY(target->solid->pos) + radius * sin(angle2) );
+   vec2_cset( &point, VX(target->solid.pos) + radius * cos(angle2),
+         VY(target->solid.pos) + radius * sin(angle2) );
 
    /*  Compute the direction using a pd controller */
-   vec2_cset( &cons, (point.x - p->solid->pos.x) * Kp +
-         (target->solid->vel.x - p->solid->vel.x) *Kd,
-         (point.y - p->solid->pos.y) * Kp +
-         (target->solid->vel.y - p->solid->vel.y) *Kd );
+   vec2_cset( &cons, (point.x - p->solid.pos.x) * Kp +
+         (target->solid.vel.x - p->solid.vel.x) *Kd,
+         (point.y - p->solid.pos.y) * Kp +
+         (target->solid.vel.y - p->solid.vel.y) *Kd );
 
-   vec2_cset( &goal, cons.x + p->solid->pos.x, cons.y + p->solid->pos.y);
+   vec2_cset( &goal, cons.x + p->solid.pos.x, cons.y + p->solid.pos.y);
 
    /* Push info */
    lua_pushvector( L, goal );
@@ -2684,12 +2684,12 @@ static int aiL_face_accurate( lua_State *L )
          pos->y + radius * sin(angle) );
 
    /*  Compute the direction using a pd controller */
-   vec2_cset( &cons, (point.x - p->solid->pos.x) * Kp +
-         (vel->x - p->solid->vel.x) *Kd,
-         (point.y - p->solid->pos.y) * Kp +
-         (vel->y - p->solid->vel.y) *Kd );
+   vec2_cset( &cons, (point.x - p->solid.pos.x) * Kp +
+         (vel->x - p->solid.vel.x) *Kd,
+         (point.y - p->solid.pos.y) * Kp +
+         (vel->y - p->solid.vel.y) *Kd );
 
-   vec2_cset( &goal, cons.x + p->solid->pos.x, cons.y + p->solid->pos.y);
+   vec2_cset( &goal, cons.x + p->solid.pos.x, cons.y + p->solid.pos.y);
 
    /* Push info */
    lua_pushvector( L, goal );
@@ -2707,8 +2707,8 @@ static int aiL_stop( lua_State *L )
 {
    (void) L; /* avoid gcc warning */
 
-   if (VMOD(cur_pilot->solid->vel) < MIN_VEL_ERR)
-      vec2_pset( &cur_pilot->solid->vel, 0., 0. );
+   if (VMOD(cur_pilot->solid.vel) < MIN_VEL_ERR)
+      vec2_pset( &cur_pilot->solid.vel, 0., 0. );
 
    return 0;
 }
@@ -2800,7 +2800,7 @@ static int aiL_getGatherable( lua_State *L )
    else
       rad = lua_tonumber(L,1);
 
-   i = gatherable_getClosest( cur_pilot->solid->pos, rad );
+   i = gatherable_getClosest( cur_pilot->solid.pos, rad );
 
    if (i != -1)
       lua_pushnumber(L,i);

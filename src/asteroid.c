@@ -1076,7 +1076,7 @@ void asteroid_explode( Asteroid *a, int max_rarity, double mining_bonus )
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
 
-      if (vec2_dist2( &p->solid->pos, &a->pos ) > rad2)
+      if (vec2_dist2( &p->solid.pos, &a->pos ) > rad2)
          continue;
 
       pilot_msg( NULL, p, "asteroid", -1 );

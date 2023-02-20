@@ -619,14 +619,14 @@ static void ship_update( unsigned int wid )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d", (int)floor(player.p->crew) );
    /* Movement. */
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f %s", player.p->solid->mass, n_( "tonne", "tonnes", player.p->solid->mass ) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f %s", player.p->solid.mass, n_( "tonne", "tonnes", player.p->solid.mass ) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%s average"), hyp_delay );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f kN/tonne"), player.p->thrust / player.p->solid->mass );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f kN/tonne"), player.p->thrust / player.p->solid.mass );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f m/s (max %.0f m/s)"),
-         player.p->speed, solid_maxspeed( player.p->solid, player.p->speed, player.p->thrust ) );
+         player.p->speed, solid_maxspeed( &player.p->solid, player.p->speed, player.p->thrust ) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f deg/s"), player.p->turn*180./M_PI );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f%%", player.p->stats.time_mod * player.p->ship->dt_default * 100. );

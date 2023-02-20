@@ -210,8 +210,8 @@ void weapon_minimap( double res, double w,
          continue;
 
       /* Get radar position. */
-      x = (wp->solid.pos.x - player.p->solid->pos.x) / res;
-      y = (wp->solid.pos.y - player.p->solid->pos.y) / res;
+      x = (wp->solid.pos.x - player.p->solid.pos.x) / res;
+      y = (wp->solid.pos.y - player.p->solid.pos.y) / res;
 
       /* Make sure in range. */
       if (shape==RADAR_RECT && (ABS(x)>w/2. || ABS(y)>h/2.))
@@ -257,8 +257,8 @@ void weapon_minimap( double res, double w,
          continue;
 
       /* Get radar position. */
-      x = (wp->solid.pos.x - player.p->solid->pos.x) / res;
-      y = (wp->solid.pos.y - player.p->solid->pos.y) / res;
+      x = (wp->solid.pos.x - player.p->solid.pos.x) / res;
+      y = (wp->solid.pos.y - player.p->solid.pos.y) / res;
 
       /* Make sure in range. */
       if (shape==RADAR_RECT && (ABS(x)>w/2. || ABS(y)>h/2.))
@@ -366,7 +366,7 @@ static void think_seeker( Weapon* w, double dt )
          jc = p->stats.jam_chance - w->outfit->u.lau.resist;
          if (jc > 0.) {
             /* Roll based on distance. */
-            d = vec2_dist( &p->solid->pos, &w->solid.pos );
+            d = vec2_dist( &p->solid.pos, &w->solid.pos );
             if (d < w->r * p->ew_evasion) {
                if (RNGF() < jc) {
                   double r = RNGF();
@@ -401,13 +401,13 @@ static void think_seeker( Weapon* w, double dt )
          if (w->outfit->u.lau.ai == AMMO_AI_SMART) {
 
             /* Calculate time to reach target. */
-            vec2_cset( &v, p->solid->pos.x - w->solid.pos.x,
-                  p->solid->pos.y - w->solid.pos.y );
+            vec2_cset( &v, p->solid.pos.x - w->solid.pos.x,
+                  p->solid.pos.y - w->solid.pos.y );
             t = vec2_odist( &v ) / w->outfit->u.lau.speed_max;
 
             /* Calculate target's movement. */
-            vec2_cset( &v, v.x + t*(p->solid->vel.x - w->solid.vel.x),
-                  v.y + t*(p->solid->vel.y - w->solid.vel.y) );
+            vec2_cset( &v, v.x + t*(p->solid.vel.x - w->solid.vel.x),
+                  v.y + t*(p->solid.vel.y - w->solid.vel.y) );
 
             /* Get the angle now. */
             diff = angle_diff(w->solid.dir, VANGLE(v) );
@@ -415,7 +415,7 @@ static void think_seeker( Weapon* w, double dt )
          /* Other seekers are simplistic. */
          else {
             diff = angle_diff(w->solid.dir, /* Get angle to target pos */
-                  vec2_angle(&w->solid.pos, &p->solid->pos));
+                  vec2_angle(&w->solid.pos, &p->solid.pos));
          }
 
          /* Set turn. */
@@ -492,11 +492,11 @@ static void think_beam( Weapon* w, double dt )
    if (slot->inrange) {
       turn_off = 1;
       if (t != NULL) {
-         if (vec2_dist( &p->solid->pos, &t->solid->pos ) <= slot->outfit->u.bem.range)
+         if (vec2_dist( &p->solid.pos, &t->solid.pos ) <= slot->outfit->u.bem.range)
             turn_off = 0;
       }
       if (ast != NULL) {
-         if (vec2_dist( &p->solid->pos, &ast->pos ) <= slot->outfit->u.bem.range)
+         if (vec2_dist( &p->solid.pos, &ast->pos ) <= slot->outfit->u.bem.range)
             turn_off = 0;
       }
 
@@ -516,16 +516,16 @@ static void think_beam( Weapon* w, double dt )
 
    /* Use mount position. */
    pilot_getMount( p, slot, &v );
-   w->solid.pos.x = p->solid->pos.x + v.x;
-   w->solid.pos.y = p->solid->pos.y + v.y;
+   w->solid.pos.x = p->solid.pos.x + v.x;
+   w->solid.pos.y = p->solid.pos.y + v.y;
 
    /* Handle aiming at the target. */
    switch (w->outfit->type) {
       case OUTFIT_TYPE_BEAM:
          if (w->outfit->u.bem.swivel > 0.)
-            w->solid.dir = weapon_aimTurret( w->outfit, p, t, &w->solid.pos, &p->solid->vel, p->solid->dir, w->outfit->u.bem.swivel, 0. );
+            w->solid.dir = weapon_aimTurret( w->outfit, p, t, &w->solid.pos, &p->solid.vel, p->solid.dir, w->outfit->u.bem.swivel, 0. );
          else
-            w->solid.dir = p->solid->dir;
+            w->solid.dir = p->solid.dir;
          break;
 
       case OUTFIT_TYPE_TURRET_BEAM:
@@ -539,11 +539,11 @@ static void think_beam( Weapon* w, double dt )
                      vec2_angle(&w->solid.pos, &ast->pos));
             }
             else
-               diff = angle_diff(w->solid.dir, p->solid->dir);
+               diff = angle_diff(w->solid.dir, p->solid.dir);
          }
          else
             diff = angle_diff(w->solid.dir, /* Get angle to target pos */
-                  vec2_angle(&w->solid.pos, &t->solid->pos));
+                  vec2_angle(&w->solid.pos, &t->solid.pos));
 
          weapon_setTurn( w, CLAMP( -w->outfit->u.bem.turn, w->outfit->u.bem.turn,
                   10 * diff *  w->outfit->u.bem.turn ));
@@ -1121,7 +1121,7 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
 
       /* Test if hit. */
       if (!weapon_testCollision( &wc, p->ship->gfx_space, p->tsx, p->tsy,
-            &p->solid->pos, p->ship->polygon, crash ))
+            &p->solid.pos, p->ship->polygon, crash ))
          continue;
 
       /* Handle the hit. */
@@ -1311,7 +1311,7 @@ static void weapon_hit( Weapon* w, Pilot* p, vec2* pos )
       spfx = outfit_spfxArmour(w->outfit);
    /* Add sprite, layer depends on whether player shot or not. */
    spfx_add( spfx, pos->x, pos->y,
-         VX(p->solid->vel), VY(p->solid->vel), spfx_layer );
+         VX(p->solid.vel), VY(p->solid.vel), spfx_layer );
 
    /* Inform AI that it's been hit. */
    weapon_hitAI( p, parent, damage );
@@ -1435,9 +1435,9 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
 
       /* Add graphic. */
       spfx_add( spfx, pos[0].x, pos[0].y,
-            VX(p->solid->vel), VY(p->solid->vel), spfx_layer );
+            VX(p->solid.vel), VY(p->solid.vel), spfx_layer );
       spfx_add( spfx, pos[1].x, pos[1].y,
-            VX(p->solid->vel), VY(p->solid->vel), spfx_layer );
+            VX(p->solid.vel), VY(p->solid.vel), spfx_layer );
       w->timer2 = -2.;
 
       /* Inform AI that it's been hit, to not saturate ai Lua with messages. */
@@ -1503,12 +1503,12 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
       const Pilot *pilot_target, const vec2 *pos, const vec2 *vel, double dir,
       double swivel, double time )
 {
-   vec2 *target_pos, *target_vel;
+   const vec2 *target_pos, *target_vel;
    double rx, ry, x, y, t, lead, rdir, off;
 
    if (pilot_target != NULL) {
-      target_pos = &pilot_target->solid->pos;
-      target_vel = &pilot_target->solid->vel;
+      target_pos = &pilot_target->solid.pos;
+      target_vel = &pilot_target->solid.vel;
    }
    else {
       if (parent->nav_asteroid < 0)
@@ -1885,7 +1885,7 @@ static Weapon* weapon_create( PilotOutfitSlot* po, const Outfit *ref,
          if (aim && (outfit->type == OUTFIT_TYPE_TURRET_BEAM)) {
             pilot_target = pilot_get(target);
             if ((w->parent != w->target) && (pilot_target != NULL))
-               rdir = vec2_angle(pos, &pilot_target->solid->pos);
+               rdir = vec2_angle(pos, &pilot_target->solid.pos);
             else if (parent->nav_asteroid >= 0) {
                field = &cur_system->asteroids[parent->nav_anchor];
                ast = &field->asteroids[parent->nav_asteroid];

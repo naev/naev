@@ -76,7 +76,7 @@ enum {
 /* Makes life easier */
 #define pilot_isPlayer(p)   pilot_isFlag(p,PILOT_PLAYER) /**< Checks if pilot is a player. */
 #define pilot_isDisabled(p) pilot_isFlag(p,PILOT_DISABLED) /**< Checks if pilot is disabled. */
-#define pilot_isStopped(p)  (VMOD(p->solid->vel) <= MIN_VEL_ERR)
+#define pilot_isStopped(p)  (VMOD(p->solid.vel) <= MIN_VEL_ERR)
 /* We would really have to recursively go up all the parents to check, but we're being cheap. */
 #define pilot_isWithPlayer(p) ((p)->faction == FACTION_PLAYER || ((p)->parent == PLAYER_ID))
 
@@ -217,7 +217,7 @@ typedef struct Pilot_ {
 
    /* Object characteristics */
    const Ship* ship; /**< ship pilot is flying */
-   Solid* solid;     /**< associated solid (physics) */
+   Solid solid;      /**< Associated solid (physics) */
    double base_mass; /**< Ship mass plus core outfit mass. */
    double mass_cargo;/**< Amount of cargo mass added. */
    double mass_outfit;/**< Amount of outfit mass added. */

@@ -537,7 +537,7 @@ static int playerL_allowSave( lua_State *L )
 static int playerL_getPosition( lua_State *L )
 {
    PLAYER_CHECK();
-   lua_pushvector(L, player.p->solid->pos);
+   lua_pushvector(L, player.p->solid.pos);
    return 1;
 }
 
@@ -912,7 +912,7 @@ static int playerL_land( lua_State *L )
 
       ovr_initAlpha();
    }
-   player.p->solid->pos = spob->pos; /* Set position to target. */
+   player.p->solid.pos = spob->pos; /* Set position to target. */
 
    /* Do whatever the spob wants to do. */
    if (spob->lua_land != LUA_NOREF) {
@@ -1953,15 +1953,15 @@ static int playerL_teleport( lua_State *L )
 
    /* Move to spob. */
    if (pnt != NULL)
-      player.p->solid->pos = pnt->pos;
+      player.p->solid.pos = pnt->pos;
 
    /* Move all escorts to new position. */
    Pilot *const* pilot_stack = pilot_getAll();
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
       if (p->parent == PLAYER_ID) {
-         memcpy( &p->solid->pos, &player.p->solid->pos, sizeof(vec2) );
-         vec2_padd( &p->solid->pos, 200.+200.*RNGF(), 2.*M_PI*RNGF() );
+         memcpy( &p->solid.pos, &player.p->solid.pos, sizeof(vec2) );
+         vec2_padd( &p->solid.pos, 200.+200.*RNGF(), 2.*M_PI*RNGF() );
 
          /* Clean up trails. */
          pilot_clearTrails( p );

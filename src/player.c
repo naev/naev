@@ -335,9 +335,9 @@ static int player_newMake (void)
    }
    assert( &player.ps == ps );
    start_position( &x, &y );
-   vec2_cset( &player.p->solid->pos, x, y );
-   vectnull( &player.p->solid->vel );
-   player.p->solid->dir = RNGF() * 2.*M_PI;
+   vec2_cset( &player.p->solid.pos, x, y );
+   vectnull( &player.p->solid.vel );
+   player.p->solid.dir = RNGF() * 2.*M_PI;
    space_init( start_system(), 1 );
 
    /* Bind camera. */
@@ -559,8 +559,8 @@ void player_swapShip( const char *shipname, int move_cargo )
    ship->nav_asteroid= player.p->nav_asteroid;
 
    /* Store position. */
-   v     = player.p->solid->pos;
-   dir   = player.p->solid->dir;
+   v     = player.p->solid.pos;
+   dir   = player.p->solid.dir;
 
    /* Copy over weapon sets. */
    ws_copy( player.ps.p->weapon_sets, player.ps.weapon_sets );
@@ -595,8 +595,8 @@ void player_swapShip( const char *shipname, int move_cargo )
       pilot_free( ps->p );
 
    /* Copy position back. */
-   player.p->solid->pos = v;
-   player.p->solid->dir = dir;
+   player.p->solid.pos = v;
+   player.p->solid.dir = dir;
 
    /* Fill the tank. */
    if (landed)
@@ -907,7 +907,7 @@ void player_soundResume (void)
 void player_warp( double x, double y )
 {
    unsigned int target = cam_getTarget();
-   vec2_cset( &player.p->solid->pos, x, y );
+   vec2_cset( &player.p->solid.pos, x, y );
    /* Have to move camera over to avoid moving stars when loading. */
    if (target == player.p->id)
       cam_setTargetPilot( target, 0 );
@@ -1031,7 +1031,7 @@ static void player_renderStealthUnderlay( double dt )
       if (!pilot_validTarget( player.p, t ))
          continue;
 
-      gl_gameToScreenCoords( &x, &y, t->solid->pos.x, t->solid->pos.y );
+      gl_gameToScreenCoords( &x, &y, t->solid.pos.x, t->solid.pos.y );
       r = detectz * t->stats.ew_detect;
       if (r > 0.) {
          glUseProgram( shaders.stealthaura.program );
@@ -1050,7 +1050,7 @@ static void player_renderStealthOverlay( double dt )
    glColour col;
 
    z = cam_getZoom();
-   gl_gameToScreenCoords( &x, &y, player.p->solid->pos.x, player.p->solid->pos.y );
+   gl_gameToScreenCoords( &x, &y, player.p->solid.pos.x, player.p->solid.pos.y );
 
    /* Determine the arcs. */
    st    = player.p->ew_stealth_timer;
@@ -1082,11 +1082,11 @@ static void player_renderAimHelper( double dt )
    if (target == NULL)
       return;
 
-   a = player.p->solid->dir;
+   a = player.p->solid.dir;
    r = 200.;
-   gl_gameToScreenCoords( &x1, &y1, player.p->solid->pos.x, player.p->solid->pos.y );
+   gl_gameToScreenCoords( &x1, &y1, player.p->solid.pos.x, player.p->solid.pos.y );
 
-   b = pilot_aimAngle( player.p, &target->solid->pos, &target->solid->vel );
+   b = pilot_aimAngle( player.p, &target->solid.pos, &target->solid.vel );
 
    theta = 22.*M_PI/180.;
 
@@ -1096,11 +1096,11 @@ static void player_renderAimHelper( double dt )
 
    c = cInert;
    c.a = 0.3;
-   gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a+theta ),
-                           player.p->solid->pos.y + r*sin( a+theta ) );
+   gl_gameToScreenCoords( &x2, &y2, player.p->solid.pos.x + r*cos( a+theta ),
+                           player.p->solid.pos.y + r*sin( a+theta ) );
    gl_renderLine( x1, y1, x2, y2, &c );
-   gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a-theta ),
-                           player.p->solid->pos.y + r*sin( a-theta ) );
+   gl_gameToScreenCoords( &x2, &y2, player.p->solid.pos.x + r*cos( a-theta ),
+                           player.p->solid.pos.y + r*sin( a-theta ) );
    gl_renderLine( x1, y1, x2, y2, &c );
 
    c.r = d*0.9;
@@ -1108,8 +1108,8 @@ static void player_renderAimHelper( double dt )
    c.b = (1-d)*0.2;
    c.a = 0.7;
    col_gammaToLinear( &c );
-   gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a ),
-                           player.p->solid->pos.y + r*sin( a ) );
+   gl_gameToScreenCoords( &x2, &y2, player.p->solid.pos.x + r*cos( a ),
+                           player.p->solid.pos.y + r*sin( a ) );
 
    gl_renderLine( x1, y1, x2, y2, &c );
 
@@ -1119,8 +1119,8 @@ static void player_renderAimHelper( double dt )
    glUniform1f(shaders.crosshairs.paramf, 1.);
    gl_renderShader( x2, y2, 7, 7, 0., &shaders.crosshairs, &c2, 1 );
 
-   gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( b ),
-                           player.p->solid->pos.y + r*sin( b ) );
+   gl_gameToScreenCoords( &x2, &y2, player.p->solid.pos.x + r*cos( b ),
+                           player.p->solid.pos.y + r*sin( b ) );
 
    c.a = 0.4;
    gl_renderLine( x1, y1, x2, y2, &c );
@@ -1184,7 +1184,7 @@ void player_think( Pilot* pplayer, const double dt )
          target = pilot_getTarget( player.p );
          if (target != NULL) {
             pilot_face( pplayer,
-                  vec2_angle( &player.p->solid->pos, &target->solid->pos ));
+                  vec2_angle( &player.p->solid.pos, &target->solid.pos ));
 
             /* Disable turning. */
             facing = 1;
@@ -1195,21 +1195,21 @@ void player_think( Pilot* pplayer, const double dt )
          AsteroidAnchor *field = &cur_system->asteroids[player.p->nav_anchor];
          Asteroid *ast = &field->asteroids[player.p->nav_asteroid];
          pilot_face( pplayer,
-               vec2_angle( &player.p->solid->pos, &ast->pos ));
+               vec2_angle( &player.p->solid.pos, &ast->pos ));
          /* Disable turning. */
          facing = 1;
       }
       /* If not try to face spob target. */
       else if ((player.p->nav_spob != -1) && ((preemption == 0) || (player.p->nav_hyperspace == -1))) {
          pilot_face( pplayer,
-               vec2_angle( &player.p->solid->pos,
+               vec2_angle( &player.p->solid.pos,
                   &cur_system->spobs[ player.p->nav_spob ]->pos ));
          /* Disable turning. */
          facing = 1;
       }
       else if (player.p->nav_hyperspace != -1) {
          pilot_face( pplayer,
-               vec2_angle( &player.p->solid->pos,
+               vec2_angle( &player.p->solid.pos,
                   &cur_system->jumps[ player.p->nav_hyperspace ].pos ));
          /* Disable turning. */
          facing = 1;
@@ -1222,7 +1222,7 @@ void player_think( Pilot* pplayer, const double dt )
        * If the player has reverse thrusters, fire those.
        */
       if (!player.p->stats.misc_reverse_thrust && !facing) {
-         pilot_face( pplayer, VANGLE(player.p->solid->vel) + M_PI );
+         pilot_face( pplayer, VANGLE(player.p->solid.vel) + M_PI );
          /* Disable turning. */
          facing = 1;
       }
@@ -1332,9 +1332,9 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
    /* Sound. */
    /*
     * Sound is now camera-specific and thus not player specific. A bit sad really.
-   sound_updateListener( pplayer->solid->dir,
-         pplayer->solid->pos.x, pplayer->solid->pos.y,
-         pplayer->solid->vel.x, pplayer->solid->vel.y );
+   sound_updateListener( pplayer->solid.dir,
+         pplayer->solid.pos.x, pplayer->solid.pos.y,
+         pplayer->solid.vel.x, pplayer->solid.vel.y );
    */
 
    /* See if must play hail sound. */
@@ -1356,7 +1356,7 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
          AsteroidAnchor *ast = &cur_system->asteroids[i];
 
          /* Field out of range. */
-         if (vec2_dist2( &ast->pos, &player.p->solid->pos ) > pow2(range+ast->radius+ast->margin))
+         if (vec2_dist2( &ast->pos, &player.p->solid.pos ) > pow2(range+ast->radius+ast->margin))
             continue;
 
          r2 = pow2(range);
@@ -1367,7 +1367,7 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
             if (a->scanned) /* Ignore scanned outfits. */
                continue;
 
-            if (vec2_dist2( &a->pos, &player.p->solid->pos ) > r2)
+            if (vec2_dist2( &a->pos, &player.p->solid.pos ) > r2)
                continue;
 
             a->scanned = 1;
@@ -1578,7 +1578,7 @@ int player_land( int loud )
       int tp = -1; /* temporary spob */
       for (int i=0; i<array_size(cur_system->spobs); i++) {
          spob = cur_system->spobs[i];
-         double d = vec2_dist(&player.p->solid->pos,&spob->pos);
+         double d = vec2_dist(&player.p->solid.pos,&spob->pos);
          if (pilot_inRangeSpob( player.p, i ) &&
                spob_hasService(spob,SPOB_SERVICE_LAND) &&
                ((tp==-1) || ((td == -1) || (td > d)))) {
@@ -1648,12 +1648,12 @@ int player_land( int loud )
 
       return player_land(loud);
    }
-   else if (vec2_dist2(&player.p->solid->pos,&spob->pos) > pow2(spob->radius)) {
+   else if (vec2_dist2(&player.p->solid.pos,&spob->pos) > pow2(spob->radius)) {
       if (loud)
          player_message(_("#rYou are too far away to land on %s."), spob_name(spob));
       return PLAYER_LAND_AGAIN;
    }
-   else if (vec2_odist2( &player.p->solid->vel ) > pow2(MAX_HYPERSPACE_VEL)) {
+   else if (vec2_odist2( &player.p->solid.vel ) > pow2(MAX_HYPERSPACE_VEL)) {
       if (loud)
          player_message(_("#rYou are going too fast to land on %s."), spob_name(spob));
       return PLAYER_LAND_AGAIN;
@@ -1916,7 +1916,7 @@ int player_jump (void)
       int j    = -1;
       mindist  = INFINITY;
       for (int i=0; i<array_size(cur_system->jumps); i++) {
-         double dist = vec2_dist2( &player.p->solid->pos, &cur_system->jumps[i].pos );
+         double dist = vec2_dist2( &player.p->solid.pos, &cur_system->jumps[i].pos );
          if (dist < mindist && jp_isUsable(&cur_system->jumps[i])) {
             mindist  = dist;
             j        = i;
@@ -2008,7 +2008,7 @@ void player_brokeHyperspace (void)
    ovr_initAlpha();
 
    /* set position, the pilot_update will handle lowering vel */
-   space_calcJumpInPos( cur_system, sys, &player.p->solid->pos, &player.p->solid->vel, &player.p->solid->dir, player.p );
+   space_calcJumpInPos( cur_system, sys, &player.p->solid.pos, &player.p->solid.vel, &player.p->solid.dir, player.p );
    cam_setTargetPilot( player.p->id, 0 );
 
    /* reduce fuel */
@@ -2031,7 +2031,7 @@ void player_brokeHyperspace (void)
 
       if (pilot_isFlag(p, PILOT_PERSIST) || pilot_isFlag(p, PILOT_PLAYER)) {
          if (p != player.p)
-            space_calcJumpInPos( cur_system, sys, &p->solid->pos, &p->solid->vel, &p->solid->dir, player.p );
+            space_calcJumpInPos( cur_system, sys, &p->solid.pos, &p->solid.vel, &p->solid.dir, player.p );
 
          /* Run Lua stuff for all persistant pilots. */
          pilot_outfitLInitAll( p );
@@ -2277,8 +2277,8 @@ void player_targetNearest (void)
    unsigned int t, dt;
    double d;
 
-   d = pilot_getNearestPos( player.p, &dt, player.p->solid->pos.x,
-         player.p->solid->pos.y, 1 );
+   d = pilot_getNearestPos( player.p, &dt, player.p->solid.pos.x,
+         player.p->solid.pos.y, 1 );
    t = dt;
 
    /* Disabled ships are typically only valid if within 500 px of the player. */
@@ -2488,8 +2488,8 @@ static int player_thinkMouseFly (void)
 {
    double px, py, r, x, y;
 
-   px = player.p->solid->pos.x;
-   py = player.p->solid->pos.y;
+   px = player.p->solid.pos.x;
+   py = player.p->solid.pos.y;
    gl_screenToGameCoords( &x, &y, player.mousex, player.mousey );
    r = sqrt(pow2(x-px) + pow2(y-py));
    if (r > 50.) { /* Ignore mouse input within a 50 px radius of the centre. */
@@ -2498,7 +2498,7 @@ static int player_thinkMouseFly (void)
          double acc = CLAMP(0., 1., (r - 100.) / 200.);
          acc = 3. * pow2(acc) - 2. * pow(acc, 3.);
          /* Only accelerate when within 180 degrees of the intended direction. */
-         if (ABS(angle_diff(atan2( y - py, x - px), player.p->solid->dir)) < M_PI_2 )
+         if (ABS(angle_diff(atan2( y - py, x - px), player.p->solid.dir)) < M_PI_2 )
             player_accel(acc);
          else
             player_accel(0.);
@@ -3100,10 +3100,10 @@ int player_addEscorts (void)
       }
 
       /* Update to random position. */
-      pe->solid->dir = RNGF() * 2. * M_PI;
-      vec2_cset( &pe->solid->pos, player.p->solid->pos.x + 50.*cos(pe->solid->dir),
-            player.p->solid->pos.y + 50.*sin(pe->solid->dir) );
-      vec2_cset( &pe->solid->vel, 0., 0. );
+      pe->solid.dir = RNGF() * 2. * M_PI;
+      vec2_cset( &pe->solid.pos, player.p->solid.pos.x + 50.*cos(pe->solid.dir),
+            player.p->solid.pos.y + 50.*sin(pe->solid.dir) );
+      vec2_cset( &pe->solid.vel, 0., 0. );
 
       /* Update outfit if needed. */
       if (e->type != ESCORT_TYPE_BAY)
@@ -3913,7 +3913,7 @@ static Spob* player_parse( xmlNodePtr parent )
    a = RNGF() * 2.*M_PI;
    r = RNGF() * pnt->radius * 0.8;
    player_warp( pnt->pos.x + r*cos(a), pnt->pos.y + r*sin(a) );
-   player.p->solid->dir = RNG(0,359) * M_PI/180.;
+   player.p->solid.dir = RNG(0,359) * M_PI/180.;
 
    /* Initialize outfits. */
    pilot_outfitLInitAll( player.p );

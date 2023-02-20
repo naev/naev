@@ -761,7 +761,7 @@ void ovr_render( double dt )
       glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE, GL_ONE, GL_ONE );
       for (int i=0; i<array_size(cur_system->asteroids); i++) {
          AsteroidAnchor *ast = &cur_system->asteroids[i];
-         detect = vec2_dist2( &player.p->solid->pos, &ast->pos );
+         detect = vec2_dist2( &player.p->solid.pos, &ast->pos );
          if (detect < pow2(pilot_sensorRange() * player.p->stats.ew_detect + ast->radius)) {
             double r;
             map_overlayToScreenPos( &x, &y, ast->pos.x, ast->pos.y );
@@ -807,7 +807,7 @@ void ovr_render( double dt )
          /* Only show pilots the player can see. */
          if (!pilot_validTarget( player.p, pstk[i] ))
             continue;
-         map_overlayToScreenPos( &x, &y, pstk[i]->solid->pos.x, pstk[i]->solid->pos.y );
+         map_overlayToScreenPos( &x, &y, pstk[i]->solid.pos.x, pstk[i]->solid.pos.y );
          r = detect * pstk[i]->stats.ew_detect; /* Already divided by res */
          if (r > 0.) {
             glUseProgram( shaders.stealthaura.program );

@@ -469,7 +469,7 @@ static void gui_renderPilotTarget (void)
    else
       c = &cNeutral;
 
-   gui_renderTargetReticles( &shaders.targetship, p->solid->pos.x, p->solid->pos.y, p->ship->gfx_space->sw * 0.5, p->solid->dir, c );
+   gui_renderTargetReticles( &shaders.targetship, p->solid.pos.x, p->solid.pos.y, p->ship->gfx_space->sw * 0.5, p->solid.dir, c );
 }
 
 /**
@@ -627,8 +627,8 @@ int gui_onScreenPilot( double *rx, double *ry, const Pilot *pilot )
    tex = pilot->ship->gfx_space;
 
    /* Get relative positions. */
-   *rx = (pilot->solid->pos.x - player.p->solid->pos.x)*z;
-   *ry = (pilot->solid->pos.y - player.p->solid->pos.y)*z;
+   *rx = (pilot->solid.pos.x - player.p->solid.pos.x)*z;
+   *ry = (pilot->solid.pos.y - player.p->solid.pos.y)*z;
 
    /* Correct for offset. */
    *rx -= gui_xoff;
@@ -663,13 +663,13 @@ int gui_onScreenSpob( double *rx, double *ry, const JumpPoint *jp, const Spob *p
 
    if (jp == NULL) {
       tex = pnt->gfx_space;
-      *rx = (pnt->pos.x - player.p->solid->pos.x)*z;
-      *ry = (pnt->pos.y - player.p->solid->pos.y)*z;
+      *rx = (pnt->pos.x - player.p->solid.pos.x)*z;
+      *ry = (pnt->pos.y - player.p->solid.pos.y)*z;
    }
    else {
       tex = jumppoint_gfx;
-      *rx = (jp->pos.x - player.p->solid->pos.x)*z;
-      *ry = (jp->pos.y - player.p->solid->pos.y)*z;
+      *rx = (jp->pos.x - player.p->solid.pos.x)*z;
+      *ry = (jp->pos.y - player.p->solid.pos.y)*z;
    }
 
    /* Correct for offset. */
@@ -793,12 +793,12 @@ void gui_render( double dt )
    if (pilot_isFlag(player.p, PILOT_HYPERSPACE) &&
          (player.p->ptimer < HYPERSPACE_FADEOUT)) {
       fade = (HYPERSPACE_FADEOUT-player.p->ptimer) / HYPERSPACE_FADEOUT;
-      direction = VANGLE(player.p->solid->vel);
+      direction = VANGLE(player.p->solid.vel);
    }
    else if (pilot_isFlag(player.p, PILOT_HYP_END) &&
          player.p->ptimer > 0.) {
       fade = player.p->ptimer / HYPERSPACE_FADEIN;
-      direction = VANGLE(player.p->solid->vel) + M_PI;
+      direction = VANGLE(player.p->solid.vel) + M_PI;
    }
    /* Perform the fade. */
    if (fade > 0.) {
@@ -1102,12 +1102,12 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
 
    /* Get position. */
    if (overlay) {
-      x = (p->solid->pos.x / res);
-      y = (p->solid->pos.y / res);
+      x = (p->solid.pos.x / res);
+      y = (p->solid.pos.y / res);
    }
    else {
-      x = ((p->solid->pos.x - player.p->solid->pos.x) / res);
-      y = ((p->solid->pos.y - player.p->solid->pos.y) / res);
+      x = ((p->solid.pos.x - player.p->solid.pos.x) / res);
+      y = ((p->solid.pos.y - player.p->solid.pos.y) / res);
    }
    /* Get size. */
    ssize = sqrt( (double)ship_size( p->ship ) );
@@ -1149,7 +1149,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    }
 
    glUseProgram(shaders.pilotmarker.program);
-   gl_renderShader( x, y, scale, scale, p->solid->dir, &shaders.pilotmarker, col, 1 );
+   gl_renderShader( x, y, scale, scale, p->solid.dir, &shaders.pilotmarker, col, 1 );
 
    /* Draw selection if targeted. */
    if (p->id == player.p->target)
@@ -1194,8 +1194,8 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
       y = (a->pos.y / res);
    }
    else {
-      x = ((a->pos.x - player.p->solid->pos.x) / res);
-      y = ((a->pos.y - player.p->solid->pos.y) / res);
+      x = ((a->pos.x - player.p->solid.pos.x) / res);
+      y = ((a->pos.y - player.p->solid.pos.y) / res);
    }
 
    /* Get size. */
@@ -1247,8 +1247,8 @@ void gui_renderPlayer( double res, int overlay )
    if (overlay) {
       double ox, oy;
       ovr_center( &ox, &oy );
-      x = player.p->solid->pos.x / res + ox;
-      y = player.p->solid->pos.y / res + oy;
+      x = player.p->solid.pos.x / res + ox;
+      y = player.p->solid.pos.y / res + oy;
       r = MAX( 17., r );
    } else {
       x = y = 0.;
@@ -1256,7 +1256,7 @@ void gui_renderPlayer( double res, int overlay )
    }
 
    glUseProgram(shaders.playermarker.program);
-   gl_renderShader( x, y, r, r, player.p->solid->dir, &shaders.playermarker, &cRadar_player, 1 );
+   gl_renderShader( x, y, r, r, player.p->solid.dir, &shaders.playermarker, &cRadar_player, 1 );
 }
 
 /**
@@ -1363,8 +1363,8 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res, 
       cy    = spob->pos.y / res;
    }
    else {
-      cx    = (spob->pos.x - player.p->solid->pos.x) / res;
-      cy    = (spob->pos.y - player.p->solid->pos.y) / res;
+      cx    = (spob->pos.x - player.p->solid.pos.x) / res;
+      cy    = (spob->pos.y - player.p->solid.pos.y) / res;
    }
 
    /* Check if in range. */
@@ -1463,8 +1463,8 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       cy    = jp->pos.y / res;
    }
    else {
-      cx    = (jp->pos.x - player.p->solid->pos.x) / res;
-      cy    = (jp->pos.y - player.p->solid->pos.y) / res;
+      cx    = (jp->pos.x - player.p->solid.pos.x) / res;
+      cy    = (jp->pos.y - player.p->solid.pos.y) / res;
    }
 
    /* Check if in range. */
@@ -2082,8 +2082,8 @@ int gui_radarClickEvent( SDL_Event* event )
    }
    if (!in_bounds)
       return 0;
-   x = (mxr - cx) * gui_radar.res + player.p->solid->pos.x;
-   y = (myr - cy) * gui_radar.res + player.p->solid->pos.y;
+   x = (mxr - cx) * gui_radar.res + player.p->solid.pos.x;
+   y = (myr - cy) * gui_radar.res + player.p->solid.pos.y;
    return input_clickPos( event, x, y, 1., 10. * gui_radar.res, 15. * gui_radar.res );
 }
 
@@ -2101,8 +2101,8 @@ int gui_borderClickEvent( SDL_Event *event )
    int pntid, jpid, astid, fieid;
    double x, y;
    int autonav = (event->button.button == SDL_BUTTON_RIGHT) ? 1 : 0;
-   double px = player.p->solid->pos.x;
-   double py = player.p->solid->pos.y;
+   double px = player.p->solid.pos.x;
+   double py = player.p->solid.pos.y;
    gui_eventToScreenPos( &mx, &my, event->button.x, event->button.y );
    mx -= gui_viewport_x;
    my -= gui_viewport_y;

@@ -150,13 +150,13 @@ int player_tryBoard( int noisy )
       player_message( "#r%s", _("Your target cannot be boarded again.") );
       return PLAYER_BOARD_IMPOSSIBLE;
    }
-   else if (vec2_dist(&player.p->solid->pos,&p->solid->pos) >
+   else if (vec2_dist(&player.p->solid.pos,&p->solid.pos) >
          p->ship->gfx_space->sw * PILOT_SIZE_APPROX) {
       if (noisy)
          player_message( "#r%s", _("You are too far away to board your target.") );
       return PLAYER_BOARD_RETRY;
    }
-   else if (vec2_dist2( &player.p->solid->vel, &p->solid->vel ) > pow2(MAX_HYPERSPACE_VEL)) {
+   else if (vec2_dist2( &player.p->solid.vel, &p->solid.vel ) > pow2(MAX_HYPERSPACE_VEL)) {
       if (noisy)
          player_message( "#r%s", _("You are going too fast to board the ship.") );
       return PLAYER_BOARD_RETRY;
@@ -174,7 +174,7 @@ int player_tryBoard( int noisy )
    }
 
    /* Set speed to target's speed. */
-   vec2_cset(&player.p->solid->vel, VX(p->solid->vel), VY(p->solid->vel));
+   vec2_cset(&player.p->solid.vel, VX(p->solid.vel), VY(p->solid.vel));
 
    /* Is boarded. */
    board_boarded = 1;
@@ -220,16 +220,16 @@ int pilot_board( Pilot *p )
    /* Check if can board. */
    if (!pilot_isDisabled(target))
       return 0;
-   else if (vec2_dist(&p->solid->pos, &target->solid->pos) >
+   else if (vec2_dist(&p->solid.pos, &target->solid.pos) >
          target->ship->gfx_space->sw * PILOT_SIZE_APPROX )
       return 0;
-   else if (vec2_dist2( &p->solid->vel, &target->solid->vel ) > pow2(MAX_HYPERSPACE_VEL))
+   else if (vec2_dist2( &p->solid.vel, &target->solid.vel ) > pow2(MAX_HYPERSPACE_VEL))
       return 0;
    else if (pilot_isFlag(target,PILOT_BOARDED))
       return 0;
 
    /* Set speed to target's speed. */
-   vec2_cset(&p->solid->vel, VX(target->solid->vel), VY(target->solid->vel));
+   vec2_cset(&p->solid.vel, VX(target->solid.vel), VY(target->solid.vel));
 
    /* Set the boarding flag. */
    pilot_setFlag(target, PILOT_BOARDED);

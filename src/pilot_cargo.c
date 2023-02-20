@@ -148,7 +148,7 @@ int pilot_cargoAddRaw( Pilot* pilot, const Commodity* cargo,
    int q = pilot_cargoAddInternal( pilot, cargo, quantity, id );
    pilot->cargo_free    -= q;
    pilot->mass_cargo    += q;
-   pilot->solid->mass   += pilot->stats.cargo_inertia * q;
+   pilot->solid.mass   += pilot->stats.cargo_inertia * q;
    pilot_updateMass( pilot );
    gui_setGeneric( pilot );
 
@@ -221,7 +221,7 @@ void pilot_cargoCalc( Pilot* pilot )
 {
    pilot->mass_cargo  = pilot_cargoUsed( pilot );
    pilot->cargo_free  = pilot->cap_cargo - pilot->mass_cargo;
-   pilot->solid->mass = pilot->ship->mass + pilot->stats.cargo_inertia * pilot->mass_cargo + pilot->mass_outfit;
+   pilot->solid.mass = pilot->ship->mass + pilot->stats.cargo_inertia * pilot->mass_cargo + pilot->mass_outfit;
    pilot_updateMass( pilot );
 }
 
@@ -278,7 +278,7 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
    /* remove cargo */
    pilot->cargo_free    += pilot->commodities[i].quantity;
    pilot->mass_cargo    -= pilot->commodities[i].quantity;
-   pilot->solid->mass   -= pilot->stats.cargo_inertia * pilot->commodities[i].quantity;
+   pilot->solid.mass   -= pilot->stats.cargo_inertia * pilot->commodities[i].quantity;
    array_erase( &pilot->commodities, &pilot->commodities[i], &pilot->commodities[i+1] );
    if (array_size(pilot->commodities) <= 0) {
       array_free( pilot->commodities );
@@ -327,7 +327,7 @@ int pilot_cargoRmRaw( Pilot* pilot, const Commodity* cargo, int quantity, int cl
          pilot->commodities[i].quantity -= q;
       pilot->cargo_free    += q;
       pilot->mass_cargo    -= q;
-      pilot->solid->mass   -= pilot->stats.cargo_inertia * q;
+      pilot->solid.mass   -= pilot->stats.cargo_inertia * q;
       pilot_updateMass( pilot );
       /* This can call Lua code and be called during takeoff (pilot cleanup), causing
        * the Lua code to be run with a half-assed pilot state crashing the game. */
@@ -369,7 +369,7 @@ int pilot_cargoRmAll( Pilot* pilot, int cleanup )
 
    pilot->cargo_free    += q;
    pilot->mass_cargo    -= q;
-   pilot->solid->mass   -= pilot->stats.cargo_inertia * q;
+   pilot->solid.mass   -= pilot->stats.cargo_inertia * q;
    pilot_updateMass( pilot );
 
    /* If we're updating this ship's status, communicate the update to the GUI.
@@ -410,10 +410,10 @@ int pilot_cargoJet( Pilot *p, const Commodity *cargo, int quantity, int simulate
       quantity = pilot_cargoRmRaw( p, cargo, quantity, 0 );
 
    n   = MAX( 1, RNG(quantity/10, quantity/5) );
-   px  = p->solid->pos.x;
-   py  = p->solid->pos.y;
-   bvx = p->solid->vel.x;
-   bvy = p->solid->vel.y;
+   px  = p->solid.pos.x;
+   py  = p->solid.pos.y;
+   bvx = p->solid.vel.x;
+   bvy = p->solid.vel.y;
    for (int i=0; i<n; i++) {
       int effect = spfx_get("cargo");
 

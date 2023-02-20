@@ -89,14 +89,14 @@ static int camL_set( lua_State *L )
       p = pilot_get( lp );
       if (p==NULL)
          return 0;
-      vec = &p->solid->pos;
+      vec = &p->solid.pos;
    }
    else if (lua_isvector(L,1))
       vec = lua_tovector(L,1);
    else if (lua_isnoneornil(L,1)) {
       if (player.p != NULL) {
          p = player.p;
-         vec = &player.p->solid->pos;
+         vec = &player.p->solid.pos;
       }
    }
    else

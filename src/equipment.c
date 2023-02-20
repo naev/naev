@@ -669,15 +669,15 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    y -= gl_smallFont.h + h;
 
    percent = (p->stats.engine_limit > 0) ? CLAMP(0., 1.,
-      (p->stats.engine_limit - p->solid->mass) / p->stats.engine_limit) : 0.;
+      (p->stats.engine_limit - p->solid.mass) / p->stats.engine_limit) : 0.;
    toolkit_drawRect( x, y - 2, w * percent, h + 4, &cGreen, NULL );
    toolkit_drawRect( x + w * percent, y - 2, w * (1.-percent), h + 4, &cOrange, NULL );
    gl_printMid( &gl_smallFont, w,
       x, y + h / 2. - gl_smallFont.h / 2.,
-      &cFontWhite, "%.0f / %.0f", p->stats.engine_limit - p->solid->mass, p->stats.engine_limit );
+      &cFontWhite, "%.0f / %.0f", p->stats.engine_limit - p->solid.mass, p->stats.engine_limit );
 
    y -= h;
-   if (p->stats.engine_limit > 0. && p->solid->mass > p->stats.engine_limit) {
+   if (p->stats.engine_limit > 0. && p->solid.mass > p->stats.engine_limit) {
       gl_printMid( &gl_smallFont, w,
          x, y, &cFontRed, _("!! %.0f%% Slower !!"),
          (1. - p->speed / p->speed_base) * 100);
@@ -1757,7 +1757,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
    num2str( sdet, ship->ew_detection, 0 );
    num2str( seva, ship->ew_evasion, 0 );
    num2str( sste, ship->ew_stealth, 0 );
-   num2str( smass, ship->solid->mass, 0 );
+   num2str( smass, ship->solid.mass, 0 );
    num2str( sfuel, ship->fuel_max, 0 );
 
    l += scnprintf( &buf[l], sizeof(buf)-l, "%s", _("Name:") );
@@ -1827,15 +1827,15 @@ void equipment_updateShips( unsigned int wid, const char* str )
       if (player.fleet_capacity > 0)
          l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d", ship->ship->points );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%s%.0f#0", EQ_COMP( ship->crew, ship->ship->crew, 0 ) );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s#0 %s", smass, n_( "tonne", "tonnes", ship->solid->mass ) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s#0 %s", smass, n_( "tonne", "tonnes", ship->solid.mass ) );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
       l += scnprintf( &buf[l], sizeof(buf)-l, _("%s average"), nt );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
       l += scnprintf( &buf[l], sizeof(buf)-l, _("#%c%s%.0f#0 kN/tonne"),
-            EQ_COMP( ship->thrust/ship->solid->mass, ship->ship->thrust/ship->ship->mass, 0 ) );
+            EQ_COMP( ship->thrust/ship->solid.mass, ship->ship->thrust/ship->ship->mass, 0 ) );
       l += scnprintf( &buf[l], sizeof(buf)-l, _("\n#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)"),
-            EQ_COMP( ship->speed, ship->ship->speed, 0 ), EQ_COMP( solid_maxspeed( ship->solid, ship->speed, ship->thrust ),
-               solid_maxspeed( ship->solid, ship->ship->speed, ship->ship->thrust), 0 ) );
+            EQ_COMP( ship->speed, ship->ship->speed, 0 ), EQ_COMP( solid_maxspeed( &ship->solid, ship->speed, ship->thrust ),
+               solid_maxspeed( &ship->solid, ship->ship->speed, ship->ship->thrust), 0 ) );
       l += scnprintf( &buf[l], sizeof(buf)-l, _("\n#%c%s%.0f#0 deg/s"),
             EQ_COMP( ship->turn*180./M_PI, ship->ship->turn*180./M_PI, 0 ) );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f%%", ship->stats.time_mod * ship->ship->dt_default * 100 );

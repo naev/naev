@@ -174,7 +174,7 @@ void gatherable_gather( Pilot *p )
       if (gat->player_only && !pilot_isPlayer(p))
          continue;
 
-      if (vec2_dist( &p->solid->pos, &gat->pos ) < GATHER_DIST ) {
+      if (vec2_dist( &p->solid.pos, &gat->pos ) < GATHER_DIST ) {
          /* Add cargo to pilot. */
          int q = pilot_cargoAdd( p, gat->type, gat->quantity, 0 );
 

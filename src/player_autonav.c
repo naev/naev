@@ -114,11 +114,10 @@ static int player_autonavSetup (void)
    if (!player_isFlag(PLAYER_AUTONAV)) {
       tc_base   = player_dt_default() * player.speed;
       tc_mod    = tc_base;
+      player.tc_max = conf.compression_velocity /
+            solid_maxspeed(&player.p->solid, player.p->speed, player.p->thrust);
       if (conf.compression_mult >= 1.)
-         player.tc_max = MIN( conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust), conf.compression_mult );
-      else
-         player.tc_max = conf.compression_velocity /
-               solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust);
+         player.tc_max = MIN( player.tc_max, conf.compression_mult );
 
       /* Safe cap. */
       player.tc_max = MAX( 1., player.tc_max );
@@ -199,8 +198,8 @@ void player_autonavSpob( const char *name, int tryland )
    pos = p->pos;
 
    /* Don't target center, but position offset in the direction of the player. */
-   a = ANGLE( player.p->solid->pos.x - pos.x,
-              player.p->solid->pos.y - pos.y );
+   a = ANGLE( player.p->solid.pos.x - pos.x,
+              player.p->solid.pos.y - pos.y );
    vec2_padd( &pos, 0.6 * p->radius, a );
    player.autonav_pos = pos;
 
@@ -261,7 +260,7 @@ static void player_autonavRampdown( double d )
    double t, tint;
    double vel;
 
-   vel   = MIN( 1.5*player.p->speed, VMOD(player.p->solid->vel) );
+   vel   = MIN( 1.5*player.p->speed, VMOD(player.p->solid.vel) );
    t     = d / vel * (1. - 0.075 * tc_base);
    tint  = 3. + 0.5*(3.*(tc_mod-tc_base));
    if (t < tint) {
@@ -350,15 +349,15 @@ static void player_autonav (void)
          jp    = &cur_system->jumps[ player.p->nav_hyperspace ];
          /* Don't target center, but position offset in the direction of the player. */
          pos = jp->pos;
-         t = ANGLE( player.p->solid->pos.x - jp->pos.x,
-                    player.p->solid->pos.y - jp->pos.y );
+         t = ANGLE( player.p->solid.pos.x - jp->pos.x,
+                    player.p->solid.pos.y - jp->pos.y );
          d = space_jumpDistance( player.p, jp );
          vec2_padd( &pos, MAX( 0.8*d, d-30. ), t );
          ret = player_autonavApproach( &pos, &d, 0 );
          if (ret)
             player.autonav = AUTONAV_JUMP_BRAKE;
          else if (!tc_rampdown && (map_npath<=1)) {
-            vel   = MIN( 1.5*player.p->speed, VMOD(player.p->solid->vel) );
+            vel   = MIN( 1.5*player.p->speed, VMOD(player.p->solid.vel) );
             t     = d / vel * (1.2 - .1 * tc_base);
             /* tint is the integral of the time in per time units.
              *
@@ -393,7 +392,7 @@ static void player_autonav (void)
             ret = pilot_interceptPos( player.p, jp->pos.x, jp->pos.y );
             if (!ret && space_canHyperspace(player.p))
                ret = 1;
-            player_acc = player.p->solid->thrust / player.p->thrust;
+            player_acc = player.p->solid.thrust / player.p->thrust;
          }
          else
             ret = player_autonavBrake();
@@ -482,7 +481,7 @@ static void player_autonav (void)
          }
 
          ret = (pilot_isDisabled(p) || pilot_isFlag(p,PILOT_BOARDABLE));
-         player_autonavFollow( &p->solid->pos, &p->solid->vel, !ret, &d );
+         player_autonavFollow( &p->solid.pos, &p->solid.vel, !ret, &d );
          if (ret && (!tc_rampdown))
             player_autonavRampdown(d);
          break;
@@ -508,7 +507,7 @@ static void player_autonav (void)
             break;
          }
 
-         ret = player_autonavApproachBoard( &p->solid->pos, &p->solid->vel, &d, p->ship->gfx_space->sw );
+         ret = player_autonavApproachBoard( &p->solid.pos, &p->solid.vel, &d, p->ship->gfx_space->sw );
          if (!tc_rampdown)
             player_autonavRampdown(d);
 
@@ -537,7 +536,7 @@ static int player_autonavApproach( const vec2 *pos, double *dist2, int count_tar
    double d, t, vel, dist;
 
    /* Only accelerate if facing move dir. */
-   d = pilot_face( player.p, vec2_angle( &player.p->solid->pos, pos ) );
+   d = pilot_face( player.p, vec2_angle( &player.p->solid.pos, pos ) );
    if (FABS(d) < MIN_DIR_ERR) {
       if (player_acc < 1.)
          player_accel( 1. );
@@ -546,18 +545,18 @@ static int player_autonavApproach( const vec2 *pos, double *dist2, int count_tar
       player_accelOver();
 
    /* Get current time to reach target. */
-   t  = MIN( 1.5*player.p->speed, VMOD(player.p->solid->vel) ) /
-      (player.p->thrust / player.p->solid->mass);
+   t  = MIN( 1.5*player.p->speed, VMOD(player.p->solid.vel) ) /
+      (player.p->thrust / player.p->solid.mass);
 
    /* Get velocity. */
-   vel   = MIN( player.p->speed, VMOD(player.p->solid->vel) );
+   vel   = MIN( player.p->speed, VMOD(player.p->solid.vel) );
 
    /* Get distance. */
    dist  = vel*(t+1.1*M_PI/player.p->turn) -
-      0.5*(player.p->thrust/player.p->solid->mass)*t*t;
+      0.5*(player.p->thrust/player.p->solid.mass)*t*t;
 
    /* Output distance^2 */
-   d        = vec2_dist( pos, &player.p->solid->pos );
+   d        = vec2_dist( pos, &player.p->solid.pos );
    dist     = d - dist;
    if (count_target)
       *dist2   = dist;
@@ -586,7 +585,7 @@ static void player_autonavFollow( const vec2 *pos, const vec2 *vel, const int fo
    vec2 dir, point;
 
    /* timeFactor is a time constant of the ship, used to heuristically determine the ratio Kd/Kp. */
-   timeFactor = M_PI/player.p->turn + player.p->speed/player.p->thrust*player.p->solid->mass;
+   timeFactor = M_PI/player.p->turn + player.p->speed/player.p->thrust*player.p->solid.mass;
 
    /* Define the control coefficients.
       Maybe radius could be adjustable by the player. */
@@ -601,10 +600,10 @@ static void player_autonavFollow( const vec2 *pos, const vec2 *vel, const int fo
    vec2_cset( &point, pos->x + radius * cos(angle),
               pos->y + radius * sin(angle) );
 
-   vec2_cset( &dir, (point.x - player.p->solid->pos.x) * Kp +
-         (vel->x - player.p->solid->vel.x) *Kd,
-         (point.y - player.p->solid->pos.y) * Kp +
-         (vel->y - player.p->solid->vel.y) *Kd );
+   vec2_cset( &dir, (point.x - player.p->solid.pos.x) * Kp +
+         (vel->x - player.p->solid.vel.x) *Kd,
+         (point.y - player.p->solid.pos.y) * Kp +
+         (vel->y - player.p->solid.vel.y) *Kd );
 
    d = pilot_face( player.p, VANGLE(dir) );
 
@@ -615,7 +614,7 @@ static void player_autonavFollow( const vec2 *pos, const vec2 *vel, const int fo
 
    /* If aiming exactly at the point, should say when approaching. */
    if (!follow)
-      *dist2 = vec2_dist( pos, &player.p->solid->pos );
+      *dist2 = vec2_dist( pos, &player.p->solid.pos );
 }
 
 static int player_autonavApproachBoard( const vec2 *pos, const vec2 *vel, double *dist2, double sw )
@@ -624,16 +623,16 @@ static int player_autonavApproachBoard( const vec2 *pos, const vec2 *vel, double
    vec2 dir;
 
    /* timeFactor is a time constant of the ship, used to heuristically determine the ratio Kd/Kp. */
-   timeFactor = M_PI/player.p->turn + player.p->speed/player.p->thrust*player.p->solid->mass;
+   timeFactor = M_PI/player.p->turn + player.p->speed/player.p->thrust*player.p->solid.mass;
 
    /* Define the control coefficients. */
    const double Kp = 10.;
    const double Kd = MAX( 5., 10.84*timeFactor-10.82 );
 
-   vec2_cset( &dir, (pos->x - player.p->solid->pos.x) * Kp +
-         (vel->x - player.p->solid->vel.x) *Kd,
-         (pos->y - player.p->solid->pos.y) * Kp +
-         (vel->y - player.p->solid->vel.y) *Kd );
+   vec2_cset( &dir, (pos->x - player.p->solid.pos.x) * Kp +
+         (vel->x - player.p->solid.vel.x) *Kd,
+         (pos->y - player.p->solid.pos.y) * Kp +
+         (vel->y - player.p->solid.vel.y) *Kd );
 
    d = pilot_face( player.p, VANGLE(dir) );
 
@@ -643,12 +642,12 @@ static int player_autonavApproachBoard( const vec2 *pos, const vec2 *vel, double
       player_accel( 0. );
 
    /* Distance for TC-rampdown. */
-   *dist2 = vec2_dist( pos, &player.p->solid->pos );
+   *dist2 = vec2_dist( pos, &player.p->solid.pos );
 
    /* Check if velocity and position allow to board. */
    if (*dist2 > sw * PILOT_SIZE_APPROX)
       return 0;
-   if (vec2_dist2( &player.p->solid->vel, vel ) > pow2(MAX_HYPERSPACE_VEL))
+   if (vec2_dist2( &player.p->solid.vel, vel ) > pow2(MAX_HYPERSPACE_VEL))
       return 0;
    return 1;
 }
@@ -674,7 +673,7 @@ static int player_autonavBrake (void)
    else
       ret = pilot_brake(player.p);
 
-   player_acc = player.p->solid->thrust / player.p->thrust;
+   player_acc = player.p->solid.thrust / player.p->thrust;
 
    return ret;
 }

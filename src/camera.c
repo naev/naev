@@ -156,9 +156,9 @@ void cam_setTargetPilot( unsigned int follow, int soft_over )
          Pilot *p = pilot_get( follow );
          if (p != NULL) {
             double x, y;
-            dir      = p->solid->dir;
-            x        = p->solid->pos.x;
-            y        = p->solid->pos.y;
+            dir      = p->solid.dir;
+            x        = p->solid.pos.x;
+            y        = p->solid.pos.y;
             camera_X = x;
             camera_Y = y;
             old_X    = x;
@@ -239,7 +239,7 @@ void cam_update( double dt )
             camera_fly = 0;
          }
          else {
-            cam_updateFly( p->solid->pos.x, p->solid->pos.y, dt );
+            cam_updateFly( p->solid.pos.x, p->solid.pos.y, dt );
             cam_updatePilotZoom( p, NULL, dt );
          }
       }
@@ -268,9 +268,9 @@ void cam_update( double dt )
       sound_updateListener( CAMERA_DIR, camera_X, camera_Y, dx, dy );
    }
    else {
-      sound_updateListener( p->solid->dir,
-            p->solid->pos.x, p->solid->pos.y,
-            p->solid->vel.x, p->solid->vel.y );
+      sound_updateListener( p->solid.dir,
+            p->solid.pos.x, p->solid.pos.y,
+            p->solid.vel.x, p->solid.vel.y );
    }
 
    /* Compute the position differential. */
@@ -331,8 +331,8 @@ static void cam_updatePilot( Pilot *follow, double dt )
    /*diag2 = pow2(SCREEN_W) + pow2(SCREEN_H);*/
    /*diag2 = pow2( MIN(SCREEN_W, SCREEN_H) );*/
    const double diag2 = 100*100;
-   x = follow->solid->pos.x;
-   y = follow->solid->pos.y;
+   x = follow->solid.pos.x;
+   y = follow->solid.pos.y;
 
    /* Compensate player movement. */
    mx        = x - old_X;
@@ -350,14 +350,14 @@ static void cam_updatePilot( Pilot *follow, double dt )
 
    /* Bias towards target. */
    if (target != NULL) {
-      bias_x += target->solid->pos.x - x;
-      bias_y += target->solid->pos.y - y;
+      bias_x += target->solid.pos.x - x;
+      bias_y += target->solid.pos.y - y;
    }
 
    /* Bias towards velocity and facing. */
-   vx       = follow->solid->vel.x*1.5;
-   vy       = follow->solid->vel.y*1.5;
-   dir      = angle_diff( atan2(vy,vx), follow->solid->dir);
+   vx       = follow->solid.vel.x*1.5;
+   vy       = follow->solid.vel.y*1.5;
+   dir      = angle_diff( atan2(vy,vx), follow->solid.dir);
    dir      = (M_PI - FABS(dir)) /  M_PI; /* Normalize. */
    vx      *= dir;
    vy      *= dir;
@@ -433,7 +433,7 @@ static void cam_updatePilotZoom( const Pilot *follow, const Pilot *target, doubl
     * z = A / A_v = 1. / (1 + v/d)
     */
    d     = sqrt(SCREEN_W*SCREEN_H);
-   znear = MIN( conf.zoom_near, 1. / (0.8 + VMOD(follow->solid->vel)/d) );
+   znear = MIN( conf.zoom_near, 1. / (0.8 + VMOD(follow->solid.vel)/d) );
 
    /* Maximum is limited by nebulae. */
    if (cur_system->nebu_density > 0.) {
@@ -455,8 +455,8 @@ static void cam_updatePilotZoom( const Pilot *follow, const Pilot *target, doubl
       if (target != NULL) {
          /* Get current relative target position. */
          gui_getOffset( &x, &y );
-         x += target->solid->pos.x - follow->solid->pos.x;
-         y += target->solid->pos.y - follow->solid->pos.y;
+         x += target->solid.pos.x - follow->solid.pos.x;
+         y += target->solid.pos.y - follow->solid.pos.y;
 
          /* Get distance ratio. */
          dx = (SCREEN_W/2.) / (FABS(x) + 2.*target->ship->gfx_space->sw);

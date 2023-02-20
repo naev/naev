@@ -260,9 +260,9 @@ static int poL_munition( lua_State *L )
    Pilot *p    = luaL_validpilot( L, 2 );
    const Outfit *o = luaL_optoutfit( L, 3, NULL );
    LuaPilot t  = nluaL_optarg( L, 4, p->id, luaL_checkpilot );
-   double dir  = luaL_optnumber( L, 5, p->solid->dir );
-   vec2 *vp    = luaL_optvector( L, 6, &p->solid->pos );
-   vec2 *vv    = luaL_optvector( L, 7, &p->solid->vel );
+   double dir  = luaL_optnumber( L, 5, p->solid.dir );
+   vec2 *vp    = luaL_optvector( L, 6, &p->solid.pos );
+   vec2 *vv    = luaL_optvector( L, 7, &p->solid.vel );
 
    weapon_add( po, o, po->heat_T, dir, vp, vv, p, t, 0., 1 );
    return 0;

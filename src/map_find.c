@@ -265,7 +265,7 @@ static int map_findDistance( StarSystem *sys, Spob *spob, int *jumps, double *di
    if (sys == cur_system) {
       *jumps = 0;
       if (spob != NULL)
-         *distance = vec2_dist( &player.p->solid->pos, &spob->pos );
+         *distance = vec2_dist( &player.p->solid.pos, &spob->pos );
       else
          *distance = 0.;
 
@@ -280,7 +280,7 @@ static int map_findDistance( StarSystem *sys, Spob *spob, int *jumps, double *di
       return -1;
 
    /* Distance to first jump point. */
-   vs = &player.p->solid->pos;
+   vs = &player.p->solid.pos;
    for (int j=0; j < array_size(cur_system->jumps); j++) {
       if (cur_system->jumps[j].target == slist[0]) {
          ve = &cur_system->jumps[j].pos;
@@ -320,7 +320,7 @@ static int map_findDistance( StarSystem *sys, Spob *spob, int *jumps, double *di
 
       /* Use current position. */
       if (i==0)
-         vs = &player.p->solid->pos;
+         vs = &player.p->solid.pos;
 
 #ifdef DEBUGGING
       if ((vs==NULL) || (ve==NULL)) {

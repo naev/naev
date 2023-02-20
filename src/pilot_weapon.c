@@ -117,7 +117,7 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       /* Calculate time to target if it is there. */
       pt = pilot_getTarget( p );
       if (pt != NULL)
-         time = pilot_weapFlyTime( o, p, &pt->solid->pos, &pt->solid->vel);
+         time = pilot_weapFlyTime( o, p, &pt->solid.pos, &pt->solid.vel);
       /* Looking for a closer targeted asteroid */
       else if (p->nav_asteroid != -1) {
          field = &cur_system->asteroids[p->nav_anchor];
@@ -879,7 +879,7 @@ double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const vec2 *pos,
    vec2 approach_vector, relative_location, orthoradial_vector;
    double speed, radial_speed, orthoradial_speed, dist, t;
 
-   dist = vec2_dist( &parent->solid->pos, pos );
+   dist = vec2_dist( &parent->solid.pos, pos );
 
    /* Beam weapons */
    if (outfit_isBeam(o)) {
@@ -896,18 +896,18 @@ double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const vec2 *pos,
    if (outfit_isLauncher(o) && o->u.lau.ai != AMMO_AI_UNGUIDED)
       vec2_cset( &approach_vector, - vel->x, - vel->y );
    else
-      vec2_cset( &approach_vector, VX(parent->solid->vel) - vel->x,
-            VY(parent->solid->vel) - vel->y );
+      vec2_cset( &approach_vector, VX(parent->solid.vel) - vel->x,
+            VY(parent->solid.vel) - vel->y );
 
    speed = outfit_speed(o);
 
    /* Get the vector : shooter -> target */
-   vec2_cset( &relative_location, pos->x - VX(parent->solid->pos),
-         pos->y - VY(parent->solid->pos) );
+   vec2_cset( &relative_location, pos->x - VX(parent->solid.pos),
+         pos->y - VY(parent->solid.pos) );
 
    /* Get the orthogonal vector */
-   vec2_cset(&orthoradial_vector, VY(parent->solid->pos) - pos->y,
-         pos->x -  VX(parent->solid->pos) );
+   vec2_cset(&orthoradial_vector, VY(parent->solid.pos) - pos->y,
+         pos->x -  VX(parent->solid.pos) );
 
    radial_speed = vec2_dot( &approach_vector, &relative_location );
    radial_speed = radial_speed / VMOD(relative_location);
@@ -1056,12 +1056,12 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time, int aim
    pilot_getMount( p, w, &vp );
 
    /* Modify velocity to take into account the rotation. */
-   vec2_cset( &vv, p->solid->vel.x - vp.y*p->solid->dir_vel,
-         p->solid->vel.y + vp.x*p->solid->dir_vel );
+   vec2_cset( &vv, p->solid.vel.x - vp.y*p->solid.dir_vel,
+         p->solid.vel.y + vp.x*p->solid.dir_vel );
 
    /* Get absolute weapon mount position. */
-   vp.x += p->solid->pos.x;
-   vp.y += p->solid->pos.y;
+   vp.x += p->solid.pos.x;
+   vp.y += p->solid.pos.y;
 
    /*
     * regular bolt weapons
@@ -1081,7 +1081,7 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time, int aim
       pilot_heatAddSlot( p, w );
       if (!outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY )) {
          for (int i=0; i<w->outfit->u.blt.shots; i++)
-            weapon_add( w, NULL, w->heat_T, p->solid->dir,
+            weapon_add( w, NULL, w->heat_T, p->solid.dir,
                   &vp, &vv, p, p->target, time, aim );
       }
    }
@@ -1106,8 +1106,8 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time, int aim
       /** @todo Handle warmup stage. */
       w->state = PILOT_OUTFIT_ON;
       if (!outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY )) {
-         w->u.beamid = beam_start( w, p->solid->dir,
-               &vp, &p->solid->vel, p, p->target, aim );
+         w->u.beamid = beam_start( w, p->solid.dir,
+               &vp, &p->solid.vel, p, p->target, aim );
       }
 
       w->timer = w->outfit->u.bem.duration;
@@ -1144,7 +1144,7 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time, int aim
       pilot_heatAddSlot( p, w );
       if (!outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY )) {
          for (int i=0; i<w->outfit->u.lau.shots; i++)
-            weapon_add( w, NULL, w->heat_T, p->solid->dir,
+            weapon_add( w, NULL, w->heat_T, p->solid.dir,
                   &vp, &vv, p, p->target, time, aim );
       }
 
@@ -1184,7 +1184,7 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time, int aim
       /* Create the escort. */
       if (!outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY ))
          escort_create( p, w->outfit->u.bay.ship,
-               &vp, &p->solid->vel, p->solid->dir, ESCORT_TYPE_BAY, 1, dockslot );
+               &vp, &p->solid.vel, p->solid.dir, ESCORT_TYPE_BAY, 1, dockslot );
 
       w->u.ammo.quantity -= 1; /* we just shot it */
       p->mass_outfit     -= w->outfit->u.bay.ship_mass;
@@ -1544,11 +1544,11 @@ void pilot_afterburn( Pilot *p )
 
       /* @todo Make this part of a more dynamic activated outfit sound system. */
       sound_playPos(p->afterburner->outfit->u.afb.sound_on,
-            p->solid->pos.x, p->solid->pos.y, p->solid->vel.x, p->solid->vel.y);
+            p->solid.pos.x, p->solid.pos.y, p->solid.vel.x, p->solid.vel.y);
    }
 
    if (pilot_isPlayer(p)) {
-      afb_mod = MIN( 1., player.p->afterburner->outfit->u.afb.mass_limit / player.p->solid->mass );
+      afb_mod = MIN( 1., player.p->afterburner->outfit->u.afb.mass_limit / player.p->solid.mass );
       spfx_shake( afb_mod * player.p->afterburner->outfit->u.afb.rumble );
    }
 }
@@ -1570,7 +1570,7 @@ void pilot_afterburnOver( Pilot *p )
 
       /* @todo Make this part of a more dynamic activated outfit sound system. */
       sound_playPos(p->afterburner->outfit->u.afb.sound_off,
-            p->solid->pos.x, p->solid->pos.y, p->solid->vel.x, p->solid->vel.y);
+            p->solid.pos.x, p->solid.pos.y, p->solid.vel.x, p->solid.vel.y);
    }
 }
 

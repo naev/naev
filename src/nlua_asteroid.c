@@ -241,7 +241,7 @@ static int asteroidL_get( lua_State *L )
       pos = lua_tovector(L,1);
 
    else if (lua_ispilot(L,1))
-      pos = &luaL_validpilot(L,1)->solid->pos;
+      pos = &luaL_validpilot(L,1)->solid.pos;
 
    else if (lua_isnoneornil(L,1)) {
       int max_field = array_size(cur_system->asteroids) - 1;

@@ -1244,7 +1244,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
    if (event->button.button == SDL_BUTTON_RIGHT) {
       pid = player.p->target;
       p = pilot_get(pid);
-      dp = pow2(x - p->solid->pos.x) + pow2(y - p->solid->pos.y);
+      dp = pow2(x - p->solid.pos.x) + pow2(y - p->solid.pos.y);
    } else {
       dp = pilot_getNearestPos( player.p, &pid, x, y, 1 );
       p  = pilot_get(pid);
@@ -1303,7 +1303,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
          return 1;
 
       /* Go to position, if the position is >= 1500 px away. */
-      if ((pow2(x - player.p->solid->pos.x) + pow2(y - player.p->solid->pos.y))
+      if ((pow2(x - player.p->solid.pos.x) + pow2(y - player.p->solid.pos.y))
             >= pow2(1500))
 
       player_autonavPos( x, y );

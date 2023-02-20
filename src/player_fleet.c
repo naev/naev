@@ -113,8 +113,8 @@ int pfleet_deploy( PlayerShip_t *ps )
 
    /* Get the position. */
    a = RNGF() * 2. * M_PI;
-   vec2_cset( &v, player.p->solid->pos.x + 50.*cos(a),
-         player.p->solid->pos.y + 50.*sin(a) );
+   vec2_cset( &v, player.p->solid.pos.x + 50.*cos(a),
+         player.p->solid.pos.y + 50.*sin(a) );
 
    /* Add the escort to the fleet. */
    escort_createRef( player.p, ps->p, &v, NULL, a, ESCORT_TYPE_FLEET, 1, -1 );

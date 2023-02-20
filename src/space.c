@@ -487,7 +487,7 @@ int space_canHyperspace( const Pilot* p )
 
    /* Check distance. */
    r = space_jumpDistance( p, jp );
-   d = vec2_dist2( &p->solid->pos, &jp->pos );
+   d = vec2_dist2( &p->solid.pos, &jp->pos );
    if (d > pow2(r))
       return 0;
    return 1;

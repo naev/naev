@@ -200,10 +200,10 @@ unsigned int escort_createRef( Pilot *p, Pilot *pe,
 
    /* Copy stuff over if necessary. */
    if (pos != NULL)
-      memcpy( &pe->solid->pos, pos, sizeof(vec2) );
+      memcpy( &pe->solid.pos, pos, sizeof(vec2) );
    if (vel != NULL)
-      memcpy( &pe->solid->vel, vel, sizeof(vec2) );
-   pe->solid->dir = dir;
+      memcpy( &pe->solid.vel, vel, sizeof(vec2) );
+   pe->solid.dir = dir;
 
    /* Set some flags for consistent behaviour. */
    if (p->faction == FACTION_PLAYER) {
@@ -242,8 +242,8 @@ int escort_clearDeployed( Pilot *p )
       if (pe==NULL)
          continue;
       /* Hack so it can dock. */
-      memcpy( &pe->solid->pos, &p->solid->pos, sizeof(vec2) );
-      memcpy( &pe->solid->vel, &p->solid->vel, sizeof(vec2) );
+      memcpy( &pe->solid.pos, &p->solid.pos, sizeof(vec2) );
+      memcpy( &pe->solid.vel, &p->solid.vel, sizeof(vec2) );
       if (pilot_dock( pe, p ))
          WARN(_("Pilot '%s' has escort '%s' docking error!"), p->name, pe->name);
       else

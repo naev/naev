@@ -63,10 +63,10 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
 
       /* We use an external variable to set and update the angle if necessary. */
       if (*a < 0.) {
-         x     = t->solid->pos.x - p->solid->pos.x;
-         y     = t->solid->pos.y - p->solid->pos.y;
+         x     = t->solid.pos.x - p->solid.pos.x;
+         y     = t->solid.pos.y - p->solid.pos.y;
          ang   = ANGLE( x, y );
-         *a    = FABS( angle_diff( ang, p->solid->dir ) );
+         *a    = FABS( angle_diff( ang, p->solid.dir ) );
       }
 
       /* Decay if not in arc. */
@@ -201,12 +201,12 @@ int pilot_dock( Pilot *p, Pilot *target )
       return -1;
 
    /* Must be close. */
-   if (vec2_dist(&p->solid->pos, &target->solid->pos) >
+   if (vec2_dist(&p->solid.pos, &target->solid.pos) >
          target->ship->gfx_space->sw * PILOT_SIZE_APPROX )
       return -1;
 
    /* Cannot be going much faster. */
-   if (vec2_dist2( &p->solid->vel, &target->solid->vel ) > pow2(MAX_HYPERSPACE_VEL))
+   if (vec2_dist2( &p->solid.vel, &target->solid.vel ) > pow2(MAX_HYPERSPACE_VEL))
       return -1;
 
    /* Grab dock ammo */
@@ -883,8 +883,8 @@ void pilot_calcStats( Pilot* pilot )
     * Set up the basic stuff
     */
    /* mass */
-   pilot->solid->mass   = pilot->ship->mass;
-   pilot->base_mass     = pilot->solid->mass;
+   pilot->solid.mass   = pilot->ship->mass;
+   pilot->base_mass     = pilot->solid.mass;
    /* cpu */
    pilot->cpu           = 0.;
    /* movement */
@@ -994,7 +994,7 @@ void pilot_calcStats( Pilot* pilot )
 
    /* Set maximum speed. */
    if (!pilot_isFlag( pilot, PILOT_AFTERBURNER ))
-      pilot->solid->speed_max = pilot->speed_base;
+      pilot->solid.speed_max = pilot->speed_base;
 
    /*
     * Flat increases.
@@ -1020,7 +1020,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot_cargoCalc(pilot);
 
    /* Calculate mass. */
-   pilot->solid->mass = MAX( s->mass_mod*pilot->ship->mass + pilot->stats.cargo_inertia*pilot->mass_cargo + pilot->mass_outfit, 0.);
+   pilot->solid.mass = MAX( s->mass_mod*pilot->ship->mass + pilot->stats.cargo_inertia*pilot->mass_cargo + pilot->mass_outfit, 0.);
 
    /* Calculate the heat. */
    pilot_heatCalc( pilot );
@@ -1086,7 +1086,7 @@ void pilot_updateMass( Pilot *pilot )
    double mass, factor;
 
    /* Set limit. */
-   mass = pilot->solid->mass;
+   mass = pilot->solid.mass;
    if ((pilot->stats.engine_limit > 0.) && (mass > pilot->stats.engine_limit))
       factor = pilot->stats.engine_limit / mass;
    else

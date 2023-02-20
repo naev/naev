@@ -731,7 +731,7 @@ static int pilotL_add( lua_State *L )
 
    /* TODO don't have space_calcJumpInPos called twice when stealth creating. */
    if ((jump != NULL) && pilot_isFlagRaw( flags, PILOT_STEALTH )) {
-      space_calcJumpInPos( cur_system, jump->from, &pplt->solid->pos, &pplt->solid->vel, &pplt->solid->dir, pplt );
+      space_calcJumpInPos( cur_system, jump->from, &pplt->solid.pos, &pplt->solid.vel, &pplt->solid.dir, pplt );
    }
    return 1;
 }
@@ -977,7 +977,7 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
    else {
       p     = luaL_validpilot(L,1);
       dist  = luaL_optnumber(L,2,-1.);
-      v     = luaL_optvector(L,3,&p->solid->pos);
+      v     = luaL_optvector(L,3,&p->solid.pos);
       inrange = !lua_toboolean(L,4);
       dis   = lua_toboolean(L,5);
       fighters = lua_toboolean(L,6);
@@ -1003,7 +1003,7 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
 
       /* Check distance if necessary. */
       if ((dist >= 0.) &&
-            vec2_dist2(&plt->solid->pos, v) > dd)
+            vec2_dist2(&plt->solid.pos, v) > dd)
          continue;
 
       /* Check if disabled. */
@@ -1164,7 +1164,7 @@ static int pilotL_getInrange( lua_State *L )
          continue;
 
       /* Must be in range. */
-      if (vec2_dist2( v, &p->solid->pos ) > d )
+      if (vec2_dist2( v, &p->solid.pos ) > d )
          continue;
 
       lua_pushpilot(L, p->id); /* value */
@@ -2220,7 +2220,7 @@ static int pilotL_rename( lua_State *L )
 static int pilotL_position( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
-   lua_pushvector(L, p->solid->pos);
+   lua_pushvector(L, p->solid.pos);
    return 1;
 }
 
@@ -2236,7 +2236,7 @@ static int pilotL_position( lua_State *L )
 static int pilotL_velocity( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
-   lua_pushvector(L, p->solid->vel);
+   lua_pushvector(L, p->solid.vel);
    return 1;
 }
 
@@ -2252,7 +2252,7 @@ static int pilotL_velocity( lua_State *L )
 static int pilotL_isStopped( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
-   lua_pushboolean(L,(VMOD(p->solid->vel) < MIN_VEL_ERR));
+   lua_pushboolean(L,(VMOD(p->solid.vel) < MIN_VEL_ERR));
    return 1;
 }
 
@@ -2284,7 +2284,7 @@ static int pilotL_evasion( lua_State *L )
 static int pilotL_dir( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
-   lua_pushnumber( L, p->solid->dir );
+   lua_pushnumber( L, p->solid.dir );
    return 1;
 }
 
@@ -2316,7 +2316,7 @@ static int pilotL_temp( lua_State *L )
 static int pilotL_mass( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
-   lua_pushnumber( L, p->solid->mass );
+   lua_pushnumber( L, p->solid.mass );
    return 1;
 }
 
@@ -2377,7 +2377,7 @@ static int pilotL_setPosition( lua_State *L )
    pilot_sample_trails( p, 1 );
 
    /* Warp pilot to new position. */
-   p->solid->pos = *vec;
+   p->solid.pos = *vec;
 
    /* Update if necessary. */
    if (pilot_isPlayer(p))
@@ -2402,7 +2402,7 @@ static int pilotL_setVelocity( lua_State *L )
    vec2 *vec = luaL_checkvector(L,2);
 
    /* Warp pilot to new position. */
-   p->solid->vel = *vec;
+   p->solid.vel = *vec;
    return 0;
 }
 
@@ -2424,9 +2424,9 @@ static int pilotL_setDir( lua_State *L )
    double d  = luaL_checknumber(L,2);
 
    /* Set direction. */
-   p->solid->dir = fmodf( d, 2*M_PI );
-   if (p->solid->dir < 0.)
-      p->solid->dir += 2*M_PI;
+   p->solid.dir = fmodf( d, 2*M_PI );
+   if (p->solid.dir < 0.)
+      p->solid.dir += 2*M_PI;
 
    return 0;
 }
@@ -3947,12 +3947,12 @@ static int pilotL_getStats( lua_State *L )
    PUSH_INT( L, "fuel", p->fuel );
    PUSH_INT( L, "fuel_max", p->fuel_max );
    PUSH_INT( L, "fuel_consumption", p->fuel_consumption );
-   PUSH_DOUBLE( L, "mass", p->solid->mass );
+   PUSH_DOUBLE( L, "mass", p->solid.mass );
    /* Movement. */
-   PUSH_DOUBLE( L, "thrust", p->thrust / p->solid->mass );
+   PUSH_DOUBLE( L, "thrust", p->thrust / p->solid.mass );
    PUSH_DOUBLE( L, "speed", p->speed );
    PUSH_DOUBLE( L, "turn", p->turn * 180. / M_PI ); /* Convert back to grad. */
-   PUSH_DOUBLE( L, "speed_max", solid_maxspeed(p->solid, p->speed, p->thrust) );
+   PUSH_DOUBLE( L, "speed_max", solid_maxspeed(&p->solid, p->speed, p->thrust) );
    /* Health. */
    PUSH_DOUBLE( L, "absorb", p->dmg_absorb );
    PUSH_DOUBLE( L, "armour", p->armour_max );
@@ -5458,7 +5458,7 @@ static int pilotL_collisionTest( lua_State *L )
       Asteroid *a = luaL_validasteroid( L, 2 );
       CollPoly rpoly;
       RotatePolygon( &rpoly, a->polygon, (float) a->ang );
-      int ret = CollidePolygon( getCollPoly(p), &p->solid->pos,
+      int ret = CollidePolygon( getCollPoly(p), &p->solid.pos,
             &rpoly, &a->pos, &crash );
       free(rpoly.x);
       free(rpoly.y);
@@ -5484,7 +5484,7 @@ static int pilotL_collisionTest( lua_State *L )
    if (!pilot_canTarget( t ))
       return 0;
 
-   int ret = CollidePolygon( getCollPoly(p), &p->solid->pos, getCollPoly(t), &t->solid->pos, &crash );
+   int ret = CollidePolygon( getCollPoly(p), &p->solid.pos, getCollPoly(t), &t->solid.pos, &crash );
    if (!ret)
       return 0;
 
@@ -5557,9 +5557,9 @@ static int pilotL_kill( lua_State *L )
 static int pilotL_knockback( lua_State *L )
 {
    Pilot *p1  = luaL_validpilot(L,1);
-   double m1  = p1->solid->mass;
-   vec2 *v1   = &p1->solid->vel;
-   vec2 *x1   = &p1->solid->pos;
+   double m1  = p1->solid.mass;
+   vec2 *v1   = &p1->solid.vel;
+   vec2 *x1   = &p1->solid.pos;
    Pilot *p2;
    double m2;
    vec2 *v2;
@@ -5567,9 +5567,9 @@ static int pilotL_knockback( lua_State *L )
    double e;
    if (lua_ispilot(L,2)) {
       p2 = luaL_validpilot(L,2);
-      m2 = p2->solid->mass;
-      v2 = &p2->solid->vel;
-      x2 = &p2->solid->pos;
+      m2 = p2->solid.mass;
+      v2 = &p2->solid.vel;
+      x2 = &p2->solid.pos;
       e  = luaL_optnumber(L,3,1.);
    }
    else {
@@ -5584,9 +5584,9 @@ static int pilotL_knockback( lua_State *L )
    if (e==0.) {
       double vx = (m1*v1->x + m2*v2->x) / (m1+m2);
       double vy = (m1*v1->y + m2*v2->y) / (m1+m2);
-      vec2_cset( &p1->solid->vel, vx, vy );
+      vec2_cset( &p1->solid.vel, vx, vy );
       if (p2 != NULL)
-         vec2_cset( &p2->solid->vel, vx, vy );
+         vec2_cset( &p2->solid.vel, vx, vy );
       return 0.;
    }
 
@@ -5596,21 +5596,21 @@ static int pilotL_knockback( lua_State *L )
    if (norm > 0.)
       a1 *= ((v1->x-v2->x)*(x1->x-x2->x) + (v1->y-v2->y)*(x1->y-x2->y)) / norm;
 
-   vec2_cadd( &p1->solid->vel, a1*(x1->x-x2->x), a1*(x1->y-x2->y) );
+   vec2_cadd( &p1->solid.vel, a1*(x1->x-x2->x), a1*(x1->y-x2->y) );
    if (p2 != NULL) {
       double a2   = -e * (2.*m1)/(m2+m1);
       if (norm > 0.)
          a2 *= ((v2->x-v1->x)*(x2->x-x1->x) + (v2->y-v1->y)*(x2->y-x1->y)) / norm;
-      vec2_cadd( &p2->solid->vel, a2*(x2->x-x1->x), a2*(x2->y-x1->y) );
+      vec2_cadd( &p2->solid.vel, a2*(x2->x-x1->x), a2*(x2->y-x1->y) );
    }
 
    /* Modulate. TODO this is probably totally wrong and needs fixing to be physicaly correct. */
    if (e != 1.) {
       double vx = (m1*v1->x + m2*v2->x) / (m1+m2);
       double vy = (m1*v1->y + m2*v2->y) / (m1+m2);
-      vec2_cset( &p1->solid->vel, e*v1->x + (1.-e)*vx, e*v1->y + (1.-e)*vy );
+      vec2_cset( &p1->solid.vel, e*v1->x + (1.-e)*vx, e*v1->y + (1.-e)*vy );
       if (p2 != NULL)
-         vec2_cset( &p2->solid->vel, e*v2->x + (1.-e)*vx, e*v2->y + (1.-e)*vy );
+         vec2_cset( &p2->solid.vel, e*v2->x + (1.-e)*vx, e*v2->y + (1.-e)*vy );
    }
 
    return 0;
