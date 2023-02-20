@@ -31,6 +31,8 @@ local neutral_m = {
    -- New images
    {"neutral/male1n.webp"},
    {"neutral/male2n.webp"},
+   {"neutral/male3n.webp"},
+   {"neutral/male3n_v2.webp"},
 }
 local neutral_f = {
    "neutral/female1.webp",

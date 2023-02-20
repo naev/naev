@@ -135,7 +135,7 @@ function enter ()
          end
 
          -- Spawn FLF ships
-         local jmp = jump.get( "Raelid", "Arcanis" )
+         local jmp = jump.get( "Raelid", "Zacron" )
          flf_fleet = fleet.add( 14, "Vendetta", "FLF", jmp:pos() )
 
          for i, j in ipairs( flf_fleet ) do
