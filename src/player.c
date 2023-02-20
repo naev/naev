@@ -4258,10 +4258,8 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    /* Create the ship. */
    ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), flags );
    /* Player is currently on this ship */
-   if (is_player) {
+   if (is_player)
       ps.deployed = 0; /* Current ship can't be deployed. */
-      pilot_setPlayer( ship );
-   }
    ps.p = ship;
 
    /* Ship should not have default outfits. */
@@ -4562,8 +4560,10 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    /* Add it to the stack if it's not what the player is in */
    if (is_player == 0)
       array_push_back( &player_stack, ps );
-   else
+   else {
+      pilot_setPlayer( ship );
       player.ps = ps;
+   }
 
    return 0;
 }
