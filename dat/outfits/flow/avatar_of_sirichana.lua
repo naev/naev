@@ -24,7 +24,8 @@ local function turnon( p, po )
    po:progress( flow.get(p) / flow.max(p) )
    mem.active = true
 
-   -- TODO add effect to pilot
+   -- Apply effect
+   p:effectAdd("Avatar of Sirichana")
 
    -- Sound effect
    if mem.isp then
@@ -63,7 +64,8 @@ function update( p, po, dt )
       end
       po:progress( flow.get(p) / flow.max(p) )
 
-      -- TODO update effect on pilot
+      -- Reapply effect
+      p:effectAdd("Avatar of Sirichana")
    end
 end
 
