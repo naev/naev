@@ -21,10 +21,13 @@ function ontoggle( p, po, on )
       flow.dec( p, flow_cost )
 
       local dir = p:dir()
+      --[[
       for i=1,10 do
          local d = dir + math.pi*2.0/10*i
          po:munition( p, ref, p:target(), d )
       end
+      --]]
+      po:munition( p, ref, p:target(), dir )
 
       return true
    end

@@ -7,7 +7,7 @@
   <delay>1</delay>
   <reload_time>1</reload_time>
   <amount>1</amount>
-  <iflockon>0.3</iflockon>
+  <iflockon>0</iflockon>
   <arc>10</arc>
   <trackmin>0</trackmin>
   <trackmax>1000</trackmax>
@@ -19,9 +19,9 @@
   <spfx_armour>ExpM</spfx_armour>
   <trail_generator x="-7">siriusS</trail_generator>
   <duration blowup="armour">10</duration>
-  <thrust>130</thrust>
-  <turn>15</turn>
-  <speed_max>500</speed_max>
+  <thrust>200</thrust>
+  <turn>50</turn>
+  <speed_max>700</speed_max>
   <resist>200</resist>
   <damage>
    <type>ion</type>

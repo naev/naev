@@ -894,19 +894,19 @@ static void weapon_render( Weapon* w, double dt )
                      (y < -r) || (y > SCREEN_H+r))
                   return;
 
+               mat4 projection = gl_view_matrix;
+               mat4_translate( &projection, x, y, 0. );
+               mat4_rotate2d( &projection, w->solid.dir );
+               mat4_scale( &projection, r, r, 1. );
+
                glUseProgram( gfx->program );
                glUniform2f( gfx->dimensions, r, r );
                glUniform1f( gfx->u_r, w->r );
                glUniform1f( gfx->u_time, w->life-w->timer );
                glUniform1f( gfx->u_fade, 1.0 );
+               gl_uniformMat4( gfx->projection, &projection );
 
-               mat4 projection = gl_view_matrix;
-               mat4_translate( &projection, x, y, 0. );
-               mat4_rotate2d( &projection, w->solid.dir );
-               mat4_scale( &projection, r, r, 1. );
-               gl_uniformMat4(gfx->projection, &projection);
-
-               glEnableVertexAttribArray(gfx->vertex);
+               glEnableVertexAttribArray( gfx->vertex );
                gl_vboActivateAttribOffset( gl_circleVBO, gfx->vertex, 0, 2, GL_FLOAT, 0 );
 
                glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
