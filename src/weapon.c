@@ -1777,7 +1777,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    w->real_vel = VMOD(v);
 
    /* Set up ammo details. */
-   mass        = w->outfit->mass;
+   mass        = w->outfit->u.lau.ammo_mass;
    w->timer    = w->outfit->u.lau.duration * parent->stats.launch_range;
    solid_init( &w->solid, mass, rdir, pos, &v, SOLID_UPDATE_EULER );
    if (w->outfit->u.lau.thrust > 0.) {
