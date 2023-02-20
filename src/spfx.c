@@ -833,6 +833,8 @@ void spfx_trail_draw( const Trail_spfx* trail )
       gl_gameToScreenCoords( &x2, &y2, tpp->x, tpp->y );
 
       s = hypot( x2-x1, y2-y1 );
+      if (s <= 0.)
+         continue;
 
       /* Make sure in bounds. */
       if ((MAX(x1,x2) < 0.) || (MIN(x1,x2) > (double)SCREEN_W) ||
