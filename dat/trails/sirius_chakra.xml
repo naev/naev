@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<trail name="sirius_chakra">
+ <type>trail_wave</type>
+ <thickness>6</thickness>
+ <ttl>0.2</ttl>
+ <idle r="1" g="1" b="1" a="0.05" />
+ <glow r="1" g="0.9" b="0.6" a="0.7" />
+ <afterburn r="1" g="0.9" b="0.6" a="0.7" />
+ <jumping r="0.9" g="0.1" b="0.9" a="0.85" scale="2" />
+</trail>
