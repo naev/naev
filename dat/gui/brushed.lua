@@ -429,6 +429,8 @@ end
 
 local effects = {}
 function update_effects()
+   local buff_col = colour.new("Friend")
+   local debuff_col = colour.new("Hostile")
    effects = {}
    local effects_added = {}
    for k,e in ipairs(pp:effectGet()) do
@@ -436,8 +438,14 @@ function update_effects()
       if not a then
          a = #effects+1
          effects[ a ] = e
-         e.n = 1
+         e.n = 0
          effects_added[ e.name ] = a
+
+         if e.buff then
+            e.col = buff_col
+         elseif e.debuff then
+            e.col = debuff_col
+         end
       end
       effects[ a ].n = effects[ a ].n + 1
    end
@@ -897,7 +905,7 @@ function render( _dt )
    -- Effects
    local ex, ey = sysx-60, sysy+20
    for k,e in ipairs(effects) do
-      gfx.renderTexRaw( e.icon, ex, ey, 32, 32 )
+      gfx.renderTexRaw( e.icon, ex, ey, 32, 32, 1, 1, 0, 0, 1, 1, e.col )
       if e.n > 1 then
          gfx.print( true, tostring(e.n), ex+24, ey+24, col_text )
       end
