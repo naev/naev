@@ -1,7 +1,7 @@
 --[[
    The new "brushed" UI.
 --]]
-
+local flowlib = require "ships.lua.lib.flow"
 local fmt = require "format"
 local formation = require "formation"
 local playerform = require "playerform"
@@ -12,15 +12,17 @@ local fields_w, fields_x, fields_y, nav_spob, nav_pnt, popup_right_x, popup_righ
 local target_image_w, ta_flt_pane_x
 -- This script has a lot of globals. It really loves them.
 -- The below variables aren't part of the GUI API and aren't accessed via _G:
--- luacheck: globals autonav_hyp autonav_jumps bar_bg bar_frame bar_frame_light bar_light bar_lock bars button_disabled button_hilighted button_mouseover button_normal button_pressed buttontypes cargo circle_h circle_w col_ammo col_heat col_lgray col_stress col_text col_top_ammo col_top_heat col_top_stress col_unkn end_right end_right_h end_right_w ext_right field_bg_center field_bg_left field_bg_right field_frame_center field_frame_left field_frame_right field_h field_w first_time fleet_pane_b fleet_pane_m fleet_pane_t icon_autonav icon_beam icon_h icon_lockon icon_lockon2 icon_missile icon_money icon_nav_target icon_outfit icon_pnt_target icon_projectile icon_refire icon_w icon_weapon1 icon_weapon2 left_side_h left_side_w lmouse main mesg_w mesg_x mesg_y nav_hyp navstring planet_bg planet_pane_b planet_pane_m planet_pane_t pl_speed_x pl_speed_y pntflags popup_body popup_bottom popup_bottom2 popup_bottom_side_left popup_empty popup_left_x popup_left_y popup_pilot popup_right_x popup_right_y popup_top question question_h question_w right_side_x services smallfont_h speed_light speed_light_double speed_light_off stats ta_dir ta_flt_pane_h ta_flt_pane_h_b ta_flt_pane_h_m ta_flt_pane_w ta_flt_pane_w_b ta_flt_pane_w_m ta_flt_pane_y ta_gfx ta_gfx_draw_h ta_gfx_draw_w ta_pnt_center_x ta_pnt_center_y ta_pnt_faction_gfx ta_pnt_fact_x ta_pnt_fact_y ta_pnt_gfx ta_pnt_gfx_draw_h ta_pnt_gfx_draw_w ta_pnt_gfx_h ta_pnt_gfx_w ta_pnt_image_x ta_pnt_image_y ta_pnt_pane_h_b ta_pnt_pane_h_m ta_pnt_pane_w_b ta_pnt_pane_w_m target_bg target_frame target_image_h target_image_x target_image_y ta_stats ta_sx ta_sy tbar_left_h tbar_left_w tbar_right_h tbar_right_w tbar_w top_bar top_bar_center top_bar_left top_bar_right top_icon weapbars x_dist x_name x_speed y_dist y_name y_speed
+-- luacheck: globals autonav_hyp autonav_jumps bar_bg bar_frame bar_frame_light bar_light bar_lock bars button_disabled button_hilighted button_mouseover button_normal button_pressed buttontypes cargo circle_h circle_w col_ammo col_heat col_lgray col_stress col_text col_flow col_top_ammo col_top_heat col_top_stress col_unkn end_right end_right_h end_right_w ext_right field_bg_center field_bg_left field_bg_right field_frame_center field_frame_left field_frame_right field_h field_w first_time fleet_pane_b fleet_pane_m fleet_pane_t icon_autonav icon_beam icon_h icon_lockon icon_lockon2 icon_missile icon_money icon_nav_target icon_outfit icon_pnt_target icon_projectile icon_refire icon_w icon_weapon1 icon_weapon2 left_side_h left_side_w lmouse main mesg_w mesg_x mesg_y nav_hyp navstring planet_bg planet_pane_b planet_pane_m planet_pane_t pl_speed_x pl_speed_y pntflags popup_body popup_bottom popup_bottom2 popup_bottom_side_left popup_empty popup_left_x popup_left_y popup_pilot popup_right_x popup_right_y popup_top question question_h question_w right_side_x services smallfont_h speed_light speed_light_double speed_light_off stats ta_dir ta_flt_pane_h ta_flt_pane_h_b ta_flt_pane_h_m ta_flt_pane_w ta_flt_pane_w_b ta_flt_pane_w_m ta_flt_pane_y ta_gfx ta_gfx_draw_h ta_gfx_draw_w ta_pnt_center_x ta_pnt_center_y ta_pnt_faction_gfx ta_pnt_fact_x ta_pnt_fact_y ta_pnt_gfx ta_pnt_gfx_draw_h ta_pnt_gfx_draw_w ta_pnt_gfx_h ta_pnt_gfx_w ta_pnt_image_x ta_pnt_image_y ta_pnt_pane_h_b ta_pnt_pane_h_m ta_pnt_pane_w_b ta_pnt_pane_w_m target_bg target_frame target_image_h target_image_x target_image_y ta_stats ta_sx ta_sy tbar_left_h tbar_left_w tbar_right_h tbar_right_w tbar_w top_bar top_bar_center top_bar_left top_bar_right top_icon weapbars x_dist x_name x_speed y_dist y_name y_speed
 -- Unfortunately, it is an error to make any function a closure over more than 60 variables.
 -- Caution: the below **are** accessed via _G. So are others, which are both set and read exclusively via _G.
--- luacheck: globals armour energy fuel shield (_G[v])
+-- luacheck: globals armour energy fuel shield flow (_G[v])
 -- luacheck: globals l_col l_col_top l_icon l_x l_y (_G["l_" .. v])
--- luacheck: globals col_armour col_energy col_fuel col_shield col_top_armour col_top_energy col_top_fuel col_top_shield icon_armour icon_energy icon_fuel icon_shield (_G[v .. "_" .. name])
+-- luacheck: globals col_armour col_energy col_fuel col_shield col_top_armour col_top_energy col_top_flow col_top_fuel col_top_shield icon_armour icon_energy icon_fuel icon_flow icon_shield (_G[v .. "_" .. name])
 -- luacheck: globals icon_cargo icon_missions icon_ship icon_weapons (_G["icon_" .. v])
 -- luacheck: globals icon_EMP icon_Energy icon_Ion icon_Kinetic icon_Radiation (_G["icon_" .. weapon.dtype])
 -- FIXME: The above line reflects a design dating from 2010, when there was a static list of allowed damage types!!
+
+local has_flow
 
 -- Namespaces
 local actions = {}
@@ -41,6 +43,7 @@ function create()
    col_shield = colour.new(  42/255,  57/255,  162/255 )
    col_armour = colour.new(  80/255,  80/255,  80/255 )
    col_energy = colour.new(  36/255,  125/255,  51/255 )
+   col_flow = colour.new( 189/255, 166/255, 85/255 )
    col_fuel   = colour.new(  135/255,  24/255,  50/255 )
    col_heat   = colour.new(  80/255,  27/255,  24/255 )
    col_stress = colour.new(  45/255,  48/255,  102/255 )
@@ -52,6 +55,7 @@ function create()
    col_top_heat   = colour.new( 188/255,  63/255,  56/255 )
    col_top_stress = colour.new(  56/255,  88/255, 156/255 )
    col_top_ammo   = colour.new( 233/255, 131/255,  21/255 )
+   col_top_flow   = colour.new( 210/255, 186/255, 95/255 )
    col_text = colour.new( 203/255, 203/255, 203/255 )
    col_unkn = colour.new( 130/255, 130/255, 130/255 )
    col_lgray = colour.new( 160/255, 160/255, 160/255 )
@@ -89,6 +93,7 @@ function create()
    icon_armour = tex_open( "iconArmour.png" )
    icon_energy = tex_open( "iconEnergy.webp" )
    icon_fuel = tex_open( "iconFuel.png" )
+   icon_flow = tex_open( "iconEnergy.webp" ) -- TODO
    icon_Kinetic = tex_open( "kinetic.png" )
    icon_Radiation = tex_open( "nuclear.png" )
    icon_EMP = tex_open( "ion.png" )
@@ -141,6 +146,8 @@ function create()
 
    margin = 14
 
+   has_flow = (flowlib.max( pp ) > 0)
+
    --Radar
    radar_x = 263
    radar_y = 5
@@ -152,6 +159,9 @@ function create()
    bar_x = 46
    bar_w, bar_h = bar_bg:dim()
    bars = { "shield", "armour", "energy", "fuel" }
+   if has_flow then
+      table.insert( bars, "flow" )
+   end
    for k,v in ipairs( bars ) do
       _G[ "x_" .. v ] = bar_x + (k-1)*(bar_w + 6)
       _G[ "y_" .. v ] = bar_y
@@ -695,6 +705,12 @@ function render( _dt )
       return awset < bwset
    end )
 
+   if has_flow then
+      flow = flowlib.get(pp) / flowlib.max(pp) * 100
+   else
+      flow = 0
+   end
+
    for k, v in ipairs( pwset ) do
       v.is_outfit = false
       if v.level ~= 0 then
@@ -781,7 +797,7 @@ function render( _dt )
       gfx.print( false, "A", 246 + mod_x, 52 + mod_y, col_text, 12 )
    end
 
-   for k, v in ipairs( bars ) do --bars = { "shield", "armour", "energy", "fuel" }, remember?
+   for k, v in ipairs( bars ) do --bars = { "shield", "armour", "energy", "flow" }, remember?
       local ht = nil
       local st = nil
       if v == "armour" then
