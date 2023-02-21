@@ -12,7 +12,7 @@
   <desc_extra>Provides 50 maximum flow capacity and allows a ship to use flow</desc_extra>
  </general>
  <specific type="modification">
-  <lua>outfits/flow/flow_amplifier.lua</lua>
+  <lua>outfits/flow/lua/flow_amplifier.lua</lua>
  </specific>
  <tags>
   <tag>flow</tag>
