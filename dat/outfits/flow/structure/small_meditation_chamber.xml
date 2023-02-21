@@ -7,7 +7,7 @@
   <mass>30</mass>
   <price>50000</price>
   <gfx_store>placeholder.webp</gfx_store>
-  <description>TODO</description>
+  <description>A small meditation chamber integrated directly into the ship. This allows the crew to aid the ship's flow capabilities and acts as an auxiliary flow buffer. A flow amplifier is required for the meditation chamber to take effect.</description>
   <desc_extra>Provides 50 maximum flow capacity</desc_extra>
  </general>
  <specific type="modification">
