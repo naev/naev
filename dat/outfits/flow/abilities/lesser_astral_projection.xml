@@ -12,6 +12,6 @@
   <desc_extra>TODO</desc_extra>
  </general>
  <specific type="modification">
-  <lua>outfits/flow/astral_projection.lua</lua>
+  <lua>outfits/flow/lua/astral_projection.lua</lua>
  </specific>
 </outfit>
