@@ -43,11 +43,15 @@ function ontoggle( p, po, on )
       local sw, sh = p:ship():dims()
       local pos = p:pos()+vec2.newP( (sw+sh)*0.5+10, dir )
       po:munition( p, ref, p:target(), dir, pos )
-      mem.timer = cooldown
+      mem.timer = cooldown * p:shipstat("cooldown_mod",true)
       po:state("cooldown")
       po:progress(1)
 
       return true
    end
    return false
+end
+
+function onimpact( _p, target )
+   target:effectAdd("Chakra Corruption")
 end

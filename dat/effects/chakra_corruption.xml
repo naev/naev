@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<effect name="Chakra Corruption">
+ <description>Your ship is corrupted by chakra damage!</description>
+ <duration>7</duration><!-- actually increased due to taint -->
+ <overwrite>chakra_corruption</overwrite>
+ <icon>/gfx/misc/icons/star-cycle.webp</icon>
+ <shader>effects/antimatter_taint.frag</shader>
+ <debuff/>
+ <stats>
+  <speed_mod>-25</speed_mod>
+  <thrust_mod>-25</thrust_mod>
+  <turn_mod>-25</turn_mod>
+  <fbay_rate>-25</fbay_rate>
+  <launch_rate>-25</launch_rate>
+  <fwd_firerate>-25</fwd_firerate>
+  <tur_firerate>-25</tur_firerate>
+ </stats>
+</effect>
