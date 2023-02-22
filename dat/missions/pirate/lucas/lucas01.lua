@@ -168,7 +168,7 @@ function land ()
       vn.na(fmt.f(_([[You manage to land on {spb}. Although things are quite quiet and clean around the spaceport, it all takes a turn for the worse once you pass the checkpoints and head into the slums towards the location you were given.]]),
          {spb=spb}))
       vn.na(_([[The atmosphere is dark, almost oppressive, and you feel like you are given many stares by the locals. It seems likely that they do not get many visitors.]]))
-      vn.na(_([[Eventually you get to the cell you were told about. It seems to be locked. You see take a look to see if you can override it.]]))
+      vn.na(_([[Eventually you get to the cell you were told about. It seems to be locked. You take a look to see if you can override it.]]))
       mg.vn()
       vn.func( function ()
          if mg.completed() then
