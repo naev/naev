@@ -19,7 +19,7 @@ pp_shaders.vertexcode = "#version 140\n"..f:read()
    @return The newly created shader.
 --]]
 function pp_shaders.newShader( fragcode )
-   return shader.new([[
+   local s = shader.new([[
 #version 140
 
 uniform sampler2D MainTex;
@@ -31,9 +31,10 @@ vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord );
 
 void main (void)
 {
-   color_out = effect( MainTex, VaryingTexCoord.st, VaryingTexCoord.st * love_ScreenSize.xy );
+   color_out = effect( MainTex, VaryingTexCoord.st, vec2(VaryingTexCoord.s,1.0-VaryingTexCoord.t) * love_ScreenSize.xy );
 }
 ]] .. fragcode, pp_shaders.vertexcode )
+   return s
 end
 
 --[[
