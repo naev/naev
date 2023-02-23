@@ -6,7 +6,7 @@ function onload( _o )
    -- TODO make outfit specific
    flow_drain = 1
    flow_cost = 40
-   projection = "Llama"
+   projection = ship.get("Llama")
 end
 
 local function turnon( p, po )
