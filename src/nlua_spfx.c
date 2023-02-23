@@ -50,6 +50,7 @@ typedef struct LuaSpfxData_s {
    int render_mg; /**< Reference to middle render function. */
    int render_fg; /**< Reference to foreground render function. */
    int update;    /**< Reference to update function. */
+   int remove;    /**< Reference to remove function. */
    LuaAudio_t sfx;/**< Sound effect. */
 } LuaSpfxData_t;
 
@@ -203,6 +204,7 @@ static void spfx_cleanup( LuaSpfxData_t *ls )
    nlua_unref( naevL, ls->render_mg );
    nlua_unref( naevL, ls->render_fg );
    nlua_unref( naevL, ls->update );
+   nlua_unref( naevL, ls->remove );
 
    /* Make sure stuff doesn't get run. */
    ls->data       = LUA_NOREF;
@@ -210,6 +212,7 @@ static void spfx_cleanup( LuaSpfxData_t *ls )
    ls->render_mg  = LUA_NOREF;
    ls->render_fg  = LUA_NOREF;
    ls->update     = LUA_NOREF;
+   ls->remove     = LUA_NOREF;
 
    /* Clean up audio. */
    ls->sfx.nocleanup = 0; /* Have to disable so it gets cleaned. */
@@ -285,14 +288,15 @@ static int spfxL_getAll( lua_State *L )
  * @usage spfx.new( 10, nil, nil, nil, nil, nil, nil, sfx ) -- Play a global effect (not affected by time stuff )
  *
  *    @luatparam Number ttl Time to live of the effect.
- *    @luatparam Function|nil update Update function to use if applicable.
- *    @luatparam Function|nil render_bg Background render function to use if applicable (behind ships).
- *    @luatparam Function|nil render_mg Middle render function to use if applicable (infront of NPC ships, behind player).
- *    @luatparam Function|nil render_fg Foregroundrender function to use if applicable (infront of player).
- *    @luatparam vec2|boolean pos Position of the effect, or a boolean to indicate whether or not the effect is local.
- *    @luatparam vec2 vel Velocity of the effect.
- *    @luatparam audio sfx Sound effect associated with the spfx.
- *    @luatparam number radius Radius to use to determine if should render.
+ *    @luatparam[opt] Function|nil update Update function to use if applicable.
+ *    @luatparam[opt] Function|nil render_bg Background render function to use if applicable (behind ships).
+ *    @luatparam[opt] Function|nil render_mg Middle render function to use if applicable (infront of NPC ships, behind player).
+ *    @luatparam[opt] Function|nil render_fg Foregroundrender function to use if applicable (infront of player).
+ *    @luatparam[opt] vec2|boolean pos Position of the effect, or a boolean to indicate whether or not the effect is local.
+ *    @luatparam[opt] vec2 vel Velocity of the effect.
+ *    @luatparam[opt] audio sfx Sound effect associated with the spfx.
+ *    @luatparam[opt] number radius Radius to use to determine if should render.
+ *    @luatparam[opt] Function|nil remove Function to run when removing the outfit.
  *    @luatreturn spfx New spfx corresponding to the data.
  * @luafunc new
  */
@@ -308,6 +312,7 @@ static int spfxL_new( lua_State *L )
    ls.render_bg = LUA_NOREF;
    ls.render_mg = LUA_NOREF;
    ls.render_fg = LUA_NOREF;
+   ls.remove   = LUA_NOREF;
 
    /* Functions. */
    if (!lua_isnoneornil(L,2))
@@ -383,6 +388,10 @@ static int spfxL_new( lua_State *L )
    /* Store radius. */
    ls.radius = luaL_optnumber(L,9,-1.);
 
+   /* Finally remove function if applicable. */
+   if (!lua_isnoneornil(L,10))
+      ls.remove = nlua_ref( L, 10 );
+
    /* Set up new data. */
    lua_newtable(L);
    ls.data = luaL_ref( L, LUA_REGISTRYINDEX ); /* Pops result. */
@@ -413,6 +422,15 @@ static int spfxL_rm( lua_State *L )
 {
    LuaSpfxData_t *ls = luaL_checkspfxdataNoWarn(L,1);
    if (ls != NULL) {
+      if (ls->remove != LUA_NOREF) {
+         lua_rawgeti( naevL, LUA_REGISTRYINDEX, ls->remove );
+         lua_pushspfx( naevL, ls->id );
+         if (lua_pcall( naevL, 1, 0, 0) != 0) {
+            WARN(_("Spfx failed to run 'remove':\n%s"), lua_tostring( naevL, -1 ));
+            lua_pop( naevL, 1 );
+         }
+      }
+
       ls->flags &= SPFX_CLEANUP;
       ls->ttl = -1.;
    }
