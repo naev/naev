@@ -339,8 +339,8 @@ function race_landed ()
          end
       end
       if player.numOutfit( reward_outfit ) <= 0 and did_all then
-         vn.na(fmt.f(_([[An individual in a suit and tie suddenly takes you up onto a stage. A large name tag on their jacket says 'Melendez Corporation'. "Congratulations on your win," they say, shaking your hand, "That wasa great race! On behalf of Melendez Corporation, and for beating the goal times of all the courses here at {spobname}, I would like to present to you your trophy!".
-They hand you one of those fake oversized cheques for the audienc, and then a credit chip with the actual prize oney on it. At least the trophy looks cool.]]),
+         vn.na(fmt.f(_([[An individual in a suit and tie suddenly takes you up onto a stage. A large name tag on their jacket says 'Melendez Corporation'. "Congratulations on your win," they say, shaking your hand, "That was a great race! On behalf of Melendez Corporation, and for beating the goal times of all the courses here at {spobname}, I would like to present to you your trophy!".
+They hand you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it. At least the trophy looks cool.]]),
             {spobname=spob.cur()}))
          vn.na(fmt.reward(reward_outfit).."\n"..fmt.reward(reward))
          vn.func( function ()
