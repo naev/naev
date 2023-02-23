@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<effect name="Fractured Reality">
+ <description>Reality is not really what it seems! Or is this the true reality?</description>
+ <duration>0.3</duration>
+ <icon>/gfx/misc/icons/hidden.webp</icon>
+ <overwrite>reality_rip</overwrite>
+ <shader>effects/fractured_reality.frag</shader>
+ <stats>
+  <energy_regen_mod>-50</energy_regen_mod>
+  <shield_regen_mod>-50</shield_regen_mod>
+  <fwd_firerate>-30</fwd_firerate>
+  <tur_firerate>-30</tur_firerate>
+  <launch_rate>-30</launch_rate>
+  <time_mod>-67</time_mod>
+  <time_speedup>200</time_speedup>
+ </stats>
+</effect>

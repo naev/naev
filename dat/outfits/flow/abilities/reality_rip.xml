@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Reality Rip">
+ <general>
+  <typename>Flow Ability</typename>
+  <slot>utility</slot>
+  <size>medium</size>
+  <rarity>4</rarity>
+  <mass>0</mass>
+  <price>650000</price>
+  <gfx_store>/gfx/misc/icons/psychic-waves.webp</gfx_store>
+  <description>TODO</description>
+  <desc_extra>TODO</desc_extra>
+ </general>
+ <specific type="modification">
+  <lua>outfits/flow/lua/reality_rip.lua</lua>
+ </specific>
+</outfit>

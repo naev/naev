@@ -71,6 +71,7 @@ dat/effects/ethereal.xml
 dat/effects/fadein.xml
 dat/effects/fadeout.xml
 dat/effects/feral_rage_i.xml
+dat/effects/fractured_reality.xml
 dat/effects/hypergate_enter.xml
 dat/effects/hypergate_exit.xml
 dat/effects/paralyzing_plasma.xml
@@ -260,6 +261,7 @@ dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml
 dat/outfits/flow/abilities/lesser_astral_projection.xml
 dat/outfits/flow/abilities/lesser_avatar_of_sirichana.xml
 dat/outfits/flow/abilities/lesser_seeking_chakra.xml
+dat/outfits/flow/abilities/reality_rip.xml
 dat/outfits/flow/abilities/seeking_chakra_small.xml
 dat/outfits/flow/internal_flow_amplifier.xml
 dat/outfits/flow/structure/small_flow_amplifier.xml
@@ -3106,6 +3108,7 @@ dat/outfits/bioship/skills/tunnelling_organ.lua
 dat/outfits/flow/lua/astral_projection.lua
 dat/outfits/flow/lua/avatar_of_sirichana.lua
 dat/outfits/flow/lua/flow_amplifier.lua
+dat/outfits/flow/lua/reality_rip.lua
 dat/outfits/flow/lua/seeking_chakra.lua
 dat/outfits/launchers/space_mine_layer.lua
 dat/outfits/lib/bioplasma.lua
@@ -3246,6 +3249,7 @@ dat/scripts/luaspfx/explosion.lua
 dat/scripts/luaspfx/pheromones.lua
 dat/scripts/luaspfx/pulse.lua
 dat/scripts/luaspfx/racetrack.lua
+dat/scripts/luaspfx/realityrip.lua
 dat/scripts/luaspfx/sfx.lua
 dat/scripts/luaspfx/spacemine.lua
 dat/scripts/luaspfx/spark.lua
