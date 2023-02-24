@@ -52,7 +52,7 @@ local function emp( pos, vel, radius, _disable, params )
       local emp_shader_frag = lf.read( "glsl/emp.frag" )
       emp_shader = lg.newShader( emp_shader_frag )
       emp_sfx = {
-         audio.new( "snd/sounds/empexplode.wav" ),
+         audio.new( "snd/sounds/empexplode.ogg" ),
       }
    end
 
