@@ -54,7 +54,7 @@ local function spark( pos, vel, radius, _disable, params )
       spark_shader = lg.newShader( spark_shader_frag )
       --[[
       spark_sfx = {
-         audio.new( "snd/sounds/empexplode.wav" ),
+         audio.new( "snd/sounds/empexplode.ogg" ),
       }
       --]]
    end
