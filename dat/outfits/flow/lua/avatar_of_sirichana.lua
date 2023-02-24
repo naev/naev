@@ -6,10 +6,14 @@ local flow_drain, flow_cost
 
 local sfx = audio.newSource( 'snd/sounds/activate4.ogg' )
 
-function onload( _o )
+function onload( o )
    -- TODO make outfit specific
-   flow_drain = 8
-   flow_cost = 40
+   if o==outfit.get("Lesser Avatar of Sirichana") then
+      flow_drain  = 8
+      flow_cost   = 40
+   else
+      error(_("Unknown outfit using script!"))
+   end
 end
 
 local function turnon( p, po )

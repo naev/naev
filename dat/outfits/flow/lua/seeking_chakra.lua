@@ -3,10 +3,15 @@ local flow = require "ships.lua.lib.flow"
 local flow_cost, ref
 local cooldown = 3
 
-function onload( _o )
+function onload( o )
    -- TODO make outfit specific
-   flow_cost = 25
-   ref = outfit.get("Seeking Chakra Small")
+   if o==outfit.get("Lesser Seeking Chakra") then
+      flow_cost   = 25
+      ref         = outfit.get("Seeking Chakra Small")
+      cooldown    = 3
+   else
+      error(_("Unknown outfit using script!"))
+   end
 end
 
 function init( _p, po )
