@@ -260,6 +260,8 @@ dat/outfits/fighter_bays/zalek_light_drone_bay.xml
 dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml
 dat/outfits/flow/abilities/lesser_astral_projection.xml
 dat/outfits/flow/abilities/lesser_avatar_of_sirichana.xml
+dat/outfits/flow/abilities/lesser_cleansing_flames.xml
+dat/outfits/flow/abilities/lesser_feather_drive.xml
 dat/outfits/flow/abilities/lesser_seeking_chakra.xml
 dat/outfits/flow/abilities/reality_rip.xml
 dat/outfits/flow/abilities/seeking_chakra_small.xml
@@ -3107,6 +3109,8 @@ dat/outfits/bioship/skills/the_bite.lua
 dat/outfits/bioship/skills/tunnelling_organ.lua
 dat/outfits/flow/lua/astral_projection.lua
 dat/outfits/flow/lua/avatar_of_sirichana.lua
+dat/outfits/flow/lua/cleansing_flames.lua
+dat/outfits/flow/lua/feather_drive.lua
 dat/outfits/flow/lua/flow_amplifier.lua
 dat/outfits/flow/lua/reality_rip.lua
 dat/outfits/flow/lua/seeking_chakra.lua
