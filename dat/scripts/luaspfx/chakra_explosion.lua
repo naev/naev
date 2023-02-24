@@ -14,6 +14,7 @@ local function render( sp, x, y, z )
    local d = sp:data()
    emp_shader:send( "u_time",  d.timer )
    emp_shader:send( "u_speed",  d.speed )
+   emp_shader:send( "u_grain",  d.grain )
    emp_shader:send( "u_r", d.r )
 
    local s = d.size * z
@@ -25,7 +26,7 @@ end
 
 local function spfx_chakra( pos, vel, size, params )
    size = size * 1.5 -- Chakra look a bit smaller in reality, so we increase in size
-   local speed = params.speed or math.max(1.4-(size/250)^0.8, 0.4)
+   local speed = params.speed or math.max(1.5-(size/350)^0.5, 0.4)
    local sfx
    if not params.silent then
       sfx = emp_sfx[ rnd.rnd(1,#emp_sfx) ]
@@ -35,6 +36,7 @@ local function spfx_chakra( pos, vel, size, params )
    d.timer  = 0
    d.size   = size
    d.speed  = speed
+   d.grain  = params.grain or (size/30)^0.5
    d.r      = rnd.rnd()
    if params.volume then
       local ss = s:sfx()

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spfx name="ChakraM">
- <anim>1</anim>
+ <anim>910</anim>
  <shader>
   <vert>project_pos.vert</vert>
   <frag>chakra_exp.frag</frag>
   <size>50</size>
   <uniforms>
-   <u_speed x="1.0" />
+   <u_speed x="1.1" />
+   <u_grain x="1.3" />
   </uniforms>
  </shader>
 </spfx>

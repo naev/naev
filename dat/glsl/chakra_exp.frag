@@ -3,6 +3,7 @@
 
 uniform float u_time = 0.0;
 uniform float u_speed = 1.0;
+uniform float u_grain = 1.0;
 uniform float u_r = 0.0;
 
 vec4 effect( vec4 color, sampler2D tex, vec2 texture_coords, vec2 screen_coords )
@@ -14,7 +15,7 @@ vec4 effect( vec4 color, sampler2D tex, vec2 texture_coords, vec2 screen_coords 
    float d = sdCircle( uv, 0.8*progress );
    d = max( d, -sdCircle( uv, 2.8*(progress-0.5) ) );
    vec2 nuv = 3.0 * uv + vec2(u_r);
-   float n = 0.3*snoise( nuv );
+   float n = 0.3*snoise( u_grain * nuv );
    colour.a *= smoothstep( -0.2, 0.2, -d );
 
    colour   += 0.6 * n * smoothstep( -0.1, 0.1, -d );
