@@ -6,6 +6,7 @@
 #include "nlua_shader.h"
 
 enum {
+   PP_LAYER_NONE, /**< Not actually done. */
    PP_LAYER_GAME, /**< Applied ontop of the in-game graphics. */
    PP_LAYER_GUI,  /**< Applied ontop of the in-game GUI. */
    PP_LAYER_FINAL,/**< Applied ontop of everything! */
