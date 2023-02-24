@@ -19,7 +19,6 @@ end
 
 local function render( sp, x, y, z )
    local d = sp:data()
-   print( x, y, z )
    d.shader:send( "u_pos", x, y, z )
 end
 
