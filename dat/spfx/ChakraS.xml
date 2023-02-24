@@ -4,7 +4,7 @@
  <shader>
   <vert>project_pos.vert</vert>
   <frag>chakra_exp.frag</frag>
-  <size>30</size>
+  <size>60</size>
   <uniforms>
    <u_speed x="0.8" />
   </uniforms>
