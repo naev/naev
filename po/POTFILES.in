@@ -577,6 +577,8 @@ dat/slots/engines.xml
 dat/slots/fighter_bay.xml
 dat/slots/hull.xml
 dat/slots/systems.xml
+dat/spfx/ChakraM.xml
+dat/spfx/ChakraS.xml
 dat/spfx/EmpM.xml
 dat/spfx/EmpS.xml
 dat/spfx/PlaM.xml
@@ -3247,6 +3249,7 @@ dat/scripts/love_shaders.lua
 dat/scripts/luaspfx.lua
 dat/scripts/luaspfx/alert.lua
 dat/scripts/luaspfx/blink.lua
+dat/scripts/luaspfx/chakra_explosion.lua
 dat/scripts/luaspfx/core.lua
 dat/scripts/luaspfx/emp.lua
 dat/scripts/luaspfx/explosion.lua

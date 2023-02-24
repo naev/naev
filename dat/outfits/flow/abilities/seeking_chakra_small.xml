@@ -15,8 +15,8 @@
   <gfx type="shader" size="20" col_size="14">particles/chakra.frag</gfx>
   <sound>missile</sound>
   <sound_hit>bansheeexp</sound_hit>
-  <spfx_shield>ExpS</spfx_shield>
-  <spfx_armour>ExpM</spfx_armour>
+  <spfx_shield>ChakraS</spfx_shield>
+  <spfx_armour>ChakraS</spfx_armour>
   <trail_generator x="-7">sirius_chakra</trail_generator>
   <duration blowup="armour">10</duration>
   <thrust>1200</thrust>
