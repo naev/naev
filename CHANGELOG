@@ -3,6 +3,7 @@
    * Fixed launcher weapons using outfit mass instead of ammo mass
    * taiomi: fixed claim check for last mission
    * Fixed some typos
+   * Fixed equipment of Lancelot in "Sharkman Is Back" mission
 
 * 0.10.4
    * Fixed crashes related to multiple effects being active at once
