@@ -12,6 +12,6 @@
   <desc_extra>TODO</desc_extra>
  </general>
  <specific type="modification">
-  <lua>outfits/flow/lua/reality_rip.lua</lua>
+  <lua>outfits/flow/abilities/reality_rip.lua</lua>
  </specific>
 </outfit>

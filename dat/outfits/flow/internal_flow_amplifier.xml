@@ -11,7 +11,7 @@
   <desc_extra>TODO</desc_extra>
  </general>
  <specific type="modification">
-  <lua>outfits/flow/lua/flow_amplifier.lua</lua>
+  <lua>outfits/flow/flow_amplifier.lua</lua>
  </specific>
  <tags>
   <tag>flow</tag>

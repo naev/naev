@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Lesser Seeking Chakra">
+<outfit name="Seeking Chakra">
  <general>
   <typename>Flow Ability</typename>
   <slot>utility</slot>
@@ -12,6 +12,6 @@
   <desc_extra>Costs 25 flow and creates an seeking energy orb that deals 100 ion damage and 100 disable with a 3 second cooldown.</desc_extra>
  </general>
  <specific type="modification">
-  <lua>outfits/flow/lua/seeking_chakra.lua</lua>
+  <lua>outfits/flow/abilities/seeking_chakra.lua</lua>
  </specific>
 </outfit>

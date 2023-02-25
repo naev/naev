@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Lesser Avatar of Sirichana">
+<outfit name="Avatar of Sirichana">
  <general>
   <typename>Flow Ability</typename>
   <slot>utility</slot>
@@ -12,6 +12,6 @@
   <desc_extra>TODO</desc_extra>
  </general>
  <specific type="modification">
-  <lua>outfits/flow/lua/avatar_of_sirichana.lua</lua>
+  <lua>outfits/flow/abilities/avatar_of_sirichana.lua</lua>
  </specific>
 </outfit>
