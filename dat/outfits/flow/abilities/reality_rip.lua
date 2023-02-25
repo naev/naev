@@ -1,27 +1,30 @@
 local flow = require "ships.lua.lib.flow"
 local spfx_rip = require "luaspfx.realityrip"
+local fmt = require "format"
 
-local flow_drain, flow_cost, field_range
-
-function onload( o )
-   -- TODO make outfit specific
-   if o==outfit.get("Reality Rip") then
-      flow_drain  = 8
-      flow_cost   = 80
-      field_range = 500
+function onadd( _p, po )
+   local size = po:slot().size
+   -- Doesn't have small version
+   if size=="Medium" then
+      mem.flow_drain  = 8
+      mem.flow_cost   = 80
+      mem.field_range = 500
+   else
+      error(fmt.f(_("Flow ability '{outfit}' put into slot of unknown size '{size}'!"),
+         {outfit=po:outfit(),size=size}))
    end
 end
 
 local function turnon( p, po )
    local f = flow.get( p )
-   if f < flow_cost then
+   if f < mem.flow_cost then
       return false
    end
-   flow.dec( p, flow_cost )
+   flow.dec( p, mem.flow_cost )
 
    po:state("on")
    po:progress( flow.get(p) / flow.max(p) )
-   mem.field = spfx_rip( p:pos(), field_range )
+   mem.field = spfx_rip( p:pos(), mem.field_range )
 end
 
 local function turnoff( _p, po )
@@ -41,7 +44,7 @@ end
 function update( p, po, dt )
    if mem.field then
       --  Drain flow
-      flow.dec( p, dt * flow_drain )
+      flow.dec( p, dt * mem.flow_drain )
       if flow.get( p ) <= 0 then
          turnoff( p, po )
          return

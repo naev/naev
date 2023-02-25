@@ -1,27 +1,27 @@
 local audio = require 'love.audio'
 local luaspfx = require 'luaspfx'
 local flow = require "ships.lua.lib.flow"
-
-local flow_drain, flow_cost
+local fmt = require "format"
 
 local sfx = audio.newSource( 'snd/sounds/activate4.ogg' )
 
-function onload( o )
-   -- TODO make outfit specific
-   if o==outfit.get("Lesser Avatar of Sirichana") then
-      flow_drain  = 8
-      flow_cost   = 40
+function onadd( _p, po )
+   local size = po:slot().size
+   if size=="Small" then
+      mem.flow_drain  = 8
+      mem.flow_cost   = 40
    else
-      error(_("Unknown outfit using script!"))
+      error(fmt.f(_("Flow ability '{outfit}' put into slot of unknown size '{size}'!"),
+         {outfit=po:outfit(),size=size}))
    end
 end
 
 local function turnon( p, po )
    local f = flow.get( p )
-   if f < flow_cost then
+   if f < mem.flow_cost then
       return false
    end
-   flow.dec( p, flow_cost )
+   flow.dec( p, mem.flow_cost )
 
    -- Turn on
    po:state("on")
@@ -61,7 +61,7 @@ end
 function update( p, po, dt )
    if mem.active then
       --  Drain flow
-      flow.dec( p, dt * flow_drain )
+      flow.dec( p, dt * mem.flow_drain )
       if flow.get( p ) <= 0 then
          turnoff( p, po )
          return

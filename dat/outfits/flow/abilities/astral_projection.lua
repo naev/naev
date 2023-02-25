@@ -1,20 +1,24 @@
 local flow = require "ships.lua.lib.flow"
+local fmt = require "format"
 
-local flow_drain, flow_cost, projection
-
-function onload( _o )
-   -- TODO make outfit specific
-   flow_drain = 1
-   flow_cost = 40
-   projection = ship.get("Llama")
+function onadd( _p, po )
+   local size = po:slot().size
+   if size=="Small" then
+      mem.flow_drain = 1
+      mem.flow_cost = 40
+      mem.projection = ship.get("Llama")
+   else
+      error(fmt.f(_("Flow ability '{outfit}' put into slot of unknown size '{size}'!"),
+         {outfit=po:outfit(),size=size}))
+   end
 end
 
 local function turnon( p, po )
    local f = flow.get( p )
-   if f < flow_cost then
+   if f < mem.flow_cost then
       return false
    end
-   flow.dec( p, flow_cost )
+   flow.dec( p, mem.flow_cost )
 
    -- Set outfit state
    po:state("on")
@@ -22,7 +26,7 @@ local function turnon( p, po )
 
    -- Astral proection
    local pos = p:pos() + vec2.newP( 20, p:dir() )
-   local np = pilot.add( projection, p:faction(), pos, _("Lesser Astral Projection"), {ai="escort"} )
+   local np = pilot.add( mem.projection, p:faction(), pos, _("Lesser Astral Projection"), {ai="escort"} )
    mem.p = np
    np:setNoDeath( true ) -- Dosen't die
 
@@ -74,7 +78,7 @@ function update( p, po, dt )
       end
 
       --  Drain flow
-      flow.dec( p, dt * flow_drain )
+      flow.dec( p, dt * mem.flow_drain )
       if flow.get( p ) <= 0 then
          turnoff( p, po )
          return
