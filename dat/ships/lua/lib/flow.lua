@@ -142,4 +142,23 @@ function flow.recalculate( p )
    flow.reset( p )
 end
 
+local amp_size = {
+   ["Small Flow Amplifier"]      = 1,
+   ["Medium Flow Amplifier"]     = 2,
+   ["Large Flow Amplifier"]      = 3,
+}
+function flow.size( p )
+   -- Sirius ships are determined by their size
+   local ps = p:ship()
+   if ps:tags().sirius then
+      return math.floor( ps:size()*0.5 + 0.5 )
+   end
+   for k,v in ipairs(p:outfitsList()) do
+      if v:tags().flow_amplifier then
+         return amp_size[ v:nameRaw() ]
+      end
+   end
+   return 0
+end
+
 return flow

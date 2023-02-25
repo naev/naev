@@ -10,6 +10,12 @@ function onadd( _p, po )
    if size=="Small" then
       mem.flow_drain  = 8
       mem.flow_cost   = 40
+   elseif size=="Medium" then
+      mem.flow_drain  = 16
+      mem.flow_cost   = 80
+   elseif size=="Large" then
+      mem.flow_drain  = 32
+      mem.flow_cost   = 160
    else
       error(fmt.f(_("Flow ability '{outfit}' put into slot of unknown size '{size}'!"),
          {outfit=po:outfit(),size=size}))

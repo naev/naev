@@ -1,19 +1,47 @@
 local flow = require "ships.lua.lib.flow"
 local fmt = require "format"
 
-function onadd( _p, po )
-   local size = po:slot().size
-   if size=="Small" then
-      mem.flow_cost   = 25
-      mem.ref         = outfit.get("Seeking Chakra Small")
-      mem.cooldown    = 3
+local function getStats( p )
+   local flow_cost, cooldown, ref
+   local size = flow.size( p )
+   if size == 1 then
+      flow_cost   = 25
+      cooldown    = 3
+      ref         = outfit.get("Seeking Chakra Small")
+   elseif size == 2 then
+      flow_cost   = 50
+      cooldown    = 4
+      ref         = outfit.get("Seeking Chakra Small")
    else
-      error(fmt.f(_("Flow ability '{outfit}' put into slot of unknown size '{size}'!"),
-         {outfit=po:outfit(),size=size}))
+      flow_cost   = 100
+      cooldown    = 5
+      ref         = outfit.get("Seeking Chakra Small")
    end
+   return flow_cost, cooldown, ref
 end
 
-function init( _p, po )
+function descextra( p, _o )
+   -- Generic description
+   if p==nil then
+      return "#y".._("Uses flow to create a seeking energy orb that deals damage and disable with a cooldown. Strength varies depending on the flow amplifier.").."#0"
+   end
+   local cost, cooldown, ref = getStats( p )
+   local refstats = ref:specificstats()
+   local damage, disable = refstats.damage, refstats.disable
+   local size = flow.size( p )
+   local prefix = ""
+   if size==1 then
+      prefix = _("(Lesser)")
+   elseif size==3 then
+      prefix = _("(Greater)")
+   end
+   return fmt.f("#y".._("{prefix} Uses {cost} flow to create a seeking energy orb that deals {damage} ion damage and {disable} disable with a {cooldown} second cooldown. Strength varies depending on the flow amplifier."),
+      {prefix=prefix, cost=cost, damage=damage, disable=disable, cooldown=cooldown}).."#0"
+end
+
+function init( p, po )
+   mem.flow_cost, mem.cooldown, mem.ref = getStats( p )
+
    mem.timer = 0
    po:state("off")
 end
