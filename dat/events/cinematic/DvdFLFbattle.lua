@@ -17,7 +17,6 @@
     In this one, there will be a battle between the Dvaered and the FLF in the Tuoladis system.
 
 ]]--
-
 local fleet = require "fleet"
 
 local flfwave, dvaeredwave -- Non-persistent state
@@ -46,47 +45,46 @@ local articles = {
 }
 }
 
-
 function create ()
-    pilot.clear()
-    pilot.toggleSpawn(false)
+   pilot.clear()
+   pilot.toggleSpawn(false)
 
-    flfwave = 1
-    dvaeredwave = 1
-    hook.timer(3.0, "FLFSpawn")
-    hook.timer(12.0, "DvaeredSpawn")
+   flfwave = 1
+   dvaeredwave = 1
+   hook.timer(3.0, "FLFSpawn")
+   hook.timer(12.0, "DvaeredSpawn")
 
-    news.add( articles )
+   news.add( articles )
 
-    hook.jumpout("leave")
-    hook.land("leave")
+   hook.jumpout("leave")
+   hook.land("leave")
 end
 
 function FLFSpawn ()
-    local source_system = system.get("Zacron")
-    local ships = { "Vendetta", "Vendetta", "Vendetta", "Vendetta", "Pacifier", "Lancelot", "Lancelot" }
+   local source_system = system.get("Zacron")
+   local ships = { "Vendetta", "Vendetta", "Vendetta", "Vendetta", "Pacifier", "Lancelot", "Lancelot" }
 
-    fleet.add( 1, ships, "FLF", source_system )
+   fleet.add( 1, ships, "FLF", source_system )
 
-    flfwave = flfwave + 1
-    if flfwave <=5 then
-        hook.timer(1.0, "FLFSpawn")
-    end
+   flfwave = flfwave + 1
+   if flfwave <=5 then
+      hook.timer(1.0, "FLFSpawn")
+   end
 end
 
 function DvaeredSpawn ()
-    local source_system = system.get("Ogat")
-    local ships = { "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor",
-                    "Dvaered Vigilance", "Dvaered Vigilance", "Dvaered Goddard" }
+   local source_system = system.get("Ogat")
+   local ships = { "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor",
+                   "Dvaered Vigilance", "Dvaered Vigilance", "Dvaered Goddard" }
 
-    fleet.add( 1, ships, "Dvaered", source_system )
+   fleet.add( 1, ships, "Dvaered", source_system )
 
-    dvaeredwave = dvaeredwave + 1
-    if dvaeredwave <= 5 then
-        hook.timer(3.0, "DvaeredSpawn")
-    end
+   dvaeredwave = dvaeredwave + 1
+   if dvaeredwave <= 5 then
+      hook.timer(3.0, "DvaeredSpawn")
+   end
 end
 
 function leave () --event ends on player leaving the system or landing
-    evt.finish()
+   evt.finish()
 end
