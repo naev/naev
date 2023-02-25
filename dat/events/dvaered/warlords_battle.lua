@@ -23,6 +23,10 @@ local finvader, flocal
 
 
 function create ()
+   -- Doesn't pilot.clear so inclusive claim
+   if not evt.claim( system.cur(), false ) then
+      evt.finish( false )
+   end
    source_system = system.cur()
    jumphook = hook.jumpin("begin")
    hook.land("leave")

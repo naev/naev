@@ -48,6 +48,11 @@ local articles = {
 
 
 function create ()
+    -- Messes spawns so exclusive claim
+    if not evt.claim( system.cur() ) then
+        evt.finish( false )
+    end
+
     pilot.clear()
     pilot.toggleSpawn(false)
 
