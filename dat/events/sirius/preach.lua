@@ -109,6 +109,11 @@ _("Someone killed the preacher!")
 
 --initialize the event
 function create()
+   -- Doesn't pilot.clear so inclusive claim
+   if not evt.claim( system.cur(), false, true ) then
+      evt.finish( false )
+   end
+
    curr = system.cur() --save the current system
 
    -- Start the fun when the player jumps

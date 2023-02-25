@@ -37,6 +37,7 @@
    * Fixed some typos
    * Fixed equipment of Lancelot in "Sharkman Is Back" mission
    * nelly02: Nelly now stops recommending stuff that only does a little disable
+   * Fixed some events not claiming systems that could interfere with other missions
 
 * 0.10.4
    * Fixed crashes related to multiple effects being active at once
