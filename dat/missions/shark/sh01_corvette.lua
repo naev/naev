@@ -33,6 +33,7 @@ local fmt = require "format"
 local lmisn = require "lmisn"
 local shark = require "common.shark"
 local vn = require "vn"
+local equipopt = require "equipopt"
 
 local sharkboy -- Non-persistent state
 
@@ -143,12 +144,7 @@ end
 function lets_go()
    -- Spawn the enemy Lancelot, equipped with ion cannons (per the plot & to disable rather than murder the player).
    sharkboy = pilot.add( "Lancelot", "Mercenary", system.get("Zacron"), nil, {ai="baddie_norun", naked=true} )
-   sharkboy:outfitAdd("S&K Light Combat Plating")
-   sharkboy:outfitAdd("Milspec Orion 3701 Core System")
-   sharkboy:outfitAdd("Tricon Zephyr II Engine")
-   sharkboy:outfitAdd("Reactor Class I", 2)
-   sharkboy:outfitAdd("Heavy Ion Cannon")
-   sharkboy:outfitAdd("Ion Cannon", 3)
+   equipopt.generic( sharkboy, { disable=2, damage=0 }, "elite" )
    sharkboy:setHostile(true)
    sharkboy:setHilight(true)
 
