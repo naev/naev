@@ -315,7 +315,7 @@ static int evtL_claim( lua_State *L )
    inclusive = lua_toboolean(L,2);
 
    /* Check to see if already claimed. */
-   if (cur_event->claims != NULL) {
+   if (!claim_isNull(cur_event->claims)) {
       NLUA_ERROR(L, _("Event trying to claim but already has."));
       return 0;
    }
