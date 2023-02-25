@@ -21,10 +21,9 @@ local trader, attAttHook, defAttHook, hailhook, jumphook
 local reward
 local finvader, flocal
 
-
 function create ()
    -- Doesn't pilot.clear so inclusive claim
-   if not evt.claim( system.cur(), false ) then
+   if not evt.claim( system.cur(), false, true ) then
       evt.finish( false )
    end
    source_system = system.cur()
