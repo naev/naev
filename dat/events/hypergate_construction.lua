@@ -63,7 +63,7 @@ local traded_total = "hypconst_traded_total"
 function create ()
    local csys = system.cur()
    -- Make sure system isn't claimed, but we don't claim it
-   if not evt.claim( csys, true ) then evt.finish() end
+   if not evt.claim( csys, nil, true ) then evt.finish() end
 
    -- Only care if we're in a system with hypergates
    local sysid
