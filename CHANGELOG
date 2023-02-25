@@ -39,6 +39,7 @@
    * nelly02: Nelly now stops recommending stuff that only does a little disable
    * Fixed some events not claiming systems that could interfere with other missions
    * hypergate_construction: should actually claim the system
+   * Fixed some formatting in the alt text when hovering over outfits in the equipment window
 
 * 0.10.4
    * Fixed crashes related to multiple effects being active at once
