@@ -393,7 +393,6 @@ static int shipL_getSlots( lua_State *L )
    int k;
    const Ship *s = luaL_validship(L,1);
    int ignore_locked = lua_toboolean(L,2);
-   char *outfit_types[] = {"Structure", "Utility", "Weapon"};
    const ShipOutfitSlot *outfit_arrays[] = {
          s->outfit_structure,
          s->outfit_utility,
@@ -414,7 +413,7 @@ static int shipL_getSlots( lua_State *L )
          lua_newtable(L);
 
          lua_pushstring(L, "type"); /* key */
-         lua_pushstring(L, outfit_types[i]); /* value */
+         lua_pushstring(L, slotName(slot->type)); /* value */
          lua_rawset(L, -3); /* table[key = value ]*/
 
          lua_pushstring(L, "size"); /* key */
