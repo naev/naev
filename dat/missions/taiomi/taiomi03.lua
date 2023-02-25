@@ -34,7 +34,7 @@ mem.state = 0
 
 function create ()
    mem.lab, mem.labsys = taiomi.laboratory()
-   if not misn.claim( mem.labsys, nil, true ) then
+   if not misn.claim( mem.labsys, true ) then
       warn(_("Unable to claim system that should be claimable!"))
       misn.finish(false)
    end

@@ -145,7 +145,7 @@ function create ()
    local pnt = spob.cur()
 
    -- Ignore claimed systems (don't want to ruin the atmosphere)
-   if not evt.claim( system.cur(), true ) then evt.finish() end
+   if not naev.claimTest( system.cur() ) then evt.finish() end
 
    -- Do not spawn on restricted spobs
    if pnt:tags().restricted then evt.finish() end

@@ -39,7 +39,7 @@ function create ()
    local scur = system.cur()
 
    -- Inclusive claim
-   if not evt.claim( scur, nil, true ) then evt.finish() end
+   if not naev.claimTest( scur, true ) then evt.finish() end
 
    -- Check to see if a nearby spob is inhabited
    local function nearby_spob( pos )
