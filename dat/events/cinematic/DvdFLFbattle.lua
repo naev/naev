@@ -75,7 +75,7 @@ function FLFSpawn ()
 end
 
 function DvaeredSpawn ()
-    local source_system = system.get("Doranthex")
+    local source_system = system.get("Ogat")
     local ships = { "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor",
                     "Dvaered Vigilance", "Dvaered Vigilance", "Dvaered Goddard" }
 
