@@ -25,6 +25,7 @@
 int pilotoutfit_modified = 0;
 
 /* Pilot outfit metatable methods. */
+static int poL_slot( lua_State *L );
 static int poL_outfit( lua_State *L );
 static int poL_state( lua_State *L );
 static int poL_progress( lua_State *L );
@@ -32,6 +33,7 @@ static int poL_set( lua_State *L );
 static int poL_clear( lua_State *L );
 static int poL_munition( lua_State *L );
 static const luaL_Reg poL_methods[] = {
+   { "slot", poL_slot },
    { "outfit", poL_outfit },
    { "state", poL_state },
    { "progress", poL_progress },
@@ -142,6 +144,50 @@ int lua_ispilotoutfit( lua_State *L, int ind )
 
    lua_pop(L, 2);  /* remove both metatables */
    return ret;
+}
+
+/**
+ * @brief Gets the properties of the outfit slot.
+ *
+ *    @luatparam PilotOutfit po Pilot outfit to get the outfit of.
+ *    @luareturn A table with slot properties string "size", string "type", string "property", boolean "required", boolean "exclusive", and boolean "locked".
+ *               (Strings are English.)
+ * @luafunc slot
+ */
+static int poL_slot( lua_State *L )
+{
+   PilotOutfitSlot *po = luaL_validpilotoutfit(L,1);
+   const ShipOutfitSlot *sslot = po->sslot;
+   const OutfitSlot *slot = &sslot->slot;
+
+   /* make the slot table and put it in */
+   lua_newtable(L);
+
+   lua_pushstring(L, "type"); /* key */
+   lua_pushstring(L, slotName( slot->type )); /* value */
+   lua_rawset(L, -3); /* table[key = value ]*/
+
+   lua_pushstring(L, "size"); /* key */
+   lua_pushstring(L, slotSize(slot->size) );
+   lua_rawset(L, -3); /* table[key] = value */
+
+   lua_pushstring(L, "property"); /* key */
+   lua_pushstring( L, sp_display(slot->spid)); /* value */
+   lua_rawset(L, -3); /* table[key] = value */
+
+   lua_pushstring(L, "required"); /* key */
+   lua_pushboolean( L, sslot->required); /* value */
+   lua_rawset(L, -3); /* table[key] = value */
+
+   lua_pushstring(L, "exclusive"); /* key */
+   lua_pushboolean( L, sslot->exclusive); /* value */
+   lua_rawset(L, -3); /* table[key] = value */
+
+   lua_pushstring(L, "locked"); /* key */
+   lua_pushboolean( L, sslot->locked); /* value */
+   lua_rawset(L, -3); /* table[key] = value */
+
+   return 1;
 }
 
 /**
