@@ -141,8 +141,14 @@ function enter()
 end
 
 function lets_go()
-   -- spawns the Shark
-   sharkboy = pilot.add( "Lancelot", "Mercenary", system.get("Zacron"), nil, {ai="baddie_norun"} )
+   -- Spawn the enemy Lancelot, equipped with ion cannons (per the plot & to disable rather than murder the player).
+   sharkboy = pilot.add( "Lancelot", "Mercenary", system.get("Zacron"), nil, {ai="baddie_norun", naked=true} )
+   sharkboy:outfitAdd("S&K Light Combat Plating")
+   sharkboy:outfitAdd("Milspec Orion 3701 Core System")
+   sharkboy:outfitAdd("Tricon Zephyr II Engine")
+   sharkboy:outfitAdd("Reactor Class I", 2)
+   sharkboy:outfitAdd("Heavy Ion Cannon")
+   sharkboy:outfitAdd("Ion Cannon", 3)
    sharkboy:setHostile(true)
    sharkboy:setHilight(true)
 
