@@ -40,7 +40,7 @@ function create ()
    end
 
    -- We do a soft claim on the final system
-   if not evt.claim( {scur}, nil, true ) then
+   if not evt.claim( {scur}, true ) then
       evt.finish(false)
       return
    end

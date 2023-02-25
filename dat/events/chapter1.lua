@@ -59,7 +59,7 @@ function create ()
       end
 
       -- Make sure system isn't claimed, but we don't claim it
-      if not evt.claim( system.cur(), true ) then evt.finish(false) end
+      if not naev.claimTest( system.cur() ) then evt.finish(false) end
 
       -- Sort the hypergates by player standing
       table.sort( hypergate_list, function ( a, b )

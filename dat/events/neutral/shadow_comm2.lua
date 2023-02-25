@@ -18,7 +18,7 @@ require "proximity"
 
 function create ()
    -- Make sure system isn't claimed, but we don't claim it
-   if not evt.claim( system.cur(), true ) then evt.finish() end
+   if not naev.claimTest( system.cur() ) then evt.finish() end
 
    hook.timer(20.0, "hailme")
    hook.land("finish")

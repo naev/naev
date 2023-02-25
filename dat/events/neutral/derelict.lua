@@ -128,7 +128,7 @@ function create ()
    end
 
    -- Ignore claimed systems (don't want to ruin the atmosphere)
-   if not evt.claim( cursys, true ) then evt.finish() end
+   if not naev.claimTest( cursys, true ) then evt.finish() end
 
    -- Get the derelict's ship.
    local dship

@@ -19,7 +19,7 @@ function create ()
    local scur = system.cur()
 
    -- Inclusive claim
-   if not evt.claim( scur, nil, true ) then evt.finish() end
+   if not evt.claim( scur, true ) then evt.finish() end
 
    -- Special case final destination
    if scur == targetsys then

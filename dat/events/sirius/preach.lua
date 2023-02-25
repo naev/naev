@@ -110,7 +110,7 @@ _("Someone killed the preacher!")
 --initialize the event
 function create()
    -- Doesn't pilot.clear so inclusive claim
-   if not evt.claim( system.cur(), false, true ) then
+   if not evt.claim( system.cur(), true ) then
       evt.finish( false )
    end
 

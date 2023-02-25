@@ -23,11 +23,11 @@ local vendetta, hailhook -- Non-persistent state.
 
 function create ()
    -- Make sure system isn't claimed, but we don't claim it
-   if not evt.claim( system.cur(), true ) then evt.finish() end
+   if not naev.claimTest( system.cur() ) then evt.finish() end
 
     -- Claim: test the claims in the mission.
    local misssys = {system.get("Qex"), system.get("Shakar"), system.get("Borla"), system.get("Doranthex")}
-   if not evt.claim( misssys, true ) then
+   if not naev.claimTest( misssys ) then
       evt.finish()
    end
 
