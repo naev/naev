@@ -100,7 +100,7 @@ function create ()
    end
 
    mem.missys = systems[ rnd.rnd( 1, #systems ) ]
-   if not misn.claim( mem.missys, false, true ) then misn.finish( false ) end
+   if not misn.claim( mem.missys, true ) then misn.finish( false ) end
 
    local planets = mem.missys:spobs()
    local numpoints = math.min( rnd.rnd( 2, 5 ), #planets )

@@ -46,7 +46,7 @@ function create ()
    mem.tier = rnd.rnd(1,3)
 
    -- Inclusive claiming, multiple missions can be done at the same time!
-   if not misn.claim( returnsys, false, true ) then misn.finish( false ) end
+   if not misn.claim( returnsys, true ) then misn.finish( false ) end
 
    mem.destpnt, mem.destsys, mem.numjumps, mem.traveldist = car.calculateRoute( rnd.rnd(3,5)+mem.tier, true )
    if not mem.destpnt then

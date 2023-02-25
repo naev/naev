@@ -32,7 +32,7 @@ function create ()
    mem.rewardrisk = mem.risk
 
    -- We do a soft claim on the final system
-   if not misn.claim( {mem.sys}, nil, true ) then
+   if not misn.claim( {mem.sys}, true ) then
       return
    end
 

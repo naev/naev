@@ -41,7 +41,7 @@ local function osd ()
 end
 
 function create ()
-   if not misn.claim( {fightsys}, nil, true ) then
+   if not misn.claim( {fightsys}, true ) then
       warn(_("Unable to claim system that should be claimable!"))
       misn.finish(false)
    end

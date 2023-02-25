@@ -82,7 +82,7 @@ function create ()
    local pntfilter = function( p )
       -- Must be claimable
       local s = p:system()
-      if not misn.claim( s, true ) then
+      if not naev.claimTest( s ) then
          return false
       end
       -- Sells Outfits
