@@ -62,6 +62,7 @@ dat/difficulty/slow_mode.xml
 dat/difficulty/story_mode.xml
 dat/effects/ambush_hunter.xml
 dat/effects/antimatter_taint.xml
+dat/effects/astral_projection.xml
 dat/effects/avatar_of_sirichana.xml
 dat/effects/blink.xml
 dat/effects/bloodlust.xml

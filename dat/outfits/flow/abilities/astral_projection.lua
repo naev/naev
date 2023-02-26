@@ -28,7 +28,7 @@ local function turnon( p, po )
    local pos = p:pos() + vec2.newP( 20, p:dir() )
    local np = pilot.add( mem.projection, p:faction(), pos, _("Lesser Astral Projection"), {ai="escort"} )
    mem.p = np
-   np:setNoDeath( true ) -- Dosen't die
+   np:effectAdd("Astral Projection")
 
    -- Don't let player attack their own astral projection
    if mem.isp then
