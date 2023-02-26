@@ -264,6 +264,8 @@ dat/outfits/flow/abilities/cleansing_flames.xml
 dat/outfits/flow/abilities/feather_drive.xml
 dat/outfits/flow/abilities/reality_rip.xml
 dat/outfits/flow/abilities/seeking_chakra.xml
+dat/outfits/flow/abilities/seeking_chakra_large.xml
+dat/outfits/flow/abilities/seeking_chakra_medium.xml
 dat/outfits/flow/abilities/seeking_chakra_small.xml
 dat/outfits/flow/internal_flow_amplifier.xml
 dat/outfits/flow/structure/small_flow_amplifier.xml

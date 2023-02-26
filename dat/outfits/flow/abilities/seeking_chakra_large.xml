@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Seeking Chakra Large">
+ <general>
+  <template/>
+ </general>
+ <specific type="launcher">
+  <delay>1</delay>
+  <reload_time>1</reload_time>
+  <amount>1</amount>
+  <iflockon>0</iflockon>
+  <arc>10</arc>
+  <trackmin>0</trackmin>
+  <trackmax>1000</trackmax>
+  <ammo_mass>1</ammo_mass>
+  <gfx type="shader" size="30" col_size="28">particles/chakra.frag</gfx>
+  <sound>missile</sound>
+  <sound_hit>bansheeexp</sound_hit>
+  <spfx_shield>ChakraM</spfx_shield>
+  <spfx_armour>ChakraM</spfx_armour>
+  <trail_generator x="-7">sirius_chakra</trail_generator>
+  <duration blowup="armour">16</duration>
+  <thrust>1000</thrust>
+  <turn>50</turn>
+  <speed_max>500</speed_max>
+  <resist>200</resist>
+  <damage>
+   <type>ion</type>
+   <penetrate>80</penetrate>
+   <physical>80</physical>
+   <disable>80</disable>
+  </damage>
+  <ai>smart</ai>
+ </specific>
+</outfit>
