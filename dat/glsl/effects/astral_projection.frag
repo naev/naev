@@ -18,7 +18,7 @@ out vec4 colour_out;
 
 vec4 calc_colour( float w, float strength )
 {
-    vec2 nuv = 0.1 * tex_coord * dimensions.xy / dimensions.z;
+    vec2 nuv = 0.001 * tex_coord * dimensions.xy / dimensions.z;
     float n = 0.5*snoise( vec3( nuv, 0.1*u_elapsed ) )+0.5; // 0-1 range
 
     nuv += strength*(n-0.25)*vec2(cos(u_dir+0.3*(n-0.5)*(n-0.5)),-sin(u_dir-0.3*(n-0.5)*(n-0.5)));
