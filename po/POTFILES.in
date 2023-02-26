@@ -537,6 +537,7 @@ dat/ships/proteron/proteron_gauss.xml
 dat/ships/proteron/proteron_hippocrates.xml
 dat/ships/proteron/proteron_pythagoras.xml
 dat/ships/proteron/proteron_watson.xml
+dat/ships/sirius/astral_projection_lesser.xml
 dat/ships/sirius/sirius_divinity.xml
 dat/ships/sirius/sirius_dogma.xml
 dat/ships/sirius/sirius_fidelity.xml
@@ -3324,6 +3325,7 @@ dat/ships/lua/lib/explode.lua
 dat/ships/lua/lib/flow.lua
 dat/ships/lua/scavenger.lua
 dat/ships/lua/sirius.lua
+dat/ships/lua/sirius_projection.lua
 dat/ships/lua/soromid.lua
 dat/ships/lua/thurion.lua
 dat/ships/lua/zalek.lua

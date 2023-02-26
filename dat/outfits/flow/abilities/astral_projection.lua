@@ -6,7 +6,7 @@ function onadd( _p, po )
    if size=="Small" then
       mem.flow_drain = 1
       mem.flow_cost = 40
-      mem.projection = ship.get("Llama")
+      mem.projection = ship.get("Astral Projection Lesser")
    else
       error(fmt.f(_("Flow ability '{outfit}' put into slot of unknown size '{size}'!"),
          {outfit=po:outfit(),size=size}))

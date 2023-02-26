@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Astral Projection Lesser">
+ <lua>ships/lua/sirius_projection.lua</lua>
+ <points>30</points>
+ <base_type>Astral Projection Lesser</base_type>
+ <gfx_space sx="8" sy="8" size="60">ship/apparition/apparition_fighter.webp</gfx_space>
+ <gfx_comm>outfit/store/placeholder.webp</gfx_comm>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Interceptor</class>
+ <price>1</price>
+ <fabricator>Sirius Psychic Powers</fabricator>
+ <description>N/A</description>
+ <movement>
+  <thrust>160</thrust>
+  <speed>330</speed>
+  <turn>140</turn>
+ </movement>
+ <health>
+  <absorb>10</absorb>
+  <armour>200</armour>
+  <shield>0</shield>
+  <shield_regen>0</shield_regen>
+  <energy>200</energy>
+  <energy_regen>12</energy_regen>
+ </health>
+ <characteristics>
+  <crew>1</crew>
+  <mass>30</mass>
+  <fuel>0</fuel>
+  <cargo>0</cargo>
+  <fuel_consumption>1</fuel_consumption>
+  <cpu>80</cpu>
+ </characteristics>
+ <slots>
+  <weapon size="small" x="10" y="-2" h="0" />
+  <weapon size="small" x="10" y="2" h="0" />
+ </slots>
+ <stats>
+  <stress_dissipation>10000</stress_dissipation>
+ </stats>
+ <tags>
+  <tag>noplayer</tag>
+  <tag>noequip</tag>
+  <tag>sirius</tag>
+ </tags>
+</ship>
