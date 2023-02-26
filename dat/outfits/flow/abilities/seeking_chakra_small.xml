@@ -18,16 +18,16 @@
   <spfx_shield>ChakraS</spfx_shield>
   <spfx_armour>ChakraS</spfx_armour>
   <trail_generator x="-7">sirius_chakra</trail_generator>
-  <duration blowup="armour">10</duration>
+  <duration blowup="armour">8</duration>
   <thrust>1200</thrust>
   <turn>50</turn>
   <speed_max>700</speed_max>
   <resist>200</resist>
   <damage>
    <type>ion</type>
-   <penetrate>50</penetrate>
-   <physical>50</physical>
-   <disable>50</disable>
+   <penetrate>40</penetrate>
+   <physical>30</physical>
+   <disable>30</disable>
   </damage>
   <ai>smart</ai>
  </specific>

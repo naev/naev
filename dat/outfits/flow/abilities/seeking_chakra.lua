@@ -33,21 +33,21 @@ function descextra( p, _o )
       size = flow.size( p )
    end
    if p==nil or flow.size(p)==0 then
-      local s = "#y".._([[Uses flow to create a seeking energy orb that deals damage and disable with a cooldown. Affected ships suffer from decreased movement and firerate. Strength varies depending on the flow amplifier.]]).."#0"
+      local s = "#y".._([[Uses flow to create a seeking energy orb that deals ion damage and disable with a cooldown. Affected ships suffer from decreased movement and firerate. Strength varies depending on the flow amplifier.]]).."#0"
       for i=1,3 do
          local cost, cooldown, ref, strength, duration = getStats( nil, i )
          local refstats = ref:specificstats()
          local damage, disable, penetration = refstats.damage, refstats.disable, refstats.penetration
-         s = s.."\n"..fmt.f(_("#n{prefix}:#0 {cost} flow, {cooldown} s cooldown, {damage} damage, {disable} disable, {penetration}% penetration, {strength}% debuff, {duration} s duration"),
-            {prefix=flow.prefix(i), cost=cost, damage=damage, disable=disable, penetration=100*penetration, cooldown=cooldown, strength=25*strength, duration=duration}).."#0"
+         s = s.."\n"..fmt.f(_("#n{prefix}:#0 {cost} flow, {cooldown} s cooldown, {range} range, {damage} damage, {disable} disable, {penetration}% penetration, {strength}% debuff, {duration} s duration"),
+            {prefix=flow.prefix(i), cost=cost, range=refstats.duration*refstats.speed_max, damage=damage, disable=disable, penetration=100*penetration, cooldown=cooldown, strength=25*strength, duration=duration}).."#0"
       end
       return s
    end
    local cost, cooldown, ref, strength, duration = getStats( p )
    local refstats = ref:specificstats()
    local damage, disable, penetration = refstats.damage, refstats.disable, refstats.penetration
-   return fmt.f("#y".._("({prefix}) Uses {cost} flow to create a seeking energy orb that deals {damage} ion damage and {disable} disable {penetration}% penetration and a {cooldown} second cooldown. Affected ships suffer from -{strength}% movement and firerate for {duration} seconds. Strength varies depending on the flow amplifier."),
-      {prefix=flow.prefix(size), cost=cost, damage=damage, disable=disable, penetration=100*penetration, cooldown=cooldown, strength=25*strength, duration=duration}).."#0"
+   return fmt.f("#y".._("({prefix}) Uses {cost} flow to create a seeking energy orb that deals {damage} ion damage and {disable} disable {penetration}% penetration with {range} range and a {cooldown} second cooldown. Affected ships suffer from -{strength}% movement and firerate for {duration} seconds. Strength varies depending on the flow amplifier."),
+      {prefix=flow.prefix(size), cost=cost, range=refstats.duration*refstats.speed_max, damage=damage, disable=disable, penetration=100*penetration, cooldown=cooldown, strength=25*strength, duration=duration}).."#0"
 end
 
 function init( p, po )
