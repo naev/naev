@@ -107,6 +107,7 @@ static int effect_parse( EffectData *efx, const char *file )
          efx->u_tex     = glGetUniformLocation( efx->program, "u_tex" );
          efx->u_timer   = glGetUniformLocation( efx->program, "u_timer" );
          efx->u_elapsed = glGetUniformLocation( efx->program, "u_elapsed" );
+         efx->u_dir     = glGetUniformLocation( efx->program, "u_dir" );
          continue;
       }
       if (xml_isNode(node,"lua")) {

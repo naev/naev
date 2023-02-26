@@ -32,6 +32,7 @@ typedef struct EffectData_ {
    GLuint u_tex;
    GLuint u_timer;
    GLuint u_elapsed;
+   GLuint u_dir;
    /* Lua. */
    nlua_env lua_env;    /**< Lua environment. */
    int lua_add;         /**< Effect has been added to a pilot. */

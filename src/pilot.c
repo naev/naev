@@ -1919,6 +1919,7 @@ void pilot_render( Pilot *p )
          glUniform1f( ed->u_timer, e->timer );
          glUniform1f( ed->u_elapsed, e->elapsed );
          glUniform1f( ed->u_r, e->r );
+         glUniform1f( ed->u_dir, p->solid.dir );
 
          /* Draw. */
          glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
