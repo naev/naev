@@ -13,14 +13,14 @@ local function getStats( p, size )
    elseif size == 2 then
       flow_cost   = 50
       cooldown    = 4
-      ref         = outfit.get("Seeking Chakra Small")
-      duration    = 8
+      ref         = outfit.get("Seeking Chakra Medium")
+      duration    = 9
       strength    = 1.25
    else
       flow_cost   = 100
       cooldown    = 5
-      ref         = outfit.get("Seeking Chakra Small")
-      duration    = 15
+      ref         = outfit.get("Seeking Chakra Large")
+      duration    = 13
       strength    = 1.5
    end
    return flow_cost, cooldown, ref, strength, duration
