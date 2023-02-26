@@ -10,15 +10,15 @@ local function getStats( p, size )
    size = size or flow.size( p )
    if size == 1 then
       flow_drain  = 8
-      flow_cost   = 40
+      flow_cost   = 20
       mass_limit  = 500
    elseif size == 2 then
       flow_drain  = 16
-      flow_cost   = 80
+      flow_cost   = 40
       mass_limit  = 3000
    else
       flow_drain  = 32
-      flow_cost   = 160
+      flow_cost   = 80
       mass_limit  = 15e3
    end
    return flow_cost, flow_drain, mass_limit
@@ -29,28 +29,21 @@ function descextra( p, _o )
    local size
    if p then
       size = flow.size( p )
+   else
+      size = 0
    end
    local s = "#y"..fmt.f(_([[Uses flow to enhance the ships damage by {dmg}%, movement by {mvt}%, absorption by {abs}%, jamming chance by {jam}%, and shield and energy regeneration by {regen}. Furthermore, it accelerates the ship by {accel}%. ]]),
       {dmg=25, mvt=25, abs=20, jam=30, regen=50, accel=25}).."#0"
-   if p==nil or flow.size(p)==0 then
-      for i=1,3 do
-         local cost, drain, limit = getStats( nil, i )
-         s = s.."\n"..fmt.f(_("#n{prefix}:#0 {cost} flow, drains {drain} flow per second, limited to ships under {limit}"),
-            {prefix=flow.prefix(i), cost=cost, drain=drain, limit=fmt.tonnes_short(limit)}).."#0"
+   for i=1,3 do
+      local cost, drain, limit = getStats( nil, i )
+      local pfx = flow.prefix(i)
+      if i==size then
+         pfx = "#b"..pfx.."#n"
       end
-      return s
+      s = s.."\n"..fmt.f(_("#n{prefix}:#0 {cost} flow, drains {drain} flow per second, limited to ships under {limit}"),
+         {prefix=pfx, cost=cost, drain=drain, limit=fmt.tonnes_short(limit)}).."#0"
    end
-   local cost, drain, limit = getStats( nil, size )
-   s = s.."\n"..fmt.f(_("({prefix}) Requires {cost} flow to use and drains {drain} flow per second. Can only be used on ships under {limit}."),
-      {prefix=flow.prefix(size), cost=cost, drain=drain, limit=fmt.tonnes_short(limit)}).."#0"
    return s
-end
-
-function init( p, po )
-   mem.flow_cost, mem.flow_drain, mem.mass_limit = getStats( p )
-
-   mem.timer = 0
-   po:state("off")
 end
 
 local function turnon( p, po )
@@ -95,6 +88,8 @@ local function turnoff( p, po )
 end
 
 function init( p, po )
+   mem.flow_cost, mem.flow_drain, mem.mass_limit = getStats( p )
+
    po:state("off")
    mem.isp = (p == player.pilot())
    turnoff()
