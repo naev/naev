@@ -32,7 +32,7 @@ function descextra( p, _o )
    if p then
       size = flow.size( p )
    end
-   if p==nil or flow.size(p)==0 then
+   if p==nil or size then
       local s = "#y".._([[Uses flow to create a seeking energy orb that deals ion damage and disable with a cooldown. Affected ships suffer from decreased movement and firerate. Strength varies depending on the flow amplifier.]]).."#0"
       for i=1,3 do
          local cost, cooldown, ref, strength, duration = getStats( nil, i )
