@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Drone">
+ <lua>ships/lua/thurion.lua</lua>
  <points>30</points>
  <base_type>Drone</base_type>
  <GFX size="70">drone</GFX>
