@@ -5,24 +5,60 @@ local fmt = require "format"
 
 local sfx = audio.newSource( 'snd/sounds/activate4.ogg' )
 
-function onadd( _p, po )
-   local size = po:slot().size
-   if size=="Small" then
-      mem.flow_drain  = 8
-      mem.flow_cost   = 40
-   elseif size=="Medium" then
-      mem.flow_drain  = 16
-      mem.flow_cost   = 80
-   elseif size=="Large" then
-      mem.flow_drain  = 32
-      mem.flow_cost   = 160
+local function getStats( p, size )
+   local flow_cost, flow_drain, mass_limit
+   size = size or flow.size( p )
+   if size == 1 then
+      flow_drain  = 8
+      flow_cost   = 40
+      mass_limit  = 500
+   elseif size == 2 then
+      flow_drain  = 16
+      flow_cost   = 80
+      mass_limit  = 3000
    else
-      error(fmt.f(_("Flow ability '{outfit}' put into slot of unknown size '{size}'!"),
-         {outfit=po:outfit(),size=size}))
+      flow_drain  = 32
+      flow_cost   = 160
+      mass_limit  = 15e3
    end
+   return flow_cost, flow_drain, mass_limit
+end
+
+function descextra( p, _o )
+   -- Generic description
+   local size
+   if p then
+      size = flow.size( p )
+   end
+   local s = "#y"..fmt.f(_([[Uses flow to enhance the ships damage by {dmg}%, movement by {mvt}%, absorption by {abs}%, jamming chance by {jam}%, and shield and energy regeneration by {regen}. Furthermore, it accelerates the ship by {accel}%. ]]),
+      {dmg=25, mvt=25, abs=20, jam=30, regen=50, accel=25}).."#0"
+   if p==nil or flow.size(p)==0 then
+      for i=1,3 do
+         local cost, drain, limit = getStats( nil, i )
+         s = s.."\n"..fmt.f(_("#n{prefix}:#0 {cost} flow, drains {drain} flow per second, limited to ships under {limit}"),
+            {prefix=flow.prefix(i), cost=cost, drain=drain, limit=fmt.tonnes_short(limit)}).."#0"
+      end
+      return s
+   end
+   local cost, drain, limit = getStats( nil, size )
+   s = s.."\n"..fmt.f(_("({prefix}) Requires {cost} flow to use and drains {drain} flow per second. Can only be used on ships under {limit}."),
+      {prefix=flow.prefix(size), cost=cost, drain=drain, limit=fmt.tonnes_short(limit)}).."#0"
+   return s
+end
+
+function init( p, po )
+   mem.flow_cost, mem.flow_drain, mem.mass_limit = getStats( p )
+
+   mem.timer = 0
+   po:state("off")
 end
 
 local function turnon( p, po )
+   if p:mass() > mem.mass_limit then
+      player.msg("#r".._("Your ship is above the mass limit to use Avatar of Sirichana.").."#0")
+      return false
+   end
+
    local f = flow.get( p )
    if f < mem.flow_cost then
       return false
