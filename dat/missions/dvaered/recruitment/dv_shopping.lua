@@ -7,7 +7,7 @@
  <location>Bar</location>
  <faction>Dvaered</faction>
  <done>Dvaered Negotiation 2</done>
- <cond>faction.playerStanding("Dvaered") &gt;= 20 and system.get("Goddard"):jumpDist() &lt; 4 and not (spob.cur():services().shipyard == nil)</cond>
+ <cond>faction.playerStanding("Dvaered") &gt;= 20 and system.get("Goddard"):jumpDist() &lt; 10 and not (spob.cur():services().shipyard == nil)</cond>
  <notes>
   <campaign>Dvaered Recruitment</campaign>
  </notes>
