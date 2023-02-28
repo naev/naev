@@ -27,8 +27,11 @@
       * Library to handle conditionals for mission computer missions
       * Added support for disabling specific patrol lanes from being generated
       * Support for Lua scripting for ships
+      * Changed api of evt.claim and misn.claim
    * Fixes
+      * Typo and wording fixes
       * Fixed many corner case crashes in the editor
+      * Fixed cargo missions not being generated in some parts of the universe
 
 * 0.10.5 (unreleased)
    * Start counting effect stacks from 1 not 2
