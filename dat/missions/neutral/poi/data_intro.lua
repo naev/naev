@@ -20,7 +20,7 @@ return function ( mem )
          local sai = tut.vn_shipai()
          vn.appear( sai, tut.shipai.transition )
          sai(_([[Your ship AI appears as you access the system.
-"This derelict seems to be quite fancy. Analysis shows that it seems like the life support system on the ship failed. Lookin at the computer system, most of the logs seem quite corrupted, however, I was able to recover some audio in part. Seems to be from the end of the black box. Let me play it back for you"]]))
+"This derelict seems to be quite fancy. Analysis shows that it seems like the life support system on the ship failed. Looking at the computer system, most of the logs seem quite corrupted, however, I was able to recover some audio in part. Seems to be from the end of the black box. Let me play it back for you"]]))
          vn.disappear( sai, tut.shipai.transition )
 
          vn.scene()

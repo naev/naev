@@ -665,6 +665,7 @@ int outfit_altText( char *buf, int n, const Outfit *o, const Pilot *plt )
       mass += outfit_amount(o) * o->u.bay.ship_mass;
 
    p  = outfit_getNameWithClass( o, buf, n );
+   p += scnprintf( &buf[p], n-p, "\n" );
    if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
       p += scnprintf( &buf[p], n-p, "#o%s#0\n", _("Unique") );
    if (o->limit != NULL)
@@ -672,7 +673,7 @@ int outfit_altText( char *buf, int n, const Outfit *o, const Pilot *plt )
    if (o->slot.spid != 0)
       p += scnprintf( &buf[p], n-p, "#o%s#0\n",
             _(sp_display( o->slot.spid) ) );
-   p += scnprintf( &buf[p], n-p, "%s", pilot_outfitSummary( plt, o, 1 ) );
+   p += scnprintf( &buf[p], n-p, "%s", pilot_outfitSummary( plt, o, 0 ) );
    if ((o->mass > 0.) && (p < n)) {
       char buf_mass[ECON_MASS_STRLEN];
       tonnes2str( buf_mass, (int)round( mass ) );

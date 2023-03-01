@@ -27,13 +27,22 @@
       * Library to handle conditionals for mission computer missions
       * Added support for disabling specific patrol lanes from being generated
       * Support for Lua scripting for ships
+      * Changed api of evt.claim and misn.claim
    * Fixes
+      * Typo and wording fixes
       * Fixed many corner case crashes in the editor
+      * Fixed cargo missions not being generated in some parts of the universe
 
 * 0.10.5 (unreleased)
    * Start counting effect stacks from 1 not 2
    * Fixed launcher weapons using outfit mass instead of ammo mass
    * taiomi: fixed claim check for last mission
+   * Fixed some typos
+   * Fixed equipment of Lancelot in "Sharkman Is Back" mission
+   * nelly02: Nelly now stops recommending stuff that only does a little disable
+   * Fixed some events not claiming systems that could interfere with other missions
+   * hypergate_construction: should actually claim the system
+   * Fixed some formatting in the alt text when hovering over outfits in the equipment window
 
 * 0.10.4
    * Fixed crashes related to multiple effects being active at once

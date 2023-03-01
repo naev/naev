@@ -80,7 +80,7 @@ function create ()
    end
 
    mem.missys = systems[ rnd.rnd( 1, #systems ) ]
-   if not misn.claim( mem.missys, false, true ) then misn.finish( false ) end
+   if not misn.claim( mem.missys, true ) then misn.finish( false ) end
 
    mem.target_faction = nil
    while mem.target_faction == nil and #target_factions > 0 do

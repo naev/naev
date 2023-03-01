@@ -33,6 +33,7 @@ local fmt = require "format"
 local lmisn = require "lmisn"
 local shark = require "common.shark"
 local vn = require "vn"
+local equipopt = require "equipopt"
 
 local sharkboy -- Non-persistent state
 
@@ -141,8 +142,9 @@ function enter()
 end
 
 function lets_go()
-   -- spawns the Shark
-   sharkboy = pilot.add( "Lancelot", "Mercenary", system.get("Raelid"), nil, {ai="baddie_norun"} )
+   -- Spawn the enemy Lancelot, equipped with ion cannons (per the plot & to disable rather than murder the player).
+   sharkboy = pilot.add( "Lancelot", "Mercenary", system.get("Zacron"), nil, {ai="baddie_norun", naked=true} )
+   equipopt.generic( sharkboy, { disable=2, damage=0 }, "elite" )
    sharkboy:setHostile(true)
    sharkboy:setHilight(true)
 

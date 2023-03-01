@@ -16,7 +16,7 @@ local msg_lore = {
    -- Some tips?
    _([["Afterburners seem like they can really help on tight curves."]]),
    _([["Lots of pilots seem to fly interceptors, they can really put out speed!"]]),
-   _([["The engine makes a ton of difference in a ship's top speed. MilSpec engines really seem to pay off."]]),
+   _([["The engine makes a ton of difference in a ship's top speed. Tricon engines really seem to pay off."]]),
 }
 
 local function getMessageLore ()

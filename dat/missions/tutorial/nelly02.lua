@@ -63,8 +63,10 @@ local enemies, rampant, rampant_pos, rampant_pos_idx, spotter, spotter_pos -- No
 local reward_amount = tutnel.reward.nelly02
 
 local function has_disable( o )
-   local _dmg, dis = o:weapstats()
-   return dis and dis > 0
+   local dmg, dis = o:weapstats()
+   dmg = dmg or 0
+   dis = dis or 0
+   return dis > dmg
 end
 
 function create ()
@@ -80,7 +82,7 @@ function create ()
    local pntfilter = function( p )
       -- Must be claimable
       local s = p:system()
-      if not misn.claim( s, true ) then
+      if not naev.claimTest( s ) then
          return false
       end
       -- Sells Outfits

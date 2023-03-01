@@ -397,7 +397,7 @@ Say our event only adds a small derelict in the system and we don't mind it shar
 
 ```lua
 function create ()
-   if not evt.claim( {system.get("Gamma Polaris")}, nil, true ) then
+   if not evt.claim( {system.get("Gamma Polaris")}, true ) then
       evt.finish(false)
    end
 
@@ -405,7 +405,7 @@ function create ()
 end
 ```
 
-In this case, the second parameter is set to `nil`, which defaults to trying to claim the system instead of just testing it, and more importantly, the third parameter is set to `true` which indicates that this event is trying to do an **inclusive** claim. Again, if the claiming fails, the event silently fails.
+In this case, the second parameter is set to `true` which indicates that this event is trying to do an **inclusive** claim. Again, if the claiming fails, the event silently fails.
 
 Claims can also be tested in an event/mission-neutral way with `naev.claimTest`. However, this can only test the claims. Only `misn.claim` and `evt.claim` can enforce claims for missions and events, respectively.
 

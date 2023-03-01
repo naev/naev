@@ -967,7 +967,6 @@ static int misn_npcRm( lua_State *L )
  * @usage if not misn.claim( { system.get("Gamma Polaris"), 'some_string' } ) then misn.finish( false ) end
  *
  *    @luatparam System|String|{System,String...} params Table of systems/strings to claim or a single system/string.
- *    @luatparam[opt=false] boolean onlytest Whether or not to only test the claim, but not apply it.
  *    @luatparam[opt=false] boolean inclusive Whether or not to allow the claim to include other inclusive claims. Multiple missions/events can inclusively claim the same system, but only one system can exclusively claim it.
  *    @luatreturn boolean true if was able to claim, false otherwise.
  * @luafunc claim
@@ -976,16 +975,15 @@ static int misn_claim( lua_State *L )
 {
    Claim_t *claim;
    Mission *cur_mission;
-   int onlytest, inclusive;
+   int inclusive;
 
    /* Get mission. */
    cur_mission = misn_getFromLua(L);
 
-   onlytest = lua_toboolean(L,2);
-   inclusive = lua_toboolean(L,3);
+   inclusive = lua_toboolean(L,2);
 
    /* Check to see if already claimed. */
-   if (!onlytest && !claim_isNull(cur_mission->claims)) {
+   if (!claim_isNull(cur_mission->claims)) {
       NLUA_ERROR(L, _("Mission trying to claim but already has."));
       return 0;
    }
@@ -1010,13 +1008,6 @@ static int misn_claim( lua_State *L )
       claim_addStr( claim, lua_tostring( L, 1 ) );
    else
       NLUA_INVALID_PARAMETER(L);
-
-   /* Only test, but don't apply case. */
-   if (onlytest) {
-      lua_pushboolean( L, !claim_test( claim ) );
-      claim_destroy( claim );
-      return 1;
-   }
 
    /* Test claim. */
    if (claim_test( claim )) {

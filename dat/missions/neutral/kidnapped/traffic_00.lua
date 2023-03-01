@@ -38,7 +38,7 @@ local pir1_desc = _([[The two pirates seem to be talking rather quietly, but lou
 local pir2_desc = _([[The pirates have both drank their wallet's worth today, so eavesdropping shouldn't be too much of an issue.]])
 
 function create()
-   if not misn.claim( {system.get("Goddard")}, true) then
+   if not misn.claim( {system.get("Goddard")}, true ) then
       warn(_("Something has gone wrong! Claim that should work has failed!"))
       return
    end

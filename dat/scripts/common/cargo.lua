@@ -151,6 +151,9 @@ function car.calculateRoute( missdist, always_available, use_hidden )
    local cargo
    local cargoes = difference(spob.cur():commoditiesSold(),destplanet:commoditiesSold())
    if #cargoes == 0 then
+      cargoes = commodity.getStandard()
+   end
+   if #cargoes == 0 then
       if always_available then
          cargo = nil
       else

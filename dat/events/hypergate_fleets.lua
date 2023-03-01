@@ -64,7 +64,7 @@ local fleets_list = {
 function create ()
    local scur = system.cur()
    -- Make sure system isn't claimed, but we don't claim it
-   if not evt.claim( scur, true ) then evt.finish() end
+   if not naev.claimTest( scur ) then evt.finish() end
 
    -- Only care if we're in a system with hypergates
    local sysid
