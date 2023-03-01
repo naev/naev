@@ -31,22 +31,22 @@ function descextra( p, _o )
    local size
    if p then
       size = flow.size( p )
+   else
+      size = 0
    end
-   if p==nil or size==0 then
-      local s = "#y".._([[Uses flow to create a seeking energy orb that deals ion damage and disable with a cooldown. Affected ships suffer from decreased movement and firerate. Strength varies depending on the flow amplifier.]]).."#0"
-      for i=1,3 do
-         local cost, cooldown, ref, strength, duration = getStats( nil, i )
-         local refstats = ref:specificstats()
-         local damage, disable, penetration = refstats.damage, refstats.disable, refstats.penetration
-         local pfx = flow.prefix(i)
-         if i==size then
-            pfx = "#b"..pfx.."#n"
-         end
-         s = s.."\n"..fmt.f(_("#n{prefix}:#0 {cost} flow, {cooldown} s cooldown, {range} range, {damage} damage, {disable} disable, {penetration}% penetration, {strength}% debuff, {duration} s duration"),
-            {prefix=pfx, cost=cost, range=refstats.duration*refstats.speed_max, damage=damage, disable=disable, penetration=100*penetration, cooldown=cooldown, strength=25*strength, duration=duration}).."#0"
+   local s = "#y".._([[Uses flow to create a seeking energy orb that deals ion damage and disable with a cooldown. Affected ships suffer from decreased movement and firerate. Strength varies depending on the flow amplifier.]]).."#0"
+   for i=1,3 do
+      local cost, cooldown, ref, strength, duration = getStats( nil, i )
+      local refstats = ref:specificstats()
+      local damage, disable, penetration = refstats.damage, refstats.disable, refstats.penetration
+      local pfx = flow.prefix(i)
+      if i==size then
+         pfx = "#b"..pfx.."#n"
       end
-      return s
+      s = s.."\n"..fmt.f(_("#n{prefix}:#0 {cost} flow, {cooldown} s cooldown, {range} range, {damage} damage, {disable} disable, {penetration}% penetration, {strength}% debuff, {duration} s duration"),
+         {prefix=pfx, cost=cost, range=refstats.duration*refstats.speed_max, damage=damage, disable=disable, penetration=100*penetration, cooldown=cooldown, strength=25*strength, duration=duration}).."#0"
    end
+   return s
 end
 
 function init( p, po )
