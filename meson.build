@@ -253,6 +253,7 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_CBLAS_HYPHEN_OPENBLAS_H', cc.links('#include <cblas-openblas.h>' + cblas_test, dependencies: blas))
    config_data.set10('HAVE_OPENBLAS_CBLAS_H', cc.links('#include <openblas/cblas.h>' + cblas_test, dependencies: blas))
    config_data.set10('HAVE_F77BLAS_H', cc.has_header('f77blas.h', dependencies: blas))
+   config_data.set10('HAVE_OPENBLAS_F77BLAS_H', cc.has_header('openblas/f77blas.h', dependencies: blas))
 
    # OS declaration (Shows which OS we built this with in the options menu)
    if host_machine.system() == 'linux'

@@ -23,6 +23,9 @@
 #elif HAVE_F77BLAS_H
 #   include <f77blas.h>
 #   define I_LOVE_FORTRAN 1
+#elif HAVE_OPENBLAS_F77BLAS_H
+#   include <openblas/f77blas.h>
+#   define I_LOVE_FORTRAN 1
 #endif
 
 #if HAVE_SUITESPARSE_CHOLMOD_H
