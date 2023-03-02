@@ -646,7 +646,7 @@ function land ()
    vn.scene()
    local sai = vn.newCharacter( tut.vn_shipai() )
    vn.transition( tut.shipai.transition )
-   vn.na(fmt.f(_("As soon as your ship lands, your ship AI {shipai} materializes infront of you."),{shipai=tut.ainame()}))
+   vn.na(fmt.f(_("As soon as your ship lands, your ship AI {shipai} materializes in front of you."),{shipai=tut.ainame()}))
    sai(fmt.f(_([["Did you hear the news, {playername}? It seems like the hypergate network has finally gone online!"]]), {playername=player.name()}))
    vn.menu{
       {_([["A great achievement!"]]), "cont01"},
@@ -654,7 +654,7 @@ function land ()
       {_("…"), "cont01"},
    }
    vn.label("cont01")
-   sai(_([["Yes, my predition routines did not anticipate this. Total annihilation was the most likely outcome. I have to revise my priors."]]))
+   sai(_([["Yes, my prediction routines did not anticipate this. Total annihilation was the most likely outcome. I have to revise my priors."]]))
    sai(_([["Although the details are not entirely clear, it seems like they are not based on hyperjump technology, which is why they allow very long distance travel."]]))
    sai(_([["We should try to use them when we get a chance, who knows where we could go?"]]))
    sai(_([["I almost forgot to mention, while you were piloting, I managed to unlock an important bottleneck in the ship fleet routines."]]))
