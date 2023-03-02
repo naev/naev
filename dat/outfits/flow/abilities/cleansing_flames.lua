@@ -7,10 +7,18 @@ local function getStats( p, size )
    if size == 1 then
       flow_cost   = 40
       ref         = nil
-      range       = 200
+      range       = 100
       cooldown    = 5
-   --elseif size == 2 then
-   --else
+   elseif size == 2 then
+      flow_cost   = 80
+      ref         = nil
+      range       = 250
+      cooldown    = 6
+   else
+      flow_cost   = 160
+      ref         = nil
+      range       = 400
+      cooldown    = 7
    end
    return flow_cost, ref, range, cooldown
 end
