@@ -521,7 +521,7 @@ They dematerialize in a hurry.]]),
    vn.run()
 
    -- Clean up stuff
-   poi.misnDone( false ) -- Can't fail
+   poi.cleanup( false ) -- Can't fail
    p:setHilight(false)
    player.unboard()
 end

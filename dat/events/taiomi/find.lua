@@ -45,7 +45,7 @@ function create ()
       for i = 1,number do
          local p = pos + vec2.new( 3000*rnd.rnd(), rnd.rnd()*359 )
          local s = shiptype[ rnd.rnd(1,#shiptype) ]
-         local d = pilot.add( s, "Derelict", p, _("Derelict") )
+         local d = pilot.add( s, "Derelict", p, p_("ship", "Derelict") )
          d:setInvincible(true)
          d:disable()
          hook.pilot( d, "board", boardfunc )
@@ -57,7 +57,7 @@ function create ()
 
    -- Main derelict
    local pos = vec2.new( 12000, 4250 )
-   derelict_mule = pilot.add( "Mule", "Derelict", pos, _("Derelict") )
+   derelict_mule = pilot.add( "Mule", "Derelict", pos, p_("ship", "Derelict") )
    derelict_mule:setInvincible(true)
    derelict_mule:disable()
 
