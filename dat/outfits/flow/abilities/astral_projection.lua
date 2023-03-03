@@ -1,16 +1,44 @@
 local flow = require "ships.lua.lib.flow"
 local fmt = require "format"
 
-function onadd( _p, po )
-   local size = po:slot().size
-   if size=="Small" then
-      mem.flow_drain = 1
-      mem.flow_cost = 40
-      mem.projection = ship.get("Astral Projection Lesser")
+local function getStats( p, size )
+   local flow_cost, flow_drain, projection
+   size = size or flow.size( p )
+   if size == 1 then
+      flow_drain = 1
+      flow_cost = 40
+      projection = ship.get("Astral Projection Lesser")
+   elseif size == 2 then
+      flow_drain = 2
+      flow_cost = 80
+      projection = ship.get("Astral Projection Lesser")
    else
-      error(fmt.f(_("Flow ability '{outfit}' put into slot of unknown size '{size}'!"),
-         {outfit=po:outfit(),size=size}))
+      flow_drain = 4
+      flow_cost = 160
+      projection = ship.get("Astral Projection Lesser")
    end
+   return flow_cost, flow_drain, projection
+end
+
+function descextra( p, _o )
+   -- Generic description
+   local size
+   if p then
+      size = flow.size( p )
+   else
+      size = 0
+   end
+   local s = "#y".._([[TODO]]).."#0"
+   for i=1,3 do
+      local cost, drain = getStats( nil, i )
+      local pfx = flow.prefix(i)
+      if i==size then
+         pfx = "#b"..pfx.."#n"
+      end
+      s = s.."\n"..fmt.f(_("#n{prefix}:#0 {cost} flow, {drain} flow drain per second"),
+         {prefix=pfx, cost=cost, drain=drain}).."#0"
+   end
+   return s
 end
 
 local function turnon( p, po )
@@ -65,8 +93,9 @@ local function turnoff( p, po )
 end
 
 function init( p, po )
-   mem.isp = (player.pilot()==p) -- is player?
+   mem.flow_cost, mem.flow_drain, mem.projection = getStats( p )
 
+   mem.isp = (player.pilot()==p) -- is player?
    turnoff( p, po )
 end
 
@@ -92,7 +121,7 @@ end
 function ontoggle( p, po, on )
    if on then
       -- Not ready yet
-      if mem.p then return false end
+      if mem.p and mem.p:exists() then return false end
 
       return turnon( p, po )
    else
