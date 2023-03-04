@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Lesser Astral Cannon">
+ <general>
+  <slot>weapon</slot>
+  <size>small</size>
+  <mass>1</mass>
+  <price>20000</price>
+  <description>TODO</description>
+  <gfx_store>ioncannon.webp</gfx_store>
+  <cpu>0</cpu>
+ </general>
+ <specific type="bolt">
+  <gfx type="shader" size="12" col_size="8">particles/chakra.frag</gfx>
+  <sound>ion</sound>
+  <spfx_shield>ChakraXS</spfx_shield>
+  <spfx_armour>ChakraXS</spfx_armour>
+  <delay>1</delay>
+  <speed>600</speed>
+  <range>900</range>
+  <falloff>750</falloff>
+  <energy>8</energy>
+  <heatup>40</heatup>
+  <trackmin>0</trackmin>
+  <trackmax>3000</trackmax>
+  <swivel>22</swivel>
+  <damage>
+   <type>ion</type>
+   <penetrate>0</penetrate>
+   <physical>12</physical>
+   <disable>12</disable>
+  </damage>
+ </specific>
+</outfit>

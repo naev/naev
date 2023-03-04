@@ -268,6 +268,7 @@ dat/outfits/flow/abilities/seeking_chakra.xml
 dat/outfits/flow/abilities/seeking_chakra_large.xml
 dat/outfits/flow/abilities/seeking_chakra_medium.xml
 dat/outfits/flow/abilities/seeking_chakra_small.xml
+dat/outfits/flow/astral_projection/lesser_astral_cannon.xml
 dat/outfits/flow/internal_flow_amplifier.xml
 dat/outfits/flow/structure/small_flow_amplifier.xml
 dat/outfits/flow/structure/small_flow_resonator.xml
@@ -583,6 +584,7 @@ dat/slots/hull.xml
 dat/slots/systems.xml
 dat/spfx/ChakraM.xml
 dat/spfx/ChakraS.xml
+dat/spfx/ChakraXS.xml
 dat/spfx/EmpM.xml
 dat/spfx/EmpS.xml
 dat/spfx/PlaM.xml
