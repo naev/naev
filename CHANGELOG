@@ -12,6 +12,7 @@
       * Show enemy/ally factions in the faction standing info window
       * Space dust is properly antialiased
       * Minor speed ups to patrol lane computations
+      * Try to enforce minimum number of articles in the news
    * New Content
       * 4 new missions
          * Nebula refugees
