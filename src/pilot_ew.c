@@ -228,7 +228,7 @@ int pilot_inRange( const Pilot *p, double x, double y )
    double sense = MAX( 0., pilot_sensorRange() * p->stats.ew_detect );
    if (d < pow2(sense))
       return 1;
-   sense = MAX( 0., pilot_sensorRange() * p->stats.ew_evasion );
+   sense = MAX( 0., pilot_sensorRange() * p->stats.ew_evade );
    if (d > pow2(sense))
       return -1;
    return 0;
