@@ -107,13 +107,13 @@ static int musicL_pause( lua_State* L )
 /**
  * @brief Stops playing the current song.
  *
- *    @luatparam boolean disable Whether or not to disable music changes until music.play() is called. This disables all in-game music changes such as taking off.
+ *    @luatparam boolean nodisable Whether or not to disable music changes until music.play() is called. This disables all in-game music changes such as taking off. Disables by false, set to true to only stop the current song.
  * @luafunc stop
  */
 static int musicL_stop( lua_State *L )
 {
-   int disable = lua_toboolean(L,1);
-   if (music_stop(disable))
+   int nodisable = lua_toboolean(L,1);
+   if (music_stop(!nodisable))
       NLUA_ERROR(L,"music.stop failed!");
    return 0;
 }

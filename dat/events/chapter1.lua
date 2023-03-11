@@ -265,7 +265,7 @@ function cutscene_start ()
    pp:setNoLand(true)
 
    -- TODO better music
-   music.stop(true)
+   music.stop()
    lmusic.play( "snd/music/empire2.ogg" )
 end
 
