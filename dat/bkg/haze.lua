@@ -23,7 +23,7 @@ const int ITERATIONS = 5;
 const float SCALAR = 2.0;
 const float SCALE = 1.0/900.0;
 const float TIME_SCALE = 1.0/50.0;
-const float VISIBILITY = 500.0;
+const float VISIBILITY = 700.0;
 
 uniform float u_time = 0.0;
 uniform vec3 u_camera;
@@ -46,7 +46,9 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    /* Give more transparency around the player. */
    float d = min( 1.0, length( (texture_coords-0.5)*love_ScreenSize.xy )*u_camera.z/VISIBILITY );
 
-   return mix( vec4(0.0), color, smoothstep(0.0, 1.0, f*d) );
+   vec4 col_out = color;
+   col_out.a *= smoothstep(0.0, 1.0, f*d);
+   return col_out;
 }
 ]], rnd.rnd(), rnd.rnd(), rnd.rnd() )
    shader = graphics.newShader( pixelcode, love_shaders.vertexcode )
