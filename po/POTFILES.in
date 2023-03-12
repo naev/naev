@@ -268,6 +268,8 @@ dat/outfits/flow/abilities/seeking_chakra.xml
 dat/outfits/flow/abilities/seeking_chakra_large.xml
 dat/outfits/flow/abilities/seeking_chakra_medium.xml
 dat/outfits/flow/abilities/seeking_chakra_small.xml
+dat/outfits/flow/astral_projection/astral_cannon.xml
+dat/outfits/flow/astral_projection/greater_astral_cannon.xml
 dat/outfits/flow/astral_projection/lesser_astral_cannon.xml
 dat/outfits/flow/internal_flow_amplifier.xml
 dat/outfits/flow/structure/small_flow_amplifier.xml
@@ -539,6 +541,8 @@ dat/ships/proteron/proteron_gauss.xml
 dat/ships/proteron/proteron_hippocrates.xml
 dat/ships/proteron/proteron_pythagoras.xml
 dat/ships/proteron/proteron_watson.xml
+dat/ships/sirius/astral_projection.xml
+dat/ships/sirius/astral_projection_greater.xml
 dat/ships/sirius/astral_projection_lesser.xml
 dat/ships/sirius/sirius_divinity.xml
 dat/ships/sirius/sirius_dogma.xml
@@ -3121,6 +3125,7 @@ dat/outfits/flow/abilities/cleansing_flames.lua
 dat/outfits/flow/abilities/feather_drive.lua
 dat/outfits/flow/abilities/reality_rip.lua
 dat/outfits/flow/abilities/seeking_chakra.lua
+dat/outfits/flow/astral_projection/astral_cannon.lua
 dat/outfits/flow/astral_projection/lesser_astral_cannon.lua
 dat/outfits/flow/flow_amplifier.lua
 dat/outfits/launchers/space_mine_layer.lua

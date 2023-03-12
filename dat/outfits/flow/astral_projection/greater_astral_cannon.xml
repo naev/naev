@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Greater Astral Cannon">
+ <general>
+  <slot>weapon</slot>
+  <size>large</size>
+  <mass>1</mass>
+  <price>20000</price>
+  <description>TODO</description>
+  <gfx_store>ioncannon.webp</gfx_store>
+  <cpu>0</cpu>
+ </general>
+ <specific type="bolt">
+  <lua>outfits/flow/astral_projection/astral_cannon.lua</lua>
+  <gfx type="shader" size="24" col_size="16">particles/chakra.frag</gfx>
+  <sound>ion</sound>
+  <spfx_shield>ChakraS</spfx_shield>
+  <spfx_armour>ChakraS</spfx_armour>
+  <delay>1.2</delay>
+  <speed>500</speed>
+  <range>1500</range>
+  <falloff>1500</falloff>
+  <energy>75</energy>
+  <heatup>500</heatup>
+  <trackmin>4000</trackmin>
+  <trackmax>12000</trackmax>
+  <swivel>22</swivel>
+  <damage>
+   <type>ion</type>
+   <penetrate>80</penetrate>
+   <physical>80</physical>
+   <disable>80</disable>
+  </damage>
+ </specific>
+</outfit>

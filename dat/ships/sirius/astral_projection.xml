@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Astral Projection">
+ <lua>ships/lua/sirius_projection.lua</lua>
+ <points>30</points>
+ <base_type>Astral Projection</base_type>
+ <gfx_space sx="10" sy="10" size="60">ship/apparition/apparition_corvette.webp</gfx_space>
+ <gfx_comm>outfit/store/placeholder.webp</gfx_comm>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Corvette</class>
+ <price>1</price>
+ <fabricator>Sirius Psychic Powers</fabricator>
+ <description>N/A</description>
+ <movement>
+  <thrust>250</thrust>
+  <speed>400</speed>
+  <turn>180</turn>
+ </movement>
+ <health>
+  <absorb>30</absorb>
+  <armour>500</armour>
+  <shield>0</shield>
+  <shield_regen>0</shield_regen>
+  <energy>500</energy>
+  <energy_regen>50</energy_regen>
+ </health>
+ <characteristics>
+  <crew>1</crew>
+  <mass>100</mass>
+  <fuel>0</fuel>
+  <cargo>0</cargo>
+  <fuel_consumption>1</fuel_consumption>
+  <cpu>80</cpu>
+ </characteristics>
+ <slots>
+  <weapon size="small" x="10" y="-2" h="0">Astral Cannon</weapon>
+  <weapon size="small" x="10" y="2" h="0">Astral Cannon</weapon>
+ </slots>
+ <stats>
+  <stress_dissipation>10000</stress_dissipation>
+ </stats>
+ <tags>
+  <tag>noplayer</tag>
+  <tag>noequip</tag>
+  <tag>sirius</tag>
+ </tags>
+</ship>

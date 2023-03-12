@@ -11,11 +11,11 @@ local function getStats( p, size )
    elseif size == 2 then
       flow_drain = 2
       flow_cost = 80
-      projection = ship.get("Astral Projection Lesser")
+      projection = ship.get("Astral Projection")
    else
       flow_drain = 4
       flow_cost = 160
-      projection = ship.get("Astral Projection Lesser")
+      projection = ship.get("Astral Projection Greater")
    end
    return flow_cost, flow_drain, projection
 end
