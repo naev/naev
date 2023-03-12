@@ -287,6 +287,7 @@ int effect_add( Effect **efxlist, const EffectData *efx, double duration, double
 {
    Effect *e = NULL;
    int overwrite = 0;
+   duration = (duration > 0.) ? duration : efx->duration;
 
    if (*efxlist == NULL)
       *efxlist = array_create( Effect );
@@ -299,9 +300,19 @@ int effect_add( Effect **efxlist, const EffectData *efx, double duration, double
                (efx->priority <= el->data->priority) &&
                (strcmp(efx->overwrite, el->data->overwrite)==0)) {
             e = el;
-            if (e->data == efx)
+            if (e->data == efx) {
+               /* Case the effect is weaker when both are the same, we just ignore. */
+               if (el->scale > scale)
+                  return 0;
+               /* Case the base effect has a longer timer with same strength we ignore. */
+               if ((fabs(el->scale-scale)<1e-5) && (el->timer > duration))
+                  return 0;
+               /* Procede to overwrite. */
                overwrite = 1;
-            else  {
+            }
+            else {
+               /* Here we remove the effect and replace it as they overlap while not being exactly the same.
+                * Can't do a scale check because they may not be comparable. */
                if (e->data->lua_remove != LUA_NOREF) {
                   lua_rawgeti(naevL, LUA_REGISTRYINDEX, e->data->lua_remove); /* f */
                   lua_pushpilot(naevL, e->parent);
@@ -323,7 +334,7 @@ int effect_add( Effect **efxlist, const EffectData *efx, double duration, double
       e->r       = RNGF();
    }
    e->data  = efx;
-   e->duration = (duration > 0.) ? duration : efx->duration;
+   e->duration = duration;
    e->timer = e->duration;
    e->scale = scale;
    e->parent = parent;
