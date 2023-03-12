@@ -20,7 +20,6 @@ void main(void)
 {
    vec2 st = tex_coord; // a bit oversized
    vec2 uv = 2.0 * tex_coord / tex_scale - 1.0;
-   uv *= 1.5;
    float c = cos(u_dir+M_PI);
    float s = sin(u_dir+M_PI);
    mat2 R = mat2( c, -s, s, c );
