@@ -4,7 +4,7 @@
  <duration>7</duration><!-- actually increased due to taint -->
  <overwrite>chakra_corruption</overwrite>
  <icon>/gfx/misc/icons/star-cycle.webp</icon>
- <shader>effects/antimatter_taint.frag</shader>
+ <shader vertex="effect15x.vert">effects/chakra_corruption.frag</shader>
  <debuff/>
  <stats>
   <speed_mod>-25</speed_mod>
