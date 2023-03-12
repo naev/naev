@@ -12,9 +12,9 @@
  <fabricator>Sirius Psychic Powers</fabricator>
  <description>N/A</description>
  <movement>
-  <thrust>160</thrust>
-  <speed>330</speed>
-  <turn>140</turn>
+  <thrust>300</thrust>
+  <speed>500</speed>
+  <turn>230</turn>
  </movement>
  <health>
   <absorb>10</absorb>

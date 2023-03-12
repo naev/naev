@@ -10,12 +10,13 @@
   <cpu>0</cpu>
  </general>
  <specific type="bolt">
+  <lua>outfits/flow/astral_projection/lesser_astral_cannon.lua</lua>
   <gfx type="shader" size="12" col_size="8">particles/chakra.frag</gfx>
   <sound>ion</sound>
   <spfx_shield>ChakraXS</spfx_shield>
   <spfx_armour>ChakraXS</spfx_armour>
   <delay>1</delay>
-  <speed>600</speed>
+  <speed>400</speed>
   <range>900</range>
   <falloff>750</falloff>
   <energy>8</energy>
