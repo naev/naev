@@ -3,7 +3,7 @@
  <description>Your ship is corrupted by chakra damage!</description>
  <duration>7</duration><!-- actually increased due to taint -->
  <overwrite>chakra_corruption</overwrite>
- <icon>/gfx/misc/icons/star-cycle.webp</icon>
+ <icon>/gfx/misc/icons/unstable-orb.webp</icon>
  <shader vertex="effect15x.vert">effects/chakra_corruption.frag</shader>
  <debuff/>
  <stats>
