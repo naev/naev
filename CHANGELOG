@@ -12,6 +12,7 @@
       * Show enemy/ally factions in the faction standing info window
       * Space dust is properly antialiased
       * Minor speed ups to patrol lane computations
+      * Try to enforce minimum number of articles in the news
    * New Content
       * 4 new missions
          * Nebula refugees
@@ -43,6 +44,7 @@
    * Fixed some events not claiming systems that could interfere with other missions
    * hypergate_construction: should actually claim the system
    * Fixed some formatting in the alt text when hovering over outfits in the equipment window
+   * Changed music.stop() API to stop music from continuing by default
 
 * 0.10.4
    * Fixed crashes related to multiple effects being active at once

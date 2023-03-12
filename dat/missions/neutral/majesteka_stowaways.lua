@@ -61,7 +61,7 @@ local function spob_goodness( s )
       return 0, "#o".._("Stations are not very good for kids").."#0"
    end
    if t.poor or t.criminal or t.military then
-      return 0, "#o".._("Inadequate enviroment for kids").."#0"
+      return 0, "#o".._("Inadequate environment for kids").."#0"
    end
 
    local fs = f:playerStanding()
@@ -77,7 +77,7 @@ local function spob_goodness( s )
       return 1, "#g".._("You are in good local standing here").."#0"
    end
 
-   return 0
+   return 0, _("There is nothing particularly good about this place")
 end
 
 function land ()

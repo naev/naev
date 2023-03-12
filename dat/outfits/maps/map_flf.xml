@@ -8,33 +8,29 @@
   <gfx_store>map_sector_01.webp</gfx_store>
  </general>
  <specific type="map">
-  <sys name="Sigur"/>
-  <sys name="Arcanis"/>
-  <sys name="Myad"/>
-  <sys name="Ingot">
-   <spob>Ingot I</spob>
-   <spob>Ulios</spob>
+  <sys name="Sigur">
+   <jump>Arcanis</jump>
+  </sys>
+  <sys name="Arcanis">
+   <jump>Sigur</jump>
   </sys>
   <sys name="Gilligan's Light">
+   <jump>Ingot</jump>
+   <jump>Myad</jump>
    <jump>Theras</jump>
-   <spob>Dawn</spob>
-   <spob>Dusk</spob>
-   <spob>Gilligan's Light III</spob>
-   <spob>The Frontier Council</spob>
+  </sys>
+  <sys name="Ingot">
+   <jump>Gilligan's Light</jump>
+  </sys>
+  <sys name="Myad">
+   <jump>Gilligan's Light</jump>
+  </sys>
+  <sys name="Klantar">
+   <jump>Theras</jump>
   </sys>
   <sys name="Theras">
    <jump>Gilligan's Light</jump>
-   <spob>Cetrat</spob>
-   <spob>Theras II</spob>
-   <spob>Theras III</spob>
-   <spob>Theras IV</spob>
-  </sys>
-  <sys name="Klantar">
-   <spob>Donnar</spob>
-   <spob>Klantar I</spob>
-   <spob>Klantar III</spob>
-   <spob>Nor</spob>
-   <spob>Tuur</spob>
+   <jump>Klantar</jump>
   </sys>
  </specific>
 </outfit>

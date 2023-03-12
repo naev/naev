@@ -201,7 +201,7 @@ static double pilot_ewJumpPoint( const Pilot *p )
  */
 void pilot_updateSensorRange (void)
 {
-   ew_interference = 1. + cur_system->interference/100.;
+   ew_interference = 1. / (1. + cur_system->interference/100.);
 }
 
 /**
@@ -211,7 +211,7 @@ void pilot_updateSensorRange (void)
  */
 double pilot_sensorRange( void )
 {
-   return 7500. / ew_interference;
+   return 7500.;
 }
 
 /**
@@ -220,7 +220,7 @@ double pilot_sensorRange( void )
  *    @param p Pilot to check to see if position is in their sensor range.
  *    @param x X position to check.
  *    @param y Y position to check.
- *    @return 1 if the position is in range, 0 if it isn't.
+ *    @return 1 if the position is in range, -1 if it is fuzzy, 0 if it isn't.
  */
 int pilot_inRange( const Pilot *p, double x, double y )
 {
@@ -228,6 +228,9 @@ int pilot_inRange( const Pilot *p, double x, double y )
    double sense = MAX( 0., pilot_sensorRange() * p->stats.ew_detect );
    if (d < pow2(sense))
       return 1;
+   sense = MAX( 0., pilot_sensorRange() * p->stats.ew_evade );
+   if (d > pow2(sense))
+      return -1;
    return 0;
 }
 

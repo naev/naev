@@ -12,6 +12,9 @@ local fmt = require "format"
 local lmisn = require "lmisn"
 local lf = require "love.filesystem"
 
+-- TODO probably better to change the system to try to enforce an average number of articles or something instead of random time since last article and random chance
+local MIN_ARTICLES   = 3 -- Minimum number of articles to try to enforce
+local ARTICLE_CHANCE = 0.25 -- Chance a new article can appear
 
 local add_article, add_econ_article, add_header -- forward-declared functions
 
@@ -133,6 +136,12 @@ function land ()
    end
 
    add_header( my_faction )
+   local n = #news.get( my_faction )
+   if n < MIN_ARTICLES then
+      for i=1,MIN_ARTICLES-n do
+         add_article( my_faction, true )
+      end
+   end
    add_article( my_faction )
    add_econ_article( my_faction )
 end
@@ -163,22 +172,26 @@ function add_header( my_faction )
    a:bind( "header" )
 end
 
-function add_article( my_faction )
-   local last_article = var.peek( "news_last_article" )
-   if last_article ~= nil then
-      local t = time.fromnumber( last_article )
-      if time.get() - t < time.new( 0, 1, 5000 ) then
-         return
+function add_article( my_faction, force )
+   if not force then
+      local last_article = var.peek( "news_last_article" )
+      if last_article ~= nil then
+         local t = time.fromnumber( last_article )
+         if time.get() - t < time.new( 0, 1, 5000 ) then
+            return false
+         end
       end
-   end
 
-   if rnd.rnd() > 0.25 then
-      return
+      if rnd.rnd() > ARTICLE_CHANCE then
+         return false
+      end
    end
 
    local function jointest( dest, src )
       for k,v in ipairs(src) do
-         if not v.test or v.test() then
+         -- Make sure it doesn't already exist and passes test
+         local tag = v.tag or v.head
+         if #news.get(tag)==0 and (not v.test or v.test()) then
             table.insert( dest, v )
          end
       end
@@ -192,7 +205,7 @@ function add_article( my_faction )
       jointest( alst, articles[ "Generic" ] )
    end
    if alst == nil or #alst <= 0 then
-      return
+      return false
    end
 
    -- Get the elemnt
@@ -204,13 +217,8 @@ function add_article( my_faction )
    if type(body)=="function" then
       body = body()
       if body == nil then
-         return -- Skip
+         return false -- Skip
       end
-   end
-
-   -- Skip if already exists
-   if #news.get( tag ) > 0 then
-      return
    end
 
    -- Add the news for roughly 10 periods
@@ -218,6 +226,8 @@ function add_article( my_faction )
    local a = news.add( my_faction, _(head), body, exp, nil, priority )
    a:bind( tag )
    var.push( "news_last_article", time.get():tonumber() )
+
+   return true
 end
 
 
