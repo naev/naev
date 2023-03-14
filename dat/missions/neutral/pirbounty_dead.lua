@@ -223,7 +223,17 @@ end
 
 function land ()
    mem.jumps_permitted = mem.jumps_permitted - 1
-   if mem.job_done and spob.cur():faction() == mem.paying_faction then
+
+   local okspob = false
+   -- Matching faction is always OK
+   if spob.cur():faction() == mem.paying_faction then
+      okspob = true
+   -- Special case static factions we look for non-hostiles
+   elseif mem.paying_faction:static() and not mem.paying_faction:areEnemies(spob.cur():faction()) then
+      okspob = true
+   end
+
+   if mem.job_done and okspob then
       local pay_text
       if mem.target_killed then
          pay_text = pay_kill_text[ rnd.rnd( 1, #pay_kill_text ) ]

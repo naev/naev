@@ -13,6 +13,7 @@
       * Space dust is properly antialiased
       * Minor speed ups to patrol lane computations
       * Try to enforce minimum number of articles in the news
+      * Independent patrol and bounty missions can be completed on more planets and stations
    * New Content
       * 4 new missions
          * Nebula refugees
