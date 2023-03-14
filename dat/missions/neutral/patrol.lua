@@ -211,8 +211,17 @@ function land ()
       mem.mark = nil
    end
 
+   local okspob = false
+   -- Matching faction is always OK
+   if spob.cur():faction() == mem.paying_faction then
+      okspob = true
+   -- Special case static factions we look for non-hostiles
+   elseif mem.paying_faction:static() and not mem.paying_faction:areEnemies(spob.cur():faction()) then
+      okspob = true
+   end
+
    mem.jumps_permitted = mem.jumps_permitted - 1
-   if mem.job_done and spob.cur():faction() == mem.paying_faction then
+   if mem.job_done and okspob then
       local txt = pay_text[ rnd.rnd( 1, #pay_text ) ]
       vntk.msg( _("Mission Completed"), txt )
       player.pay( mem.credits )
