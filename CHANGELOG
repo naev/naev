@@ -5,6 +5,7 @@
    * Fixed some typos
    * Fixed equipment of Lancelot in "Sharkman Is Back" mission
    * nelly02: Nelly now stops recommending stuff that only does a little disable
+   * shadowvigil: Fixed mission not spawning escorts
    * Fixed some events not claiming systems that could interfere with other missions
    * hypergate_construction: should actually claim the system
    * Fixed some formatting in the alt text when hovering over outfits in the equipment window
