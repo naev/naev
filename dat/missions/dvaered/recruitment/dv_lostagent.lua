@@ -108,7 +108,7 @@ Oh, I almost forgot! There is one thing you are authorized to know: this cargo i
    -- Mission details
    mem.credits = 50e3
    misn.setTitle(_("Dvaered Delivery"))
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setReward( mem.credits )
    misn.setDesc( fmt.f(_("You have to transfer a parcel to the Empire at {pnt} ({sys})"), {pnt=mem.spob1,sys=sys}))
    mem.misn_marker = misn.markerAdd( mem.spob1 )
    mem.misn_state = 0

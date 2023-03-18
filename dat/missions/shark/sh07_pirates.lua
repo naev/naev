@@ -116,7 +116,7 @@ function accept()
    misn.accept()
 
    misn.setTitle(_("The Last Detail"))
-   misn.setReward(fmt.credits(shark.rewards.sh07))
+   misn.setReward(shark.rewards.sh07)
    misn.setDesc(_("Nexus Shipyards has tasked you with killing four pirates."))
    misn.osdCreate(mem.osd_title, {
       _("Kill the four pirates"),

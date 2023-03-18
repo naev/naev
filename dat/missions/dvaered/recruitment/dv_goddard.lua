@@ -172,7 +172,7 @@ function accept()
    -- Mission details
    mem.credits = 100e3
    misn.setTitle(_("Dvaered Negotiation 1"))
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setReward( mem.credits )
    misn.setDesc( fmt.f(_("A Dvaered Warlord needs you to kill a Goddard shareholder. Strangely enough, this operation will be mostly legal.")))
    mem.misn_marker = misn.markerAdd( mem.enginpnt )
    mem.misn_state = 0

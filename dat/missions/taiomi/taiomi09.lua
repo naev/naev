@@ -58,7 +58,7 @@ function create ()
 
    misn.setDesc(fmt.f(_("You have been tasked to contact smugglers at {smugden} ({smugsys}) to obtain new materials for the citizens of {basesys}."),
       {smugden=smugden, smugsys=smugsys, basesys=basesys}))
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
 
    mem.marker = misn.markerAdd( smugden )
 

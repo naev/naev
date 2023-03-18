@@ -76,7 +76,7 @@ function accept ()
    misn.setTitle( title )
    misn.setDesc(fmt.f(_("Verner needs you to escort a core miner from {pnt} in the {sys} system to {retpnt} to help with the terraforming efforts."),
       {pnt=mainpnt, sys=mainsys, retpnt=retpnt}))
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.osdCreate( title, {
       fmt.f(_("Go to {pnt} ({sys} system)"),{pnt=mainpnt, sys=mainsys}),
       fmt.f(_("Escort the miner to {pnt} ({sys} system)"),{pnt=retpnt, sys=retsys}),

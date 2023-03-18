@@ -86,7 +86,7 @@ function accept()
    misn.accept()
 
    misn.setTitle(_("Unfair Competition"))
-   misn.setReward(fmt.credits(shark.rewards.sh02))
+   misn.setReward(shark.rewards.sh02)
    misn.setDesc(_("Nexus Shipyards is in competition with House Sirius."))
    misn.osdCreate(_("Unfair Competition"), {
       fmt.f(_("Land on {pnt} in {sys} and meet the Nexus agent"), {pnt=mem.mispla, sys=mem.missys}),

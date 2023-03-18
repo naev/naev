@@ -62,7 +62,7 @@ function accept ()
 
       misn.setTitle( fmt.f( misn_title[mem.level], {sys=mem.missys} ) )
       mem.marker = misn.markerAdd( mem.missys, "high" )
-      misn.setReward( fmt.credits( mem.credits ) )
+      misn.setReward( mem.credits )
 
       mem.pirate_ships_left = 0
       mem.job_done = false

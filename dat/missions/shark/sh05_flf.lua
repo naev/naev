@@ -79,7 +79,7 @@ function accept()
    misn.accept()
 
    misn.setTitle(_("The FLF Contact"))
-   misn.setReward(fmt.credits(shark.rewards.sh05))
+   misn.setReward(shark.rewards.sh05)
    misn.setDesc(_("Nexus Shipyards is looking to strike a better deal with the FLF."))
    misn.osdCreate(_("The FLF Contact"), {
       _("Hail any FLF ship, or disable and board one if necessary"),

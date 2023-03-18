@@ -105,7 +105,7 @@ He takes a deep breath, "We hope to be able to find out more secrets of the Sol 
 
    -- Set up mission information
    misn.setTitle( _("Nebula Satellite") )
-   misn.setReward( fmt.credits(credits) )
+   misn.setReward(credits)
    misn.setDesc( fmt.f( _("Go to the {sys} system to launch the probe."), {sys=mem.satellite_sys} ) )
    mem.misn_marker = misn.markerAdd( mem.satellite_sys, "low" )
 

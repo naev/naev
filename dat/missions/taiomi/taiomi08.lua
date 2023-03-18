@@ -84,7 +84,7 @@ function create ()
       desc = desc .. "\n" .. fmt.f(_("   {sysname}"),{sysname=v.sys})
    end
    misn.setDesc( desc )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
 
    for k,v in ipairs(convoysys) do
       misn.markerAdd( v.sys )

@@ -45,7 +45,7 @@ function accept ()
    if tk.yesno(_("Looking for a 4th"), fmt.f(_([["Hiya there! We're having a race around this system soon and need a 4th person to participate. You have to bring a Yacht class ship, and there's a prize of {credits} if you win. Interested?"]]), {credits=fmt.credits(mem.credits)})) then
       misn.accept()
       misn.setDesc(_("You're participating in a race!"))
-      misn.setReward(fmt.credits(mem.credits))
+      misn.setReward(mem.credits)
       misn.osdCreate(_("Racing Skills 1"), {
          _("Board checkpoint 1"),
          _("Board checkpoint 2"),

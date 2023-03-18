@@ -54,7 +54,7 @@ function create ()
 
 Only ships to which you or your fleet deal over 50% damage will count towards the number of ships destroyed.]]),
       {num = NUMBER_SHIPS, sys = fightsys} ))
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    mem.marker = misn.markerAdd( fightsys )
 
    osd()

@@ -93,7 +93,7 @@ But before I forget, there's some issue..."]]))
 
     -- Set up mission information
     misn.setTitle(_("Emergency of Immediate Inspiration"))
-    misn.setReward(fmt.credits(credits))
+    misn.setReward(credits)
     misn.setDesc(fmt.f(_("Take Dr. Mensing to {pnt} in the {sys} system as fast as possible!"), {pnt=homeworld, sys=homeworld_sys}))
     mem.misn_marker = misn.markerAdd(homeworld, "low")
 

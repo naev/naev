@@ -79,7 +79,7 @@ He points towards a glancing burn mark on his abdomen. It looks like the shot fi
    misn.accept()
    misn.setTitle( _("Eliminate the PUAAA Supply Ship") )
    misn.setDesc(fmt.f(_("Eliminate the PUAAA supply ship at {sys}."),{sys=mainsys}))
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.osdCreate(_("Eliminate the PUAAA Supply Ship"), {
       fmt.f(_("Go to {sys}"),{sys=mainsys}),
       _("Destroy the PUAAA supply ship"),

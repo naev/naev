@@ -42,7 +42,7 @@ function create()
    mem.deathcount = 0
    --set the mission stuff
    misn.setTitle(_("The Patrol"))
-   misn.setReward(fmt.credits(mem.reward))
+   misn.setReward(mem.reward)
    misn.setNPC(_("An Imposing Man"), "sirius/unique/draga.webp", _("This man leans against the bar while looking right at you."))
 end
 

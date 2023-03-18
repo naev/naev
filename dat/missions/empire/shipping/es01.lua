@@ -79,7 +79,7 @@ function accept ()
    -- Mission details
    mem.misn_stage = 0
    misn.setTitle(_("Empire Shipping Delivery"))
-   misn.setReward( fmt.credits( emp.rewards.es01 ) )
+   misn.setReward( emp.rewards.es01 )
    misn.setDesc( fmt.f(_("Pick up a package at {pnt} in the {sys} system"), {pnt=mem.pickup, sys=mem.pickupsys}) )
    misn.osdCreate(_("Empire Shipping Delivery"), {
       fmt.f(_("Pick up a package at {pnt} in the {sys} system"), {pnt=mem.pickup, sys=mem.pickupsys}),

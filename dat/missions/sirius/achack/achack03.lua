@@ -54,7 +54,7 @@ function accept()
 
    misn.accept()
    misn.setDesc(_("Joanne wants you to find Harja and interrogate him about his motives."))
-   misn.setReward(fmt.credits(reward))
+   misn.setReward(reward)
    misn.osdCreate(_("Joanne's Doubt"), {
       _("Find Harja in Sirius space"),
       _("Talk to Harja"),

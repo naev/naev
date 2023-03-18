@@ -90,7 +90,7 @@ Will you accept the mission?]]))
    -- Mission details
    mem.reward = rnd.rnd(10,20) * 100e3 -- Hey, this mission is probably hell, after all.
    misn.setTitle(_("Clans trade"))
-   misn.setReward( fmt.credits(mem.reward) )
+   misn.setReward(mem.reward)
    misn.setDesc( fmt.f(_("Deliver some boxes to the pirate clan of {pnt}, in the {sys} system."), {pnt=mem.dest, sys=mem.sys}) )
 
    -- Flavour text and mini-briefing

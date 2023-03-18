@@ -62,7 +62,7 @@ function accept ()
 
    -- Mission details
    misn.setTitle(_("Collective Espionage"))
-   misn.setReward( fmt.credits( emp.rewards.ec02 ) )
+   misn.setReward( emp.rewards.ec02 )
    misn.setDesc( fmt.f(_("Land on {pnt} in the {sys} system to monitor Collective communications"), {pnt=misn_target, sys=misn_target_sys} ))
    misn.osdCreate(_("Collective Espionage"), {
       fmt.f(_("Fly to {sys} and land on {pnt}"), {sys=misn_target_sys, pnt=misn_target}),

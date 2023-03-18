@@ -80,7 +80,7 @@ function create ()
 
    -- Mission details
    misn.setTitle(fmt.f(dv.prefix.._("Monitor Pirate Activity in {sys}"), {sys=mem.sys}))
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setReward( mem.credits )
    misn.setDesc( fmt.f(_("Dvaered High Command requires a pilot to go to {sys} and detect {nb} Pirate ships"), {sys=mem.sys, nb=mem.nbships}))
    mem.misn_marker = misn.markerAdd( mem.sys )
 end

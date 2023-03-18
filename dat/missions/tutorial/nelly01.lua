@@ -104,7 +104,7 @@ function create ()
 
    misn.setTitle( _("Helping Nelly Out") )
    misn.setDesc( fmt.f(_("Help Nelly deliver {tonnes} of {cargo} to {destpnt} in the {destsys} system."), {tonnes=fmt.tonnes(cargo_q), cargo=cargo_type, destpnt=mem.destpnt, destsys=mem.destsys} ))
-   misn.setReward( fmt.credits(reward_amount) )
+   misn.setReward(reward_amount)
 end
 
 

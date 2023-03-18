@@ -45,7 +45,7 @@ function accept ()
    mem.amount = pp:cargoFree()
    mem.cargo = misn.cargoAdd( c, mem.amount )
 
-   misn.setReward( fmt.credits(mem.reward*mem.amount) )
+   misn.setReward(mem.reward*mem.amount)
 
    misn.osdCreate( _("Refugee Evacuation"), {
       fmt.f(_("Take the refugees to {spob} ({sys} system)"),

@@ -149,7 +149,7 @@ function create()
       car.setDesc( fmt.f( _("Smuggling contraband goods to {pnt} in the {sys} system.{msg}"), {pnt=mem.destplanet, sys=mem.destsys, msg=faction_text} ) .. "\n\n" .. _("#rWARNING:#0 Contraband is illegal in most systems and you will face consequences if caught by patrols."), mem.cargo, mem.amount, mem.destplanet, mem.timelimit )
    end
 
-   misn.setReward( fmt.credits(mem.reward) )
+   misn.setReward(mem.reward)
 end
 
 -- Mission is accepted

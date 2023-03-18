@@ -109,7 +109,7 @@ function accept()
     -- Set up mission information
     mem.destsys = t_sys[1]
     misn.setTitle(_("Advanced Nebula Research"))
-    misn.setReward(fmt.credits(credits))
+    misn.setReward(credits)
     misn.setDesc(fmt.f(_("Escort the transport ship to the {station} in the {sys} system. Make sure to stay close to the transport ship and wait until they jumped out of the system safely."), {station=station, sys=t_sys[5]}))
     mem.nextsys = lmisn.getNextSystem(system.cur(), mem.destsys) -- This variable holds the system the player is supposed to jump to NEXT.
 

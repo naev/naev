@@ -170,7 +170,7 @@ The lean in and whisper to you.
    misn.accept()
    misn.setTitle( title )
    misn.setDesc(_([[You promised to help Lucas, the ex-Nebula refugee who lost his family, become a pirate.]]))
-   misn.setReward(fmt.credits(reward))
+   misn.setReward(reward)
    hook.land("land")
 
    local c = commodity.new( N_("Lucas"), N_("An individual who has given up on so-called 'civilized society' and wishes to become a pirate.") )

@@ -117,7 +117,7 @@ function accept ()
    misn.accept()
    misn.setTitle( title )
    misn.setDesc(_([[You promised to help Lucas, the ex-Nebula refugee, find his family who may not have made it far from the Nebula.]]))
-   misn.setReward(fmt.credits(reward))
+   misn.setReward(reward)
 
    local c = commodity.new( N_("Old Pendant"), N_("An old locket belonging to Lucas.") )
    mem.cargo = misn.cargoAdd( c, 0 )

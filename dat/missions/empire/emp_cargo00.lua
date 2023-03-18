@@ -85,7 +85,7 @@ function accept ()
 
    -- Mission details
    misn.setTitle(_("Empire Recruitment"))
-   misn.setReward( fmt.credits( emp.rewards.cargo00 ) )
+   misn.setReward( emp.rewards.cargo00 )
    misn.setDesc( fmt.f(_("Deliver some parcels for the Empire to {pnt} in {sys}."), {pnt=mem.dest, sys=mem.sys}) )
 
    -- Flavour text and mini-briefing

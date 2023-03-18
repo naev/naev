@@ -54,7 +54,7 @@ function create()
 
    -- This mission auto-accepts, but a choice will be offered to the player later. No OSD yet.
    misn.accept()
-   misn.setReward(fmt.credits(reward))
+   misn.setReward(reward)
    misn.setDesc(fmt.f(_("Joanne has contacted you. She wants to meet you on {pnt} ({sys})."), {pnt=startplanet, sys=startsys}))
    hook.land("land")
    hook.load("land")

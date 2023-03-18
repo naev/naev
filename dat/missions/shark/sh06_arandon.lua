@@ -72,7 +72,7 @@ function accept()
    misn.accept()
 
    misn.setTitle(fmt.f(_("A Journey To {sys}"), {sys=missys}))
-   misn.setReward(fmt.credits(shark.rewards.sh06))
+   misn.setReward(shark.rewards.sh06)
    misn.setDesc(fmt.f(_("You are to transport Arnold Smith to {sys} so that he can talk about a deal."), {sys=missys}))
    misn.osdCreate(fmt.f(_("A Journey To {sys}"), {sys=missys}), {
       fmt.f(_("Go to {sys} and wait for the FLF ship, then hail and board it."), {sys=missys}),

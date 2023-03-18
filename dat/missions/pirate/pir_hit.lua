@@ -117,7 +117,7 @@ function create ()
    end
    misn.setDesc( mdesc )
 
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setReward( mem.credits )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
 

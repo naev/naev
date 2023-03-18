@@ -57,7 +57,7 @@ function accept ()
 
    -- Mission details
    misn.setTitle(_("Collective Espionage"))
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setReward( mem.credits )
    misn.setDesc(_("Scan the Collective systems for wireless communications"))
    mem.misn_marker1 = misn.markerAdd(targsys1, "low")
    mem.misn_marker2 = misn.markerAdd(targsys2, "low")

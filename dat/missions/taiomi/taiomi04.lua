@@ -52,7 +52,7 @@ function create ()
    misn.setTitle( title )
    misn.setDesc(fmt.f(_("You have been asked to fly to obtain {resource} to help do an experiment. {resource} can be found in the nearby {sys} system."),
       {resource=resource, sys=minesys}))
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    mem.marker = misn.markerAdd( minesys )
 
    update_osd()

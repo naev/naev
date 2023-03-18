@@ -78,7 +78,7 @@ function accept ()
    misn.setTitle( title )
    misn.setDesc(fmt.f(_("Eliminate the PUAAA mothership named {shipname} that islocated in the {sys} system. You have been provided explosives to detonate the mothership if you are able to get close enough to it."),
       {sys=mainsys,shipname=mothership_name}))
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.osdCreate( title , {
       fmt.f(_("Go to {sys}"),{sys=mainsys}),
       fmt.f(_("Plant explosives on the {shipname}"),{shipname=mothership_name}),

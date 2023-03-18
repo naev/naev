@@ -71,7 +71,7 @@ function create ()
    misn.accept()
    misn.setTitle( _("Terraforming Antlejos") )
    misn.setDesc(fmt.f(_("Defend the supply ships coming to {pnt} from the PUAAA."),{pnt=mainpnt}))
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.osdCreate(_("Terraforming Antlejos V"), {
       fmt.f(_("Go to the jump point from {sys} and wait for the supply ships"),{sys=nextsys}),
       _("Guard the supply ships from the PUAAA"),

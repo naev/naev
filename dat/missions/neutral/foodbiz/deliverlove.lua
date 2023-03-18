@@ -118,7 +118,7 @@ function accept ()
    misn.cargoAdd( c, 1 )
 
    misn.setTitle( _([[Deliver Love]]) )
-   misn.setReward( fmt.credits( mem.reward ) )
+   misn.setReward( mem.reward )
    misn.setDesc( fmt.f(_([[Absence makes the heart grow fonder. Deliver love letters to {pnt} in the {sys} system.]]), {pnt=targetworld, sys=targetworld_sys} ) )
 
    misn.osdCreate( _([[Deliver Love]]), {

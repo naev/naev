@@ -74,7 +74,7 @@ function accept ()
 
       -- Mission details
       misn.setTitle(_("Collective Distraction"))
-      misn.setReward( fmt.credits( mem.credits ) )
+      misn.setReward( mem.credits )
       misn.setDesc( fmt.f(_("Go to draw the Collective's attention in the {sys} system"), {sys=misn_target_sys} ))
 
       tk.msg( _("Collective Espionage"), fmt.f(_([["Here's the plan: we want to drop a commando team on {pnt} to set up more sophisticated surveillance. We've already got a team assembled. Your job will be to provide a distraction.

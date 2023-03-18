@@ -88,7 +88,7 @@ function accept()
 
    misn.accept()
    misn.setDesc(_("Joanne needs you to escort her ship and fight off mercenaries sent to kill her."))
-   misn.setReward(fmt.credits(reward))
+   misn.setReward(reward)
    misn.osdCreate(_("Harja's Vengeance"), {
       _("Follow Joanne's ship"),
       _("Defeat Joanne's attackers"),

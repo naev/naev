@@ -155,7 +155,7 @@ function create()
    misn.markerAdd(mem.destplanet, "computer")
    misn.setTitle( fmt.f(srs.prefix.._("{tier} pilgrimage transport for {rank}-class citizen"), {tier=ferrytime[mem.print_speed], rank=prank[mem.rank]}) )
    car.setDesc( fmt.f(_("{tier} space transport to {pnt} for {rank}-class citizen"), {tier=ferrytime[mem.print_speed], pnt=mem.destplanet, rank=prank[mem.rank]}), nil, nil, mem.destplanet, mem.timelimit )
-   misn.setReward(fmt.credits(mem.reward))
+   misn.setReward(mem.reward)
 
    -- Set up passenger details so player cannot keep trying to get a better outcome
    mem.destpicky = rnd.rnd(1,4)

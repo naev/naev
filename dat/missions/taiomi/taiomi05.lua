@@ -78,7 +78,7 @@ function create ()
    misn.setTitle( title )
    misn.setDesc(fmt.f(_("You have been asked to help find {name}, who went missing."),
       {name = taiomi.young_died()} ) )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    mem.marker = misn.markerAdd( base )
 
    misn.osdCreate( title, {

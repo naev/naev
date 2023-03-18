@@ -88,7 +88,7 @@ function create()
    misn.setTitle( fmt.f( zlk.prefix.._("Test of {engine}"), {engine=typeOfEng} ))
    misn.markerAdd(mem.destplanet, "computer")
    car.setDesc( fmt.f(_("A Za'lek research team needs you to travel to {pnt} in {sys} using an engine in order to test it."), {pnt=mem.destplanet, sys=mem.destsys} ), nil, nil, mem.destplanet )
-   misn.setReward(fmt.credits(mem.reward))
+   misn.setReward(mem.reward)
 end
 
 function accept()
