@@ -98,7 +98,7 @@ int cond_check( const char *cond )
 
 cond_err:
    print_with_line_numbers( cond );
-   WARN( buf );
+   WARN( "%s", buf );
 
    /* Clear the stack. */
    lua_settop(naevL, 0);
