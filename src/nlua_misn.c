@@ -302,12 +302,11 @@ static int misn_setDesc( lua_State *L )
 /**
  * @brief Sets the current mission reward description.
  *
- *    @luatparam string|number reward Description of the reward to use. Can pass a number to signify a monetary reward.
+ *    @luatparam string|number reward Description of the reward to use. Can pass a number to signify a monetary reward, and allow for sorting.
  * @luafunc setReward
  */
 static int misn_setReward( lua_State *L )
 {
-   const char *str;
    Mission *cur_mission = misn_getFromLua(L);
    free(cur_mission->reward);
    cur_mission->reward_value = -1.;
@@ -318,7 +317,7 @@ static int misn_setReward( lua_State *L )
       cur_mission->reward = strdup(buf);
    }
    else {
-      str = luaL_checkstring(L,1);
+      const char *str = luaL_checkstring(L,1);
       cur_mission->reward = strdup(str);
    }
    return 0;
