@@ -423,7 +423,7 @@ static void info_openMain( unsigned int wid )
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", _("Close"), info_close );
-   window_addButtonKey( wid, -20 - (20+BUTTON_WIDTH), 20,
+   window_addButtonKey( wid, -20-(20+BUTTON_WIDTH), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSetGUI", _("Set GUI"), info_setGui, SDLK_g );
 
@@ -912,7 +912,7 @@ static void info_openCargo( unsigned int wid )
    /* Buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "closeCargo", _("Close"), info_close );
-   window_addButton( wid, -40 - BUTTON_WIDTH, 20,
+   window_addButton( wid, -20-BUTTON_WIDTH-10, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnJettisonCargo", _("Jettison"),
          cargo_jettison );
    window_disableButton( wid, "btnJettisonCargo" );
@@ -1296,19 +1296,13 @@ static void info_openMissions( unsigned int wid )
    /* buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "closeMissions", _("Close"), info_close );
-   window_addButtonKey( wid, -20, 40 + BUTTON_HEIGHT,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnAbortMission", _("Abort"),
-         mission_menu_abort, SDLK_a );
+   window_addButtonKey( wid, -20-BUTTON_WIDTH-10, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnAbortMission", _("Abort"), mission_menu_abort, SDLK_a );
 
    /* text */
-   window_addText( wid, 300+40, -60,
-         200, 40, 0, "txtSReward",
-         &gl_smallFont, NULL, _("#nReward:#0") );
-   window_addText( wid, 300+40, -80,
-         200, 40, 0, "txtReward", &gl_smallFont, NULL, NULL );
-   window_addText( wid, 300+40, -120,
-         w - (300+40+40), h - BUTTON_HEIGHT - 120, 0,
-         "txtDesc", &gl_smallFont, NULL, NULL );
+   window_addText( wid, 300+40, -40,
+         w-300-60, h - BUTTON_HEIGHT - 120, 0, "txtDesc",
+         &gl_smallFont, NULL, NULL );
 
    /* Put a map. */
    map_show( wid, 20, 20, 300, 260, 0.75, 0., 0. );
@@ -1343,7 +1337,6 @@ static void mission_menu_genList( unsigned int wid, int first )
 
    if (j==0) { /* no missions */
       misn_names[j++] = strdup(_("No Missions"));
-      window_modifyText( wid, "txtReward", _("None") );
       window_modifyText( wid, "txtDesc", _("You currently have no active missions.") );
       window_disableButton( wid, "btnAbortMission" );
       selectedMission = 0; /* misn_menu_update should do nothing. */
@@ -1360,6 +1353,7 @@ static void mission_menu_genList( unsigned int wid, int first )
 static void mission_menu_update( unsigned int wid, const char *str )
 {
    (void) str;
+   char buf[STRMAX];
    Mission* misn;
    const StarSystem *sys;
    int pos = toolkit_getListPos(wid, "lstMission" );
@@ -1370,8 +1364,8 @@ static void mission_menu_update( unsigned int wid, const char *str )
    /* Modify the text. */
    selectedMission = pos;
    misn = player_missions[selectedMission];
-   window_modifyText( wid, "txtReward", misn->reward );
-   window_modifyText( wid, "txtDesc", misn->desc );
+   snprintf( buf, sizeof(buf),_("%s\n#nReward:#0 %s\n\n%s"), misn->title, misn->reward, misn->desc );
+   window_modifyText( wid, "txtDesc", buf );
    window_enableButton( wid, "btnAbortMission" );
 
    /* Select the system. */
