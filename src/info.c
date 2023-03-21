@@ -423,7 +423,7 @@ static void info_openMain( unsigned int wid )
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", _("Close"), info_close );
-   window_addButtonKey( wid, -20 - (20+BUTTON_WIDTH), 20,
+   window_addButtonKey( wid, -20-(20+BUTTON_WIDTH), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSetGUI", _("Set GUI"), info_setGui, SDLK_g );
 
@@ -912,7 +912,7 @@ static void info_openCargo( unsigned int wid )
    /* Buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "closeCargo", _("Close"), info_close );
-   window_addButton( wid, -40 - BUTTON_WIDTH, 20,
+   window_addButton( wid, -20-BUTTON_WIDTH-10, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnJettisonCargo", _("Jettison"),
          cargo_jettison );
    window_disableButton( wid, "btnJettisonCargo" );
@@ -1296,9 +1296,8 @@ static void info_openMissions( unsigned int wid )
    /* buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "closeMissions", _("Close"), info_close );
-   window_addButtonKey( wid, -20, 40 + BUTTON_HEIGHT,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnAbortMission", _("Abort"),
-         mission_menu_abort, SDLK_a );
+   window_addButtonKey( wid, -20-BUTTON_WIDTH-10, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnAbortMission", _("Abort"), mission_menu_abort, SDLK_a );
 
    /* text */
    window_addText( wid, 300+40, -40,
