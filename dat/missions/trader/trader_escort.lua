@@ -90,7 +90,7 @@ function create()
    misn.setTitle( fmt.f( misn_title[mem.convoysize], {pnt=mem.destspob, sys=mem.destsys} ) )
    car.setDesc( fmt.f(_("A convoy of traders needs protection while they go to {pnt} ({sys} system). You must stick with the convoy at all times, waiting to jump or land until the entire convoy has done so."), {pnt=mem.destspob, sys=mem.destsys} ), mem.cargo, nil, mem.destspob, nil, piracyrisk )
    misn.markerAdd(mem.destspob, "computer")
-   misn.setReward( fmt.credits(mem.reward) )
+   misn.setReward(mem.reward)
 end
 
 function accept()

@@ -56,7 +56,7 @@ function accept ()
       misn.setTitle( _("Diversion from Haleb") )
       misn.setDesc( fmt.f( _("A covert operation is being conducted in Haleb. You are to create a diversion from this operation by wreaking havoc in the nearby {sys} system."), {sys=mem.missys} ) )
       mem.marker = misn.markerAdd( mem.missys, "plot" )
-      misn.setReward( fmt.credits( mem.credits ) )
+      misn.setReward( mem.credits )
 
       mem.dv_attention = 0
       mem.job_done = false

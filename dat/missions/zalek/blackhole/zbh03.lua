@@ -92,7 +92,7 @@ He chuckles slightly.]]))
 
    -- mission details
    misn.setTitle( _("Black Hole Scouting") )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc( fmt.f(_("Patrol the {sys} system and report your observations to Zach at {pnt}."), {pnt=mainpnt, sys=mainsys}) )
 
    mem.mrk = misn.markerAdd( mainsys )

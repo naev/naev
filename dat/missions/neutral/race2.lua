@@ -64,7 +64,7 @@ function accept ()
          mem.credits = mem.credits_hard
          tk.msg(_("Hard Mode"), _([["You want a challenge huh? Remember, no afterburners on your ship or you will not be allowed to race. Let's go have some fun!"]]))
       end
-      misn.setReward(fmt.credits(mem.credits))
+      misn.setReward(mem.credits)
       hook.takeoff("takeoff")
       else
       tk.msg(_("Refusal"), _([["I guess we'll need to find another pilot."]]))

@@ -168,7 +168,7 @@ function create ()
          {fct=mem.paying_faction})
    end
    misn.setDesc(desc)
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setReward( mem.credits )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
 

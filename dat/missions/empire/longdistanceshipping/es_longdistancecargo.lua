@@ -86,7 +86,7 @@ function create()
       {tonnes=fmt.tonnes(mem.amount), cargo=_(mem.cargo)} ) )
    misn.markerAdd(mem.destplanet, "computer")
    car.setDesc( fmt.f(_("Official Empire long distance cargo transport to {pnt} in the {sys} system."), {pnt=mem.destplanet, sys=mem.destsys} ), mem.cargo, mem.amount, mem.destplanet, mem.timelimit, piracyrisk )
-   misn.setReward( fmt.credits(mem.reward) )
+   misn.setReward(mem.reward)
 end
 
 -- Mission is accepted

@@ -89,7 +89,7 @@ function accept ()
 
    -- Mission details
    misn.setTitle(_("Operation Black Trinity"))
-   misn.setReward( fmt.credits( emp.rewards.ec05 ) )
+   misn.setReward( emp.rewards.ec05 )
    misn.setDesc( fmt.f(_("Arrest the ESS Trinity in {sys}"), {sys=misn_target_sys} ))
    misn.osdCreate(_("Operation Black Trinity"), {
       fmt.f(_("Fly to the {sys} system"), {sys=misn_target_sys}),

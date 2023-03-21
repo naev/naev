@@ -82,7 +82,7 @@ function accept ()
    -- Mission details
    mem.misn_stage = 0
    misn.setTitle(_("Prisoner Exchange"))
-   misn.setReward( fmt.credits( emp.rewards.es00 ) )
+   misn.setReward( emp.rewards.es00 )
    misn.setDesc( fmt.f(_("Go to {pnt} in the {sys} system to exchange prisoners with the FLF"), {pnt=mem.dest, sys=mem.destsys}) )
    misn.osdCreate(_("Prisoner Exchange"), {
       fmt.f(_("Go to {pnt} in the {sys} system to exchange prisoners with the FLF"), {pnt=mem.dest, sys=mem.destsys}),

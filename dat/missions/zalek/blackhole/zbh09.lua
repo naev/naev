@@ -102,7 +102,7 @@ OK, maybe a little. Let's get going!"]]))
 
    -- mission details
    misn.setTitle( title )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc(fmt.f(_("Investigate the mysterious signal coming from the {sys} system with Zach."),{sys=insys}))
 
    local c = commodity.new( N_("Zach"), N_("A Za'lek scientist.") )

@@ -129,7 +129,7 @@ function accept()
 
    -- mission details
    misn.setTitle(_("Anxious Merchant"))
-   misn.setReward(fmt.credits(mem.payment))
+   misn.setReward(mem.payment)
    misn.setDesc(fmt.f(_("You decided to help a fraught merchant by delivering some goods to {pnt}."), {pnt=mem.dest_planet}))
    mem.marker = misn.markerAdd( mem.dest_planet, "low" ) -- destination
    mem.cargo_ID = misn.cargoAdd( mem.cargo, mem.cargo_size ) -- adds cargo

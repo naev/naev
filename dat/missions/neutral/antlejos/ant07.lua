@@ -68,7 +68,7 @@ function accept ()
    misn.accept()
    misn.setTitle( _("Antlejos V Trade Deal") )
    misn.setDesc(fmt.f(_("Go to {pnt} in the {sys} system to try to forge an alliance with the government at {pnt} to support {retpnt}."),{pnt=mainpnt, sys=mainsys, retpnt=retpnt}))
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.osdCreate(_("Antlejos V Trade Deal"), {
       fmt.f(_("Go to {pnt} ({sys} system)"),{pnt=mainpnt, sys=mainsys}),
       fmt.f(_("Return to {pnt} ({sys} system)"),{pnt=retpnt, sys=retsys}),

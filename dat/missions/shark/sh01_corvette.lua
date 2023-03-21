@@ -85,7 +85,7 @@ function accept()
    misn.accept()
 
    misn.setTitle(_("Sharkman is back"))
-   misn.setReward(fmt.credits(shark.rewards.sh01/2))
+   misn.setReward(shark.rewards.sh01/2)
    misn.setDesc(_("Nexus Shipyards wants you to fake a loss against a Lancelot while piloting a Destroyer-class ship."))
    misn.osdCreate(_("Sharkman Is Back"), {
       fmt.f(_("Jump in {sys} with a Destroyer-class ship and let the Lancelot disable you"), {sys=battlesys}),

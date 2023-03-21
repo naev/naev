@@ -127,7 +127,7 @@ They go to the restroom and come back holding a nondescript brown box that seems
    misn.osdCreate( _("Deliver Cake"), { fmt.f(_("Fly to {pnt} in the {sys} system without getting scanned"), {pnt=mem.destplanet, sys=mem.destsys}) } )
 
    misn.setTitle(_("Deliver Cake"))
-   misn.setReward( fmt.credits(mem.reward) )
+   misn.setReward(mem.reward)
    misn.setDesc( fmt.f(_("Deliver a cake to {pnt} in the {sys} system. Apparently it has a special frosting and will be damaged if you are scanned. Use stealth to avoid getting scanned."), {pnt=mem.destplanet, sys=mem.destsys} ) )
    misn.markerAdd(mem.destplanet)
 

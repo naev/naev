@@ -68,7 +68,7 @@ She hands you the report package, which seems a bit heavier than you expected, a
 
    -- mission details
    misn.setTitle( _("Particle Physics") )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc( fmt.f(_("Deliver Noona's preliminary report to {pnt} in the {sys} system."), {pnt=destpnt, sys=destsys} ))
 
    misn.markerAdd( destpnt )

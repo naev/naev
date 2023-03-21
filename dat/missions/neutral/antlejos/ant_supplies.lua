@@ -64,7 +64,7 @@ function create ()
    end
    misn.setTitle( fmt.f(_("#oANTLEJOS:#0 {adj} delivery of supplies from {pnt} ({sys} system)"),
          {adj=adj, pnt=mem.destpnt, sys=mem.destsys}) )
-   misn.setReward( fmt.credits(mem.reward) )
+   misn.setReward(mem.reward)
 
    local desc = fmt.f(_("Pick up {cargo} at {pnt} in the {sys} system and bring them to {retpnt} to further accelerate the terraforming. Note that protestors from the PUAAA are expected to show up.\n"),
       {cargo=cargo_name, pnt=mem.destpnt, sys=mem.destsys, retpnt=returnpnt})

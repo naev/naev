@@ -56,7 +56,7 @@ function create ()
    -- Set mission details
    misn.setTitle( fmt.f( _("FLF: Diversion in {sys}"), {sys=mem.missys} ) )
    misn.setDesc( fmt.f( _("A fleet of FLF ships will be conducting an operation against the Dvaered forces. Create a diversion from this operation by wreaking havoc in the nearby {sys} system."), {sys=mem.missys} ) )
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setReward( mem.credits )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
 

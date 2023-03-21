@@ -86,7 +86,7 @@ That doesn't sound very reassuring.
 
    -- mission details
    misn.setTitle( _("Particle Physics") )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc( fmt.f(_("Take Noona and some equipment to {pnt} in the {sys} system."), {pnt=destpnt, sys=destsys} ))
 
    misn.markerAdd( destpnt )

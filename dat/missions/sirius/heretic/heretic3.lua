@@ -39,7 +39,7 @@ function create()
    if not misn.claim(mem.homesys) then
       misn.finish(false)
    end
-   misn.setReward( fmt.credits( mem.reward ) )
+   misn.setReward( mem.reward )
    misn.setTitle( _("The Assault") )
    misn.setNPC(_("Draga"), "sirius/unique/draga.webp", _("The familiar form of Draga is at a table with some officers. They look busy."))
 end

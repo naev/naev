@@ -86,7 +86,7 @@ function accept()
    mem.qtt = player.pilot():cargoFree()
    mem.pay = mem.credits * mem.qtt
    mem.cid = misn.cargoAdd( cflyers, mem.qtt )
-   misn.setReward( fmt.credits( mem.pay ) )
+   misn.setReward( mem.pay )
 end
 
 function enter()

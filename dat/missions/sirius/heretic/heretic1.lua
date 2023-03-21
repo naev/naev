@@ -31,7 +31,7 @@ function create()
    mem.targetasset, mem.targetsystem = spob.getS("The Wringer")
    --set the mission stuff
    misn.setTitle(_("The Return"))
-   misn.setReward(fmt.credits(mem.reward))
+   misn.setReward(mem.reward)
    misn.setNPC(_("A Tall Man"), "sirius/unique/shaman.webp", _("A tall man sitting at a table littered with papers."))
    misn.setDesc(_("A tall man sitting at a table littered with papers."))
 end

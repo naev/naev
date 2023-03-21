@@ -56,7 +56,7 @@ function create ()
 
       -- Mission details
       misn.setTitle(_("Collective Extraction"))
-      misn.setReward( fmt.credits( credits ) )
+      misn.setReward( credits )
       misn.setDesc( fmt.f(_("Check for survivors on {pnt} in {sys}"), {pnt=misn_target, sys=misn_target_sys} ))
       tk.msg( _("Collective Extraction"), fmt.f(_([["We'll send extra forces to {sys} to try to give you a chance to break through the blockade. You'll have to land on {pnt} and extract our team. Be very careful. This is going to be no walk in the park."]]), {sys=misn_target_sys, pnt=misn_target}) )
       misn.osdCreate(_("Collective Extraction"), {

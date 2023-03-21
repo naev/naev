@@ -85,7 +85,7 @@ function accept()
    mem.piratename = pilotname.pirate() --for now, we only need his name
 
    misn.setTitle(_("A Shark Bites"))
-   misn.setReward(fmt.credits(shark.rewards.sh00))
+   misn.setReward(shark.rewards.sh00)
    misn.setDesc(_("Nexus Shipyards needs you to demonstrate to Baron Sauterfeldt the capabilities of Nexus designs."))
    misn.osdCreate(_("A Shark Bites"), {
       fmt.f(_("Buy a Shark (but not a Pirate Shark), then fly to the {sys} system and land on {pnt}"), {sys=missys, pnt=mispla}),

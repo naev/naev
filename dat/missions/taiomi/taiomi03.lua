@@ -44,7 +44,7 @@ function create ()
    -- Mission details
    misn.setTitle( title )
    misn.setDesc(fmt.f(_("You have been asked to fly to {lab} in the {labsys} system to recover important documents regarding the technical details of the hypergates.."),{lab=mem.lab,labsys=mem.labsys}))
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    mem.marker = misn.markerAdd( mem.lab )
 
    misn.osdCreate( title, {

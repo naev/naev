@@ -74,7 +74,7 @@ function create ()
    misn.setTitle( _("Terraforming Antlejos") )
    misn.setDesc(fmt.f(_("Pick up the {cargo} at {pnt} in the {sys} system and deliver it to {retpnt}."),
       {cargo=cargo_name, pnt=mem.destpnt, sys=mem.destsys, retpnt=returnpnt}))
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.osdCreate(_("Terraforming Antlejos V"), {
       fmt.f(_("Pick up the {cargo} at {pnt} ({sys} system)"), {cargo=cargo_name, pnt=mem.destpnt, sys=mem.destsys}),
       fmt.f(_("Deliver the cargo to {pnt} ({sys} system)"), {pnt=returnpnt, sys=returnsys})

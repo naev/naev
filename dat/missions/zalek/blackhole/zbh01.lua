@@ -74,7 +74,7 @@ He seems visibly distraught and you try to soothe him.]]))
 
    -- mission details
    misn.setTitle( _("Black Hole Research") )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc( fmt.f(_("Take Zach to see what happened to his colleagues at {pnt} in the {sys} system."),
       {pnt=destpnt, sys=destsys} ))
 

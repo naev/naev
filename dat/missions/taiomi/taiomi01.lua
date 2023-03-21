@@ -40,7 +40,7 @@ function create ()
    -- Mission details
    misn.setTitle( title )
    misn.setDesc( _("You have agreed to help the robotic citizens of Taiomi to scan a hypergate. Given the nature of the scanner, care has to be taken to not be scanned by ships.") )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
 
    -- Mark hypergates
    for i,s in ipairs(system.getAll()) do

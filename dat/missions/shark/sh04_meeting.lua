@@ -79,7 +79,7 @@ function accept()
    tk.msg(_("Time to go"), _([["Let's go, then."]]))
 
    misn.setTitle(_("The Meeting"))
-   misn.setReward(fmt.credits(shark.rewards.sh04))
+   misn.setReward(shark.rewards.sh04)
    misn.setDesc(_("Nexus Shipyards asks you to take part in a secret meeting"))
    misn.osdCreate(_("The Meeting"), {
       fmt.f(_("Go to the {sys} system and land on {pnt}"), {sys=missys, pnt=mispla}),

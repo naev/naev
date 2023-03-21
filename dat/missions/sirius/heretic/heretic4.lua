@@ -58,7 +58,7 @@ function accept()
    local free_cargo = player.pilot():cargoFree()
    mem.people_carried =  (16 * free_cargo) + 7 --average weight per person is 62kg. one ton / 62 is 16. added the +7 for ships with 0 cargo.
    misn.setTitle(_("The Egress"))
-   misn.setReward(fmt.credits(mem.reward))
+   misn.setReward(mem.reward)
    misn.setDesc(fmt.f(_("Assist the Nasin refugees by flying to {pnt} in {sys}, and unloading them there."), {pnt=targetasset, sys=targetsys}))
    misn.osdCreate(_("The Egress"), {
       fmt.f(_("Fly the refugees to {pnt} in the {sys} system."), {pnt=targetasset, sys=targetsys}),

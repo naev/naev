@@ -55,7 +55,7 @@ function create ()
    misn.setTitle( title )
    misn.setDesc(fmt.f(_([[Destroy a patrol in the {sys} system.]]),
       {sys = fightsys} ))
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    mem.marker = misn.markerAdd( fightsys )
 
    misn.osdCreate( title, {

@@ -127,7 +127,7 @@ function create ()
 #nAttractions:#0 {amount}
 #nPreferred Ship:#0 Luxury Yacht-class]]),
       {sys=mem.missys, amount=mem.attractions, retspob=mem.startingplanet, retsys=mem.startingsystem} ) )
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setReward( mem.credits )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
 
@@ -136,7 +136,7 @@ function accept ()
    if not player.pilot():ship():tags().luxury then
       if vntk.yesno( _("Not Very Luxurious"), fmt.f( _("Since your ship is not a Luxury Yacht-class ship, you will only be paid {credits}. Accept the mission anyway?"), {credits=fmt.credits(mem.credits_nolux)} ) ) then
          mem.nolux_known = true
-         misn.setReward( fmt.credits( mem.credits_nolux ) )
+         misn.setReward( mem.credits_nolux )
       else
          return
       end

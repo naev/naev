@@ -92,7 +92,7 @@ function accept()
 
    -- set up mission computer
    misn.setTitle( _("A Tasty Job") )
-   misn.setReward( fmt.credits( mem.reward ) )
+   misn.setReward( mem.reward )
    misn.setDesc( fmt.f(_([[Deliver the recipes to Michal on {pnt} in the {sys} system.]]), {pnt=targetworld, sys=targetworld_sys} ) )
 
    misn.osdCreate( _("A Tasty Job"), {

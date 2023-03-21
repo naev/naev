@@ -162,7 +162,7 @@ She runs off out of the spaceport bar.]]))
 
    misn.setTitle( title )
    misn.setDesc(_("Help Nelly do some ad-hoc repairs on their ship by getting some materials from asteroids. There is no way this can go wrong, is there?"))
-   misn.setReward( fmt.credits(reward_amount) )
+   misn.setReward(reward_amount)
 
    hook.enter("enter")
    hook.land("land")

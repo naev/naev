@@ -63,7 +63,7 @@ function accept ()
 
    -- Mission details
    misn.setTitle(_("Collective Scout"))
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setReward( mem.credits )
    misn.setDesc( fmt.f(_("Find a scout last seen in the {sys} system"), {sys=misn_nearby}))
 
    -- Flavour text and mini-briefing

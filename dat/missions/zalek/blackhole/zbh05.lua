@@ -86,7 +86,7 @@ You can see the glee on his face when he goes back to looking at the charts on h
 
    -- mission details
    misn.setTitle( _("Saving Icarus") )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc( fmt.f(_("Pick up the necessary supplies at {pnt} ({sys} system) and bring them back to Zach at {retpnt} ({retsys} system)."),
       {pnt=destpnt, sys=destsys, retpnt=retpnt, retsys=retsys} ))
 

@@ -83,7 +83,7 @@ function accept ()
    -- mission details
    local title = _("Sigma-13 Sensors")
    misn.setTitle( title )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc( fmt.f(_("Pick up the necessary supplies at {pnt} ({sys} system) and bring them back to Zach at {retpnt} ({retsys} system)."),
       {pnt=mem.destpnt, sys=mem.destsys, retpnt=retpnt, retsys=retsys} ))
 

@@ -92,7 +92,7 @@ function accept()
 
    -- Set up mission information
    misn.setTitle(_("Expert Nebula Research"))
-   misn.setReward(fmt.credits(credits))
+   misn.setReward(credits)
    misn.setDesc(_("Test the shielding prototype by flying into the Sol nebula."))
    mem.misn_marker = misn.markerAdd(dest_sys, "low")
 

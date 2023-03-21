@@ -70,7 +70,7 @@ function accept ()
 
    -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
    misn.setTitle(_("Soromid Long Distance Recruitment"))
-   misn.setReward( fmt.credits( emp.rewards.ldc1 ) )
+   misn.setReward( emp.rewards.ldc1 )
    local misn_desc = fmt.f(_("Deliver a shipping diplomat for the Empire to {pnt} in the {sys} system"),
       {pnt=targetworld, sys=targetworld_sys})
    misn.setDesc( misn_desc )

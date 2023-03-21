@@ -78,7 +78,7 @@ function accept ()
 
    misn.setTitle( _("Verner's Request") )
    misn.setDesc(fmt.f(_("Verner asked you to take him to {pnt} in the {sys} system."), {pnt=destpnt, sys=destsys}))
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.osdCreate(_("Verner's Request"), {
       fmt.f(_("Take Verner to {pnt} ({sys} system)"), {pnt=destpnt, sys=destsys}),
    })

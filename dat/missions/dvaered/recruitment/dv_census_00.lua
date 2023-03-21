@@ -110,7 +110,7 @@ Once you have seen enough ships, you can land on any Dvaered-controlled planet t
 
    -- Mission details
    misn.setTitle(fmt.f(_("Monitoring of Warlords activity in {sys}"), {sys=mem.sys}))
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setReward( mem.credits )
    misn.setDesc( fmt.f(_("Dvaered High Command requires a pilot to go to {sys} and detect {nb} Dvaered ships"), {sys=mem.sys, nb=mem.nbships}))
    cens.osd( _("Dvaered Census"), mem.sys, mem.nbships, 0, _("Dvaered"), _("Dvaered") )
 

@@ -111,7 +111,7 @@ You just start to marvel at the self-assurance of one so young when she signals 
 
    misn.accept()
    misn.setTitle( _("DIY Nerds") )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc( _("Cart some nerds to their contest, and back.") )
    mem.marker = misn.markerAdd( mem.destPlanet, "low" )
 

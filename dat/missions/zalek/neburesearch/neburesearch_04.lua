@@ -80,7 +80,7 @@ function accept()
 
     -- Set up mission information
     misn.setTitle(_("Shielding Prototype Funding"))
-    misn.setReward(fmt.credits(credits))
+    misn.setReward(credits)
     misn.setDesc(_("Help Dr. Mensing to get funding to construct a shielding prototype."))
     mem.misn_marker = misn.markerAdd(mem.dest_sys, "low")
 

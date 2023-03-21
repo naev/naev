@@ -77,7 +77,7 @@ function accept()
    misn.accept()
 
    misn.setTitle(_("Invitation"))
-   misn.setReward(fmt.credits(shark.rewards.sh03))
+   misn.setReward(shark.rewards.sh03)
    misn.setDesc(_("Nexus Shipyards asks you to help initiate a secret meeting"))
    misn.osdCreate(_("Invitation"), {
       fmt.f(_("Go to {sys}, find and hail the Air Force One"), {sys=mem.missys}),

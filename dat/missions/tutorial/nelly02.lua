@@ -103,7 +103,7 @@ function create ()
 
    misn.setTitle( _("Helping Nelly Out… Again") )
    misn.setDesc( _("Help Nelly fix their ship.") )
-   misn.setReward( fmt.credits(reward_amount) )
+   misn.setReward(reward_amount)
 end
 
 

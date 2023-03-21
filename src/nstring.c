@@ -190,7 +190,7 @@ int scnprintf( char* text, size_t maxlen, const char* fmt, ... )
 }
 
 /**
- * @brief Converts an electronic warfare value to a string.
+ * @brief Converts a numeric value to a string.
  *
  *    @param[out] dest String to write to.
  *    @param n Number to write.
@@ -198,8 +198,16 @@ int scnprintf( char* text, size_t maxlen, const char* fmt, ... )
  */
 int num2str( char dest[NUM2STRLEN], double n, int decimals )
 {
-   if (n >= 1e12)
+   if (n >= 1e15)
       return snprintf( dest, NUM2STRLEN, "%.*f", decimals, n );
+   else if (n >= 1e12)
+      return snprintf( dest, NUM2STRLEN,
+            _("%.0f,%03.0f,%03.0f,%03.0f,%03.*f"),
+            floor(n/1e12),
+            floor(fmod(floor(fabs(n/1e9)),1e3)),
+            floor(fmod(floor(fabs(n/1e6)),1e3)),
+            floor(fmod(floor(fabs(n/1e3)),1e3)),
+            decimals, fmod(floor(fabs(n)),1e3) );
    else if (n >= 1e9)
       return snprintf( dest, NUM2STRLEN,
             _("%.0f,%03.0f,%03.0f,%03.*f"),
