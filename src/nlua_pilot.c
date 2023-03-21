@@ -1059,7 +1059,7 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
  *    @luatparam Pilot|faction pilot Pilot or to get allies of.
  *    @luatparam[opt=infinity] number dist Distance to look for allies.
  *    @luatparam[opt=pilot.pos] Vec2 pos Position to check from.
- *    @luatparam[opt=false] boolean Whether or not to only check for pilots in range (only in the case of pilot, not faction)
+ *    @luatparam[opt=false] boolean ignore_range Whether or not to only check for pilots in range (only in the case of pilot, not faction)
  *    @luatparam[opt=false] boolean disabled Whether or not to count disabled pilots.
  *    @luatparam[opt=false] boolean fighters Whether or not to count deployed fighters.
  *    @luatreturn {Pilot,...} A table containing the pilots.
