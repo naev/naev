@@ -1,5 +1,6 @@
 local flow = require "ships.lua.lib.flow"
 local fmt = require "format"
+local spfxflames = require "luaspfx.cleansing_flames"
 
 local function getStats( p, size )
    local flow_cost, cooldown, ref, range
@@ -74,8 +75,9 @@ function ontoggle( p, po, on )
       end
       flow.dec( p, mem.flow_cost )
 
-      -- TODO spfx + damage stuff
+      -- TODO apply effect and let it get set here
       print( mem.ref, mem.range )
+      spfxflames( p:pos(), p:vel(), mem.range, { parent=p } )
 
       mem.timer = mem.cooldown * p:shipstat("cooldown_mod",true)
       po:state("cooldown")
