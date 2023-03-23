@@ -10,6 +10,7 @@ typedef struct WidgetCheckboxData_ {
    void (*fptr) (unsigned int,const char*); /**< Toggle callback. */
    char *display; /**< Displayed text. */
    int state; /**< Current checkbox status. */
+   int disabled; /**< The widget is currently disabled. */
 } WidgetCheckboxData;
 
 /* Required functions. */
@@ -24,3 +25,5 @@ void window_addCheckbox( unsigned int wid,
 void window_checkboxCaption( unsigned int wid, const char *name, char *display );
 int window_checkboxState( unsigned int wid, const char *name );
 int window_checkboxSet( unsigned int wid, const char *name, int state );
+int window_enableCheckbox( unsigned int wid, const char *name );
+int window_disableCheckbox( unsigned int wid, const char *name );
