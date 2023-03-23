@@ -1234,65 +1234,68 @@ int missions_saveActive( xmlTextWriterPtr writer )
 
    xmlw_startElem(writer,"missions");
    for (int i=0; i<array_size(player_missions); i++) {
-      if (player_missions[i]->id != 0) {
-         xmlw_startElem(writer,"mission");
+      Mission *misn = player_missions[i];
+      if (misn->id == 0)
+         continue;
 
-         /* data and id are attributes because they must be loaded first */
-         xmlw_attr(writer,"data","%s",player_missions[i]->data->name);
-         xmlw_attr(writer,"id","%u",player_missions[i]->id);
+      xmlw_startElem(writer,"mission");
 
-         xmlw_elem(writer,"title","%s",player_missions[i]->title);
-         xmlw_elem(writer,"desc","%s",player_missions[i]->desc);
-         xmlw_elem(writer,"reward","%s",player_missions[i]->reward);
+      /* data and id are attributes because they must be loaded first */
+      xmlw_attr(writer,"data","%s",misn->data->name);
+      xmlw_attr(writer,"id","%u",misn->id);
 
-         /* Markers. */
-         xmlw_startElem( writer, "markers" );
-         for (int j=0; j<array_size( player_missions[i]->markers ); j++) {
-            MissionMarker *m = &player_missions[i]->markers[j];
-            xmlw_startElem(writer,"marker");
-            xmlw_attr(writer,"id","%d",m->id);
-            xmlw_attr(writer,"type","%d",m->type);
-            xmlw_str(writer,"%s", mission_markerTarget( m ));
-            xmlw_endElem(writer); /* "marker" */
-         }
-         xmlw_endElem( writer ); /* "markers" */
+      xmlw_elem(writer,"title","%s",misn->title);
+      xmlw_elem(writer,"desc","%s",misn->desc);
+      xmlw_elem(writer,"reward","%s",misn->reward);
 
-         /* Cargo */
-         xmlw_startElem(writer,"cargos");
-         for (int j=0; j<array_size(player_missions[i]->cargo); j++)
-            xmlw_elem(writer,"cargo","%u", player_missions[i]->cargo[j]);
-         xmlw_endElem(writer); /* "cargos" */
-
-         /* OSD. */
-         if (player_missions[i]->osd > 0) {
-            char **items = osd_getItems(player_missions[i]->osd);
-
-            xmlw_startElem(writer,"osd");
-
-            /* Save attributes. */
-            xmlw_attr(writer,"title","%s",osd_getTitle(player_missions[i]->osd));
-            xmlw_attr(writer,"nitems","%d",array_size(items));
-            xmlw_attr(writer,"active","%d",osd_getActive(player_missions[i]->osd));
-
-            /* Save messages. */
-            for (int j=0; j<array_size(items); j++)
-               xmlw_elem(writer,"msg","%s",items[j]);
-
-            xmlw_endElem(writer); /* "osd" */
-         }
-
-         /* Claims. */
-         xmlw_startElem(writer,"claims");
-         claim_xmlSave( writer, player_missions[i]->claims );
-         xmlw_endElem(writer); /* "claims" */
-
-         /* Write Lua magic */
-         xmlw_startElem(writer,"lua");
-         nxml_persistLua( player_missions[i]->env, writer );
-         xmlw_endElem(writer); /* "lua" */
-
-         xmlw_endElem(writer); /* "mission" */
+      /* Markers. */
+      xmlw_startElem( writer, "markers" );
+      for (int j=0; j<array_size( misn->markers ); j++) {
+         MissionMarker *m = &misn->markers[j];
+         xmlw_startElem(writer,"marker");
+         xmlw_attr(writer,"id","%d",m->id);
+         xmlw_attr(writer,"type","%d",m->type);
+         xmlw_str(writer,"%s", mission_markerTarget( m ));
+         xmlw_endElem(writer); /* "marker" */
       }
+      xmlw_endElem( writer ); /* "markers" */
+
+      /* Cargo */
+      xmlw_startElem(writer,"cargos");
+      for (int j=0; j<array_size(misn->cargo); j++)
+         xmlw_elem(writer,"cargo","%u", misn->cargo[j]);
+      xmlw_endElem(writer); /* "cargos" */
+
+      /* OSD. */
+      if (misn->osd > 0) {
+         char **items = osd_getItems(misn->osd);
+
+         xmlw_startElem(writer,"osd");
+
+         /* Save attributes. */
+         xmlw_attr(writer,"title","%s",osd_getTitle(misn->osd));
+         xmlw_attr(writer,"nitems","%d",array_size(items));
+         xmlw_attr(writer,"active","%d",osd_getActive(misn->osd));
+         xmlw_attr(writer,"hidden","%d",osd_getHide(misn->osd));
+
+         /* Save messages. */
+         for (int j=0; j<array_size(items); j++)
+            xmlw_elem(writer,"msg","%s",items[j]);
+
+         xmlw_endElem(writer); /* "osd" */
+      }
+
+      /* Claims. */
+      xmlw_startElem(writer,"claims");
+      claim_xmlSave( writer, misn->claims );
+      xmlw_endElem(writer); /* "claims" */
+
+      /* Write Lua magic */
+      xmlw_startElem(writer,"lua");
+      nxml_persistLua( misn->env, writer );
+      xmlw_endElem(writer); /* "lua" */
+
+      xmlw_endElem(writer); /* "mission" */
    }
    xmlw_endElem(writer); /* "missions" */
 
@@ -1467,6 +1470,8 @@ static int missions_parseActive( xmlNodePtr parent )
 
          cur = node->xmlChildrenNode;
          do {
+            int hidden;
+
             xmlr_strd(cur,"title",misn->title);
             xmlr_strd(cur,"desc",misn->desc);
             xmlr_strd(cur,"reward",misn->reward);
@@ -1519,6 +1524,9 @@ static int missions_parseActive( xmlNodePtr parent )
                xmlr_attr_int_def( cur, "active", active, -1 );
                if (active != -1)
                   osd_active( misn->osd, active );
+
+               xmlr_attr_int_def( cur, "hidden", hidden, 0 );
+               osd_setHide( misn->osd, hidden );
             }
 
             /* Claims. */

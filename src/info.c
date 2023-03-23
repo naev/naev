@@ -16,6 +16,7 @@
 #include "dialogue.h"
 #include "equipment.h"
 #include "gui.h"
+#include "gui_osd.h"
 #include "hook.h"
 #include "land.h"
 #include "log.h"
@@ -128,6 +129,7 @@ static void standings_update( unsigned int wid, const char *str );
 static void cargo_genList( unsigned int wid );
 static void cargo_update( unsigned int wid, const char *str );
 static void cargo_jettison( unsigned int wid, const char *str );
+static void mission_menu_chk_hide( unsigned int wid, const char *str );
 static void mission_menu_abort( unsigned int wid, const char *str );
 static void mission_menu_genList( unsigned int wid, int first );
 static void mission_menu_update( unsigned int wid, const char *str );
@@ -433,9 +435,9 @@ static void info_openMain( unsigned int wid )
    n   = array_size(lic) + array_size(inv);
    /* List. */
    if (n == 0) {
-     inventory = malloc(sizeof(char*));
-     inventory[0] = strdup(_("None"));
-     n = 1;
+      inventory = malloc(sizeof(char*));
+      inventory[0] = strdup(_("None"));
+      n = 1;
    }
    else {
       int nlic = array_size(lic);
@@ -791,7 +793,7 @@ static void weapons_autoweap( unsigned int wid, const char *str )
    if (state) {
       int sure = dialogue_YesNoRaw( _("Enable autoweapons?"),
             _("Are you sure you want to enable automatic weapon groups for the "
-            "ship?\n\nThis will overwrite all manually-tweaked weapons groups.") );
+               "ship?\n\nThis will overwrite all manually-tweaked weapons groups.") );
       if (!sure) {
          window_checkboxSet( wid, str, 0 );
          return;
@@ -1105,7 +1107,7 @@ static void cargo_jettison( unsigned int wid, const char *str )
    /* Run hooks. */
    hparam[0].type    = HOOK_PARAM_STRING;
    hparam[0].u.str   = pclist[pos].commodity->name,
-   hparam[1].type    = HOOK_PARAM_NUMBER;
+      hparam[1].type    = HOOK_PARAM_NUMBER;
    hparam[1].u.num   = pclist[pos].quantity;
    hparam[2].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "comm_jettison", hparam );
@@ -1234,8 +1236,8 @@ static void standings_update( unsigned int wid, const char *str )
    y -= 10;
    m = round( faction_getPlayer( info_factions[p] ) );
    snprintf( buf, sizeof(buf), "#%c%+d%%#0   [ %s ]",
-      faction_getColourChar( info_factions[p] ), m,
-      faction_getStandingText( info_factions[p] ) );
+         faction_getColourChar( info_factions[p] ), m,
+         faction_getStandingText( info_factions[p] ) );
    window_modifyText( wid, "txtName", faction_longname( info_factions[p] ) );
    window_moveWidget( wid, "txtName", lw+40, y );
    y -= 20;
@@ -1299,7 +1301,13 @@ static void info_openMissions( unsigned int wid )
    window_addButtonKey( wid, -20-BUTTON_WIDTH-10, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnAbortMission", _("Abort"), mission_menu_abort, SDLK_a );
 
-   /* text */
+   /* Add a checkbox to hide the mission. */
+   window_addCheckbox( wid,300+40, 20+BUTTON_HEIGHT+10,
+         w-300-60, BUTTON_HEIGHT,
+         "chkHide", _("Hide mission on-screen display"),
+         mission_menu_chk_hide, 0 );
+
+   /* Mission Description */
    window_addText( wid, 300+40, -40,
          w-300-60, h - BUTTON_HEIGHT - 120, 0, "txtDesc",
          &gl_smallFont, NULL, NULL );
@@ -1333,12 +1341,13 @@ static void mission_menu_genList( unsigned int wid, int first )
    for (int i=0; i<array_size(player_missions); i++)
       if (player_missions[i]->id != 0)
          misn_names[j++] = (player_missions[i]->title != NULL) ?
-               strdup(player_missions[i]->title) : NULL;
+            strdup(player_missions[i]->title) : NULL;
 
    if (j==0) { /* no missions */
       misn_names[j++] = strdup(_("No Missions"));
       window_modifyText( wid, "txtDesc", _("You currently have no active missions.") );
       window_disableButton( wid, "btnAbortMission" );
+      window_disableCheckbox( wid, "chkHide" );
       selectedMission = 0; /* misn_menu_update should do nothing. */
    }
    window_addList( wid, 20, -40,
@@ -1367,11 +1376,28 @@ static void mission_menu_update( unsigned int wid, const char *str )
    snprintf( buf, sizeof(buf),_("%s\n#nReward:#0 %s\n\n%s"), misn->title, misn->reward, misn->desc );
    window_modifyText( wid, "txtDesc", buf );
    window_enableButton( wid, "btnAbortMission" );
+   window_enableCheckbox( wid, "chkHide" );
+   if (misn->osd <= 0)
+      window_checkboxSet( wid, "chkHide", 0 );
+   else
+      window_checkboxSet( wid, "chkHide", osd_getHide( misn->osd ) );
 
    /* Select the system. */
    sys = mission_getSystemMarker( misn );
    if (sys != NULL)
       map_center( wid, sys->name );
+}
+static void mission_menu_chk_hide( unsigned int wid, const char *str )
+{
+   Mission *misn;
+   int pos = toolkit_getListPos(wid, "lstMission" );
+   if ((pos < 0) || (pos > array_size(player_missions)))
+      return;
+   misn = player_missions[pos];
+
+   if (misn->osd <= 0)
+      return;
+   osd_setHide( misn->osd, window_checkboxState(wid,str) );
 }
 /**
  * @brief Aborts a mission in the mission menu.
@@ -1451,8 +1477,8 @@ static void shiplog_menu_update( unsigned int wid, const char *str )
          if (selectedLog >= nlogs)
             selectedLog = 0;
          window_addList( wid, 20, 60 + BUTTON_HEIGHT  + LOGSPACING / 2,
-                         w-40, LOGSPACING / 4,
-                         "lstLogs", logs, nlogs, 0, shiplog_menu_update, NULL );
+               w-40, LOGSPACING / 4,
+               "lstLogs", logs, nlogs, 0, shiplog_menu_update, NULL );
 
          toolkit_setListPos( wid, "lstLogs", selectedLog );
          regenerateEntries=1;
@@ -1463,8 +1489,8 @@ static void shiplog_menu_update( unsigned int wid, const char *str )
          window_destroyWidget( wid, "lstLogEntries" );
          shiplog_listLog( logIDs[selectedLog], info_getLogTypeFilter(selectedLogType), &nentries, &logentries, 1 );
          window_addList( wid, 20, 40 + BUTTON_HEIGHT,
-                         w-40, LOGSPACING / 2-20,
-                         "lstLogEntries", logentries, nentries, 0, shiplog_menu_update, info_shiplogView );
+               w-40, LOGSPACING / 2-20,
+               "lstLogEntries", logentries, nentries, 0, shiplog_menu_update, info_shiplogView );
          toolkit_setListPos( wid, "lstLogEntries", 0 );
          window_setFocus( wid, "lstLogEntries" );
       }
@@ -1518,14 +1544,14 @@ static void shiplog_menu_genList( unsigned int wid, int first )
    shiplog_listLog(logIDs[selectedLog], info_getLogTypeFilter(selectedLogType), &nentries, &logentries, 1);
    logWidgetsReady=0;
    window_addList( wid, 20, 80 + BUTTON_HEIGHT + 3*LOGSPACING/4 ,
-                   w-40, LOGSPACING / 4,
+         w-40, LOGSPACING / 4,
          "lstLogType", logTypes, ntypes, 0, shiplog_menu_update, NULL );
    window_addList( wid, 20, 60 + BUTTON_HEIGHT + LOGSPACING / 2,
-                   w-40, LOGSPACING / 4,
+         w-40, LOGSPACING / 4,
          "lstLogs", logs, nlogs, 0, shiplog_menu_update, NULL );
    window_addList( wid, 20, 40 + BUTTON_HEIGHT,
-                   w-40, LOGSPACING / 2-20,
-                   "lstLogEntries", logentries, nentries, 0, shiplog_menu_update, info_shiplogView );
+         w-40, LOGSPACING / 2-20,
+         "lstLogEntries", logentries, nentries, 0, shiplog_menu_update, info_shiplogView );
    window_setFocus( wid, "lstLogEntries" );
    logWidgetsReady=1;
 }
@@ -1598,7 +1624,7 @@ static void info_shiplogAdd( unsigned int wid, const char *str )
       tmp = dialogue_inputRaw( _("Add a log entry"), 0, 4096, _("Add an entry to your diary:") );
       if ( ( tmp != NULL ) && ( strlen(tmp) > 0 ) ) {
          if ( shiplog_getID( "Diary" ) == -1 )
-              shiplog_create( "Diary", _("Your Diary"), "Diary", 0, 0 );
+            shiplog_create( "Diary", _("Your Diary"), "Diary", 0, 0 );
          shiplog_append( "Diary", tmp );
          free( tmp );
       }
