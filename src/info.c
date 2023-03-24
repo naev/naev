@@ -130,6 +130,7 @@ static void cargo_genList( unsigned int wid );
 static void cargo_update( unsigned int wid, const char *str );
 static void cargo_jettison( unsigned int wid, const char *str );
 static void mission_menu_chk_hide( unsigned int wid, const char *str );
+static void mission_menu_chk_priority( unsigned int wid, const char *str );
 static void mission_menu_abort( unsigned int wid, const char *str );
 static void mission_menu_genList( unsigned int wid, int first );
 static void mission_menu_update( unsigned int wid, const char *str );
@@ -1302,10 +1303,15 @@ static void info_openMissions( unsigned int wid )
          "btnAbortMission", _("Abort"), mission_menu_abort, SDLK_a );
 
    /* Add a checkbox to hide the mission. */
-   window_addCheckbox( wid,300+40, 20+BUTTON_HEIGHT+10,
+   window_addCheckbox( wid, 300+40, 20+BUTTON_HEIGHT+10,
          w-300-60, BUTTON_HEIGHT,
          "chkHide", _("Hide mission on-screen display"),
          mission_menu_chk_hide, 0 );
+   /* Checkbox to make the mission be top. */
+   window_addCheckbox( wid, 300+40, 20+BUTTON_HEIGHT+10+gl_defFont.h+10,
+         w-300-60, BUTTON_HEIGHT,
+         "chkPrefer", _("Prioritize the mission"),
+         mission_menu_chk_priority, 0 );
 
    /* Mission Description */
    window_addText( wid, 300+40, -40,
@@ -1348,6 +1354,7 @@ static void mission_menu_genList( unsigned int wid, int first )
       window_modifyText( wid, "txtDesc", _("You currently have no active missions.") );
       window_disableButton( wid, "btnAbortMission" );
       window_disableCheckbox( wid, "chkHide" );
+      window_disableCheckbox( wid, "chkPrefer" );
       selectedMission = 0; /* misn_menu_update should do nothing. */
    }
    window_addList( wid, 20, -40,
@@ -1377,10 +1384,15 @@ static void mission_menu_update( unsigned int wid, const char *str )
    window_modifyText( wid, "txtDesc", buf );
    window_enableButton( wid, "btnAbortMission" );
    window_enableCheckbox( wid, "chkHide" );
-   if (misn->osd <= 0)
+   window_enableCheckbox( wid, "chkPrefer" );
+   if (misn->osd <= 0) {
       window_checkboxSet( wid, "chkHide", 0 );
-   else
+      window_checkboxSet( wid, "chkPrefer", 0 );
+   }
+   else {
       window_checkboxSet( wid, "chkHide", osd_getHide( misn->osd ) );
+      window_checkboxSet( wid, "chkPrefer", osd_getPriority( misn->osd ) != misn->data->avail.priority );
+   }
 
    /* Select the system. */
    sys = mission_getSystemMarker( misn );
@@ -1398,6 +1410,18 @@ static void mission_menu_chk_hide( unsigned int wid, const char *str )
    if (misn->osd <= 0)
       return;
    osd_setHide( misn->osd, window_checkboxState(wid,str) );
+}
+static void mission_menu_chk_priority( unsigned int wid, const char *str )
+{
+   Mission *misn;
+   int pos = toolkit_getListPos(wid, "lstMission" );
+   if ((pos < 0) || (pos > array_size(player_missions)))
+      return;
+   misn = player_missions[pos];
+
+   if (misn->osd <= 0)
+      return;
+   osd_setPriority( misn->osd, misn->data->avail.priority-100*window_checkboxState(wid,str) );
 }
 /**
  * @brief Aborts a mission in the mission menu.
