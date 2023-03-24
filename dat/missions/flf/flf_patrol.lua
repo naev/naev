@@ -112,8 +112,8 @@ function create ()
    mem.credits = mem.ships * 30e3 - mem.flfships * 1e3
    if mem.has_vigilence then mem.credits = mem.credits + 120e3 end
    if mem.has_goddard then mem.credits = mem.credits + 270e3 end
-   mem.credits = mem.credits * system.cur():jumpDist( mem.missys, true ) / 3
-   mem.credits = mem.credits + rnd.sigma() * 80e3
+   mem.credits = mem.credits * (system.cur():jumpDist( mem.missys, true )+1) / 3
+   mem.credits = mem.credits * (1 + 0.2*rnd.sigma())
 
    local desc = setDescription()
 

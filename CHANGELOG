@@ -14,6 +14,7 @@
       * Minor speed ups to patrol lane computations
       * Try to enforce minimum number of articles in the news
       * Independent patrol and bounty missions can be completed on more planets and stations
+      * Can hide or prioritize missions from the info menu
    * New Content
       * New mechanic for House Sirius called flow that allows unleashing psychic powers
       * 4 new missions
@@ -44,6 +45,7 @@
    * Fixed equipment of Lancelot in "Sharkman Is Back" mission
    * nelly02: Nelly now stops recommending stuff that only does a little disable
    * shadowvigil: Fixed mission not spawning escorts
+   * flf_patrol: Missions should no longer be able to have ridiculously low credit rewards
    * Fixed some events not claiming systems that could interfere with other missions
    * hypergate_construction: should actually claim the system
    * Fixed some formatting in the alt text when hovering over outfits in the equipment window

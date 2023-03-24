@@ -22,6 +22,7 @@ typedef struct OSD_s {
    unsigned int id;  /**< OSD id. */
    int priority;     /**< Priority level. */
    int skip;         /**< Not rendered. */
+   int hide;         /**< Actively hidden. */
    int duplicates;   /**< How many duplicates of this OSD there are. */
    char *title;      /**< Title of the OSD. */
    char **titlew;    /**< Wrapped version of the title. */
@@ -134,8 +135,8 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
    /* Copy text. */
    osd->title  = strdup(title);
    osd->priority = priority;
-   osd->msg = array_create_size( char*, nitems );
-   osd->items = array_create_size( char**, nitems );
+   osd->msg    = array_create_size( char*, nitems );
+   osd->items  = array_create_size( char**, nitems );
    osd->titlew = array_create( char* );
    for (int i=0; i<nitems; i++) {
       array_push_back( &osd->msg, strdup( items[i] ) );
@@ -425,7 +426,7 @@ static void osd_calcDimensions (void)
    /* Reset skips. */
    for (int k=0; k<array_size(osd_list); k++) {
       OSD_t *ll = &osd_list[k];
-      ll->skip = 0;
+      ll->skip = ll->hide;
       ll->duplicates = 0;
    }
 
@@ -508,4 +509,67 @@ char **osd_getItems( unsigned int osd )
    if (o == NULL)
       return NULL;
    return o->msg;
+}
+
+/**
+ * @brief Sets the hidden state of an OSD.
+ *
+ *    @param osd OSD to set state of.
+ *    @param state Whether or not to hide the OSD.
+ */
+int osd_setHide( unsigned int osd, int state )
+{
+   OSD_t *o = osd_get(osd);
+   if (o == NULL)
+      return -1;
+
+   o->hide = state;
+   osd_calcDimensions();
+   return 0;
+}
+
+/**
+ * @brief Gets the hidden state of an OSD.
+ *
+ *    @param osd OSD to get state of.
+ *    @return Whether or not the OSD is hidden or -1 on error.
+ */
+int osd_getHide( unsigned int osd )
+{
+   OSD_t *o = osd_get(osd);
+   if (o == NULL)
+      return -1;
+   return o->hide;
+}
+
+/**
+ * @brief Sets the priority of the OSD.
+ *
+ *    @param osd OSD to set priority of.
+ *    @param state Priority of the OSD (lower is more important).
+ */
+int osd_setPriority( unsigned int osd, int priority )
+{
+   OSD_t *o = osd_get(osd);
+   if (o == NULL)
+      return -1;
+
+   o->priority = priority;
+   osd_sort();
+   osd_calcDimensions();
+   return 0;
+}
+
+/**
+ * @brief Gets the priority of an OSD.
+ *
+ *    @param osd OSD to get state of.
+ *    @return The priority of the OSD.
+ */
+int osd_getPriority( unsigned int osd )
+{
+   OSD_t *o = osd_get(osd);
+   if (o == NULL)
+      return -1;
+   return o->priority;
 }
