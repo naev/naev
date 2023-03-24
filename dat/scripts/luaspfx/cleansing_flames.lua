@@ -57,10 +57,11 @@ local function flames( pos, vel, radius, params )
    end
 
    if params.parent then
-      -- Apply effect-
+      local dmg = params.damage or 1
+      -- Apply effect
       for k,p in ipairs(params.parent:getEnemies( radius, pos, true, false, true )) do
-         -- TODO change to effect
-         p:effectAdd("Chakra Corruption")
+         p:effectAdd("Chakra Corruption", nil, 10/25)
+         p:effectAdd("Chakra Burn", nil, dmg)
       end
       -- Clear debuffs
       for k,p in ipairs(params.parent:getAllies( radius, pos, true, false, true )) do

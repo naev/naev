@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <effect name="Chakra Corruption">
  <description>Your ship is corrupted by chakra damage!</description>
- <duration>7</duration><!-- actually increased due to taint -->
+ <duration>7</duration>
  <overwrite>chakra_corruption</overwrite>
  <icon>/gfx/misc/icons/unstable-orb.webp</icon>
  <shader vertex="effect15x.vert">effects/chakra_corruption.frag</shader>

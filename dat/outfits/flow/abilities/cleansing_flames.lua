@@ -3,25 +3,25 @@ local fmt = require "format"
 local spfxflames = require "luaspfx.cleansing_flames"
 
 local function getStats( p, size )
-   local flow_cost, cooldown, ref, range
+   local flow_cost, cooldown, dmg, range
    size = size or flow.size( p )
    if size == 1 then
       flow_cost   = 40
-      ref         = nil
+      dmg         = 10
       range       = 100
       cooldown    = 5
    elseif size == 2 then
       flow_cost   = 80
-      ref         = nil
+      dmg         = 20
       range       = 250
       cooldown    = 6
    else
       flow_cost   = 160
-      ref         = nil
+      dmg         = 40
       range       = 400
       cooldown    = 7
    end
-   return flow_cost, ref, range, cooldown
+   return flow_cost, dmg, range, cooldown
 end
 
 function descextra( p, _o )
@@ -32,21 +32,21 @@ function descextra( p, _o )
    else
       size = 0
    end
-   local s = "#y".._([[TODO]]).."#0"
+   local s = "#y".._([[Creates a rolling wave of cleaning flames that purify debuffs from allies while applying weak chakra corruption and damage over time to hostile ships within range.]]).."#0"
    for i=1,3 do
-      local cost, _ref, range, cooldown = getStats( nil, i )
+      local cost, damage, range, cooldown = getStats( nil, i )
       local pfx = flow.prefix(i)
       if i==size then
          pfx = "#b"..pfx.."#n"
       end
-      s = s.."\n"..fmt.f(_("#n{prefix}:#0 {cost} flow, {cooldown} s cooldown, {range} range"),
-         {prefix=pfx, cost=cost, range=range, cooldown=cooldown}).."#0"
+      s = s.."\n"..fmt.f(_("#n{prefix}:#0 {cost} flow, {cooldown} s cooldown, {range} range, {damage} MW damage per second"),
+         {prefix=pfx, cost=cost, range=range, cooldown=cooldown, damage=damage}).."#0"
    end
    return s
 end
 
 function init( p, po )
-   mem.flow_cost, mem.ref, mem.range, mem.cooldown = getStats( p )
+   mem.flow_cost, mem.dmg, mem.range, mem.cooldown = getStats( p )
 
    mem.timer = 0
    po:state("off")
@@ -75,9 +75,7 @@ function ontoggle( p, po, on )
       end
       flow.dec( p, mem.flow_cost )
 
-      -- TODO apply effect and let it get set here
-      print( mem.ref, mem.range )
-      spfxflames( p:pos(), p:vel(), mem.range, { parent=p } )
+      spfxflames( p:pos(), p:vel(), mem.range, { parent=p, damage=mem.dmg} )
 
       mem.timer = mem.cooldown * p:shipstat("cooldown_mod",true)
       po:state("cooldown")
