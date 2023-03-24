@@ -1268,6 +1268,7 @@ int missions_saveActive( xmlTextWriterPtr writer )
 
       /* OSD. */
       if (misn->osd > 0) {
+         int priority;
          char **items = osd_getItems(misn->osd);
 
          xmlw_startElem(writer,"osd");
@@ -1277,6 +1278,9 @@ int missions_saveActive( xmlTextWriterPtr writer )
          xmlw_attr(writer,"nitems","%d",array_size(items));
          xmlw_attr(writer,"active","%d",osd_getActive(misn->osd));
          xmlw_attr(writer,"hidden","%d",osd_getHide(misn->osd));
+         priority = osd_getPriority(misn->osd);
+         if (priority != misn->data->avail.priority)
+            xmlw_attr(writer,"priority","%d",osd_getPriority(misn->osd));
 
          /* Save messages. */
          for (int j=0; j<array_size(items); j++)
@@ -1470,8 +1474,6 @@ static int missions_parseActive( xmlNodePtr parent )
 
          cur = node->xmlChildrenNode;
          do {
-            int hidden;
-
             xmlr_strd(cur,"title",misn->title);
             xmlr_strd(cur,"desc",misn->desc);
             xmlr_strd(cur,"reward",misn->reward);
@@ -1496,6 +1498,7 @@ static int missions_parseActive( xmlNodePtr parent )
 
             /* OSD. */
             if (xml_isNode(cur,"osd")) {
+               int hidden, priority;
                xmlNodePtr nest;
                int i = 0;
                xmlr_attr_int_def( cur, "nitems", nitems, -1 );
@@ -1515,8 +1518,11 @@ static int missions_parseActive( xmlNodePtr parent )
                   }
                } while (xml_nextNode(nest));
 
+               /* Get priority if set differently. */
+               xmlr_attr_int_def( cur, "priority", priority, data->avail.priority );
+
                /* Create the OSD. */
-               misn->osd = osd_create( title, nitems, items, data->avail.priority );
+               misn->osd = osd_create( title, nitems, items, priority );
                free(items);
                free(title);
 

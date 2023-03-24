@@ -135,8 +135,8 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
    /* Copy text. */
    osd->title  = strdup(title);
    osd->priority = priority;
-   osd->msg = array_create_size( char*, nitems );
-   osd->items = array_create_size( char**, nitems );
+   osd->msg    = array_create_size( char*, nitems );
+   osd->items  = array_create_size( char**, nitems );
    osd->titlew = array_create( char* );
    for (int i=0; i<nitems; i++) {
       array_push_back( &osd->msg, strdup( items[i] ) );
@@ -539,6 +539,37 @@ int osd_getHide( unsigned int osd )
    OSD_t *o = osd_get(osd);
    if (o == NULL)
       return -1;
-
    return o->hide;
+}
+
+/**
+ * @brief Sets the priority of the OSD.
+ *
+ *    @param osd OSD to set priority of.
+ *    @param state Priority of the OSD (lower is more important).
+ */
+int osd_setPriority( unsigned int osd, int priority )
+{
+   OSD_t *o = osd_get(osd);
+   if (o == NULL)
+      return -1;
+
+   o->priority = priority;
+   osd_sort();
+   osd_calcDimensions();
+   return 0;
+}
+
+/**
+ * @brief Gets the priority of an OSD.
+ *
+ *    @param osd OSD to get state of.
+ *    @return The priority of the OSD.
+ */
+int osd_getPriority( unsigned int osd )
+{
+   OSD_t *o = osd_get(osd);
+   if (o == NULL)
+      return -1;
+   return o->priority;
 }
