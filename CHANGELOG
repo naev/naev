@@ -14,6 +14,7 @@
       * Minor speed ups to patrol lane computations
       * Try to enforce minimum number of articles in the news
       * Independent patrol and bounty missions can be completed on more planets and stations
+      * Can hide or prioritize missions from the info menu
    * New Content
       * 4 new missions
          * Nebula refugees
