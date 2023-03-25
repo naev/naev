@@ -4,11 +4,12 @@
   <typename>Flow Ability</typename>
   <slot>utility</slot>
   <size>small</size>
-  <rarity>3</rarity>
+  <rarity>6</rarity>
+  <unique/>
   <mass>0</mass>
   <price>650000</price>
   <gfx_store>/gfx/misc/icons/angel-outfit.webp</gfx_store>
-  <description>TODO</description>
+  <description>By turning flow inwards to oneself, one can embody all the virtues of the Sirichana significantly increasing all aspects of the ship being flown.</description>
  </general>
  <specific type="modification">
   <lua>outfits/flow/abilities/avatar_of_sirichana.lua</lua>

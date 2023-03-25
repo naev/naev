@@ -4,11 +4,12 @@
   <typename>Flow Ability</typename>
   <slot>utility</slot>
   <size>small</size>
-  <rarity>3</rarity>
+  <rarity>6</rarity>
+  <unique/>
   <mass>0</mass>
   <price>650000</price>
   <gfx_store>/gfx/misc/icons/fire-ring.webp</gfx_store>
-  <description>TODO</description>
+  <description>Flow can be used to purify the immediate environment of the ship, bathing allies in soothing psychic emanations, while scorching enemies in damaging chakra burns.</description>
  </general>
  <specific type="modification">
   <lua>outfits/flow/abilities/cleansing_flames.lua</lua>

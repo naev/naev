@@ -4,11 +4,12 @@
   <typename>Flow Ability</typename>
   <slot>utility</slot>
   <size>small</size>
-  <rarity>3</rarity>
+  <rarity>6</rarity>
+  <unique/>
   <mass>0</mass>
   <price>650000</price>
   <gfx_store>/gfx/misc/icons/arcing-bolt.webp</gfx_store>
-  <description>TODO</description>
+  <description>One of the first abilities all Sirii Cadets learn. Flow is focused into a ball which is then hurled at the target. Proficient users are able to create multiple seeking chakra at once.</description>
  </general>
  <specific type="modification">
   <lua>outfits/flow/abilities/seeking_chakra.lua</lua>

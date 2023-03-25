@@ -4,11 +4,12 @@
   <typename>Flow Ability</typename>
   <slot>utility</slot>
   <size>small</size>
-  <rarity>4</rarity>
+  <rarity>6</rarity>
+  <unique/>
   <mass>0</mass>
   <price>650000</price>
   <gfx_store>/gfx/misc/icons/psychic-waves.webp</gfx_store>
-  <description>TODO</description>
+  <description>Focusing flow power allows the creation of ethereal manifestations that can interact directly with reality. These manifestations take the form of ships that are able to engage with enemies of the user, as long as flow is sustained.</description>
  </general>
  <specific type="modification">
   <lua>outfits/flow/abilities/astral_projection.lua</lua>
