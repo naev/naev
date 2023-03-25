@@ -2561,6 +2561,12 @@ int outfit_load (void)
    if (license_stack != NULL)
       qsort( license_stack, array_size(license_stack), sizeof(char*), strsort );
 
+#if DEBUGGING
+   for (int i=1; i<noutfits; i++)
+      if (strcmp( outfit_stack[i-1].name, outfit_stack[i].name )==0)
+         WARN(_("Duplicated outfit name '%s' detected!"), outfit_stack[i].name);
+#endif /* DEBUGGING */
+
    /* Second pass. */
    for (int i=0; i<noutfits; i++) {
       Outfit *o = &outfit_stack[i];
