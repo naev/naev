@@ -1064,6 +1064,13 @@ int ships_load (void)
    }
    qsort( ship_stack, array_size(ship_stack), sizeof(Ship), ship_cmp );
 
+#if DEBUGGING
+   /* Check to see if there are name collisions. */
+   for (int i=1; i<array_size(ship_stack); i++)
+      if (strcmp( ship_stack[i-1].name, ship_stack[i].name )==0)
+         WARN(_("Duplicated ship name '%s' detected!"), ship_stack[i].name);
+#endif /* DEBUGGING */
+
    /* Shrink stack. */
    array_shrink(&ship_stack);
 
