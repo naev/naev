@@ -39,7 +39,7 @@ local function flames( pos, vel, radius, params )
 
    -- Create the flames
    local size = radius * 1.5 -- Flames look a bit smaller in reality, so we increase in size
-   local speed = params.speed or math.max(1.5-(size/350)^0.5, 0.4)
+   local speed = params.speed or math.max(3.0-(size/350)^0.5, 0.8)
    local sfx
    if not params.silent then
       sfx = flames_sfx[ rnd.rnd(1,#flames_sfx) ]
