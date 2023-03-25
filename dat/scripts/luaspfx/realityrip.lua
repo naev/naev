@@ -13,7 +13,7 @@ local function update( sp, dt )
 
    -- Apply effect to all pilots in range
    for k,p in ipairs(pilot.getInrange( d.pos, d.size )) do
-      p:effectAdd("Fractured Reality")
+      p:effectAdd("Fractured Reality", nil, d.strength)
    end
 end
 
@@ -40,6 +40,7 @@ local function realityrip( pos, size, params )
    d.pos    = pos
    d.timer  = 0
    d.size   = size
+   d.strength = params.strength or 1
    d.shader = pp_shaders.newShader( rip_bg_shader_frag ) -- Have to recreate each time
    d.shader:send( "u_size", size )
    d.shader:addPPShader("game", 20)

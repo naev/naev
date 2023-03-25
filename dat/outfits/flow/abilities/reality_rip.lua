@@ -2,17 +2,47 @@ local flow = require "ships.lua.lib.flow"
 local spfx_rip = require "luaspfx.realityrip"
 local fmt = require "format"
 
-function onadd( _p, po )
-   local size = po:slot().size
-   -- Doesn't have small version
-   if size=="Medium" then
-      mem.flow_drain  = 8
-      mem.flow_cost   = 80
-      mem.field_range = 500
+local function getStats( p, size )
+   local flow_cost, flow_drain, range, strength
+   size = size or flow.size( p )
+   if size == 1 then
+      flow_cost   = 40
+      flow_drain  = 4
+      range       = 300
+      strength    = 0.75
+   elseif size == 2 then
+      flow_cost   = 80
+      flow_drain  = 8
+      range       = 400
+      strength    = 1
    else
-      error(fmt.f(_("Flow ability '{outfit}' put into slot of unknown size '{size}'!"),
-         {outfit=po:outfit(),size=size}))
+      flow_cost   = 160
+      flow_drain  = 16
+      range       = 500
+      strength    = 1.25
    end
+   return flow_cost, flow_drain, range, strength
+end
+
+function descextra( p, _o )
+   -- Generic description
+   local size
+   if p then
+      size = flow.size( p )
+   else
+      size = 0
+   end
+   local s = "#y".._([[TODO]]).."#0"
+   for i=1,3 do
+      local cost, drain, range, strength = getStats( nil, i )
+      local pfx = flow.prefix(i)
+      if i==size then
+         pfx = "#b"..pfx.."#n"
+      end
+      s = s.."\n"..fmt.f(_("#n{prefix}:#0 {cost} flow, {drain} flow drain, {range} field range, {strength}% effect strength"),
+         {prefix=pfx, cost=cost, drain=drain, range=range, strength=strength*100}).."#0"
+   end
+   return s
 end
 
 local function turnon( p, po )
@@ -24,7 +54,7 @@ local function turnon( p, po )
 
    po:state("on")
    po:progress( flow.get(p) / flow.max(p) )
-   mem.field = spfx_rip( p:pos(), mem.field_range )
+   mem.field = spfx_rip( p:pos(), mem.field_range, {strength=mem.strength} )
 end
 
 local function turnoff( _p, po )
@@ -36,8 +66,8 @@ local function turnoff( _p, po )
 end
 
 function init( p, po )
+   mem.flow_cost, mem.flow_drain, mem.field_range, mem.strength = getStats( p )
    mem.isp = (player.pilot()==p) -- is player?
-
    turnoff( p, po )
 end
 
