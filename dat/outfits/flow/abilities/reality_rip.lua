@@ -32,7 +32,7 @@ function descextra( p, _o )
    else
       size = 0
    end
-   local s = "#y".._([[TODO]]).."#0"
+   local s = "#y".._([[Creates a temporal distortion field that heavily accelerates ships with respect to those outside.]]).."#0"
    for i=1,3 do
       local cost, drain, range, strength = getStats( nil, i )
       local pfx = flow.prefix(i)

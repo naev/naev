@@ -9,7 +9,6 @@
   <price>650000</price>
   <gfx_store>/gfx/misc/icons/psychic-waves.webp</gfx_store>
   <description>TODO</description>
-  <desc_extra>TODO</desc_extra>
  </general>
  <specific type="modification">
   <lua>outfits/flow/abilities/astral_projection.lua</lua>
