@@ -7,25 +7,28 @@ local chakraexp = require "luaspfx.chakra_explosion"
 local sfx = audio.newSource( 'snd/sounds/blink.ogg' )
 
 local function getStats( p, size )
-   local flow_cost, cooldown, masslimit, range
+   local flow_cost, cooldown, masslimit, range, drain
    size = size or flow.size( p )
    if size == 1 then
       flow_cost   = 40
       range       = 500
       masslimit   = 600^2 --squared
       cooldown    = 7
+      drain       = 100
    elseif size == 2 then
       flow_cost   = 80
       range       = 500
       masslimit   = 1500^2 --squared
       cooldown    = 8
+      drain       = 200
    else
       flow_cost   = 160
       range       = 500
       masslimit   = 5000^2 --squared
       cooldown    = 9
+      drain       = 400
    end
-   return flow_cost, masslimit, range, cooldown
+   return flow_cost, masslimit, range, cooldown, drain
 end
 
 function descextra( p, _o )
@@ -37,19 +40,19 @@ function descextra( p, _o )
    end
    local s = "#y".._([[TODO]]).."#0"
    for i=1,3 do
-      local cost, masslimit, range, cooldown = getStats( nil, i )
+      local cost, masslimit, range, cooldown, drain = getStats( nil, i )
       local pfx = flow.prefix(i)
       if i==size then
          pfx = "#b"..pfx.."#n"
       end
-      s = s.."\n"..fmt.f(_("#n{prefix}:#0 {cost} flow, {cooldown} s cooldown, {range} range, {masslimit} tonne limit"),
-         {prefix=pfx, cost=cost, range=range, cooldown=cooldown, masslimit=masslimit}).."#0"
+      s = s.."\n"..fmt.f(_("#n{prefix}:#0 {cost} flow, {cooldown} s cooldown, {range} range, {masslimit} tonne limit, {drain} MJ energy drained per ship hit"),
+         {prefix=pfx, cost=cost, range=range, cooldown=cooldown, masslimit=masslimit, drain=drain}).."#0"
    end
    return s
 end
 
 function init( p, po )
-   mem.flow_cost, mem.masslimit, mem.range, mem.cooldown = getStats( p )
+   mem.flow_cost, mem.masslimit, mem.range, mem.cooldown, mem.drain = getStats( p )
    mem.timer = 0
    po:state("off")
 end
@@ -100,6 +103,7 @@ function ontoggle( p, po, on )
    local centerpos = (pos+newpos)*0.5
    local pw, ph = p:ship():dims()
    local pr = (pw+ph)*0.25
+   local drained = 0
    for k,t in ipairs(p:getEnemies( dist*0.5+100, centerpos, true, false, true )) do
       local tp = t:pos()
       local tw, th = t:ship():dims()
@@ -110,8 +114,13 @@ function ontoggle( p, po, on )
          local col = (col1+col2)*0.5
          t:effectAdd("Chakra Corruption")
          chakraexp( col, p:vel(), tr )
+         local e = t:energy(true)
+         local d = math.min( mem.drain, e )
+         t:setEnergy( e-d, true )
+         drained = drained + d
       end
    end
+   p:setEnergy( p:energy(true)+drained, true )
 
    -- Play the sound
    luaspfx.sfx( pos, p:vel(), sfx )
