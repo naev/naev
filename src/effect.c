@@ -409,7 +409,7 @@ int effect_rm( Effect **efxlist, const EffectData *efx, int all )
  */
 void effect_clearSpecific( Effect **efxlist, int debuffs, int buffs, int others )
 {
-   for (int i=array_size(*efxlist); i>=0; i++) {
+   for (int i=array_size(*efxlist)-1; i>=0; i++) {
       const Effect *e = &(*efxlist)[i];
 
       /* See if should be eliminated. */
