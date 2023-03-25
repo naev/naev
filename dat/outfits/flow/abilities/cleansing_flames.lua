@@ -47,7 +47,6 @@ end
 
 function init( p, po )
    mem.flow_cost, mem.dmg, mem.range, mem.cooldown = getStats( p )
-
    mem.timer = 0
    po:state("off")
 end

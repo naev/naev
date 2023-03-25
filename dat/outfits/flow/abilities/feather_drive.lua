@@ -2,23 +2,54 @@ local audio = require 'love.audio'
 local luaspfx = require 'luaspfx'
 local flow = require "ships.lua.lib.flow"
 local fmt = require "format"
+local chakraexp = require "luaspfx.chakra_explosion"
 
 local sfx = audio.newSource( 'snd/sounds/blink.ogg' )
 
-function onadd( _p, po )
-   local size = po:slot().size
-   if size=="Small" then
-      mem.flow_cost   = 40
-      mem.range       = 500
-      mem.masslimit   = 500^2 --squared
-      mem.cooldown    = 7
+local function getStats( p, size )
+   local flow_cost, cooldown, masslimit, range
+   size = size or flow.size( p )
+   if size == 1 then
+      flow_cost   = 40
+      range       = 500
+      masslimit   = 600^2 --squared
+      cooldown    = 7
+   elseif size == 2 then
+      flow_cost   = 80
+      range       = 500
+      masslimit   = 1500^2 --squared
+      cooldown    = 8
    else
-      error(fmt.f(_("Flow ability '{outfit}' put into slot of unknown size '{size}'!"),
-         {outfit=po:outfit(),size=size}))
+      flow_cost   = 160
+      range       = 500
+      masslimit   = 5000^2 --squared
+      cooldown    = 9
    end
+   return flow_cost, masslimit, range, cooldown
 end
 
-function init( _p, po )
+function descextra( p, _o )
+   local size
+   if p then
+      size = flow.size( p )
+   else
+      size = 0
+   end
+   local s = "#y".._([[TODO]]).."#0"
+   for i=1,3 do
+      local cost, masslimit, range, cooldown = getStats( nil, i )
+      local pfx = flow.prefix(i)
+      if i==size then
+         pfx = "#b"..pfx.."#n"
+      end
+      s = s.."\n"..fmt.f(_("#n{prefix}:#0 {cost} flow, {cooldown} s cooldown, {range} range, {masslimit} tonne limit"),
+         {prefix=pfx, cost=cost, range=range, cooldown=cooldown, masslimit=masslimit}).."#0"
+   end
+   return s
+end
+
+function init( p, po )
+   mem.flow_cost, mem.masslimit, mem.range, mem.cooldown = getStats( p )
    mem.timer = 0
    po:state("off")
 end
@@ -59,10 +90,28 @@ function ontoggle( p, po, on )
    local pos = p:pos()
    luaspfx.blink( pos ) -- Blink afterimage
    p:effectAdd( "Blink" ) -- Cool "blink in" effect
-   p:setPos( pos + vec2.newP( dist, p:dir() ) )
+   local newpos = pos + vec2.newP( dist, p:dir() )
+   p:setPos( newpos )
    mem.timer = mem.cooldown * p:shipstat("cooldown_mod",true)
    po:state("cooldown")
    po:progress(1)
+
+   -- Calculate hits
+   local centerpos = (pos+newpos)*0.5
+   local pw, ph = p:ship():dims()
+   local pr = (pw+ph)*0.25
+   for k,t in ipairs(p:getEnemies( dist*0.5+100, centerpos, true, false, true )) do
+      local tp = t:pos()
+      local tw, th = t:ship():dims()
+      local tr = (tw+th)*0.25
+      local col1, col2 = vec2.collideCircleLine( tp, tr+pr, pos, newpos )
+      if col1 then
+         col2 = col2 or col1
+         local col = (col1+col2)*0.5
+         t:effectAdd("Chakra Corruption")
+         chakraexp( col, p:vel(), tr )
+      end
+   end
 
    -- Play the sound
    luaspfx.sfx( pos, p:vel(), sfx )
