@@ -27,7 +27,7 @@ local destpnt, destsys = spob.getS("Katar I")
 local cargo_amount = 30 -- Amount of cargo to take
 
 function create ()
-   misn.setNPC( _("Za'lek Scientist"), zpp.noona.portrait, _("You see a Za'lek scientist who seems to be looking or someone to do something for them.") )
+   misn.setNPC( _("Za'lek Scientist"), zpp.noona.portrait, _("You see a Za'lek scientist who seems to be looking for someone to do something for them.") )
 end
 
 function accept ()
