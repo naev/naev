@@ -446,7 +446,8 @@ function comm( plt )
          str = fmt.f(_([["I should be able to refuel you for {credits} for 100 units of fuel."]]), {credits=cstr})
       end
       if cost <= 0 then
-         vn.jump("refuel_trypay")
+         -- It's free so give as much as the player wants
+         vn.jump("refuel_trypay_max")
       end
       return fmt.f(_("{msg}\n\nYou have {credits}. Pay for refueling??"), {msg=str, credits=chave} )
    end )
@@ -482,6 +483,7 @@ function comm( plt )
    end )
    vn.jump("menu")
 
+   -- Provides 100 fuel
    vn.label("refuel_trypay")
    vn.func( function ()
       local cost = mem.refuel
@@ -499,6 +501,7 @@ function comm( plt )
    p(_([["On my way."]]))
    vn.jump("menu")
 
+   -- Provides fuel for one jump
    vn.label("refuel_trypay_jump")
    vn.func( function ()
       local pps = player.pilot():stats()
@@ -518,6 +521,7 @@ function comm( plt )
    end )
    vn.jump("refuel_startmsg")
 
+   -- PRovides as much fuel as possible
    vn.label("refuel_trypay_max")
    vn.func( function ()
       local pps = player.pilot():stats()
