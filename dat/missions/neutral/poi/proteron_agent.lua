@@ -86,7 +86,7 @@ return function ( mem )
          vn.disappear( sai, tut.shipai.transition )
 
          local reward = poi.data_str(1)
-         vn.na(fmt.f(_([[Following {shipai}'s advice, you continue to explore the ship and eventually reach the systems room. Going over the systems, it seems like you can recover a {reward}, which you promptly do so.]]),
+         vn.na(fmt.f(_([[Following {shipai}'s advice, you continue to explore the ship and eventually reach the systems room. Going over the systems, it seems like you can recover {reward}, which you promptly do so.]]),
             {shipai=tut.ainame(), reward=reward}))
          vn.na(fmt.reward(reward))
 
