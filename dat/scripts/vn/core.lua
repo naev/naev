@@ -836,14 +836,14 @@ function vn.StateWait:_keypressed( key )
    elseif key=="pageup" then
       if vn._buffer_y < 0 then
          local fonth = vn.textbox_font:getLineHeight()
-         local h = math.floor( vn.textbox_h / fonth ) * fonth
+         local h = (math.floor( vn.textbox_h / fonth )-1) * fonth
          vn._buffer_y = math.min( 0, vn._buffer_y+h )
       end
       self._scrolled = _check_scroll( self._lines )
       return true
    elseif key=="pagedown" then
       local fonth = vn.textbox_font:getLineHeight()
-      local h = (math.floor( vn.textbox_h / fonth )-1) * fonth
+      local h = (math.floor( vn.textbox_h / fonth )-2) * fonth -- wait_scrollorfinish adds an extra line movement
       vn._buffer_y = math.max( vn._buffer_y-h, (vn.textbox_h - 40) - vn.textbox_font:getLineHeight() * (#self._lines) )
       wait_scrollorfinish( self )
       return true
