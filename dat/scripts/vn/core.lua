@@ -853,6 +853,7 @@ function vn.StateWait:_wheelmoved( _dx, dy )
       vn._buffer_y = vn._buffer_y - vn.textbox_font:getLineHeight()
       vn._buffer_y = math.max( vn._buffer_y, (vn.textbox_h - 40) - vn.textbox_font:getLineHeight() * (#self._lines) )
       self._scrolled = _check_scroll( self._lines )
+      -- we don't check for finish, have to click for that
       return true
    end
    return false
