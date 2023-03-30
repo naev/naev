@@ -230,7 +230,8 @@ local function _draw()
    -- We pad a bit here so that the top doesn't get cut off from certain
    -- characters that extend above the font height
    local padh = font:getLineHeight()-font:getHeight()
-   graphics.setScissor( x-padh, y+bh, w, h-2*bh+padh )
+
+   graphics.setScissor( x, y+bh-padh, w, h-2*bh+padh )
    y = y + vn._buffer_y
    graphics.printf( vn._buffer, font, x+bw, y+bh, w-3*bw )
    graphics.setScissor()
