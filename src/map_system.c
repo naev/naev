@@ -616,7 +616,7 @@ static void map_system_array_update( unsigned int wid, const char* str )
       snprintf( buf_mass, sizeof(buf_mass), n_( "%d t", "%d t", (int)round( mass ) ), (int)round( mass ) );
 
       l += outfit_getNameWithClass( outfit, &infobuf[l], sizeof(infobuf)-l );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s\n\n", pilot_outfitDescription( player.p, outfit ) );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n%s\n\n", pilot_outfitDescription( player.p, outfit ) );
 
       /* FIXME: The point of this misery is to split desc_short into a 2-column layout.
        * It works poorly, but if we don't do this, check out e.g. the TeraCom Medusa Launcher in a 720p window. */
