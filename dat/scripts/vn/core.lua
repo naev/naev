@@ -231,6 +231,8 @@ local function _draw()
    -- characters that extend above the font height
    local padh = font:getLineHeight()-font:getHeight()
    graphics.setScissor( x, y+bh-padh, w, h-2*bh+padh )
+   -- We're actually printing the entire text and using scissors to cut it out
+   -- TODO only show the visible text while not trying to render it
    y = y + vn._buffer_y
    graphics.printf( vn._buffer, font, x+bw, y+bh, w-3*bw )
    graphics.setScissor()
