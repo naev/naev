@@ -18,6 +18,10 @@ function love.mousemoved( mx, my, dx, dy )
    return vn.mousemoved( mx, my, dx, dy )
 end
 
+function love.wheelmoved( dx, dy )
+   return vn.wheelmoved( dx, dy )
+end
+
 function love.textinput( str )
    return vn.textinput( str )
 end

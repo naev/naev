@@ -499,6 +499,15 @@ function vn.mousereleased( mx, my, button )
 end
 
 --[[--
+Mouse wheel handler.
+--]]
+function vn.wheelmoved( dx, dy )
+   if vn.isDone() then return false end
+   local s = vn._states[ vn._state ]
+   return s:wheelmoved( dx, dy )
+end
+
+--[[--
 Text input handler.
 --]]
 function vn.textinput( str )
@@ -542,6 +551,7 @@ function vn.State.new()
    s._mousepressed = _dummy
    s._mousereleased = _dummy
    s._mousemoved = _dummy
+   s._wheelmoved = _dummy
    s._keypressed = _dummy
    s._textinput = _dummy
    s.done = false
@@ -572,6 +582,11 @@ function vn.State:mousereleased( mx, my, button )
 end
 function vn.State:mousemoved( mx, my, dx, dy )
    local ret = self:_mousemoved( mx, my, dx, dy )
+   vn._checkDone()
+   return ret
+end
+function vn.State:wheelmoved( dx, dy )
+   local ret = self:_wheelmoved( dx, dy )
    vn._checkDone()
    return ret
 end
@@ -774,6 +789,7 @@ function vn.StateWait.new()
    s._init = vn.StateWait._init
    s._draw = vn.StateWait._draw
    s._mousepressed = vn.StateWait._mousepressed
+   s._wheelmoved = vn.StateWait._wheelmoved
    s._keypressed = vn.StateWait._keypressed
    s._type = "Wait"
    return s
@@ -826,6 +842,20 @@ local function wait_scrollorfinish( self )
 end
 function vn.StateWait:_mousepressed( _mx, _my, _button )
    wait_scrollorfinish( self )
+end
+function vn.StateWait:_wheelmoved( _dx, dy )
+   if dy > 0 then -- upwards movement
+      vn._buffer_y = vn._buffer_y + vn.textbox_font:getLineHeight()
+      vn._buffer_y = math.min( 0, vn._buffer_y )
+      self._scrolled = _check_scroll( self._lines )
+      return true
+   elseif dy < 0 then -- downwards movement
+      vn._buffer_y = vn._buffer_y - vn.textbox_font:getLineHeight()
+      vn._buffer_y = math.max( vn._buffer_y, (vn.textbox_h - 40) - vn.textbox_font:getLineHeight() * (#self._lines) )
+      self._scrolled = _check_scroll( self._lines )
+      return true
+   end
+   return false
 end
 function vn.StateWait:_keypressed( key )
    if key=="up" then
