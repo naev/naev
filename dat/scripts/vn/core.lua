@@ -230,7 +230,6 @@ local function _draw()
    -- We pad a bit here so that the top doesn't get cut off from certain
    -- characters that extend above the font height
    local padh = font:getLineHeight()-font:getHeight()
-
    graphics.setScissor( x, y+bh-padh, w, h-2*bh+padh )
    y = y + vn._buffer_y
    graphics.printf( vn._buffer, font, x+bw, y+bh, w-3*bw )
@@ -827,13 +826,30 @@ function vn.StateWait:_mousepressed( _mx, _my, _button )
    wait_scrollorfinish( self )
 end
 function vn.StateWait:_keypressed( key )
-   if key=="up" or key=="pageup" then
+   if key=="up" then
       if vn._buffer_y < 0 then
          vn._buffer_y = vn._buffer_y + vn.textbox_font:getLineHeight()
       end
+      vn._buffer_y = math.min( 0, vn._buffer_y )
+      self._scrolled = _check_scroll( self._lines )
+      return true
+   elseif key=="pageup" then
+      if vn._buffer_y < 0 then
+         local fonth = vn.textbox_font:getLineHeight()
+         local h = math.floor( vn.textbox_h / fonth ) * fonth
+         vn._buffer_y = math.min( 0, vn._buffer_y+h )
+      end
+      self._scrolled = _check_scroll( self._lines )
+      return true
+   elseif key=="pagedown" then
+      local fonth = vn.textbox_font:getLineHeight()
+      local h = (math.floor( vn.textbox_h / fonth )-1) * fonth
+      vn._buffer_y = math.max( vn._buffer_y-h, (vn.textbox_h - 40) - vn.textbox_font:getLineHeight() * (#self._lines) )
+      wait_scrollorfinish( self )
       return true
    elseif key=="home" then
       vn._buffer_y = 0
+      self._scrolled = _check_scroll( self._lines )
       return true
    elseif key=="end" then
       vn._buffer_y = (vn.textbox_h - 40) - vn.textbox_font:getLineHeight() * (#self._lines)
@@ -846,7 +862,6 @@ function vn.StateWait:_keypressed( key )
       "space",
       "right",
       "down",
-      "pagedown",
       "escape",
    }
    local found = false
