@@ -227,7 +227,10 @@ local function _draw()
    _draw_bg( x, y, w, h, vn.textbox_bg, nil, vn.textbox_bg_alpha )
    -- Draw text
    vn.setColor( vn._bufcol, vn.textbox_text_alpha )
-   graphics.setScissor( x, y+bh, w, h-2*bh )
+   -- We pad a bit here so that the top doesn't get cut off from certain
+   -- characters that extend above the font height
+   local padh = font:getLineHeight()-font:getHeight()
+   graphics.setScissor( x-padh, y+bh, w, h-2*bh+padh )
    y = y + vn._buffer_y
    graphics.printf( vn._buffer, font, x+bw, y+bh, w-3*bw )
    graphics.setScissor()
