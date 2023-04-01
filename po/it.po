@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-03-21 23:08+0900\n"
-"PO-Revision-Date: 2023-01-17 21:49+0000\n"
+"PO-Revision-Date: 2023-04-01 20:37+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15.1-dev\n"
+"X-Generator: Weblate 4.17-dev\n"
 
 #: physfs.c:1
 msgid "no error"
@@ -4251,7 +4251,7 @@ msgid ""
 "EM pulses rarely destroy the ship, leaving it floating disabled in space. "
 "These are favoured by traders for keeping pirates at bay."
 msgstr ""
-"Questo lanciatore può sparare granate EMP in qualsiasi direzione usando un "
+"Questo lanciagranate EMP può sparare in qualsiasi direzione usando un "
 "sistema di guida interno impareggiabile. Le granate rilasciano un impulso "
 "elettromagnetico che rapidamente disabilita l'elettronica delle astronavi "
 "nemiche. Utile per catturare le astronavi intatte; l'impulso EM raramente "
@@ -4363,7 +4363,7 @@ msgstr ""
 
 #: dat/outfits/launchers/space_mine_layer.xml:2
 msgid "Space Mine Layer"
-msgstr ""
+msgstr "Disposizione Stratificata di Mine Spaziali"
 
 #: dat/outfits/launchers/space_mine_layer.xml:10
 msgid ""
@@ -4371,6 +4371,10 @@ msgid ""
 "automated or manned patrols in most situations. However, when raw explosive "
 "power is mandated, nothing can surpass the destructive force of space mines."
 msgstr ""
+"Nella maggior parte dei casi, la vastità spaziale limita l'applicabilità "
+"delle mine spaziali in sostituzione di pattuglie automatizzate o con "
+"equipaggio. Tuttavia, quando è necessaria una brutale potenza esplosiva, "
+"nulla può superare la forza distruttiva delle mine spaziali."
 
 #: dat/outfits/launchers/space_mine_layer.xml:11
 msgid ""
@@ -4378,10 +4382,14 @@ msgid ""
 "a maximum tracking of 10,000 units and minimum tracking of 3,000 units. "
 "Detonations have a range of 500 units and damage all ships within range."
 msgstr ""
+"Le mine spaziali esplodono in cinque secondi dopo che le forze ostili si "
+"siano avvicinate nel raggio di 300 unità con un rilevamento massimo di "
+"10.000 unità e minimo di 3.000 unità. Le detonazioni causano danni a tutte "
+"le astronavi presenti in un raggio di 500 unità."
 
 #: dat/outfits/launchers/superfast_collider_launcher.xml:2
 msgid "Super-Fast Collider Launcher"
-msgstr ""
+msgstr "Lanciarazzi Collisore Superveloce"
 
 #: dat/outfits/launchers/superfast_collider_launcher.xml:10
 msgid ""
@@ -4389,10 +4397,13 @@ msgid ""
 "giant Mace rocket used by Dvaered Capships in order to strike distant "
 "enemies."
 msgstr ""
+"Principalmente conosciuto dalle sue iniziali LCS, il Lanciarazzi Collisore "
+"Superveloce è principalmente un razzo Mace gigantesco usato dalle Astronavi "
+"Cargo dei Dvaered per colpire i nemici più distanti."
 
 #: dat/outfits/launchers/teracom_banshee_launcher.xml:2
 msgid "TeraCom Banshee Launcher"
-msgstr ""
+msgstr "Lanciarazzi Banshee di TeraCom"
 
 #: dat/outfits/launchers/teracom_banshee_launcher.xml:10
 msgid ""
@@ -4401,10 +4412,15 @@ msgid ""
 "unguided rockets, while slow, can do quite respectable damage even to fairly "
 "large ships."
 msgstr ""
+"TeraCom ha equipaggiato il suo Lanciarazzi modello Banshee con sistemi di "
+"ricarica e di raffreddamento di alta qualità, fornendo così un incremento "
+"significativo alla rapidità di lancio. Questi razzi senza guida, anche se "
+"lenti, possono arrecare danni rispettabili anche ad astronavi piuttosto "
+"grandi."
 
 #: dat/outfits/launchers/teracom_fury_launcher.xml:2
 msgid "TeraCom Fury Launcher"
-msgstr ""
+msgstr "Lanciarazzi Furore di TeraCom"
 
 #: dat/outfits/launchers/teracom_fury_launcher.xml:9
 msgid ""
@@ -4414,10 +4430,16 @@ msgid ""
 "power, the Fury missiles launched are nimble enough to easily strike even "
 "some of the fastest ships in the galaxy."
 msgstr ""
+"Il Lanciarazzi Furore di TeraCom è un lanciarazzi ad alte prestazioni, "
+"equipaggiato con una tecnologia brevettata per il tracciamento del bersaglio "
+"e per l'armamento del razzo, questo permette al pilota di agganciare un "
+"bersaglio velocemente e facilmente. Anche se non possiedono una buona "
+"potenza distruttiva, i razzi Furore sono abbastanza scattanti per colpire "
+"facilmente anche alcune delle astronavi più veloci nella galassia."
 
 #: dat/outfits/launchers/teracom_headhunter_launcher.xml:2
 msgid "TeraCom Headhunter Launcher"
-msgstr ""
+msgstr "Lanciarazzi Cacciatore di Teste di TeraCom"
 
 #: dat/outfits/launchers/teracom_headhunter_launcher.xml:9
 msgid ""
@@ -4430,10 +4452,19 @@ msgid ""
 "demanding on the ship's resources, the patented tracking and missile arming "
 "technology allows pilots to fire their missiles before the competition does."
 msgstr ""
+"Il razzo Cacciatore di Teste, della classe intercettatore, è un razzo di "
+"calibro medio che può causare danni devastanti ad obiettivi di piccola e "
+"media grandezza, mantenendo una velocità e un'agilità ragionevole. È "
+"maggiormente efficace quando viene lanciato verso nemici distanti.\n"
+"\n"
+"Questo è il modello del Lanciarazzi Cacciatore di Teste di TeraCom. Sebbene "
+"sia abbastanza costoso ed esoso di risorse dell'astronave, la tecnologia "
+"brevettata per il tracciamento e l'armamento del razzo permettono ai piloti "
+"di sparare i loro razzi prima dei nemici."
 
 #: dat/outfits/launchers/teracom_imperator_launcher.xml:2
 msgid "TeraCom Imperator Launcher"
-msgstr ""
+msgstr "Lanciarazzi Imperatore di TeraCom"
 
 #: dat/outfits/launchers/teracom_imperator_launcher.xml:10
 msgid ""
@@ -4444,10 +4475,17 @@ msgid ""
 "take a while for it to reach its target. Faster cruisers may be able to "
 "outrun it completely."
 msgstr ""
+"TeraCom ha deciso di non costruire un lanciarazzi per il Cesare IV, perché "
+"non era all'altezza dei requisiti prestazionali societari. Al suo posto "
+"l'azienda ha prodotto una specifica per siluri completamente nuova. "
+"Attualmente, il grosso siluro della classe Imperatore fornisce una potenza "
+"distruttiva devastante, anche se necessita di un po' di tempo per "
+"raggiungere il suo obiettivo. Gli incrociatori più veloci potrebbero essere "
+"così in grado di seminarlo completamente."
 
 #: dat/outfits/launchers/teracom_mace_launcher.xml:2
 msgid "TeraCom Mace Launcher"
-msgstr ""
+msgstr "Lanciarazzi Mace di TeraCom"
 
 #: dat/outfits/launchers/teracom_mace_launcher.xml:9
 msgid ""
@@ -4456,6 +4494,11 @@ msgid ""
 "light targets than most fighter sized energy cannons, but comes with the "
 "disadvantage of running out of ammunition after only a short time of fire."
 msgstr ""
+"I razzi senza guida della classe Mace sono poco costosi, armi sacrificabili "
+"usate per aumentare la potenza di fuoco massima in situazioni difficili. "
+"Sono decisamente migliori ad infliggere danni a bersagli leggeri rispetto ai "
+"cannoni d'energia impiegati contro i caccia, ma hanno lo svantaggio di "
+"restare senza munizioni dopo soltanto un breve periodo di fuoco."
 
 #: dat/outfits/launchers/teracom_medusa_launcher.xml:2
 msgid "TeraCom Medusa Launcher"
@@ -37633,6 +37676,9 @@ msgid ""
 "ones for their capships. They're called Super-Fast Colliders or SFC for "
 "short!\""
 msgstr ""
+"\"Ai Signori della Guerra piacciono i razzi Mace così tanto che hanno deciso "
+"di crearne uno realmente grosso per le loro astronavi cargo. Sono chiamati "
+"Collisori Superveloci o LCS in breve!\""
 
 #: dat/events/npc/dvaered.lua:52
 msgid ""
@@ -111545,7 +111591,7 @@ msgstr ""
 
 #: src/outfit.c:887 src/outfit.c:914
 msgid "Launcher"
-msgstr ""
+msgstr "Lanciarazzi/Lanciagranate"
 
 #: src/outfit.c:888
 msgid "Turret Launcher"
@@ -113095,7 +113141,7 @@ msgstr ""
 
 #: src/ship.c:198
 msgid "Interceptor"
-msgstr ""
+msgstr "Intercettore"
 
 #: src/ship.c:200
 msgid "Fighter"
