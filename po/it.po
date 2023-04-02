@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-02-22 09:01+0900\n"
-"PO-Revision-Date: 2023-04-01 20:41+0000\n"
+"PO-Revision-Date: 2023-04-02 21:39+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev-0-10-x/"
 "it/>\n"
@@ -4534,7 +4534,7 @@ msgstr ""
 
 #: dat/outfits/launchers/teracom_medusa_launcher.xml:2
 msgid "TeraCom Medusa Launcher"
-msgstr ""
+msgstr "Lanciarazzi Medusa di TeraCom"
 
 #: dat/outfits/launchers/teracom_medusa_launcher.xml:9
 msgid ""
@@ -4544,10 +4544,16 @@ msgid ""
 "effectively be disabled with this weapon. However, the Medusa is not the "
 "most agile missile on the market."
 msgstr ""
+"I razzi da crociera EMP della classe Medusa sono un'arma non letale, "
+"progettata per disabilitare i sistemi interni di un'astronave, rendendola "
+"inoffensiva e pronta per essere abbordata. La testata procura soltanto dei "
+"danni limitati, per cui anche obiettivi con armamenti leggeri possono essere "
+"disabilitati efficacemente con quest'arma. Tuttavia, i razzi Medusa non sono "
+"i più agili esistenti."
 
 #: dat/outfits/launchers/teracom_vengeance_launcher.xml:2
 msgid "TeraCom Vengeance Launcher"
-msgstr ""
+msgstr "Lanciarazzi Rivincita di TeraCom"
 
 #: dat/outfits/launchers/teracom_vengeance_launcher.xml:9
 msgid ""
@@ -4559,10 +4565,18 @@ msgid ""
 "considerably reduces the time it takes to achieve a lock. Sometimes, those "
 "few seconds can make all the difference."
 msgstr ""
+"I razzi intercettori della classe Rivincita sono i più potenti razzi "
+"intercettori attualmente in produzione. Quasi la metà della fusoliera è "
+"utilizzata per il carico, il che diminuisce la sua capacità di intercettare "
+"gli obiettivi veloci. Sono stati progettati per eccellere nella distruzione "
+"di obiettivi corazzati a scapito di essere poco efficiente contro gli scudi. "
+"Per questo è consigliato abbinarli con armi antiscudo. L'hardware brevettato "
+"da TeraCom riduce considerevolmente il tempo necessario per prendere la mira "
+"l'obiettivo. Talvolta, questi pochi secondi possono fare la differenza."
 
 #: dat/outfits/launchers/turreted_convulsion_launcher.xml:2
 msgid "Turreted Convulsion Launcher"
-msgstr ""
+msgstr "Torretta Lanciarazzi Scompiglio"
 
 #: dat/outfits/launchers/turreted_convulsion_launcher.xml:10
 msgid ""
@@ -4573,10 +4587,16 @@ msgid ""
 "This launcher is mounted on a turret and has more ammo capacity than the "
 "standard launcher."
 msgstr ""
+"I razzi intercettori della classe Thurion sono pensati per essere altamente "
+"agili a scapito del potere distruttivo. Anche se fanno danni minori a "
+"oggetti fisici sono abbastanza efficaci nel togliere potenza agli scudi.\n"
+"\n"
+"Questo lanciarazzi è montato su una torretta e ha una maggior capienza di "
+"munizioni rispetto ai lanciarazzi standard."
 
 #: dat/outfits/launchers/unicorp_caesar_iv_launcher.xml:2
 msgid "Unicorp Caesar IV Launcher"
-msgstr ""
+msgstr "Lanciarazzi Cesare IV di Unicorp"
 
 #: dat/outfits/launchers/unicorp_caesar_iv_launcher.xml:10
 msgid ""
@@ -4584,10 +4604,13 @@ msgid ""
 "available. Though much slower than missiles and useless against mobile "
 "targets, they remain manoeuvrable enough to chase down cruisers."
 msgstr ""
+"I siluri della classe Cesare IV sono tra i siluri più comuni disponibili. "
+"Anche se sono molto più lenti rispetto ai razzi e inefficaci contro bersagli "
+"mobili, sono abbastanza manovrabili per dare la caccia agli incrociatori."
 
 #: dat/outfits/launchers/unicorp_storm_launcher.xml:2
 msgid "Unicorp Storm Launcher"
-msgstr ""
+msgstr "Lanciarazzi Tempesta di Unicorp"
 
 #: dat/outfits/launchers/unicorp_storm_launcher.xml:9
 msgid ""
@@ -4597,10 +4620,16 @@ msgid ""
 "be way too costly to mass-equip the Navy. This is the reason why only the "
 "Imperial elite squadrons use this very deadly weapon."
 msgstr ""
+"I razzi e lanciarazzi Tempesta sono stati progettati da Unicorp per essere "
+"l'equivalente teleguidato di un razzo Mace. Nonostante l'innegabile abilità "
+"di Unicorp di progettare equipaggiamenti funzionali e a basso costo, questa "
+"volta il risultato ottenuto è troppo costoso per equipaggiare massivamente "
+"la Flotta. Questa è la ragione per cui soltanto gli squadroni Imperiali "
+"d'élite utilizzano quest'arma veramente letale."
 
 #: dat/outfits/launchers/zalek_hunter_launcher.xml:2
 msgid "Za'lek Hunter Launcher"
-msgstr ""
+msgstr "Lanciarazzi Cacciatore di Za'lek"
 
 #: dat/outfits/launchers/zalek_hunter_launcher.xml:12
 msgid ""
@@ -4610,10 +4639,16 @@ msgid ""
 "deadly fruit with the hunter-killer drone. It accelerates towards its target "
 "and unleashes its ferromagnetohydraulic payload to deadly effect."
 msgstr ""
+"I Za'lek iniziarono a trovare che i missili e i siluri convenzionali erano "
+"spiacevolmente primitivi in confronto alla loro tecnologia di droni "
+"miniaturizzati. Per questo motivo iniziarono a produrre costruttori di droni "
+"kamikaze per rimpiazzarli. Il risultato ha generato i mortali droni "
+"Cacciatori-Sicario. Accelerano verso i loro obiettivi e rilasciano il loro "
+"carico ferromaneticoidraulico con effetti letali."
 
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:2
 msgid "Za'lek Reaper Launcher"
-msgstr ""
+msgstr "Lanciarazzi falciatore di Za'lek"
 
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:12
 msgid ""
@@ -4623,10 +4658,15 @@ msgid ""
 "the Za'lek's answer to torpedoes from less advanced nations, and an eloquent "
 "answer it certainly is."
 msgstr ""
+"Quest'arma estende il termine 'drone miniaturizzato' vicino al limite "
+"massimo possibile. In effetti è una piattaforma per drone standard ridotta "
+"in cui quasi tutto è stato sostituito per ottenere un'enorme bomba "
+"ferromagneticoidraulica. È la risposta dei Za'lek ai siluri delle nazioni "
+"meno avanzate e certamente è una risposta eloquente."
 
 #: dat/outfits/maps/localmap.xml:2
 msgid "Local System Map"
-msgstr ""
+msgstr "Mappa dello Spazio Circostante"
 
 #: dat/outfits/maps/localmap.xml:6
 msgid "This map contains information about the local system."
@@ -4634,7 +4674,7 @@ msgstr "Questa mappa contiene informazioni dello spazio circostante."
 
 #: dat/outfits/maps/map_collective_space.xml:2
 msgid "Map: Collective Space"
-msgstr ""
+msgstr "Mappa: Spazio della Collettività"
 
 #: dat/outfits/maps/map_collective_space.xml:7
 msgid ""
@@ -4642,86 +4682,107 @@ msgid ""
 "Collective. Sadly, the Empire has no accurate intel about Collective assets "
 "in the area."
 msgstr ""
+"Questa mappa riporta i salti spaziali conosciuti che connettono i sistemi "
+"occupati dalla Collettività. Sfortunatamente l'Impero non ha fonti di "
+"intelligence accurate delle risorse della Collettività presenti in "
+"quest'area."
 
 #: dat/outfits/maps/map_dvaered_core.xml:2
 msgid "Map: Dvaered Core"
-msgstr ""
+msgstr "Mappa: Territorio Centrale Dvaered"
 
 #: dat/outfits/maps/map_dvaered_core.xml:6
 msgid ""
 "This map lists the locations of all Dvaered worlds and stations close to the "
 "Dvaered capital."
 msgstr ""
+"Questa mappa elenca tutte le posizioni di tutti i pianeti e le stazioni "
+"spaziali Dvaered nei pressi della loro capitale."
 
 #: dat/outfits/maps/map_dvaeredsoromid_trade_route.xml:2
 msgid "Map: Dvaered-Soromid Trade Route"
-msgstr ""
+msgstr "Mappa: Rotta Commerciale tra Dvaered e Soromid"
 
 #: dat/outfits/maps/map_dvaeredsoromid_trade_route.xml:7
 msgid ""
 "This map contains the main trade route between Dvaered and Soromid "
 "controlled space."
 msgstr ""
+"Questa mappa contiene le principali rotte commerciali tra lo spazio "
+"controllato dai Dvaered e dai Soromid."
 
 #: dat/outfits/maps/map_empire_core.xml:2
 msgid "Map: Empire Core"
-msgstr ""
+msgstr "Mappa: Territori Centrali Imperiali"
 
 #: dat/outfits/maps/map_empire_core.xml:6
 msgid ""
 "This map lists the locations of all Imperial worlds and stations close to "
 "the Imperial capital."
 msgstr ""
+"Questa mappa elenca le locazioni di tutti i pianeti e le stazioni spaziali "
+"Imperiali nei pressi della loro capitale."
 
 #: dat/outfits/maps/map_flf.xml:2
 msgid "Map: FLF Hidden Jumps"
-msgstr "Salto Spaziale Nascosto dell'FLF"
+msgstr "Mappa: Salto Spaziale Nascosto dell'FLF"
 
 #: dat/outfits/maps/map_flf.xml:7
 msgid ""
 "This map contains the location of hidden jump points between the FLF base "
 "and Frontier space."
 msgstr ""
+"Questa mappa contiene la locazione del punto in cui è presente il salto "
+"spaziale nascosto tra la base FLF e lo spazio della Frontiera."
 
 #: dat/outfits/maps/map_flf_pirate_route.xml:2
 msgid "Map: FLF-Pirate Route"
-msgstr ""
+msgstr "Mappa: rotta FLF-Pirati"
 
 #: dat/outfits/maps/map_flf_pirate_route.xml:7
 msgid ""
 "This map contains the location of the two-way hidden jump point between the "
 "FLF base and the nearest Pirate stronghold."
 msgstr ""
+"Questa mappa contiene la locazione del punto in cui è presente il salto "
+"spaziale nascosto, percorribile in entrambe le direzioni, tra la base FLF e "
+"la più vicina roccaforte Pirata."
 
 #: dat/outfits/maps/map_inner_nebula_secret_jump.xml:2
 msgid "Map: Inner Nebula Secret Jump"
-msgstr ""
+msgstr "Mappa: Salto Spaziale Segreto della Nebulosa Interna"
 
 #: dat/outfits/maps/map_inner_nebula_secret_jump.xml:7
 msgid ""
 "This map contains the location of a hidden jump point leading to the inner "
 "nebula."
 msgstr ""
+"Questa mappa contiene la locazione del punto in cui è presente il salto "
+"spaziale nascosto che conduce alla Nebulosa Interna."
 
 #: dat/outfits/maps/map_kretogg_hypergate.xml:2
 msgid "Map: Kretogg's Hypergate"
-msgstr ""
+msgstr "Mappa: Varco Iperspaziale di Kretogg"
 
 #: dat/outfits/maps/map_kretogg_hypergate.xml:7
 msgid ""
 "A map revealing a hidden jump point from Kretogg to NGC-14549, leading to "
 "the Black Lotus Clan-controlled hypergate."
 msgstr ""
+"Una mappa che riporta un salto spaziale nascosto da Kretogg a NGC-14549, che "
+"conduce al varco iperspaziale controllato dal Clan del Fiore di Loto Nero."
 
 #: dat/outfits/maps/map_kretogg_secrets.xml:2
 msgid "Map: Kretogg's Secrets"
-msgstr ""
+msgstr "Mappa: Segreti di Kretogg"
 
 #: dat/outfits/maps/map_kretogg_secrets.xml:7
 msgid ""
 "This map contains the position of hidden jump points leading straight into "
 "Za'lek space."
 msgstr ""
+"Questa mappa contiene la locazione dei salti spaziali segreti che conducono "
+"direttamente nello spazio Za'lek."
 
 #: dat/outfits/maps/map_nebula_edge.xml:2
 msgid "Map: Nebula Edge"
@@ -6885,7 +6946,7 @@ msgstr ""
 
 #: dat/ships/collective/drone.xml:2 dat/missions/minerva/pirate1.lua:170
 msgid "Drone"
-msgstr ""
+msgstr "Drone"
 
 #: dat/ships/collective/drone.xml:9 dat/ships/collective/drone_hyena.xml:13
 #: dat/ships/zalek/zalek_drone_light.xml:8
@@ -14261,7 +14322,7 @@ msgstr ""
 #: dat/spob/hypergate_ngc14549.xml:22 dat/spob/hypergate_polaris.xml:22
 #: dat/spob/hypergate_ruadan.xml:22
 msgid "hypergate"
-msgstr ""
+msgstr "varco iperspaziale"
 
 #: dat/spob/hypergate_feye.xml:2
 msgid "Hypergate Feye"
