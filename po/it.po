@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-03-21 23:08+0900\n"
-"PO-Revision-Date: 2023-04-02 21:39+0000\n"
+"PO-Revision-Date: 2023-04-03 21:40+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -4752,7 +4752,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_nebula_edge.xml:2
 msgid "Map: Nebula Edge"
-msgstr ""
+msgstr "Mappa: Frontiera della Nebulosa"
 
 #: dat/outfits/maps/map_nebula_edge.xml:7
 msgid ""
@@ -4762,23 +4762,27 @@ msgstr ""
 
 #: dat/outfits/maps/map_new_haven_secrets.xml:2
 msgid "Map: New Haven's Secrets"
-msgstr ""
+msgstr "Mappa: Segreti della Nuova Oasi"
 
 #: dat/outfits/maps/map_new_haven_secrets.xml:7
 msgid ""
 "This map contains the position of a set of hidden jump points in and around "
 "the New Haven system."
 msgstr ""
+"Questa mappa contiene la posizione di un insieme di punti di salto spaziale "
+"nascosti per l'ingresso e l'uscita nei dintorni della Nuova Oasi."
 
 #: dat/outfits/maps/map_pirate_strongholds.xml:2
 msgid "Map: Pirate Strongholds"
-msgstr ""
+msgstr "Mappa: Roccaforti dei Pirati"
 
 #: dat/outfits/maps/map_pirate_strongholds.xml:7
 msgid ""
 "This map contains the locations of the pirate clan worlds, and a few "
 "stations that are known to offer opportunities for pirates in the vicinity."
 msgstr ""
+"Questa mappa contiene le locazioni dei pianeti dei clan dei pirati e alcune "
+"stazioni spaziali note per offrire opportunità ai pirati nelle vicinanze."
 
 #: dat/outfits/maps/map_qorel.xml:2
 msgid "Map: Qorel Tunnel"
@@ -4794,25 +4798,29 @@ msgstr ""
 
 #: dat/outfits/maps/map_sirian_border_systems.xml:2
 msgid "Map: Sirian Border Systems"
-msgstr ""
+msgstr "Mappa: Sistemi del Confine Siriano"
 
 #: dat/outfits/maps/map_sirian_border_systems.xml:7
 msgid "This map contains the systems that lead to Sirius controlled space."
 msgstr ""
+"Questa mappa contiene i sistemi che conducono allo spazio controllato da "
+"Sirio."
 
 #: dat/outfits/maps/map_sirius_core.xml:2
 msgid "Map: Sirius Core"
-msgstr ""
+msgstr "Mappa: Territorio Centrale di Sirio"
 
 #: dat/outfits/maps/map_sirius_core.xml:7
 msgid ""
 "This map contains the location of Mutris, home of Sirichana and capital to "
 "the Sirians, as well as the surrounding systems."
 msgstr ""
+"Questa mappa contiene la locazione di Mutris, pianeta che ospita la città "
+"Sirichana e la capitale dei Siriani, e anche dei sistemi circostanti."
 
 #: dat/outfits/maps/map_sol.xml:2
 msgid "Map: Sol"
-msgstr ""
+msgstr "Mappa: Sol"
 
 #: dat/outfits/maps/map_sol.xml:6
 msgid ""
@@ -4821,48 +4829,59 @@ msgid ""
 "which no known ship in the galaxy can safely pass through. What lies beyond "
 "Sol, if anything, is unknown."
 msgstr ""
+"Questa mappa contiene la locazione del sistema Solare, l'origine "
+"dell'umanità. Reso deserto dall'Incidente, è ora ricoperto da una nebulosa "
+"altamente instabile per la quale nessuna astronave conosciuta nella galassia "
+"è in grado di attraversarla. Cosa risieda dietro alla Nebulosa Sol, se "
+"qualcosa è qui presente, è sconosciuto."
 
 #: dat/outfits/maps/map_the_frontier.xml:2
 msgid "Map: The Frontier"
-msgstr ""
+msgstr "Mappa: La Frontiera"
 
 #: dat/outfits/maps/map_the_frontier.xml:7
 msgid ""
 "This map contains an east-west route through Frontier space, as well as the "
 "location of the Frontier Council."
 msgstr ""
+"Questa mappa contiene una rotta est-ovest attraverso lo spazio della "
+"Frontiera e la locazione del Consiglio della Frontiera."
 
 #: dat/outfits/maps/map_thurion.xml:2
 msgid "Map: Thurion Core"
-msgstr ""
+msgstr "Mappa: Territorio Centrale di Thurion"
 
 #: dat/outfits/maps/map_thurion.xml:7
 msgid ""
 "This map provides the hidden route to the Thurion core systems outside of "
 "the Nebula."
 msgstr ""
+"Questa mappa fornisce la rotta nascosta che conduce ai sistemi del "
+"Territorio Centrale di Thurion che sono oltre la Nebulosa."
 
 #: dat/outfits/maps/map_zalek_core.xml:2
 msgid "Map: Za'lek Core"
-msgstr ""
+msgstr "Mappa: Territorio Centrale di Za'lek"
 
 #: dat/outfits/maps/map_zalek_core.xml:7
 msgid ""
 "This map contains the heart of Za'lek space, including its capital Ruadan "
 "and central hub, Za'lek."
 msgstr ""
+"Questa mappa contiene la parte centrale dello spazio di Za'lek, inclusa la "
+"loro capitale Ruadan e il sistema centrale Za'lek."
 
 #: dat/outfits/maps/ultra_map.xml:2
 msgid "Ultra Map"
-msgstr ""
+msgstr "Mappa Ultra"
 
 #: dat/outfits/maps/ultra_map.xml:6
 msgid "For cheating."
-msgstr ""
+msgstr "Per barare."
 
 #: dat/outfits/misc/counterfeit_heavy_combat_vessel_license.xml:2
 msgid "Counterfeit Heavy Combat Vessel License"
-msgstr ""
+msgstr "Licenza Contraffatta per Astronave da Combattimento Pesante"
 
 #: dat/outfits/misc/counterfeit_heavy_combat_vessel_license.xml:8
 msgid ""
