@@ -6,16 +6,16 @@ local function getStats( p, size )
    local flow_cost, flow_drain, copies
    size = size or flow.size( p )
    if size == 1 then
-      flow_drain  = 8
-      flow_cost   = 30
+      flow_drain  = 6
+      flow_cost   = 25
       copies      = 2
    elseif size == 2 then
-      flow_drain  = 16
-      flow_cost   = 60
+      flow_drain  = 12
+      flow_cost   = 50
       copies      = 3
    else
-      flow_drain  = 32
-      flow_cost   = 120
+      flow_drain  = 24
+      flow_cost   = 100
       copies      = 4
    end
    return flow_cost, flow_drain, copies
