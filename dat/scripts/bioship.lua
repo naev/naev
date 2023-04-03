@@ -199,6 +199,7 @@ end
 
 function bioship.setstage( p, stage )
    local _skills, intrinsics, _maxtier = _getskills( p )
+   local fuel = p:fuel()
 
    -- Reset biostage as necessary
    local curstage = p:shipvarPeek("biostage") or 1
@@ -215,6 +216,11 @@ function bioship.setstage( p, stage )
       end
    end
    p:shipvarPush("biostage",stage)
+
+   -- Heal up and restore fuel
+   p:setHealth( 100, 100 )
+   p:setEnergy( 100 )
+   p:setFuel( fuel )
 end
 
 local function _skill_count( skills )

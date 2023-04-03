@@ -227,7 +227,12 @@ local function _draw()
    _draw_bg( x, y, w, h, vn.textbox_bg, nil, vn.textbox_bg_alpha )
    -- Draw text
    vn.setColor( vn._bufcol, vn.textbox_text_alpha )
-   graphics.setScissor( x, y+bh, w, h-2*bh )
+   -- We pad a bit here so that the top doesn't get cut off from certain
+   -- characters that extend above the font height
+   local padh = font:getLineHeight()-font:getHeight()
+   graphics.setScissor( x, y+bh-padh, w, h-2*bh+padh )
+   -- We're actually printing the entire text and using scissors to cut it out
+   -- TODO only show the visible text while not trying to render it
    y = y + vn._buffer_y
    graphics.printf( vn._buffer, font, x+bw, y+bh, w-3*bw )
    graphics.setScissor()
@@ -494,6 +499,15 @@ function vn.mousereleased( mx, my, button )
 end
 
 --[[--
+Mouse wheel handler.
+--]]
+function vn.wheelmoved( dx, dy )
+   if vn.isDone() then return false end
+   local s = vn._states[ vn._state ]
+   return s:wheelmoved( dx, dy )
+end
+
+--[[--
 Text input handler.
 --]]
 function vn.textinput( str )
@@ -537,6 +551,7 @@ function vn.State.new()
    s._mousepressed = _dummy
    s._mousereleased = _dummy
    s._mousemoved = _dummy
+   s._wheelmoved = _dummy
    s._keypressed = _dummy
    s._textinput = _dummy
    s.done = false
@@ -567,6 +582,11 @@ function vn.State:mousereleased( mx, my, button )
 end
 function vn.State:mousemoved( mx, my, dx, dy )
    local ret = self:_mousemoved( mx, my, dx, dy )
+   vn._checkDone()
+   return ret
+end
+function vn.State:wheelmoved( dx, dy )
+   local ret = self:_wheelmoved( dx, dy )
    vn._checkDone()
    return ret
 end
@@ -769,6 +789,7 @@ function vn.StateWait.new()
    s._init = vn.StateWait._init
    s._draw = vn.StateWait._draw
    s._mousepressed = vn.StateWait._mousepressed
+   s._wheelmoved = vn.StateWait._wheelmoved
    s._keypressed = vn.StateWait._keypressed
    s._type = "Wait"
    return s
@@ -822,14 +843,46 @@ end
 function vn.StateWait:_mousepressed( _mx, _my, _button )
    wait_scrollorfinish( self )
 end
+function vn.StateWait:_wheelmoved( _dx, dy )
+   if dy > 0 then -- upwards movement
+      vn._buffer_y = vn._buffer_y + vn.textbox_font:getLineHeight()
+      vn._buffer_y = math.min( 0, vn._buffer_y )
+      self._scrolled = _check_scroll( self._lines )
+      return true
+   elseif dy < 0 then -- downwards movement
+      vn._buffer_y = vn._buffer_y - vn.textbox_font:getLineHeight()
+      vn._buffer_y = math.max( vn._buffer_y, (vn.textbox_h - 40) - vn.textbox_font:getLineHeight() * (#self._lines) )
+      self._scrolled = _check_scroll( self._lines )
+      -- we don't check for finish, have to click for that
+      return true
+   end
+   return false
+end
 function vn.StateWait:_keypressed( key )
-   if key=="up" or key=="pageup" then
+   if key=="up" then
       if vn._buffer_y < 0 then
          vn._buffer_y = vn._buffer_y + vn.textbox_font:getLineHeight()
       end
+      vn._buffer_y = math.min( 0, vn._buffer_y )
+      self._scrolled = _check_scroll( self._lines )
+      return true
+   elseif key=="pageup" then
+      if vn._buffer_y < 0 then
+         local fonth = vn.textbox_font:getLineHeight()
+         local h = (math.floor( vn.textbox_h / fonth )-1) * fonth
+         vn._buffer_y = math.min( 0, vn._buffer_y+h )
+      end
+      self._scrolled = _check_scroll( self._lines )
+      return true
+   elseif key=="pagedown" then
+      local fonth = vn.textbox_font:getLineHeight()
+      local h = (math.floor( vn.textbox_h / fonth )-2) * fonth -- wait_scrollorfinish adds an extra line movement
+      vn._buffer_y = math.max( vn._buffer_y-h, (vn.textbox_h - 40) - vn.textbox_font:getLineHeight() * (#self._lines) )
+      wait_scrollorfinish( self )
       return true
    elseif key=="home" then
       vn._buffer_y = 0
+      self._scrolled = _check_scroll( self._lines )
       return true
    elseif key=="end" then
       vn._buffer_y = (vn.textbox_h - 40) - vn.textbox_font:getLineHeight() * (#self._lines)
@@ -842,7 +895,6 @@ function vn.StateWait:_keypressed( key )
       "space",
       "right",
       "down",
-      "pagedown",
       "escape",
    }
    local found = false

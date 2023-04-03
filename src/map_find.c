@@ -675,7 +675,7 @@ static void map_showOutfitDetail( unsigned int wid, const char* wgtname, int x, 
 
    window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 128, 128 );
    l = outfit_getNameWithClass( outfit, buf, sizeof(buf) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", pilot_outfitSummary( player.p, outfit, 0 ) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, " %s", pilot_outfitSummary( player.p, outfit, 0 ) );
    window_modifyText( wid, "txtDescShort", buf );
    th = gl_printHeightRaw( &gl_smallFont, 280, buf );
 
