@@ -59,8 +59,9 @@ local function turnon( p, po )
 
    -- Create figures
    mem.p = {}
+   local bp = p:pos()
    for i=1,mem.n do
-      local pos = vec2.newP( mem.r, mem.off + math.pi*2*i/mem.n )
+      local pos = bp + vec2.newP( mem.r, mem.off + math.pi*2*i/mem.n )
       local np = pilot.add( p:ship(), p:faction(), pos, p:name(), {ai="house_of_mirrors", naked=true} )
       np:effectAdd("Astral Projection")
       np:outfitRm("all")
@@ -122,11 +123,12 @@ function update( p, po, dt )
       -- Spin them around and shoot
       mem.off = mem.off + 0.2 * math.pi * dt
       local t = p:target()
+      local bp = p:pos()
       for k,np in ipairs(mem.p) do
          -- Update position
          --np:setDir( p:dir() )
          np:setVel( p:vel() )
-         local pos = vec2.newP( mem.r, mem.off + math.pi*2*k/mem.n )
+         local pos = bp + vec2.newP( mem.r, mem.off + math.pi*2*k/mem.n )
          np:setPos( pos )
 
          -- Shoot
