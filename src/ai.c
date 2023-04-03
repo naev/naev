@@ -120,7 +120,7 @@ static nlua_env equip_env = LUA_NOREF; /**< Equipment enviornment. */
 /* Internal C routines */
 static void ai_run( nlua_env env, int nargs );
 static int ai_loadProfile( AI_Profile *prof, const char* filename );
-static void ai_setMemory (void);
+static int ai_setMemory (void);
 static void ai_create( Pilot* pilot );
 static int ai_loadEquip (void);
 static int ai_sort( const void *p1, const void *p2 );
@@ -390,11 +390,18 @@ Task* ai_curTask( Pilot* pilot )
 /**
  * @brief Sets the cur_pilot's ai.
  */
-static void ai_setMemory (void)
+static int ai_setMemory (void)
 {
+   int oldmem;
    nlua_env env = cur_pilot->ai->env;
+
+   nlua_getenv( naevL, env, "mem" ); /* oldmem */
+   oldmem = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* */
+
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, cur_pilot->lua_mem );
    nlua_setenv(naevL, env, "mem"); /* pm */
+
+   return oldmem;
 }
 
 /**
@@ -402,10 +409,21 @@ static void ai_setMemory (void)
  *
  *    @param p Pilot to set.
  */
-void ai_setPilot( Pilot *p )
+int ai_setPilot( Pilot *p )
 {
    cur_pilot = p;
-   ai_setMemory();
+   return ai_setMemory();
+}
+
+/**
+ * @brief Finishes setting up a pilot.
+ */
+void ai_unsetPilot( int oldmem )
+{
+   nlua_env env = cur_pilot->ai->env;
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, oldmem );
+   nlua_setenv( naevL, env, "mem"); /* pm */
+   luaL_unref( naevL, LUA_REGISTRYINDEX, oldmem );
 }
 
 /**
@@ -720,14 +738,14 @@ void ai_think( Pilot* pilot, const double dt )
 {
    (void) dt;
    nlua_env env;
-   int data;
+   int data, oldmem;
    Task *t;
 
    /* Must have AI. */
    if (pilot->ai == NULL)
       return;
 
-   ai_setPilot(pilot);
+   oldmem = ai_setPilot(pilot);
    env = cur_pilot->ai->env; /* set the AI profile to the current pilot's */
 
    /* Clean up some variables */
@@ -816,6 +834,9 @@ void ai_think( Pilot* pilot, const double dt )
    if (ai_isFlag(AI_DISTRESS))
       pilot_distress(cur_pilot, NULL, aiL_distressmsg);
 
+   /* Restore memory. */
+   ai_unsetPilot( oldmem );
+
    /* Clean up if necessary. */
    ai_taskGC( cur_pilot );
 }
@@ -827,11 +848,13 @@ void ai_think( Pilot* pilot, const double dt )
  */
 void ai_init( Pilot *p )
 {
+   int oldmem;
    if ((p->ai==NULL) || (p->ai->ref_create==LUA_NOREF))
       return;
-   ai_setPilot( p );
+   oldmem = ai_setPilot( p );
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->ai->ref_create );
    ai_run( p->ai->env, 0 ); /* run control */
+   ai_unsetPilot( oldmem );
 
 }
 
@@ -844,6 +867,7 @@ void ai_init( Pilot *p )
  */
 void ai_attacked( Pilot *attacked, const unsigned int attacker, double dmg )
 {
+   int oldmem;
    HookParam hparam[2];
 
    /* Custom hook parameters. */
@@ -859,7 +883,7 @@ void ai_attacked( Pilot *attacked, const unsigned int attacker, double dmg )
    if (attacked->ai == NULL)
       return;
 
-   ai_setPilot( attacked ); /* Sets cur_pilot. */
+   oldmem = ai_setPilot( attacked ); /* Sets cur_pilot. */
    if (pilot_isFlag( attacked, PILOT_MANUAL_CONTROL ))
       nlua_getenv(naevL, cur_pilot->ai->env, "attacked_manual");
    else
@@ -870,6 +894,7 @@ void ai_attacked( Pilot *attacked, const unsigned int attacker, double dmg )
       WARN( _("Pilot '%s' ai '%s' -> 'attacked': %s"), cur_pilot->name, cur_pilot->ai->name, lua_tostring(naevL, -1));
       lua_pop(naevL, 1);
    }
+   ai_unsetPilot( oldmem );
 }
 
 /**
@@ -879,6 +904,8 @@ void ai_attacked( Pilot *attacked, const unsigned int attacker, double dmg )
  */
 void ai_discovered( Pilot* discovered )
 {
+   int oldmem;
+
    /* Behaves differently if manually overridden. */
    pilot_runHook( discovered, PILOT_HOOK_DISCOVERED );
    if (pilot_isFlag( discovered, PILOT_MANUAL_CONTROL ))
@@ -888,12 +915,13 @@ void ai_discovered( Pilot* discovered )
    if (discovered->ai == NULL)
       return;
 
-   ai_setPilot( discovered ); /* Sets cur_pilot. */
+   oldmem = ai_setPilot( discovered ); /* Sets cur_pilot. */
 
    /* Only run if discovered function exists. */
    nlua_getenv(naevL, cur_pilot->ai->env, "discovered");
    if (lua_isnil(naevL,-1)) {
       lua_pop(naevL,1);
+      ai_unsetPilot( oldmem );
       return;
    }
 
@@ -901,6 +929,7 @@ void ai_discovered( Pilot* discovered )
       WARN( _("Pilot '%s' ai '%s' -> 'discovered': %s"), cur_pilot->name, cur_pilot->ai->name, lua_tostring(naevL, -1));
       lua_pop(naevL, 1);
    }
+   ai_unsetPilot( oldmem );
 }
 
 /**
@@ -910,6 +939,8 @@ void ai_discovered( Pilot* discovered )
  */
 void ai_hail( Pilot* recipient )
 {
+   int oldmem;
+
    /* Make sure it's getable. */
    if (!pilot_canTarget( recipient ))
       return;
@@ -918,12 +949,13 @@ void ai_hail( Pilot* recipient )
    if (recipient->ai == NULL)
       return;
 
-   ai_setPilot( recipient ); /* Sets cur_pilot. */
+   oldmem = ai_setPilot( recipient ); /* Sets cur_pilot. */
 
    /* Only run if hail function exists. */
    nlua_getenv(naevL, cur_pilot->ai->env, "hail");
    if (lua_isnil(naevL,-1)) {
       lua_pop(naevL,1);
+      ai_unsetPilot( oldmem );
       return;
    }
 
@@ -931,6 +963,7 @@ void ai_hail( Pilot* recipient )
       WARN( _("Pilot '%s' ai '%s' -> 'hail': %s"), cur_pilot->name, cur_pilot->ai->name, lua_tostring(naevL, -1));
       lua_pop(naevL, 1);
    }
+   ai_unsetPilot( oldmem );
 }
 
 /**
@@ -972,6 +1005,8 @@ void ai_refuel( Pilot* refueler, unsigned int target )
  */
 void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
 {
+   int oldmem;
+
    /* Ignore distress signals when under manual control. */
    if (pilot_isFlag( p, PILOT_MANUAL_CONTROL ))
       return;
@@ -981,12 +1016,13 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
       return;
 
    /* Set up the environment. */
-   ai_setPilot(p);
+   oldmem = ai_setPilot(p);
 
    /* See if function exists. */
    nlua_getenv(naevL, cur_pilot->ai->env, "distress");
    if (lua_isnil(naevL,-1)) {
       lua_pop(naevL,1);
+      ai_unsetPilot( oldmem );
       return;
    }
 
@@ -1001,6 +1037,7 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
       WARN( _("Pilot '%s' ai '%s' -> 'distress': %s"), cur_pilot->name, cur_pilot->ai->name, lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
+   ai_unsetPilot( oldmem );
 }
 
 /**

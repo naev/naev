@@ -73,6 +73,7 @@ int comm_openPilot( unsigned int pilot )
    char c;
    Pilot *p;
    Pilot *const* pltstk;
+   int oldmem;
 
    /* Get the pilot. */
    p  = pilot_get( pilot );
@@ -108,7 +109,7 @@ int comm_openPilot( unsigned int pilot )
    }
 
    /* Set up for the comm_get* functions. */
-   ai_setPilot( p );
+   oldmem = ai_setPilot( p );
 
    /* Have pilot stop hailing. */
    pilot_rmFlag( p, PILOT_HAILING );
@@ -131,6 +132,7 @@ int comm_openPilot( unsigned int pilot )
    if (msg != NULL) {
       if (comm_commClose==0)
          player_messageRaw( msg );
+      ai_unsetPilot( oldmem );
       return 0;
    }
 
@@ -143,6 +145,7 @@ int comm_openPilot( unsigned int pilot )
    if (comm_commClose) {
       comm_spob = NULL;
       comm_commClose = 0;
+      ai_unsetPilot( oldmem );
       return 0;
    }
 
@@ -159,6 +162,7 @@ int comm_openPilot( unsigned int pilot )
              "Most likely Lua file has improper syntax, please check"),
                COMM_PATH, lua_tostring(naevL,-1));
          free(buf);
+         ai_unsetPilot( oldmem );
          return -1;
       }
       free(buf);
@@ -174,6 +178,7 @@ int comm_openPilot( unsigned int pilot )
       lua_pop(naevL,1);
    }
 
+   ai_unsetPilot( oldmem );
    comm_open = 0;
 
    return 0;

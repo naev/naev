@@ -1164,17 +1164,32 @@ static void outfitLRunWarning( const Pilot *p, const Outfit *o, const char *name
 /**
  * @brief Sets up the outfit memory for a slot.
  */
-static void pilot_outfitLmem( PilotOutfitSlot *po, nlua_env env )
+static int pilot_outfitLmem( PilotOutfitSlot *po, nlua_env env )
 {
+   int oldmem;
    /* Create the memory if necessary and initialize stats. */
    if (po->lua_mem == LUA_NOREF) {
       ss_statsInit( &po->lua_stats );
       lua_newtable(naevL); /* mem */
       po->lua_mem = luaL_ref(naevL,LUA_REGISTRYINDEX); /* */
    }
+   /* Get old memory. */
+   nlua_getenv( naevL, env, "mem" ); /* oldmem */
+   oldmem = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* */
    /* Set the memory. */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
    nlua_setenv( naevL, env, "mem" ); /* */
+   return oldmem;
+}
+
+/**
+ * @brief Cleans up the outfit memory for a slot.
+ */
+static void pilot_outfitLunmem( nlua_env env, int oldmem )
+{
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, oldmem );
+   nlua_setenv( naevL, env, "mem"); /* pm */
+   luaL_unref( naevL, LUA_REGISTRYINDEX, oldmem );
 }
 
 static const char* pilot_outfitLDescExtra( const Pilot *p, const Outfit *o )
@@ -1274,13 +1289,15 @@ void pilot_outfitLInitAll( Pilot *pilot )
  */
 int pilot_outfitLAdd( Pilot *pilot, PilotOutfitSlot *po )
 {
+   int oldmem;
+
    if (po->outfit==NULL)
       return 0;
    if (po->outfit->lua_onadd == LUA_NOREF)
       return 0;
 
    /* Create the memory if necessary and initialize stats. */
-   pilot_outfitLmem( po, po->outfit->lua_env );
+   oldmem = pilot_outfitLmem( po, po->outfit->lua_env );
 
    /* Set up the function: init( p, po ) */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_onadd); /* f */
@@ -1289,8 +1306,10 @@ int pilot_outfitLAdd( Pilot *pilot, PilotOutfitSlot *po )
    if (nlua_pcall( po->outfit->lua_env, 2, 0 )) { /* */
       outfitLRunWarning( pilot, po->outfit, "onadd", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
+      pilot_outfitLunmem( po->outfit->lua_env, oldmem );
       return -1;
    }
+   pilot_outfitLunmem( po->outfit->lua_env, oldmem );
    return 1;
 }
 
@@ -1299,13 +1318,15 @@ int pilot_outfitLAdd( Pilot *pilot, PilotOutfitSlot *po )
  */
 int pilot_outfitLRemove( Pilot *pilot, PilotOutfitSlot *po )
 {
+   int oldmem;
+
    if (po->outfit==NULL)
       return 0;
    if (po->outfit->lua_onremove == LUA_NOREF)
       return 0;
 
    /* Create the memory if necessary and initialize stats. */
-   pilot_outfitLmem( po, po->outfit->lua_env );
+   oldmem = pilot_outfitLmem( po, po->outfit->lua_env );
 
    /* Set up the function: init( p, po ) */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_onremove); /* f */
@@ -1314,8 +1335,10 @@ int pilot_outfitLRemove( Pilot *pilot, PilotOutfitSlot *po )
    if (nlua_pcall( po->outfit->lua_env, 2, 0 )) { /* */
       outfitLRunWarning( pilot, po->outfit, "onremove", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
+      pilot_outfitLunmem( po->outfit->lua_env, oldmem );
       return -1;
    }
+   pilot_outfitLunmem( po->outfit->lua_env, oldmem );
    return 1;
 }
 
@@ -1328,7 +1351,7 @@ int pilot_outfitLRemove( Pilot *pilot, PilotOutfitSlot *po )
  */
 int pilot_outfitLInit( Pilot *pilot, PilotOutfitSlot *po )
 {
-   int lua_init;
+   int lua_init, oldmem;
    nlua_env lua_env;
 
    if (po->outfit==NULL)
@@ -1341,10 +1364,12 @@ int pilot_outfitLInit( Pilot *pilot, PilotOutfitSlot *po )
    lua_env = po->outfit->lua_env;
 
    /* Create the memory if necessary and initialize stats. */
-   pilot_outfitLmem( po, lua_env );
+   oldmem = pilot_outfitLmem( po, lua_env );
 
-   if (lua_init == LUA_NOREF)
+   if (lua_init == LUA_NOREF) {
+      pilot_outfitLunmem( po->outfit->lua_env, oldmem );
       return 0;
+   }
 
    /* Set up the function: init( p, po ) */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, lua_init); /* f */
@@ -1353,14 +1378,17 @@ int pilot_outfitLInit( Pilot *pilot, PilotOutfitSlot *po )
    if (nlua_pcall( lua_env, 2, 0 )) { /* */
       outfitLRunWarning( pilot, po->outfit, "init", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
+      pilot_outfitLunmem( po->outfit->lua_env, oldmem );
       return -1;
    }
+   pilot_outfitLunmem( po->outfit->lua_env, oldmem );
    return 1;
 }
 
 static void outfitLUpdate( const Pilot *pilot, PilotOutfitSlot *po, const void *data )
 {
    double dt;
+   int oldmem;
    if (po->outfit->lua_update == LUA_NOREF)
       return;
 
@@ -1370,8 +1398,7 @@ static void outfitLUpdate( const Pilot *pilot, PilotOutfitSlot *po, const void *
    dt = *(double*)data;
 
    /* Set the memory. */
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
-   nlua_setenv(naevL, env, "mem"); /* */
+   oldmem = pilot_outfitLmem( po, env );
 
    /* Set up the function: update( p, po, dt ) */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_update); /* f */
@@ -1382,6 +1409,7 @@ static void outfitLUpdate( const Pilot *pilot, PilotOutfitSlot *po, const void *
       outfitLRunWarning( pilot, po->outfit, "update", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
    }
+   pilot_outfitLunmem( env, oldmem );
 }
 /**
  * @brief Runs the pilot's Lua outfits update script.
@@ -1399,14 +1427,15 @@ void pilot_outfitLUpdate( Pilot *pilot, double dt )
 static void outfitLOutofenergy( const Pilot *pilot, PilotOutfitSlot *po, const void *data )
 {
    (void) data;
+   int oldmem;
+
    if (po->outfit->lua_outofenergy == LUA_NOREF)
       return;
 
    nlua_env env = po->outfit->lua_env;
 
    /* Set the memory. */
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
-   nlua_setenv(naevL, env, "mem"); /* */
+   oldmem = pilot_outfitLmem( po, env );
 
    /* Set up the function: outofenergy( p, po ) */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_outofenergy); /* f */
@@ -1416,6 +1445,7 @@ static void outfitLOutofenergy( const Pilot *pilot, PilotOutfitSlot *po, const v
       outfitLRunWarning( pilot, po->outfit, "outofenergy", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
    }
+   pilot_outfitLunmem( env, oldmem );
 }
 /**
  * @brief Handles when the pilot runs out of energy.
@@ -1437,6 +1467,7 @@ static void outfitLOnhit( const Pilot *pilot, PilotOutfitSlot *po, const void *d
    double armour, shield;
    unsigned int attacker;
    const struct OnhitData *odat;
+   int oldmem;
 
    if (po->outfit->lua_onhit == LUA_NOREF)
       return;
@@ -1450,8 +1481,7 @@ static void outfitLOnhit( const Pilot *pilot, PilotOutfitSlot *po, const void *d
    attacker = odat->attacker;
 
    /* Set the memory. */
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
-   nlua_setenv(naevL, env, "mem"); /* */
+   oldmem = pilot_outfitLmem( po, env );
 
    /* Set up the function: onhit( p, po, armour, shield ) */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_onhit); /* f */
@@ -1464,6 +1494,7 @@ static void outfitLOnhit( const Pilot *pilot, PilotOutfitSlot *po, const void *d
       outfitLRunWarning( pilot, po->outfit, "onhit", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
    }
+   pilot_outfitLunmem( env, oldmem );
 }
 /**
  * @brief Runs the pilot's Lua outfits onhit script.
@@ -1490,12 +1521,11 @@ void pilot_outfitLOnhit( Pilot *pilot, double armour, double shield, unsigned in
 int pilot_outfitLOntoggle( Pilot *pilot, PilotOutfitSlot *po, int on )
 {
    nlua_env env = po->outfit->lua_env;
-   int ret;
+   int ret, oldmem;
    pilotoutfit_modified = 0;
 
    /* Set the memory. */
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
-   nlua_setenv(naevL, env, "mem"); /* */
+   oldmem = pilot_outfitLmem( po, env );
 
    /* Set up the function: ontoggle( p, po, armour, shield ) */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_ontoggle); /* f */
@@ -1505,12 +1535,14 @@ int pilot_outfitLOntoggle( Pilot *pilot, PilotOutfitSlot *po, int on )
    if (nlua_pcall( env, 3, 1 )) {   /* */
       outfitLRunWarning( pilot, po->outfit, "ontoggle", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
+      pilot_outfitLunmem( env, oldmem );
       return 0;
    }
 
    /* Handle return boolean. */
    ret = lua_toboolean(naevL, -1);
    lua_pop(naevL, 1);
+   pilot_outfitLunmem( env, oldmem );
    return ret || pilotoutfit_modified; /* Even if the script says it didn't change, it may have been modified. */
 }
 
@@ -1521,7 +1553,7 @@ struct CooldownData {
 };
 static void outfitLCooldown( const Pilot *pilot, PilotOutfitSlot *po, const void *data )
 {
-   int done, success;
+   int done, success, oldmem;
    double timer;
    const struct CooldownData *cdat;
 
@@ -1536,8 +1568,7 @@ static void outfitLCooldown( const Pilot *pilot, PilotOutfitSlot *po, const void
    timer = cdat->timer;
 
    /* Set the memory. */
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
-   nlua_setenv(naevL, env, "mem"); /* */
+   oldmem = pilot_outfitLmem( po, env );
 
    /* Set up the function: cooldown( p, po, done, success/timer ) */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_cooldown); /* f */
@@ -1552,6 +1583,7 @@ static void outfitLCooldown( const Pilot *pilot, PilotOutfitSlot *po, const void
       outfitLRunWarning( pilot, po->outfit, "cooldown", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
    }
+   pilot_outfitLunmem( env, oldmem );
 }
 /**
  * @brief Handle cooldown hooks for outfits.
@@ -1570,14 +1602,14 @@ void pilot_outfitLCooldown( Pilot *pilot, int done, int success, double timer )
 static void outfitLOnshoot( const Pilot *pilot, PilotOutfitSlot *po, const void *data )
 {
    (void) data;
+   int oldmem;
    if (po->outfit->lua_onshoot == LUA_NOREF)
       return;
 
    nlua_env env = po->outfit->lua_env;
 
    /* Set the memory. */
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
-   nlua_setenv(naevL, env, "mem"); /* */
+   oldmem = pilot_outfitLmem( po, env );
 
    /* Set up the function: onshoot( p, po ) */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_onshoot); /* f */
@@ -1587,6 +1619,7 @@ static void outfitLOnshoot( const Pilot *pilot, PilotOutfitSlot *po, const void 
       outfitLRunWarning( pilot, po->outfit, "onshoot", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
    }
+   pilot_outfitLunmem( env, oldmem );
 }
 /**
  * @brief Runs the pilot's Lua outfits onshoot script.
@@ -1601,14 +1634,14 @@ void pilot_outfitLOnshoot( Pilot *pilot )
 static void outfitLOnstealth( const Pilot *pilot, PilotOutfitSlot *po, const void *data )
 {
    (void) data;
+   int oldmem;
    if (po->outfit->lua_onstealth == LUA_NOREF)
       return;
 
    nlua_env env = po->outfit->lua_env;
 
    /* Set the memory. */
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
-   nlua_setenv(naevL, env, "mem"); /* */
+   oldmem = pilot_outfitLmem( po, env );
 
    /* Set up the function: onstealth( p, po, stealthed ) */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_onstealth); /* f */
@@ -1619,6 +1652,7 @@ static void outfitLOnstealth( const Pilot *pilot, PilotOutfitSlot *po, const voi
       outfitLRunWarning( pilot, po->outfit, "onstealth", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
    }
+   pilot_outfitLunmem( env, oldmem );
 }
 /**
  * @brief Runs the pilot's Lua outfits onhit script.
@@ -1635,14 +1669,14 @@ int pilot_outfitLOnstealth( Pilot *pilot )
 static void outfitLOnscan( const Pilot *pilot, PilotOutfitSlot *po, const void *data )
 {
    (void) data;
+   int oldmem;
    if (po->outfit->lua_onscan == LUA_NOREF)
       return;
 
    nlua_env env = po->outfit->lua_env;
 
    /* Set the memory. */
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
-   nlua_setenv(naevL, env, "mem"); /* */
+   oldmem = pilot_outfitLmem( po, env );
 
    /* Set up the function: onscan( p, po, target ) */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_onscan); /* f */
@@ -1653,6 +1687,7 @@ static void outfitLOnscan( const Pilot *pilot, PilotOutfitSlot *po, const void *
       outfitLRunWarning( pilot, po->outfit, "onscan", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
    }
+   pilot_outfitLunmem( env, oldmem );
 }
 /**
  * @brief Runs Lua outfits when pilot scanned their target.
@@ -1667,6 +1702,7 @@ void pilot_outfitLOnscan( Pilot *pilot )
 static void outfitLOnscanned( const Pilot *pilot, PilotOutfitSlot *po, const void *data )
 {
    const Pilot *scanner;
+   int oldmem;
    if (po->outfit->lua_onscanned == LUA_NOREF)
       return;
 
@@ -1674,8 +1710,7 @@ static void outfitLOnscanned( const Pilot *pilot, PilotOutfitSlot *po, const voi
    scanner = (const Pilot*) data;
 
    /* Set the memory. */
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
-   nlua_setenv(naevL, env, "mem"); /* */
+   oldmem = pilot_outfitLmem( po, env );
 
    /* Set up the function: onscanned( p, po, stealthed ) */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_onscanned); /* f */
@@ -1686,6 +1721,7 @@ static void outfitLOnscanned( const Pilot *pilot, PilotOutfitSlot *po, const voi
       outfitLRunWarning( pilot, po->outfit, "onscanned", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
    }
+   pilot_outfitLunmem( env, oldmem );
 }
 /**
  * @brief Runs Lua outfits when pilot was scanned by scanner.
@@ -1701,14 +1737,14 @@ void pilot_outfitLOnscanned( Pilot *pilot, const Pilot *scanner )
 static void outfitLOnland( const Pilot *pilot, PilotOutfitSlot *po, const void *data )
 {
    (void) data;
+   int oldmem;
    if (po->outfit->lua_land == LUA_NOREF)
       return;
 
    nlua_env env = po->outfit->lua_env;
 
    /* Set the memory. */
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
-   nlua_setenv(naevL, env, "mem"); /* */
+   oldmem = pilot_outfitLmem( po, env );
 
    /* Set up the function: land( p, po ) */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_land); /* f */
@@ -1718,6 +1754,7 @@ static void outfitLOnland( const Pilot *pilot, PilotOutfitSlot *po, const void *
       outfitLRunWarning( pilot, po->outfit, "land", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
    }
+   pilot_outfitLunmem( env, oldmem );
 }
 /**
  * @brief Runs Lua outfits when pilot lands on a spob.
@@ -1732,14 +1769,14 @@ void pilot_outfitLOnland( Pilot *pilot )
 static void outfitLOntakeoff( const Pilot *pilot, PilotOutfitSlot *po, const void *data )
 {
    (void) data;
+   int oldmem;
    if (po->outfit->lua_takeoff == LUA_NOREF)
       return;
 
    nlua_env env = po->outfit->lua_env;
 
    /* Set the memory. */
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
-   nlua_setenv(naevL, env, "mem"); /* */
+   oldmem = pilot_outfitLmem( po, env );
 
    /* Set up the function: takeoff( p, po ) */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_takeoff); /* f */
@@ -1749,6 +1786,7 @@ static void outfitLOntakeoff( const Pilot *pilot, PilotOutfitSlot *po, const voi
       outfitLRunWarning( pilot, po->outfit, "takeoff", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
    }
+   pilot_outfitLunmem( env, oldmem );
 }
 /**
  * @brief Runs Lua outfits when pilot takes off from a spob.
@@ -1763,14 +1801,14 @@ void pilot_outfitLOntakeoff( Pilot *pilot )
 static void outfitLOnjumpin( const Pilot *pilot, PilotOutfitSlot *po, const void *data )
 {
    (void) data;
+   int oldmem;
    if (po->outfit->lua_jumpin == LUA_NOREF)
       return;
 
    nlua_env env = po->outfit->lua_env;
 
    /* Set the memory. */
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
-   nlua_setenv(naevL, env, "mem"); /* */
+   oldmem = pilot_outfitLmem( po, env );
 
    /* Set up the function: takeoff( p, po ) */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_jumpin); /* f */
@@ -1780,6 +1818,7 @@ static void outfitLOnjumpin( const Pilot *pilot, PilotOutfitSlot *po, const void
       outfitLRunWarning( pilot, po->outfit, "jumpin", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
    }
+   pilot_outfitLunmem( env, oldmem );
 }
 /**
  * @brief Runs Lua outfits when pilot jumps into a system.
@@ -1801,6 +1840,7 @@ void pilot_outfitLCleanup( Pilot *pilot )
    /* TODO we might want to run this on intrinsic outfits too.. */
    pilotoutfit_modified = 0;
    for (int i=0; i<array_size(pilot->outfits); i++) {
+      int oldmem;
       PilotOutfitSlot *po = pilot->outfits[i];
       if (po->outfit==NULL)
          continue;
@@ -1814,8 +1854,7 @@ void pilot_outfitLCleanup( Pilot *pilot )
       nlua_env env = po->outfit->lua_env;
 
       /* Set the memory. */
-      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
-      nlua_setenv(naevL, env, "mem"); /* */
+      oldmem = pilot_outfitLmem( po, env );
 
       /* Set up the function: cleanup( p, po ) */
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_cleanup); /* f */
@@ -1825,6 +1864,7 @@ void pilot_outfitLCleanup( Pilot *pilot )
          outfitLRunWarning( pilot, po->outfit, "cleanup", lua_tostring(naevL,-1) );
          lua_pop(naevL, 1);
       }
+      pilot_outfitLunmem( env, oldmem );
    }
    /* Pilot gets cleaned up so no need to recalculate stats. */
 }

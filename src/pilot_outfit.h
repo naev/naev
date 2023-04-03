@@ -54,7 +54,6 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, vec2 *v );
 
 /* Lua outfit stuff. */
 int pilot_slotIsToggleable( const PilotOutfitSlot *o );
-int pilot_slotIsToggleable( const PilotOutfitSlot *o );
 int pilot_outfitLAdd( Pilot *pilot, PilotOutfitSlot *po );
 int pilot_outfitLRemove( Pilot *pilot, PilotOutfitSlot *po );
 void pilot_outfitLInitAll( Pilot *pilot );
