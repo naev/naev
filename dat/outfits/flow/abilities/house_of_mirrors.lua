@@ -123,6 +123,9 @@ function update( p, po, dt )
       -- Spin them around and shoot
       mem.off = mem.off + 0.2 * math.pi * dt
       local t = p:target()
+      if t and not p:faction():areEnenemies( t:faction() ) then
+         t = nil
+      end
       local bp = p:pos()
       for k,np in ipairs(mem.p) do
          -- Update position
@@ -135,6 +138,8 @@ function update( p, po, dt )
          np:taskClear()
          if t then
             np:pushtask( "shootat", t )
+         else
+            np:pushtask( "faceleader" )
          end
       end
    end
