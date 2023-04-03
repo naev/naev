@@ -264,6 +264,7 @@ dat/outfits/flow/abilities/astral_projection.xml
 dat/outfits/flow/abilities/avatar_of_sirichana.xml
 dat/outfits/flow/abilities/cleansing_flames.xml
 dat/outfits/flow/abilities/feather_drive.xml
+dat/outfits/flow/abilities/house_of_mirrors.xml
 dat/outfits/flow/abilities/reality_rip.xml
 dat/outfits/flow/abilities/seeking_chakra.xml
 dat/outfits/flow/abilities/seeking_chakra_large.xml
@@ -2675,6 +2676,7 @@ dat/ai/flf_rogue_norun.lua
 dat/ai/frontier_police.lua
 dat/ai/goddard.lua
 dat/ai/guard.lua
+dat/ai/house_of_mirrors.lua
 dat/ai/independent.lua
 dat/ai/marauder.lua
 dat/ai/mercenary.lua
@@ -3124,6 +3126,7 @@ dat/outfits/flow/abilities/astral_projection.lua
 dat/outfits/flow/abilities/avatar_of_sirichana.lua
 dat/outfits/flow/abilities/cleansing_flames.lua
 dat/outfits/flow/abilities/feather_drive.lua
+dat/outfits/flow/abilities/house_of_mirrors.lua
 dat/outfits/flow/abilities/reality_rip.lua
 dat/outfits/flow/abilities/seeking_chakra.lua
 dat/outfits/flow/astral_projection/astral_cannon.lua

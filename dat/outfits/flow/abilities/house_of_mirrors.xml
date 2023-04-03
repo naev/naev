@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="House of Mirrors">
+ <general>
+  <typename>Flow Ability</typename>
+  <slot>utility</slot>
+  <size>small</size>
+  <rarity>6</rarity>
+  <unique/>
+  <mass>0</mass>
+  <price>650000</price>
+  <gfx_store>/gfx/misc/icons/mirror-mirror.webp</gfx_store>
+  <description>TODO</description>
+ </general>
+ <specific type="modification">
+  <lua>outfits/flow/abilities/house_of_mirrors.lua</lua>
+ </specific>
+</outfit>
