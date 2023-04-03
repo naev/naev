@@ -13,11 +13,22 @@
 #include "nlua_pilot.h"
 #include "nlua_ship.h"
 
-static void pilot_shipLmem( Pilot *p )
+static int pilot_shipLmem( const Pilot *p )
 {
+   int oldmem;
+   /* Get old memory. */
+   nlua_getenv( naevL, p->ship->lua_env, "mem" ); /* oldmem */
+   oldmem = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* */
    /* Set the memory. */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->lua_ship_mem ); /* mem */
    nlua_setenv( naevL, p->ship->lua_env, "mem" );
+   return oldmem;
+}
+static void pilot_shipLunmem( const Pilot *p, int oldmem )
+{
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, oldmem );
+   nlua_setenv( naevL, p->ship->lua_env, "mem"); /* pm */
+   luaL_unref( naevL, LUA_REGISTRYINDEX, oldmem );
 }
 static void shipLRunWarning( const Pilot *p, const Ship *s, const char *name, const char *error )
 {
@@ -32,6 +43,7 @@ static void shipLRunWarning( const Pilot *p, const Ship *s, const char *name, co
  */
 int pilot_shipLInit( Pilot *p )
 {
+   int oldmem;
    if (p->lua_ship_mem == LUA_NOREF) {
       lua_newtable( naevL ); /* mem */
       p->lua_ship_mem = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* */
@@ -40,7 +52,7 @@ int pilot_shipLInit( Pilot *p )
    if (p->ship->lua_init == LUA_NOREF)
       return 0;
 
-   pilot_shipLmem( p );
+   oldmem = pilot_shipLmem( p );
 
    /* Set up the function: init( p ) */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->ship->lua_init ); /* f */
@@ -48,8 +60,10 @@ int pilot_shipLInit( Pilot *p )
    if (nlua_pcall( p->ship->lua_env, 1, 0 )) { /* */
       shipLRunWarning( p, p->ship, "init", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
+      pilot_shipLunmem( p, oldmem );
       return -1;
    }
+   pilot_shipLunmem( p, oldmem );
    return 1;
 }
 
@@ -62,7 +76,7 @@ int pilot_shipLInit( Pilot *p )
 int pilot_shipLCleanup( Pilot *p )
 {
    if (p->ship->lua_cleanup != LUA_NOREF) {
-      pilot_shipLmem( p );
+      int oldmem = pilot_shipLmem( p );
 
       /* Set up the function: cleanup( p ) */
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->ship->lua_cleanup ); /* f */
@@ -70,8 +84,10 @@ int pilot_shipLCleanup( Pilot *p )
       if (nlua_pcall( p->ship->lua_env, 1, 0 )) { /* */
          shipLRunWarning( p, p->ship, "cleanup", lua_tostring(naevL,-1) );
          lua_pop(naevL, 1);
+         pilot_shipLunmem( p, oldmem );
          return -1;
       }
+      pilot_shipLunmem( p, oldmem );
    }
 
    /* Clear Lua if necessary. */
@@ -114,9 +130,10 @@ int pilot_shipLUpdate( Pilot *p, double dt )
  */
 int pilot_shipLExplodeInit( Pilot *p )
 {
+   int oldmem;
    if (p->ship->lua_explode_init == LUA_NOREF)
       return 0;
-   pilot_shipLmem( p );
+   oldmem = pilot_shipLmem( p );
 
    /* Set up the function: explode_init( p ) */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->ship->lua_explode_init ); /* f */
@@ -124,8 +141,10 @@ int pilot_shipLExplodeInit( Pilot *p )
    if (nlua_pcall( p->ship->lua_env, 1, 0 )) { /* */
       shipLRunWarning( p, p->ship, "explode_init", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
+      pilot_shipLunmem( p, oldmem );
       return -1;
    }
+   pilot_shipLunmem( p, oldmem );
    return 0;
 }
 
@@ -138,9 +157,10 @@ int pilot_shipLExplodeInit( Pilot *p )
  */
 int pilot_shipLExplodeUpdate( Pilot *p, double dt )
 {
+   int oldmem;
    if (p->ship->lua_explode_update == LUA_NOREF)
       return 0;
-   pilot_shipLmem( p );
+   oldmem = pilot_shipLmem( p );
 
    /* Set up the function: explode_update( p ) */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->ship->lua_explode_update ); /* f */
@@ -149,7 +169,9 @@ int pilot_shipLExplodeUpdate( Pilot *p, double dt )
    if (nlua_pcall( p->ship->lua_env, 2, 0 )) { /* */
       shipLRunWarning( p, p->ship, "explode_update", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
+      pilot_shipLunmem( p, oldmem );
       return -1;
    }
+   pilot_shipLunmem( p, oldmem );
    return 0;
 }
