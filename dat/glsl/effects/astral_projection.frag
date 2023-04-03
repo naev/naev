@@ -37,9 +37,10 @@ void main(void)
    if (base_colour.a <= 0.0)
       discard;
 
+   float t    = u_elapsed + 10.0 * u_r;
    float w    = length(base_colour.rgb);
-   float m    = abs(1.0-2.0*fract(4.0*u_elapsed+7.0*((uvr.x+0.02*cos(64.0*uvr.y)))));
-   float f    = 0.5+0.75*abs(1.0-2.0*fract((1.7+0.03*st.x)*u_elapsed+abs(1.0-2.0*fract((1.9+0.03*st.y)*u_elapsed))));
+   float m    = abs(1.0-2.0*fract(4.0*t+7.0*((uvr.x+0.02*cos(64.0*uvr.y)))));
+   float f    = 0.5+0.75*abs(1.0-2.0*fract((1.7+0.03*st.x)*t+abs(1.0-2.0*fract((1.9+0.03*st.y)*t))));
    colour_out = clamp(mix(f*COLOUR_OUTLINE, mix(COLOUR_DARK, COLOUR_BRIGHT, m*(m+0.5)), w), 0.0, 1.0);
    colour_out *= base_colour.a;
 }
