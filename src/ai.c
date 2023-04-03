@@ -1730,7 +1730,7 @@ static int aiL_turn( lua_State *L )
  * @usage ai.face( a_pilot, true ) -- Face away from a pilot
  * @usage ai.face( a_pilot, nil, true ) -- Compensate velocity facing a pilot
  *
- *    @luatparam Pilot|Vec2|number target Target to face.
+ *    @luatparam Pilot|Vec2|number target Target to face. Can be either a pilot, position (Vec2), or an orientation (number representing angle in radians).
  *    @luatparam[opt=false] boolean invert Invert away from target.
  *    @luatparam[opt=false] boolean compensate Compensate for velocity?
  *    @luatreturn number Angle offset in radians.
@@ -1742,6 +1742,14 @@ static int aiL_face( lua_State *L )
    double k_diff, k_vel, diff, vx, vy, dx, dy;
    int vel;
 
+   /* Default gain. */
+   k_diff = 10.;
+   k_vel  = 100.; /* overkill gain! */
+
+   /* Check if must invert. */
+   if (lua_toboolean(L,2))
+      k_diff *= -1;
+
    /* Get first parameter, aka what to face. */
    if (lua_ispilot(L,1)) {
       Pilot* p = luaL_validpilot(L,1);
@@ -1750,23 +1758,17 @@ static int aiL_face( lua_State *L )
    }
    else if (lua_isnumber(L,1)) {
       double d = lua_tonumber(L,1);
-      if (d < 0.)
-         tv = &cur_pilot->solid.pos;
-      else
-         NLUA_INVALID_PARAMETER(L);
+      diff = angle_diff( cur_pilot->solid.dir, d );
+      /* Make pilot turn. */
+      pilot_turn = k_diff * diff;
+      /* Return angle away from target. */
+      lua_pushnumber(L, ABS(diff));
+      return 1;
    }
    else if (lua_isvector(L,1))
       tv = lua_tovector(L,1);
    else
       NLUA_INVALID_PARAMETER(L);
-
-   /* Default gain. */
-   k_diff = 10.;
-   k_vel  = 100.; /* overkill gain! */
-
-   /* Check if must invert. */
-   if (lua_toboolean(L,2))
-      k_diff *= -1;
 
    /* Third parameter. */
    vel = lua_toboolean(L, 3);
