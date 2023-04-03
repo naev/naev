@@ -61,7 +61,7 @@ local function turnon( p, po )
    mem.p = {}
    for i=1,mem.n do
       local pos = vec2.newP( mem.r, mem.off + math.pi*2*i/mem.n )
-      local np = pilot.add( _("Mirror"), p:faction(), pos, p:name(), {ai="house_of_mirrors", naked=true} )
+      local np = pilot.add( p:ship(), p:faction(), pos, p:name(), {ai="house_of_mirrors", naked=true} )
       np:effectAdd("Astral Projection")
       np:outfitRm("all")
       for k,v in ipairs(p:outfitsList()) do
@@ -79,7 +79,7 @@ local function turnon( p, po )
       np:control( true )
       np:setLeader( p )
       np:setInvisible( true )
-      mem.p[i] = np
+      table.insert( mem.p, np )
    end
 
    flow.activate( p )
@@ -103,7 +103,7 @@ local function turnoff( p, po )
 end
 
 function init( p, po )
-   mem.flow_cost, mem.flow_drain, mem.projection = getStats( p )
+   mem.flow_cost, mem.flow_drain, mem.n = getStats( p )
 
    mem.isp = (player.pilot()==p) -- is player?
    turnoff( p, po )
