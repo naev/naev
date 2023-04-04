@@ -126,7 +126,7 @@ function land ()
       local z = vn.newCharacter( zbh.vn_zach() )
       vn.transition( zbh.zach.transition )
       vn.na(_([[Your ship lands on the station. The moment you and Zach get out of the ship, you hear a loud groan and amidst a shower of sparks, half the engine sputters and falls down onto the ground. As you take cover, your now imbalanced ship falls off to the side and slides on the metal floor in a cacophony of clangs and groans.]]))
-      z(_([["Maybe I should have increased the safety tolerance a bit more. Pretty lucky that this happened now and not while we were travelling through hyperspace. I guess we know know why the ships have security jump mechanisms."]]))
+      z(_([["Maybe I should have increased the safety tolerance a bit more. Pretty lucky that this happened now and not while we were travelling through hyperspace. I guess we now know why the ships have security jump mechanisms."]]))
       vn.menu{
          {fmt.f(_([["{shipname}! My ship!"]]),{shipname=player.pilot()}), "01ship"},
          {_([["We're not doing that again are we…"]]), "01again"},
