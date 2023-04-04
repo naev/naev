@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-03-21 23:08+0900\n"
-"PO-Revision-Date: 2023-04-03 21:40+0000\n"
+"PO-Revision-Date: 2023-04-04 21:42+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -4881,7 +4881,7 @@ msgstr "Per barare."
 
 #: dat/outfits/misc/counterfeit_heavy_combat_vessel_license.xml:2
 msgid "Counterfeit Heavy Combat Vessel License"
-msgstr "Licenza Contraffatta per Astronave da Combattimento Pesante"
+msgstr "Licenza Contraffatta per Astronavi da Combattimento Pesanti"
 
 #: dat/outfits/misc/counterfeit_heavy_combat_vessel_license.xml:8
 msgid ""
@@ -4891,15 +4891,21 @@ msgid ""
 "This license will authorize you to buy cruiser and carrier-class ships on "
 "worlds that perform background checks."
 msgstr ""
+"Tramite l'affinata maestria, gli ingegneri del software pirata sono in grado "
+"di creare una replica quasi perfetta della Licenza per Astronavi da "
+"Combattimento Pesanti. Tuttavia, il suo prezzo è significativamente maggiore "
+"rispetto a quello delle licenze regolari. Questa licenza ti autorizza a "
+"comprare astronavi della classe incrociatore e portaastronavi sui pianeti in "
+"cui i controlli vengono effettuati."
 
 #: dat/outfits/misc/counterfeit_heavy_combat_vessel_license.xml:11
 #: dat/outfits/misc/heavy_combat_vessel_license.xml:12
 msgid "Heavy Combat Vessel"
-msgstr ""
+msgstr "Astronave da Combattimento Pesante"
 
 #: dat/outfits/misc/counterfeit_heavy_weapon_license.xml:2
 msgid "Counterfeit Heavy Weapon License"
-msgstr ""
+msgstr "Licenza Contraffatta per Armamenti Pesanti"
 
 #: dat/outfits/misc/counterfeit_heavy_weapon_license.xml:8
 msgid ""
@@ -4909,47 +4915,53 @@ msgid ""
 "license will authorize you to buy and use heavy weapons, like the heavy ion "
 "turret, on worlds that perform background checks."
 msgstr ""
+"Tramite l'affinata maestria, gli ingegneri del software pirata sono in grado "
+"di creare una replica quasi perfetta della Licenza per Armamenti Pesanti. "
+"Tuttavia, il suo prezzo è significativamente maggiore rispetto a quello "
+"delle licenze regolari. Questa licenza ti autorizza a comprare armamenti "
+"pesanti, come torrette a ioni pesanti, sui pianeti in cui i controlli "
+"vengono effettuati."
 
 #: dat/outfits/misc/counterfeit_heavy_weapon_license.xml:11
 #: dat/outfits/misc/heavy_weapon_license.xml:12
 msgid "Heavy Weapon"
-msgstr ""
+msgstr "Armamenti Pesanti"
 
 #: dat/outfits/misc/gui_brushed.xml:2
 msgid "GUI - Brushed"
-msgstr ""
+msgstr "GUI - Morbida"
 
 #: dat/outfits/misc/gui_brushed.xml:6
 msgid "Outfit corresponding with the \"Brushed\" GUI."
-msgstr ""
+msgstr "Equipaggiamento corrispondente con la GUI \"Morbida\"."
 
 #: dat/outfits/misc/gui_legacy.xml:2
 msgid "GUI - Legacy"
-msgstr ""
+msgstr "GUI - Vecchio Stampo"
 
 #: dat/outfits/misc/gui_legacy.xml:6
 msgid "Outfit corresponding with the \"Legacy\" GUI."
-msgstr ""
+msgstr "Equipaggiamento corrispondente con la GUI \"Vecchio Stampo\"."
 
 #: dat/outfits/misc/gui_slim.xml:2
 msgid "GUI - Slim"
-msgstr ""
+msgstr "GUI - Snella"
 
 #: dat/outfits/misc/gui_slim.xml:6
 msgid "Outfit corresponding with the \"Slim\" GUI."
-msgstr ""
+msgstr "Equipaggiamento corrispondente con la GUI \"Snella\"."
 
 #: dat/outfits/misc/gui_slimv2.xml:2
 msgid "GUI - Slimv2"
-msgstr ""
+msgstr "GUI - Snella v2"
 
 #: dat/outfits/misc/gui_slimv2.xml:6
 msgid "Outfit corresponding with the \"Slimv2\" GUI."
-msgstr ""
+msgstr "Equipaggiamento corrispondente con la GUI \"Snella v2\"."
 
 #: dat/outfits/misc/heavy_combat_vessel_license.xml:2
 msgid "Heavy Combat Vessel License"
-msgstr ""
+msgstr "Licenza per Astronavi da Combattimento Pesanti"
 
 #: dat/outfits/misc/heavy_combat_vessel_license.xml:9
 msgid "This license will authorize you to buy cruiser and carrier-class ships."
@@ -4959,7 +4971,7 @@ msgstr ""
 
 #: dat/outfits/misc/heavy_weapon_license.xml:2
 msgid "Heavy Weapon License"
-msgstr ""
+msgstr "Licenza per Armamenti Pesanti"
 
 #: dat/outfits/misc/heavy_weapon_license.xml:9
 msgid ""
@@ -4971,7 +4983,7 @@ msgstr ""
 
 #: dat/outfits/misc/large_civilian_vessel_license.xml:2
 msgid "Large Civilian Vessel License"
-msgstr ""
+msgstr "Licenza per Grosse Astronavi Civili"
 
 #: dat/outfits/misc/large_civilian_vessel_license.xml:7
 msgid "This license will authorize you to buy freighter-class ships."
@@ -4981,11 +4993,11 @@ msgstr ""
 
 #: dat/outfits/misc/large_civilian_vessel_license.xml:10
 msgid "Large Civilian Vessel"
-msgstr ""
+msgstr "Grosse Astronavi Civili"
 
 #: dat/outfits/misc/light_combat_vessel_license.xml:2
 msgid "Light Combat Vessel License"
-msgstr ""
+msgstr "Licenza per Astronavi da Combattimento Leggere"
 
 #: dat/outfits/misc/light_combat_vessel_license.xml:7
 msgid "This license will authorize you to buy fighter and bomber class ships."
@@ -4995,11 +5007,11 @@ msgstr ""
 
 #: dat/outfits/misc/light_combat_vessel_license.xml:10
 msgid "Light Combat Vessel"
-msgstr ""
+msgstr "Astronavi da Combattimento Leggere"
 
 #: dat/outfits/misc/medium_combat_vessel_license.xml:2
 msgid "Medium Combat Vessel License"
-msgstr ""
+msgstr "Licenza per Astronavi da Combattimento Medie"
 
 #: dat/outfits/misc/medium_combat_vessel_license.xml:8
 msgid ""
@@ -5010,35 +5022,39 @@ msgstr ""
 
 #: dat/outfits/misc/medium_combat_vessel_license.xml:11
 msgid "Medium Combat Vessel"
-msgstr ""
+msgstr "Astronavi da Combattimento Medie"
 
 #: dat/outfits/misc/medium_weapon_license.xml:2
 msgid "Medium Weapon License"
-msgstr ""
+msgstr "Licenza per Armamenti Medi"
 
 #: dat/outfits/misc/medium_weapon_license.xml:7
 msgid ""
 "This license will authorize you to buy and use medium weapons like the "
 "ripper cannon."
 msgstr ""
+"Questa licenza ti autorizzerà a comprare e usare armamenti medi come i "
+"cannoni squartatore."
 
 #: dat/outfits/misc/medium_weapon_license.xml:10
 msgid "Medium Weapon"
-msgstr ""
+msgstr "Armamenti Medi"
 
 #: dat/outfits/misc/mercenary_license.xml:2
 msgid "Mercenary License"
-msgstr ""
+msgstr "Licenza per Mercenari"
 
 #: dat/outfits/misc/mercenary_license.xml:7
 msgid ""
 "This license will authorize you to do mercenary missions and, more "
 "importantly, collect bounties."
 msgstr ""
+"Questa licenza ti autorizzerà a compiere missioni di tipo mercenario e, più "
+"importante, a riscuotere le taglie."
 
 #: dat/outfits/structure/active_plating.xml:2
 msgid "Active Plating"
-msgstr ""
+msgstr "Rivestimento Attivo"
 
 #: dat/outfits/structure/active_plating.xml:4
 #: dat/outfits/structure/adaptive_stealth_plating.xml:4
@@ -5047,7 +5063,7 @@ msgstr ""
 #: dat/outfits/structure/nanobond_plating.xml:4
 #: dat/outfits/structure/plasteel_plating.xml:4
 msgid "Armour Modifier"
-msgstr ""
+msgstr "Modificatore d'Armatura"
 
 #: dat/outfits/structure/active_plating.xml:11
 msgid ""
@@ -5057,6 +5073,12 @@ msgid ""
 "strength is substantially increased at the cost of dramatically increased "
 "energy usage."
 msgstr ""
+"Questo rivestimento sviluppato dalla Casata Dvaered adotta un approccio "
+"unico, ma in qualche modo brutale per incrementare la solidità "
+"dell'armatura. Tramite il pompaggio costante di energia attraverso le bobine "
+"delle schermature elettromagnetiche disposte sull'intera fusoliera, la "
+"solidità dell'armatura è sostanzialmente aumentata al costo di incrementare "
+"drammaticamente l'uso di energia."
 
 #: dat/outfits/structure/adaptive_stealth_plating.xml:2
 msgid "Adaptive Stealth Plating"
@@ -113239,7 +113261,7 @@ msgstr ""
 
 #: src/ship.c:208
 msgid "Cruiser"
-msgstr ""
+msgstr "Incrociatore"
 
 #: src/ship.c:210
 msgid "Battleship"
