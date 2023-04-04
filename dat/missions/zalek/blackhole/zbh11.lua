@@ -140,7 +140,7 @@ function land ()
 
       vn.label("01ship")
       z(_([["Don't worry about the damage. I'll have the drones fix it up. A small price to pay for all the experimental data we were able to recover!"
-He gives a sign to the drones that start working like ants to lift the ship back up and stabilizer it, and then starts to lead you into the station.]]))
+He gives a sign to the drones that start working like ants to lift the ship back up and stabilize it, and then starts to lead you into the station.]]))
       z(_([["One of the major issues of creating antimatter is the volatility and energy requirements. Most of the time it is infeasible to generate in any large amounts, which is why its use is restricted to very particular experiments and military applications. You wouldn't imagine the amount of paperwork you need to get a single nanogram of antimatter!"]]))
       z(_([["Now normally, you slowly collect antimatter from nuclei collisions with careful slowing down of the anti-protons to avoid volatility issues. While this allows them to be generated anywhere, it's pretty impracticable with no way of scaling it up."]]))
       z(_([["The beauty of my colleagues, of Mie's research, is to take a completely different approach using hyper-relativistic acceleration in a Schwarzschild frame such that the Birkhoff-Kerr radiation does the brunt of the work. It's a really interesting novel take that was only theorized about. That is, up until now!"]]))
