@@ -208,7 +208,8 @@ function land_escorts ()
 end
 
 local function escort_faction ()
-   return faction.dynAdd( "Pirate", "taiomi_convoy", _("Smugglers"), {clear_enemies=true, clear_allies=true} )
+   -- If we use "Pirate" it defaults to hostile to the player which can be problematic
+   return faction.dynAdd( "Independent", "taiomi_convoy", _("Smugglers"), {clear_enemies=true, clear_allies=true} )
 end
 
 -- luacheck: globals escort_spawn
