@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-03-21 23:08+0900\n"
-"PO-Revision-Date: 2022-09-19 19:18+0000\n"
-"Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
+"PO-Revision-Date: 2023-04-06 10:52+0000\n"
+"Last-Translator: David Doubek <David.Doubek42@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.17-dev\n"
 
 #: physfs.c:1
 msgid "no error"
@@ -812,7 +812,7 @@ msgstr "PIRÁTSKÝ ANCESTOR"
 
 #: artwork/gfx/loading/dalton.webp.txt:1
 msgid "DALTON"
-msgstr ""
+msgstr "DALTON"
 
 #: artwork/gfx/loading/diablo.webp.txt:1
 msgid "ZA'LEK DIABLO"
@@ -824,7 +824,7 @@ msgstr "DRON"
 
 #: artwork/gfx/loading/euler.webp.txt:1
 msgid "EULER"
-msgstr ""
+msgstr "EULER"
 
 #: artwork/gfx/loading/fidelity.webp.txt:1
 msgid "SIRIUS FIDELITY"
@@ -832,7 +832,7 @@ msgstr "SIRIUS FIDELITY"
 
 #: artwork/gfx/loading/gauss.webp.txt:1
 msgid "GAUSS"
-msgstr ""
+msgstr "GAUSS"
 
 #: artwork/gfx/loading/gawain.webp.txt:1
 msgid "GAWAIN"
@@ -1404,23 +1404,19 @@ msgstr "Loď je éterická."
 
 #: dat/effects/fadein.xml:2
 msgid "Fade-In"
-msgstr "Fade-In"
+msgstr "Splynout"
 
 #: dat/effects/fadein.xml:3
 msgid "Fading in!"
-msgstr "Blednutí!"
+msgstr "Splynutí!"
 
 #: dat/effects/fadeout.xml:2
-#, fuzzy
-#| msgid "Fade-In"
 msgid "Fade-Out"
-msgstr "Fade-In"
+msgstr "Rozpynout"
 
 #: dat/effects/fadeout.xml:3
-#, fuzzy
-#| msgid "Fading in!"
 msgid "Fading Out!"
-msgstr "Blednutí!"
+msgstr "Rozplynutí!"
 
 #. Attack tree
 #. For everyone!
@@ -1542,21 +1538,23 @@ msgstr "Opuštěný"
 
 #: dat/factions/dreamer_clan.xml:2
 msgid "Dreamer Clan"
-msgstr "Nadpozemský klan"
+msgstr "Dreamer Klan"
 
 #: dat/factions/dreamer_clan.xml:5
 msgid "Dreamer Pirate Clan"
-msgstr "Nadpozemský Klan pirátů"
+msgstr "Klan pirátů Dreamer"
 
 #: dat/factions/dreamer_clan.xml:12
 msgid ""
 "The Dreamer Pirate Clan consists largely of disgruntled pirates from the "
 "Frontier, fed up with both the FLF and Dvaered terrorism, and Empire tyranny."
 msgstr ""
+"Pirátský klan Dreamer se skládá z velké části z nespokojených pirátů z "
+"Pohraničí, otrávených terorismem FLF, Dvaered a tyranií Impéria."
 
 #: dat/factions/dummy.xml:2
 msgid "Dummy"
-msgstr ""
+msgstr "Maketa"
 
 #. Add the Cargo
 #. Ship to go back to
@@ -1590,13 +1588,15 @@ msgstr "Dvaered"
 #: dat/ships/neutral/phalanx.xml:15 dat/ships/neutral/vendetta.xml:15
 #: dat/ships/neutral/vigilance.xml:14
 msgid "House Dvaered"
-msgstr ""
+msgstr "Rod Dvaered"
 
 #: dat/factions/dvaered.xml:12
 msgid ""
 "House Dvaered is one of the oldest Great Houses in the Empire. They are "
 "proud and formed by a coalition of many powerful warlords."
 msgstr ""
+"Rod Dvaered je jedním z nejstarších velkých rodů v Říši. Je hrdý a tvoří ho "
+"koalice mnoha mocných vojevůdců."
 
 #: dat/factions/empire.xml:2 dat/scripts/common/empire.lua:15
 #: dat/scripts/common/empire.lua:20
