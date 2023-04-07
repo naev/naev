@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-02-22 09:01+0900\n"
-"PO-Revision-Date: 2023-04-04 21:42+0000\n"
+"PO-Revision-Date: 2023-04-07 19:51+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev-0-10-x/"
 "it/>\n"
@@ -666,7 +666,7 @@ msgstr "Cypher3c <cypher3c@gmail.com>"
 
 #: dat/AUTHORS:125
 msgid "   * Spiced up the boring generic cargo missions."
-msgstr "   * Rese più divertenti le generiche e noiose missioni cargo."
+msgstr "   * Rese più divertenti le generiche e noiose missioni di carico."
 
 #: dat/AUTHORS:127
 msgid "Nathan Loewen <loewen.nathan@gmail.com>"
@@ -2576,7 +2576,7 @@ msgstr "Addome Voluminoso"
 #: dat/outfits/bioship/skills/cargo_sacs.xml:2
 #: dat/scripts/bioship/skills.lua:294
 msgid "Cargo Sacs"
-msgstr "Sacchi Cargo"
+msgstr "Sacchi di Carico"
 
 #. Stealth skill tree
 #. For up to destroyer
@@ -2931,7 +2931,7 @@ msgid ""
 "in its size class, and more than a few combat vessels rely on it to move "
 "them and their arsenals into battle."
 msgstr ""
-"Il Buffalo XL è un motore basilare per le astronavi cargo di media "
+"Il Buffalo XL è un motore basilare per le astronavi di carico di media "
 "grandezza, particolarmente quelle che trasportano carichi consistenti. La "
 "sua notevole potenza lascia poca concorrenza in questa classe di astronavi e "
 "più di qualche astronave da combattimento si affida ad esso per muoverle "
@@ -3079,8 +3079,8 @@ msgid ""
 "modest energy consumption allows it to be equipped on most vessels without "
 "requiring reactor upgrades."
 msgstr ""
-"Lo Sparviero 350 è destinato a caccia pesanti e astronavi cargo leggere. Il "
-"suo consumo energetico modesto gli permette di essere installato sulla "
+"Lo Sparviero 350 è destinato a caccia pesanti e astronavi di carico leggere. "
+"Il suo consumo energetico modesto gli permette di essere installato sulla "
 "maggior parte delle astronavi senza la necessità di aggiornare il reattore."
 
 #: dat/outfits/core_engine/small/zalek_test_engine.xml:2
@@ -3156,7 +3156,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/large/rs_large_cargo_hull.xml:2
 msgid "Red Star Large Cargo Hull"
-msgstr "Fusoliera Grande per Cargo Stella Rossa"
+msgstr "Fusoliera Grande di Carico Stella Rossa"
 
 #: dat/outfits/core_hull/large/rs_large_cargo_hull.xml:10
 msgid ""
@@ -3169,7 +3169,7 @@ msgid ""
 msgstr ""
 "La Stella Rossa Imperiale è specializzata per compiere missioni di soccorso "
 "in aree colpite da guerre, pirateria e malattie. Sviluppate recentemente "
-"dall'organizzazione fanno parte di una serie di fusoliere per cargo "
+"dall'organizzazione fanno parte di una serie di fusoliere di carico "
 "specializzate e pensate per massimizzare le probabilità che i rifornimenti e "
 "il personali arrivino in modo affidabile dove sono maggiormente necessari. I "
 "sistemi integrati di disturbo permettono anche alle astronavi più grandi di "
@@ -3191,7 +3191,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/large/sk_large_cargo_hull.xml:2
 msgid "S&K Large Cargo Hull"
-msgstr "Fusoliera S&K per Cargo Grande"
+msgstr "Fusoliera S&K di Carico Grande"
 
 #: dat/outfits/core_hull/large/sk_large_cargo_hull.xml:10
 msgid ""
@@ -3199,7 +3199,7 @@ msgid ""
 "defensive alloys, which allows it to free up even more space for cargo "
 "without sacrificing too much durability."
 msgstr ""
-"Questa fusoliera per cargo prodotta dalle industrie Schafer & Kane fa uso di "
+"Questa fusoliera di carico prodotta dalle industrie Schafer & Kane fa uso di "
 "leghe d'avanguardia pensate per scopi difensivi che permettono anche di "
 "liberare più spazio per il trasporto merci senza sacrificare troppo la "
 "solidità."
@@ -3267,7 +3267,7 @@ msgstr "Rivestimento Patchwork Medio"
 
 #: dat/outfits/core_hull/medium/rs_medium_cargo_hull.xml:2
 msgid "Red Star Medium Cargo Hull"
-msgstr "Fusoliera Media per Cargo Stella Rossa"
+msgstr "Fusoliera Media di Carico Stella Rossa"
 
 #: dat/outfits/core_hull/medium/rs_medium_cargo_hull.xml:10
 msgid ""
@@ -3281,7 +3281,7 @@ msgid ""
 msgstr ""
 "La Stella Rossa Imperiale è specializzata per compiere missioni di soccorso "
 "in aree colpite da guerre, pirateria e malattie. Sviluppate recentemente "
-"dall'organizzazione fanno parte di una serie di fusoliere per cargo "
+"dall'organizzazione fanno parte di una serie di fusoliere di carico "
 "specializzate e pensate per massimizzare le probabilità che i rifornimenti e "
 "il personali arrivino in modo affidabile dove sono maggiormente necessari. I "
 "sistemi alimentati di disturbo permettono alle astronavi di dimensioni medie "
@@ -3291,7 +3291,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/medium/sk_medium_cargo_hull.xml:2
 msgid "S&K Medium Cargo Hull"
-msgstr "Fusoliera S&K per Cargo Medio"
+msgstr "Fusoliera S&K di Carico Medio"
 
 #: dat/outfits/core_hull/medium/sk_medium_cargo_hull.xml:10
 msgid ""
@@ -3376,7 +3376,7 @@ msgstr "Rivestimento Patchwork Leggero"
 
 #: dat/outfits/core_hull/small/rs_small_cargo_hull.xml:2
 msgid "Red Star Small Cargo Hull"
-msgstr "Fusoliera Piccola per Cargo Stella Rossa"
+msgstr "Fusoliera Piccola di Carico Stella Rossa"
 
 #: dat/outfits/core_hull/small/rs_small_cargo_hull.xml:10
 msgid ""
@@ -3390,7 +3390,7 @@ msgid ""
 msgstr ""
 "La Stella Rossa Imperiale è specializzata per compiere missioni di soccorso "
 "in aree colpite da guerre, pirateria e malattie. Sviluppate recentemente "
-"dall'organizzazione fanno parte di una serie di fusoliere per cargo "
+"dall'organizzazione fanno parte di una serie di fusoliere di carico "
 "specializzate e pensate per massimizzare le probabilità che i rifornimenti e "
 "il personali arrivino in modo affidabile dove sono maggiormente necessari. I "
 "sistemi di disturbo integrati nella fusoliera aiutano a deviare gli effetti "
@@ -3416,7 +3416,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/small/sk_small_cargo_hull.xml:2
 msgid "S&K Small Cargo Hull"
-msgstr "Fusoliera S&K per Cargo Piccolo"
+msgstr "Fusoliera S&K di Carico Piccolo"
 
 #: dat/outfits/core_hull/small/sk_small_cargo_hull.xml:10
 msgid ""
@@ -5133,103 +5133,129 @@ msgid ""
 "radiation around the ship and is able to emit space-resolved the right "
 "amount of radiation to appear invisible for passive sensors."
 msgstr ""
+"Questo rivestimento d'armatura non fornisce nessuna protezione, invece rende "
+"complesso rilevare l'astronave. Ha sensori integrati che misurano la "
+"radiazione ambientale intorno all'astronave ed è in grado di emettere, "
+"diluite nello spazio, il giusto quantitativo di radiazioni per apparire "
+"invisibile ai sensori passivi."
 
 #: dat/outfits/structure/auxiliary_processing_unit_i.xml:2
 msgid "Auxiliary Proccessing Unit I"
-msgstr ""
+msgstr "Unità di Elaborazione Ausiliaria I"
 
 #: dat/outfits/structure/auxiliary_processing_unit_i.xml:4
 #: dat/outfits/structure/auxiliary_processing_unit_ii.xml:4
 #: dat/outfits/structure/auxiliary_processing_unit_iii.xml:4
 #: dat/outfits/structure/auxiliary_processing_unit_iv.xml:4
 msgid "CPU Modifier"
-msgstr ""
+msgstr "Modificatore di CPU"
 
 #: dat/outfits/structure/auxiliary_processing_unit_i.xml:9
 msgid ""
 "An additional proccessing unit to supplement the main processor of the core "
 "system, giving small ships a little more processing power."
 msgstr ""
+"Un'unità di elaborazione aggiuntiva per incrementare il processore "
+"principale del sistema essenziale, fornendo alle piccole astronavi un lieve "
+"incremento della potenza di elaborazione."
 
 #: dat/outfits/structure/auxiliary_processing_unit_ii.xml:2
 msgid "Auxiliary Proccessing Unit II"
-msgstr ""
+msgstr "Unità di Elaborazione Ausiliaria II"
 
 #: dat/outfits/structure/auxiliary_processing_unit_ii.xml:9
 msgid ""
 "An additional proccessing unit to supplement the main processor of the core "
 "system, giving medium ships a little more processing power."
 msgstr ""
+"Un'unità di elaborazione aggiuntiva per incrementare il processore "
+"principale del sistema essenziale, fornendo alle astronavi medie un lieve "
+"incremento della potenza di elaborazione."
 
 #: dat/outfits/structure/auxiliary_processing_unit_iii.xml:2
 msgid "Auxiliary Proccessing Unit III"
-msgstr ""
+msgstr "Unità di Elaborazione Ausiliaria III"
 
 #: dat/outfits/structure/auxiliary_processing_unit_iii.xml:9
 msgid ""
 "An additional proccessing unit to supplement the main processor of the core "
 "system, giving large ships a little more processing power."
 msgstr ""
+"Un'unità di elaborazione aggiuntiva per incrementare il processore "
+"principale del sistema essenziale, fornendo alle grandi astronavi un lieve "
+"incremento della potenza di elaborazione."
 
 #: dat/outfits/structure/auxiliary_processing_unit_iv.xml:2
 msgid "Auxiliary Proccessing Unit IV"
-msgstr ""
+msgstr "Unità di Elaborazione Ausiliaria IV"
 
 #: dat/outfits/structure/auxiliary_processing_unit_iv.xml:9
 msgid ""
 "An additional proccessing unit to supplement the main processor of the core "
 "system, giving capital ships a little more processing power."
 msgstr ""
+"Un'unità di elaborazione aggiuntiva per incrementare il processore "
+"principale del sistema essenziale, fornendo alle principali astronavi un "
+"lieve incremento della potenza di elaborazione."
 
 #: dat/outfits/structure/battery_i.xml:2
 msgid "Battery I"
-msgstr ""
+msgstr "Batteria I"
 
 #: dat/outfits/structure/battery_i.xml:4 dat/outfits/structure/battery_ii.xml:4
 #: dat/outfits/structure/battery_iii.xml:4
 #: dat/outfits/structure/battery_iv.xml:4
 msgid "Energy Modifier"
-msgstr ""
+msgstr "Modificatore d'Energia"
 
 #: dat/outfits/structure/battery_i.xml:9
 msgid ""
 "A large battery unit designed to hold 250 MJ of energy. Small enough to "
 "mount on many light vessels."
 msgstr ""
+"Un voluminoso gruppo di batterie progettato per contenere 250 MJ d'energia. "
+"Piccolo a sufficienza per essere montato in molte astronavi leggere."
 
 #: dat/outfits/structure/battery_ii.xml:2
 msgid "Battery II"
-msgstr ""
+msgstr "Batteria II"
 
 #: dat/outfits/structure/battery_ii.xml:9
 msgid ""
 "A large battery unit designed to hold 500 MJ of energy. Ideally mounted on "
 "medium-to-large vessels."
 msgstr ""
+"Un voluminoso gruppo di batterie progettato per contenere 500 MJ d'energia. "
+"Montato principalmente su astronavi medio-grandi."
 
 #: dat/outfits/structure/battery_iii.xml:2
 msgid "Battery III"
-msgstr ""
+msgstr "Batteria III"
 
 #: dat/outfits/structure/battery_iii.xml:9
 msgid ""
 "A very large battery unit designed to hold 1200 MJ of energy. It can only be "
 "mounted on very large ships."
 msgstr ""
+"Un gruppo di batterie, veramente voluminoso, progettato per contenere 1200 "
+"MJ d'energia. Può essere montato solamente su astronavi molto grandi."
 
 #: dat/outfits/structure/battery_iv.xml:2
 msgid "Battery IV"
-msgstr ""
+msgstr "Batteria IV"
 
 #: dat/outfits/structure/battery_iv.xml:9
 msgid ""
 "A massive battery unit designed to hold 2000 MJ of energy. Given the mass of "
 "this battery, it's advisable to only mount it on capital ships."
 msgstr ""
+"Un gruppo di batterie massivo progettato per contenere 2000 MJ d'energia. "
+"Data la massa di questa batteria, è consigliato di montarlo solamente su "
+"astronavi principali."
 
 #: dat/outfits/structure/biometal_armour.xml:2
 msgid "Biometal Armour"
-msgstr ""
+msgstr "Armatura Biometallica"
 
 #: dat/outfits/structure/biometal_armour.xml:10
 msgid ""
@@ -5238,15 +5264,20 @@ msgid ""
 "life, and the difficulty of cultivating the bacteria, Biometal has greater "
 "mass than alternatives, and is the most expensive hull plating."
 msgstr ""
+"Il Biometallo è un'armatura che si rigenera grazie a batteri "
+"geoingegnerizzati al suo interno. A causa della compartimentazione "
+"necessaria a permettere la vita batterica e alla difficoltà di coltivare i "
+"batteri, i Biometalli hanno una massa maggiore rispetto alle alternative e "
+"sono i rivestimenti più costosi per le fusoliere."
 
 #: dat/outfits/structure/engine_reroute.xml:2
 msgid "Engine Reroute"
-msgstr ""
+msgstr "Deviatore Motore"
 
 #: dat/outfits/structure/engine_reroute.xml:4
 #: dat/outfits/structure/improved_stabilizer.xml:4
 msgid "Manoeuvrability Modifier"
-msgstr ""
+msgstr "Modificatore di Manovrabilità"
 
 #: dat/outfits/structure/engine_reroute.xml:9
 msgid ""
@@ -5256,10 +5287,16 @@ msgid ""
 "curious effect is that the engines can now also be run in reverse to allow "
 "braking with a small loss in reverse thrust capability."
 msgstr ""
+"Questo miglioramento devia l'energia dalle riserve energetiche "
+"dell'astronave ai motori, fornendo un incremento di accelerazione e virata. "
+"Non incrementa direttamente la velocità massima o l'abilità di virata "
+"dell'astronave, tuttavia, un effetto curioso è che i motori possono così "
+"funzionare anche al contrario per permettere di frenare con una piccola "
+"perdita nelle capacità di accelerazione inversa."
 
 #: dat/outfits/structure/improved_stabilizer.xml:2
 msgid "Improved Stabilizer"
-msgstr ""
+msgstr "Stabilizzatore Migliorato"
 
 #: dat/outfits/structure/improved_stabilizer.xml:9
 msgid ""
@@ -5268,16 +5305,21 @@ msgid ""
 "ship stable. As another side effect, the improved stabilizers allowing "
 "reversing the thrusters with a small loss of thrust."
 msgstr ""
+"Migliorando drasticamente i sistemi di stabilizzazione dell'astronave, "
+"questa modifica ti permetterà di raggiungere velocità maggiori mantenendo la "
+"stabilità dell'astronave. Come altro effetto collaterale, gli stabilizzatori "
+"migliorati permettono di invertire la virata con una piccola perdita di "
+"accelerazione."
 
 #: dat/outfits/structure/large_cargo_pod.xml:2
 msgid "Large Cargo Pod"
-msgstr ""
+msgstr "Grossa Capsula di Carico"
 
 #: dat/outfits/structure/large_cargo_pod.xml:4
 #: dat/outfits/structure/medium_cargo_pod.xml:4
 #: dat/outfits/structure/small_cargo_pod.xml:4
 msgid "Cargo Expansion"
-msgstr ""
+msgstr "Espansione di Carico"
 
 #: dat/outfits/structure/large_cargo_pod.xml:9
 #: dat/outfits/structure/medium_cargo_pod.xml:9
@@ -5287,32 +5329,38 @@ msgid ""
 "to being externally added to the ship's hull, it has the side effect of "
 "slightly increasing the cargo inertia."
 msgstr ""
+"Le capsule di carico sono grossi contenitori che incrementano la capacità di "
+"carico dell'astronave. Poiché sono aggiunte esternamente alla fusoliera "
+"dell'astronave, hanno come effetto collaterale quello di incrementare "
+"leggermente l'inerzia del carico."
 
 #: dat/outfits/structure/large_fuel_pod.xml:2
 msgid "Large Fuel Pod"
-msgstr ""
+msgstr "Grosse Capsule di Carburante"
 
 #: dat/outfits/structure/large_fuel_pod.xml:4
 #: dat/outfits/structure/medium_fuel_pod.xml:4
 #: dat/outfits/structure/small_fuel_pod.xml:4
 msgid "Fuel Modifier"
-msgstr ""
+msgstr "Modificatore di Carburante"
 
 #: dat/outfits/structure/large_fuel_pod.xml:9
 #: dat/outfits/structure/medium_fuel_pod.xml:9
 #: dat/outfits/structure/small_fuel_pod.xml:9
 msgid "The fuel pod allows a ship to store more fuel for hyperspace jumps."
 msgstr ""
+"La capsula di carburante permette ad un'astronave di immagazzinare più "
+"carburante per spazi iperspaziali."
 
 #: dat/outfits/structure/large_shield_booster.xml:2
 msgid "Large Shield Booster"
-msgstr ""
+msgstr "Grosso Potenziatore di Scudi"
 
 #: dat/outfits/structure/large_shield_booster.xml:4
 #: dat/outfits/structure/medium_shield_booster.xml:4
 #: dat/outfits/structure/small_shield_booster.xml:4
 msgid "Shield Booster"
-msgstr ""
+msgstr "Potenziatore di Scudi"
 
 #: dat/outfits/structure/large_shield_booster.xml:9
 #: dat/outfits/structure/medium_shield_booster.xml:9
@@ -5322,22 +5370,26 @@ msgid ""
 "you to regenerate your shield faster and give you a small shield capacity "
 "boost, at the expense of draining some of the ship's energy."
 msgstr ""
+"Un generatore di scudi che si alimenta tramite la linea di energia "
+"principale dell'astronave. Permette così di rigenerare i tuoi scudi più "
+"velocemente e ti fornisce un piccolo incremento di capacità di scudo, al "
+"costo di consumare un po' di energia dell'astronave."
 
 #: dat/outfits/structure/medium_cargo_pod.xml:2
 msgid "Medium Cargo Pod"
-msgstr ""
+msgstr "Capsula di Carico Media"
 
 #: dat/outfits/structure/medium_fuel_pod.xml:2
 msgid "Medium Fuel Pod"
-msgstr ""
+msgstr "Capsule di Carburante Medie"
 
 #: dat/outfits/structure/medium_shield_booster.xml:2
 msgid "Medium Shield Booster"
-msgstr ""
+msgstr "Potenziatore di Scudi Medio"
 
 #: dat/outfits/structure/microbond_plating.xml:2
 msgid "Microbond Plating"
-msgstr ""
+msgstr "Rivestimento a Microlegami"
 
 #: dat/outfits/structure/microbond_plating.xml:10
 msgid ""
@@ -5345,10 +5397,14 @@ msgid ""
 "lighter revision that's still stronger than Plasteel, making it a great "
 "choice to strengthen the hull of a medium-sized ship."
 msgstr ""
+"Sviluppato a partire dal rivestimento a nanolegami, il rivestimento a "
+"microlegami è una revisione meno densa e più leggera che è ancora più "
+"resistente rispetto al Plastacciaio, rendendolo una scelta per rinforzare la "
+"fusoliera di un'astronave di grandezza media."
 
 #: dat/outfits/structure/nanobond_plating.xml:2
 msgid "Nanobond Plating"
-msgstr "Armatura di Nanobond"
+msgstr "Armatura di Nanolegami"
 
 #: dat/outfits/structure/nanobond_plating.xml:10
 msgid ""
@@ -5357,10 +5413,15 @@ msgid ""
 "The result is a much more robust material, although it is substantially more "
 "expensive."
 msgstr ""
+"I Nanolegami sono il successore del Plastacciaio. Partono dalla stessa "
+"metodologia, ma usano un processo di produzione in cui è stata incrementata "
+"notevolmente la raffinazione, ottenendo come risultato una maggiore densità "
+"delle particelle. Il risultato è un materiale più robusto, anche se è "
+"sostanzialmente più costoso."
 
 #: dat/outfits/structure/nebular_shielding_prototype.xml:2
 msgid "Nebular Shielding Prototype"
-msgstr ""
+msgstr "Prototipo di Schermatura Nebulare"
 
 #: dat/outfits/structure/nebular_shielding_prototype.xml:4
 #: dat/outfits/structure/shield_capacitor_i.xml:4
@@ -5368,23 +5429,27 @@ msgstr ""
 #: dat/outfits/structure/shield_capacitor_iii.xml:4
 #: dat/outfits/structure/shield_capacitor_iv.xml:4
 msgid "Shield Modifier"
-msgstr ""
+msgstr "Modificatore di Scudi"
 
 #: dat/outfits/structure/nebular_shielding_prototype.xml:11
 msgid ""
 "A modification to the ship's shields that allows them to resist nebular "
 "volatility."
 msgstr ""
+"Una modifica agli scudi dell'astronave che gli permette di resistere alla "
+"volatilità nebulare."
 
 #: dat/outfits/structure/nebular_shielding_prototype.xml:12
 msgid ""
 "Able to compensate up to 30 MW of nebula volatility. Uses 1 MW of energy per "
 "MW of damage prevented."
 msgstr ""
+"In grado di compensare fino a 30 MW di volatilità nebulare. Utilizza 1 MW "
+"d'energia per ogni MW di danno impedito."
 
 #: dat/outfits/structure/plasteel_plating.xml:2
 msgid "Plasteel Plating"
-msgstr ""
+msgstr "Rivestimento di Plastacciaio"
 
 #: dat/outfits/structure/plasteel_plating.xml:10
 msgid ""
@@ -5394,17 +5459,23 @@ msgid ""
 "only possible with this material. Although it is no longer cutting-edge, its "
 "low price point attracts many buyers."
 msgstr ""
+"Il Plastacciaio è stato uno dei più grandi miglioramenti apportati dall'uomo "
+"sui materiali. È un'armatura poco costosa e resistente che sembra prendere "
+"il meglio sia dalla plastica che dall'acciaio, piegandosi facilmente pur "
+"mantenendo la sua incredibile resistenza. La Seconda Crescita è stata "
+"possibile grazie solamente a questo materiale. Anche se non è più "
+"all'avanguardia, il suo basso costo attrae ancora molti compratori."
 
 #: dat/outfits/structure/reactor_class_i.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:237
 msgid "Reactor Class I"
-msgstr ""
+msgstr "Reattore di Classe I"
 
 #: dat/outfits/structure/reactor_class_i.xml:4
 #: dat/outfits/structure/reactor_class_ii.xml:4
 #: dat/outfits/structure/reactor_class_iii.xml:4
 msgid "Power Modifier"
-msgstr ""
+msgstr "Modificatore di Potenza"
 
 #: dat/outfits/structure/reactor_class_i.xml:10
 msgid ""
@@ -5412,10 +5483,14 @@ msgid ""
 "energy boost you need. This does not replace the existing reactor but works "
 "alongside it and hooks up directly to the energy flux."
 msgstr ""
+"Aggiungere un reattore complementare alla tua astronave è un ottimo modo per "
+"disporre dell'incremento energetico che hai bisogno. Questo non rimpiazza il "
+"reattore esistente, ma lo affianca e si collega direttamente al flusso "
+"energetico."
 
 #: dat/outfits/structure/reactor_class_ii.xml:2
 msgid "Reactor Class II"
-msgstr ""
+msgstr "Reattore di Classe II"
 
 #: dat/outfits/structure/reactor_class_ii.xml:10
 msgid ""
@@ -5423,10 +5498,14 @@ msgid ""
 "permitting it to have greater energy density. The result is a mid-sized "
 "reactor that is best used on ships with moderate energy demands."
 msgstr ""
+"Il reattore di classe II utilizza una più recente tecnologia di fusione "
+"rispetto alla classe I, questo permette di disporre una densità di energia "
+"maggiore. Il risultato è un reattore di grandezza media che è ottimale per "
+"le astronavi con una richiesta di energia moderata."
 
 #: dat/outfits/structure/reactor_class_iii.xml:2
 msgid "Reactor Class III"
-msgstr ""
+msgstr "Reattore di Classe III"
 
 #: dat/outfits/structure/reactor_class_iii.xml:10
 msgid ""
@@ -5436,6 +5515,12 @@ msgid ""
 "III results in it only fitting comfortably on large vessels, though its "
 "energy output would be excessive for anything less."
 msgstr ""
+"L'immenso reattore di classe III fornisce abbastanza potenza per quasi ogni "
+"cosa. La tecnologia utilizzata in questo reattore è particolarmente "
+"rivoluzionaria, che permette di ottenere la migliore densità energetica "
+"delle tre classi di reattore. L'enorme grandezza della classe III fa si che "
+"sia usabile solo su grandi astronavi, anche perché l'energia prodotta "
+"sarebbe eccessiva per qualsiasi astronave più piccola."
 
 #: dat/outfits/structure/shield_capacitor_i.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:224
@@ -5480,16 +5565,16 @@ msgstr ""
 
 #: dat/outfits/structure/small_cargo_pod.xml:2
 msgid "Small Cargo Pod"
-msgstr ""
+msgstr "Piccola Capsula di Carico"
 
 #: dat/outfits/structure/small_fuel_pod.xml:2
 msgid "Small Fuel Pod"
-msgstr ""
+msgstr "Piccole Capsule di Carburante"
 
 #: dat/outfits/structure/small_shield_booster.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:240
 msgid "Small Shield Booster"
-msgstr ""
+msgstr "Piccolo Potenziatore di Scudi"
 
 #: dat/outfits/unique/bioship_pheromone_emitter.xml:2
 msgid "Bioship Pheromone Emitter"
@@ -5987,7 +6072,7 @@ msgstr ""
 #: dat/outfits/utility/emergency_shield_booster.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:220
 msgid "Emergency Shield Booster"
-msgstr ""
+msgstr "Potenziatore di Scudi di Emergenza"
 
 #: dat/outfits/utility/emergency_shield_booster.xml:4
 msgid "Shield Modification"
@@ -27764,7 +27849,7 @@ msgstr ""
 #. Add some fuel, far away so that no npc gathers it
 #: dat/board.lua:130 dat/missions/dvaered/frontier_war/fw02_escape.lua:627
 msgid "Fuel"
-msgstr ""
+msgstr "Carburante"
 
 #: dat/board.lua:134
 msgid ""
