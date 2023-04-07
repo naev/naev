@@ -795,7 +795,7 @@ function land_end ()
    local s = vn.newCharacter( taiomi.vn_scavenger() )
    vn.transition( taiomi.scavenger.transition )
    vn.na(_([[You dock at the spaceport with Scavenger following your movements. Eventually you make it to the hangar and dock with Scavenger alongside. Scavenger transmits directly to your headset.]]))
-   s(_([["This is very weird. All all human spaceports this impractical?"]]))
+   s(_([["This is very weird. Are all human spaceports this impractical?"]]))
    if mem.scavenger_no then
       s(_([["Can you teach me the basics of human society before I take my leave?"]]))
       vn.menu{
