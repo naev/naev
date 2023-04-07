@@ -183,7 +183,6 @@ Accept the mission anyway?]]), {time_limit=(mem.timelimit - time.get()), time=(p
    if not can_land then
       -- Decide if the passenger will be OK with being dropped off at Urail or Gayathi, and if mem.reward is reduced
       -- Then ask player if they're OK with that
-
       local counter = 0
       local altplanets = {}
       for key,dplanet in ipairs( mem.destsys:spobs() ) do
@@ -194,8 +193,8 @@ Accept the mission anyway?]]), {time_limit=(mem.timelimit - time.get()), time=(p
       end
 
       if counter == 0 then
-      -- Something has changed with the system map, and this mission is no longer valid
-      print( _("Error: no landable planets in the Aesir system. This mission is broken.") )
+         -- Something has changed with the system map, and this mission is no longer valid
+         print(_("Error: no landable planets in the Aesir system. This mission is broken."))
          return
       end
 
