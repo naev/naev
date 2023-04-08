@@ -38,7 +38,7 @@ end
 function shootat( target )
    --local p = ai.pilot()
    --if not target or not target:exists() or not p:faction():areEnemies(target:faction()) then
-   if not target then -- The enemy check is handled in the outfit function
+   if not target or not target:exists() then -- The enemy check is handled in the outfit function
       ai.poptask()
       return
    end
