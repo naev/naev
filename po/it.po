@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-02-22 09:01+0900\n"
-"PO-Revision-Date: 2023-04-07 19:51+0000\n"
+"PO-Revision-Date: 2023-04-08 20:52+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev-0-10-x/"
 "it/>\n"
@@ -1088,8 +1088,8 @@ msgid ""
 msgstr ""
 "Non è esattamente chiaro come questi cristalli si formino, ma possono essere "
 "trovati nelle profondità della nebulosa. Sono stranamente caldi al tocco e "
-"alcune volte pensi di sentire dei rumori provenire da essi. Tuttavia il tuo "
-"analizzatore non mostra nulla fuori dall'ordinario."
+"alcune volte pensi di sentire dei rumori provenire da essi. Tuttavia i tuoi "
+"rilevatori non mostrano nulla fuori dall'ordinario."
 
 #: dat/commodities/neodymium.xml:3
 msgid "Neodymium"
@@ -5526,42 +5526,50 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:224
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:243
 msgid "Shield Capacitor I"
-msgstr ""
+msgstr "Condensatori per Scudi I"
 
 #: dat/outfits/structure/shield_capacitor_i.xml:9
 msgid ""
 "An enhancement for the shield power system, giving small ships a better "
 "chance of escaping attackers."
 msgstr ""
+"Un miglioramento del sistema energetico degli scudi, che offre alle piccole "
+"astronavi migliori possibilità di sfuggire dagli attaccanti."
 
 #: dat/outfits/structure/shield_capacitor_ii.xml:2
 msgid "Shield Capacitor II"
-msgstr ""
+msgstr "Condensatori per Scudi II"
 
 #: dat/outfits/structure/shield_capacitor_ii.xml:9
 msgid ""
 "A more powerful shield enhancer, providing better protection during "
 "skirmishes."
 msgstr ""
+"Un miglioramento potenziato per gli scudi, che offre migliore protezione "
+"durante gli scontri."
 
 #: dat/outfits/structure/shield_capacitor_iii.xml:2
 msgid "Shield Capacitor III"
-msgstr ""
+msgstr "Condensatori per Scudi III"
 
 #: dat/outfits/structure/shield_capacitor_iii.xml:9
 msgid ""
 "A heavy duty shield enhancer for ships that face combat on a regular basis."
 msgstr ""
+"Un pesante miglioramento degli scudi per astronavi che regolarmente "
+"affrontano combattimenti."
 
 #: dat/outfits/structure/shield_capacitor_iv.xml:2
 msgid "Shield Capacitor IV"
-msgstr ""
+msgstr "Condensatori per Scudi IV"
 
 #: dat/outfits/structure/shield_capacitor_iv.xml:9
 msgid ""
 "The pinnacle in shield boosting technology, reinforcing the defences of "
 "ships fighting on the front lines."
 msgstr ""
+"L'auge nella tecnologia di miglioramento degli scudi, che rinforza le difese "
+"delle astronavi che combattono nelle prime linee del fronte."
 
 #: dat/outfits/structure/small_cargo_pod.xml:2
 msgid "Small Cargo Pod"
@@ -5578,11 +5586,11 @@ msgstr "Piccolo Potenziatore di Scudi"
 
 #: dat/outfits/unique/bioship_pheromone_emitter.xml:2
 msgid "Bioship Pheromone Emitter"
-msgstr ""
+msgstr "Emettitore di Feromoni per Bioastronave"
 
 #: dat/outfits/unique/bioship_pheromone_emitter.xml:6
 msgid "Pheromone Emitter"
-msgstr ""
+msgstr "Emettitore di Feromoni"
 
 #: dat/outfits/unique/bioship_pheromone_emitter.xml:11
 msgid ""
@@ -5593,14 +5601,21 @@ msgid ""
 "albeit with much more potency, and it may be able to have some influence on "
 "bioships in some cases."
 msgstr ""
+"Non è chiaro come esattamente le bioastronavi comunichino tra loro, in ogni "
+"caso, quello che è certo è che non utilizzano frequenze elettromagnetiche, "
+"ma è certo anche l'uso di feromoni per influenzarsi e scambiarsi "
+"informazioni tra di loro. Questo dispositivo sperimentale è progettato per "
+"mimare alcuni modelli di feromoni osservati, benché con una potenza maggiore "
+"e per questo potrebbe essere in grado di influenzare in qualche modo le "
+"bioastronavi."
 
 #: dat/outfits/unique/bioship_pheromone_emitter.xml:12
 msgid "Release bioship pheromones when used."
-msgstr ""
+msgstr "Quando è utilizzato rilascia feromoni per bioastronavi."
 
 #: dat/outfits/unique/daphnes_leap.xml:2
 msgid "Daphne's Leap"
-msgstr ""
+msgstr "Salto di Dafne"
 
 #: dat/outfits/unique/daphnes_leap.xml:10
 msgid ""
@@ -5610,10 +5625,17 @@ msgid ""
 "amount of time needed to jump, however, this comes at the cost of increasing "
 "the overall time needed to jump due to necessary in-flight calibration."
 msgstr ""
+"Questo è un modulo che si interfaccia con il sistema di navigazione "
+"dell'astronave, modificando il suo comportamento interno. Portando al limite "
+"il rilevamento dei punti di salto spaziale e i sistemi di calibrazione, è in "
+"grado di ridurre significativamente il tempo necessario per effettuare un "
+"salto spaziale, tuttavia, il prezzo da pagare è un incremento del tempo "
+"complessivo necessario per iniziale il salto spaziale a causa della "
+"necessità di calibrazione durante il volo."
 
 #: dat/outfits/unique/executor_shield_aura.xml:2
 msgid "Executor Shield Aura"
-msgstr ""
+msgstr "Scudi Aura Esecutore"
 
 #: dat/outfits/unique/executor_shield_aura.xml:6
 msgid "Aura"
@@ -5629,32 +5651,46 @@ msgid ""
 "necessary, few of such devices are available, and their usage is limited to "
 "the fearsome Imperial Executors."
 msgstr ""
+"Sviluppati come parte di un programma Imperiale confidenziale atto a "
+"spingere i limiti tecnologici degli scudi, gli Scudi Aura Esecutore "
+"utilizzano campi elettromagnetici polarizzati per sovraccaricare remotamente "
+"le astronavi nelle vicinanze. Attraverso un'attenta modulazione della "
+"polarizzazione, l'effetto può essere limitato a un sottoinsieme delle "
+"astronavi. A causa delle tecniche avanzate richieste, come la calibrazione e "
+"le rare risorse necessarie, sono disponibili pochi dispositivi di questo "
+"tipo e il loro uso è limitato ai solo terrificanti Esecutori Imperiali."
 
 #: dat/outfits/unique/executor_shield_aura.xml:12
 msgid "Gives +30% shield regeneration to all friendly ships within 3000 units."
 msgstr ""
+"Fornisce un incremento del +30% alla rigenerazioni degli scudi a tutte le "
+"astronavi alleate nel raggio di 3.000 unità."
 
 #: dat/outfits/unique/fake_transponder.xml:2
 #: dat/outfits/unique/fake_transponder.xml:6
 msgid "Fake Transponder"
-msgstr ""
+msgstr "Falso Trasponditore"
 
 #: dat/outfits/unique/fake_transponder.xml:11
 msgid ""
 "A fake transponder to make ships appear to be a non-descript and harmless "
 "independent ship."
 msgstr ""
+"Un falso trasponditore per far apparire le astronavi come se fossero "
+"astronavi indipendenti, anonime e innocue."
 
 #: dat/outfits/unique/fake_transponder.xml:12
 msgid ""
 "Makes the ship appear as independent to other ships. Becomes temporarily "
 "void when discovered."
 msgstr ""
+"Fa apparire l'astronave come indipendente alle altre astronavi. L'effetto "
+"diventa temporaneamente nullo quando scoperto."
 
 #: dat/outfits/unique/fuel_recycler.xml:2
 #: dat/outfits/unique/fuel_recycler.lua:67
 msgid "Fuel Recycler"
-msgstr ""
+msgstr "Riciclaggio del Carburante"
 
 #: dat/outfits/unique/fuel_recycler.xml:10
 msgid ""
@@ -5667,14 +5703,24 @@ msgid ""
 "materials to generate fuel. Despite this, such generation can be useful for "
 "long space journeys or when in a pinch."
 msgstr ""
+"Sebbene il processo di raffinazione del carburante per le astronavi sia "
+"possibile utilizzando materiali disponibili a basso costo con gli adeguati "
+"macchinari, la produzione è normalmente limitata a grosse stazioni fisse o a "
+"corpi astrali. Sacrificando la grandezza dei macchinari e la complessità, il "
+"Riciclaggio di Carburante è in grado di sintetizzare carburante in una forma "
+"veramente compatta. L'aspetto negativo è la significativa riduzione "
+"dell'efficienza e la richiesta di una grande quantità di materiali grezzi "
+"per generare il carburante. Trascurando questi aspetti negativi, tale "
+"generazione può essere utile durante i lunghi viaggi spaziali o in caso di "
+"necessità."
 
 #: dat/outfits/unique/fuel_recycler.xml:11
 msgid "#gAllows converting space resources to fuel.#0"
-msgstr ""
+msgstr "#gPermette la conversione di risorse spaziali in carburante.#0"
 
 #: dat/outfits/unique/hades_torch.xml:2
 msgid "Hades Torch"
-msgstr ""
+msgstr "Torcia dell'Ade"
 
 #: dat/outfits/unique/hades_torch.xml:10
 msgid ""
@@ -5682,20 +5728,23 @@ msgid ""
 "detail that to obtain maximum performance it has a tendency to burn the hull "
 "of the ship it is attached too."
 msgstr ""
+"La Torcia dell'Ade sarebbe un'eccezionale postbruciatore eccetto per il "
+"piccolo dettaglio che per ottenere le prestazioni massime ha la tendenza a "
+"bruciare la fusoliera dell'astronave a cui è attaccato."
 
 #: dat/outfits/unique/hades_torch.xml:14
 msgid "#rHot hot hot!#0"
-msgstr ""
+msgstr "#rBollente Bollente Bollente!#0"
 
 #: dat/outfits/unique/pulse_scanner.xml:2
 #: dat/missions/neutral/poi_intro.lua:233
 msgid "Pulse Scanner"
-msgstr ""
+msgstr "Rilevatore ad Impulsi"
 
 #: dat/outfits/unique/pulse_scanner.xml:6
 #: dat/outfits/utility/sensor_array.xml:4 dat/events/shipai.lua:108
 msgid "Electronic Warfare"
-msgstr ""
+msgstr "Guerra Elettronica"
 
 #: dat/outfits/unique/pulse_scanner.xml:11
 msgid ""
@@ -5709,16 +5758,29 @@ msgid ""
 "strong enough to pick up nearby faint traces and can be useful for detective "
 "work."
 msgstr ""
+"Per rilevare le astronavi, il Rilevatore ad Impulsi utilizza un approccio "
+"alternativo rispetto ai normali dispositivi di rilevazione. L'hardware è "
+"profondamente modificato per non lavorare in una modalità continua, ma per "
+"generare un segnale ad impulsi estremamente largo e successivamente "
+"analizzare la risposta riflessa che le altre astronavi generano. Questo "
+"risultato è in grado di incrementare significativamente la capacità di "
+"individuazione di un'astronave in periodi temporali brevi, tuttavia ha come "
+"controindicazione l'incremento della visibilità dell'astronave che ha "
+"generato l'impulso. Oltre a ciò, l'impulso è abbastanza forte da raccogliere "
+"deboli tracce nelle vicinanze e può essere utile per attività investigative."
 
 #: dat/outfits/unique/pulse_scanner.xml:12
 msgid ""
 "Activates for 5 seconds with a 15 second cooldown period.\n"
 "#pCan be used for tracking anomaly signals.#0"
 msgstr ""
+"Si attiva per 5 secondi con un successivo tempo di attesa di 15 secondi "
+"prima di poterlo riusare.\n"
+"#pPuò essere usato per rilevare segnali anomali.#0"
 
 #: dat/outfits/unique/valkyrie_beam.xml:2
 msgid "Valkyrie Beam"
-msgstr ""
+msgstr "Disintegratore delle Valchirie"
 
 #: dat/outfits/unique/valkyrie_beam.xml:10
 msgid ""
@@ -5728,14 +5790,22 @@ msgid ""
 "a tendency to leave the ship as a sitting duck if it is unable to destroy "
 "the target in a single shot."
 msgstr ""
+"Il Disintegratore delle Valchirie è una versione fortemente modificata del "
+"Disintegratore Ragnarǫk, in cui gli scudi dell'astronave sono rediretti in "
+"modo significativo nell'arma del disintegratore per aumentare il danno "
+"prodotto. Il risultato è un disintegratore estremamente potente che ha la "
+"tendenza a trasformare l'astronave in un facile bersaglio indifeso se non "
+"riesce a distruggere l'obiettivo al primo colpo."
 
 #: dat/outfits/unique/valkyrie_beam.xml:11
 msgid "#rDrains 80 shield per second when firing and for one second after.#0"
 msgstr ""
+"#rProsciuga 80 scudi al secondo durante lo sparo e per un secondo subito "
+"dopo.#0"
 
 #: dat/outfits/unique/veil_of_penelope.xml:2
 msgid "Veil of Penelope"
-msgstr ""
+msgstr "Velo di Penelope"
 
 #: dat/outfits/unique/veil_of_penelope.xml:10
 msgid ""
@@ -5744,10 +5814,14 @@ msgid ""
 "emitted radiation, allowing the ship to remain undetected longer when near "
 "other ships."
 msgstr ""
+"Questo dispositivo sembra essere simile ad un parassita che si aggancia ai "
+"sistemi dell'astronave. Non è precisamente chiaro cosa faccia, ma sembra che "
+"si cibi delle radiazioni emesse permettendo all'astronave di rimanente non "
+"rilevabile più a lungo quando è vicino ad altre astronavi."
 
 #: dat/outfits/unique/zd5_guardian_unit.xml:2
 msgid "ZD-5 Guardian Unit"
-msgstr ""
+msgstr "Unità Guardiano ZD-5"
 
 #: dat/outfits/unique/zd5_guardian_unit.xml:10
 msgid ""
@@ -5758,16 +5832,26 @@ msgid ""
 "although the reasons are not very clear, the project was cancelled only very "
 "few experimental models exist."
 msgstr ""
+"L'unità Guardiano ZD-5 è progettata come sistema di difesa di ultima "
+"istanza. Potenzia i campi magnetici per mantenere con tale forza l'integrità "
+"della fusoliera dell'astronave fino a quando l'energia disponibile è "
+"sufficiente. La ridotta disposizione limita il danno massimo che l'unità può "
+"compensare. Pensata in origine per essere usata per i droni di prossima "
+"generazione Za'lek, anche se le ragioni non sono molto chiare, il progetto è "
+"stato cancellato e veramente pochi modelli sperimentali sono attualmente "
+"esistenti."
 
 #: dat/outfits/unique/zd5_guardian_unit.xml:11
 msgid ""
 "Uses energy to stop lethal damage with 50% efficiency. Can only stop a "
 "maximum of 200 damage per second."
 msgstr ""
+"Utilizza l'energia per fermare danni letali con un'efficienza del 50%. Può "
+"fermare soltanto al massimo 200 danni al secondo."
 
 #: dat/outfits/utility/asteroid_scanner.xml:2
 msgid "Asteroid Scanner"
-msgstr ""
+msgstr "Rilevatore di Asteroidi"
 
 #: dat/outfits/utility/asteroid_scanner.xml:8
 msgid ""
@@ -5778,16 +5862,23 @@ msgid ""
 "composition via inverse electrical impedance. Of course, that comes at a "
 "price that not just any miner can pay."
 msgstr ""
+"Qualsiasi rilevatore può calcolare la massa, la posizione e la velocità di "
+"un asteroide. Ma i minatori preferiscono conoscere il valore dell'asteroide. "
+"Per questo scopo Milspec ha progettato una schiera di rilevatori in grado di "
+"dedurre la composizione superficiale grazie alla spettroscopia e, cosa "
+"ancora più impressionante, di inferire la composizione interna tramite "
+"impedenza elettrica inversa. Naturalmente tutto questo è fornito ad un "
+"prezzo che non tutti i minatori possono pagare."
 
 #: dat/outfits/utility/berserk_chip.xml:2
 msgid "Berserk Chip"
-msgstr ""
+msgstr "Chip della Frenesia"
 
 #: dat/outfits/utility/berserk_chip.xml:4
 #: dat/outfits/utility/emergency_stasis_inducer.xml:4
 #: dat/outfits/utility/neural_accelerator_interface.xml:4
 msgid "Speed Modifier"
-msgstr ""
+msgstr "Modificatore di Velocità"
 
 #: dat/outfits/utility/berserk_chip.xml:9
 msgid ""
@@ -5798,6 +5889,14 @@ msgid ""
 "used for a short time. Newer versions have a safety shutoff which "
 "automatically turn off the chip before hull integrity collapses."
 msgstr ""
+"Il Chip della Frenesia è qualcosa di pericoloso, usato soltanto dai piloti "
+"più temerari. Può essere completamente integrato all'interno di un'astronave "
+"per sostituire la maggior parte delle funzionalità di base e ridirigerle in "
+"capacità di combattimento. Tutto questo funziona ad un costo veramente alto "
+"all'integrità della fusoliera e ai sistemi dell'astronave ed inoltre può "
+"essere usato soltanto per un breve periodo. Nuove versioni dispongono di uno "
+"spegnimento di sicurezza che automaticamente disattivano il chip prima che "
+"l'integrità della fusoliera collassi."
 
 #: dat/outfits/utility/berserk_chip.xml:10
 msgid ""
@@ -5806,12 +5905,17 @@ msgid ""
 "second cooldown period during which movement and damage output is decreased "
 "by 20%."
 msgstr ""
+"Riceve, nel tempo, una vasta quantità di danno agli scudi e all'armatura e "
+"si spegne in automatico quando l'integrità della fusoliera scende sotto il "
+"30%. Dopo l'uso bisogna attendere 8 secondi prima di poterlo riusare ed "
+"inoltre in questo periodo il movimento e i danni che possono essere inflitti "
+"sono diminuiti del 20%."
 
 #: dat/outfits/utility/blink_drive.xml:2 dat/outfits/utility/blink_drive.xml:4
 #: dat/outfits/utility/evasive_blink_thruster.xml:4
 #: dat/outfits/utility/hyperbolic_blink_engine.xml:4
 msgid "Blink Drive"
-msgstr ""
+msgstr "Motore Teletrasportatore"
 
 #: dat/outfits/utility/blink_drive.xml:10
 msgid ""
@@ -5820,21 +5924,29 @@ msgid ""
 "often use such devices tend to have a higher amount of strong headaches than "
 "usual, but it must be safe, right?"
 msgstr ""
+"Il Motore Teletrasportatore utilizza la tecnologia per ipermotore modificata "
+"per creare una piccola piega allo spaziotempo, permettendo così "
+"all'astronave di attraversare istantaneamente brevi distanze. I piloti che "
+"usano frequentemente tale dispositivo tendono ad avere un maggior numero di "
+"forti mal di testa rispetto alla norma, ma dovrebbe essere sicuro, giusto?"
 
 #: dat/outfits/utility/blink_drive.xml:11
 msgid ""
 "Blinks you 500 units in the direction you are facing. Can only be run once "
 "every 8 seconds. Performance degrades over 800 tonnes of mass."
 msgstr ""
+"Ti teletrasporta di 500 unità nella direzione in cui è rivolta l'astronave. "
+"Può essere utilizzato una volta ogni 8 secondi. Le prestazioni degradano per "
+"masse superiori le 800 tonnellate."
 
 #: dat/outfits/utility/boarding_androids_mk1.xml:2
 msgid "Boarding Androids MK1"
-msgstr ""
+msgstr "Androidi di Abbordaggio MK1"
 
 #: dat/outfits/utility/boarding_androids_mk1.xml:4
 #: dat/outfits/utility/boarding_androids_mk2.xml:4
 msgid "Boarding Androids"
-msgstr ""
+msgstr "Androidi di Abbordaggio"
 
 #: dat/outfits/utility/boarding_androids_mk1.xml:9
 msgid ""
@@ -5843,10 +5955,15 @@ msgid ""
 "torch/can opener/spatula, the Boarding Android is ready for any situation, "
 "be it tactical or culinary."
 msgstr ""
+"Gli Androidi di Abbordaggio, della società Asimov Destructicorp, sono "
+"l'ultima tecnologia per un imbarco ostile. Sono equipaggiati con Folgoratore "
+"al Plasma/Cannello Perforante/Apriscatole/Spatole multifunzioni, gli "
+"Androidi di Abbordaggio sono pronti per qualsiasi situazione, sia tattica "
+"che culinaria."
 
 #: dat/outfits/utility/boarding_androids_mk2.xml:2
 msgid "Boarding Androids MK2"
-msgstr ""
+msgstr "Androidi di Abbordaggio MK2"
 
 #: dat/outfits/utility/boarding_androids_mk2.xml:9
 msgid ""
@@ -5854,17 +5971,20 @@ msgid ""
 "sported by its predecessor, additionally including scissor-hands and a "
 "sewing needle."
 msgstr ""
+"Gli Androidi di Abbordaggio MK2 sono una miglioria rispetto alla varietà di "
+"strumenti a disposizione dei loro predecessori, in aggiunta includono anche "
+"forbici e un ago da cucito."
 
 #: dat/outfits/utility/camouflage_burster.xml:2
 msgid "Camouflage Burster"
-msgstr ""
+msgstr "Carica di Camuffamento"
 
 #: dat/outfits/utility/camouflage_burster.xml:4
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:4
 #: dat/outfits/utility/targeting_conduit.xml:4
 #: dat/outfits/utility/weakness_harmonizer_ai.xml:4
 msgid "System Improvement"
-msgstr ""
+msgstr "Miglioramento dei Sistemi"
 
 #: dat/outfits/utility/camouflage_burster.xml:10
 msgid ""
@@ -5876,30 +5996,43 @@ msgid ""
 "temporary effect, and the device takes a long time to recalibrate and load "
 "the capacitors."
 msgstr ""
+"Nessuno conosce realmente l'origine della Carica di Camuffamento, tuttavia "
+"sembra essere derivata da una precedente versione più primitiva di ripiego "
+"usata dai contrabbandieri per evadere le pattuglie. Emettendo una barriera "
+"di forti segnali è in grado di confondere temporaneamente i sensori delle "
+"astronavi vicine e fornire un incremento significativo all'abilità di "
+"invisibilità. Tuttavia questo è soltanto un effetto di breve durata e il "
+"dispositivo richiede un lungo periodo per ricalibrarsi e caricare i "
+"condensatori."
 
 #: dat/outfits/utility/camouflage_burster.xml:11
 msgid ""
 "8 second duration with 30 second cooldown. Will not activate if the ship is "
 "unable to stealth with the bonus."
 msgstr ""
+"Durata di 8 secondi con un tempo di attesa di 30 secondi prima di essere "
+"riusata. Non si attiva se l'astronave non è in grado di rendersi invisibile "
+"con il bonus."
 
 #: dat/outfits/utility/cloaking_device.xml:2
 #: dat/outfits/utility/cloaking_device.xml:4
 #: dat/outfits/utility/cloaking_device.xml:9
 msgid "Cloaking Device"
-msgstr ""
+msgstr "Dispositivo di Mimetizzazione"
 
 #: dat/outfits/utility/cloaking_device.xml:10
 msgid "Uses 1 MJ of energy per 10 mass and drains shield in 0.5 seconds."
 msgstr ""
+"Utilizza 1 MJ di energia ogni 10 di massa e prosciuga gli scudi in 0.5 "
+"secondi."
 
 #: dat/outfits/utility/combat_hologram_projector.xml:2
 msgid "Combat Hologram Projector"
-msgstr ""
+msgstr "Proiettore per Ologrammi di Combattimento"
 
 #: dat/outfits/utility/combat_hologram_projector.xml:4
 msgid "Holograph Projector"
-msgstr ""
+msgstr "Proiettore per Ologrammi"
 
 #: dat/outfits/utility/combat_hologram_projector.xml:12
 msgid ""
@@ -5909,15 +6042,22 @@ msgid ""
 "confusion, however, when engaged in actual combat the cover is usually "
 "quickly blown away."
 msgstr ""
+"Il Proiettore per Ologrammi di Combattimento utilizza una tecnologia "
+"avanzata per creare un ologramma di un'astronave quasi indistinguibile da "
+"quella reale. Tali visualizzazioni olografiche sono molto efficienti e "
+"dirottano il fuoco nemico e creano confusione, tuttavia quando utilizzata in "
+"combattimenti autentici tale copertura normalmente svanisce rapidamente."
 
 #: dat/outfits/utility/combat_hologram_projector.xml:13
 msgid ""
 "Creates a hologram of the current ship to distract the enemy ship target."
 msgstr ""
+"Crea un ologramma dell'attuale astronave per sviare l'obiettivo "
+"dell'astronave nemica."
 
 #: dat/outfits/utility/combatai/agility_combat_ai.xml:2
 msgid "Agility Combat AI"
-msgstr ""
+msgstr "Agilità per IA da Combattimento"
 
 #: dat/outfits/utility/combatai/agility_combat_ai.xml:4
 #: dat/outfits/utility/combatai/bioneural_combat_ai.xml:4
@@ -5928,7 +6068,7 @@ msgstr ""
 #: dat/outfits/utility/combatai/pinpoint_combat_ai.xml:4
 #: dat/outfits/utility/combatai/scanning_combat_ai.xml:4
 msgid "Combat AI"
-msgstr ""
+msgstr "IA da Combattimento"
 
 #: dat/outfits/utility/combatai/agility_combat_ai.xml:11
 msgid ""
@@ -5937,10 +6077,15 @@ msgid ""
 "to increase both the overall thrust and turn of the ship without actually "
 "modifying the hardware nor increasing the energy consumption."
 msgstr ""
+"Questa IA da Combattimento aumenta le funzionalità normali dell'astronave "
+"focalizzandosi sull'agilità. Attraverso attente regolazioni dei propulsori "
+"dell'astronave, l'IA è in grado di incrementare sia che l'accelerazione "
+"complessiva che la virata dell'astronave, in realtà senza modificare "
+"l'hardware né incrementare il consumo d'energia."
 
 #: dat/outfits/utility/combatai/bioneural_combat_ai.xml:2
 msgid "Bio-Neural Combat AI"
-msgstr ""
+msgstr "IA da Combattimento Bioneurale"
 
 #: dat/outfits/utility/combatai/bioneural_combat_ai.xml:11
 msgid ""
@@ -5950,10 +6095,17 @@ msgid ""
 "process all ship sensory data to predict future events, allowing the ship to "
 "seemingly gain an edge over other ships in reaction time."
 msgstr ""
+"A differenza delle IA da Combattimento normali, che consistono di puro "
+"software, questa IA è un coprocessore quasi-organico fatto sia di tessuto "
+"vivente che di materiale inorganico. Funzionando come un piccolo lobo "
+"temporale, il coprocessore è in grado di processare tutti i dati dei sensori "
+"dell'astronave per prevedere gli eventi futuri, permettendo all'astronave di "
+"avere in apparenza un vantaggio rispetto alle altre astronave come tempo di "
+"reazione."
 
 #: dat/outfits/utility/combatai/cyclic_combat_ai.xml:2
 msgid "Cyclic Combat AI"
-msgstr ""
+msgstr "IA da Combattimento Ciclica"
 
 #: dat/outfits/utility/combatai/cyclic_combat_ai.xml:11
 msgid ""
@@ -5962,10 +6114,15 @@ msgid ""
 "weapons, the AI is able to perform seemingly trivial modifications of "
 "parameters that lead to an overall increase in fire rate."
 msgstr ""
+"Questa IA da Combattimento ha come obiettivo l'ottimizzazione del ritmo di "
+"fuoco degli armamenti montanti frontalmente. Attraverso analisi accurate del "
+"ciclo di fuoco degli armamenti, l'IA è in grado di effettuare modifiche dei "
+"parametri, in apparenza banali, che conducono ad un complessivo incremento "
+"del ritmo di fuoco."
 
 #: dat/outfits/utility/combatai/efficiency_combat_ai.xml:2
 msgid "Efficiency Combat AI"
-msgstr ""
+msgstr "Efficienza per IA da Combattimento"
 
 #: dat/outfits/utility/combatai/efficiency_combat_ai.xml:11
 msgid ""
@@ -5973,10 +6130,14 @@ msgid ""
 "power more efficient, allowing more power to be packed into the same energy "
 "usage."
 msgstr ""
+"Questa IA da Combattimento utilizza un avanzato instradamento energetico per "
+"rendere la potenza computazionale dell'astronave più efficiente e "
+"permettendo così di ottenere più potenza usando la stessa quantità di "
+"energia."
 
 #: dat/outfits/utility/combatai/hive_combat_ai.xml:2
 msgid "Hive Combat AI"
-msgstr ""
+msgstr "IA da Combattimento della Collettività"
 
 #: dat/outfits/utility/combatai/hive_combat_ai.xml:10
 msgid "You need at least 10 reputation with House Za'lek."
@@ -5990,6 +6151,12 @@ msgid ""
 "in more efficient movement of the fighters, and a better ability to respond "
 "to mishaps such as lost fighters."
 msgstr ""
+"Ispirata fortemente dalle colonie di api e altri insetti, l'IA da "
+"Combattimento della Collettività incrementa la condivisione dei dati e dei "
+"parametri tra una portaastronavi e i suoi caccia, permettendo un incremento "
+"di efficienza nelle comunicazioni. Ottenendo così movimenti dei caccia più "
+"efficienti e una miglior abilità di rispondere a contrattempi come la "
+"perdita di alcuni caccia."
 
 #: dat/outfits/utility/combatai/hunting_combat_ai.xml:2
 msgid "Hunting Combat AI"
@@ -28276,7 +28443,7 @@ msgstr ""
 #. Initialize in the case stage isn't set
 #: dat/events/bioship.lua:40
 msgid "Bioship"
-msgstr ""
+msgstr "Bioastronave"
 
 #: dat/events/bioship.lua:42
 msgid " !!"
