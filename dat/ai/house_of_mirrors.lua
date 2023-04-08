@@ -1,7 +1,7 @@
 require 'ai.core.core'
 require 'ai.core.control.escort'
 
-control_rate = math.huge
+control_rate = math.huge -- don't actually run control
 
 function create ()
    create_pre()
@@ -36,12 +36,17 @@ end
 
 -- luacheck: globals shootat (AI Task functions passed by name)
 function shootat( target )
-   local p = ai.pilot()
-   if not target or not target:exists() or not p:faction():areEnemies(target:faction()) then
+   --local p = ai.pilot()
+   --if not target or not target:exists() or not p:faction():areEnemies(target:faction()) then
+   if not target then -- The enemy check is handled in the outfit function
       ai.poptask()
       return
    end
+   ai.weapset( 3 ) -- Turret and forward weapons
 
-   ai.face( target )
-   ai.shoot()
+   local dir = ai.face( target )
+   if dir < math.rad(10) then
+      ai.shoot()
+   end
+   ai.shoot(true)
 end

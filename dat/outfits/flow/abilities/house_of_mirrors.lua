@@ -80,6 +80,7 @@ local function turnon( p, po )
       np:control( true )
       np:setLeader( p )
       np:setInvisible( true )
+      np:setInvincible( true )
       table.insert( mem.p, np )
    end
 
@@ -87,7 +88,7 @@ local function turnon( p, po )
    return true
 end
 
-local function removeprojection( p )
+local function turnoff( p, po )
    if mem.p then
       -- Remove all potential escorts
       for k,np in ipairs(mem.p) do
@@ -96,10 +97,6 @@ local function removeprojection( p )
       flow.deactivate( p )
    end
    mem.p = nil
-end
-
-local function turnoff( p, po )
-   removeprojection( p )
    po:state("off")
 end
 
@@ -123,23 +120,28 @@ function update( p, po, dt )
       -- Spin them around and shoot
       mem.off = mem.off + 0.2 * math.pi * dt
       local t = p:target()
-      if t and not p:faction():areEnenemies( t:faction() ) then
+      if t and not p:faction():areEnemies( t:faction() ) then
          t = nil
       end
       local bp = p:pos()
       for k,np in ipairs(mem.p) do
-         -- Update position
-         --np:setDir( p:dir() )
-         np:setVel( p:vel() )
-         local pos = bp + vec2.newP( mem.r, mem.off + math.pi*2*k/mem.n )
-         np:setPos( pos )
+         if np:exists() then
+            -- Update position
+            --np:setDir( p:dir() )
+            np:setVel( p:vel() )
+            local pos = bp + vec2.newP( mem.r, mem.off + math.pi*2*k/mem.n )
+            np:setPos( pos )
 
-         -- Shoot
-         np:taskClear()
-         if t then
-            np:pushtask( "shootat", t )
+            -- Shoot
+            np:taskClear()
+            if t then
+               np:pushtask( "shootat", t )
+            else
+               np:pushtask( "faceleader" )
+            end
          else
-            np:pushtask( "faceleader" )
+            turnoff( p, po )
+            return
          end
       end
    end
