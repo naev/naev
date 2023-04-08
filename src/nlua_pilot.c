@@ -754,6 +754,8 @@ static int pilotL_clone( lua_State *L )
 /**
  * @brief Removes a pilot without explosions or anything.
  *
+ * Does nothing if the pilot does not exist.
+ *
  * @usage p:rm() -- pilot will be destroyed
  *
  *    @luatparam Pilot p Pilot to remove.
@@ -761,7 +763,9 @@ static int pilotL_clone( lua_State *L )
  */
 static int pilotL_remove( lua_State *L )
 {
-   Pilot *p = luaL_validpilot(L,1);
+   Pilot *p = pilot_get( luaL_checkpilot(L,1) );
+   if (p==NULL)
+      return 0;
 
    /* Player is destroyed. */
    if (pilot_isPlayer(p))
