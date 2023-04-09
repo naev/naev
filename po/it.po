@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-03-21 23:08+0900\n"
-"PO-Revision-Date: 2023-04-08 20:52+0000\n"
+"PO-Revision-Date: 2023-04-09 17:48+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
 "Language: it\n"
@@ -729,7 +729,7 @@ msgstr "Devin Khan"
 
 #: dat/AUTHORS:146
 msgid "   * Modeller of the Phalanx"
-msgstr "   * Modello del Phalanx"
+msgstr "   * Modello del Falange"
 
 #: dat/AUTHORS:148
 msgid "Areze"
@@ -3483,7 +3483,7 @@ msgstr ""
 
 #: dat/outfits/core_system/large/milspec_orion_8601_core_system.xml:2
 msgid "Milspec Orion 8601 Core System"
-msgstr "Sistema Essenziale Milspec Orion 8601"
+msgstr "Sistema Essenziale Milspec Orione 8601"
 
 #: dat/outfits/core_system/large/milspec_orion_8601_core_system.xml:9
 msgid ""
@@ -3496,13 +3496,13 @@ msgstr ""
 "Milspec costruisce hardware ad alte prestazioni per la tua astronave per "
 "assicurarsi che tu sia sempre preparato in maniera ottimale ad affrontare i "
 "pericoli che puoi incontrare nell'universo durante i tuoi viaggi. Il sistema "
-"essenziale Orion 8601 è una soluzione di fascia alta per le astronavi "
+"essenziale Orione 8601 è una soluzione di fascia alta per le astronavi "
 "principali che fornisce prestazioni superiori in ogni campo. Vola in "
 "sicurezza, vola con Milspec."
 
 #: dat/outfits/core_system/large/milspec_orion_9901_core_system.xml:2
 msgid "Milspec Orion 9901 Core System"
-msgstr "Sistema Essenziale Milspec Orion 9901"
+msgstr "Sistema Essenziale Milspec Orione 9901"
 
 #: dat/outfits/core_system/large/milspec_orion_9901_core_system.xml:10
 msgid ""
@@ -3515,7 +3515,7 @@ msgstr ""
 "Milspec costruisce hardware ad alte prestazioni per la tua astronave per "
 "assicurarsi che tu sia sempre preparato in maniera ottimale ad affrontare i "
 "pericoli che puoi incontrare nell'universo durante i tuoi viaggi. Il sistema "
-"essenziale Orion 9901 è una soluzione di fascia alta per le astronavi "
+"essenziale Orione 9901 è una soluzione di fascia alta per le astronavi "
 "principali che fornisce prestazioni superiori in ogni campo. Vola in "
 "sicurezza, vola con Milspec."
 
@@ -3598,7 +3598,7 @@ msgstr ""
 
 #: dat/outfits/core_system/medium/milspec_orion_4801_core_system.xml:2
 msgid "Milspec Orion 4801 Core System"
-msgstr "Sistema Essenziale Milspec Orion 4801"
+msgstr "Sistema Essenziale Milspec Orione 4801"
 
 #: dat/outfits/core_system/medium/milspec_orion_4801_core_system.xml:9
 msgid ""
@@ -3610,12 +3610,12 @@ msgstr ""
 "Milspec costruisce hardware ad alte prestazioni per la tua astronave per "
 "assicurarsi che tu sia sempre preparato in maniera ottimale ad affrontare i "
 "pericoli che puoi incontrare nell'universo durante i tuoi viaggi. Il sistema "
-"essenziale Orion 4801 è una soluzione a buon prezzo ma adeguata, consigliato "
-"per i capitani esigenti. Vola in sicurezza, vola con Milspec."
+"essenziale Orione 4801 è una soluzione a buon prezzo ma adeguata, "
+"consigliato per i capitani esigenti. Vola in sicurezza, vola con Milspec."
 
 #: dat/outfits/core_system/medium/milspec_orion_5501_core_system.xml:2
 msgid "Milspec Orion 5501 Core System"
-msgstr "Sistema Essenziale Milspec Orion 5501"
+msgstr "Sistema Essenziale Milspec Orione 5501"
 
 #: dat/outfits/core_system/medium/milspec_orion_5501_core_system.xml:10
 msgid ""
@@ -3628,7 +3628,7 @@ msgstr ""
 "Milspec costruisce hardware ad alte prestazioni per la tua astronave per "
 "assicurarsi che tu sia sempre preparato in maniera ottimale ad affrontare i "
 "pericoli che puoi incontrare nell'universo durante i tuoi viaggi. Il sistema "
-"essenziale Orion 5501 è una soluzione di fascia alta per le astronavi "
+"essenziale Orione 5501 è una soluzione di fascia alta per le astronavi "
 "principali che fornisce prestazioni superiori in ogni campo. Vola in "
 "sicurezza, vola con Milspec."
 
@@ -3699,7 +3699,7 @@ msgstr ""
 
 #: dat/outfits/core_system/small/milspec_orion_2301_core_system.xml:2
 msgid "Milspec Orion 2301 Core System"
-msgstr "Sistema Essenziale Milspec Orion 2301"
+msgstr "Sistema Essenziale Milspec Orione 2301"
 
 #: dat/outfits/core_system/small/milspec_orion_2301_core_system.xml:9
 msgid ""
@@ -3711,13 +3711,13 @@ msgstr ""
 "Milspec costruisce hardware ad alte prestazioni per la tua astronave per "
 "assicurarsi che tu sia sempre preparato in maniera ottimale ad affrontare i "
 "pericoli che puoi incontrare nell'universo durante i tuoi viaggi. Il sistema "
-"essenziale Orion 2301 è una soluzione a buon prezzo ma adeguata, consigliato "
-"per i capitani esordienti. Vola in sicurezza, vola con Milspec."
+"essenziale Orione 2301 è una soluzione a buon prezzo ma adeguata, "
+"consigliato per i capitani esordienti. Vola in sicurezza, vola con Milspec."
 
 #: dat/outfits/core_system/small/milspec_orion_3701_core_system.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:224
 msgid "Milspec Orion 3701 Core System"
-msgstr "Sistema Essenziale Milspec Orion 3701"
+msgstr "Sistema Essenziale Milspec Orione 3701"
 
 #: dat/outfits/core_system/small/milspec_orion_3701_core_system.xml:10
 msgid ""
@@ -3730,7 +3730,7 @@ msgstr ""
 "Milspec costruisce hardware ad alte prestazioni per la tua astronave per "
 "assicurarsi che tu sia sempre preparato in maniera ottimale ad affrontare i "
 "pericoli che puoi incontrare nell'universo durante i tuoi viaggi. Il sistema "
-"essenziale Orion 3701 è una soluzione di fascia alta per le astronavi "
+"essenziale Orione 3701 è una soluzione di fascia alta per le astronavi "
 "principali che fornisce prestazioni superiori in ogni campo. Vola in "
 "sicurezza, vola con Milspec."
 
@@ -6146,7 +6146,7 @@ msgstr ""
 
 #: dat/outfits/utility/combatai/hunting_combat_ai.xml:2
 msgid "Hunting Combat AI"
-msgstr ""
+msgstr "IA da Combattimento per Caccia"
 
 #: dat/outfits/utility/combatai/hunting_combat_ai.xml:11
 msgid ""
@@ -6155,10 +6155,15 @@ msgid ""
 "resulting in a significant increase in damage for turret weapons, albeit "
 "with a reduced fire rate."
 msgstr ""
+"Similmente alle imboscate dei cacciatori, la IA da Combattimento per Caccia "
+"è in grado di focalizzarsi sullo sfruttamento dell'elemento sorpresa e sulle "
+"debolezze presenti nelle fusoliere delle astronavi nemiche, questo determina "
+"un incremento significativo nel danno provocato dagli armamenti sulle "
+"torrette, anche se il ritmo di fuoco risulta ridotto."
 
 #: dat/outfits/utility/combatai/pinpoint_combat_ai.xml:2
 msgid "Pinpoint Combat AI"
-msgstr ""
+msgstr "IA da Combattimento per Localizzazione"
 
 #: dat/outfits/utility/combatai/pinpoint_combat_ai.xml:11
 msgid ""
@@ -6168,10 +6173,16 @@ msgid ""
 "to increase both the range and the lock-on speed of all missile launchers on "
 "the ship."
 msgstr ""
+"Costruita per risolvere le necessità in problemi del tipo ago in un "
+"pagliaio, la IA da Combattimento per Localizzazione eccelle nel trovare e "
+"agganciare piccoli oggetti presenti nella vastità dello spazio. Attraverso "
+"la fusione con i sistemi di lancio missilistici dell'astronave, l'IA è in "
+"grado di incrementare sia il raggio e la velocità di aggancio di tutti i "
+"lanciarazzi presenti sull'astronave."
 
 #: dat/outfits/utility/combatai/scanning_combat_ai.xml:2
 msgid "Scanning Combat AI"
-msgstr ""
+msgstr "IA da Combattimento di Rilevamento"
 
 #: dat/outfits/utility/combatai/scanning_combat_ai.xml:11
 msgid ""
@@ -6179,15 +6190,19 @@ msgid ""
 "infrastructure. By making small tweaks online, it is able to effectively "
 "increase the range at which other ships are detected."
 msgstr ""
+"Questa IA da Combattimento si focalizza sull'ottimizzazione "
+"dell'infrastruttura dei sensori dell'astronave. Tramite piccoli ritocchi "
+"online è in grado di accrescere effettivamente il raggio nel quale le altre "
+"astronavi sono individuate."
 
 #: dat/outfits/utility/cryogenic_repair_nanobots.xml:2
 msgid "Cryogenic Repair Nanobots"
-msgstr ""
+msgstr "Nanobot Criogenici di Riparazione"
 
 #: dat/outfits/utility/cryogenic_repair_nanobots.xml:4
 #: dat/outfits/utility/droid_repair_crew.xml:4
 msgid "Armour Repair"
-msgstr ""
+msgstr "Riparazione dell'Armatura"
 
 #: dat/outfits/utility/cryogenic_repair_nanobots.xml:10
 msgid ""
@@ -6199,14 +6214,24 @@ msgid ""
 "fully capable of, however when the ship is in motion they go into "
 "hibernation."
 msgstr ""
+"I Nanobot di Riparazione sono in grado di effettuare quello che sembra nulla "
+"di meno che un miracolo, ripristinando la fusoliera e l'armatura delle "
+"astronavi nello stato originario. Sebbene mostrino dei comportamenti "
+"rimarchevoli in condizioni di laboratorio, in pratica hanno bisogno un "
+"ambiente alquanto immobile per effettuare i lavori. Lo fase di "
+"raffreddamento attivo di un'astronave fornisce un'opportunità eccellente ai "
+"nanobot per mostrare di cosa sono completamente capaci di fare, sebbene che "
+"quando l'astronave è in movimento loro vadano in ibernazione."
 
 #: dat/outfits/utility/cryogenic_repair_nanobots.xml:11
 msgid "Restores armour to full when performing an active cooldown."
 msgstr ""
+"Ripristina completamente l'armatura durante una fase di raffreddamento "
+"attiva."
 
 #: dat/outfits/utility/droid_repair_crew.xml:2
 msgid "Droid Repair Crew"
-msgstr ""
+msgstr "Equipaggio di Droidi per Riparazioni"
 
 #: dat/outfits/utility/droid_repair_crew.xml:10
 msgid ""
@@ -6217,10 +6242,18 @@ msgid ""
 "having a robotic repair crew. Due to the simplicity of the droid tools, they "
 "are unable to restore armour beyond 50%."
 msgstr ""
+"Questo equipaggio di droidi di manutenzione di basso livello perlustrerà la "
+"tua astronave per riparare qualsiasi danno causato dai pericoli spaziali. "
+"Sono veramente piccoli e capaci di lavorare sia all'interno che all'esterno "
+"dell'astronave. I robot prelevano l'energia necessaria dall'astronave, "
+"benché il prelievo è generalmente molto basso in confronto ai benefici di "
+"avere un equipaggio robotico di riparazione. A causa della semplicità degli "
+"strumenti a disposizione dei droidi, questi non sono in grado di riparare "
+"armature con danni superiori al 50%."
 
 #: dat/outfits/utility/droid_repair_crew.xml:11
 msgid "Can only restore armour when below 50%."
-msgstr ""
+msgstr "Possono riparare soltanto armature con danni sotto al 50%."
 
 #: dat/outfits/utility/emergency_shield_booster.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:220
@@ -6229,7 +6262,7 @@ msgstr "Potenziatore di Scudi di Emergenza"
 
 #: dat/outfits/utility/emergency_shield_booster.xml:4
 msgid "Shield Modification"
-msgstr ""
+msgstr "Modifica degli Scudi"
 
 #: dat/outfits/utility/emergency_shield_booster.xml:9
 msgid ""
@@ -6240,16 +6273,27 @@ msgid ""
 "disproportionally high and the outfit can't be active for more than a "
 "certain period of time before needing entering a cooldown cycle."
 msgstr ""
+"Questo pezzo d'hardware fornisce una derivazione energetica ausiliaria tra "
+"il reattore dell'astronave e il sistema di scudi. Quando questo dispositivo "
+"viene attivato, aumenta in modo drammatico la rigenerazione degli scudi "
+"dell'astronave tramite il trasferimento di energia grezza direttamente nei "
+"condensatori degli scudi. Il processo è veramente efficiente e in questo "
+"modo l'energia usata è sproporzionalmente elevata, ma l'equipaggiamento non "
+"può restare attivo più di un certo periodo temporale prima di necessitare di "
+"un ciclo di raffreddamento."
 
 #: dat/outfits/utility/emergency_shield_booster.xml:10
 msgid ""
 "Increases shield regeneration by 500%. Active for 4 seconds with a cooldown "
 "of 8 seconds. Uses 3 MJ of energy for each MJ of shield recovered."
 msgstr ""
+"Incrementa la rigenerazione degli scudi del 500%. Attivo per 4 secondi con "
+"un raffreddamento di 8 secondi. Usa 3 MJ di energia per ogni MJ di scudi "
+"rigenerati."
 
 #: dat/outfits/utility/emergency_stasis_inducer.xml:2
 msgid "Emergency Stasis Inducer"
-msgstr ""
+msgstr "Induttore Statico d'Emergenza"
 
 #: dat/outfits/utility/emergency_stasis_inducer.xml:9
 msgid ""
@@ -6262,10 +6306,22 @@ msgid ""
 "how this effect is created, however, doctors do not recommend prolonged "
 "usage."
 msgstr ""
+"L'Induttore Statico d'Emergenza funziona tramite la creazione di un potente "
+"campo elettromagnetico intorno all'astronave, facendo sì che il tempo sembri "
+"scorrere più lentamente rispetto al normale per qualsiasi cosa all'esterno "
+"dell'astronave e contemporaneamente velocizzando la nave, tutto il suo "
+"equipaggiamento e le sue attività. Questo ti permette di muoverti più "
+"velocemente e di infliggere molti più danni del normale. Il meccanismo è "
+"scatenato automaticamente quando l'armatura viene danneggiata senza la "
+"necessità di intervento manuale. Non è interamente chiaro come questo "
+"effetto venga creato, in ogni caso i dottori non raccomandano un suo uso "
+"prolungato."
 
 #: dat/outfits/utility/emergency_stasis_inducer.xml:10
 msgid "Triggered on armour damage. Lasts 3 seconds with 8 seconds cooldown."
 msgstr ""
+"Attivato quando l'armatura viene danneggiata. Ha durata di 3 secondi con "
+"successivi 8 secondi di raffreddamento."
 
 #: dat/outfits/utility/evasive_blink_thruster.xml:2
 msgid "Evasive Blink Thruster"
@@ -6920,7 +6976,7 @@ msgstr ""
 
 #: dat/outfits/weapons/orion_beam.xml:2
 msgid "Orion Beam"
-msgstr ""
+msgstr "Disintegratore d'Orione"
 
 #: dat/outfits/weapons/orion_beam.xml:9
 msgid ""
@@ -7337,7 +7393,7 @@ msgstr ""
 
 #: dat/ships/dvaered/dvaered_phalanx.xml:2
 msgid "Dvaered Phalanx"
-msgstr ""
+msgstr "Falange Dvaered"
 
 #: dat/ships/dvaered/dvaered_phalanx.xml:20
 msgid "You need at least 40 reputation with House Dvaered."
@@ -7758,7 +7814,7 @@ msgstr ""
 
 #: dat/ships/neutral/phalanx.xml:2
 msgid "Phalanx"
-msgstr ""
+msgstr "Falange"
 
 #: dat/ships/neutral/phalanx.xml:17
 msgid ""
@@ -7941,7 +7997,7 @@ msgstr ""
 
 #: dat/ships/pirate/pirate_phalanx.xml:2
 msgid "Pirate Phalanx"
-msgstr ""
+msgstr "Falange Pirata"
 
 #: dat/ships/pirate/pirate_phalanx.xml:17
 msgid ""
@@ -18795,7 +18851,7 @@ msgstr ""
 
 #: dat/spob/orions_anger.xml:2
 msgid "Orion's Anger"
-msgstr ""
+msgstr "Rabbia d'Orione"
 
 #: dat/spob/orions_fist.xml:2
 msgid "Orion's Fist"
@@ -26162,7 +26218,7 @@ msgstr ""
 
 #: dat/ssys/orion.xml:2
 msgid "Orion"
-msgstr ""
+msgstr "Orione"
 
 #: dat/ssys/overture.xml:2
 msgid "Overture"
@@ -109757,9 +109813,8 @@ msgid "Menu"
 msgstr "Menu"
 
 #: src/menu.c:442
-#, fuzzy
 msgid "Resume"
-msgstr "Proseguire"
+msgstr "Ricominciare"
 
 #: src/menu.c:452
 msgid "Load / Save"
