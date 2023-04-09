@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-02-22 09:01+0900\n"
-"PO-Revision-Date: 2023-04-09 17:47+0000\n"
+"PO-Revision-Date: 2023-04-10 00:50+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev-0-10-x/"
 "it/>\n"
@@ -6339,12 +6339,12 @@ msgstr ""
 
 #: dat/outfits/utility/evasive_blink_thruster.xml:2
 msgid "Evasive Blink Thruster"
-msgstr ""
+msgstr "Propulsore per Teletrasporto Evasivo"
 
 #: dat/outfits/utility/hellburner.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:234
 msgid "Hellburner"
-msgstr ""
+msgstr "Bruciatore Infernale"
 
 #: dat/outfits/utility/hellburner.xml:8
 msgid ""
@@ -6354,10 +6354,17 @@ msgid ""
 "efficiency is significantly lower than common models, so it consumes energy "
 "more rapidly and overheats much more quickly."
 msgstr ""
+"Il Bruciatore Infernale è uno dei migliori postbruciatori leggeri presenti "
+"sul mercato. Attraverso condutture di pressurizzazione proprietarie, il "
+"Bruciatore Infernale è in grado di generare molta più accelerazione rispetto "
+"alle generiche alternative. Sfortunatamente, la sua efficienza di "
+"conversione energetica è significativamente minore rispetto ai comuni "
+"modelli, per questo motivo consuma energia più rapidamente e si surriscalda "
+"più velocemente."
 
 #: dat/outfits/utility/hidden_jump_scanner.xml:2
 msgid "Hidden Jump Scanner"
-msgstr ""
+msgstr "Rilevatore di Salti Spaziali Nascosti"
 
 #: dat/outfits/utility/hidden_jump_scanner.xml:9
 msgid ""
@@ -6367,10 +6374,16 @@ msgid ""
 "needing to recharge, this scanner is capable of discovering jump points that "
 "regular sensors can't detect."
 msgstr ""
+"Un sensore tecnologico specializzato che può rilevare negli immediati "
+"dintorni la presenza di anomalie inusuali nella curvatura dello spaziotempo. "
+"Sebbene abbia un corto raggio d'azione e sia in grado di effettuare "
+"rilevazione per una limitata quantità temporale prima di necessitare di "
+"essere ricaricato, questo rilevatore è in grado di scoprire punti di salto "
+"spaziale che i normali sensori non sono in grado di individuare."
 
 #: dat/outfits/utility/hullcoating/faraday_tempest_coating.xml:2
 msgid "Faraday Tempest Coating"
-msgstr ""
+msgstr "Copertura Tempesta di Faraday"
 
 #: dat/outfits/utility/hullcoating/faraday_tempest_coating.xml:4
 #: dat/outfits/utility/hullcoating/lattice_thermal_coating.xml:4
@@ -6379,7 +6392,7 @@ msgstr ""
 #: dat/outfits/utility/hullcoating/nexus_stealth_coating.xml:4
 #: dat/outfits/utility/hullcoating/photovoltaic_nanobot_coating.xml:4
 msgid "Hull Coating"
-msgstr ""
+msgstr "Copertura per Fusoliera"
 
 #: dat/outfits/utility/hullcoating/faraday_tempest_coating.xml:9
 msgid ""
@@ -6389,10 +6402,16 @@ msgid ""
 "harmless evanescent fields, greatly speeding up the recovery from system "
 "damage."
 msgstr ""
+"Le armi ioniche moderne hanno trovato una modalità per superare l'armatura "
+"delle astronavi e attaccare direttamente i sistemi elettronici vulnerabili. "
+"La Copertura Tempesta di Faraday è in grado di resistere alla "
+"disabilitazione delle armi tramite la sua dissipazione ottenuta con campi "
+"evanescenti inoffensivi, velocizzando grandemente il ripristino dei sistemi "
+"danneggiati."
 
 #: dat/outfits/utility/hullcoating/lattice_thermal_coating.xml:2
 msgid "Lattice Thermal Coating"
-msgstr ""
+msgstr "Copertura Termica Reticolare"
 
 #: dat/outfits/utility/hullcoating/lattice_thermal_coating.xml:9
 msgid ""
@@ -6402,6 +6421,12 @@ msgid ""
 "a special nano-material that is able to radiate through itself, allowing for "
 "increased heat dissipation."
 msgstr ""
+"Dato che non vi è atmosfera nello spazio, le astronavi si affidano alla "
+"radiazione per sbarazzarsi passivamente dell'eccesso di calore. Tale "
+"radiazione è generalmente limitata dalla grandezza dell'astronave. La "
+"Copertura Termica Reticolare permette di superare questa limitazione grazie "
+"all'uso di un nano-materiale speciale che è in grado di irradiare attraverso "
+"sé stesso, permettendo un incremento nella dissipazione del calore."
 
 #: dat/outfits/utility/hullcoating/milspec_impactoplastic_coating.xml:2
 msgid "Milspec Impacto-Plastic Coating"
