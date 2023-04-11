@@ -43,8 +43,9 @@ function shootat( target )
       return
    end
    ai.weapset( 3 ) -- Turret and forward weapons
+   ai.settarget( target )
 
-   local dir = ai.face( target )
+   local dir = ai.aim( target )
    if dir < math.rad(10) then
       ai.shoot()
    end
