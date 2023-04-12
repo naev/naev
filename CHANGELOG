@@ -42,6 +42,7 @@
    * taiomi: fixed claim check for last mission
    * Fixed some typos
    * Fixed equipment of Lancelot in "Sharkman Is Back" mission
+   * Fixed clicking on jump points also selecting planets in some cases
    * nelly02: Nelly now stops recommending stuff that only does a little disable
    * shadowvigil: Fixed mission not spawning escorts
    * flf_patrol: Missions should no longer be able to have ridiculously low credit rewards
