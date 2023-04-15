@@ -100,6 +100,11 @@ function luaspob.can_land ()
 end
 
 function luaspob.comm ()
+   local s = mem.spob:services()
+   if not s.inhabited then
+      return false
+   end
+
    local fct = mem.spob:faction()
    vn.clear()
    vn.scene()
@@ -181,6 +186,7 @@ function luaspob.comm ()
    vn.run()
 
    mem.spob:canLand() -- forcess a refresh of condition
+   return true
 end
 
 return luaspob

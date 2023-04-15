@@ -192,12 +192,6 @@ int comm_openPilot( unsigned int pilot )
  */
 int comm_openSpob( Spob *spob )
 {
-   /* Must not be disabled. */
-   if (!spob_hasService(spob, SPOB_SERVICE_INHABITED)) {
-      player_message(_("%s does not respond."), spob_name(spob));
-      return 0;
-   }
-
    /* Don't close automatically. */
    comm_commClose = 0;
 
@@ -220,12 +214,19 @@ int comm_openSpob( Spob *spob )
       comm_open = 1;
       spob_luaInitMem( spob );
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, spob->lua_comm); /* f */
-      if (nlua_pcall( spob->lua_env, 0, 0 )) {
+      if (nlua_pcall( spob->lua_env, 0, 1 )) {
          WARN(_("Spob '%s' failed to run '%s':\n%s"), spob->name, "comm", lua_tostring(naevL,-1));
          lua_pop(naevL,1);
       }
+      else {
+         int commed = lua_toboolean(naevL,-1);
+         lua_pop(naevL,1);
+         if (commed) {
+            comm_open = 0;
+            return 0;
+         }
+      }
       comm_open = 0;
-      return 0;
    }
 
    player_message(_("%s does not respond."), spob_name(spob));
