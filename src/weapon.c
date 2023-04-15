@@ -337,7 +337,7 @@ static void think_seeker( Weapon* w, double dt )
    double diff;
    Pilot *p;
    vec2 v;
-   double t, turn_max, d, jc, speed_mod;
+   double turn_max, d, jc, speed_mod;
 
    if (w->target == w->parent)
       return; /* no self shooting */
@@ -397,31 +397,63 @@ static void think_seeker( Weapon* w, double dt )
 
       case WEAPON_STATUS_JAMMED_SLOWED: /* Slowed down. */
       case WEAPON_STATUS_UNJAMMED: /* Work as expected */
+         turn_max = w->outfit->u.lau.turn;// * ewtrack;
+
          /* Smart seekers take into account ship velocity. */
          if (w->outfit->u.lau.ai == AMMO_AI_SMART) {
+            /*
+              The control interval is short enough compared to the maximum turn rate,
+              so we can use a bang-bang control.
+            */
+            vec2_csetmin( &v, p->solid->pos.x - w->solid->pos.x,
+                  p->solid->pos.y - w->solid->pos.y );
 
-            /* Calculate time to reach target. */
-            vec2_cset( &v, p->solid.pos.x - w->solid.pos.x,
-                  p->solid.pos.y - w->solid.pos.y );
-            t = vec2_odist( &v ) / w->outfit->u.lau.speed_max;
-
-            /* Calculate target's movement. */
-            vec2_cset( &v, v.x + t*(p->solid.vel.x - w->solid.vel.x),
-                  v.y + t*(p->solid.vel.y - w->solid.vel.y) );
-
-            /* Get the angle now. */
-            diff = angle_diff(w->solid.dir, VANGLE(v) );
+#define QUADRATURE(ref, v) ((v).x * (-(ref).y) + (v).y * (ref).x)
+            if (vec2_dot(&v, &w->solid->vel) < 0) {
+               /*
+                 The target's behind the weapon.
+                 Make U-turn.
+               */
+               if (QUADRATURE(w->solid->vel, v) > 0)
+                  weapon_setTurn( w, turn_max );
+               else
+                  weapon_setTurn( w, -turn_max );
+            }
+            else {
+               vec2 r_vel;
+               vec2_csetmin( &r_vel, p->solid->vel.x - w->solid->vel.x,
+                     p->solid->vel.y - w->solid->vel.y);
+               if (vec2_dot(&r_vel, &w->solid->vel) > 0) {
+                  /*
+                    The target is going away.
+                    Run parallel to the target.
+                  */
+                  if (QUADRATURE(w->solid->vel, p->solid->vel) > 0)
+                     weapon_setTurn( w, turn_max );
+                  else
+                     weapon_setTurn( w, -turn_max );
+               }
+               else {
+                  /*
+                    Match the horizontal speed of the missile to the target's.
+                    (cf. Proportional navigation)
+                    It assumes that the approaching speed is a positive number.
+                  */
+                  if (QUADRATURE(r_vel, v) < 0)
+                     weapon_setTurn( w, turn_max );
+                  else
+                     weapon_setTurn( w, -turn_max );
+               }
+            }
+#undef QUADRATURE
          }
          /* Other seekers are simplistic. */
          else {
-            diff = angle_diff(w->solid.dir, /* Get angle to target pos */
-                  vec2_angle(&w->solid.pos, &p->solid.pos));
-         }
-
-         /* Set turn. */
-         turn_max = w->outfit->u.lau.turn;// * ewtrack;
-         weapon_setTurn( w, CLAMP( -turn_max, turn_max,
+            diff = angle_diff(w->solid->dir, /* Get angle to target pos */
+                  vec2_angle(&w->solid->pos, &p->solid->pos));
+            weapon_setTurn( w, CLAMP( -turn_max, turn_max,
                   10 * diff * w->outfit->u.lau.turn ));
+         }
          break;
 
       case WEAPON_STATUS_JAMMED: /* Continue doing whatever */
