@@ -405,30 +405,30 @@ static void think_seeker( Weapon* w, double dt )
               The control interval is short enough compared to the maximum turn rate,
               so we can use a bang-bang control.
             */
-            vec2_csetmin( &v, p->solid->pos.x - w->solid->pos.x,
-                  p->solid->pos.y - w->solid->pos.y );
+            vec2_csetmin( &v, p->solid.pos.x - w->solid.pos.x,
+                  p->solid.pos.y - w->solid.pos.y );
 
 #define QUADRATURE(ref, v) ((v).x * (-(ref).y) + (v).y * (ref).x)
-            if (vec2_dot(&v, &w->solid->vel) < 0) {
+            if (vec2_dot(&v, &w->solid.vel) < 0) {
                /*
                  The target's behind the weapon.
                  Make U-turn.
                */
-               if (QUADRATURE(w->solid->vel, v) > 0)
+               if (QUADRATURE(w->solid.vel, v) > 0)
                   weapon_setTurn( w, turn_max );
                else
                   weapon_setTurn( w, -turn_max );
             }
             else {
                vec2 r_vel;
-               vec2_csetmin( &r_vel, p->solid->vel.x - w->solid->vel.x,
-                     p->solid->vel.y - w->solid->vel.y);
-               if (vec2_dot(&r_vel, &w->solid->vel) > 0) {
+               vec2_csetmin( &r_vel, p->solid.vel.x - w->solid.vel.x,
+                     p->solid.vel.y - w->solid.vel.y);
+               if (vec2_dot(&r_vel, &w->solid.vel) > 0) {
                   /*
                     The target is going away.
                     Run parallel to the target.
                   */
-                  if (QUADRATURE(w->solid->vel, p->solid->vel) > 0)
+                  if (QUADRATURE(w->solid.vel, p->solid.vel) > 0)
                      weapon_setTurn( w, turn_max );
                   else
                      weapon_setTurn( w, -turn_max );
@@ -449,8 +449,8 @@ static void think_seeker( Weapon* w, double dt )
          }
          /* Other seekers are simplistic. */
          else {
-            diff = angle_diff(w->solid->dir, /* Get angle to target pos */
-                  vec2_angle(&w->solid->pos, &p->solid->pos));
+            diff = angle_diff(w->solid.dir, /* Get angle to target pos */
+                  vec2_angle(&w->solid.pos, &p->solid.pos));
             weapon_setTurn( w, CLAMP( -turn_max, turn_max,
                   10 * diff * w->outfit->u.lau.turn ));
          }
