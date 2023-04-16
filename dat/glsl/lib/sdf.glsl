@@ -24,7 +24,6 @@ float cro( vec2 a, vec2 b ) { return a.x*b.y - a.y*b.x; }
 float ndot( vec2 a, vec2 b ) { return a.x*b.x - a.y*b.y; }
 float dot2( vec2 v ) { return dot(v,v); }
 
-
 /* Circle. */
 float sdCircle( vec2 p, float r )
 {

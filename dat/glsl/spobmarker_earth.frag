@@ -7,7 +7,7 @@ float marker_func( vec2 pos, float rad )
       length( pos - vec2( 0.0, clamp( pos.y, -rad, rad ) ) )
    );
    float dcirc = abs( sdCircle( pos, rad ) );
-   return  min( dcirc, dplus );
+   return min( dcirc, dplus );
 }
 
 #include "spobmarker_base.frag"
