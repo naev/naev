@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-03-21 23:08+0900\n"
-"PO-Revision-Date: 2023-01-08 20:50+0000\n"
-"Last-Translator: Jérémie Guegain <Mirejai@users.noreply.hosted.weblate.org>\n"
+"PO-Revision-Date: 2023-04-17 00:52+0000\n"
+"Last-Translator: John Donne <akheron@zaclys.net>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.15.1-dev\n"
+"X-Generator: Weblate 4.17-dev\n"
 
 #: physfs.c:1
 msgid "no error"
@@ -840,7 +840,7 @@ msgstr "ANCÊTRE PIRATE"
 
 #: artwork/gfx/loading/dalton.webp.txt:1
 msgid "DALTON"
-msgstr ""
+msgstr "DALTON"
 
 #: artwork/gfx/loading/diablo.webp.txt:1
 #, fuzzy
@@ -854,7 +854,7 @@ msgstr "DRONE"
 
 #: artwork/gfx/loading/euler.webp.txt:1
 msgid "EULER"
-msgstr ""
+msgstr "EULER"
 
 #: artwork/gfx/loading/fidelity.webp.txt:1
 #, fuzzy
@@ -863,7 +863,7 @@ msgstr "FIDÉLITÉ SIRIUS"
 
 #: artwork/gfx/loading/gauss.webp.txt:1
 msgid "GAUSS"
-msgstr ""
+msgstr "GAUSS"
 
 #: artwork/gfx/loading/gawain.webp.txt:1
 #, fuzzy
@@ -1470,11 +1470,11 @@ msgstr "Le plasma interfère avec les systèmes de combat !"
 
 #: dat/effects/ethereal.xml:2
 msgid "Ethereal"
-msgstr ""
+msgstr "Éthéré"
 
 #: dat/effects/ethereal.xml:3
 msgid "Ship is ethereal."
-msgstr ""
+msgstr "Le vaisseau est éthéré."
 
 #: dat/effects/fadein.xml:2
 msgid "Fade-In"
@@ -1543,7 +1543,7 @@ msgstr "Brûlure plasma II"
 
 #: dat/effects/ride_of_the_valkyries.xml:2
 msgid "Ride of the Valkyries"
-msgstr ""
+msgstr "Chevauchée des Valkyries"
 
 #: dat/effects/ride_of_the_valkyries.xml:3
 msgid "The Valkyrie beam is draining your shields!"
@@ -1555,7 +1555,7 @@ msgstr ""
 
 #: dat/effects/shieldaura.xml:3
 msgid "Under the effects of a shield aura."
-msgstr ""
+msgstr "Sous l'effet d'une aura de protection."
 
 #: dat/effects/shieldboost.xml:2
 msgid "Shield Boost"
@@ -1567,19 +1567,19 @@ msgstr "Les boucliers sont en train d'être boostées."
 
 #: dat/effects/wormhole_enter.xml:2
 msgid "Wormhole Enter"
-msgstr ""
+msgstr "Entrée d'un trou de ver"
 
 #: dat/effects/wormhole_enter.xml:3
 msgid "Entering a wormhole!"
-msgstr ""
+msgstr "Entrée dans un trou de ver !"
 
 #: dat/effects/wormhole_exit.xml:2
 msgid "Wormhole Exit"
-msgstr ""
+msgstr "Sortie de trou de ver"
 
 #: dat/effects/wormhole_exit.xml:3
 msgid "Exiting a wormhole!"
-msgstr ""
+msgstr "Sortie d'un trou de ver !"
 
 #: dat/factions/black_lotus.xml:2
 msgid "Black Lotus"
@@ -2055,18 +2055,22 @@ msgid ""
 msgstr ""
 
 #: dat/factions/wild_ones.xml:2
+#, fuzzy
 msgid "Wild Ones"
-msgstr ""
+msgstr "Les Sauvages"
 
 #: dat/factions/wild_ones.xml:5
 msgid "Wild Ones Pirate Clan"
-msgstr ""
+msgstr "Le Clan des Pirates Sauvages"
 
 #: dat/factions/wild_ones.xml:12
 msgid ""
 "The Wild Ones Pirate Clan is a violent and loosely organized band of pirates "
 "that control the Haven sector between Empire and Soromid territories."
 msgstr ""
+"Le Clan des Pirates Sauvages est un groupe de pirates violent et lâchement "
+"organisé qui contrôle le secteur du Havre, situé entre les territoires de "
+"l'Empire et ceux des Soromid."
 
 #. Gets reset on enter system
 #. Must be goal system
@@ -2109,7 +2113,7 @@ msgstr ""
 
 #: dat/outfits/accessory/air_freshener.xml:2
 msgid "Air Freshener"
-msgstr ""
+msgstr "Rafraîchisseur d'air"
 
 #: dat/outfits/accessory/air_freshener.xml:5
 #: dat/outfits/accessory/black_cat_doll.xml:5
@@ -2142,6 +2146,11 @@ msgid ""
 "modern ships' powerful filtration systems, these days they are entirely "
 "cosmetic."
 msgstr ""
+"Apparemment les rafraîchisseurs d'air furent traditionnellement utilisés "
+"dans les véhicules des humains comme ornements. Ils répandaient "
+"habituellement des odeurs mais, puisque ceux-ci n'ont aucun effet en raison "
+"des puissants systèmes de filtration des vaisseaux modernes, ils sont de nos "
+"jours entièrement cosmétiques."
 
 #: dat/outfits/accessory/black_cat_doll.xml:2
 msgid "Black Cat Doll"
@@ -2163,7 +2172,7 @@ msgstr "#pUniquement activé en mode furtif.#0"
 
 #: dat/outfits/accessory/broken_nebular_shielding_prototype.xml:2
 msgid "Broken Nebular Shielding Prototype"
-msgstr ""
+msgstr "Prototype de Bouclier Nébuleux Brisé"
 
 #: dat/outfits/accessory/broken_nebular_shielding_prototype.xml:11
 msgid ""
