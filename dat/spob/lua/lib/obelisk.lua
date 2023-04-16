@@ -1,6 +1,7 @@
 local vn = require 'vn'
 local fmt = require "format"
 local ccomm = require "common.comm"
+local srs = require "common.sirius"
 
 local obelisk = {}
 
@@ -12,7 +13,7 @@ end
 
 function obelisk.can_land ()
    -- No psychic powers
-   if not var.peek("sirius_psychic") then
+   if not srs.playerIsPsychic() then
       return false, _("The obelisk seems to be inert.")
    end
 
@@ -21,7 +22,7 @@ end
 
 function obelisk.comm ()
    -- No psychic powers
-   if not var.peek("sirius_psychic") then
+   if not srs.playerIsPsychic() then
       player.msg(_("The obelisk seems to be inert."), true)
       return true
    end

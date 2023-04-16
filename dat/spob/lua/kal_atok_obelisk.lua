@@ -1,7 +1,7 @@
 local obelisk = require "spob.lua.lib.obelisk"
 
 function init( spb )
-   return obelisk.init( spb, "Kal Atok", function ()
+   return obelisk.init( spb, "Test of Enlightenment", function ()
       return true, ""
    end )
 end

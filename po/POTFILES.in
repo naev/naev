@@ -2124,7 +2124,6 @@ dat/ssys/jackson.xml
 dat/ssys/jade.xml
 dat/ssys/jervis.xml
 dat/ssys/jommel.xml
-dat/ssys/kal_atok.xml
 dat/ssys/kansas.xml
 dat/ssys/karman.xml
 dat/ssys/katami.xml
@@ -2405,6 +2404,7 @@ dat/ssys/tempus.xml
 dat/ssys/tepdania.xml
 dat/ssys/tepvin.xml
 dat/ssys/terminus.xml
+dat/ssys/test_of_enlightenment.xml
 dat/ssys/theras.xml
 dat/ssys/thirty_stars.xml
 dat/ssys/thorndyke.xml
@@ -2827,6 +2827,7 @@ dat/events/shipai.lua
 dat/events/shiplog.lua
 dat/events/sirius/achack04.lua
 dat/events/sirius/preach.lua
+dat/events/sirius/test_of_enlightenment.lua
 dat/events/soromid/ferals.lua
 dat/events/standing.lua
 dat/events/start.lua
