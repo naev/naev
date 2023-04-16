@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Kal Atok Obelisk">
+ <feature>#yObelisk#0</feature>
+ <lua>spob/lua/kal_atok_obelisk.lua</lua>
+ <marker>spobmarker_wormhole</marker>
+ <pos x="8040.138268" y="-4638.671909"/>
+ <GFX>
+  <space>A02.webp</space>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <base>0.000000</base>
+  <bonus>0.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>Obelisk</class>
+  <population>0</population>
+  <hide>0.100000</hide>
+  <services/>
+ </general>
+ <tags>
+  <tag>obelisk</tag>
+ </tags>
+</spob>

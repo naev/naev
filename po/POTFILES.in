@@ -1129,6 +1129,7 @@ dat/spob/jugreny.xml
 dat/spob/jurai.xml
 dat/spob/juran.xml
 dat/spob/kaira.xml
+dat/spob/kal_atok_obelisk.xml
 dat/spob/kanar.xml
 dat/spob/kanel.xml
 dat/spob/kansas_i.xml
@@ -2123,6 +2124,7 @@ dat/ssys/jackson.xml
 dat/ssys/jade.xml
 dat/ssys/jervis.xml
 dat/ssys/jommel.xml
+dat/ssys/kal_atok.xml
 dat/ssys/kansas.xml
 dat/ssys/karman.xml
 dat/ssys/katami.xml
@@ -2722,6 +2724,7 @@ dat/bkg/nebu_ngc_2440.lua
 dat/bkg/nebu_ngc_2440_2.lua
 dat/bkg/nebu_ngc_5189.lua
 dat/bkg/nebu_ngc_6210.lua
+dat/bkg/obelisk.lua
 dat/bkg/plasmastorm.lua
 dat/bkg/pso.lua
 dat/bkg/stellarwind.lua
@@ -2806,6 +2809,7 @@ dat/events/npc/thurion.lua
 dat/events/npc/trader.lua
 dat/events/npc/wild_ones.lua
 dat/events/npc/zalek.lua
+dat/events/obelisk.lua
 dat/events/pers.lua
 dat/events/pers/dvaered.lua
 dat/events/pers/empire.lua
@@ -3358,6 +3362,7 @@ dat/spob/lua/hypergate_gamma_polaris.lua
 dat/spob/lua/hypergate_kiwi.lua
 dat/spob/lua/hypergate_ngc14549.lua
 dat/spob/lua/hypergate_ruadan.lua
+dat/spob/lua/kal_atok_obelisk.lua
 dat/spob/lua/lib/hypergate.lua
 dat/spob/lua/lib/spob.lua
 dat/spob/lua/lib/wormhole.lua
