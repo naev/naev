@@ -289,6 +289,10 @@ SHADERS = [
       fs_path = "spobmarker_wormhole.frag",
    ),
    SimpleShader(
+      name = "spobmarker_obelisk",
+      fs_path = "spobmarker_obelisk.frag",
+   ),
+   SimpleShader(
       name = "jumpmarker",
       fs_path = "jumpmarker.frag",
    ),

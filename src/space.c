@@ -2171,6 +2171,7 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
    spob->hide        = 0.01;
    spob->radius      = -1.;
    spob->presence.faction = -1;
+   spob->marker_scale = 1.; /* Default scale. */
    comms             = array_create( Commodity* );
    /* Lua stuff. */
    spob->lua_env     = LUA_NOREF;
@@ -2198,6 +2199,7 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
       if (xml_isNode(node, "marker")) {
          const char *s = xml_get(node);
          spob->marker = shaders_getSimple( s );
+         xmlr_attr_float_def(node,"scale",spob->marker_scale,1.);
          if (spob->marker == NULL)
             WARN(_("Spob '%s' has unknown marker shader '%s'!"), spob->name, s );
          continue;

@@ -1399,6 +1399,9 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res, 
       h  *= 2.;
    }
 
+   /* Scale according to marker. */
+   vr *= spob->marker_scale;
+
    /* Is marked. */
    if (spob_isKnown( spob ) && spob_isFlag( spob, SPOB_MARKED )) {
       glColour highlighted = cRadar_hilight;

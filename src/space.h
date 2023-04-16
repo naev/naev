@@ -94,6 +94,7 @@ typedef struct Spob_ {
    vec2 pos;  /**< position in star system */
    double radius; /**< Radius of the space object. WARNING: lazy-loaded with gfx_space. */
    const SimpleShader *marker; /**< GUI marker. */
+   double marker_scale; /**< Scales the marker. */
 
    /* Spob details. */
    char *class;         /**< Spob type. Uses Star Trek classification system for planets (https://stexpanded.fandom.com/wiki/Spob_classifications) */
