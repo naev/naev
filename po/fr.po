@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-03-21 23:08+0900\n"
 "PO-Revision-Date: 2023-04-17 00:52+0000\n"
-"Last-Translator: John Donne <akheron@zaclys.net>\n"
+"Last-Translator: Theodore DA <my.super.garbage.collector@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -1332,7 +1332,7 @@ msgstr ""
 
 #: dat/commodities/yttrium.xml:3
 msgid "Yttrium"
-msgstr ""
+msgstr "Yttrium"
 
 #: dat/commodities/yttrium.xml:4
 msgid ""
