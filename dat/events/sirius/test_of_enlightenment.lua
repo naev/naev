@@ -12,14 +12,15 @@ local prevship
 local markers
 
 local function marker_set( n, state )
-   markers[n].p:effectClear()
+   local m = markers[n]
+   m.p:effectClear()
    if state then
-      markers[n].p:effectAdd("Psychic Orb On")
+      m.p:effectAdd("Psychic Orb On")
    else
-      markers[n].p:effectAdd("Psychic Orb Off")
+      m.p:effectAdd("Psychic Orb Off")
    end
-   markers[n].on = state
-   markers[n].t = naev.ticksGame()
+   m.on = state
+   m.t = naev.ticksGame()
 end
 
 local function marker_toggle( n )
@@ -49,6 +50,11 @@ function create ()
    pp:effectAdd("Astral Projection")
    pp:setDir( math.pi*0.5 )
    pp:setPos( vec2.new() )
+   pp:intrinsicSet( {
+      thrust_mod     = -50,
+      speed_mod      = -50,
+      turn_mod       = -50,
+   }, true ) -- overwrite all
 
    -- First puzzle
    markers = {}
