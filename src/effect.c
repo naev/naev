@@ -195,6 +195,13 @@ int effect_load (void)
    ne = array_size(effect_list);
    qsort( effect_list, ne, sizeof(EffectData), effect_cmp );
 
+#if DEBUGGING
+   /* Check to see if there are name collisions. */
+   for (int i=1; i<array_size(effect_list); i++)
+      if (strcmp( effect_list[i-1].name, effect_list[i].name )==0)
+         WARN(_("Duplicated effect name '%s' detected!"), effect_list[i].name);
+#endif /* DEBUGGING */
+
    if (conf.devmode) {
       time = SDL_GetTicks() - time;
       DEBUG( n_( "Loaded %d Effect in %.3f s", "Loaded %d Effects in %.3f s", ne ), ne, time/1000. );
