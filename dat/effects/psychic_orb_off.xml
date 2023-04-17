@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<effect name="Psychic Orb On">
+<effect name="Psychic Orb Off">
  <description>A psychic orb that is off.</description>
  <duration>inf</duration>
  <icon>/gfx/misc/icons/angel-outfit.webp</icon>
  <overwrite>psychic_orb</overwrite>
- <shader>effects/psychic_orb_on.frag</shader>
+ <shader>effects/psychic_orb_off.frag</shader>
 </effect>
