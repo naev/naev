@@ -90,6 +90,7 @@ static int pilotL_nav( lua_State *L );
 static int pilotL_activeWeapset( lua_State *L );
 static int pilotL_weapset( lua_State *L );
 static int pilotL_weapsetHeat( lua_State *L );
+static int pilotL_weapsetSetInrange( lua_State *L );
 static int pilotL_actives( lua_State *L );
 static int pilotL_outfitsList( lua_State *L );
 static int pilotL_outfits( lua_State *L );
@@ -249,6 +250,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "activeWeapset", pilotL_activeWeapset },
    { "weapset", pilotL_weapset },
    { "weapsetHeat", pilotL_weapsetHeat },
+   { "weapsetSetInrange", pilotL_weapsetSetInrange },
    { "actives", pilotL_actives },
    { "outfitsList", pilotL_outfitsList },
    { "outfits", pilotL_outfits },
@@ -1826,6 +1828,28 @@ static int pilotL_weapsetHeat( lua_State *L )
    lua_pushnumber( L, heat_mean );
    lua_pushnumber( L, heat_peak );
 
+   return 2;
+}
+
+/**
+ * @brief Sets whether a pilot's weapon set does inrange checks.
+ *
+ *    @luatparam Pilot p Pilot to get weapset weapon of.
+ *    @luatparam[opt=nil] number id ID of the weapon set to set inrange check status, or nil for all.
+ *    @luatparam boolean docheck Whether or not to do inrange checks.
+ * @luafunc weapsetSetInrange
+ */
+static int pilotL_weapsetSetInrange( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   int id = luaL_optinteger(L,2,-1);
+   int inrange = lua_toboolean(L,3);
+   if (id<0) {
+      for (int i=0; i<PILOT_WEAPON_SETS; i++)
+         pilot_weapSetInrange( p, i, inrange );
+   }
+   else
+      pilot_weapSetInrange( p, id, inrange );
    return 2;
 }
 
