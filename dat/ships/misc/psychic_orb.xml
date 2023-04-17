@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Psychic Orb">
+ <points>1</points>
+ <base_type>Psychic Orb</base_type>
+ <GFX size="46">koala</GFX><!-- TODO fix-->
+ <gfx_comm>spob/exterior/onewing_goddard.webp</gfx_comm>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class display="Unknown">Interceptor</class>
+ <price>1</price>
+ <time_mod>1</time_mod>
+ <fabricator>N/A</fabricator>
+ <description>Not meant for the player.</description>
+ <mission />
+ <movement>
+  <thrust>0.001</thrust>
+  <turn>0.001</turn>
+  <speed>0.001</speed>
+ </movement>
+ <health>
+  <absorb>200</absorb>
+  <shield>0</shield>
+  <armour>100</armour>
+  <energy>0</energy>
+  <shield_regen>0</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>0</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>0</cpu>
+  <crew>1</crew>
+  <mass>999999</mass>
+  <fuel>0</fuel>
+  <fuel_consumption>100</fuel_consumption>
+  <cargo>0</cargo>
+ </characteristics>
+ <slots />
+ <tags>
+  <tag>noplayer</tag>
+  <tag>noequip</tag>
+ </tags>
+</ship>

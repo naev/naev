@@ -79,6 +79,8 @@ dat/effects/hypergate_exit.xml
 dat/effects/paralyzing_plasma.xml
 dat/effects/plasma_burn.xml
 dat/effects/plasma_burn_ii.xml
+dat/effects/psychic_orb_off.xml
+dat/effects/psychic_orb_on.xml
 dat/effects/ride_of_the_valkyries.xml
 dat/effects/shieldaura.xml
 dat/effects/shieldboost.xml
@@ -503,6 +505,7 @@ dat/ships/feral_bioship/taitamariki.xml
 dat/ships/misc/fort_raelid.xml
 dat/ships/misc/fort_raglan.xml
 dat/ships/misc/onewing_goddard.xml
+dat/ships/misc/psychic_orb.xml
 dat/ships/misc/sindbad.xml
 dat/ships/neutral/admonisher.xml
 dat/ships/neutral/ancestor.xml
