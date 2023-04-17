@@ -47,6 +47,7 @@ function create ()
 
    -- Set up position
    local pp = player.pilot()
+   pp:weapsetSetInrange(nil,false)
    pp:effectAdd("Astral Projection")
    pp:setDir( math.pi*0.5 )
    pp:setPos( vec2.new() )
@@ -115,12 +116,12 @@ function puzzle01( p )
    mm.p:setVel( vec2.new() )
 
    -- Only switch every 1.5 seconds
-   local t = naev.ticksGame()
-   if t-mm.t > 0.5 then
+   --local t = naev.ticksGame()
+   --if t-mm.t > 0.5 then
       marker_toggle( n )
       marker_toggle( math.fmod( n,   5 )+1 ) -- One up
       marker_toggle( math.fmod( n+3, 5 )+1 ) -- One below
-   end
+   --end
 
    -- Check if done
    local allon = true
