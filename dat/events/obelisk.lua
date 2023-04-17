@@ -56,7 +56,6 @@ function obelisk ()
    time.inc( time.new( 0, 0, 1000 + 2000*rnd.rnd() ) )
    player.teleport( target )
    local pp = player.pilot()
-   pp:setPos( vec2.new() )
    pp:shipvarPop( "obelisk" ) -- Clear obelisk
    pp:effectAdd("Wormhole Exit")
 end

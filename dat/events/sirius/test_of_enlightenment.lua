@@ -9,10 +9,26 @@
 
 local sys, sysr
 local prevship
+local markers
+
+local function marker_set( n, state )
+   markers[n].p:effectClear()
+   if state then
+      markers[n].p:effectAdd("Psychic Orb On")
+   else
+      markers[n].p:effectAdd("Psychic Orb Off")
+   end
+   markers[n].on = state
+   markers[n].t = naev.ticksGame()
+end
+
+local function marker_toggle( n )
+   marker_set( n, not markers[n].on )
+end
 
 function create ()
-   sys = system.get()
-   sysr = system.radius()
+   sys = system.cur()
+   sysr = sys:radius()
 
    -- Hide rest of the universe
    for k,s in ipairs(system.getAll()) do
@@ -27,7 +43,28 @@ function create ()
    local player_ship = player.shipAdd( "Astral Projection Lesser", _("Psyche"), _("Psychic powers."), true )
    prevship = player.pilot():name() -- Ship to go back to
    player.shipSwap( player_ship, true )
-   player.pilot():effectAdd("Astral Projection")
+
+   -- Set up position
+   local pp = player.pilot()
+   pp:effectAdd("Astral Projection")
+   pp:setDir( math.pi*0.5 )
+   pp:setPos( vec2.new() )
+
+   -- First puzzle
+   markers = {}
+   local n = 5
+   for i=1,n do
+      local dir = math.pi*0.5 + (i-1)/n*math.pi*2.0
+      local pos = vec2.newP( 200, dir )
+      local m = pilot.add("Psychic Orb", "Independent", pos, nil, {ai="dummy"} )
+      m:effectAdd("Psychic Orb On")
+      m:setNoDeath(true)
+      m:setHostile(true)
+      hook.pilot( m, "attacked", "puzzle01" )
+      markers[i] = { p=m, on=true, t=naev.ticksGame() }
+   end
+   marker_set( 2, false )
+   marker_set( 5, false )
 
    hook.update( "update" )
 
@@ -56,4 +93,43 @@ function done ()
       s:setHidden(false)
    end
    evt.finish()
+end
+
+function puzzle01( p )
+   local n = 0
+   for i,m in ipairs(markers) do
+      if m.p==p then
+         n = i
+         break
+      end
+   end
+   assert( n~=0 )
+   local mm = markers[n]
+   mm.p:setHealth( 100, 100 )
+   mm.p:setVel( vec2.new() )
+
+   -- Only switch every 1.5 seconds
+   local t = naev.ticksGame()
+   if t-mm.t > 0.5 then
+      marker_toggle( n )
+      marker_toggle( math.fmod( n,   5 )+1 ) -- One up
+      marker_toggle( math.fmod( n+3, 5 )+1 ) -- One below
+   end
+
+   -- Check if done
+   local allon = true
+   for i,m in ipairs(markers) do
+      if not m.on then
+         allon = false
+         break
+      end
+   end
+   if allon then
+      -- TODO
+      player.msg( "You win!", true )
+      for i,m in ipairs(markers) do
+         m.m:rm()
+      end
+      markers = nil
+   end
 end
