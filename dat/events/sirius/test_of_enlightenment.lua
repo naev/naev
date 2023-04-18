@@ -8,9 +8,10 @@
 --]]
 local textoverlay = require "textoverlay"
 
-local sys, sysr
+local ssys, sysr
 local prevship
 local markers
+local reward = outfit.get("Seeking Chakra")
 
 local function marker_set( n, state )
    local m = markers[n]
@@ -29,17 +30,18 @@ local function marker_toggle( n )
 end
 
 function create ()
-   sys = system.cur()
-   sysr = sys:radius()
+   ssys = system.cur()
+   sysr = ssys:radius()
 
    -- Hide rest of the universe
    for k,s in ipairs(system.getAll()) do
       s:setHidden(true)
    end
-   sys:setHidden(false)
+   ssys:setHidden(false)
 
    -- Stop and play different music
    music.stop()
+   -- TODO sound
 
    -- Swap player's ship
    local player_ship = player.shipAdd( "Astral Projection Lesser", _("Psyche"), _("Psychic powers."), true )
@@ -102,7 +104,7 @@ function done ()
    -- Restore previous ship
    player.shipSwap( prevship, true, true )
 
-   sys:setKnown(false)
+   ssys:setKnown(false)
    for k,s in ipairs(system.getAll()) do
       s:setHidden(false)
    end
@@ -135,11 +137,28 @@ function puzzle01( p )
       end
    end
    if allon then
-      -- TODO
-      player.msg( "You win!", true )
       for i,m in ipairs(markers) do
          m.p:rm()
       end
       markers = nil
+
+      -- TODO sound
+      player.outfitAdd( reward )
+      textoverlay.init( "#y"..reward:name().."#0",
+         "#y".._("New Flow Ability Unlocked").."#0",
+         {length=6})
+      hook.timer( 10, "cleanup" )
    end
+end
+
+function cleanup ()
+   local spb,sys = spob.getS("Kal Atok Obelisk")
+   local pos = spb:pos() + vec2.newP( 100+50*rnd.rnd(), rnd.angle() )
+   local pp = player.pilot()
+   pp:setPos( pos )
+   pp:setDir( rnd.angle() )
+   -- TODO animation
+   player.teleport( sys )
+   music.stop()
+   done()
 end

@@ -14,7 +14,6 @@ local pixelcode = lf.read( "glsl/love/wormhole_travel.frag" )
 local target, shader, r
 local sfx = audio.newSource( 'snd/sounds/wormhole.ogg' )
 function create ()
-
    target = var.peek("obelisk_target")
    if not target then
       warn(_("Obelisk event run with no target!"))
