@@ -325,7 +325,8 @@ end
 function update_target()
    ptarget = pp:target()
    if ptarget then
-      ptarget_gfx = ptarget:ship():gfxTarget()
+      --ptarget_gfx = ptarget:ship():gfxTarget()
+      ptarget_gfx = ptarget:render():getTex()
       ptarget_gfx_w, ptarget_gfx_h = ptarget_gfx:dim()
       local ptargetfact = ptarget:faction()
       ptarget_target = ptarget:target()
@@ -928,9 +929,9 @@ function render( dt, dt_mod )
 
             --Render target graphic
             if ptarget_gfx_w > 62 or ptarget_gfx_h > 62 then
-               gfx.renderTexRaw( ptarget_gfx, ta_center_x - ptarget_gfx_draw_w / 2, ta_center_y - ptarget_gfx_draw_h / 2, ptarget_gfx_draw_w, ptarget_gfx_draw_h, 1, 1, 0, 0, 1, 1)
+               gfx.renderTexRaw( ptarget_gfx, ta_center_x - ptarget_gfx_draw_w / 2, ta_center_y - ptarget_gfx_draw_h / 2, ptarget_gfx_draw_w, ptarget_gfx_draw_h, 1, 1, 0, 0, 1, -1)
             else
-               gfx.renderTex( ptarget_gfx, ta_center_x - ptarget_gfx_w / 2, ta_center_y - ptarget_gfx_h / 2)
+               gfx.renderTexRaw( ptarget_gfx, ta_center_x - ptarget_gfx_w / 2, ta_center_y - ptarget_gfx_h / 2, ptarget_gfx_w, ptarget_gfx_h, 1, 1, 0, 0, 1, -1)
             end
          else
             --Render ?
