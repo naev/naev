@@ -51,8 +51,8 @@ function create ()
    pp:weapsetSetInrange(nil,false)
    pp:effectAdd("Astral Projection")
    pp:setDir( math.pi*0.5 )
-   pp:setPos( vec2.new() )
-   pp:intrinsicSet( {
+   pp:setPos( vec2.new(0,-500) )
+   pp:intrinsicSet( { -- Ship is too fast otherwise
       thrust_mod     = -50,
       speed_mod      = -50,
       turn_mod       = -50,
