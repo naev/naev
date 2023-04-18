@@ -1828,6 +1828,8 @@ static void pilot_renderFramebufferBase( Pilot *p, GLuint fbo, double fw, double
 /**
  * @brief Renders a pilot to a framebuffer.
  *
+ * @TODO Reduce duplicate code with pilot_render.
+ *
  *    @param p Pilot to render.
  *    @param fbo Framebuffer to render to.
  *    @param fw Framebuffer width.
@@ -1837,10 +1839,6 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
 {
    double x,y, w,h;
    Effect *e = NULL;
-
-   /* Don't render the pilot. */
-   if (pilot_isFlag( p, PILOT_NORENDER ))
-      return;
 
    /* Transform coordinates. */
    w = p->ship->gfx_space->sw;
