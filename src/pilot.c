@@ -75,6 +75,7 @@ static void pilot_refuel( Pilot *p, double dt );
 /* Clean up. */
 static void pilot_erase( Pilot *p );
 /* Misc. */
+static void pilot_renderFramebufferBase( Pilot *p, GLuint fbo, double fw, double fh );
 static int pilot_getStackPos( unsigned int id );
 static void pilot_init_trails( Pilot* p );
 static int pilot_trail_generated( Pilot* p, int generator );
@@ -1774,14 +1775,14 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
 }
 
 /**
- * @brief Renders a pilot to a framebuffer.
+ * @brief Renders a pilot to a framebuffer without effects.
  *
  *    @param p Pilot to render.
  *    @param fbo Framebuffer to render to.
  *    @param fw Framebuffer width.
  *    @param fh Framebuffer height.
  */
-void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
+static void pilot_renderFramebufferBase( Pilot *p, GLuint fbo, double fw, double fh )
 {
    glColour c = { 1., 1., 1., 1. };
 
@@ -1822,6 +1823,88 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
 
    glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
    glClearColor( 0., 0., 0., 1. );
+}
+
+/**
+ * @brief Renders a pilot to a framebuffer.
+ *
+ *    @param p Pilot to render.
+ *    @param fbo Framebuffer to render to.
+ *    @param fw Framebuffer width.
+ *    @param fh Framebuffer height.
+ */
+void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
+{
+   double x,y, w,h;
+   Effect *e = NULL;
+
+   /* Don't render the pilot. */
+   if (pilot_isFlag( p, PILOT_NORENDER ))
+      return;
+
+   /* Transform coordinates. */
+   w = p->ship->gfx_space->sw;
+   h = p->ship->gfx_space->sh;
+   gl_gameToScreenCoords( &x, &y, p->solid.pos.x-w/2., p->solid.pos.y-h/2. );
+
+   /* Render effects. */
+   for (int i=0; i<array_size(p->effects); i++) {
+   //for (int i=array_size(p->effects)-1; i>=0; i--) {
+      Effect *eiter = &p->effects[i];
+      if (eiter->data->program==0)
+         continue;
+
+      /* Only render one effect for now. */
+      e = eiter;
+      break;
+   }
+
+   /* Render normally. */
+   if (e==NULL)
+      pilot_renderFramebufferBase( p, fbo, fw, fh );
+   /* Render effect single effect. */
+   else {
+      mat4 projection, tex_mat;
+      const EffectData *ed = e->data;
+
+      /* Render onto framebuffer. */
+      pilot_renderFramebufferBase( p, gl_screen.fbo[2], gl_screen.nw, gl_screen.nh );
+
+      glBindFramebuffer( GL_FRAMEBUFFER, fbo );
+      glClearColor( 0., 0., 0., 0. );
+
+      glUseProgram( ed->program );
+
+      glActiveTexture( GL_TEXTURE0 );
+      glBindTexture( GL_TEXTURE_2D, gl_screen.fbo_tex[2] );
+      glUniform1i( ed->u_tex, 0 );
+
+      glEnableVertexAttribArray( ed->vertex );
+      gl_vboActivateAttribOffset( gl_squareVBO, ed->vertex, 0, 2, GL_FLOAT, 0 );
+
+      projection = mat4_ortho( 0., fw, 0, fh, -1., 1. );
+      mat4_scale( &projection, w, h, 1. );
+      gl_uniformMat4(ed->projection, &projection);
+
+      tex_mat = mat4_identity();
+      mat4_scale( &tex_mat, w/(double)gl_screen.nw, h/(double)gl_screen.nh, 1. );
+      gl_uniformMat4(ed->tex_mat, &tex_mat);
+
+      glUniform3f( ed->dimensions, SCREEN_W, SCREEN_H, 1. );
+      glUniform1f( ed->u_timer, e->timer );
+      glUniform1f( ed->u_elapsed, e->elapsed );
+      glUniform1f( ed->u_r, e->r );
+      glUniform1f( ed->u_dir, p->solid.dir );
+
+      /* Draw. */
+      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+      /* Clear state. */
+      glDisableVertexAttribArray( ed->vertex );
+
+      glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
+      glClearColor( 0., 0., 0., 1. );
+   }
 }
 
 /**
@@ -1895,7 +1978,7 @@ void pilot_render( Pilot *p )
          const EffectData *ed = e->data;
 
          /* Render onto framebuffer. */
-         pilot_renderFramebuffer( p, gl_screen.fbo[2], gl_screen.nw, gl_screen.nh );
+         pilot_renderFramebufferBase( p, gl_screen.fbo[2], gl_screen.nw, gl_screen.nh );
 
          glUseProgram( ed->program );
 
