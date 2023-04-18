@@ -50,7 +50,7 @@
    * hypergate_construction: should actually claim the system
    * Fixed some formatting in the alt text when hovering over outfits in the equipment window
    * ec06: refuel tanker should provide as much fuel as possible
-   * taiomi09: fixed smugglers bocaing hostile in some cases
+   * taiomi09: fixed smugglers becoming hostile in some cases
    * Changed music.stop() API to stop music from continuing by default
 
 * 0.10.4
