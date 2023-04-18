@@ -18,9 +18,9 @@
   <speed>0.001</speed>
  </movement>
  <health>
-  <absorb>200</absorb>
+  <absorb>0</absorb>
   <shield>0</shield>
-  <armour>100</armour>
+  <armour>1</armour>
   <energy>0</energy>
   <shield_regen>0</shield_regen>
   <armour_regen>0</armour_regen>

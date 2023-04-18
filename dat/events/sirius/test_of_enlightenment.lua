@@ -6,6 +6,7 @@
  <system>Test of Enlightenment</system>
 </event>
 --]]
+local textoverlay = require "textoverlay"
 
 local sys, sysr
 local prevship
@@ -64,16 +65,22 @@ function create ()
       local dir = math.pi*0.5 + (i-1)/n*math.pi*2.0
       local pos = vec2.newP( 200, dir )
       local m = pilot.add("Psychic Orb", "Independent", pos, nil, {ai="dummy"} )
-      m:effectAdd("Psychic Orb On")
       m:setNoDeath(true)
+      m:setNoDisable(true)
       m:setHostile(true)
       hook.pilot( m, "attacked", "puzzle01" )
-      markers[i] = { p=m, on=true, t=naev.ticksGame() }
+      markers[i] = { p=m }
    end
+   marker_set( 1, true )
    marker_set( 2, false )
+   marker_set( 3, true )
+   marker_set( 4, true )
    marker_set( 5, false )
 
    hook.update( "update" )
+
+   textoverlay.init( "#y".._("Test of Enlightenment").."#0",
+      "#y".._("Activate the Orbs").."#0" )
 
    -- Anything will finish the event
    hook.enter( "done" )
@@ -115,13 +122,9 @@ function puzzle01( p )
    mm.p:setHealth( 100, 100 )
    mm.p:setVel( vec2.new() )
 
-   -- Only switch every 1.5 seconds
-   --local t = naev.ticksGame()
-   --if t-mm.t > 0.5 then
-      marker_toggle( n )
-      marker_toggle( math.fmod( n,   5 )+1 ) -- One up
-      marker_toggle( math.fmod( n+3, 5 )+1 ) -- One below
-   --end
+   marker_toggle( n )
+   marker_toggle( math.fmod( n,   5 )+1 ) -- One up
+   marker_toggle( math.fmod( n+3, 5 )+1 ) -- One below
 
    -- Check if done
    local allon = true
@@ -135,7 +138,7 @@ function puzzle01( p )
       -- TODO
       player.msg( "You win!", true )
       for i,m in ipairs(markers) do
-         m.m:rm()
+         m.p:rm()
       end
       markers = nil
    end
