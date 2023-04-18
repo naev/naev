@@ -99,6 +99,7 @@ function create()
          {N_("Heretical Documents"), N_("Illegal documents referring to heresy.")},
          {N_("Itch Powder"), N_("A banned substance with a history of disrupting robed processions.")},
          {N_("Unauthorized Sirichana Merchandise"), N_("Horribly tacky and outright bad merchandise with Sirichana pasted all over it. Sirichana toenail clipper anyone?")},
+         {N_("Tinfoil Caps"), N_("Tinfoil caps that do not look very stylish.")},
       },
       ["Za'lek"] = {
          {N_("Scientific Preprints"), N_("Non-paywalled illegal scientific papers.")},
