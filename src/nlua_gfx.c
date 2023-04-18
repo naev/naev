@@ -192,7 +192,6 @@ static int gfxL_renderTex( lua_State *L )
    double x, y;
    int sx, sy;
 
-
    /* Parameters. */
    col = NULL;
    tex = luaL_checktex( L, 1 );
@@ -246,7 +245,6 @@ static int gfxL_renderTexScale( lua_State *L )
    glColour *col;
    double x, y, bw, bh;
    int sx, sy;
-
 
    /* Parameters. */
    col = NULL;
