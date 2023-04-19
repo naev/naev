@@ -52,6 +52,7 @@
    * ec06: refuel tanker should provide as much fuel as possible
    * taiomi09: fixed smugglers becoming hostile in some cases
    * Changed music.stop() API to stop music from continuing by default
+   * Fixed potential memory issues on some platforms
 
 * 0.10.4
    * Fixed crashes related to multiple effects being active at once
