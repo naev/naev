@@ -1918,7 +1918,7 @@ static int al_loadWav( ALuint *buf, SDL_RWops *rw )
    soundUnlock();
 
    /* Clean up. */
-   free( wav_buffer );
+   SDL_FreeWAV( wav_buffer );
    return 0;
 }
 
