@@ -11,12 +11,12 @@ vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 {
    float t = u_time / LENGTH;
    vec2 uv = texture_coords-0.5;
-   vec4 blur = max(1.0, 5.0-2.0*u_time );
+   float blur = max(1.0, 5.0-2.0*u_time );
    vec4 colour;
    if (blur <= 1.0)
       colour = texture(tex, texture_coords );
    else
       colour = blur5( tex, texture_coords, love_ScreenSize.xy, blur );
 
-   return vec4( mix( FADECOLOUR, colour, min(1.0,u_time*2.0) ), 1.0 );
+   return mix( FADECOLOUR, colour, min(1.0,u_time*2.0) );
 }

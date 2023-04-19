@@ -12,7 +12,7 @@ vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 {
    float t = u_time / LENGTH;
    vec2 uv = texture_coords-0.5;
-   float blur = 1.0+2.0*min(u_time-2.0);
+   float blur = 1.0+2.0*max(0.0, u_time-2.0);
    vec4 colour;
    if (blur <= 1.0)
       colour = texture(tex, texture_coords );
@@ -22,5 +22,5 @@ vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
    float d = sdVesica( uv, 0.8, 1.0-t );
    float a = (1.0-clamp( -0.2, 0.0, d )) * min(1.0, u_time);
 
-   return vec4( mix( colour, FADECOLOUR, a ), 1.0 );
+   return mix( colour, FADECOLOUR, a );
 }
