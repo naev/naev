@@ -9,9 +9,10 @@ local audio = require 'love.audio'
 local lf = require "love.filesystem"
 local pp_shaders = require "pp_shaders"
 
-local pixelcode = lf.read( "glsl/love/wormhole_travel.frag" )
+local pixelcode_enter = lf.read( "glsl/love/obelisk_enter.frag" )
+local pixelcode_exit = lf.read( "glsl/love/obelisk_exit.frag" )
 
-local target, shader, r
+local target, shader
 local sfx = audio.newSource( 'snd/sounds/wormhole.ogg' )
 function create ()
    target = var.peek("obelisk_target")
@@ -23,25 +24,24 @@ function create ()
    hook.update( "update" )
    sfx:play()
 
-   shader = pp_shaders.newShader( pixelcode )
+   shader = pp_shaders.newShader( pixelcode_enter )
    shader.addPPShader( shader, "final" )
-   r = -rnd.rnd()*1000
 end
 
 local timer = 0
 local jumped = false
-local jumptime = 2.0
+local jumptime = 3.0
 function update( _dt, real_dt )
    timer = timer + real_dt
-   shader:send( "u_time", timer+r )
-   shader:send( "u_progress", math.min(timer/jumptime,1.0) )
+   shader:send( "u_time", timer )
    if timer >= jumptime then
       if not jumped then
          jumped = true
-         r = r + timer
          timer = 0
-         shader:send( "u_progress", 0 ) -- avoids visual artefact
-         shader:send( "u_invert", 1 )
+         shader.rmPPShader( shader )
+         shader = pp_shaders.newShader( pixelcode_exit )
+         shader.addPPShader( shader, "final" )
+         shader:send( "u_time", timer )
          hook.safe( "obelisk" )
       else
          shader.rmPPShader( shader )
