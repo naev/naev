@@ -119,36 +119,6 @@ int strsort_reverse( const void *p1, const void *p2 )
 }
 
 /**
- * @brief Like vsprintf(), but it allocates a large-enough string and returns the pointer in the first argument.
- *        Conforms to GNU and BSD libc semantics.
- *
- * @param[out] strp Used to return the allocated char* in case of success. Caller must free.
- *                  In case of failure, *strp is set to NULL, but don't rely on this because the GNU version doesn't guarantee it.
- * @param fmt Same as vsprintf().
- * @param ap Same as vsprintf().
- * @return -1 if it failed, otherwise the number of bytes "printed".
- */
-#if !HAVE_VASPRINTF
-int vasprintf( char** strp, const char* fmt, va_list ap )
-{
-   int n;
-   va_list ap1;
-
-   va_copy( ap1, ap );
-   n = vsnprintf( NULL, 0, fmt, ap1 );
-   va_end( ap1 );
-
-   if (n < 0)
-      return -1;
-   *strp = malloc( n+1 );
-   if (strp == NULL )
-      return -1; /* Not that we'll check. We're Linux fans. We've never heard of malloc() failing. */
-
-   return vsnprintf( *strp, n+1, fmt, ap );
-}
-#endif /* !HAVE_VASPRINTF */
-
-/**
  * @brief Like sprintf(), but it allocates a large-enough string and returns the pointer in the first argument.
  *        Conforms to GNU and BSD libc semantics.
  *
@@ -164,7 +134,7 @@ int asprintf( char** strp, const char* fmt, ... )
    va_list ap;
 
    va_start( ap, fmt );
-   n = vasprintf( strp, fmt, ap );
+   n = SDL_vasprintf( strp, fmt, ap );
    va_end( ap );
    return n;
 }
