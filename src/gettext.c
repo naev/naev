@@ -52,7 +52,6 @@ void gettext_init (void)
     * 1.0 in certain languages. */
    setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
 
-#if SDL_VERSION_ATLEAST(2, 0, 14)
    /* Try to get info from SDL. */
    SDL_Locale *locales = SDL_GetPreferredLocales();
    if (locales != NULL) {
@@ -63,7 +62,6 @@ void gettext_init (void)
       }
       SDL_free( locales );
    }
-#endif /* SDL_VERSION_ATLEAST(2, 0, 14) */
 
    free( gettext_systemLanguage );
    for (size_t i=0; i < sizeof(env_vars)/sizeof(env_vars[0]); i++) {
