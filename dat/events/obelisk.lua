@@ -13,7 +13,7 @@ local pixelcode_enter = lf.read( "glsl/love/obelisk_enter.frag" )
 local pixelcode_exit = lf.read( "glsl/love/obelisk_exit.frag" )
 
 local target, shader
-local sfx = audio.newSource( 'snd/sounds/wormhole.ogg' )
+local sfx = audio.newSource( 'snd/sounds/gamelan_gong.ogg' )
 function create ()
    target = var.peek("obelisk_target")
    if not target then
@@ -22,7 +22,6 @@ function create ()
    end
    target = system.get(target)
    hook.update( "update" )
-   sfx:play()
 
    shader = pp_shaders.newShader( pixelcode_enter )
    shader.addPPShader( shader, "gui" )
@@ -55,4 +54,5 @@ function obelisk ()
    player.teleport( target, true, true )
    local pp = player.pilot()
    pp:shipvarPop( "obelisk" ) -- Clear obelisk
+   sfx:play()
 end
