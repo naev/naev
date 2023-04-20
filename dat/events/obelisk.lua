@@ -25,7 +25,7 @@ function create ()
    sfx:play()
 
    shader = pp_shaders.newShader( pixelcode_enter )
-   shader.addPPShader( shader, "final" )
+   shader.addPPShader( shader, "gui" )
 end
 
 local timer = 0
@@ -40,8 +40,7 @@ function update( _dt, real_dt )
          timer = 0
          shader.rmPPShader( shader )
          shader = pp_shaders.newShader( pixelcode_exit )
-         shader.addPPShader( shader, "final" )
-         shader:send( "u_time", timer )
+         shader.addPPShader( shader, "gui" )
          hook.safe( "obelisk" )
       else
          shader.rmPPShader( shader )
@@ -56,5 +55,4 @@ function obelisk ()
    player.teleport( target, true, true )
    local pp = player.pilot()
    pp:shipvarPop( "obelisk" ) -- Clear obelisk
-   pp:effectAdd("Wormhole Exit")
 end
