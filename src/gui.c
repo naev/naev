@@ -338,7 +338,8 @@ void player_message( const char *fmt, ... )
 
    /* Add the new one */
    va_start( ap, fmt );
-   vasprintf( &buf, fmt, ap );
+   /* Requires SDL2 >=2.0.18 */
+   SDL_vasprintf( &buf, fmt, ap );
    va_end( ap );
    player_messageRaw( buf );
    free( buf );
