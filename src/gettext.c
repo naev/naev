@@ -52,9 +52,22 @@ void gettext_init (void)
     * 1.0 in certain languages. */
    setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
 
+#if SDL_VERSION_ATLEAST(2, 14, 0)
+   /* Try to get info from SDL. */
+   SDL_Locale *locales = SDL_GetPreferredLocales();
+   if (locales != NULL) {
+      if (locales[0].language != NULL) {
+         gettext_systemLanguage = strdup( locales[0].language );
+         SDL_free( locales );
+         return;
+      }
+      SDL_free( locales );
+   }
+#endif /* SDL_VERSION_ATLEAST(2, 14, 0) */
+
    free( gettext_systemLanguage );
    for (size_t i=0; i < sizeof(env_vars)/sizeof(env_vars[0]); i++) {
-      const char *language = getenv( env_vars[i] );
+      const char *language = SDL_getenv( env_vars[i] );
       if (language != NULL && *language != 0) {
          gettext_systemLanguage = strdup( language );
          return; /* The first env var with language settings wins. */
