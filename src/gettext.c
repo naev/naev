@@ -99,6 +99,14 @@ void gettext_exit (void)
 }
 
 /**
+ * @brief Gets the current system language as detected by Naev.
+ */
+const char* gettext_getSystemLanguage (void)
+{
+   return gettext_systemLanguage;
+}
+
+/**
  * @brief Gets the active (primary) translation language. Even in case of a complex locale, this will be the name of
  *        the first message catalog to be checked (or the "en" language code for untranslated English).
  *        The purpose is to provide a simple answer to things like libunibreak which ask which language we're using.
@@ -231,7 +239,6 @@ const char* gettext_pgettext_impl( const char* lookup, const char* msgid )
    return trans==lookup ? msgid : trans;
 }
 
-
 /**
  * @brief Read the GETTEXT_STATS_PATH data and compute gettext_nstrings.
  * (Common case: just a "naev.txt" file with one number. But mods pulled in via PhysicsFS can have their own string counts.)
@@ -250,7 +257,6 @@ static void gettext_readStats (void)
    }
    array_free( paths );
 }
-
 
 /**
  * @brief List the available languages, with completeness statistics.
@@ -272,7 +278,6 @@ LanguageOption* gettext_languageOptions (void)
 
    return opts;
 }
-
 
 /**
  * @brief Return the fraction of strings which have a translation into the given language.
@@ -309,7 +314,6 @@ double gettext_languageCoverage( const char* lang )
    array_free( paths );
    return (double)translated / gettext_nstrings;
 }
-
 
 /* The function is almost the same as p_() but msgctxt and msgid can be string variables.
  */

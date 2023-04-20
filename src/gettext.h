@@ -16,6 +16,7 @@ typedef struct LanguageOption_ {
 
 void gettext_init (void);
 void gettext_exit (void);
+const char* gettext_getSystemLanguage (void);
 const char* gettext_getLanguage (void);
 void gettext_setLanguage( const char* lang );
 LanguageOption* gettext_languageOptions (void);

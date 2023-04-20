@@ -236,7 +236,7 @@ static char** lang_list( int *n )
 
    /* Default English only. */
    ls = malloc( sizeof(char*)*128 );
-   ls[0] = strdup(_("system"));
+   asprintf( &ls[0], _("system (%s)"), gettext_getSystemLanguage() );
    *n = 1;
 
    /* Try to open the available languages. */
