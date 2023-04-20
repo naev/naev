@@ -233,16 +233,19 @@ static char** lang_list( int *n )
 {
    char **ls;
    LanguageOption *opts = gettext_languageOptions();
+   const char *syslang = gettext_getSystemLanguage();
 
    /* Default English only. */
    ls = malloc( sizeof(char*)*128 );
-   asprintf( &ls[0], _("system (%s)"), gettext_getSystemLanguage() );
+   asprintf( &ls[0], _("system ([%3.0f%%] %s)"), 100.*gettext_languageCoverage(syslang), syslang );
    *n = 1;
 
    /* Try to open the available languages. */
    for (int i=0; i<array_size(opts); i++) {
       char **item = &ls[(*n)++];
-      asprintf( item, "[%3.0f%%] %s", 100.*opts[i].coverage, opts[i].language );
+      asprintf( item, "%s[%3.0f%%] %s#0",
+         (opts[i].coverage<0.8)?"#r":"",
+         100.*opts[i].coverage, opts[i].language );
       free( opts[i].language );
    }
    array_free( opts );
