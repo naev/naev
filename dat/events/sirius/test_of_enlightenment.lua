@@ -8,9 +8,11 @@
 --]]
 local textoverlay = require "textoverlay"
 local audio = require 'love.audio'
+local lf = require "love.filesystem"
+local pp_shaders = require "pp_shaders"
 --local chakra = require "luaspfx.chakra_explosion"
 
-local ssys, sysr
+local ssys, sysr, spos, sdir
 local prevship
 local markers
 local reward = outfit.get("Seeking Chakra")
@@ -33,6 +35,7 @@ local function marker_toggle( n )
    marker_set( n, not markers[n].on )
 end
 
+local hook_done
 function create ()
    ssys = system.cur()
    sysr = ssys:radius()
@@ -54,6 +57,8 @@ function create ()
 
    -- Set up position
    local pp = player.pilot()
+   spos = pp:pos()
+   sdir = pp:dir()
    pp:weapsetSetInrange(nil,false)
    pp:effectAdd("Astral Projection")
    pp:setDir( math.pi*0.5 )
@@ -90,7 +95,7 @@ function create ()
       "#y".._("Activate the Orbs").."#0" )
 
    -- Anything will finish the event
-   hook.enter( "done" )
+   hook_done = hook.enter( "done" )
 end
 
 -- Forces the player (and other ships) to stay in the radius of the system
@@ -156,15 +161,45 @@ function puzzle01( p )
    end
 end
 
+local pixelcode_enter = lf.read( "glsl/love/obelisk_enter.frag" )
+local pixelcode_exit = lf.read( "glsl/love/obelisk_exit.frag" )
+local shader
 function cleanup ()
-   local spb,sys = spob.getS("Kal Atok Obelisk")
-   local pos = spb:pos() + vec2.newP( 100+50*rnd.rnd(), rnd.angle() )
-   local pp = player.pilot()
-   pp:setPos( pos )
-   pp:setDir( rnd.angle() )
+   -- Played backwards from entering
+   shader = pp_shaders.newShader( pixelcode_exit )
+   shader.addPPShader( shader, "gui" )
+   hook.update( "update_end" )
+   hook.rm( hook_done )
+end
 
-   -- TODO animation
-   player.teleport( sys )
+local end_timer = 2.0
+local jumped = false
+function update_end( _dt, real_dt )
+   end_timer = end_timer - real_dt
+   shader:send( "u_progress", end_timer/2.0 )
+   if end_timer < 0 then
+      if not jumped then
+         jumped = true
+         end_timer = 2.0
+         shader.rmPPShader( shader )
+         shader = pp_shaders.newShader( pixelcode_enter )
+         shader.addPPShader( shader, "gui" )
+         hook.safe( "return_obelisk" )
+      else
+         shader.rmPPShader( shader )
+         done()
+      end
+   end
+end
+
+function return_obelisk ()
+   local _spb,sys = spob.getS("Kal Atok Obelisk")
+   time.inc( time.new( 0, 0, 1000 + 2000*rnd.rnd() ) )
+   player.teleport( sys, true, true )
+   local pp = player.pilot()
+   pp:setDir( sdir )
+   pp:setPos( spos )
+   pp:setVel( vec2.new() )
+   sfx:play()
    music.stop()
-   done()
 end

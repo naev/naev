@@ -32,7 +32,7 @@ local jumped = false
 local jumptime = 2.0
 function update( _dt, real_dt )
    timer = timer + real_dt
-   shader:send( "u_time", timer )
+   shader:send( "u_progress", timer/jumptime )
    if timer >= jumptime then
       if not jumped then
          jumped = true
