@@ -7,11 +7,15 @@
 </event>
 --]]
 local textoverlay = require "textoverlay"
+local audio = require 'love.audio'
+--local chakra = require "luaspfx.chakra_explosion"
 
 local ssys, sysr
 local prevship
 local markers
 local reward = outfit.get("Seeking Chakra")
+
+local sfx = audio.newSource( 'snd/sounds/gamelan_gong.ogg' )
 
 local function marker_set( n, state )
    local m = markers[n]
@@ -71,8 +75,8 @@ function create ()
       m:setNoDisable(true)
       m:setHostile(true)
       m:setInvisible(true)
-      hook.pilot( m, "attacked", "puzzle01" )
-      markers[i] = { p=m }
+      local h = hook.pilot( m, "attacked", "puzzle01" )
+      markers[i] = { p=m, h=h }
    end
    marker_set( 1, true )
    marker_set( 2, false )
@@ -80,7 +84,7 @@ function create ()
    marker_set( 4, true )
    marker_set( 5, false )
 
-   hook.update( "update" )
+   hook.update( "update_limits" )
 
    textoverlay.init( "#y".._("Test of Enlightenment").."#0",
       "#y".._("Activate the Orbs").."#0" )
@@ -90,7 +94,7 @@ function create ()
 end
 
 -- Forces the player (and other ships) to stay in the radius of the system
-function update ()
+function update_limits ()
    for k,p in ipairs(pilot.get()) do
       local pos = p:pos()
       local d = pos:dist()
@@ -143,7 +147,7 @@ function puzzle01( p )
       end
       markers = nil
 
-      -- TODO sound
+      sfx:play()
       player.outfitAdd( reward )
       textoverlay.init( "#y"..reward:name().."#0",
          "#y".._("New Flow Ability Unlocked").."#0",
@@ -158,6 +162,7 @@ function cleanup ()
    local pp = player.pilot()
    pp:setPos( pos )
    pp:setDir( rnd.angle() )
+
    -- TODO animation
    player.teleport( sys )
    music.stop()
