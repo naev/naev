@@ -70,6 +70,7 @@ function create ()
       m:setNoDeath(true)
       m:setNoDisable(true)
       m:setHostile(true)
+      m:setInvisible(true)
       hook.pilot( m, "attacked", "puzzle01" )
       markers[i] = { p=m }
    end
