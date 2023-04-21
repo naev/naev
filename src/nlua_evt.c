@@ -154,6 +154,10 @@ int event_runFunc( unsigned int eventid, const char *func, int nargs )
 
    /* Time to remove the event. */
    ev = event_get( eventid );  /* The Lua call may have invalidated the pointer. */
+   if (ev==NULL) {
+      WARN(_("Event deleted in middle of hook call! Likely caused by another hook finishing the event triggered by this hook (\"%s\")."), func);
+      return -1;
+   }
    nlua_getenv(naevL, ev->env, "__evt_delete");
    evt_delete = lua_toboolean(naevL,-1);
    lua_pop(naevL,1);
