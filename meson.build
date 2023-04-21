@@ -94,7 +94,7 @@ if buildExec.disabled() == false
 
    enet = dependency('libenet', required: true, version: '>=1.3', fallback: ['enet', 'enet_dep'], static: get_option('steamruntime'))
    pcre2 = dependency('libpcre2-8', fallback : ['pcre2', 'libpcre2_8'], static: get_option('steamruntime'))
-   sdl = dependency('sdl2', required: true)
+   sdl = dependency('sdl2', version: '>=2.0.18', required: true)
    sdl_image = dependency('SDL2_image', required: true, fallback: ['sdl2_image', 'sdl2_image_dep'])
    libunibreak = dependency('libunibreak', required: true, version: '>=4.0', fallback: ['libunibreak', 'libunibreak_dep'])
 
@@ -244,7 +244,6 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_STRNDUP', cc.has_header_symbol('string.h', 'strndup') and cc.has_function('strndup'))
    config_data.set10('HAVE_STRNSTR', cc.has_function('strnstr'))
    config_data.set10('HAVE_STRSIGNAL', cc.has_function('strsignal'))
-   config_data.set10('HAVE_VASPRINTF', cc.has_function('vasprintf'))
    # BLAS include tests
    cblas_test = '\nint main (void) { double x = 0; return (int)cblas_ddot( 1, &x, 1, &x, 1 ); }'
    config_data.set10('HAVE_ACCELERATE_ACCELERATE_H', cc.links('#include <Accelerate/Accelerate.h>' + cblas_test, dependencies: blas))

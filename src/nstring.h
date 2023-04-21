@@ -29,7 +29,6 @@
 char* strndup( const char *s, size_t n );
 
 PRINTF_FORMAT( 2, 3 ) int asprintf( char** strp, const char* fmt, ... );
-PRINTF_FORMAT( 2, 0 ) int vasprintf( char** strp, const char* fmt, va_list ap );
 PRINTF_FORMAT( 3, 4 ) int scnprintf( char* text, size_t maxlen, const char* fmt, ... );
 
 int strsort( const void *p1, const void *p2 );
