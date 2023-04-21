@@ -29,7 +29,7 @@ end
 
 local timer = 0
 local jumped = false
-local jumptime = 3.0
+local jumptime = 2.0
 function update( _dt, real_dt )
    timer = timer + real_dt
    shader:send( "u_time", timer )
