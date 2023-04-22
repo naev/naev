@@ -94,8 +94,8 @@ static Spob *spob_stack = NULL; /**< Spob stack. */
 static VirtualSpob *vspob_stack = NULL; /**< Virtual spob stack. */
 #ifdef DEBUGGING
 static int systemstack_changed = 0; /**< Whether or not the systems_stack was changed after loading. */
-static int spobstack_changed = 0; /**< Whether or not the spob_stack was changed after loading. */
 #endif /* DEBUGGING */
+static int spobstack_changed = 0; /**< Whether or not the spob_stack was changed after loading. */
 static MapShader **mapshaders = NULL; /**< Map shaders. */
 
 /*
