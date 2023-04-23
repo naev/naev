@@ -578,15 +578,15 @@ static char **map_fuzzyOutfits( Outfit **o, const char *name )
 
    /* Do fuzzy search. */
    for (int i=0; i<array_size(o); i++) {
-      if (strcasestr( _(o[i]->name), name ) != NULL)
+      if (SDL_strcasestr( _(o[i]->name), name ) != NULL)
          array_push_back( &names, o[i]->name );
-      else if ((o[i]->typename != NULL) && strcasestr( o[i]->typename, name ) != NULL)
+      else if ((o[i]->typename != NULL) && SDL_strcasestr( o[i]->typename, name ) != NULL)
          array_push_back( &names, o[i]->name );
-      else if ((o[i]->condstr != NULL) && strcasestr( o[i]->condstr, name ) != NULL)
+      else if ((o[i]->condstr != NULL) && SDL_strcasestr( o[i]->condstr, name ) != NULL)
          array_push_back( &names, o[i]->name );
-      else if (strcasestr( outfit_description(o[i]), name ) != NULL)
+      else if (SDL_strcasestr( outfit_description(o[i]), name ) != NULL)
          array_push_back( &names, o[i]->name );
-      else if (strcasestr( outfit_summary(o[i], 0), name ) != NULL)
+      else if (SDL_strcasestr( outfit_summary(o[i], 0), name ) != NULL)
          array_push_back( &names, o[i]->name );
    }
 
@@ -808,15 +808,15 @@ static char **map_fuzzyShips( Ship **s, const char *name )
 
    /* Do fuzzy search. */
    for (int i=0; i<array_size(s); i++) {
-      if (strcasestr( _(s[i]->name), name ) != NULL)
+      if (SDL_strcasestr( _(s[i]->name), name ) != NULL)
          array_push_back( &names, s[i]->name );
-      else if ((s[i]->license != NULL) && strcasestr( _(s[i]->license), name ) != NULL)
+      else if ((s[i]->license != NULL) && SDL_strcasestr( _(s[i]->license), name ) != NULL)
          array_push_back( &names, s[i]->name );
-      else if (strcasestr( _(ship_classDisplay( s[i] )), name ) != NULL)
+      else if (SDL_strcasestr( _(ship_classDisplay( s[i] )), name ) != NULL)
          array_push_back( &names, s[i]->name );
-      else if (strcasestr( _(s[i]->fabricator), name ) != NULL)
+      else if (SDL_strcasestr( _(s[i]->fabricator), name ) != NULL)
          array_push_back( &names, s[i]->name );
-      else if (strcasestr( _(s[i]->description), name ) != NULL)
+      else if (SDL_strcasestr( _(s[i]->description), name ) != NULL)
          array_push_back( &names, s[i]->name );
    }
 

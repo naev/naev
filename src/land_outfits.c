@@ -590,7 +590,7 @@ int outfits_filter( const Outfit **outfits, int n,
       if ((filter != NULL) && !filter(outfits[i]))
          continue;
 
-      if ((name != NULL) && (strcasestr( outfits[i]->name, name ) == NULL))
+      if ((name != NULL) && (SDL_strcasestr( outfits[i]->name, name ) == NULL))
          continue;
 
       /* Shift matches downward. */
