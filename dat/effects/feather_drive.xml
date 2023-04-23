@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<effect name="Feather Drive">
+ <description>Your ship just used Feather DRive!</description>
+ <duration>0.3</duration>
+ <icon>/gfx/misc/icons/galaxy.webp</icon>
+ <shader>effects/feather_drive.frag</shader>
+</effect>

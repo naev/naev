@@ -72,6 +72,7 @@ dat/effects/crippling_plasma.xml
 dat/effects/ethereal.xml
 dat/effects/fadein.xml
 dat/effects/fadeout.xml
+dat/effects/feather_drive.xml
 dat/effects/feral_rage_i.xml
 dat/effects/fractured_reality.xml
 dat/effects/hypergate_enter.xml
@@ -3278,6 +3279,7 @@ dat/scripts/luaspfx/cleansing_flames.lua
 dat/scripts/luaspfx/core.lua
 dat/scripts/luaspfx/emp.lua
 dat/scripts/luaspfx/explosion.lua
+dat/scripts/luaspfx/feather_drive.lua
 dat/scripts/luaspfx/pheromones.lua
 dat/scripts/luaspfx/pulse.lua
 dat/scripts/luaspfx/racetrack.lua

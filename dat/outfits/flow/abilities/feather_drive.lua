@@ -1,5 +1,6 @@
 local audio = require 'love.audio'
-local luaspfx = require 'luaspfx'
+local luaspfx = require "luaspfx"
+local blink = require "luaspfx.feather_drive"
 local flow = require "ships.lua.lib.flow"
 local fmt = require "format"
 local chakraexp = require "luaspfx.chakra_explosion"
@@ -91,9 +92,9 @@ function ontoggle( p, po, on )
       dist = dist * mem.masslimit / m
    end
    local pos = p:pos()
-   luaspfx.blink( pos ) -- Blink afterimage
-   p:effectAdd( "Blink" ) -- Cool "blink in" effect
    local newpos = pos + vec2.newP( dist, p:dir() )
+   blink( pos, (newpos-pos)*2+p:vel() ) -- Blink afterimage
+   p:effectAdd( "Feather Drive" ) -- Cool "blink in" effect
    p:setPos( newpos )
    mem.timer = mem.cooldown * p:shipstat("cooldown_mod",true)
    po:state("cooldown")
