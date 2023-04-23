@@ -54,7 +54,7 @@ jobs:
           name: naev-changelog
           path: ${{ github.workspace }}/build/dist/CHANGELOG
           if-no-files-found: error
-          
+
       - name: Upload Version Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -117,6 +117,8 @@ jobs:
           meson setup build source \
               --native-file='source/utils/build/linux_steamruntime_scout.ini' \
               --buildtype=debug \
+              --force-fallback-for=sdl2_image,glpk,SuiteSparse \
+              -Dsteamruntime=true \
               -Dprefix="/usr" \
               -Dinstaller=true \
               -Db_lto=true \
