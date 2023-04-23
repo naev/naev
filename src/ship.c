@@ -500,6 +500,10 @@ static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine
    }
 
    /* Get the comm graphic for future loading. */
+   if (temp->gfx_comm != NULL) {
+      WARN(_("Ship '%s' has doubly defined 'gfx_comm'!"),temp->name);
+      free(temp->gfx_comm);
+   }
    SDL_asprintf( &temp->gfx_comm, SHIP_GFX_PATH"%s/%s"SHIP_COMM"%s", base, buf, ext );
    free( base );
 
@@ -786,6 +790,10 @@ static int ship_parse( Ship *temp, const char *filename )
             continue;
          }
          snprintf( str, sizeof(str), GFX_PATH"%s", buf );
+         if (temp->gfx_comm != NULL) {
+            WARN(_("Ship '%s' has doubly defined 'gfx_comm'!"),temp->name);
+            free(temp->gfx_comm);
+         }
          temp->gfx_comm = strdup(str);
          continue;
       }
