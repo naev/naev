@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# AppImage BUILD SCRIPT FOR NAEV
+# AppDir BUILD SCRIPT FOR NAEV
 #
 # For more information, see http://appimage.org/
 # Pass in [-d] (set this for debug builds) [-n] (set this for nightly builds) [-i] (set this to build an appimage from source) [-p] (set this to package an appimage from an AppDir) -a <APPDIRPATH> Sets location of AppDir for packaging -s <SOURCEPATH> (Sets location of source) -b <BUILDPATH> (Sets location of build directory)
