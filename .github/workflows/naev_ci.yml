@@ -33,7 +33,9 @@ jobs:
 
   "Linux_Compile_Naev":
     needs: "Package_Source"
-
+    defaults:
+      run:
+        shell: bash
     strategy:
       fail-fast: false
       matrix:
@@ -117,8 +119,13 @@ jobs:
       - name: Compile AppImage
         id: appimageCompile
         run: |
-          ./source/utils/buildAppImage.sh -c -m -s source -b appImageBuild | tee appImageBuildLog.txt
-          ls ${{ github.workspace }}/appImageBuild/dist/*.AppImage >/dev/null || exit
+          if [[ "$IMAGE_NAME" =~ "naev-steamfrankenruntime" ]]; then
+              ./source/utils/buildAppImage.sh -d -s source -b appImageBuild | tee appImageBuildLog.txt
+              ls ${{ github.workspace }}/appImageBuild/AppDir >/dev/null || exit
+          else
+            ./source/utils/buildAppImage.sh -d -i -s source -b appImageBuild | tee appImageBuildLog.txt
+            ls ${{ github.workspace }}/appImageBuild/dist/*.AppImage >/dev/null || exit
+          fi
 
       - name: Upload AppImage Compile Log
         uses: actions/upload-artifact@v1

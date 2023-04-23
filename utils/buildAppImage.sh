@@ -3,7 +3,7 @@
 # AppImage BUILD SCRIPT FOR NAEV
 #
 # For more information, see http://appimage.org/
-# Pass in [-d] [-c] (set this for debug builds) [-n] (set this for nightly builds) -s <SOURCEPATH> (Sets location of source) -b <BUILDPATH> (Sets location of build directory)
+# Pass in [-d] (set this for debug builds) [-n] (set this for nightly builds) [-i] (set this to build an appimage from source) [-p] (set this to package an appimage from an AppDir) -a <APPDIRPATH> Sets location of AppDir for packaging -s <SOURCEPATH> (Sets location of source) -b <BUILDPATH> (Sets location of build directory)
 
 # Output destination is ${WORKPATH}/dist
 
@@ -12,17 +12,27 @@ set -e
 # Defaults
 SOURCEPATH="$(pwd)"
 BUILDTYPE="release"
+MAKEAPPIMAGE="false"
+PACKAGE="false"
 
-while getopts dcns:b: OPTION "$@"; do
+while getopts dnipa:s:b: OPTION "$@"; do
     case $OPTION in
     d)
         set -x
-        ;;
-    c)
-        BUILDTYPE="debugoptimized"
+        BUILDTYPE="debug"
         ;;
     n)
+        NIGHTLY="true"
         BUILDTYPE="debug"
+        ;;
+    i)
+        MAKEAPPIMAGE="true"
+        ;;
+    p)
+        PACKAGE="true"
+        ;;
+    a)
+        APPDIRPATH="${OPTARG}"
         ;;
     s)
         SOURCEPATH="${OPTARG}"
@@ -43,109 +53,128 @@ else
     WORKPATH=$(readlink -mf "$BUILDPATH")
 fi
 
-BUILDPATH="$WORKPATH/builddir"
-
-# Honours the MESON variable set by the environment before setting it manually
-
-if [ -z "$MESON" ]; then
-    MESON="$SOURCEPATH/meson.sh"
+if [ -z "$APPDIRPATH" ]; then
+    APPDIRPATH="$WORKPATH/dist/AppDir"
+else
+    APPDIRPATH=$(readlink -mf "$APPDIRPATH")
 fi
+
+BUILDPATH="$WORKPATH/builddir"
 
 # Output configured variables
 
 echo "SCRIPT WORKING PATH: $WORKPATH"
+echo "APPDIR PATH:         $APPDIRPATH"
 echo "SOURCE PATH:         $SOURCEPATH"
 echo "BUILD PATH:          $BUILDPATH"
 echo "BUILDTYPE:           $BUILDTYPE"
-echo "MESON WRAPPER PATH:  $MESON"
 
 # Make temp directories
-mkdir -p "$WORKPATH"/{dist,utils,AppDir}
-
-DESTDIR="$WORKPATH/AppDir"
-export DESTDIR
+mkdir -p "$WORKPATH"/{dist,utils}
 
 # Get arch for use with linuxdeploy and to help make the linuxdeploy URL more architecture agnostic.
 ARCH=$(arch)
 
 export ARCH
 
-# Get linuxdeploy's AppImage
-linuxdeploy="$WORKPATH/utils/linuxdeploy.AppImage"
-if [ ! -f "$linuxdeploy" ]; then
-    curl -L -o "$linuxdeploy" "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-$ARCH.AppImage"
-    #
-    # This fiddles with some magic bytes in the ELF header. Don't ask me what this means.
-    # For the layman: makes appimages run in docker containers properly again.
-    # https://github.com/AppImage/AppImageKit/issues/828
-    #
-    sed '0,/AI\x02/{s|AI\x02|\x00\x00\x00|}' -i "$linuxdeploy"
-    chmod +x "$linuxdeploy"
-fi
+get_tools(){
+    # Get linuxdeploy's AppImage
+    linuxdeploy="$WORKPATH/utils/linuxdeploy.AppImage"
+    if [ ! -f "$linuxdeploy" ]; then
+        curl -L -o "$linuxdeploy" "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-$ARCH.AppImage"
+        #
+        # This fiddles with some magic bytes in the ELF header. Don't ask me what this means.
+        # For the layman: makes appimages run in docker containers properly again.
+        # https://github.com/AppImage/AppImageKit/issues/828
+        #
+        sed '0,/AI\x02/{s|AI\x02|\x00\x00\x00|}' -i "$linuxdeploy"
+        chmod +x "$linuxdeploy"
+    fi
+    # Get appimagetool's AppImage
+    appimagetool="$WORKPATH/utils/appimagetool.AppImage"
+    if [ ! -f "$appimagetool" ]; then
+        curl -L -o "$appimagetool" "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-$ARCH.AppImage"
+        #
+        # This fiddles with some magic bytes in the ELF header. Don't ask me what this means.
+        # For the layman: makes appimages run in docker containers properly again.
+        # https://github.com/AppImage/AppImageKit/issues/828
+        #
+        sed '0,/AI\x02/{s|AI\x02|\x00\x00\x00|}' -i "$appimagetool"
+        chmod +x "$appimagetool"
+    fi
+}
 
-# Run build
-# Setup AppImage Build Directory
-sh "$MESON" setup "$BUILDPATH" "$SOURCEPATH" \
---native-file "$SOURCEPATH/utils/build/linux.ini" \
---buildtype "$BUILDTYPE" \
---force-fallback-for=glpk,SuiteSparse \
--Dprefix="/usr" \
--Db_lto=true \
--Dauto_features=enabled \
--Ddocs_c=disabled \
--Ddocs_lua=disabled
+build_appdir(){
+    # Honours the MESON variable set by the environment before setting it manually
 
-# Compile and Install Naev to DISTDIR
-sh "$MESON" install -C "$BUILDPATH"
+    if [ -z "$MESON" ]; then
+        MESON="$SOURCEPATH/meson.sh"
+    fi
 
-# Prep dist directory for appimage
+    "$MESON" setup "$BUILDPATH" "$SOURCEPATH" \
+    --native-file "$SOURCEPATH/utils/build/linux_steamruntime_scout.ini" \
+    --buildtype "$BUILDTYPE" \
+    --force-fallback-for=glpk,SuiteSparse \
+    -Dprefix="/usr" \
+    -Db_lto=true \
+    -Dauto_features=enabled \
+    -Ddocs_c=disabled \
+    -Ddocs_lua=disabled
+    # Compile and Install Naev to DISTDIR
+    DESTDIR=$APPDIRPATH "$MESON" install -C "$BUILDPATH"
+    # Rename metainfo file
+    mv "$APPDIRPATH/usr/share/metainfo/org.naev.Naev.metainfo.xml" "$APPDIRPATH/usr/share/metainfo/org.naev.Naev.appdata.xml"
+    pushd "$WORKPATH"
+    "$linuxdeploy" --appdir "$APPDIRPATH"
+    popd
 
-# Set VERSION and OUTPUT variables
-if [ -f "$SOURCEPATH/dat/VERSION" ]; then
-    VERSION="$(<"$SOURCEPATH/dat/VERSION")"
-    export VERSION
+}
+
+build_appimage(){
+    # Set VERSION and OUTPUT variables
+    if [ -f "$APPDIRPATH/usr/share/naev/dat/VERSION" ]; then
+        VERSION="$(<"$APPDIRPATH/usr/share/naev/dat/VERSION")"
+        export VERSION
+    else
+        echo "The VERSION file is missing from $APPDIRPATH."
+        exit 1
+    fi
+
+    if [[ "$NIGHTLY" =~ "true" ]]; then
+        TAG="nightly"
+    else
+        TAG="latest"
+    fi
+
+    SUFFIX="$VERSION-linux"
+
+    if [[ "$ARCH" =~ "x86_64" ]]; then
+        SUFFIX="$SUFFIX-x86-64"
+    elif [[ "$ARCH" =~ "x86" ]]; then
+        SUFFIX="$SUFFIX-x86"
+    else
+        SUFFIX="$SUFFIX-unknown"
+    fi
+
+    export OUTPUT="$WORKPATH/dist/naev-$SUFFIX.AppImage"
+
+    # Disable appstream test
+    export NO_APPSTREAM=1
+
+    export UPDATE_INFORMATION="gh-releases-zsync|naev|naev|$TAG|naev-*.AppImage.zsync"
+    pushd "$WORKPATH/dist"
+    "$appimagetool" -n -v -u "$UPDATE_INFORMATION" "$APPDIRPATH" "$OUTPUT"
+    popd
+echo "Completed."
+}
+
+get_tools
+if [[ "$MAKEAPPIMAGE" =~ "true" ]]; then
+    build_appdir
+    build_appimage
+
+elif [[ "$PACKAGE" =~ "true" ]]; then
+    build_appimage
 else
-    echo "The VERSION file is missing from $SOURCEPATH."
-    exit 1
+    build_appdir
 fi
-
-if [[ "$NIGHTLY" =~ "true" ]]; then
-    TAG="nightly"
-else
-    TAG="latest"
-fi
-
-SUFFIX="$VERSION-linux"
-
-if [[ "$ARCH" =~ "x86_64" ]]; then
-    SUFFIX="$SUFFIX-x86-64"
-elif [[ "$ARCH" =~ "x86" ]]; then
-    SUFFIX="$SUFFIX-x86"
-else
-    SUFFIX="$SUFFIX-unknown"
-fi
-
-export OUTPUT="$WORKPATH/dist/naev-$SUFFIX.AppImage"
-
-# Rename metainfo file
-mv "$WORKPATH/AppDir/usr/share/metainfo/org.naev.Naev.metainfo.xml" "$WORKPATH/AppDir/usr/share/metainfo/org.naev.Naev.appdata.xml"
-
-# Disable appstream test
-export NO_APPSTREAM=1
-
-export UPDATE_INFORMATION="gh-releases-zsync|naev|naev|$TAG|naev-*.AppImage.zsync"
-
-# Run linuxdeploy and generate an AppDir, then generate an AppImage
-
-pushd "$WORKPATH"
-
-"$linuxdeploy" \
-    --appdir "$DESTDIR" \
-    --output appimage
-
-# Move zsync file to dist directory
-mv ./*.zsync "$WORKPATH"/dist
-popd
-
-# Mark AppImage as executable
-chmod +x "$OUTPUT"
