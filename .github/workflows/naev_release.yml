@@ -37,6 +37,7 @@ jobs:
         run: |
           mkdir -p build/dist
           cp -r source/utils/ci/itch source/utils/ci/steam source/utils/ci/gh build/dist/
+          cp source/utils/buildAppImage.sh build/dist
           mv build/meson-dist/naev-*.tar.xz build/dist/source.tar.xz
           cp source/CHANGELOG build/dist
           cp source/dat/VERSION build/dist
@@ -54,7 +55,7 @@ jobs:
           name: naev-changelog
           path: ${{ github.workspace }}/build/dist/CHANGELOG
           if-no-files-found: error
-
+          
       - name: Upload Version Artifact
         uses: actions/upload-artifact@v3
         with:
