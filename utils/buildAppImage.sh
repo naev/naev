@@ -117,7 +117,6 @@ build_appdir(){
     --force-fallback-for=sdl2_image,glpk,SuiteSparse \
     -Dprefix="/usr" \
     -Db_lto=true \
-    -Dsteamruntime=true \
     -Dauto_features=enabled \
     -Ddocs_c=disabled \
     -Ddocs_lua=disabled
