@@ -172,7 +172,7 @@ int canvas_new( LuaCanvas_t *lc, int w, int h )
    memset( lc, 0, sizeof(LuaCanvas_t) );
 
    /* Create the texture. */
-   asprintf( &name, "nlua_canvas_%03d", ++nlua_canvas_counter );
+   SDL_asprintf( &name, "nlua_canvas_%03d", ++nlua_canvas_counter );
    lc->tex = gl_loadImageData( NULL, w, h, 1, 1, name );
    lc->tex->flags |= OPENGL_TEX_VFLIP; /* Long story, but love stuff inverts Y axis for canvases so we have to redo that here for spob targetting stuff to work properly. */
    free( name );

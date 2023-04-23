@@ -231,7 +231,6 @@ if buildExec.disabled() == false
    naev_deps += [openal, ogg, vorbis, vorbisfile]
 
    # Standard library feature tests
-   config_data.set10('HAVE_ASPRINTF', cc.has_function('asprintf'))
    config_data.set10('HAVE_DECL_SETENV', cc.has_header_symbol('stdlib.h', 'setenv'))
    config_data.set10('HAVE_DECL__PUTENV_S', cc.has_header_symbol('stdlib.h', '_putenv_s'))
    config_data.set10('HAVE_DECL_GETENV_S', cc.has_header_symbol('stdlib.h', 'getenv_s'))

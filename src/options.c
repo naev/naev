@@ -238,13 +238,13 @@ static char** lang_list( int *n )
 
    /* Default English only. */
    ls = malloc( sizeof(char*)*128 );
-   asprintf( &ls[0], _("system (%s[%3.0f%%] %s#0)"), (syscoverage<0.8)?"#r":"", 100.*syscoverage, syslang );
+   SDL_asprintf( &ls[0], _("system (%s[%3.0f%%] %s#0)"), (syscoverage<0.8)?"#r":"", 100.*syscoverage, syslang );
    *n = 1;
 
    /* Try to open the available languages. */
    for (int i=0; i<array_size(opts); i++) {
       char **item = &ls[(*n)++];
-      asprintf( item, "%s[%3.0f%%] %s",
+      SDL_asprintf( item, "%s[%3.0f%%] %s",
          (opts[i].coverage<0.8)?"#r":"",
          100.*opts[i].coverage, opts[i].language );
       free( opts[i].language );
@@ -1313,12 +1313,12 @@ static void opt_video( unsigned int wid )
    nres  = 0;
    res_def = 0;
    if (j) {
-      asprintf( &res[0], "%dx%d", conf.width, conf.height );
+      SDL_asprintf( &res[0], "%dx%d", conf.width, conf.height );
       nres     = 1;
    }
    for (i=0; i<n; i++) {
       SDL_GetDisplayMode( display_index, i, &mode  );
-      asprintf( &res[ nres ], "%dx%d", mode.w, mode.h );
+      SDL_asprintf( &res[ nres ], "%dx%d", mode.w, mode.h );
 
       /* Make sure doesn't already exist. */
       for (k=0; k<nres; k++)

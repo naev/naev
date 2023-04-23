@@ -919,7 +919,7 @@ static int mapedit_mapsList_refresh (void)
       credits_t price = 1000;
       int rarity = 0;
 
-      asprintf( &file, "%s%s", MAP_DATA_PATH, map_files[i] );
+      SDL_asprintf( &file, "%s%s", MAP_DATA_PATH, map_files[i] );
 
       doc = xml_parsePhysFS( file );
       if (doc == NULL) {
@@ -1115,7 +1115,7 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t* ns )
    xmlFreeTextWriter(writer);
 
    /* Actually write data */
-   asprintf( &file, "%s/%s", conf.dev_save_map, ns->fileName );
+   SDL_asprintf( &file, "%s/%s", conf.dev_save_map, ns->fileName );
    if (xmlSaveFileEnc( file, doc, "UTF-8" ) < 0)
       WARN(_("Failed writing '%s'!"), file);
    free( file );

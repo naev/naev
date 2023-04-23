@@ -669,7 +669,7 @@ void cli_open (void)
       char *buf;
       cli_addMessage( "" );
       cli_addMessage( _("#gWelcome to the Lua console!") );
-      asprintf( &buf, "#g "APPNAME" v%s", naev_version(0) );
+      SDL_asprintf( &buf, "#g "APPNAME" v%s", naev_version(0) );
       cli_printCoreString( buf, 0 );
       free( buf );
       cli_addMessage( "" );

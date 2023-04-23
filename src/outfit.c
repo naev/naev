@@ -1155,7 +1155,7 @@ static int outfit_loadPLG( Outfit *temp, const char *buf, unsigned int bolt )
    xmlDocPtr doc;
    xmlNodePtr node, cur;
 
-   asprintf( &file, "%s%s.xml", OUTFIT_POLYGON_PATH, buf );
+   SDL_asprintf( &file, "%s%s.xml", OUTFIT_POLYGON_PATH, buf );
 
    /* See if the file does exist. */
    if (!PHYSFS_exists(file)) {

@@ -518,11 +518,11 @@ static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
 
       /* Rename. */
       filtered = uniedit_nameFilter(p->name);
-      asprintf(&oldName, "%s/%s.xml", conf.dev_save_spob, filtered);
+      SDL_asprintf(&oldName, "%s/%s.xml", conf.dev_save_spob, filtered);
       free(filtered);
 
       filtered = uniedit_nameFilter(name);
-      asprintf(&newName, "%s/%s.xml", conf.dev_save_spob, filtered);
+      SDL_asprintf(&newName, "%s/%s.xml", conf.dev_save_spob, filtered);
       free(filtered);
 
       if (rename(oldName, newName))
@@ -559,7 +559,7 @@ static void sysedit_btnRemove( unsigned int wid_unused, const char *unused )
          if (sel->type == SELECT_SPOB) {
             Spob *sp = sysedit_sys->spobs[ sel->u.spob ];
             filtered = uniedit_nameFilter( sp->name );
-            asprintf(&file, "%s/%s.xml", conf.dev_save_spob, filtered);
+            SDL_asprintf(&file, "%s/%s.xml", conf.dev_save_spob, filtered);
             remove(file);
 
             free(filtered);
