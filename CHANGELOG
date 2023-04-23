@@ -36,7 +36,7 @@
       * Fixed many corner case crashes in the editor
       * Fixed cargo missions not being generated in some parts of the universe
 
-* 0.10.5 (unreleased)
+* 0.10.5
    * Start counting effect stacks from 1 not 2
    * Fixed launcher weapons using outfit mass instead of ammo mass
    * taiomi: fixed claim check for last mission
