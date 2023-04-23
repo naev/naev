@@ -1419,11 +1419,11 @@ static void uniedit_renameSys (void)
 
       /* Change the name. */
       filtered = uniedit_nameFilter(sys->name);
-      asprintf(&oldName, "%s/%s.xml", conf.dev_save_sys, filtered);
+      SDL_asprintf(&oldName, "%s/%s.xml", conf.dev_save_sys, filtered);
       free(filtered);
 
       filtered = uniedit_nameFilter(name);
-      asprintf(&newName, "%s/%s.xml", conf.dev_save_sys, filtered);
+      SDL_asprintf(&newName, "%s/%s.xml", conf.dev_save_sys, filtered);
       free(filtered);
 
       if (rename(oldName, newName))

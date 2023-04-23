@@ -96,7 +96,7 @@ if buildExec.disabled() == false
    pcre2 = dependency('libpcre2-8', fallback : ['pcre2', 'libpcre2_8'], static: get_option('steamruntime'))
    sdl = dependency('sdl2', version: '>=2.0.18', required: true)
    sdl_image = dependency('SDL2_image', required: true, fallback: ['sdl2_image', 'sdl2_image_dep'])
-   libunibreak = dependency('libunibreak', required: true, version: '>=4.0', fallback: ['libunibreak', 'libunibreak_dep'])
+   libunibreak = dependency('libunibreak', required: true, version: '>=4.0', fallback: ['libunibreak', 'libunibreak_dep'], static: get_option('steamruntime'))
 
    libxml2 = dependency('libxml-2.0', required: false)
    if not libxml2.found()
@@ -105,7 +105,7 @@ if buildExec.disabled() == false
 
    use_system_physfs = ('physfs' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
    if use_system_physfs
-      system_physfs = dependency('physfs', required: false)
+      system_physfs = dependency('physfs', required: false, static: get_option('steamruntime'))
       if not system_physfs.found()
          system_physfs = cc.find_library('physfs', required: false, has_headers: ['physfs.h'])
       endif
@@ -129,7 +129,7 @@ if buildExec.disabled() == false
    useLuaJIT = get_option('luajit')
    lua = dependency('', required: false)
    if useLuaJIT.disabled() == false
-      lua = dependency('luajit', fallback: ['luajit', 'luajit_dep'], required: useLuaJIT)
+      lua = dependency('luajit', fallback: ['luajit', 'luajit_dep'], required: useLuaJIT, static: get_option('steamruntime'))
    endif
    config_data.set10('HAVE_LUAJIT', lua.found())
    summary('LuaJIT', lua.found(), section: 'Features', bool_yn: true)
@@ -231,7 +231,6 @@ if buildExec.disabled() == false
    naev_deps += [openal, ogg, vorbis, vorbisfile]
 
    # Standard library feature tests
-   config_data.set10('HAVE_ASPRINTF', cc.has_function('asprintf'))
    config_data.set10('HAVE_DECL_SETENV', cc.has_header_symbol('stdlib.h', 'setenv'))
    config_data.set10('HAVE_DECL__PUTENV_S', cc.has_header_symbol('stdlib.h', '_putenv_s'))
    config_data.set10('HAVE_DECL_GETENV_S', cc.has_header_symbol('stdlib.h', 'getenv_s'))
@@ -239,7 +238,6 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_ALLOCA_H', cc.has_header('alloca.h'))
    config_data.set10('HAVE_FENV_H', cc.has_header('fenv.h'))
    config_data.set10('HAVE_MALLOC_H', cc.has_header('malloc.h'))
-   config_data.set10('HAVE_STRCASESTR', cc.has_function('strcasestr'))
    # strndup() detectin must work around this bug: https://github.com/mesonbuild/meson/issues/3672
    config_data.set10('HAVE_STRNDUP', cc.has_header_symbol('string.h', 'strndup') and cc.has_function('strndup'))
    config_data.set10('HAVE_STRNSTR', cc.has_function('strnstr'))

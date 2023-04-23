@@ -319,7 +319,7 @@ const char* pgettext_var( const char* msgctxt, const char* msgid )
 {
    char *lookup = NULL;
    const char* trans;
-   asprintf( &lookup, "%s" GETTEXT_CONTEXT_GLUE "%s", msgctxt, msgid );
+   SDL_asprintf( &lookup, "%s" GETTEXT_CONTEXT_GLUE "%s", msgctxt, msgid );
    trans = gettext_pgettext_impl( lookup, msgid );
    free( lookup );
    return trans;

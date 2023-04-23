@@ -25,10 +25,8 @@
 #define PRINTF_FORMAT( i, j ) FORMAT( BUILTIN_PRINTF_FORMAT, i, j)
 
 /*const*/ char *strnstr( const char *haystack, const char *needle, size_t size );
-/*const*/ char *strcasestr( const char *haystack, const char *needle );
 char* strndup( const char *s, size_t n );
 
-PRINTF_FORMAT( 2, 3 ) int asprintf( char** strp, const char* fmt, ... );
 PRINTF_FORMAT( 3, 4 ) int scnprintf( char* text, size_t maxlen, const char* fmt, ... );
 
 int strsort( const void *p1, const void *p2 );

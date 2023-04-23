@@ -74,7 +74,7 @@ static char* gl_shader_preprocess( size_t *size, const char *fbuf, size_t fbufsi
 
    /* Prepend useful information if available. */
    if (prepend != NULL) {
-      bufsize = asprintf( &buf, "%s%s", prepend, fbuf ) + 1 /* the null byte */;
+      bufsize = SDL_asprintf( &buf, "%s%s", prepend, fbuf ) + 1 /* the null byte */;
    }
    else {
       bufsize = fbufsize;

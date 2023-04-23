@@ -909,7 +909,7 @@ char **system_searchFuzzyCase( const char* sysname, int *n )
    len = 0;
    for (int i=0; i<array_size(systems_stack); i++) {
       StarSystem *sys = &systems_stack[i];
-      if (strcasestr( _(sys->name), sysname ) != NULL) {
+      if (SDL_strcasestr( _(sys->name), sysname ) != NULL) {
          names[len] = sys->name;
          len++;
       }
@@ -1147,7 +1147,7 @@ char **spob_searchFuzzyCase( const char* spobname, int *n )
    len = 0;
    for (int i=0; i<array_size(spob_stack); i++) {
       Spob *spob = &spob_stack[i];
-      if (strcasestr( spob_name(spob), spobname ) != NULL) {
+      if (SDL_strcasestr( spob_name(spob), spobname ) != NULL) {
          names[len] = spob->name;
          len++;
       }

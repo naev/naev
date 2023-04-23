@@ -200,7 +200,7 @@ int info_buttonRegister( const char *caption, int priority, SDL_Keycode key )
    btn = &array_grow( &info_buttons );
    btn->id     = ++button_idgen;
    btn->caption= strdup( caption );
-   asprintf( &btn->button, "btnExtra::%s", caption );
+   SDL_asprintf( &btn->button, "btnExtra::%s", caption );
    btn->priority = priority;
    btn->env    = __NLUA_CURENV;
    btn->func   = luaL_ref( naevL, LUA_REGISTRYINDEX );
@@ -445,14 +445,14 @@ static void info_openMain( unsigned int wid )
       int ninv = array_size(inv);
       inventory = malloc(sizeof(char*) * n);
       for (int i=0; i<nlic; i++)
-         asprintf( &inventory[i], "#n%s#0%s", _("License: "), _(lic[i]) );
+         SDL_asprintf( &inventory[i], "#n%s#0%s", _("License: "), _(lic[i]) );
       qsort( inventory, nlic, sizeof(char*), strsort );
       for (int i=0; i<ninv; i++) {
          const PlayerItem *pi = &inv[i];
          if (pi->quantity == 0)
-            asprintf( &inventory[nlic+i], "%s", _(pi->name) );
+            SDL_asprintf( &inventory[nlic+i], "%s", _(pi->name) );
          else
-            asprintf( &inventory[nlic+i], _("%s (%d)"), _(pi->name), pi->quantity );
+            SDL_asprintf( &inventory[nlic+i], _("%s (%d)"), _(pi->name), pi->quantity );
       }
       qsort( &inventory[nlic], ninv, sizeof(char*), strsort );
    }
@@ -960,7 +960,7 @@ static void cargo_genList( unsigned int wid )
          int misn = (pc->id != 0);
          int illegal = (array_size(pc->commodity->illegalto)>0);
 
-         asprintf(&buf[i], "%s %d%s%s",
+         SDL_asprintf(&buf[i], "%s %d%s%s",
                _(pc->commodity->name),
                pc->quantity,
                misn ? _(" [#bMission#0]") : "",
@@ -1189,7 +1189,7 @@ static void info_openStandings( unsigned int wid )
    /* Create list. */
    for (int i=0; i<array_size(info_factions); i++) {
       int m = round( faction_getPlayer( info_factions[i] ) );
-      asprintf( &str[i], "%s   [ #%c%+d%%#0 ]",
+      SDL_asprintf( &str[i], "%s   [ #%c%+d%%#0 ]",
             faction_longname( info_factions[i] ),
             faction_getColourChar( info_factions[i] ), m );
    }

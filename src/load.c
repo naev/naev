@@ -253,7 +253,7 @@ static int load_enumerateCallbackPlayer( void* data, const char* origdir, const 
    dir_len = strlen( origdir );
 
    fmt = dir_len && origdir[dir_len-1]=='/' ? "%s%s" : "%s/%s";
-   asprintf( &path, fmt, origdir, fname );
+   SDL_asprintf( &path, fmt, origdir, fname );
    if (!PHYSFS_stat( path, &stat ))
       WARN( _("PhysicsFS: Cannot stat %s: %s"), path,
             _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
@@ -291,7 +291,7 @@ static int load_enumerateCallback( void* data, const char* origdir, const char* 
    name_len = strlen( fname );
 
    fmt = dir_len && origdir[dir_len-1]=='/' ? "%s%s" : "%s/%s";
-   asprintf( &path, fmt, origdir, fname );
+   SDL_asprintf( &path, fmt, origdir, fname );
    if (!PHYSFS_stat( path, &stat ))
       WARN( _("PhysicsFS: Cannot stat %s: %s"), path,
             _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
@@ -303,7 +303,7 @@ static int load_enumerateCallback( void* data, const char* origdir, const char* 
       }
       if (!PHYSFS_exists( "saves-pre-0.10.0" ))
          PHYSFS_mkdir( "saves-pre-0.10.0" );
-      asprintf( &backup_path, "saves-pre-0.10.0/%s", fname );
+      SDL_asprintf( &backup_path, "saves-pre-0.10.0/%s", fname );
       if (!ndata_copyIfExists( path, backup_path ))
          old_saves_detected = 1;
       free( backup_path );
@@ -767,19 +767,19 @@ static void move_old_save( const char *path, const char *fname, const char *ext,
       char *dirname = strdup( fname );
       dirname[name_len - ext_len] = '\0';
       char *new_path;
-      asprintf( &new_path, "saves/%s", dirname );
+      SDL_asprintf( &new_path, "saves/%s", dirname );
       if (!PHYSFS_exists( new_path ))
          PHYSFS_mkdir( new_path );
       free( new_path );
-      asprintf( &new_path, "saves/%s/%s", dirname, new_name );
+      SDL_asprintf( &new_path, "saves/%s/%s", dirname, new_name );
       /* If it's going to overwrite a file, try to back it up. */
       if (PHYSFS_exists( new_path )) {
          int tries = 0;
          char *bkp_path;
-         asprintf( &bkp_path, "%s.bkp", new_path );
+         SDL_asprintf( &bkp_path, "%s.bkp", new_path );
          while (PHYSFS_exists(bkp_path) && (tries++ < 10)) {
             char *bkp_bkp_path;
-            asprintf( &bkp_bkp_path, "%s.bkp", bkp_path );
+            SDL_asprintf( &bkp_bkp_path, "%s.bkp", bkp_path );
             free( bkp_path );
             bkp_path = bkp_bkp_path;
          }

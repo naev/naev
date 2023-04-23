@@ -170,7 +170,7 @@ char **outfit_searchFuzzyCase( const char* name, int *n )
    /* Do fuzzy search. */
    len = 0;
    for (int i=0; i<nstack; i++) {
-      if (strcasestr( _(outfit_stack[i].name), name ) != NULL) {
+      if (SDL_strcasestr( _(outfit_stack[i].name), name ) != NULL) {
          names[len] = outfit_stack[i].name;
          len++;
       }
@@ -1165,7 +1165,7 @@ static int outfit_loadPLG( Outfit *temp, const char *buf )
       return -1;
    }
 
-   asprintf( &file, "%s%s.xml", OUTFIT_POLYGON_PATH, buf );
+   SDL_asprintf( &file, "%s%s.xml", OUTFIT_POLYGON_PATH, buf );
 
    /* See if the file does exist. */
    if (!PHYSFS_exists(file)) {

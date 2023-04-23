@@ -256,7 +256,7 @@ static int ndata_enumerateCallback( void* data, const char* origdir, const char*
 
    dir_len = strlen( origdir );
    fmt = dir_len && origdir[dir_len-1]=='/' ? "%s%s" : "%s/%s";
-   asprintf( &path, fmt, origdir, fname );
+   SDL_asprintf( &path, fmt, origdir, fname );
    if (!PHYSFS_stat( path, &stat )) {
       WARN( _("PhysicsFS: Cannot stat %s: %s"), path,
             _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );

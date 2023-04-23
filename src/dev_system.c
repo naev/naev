@@ -260,7 +260,7 @@ int dsys_saveSystem( StarSystem *sys )
 
    /* Write data. */
    cleanName = uniedit_nameFilter( sys->name );
-   asprintf( &file, "%s/%s.xml", conf.dev_save_sys, cleanName );
+   SDL_asprintf( &file, "%s/%s.xml", conf.dev_save_sys, cleanName );
    if (xmlSaveFileEnc( file, doc, "UTF-8" ) < 0)
       WARN("Failed writing '%s'!", file);
 

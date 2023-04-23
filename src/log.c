@@ -127,8 +127,8 @@ void log_redirect (void)
    if ( logerr_file == NULL )
       WARN(_("Unable to redirect stderr to file"));
 
-   asprintf( &outfiledouble, "logs/%s_stdout.txt", timestr );
-   asprintf( &errfiledouble, "logs/%s_stderr.txt", timestr );
+   SDL_asprintf( &outfiledouble, "logs/%s_stdout.txt", timestr );
+   SDL_asprintf( &errfiledouble, "logs/%s_stderr.txt", timestr );
 
    log_copy(0);
 }

@@ -58,33 +58,6 @@ char *strnstr( const char *haystack, const char *needle, size_t size )
 #endif /* !HAVE_STRNSTR */
 
 /**
- * @brief Finds a string inside another string case insensitively.
- *
- *    @param haystack String to look into.
- *    @param needle String to find.
- *    @return Pointer in haystack where needle was found or NULL if not found.
- */
-#if !HAVE_STRCASESTR
-char *strcasestr( const char *haystack, const char *needle )
-{
-   /* Get lengths. */
-   size_t hay_len     = strlen(haystack);
-   size_t needle_len  = strlen(needle);
-
-   /* Slow search. */
-   while (hay_len >= needle_len) {
-      if (strncasecmp(haystack, needle, needle_len) == 0)
-         return (char*)haystack;
-
-      haystack++;
-      hay_len--;
-   }
-
-   return NULL;
-}
-#endif /* !HAVE_STRCASESTR */
-
-/**
  * @brief Return a pointer to a new string, which is a duplicate of the string \p s
  *        (or, if necessary, which contains the first \p nn bytes of \p s plus a terminating null).
  *
@@ -117,28 +90,6 @@ int strsort_reverse( const void *p1, const void *p2 )
 {
    return strsort( p2, p1 );
 }
-
-/**
- * @brief Like sprintf(), but it allocates a large-enough string and returns the pointer in the first argument.
- *        Conforms to GNU and BSD libc semantics.
- *
- * @param[out] strp Used to return the allocated char* in case of success. Caller must free.
- *                  In case of failure, *strp is set to NULL, but don't rely on this because the GNU version doesn't guarantee it.
- * @param fmt Same as sprintf().
- * @return -1 if it failed, otherwise the number of bytes "printed".
- */
-#if !HAVE_ASPRINTF
-int asprintf( char** strp, const char* fmt, ... )
-{
-   int n;
-   va_list ap;
-
-   va_start( ap, fmt );
-   n = SDL_vasprintf( strp, fmt, ap );
-   va_end( ap );
-   return n;
-}
-#endif /* !HAVE_ASPRINTF */
 
 /**
  * @brief Like snprintf(), but returns the number of characters \em ACTUALLY "printed" into the buffer.

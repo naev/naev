@@ -500,7 +500,7 @@ static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine
    }
 
    /* Get the comm graphic for future loading. */
-   asprintf( &temp->gfx_comm, SHIP_GFX_PATH"%s/%s"SHIP_COMM"%s", base, buf, ext );
+   SDL_asprintf( &temp->gfx_comm, SHIP_GFX_PATH"%s/%s"SHIP_COMM"%s", base, buf, ext );
    free( base );
 
    return 0;

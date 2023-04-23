@@ -2134,8 +2134,8 @@ static void map_genModeList(void)
    odd_template = _("%s: Trade");
    for (int i=0; i<totGot; i++) {
       const char *commod_text = _(commod_known[i]->name);
-      asprintf( &array_grow( &map_modes ), even_template, commod_text );
-      asprintf( &array_grow( &map_modes ), odd_template, commod_text );
+      SDL_asprintf( &array_grow( &map_modes ), even_template, commod_text );
+      SDL_asprintf( &array_grow( &map_modes ), odd_template, commod_text );
    }
 }
 

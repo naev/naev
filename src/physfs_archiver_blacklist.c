@@ -128,7 +128,7 @@ static int blk_enumerateCallback( void* data, const char* origdir, const char* f
 
    dir_len = strlen( origdir );
    fmt = ((dir_len && origdir[dir_len-1]=='/') || dir_len==0) ? "%s%s" : "%s/%s";
-   asprintf( &path, fmt, origdir, fname );
+   SDL_asprintf( &path, fmt, origdir, fname );
    if (!PHYSFS_stat( path, &stat )) {
        PHYSFS_ErrorCode err = PHYSFS_getLastErrorCode();
       if (err!=PHYSFS_ERR_BAD_FILENAME)
