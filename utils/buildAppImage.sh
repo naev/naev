@@ -114,7 +114,7 @@ build_appdir(){
     "$MESON" setup "$BUILDPATH" "$SOURCEPATH" \
     --native-file "$SOURCEPATH/utils/build/linux_steamruntime_scout.ini" \
     --buildtype "$BUILDTYPE" \
-    --force-fallback-for=glpk,SuiteSparse \
+    --force-fallback-for=sdl2_image,glpk,SuiteSparse \
     -Dprefix="/usr" \
     -Db_lto=true \
     -Dauto_features=enabled \
