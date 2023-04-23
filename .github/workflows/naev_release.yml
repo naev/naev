@@ -299,68 +299,6 @@ jobs:
           path: ${{ github.workspace }}/build/dist/*
           if-no-files-found: error
 
-  "Steam_Naev_Release":
-    needs: "Package_Source"
-    runs-on: ubuntu-latest
-
-    container:
-      image: "ghcr.io/naev/naev-steamruntime:latest"
-
-    steps:
-      - name: Get Source
-        uses: actions/download-artifact@v3
-        with:
-          name: naev-dist
-
-      - name: Extract Source
-        run: |
-          mkdir source
-          tar -xf source.tar.xz -C source --strip 1
-
-      - name: Meson Setup
-        run: |
-          meson setup build source \
-              --native-file='source/utils/build/linux_steamruntime.ini' \
-              --buildtype=release \
-              --force-fallback-for=SuiteSparse,sdl2_image,enet \
-              -Dprefix="/usr" \
-              -Dinstaller=true \
-              -Db_lto=true \
-              -Dauto_features=enabled \
-              -Ddocs_c=disabled \
-              -Ddocs_lua=disabled
-
-      - name: Meson Compile
-        run: |
-          meson compile -C build
-
-      - name: Meson Install
-        run: |
-          meson install -C build
-        env:
-          DESTDIR: ${{ github.workspace }}/staging
-
-      - name: Collect Steam Linux64 Artifacts
-        run: |
-          mkdir -p build/dist/
-
-          mv staging/usr/bin/naev build/dist/naev.x64
-          chmod +x build/dist/naev.x64
-
-          tar -cJvf build/dist/naev-ndata.tar.xz -C staging/usr/share/naev dat
-
-      - name: Upload Naev Binary Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: naev-steamruntime
-          path: build/dist/naev.x64
-
-      - name: Upload Naev Data Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: naev-ndata
-          path: build/dist/naev-ndata.tar.xz
-
   "Steam_Naev_Soundtrack_Release":
     needs: "Package_Source"
     runs-on: ubuntu-latest
