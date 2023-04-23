@@ -72,6 +72,7 @@ jobs:
               --buildtype=debug \
               --wrap-mode=${{ matrix.wrap_mode }} \
               --force-fallback-for=sdl2_image,glpk,SuiteSparse \
+              -Dsteamruntime=false \
               -Dprefix="/usr" \
               -Db_lto=true \
               -Dinstaller=false \

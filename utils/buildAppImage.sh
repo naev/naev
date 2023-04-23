@@ -115,6 +115,7 @@ build_appdir(){
     --native-file "$SOURCEPATH/utils/build/linux_steamruntime_scout.ini" \
     --buildtype "$BUILDTYPE" \
     --force-fallback-for=sdl2_image,glpk,SuiteSparse \
+    -Dsteamruntime=false \
     -Dprefix="/usr" \
     -Db_lto=true \
     -Dauto_features=enabled \
