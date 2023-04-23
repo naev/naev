@@ -378,7 +378,7 @@ jobs:
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
       - name: Trigger API Documentation Update
-        if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
+        if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' && github.ref == 'refs/heads/main' }}
         uses: convictional/trigger-workflow-and-wait@v1.6.5
         with:
           owner: naev
