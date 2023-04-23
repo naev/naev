@@ -121,7 +121,7 @@ jobs:
         run: |
           if [[ "$IMAGE_NAME" =~ "naev-steamfrankenruntime" ]]; then
               ./source/utils/buildAppImage.sh -d -s source -b appImageBuild | tee appImageBuildLog.txt
-              ls ${{ github.workspace }}/appImageBuild/AppDir >/dev/null || exit
+              ls ${{ github.workspace }}/appImageBuild/dist/AppDir >/dev/null || exit
           else
             ./source/utils/buildAppImage.sh -d -i -s source -b appImageBuild | tee appImageBuildLog.txt
             ls ${{ github.workspace }}/appImageBuild/dist/*.AppImage >/dev/null || exit
