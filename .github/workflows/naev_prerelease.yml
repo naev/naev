@@ -89,7 +89,7 @@ jobs:
           path: ${{ github.workspace }}/build/dist/itch/*
           if-no-files-found: error
 
- "Linux_Naev_Release":
+  "Linux_Naev_Release":
     needs: "Package_Source"
     runs-on: ubuntu-latest
     defaults:
