@@ -368,6 +368,8 @@ if buildExec.disabled() == false
          'source_root': meson.source_root(),
          'naev_bin' : naev_bin.full_path(),
          'zip_overlay' : zip_overlay.full_path(),
+         'debug' : debug,
+         'debug_paranoid' : paranoid,
       }
    )
 

@@ -3663,6 +3663,8 @@ src/shipstats.h
 src/slots.c
 src/slots.h
 src/sound.c
+src/sound.c
+src/sound.c
 src/sound.h
 src/space.c
 src/space.h

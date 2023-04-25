@@ -20,7 +20,14 @@ for mo_path in "@build_root@"/po/*/; do
    fi
 done
 
+# shellcheck disable=SC2050
 wrapper() {
+   if [[ "@debug_paranoid@" = "True" ]]; then
+      export ALSOFT_LOGLEVEL=3
+      export ALSOFT_TRAP_AL_ERROR=1
+   elif [[ "@debug@" = "True" ]]; then
+      export ALSOFT_LOGLEVEL=2
+   fi
    if [[ ! "$WITHGDB" =~ "NO" ]] && type "gdb" > /dev/null 2>&1; then
       export ASAN_OPTIONS=abort_on_error=1
       exec gdb -x "@source_root@/.gdbinit" --args "$@"
