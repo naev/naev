@@ -86,7 +86,7 @@ jobs:
       run:
         shell: bash
     container:
-      image: "ghcr.io/naev/naev-steamfrankenruntime:latest"
+      image: "ghcr.io/naev/naev-steamruntime:latest"
       volumes:
         - ${{ github.workspace }}:${{ github.workspace }}
 
@@ -104,9 +104,9 @@ jobs:
       - name: Meson Setup
         run: |
           meson setup build source \
-              --native-file='source/utils/build/linux_steamruntime_scout.ini' \
+              --native-file='source/utils/build/linux_steamruntime.ini' \
               --buildtype=debug \
-              --force-fallback-for=sdl2_image,glpk,SuiteSparse \
+              --force-fallback-for=glpk,SuiteSparse \
               -Dsteamruntime=true \
               -Dprefix="/usr" \
               -Dinstaller=true \

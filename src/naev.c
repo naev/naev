@@ -218,7 +218,7 @@ int main( int argc, char** argv )
 
 #if HAS_UNIX
    /* Set window class and name. */
-   nsetenv("SDL_VIDEO_X11_WMCLASS", APPNAME, 0);
+   SDL_setenv("SDL_VIDEO_X11_WMCLASS", APPNAME, 0);
 #endif /* HAS_UNIX */
 
    /* Must be initialized before input_init is called. */
