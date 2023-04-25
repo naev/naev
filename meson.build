@@ -4,7 +4,8 @@ project('naev', 'c',
       'warning_level=2',
       'optimization=g',
       'c_std=gnu11',
-      'werror=false'
+      'werror=false',
+      'warning_level=3',
    ],
    meson_version: '>=0.55.0')
 
@@ -16,7 +17,7 @@ copyright_holder = 'Naev Dev Team'
 
 # Tools
 cc = meson.get_compiler('c')
-c_args = cc.get_supported_arguments(['-Wextra', '-Wshadow'])
+c_args = cc.get_supported_arguments(['-Wshadow'])
 add_project_arguments(c_args, language: 'c')
 
 # Python module checks (For AUTHORS generation and soundtrack generation)
