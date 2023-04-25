@@ -2653,7 +2653,7 @@ static void sysedit_spobGFX( unsigned int wid_unused, const char *wgt )
       cells[j].image   = t;
       cells[j].caption = strdup( files[i] );
       filepath = (land ? p->gfx_exteriorPath : p->gfx_spacePath);
-      c = ((filepath==NULL) || !strcmp(files[i], filepath)==0) ? cBlack : cOrange;
+      c = ((filepath==NULL) || strcmp(files[i], filepath)!=0) ? cBlack : cOrange;
       memcpy( &cells[j].bg, &c, sizeof(glColour) );
       j++;
    }
