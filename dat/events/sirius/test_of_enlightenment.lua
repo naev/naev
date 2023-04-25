@@ -10,7 +10,7 @@ local textoverlay = require "textoverlay"
 local audio = require 'love.audio'
 local lf = require "love.filesystem"
 local pp_shaders = require "pp_shaders"
---local chakra = require "luaspfx.chakra_explosion"
+local chakra = require "luaspfx.chakra_explosion"
 
 local ssys, sysr, spos, sdir
 local prevship
@@ -142,6 +142,37 @@ function puzzle01( p )
    local allon = true
    for i,m in ipairs(markers) do
       if not m.on then
+         allon = false
+         break
+      end
+   end
+   if allon then
+      for i,m in ipairs(markers) do
+         m.p:rm()
+         hook.rm( m.h )
+         m.h = hook.pilot( m.p, "attacked", "puzzle02" )
+      end
+   end
+end
+
+function puzzle02( p )
+   local n = 0
+   for i,m in ipairs(markers) do
+      if m.p and m.p==p then
+         n = i
+         break
+      end
+   end
+   assert( n~=0 )
+   local mm = markers[n]
+   chakra( mm.p:pos() )
+   mm.p:rm()
+   mm.p = nil
+
+   -- Check if done
+   local allon = true
+   for i,m in ipairs(markers) do
+      if m.p and m.p:exists() then
          allon = false
          break
       end
