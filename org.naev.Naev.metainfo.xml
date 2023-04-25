@@ -5,6 +5,7 @@
   <name>Naev</name>
   <summary>2D action/rpg space trading combat game</summary>
   <summary xml:lang="de">2D-Action- und RPG-Weltraumhandels- und Kampfspiel</summary>
+  <summary xml:lang="ja">2Dアクション/RPG 宇宙交易戦闘ゲーム</summary>
   <developer_name>Naev DevTeam</developer_name>
   <icon type="stock">org.naev.Naev</icon>
   <url type="homepage">https://naev.org</url>
@@ -26,11 +27,17 @@
     <p xml:lang="de">
       Naev ist ein 2D-Weltraumhandels- und -kampfspiel, welches Inspiration aus der „Escape Veolcity“-Serie und anderen Spielen nimmt.
     </p>
+    <p xml:lang="ja">
+      Naevは2Dの宇宙交易戦闘ゲームで、Escape Velocityシリーズなどから着想を得たものです。
+    </p>
     <p>
       You pilot a space ship from a top-down perspective, and are more or less free to do what you want. As the genre name implies, you’re able to trade and engage in combat at will. Beyond that, there’s an ever-growing number of storyline missions, equipment, and ships; Even the galaxy itself grows larger with each release. For the literarily-inclined, there are large amounts of lore accompanying everything from planets to equipment.
     </p>
     <p xml:lang="de">
       Du steuerst ein Raumschiff aus der Vogelperspektive und kannst mehr oder weniger über dein eigenes Schicksal bestimmen. Wie der Name des Genres impliziert, kannst du beliebig handeln und kämpfen. Darüber hinaus gibt es eine beständig wachsende Anzahl an Missionen, Equipment und Schiffe; auch die Galaxie selbst wächst mit jeder Veröffentlichung. Für die literarisch geneigten Spieler gibt es viele Hintergrundgeschichten, die alles von Planeten bis zum Equipment begleiten.
+    </p>
+    <p xml:lang="ja">
+      あなたはトップダウン視点で宇宙船を操縦し、したいことをほぼ自由にすることができます。ジャンルの名前が含むとおり、思うがままに交易をしたり戦いに参加することが可能です。そのうえ、ストーリーを構成する任務の数や、装備と船の数はつねに増えつづけていますし、銀河自体もリリースごとにさらに大きく成長しています。読みものとしての趣向もあって、惑星から装備にいたるすべてに大量の逸話が添えられています。
     </p>
   </description>
 
