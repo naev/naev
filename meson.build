@@ -1,28 +1,22 @@
 project('naev', 'c',
    version : '0.11.0-alpha.1',
    default_options : [
-      'warning_level=2',
       'optimization=g',
       'c_std=gnu11',
-      'werror=false'
+      'werror=false',
+      'warning_level=3',
    ],
-   meson_version: '>=0.53.0')
+   meson_version: '>=0.55.0')
 
 copyright_year = 2023
-
-if meson.version().startswith('0.53.') or meson.version().startswith('0.54.')
-   warning('This version of Meson is nearly too old to work, but partially supported for subproject-free builds (e.g., for distro packages). In most cases you will need to upgrade Meson or use the included meson.sh wrapper script.')
-   forced_fallbacks = []
-else
-   forced_fallbacks = get_option('force_fallback_for')
-endif
+forced_fallbacks = get_option('force_fallback_for')
 
 issue_address = 'https://github.com/naev/naev/issues'
 copyright_holder = 'Naev Dev Team'
 
 # Tools
 cc = meson.get_compiler('c')
-c_args = cc.get_supported_arguments(['-Wextra', '-Wshadow'])
+c_args = cc.get_supported_arguments(['-Wshadow'])
 add_project_arguments(c_args, language: 'c')
 
 # Python module checks (For AUTHORS generation and soundtrack generation)
