@@ -32,12 +32,14 @@ local jumped = false
 local jumptime = 2.0
 function update( _dt, real_dt )
    timer = timer + real_dt
-   shader:send( "u_progress", timer/jumptime )
    if timer >= jumptime then
       if not jumped then
          shader.rmPPShader( shader )
          shader = pp_shaders.newShader( pixelcode_exit )
          shader.addPPShader( shader, "gui" )
+         jumped = true
+         timer = 0
+         jumptime = 3.0
          hook.safe( "obelisk" )
       else
          shader.rmPPShader( shader )
@@ -45,6 +47,7 @@ function update( _dt, real_dt )
          evt.finish()
       end
    end
+   shader:send( "u_progress", timer/jumptime )
 end
 
 function obelisk ()
@@ -53,7 +56,4 @@ function obelisk ()
    local pp = player.pilot()
    pp:shipvarPop( "obelisk" ) -- Clear obelisk
    sfx:play()
-   jumped = true
-   timer = 0
-   jumptime = 3.0
 end

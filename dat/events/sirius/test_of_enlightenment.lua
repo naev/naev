@@ -151,6 +151,8 @@ function puzzle01( p )
          m.p:rm()
          hook.rm( m.h )
          m.h = hook.pilot( m.p, "attacked", "puzzle02" )
+
+         -- TODO move to positions and have motion
       end
    end
 end
@@ -165,7 +167,7 @@ function puzzle02( p )
    end
    assert( n~=0 )
    local mm = markers[n]
-   chakra( mm.p:pos() )
+   chakra( mm.p:pos(), vec2.new(), 100 )
    mm.p:rm()
    mm.p = nil
 
