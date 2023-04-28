@@ -16,7 +16,7 @@ vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
       colour = blur5( tex, texture_coords, love_ScreenSize.xy, blur );
 
    float d = sdVesica( uv.yx, 0.8, u_progress );
-   float a = (1.0-smoothstep( 0.0, 0.2, -d )) * min(1.0, u_progress*2.0);
+   float a = (1.0-smoothstep( 0.0, 0.2, -d )) * smoothstep(0.0, 1.0, u_progress*2.0);
 
    return mix( colour, FADECOLOUR, a );
 }
