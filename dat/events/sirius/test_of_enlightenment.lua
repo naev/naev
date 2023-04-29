@@ -11,8 +11,9 @@ local audio = require 'love.audio'
 local lf = require "love.filesystem"
 local pp_shaders = require "pp_shaders"
 local chakra = require "luaspfx.chakra_explosion"
+local srs = require "common.sirius"
 
-local ssys, sysr, spos, sdir
+local spos, sdir
 local prevship
 local markers
 local reward = outfit.get("Seeking Chakra")
@@ -37,18 +38,7 @@ end
 
 local hook_done
 function create ()
-   ssys = system.cur()
-   sysr = ssys:radius()
-
-   -- Hide rest of the universe
-   for k,s in ipairs(system.getAll()) do
-      s:setHidden(true)
-   end
-   ssys:setHidden(false)
-
-   -- Stop and play different music
-   music.stop()
-   -- TODO sound
+   srs.obeliskEnter()
 
    -- Swap player's ship
    local player_ship = player.shipAdd( "Astral Projection Lesser", _("Psyche"), _("Psychic powers."), true )
@@ -89,8 +79,6 @@ function create ()
    marker_set( 4, true )
    marker_set( 5, false )
 
-   hook.update( "update_limits" )
-
    textoverlay.init( "#y".._("Test of Enlightenment").."#0",
       "#y".._("Activate the Orbs").."#0" )
 
@@ -98,26 +86,12 @@ function create ()
    hook_done = hook.enter( "done" )
 end
 
--- Forces the player (and other ships) to stay in the radius of the system
-function update_limits ()
-   for k,p in ipairs(pilot.get()) do
-      local pos = p:pos()
-      local d = pos:dist()
-      if d > sysr then
-         local _m, dir = pos:polar()
-         p:setPos( vec2.newP( sysr, dir ) )
-      end
-   end
-end
-
 function done ()
    -- Restore previous ship
    player.shipSwap( prevship, true, true )
 
-   ssys:setKnown(false)
-   for k,s in ipairs(system.getAll()) do
-      s:setHidden(false)
-   end
+   srs.obeliskExit()
+
    evt.finish()
 end
 
@@ -217,7 +191,7 @@ function puzzle02( p )
       textoverlay.init( "#y"..reward:name().."#0",
          "#y".._("New Flow Ability Unlocked").."#0",
          {length=6})
-      hook.timer( 10, "cleanup" )
+      hook.timer( 6, "cleanup" )
    end
 end
 
