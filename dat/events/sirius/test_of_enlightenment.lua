@@ -159,10 +159,11 @@ function puzzle01( p )
          m.p:control()
          m.t = 1
          hook.pilot( m.p, "idle", "puzzle02_idle" )
-         local pos = m.p:pos()
-         local posm, posa = pos:polar()
+         local lastpos = m.p:pos()
+         local posm, posa = lastpos:polar()
          local function rndpos ()
-            return pos + vec2.newP( posm+50+50*rnd.rnd(), posa+math.pi*0.5*(rnd.rnd()-0.5) )
+            lastpos = lastpos + vec2.newP( posm+50+50*rnd.rnd(), posa+math.pi*0.5*(rnd.rnd()-0.5) )
+            return lastpos
          end
          puzzle02_pos[i] = { rndpos(), rndpos(), rndpos(), }
          m.p:moveto( puzzle02_pos[i][m.t] )
