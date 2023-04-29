@@ -254,7 +254,6 @@ end
 
 function return_obelisk ()
    local _spb,sys = spob.getS("Kal Atok Obelisk")
-   time.inc( time.new( 0, 0, 1000 + 2000*rnd.rnd() ) )
    player.teleport( sys, true, true )
    local pp = player.pilot()
    pp:setDir( sdir )
