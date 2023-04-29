@@ -25,6 +25,8 @@ function create ()
 
    shader = pp_shaders.newShader( pixelcode_enter )
    shader.addPPShader( shader, "gui" )
+
+   player.pilot():setInvincible(true)
 end
 
 local timer = 0
@@ -56,4 +58,5 @@ function obelisk ()
    local pp = player.pilot()
    pp:shipvarPop( "obelisk" ) -- Clear obelisk
    sfx:play()
+   pp:setInvincible(false)
 end

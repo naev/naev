@@ -81,7 +81,6 @@ end
 local function cleanup_player ()
    -- Restore previous ship
    player.shipSwap( prevship, true, true )
-   hook.rm( hook_done )
 end
 
 function done ()
@@ -194,5 +193,6 @@ function puzzle02( p )
 end
 
 function cleanup ()
+   hook.rm( hook_done )
    srs.obeliskCleanup( cleanup_player )
 end

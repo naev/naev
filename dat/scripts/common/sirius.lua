@@ -82,16 +82,10 @@ function _srs_obelisk_end( _dt, real_dt )
       if not jumped then
          jumped = true
          end_timer = 2.0
-         shader.rmPPShader( shader )
-         shader = pp_shaders.newShader( pixelcode_enter )
-         shader.addPPShader( shader, "gui" )
          hook.safe( "_srs_return_obelisk" )
       else
          shader.rmPPShader( shader )
          srs.obeliskExit()
-         if endfunc then
-            endfunc()
-         end
       end
    end
 end
@@ -99,6 +93,12 @@ end
 function _srs_return_obelisk ()
    local _spb,sys = spob.getS( obelisk )
    player.teleport( sys, true, true )
+   shader.rmPPShader( shader )
+   shader = pp_shaders.newShader( pixelcode_enter )
+   shader.addPPShader( shader, "gui" )
+   if endfunc then
+      endfunc()
+   end
    local pp = player.pilot()
    pp:setDir( sdir )
    pp:setPos( spos )
