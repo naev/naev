@@ -78,13 +78,14 @@ function create ()
    hook_done = hook.enter( "done" )
 end
 
-local function cleanup ()
+local function cleanup_player ()
    -- Restore previous ship
    player.shipSwap( prevship, true, true )
+   hook.rm( hook_done )
 end
 
 function done ()
-   cleanup()
+   cleanup_player()
    srs.obeliskExit()
 
    evt.finish()
@@ -117,28 +118,31 @@ function puzzle01( p )
       end
    end
    if allon then
-      puzzle02_pos = {}
-      for i,m in ipairs(markers) do
-         hook.rm( m.h )
-         m.p:intrinsicSet( {
-            thrust     = 200,
-            speed      = 100,
-            turn       = 900,
-         }, true ) -- overwrite all
-         m.p:control()
-         m.t = 1
-         hook.pilot( m.p, "idle", "puzzle02_idle" )
-         local lastpos = m.p:pos()
-         local posm, posa = lastpos:polar()
-         local function rndpos ()
-            lastpos = lastpos + vec2.newP( posm+50+50*rnd.rnd(), posa+math.pi*0.5*(rnd.rnd()-0.5) )
-            return lastpos
-         end
-         puzzle02_pos[i] = { rndpos(), rndpos(), rndpos(), }
-         m.p:moveto( puzzle02_pos[i][m.t] )
-         m.p:setInvincible(true)
-         m.h = hook.pilot( m.p, "attacked", "puzzle02" )
+      hook.safe("puzzle02_start")
+   end
+end
+
+function puzzle02_start ()
+   puzzle02_pos = {}
+   for i,m in ipairs(markers) do
+      hook.rm( m.h )
+      m.p:intrinsicSet( {
+         thrust     = 200,
+         speed      = 100,
+         turn       = 900,
+      }, true ) -- overwrite all
+      m.p:control()
+      m.t = 1
+      hook.pilot( m.p, "idle", "puzzle02_idle" )
+      local lastpos = m.p:pos()
+      local posm, posa = lastpos:polar()
+      local function rndpos ()
+         lastpos = lastpos + vec2.newP( posm+50+50*rnd.rnd(), posa+math.pi*0.5*(rnd.rnd()-0.5) )
+         return lastpos
       end
+      puzzle02_pos[i] = { rndpos(), rndpos(), rndpos(), }
+      m.p:moveto( puzzle02_pos[i][m.t] )
+      m.h = hook.pilot( m.p, "attacked", "puzzle02" )
    end
 end
 
@@ -154,7 +158,6 @@ function puzzle02_idle( p )
    local mm = markers[n]
    local mp = puzzle02_pos[n]
    mm.t = math.fmod( mm.t, #mp )+1
-   mm.p:setInvincible(false)
    mm.p:moveto( mp[mm.t] )
 end
 
@@ -191,6 +194,5 @@ function puzzle02( p )
 end
 
 function cleanup ()
-   srs.obeliskCleanup( cleanup )
-   hook.rm( hook_done )
+   srs.obeliskCleanup( cleanup_player )
 end
