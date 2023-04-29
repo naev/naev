@@ -3,6 +3,10 @@
    Sirius Common Functions
 
 --]]
+local pp_shaders = require "pp_shaders"
+local lf = require "love.filesystem"
+local audio = require 'love.audio'
+
 local srs = {}
 
 srs.prefix = "#y".._("SIRIUS: ").."#0"
@@ -21,10 +25,22 @@ function srs.addHereticLog( text )
    shiplog.append( "heretic", text )
 end
 
-local ssys, sysr
-function srs.obeliskEnter ()
+local sfxGong
+function srs.sfxGong()
+   if not sfxGong then
+      sfxGong = audio.newSource( 'snd/sounds/gamelan_gong.ogg' )
+   end
+   sfxGong:play()
+end
+
+local ssys, sysr, obelisk, spos, sdir
+function srs.obeliskEnter( oblk )
+   obelisk = oblk
    ssys = system.cur()
    sysr = ssys:radius()
+   local pp = player.pilot()
+   spos = pp:pos()
+   sdir = pp:dir()
 
    -- Hide rest of the universe
    for k,s in ipairs(system.getAll()) do
@@ -44,6 +60,51 @@ function srs.obeliskExit ()
    for k,s in ipairs(system.getAll()) do
       s:setHidden(false)
    end
+end
+
+local pixelcode_enter = lf.read( "glsl/love/obelisk_enter.frag" )
+local pixelcode_exit = lf.read( "glsl/love/obelisk_exit.frag" )
+local shader, endfunc
+function srs.obeliskCleanup( func )
+   endfunc = func
+   -- Played backwards from entering
+   shader = pp_shaders.newShader( pixelcode_exit )
+   shader.addPPShader( shader, "gui" )
+   hook.update( "_srs_obelisk_end" )
+end
+
+local end_timer = 2.0
+local jumped = false
+function _srs_obelisk_end( _dt, real_dt )
+   end_timer = end_timer - real_dt
+   shader:send( "u_progress", end_timer/2.0 )
+   if end_timer < 0 then
+      if not jumped then
+         jumped = true
+         end_timer = 2.0
+         shader.rmPPShader( shader )
+         shader = pp_shaders.newShader( pixelcode_enter )
+         shader.addPPShader( shader, "gui" )
+         hook.safe( "_srs_return_obelisk" )
+      else
+         shader.rmPPShader( shader )
+         srs.obeliskExit()
+         if endfunc then
+            endfunc()
+         end
+      end
+   end
+end
+
+function _srs_return_obelisk ()
+   local _spb,sys = spob.getS( obelisk )
+   player.teleport( sys, true, true )
+   local pp = player.pilot()
+   pp:setDir( sdir )
+   pp:setPos( spos )
+   pp:setVel( vec2.new() )
+   srs.sfxGong()
+   music.stop()
 end
 
 -- Forces the player (and other ships) to stay in the radius of the system
