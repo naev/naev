@@ -96,6 +96,7 @@ function _srs_return_obelisk ()
    shader.rmPPShader( shader )
    shader = pp_shaders.newShader( pixelcode_enter )
    shader.addPPShader( shader, "gui" )
+   shader:send( "u_progress", 1.0 )
    if endfunc then
       endfunc()
    end
