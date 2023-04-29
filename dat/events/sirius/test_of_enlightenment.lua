@@ -121,6 +121,7 @@ function done ()
    evt.finish()
 end
 
+local puzzle02_pos
 function puzzle01( p )
    local n = 0
    for i,m in ipairs(markers) do
@@ -147,14 +148,44 @@ function puzzle01( p )
       end
    end
    if allon then
+      puzzle02_pos = {}
       for i,m in ipairs(markers) do
-         m.p:rm()
          hook.rm( m.h )
+         m.p:intrinsicSet( {
+            thrust     = 200,
+            speed      = 100,
+            turn       = 900,
+         }, true ) -- overwrite all
+         m.p:control()
+         m.t = 1
+         hook.pilot( m.p, "idle", "puzzle02_idle" )
+         local pos = m.p:pos()
+         local posm, posa = pos:polar()
+         local function rndpos ()
+            return pos + vec2.newP( posm+50+50*rnd.rnd(), posa+math.pi*0.5*(rnd.rnd()-0.5) )
+         end
+         puzzle02_pos[i] = { rndpos(), rndpos(), rndpos(), }
+         m.p:moveto( puzzle02_pos[i][m.t] )
+         m.p:setInvincible(true)
          m.h = hook.pilot( m.p, "attacked", "puzzle02" )
-
-         -- TODO move to positions and have motion
       end
    end
+end
+
+function puzzle02_idle( p )
+   local n = 0
+   for i,m in ipairs(markers) do
+      if m.p and m.p==p then
+         n = i
+         break
+      end
+   end
+   assert( n~=0 )
+   local mm = markers[n]
+   local mp = puzzle02_pos[n]
+   mm.t = math.fmod( mm.t, #mp )+1
+   mm.p:setInvincible(false)
+   mm.p:moveto( mp[mm.t] )
 end
 
 function puzzle02( p )
@@ -180,11 +211,6 @@ function puzzle02( p )
       end
    end
    if allon then
-      for i,m in ipairs(markers) do
-         m.p:rm()
-      end
-      markers = nil
-
       sfx:play()
       player.outfitAdd( reward )
       textoverlay.init( "#y"..reward:name().."#0",
