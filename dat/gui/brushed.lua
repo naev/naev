@@ -696,7 +696,7 @@ function render( _dt )
    fuel = player.fuel() / stats.fuel_max * 100
    local heat = math.max( math.min( (pp:temp() - 250)/87.5, 2 ), 0 )
    local _wset_name, pwset = pp:weapset( true )
-   local wset_id = string.format( "%d", pp:activeWeapset() )
+   local wset_id = string.format( "%d", pp:weapsetActive() )
    if wset_id == 10 then wset_id = 0 end
    local wset = {}
    local aset = pp:actives( true )
