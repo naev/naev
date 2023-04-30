@@ -5,9 +5,10 @@ local srs = require "common.sirius"
 
 local obelisk = {}
 
-function obelisk.init( spb, target, criteria )
+function obelisk.init( spb, target, description, criteria )
    mem.spob = spb
    mem.target = system.get(target)
+   mem.description = description
    mem.criteria = criteria
 end
 
@@ -34,8 +35,8 @@ function obelisk.comm ()
    --local spb = ccomm.newCharacterSpob( vn, mem.spob )
    ccomm.newCharacterSpob( vn, mem.spob )
    vn.transition()
-   vn.na(fmt.f(_("You tune your psychic energy to the {spb}."),
-      {spb=mem.spob}))
+   vn.na(fmt.f(_("You tune your psychic energy to the {spb}. {description}"),
+      {spb=mem.spob, description=mem.description}))
 
    vn.label("menu")
    vn.menu( function ()
