@@ -1134,6 +1134,7 @@ dat/spob/jurai.xml
 dat/spob/juran.xml
 dat/spob/kaira.xml
 dat/spob/kal_atok_obelisk.xml
+dat/spob/kal_maro_obelisk.xml
 dat/spob/kanar.xml
 dat/spob/kanel.xml
 dat/spob/kansas_i.xml
@@ -2408,6 +2409,7 @@ dat/ssys/tempus.xml
 dat/ssys/tepdania.xml
 dat/ssys/tepvin.xml
 dat/ssys/terminus.xml
+dat/ssys/test_of_alacrity.xml
 dat/ssys/test_of_enlightenment.xml
 dat/ssys/theras.xml
 dat/ssys/thirty_stars.xml
@@ -2831,6 +2833,7 @@ dat/events/shipai.lua
 dat/events/shiplog.lua
 dat/events/sirius/achack04.lua
 dat/events/sirius/preach.lua
+dat/events/sirius/test_of_alacrity.lua
 dat/events/sirius/test_of_enlightenment.lua
 dat/events/soromid/ferals.lua
 dat/events/standing.lua
@@ -3369,6 +3372,7 @@ dat/spob/lua/hypergate_kiwi.lua
 dat/spob/lua/hypergate_ngc14549.lua
 dat/spob/lua/hypergate_ruadan.lua
 dat/spob/lua/kal_atok_obelisk.lua
+dat/spob/lua/kal_maro_obelisk.lua
 dat/spob/lua/lib/hypergate.lua
 dat/spob/lua/lib/obelisk.lua
 dat/spob/lua/lib/spob.lua
