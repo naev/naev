@@ -10,9 +10,9 @@ local textoverlay = require "textoverlay"
 local chakra = require "luaspfx.chakra_explosion"
 local srs = require "common.sirius"
 
-local prevship
-local markers
+local prevship, markers
 local reward = outfit.get("Seeking Chakra")
+local obelisk = spob.get("Kal Atok Obelisk")
 
 local function marker_set( n, state )
    local m = markers[n]
@@ -32,7 +32,7 @@ end
 
 local hook_done
 function create ()
-   srs.obeliskEnter( spob.get("Kal Atok Obelisk") )
+   srs.obeliskEnter( obelisk )
 
    -- Swap player's ship
    local player_ship = player.shipAdd( "Astral Projection Lesser", _("Psyche"), _("Psychic powers."), true )
