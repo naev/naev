@@ -277,12 +277,12 @@ static int playerL_shipname( lua_State *L )
  */
 static int playerL_pay( lua_State *L )
 {
+   PLAYER_CHECK();
+
    HookParam p[3];
    credits_t money;
    int nohooks;
    const char *reason;
-
-   PLAYER_CHECK();
 
    money = CLAMP( CREDITS_MIN, CREDITS_MAX, (credits_t)round(luaL_checknumber(L,1)) );
    player_modCredits( money );
@@ -325,15 +325,16 @@ static int playerL_pay( lua_State *L )
  */
 static int playerL_credits( lua_State *L )
 {
-   PLAYER_CHECK();
+   credits_t creds = (player.p==NULL) ? 0 : player.p->credits;
+
    /* Parse parameters. */
    int decimals = luaL_optinteger(L,1,-1);
 
    /* Push return. */
-   lua_pushnumber(L, player.p->credits);
+   lua_pushnumber(L, creds);
    if (decimals >= 0) {
       char buf[ ECON_CRED_STRLEN ];
-      credits2str( buf, player.p->credits, decimals );
+      credits2str( buf, creds, decimals );
       lua_pushstring(L, buf);
       return 2;
    }
@@ -353,18 +354,23 @@ static int playerL_credits( lua_State *L )
  */
 static int playerL_wealth( lua_State *L )
 {
-   PLAYER_CHECK();
-   const PlayerShip_t *ps = player_getShipStack();
-   const PlayerOutfit_t *po = player_getOutfits();
-   credits_t wealth = player.p->credits + pilot_worth( player.p );
+   credits_t wealth;
    /* Parse parameters. */
    int decimals = luaL_optinteger(L,1,-1);
 
-   /* Compute total wealth. */
-   for (int i=0; i<array_size(ps); i++)
-      wealth += pilot_worth( ps[i].p  );
-   for (int i=0; i<array_size(po); i++)
-      wealth += po[i].q * po[i].o->price;
+   if (player.p != NULL) {
+      const PlayerShip_t *ps = player_getShipStack();
+      const PlayerOutfit_t *po = player_getOutfits();
+      wealth = player.p->credits + pilot_worth( player.p );
+
+      /* Compute total wealth. */
+      for (int i=0; i<array_size(ps); i++)
+         wealth += pilot_worth( ps[i].p  );
+      for (int i=0; i<array_size(po); i++)
+         wealth += po[i].q * po[i].o->price;
+   }
+   else
+      wealth = 0;
 
    /* Push return. */
    lua_pushnumber(L, wealth);
@@ -512,8 +518,8 @@ static int playerL_omsgRm( lua_State *L )
  */
 static int playerL_allowSave( lua_State *L )
 {
-   unsigned int b;
    PLAYER_CHECK();
+   unsigned int b;
    if (lua_gettop(L)==0)
       b = 1;
    else
@@ -564,8 +570,10 @@ static int playerL_getPilot( lua_State *L )
  */
 static int playerL_jumps( lua_State *L )
 {
-   PLAYER_CHECK();
-   lua_pushnumber(L, pilot_getJumps(player.p));
+   if (player.p == NULL)
+      lua_pushnumber(L, 0);
+   else
+      lua_pushnumber(L, pilot_getJumps(player.p));
    return 1;
 }
 
@@ -580,9 +588,14 @@ static int playerL_jumps( lua_State *L )
  */
 static int playerL_fuel( lua_State *L )
 {
-   PLAYER_CHECK();
-   lua_pushnumber(L,player.p->fuel);
-   lua_pushnumber(L,player.p->fuel_consumption);
+   if (player.p == NULL) {
+      lua_pushnumber(L,0);
+      lua_pushnumber(L,0);
+   }
+   else {
+      lua_pushnumber(L,player.p->fuel);
+      lua_pushnumber(L,player.p->fuel_consumption);
+   }
    return 2;
 }
 
@@ -1108,7 +1121,10 @@ static int playerL_shipvarPop( lua_State *L )
  */
 static int playerL_ships( lua_State *L )
 {
-   PLAYER_CHECK();
+   if (player.p == NULL) {
+      lua_newtable(L);
+      return 1;
+   }
 
    const PlayerShip_t *ships = player_getShipStack();
    lua_newtable(L);  /* t */
@@ -1140,7 +1156,10 @@ static int playerL_ships( lua_State *L )
  */
 static int playerL_shipOutfits( lua_State *L )
 {
-   PLAYER_CHECK();
+   if (player.p == NULL) {
+      lua_newtable(L);
+      return 1;
+   }
 
    const char *str;
    int j;
@@ -1290,7 +1309,10 @@ static int playerL_shipDeploy( lua_State *L )
  */
 static int playerL_outfits( lua_State *L )
 {
-   PLAYER_CHECK();
+   if (player.p == NULL) {
+      lua_newtable(L);
+      return 1;
+   }
 
    const PlayerOutfit_t *outfits = player_getOutfits();
    lua_newtable(L);
@@ -1373,8 +1395,6 @@ static int playerL_outfitAdd( lua_State *L  )
  */
 static int playerL_outfitRm( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
-
    const Outfit *o;
    int q = luaL_optinteger(L, 2, 1);
 
@@ -1476,6 +1496,10 @@ static int playerL_shipSwap( lua_State *L )
  */
 static int playerL_missions( lua_State *L )
 {
+   if (player.p == NULL) {
+      lua_newtable(L);
+      return 1;
+   }
    int j = 1;
    lua_newtable(L);
    for (int i=0; i<array_size(player_missions); i++) {
@@ -1498,6 +1522,7 @@ static int playerL_missions( lua_State *L )
  */
 static int playerL_misnActive( lua_State *L )
 {
+   PLAYER_CHECK();
    const char *str = luaL_checkstring(L,1);
    const MissionData *misn = mission_getFromName( str );
    if (misn == NULL) {
@@ -1524,6 +1549,7 @@ static int playerL_misnActive( lua_State *L )
  */
 static int playerL_misnDone( lua_State *L )
 {
+   PLAYER_CHECK();
    const char *str = luaL_checkstring(L, 1);
    int id          = mission_getID( str );
    if (id == -1) {
@@ -1542,6 +1568,10 @@ static int playerL_misnDone( lua_State *L )
  */
 static int playerL_misnDoneList( lua_State *L )
 {
+   if (player.p == NULL) {
+      lua_newtable(L);
+      return 1;
+   }
    int *done = player_missionsDoneList();
    lua_newtable(L);
    for (int i=0; i<array_size(done); i++) {
@@ -1562,6 +1592,7 @@ static int playerL_misnDoneList( lua_State *L )
  */
 static int playerL_evtActive( lua_State *L )
 {
+   PLAYER_CHECK();
    const char *str= luaL_checkstring(L,1);
    int evtid      = event_dataID( str );
    if (evtid < 0) {
@@ -1584,6 +1615,7 @@ static int playerL_evtActive( lua_State *L )
  */
 static int playerL_evtDone( lua_State *L )
 {
+   PLAYER_CHECK();
    const char *str = luaL_checkstring(L, 1);
    int id          = event_dataID( str );
    if (id == -1) {
@@ -1602,6 +1634,10 @@ static int playerL_evtDone( lua_State *L )
  */
 static int playerL_evtDoneList( lua_State *L )
 {
+   if (player.p == NULL) {
+      lua_newtable(L);
+      return 1;
+   }
    int *done = player_eventsDoneList();
    lua_newtable(L);
    for (int i=0; i<array_size(done); i++) {
@@ -1619,6 +1655,10 @@ static int playerL_evtDoneList( lua_State *L )
  */
 static int playerL_fleetList( lua_State *L )
 {
+   if (player.p == NULL) {
+      lua_newtable(L);
+      return 1;
+   }
    int n = 1;
    const PlayerShip_t* pstack = player_getShipStack();
    lua_newtable(L);
@@ -1647,7 +1687,10 @@ static int playerL_fleetList( lua_State *L )
  */
 static int playerL_fleetCargoFree( lua_State *L )
 {
-   lua_pushinteger( L, pfleet_cargoFree() );
+   if (player.p==NULL)
+      lua_pushinteger(L,0);
+   else
+      lua_pushinteger( L, pfleet_cargoFree() );
    return 1;
 }
 
@@ -1659,7 +1702,10 @@ static int playerL_fleetCargoFree( lua_State *L )
  */
 static int playerL_fleetCargoUsed( lua_State *L )
 {
-   lua_pushinteger( L, pfleet_cargoUsed() );
+   if (player.p==NULL)
+      lua_pushinteger(L,0);
+   else
+      lua_pushinteger( L, pfleet_cargoUsed() );
    return 1;
 }
 
@@ -1673,7 +1719,10 @@ static int playerL_fleetCargoUsed( lua_State *L )
 static int playerL_fleetCargoOwned( lua_State *L )
 {
    Commodity *c = luaL_validcommodity( L, 1 );
-   lua_pushinteger( L, pfleet_cargoOwned( c ) );
+   if (player.p==NULL)
+      lua_pushinteger(L,0);
+   else
+      lua_pushinteger( L, pfleet_cargoOwned( c ) );
    return 1;
 }
 
@@ -1689,7 +1738,10 @@ static int playerL_fleetCargoAdd( lua_State *L )
 {
    Commodity *c = luaL_validcommodity( L, 1 );
    int q = luaL_checkinteger( L, 2 );
-   lua_pushinteger( L, pfleet_cargoAdd( c, q ) );
+   if (player.p==NULL)
+      lua_pushinteger(L,0);
+   else
+      lua_pushinteger( L, pfleet_cargoAdd( c, q ) );
    return 1;
 }
 
@@ -1705,7 +1757,10 @@ static int playerL_fleetCargoRm( lua_State *L )
 {
    Commodity *c = luaL_validcommodity( L, 1 );
    int q = luaL_checkinteger( L, 2 );
-   lua_pushinteger( L, pfleet_cargoRm( c, q, 0 ) );
+   if (player.p==NULL)
+      lua_pushinteger(L,0);
+   else
+      lua_pushinteger( L, pfleet_cargoRm( c, q, 0 ) );
    return 1;
 }
 
@@ -1721,7 +1776,10 @@ static int playerL_fleetCargoJet( lua_State *L )
 {
    Commodity *c = luaL_validcommodity( L, 1 );
    int q = luaL_checkinteger( L, 2 );
-   lua_pushinteger( L, pfleet_cargoRm( c, q, 1 ) );
+   if (player.p==NULL)
+      lua_pushinteger(L,0);
+   else
+      lua_pushinteger( L, pfleet_cargoRm( c, q, 1 ) );
    return 1;
 }
 
@@ -1735,6 +1793,10 @@ static int playerL_fleetCargoJet( lua_State *L )
  */
 static int playerL_fleetCargoList( lua_State *L )
 {
+   if (player.p==NULL) {
+      lua_newtable(L);
+      return 1;
+   }
    Commodity *call = commodity_getAll();
    int n = 0;
    lua_newtable(L);                 /* t */
@@ -1767,6 +1829,10 @@ static int playerL_fleetCargoList( lua_State *L )
  */
 static int playerL_inventory( lua_State *L )
 {
+   if (player.p==NULL) {
+      lua_newtable(L);
+      return 1;
+   }
    const PlayerItem *inv = player_inventory();
    lua_newtable(L);
    for (int i=0; i<array_size(inv); i++) {
@@ -1796,7 +1862,10 @@ static int playerL_inventoryAdd( lua_State *L )
 {
    const char *name = luaL_checkstring(L,1);
    int q = luaL_optinteger(L,2,1);
-   lua_pushinteger( L, player_inventoryAdd( name, q ) );
+   if (player.p==NULL)
+      lua_pushinteger( L, 0 );
+   else
+      lua_pushinteger( L, player_inventoryAdd( name, q ) );
    return 1;
 }
 
@@ -1812,7 +1881,10 @@ static int playerL_inventoryRm( lua_State *L )
 {
    const char *name = luaL_checkstring(L,1);
    int q = luaL_optinteger(L,2,1);
-   lua_pushinteger( L, player_inventoryRemove( name, q ) );
+   if (player.p==NULL)
+      lua_pushinteger( L, 0 );
+   else
+      lua_pushinteger( L, player_inventoryRemove( name, q ) );
    return 1;
 }
 
@@ -1826,7 +1898,10 @@ static int playerL_inventoryRm( lua_State *L )
 static int playerL_inventoryOwned( lua_State *L )
 {
    const char *name = luaL_checkstring(L,1);
-   lua_pushinteger( L, player_inventoryAmount( name ) );
+   if (player.p==NULL)
+      lua_pushinteger( L, 0 );
+   else
+      lua_pushinteger( L, player_inventoryAmount( name ) );
    return 1;
 }
 
@@ -1848,11 +1923,10 @@ static int playerL_inventoryOwned( lua_State *L )
  */
 static int playerL_teleport( lua_State *L )
 {
+   PLAYER_CHECK();
    Spob *pnt;
    const char *name, *pntname;
    int no_simulate, silent;
-
-   PLAYER_CHECK();
 
    /* Must not be landed. */
    if (landed)
