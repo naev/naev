@@ -3,7 +3,7 @@
 <mission name="A Shark Bites">
  <unique />
  <priority>3</priority>
- <cond>spob.cur() ~= spob.get("Ulios") and player.numOutfit("Mercenary License") &gt; 0</cond>
+ <cond>spob.cur() ~= spob.get("Ulios") and player.outfitNum("Mercenary License") &gt; 0</cond>
  <chance>5</chance>
  <location>Bar</location>
  <faction>Dvaered</faction>

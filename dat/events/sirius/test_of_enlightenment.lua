@@ -184,7 +184,7 @@ function puzzle02( p )
    end
    if allon then
       srs.sfxGong()
-      if player.numOutfit( reward ) > 0 then
+      if player.outfitNum( reward ) > 0 then
          textoverlay.init( "#y".._("Test Completed").."#0", nil, {length=6})
       else
          player.outfitAdd( reward )

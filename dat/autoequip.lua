@@ -51,7 +51,7 @@ function autoequip( p )
    -- Set parameters, making sure we don't equip too many of the same
    local opt_params = equipopt.params.choose( p )
    for k,o in ipairs(poutfits) do
-      opt_params.type_range[ o:nameRaw() ] = { max = player.numOutfit(o, true) }
+      opt_params.type_range[ o:nameRaw() ] = { max = player.outfitNum(o, true) }
    end
 
    -- Do equipopt

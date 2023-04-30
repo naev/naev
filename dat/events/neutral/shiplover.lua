@@ -229,7 +229,7 @@ function create ()
 
    -- Determine reward
    reward = {}
-   if nwon == 4 and player.numOutfit("Trading Card (Common)")<1 then
+   if nwon == 4 and player.outfitNum("Trading Card (Common)")<1 then
       local outfit_reward = outfit.get("Trading Card (Common)")
       reward.func = function ()
          shiplover_log(fmt.f(_("You obtained 1 {outfit} from the Ship Enthusiast for getting 5 quizzes right."), {outfit=outfit_reward}))
@@ -238,7 +238,7 @@ function create ()
       reward.msg_shiplover = _([["Wow. This is the 5th time you got my quiz right. This deserves a special reward. Here, take this special trading card. Don't worry, I have a dozen like it. I'll have to step up my quiz game from now on."]])
       reward.msg_obtain = fmt.reward(outfit_reward)
 
-   elseif nwon == 9 and player.numOutfit("Trading Card (Uncommon)")<1 then
+   elseif nwon == 9 and player.outfitNum("Trading Card (Uncommon)")<1 then
       local outfit_reward = outfit.get("Trading Card (Uncommon)")
       reward.func = function ()
          shiplover_log(fmt.f(_("You obtained 1 {outfit} from the Ship Enthusiast for getting 10 quizzes right."), {outfit=outfit_reward}))
@@ -247,7 +247,7 @@ function create ()
       reward.msg_shiplover = _([["Wow. This is the 10th time you got my quiz right. You are doing much better than I anticipated. Here, take one of my favourite trading cards. Make sure not to lose it, this one is fairly special! I'll have to think of better quizzes from now on."]])
       reward.msg_obtain = fmt.reward(outfit_reward)
 
-   elseif nwon == 24 and player.numOutfit("Trading Card (Rare)")<1 then
+   elseif nwon == 24 and player.outfitNum("Trading Card (Rare)")<1 then
       local outfit_reward = outfit.get("Trading Card (Rare)")
       reward.func = function ()
          shiplover_log(fmt.f(_("You obtained a {outfit} from the Ship Enthusiast for getting 25 quizzes right."), {outfit=outfit_reward}))

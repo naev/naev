@@ -86,7 +86,7 @@ function accept()
 
    mem.stage = 0
    -- Give the player a Nebular Shielding Prototype only if they have none.
-   if player.numOutfit("Nebular Shielding Prototype", false)==0 then
+   if player.outfitNum("Nebular Shielding Prototype", false)==0 then
       player.outfitAdd("Nebular Shielding Prototype")
    end
 

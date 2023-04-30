@@ -8,7 +8,7 @@ local reward = outfit.get("Bioship Pheromone Emitter")
 
 return function ( mem )
    -- Already done
-   if player.numOutfit( reward ) > 0 then
+   if player.outfitNum( reward ) > 0 then
       return
    end
 

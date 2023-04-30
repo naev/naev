@@ -60,7 +60,7 @@ local patron_messages = {
    _([["It's incredible! Who would have thought to make money physical! These Minerva Tokens defy all logic!"]]),
    function ()
       local soldoutmsg = ""
-      if player.numOutfit("Fuzzy Dice") > 0 then
+      if player.outfitNum("Fuzzy Dice") > 0 then
          soldoutmsg = _(" Wait, what? What do you mean they are sold out!?")
       end
       return fmt.f(_([["I really have my eyes on the Fuzzy Dice available at the terminal. I always wanted to own a piece of history!{msg}"]]), {msg=soldoutmsg} ) end,
@@ -316,7 +316,7 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
       local opts = {}
       for k,v in ipairs(trades) do
          local tokens = v[2][1]
-         local soldout = (v[2][2]=="outfit" and outfit.unique(v[1]) and player.numOutfit(v[1])>0)
+         local soldout = (v[2][2]=="outfit" and outfit.unique(v[1]) and player.outfitNum(v[1])>0)
          if soldout then
             opts[k] = { fmt.f(_("{item} (#rSOLD OUT#0)"), {item=_(v[1])}), -1 }
          else

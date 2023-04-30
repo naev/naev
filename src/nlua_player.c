@@ -101,7 +101,7 @@ static int playerL_shipOutfits( lua_State *L );
 static int playerL_shipMetadata( lua_State *L );
 static int playerL_shipDeploy( lua_State *L );
 static int playerL_outfits( lua_State *L );
-static int playerL_numOutfit( lua_State *L );
+static int playerL_outfitNum( lua_State *L );
 static int playerL_outfitAdd( lua_State *L );
 static int playerL_outfitRm( lua_State *L );
 static int playerL_shipAdd( lua_State *L );
@@ -181,7 +181,7 @@ static const luaL_Reg playerL_methods[] = {
    { "shipMetadata", playerL_shipMetadata },
    { "shipDeploy", playerL_shipDeploy },
    { "outfits", playerL_outfits },
-   { "numOutfit", playerL_numOutfit },
+   { "outfitNum", playerL_outfitNum },
    { "outfitAdd", playerL_outfitAdd },
    { "outfitRm", playerL_outfitRm },
    { "shipAdd", playerL_shipAdd },
@@ -1281,7 +1281,7 @@ static int playerL_shipDeploy( lua_State *L )
 /**
  * @brief Gets all the outfits the player owns.
  *
- * If you want the quantity, call player.numOutfit() on the individual outfit.
+ * If you want the quantity, call player.outfitNum() on the individual outfit.
  *
  * @usage player.outfits() -- A table of all the player's outfits.
  *
@@ -1304,16 +1304,19 @@ static int playerL_outfits( lua_State *L )
 /**
  * @brief Gets the number of outfits the player owns in their list (excludes equipped on ships).
  *
- * @usage q = player.numOutfit( "Laser Cannon MK0", true ) -- Number of 'Laser Cannon MK0' the player owns (unequipped)
+ * @usage q = player.outfitNum( "Laser Cannon MK0", true ) -- Number of 'Laser Cannon MK0' the player owns (unequipped)
  *
  *    @luatparam string name Name of the outfit to remove.
  *    @luatparam[opt=false] bool unequipped_only Whether or not to check only the unequipped outfits and not equipped outfits. Defaults to false.
  *    @luatreturn number The quantity the player owns.
- * @luafunc numOutfit
+ * @luafunc outfitNum
  */
-static int playerL_numOutfit( lua_State *L )
+static int playerL_outfitNum( lua_State *L )
 {
-   PLAYER_CHECK();
+   if (player.p==NULL) {
+      lua_pushnumber(L,0.);
+      return 1;
+   }
 
    const Outfit *o;
    int q, unequipped_only;

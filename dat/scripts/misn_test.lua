@@ -47,7 +47,7 @@ end
    @brief Test for mercenary missions.
 --]]
 function misn_test.mercenary()
-   if player.numOutfit("Mercenary License") <= 0 then
+   if player.outfitNum("Mercenary License") <= 0 then
       return false
    end
    return misn_test.computer()

@@ -245,7 +245,7 @@ end
 function land()
    if target[4] == 4 then
       if racers[1]:exists() and racers[2]:exists() and racers[3]:exists() then
-         if mem.choice==2 and player.numOutfit("Racing Trophy") <= 0 then
+         if mem.choice==2 and player.outfitNum("Racing Trophy") <= 0 then
             tk.msg(_("You Won!"), fmt.f(_([[A man in a suit and tie takes you up onto a stage. A large name tag on his jacket says 'Melendez Corporation'. "Congratulations on your win," he says, shaking your hand, "that was a great race. On behalf of Melendez Corporation, I would like to present to you your trophy and prize money of {credits}!" He hands you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it. At least the trophy looks cool.]]), {credits=fmt.credits(mem.credits)}))
             player.outfitAdd("Racing Trophy")
          else

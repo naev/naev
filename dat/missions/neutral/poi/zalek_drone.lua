@@ -15,7 +15,7 @@ return function ( mem )
    end
 
    -- Already done
-   if player.numOutfit( reward ) > 0 then
+   if player.outfitNum( reward ) > 0 then
       return
    end
 

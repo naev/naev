@@ -5,7 +5,7 @@
  <chance>150</chance>
  <location>Computer</location>
  <faction>Dvaered</faction>
- <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+ <cond>player.outfitNum("Mercenary License") &gt; 0</cond>
  <notes>
   <tier>1</tier>
   <campaign>Dvaered Recruitment</campaign>

@@ -3,7 +3,7 @@
 <event name="Kidnapped">
  <location>enter</location>
  <chance>15</chance>
- <cond>player.misnDone("Kidnapped") == false and player.misnActive("Kidnapped") == false and system.cur() == system.get("Arcturus") and player.numOutfit("Mercenary License") &gt; 0</cond>
+ <cond>player.misnDone("Kidnapped") == false and player.misnActive("Kidnapped") == false and system.cur() == system.get("Arcturus") and player.outfitNum("Mercenary License") &gt; 0</cond>
  <notes>
   <campaign>Kidnapping</campaign>
   <tier>3</tier>

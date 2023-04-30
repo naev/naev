@@ -25,7 +25,7 @@ local cost = 1e6
 
 function create ()
    -- Player already has it somehow, so this event makes no sense
-   if player.numOutfit(transponder) > 0 then
+   if player.outfitNum(transponder) > 0 then
       evt.finish(true)
    end
 
@@ -70,7 +70,7 @@ Having sold his wares, the pirate disappears into the shadows.]]))
    vn.run()
 
    -- Player bought it, we're done!
-   if player.numOutfit(transponder) > 0 then
+   if player.outfitNum(transponder) > 0 then
       evt.finish(true)
    end
 end

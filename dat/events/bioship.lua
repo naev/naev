@@ -56,7 +56,7 @@ function create ()
    -- Try to clean up outfits
    for k,o in ipairs(player.outfits()) do
       if remove_types[ o:type() ] then
-         local q = player.numOutfit( o, true )
+         local q = player.outfitNum( o, true )
          player.outfitRm( o, q )
          print(fmt.f(_("Removing unobtainable Bioship outfit '{outfit}'!"),{outfit=o}))
       end

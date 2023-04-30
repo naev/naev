@@ -190,7 +190,7 @@ function board ()
    }
 
    -- Bonus for killing executors
-   if player.numOutfit("Executor Shield Aura")<1 and (var.peek("executors_killed") or 0) >= 3 then
+   if player.outfitNum("Executor Shield Aura")<1 and (var.peek("executors_killed") or 0) >= 3 then
       table.insert( outfits, "Executor Shield Aura" )
    end
 
@@ -220,14 +220,14 @@ function board ()
    for i,r in ipairs(mission_rewards) do
       local m = r[1]
       local o = r[2]
-      if player.misnDone(m) and player.numOutfit(o)<1 then
+      if player.misnDone(m) and player.outfitNum(o)<1 then
          table.insert( outfits, o )
       end
    end
    for i,r in ipairs(event_rewards) do
       local e = r[1]
       local o = r[2]
-      if player.evtDone(e) and player.numOutfit(o)<1 then
+      if player.evtDone(e) and player.outfitNum(o)<1 then
          table.insert( outfits, o )
       end
    end

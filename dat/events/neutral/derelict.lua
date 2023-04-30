@@ -406,7 +406,7 @@ function goodevent()
 
    local unknown = {}
    for k,v in pairs(maps) do
-      if player.numOutfit(k) == 0 then
+      if player.outfitNum(k) == 0 then
          table.insert( unknown, k )
       end
    end
