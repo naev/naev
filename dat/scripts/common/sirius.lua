@@ -33,7 +33,7 @@ function srs.sfxGong()
    sfxGong:play()
 end
 
-local ssys, sysr, obelisk, spos, sdir
+local ssys, sysr, obelisk, spos, sdir, hook_limits
 function srs.obeliskEnter( oblk )
    obelisk = oblk
    ssys = system.cur()
@@ -52,7 +52,7 @@ function srs.obeliskEnter( oblk )
    music.stop()
    -- TODO sound
 
-   hook.update( "_srs_update_limits" )
+   hook_limits = hook.update( "_srs_update_limits" )
 end
 
 function srs.obeliskExit ()
@@ -64,9 +64,10 @@ end
 
 local pixelcode_enter = lf.read( "glsl/love/obelisk_enter.frag" )
 local pixelcode_exit = lf.read( "glsl/love/obelisk_exit.frag" )
-local shader, endfunc
-function srs.obeliskCleanup( func )
+local shader, endfunc, finalfunc
+function srs.obeliskCleanup( func, cleanup )
    endfunc = func
+   finalfunc = cleanup
    -- Played backwards from entering
    shader = pp_shaders.newShader( pixelcode_exit )
    shader.addPPShader( shader, "gui" )
@@ -86,12 +87,20 @@ function _srs_obelisk_end( _dt, real_dt )
       else
          shader.rmPPShader( shader )
          srs.obeliskExit()
+         hook.safe( "_srs_obelisk_cleanup" )
       end
+   end
+end
+
+function _srs_obelisk_cleanup ()
+   if finalfunc then
+      finalfunc()
    end
 end
 
 function _srs_return_obelisk ()
    local _spb,sys = spob.getS( obelisk )
+   hook.rm( hook_limits )
    player.teleport( sys, true, true )
    shader.rmPPShader( shader )
    shader = pp_shaders.newShader( pixelcode_enter )
