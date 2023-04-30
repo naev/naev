@@ -27,6 +27,10 @@ function obelisk.comm ()
       player.msg(_("The obelisk seems to be inert."), true)
       return true
    end
+   if player.pos():dist( mem.spob:pos() ) > 1000 then
+      player.msg(_("You need to get closer to connect to the Obelisk."))
+      return true
+   end
    local activated = false
    local canactivate, requirement = mem.criteria()
 
