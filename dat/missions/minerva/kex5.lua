@@ -260,7 +260,7 @@ function enter ()
          local pos = targetplanet:pos()
          spawn_thugs( pos, false )
          hook.timer( 5, "thug_heartbeat" )
-         player.allowLand( false, "#r".._("You are unable to land while the bounty hunters are still active.").."#0" )
+         player.landAllow( false, "#r".._("You are unable to land while the bounty hunters are still active.").."#0" )
 
          hook.timer( 3, "thug_check" )
 
@@ -382,7 +382,7 @@ function thugs_cleared ()
    vn.run()
 
    mem.misn_state = 1
-   player.allowLand( true )
+   player.landAllow( true )
 end
 
 function landed_lab ()
@@ -454,7 +454,7 @@ function landed_lab ()
    player.takeoff()
 
    -- Disable landing, will get disabled on entering new system
-   player.allowLand( false, _("You have better things to do right now.") )
+   player.landAllow( false, _("You have better things to do right now.") )
 end
 
 function strangelove_hail ()

@@ -203,7 +203,7 @@ function enter ()
       hook.pilot( p, "discovered", "scout_discovered" )
 
    elseif mem.state==1 and system.cur() == insys then
-      player.allowLand( false, _("Zach is analyzing the wormhole signal.") )
+      player.landAllow( false, _("Zach is analyzing the wormhole signal.") )
 
       if mem.wormholeknown then
          system.markerAdd( inwormhole:pos(), _("Wormhole") )
@@ -219,7 +219,7 @@ function enter ()
       pilot.clear()
       pilot.toggleSpawn(false)
 
-      player.allowLand( false, _("The wormhole seems to have become too weak to go through.") )
+      player.landAllow( false, _("The wormhole seems to have become too weak to go through.") )
 
       --local j = jump.get( outsys, "NGC-4771" )
       local pp = player.pilot()
@@ -302,7 +302,7 @@ function heartbeat_wormhole ()
       local msg = msglist[ wstate-2 ]
       zach_say( msg )
       if msglist[ wstate-1 ]==nil then -- Was the last message
-         player.allowLand()
+         player.landAllow()
          misn.osdCreate( title, { _("Go through the wormhole") } )
          return
       end
@@ -455,7 +455,7 @@ function heartbeat_ferals ()
 
    elseif fstate == 11 and icarus:pos():dist( player.pos() ) < 3000 then
       local pp = player.pilot()
-      player.allowLand()
+      player.landAllow()
       pp:setNoJump(false)
 
       pp:control()

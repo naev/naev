@@ -263,7 +263,7 @@ local function land_lab ()
 
    player.takeoff()
    player.allowSave(true)
-   player.allowLand( false, _("You're going to have to leave the system before you can land.") )
+   player.landAllow( false, _("You're going to have to leave the system before you can land.") )
 end
 
 function spawn_baddies ()

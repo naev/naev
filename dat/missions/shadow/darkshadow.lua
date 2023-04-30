@@ -157,7 +157,7 @@ function enter()
    elseif system.cur() == joreksys2 and mem.stage == 4 then
       pilot.clear()
       pilot.toggleSpawn(false)
-      player.allowLand(false, _("Landing permission denied. Our docking clamps are currently undergoing maintenance."))
+      player.landAllow(false, _("Landing permission denied. Our docking clamps are currently undergoing maintenance."))
       -- Meet Joe, our informant.
       joe = pilot.add( "Vendetta", shadow.fct_fourwinds(), vec2.new(-500, -4000), _("Four Winds Informant"), {ai="trader"} )
       joe:control()

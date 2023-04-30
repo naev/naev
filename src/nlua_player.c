@@ -87,7 +87,7 @@ static int playerL_unboard( lua_State *L );
 static int playerL_isLanded( lua_State *L );
 static int playerL_takeoff( lua_State *L );
 static int playerL_land( lua_State *L );
-static int playerL_allowLand( lua_State *L );
+static int playerL_landAllow( lua_State *L );
 static int playerL_landWindow( lua_State *L );
 /* Hail stuff. */
 static int playerL_commclose( lua_State *L );
@@ -170,7 +170,7 @@ static const luaL_Reg playerL_methods[] = {
    { "isLanded", playerL_isLanded },
    { "takeoff", playerL_takeoff },
    { "land", playerL_land },
-   { "allowLand", playerL_allowLand },
+   { "landAllow", playerL_landAllow },
    { "landWindow", playerL_landWindow },
    { "commClose", playerL_commclose },
    { "shipvarPeek", playerL_shipvarPeek },
@@ -938,15 +938,15 @@ static int playerL_land( lua_State *L )
  * This will allow or disallow landing on a system level and is reset when the
  *  player enters another system.
  *
- * @usage player.allowLand() -- Allows the player to land
- * @usage player.allowLand( false ) -- Doesn't allow the player to land.
- * @usage player.allowLand( false, "No landing." ) -- Doesn't allow the player to land with the message "No landing."
+ * @usage player.landAllow() -- Allows the player to land
+ * @usage player.landAllow( false ) -- Doesn't allow the player to land.
+ * @usage player.landAllow( false, "No landing." ) -- Doesn't allow the player to land with the message "No landing."
  *
  *    @luatparam[opt=true] boolean b Whether or not to allow the player to land.
  *    @luatparam[opt] string msg Message displayed when player tries to land (only if disallowed to land). Can be omitted to use default.
- * @luafunc allowLand
+ * @luafunc landAllow
  */
-static int playerL_allowLand( lua_State *L )
+static int playerL_landAllow( lua_State *L )
 {
    int b;
    const char *str = NULL;

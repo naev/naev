@@ -194,7 +194,7 @@ function abort ()
       end
 
       -- No landing, filthy waste dumper!
-      player.allowLand( false, _("Get lost, waste dumping scum! We don't want you here!") )
+      player.landAllow( false, _("Get lost, waste dumping scum! We don't want you here!") )
 
       misn.finish( true )
    end

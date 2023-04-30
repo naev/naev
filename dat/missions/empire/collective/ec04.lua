@@ -159,7 +159,7 @@ function enter()
          swarm3[i]:setVisplayer()
       end
 
-      player.allowLand(false, _("You can't land now! Get to the jump point!"))
+      player.landAllow(false, _("You can't land now! Get to the jump point!"))
       misn.osdActive(3)
    elseif mem.misn_stage == 1 then
       -- Case jumped back out without landing

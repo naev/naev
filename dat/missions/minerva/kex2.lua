@@ -207,7 +207,7 @@ function enter ()
    -- Main stuff starts
    if mem.misn_state==1 and system.cur() == targetsys then
       player.allowSave(true)
-      player.allowLand(false)
+      player.landAllow(false)
 
       local fbaroness = faction.dynAdd( "Mercenary", "Baroness", _("Baroness Eve") )
       local pos = vec2.new( 9000, 3500 )

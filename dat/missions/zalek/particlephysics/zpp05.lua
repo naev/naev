@@ -246,7 +246,7 @@ function heartbeat ()
    elseif stage==5 and inrange() then
       -- CUTSCENE START
       player.cinematics( true )
-      player.allowLand( false )
+      player.landAllow( false )
       love.origin()
       music.stop()
       stage = 6
@@ -305,7 +305,7 @@ function heartbeat ()
    elseif stage==15 then
       -- CUTSCENE END
       player.cinematics( false )
-      player.allowLand( true )
+      player.landAllow( true )
       music.play("ambient1.ogg")
       cutscene = false
       mem.state = 2
