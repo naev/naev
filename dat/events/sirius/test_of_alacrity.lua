@@ -85,8 +85,7 @@ function create ()
    -- First puzzle
    -- TODO much better generation scheme
    local r = 0
-   local tt = track[1]
-   local origin = cubicBezier( 0, tt[1], tt[1]+tt[2], tt[4]+tt[3], tt[4] )
+   local origin = track[1][1]
    for k,trk in ipairs(track) do
       for t = 0,1,0.05 do
          local p = cubicBezier( t, trk[1], trk[1]+trk[2], trk[4]+trk[3], trk[4] ) - origin
