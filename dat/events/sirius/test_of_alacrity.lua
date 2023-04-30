@@ -15,6 +15,52 @@ local markers
 local reward = outfit.get("Feather Drive")
 local obelisk = spob.get("Kal Maro Obelisk")
 
+local track = {
+   {
+      vec2.new( 578, 354 ),
+      vec2.new( -2, -86 ),
+      vec2.new( -61, -102 ),
+      vec2.new( 800, 319 ),
+   },
+   {
+      vec2.new( 800, 319 ),
+      vec2.new( 59, 98 ),
+      vec2.new( 43, -121 ),
+      vec2.new( 951, 496 ),
+   },
+   {
+      vec2.new( 951, 496 ),
+      vec2.new( -43, 121 ),
+      vec2.new( 73, 23 ),
+      vec2.new( 552, 696 ),
+   },
+   {
+      vec2.new( 552, 696 ),
+      vec2.new( -186, -90 ),
+      vec2.new( 186, 38 ),
+      vec2.new( 323, 448 ),
+   },
+   {
+      vec2.new( 323, 448 ),
+      vec2.new( -186, -38 ),
+      vec2.new( -82, 19 ),
+      vec2.new( 332, 246 ),
+   },
+}
+
+local function lerp(a, b, t)
+	return a + (b - a) * t
+end
+
+local function cubicBezier( t, p0, p1, p2, p3 )
+	local l1 = lerp(p0, p1, t)
+	local l2 = lerp(p1, p2, t)
+	local l3 = lerp(p2, p3, t)
+	local l4 = lerp(l1, l2, t)
+	local l5 = lerp(l2, l3, t)
+   return lerp(l4, l5, t)
+end
+
 local hook_done
 function create ()
    srs.obeliskEnter( obelisk )
@@ -29,7 +75,7 @@ function create ()
    pp:weapsetSetInrange(nil,false)
    pp:effectAdd("Astral Projection")
    pp:setDir( math.pi*0.5 )
-   pp:setPos( vec2.new(0,-500) )
+   pp:setPos( vec2.new(0,-200) )
    pp:intrinsicSet( { -- Ship is too fast otherwise
       thrust_mod     = -30,
       speed_mod      = -30,
@@ -38,16 +84,30 @@ function create ()
 
    -- First puzzle
    -- TODO much better generation scheme
+   local r = 0
+   local tt = track[1]
+   local origin = cubicBezier( 0, tt[1], tt[1]+tt[2], tt[4]+tt[3], tt[4] )
+   for k,trk in ipairs(track) do
+      for t = 0,1,0.05 do
+         local p = cubicBezier( t, trk[1], trk[1]+trk[2], trk[4]+trk[3], trk[4] ) - origin
+         r = math.max( r, p:polar() )
+      end
+   end
+   local scale = (system.cur():radius()-500) / r
+   local lp
    markers = {}
-   local n = 5
-   for i=1,n do
-      local dir = math.pi*0.5 + (i-1)/n*math.pi*2.0
-      local pos = vec2.newP( 200, dir )
-      local m = pilot.add("Psychic Orb", "Independent", pos, nil, {ai="dummy"} )
-      m:setInvincible(true)
-      m:setInvisible(true)
-      m:effectAdd("Psychic Orb On")
-      table.insert( markers, m )
+   for k,trk in ipairs(track) do
+      for t = 0,1,0.005 do
+         local p = cubicBezier( t, trk[1], trk[1]+trk[2], trk[4]+trk[3], trk[4] ) * scale - origin
+         local d = (lp and p:dist(lp)) or math.huge
+         if d > 500 then
+            local m = pilot.add("Psychic Orb", "Independent", p, nil, {ai="dummy"} )
+            m:setInvincible(true)
+            m:effectAdd("Psychic Orb On")
+            table.insert( markers, m )
+            lp = p
+         end
+      end
    end
 
    textoverlay.init( "#y".._("Test of Alacrity").."#0",
@@ -111,5 +171,5 @@ end
 
 function cleanup ()
    hook.rm( hook_done )
-   srs.obeliskCleanup( cleanup_player )
+   srs.obeliskCleanup( cleanup_player, evt.finish )
 end

@@ -198,5 +198,5 @@ end
 
 function cleanup ()
    hook.rm( hook_done )
-   srs.obeliskCleanup( cleanup_player )
+   srs.obeliskCleanup( cleanup_player, evt.finish )
 end
