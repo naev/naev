@@ -184,10 +184,14 @@ function puzzle02( p )
    end
    if allon then
       srs.sfxGong()
-      player.outfitAdd( reward )
-      textoverlay.init( "#y"..reward:name().."#0",
-         "#y".._("New Flow Ability Unlocked").."#0",
-         {length=6})
+      if player.numOutfit( reward ) > 0 then
+         textoverlay.init( "#y".._("Test Completed").."#0", nil, {length=6})
+      else
+         player.outfitAdd( reward )
+         textoverlay.init( "#y"..reward:name().."#0",
+            "#y".._("New Flow Ability Unlocked").."#0",
+            {length=6})
+      end
       hook.timer( 6, "cleanup" )
    end
 end
