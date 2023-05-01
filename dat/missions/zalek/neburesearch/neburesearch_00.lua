@@ -29,7 +29,6 @@ local vn = require 'vn'
 
 local student_portrait = nebu_research.student.portrait
 
-
 -- Mission Constants
 local t_sys = { system.get("Doeston"), system.get("Iris") }
 local homeworld, homeworld_sys = spob.getS("Jorla")
