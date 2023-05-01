@@ -27,6 +27,8 @@ require "proximity"
 local sciwrong = require "common.sciencegonewrong"
 local equipopt = require "equipopt"
 local vn = require 'vn'
+local ccomm = require "common.comm"
+local lmisn = require "lmisn"
 
 local adm1, lance1, lance2 -- Non-persistent state
 local spwn_police -- Forward-declared functions
@@ -240,8 +242,14 @@ function sys_enter ()
 end
 function call_the_police ()
    spwn_police()
-   tk.msg(_([[On the intercom]]),_([["We have reason to believe you are carrying controlled substances without a proper license. Please stop your ship and prepare to be boarded."]]))
-   tk.msg(_([[On the intercom]]),_([["Stand down for inspection."]]))
+
+   vn.reset()
+   vn.scene()
+   local p = ccomm.newCharacter( vn, adm1 )
+   p(_([["We have reason to believe you are carrying controlled substances without a proper license. Please stop your ship and prepare to be boarded."]]))
+   p(_([["Stand down for inspection."]]))
+   vn.run()
+
    if mem.boardh == nil then
       mem.boardh = hook.pilot(player.pilot(), "disable", "go_board")
    end
@@ -296,14 +304,28 @@ function go_board ()
 end
 -- display msgs and have the ships disappear and fail the mission...
 function fine_vanish ()
+   vn.reset()
+   vn.scene()
+   local p
+   if adm1:exists() then
+      p = ccomm.newCharacter( vn, adm1 )
+   elseif lance1:exists() then
+      p = ccomm.newCharacter( vn, lance1 )
+   elseif lance2:exists() then
+      p = ccomm.newCharacter( vn, lance2 )
+   end
+
    local fine = 100e3
-   tk.msg(_([[On your ship]]),_([["You are accused of violating regulations on the transport of toxic materials. Your ship will be searched now. If there are no contraband substances, we will be out of your hair in just a moment."]]))
-   tk.msg(_([[On your ship]]), fmt.f(_([[The inspectors search through your ship and cargo hold. It doesn't take long for them to find the phosphine; they confiscate it and fine you {credits}.]]), {credits=fmt.credits(fine)}))
+   p(_([["You are accused of violating regulations on the transport of toxic materials. Your ship will be searched now. If there are no contraband substances, we will be out of your hair in just a moment."]]))
+   p(fmt.f(_([[The inspectors search through your ship and cargo hold. It doesn't take long for them to find the phosphine; they confiscate it and fine you {credits}.]]), {credits=fmt.credits(fine)}))
+   vn.run()
+
    if player.credits() > fine then
       player.pay(-fine)
    else
       player.pay(-player.credits())
    end
+
    misn.cargoRm(mem.carg_id)
    if adm1:exists() then
       adm1:hyperspace()
@@ -314,10 +336,5 @@ function fine_vanish ()
    if lance2:exists() then
       lance2:hyperspace()
    end
-   player.msgClear()
-   player.msg(_("Mission failed!"))
-   hook.rm(mem.l1ho)
-   hook.rm(mem.l2ho)
-   hook.rm(mem.admho)
-   misn.finish(false)
+   lmisn.fail(_("the phosphine was confiscated!"))
 end
