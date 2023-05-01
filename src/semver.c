@@ -142,6 +142,10 @@ semver_parse (const char *str, semver_t *ver) {
   int valid, res;
   size_t len;
   char *buf;
+
+  ver->metadata = NULL;
+  ver->prerelease = NULL;
+
   valid = semver_is_valid(str);
   if (!valid) return -1;
 
