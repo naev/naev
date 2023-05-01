@@ -26,6 +26,7 @@ local fmt = require "format"
 require "proximity"
 local sciwrong = require "common.sciencegonewrong"
 local equipopt = require "equipopt"
+local vn = require 'vn'
 
 local adm1, lance1, lance2 -- Non-persistent state
 local spwn_police -- Forward-declared functions
@@ -40,21 +41,53 @@ mem.t_pla[2], mem.t_sys[2] = spob.getS("Waterhole's Moon")
 local pho_mny = 50e3
 local reward = 1e6
 
+local trader1 = {
+   name = _("Trader"),
+   portrait = "neutral/scientist3.webp",
+   image = "gfx/portraits/neutral/scientist3.webp",
+   desc = _("A scientist conspicuously sits in the corner. Perhaps he might be the person you're supposed to get this stuff for."),
+}
+local trader2 = {
+   name = _("Contact Person"),
+   portrait = "neutral/unique/dealer.webp",
+   image = "gfx/portraits/neutral/unique/dealer.webp",
+   desc = _("You see a shifty-looking dealer of some kind. Maybe he has what you're looking for."),
+}
+
 function create ()
    -- Variable set up and clean up
    var.push( sciwrong.center_operations, spob.cur():nameRaw() )
    mem.t_pla[3], mem.t_sys[3] = sciwrong.getCenterOperations()
 
    -- Spaceport bar stuff
-   misn.setNPC( _("A scientist"), "zalek/unique/geller.webp", _("You see a scientist talking to various pilots. Perhaps you should see what he's looking for.") )
+   misn.setNPC( _("A scientist"), sciwrong.geller.portrait, _("You see a scientist talking to various pilots. Perhaps you should see what he's looking for.") )
 end
 function accept()
+   local accepted = false
+   vn.clear()
+   vn.scene()
+   local geller = vn.newCharacter( sciwrong.vn_geller() )
+
    -- Mission details:
-   if not tk.yesno( _([[In the bar]]), _([["Oh, hello! You look like you're a pilot; is that right? I've got a job for you. Allow me to introduce myself; my name is Dr. Geller, and I am on the brink of revolutionizing science! I've basically already done it; there's just some minor fiddling to do. Would you like to help me out? I just need you to find some samples that I can study."]]) ) then
-      tk.msg(_("No Science Today"), _("I guess you don't care for science…"))
+   geller(_([["Oh, hello! You look like you're a pilot; is that right? I've got a job for you. Allow me to introduce myself; my name is Dr. Geller, and I am on the brink of revolutionizing science! I've basically already done it; there's just some minor fiddling to do. Would you like to help me out? I just need you to find some samples that I can study."]]))
+   vn.menu( {
+      { _("Help them out"), "accept" },
+      { _("Decline to help"), "decline" },
+   } )
+
+   vn.label("decline")
+   geller(_("I guess you don't care for science…"))
+   vn.done()
+
+   vn.label("accept")
+   vn.func( function () accepted = true end )
+   geller(_([["Excellent! Here is the list." He hands you a memory chip and turns away even before you can say anything and without giving you any cash to actually do his shopping. Once you check the list, you find that it contains not only a list of materials he needs, but also information where to retrieve them, as well as a list of traders to contact.]]))
+   vn.run()
+
+   if not accepted then
       return
    end
-   tk.msg( _([[In the bar]]), _([["Excellent! Here is the list." He hands you a memory chip and turns away even before you can say anything and without giving you any cash to actually do his shopping. Once you check the list, you find that it contains not only a list of materials he needs, but also information where to retrieve them, as well as a list of traders to contact.]]) )
+
    misn.accept()
    misn.osdCreate(_("The one with the Shopping"), {
       fmt.f(_("Go to the {sys} system and talk to the trader on {pnt}"), {sys=mem.t_sys[1], pnt=mem.t_pla[1]}),
@@ -68,91 +101,133 @@ function accept()
 end
 
 function land1()
-   local trd1_desc = _("A scientist conspicuously sits in the corner. Perhaps he might be the person you're supposed to get this stuff for.")
    if spob.cur() == mem.t_pla[1] and not mem.traded1 then
-      mem.bar1pir1 = misn.npcAdd("first_trd", _("Trader"), "neutral/scientist3.webp", trd1_desc)
+      mem.bar1pir1 = misn.npcAdd("first_trd", trader1.name, trader1.portrait, trader1.desc )
    elseif spob.cur() == mem.t_pla[1] and mem.talked and mem.traded1 then
-      mem.bar1pir1 = misn.npcAdd("third_trd", _("Trader"), "neutral/scientist3.webp", trd1_desc)
+      mem.bar1pir1 = misn.npcAdd("third_trd", trader1.name, trader1.portrait, trader1.desc )
    end
 end
 
 function land2()
    if spob.cur() == mem.t_pla[2] and mem.talked and not mem.traded1 then
-      mem.bar2pir1 = misn.npcAdd("second_trd", _("Contact Person"), "neutral/unique/dealer.webp", _("You see a shifty-looking dealer of some kind. Maybe he has what you're looking for."))
+      mem.bar2pir1 = misn.npcAdd("second_trd", trader2.name, trader2.portrait, trader2.desc )
    end
 end
 
 -- first trade: send player 2 2nd system, if he goes back here, tell them to get going...
 function first_trd()
-  if mem.talked then
-     tk.msg(_([[In the bar]]), _([["What are you still doing here? No phosphine, no trade."]]))
-     return
-  else
-     tk.msg(_([[In the bar]]), _([["With what can I help you, my friend?" says the shifty figure. You hand him the memory chip the scientist handed you.]]))
-     tk.msg(_([[In the bar]]), fmt.f(_([["Of course I have what you need. I'll trade it for some 3t phosphine. You can find it on {pnt} in the {sys} system."]]), {pnt=mem.t_pla[2], sys=mem.t_sys[2]}))
-     mem.talked = true
-  end
+   vn.clear()
+   vn.scene()
+   local trader = vn.newCharacter( trader1.name, {image=trader1.image} )
 
-  misn.osdCreate(_("The one with the Shopping"), {
-     fmt.f(_("Go to the {sys} system and talk to the contact person on {pnt}"), {sys=mem.t_sys[2], pnt=mem.t_pla[2]}),
-  })
+   if mem.talked then
+      trader(_([["What are you still doing here? No phosphine, no trade."]]))
+   else
+      trader(_([["With what can I help you, my friend?" says the shifty figure. You hand him the memory chip the scientist handed you.]]))
+      trader(fmt.f(_([["Of course I have what you need. I'll trade it for some 3t phosphine. You can find it on {pnt} in the {sys} system."]]), {pnt=mem.t_pla[2], sys=mem.t_sys[2]}))
+      vn.func( function ()
+         mem.talked = true
+      end )
+   end
 
-  misn.markerMove(mem.misn_mark, mem.t_pla[2])
+   vn.run()
 
-  mem.lhook2 = hook.land("land2", "land")
+   misn.osdCreate(_("The one with the Shopping"), {
+      fmt.f(_("Go to the {sys} system and talk to the contact person on {pnt}"), {sys=mem.t_sys[2], pnt=mem.t_pla[2]}),
+   })
 
+   misn.markerMove(mem.misn_mark, mem.t_pla[2])
+
+   mem.lhook2 = hook.land("land2", "land")
 end
+
 -- 2nd trade: Get player the stuff and make them pay, let them be hunted by the police squad
 function second_trd()
-  misn.npcRm(mem.bar2pir1)
-  if not tk.yesno( _([[In the bar]]), fmt.f(_([["You approach the dealer and explain what you are looking for. He raises his eyebrow. "It will be {credits}. But if you get caught by the authorities, you're on your own. Far as I'm concerned, I never saw you. Deal?"]]), {credits=fmt.credits(pho_mny)}) ) then
-     tk.msg(_([[In the bar]]), _([["Then we have nothing to to discuss."]]))
-     return
-  end
-  -- take money from player, if player does not have the money, refuse
-  if player.credits() < 50e3 then
-     tk.msg(_([[In the bar]]), _([["You don't have enough money. Stop wasting my time."]]))
-     return
-  end
-  player.pay(-pho_mny)
-  local c = commodity.new(N_("Phosphine"), N_("A colourless, flammable, poisonous gas."))
-  mem.carg_id = misn.cargoAdd(c, 3)
-  tk.msg(_([[In the bar]]), _([["Pleasure to do business with you."]]))
-  misn.osdCreate(_("The one with the Shopping"), {
-     fmt.f(_("Return to the {sys} system to the trader on {pnt}"), {sys=mem.t_sys[1], pnt=mem.t_pla[1]}),
-  })
- -- create hook that player will be hailed by authorities bc of toxic materials
-  misn.markerMove(mem.misn_mark, mem.t_pla[1])
-  hook.rm(mem.lhook2)
-  hook.enter("sys_enter")
-  mem.traded1 = true
+   misn.npcRm(mem.bar2pir1)
+
+   local traded = false
+   vn.clear()
+   vn.scene()
+   local trader = vn.newCharacter( trader2.name, {image=trader2.image} )
+
+   trader(fmt.f(_([["You approach the dealer and explain what you are looking for. He raises his eyebrow. "It will be {credits}. But if you get caught by the authorities, you're on your own. Far as I'm concerned, I never saw you. Deal?"]]), {credits=fmt.credits(pho_mny)}))
+   vn.menu{
+   }
+
+   vn.label("decline")
+   trader(_([["Then we have nothing to to discuss."]]))
+   vn.done()
+
+   vn.label("broke")
+   trader(_([["You don't have enough money. Stop wasting my time."]]))
+   vn.done()
+
+   vn.label("accept")
+   vn.func( function ()
+      if player.credits() < pho_mny then
+         vn.jump("broke")
+         return
+      end
+      player.pay(-pho_mny)
+      local c = commodity.new(N_("Phosphine"), N_("A colourless, flammable, poisonous gas."))
+      mem.carg_id = misn.cargoAdd(c, 3)
+      traded = true
+   end )
+   trader(_([["Pleasure to do business with you."]]))
+   vn.run()
+
+   if not traded then
+      return
+   end
+
+   misn.osdCreate(_("The one with the Shopping"), {
+      fmt.f(_("Return to the {sys} system to the trader on {pnt}"), {sys=mem.t_sys[1], pnt=mem.t_pla[1]}),
+   })
+   -- create hook that player will be hailed by authorities bc of toxic materials
+   misn.markerMove(mem.misn_mark, mem.t_pla[1])
+   hook.rm(mem.lhook2)
+   hook.enter("sys_enter")
+   mem.traded1 = true
 end
 
 -- 3rd trade: Get the stuff the scientist wants
 function third_trd()
-  tk.msg(_([[In the bar]]), _([["Ah, yes indeed," he says as he inspects a sample in front of him. "That will do. And here, as promised: a piece of a ghost ship from the nebula. 100% authentic! At least, according to my supplier."]]))
+   vn.clear()
+   vn.scene()
+   local trader = vn.newCharacter( trader1.name, {image=trader1.image} )
+   trader(_([["Ah, yes indeed," he says as he inspects a sample in front of him. "That will do. And here, as promised: a piece of a ghost ship from the Nebula. 100% authentic! At least, according to my supplier."]]))
+   vn.run()
 
-  misn.npcRm(mem.bar1pir1)
-  misn.cargoRm(mem.carg_id)
-  player.msg(mem.t_sys[3]:name())
-  misn.osdCreate(_("The one with the Shopping"), {
-     fmt.f(_("Return to the {sys} system and deliver to Dr. Geller on {pnt}"), {sys=mem.t_sys[3], pnt=mem.t_pla[3]}),
-  })
+   misn.npcRm(mem.bar1pir1)
+   misn.cargoRm(mem.carg_id)
+   player.msg(mem.t_sys[3]:name())
+   misn.osdCreate(_("The one with the Shopping"), {
+      fmt.f(_("Return to the {sys} system and deliver to Dr. Geller on {pnt}"), {sys=mem.t_sys[3], pnt=mem.t_pla[3]}),
+   })
 
-  misn.markerMove(mem.misn_mark, mem.t_pla[3])
+   misn.markerMove(mem.misn_mark, mem.t_pla[3])
 
-  hook.rm(mem.lhook1)
+   hook.rm(mem.lhook1)
 
-  mem.traded2 = true
-  mem.lhook1 = hook.land("fnl_ld", "land")
+   mem.traded2 = true
+   mem.lhook1 = hook.land("fnl_ld", "land")
 end
 
 -- final land: let the player land and collect the reward
 function fnl_ld ()
    if spob.cur() == mem.t_pla[3] and mem.traded2 then
-      tk.msg(_([[In the bar]]),_([[Dr. Geller looks up at you as you approach. "Do you have what I was looking for?" You present the ghost ship piece and his face lights up. "Yes, that's it! Now I can continue my research. I've been looking everywhere for a sample!" You ask him about the so-called ghost ships. He seems amused by the question. "Some people believe in ridiculous nonsense related to this. There is no scientific explanation for the origin of these so-called ghost ships yet, but I think it has to do with some technology involved in the Incident. Hard to say exactly what, but hey, that's why we do research!"]]))
-      tk.msg(_([[In the bar]]),_([[As he turns away, you audibly clear your throat, prompting him to turn back to you. "Oh, yes, of course you want some payment for your service. My apologies for forgetting." He hands you a credit chip with your payment. "I might need your services again in the future, so do stay in touch!"]]))
-      player.pay(reward)
+      vn.clear()
+      vn.scene()
+      local geller = vn.newCharacter( sciwrong.vn_geller() )
+      geller(_([[Dr. Geller looks up at you as you approach. "Do you have what I was looking for?" You present the ghost ship piece and his face lights up. "Yes, that's it! Now I can continue my research. I've been looking everywhere for a sample!" You ask him about the so-called ghost ships. He seems amused by the question. "Some people believe in ridiculous nonsense related to this. There is no scientific explanation for the origin of these so-called ghost ships yet, but I think it has to do with some technology involved in the Incident. Hard to say exactly what, but hey, that's why we do research!"]]))
+      geller(_([[As he turns away, you audibly clear your throat, prompting him to turn back to you. "Oh, yes, of course you want some payment for your service. My apologies for forgetting." He hands you a credit chip with your payment. "I might need your services again in the future, so do stay in touch!"]]))
+      vn.sfxVictory()
+      vn.func( function ()
+         player.pay(reward)
+      end )
+      vn.na(fmt.reward(reward))
+      vn.run()
+
       sciwrong.addLog( fmt.f( _([[You helped Dr. Geller at {pnt} in the {sys} system to obtain a "ghost ship piece" for his research. When you asked about these so-called ghost ships, he seemed amused. "Some people believe in ridiculous nonsense related to this. There is no scientific explanation for the origin of these so-called ghost ships yet, but I think it has to do with some technology involved in the Incident. Hard to say exactly what, but hey, that's why we do research!"]]), {pnt=mem.t_pla[3], sys=mem.t_sys[3] } ) )
       misn.finish(true)
    end
