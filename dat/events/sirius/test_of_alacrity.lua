@@ -81,6 +81,7 @@ function create ()
       speed_mod      = -30,
       turn_mod       = -30,
    }, true ) -- overwrite all
+   pp:control(true)
 
    -- First puzzle
    -- TODO much better generation scheme
@@ -110,15 +111,36 @@ function create ()
    end
 
    textoverlay.init( "#y".._("Test of Alacrity").."#0",
-      "#y".._("Collect All the Orbs").."#0" )
+      "#y".._("Collect All the Orbs").."#0",
+      { length=6} )
 
    -- Anything will finish the event
    hook_done = hook.enter( "done" )
+
+   hook.timer( 6, "start" )
+end
+
+local time_left = 60
+local omsg_id
+function start ()
+   local pp = player.pilot()
+   pp:control(false)
+
+   omsg_id = player.omsgAdd( "", 0 )
 
    hook.timer( 0.1, "puzzle01" )
 end
 
 function puzzle01 ()
+   time_left = time_left - 0.1
+   if time_left < 0 then
+      -- TODO failure
+      textoverlay.init( "#r".._("Test Failed").."#0", nil, {length=6})
+      hook.timer( 6, "cleanup" )
+      return
+   end
+   player.omsgChange( omsg_id, string.format("%.1f",time_left), 0 )
+
    local n = 0
    local ppos = player.pos()
    for k,m in ipairs(markers) do
@@ -144,6 +166,7 @@ function puzzle01 ()
    end
 
    -- All done, so give ability
+   player.omsgRm( omsg_id )
    srs.sfxGong()
    if player.outfitNum( reward ) > 0 then
       textoverlay.init( "#y".._("Test Completed").."#0", nil, {length=6})
