@@ -88,7 +88,7 @@ function create ()
    local origin = track[1][1]
    for k,trk in ipairs(track) do
       for t = 0,1,0.05 do
-         local p = cubicBezier( t, trk[1], trk[1]+trk[2], trk[4]+trk[3], trk[4] ) - origin
+         local p = origin - cubicBezier( t, trk[1], trk[1]+trk[2], trk[4]+trk[3], trk[4] )
          r = math.max( r, p:polar() )
       end
    end
@@ -97,7 +97,7 @@ function create ()
    markers = {}
    for k,trk in ipairs(track) do
       for t = 0,1,0.005 do
-         local p = cubicBezier( t, trk[1], trk[1]+trk[2], trk[4]+trk[3], trk[4] ) * scale - origin
+         local p = (origin - cubicBezier( t, trk[1], trk[1]+trk[2], trk[4]+trk[3], trk[4] )) * scale
          local d = (lp and p:dist(lp)) or math.huge
          if d > 500 then
             local m = pilot.add("Psychic Orb", "Independent", p, nil, {ai="dummy"} )
