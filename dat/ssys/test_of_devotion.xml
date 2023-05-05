@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Test of Devotion">
+ <general>
+  <background>obelisk</background>
+  <radius>5000.000000</radius>
+  <spacedust>20</spacedust>
+  <interference>0.000000</interference>
+  <nolanes/>
+ </general>
+ <pos x="1348.200000" y="-210.080000"/>
+ <spobs/>
+ <jumps/>
+</ssys>
