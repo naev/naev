@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Kal Niut Obelisk">
+ <feature>#yObelisk#0</feature>
+ <lua>spob/lua/kal_niut_obelisk.lua</lua>
+ <marker>spobmarker_obelisk</marker>
+ <pos x="14780.209704" y="5933.808522"/>
+ <GFX>
+  <space>moon-P00.webp</space>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <base>0.000000</base>
+  <bonus>0.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>Obelisk</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+ <tags>
+  <tag>obelisk</tag>
+ </tags>
+</spob>
