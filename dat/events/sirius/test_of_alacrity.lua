@@ -120,7 +120,7 @@ function create ()
    hook.timer( 6, "start" )
 end
 
-local time_left = 60
+local time_left = 55
 local omsg_id
 function start ()
    local pp = player.pilot()
