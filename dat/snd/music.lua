@@ -123,6 +123,7 @@ local planet_songs = {
 local system_ambient_songs = {
    ["Taiomi"] = { "/snd/sounds/songs/inca-spa.ogg" },
    ["Test of Enlightenment"] = { "/snd/sounds/loops/kalimba_atmosphere.ogg" },
+   ["Test of Alacrity"] = { "/snd/sounds/loops/kalimba_atmosphere.ogg" },
 }
 
 --[[--
