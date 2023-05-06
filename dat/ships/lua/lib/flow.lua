@@ -54,6 +54,11 @@ local flow_mod = {
 }
 flow.list_mod = flow_mod
 
+function flow.has( p )
+   local sm = p:shipMemory()
+   return sm._flow_mod~=nil
+end
+
 function flow.get( p )
    local sm = p:shipMemory()
    return sm._flow or 0
@@ -142,6 +147,10 @@ function flow.recalculate( p )
       sm._flow_mod = fm
       sm._flow_base = fb * fm
       sm._flow_regen = fr
+   else
+      sm._flow_mod = nil
+      sm._flow_base = nil
+      sm._flow_regen = nil
    end
 
    -- Reset just in case

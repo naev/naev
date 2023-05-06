@@ -1,3 +1,5 @@
+local flow = require "ships.lua.lib.flow"
+
 local setup = {}
 
 local usable_outfits = {
@@ -18,6 +20,13 @@ local usable_outfits = {
    ["The Bite - Improved"]       = "bite",
    ["The Bite - Blood Lust"]     = {"bite", "bite_lust"},
    ["Plasma Burst"]              = "plasma_burst",
+   -- Flow
+   ["Seeking Chakra"]            = "seeking_chakra",
+   ["Feather Drive"]             = "feather_drive",
+   ["Astral Projection"]         = "astral_projection",
+   ["Cleansing Flames"]          = "cleansing_flames",
+   ["House of Mirrors"]          = "house_mirrors",
+   ["Reality Rip"]               = "reality_rip",
 }
 
 if __debugging then
@@ -35,6 +44,9 @@ function setup.setup( p )
    local m = p:memory()
    m._o = nil
    local o = {}
+
+   -- Check flow
+   m._o.flow = flow.has( p )
 
    -- Check out what interesting outfits there are
    for k,v in ipairs(p:outfits()) do
