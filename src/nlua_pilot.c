@@ -4552,6 +4552,13 @@ static int pilotL_shipmemory( lua_State *L )
 {
    /* Get the pilot. */
    Pilot *p  = luaL_validpilot(L,1);
+
+   /* Possible it's not initialized yet, so we do the dirty work here. */
+   if (p->lua_ship_mem == LUA_NOREF) {
+      lua_newtable( naevL ); /* mem */
+      p->lua_ship_mem = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* */
+   }
+
    lua_rawgeti( L, LUA_REGISTRYINDEX, p->lua_ship_mem );
    return 1;
 }
