@@ -89,6 +89,10 @@ static int pilotL_withPlayer( lua_State *L );
 static int pilotL_nav( lua_State *L );
 static int pilotL_weapsetActive( lua_State *L );
 static int pilotL_weapset( lua_State *L );
+static int pilotL_weapsetType( lua_State *L );
+static int pilotL_weapsetAdd( lua_State *L );
+static int pilotL_weapsetRm( lua_State *L );
+static int pilotL_weapsetCleanup( lua_State *L );
 static int pilotL_weapsetHeat( lua_State *L );
 static int pilotL_weapsetSetInrange( lua_State *L );
 static int pilotL_actives( lua_State *L );
@@ -249,6 +253,10 @@ static const luaL_Reg pilotL_methods[] = {
    { "nav", pilotL_nav },
    { "weapsetActive", pilotL_weapsetActive },
    { "weapset", pilotL_weapset },
+   { "weapsetType", pilotL_weapsetType },
+   { "weapsetAdd", pilotL_weapsetAdd },
+   { "weapsetRm", pilotL_weapsetRm },
+   { "weapsetCleanup", pilotL_weapsetCleanup },
    { "weapsetHeat", pilotL_weapsetHeat },
    { "weapsetSetInrange", pilotL_weapsetSetInrange },
    { "actives", pilotL_actives },
@@ -1735,6 +1743,91 @@ static int pilotL_weapset( lua_State *L )
    return 2;
 }
 
+static int pilotL_weapsetType( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   int id = luaL_checkinteger(L,2);
+   const char *type = luaL_checkstring(L,3);
+   int typeid;
+   if (strcmp(type,"change")==0)
+      typeid = WEAPSET_TYPE_CHANGE;
+   else if (strcmp(type,"weapon")==0)
+      typeid = WEAPSET_TYPE_WEAPON;
+   else if (strcmp(type,"active")==0)
+      typeid = WEAPSET_TYPE_ACTIVE;
+   else {
+      NLUA_ERROR(L,_("Invalid weapon set type '%s'!"),type);
+      return 0;
+   }
+   pilot_weapSetType( p, id, typeid );
+   return 0;
+}
+
+static PilotOutfitSlot *getSlot( lua_State *L, Pilot *p, int idx )
+{
+   if (lua_isnumber(L,idx)) {
+      const int slotid = lua_tointeger(L,idx);
+      if ((slotid < 1) || (slotid > array_size(p->outfits))) {
+         NLUA_ERROR(L,_("Pilot '%s' with ship '%s' does not have a slot with id '%d'!"), p->name, _(p->ship->name), slotid );
+         return NULL;
+      }
+      /* We have to convert from "Lua IDs" to "C" ids by subtracting 1. */
+      return p->outfits[ slotid-1 ];
+   }
+
+   const char *slotname = luaL_checkstring(L,idx);
+   PilotOutfitSlot *s = pilot_getSlotByName( p, slotname );
+   if (s==NULL) {
+      WARN(_("Pilot '%s' with ship '%s' does not have named slot '%s'!"), p->name, _(p->ship->name), slotname );
+      return NULL;
+   }
+   return s;
+}
+
+static int pilotL_weapsetAdd( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   int id = luaL_checkinteger(L,2);
+   PilotOutfitSlot *o = getSlot(L,p,3);
+   int level = luaL_optinteger(L,4,0);
+   /* Follows same logic as equipment_mouseColumn (equipment.c) */
+   if ((o->sslot->slot.type==OUTFIT_SLOT_UTILITY) ||
+         (o->sslot->slot.type==OUTFIT_SLOT_UTILITY)) {
+      pilot_weapSetRmSlot( p, id, OUTFIT_SLOT_WEAPON );
+      pilot_weapSetAdd( p, id, o, level );
+      pilot_weapSetType( p, id, WEAPSET_TYPE_ACTIVE );
+   }
+   else {
+      pilot_weapSetRmSlot( p, id, OUTFIT_SLOT_STRUCTURE );
+      pilot_weapSetRmSlot( p, id, OUTFIT_SLOT_UTILITY );
+      if (pilot_weapSetTypeCheck( p, id) == WEAPSET_TYPE_CHANGE)
+         pilot_weapSetType( p, id, WEAPSET_TYPE_CHANGE );
+      else {
+         pilot_weapSetType( p, id, WEAPSET_TYPE_WEAPON );
+         level = 0;
+      }
+      pilot_weapSetAdd( p, id, o, level );
+   }
+   return 0;
+}
+
+static int pilotL_weapsetRm( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   int id = luaL_checkinteger(L,2);
+   PilotOutfitSlot *o = getSlot(L,p,3);
+   pilot_weapSetRm( p, id, o );
+   return 0;
+}
+
+static int pilotL_weapsetCleanup( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   int id = luaL_checkinteger(L,2);
+   pilot_weapSetCleanup( p, id );
+   return 0;
+}
+
 /**
  * @brief Gets heat information for a weapon set.
  *
@@ -3101,27 +3194,6 @@ static int pilotL_outfitAdd( lua_State *L )
       return 1;
    lua_pushinteger(L,slotid+1);
    return 2;
-}
-
-static PilotOutfitSlot *getSlot( lua_State *L, Pilot *p, int idx )
-{
-   if (lua_isnumber(L,idx)) {
-      const int slotid = lua_tointeger(L,idx);
-      if ((slotid < 1) || (slotid > array_size(p->outfits))) {
-         NLUA_ERROR(L,_("Pilot '%s' with ship '%s' does not have a slot with id '%d'!"), p->name, _(p->ship->name), slotid );
-         return NULL;
-      }
-      /* We have to convert from "Lua IDs" to "C" ids by subtracting 1. */
-      return p->outfits[ slotid-1 ];
-   }
-
-   const char *slotname = luaL_checkstring(L,idx);
-   PilotOutfitSlot *s = pilot_getSlotByName( p, slotname );
-   if (s==NULL) {
-      WARN(_("Pilot '%s' with ship '%s' does not have named slot '%s'!"), p->name, _(p->ship->name), slotname );
-      return NULL;
-   }
-   return s;
 }
 
 /**
