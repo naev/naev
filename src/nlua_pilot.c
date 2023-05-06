@@ -2104,6 +2104,8 @@ static int pilotL_outfitsList( lua_State *L )
 /**
  * @brief Gets a mapping of outfit slot IDs and outfits of a pilot.
  *
+ * @note The index value can be used as a slot identifier.
+ *
  *    @luatparam Pilot p Pilot to get outfits of.
  *    @luatreturn table Ordered table of outfits. If an outfit is not equipped at slot it sets the value to false.
  * @luafunc outfits
@@ -3094,6 +3096,26 @@ static int pilotL_outfitAdd( lua_State *L )
    return 1;
 }
 
+static PilotOutfitSlot *getSlot( lua_State *L, Pilot *p, int idx )
+{
+   if (lua_isnumber(L,idx)) {
+      const int slotid = lua_tointeger(L,idx);
+      if ((slotid < 1) || (slotid > array_size(p->outfits))) {
+         NLUA_ERROR(L,_("Pilot '%s' with ship '%s' does not have a slot with id '%d'!"), p->name, _(p->ship->name), slotid );
+         return NULL;
+      }
+      return p->outfits[ slotid-1 ];
+   }
+
+   const char *slotname = luaL_checkstring(L,idx);
+   PilotOutfitSlot *s = pilot_getSlotByName( p, slotname );
+   if (s==NULL) {
+      WARN(_("Pilot '%s' with ship '%s' does not have named slot '%s'!"), p->name, _(p->ship->name), slotname );
+      return NULL;
+   }
+   return s;
+}
+
 /**
  * @brief Checks to see outfit a pilot has in a slot.
  *
@@ -3105,12 +3127,9 @@ static int pilotL_outfitAdd( lua_State *L )
 static int pilotL_outfitSlot( lua_State *L )
 {
    Pilot *p             = luaL_validpilot(L,1);
-   const char *slotname = luaL_checkstring(L,2);
-   PilotOutfitSlot *s = pilot_getSlotByName( p, slotname );
-   if (s==NULL) {
-      WARN(_("Pilot '%s' with ship '%s' does not have named slot '%s'!"), p->name, _(p->ship->name), slotname );
+   PilotOutfitSlot *s   = getSlot( L, p, 2 );
+   if (s==NULL)
       return 0;
-   }
    if (s->outfit) {
       lua_pushoutfit(L,s->outfit);
       return 1;
@@ -3134,25 +3153,20 @@ static int pilotL_outfitAddSlot( lua_State *L )
    Pilot *p;
    const Outfit *o;
    int ret, added, bypass_cpu, bypass_slot;
-   const char *slotname;
+   PilotOutfitSlot *s;
 
    /* Get parameters. */
-   p      = luaL_validpilot(L,1);
-   o      = luaL_validoutfit(L,2);
-   slotname = luaL_checkstring(L,3);
+   p        = luaL_validpilot(L,1);
+   o        = luaL_validoutfit(L,2);
+   s        = getSlot( L, p, 3 );
    bypass_cpu = lua_toboolean(L,4);
    bypass_slot = lua_toboolean(L,5);
-
-   /* Case named slot. */
-   PilotOutfitSlot *s = pilot_getSlotByName( p, slotname );
-   if (s==NULL) {
-      WARN(_("Pilot '%s' with ship '%s' does not have named slot '%s'!"), p->name, _(p->ship->name), slotname );
+   if (s==NULL)
       return 0;
-   }
-   else {
-      ret = pilot_outfitAddSlot( p, o, s, bypass_cpu, bypass_slot );
-      added = (ret>0);
-   }
+
+   /* Try to add. */
+   ret = pilot_outfitAddSlot( p, o, s, bypass_cpu, bypass_slot );
+   added = (ret>0);
 
    /* Update stats. */
    if (added > 0)
@@ -3271,12 +3285,9 @@ static int pilotL_outfitRmSlot( lua_State *L )
    /* Get parameters. */
    int ret, removed = 0;
    Pilot *p = luaL_validpilot(L,1);
-   const char *slotname = luaL_checkstring(L,2);
-   PilotOutfitSlot *s = pilot_getSlotByName( p, slotname );
-   if (s==NULL) {
-      WARN(_("Pilot '%s' with ship '%s' does not have named slot '%s'!"), p->name, _(p->ship->name), slotname );
+   PilotOutfitSlot *s = getSlot( L, p, 2 );
+   if (s==NULL)
       return 0;
-   }
 
    ret = !pilot_rmOutfitRaw( p, s );
    if (ret) {

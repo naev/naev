@@ -412,9 +412,16 @@ static int shipL_getSlots( lua_State *L )
          /* make the slot table and put it in */
          lua_newtable(L);
 
+         /* Index can be used as an ID (at least for now...) */
+#if 0
+         lua_pushstring(L, "id" ); /* key */
+         lua_pushinteger(L, k); /* value */
+         lua_rawset(L, -3); /* table[key] = value*/
+#endif
+
          lua_pushstring(L, "type"); /* key */
          lua_pushstring(L, slotName(slot->type)); /* value */
-         lua_rawset(L, -3); /* table[key = value ]*/
+         lua_rawset(L, -3); /* table[key] = value*/
 
          lua_pushstring(L, "size"); /* key */
          lua_pushstring(L, slotSize(slot->size) );
