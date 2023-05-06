@@ -3259,10 +3259,8 @@ unsigned int pilot_create( const Ship* ship, const char* name, int faction, cons
       const double dir, const vec2* pos, const vec2* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot )
 {
-   Pilot *p;
-
    /* Allocate pilot memory. */
-   p = malloc(sizeof(Pilot));
+   Pilot *p = malloc(sizeof(Pilot));
    if (p == NULL) {
       WARN(_("Unable to allocate memory"));
       return 0;
@@ -3288,12 +3286,12 @@ unsigned int pilot_create( const Ship* ship, const char* name, int faction, cons
    if (ai != NULL)
       ai_pinit( p, ai ); /* Must run before ai_create */
 
-   /* Animated trail. */
-   pilot_init_trails( p );
-
    /* Run Lua stuff. */
    pilot_shipLInit( p );
    pilot_outfitLInitAll( p );
+
+   /* Animated trail. */
+   pilot_init_trails( p );
 
    /* Pilot creation hook. */
    pilot_runHook( p, PILOT_HOOK_CREATION );
