@@ -15,6 +15,7 @@ local flow_base = {
    ["Small Meditation Chamber"]  = 50,
    ["Medium Meditation Chamber"] = 100,
    ["Large Meditation Chamber"]  = 200,
+   ["Astral Flow Amplifier"]     = 100,
 }
 flow.list_base = flow_base
 
@@ -30,6 +31,7 @@ local flow_regen = {
    ["Small Flow Resonator"]      = 1,
    ["Medium Flow Resonator"]     = 2,
    ["Large Flow Resonator"]      = 4,
+   ["Astral Flow Amplifier"]     = 10,
 }
 flow.list_regen = flow_regen
 
@@ -42,9 +44,13 @@ local flow_mod = {
    ["Sirius Shama"]              = 1.3,
    ["Sirius Fidelity"]           = 1.3,
    -- Outfits
-   ["Lesser Ethereal Apparition"] = 1/1.3,
-   ["Ethereal Apparition"]       = 1/1.3,
-   ["Greater Ethereal Apparition"] = 1/1.3,
+   ["Astral Projection"]         = 1/1.3,
+   ["Avatar of Sirichana"]       = 1/1.3,
+   ["Cleansing Flames"]          = 1/1.3,
+   ["Feather Drive"]             = 1/1.3,
+   ["House of Mirrors"]          = 1/1.3,
+   ["Reality Rip"]               = 1/1.3,
+   ["Seeking Chakra"]            = 1/1.3,
 }
 flow.list_mod = flow_mod
 
