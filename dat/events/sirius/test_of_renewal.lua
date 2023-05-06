@@ -13,7 +13,7 @@ local fmt = require "format"
 
 local prevship
 local reward = outfit.get("Astral Projection")
-local obelisk = spob.get("Kal Nius Obelisk")
+local obelisk = spob.get("Kal Niut Obelisk")
 
 local hook_done
 function create ()
