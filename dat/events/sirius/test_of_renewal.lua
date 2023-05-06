@@ -1,9 +1,9 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<event name="Test of Alacrity">
+<event name="Test of Renewal">
  <location>enter</location>
  <chance>100</chance>
- <system>Test of Alacrity</system>
+ <system>Test of Renewal</system>
 </event>
 --]]
 local textoverlay = require "textoverlay"
