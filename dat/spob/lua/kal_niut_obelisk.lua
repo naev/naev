@@ -2,6 +2,10 @@ local obelisk = require "spob.lua.lib.obelisk"
 local fmt = require "format"
 
 local reward = outfit.get("Astral Projection")
+local reqs = {
+   outfit.get("Feather Drive"),
+   outfit.get("Seeking Chakra"),
+}
 
 function init( spb )
    local description
@@ -11,6 +15,15 @@ function init( spb )
       description = fmt.f(_("You will be able to acquire the {reward} ability by passing the Obelisk's Test."), {reward=reward} )
    end
    return obelisk.init( spb, "Test of Renewal", description, function ()
+      for k,o in ipairs(reqs) do
+         if player.outfitNum( o ) <= 0 then
+            local desc = _("You need the following flow abilities to be able to activate the Obelisk:")
+            for i,r in ipairs(reqs) do
+               desc = desc.."\n"..o:name()
+            end
+            return false, desc
+         end
+      end
       return true, ""
    end )
 end
