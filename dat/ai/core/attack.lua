@@ -1,4 +1,5 @@
 local atk_generic = require "ai.core.attack.generic"
+local flow = require "ships.lua.lib.flow"
 
 local atk = {}
 
@@ -108,6 +109,49 @@ function atk.think( target, si, noretarget )
             local e = p:getEnemies( 300 )
             if #e >= 2 then
                p:outfitToggle( mem._o.plasma_burst, true )
+            end
+         end
+      end
+
+      -- Check to see if we want to do flow stuff
+      if mem._o.flow then
+         local f = flow.get( p )
+         local fm = flow.max( p )
+         local s = flow.size( p )
+
+         if mem._o.seeking_chakra and f > fm * 0.25 and rnd.rnd() < 0.3 then
+            if ai.dist( target ) < 3000 then -- TODO more exact range
+               p:outfitToggle( mem._o.seeking_chakra, true )
+            end
+         end
+         if mem._o.feather_drive and f > fm * 0.25 and rnd.rnd() < 0.3 then
+            if ai.dir( target ) < math.rad(10) and ai.dist( target ) < 300  then
+               p:outfitToggle( mem._o.feather_drive, true )
+            end
+         end
+         if mem._o.astral_projection and f >= fm * 0.45 and rnd.rnd() < 0.1 then
+            if ai.dist( target ) < 1500 + s * 500 then
+               p:outfitToggle( mem._o.astral_projection, true )
+            end
+         end
+         if mem._o.cleansing_flames and f > fm * 0.25 and rnd.rnd() < 0.5 then
+            if ai.dist( target ) < 400 then
+               p:outfitToggle( mem._o.cleansing_flames, true )
+            end
+         end
+         if mem._o.house_mirrors and f > fm * 0.4 and rnd.rnd() < 0.5 then
+            -- Want enemy to be in shooting range
+            local range = ai.getweaprange(3, 0) -- forward turrets
+            if ai.dist( target ) < 0.8*range then
+               p:outfitToggle( mem._o.house_mirrors, true )
+            end
+         end
+         if mem._o.reality_rip and f > fm * 0.4 and rnd.rnd() < 0.5 then
+            -- Want enemy to be close, but not too close
+            local range = ai.getweaprange(3, 0) -- forward turrets
+            local d = ai.dist( target )
+            if d > 300 and d < 0.8*range  then
+               p:outfitToggle( mem._o.house_mirrors, true )
             end
          end
       end
