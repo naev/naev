@@ -273,6 +273,7 @@ dat/outfits/flow/abilities/seeking_chakra.xml
 dat/outfits/flow/abilities/seeking_chakra_large.xml
 dat/outfits/flow/abilities/seeking_chakra_medium.xml
 dat/outfits/flow/abilities/seeking_chakra_small.xml
+dat/outfits/flow/astral_flow_amplifier.xml
 dat/outfits/flow/astral_projection/astral_cannon.xml
 dat/outfits/flow/astral_projection/greater_astral_cannon.xml
 dat/outfits/flow/astral_projection/lesser_astral_cannon.xml
@@ -2839,6 +2840,7 @@ dat/events/sirius/achack04.lua
 dat/events/sirius/preach.lua
 dat/events/sirius/test_of_alacrity.lua
 dat/events/sirius/test_of_enlightenment.lua
+dat/events/sirius/test_of_renewal.lua
 dat/events/soromid/ferals.lua
 dat/events/standing.lua
 dat/events/start.lua
