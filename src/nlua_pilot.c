@@ -3043,13 +3043,14 @@ static int pilot_outfitAddSlot( Pilot *p, const Outfit *o, PilotOutfitSlot *s, i
  *    @luatparam[opt=false] boolean bypass_cpu Whether to skip CPU checks when adding an outfit.
  *    @luatparam[opt=false] boolean bypass_slot Whether or not to skip slot size checks before adding an outfit. Not that this implies skipping the CPU checks.
  *    @luatreturn number The number of outfits added.
+ *    @luatreturn number The id of the slot of the first outfit added if applicable.
  * @luafunc outfitAdd
  */
 static int pilotL_outfitAdd( lua_State *L )
 {
    Pilot *p;
    const Outfit *o;
-   int q, added, bypass_cpu, bypass_slot;
+   int q, added, bypass_cpu, bypass_slot, slotid;
 
    /* Get parameters. */
    p      = luaL_validpilot(L,1);
@@ -3060,6 +3061,7 @@ static int pilotL_outfitAdd( lua_State *L )
 
    /* Add outfit. */
    added = 0;
+   slotid = -1;
    for (int i=0; i<array_size(p->outfits); i++) {
       int ret;
       PilotOutfitSlot *s = p->outfits[i];
@@ -3078,6 +3080,8 @@ static int pilotL_outfitAdd( lua_State *L )
       /* We added an outfit. */
       q--;
       added++;
+      if (slotid < 0)
+         slotid = i;
    }
 
    /* Update stats. */
@@ -3093,7 +3097,10 @@ static int pilotL_outfitAdd( lua_State *L )
       outfits_updateEquipmentOutfits();
 
    lua_pushnumber(L,added);
-   return 1;
+   if (slotid < 0)
+      return 1;
+   lua_pushinteger(L,slotid+1);
+   return 2;
 }
 
 static PilotOutfitSlot *getSlot( lua_State *L, Pilot *p, int idx )
