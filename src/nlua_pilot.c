@@ -3111,6 +3111,7 @@ static PilotOutfitSlot *getSlot( lua_State *L, Pilot *p, int idx )
          NLUA_ERROR(L,_("Pilot '%s' with ship '%s' does not have a slot with id '%d'!"), p->name, _(p->ship->name), slotid );
          return NULL;
       }
+      /* We have to convert from "Lua IDs" to "C" ids by subtracting 1. */
       return p->outfits[ slotid-1 ];
    }
 
