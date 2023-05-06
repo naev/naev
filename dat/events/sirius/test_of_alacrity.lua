@@ -84,7 +84,6 @@ function create ()
    pp:control(true)
 
    -- First puzzle
-   -- TODO much better generation scheme
    local r = 0
    local origin = track[1][1]
    for k,trk in ipairs(track) do
@@ -134,7 +133,6 @@ end
 function puzzle01 ()
    time_left = time_left - 0.1
    if time_left < 0 then
-      -- TODO failure
       textoverlay.init( "#r".._("Test Failed").."#0", nil, {length=6})
       hook.timer( 6, "cleanup" )
       return
