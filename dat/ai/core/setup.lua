@@ -46,7 +46,7 @@ function setup.setup( p )
    local o = {}
 
    -- Check flow
-   m._o.flow = flow.has( p )
+   o.flow = flow.has( p )
 
    -- Check out what interesting outfits there are
    for k,v in ipairs(p:outfits()) do
