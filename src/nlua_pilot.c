@@ -59,6 +59,8 @@ static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task );
 static int outfit_compareActive( const void *slot1, const void *slot2 );
 static int pilotL_setFlagWrapper( lua_State *L, int flag );
 static int pilot_outfitAddSlot( Pilot *p, const Outfit *o, PilotOutfitSlot *s, int bypass_slot, int bypass_cpu );
+static int luaL_checkweapset( lua_State *L, int idx );
+static PilotOutfitSlot *luaL_checkslot( lua_State *L, Pilot *p, int idx );
 
 /* Pilot metatable methods. */
 static int pilotL_add( lua_State *L );
@@ -1743,27 +1745,15 @@ static int pilotL_weapset( lua_State *L )
    return 2;
 }
 
-static int pilotL_weapsetType( lua_State *L )
+static int luaL_checkweapset( lua_State *L, int idx )
 {
-   Pilot *p = luaL_validpilot(L,1);
-   int id = luaL_checkinteger(L,2);
-   const char *type = luaL_checkstring(L,3);
-   int typeid;
-   if (strcmp(type,"change")==0)
-      typeid = WEAPSET_TYPE_CHANGE;
-   else if (strcmp(type,"weapon")==0)
-      typeid = WEAPSET_TYPE_WEAPON;
-   else if (strcmp(type,"active")==0)
-      typeid = WEAPSET_TYPE_ACTIVE;
-   else {
-      NLUA_ERROR(L,_("Invalid weapon set type '%s'!"),type);
-      return 0;
-   }
-   pilot_weapSetType( p, id, typeid );
-   return 0;
+   int ws = luaL_checkinteger(L,2);
+   if ((ws < 0) || (ws > 9))
+      NLUA_ERROR(L,_("Invalid weapon set '%d'!"),idx);
+   return ws;
 }
 
-static PilotOutfitSlot *getSlot( lua_State *L, Pilot *p, int idx )
+static PilotOutfitSlot *luaL_checkslot( lua_State *L, Pilot *p, int idx )
 {
    if (lua_isnumber(L,idx)) {
       const int slotid = lua_tointeger(L,idx);
@@ -1784,11 +1774,49 @@ static PilotOutfitSlot *getSlot( lua_State *L, Pilot *p, int idx )
    return s;
 }
 
+/**
+ * @brief Sets the type of a weapon set for a pilot.
+ *
+ *    @luatparam Pilot p Pilot to set weapon set type of.
+ *    @luatparam integer id ID of the weapon set as shown in game (from 0 to 9).
+ *    @luatparam string type Type of the weapon set. Can be either "change", "weapon", or "active".
+ * @luafunc weapsetType
+ */
+static int pilotL_weapsetType( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   int id = luaL_checkweapset(L,2);
+   const char *type = luaL_checkstring(L,3);
+   int typeid;
+   if (strcmp(type,"change")==0)
+      typeid = WEAPSET_TYPE_CHANGE;
+   else if (strcmp(type,"weapon")==0)
+      typeid = WEAPSET_TYPE_WEAPON;
+   else if (strcmp(type,"active")==0)
+      typeid = WEAPSET_TYPE_ACTIVE;
+   else {
+      NLUA_ERROR(L,_("Invalid weapon set type '%s'!"),type);
+      return 0;
+   }
+   pilot_weapSetType( p, id, typeid );
+   return 0;
+}
+
+/**
+ * @brief Adds an outfit to a pilot's weapon set.
+ *
+ * Note that this can change the structure of the weapon set. For example, adding a utility/structural outfit to a weapon weapon set will remove all weapons and change it to be of type "active".
+ *
+ *    @luatparam Pilot p Pilot to remove weapon from weapon set.
+ *    @luatparam integer id ID of the weapon set as shown in game (from 0 to 9).
+ *    @luatparam string|integer slot Slot to add to weapon set. Can be passed by either id or name.
+ * @luafunc weapsetAdd
+ */
 static int pilotL_weapsetAdd( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
-   int id = luaL_checkinteger(L,2);
-   PilotOutfitSlot *o = getSlot(L,p,3);
+   int id = luaL_checkweapset(L,2);
+   PilotOutfitSlot *o = luaL_checkslot(L,p,3);
    int level = luaL_optinteger(L,4,0);
    /* Follows same logic as equipment_mouseColumn (equipment.c) */
    if ((o->sslot->slot.type==OUTFIT_SLOT_UTILITY) ||
@@ -1811,19 +1839,34 @@ static int pilotL_weapsetAdd( lua_State *L )
    return 0;
 }
 
+/**
+ * @brief Removes an outfit from a pilot's weapon set.
+ *
+ *    @luatparam Pilot p Pilot to remove weapon from weapon set.
+ *    @luatparam integer id ID of the weapon set as shown in game (from 0 to 9).
+ *    @luatparam string|integer slot Slot to remove from weapon set. Can be passed by either id or name.
+ * @luafunc weapsetRm
+ */
 static int pilotL_weapsetRm( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
-   int id = luaL_checkinteger(L,2);
-   PilotOutfitSlot *o = getSlot(L,p,3);
+   int id = luaL_checkweapset(L,2);
+   PilotOutfitSlot *o = luaL_checkslot(L,p,3);
    pilot_weapSetRm( p, id, o );
    return 0;
 }
 
+/**
+ * @brief Cleans up a weapon set. This removes all properties of the weapon set and resets it.
+ *
+ *    @luatparam Pilot p Pilot to remove weapon from weapon set.
+ *    @luatparam integer id ID of the weapon set as shown in game (from 0 to 9).
+ * @luafunc weapsetCleanup
+ */
 static int pilotL_weapsetCleanup( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
-   int id = luaL_checkinteger(L,2);
+   int id = luaL_checkweapset(L,2);
    pilot_weapSetCleanup( p, id );
    return 0;
 }
@@ -3207,7 +3250,7 @@ static int pilotL_outfitAdd( lua_State *L )
 static int pilotL_outfitSlot( lua_State *L )
 {
    Pilot *p             = luaL_validpilot(L,1);
-   PilotOutfitSlot *s   = getSlot( L, p, 2 );
+   PilotOutfitSlot *s   = luaL_checkslot( L, p, 2 );
    if (s==NULL)
       return 0;
    if (s->outfit) {
@@ -3238,7 +3281,7 @@ static int pilotL_outfitAddSlot( lua_State *L )
    /* Get parameters. */
    p        = luaL_validpilot(L,1);
    o        = luaL_validoutfit(L,2);
-   s        = getSlot( L, p, 3 );
+   s        = luaL_checkslot( L, p, 3 );
    bypass_cpu = lua_toboolean(L,4);
    bypass_slot = lua_toboolean(L,5);
    if (s==NULL)
@@ -3365,7 +3408,7 @@ static int pilotL_outfitRmSlot( lua_State *L )
    /* Get parameters. */
    int ret, removed = 0;
    Pilot *p = luaL_validpilot(L,1);
-   PilotOutfitSlot *s = getSlot( L, p, 2 );
+   PilotOutfitSlot *s = luaL_checkslot( L, p, 2 );
    if (s==NULL)
       return 0;
 
