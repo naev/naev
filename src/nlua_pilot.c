@@ -3243,7 +3243,7 @@ static int pilotL_outfitAdd( lua_State *L )
  * @brief Checks to see outfit a pilot has in a slot.
  *
  *    @luatparam Pilot p Pilot to check outfit slot of.
- *    @luatparam string slotname Name of the slot to check.
+ *    @luatparam string|integer slot Slot to check. Can be passed as a slot name (string) or slot id (integer).
  *    @luatreturn Outfit|nil Outfit if applicable or nil otherwise.
  * @luafunc outfitSlot
  */
@@ -3265,7 +3265,7 @@ static int pilotL_outfitSlot( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to add outfit to.
  *    @luatparam string|outfit outfit Outfit or name of the outfit to add.
- *    @luatparam string slotname Name of the slot to add to.
+ *    @luatparam string|integer slot Slot to add to. Can be passed as a slot name (string) or slot id (integer).
  *    @luatparam[opt=false] boolean bypass_cpu Whether to skip CPU checks when adding an outfit.
  *    @luatparam[opt=false] boolean|string bypass_slot Whether or not to skip slot size checks before adding an outfit. Not that this implies skipping the CPU checks. In the case bypass_slot is a string, the outfit gets added to the named slot if possible (no slot check).
  *    @luatreturn boolean Whether or not the outfit was added.
@@ -3398,7 +3398,7 @@ static int pilotL_outfitRm( lua_State *L )
  * Note that this only works with the `name="foo"` property of slots. It is not meant to be used with unnamed slots. By default all slots are unnamed unless specified.
  *
  *    @luatparam Pilot p Pilot to remove outfit from.
- *    @luatparam string slotname Name of the slot to remove the outfit from.
+ *    @luatparam string|integer slot Slot to remove from. Can be passed as a slot name (string) or slot id (integer).
  *    @luatreturn boolean true on success.
  * @luafunc outfitRmSlot
  * @see outfitRm
