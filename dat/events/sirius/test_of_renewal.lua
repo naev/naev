@@ -35,9 +35,11 @@ function create ()
       speed_mod      = -30,
       turn_mod       = -30,
    }, true ) -- overwrite all
-   pp:outfitAdd( "Seeking Chakra" )
-   pp:outfitAdd( "Feather Drive" )
-   pp:outfitAddIntrinsic( "Internal Flow Amplifier" )
+   local _n1, seeking_chakra = pp:outfitAdd( "Seeking Chakra" )
+   local _n2, feather_drive = pp:outfitAdd( "Feather Drive" )
+   pp:weapsetAdd( 1, seeking_chakra )
+   pp:weapsetAdd( 2, feather_drive )
+   pp:outfitAddIntrinsic( "Astral Flow Amplifier" )
 
    -- First puzzle
    -- TODO
