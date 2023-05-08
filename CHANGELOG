@@ -37,7 +37,8 @@
       * Fixed cargo missions not being generated in some parts of the universe
 
 * 0.10.6 (unreleased)
-   * Fixed potential segfault with invalid semvar strings
+   * Fixed potential segfault with invalid semver strings
+   * Fixed sign error when buying artifats in the Baron Prince mission (sorry)
 
 * 0.10.5
    * Start counting effect stacks from 1 not 2
