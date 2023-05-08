@@ -2096,7 +2096,7 @@ static void al_volumeUpdate (void)
    soundUnlock();
 
    /* Do special effects. */
-   spfxL_setSpeedVolume( svolume_speed );
+   spfxL_setSpeedVolume( svolume * svolume_speed );
 }
 
 /**
