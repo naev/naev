@@ -557,7 +557,7 @@ static int naevL_trigger( lua_State *L )
    const char *hookname = luaL_checkstring(L,1);
 
    /* Set up hooks. */
-   if (lua_isnoneornil(L,2)) {
+   if (!lua_isnoneornil(L,2)) {
       /* Since this doesn't get saved and is triggered by Lua code, we can
        * actually pass references here. */
       hp[0].type = HOOK_PARAM_REF;
