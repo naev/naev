@@ -662,8 +662,8 @@ void audio_clone( LuaAudio_t *la, const LuaAudio_t *source )
     * being cloned to be truly compatible with Love2D. */
    /* Defaults. */
    master = sound_getVolumeLog();
-   alSourcef( la->source, AL_GAIN, master );
-   la->volume = 1.;
+   alSourcef( la->source, AL_GAIN, master * source->volume );
+   la->volume = source->volume;
    /* See note in audioL_new */
    alSourcei( la->source, AL_SOURCE_RELATIVE, AL_TRUE );
    alSource3f( la->source, AL_POSITION, 0., 0., 0. );
