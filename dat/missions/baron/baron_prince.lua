@@ -210,7 +210,7 @@ function seller()
       if tk.choice(_("A suspicious salesman"), _([["Hello there," the guy says to you when you approach. "Can I interest you in this bona fide relic from an ancient past? Unlike all those scammers out there, I offer you the real deal, no fakes here!"]]), option_yes, option_no) == 1 then
          if player.credits() >= reward * 0.15 then
             misn.npcRm(mem.sellnpc)
-            player.pay( reward * 0.15 )
+            player.pay( -reward * 0.15 )
             local c = commodity.new( N_("Artefact? A"), N_("An ancient artefact?") )
             mem.artifactA = misn.cargoAdd(c, 0)
             misn.markerRm(mem.markerA)
@@ -222,7 +222,7 @@ function seller()
       if tk.choice(_("A suspicious salesman"), _([[The man grins at you. "Ah, I can tell you have the eye of a connoisseur! I deal only in the finest, counterfeit-free antiques. If you're smart, and I can see that you are, you won't trust all those opportunists who will try to sell you fakes! How about it?"]]), option_yes, option_no) == 1 then
          if player.credits() >= reward * 0.15 then
             misn.npcRm(mem.sellnpc)
-            player.pay( reward * 0.15 )
+            player.pay( -reward * 0.15 )
             local c = commodity.new( N_("Artefact? B"), N_("An ancient artefact?") )
             mem.artifactB = misn.cargoAdd(c, 0)
             misn.markerRm(mem.markerB)
@@ -234,7 +234,7 @@ function seller()
       if tk.choice(_("A suspicious salesman"), _([[The woman beckons you over to the bar. "Listen, friend. I have here a unique, extremely rare remnant of prehistoric times. This is the genuine article, trust me on that. One hundred per cent legit! And you wouldn't want to spend good credits on a fake, right?"]]), option_yes, option_no) == 1 then
          if player.credits() >= reward * 0.15 then
             misn.npcRm(mem.sellnpc)
-            player.pay( reward * 0.15 )
+            player.pay( -reward * 0.15 )
             local c = commodity.new( N_("Artefact? C"), N_("An ancient artefact?") )
             mem.artifactC = misn.cargoAdd(c, 0)
             misn.markerRm(mem.markerC)
