@@ -119,6 +119,8 @@ function ontoggle( p, po, on )
          local d = math.min( mem.drain, e )
          t:setEnergy( e-d, true )
          drained = drained + d
+
+         naev.trigger( "feather_drive", t, p )
       end
    end
    p:setEnergy( p:energy(true)+drained, true )
