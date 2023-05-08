@@ -15,7 +15,7 @@ local prevship
 local reward = outfit.get("Astral Projection")
 local obelisk = spob.get("Kal Niut Obelisk")
 
-local hook_done
+local hook_done, start_marker
 function create ()
    srs.obeliskEnter( obelisk )
 
@@ -42,7 +42,12 @@ function create ()
    pp:outfitAddIntrinsic( "Astral Flow Amplifier" )
 
    -- First puzzle
-   -- TODO
+   local m = pilot.add("Psychic Orb", "Independent", vec2.new(), nil, {ai="dummy"} )
+   m:setNoDeath(true)
+   m:setNoDisable(true)
+   m:setHostile(true)
+   m:setInvisible(true)
+   start_marker = m
 
    textoverlay.init( "#y".._("Test of Renewal").."#0",
       "#y".._("Collect All the Orbs").."\n"..
@@ -55,7 +60,7 @@ function create ()
    hook.pilot( pp, "exploded", "player_lost" )
 
    -- TODO proper puzzle
-   hook.timer( 10, "puzzle01" )
+   hook.custom( "puzzle01" )
 
    -- Anything will finish the event
    hook_done = hook.enter( "done" )
@@ -82,7 +87,12 @@ function player_lost ()
    end
 end
 
-function puzzle01 ()
+function puzzle01( p )
+   if p==start_marker then
+      start_marker:rm()
+      start_marker = nil
+   end
+
    -- All done, so give ability
    srs.sfxGong()
    if player.outfitNum( reward ) > 0 then
