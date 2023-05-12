@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Thaddius Terminal">
+ <pos x="1478.954102" y="-804.588905"/>
+ <GFX>
+  <space>002.webp</space>
+  <exterior>station05.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <base>33.333300</base>
+  <bonus>16.666700</bonus>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>9000</population>
+  <hide>3.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <outfits/>
+   <blackmarket/>
+  </services>
+  <commodities/>
+  <description>Ostensibly a 'research station' this rickety station is in fact a gambling den and smuggling outpost for the criminal underbelly in Za'lek space. There is a diverse array of goods available to the captain who is carefully incurious about the origins. Scientists looking into illegal research (what little there is in Za'lek space), 'private military contractors', 'free traders', it's all here.</description>
+  <bar>This bar contains most of the flaws of both pirate and Za'lek 'sensibilities'. It is poorly laid-out, filthy, full of suspicious characters, and overlooked by bouncers who seem somewhat overeager to find troublemakers. At least the drinks are strong.</bar>
+ </general>
+ <tech>
+  <item>Ion 1</item>
+  <item>Ion 2</item>
+  <item>Kinetic 1</item>
+  <item>Plasma 1</item>
+  <item>Heavy Weapons 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>Star Maps</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Heavy Civilian Combat Ships</item>
+  <item>Criminal Outfits</item>
+ </tech>
+ <tags>
+  <tag>criminal</tag>
+  <tag>station</tag>
+ </tags>
+</spob>

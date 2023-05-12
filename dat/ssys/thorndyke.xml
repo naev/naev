@@ -2,18 +2,13 @@
 <ssys name="Thorndyke">
  <general>
   <radius>12950.000000</radius>
-  <stars>400</stars>
-  <interference>3.030303</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>6.818181</interference>
  </general>
- <pos x="307.000000" y="41.000000"/>
+ <pos x="368.679986" y="589.302191"/>
  <spobs/>
  <jumps>
-  <jump target="Pilatis">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Surano">
+  <jump target="Shikima">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Sirius Shaman">
+ <lua>ships/lua/sirius.lua</lua>
  <points>40</points>
  <base_type>Shaman</base_type>
  <rarity>2</rarity>
  <GFX size="68">shaman</GFX>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Bomber</class>
  <price>525000</price>

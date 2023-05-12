@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ssys name="NGC-4746">
  <general>
-  <radius>15000.000000</radius>
-  <stars>400</stars>
+  <radius>12000.000000</radius>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="-530.516101" y="-487.848508"/>
- <spobs/>
+ <pos x="-310.351757" y="-173.726181"/>
+ <spobs>
+  <spob>P-13571</spob>
+ </spobs>
  <jumps>
   <jump target="NGC-7078">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Valerie">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

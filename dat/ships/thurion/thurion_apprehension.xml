@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Apprehension">
+ <lua>ships/lua/thurion.lua</lua>
  <points>90</points>
  <base_type>Apprehension</base_type>
  <GFX size="90" sx="12" sy="12">apprehension</GFX>
  <rarity>3</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>2300000</price>

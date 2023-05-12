@@ -3,7 +3,6 @@ local love_math = require 'love.math'
 local love_shaders = require 'love_shaders'
 local transitions = require 'vn.transitions'
 
--- luacheck: globals _textoverlay_fg _textoverlay_update (Hook functions passed by name)
 
 local textoverlay = {}
 

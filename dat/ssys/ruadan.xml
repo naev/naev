@@ -3,11 +3,10 @@
  <general>
   <features>#pZa'lek Homeworld#0</features>
   <radius>24000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-579.523514" y="-1044.424651"/>
+ <pos x="-243.802225" y="-796.410944"/>
  <spobs>
   <spob>Hypergate Ruadan</spob>
   <spob>Ruadan Bastion</spob>
@@ -17,7 +16,8 @@
   <spob>Ruadan J-2</spob>
   <spob>Ruadan Prime</spob>
   <spob>Ruadan Secundus</spob>
-  <spob>Ruadan Station</spob>
+  <spob>Ruadan Terminal</spob>
+  <spob_virtual>Pirate All Unpresence</spob_virtual>
   <spob_virtual>Trade Lane (Za'lek)</spob_virtual>
  </spobs>
  <jumps>
@@ -25,11 +25,11 @@
    <autopos/>
    <hide>0.000000</hide>
   </jump>
-  <jump target="Vauban">
+  <jump target="Severus">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Woreck">
+  <jump target="Tomas">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

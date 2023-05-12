@@ -2,7 +2,7 @@
 <spob name="Research Post Sigma-13">
  <pos x="13999.436084" y="3949.127770"/>
  <GFX>
-  <space>001.webp</space>
+  <space>zalek_research_station2.webp</space>
   <exterior>station_scene.webp</exterior>
  </GFX>
  <presence>
@@ -24,5 +24,6 @@
  </general>
  <tags>
   <tag>nonpc</tag>
+  <tag>station</tag>
  </tags>
 </spob>

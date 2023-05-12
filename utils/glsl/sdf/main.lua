@@ -1,53 +1,4 @@
 local pixelcode_sdf = love.filesystem.read( "frag.glsl" )
-local _pixelcode = [[
-#pragma language glsl3
-uniform float u_time = 0.0;
-
-vec4 bg( vec2 uv )
-{
-   vec3 c;
-   uv *= 10.0;
-   if (mod( floor(uv.x)+floor(uv.y), 2.0 ) == 0.0)
-      c = vec3( 0.8 );
-   else
-      c = vec3( 0.2 );
-   return vec4( c, 1.0 );
-}
-
-const float PULSE_SPEED    = 0.5;
-const float PULSE_WIDTH    = 0.1;
-
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
-{
-   //Sawtooth function to pulse from centre.
-   float u_time = fract(u_time * PULSE_SPEED);
-   vec2 off = uv - vec2(0.5);
-   float dist = length( off );
-
-   vec4 col;
-
-   //Only distort the pixels within the parameter distance from the centre
-   float diff = dist - u_time;
-   if ((diff <= PULSE_WIDTH) && (diff >= -PULSE_WIDTH)) {
-      //The pixel offset distance based on the input parameters
-      //float sdiff = (1.0 - pow(abs(diff * 10.0), 0.38));
-      float sdiff = (1.0 - abs(diff * 10.0));
-      float tdist = u_time * dist;
-
-      /* Perform the distortion and reduce the effect over time */
-      uv += ((normalize(off) * diff * sdiff) / (tdist * 60.0));
-      //Color = texture( tex, uv );
-      col = bg( uv );
-
-      /* Blow out the color and reduce the effect over time */
-      col += color * sdiff / (tdist * 60.0);
-   }
-   else
-      col = bg( uv );
-
-   return col;
-}
-]]
 
 local vertexcode = [[
 #pragma language glsl3
@@ -107,7 +58,8 @@ function love.draw ()
       lg.setShader()
       lg.setColor( 0.0, 0.0, 0.0, 1 )
       lg.rectangle( "fill", x, y, w, h )
-      lg.setColor( 1, 1, 0, 0.5 )
+      --lg.setColor( 1, 1, 0, 0.5 )
+      lg.setColor( 1, 0, 0, 1 )
       lg.setShader(shader)
       lg.draw( img, x, y, 0, w, h )
 

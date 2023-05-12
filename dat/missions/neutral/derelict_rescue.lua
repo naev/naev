@@ -19,8 +19,6 @@ local vntk = require "vntk"
 local lmisn = require "lmisn"
 local der = require "common.derelict"
 
--- luacheck: globals land (Hook functions passed by name)
-
 function create ()
    mem.destpnt, mem.destsys = lmisn.getRandomSpobAtDistance( system.cur(), 0, 5, "Independent" )
 
@@ -76,7 +74,7 @@ function create ()
 
    misn.setTitle(_("Derelict Rescue"))
    misn.setDesc(fmt.f(_("You have agreed to take some crew you rescued from a derelict ship to {pnt} in the {sys} system."), {pnt=mem.destpnt, sys=mem.destsys}))
-   misn.setReward(fmt.credits(mem.reward_amount))
+   misn.setReward(mem.reward_amount)
 
    local c = commodity.new( N_("Rescued Crew"), N_("Some crew you rescued from a derelict ship.") )
    mem.civs = misn.cargoAdd( c, 0 )
@@ -95,13 +93,13 @@ function land ()
 
    vn.clear()
    vn.scene()
-   vn.na(_([[Soon after you land the crew you rescued from the derelict burst out of the ship in joy. After a short while the captain comes over to you and gives you the credits you were promised.]])
-      .. "\n\n"
-      .. fmt.reward(mem.reward_amount))
+   vn.sfxMoney()
    vn.func( function ()
       player.pay( mem.reward_amount )
    end )
-   vn.sfxVictory()
+   vn.na(_([[Soon after you land the crew you rescued from the derelict burst out of the ship in joy. After a short while the captain comes over to you and gives you the credits you were promised.]])
+      .. "\n\n"
+      .. fmt.reward(mem.reward_amount))
    vn.run()
 
    der.addMiscLog(fmt.f(_([[You rescued the crew of a derelict ship and returned them safely to {pnt} ({sys}).]]), {pnt=spob.cur(), sys=system.cur()}))

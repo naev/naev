@@ -13,11 +13,17 @@ local atk_drone = {}
 -- Mainly targets small drones.
 --]]
 function atk_drone.think( target, _si )
-   local enemy    = ai.getenemy_size(0, 200)  -- find a small ship to attack
+   -- Low chance to not switch targets
+   if rnd.rnd() < 0.2 then
+      return
+   end
+
+   --local enemy    = ai.getenemy_size(0, 200)  -- find a small ship to attack
+   local enemy = atk.preferred_enemy()
    local nearest_enemy = ai.getenemy()
    local dist     = ai.dist(target)
-
    local range = ai.getweaprange(3, 0)
+
    -- Get new target if it's closer
    --prioritize targets within the size limit
    if enemy ~= target and enemy ~= nil then

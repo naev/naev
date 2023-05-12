@@ -3,7 +3,7 @@
 <mission name="Harja's Vengeance">
  <unique />
  <priority>3</priority>
- <cond>spob.get("Violin Station"):system():jumpDist() &lt; 4</cond>
+ <cond>spob.get("Violin Monastery"):system():jumpDist() &lt; 4</cond>
  <done>Sirian Bounty</done>
  <chance>10</chance>
  <location>Bar</location>
@@ -23,15 +23,15 @@ require "proximity"
 local srs = require "common.sirius"
 local fmt = require "format"
 local pir = require "common.pirate"
+local achack = require "common.achack"
 
 local ambush, joanne -- Non-persistent state
 local ambushSet -- Forward-declared functions
--- luacheck: globals ambushActivate ambusherDead enter joanneDead joanneJump joanneLand land on_load (Hook functions passed by name)
 
 -- Mission constants
 local reward = 750e3
 -- This is the route Joanne will take.
-local route = {"Violin Station", "Fyruse Station", "Inios Station", "Tankard Station", "Sroolu"}
+local route = {"Violin Monastery", "Fyruse Monastery", "Inios Monastery", "Tankard Cloister", "Sroolu"}
 
 local text4 = _([[You go through the now familiar routine of waiting for Joanne. She soon hails you on the comms.
     "That's it, {player}! This was the final stop. You've been a great help. This isn't a good place to wrap things up though. Tell you what, let's relocate to Sroolu and meet up in the spaceport bar there. I need to give you your payment, of course, but I also want to talk to you for a bit. See you planetside!"
@@ -88,7 +88,7 @@ function accept()
 
    misn.accept()
    misn.setDesc(_("Joanne needs you to escort her ship and fight off mercenaries sent to kill her."))
-   misn.setReward(fmt.credits(reward))
+   misn.setReward(reward)
    misn.osdCreate(_("Harja's Vengeance"), {
       _("Follow Joanne's ship"),
       _("Defeat Joanne's attackers"),
@@ -160,23 +160,11 @@ function enter()
       mem.warnFuel = false
    end
 
-   joanne = pilot.add("Sirius Fidelity", "Achack_sirius", mem.origin, _("Joanne"))
-   joanne:control()
-   joanne:outfitRm("cores")
-   joanne:outfitRm("all")
-   joanne:outfitAdd("Tricon Zephyr Engine")
-   joanne:outfitAdd("Milspec Orion 2301 Core System")
-   joanne:outfitAdd("S&K Ultralight Combat Plating")
-   joanne:cargoRm( "all" )
-   joanne:outfitAdd("Razor MK2", 4)
-   joanne:outfitAdd("Reactor Class I", 1)
-   joanne:outfitAdd("Shield Capacitor I", 1)
-   joanne:setHealth(100,100)
-   joanne:setEnergy(100)
-   joanne:setFuel(true)
-   joanne:setVisplayer()
-   joanne:setHilight()
-   joanne:setInvincPlayer()
+   joanne = pilot.add("Sirius Fidelity", achack.fct_sirius(), mem.origin, _("Joanne"))
+   joanne:control(true)
+   joanne:setVisplayer(true)
+   joanne:setHilight(true)
+   joanne:setInvincPlayer(true)
    local stats = joanne:stats()
    local joanneshipspeed = stats.speed_max
    if mem.playershipspeed < joanneshipspeed then
@@ -213,7 +201,7 @@ end
 function ambushSet(ships, location)
    -- TODO should probably redo how this is handled. It's not very robust if
    -- the player or whatever attacks them early
-   ambush = fleet.add(1, ships, "Achack_thugs", location)
+   ambush = fleet.add(1, ships, achack.fct_thugs(), location)
    for _, j in ipairs(ambush) do
       j:control()
    end

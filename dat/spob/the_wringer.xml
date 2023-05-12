@@ -2,13 +2,13 @@
 <spob name="The Wringer">
  <pos x="1951.744467" y="5691.325470"/>
  <GFX>
-  <space>002.webp</space>
+  <space>station-ring1.webp</space>
   <exterior>station02.webp</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>0</range>
  </presence>
  <general>
@@ -31,5 +31,6 @@
  </tech>
  <tags>
   <tag>criminal</tag>
+  <tag>station</tag>
  </tags>
 </spob>

@@ -23,31 +23,41 @@
 
 /* Asteroid methods. */
 static int asteroidL_eq( lua_State *L );
+static int asteroidL_getAll( lua_State *L );
 static int asteroidL_get( lua_State *L );
 static int asteroidL_exists( lua_State *L );
+static int asteroidL_state( lua_State *L );
+static int asteroidL_setState( lua_State *L );
 static int asteroidL_field( lua_State *L );
 static int asteroidL_pos( lua_State *L );
 static int asteroidL_vel( lua_State *L );
+static int asteroidL_setPos( lua_State *L );
+static int asteroidL_setVel( lua_State *L );
 static int asteroidL_scanned( lua_State *L );
 static int asteroidL_timer( lua_State *L );
 static int asteroidL_setTimer( lua_State *L );
 static int asteroidL_armour( lua_State *L );
-static int asteroidL_alertRange( lua_State *L );
 static int asteroidL_setArmour( lua_State *L );
+static int asteroidL_alertRange( lua_State *L );
 static int asteroidL_materials( lua_State *L );
 static const luaL_Reg asteroidL_methods[] = {
    { "__eq", asteroidL_eq },
+   { "getAll", asteroidL_getAll },
    { "get", asteroidL_get },
    { "exists", asteroidL_exists },
+   { "state", asteroidL_state },
+   { "setState", asteroidL_setState },
    { "field", asteroidL_field },
    { "pos", asteroidL_pos },
    { "vel", asteroidL_vel },
+   { "setPos", asteroidL_setPos },
+   { "setVel", asteroidL_setVel },
    { "scanned", asteroidL_scanned },
    { "timer", asteroidL_timer },
    { "setTimer", asteroidL_setTimer },
    { "armour", asteroidL_armour },
-   { "alertRange", asteroidL_alertRange },
    { "setArmour", asteroidL_setArmour },
+   { "alertRange", asteroidL_alertRange },
    { "materials", asteroidL_materials },
    {0,0}
 }; /**< AsteroidLua methods. */
@@ -184,6 +194,33 @@ static int asteroidL_eq( lua_State *L )
 }
 
 /**
+ * @brief Gets all the asteroids in the system.
+ *
+ *    @luatreturn table t A list of all asteroids in the system.
+ * @luafunc getAll
+ */
+static int asteroidL_getAll( lua_State *L )
+{
+   int n = 1;
+   lua_newtable(L);
+   for (int i=0; i<array_size(cur_system->asteroids); i++) {
+      AsteroidAnchor *ast = &cur_system->asteroids[i];
+      for (int j=0; j<ast->nb; j++) {
+         Asteroid *a = &ast->asteroids[j];
+         LuaAsteroid_t la = {
+            .parent = a->parent,
+            .id = a->id,
+         };
+
+         lua_pushasteroid( L, la );
+         lua_rawseti( L, -2, n++ );
+      }
+   }
+
+   return 1;
+}
+
+/**
  * @brief Gets an asteroid in the system.
  *
  *    @luatparam nil|number|Vector|Pilot If not supplied, gets a random asteroid, if not it tries to get the asteroid closest to the Vector or Pilot. In the case of a number, it tries to get a random asteroid from the asteroid field with the number as an id.
@@ -309,6 +346,79 @@ static int asteroidL_exists( lua_State *L )
 }
 
 /**
+ * @brief Gets the state of an asteroid.
+ *
+ *    @luatparam Asteroid a Asteroid to check state of.
+ *    @luatreturn string State of the asteroid. Can be one of "FG", "XB", "BX", "XX_TO_BG", "FG_TO_BG", "BG_TO_FG", "BG_TO_XX", or "XX".
+ * @luafunc state
+ */
+static int asteroidL_state( lua_State *L )
+{
+   Asteroid *ast = luaL_validasteroid(L,1);
+   const char *state = NULL;
+   switch (ast->state) {
+         case ASTEROID_FG:
+            state = "FG";
+            break;
+         case ASTEROID_XB:
+            state = "XB";
+            break;
+         case ASTEROID_BX:
+            state = "BX";
+            break;
+         case ASTEROID_XX_TO_BG:
+            state = "XX_TO_BG";
+            break;
+         case ASTEROID_FG_TO_BG:
+            state = "FG_TO_BG";
+            break;
+         case ASTEROID_BG_TO_FG:
+            state = "BG_TO_FG";
+            break;
+         case ASTEROID_BG_TO_XX:
+            state = "BG_TO_XX";
+            break;
+         case ASTEROID_XX:
+            state = "XX";
+            break;
+   }
+   lua_pushstring( L, state );
+   return 1;
+}
+
+/**
+ * @brief Sets the state of an asteroid.
+ *
+ *    @luatparam Asteroid a Asteroid to set state of.
+ *    @luatparam string s State to set. Has to be one of "FG", "XB", "BX", "XX_TO_BG", "FG_TO_BG", "BG_TO_FG", "BG_TO_XX", or "XX".
+ * @luafunc state
+ */
+static int asteroidL_setState( lua_State *L )
+{
+   Asteroid *ast = luaL_validasteroid(L,1);
+   const char *state = luaL_checkstring(L,2);
+   if (strcmp(state,"FG")==0)
+      ast->state = ASTEROID_FG;
+   else if (strcmp(state,"XB")==0)
+      ast->state = ASTEROID_XB;
+   else if (strcmp(state,"BX")==0)
+      ast->state = ASTEROID_BX;
+   else if (strcmp(state,"XX_TO_BG")==0)
+      ast->state = ASTEROID_XX_TO_BG;
+   else if (strcmp(state,"FG_TO_BG")==0)
+      ast->state = ASTEROID_FG_TO_BG;
+   else if (strcmp(state,"BG_TO_FG")==0)
+      ast->state = ASTEROID_BG_TO_FG;
+   else if (strcmp(state,"BG_TO_XX")==0)
+      ast->state = ASTEROID_BG_TO_XX;
+   else if (strcmp(state,"XX")==0)
+      ast->state = ASTEROID_XX;
+   else
+      NLUA_INVALID_PARAMETER(L);
+   return 0;
+}
+
+/**
  * @brief Gets the field the asteroid belongs to (useful for getting more asteroids from the same field).
  *
  *    @luatparam Asteroid a Asteroid to get what field it belongs to.
@@ -348,6 +458,36 @@ static int asteroidL_vel( lua_State *L )
    Asteroid *a = luaL_validasteroid(L,1);
    lua_pushvector(L,a->vel);
    return 1;
+}
+
+/**
+ * @brief Sets the position of an asteroid.
+ *
+ *    @luatparam Asteroid a Asteroid to set position of.
+ *    @luatparam vec2 v Position to set to.
+ * @luafunc setPos
+ */
+static int asteroidL_setPos( lua_State *L )
+{
+   Asteroid *a = luaL_validasteroid(L,1);
+   vec2 *v = luaL_checkvector(L,2);
+   a->pos = *v;
+   return 0;
+}
+
+/**
+ * @brief Sets the velocity of an asteroid.
+ *
+ *    @luatparam Asteroid a Asteroid to set velocity of.
+ *    @luatparam vec2 v Velocity to set to.
+ * @luafunc setVel
+ */
+static int asteroidL_setVel( lua_State *L )
+{
+   Asteroid *a = luaL_validasteroid(L,1);
+   vec2 *v = luaL_checkvector(L,2);
+   a->vel = *v;
+   return 0;
 }
 
 /**
@@ -410,20 +550,6 @@ static int asteroidL_armour( lua_State *L )
 }
 
 /**
- * @brief Gets the alert range of an asteroid.
- *
- *    @luatparam Asteroid a Asteroid to get alert range of.
- *    @luatreturn number Alert range of the asteroid.
- * @luafunc alertRange
- */
-static int asteroidL_alertRange( lua_State *L )
-{
-   Asteroid *a = luaL_validasteroid(L,1);
-   lua_pushnumber(L,a->type->alert_range);
-   return 1;
-}
-
-/**
  * @brief Sets the armour of the asteroid.
  *
  *    @luatparam Asteroid a Asteroid to set armour of.
@@ -437,6 +563,20 @@ static int asteroidL_setArmour( lua_State *L )
    if (a->armour <= 0.)
       asteroid_explode( a, -1, 0. );
    return 0;
+}
+
+/**
+ * @brief Gets the alert range of an asteroid.
+ *
+ *    @luatparam Asteroid a Asteroid to get alert range of.
+ *    @luatreturn number Alert range of the asteroid.
+ * @luafunc alertRange
+ */
+static int asteroidL_alertRange( lua_State *L )
+{
+   Asteroid *a = luaL_validasteroid(L,1);
+   lua_pushnumber(L,a->type->alert_range);
+   return 1;
 }
 
 /**

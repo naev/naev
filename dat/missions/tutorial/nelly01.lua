@@ -58,7 +58,6 @@ local lmisn = require "lmisn"
 --]]
 mem.misn_state = nil
 local derelict -- Non-persistent state
--- luacheck: globals board clear_target_hyperspace enter equip equipment info info_cargo info_mission info_reminder info_ship info_shiplog info_standing info_weapons land outfit_buy outfits talk_derelict target_hyperspace (Hook functions passed by name)
 
 -- Constants
 local cargo_type  = commodity.get("Food")
@@ -105,7 +104,7 @@ function create ()
 
    misn.setTitle( _("Helping Nelly Out") )
    misn.setDesc( fmt.f(_("Help Nelly deliver {tonnes} of {cargo} to {destpnt} in the {destsys} system."), {tonnes=fmt.tonnes(cargo_q), cargo=cargo_type, destpnt=mem.destpnt, destsys=mem.destsys} ))
-   misn.setReward( fmt.credits(reward_amount) )
+   misn.setReward(reward_amount)
 end
 
 
@@ -328,7 +327,7 @@ function enter ()
       hook.timer( 5e3, "talk_derelict" )
 
       local pos = player.pos() * 0.6 -- Should be to the center of the system
-      derelict = pilot.add( "Koala", "Derelict", pos, _("Derelict") )
+      derelict = pilot.add( "Koala", "Derelict", pos, p_("ship", "Derelict") )
       derelict:disable()
       derelict:intrinsicSet( "ew_hide", -75 ) -- Much more visible
       derelict:setHilight(true)
@@ -369,7 +368,7 @@ function board ()
 end
 
 function info_reminder ()
-   player.pilot():comm(fmt.f(_([[Nelly: "Try opening the info menu with {infokey}."]]),{infokey=tut.getKey("info")}))
+   player.msg(fmt.f(_([[Nelly: "Try opening the info menu with {infokey}."]]),{infokey=tut.getKey("info")}), true)
    mem.times_said = (mem.times_said or 0) + 1
    if mem.times_said < 4 then
       mem.hk_info_timer = hook.timer( 15, "info_reminder" )
@@ -528,7 +527,7 @@ function equip ()
       return
    end
 
-   info_msg( fmt.f(_([["Great! Now you have the #o{outfit}#0 equipped. If your ship is set to automatically weapons, it should be assigned to a primary weapon. If not, you will have to assign the #o{outfit}#0 to a weapon set so you can use that. You can check by opening the #oInfo Window#0 with {infokey}. Check to make sure that is set up and let us go back to {pnt} in {sys}."]]), {outfit=outfit_tobuy, infokey=tut.getKey("info"), pnt=mem.retpnt, sys=mem.retsys} ))
+   info_msg( fmt.f(_([["Great! Now you have the #o{outfit}#0 equipped. If your ship is set to automatically handle weapons, it should be assigned to a primary weapon. If not, you will have to assign the #o{outfit}#0 to a weapon set so you can use that. You can check by opening the #oInfo Window#0 with {infokey}. Check to make sure that is set up and let us go back to {pnt} in {sys}."]]), {outfit=outfit_tobuy, infokey=tut.getKey("info"), pnt=mem.retpnt, sys=mem.retsys} ))
 
    hook.rm( mem.hk_equip )
    mem.hk_equip = nil

@@ -1,9 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Dvaered Goddard">
+ <lua>ships/lua/dvaered.lua</lua>
  <points>200</points>
  <base_type>Goddard</base_type>
  <GFX size="125" sx="12" sy="12">goddard_dvaered</GFX>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <rarity>2</rarity>
  <sound>engine</sound>
  <class>Battleship</class>

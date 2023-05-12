@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Sirius Divinity">
+ <lua>ships/lua/sirius.lua</lua>
  <points>200</points>
  <base_type>Divinity</base_type>
  <GFX size="140" sx="12" sy="12">divinity</GFX>
  <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Carrier</class>
  <price>11000000</price>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Brumeria">
+ <general>
+  <radius>15000.000000</radius>
+  <spacedust>400</spacedust>
+  <interference>108.225000</interference>
+  <nebula volatility="10.700000" hue="290.000000">500.000000</nebula>
+  <nolanes/>
+ </general>
+ <pos x="880.299997" y="-71.932467"/>
+ <spobs/>
+ <jumps>
+  <jump target="Teller">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+ </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
+</ssys>

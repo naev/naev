@@ -17,7 +17,7 @@
 #include "font.h"
 #include "log.h"
 #include "ndata.h"
-#include "nlua_col.h"
+#include "nlua_colour.h"
 #include "nlua_font.h"
 #include "nlua_shader.h"
 #include "nlua_tex.h"
@@ -39,6 +39,7 @@ static int gfxL_renderRect( lua_State *L );
 static int gfxL_renderRectH( lua_State *L );
 static int gfxL_renderCircle( lua_State *L );
 static int gfxL_renderCircleH( lua_State *L );
+static int gfxL_renderLinesH( lua_State *L );
 static int gfxL_clearDepth( lua_State *L );
 static int gfxL_fontSize( lua_State *L );
 /* TODO get rid of printDim and print in favour of printfDim and printf */
@@ -67,6 +68,7 @@ static const luaL_Reg gfxL_methods[] = {
    { "renderRectH", gfxL_renderRectH },
    { "renderCircle", gfxL_renderCircle },
    { "renderCircleH", gfxL_renderCircleH },
+   { "renderLinesH", gfxL_renderLinesH },
    /* Printing. */
    { "clearDepth", gfxL_clearDepth },
    { "fontSize", gfxL_fontSize },
@@ -474,7 +476,6 @@ static int gfxL_renderRect( lua_State *L )
  */
 static int gfxL_renderRectH( lua_State *L )
 {
-
    /* Parse parameters. */
    const mat4 *H = luaL_checktransform(L,1);
    const glColour *col = luaL_optcolour(L,2,&cWhite);
@@ -534,6 +535,72 @@ static int gfxL_renderCircleH( lua_State *L )
 
    /* Render. */
    gl_renderCircleH( H, col, !empty );
+
+   return 0;
+}
+
+static gl_vbo *vbo_lines = NULL;
+/**
+ * @brief Renders a polyline or set of line segments.
+ *
+ * @usage gfx.renderLinesH( 50,30, 70,70 )
+ * @usage gfx.renderLinesH( vec2.new(), vec2.new(100,100), vec2.new(200,100) )
+ *
+ *    @luatparam Transform H Transform to use when rendering.
+ *    @luatparam Colour Colour to use when drawing.
+ *    @luatparam number|Vec2 Either a set of x/y coordinates or 2D vector.
+ * @luafunc renderLinesH
+ */
+static int gfxL_renderLinesH( lua_State *L )
+{
+   GLfloat buf[256*2];
+   int i = 3;
+   GLuint n = 0;
+   const mat4 *H = luaL_checktransform(L,1);
+   const glColour *c = luaL_optcolour(L,2,&cWhite);
+
+   if (vbo_lines==NULL)
+      vbo_lines = gl_vboCreateDynamic( 256*sizeof(GLfloat)*2, NULL );
+
+   while (!lua_isnoneornil(L,i)) {
+      if (n >= 256) {
+         WARN(_("Trying to draw too many lines in one call!"));
+         n = 256;
+         break;
+      }
+
+      if (lua_isnumber(L,i)) {
+         double x = luaL_checknumber(L,i);
+         double y = luaL_checknumber(L,i+1);
+         buf[2*n+0] = x;
+         buf[2*n+1] = y;
+         n++;
+         i+=2;
+      }
+      else {
+         vec2 *v = luaL_checkvector(L,i);
+         buf[2*n+0] = v->x;
+         buf[2*n+1] = v->y;
+         n++;
+         i+=1;
+      }
+   }
+
+   glUseProgram(shaders.lines.program);
+
+   gl_vboData( vbo_lines, sizeof(GLfloat)*2*n, buf );
+   glEnableVertexAttribArray( shaders.lines.vertex );
+   gl_vboActivateAttribOffset( vbo_lines, shaders.lines.vertex, 0,
+         2, GL_FLOAT, 2*sizeof(GLfloat) );
+
+   gl_uniformColor(shaders.lines.colour, c);
+   gl_uniformMat4(shaders.lines.projection, H);
+
+   glDrawArrays( GL_LINE_STRIP, 0, n );
+   glUseProgram(0);
+
+   /* Check for errors. */
+   gl_checkErr();
 
    return 0;
 }
@@ -785,7 +852,6 @@ static int gfxL_print( lua_State *L )
    double x, y;
    glColour *col;
    int max, mid;
-
 
    /* Parse parameters. */
    font  = lua_toboolean(L,1) ? &gl_smallFont : &gl_defFont;

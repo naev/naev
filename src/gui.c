@@ -153,7 +153,7 @@ static glTexture *gui_target_pilot  = NULL; /**< Pilot targeting icon. */
 static int gui_lua_create           = LUA_NOREF;
 static int gui_lua_render           = LUA_NOREF;
 static int gui_lua_render_cooldown  = LUA_NOREF;
-static int gui_lua_end_cooldown     = LUA_NOREF;
+static int gui_lua_cooldown_end     = LUA_NOREF;
 static int gui_lua_mouse_move       = LUA_NOREF;
 static int gui_lua_mouse_click      = LUA_NOREF;
 static int gui_lua_update_cargo     = LUA_NOREF;
@@ -338,7 +338,8 @@ void player_message( const char *fmt, ... )
 
    /* Add the new one */
    va_start( ap, fmt );
-   vasprintf( &buf, fmt, ap );
+   /* Requires SDL2 >=2.0.18 */
+   SDL_vasprintf( &buf, fmt, ap );
    va_end( ap );
    player_messageRaw( buf );
    free( buf );
@@ -817,6 +818,7 @@ void gui_render( double dt )
       glUniform1f( shaders.jump.progress, fade );
       glUniform1f( shaders.jump.direction, direction );
       glUniform2f( shaders.jump.dimensions, gl_screen.nw, gl_screen.nh );
+      glUniform1f( shaders.jump.brightness, conf.jump_brightness );
 
       /* Set the subroutine. */
       if (gl_has( OPENGL_SUBROUTINES )) {
@@ -849,7 +851,7 @@ void gui_render( double dt )
  */
 void gui_cooldownEnd (void)
 {
-   gui_doFunc( gui_lua_end_cooldown, "end_cooldown" );
+   gui_doFunc( gui_lua_cooldown_end, "cooldown_end" );
 }
 
 /**
@@ -880,6 +882,9 @@ void gui_radarRender( double x, double y )
    Radar *radar;
    mat4 view_matrix_prev;
    Pilot *const* pilot_stack;
+
+   if (!conf.always_radar && ovr_isOpen())
+      return;
 
    /* The global radar. */
    radar = &gui_radar;
@@ -1127,8 +1132,6 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       ovr_center( &ox, &oy );
       x += ox;
       y += oy;
-      w *= 2.;
-      h *= 2.;
    }
 
    if (p->id == player.p->target)
@@ -1491,8 +1494,6 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       /* Transform coordinates. */
       cx += ox;
       cy += oy;
-      w  *= 2.;
-      h  *= 2.;
    }
 
    /* See if far side is marked. */
@@ -1823,7 +1824,7 @@ char* gui_pick (void)
     * naev_resize and can cause an issue if player is dead. */
    if ((player.p == NULL) || pilot_isFlag(player.p,PILOT_DEAD))
       gui = NULL;
-   else if (player.gui && (player.guiOverride == 1 || strcmp(player.p->ship->gui,"default")==0))
+   else if (player.gui != NULL)
       gui = player.gui;
    else
       gui = player.p->ship->gui;
@@ -1882,7 +1883,7 @@ int gui_load( const char* name )
    LUA_FUNC( create );
    LUA_FUNC( render );
    LUA_FUNC( render_cooldown );
-   LUA_FUNC( end_cooldown );
+   LUA_FUNC( cooldown_end );
    LUA_FUNC( mouse_move );
    LUA_FUNC( mouse_click );
    LUA_FUNC( update_cargo );
@@ -1950,7 +1951,7 @@ void gui_cleanup (void)
    LUA_CLEANUP( gui_lua_create );
    LUA_CLEANUP( gui_lua_render );
    LUA_CLEANUP( gui_lua_render_cooldown );
-   LUA_CLEANUP( gui_lua_end_cooldown );
+   LUA_CLEANUP( gui_lua_cooldown_end );
    LUA_CLEANUP( gui_lua_mouse_move );
    LUA_CLEANUP( gui_lua_mouse_click );
    LUA_CLEANUP( gui_lua_update_cargo );

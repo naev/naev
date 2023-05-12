@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Hubfar Citadel">
+ <lua>spob/lua/dvaered_mil_restricted.lua</lua>
+ <pos x="-1341.815997" y="2683.631995"/>
+ <GFX>
+  <space>station-fleetbase4.webp</space>
+  <exterior>station04.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <base>50.000000</base>
+  <bonus>25.000000</bonus>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>27000</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Originally an Imperial base, it was turned over to the Dvaered as part of the agreement when House Dvaered was formed. The core of the station follows traditional Imperial designs, while the additional wings and barracks are much more functional and crude, breaking the little harmony the original design had. The citadel is used exert Dvaered influence on the norther border of Dvaered space and has several large platoons and squadrons ready to be sent to instill peace at a moments notice.</description>
+  <bar>Although the bar is in the Imperial part of the station, it has been reformed from the inside out and rebranded as the Hubfar Beer Garden. There is always an assortment of merry soldiers munching down on all sorts of hearty foods with beer constantly flowing. Not a bad place if you are into that sort of stuff.</bar>
+ </general>
+ <tags>
+  <tag>restricted</tag>
+  <tag>station</tag>
+  <tag>military</tag>
+  <tag>old</tag>
+ </tags>
+</spob>

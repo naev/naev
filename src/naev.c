@@ -61,7 +61,7 @@
 #include "nlua_misn.h"
 #include "nlua_var.h"
 #include "nlua_tex.h"
-#include "nlua_col.h"
+#include "nlua_colour.h"
 #include "nlua_gfx.h"
 #include "nlua_naev.h"
 #include "nlua_rnd.h"
@@ -98,12 +98,12 @@
 #define VERSION_FILE    "VERSION" /**< Version file by default. */
 
 static int quit               = 0; /**< For primary loop */
+Uint32 SDL_LOOPDONE           = 0; /**< For custom event to exit loops. */
 static unsigned int time_ms   = 0; /**< used to calculate FPS and movement. */
 static SDL_Surface *naev_icon = NULL; /**< Icon. */
 static int fps_skipped        = 0; /**< Skipped last frame? */
 /* Version stuff. */
 static semver_t version_binary; /**< Naev binary version. */
-static char version_human[STRMAX_SHORT]; /**< Human readable version. */
 
 /*
  * FPS stuff.
@@ -119,6 +119,8 @@ const double fps_min    = 1./30.; /**< Minimum fps to run at. */
 double elapsed_time_mod = 0.; /**< Elapsed modified time. */
 
 static nlua_env load_env = LUA_NOREF; /**< Environment for displaying load messages and stuff. */
+static int load_force_render = 0;
+static unsigned int load_last_render = 0;
 
 /*
  * prototypes
@@ -136,7 +138,7 @@ static double fps_elapsed (void);
 static void fps_control (void);
 static void update_all (void);
 /* Misc. */
-static void loadscreen_render( double done, const char *msg );
+static void loadscreen_update( double done, const char *msg );
 void main_loop( int update ); /* dialogue.c */
 
 /**
@@ -182,14 +184,15 @@ int main( int argc, char** argv )
             _( PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
       return -1;
    }
+   PHYSFS_permitSymbolicLinks( 1 );
 
    /* Set up locales. */
    gettext_init();
    init_linebreak();
 
    /* Parse version. */
-   if (semver_parse( VERSION, &version_binary ))
-      WARN( _("Failed to parse version string '%s'!"), VERSION );
+   if (semver_parse( naev_version( 0 ), &version_binary ))
+      WARN( _("Failed to parse version string '%s'!"), naev_version( 0 ) );
 
    /* Print the version */
    LOG( " %s v%s (%s)", APPNAME, naev_version(0), HOST );
@@ -205,6 +208,7 @@ int main( int argc, char** argv )
       return -1;
    }
    starttime = SDL_GetTicks();
+   SDL_LOOPDONE = SDL_RegisterEvents(1);
 
    /* Initialize the threadpool */
    threadpool_init();
@@ -214,7 +218,7 @@ int main( int argc, char** argv )
 
 #if HAS_UNIX
    /* Set window class and name. */
-   nsetenv("SDL_VIDEO_X11_WMCLASS", APPNAME, 0);
+   SDL_setenv("SDL_VIDEO_X11_WMCLASS", APPNAME, 0);
 #endif /* HAS_UNIX */
 
    /* Must be initialized before input_init is called. */
@@ -304,7 +308,7 @@ int main( int argc, char** argv )
 
    /* Display the load screen. */
    loadscreen_load();
-   loadscreen_render( 0., _("Initializing subsystems…") );
+   loadscreen_update( 0., _("Initializing subsystems…") );
    time_ms = SDL_GetTicks();
 
    /*
@@ -429,6 +433,7 @@ int main( int argc, char** argv )
    while (!quit) {
       while (!quit && SDL_PollEvent(&event)) { /* event loop */
          if (event.type == SDL_QUIT) {
+            SDL_FlushEvent( SDL_QUIT ); /* flush event to prevent it from quitting when lagging a bit. */
             if (quit || menu_askQuit()) {
                quit = 1; /* quit is handled here */
                break;
@@ -489,6 +494,7 @@ int main( int argc, char** argv )
 
    /* Clean up parser. */
    xmlCleanupParser();
+   xmlMemoryDump();
 
    /* Clean up signal handler. */
    debug_sigClose();
@@ -540,24 +546,25 @@ void loadscreen_load (void)
 }
 
 /**
- * @brief Renders the load screen with message.
- *
- *    @param done Amount done (1. == completed).
- *    @param msg Loading screen message.
+ * @brief Renders the loadscreen if necessary.
  */
-void loadscreen_render( double done, const char *msg )
+void naev_renderLoadscreen (void)
 {
    SDL_Event event;
+   unsigned int t = SDL_GetTicks();
+
+   /* Only render if forced or try for low 10 FPS. */
+   if (!load_force_render && (t-load_last_render) < 100 )
+      return;
+   load_last_render = t;
 
    /* Clear background. */
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
    /* Run Lua. */
    nlua_getenv( naevL, load_env, "render" );
-   lua_pushnumber( naevL, done );
-   lua_pushstring( naevL, msg );
-   if (nlua_pcall(load_env, 2, 0)) { /* error has occurred */
-      WARN( _("Loadscreen: '%s'"), lua_tostring(naevL,-1));
+   if (nlua_pcall(load_env, 0, 0)) { /* error has occurred */
+      WARN( _("Loadscreen '%s': '%s'"), "render", lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
 
@@ -567,6 +574,31 @@ void loadscreen_render( double done, const char *msg )
    /* Flip buffers. HACK: Also try to catch a late-breaking resize from the WM (...or a crazy user?). */
    SDL_GL_SwapWindow( gl_screen.window );
    naev_resize();
+
+   /* Clear forcing. */
+   load_force_render = 0;
+}
+
+/**
+ * @brief Renders the load screen with message.
+ *
+ *    @param done Amount done (1. == completed).
+ *    @param msg Loading screen message.
+ */
+void loadscreen_update( double done, const char *msg )
+{
+   /* Run Lua. */
+   nlua_getenv( naevL, load_env, "update" );
+   lua_pushnumber( naevL, done );
+   lua_pushstring( naevL, msg );
+   if (nlua_pcall(load_env, 2, 0)) { /* error has occurred */
+      WARN( _("Loadscreen '%s': '%s'"), "update", lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
+   }
+
+   /* Force rerender. */
+   load_force_render = 1;
+   naev_renderLoadscreen();
 }
 
 /**
@@ -588,55 +620,55 @@ void load_all (void)
    sp_load();
 
    /* order is very important as they're interdependent */
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Commodities…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading Commodities…") );
    commodity_load(); /* dep for space */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Special Effects…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading Special Effects…") );
    spfx_load(); /* no dep */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Effects…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading Effects…") );
    effect_load(); /* no dep */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Damage Types…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading Damage Types…") );
    dtype_load(); /* dep for outfits */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Outfits…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading Outfits…") );
    outfit_load(); /* dep for ships, factions */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Ships…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading Ships…") );
    ships_load(); /* dep for fleet */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Factions…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading Factions…") );
    factions_load(); /* dep for fleet, space, missions, AI */
 
    /* Handle outfit loading part that may use ships and factions. */
    outfit_loadPost();
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading AI…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading AI…") );
    ai_load(); /* dep for fleets */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Techs…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading Techs…") );
    tech_load(); /* dep for space */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading the Universe…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading the Universe…") );
    space_load(); /* dep for events/missions */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Events…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading Events…") );
    events_load();
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Missions…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading Missions…") );
    missions_load();
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading the UniDiffs…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Loading the UniDiffs…") );
    diff_loadAvailable();
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Populating Maps…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Populating Maps…") );
    outfit_mapParse();
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Calculating Patrols…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Calculating Patrols…") );
    safelanes_init();
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Initializing Details…") );
+   loadscreen_update( ++stage/LOADING_STAGES, _("Initializing Details…") );
 #if DEBUGGING
    if (stage > LOADING_STAGES)
       WARN(_("Too many loading stages, please increase LOADING_STAGES"));
@@ -649,7 +681,7 @@ void load_all (void)
    pilots_init();
    weapon_init();
    player_init(); /* Initialize player stuff. */
-   loadscreen_render( 1., _("Loading Completed!") );
+   loadscreen_update( 1., _("Loading Completed!") );
 }
 /**
  * @brief Unloads all data, simplifies main().
@@ -748,9 +780,9 @@ void naev_resize (void)
    /* Resize the GL context, etc. */
    gl_resize();
 
-   /* Regenerate the background stars. */
+   /* Regenerate the background space dust. */
    if (cur_system != NULL)
-      background_initDust( cur_system->stars );
+      background_initDust( cur_system->spacedust );
    else
       background_initDust( 1000. ); /* from loadscreen_load */
 
@@ -772,6 +804,9 @@ void naev_resize (void)
    /* Finally do a render pass to avoid half-rendered stuff. */
    render_all( 0., 0. );
    SDL_GL_SwapWindow( gl_screen.window );
+
+   /* Force render. */
+   load_force_render = 1;
 }
 
 /*
@@ -1018,35 +1053,10 @@ static void window_caption (void)
    }
 
    /* Set caption. */
-   asprintf( &buf, APPNAME" - %s", _(start_name()) );
+   SDL_asprintf( &buf, APPNAME" - %s", _(start_name()) );
    SDL_SetWindowTitle( gl_screen.window, buf );
    SDL_SetWindowIcon( gl_screen.window, naev_icon );
    free( buf );
-}
-
-/**
- * @brief Returns the version in a human readable string.
- *
- *    @param long_version Returns the long version if it's long.
- *    @return The human readable version string.
- */
-char *naev_version( int long_version )
-{
-   /* Set up the long version. */
-   if (long_version) {
-      if (version_human[0] == '\0')
-         snprintf( version_human, sizeof(version_human),
-               " "APPNAME" v%s%s - %s", VERSION,
-#ifdef DEBUGGING
-               _(" debug"),
-#else /* DEBUGGING */
-               "",
-#endif /* DEBUGGING */
-               start_name() );
-      return version_human;
-   }
-
-   return VERSION;
 }
 
 static int binary_comparison( int x, int y )

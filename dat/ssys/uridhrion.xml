@@ -2,15 +2,14 @@
 <ssys name="Uridhrion">
  <general>
   <radius>24500.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="306.666667" y="632.066667"/>
+ <pos x="573.208013" y="706.106497"/>
  <spobs>
   <spob>Cutha</spob>
   <spob>Heronus</spob>
-  <spob>Heronus Orbital</spob>
+  <spob>Heronus Nidus</spob>
   <spob>Terminus</spob>
   <spob>Uridhrion I</spob>
   <spob>Uridhrion II</spob>
@@ -22,7 +21,7 @@
    <hidden/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Point Zero">
+  <jump target="Gewirn">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

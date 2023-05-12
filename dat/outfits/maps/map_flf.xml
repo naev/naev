@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <outfit name="Map: FLF Hidden Jumps">
  <general>
   <rarity>2</rarity>
@@ -14,25 +14,23 @@
   <sys name="Arcanis">
    <jump>Sigur</jump>
   </sys>
+  <sys name="Gilligan's Light">
+   <jump>Ingot</jump>
+   <jump>Myad</jump>
+   <jump>Theras</jump>
+  </sys>
+  <sys name="Ingot">
+   <jump>Gilligan's Light</jump>
+  </sys>
   <sys name="Myad">
    <jump>Gilligan's Light</jump>
   </sys>
-  <sys name="Ingot">
-   <jump>Tuoladis</jump>
-   <jump>Gilligan's Light</jump>
-  </sys>
-  <sys name="Tuoladis">
-   <jump>Ingot</jump>
-  </sys>
-  <sys name="Gilligan's Light">
-   <jump>Myad</jump>
-   <jump>Ingot</jump>
-  </sys>
-  <sys name="Theras">
-   <jump>Klantar</jump>
-  </sys>
   <sys name="Klantar">
    <jump>Theras</jump>
+  </sys>
+  <sys name="Theras">
+   <jump>Gilligan's Light</jump>
+   <jump>Klantar</jump>
   </sys>
  </specific>
 </outfit>

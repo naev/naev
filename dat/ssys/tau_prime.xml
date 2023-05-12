@@ -2,11 +2,10 @@
 <ssys name="Tau Prime">
  <general>
   <radius>24500.000000</radius>
-  <stars>600</stars>
-  <interference>3.030300</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>600</spacedust>
+  <interference>6.818175</interference>
  </general>
- <pos x="165.388889" y="-38.555556"/>
+ <pos x="260.785374" y="208.751310"/>
  <spobs>
   <spob>Anubis</spob>
   <spob>Europea</spob>
@@ -20,11 +19,11 @@
    <autopos/>
    <hide>0.000000</hide>
   </jump>
-  <jump target="Draygar">
+  <jump target="Goddard">
    <autopos/>
    <hide>0.000000</hide>
   </jump>
-  <jump target="Raelid">
+  <jump target="Kenvis">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

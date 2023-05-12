@@ -5,24 +5,27 @@
   <map_shader>haze_map.frag</map_shader>
   <features>#rHaze (-50% Shield and Shield Regen)#0</features>
   <radius>20000.000000</radius>
-  <stars>400</stars>
-  <interference>15.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>33.750000</interference>
  </general>
- <pos x="-177.591827" y="588.718027"/>
+ <pos x="115.020532" y="890.025090"/>
  <spobs>
   <spob>Ariadus II</spob>
   <spob>Ariadus IV</spob>
   <spob>Ariadus VI</spob>
   <spob>Ariadus VIa</spob>
   <spob>Ariadus VIb</spob>
-  <spob>Belltower Station</spob>
+  <spob>Belltower Nest</spob>
   <spob>Janko</spob>
   <spob>Magellan</spob>
   <spob>Trichu</spob>
  </spobs>
  <jumps>
   <jump target="Amatiri">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Tandar">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

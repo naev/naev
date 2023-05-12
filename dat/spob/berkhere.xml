@@ -8,13 +8,13 @@
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>H</class>
-  <population>1e+08</population>
+  <population>2.7e+07</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -27,4 +27,7 @@
   <description>Most of Berkhere's surface is rock, dust and sand. But under that surface lie rare and valuable gems and minerals. The colony here relies on this mineral wealth for survival. Crops will not grow on this arid planet, so all food has to be imported.</description>
   <bar>The spaceport bar is arranged around a central area that serves as a showcase for the single largest uncut gem ever found under the sands of Berkhere. It is a reminder to both visitors and the local populace that Berkhere is still wealthy. So long as the gem on display doesn't have to be sold, the reasoning goes, Berkhere's future isn't in peril. Needless to say, the gem is heavily protected by security systems.</bar>
  </general>
+ <tags>
+  <tag>mining</tag>
+ </tags>
 </spob>

@@ -24,8 +24,6 @@ local fmt = require "format"
 local zpp = require "common.zalek_physics"
 local sokoban = require "minigames.sokoban"
 
--- luacheck: globals land enter drone_board heartbeat (Hook functions passed by name)
-
 local reward = zpp.rewards.zpp03
 local mainpnt, mainsys = spob.getS("Katar I")
 
@@ -72,7 +70,7 @@ She goes back to ruminating on what to do.]]))
 
    -- mission details
    misn.setTitle( _("Particle Physics") )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc(fmt.f(_("Investigate the issue with the drones near the particle physics testing site at {sys}."),
       {sys=mainsys}))
 
@@ -161,10 +159,12 @@ function enter ()
 end
 
 function heartbeat ()
+   if not pdis or not pdis:exists() then return end
+
    if stage==0 then
       pilot.comm(_("Noona"), _("I've sent you the drone positions, please get close to investigate."))
       stage = 1
-   elseif stage==1 and  pdis:pos():dist( player.pilot():pos() ) < 500 then
+   elseif stage==1 and pdis:pos():dist( player.pilot():pos() ) < 500 then
       pilot.comm(_("Noona"), _("That is weird, maybe a firmware bug? Wait… I'm detecting a power fluctuation!"))
       stage = 2
    elseif stage==2 then
@@ -202,7 +202,7 @@ function drone_board ()
 
    vn.na(_([[You access the drone control panel and jack into the black box.]]))
 
-   sokoban.vn{ levels={4,5}, header="Drone Black Box"}
+   sokoban.vn{ levels={4,5}, header=_("Drone Black Box") }
    vn.func( function ()
       if sokoban.completed() then
          mem.state = 2

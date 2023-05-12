@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Fort Fernando">
+ <lua>spob/lua/dvaered_mil_restricted.lua</lua>
+ <pos x="12376.160912" y="625.892062"/>
+ <GFX>
+  <space>station-dvaered1.webp</space>
+  <exterior>station05.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>2000</population>
+  <hide>2.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Officially Fort Fernando is a local security nexus, meant to keep the local systems safe from pirates and the FLF, but it is rather heavily equipped for simply maintaining law and order. Some people believe that the Dvaered are gradually reinforcing Ogat, preparing for military conflict with the Empire. Nothing currently suggests that the Dvaered are on the warpath but Fort Fernando might be a harbinger of things to come.</description>
+  <bar>The spacedock bar is mainly frequented by Dvaered military pilots, as can be expected from a bar on a military base. The drinks served here are mostly free of mind-altering substances, a serious detractor for the ordinary visitor but then Fort Fernando isn't out to make itself popular.</bar>
+ </general>
+ <tech>
+  <item>Hulls Low</item>
+  <item>Hulls Medium</item>
+  <item>Engines Medium</item>
+  <item>Kinetic 1</item>
+  <item>Kinetic 2</item>
+  <item>Kinetic 3</item>
+  <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+ </tech>
+ <tags>
+  <tag>restricted</tag>
+  <tag>station</tag>
+  <tag>military</tag>
+ </tags>
+</spob>

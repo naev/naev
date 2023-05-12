@@ -7,6 +7,7 @@
 -- We use the default background too!
 local starfield = require "bkg.lib.starfield"
 local lg = require 'love.graphics'
+local taiomi = require "common.taiomi"
 
 -- Since we don't actually activate the Love framework we have to fake the
 -- the dimensions and width, and set up the origins.
@@ -18,23 +19,34 @@ local nw2, nh2 = nw/2, nh/2
 local buffer, tw, th, fgparts, bgparts, wing, pos
 
 function background ()
+   -- Check to see taiomi progress
+   local lastfight = false
+   if player.pilot():exists() then
+      if taiomi.progress() == 9 and taiomi.inprogress() then
+         lastfight = true
+      end
+   end
+
    -- Create particles and buffer
-   local density = 250*250
+   local density = 400
+   if lastfight then
+      density = 600
+   end
    buffer = 200
    tw = zmax*nw+2*buffer
    th = zmax*nh+2*buffer
-   local nparts = math.floor( tw * th / density + 0.5 )
+   local nparts = math.floor( tw * th / math.pow(density,2) + 0.5 )
 
    -- Load graphics
    local images_raw = {
       -- Debris
-      { n = 5, i = lg.newImage( 'gfx/spfx/cargo.webp' ), s = 6, debris = true },
-      { n = 5, i = lg.newImage( 'gfx/spfx/debris0.webp' ), s = 6, debris = true },
-      { n = 5, i = lg.newImage( 'gfx/spfx/debris1.webp' ), s = 6, debris = true },
-      { n = 5, i = lg.newImage( 'gfx/spfx/debris2.webp' ), s = 6, debris = true },
-      { n = 5, i = lg.newImage( 'gfx/spfx/debris3.webp' ), s = 6, debris = true },
-      { n = 5, i = lg.newImage( 'gfx/spfx/debris4.webp' ), s = 6, debris = true },
-      { n = 5, i = lg.newImage( 'gfx/spfx/debris5.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/cargo.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris0.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris1.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris2.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris3.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris4.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris5.webp' ), s = 6, debris = true },
       { n = 2, i = lg.newImage( 'gfx/spfx/debris_cluster1.webp' ), s = 6, debris = true },
       { n = 2, i = lg.newImage( 'gfx/spfx/debris_cluster2.webp' ), s = 6, debris = true },
       -- Neutral
@@ -102,7 +114,7 @@ function background ()
    -- Create background
    bgparts = {}
    for i = 1,nparts*3 do
-      local part = parts_create()
+      local part = parts_create( true )
       bgparts[i] = part
       part.s = 1 / (2 + 5*rnd.rnd())
    end
@@ -111,7 +123,7 @@ function background ()
    -- Create foreground
    fgparts = {}
    for i = 1,nparts do
-      local part = parts_create()
+      local part = parts_create( false )
       fgparts[i] = part
       part.s = 1 + rnd.rnd()
    end
@@ -175,9 +187,13 @@ function background ()
    end
    -- Create three layers using parallax, this lets us cut down significantly
    -- on the number of ships we have to render to create them
-   add_bkg( 0, 9e3, 0.03, 1.5, 0.6, 6.7, 3 )
-   add_bkg( 1, 6e3, 0.05, 1.5, 0.7, 4.0, 3 )
-   add_bkg( 2, 3e3, 0.08, 1.5, 0.8, 2.5, 3 )
+   local a = 0.5
+   if lastfight then
+      a = 0.4
+   end
+   add_bkg( 0, 9e3, 0.03, 1.5, a+0.0, 6.7, 3 )
+   add_bkg( 1, 6e3, 0.05, 1.5, a+0.1, 4.0, 3 )
+   add_bkg( 2, 3e3, 0.08, 1.5, a+0.2, 2.5, 3 )
 
    -- Default nebula background (no star)
    starfield.init{ nolocalstars = true }

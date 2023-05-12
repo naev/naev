@@ -2,11 +2,11 @@
 <ssys name="Terminus">
  <general>
   <radius>24500.000000</radius>
-  <stars>200</stars>
-  <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>200</spacedust>
+  <interference>22.000000</interference>
+  <nolanes/>
  </general>
- <pos x="-42.680556" y="-118.822531"/>
+ <pos x="145.986751" y="172.057493"/>
  <spobs>
   <spob>Foundation Station</spob>
  </spobs>
@@ -16,7 +16,7 @@
    <hidden/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Akodu">
+  <jump target="Flok">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

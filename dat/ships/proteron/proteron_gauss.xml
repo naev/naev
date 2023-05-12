@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Proteron Gauss">
+ <points>90</points>
+ <base_type>Gauss</base_type>
+ <GFX size="100" sx="10" sy="10">gauss</GFX>
+ <rarity>3</rarity>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Destroyer</class>
+ <price>2200000</price>
+ <time_mod>1.1</time_mod>
+ <trail_generator x="-40" y="17" h="0">proteron</trail_generator>
+ <trail_generator x="-40" y="-17" h="0">proteron</trail_generator>
+ <trail_generator x="-40" y="-5" h="0">nebula</trail_generator>
+ <trail_generator x="-40" y="5" h="0">nebula</trail_generator>
+ <fabricator>Proteron</fabricator>
+ <license>Medium Combat Vessel</license>
+ <description>The Gauss is a cutting-edge vessel. Its design was completed shortly before the Incident, and it was on track to become the Proteron military's primary combat vessel. While possessing fewer weapon mounts than the Pacifier, it makes up for it with its lower mass and expanded structural space.</description>
+ <health>
+  <armour>500</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>20</crew>
+  <mass>250</mass>
+  <fuel_consumption>200</fuel_consumption>
+  <cargo>40</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="large" x="28" y="0" h="5" />
+  <weapon size="large" x="18" y="0" h="5" />
+  <weapon size="medium" prop="fighter_bay" x="-30" y="-8" h="3" />
+  <weapon size="medium" prop="fighter_bay" x="-30" y="8" h="3" />
+  <utility size="medium" prop="systems">Unicorp PT-310 Core System</utility>
+  <utility size="medium" prop="accessory" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="medium" />
+  <utility size="medium" />
+  <structure size="medium" prop="engines">Unicorp Falcon 1300 Engine</structure>
+  <structure size="medium" prop="hull">Unicorp D-24 Medium Plating</structure>
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="medium" />
+  <structure size="medium" />
+ </slots>
+ <stats>
+  <speed_mod>5</speed_mod>
+  <thrust_mod>5</thrust_mod>
+  <turn_mod>5</turn_mod>
+  <shield_regen_mod>20</shield_regen_mod>
+ </stats>
+ <tags>
+  <tag>proteron</tag>
+ </tags>
+</ship>

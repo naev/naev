@@ -2,7 +2,9 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Dead Or Alive Bounty">
  <priority>4</priority>
- <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+ <cond>
+   return require("misn_test").mercenary()
+ </cond>
  <chance>360</chance>
  <location>Computer</location>
  <faction>Dvaered</faction>
@@ -32,7 +34,6 @@ local vntk = require "vntk"
 local lmisn = require "lmisn"
 
 -- luacheck: globals board_fail bounty_setup get_faction misn_title msg pay_capture_text pay_kill_text pilot_death share_text subdue_fail_text subdue_text succeed (shared with derived missions neutral.pirbounty_alive, proteron.dissbounty_dead)
--- luacheck: globals hunter_hail hunter_leave jumpin jumpout land pilot_attacked pilot_board pilot_disable pilot_jump takeoff timer_hail (Hook functions passed by name)
 
 subdue_text = {
    _("You and your crew infiltrate the ship's pathetic security and subdue {plt}. You transport the pirate to your ship."),
@@ -83,7 +84,11 @@ misn_title = {
    _("Dangerous Dead or Alive Bounty in {sys}"),
 }
 
-mem.misn_desc   = _("The pirate known as {pirname} was recently seen in the {sys} system. {fct} authorities want this pirate dead or alive. {pirname} is believed to be flying a {shipclass}-class ship.")
+mem.misn_desc = _([[The pirate known as {pirname} was recently seen in the {sys} system. {fct} authorities want this pirate dead or alive. {pirname} is believed to be flying a {shipclass}-class ship. The pirate may disappear if you take too long to reach the {sys} system.
+
+#nTarget:#0 {pirname} ({shipclass}-class ship)
+#nWanted:#0 Dead or Alive
+#nLast Seen:#0 {sys} system]])
 
 -- Messages
 msg = {
@@ -121,12 +126,9 @@ function create ()
    end
 
    mem.missys = systems[ rnd.rnd( 1, #systems ) ]
-   if not misn.claim( mem.missys, false, true ) then misn.finish( false ) end
+   if not misn.claim( mem.missys, true ) then misn.finish( false ) end
 
-   mem.jumps_permitted = system.cur():jumpDist(mem.missys) + rnd.rnd( 5 )
-   if rnd.rnd() < 0.05 then
-      mem.jumps_permitted = mem.jumps_permitted - 1
-   end
+   mem.jumps_permitted = system.cur():jumpDist(mem.missys) + rnd.rnd(3,5)
 
    local num_pirates = pir.systemPresence( mem.missys )
    if num_pirates <= 50 then
@@ -149,10 +151,24 @@ function create ()
    mem.board_failed = false
    mem.pship, mem.credits, mem.reputation = bounty_setup()
 
+   -- Faction prefix
+   local prefix
+   if mem.paying_faction:static() then
+      prefix = ""
+   else
+      prefix = require("common.prefix").prefix(mem.paying_faction)
+   end
+
    -- Set mission details
-   misn.setTitle( fmt.f( misn_title[mem.level], {sys=mem.missys} ) )
-   misn.setDesc( fmt.f( mem.misn_desc, {pirname=mem.name, sys=mem.missys, fct=mem.paying_faction, shipclass=_(ship.get(mem.pship):classDisplay()) } ) )
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setTitle( prefix..fmt.f(misn_title[mem.level], {sys=mem.missys}) )
+   local desc = fmt.f(mem.misn_desc,
+      {pirname=mem.name, sys=mem.missys, fct=mem.paying_faction, shipclass=_(ship.get(mem.pship):classDisplay()) })
+   if not mem.paying_faction:static() then
+      desc = desc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
+         {fct=mem.paying_faction})
+   end
+   misn.setDesc(desc)
+   misn.setReward( mem.credits )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
 
@@ -207,7 +223,17 @@ end
 
 function land ()
    mem.jumps_permitted = mem.jumps_permitted - 1
-   if mem.job_done and spob.cur():faction() == mem.paying_faction then
+
+   local okspob = false
+   -- Matching faction is always OK
+   if spob.cur():faction() == mem.paying_faction then
+      okspob = true
+   -- Special case static factions we look for non-hostiles
+   elseif mem.paying_faction:static() and not mem.paying_faction:areEnemies(spob.cur():faction()) then
+      okspob = true
+   end
+
+   if mem.job_done and okspob then
       local pay_text
       if mem.target_killed then
          pay_text = pay_kill_text[ rnd.rnd( 1, #pay_kill_text ) ]

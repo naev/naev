@@ -49,6 +49,7 @@ static LuaAudioEfx_t *lua_efx = NULL;
 static int stream_thread( void *la_data );
 static int stream_loadBuffer( LuaAudio_t *la, ALuint buffer );
 static void rg_filter( float **pcm, long channels, long samples, void *filter_param );
+static int audio_genSource( ALuint *source );
 
 /* Audio methods. */
 static int audioL_gc( lua_State *L );
@@ -82,6 +83,7 @@ static int audioL_getRolloff( lua_State *L );
 static int audioL_setEffect( lua_State *L );
 static int audioL_setGlobalEffect( lua_State *L );
 static int audioL_setGlobalAirAbsorption( lua_State *L );
+static int audioL_setGlobaDopplerFactor( lua_State *L );
 /* Deprecated stuff. */
 static int audioL_soundPlay( lua_State *L ); /* Obsolete API, to get rid of. */
 static const luaL_Reg audioL_methods[] = {
@@ -116,6 +118,7 @@ static const luaL_Reg audioL_methods[] = {
    { "setEffect", audioL_setEffect },
    { "setGlobalEffect", audioL_setGlobalEffect },
    { "setGlobalAirAbsorption", audioL_setGlobalAirAbsorption },
+   { "setGlobalDopplerFactor", audioL_setGlobaDopplerFactor },
    /* Deprecated. */
    { "soundPlay", audioL_soundPlay }, /* Old API */
    {0,0}
@@ -384,7 +387,7 @@ void audio_cleanup( LuaAudio_t *la )
          break;
       case LUA_AUDIO_STATIC:
          soundLock();
-         if (la->source > 0)
+         if (alIsSource( la->source )==AL_TRUE)
             alDeleteSources( 1, &la->source );
          /* Check if buffers need freeing. */
          if (la->buf != NULL) {
@@ -409,9 +412,9 @@ void audio_cleanup( LuaAudio_t *la )
                WARN(_("Timed out while waiting for audio thread to finish!"));
 #endif /* DEBUGGING */
          }
-         if (la->source > 0)
+         if (alIsSource( la->source )==AL_TRUE)
             alDeleteSources( 1, &la->source );
-         if (la->stream_buffers[0] > 0)
+         if (alIsBuffer( la->stream_buffers[0] )==AL_TRUE)
             alDeleteBuffers( 2, la->stream_buffers );
          if (la->cond != NULL)
             SDL_DestroyCond( la->cond );
@@ -461,6 +464,38 @@ static int audioL_eq( lua_State *L )
    a2 = luaL_checkaudio(L,2);
    lua_pushboolean( L, (memcmp( a1, a2, sizeof(LuaAudio_t) )==0) );
    return 1;
+}
+
+/**
+ * @brief Tries to generate a single openal source, running GC if necessary.
+ */
+static int audio_genSource( ALuint *source )
+{
+   ALenum err;
+   alGenSources( 1, source );
+   if (alIsSource( *source)==AL_TRUE)
+      return 0;
+   err = alGetError();
+   switch (err) {
+      case AL_NO_ERROR:
+         break;
+      case AL_OUT_OF_MEMORY:
+         /* Assume that we need to collect audio stuff. */
+         soundUnlock();
+         lua_gc( naevL, LUA_GCCOLLECT, 0 );
+         soundLock();
+         /* Try to create source again. */
+         alGenSources( 1, source );
+         al_checkErr();
+         break;
+
+      default:
+#if DEBUGGING
+         al_checkHandleError( err, __func__, __LINE__ );
+#endif /* DEBUGGING */
+         return -1;
+   }
+   return 0;
 }
 
 /**
@@ -518,7 +553,7 @@ static int audioL_new( lua_State *L )
 #endif /* DEBUGGING */
 
    soundLock();
-   alGenSources( 1, &la.source );
+   audio_genSource( &la.source );
 
    /* Deal with stream. */
    if (!stream) {
@@ -602,9 +637,9 @@ void audio_clone( LuaAudio_t *la, const LuaAudio_t *source )
    }
 
    soundLock();
-   alGenSources( 1, &la->source );
+   audio_genSource( &la->source );
 
-   switch (la->type) {
+   switch (source->type) {
       case LUA_AUDIO_STATIC:
          /* Attach source buffer. */
          la->buf = source->buf;
@@ -614,17 +649,21 @@ void audio_clone( LuaAudio_t *la, const LuaAudio_t *source )
          alSourcei( la->source, AL_BUFFER, la->buf->buffer );
          break;
 
-      case LUA_AUDIO_NULL:
       case LUA_AUDIO_STREAM:
+         WARN(_("Unimplemented"));
+         break;
+
+      case LUA_AUDIO_NULL:
          break;
    }
+   la->type = source->type;
 
    /* TODO this should probably set the same parameters as the original source
     * being cloned to be truly compatible with Love2D. */
    /* Defaults. */
    master = sound_getVolumeLog();
-   alSourcef( la->source, AL_GAIN, master );
-   la->volume = 1.;
+   alSourcef( la->source, AL_GAIN, master * source->volume );
+   la->volume = source->volume;
    /* See note in audioL_new */
    alSourcei( la->source, AL_SOURCE_RELATIVE, AL_TRUE );
    alSource3f( la->source, AL_POSITION, 0., 0., 0. );
@@ -728,12 +767,46 @@ static int audioL_isPaused( lua_State *L )
  */
 static int audioL_stop( lua_State *L )
 {
+   ALint alstate;
+   ALuint removed[2];
    LuaAudio_t *la = luaL_checkaudio(L,1);
    if (sound_disabled)
       return 0;
 
    soundLock();
-   alSourceStop( la->source );
+   switch (la->type) {
+      case LUA_AUDIO_NULL:
+         break;
+      case LUA_AUDIO_STATIC:
+         alSourceStop( la->source );
+         break;
+
+      case LUA_AUDIO_STREAM:
+         /* Kill the thread first. */
+         if (la->th != NULL) {
+            la->active = -1;
+            if (SDL_CondWaitTimeout( la->cond, sound_lock, 3000 ) == SDL_MUTEX_TIMEDOUT)
+#if DEBUGGING
+               WARN(_("Timed out while waiting for audio thread of '%s' to finish!"), la->name);
+#else /* DEBUGGING */
+               WARN(_("Timed out while waiting for audio thread to finish!"));
+#endif /* DEBUGGING */
+         }
+         la->th = NULL;
+
+         /* Stopping a source will make all buffers become processed. */
+         alSourceStop( la->source );
+
+         /* Unqueue the buffers. */
+         alGetSourcei( la->source, AL_BUFFERS_PROCESSED, &alstate );
+         alSourceUnqueueBuffers( la->source, alstate, removed );
+
+         /* Seek the stream to the beginning. */
+         SDL_mutexP( la->lock );
+         ov_pcm_seek( &la->stream, 0 );
+         SDL_mutexV( la->lock );
+         break;
+   }
    al_checkErr();
    soundUnlock();
    return 0;
@@ -794,13 +867,11 @@ static int audioL_seek( lua_State *L )
    LuaAudio_t *la = luaL_checkaudio(L,1);
    double offset = luaL_checknumber(L,2);
    const char *unit = luaL_optstring(L,3,"seconds");
-   int seconds;
+   int seconds = 1;
 
-   if (strcmp(unit,"seconds")==0)
-      seconds = 1;
-   else if (strcmp(unit,"samples")==0)
+   if (strcmp(unit,"samples")==0)
       seconds = 0;
-   else
+   else if (strcmp(unit,"seconds")!=0)
       NLUA_ERROR(L, _("Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"), unit );
 
    if (sound_disabled)
@@ -847,13 +918,11 @@ static int audioL_tell( lua_State *L )
    const char *unit = luaL_optstring(L,2,"seconds");
    double offset = -1.;
    float aloffset;
-   int seconds;
+   int seconds = 1;
 
-   if (strcmp(unit,"seconds")==0)
-      seconds = 1;
-   else if (strcmp(unit,"samples")==0)
+   if (strcmp(unit,"samples")==0)
       seconds = 0;
-   else
+   else if (strcmp(unit,"seconds")!=0)
       NLUA_ERROR(L, _("Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"), unit );
 
    if (sound_disabled) {
@@ -903,15 +972,13 @@ static int audioL_getDuration( lua_State *L )
    LuaAudio_t *la = luaL_checkaudio(L,1);
    const char *unit = luaL_optstring(L,2,"seconds");
    float duration = -1.;
-   int seconds;
+   int seconds = 1;
    ALint bytes, channels, bits, samples;
    ALuint buffer;
 
-   if (strcmp(unit,"seconds")==0)
-      seconds = 1;
-   else if (strcmp(unit,"samples")==0)
+   if (strcmp(unit,"samples")==0)
       seconds = 0;
-   else
+   else if (strcmp(unit,"seconds")!=0)
       NLUA_ERROR(L, _("Unknown duration source '%s'! Should be either 'seconds' or 'samples'!"), unit );
 
    if (sound_disabled) {
@@ -1646,6 +1713,26 @@ static int audioL_setGlobalAirAbsorption( lua_State *L )
    alSpeedOfSound( speed );
    if (absorption > 0.)
       sound_setAbsorption( absorption );
+   al_checkErr();
+   soundUnlock();
+   return 0;
+}
+
+/**
+ * @brief Sets the doppler effect factor.
+ *
+ * Defaults to 0.3 outside of the nebula and 1.0 in the nebula.
+ *
+ *    @luatparam number factor Factor to set doppler effect to. Must be positive.
+ * @luafunc setGlobalDopplerFactor
+ */
+static int audioL_setGlobaDopplerFactor( lua_State *L )
+{
+   if (sound_disabled)
+      return 0;
+
+   soundLock();
+   alDopplerFactor( luaL_checknumber(L,1) );
    al_checkErr();
    soundUnlock();
    return 0;

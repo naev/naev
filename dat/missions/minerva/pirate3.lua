@@ -49,8 +49,6 @@ local mainsys = system.get("Limbo")
 --    7. defend torture ship
 mem.misn_state = nil
 local harper -- Non-persistent state
--- luacheck: globals enter generate_npc harper_board harper_death harper_gotattacked harper_hail harper_land start_spa (Hook functions passed by name)
--- luacheck: globals approach_pir approach_spa (NPC functions passed by name)
 
 function create ()
    if not misn.claim( mainsys ) then
@@ -193,6 +191,7 @@ She takes out a metallic object from her pocket and show it to you. You don't kn
    pir(_([["The high-tech latest gen signal capturing device I gave should be able to bypass most jammers. However, you're going to have to plant it in a VIP room or in some place where we might be able to catch the mole."]]))
    if mem.misn_state==0 then
       pir(_([["The main issue we have right now is that VIP rooms and such are not easy to access, so we're going to have to keep our eyes open and see if we can spot an opportunity to plant the device."]]))
+      pir(_([["You never know when we'll get a chance, just take your time doing stuff near Minerva station and I'm sure you'll find an opening."]]))
    elseif mem.misn_state==1 then
       pir(_([["The Spa sounds like a perfect place to set up the signal capturing device. Nobody will suspect a thing! You should buy a ticket to the Spa and see if we can get lucky. If not, we may have to take other measures to ensure success."]]))
    elseif mem.misn_state==3 then

@@ -440,8 +440,7 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
             lua_pushlstring( L, data, len );
             free( data );
          }
-         else if (strcmp(type,SPOB_METATABLE)==0 ||
-               (strcmp(type,"planet")==0)) { /* TODO "planet" check remove in 0.11.0. */
+         else if (strcmp(type,SPOB_METATABLE)==0) {
             Spob *pnt = spob_get(xml_get(node));
             if (pnt != NULL) {
                lua_pushspob(L,spob_index(pnt));
@@ -493,6 +492,8 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
              * article, audio, canvas, colour, data, file, font, linopt, pilot, pilotoutfit, shader, tex, transform.
              * */
             WARN(_("Unknown Lua data type!"));
+            free(type);
+            free(name);
             lua_pop(L,1);
             return -1;
          }

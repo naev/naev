@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <decorator>
  <image>dvaered.webp</image>
- <x>240.000000</x>
- <y>-573.000000</y>
+ <x>345.000000</x>
+ <y>-785.000000</y>
  <detection_radius>100</detection_radius>
 </decorator>

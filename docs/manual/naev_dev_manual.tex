@@ -13,7 +13,7 @@
 \usepackage{hyperref}  % for hyperlinks
 \usepackage[a4paper,top=4.2cm,bottom=4.2cm,left=3.5cm,right=3.5cm]{geometry} % for setting page size and margins
 \usepackage{listings}
-\usepackage{xcolor}
+\usepackage[svgnames]{xcolor}
 \usepackage{booktabs}
 
 \makeatletter
@@ -59,9 +59,26 @@
    language=[5.1]Lua,
 }
 
+\lstdefinelanguage{XML}{
+  basicstyle=\ttfamily\footnotesize,
+  morestring=[b]",
+  moredelim=[s][\bfseries\color{Maroon}]{<}{\ },
+  moredelim=[s][\bfseries\color{Maroon}]{</}{>},
+  moredelim=[l][\bfseries\color{Maroon}]{/>},
+  moredelim=[l][\bfseries\color{Maroon}]{>},
+  morecomment=[s]{<?}{?>},
+  morecomment=[s]{<!--}{-->},
+  commentstyle=\color{DarkOliveGreen},
+  stringstyle=\color{blue},
+  identifierstyle=\color{red}
+}
+
 \newunicodechar{✔}{{\checkmark}}
 
-\DeclareRobustCommand*\naev{\includegraphics[height=0.7\baselineskip]{Naev.png}}
+% TODO we would want the height to depend here on the line height, but that
+% breaks headers in some cases if we use \baselineskip, so just hardcode height
+% for now...
+\DeclareRobustCommand*\naev{\includegraphics[height=14pt]{Naev.png}}
 
 \definecolor{bluekeywords}{rgb}{0.13, 0.13, 1}
 \definecolor{greencomments}{rgb}{0, 0.5, 0}
@@ -104,6 +121,10 @@
 %\listoflistings
 \newpage
 
+\markdownInput{intro.md}
+
+\part{Naev Engine}
+
 \markdownInput{sec/intro.md}
 
 \markdownInput{sec/plugins.md}
@@ -122,5 +143,23 @@
 \markdownInput{sec/outfits.md}
 
 \markdownInput{sec/ships.md}
+
+\part{Naev Lore}
+
+\markdownInput{lore/intro.md}
+
+\markdownInput{lore/time.md}
+
+\markdownInput{lore/history.md}
+%\markdownInptu{lore/history-incident.md}
+
+%\markdownInput{lore/faction-empire.md}
+\markdownInput{lore/faction-dvaered.md}
+\markdownInput{lore/faction-zalek.md}
+%\markdownInput{lore/faction-sirius.md}
+%\markdownInput{lore/faction-soromid.md}
+%\markdownInput{lore/faction-proteron.md}
+%\markdownInput{lore/faction-thurion.md}
+%\markdownInput{lore/faction-collective.md}
 
 \end{document}

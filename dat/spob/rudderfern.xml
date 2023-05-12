@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Rudderfern">
  <lua>spob/lua/highclass.lua</lua>
- <pos x="-22830.899336" y="-7419.439987"/>
+ <pos x="-17255.078803" y="-5266.400375"/>
  <GFX>
   <space>moon-L00.webp</space>
   <exterior>forest2.webp</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>2</range>
  </presence>
  <general>

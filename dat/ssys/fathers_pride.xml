@@ -2,31 +2,30 @@
 <ssys name="Father's Pride">
  <general>
   <radius>17500.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="305.666667" y="457.066667"/>
+ <pos x="494.818497" y="560.875892"/>
  <spobs>
   <spob>Father's Pride I</spob>
   <spob>Father's Pride II</spob>
   <spob>Father's Pride III</spob>
   <spob>Flach</spob>
-  <spob>Hartwell Station</spob>
+  <spob>Hartwell Nidus</spob>
   <spob>Rudderfern</spob>
   <spob_virtual>Trade Lane (Soromid)</spob_virtual>
  </spobs>
  <jumps>
-  <jump target="Gewirn">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
   <jump target="Hatter">
    <autopos/>
    <hide>0.000000</hide>
   </jump>
+  <jump target="Point Zero">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
   <jump target="Shikima">
-   <pos x="-20143.133265" y="-21795.269630"/>
+   <pos x="-9941.037874" y="-15170.532363"/>
    <hide>0.000000</hide>
   </jump>
  </jumps>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Rogan">
  <lua>spob/lua/lowclass.lua</lua>
- <pos x="-6362.374227" y="-13921.738082"/>
+ <pos x="-6362.361403" y="-13921.710021"/>
  <GFX>
   <space>H03.webp</space>
   <exterior>oceanic.webp</exterior>

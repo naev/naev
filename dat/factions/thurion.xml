@@ -16,4 +16,7 @@
   <enemy>Raven Clan</enemy>
   <enemy>Black Lotus</enemy>
  </enemies>
+ <tags>
+  <tag>misn_cargo</tag>
+ </tags>
 </faction>

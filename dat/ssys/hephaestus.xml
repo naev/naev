@@ -2,11 +2,11 @@
 <ssys name="Hephaestus">
  <general>
   <radius>10000.000000</radius>
-  <stars>400</stars>
-  <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>9.675000</interference>
+  <nebula volatility="0.000000" hue="240.000000">100.000000</nebula>
  </general>
- <pos x="737.000000" y="-230.000000"/>
+ <pos x="820.470882" y="-376.827167"/>
  <spobs/>
  <jumps>
   <jump target="Aneel Azi">
@@ -25,4 +25,7 @@
    <pos x="-2000.000000" y="-2000.000000"/>
   </asteroid>
  </asteroids>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

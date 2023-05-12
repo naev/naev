@@ -121,7 +121,6 @@ int misn_loadLibs( nlua_env env )
    nlua_loadTex(env);
    nlua_loadBackground(env);
    nlua_loadMusic(env);
-   nlua_loadAudio(env);
    nlua_loadTk(env);
    return 0;
 }
@@ -277,15 +276,10 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
  */
 static int misn_setTitle( lua_State *L )
 {
-   const char *str;
-   Mission *cur_mission;
-
-   str = luaL_checkstring(L,1);
-
-   cur_mission = misn_getFromLua(L);
+   const char *str = luaL_checkstring(L,1);
+   Mission *cur_mission = misn_getFromLua(L);
    free(cur_mission->title);
    cur_mission->title = strdup(str);
-
    return 0;
 }
 /**
@@ -299,33 +293,33 @@ static int misn_setTitle( lua_State *L )
  */
 static int misn_setDesc( lua_State *L )
 {
-   const char *str;
-   Mission *cur_mission;
-
-   str = luaL_checkstring(L,1);
-
-   cur_mission = misn_getFromLua(L);
+   const char *str = luaL_checkstring(L,1);
+   Mission *cur_mission = misn_getFromLua(L);
    free(cur_mission->desc);
    cur_mission->desc = strdup(str);
-
    return 0;
 }
 /**
  * @brief Sets the current mission reward description.
  *
- *    @luatparam string reward Description of the reward to use.
+ *    @luatparam string|number reward Description of the reward to use. Can pass a number to signify a monetary reward, and allow for sorting.
  * @luafunc setReward
  */
 static int misn_setReward( lua_State *L )
 {
-   const char *str;
-   Mission *cur_mission;
-
-   str = luaL_checkstring(L,1);
-
-   cur_mission = misn_getFromLua(L);
+   Mission *cur_mission = misn_getFromLua(L);
    free(cur_mission->reward);
-   cur_mission->reward = strdup(str);
+   cur_mission->reward_value = -1.;
+   if (lua_isnumber(L,1)) {
+      char buf[ECON_CRED_STRLEN];
+      cur_mission->reward_value = CLAMP( CREDITS_MIN, CREDITS_MAX, (credits_t)round(luaL_checknumber(L,1)) );
+      credits2str( buf, cur_mission->reward_value, 2 );
+      cur_mission->reward = strdup(buf);
+   }
+   else {
+      const char *str = luaL_checkstring(L,1);
+      cur_mission->reward = strdup(str);
+   }
    return 0;
 }
 
@@ -601,6 +595,7 @@ static int misn_accept( lua_State *L )
    else { /* copy it over */
       *new_misn = *cur_mission;
       memset( cur_mission, 0, sizeof(Mission) );
+      cur_mission->env = LUA_NOREF;
       cur_mission->accepted = 1; /* Propagated to the mission computer. */
       cur_mission = new_misn;
       cur_mission->accepted = 1; /* Mark as accepted. */
@@ -971,7 +966,6 @@ static int misn_npcRm( lua_State *L )
  * @usage if not misn.claim( { system.get("Gamma Polaris"), 'some_string' } ) then misn.finish( false ) end
  *
  *    @luatparam System|String|{System,String...} params Table of systems/strings to claim or a single system/string.
- *    @luatparam[opt=false] boolean onlytest Whether or not to only test the claim, but not apply it.
  *    @luatparam[opt=false] boolean inclusive Whether or not to allow the claim to include other inclusive claims. Multiple missions/events can inclusively claim the same system, but only one system can exclusively claim it.
  *    @luatreturn boolean true if was able to claim, false otherwise.
  * @luafunc claim
@@ -980,16 +974,15 @@ static int misn_claim( lua_State *L )
 {
    Claim_t *claim;
    Mission *cur_mission;
-   int onlytest, inclusive;
+   int inclusive;
 
    /* Get mission. */
    cur_mission = misn_getFromLua(L);
 
-   onlytest = lua_toboolean(L,2);
-   inclusive = lua_toboolean(L,3);
+   inclusive = lua_toboolean(L,2);
 
    /* Check to see if already claimed. */
-   if (!onlytest && !claim_isNull(cur_mission->claims)) {
+   if (!claim_isNull(cur_mission->claims)) {
       NLUA_ERROR(L, _("Mission trying to claim but already has."));
       return 0;
    }
@@ -1014,13 +1007,6 @@ static int misn_claim( lua_State *L )
       claim_addStr( claim, lua_tostring( L, 1 ) );
    else
       NLUA_INVALID_PARAMETER(L);
-
-   /* Only test, but don't apply case. */
-   if (onlytest) {
-      lua_pushboolean( L, !claim_test( claim ) );
-      claim_destroy( claim );
-      return 1;
-   }
 
    /* Test claim. */
    if (claim_test( claim )) {

@@ -13,15 +13,16 @@ local nw, nh
 
 local bgshader = {}
 local bgshader_mt = { __index = bgshader }
-local bgbright
 
 function bgshaders.init( shader, scale, params )
+   params = params or {}
    nw, nh = naev.gfx.dim()
 
    local shd = {
       bgshader = shader,
       bgscale  = scale or 1,
-      params   = params or {},
+      bgbright = 1,
+      params   = params,
    }
    setmetatable( shd, bgshader_mt )
 
@@ -34,12 +35,15 @@ function bgshaders.init( shader, scale, params )
       shd.prevcanvas = lg.newCanvas( shd.cw, shd.ch )
    end
 
-   bgbright =  naev.conf().bg_brightness
+   if not shd.params.nobright then
+      shd.bgbright = naev.conf().bg_brightness
+   end
 
    return shd
 end
 
 function bgshader:render( dt, col )
+   local bgbright = self.bgbright
    dt = dt or 0
    col = col or {1, 1, 1, 1}
    col[1] = col[1] * bgbright

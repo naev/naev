@@ -60,67 +60,72 @@ function create()
 
    --Load Images
    local base = "gfx/gui/slim/"
-   player_pane_t = tex.open( base .. "frame_player_top.png" )
-   player_pane_m = tex.open( base .. "frame_player_middle.webp" )
-   player_pane_b = tex.open( base .. "frame_player_bottom.png" )
-   target_pane = tex.open( base .. "frame_target.png" )
-   planet_pane_t = tex.open( base .. "frame_planet_top.png" )
-   planet_pane_m = tex.open( base .. "frame_planet_middle.webp" )
-   planet_pane_b = tex.open( base .. "frame_planet_bottom.png" )
-   radar_gfx = tex.open( base .. "radar.png" )
-   target_bg = tex.open( base .. "target_image.png" )
-   planet_bg = tex.open( base .. "planet_image.png" )
-   icons.shield = tex.open( base .. "shield.png" )
-   icons.armour = tex.open( base .. "armour.png" )
-   icons.energy = tex.open( base .. "energy.webp" )
-   icons.speed = tex.open( base .. "speed.png" )
-   icons.temperature = tex.open( base .. "heat.png" )
-   icons.shield_sm = tex.open( base .. "shield_sm.png" )
-   icons.armour_sm = tex.open( base .. "armour_sm.png" )
-   icons.energy_sm = tex.open( base .. "energy_sm.png" )
-   icons.speed_sm = tex.open( base .. "speed_sm.png" )
-   bgs.bar = tex.open( base .. "bg_bar.png" )
-   bgs.bar_sm = tex.open( base .. "bg_bar_sm.png" )
-   bgs.bar_weapon = tex.open( base .. "bg_bar_weapon.png" )
-   bgs.bar_weapon_prim = tex.open( base .. "bg_bar_weapon_prim.png" )
-   bgs.bar_weapon_sec = tex.open( base .. "bg_bar_weapon_sec.png" )
-   bgs.shield = tex.open( base .. "bg_shield.png" )
-   bgs.armour = tex.open( base .. "bg_armour.png" )
-   bgs.energy = tex.open( base .. "bg_energy.png" )
-   bgs.speed = tex.open( base .. "bg_speed.png" )
+   local function tex_open( name, sx, sy )
+      local t = tex.open( base .. name, sx, sy )
+      t:setWrap( "clamp" )
+      return t
+   end
+   player_pane_t = tex_open( "frame_player_top.png" )
+   player_pane_m = tex_open( "frame_player_middle.webp" )
+   player_pane_b = tex_open( "frame_player_bottom.png" )
+   target_pane = tex_open( "frame_target.png" )
+   planet_pane_t = tex_open( "frame_planet_top.png" )
+   planet_pane_m = tex_open( "frame_planet_middle.webp" )
+   planet_pane_b = tex_open( "frame_planet_bottom.png" )
+   radar_gfx = tex_open( "radar.png" )
+   target_bg = tex_open( "target_image.png" )
+   planet_bg = tex_open( "planet_image.png" )
+   icons.shield = tex_open( "shield.png" )
+   icons.armour = tex_open( "armour.png" )
+   icons.energy = tex_open( "energy.webp" )
+   icons.speed = tex_open( "speed.png" )
+   icons.temperature = tex_open( "heat.png" )
+   icons.shield_sm = tex_open( "shield_sm.png" )
+   icons.armour_sm = tex_open( "armour_sm.png" )
+   icons.energy_sm = tex_open( "energy_sm.png" )
+   icons.speed_sm = tex_open( "speed_sm.png" )
+   bgs.bar = tex_open( "bg_bar.png" )
+   bgs.bar_sm = tex_open( "bg_bar_sm.png" )
+   bgs.bar_weapon = tex_open( "bg_bar_weapon.png" )
+   bgs.bar_weapon_prim = tex_open( "bg_bar_weapon_prim.png" )
+   bgs.bar_weapon_sec = tex_open( "bg_bar_weapon_sec.png" )
+   bgs.shield = tex_open( "bg_shield.png" )
+   bgs.armour = tex_open( "bg_armour.png" )
+   bgs.energy = tex_open( "bg_energy.png" )
+   bgs.speed = tex_open( "bg_speed.png" )
    bgs.temperature = bgs.speed
-   bgs.ammo = tex.open( base .. "bg_ammo.png" )
-   bgs.heat = tex.open( base .. "bg_heat.png" )
-   bgs.ready = tex.open( base .. "bg_ready.png" )
-   bgs.shield_sm = tex.open( base .. "bg_shield_sm.png" )
-   bgs.armour_sm = tex.open( base .. "bg_armour_sm.png" )
-   bgs.energy_sm = tex.open( base .. "bg_energy_sm.png" )
-   bgs.speed_sm = tex.open( base .. "bg_speed_sm.png" )
-   sheen = tex.open( base .. "sheen.png" )
-   sheen_sm = tex.open( base .. "sheen_sm.png" )
-   sheen_weapon = tex.open( base .. "sheen_weapon.png" )
-   sheen_tiny = tex.open( base .. "sheen_tiny.png" )
-   bottom_bar = tex.open( base .. "bottombar.png" )
-   target_dir = tex.open( base .. "dir.png", 6, 6 )
-   warnlight1 = tex.open( base .. "warnlight1.png" )
-   warnlight2 = tex.open( base .. "warnlight2.png" )
-   warnlight3 = tex.open( base .. "warnlight3.png" )
-   warnlight4 = tex.open( base .. "warnlight4.png" )
-   warnlight5 = tex.open( base .. "warnlight5.png" )
-   tracking_light = tex.open( base .. "track.png" )
-   target_light_off = tex.open( base .. "targeted_off.png" )
-   target_light_on =  tex.open( base .. "targeted_on.png" )
-   cargo_light_off = tex.open( base .. "cargo_off.png" )
-   cargo_light_on =  tex.open( base .. "cargo_on.png" )
-   question = tex.open( base .. "question.png" )
-   gui.targetSpobGFX( tex.open( base .. "radar_planet.png", 2, 2 ) )
-   gui.targetPilotGFX(  tex.open( base .. "radar_ship.png", 2, 2 ) )
+   bgs.ammo = tex_open( "bg_ammo.png" )
+   bgs.heat = tex_open( "bg_heat.png" )
+   bgs.ready = tex_open( "bg_ready.png" )
+   bgs.shield_sm = tex_open( "bg_shield_sm.png" )
+   bgs.armour_sm = tex_open( "bg_armour_sm.png" )
+   bgs.energy_sm = tex_open( "bg_energy_sm.png" )
+   bgs.speed_sm = tex_open( "bg_speed_sm.png" )
+   sheen = tex_open( "sheen.png" )
+   sheen_sm = tex_open( "sheen_sm.png" )
+   sheen_weapon = tex_open( "sheen_weapon.png" )
+   sheen_tiny = tex_open( "sheen_tiny.png" )
+   bottom_bar = tex_open( "bottombar.png" )
+   target_dir = tex_open( "dir.png", 6, 6 )
+   warnlight1 = tex_open( "warnlight1.png" )
+   warnlight2 = tex_open( "warnlight2.png" )
+   warnlight3 = tex_open( "warnlight3.png" )
+   warnlight4 = tex_open( "warnlight4.png" )
+   warnlight5 = tex_open( "warnlight5.png" )
+   tracking_light = tex_open( "track.png" )
+   target_light_off = tex_open( "targeted_off.png" )
+   target_light_on =  tex_open( "targeted_on.png" )
+   cargo_light_off = tex_open( "cargo_off.png" )
+   cargo_light_on =  tex_open( "cargo_on.png" )
+   question = tex_open( "question.png" )
+   gui.targetSpobGFX( tex_open( "radar_planet.png", 2, 2 ) )
+   gui.targetPilotGFX(  tex_open( "radar_ship.png", 2, 2 ) )
 
    -- Active outfit list.
-   slot = tex.open( base .. "slot.png" )
-   slotend = tex.open( base .. "slotend.png" )
-   cooldown = tex.open( base .. "cooldown.png", 6, 6 )
-   active =  tex.open( base .. "active.png" )
+   slot = tex_open( "slot.png" )
+   slotend = tex_open( "slotend.png" )
+   cooldown = tex_open( "cooldown.png", 6, 6 )
+   active =  tex_open( "active.png" )
 
    -- Active outfit bar
    slot_w, slot_h = slot:dim()
@@ -131,10 +136,10 @@ function create()
    slotend_w, slotend_h = slotend:dim()
 
    -- Cooldown pane.
-   cooldown_sheen = tex.open( base .. "cooldown-sheen.png" )
-   cooldown_bg = tex.open( base .. "cooldown-bg.png" )
-   cooldown_frame = tex.open( base .. "cooldown-frame.png" )
-   cooldown_panel = tex.open( base .. "cooldown-panel.png" )
+   cooldown_sheen = tex_open( "cooldown-sheen.png" )
+   cooldown_bg = tex_open( "cooldown-bg.png" )
+   cooldown_frame = tex_open( "cooldown-frame.png" )
+   cooldown_panel = tex_open( "cooldown-panel.png" )
    cooldown_frame_w, cooldown_frame_h = cooldown_frame:dim()
    cooldown_frame_x = (screen_w - cooldown_frame_w)/2.
    cooldown_frame_y = math.min( slot_y - cooldown_frame_h - 10, (screen_h - cooldown_frame_h)/2. + 150 )
@@ -426,9 +431,20 @@ function update_system()
    sysname = system.cur():name()
 end
 
-local effects
+local effects = {}
 function update_effects()
-   effects = pp:effectGet()
+   effects = {}
+   local effects_added = {}
+   for k,e in ipairs(pp:effectGet()) do
+      local a = effects_added[ e.name ]
+      if not a then
+         a = #effects+1
+         effects[ a ] = e
+         e.n = 0
+         effects_added[ e.name ] = a
+      end
+      effects[ a ].n = effects[ a ].n + 1
+   end
 end
 
 local function update_wset()
@@ -652,6 +668,9 @@ function render( dt, dt_mod )
    local ex, ey = radar_x-48, screen_h-32-32
    for k,e in ipairs(effects) do
       gfx.renderTexRaw( e.icon, ex, ey, 32, 32 )
+      if e.n > 1 then
+         gfx.print( true, tostring(e.n), ex+24, ey+24, cols.txt_bar )
+      end
       ex = ex - 48
    end
 
@@ -1182,5 +1201,5 @@ function mouse_move( x, y )
    end
 end
 
-function end_cooldown ()
+function cooldown_end ()
 end

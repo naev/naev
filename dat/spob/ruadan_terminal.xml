@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Ruadan Terminal">
+ <pos x="-8313.446778" y="-6385.162765"/>
+ <GFX>
+  <space>002.webp</space>
+  <exterior>station00.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <base>6.666670</base>
+  <bonus>3.333330</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>100</population>
+  <hide>2.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>This simple station serves as a refuel depot for those ships that do not have security clearance to land on Ruadan Prime or Ruadan Bastion. There is precious little else of interest here.</description>
+ </general>
+ <tags>
+  <tag>station</tag>
+  <tag>refuel</tag>
+ </tags>
+</spob>

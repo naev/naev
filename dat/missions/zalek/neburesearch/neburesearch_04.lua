@@ -28,12 +28,22 @@ local vn = require 'vn'
 
 local mensing_portrait = nebu_research.mensing.portrait
 
--- luacheck: globals cannotLand jumpin land secondWarningMessage startAmbush takeoff warningMessage (Hook functions passed by name)
-
 -- Mission constants
 local homeworld, homeworld_sys = spob.getS("Jorla")
 local dest_planet, dest_sys = spob.getS("Jurai")
 local credits = nebu_research.rewards.credits04
+
+--[[
+Stages
+0: mission start
+1: first land on Jurai done
+2: jumped in and hostile drones spawned
+3: landed on Jurai and head towards Ruadan
+4: can't land message
+5: landed and on Ruadan Terminal the way to Excelcior
+6: (second ambush, can be skipped )
+7: landed on Excelcior, on way back
+--]]
 
 function create()
     misn.setNPC(_("Dr. Mensing"), mensing_portrait, _("She probably has a new poorly-paid job for you. Maybe she won't notice you if you leave now."))
@@ -66,13 +76,13 @@ function accept()
     end
 
     mem.stage = 0
-    mem.dest_planet = dest_planet
+    mem.dest_planet, mem.dest_sys = dest_planet, dest_sys
 
     -- Set up mission information
     misn.setTitle(_("Shielding Prototype Funding"))
-    misn.setReward(fmt.credits(credits))
+    misn.setReward(credits)
     misn.setDesc(_("Help Dr. Mensing to get funding to construct a shielding prototype."))
-    mem.misn_marker = misn.markerAdd(dest_sys, "low")
+    mem.misn_marker = misn.markerAdd(mem.dest_sys, "low")
 
     misn.accept()
     misn.osdCreate(_("Shielding Prototype Funding"), {
@@ -88,7 +98,7 @@ end
 local function dest_updated()
    misn.markerMove(mem.misn_marker, mem.dest_planet)
    misn.osdCreate(_("Shielding Prototype Funding"), {
-      fmt.f(_("Land on {pnt} in the {sys} system"), {pnt=mem.dest_planet, sys=dest_sys}),
+      fmt.f(_("Land on {pnt} in the {sys} system"), {pnt=mem.dest_planet, sys=mem.dest_sys}),
       fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=homeworld, sys=homeworld_sys}),
     })
 end
@@ -102,32 +112,31 @@ function land()
         vn.transition("fade")
         if mem.stage == 0 then
             mem.stage = 1
-            mem.dest_planet, dest_sys = spob.getS("Neo Pomerania")
+            mem.dest_planet, mem.dest_sys = spob.getS("Neo Pomerania")
             vn.na(fmt.f(_([[After landing on {cur_pnt}, Dr. Mensing tells you to wait until she returns. "Not more than a couple of periods." she said; in fact you had to wait for only two periods until she returned. She comes back looking defeated.]]), {cur_pnt=mem.landed}))
-            mensing(fmt.f(_([["This is the first time that one of my applications was rejected. That's weird. I got positive feedback at first. It makes no sense that my application was rejected at the last minute. I guess things like this happen. Let's just go to {pnt} in the {sys} system next and try again."]]), {pnt=mem.dest_planet, sys=dest_sys}))
+            mensing(fmt.f(_([["This is the first time that one of my applications was rejected. That's weird. I got positive feedback at first. It makes no sense that my application was rejected at the last minute. I guess things like this happen. Let's just go to {pnt} in the {sys} system next and try again."]]), {pnt=mem.dest_planet, sys=mem.dest_sys}))
             vn.done()
             vn.run()
             dest_updated()
         elseif mem.stage == 2 then
             mem.stage = 3
-            mem.dest_planet, dest_sys = spob.getS("Ruadan Prime")
+            mem.dest_planet, mem.dest_sys = spob.getS("Ruadan Prime")
             mensing(fmt.f(_([["Alright, I'm sure it will work out this time!", Dr. Mensing said on arriving on {cur_pnt}.]]), {cur_pnt=mem.landed}))
             vn.na(_([[This time you have to wait even longer for her to return. The result is the same as her first try.]]))
-            mensing(fmt.f(_([["I don't get it. My presentation is flawless and my proposal is exciting. Why wouldn't they grant me additional funds? I tell you, something is wrong here! Hmm... Time to change tactics. I have to speak with Professor Voges himself but he is currently on {pnt} in the {sys} system and just ignores us. I guess we have to go there to speak with him face-to-face."]]), {pnt=mem.dest_planet, sys=dest_sys}))
+            mensing(fmt.f(_([["I don't get it. My presentation is flawless and my proposal is exciting. Why wouldn't they grant me additional funds? I tell you, something is wrong here! Hmm... Time to change tactics. I have to speak with Professor Voges himself but he is currently on {pnt} in the {sys} system and just ignores us. I guess we have to go there to speak with him face-to-face."]]), {pnt=mem.dest_planet, sys=mem.dest_sys}))
             vn.done()
             vn.run()
             dest_updated()
         elseif mem.stage == 4 then
             mem.stage = 5
-            mem.dest_planet, dest_sys = spob.getS("Excelcior")
-            mensing(fmt.f(_([["Good news! I asked around and found a way to contact Professor Voges. He promised to show up to one of his colleague's parties. Something about his wife, like they have gotten married, or she died, or something. Anyway, I managed to get invited there as well. So let's go to {pnt} in the {sys} system!"]]), {pnt=mem.dest_planet, sys=dest_sys}))
+            mem.dest_planet, mem.dest_sys = spob.getS("Excelcior")
+            mensing(fmt.f(_([["Good news! I asked around and found a way to contact Professor Voges. He promised to show up to one of his colleague's parties. Something about his wife, like they have gotten married, or she died, or something. Anyway, I managed to get invited there as well. So let's go to {pnt} in the {sys} system!"]]), {pnt=mem.dest_planet, sys=mem.dest_sys}))
             vn.done()
             vn.run()
             dest_updated()
         elseif mem.stage == 5 or mem.stage == 6 then
             mem.stage = 7
-            mem.dest_planet = homeworld
-            dest_sys = homeworld_sys
+            mem.dest_planet, mem.dest_sys = homeworld, homeworld_sys
             vn.na(_([[The two of you arrive at the location of the party.]]))
             mensing(_([["Listen, this is probably your first party, so let me briefly explain to you how it works. Your goal, usually, is to talk with all people, draw some attention, let them know you attended the party. Efficiency is most important here. The earlier you're done with demonstrating your presence and making a good impression; the earlier you can leave and do something useful."]]))
             mensing(_([["You'll need an escape strategy to leave unnoticed though; It's gauche if someone sees you leaving early. As you're a beginner, I'll give you a tip: sneak out the window of the bathroom on the ground floor. No one will be able to see you from inside the house if you climb over the fence."]]))
@@ -142,7 +151,7 @@ function land()
             vn.na(_([[For a moment you wonder what she is doing as she drags you towards the bathroom; finally you remember what she said about her 'escape strategy'. She mentioned that you are supposed to leave the building through the window of the bathroom.]]))
             vn.done()
             vn.run()
-            misn.markerMove(mem.misn_marker, dest_sys)
+            misn.markerMove(mem.misn_marker, mem.dest_sys)
             misn.osdActive(2)
         elseif mem.stage == 7 then
             mensing(_([["That took long enough! I'm glad Professor Voges promised to take care of the funding. The problem was that my recent research is related to a secret project and my funding was shut down - like some kind of conspiracy; can you believe it! Actually I'm not supposed to tell you anything as you could possibly get into a lot of trouble.. forget I said anything! I have much work to do!"]]))
@@ -158,7 +167,7 @@ function land()
 end
 
 function jumpin()
-   if mem.stage == 1 and system.cur() == dest_sys then
+   if mem.stage == 1 and system.cur() == mem.dest_sys then
       local scom = {}
       mem.stage = 2
       scom[1] = pilot.add("Za'lek Light Drone", "Mercenary", mem.dest_planet, nil, {ai="baddiepos"})
@@ -169,7 +178,7 @@ function jumpin()
          p:memory().guardpos = player.pos() -- Just go towards the player position and attack if they are around
       end
       hook.timer(10.0, "warningMessage")
-   elseif mem.stage == 3 and system.cur() == dest_sys then
+   elseif mem.stage == 3 and system.cur() == mem.dest_sys then
       hook.timer(60.0, "cannotLand")
    end
 end
@@ -212,7 +221,7 @@ end
 function cannotLand()
     local cur_planet = mem.dest_planet
     mem.stage = 4
-    mem.dest_planet, dest_sys = spob.getS("Ruadan Station")
+    mem.dest_planet, mem.dest_sys = spob.getS("Ruadan Terminal")
     vn.clear()
     vn.scene()
     local mensing = vn.newCharacter( nebu_research.vn_mensing() )

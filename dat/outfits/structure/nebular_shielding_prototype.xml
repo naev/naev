@@ -7,7 +7,7 @@
   <rarity>3</rarity>
   <mass>30</mass>
   <price>1200000</price>
-  <gfx_store>capacitor.webp</gfx_store>
+  <gfx_store>nebula_shielding_prototype.webp</gfx_store>
   <description>A modification to the ship's shields that allows them to resist nebular volatility.</description>
   <desc_extra>Able to compensate up to 30 MW of nebula volatility. Uses 1 MW of energy per MW of damage prevented.</desc_extra>
  </general>

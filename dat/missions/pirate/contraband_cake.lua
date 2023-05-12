@@ -31,7 +31,6 @@ local giverimage = portrait.getFullPath(giverportrait)
 local receivername = _("Burly Individual")
 local receiverimage = portrait.getFullPath(portrait.get())
 
--- luacheck: globals land (Hook functions passed by name)
 
 function create()
    -- Note: this mission does not make any system claims.
@@ -128,7 +127,7 @@ They go to the restroom and come back holding a nondescript brown box that seems
    misn.osdCreate( _("Deliver Cake"), { fmt.f(_("Fly to {pnt} in the {sys} system without getting scanned"), {pnt=mem.destplanet, sys=mem.destsys}) } )
 
    misn.setTitle(_("Deliver Cake"))
-   misn.setReward( fmt.credits(mem.reward) )
+   misn.setReward(mem.reward)
    misn.setDesc( fmt.f(_("Deliver a cake to {pnt} in the {sys} system. Apparently it has a special frosting and will be damaged if you are scanned. Use stealth to avoid getting scanned."), {pnt=mem.destplanet, sys=mem.destsys} ) )
    misn.markerAdd(mem.destplanet)
 
@@ -144,6 +143,7 @@ function land()
    vn.clear()
    vn.scene()
    local b = vn.newCharacter( receivername, { image=receiverimage } )
+   vn.transition()
    vn.na(_("After you land you are promptly greeted by a burly looking individual."))
    b(_([["So you've been sent by Sam? That weasel, I knew they weren't cut out for this work."]]))
    vn.na(_([[You guess that this is the person you were supposed to deliver the cake to and hand it over.]]))

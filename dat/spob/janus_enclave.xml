@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Janus Enclave">
+ <lua>spob/lua/empire_mil_restricted.lua</lua>
+ <pos x="-2258.544687" y="5008.117353"/>
+ <GFX>
+  <space>station-shipyard2.webp</space>
+  <exterior>station04.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>12000</population>
+  <hide>2.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Janus Enclave is a quiet garrison post for the empire. It serves as a potential rallying point for imperial forces trying to defend the core, but at the moment, it is considered an acceptable post for older crewmen wanting a relaxing post before they retire to Amphion not far away.</description>
+  <bar>The bar has a few games on, and the drinks are cold. There is food, but it is mostly pre-packaged stuff. Not bad, but not amazing either.</bar>
+ </general>
+ <tech>
+  <item>Engines Low</item>
+  <item>Engines Medium</item>
+  <item>Laser 1</item>
+  <item>Kinetic 1</item>
+  <item>Basic Civilian Ships</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>Empire Ships Small</item>
+  <item>Empire Ships Medium</item>
+ </tech>
+ <tags>
+  <tag>restricted</tag>
+  <tag>military</tag>
+  <tag>station</tag>
+ </tags>
+</spob>

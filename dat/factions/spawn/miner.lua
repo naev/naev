@@ -10,13 +10,13 @@ local function spawn_lone_miner ()
    local pilots = {}
    local r = rnd.rnd()
    if r < 0.4 then
-      scom.addPilot( pilots, sllama, {name=_("Miner Llama"), ai="miner"}  )
+      scom.addPilot( pilots, sllama, {name=_("Miner Llama"), ai="miner"} )
    elseif r < 0.7 then
       scom.addPilot( pilots, skoala, {name=_("Miner Koala"), ai="miner"} )
    elseif r < 0.9 then
       scom.addPilot( pilots, smule,  {name=_("Miner Mule"), ai="miner"} )
    else
-      scom.addPilot( pilots, srhino,  {name=_("Miner Rhino"), ai="miner"} )
+      scom.addPilot( pilots, srhino, {name=_("Miner Rhino"), ai="miner"} )
    end
 
    return pilots

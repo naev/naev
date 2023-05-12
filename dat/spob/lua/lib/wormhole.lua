@@ -26,16 +26,23 @@ local function update_canvas ()
    lg.setCanvas( oldcanvas )
 end
 
-function wormhole.init( spb, target )
+function wormhole.init( spb, target, params )
+   params = params or {}
    mem.spob = spb
    mem.target = target
+   mem.params = params
 end
 
 function wormhole.load ()
    local _spob, sys = spob.getS( mem.target )
    if mem.shader==nil then
       -- Load shader
-      mem.shader = lg.newShader( pixelcode, love_shaders.vertexcode )
+      local col_inner = mem.params.col_inner or {0.2, 0.8, 1.0}
+      local col_outter = mem.params.col_outter or {0.0, 0.8, 1.0}
+      local pcode = string.format( pixelcode,
+         col_inner[1], col_inner[2], col_inner[3],
+         col_outter[1], col_outter[2], col_outter[3] )
+      mem.shader = lg.newShader( pcode, love_shaders.vertexcode )
       mem.shader._dt = -1000 * rnd.rnd()
       mem.shader.update = function( self, dt )
          self._dt = self._dt + dt
@@ -47,6 +54,8 @@ function wormhole.load ()
 
       -- Set up background texture
       local _nw, _nh, ns = gfx.dim()
+      -- TODO have this actually render the real background, not just starfield
+      -- so it works properly with Nebulas and other fancy backgrounds
       starfield.init{ seed=sys:nameRaw(), static=true, nolocalstars=true, size=s*ns }
       mem.shader:send( "u_bgtex", starfield.canvas() )
 
@@ -81,7 +90,7 @@ function wormhole.render ()
 end
 
 function wormhole.can_land ()
-   return true, "The wormhole seems to be active."
+   return true, _("The wormhole seems to be active.")
 end
 
 function wormhole.land( _s, p )

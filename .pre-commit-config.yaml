@@ -15,16 +15,17 @@ repos:
     - id: check-shebang-scripts-are-executable
     - id: mixed-line-ending
     - id: pretty-format-json
-- repo: https://github.com/lunarmodules/luacheck
-  rev: v0.26.0
-  hooks:
-    - id: luacheck
 - repo: https://github.com/shellcheck-py/shellcheck-py
   rev: v0.8.0.3
   hooks:
     - id: shellcheck
 - repo: local
   hooks:
+    - id: nluacheck
+      name: Wrapper for luacheck that understands Naev hooks
+      entry: utils/nluacheck.py
+      files: dat/.*\.lua
+      language: python
     - id: check_fmt_f_usage
       name: Lua f-string validation
       entry: utils/check_fmt_f_usage.py

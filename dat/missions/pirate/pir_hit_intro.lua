@@ -31,7 +31,6 @@ local vn = require "vn"
 local portrait = require "portrait"
 
 local spawn_target -- Forward-declared functions
--- luacheck: globals land jumpin jumpout pilot_attacked pilot_death pilot_jump takeoff (Hook functions passed by name)
 
 local hunters = {}
 local hunter_hits = {}
@@ -123,7 +122,7 @@ They grin.]]),
 
    misn.setDesc( fmt.f( _("A pilot known as {plt}, recently seen in the {sys} system, has to be eliminated as compensation for some unknown clients."), {plt=mem.name, sys=mem.missys } ) )
 
-   misn.setReward( fmt.credits( reward ) )
+   misn.setReward( reward )
    mem.marker = misn.markerAdd( mem.missys )
 
    misn.osdCreate( _("Dark Compensation"), {

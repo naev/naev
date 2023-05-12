@@ -15,10 +15,10 @@ local fmt = require "format"
 local tut = require "common.tutorial"
 local vn = require "vn"
 local vntk = require "vntk"
+local luatk = require "luatk"
 
 local captainTP -- Non-persistent state
 local msg_info, spawn_captain_tp -- Forward-declared functions
--- luacheck: globals enter enter_timer land land_bar land_commodity land_equipment land_mission land_outfits land_shipyard pilot_death pilot_death_timer takeoff taunt timer (Hook functions passed by name)
 
 local missys = system.get( "Delta Polaris" )
 local destsys = system.get( "Jade" )
@@ -50,22 +50,23 @@ They stare at you for a few seconds.
    sai(_([["Anyway, from now on, I will be your Ship AI, but don't worry if you get a new ship, I will be transferred over without an issue. If you have any questions or comments about how your ship works or how to do things, I believe I can be of help. As your new Ship AI, would you like to give me a name?"]]))
    vn.label("rename")
    local ainame
-   vn.func( function ()
-      -- TODO integrate into vn
-      ainame = tk.input( _("Name Ship AI"), 1, 16, _("Please enter a name for your Ship AI") )
-      if ainame then
-         var.push("shipai_name",ainame)
-         sai.displayname = ainame -- Can't use rename here
+   luatk.vn( function ()
+      luatk.msgInput( _("Name Ship AI"), _("Please enter a name for your Ship AI"), 50, function( str )
+         ainame = str
+         if ainame then
+            var.push("shipai_name",ainame)
+            sai.displayname = ainame -- Can't use rename here
 
-         if tut.specialnames[ string.upper(ainame) ] then
-            vn.jump("specialname")
+            if tut.specialnames[ string.upper(ainame) ] then
+               vn.jump("specialname")
+               return
+            end
+
+            vn.jump("gavename")
             return
          end
-
-         vn.jump("gavename")
-         return
-      end
-      vn.jump("noname")
+         vn.jump("noname")
+      end )
    end )
    vn.label("specialname")
    sai( function () return tut.specialnames[ string.upper(ainame) ] end )
@@ -361,12 +362,13 @@ function pilot_death_timer ()
 end
 
 function spawn_captain_tp ()
-   local p = pilot.add( "Hyena", "Dummy", dest_planet, _("Captain T. Practice"), {ai="baddie_norun"} )
+   local p = pilot.add( "Hyena", "Dummy", dest_planet, _("Captain T. Practice"), {ai="baddie_norun", naked=true} )
    p:outfitRm( "all" )
    p:outfitRm( "cores" )
    p:outfitAdd( "Previous Generation Small Systems" )
    p:outfitAdd( "Patchwork Light Plating" )
    p:outfitAdd( "Beat Up Small Engine" )
+   require("ai.core.setup").setup( p )
 
    p:setHealth( 100, 100 )
    p:setEnergy( 100 )

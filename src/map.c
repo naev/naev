@@ -114,6 +114,7 @@ extern Spob* land_spob;
  * prototypes
  */
 /* Update. */
+static void map_update_autonav( unsigned int wid );
 static void map_update_status( unsigned int wid, const char *buf );
 static void map_update( unsigned int wid );
 /* Render. */
@@ -383,7 +384,7 @@ void map_open (void)
             "btnAutonav", _("Autonav"), player_autonavStartWindow, SDLK_a );
    /* MInimal button */
    window_addButtonKey( wid, -20 - 4*(BUTTON_WIDTH+20), y, BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnMinimal", NULL, map_buttonMinimal, SDLK_i );
+            "btnMinimal", NULL, map_buttonMinimal, SDLK_v );
    map_setMinimal( wid, map_minimal_mode );
    /* System info button */
    window_addButtonKey( wid, -20 - 5*(BUTTON_WIDTH+20), y, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -476,6 +477,33 @@ static void map_update_commod_av_price (void)
       commod_av_gal_price = 0;
 }
 
+static void map_update_autonav( unsigned int wid )
+{
+   char buf[STRMAX];
+   StarSystem *sys;
+   int autonav, th;
+   int jumps = floor(player.p->fuel / player.p->fuel_consumption);
+   int p = 0;
+   int rw = RCOL_HEADER_W;
+   p += scnprintf(&buf[p], sizeof(buf)-p, "#n%s#0", _("Fuel: ") );
+   p += scnprintf(&buf[p], sizeof(buf)-p, n_("%d jump", "%d jumps", jumps), jumps );
+   sys = map_getDestination( &autonav );
+   p += scnprintf(&buf[p], sizeof(buf)-p, "\n#n%s#0", _("Autonav: ") );
+   if (sys==NULL)
+      p += scnprintf(&buf[p], sizeof(buf)-p, _("Off") );
+   else {
+      if (autonav > jumps)
+         p += scnprintf(&buf[p], sizeof(buf)-p, "#r" );
+      p += scnprintf(&buf[p], sizeof(buf)-p, n_("%d jump", "%d jumps", autonav), autonav );
+      if (autonav > jumps)
+         p += scnprintf(&buf[p], sizeof(buf)-p, "#0" );
+   }
+   th = gl_printHeightRaw( &gl_smallFont, rw, buf );
+   window_resizeWidget( wid, "txtPlayerStatus", rw, th );
+   window_moveWidget( wid, "txtPlayerStatus", RCOL_X, 40+BUTTON_HEIGHT*2 );
+   window_modifyText( wid, "txtPlayerStatus", buf );
+}
+
 static void map_update_status( unsigned int wid, const char *buf )
 {
    int w, h;
@@ -501,12 +529,11 @@ static void map_update( unsigned int wid )
    unsigned int services, services_u, services_h, services_f, services_r;
    int hasSpobs;
    char t;
-   const char *sym, *adj;
+   const char *adj;
    char buf[STRMAX];
    int p;
    const glTexture *logo;
    double w, dmg, itf;
-   int jumps, autonav, rw, th;
 
    /* Needs map to update. */
    if (!map_isOpen())
@@ -591,6 +618,9 @@ static void map_update( unsigned int wid )
       window_moveWidget( wid, "txtServices", x, y -gl_smallFont.h - 5 );
       window_modifyText( wid, "txtServices", _("Unknown") );
 
+      /* Update autonav stuff. */
+      map_update_autonav( wid );
+
       /*
        * Bottom Text
        */
@@ -606,15 +636,15 @@ static void map_update( unsigned int wid )
    for (int i=0; i<array_size(sys->spobs); i++) {
       if (!spob_isKnown(sys->spobs[i]))
          continue;
-      if ((sys->spobs[i]->presence.faction > 0)
+      if ((sys->spobs[i]->presence.faction >= 0)
             && (!faction_isKnown(sys->spobs[i]->presence.faction)) )
          continue;
 
-      if ((f == -1) && (sys->spobs[i]->presence.faction > 0)) {
+      if ((f == -1) && (sys->spobs[i]->presence.faction >= 0)) {
          f = sys->spobs[i]->presence.faction;
       }
       else if (f != sys->spobs[i]->presence.faction /** @todo more verbosity */
-               && (sys->spobs[i]->presence.faction > 0)) {
+               && (sys->spobs[i]->presence.faction >= 0)) {
          snprintf( buf, sizeof(buf), _("Multiple") );
          multiple = 1;
          break;
@@ -672,20 +702,25 @@ static void map_update( unsigned int wid )
    p = 0;
    buf[0] = '\0';
    for (int i=0; i<array_size(sys->spobs); i++) {
-      if (!spob_isKnown(sys->spobs[i]))
+      const char *prefix, *suffix;
+      Spob *s = sys->spobs[i];
+
+      if (!spob_isKnown(s))
          continue;
 
       /* Colourize output. */
-      spob_updateLand(sys->spobs[i]);
-      t = spob_getColourChar(sys->spobs[i]);
-      sym = spob_getSymbol(sys->spobs[i]);
+      spob_updateLand( s );
+      t = spob_getColourChar( s );
+      prefix = spob_getSymbol( s );
+      //suffix = (spob_isFlag( s, SPOB_MARKED ) ? _(" #o(M)") : "");
+      suffix = "";
 
       if (!hasSpobs)
-         p += scnprintf( &buf[p], sizeof(buf)-p, "#%c%s%s#n",
-               t, sym, spob_name(sys->spobs[i]) );
+         p += scnprintf( &buf[p], sizeof(buf)-p, "#%c%s%s%s#n",
+               t, prefix, spob_name( s ), suffix );
       else
-         p += scnprintf( &buf[p], sizeof(buf)-p, ",\n#%c%s%s#n",
-               t, sym, spob_name(sys->spobs[i]) );
+         p += scnprintf( &buf[p], sizeof(buf)-p, ",\n#%c%s%s%s#n",
+               t, prefix, spob_name( s ), suffix );
       hasSpobs = 1;
    }
    if (hasSpobs == 0) {
@@ -858,26 +893,7 @@ static void map_update( unsigned int wid )
    }
 
    /* Player info. */
-   jumps = floor(player.p->fuel / player.p->fuel_consumption);
-   p = 0;
-   rw = RCOL_HEADER_W;
-   p += scnprintf(&buf[p], sizeof(buf)-p, "#n%s#0", _("Fuel: ") );
-   p += scnprintf(&buf[p], sizeof(buf)-p, n_("%d jump", "%d jumps", jumps), jumps );
-   sys = map_getDestination( &autonav );
-   p += scnprintf(&buf[p], sizeof(buf)-p, "\n#n%s#0", _("Autonav: ") );
-   if (sys==NULL)
-      p += scnprintf(&buf[p], sizeof(buf)-p, _("Off") );
-   else {
-      if (autonav > jumps)
-         p += scnprintf(&buf[p], sizeof(buf)-p, "#r" );
-      p += scnprintf(&buf[p], sizeof(buf)-p, n_("%d jump", "%d jumps", autonav), autonav );
-      if (autonav > jumps)
-         p += scnprintf(&buf[p], sizeof(buf)-p, "#0" );
-   }
-   th = gl_printHeightRaw( &gl_smallFont, rw, buf );
-   window_resizeWidget( wid, "txtPlayerStatus", rw, th );
-   window_moveWidget( wid, "txtPlayerStatus", RCOL_X, 40+BUTTON_HEIGHT*2 );
-   window_modifyText( wid, "txtPlayerStatus", buf );
+   map_update_autonav( wid );
 }
 
 /**
@@ -1881,7 +1897,7 @@ static int factionPresenceCompare( const void *a, const void *b )
  *    @param wid Window to which the text widget belongs.
  *    @param name Name of the text widget.
  *    @param sys System whose faction presence we're reporting.
- *    @param omniscient Whether to dispaly complete information (editor view).
+ *    @param omniscient Whether to display complete information (editor view).
  *                      (As currently interpreted, this also means un-translated, even if the user isn't using English.)
  */
 void map_updateFactionPresence( const unsigned int wid, const char *name, const StarSystem *sys, int omniscient )
@@ -2118,8 +2134,8 @@ static void map_genModeList(void)
    odd_template = _("%s: Trade");
    for (int i=0; i<totGot; i++) {
       const char *commod_text = _(commod_known[i]->name);
-      asprintf( &array_grow( &map_modes ), even_template, commod_text );
-      asprintf( &array_grow( &map_modes ), odd_template, commod_text );
+      SDL_asprintf( &array_grow( &map_modes ), even_template, commod_text );
+      SDL_asprintf( &array_grow( &map_modes ), odd_template, commod_text );
    }
 }
 
@@ -2194,8 +2210,9 @@ static void map_buttonMarkSystem( unsigned int wid, const char* str )
       if (sys_isFlag(sys, SYSTEM_PMARKED))
          sys_rmFlag(sys, SYSTEM_PMARKED);
       else {
-         sys->note = dialogue_input(_("Add System Note"), 0, 60, _("Write a note about the #o%s#0 system:"), sys->name );
-         sys_setFlag(sys, SYSTEM_PMARKED);
+         sys->note = dialogue_input(_("Add System Note"), 0, 60, _("Write a note about the #o%s#0 system:"), sys_isKnown(sys) ? _(sys->name) : _("Unknown") );
+         if (sys->note != NULL)
+            sys_setFlag(sys, SYSTEM_PMARKED);
       }
    }
 }
@@ -2354,7 +2371,7 @@ else (x) = MAX( y, (x) - dt )
          AMIN( cst->alpha_path );
          AMAX( cst->alpha_names );
          AMIN( cst->alpha_commod );
-         AMIN( cst->alpha_markers );
+         AMAX( cst->alpha_markers );
          break;
 
       case MAPMODE_TRADE:
@@ -2364,7 +2381,7 @@ else (x) = MAX( y, (x) - dt )
          AMIN( cst->alpha_path );
          AMIN( cst->alpha_names );
          AMAX( cst->alpha_commod );
-         AMIN( cst->alpha_markers );
+         ATAR( cst->alpha_markers, 0.5 );
          break;
    }
 #undef AMAX
@@ -2921,7 +2938,7 @@ int map_isUseless( const Outfit* map )
 
    for (int i=0; i<array_size(map->u.map->spobs);i++) {
       Spob *p = map->u.map->spobs[i];
-      if (!spob_hasSystem( p->name ) )
+      if (!spob_hasSystem( p ) )
          continue;
       if (!spob_isKnown(p))
          return 0;
@@ -2958,7 +2975,7 @@ int localmap_map( const Outfit *lmap )
    detect = lmap->u.lmap.spob_detect;
    for (int i=0; i<array_size(cur_system->spobs); i++) {
       Spob *p = cur_system->spobs[i];
-      if (!spob_hasSystem( p->name ) )
+      if (!spob_hasSystem( p ) )
          continue;
       if (mod*p->hide <= detect)
          spob_setKnown( p );

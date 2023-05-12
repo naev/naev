@@ -2,14 +2,14 @@
 <ssys name="Poller">
  <general>
   <radius>18000.000000</radius>
-  <stars>400</stars>
-  <interference>15.789500</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>20.000000</interference>
  </general>
- <pos x="-707.110498" y="-1113.835725"/>
+ <pos x="-494.532696" y="-909.790192"/>
  <spobs>
   <spob>Poller D-2</spob>
   <spob>Poller I-1</spob>
+  <spob>Poller Mass</spob>
   <spob_virtual>Miner Local</spob_virtual>
  </spobs>
  <jumps>

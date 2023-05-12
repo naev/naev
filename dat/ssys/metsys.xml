@@ -2,11 +2,12 @@
 <ssys name="Metsys">
  <general>
   <radius>13000.000000</radius>
-  <stars>400</stars>
-  <interference>27.272700</interference>
+  <spacedust>400</spacedust>
+  <interference>61.363600</interference>
   <nebula volatility="1.000000" hue="280.000000">400.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="605.000000" y="352.000000"/>
+ <pos x="612.428192" y="127.103847"/>
  <spobs>
   <spob>FD-24</spob>
   <spob_virtual>Thurion Local</spob_virtual>
@@ -29,4 +30,7 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

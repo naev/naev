@@ -2,11 +2,10 @@
 <ssys name="Draygar">
  <general>
   <radius>28000.000000</radius>
-  <stars>500</stars>
+  <spacedust>500</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="147.694444" y="-139.777778"/>
+ <pos x="265.125923" y="-509.020842"/>
  <spobs>
   <spob>Anecu</spob>
   <spob>Draygar III</spob>
@@ -19,11 +18,11 @@
  <jumps>
   <jump target="Ogat">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.000000</hide>
   </jump>
-  <jump target="Tau Prime">
+  <jump target="Wochii">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

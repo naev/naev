@@ -5,7 +5,6 @@
 </event>
 --]]
 
--- luacheck: globals timer_tutorial (Hook functions passed by name)
 
 local function name()
    local names = {

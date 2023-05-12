@@ -3,12 +3,12 @@ Library for dealing with escorts in missions.
 
 @module escort
 --]]
--- luacheck: globals _escort_spawn _escort_jumpin _escort_jumpout _escort_land _escort_takeoff _escort_failure _escort_e_death _escort_e_land _escort_e_jump _escort_e_attacked(Hook functions passed by name)
 local escort = {}
 
 local lmisn = require "lmisn"
 local fmt = require "format"
 local vntk = require "vntk"
+local aisetup = require "ai.core.setup"
 
 --[[--
 Initializes the library by setting all the necessary hooks.
@@ -160,15 +160,29 @@ function _escort_e_death( p )
             end
             escort.reset_ai()
          end
+
+         if mem._escort.params.func_pilot_death then
+            _G[mem._escort.params.func_pilot_death]( p )
+         end
          return
       end
    end
 end
 
-function _escort_e_attacked( p )
+function _escort_e_attacked( p, attacker )
    if mem._escort.params.func_pilot_attacked then
-      _G[mem._escort.params.func_pilot_attacked]( p )
+      _G[mem._escort.params.func_pilot_attacked]( p, attacker )
    end
+end
+
+local function escorts_left ()
+   local left = 0
+   for k,v in ipairs(escort.pilots()) do
+      if v:exists() then
+         left = left+1
+      end
+   end
+   return left
 end
 
 function _escort_e_land( p, landed_spob )
@@ -176,6 +190,10 @@ function _escort_e_land( p, landed_spob )
       table.insert( exited, p )
       if p:exists() then
          player.msg( "#g"..fmt.f(_("{plt} has landed on {pnt}."), {plt=p, pnt=landed_spob} ).."#0" )
+      end
+
+      if escorts_left() <= 1 then
+         player.msg("#g"..fmt.f(_("All escorts have landed on {pnt}."), {pnt=landed_spob}).."#0")
       end
    else
       _escort_e_death( p )
@@ -187,6 +205,10 @@ function _escort_e_jump( p, j )
       table.insert( exited, p )
       if p:exists() then
          player.msg( "#g"..fmt.f(_("{plt} has jumped to {sys}."), {plt=p, sys=j:dest()} ).."#0" )
+      end
+
+      if escorts_left() <= 1 then
+         player.msg("#g"..fmt.f(_("All escorts have jumped to {sys}. Follow them."), {sys=j:dest()}).."#0")
       end
    else
       _escort_e_death( p )
@@ -235,6 +257,7 @@ function escort.spawn( pos )
 
       if fcreate then
          fcreate( p )
+         aisetup.setup( p )
       end
 
       minspeed = math.min( p:stats().speed_max, minspeed )
@@ -249,10 +272,10 @@ function escort.spawn( pos )
    -- Mark destination
    local scur = system.cur()
    if mem._escort.nextsys ~= scur then
-      system.mrkAdd( jump.get( scur, mem._escort.nextsys ):pos() )
+      system.markerAdd( jump.get( scur, mem._escort.nextsys ):pos() )
    else
       if mem._escort.destspob then
-         system.mrkAdd( mem._escort.destspob:pos() )
+         system.markerAdd( mem._escort.destspob:pos() )
       end
    end
 
@@ -298,6 +321,7 @@ function _escort_jumpout()
    mem._escort.origin = system.cur()
 end
 
+-- luacheck: globals _escort_failure
 function _escort_failure ()
    local n = #mem._escort.ships_orig
    if escort.num_alive() <= 0 then

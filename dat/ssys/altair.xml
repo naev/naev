@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Altair">
+ <general>
+  <radius>15000.000000</radius>
+  <spacedust>400</spacedust>
+  <interference>58.725000</interference>
+  <nebula volatility="13.200000" hue="285.000000">500.000000</nebula>
+  <nolanes/>
+ </general>
+ <pos x="516.055248" y="128.557056"/>
+ <spobs>
+  <spob>Alpha Aquilea</spob>
+ </spobs>
+ <jumps>
+  <jump target="Deneb">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Qellan">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Vega">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+ </jumps>
+ <asteroids>
+  <asteroid>
+   <group>Nebula Crystal</group>
+   <radius>6000.000000</radius>
+   <pos x="6492.242522" y="-4239.831851"/>
+   <density>0.500000</density>
+  </asteroid>
+ </asteroids>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
+</ssys>

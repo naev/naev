@@ -2,11 +2,10 @@
 <ssys name="Regas">
  <general>
   <radius>18381.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-504.427835" y="-709.039620"/>
+ <pos x="-380.230135" y="-571.908926"/>
  <spobs>
   <spob>Jorla</spob>
   <spob>Lugun</spob>
@@ -17,9 +16,13 @@
    <autopos/>
    <hide>0.000000</hide>
   </jump>
-  <jump target="Poltergeist">
+  <jump target="Seiben">
    <autopos/>
    <hide>0.000000</hide>
+  </jump>
+  <jump target="Vost">
+   <autopos/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

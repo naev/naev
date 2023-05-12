@@ -2,14 +2,13 @@
 <ssys name="Vanir">
  <general>
   <radius>20720.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="1243.787195" y="-525.112269"/>
+ <pos x="1321.175913" y="-286.534780"/>
  <spobs>
-  <spob>Fort Sirius</spob>
   <spob>Sinass</spob>
+  <spob>Sirius Monastery</spob>
   <spob>Vanir I</spob>
   <spob>Vanir II</spob>
   <spob>Vanir Ia</spob>
@@ -27,7 +26,7 @@
   </jump>
   <jump target="Botarn">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>0.000000</hide>
   </jump>
  </jumps>
 </ssys>

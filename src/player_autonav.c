@@ -90,7 +90,10 @@ void player_autonavStart (void)
 
    dest = map_getDestination(NULL);
    player_message(_("#oAutonav: travelling to %s."), (sys_isKnown(dest) ? _(dest->name) : _("Unknown")) );
-   player.autonav = AUTONAV_JUMP_APPROACH;
+   if (space_canHyperspace(player.p))
+      player.autonav = AUTONAV_JUMP_BRAKE;
+   else
+      player.autonav = AUTONAV_JUMP_APPROACH;
 }
 
 /**
@@ -185,13 +188,21 @@ void player_autonavPos( double x, double y )
 void player_autonavSpob( const char *name, int tryland )
 {
    Spob *p;
+   vec2 pos;
+   double a;
 
    if (player_autonavSetup())
       return;
    p = spob_get( name );
    player.autonavmsg = strdup( spob_name(p) );
    player.autonavcol = spob_getColourChar( p );
-   vec2_cset( &player.autonav_pos, p->pos.x, p->pos.y );
+   pos = p->pos;
+
+   /* Don't target center, but position offset in the direction of the player. */
+   a = ANGLE( player.p->solid->pos.x - pos.x,
+              player.p->solid->pos.y - pos.y );
+   vec2_padd( &pos, 0.6 * p->radius, a );
+   player.autonav_pos = pos;
 
    if (tryland) {
       player.autonav = AUTONAV_SPOB_LAND_APPROACH;
@@ -329,6 +340,7 @@ static void player_autonav (void)
    int ret, map_npath, inrange;
    double d, t, tint;
    double vel;
+   vec2 pos;
 
    (void) map_getDestination( &map_npath );
 
@@ -336,7 +348,13 @@ static void player_autonav (void)
       case AUTONAV_JUMP_APPROACH:
          /* Target jump. */
          jp    = &cur_system->jumps[ player.p->nav_hyperspace ];
-         ret   = player_autonavApproach( &jp->pos, &d, 0 );
+         /* Don't target center, but position offset in the direction of the player. */
+         pos = jp->pos;
+         t = ANGLE( player.p->solid->pos.x - jp->pos.x,
+                    player.p->solid->pos.y - jp->pos.y );
+         d = space_jumpDistance( player.p, jp );
+         vec2_padd( &pos, MAX( 0.8*d, d-30. ), t );
+         ret = player_autonavApproach( &pos, &d, 0 );
          if (ret)
             player.autonav = AUTONAV_JUMP_BRAKE;
          else if (!tc_rampdown && (map_npath<=1)) {
@@ -788,7 +806,9 @@ void player_updateAutonav( double dt )
    const double dis_max  = 4.0;
    const double dis_ramp = 6.0;
 
-   if (paused || (player.p==NULL) || pilot_isFlag(player.p, PILOT_DEAD))
+   if (paused || (player.p==NULL) ||
+         pilot_isFlag(player.p, PILOT_DEAD) ||
+         player_isFlag( PLAYER_CINEMATICS ))
       return;
 
    /* We handle disabling here. */

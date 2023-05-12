@@ -2,11 +2,12 @@
 <ssys name="Rotide">
  <general>
   <radius>12000.000000</radius>
-  <stars>400</stars>
-  <interference>27.272700</interference>
+  <spacedust>400</spacedust>
+  <interference>61.363600</interference>
   <nebula volatility="15.400000" hue="305.000000">500.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="786.631944" y="260.608796"/>
+ <pos x="814.505891" y="-78.676152"/>
  <spobs>
   <spob>Rotide I</spob>
   <spob>Rotide II</spob>
@@ -25,14 +26,13 @@
  </jumps>
  <asteroids>
   <asteroid>
-   <group>default</group>
-   <group>default</group>
-   <group>default</group>
-   <group>default</group>
-   <group>diamond</group>
+   <group>typeC-standard</group>
    <radius>4000.000000</radius>
    <pos x="-6000.000000" y="3000.000000"/>
    <density>0.250000</density>
   </asteroid>
  </asteroids>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

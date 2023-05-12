@@ -2,13 +2,13 @@
 <spob name="The Crucible">
  <pos x="5212.946189" y="780.244879"/>
  <GFX>
-  <space>003.webp</space>
+  <space>station-round1.webp</space>
   <exterior>traderoom.webp</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>
-  <base>33.333333</base>
-  <bonus>16.666667</bonus>
+  <base>33.333300</base>
+  <bonus>16.666700</bonus>
   <range>2</range>
  </presence>
  <general>
@@ -43,5 +43,6 @@
  </tech>
  <tags>
   <tag>criminal</tag>
+  <tag>station</tag>
  </tags>
 </spob>

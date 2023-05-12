@@ -25,7 +25,6 @@ local dv  = require "common.dvaered"
 local misn_target_sys = system.get("Unicorn")
 -- local misn_return_sys = system.get("Amaroq")
 
--- luacheck: globals death jumpin land (Hook functions passed by name)
 
 local function update_osd()
    local osd_msg = {}

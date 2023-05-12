@@ -2,11 +2,12 @@
 <ssys name="Adran">
  <general>
   <radius>13000.000000</radius>
-  <stars>400</stars>
-  <interference>20.000000</interference>
+  <spacedust>400</spacedust>
+  <interference>45.000000</interference>
   <nebula volatility="4.600000" hue="290.000000">500.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="665.000000" y="325.000000"/>
+ <pos x="672.697021" y="64.298066"/>
  <spobs>
   <spob_virtual>Thurion Local</spob_virtual>
  </spobs>
@@ -20,4 +21,7 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

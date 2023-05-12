@@ -4,7 +4,7 @@
  <base_type>Ancestor</base_type>
  <GFX size="65">ancestor_pirate</GFX>
  <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Bomber</class>
  <price>550000</price>

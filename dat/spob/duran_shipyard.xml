@@ -30,4 +30,8 @@
   <item>Light Civilian Combat Ships</item>
   <item>Basic Trade Ships</item>
  </tech>
+ <tags>
+  <tag>shipbuilding</tag>
+  <tag>station</tag>
+ </tags>
 </spob>

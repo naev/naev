@@ -5,6 +5,7 @@
 
 #include "space_fdecl.h"
 
+#include "collision.h"
 #include "commodity.h"
 #include "opengl.h"
 #include "physics.h"
@@ -13,6 +14,7 @@
 
 #define ASTEROID_DEFAULT_DENSITY    1.  /**< Default density of an asteroid field. */
 #define ASTEROID_DEFAULT_MAXSPEED   20. /**< Max speed of asteroids in an asteroid field. */
+#define ASTEROID_DEFAULT_MAXSPIN    M_PI/5 /**< Max spin of asteroids in an asteroid field. */
 #define ASTEROID_DEFAULT_THRUST     1.  /**< Thrust applied when asteroid leaves asteroid field. */
 
 #define ASTEROID_REF_AREA     250e3    /**< The "density" value in an asteroid field means 1 rock per this area. */
@@ -46,6 +48,7 @@ typedef struct AsteroidType_ {
    char *name;          /**< Name of the asteroid type. */
    char *scanned_msg;   /**< Scanned message. */
    glTexture **gfxs;    /**< asteroid possible gfxs. */
+   CollPoly *polygon;   /**< Collision polygons associated to gfxs. */
    AsteroidReward *material; /**< Materials contained in the asteroid. */
    double armour_min;   /**< Minimum "armour" of the asteroid. */
    double armour_max;   /**< Maximum "armour" of the asteroid. */
@@ -77,11 +80,13 @@ typedef struct Asteroid_ {
    int state;     /**< State of the asteroid. */
    const AsteroidType *type; /**< Type of the asteroid. */
    const glTexture *gfx; /**< Graphic of the asteroid. */
+   CollPoly *polygon;   /**< Collision polygon associated to gfx. */
    double armour; /**< Current "armour" of the asteroid. */
    /* Movement. */
    vec2 pos;      /**< Position. */
    vec2 vel;      /**< Velocity. */
    double ang;    /**< Angle. */
+   double spin;   /**< Spin. */
    /* Stats. */
    double timer;  /**< Internal timer for animations. */
    double timer_max; /**< Internal timer initial value. */
@@ -105,6 +110,7 @@ typedef struct AsteroidAnchor_ {
    double *groupsw;/**< Weight of the groups of asteroids. */
    double groupswtotal;/**< Sum of the weights of the groups. */
    double maxspeed;/**< Maxmimum speed the asteroids can have in the field. */
+   double maxspin;/**< Maxmimum spin the asteroids can have in the field. */
    double thrust; /**< Thrust applied when out of radius towards center. */
    double margin; /**< Extra margin to use when doing distance computations. */
 } AsteroidAnchor;

@@ -11,7 +11,7 @@
  </general>
  <specific type="modification">
   <ew_track>10</ew_track>
-  <ew_stealth_timer>10</ew_stealth_timer>
+  <ew_stealth_timer>-10</ew_stealth_timer>
  </specific>
  <tags>
   <tag>lucky</tag>

@@ -87,6 +87,7 @@ local taunt_list_offensive = {
    _("I'm trying to kill you. Is it working?"),
    _("I'm sorry, I just don't like you."),
    _("Sorry, but I'm a private tracker."),
+   _("Hey ho! Space pirates! Rum-dee Rum Rum!"), -- From the space pirate shanty
 }
 local taunt_list_defensive = {
    _("You dare attack me?!"),

@@ -118,14 +118,18 @@ int dsys_saveSystem( StarSystem *sys )
    if (sys->features != NULL)
       xmlw_elem( writer, "features", "%s", sys->features );
    xmlw_elem( writer, "radius", "%f", sys->radius );
-   xmlw_elem( writer, "stars", "%d", sys->stars );
+   xmlw_elem( writer, "spacedust", "%d", sys->spacedust );
    xmlw_elem( writer, "interference", "%f", sys->interference );
-   xmlw_startElem( writer, "nebula" );
-   xmlw_attr( writer, "volatility", "%f", sys->nebu_volatility );
-   if (fabs(sys->nebu_hue*360.0 - NEBULA_DEFAULT_HUE) > 1e-5)
-      xmlw_attr( writer, "hue", "%f", sys->nebu_hue*360.0 );
-   xmlw_str( writer, "%f", sys->nebu_density );
-   xmlw_endElem( writer ); /* "nebula" */
+   if (sys->nebu_density > 0.) {
+      xmlw_startElem( writer, "nebula" );
+      xmlw_attr( writer, "volatility", "%f", sys->nebu_volatility );
+      if (fabs(sys->nebu_hue*360.0 - NEBULA_DEFAULT_HUE) > 1e-5)
+         xmlw_attr( writer, "hue", "%f", sys->nebu_hue*360.0 );
+      xmlw_str( writer, "%f", sys->nebu_density );
+      xmlw_endElem( writer ); /* "nebula" */
+   }
+   if (sys_isFlag( sys, SYSTEM_NOLANES ))
+      xmlw_elemEmpty( writer, "nolanes" );
    xmlw_endElem( writer ); /* "general" */
 
    /* Position. */
@@ -181,6 +185,8 @@ int dsys_saveSystem( StarSystem *sys )
          xmlw_elemEmpty( writer, "hidden" );
       if (jp_isFlag( jp, JP_EXITONLY ))
          xmlw_elemEmpty( writer, "exitonly" );
+      if (jp_isFlag( jp, JP_NOLANES ))
+         xmlw_elemEmpty( writer, "nolanes" );
       xmlw_elem( writer, "hide", "%f", jp->hide );
       xmlw_endElem( writer ); /* "jump" */
    }
@@ -254,7 +260,7 @@ int dsys_saveSystem( StarSystem *sys )
 
    /* Write data. */
    cleanName = uniedit_nameFilter( sys->name );
-   asprintf( &file, "%s/%s.xml", conf.dev_save_sys, cleanName );
+   SDL_asprintf( &file, "%s/%s.xml", conf.dev_save_sys, cleanName );
    if (xmlSaveFileEnc( file, doc, "UTF-8" ) < 0)
       WARN("Failed writing '%s'!", file);
 

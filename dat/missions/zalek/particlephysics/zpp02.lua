@@ -23,7 +23,6 @@ local zpp = require "common.zalek_physics"
 local lmisn = require "lmisn"
 local sokoban = require "minigames.sokoban"
 
--- luacheck: globals land approach_guy (Hook functions passed by name)
 
 local reward = zpp.rewards.zpp02
 local cargo_name = _("drone interface controllers")
@@ -77,7 +76,7 @@ She furrows her brow.]]))
 
    -- mission details
    misn.setTitle( _("Particle Physics") )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc( fmt.f(_("Pick up some {cargo} from {pnt} in the {sys} system and deliver them to {retpnt}."),
       {cargo=cargo_name, pnt=mem.destpnt, sys=mem.destsys, retpnt=retpnt} ))
 
@@ -145,7 +144,7 @@ They scratch their head.]]))
          talked_once = true
       end
 
-      sokoban.vn{ levels={1,2,3}, header="Drone Memory Banks"}
+      sokoban.vn{ levels={1,2,3}, header=_("Drone Memory Banks") }
       vn.func( function ()
          if sokoban.completed() then
             mem.state = 2

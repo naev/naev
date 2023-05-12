@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ssys name="NGC-2232">
  <general>
+  <background>pso</background>
+  <map_shader>pso_map.frag</map_shader>
   <radius>15000.000000</radius>
-  <stars>400</stars>
-  <interference>11.000000</interference>
-  <nebula volatility="0.000000" hue="300.000000">300.000000</nebula>
+  <spacedust>0</spacedust>
+  <interference>83.000000</interference>
+  <nolanes/>
  </general>
- <pos x="153.430101" y="-958.738334"/>
+ <pos x="312.669925" y="-1109.389445"/>
  <spobs>
   <spob_virtual>Pirate All Unpresence</spob_virtual>
  </spobs>

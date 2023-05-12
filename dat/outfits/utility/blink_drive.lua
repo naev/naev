@@ -36,15 +36,16 @@ function ontoggle( p, po, on )
    if m > masslimit then
       dist = dist * masslimit / m
    end
-   luaspfx.blink( p:pos() ) -- Blink afterimage
+   local pos = p:pos()
+   luaspfx.blink( pos ) -- Blink afterimage
    p:effectAdd( "Blink" ) -- Cool "blink in" effect
-   p:setPos( p:pos() + vec2.newP( dist, p:dir() ) )
-   mem.timer = cooldown
+   p:setPos( pos + vec2.newP( dist, p:dir() ) )
+   mem.timer = cooldown * p:shipstat("cooldown_mod",true)
    po:state("cooldown")
    po:progress(1)
 
    -- Play the sound
-   luaspfx.sfx( p:pos(), p:vel(), sfx )
+   luaspfx.sfx( pos, p:vel(), sfx )
 
    return true
 end

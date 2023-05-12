@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="P-8318">
+ <pos x="4891.540929" y="3830.314717"/>
+ <GFX>
+  <space>moon-J01.webp</space>
+  <exterior>lava.webp</exterior>
+ </GFX>
+ <general>
+  <class>J</class>
+  <population>0</population>
+  <hide>0.300000</hide>
+  <services/>
+ </general>
+</spob>

@@ -20,20 +20,19 @@ local fmt = require "format"
 local shadow = require "common.shadow"
 
 local vendetta, hailhook -- Non-persistent state.
--- luacheck: globals finish hail hailme (Hook functions passed by name)
 
 function create ()
    -- Make sure system isn't claimed, but we don't claim it
-   if not evt.claim( system.cur(), true ) then evt.finish() end
+   if not naev.claimTest( system.cur() ) then evt.finish() end
 
     -- Claim: test the claims in the mission.
    local misssys = {system.get("Qex"), system.get("Shakar"), system.get("Borla"), system.get("Doranthex")}
-   if not evt.claim( misssys, true ) then
+   if not naev.claimTest( misssys ) then
       evt.finish()
    end
 
    -- Create a Vendetta who hails the player after a bit
-   vendetta = pilot.add( "Vendetta", "Four Winds", nil, _("Four Winds Vendetta"), {ai="trader"} )
+   vendetta = pilot.add( "Vendetta", shadow.fct_fourwinds(), nil, _("Four Winds Vendetta"), {ai="trader"} )
    vendetta:control()
    vendetta:follow(player.pilot())
    hook.timer(0.5, "proximityScan", {focus = vendetta, funcname = "hailme"})

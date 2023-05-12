@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Mining Vrata Guildhouse">
+ <pos x="0.000000" y="0.000000"/>
+ <GFX>
+  <space>station-round3.webp</space>
+  <exterior>traderoom.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Traders Society</faction>
+  <base>80.000000</base>
+  <bonus>40.000000</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>150000</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>As the center of power of the Mining Vrata Guild, one of the strongest organizations in the Space Traders Society, the Mining Vrata Guildhouse wields a considerable amount of influence and power. As such, the station has an extravagant spacious design, significantly diverging from the standard space-concious space station layouts, likely permitted by using the nearby planets as storage facilities, allowing the station itself to focus mainly on its social functionality and trade.
+Although the station is almost entirely devoted to the Mining Vrata, other organizations in the Space Traders Society also have small chapterhouses located throughout the station.</description>
+  <bar>Unlike the rest of the station, the Guildhouse Grill is made entirely out of stone brought from the nearby Holly I, II, and III worlds. While the floor has an attractive smooth finish, the walls are much more rough with the history of the Mining Vrata engraved throughout it. Overall, it does not feel like a station bar at all.</bar>
+ </general>
+ <tech>
+  <item>Mining Outfits</item>
+  <item>Milspec Impacto-Plastic Coating</item>
+  <item>Mining 1</item>
+  <item>Mining 2</item>
+  <item>Cargo Trader Outfits</item>
+  <item>Crappy Core Systems</item>
+  <item>Engines Cargo</item>
+  <item>Hulls Cargo</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+ </tech>
+ <tags>
+  <tag>trade</tag>
+  <tag>station</tag>
+  <tag>rich</tag>
+ </tags>
+</spob>

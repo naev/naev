@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Map: Kretogg's Hypergate">
+ <general>
+  <rarity>2</rarity>
+  <mass>0</mass>
+  <price>300000</price>
+  <description>A map revealing a hidden jump point from Kretogg to NGC-14549, leading to the Black Lotus Clan-controlled hypergate.</description>
+  <gfx_store>map_sector_04.webp</gfx_store>
+ </general>
+ <specific type="map">
+  <sys name="Kretogg">
+   <jump>NGC-14549</jump>
+  </sys>
+  <sys name="NGC-14549">
+   <jump>Kretogg</jump>
+  </sys>
+ </specific>
+</outfit>

@@ -21,11 +21,10 @@
 --]]
 
 local timer
--- luacheck: globals finish msgme (Hook functions passed by name)
 
 function create ()
    local invasion_time = var.peek("invasion_time")
-   if time.get() < time.fromnumber(invasion_time) + time.create(0, 10, 0) then
+   if time.get() < time.fromnumber(invasion_time) + time.new(0, 10, 0) then
       evt.finish()
    end
 

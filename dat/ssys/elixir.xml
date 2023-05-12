@@ -2,11 +2,11 @@
 <ssys name="Elixir">
  <general>
   <radius>15750.000000</radius>
-  <stars>120</stars>
-  <interference>5.882353</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>120</spacedust>
+  <interference>13.235300</interference>
+  <nolanes/>
  </general>
- <pos x="145.248810" y="251.809064"/>
+ <pos x="140.364926" y="541.115094"/>
  <spobs>
   <spob>Elixir I</spob>
  </spobs>

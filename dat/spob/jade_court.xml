@@ -23,10 +23,11 @@
    <missions/>
   </services>
   <commodities/>
-  <description>Jade Court is a large judiciary installation. Though owned by the Empire, the station itself counts as neutral territory. Cases here come from all over the galaxy, presided over by judges who are not affiliated with any of the major factions. Typically, any large international case that local law enforcement is unable to handle on its own will be taken to Jade.</description>
+  <description>Jade Court is a large judiciary installation, and has gained significant importance since the destruction of the Imperial Court in the Incident. Though owned by the Empire, the station itself counts as neutral territory. Cases here come from all over the galaxy, presided over by judges who are not affiliated with any of the major factions. Typically, any large international case that local law enforcement is unable to handle on its own will be taken to Jade.</description>
   <bar>This is just an ordinary bar. Lawyers don't come here much, as they all have their own private offices aboard the station.</bar>
  </general>
  <tags>
   <tag>restricted</tag>
+  <tag>station</tag>
  </tags>
 </spob>

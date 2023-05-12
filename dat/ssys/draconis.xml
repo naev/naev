@@ -2,11 +2,10 @@
 <ssys name="Draconis">
  <general>
   <radius>31500.000000</radius>
-  <stars>600</stars>
-  <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>600</spacedust>
+  <interference>10.000000</interference>
  </general>
- <pos x="202.250000" y="59.222222"/>
+ <pos x="258.135376" y="267.315686"/>
  <spobs>
   <spob>Draconis Alpha</spob>
   <spob>Draconis Beta</spob>
@@ -14,7 +13,7 @@
   <spob>Draconis Epsilon</spob>
   <spob>Draconis Gamma</spob>
   <spob>Draconis Omega</spob>
-  <spob>Zabween</spob>
+  <spob>Zabween Outpost</spob>
   <spob_virtual>Trade Lane (Empire)</spob_virtual>
  </spobs>
  <jumps>
@@ -26,10 +25,6 @@
   <jump target="Pilatis">
    <autopos/>
    <hide>0.000000</hide>
-  </jump>
-  <jump target="Surano">
-   <autopos/>
-   <hide>1.000000</hide>
   </jump>
   <jump target="Tau Prime">
    <autopos/>

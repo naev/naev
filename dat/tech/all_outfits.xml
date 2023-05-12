@@ -110,7 +110,7 @@
  <item>Asteroid Scanner</item>
  <item>Map: Nebula Edge</item>
  <item>Map: Collective Space</item>
- <item>Map: Dvaered-Soromid Trade Route</item>
+ <item>Map: Empire-Soromid Trade Route</item>
  <item>Map: Sirian Border Systems</item>
  <item>Map: The Frontier</item>
  <item>Map: Sol</item>
@@ -119,7 +119,7 @@
  <item>Map: Sirius Core</item>
  <item>Map: Za'lek Core</item>
  <item>Map: Pirate Strongholds</item>
- <item>Map: Qorel Expanse</item>
+ <item>Map: Qorel Tunnel</item>
  <item>Map: New Haven's Secrets</item>
  <item>Map: Kretogg's Secrets</item>
  <item>Map: FLF Hidden Jumps</item>
@@ -151,7 +151,8 @@
  <item>Za'lek Bomber Drone Bay</item>
  <item>Thurion Perspicacity Bay</item>
  <item>Thurion Perspicacity Dock</item>
- <item>Proteron Derivative Bay</item>
+ <item>Proteron Dalton Dock</item>
+ <item>Proteron Dalton Bay</item>
  <item>Soromid Brigand Bay</item>
  <item>Large Civilian Vessel License</item>
  <item>Medium Weapon License</item>

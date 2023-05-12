@@ -17,6 +17,7 @@
 
 #include "conf.h"
 #include "camera.h"
+#include "debris.h"
 #include "array.h"
 #include "nlua_audio.h"
 #include "nlua_vec2.h"
@@ -43,6 +44,7 @@ typedef struct LuaSpfxData_s {
    double ttl;    /**< Time to live. */
    vec2 pos;      /**< Position. */
    vec2 vel;      /**< Velocity. */
+   double radius; /**< Used for rendering. */
    int data;      /**< Reference to table of data. */
    int render_bg; /**< Reference to background render function. */
    int render_mg; /**< Reference to middle render function. */
@@ -62,21 +64,29 @@ static int lua_spfx_lock = 0;
 /* Spfx methods. */
 static int spfxL_gc( lua_State *L );
 static int spfxL_eq( lua_State *L );
+static int spfxL_getAll( lua_State *L );
 static int spfxL_new( lua_State *L );
 static int spfxL_rm( lua_State *L );
 static int spfxL_pos( lua_State *L );
 static int spfxL_vel( lua_State *L );
+static int spfxL_setPos( lua_State *L );
+static int spfxL_setVel( lua_State *L );
 static int spfxL_sfx( lua_State *L );
 static int spfxL_data( lua_State *L );
+static int spfxL_debris( lua_State *L );
 static const luaL_Reg spfxL_methods[] = {
    { "__gc", spfxL_gc },
    { "__eq", spfxL_eq },
+   { "getAll", spfxL_getAll },
    { "new", spfxL_new },
    { "rm", spfxL_rm },
    { "pos", spfxL_pos },
    { "vel", spfxL_vel },
+   { "setPos", spfxL_setPos },
+   { "setVel", spfxL_setVel },
    { "sfx", spfxL_sfx },
    { "data", spfxL_data },
+   { "debris", spfxL_debris },
    {0,0}
 }; /**< SpfxLua methods. */
 
@@ -246,6 +256,28 @@ static int spfxL_eq( lua_State *L )
 }
 
 /**
+ * @brief Gets all the active spfx.
+ *
+ *    @luatreturn table A table containing all the spfx.
+ * @luafunc getAll
+ */
+static int spfxL_getAll( lua_State *L )
+{
+   int n=1;
+   lua_newtable(L);
+   for (int i=0; i<array_size(lua_spfx); i++) {
+      LuaSpfxData_t *ls = &lua_spfx[i];
+
+      if (ls->flags & (SPFX_GLOBAL | SPFX_CLEANUP))
+         continue;
+
+      lua_pushspfx( L, ls->id );
+      lua_rawseti( L, -2, n++ );
+   }
+   return 1;
+}
+
+/**
  * @brief Creates a new special effect.
  *
  * @usage spfx.new( 5, update, nil, nil, render, player.pos(), player.pilot():vel(), sfx ) -- Play effect with update and render functions at player position/velocity
@@ -260,6 +292,7 @@ static int spfxL_eq( lua_State *L )
  *    @luatparam vec2|boolean pos Position of the effect, or a boolean to indicate whether or not the effect is local.
  *    @luatparam vec2 vel Velocity of the effect.
  *    @luatparam audio sfx Sound effect associated with the spfx.
+ *    @luatparam number radius Radius to use to determine if should render.
  *    @luatreturn spfx New spfx corresponding to the data.
  * @luafunc new
  */
@@ -347,6 +380,9 @@ static int spfxL_new( lua_State *L )
       }
    }
 
+   /* Store radius. */
+   ls.radius = luaL_optnumber(L,9,-1.);
+
    /* Set up new data. */
    lua_newtable(L);
    ls.data = luaL_ref( L, LUA_REGISTRYINDEX ); /* Pops result. */
@@ -407,8 +443,38 @@ static int spfxL_pos( lua_State *L )
 static int spfxL_vel( lua_State *L )
 {
    LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
-   lua_pushvector( L, ls->pos );
+   lua_pushvector( L, ls->vel );
    return 1;
+}
+
+/**
+ * @brief Sets the position of a spfx.
+ *
+ *    @luatparam spfx s Spfx to set the position of.
+ *    @luatparam vec2 p Position to set to.
+ * @luafunc setPos
+ */
+static int spfxL_setPos( lua_State *L )
+{
+   LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
+   vec2 *v = luaL_checkvector(L,2);
+   ls->pos = *v;
+   return 0;
+}
+
+/**
+ * @brief Sets the velocity of a spfx.
+ *
+ *    @luatparam spfx s Spfx to set the velocity of.
+ *    @luatparam vec2 v Velocity to set to.
+ * @luafunc setVel
+ */
+static int spfxL_setVel( lua_State *L )
+{
+   LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
+   vec2 *v = luaL_checkvector(L,2);
+   ls->vel = *v;
+   return 0;
 }
 
 /**
@@ -562,7 +628,7 @@ void spfxL_update( double dt )
             alf[1] = ls->pos.y;
             alf[2] = 0.;
             alSourcefv( ls->sfx.source, AL_POSITION, alf );
-	    al_checkErr();
+            al_checkErr();
             soundUnlock();
          }
       }
@@ -626,6 +692,7 @@ void spfxL_rendermg (void)
    for (int i=0; i<array_size(lua_spfx); i++) {
       vec2 pos;
       LuaSpfxData_t *ls = &lua_spfx[i];
+      double r = ls->radius;
 
       /* Skip no rendering. */
       if ((ls->render_mg == LUA_NOREF) || (ls->flags & SPFX_CLEANUP))
@@ -633,6 +700,13 @@ void spfxL_rendermg (void)
 
       /* Convert coordinates. */
       gl_gameToScreenCoords( &pos.x, &pos.y, ls->pos.x, ls->pos.y );
+
+      /* If radius is defined see if in screen. */
+      if ((r > 0.) && ((pos.x < -r) || (pos.y < -r) ||
+            (pos.x > SCREEN_W+r) || (pos.y > SCREEN_H+r)))
+         continue;
+
+      /* Invert y axis. */
       pos.y = SCREEN_H-pos.y;
 
       /* Render. */
@@ -659,6 +733,7 @@ void spfxL_renderfg (void)
    for (int i=0; i<array_size(lua_spfx); i++) {
       vec2 pos;
       LuaSpfxData_t *ls = &lua_spfx[i];
+      double r = ls->radius;
 
       /* Skip no rendering. */
       if ((ls->render_fg == LUA_NOREF) || (ls->flags & SPFX_CLEANUP))
@@ -666,6 +741,13 @@ void spfxL_renderfg (void)
 
       /* Convert coordinates. */
       gl_gameToScreenCoords( &pos.x, &pos.y, ls->pos.x, ls->pos.y );
+
+      /* If radius is defined see if in screen. */
+      if ((r > 0.) && ((pos.x < -r) || (pos.y < -r) ||
+            (pos.x > SCREEN_W+r) || (pos.y > SCREEN_H+r)))
+         continue;
+
+      /* Invert y axis. */
       pos.y = SCREEN_H-pos.y;
 
       /* Render. */
@@ -680,4 +762,23 @@ void spfxL_renderfg (void)
       }
    }
    spfx_unlock();
+}
+
+/**
+ * @brief Creates a cloud of debris.
+ *
+ *    @luatparam number mass Mass of the cloud.
+ *    @luatparam number radius Radius of the cloud.
+ *    @luatparam Vec2 pos Position of the cloud.
+ *    @luatparam Vec2 vel Velocity of the cloud.
+ * @luafunc debris
+ */
+static int spfxL_debris( lua_State *L )
+{
+   double mass = luaL_checknumber( L, 1 );
+   double radius = luaL_checknumber( L, 2 );
+   vec2 *p = luaL_checkvector( L, 3 );
+   vec2 *v = luaL_checkvector( L, 4 );
+   debris_add( mass, radius, p->x, p->y, v->x, v->y );
+   return 0;
 }

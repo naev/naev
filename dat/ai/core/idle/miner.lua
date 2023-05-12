@@ -1,9 +1,8 @@
 -- Default task to run when idle
--- luacheck: globals idle (AI Task functions passed by name)
 function idle ()
    local ast = asteroid.get( mem.mining_field ) -- Get a random asteroid in the system (or current mining field)
 
-   if (ai.pilot():cargoFree()==0) or (ast==nil) then -- Leave this system
+   if mem.force_leave or (ai.pilot():cargoFree()==0) or (ast==nil) then -- Leave this system
       local planet = ai.landspob( mem.land_friendly )
       -- planet must exist
       if planet == nil then

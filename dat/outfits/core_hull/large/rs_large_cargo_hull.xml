@@ -7,7 +7,7 @@
   <priority>7</priority>
   <mass>550</mass>
   <price>1200000</price>
-  <description>This cargo hull from the Red Star Organisation makes use of state-of-the-art defensive alloys, which allows it to free up even more space for cargo without sacrificing too much durability. Along with the increased space, their (in)famous electromagnetic shockwave absorbtion generator comes built in, turning CPU power and a little more obviousness into missile james, tracking zero-points and reduced secondary splash damage, turtling has never been safer.</description>
+  <description>The Imperial Red Star is dedicated to relief efforts in areas stricken by war, piracy and disease. Recently developed by the organization is a series of specialized cargo hulls meant to maximize the odds of their supplies and personnel safely arriving where they are needed most. The integrated scrambler systems allow even the largest ships a chance to turn away missiles.</description>
   <gfx_store>rs_hull_l.webp</gfx_store>
   <cpu>-160</cpu>
  </general>
@@ -18,7 +18,7 @@
   <cargo_inertia>-10</cargo_inertia>
   <cargo_mod>10</cargo_mod>
   <ew_hide>-20</ew_hide>
-  <ew_evade>10</ew_evade>
+  <ew_evade>30</ew_evade>
   <jam_chance>42</jam_chance>
  </specific>
 </outfit>

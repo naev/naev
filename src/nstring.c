@@ -58,33 +58,6 @@ char *strnstr( const char *haystack, const char *needle, size_t size )
 #endif /* !HAVE_STRNSTR */
 
 /**
- * @brief Finds a string inside another string case insensitively.
- *
- *    @param haystack String to look into.
- *    @param needle String to find.
- *    @return Pointer in haystack where needle was found or NULL if not found.
- */
-#if !HAVE_STRCASESTR
-char *strcasestr( const char *haystack, const char *needle )
-{
-   /* Get lengths. */
-   size_t hay_len     = strlen(haystack);
-   size_t needle_len  = strlen(needle);
-
-   /* Slow search. */
-   while (hay_len >= needle_len) {
-      if (strncasecmp(haystack, needle, needle_len) == 0)
-         return (char*)haystack;
-
-      haystack++;
-      hay_len--;
-   }
-
-   return NULL;
-}
-#endif /* !HAVE_STRCASESTR */
-
-/**
  * @brief Return a pointer to a new string, which is a duplicate of the string \p s
  *        (or, if necessary, which contains the first \p nn bytes of \p s plus a terminating null).
  *
@@ -119,58 +92,6 @@ int strsort_reverse( const void *p1, const void *p2 )
 }
 
 /**
- * @brief Like vsprintf(), but it allocates a large-enough string and returns the pointer in the first argument.
- *        Conforms to GNU and BSD libc semantics.
- *
- * @param[out] strp Used to return the allocated char* in case of success. Caller must free.
- *                  In case of failure, *strp is set to NULL, but don't rely on this because the GNU version doesn't guarantee it.
- * @param fmt Same as vsprintf().
- * @param ap Same as vsprintf().
- * @return -1 if it failed, otherwise the number of bytes "printed".
- */
-#if !HAVE_VASPRINTF
-int vasprintf( char** strp, const char* fmt, va_list ap )
-{
-   int n;
-   va_list ap1;
-
-   va_copy( ap1, ap );
-   n = vsnprintf( NULL, 0, fmt, ap1 );
-   va_end( ap1 );
-
-   if (n < 0)
-      return -1;
-   *strp = malloc( n+1 );
-   if (strp == NULL )
-      return -1; /* Not that we'll check. We're Linux fans. We've never heard of malloc() failing. */
-
-   return vsnprintf( *strp, n+1, fmt, ap );
-}
-#endif /* !HAVE_VASPRINTF */
-
-/**
- * @brief Like sprintf(), but it allocates a large-enough string and returns the pointer in the first argument.
- *        Conforms to GNU and BSD libc semantics.
- *
- * @param[out] strp Used to return the allocated char* in case of success. Caller must free.
- *                  In case of failure, *strp is set to NULL, but don't rely on this because the GNU version doesn't guarantee it.
- * @param fmt Same as sprintf().
- * @return -1 if it failed, otherwise the number of bytes "printed".
- */
-#if !HAVE_ASPRINTF
-int asprintf( char** strp, const char* fmt, ... )
-{
-   int n;
-   va_list ap;
-
-   va_start( ap, fmt );
-   n = vasprintf( strp, fmt, ap );
-   va_end( ap );
-   return n;
-}
-#endif /* !HAVE_ASPRINTF */
-
-/**
  * @brief Like snprintf(), but returns the number of characters \em ACTUALLY "printed" into the buffer.
  *        This makes it possible to chain these calls to concatenate into a buffer without introducing a potential bug every time.
  *        This call was first added to the Linux kernel by Juergen Quade.
@@ -190,7 +111,7 @@ int scnprintf( char* text, size_t maxlen, const char* fmt, ... )
 }
 
 /**
- * @brief Converts an electronic warfare value to a string.
+ * @brief Converts a numeric value to a string.
  *
  *    @param[out] dest String to write to.
  *    @param n Number to write.
@@ -198,8 +119,16 @@ int scnprintf( char* text, size_t maxlen, const char* fmt, ... )
  */
 int num2str( char dest[NUM2STRLEN], double n, int decimals )
 {
-   if (n >= 1e12)
+   if (n >= 1e15)
       return snprintf( dest, NUM2STRLEN, "%.*f", decimals, n );
+   else if (n >= 1e12)
+      return snprintf( dest, NUM2STRLEN,
+            _("%.0f,%03.0f,%03.0f,%03.0f,%03.*f"),
+            floor(n/1e12),
+            floor(fmod(floor(fabs(n/1e9)),1e3)),
+            floor(fmod(floor(fabs(n/1e6)),1e3)),
+            floor(fmod(floor(fabs(n/1e3)),1e3)),
+            decimals, fmod(floor(fabs(n)),1e3) );
    else if (n >= 1e9)
       return snprintf( dest, NUM2STRLEN,
             _("%.0f,%03.0f,%03.0f,%03.*f"),
@@ -232,4 +161,22 @@ const char* num2strU( double n, int decimals )
    static char num2strU_buf[NUM2STRLEN];
    num2str( num2strU_buf, n, decimals );
    return num2strU_buf;
+}
+
+/**
+ * @brief Prints to stderr with line numbers.
+ *
+ *    @param str String to print.
+ */
+void print_with_line_numbers( const char *str )
+{
+   int counter = 0;
+   logprintf( stderr, 0, "%03d: ", ++counter );
+   for (int i=0; str[i] != '\0'; i++) {
+      if (str[i]=='\n')
+         logprintf( stderr, 0, "\n%03d: ", ++counter );
+      else //if (str[i]!='\n')
+         logprintf( stderr, 0, "%c", str[i] );
+   }
+   logprintf( stderr, 0, "\n" );
 }

@@ -206,9 +206,8 @@ void map_system_open( int sys_selected )
    window_disableButton( wid, "btnBuyCommodPrice");
 
    /* Load the spob gfx if necessary */
-   if ( cur_sys_sel != cur_system ) {
+   if (cur_sys_sel != cur_system)
      space_gfxLoad( cur_sys_sel );
-   }
    /* get textures for the stars.  The first will be the nebula */
    /* There seems no other reliable way of getting the correct images -*/
    /* these are determined by a random number generator in lua */
@@ -228,7 +227,6 @@ void map_system_open( int sys_selected )
 
    map_system_show( wid, 20, 60, w-40, h-100);
    map_system_updateSelected( wid );
-
 }
 
 /**
@@ -260,6 +258,8 @@ void map_system_show( int wid, int x, int y, int w, int h)
 /**
  * @brief Renders the custom solar system map widget.
  *
+ * TODO this shouldn't compute all the strings every render frame.
+ *
  *    @param bx Base X position to render at.
  *    @param by Base Y position to render at.
  *    @param w Width of the widget.
@@ -270,7 +270,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    (void) data;
    int i, vis_index;
    double iw, ih;
-   StarSystem *sys=cur_sys_sel;
+   StarSystem *sys = cur_sys_sel;
    Spob *p;
    static int phase=0;
    glColour ccol;
@@ -322,9 +322,9 @@ static void map_system_render( double bx, double by, double w, double h, void *d
             (cur_spob_sel == vis_index ? &cFontGreen : &cFontWhite), -1., spob_name(p) );
    }
    /* draw the star */
-   ih=pitch;
-   iw=ih;
-   if ( array_size( bgImages ) > 0 ) {
+   ih = pitch;
+   iw = ih;
+   if (array_size( bgImages ) > 0) {
       if ( bgImages[starCnt]->w > bgImages[starCnt]->h )
          ih = ih * bgImages[starCnt]->h / bgImages[starCnt]->w;
       else if ( bgImages[starCnt]->w < bgImages[starCnt]->h )
@@ -351,30 +351,26 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          ccol.a = 1 - ccol.a;
          gl_renderScale( bgImages[i], bx+2, by+(nshow-1)*pitch + (pitch-ih)/2 + offset, iw, ih, &ccol );
       }
-   } else {
+   }
+   else {
       /* no nebula or star images - probably due to nebula */
-      txtHeight=gl_printHeightRaw( &gl_smallFont,pitch,_("Obscured by the nebula") );
+      txtHeight = gl_printHeightRaw( &gl_smallFont,pitch,_("Obscured by the nebula") );
       gl_printTextRaw( &gl_smallFont, pitch, txtHeight, (bx+2),
             (by + (nshow-0.5)*pitch + offset), 0, &cFontRed, -1., _("Obscured by the nebula") );
    }
    gl_printRaw( &gl_smallFont, bx + 5 + pitch, by + (nshow-0.5)*pitch + offset,
          (cur_spob_sel == 0 ? &cFontGreen : &cFontWhite), -1., _(sys->name) );
-   if ( cur_spob_sel == 0 && array_size( bgImages ) > 0 ) {
+   if ((cur_spob_sel==0) && array_size( bgImages ) > 0) {
       /* make use of space to draw a nice nebula */
-      double imgw,imgh;
+      double imgw,imgh, s;
       iw = w - 50 - pitch - nameWidth;
-      ih = h - 110;
+      ih = h;
       imgw = bgImages[0]->w;
       imgh = bgImages[0]->h;
-      if ( (ih * imgw) / imgh > iw ) {
-         /* image is wider per height than the space allows - use all width */
-         int newih = (int)((iw * imgh) / imgw);
-         gl_renderScale( bgImages[0], bx + 10 + pitch + nameWidth, by + (ih-newih)/2, iw, newih, &cWhite );
-      } else {
-         /* image is higher, so use all height. */
-         int newiw = (int)((ih * imgw) / imgh);
-         gl_renderScale( bgImages[0], bx + 10 + pitch + nameWidth + (iw-newiw)/2, by, newiw, ih, &cWhite );
-      }
+      s = MIN( iw / imgw, ih / imgh );
+      imgw *= s;
+      imgh *= s;
+      gl_renderScale( bgImages[0], bx+w-iw+(iw-imgw)*0.5, by+h-ih+(ih-imgh)*0.5, imgw, imgh, &cWhite );
    }
    /* draw marker around currently selected spob */
    ccol.r=0; ccol.g=0.6+0.4*sin( phase/150.*2*M_PI ); ccol.b=0; ccol.a=1;
@@ -439,9 +435,9 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       f = -1;
       for (i=0; i<array_size(sys->spobs); i++) {
          if (spob_isKnown( sys->spobs[i] )) {
-            if ((f==-1) && (sys->spobs[i]->presence.faction>0) ) {
+            if ((f==-1) && (sys->spobs[i]->presence.faction>=0) ) {
                f = sys->spobs[i]->presence.faction;
-            } else if (f != sys->spobs[i]->presence.faction &&  (sys->spobs[i]->presence.faction>0) ) {
+            } else if (f != sys->spobs[i]->presence.faction &&  (sys->spobs[i]->presence.faction>=0) ) {
                cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Faction: Multiple\n") );
                break;
             }
@@ -495,52 +491,55 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          }
       }
    } else {
-     /* display spob info */
-     p = cur_spobObj_sel;
-     if (p->presence.faction > 0 ) {/* show the faction */
-        char factionBuf[64];
-        logo = faction_logo( p->presence.faction );
-        if (logo != NULL)
-           gl_renderScale( logo, bx + pitch + nameWidth + 200, by + h - 21, 20, 20, &cWhite );
+      /* display spob info */
+      p = cur_spobObj_sel;
+      if (p->presence.faction >= 0 ) {/* show the faction */
+         char factionBuf[64];
+         logo = faction_logo( p->presence.faction );
+         if (logo != NULL)
+            gl_renderScale( logo, bx + pitch + nameWidth + 200, by + h - 21, 20, 20, &cWhite );
 
-        snprintf( factionBuf, 64, "%s", faction_shortname( p->presence.faction ) );
-        gl_printTextRaw( &gl_smallFont, (w - nameWidth-pitch - 60) / 2, 20,
-            bx+pitch+nameWidth + 230, by + h - 31, 0, &cFontWhite, -1., factionBuf );
-     }
+         snprintf( factionBuf, 64, "%s", faction_shortname( p->presence.faction ) );
+         gl_printTextRaw( &gl_smallFont, (w - nameWidth-pitch - 60) / 2, 20,
+               bx+pitch+nameWidth + 230, by + h - 31, 0, &cFontWhite, -1., factionBuf );
+      }
 
-     cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Spob: %s\nPlanetary class: %s    Population: roughly %s\n"), spob_name(p), _(p->class), space_populationStr( p->population ) );
-     if (!spob_hasService( p, SPOB_SERVICE_INHABITED ))
-        cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("No space port here\n") );
-     else if (p->can_land)
-        cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#g%s#0", _("You can land here\n") );
-     else if (areEnemies( FACTION_PLAYER, p->presence.faction))
-        cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#o%s#0", _("Not advisable to land here\n") );
-     else
-        cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#r%s#0", _("You cannot land here\n") );
-     /* Add a description */
-     cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "%s", (p->description==NULL?_("No description available"):_(p->description)) );
+      cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Spob: %s\nPlanetary class: %s    Population: roughly %s\n"), spob_name(p), _(p->class), space_populationStr( p->population ) );
+      if (!spob_hasService( p, SPOB_SERVICE_INHABITED ))
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("No space port here\n") );
+      else if (p->can_land)
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#g%s#0", _("You can land here\n") );
+      else if (areEnemies( FACTION_PLAYER, p->presence.faction))
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#o%s#0", _("Not advisable to land here\n") );
+      else
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#r%s#0", _("You cannot land here\n") );
 
-     txtHeight = gl_printHeightRaw( &gl_smallFont, (w - nameWidth-pitch-60)/2, buf );
+      if (infobuf[0]=='\0') {
+         int infocnt = 0;
 
-     if (infobuf[0] == '\0') {
-        int infocnt = 0;
-        /* show some additional information */
-        infocnt = scnprintf( infobuf, sizeof(infobuf), "%s\n"
-              "%s\n%s\n%s\n%s\n%s\n%s\n%s",
-              spob_hasService( p, SPOB_SERVICE_LAND) ? _("This system is landable") : _("This system is not landable"),
-              spob_hasService( p, SPOB_SERVICE_INHABITED) ? _("This system is inhabited") : _("This system is not inhabited"),
-              spob_hasService( p, SPOB_SERVICE_REFUEL) ? _("You can refuel here") : _("You cannot refuel here"),
-              spob_hasService( p, SPOB_SERVICE_BAR) ? _("This system has a bar") : _("This system does not have a bar"),
-              spob_hasService( p,SPOB_SERVICE_MISSIONS) ? _("This system offers missions") : _("This system does not offer missions"),
-              spob_hasService( p, SPOB_SERVICE_COMMODITY) ? _("This system has a trade outlet") : _("This system does not have a trade outlet"),
-              spob_hasService( p, SPOB_SERVICE_OUTFITS) ? _("This system sells ship equipment") : _("This system does not sell ship equipment"),
-              spob_hasService( p, SPOB_SERVICE_SHIPYARD) ? _("This system sells ships") : _("This system does not sell ships"));
-        if ( p->bar_description && spob_hasService( p, SPOB_SERVICE_BAR ) ) {
-           infocnt+=scnprintf( &infobuf[infocnt], sizeof(infobuf)-infocnt, "\n\n%s", _(p->bar_description) );
-        }
-     }
-     gl_printTextRaw( &gl_smallFont, (w - nameWidth - pitch - 60) / 2, txtHeight,
-         bx + 10 + pitch + nameWidth, by + h - 10 - txtHeight, 0, &cFontWhite, -1., buf );
+         /* Add a description */
+         infocnt += scnprintf( &infobuf[infocnt], sizeof(infobuf)-infocnt, "%s\n\n", (p->description==NULL?_("No description available"):_(p->description)) );
+
+         /* show some additional information */
+         infocnt += scnprintf( &infobuf[infocnt], sizeof(infobuf)-infocnt, "%s\n"
+               "%s\n%s%s%s%s",
+               /* Redundant information. */
+               //spob_hasService( p, SPOB_SERVICE_LAND) ? _("This system is landable") : _("This system is not landable"),
+               //spob_hasService( p, SPOB_SERVICE_INHABITED) ? _("This system is inhabited") : _("This system is not inhabited"),
+               spob_hasService( p, SPOB_SERVICE_REFUEL) ? _("You can refuel here") : _("You cannot refuel here"),
+               spob_hasService( p, SPOB_SERVICE_BAR) ? _("This system has a bar") : _("This system does not have a bar"),
+               spob_hasService( p, SPOB_SERVICE_MISSIONS) ? _("This system offers missions") : _("This system does not offer missions"),
+               spob_hasService( p, SPOB_SERVICE_COMMODITY) ? "" : _("\nThis system does not have a trade outlet"),
+               spob_hasService( p, SPOB_SERVICE_OUTFITS) ? "" : _("\nThis system does not sell ship equipment"),
+               spob_hasService( p, SPOB_SERVICE_SHIPYARD) ? "" : _("\nThis system does not sell ships"));
+         //if (p->bar_description && spob_hasService( p, SPOB_SERVICE_BAR ))
+         //   infocnt += scnprintf( &infobuf[infocnt], sizeof(infobuf)-infocnt, "\n\n%s", _(p->bar_description) );
+      }
+
+      txtHeight = gl_printHeightRaw( &gl_smallFont, (w - nameWidth-pitch-60)/2, buf );
+
+      gl_printTextRaw( &gl_smallFont, (w - nameWidth - pitch - 60) / 2, txtHeight,
+            bx + 10 + pitch + nameWidth, by + h - 10 - txtHeight, 0, &cFontWhite, -1., buf );
    }
 
    /* show the trade/outfit/ship info */
@@ -617,12 +616,12 @@ static void map_system_array_update( unsigned int wid, const char* str )
       snprintf( buf_mass, sizeof(buf_mass), n_( "%d t", "%d t", (int)round( mass ) ), (int)round( mass ) );
 
       l += outfit_getNameWithClass( outfit, &infobuf[l], sizeof(infobuf)-l );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s\n\n", _(outfit->description) );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n%s\n\n", pilot_outfitDescription( player.p, outfit ) );
 
       /* FIXME: The point of this misery is to split desc_short into a 2-column layout.
        * It works poorly, but if we don't do this, check out e.g. the TeraCom Medusa Launcher in a 720p window. */
       char *desc_start = &infobuf[l];
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s\n\n", outfit->desc_short );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s\n\n", pilot_outfitSummary( player.p, outfit, 0 ) );
       while ( (desc_start = strchr( desc_start, '\n' )) != NULL ) {
          char *tab_pos = desc_start;
          desc_start = strchr( &tab_pos[1], '\n' );
@@ -743,6 +742,7 @@ void map_system_updateSelected( unsigned int wid )
    float g,o,s;
    nameWidth = 0; /* get the widest spob/star name */
    nshow=1;/* start at 1 for the sun*/
+   infobuf[0] = '\0'; /* clear buffer. */
    for (int i=0; i<array_size(sys->spobs); i++) {
       p = sys->spobs[i];
       if (spob_isKnown( p )) {
@@ -872,7 +872,7 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
 
    if (noutfits <= 0)
       return;
-   coutfits = outfits_imageArrayCells( (const Outfit**)cur_spob_sel_outfits, &noutfits );
+   coutfits = outfits_imageArrayCells( (const Outfit**)cur_spob_sel_outfits, &noutfits, player.p );
 
    xw = ( w - nameWidth - pitch - 60 ) / 2;
    xpos = 35 + pitch + nameWidth + xw;

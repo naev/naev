@@ -2,18 +2,18 @@
 <ssys name="Flok">
  <general>
   <radius>24500.000000</radius>
-  <stars>200</stars>
-  <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>200</spacedust>
+  <interference>22.000000</interference>
+  <nolanes/>
  </general>
- <pos x="15.000000" y="-258.500000"/>
+ <pos x="119.132950" y="87.715970"/>
  <spobs/>
  <jumps>
-  <jump target="Akodu">
+  <jump target="Firk">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Doowa">
+  <jump target="Terminus">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

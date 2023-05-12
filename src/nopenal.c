@@ -38,13 +38,9 @@ ALvoid (AL_APIENTRY *nalEffectfv)(ALuint,ALenum,ALfloat*);
  *    @param err Error to convert to string.
  *    @return String corresponding to the error.
  */
-void al_checkHandleError( const char *func, int line )
+void al_checkHandleError( ALenum err, const char *func, int line )
 {
-   ALenum err;
    const char *errstr;
-
-   /* Get the possible error. */
-   err = alGetError();
 
    /* No error. */
    if (err == AL_NO_ERROR)

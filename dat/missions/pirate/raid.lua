@@ -28,7 +28,6 @@ local lmisn = require "lmisn"
 local vntk = require "vntk"
 
 local sconvoy, sescorts -- Non-persistent state
--- luacheck: globals convoy_attacked convoy_board convoy_boarded convoy_done enter enter_delay land spawn_convoy (Hook functions passed by name)
 
 local function get_route( sys )
    local adj = sys:jumps()
@@ -77,7 +76,7 @@ function create ()
          return false
       end
       -- Must not be claimed
-      if not misn.claim( sys, true, true ) then
+      if not naev.claimTest( sys, true ) then
          return false
       end
       -- Must have two jumps that are fair away-ish
@@ -95,7 +94,7 @@ function create ()
 
    -- Choose system
    mem.targetsys = syslist[ rnd.rnd(1,#syslist) ]
-   if not misn.claim( mem.targetsys, false, true ) then
+   if not misn.claim( mem.targetsys, true ) then
       misn.finish(false)
    end
 
@@ -180,7 +179,7 @@ function accept ()
 end
 
 function enter ()
-   local q = player.pilot():cargoHas( mem.misn_cargo )
+   local q = player.fleetCargoOwned( mem.misn_cargo )
    if mem.convoy_spawned and q <= 0 then
       lmisn.fail(fmt.f(_("You did not recover any {cargo} from the convoy!"), {cargo=mem.misn_cargo}))
    end
@@ -197,10 +196,9 @@ function enter ()
 end
 
 function land ()
-   local pp = player.pilot()
-   local q = pp:cargoHas( mem.misn_cargo )
+   local q = player.fleetCargoOwned( mem.misn_cargo )
    if mem.convoy_spawned and q > 0 and spob.cur()==mem.returnpnt then
-      q = pp:cargoRm( mem.misn_cargo, q ) -- Remove it
+      q = player.fleetCargoRm( mem.misn_cargo, q ) -- Remove it
       local reward = mem.reward_base + q * mem.reward_cargo
       lmisn.sfxVictory()
       vntk.msg( _("Mission Success"), fmt.f(_("The workers unload your {cargo} and take it away to somewhere you can't see. As you wonder about your payment, you suddenly receive a message that #g{reward}#0 was transferred to your account."), {cargo=mem.misn_cargo, reward=fmt.credits(reward)}) )
@@ -219,8 +217,8 @@ function land ()
 end
 
 function enter_delay ()
-   mem.mrkentry = system.mrkAdd( mem.convoy_enter:pos(), _("Convoy Entry Point") )
-   mem.mrkexit = system.mrkAdd( mem.convoy_exit:pos(), _("Convoy Exit Point") )
+   mem.mrkentry = system.markerAdd( mem.convoy_enter:pos(), _("Convoy Entry Point") )
+   mem.mrkexit = system.markerAdd( mem.convoy_exit:pos(), _("Convoy Exit Point") )
 
    player.autonavReset( 5 )
    player.msg(fmt.f(_("The convoy will be coming in from {sys} shortly!"), {sys=mem.convoy_enter:dest()}))
@@ -325,11 +323,11 @@ function convoy_board ()
 end
 
 function convoy_boarded ()
-   if player.pilot():cargoHas( mem.misn_cargo ) > 0 then
+   if player.fleetCargoOwned( mem.misn_cargo ) > 0 then
       misn.osdGetActive(3)
    end
 end
 
 function convoy_done ()
-   system.mrkClear()
+   system.markerClear()
 end

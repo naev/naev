@@ -2,20 +2,29 @@
 <ssys name="Haered">
  <general>
   <radius>21000.000000</radius>
-  <stars>400</stars>
-  <interference>50.000000</interference>
+  <spacedust>400</spacedust>
+  <interference>112.500000</interference>
   <nebula volatility="10.000000" hue="240.000000">400.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="1018.261333" y="466.832000"/>
+ <pos x="1013.038352" y="347.593066"/>
  <spobs/>
  <jumps>
   <jump target="Cleai">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Protera">
+  <jump target="Leporis">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Scholz's Star">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
  </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

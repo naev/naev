@@ -2,11 +2,11 @@
 <ssys name="NGC-902">
  <general>
   <radius>15000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="-582.985236" y="36.264146"/>
+ <pos x="-401.640148" y="254.130039"/>
  <spobs>
   <spob_virtual>Empire Unpresence (Range 1)</spob_virtual>
   <spob_virtual>Independent All Unpresence (Range 1)</spob_virtual>

@@ -14,7 +14,7 @@ function attacked ( attacker )
       ai.pushtask( "attack", attacker )
 
    elseif task == "attack" then
-      if ai.targetid() ~= attacker then
+      if ai.taskdata() ~= attacker then
             ai.pushtask( "attack", attacker )
       end
    end
@@ -41,7 +41,7 @@ function attack( target )
    end
 
    local dir = ai.face( target )
-   local dist = ai.dist( ai.pos(target) )
+   local dist = ai.dist( target )
 
    -- Attack with primary weapon. Real AIs manage weapon sets so they can use missile launchers etc.
    if math.abs(dir) < math.rad(10) and dist > 300 then

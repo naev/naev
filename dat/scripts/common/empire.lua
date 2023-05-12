@@ -4,6 +4,9 @@
 -- This framework allows to keep consistency and abstracts around commonly used
 --  empire mission functions.
 --]]
+local portrait = require "portrait"
+local vn = require "vn"
+
 local emp = {}
 
 emp.prefix = "#g".._("EMPIRE: ").."#0" -- Repeatable Empire mission prefix
@@ -17,6 +20,40 @@ function emp.addCollectiveLog( text )
    shiplog.create("empire_collective", _("Empire Collective Campaign"), _("Empire"))
    shiplog.append("empire_collective", text)
 end
+
+emp.czesc = {
+   portrait = "empire/unique/czesc.webp",
+   name = _("Lieutenant Czesc"),
+   colour = nil,
+   transition = "pixelize",
+   description = _("Lieutenant Czesc, from the Empire Armada Shipping Division, is sitting at the bar."),
+}
+emp.czesc.image = portrait.getFullPath(emp.czesc.portrait)
+emp.soldner = {
+   portrait = "empire/unique/soldner.webp",
+   name = _("Commander Soldner"),
+   colour = nil,
+   transition = "pixelize",
+   description = _("You see Commander Soldner. He is expecting you."),
+}
+emp.soldner.image = portrait.getFullPath(emp.soldner.portrait)
+
+function emp.vn_czesc( params )
+   return vn.Character.new( emp.czesc.name,
+      tmerge( {
+         image=emp.czesc.image,
+         color=emp.czesc.colour,
+      }, params) )
+end
+
+function emp.vn_soldner( params )
+   return vn.Character.new( emp.soldner.name,
+      tmerge( {
+         image=emp.soldner.image,
+         color=emp.soldner.colour,
+      }, params) )
+end
+
 
 emp.rewards = {
    cargo00 = 100e3,

@@ -2,11 +2,10 @@
 <ssys name="Anrique">
  <general>
   <radius>17500.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="1166.705242" y="-546.136900"/>
+ <pos x="1262.642740" y="-354.918290"/>
  <spobs/>
  <jumps>
   <jump target="Herakin">

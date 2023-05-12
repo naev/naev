@@ -11,8 +11,7 @@
 --]]
 
 -- flies to the target planet
-function moveto ()
-   local target = ai.target()
+function moveto( target )
    local dir = ai.face(target)
    local dist = ai.dist( target )
    local bdist = ai.minbrakedist()

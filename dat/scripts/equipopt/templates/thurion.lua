@@ -43,7 +43,6 @@ local thurion_outfits = eoutfits.merge{{
 }}
 
 local thurion_params = {
-   --["Sirius Demon"] = function () return {
    ["Thurion Apprehension"] = function () return {
          type_range = {
             ["Launcher"] = { max = 1 },
@@ -55,7 +54,6 @@ local thurion_params = {
          },
       } end,
 }
---local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 local thurion_cores = {
 }
 
@@ -89,6 +87,12 @@ local function equip_thurion( p, opt_params )
    end
    params = tmerge( params, opt_params )
 
+   -- Outfits
+   local outfits = thurion_outfits
+   if opt_params.outfits_add then
+      outfits = eoutfits.merge{ outfits, opt_params.outfits_add }
+   end
+
    -- See cores
    local cores = opt_params.cores
    if not cores then
@@ -105,7 +109,7 @@ local function equip_thurion( p, opt_params )
    mem.equip = { type="thurion", level="elite" }
 
    -- Try to equip
-   return optimize.optimize( p, cores, thurion_outfits, params )
+   return optimize.optimize( p, cores, outfits, params )
 end
 
 return equip_thurion

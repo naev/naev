@@ -9,8 +9,12 @@ on:
 
 name: Release
 
+permissions: {}
 jobs:
   "Package_Source":
+    permissions:
+      contents: read  #  to fetch code (actions/checkout)
+
     runs-on: ubuntu-latest
 
     container:
@@ -18,7 +22,7 @@ jobs:
 
     steps:
       - name: Checkout Naev Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
           path: source
@@ -26,54 +30,62 @@ jobs:
 
       - name: Package Dist
         run: |
-          meson setup build source -Dnightly=false -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
+          meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
           meson dist -C build --no-tests --include-subprojects
 
       - name: Collect Artifacts
         run: |
           mkdir -p build/dist
           cp -r source/utils/ci/itch source/utils/ci/steam source/utils/ci/gh build/dist/
+          cp source/utils/buildAppImage.sh build/dist
           mv build/meson-dist/naev-*.tar.xz build/dist/source.tar.xz
           cp source/CHANGELOG build/dist
           cp source/dat/VERSION build/dist
 
       - name: Upload Source Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: naev-dist
           path: ${{ github.workspace }}/build/dist/source.tar.xz
           if-no-files-found: error
 
       - name: Upload Changelog Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: naev-changelog
           path: ${{ github.workspace }}/build/dist/CHANGELOG
           if-no-files-found: error
 
       - name: Upload Version Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: naev-version
           path: ${{ github.workspace }}/build/dist/VERSION
           if-no-files-found: error
 
+      - name: Upload AppImage Packaging Script Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: naev-appimage-packaging
+          path: ${{ github.workspace }}/build/dist/buildAppImage.sh
+          if-no-files-found: error
+
       - name: Upload GitHub Deployment Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: naev-github-deployment
           path: ${{ github.workspace }}/build/dist/gh/*
           if-no-files-found: error
 
       - name: Upload Steam Deployment Script Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: naev-steam-deployment
           path: ${{ github.workspace }}/build/dist/steam/*
           if-no-files-found: error
 
       - name: Upload Itch Deployment Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: naev-itch-deployment
           path: ${{ github.workspace }}/build/dist/itch/*
@@ -82,134 +94,13 @@ jobs:
   "Linux_Naev_Release":
     needs: "Package_Source"
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        shell: bash
     container:
-      image: "ghcr.io/naev/naev-linux-lts:latest"
-
-    steps:
-      - name: Get Source
-        uses: actions/download-artifact@v2
-        with:
-          name: naev-dist
-
-      - name: Extract Source
-        run: |
-          mkdir source
-          tar -xf source.tar.xz -C source --strip 1
-
-      - name: Compile AppImage
-        run: |
-          ./source/utils/buildAppImage.sh -s "source" -b "build"
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: naev-linux-x86-64
-          path: "${{ github.workspace }}/build/dist/*"
-
-  "Windows_Naev_Release":
-    needs: "Package_Source"
-    runs-on: ubuntu-latest
-
-    container:
-      image: "ghcr.io/naev/naev-windows:latest"
-
-    steps:
-      - name: Get Source
-        uses: actions/download-artifact@v2
-        with:
-          name: naev-dist
-
-      - name: Extract Source
-        run: |
-          mkdir source
-          tar -xf source.tar.xz -C source --strip 1
-
-      - name: Meson Setup
-        run: |
-          meson setup build source \
-              --prefix="$(pwd)"/source/extras/windows/installer \
-              --bindir=bin \
-              -Dndata_path=bin \
-              --cross-file='source/utils/build/windows_cross_mingw.ini' \
-              --buildtype=release \
-              --force-fallback-for=glpk,SuiteSparse \
-              -Dnightly=false \
-              -Db_lto=true \
-              -Dauto_features=enabled \
-              -Ddocs_c=disabled \
-              -Ddocs_lua=disabled
-
-      - name: Meson Compile
-        run: |
-          meson compile -C build
-
-      - name: Meson Install
-        run: |
-          meson install -C build
-
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: naev-win64
-          path: ${{ github.workspace }}/build/dist/*
-          if-no-files-found: error
-
-  "Darwin_Naev_Release":
-    needs: "Package_Source"
-    runs-on: ubuntu-latest
-    container:
-      image: "ghcr.io/naev/naev-macos:latest"
-
-    steps:
-      - name: Get Source
-        uses: actions/download-artifact@v2
-        with:
-          name: naev-dist
-
-      - name: Extract Source
-        run: |
-          mkdir source
-          tar -xf source.tar.xz -C source --strip 1
-
-      - name: Meson Setup
-        run: |
-          meson setup build source \
-              --prefix="$(pwd)"/build/dist/Naev.app \
-              --bindir=Contents/MacOS \
-              -Dndata_path=Contents/Resources \
-              --cross-file='source/utils/build/macos_cross_osxcross.ini' \
-              --buildtype=release \
-              -Dnightly=false \
-              -Db_lto=true \
-              -Dauto_features=enabled \
-              -Ddocs_c=disabled \
-              -Ddocs_lua=disabled
-
-      - name: Meson Compile
-        run: |
-          meson compile -C build
-
-      - name: Meson Install
-        run: |
-          meson install -C build
-          cd build/dist
-          zip -r naev-macos.zip Naev.app/*
-          rm -rf Naev.app
-
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: naev-macos
-          path: ${{ github.workspace }}/build/dist/*
-          if-no-files-found: error
-
-  "Steam_Naev_Release":
-    needs: "Package_Source"
-    runs-on: ubuntu-latest
-
-    container:
-      image: "ghcr.io/naev/naev-steamruntime:latest"
+      image: "ghcr.io/naev/naev-steamfrankenruntime:latest"
+      volumes:
+        - ${{ github.workspace }}:${{ github.workspace }}
 
     steps:
       - name: Get Source
@@ -225,11 +116,12 @@ jobs:
       - name: Meson Setup
         run: |
           meson setup build source \
-              --native-file='source/utils/build/linux_steamruntime.ini' \
+              --native-file='source/utils/build/linux_steamruntime_scout.ini' \
               --buildtype=release \
-              --force-fallback-for=SuiteSparse,sdl2_image \
+              --force-fallback-for=sdl2_image,glpk,SuiteSparse \
+              -Dsteamruntime=true \
               -Dprefix="/usr" \
-              -Dnightly=false \
+              -Dinstaller=true \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
@@ -245,6 +137,10 @@ jobs:
         env:
           DESTDIR: ${{ github.workspace }}/staging
 
+      - name: Compile AppImage
+        run: |
+              ./source/utils/buildAppImage.sh -s source -b build
+
       - name: Collect Steam Linux64 Artifacts
         run: |
           mkdir -p build/dist/
@@ -252,19 +148,159 @@ jobs:
           mv staging/usr/bin/naev build/dist/naev.x64
           chmod +x build/dist/naev.x64
 
-          tar -cJvf build/dist/steam-ndata.tar.xz -C staging/usr/share/naev dat
+          tar -cJvf build/dist/naev-appdir.tar.xz -C  build/dist/ AppDir
+
+          tar -cJvf build/dist/naev-ndata.tar.xz -C staging/usr/share/naev dat
 
       - name: Upload Naev Binary Artifact
         uses: actions/upload-artifact@v1
         with:
           name: naev-steamruntime
-          path: build/dist/naev.x64
+          path: ${{ github.workspace }}/build/dist/naev.x64
 
       - name: Upload Naev Data Artifact
         uses: actions/upload-artifact@v1
         with:
           name: naev-ndata
-          path: build/dist/steam-ndata.tar.xz
+          path: ${{ github.workspace }}/build/dist/naev-ndata.tar.xz
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: naev-linux-appdir-x86-64
+          path: "${{ github.workspace }}/build/dist/naev-appdir.tar.xz"
+
+  "Linux_Package_Release":
+    needs:
+      [
+        Package_Source,
+        Linux_Naev_Release
+      ]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    container:
+      image: "ghcr.io/naev/naev-release:latest"
+
+    steps:
+      - name: Get AppImage Packaging Script
+        uses: actions/download-artifact@v3
+        with:
+          name: naev-appimage-packaging
+
+      - name: Get AppDir
+        uses: actions/download-artifact@v3
+        with:
+          name: naev-linux-appdir-x86-64
+
+      - name: Package AppImage
+        run: |
+              chmod +x buildAppImage.sh
+              tar -Jxf naev-appdir.tar.xz
+              ./buildAppImage.sh -p -a "./AppDir" -b build
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: naev-linux-x86-64
+          path: "${{ github.workspace }}/build/dist/*"
+
+  "Windows_Naev_Release":
+    needs: "Package_Source"
+    runs-on: ubuntu-latest
+
+    container:
+      image: "ghcr.io/naev/naev-windows:latest"
+
+    steps:
+      - name: Get Source
+        uses: actions/download-artifact@v3
+        with:
+          name: naev-dist
+
+      - name: Extract Source
+        run: |
+          mkdir source
+          tar -xf source.tar.xz -C source --strip 1
+
+      - name: Meson Setup
+        run: |
+          meson setup build source \
+              --prefix="$(pwd)"/build/windows \
+              --bindir=. \
+              -Dndata_path=. \
+              --cross-file='source/utils/build/windows_cross_mingw.ini' \
+              --buildtype=release \
+              --force-fallback-for=glpk,SuiteSparse \
+              -Dinstaller=true \
+              -Drelease=true \
+              -Db_lto=true \
+              -Dauto_features=enabled \
+              -Ddocs_c=disabled \
+              -Ddocs_lua=disabled
+
+      - name: Meson Compile
+        run: |
+          meson compile -C build
+
+      - name: Meson Install
+        run: |
+          meson install -C build
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: naev-win64
+          path: ${{ github.workspace }}/build/dist/*
+          if-no-files-found: error
+
+  "Darwin_Naev_Release":
+    needs: "Package_Source"
+    runs-on: ubuntu-latest
+    container:
+      image: "ghcr.io/naev/naev-macos:latest"
+
+    steps:
+      - name: Get Source
+        uses: actions/download-artifact@v3
+        with:
+          name: naev-dist
+
+      - name: Extract Source
+        run: |
+          mkdir source
+          tar -xf source.tar.xz -C source --strip 1
+
+      - name: Meson Setup
+        run: |
+          meson setup build source \
+              --prefix="$(pwd)"/build/macos/Naev.app \
+              --bindir=Contents/MacOS \
+              -Dndata_path=Contents/Resources \
+              --cross-file='source/utils/build/macos_cross_osxcross.ini' \
+              --buildtype=release \
+              -Dinstaller=true \
+              -Drelease=true \
+              -Db_lto=true \
+              -Dauto_features=enabled \
+              -Ddocs_c=disabled \
+              -Ddocs_lua=disabled
+
+      - name: Meson Compile
+        run: |
+          meson compile -C build
+
+      - name: Meson Install
+        run: |
+          meson install -C build
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: naev-macos
+          path: ${{ github.workspace }}/build/dist/*
+          if-no-files-found: error
 
   "Steam_Naev_Soundtrack_Release":
     needs: "Package_Source"
@@ -275,21 +311,21 @@ jobs:
 
     steps:
       - name: Get Source
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v3
         with:
           name: naev-dist
 
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf naev-dist/source.tar.xz -C source --strip 1
+          tar -xf source.tar.xz -C source --strip 1
 
       - name: Meson Setup
         run: |
           meson setup build source \
               --native-file='source/utils/build/linux.ini' \
               --buildtype=release \
-              -Dnightly=false \
+              -Dinstaller=true \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
@@ -313,20 +349,23 @@ jobs:
           ./source/utils/convertToMP3.sh -i build/staging -f ogg -o build/dist/steam
 
       - name: Upload Soundtrack Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: naev-soundtrack
           path: ${{ github.workspace }}/build/dist/naev-*-soundtrack.zip
           if-no-files-found: error
 
       - name: Upload Steam Soundtrack Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: naev-steam-soundtrack
           path: ${{ github.workspace }}/build/dist/steam/*
           if-no-files-found: error
 
   "Upload_Naev_Release":
+    permissions:
+      contents: write  #  to create a release (ncipollo/release-action)
+
     strategy:
       fail-fast: true
       matrix:
@@ -343,17 +382,16 @@ jobs:
     needs:
       [
         Package_Source,
-        Linux_Naev_Release,
+        Linux_Package_Release,
         Windows_Naev_Release,
         Darwin_Naev_Release,
-        Steam_Naev_Release,
         Steam_Naev_Soundtrack_Release,
       ]
     if: ${{ github.repository == 'naev/naev' }}
 
     steps:
       - name: Checkout Naev Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         if: ${{ matrix.releasetype == 'github' }}
 
       - name: Create Release Staging and Output Areas
@@ -362,7 +400,7 @@ jobs:
         working-directory: ${{ github.workspace }}
 
       - name: Download Artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           path: ${{ github.workspace }}/build/staging
 
@@ -373,6 +411,7 @@ jobs:
           bodyFile: "build/staging/naev-changelog/CHANGELOG"
           token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: false
+          makeLatest: true
 
       - name: Build and Upload Github Release
         if: ${{ matrix.releasetype == 'github' }}

@@ -16,7 +16,7 @@ function init( p, po )
 end
 
 function update( p, po, _dt )
-   local h = p:getHostiles( range )
+   local h = p:getEnemies(range) -- Only consider visible ships
    local n = 0
    for k,v in ipairs(h) do
       local l = pilotToLevel( v )

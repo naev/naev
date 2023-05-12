@@ -171,7 +171,7 @@ static void nebu_renderBackground( const double dt )
    /* Set shader uniforms. */
    glUniform1f(shaders.nebula_background.eddy_scale, nebu_view * cam_getZoom() / nebu_scale);
    glUniform1f(shaders.nebula_background.time, nebu_time);
-   glUniform1f(shaders.nebula_background.brightness, conf.nebu_brightness);
+   glUniform1f(shaders.nebula_background.nonuniformity, conf.nebu_nonuniformity);
 
    /* Draw. */
    glEnableVertexAttribArray( shaders.nebula_background.vertex );
@@ -298,7 +298,7 @@ void nebu_renderOverlay( const double dt )
    glUniform1f(shaders.nebula.horizon, nebu_view * z / nebu_scale);
    glUniform1f(shaders.nebula.eddy_scale, nebu_dx * z / nebu_scale);
    glUniform1f(shaders.nebula.time, nebu_time);
-   glUniform1f(shaders.nebula.brightness, conf.nebu_brightness);
+   glUniform1f(shaders.nebula.nonuniformity, conf.nebu_nonuniformity);
 
    /* Draw. */
    glEnableVertexAttribArray(shaders.nebula.vertex);

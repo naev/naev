@@ -7,7 +7,7 @@
   <priority>7</priority>
   <mass>40</mass>
   <price>140000</price>
-  <description>Expensive though they are the Red Star Organisation started producing these hulls to provide more cargo space but also provide better protection to their ships involved in relief efforts during wars and working in less savoury parts of the galaxy. Since the extra bulk and protrusions from the cargo sections make it easier to detect anyway, the Organisation went ahead and added an eletromagnetic shockwave absorbtion generator that, though also increasing the hull signature and CPU usage also causes missile jams, reduces the hulls tracability and reduces splash damage from weapon strikes.</description>
+  <description>The Imperial Red Star is dedicated to relief efforts in areas stricken by war, piracy and disease. Recently developed by the organization is a series of specialized cargo hulls meant to maximize the odds of their supplies and personnel safely arriving where they are needed most. This hull integrates scramblers to help blunt the effects of homing missiles and turret tracking, allowing small ships to more effectively run blockades by pirates and privateers.</description>
   <gfx_store>rs_hull_s.webp</gfx_store>
   <cpu>-24</cpu>
  </general>
@@ -18,7 +18,7 @@
   <cargo_inertia>-10</cargo_inertia>
   <cargo_mod>10</cargo_mod>
   <ew_hide>-20</ew_hide>
-  <ew_evade>10</ew_evade>
+  <ew_evade>30</ew_evade>
   <jam_chance>42</jam_chance>
  </specific>
 </outfit>

@@ -2,11 +2,10 @@
 <ssys name="Damien">
  <general>
   <radius>25000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-536.295529" y="-927.777675"/>
+ <pos x="-305.749098" y="-757.910782"/>
  <spobs>
   <spob>Anker</spob>
   <spob>Damien VII</spob>
@@ -22,10 +21,6 @@
   <jump target="Ruadan">
    <autopos/>
    <hide>0.000000</hide>
-  </jump>
-  <jump target="Severus">
-   <pos x="25200.916889" y="-17334.000223"/>
-   <hide>1.000000</hide>
   </jump>
   <jump target="Za'lek">
    <autopos/>

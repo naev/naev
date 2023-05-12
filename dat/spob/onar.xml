@@ -7,14 +7,14 @@
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>33.333333</base>
-  <bonus>16.666667</bonus>
+  <base>33.333300</base>
+  <bonus>16.666700</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>O</class>
   <population>700000</population>
-  <hide>1.000000</hide>
+  <hide>0.600000</hide>
   <services>
    <land/>
    <refuel/>
@@ -36,4 +36,7 @@
   <item>Missiles 2</item>
   <item>Heavy Weapons 1</item>
  </tech>
+ <tags>
+  <tag>research</tag>
+ </tags>
 </spob>

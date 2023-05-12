@@ -38,7 +38,6 @@ local vntk     = require 'vntk'
 local dv       = require "common.dvaered"
 local pir      = require "common.pirate"
 
--- luacheck: globals enter land loading land_state1 land_state3 escape biker1 biker2 biker3 biker4 bbb1 spawnGang nextActivity timerIncrement startHallway finishHallway tick timeOver killPil1 killPil2 killPil3 bbb1bis bbb2 startDuel killBBB boardBBB
 
 
 local agentPort = "dvaered/dv_military_m2.webp"
@@ -56,6 +55,9 @@ local gangs = { _("Big Bang Band"), -- gang of Blue Belly Billy
                 _("Flamethrower Gang"),
                 _("The Stabbers"),
                 _("The Warriors") }
+
+-- Forward declarations of functions
+local spawnGang, land_state1, land_state3
 
 function create()
    mem.baronpnt, mem.baronsys  = spob.getS("Ulios") -- Where you get paid
@@ -76,33 +78,33 @@ function accept()
    local doaccept = false
 
    vn.transition()
-   sol(_("Good day, citizen. I have a new task for you, in relation to our efforts to get a second battlecruiser for Lord Fatgun. Are you interested?"))
+   sol(_([["Good day, citizen. I have a new task for you, in relation to our efforts to get a second battlecruiser for Lord Fatgun. Are you interested?"]]))
    vn.menu{
-      {_("Of course! What should I do?"), "accept"},
-      {_("I'm afraid I have other things to do."), "refuse"},
+      {_([["Of course! What should I do?"]]), "accept"},
+      {_([["I'm afraid I have other things to do."]]), "refuse"},
    }
 
    vn.label("refuse")
-   sol(_([[I guess working for a true major Warlord might be too challenging for someone like you. Too bad.]]))
+   sol(_([["I guess working for a true major Warlord might be too challenging for someone like you. Too bad."]]))
    vn.func( function () doaccept = false end )
    vn.done()
 
    vn.label("accept")
-   sol(_([[I knew you would say that.
-So, as the negotiations with Goddard shareholders is making progress, we identified an other private person that needs to be… worked on. It is the very famous Baron Sauterfeldt, President of the recently-created Hereditary Democratic Republic of Ulios.]]))
+   sol(_([["I knew you would say that.
+So, as the negotiations with Goddard shareholders is making progress, we identified another private person that needs to be… worked on. It is the very famous Baron Sauterfeldt, President of the recently-created Hereditary Democratic Republic of Ulios."]]))
    vn.func( function () doaccept = true end )
    vn.menu{
-      {_("Shall I exert some negotiation on him with my cannons?"), "negotiate"},
-      {_("When you say he needs to be worked on… What does that imply?"), "work"},
+      {_([["Shall I exert some negotiation on him with my cannons?"]]), "negotiate"},
+      {_([["When you say he needs to be worked on… What does that imply?"]]), "work"},
    }
 
    vn.label("negotiate")
-   sol(_([[Oh no! We do not need you to provide to Mr. Sauterfeldt the same kind of service you did to Mrs. Grosjean. It would even rather be the exact opposite.]]))
+   sol(_([["Oh no! We do not need you to provide to Mr. Sauterfeldt the same kind of service you did to Mrs. Grosjean. It would even rather be the exact opposite."]]))
    vn.jump("work")
 
    vn.label("work")
-   sol(fmt.f(_([[The Baron is in not so cordial terms with the Imperial authorities (partially due to the fact that he declared Ulios independent not so long ago). By a complex alliance game, this might get him to back Lord Fatgun's views.
-He told me that he was impressed by the way the "obstacle Agrippina Grosjean" was handled and needs us to provide him a pilot for some "tiny special task" (those are his words). I have no idea what this task might be, but he required me to send you directly to {pnt} in {sys} to meet him.]]), {pnt=mem.baronpnt, sys=mem.baronsys}))
+   sol(fmt.f(_([["The Baron is in not so cordial terms with the Imperial authorities (partially due to the fact that he declared Ulios independent not so long ago). By a complex alliance game, this might get him to back Lord Fatgun's views."
+"He told me that he was impressed by the way the 'obstacle Agrippina Grosjean' was handled and needs us to provide him a pilot for some 'tiny special task' (those are his words). I have no idea what this task might be, but he required me to send you directly to {pnt} in {sys} to meet him."]]), {pnt=mem.baronpnt, sys=mem.baronsys}))
 
    vn.done()
    vn.run()
@@ -112,7 +114,7 @@ He told me that he was impressed by the way the "obstacle Agrippina Grosjean" wa
 
    -- Mission details
    misn.setTitle(_("Dvaered Negotiation 2"))
-   misn.setReward( "They did not tell you" )
+   misn.setReward( _("They did not tell you") )
    misn.setDesc( fmt.f(_("A Dvaered Warlord needs you to perform a tiny special task for the Baron Sauterfeldt. Only the Baron knows what that task is.")))
    mem.misn_marker = misn.markerAdd( mem.baronpnt )
    mem.misn_state = 0
@@ -264,7 +266,7 @@ function land()
       vn.na(_([[After landing, you are approached by a group of well-dressed people: "His Lordship, the Baron Sauterfeldt, will encounter you. Please follow us to the presidential palace."
 They guide you to the urban transport station, and while a crowd of workers are waiting for the next train in a suffocating heat, you enter a small shuttle: "His Lordship decided the creation of the hypervelocity shuttles system last cycle. Since then, this system saves much time to first-class citizen who used to get stuck in traffic jams or in over-crowded heliports. His genial idea was to use the same tunnel net as the subway."]]))
       vn.na(_([["The shuttle system leads us directly under the presidential palace. I'm afraid you won't see its new pediment that His Lordship had built recently."
-You proceed to follow your guides through a checkpoint into the administrative part of the palace, the kind of place where people wear moccasins and the carpets have no spots. You enter a seemingly common and empty meeting room and start to ask yourself where the Baron is.]])) -- Remark: implicitly, we suggest the baron is in his Kahan, the Pinnacle.
+You proceed to follow your guides through a checkpoint into the administrative part of the palace, the kind of place where people wear moccasins and the carpets have no spots. You enter a seemingly common and empty meeting room and start to ask yourself where the Baron is.]])) -- Remark: implicitly, we suggest the baron is in his Gauss, the Pinnacle.
       vn.na(fmt.f(_([[Suddenly, a huge holographic face appears in the centre of the room:
 "Hello, and welcome on the planet Ulios, {player}! I am the Baron Dovai Sauterfeldt. I hope you got a smooth travel to our very remote humble piece of land! I am truly delighted to meet you, {player}, truly… Or did we already meet before? Mmmm! I am afraid I am perfectly incapable to remember most of the astonishingly inspiring people I tend to meet.
 "Anyway, you are truly most certainly one very inspiring person, {player}, aren't you? Yes, you are! You know what? I am really happy to finally have time to discuss with such a notable person as you."]]), {player=player.name()}))
@@ -290,7 +292,7 @@ The man on your right answers: "Certainly, your Lordship."]]))
          fmt.f(_("Go back to {pnt} in {sys}"), {pnt=mem.baronpnt,sys=mem.baronsys} ),
       } )
       misn.markerMove( mem.misn_marker, mem.convpnt )
-      misn.setReward( "They still did not tell you" )
+      misn.setReward( _("They still did not tell you") )
       misn.setDesc( fmt.f(_("The Baron Sauterfeldt wants you to defy a Hyena biker to steal her left nozzle hubcap, that happens to be sort of a piece of fine art.")))
 
    -- Player arrives at Hyena festival
@@ -311,16 +313,16 @@ The man on your right answers: "Certainly, your Lordship."]]))
 "That is awesome, my little colonel Orcon! The pilot you recruited for me really made it. I am very pleased. Now, I guess I have no further objections to let your little friend, the Lord Whatsoever, add a new toy to his arsenal. As promised, I will call the sales manager of Goddard right now!"]])) -- TODO: once everyone has a portrait, rework that part
       vn.na(_([[The Dvaered colonel and you get promptly dismissed, and he talks with you on the way back.]]))
       local sol = vn.newCharacter( _("Colonel Okran"), { image=portrait.getFullPath(agentPort) } )
-      sol(fmt.f(_([[Citizen, you apparently did a pretty good job, out there. I did not fully understand why the Baron Sauterfeldt did want you to get your hands on that… piece of… stuff, but what is certain is that we can now count on him for getting our second battleship.
-You deserve your reward. Please receive {credits}.]]), {credits=fmt.credits(pay)}))
+      sol(fmt.f(_([["Citizen, you apparently did a pretty good job, out there. I did not fully understand why the Baron Sauterfeldt did want you to get your hands on that… piece of… stuff, but what is certain is that we can now count on him for getting our second battleship."
+"You deserve your reward. Please receive {credits}."]]), {credits=fmt.credits(pay)}))
       vn.menu{
          {_("Talk with Okran"), "talk"},
          {_("Leave Okran ASAP"), "shutup"},
       }
 
       vn.label("talk")
-      sol(_([[Hopefully, we should now have a sufficient number of supporters inside The Goddard Company to ensure we will get our ship. I will not be annoyed not to have to take part anymore to those shenanigans with that decadent galactic oligarchy.]]))
-      sol(_([[You know, as a Dvaered, I have been raised in a much simpler environment, far from all those sophistications. Everything in a place like Ulios seems to have been made to make me feel uncomfortable. Look for example at this first-class suburban shuttle we took to go from spaceport to the palace, and back. This kind of service is an insult to the regular workers who have to use crowded, hot and clammy trains. No Dvaered in their right mind would endorse such a thing. Except for the decadent Warlords like Lady Bitterfly or Lord Chainsaw, of course.]]))
+      sol(_([["Hopefully, we should now have a sufficient number of supporters inside The Goddard Company to ensure we will get our ship. I will not be annoyed not to have to take part anymore to those shenanigans with that decadent galactic oligarchy."]]))
+      sol(_([["You know, as a Dvaered, I have been raised in a much simpler environment, far from all those sophistications. Everything in a place like Ulios seems to have been made to make me feel uncomfortable. Look for example at this first-class suburban shuttle we took to go from spaceport to the palace, and back. This kind of service is an insult to the regular workers who have to use crowded, hot and clammy trains. No Dvaered in their right mind would endorse such a thing. Except for the decadent Warlords like Lady Bitterfly or Lord Chainsaw, of course."]]))
       -- Okran talks about the fact that Dvaered ideology is based on egalitarianism. But with time, an increasing number of Warlords and generals manage to obtain special privileges. Dvaered society is also haunted by the fear of decadence
       vn.jump("shutup")
 
@@ -361,12 +363,12 @@ end
 function escape()
    -- Player quits in the middle of the Hallway to Hell
    if mem.misn_state == 2 then
-      vntk.msg("Mission Failure",_([[You were supposed to cross the Hallway to Hell, not to cowardly run away.]]))
+      vntk.msg(_("Mission Failure"),_([[You were supposed to cross the Hallway to Hell, not to cowardly run away.]]))
       misn.finish(false)
 
    -- Player escapes the fight with BBB
    elseif mem.misn_state == 5 then
-      vntk.msg("Mission Failure",_([[You were supposed to defeat Blue Belly Billy, not to run away.]]))
+      vntk.msg(_("Mission Failure"),_([[You were supposed to defeat Blue Belly Billy, not to run away.]]))
       misn.finish(false)
    end
 end
@@ -377,7 +379,7 @@ function biker1()
    vn.scene()
    local biker = vn.newCharacter( _("Hyena Biker"), { image=portrait.getFullPath(npc1) } )
    vn.transition()
-   biker(_([[The Hyena is much more than just an interceptor. It's a way of life: speed, adrenalin, and leather jackets. That ship is awesome and unforgiving: any error can be fatal when you fly it out there.]]))
+   biker(_([["The Hyena is much more than just an interceptor. It's a way of life: speed, adrenalin, and leather jackets. That ship is awesome and unforgiving: any error can be fatal when you fly it out there."]]))
    vn.done()
    vn.run()
 end
@@ -386,7 +388,7 @@ function biker2()
    vn.scene()
    local biker = vn.newCharacter( _("Hyena Biker"), { image=portrait.getFullPath(npc2) } )
    vn.transition()
-   biker(_([[You came for the festival? What gang do you belong to? You don't wear any gang jacket.]]))
+   biker(_([["You came for the festival? What gang do you belong to? You don't wear any gang jacket."]]))
    vn.done()
    vn.run()
 end
@@ -395,7 +397,7 @@ function biker3()
    vn.scene()
    local biker = vn.newCharacter( _("Hyena Biker"), { image=portrait.getFullPath(npc3) } )
    vn.transition()
-   biker(_([[Of course, we are gangs! We make tons of totally criminal stuff! One day, I even parked my Hyena at a spot reserved for delivery ships!]]))
+   biker(_([["Of course, we are gangs! We make tons of totally criminal stuff! One day, I even parked my Hyena at a spot reserved for delivery ships!"]]))
    vn.done()
    vn.run()
 end
@@ -404,7 +406,7 @@ function biker4()
    vn.scene()
    local biker = vn.newCharacter( _("Hyena Biker"), { image=portrait.getFullPath(npc4) } )
    vn.transition()
-   biker(_([[Me and my buddies will show an incredible Hyena trick at this cycle's festival: two Hyenas fly side by side at full speed, then both pilots eject from their ship and enter the other one. I'm with the Stabbers Gang.]]))
+   biker(_([["Me and my buddies will show an incredible Hyena trick at this cycle's festival: two Hyenas fly side by side at full speed, then both pilots eject from their ship and enter the other one. I'm with the Stabbers Gang."]]))
    vn.done()
    vn.run()
 end
@@ -415,66 +417,66 @@ function bbb1()
    vn.scene()
    local biker = vn.newCharacter( _("Hyena Biker"), { image=portrait.getFullPath(BBB1Port) } )
    vn.transition()
-   biker(_([[My name is Big Bunny Benny. I never met you before. Are you a Hyena biker?]]))
+   biker(_([["My name is Big Bunny Benny. I never met you before. Are you a Hyena biker?"]]))
    vn.menu{
-      {_("Of course I am!"), "biker"},
-      {_("I am not, but I'd like to learn."), "noob"},
-      {_("No, I just came to steal someone's nozzle hubcap."), "steal"},
-      {_("No, I just came to defy someone."), "duel"},
+      {_([["Of course I am!"]]), "biker"},
+      {_([["I am not, but I'd like to learn."]]), "noob"},
+      {_([["No, I just came to steal someone's nozzle hubcap."]]), "steal"},
+      {_([["No, I just came to defy someone."]]), "duel"},
    }
 
    vn.label("biker")
-   biker(_([[For real? What gang do you belong to?]]))
+   biker(_([["For real? What gang do you belong to?"]]))
    vn.menu{
-      {_("The Torpedo Crew"), "noob"},
-      {_("The Heavy Headbutt Gang"), "headbutt"},
-      {_("The Boring Bears Band"), "noob"},
-      {_("The Earless Painters"), "noob"},
-      {_("I lied. I'm no biker."), "noob"},
+      {_([["The Torpedo Crew"]]), "noob"},
+      {_([["The Heavy Headbutt Gang"]]), "headbutt"},
+      {_([["The Boring Bears Band"]]), "noob"},
+      {_([["The Earless Painters"]]), "noob"},
+      {_([["I lied. I'm no biker."]]), "noob"},
    }
 
    vn.label("noob")
-   biker(_([[Yeah, that confirms my first impression: you're a authentic noob. If you want to become a biker, you first need to join a gang. For that, you need to prove yourself by beating a special challenge.]])) -- Actually, later, one could allow the player to join one of the gangs
+   biker(_([["Yeah, that confirms my first impression: you're a authentic noob. If you want to become a biker, you first need to join a gang. For that, you need to prove yourself by beating a special challenge."]])) -- Actually, later, one could allow the player to join one of the gangs
    vn.menu{
-      {_("What kind of challenge?"), "challenge"},
-      {_("I'd like to defy a gang member."), "duel"},
-      {_("Not interested, I just came to steal someone's nozzle hubcap."), "steal"},
+      {_([["What kind of challenge?"]]), "challenge"},
+      {_([["I'd like to defy a gang member."]]), "duel"},
+      {_([["Not interested, I just came to steal someone's nozzle hubcap."]]), "steal"},
    }
 
    vn.label("steal")
-   biker(_([[Seriously? You must have been sent by the Count Sauerkartoffel then? For some reason, he keeps on sending private pilots after Blue Belly Billy's left nozzle hubcap. Usually, they pretend to want to defy Billy. Sauerkartoffel must be short of decently-smart henchmen given how subtlety-deficient you look. Wait? Have you been recruited through a Dvaered Warlord? That sounds very possible.]]))
+   biker(_([["Seriously? You must have been sent by the Count Sauerkartoffel then? For some reason, he keeps on sending private pilots after Blue Belly Billy's left nozzle hubcap. Usually, they pretend to want to defy Billy. Sauerkartoffel must be short of decently-smart henchmen given how subtlety-deficient you look. Wait? Have you been recruited through a Dvaered Warlord? That sounds very possible."]]))
    vn.jump("hallway")
 
    vn.label("duel")
-   biker(_([[Ah! You came here to defy a gang member! Do you know that gang members only accept duels to death? Yo do! So, who do you want to defy?]]))
+   biker(_([["Ah! You came here to defy a gang member! Do you know that gang members only accept duels to death? Yo do! So, who do you want to defy?"]]))
    vn.na(_([[You answer you would like to defy Blue Belly Billy.]]))
    vn.jump("hallway")
 
    vn.label("headbutt") -- Player is lucky and gives a name that scares BBB
-   biker(_([[The… Heavy Headbutt Gang? Really? Oh my… They did send someone to our Hyena festival!
-Please tell your boss we will pay him very soon! I promise! Don't get angry, I can even pay you right now! Do you want my money?]]))
+   biker(_([["The… Heavy Headbutt Gang? Really? Oh my… They did send someone to our Hyena festival!
+Please tell your boss we will pay him very soon! I promise! Don't get angry, I can even pay you right now! Do you want my money?"]]))
    vn.menu{
-      {_("Exactly: I came for the money. Give it now."), "money"},
-      {_("I did not come for that. I want to defy Blue Belly Billy."), "hallway"},
+      {_([["Exactly: I came for the money. Give it now."]]), "money"},
+      {_([["I did not come for that. I want to defy Blue Belly Billy."]]), "hallway"},
    }
 
    vn.label("money")
-   biker(_([[Actually, nothing tells me that you truly are a member of the Heavy Headbutt Gang. If you are, you'll have no problem to beat the Hallway to Hell challenge. Afterwards, I'll let you settle our affair with our leader Blue Belly Billy. I guess you will want to have a duel with her, no?]]))
+   biker(_([["Actually, nothing tells me that you truly are a member of the Heavy Headbutt Gang. If you are, you'll have no problem to beat the Hallway to Hell challenge. Afterwards, I'll let you settle our affair with our leader Blue Belly Billy. I guess you will want to have a duel with her, no?"]]))
    vn.jump("hallway")
 
    vn.label("challenge")
-   biker(_([[There are plenty of kinds of challenges! Some consist in doing acrobatic figures, other are races. There is also the 'Bad Boar Battle' challenge, it is the one you must beat to enter my gang: the Big Bang Band, and it consists in flying to Dvaer Prime, broadcasting messages of insults against House Dvaered, and then… if you manage to get to a civilized planet in one piece, you have beaten the challenge.
-Oh, and there is also the 'Hallway to Hell'. It was invented by my gang leader, Blue Belly Billy, and nowadays, she requires anybody who wants to defy her to first beat the Hallway to Hell. Do you want to try it out?]]))
+   biker(_([["There are plenty of kinds of challenges! Some consist in doing acrobatic figures, other are races. There is also the 'Bad Boar Battle' challenge, it is the one you must beat to enter my gang: the Big Bang Band, and it consists in flying to Dvaer Prime, broadcasting messages of insults against House Dvaered, and then… if you manage to get to a civilized planet in one piece, you have beaten the challenge."
+"Oh, and there is also the 'Hallway to Hell'. It was invented by my gang leader, Blue Belly Billy, and nowadays, she requires anybody who wants to defy her to first beat the Hallway to Hell. Do you want to try it out?"]]))
    vn.na(_([[You answer you would like to try it out.]]))
-   biker(_([[Hey? I was joking, you know. The Hallway to Hell is the most deadly of all challenges. And if you survive it, you'll have to fight to death against Blue Belly Billy. No-one ever won against her!]]))
+   biker(_([["Hey? I was joking, you know. The Hallway to Hell is the most deadly of all challenges. And if you survive it, you'll have to fight to death against Blue Belly Billy. No-one ever won against her!"]]))
    vn.na(_([[You insist.]])) -- This is a bit too directive, any reorganization is welcome to get the player feel they can actually decide what they say.
    vn.jump("hallway")
 
    vn.label("hallway")
-   biker(_([[If you want to approach Blue Belly Billy, you have to prove that you are worth of it. You need to cross the 'Hallway to Hell' inside a Hyena.
+   biker(_([["If you want to approach Blue Belly Billy, you have to prove that you are worth of it. You need to cross the 'Hallway to Hell' inside a Hyena.
 It is a very simple challenge in principle, but only few manage to make it alive through the Hallway to Hell. And even fewer manage to make it in a time short enough for Blue Belly Billy to accept them to defy her.
 Let me explain: there are 3 weak targets in a triangle, and you need to destroy all those 3 targets with your Hyena. Sounds pretty simple, no? But between those targets, there are platforms that fire fury missiles at you. You'll have to dodge the missiles and destroy the 3 buoys before the timer runs out… unless you are too scared for our challenge and you did already pee your pants.
-We are preparing the set. Just take off to start the challenge!]]))
+We are preparing the set. Just take off to start the challenge!"]]))
 
    vn.done()
    vn.run()
@@ -611,7 +613,7 @@ end
 -- Player failed the Hallway to Hell because time is over
 function timeOver()
    player.omsgChange(mem.omsg, _("Time Over!"), 3)
-   vntk.msg( "Mission Failure", [[Too late: you failed the Challenge.]] )
+   vntk.msg( _("Mission Failure"), _([[Too late: you failed the Challenge.]]) )
    mem.pla1:taskClear()
    mem.pla2:taskClear()
    mem.pla3:taskClear()
@@ -620,19 +622,19 @@ end
 
 -- Player destroys a target (Hallway to Hell)
 function killPil1()
-   player.omsgAdd("Target 1 Destroyed", 3, 50)
+   player.omsgAdd(_("Target 1 Destroyed"), 3, 50)
    hook.pilot( mem.pil2, "death", "killPil2" )
    mem.pil2:setHilight()
    player.pilot():setTarget(mem.pil2)
 end
 function killPil2()
-   player.omsgAdd("Target 2 Destroyed", 3, 50)
+   player.omsgAdd(_("Target 2 Destroyed"), 3, 50)
    hook.pilot( mem.pil3, "death", "killPil3" )
    mem.pil3:setHilight()
    player.pilot():setTarget(mem.pil3)
 end
 function killPil3()
-   player.omsgAdd("Target 3 Destroyed: you won!\n(Provided you dodge the remaining missiles)", 3, 50)
+   player.omsgAdd(_("Target 3 Destroyed: you won!\n(Provided you dodge the remaining missiles)"), 3, 50)
    mem.misn_state = 3
    misn.osdActive(2)
    hook.rm(mem.loseH) -- One can not lose once one won
@@ -651,7 +653,7 @@ function bbb1bis()
    vn.scene()
    local biker = vn.newCharacter( _("Big Bunny Benny"), { image=portrait.getFullPath(BBB1Port) } )
    vn.transition()
-   biker(_([[Wow! you have beaten the Hallway to Hell challenge! That is quite impressive. I think you owned the right to get destroyed by Blue Belly Billy's Blasters!]]))
+   biker(_([["Wow! you have beaten the Hallway to Hell challenge! That is quite impressive. I think you owned the right to get destroyed by Blue Belly Billy's Blasters!"]]))
    vn.done()
    vn.run()
 end
@@ -662,9 +664,9 @@ function bbb2()
    vn.scene()
    local biker = vn.newCharacter( _("Blue Belly Billy"), { image=portrait.getFullPath(BBB2Port) } )
    vn.transition()
-   biker(_([[I am Blue Belly Billy. Do you really want to defy me? You know I never lost a duel, right?
+   biker(_([["I am Blue Belly Billy. Do you really want to defy me? You know I never lost a duel, right?
 Well, actually, I never fought a duel before because no one has never beaten the Hallway to Hell. But anyway, I am nonetheless a dangerous pilot… hem… yes, I am. Are you sure you don't want to abandon? I'll let you live. No?
-Fine, let's get that behind us. Just take off with your Hyena and I'll follow you.]])) -- Actually, BBB is not that strong. The true challenge is the Hallway to Hell (and we're quite early game)
+Fine, let's get that behind us. Just take off with your Hyena and I'll follow you."]])) -- Actually, BBB is not that strong. The true challenge is the Hallway to Hell (and we're quite early game)
    vn.done()
    vn.run()
 
@@ -686,21 +688,21 @@ end
 
 -- Player killed BBB
 function killBBB()
-   vntk.msg("",[[You feel satisfaction while watching the remains of Billy's ship being scattered in all directions by the final explosion of her ship…
+   vntk.msg("",_([[You feel satisfaction while watching the remains of Billy's ship being scattered in all directions by the final explosion of her ship…
 Then, you remember you had to disable and board her ship in order to recover a nozzle hubcap.
-Your mission failed!]])
+Your mission failed!]]))
    misn.finish(false)
 end
 
 -- Player boards BBB
 function boardBBB()
-   vntk.msg("",[[Once your ship is docked with Billy's interceptor, you send your extra-vehicular android to recover the left nozzle hubcap. Soon, the robot comes back with what indeed looks like a very primitive trash top. Before undocking, you realize it might be an occasion to loot a bit around in Billy's ship.]])
+   vntk.msg("",_([[Once your ship is docked with Billy's interceptor, you send your extra-vehicular android to recover the left nozzle hubcap. Soon, the robot comes back with what indeed looks like a very primitive trash top. Before undocking, you realize it might be an occasion to loot a bit around in Billy's ship.]]))
    -- We don't de-board the player: looting the ship is allowed
    mem.misn_state = 6
    misn.osdActive(3)
    misn.markerMove( mem.misn_marker, mem.baronpnt )
    pilot.toggleSpawn()
 
-   local c = commodity.new( "Nozzle Hubcap", "This looks like a prehistoric trash top." )
+   local c = commodity.new( N_("Nozzle Hubcap"), N_("This looks like a prehistoric trash top.") )
    misn.cargoAdd( c, 0 )
 end

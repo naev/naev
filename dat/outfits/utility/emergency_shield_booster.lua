@@ -39,14 +39,14 @@ local function turnoff( p, po )
    po:state("cooldown")
    po:progress(1)
    po:clear() -- clear stat modifications
-   mem.timer = cooldown
+   mem.timer = cooldown * p:shipstat("cooldown_mod",true)
    mem.active = false
    p:effectAdd("Shield Boost", 1)
    return true
 end
 
-function init( _p, po )
-   turnoff()
+function init( p, po )
+   turnoff( p, po )
    mem.timer = 0
    po:state("off")
 end

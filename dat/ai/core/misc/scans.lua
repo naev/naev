@@ -8,19 +8,24 @@ local scans = {}
 -- Assumes the pilot exists!
 --]]
 function scans.check_visible( target )
-   local self   = ai.pilot()
-   if not target:flags("invisible") then
-      -- Pilot still sees the target: continue attack
-      if self:inrange( target ) then
-         return true
-      end
+   if target:flags("invisible") then
+      return false
+   end
+   local self = ai.pilot()
 
-      -- Pilots on manual control (in missions or events) never loose target
-      -- /!\ This is not necessary desirable all the time /!\
-      -- TODO: there should probably be a flag settable to allow to outwit pilots under manual control
-      if self:flags("manualcontrol") then
-         return true
-      end
+   -- Carried ships depend on the visibility of their parent
+   local checker = (mem.carried and self:leader()) or self
+
+   -- Pilot still sees the target: continue attack
+   if checker:inrange( target ) then
+      return true
+   end
+
+   -- Pilots on manual control (in missions or events) never loose target
+   -- /!\ This is not necessary desirable all the time /!\
+   -- TODO: there should probably be a flag settable to allow to outwit pilots under manual control
+   if self:flags("manualcontrol") then
+      return true
    end
    return false
 end
@@ -42,7 +47,7 @@ function scans.investigate( target )
    -- Guess the pilot will be randomly between the current position and the
    -- future position if they go in the same direction with the same velocity
    local ttl = ai.dist(target) / p:stats().speed_max
-   local fpos = target:pos() + vec2.newP( target:vel()*ttl, target:dir() ) * rnd.rnd()
+   local fpos = target:pos() + vec2.newP( target:vel():mod()*ttl, target:dir() ) * rnd.rnd()
    ai.pushtask("inspect_moveto", fpos )
 end
 
@@ -58,7 +63,6 @@ end
 --[[
 -- Tries to get close to scan the enemy
 --]]
--- luacheck: globals scan (AI Task functions passed by name)
 function scans.scan( target )
    if not target:exists() then
       ai.poptask()
@@ -130,6 +134,11 @@ local function __needs_scan( target )
    if not mem.scanned then
       return false
    end
+   -- Don't scan immediately
+   if target:memory().elapsed < 20 then
+      return false
+   end
+   -- See if have already been scanned
    for k,v in ipairs(mem.scanned) do
       if target==v then
          return false
@@ -143,8 +152,8 @@ end
 -- Whether or not we want to scan, ignore players for now
 --]]
 local function __wanttoscan( p, target )
-   -- Bribed pilots don't care about scanning
-   if p:flags("bribed") then
+   -- Bribed pilots don't care about scanning player ships
+   if p:flags("bribed") and target:withPlayer() then
       return false
    end
 

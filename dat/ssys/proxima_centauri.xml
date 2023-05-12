@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Proxima Centauri">
+ <general>
+  <radius>15000.000000</radius>
+  <spacedust>400</spacedust>
+  <interference>123.300000</interference>
+  <nebula volatility="47.200000" hue="295.000000">700.000000</nebula>
+  <nolanes/>
+ </general>
+ <pos x="726.959858" y="-204.004838"/>
+ <spobs>
+  <spob>Proxima Centauri c</spob>
+  <spob>Tuomi's Orb</spob>
+  <spob_virtual>Pirate All Unpresence (Range 1)</spob_virtual>
+ </spobs>
+ <jumps>
+  <jump target="Polaris">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Sten">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+ </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
+</ssys>

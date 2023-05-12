@@ -3,15 +3,14 @@
  <general>
   <background>nebu_dobayashi</background>
   <radius>23100.000000</radius>
-  <stars>500</stars>
+  <spacedust>500</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="240.000000" y="-573.000000"/>
+ <pos x="306.300349" y="-779.909408"/>
  <spobs>
   <spob>Adham</spob>
   <spob>Beeklo II</spob>
-  <spob>Diabolos</spob>
+  <spob>Diabolos Station</spob>
   <spob>Icarus</spob>
   <spob>Totoran</spob>
   <spob_virtual>Trade Lane (Dvaered)</spob_virtual>
@@ -21,10 +20,6 @@
    <autopos/>
    <hide>0.000000</hide>
   </jump>
-  <jump target="Baf">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
   <jump target="Darkstone">
    <autopos/>
    <hide>0.000000</hide>
@@ -32,6 +27,10 @@
   <jump target="Dvaer">
    <autopos/>
    <hide>0.000000</hide>
+  </jump>
+  <jump target="Vandal">
+   <autopos/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

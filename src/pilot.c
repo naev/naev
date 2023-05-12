@@ -45,6 +45,7 @@
 #include "pause.h"
 #include "player.h"
 #include "player_autonav.h"
+#include "pilot_ship.h"
 #include "rng.h"
 #include "weapon.h"
 
@@ -71,7 +72,7 @@ static void pilot_init( Pilot* dest, const Ship* ship, const char* name, int fac
 static void pilot_hyperspace( Pilot* pilot, double dt );
 static void pilot_refuel( Pilot *p, double dt );
 /* Clean up. */
-static void pilot_dead( Pilot* p, unsigned int killer );
+static void pilot_erase( Pilot *p );
 /* Misc. */
 static int pilot_getStackPos( unsigned int id );
 static void pilot_init_trails( Pilot* p );
@@ -580,7 +581,7 @@ double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int di
  * @brief Pulls a pilot out of the pilot_stack based on ID.
  *
  * It's a binary search ( O(logn) ) therefore it's pretty fast and can be
- *  abused all the time.  Maximum iterations is 32 on a platform with 32 bit
+ *  abused all the time. Maximum iterations is 32 on a platform with 32 bit
  *  unsigned ints.
  *
  *    @param id ID of the pilot to get.
@@ -788,6 +789,10 @@ double pilot_face( Pilot* p, const double dir )
 int pilot_brake( Pilot *p )
 {
    double dir, thrust, diff;
+   int isstopped = pilot_isStopped(p);
+
+   if (isstopped)
+      return 1;
 
    /* Face backwards by default. */
    dir    = VANGLE(p->solid->vel) + M_PI;
@@ -812,11 +817,11 @@ int pilot_brake( Pilot *p )
    }
 
    diff = pilot_face(p, dir);
-   if (ABS(diff) < MAX_DIR_ERR && !pilot_isStopped(p))
+   if (ABS(diff) < MAX_DIR_ERR && !isstopped)
       pilot_setThrust(p, thrust);
    else {
       pilot_setThrust(p, 0.);
-      if (pilot_isStopped(p))
+      if (isstopped)
          return 1;
    }
 
@@ -1014,6 +1019,7 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
          else
             player_message("#r%s",_("Active cooldown aborted!"));
       }
+      gui_cooldownEnd();
    }
 
    pilot_rmFlag(p, PILOT_COOLDOWN);
@@ -1030,12 +1036,13 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
 }
 
 /**
- * @brief Returns the angle for a pilot to aim at an other pilot
+ * @brief Returns the angle for a pilot to aim at another pilot
  *
  *    @param p Pilot that aims.
- *    @param target Pilot that is being aimed at.
+ *    @param pos Posiion of the target being aimed at.
+ *    @param vel Velocity of the target being aimed at.
  */
-double pilot_aimAngle( Pilot *p, const Pilot *target )
+double pilot_aimAngle( Pilot *p, const vec2* pos, const vec2* vel )
 {
    double x, y;
    double t;
@@ -1046,7 +1053,7 @@ double pilot_aimAngle( Pilot *p, const Pilot *target )
    double orthoradial_speed;
 
    /* Get the distance */
-   dist = vec2_dist( &p->solid->pos, &target->solid->pos );
+   dist = vec2_dist( &p->solid->pos, pos );
 
    /* Check if should recalculate weapon speed with secondary weapon. */
    speed = pilot_weapSetSpeed( p, p->active_set, -1 );
@@ -1061,9 +1068,9 @@ double pilot_aimAngle( Pilot *p, const Pilot *target )
     *
     *Va dot Vr + ShotSpeed is the net closing velocity for the shot, and is used to compute the time of flight for the shot.
     */
-   vec2_cset(&approach_vector, VX(p->solid->vel) - VX(target->solid->vel), VY(p->solid->vel) - VY(target->solid->vel) );
-   vec2_cset(&relative_location, VX(target->solid->pos) -  VX(p->solid->pos),  VY(target->solid->pos) - VY(p->solid->pos) );
-   vec2_cset(&orthoradial_vector, VY(p->solid->pos) - VY(target->solid->pos), VX(target->solid->pos) -  VX(p->solid->pos) );
+   vec2_cset(&approach_vector, VX(p->solid->vel) - VX(*vel), VY(p->solid->vel) - VY(*vel) );
+   vec2_cset(&relative_location, VX(*pos) -  VX(p->solid->pos),  VY(*pos) - VY(p->solid->pos) );
+   vec2_cset(&orthoradial_vector, VY(p->solid->pos) - VY(*pos), VX(*pos) -  VX(p->solid->pos) );
 
    radial_speed = vec2_dot(&approach_vector, &relative_location);
    radial_speed = radial_speed / VMOD(relative_location);
@@ -1090,10 +1097,8 @@ double pilot_aimAngle( Pilot *p, const Pilot *target )
       t = 0;
 
    /* Position is calculated on where it should be */
-   x = target->solid->pos.x + target->solid->vel.x*t
-      - (p->solid->pos.x + p->solid->vel.x*t);
-   y = target->solid->pos.y + target->solid->vel.y*t
-      - (p->solid->pos.y + p->solid->vel.y*t);
+   x = pos->x + vel->x*t - (p->solid->pos.x + p->solid->vel.x*t);
+   y = pos->y + vel->y*t - (p->solid->pos.y + p->solid->vel.y*t);
    vec2_cset( &tv, x, y );
 
    return VANGLE(tv);
@@ -1138,41 +1143,6 @@ void pilot_setCommMsg( Pilot *p, const char *s )
    p->comm_msg       = strdup( s );
    p->comm_msgWidth  = gl_printWidthRaw( NULL, s );
    p->comm_msgTimer  = pilot_commTimeout;
-}
-
-/**
- * @brief Have pilot send a message to another.
- *
- *    @param p Pilot sending message.
- *    @param target Target of the message.
- *    @param msg The message.
- *    @param ignore_int Whether or not should ignore interference.
- */
-void pilot_message( Pilot *p, unsigned int target, const char *msg, int ignore_int )
-{
-   Pilot *t;
-
-   /* Makes no sense with no player.p atm. */
-   if (player.p==NULL)
-      return;
-
-   /* Get the target. */
-   t = pilot_get(target);
-   if (t == NULL)
-      return;
-
-   /* Must be in range. */
-   if (!ignore_int && !pilot_inRangePilot( player.p, p, NULL ))
-      return;
-
-   /* Only really affects player.p atm. */
-   if (target == PLAYER_ID) {
-      char c = pilot_getFactionColourChar( p );
-      player_message( _("#%cComm %s>#0 \"%s\""), c, p->name, msg );
-
-      /* Set comm message. */
-      pilot_setCommMsg( p, msg );
-   }
 }
 
 /**
@@ -1386,6 +1356,7 @@ void pilot_setTarget( Pilot* p, unsigned int id )
       return;
 
    p->target = id;
+   p->ptarget = NULL; /* Gets recomputed later in pilot_getTarget. */
    pilot_lockClear( p );
 
    /* Set the scan timer. */
@@ -1417,7 +1388,8 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
 
    /* Invincible means no damage. */
    if (pilot_isFlag( p, PILOT_INVINCIBLE ) ||
-         pilot_isFlag( p, PILOT_HIDE ))
+         pilot_isFlag( p, PILOT_HIDE ) ||
+         ((pshooter!=NULL) && pilot_isWithPlayer(pshooter) && pilot_isFlag( p, PILOT_INVINC_PLAYER )))
       return 0.;
 
    /* Defaults. */
@@ -1595,7 +1567,6 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
    /* Officially dead, run after in case they are regenerated by outfit. */
    if (p->armour <= 0.) {
       p->armour = 0.;
-      dam_mod   = 0.;
 
       if (!pilot_isFlag(p, PILOT_DEAD)) {
          pilot_dead( p, shooter );
@@ -1664,7 +1635,10 @@ void pilot_updateDisable( Pilot* p, unsigned int shooter )
       if (pilot_outfitOffAll( p ) > 0)
          pilot_calcStats( p );
 
-      pilot_setFlag( p,PILOT_DISABLED ); /* set as disabled */
+      pilot_setFlag( p, PILOT_DISABLED ); /* set as disabled */
+      if (pilot_isPlayer( p ))
+         player_message("#r%s",_("You have been disabled!"));
+
       /* Run hook */
       if (shooter > 0) {
          hparam.type       = HOOK_PARAM_PILOT;
@@ -1687,8 +1661,10 @@ void pilot_updateDisable( Pilot* p, unsigned int shooter )
       pilot_runHook( p, PILOT_HOOK_UNDISABLE );
 
       /* This is sort of a hack to make sure it gets reset... */
-      if (p->id==PLAYER_ID)
+      if (pilot_isPlayer(p)) {
          player_autonavResetSpeed();
+         player_message("#g%s",_("You have recovered control of your ship!"));
+      }
    }
 }
 
@@ -1698,7 +1674,7 @@ void pilot_updateDisable( Pilot* p, unsigned int shooter )
  *    @param p Pilot that just died.
  *    @param killer Pilot killer or 0 if invalid.
  */
-static void pilot_dead( Pilot* p, unsigned int killer )
+void pilot_dead( Pilot* p, unsigned int killer )
 {
    HookParam hparam;
 
@@ -1739,6 +1715,9 @@ static void pilot_dead( Pilot* p, unsigned int killer )
          player_message( _("#rShip under command '%s' was destroyed!#0"), p->name );
       /* PILOT R OFFICIALLY DEADZ0R */
       pilot_setFlag( p, PILOT_DEAD );
+
+      /* Run Lua if applicable. */
+      pilot_shipLExplodeInit( p );
    }
 }
 
@@ -1805,7 +1784,7 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
    glColour c = { 1., 1., 1., 1. };
 
    /* Add some transparency if stealthed. TODO better effect */
-   if (pilot_isFlag(p, PILOT_STEALTH))
+   if (!pilot_isPlayer(p) && pilot_isFlag(p, PILOT_STEALTH))
       c.a = 0.5;
 
    glBindFramebuffer( GL_FRAMEBUFFER, fbo );
@@ -1851,6 +1830,7 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
 void pilot_render( Pilot *p )
 {
    double scale, x,y, w,h, z;
+   int inbounds = 1;
    Effect *e = NULL;
    glColour c = {.r=1., .g=1., .b=1., .a=1.};
 
@@ -1867,81 +1847,83 @@ void pilot_render( Pilot *p )
    /* Check if inbounds */
    if ((x < -w) || (x > SCREEN_W+w) ||
          (y < -h) || (y > SCREEN_H+h))
-      return;
+      inbounds = 0;
 
-   /* Render effects. */
-   for (int i=0; i<array_size(p->effects); i++) {
-   //for (int i=array_size(p->effects)-1; i>=0; i--) {
-      Effect *eiter = &p->effects[i];
-      if (eiter->data->program==0)
-         continue;
+   if (inbounds) {
+      /* Render effects. */
+      for (int i=0; i<array_size(p->effects); i++) {
+      //for (int i=array_size(p->effects)-1; i>=0; i--) {
+         Effect *eiter = &p->effects[i];
+         if (eiter->data->program==0)
+            continue;
 
-      /* Only render one effect for now. */
-      e = eiter;
-      break;
-   }
-
-   /* Check if needs scaling. */
-   if (pilot_isFlag( p, PILOT_LANDING ))
-      scale = CLAMP( 0., 1., p->ptimer / p->landing_delay );
-   else if (pilot_isFlag( p, PILOT_TAKEOFF ))
-      scale = CLAMP( 0., 1., 1. - p->ptimer / p->landing_delay );
-   else
-      scale = 1.;
-
-   /* Add some transparency if stealthed. TODO better effect */
-   if (pilot_isFlag(p, PILOT_STEALTH))
-      c.a = 0.5;
-
-   /* Render normally. */
-   if (e==NULL) {
-      if (p->ship->gfx_3d != NULL) {
-         /* 3d */
-         object_renderSolidPart(p->ship->gfx_3d, p->solid, "body", c.a, p->ship->gfx_3d_scale * scale);
-         object_renderSolidPart(p->ship->gfx_3d, p->solid, "engine", c.a * p->engine_glow, p->ship->gfx_3d_scale * scale);
+         /* Only render one effect for now. */
+         e = eiter;
+         break;
       }
+
+      /* Check if needs scaling. */
+      if (pilot_isFlag( p, PILOT_LANDING ))
+         scale = CLAMP( 0., 1., p->ptimer / p->landing_delay );
+      else if (pilot_isFlag( p, PILOT_TAKEOFF ))
+         scale = CLAMP( 0., 1., 1. - p->ptimer / p->landing_delay );
+      else
+         scale = 1.;
+
+      /* Add some transparency if stealthed. TODO better effect */
+      if (!pilot_isPlayer(p) && pilot_isFlag(p, PILOT_STEALTH))
+         c.a = 0.5;
+
+      /* Render normally. */
+      if (e==NULL) {
+         if (p->ship->gfx_3d != NULL) {
+            /* 3d */
+            object_renderSolidPart(p->ship->gfx_3d, p->solid, "body", c.a, p->ship->gfx_3d_scale * scale);
+            object_renderSolidPart(p->ship->gfx_3d, p->solid, "engine", c.a * p->engine_glow, p->ship->gfx_3d_scale * scale);
+         }
+         else {
+            gl_renderSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
+                  1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
+                  scale, scale, p->tsx, p->tsy, &c );
+         }
+      }
+      /* Render effect single effect. */
       else {
-         gl_renderSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
-               1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
-               scale, scale, p->tsx, p->tsy, &c );
+         mat4 projection, tex_mat;
+         const EffectData *ed = e->data;
+
+         /* Render onto framebuffer. */
+         pilot_renderFramebuffer( p, gl_screen.fbo[2], gl_screen.nw, gl_screen.nh );
+
+         glUseProgram( ed->program );
+
+         glActiveTexture( GL_TEXTURE0 );
+         glBindTexture( GL_TEXTURE_2D, gl_screen.fbo_tex[2] );
+         glUniform1i( ed->u_tex, 0 );
+
+         glEnableVertexAttribArray( ed->vertex );
+         gl_vboActivateAttribOffset( gl_squareVBO, ed->vertex, 0, 2, GL_FLOAT, 0 );
+
+         projection = gl_view_matrix;
+         mat4_translate( &projection, x + (1.-scale)*z*w/2., y + (1.-scale)*z*h/2., 0. );
+         mat4_scale( &projection, scale*z*w, scale*z*h, 1. );
+         gl_uniformMat4(ed->projection, &projection);
+
+         tex_mat = mat4_identity();
+         mat4_scale( &tex_mat, w/(double)gl_screen.nw, h/(double)gl_screen.nh, 1. );
+         gl_uniformMat4(ed->tex_mat, &tex_mat);
+
+         glUniform3f( ed->dimensions, SCREEN_W, SCREEN_H, cam_getZoom() );
+         glUniform1f( ed->u_timer, e->timer );
+         glUniform1f( ed->u_elapsed, e->elapsed );
+         glUniform1f( ed->u_r, e->r );
+
+         /* Draw. */
+         glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+         /* Clear state. */
+         glDisableVertexAttribArray( ed->vertex );
       }
-   }
-   /* Render effect single effect. */
-   else {
-      mat4 projection, tex_mat;
-      const EffectData *ed = e->data;
-
-      /* Render onto framebuffer. */
-      pilot_renderFramebuffer( p, gl_screen.fbo[2], gl_screen.nw, gl_screen.nh );
-
-      glUseProgram( ed->program );
-
-      glActiveTexture( GL_TEXTURE0 );
-      glBindTexture( GL_TEXTURE_2D, gl_screen.fbo_tex[2] );
-      glUniform1i( ed->u_tex, 0 );
-
-      glEnableVertexAttribArray( ed->vertex );
-      gl_vboActivateAttribOffset( gl_squareVBO, ed->vertex, 0, 2, GL_FLOAT, 0 );
-
-      projection = gl_view_matrix;
-      mat4_translate( &projection, x + (1.-scale)*z*w/2., y + (1.-scale)*z*h/2., 0. );
-      mat4_scale( &projection, scale*z*w, scale*z*h, 1. );
-      gl_uniformMat4(ed->projection, &projection);
-
-      tex_mat = mat4_identity();
-      mat4_scale( &tex_mat, w/(double)gl_screen.nw, h/(double)gl_screen.nh, 1. );
-      gl_uniformMat4(ed->tex_mat, &tex_mat);
-
-      glUniform3f( ed->dimensions, SCREEN_W, SCREEN_H, cam_getZoom() );
-      glUniform1f( ed->u_timer, e->timer );
-      glUniform1f( ed->u_elapsed, e->elapsed );
-      glUniform1f( ed->u_r, e->r );
-
-      /* Draw. */
-      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-      /* Clear state. */
-      glDisableVertexAttribArray( ed->vertex );
    }
 
 #ifdef DEBUGGING
@@ -1989,12 +1971,16 @@ void pilot_render( Pilot *p )
  */
 void pilot_renderOverlay( Pilot* p )
 {
+   int playerdead;
+
    /* Don't render the pilot. */
    if (pilot_isFlag( p, PILOT_NORENDER ))
       return;
 
+   playerdead = (player_isFlag(PLAYER_DESTROYED) || (player.p==NULL));
+
    /* Render the hailing graphic if needed. */
-   if (pilot_isFlag( p, PILOT_HAILING )) {
+   if (!playerdead && pilot_isFlag( p, PILOT_HAILING )) {
       glTexture *ico_hail = gui_hailIcon();
       if (ico_hail != NULL) {
          int sx = (int)ico_hail->sx;
@@ -2009,13 +1995,12 @@ void pilot_renderOverlay( Pilot* p )
 
    /* Text ontop if needed. */
    if (p->comm_msg != NULL) {
-      double x, y;
+      double x, y, dx, dy;
 
       /* Coordinate translation. */
       gl_gameToScreenCoords( &x, &y, p->solid->pos.x, p->solid->pos.y );
 
       /* Display the text. */
-      double dx, dy;
       glColour c = {1., 1., 1., 1.};
 
       /* Colour. */
@@ -2031,6 +2016,32 @@ void pilot_renderOverlay( Pilot* p )
 
       /* Display text. */
       gl_printRaw( NULL, dx, dy, &c, -1., p->comm_msg );
+   }
+
+   /* Show health / friendlyness */
+   if (conf.healthbars && !playerdead && !pilot_isPlayer(p) && !pilot_isFlag(p, PILOT_DEAD) && !pilot_isDisabled(p) &&
+         (pilot_isFlag(p, PILOT_COMBAT) || (p->shield < p->shield_max))) {
+      double x, y, w, h;
+
+      /* Coordinate translation. */
+      gl_gameToScreenCoords( &x, &y, p->solid->pos.x, p->solid->pos.y );
+
+      w = p->ship->gfx_space->sw + 4.;
+      h = p->ship->gfx_space->sh + 4.;
+
+      /* Can do an inbounds check now. */
+      if ((x < -w) || (x > SCREEN_W+w) ||
+            (y < -h) || (y > SCREEN_H+h))
+         return;
+
+      w = PILOT_SIZE_APPROX * p->ship->gfx_space->sw;
+      h = PILOT_SIZE_APPROX * p->ship->gfx_space->sh / 3.;
+
+      glUseProgram( shaders.healthbar.program );
+      glUniform2f( shaders.healthbar.dimensions, 5., h );
+      glUniform1f( shaders.healthbar.paramf, (p->armour + p->shield) / (p->armour_max + p->shield_max) );
+      gl_uniformColor( shaders.healthbar.paramv, (p->shield > 0.) ? &cShield : &cArmour );
+      gl_renderShader( x + w/2. + 2.5, y, 5., h, 0., &shaders.healthbar, pilot_getColour(p), 1 );
    }
 }
 
@@ -2231,74 +2242,80 @@ void pilot_update( Pilot* pilot, double dt )
    /* he's dead jim */
    else if (pilot_isFlag(pilot,PILOT_DEAD)) {
 
-      /* pilot death sound */
-      if (!pilot_isFlag(pilot,PILOT_DEATH_SOUND) &&
-            (pilot->ptimer < 0.050)) {
-         char buf[16];
-
-         /* Play random explosion sound. */
-         snprintf(buf, sizeof(buf), "explosion%d", RNG(0,2));
-         sound_playPos( sound_get(buf), pilot->solid->pos.x, pilot->solid->pos.y,
-               pilot->solid->vel.x, pilot->solid->vel.y );
-
-         pilot_setFlag(pilot,PILOT_DEATH_SOUND);
+      if (pilot->ship->lua_explode_update != LUA_NOREF) {
+         /* Run Lua if applicable. */
+         pilot_shipLExplodeUpdate( pilot, dt );
       }
-      /* final explosion */
-      else if (!pilot_isFlag(pilot,PILOT_EXPLODED) &&
-            (pilot->ptimer < 0.200)) {
-         Damage dmg;
+      else {
+         /* pilot death sound */
+         if (!pilot_isFlag(pilot,PILOT_DEATH_SOUND) &&
+               (pilot->ptimer < 0.050)) {
+            char buf[16];
 
-         /* Damage from explosion. */
-         a                 = sqrt(pilot->solid->mass);
-         dmg.type          = dtype_get("explosion_splash");
-         dmg.damage        = MAX(0., 2. * (a * (1. + sqrt(pilot->fuel + 1.) / 28.)));
-         dmg.penetration   = 1.; /* Full penetration. */
-         dmg.disable       = 0.;
-         expl_explode( pilot->solid->pos.x, pilot->solid->pos.y,
-               pilot->solid->vel.x, pilot->solid->vel.y,
-               pilot->ship->gfx_space->sw/2./PILOT_SIZE_APPROX + a, &dmg, NULL, EXPL_MODE_SHIP );
-         debris_add( pilot->solid->mass, pilot->ship->gfx_space->sw/2.,
-               pilot->solid->pos.x, pilot->solid->pos.y,
-               pilot->solid->vel.x, pilot->solid->vel.y );
-         pilot_setFlag(pilot,PILOT_EXPLODED);
-         pilot_runHook( pilot, PILOT_HOOK_EXPLODED );
+            /* Play random explosion sound. */
+            snprintf(buf, sizeof(buf), "explosion%d", RNG(0,2));
+            sound_playPos( sound_get(buf), pilot->solid->pos.x, pilot->solid->pos.y,
+                  pilot->solid->vel.x, pilot->solid->vel.y );
 
-         /* We do a check here in case the pilot was regenerated. */
-         if (pilot_isFlag(pilot, PILOT_EXPLODED)) {
-            /* Release cargo */
-            for (int i=0; i<array_size(pilot->commodities); i++)
-               pilot_cargoJet( pilot, pilot->commodities[i].commodity,
-                     pilot->commodities[i].quantity, 1 );
+            pilot_setFlag(pilot,PILOT_DEATH_SOUND);
          }
-      }
-      /* reset random explosion timer */
-      else if (pilot->timer[1] <= 0.) {
-         unsigned int l;
+         /* final explosion */
+         else if (!pilot_isFlag(pilot,PILOT_EXPLODED) &&
+               (pilot->ptimer < 0.200)) {
+            Damage dmg;
 
-         pilot->timer[1] = 0.08 * (pilot->ptimer - pilot->timer[1]) /
-               pilot->ptimer;
+            /* Damage from explosion. */
+            a                 = sqrt(pilot->solid->mass);
+            dmg.type          = dtype_get("explosion_splash");
+            dmg.damage        = MAX(0., 2. * (a * (1. + sqrt(pilot->fuel + 1.) / 28.)));
+            dmg.penetration   = 1.; /* Full penetration. */
+            dmg.disable       = 0.;
+            expl_explode( pilot->solid->pos.x, pilot->solid->pos.y,
+                  pilot->solid->vel.x, pilot->solid->vel.y,
+                  pilot->ship->gfx_space->sw/2./PILOT_SIZE_APPROX + a, &dmg, NULL, EXPL_MODE_SHIP );
+            debris_add( pilot->solid->mass, pilot->ship->gfx_space->sw/2.,
+                  pilot->solid->pos.x, pilot->solid->pos.y,
+                  pilot->solid->vel.x, pilot->solid->vel.y );
+            pilot_setFlag(pilot,PILOT_EXPLODED);
+            pilot_runHook( pilot, PILOT_HOOK_EXPLODED );
 
-         /* random position on ship */
-         a = RNGF()*2.*M_PI;
-         px = VX(pilot->solid->pos) +  cos(a)*RNGF()*pilot->ship->gfx_space->sw/2.;
-         py = VY(pilot->solid->pos) +  sin(a)*RNGF()*pilot->ship->gfx_space->sh/2.;
-         vx = VX(pilot->solid->vel);
-         vy = VY(pilot->solid->vel);
+            /* We do a check here in case the pilot was regenerated. */
+            if (pilot_isFlag(pilot, PILOT_EXPLODED)) {
+               /* Release cargo */
+               for (int i=0; i<array_size(pilot->commodities); i++)
+                  pilot_cargoJet( pilot, pilot->commodities[i].commodity,
+                        pilot->commodities[i].quantity, 1 );
+            }
+         }
+         /* reset random explosion timer */
+         else if (pilot->timer[1] <= 0.) {
+            unsigned int l;
 
-         /* set explosions */
-         l = (pilot->id==PLAYER_ID) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
-         if (RNGF() > 0.8)
-            spfx_add( spfx_get("ExpM"), px, py, vx, vy, l );
-         else
-            spfx_add( spfx_get("ExpS"), px, py, vx, vy, l );
-      }
+            pilot->timer[1] = 0.08 * (pilot->ptimer - pilot->timer[1]) /
+                  pilot->ptimer;
 
-      /* completely destroyed with final explosion */
-      if (pilot_isFlag(pilot,PILOT_DEAD) && (pilot->ptimer < 0.)) {
-         if (pilot->id==PLAYER_ID) /* player.p handled differently */
-            player_destroyed();
-         pilot_delete(pilot);
-         return;
+            /* random position on ship */
+            a = RNGF()*2.*M_PI;
+            px = VX(pilot->solid->pos) +  cos(a)*RNGF()*pilot->ship->gfx_space->sw/2.;
+            py = VY(pilot->solid->pos) +  sin(a)*RNGF()*pilot->ship->gfx_space->sh/2.;
+            vx = VX(pilot->solid->vel);
+            vy = VY(pilot->solid->vel);
+
+            /* set explosions */
+            l = (pilot->id==PLAYER_ID) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
+            if (RNGF() > 0.8)
+               spfx_add( spfx_get("ExpM"), px, py, vx, vy, l );
+            else
+               spfx_add( spfx_get("ExpS"), px, py, vx, vy, l );
+         }
+
+         /* completely destroyed with final explosion */
+         if (pilot_isFlag(pilot,PILOT_DEAD) && (pilot->ptimer < 0.)) {
+            if (pilot->id==PLAYER_ID) /* player.p handled differently */
+               player_destroyed();
+            pilot_delete(pilot);
+            return;
+         }
       }
    }
    else if (pilot_isFlag(pilot, PILOT_NONTARGETABLE)) {
@@ -2503,6 +2520,9 @@ void pilot_update( Pilot* pilot, double dt )
    /* Update the trail. */
    pilot_sample_trails( pilot, 0 );
 
+   /* Update pilot Lua. */
+   pilot_shipLUpdate( pilot, dt );
+
    /* Update outfits if necessary. */
    pilot->otimer += dt;
    while (pilot->otimer >= PILOT_OUTFIT_LUA_UPDATE_DT) {
@@ -2597,11 +2617,36 @@ void pilot_delete( Pilot* p )
 {
    PilotOutfitSlot* dockslot;
 
+   /* Don't double delete, just in case. */
+   if (pilot_isFlag( p, PILOT_DELETE ))
+      return;
+
+   /* If the pilot was deleted from Lua, we must run the explosion hook. */
+   if ((p->ship->lua_explode_update != LUA_NOREF) && pilot_isFlag( p, PILOT_DEAD )) {
+      pilot_setFlag( p, PILOT_EXPLODED );
+      pilot_runHook( p, PILOT_HOOK_EXPLODED );
+      if (!pilot_isFlag( p, PILOT_EXPLODED ))
+         return;
+   }
+
+   /* Stop ship stuff. */
+   pilot_shipLCleanup(p);
+
+   /* Handle Lua outfits. */
+   pilot_outfitOffAll(p);
+   pilot_outfitLCleanup(p);
+
    /* Remove from parent's escort list */
    if (p->parent != 0) {
       Pilot *leader = pilot_get(p->parent);
       if (leader != NULL)
          escort_rmList(leader, p->id);
+   }
+
+   /* Remove faction if necessary. */
+   if (p->presence > 0) {
+      system_rmCurrentPresence( cur_system, p->faction, p->presence );
+      p->presence = 0;
    }
 
    /* Unmark as deployed if necessary */
@@ -2939,9 +2984,11 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
 
    /* Defaults. */
    pilot->lua_mem = LUA_NOREF;
+   pilot->lua_ship_mem = LUA_NOREF;
    pilot->autoweap = 1;
    pilot->aimLines = 0;
    pilot->dockpilot = dockpilot;
+   pilot->parent = dockpilot; /* leader will default to mothership if exists. */
    pilot->dockslot = dockslot;
    ss_statsInit( &pilot->intrinsic_stats );
 
@@ -3012,9 +3059,10 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
 
    /* Safety check. */
 #ifdef DEBUGGING
-   const char *str = pilot_checkSpaceworthy( pilot );
-   if (str != NULL) {
-      DEBUG( _("Pilot '%s' failed safety check: %s"), pilot->name, str );
+   char message[STRMAX_SHORT];
+   int notworthy = pilot_reportSpaceworthy( pilot, message, sizeof(message) );
+   if (notworthy) {
+      DEBUG( _("Pilot '%s' failed safety check: %s"), pilot->name, message );
       for (int i=0; i<array_size(pilot->outfits); i++) {
          if (pilot->outfits[i]->outfit != NULL)
             DEBUG(_("   [%d] %s"), i, _(pilot->outfits[i]->outfit->name) );
@@ -3096,6 +3144,7 @@ void pilot_reset( Pilot* pilot )
    pilot->shoot_indicator = 0;
 
    /* Run Lua stuff. */
+   pilot_shipLInit( pilot );
    pilot_outfitLInitAll( pilot );
 }
 
@@ -3127,43 +3176,46 @@ unsigned int pilot_create( const Ship* ship, const char* name, int faction, cons
       const double dir, const vec2* pos, const vec2* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot )
 {
-   Pilot *dyn, **p;
+   Pilot *p;
 
    /* Allocate pilot memory. */
-   dyn = malloc(sizeof(Pilot));
-   if (dyn == NULL) {
+   p = malloc(sizeof(Pilot));
+   if (p == NULL) {
       WARN(_("Unable to allocate memory"));
       return 0;
    }
 
    /* Set the pilot in the stack -- must be there before initializing */
-   p = &array_grow( &pilot_stack );
-   *p = dyn;
+   array_push_back( &pilot_stack, p );
 
    /* Initialize the pilot. */
-   pilot_init( dyn, ship, name, faction, dir, pos, vel, flags, dockpilot, dockslot );
+   pilot_init( p, ship, name, faction, dir, pos, vel, flags, dockpilot, dockslot );
 
    /* Set the ID. */
    if (pilot_isFlagRaw(flags, PILOT_PLAYER)) { /* Set player ID. TODO should probably be fixed to something better someday. */
-      dyn->id = PLAYER_ID;
+      p->id = PLAYER_ID;
       qsort( pilot_stack, array_size(pilot_stack), sizeof(Pilot*), pilot_cmp );
    }
    else
-      dyn->id = ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
+      p->id = ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
 
    /* Initialize AI if applicable. */
    if (ai == NULL)
       ai = faction_default_ai( faction );
    if (ai != NULL)
-      ai_pinit( dyn, ai ); /* Must run before ai_create */
+      ai_pinit( p, ai ); /* Must run before ai_create */
 
    /* Animated trail. */
-   pilot_init_trails( dyn );
+   pilot_init_trails( p );
 
    /* Run Lua stuff. */
-   pilot_outfitLInitAll( dyn );
+   pilot_shipLInit( p );
+   pilot_outfitLInitAll( p );
 
-   return dyn->id;
+   /* Pilot creation hook. */
+   pilot_runHook( p, PILOT_HOOK_CREATION );
+
+   return p->id;
 }
 
 /**
@@ -3236,12 +3288,14 @@ unsigned int pilot_addStack( Pilot *p )
 {
    p->id = ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
    pilot_setFlag( p, PILOT_NOFREE );
+
+   array_push_back( &pilot_stack, p );
+
+   /* Have to reset after adding to stack, as some Lua functions will run code on the pilot. */
    pilot_reset( p );
 
    /* Animated trail. */
    pilot_init_trails( p );
-
-   array_push_back( &pilot_stack, p );
 
 #if DEBUGGING
    for (int i=1; i<array_size(pilot_stack); i++)
@@ -3298,6 +3352,7 @@ Pilot* pilot_setPlayer( Pilot* after )
    pilot_setFlag( after, PILOT_NOFREE );
 
    /* Run Lua stuff. */
+   pilot_shipLInit( after );
    pilot_outfitLInitAll( after );
 
    return after;
@@ -3464,32 +3519,9 @@ void pilot_free( Pilot *p )
  *
  *    @param p Pilot to destroy.
  */
-void pilot_destroy( Pilot *p )
+static void pilot_erase( Pilot *p )
 {
-   PilotOutfitSlot* dockslot;
    int i = pilot_getStackPos( p->id );
-
-   /* Stop all outfits. */
-   pilot_outfitOffAll(p);
-
-   /* Handle Lua outfits. */
-   pilot_outfitLCleanup(p);
-
-   /* Remove faction if necessary. */
-   if (p->presence > 0) {
-      system_rmCurrentPresence( cur_system, p->faction, p->presence );
-      p->presence = 0;
-   }
-
-   /* Unmark as deployed if necessary */
-   dockslot = pilot_getDockSlot( p );
-   if (dockslot != NULL) {
-      dockslot->u.ammo.deployed--;
-      p->dockpilot = 0;
-      p->dockslot = -1;
-   }
-
-   /* pilot is eliminated */
    pilot_free(p);
    array_erase( &pilot_stack, &pilot_stack[i], &pilot_stack[i+1] );
 }
@@ -3525,6 +3557,8 @@ void pilots_free (void)
 
    /* First pass to stop outfits. */
    for (int i=0; i < array_size(pilot_stack); i++) {
+      /* Stop ship stuff. */
+      pilot_shipLCleanup( pilot_stack[i]);
       /* Stop all outfits. */
       pilot_outfitOffAll(pilot_stack[i]);
       /* Handle Lua outfits. */
@@ -3552,22 +3586,23 @@ void pilots_clean( int persist )
 
    /* First pass to stop outfits without clearing stuff - this can call all
     * sorts of Lua stuff. */
-   for (int i=0; i < array_size(pilot_stack); i++) {
+   for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
       if (p == player.p &&
           (persist && pilot_isFlag(p, PILOT_PERSIST)))
          continue;
       /* Stop all outfits. */
-      pilot_outfitOffAll(p);
+      pilot_outfitOffAll( p );
       /* Handle Lua outfits. */
-      pilot_outfitLCleanup(p);
+      pilot_outfitLCleanup( p );
    }
 
    /* Here we actually clean up stuff. */
-   for (int i=0; i < array_size(pilot_stack); i++) {
+   for (int i=0; i<array_size(pilot_stack); i++) {
       /* move player and persisted pilots to start */
-      if (pilot_stack[i] == player.p ||
-          (persist && pilot_isFlag(pilot_stack[i], PILOT_PERSIST))) {
+      if (!pilot_isFlag(pilot_stack[i], PILOT_DELETE) &&
+            (pilot_stack[i] == player.p ||
+             (persist && pilot_isFlag(pilot_stack[i], PILOT_PERSIST)))) {
          /* Have to swap the pilots so it gets properly freed. */
          Pilot *p = pilot_stack[persist_count];
          pilot_stack[persist_count] = pilot_stack[i];
@@ -3588,6 +3623,14 @@ void pilots_clean( int persist )
          pilot_free(pilot_stack[i]);
    }
    array_erase( &pilot_stack, &pilot_stack[persist_count], array_end(pilot_stack) );
+
+   /* Init AI on the remaining pilots, has to be done here so the pilot_stack is consistent. */
+   for (int i=0; i<array_size(pilot_stack); i++) {
+      Pilot *p = pilot_stack[i];
+      pilot_clearHooks(p);
+      ai_cleartasks(p);
+      ai_init(p);
+   }
 
    /* Clear global hooks. */
    pilots_clearGlobalHooks();
@@ -3646,7 +3689,7 @@ void pilots_update( double dt )
 
       /* Destroy pilot and go on. */
       if (pilot_isFlag(p, PILOT_DELETE))
-         pilot_destroy(p);
+         pilot_erase( p );
    }
 
    /* Have all the pilots think. */

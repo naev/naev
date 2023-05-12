@@ -70,7 +70,6 @@ function scom.calcNextSpawn( cur )
    return math.min(stddelay * fleetratio * delayweight * penaltyweight, maxdelay)
 end
 
-
 --[[
    @brief Creates the spawn table based on a weighted spawn function table.
       @param weights Weighted spawn function table to use to generate the spawn table.
@@ -81,37 +80,40 @@ function scom.createSpawnTable( weights )
    local spawn_table = {}
    local max = 0
    for k,v in pairs(weights) do
-      max = max + v
-      table.insert( spawn_table, { chance = max, func = k } )
+      if v > 0 then
+         max = max + v
+         table.insert( spawn_table, { w = v, func = k } )
+      end
    end
 
    -- Safety check
    if max == 0 then
       error(_("No weight specified"))
    end
+   spawn_table._maxw = max
 
-   -- Normalize
-   for _k,v in ipairs(spawn_table) do
-      v.chance = v.chance / max
-   end
+   -- Sort so it's a wee bit faster
+   table.sort( spawn_table, function( a, b )
+      return a.w > b.w
+   end )
 
    -- Job done
    return spawn_table
 end
 
-
 -- @brief Chooses what to spawn
 function scom.choose ()
-   local r = rnd.rnd()
+   local r = rnd.rnd() * scom._weight_table._maxw
+   local m = 0
    for _k,v in ipairs( scom._weight_table ) do
-      if r < v.chance then
+      m = m + v.w
+      if r < m then
          scom._spawn_data = v.func()
          return true
       end
    end
    error(_("No spawn function found"))
 end
-
 
 -- @brief Actually spawns the pilots
 function scom.spawn( pilots )
@@ -132,7 +134,7 @@ function scom.spawn( pilots )
    local leader
    local origin
    if issim then
-      -- Stealth should avoid pirates
+      -- Stealth should avoid enemies nearby
       if pilots.__stealth then
          local r = system.cur():radius() * 0.8
          local p = vec2.newP( rnd.rnd() * r, rnd.angle() )
@@ -140,7 +142,7 @@ function scom.spawn( pilots )
          local L = lanes.get(fct, "non-friendly")
          for i = 1,20 do -- Just brute force sampling
             local np = lanes.getNonPoint( L, p, r, m )
-            if np and #pilot.getHostiles( fct, m, np ) == 0 then
+            if np and #pilot.getEnemies( fct, m, np ) == 0 then
                origin = np
                break
             end
@@ -157,7 +159,7 @@ function scom.spawn( pilots )
    for _k,v in ipairs(pilots) do
       local params = v.params or {}
       if params.stealth==nil and pilots.__stealth then
-         params.stealth= true
+         params.stealth = true
       end
       if params.ai==nil and pilots.__ai then
          params.ai = pilots.__ai
@@ -171,10 +173,13 @@ function scom.spawn( pilots )
          if leader == nil then
             leader = p
             if pilots.__formation ~= nil then
-               leader:memory().formation = pilots.__formation
+               mem.formation = pilots.__formation
             end
          else
             p:setLeader(leader)
+            if #pilots > 1 then
+               mem.autoleader = true
+            end
          end
       end
       if pilots.__doscans then
@@ -207,7 +212,6 @@ function scom.spawn( pilots )
    return spawned
 end
 
-
 -- @brief adds a pilot to the table
 function scom.addPilot( pilots, s, params )
    local presence = s:points()
@@ -215,11 +219,9 @@ function scom.addPilot( pilots, s, params )
    pilots.__presence = (pilots.__presence or 0) + presence
 end
 
-
 -- @brief Gets the presence value of a group of pilots
 function scom.presence( pilots )
    return (pilots and pilots.__presence) or 0
 end
-
 
 return scom

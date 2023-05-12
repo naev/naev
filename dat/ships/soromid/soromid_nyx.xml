@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Nyx">
+ <lua>ships/lua/soromid.lua</lua>
  <points>90</points>
  <base_type>Nyx</base_type>
  <GFX size="96" sx="10" sy="10">nyx</GFX>
  <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound pitch="0.75">engine_soromid</sound>
  <class display="Bio-Destroyer">Destroyer</class>
  <price>2900000</price>

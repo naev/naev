@@ -109,11 +109,6 @@
 #define AI_DISTRESS     (1<<2)   /**< Sent distress signal. */
 
 /*
- * file info
- */
-#define AI_SUFFIX       ".lua" /**< AI file suffix. */
-
-/*
  * all the AI profiles
  */
 static AI_Profile* profiles = NULL; /**< Array of AI_Profiles loaded. */
@@ -476,6 +471,13 @@ int ai_pinit( Pilot *p, const char *ai )
    ai_create( p );
    pilot_setFlag(p, PILOT_CREATED_AI);
 
+   /* Initialize randomly within a control tick. */
+   /* This doesn't work as nicely as one would expect because the pilot
+    * has no initial task and control ticks get synchronized if you
+    * spawn a bunch at the same time, which is why we add randomness
+    * elsewhere. */
+   p->tcontrol = RNGF() * p->ai->control_rate;
+
    return 0;
 }
 
@@ -527,7 +529,6 @@ static int ai_sort( const void *p1, const void *p2 )
 int ai_load (void)
 {
    char** files;
-   int suflen;
    Uint32 time = SDL_GetTicks();
 
    /* get the file list */
@@ -537,22 +538,23 @@ int ai_load (void)
    profiles = array_create( AI_Profile );
 
    /* load the profiles */
-   suflen = strlen(AI_SUFFIX);
    for (size_t i=0; files[i]!=NULL; i++) {
-      int flen = strlen(files[i]);
-      if ((flen > suflen) &&
-            strncmp(&files[i][flen-suflen], AI_SUFFIX, suflen)==0) {
-         AI_Profile prof;
-         char path[PATH_MAX];
-         int ret;
+      AI_Profile prof;
+      char path[PATH_MAX];
+      int ret;
 
-         snprintf( path, sizeof(path), AI_PATH"%s", files[i] );
-         ret = ai_loadProfile(&prof,path); /* Load the profile */
-         if (ret == 0)
-            array_push_back( &profiles, prof );
-         else
-            WARN( _("Error loading AI profile '%s'"), path);
-      }
+      if (!ndata_matchExt( files[i], "lua" ))
+         continue;
+
+      snprintf( path, sizeof(path), AI_PATH"%s", files[i] );
+      ret = ai_loadProfile(&prof,path); /* Load the profile */
+      if (ret == 0)
+         array_push_back( &profiles, prof );
+      else
+         WARN( _("Error loading AI profile '%s'"), path);
+
+      /* Render if necessary. */
+      naev_renderLoadscreen();
    }
    qsort( profiles, array_size(profiles), sizeof(AI_Profile), ai_sort );
 
@@ -616,7 +618,7 @@ static int ai_loadProfile( AI_Profile *prof, const char* filename )
    const char *str;
 
    /* Set name. */
-   len = strlen(filename)-strlen(AI_PATH)-strlen(AI_SUFFIX);
+   len = strlen(filename)-strlen(AI_PATH)-strlen(".lua");
    prof->name = malloc(len+1);
    strncpy( prof->name, &filename[strlen(AI_PATH)], len );
    prof->name[len] = '\0';
@@ -628,6 +630,10 @@ static int ai_loadProfile( AI_Profile *prof, const char* filename )
 
    /* Register C functions in Lua */
    nlua_register(env, "ai", aiL_methods, 0);
+
+   /* Mark as an ai. */
+   lua_pushboolean( naevL, 1 );
+   nlua_setenv( naevL, env, "__ai" );
 
    /* Set "mem" to be default template. */
    lua_newtable(naevL);              /* m */
@@ -655,11 +661,19 @@ static int ai_loadProfile( AI_Profile *prof, const char* filename )
    if (prof->ref_control == LUA_NOREF)
       WARN( str, filename, "control" );
    prof->ref_control_manual = nlua_refenvtype( env, "control_manual", LUA_TFUNCTION );
-   if (prof->ref_control == LUA_NOREF)
+   if (prof->ref_control_manual == LUA_NOREF)
       WARN( str, filename, "control_manual" );
    prof->ref_refuel = nlua_refenvtype( env, "refuel", LUA_TFUNCTION );
-   if (prof->ref_control == LUA_NOREF)
+   if (prof->ref_refuel == LUA_NOREF)
       WARN( str, filename, "refuel" );
+   prof->ref_create = nlua_refenvtype( env, "create", LUA_TFUNCTION );
+   if (prof->ref_create == LUA_NOREF)
+      WARN( str, filename, "create" );
+
+   /* Get the control rate. */
+   nlua_getenv(naevL, env, "control_rate");
+   prof->control_rate = lua_tonumber(naevL,-1);
+   lua_pop(naevL,1);
 
    return 0;
 }
@@ -733,18 +747,19 @@ void ai_think( Pilot* pilot, const double dt )
 
    /* control function if pilot is idle or tick is up */
    if ((cur_pilot->tcontrol < 0.) || (t == NULL)) {
+      double crate = cur_pilot->ai->control_rate;
       if (pilot_isFlag(pilot,PILOT_PLAYER) ||
           pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL)) {
          lua_rawgeti( naevL, LUA_REGISTRYINDEX, cur_pilot->ai->ref_control_manual );
-         ai_run(env, 0);
+         lua_pushnumber( naevL, crate-cur_pilot->tcontrol );
+         ai_run(env, 1);
       } else {
          lua_rawgeti( naevL, LUA_REGISTRYINDEX, cur_pilot->ai->ref_control );
-         ai_run(env, 0); /* run control */
+         lua_pushnumber( naevL, crate-cur_pilot->tcontrol );
+         ai_run(env, 1); /* run control */
       }
-
-      nlua_getenv(naevL, env, "control_rate");
-      cur_pilot->tcontrol = lua_tonumber(naevL,-1);
-      lua_pop(naevL,1);
+      /* Try to desync control ticks when possible by adding randomness. */
+      cur_pilot->tcontrol = crate * (0.9+0.2*RNGF());
 
       /* Task may have changed due to control tick. */
       t = ai_curTask( cur_pilot );
@@ -803,6 +818,21 @@ void ai_think( Pilot* pilot, const double dt )
 
    /* Clean up if necessary. */
    ai_taskGC( cur_pilot );
+}
+
+/**
+ * @brief Initializes the AI.
+ *
+ *    @param p Pilot to run initialization when jumping/entering.
+ */
+void ai_init( Pilot *p )
+{
+   if ((p->ai==NULL) || (p->ai->ref_create==LUA_NOREF))
+      return;
+   ai_setPilot( p );
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->ai->ref_create );
+   ai_run( p->ai->env, 0 ); /* run control */
+
 }
 
 /**
@@ -991,7 +1021,7 @@ static void ai_create( Pilot* pilot )
       nlua_env env = equip_env;
       char *func = "equip_generic";
 
-      if  (faction_getEquipper( pilot->faction ) != LUA_NOREF) {
+      if (faction_getEquipper( pilot->faction ) != LUA_NOREF) {
          env = faction_getEquipper( pilot->faction );
          func = "equip";
       }
@@ -1012,17 +1042,8 @@ static void ai_create( Pilot* pilot )
    if (pilot->ai == NULL)
       return;
 
-   /* Prepare AI (this sets cur_pilot among others). */
-   ai_setPilot( pilot );
-
-   /* Prepare stack. */
-   nlua_getenv(naevL, cur_pilot->ai->env, "create");
-
-   /* Run function. */
-   if (nlua_pcall(cur_pilot->ai->env, 0, 0)) { /* error has occurred */
-      WARN( _("Pilot '%s' ai '%s' -> '%s': %s"), cur_pilot->name, cur_pilot->ai->name, "create", lua_tostring(naevL,-1));
-      lua_pop(naevL,1);
-   }
+   /* Set up. */
+   ai_init( pilot );
 
    /* Recover normal mode. */
    if (!pilot_isFlag(pilot, PILOT_CREATED_AI))
@@ -1120,6 +1141,9 @@ static Task* ai_createTask( lua_State *L, int subtask )
 {
    /* Parse basic parameters. */
    const char *func = luaL_checkstring(L,1);
+
+   if (pilot_isPlayer(cur_pilot) && !pilot_isFlag(cur_pilot,PILOT_MANUAL_CONTROL))
+      return NULL;
 
    /* Creates a new AI task. */
    Task *t = ai_newtask( L, cur_pilot, func, subtask, 0 );
@@ -1850,21 +1874,22 @@ static int aiL_careful_face( lua_State *L )
  *
  * This method uses a polar UV decomposition to get a more accurate time-of-flight
  *
- *    @luatparam Pilot target The pilot to aim at
+ *    @luatparam Pilot|Asteroid target The pilot to aim at
  *    @luatreturn number The offset from the target aiming position (in radians).
  * @luafunc aim
  */
 static int aiL_aim( lua_State *L )
 {
-   Pilot *p;
-   double diff;
-   double mod;
-   double angle;
+   double diff, mod, angle;
 
-   /* Only acceptable parameter is pilot */
-   p = luaL_validpilot(L,1);
-
-   angle = pilot_aimAngle( cur_pilot, p );
+   if (lua_isasteroid(L,1)) {
+      Asteroid *a = luaL_validasteroid(L,1);
+      angle = pilot_aimAngle( cur_pilot, &a->pos, &a->vel );
+   }
+   else {
+      Pilot *p = luaL_validpilot(L,1);
+      angle = pilot_aimAngle( cur_pilot, &p->solid->pos, &p->solid->vel );
+   }
 
    /* Calculate what we need to turn */
    mod = 10.;
@@ -2094,7 +2119,6 @@ static int aiL_drift_facing( lua_State *L )
  *    @luatreturn boolean Whether braking is finished.
  *    @luafunc brake
  */
-
 static int aiL_brake( lua_State *L )
 {
    int ret = pilot_brake( cur_pilot );
@@ -2369,6 +2393,9 @@ static int aiL_hyperspace( lua_State *L )
    /* Find the target jump. */
    if (!lua_isnoneornil(L,1)) {
       JumpPoint *jp = luaL_validjump( L, 1 );
+      LuaJump *lj = luaL_checkjump( L, 1 );
+      if (lj->srcid != cur_system->id)
+         NLUA_ERROR(L, _("Jump point must be in current system."));
       cur_pilot->nav_hyperspace = jp - cur_system->jumps;
    }
 
@@ -2571,7 +2598,7 @@ static int aiL_relvel( lua_State *L )
 
 /**
  * @brief Computes the point to face in order to
- *        follow an other pilot using a PD controller.
+ *        follow another pilot using a PD controller.
  *
  *    @luatparam Pilot target The pilot to follow
  *    @luatparam number radius The requested distance between p and target
@@ -2715,7 +2742,8 @@ static int aiL_combat( lua_State *L )
       else if (i==0)
          pilot_rmFlag(cur_pilot, PILOT_COMBAT);
    }
-   else pilot_setFlag(cur_pilot, PILOT_COMBAT);
+   else
+      pilot_setFlag(cur_pilot, PILOT_COMBAT);
 
    return 0;
 }
@@ -2750,6 +2778,7 @@ static int aiL_setasterotarget( lua_State *L )
 
    /* Untarget pilot. */
    cur_pilot->target = cur_pilot->id;
+   cur_pilot->ptarget = NULL;
 
    return 0;
 }
@@ -2817,7 +2846,7 @@ static int aiL_gatherablePos( lua_State *L )
 static int aiL_weapSet( lua_State *L )
 {
    Pilot* p;
-   int id, type, on, l, i;
+   int id, type;
    PilotWeaponSet *ws;
 
    p = cur_pilot;
@@ -2832,10 +2861,10 @@ static int aiL_weapSet( lua_State *L )
 
    if (ws->type == WEAPSET_TYPE_ACTIVE) {
       /* Check if outfit is on */
-      on = 1;
-      l  = array_size(ws->slots);
-      for (i=0; i<l; i++) {
-         if (ws->slots[i].slot->state == PILOT_OUTFIT_OFF) {
+      int on = 1;
+      int l  = array_size(ws->slots);
+      for (int i=0; i<l; i++) {
+         if (p->outfits[ ws->slots[i].slotid ]->state == PILOT_OUTFIT_OFF) {
             on = 0;
             break;
          }

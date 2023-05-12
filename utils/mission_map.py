@@ -10,7 +10,7 @@
 # 4: Heavy ship needed or tricky combat
 # Above: plot-related
 
-# A mission that requires an other mission to be done must be of > tier, or no indicated tier at all
+# A mission that requires another mission to be done must be of > tier, or no indicated tier at all
 
 import xml.etree.ElementTree as ET
 import pygraphviz as pgv
@@ -135,15 +135,11 @@ for missionfile in glob.glob( prefix+'/dat/missions/**/*.lua', recursive=True ):
     done = misn.find('done')  # TODO: I guess findall is needed if there are more than one
     dones.append(done)
 
-    flags = misn.find('flags')
-    if flags == None:
+    unique = misn.find('unique')
+    if unique == None:
         uniques.append(False)
     else:
-        unique = flags.find('unique')
-        if unique == None:
-            uniques.append(False)
-        else:
-            uniques.append(True)
+        uniques.append(True)
 
     # Read the notes
     add_notes( name, misn, "Generic Missions", camp, tierL )
@@ -178,15 +174,11 @@ for eventfile in glob.glob( prefix+'/dat/events/**/*.lua', recursive=True ):
     namesE.append(name)
     namdictE[name] = i
 
-    flags = evt.find('flags')
-    if flags == None:
+    unique = evt.find('unique')
+    if unique == None:
         uniquesE.append(False)
     else:
-        unique = flags.find('unique')
-        if unique == None:
-            uniquesE.append(False)
-        else:
-            uniquesE.append(True)
+        uniquesE.append(True)
 
     # Read the notes
     add_notes( name, evt, "Generic Events", campE, tierLE )

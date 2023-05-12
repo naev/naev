@@ -15,7 +15,6 @@ function __hoge( data ) -- internal in name only, or forward-declared local func
 
 -- Remark: the (sub)taskdata is passed as the (sub)task function argument
 --]]
-
 local atk = require "ai.core.attack.util"
 local fmt = require "format"
 local scans = require "ai.core.misc.scans"
@@ -214,13 +213,13 @@ function __moveto_generic( target, dir )
    local dist  = ai.dist( target )
    local bdist = 50
 
-   -- Need to get closer
-   if dir < math.rad(10) and dist > bdist then
-      ai.accel()
-
    -- Need to start braking
-   elseif dist < bdist then
+   if dist < bdist then
       ai.poptask()
+
+   -- Need to get closer
+   elseif dir < math.rad(10) and dist > bdist then
+      ai.accel()
    end
 end
 
@@ -238,6 +237,9 @@ function follow( target )
    local dir   = ai.face(target)
    local dist  = ai.dist(target)
 
+   -- Stealth like whoever is being followed
+   ai.stealth( target:flags("stealth") )
+
    -- Must approach
    if dir < math.rad(10) and dist > 300 then
       ai.accel()
@@ -251,6 +253,9 @@ function follow_accurate( target )
       ai.poptask()
       return
    end
+
+   -- Stealth like whoever is being followed
+   ai.stealth( target:flags("stealth") )
 
    local goal = ai.follow_accurate(target, mem.radius,
          mem.angle, mem.Kp, mem.Kd)
@@ -352,7 +357,7 @@ end
 -- luacheck: globals _hyp_approach_shoot (AI Task functions passed by name)
 function _hyp_approach_shoot( target )
    -- Shoot and approach
-   local enemy = ai.getenemy()
+   local enemy = atk.preferred_enemy()
    __shoot_turret( enemy )
    __hyp_approach( target )
 end
@@ -364,7 +369,7 @@ end
 
 -- luacheck: globals _landgo_shoot (AI Task functions passed by name)
 function _landgo_shoot ( planet )
-   local enemy = ai.getenemy()
+   local enemy = atk.preferred_enemy()
    __shoot_turret( enemy )
    __landgo( planet )
 end
@@ -399,7 +404,7 @@ function __choose_land_target ( target )
    return target
 end
 
-function land ( target )
+function land( target )
    local planet = __choose_land_target ( target )
    ai.pushsubtask( "_landgo", planet )
 end
@@ -446,11 +451,25 @@ function _landland ( planet )
    end
 end
 
-
 --[[
 -- Attempts to run away from the target.
 --]]
 function runaway( target )
+   if mem.mothership and mem.mothership:exists() then
+      local goal = ai.follow_accurate( mem.mothership, 0, 0, mem.Kp, mem.Kd )
+      local dir  = ai.face( goal )
+      local dist = ai.dist( goal )
+
+      if dist > 300 then
+         if dir < math.rad(10) then
+            ai.accel()
+         end
+      else -- Time to dock
+         ai.dock( mem.mothership )
+      end
+      return
+   end
+
    -- Target must exist
    if not target or not target:exists() then
       ai.poptask()
@@ -503,7 +522,7 @@ function _run_target( target )
    __run_target( target )
 end
 function __run_target( target )
-   local plt    = ai.pilot()
+   local plt = ai.pilot()
 
    -- Target must exist
    if not target or not target:exists() then
@@ -528,6 +547,13 @@ function __run_target( target )
    -- Afterburner handling.
    if ai.hasafterburner() and plt:energy() > 10 then
       ai.weapset( 8, true )
+   end
+   if mem._o then
+      if mem._o.blink_drive then
+         plt:outfitToggle( mem._o.blink_drive, true )
+      elseif mem._o.blink_engine then
+         plt:outfitToggle( mem._o.blink_engine, true )
+      end
    end
 
    return false
@@ -610,6 +636,14 @@ function _run_hyp( data )
          ai.weapset( 8, false )
       end
    end
+   -- Hyperbolic blink drives have a distance of 2000
+   if mem._o then
+      if mem._o.blink_drive and jdist > 500 + 3 * bdist then
+         plt:outfitToggle( mem._o.blink_drive, true )
+      elseif mem._o.blink_engine and jdist > 2000 + 3 * bdist then
+         plt:outfitToggle( mem._o.blink_engine, true )
+      end
+   end
 end
 
 -- luacheck: globals _run_landgo (AI Task functions passed by name)
@@ -621,6 +655,7 @@ function _run_landgo( data )
    -- Shoot the target
    __shoot_turret( enemy )
 
+   local dir
    local dist     = ai.dist( pl_pos )
    local bdist    = ai.minbrakedist()
    local plt      = ai.pilot()
@@ -641,12 +676,11 @@ function _run_landgo( data )
 
       if dozigzag then
          -- Pilot is agile, but too slow to outrun the enemy: dodge
-         local dir = ai.dir(pl_pos)
+         dir = ai.dir(pl_pos)
          __zigzag(dir, math.rad(70))
       else
 
          -- 2 methods depending on mem.careful
-         local dir
          if not mem.careful or dist < 3*bdist then
             dir = ai.face( pl_pos )
          else
@@ -664,6 +698,14 @@ function _run_landgo( data )
          ai.weapset( 8, true )
       else
          ai.weapset( 8, false )
+      end
+   end
+   -- Hyperbolic blink drives have a distance of 2000
+   if mem._o and dir < math.rad(25) then
+      if mem._o.blink_drive and dist > 500 + 3 * bdist then
+         plt:outfitToggle( mem._o.blink_drive, true )
+      elseif mem._o.blink_engine and dist > 2000 + 3 * bdist then
+         plt:outfitToggle( mem._o.blink_engine, true )
       end
    end
 end
@@ -890,6 +932,57 @@ end
 --]]
 -- luacheck: globals mine (AI Task functions passed by name)
 function mine( ast )
+   if mem._o and mem._o.plasma_drill then
+      ai.pushsubtask("mine_drill", ast)
+   else
+      ai.pushsubtask("mine_shoot", ast)
+   end
+end
+-- luacheck: globals mine_drill (AI Task functions passed by name)
+function mine_drill( ast )
+   if not ast:exists() then
+      ai.poptask()
+      return
+   end
+
+   local p         = ai.pilot()
+   local mbd       = ai.minbrakedist()
+
+   ai.setasterotarget( ast )
+
+   local target = ast:pos()
+   local vel = ast:vel()
+   local _dist, angle = vec2.polar( p:pos() - target )
+
+   -- First task : place the ship close to the asteroid
+   local goal = ai.face_accurate( target, vel, 0, angle, mem.Kp, mem.Kd )
+
+   local dir  = ai.face(goal)
+   local mod  = ai.dist(goal)
+
+   if dir < math.rad(10) and mod > mbd then
+      ai.accel()
+   elseif mod < mbd then
+      ai.pushsubtask( "mine_drill_brake", ast )
+   end
+end
+-- luacheck: globals mine_drill_brake (AI Task functions passed by name)
+function mine_drill_brake( ast )
+   if ai.isstopped() then
+      ai.popsubtask()
+      return
+   end
+   ai.setasterotarget( ast )
+   ai.brake()
+   ai.pilot():outfitToggle( mem._o.plasma_drill, true )
+end
+-- luacheck: globals mine_shoot (AI Task functions passed by name)
+function mine_shoot( ast )
+   if not ast:exists() then
+      ai.poptask()
+      return
+   end
+
    ai.weapset( 1 )
    local p         = ai.pilot()
    local wrange    = ai.getweaprange(nil, 0)

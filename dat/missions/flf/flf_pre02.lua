@@ -30,8 +30,7 @@ local flf = require "missions.flf.flf_common"
 local fmt = require "format"
 require "missions.flf.flf_patrol"
 
--- luacheck: globals enter fleetDV fleetFLF land_flf leave misn_title patrol_getSystem patrol_spawnDV patrol_spawnFLF pilot_death_dv setDescription timer_lateFLF (from base mission flf_patrol)
--- luacheck: globals hail land_dv timer_hail timer_rehail timer_spawnFLF timer_spawnHostileFLF (Hook functions passed by name)
+-- luacheck: globals patrol_spawnDV fleetDV fleetFLF (inherited from flf_patrol, TODO remove horrible hack)
 
 local boss -- Non-persistent state
 
@@ -66,7 +65,7 @@ function accept ()
       mem.marker = misn.markerAdd( mem.missys, "low" )
       misn.setReward( _("A chance to make friends with the FLF.") )
 
-      mem.DVplanet, mem.DVsys = spob.getS("Raelid Outpost")
+      mem.DVplanet, mem.DVsys = spob.getS("Fort Raelid")
 
       mem.reinforcements_arrived = false
       mem.dv_ships_left = 0

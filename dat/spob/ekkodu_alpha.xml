@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Ekkodu Alpha">
+ <pos x="-15965.616813" y="-7750.942602"/>
+ <GFX>
+  <space>I06.webp</space>
+  <exterior>desertic4.webp</exterior>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

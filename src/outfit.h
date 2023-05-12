@@ -17,6 +17,7 @@
 #define outfit_isProp(o,p)          ((o)->properties & p) /**< Checks an outfit for property. */
 /* property flags */
 #define OUTFIT_PROP_UNIQUE             (1<<0)  /**< Unique item (can only have one). Not sellable.*/
+#define OUTFIT_PROP_SHOOT_DRY          (1<<1)  /**< Doesn't actually create particlus. Should be handled in ontoggle. */
 #define OUTFIT_PROP_WEAP_SECONDARY     (1<<10) /**< Is a secondary weapon? */
 #define OUTFIT_PROP_WEAP_SPIN          (1<<11) /**< Should weapon spin around? */
 #define OUTFIT_PROP_WEAP_BLOWUP_ARMOUR (1<<12) /**< Weapon blows up (armour spfx)
@@ -319,8 +320,9 @@ typedef struct Outfit_ {
 
    /* Store stuff */
    credits_t price;  /**< Base sell price. */
-   char *description;/**< Store description. */
-   char *desc_short; /**< Short outfit description (stored translated). */
+   char *desc_raw;   /**< Base store description. */
+   char *summary_raw;/**< Short outfit summary (stored translated). */
+   char *desc_extra; /**< Extra description string (if static). */
    int priority;     /**< Sort priority, highest first. */
 
    glTexture *gfx_store;   /**< Store graphic. */
@@ -338,6 +340,7 @@ typedef struct Outfit_ {
    /* Lua function references. Set to LUA_NOREF if not used. */
    char *lua_file;   /**< Lua File. */
    nlua_env lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
+   int lua_descextra;/**< Run to get the extra description status. */
    int lua_onadd;    /**< Run when added to a pilot or player swaps to this ship. */
    int lua_onremove; /**< Run when removed to a pilot or when player swaps away from this ship. */
    int lua_init;     /**< Run when pilot enters a system. */
@@ -386,25 +389,28 @@ const Outfit* outfit_getW( const char* name );
 const Outfit* outfit_getAll (void);
 int outfit_compareTech( const void *outfit1, const void *outfit2 );
 /* outfit types */
-int outfit_isActive( const Outfit* o );
-int outfit_isForward( const Outfit* o );
-int outfit_isBolt( const Outfit* o );
-int outfit_isBeam( const Outfit* o );
-int outfit_isLauncher( const Outfit* o );
-int outfit_isAmmo( const Outfit* o );
-int outfit_isSeeker( const Outfit* o );
-int outfit_isTurret( const Outfit* o );
-int outfit_isMod( const Outfit* o );
-int outfit_isAfterburner( const Outfit* o );
-int outfit_isFighterBay( const Outfit* o );
-int outfit_isMap( const Outfit* o );
-int outfit_isLocalMap( const Outfit* o );
-int outfit_isGUI( const Outfit* o );
-int outfit_isLicense( const Outfit* o );
-int outfit_isSecondary( const Outfit* o );
-const char* outfit_getType( const Outfit* o );
-const char* outfit_getTypeBroad( const Outfit* o );
+int outfit_isActive( const Outfit *o );
+int outfit_isToggleable( const Outfit *o );
+int outfit_isForward( const Outfit *o );
+int outfit_isBolt( const Outfit *o );
+int outfit_isBeam( const Outfit *o );
+int outfit_isLauncher( const Outfit *o );
+int outfit_isAmmo( const Outfit *o );
+int outfit_isSeeker( const Outfit *o );
+int outfit_isTurret( const Outfit *o );
+int outfit_isMod( const Outfit *o );
+int outfit_isAfterburner( const Outfit *o );
+int outfit_isFighterBay( const Outfit *o );
+int outfit_isMap( const Outfit *o );
+int outfit_isLocalMap( const Outfit *o );
+int outfit_isGUI( const Outfit *o );
+int outfit_isLicense( const Outfit *o );
+int outfit_isSecondary( const Outfit *o );
+const char* outfit_getType( const Outfit *o );
+const char* outfit_getTypeBroad( const Outfit *o );
 const char* outfit_getAmmoAI( const Outfit *o );
+const char* outfit_description( const Outfit *o );
+const char* outfit_summary( const Outfit *o, int withname );
 
 /*
  * Search.

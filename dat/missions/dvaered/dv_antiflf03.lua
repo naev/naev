@@ -5,6 +5,7 @@
  <priority>2</priority>
  <chance>10</chance>
  <location>Bar</location>
+ <done>Dvaered Shopping</done>
  <cond>var.peek("flfbase_intro") == 3</cond>
  <faction>Dvaered</faction>
  <notes>
@@ -12,6 +13,9 @@
   <campaign>Doom the FLF</campaign>
   <provides name="The FLF is dead"/>
  </notes>
+ <tags>
+  <tag>dva_cap_ch01_lrg</tag>
+ </tags>
 </mission>
 --]]
 --[[
@@ -27,14 +31,15 @@ local fmt = require "format"
 require "proximity"
 local portrait = require "portrait"
 local dv = require "common.dvaered"
+local cinema = require "cinema"
+local ai_setup = require "ai.core.setup"
 
 -- Mission constants
-local DVplanet, DVsys = spob.getS("Stalwart Station")
-local basepos = vec2.new(-8700, -3000) -- NOTE: Should be the same coordinates as in asset.xml!
+local DVplanet, DVsys = spob.getS("Stalwart Citadel")
+local basepos = spob.get("Sindbad"):pos()
 
 local base, bomber, bombers, fighterpos, fightersDV, fleetDV, fleetFLF, fleetpos, obstinate, vendetta, vigilance -- Non-persistent state
 local nextStage, spawnDV, spawnbase, updatepos -- Forward-declared functions
--- luacheck: globals attacked attackedObstinate broadcast control deathBase deathDVbomber deathFLF deathObstinate destroyBase engageBase enter idle land operationStart spawnDVbomber spawnFLFbombers spawnFLFdestroyers spawnFLFfighters timer_plcontrol (Hook functions passed by name)
 
 function create()
     local missys = {system.get(var.peek("flfbase_sysname"))}
@@ -168,7 +173,6 @@ function land()
         tk.msg(_("FLF base? What FLF base?"), _([[Colonel Urnus returns to his seat.
     "Let me tell you one thing, though. I doubt we've quite seen the last of the FLF. We may have dealt them a mortal blow by taking out their hidden base, but as long as rebel sentiment runs high among the Frontier worlds, they will rear their ugly heads again. That means my job isn't over, and maybe it means yours isn't either. Perhaps in the future we'll work together again - but this time it won't be just about removing a threat on our doorstep." Urnus smiles grimly. "It will be about rooting out the source of the problem once and for all."
     As you walk the corridor that leads out of the military complex, the Star of Valor glinting on your lapel, you find yourself thinking about what your decisions might ultimately lead to. Colonel Urnus hinted at war on the Frontier, and he also indicated that you would be involved. While the Dvaered have been treating you as well as can be expected from a military regime, perhaps you might want to reconsider your allegiance when the time comes...]]))
-        dv.modReputation( 5 )
         faction.get("Dvaered"):modPlayerSingle(10)
         player.pay(1e6)
         player.outfitAdd("Star of Valor")
@@ -185,12 +189,7 @@ end
 
 -- Spawns the FLF base, ship version.
 function spawnbase()
-    base = pilot.add( "Sindbad", "FLF", basepos, nil, {ai="flf_norun"} )
-    base:outfitRm("all")
-    base:outfitRm("cores")
-    base:outfitAdd("Dummy Systems")
-    base:outfitAdd("Dummy Plating")
-    base:outfitAdd("Dummy Engine")
+    base = pilot.add( "Sindbad", "FLF", basepos, nil, {ai="flf_norun", naked=true} )
     base:outfitAdd("Base Ripper MK2", 8)
     base:setHostile()
     base:setNoDisable(true)
@@ -200,8 +199,8 @@ function spawnbase()
 end
 
 function deathBase()
-    player.pilot():setInvincible()
-    player.cinematics()
+    cinema.on()
+
     camera.set( base, false, 5000 )
     hook.timer( 8.0, "timer_plcontrol" )
 
@@ -242,8 +241,8 @@ function deathBase()
 end
 
 function timer_plcontrol ()
-    camera.set( player.pilot(), false, 5000 )
-    player.cinematics( false )
+   cinema.off()
+   camera.set( player.pilot(), false, 5000 )
 end
 
 -- Spawns the one-time-only Dvaered ships. Bombers are handled elsewhere.
@@ -261,6 +260,7 @@ function spawnDV()
     obstinate:outfitAdd("Engine Reroute")
     obstinate:outfitAdd("Small Shield Booster")
     obstinate:outfitAdd("Small Shield Booster")
+    ai_setup.setup(obstinate)
     hook.pilot(obstinate, "attacked", "attackedObstinate")
     hook.pilot(obstinate, "death", "deathObstinate")
     hook.pilot(obstinate, "idle", "idle")
@@ -405,6 +405,7 @@ function spawnDVbomber()
     bomber:outfitAdd("TeraCom Imperator Launcher", 1, true, true)
     bomber:outfitAdd("Engine Reroute", 1)
     bomber:outfitAdd("Vulcan Gun", 3)
+    ai_setup.setup(bomber)
     bomber:setNoDisable(true)
     bomber:setFriendly()
     bomber:control()
@@ -518,6 +519,7 @@ function deathDVbomber()
                 bomber:outfitAdd("TeraCom Imperator Launcher", 1, true, true)
                 bomber:outfitAdd("Engine Reroute", 1)
                 bomber:outfitAdd("Vulcan Gun", 3)
+                ai_setup.setup(bomber)
                 bomber:setNoDisable(true)
                 bomber:setFriendly()
                 bomber:control()

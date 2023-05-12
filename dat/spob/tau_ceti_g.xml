@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Tau Ceti g">
+ <pos x="7853.883318" y="4437.222213"/>
+ <GFX>
+  <space>moon-I01.webp</space>
+  <exterior>station03.webp</exterior>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

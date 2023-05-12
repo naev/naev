@@ -64,7 +64,7 @@ int widget_isCovered( unsigned int wid, const char *name, int x, int y );
 /*
  * destruction
  */
-void toolkit_closeAll( void );
+void toolkit_closeAll (void);
 void window_close( unsigned int wid, const char* str );
 void window_destroy( unsigned int wid );
 void window_destroyWidget( unsigned int wid, const char* wgtname );

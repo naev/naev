@@ -26,10 +26,11 @@ require "proximity"
 local fmt = require "format"
 local fleet = require "fleet"
 local shark = require "common.shark"
+local vn = require "vn"
+local vntk = require "vntk"
 
 local badguy, badguyprox -- Non-persistent state
 local ambush -- Forward-declared functions
--- luacheck: globals enabling enter land reveal (Hook functions passed by name)
 
 --Change here to change the planets and the systems
 local mispla, missys = spob.getS("Curie")
@@ -40,59 +41,95 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC(_("Arnold Smith"), "neutral/unique/arnoldsmith.webp", _([[He is waiting for you.]]))
+   misn.setNPC(shark.arnold.name, shark.arnold.portrait, _([[He is waiting for you.]]))
 end
 
 function accept()
    mem.stage = 0
    mem.proba = 0.3  --the probability of ambushes will change
    mem.firstambush = true  --In the first ambush, there will be a little surprise text
+   local accepted = false
 
-   if tk.yesno(_("Travel"), fmt.f(_([["OK, are you ready for the travel to {pnt} in the {sys} system?"]]), {pnt=mispla, sys=missys})) then
-      misn.accept()
-      tk.msg(_("Time to go"), _([["Let's go, then."]]))
+   vn.clear()
+   vn.scene()
+   local arnold = vn.newCharacter( shark.vn_arnold() )
+   vn.transition( shark.arnold.transition )
 
-      misn.setTitle(_("The Meeting"))
-      misn.setReward(fmt.credits(shark.rewards.sh04))
-      misn.setDesc(_("Nexus Shipyards asks you to take part in a secret meeting"))
-      misn.osdCreate(_("The Meeting"), {
-         fmt.f(_("Go to the {sys} system and land on {pnt}"), {sys=missys, pnt=mispla}),
-         fmt.f(_("Bring Smith back to {pnt} in the {sys} system"), {pnt=paypla, sys=paysys}),
-      })
-      misn.osdActive(1)
+   arnold(fmt.f(_([["OK, are you ready for the travel to {pnt} in the {sys} system?"]]),
+      {pnt=mispla, sys=missys}))
+   vn.menu{
+      {_([[Accept]]), "accept"},
+      {_([[Decline]]), "decline"},
+   }
 
-      mem.marker = misn.markerAdd(mispla, "low")
+   vn.label("decline")
+   arnold(_([["OK, come back when you are interested."]]))
+   vn.done( shark.arnold.transition )
 
-      local c = commodity.new( N_("Smith"), N_("Arnold Smith of Nexus Shipyards.") )
-      mem.smith = misn.cargoAdd( c, 0 )
+   vn.label("accept")
+   vn.func( function () accepted = true end )
+   arnold(_([["Fantastic! I am known as Donald Ulnish to the Council member. Good luck."]]))
 
-      hook.land("land")
-      hook.enter("enter")
-   else
-      tk.msg(_("Sorry, not interested"), _([["OK, come back when you are ready."]]))
-   end
+   vn.done( shark.arnold.transition )
+   vn.run()
+
+   if not accepted then return end
+
+   misn.accept()
+   tk.msg(_("Time to go"), _([["Let's go, then."]]))
+
+   misn.setTitle(_("The Meeting"))
+   misn.setReward(shark.rewards.sh04)
+   misn.setDesc(_("Nexus Shipyards asks you to take part in a secret meeting"))
+   misn.osdCreate(_("The Meeting"), {
+      fmt.f(_("Go to the {sys} system and land on {pnt}"), {sys=missys, pnt=mispla}),
+      fmt.f(_("Bring Smith back to {pnt} in the {sys} system"), {pnt=paypla, sys=paysys}),
+   })
+   misn.osdActive(1)
+
+   mem.marker = misn.markerAdd(mispla, "low")
+
+   local c = commodity.new( N_("Smith"), N_("Arnold Smith of Nexus Shipyards.") )
+   mem.smith = misn.cargoAdd( c, 0 )
+
+   hook.land("land")
+   hook.enter("enter")
 end
 
 function land()
    --The player is landing on the mission planet
    if mem.stage == 0 and spob.cur() == mispla then
-      tk.msg(_("The meeting"), _([[As you land, you see a group of people that were waiting for your ship. Smith hails them and tells you to wait in the ship while he goes to a private part of the bar.
-    A few periods later, he comes back and explains that he wasn't able to improve Nexus sales in the Frontier, but he was able to stop House Sirius from entering the picture, at least.]]))
+      vn.clear()
+      vn.scene()
+      local arnold = vn.newCharacter( shark.vn_arnold() )
+      vn.transition( shark.arnold.transition )
+      arnold(_([[As you land, you see a group of people that were waiting for your ship. Smith hails them and tells you to wait in the ship while he goes to a private part of the bar.]]))
+      arnold(_([[A few periods later, he comes back and explains that he wasn't able to improve Nexus sales in the Frontier, but he was able to stop House Sirius from entering the picture, at least.]]))
+      vn.done( shark.arnold.transition )
+      vn.run()
       mem.stage = 1
       misn.osdActive(2)
       misn.markerRm(mem.marker)
       mem.marker2 = misn.markerAdd(paypla, "low")
-   end
 
    --Job is done
-   if mem.stage == 1 and spob.cur() == paypla then
-      if misn.cargoRm(mem.smith) then
-         tk.msg(_("End of mission"), _([[Smith gets out of your ship and looks at you, smiling. "You know, it's like that in our kind of job. Sometimes it works and sometimes it fails. It's not our fault. Anyway, here is your pay."]]))
+   elseif mem.stage == 1 and spob.cur() == paypla then
+      vn.clear()
+      vn.scene()
+      local arnold = vn.newCharacter( shark.vn_arnold() )
+      vn.transition( shark.arnold.transition )
+      arnold(_([[Smith gets out of your ship and looks at you, smiling. "You know, it's like that in our kind of job. Sometimes it works and sometimes it fails. It's not our fault. Anyway, here is your pay."]]))
+      vn.func( function ()
          player.pay(shark.rewards.sh04)
          pir.reputationNormalMission(rnd.rnd(2,3))
-         shark.addLog( _([[You transported Arnold Smith to a secret meeting for Nexus Shipyards. The meeting supposedly did not go as well as he hoped, but was a partial success.]]) )
-         misn.finish(true)
-      end
+      end )
+      vn.sfxVictory()
+      vn.na(fmt.reward(shark.rewards.sh04))
+      vn.done( shark.arnold.transition )
+      vn.run()
+
+      shark.addLog( _([[You transported Arnold Smith to a secret meeting for Nexus Shipyards. The meeting supposedly did not go as well as he hoped, but was a partial success.]]) )
+      misn.finish(true)
    end
 end
 
@@ -126,11 +163,6 @@ function ambush()
    end
 end
 
-function abort()
-   misn.cargoRm(mem.smith)
-   misn.finish(false)
-end
-
 function reveal()  --transforms the spawn drones into baddies
    if mem.enable == true then  --only if this happens a few time after the jumping/taking off
       for i, j in ipairs(badguy) do
@@ -144,7 +176,7 @@ function reveal()  --transforms the spawn drones into baddies
       end
       if mem.firstambush == true then
          --Surprise message
-         tk.msg(_("What is going on?"), _([[Suddenly, a Za'lek drone starts attacking you! As you wonder what to do, you hear a broadcast from a remote Za'lek ship. "Attention please, it seems some of our drones have gone haywire. If a drone attacks you and you aren't wanted by the authorities, you are hereby granted authorization to destroy it."]]))
+         vntk.msg(_("What is going on?"), _([[Suddenly, a Za'lek drone starts attacking you! As you wonder what to do, you hear a broadcast from a remote Za'lek ship. "Attention please, it seems some of our drones have gone haywire. If a drone attacks you and you aren't wanted by the authorities, you are hereby granted authorization to destroy it."]]))
          mem.firstambush = false
       end
       mem.proba = mem.proba - 0.1 * #badguy --processing the probability change

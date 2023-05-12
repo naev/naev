@@ -23,7 +23,6 @@ local fmt = require "format"
 local zbh = require "common.zalek_blackhole"
 local lmisn = require "lmisn"
 
--- luacheck: globals land enter heartbeat cutscene_done welcome_back (Hook functions passed by name)
 
 local reward = zbh.rewards.zbh02
 local cargo_name = _("Repair Supplies")
@@ -79,7 +78,7 @@ function accept ()
 
    -- mission details
    misn.setTitle( _("Repairing Sigma-13") )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc( fmt.f(_("Pick up the necessary supplies at {pnt} in the {sys} system and bring them back to Zach at {retpnt}."),
       {pnt=mem.destpnt, sys=mem.destsys, retpnt=retpnt} ))
 

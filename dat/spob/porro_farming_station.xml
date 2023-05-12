@@ -7,14 +7,14 @@
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>0</class>
-  <population>1000</population>
-  <hide>2.000000</hide>
+  <population>8000</population>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -24,4 +24,8 @@
   <description>Stations like this one are a marvel of technology. They span only a few dozen kilometers in diameter, yet have the food production capability to feed several planets. Food is grown so rapidly that it takes a constant stream of merchant ships to take it all away.</description>
   <bar>It is said among spacers that if you sit down in a spacedock bar, order a drink and read a few articles on the galactic news, a whole generation of vegetables will have grown from seed to crop by the time you get up again. This is not true, of course - unless you take small sips.</bar>
  </general>
+ <tags>
+  <tag>station</tag>
+  <tag>agriculture</tag>
+ </tags>
 </spob>

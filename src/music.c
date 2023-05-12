@@ -101,6 +101,7 @@ static int music_runLua( const char *situation )
    if (nlua_pcall(music_env, 1, 0)) { /* error has occurred */
       WARN(_("Error while running music function '%s': %s"), "choose", lua_tostring(naevL,-1));
       lua_pop(naevL,1);
+      return -1;
    }
 
    return 0;
@@ -233,9 +234,9 @@ double music_getVolumeLog(void)
 /**
  * @brief Plays the loaded music.
  */
-void music_play( const char *filename )
+int music_play( const char *filename )
 {
-   if (music_disabled) return;
+   if (music_disabled) return 0;
 
    /* Run the play function in Lua. */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, music_lua_play );
@@ -246,56 +247,71 @@ void music_play( const char *filename )
    if (nlua_pcall(music_env, 1, 0)) { /* error has occurred */
       WARN(_("Error while running music function '%s': %s"), "play", lua_tostring(naevL,-1));
       lua_pop(naevL,1);
+      return -1;
    }
+   return 0;
 }
 
 /**
  * @brief Stops the loaded music.
+ *
+ *    @param disable Whether or not to temporarily disable the music.
+ *    @return 0 on success
  */
-void music_stop (void)
+int music_stop( int disable )
 {
-   if (music_disabled) return;
+   if (music_disabled) return 0;
 
    /* Run the stop function in Lua. */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, music_lua_stop );
-   if (nlua_pcall(music_env, 0, 0)) { /* error has occurred */
+   lua_pushboolean( naevL, disable );
+   if (nlua_pcall(music_env, 1, 0)) { /* error has occurred */
       WARN(_("Error while running music function '%s': %s"), "stop", lua_tostring(naevL,-1));
       lua_pop(naevL,1);
+      return -1;
    }
+   return 0;
 }
 
 /**
  * @brief Pauses the music.
  */
-void music_pause (void)
+int music_pause( int disable )
 {
-   if (music_disabled) return;
+   if (music_disabled) return 0;
 
    /* Run the pause function in Lua. */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, music_lua_pause );
-   if (nlua_pcall(music_env, 0, 0)) { /* error has occurred */
+   lua_pushboolean( naevL, disable );
+   if (nlua_pcall(music_env, 1, 0)) { /* error has occurred */
       WARN(_("Error while running music function '%s': %s"), "pause", lua_tostring(naevL,-1));
       lua_pop(naevL,1);
+      return -1;
    }
+   return 0;
 }
 
 /**
  * @brief Resumes the music.
  */
-void music_resume (void)
+int music_resume (void)
 {
-   if (music_disabled) return;
+   if (music_disabled) return 0;
 
    /* Run the resume function in Lua. */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, music_lua_resume );
    if (nlua_pcall(music_env, 0, 0)) { /* error has occurred */
       WARN(_("Error while running music function '%s': %s"), "resume", lua_tostring(naevL,-1));
       lua_pop(naevL,1);
+      return -1;
    }
+   return 0;
 }
 
-
 static MusicInfo_t minfo;
+/**
+ * @brief Gets information about the current music state.
+ */
 MusicInfo_t* music_info (void)
 {
    if (minfo.name) {
@@ -308,6 +324,7 @@ MusicInfo_t* music_info (void)
    if (nlua_pcall(music_env, 0, 3)) { /* error has occurred */
       WARN(_("Error while running music function '%s': %s"), "info", lua_tostring(naevL,-1));
       lua_pop(naevL,1);
+      return NULL;
    }
 
    minfo.playing  = lua_toboolean(naevL,-3);
@@ -341,7 +358,6 @@ static int music_luaInit (void)
    /* Reset the environment. */
    music_env = nlua_newEnv();
    nlua_loadStandard(music_env);
-   nlua_loadAudio(music_env);
    nlua_loadTk(music_env);
 
    /* load the actual Lua music code */
@@ -399,7 +415,8 @@ int music_choose( const char* situation )
    if (music_disabled || sound_disabled)
       return 0;
 
-   music_runLua( situation );
+   if (music_runLua( situation ))
+      return -1;
 
    return 0;
 }

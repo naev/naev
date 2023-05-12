@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="House Za'lek Central">
+ <lua>spob/lua/zalek_mil_restricted.lua</lua>
+ <pos x="10464.449053" y="5380.131934"/>
+ <GFX>
+  <space>zalek_hq.webp</space>
+  <exterior>traderoom.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <base>250.000000</base>
+  <bonus>50.000000</bonus>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>25000</population>
+  <hide>1.600000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>This station was once the nerve centre of the entirety of House Za'lek. It still is to an extent, but with the move of much the Za'lek government to Ruadan, this station's become something of a secondary capital. Most day to day business of running the Great House still takes place here.</description>
+  <bar>This bar seems to double as a conference hall, with many Za'lek university deans and government officials (more often than not being represented by the same people) meeting with each other as well as foreign trade leaders and dignitaries. The food and drink here is of course top notch, but not extravagant.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Ion 1</item>
+  <item>Ion 2</item>
+  <item>Kinetic 1</item>
+  <item>Plasma 1</item>
+  <item>Plasma 2</item>
+  <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
+  <item>Basic Outfits 2</item>
+  <item>Heavy Weapons 1</item>
+  <item>Heavy Weapons 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+  <item>High Tech Upgrades 2</item>
+  <item>Beam 1</item>
+  <item>Beam 2</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Heavy Civilian Combat Ships</item>
+  <item>Bulk Trade Ships</item>
+  <item>Systems Low</item>
+  <item>Systems Medium</item>
+  <item>Systems High</item>
+  <item>Systems Elite</item>
+  <item>Engines Low</item>
+  <item>Engines Medium</item>
+  <item>Engines High</item>
+  <item>Hulls Low</item>
+  <item>Hulls Medium</item>
+  <item>Hulls High</item>
+  <item>Za'lek Outfits Low</item>
+  <item>Za'lek Outfits Medium</item>
+  <item>Za'lek Outfits High</item>
+  <item>Za'lek Ships Medium</item>
+  <item>Za'lek Ships Large</item>
+ </tech>
+ <tags>
+  <tag>restricted</tag>
+  <tag>military</tag>
+  <tag>urban</tag>
+  <tag>station</tag>
+ </tags>
+</spob>

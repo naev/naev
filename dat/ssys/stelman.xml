@@ -2,17 +2,20 @@
 <ssys name="Stelman">
  <general>
   <radius>13200.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-531.489999" y="-1138.350257"/>
+ <pos x="-319.830616" y="-940.166249"/>
  <spobs>
   <spob>Scorch</spob>
   <spob>Stein</spob>
   <spob>Stelman I-3</spob>
  </spobs>
  <jumps>
+  <jump target="Garten">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="NGC-1317">
    <autopos/>
    <hide>1.000000</hide>

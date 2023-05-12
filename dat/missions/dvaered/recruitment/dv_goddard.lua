@@ -18,7 +18,7 @@
 -- This is the mission of the Dvaered Recruitment arc when the player has to help a Warlord getting a second Goddard Battleship.
 -- The player has to transport commandos to sabotage a ship's engine in a hangar.
 -- Things don't go as expected and player has to intercept a ship (pretending to need fuel) and let the commandos board.
--- Afterwards, the player needs to kill a pirate shark with a Llama. Rem: if an other dummy yacht gets added in the future, it could be added
+-- Afterwards, the player needs to kill a pirate shark with a Llama. Rem: if another dummy yacht gets added in the future, it could be added
 
    Stages :
    0) Way to Halir to search for the engine
@@ -37,7 +37,6 @@ local vntk     = require 'vntk'
 local dv       = require "common.dvaered"
 local pir      = require "common.pirate"
 
--- luacheck: globals enter land escape spawnKoala koalaHailed koalaEscaped koalaBoard spreadCommando gather spawnShark makeSilentDeathAnnoying sharkEscaped sharkAttacked sharkKilled
 
 -- Define the cargo commodity
 local cargo_misn
@@ -173,7 +172,7 @@ function accept()
    -- Mission details
    mem.credits = 100e3
    misn.setTitle(_("Dvaered Negotiation 1"))
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setReward( mem.credits )
    misn.setDesc( fmt.f(_("A Dvaered Warlord needs you to kill a Goddard shareholder. Strangely enough, this operation will be mostly legal.")))
    mem.misn_marker = misn.markerAdd( mem.enginpnt )
    mem.misn_state = 0
@@ -226,40 +225,40 @@ function land()
       vn.na(_([[You land and the saboteurs team leave your ship to disappear among the crowd on the docks. You head to the bar to wait for their return behind a drink. The atmosphere in the spaceport seems unusual. There are groups of workers wandering around and policemen guarding the stores in the shopping alley. You finally ask someone for information.]]))
       local cyb = vn.newCharacter( _("Sergeant Krakadak"), { image=portrait.getFullPath(cyborPort) } )
       local civ = vn.newCharacter( _("Worker"), { image=portrait.getFullPath(civilPort) } )
-      civ(_([[We are on strike! That is what's going on! Nexus docks, who runs the spaceport, decided to lower our wages to only 0.026 credits per tonne for loaders, and 0.051 credits per kilometer for drivers. It is totally impossible for non-modified workers to survive like that, and costs for maintenance are also increasing for cyborg-workers. There are planets where the gravity is lower than here, but the wages are higher. According to some workers, there are even docker companies that offer a fixed salary, on other planets. So we are on strike to force Nexus docks to give us better remuneration.]]))
+      civ(_([["We are on strike! That is what's going on! Nexus docks, who runs the spaceport, decided to lower our wages to only 0.026 credits per tonne for loaders, and 0.051 credits per kilometer for drivers. It is totally impossible for non-modified workers to survive like that, and costs for maintenance are also increasing for cyborg-workers. There are planets where the gravity is lower than here, but the wages are higher. According to some workers, there are even docker companies that offer a fixed salary, on other planets. So we are on strike to force Nexus docks to give us better remuneration."]]))
       vn.jump("menu")
 
       vn.label("menu")
       vn.menu{
-         {_("Why don't you go to one of those other planets, then?"), "other"},
-         {_("Your strike will mostly handicap the clients of the docks, not Nexus docks itself."), "independent"},
-         {_("Does the Imperial laws authorize strikes?"), "legal"},
-         {_("Do you think Tricon main warehouse might be impacted by the strike?"), "tricon"},
+         {_([["Why don't you go to one of those other planets, then?"]]), "other"},
+         {_([["Your strike will mostly handicap the clients of the docks, not Nexus docks itself."]]), "independent"},
+         {_([["Does the Imperial laws authorize strikes?"]]), "legal"},
+         {_([["Do you think Tricon main warehouse might be impacted by the strike?"]]), "tricon"},
          {_("Leave"), "leave"},
       }
 
       vn.label("other")
-      civ(_([[That is unfortunately impossible: a cheap spacebus ticket costs about 50 credits at least. That is about what we dockers can spare in several cycles. Besides, most of us have our roots on this planet. Our parents, families, children that we cannot abandon like that. You know, you are used to travelling across the stars and such, but remember that most of the population won't ever make an interplanetary travel in their whole life!]]))
+      civ(_([["That is unfortunately impossible: a cheap spacebus ticket costs about 50 credits at least. That is about what we dockers can spare in several cycles. Besides, most of us have our roots on this planet. Our parents, families, children that we cannot abandon like that. You know, you are used to travelling across the stars and such, but remember that most of the population won't ever make an interplanetary travel in their whole life!"]]))
       vn.jump("menu")
 
       vn.label("independent")
-      civ(_([[It is of the responsibility of Nexus docks to do all that is needed to satisfy their clients. And this includes providing us workers (who actually do the work) with suitable wages. Nowadays, with our current remuneration, we had to work about 5 periods per decaperiod, and at this rhythm, non-modified workers start having severe health issues at the age of 20 cycles, while cyborgs tend to fall apart even earlier. This is why Nexus docks is the only one to blame for this situation and we workers have not to be accused to defend our right to live longer than 25 cycles and to feed our children without having to force them to work.]]))
+      civ(_([["It is of the responsibility of Nexus docks to do all that is needed to satisfy their clients. And this includes providing us workers (who actually do the work) with suitable wages. Nowadays, with our current remuneration, we had to work about 5 periods per decaperiod, and at this rhythm, non-modified workers start having severe health issues at the age of 20 cycles, while cyborgs tend to fall apart even earlier. This is why Nexus docks is the only one to blame for this situation and we workers have not to be accused to defend our right to live longer than 25 cycles and to feed our children without having to force them to work."]]))
       vn.jump("menu")
 
       vn.label("legal")
-      civ(_([[Actually, nowadays, only few people really care about Imperial laws. All I know is that Nexus sent their private police after us when we created our labor union. Then we did throw large bolts at the cops and they never came back. So I suppose what we do is legal.]]))
-      civ(_([[By the way, the General Inquisitor of Nexus private police on the planet was found dead in his bath at that same period. Some say that a foreign power sent agents to disorganize the repression against our union. I don't know if it is true, or if it is just an other attempt at flagging the union as an "agent of hostile foreign powers".]]))
+      civ(_([["Actually, nowadays, only few people really care about Imperial laws. All I know is that Nexus sent their private police after us when we created our labor union. Then we did throw large bolts at the cops and they never came back. So I suppose what we do is legal."]]))
+      civ(_([["By the way, the General Inquisitor of Nexus private police on the planet was found dead in his bath at that same period. Some say that a foreign power sent agents to disorganize the repression against our union. I don't know if it is true, or if it is just an other attempt at flagging the union as an 'agent of hostile foreign powers'."]]))
       vn.jump("menu")
 
       vn.label("tricon")
-      civ(_([[Ahah! Of course, it is! Nothing enters nor gets out of that warehouse! I have informations that suggest that Tricon is already lobbying for Nexus docks to accept our claims because they cannot afford that strike!]]))
+      civ(_([["Ahah! Of course, it is! Nothing enters nor gets out of that warehouse! I have informations that suggest that Tricon is already lobbying for Nexus docks to accept our claims because they cannot afford that strike!"]]))
       vn.jump("menu")
 
       vn.label("leave")
       vn.na(_([[You leave the workers and head to the bar, where you were supposed to meet the saboteurs once they have completed their mission. You soon notice the two gamma-class cyborgs and approach them.]]))
-      cyb(fmt.f(_([[Unexpected event, {player}. Some lazy workers are on strike, and the engine in question was not delivered to the warehouse. We managed to contact Colonel Okran and he got the information that it was sent to a secondary warehouse in Mural to avoid the strike. It is too late to get it there, but it will soon be transferred again. Let us go back to the ship: we will intercept it in {sys}.]]), {player=player.name(),sys=mem.koalasys}))
-      cyb(_([[The new plan is the following: you will find and hail that transport ship, whose name is the 'Siren of Halir'. You will pretend you're in need of fuel and they will board you. Meanwhile, we are going to do a small spacewalk and infiltrate the ship. Once we have done what is planned, we will evacuate the 'Siren of Halir'.]]))
-      cyb(_([[That is actually the tricky part: you are going to have to recover us in space (like when a miner gathers ore). In the Space Forces, the officers call that kind of stunt an "extra-vehicular recovery operation", but I prefer to refer to it as "one of the stupid stunts I would refuse to do if half my brain had not been amputated before birth in that damn embryo factory". So please, please don't miss us when we will be helplessly floating out there.]]))
+      cyb(fmt.f(_([["Unexpected event, {player}. Some lazy workers are on strike, and the engine in question was not delivered to the warehouse. We managed to contact Colonel Okran and he got the information that it was sent to a secondary warehouse in Mural to avoid the strike. It is too late to get it there, but it will soon be transferred again. Let us go back to the ship: we will intercept it in {sys}."]]), {player=player.name(),sys=mem.koalasys}))
+      cyb(_([["The new plan is the following: you will find and hail that transport ship, whose name is the 'Siren of Halir'. You will pretend you're in need of fuel and they will board you. Meanwhile, we are going to do a small spacewalk and infiltrate the ship. Once we have done what is planned, we will evacuate the 'Siren of Halir'."]]))
+      cyb(_([["That is actually the tricky part: you are going to have to recover us in space (like when a miner gathers ore). In the Space Forces, the officers call that kind of stunt an "extra-vehicular recovery operation", but I prefer to refer to it as "one of the stupid stunts I would refuse to do if half my brain had not been amputated before birth in that damn embryo factory". So please, please don't miss us when we will be helplessly floating out there."]]))
 
       vn.done()
       vn.run()
@@ -291,14 +290,20 @@ function land()
       vn.transition( )
       vn.na(_([[After landing, you notice Colonel Okran waiting for you on the dock.]]))
       local sol = vn.newCharacter( _("Colonel Okran"), { image=portrait.getFullPath(agentPort) } )
-      sol(fmt.f(_([[Hello again, citizen {name}. We have been informed by House Goddard of the tragic death of Mrs Grosjean. Lord Fatgun sent flowers to her family, and I believe you may have come to receive your reward. We will re-contact you in case we need your services again in the future.]]),{name=player.name()}))
+      sol(fmt.f(_([["Hello again, citizen {name}. We have been informed by House Goddard of the tragic death of Mrs Grosjean. Lord Fatgun sent flowers to her family, and I believe you may have come to receive your reward. We will re-contact you in case we need your services again in the future."
+"Oh, and as an additional reward, I made sure you can now purchase the Heavy Weapon License in case you don't already have it."]]),{name=player.name()}))
       vn.na(fmt.f(_([[Colonel Okran pays you {credits}.]]), {credits=fmt.credits(mem.credits)}))
 
       vn.done()
       vn.run()
 
       -- TODO once the whole recruitment campaign is stabilized: faction.get("Dvaered"):modPlayerRaw(someQuantity)
-      dv.addStandardLog( _([[You performed a negotiation mission for Lord Fatgun, who needs to purchase a second Goddard battlecruiser. This mission consisted in killing a shareholder of Goddard who was opposed to this contract.]]) )
+      if diff.isApplied( "heavy_weapons_license" ) then
+         dv.addStandardLog( _([[You performed a negotiation mission for Lord Fatgun, who needs to purchase a second Goddard battlecruiser. This mission consisted in killing a shareholder of Goddard who was opposed to this contract.]]) )
+      else -- Player does not have the license
+         dv.addStandardLog( _([[You performed a negotiation mission for Lord Fatgun, who needs to purchase a second Goddard battlecruiser. This mission consisted in killing a shareholder of Goddard who was opposed to this contract. Completing this mission has granted you access to the Heavy Weapon License.]]) )
+         diff.apply("heavy_weapons_license")
+      end
       player.pay(mem.credits)
       misn.finish(true)
    end

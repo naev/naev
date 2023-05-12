@@ -28,6 +28,7 @@ local fmt = require "format"
 require "proximity"
 local portrait = require "portrait"
 local bioship = require "bioship"
+local ai_setup = require "ai.core.setup"
 
 -- NPC
 mem.npc_portrait = {}
@@ -46,8 +47,6 @@ local opponent, sec11, sec12, sec21, sec22, tv1, tv2
 local mispla, missys = spob.getS("Dvaer Prime")
 
 local beginbattle, land_everyone, player_wanted, won -- Forward-declared functions
--- luacheck: globals assault enter escort_attacked jumpout land oppo_attacked oppo_boarded oppo_dead oppo_disabled oppo_jump player_disabled (Hook functions passed by name)
--- luacheck: globals cleanNbegin competitor1 competitor2 competitor3 competitor4 competitor5 (NPC functions passed by name)
 
 function create ()
    if not misn.claim ( missys ) then
@@ -191,7 +190,7 @@ function enter()
 
       local shiplist = ships[mem.level+1]
       local oppotype = shiplist[ rnd.rnd(1,#shiplist) ]
-      opponent = pilot.add( oppotype, "Thugs", mispla, mem.opponame, {ai="baddie", naked=true} )
+      opponent = pilot.add( oppotype, "Mercenary", mispla, mem.opponame, {ai="baddie", naked=true} )
 
       oppotype = opponent:ship()
 
@@ -232,6 +231,7 @@ function enter()
 
       opponent:control()
       opponent:moveto(mispla:pos() + vec2.new( 1000,  1500))
+      ai_setup.setup(opponent)
 
       --The TV and the security
       tv1 = pilot.add( "Gawain", "Dvaered", mispla, _("Holovision"), {ai="civilian"} )
@@ -294,14 +294,14 @@ function enter()
 
       --Adding the starting mark
       local start_pos = mispla:pos() + vec2.new( -1000, -1500)
-      mem.mark = system.mrkAdd( start_pos, _("START") )
+      mem.mark = system.markerAdd( start_pos, _("START") )
       mem.prox = hook.timer(0.5, "proximity", {location = start_pos, radius = 300, funcname = "assault"})
 
    elseif haslauncher == true then
-      tk.msg(_("You are dismissed"), _("You weren't allowed to use missiles"))
+      tk.msg(_("You are dismissed"), _("You weren't allowed to use missiles!"))
       misn.finish(false)
    elseif mem.playerclass ~= "Fighter" then
-      tk.msg(_("You are dismissed"), _("You had to use a fighter"))
+      tk.msg(_("You are dismissed"), _("You had to use a fighter!"))
       misn.finish(false)
    end
 end
@@ -317,7 +317,7 @@ function oppo_attacked(_pilot, attacker)  --The player tries to cheat by attacki
    if mem.stage == 0 and (attacker and attacker:withPlayer()) then
       land_everyone()
       tk.msg(_("You are dismissed"), _("You weren't supposed to attack before the signal."))
-      system.mrkRm(mem.mark)
+      system.markerRm(mem.mark)
       misn.finish(false)
    end
 end
@@ -333,7 +333,7 @@ function assault()
    opponent:attack(player.pilot()) -- Probably fine to just attack player
    hook.rm(mem.prox)
    hook.rm(mem.attackhook)
-   system.mrkRm(mem.mark)
+   system.markerRm(mem.mark)
 end
 
 function land()

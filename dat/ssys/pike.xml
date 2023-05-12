@@ -2,13 +2,12 @@
 <ssys name="Pike">
  <general>
   <radius>17000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="941.000000" y="-352.000000"/>
+ <pos x="983.843750" y="-330.960503"/>
  <spobs>
-  <spob>Coral Station</spob>
+  <spob>Coral Cloister</spob>
   <spob>Ohon</spob>
   <spob>Pike I</spob>
  </spobs>
@@ -21,8 +20,9 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Qellan">
+  <jump target="Rei">
    <autopos/>
+   <hidden/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

@@ -2,20 +2,23 @@
 <ssys name="Telika">
  <general>
   <radius>16000.000000</radius>
-  <stars>500</stars>
+  <spacedust>500</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="1163.000000" y="401.138560"/>
+ <pos x="1161.432230" y="338.905980"/>
  <spobs>
   <spob>Petra</spob>
   <spob>Telika II</spob>
   <spob>Telika III</spob>
-  <spob>Telika Station</spob>
+  <spob>Telika Keep</spob>
   <spob>Vracha</spob>
  </spobs>
  <jumps>
   <jump target="Ekta">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Leporis">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

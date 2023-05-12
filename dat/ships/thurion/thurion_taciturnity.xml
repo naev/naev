@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Taciturnity">
+ <lua>ships/lua/thurion.lua</lua>
  <points>80</points>
  <base_type>Taciturnity</base_type>
  <GFX size="80" sx="10" sy="10">taciturnity</GFX>
  <rarity>3</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <trail_generator x="-20" y="0" h="0" />
  <trail_generator x="-7" y="23" h="-13">nebula</trail_generator>

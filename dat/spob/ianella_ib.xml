@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Ianella I-b">
+ <pos x="-6817.963140" y="-1059.986749"/>
+ <GFX>
+  <space>moon-J00.webp</space>
+  <exterior>forest.webp</exterior>
+ </GFX>
+ <general>
+  <class>J</class>
+  <population>0</population>
+  <hide>0.300000</hide>
+  <services/>
+ </general>
+</spob>

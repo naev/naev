@@ -7,7 +7,7 @@
  <done>Collective Espionage 1</done>
  <chance>100</chance>
  <location>Bar</location>
- <spob>Omega Station</spob>
+ <spob>Omega Enclave</spob>
  <notes>
   <campaign>Collective</campaign>
  </notes>
@@ -28,19 +28,19 @@
 local fleet = require "fleet"
 local emp = require "common.empire"
 local fmt = require "format"
+local cinema = require "cinema"
 
 -- Mission consstants
-local misn_base, misn_base_sys = spob.getS("Omega Station")
+local misn_base, misn_base_sys = spob.getS("Omega Enclave")
 local misn_target, misn_target_sys = spob.getS("Eiroik")
 
 local swarm1, swarm2, swarm3 -- Non-persistent state
 local moveSwarm -- Forward-declared functions
--- luacheck: globals cameraZoom endCutscene land takeoff (Hook functions passed by name)
 
 function create ()
     local missys = {misn_target}
     if not misn.claim(missys) then
-        abort()
+        misn.finish(false)
     end
 
    misn.setNPC( _("Dimitri"), "empire/unique/dimitri.webp", _("You notice Lt. Commander Dimitri at one of the booths.") )
@@ -62,7 +62,7 @@ function accept ()
 
    -- Mission details
    misn.setTitle(_("Collective Espionage"))
-   misn.setReward( fmt.credits( emp.rewards.ec02 ) )
+   misn.setReward( emp.rewards.ec02 )
    misn.setDesc( fmt.f(_("Land on {pnt} in the {sys} system to monitor Collective communications"), {pnt=misn_target, sys=misn_target_sys} ))
    misn.osdCreate(_("Collective Espionage"), {
       fmt.f(_("Fly to {sys} and land on {pnt}"), {sys=misn_target_sys, pnt=misn_target}),
@@ -83,6 +83,7 @@ function land()
       -- Initiate cutscene
       mem.takeoffhook = hook.takeoff("takeoff")
       player.takeoff()
+
    -- Return bit
    elseif mem.misn_stage == 1 and spob.cur() == misn_base then
       tk.msg( _("Mission Accomplished"), _([[As your ship touches ground, you see Lt. Commander Dimitri come out to greet you.
@@ -92,13 +93,17 @@ function land()
       faction.modPlayerSingle("Empire",5)
       player.pay( emp.rewards.ec02 )
 
-      emp.addCollectiveLog( _([[You monitored Collective communications for the Empire again, this time while landed on Eiroik. Lt. Commander Dimitri told you to meet him in the bar on Omega Station again later.]]) )
+      emp.addCollectiveLog( _([[You monitored Collective communications for the Empire again, this time while landed on Eiroik. Lt. Commander Dimitri told you to meet him in the bar on Omega Enclave again later.]]) )
 
       misn.finish(true)
    end
 end
 
 function takeoff()
+    -- Build the actual cutscene
+    player.pilot():setHide(true)
+    cinema.on()
+
     -- Sinister music landing
     music.play("landing_sinister.ogg")
 
@@ -108,9 +113,6 @@ function takeoff()
 
     local sml_swarm = { "Drone", "Drone", "Drone", "Heavy Drone" }
 
-    -- Build the actual cutscene
-    player.pilot():setHide(true)
-    player.cinematics(true)
     swarm1 = fleet.add( 1, sml_swarm, "Collective", vec2.new(-11000, 4000), _("Collective Drone") )
     swarm1[4]:rename(_("Collective Heavy Drone"))
     moveSwarm(swarm1, vec2.new(-8000, -7500))
@@ -168,7 +170,7 @@ function endCutscene()
     mem.misn_stage = 1
     misn.markerMove( mem.misn_marker, misn_base )
     player.pilot():setHide(false)
-    player.cinematics(false)
+    cinema.off()
     misn.osdActive(2)
     music.choose("ambient")
 end

@@ -13,7 +13,7 @@
  <faction>Independent</faction>
  <faction>Sirius</faction>
  <faction>Soromid</faction>
- <faction>Traders Guild</faction>
+ <faction>Traders Society</faction>
  <faction>Za'lek</faction>
  <notes>
   <campaign>Nexus show their teeth</campaign>
@@ -32,9 +32,10 @@ local pir = require "common.pirate"
 local fmt = require "format"
 local lmisn = require "lmisn"
 local shark = require "common.shark"
+local vn = require "vn"
+local equipopt = require "equipopt"
 
 local sharkboy -- Non-persistent state
--- luacheck: globals disabled enter jumpout land lets_go shark_dead (Hook functions passed by name)
 
 --Change here to change the planet and the system
 local battlesys = system.get("Toaxis")
@@ -47,35 +48,56 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC(_("Arnold Smith"), "neutral/unique/arnoldsmith.webp", _([[The Nexus employee seems to be looking for pilots. Maybe he has an other task for you.]]))
+   misn.setNPC( shark.arnold.name, shark.arnold.portrait, shark.arnold.description )
 end
 
 function accept()
    mem.stage = 0
+   local accepted = false
 
-   if tk.yesno(_("Nexus Shipyards needs you"), _([["I have another job for you. The Baron was unfortunately not as impressed as we hoped. So we need a better demonstration, and we think we know what to do: we're going to demonstrate that the Lancelot, our higher-end fighter design, is more than capable of defeating Destroyer class ships.
-    "Now, one small problem we face is that pirates almost never use Destroyer class ships; they tend to stick to fighters, corvettes, and cruisers. More importantly, actually sending a fighter after a Destroyer is exceedingly dangerous, even if we could find a pirate piloting one. So we have another plan: we want someone to pilot a Destroyer class ship and just let another pilot disable them with ion cannons.
-    "What do you say? Are you interested?"]])) then
-      misn.accept()
-      tk.msg(_("Wonderful"), fmt.f(_([["Great! Go and meet our pilot in {battlesys}. After the job is done, meet me on {pnt} in the {sys} system."]]), {battlesys=battlesys, pnt=paypla, sys=paysys}))
+   vn.clear()
+   vn.scene()
+   local arnold = vn.newCharacter( shark.vn_arnold() )
+   vn.transition( shark.arnold.transition )
 
-      misn.setTitle(_("Sharkman is back"))
-      misn.setReward(fmt.credits(shark.rewards.sh01/2))
-      misn.setDesc(_("Nexus Shipyards wants you to fake a loss against a Lancelot while piloting a Destroyer class ship."))
-      misn.osdCreate(_("Sharkman Is Back"), {
-         fmt.f(_("Jump in {sys} with a Destroyer class ship and let the Lancelot disable you"), {sys=battlesys}),
-         fmt.f(_("Go to {pnt} in {sys} to collect your pay"), {pnt=paypla, sys=paysys}),
-      })
-      misn.osdActive(1)
+   arnold(_([["I have another job for you. The Baron was unfortunately not as impressed as we hoped. So we need a better demonstration, and we think we know what to do: we're going to demonstrate that the Lancelot, our higher-end fighter design, is more than capable of defeating Destroyer-class ships.]]))
+   arnold(_([["Now, one small problem we face is that pirates almost never use Destroyer-class ships; they tend to stick to fighters, corvettes, and cruisers. More importantly, actually sending a fighter after a Destroyer is exceedingly dangerous, even if we could find a pirate piloting one. So we have another plan: we want someone to pilot a Destroyer-class ship and just let another pilot disable them with ion cannons.]]))
+   arnold(_([["What do you say? Are you interested?"]]))
+   vn.menu{
+      {_([[Accept]]), "accept"},
+      {_([[Decline]]), "decline"},
+   }
 
-      mem.marker = misn.markerAdd(battlesys, "low")
+   vn.label("decline")
+   arnold(_([["OK, that's alright."]]))
+   vn.done( shark.arnold.transition )
 
-      hook.jumpout("jumpout")
-      hook.land("land")
-      hook.enter("enter")
-   else
-      tk.msg(_("Sorry, not interested"), _([["OK, that's alright."]]))
-   end
+   vn.label("accept")
+   vn.func( function () accepted = true end )
+   arnold(fmt.f(_([["Great! Go and meet our pilot in {battlesys}. After the job is done, meet me on {pnt} in the {sys} system."]]),
+      {battlesys=battlesys, pnt=paypla, sys=paysys}))
+
+   vn.done( shark.arnold.transition )
+   vn.run()
+
+   if not accepted then return end
+
+   misn.accept()
+
+   misn.setTitle(_("Sharkman is back"))
+   misn.setReward(shark.rewards.sh01/2)
+   misn.setDesc(_("Nexus Shipyards wants you to fake a loss against a Lancelot while piloting a Destroyer-class ship."))
+   misn.osdCreate(_("Sharkman Is Back"), {
+      fmt.f(_("Jump in {sys} with a Destroyer-class ship and let the Lancelot disable you"), {sys=battlesys}),
+      fmt.f(_("Go to {pnt} in {sys} to collect your pay"), {pnt=paypla, sys=paysys}),
+   })
+   misn.osdActive(1)
+
+   mem.marker = misn.markerAdd(battlesys, "low")
+
+   hook.jumpout("jumpout")
+   hook.land("land")
+   hook.enter("enter")
 end
 
 function jumpout()
@@ -89,18 +111,29 @@ function land()
       lmisn.fail( _("You ran away.") )
    end
    if mem.stage == 2 and spob.cur() == paypla then
-      tk.msg(_("Reward"), _([[As you land, you see Arnold Smith waiting for you. He explains that the Baron was so impressed by the battle that he signed an updated contract with Nexus Shipyards, solidifying Nexus as the primary supplier of ships for his fleet. As a reward, they give you twice the sum of credits they promised to you.]]))
-      pir.reputationNormalMission(rnd.rnd(2,3))
-      player.pay(shark.rewards.sh01)
+      vn.clear()
+      vn.scene()
+      local arnold = vn.newCharacter( shark.vn_arnold() )
+      vn.transition( shark.arnold.transition )
+      arnold(_([[As you land, you see Arnold Smith waiting for you. He explains that the Baron was so impressed by the battle that he signed an updated contract with Nexus Shipyards, solidifying Nexus as the primary supplier of ships for his fleet. As a reward, they give you twice the sum of credits they promised to you.]]))
+      vn.func( function ()
+         pir.reputationNormalMission(rnd.rnd(2,3))
+         player.pay(shark.rewards.sh01)
+      end )
+      vn.sfxVictory()
+      vn.na(fmt.reward( shark.rewards.sh01 ))
+      vn.done( shark.arnold.transition )
+      vn.run()
+
       shark.addLog( _([[You helped Nexus Shipyards fake a demonstration by allowing a Lancelot to disable your Destroyer class ship.]]) )
       misn.finish(true)
    end
 end
 
 function enter()
-   local playerclass = player.pilot():ship():class()
+   local playersize = player.pilot():ship():size()
    --Jumping in Toaxis for the battle with a Destroyer class ship
-   if system.cur() == battlesys and mem.stage == 0 and playerclass == "Destroyer" then
+   if system.cur() == battlesys and mem.stage == 0 and playersize == 4 then
       pilot.clear()
       pilot.toggleSpawn( false )
 
@@ -109,27 +142,12 @@ function enter()
 end
 
 function lets_go()
-   -- spawns the Shark
-   sharkboy = pilot.add( "Lancelot", "Mercenary", system.get("Raelid"), nil, {ai="baddie_norun"} )
-   sharkboy:setHostile()
-   sharkboy:setHilight()
+   -- Spawn the enemy Lancelot, equipped with ion cannons (per the plot & to disable rather than murder the player).
+   sharkboy = pilot.add( "Lancelot", "Mercenary", system.get("Zacron"), nil, {ai="baddie_norun", naked=true} )
+   equipopt.generic( sharkboy, { disable=2, damage=0 }, "elite" )
+   sharkboy:setHostile(true)
+   sharkboy:setHilight(true)
 
-   --The shark becomes nice outfits
-   sharkboy:outfitRm("all")
-   sharkboy:outfitRm("cores")
-
-   sharkboy:outfitAdd("S&K Light Combat Plating")
-   sharkboy:outfitAdd("Milspec Orion 3701 Core System")
-   sharkboy:outfitAdd("Tricon Zephyr II Engine")
-
-   sharkboy:outfitAdd("Reactor Class I",2)
-
-   sharkboy:outfitAdd("Heavy Ion Cannon")
-   sharkboy:outfitAdd("Ion Cannon",3)
-
-   sharkboy:setHealth(100,100)
-   sharkboy:setEnergy(100)
-   sharkboy:setFuel(true)
    mem.stage = 1
 
    mem.shark_dead_hook = hook.pilot( sharkboy, "death", "shark_dead" )
@@ -148,8 +166,8 @@ function disabled(pilot, attacker)
       mem.marker2 = misn.markerAdd(paypla, "low")
       pilot.toggleSpawn( true )
    end
-   sharkboy:control()
-   --making sure the shark doesn't continue attacking the player
+   sharkboy:control(true)
+   -- making sure the shark doesn't continue attacking the player
    sharkboy:hyperspace(escapesys, true)
    sharkboy:setNoDeath(true)
 end

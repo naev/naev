@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="P-13571">
+ <pos x="4827.533427" y="2657.711222"/>
+ <GFX>
+  <space>A00.webp</space>
+  <exterior>station05.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

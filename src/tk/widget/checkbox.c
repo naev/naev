@@ -8,7 +8,6 @@
  * @brief Button widget.
  */
 
-
 /** @cond */
 #include <stdlib.h>
 /** @endcond */
@@ -16,14 +15,12 @@
 #include "nstring.h"
 #include "tk/toolkit_priv.h"
 
-
 static Widget *chk_getWgt( unsigned int wid, const char *name );
 static int chk_key( Widget* chk, SDL_Keycode key, SDL_Keymod mod );
 static int chk_mclick( Widget* chk, int button, int x, int y );
 static void chk_render( Widget* chk, double bx, double by );
 static void chk_cleanup( Widget* chk );
 static void chk_toggleState( Widget *chk );
-
 
 /**
  * @brief Adds a button widget to a window.
@@ -64,6 +61,7 @@ void window_addCheckbox( unsigned int wid,
    wgt->dat.chk.display    = (display == NULL) ? NULL : strdup(display);
    wgt->dat.chk.fptr       = call;
    wgt->dat.chk.state      = default_state;
+   wgt->dat.chk.disabled   = 0;
 
    /* position/size */
    wgt->w = (double) w;
@@ -71,16 +69,12 @@ void window_addCheckbox( unsigned int wid,
    toolkit_setPos( wdw, wgt, x, y );
 }
 
-
 /**
  * @brief Gets a widget.
  */
 static Widget *chk_getWgt( unsigned int wid, const char *name )
 {
-   Widget *wgt;
-
-   /* Get widget. */
-   wgt = window_getwgt(wid,name);
+   Widget *wgt = window_getwgt(wid,name);
    if (wgt == NULL)
       return NULL;
 
@@ -93,7 +87,6 @@ static Widget *chk_getWgt( unsigned int wid, const char *name )
    return wgt;
 }
 
-
 /**
  * @brief Changes the checkbox caption.
  *
@@ -103,15 +96,13 @@ static Widget *chk_getWgt( unsigned int wid, const char *name )
  */
 void window_checkboxCaption( unsigned int wid, const char *name, char *display )
 {
-   Widget *wgt;
-   wgt = chk_getWgt(wid, name);
+   Widget *wgt = chk_getWgt(wid, name);
    if (wgt == NULL)
       return;
 
    free(wgt->dat.chk.display);
    wgt->dat.chk.display = strdup(display);
 }
-
 
 /**
  * @brief Gets the state of a checkbox.
@@ -120,14 +111,12 @@ void window_checkboxCaption( unsigned int wid, const char *name, char *display )
  */
 int window_checkboxState( unsigned int wid, const char *name )
 {
-   Widget *wgt;
-   wgt = chk_getWgt(wid, name);
+   Widget *wgt = chk_getWgt(wid, name);
    if (wgt == NULL)
       return -1;
 
    return wgt->dat.chk.state;
 }
-
 
 /**
  * @brief Sets the checkbox state.
@@ -137,8 +126,7 @@ int window_checkboxState( unsigned int wid, const char *name )
  */
 int window_checkboxSet( unsigned int wid, const char *name, int state )
 {
-   Widget *wgt;
-   wgt = chk_getWgt(wid, name);
+   Widget *wgt = chk_getWgt(wid, name);
    if (wgt == NULL)
       return -1;
 
@@ -146,9 +134,8 @@ int window_checkboxSet( unsigned int wid, const char *name, int state )
    return wgt->dat.chk.state;
 }
 
-
 /**
- * @brief Toggles the checkbox. state.
+ * @brief Toggles the checkbox state.
  */
 static void chk_toggleState( Widget *chk )
 {
@@ -156,7 +143,6 @@ static void chk_toggleState( Widget *chk )
    if (chk->dat.chk.fptr != NULL)
       chk->dat.chk.fptr( chk->wdw, chk->name );
 }
-
 
 /**
  * @brief Handles input for an button widget.
@@ -170,12 +156,14 @@ static int chk_key( Widget* chk, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) mod;
 
+   if (chk->dat.chk.disabled)
+      return 0;
+
    if (key == SDLK_SPACE)
       chk_toggleState( chk );
 
    return 0;
 }
-
 
 /**
  * @brief Handles checkbox mouse clicks.
@@ -184,11 +172,12 @@ static int chk_mclick( Widget* chk, int button, int x, int y )
 {
    (void) button;
    (void) y;
+   if (chk->dat.chk.disabled)
+      return 0;
    if ((x > 0) && (x <= chk->w) && (y > 0) && (y <= chk->h))
       chk_toggleState( chk );
    return 1;
 }
-
 
 /**
  * @brief Renders a button widget.
@@ -199,55 +188,34 @@ static int chk_mclick( Widget* chk, int button, int x, int y )
  */
 static void chk_render( Widget* chk, double bx, double by )
 {
-   /*
-   glColour *c;
-   glColour *dc, *lc;
-   */
+   const glColour *cbkg, *cfg;
    double x, y;
 
    x = bx + chk->x;
    y = by + chk->y;
 
    /* set the colours */
-#if 0
-   switch (chk->status) {
-      case WIDGET_STATUS_NORMAL:
-         lc = &cGrey80;
-         dc = &cGrey40;
-         break;
-      case WIDGET_STATUS_MOUSEOVER:
-         lc = &cWhite;
-         dc = &cGrey60;
-         break;
-      case WIDGET_STATUS_MOUSEDOWN:
-         lc = &cGreen;
-         dc = &cGrey40;
-         break;
-      default:
-         break;
+   if (chk->dat.chk.disabled) {
+      cbkg  = toolkit_col;
+      cfg   = &cFontGrey;
    }
-#endif
+   else {
+      cbkg  = toolkit_colLight;
+      cfg   = &cFontWhite;
+   }
 
    /* Draw rect. */
    toolkit_drawRect( x-1, y-1 + (chk->h-10.)/2., 12., 12., toolkit_colDark, NULL );
-   toolkit_drawRect( x, y + (chk->h-10.)/2., 10., 10., toolkit_colLight, NULL );
+   toolkit_drawRect( x, y + (chk->h-10.)/2., 10., 10., cbkg, NULL );
    if (chk->dat.chk.state)
       toolkit_drawRect( x+2., y+2. + (chk->h-10.)/2., 6., 6., toolkit_colDark, NULL );
-
-#if 0
-   /* Inner outline */
-   toolkit_drawOutline( x, y + (chk->h-10.)/2., 10, 10, 0., lc, c );
-   /* Outer outline */
-   toolkit_drawOutline( x, y + (chk->h-10.)/2., 10, 10, 1., &cBlack, NULL );
-#endif
 
    /* Draw the txt. */
    gl_printMaxRaw( NULL, chk->w - 20,
          bx + chk->x + 15,
          by + chk->y + (chk->h - gl_defFont.h)/2.,
-         &cFontWhite, -1., chk->dat.chk.display );
+         cfg, -1., chk->dat.chk.display );
 }
-
 
 /**
  * @brief Clean up function for the button widget.
@@ -258,4 +226,34 @@ static void chk_cleanup( Widget *chk )
 {
    if (chk->dat.chk.display != NULL)
       free(chk->dat.chk.display);
+}
+
+/**
+ * @brief Disables a checkbox.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the checkbox to disable.
+ */
+int window_enableCheckbox( unsigned int wid, const char *name )
+{
+   Widget *wgt = chk_getWgt(wid, name);
+   if (wgt == NULL)
+      return -1;
+   wgt->dat.chk.disabled = 0;
+   return 0;
+}
+
+/**
+ * @brief Enables a checkbox.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the checkbox to enable.
+ */
+int window_disableCheckbox( unsigned int wid, const char *name )
+{
+   Widget *wgt = chk_getWgt(wid, name);
+   if (wgt == NULL)
+      return -1;
+   wgt->dat.chk.disabled = 1;
+   return 0;
 }

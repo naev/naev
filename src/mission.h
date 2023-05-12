@@ -84,6 +84,7 @@ typedef struct Mission_ {
    char *title; /**< Not to be confused with name */
    char *desc; /**< Description of the mission */
    char *reward; /**< Rewards in text */
+   credits_t reward_value; /**< Value of the reward (for monetary cases). */
    glTexture *portrait; /**< Portrait of the mission giver if applicable. */
    char *npc; /**< Name of the NPC giving the mission. */
    char *npc_desc; /**< Description of the giver NPC. */
@@ -117,6 +118,7 @@ Mission* missions_genList( int *n, int faction,
 int mission_accept( Mission* mission ); /* player accepted mission for computer/bar */
 void missions_run( MissionAvailability loc, int faction, const Spob *pnt, const StarSystem *sys );
 int mission_start( const char *name, unsigned int *id );
+int mission_test( const char *name );
 
 /*
  * misc

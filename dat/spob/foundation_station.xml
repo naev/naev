@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Foundation Station">
+ <lua>spob/lua/pirate_clanworld.lua</lua>
  <pos x="1941.876493" y="767.371325"/>
  <GFX>
   <space>000.webp</space>
@@ -13,17 +14,18 @@
  </presence>
  <general>
   <class>2</class>
-  <population>1500</population>
-  <hide>1.000000</hide>
+  <population>5000</population>
+  <hide>0.800000</hide>
   <services>
    <land/>
    <refuel/>
    <missions/>
+   <commodity/>
    <outfits/>
    <blackmarket/>
   </services>
   <commodities/>
-  <description>Foundation Station is the northern refuel point of the Qorel Expanse. As with all pirate outposts, it also serves as a trading post in which loot is exchanged.</description>
+  <description>Foundation Station is the northern refuel point of the Qorel Tunnel and strengthen the ties between the Wild Ones clan and Raven clan. As with all pirate outposts, it also serves as a trading post in which loot is exchanged, and offers some simple outfitting.</description>
  </general>
  <tech>
   <item>Pirate Maps</item>
@@ -34,5 +36,6 @@
  </tech>
  <tags>
   <tag>criminal</tag>
+  <tag>station</tag>
  </tags>
 </spob>

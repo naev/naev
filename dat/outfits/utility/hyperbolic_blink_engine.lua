@@ -30,16 +30,17 @@ function update( p, po, dt )
          if m > masslimit then
             dist = dist * masslimit / m
          end
-         luaspfx.blink( p:pos() ) -- Blink afterimage
+         local pos = p:pos()
+         luaspfx.blink( pos ) -- Blink afterimage
          p:effectAdd( "Blink" ) -- Cool "blink in" effect
          -- Direction is random
-         p:setPos( p:pos() + vec2.newP( dist, p:dir()+(2*rnd.rnd()-1)*math.pi/6 ) )
+         p:setPos( pos + vec2.newP( dist, p:dir()+(2*rnd.rnd()-1)*math.pi/6 ) )
 
          -- Play the sound
          if mem.isp then
             luaspfx.sfx( true, nil, sfx )
          else
-            luaspfx.sfx( p:pos(), p:vel(), sfx )
+            luaspfx.sfx( pos, p:vel(), sfx )
          end
 
          -- Set cooldown and maluses
@@ -48,7 +49,7 @@ function update( p, po, dt )
          po:set("thrust_mod", penalty)
          po:set("turn_mod", penalty)
          mem.cooldown = true
-         mem.timer = cooldown
+         mem.timer = cooldown * p:shipstat("cooldown_mod",true)
       else
          -- Cooldown is over
          if mem.cooldown then

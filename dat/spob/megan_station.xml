@@ -25,4 +25,8 @@
   <description>The Frontier is relatively poor, and part of the reason for this is that the Frontier is lacking in energy output. In an attempt to reinforce this weak link, the Frontier Council sanctioned the construction of a deep-space power generator, which was to provide energy cells to industries across Frontier space. That generator is Megan Station.</description>
   <bar>The spacedock bar is quite plain in its appointments. The Frontier people have learned to be practical and utilitarian, and so didn't waste any more space or effort on the bar onboard Megan than was required.</bar>
  </general>
+ <tags>
+  <tag>station</tag>
+  <tag>poor</tag>
+ </tags>
 </spob>

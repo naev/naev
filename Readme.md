@@ -18,7 +18,7 @@ accompanying everything from planets to equipment.
 ## DEPENDENCIES
 
 Naev's dependencies are intended to be widely available. In addition to a
-graphics card and driver supporting at least OpenGL 3.1, Naev requires:
+graphics card and driver supporting at least OpenGL 3.2, Naev requires:
 * SDL 2
 * libxml2
 * freetype2
@@ -28,7 +28,6 @@ graphics card and driver supporting at least OpenGL 3.1, Naev requires:
 * OpenAL
 * OpenBLAS
 * libvorbis
-* binutils
 * intltool
 * libunibreak (included)
 * pyyaml
@@ -76,9 +75,9 @@ directory to see a list of all available options.
 
 **For installation**, try: `meson configure --buildtype=release -Db_lto=true`
 
-**For Windows packaging**, try adding: `--bindir=bin -Dndata_path=bin`
+**For Building a Windows Installer**, try adding: `--bindir=. -Dndata_path=. -Dinstaller=true`. Check the `dist` folder in your build directory
 
-**For macOS**, try adding: `--prefix="$(pwd)"/build/dist/Naev.app --bindir=Contents/MacOS -Dndata_path=Contents/Resources`
+**For Building a macOS DMG**, try adding: `--prefix="$(pwd)"/build/dist/Naev.app --bindir=Contents/MacOS -Dndata_path=Contents/Resources -Dinstaller=true`. Check the `dist` folder in your build directory
 
 **For normal development**, try adding: `--buildtype=debug -Db_sanitize=address` (adding `-Db_lundef=false` if compiling with Clang, substituting `-Ddebug_arrays=true` for `-Db_sanitize=...` on Windows if you can't use Clang).
 (If your system supports debuginfod, also add `set debuginfod enabled on` to a file named `.gdbinit` in your home directory!)

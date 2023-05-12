@@ -18,6 +18,7 @@
 
 #include "log.h"
 #include "nluadef.h"
+#include "collision.h"
 
 /* Vector metatable methods */
 static int vectorL_new( lua_State *L );
@@ -39,7 +40,10 @@ static int vectorL_setP( lua_State *L );
 static int vectorL_distance( lua_State *L );
 static int vectorL_distance2( lua_State *L );
 static int vectorL_mod( lua_State *L );
+static int vectorL_angle( lua_State *L );
 static int vectorL_normalize( lua_State *L );
+static int vectorL_collideLineLine( lua_State *L );
+static int vectorL_collideCircleLine( lua_State *L );
 static const luaL_Reg vector_methods[] = {
    { "new", vectorL_new },
    { "newP", vectorL_newP },
@@ -60,7 +64,10 @@ static const luaL_Reg vector_methods[] = {
    { "dist", vectorL_distance },
    { "dist2", vectorL_distance2 },
    { "mod", vectorL_mod },
+   { "angle", vectorL_angle },
    { "normalize", vectorL_normalize },
+   { "collideLineLine", vectorL_collideLineLine },
+   { "collideCircleLine", vectorL_collideCircleLine },
    {0,0}
 }; /**< Vector metatable methods. */
 
@@ -131,8 +138,7 @@ vec2* luaL_checkvector( lua_State *L, int ind )
  */
 vec2* lua_pushvector( lua_State *L, vec2 vec )
 {
-   vec2 *v;
-   v = (vec2*) lua_newuserdata(L, sizeof(vec2));
+   vec2 *v = (vec2*) lua_newuserdata(L, sizeof(vec2));
    *v = vec;
    luaL_getmetatable(L, VECTOR_METATABLE);
    lua_setmetatable(L, -2);
@@ -168,8 +174,8 @@ int lua_isvector( lua_State *L, int ind )
  * @usage vec2.new( 5, 3 ) -- creates a vector at (5,3)
  * @usage vec2.new() -- creates a vector at (0,0)
  *
- *    @luatparam number x If set, the X value for the new vector.
- *    @luatparam number y If set, the Y value for the new vector.
+ *    @luatparam[opt=0] number x If set, the X value for the new vector.
+ *    @luatparam[opt=x] number y If set, the Y value for the new vector.
  *    @luatreturn Vec2 The new vector.
  * @luafunc new
  */
@@ -178,14 +184,15 @@ static int vectorL_new( lua_State *L )
    vec2 v;
    double x, y;
 
-   if ((lua_gettop(L) > 1) && lua_isnumber(L,1) && lua_isnumber(L,2)) {
-      x = lua_tonumber(L,1);
-      y = lua_tonumber(L,2);
-   }
-   else {
+   if (!lua_isnoneornil(L,1))
+      x = luaL_checknumber(L,1);
+   else
       x = 0.;
-      y = 0.;
-   }
+
+   if (!lua_isnoneornil(L,2))
+      y = luaL_checknumber(L,2);
+   else
+      y = x;
 
    vec2_cset( &v, x, y );
    lua_pushvector(L, v);
@@ -208,14 +215,15 @@ static int vectorL_newP( lua_State *L )
    vec2 v;
    double m, a;
 
-   if ((lua_gettop(L) > 1) && lua_isnumber(L,1) && lua_isnumber(L,2)) {
-      m = lua_tonumber(L, 1);
-      a = lua_tonumber(L, 2);
-   }
-   else {
+   if (!lua_isnoneornil(L,1))
+      m = luaL_checknumber(L, 1);
+   else
       m = 0.;
+
+   if (!lua_isnoneornil(L,2))
+      a = luaL_checknumber(L, 2);
+   else
       a = 0.;
-   }
 
    vec2_pset( &v, m, a );
    lua_pushvector(L, v);
@@ -248,7 +256,7 @@ static int vectorL_tostring( lua_State *L )
  * @usage my_vec:add( your_vec )
  * @usage my_vec:add( 5, 3 )
  *
- *    @luatparam Vector v Vector getting stuff subtracted from.
+ *    @luatparam Vector v Vector getting stuff added to.
  *    @luatparam number|Vec2 x X coordinate or vector to add to.
  *    @luatparam number|nil y Y coordinate or nil to add to.
  *    @luatreturn Vec2 The result of the vector operation.
@@ -259,22 +267,27 @@ static int vectorL_add( lua_State *L )
    vec2 vout, *v1;
    double x, y;
 
-   /* Get self. */
-   v1    = luaL_checkvector(L,1);
-
-   /* Get rest of parameters. */
-   if (lua_isvector(L,2)) {
-      vec2 *v2 = lua_tovector(L,2);
-      x = v2->x;
-      y = v2->y;
-   }
-   else if ((lua_gettop(L) > 2) && lua_isnumber(L,2) && lua_isnumber(L,3)) {
-      x = lua_tonumber(L,2);
-      y = lua_tonumber(L,3);
+   if (lua_isnumber(L,1)) {
+      x = y = lua_tonumber(L,1);
+      v1 = luaL_checkvector(L,2);
    }
    else {
-      NLUA_INVALID_PARAMETER(L);
-      return 0;
+      /* Get self. */
+      v1    = luaL_checkvector(L,1);
+
+      /* Get rest of parameters. */
+      if (lua_isvector(L,2)) {
+         vec2 *v2 = lua_tovector(L,2);
+         x = v2->x;
+         y = v2->y;
+      }
+      else {
+         x = luaL_checknumber(L,2);
+         if (!lua_isnoneornil(L,3))
+            y = luaL_checknumber(L,3);
+         else
+            y = x;
+      }
    }
 
    /* Actually add it */
@@ -289,7 +302,7 @@ static int vectorL_add__( lua_State *L )
    double x, y;
 
    /* Get self. */
-   v1    = luaL_checkvector(L,1);
+   v1 = luaL_checkvector(L,1);
 
    /* Get rest of parameters. */
    if (lua_isvector(L,2)) {
@@ -297,13 +310,12 @@ static int vectorL_add__( lua_State *L )
       x = v2->x;
       y = v2->y;
    }
-   else if ((lua_gettop(L) > 2) && lua_isnumber(L,2) && lua_isnumber(L,3)) {
-      x = lua_tonumber(L,2);
-      y = lua_tonumber(L,3);
-   }
    else {
-      NLUA_INVALID_PARAMETER(L);
-      return 0;
+      x = luaL_checknumber(L,2);
+      if (!lua_isnoneornil(L,3))
+         y = luaL_checknumber(L,3);
+      else
+         y = x;
    }
 
    /* Actually add it */
@@ -343,13 +355,12 @@ static int vectorL_sub( lua_State *L )
       x = v2->x;
       y = v2->y;
    }
-   else if ((lua_gettop(L) > 2) && lua_isnumber(L,2) && lua_isnumber(L,3)) {
-      x = lua_tonumber(L,2);
-      y = lua_tonumber(L,3);
-   }
    else {
-      NLUA_INVALID_PARAMETER(L);
-      return 0;
+      x = luaL_checknumber(L,2);
+      if (!lua_isnoneornil(L,3))
+         y = luaL_checknumber(L,3);
+      else
+         y = x;
    }
 
    /* Actually add it */
@@ -371,13 +382,12 @@ static int vectorL_sub__( lua_State *L )
       x = v2->x;
       y = v2->y;
    }
-   else if ((lua_gettop(L) > 2) && lua_isnumber(L,2) && lua_isnumber(L,3)) {
-      x = lua_tonumber(L,2);
-      y = lua_tonumber(L,3);
-   }
    else {
-      NLUA_INVALID_PARAMETER(L);
-      return 0;
+      x = luaL_checknumber(L,2);
+      if (!lua_isnoneornil(L,3))
+         y = luaL_checknumber(L,3);
+      else
+         y = x;
    }
 
    /* Actually add it */
@@ -426,14 +436,19 @@ static int vectorL_mul( lua_State *L )
 static int vectorL_mul__( lua_State *L )
 {
    vec2 *v1;
-   double mod;
 
    /* Get parameters. */
-   v1    = luaL_checkvector(L,1);
-   mod   = luaL_checknumber(L,2);
+   v1 = luaL_checkvector(L,1);
+   if (lua_isnumber(L,2)) {
+      double mod = luaL_checknumber(L,2);
+      vec2_cset( v1, v1->x * mod, v1->y * mod );
+   }
+   else {
+      vec2 *v2 = luaL_checkvector(L,2);
+      vec2_cset( v1, v1->x * v2->x, v1->y * v2->y );
+   }
 
    /* Actually add it */
-   vec2_cset( v1, v1->x * mod, v1->y * mod );
    lua_pushvector( L, *v1 );
    return 1;
 }
@@ -452,28 +467,36 @@ static int vectorL_mul__( lua_State *L )
 static int vectorL_div( lua_State *L )
 {
    vec2 vout, *v1;
-   double mod;
 
    /* Get parameters. */
    v1    = luaL_checkvector(L,1);
-   mod   = luaL_checknumber(L,2);
+   if (lua_isnumber(L,2)) {
+      double mod = lua_tonumber(L,2);
+      vec2_cset( &vout, v1->x / mod, v1->y / mod );
+   }
+   else {
+      vec2 *v2 = luaL_checkvector(L,2);
+      vec2_cset( &vout, v1->x / v2->x, v1->y / v2->y );
+   }
 
-   /* Actually add it */
-   vec2_cset( &vout, v1->x / mod, v1->y / mod );
    lua_pushvector( L, vout );
    return 1;
 }
 static int vectorL_div__( lua_State *L )
 {
    vec2 *v1;
-   double mod;
 
    /* Get parameters. */
    v1    = luaL_checkvector(L,1);
-   mod   = luaL_checknumber(L,2);
+   if (lua_isnumber(L,2)) {
+      double mod = lua_tonumber(L,2);
+      vec2_cset( v1, v1->x / mod, v1->y / mod );
+   }
+   else {
+      vec2 *v2 = luaL_checkvector(L,2);
+      vec2_cset( v1, v1->x / v2->x, v1->y / v2->y );
+   }
 
-   /* Actually add it */
-   vec2_cset( v1, v1->x / mod, v1->y / mod );
    lua_pushvector( L, *v1 );
    return 1;
 }
@@ -589,7 +612,7 @@ static int vectorL_setP( lua_State *L )
  * @usage my_vec:dist( your_vec ) -- Gets distance from both vectors (your_vec - my_vec).
  *
  *    @luatparam Vec2 v Vector to act as origin.
- *    @luatparam Vec2 v2 Vector to get distance from, uses origin (0,0) if not set.
+ *    @luatparam[opt=vec2.new()] Vec2 v2 Vector to get distance from, uses origin (0,0) if not set.
  *    @luatreturn number The distance calculated.
  * @luafunc dist
  */
@@ -602,10 +625,10 @@ static int vectorL_distance( lua_State *L )
    v1 = luaL_checkvector(L,1);
 
    /* Get rest of parameters. */
-   v2 = NULL;
-   if (lua_gettop(L) > 1) {
+   if (!lua_isnoneornil(L,2))
       v2 = luaL_checkvector(L,2);
-   }
+   else
+      v2 = NULL;
 
    /* Get distance. */
    if (v2 == NULL)
@@ -625,7 +648,7 @@ static int vectorL_distance( lua_State *L )
  * @usage my_vec:dist2( your_vec ) -- Gets squared distance from both vectors (your_vec - my_vec)^2.
  *
  *    @luatparam Vec2 v Vector to act as origin.
- *    @luatparam Vec2 v2 Vector to get squared distance from, uses origin (0,0) if not set.
+ *    @luatparam[opt=vec2.new()] Vec2 v2 Vector to get squared distance from, uses origin (0,0) if not set.
  *    @luatreturn number The distance calculated.
  * @luafunc dist2
  */
@@ -638,10 +661,10 @@ static int vectorL_distance2( lua_State *L )
    v1 = luaL_checkvector(L,1);
 
    /* Get rest of parameters. */
-   v2 = NULL;
-   if (lua_gettop(L) > 1) {
+   if (!lua_isnoneornil(L,2))
       v2 = luaL_checkvector(L,2);
-   }
+   else
+      v2 = NULL;
 
    /* Get distance. */
    if (v2 == NULL)
@@ -668,6 +691,19 @@ static int vectorL_mod( lua_State *L )
 }
 
 /**
+ * @brief Gets the angle of the vector.
+ *    @luatparam Vec2 v Vector to get angle of.
+ *    @luatreturn number The angle of the vector.
+ * @luafunc angle
+ */
+static int vectorL_angle( lua_State *L )
+{
+   vec2 *v = luaL_checkvector(L,1);
+   lua_pushnumber(L, VANGLE(*v));
+   return 1;
+}
+
+/**
  * @brief Normalizes a vector.
  *    @luatparam Vec2 v Vector to normalize.
  *    @luatreturn Vec2 Normalized vector.
@@ -681,4 +717,57 @@ static int vectorL_normalize( lua_State *L )
    v->y /= m;
    lua_pushvector(L, *v);
    return 1;
+}
+
+/**
+ * @brief Sees if two line segments collide.
+ *
+ *    @luatparam Vec2 s1 Start point of the first segment.
+ *    @luatparam Vec2 e1 End point of the first segment.
+ *    @luatparam Vec2 s2 Start point of the second segment.
+ *    @luatparam Vec2 e2 End point of the second segment.
+ *    @luatreturn integer 0 if they don't collide, 1 if they collide on a point, 2 if they are parallel, and 3 if they are coincident.
+ * @luafunc collideLineLine
+ */
+static int vectorL_collideLineLine( lua_State *L )
+{
+   vec2 *s1 = luaL_checkvector(L,1);
+   vec2 *e1 = luaL_checkvector(L,2);
+   vec2 *s2 = luaL_checkvector(L,3);
+   vec2 *e2 = luaL_checkvector(L,4);
+   vec2 crash;
+   int ret = CollideLineLine( s1->x, s1->y, e1->x, e1->y, s2->x, s2->y, e2->x, e2->y, &crash );
+   lua_pushinteger( L, ret );
+   lua_pushvector( L, crash );
+   return 2;
+}
+
+/**
+ * @brief Computes the intersection of a line segment and a circle.
+ *
+ *    @luatparam Vector center Center of the circle.
+ *    @luatparam number radius Radius of the circle.
+ *    @luatparam Vector p1 First point of the line segment.
+ *    @luatparam Vector p2 Second point of the line segment.
+ *    @luatreturn Vector|nil First point of collision or nil if no collision.
+ *    @luatreturn Vector|nil Second point of collision or nil if single-point collision.
+ * @luafunc collideCircleLine
+ */
+static int vectorL_collideCircleLine( lua_State *L )
+{
+   vec2 *center, *p1, *p2, crash[2];
+   double radius;
+
+   center = luaL_checkvector( L, 1 );
+   radius = luaL_checknumber( L, 2 );
+   p1     = luaL_checkvector( L, 3 );
+   p2     = luaL_checkvector( L, 4 );
+
+   int cnt = CollideLineCircle( p1, p2, center, radius, crash );
+   if (cnt>0)
+      lua_pushvector( L, crash[0] );
+   if (cnt>1)
+      lua_pushvector( L, crash[1] );
+
+   return cnt;
 }

@@ -1,18 +1,16 @@
-# Introduction
-
-Welcome to the Naev development manual! This manual is meant to cover all aspects of Naev development. It is currently a work in progress. The source code for the manual can be found on the [naev github](https://github.com/naev/naev/tree/main/docs/manual) with pull requests and issues being welcome.
+# Introduction to the Naev Engine
 
 While this document does cover the Naev engine in general, many sections refer to customs and properties specific to the **Sea of Darkness** default Naev universe. These are marked with \naev.
 
 ## Getting Started
 
-This document assumes you have access to the Naev data. This can be either from downloading the game directly from a distribution platform, or getting directly the [naev source code](https://github.com/naev/naev). Either way it is possible to modify the game data and change many aspects of the game. It is also possible to create plugins that add or replace content from the game without touching the core data to be compatible with updates.
+Th Naev engine explanations assume you have access to the Naev data. This can be either from downloading the game directly from a distribution platform, or getting directly the [naev source code](https://github.com/naev/naev). Either way it is possible to modify the game data and change many aspects of the game. It is also possible to create plugins that add or replace content from the game without touching the core data to be compatible with updates.
 
 | Operating System | Data Location |
 | --- | --- |
 | Linux | `/usr/share/naev/dat` |
 | Mac OS X | `/Applications/Naev.app/Contents/Resources/dat` |
-| Windows | TODO |
+| Windows | `%ProgramFiles(x86)%\Naev\dat` |
 
 Most changes will only take place when you restart Naev, although it is possible to force Naev to reload a mission or event with `naev.missionReload` or `naev.eventReload`.
 
@@ -31,8 +29,11 @@ Plugins are found at the following locations by default, and are automatically l
 Note that plugins can use either a directory structure or be compressed as zip files (while still having the appropriate directory structure). For example, it is possible to add a single mission by creating a plugin with the follow structure:
 
 ```
+plugin.xml
 missions/
    my_mission.xml
 ```
 
-This will cause `my_mission.xml` to be loaded as an extra mission.
+This will cause `my_mission.xml` to be loaded as an extra mission. `plugin.xml` is a plugin-specific file which would contain information on plugin name, authors, version, description, compatibility, and so on.
+
+Plugins are described in detail in Chapter \ref{chapter:plugins}.

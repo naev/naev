@@ -5,13 +5,12 @@
   <map_shader>plasmastorm_map.frag</map_shader>
   <features>#pPlasma Storm (-50% energy and -50% stress dissipation)#0</features>
   <radius>14500.000000</radius>
-  <stars>400</stars>
-  <interference>25.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>56.250000</interference>
  </general>
- <pos x="1273.730737" y="-776.218016"/>
+ <pos x="1467.789953" y="-510.108332"/>
  <spobs>
-  <spob>Monsoon Station</spob>
+  <spob>Monsoon Cloister</spob>
   <spob>Narousse I</spob>
   <spob>Narousse II</spob>
   <spob>Narousse III</spob>
@@ -23,11 +22,7 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Muirat">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Porro">
+  <jump target="Korma">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

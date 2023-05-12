@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Majesteka Prime">
+ <lua>spob/lua/dvaered_mil_restricted.lua</lua>
+ <pos x="6862.430386" y="-3603.734393"/>
+ <GFX>
+  <space>M25.webp</space>
+  <exterior>citadel.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <base>50.000000</base>
+  <bonus>25.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>170000</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Majesteka Prime is a tough planet battled by constant storms that can cover an entire hemisphere at a time. Living requires constant battling the elements, which is why the Dvaered designed it as a military training complex. Many rookies spend cycles here where they are hardened by the constant fight against the elements. Those that survive often go on to lead successful military careers in space. Other than the abnormally tempestuous climate, there is not much interesting to the planet.</description>
+  <bar>The bar is hidden deep inside the military complex citadel in a futile effort to guard it against the elements. The floor is a constant mess of mud that never quite dries. Due to the abrasiveness of the elements contained in the mud, cleaning robots never really survive long and it has become a custom for newer recruits to be forced to futilely try to mop the floor. The selection of drinks is dominated by a stout brewed locally from algae that thrives in the constant storms. It is extremely sour and leaves a bitter aftertaste, but all the locals seem to be completely used to it.</bar>
+ </general>
+ <tags>
+  <tag>military</tag>
+  <tag>restricted</tag>
+ </tags>
+</spob>

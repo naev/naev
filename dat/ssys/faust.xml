@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ssys name="Faust">
  <general>
+  <background>pso</background>
+  <map_shader>pso_map.frag</map_shader>
   <radius>12500.000000</radius>
-  <stars>400</stars>
-  <interference>2.439020</interference>
-  <nebula volatility="0.000000" hue="290.000000">300.000000</nebula>
+  <spacedust>0</spacedust>
+  <interference>49.000000</interference>
  </general>
- <pos x="190.678211" y="-888.714763"/>
+ <pos x="370.829630" y="-1053.057817"/>
  <spobs>
   <spob>Faust III</spob>
   <spob>Faust VI</spob>

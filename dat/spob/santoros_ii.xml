@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Santoros II">
+ <pos x="-8520.082931" y="-3559.021984"/>
+ <GFX>
+  <space>D05.webp</space>
+  <exterior>uninhabited-rocky-airless-01.webp</exterior>
+ </GFX>
+ <general>
+  <class>D</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>With no atmosphere or any rare resources, Santoros II is just an oversized rock floating in space. It is speculated that most of the asteroids in the system were originally part of Santoros II, broken off due the flakiness of the planetary crust and low-density.</description>
+ </general>
+</spob>

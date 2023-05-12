@@ -2,12 +2,16 @@
 <ssys name="Behar">
  <general>
   <radius>14000.000000</radius>
-  <stars>400</stars>
-  <interference>20.000000</interference>
-  <nebula volatility="0.000000">250.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>45.000000</interference>
+  <nebula volatility="3.100000">250.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="422.000000" y="61.000000"/>
- <spobs/>
+ <pos x="471.335013" y="-204.056462"/>
+ <spobs>
+  <spob>Behar Prime</spob>
+  <spob>Behar Station</spob>
+ </spobs>
  <jumps>
   <jump target="Doeston">
    <autopos/>
@@ -22,4 +26,7 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

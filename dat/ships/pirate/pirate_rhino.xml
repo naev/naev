@@ -4,7 +4,7 @@
  <base_type>Rhino</base_type>
  <GFX size="100" sx="10" sy="10">rhino_pirate</GFX>
  <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Armoured Transport</class>
  <price>1450000</price>

@@ -105,6 +105,7 @@ static void move_old_save( const char *path, const char *fname, const char *ext,
 static int load_load( nsave_t *save, const char *path );
 static int load_game( nsave_t *ns );
 static int load_gameInternal( const char* file, const char* version );
+static int load_gameInternalHook( void *data );
 static int load_enumerateCallback( void* data, const char* origdir, const char* fname );
 static int load_enumerateCallbackPlayer( void* data, const char* origdir, const char* fname );
 static int load_compatibilityTest( const nsave_t *ns );
@@ -252,7 +253,7 @@ static int load_enumerateCallbackPlayer( void* data, const char* origdir, const 
    dir_len = strlen( origdir );
 
    fmt = dir_len && origdir[dir_len-1]=='/' ? "%s%s" : "%s/%s";
-   asprintf( &path, fmt, origdir, fname );
+   SDL_asprintf( &path, fmt, origdir, fname );
    if (!PHYSFS_stat( path, &stat ))
       WARN( _("PhysicsFS: Cannot stat %s: %s"), path,
             _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
@@ -290,7 +291,7 @@ static int load_enumerateCallback( void* data, const char* origdir, const char* 
    name_len = strlen( fname );
 
    fmt = dir_len && origdir[dir_len-1]=='/' ? "%s%s" : "%s/%s";
-   asprintf( &path, fmt, origdir, fname );
+   SDL_asprintf( &path, fmt, origdir, fname );
    if (!PHYSFS_stat( path, &stat ))
       WARN( _("PhysicsFS: Cannot stat %s: %s"), path,
             _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
@@ -302,7 +303,7 @@ static int load_enumerateCallback( void* data, const char* origdir, const char* 
       }
       if (!PHYSFS_exists( "saves-pre-0.10.0" ))
          PHYSFS_mkdir( "saves-pre-0.10.0" );
-      asprintf( &backup_path, "saves-pre-0.10.0/%s", fname );
+      SDL_asprintf( &backup_path, "saves-pre-0.10.0/%s", fname );
       if (!ndata_copyIfExists( path, backup_path ))
          old_saves_detected = 1;
       free( backup_path );
@@ -339,15 +340,17 @@ static int load_compatibilityTest( const nsave_t *ns )
                "   Save version: #r%s#0\n"
                "   Naev version: %s\n"
                "Are you sure you want to load this game? It may lose data."),
-               ns->player_name, ns->version, VERSION ))
+               ns->player_name, ns->version, naev_version( 0 ) ))
             return -1;
          break;
 
       case SAVE_COMPATIBILITY_PLUGINS:
+         buf[0] = '\0';
          l = 0;
          for (int i=0; i<array_size(ns->plugins); i++)
             l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", (l>0)?_(", "):"#r", ns->plugins[i] );
          l += scnprintf( &buf[l], sizeof(buf)-l, "#0" );
+         buf2[0] = '\0';
          l = 0;
          for (int i=0; i<array_size(plugins); i++)
             l += scnprintf( &buf2[l], sizeof(buf2)-l, "%s%s", (l>0)?_(", "):"", plugin_name(&plugins[i]) );
@@ -513,9 +516,9 @@ void load_loadGameMenu (void)
          nsave_t *ns = &load_saves[i].saves[0];
          if (ns->compatible) {
             char buf[STRMAX_SHORT];
-            int l = 0;
-            l += snprintf( &buf[l], sizeof(buf)-l, _("%s (#r%s#0)"),
-               load_saves[i].name, load_compatibilityString( ns ) );
+            size_t l = 0;
+            l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (#r%s#0)"),
+               ns->player_name, load_compatibilityString( ns ) );
             names[i] = strdup( buf );
          }
          else
@@ -559,8 +562,9 @@ void load_loadGameMenu (void)
 /**
  * @brief Opens the load snapshot menu.
  *    @param name Player's name.
+ *    @param disablesave Forcibly disable saving.
  */
-void load_loadSnapshotMenu( const char *name )
+void load_loadSnapshotMenu( const char *name, int disablesave )
 {
    unsigned int wid;
    char **names;
@@ -593,11 +597,9 @@ void load_loadSnapshotMenu( const char *name )
          nsave_t *ns = &ps->saves[i];
          if (ns->compatible) {
             char buf[STRMAX_SHORT];
-            int l = 0;
-            l += snprintf( &buf[l], sizeof(buf)-l, "#r" );
-            l += snprintf( buf, sizeof(buf), _("%s (%s)"),
-               load_saves[i].name, load_compatibilityString( ns ) );
-            l += snprintf( &buf[l], sizeof(buf)-l, "#0" );
+            size_t l = 0;
+            l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (#r%s#0)"),
+               ns->save_name, load_compatibilityString( ns ) );
             names[i] = strdup( buf );
          }
          else
@@ -623,13 +625,13 @@ void load_loadSnapshotMenu( const char *name )
    window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnBack", _("Back"), load_snapshot_menu_close, SDLK_b );
    window_addButtonKey( wid, -20-BUTTON_WIDTH-20, 20 + BUTTON_HEIGHT+15, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnSave", _("Save"), load_snapshot_menu_save, SDLK_s );
+         "btnSave", _("Save As"), load_snapshot_menu_save, SDLK_s );
    window_addButtonKey( wid, -20, 20 + BUTTON_HEIGHT+15, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnLoad", _("Load"), load_snapshot_menu_load, SDLK_l );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnDelete", _("Delete"), load_snapshot_menu_delete );
 
-   if (window_exists( "wdwLoadGameMenu" ))
+   if (disablesave || window_exists( "wdwLoadGameMenu" ))
       window_disableButton( wid, "btnSave" );
    else {
       can_save = landed && !player_isFlag(PLAYER_NOSAVE);
@@ -651,7 +653,7 @@ static void load_menu_snapshots( unsigned int wdw, const char *str )
    pos = toolkit_getListPos( wdw, "lstNames" );
    if (array_size(load_saves) <= 0)
       return;
-   load_loadSnapshotMenu( load_saves[pos].name );
+   load_loadSnapshotMenu( load_saves[pos].name, 1 );
 }
 
 /**
@@ -671,6 +673,7 @@ static void load_snapshot_menu_save( unsigned int wdw, const char *str )
          _("You already have a snapshot named '%s'. Overwrite?"), save_name);
       if (r==0) {
          load_snapshot_menu_save( wdw, str );
+         free( save_name );
          return;
       }
    }
@@ -679,8 +682,9 @@ static void load_snapshot_menu_save( unsigned int wdw, const char *str )
    else {
       load_refresh();
       load_snapshot_menu_close( wdw, str );
-      load_loadSnapshotMenu( player.name );
+      load_loadSnapshotMenu( player.name, 1 );
    }
+   free( save_name );
 }
 
 /**
@@ -763,11 +767,26 @@ static void move_old_save( const char *path, const char *fname, const char *ext,
       char *dirname = strdup( fname );
       dirname[name_len - ext_len] = '\0';
       char *new_path;
-      asprintf( &new_path, "saves/%s", dirname );
+      SDL_asprintf( &new_path, "saves/%s", dirname );
       if (!PHYSFS_exists( new_path ))
          PHYSFS_mkdir( new_path );
       free( new_path );
-      asprintf( &new_path, "saves/%s/%s", dirname, new_name );
+      SDL_asprintf( &new_path, "saves/%s/%s", dirname, new_name );
+      /* If it's going to overwrite a file, try to back it up. */
+      if (PHYSFS_exists( new_path )) {
+         int tries = 0;
+         char *bkp_path;
+         SDL_asprintf( &bkp_path, "%s.bkp", new_path );
+         while (PHYSFS_exists(bkp_path) && (tries++ < 10)) {
+            char *bkp_bkp_path;
+            SDL_asprintf( &bkp_bkp_path, "%s.bkp", bkp_path );
+            free( bkp_path );
+            bkp_path = bkp_bkp_path;
+         }
+         ndata_copyIfExists( new_path, bkp_path );
+         free( bkp_path );
+      }
+      /* Copy over the old file. */
       if (!ndata_copyIfExists( path, new_path ))
          if (!PHYSFS_delete( path ))
             dialogue_alert( _("Unable to delete %s"), path );
@@ -919,7 +938,7 @@ static void load_menu_delete( unsigned int wdw, const char *str )
       return;
 
    if (dialogue_YesNo( _("Permanently Delete?"),
-      _("Are you sure you want to permanently delete '%s'?"), load_saves[pos].name) == 0)
+      _("Are you sure you want to permanently delete the character '%s'?\n#rThis is an undoable action!#0"), load_saves[pos].name) == 0)
       return;
 
    /* Remove it. */
@@ -946,20 +965,31 @@ static void load_menu_delete( unsigned int wdw, const char *str )
 static void load_snapshot_menu_delete( unsigned int wdw, const char *str )
 {
    unsigned int wid;
-   int pos;
+   int pos, last_save;
 
    wid = window_get( "wdwLoadSnapshotMenu" );
 
    if (array_size(load_player->saves) <= 0)
       return;
 
+   pos = toolkit_getListPos( wid, "lstSaves" );
+
    if (dialogue_YesNo( _("Permanently Delete?"),
-      _("Are you sure you want to permanently delete '%s'?"), load_player->name) == 0)
+      _("Are you sure you want to permanently delete the snapshot '%s'?\n#rThis is an undoable action!#0"), load_player->saves[pos].save_name) == 0)
       return;
 
    /* Remove it. */
-   pos = toolkit_getListPos( wid, "lstSaves" );
-   PHYSFS_delete( load_player->saves[pos].path );
+   if (!PHYSFS_delete( load_player->saves[pos].path ))
+      dialogue_alert( _("Unable to delete %s"), load_player->saves[pos].path );
+   last_save = (array_size(load_player->saves) <= 1);
+
+   /* Delete directory if all are gone. */
+   if (last_save) {
+      char path[PATH_MAX];
+      snprintf(path, sizeof(path), "saves/%s", load_player->name);
+      if (!PHYSFS_delete( path ))
+         dialogue_alert( _("Unable to delete '%s' directory"), load_player->name );
+   }
 
    load_refresh();
 
@@ -970,7 +1000,8 @@ static void load_snapshot_menu_delete( unsigned int wdw, const char *str )
       load_menu_close( wid, str );
       load_loadGameMenu();
    }
-   load_loadSnapshotMenu( selected_player );
+   if (!last_save)
+      load_loadSnapshotMenu( selected_player, 1 );
 }
 
 static void load_compatSlots (void)
@@ -1085,16 +1116,50 @@ static int load_game( nsave_t *ns )
  */
 static int load_gameInternal( const char* file, const char* version )
 {
-   xmlNodePtr node;
-   xmlDocPtr doc;
-   Spob *pnt;
-   int version_diff = (version!=NULL) ? naev_versionCompare(version) : 0;
+   const char** data;
 
    /* Make sure it exists. */
    if (!PHYSFS_exists( file )) {
       dialogue_alert( _("Saved game file seems to have been deleted.") );
       return -1;
    }
+
+   /* Some global cleaning has to be done here. */
+   toolkit_closeAll();
+   hook_cleanup();
+
+   data = malloc( sizeof(const char*) * 2 );
+   data[0] = file;
+   data[1] = version;
+   /* If the player isn't loaded, hooks aren't run so we can just go right away. */
+   if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED)) /* same condition in hook.c */
+      return load_gameInternalHook( data );
+   else {
+      /* Break out of potential inner loops. */
+      SDL_Event event;
+      SDL_memset( &event, 0, sizeof(event) );
+      event.type = SDL_LOOPDONE;
+      SDL_PushEvent( &event );
+
+      /* Delay one frame. */
+      hook_addFunc( load_gameInternalHook, data, "safe" );
+   }
+   return 0;
+}
+
+/**
+ * @brief Loads a game .Meant to be run in a function hook.
+ */
+static int load_gameInternalHook( void *data )
+{
+   xmlNodePtr node;
+   xmlDocPtr doc;
+   Spob *pnt;
+   const char **sdata = data;
+   const char *file = sdata[0];
+   const char *version = sdata[1];
+   int version_diff = (version!=NULL) ? naev_versionCompare(version) : 0;
+   free(data);
 
    /* Load the XML. */
    doc = load_xml_parsePhysFS( file );
@@ -1174,7 +1239,8 @@ static int load_gameInternal( const char* file, const char* version )
 err_doc:
    xmlFreeDoc(doc);
 err:
-   WARN( _("Saved game '%s' invalid!"), file);
+   dialogue_alert( _("Saved game '%s' invalid!"), file);
+   menu_main();
    return -1;
 }
 

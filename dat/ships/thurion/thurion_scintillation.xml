@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Scintillation">
+ <lua>ships/lua/thurion.lua</lua>
  <points>40</points>
  <base_type>Scintillation</base_type>
  <GFX size="70">scintillation</GFX>
  <rarity>3</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Bomber</class>
  <price>750000</price>

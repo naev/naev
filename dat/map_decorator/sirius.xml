@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <decorator>
  <image>sirius.webp</image>
- <x>1015.589870</x>
- <y>-624.818459</y>
+ <x>1300.589870</x>
+ <y>-480.818459</y>
  <detection_radius>100</detection_radius>
 </decorator>

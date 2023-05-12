@@ -33,8 +33,6 @@ local rearpoint  = jump.get( mainsys, rearsys )
 local supplylanded, supplydied
 local sysmrk
 
--- luacheck: globals approaching enter heartbeat land protest protestor1 protestor2 protestor3 protestor4 supply1 supply2 supply3 supply4 supply5 supplydeath supplyattacked supplyland (Hook functions passed by name)
-
 function create ()
    if ant.datecheck() then misn.finish() end
 
@@ -73,7 +71,7 @@ function create ()
    misn.accept()
    misn.setTitle( _("Terraforming Antlejos") )
    misn.setDesc(fmt.f(_("Defend the supply ships coming to {pnt} from the PUAAA."),{pnt=mainpnt}))
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.osdCreate(_("Terraforming Antlejos V"), {
       fmt.f(_("Go to the jump point from {sys} and wait for the supply ships"),{sys=nextsys}),
       _("Guard the supply ships from the PUAAA"),
@@ -100,7 +98,7 @@ function land ()
       else
          v(_([["I guess that was better than nothing. With so few supplies making it through it seems like terraforming will take longer than I was hoping for."]]))
       end
-      v(_([["With these supplies, I think we will be able to start the next important step on scaling up the terraforming operation. We're almost there, but we'll still need more assistance. The mission terminal should up and working and you should be able to find new supply requests there if you want to help. We still need all the hands we can get!"]]))
+      v(_([["With these supplies, I think we will be able to start the next important step on scaling up the terraforming operation. We're almost there, but we'll still need more assistance. The mission terminal should be up and working and you should be able to find new supply requests there if you want to help. We still need all the hands we can get!"]]))
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
       vn.run()
@@ -178,13 +176,13 @@ function enter ()
    pilot.clear()
    pilot.toggleSpawn(false)
 
-   sysmrk = system.mrkAdd( entrypoint:pos(), _("Supply Ship Entry Point") )
-   hook.timer( "3", "approaching" )
+   sysmrk = system.markerAdd( entrypoint:pos(), _("Supply Ship Entry Point") )
+   hook.timer( 3, "approaching" )
 end
 
 function approaching ()
    if player.pos():dist( entrypoint:pos() ) > 3000 then
-      hook.timer( "3", "approaching" )
+      hook.timer( 3, "approaching" )
       return
    end
 
@@ -235,7 +233,7 @@ function supply5 ()
    add_supplyship( "Koala" )
    add_supplyship( "Koala" )
    player.msg(_("The last supply ships have entered the system!"))
-   system.mrkRm( sysmrk )
+   system.markerRm( sysmrk )
 end
 
 function protestor1 ()

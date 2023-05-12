@@ -3,7 +3,7 @@
  <lua>spob/lua/dvaered_mil_dhc.lua</lua>
  <pos x="-16173.088338" y="-11736.708576"/>
  <GFX>
-  <space>000.webp</space>
+  <space>station-battlestation.webp</space>
   <exterior>traderoom.webp</exterior>
  </GFX>
  <presence>
@@ -46,5 +46,7 @@
  <tags>
   <tag>military</tag>
   <tag>restricted</tag>
+  <tag>station</tag>
+  <tag>government</tag>
  </tags>
 </spob>

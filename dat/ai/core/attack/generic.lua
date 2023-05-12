@@ -1,7 +1,6 @@
 --[[
 --    Generic attack functions
 --]]
-
 local atk = require "ai.core.attack.util"
 
 local atk_generic = {}
@@ -10,8 +9,13 @@ local atk_generic = {}
 -- Mainly manages targeting nearest enemy.
 --]]
 function atk_generic.think( target, _si )
-   -- Get new target if it's closer
-   local enemy  = ai.getenemy()
+   -- A chance to just focus on the current enemy
+   if rnd.rnd() < 0.5 then
+      return
+   end
+
+   -- Get new target if it is better
+   local enemy = atk.preferred_enemy()
    if enemy ~= target and enemy ~= nil then
       local dist  = ai.dist( target )
       local range = ai.getweaprange( 3 )
@@ -22,7 +26,6 @@ function atk_generic.think( target, _si )
       end
    end
 end
-
 
 --[[
 -- Attacked function.  Only called from "attack" tasks (i.e., under "if si.attack").
@@ -37,16 +40,18 @@ function atk_generic.attacked( attacker )
       ai.pushtask("attack", attacker)
       return
    end
-   local tdist  = ai.dist(target)
-   local dist   = ai.dist(attacker)
-   local range  = ai.getweaprange( 0 )
+   local dist  = ai.dist(attacker)
+   local range = ai.getweaprange( 0 )
 
-   if target ~= attacker and dist < tdist and
-         dist < range * mem.atk_changetarget then
-      ai.pushtask("attack", attacker)
+   -- Choose target based on preference
+   if target ~= attacker and dist < range * mem.atk_changetarget then
+      local wtarget = atk.preferred_enemy_test( target )
+      local wattacker = atk.preferred_enemy_test( attacker )
+      if wattacker < wtarget then -- minimizing
+         ai.pushtask("attack", attacker)
+      end
    end
 end
-
 
 --[[
 -- Approaches the target
@@ -62,7 +67,6 @@ local function __atk_g_approach( target, _dist )
       ai.accel()
    end
 end
-
 
 --[[
 -- Melees the target
@@ -86,7 +90,6 @@ local function __atk_g_melee( target, dist )
    -- Also try to shoot missiles
    atk.dogfight_seekers( dist, dir )
 end
-
 
 --[[
 -- Generic "brute force" attack.  Doesn't really do anything interesting.

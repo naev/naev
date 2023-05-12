@@ -123,7 +123,7 @@ local function bribe_msg( plt, group )
    local mem = plt:memory()
    if group then
       local cost = bribe_cost( group )
-      local str = mem.bribe_prompt_nearby
+      local str = mem.bribe_prompt_nearby or mem.bribe_prompt
       local cstr = fmt.credits(cost)
       local chave = fmt.credits(player.credits())
       if not str then
@@ -147,6 +147,11 @@ end
 
 function comm( plt )
    local mem = plt:memory()
+
+   if mem.carried then
+      plt:comm(_("The fighter does not respond."), true, true)
+      return
+   end
 
    vn.reset()
    vn.scene()
@@ -206,12 +211,33 @@ function comm( plt )
             end
          end
       end
-      if not hostile then
+      if not hostile and not mem.carried then
          table.insert( opts, 1, {_("Request Fuel"), "refuel"} )
+      end
+      if mem.comm_custom then
+         for k,v in ipairs(mem.comm_custom) do
+            local msg = v.menu
+            if type(msg)=="function" then
+               msg = msg()
+            end
+            if msg then
+               table.insert( opts, 1, {msg, "custom_"..tostring(k)} )
+            end
+         end
       end
       return opts
    end )
 
+   --
+   -- Custom stuff
+   --
+   if mem.comm_custom then
+      for k,v in ipairs(mem.comm_custom) do
+         vn.label("custom_"..tostring(k))
+         v.setup( vn, p )
+         vn.jump("menu")
+      end
+   end
 
    --
    -- Bribing
@@ -441,7 +467,8 @@ function comm( plt )
          str = fmt.f(_([["I should be able to refuel you for {credits} for 100 units of fuel."]]), {credits=cstr})
       end
       if cost <= 0 then
-         vn.jump("refuel_trypay")
+         -- It's free so give as much as the player wants
+         vn.jump("refuel_trypay_max")
       end
       return fmt.f(_("{msg}\n\nYou have {credits}. Pay for refueling??"), {msg=str, credits=chave} )
    end )
@@ -477,6 +504,7 @@ function comm( plt )
    end )
    vn.jump("menu")
 
+   -- Provides 100 fuel
    vn.label("refuel_trypay")
    vn.func( function ()
       local cost = mem.refuel
@@ -494,6 +522,7 @@ function comm( plt )
    p(_([["On my way."]]))
    vn.jump("menu")
 
+   -- Provides fuel for one jump
    vn.label("refuel_trypay_jump")
    vn.func( function ()
       local pps = player.pilot():stats()
@@ -513,6 +542,7 @@ function comm( plt )
    end )
    vn.jump("refuel_startmsg")
 
+   -- PRovides as much fuel as possible
    vn.label("refuel_trypay_max")
    vn.func( function ()
       local pps = player.pilot():stats()

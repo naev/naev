@@ -2,17 +2,25 @@
 <ssys name="Iris">
  <general>
   <radius>14000.000000</radius>
-  <stars>400</stars>
-  <interference>15.789474</interference>
-  <nebula volatility="1.000000" hue="270.000000">400.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>35.526400</interference>
+  <nebula volatility="3.200000" hue="270.000000">400.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="458.333333" y="116.733333"/>
+ <pos x="471.128752" y="-116.715799"/>
  <spobs>
   <spob>Aluben</spob>
-  <spob>Tenal-P</spob>
+  <spob_virtual>Empire Unpresence</spob_virtual>
+  <spob_virtual>FLF Unpresence</spob_virtual>
+  <spob_virtual>Independent All Unpresence (Range 1)</spob_virtual>
+  <spob_virtual>Traders Society Unpresence (Range 1)</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Behar">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Ophiuchi">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
@@ -21,9 +29,8 @@
    <hidden/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Percival">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
  </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

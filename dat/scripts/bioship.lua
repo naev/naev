@@ -26,7 +26,7 @@ local _mult = 1.2
 function bioship.exptostage( stage )
    local exp = 0
    for i=1,stage-1 do
-      exp = exp + _base * math.pow(_mult,i-1)
+      exp = exp + math.floor( _base * math.pow(_mult,i-1) )
    end
    return math.floor(exp)
 end
@@ -36,7 +36,7 @@ function bioship.curstage( exp, maxstage )
    local nextstage = 0
    for i=1,maxstage do
       curstage = i
-      nextstage = nextstage + _base * math.pow(_mult,i-1)
+      nextstage = nextstage + math.floor( _base * math.pow(_mult,i-1) )
       if exp < nextstage then
          break
       end
@@ -133,10 +133,10 @@ local function skill_disable( p, s, keepvar )
    end
    if not keepvar and p == player.pilot() then
       if s.id then
-         player.shipvarPop( s.id )
+         p:shipvarPop( s.id )
       end
       if s.shipvar then
-         player.shipvarPop( s.shipvar )
+         p:shipvarPop( s.shipvar )
       end
    end
    if not keepvar then
@@ -173,10 +173,10 @@ local function skill_enable( p, s )
    end
    if p == player.pilot() then
       if s.id then
-         player.shipvarPush( s.id, true )
+         p:shipvarPush( s.id, true )
       end
       if s.shipvar then
-         player.shipvarPush( s.shipvar, true )
+         p:shipvarPush( s.shipvar, true )
       end
    end
    s.enabled = true
@@ -184,28 +184,43 @@ local function skill_enable( p, s )
 end
 
 local _maxstageSize = {
-   5,
-   6,
-   7,
-   8,
-   9,
-  10
+   5, -- interceptor
+   6, -- fighter / bomber
+   7, -- corvette
+   8, -- destroyer
+   9, -- cruiser
+  10, -- carrier / battleship
 }
 function bioship.maxstage( p )
-   return _maxstageSize[ p:ship():size() ]
+   local ps = p:ship()
+   local intrin = biointrin[ ps:nameRaw() ]
+   return intrin.maxstage or _maxstageSize[ ps:size() ]
 end
 
-function bioship.setstage( stage )
-   local pp = player.pilot()
-   local _skills, intrinsics, _maxtier = _getskills( pp )
+function bioship.setstage( p, stage )
+   local _skills, intrinsics, _maxtier = _getskills( p )
+   local fuel = p:fuel()
+
+   -- Reset biostage as necessary
+   local curstage = p:shipvarPeek("biostage") or 1
+   if stage < curstage then
+      for k,s in ipairs(intrinsics) do
+         skill_disable( p, s )
+      end
+   end
 
    -- Make sure to enable intrinsics if applicable
    for k,s in ipairs(intrinsics) do
       if stage >= s.stage then
-         skill_enable( pp, s )
+         skill_enable( p, s )
       end
    end
-   player.shipvarPush("biostage",stage)
+   p:shipvarPush("biostage",stage)
+
+   -- Heal up and restore fuel
+   p:setHealth( 100, 100 )
+   p:setEnergy( 100 )
+   p:setFuel( fuel )
 end
 
 local function _skill_count( skills )
@@ -218,25 +233,25 @@ local function _skill_count( skills )
    return n
 end
 
-function bioship.skillpointsused ()
-   local pp = player.pilot()
-   local skills, _intrinsics, _maxtier = _getskills( pp )
+function bioship.skillpointsused( p )
+   local skills, _intrinsics, _maxtier = _getskills( p )
    for k,s in pairs(skills) do
       s.id = "bio_"..k
-      s.enabled = player.shipvarPeek( s.id )
+      s.enabled = p:shipvarPeek( s.id )
    end
    return _skill_count( skills )
 end
 
-function bioship.skillpointsfree ()
-   local stage = player.shipvarPeek("biostage")
-   return stage - bioship.skillpointsused()
+function bioship.skillpointsfree( p )
+   local stage = p:shipvarPeek("biostage")
+   return stage - bioship.skillpointsused( p )
 end
 
-function bioship.simulate( p, stage )
+function bioship.simulate( p, stage, setskills )
    if not p:ship():tags().bioship then
       return
    end
+   setskills = setskills or {}
 
    local skills, intrinsics, _maxtier = _getskills( p )
 
@@ -259,8 +274,13 @@ function bioship.simulate( p, stage )
       return true
    end
 
+   -- Forcibly set these skills
+   for k,s in ipairs(setskills) do
+      skill_enable( p, skills[s] )
+   end
+
    -- Simulate adding one by one randomly
-   for i=1,stage do
+   for i=#setskills+1,stage do
       local a = {}
       for k,s in pairs(skills) do
          if skill_canEnable( s ) then
@@ -270,6 +290,11 @@ function bioship.simulate( p, stage )
       local s = a[ rnd.rnd(1,#a) ]
       skill_enable( p, s )
    end
+
+   -- Heal up
+   p:setHealth( 100, 100 )
+   p:setEnergy( 100 )
+   p:shipvarPush("bioship_init",true)
 end
 
 local stage, skills, intrinsics, skillpoints, skilltxt
@@ -277,6 +302,7 @@ function bioship.window ()
    local pp = player.pilot()
    local ps = pp:ship()
    local island = player.isLanded()
+   local recreate = false
 
    -- Only bioships are good for now
    if not ps:tags().bioship then
@@ -323,7 +349,7 @@ function bioship.window ()
       s.y = s.tier
       s.gfx = lg.newImage( "gfx/misc/icons/"..s.icon )
 
-      s.enabled = player.shipvarPeek( s.id )
+      s.enabled = pp:shipvarPeek( s.id )
    end
 
    -- Recursive group creation
@@ -468,7 +494,7 @@ function bioship.window ()
       skill_text()
    end
 
-   stage = player.shipvarPeek( "biostage" ) or 1
+   stage = pp:shipvarPeek( "biostage" ) or 1
    skillpoints = stage - _skill_count( skills )
 
    for k,s in ipairs(intrinsics) do
@@ -478,9 +504,10 @@ function bioship.window ()
    end
 
    -- Case ship not initialized
-   if not player.shipvarPeek( "bioship" ) then
+   if not pp:shipvarPeek( "bioship" ) then
+      bioship.setstage( pp, 1)
       skill_reset()
-      player.shipvarPush( "bioship", true )
+      pp:shipvarPush( "bioship", true )
    end
 
    local sfont = lg.newFont(10)
@@ -560,9 +587,11 @@ function bioship.window ()
    local stagetxt
    local maxstage = bioship.maxstage(pp)
    if stage==maxstage then
+      local exp = pp:shipvarPeek("bioshipexp") or 0
       stagetxt = "#g".._("Max Stage!").."#0"
+      stagetxt = stagetxt..fmt.f(_(" ({exp} points)"),{exp=exp})
    else
-      local exp = player.shipvarPeek("bioshipexp") or 0
+      local exp = pp:shipvarPeek("bioshipexp") or 0
       local nextexp = bioship.exptostage( stage+1 )
       if not player.isLanded() and nextexp <= exp then
          stagetxt = fmt.f(_("Current Experience: {exp} points (land to advance to the next stage)"),{exp=fmt.number(exp)})
@@ -571,8 +600,26 @@ function bioship.window ()
       end
    end
    luatk.newText( wdw, 30, 40, w-60, 20, stagetxt, nil, 'center' )
-   luatk.newButton( wdw, w-120-100-20, h-40-20, 100, 40, _("Reset"), function ()
-      skill_reset()
+   local btn_reset = luatk.newButton( wdw, w-120-100-20, h-40-20, 100, 40, _("Reset"), function ()
+      -- Player pays EXP cost when resetting ship. Can lower their ship's stage.
+      local curexp = pp:shipvarPeek("bioshipexp") or 0
+      local exp = math.floor(curexp * 0.2) -- Cost 20% of total exp
+      local desc = fmt.f(_("Resetting skills will cost {exp} experience points."),{exp=exp})
+      local curstage = bioship.curstage( curexp, maxstage )
+      local resetstage = bioship.curstage( curexp-exp, maxstage )
+      if curstage ~= resetstage then
+         desc = desc .. fmt.f(_(" Your loss of experience will also lower your bioship from stage {curstage} to {resetstage}."),
+               {curstage="#g"..tostring(curstage).."#0", resetstage="#r"..tostring(resetstage).."#0"} )
+      end
+      desc = desc .. "\n\n" .. _("Are you sure you want to reset your ship skills?")
+      luatk.yesno( _("Reset Skills"), desc,
+         function ()
+            pp:shipvarPush("bioshipexp", curexp-exp)
+            bioship.setstage( pp, resetstage )
+            skill_reset()
+            wdw:destroy()
+            recreate = true
+         end )
    end )
    luatk.newButton( wdw, w-100-20, h-40-20, 100, 40, _("OK"), function( wgt )
       wgt.parent:destroy()
@@ -617,7 +664,17 @@ function bioship.window ()
       newSkillIcon( wdw, x, y, sw, sh, s )
    end
 
+   -- Disable stuff when not landed
+   if not island then
+      btn_reset:disable()
+      btn_reset:setAlt( "#r".._("You must be landed to reset skills!").."#0" )
+   end
+
    luatk.run()
+
+   if recreate then
+      bioship.window()
+   end
 end
 
 return bioship

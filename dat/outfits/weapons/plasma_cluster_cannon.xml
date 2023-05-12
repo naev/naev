@@ -11,6 +11,7 @@
   <cpu>-50</cpu>
  </general>
  <specific type="bolt">
+  <lua>outfits/weapons/plasma2.lua</lua>
   <gfx>plasma2.png</gfx>
   <sound>plasma</sound>
   <spfx_shield>ShiS</spfx_shield>
@@ -28,7 +29,7 @@
   <damage>
    <type>impact</type>
    <penetrate>48</penetrate>
-   <physical>48</physical>
+   <physical>36</physical>
   </damage>
  </specific>
 </outfit>

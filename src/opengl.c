@@ -39,6 +39,7 @@
 #include "opengl.h"
 
 #include "conf.h"
+#include "debug.h"
 #include "log.h"
 #include "render.h"
 
@@ -142,6 +143,9 @@ GLboolean gl_hasVersion( int major, int minor )
  */
 void gl_checkHandleError( const char *func, int line )
 {
+   (void) func;
+   (void) line;
+#if !DEBUG_GL
    const char* errstr;
    GLenum err = glGetError();
 
@@ -171,7 +175,57 @@ void gl_checkHandleError( const char *func, int line )
          break;
    }
    WARN(_("OpenGL error [%s:%d]: %s"), func, line, errstr);
+#endif /* !DEBUG_GL */
 }
+
+#if DEBUG_GL
+/**
+ * @brief Checks and reports if there's been an error.
+ */
+static void GLAPIENTRY gl_debugCallback( GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* p )
+{
+   static int errors_seen = 0;
+   (void) source;
+   (void) id;
+   (void) length;
+   (void) p;
+   const char *typestr;
+
+   if (++errors_seen == 10)
+      WARN( _("Too many OpenGL diagnostics reported! Suppressing further reports.") );
+   if (errors_seen >= 10)
+      return;
+
+   switch (type) {
+      case GL_DEBUG_TYPE_ERROR:
+         typestr = " GL_DEBUG_TYPE_ERROR";
+         break;
+      case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
+         typestr = " GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR";
+         break;
+      case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:
+         typestr = " GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR";
+         break;
+      case GL_DEBUG_TYPE_PORTABILITY:
+         typestr = " GL_DEBUG_TYPE_PORTABILITY";
+         break;
+      case GL_DEBUG_TYPE_PERFORMANCE:
+         typestr = " GL_DEBUG_TYPE_PERFORMANCE";
+         break;
+      case GL_DEBUG_TYPE_OTHER:
+         typestr = " GL_DEBUG_TYPE_OTHER";
+         break;
+      case GL_DEBUG_TYPE_MARKER: /* fallthrough */
+      case GL_DEBUG_TYPE_PUSH_GROUP: /* fallthrough */
+      case GL_DEBUG_TYPE_POP_GROUP: /* fallthrough */
+         return;
+      default:
+         typestr = "";
+   }
+   WARN( _("[type = 0x%x%s], severity = 0x%x, message = %s backtrace:"), type, typestr, severity, message );
+   debug_logBacktrace();
+}
+#endif /* DEBUG_GL */
 #endif /* DEBUGGING */
 
 /**
@@ -190,6 +244,9 @@ static int gl_setupAttributes( int fallback )
       SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, conf.fsaa);
    }
    SDL_GL_SetAttribute(SDL_GL_FRAMEBUFFER_SRGB_CAPABLE, 1);
+#if DEBUG_GL
+   SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
+#endif /* DEBUG_GL */
 
    return 0;
 }
@@ -351,6 +408,12 @@ static int gl_defState (void)
    glDisable( GL_DEPTH_TEST ); /* set for doing 2d */
    glEnable(  GL_BLEND ); /* alpha blending ftw */
    glEnable(  GL_LINE_SMOOTH ); /* We use SDF shaders for most shapes, but star trails & map routes are thin & anti-aliased. */
+#if DEBUG_GL
+   glEnable(  GL_DEBUG_OUTPUT ); /* Log errors immediately.. */
+   glDebugMessageCallback( gl_debugCallback, 0 );
+   glDebugMessageControl( GL_DONT_CARE, GL_DEBUG_TYPE_PERFORMANCE, GL_DONT_CARE, 0, NULL, GL_FALSE );
+   glDebugMessageControl( GL_DONT_CARE, GL_DEBUG_TYPE_OTHER, GL_DONT_CARE, 0, NULL, GL_FALSE );
+#endif /* DEBUG_GL */
 
    /* Set the blending/shading model to use. */
    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ); /* good blend model */
@@ -416,7 +479,7 @@ int gl_init (void)
 
    /* Defaults. */
    memset( &gl_screen, 0, sizeof(gl_screen) );
-
+   SDL_SetHint( "SDL_WINDOWS_DPI_SCALING", "1" );
    flags = SDL_WINDOW_OPENGL | gl_getFullscreenMode();
 
    /* Initializes Video */

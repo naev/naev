@@ -5,12 +5,13 @@
 
 #include "outfit.h"
 #include "pilot.h"
+#include "player.h"
 
 /**
  * Custom slot widget.
  */
 typedef struct CstSlotWidget_ {
-   Pilot *selected; /**< Selected pilot ship. */
+   PlayerShip_t *selected; /**< Selected pilot ship. */
    Outfit *outfit; /**< Selected outfit. */
    int slot; /**< Selected equipment slot. */
    int mouseover; /**< Mouse over slot. */

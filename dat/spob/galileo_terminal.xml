@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Galileo Terminal">
+ <pos x="3194.799994" y="-7481.156652"/>
+ <GFX>
+  <space>003.webp</space>
+  <exterior>station01.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <base>30.000000</base>
+  <bonus>15.000000</bonus>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>3000</population>
+  <hide>3.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Originally funded by an ambitious research proposal to expand Za'lek space beyond the Anubis black hole, the Galileo project has been plagued by funding mismanagement, inner quarrels, and even a murder investigation. While the original research project itself is more or less a failure, the station does host a significant amount of researchers. Furthermore, despite originally being focused on applied science, the funding issues have made it so that most of the researchers that remain are more focused on theoretical developments that require few resources.</description>
+  <bar>The bar is frequented by many Za'lek scientists who mainly keep to themselves as they attempt to untangle large equations and decipher texts on theoretical advances in their field of study. Even by Za'lek standards it is very quiet and calm.</bar>
+ </general>
+ <tags>
+  <tag>station</tag>
+  <tag>research</tag>
+ </tags>
+</spob>

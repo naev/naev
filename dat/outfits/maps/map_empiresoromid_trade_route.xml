@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Map: Empire-Soromid Trade Route">
+ <general>
+  <rarity>0</rarity>
+  <mass>0</mass>
+  <price>30000</price>
+  <description>This map contains the main trade route between Empire and Soromid controlled space.</description>
+  <gfx_store>map_sector_05.webp</gfx_store>
+ </general>
+ <specific type="map">
+  <sys name="Tau Prime">
+   <jump>Draconis</jump>
+   <spob>Anubis</spob>
+   <spob>Europea</spob>
+   <spob>Tau Prime</spob>
+   <spob>Tau Secundus</spob>
+   <spob>Tau Station</spob>
+  </sys>
+  <sys name="Draconis">
+   <jump>Pilatis</jump>
+   <jump>Tau Prime</jump>
+   <spob>Draconis Alpha</spob>
+   <spob>Draconis Beta</spob>
+   <spob>Draconis Delta</spob>
+   <spob>Draconis Epsilon</spob>
+   <spob>Draconis Gamma</spob>
+   <spob>Draconis Omega</spob>
+   <spob>Zabween Outpost</spob>
+  </sys>
+  <sys name="Pilatis">
+   <jump>Defa</jump>
+   <jump>Draconis</jump>
+   <spob>Pilatis I</spob>
+   <spob>Pilatis II</spob>
+   <spob>Pilatis III</spob>
+   <spob>Wildwood Nest</spob>
+  </sys>
+  <sys name="Defa">
+   <jump>Oberon</jump>
+   <jump>Pilatis</jump>
+  </sys>
+  <sys name="Oberon">
+   <jump>Defa</jump>
+   <spob>M.K.</spob>
+   <spob>Oberon I</spob>
+   <spob>Oberon III</spob>
+   <spob>Oberon IV</spob>
+   <spob>Soromid Customs Central</spob>
+  </sys>
+ </specific>
+</outfit>

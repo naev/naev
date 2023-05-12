@@ -15,7 +15,8 @@ function create ()
 end
 
 -- Required "control" function
-function control ()
+function control( dt )
+   mem.elapsed = mem.elapsed + dt
    local task  = ai.taskname()
 
    if task ~= "runaway" then

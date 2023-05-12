@@ -18,7 +18,6 @@ DESCRIPTION:
 
 ]]--
 
--- luacheck: globals enter_system (Hook functions passed by name)
 
 -- Stage one: something goes wrong in fabric of reality.
 local text = {}
@@ -47,7 +46,6 @@ text[3] = _([["Oh sorry about that. We're working hard on improving life, the un
 function create()
       -- Create an eerie atmosphere by cutting off the background music and substituting something spooky
       --disabled until difficulties with the music API are sorted out
-      music.pause()
       music.play( "sirius1.ogg" )
 
       -- The big programmer in the sky looks in to ask the player a question
@@ -65,7 +63,6 @@ function create()
       end
 
       -- everything returns to normal
-      music.stop()
       music.choose( "land" )
 
       evt.finish( true )

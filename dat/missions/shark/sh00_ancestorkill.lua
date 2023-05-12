@@ -13,7 +13,7 @@
  <faction>Independent</faction>
  <faction>Sirius</faction>
  <faction>Soromid</faction>
- <faction>Traders Guild</faction>
+ <faction>Traders Society</faction>
  <faction>Za'lek</faction>
  <notes>
   <campaign>Nexus show their teeth</campaign>
@@ -36,9 +36,7 @@ local pilotname = require "pilotname"
 local fmt = require "format"
 local lmisn = require "lmisn"
 local shark = require "common.shark"
-
--- luacheck: globals enter jumpout land pirate_dead pirate_jump (Hook functions passed by name)
--- luacheck: globals beginbattle (NPC functions passed by name)
+local vn = require "vn"
 
 --Change here to change the planet and the system
 local missys = system.get("Ingot")
@@ -50,36 +48,57 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC(_("An honest-looking man"), "neutral/unique/arnoldsmith.webp", _("This man looks like a honest citizen. He glances in your direction."))
+   misn.setNPC(_("An honest-looking man"), shark.arnold.portrait, _("This man looks like a honest citizen. He glances in your direction."))
 end
 
 function accept()
    mem.stage = 0
+   local accepted = false
 
-   if tk.yesno(_("Nexus Shipyards needs you"), _([[You approach the man and he introduces himself. "Hello, my name is Arnold Smith; I work for Nexus Shipyards. I'm looking for a talented pilot to make a demonstration to one of our potential customers.
-    "Pretty simple, really: we want someone to show how great Nexus ship designs are by destroying a Pirate Ancestor with our lowest-grade ship, the Shark. Of course, the pilot of the Ancestor has a bounty on his head, so it won't be illegal. The sum of the bounty will be paid to you and Nexus will add a little extra. Would you be interested?"]])) then
-      misn.accept()
-      mem.piratename = pilotname.pirate() --for now, we only need his name
-      tk.msg(_("Wonderful"), fmt.f(_([["Great! I knew I could trust you. I'll meet you on {pnt} in the {sys} system. I'll be with my boss and our customer, Baron Sauterfeldt."]]), {sys=missys, pnt=mispla}))
+   vn.clear()
+   vn.scene()
+   local arnold = vn.newCharacter( shark.vn_arnold() )
+   vn.transition( shark.arnold.transition )
 
-      misn.setTitle(_("A Shark Bites"))
-      misn.setReward(fmt.credits(shark.rewards.sh00))
-      misn.setDesc(_("Nexus Shipyards needs you to demonstrate to Baron Sauterfeldt the capabilities of Nexus designs."))
-      misn.osdCreate(_("A Shark Bites"), {
-         fmt.f(_("Buy a Shark (but not a Pirate Shark), then fly to the {sys} system and land on {pnt}"), {sys=missys, pnt=mispla}),
-         fmt.f(_("Go to {sys} and kill the pirate with your Shark"), {sys=battlesys}),
-         fmt.f(_("Land on {pnt} and collect your fee"), {pnt=mispla}),
-      })
-      misn.osdActive(1)
+   arnold(_([[You approach the man and he introduces himself. "Hello, my name is Arnold Smith; I work for Nexus Shipyards. I'm looking for a talented pilot to make a demonstration to one of our potential customers.]]))
+   arnold(_([["Pretty simple, really: we want someone to show how great Nexus ship designs are by destroying a Pirate Ancestor with our lowest-grade ship, the Shark. Of course, the pilot of the Ancestor has a bounty on his head, so it won't be illegal. The sum of the bounty will be paid to you and Nexus will add a little extra. Would you be interested?"]]))
+   vn.menu{
+      {_([[Accept]]), "accept"},
+      {_([[Decline]]), "decline"},
+   }
 
-      mem.markeri = misn.markerAdd(mispla, "low")
+   vn.label("decline")
+   arnold(_([["That's your choice," the man says. "Don't hesitate to tell me if you change your mind."]]))
+   vn.done( shark.arnold.transition )
 
-      hook.jumpout("jumpout")
-      hook.land("land")
-      hook.enter("enter")
-   else
-      tk.msg(_("Sorry, not interested"), _([["That's your choice," the man says. "Don't hesitate to tell me if you change your mind."]]))
-   end
+   vn.label("accept")
+   vn.func( function () accepted = true end )
+   arnold(fmt.f(_([["Great! I knew I could trust you. I'll meet you on {pnt} in the {sys} system. I'll be with my boss and our customer, Baron Sauterfeldt."]]),
+      {sys=missys, pnt=mispla}))
+
+   vn.done( shark.arnold.transition )
+   vn.run()
+
+   if not accepted then return end
+
+   misn.accept()
+   mem.piratename = pilotname.pirate() --for now, we only need his name
+
+   misn.setTitle(_("A Shark Bites"))
+   misn.setReward(shark.rewards.sh00)
+   misn.setDesc(_("Nexus Shipyards needs you to demonstrate to Baron Sauterfeldt the capabilities of Nexus designs."))
+   misn.osdCreate(_("A Shark Bites"), {
+      fmt.f(_("Buy a Shark (but not a Pirate Shark), then fly to the {sys} system and land on {pnt}"), {sys=missys, pnt=mispla}),
+      fmt.f(_("Go to {sys} and kill the pirate with your Shark"), {sys=battlesys}),
+      fmt.f(_("Land on {pnt} and collect your fee"), {pnt=mispla}),
+   })
+   misn.osdActive(1)
+
+   mem.markeri = misn.markerAdd(mispla, "low")
+
+   hook.jumpout("jumpout")
+   hook.land("land")
+   hook.enter("enter")
 end
 
 -- landing on any planet system
@@ -87,15 +106,29 @@ function land()
 
    -- Did the player reach Ulios ?
    if spob.cur() == mispla and mem.stage == 0 then
-      misn.npcAdd("beginbattle", _("Arnold Smith"), "neutral/unique/arnoldsmith.webp", _([[The Nexus employee who recruited you for a very special demo of the "Shark" fighter.]]))
+      misn.npcAdd("beginbattle", shark.arnold.name, shark.arnold.portrait, _([[The Nexus employee who recruited you for a very special demo of the "Shark" fighter.]]))
    end
 
    -- Did the player land again on Ulios after having killed the pirate
    if spob.cur() == mispla and mem.stage == 4 then
-      tk.msg(_("Congratulations!"), _([[As you step on the ground, Arnold Smith greets you. "That was a great demonstration! Thank you. I haven't been able to speak to the Baron about the results yet, but I am confident he will be impressed." He hands you your pay. "I may have another mission for you later. Be sure to check back!"]]))
-      player.pay(shark.rewards.sh00)
+      vn.clear()
+      vn.scene()
+      local arnold = vn.newCharacter( shark.vn_arnold() )
+      vn.transition( shark.arnold.transition )
+
+      arnold(_([[As you step on the ground, Arnold Smith greets you. "That was a great demonstration! Thank you. I haven't been able to speak to the Baron about the results yet, but I am confident he will be impressed." He hands you your pay. "I may have another mission for you later. Be sure to check back!"]]))
+
+      vn.func( function ()
+         player.pay(shark.rewards.sh00)
+         pir.reputationNormalMission(rnd.rnd(2,3))
+      end )
+      vn.sfxVictory()
+      vn.na(fmt.reward(shark.rewards.sh00))
+
+      vn.done( shark.arnold.transition )
+      vn.run()
+
       shark.addLog( _([[You helped Nexus Shipyards demonstrate the capabilities of their ships by destroying a Pirate Ancestor.]]) )
-      pir.reputationNormalMission(rnd.rnd(2,3))
       misn.finish(true)
    end
 end
@@ -123,7 +156,7 @@ function enter()
       pilot.toggleSpawn(false)
 
       -- spawns the bad guy
-      local badboy = pilot.add( "Pirate Ancestor", shark.pirateFaction(), system.get("Raelid"), mem.piratename )
+      local badboy = pilot.add( "Pirate Ancestor", shark.pirateFaction(), system.get("Zacron"), mem.piratename )
       badboy:setHostile()
       badboy:setVisplayer()
       badboy:setHilight()
@@ -135,12 +168,21 @@ end
 
 --Chatting with Smith and begin the battle
 function beginbattle()
-
    misn.markerRm(mem.markeri)
 
-   tk.msg(_("Ready for action"), fmt.f(_([["Nice to see you again," he says with a smile. "I hope you are ready to kick that pirate's ass! Please follow me. I will introduce you to my boss, the sales manager of Nexus Shipyards. Oh, and the Baron, too."
-    Arnold Smith guides you to some kind of control room where you see some important-looking people. After introducing you to some of them, he goes over the mission, rather over-emphasizing the threat involved; it's just a Pirate Ancestor, after all. Nonetheless, the Baron is intrigued.
-    Arnold Smith gets a call. After answering, he turns to you. "Perfect timing! The pirate has just arrived at {sys}. Now go show them what your ship can do!" Time to head back to the ship, then.]]), {sys=battlesys}))
+   vn.clear()
+   vn.scene()
+   local arnold = vn.newCharacter( shark.vn_arnold() )
+   vn.transition( shark.arnold.transition )
+
+   arnold(_([["Nice to see you again," he says with a smile. "I hope you are ready to kick that pirate's ass! Please follow me. I will introduce you to my boss, the sales manager of Nexus Shipyards. Oh, and the Baron, too."]]))
+   vn.na(_([[Arnold Smith guides you to some kind of control room where you see some important-looking people. After introducing you to some of them, he goes over the mission, rather over-emphasizing the threat involved; it's just a Pirate Ancestor, after all. Nonetheless, the Baron is intrigued.]]))
+   arnold(fmt.f(_([[Arnold Smith gets a call. After answering, he turns to you. "Perfect timing! The pirate has just arrived at {sys}. Now go show them what your ship can do!" Time to head back to the ship, then.]]),
+      {sys=battlesys}))
+
+   vn.done( shark.arnold.transition )
+   vn.run()
+
    misn.osdActive(2)
    mem.stage = 1
 
@@ -157,4 +199,5 @@ function pirate_dead()  --wou win
    misn.markerRm(mem.marker1)
    mem.marker2 = misn.markerAdd(mispla, "low")
    misn.osdActive(3)
+   pilot.toggleSpawn()
 end

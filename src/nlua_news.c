@@ -125,7 +125,6 @@ int lua_isnews( lua_State *L, int ind )
    return ret;
 }
 
-
 /**
  * @brief Makes sure the news is valid or raises a Lua error.
  *
@@ -167,14 +166,13 @@ news_t* luaL_validnews( lua_State *L, int ind )
  */
 int newsL_add( lua_State *L )
 {
-   LuaNews_t n_article;
    const char *title, *body, *faction;
    ntime_t date, date_to_rm;
    int priority;
 
-   title   = NULL;
-   body = NULL;
-   faction = NULL;
+   title    = NULL;
+   body     = NULL;
+   faction  = NULL;
    priority = 5;
 
    date = ntime_get();
@@ -235,13 +233,6 @@ int newsL_add( lua_State *L )
                news_add( title, body, faction, NULL, date, date_to_rm, priority );
             else
                WARN(_("Bad arguments"));
-
-            faction = NULL;
-            title = NULL;
-            body = NULL;
-
-            date = ntime_get();
-            date_to_rm = NEWS_FOREVER;
          }
          lua_pop(L, 1);
       }
@@ -282,12 +273,12 @@ int newsL_add( lua_State *L )
          date = luaL_checklong(L, 5);
    }
 
-   if (title && body && faction)
-      n_article = news_add( title, body, faction, NULL, date, date_to_rm, priority );
+   if (title && body && faction) {
+      LuaNews_t n_article = news_add( title, body, faction, NULL, date, date_to_rm, priority );
+      lua_pushnews( L, n_article );
+   }
    else
       NLUA_ERROR(L,_("Bad arguments"));
-
-   lua_pushnews( L, n_article );
 
    /* If we're landed, we should regenerate the news buffer. */
    if (landed) {
@@ -353,6 +344,7 @@ int newsL_get( lua_State *L )
    ntime_t date  = -1;
    const char *characteristic = NULL;
    int print_all = 0;
+   int narticle = 1;
 
    if (lua_isnoneornil(L, 1)) /* Case no argument */
       print_all = 1;
@@ -378,7 +370,7 @@ int newsL_get( lua_State *L )
                      || (strcmp( n->faction, characteristic ) == 0)
                      || (n->tag != NULL && strcmp( n->tag, characteristic ) == 0 )))) {
          lua_pushnews(L, n->id); /* value */
-         lua_rawseti(L, -2, i+1);
+         lua_rawseti(L, -2, narticle++);
       }
    }
 
@@ -475,8 +467,7 @@ int newsL_bind( lua_State *L )
       /* traverse table */
       while (lua_next(L, -2)) {
          if (!(a = luaL_checknews(L, -1))) {
-            WARN(_("Bad argument to news.date(), must be article or a table of "
-                 "articles"));
+            WARN(_("Bad argument to news.date(), must be article or a table of articles"));
             return 0;
          }
          article_ptr = news_get( *a );
@@ -491,8 +482,7 @@ int newsL_bind( lua_State *L )
    else {
       const char *tag;
       if (!(a = luaL_checknews(L, 1))) {
-         WARN(_("Bad argument to news.date(), must be article or a table of "
-              "articles"));
+         WARN(_("Bad argument to news.date(), must be article or a table of articles"));
          return 0;
       }
       article_ptr = news_get(*a);

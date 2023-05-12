@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Tau Ceti Station">
+ <pos x="2195.500574" y="-1450.827865"/>
+ <GFX>
+  <space>station-destroyed2.webp</space>
+  <exterior>station04.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Derelict</faction>
+  <base>0.000000</base>
+  <bonus>0.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+  </services>
+  <commodities/>
+  <description>Originally a state of the art agricultural research center, Tau Ceti Station was unable to survive the blast of the Incident. Once the life support system was breached, it quickly devolved into chaos with ships trying to evacuate the personnel. The station docks, which were not meant to deal with such heavy ship traffic, became jammed with ships practically ramming into each other to get out. The result is a horrible, tumultuous mass of ships mashed together with the station hull that looks almost like a macabre statue to death. The fact that many parts have been cut open and salvaged by scavengers makes it all more twisted tragedy.</description>
+ </general>
+ <tags>
+  <tag>station</tag>
+  <tag>ruined</tag>
+ </tags>
+</spob>

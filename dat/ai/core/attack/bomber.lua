@@ -2,6 +2,10 @@ local atk = require "ai.core.attack.util"
 
 local atk_bomber = {}
 
+function atk_bomber.init ()
+   mem.atk_pref_func = atk.prefer_capship
+end
+
 --[[
 -- Main control function for bomber behavior.
 -- Bombers are expected to have heavy weapons and target

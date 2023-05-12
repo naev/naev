@@ -29,7 +29,6 @@ local lmisn  = require "lmisn"
 local pir    = require "common.pirate"
 require "proximity"
 
--- luacheck: globals enter land beginSpread spreadFlyers spawnHostiles (Hook functions passed by name)
 
 -- Define the flyers commodity
 local cargo_flyers
@@ -87,7 +86,7 @@ function accept()
    mem.qtt = player.pilot():cargoFree()
    mem.pay = mem.credits * mem.qtt
    mem.cid = misn.cargoAdd( cflyers, mem.qtt )
-   misn.setReward( fmt.credits( mem.pay ) )
+   misn.setReward( mem.pay )
 end
 
 function enter()

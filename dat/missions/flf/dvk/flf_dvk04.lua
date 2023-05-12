@@ -22,7 +22,7 @@ local fmt = require "format"
 local flf = require "missions.flf.flf_common"
 require "missions.flf.flf_diversion"
 
--- luacheck: globals enter land leave pay_text success_text (from base mission flf_diversion)
+-- luacheck: globals success_text pay_text land (overwriting main mission, TODO get rid of this hack)
 
 success_text = {
    _([[You receive a transmission from Benito. "Operation successful!" she says. "I've got your pay waiting for you back at home, so don't get yourself blown up on the way back!"]]),
@@ -56,7 +56,7 @@ function accept ()
       misn.setTitle( _("Diversion from Haleb") )
       misn.setDesc( fmt.f( _("A covert operation is being conducted in Haleb. You are to create a diversion from this operation by wreaking havoc in the nearby {sys} system."), {sys=mem.missys} ) )
       mem.marker = misn.markerAdd( mem.missys, "plot" )
-      misn.setReward( fmt.credits( mem.credits ) )
+      misn.setReward( mem.credits )
 
       mem.dv_attention = 0
       mem.job_done = false

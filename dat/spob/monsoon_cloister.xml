@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Monsoon Cloister">
+ <lua>spob/lua/sirius_mil_restricted.lua</lua>
+ <pos x="3975.396126" y="-907.323198"/>
+ <GFX>
+  <space>station-fleetbase2.webp</space>
+  <exterior>station03.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>500</population>
+  <hide>2.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+  </services>
+  <commodities/>
+  <description>Monsoon Cloister is the lone bastion of Sirian law enforcement in this area of space. Though the region is generally quiet, the soldiers here take their responsibility seriously.</description>
+  <bar>The spacedock bar is a utilitarian, no-frills affair that is kept clean and in prime functioning condition. Most of the facilities are automated, as Monsoon Cloister doesn't have the space to keep on a full serving staff.</bar>
+ </general>
+ <tags>
+  <tag>restricted</tag>
+  <tag>station</tag>
+  <tag>military</tag>
+ </tags>
+</spob>

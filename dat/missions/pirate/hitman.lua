@@ -22,27 +22,53 @@
 --]]
 local fmt = require "format"
 local pir = require "common.pirate"
+local portrait = require "portrait"
+local vn = require "vn"
 
 -- Mission constants
+-- TODO make it also appear in other systems?
 local targetsystem = system.get("Delta Pavonis")
 
 local attack_finished -- Forward-declared functions
--- luacheck: globals landed sys_enter trader_attacked trader_jumped (Hook functions passed by name)
+
+local reward = 150e3
+
+local npc_name = _("Shifty Trader")
+local npc_portrait = "neutral/unique/shifty_merchant.webp"
+local npc_image = portrait.getFullPath( npc_portrait )
 
 function create ()
    -- Note: this mission does not make any system claims.
-   misn.setNPC( _("Shifty Trader"),  "neutral/unique/shifty_merchant.webp", _("You see a shifty looking man sitting in a darkened corner of the bar. He is trying to discreetly motion you to join him, but is only managing to make himself look suspicious. Perhaps he's watched too many holovideos."))
+   misn.setNPC( npc_name, npc_portrait, _("You see a shifty looking man sitting in a darkened corner of the bar. He is trying to discreetly motion you to join him, but is only managing to make himself look suspicious. Perhaps he's watched too many holovideos."))
 end
-
 
 --[[
 Mission entry point.
 --]]
 function accept ()
-   -- Mission details:
-   if not tk.yesno( _("Spaceport Bar"), _([[The man motions for you to take a seat next to him. Voice barely above a whisper, he asks, "How'd you like to earn some easy money? If you're comfortable with getting your hands dirty, that is."]]) ) then
-      return
-   end
+   local accepted = false
+   vn.clear()
+   vn.scene()
+   local m = vn.newCharacter( npc_name, {image=npc_image} )
+   vn.transition()
+   m(_([[The man motions for you to take a seat next to him. Voice barely above a whisper, he asks, "How'd you like to earn some easy money? If you're comfortable with getting your hands dirty, that is."]]))
+   vn.menu{
+      {_("Accept"),"accept"},
+      {_("Decline"),"decline"},
+   }
+
+   vn.label("decline")
+   vn.done()
+
+   vn.label("accept")
+   vn.func( function () accepted = true end )
+   m(fmt.f( _([[Apparently relieved that you've accepted his offer, he continues, "There're some new merchants edging in on my trade routes in {sys}. I want you to make sure they know they're not welcome." Pausing for a moment, he notes, "You don't have to kill anyone, just rough them up a bit."]]),
+      {sys=targetsystem}))
+
+   vn.run()
+
+   if not accepted then return end
+
    misn.accept()
 
    -- Some variables for keeping track of the mission
@@ -59,8 +85,6 @@ function accept ()
       fmt.f(_("Attack, but do not kill, Trader pilots in the {sys} system so that they run away"), {sys=targetsystem} ),
       fmt.f(_("Return to {pnt} in the {sys} system for payment"), {pnt=mem.misn_base, sys=mem.misn_base_sys} ),
    } )
-   -- Some flavour text
-   tk.msg( _("Spaceport Bar"), fmt.f( _([[Apparently relieved that you've accepted his offer, he continues, "There're some new merchants edging in on my trade routes in {sys}. I want you to make sure they know they're not welcome." Pausing for a moment, he notes, "You don't have to kill anyone, just rough them up a bit."]]), {sys=targetsystem}) )
 
    -- Set hooks
    hook.enter("sys_enter")
@@ -76,13 +100,13 @@ function sys_enter ()
 end
 
 -- Attacked a trader
-function trader_attacked (hook_pilot, hook_attacker, _arg)
+function trader_attacked( hook_pilot, hook_attacker, _arg )
    if mem.misn_done then
       return
    end
 
    if (hook_pilot:faction() == faction.get("Trader")
-            or hook_pilot:faction() == faction.get("Traders Guild") )
+            or hook_pilot:faction() == faction.get("Traders Society") )
          and (hook_attacker and hook_attacker:withPlayer()) then
       hook_pilot:hookClear()
       hook.pilot(hook_pilot, "jump", "trader_jumped")
@@ -91,7 +115,7 @@ function trader_attacked (hook_pilot, hook_attacker, _arg)
 end
 
 -- An attacked Trader Jumped
-function trader_jumped (_pilot, _arg)
+function trader_jumped( _pilot, _arg )
    if mem.misn_done then
       return
    end
@@ -117,13 +141,27 @@ end
 
 -- landed
 function landed()
-   if spob.cur() == mem.misn_base then
-      tk.msg(_("Mission Complete"), _([[As you inform your acquaintance that you successfully scared off the traders, he grins and transfers a sum of credits to your account. "That should teach them to stay out of my space."]]))
-      player.pay(150e3)
+   if spob.cur() ~= mem.misn_base then
+      return
+   end
+
+   vn.clear()
+   vn.scene()
+   local m = vn.newCharacter( npc_name, {image=npc_image} )
+   vn.transition()
+   m(_([[As you inform your acquaintance that you successfully scared off the traders, he grins and transfers a sum of credits to your account. "That should teach them to stay out of my space."]]))
+
+   vn.func( function ()
+      player.pay( reward )
       pir.modDecayFloor(2)
       pir.modReputation(2)
       faction.modPlayerSingle("Pirate", 5)
-      pir.addMiscLog(_([[You chased away a shifty merchant's competition and were paid a sum of credits by the shifty merchant for your services.]]))
-      misn.finish(true)
+   end )
+   vn.sfxVictory()
+   vn.na(fmt.reward(reward))
+
+   vn.run()
+
+   pir.addMiscLog(_([[You chased away a shifty merchant's competition and were paid a sum of credits by the shifty merchant for your services.]]))
+   misn.finish(true)
    end
-end

@@ -100,18 +100,10 @@ run_butler () {
     fi
 }
 
-# Collect date and assemble the VERSION suffix
+# Collect the VERSION
 
-BUILD_DATE="$(date +%Y%m%d)"
 VERSION="$(<"$TEMPPATH/naev-version/VERSION")"
 
-if [ "$NIGHTLY" == "true" ]; then
-    SUFFIX="$VERSION+DEBUG.$BUILD_DATE"
-elif [ "$PRERELEASE" == "true" ]; then
-    SUFFIX="$VERSION+DEBUG.$BUILD_DATE"
-else
-    SUFFIX="$VERSION"
-fi
 
 
 # Make itch.io dist path if it does not exist
@@ -121,20 +113,23 @@ mkdir -p "$OUTDIR"/win64
 
 # Move all build artefacts to deployment locations
 # Move Linux binary and set as executable
-cp "$TEMPPATH"/naev-linux-x86-64/*.AppImage "$OUTDIR/lin64/naev-$SUFFIX-linux-x86-64.AppImage"
-chmod +x "$OUTDIR/lin64/naev-$SUFFIX-linux-x86-64.AppImage"
+cp "$TEMPPATH"/naev-linux-x86-64/*.AppImage "$OUTDIR/lin64/naev-$VERSION-linux-x86-64.AppImage"
+chmod +x "$OUTDIR/lin64/naev-$VERSION-linux-x86-64.AppImage"
 
 # Move macOS bundle to deployment location
 unzip "$TEMPPATH"/naev-macos/*.zip -d "$OUTDIR"/macos
 
 # Unzip Windows binary and DLLs and move to deployment location
-tar -Jxf "$TEMPPATH/naev-win64/steam-win64.tar.xz" -C "$OUTDIR/win64"
-tar -Jxf "$TEMPPATH/naev-ndata/steam-ndata.tar.xz" -C "$OUTDIR/win64"
+tar -Jxf "$TEMPPATH/naev-win64/naev-windows.tar.xz" -C "$OUTDIR/win64"
+tar -Jxf "$TEMPPATH/naev-ndata/naev-ndata.tar.xz" -C "$OUTDIR/win64"
+
+# Rename windows binary so it follows the correct naming scheme.
+mv "$OUTDIR"/win64/*.exe "$OUTDIR/win64/naev-$VERSION-win64.exe"
 
 # Prepare itch.toml for Linux
 
 cp "$TEMPPATH"/naev-itch-deployment/.itch.toml "$OUTDIR"/lin64
-sed -i "s/%EXECNAME%/naev-$SUFFIX-linux-x86-64.AppImage/" "$OUTDIR"/lin64/.itch.toml
+sed -i "s/%EXECNAME%/naev-$VERSION-linux-x86-64.AppImage/" "$OUTDIR"/lin64/.itch.toml
 sed -i 's/%PLATFORM%/linux/' "$OUTDIR"/lin64/.itch.toml
 
 # Prepare itch.toml for macOS
@@ -146,7 +141,7 @@ sed -i 's/%PLATFORM%/osx/' "$OUTDIR"/macos/.itch.toml
 # Prepare itch.toml for Windows
 
 cp "$TEMPPATH"/naev-itch-deployment/.itch.toml "$OUTDIR"/win64
-sed -i "s/%EXECNAME%/naev-$SUFFIX-win64.exe/" "$OUTDIR"/win64/.itch.toml
+sed -i "s/%EXECNAME%/naev-$VERSION-win64.exe/" "$OUTDIR"/win64/.itch.toml
 sed -i 's/%PLATFORM%/windows/' "$OUTDIR"/win64/.itch.toml
 
 # Prepare soundtrack
@@ -160,21 +155,21 @@ fi
 if [ "$DRYRUN" == "false" ]; then
     run_butler -V
     if [ "$NIGHTLY" == "true" ]; then
-        run_butler push --userversion="$SUFFIX" "$OUTDIR"/lin64 naev/naev:linux-x86-64-nightly
-        run_butler push --userversion="$SUFFIX" "$OUTDIR"/macos naev/naev:macos-x86-64-nightly
-        run_butler push --userversion="$SUFFIX" "$OUTDIR"/win64 naev/naev:windows-x86-64-nightly
+        run_butler push --userversion="$VERSION" "$OUTDIR"/lin64 naev/naev:linux-x86-64-nightly
+        run_butler push --userversion="$VERSION" "$OUTDIR"/macos naev/naev:macos-x86-64-nightly
+        run_butler push --userversion="$VERSION" "$OUTDIR"/win64 naev/naev:windows-x86-64-nightly
 
     else
         if [ "$PRERELEASE" == "true" ]; then
-            run_butler push --userversion="$SUFFIX" "$OUTDIR"/lin64 naev/naev:linux-x86-64-beta
-            run_butler push --userversion="$SUFFIX" "$OUTDIR"/macos naev/naev:macos-x86-64-beta
-            run_butler push --userversion="$SUFFIX" "$OUTDIR"/win64 naev/naev:windows-x86-64-beta
+            run_butler push --userversion="$VERSION" "$OUTDIR"/lin64 naev/naev:linux-x86-64-beta
+            run_butler push --userversion="$VERSION" "$OUTDIR"/macos naev/naev:macos-x86-64-beta
+            run_butler push --userversion="$VERSION" "$OUTDIR"/win64 naev/naev:windows-x86-64-beta
 
         elif [ "$PRERELEASE" == "false" ]; then
-            run_butler push --userversion="$SUFFIX" "$OUTDIR"/lin64 naev/naev:linux-x86-64
-            run_butler push --userversion="$SUFFIX" "$OUTDIR"/macos naev/naev:macos-x86-64
-            run_butler push --userversion="$SUFFIX" "$OUTDIR"/win64 naev/naev:windows-x86-64
-            run_butler push --userversion="$SUFFIX" "$OUTDIR"/soundtrack naev/naev:soundtrack
+            run_butler push --userversion="$VERSION" "$OUTDIR"/lin64 naev/naev:linux-x86-64
+            run_butler push --userversion="$VERSION" "$OUTDIR"/macos naev/naev:macos-x86-64
+            run_butler push --userversion="$VERSION" "$OUTDIR"/win64 naev/naev:windows-x86-64
+            run_butler push --userversion="$VERSION" "$OUTDIR"/soundtrack naev/naev:soundtrack
 
         else
             echo "Something went wrong determining if this is a PRERELEASE or not."

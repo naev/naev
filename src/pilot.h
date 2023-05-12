@@ -23,8 +23,8 @@
 /* Hyperspace parameters. */
 #define HYPERSPACE_ENGINE_DELAY  3. /**< Time to warm up engine (seconds). */
 #define HYPERSPACE_FLY_DELAY     5. /**< Time it takes to hyperspace (seconds). */
-#define HYPERSPACE_STARS_BLUR    3. /**< How long it takes for stars to start blurring (seconds). */
-#define HYPERSPACE_STARS_LENGTH  250 /**< Length the stars blur to at max (pixels). */
+#define HYPERSPACE_DUST_BLUR     3. /**< How long it takes for space dust to start blurring (seconds). */
+#define HYPERSPACE_DUST_LENGTH   250 /**< Length the space dust blur to at max (pixels). */
 #define HYPERSPACE_FADEOUT       1. /**< How long the fade is (seconds). */
 #define HYPERSPACE_FADEIN        1. /**< How long the fade is (seconds). */
 #define HYPERSPACE_THRUST        2000./**< How much thrust you use in hyperspace. */
@@ -49,6 +49,7 @@
 /* Pilot-related hooks. */
 enum {
    PILOT_HOOK_NONE,      /**< No hook. */
+   PILOT_HOOK_CREATION,  /**< Pilot was created. */
    PILOT_HOOK_DEATH,     /**< Pilot died. */
    PILOT_HOOK_BOARDING,  /**< Player is boarding. */
    PILOT_HOOK_BOARD,     /**< Player got boarded. */
@@ -145,7 +146,7 @@ typedef struct PilotOutfitSlot_ {
 typedef struct PilotWeaponSetOutfit_ {
    int level;              /**< Level of trigger. */
    double range2;          /**< Range squared of this specific outfit. */
-   PilotOutfitSlot *slot;  /**< Slot associated with it. */
+   int slotid;             /**< ID of the slot associated with the weapon set. */
 } PilotWeaponSetOutfit;
 
 /**
@@ -160,6 +161,7 @@ typedef struct PilotWeaponSet_ {
    PilotWeaponSetOutfit *slots; /**< Slots involved with the weapon set. */
    /* Only applicable to weapon type. */
    int inrange;   /**< Whether or not to fire only if the target is inrange. */
+   int manual;    /**< Whether or not is manually aiming. */
    double range[PILOT_WEAPSET_MAX_LEVELS]; /**< Range of the levels in the outfit slot. */
    double speed[PILOT_WEAPSET_MAX_LEVELS]; /**< Speed of the levels in the outfit slot. */
 } PilotWeaponSet;
@@ -344,6 +346,9 @@ typedef struct Pilot_ {
    Task* task;       /**< current action */
    unsigned int shoot_indicator; /**< Indicator to inform the AI if a seeker has been shot recently. */
 
+   /* Ship Lua. */
+   int lua_ship_mem; /**< Ship memory. */
+
    /* Misc */
    double comm_msgTimer; /**< Message timer for the comm. */
    double comm_msgWidth; /**< Width of the message. */
@@ -419,7 +424,7 @@ double pilot_brakeDist( Pilot *p, vec2 *pos );
 int pilot_interceptPos( Pilot *p, double x, double y );
 void pilot_cooldown( Pilot *p, int dochecks );
 void pilot_cooldownEnd( Pilot *p, const char *reason );
-double pilot_aimAngle( Pilot *p, const Pilot *target );
+double pilot_aimAngle( Pilot *p, const vec2* pos, const vec2* vel );
 
 /*
  * Faction stuff.
@@ -459,11 +464,11 @@ void pilot_reset( Pilot* pilot );
 Pilot* pilot_setPlayer( Pilot* after );
 void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ignore_rules, int guerilla );
 void pilot_delete( Pilot *p );
+void pilot_dead( Pilot* p, unsigned int killer );
 
 /*
  * Init and cleanup.
  */
-void pilot_destroy( Pilot *p );
 void pilot_stackRemove( Pilot *p );
 void pilots_init (void);
 void pilots_free (void);
@@ -493,7 +498,6 @@ void pilot_renderOverlay( Pilot* p );
 /*
  * communication
  */
-void pilot_message( Pilot *p, unsigned int target, const char *msg, int ignore_int );
 void pilot_broadcast( Pilot *p, const char *msg, int ignore_int );
 void pilot_distress( Pilot *p, Pilot *attacker, const char *msg );
 void pilot_setCommMsg( Pilot *p, const char *s );

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Heronus Nidus">
+ <lua>spob/lua/soromid_mil_restricted.lua</lua>
+ <pos x="-12991.493773" y="17143.680277"/>
+ <GFX>
+  <space>station-battlestation.webp</space>
+  <exterior>station04.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>50000</population>
+  <hide>2.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Heronus Nidus is a military base directly tied to Heronus below. Its primary duty is to protect the planet, because it is vital to the Soromid fleet. If Heronus were to cease producing new ships, the Soromid would suffer a tremendous blow to their military capabilities. Needless to say, Heronus Nidus is one of the most heavily armed stations in Soromid space.</description>
+  <bar>A large viewport gives a magnificent view of the young ships that occasionally lift off from Heronus. There's something about the sheen of a ship that has not yet undergone treatment at Ebenezer that particularly catches the eye.</bar>
+ </general>
+ <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Medium</item>
+  <item>Plasma 2</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+  <item>Basic Outfits 2</item>
+  <item>Star Maps</item>
+  <item>High Tech Upgrades 2</item>
+  <item>Soromid Elite Outfits</item>
+ </tech>
+ <tags>
+  <tag>restricted</tag>
+  <tag>military</tag>
+  <tag>station</tag>
+ </tags>
+</spob>

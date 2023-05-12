@@ -3,60 +3,62 @@
 set -e
 
 usage() {
-    echo "usage: $(basename "$0") [-d] [-n] (set this for nightly builds) -s <SOURCEROOT> (Sets location of source) -b <BUILDROOT> (Sets location of build directory) -r <RUNNER> (must be specified)"
-    cat <<EOF
+   echo "usage: $(basename "$0") [-v] (Verbose output)"
+   cat <<EOF
 DMG Packaging Script for Naev
 
-This should be run after meson install -C build, and can be run from the source root. Requires genisoimage
+This script is called by "meson install" if building for macOS.
 
-Pass in [-d] [-s] (Sets location of source root) [-b] <BUILDPATH> (Sets location of meson build directory)
+usage: $(basename "$0") [-v] (Verbose output)
 EOF
-    exit 1
+   exit 1
 }
 
-# Defaults
-SOURCEPATH="$(pwd)"
-BUILDPATH="$(pwd)/build"
+while getopts v OPTION "$@"; do
+   case $OPTION in
+      v)
+         set -x
+         ;;
 
-while getopts ds:b: OPTION "$@"; do
-    case $OPTION in
-    d)
-        set -x
-        ;;
-    s)
-        SOURCEPATH="${OPTARG}"
-        ;;
-    b)
-        BUILDPATH="${OPTARG}"
-        ;;
-    *)
-        usage
-        ;;
-    esac
+      *)
+         usage
+         ;;
+   esac
 done
 
 if ! [ -x "$(command -v genisoimage)" ]; then
-    echo "You don't have genisoimage in PATH"
-    exit 1
+   echo "You don't have genisoimage in PATH"
+   exit 1
 elif ! [ -x "$(command -v dmg)" ]; then
-    echo "You don't have dmg in PATH"
-    echo "Get it from https://github.com/fanquake/libdmg-hfsplus"
-    exit 1
+   echo "You don't have dmg in PATH"
+   echo "Get it from https://github.com/fanquake/libdmg-hfsplus"
+   exit 1
+elif ! [ -x "$(command -v readlink)" ]; then
+   echo "You don't have readlink in PATH"
+   echo "Get it from your distro repositories."
+   exit 1
 fi
 
 
 # Creates temp directory
-WORKPATH=$(readlink -mf "$(mktemp -d)")
+WORKPATH="${MESON_BUILD_ROOT}/dmg_staging"
 
-# Make temp directory
+
+# Create dist dir in build root
+mkdir -p "${MESON_BUILD_ROOT}"/dist
+
+# Create temp directory in build root
 mkdir -p "$WORKPATH"
 
 # Copy all DMG assets to BundleDir
-cp -r "$SOURCEPATH"/extras/macos/dmg_assets/. "$WORKPATH"
+cp -r "${MESON_SOURCE_ROOT}"/extras/macos/dmg_assets/. "$WORKPATH"
 
 # Extract Naev app bundle to BundleDir
-cp -r "$BUILDPATH"/dist/Naev.app "$WORKPATH"
+cp -r "${MESON_INSTALL_DESTDIR_PREFIX}" "$WORKPATH"
 
 # Generate ISO image and compress into DMG
-genisoimage -V Naev -D -R -apple -no-pad -o "$WORKPATH"/naev.iso "$WORKPATH"
-dmg "$WORKPATH"/naev.iso "$BUILDPATH"/dist/naev.dmg
+genisoimage -V Naev -D -R -apple -no-pad -o "$WORKPATH"/naev-macos.iso "$WORKPATH"
+dmg "$WORKPATH"/naev-macos.iso "${MESON_BUILD_ROOT}"/dist/naev-macos.dmg
+
+# Clean up after ourselves (Your storage space will thank me.)
+rm -rf "$WORKPATH"

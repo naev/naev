@@ -89,16 +89,20 @@ void shipyard_open( unsigned int wid )
    bh = LAND_BUTTON_HEIGHT;
 
    /* buttons */
-   window_addButtonKey( wid, off = -20, 20,
+   off = -20;
+   window_addButtonKey( wid, off, 20,
          bw, bh, "btnCloseShipyard",
          _("Take Off"), land_buttonTakeoff, SDLK_t );
-   window_addButtonKey( wid, off -= 20+bw, 20,
+   off -= 20+bw;
+   window_addButtonKey( wid, off, 20,
          bw, bh, "btnTradeShip",
          _("Trade-In"), shipyard_trade, SDLK_r );
-   window_addButtonKey( wid, off -= 20+bw, 20,
+   off -= 20+bw;
+   window_addButtonKey( wid, off, 20,
          bw, bh, "btnBuyShip",
          _("Buy"), shipyard_buy, SDLK_b );
-   window_addButtonKey( wid, off -= 20+bw, 20,
+   off -= 20+bw;
+   window_addButtonKey( wid, off, 20,
          bw, bh, "btnFindShips",
          _("Find Ships"), shipyard_find, SDLK_f );
 
@@ -230,6 +234,10 @@ void shipyard_update( unsigned int wid, const char* str )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(ship->fabricator) );
    k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Crew:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d", ship->crew );
+   if (player.fleet_capacity > 0) {
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Fleet Capacity:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d", ship->points );
+   }
    /* Weapons & Manoeuvrability */
    k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n\n%s", _("Base Properties") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n\n%s", "");
@@ -372,7 +380,7 @@ static void shipyard_find( unsigned int wid, const char* str )
  */
 static void shipyard_rmouse( unsigned int wid, const char* widget_name )
 {
-    return shipyard_buy(wid, widget_name);
+    shipyard_buy(wid, widget_name);
 }
 
 /**

@@ -1,4 +1,149 @@
-* 0.10.0 (unreleased)
+* 0.11.0 (unreleased)
+   * Gameplay Changes
+      * Universe significantly overworked to me more consistent with lore
+      * Planet properties affect quantity of missions available
+      * Moved many missions to the vn system
+      * Can sometimes find POI events with a pulse scanner equipped when entering systems
+      * Changed the visuals for some of the nebulas
+      * diy-nerds: improved reward
+   * Quality of Life
+      * Make it explicit when all the escorts have jumped or landed
+      * Player ship is no longer translucent when in stealth as it is redundant with the stealth icon
+      * Show enemy/ally factions in the faction standing info window
+      * Space dust is properly antialiased
+      * Minor speed ups to patrol lane computations
+      * Try to enforce minimum number of articles in the news
+      * Independent patrol and bounty missions can be completed on more planets and stations
+      * Can hide or prioritize missions from the info menu
+   * New Content
+      * 4 new missions
+         * Nebula refugees
+      * Added the Space Trader Society faction
+      * More points of interest
+      * Many, many new systems and space objects
+      * Custom death animations for many ships
+   * Engine
+      * Map system viewer is more compact
+      * Added hook.hail_spob
+      * Events support tags
+      * Editor supports tags
+      * Library to handle conditionals for mission computer missions
+      * Added support for disabling specific patrol lanes from being generated
+      * Support for Lua scripting for ships
+      * Changed api of evt.claim and misn.claim
+   * Fixes
+      * Typo and wording fixes
+      * Fixed many corner case crashes in the editor
+      * Fixed cargo missions not being generated in some parts of the universe
+
+* 0.10.6 (unreleased)
+   * Fixed potential segfault with invalid semver strings
+   * Fixed sign error when buying artifats in the Baron Prince mission (sorry)
+   * Fixed behaviour of naev.trigger with parameters
+   * Fixed Lua spfx volume changing with game speed
+
+* 0.10.5
+   * Start counting effect stacks from 1 not 2
+   * Fixed launcher weapons using outfit mass instead of ammo mass
+   * taiomi: fixed claim check for last mission
+   * Fixed some typos
+   * Fixed equipment of Lancelot in "Sharkman Is Back" mission
+   * Fixed clicking on jump points also selecting planets in some cases
+   * nelly02: Nelly now stops recommending stuff that only does a little disable
+   * shadowvigil: Fixed mission not spawning escorts
+   * flf_patrol: Missions should no longer be able to have ridiculously low credit rewards
+   * Fixed some events not claiming systems that could interfere with other missions
+   * hypergate_construction: should actually claim the system
+   * Fixed some formatting in the alt text when hovering over outfits in the equipment window
+   * ec06: refuel tanker should provide as much fuel as possible
+   * taiomi09: fixed smugglers becoming hostile in some cases
+   * Changed music.stop() API to stop music from continuing by default
+   * Fixed potential memory issues on some platforms
+   * Fixed crash when changing to Japanese language on Windows using Japanese locale
+
+* 0.10.4
+   * Fixed crashes related to multiple effects being active at once
+   * Fixed multiple mission_done hooks not passing parameter correctly
+   * Fixed plugin strings not being initialized with mismatched saves
+   * ec06: made the final battle work much better
+
+* 0.10.3
+   * Fixed crash when using fits currently selected ship outfit filter
+   * Fixed escorts always being set to aggressive when loading a save
+   * Fixed Dvaered standing cap increase being lost after loading game
+   * Made space dust a bit less bright when it starts turning into lines
+   * derelict_rescue: play money sound instead of victory sound on completion
+   * rehab: fixed crash when aborting rehabilitation missions
+   * foundation station, efferey: fixed not using pirate landing script
+
+* 0.10.2
+   * Fixed escorts sometimes not following their leader and landing
+   * Fixed autonav always wanting to go to the edge of jump points
+   * Fixed crash when causing multiple dialogues to run in the background
+   * Fixed outfit lua being called before initialization
+   * Fixed not giving the AI a name when updating a save breaking the updater script
+   * Fixed deleting last snapshot of a save switching to another pilot's saves
+   * Fixed saves and snapshots not displaying correct name with version mismatch
+   * Fixed crash when deleting Lua-side fonts, should fix crash with POI
+   * Fixed swapping ships with mission cargo sharing name with other cargo can lead to wrong cargo getting duplicated
+   * Fixed original music at Research Post Sigma-13
+   * Fixed music stopping after playing once in new games
+   * Change music API to make it explicit you can temporarily disable the music engine
+   * Set windows compatibility mode to Windows 7 when cross-compiling
+   * legacy gui: fixed line artefacts near fuel / energy bars
+   * pulse_scanner: fix potential error on init
+   * patrol: don't have an invisible time limit to reach the system anymore
+   * taiomi: fixed some claims
+   * zbh03: landing when hostiles spawned will fail the mission
+   * bounties: mention there is a time limit to reach the system, not made explicit though
+   * zpp01, zbh01: bumped chance to 30%
+   * poi_intro: can't board nelly again
+
+* 0.10.1
+   * Fixed many stations not marked as stations
+   * FLF combatants only appear on FLF spobs
+   * Fixed cases where the player could be forced to take off when not spaceworthy
+   * Show engine volume option same as other volume options
+   * Use nearest neighbour interpolation for small resolution vn images
+   * Fix engine sound being played at high time compression values
+   * Try to fix issue where music stops playing
+   * Statically link libenet on steam versions
+   * diy-nerds: fixed reward and description not matching
+   * deliverlove: fixed credit exploit
+   * reynir: don't add 0 tonnes of hotdogs
+
+* 0.10.0
+   * Made slim the default GUI instead of brushed
+   * Contraband missions use vntk instead of tk
+   * Sightseeing missions mention explicitly how much you get paid when completed
+   * Removed outfit name duplication in alt texts
+   * Made outfit descriptions fit in the landing window for all outfits
+   * Added sound effects to starting race
+   * Fixed non-Lua active outfits (jammers, etc.)
+   * Sort ship stats in outfit/ship descriptions
+   * Fixed jammers and jamming
+   * Buffed jamers and scramblers
+   * Buffed evasion bonus of Red Star hulls to compensate for detection malus
+   * Fix "Dead or Alive" and "Alive" being swapped in bounty mission descriptions
+   * Lowered error in physics approximation (shouldn't be noticeable though)
+   * Added particle beam and particle lance to Za'lek outfitters
+   * Fixed escort ai not being properly applied to newly spawned escorts
+   * Improved rendering of the map system information window
+   * Improved minor artefacts in slim and slimv2 GUIs with scaling enabled
+   * Engine sounds smoothly transition on/off
+   * Fixed other minor issues
+
+* 0.10.0-beta.2
+   * Pirates should avoid attacking near safeish areas
+   * Fixed crash on load when player has more than one ship
+   * Fixed player.setSpeed() not resetting speed as intended
+   * Fixed pilot.comm not showing messages
+   * Fixed typo/grammar in sightseeing and dvaered census introductory mission
+   * Don't display health bars with no player alive
+   * Autonav doesn't go only to the center of spobs
+   * Mention escort AI settings when buying a fighter bay tutorial plays
+
+* 0.10.0 (beta)
    * New Mechanics
       * Support for setting ships as escorts and thus player fleets
       * Hypergates that allow for long distance travel
@@ -15,7 +160,8 @@
       * More complex space objects (spob)
       * Support for different difficulty settings
       * New exploration mechanic with points of interest
-      * Unique ships to be find throughout the universe (pers)
+      * Unique ships to be found throughout the universe (pers)
+      * Manual aiming mode for weapon sets
    * Gameplay Changes
       * Weapon types are more differentiated
       * Removed nearly redundant launchers
@@ -23,26 +169,36 @@
       * Factional ships are more widely sold
       * Schroedinger uses less fuel instead of getting a large bonus
       * Plasma has a burning effect
+      * Changed spawning and behaviour of pirates to be less dangerous in populated systems
+      * Fighters only attack enemies visible by their carrier
+      * AI is better at choosing targets
+      * More dump targets for waste dump mission and tweaked rewards
+      * Removed escorts for hire in lieu of player fleets
    * New Content
       * Added a gigantic black hole
       * Added new space anomalies such as plasma storms
       * Lots of new asteroid types and commodities
       * More interesting places to visit and explore
       * More engine sounds
-      * 29 New missions
+      * 45 New missions
          * More terraforming
          * Continuation of the Za'lek story
          * Help the Dvaered do some tasks
          * Tutorial for new mechanics
-      * 7 New ships
+         * Secret system!
+      * 14 New ships
+         * Certain secret faction completely revamped
       * New spob graphics
       * Lots of new outfits and reworked old outfits
          * Use energy to avoid death
          * Create scanning pulses
          * Blinking has animations
          * Advanced mining techniques
+         * Space mines
       * News revamped to be more flexible and relate more with current events
+      * NPCs revamped to be more flexible with many new messages
       * New commodities that are only available from mining
+      * Fancy racing mini-game that replaces old race missions
    * Quality of Life
       * Support for save snapshots for each pilot
       * Can ask pilots to refuel you more than 100 units at a time
@@ -53,6 +209,15 @@
       * Spob communication window has been redone
       * Limit sound output volume when lots of sounds are playing jointly
       * Redid the music engine to be less prone to play combat music
+      * Hide radar when overlay is open (with option to revert to old behaviour)
+      * Duplicate effects get collapsed into stacks in the GUI
+      * Allowing exiting and reloading while love framework is open (VN, etc.)
+      * Autonav is more flexible with positioning on jump points
+      * Can customize jump flash brightness
+      * Player will not be scanned immediately on jumping in or taking off
+      * Show health bars near pilots in combat (can be disabled in options)
+      * Escort AI is customizable
+      * Ship AI reminds player about things when they haven't played in a while
    * Engine changes
       * Work has begun on a development manual
       * Plugin support with explicit support for total conversions
@@ -71,9 +236,13 @@
       * Unified the event and mission headers
       * Implemented per-pilot variables
       * Lua scripting for spob
+      * AI can use special outfits
       * Lots of engine rewriting and modernization that should bring some speed improvements and more flexibility when modding
+      * Added lua-enet library to allow for networking in plugins (off by default, requires setting in configuration file)
+      * Can animate loading screen
    * Bug Fixes
       * Too many to list, but we'll try
+      * Fixed pilots not getting equipped at all in some cases
       * Fixed looting cargo when boarding giving less than expected
       * Fixed all asteroid graphics being used as debris
       * Fixed some hooks not properly passing arguments

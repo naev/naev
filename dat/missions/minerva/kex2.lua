@@ -30,10 +30,8 @@ local fmt = require "format"
 --  2: got away
 mem.misn_state = nil
 local blockade -- Non-persistent state
--- luacheck: globals blockade_attacked enter generate_npc gotaway heartbeat loadfunc spawn_enemies (Hook functions passed by name)
--- luacheck: globals approach_kex approach_terminal (NPC functions passed by name)
 
-local targetplanet, targetsys = spob.getS("Niflheim")
+local targetplanet, targetsys = spob.getS("Niflheim Enclave")
 
 local money_reward = minerva.rewards.kex2
 

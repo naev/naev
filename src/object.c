@@ -194,7 +194,7 @@ static void materials_readFromFile( const char *filename, Material **materials )
 
             /* computes the path to texture */
             copy_filename = strdup(filename);
-            asprintf(&texture_filename, "%s/%s", dirname(copy_filename), args);
+            SDL_asprintf(&texture_filename, "%s/%s", dirname(copy_filename), args);
             *map = gl_newImage(texture_filename, 0);
             free(copy_filename);
             free(texture_filename);
@@ -263,7 +263,7 @@ Object *object_loadFromFile( const char *filename )
          while ((token = strtok_r(NULL, DELIM, &saveptr)) != NULL) {
             /* computes the path to materials */
             copy_filename = strdup(filename);
-            asprintf(&material_filename, "%s/%s", dirname(copy_filename), token);
+            SDL_asprintf(&material_filename, "%s/%s", dirname(copy_filename), token);
             materials_readFromFile(material_filename, &object->materials);
             free(copy_filename);
             free(material_filename);

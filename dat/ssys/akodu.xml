@@ -2,20 +2,36 @@
 <ssys name="Akodu">
  <general>
   <radius>24500.000000</radius>
-  <stars>200</stars>
-  <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>200</spacedust>
+  <interference>8.325000</interference>
+  <nebula volatility="0.000000" hue="240.000000">100.000000</nebula>
  </general>
- <pos x="-29.000000" y="-187.000000"/>
- <spobs/>
+ <pos x="375.252228" y="109.453472"/>
+ <spobs>
+  <spob>Tenal-P</spob>
+ </spobs>
  <jumps>
-  <jump target="Flok">
+  <jump target="Santoros">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Terminus">
+  <jump target="Vega">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeA-poor</group>
+   <radius>9000.000000</radius>
+   <pos x="17356.811639" y="5763.521422"/>
+  </asteroid>
+  <exclusion>
+   <radius>13000.000000</radius>
+   <pos x="8545.911074" y="2716.142279"/>
+  </exclusion>
+ </asteroids>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

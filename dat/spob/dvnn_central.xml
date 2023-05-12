@@ -7,8 +7,8 @@
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>33.333333</base>
-  <bonus>16.666667</bonus>
+  <base>33.333300</base>
+  <bonus>16.666700</bonus>
   <range>3</range>
  </presence>
  <general>
@@ -24,4 +24,7 @@
   <description>Even before House Dvaered gained its independence, there were unofficial news channels that fueled the discontent among the Imperial labour force. Later, after their work was done, these channels pooled their resources to establish the Dvaered News Network, DVNN. This station serves as the main nexus for all Dvaered mass media. As such it is coveted by many a Warlord but Dvaered High Command makes sure that the station remains firmly under its control.</description>
   <bar>Spaceport bar, waiting lounge, interview room, this facility is everything at once. It's the only place accessible to non-DVNN personnel so all dealings with visitors have to take place here. In fact, one of the Dvaered reality shows is a live feed from the spaceport bar on DVNN Central, showing how the various visitors behave. The Dvaered seem to find this entertaining.</bar>
  </general>
+ <tags>
+  <tag>station</tag>
+ </tags>
 </spob>

@@ -11,7 +11,6 @@ local pp_shaders = require "pp_shaders"
 
 local pixelcode = lf.read( "glsl/love/hypergate_travel.frag" )
 
--- luacheck: globals update hypergate (Hook functions passed by name)
 
 local target, shader, prevtex
 local sfx = audio.newSource( 'snd/sounds/hypergate.ogg' )

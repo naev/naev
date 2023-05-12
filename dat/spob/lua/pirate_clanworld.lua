@@ -7,7 +7,8 @@ mem.params = {
       return (mem.std_land - std) * 500 + 1000
    end,
    std_land = 20,
-   std_bribe = -50,
+   std_bribe = -70,
+   std_dangerous = -math.huge,
    msg_granted = {
       _([["Permission to land granted. Welcome, mate."]]),
    },
@@ -23,6 +24,8 @@ mem.params = {
    },
    msg_cantbribe = {
       _([["Your money isn't worth the trouble you bring."]]),
+      _([["You think we'd let scum like you land? You're a menace to pirate society!"]]),
+      _([["Even pirates have standards better than letting vermin like you land."]]),
    },
    msg_trybribe = {
       _([["Well, I think you're scum, but I'm willing to look the other way for {credits}. Deal?"

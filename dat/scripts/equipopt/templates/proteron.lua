@@ -5,40 +5,74 @@ local eparams = require 'equipopt.params'
 
 local proteron_outfits = eoutfits.merge{{
    -- Heavy Weapons
-   "Proteron Derivative Bay",
+   "Proteron Dalton Bay",
    "Heavy Razor Turret", "Grave Beam", "Railgun",
    "Heavy Laser Turret", "Railgun Turret", "Ragnarok Beam",
    "Heavy Ripper Turret",
    -- Medium Weapons
+   "Proteron Dalton Dock",
    "Enygma Systems Turreted Fury Launcher",
    "Enygma Systems Turreted Headhunter Launcher",
+   "Laser Turret MK2", "Plasma Turret MK2",
    -- Small Weapons
-   "TeraCom Banshee Launcher",
-   "Laser Cannon MK1", "Plasma Blaster MK1",
+   "Laser Turret MK1", "Plasma Turret MK1", "Razor Turret MK1",
+   "Laser Cannon MK1", "Plasma Blaster MK1", "Razor MK1",
    -- Utility
    "Droid Repair Crew", "Milspec Scrambler",
-   "Targeting Array", "Agility Combat AI",
+   "Targeting Array",
+   "Hunting Combat AI", "Agility Combat AI",
+   "Milspec Impacto-Plastic Coating", "Photo-Voltaic Nanobot Coating",
    "Milspec Jammer", "Emergency Shield Booster",
    "Weapons Ionizer", "Sensor Array",
    -- Heavy Structural
    "Battery III", "Shield Capacitor III", "Shield Capacitor IV",
-   "Reactor Class III",
-   "Large Shield Booster",
+   "Reactor Class III", "Biometal Armour", "Large Shield Booster",
    -- Medium Structural
    "Battery II", "Shield Capacitor II", "Reactor Class II",
    "Medium Shield Booster",
    -- Small Structural
-   "Improved Stabilizer", "Engine Reroute",
+   "Improved Stabilizer", "Engine Reroute", "Plasteel Plating",
    "Battery I", "Shield Capacitor I", "Reactor Class I",
    "Small Shield Booster",
 }}
 
 local proteron_params = {
-   --["Proteron Demon"] = function () return {
+   ["Proteron Dalton"] = function () return {
+   type_range = {
+            ["Launcher"] = { max = 1 },
+         },
+      } end,
+   ["Proteron Hippocrates"] = function () return {
+   energy = 0.8, -- neglect energy and prefer launchers and fighter bays
+   launcher = 1.2,
+   fighterbay = 1.1,
+   type_range = {
+            ["Launcher"] = { min = 1, max = rnd.rnd(1,3) },
+         },
+      } end,
+   ["Proteron Gauss"] = function () return {
+         type_range = {
+            ["Launcher"] = { max = 1 },
+         }
+      } end,
+   ["Proteron Pythagoras"] = function () return {
+   type_range = {
+            ["Launcher"] = { max = 1 },
+            ["Bolt Turret"] = { min = 1 },
+         },
+      } end,
+   ["Proteron Archimedes"] = function () return {
+   type_range = {
+            ["Launcher"] = { max = 2 },
+            ["Bolt Turret"] = { min = 1 },
+         },
+      } end,
 }
 --local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 local proteron_params_overwrite = {
+   turret = 1.1,
+   launcher = 0.9,
    max_same_stru = 3,
 }
 
@@ -62,6 +96,12 @@ local function equip_proteron( p, opt_params )
    end
    params = tmerge( params, opt_params )
 
+   -- Outfits
+   local outfits = proteron_outfits
+   if opt_params.outfits_add then
+      outfits = eoutfits.merge{ outfits, opt_params.outfits_add }
+   end
+
    -- See cores
    local cores = opt_params.cores
    if not cores then
@@ -73,7 +113,7 @@ local function equip_proteron( p, opt_params )
    mem.equip = { type="proteron", level="elite" }
 
    -- Try to equip
-   return optimize.optimize( p, cores, proteron_outfits, params )
+   return optimize.optimize( p, cores, outfits, params )
 end
 
 

@@ -14,7 +14,6 @@ local fmt = require "format"
 local tut = require "common.tutorial"
 local vn  = require 'vn'
 
--- luacheck: globals outfit_buy ship_buy takeoff (Hook functions passed by name)
 
 function create ()
    if tut.isDisabled() then evt.finish() end
@@ -27,6 +26,7 @@ end
 function outfit_buy( outfitname )
    local o = outfit.get(outfitname)
    local tbroad = o:typeBroad()
+   local isturret = o:specificstats().isturret
 
    if tbroad == "Afterburner" and not var.peek( "tut_afterburner" ) then
       vn.clear()
@@ -57,10 +57,24 @@ function outfit_buy( outfitname )
       local sai = vn.newCharacter( tut.vn_shipai() )
       vn.transition( tut.shipai.transition )
       sai(fmt.f(_([["Looks like you are moving up in the world with your first #oFighter Bay#0 outfit! As you can expect, fighter bays let you launch and control interceptor or fighter class escorts. They autonomously defend your ship when deployed, and can be given particular orders. You can tell them to #oattack#0 your target with {eattackkey}, #oclear orders#0 with {eclearkey}, #ohold position#0 with {eholdkey}, and #oreturn to ship#0 with {ereturnkey}."]]),{eattackkey=tut.getKey("e_attack"), eholdkey=tut.getKey("e_hold"), ereturnkey=tut.getKey("e_return"), eclearkey=tut.getKey("e_clear")}))
+      sai(fmt.f(_([["Besides giving direct orders to your escorts, you can also control how they behave by using the 'Escort AI' button accessible from the #oMain#0 tab of the #oInformation#0 menu accessible with {infokey}. You can set a range of behaviours from engaging all hostiles to only defending when directly attacked. Using proper settings can minimize the amount of orders you have to give your escorts!"]]),
+         {infokey=tut.getKey("info")}))
       sai(fmt.f(_([["Like ammunition in launchers, lost fighters will regenerate slowly over time and you can restock them either by performing a cooldown operation with {cooldownkey} or double-tapping {reversekey}, or by landing on a planet or station. You can either fly around with deployed fighters or keep them inside your ship and only deploy as necessary. You should try to see whatever works best for you!"]]),{cooldownkey=tut.getKey("cooldown"), reversekey=tut.getKey("reverse")}))
       vn.done( tut.shipai.transition )
       vn.run()
       var.push( "tut_fighterbay", true )
+
+   elseif isturret and not var.peek( "tut_turret" ) then
+      vn.clear()
+      vn.scene()
+      local sai = vn.newCharacter( tut.vn_shipai() )
+      vn.transition( tut.shipai.transition )
+      sai(_([["Is that a #oTurret#0 weapon you just bought? Almost all weapons have built-in tracking capabilities, however, non-turret weapons have very limited mobility, and are only able to target weapons more or less straight ahead. On the other hand, turret weapons have 360 degree tracking capability and can hit enemy ships from all over!"]]))
+      sai(fmt.f(_([["Like non-turret weapons, turret weapons must be fired manually. When outfitting a ship with both turrets and non-turrets at the same time, it may be useful to set up #oWeapon Sets#0 to be able to fire non-turrets and turrets independently. Weapon sets can be set up from the #oWeapons#0 tab of the #oInformation#0 menu accessible with {infokey}. You should try and see what works best for you!"]]),
+         {infokey=tut.getKey("info")}))
+      vn.done( tut.shipai.transition )
+      vn.run()
+      var.push( "tut_turret", true )
 
    elseif tbroad == "License" then
 

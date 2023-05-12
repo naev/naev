@@ -24,8 +24,7 @@ local lmisn = require "lmisn"
 local luaspfx = require "luaspfx"
 local love_shaders = require "love_shaders"
 local tut = require "common.tutorial"
-
--- luacheck: globals land enter feral_idle feral_move feral_discovered feral_hailstart feral_hail zach_msg spacewhale (Hook functions passed by name)
+local cinema = require "cinema"
 
 local reward = zbh.rewards.zbh04
 
@@ -78,7 +77,7 @@ He gets up and starts running to the command center.
 
    -- mission details
    misn.setTitle( _("Black Hole Mystery") )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc( fmt.f(_("Patrol the {sys} system and report your observations to Zach at {pnt}."), {pnt=mainpnt, sys=mainsys}) )
 
    mem.mrk = misn.markerAdd( mainsys )
@@ -144,10 +143,10 @@ end
 
 local feral, points
 local function feral_map( first )
-   system.mrkClear()
+   system.markerClear()
    for k,v in ipairs(points) do
       local pos = v + vec2.newP( 300+1500*rnd.rnd(), rnd.angle() )
-      system.mrkAdd( pos, _("Detected Motion")  )
+      system.markerAdd( pos, _("Detected Motion")  )
    end
 
    local msg
@@ -242,7 +241,7 @@ function feral_discovered ()
    feral:face( player.pilot() )
 
    player.autonavAbort(_("You found something!"))
-   player.cinematics( true, {gui=true} )
+   cinema.on{ gui=true }
    camera.set( feral )
 
    -- Have to do this AFTER aborting autonav
@@ -251,7 +250,7 @@ function feral_discovered ()
    pp:brake()
    pp:face(feral)
 
-   system.mrkClear()
+   system.markerClear()
 
    hook.pilot( feral, "hail", "feral_hail" )
 
@@ -263,8 +262,7 @@ end
 local feral_canhail = false
 function feral_hailstart ()
    feral_canhail = true
-   player.pilot():control(false)
-   player.cinematics(false)
+   cinema.off()
    camera.set()
 end
 

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Carnis Minor">
+ <general>
+  <radius>3000.000000</radius>
+  <spacedust>400</spacedust>
+  <interference>24.975000</interference>
+  <nebula volatility="0.000000" hue="245.000000">200.000000</nebula>
+  <nolanes/>
+ </general>
+ <pos x="306.458045" y="-86.665666"/>
+ <spobs>
+  <spob_virtual>Independent All Unpresence (Range 1)</spob_virtual>
+  <spob_virtual>Traders Society Unpresence (Range 1)</spob_virtual>
+ </spobs>
+ <jumps>
+  <jump target="Carnis Major">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Cebus">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+ </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
+</ssys>

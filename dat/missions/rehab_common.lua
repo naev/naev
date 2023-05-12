@@ -8,9 +8,9 @@
 --]]
 local fmt   = require "format"
 local vntk  = require 'vntk'
+local prefix = require "common.prefix"
 
 local setFine -- Forward-declared functions
--- luacheck: globals standing (Hook functions passed by name)
 
 function create()
     -- Note: this mission does not make any system claims.
@@ -30,10 +30,11 @@ function create()
 
     setFine(mem.rep)
 
-    misn.setTitle(fmt.f(_("{fct} Rehabilitation"), {fct=mem.fac}))
+    misn.setTitle(prefix.prefix(mem.fac)..fmt.f(_("{fct} Rehabilitation"), {fct=mem.fac}))
     misn.setDesc(fmt.f(_([[You may pay a fine for a chance to redeem yourself in the eyes of a faction you have offended. You may interact with this faction as if your reputation were neutral, but your reputation will not actually improve until you've regained their trust. ANY hostile action against this faction will immediately void this agreement.
-Faction: {fct}
-Cost: {credits}]]), {fct=mem.fac, credits=fmt.credits(mem.fine)}))
+
+#nFaction:#0 {fct}
+#nCost:#0 {credits}]]), {fct=mem.fac, credits=fmt.credits(mem.fine)}))
     misn.setReward(_("None"))
 end
 
@@ -111,12 +112,12 @@ end
 
 -- On abort, reset reputation.
 function abort()
-    -- Remove the standing hook prior to modifying reputation.
-    hook.rm(mem.standhook)
+   -- Have to remove hook first or applied infinitely
+   hook.rm( mem.standhook )
 
-    -- Reapply the original negative reputation.
-    mem.fac:modPlayerRaw(mem.rep)
+   -- Reapply the original negative reputation.
+   mem.fac:modPlayerRaw(mem.rep)
 
-    vntk.msg(fmt.f(_("{fct} Rehabilitation Canceled"), {fct=mem.fac}), _([[You have committed another offense against this faction! Your rehabilitation procedure has been canceled, and your reputation is once again tarnished. You may start another rehabilitation procedure at a later time.]]))
-    misn.finish(false)
+   vntk.msg(fmt.f(_("{fct} Rehabilitation Canceled"), {fct=mem.fac}), _([[You have committed another offense against this faction! Your rehabilitation procedure has been canceled, and your reputation is once again tarnished. You may start another rehabilitation procedure at a later time.]]))
+   misn.finish(false)
 end

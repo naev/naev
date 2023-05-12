@@ -57,13 +57,15 @@ static int commodity_parse( Commodity *temp, const char *filename );
  * @brief Converts credits to a usable string for displaying.
  *
  *    @param[out] str Output is stored here, must have at least a size of ECON_CRED_STRLEN.
- *    @param credits Credits to display.
+ *    @param credits Credits to display, negative value to display full string.
  *    @param decimals Decimals to use.
  */
 void credits2str( char *str, credits_t credits, int decimals )
 {
-   if (decimals < 0)
+   if (decimals < 0) {
+      /* TODO support , separator like fmt.credits(). */
       snprintf( str, CRED_TEXT_MAX, _("%.*f ¤"), 0, (double)credits );
+   }
    else if (credits >= 1000000000000000000LL)
       snprintf( str, CRED_TEXT_MAX, _("%.*f E¤"), decimals, (double)credits / 1e18 );
    else if (credits >= 1000000000000000LL)
@@ -485,6 +487,9 @@ int commodity_load (void)
             int *e = &array_grow( &econ_comm );
             *e = array_size(commodity_stack)-1;
          }
+
+         /* Render if necessary. */
+         naev_renderLoadscreen();
       }
       free( commodities[i] );
    }

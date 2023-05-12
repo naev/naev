@@ -14,7 +14,6 @@ local vn = require "vn"
 local der = require "common.derelict"
 local ccomm = require "common.comm"
 
--- luacheck: globals endevent boss_first boss_hail boss_board (Hook functions passed by name)
 
 local hypergates_list = {
    "Hypergate Dvaer", -- Dvaered
@@ -56,6 +55,7 @@ local boss_message_list = {
 
 local mineral_list = { "Therite", "Kermite", "Vixilium" } -- Only rares
 local markup = 1.2 -- Multiplier for amount being paid
+local standing = 0.1 -- Multiplier for standing increase
 
 local id, hypergate, boss, talked_check, traded_amount
 local traded_total = "hypconst_traded_total"
@@ -63,7 +63,7 @@ local traded_total = "hypconst_traded_total"
 function create ()
    local csys = system.cur()
    -- Make sure system isn't claimed, but we don't claim it
-   if not evt.claim( csys, true ) then evt.finish() end
+   if not naev.claimTest( csys, true ) then evt.finish() end
 
    -- Only care if we're in a system with hypergates
    local sysid
@@ -224,6 +224,8 @@ function boss_board ()
          local a = pp:cargoHas(m)
          pp:cargoRm( m, a )
          player.pay( a * markup * m:price() )
+         -- Add some faction too
+         hypergate:faction():modPlayer( a * standing )
          -- Store how much was traded
          local q = var.peek( traded_amount ) or 0
          var.push( traded_amount, q+a )

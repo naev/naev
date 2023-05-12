@@ -32,7 +32,7 @@
 #include "nlua_bkg.h"
 #include "nlua_camera.h"
 #include "nlua_cli.h"
-#include "nlua_col.h"
+#include "nlua_colour.h"
 #include "nlua_linopt.h"
 #include "nlua_music.h"
 #include "nlua_tex.h"
@@ -58,16 +58,16 @@ static glFont *cli_font     = NULL; /**< CLI font to use. */
 #define CLI_MAX_INPUT      STRMAX_SHORT /** Maximum characters typed into console. */
 #define CLI_WIDTH          (SCREEN_W - 100) /**< Console width. */
 #define CLI_HEIGHT         (SCREEN_H - 100) /**< Console height. */
-/** Height of console box */
-#define CLI_CONSOLE_HEIGHT  (CLI_HEIGHT-50-BUTTON_HEIGHT)
-/** Number of lines displayed at once */
-#define CLI_MAX_LINES (CLI_CONSOLE_HEIGHT/(cli_font->h+5)-2)
 static char **cli_buffer; /**< CLI buffer. */
 static char *cli_prompt; /**< Prompt string (allocated). */
 static int cli_history     = 0; /**< Position in history. */
 static int cli_scroll_pos  = -1; /**< Position in scrolling through output */
 static int cli_firstOpen   = 1; /**< First time opening. */
 static int cli_firstline   = 1; /**< Original CLI: Is this the first line? */
+static int cli_height      = 0;
+static int cli_max_lines   = 0;
+/** Number of lines displayed at once */
+#define CLI_MAX_LINES (cli_max_lines)
 
 /*
  * CLI stuff.
@@ -276,15 +276,18 @@ static void cli_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
    int start;
+   const glColour col = COL_ALPHA( cBlack, 0.5 );
+
+   gl_renderRect( bx, by, w, h, &col );
 
    if (cli_scroll_pos == -1)
-      start = MAX(0, array_size(cli_buffer) - CLI_MAX_LINES);
+      start = MAX(0, array_size(cli_buffer)-CLI_MAX_LINES);
    else
       start = cli_scroll_pos;
 
    for (int i=start; i<array_size(cli_buffer); i++)
       gl_printMaxRaw( cli_font, w, bx,
-            by + h - (i+1-start)*(cli_font->h+5),
+            by + h - (i-start)*(cli_font->h+5),
             &cFontWhite, -1., cli_buffer[i] );
 }
 
@@ -434,7 +437,6 @@ void cli_tabComplete( unsigned int wid )
 static int cli_initLua (void)
 {
    int status;
-   char *buf;
    size_t blen;
    /* Already loaded. */
    if (cli_env != LUA_NOREF)
@@ -449,7 +451,6 @@ static int cli_initLua (void)
    nlua_loadCLI( cli_env );
    nlua_loadCamera( cli_env );
    nlua_loadMusic( cli_env );
-   nlua_loadAudio( cli_env );
    nlua_loadTk( cli_env );
    nlua_loadLinOpt( cli_env );
 
@@ -458,8 +459,9 @@ static int cli_initLua (void)
    lua_settop( naevL, 0 );
 
    if (conf.lua_repl) {
-      buf = ndata_read( "rep.lua", &blen );
+      char *buf = ndata_read( "rep.lua", &blen );
       status = nlua_dobufenv( cli_env, buf, blen, "@rep.lua" );
+      free( buf );
       if (status) {
          lua_settop( naevL, 0 );
          return status;
@@ -652,6 +654,7 @@ static void cli_input( unsigned int wid, const char *unused )
 void cli_open (void)
 {
    unsigned int wid;
+   int line_height;
 
    /* Lazy loading. */
    if (cli_env == LUA_NOREF)
@@ -666,7 +669,7 @@ void cli_open (void)
       char *buf;
       cli_addMessage( "" );
       cli_addMessage( _("#gWelcome to the Lua console!") );
-      asprintf( &buf, "#g "APPNAME" v%s", naev_version(0) );
+      SDL_asprintf( &buf, "#g "APPNAME" v%s", naev_version(0) );
       cli_printCoreString( buf, 0 );
       free( buf );
       cli_addMessage( "" );
@@ -691,8 +694,11 @@ void cli_open (void)
          "btnClose", _("Close"), window_close );
 
    /* Custom console widget. */
+   line_height = cli_font->h*1.5;
+   cli_max_lines = ((CLI_HEIGHT-60-BUTTON_HEIGHT+(line_height-cli_font->h)) / line_height);
+   cli_height = line_height * cli_max_lines - (line_height - cli_font->h);
    window_addCust( wid, 20, -40,
-         CLI_WIDTH-40, CLI_CONSOLE_HEIGHT,
+         CLI_WIDTH-40, cli_height,
          "cstConsole", 0, cli_render, NULL, NULL, NULL, NULL );
 
    /* Reinitilaized. */

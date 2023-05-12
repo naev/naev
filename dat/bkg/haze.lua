@@ -21,9 +21,9 @@ function background ()
 
 const int ITERATIONS = 5;
 const float SCALAR = 2.0;
-const float SCALE = 900.0;
-const float TIME_SCALE = 50.0;
-const float VISIBILITY = 400.0;
+const float SCALE = 1.0/900.0;
+const float TIME_SCALE = 1.0/50.0;
+const float VISIBILITY = 700.0;
 
 uniform float u_time = 0.0;
 uniform vec3 u_camera;
@@ -33,8 +33,8 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    vec3 uv = 100.0 * vec3( %f, %f, %f );
 
    /* Calculate coordinates */
-   uv.xy += ((texture_coords - 0.5) * love_ScreenSize.xy * u_camera.z + u_camera.xy) / SCALE;
-   uv.z += u_time / TIME_SCALE;
+   uv.xy += ((texture_coords - 0.5) * love_ScreenSize.xy * u_camera.z + u_camera.xy) * SCALE;
+   uv.z += u_time * TIME_SCALE;
 
    /* Create the noise */
    float f = 0.0;
@@ -46,7 +46,9 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    /* Give more transparency around the player. */
    float d = min( 1.0, length( (texture_coords-0.5)*love_ScreenSize.xy )*u_camera.z/VISIBILITY );
 
-   return mix( vec4(0.0), color, f*d );
+   vec4 col_out = color;
+   col_out.a *= smoothstep(0.0, 1.0, f*d);
+   return col_out;
 }
 ]], rnd.rnd(), rnd.rnd(), rnd.rnd() )
    shader = graphics.newShader( pixelcode, love_shaders.vertexcode )
@@ -64,6 +66,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    audio.setEffect( "haze", require("reverb_preset").forest() )
    audio.setGlobalEffect( "haze" )
    audio.setGlobalAirAbsorption( 3000, 1 )
+   audio.setGlobalDopplerFactor( 0.6 ) -- More than normal
 end
 
 function renderov( dt )
@@ -74,5 +77,5 @@ function renderov( dt )
    shader:send( "u_camera", x*m/sf, -y*m/sf, z*sf )
 
    --shaze:render( dt, {0.9, 0.1, 0.4, 1.0} )
-   shaze:render( dt, {0xE5/0xFF, 0x1A/0xFF, 0x4C/0xFF, 1.0} )
+   shaze:render( dt, {0xE5/0xFF, 0x1A/0xFF, 0x4C/0xFF, 0.5} )
 end

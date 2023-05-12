@@ -2,11 +2,10 @@
 <ssys name="Shakar">
  <general>
   <radius>14000.000000</radius>
-  <stars>500</stars>
+  <spacedust>500</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-223.800000" y="-201.000000"/>
+ <pos x="50.391255" y="88.663196"/>
  <spobs>
   <spob>Nova Shakar</spob>
   <spob>Shakar I</spob>

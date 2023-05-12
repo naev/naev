@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<spob name="Trader Local">
- <presence>
-  <faction>Traders Guild</faction>
-  <base>16.666667</base>
-  <bonus>8.333333</bonus>
-  <range>0</range>
- </presence>
-</spob>

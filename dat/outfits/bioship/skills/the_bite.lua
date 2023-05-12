@@ -1,3 +1,4 @@
+local fmt   = require "format"
 local osh   = require 'outfits.shaders'
 local audio = require 'love.audio'
 local luaspfx = require 'luaspfx'
@@ -26,8 +27,16 @@ local function turnon( p, po )
    end
    -- Needs a target
    local t = p:target()
+   mem.isasteroid = false
    if t==nil then
-      return false
+      t = p:targetAsteroid()
+      if t==nil then
+         if mem.isp then
+            player.msg("#r".._("You need a target to bite!"))
+         end
+         return false
+      end
+      mem.isasteroid = true
    end
    -- Must be roughly infront
    local tp = t:pos()
@@ -39,6 +48,7 @@ local function turnon( p, po )
    po:progress(1)
    mem.timer = mem.duration
    mem.active = true
+   mem.target = t
 
    p:control(true)
    p:pushtask( "lunge", t )
@@ -60,7 +70,7 @@ local function turnoff( p, po )
    end
    po:state("cooldown")
    po:progress(1)
-   mem.timer = cooldown
+   mem.timer = cooldown * p:shipstat("cooldown_mod",true)
    mem.active = false
    p:control(false)
    oshader:off()
@@ -90,6 +100,34 @@ function init( p, po )
    end
 end
 
+function descextra( p, o )
+   if p then
+      local mass = p:mass()
+      local dmg = 10*math.sqrt(mass)
+      local dur = 3
+      local improved = (o==o_improved)
+      local lust = improved or (o==o_lust)
+      if lust then
+         dur = 5
+      end
+      if improved then
+         dmg = dmg * 1.5
+      end
+
+      if improved then
+         return fmt.f(_("Makes the ship lunge for {duration} seconds at the target to take a bite out of it for {damage:.0f} damage ({mass}) [Strong Jaws]. On succesful bite, weapon damage is increased by 25% for 10 seconds [Blood Lust], and 25% of bitten armour is restored to the ship [Strong Jaws]."),
+            {damage=dmg, mass=fmt.tonnes_short(mass), duration=dur } )
+      elseif lust then
+         return fmt.f(_("Makes the ship lunge for {duration} seconds at the target to take a bite out of it for {damage:.0f} damage ({mass}). On succesful bite, weapon damage is increased by 25% for 10 seconds [Blood Lust]."),
+            {damage=dmg, mass=fmt.tonnes_short(mass), duration=dur } )
+      else
+         return fmt.f(_("Makes the ship lunge at the target for {duration} seconds to take a bite out of it for {damage:.0f} damage ({mass})."),
+            {damage=dmg, mass=fmt.tonnes_short(mass), duration=dur } )
+      end
+   end
+   return _("Makes the ship lunge at the target to take a bite out of it. Damage is based on ship's mass.")
+end
+
 function update( p, po, dt )
    if not mem.timer then return end
    mem.timer = mem.timer - dt
@@ -98,13 +136,37 @@ function update( p, po, dt )
       if mem.timer <= 0 then
          return turnoff( p, po )
       else
-         local t = p:target()
-         if t==nil then
+         local t = mem.target
+         if t==nil or not t:exists() then
             return turnoff( p, po )
          end
          local c = p:collisionTest( t )
          if not c then
             po:progress( mem.timer / mem.duration )
+         elseif mem.isasteroid then
+            -- Hit the enemy!
+            local dmg = 10*math.sqrt(p:mass())
+            local ta = t:armour()
+            if mem.improved then
+               dmg = dmg*1.5
+            end
+            t:setArmour( ta-dmg )
+            -- TODO better calculation of asteroid mass
+            p:knockback( 1000, t:vel(), t:pos(), 0.5 )
+            -- Do the healing
+            if mem.improved then
+               local heal = 0.25 * dmg
+               p:addHealth( heal )
+            end
+            -- Player effects
+            mem.spfx_start:rm()
+            if mem.isp then
+               luaspfx.sfx( true, nil, sfx_bite )
+               camera.shake( 0.8 )
+            else
+               luaspfx.sfx( p:pos(), p:vel(), sfx_bite )
+            end
+            return turnoff( p, po )
          else
             -- Hit the enemy!
             local dmg = 10*math.sqrt(p:mass())

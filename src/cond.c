@@ -53,6 +53,7 @@ void cond_exit (void)
 int cond_check( const char *cond )
 {
    int ret;
+   char buf[STRMAX_SHORT];
 
    /* Load the string directly. */
    if (strstr( cond, "return" ) != NULL) {
@@ -68,16 +69,16 @@ int cond_check( const char *cond )
                        lua_strlen(naevL,-1), "Lua Conditional");
    switch (ret) {
       case  LUA_ERRSYNTAX:
-         WARN(_("Lua conditional syntax error: %s"), lua_tostring(naevL, -1));
+         snprintf( buf, sizeof(buf), _("Lua conditional syntax error: %s"), lua_tostring(naevL, -1));
          goto cond_err;
       case LUA_ERRRUN:
-         WARN(_("Lua Conditional had a runtime error: %s"), lua_tostring(naevL, -1));
+         snprintf( buf, sizeof(buf), _("Lua Conditional had a runtime error: %s"), lua_tostring(naevL, -1));
          goto cond_err;
       case LUA_ERRMEM:
-         WARN(_("Lua Conditional ran out of memory: %s"), lua_tostring(naevL, -1));
+         snprintf( buf, sizeof(buf), _("Lua Conditional ran out of memory: %s"), lua_tostring(naevL, -1));
          goto cond_err;
       case LUA_ERRERR:
-         WARN(_("Lua Conditional had an error while handling error function: %s"), lua_tostring(naevL, -1));
+         snprintf( buf, sizeof(buf), _("Lua Conditional had an error while handling error function: %s"), lua_tostring(naevL, -1));
          goto cond_err;
       default:
          break;
@@ -93,9 +94,12 @@ int cond_check( const char *cond )
 
       return ret;
    }
-   WARN(_("Lua Conditional didn't return a boolean"));
+   snprintf( buf, sizeof(buf), _("Lua Conditional didn't return a boolean"));
 
 cond_err:
+   print_with_line_numbers( cond );
+   WARN( "%s", buf );
+
    /* Clear the stack. */
    lua_settop(naevL, 0);
    return -1;

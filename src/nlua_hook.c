@@ -40,11 +40,13 @@ static int hookL_jumpout( lua_State *L );
 static int hookL_jumpin( lua_State *L );
 static int hookL_enter( lua_State *L );
 static int hookL_hail( lua_State *L );
+static int hookL_hail_spob( lua_State *L );
 static int hookL_board( lua_State *L );
 static int hookL_timer( lua_State *L );
 static int hookL_date( lua_State *L );
 static int hookL_commbuy( lua_State *L );
 static int hookL_commsell( lua_State *L );
+static int hookL_commjettison( lua_State *L );
 static int hookL_gather( lua_State *L );
 static int hookL_outfitbuy( lua_State *L );
 static int hookL_outfitsell( lua_State *L );
@@ -60,6 +62,7 @@ static int hookL_renderbg( lua_State *L );
 static int hookL_renderfg( lua_State *L );
 static int hookL_rendertop( lua_State *L );
 static int hookL_mission_done( lua_State *L );
+static int hookL_event_done( lua_State *L );
 static int hookL_standing( lua_State *L );
 static int hookL_discover( lua_State *L );
 static int hookL_asteroidScan( lua_State *L );
@@ -76,12 +79,14 @@ static const luaL_Reg hookL_methods[] = {
    { "jumpin", hookL_jumpin },
    { "enter", hookL_enter },
    { "hail", hookL_hail },
+   { "hail_spob", hookL_hail_spob },
    { "board", hookL_board },
    { "timer", hookL_timer },
    { "date", hookL_date },
-   { "comm_buy", hookL_commbuy },
    { "gather", hookL_gather },
+   { "comm_buy", hookL_commbuy },
    { "comm_sell", hookL_commsell },
+   { "comm_jettison", hookL_commjettison },
    { "outfit_buy", hookL_outfitbuy },
    { "outfit_sell", hookL_outfitsell },
    { "equip", hookL_equip },
@@ -96,6 +101,7 @@ static const luaL_Reg hookL_methods[] = {
    { "renderfg", hookL_renderfg },
    { "rendertop", hookL_rendertop },
    { "mission_done", hookL_mission_done },
+   { "event_done", hookL_event_done },
    { "standing", hookL_standing },
    { "discover", hookL_discover },
    { "asteroid_scan", hookL_asteroidScan },
@@ -159,17 +165,6 @@ static int hookL_rm( lua_State *L )
    if (h < 0)
       return 0;
    hook_rm( (unsigned int) h );
-
-   /* Clean up hook data. */
-   nlua_getenv(L, __NLUA_CURENV, "mem");/* t */
-   lua_getfield(L, -1, "__hook_arg");   /* t, t */
-   if (!lua_isnil(L,-1)) {
-      lua_pushnumber( L, h );           /* t, t, n */
-      lua_pushnil( L );                 /* t, t, n, nil */
-      lua_settable( L, -3 );            /* t, t */
-   }
-   lua_pop( L, 2 );                     /* */
-
    return 0;
 }
 
@@ -471,6 +466,23 @@ static int hookL_enter( lua_State *L )
 }
 
 /**
+ * @brief Hooks the function to the player hailing any spob.
+ *
+ * The hook receives a single parameter which is the spob being hailed.
+ *
+ *    @luatparam string funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luatreturn number Hook identifier.
+ * @luafunc hail_spob
+ */
+static int hookL_hail_spob( lua_State *L )
+{
+   unsigned int h = hookL_generic( L, "hail_spob", 0., 1, 0, 2 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+
+/**
  * @brief Hooks the function to the player hailing any ship (not a spob).
  *
  * The hook receives a single parameter which is the ship being hailed.
@@ -574,6 +586,23 @@ static int hookL_commbuy( lua_State *L )
 static int hookL_commsell( lua_State *L )
 {
    unsigned int h = hookL_generic( L, "comm_sell", 0., 1, 0, 2 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+
+/**
+ * @brief Hooks the function to the player jettisoning any sort of commodity.
+ *
+ * The hook receives the name of the commodity and the quantity jettisoned.
+ *
+ *    @luatparam string funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luatreturn number Hook identifier.
+ * @luafunc comm_jettison
+ */
+static int hookL_commjettison( lua_State *L )
+{
+   unsigned int h = hookL_generic( L, "comm_jettison", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -890,7 +919,7 @@ static int hookL_rendertop( lua_State *L )
 }
 
 /**
- * @brief Hook that runs when a mission is complete. The entire mission information table is passed similar to player.misnDoneList().
+ * @brief Hook that runs when a mission is complete. The entire mission information table is passed similar to player.evtDoneList().
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
@@ -900,6 +929,21 @@ static int hookL_rendertop( lua_State *L )
 static int hookL_mission_done( lua_State *L )
 {
    unsigned int h = hookL_generic( L, "mission_done", 0., 1, 0, 2 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+
+/**
+ * @brief Hook that runs when a event is complete. The entire event information table is passed similar to player.evtDoneList().
+ *
+ *    @luatparam string funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luatreturn number Hook identifier.
+ * @luafunc event_done
+ */
+static int hookL_event_done( lua_State *L )
+{
+   unsigned int h = hookL_generic( L, "event_done", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -924,8 +968,11 @@ static int hookL_custom( lua_State *L )
 /**
  * @brief Hooks the function to a specific pilot.
  *
+ * These hooks only live in the current system and get reset every time the player enters a new system.
+ *
  * You can hook to different actions.  Currently hook system only supports:<br />
  * <ul>
+ *    <li> "creation" : triggered when a pilot is created.</li>
  *    <li> "death" : triggered when pilot dies (before marked as dead). </li>
  *    <li> "exploded" : triggered when pilot has died and the final explosion has begun. </li>
  *    <li> "boarding" : triggered when a pilot boards another ship (start of boarding).</li>
@@ -1006,7 +1053,8 @@ static int hookL_pilot( lua_State *L )
    hook_type   = luaL_checkstring(L,2);
 
    /* Check to see if hook_type is valid */
-   if (strcmp(hook_type,"death")==0)         type = PILOT_HOOK_DEATH;
+   if (strcmp(hook_type,"creation")==0)      type = PILOT_HOOK_CREATION;
+   else if (strcmp(hook_type,"death")==0)    type = PILOT_HOOK_DEATH;
    else if (strcmp(hook_type,"exploded")==0) type = PILOT_HOOK_EXPLODED;
    else if (strcmp(hook_type,"boarding")==0) type = PILOT_HOOK_BOARDING;
    else if (strcmp(hook_type,"boardall")==0) type = PILOT_HOOK_BOARD_ALL;
@@ -1027,6 +1075,11 @@ static int hookL_pilot( lua_State *L )
       NLUA_ERROR(L, _("Invalid pilot hook type: '%s'"), hook_type);
       return 0;
    }
+
+#ifdef DEBUGGING
+   if ((type == PILOT_HOOK_CREATION) && (p!=0))
+      NLUA_ERROR( L, _("'creation' pilot hook can not be set on a specific pilot, only globally.") );
+#endif /* DEBUGGING */
 
    /* actually add the hook */
    snprintf( buf, sizeof(buf), "p_%s", hook_type );

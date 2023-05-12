@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Kappa Vadornia">
+ <pos x="-2606.563001" y="-702.361708"/>
+ <GFX>
+  <space>J08.webp</space>
+  <exterior>lava.webp</exterior>
+ </GFX>
+ <general>
+  <class>J</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

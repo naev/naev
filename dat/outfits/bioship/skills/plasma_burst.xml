@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Plasma Burst">
+ <general>
+  <typename>Bioship Organ</typename>
+  <slot prop="bio_organ">utility</slot>
+  <size>small</size>
+  <mass>0</mass>
+  <price>0</price>
+  <description>TODO</description>
+  <gfx_store>/gfx/misc/icons/goo-skull.webp</gfx_store>
+  <desc_extra>Deals 300 plasma damage to all hostile ships in 200 range.</desc_extra>
+ </general>
+ <specific type="modification">
+  <lua>outfits/bioship/skills/plasma_burst.lua</lua>
+ </specific>
+</outfit>

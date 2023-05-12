@@ -5,11 +5,10 @@
   <map_shader>haze_map.frag</map_shader>
   <features>#rHaze (-50% Shield and Shield Regen)#0</features>
   <radius>16700.000000</radius>
-  <stars>400</stars>
-  <interference>15.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>33.750000</interference>
  </general>
- <pos x="51.725467" y="833.358667"/>
+ <pos x="425.283368" y="983.269908"/>
  <spobs>
   <spob>Bonanza I</spob>
   <spob>Bonanza II</spob>
@@ -19,10 +18,6 @@
   <jump target="Hasselt">
    <autopos/>
    <hide>0.000000</hide>
-  </jump>
-  <jump target="Malebolge">
-   <autopos/>
-   <hide>1.000000</hide>
   </jump>
   <jump target="Norn">
    <autopos/>

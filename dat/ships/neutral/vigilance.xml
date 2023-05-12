@@ -3,7 +3,7 @@
  <points>90</points>
  <base_type>Vigilance</base_type>
  <GFX size="95" sx="10" sy="10">vigilance</GFX>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>2050000</price>

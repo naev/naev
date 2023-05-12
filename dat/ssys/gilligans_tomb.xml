@@ -2,11 +2,10 @@
 <ssys name="Gilligan's Tomb">
  <general>
   <radius>17500.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="1181.787195" y="-632.145111"/>
+ <pos x="1352.265692" y="-439.103097"/>
  <spobs>
   <spob>Gilligan's Tomb</spob>
   <spob_virtual>Trade Lane (Sirius)</spob_virtual>

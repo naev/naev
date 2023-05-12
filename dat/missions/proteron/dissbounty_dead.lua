@@ -2,7 +2,9 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Proteron Dissident Dead Or Alive Bounty">
  <priority>4</priority>
- <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+ <cond>
+   require("misn_test").mercenary()
+ </cond>
  <chance>360</chance>
  <location>Computer</location>
  <faction>Proteron</faction>
@@ -108,8 +110,8 @@ function create ()
 
    -- Set mission details
    misn.setTitle( fmt.f( _("PD: Dead or Alive Bounty in {sys}"), {sys=mem.missys} ) )
-   misn.setDesc( fmt.f( _("A political dissident was recently seen in the {sys} system. {fct} authorities want this dissident dead or alive."), {sys=mem.missys, fct=mem.paying_faction} ) )
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setDesc( fmt.f( _("A political dissident was recently seen in the {sys} system. {fct} authorities want this dissident dead or alive. The dissident may disappear you take too long to reach the {sys} system."), {sys=mem.missys, fct=mem.paying_faction} ) )
+   misn.setReward( mem.credits )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
 

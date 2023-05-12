@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Sanchez">
  <lua>spob/lua/pirate_clanworld.lua</lua>
- <pos x="-7072.689032" y="12459.780596"/>
+ <pos x="-7331.255945" y="12210.129783"/>
  <GFX>
   <space>moon-G01.webp</space>
   <exterior>mining3.webp</exterior>
@@ -15,7 +15,7 @@
  <general>
   <class>G</class>
   <population>12500</population>
-  <hide>1.000000</hide>
+  <hide>0.300000</hide>
   <services>
    <land/>
    <refuel/>
@@ -26,8 +26,9 @@
    <blackmarket/>
   </services>
   <commodities/>
-  <description>Old King Cole's moon Sanchez is a rather dirty place due to the haphazard construction style that allows the horrible planetary dust to creep in. The pirate base was originally constructed by some fugitives from the frontier, but since then has been expanded and become the centre of power of the Dreamer Pirate Clan. Due to the little resources on the moon, other than obtaining things by piracy, the local pirates resort to exploiting other planets in the systems.</description>
-  <bar>The bar is quiet and orderly, with a few deals going down in closed-off booths, nice food and only the occasional drunken brawl. The lord of Sanchez doesn't appreciate louts, it seems.</bar>
+  <description>Although having a very low hospitality index due to the thin atmosphere and abundance of damaging space dust, Old King Cole's moon Sanchez was colonized due to being located on a trade lane. While not being very prosperous, it grew and expanded over time. When the Incident struck, Sanchez was lucky to be shielded from the expanding Nebula by being in Old King Cole's shadow. Despite not being destroyed outright, the severe intensity of the radiation ended up killing nearly all that were unable to emigrate to safer territory. Out of sheer necessity the few survivors were able to mainly shield themselves by digging into the core of the moon, using extreme pharmacological treatments to survive their apocalypse. Eventually scavengers and pirates found the station again, and a unique alliance was struck, leading to the creation of the Dreamer Pirate Clan.
+Through piracy, Sanchez has reached a prosperity it never had before Incident. Although still far from a rich planet, it hosts many refugees from nearby systems and criminals fleeing from more civilized society. Given the frail balance one would think that this would lead to an inevitable doom, however, heavy use of narcotics and a communal mindset avoids most serious conflicts and allows the society at Sanchez to be relatively stable.</description>
+  <bar>The bar is quiet and orderly, with a few deals going down in closed-off booths, nice food and only the occasional drunken brawl. The lord of Sanchez doesn't appreciate louts, it seems. If it were not for the abundant presence of narcotics of all sorts being used, you would believe to be in a regular backwater spaceport bar.</bar>
  </general>
  <tech>
   <item>Pirate Ships</item>

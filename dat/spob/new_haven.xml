@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="New Haven">
  <lua>spob/lua/pirate_clanworld.lua</lua>
- <pos x="-34532.161684" y="3671.278901"/>
+ <pos x="-29845.859288" y="4223.363841"/>
  <GFX>
   <space>X01.webp</space>
   <exterior>gas.webp</exterior>
@@ -53,6 +53,7 @@
   <item>New Haven Maps</item>
   <item>Pirate Elite Outfits</item>
   <item>Criminal Outfits</item>
+  <item>Wild Ones Tech</item>
  </tech>
  <tags>
   <tag>criminal</tag>

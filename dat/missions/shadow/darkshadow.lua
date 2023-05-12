@@ -17,12 +17,12 @@
 local fleet = require "fleet"
 local fmt = require "format"
 local shadow = require "common.shadow"
+local cinema = require "cinema"
+local ai_setup = require "ai.core.setup"
 require "proximity"
 
 local genbu, joe, leader, leaderdest, leaderstart, seiryuu, squads -- Non-persistent state
 local spawnGenbu, spawnSquads -- Forward-declared functions
--- luacheck: globals attacked continueAmbush enter invProximity joeBoard jumpout land leaderIdle leaderVis patrolPoll playerControl seiryuuBoard showMsg showText spawnInterceptors squadVis startAmbush zoomTo (Hook functions passed by name)
--- luacheck: globals barman jorek (NPC functions passed by name)
 
 -- Mission constants
 local seirplanet, seirsys = spob.getS("Edergast")
@@ -73,6 +73,7 @@ local function accept2()
    misn.setDesc(_([[You have been tasked by Captain Rebina of the Four Winds to assist Jorek McArthy.]]))
    misn.setReward(_("A sum of money."))
    mem.landhook = hook.land("land")
+   mem.loadhook = hook.load("spobNpcs") -- Ensure NPCs appear at loading
    mem.jumpouthook = hook.jumpout("jumpout")
 end
 
@@ -139,7 +140,7 @@ end
 -- Enter hook
 function enter()
    if system.cur() == seirsys then
-      seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", vec2.new(300, 300) + seirplanet:pos(), _("Seiryuu"), {ai="trader"} )
+      seiryuu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), vec2.new(300, 300) + seirplanet:pos(), _("Seiryuu"), {ai="trader"} )
       seiryuu:setInvincible(true)
       seiryuu:control()
       if mem.stage == 1 or mem.stage == 6 then
@@ -158,7 +159,7 @@ function enter()
       pilot.toggleSpawn(false)
       player.allowLand(false, _("Landing permission denied. Our docking clamps are currently undergoing maintenance."))
       -- Meet Joe, our informant.
-      joe = pilot.add( "Vendetta", "Four Winds", vec2.new(-500, -4000), _("Four Winds Informant"), {ai="trader"} )
+      joe = pilot.add( "Vendetta", shadow.fct_fourwinds(), vec2.new(-500, -4000), _("Four Winds Informant"), {ai="trader"} )
       joe:control()
       joe:setHilight(true)
       joe:setVisplayer()
@@ -245,11 +246,12 @@ function spawnSquads(highlight)
    leader = {}
 
    for i, start in ipairs(leaderstart) do
-      squads[i] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[i], _("Four Winds Patrol") )
+      squads[i] = fleet.add( 4, "Vendetta", shadow.fct_rogues(), leaderstart[i], _("Four Winds Patrol") )
       for j, k in ipairs(squads[i]) do
          hook.pilot(k, "attacked", "attacked")
          k:outfitRm("all")
          k:outfitAdd("Cheater's Laser Cannon", 6) -- Equip these fellas with unfair weaponry
+         ai_setup.setup(k)
          k:setNoDisable()
       end
       squads[i][1]:control() -- Only need to control leader. Others will follow
@@ -325,10 +327,11 @@ end
 
 -- Spawns the Genbu
 function spawnGenbu(sys)
-   genbu = pilot.add( "Pirate Kestrel", "Four Winds", sys, _("Genbu") )
+   genbu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), sys, _("Genbu") )
    genbu:outfitRm("all")
    genbu:outfitAdd("Heavy Laser Turret", 3)
    genbu:outfitAdd("Cheater's Ragnarok Beam", 3) -- You can't win. Seriously.
+   ai_setup.setup(genbu)
    genbu:control()
    genbu:setHilight()
    genbu:setVisplayer()
@@ -365,12 +368,13 @@ end
 
 -- Spawns a wing of Lancelots that intercept the player.
 function spawnInterceptors()
-   local inters = fleet.add( 3, "Lancelot", "Rogue Four Winds", genbu:pos(), _("Four Winds Lancelot") )
+   local inters = fleet.add( 3, "Lancelot", shadow.fct_rogues(), genbu:pos(), _("Four Winds Lancelot") )
    for _, j in ipairs(inters) do
       j:outfitRm("all")
       j:outfitAdd("Cheater's Laser Cannon", 4) -- Equip these fellas with unfair weaponry
       j:outfitAdd("Engine Reroute", 1)
       j:outfitAdd("Improved Stabilizer", 1)
+      ai_setup.setup(j)
       j:setLeader( genbu )
       j:control()
       j:attack(player.pilot())
@@ -386,6 +390,13 @@ function land()
    if spob.cur() == jorekplanet1 and mem.stage == 2 then
       -- Thank you player, but our SHITMAN is in another castle.
       tk.msg(_("No Jorek"), _([[You step into the bar, expecting to find Jorek McArthy sitting somewhere at a table. However, you don't see him anywhere. You decide to go for a drink to contemplate your next move. Then, you notice the barman is giving you a curious look.]]))
+   end
+   spobNpcs()
+end
+
+-- Get the NPCs to appear
+function spobNpcs()
+   if spob.cur() == jorekplanet1 and mem.stage == 2 then
       mem.barmanNPC = misn.npcAdd("barman", _("Barman"), "neutral/barman.webp", _("The barman seems to be eyeing you in particular."), 4)
    elseif spob.cur() == jorekplanet2 and mem.stage == 3 then
       mem.joreknpc = misn.npcAdd("jorek", _("Jorek"), "neutral/unique/jorek.webp", _("There he is, Jorek McArthy, the man you've been chasing across half the galaxy. What he's doing on this piece of junk is unclear."), 4)
@@ -447,14 +458,16 @@ end
 -- Capsule function for player.pilot():control(), for timer use
 -- Also saves the player's velocity.
 local pvel
-function playerControl(status)
-   player.pilot():control(status)
-   player.cinematics(status)
+function playerControl( status )
+   local pp = player.pilot()
    if status then
-      pvel = player.pilot():vel()
-      player.pilot():setVel(vec2.new(0, 0))
+      cinema.on()
+      pp:control(false)
+      pvel = pp:vel()
+      pp:setVel(vec2.new(0, 0))
    else
-      player.pilot():setVel(pvel)
+      cinema.off()
+      pp:setVel(pvel)
    end
 end
 

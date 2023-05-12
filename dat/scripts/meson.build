@@ -1,4 +1,5 @@
 lua_source = files(
+   'cinema.lua',
    'equipopt/optimize.lua',
    'escort.lua',
    'fleet.lua',

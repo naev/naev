@@ -1,5 +1,6 @@
 require 'ai.core.core'
 local scans = require 'ai.core.misc.scans'
+local atk = require "ai.core.attack.util"
 --[[
 
    Guard Mission AI. Have to set mem.guardpos to the position to guard.
@@ -10,8 +11,8 @@ local scans = require 'ai.core.misc.scans'
 mem.aggressive    = true
 mem.atk_kill      = true
 mem.atk_board     = false
-mem.bribe_no      = _("You can't bribe me!")
-mem.refuel_no     = _("I won't give you fuel!")
+mem.bribe_no      = _([["You can't bribe me!"]])
+mem.refuel_no     = _([["I won't give you fuel!"]])
 mem.guardpos      = vec2.new( 0, 0 ) -- defaults to origin
 mem.guardbrake    = 500
 mem.guarddodist   = 3000 -- distance at which to start activities
@@ -50,12 +51,11 @@ function should_attack( enemy, si )
 end
 
 -- Default task to run when idle
--- luacheck: globals idle (AI Task functions passed by name)
 function idle ()
    -- Aggressives will try to find enemies first, before falling back on
    -- loitering, to avoid weird stuff starting to scan before attacking
    if mem.aggressive then
-      local enemy  = ai.getenemy()
+      local enemy  = atk.preferred_enemy()
       if enemy ~= nil and should_attack(enemy) then
          ai.pushtask( "attack", enemy )
          return
@@ -80,7 +80,12 @@ function idle ()
    end
 
    if guarddist < mem.guardbrake then
-      ai.pushtask("brake" )
+      if ai.isstopped() then
+         ai.settimer( 0, 3 )
+         ai.pushtask("idle_wait")
+      else
+         ai.pushtask("brake" )
+      end
    else
       -- Just return
       ai.pushtask( "moveto", mem.guardpos )
@@ -89,7 +94,7 @@ end
 
 -- Override the control function
 local control_generic = control
-function control ()
+function control( dt )
    if ai.dist(mem.guardpos) > mem.guardreturndist then
       -- Try to return
       ai.pushtask( "moveto", mem.guardpos )
@@ -97,5 +102,5 @@ function control ()
    end
 
    -- Then do normal control
-   control_generic()
+   control_generic( dt )
 end

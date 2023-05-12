@@ -42,10 +42,12 @@
 #define SHOW_PAUSE_DEFAULT             1     /**< Whether to display pause status. */
 #define MINIMIZE_DEFAULT               1     /**< Whether to minimize on focus loss. */
 #define COLORBLIND_DEFAULT             0     /**< Whether to enable colorblindness simulation. */
-#define BG_BRIGHTNESS_DEFAULT          0.7   /**< How much to darken (or lighten) the backgrounds. */
-#define NEBU_BRIGHTNESS_DEFAULT        1.    /**< How much to darken (or lighten) the nebula stuff. */
+#define HEALTHBARS_DEFAULT             1     /**< Whether or not to show pilot health bars. */
+#define BG_BRIGHTNESS_DEFAULT          0.5   /**< How much to darken (or lighten) the backgrounds. */
+#define NEBU_NONUNIFORMITY_DEFAULT     1.    /**< How much to darken (or lighten) the nebula stuff. */
 #define GAMMA_CORRECTION_DEFAULT       1.    /**< How much gamma correction to do. */
 #define BACKGROUND_FANCY_DEFAULT       0     /**< Default fancy background. */
+#define JUMP_BRIGHTNESS_DEFAULT        1.    /**< Default jump brightness.*/
 #define BIG_ICONS_DEFAULT              0     /**< Whether to display BIGGER icons. */
 #define FONT_SIZE_CONSOLE_DEFAULT      10    /**< Default console font size. */
 #define FONT_SIZE_INTRO_DEFAULT        18    /**< Default intro font size. */
@@ -92,9 +94,11 @@ typedef struct PlayerConf_s {
    int notresizable; /**< Whether or not the window is resizable. */
    int borderless; /**< Whether to disable window decorations. */
    int minimize; /**< Whether to minimize on focus loss. */
-   int colorblind; /**< Whether to enable colorblindness simulation. */
+   int colorblind; /**< Whether to enable colourblindness simulation. */
+   int healthbars; /**< Whether or not to show health bars next to pilots. */
    double bg_brightness; /**< How much to darken the background stuff. */
-   double nebu_brightness; /**< How much to darken the nebula stuff. */
+   double nebu_nonuniformity; /**< How much to darken the nebula stuff. */
+   double jump_brightness; /**< Intensity to fade to/from when jumping. */
    double gamma_correction; /**< How much gamma correction to do. */
    int background_fancy; /**< High quality moving, but slow background. */
 
@@ -120,6 +124,7 @@ typedef struct PlayerConf_s {
    int mesg_visible; /**< Amount of visible messages. */
    double map_overlay_opacity; /**< Map overlay opacity. */
    int big_icons; /**< Use big icons or not. */
+   int always_radar; /**< Radar is always visible. */
 
    /* Keyrepeat. */
    unsigned int repeat_delay; /**< Time in ms before start repeating. */
@@ -130,7 +135,6 @@ typedef struct PlayerConf_s {
    double zoom_far; /**< Maximum in-game zoom to use should be less then zoom_near. */
    double zoom_near; /**< Minimum in-game zoom to use. */
    double zoom_speed; /**< Maximum zoom speed change. */
-   double zoom_stars; /**< How much stars can zoom (modulates zoom_[mix|max]). */
 
    /* Font sizes. */
    int font_size_console; /**< Console monospaced font size. */
@@ -150,12 +154,14 @@ typedef struct PlayerConf_s {
    double mouse_doubleclick; /**< How long to consider double-clicks for. */
    double autonav_reset_dist; /**< Enemy distance condition for resetting autonav. */
    double autonav_reset_shield; /**< Shield condition for resetting autonav speed. */
-   int nosave; /**< Disables conf saving. */
    int devmode; /**< Developer mode. */
    int devautosave; /**< Developer mode autosave. */
+   int lua_enet; /**< Enable the lua-enet library. */
    int lua_repl; /**< Enable the experimental CLI based on lua-repl. */
+   int nosave; /**< Disables conf saving. */
    char *lastversion; /**< The last version the game was ran in. */
    int translation_warning_seen; /**< No need to warn about incomplete game translations again. */
+   time_t last_played; /**< Date the game was last played. */
 
    /* Debugging. */
    int fpu_except; /**< Enable FPU exceptions? */
@@ -164,7 +170,6 @@ typedef struct PlayerConf_s {
    char *dev_save_sys; /**< Path to save systems to. */
    char *dev_save_map; /**< Path to save maps to. */
    char *dev_save_spob; /**< Path to save spobs to. */
-
 } PlayerConf_t;
 extern PlayerConf_t conf; /**< Player configuration. */
 

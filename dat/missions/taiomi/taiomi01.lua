@@ -22,10 +22,8 @@ local audio = require "love.audio"
 local luaspfx = require "luaspfx"
 local taiomi = require "common.taiomi"
 
--- luacheck: globals enter heartbeat land (Hook functions passed by name)
-
 local reward = taiomi.rewards.taiomi01
-local title = _("Escaping Taiomi")
+local title = _("Secrets of the Hypergates")
 local base, basesys = spob.getS("One-Wing Goddard")
 
 local beep = audio.newSource( "snd/sounds/computer_lock.ogg" )
@@ -42,7 +40,7 @@ function create ()
    -- Mission details
    misn.setTitle( title )
    misn.setDesc( _("You have agreed to help the robotic citizens of Taiomi to scan a hypergate. Given the nature of the scanner, care has to be taken to not be scanned by ships.") )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
 
    -- Mark hypergates
    for i,s in ipairs(system.getAll()) do
@@ -110,7 +108,7 @@ function heartbeat ()
 end
 
 function land ()
-   if mem.state < 1 or not spob.cur()==base then
+   if mem.state < 1 or spob.cur()~=base then
       return
    end
 
@@ -122,7 +120,7 @@ function land ()
    s(_([["It must have been no easy feat to collect this data. Let us see what secrets the hypergates hide."]]))
    s(_([[Scavenger's lights dim slightly as they begin to process the troves of information.]]))
    s(_([["Interesting. The hypergate seems to be acting as some sort of conduit. It is not yet clear what it is conducting, however, this gives us a good place to start looking into this."]]))
-   s(_([["We do not have much in forms of payment, but please take these tokes that we have collected from the debris. I will be outside preparing for our next steps."]]))
+   s(_([["We do not have much in forms of payment, but please take these tokens that we have collected from the debris. I will be outside preparing for our next steps."]]))
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )
    vn.na(_([[Scavenger once again elegantly exits the ship, leaving you to yourself.]]))

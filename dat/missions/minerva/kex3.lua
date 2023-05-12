@@ -34,8 +34,6 @@ local fmt      = require "format"
 --  5: return to Kex
 mem.misn_state = nil
 local enemies, enemies_weak, enemy_faction, noise_shader, pmalik, thug_leader, thug_pilots -- Non-persistent state
--- luacheck: globals countdown countdown_done countdown_start enter enter_the_ring generate_npc leave_the_ring maikki_arrives_extra maikki_arrives_extra_real maikki_arrives_real malik_boarded malik_death malik_disabled malik_respawn_real malik_spawn_more malik_spawn_more_real malik_speech malik_taunt player_death thug_heartbeat (Hook functions passed by name)
--- luacheck: globals approach_kex approach_malik (NPC functions passed by name)
 
 local gauntlet_start -- Forward-declared functions
 
@@ -363,9 +361,9 @@ function enter_the_ring ()
    gauntlet.enter_the_ring()
 
    -- Set up Player
-   local player_vendetta = player.addShip( "Vendetta", _("Ketchup"), _("It's virtual reality!"), true )
+   local player_vendetta = player.shipAdd( "Vendetta", _("Ketchup"), _("It's virtual reality!"), true )
    mem.player_prevship = player.pilot():name() -- Ship to go back to
-   player.swapShip( player_vendetta, true )
+   player.shipSwap( player_vendetta, true )
    equipopt.generic( player.pilot(), {type_range={Afterburner={min=1}}}, "elite" )
    hook.pilot( player.pilot(), "death", "player_death" )
 
@@ -390,7 +388,7 @@ function leave_the_ring ()
    gauntlet.leave_the_ring ()
 
    -- Give the player back their old ship
-   player.swapShip( mem.player_prevship, true, true )
+   player.shipSwap( mem.player_prevship, true, true )
    player.land( spob.get("Totoran") )
 end
 

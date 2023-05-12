@@ -83,31 +83,37 @@ function create()
 
    --Load Images
    local base = "gfx/gui/slimv2/"
-   player_pane = tex.open( base .. "main.png" )
-   bar_sheen = tex.open( base .. "sheen.png" )
-   bar_bg = tex.open( base .. "bar_bg.png" )
-   bars.armour.icon = tex.open( base .. "armour.png" )
-   bars.energy.icon = tex.open( base .. "energy.png" )
-   bars.fuel.icon = tex.open( base .. "fuel.png" )
-   bars.heat.icon = tex.open( base .. "heat.png" )
-   bars.shield.icon = tex.open( base .. "shield.png" )
-   bars.speed.icon = tex.open( base .. "speed.png" )
-   slotA = tex.open( base .. "slot1-3.png" )
-   slotAend = tex.open( base .. "slot1-3end.png" )
-   slotB = tex.open( base .. "slot4.png" )
-   slotBend = tex.open( base .. "slot4end.png" )
-   slotC = tex.open( base .. "slot.png" )
-   slotCend = tex.open( base .. "slotend.png" )
-   slotAe = tex.open( base .. "slot1e.png" )
-   slotBe = tex.open( base .. "slot2-3e.png" )
-   slotCe = tex.open( base .. "slot4e.png" )
-   cooldown = tex.open( base .. "cooldown.png", 6, 6 )
-   lockonA = tex.open( base .. "padlockA.png" )
-   lockonB = tex.open( base .. "padlockB.png" )
-   active =  tex.open( base .. "active.png" )
+   local function tex_open( name, sx, sy, basepath )
+      basepath = basepath or base
+      local t = tex.open( basepath .. name, sx, sy )
+      t:setWrap( "clamp" )
+      return t
+   end
+   player_pane = tex_open( "main.png" )
+   bar_sheen = tex_open( "sheen.png" )
+   bar_bg = tex_open( "bar_bg.png" )
+   bars.armour.icon = tex_open( "armour.png" )
+   bars.energy.icon = tex_open( "energy.png" )
+   bars.fuel.icon = tex_open( "fuel.png" )
+   bars.heat.icon = tex_open( "heat.png" )
+   bars.shield.icon = tex_open( "shield.png" )
+   bars.speed.icon = tex_open( "speed.png" )
+   slotA = tex_open( "slot1-3.png" )
+   slotAend = tex_open( "slot1-3end.png" )
+   slotB = tex_open( "slot4.png" )
+   slotBend = tex_open( "slot4end.png" )
+   slotC = tex_open( "slot.png" )
+   slotCend = tex_open( "slotend.png" )
+   slotAe = tex_open( "slot1e.png" )
+   slotBe = tex_open( "slot2-3e.png" )
+   slotCe = tex_open( "slot4e.png" )
+   cooldown = tex_open( "cooldown.png", 6, 6 )
+   lockonA = tex_open( "padlockA.png" )
+   lockonB = tex_open( "padlockB.png" )
+   active =  tex_open( "active.png" )
 
-   gui.targetSpobGFX( tex.open( base .. "radar_planet.png", 2, 2 ) )
-   gui.targetPilotGFX(  tex.open( base .. "radar_ship.png", 2, 2 ) )
+   gui.targetSpobGFX( tex_open( "radar_planet.png", 2, 2 ) )
+   gui.targetPilotGFX(  tex_open( "radar_ship.png", 2, 2 ) )
 
    --Get positions
    --Radar
@@ -174,10 +180,10 @@ function create()
    bars.speed.y = bars.shield.y
 
    -- Cooldown pane.
-   cooldown_sheen = tex.open( "gfx/gui/slim/cooldown-sheen.png" )
-   cooldown_bg = tex.open( "gfx/gui/slim/cooldown-bg.png" )
-   cooldown_frame = tex.open( "gfx/gui/slim/cooldown-frame.png" )
-   cooldown_panel = tex.open( "gfx/gui/slim/cooldown-panel.png" )
+   cooldown_sheen = tex_open( "gfx/gui/slim/cooldown-sheen.png", nil, nil, "" )
+   cooldown_bg = tex_open( "gfx/gui/slim/cooldown-bg.png", nil, nil, "" )
+   cooldown_frame = tex_open( "gfx/gui/slim/cooldown-frame.png", nil, nil, "" )
+   cooldown_panel = tex_open( "gfx/gui/slim/cooldown-panel.png", nil, nil, "" )
    cooldown_frame_w, cooldown_frame_h = cooldown_frame:dim()
    cooldown_frame_x = (screen_w - cooldown_frame_w)/2.
    cooldown_frame_y = (screen_h - cooldown_frame_h)/2.
@@ -573,5 +579,8 @@ function render( dt, dt_mod )
    gfx.print( true, time.str( time.get(), 2 ), time_x, time_y, col_txt_std, time_w, true )
 end
 
-function end_cooldown ()
+function cooldown_end ()
+end
+
+function update_effects ()
 end

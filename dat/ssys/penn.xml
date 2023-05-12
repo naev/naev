@@ -2,32 +2,31 @@
 <ssys name="Penn">
  <general>
   <radius>10000.000000</radius>
-  <stars>400</stars>
-  <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>28.575000</interference>
+  <nebula volatility="0.000000">200.000000</nebula>
  </general>
- <pos x="947.056268" y="-139.853445"/>
+ <pos x="991.358803" y="-164.210303"/>
  <spobs/>
  <jumps>
-  <jump target="Korma">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="NGC-12108">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
   <jump target="Rei">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Seifer">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>0.800000</hide>
   </jump>
-  <jump target="Teller">
+  <jump target="Sorrow">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Teller">
+   <pos x="-1980.999692" y="9661.404488"/>
+   <hide>0.400000</hide>
+  </jump>
  </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

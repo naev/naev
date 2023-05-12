@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Alsafi Ia">
+ <pos x="-6256.241107" y="3066.413983"/>
+ <GFX>
+  <space>moon-K00.webp</space>
+  <exterior>gas.webp</exterior>
+ </GFX>
+ <general>
+  <class>K</class>
+  <population>0</population>
+  <hide>0.300000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>Once a small-time trading colony that dealt with resources collected from Alsafi I and the nearby asteroid field, it has been abandoned since shortly after the incident with the loss of the atmosphere and deteriorated habitability due to the Nebula. Whatever the inhabitants weren't able to take with them when they fled has been completely ransacked by scavengers. Only the left behind garbage and worthless buildings give an indication that there used to be civilization here.</description>
+ </general>
+ <tags>
+  <tag>ruined</tag>
+ </tags>
+</spob>

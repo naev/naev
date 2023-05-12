@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Coral Cloister">
+ <lua>spob/lua/sirius_mil_restricted.lua</lua>
+ <pos x="-10376.000424" y="3007.726705"/>
+ <GFX>
+  <space>station-fleetbase.webp</space>
+  <exterior>station03.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>3500</population>
+  <hide>2.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>Coral Cloister was established as a new border guard station shortly after the Incident to attempt to organize the refugees and new traffic in and out of Sirius space at the new Sirius border. The forces stationed here are the first line of defence against threats coming from outside Sirian space. The station inspects all traffic entering Sirius space this way as well as keeping an eye on outbound traffic too.</description>
+ </general>
+ <tags>
+  <tag>restricted</tag>
+  <tag>station</tag>
+  <tag>new</tag>
+ </tags>
+</spob>

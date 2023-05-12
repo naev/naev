@@ -20,6 +20,8 @@ local fleet = require "fleet"
 local fmt = require "format"
 local shadow = require "common.shadow"
 local pir = require "common.pirate"
+local cinema = require "cinema"
+local ai_setup = require "ai.core.setup"
 
 -- Mission constants
 local rebinasys = system.get("Pas")
@@ -32,7 +34,6 @@ local misssys = {
 
 local ambush, diplomat, dvaerplomat, escorts, seiryuu -- Non-persistent state
 local accept_m -- Forward-declared functions
--- luacheck: globals attackerDeath board board_escort chatter delayedClaim diplomatAttacked diplomatCutscene diplomatDeath diplomatGo diplomatIdle diplomatJump diplomatKilled diplomatShutup enter escortDeath escortFlee escortNext escortStart jumpin jumpout killDiplomats land takeoff (Hook functions passed by name)
 
 -- Make a pilot say a line, if he is alive. Mainly useful in sequential chat messages.
 -- argument chat: A table containing:
@@ -172,7 +173,7 @@ end
 function enter()
    if system.cur() == misssys[1] and mem.stage == 1 and mem.missend == false then
       -- case enter system where escorts wait
-      escorts = fleet.add( 3, "Lancelot", "Four Winds", vec2.new(0, 0), _("Four Winds Escort"), {ai="baddie_norun"} )
+      escorts = fleet.add( 3, "Lancelot", shadow.fct_fourwinds(), vec2.new(0, 0), _("Four Winds Escort"), {ai="baddie_norun"} )
       for i, j in ipairs(escorts) do
          if not mem.alive[i] then j:rm() end -- Dead escorts stay dead.
          if j:exists() then
@@ -182,7 +183,7 @@ function enter()
          end
       end
       local rend_point = vec2.new(0,0)
-      mem.start_marker = system.mrkAdd( rend_point, _("Rendezvous point") )
+      mem.start_marker = system.markerAdd( rend_point, _("Rendezvous point") )
       mem.proxy = hook.timer(0.5, "proximity", {location = rend_point, radius = 500, funcname = "escortStart"})
    end
 end
@@ -196,7 +197,7 @@ function jumpin()
    end
 
    if mem.stage == 0 and system.cur() == rebinasys then -- put Rebina's ship
-      seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", vec2.new(0, -2000), _("Seiryuu"), {ai="trader"} )
+      seiryuu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), vec2.new(0, -2000), _("Seiryuu"), {ai="trader"} )
       seiryuu:control(true)
       seiryuu:setActiveBoard(true)
       seiryuu:setInvincible(true)
@@ -213,7 +214,7 @@ function jumpin()
 
    if mem.stage == 4 then
       -- Spawn the diplomat.
-      diplomat = pilot.add( "Gawain", "Diplomatic", mem.origin, _("Imperial Diplomat") )
+      diplomat = pilot.add( "Gawain", shadow.fct_diplomatic(), mem.origin, _("Imperial Diplomat") )
       hook.pilot(diplomat, "death", "diplomatDeath")
       hook.pilot(diplomat, "jump", "diplomatJump")
       hook.pilot(diplomat, "attacked", "diplomatAttacked")
@@ -235,7 +236,7 @@ function jumpin()
       end
 
       -- Spawn the escorts.
-      escorts = fleet.add( 3, "Lancelot", "Four Winds", mem.origin, _("Four Winds Escort"), {ai="baddie_norun"} )
+      escorts = fleet.add( 3, "Lancelot", shadow.fct_fourwinds(), mem.origin, _("Four Winds Escort"), {ai="baddie_norun"} )
       for i, j in ipairs(escorts) do
          if not mem.alive[i] then j:rm() end -- Dead escorts stay dead.
          if j:exists() then
@@ -257,7 +258,7 @@ function jumpin()
             end
          end
       elseif system.cur() == misssys[3] then -- case join up with diplomat
-         diplomat = pilot.add( "Gawain", "Diplomatic", vec2.new(0, 0), _("Imperial Diplomat") )
+         diplomat = pilot.add( "Gawain", shadow.fct_diplomatic(), vec2.new(0, 0), _("Imperial Diplomat") )
          hook.pilot(diplomat, "death", "diplomatDeath")
          hook.pilot(diplomat, "jump", "diplomatJump")
          diplomat:setSpeedLimit( 130 )
@@ -288,7 +289,7 @@ function jumpin()
          dvaerplomat:setHilight(true)
          dvaerplomat:setVisplayer()
          dvaerplomat:setDir(math.pi)
-         dvaerplomat:setFaction("Diplomatic")
+         dvaerplomat:setFaction( shadow.fct_diplomatic() )
          diplomat:setInvincible(true)
          diplomat:moveto(vec2.new(1850, 4000), true)
          mem.diplomatidle = hook.pilot(diplomat, "idle", "diplomatIdle")
@@ -316,7 +317,7 @@ function jumpin()
                {"Pirate Ancestor", "Pirate Hyena", "Pirate Hyena"},
                {"Pirate Ancestor", "Pirate Vendetta", "Pirate Hyena", "Pirate Hyena"}
             }
-            ambush = fleet.add( 1,  ambush_ships[3 - mem.jp2go], "Shadow_pirates", vec2.new(0, 0), _("Pirate Attacker"), {ai="baddie_norun"} )
+            ambush = fleet.add( 1,  ambush_ships[3 - mem.jp2go], shadow.fct_pirates(), vec2.new(0, 0), _("Pirate Attacker"), {ai="baddie_norun"} )
             mem.kills = 0
             for i, j in ipairs(ambush) do
                if j:exists() then
@@ -339,7 +340,7 @@ function jumpin()
 
    elseif system.cur() == mem.seirsys then -- not escorting.
       -- case enter system where Seiryuu is
-      seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", vec2.new(0, -2000), _("Seiryuu"), {ai="trader"} )
+      seiryuu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), vec2.new(0, -2000), _("Seiryuu"), {ai="trader"} )
       seiryuu:setInvincible(true)
       if mem.missend then
          seiryuu:setActiveBoard(true)
@@ -358,7 +359,7 @@ end
 -- The player has successfully joined up with the escort fleet. Cutscene -> departure.
 function escortStart()
    if mem.start_marker ~= nil then
-      system.mrkRm( mem.start_marker )
+      system.markerRm( mem.start_marker )
    end
    mem.stage = 2 -- Fly to the refuel planet.
    misn.osdActive(2)
@@ -494,10 +495,7 @@ end
 
 -- This is the final cutscene.
 function diplomatCutscene()
-   player.pilot():control()
-   player.pilot():brake()
-   player.pilot():setInvincible(true)
-   player.cinematics(true)
+   cinema.on()
 
    camera.set(dvaerplomat, false, 500)
 
@@ -524,6 +522,7 @@ function killDiplomats()
          j:taskClear()
          j:outfitRm("all")
          j:outfitAdd("Cheater's Ragnarok Beam", 1)
+         ai_setup.setup(j)
          j:attack(dvaerplomat)
          j:setHilight(false)
       end
@@ -541,11 +540,8 @@ function diplomatKilled()
 end
 
 function escortFlee()
+   cinema.off()
    camera.set()
-
-   player.pilot():setInvincible(false)
-   player.pilot():control(false)
-   player.cinematics(false)
 
    for i, j in ipairs(escorts) do
       if j:exists() then

@@ -141,13 +141,13 @@ void equipment_rightClickOutfits( unsigned int wid, const char* str )
    /* Figure out which slot this stuff fits into */
    switch (o->slot.type) {
       case OUTFIT_SLOT_STRUCTURE:
-         slots    = eq_wgt.selected->outfit_structure;
+         slots    = eq_wgt.selected->p->outfit_structure;
          break;
       case OUTFIT_SLOT_UTILITY:
-         slots    = eq_wgt.selected->outfit_utility;
+         slots    = eq_wgt.selected->p->outfit_utility;
          break;
       case OUTFIT_SLOT_WEAPON:
-         slots    = eq_wgt.selected->outfit_weapon;
+         slots    = eq_wgt.selected->p->outfit_weapon;
          break;
       default:
          return;
@@ -172,7 +172,7 @@ void equipment_rightClickOutfits( unsigned int wid, const char* str )
    /* Only fits in a single slot, so we might as well just swap it. */
    if (nfits==1) {
       eq_wgt.outfit  = o;
-      p              = eq_wgt.selected;
+      p              = eq_wgt.selected->p;
       /* We have to call once to remove, once to add. */
       if (slots[minimal].outfit != NULL)
          equipment_swapSlot( equipment_wid, p, &slots[minimal] );
@@ -207,7 +207,7 @@ void equipment_rightClickOutfits( unsigned int wid, const char* str )
       }
       if (minimal < n) {
          eq_wgt.outfit  = o;
-         p              = eq_wgt.selected;
+         p              = eq_wgt.selected->p;
          /* Once to unequip and once to equip. */
          equipment_swapSlot( equipment_wid, p, &slots[minimal] );
          eq_wgt.outfit  = o;
@@ -243,7 +243,7 @@ void equipment_rightClickOutfits( unsigned int wid, const char* str )
    /* Use the chosen one (if any). */
    if (minimal < n) {
       eq_wgt.outfit  = o;
-      p              = eq_wgt.selected;
+      p              = eq_wgt.selected->p;
       equipment_swapSlot( equipment_wid, p, &slots[minimal] );
       hooks_run( "equip" ); /* Equipped. */
    }
@@ -376,8 +376,10 @@ void equipment_open( unsigned int wid )
    x = -20-(128-cw)/2;
    y = -20-150-ch;
    window_addCheckbox( wid, x, y, cw, 30, "chkFav", _("Favourite"), equipment_toggleFav, 0 );
-   y -= 23;
-   window_addCheckbox( wid, x, y, cw, 30, "chkDeploy", _("Deployed"), equipment_toggleDeploy, 0 );
+   if (player.fleet_capacity > 0) {
+      y -= 23;
+      window_addCheckbox( wid, x, y, cw, 30, "chkDeploy", _("Deployed"), equipment_toggleDeploy, 0 );
+   }
    x = -16;
    y -= 23 + 10;
    window_addButtonKey( wid, x, y, 128+8, bh, "btnRenameShip",
@@ -467,7 +469,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
             dc = &cFontRed;
          else if (level == 1)
             dc = &cFontYellow;
-         else if (pilot_slotIsActive( &lst[i] ))
+         else if (pilot_slotIsToggleable( &lst[i] ))
             dc = &cFontBlue;
          else
             dc = &cFontGrey;
@@ -573,14 +575,14 @@ static void equipment_renderSlots( double bx, double by, double bw, double bh, v
    Pilot *p;
    int selected;
 
-   /* Get data. */
-   wgt = (CstSlotWidget*) data;
-   p   = wgt->selected;
-   selected = wgt->slot;
-
    /* Must have selected ship. */
-   if (p == NULL)
+   wgt = (CstSlotWidget*) data;
+   if (wgt->selected == NULL)
       return;
+
+   /* Get data. */
+   p   = wgt->selected->p;
+   selected = wgt->slot;
 
    /* Get dimensions. */
    equipment_calculateSlots( p, bw, bh, &w, &h, &n, &m );
@@ -591,7 +593,7 @@ static void equipment_renderSlots( double bx, double by, double bw, double bh, v
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderColumn( x, y, w, h,
          p->outfit_weapon, _("Weapon"),
-         selected, wgt->outfit, wgt->selected, wgt );
+         selected, wgt->outfit, p, wgt );
 
    /* Draw systems outfits. */
    selected -= array_size(p->outfit_weapon);
@@ -599,7 +601,7 @@ static void equipment_renderSlots( double bx, double by, double bw, double bh, v
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderColumn( x, y, w, h,
          p->outfit_utility, _("Utility"),
-         selected, wgt->outfit, wgt->selected, wgt );
+         selected, wgt->outfit, p, wgt );
 
    /* Draw structure outfits. */
    selected -= array_size(p->outfit_utility);
@@ -607,7 +609,7 @@ static void equipment_renderSlots( double bx, double by, double bw, double bh, v
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderColumn( x, y, w, h,
          p->outfit_structure, _("Structure"),
-         selected, wgt->outfit, wgt->selected, wgt );
+         selected, wgt->outfit, p, wgt );
 }
 /**
  * @brief Renders the custom equipment widget.
@@ -630,7 +632,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    if (eq_wgt.selected == NULL)
       return;
 
-   p = eq_wgt.selected;
+   p = eq_wgt.selected->p;
 
    /* Base bar properties. */
    w = bw;
@@ -697,12 +699,13 @@ static void equipment_renderOverlayColumn( double x, double y, double h,
 {
    const glColour *c;
    glColour tc;
-   int text_width, yoff, top;
+   int text_width, yoff;
    const char *display;
 
    /* Iterate for all the slots. */
    for (int i=0; i<array_size(lst); i++) {
       int subtitle = 0;
+      int top = 0;
       if (lst[i].outfit != NULL) {
          /* See if needs a subtitle. */
          if ((outfit_isLauncher(lst[i].outfit) ||
@@ -720,7 +723,7 @@ static void equipment_renderOverlayColumn( double x, double y, double h,
             }
             else if (lst[i].outfit != NULL) {
                top = 1;
-               display = pilot_canEquip( wgt->selected, &lst[i], NULL );
+               display = pilot_canEquip( wgt->selected->p, &lst[i], NULL );
                if (display != NULL)
                   c = &cFontRed;
                else {
@@ -731,7 +734,7 @@ static void equipment_renderOverlayColumn( double x, double y, double h,
             else if ((wgt->outfit != NULL) &&
                   (lst->sslot->slot.type == wgt->outfit->slot.type)) {
                top = 1;
-               display = pilot_canEquip( wgt->selected, &lst[i], wgt->outfit );
+               display = pilot_canEquip( wgt->selected->p, &lst[i], wgt->outfit );
                if (display != NULL)
                   c = &cFontRed;
                else {
@@ -794,11 +797,9 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
 
    /* Get data. */
    wgt = (CstSlotWidget*) data;
-   p   = wgt->selected;
-
-   /* Must have selected ship. */
-   if (p == NULL)
+   if (wgt->selected == NULL)
       return;
+   p   = wgt->selected->p;
 
    /* Get dimensions. */
    equipment_calculateSlots( p, bw, bh, &w, &h, &n, &m );
@@ -864,9 +865,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    }
 
    /* Get text. */
-   if (o->desc_short == NULL)
-      return;
-   outfit_altText( alt, sizeof(alt), o );
+   outfit_altText( alt, sizeof(alt), o, (p==player.p) ? p : NULL );
 
    /* Display temporary bonuses. */
    if (slot->lua_mem != LUA_NOREF) {
@@ -899,11 +898,11 @@ static void equipment_renderShip( double bx, double by,
    double pw, ph;
    vec2 v;
 
-   p = eq_wgt.selected;
-
    /* Must have selected ship. */
-   if (p == NULL)
+   if (eq_wgt.selected == NULL)
       return;
+
+   p = eq_wgt.selected->p;
 
    tick = SDL_GetTicks();
    dt   = (double)(tick - equipment_lastick)/1000.;
@@ -1095,11 +1094,9 @@ static int equipment_mouseSlots( unsigned int wid, SDL_Event* event,
 
    /* Get data. */
    wgt = (CstSlotWidget*) data;
-   p   = wgt->selected;
-
-   /* Must have selected ship. */
-   if (p == NULL)
+   if (wgt->selected == NULL)
       return 0;
+   p   = wgt->selected->p;
 
    /* Must be left click for now. */
    if ((event->type != SDL_MOUSEBUTTONDOWN) &&
@@ -1163,14 +1160,14 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
       const Outfit *o = slot->outfit;
 
       /* Must be able to remove. */
-      if (pilot_canEquip( eq_wgt.selected, slot, NULL ) != NULL)
+      if (pilot_canEquip( eq_wgt.selected->p, slot, NULL ) != NULL)
          return 0;
 
       /* Remove ammo first. */
-      pilot_rmAmmo( eq_wgt.selected, slot, slot->u.ammo.quantity );
+      pilot_rmAmmo( eq_wgt.selected->p, slot, slot->u.ammo.quantity );
 
       /* Remove outfit. */
-      ret = pilot_rmOutfit( eq_wgt.selected, slot );
+      ret = pilot_rmOutfit( eq_wgt.selected->p, slot );
       if (ret == 0)
          equipment_playerAddOutfit( o, 1 );
    }
@@ -1187,16 +1184,16 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
          return 0;
 
       /* Must be able to add. */
-      if (pilot_canEquip( eq_wgt.selected, slot, o ) != NULL)
+      if (pilot_canEquip( eq_wgt.selected->p, slot, o ) != NULL)
          return 0;
 
       /* Add outfit to ship. */
       ret = equipment_playerRmOutfit( o, 1 );
       if (ret == 1) {
-         pilot_addOutfitRaw( eq_wgt.selected, o, slot );
+         pilot_addOutfitRaw( eq_wgt.selected->p, o, slot );
 
          /* Recalculate stats. */
-         pilot_calcStats( eq_wgt.selected );
+         pilot_calcStats( eq_wgt.selected->p );
       }
 
       equipment_addAmmo();
@@ -1216,9 +1213,11 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
    outfits_updateEquipmentOutfits();
 
    /* Update weapon sets if needed. */
-   if (eq_wgt.selected->autoweap)
-      pilot_weaponAuto( eq_wgt.selected );
-   pilot_weaponSafe( eq_wgt.selected );
+   if (eq_wgt.selected->p->autoweap) {
+      pilot_weaponAuto( eq_wgt.selected->p );
+      ws_copy( eq_wgt.selected->weapon_sets, eq_wgt.selected->p->weapon_sets );
+   }
+   pilot_weaponSafe( eq_wgt.selected->p );
 
    /* Notify GUI of modification. */
    gui_setShip();
@@ -1307,15 +1306,10 @@ void equipment_addAmmo (void)
    if (eq_wgt.selected == NULL)
       p = player.p;
    else
-      p = eq_wgt.selected;
+      p = eq_wgt.selected->p;
 
    /* Add ammo to all outfits. */
    pilot_fillAmmo( p );
-
-   /* Update weapon sets if needed. */
-   if (p->autoweap)
-      pilot_weaponAuto( p );
-   pilot_weaponSafe( p );
 
    /* Notify GUI of modification. */
    gui_setShip();
@@ -1376,6 +1370,10 @@ static void equipment_toggleDeploy( unsigned int wid, const char *wgt )
 {
    int state = window_checkboxState( wid, wgt );
    const char *shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
+
+   /* Can't deploy if no capacity. */
+   if (player.fleet_capacity <= 0)
+      return;
 
    /* Only if current ship isn't selected try to deploy. */
    if (strcmp(shipname,player.p->name)!=0) {
@@ -1526,7 +1524,9 @@ static int equipment_filter( const Outfit *o ) {
          return 0;
 
       case 2: /* Fits currently selected ship. */
-         p = eq_wgt.selected;
+         if (eq_wgt.selected==NULL)
+            return 1;
+         p = eq_wgt.selected->p;
          if (p==NULL)
             return 1;
          for (int i=0; i < array_size(p->outfits); i++) {
@@ -1576,10 +1576,10 @@ static void equipment_genOutfitList( unsigned int wid )
    const char *tabnames[] = {
       _("All"), _(OUTFIT_LABEL_WEAPON), _(OUTFIT_LABEL_UTILITY), _(OUTFIT_LABEL_STRUCTURE), _(OUTFIT_LABEL_CORE)
    };
-
    int noutfits, active;
    ImageArrayCell *coutfits;
    int iconsize;
+   Pilot *p = (eq_wgt.selected != NULL) ? eq_wgt.selected->p : NULL;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, NULL, NULL, &ow, &oh,
@@ -1642,7 +1642,7 @@ static void equipment_genOutfitList( unsigned int wid )
 
    /* Get the outfits. */
    noutfits = player_getOutfitsFiltered( (const Outfit**)iar_outfits[active], tabfilters[active], filtertext );
-   coutfits = outfits_imageArrayCells( (const Outfit**)iar_outfits[active], &noutfits );
+   coutfits = outfits_imageArrayCells( (const Outfit**)iar_outfits[active], &noutfits, (p==NULL) ? player.p : p );
 
    /* Create the actual image array. */
    iw = ow - 6;
@@ -1703,10 +1703,10 @@ void equipment_updateShips( unsigned int wid, const char* str )
    const char *shipname, *acquired;
    char sdet[NUM2STRLEN], seva[NUM2STRLEN], sste[NUM2STRLEN];
    char smass[NUM2STRLEN], sfuel[NUM2STRLEN];
-   Pilot *ship, *prevship;
-   const PlayerShip_t *ps;
+   Pilot *ship;
+   PlayerShip_t *ps, *prevship;
    char *nt;
-   int onboard, cargo, jumps, favourite, deployed, x, h;
+   int onboard, cargo, jumps, favourite, deployed, x, h, spaceworthy;
    int ww, wh, sw, sh, hacquired, hname;
    int wgtw, wgth;
    size_t l = 0;
@@ -1733,7 +1733,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
    ship        = ps->p;
    favourite   = ps->favourite;
    prevship    = eq_wgt.selected;
-   eq_wgt.selected = ship;
+   eq_wgt.selected = ps;
 
    /* update text */
    credits2str( buf_price, player_shipPrice(shipname), 2 ); /* sell price */
@@ -1741,7 +1741,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
    nt = ntime_pretty( pilot_hyperspaceDelay( ship ), 2 );
 
    /* Get ship error report. */
-   pilot_reportSpaceworthy( ship, errorReport, sizeof(errorReport));
+   spaceworthy = !pilot_reportSpaceworthy( ship, errorReport, sizeof(errorReport));
 
    jumps = floor(ship->fuel_max / ship->fuel_consumption);
 
@@ -1861,7 +1861,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, _("%s %s (%d %s)"),
             sfuel, n_( "unit", "units", ship->fuel_max ), jumps, n_( "jump", "jumps", jumps ) );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%s#0", pilot_checkSpaceworthy(ship) ? 'r' : '0', errorReport );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%s#0", spaceworthy ? '0' : 'r', errorReport );
    }
    else {
       int destroyed = 0;
@@ -1887,7 +1887,8 @@ void equipment_updateShips( unsigned int wid, const char* str )
 
    /* Set checkboxes. */
    window_checkboxSet( wid, "chkFav", favourite );
-   window_checkboxSet( wid, "chkDeploy", deployed );
+   if (player.fleet_capacity > 0)
+      window_checkboxSet( wid, "chkDeploy", deployed );
 
    /* button disabling */
    if (onboard) {
@@ -2053,7 +2054,8 @@ static void equipment_rightClickShips( unsigned int wid, const char *str )
    if (pfleet_toggleDeploy( ps, !ps->deployed ))
       return;
 
-   window_checkboxSet( wid, "chkDeploy", ps->deployed );
+   if (player.fleet_capacity > 0)
+      window_checkboxSet( wid, "chkDeploy", ps->deployed );
 
    pfleet_update();
 
@@ -2136,7 +2138,7 @@ static void equipment_changeShip( unsigned int wid )
 static void equipment_unequipShip( unsigned int wid, const char* str )
 {
    (void) str;
-   Pilot *ship = eq_wgt.selected;
+   Pilot *ship = eq_wgt.selected->p;
 
    /*
     * Unequipping is disallowed under two conditions. Firstly, the ship may not
@@ -2192,8 +2194,10 @@ static void equipment_unequipShip( unsigned int wid, const char* str )
    outfits_updateEquipmentOutfits();
 
    /* Update weapon sets if needed. */
-   if (ship->autoweap)
+   if (ship->autoweap) {
       pilot_weaponAuto( ship );
+      ws_copy( eq_wgt.selected->weapon_sets, ship->weapon_sets );
+   }
    pilot_weaponSafe( ship );
 
    /* Notify GUI of modification. */
@@ -2212,7 +2216,7 @@ static void equipment_autoequipShip( unsigned int wid, const char* str )
    const char *curship;
    const char *file = AUTOEQUIP_PATH;
 
-   ship = eq_wgt.selected;
+   ship = eq_wgt.selected->p;
 
    /* Swap ship if necessary. */
    doswap = (ship != player.p);

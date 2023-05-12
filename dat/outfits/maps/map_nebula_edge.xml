@@ -1,35 +1,46 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <outfit name="Map: Nebula Edge">
  <general>
+  <rarity>0</rarity>
   <mass>0</mass>
   <price>25000</price>
-  <description>This map contains the route leading from Dvaered/Imperial space to the edge of the Nebula. It also lists the two Imperial stations along the route.</description>
+  <description>This map contains border of the Nebula with Dvaered/Imperial space. It also lists the deepest Imperial station within the Nebula.</description>
   <gfx_store>map_sector_01.webp</gfx_store>
  </general>
  <specific type="map">
-  <sys name="Zacron">
-   <jump>Raelid</jump>
+  <sys name="Tuoladis">
+   <jump>Surano</jump>
   </sys>
-  <sys name="Raelid">
-   <jump>Arcanis</jump>
-   <jump>Zacron</jump>
-   <spob>Marius Station</spob>
-   <spob>Raelid II</spob>
-   <spob>Raelid Outpost</spob>
-   <spob>Raelid Prime</spob>
+  <sys name="Surano">
+   <jump>Tuoladis</jump>
   </sys>
-  <sys name="Arcanis">
-   <jump>Raelid</jump>
-   <jump>Zylex</jump>
+  <sys name="Guntesh">
+   <jump>Kruger</jump>
   </sys>
-  <sys name="Zylex">
-   <jump>Arcanis</jump>
-   <jump>Doeston</jump>
+  <sys name="Tau Ceti"/>
+  <sys name="Akodu">
+   <spob>Tenal-P</spob>
+  </sys>
+  <sys name="Qellan"/>
+  <sys name="Aneel Azi">
+   <spob>Edergast</spob>
+  </sys>
+  <sys name="Atlantis">
+   <spob>Atlantis I</spob>
   </sys>
   <sys name="Doeston">
-   <jump>Zylex</jump>
-   <spob>Cerberus</spob>
+   <spob>Cerberus Outpost</spob>
    <spob>Doeston Prime</spob>
+  </sys>
+  <sys name="Cebus"/>
+  <sys name="Kruger">
+   <jump>Guntesh</jump>
+  </sys>
+  <sys name="Raelid">
+   <spob>Marius Enclave</spob>
+   <spob>Raelid II</spob>
+   <spob>Raelid Prime</spob>
+   <spob>Fort Raelid</spob>
   </sys>
  </specific>
 </outfit>

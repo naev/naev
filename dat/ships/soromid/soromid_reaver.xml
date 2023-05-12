@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Reaver">
+ <lua>ships/lua/soromid.lua</lua>
  <points>40</points>
  <base_type>Reaver</base_type>
  <GFX size="68">reaver</GFX>
  <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine_soromid</sound>
  <class display="Bio-Fighter">Fighter</class>
  <price>670000</price>

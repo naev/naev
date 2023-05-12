@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <unidiff name="hypergates_3">
+ <!-- All hypergates are on and active! -->
  <spob name="Hypergate Dvaer">
   <displayname>Hypergate</displayname>
   <lua>spob/lua/hypergate_dvaer.lua</lua>
@@ -30,4 +31,10 @@
   <lua>spob/lua/hypergate_ngc14549.lua</lua>
   <tag_add>active</tag_add>
  </spob>
+ <system name="Haven">
+  <spob name="Hypergate Haven">add</spob>
+ </system>
+ <tech name="Pirate Maps">
+  <add>Map: Kretogg's Hypergate</add>
+ </tech>
 </unidiff>

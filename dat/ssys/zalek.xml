@@ -2,14 +2,13 @@
 <ssys name="Za'lek">
  <general>
   <radius>32400.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-582.606486" y="-881.496039"/>
+ <pos x="-365.950499" y="-709.500702"/>
  <spobs>
   <spob>Atryssa</spob>
-  <spob>House Za'lek Central Station</spob>
+  <spob>House Za'lek Central</spob>
   <spob>Ocata</spob>
   <spob>PRP-1</spob>
   <spob>PRP-2</spob>
@@ -30,6 +29,10 @@
    <hide>1.000000</hide>
   </jump>
   <jump target="Qulam">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Seelie">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

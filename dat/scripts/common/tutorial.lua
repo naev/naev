@@ -25,6 +25,7 @@ tut.specialnames = {
    ["ROBBY"] = _([["For your convenience I am programmed to respond to the name Robby. …Wait, what was that?"]]), -- Forbidden Planet
    ["MASCHINENMENSCH"] = _([["Who is the living food for the machines in Metropolis? Who lubricates the machine joints with their own blood? Who feeds the machines with their own flesh? Let the machines starve, you fools! Let them die! Kill them the machines! …Wait, what was that?"]]), -- Metropolis
    ["KITT"] = _([["Please Michael, I'm the Knight Industries 2000, not a tomato on wheels!” …Wait, what was that?"]]), -- Knight Rider
+   ["Siri"] = _([["Sorry, I didn't quite get that.” …Wait, what was that?"]]), -- Siri, Apple's "smart" assistant
 }
 tut.specialnames["HAL 9000"] = tut.specialnames["HAL9000"]
 
@@ -62,6 +63,7 @@ function tut.reset ()
    var.pop( "tut_nebvol" )
    var.pop( "tut_afterburner" )
    var.pop( "tut_fighterbay" )
+   var.pop( "tut_turret" )
    var.pop( "tut_buyship" )
    var.pop( "tut_timedil" )
    var.pop( "tut_bioship" )

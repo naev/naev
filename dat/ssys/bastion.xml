@@ -2,11 +2,11 @@
 <ssys name="Bastion">
  <general>
   <radius>17500.000000</radius>
-  <stars>160</stars>
-  <interference>5.882353</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>160</spacedust>
+  <interference>13.235300</interference>
+  <nolanes/>
  </general>
- <pos x="145.830169" y="186.284610"/>
+ <pos x="129.997050" y="476.413476"/>
  <spobs/>
  <jumps>
   <jump target="Elixir">

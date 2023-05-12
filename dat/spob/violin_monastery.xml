@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Violin Monastery">
+ <lua>spob/lua/sirius_mil_restricted.lua</lua>
+ <pos x="8471.615119" y="17666.192451"/>
+ <GFX>
+  <space>station-battlestation.webp</space>
+  <exterior>station05.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>9000</population>
+  <hide>2.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>Violin Monastery is one of the more important Sirian military outposts. With so much traffic coming through Churchill, extra security is called for. Violin Monastery also responds to disturbances in Eiderdown, when the Wringer is causing trouble again.</description>
+ </general>
+ <tags>
+  <tag>station</tag>
+  <tag>restricted</tag>
+  <tag>military</tag>
+ </tags>
+</spob>

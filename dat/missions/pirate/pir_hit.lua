@@ -12,9 +12,6 @@
  <faction>Independent</faction>
  <faction>FLF</faction>
  <done>Pirate Hit Intro</done>
- <notes>
-  <tier>3</tier>
- </notes>
 </mission>
 --]]
 --[[
@@ -30,7 +27,6 @@ local pilotname = require "pilotname"
 local lmisn = require "lmisn"
 
 local bounty_setup, level_setup, spawn_target, succeed -- Forward-declared functions
--- luacheck: globals jumpin jumpout pilot_attacked pilot_death pilot_jump takeoff (Hook functions passed by name)
 
 -- Mission details
 local misn_title = {}
@@ -63,7 +59,7 @@ function create ()
       "Sirius",
       "Soromid",
       "Trader",
-      "Traders Guild",
+      "Traders Society",
       "Za'lek",
    }
 
@@ -84,7 +80,7 @@ function create ()
    end
 
    mem.missys = systems[ rnd.rnd( 1, #systems ) ]
-   if not misn.claim( mem.missys, false, true ) then misn.finish( false ) end
+   if not misn.claim( mem.missys, true ) then misn.finish( false ) end
 
    mem.target_faction = nil
    while mem.target_faction == nil and #target_factions > 0 do
@@ -104,10 +100,7 @@ function create ()
       misn.finish( false )
    end
 
-   mem.jumps_permitted = system.cur():jumpDist(mem.missys, true) + rnd.rnd( 3, 10 )
-   if rnd.rnd() < 0.05 then
-      mem.jumps_permitted = mem.jumps_permitted - 1
-   end
+   mem.jumps_permitted = system.cur():jumpDist(mem.missys, true) + rnd.rnd( 3, 8 )
 
    mem.name = pilotname.generic()
    mem.level = level_setup()
@@ -116,7 +109,7 @@ function create ()
    -- Set mission details
    misn.setTitle( fmt.f( pir.prefix(mem.paying_faction)..misn_title[mem.level], {sys=mem.missys} ) )
 
-   local mdesc = fmt.f( _("A meddlesome {fct} pilot known as {plt} was recently seen in the {sys} system. Local crime lords want this pilot dead. {plt} is known to be flying a {shipclass}-class ship.{msg}"), {fct=_(mem.target_faction), plt=mem.name, sys=mem.missys, shipclass=_(ship.get(mem.pship):classDisplay()), msg=faction_text } )
+   local mdesc = fmt.f( _("A meddlesome {fct} pilot known as {plt} was recently seen in the {sys} system. Local crime lords want this pilot dead. {plt} is known to be flying a {shipclass}-class ship. The pilot may disappear if you take too long to reach the {sys} system.{msg}"), {fct=_(mem.target_faction), plt=mem.name, sys=mem.missys, shipclass=_(ship.get(mem.pship):classDisplay()), msg=faction_text } )
    if not pir.factionIsPirate( spob.cur():faction() ) then
       -- We're not on a pirate stronghold, so include a clear warning that the
       -- mission is in fact illegal.
@@ -124,7 +117,7 @@ function create ()
    end
    misn.setDesc( mdesc )
 
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setReward( mem.credits )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
 
@@ -148,6 +141,19 @@ end
 function jumpin ()
    -- Nothing to do.
    if system.cur() ~= mem.missys then
+      return
+   end
+
+   -- Make sure system is adjacent to the previous one (system tour)
+   local found = false
+   for k,v in ipairs(system.cur():adjacentSystems()) do
+      if v==mem.last_sys then
+         found = true
+         break
+      end
+   end
+   if not found then
+      spawn_target()
       return
    end
 
@@ -241,7 +247,7 @@ function level_setup ()
    local level
    if mem.target_faction == "Independent" then
       level = 1
-   elseif mem.target_faction == "Trader" or mem.target_faction == "Traders Guild" then
+   elseif mem.target_faction == "Trader" or mem.target_faction == "Traders Society" then
       if num_pirates <= 100 then
          level = rnd.rnd( 1, 2 )
       else
@@ -508,7 +514,7 @@ function bounty_setup ()
          credits = 1e6 + rnd.sigma() * 100e3
          reputation = 8
       end
-   elseif mem.target_faction == "Traders Guild" then
+   elseif mem.target_faction == "Traders Society" then
       if mem.level == 1 then
          if rnd.rnd() < 0.5 then
             pship = "Gawain"

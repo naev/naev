@@ -222,8 +222,13 @@ local function gauntlet_settype( wgt )
 end
 
 local function gauntlet_enter ()
-   gauntlet_start = true
-   luatk.close()
+   local worthy, reason = player.pilot():spaceworthy()
+   if not worthy then
+      luatk.msg(_("Not Spaceworthy!"), _("Your ship is not spaceworthy and can not participate in the Crimson Gauntlet right now for the following reasons:\n\n")..reason)
+   else
+      gauntlet_start = true
+      luatk.close()
+   end
 end
 
 local function gauntlet_cancel ()

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Shangris Station">
+ <pos x="13172.960754" y="425.307879"/>
+ <GFX>
+  <space>station-fleetbase4.webp</space>
+  <exterior>mining6.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Independent</faction>
+  <base>60.000000</base>
+  <bonus>20.000000</bonus>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>35700</population>
+  <hide>0.200000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Although not well publicized due to the nature of many deals going on at the location, Shangris Station is infamous for being a place where one can acquire all sorts of outfits, as long as you don't ask or care about where it has come from. There is a constant coming and going of ships of all types with people from all walks of life. You can see hardened thugs and criminals, fairly normal looking pilots, and even what looks like poorly disguised Imperial bureaucrats walking around the station. It seems like pretty much everything goes as long as you don't call too much attention to yourself or stir too much trouble.</description>
+  <bar>Whether you're looking to get black out drunk, get into fights with the locals, or do shady business, the Shangris Bar is the place to be. It is a tumultuous place where it is impossible to keep track of what is going on at any given time. Lots of shady characters can be seen all over and every so often a fight breaks out to the cheering of onlookers. However, it does seem like there are some unspoken rules and even fights end shortly and get cleaned up so quick that you would have doubted there had been one in the first place.</bar>
+ </general>
+ <tech>
+  <item>Hulls Medium</item>
+  <item>Hulls High</item>
+  <item>Systems Medium</item>
+  <item>Systems High</item>
+  <item>Engines Medium</item>
+  <item>Engines High</item>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Laser 3</item>
+  <item>Kinetic 2</item>
+  <item>Kinetic 3</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Star Maps</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Heavy Civilian Combat Ships</item>
+  <item>Criminal Outfits</item>
+ </tech>
+ <tags>
+  <tag>criminal</tag>
+  <tag>trade</tag>
+  <tag>station</tag>
+ </tags>
+</spob>

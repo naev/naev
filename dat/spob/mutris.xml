@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Mutris">
  <lua>spob/lua/sirius_mil_mutris.lua</lua>
- <pos x="33152.000000" y="30118.000000"/>
+ <pos x="26196.025870" y="16073.556994"/>
  <GFX>
   <space>L00.webp</space>
   <exterior>mining4.webp</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>250.000000</base>
-  <bonus>100.000000</bonus>
+  <base>150.000000</base>
+  <bonus>80.000000</bonus>
   <range>3</range>
  </presence>
  <general>
@@ -35,14 +35,20 @@
   <item>Hulls Low</item>
   <item>Engines Low</item>
   <item>Engines Medium</item>
+  <item>Ion 1</item>
   <item>Ion 2</item>
+  <item>Ion 3</item>
   <item>Basic Outfits 2</item>
   <item>Star Maps</item>
   <item>High Tech Upgrades 1</item>
   <item>Basic Civilian Ships</item>
+  <item>Sirius Ships Small</item>
+  <item>Sirius Ships Medium</item>
+  <item>Sirius Ships Large</item>
   <item>Sirius Elite Outfits</item>
  </tech>
  <tags>
   <tag>restricted</tag>
+  <tag>government</tag>
  </tags>
 </spob>

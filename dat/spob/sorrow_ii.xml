@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Sorrow II">
+ <pos x="2680.821754" y="5250.712953"/>
+ <GFX>
+  <space>K02.webp</space>
+  <exterior>mining_shaft.webp</exterior>
+ </GFX>
+ <general>
+  <class>G</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>Almost true to its name Sorrow II is a sad planet designated as the House Sirius waste disposal facility by the whims of an Arch-Canter. Although at one point there was a small manned station that allowed for refueling. It has long since been abandoned and is treated as a dump location for toxic materials brought from throughout the House Sirius territories.</description>
+ </general>
+ <tags>
+  <tag>garbage</tag>
+ </tags>
+</spob>

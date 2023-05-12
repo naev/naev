@@ -1,5 +1,6 @@
 local fmt = require "format"
 local vn = require "vn"
+local vni = require "vnimage"
 local tut = require "common.tutorial"
 local poi = require "common.poi"
 
@@ -19,11 +20,11 @@ return function ( mem )
          local sai = tut.vn_shipai()
          vn.appear( sai, tut.shipai.transition )
          sai(_([[Your ship AI appears as you access the system.
-"This derelict seems to be quite fancy. Analysis shows that it seems like the life support system on the ship failed. Lookin at the computer system, most of the logs seem quite corrupted, however, I was able to recover some audio in part. Seems to be from the end of the black box. Let me play it back for you"]]))
+"This derelict seems to be quite fancy. Analysis shows that it seems like the life support system on the ship failed. Looking at the computer system, most of the logs seem quite corrupted, however, I was able to recover some audio in part. Seems to be from the end of the black box. Let me play it back for you"]]))
          vn.disappear( sai, tut.shipai.transition )
 
          vn.scene()
-         local v01 = vn.newCharacter( poi.vn_soundonly( _("01"), {color={0.9,0.2,0.2}} ) )
+         local v01 = vn.newCharacter( vni.soundonly( _("01"), {color={0.9,0.2,0.2}} ) )
          vn.transition()
 
          vn.na(_([[BEGIN PLAYBACK OF AUDIO DATA]]))

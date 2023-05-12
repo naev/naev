@@ -13,7 +13,7 @@
  </presence>
  <general>
   <class>M</class>
-  <population>3.1e+09</population>
+  <population>3.1e+07</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -34,4 +34,8 @@
   <item>Light Civilian Combat Ships</item>
   <item>Sirius Elite Outfits</item>
  </tech>
+ <tags>
+  <tag>rich</tag>
+  <tag>tourism</tag>
+ </tags>
 </spob>

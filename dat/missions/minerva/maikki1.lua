@@ -39,6 +39,7 @@ local vn = require 'vn'
 local love_shaders = require 'love_shaders'
 local fmt = require "format"
 local lmisn = require "lmisn"
+local cinema = require "cinema"
 
 local maikki_portrait = minerva.maikki.portrait
 
@@ -61,8 +62,6 @@ local stealthsys = system.get("Zerantix")
 mem.misn_state = nil
 local pscavA, pscavB, stealthmessages, waypoints, wreck -- Non-persistent state
 local scavengers_encounter -- Forward-declared functions
--- luacheck: globals board_wreck cutscene_hail cutscene_timeout cutscene_timer enter generate_npc scav_attacked stealthbroadcast stealthheartbeat stealthstart stealthstartanimation wreckcutscene (Hook functions passed by name)
--- luacheck: globals approach_maikki approach_oldman approach_scavengers (NPC functions passed by name)
 
 function create ()
    if not misn.claim( {cutscenesys, stealthsys} ) then
@@ -96,7 +95,7 @@ end
 
 
 function generate_npc ()
-   if spob.cur() == spob.get("Cerberus") then
+   if spob.cur() == spob.get("Cerberus Outpost") then
       misn.npcAdd( "approach_oldman", _("Old Man"), oldman_portrait, _("You see a nonchalant old man sipping on his drink with a carefree aura.") )
       if mem.misn_state==3 or mem.misn_state==4 or mem.bribed_scavengers==true then
          misn.npcAdd( "approach_scavengers", minerva.scavengers.name, minerva.scavengers.portrait, minerva.scavengers.description )
@@ -204,7 +203,7 @@ She starts eating the parfait, which seems to be larger than her head.]]))
    maikki(_([["My mother died without telling me, but, after her death, while going through her stuff, I found out that my father was the famous Kex McPherson!"]]))
    maikki(_([["Apparently, one day he went into the nebula with his business partner Mireia and they were never seen again. All attempts to find them failed."]]))
    maikki(_([["Most people believe they are dead, but I think he was kidnapped and is being held here. Maybe he hit his head and even forgot who he was!"]]))
-   maikki(_([["I don't have a spaceship, but while I look around here, could you try to look for hints around where he went missing? I heard he was very fond of the Cerberus bar in Doeston. Maybe there is a hint there."]]))
+   maikki(_([["I don't have a spaceship, but while I look around here, could you try to look for hints around where he went missing? I heard he was very fond of the Cerberus Outpost bar in Doeston. Maybe there is a hint there."]]))
    vn.func( function ()
       if mem.misn_state < 0 then
          mem.misn_state = 0
@@ -478,7 +477,7 @@ function cutscene_timer ()
          mem.cuttimeout = nil
       end
       if mem.sysmarker then
-         system.mrkRm( mem.sysmarker )
+         system.markerRm( mem.sysmarker )
          mem.sysmarker = nil
       end
    else
@@ -493,7 +492,7 @@ end
 
 function cutscene_timeout ()
    player.msg(_("#pYour ship has detected a curious signal originating from inside the system.#0"))
-   mem.sysmarker = system.mrkAdd( pscavB:pos(), _("Curious Signal") )
+   mem.sysmarker = system.markerAdd( pscavB:pos(), _("Curious Signal") )
    mem.cuttimeout = nil
 end
 
@@ -556,7 +555,7 @@ function stealthstart ()
 
    -- Start the cinematics
    mem.stealthanimation = 0
-   player.cinematics( true )
+   cinema.on()
    camera.set( waypoints[1] )
    hook.timer( 1.0, "stealthstartanimation" )
 end
@@ -581,7 +580,7 @@ function stealthstartanimation ()
       hook.timer( 4.0, "stealthstartanimation" )
    elseif mem.stealthanimation==6 then
       -- Back to player
-      player.cinematics( false )
+      cinema.off()
       camera.set()
       player.pilot():control(false)
       mem.stealthtarget = 0
@@ -691,9 +690,7 @@ function stealthheartbeat ()
                p:brake()
                p:face( wreck )
             end
-            pp:control()
-            pp:brake()
-            player.cinematics( true )
+            cinema.on()
             camera.set( waypoints[ #waypoints ] )
             mem.wreckscene = 0
             hook.timer( 3.0, "wreckcutscene" )
@@ -750,9 +747,7 @@ function wreckcutscene ()
    elseif mem.wreckscene==5 then
       scavengers_encounter()
       mem.found_wreck = true
-      local pp = player.pilot()
-      pp:control( false )
-      player.cinematics( false )
+      cinema.off()
       camera.set()
       return
    end

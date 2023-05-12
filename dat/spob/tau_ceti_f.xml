@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Tau Ceti f">
+ <pos x="-12736.602642" y="771.189221"/>
+ <GFX>
+  <space>J00.webp</space>
+  <exterior>desertic2.webp</exterior>
+ </GFX>
+ <general>
+  <class>J</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

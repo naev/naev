@@ -19,9 +19,9 @@ local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
 local fmt = require "format"
 local lmisn = require "lmisn"
+local cinema = require "cinema"
 
 local dv_ships, emp_ships, flf_ships, flf_base -- State of battle phase (jumping out to save not allowed).
--- luacheck: globals enter_bar jumpin land pilot_attacked_sindbad pilot_death_emp pilot_death_sindbad takeoff takeoff_abort timer_end timer_plcontrol timer_thurion (Hook functions passed by name)
 
 -- Event constants
 local emp_srcsys = system.get( "Arcanis" )
@@ -53,7 +53,6 @@ function enter_bar ()
       hook.rm( mem.bar_hook )
       hook.rm( mem.abort_hook )
       music.play( "tension.ogg" )
-      var.push( "music_off", true )
       tk.msg( _("Catastrophe Looms"), _([[As you enter the bar on Sindbad, you immediately know that something is wrong. Everyone is frantic and you sense dread around your comrades. You are about to ask around when Benito approaches.]]) )
       tk.msg( _("Catastrophe Looms"), fmt.f( _([["{player}, it's horrible," she says with a look of dread in her eyes. "They found us. The damn Empire found us! I'm going to be frank, I don't even know if we can survive this." You stammer for a moment. No, it can't be true! It has to be some mistake! How can the FLF be defeated like this? Now the commotion makes perfect sense.
     "It's those damn traitors!" Benito continues. "One of them went off and told the Empire where our base is, and they even told them where our hidden jumps are! This is terrible!"]]), {player=player.name()} ) )
@@ -61,7 +60,6 @@ function enter_bar ()
     Benito clears her throat. "But I'm sure you can guess what your mission is. You need to join with the others in the fight against the incoming Empire ships. You have to destroy all of the ships. I will be here helping to man the station; our defences are weak, but better than nothing."]]), {sys=emp_srcsys, player=player.name()} ) )
       tk.msg( _("Catastrophe Looms"), _([[Silence seems to engulf the room. You see the mouths of your comrades frantically talking, but you cannot hear them. Benito puts her hand on your shoulder and looks at you in the eye. "Don't die, soldier," she says, only this time, it's not in the usual playful tone you tend to expect of her. She then hurriedly exits toward the station's weapon controls room.]]) )
       tk.msg( _("Catastrophe Looms"), _([[There's no time to lose. You go to the hangar bay and immediately take off.]]) )
-      var.pop( "music_off" )
 
       mem.takeoff_hook = hook.enter( "takeoff" )
       player.takeoff()
@@ -223,8 +221,7 @@ function pilot_death_sindbad( pilot, attacker, _arg )
    music.play( "machina.ogg" )
    var.push( "music_wait", true )
 
-   player.pilot():setInvincible()
-   player.cinematics()
+   cinema.on()
    camera.set( flf_base, true )
 
    tk.msg( _("Escape and Live On"), _([[As the last shot penetrates the hull of Sindbad, a sense of dread comes over you. The FLF, Benito, your comrades... no...
@@ -242,8 +239,8 @@ end
 
 
 function timer_plcontrol ()
+   cinema.off()
    camera.set( player.pilot(), true )
-   player.cinematics( false )
    hook.timer( 2.0, "timer_end" )
 end
 

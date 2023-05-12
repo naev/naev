@@ -2,11 +2,10 @@
 <ssys name="Eiderdown">
  <general>
   <radius>17500.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="1098.787195" y="-650.145111"/>
+ <pos x="1290.198607" y="-514.589556"/>
  <spobs>
   <spob>Adrian</spob>
   <spob>Eiderdown I</spob>
@@ -17,7 +16,7 @@
  </spobs>
  <jumps>
   <jump target="Churchill">
-   <pos x="-12712.101440" y="-29431.191500"/>
+   <pos x="-9902.466534" y="-15405.908775"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Gilligan's Tomb">
@@ -25,7 +24,11 @@
    <hide>0.000000</hide>
   </jump>
   <jump target="Herakin">
-   <pos x="25532.127636" y="-19674.201177"/>
+   <pos x="17781.185034" y="-14440.658736"/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Margarita">
+   <autopos/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Palovi">

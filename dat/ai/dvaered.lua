@@ -22,6 +22,7 @@ local taunt_list_default = {
    _("You're no match for the Dvaered!"),
    _("Death awaits you!")
 }
+tmergei( taunt_list_warship, taunt_list_default ) -- Add default to warship
 
 -- Create function
 function create ()
@@ -94,7 +95,7 @@ function taunt ( target, _offense )
    if mem.istransport then
       taunts = taunt_list_default
    else
-      taunts = tmerge( taunt_list_warship, taunt_list_default )
+      taunts = taunt_list_warship
    end
 
    ai.pilot():comm( target, taunts[ rnd.rnd(1,#taunts) ] )

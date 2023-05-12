@@ -295,9 +295,9 @@ intrinsics["Soromid Nyx"] = {
       },
    },
    {
-      name = _("Gene Drive Growth I"),
-      outfit = "Largus Gene Drive II",
-      slot = "genedrive",
+      name = _("Cortex Growth II"),
+      outfit = "Largus Cortex III",
+      slot = "shell",
    },
    {
       name = _("Weapon Organ Growth II"),
@@ -653,6 +653,72 @@ intrinsics["Soromid Arx"] = {
       slot = {
          "rightweap",
          "leftweap",
+      },
+   },
+}
+
+-- Revenant (Corvette) intrinsics
+intrinsics["Pirate Revenant"] = {
+   maxstage = 5, -- 2 stages below
+   {
+      name = _("Innate"),
+      outfit = {
+         "Mediocre Cerebrum I",
+         "Mediocris Cortex I",
+         "Mediocris Gene Drive I",
+         "Talon Organ I",
+         "Talon Organ I",
+      },
+      slot = {
+         "brain",
+         "shell",
+         "genedrive",
+         "weap1",
+         "weap2",
+      },
+   },
+   {
+      name = _("Growth I"),
+      outfit = {
+         "Mediocris Cortex II",
+         "Mediocris Gene Drive II",
+      },
+      slot = {
+         "shell",
+         "genedrive",
+      },
+   },
+   {
+      name = _("Weapon Organ Growth I"),
+      outfit = {
+         "Talon Organ II",
+         "Talon Organ II",
+      },
+      slot = {
+         "weap1",
+         "weap2",
+      },
+   },
+   {
+      name = _("Growth II"),
+      outfit = {
+         "Mediocre Cerebrum II",
+         "Mediocris Gene Drive III",
+      },
+      slot = {
+         "brain",
+         "genedrive",
+      },
+   },
+   {
+      name = _("Weapon Organ Growth II"),
+      outfit = {
+         "Talon Organ III",
+         "Talon Organ III",
+      },
+      slot = {
+         "weap1",
+         "weap2",
       },
    },
 }

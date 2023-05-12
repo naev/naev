@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Nirtos">
+ <general>
+  <radius>15000.000000</radius>
+  <spacedust>400</spacedust>
+  <interference>93.825000</interference>
+  <nebula volatility="14.800000" hue="300.000000">500.000000</nebula>
+  <nolanes/>
+ </general>
+ <pos x="820.423656" y="632.418811"/>
+ <spobs>
+  <spob_virtual>Pirate All Unpresence (Range 1)</spob_virtual>
+ </spobs>
+ <jumps>
+  <jump target="Sagittarius">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Syndania">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+ </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
+</ssys>

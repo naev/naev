@@ -24,12 +24,11 @@ local flf = require "missions.flf.flf_common"
 
 local civ_fleet, dv_base, dv_fleet, flf_fleet, pir_boss, pir_fleet -- Non-persistent state
 local finish -- Forward-declared functions
--- luacheck: globals enter hail land pilot_attacked pilot_attacked_civilian pilot_attacked_station pilot_death_civilian pilot_death_kestrel pilot_death_station timer_pirates timer_start (Hook functions passed by name)
 
 mem.osd_desc    = {}
 mem.osd_desc[1] = _("Fly to the {sys} system and meet with the group of FLF ships")
 mem.osd_desc[2] = _("Wait until the coast is clear, then hail one of your wingmates")
-mem.osd_desc[3] = _("Attack Raglan Outpost until it is destroyed")
+mem.osd_desc[3] = _("Attack Fort Raglan until it is destroyed")
 mem.osd_desc[4] = _("Return to FLF base")
 
 function create ()
@@ -44,15 +43,15 @@ end
 
 function accept ()
    if tk.yesno( _("Here we go again"), fmt.f( _([["{player}, we were just saying you should join in on this one! It's another great assault against the Dvaered oppressors, and we'd like you to lead the way to victory once again! Are you in?"]]), {player=player.name()} ) ) then
-      tk.msg( _("Another Decisive Strike"), _([["Excellent!" You take a seat. "So once again, our mission today is the destruction of a loathed Dvaered base: Raglan Outpost! The plan is pretty much the same as before: we have tasked a group of pirates with creating a disturbance nearby, and we have planted a bomb within the outpost to aid in its destruction. You just need to decide when to strike and let your teammates know.
-    The one thing that will be different, though, is that you're likely to find more Dvaered ships guarding Raglan Outpost compared to Raelid Outpost, and it might be a little harder to destroy. So be extra careful!" Time to get your ship ready for battle, then.]]) )
+      tk.msg( _("Another Decisive Strike"), _([["Excellent!" You take a seat. "So once again, our mission today is the destruction of a loathed Dvaered base: Fort Raglan! The plan is pretty much the same as before: we have tasked a group of pirates with creating a disturbance nearby, and we have planted a bomb within the outpost to aid in its destruction. You just need to decide when to strike and let your teammates know.
+    The one thing that will be different, though, is that you're likely to find more Dvaered ships guarding Fort Raglan compared to Fort Raelid, and it might be a little harder to destroy. So be extra careful!" Time to get your ship ready for battle, then.]]) )
 
       misn.accept()
 
       mem.osd_desc[1] = fmt.f( mem.osd_desc[1], {sys=mem.missys} )
       misn.osdCreate( _("Assault on Haleb"), mem.osd_desc )
       misn.setTitle( _("Assault on Haleb") )
-      misn.setDesc( _("Join with the other FLF pilots for the assault on Raglan Outpost.") )
+      misn.setDesc( _("Join with the other FLF pilots for the assault on Fort Raglan.") )
       mem.marker = misn.markerAdd( mem.missys, "plot" )
       misn.setReward( _("Another great victory against the Dvaereds") )
 
@@ -87,10 +86,10 @@ function enter ()
          pilot.clear()
          pilot.toggleSpawn( false )
 
-         local ro = spob.get( "Raglan Outpost" )
+         local ro = spob.get( "Fort Raglan" )
 
-         -- Spawn Raglan Outpost ship
-         dv_base = pilot.add( "Raglan Outpost", "Dvaered", ro:pos() , nil, {ai="dvaered_norun"} )
+         -- Spawn Fort Raglan ship
+         dv_base = pilot.add( "Fort Raglan", "Dvaered", ro:pos() , nil, {ai="dvaered_norun", naked=true} )
          dv_base:outfitRm( "all" )
          dv_base:outfitRm( "cores" )
          dv_base:outfitAdd( "Dummy Systems" )
@@ -305,7 +304,7 @@ function finish ()
    player.pay( mem.credits )
    flf.setReputation( 90 )
    faction.get("FLF"):modPlayer( mem.reputation )
-   flf.addLog( _([[You led the charge to destroy Raglan Outpost, a source of deep penetration of Dvaered forces into the Frontier. As a result, Dvaered forces have started to be pushed out of Frontier space, the first time the FLF has ever done so and a major victory for the Frontier.]]) )
+   flf.addLog( _([[You led the charge to destroy Fort Raglan, a source of deep penetration of Dvaered forces into the Frontier. As a result, Dvaered forces have started to be pushed out of Frontier space, the first time the FLF has ever done so and a major victory for the Frontier.]]) )
    misn.finish( true )
 end
 

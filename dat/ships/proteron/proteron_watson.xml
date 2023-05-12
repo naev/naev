@@ -2,39 +2,43 @@
 <ship name="Proteron Watson">
  <points>200</points>
  <base_type>Watson</base_type>
- <GFX size="130" sx="12" sy="12">watson</GFX>
+ <GFX size="124" sx="12" sy="12">watson</GFX>
  <rarity>3</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Carrier</class>
- <price>9800000</price>
+ <price>11000000</price>
  <time_mod>1.5</time_mod>
- <trail_generator x="-55" y="0" h="5">nebula</trail_generator>
- <trail_generator x="-55" y="0" h="-5">nebula</trail_generator>
- <trail_generator x="-55" y="12" h="0" />
- <trail_generator x="-55" y="-12" h="0" />
+ <trail_generator x="-48" y="4" h="6">proteron</trail_generator>
+ <trail_generator x="-48" y="4" h="-6">proteron</trail_generator>
+ <trail_generator x="-48" y="-4" h="6">proteron</trail_generator>
+ <trail_generator x="-48" y="-4" h="-6">proteron</trail_generator>
+ <trail_generator x="-5" y="22" h="0" always_under="1">nebula</trail_generator>
+ <trail_generator x="-5" y="-22" h="0" always_under="1">nebula</trail_generator>
  <fabricator>Proteron</fabricator>
  <license>Heavy Combat Vessel</license>
+ <cond>faction.playerStanding("Proteron") &gt;= 70</cond>
+ <condstr>You need at least 70 reputation with the Proteron.</condstr>
  <description>The heart of the Proteron battle fleet is formed by the Watson. Acting as a mobile launch base as well as a command and control unit, this vessel co-ordinates the rest of the fleet in the fight for dominance over the galaxy.</description>
  <health>
-  <armour>1200</armour>
+  <armour>1800</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>65</crew>
-  <mass>1800</mass>
+  <mass>2100</mass>
   <fuel_consumption>400</fuel_consumption>
   <cargo>70</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="40" y="0" h="2" />
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="25" y="0" h="2" />
-  <weapon size="large" x="12" y="-6" h="0" />
-  <weapon size="large" x="12" y="6" h="0" />
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="0" y="0" h="7" />
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="0" y="0" h="7" />
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="-15" y="0" h="7" />
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="-33" y="0" h="7" />
+  <weapon size="large" x="-9" y="3" h="4" />
+  <weapon size="large" x="-9" y="-3" h="4" />
+  <weapon size="large" prop="fighter_bay" exclusive="1" x="3" y="-10" h="2" />
+  <weapon size="large" prop="fighter_bay" exclusive="1" x="3" y="10" h="2" />
+  <weapon size="large" prop="fighter_bay" exclusive="1" x="9" y="-10" h="2" />
+  <weapon size="large" prop="fighter_bay" exclusive="1" x="9" y="10" h="2" />
+  <weapon size="large" prop="fighter_bay" exclusive="1" x="14" y="-10" h="2" />
+  <weapon size="large" prop="fighter_bay" exclusive="1" x="14" y="10" h="2" />
   <utility size="large" prop="systems">Unicorp PT-2200 Core System</utility>
   <utility size="large" prop="accessory" />
   <utility size="large" />
@@ -53,11 +57,14 @@
   <structure size="large" />
  </slots>
  <stats>
+  <speed_mod>-10</speed_mod>
+  <armour_mod>10</armour_mod>
   <armour_regen_mod>-10</armour_regen_mod>
-  <shield_mod>5</shield_mod>
-  <shield_regen_mod>10</shield_regen_mod>
+  <shield_mod>20</shield_mod>
+  <shield_regen_mod>20</shield_regen_mod>
   <heat_dissipation>15</heat_dissipation>
   <misc_instant_jump>1</misc_instant_jump>
+  <fbay_capacity>20</fbay_capacity>
  </stats>
  <tags>
   <tag>proteron</tag>

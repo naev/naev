@@ -2,7 +2,15 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Empire Shipping">
  <priority>3</priority>
- <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+ <cond>
+   if faction.playerStanding("Empire") &lt; 0 then
+      return false
+   end
+   if var.peek("es_cargo") ~= true then
+      return false
+   end
+   return require("misn_test").computer()
+ </cond>
  <chance>350</chance>
  <done>Empire Recruitment</done>
  <location>Computer</location>
@@ -19,8 +27,7 @@ local car = require "common.cargo"
 local fmt = require "format"
 local lmisn = require "lmisn"
 local emp = require "common.empire"
-
--- luacheck: globals land tick (Hook functions passed by name)
+local vntk = require "vntk"
 
 local piracyrisk = {}
 piracyrisk[1] = _("#nPiracy Risk:#0 None")
@@ -52,12 +59,12 @@ function create()
    local stuperpx   = 0.3 - 0.015 * mem.tier
    local stuperjump = 11000 - 75 * mem.tier
    local stupertakeoff = 15000
-   mem.timelimit  = time.get() + time.create(0, 0, mem.traveldist * stuperpx + mem.numjumps * stuperjump + stupertakeoff + 480 * mem.numjumps)
+   mem.timelimit  = time.get() + time.new(0, 0, mem.traveldist * stuperpx + mem.numjumps * stuperjump + stupertakeoff + 480 * mem.numjumps)
 
    -- Allow extra time for refuelling stops.
    local jumpsperstop = 3 + math.min(mem.tier, 2)
    if mem.numjumps > jumpsperstop then
-      mem.timelimit:add(time.create( 0, 0, math.floor((mem.numjumps-1) / jumpsperstop) * stuperjump ))
+      mem.timelimit:add(time.new( 0, 0, math.floor((mem.numjumps-1) / jumpsperstop) * stuperjump ))
    end
 
    --Determine risk of piracy
@@ -86,21 +93,21 @@ function create()
          {pnt=mem.destplanet, sys=mem.destsys, tonnes=fmt.tonnes(mem.amount)} ) )
    misn.markerAdd(mem.destplanet, "computer")
    car.setDesc( fmt.f(_("Official Empire cargo transport to {pnt} in the {sys} system."), {pnt=mem.destplanet, sys=mem.destsys} ), mem.cargo, mem.amount, mem.destplanet, mem.timelimit, piracyrisk )
-   misn.setReward( fmt.credits(mem.reward) )
+   misn.setReward(mem.reward)
 end
 
 -- Mission is accepted
 function accept()
    local playerbest = car.getTransit( mem.numjumps, mem.traveldist )
    if mem.timelimit < playerbest then
-      if not tk.yesno( _("Too slow"), fmt.f(
+      if not vntk.yesno( _("Too slow"), fmt.f(
             _("This shipment must arrive within {time_limit}, but it will take at least {time} for your ship to reach {pnt}, missing the deadline. Accept the mission anyway?"),
 	    {time_limit=(mem.timelimit - time.get()), time=(playerbest - time.get()), pnt=mem.destplanet} ) ) then
          return
       end
    end
    if player.pilot():cargoFree() < mem.amount then
-      tk.msg( _("No room in ship"), fmt.f(
+      vntk.msg( _("No room in ship"), fmt.f(
          _("You don't have enough cargo space to accept this mission. It requires {tonnes_free} of free space ({tonnes_short} more than you have)."),
          { tonnes_free = fmt.tonnes(mem.amount), tonnes_short = fmt.tonnes( mem.amount - player.pilot():cargoFree() ) } ) )
       return
@@ -109,18 +116,18 @@ function accept()
    misn.accept()
 
    mem.carg_id = misn.cargoAdd( mem.cargo, mem.amount )
-   tk.msg( _("Mission Accepted"), fmt.f(
+   vntk.msg( _("Mission Accepted"), fmt.f(
       _("The Empire workers load the {tonnes} of {cargo} onto your ship."),
       {tonnes=fmt.tonnes(mem.amount), cargo=_(mem.cargo)} ) )
    hook.land( "land" ) -- only hook after accepting
-   hook.date(time.create(0, 0, 100), "tick") -- 100STU per tick
+   hook.date(time.new(0, 0, 100), "tick") -- 100STU per tick
    tick() -- set OSD
 end
 
 -- Land hook
 function land()
    if spob.cur() == mem.destplanet then
-      tk.msg( _("Successful Delivery"), fmt.f(
+      vntk.msg( _("Successful Delivery"), fmt.f(
          _("The Empire workers unload the {cargo} at the docks."), {cargo=_(mem.cargo)} ) )
       player.pay(mem.reward)
       local n = var.peek("es_misn")

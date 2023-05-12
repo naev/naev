@@ -3,30 +3,18 @@
  <general>
   <background>nebu_cats_paw</background>
   <radius>7000.000000</radius>
-  <stars>500</stars>
+  <spacedust>500</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="-67.166667" y="-872.166667"/>
+ <pos x="-631.782464" y="-142.704558"/>
  <spobs>
   <spob>Bon Sebb</spob>
   <spob>Sixbat Station</spob>
+  <spob>Wormhole Zied</spob>
   <spob_virtual>Miner Local</spob_virtual>
  </spobs>
- <jumps>
-  <jump target="Amaroq">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Pudas">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Sheffield">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
- </jumps>
+ <jumps/>
  <asteroids>
   <asteroid>
    <group>typeA-rich</group>

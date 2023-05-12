@@ -13,6 +13,10 @@ int osd_active( unsigned int osd, int msg );
 int osd_getActive( unsigned int osd );
 char *osd_getTitle( unsigned int osd );
 char **osd_getItems( unsigned int osd );
+int osd_setHide( unsigned int osd, int state );
+int osd_getHide( unsigned int osd );
+int osd_setPriority( unsigned int osd, int priority );
+int osd_getPriority( unsigned int osd );
 
 /*
  * Subsystem usage.

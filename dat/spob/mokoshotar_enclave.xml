@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Mokoshotar Enclave">
+ <lua>spob/lua/empire_mil_restricted.lua</lua>
+ <pos x="-3860.547659" y="3407.931727"/>
+ <GFX>
+  <space>station-cylinder.webp</space>
+  <exterior>traderoom.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <base>150.000000</base>
+  <bonus>50.000000</bonus>
+  <range>4</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>17500</population>
+  <hide>2.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>This station protects the Empire's north-western flank from incursions. It is a modern station, with a large complement of crew and ships to protect the local space. However, the occasional pirate still slips through, but not in enough numbers to be a true threat.</description>
+  <bar>The bar is clean and orderly, and there are several bartenders tending to the needs of the patrons. Several officers come and go to talk to the men in here.</bar>
+ </general>
+ <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Low</item>
+  <item>Hulls Medium</item>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
+  <item>Low Tech Upgrades</item>
+  <item>Missiles 1</item>
+ </tech>
+ <tags>
+  <tag>restricted</tag>
+  <tag>military</tag>
+  <tag>station</tag>
+ </tags>
+</spob>

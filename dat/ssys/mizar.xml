@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ssys name="Mizar">
  <general>
+  <background>mizar</background>
+  <map_shader>mizar_map.frag</map_shader>
   <radius>22575.000000</radius>
-  <stars>500</stars>
-  <interference>5.882353</interference>
-  <nebula volatility="0.000000" hue="100.000000">100.000000</nebula>
+  <spacedust>0</spacedust>
+  <interference>47.000000</interference>
  </general>
- <pos x="254.000000" y="609.000000"/>
+ <pos x="489.802768" y="676.911652"/>
  <spobs>
   <spob>Ahmed</spob>
   <spob>Mizar III</spob>
   <spob>Mizar IV</spob>
   <spob>Mizar VI</spob>
-  <spob>Westeros Station</spob>
+  <spob>Westeros Nest</spob>
  </spobs>
  <jumps>
   <jump target="Hatter">
-   <pos x="-7960.892232" y="-26332.526438"/>
+   <pos x="-7497.160623" y="-20966.489252"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Possum">

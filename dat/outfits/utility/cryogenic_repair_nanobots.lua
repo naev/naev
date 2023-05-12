@@ -1,3 +1,5 @@
+notactive = true
+
 function init( _p, po )
    po:clear()
 end

@@ -23,6 +23,9 @@
 #elif HAVE_F77BLAS_H
 #   include <f77blas.h>
 #   define I_LOVE_FORTRAN 1
+#elif HAVE_OPENBLAS_F77BLAS_H
+#   include <openblas/f77blas.h>
+#   define I_LOVE_FORTRAN 1
 #endif
 
 #if HAVE_SUITESPARSE_CHOLMOD_H
@@ -358,12 +361,15 @@ static void safelanes_initStacks_vertex (void)
    tmp_jump_edges = array_create( Edge );
    for (int system=0; system<array_size(systems_stack); system++) {
       const StarSystem *sys = &systems_stack[system];
-
-      if (sys_isFlag( sys, SYSTEM_NOLANES ))
+      if (sys_isFlag( sys, SYSTEM_NOLANES )) {
+         array_push_back( &sys_to_first_vertex, array_size(vertex_stack) );
          continue;
+      }
 
       for (int i=0; i<array_size(sys->spobs); i++) {
          const Spob *p = sys->spobs[i];
+         if (spob_isFlag( p, SPOB_NOLANES ))
+            continue;
          if (p->presence.base!=0. || p->presence.bonus!=0.) {
             Vertex v = {.system = system, .type = VERTEX_SPOB, .index = i};
             array_push_back( &tmp_spob_indices, array_size(vertex_stack) );
@@ -373,21 +379,22 @@ static void safelanes_initStacks_vertex (void)
 
       for (int i=0; i<array_size(sys->jumps); i++) {
          const JumpPoint *jp = &sys->jumps[i];
-         if (!jp_isFlag( jp, JP_HIDDEN | JP_EXITONLY )) {
-            Vertex v = {.system = system, .type = VERTEX_JUMP, .index = i};
-            array_push_back( &vertex_stack, v );
-            if (jp->targetid < system && jp->returnJump != NULL)
-               for (int j=sys_to_first_vertex[jp->targetid]; j < sys_to_first_vertex[1+jp->targetid]; j++)
-                  if (vertex_stack[j].type == VERTEX_JUMP && jp->returnJump == &jp->target->jumps[vertex_stack[j].index]) {
-                     array_push_back_edge( &tmp_jump_edges, array_size(vertex_stack)-1, j );
-                     break;
-                  }
-         }
+         if (jp_isFlag( jp, JP_HIDDEN | JP_EXITONLY | JP_NOLANES ))
+            continue;
+         Vertex v = {.system = system, .type = VERTEX_JUMP, .index = i};
+         array_push_back( &vertex_stack, v );
+         if (jp->targetid < system && jp->returnJump != NULL)
+            for (int j=sys_to_first_vertex[jp->targetid]; j < sys_to_first_vertex[1+jp->targetid]; j++)
+               if (vertex_stack[j].type == VERTEX_JUMP && jp->returnJump == &jp->target->jumps[vertex_stack[j].index]) {
+                  array_push_back_edge( &tmp_jump_edges, array_size(vertex_stack)-1, j );
+                  break;
+               }
       }
+
       array_push_back( &sys_to_first_vertex, array_size(vertex_stack) );
    }
-   array_shrink( &vertex_stack );
-   array_shrink( &sys_to_first_vertex );
+   //array_shrink( &vertex_stack );
+   //array_shrink( &sys_to_first_vertex );
 
    vertex_fmask = calloc( array_size(vertex_stack), sizeof(FactionMask) );
 }
@@ -457,8 +464,11 @@ static void safelanes_initStacks_faction (void)
    systems_stack = system_getAll();
    for (int fi=0; fi<array_size(faction_stack); fi++) {
       array_push_back( &presence_budget, array_create_size( double, array_size(systems_stack) ) );
-      for (int s=0; s<array_size(systems_stack); s++)
-         array_push_back( &presence_budget[fi], system_getPresence( &systems_stack[s], faction_stack[fi].id ) );
+      for (int s=0; s<array_size(systems_stack); s++) {
+         const StarSystem *sys = &systems_stack[s];
+         double budget = system_getPresence( sys, faction_stack[fi].id );
+         array_push_back( &presence_budget[fi], budget );
+      }
    }
 }
 

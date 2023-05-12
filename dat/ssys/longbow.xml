@@ -2,11 +2,10 @@
 <ssys name="Longbow">
  <general>
   <radius>19000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="438.135413" y="819.263591"/>
+ <pos x="792.747267" y="770.365623"/>
  <spobs>
   <spob>Jaxheen</spob>
   <spob>Longbow I</spob>
@@ -16,6 +15,10 @@
   <spob>Tummalin</spob>
  </spobs>
  <jumps>
+  <jump target="Herculis">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Moor">
    <autopos/>
    <hide>1.000000</hide>

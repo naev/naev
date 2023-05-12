@@ -3,7 +3,7 @@
  <points>60</points>
  <base_type>Phalanx</base_type>
  <GFX size="95" sx="10" sy="10">phalanx</GFX>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Corvette</class>
  <price>850000</price>

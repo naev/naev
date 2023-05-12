@@ -1,6 +1,7 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <outfit name="Map: Empire Core">
  <general>
+  <rarity>0</rarity>
   <mass>0</mass>
   <price>25000</price>
   <description>This map lists the locations of all Imperial worlds and stations close to the Imperial capital.</description>
@@ -16,6 +17,7 @@
    <spob>Emperor's Fist</spob>
    <spob>Emperor's Wrath</spob>
    <spob>Halir</spob>
+   <spob>Hypergate Gamma Polaris</spob>
    <spob>New Deimos</spob>
    <spob>New Mars</spob>
    <spob>New Phobos</spob>
@@ -27,6 +29,7 @@
    <jump>Gamma Polaris</jump>
    <jump>Koralis</jump>
    <spob>Ammu</spob>
+   <spob>Melendez Dome</spob>
    <spob>Qex II</spob>
    <spob>Qex IV</spob>
    <spob>Qex V</spob>
@@ -48,7 +51,7 @@
    <jump>Gamma Polaris</jump>
    <spob>Doormat</spob>
    <spob>Rogan</spob>
-   <spob>Sirou Alpha</spob>
+   <spob>Sirou Enclave</spob>
    <spob>Sirou I</spob>
    <spob>Sirou II</spob>
    <spob>Sirou VI</spob>
@@ -62,6 +65,7 @@
   </sys>
   <sys name="Apez">
    <jump>Gamma Polaris</jump>
+   <jump>Hekaras</jump>
    <jump>Mural</jump>
    <spob>Apez II</spob>
    <spob>Apez V</spob>
@@ -83,9 +87,17 @@
    <jump>Apez</jump>
    <spob>Amphion</spob>
    <spob>Hrimfaxi</spob>
-   <spob>Janus Station</spob>
+   <spob>Janus Enclave</spob>
    <spob>Scinfaxi</spob>
    <spob>Zethus</spob>
+  </sys>
+  <sys name="Hekaras">
+   <jump>Apez</jump>
+   <spob>Hekaras III</spob>
+   <spob>Hekaras IV</spob>
+   <spob>Hurada</spob>
+   <spob>Three and a Half Kings</spob>
+   <spob>Vino</spob>
   </sys>
  </specific>
 </outfit>

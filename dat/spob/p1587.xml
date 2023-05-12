@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="P-1587">
+ <pos x="-5635.272211" y="1375.538886"/>
+ <GFX>
+  <space>D00.webp</space>
+  <exterior>uninhabited-rocky-airless-04.webp</exterior>
+ </GFX>
+ <general>
+  <class>D</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>An atmosphere-less amalgam of rock, likely created by the concentration of asteroids that ended up reaching a critical mass becoming stable and having its own gravitational pull. While it is likely that there are rare resources in under the planet's mantle, it is likely much easier to obtain them from the nearby asteroid fields that originally gave birth to this planet.</description>
+ </general>
+</spob>

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Sirius Shipyards">
  <lua>spob/lua/sirius_mil_restricted.lua</lua>
- <pos x="30766.666667" y="7166.666667"/>
+ <pos x="20763.313394" y="4318.029642"/>
  <GFX>
   <space>station-shipyard2.webp</space>
   <exterior>station04.webp</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>150.000000</base>
-  <bonus>100.000000</bonus>
+  <base>100.000000</base>
+  <bonus>60.000000</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>0</class>
-  <population>4000</population>
-  <hide>2.000000</hide>
+  <population>40000</population>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -30,5 +30,7 @@
  </tech>
  <tags>
   <tag>restricted</tag>
+  <tag>station</tag>
+  <tag>shipbuilding</tag>
  </tags>
 </spob>

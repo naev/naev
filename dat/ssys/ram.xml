@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ssys name="Ram">
  <general>
+  <background>haze</background>
+  <map_shader>haze_map.frag</map_shader>
+  <features>#rHaze (-50% Shield and Shield Regen)#0</features>
   <radius>15000.000000</radius>
-  <stars>400</stars>
-  <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>33.750000</interference>
  </general>
- <pos x="23.808800" y="751.692000"/>
+ <pos x="345.019617" y="887.774032"/>
  <spobs/>
  <jumps>
   <jump target="Hadosh">
@@ -18,4 +20,11 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <stats>
+  <shield_mod>-50.000000</shield_mod>
+  <shield_regen_mod>-50.000000</shield_regen_mod>
+ </stats>
+ <tags>
+  <tag>haze</tag>
+ </tags>
 </ssys>

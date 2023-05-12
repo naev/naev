@@ -2,11 +2,12 @@
 <ssys name="Nasona">
  <general>
   <radius>12000.000000</radius>
-  <stars>400</stars>
-  <interference>42.857100</interference>
+  <spacedust>400</spacedust>
+  <interference>96.428500</interference>
   <nebula volatility="51.400000" hue="290.000000">700.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="606.000000" y="87.000000"/>
+ <pos x="620.095616" y="-196.984998"/>
  <spobs>
   <spob_virtual>Empire Unpresence</spob_virtual>
   <spob_virtual>Independent All Unpresence</spob_virtual>
@@ -16,9 +17,17 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Gliese Minor">
+   <autopos/>
+   <hidden/>
+   <hide>0.200000</hide>
+  </jump>
   <jump target="Polaris">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

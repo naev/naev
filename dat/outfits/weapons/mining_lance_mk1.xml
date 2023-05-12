@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Mining Lance MK1">
  <general>
-  <typename>Mining Tool</typename>
+  <typename>Mining System</typename>
   <slot>weapon</slot>
   <size>small</size>
   <mass>10</mass>

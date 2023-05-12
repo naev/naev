@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="New Xantusia">
+ <pos x="3434.141736" y="-3035.812314"/>
+ <GFX>
+  <space>moon-P03.webp</space>
+  <exterior>snowy_cliffs.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Traders Society</faction>
+  <base>120.000000</base>
+  <bonus>60.000000</bonus>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>P</class>
+  <population>700000</population>
+  <hide>0.800000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>New Xantusia is the main headquarters of the Astra Vigilis mercenary guild, one of the important members of the Space Traders Society. Being quite small in size, there is only a single city sprawling nearly a third of the planet's frozen surface. The guild motto "No Escape from the Pull of the Stars" is prominent in the large spaceport that accommodates what seems to be many mismatched combat-ready vessels. Directly accessible from the spaceport is the Astra Vigilis guildhall, with the Space Traders Society hall of guilds adjacent to it. Although most of the organizations are present, most of the people coming to the planet are those looking for dealings with Astra Vigilis members.</description>
+  <bar>The Vigilante Cantina is the place to do business on New Xantusia. Bounties and other mercenary offers are shown in real-time on the central holo-display of the cantina. Many mercenaries and bounty hunters spend their time enjoying the food and drink while keeping an eye out for a good job. Every so often a popular job will cause a spur of activity as people scramble to complete it before others.</bar>
+ </general>
+ <tech>
+  <item>Engines Low</item>
+  <item>Engines Medium</item>
+  <item>Hulls Elite</item>
+  <item>Systems Elite</item>
+  <item>Ion 1</item>
+  <item>Ion 2</item>
+  <item>Ion 3</item>
+  <item>Kinetic 1</item>
+  <item>Kinetic 2</item>
+  <item>Kinetic 3</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Star Maps</item>
+  <item>Basic Outfits 2</item>
+  <item>Basic Trade Ships</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Heavy Civilian Combat Ships</item>
+ </tech>
+ <tags>
+  <tag>trade</tag>
+ </tags>
+</spob>

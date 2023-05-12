@@ -19,7 +19,8 @@
 #include "land_outfits.h"
 #include "log.h"
 #include "map.h"
-#include "nlua_col.h"
+#include "map_overlay.h"
+#include "nlua_colour.h"
 #include "nlua_commodity.h"
 #include "nlua_faction.h"
 #include "nlua_outfit.h"
@@ -425,16 +426,21 @@ static int spobL_getLandable( lua_State *L )
 
 /**
  * @brief Gets all the spobs.
+ *    @luatparam boolean all_spob Whether or not to get all Spob, including those that may not be located in a system at the time.
  *    @luatreturn {Spob,...} An ordered list of all the spobs.
  * @luafunc getAll
  */
 static int spobL_getAll( lua_State *L )
 {
    Spob *p = spob_getAll();
+   int n = 1;
+   int all_spob = lua_toboolean(L,1);
    lua_newtable(L);
    for (int i=0; i<array_size(p); i++) {
+      if (!all_spob && !spob_hasSystem(&p[i]))
+         continue;
       lua_pushspob( L, spob_index( &p[i] ) );
-      lua_rawseti( L, -2, i+1 );
+      lua_rawseti( L, -2, n++ );
    }
    return 1;
 }
@@ -912,9 +918,11 @@ static int spobL_setKnown( lua_State *L )
    else
       spob_rmFlag( p, SPOB_KNOWN );
 
-   /* Update outfits image array. */
-   if (changed)
+   if (changed) {
+      ovr_refresh();
+      /* Update outfits image array. */
       outfits_updateEquipmentOutfits();
+   }
 
    return 0;
 }

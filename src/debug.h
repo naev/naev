@@ -23,6 +23,8 @@ typedef char DebugFlags[ DEBUG_FLAGS_MAX ];
 
 /* Initialize debugging flags. */
 extern DebugFlags debug_flags;
+
+void debug_logBacktrace (void);
 #else /* DEBUGGING */
 #define debug_isFlag(f)     0                    /**< Checks if flag f is set. */
 #define debug_rmFlag(f)     do {} while(0)       /**< Removes flag f. */

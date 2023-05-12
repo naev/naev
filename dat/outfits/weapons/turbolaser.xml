@@ -27,7 +27,7 @@
   <trackmax>24000</trackmax>
   <damage>
    <type>normal</type>
-   <penetrate>100</penetrate>
+   <penetrate>80</penetrate>
    <physical>80</physical>
   </damage>
  </specific>

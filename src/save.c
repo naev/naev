@@ -102,9 +102,9 @@ int save_all (void)
  *    @param name Name of custom snapshot.
  *    @return 0 on success.
  */
-int save_all_with_name ( char *name )
+int save_all_with_name( const char *name )
 {
-   char file[PATH_MAX], backup[PATH_MAX];
+   char file[PATH_MAX];
    const plugin_t *plugins = plugin_list();
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
@@ -129,7 +129,7 @@ int save_all_with_name ( char *name )
 
    /* Save the version and such. */
    xmlw_startElem(writer,"version");
-   xmlw_elem( writer, "naev", "%s", VERSION );
+   xmlw_elem( writer, "naev", "%s", naev_version( 0 ) );
    xmlw_elem( writer, "data", "%s", start_name() );
    xmlw_endElem(writer); /* "version" */
 
@@ -170,10 +170,11 @@ int save_all_with_name ( char *name )
    /* Back up old saved game. */
    if (!strcmp(name, "autosave")) {
       if (!save_loaded) {
+         char backup[PATH_MAX];
          snprintf(file, sizeof(file), "saves/%s/autosave.ns", player.name);
          snprintf(backup, sizeof(backup), "saves/%s/backup.ns", player.name);
          if (ndata_copyIfExists(file, backup) < 0) {
-            WARN(_("Aborting save..."));
+            WARN(_("Aborting save…"));
             goto err_writer;
          }
       }

@@ -33,10 +33,10 @@ int music_volume( double vol );
 double music_getVolume (void);
 double music_getVolumeLog(void);
 int music_load( const char* name );
-void music_play( const char *filename );
-void music_stop (void);
-void music_pause (void);
-void music_resume (void);
+int music_play( const char *filename );
+int music_stop( int disable );
+int music_pause( int disable );
+int music_resume (void);
 MusicInfo_t* music_info (void);
 
 /*

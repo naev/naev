@@ -239,13 +239,18 @@ end
 local function getCacheP( p )
    local mem = p:memory()
    if not mem.__lanes then
-      local L = {}
       local standing = (mem.lanes_useneutral and "non-hostile") or "friendly"
-      L.lanes = safelanes.get( p:faction(), standing )
-      L.v, L.e = safelanesToGraph( L.lanes )
-      mem.__lanes = L
+      mem.__lanes = lanes.get( p:faction(), standing )
    end
    return mem.__lanes
+end
+-- Same thing for hostile lanes
+local function getCachePH( p )
+   local mem = p:memory()
+   if not mem.__lanes_H then
+      mem.__lanes_H = lanes.get( p:faction(), "hostile" )
+   end
+   return mem.__lanes_H
 end
 
 
@@ -280,6 +285,9 @@ end
 function lanes.getDistanceP( p, pos )
    return lanes.getDistance( getCacheP(p), pos )
 end
+function lanes.getDistancePH( p, pos )
+   return lanes.getDistance( getCachePH(p), pos )
+end
 
 
 --[[
@@ -300,6 +308,9 @@ function lanes.getDistance2( L, pos )
 end
 function lanes.getDistance2P( p, pos )
    return lanes.getDistance2( getCacheP(p), pos )
+end
+function lanes.getDistance2PH( p, pos )
+   return lanes.getDistance2( getCachePH(p), pos )
 end
 
 
@@ -380,7 +391,6 @@ function lanes.getNonPointP( p, pos, rad, margin, biasdir )
    local L = getCacheP( p )
    return lanes.getNonPoint( L, pos, rad, margin, biasdir )
 end
-
 
 --[[
 -- Gets a random point of interest

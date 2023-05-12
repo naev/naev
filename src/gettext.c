@@ -52,9 +52,20 @@ void gettext_init (void)
     * 1.0 in certain languages. */
    setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
 
+   /* Try to get info from SDL. */
+   SDL_Locale *locales = SDL_GetPreferredLocales();
+   if (locales != NULL) {
+      if (locales[0].language != NULL) {
+         gettext_systemLanguage = strdup( locales[0].language );
+         SDL_free( locales );
+         return;
+      }
+      SDL_free( locales );
+   }
+
    free( gettext_systemLanguage );
    for (size_t i=0; i < sizeof(env_vars)/sizeof(env_vars[0]); i++) {
-      const char *language = getenv( env_vars[i] );
+      const char *language = SDL_getenv( env_vars[i] );
       if (language != NULL && *language != 0) {
          gettext_systemLanguage = strdup( language );
          return; /* The first env var with language settings wins. */
@@ -83,6 +94,14 @@ void gettext_exit (void)
       free( gettext_translations );
       gettext_translations = gettext_activeTranslation;
    }
+}
+
+/**
+ * @brief Gets the current system language as detected by Naev.
+ */
+const char* gettext_getSystemLanguage (void)
+{
+   return gettext_systemLanguage;
 }
 
 /**
@@ -218,7 +237,6 @@ const char* gettext_pgettext_impl( const char* lookup, const char* msgid )
    return trans==lookup ? msgid : trans;
 }
 
-
 /**
  * @brief Read the GETTEXT_STATS_PATH data and compute gettext_nstrings.
  * (Common case: just a "naev.txt" file with one number. But mods pulled in via PhysicsFS can have their own string counts.)
@@ -237,7 +255,6 @@ static void gettext_readStats (void)
    }
    array_free( paths );
 }
-
 
 /**
  * @brief List the available languages, with completeness statistics.
@@ -259,7 +276,6 @@ LanguageOption* gettext_languageOptions (void)
 
    return opts;
 }
-
 
 /**
  * @brief Return the fraction of strings which have a translation into the given language.
@@ -297,14 +313,13 @@ double gettext_languageCoverage( const char* lang )
    return (double)translated / gettext_nstrings;
 }
 
-
 /* The function is almost the same as p_() but msgctxt and msgid can be string variables.
  */
 const char* pgettext_var( const char* msgctxt, const char* msgid )
 {
    char *lookup = NULL;
    const char* trans;
-   asprintf( &lookup, "%s" GETTEXT_CONTEXT_GLUE "%s", msgctxt, msgid );
+   SDL_asprintf( &lookup, "%s" GETTEXT_CONTEXT_GLUE "%s", msgctxt, msgid );
    trans = gettext_pgettext_impl( lookup, msgid );
    free( lookup );
    return trans;

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Ianella IV">
+ <pos x="9207.236093" y="-3949.127770"/>
+ <GFX>
+  <space>M14.webp</space>
+  <exterior>agricultural.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <base>30.000000</base>
+  <bonus>15.000000</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>8.7e+06</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Ianella IV was colonized early in the Second Growth given its naturally high habitability index. However, planet topology consisting of a soft outer mantel with heavy active seismic activity have limited the types of constructions that are feasible to maintain on the planet. This has lead to a low population density and a focus on agriculture as a prime export. After the Incident, the loss of critical trade and concentration of refugees has led Ianella IV to experience a growth in both population and agricultural output, now playing an important role in feeding many nearby planets and stations. Despite a significant increase in population from refugees, Ianella IV has not succumbed to issues in overpopulation or supply demands.</description>
+  <bar>Although remodeled recently, the spaceport bar reminisces about the origins and past of the planet. From the early settlers who immigrated and built the first city, to said destruction of first city in a major earthquake, and the establishment of Ianella IV as an agricultural low population density world. Local trinkets, baubles, and traditional farming utensils litter the walls, giving it a rustic and homely look.</bar>
+ </general>
+ <tags>
+  <tag>agriculture</tag>
+  <tag>immigration</tag>
+  <tag>rural</tag>
+ </tags>
+</spob>

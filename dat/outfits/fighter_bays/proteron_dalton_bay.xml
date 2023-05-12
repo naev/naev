@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Proteron Dalton Bay">
+ <general>
+  <slot prop="fighter_bay">weapon</slot>
+  <size>large</size>
+  <license>Light Combat Vessel</license>
+  <rarity>2</rarity>
+  <mass>180</mass>
+  <price>1580000</price>
+  <gfx_store>dalton_bay.webp</gfx_store>
+  <description>This fighter bay allows your ship to carry four Proteron Dalton class interceptors. It comes with all the devices required for the maintenance and flight of the interceptors.</description>
+  <cpu>-450</cpu>
+ </general>
+ <specific type="fighter bay" secondary="1">
+  <delay>5</delay>
+  <reload_time>240</reload_time>
+  <amount>4</amount>
+  <ship>Proteron Dalton</ship>
+  <ship_mass>60</ship_mass>
+ </specific>
+</outfit>

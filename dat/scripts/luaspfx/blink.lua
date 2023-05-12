@@ -1,7 +1,6 @@
 local lg = require 'love.graphics'
 local lf = require 'love.filesystem'
 
-local blink_shader_frag = lf.read( "scripts/luaspfx/shaders/blink.frag" )
 local blink_shader
 local ttl = 2
 
@@ -27,14 +26,16 @@ local function render( sp, x, y, z )
    lg.setShader( old_shader )
 end
 
-local function blink( pos )
+local function blink( pos, vel )
    if not blink_shader then
+      local blink_shader_frag = lf.read( "scripts/luaspfx/shaders/blink.frag" )
       blink_shader = lg.newShader( blink_shader_frag )
    end
 
-   local s = spfx.new( ttl, update, render, nil, nil, pos, nil )
+   local c = lg.newCanvas( player.pilot():render() )
+   local s = spfx.new( ttl, update, render, nil, nil, pos, vel, nil, (c.w+c.h)*0.25 )
    local d  = s:data()
-   d.canvas = lg.newCanvas( player.pilot():render() )
+   d.canvas = c
    d.timer = 0
    return s
 end

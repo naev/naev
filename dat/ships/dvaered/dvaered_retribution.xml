@@ -1,16 +1,17 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Dvaered Retribution">
+ <lua>ships/lua/dvaered.lua</lua>
  <points>150</points>
  <base_type>Retribution</base_type>
  <GFX size="128" sx="12" sy="12">retribution_dvaered</GFX>
  <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Cruiser</class>
  <price>5000000</price>
  <time_mod>1.375</time_mod>
- <trail_generator x="-44" y="20" h="0" />
- <trail_generator x="-44" y="-20" h="0" />
+ <trail_generator x="-44" y="20" h="0">fire</trail_generator>
+ <trail_generator x="-44" y="-20" h="0">fire</trail_generator>
  <trail_generator x="-28" y="32" h="0">nebula</trail_generator>
  <trail_generator x="-28" y="-32" h="0">nebula</trail_generator>
  <fabricator>House Dvaered</fabricator>

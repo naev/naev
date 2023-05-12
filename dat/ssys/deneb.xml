@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Deneb">
+ <general>
+  <radius>15000.000000</radius>
+  <spacedust>400</spacedust>
+  <interference>94.725000</interference>
+  <nebula volatility="21.300000" hue="310.000000">600.000000</nebula>
+  <nolanes/>
+ </general>
+ <pos x="536.609182" y="67.782022"/>
+ <spobs>
+  <spob>Deneb III</spob>
+  <spob>Deneb III-a</spob>
+  <spob_virtual>Traders Society Unpresence (Range 1)</spob_virtual>
+ </spobs>
+ <jumps>
+  <jump target="Altair">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Vega">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+ </jumps>
+ <asteroids>
+  <asteroid>
+   <group>Nebula Crystal</group>
+   <radius>2500.000000</radius>
+   <pos x="-1349.013461" y="4506.068103"/>
+   <density>2.000000</density>
+  </asteroid>
+  <exclusion>
+   <radius>1000.000000</radius>
+   <pos x="-1390.911670" y="4466.966325"/>
+  </exclusion>
+ </asteroids>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
+</ssys>

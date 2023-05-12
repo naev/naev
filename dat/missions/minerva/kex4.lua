@@ -34,8 +34,6 @@ local lmisn = require "lmisn"
 --  2: return to kex
 mem.misn_state = nil
 local enemies, pjie, thug_leader, thug_pilots -- Non-persistent state
--- luacheck: globals enter generate_npc jie_board jie_death jie_epilogue jie_takeoff load_game thug_heartbeat (Hook functions passed by name)
--- luacheck: globals approach_jie approach_kex (NPC functions passed by name)
 
 local targetplanet, targetsys = spob.getS("Jorlan")
 
@@ -316,8 +314,8 @@ function enter ()
       hook.timer( 5, "thug_heartbeat" )
 
    elseif mem.misn_state~=1 and rnd.rnd() < mem.thug_chance then
-      -- Make sure system isn't claimed, but we don't claim it
-      if misn.claim( system.cur(), true ) then
+      -- Make sure system isn't claimed, but we don't claim it (inclusive test)
+      if naev.claimTest( system.cur(), true ) then
          -- Spawn near the center, they home in on player
          spawn_thugs( vec2.newP(0.7*system.cur():radius()*rnd.rnd(), rnd.angle()), false )
          -- Timer

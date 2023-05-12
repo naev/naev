@@ -59,14 +59,14 @@ local lmisn = require "lmisn"
 --]]
 mem.misn_state = nil
 local enemies, rampant, rampant_pos, rampant_pos_idx, spotter, spotter_pos -- Non-persistent state
--- luacheck: globals board death disable enter equip idle land reset_osd_hook spotter_spot timer_pirate timer_pirate_checkbribe timer_pirate_nelly timer_spotter timer_spotter_start (Hook functions passed by name)
--- luacheck: globals approach_nelly (NPC functions passed by name)
 
 local reward_amount = tutnel.reward.nelly02
 
 local function has_disable( o )
-   local _dmg, dis = o:weapstats()
-   return dis and dis > 0
+   local dmg, dis = o:weapstats()
+   dmg = dmg or 0
+   dis = dis or 0
+   return dis > dmg
 end
 
 function create ()
@@ -82,7 +82,7 @@ function create ()
    local pntfilter = function( p )
       -- Must be claimable
       local s = p:system()
-      if not misn.claim( s, true ) then
+      if not naev.claimTest( s ) then
          return false
       end
       -- Sells Outfits
@@ -99,11 +99,11 @@ function create ()
       misn.finish()
    end
 
-   misn.setNPC( tutnel.nelly.name, tutnel.nelly.portrait, _("You see a Nelly motioning to you at a table.") )
+   misn.setNPC( tutnel.nelly.name, tutnel.nelly.portrait, _("You see Nelly motioning to you at a table.") )
 
    misn.setTitle( _("Helping Nelly Out… Again") )
    misn.setDesc( _("Help Nelly fix their ship.") )
-   misn.setReward( fmt.credits(reward_amount) )
+   misn.setReward(reward_amount)
 end
 
 
@@ -298,7 +298,7 @@ function idle ()
 end
 
 function disable ()
-   player.pilot():comm(fmt.f(_([[Nelly: "You disabled it! Now get on top of the ship and board it with {boardkey}!"]]),{boardkey=tut.getKey("board")}))
+   player.msg(fmt.f(_([[Nelly: "You disabled it! Now get on top of the ship and board it with {boardkey}!"]]),{boardkey=tut.getKey("board")}),true)
 end
 
 function board ()
@@ -425,9 +425,9 @@ function timer_pirate( fpir )
          aimem.vulnignore = true -- Ignore vulnerability
          table.insert( enemies, p )
       end
-      pp:comm(fmt.f(_([[Nelly: "Wait, are those pirates coming our way?"]])))
-      player.autonavReset(7)
-      hook.timer( 5, "timer_pirate_nelly" )
+      player.msg(fmt.f(_([[Nelly: "Wait, are those pirates coming our way?"]])),true)
+      player.autonavReset(5)
+      hook.timer( 3, "timer_pirate_nelly" )
       hook.timer( 3, "timer_pirate_checkbribe" )
       mem.nelly_spam = 2
       return
@@ -452,6 +452,13 @@ function timer_pirate_nelly ()
    local osdtitle, osdelem = misn.osdGet()
    table.insert( osdelem, 1, _("Hail and bribe the pirates") )
    misn.osdCreate( osdtitle, osdelem )
+
+   player.setSpeed( 2/3 )
+   hook.timer( 15, "reset_speed" )
+end
+
+function reset_speed ()
+   player.setSpeed()
 end
 
 function timer_pirate_checkbribe ()
@@ -470,9 +477,9 @@ function timer_pirate_checkbribe ()
       end
    end
 
-   local pp = player.pilot()
    if allbribed then
-      pp:comm(_([[Nelly: "Now we should be able to get out of here safely."]]))
+      player.msg(_([[Nelly: "Now we should be able to get out of here safely."]]),true)
+      player.setSpeed()
       return
    end
 
@@ -481,15 +488,19 @@ function timer_pirate_checkbribe ()
       local msg
       if n <= 0 then
          msg = _([[Nelly: "I guess that's another way of doing it."]])
+         player.setSpeed()
       elseif somebribed then
          msg = _([[Nelly: "You only bribed some pilots, try to bribe them all!"]])
       else
-         msg = fmt.f(_([[Nelly: "Quickly! Target the hostile pirates with {targetkey} and bribe them by hailing them with {hailkey}!"]]),{targetkey=tut.getKey("target_hostile"),hailkey=tut.getKey("hail")})
+         msg = fmt.f(_([[Nelly: "Quickly! Target the hostile pirates with {targetkey} and bribe them by hailing them with {hailkey}!"]]),
+            {targetkey=tut.getKey("target_hostile"),hailkey=tut.getKey("hail")})
       end
-      pp:comm( msg )
+      player.msg( msg, true )
    end
 
-   hook.timer( 3, "timer_pirate_checkbribe" )
+   if n > 0 then
+      hook.timer( 3, "timer_pirate_checkbribe" )
+   end
 end
 
 function reset_osd_hook ()
@@ -577,7 +588,7 @@ function spotter_spot ()
       mem.spotter_scanning = false
       spotter:taskClear()
       spotter:moveto( spotter_pos )
-      pp:comm(_([[Nelly: "Phew, it seems like they lost track of us."]]))
+      player.msg(_([[Nelly: "Phew, it seems like they lost track of us."]]),true)
 
    elseif mem.spotter_scanning and spotter:scandone() then
       spotter:control(false)
@@ -591,7 +602,7 @@ function spotter_spot ()
       mem.spotter_scanning = true
       spotter:taskClear()
       spotter:pushtask( "scan", pp )
-      pp:comm(fmt.f(_([[Nelly: "They found us and are scanning us. Quickly try to stealth with {stealthkey}!"]]),{stealthkey=tut.getKey("stealth")}))
+      player.msg(fmt.f(_([[Nelly: "They found us and are scanning us. Quickly try to stealth with {stealthkey}!"]]),{stealthkey=tut.getKey("stealth")}),true)
       player.autonavReset( 5 )
 
    end

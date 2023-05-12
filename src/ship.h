@@ -20,6 +20,7 @@
 /* Ship Flags. */
 #define SHIP_NOPLAYER   (1<<0)   /**< Player is not allowed to fly the ship. */
 #define SHIP_NOESCORT   (1<<1)   /**< Player is not allowed to set the ship as an escort. */
+#define SHIP_UNIQUE     (1<<2)   /**< Ship is unique and player can only have one. */
 #define ship_isFlag(s,f)   ((s)->flags & (f)) /**< Checks ship flag. */
 #define ship_setFlag(s,f)  ((s)->flags |= (f)) /**< Sets ship flag. */
 #define ship_rmFlag(s,f)   ((s)->flags &= ~(f)) /**< Removes ship flag. */
@@ -166,6 +167,15 @@ typedef struct Ship_ {
 
    /* Tags. */
    char **tags;   /**< Ship tags. */
+
+   /* Lua function references. Set to LUA_NOREF if not used. */
+   char *lua_file;   /**< Lua File. */
+   nlua_env lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
+   int lua_init;     /**< Run when pilot enters a system. */
+   int lua_cleanup;  /**< Run when the pilot is erased. */
+   int lua_update;   /**< Run periodically. */
+   int lua_explode_init; /**< Run when starting explosion. */
+   int lua_explode_update; /**< Run when exploding. */
 } Ship;
 
 /*

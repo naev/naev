@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<effect name="Fade-Out">
+ <description>Fading Out!</description>
+ <duration>3</duration>
+ <overwrite>fadeout</overwrite>
+ <icon>/gfx/misc/icons/galaxy.webp</icon>
+ <lua>effects/lua/fadeout.lua</lua>
+ <shader>effects/fadeout.frag</shader>
+</effect>

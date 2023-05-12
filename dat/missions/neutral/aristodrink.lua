@@ -24,10 +24,16 @@ Thank you to Bobbens, Deiz, BTAxis, and others that have helped me with learning
 local fmt = require "format"
 local neu = require "common.neutral"
 local lmisn = require "lmisn"
+local vn = require "vn"
+local vntk = require "vntk"
+local portrait = require "portrait"
+
+local npc_name = _("Drinking Aristocrat")
+local npc_portrait = "neutral/unique/aristocrat.webp"
+local npc_image = portrait.getFullPath( npc_portrait )
 
 local payment = 200e3
 local getclueplanet, isPrevPlanet -- Forward-declared functions
--- luacheck: globals land takeoff (Hook functions passed by name)
 
 -- defines Previous Planets table
 mem.prevPlanets = {}
@@ -50,7 +56,7 @@ function create ()
    -- Note: this mission does not make any system claims.
 
    -- creates the NPC at the bar to create the mission
-   misn.setNPC( _("Drinking Aristocrat"), "neutral/unique/aristocrat.webp", _("You see an aristocrat sitting at a table in the middle of the bar, drinking a swirling concoction in a martini glass with a disappointed look on his face every time he takes a sip.") )
+   misn.setNPC( npc_name, npc_portrait, _("You see an aristocrat sitting at a table in the middle of the bar, drinking a swirling concoction in a martini glass with a disappointed look on his face every time he takes a sip.") )
 
    mem.startplanet, mem.startsys = spob.cur()
    mem.prevPlanets[1] = mem.startplanet
@@ -62,34 +68,52 @@ function create ()
 end
 
 function accept ()
-   if not tk.yesno( _("Drinking Aristocrat"), fmt.f( _([[You begin to approach the aristocrat. Next to him stands a well dressed and muscular man, perhaps his assistant, or maybe his bodyguard, you're not sure. When you get close to his table, he begins talking to you as if you work for him. "This simply will not do. When I ordered this 'drink', if you can call it that, it seemed interesting. It certainly doesn't taste interesting. It's just bland. The only parts of it that are in any way interesting are not at all pleasing. It just tastes so... common.
-    You know what I would really like? There was this drink at a bar on, what planet was that? Damien, do you remember? The green drink with the red fruit shavings." Damien looks down at him and seems to think for a second before shaking his head. "I believe it might have been {pnt} in the {sys} system. The drink was something like an Atmospheric Re-Entry or Gaian Bombing or something. It's the bar's specialty. They'll know what you're talking about. You should go get me one. Can you leave right away?"]]), {pnt=mem.clueplanet, sys=mem.cluesys} ) ) then
-      tk.msg( _("Refuse"), _([["What do you mean, you can't leave right away? Then why even bother? Remove yourself from my sight." The aristocrat makes a horrible face, and sips his drink, only to look even more disgusted. Ignoring you, he puts his drink back on the table and motions to the bartender.]]) )
+   local accepted = false
+
+   vn.clear()
+   vn.scene()
+   local ari = vn.newCharacter( npc_name, { image=npc_image } )
+   vn.transition()
+
+   ari(fmt.f( _([[You begin to approach the aristocrat. Next to him stands a well dressed and muscular man, perhaps his assistant, or maybe his bodyguard, you're not sure. When you get close to his table, he begins talking to you as if you work for him. "This simply will not do. When I ordered this 'drink', if you can call it that, it seemed interesting. It certainly doesn't taste interesting. It's just bland. The only parts of it that are in any way interesting are not at all pleasing. It just tastes so… common.
+    You know what I would really like? There was this drink at a bar on, what planet was that? Damien, do you remember? The green drink with the red fruit shavings." Damien looks down at him and seems to think for a second before shaking his head. "I believe it might have been {pnt} in the {sys} system. The drink was something like an Atmospheric Re-Entry or Gaian Bombing or something. It's the bar's specialty. They'll know what you're talking about. You should go get me one. Can you leave right away?"]]),
+      {pnt=mem.clueplanet, sys=mem.cluesys}))
+   vn.menu{
+      {_([[Accept]]), "accept"},
+      {_([[Refuse]]), "refuse"},
+   }
+
+   vn.label("refuse")
+   ari(_([["What do you mean, you can't leave right away? Then why even bother? Remove yourself from my sight." The aristocrat makes a horrible face, and sips his drink, only to look even more disgusted. Ignoring you, he puts his drink back on the table and motions to the bartender.]]))
+   vn.done()
+
+   vn.label("accept")
+   ari(_([["Oh good! Of course you will be paid handsomely for your efforts. I trust you can figure out how to get it here intact on your own." Ignoring you, the aristocrat goes back to sipping his drink, making an awful face every time he tastes it. You walk away, a bit confused.]]))
+   vn.func(function () accepted = true end )
+   vn.run()
+
+   if not accepted then
       return
-
-   else
-      misn.accept()
-
-      mem.landmarker = misn.markerAdd( mem.clueplanet, "low" )
-
-      -- mission details
-      misn.setTitle( _("Drinking Aristocrat") )
-      misn.setReward( _("He will pay handsomely.") )
-      misn.setDesc( _("Go find a specific drink for an aristocrat.") )
-
-      tk.msg( _("Leave Immediately"), _([["Oh good! Of course you will be paid handsomely for your efforts. I trust you can figure out how to get it here intact on your own." Ignoring you, the aristocrat goes back to sipping his drink, making an awful face every time he tastes it. You walk away, a bit confused.]]) )
-
-      -- how many systems you'll have to run through
-      mem.numclues = rnd.rnd(1,5)
-      mem.numexwork = rnd.rnd(1,3)
-
-      -- final bartender data
-      mem.fintendergen = rnd.rnd(1,3)
-
-      -- hooks
-      mem.landhook = hook.land ("land", "bar")
-      mem.takeoffhook = hook.takeoff ("takeoff")
    end
+
+   misn.accept()
+   mem.landmarker = misn.markerAdd( mem.clueplanet, "low" )
+
+   -- mission details
+   misn.setTitle( _("Drinking Aristocrat") )
+   misn.setReward( _("He will pay handsomely.") )
+   misn.setDesc( _("Go find a specific drink for an aristocrat.") )
+
+   -- how many systems you'll have to run through
+   mem.numclues = rnd.rnd(1,5)
+   mem.numexwork = rnd.rnd(1,3)
+
+   -- final bartender data
+   mem.fintendergen = rnd.rnd(1,3)
+
+   -- hooks
+   mem.landhook = hook.land ("land", "bar")
+   mem.takeoffhook = hook.takeoff ("takeoff")
 end
 
 function land ()
@@ -103,7 +127,7 @@ function land ()
          misn.markerMove( mem.landmarker, mem.clueplanet )
          mem.prevPlanets[#mem.prevPlanets+1] = mem.clueplanet
 
-         tk.msg( _("Clue"), fmt.f( _([[You walk into the bar and approach the bartender. You describe the drink, but the bartender doesn't seem to know what you're talking about. There is another bartender that they think may be able to help you though, at {pnt} in the {sys} system.]]),
+         vntk.msg( _("Clue"), fmt.f( _([[You walk into the bar and approach the bartender. You describe the drink, but the bartender doesn't seem to know what you're talking about. There is another bartender that they think may be able to help you though, at {pnt} in the {sys} system.]]),
             {pnt=mem.clueplanet, sys=mem.cluesys} ) )
 
       else
@@ -117,7 +141,7 @@ function land ()
             misn.markerMove( mem.landmarker, mem.clueplanet )
             mem.prevPlanets[#mem.prevPlanets+1] = mem.clueplanet
 
-            tk.msg( _("A bit more info..."), fmt.f( moreinfotxt[mem.fintendergen],
+            vntk.msg( _("A bit more info…"), fmt.f( moreinfotxt[mem.fintendergen],
                {pnt=mem.clueplanet, sys=mem.cluesys} ) )
 
          else   -- find another bar that the bartender used to work at
@@ -129,13 +153,13 @@ function land ()
                misn.markerMove( mem.landmarker, mem.clueplanet )
                mem.prevPlanets[#mem.prevPlanets+1] = mem.clueplanet
 
-               tk.msg( _("Is this it?"), fmt.f( _([[You walk into the bar fully confident that this is the bar. You walk up to the bartender and ask for a Swamp Bombing. "A wha???" Guess this isn't the right bar. You get another possible clue, {pnt} in the {sys} system, and head on your way.]]),
+               vntk.msg( _("Is this it?"), fmt.f( _([[You walk into the bar fully confident that this is the bar. You walk up to the bartender and ask for a Swamp Bombing. "A wha???" Guess this isn't the right bar. You get another possible clue, {pnt} in the {sys} system, and head on your way.]]),
                   {pnt=mem.clueplanet, sys=mem.cluesys} ) )
 
             elseif not mem.hasDrink then  -- get the drink
                mem.hasDrink = true
 
-               tk.msg( _("This is it!"), worktxt[mem.fintendergen] )
+               vntk.msg( _("This is it!"), worktxt[mem.fintendergen] )
 
                misn.markerMove(mem.landmarker, mem.startplanet)
             end
@@ -143,11 +167,25 @@ function land ()
       end
    elseif mem.hasDrink and spob.cur() == mem.startplanet then
       lmisn.sfxVictory()
-      tk.msg( _("Delivery"), fmt.f( _([["Ahh! I was just thinking how much I wanted one of those drinks! I'm so glad that you managed to find it. You sure seemed to take your time though." You give him his drink and tell him that it wasn't easy, and how many systems you had to go through. "Hmm. That is quite a few systems. No reason for you to be this late though." He takes a sip from his drink. "Ahh! That is good though. I suppose you'll be wanting to get paid for your efforts. You did go through a lot of trouble. Then again, you did take quite a long time. I suppose {credits} should be appropriate."
-    Considering the amount of effort that you went through, you feel almost cheated. You don't feel like arguing with the snobby aristocrat though, so you just leave him to his drink without another word. It's probably the most that anyone's ever paid for a drink like that anyway.
-    When you get back to your ship you realize you have a drink left over. It might look good like an ornament?]]), {credits=fmt.credits(payment)} ) )
-      player.outfitAdd( "Swamp Bombing" )
-      player.pay( payment )
+
+      local reward = outfit.get("Swamp Bombing")
+
+      vn.clear()
+      vn.scene()
+      local ari = vn.newCharacter( npc_name, { image=npc_image } )
+      vn.transition()
+
+      ari(fmt.f(_([["Ahh! I was just thinking how much I wanted one of those drinks! I'm so glad that you managed to find it. You sure seemed to take your time though." You give him his drink and tell him that it wasn't easy, and how many systems you had to go through. "Hmm. That is quite a few systems. No reason for you to be this late though." He takes a sip from his drink. "Ahh! That is good though. I suppose you'll be wanting to get paid for your efforts. You did go through a lot of trouble. Then again, you did take quite a long time. I suppose {credits} should be appropriate."]]),
+         {credits=fmt.credits(payment)}))
+      vn.na(_([[Considering the amount of effort that you went through, you feel almost cheated. You don't feel like arguing with the snobby aristocrat though, so you just leave him to his drink without another word. It's probably the most that anyone's ever paid for a drink like that anyway.
+    When you get back to your ship you realize you have a drink left over. It might look good like an ornament?]]))
+      vn.sfxVictory()
+      vn.func( function ()
+         player.outfitAdd(reward)
+         player.pay( payment )
+      end )
+      vn.na(fmt.reward(payment).."\n"..fmt.reward(reward))
+      vn.run()
 
       hook.rm(mem.landhook)
       hook.rm(mem.takeoffhook)

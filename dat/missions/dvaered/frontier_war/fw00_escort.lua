@@ -42,15 +42,13 @@ local fleepla, fleesys = spob.getS("Odonga m1")
 
 local ambush, hamelsen, majorTam, p, quickie, savers, warlord -- Non-persistent state
 local encounterWarlord, hamelsenAmbush, spawnTam, testPlayerSpeed -- Forward-declared functions
--- luacheck: globals ambushDied ambush_end ambush_msg attackMe enter explain_battle hamelsen_attacked land loading meeting meeting_msg1 meeting_msg2 meeting_msg3 meeting_timer moreBadGuys tamDied tamJump (Hook functions passed by name)
--- luacheck: globals discussWithTam (NPC functions passed by name)
 
 local meet_text1 = _([[After Tam boards the Goddard, you wait for about half a period until his ship undocks from the warlord's cruiser. You then receive a message from him "Everything is right, we will now land on {pnt} in order to refuel and rest for some time."]])
 
 function create()
    -- The mission should not appear just after the FLF destruction
    if not (var.peek("invasion_time") == nil or
-           time.get() >= time.fromnumber(var.peek("invasion_time")) + time.create(0, 20, 0)) then
+           time.get() >= time.fromnumber(var.peek("invasion_time")) + time.new(0, 20, 0)) then
       misn.finish(false)
    end
 
@@ -177,7 +175,7 @@ function spawnTam( origin )
    majorTam = pilot.add( "Dvaered Vendetta", "Dvaered", origin, _("Major Tam") )
    majorTam:setHilight()
    majorTam:setVisplayer()
-   majorTam:setFaction("DHC")
+   majorTam:setFaction( fw.fct_dhc() )
 
    majorTam:outfitRm("all")
    majorTam:outfitRm("cores")
@@ -273,10 +271,9 @@ function loading()
 end
 
 function meeting_timer() -- Delay the triggering of the meeting
-   player.pilot():control() -- Make sure to remove the autonav
-   player.pilot():brake()
-   player.cinematics( true )
-   player.cinematics( false )
+   local pp = player.pilot()
+   pp:control() -- Make sure to remove the autonav
+   pp:brake()
 
    hook.timer(7.0, "meeting")
 end
@@ -299,7 +296,7 @@ function meeting()
       mem.stage = 3
       quickie = pilot.add( "Dvaered Vendetta", "Dvaered", destpla2 )
       quickie:cargoRm( "all" )
-      quickie:setFaction("Warlords")
+      quickie:setFaction( fw.fct_warlords() )
 
       majorTam:taskClear()
       majorTam:memory().careful = true
@@ -325,7 +322,7 @@ function attackMe()
 
    -- Change the enemies to Warlords in order to make them attack
    for i = 1,#p do
-      p[i]:setFaction("Warlords")
+      p[i]:setFaction( fw.fct_warlords() )
       p[i]:control(false)
    end
 end
@@ -333,15 +330,16 @@ end
 -- Battleaddict's bros
 function moreBadGuys()
    local buff
+   local fwarlords = fw.fct_warlords()
    for i = 1, 3 do
       buff = pilot.add( "Dvaered Ancestor", "Dvaered", destpla2 )
-      buff:setFaction("Warlords")
+      buff:setFaction(fwarlords)
    end
    buff = pilot.add( "Dvaered Vigilance", "Dvaered", destpla2, _("Colonel Hamelsen") )
-   buff:setFaction("Warlords")
+   buff:setFaction(fwarlords)
    buff = pilot.add( "Dvaered Phalanx", "Dvaered", destpla2 )
-   buff:setFaction("Warlords")
-   warlord:setFaction("Warlords")
+   buff:setFaction(fwarlords)
+   warlord:setFaction(fwarlords)
    warlord:control(false)
 end
 
@@ -349,13 +347,14 @@ end
 function hamelsenAmbush()
    local jp     = jump.get(system.cur(), mem.previous)
    local x, y, pos
+   local fwarlords = fw.fct_warlords()
    ambush = {}
    for i = 1, 3 do
       x = 1000 * rnd.rnd() + 1000
       y = 1000 * rnd.rnd() + 1000
       pos = jp:pos() + vec2.new(x,y)
 
-      ambush[i] = pilot.add( "Shark", "Warlords", pos, nil, {ai="baddie_norun"} )
+      ambush[i] = pilot.add( "Shark", fwarlords, pos, nil, {ai="baddie_norun"} )
       ambush[i]:setHostile()
       hook.pilot(ambush[i], "death", "ambushDied")
       hook.pilot(ambush[i], "land", "ambushDied")
@@ -365,7 +364,7 @@ function hamelsenAmbush()
    x = 1000 * rnd.rnd() + 2000
    y = 1000 * rnd.rnd() + 2000
    pos = jp:pos() + vec2.new(x,y)
-   hamelsen = pilot.add( "Shark", "Warlords", pos, _("Colonel Hamelsen"), {ai="baddie_norun"} )
+   hamelsen = pilot.add( "Shark", fwarlords, pos, _("Colonel Hamelsen"), {ai="baddie_norun"} )
 
    -- Nice outfits for Colonel Hamelsen (the Hellburner is her life insurance)
    hamelsen:outfitRm("all")
@@ -411,8 +410,9 @@ function ambush_msg()
    majorTam:control(false)
    hook.rm(mem.proxHook) -- To avoid triggering by mistake
 
+   local fdhc = fw.fct_dhc()
    for i, pi in ipairs(savers) do
-      pi:setFaction("DHC")
+      pi:setFaction( fdhc )
    end
 end
 

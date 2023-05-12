@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Space Mine Layer">
+ <general>
+  <shoot_dry/>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <mass>15</mass>
+  <price>100000</price>
+  <gfx_store>placeholder.webp</gfx_store>
+  <description>The vastness of space limits the applicability of space mines in lieu of automated or manned patrols in most situations. However, when raw explosive power is mandated, nothing can surpass the destructive force of space mines.</description>
+  <desc_extra>Space mines detonate five seconds after hostiles come within 300 units with a maximum tracking of 10,000 units and minimum tracking of 3,000 units. Detonations have a range of 500 units and damage all ships within range.</desc_extra>
+  <cpu>-12</cpu>
+ </general>
+ <specific type="launcher">
+  <lua>outfits/launchers/space_mine_layer.lua</lua>
+  <delay>15</delay>
+  <reload_time>90</reload_time>
+  <amount>3</amount>
+  <trackmin>3000</trackmin>
+  <trackmax>10000</trackmax>
+  <ammo_mass>10</ammo_mass>
+  <sound>grenadefire</sound>
+  <duration>90</duration>
+  <damage>
+   <type>emp</type>
+   <penetrate>50</penetrate>
+   <physical>1000</physical>
+   <disable>0</disable>
+  </damage>
+  <ai>unguided</ai>
+ </specific>
+</outfit>

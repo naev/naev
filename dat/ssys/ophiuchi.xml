@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Ophiuchi">
+ <general>
+  <radius>15000.000000</radius>
+  <spacedust>400</spacedust>
+  <interference>28.800000</interference>
+  <nebula volatility="0.900000">300.000000</nebula>
+  <nolanes/>
+ </general>
+ <pos x="390.725002" y="-135.407505"/>
+ <spobs/>
+ <jumps>
+  <jump target="Iris">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Tau Ceti">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+ </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
+</ssys>

@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Copia">
+ <lua>ships/lua/soromid.lua</lua>
  <points>120</points>
  <base_type>Copia</base_type>
  <GFX size="132" sx="12" sy="12">copia</GFX>
  <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine_soromid</sound>
  <class display="Bio-Freighter">Bulk Freighter</class>
  <price>5500000</price>
@@ -40,7 +41,7 @@
   <utility size="large" prop="bio_systems" name="brain">Ponderosum Cerebrum I</utility>
   <utility size="large" prop="bio_organ" name="the_bite" />
   <utility size="large" prop="bio_organ" name="feral_rage" />
-  <utility size="large" prop="bio_organ" name="primal_yell" />
+  <utility size="large" prop="bio_organ" name="plasma_burst" />
   <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />

@@ -2,11 +2,10 @@
 <ssys name="Astana">
  <general>
   <radius>20000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-427.386867" y="-865.091193"/>
+ <pos x="-153.410109" y="-692.628671"/>
  <spobs>
   <spob>Akrikos</spob>
   <spob>Astana IIV</spob>
@@ -14,10 +13,6 @@
  </spobs>
  <jumps>
   <jump target="Auger">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Seelie">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

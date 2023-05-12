@@ -2,11 +2,10 @@
 <ssys name="Merisi">
  <general>
   <radius>24500.000000</radius>
-  <stars>200</stars>
+  <spacedust>200</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-102.000000" y="-90.000000"/>
+ <pos x="24.112415" y="180.701866"/>
  <spobs>
   <spob>Merisi I</spob>
   <spob>Merisi II</spob>

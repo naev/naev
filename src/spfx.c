@@ -224,7 +224,7 @@ static int spfx_base_parse( SPFX_Base *temp, const char *filename )
 
    /* Has shaders. */
    if (shadervert != NULL && shaderfrag != NULL) {
-      temp->shader      = gl_program_vert_frag( shadervert, shaderfrag );
+      temp->shader      = gl_program_vert_frag( shadervert, shaderfrag, NULL );
       temp->vertex      = glGetAttribLocation( temp->shader, "vertex");
       temp->projection  = glGetUniformLocation( temp->shader, "projection");
       temp->u_r         = glGetUniformLocation( temp->shader, "u_r" );
@@ -797,12 +797,10 @@ static void spfx_trail_free( Trail_spfx* trail )
  */
 void spfx_trail_draw( const Trail_spfx* trail )
 {
-   double x1, y1, x2, y2, z;
-   const TrailStyle *sp, *spp, *styles;
+   const TrailStyle *styles;
    size_t n;
    GLfloat len;
-   mat4 projection;
-   double s;
+   double z;
 
    n = trail_size(trail);
    if (n==0)
@@ -821,6 +819,9 @@ void spfx_trail_draw( const Trail_spfx* trail )
    z   = cam_getZoom();
    len = 0.;
    for (size_t i=trail->iread + 1; i < trail->iwrite; i++) {
+      mat4 projection;
+      const TrailStyle *sp, *spp;
+      double x1, y1, x2, y2, s;
       TrailPoint *tp  = &trail_at( trail, i );
       TrailPoint *tpp = &trail_at( trail, i-1 );
 
@@ -835,7 +836,7 @@ void spfx_trail_draw( const Trail_spfx* trail )
 
       /* Make sure in bounds. */
       if ((MAX(x1,x2) < 0.) || (MIN(x1,x2) > (double)SCREEN_W) ||
-         (MAX(y1,y2) < 0.) || (MIN(y1,y2) > (double)SCREEN_H)) {
+          (MAX(y1,y2) < 0.) || (MIN(y1,y2) > (double)SCREEN_H)) {
          len += s;
          continue;
       }
@@ -993,48 +994,8 @@ void spfx_cinematic (void)
    gl_renderRect( 0., SCREEN_H*0.8, SCREEN_W, SCREEN_H,     &cBlack );
 }
 
-/**
- * @brief Renders the entire spfx layer.
- *
- *    @param layer Layer to render.
- */
-void spfx_render( int layer )
+static void spfx_renderStack( SPFX *spfx_stack )
 {
-   SPFX *spfx_stack;
-   int sx, sy;
-   double time;
-
-   /* get the appropriate layer */
-   switch (layer) {
-      case SPFX_LAYER_FRONT:
-         spfx_stack = spfx_stack_front;
-         spfxL_renderfg();
-         break;
-
-      case SPFX_LAYER_MIDDLE:
-         spfx_stack = spfx_stack_middle;
-         spfxL_rendermg();
-         break;
-
-      case SPFX_LAYER_BACK:
-         spfx_stack = spfx_stack_back;
-         spfxL_renderbg();
-         break;
-
-      default:
-         WARN(_("Rendering invalid SPFX layer."));
-         return;
-   }
-
-   /* Trails are special (for now?). */
-   if (layer == SPFX_LAYER_BACK)
-      for (int i=0; i<array_size(trail_spfx_stack); i++) {
-         Trail_spfx *trail = trail_spfx_stack[i];
-         if (!trail->ontop)
-            spfx_trail_draw( trail );
-      }
-
-   /* Now render the layer */
    for (int i=array_size(spfx_stack)-1; i>=0; i--) {
       SPFX *spfx        = &spfx_stack[i];
       SPFX_Base *effect = &spfx_effects[ spfx->effect ];
@@ -1087,12 +1048,14 @@ void spfx_render( int layer )
       }
       /* No shader. */
       else {
+         int sx, sy;
+
          /* Simplifies */
          sx = (int)effect->gfx->sx;
          sy = (int)effect->gfx->sy;
 
          if (!paused) { /* don't calculate frame if paused */
-            time = 1. - fmod(spfx_stack[i].timer,effect->anim) / effect->anim;
+            double time = 1. - fmod(spfx_stack[i].timer,effect->anim) / effect->anim;
             spfx_stack[i].lastframe = sx * sy * MIN(time, 1.);
          }
 
@@ -1103,6 +1066,43 @@ void spfx_render( int layer )
                spfx_stack[i].lastframe / sx,
                NULL );
       }
+   }
+}
+
+/**
+ * @brief Renders the entire spfx layer.
+ *
+ *    @param layer Layer to render.
+ */
+void spfx_render( int layer )
+{
+   /* get the appropriate layer */
+   switch (layer) {
+      case SPFX_LAYER_FRONT:
+         spfx_renderStack( spfx_stack_front );
+         spfxL_renderfg();
+         break;
+
+      case SPFX_LAYER_MIDDLE:
+         spfx_renderStack( spfx_stack_middle );
+         spfxL_rendermg();
+         break;
+
+      case SPFX_LAYER_BACK:
+         spfx_renderStack( spfx_stack_back );
+         spfxL_renderbg();
+
+         /* Trails are special (for now?). */
+         for (int i=0; i<array_size(trail_spfx_stack); i++) {
+            Trail_spfx *trail = trail_spfx_stack[i];
+            if (!trail->ontop)
+               spfx_trail_draw( trail );
+         }
+         break;
+
+      default:
+         WARN(_("Rendering invalid SPFX layer."));
+         return;
    }
 }
 

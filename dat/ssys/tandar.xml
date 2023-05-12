@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ssys name="Tandar">
  <general>
+  <background>haze</background>
+  <map_shader>haze_map.frag</map_shader>
+  <features>#rHaze (-50% Shield and Shield Regen)#0</features>
   <radius>22500.000000</radius>
-  <stars>400</stars>
-  <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>33.750000</interference>
  </general>
- <pos x="-77.256077" y="603.910705"/>
+ <pos x="178.027569" y="840.991280"/>
  <spobs>
   <spob>Benedict</spob>
   <spob>Jacqueline</spob>
@@ -15,6 +17,10 @@
   <spob>Tandar Ia</spob>
  </spobs>
  <jumps>
+  <jump target="Ariadus">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Corvus">
    <autopos/>
    <hide>1.000000</hide>
@@ -24,4 +30,11 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <stats>
+  <shield_mod>-50.000000</shield_mod>
+  <shield_regen_mod>-50.000000</shield_regen_mod>
+ </stats>
+ <tags>
+  <tag>haze</tag>
+ </tags>
 </ssys>

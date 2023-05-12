@@ -2,16 +2,22 @@
 <ssys name="Arandon">
  <general>
   <radius>14000.000000</radius>
-  <stars>500</stars>
-  <interference>33.333300</interference>
+  <spacedust>500</spacedust>
+  <interference>74.999900</interference>
   <nebula volatility="15.600000" hue="270.000000">600.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="525.000000" y="63.000000"/>
+ <pos x="563.365011" y="-220.157659"/>
  <spobs>
+  <spob>Arandon Station</spob>
   <spob_virtual>Empire Unpresence</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Doeston">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Gliese">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
@@ -33,4 +39,7 @@
    <maxspeed>40.000000</maxspeed>
   </asteroid>
  </asteroids>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

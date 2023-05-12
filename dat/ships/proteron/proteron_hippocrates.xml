@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Proteron Hippocrates">
+ <points>80</points>
+ <base_type>Hippocrates</base_type>
+ <GFX size="88" sx="10" sy="10">hippocrates</GFX>
+ <rarity>3</rarity>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Destroyer</class>
+ <price>1900000</price>
+ <time_mod>1.1</time_mod>
+ <trail_generator x="-25" y="8" h="0">proteron</trail_generator>
+ <trail_generator x="-25" y="-8" h="0">proteron</trail_generator>
+ <trail_generator x="-9" y="20" h="0">proteronS</trail_generator>
+ <trail_generator x="-9" y="-20" h="0">proteronS</trail_generator>
+ <trail_generator x="2" y="30" h="0">nebula</trail_generator>
+ <trail_generator x="2" y="-30" h="0">nebula</trail_generator>
+ <fabricator>Proteron</fabricator>
+ <license>Medium Combat Vessel</license>
+ <cond>faction.playerStanding("Proteron") &gt;= 50</cond>
+ <condstr>You need at least 50 reputation with the Proteron.</condstr>
+ <description>As the Proteron only use carrier-based fighters small fleets lack fighter support. To make up this issue the Hippocrates was developed, an ultra-light carrier specialized to provide fighter support for the Proteron raiding fleets. The Hippocrates can also be used as missile platform using the hangar bay to store additional ammo crates.</description>
+ <health>
+  <armour>400</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>19</crew>
+  <mass>240</mass>
+  <fuel_consumption>200</fuel_consumption>
+  <cargo>40</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="large" prop="fighter_bay" exclusive="1" x="7" y="0" h="3" />
+  <weapon size="medium" prop="fighter_bay" x="2" y="20" h="1" />
+  <weapon size="medium" prop="fighter_bay" x="2" y="-20" h="1" />
+  <weapon size="small" x="29" y="3" h="0" />
+  <weapon size="small" x="29" y="-3" h="0" />
+  <weapon size="small" x="18" y="0" h="2" />
+  <utility size="medium" prop="systems">Unicorp PT-310 Core System</utility>
+  <utility size="medium" prop="accessory" />
+  <utility size="medium" />
+  <utility size="medium" />
+  <utility size="small" />
+  <structure size="medium" prop="engines">Unicorp Falcon 1300 Engine</structure>
+  <structure size="medium" prop="hull">Unicorp D-24 Medium Plating</structure>
+  <structure size="medium" />
+  <structure size="medium" />
+  <structure size="medium" />
+ </slots>
+ <stats>
+  <speed_mod>5</speed_mod>
+  <shield_regen_mod>20</shield_regen_mod>
+  <launch_range>20</launch_range>
+  <ammo_capacity>25</ammo_capacity>
+  <cpu_mod>10</cpu_mod>
+  <engine_limit_rel>10</engine_limit_rel>
+ </stats>
+ <tags>
+  <tag>proteron</tag>
+ </tags>
+</ship>

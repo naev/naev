@@ -24,7 +24,6 @@ local zbh = require "common.zalek_blackhole"
 local lmisn = require  "lmisn"
 local pilotai = require "pilotai"
 
--- luacheck: globals land enter scout_discovered feral_hail (Hook functions passed by name)
 
 local reward = zbh.rewards.zbh08
 local cargo_name = _("Sensor Upgrades")
@@ -84,7 +83,7 @@ function accept ()
    -- mission details
    local title = _("Sigma-13 Sensors")
    misn.setTitle( title )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc( fmt.f(_("Pick up the necessary supplies at {pnt} ({sys} system) and bring them back to Zach at {retpnt} ({retsys} system)."),
       {pnt=mem.destpnt, sys=mem.destsys, retpnt=retpnt, retsys=retsys} ))
 

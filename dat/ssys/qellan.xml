@@ -2,20 +2,27 @@
 <ssys name="Qellan">
  <general>
   <radius>10000.000000</radius>
-  <stars>400</stars>
-  <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>17.550000</interference>
+  <nebula volatility="0.000000" hue="250.000000">150.000000</nebula>
  </general>
- <pos x="995.477822" y="-295.380065"/>
+ <pos x="427.395776" y="166.173590"/>
  <spobs/>
  <jumps>
+  <jump target="Altair">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Eisenhorn">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Pike">
+  <jump target="Kenvis">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

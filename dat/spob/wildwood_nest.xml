@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Wildwood Nest">
+ <pos x="-7343.434885" y="-3353.838054"/>
+ <GFX>
+  <space>station-commerce3.webp</space>
+  <exterior>traderoom.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <base>50.000000</base>
+  <bonus>25.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>1300</population>
+  <hide>2.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>Almost anyone who seeks to travel from Dvaered to Soromid space, or the other way around, stops by Wildwood on the way. It's a long haul and Wildwood is one of the sparse providers of refueling along the route. While mainly a commercially oriented installation, Wildwood is also home to a small Soromid military outpost. The ships stationed here provide a bare minimum of protection to the traffic that passes through the system.</description>
+  <bar>Ships need fuel, so do their captains. Wildwood's spacedock bar, though modest, offers visiting captains a respectable choice in beverages and pastimes before they have to move on.</bar>
+ </general>
+ <tags>
+  <tag>station</tag>
+  <tag>military</tag>
+  <tag>refuel</tag>
+ </tags>
+</spob>

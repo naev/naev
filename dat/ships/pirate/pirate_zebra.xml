@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Pirate Zebra">
+ <points>110</points>
+ <base_type>Zebra</base_type>
+ <GFX size="120" sx="12" sy="12">zebra_pirate</GFX>
+ <rarity>2</rarity>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Carrier</class>
+ <price>8000000</price>
+ <time_mod>1.5</time_mod>
+ <trail_generator x="-46" y="10" h="6">pirate</trail_generator>
+ <trail_generator x="-46" y="10" h="-6">pirate</trail_generator>
+ <trail_generator x="-46" y="-10" h="6">pirate</trail_generator>
+ <trail_generator x="-46" y="-10" h="-6">pirate</trail_generator>
+ <trail_generator x="-29" y="27" h="4">nebula</trail_generator>
+ <trail_generator x="-29" y="-27" h="4">nebula</trail_generator>
+ <trail_generator x="16" y="27" h="-4" always_under="1">nebula</trail_generator>
+ <trail_generator x="16" y="-27" h="-4" always_under="1">nebula</trail_generator>
+ <fabricator>Skull and Bones</fabricator>
+ <description>The Zebra, one of the largest freighters available for independent civilian traders, was refitted by Skull and Bones to serve as carrier. Large portions of the cargo bays were repurposed as hangars, thus the cargo capacity is significantly lower. The pirate version of the Zebra is nevertheless used as freighter occasionally.</description>
+ <health>
+  <armour>1400</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>40</crew>
+  <mass>1600</mass>
+  <fuel_consumption>400</fuel_consumption>
+  <cargo>210</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="large" prop="fighter_bay" exclusive="1" x="-18" y="20" h="4" />
+  <weapon size="large" prop="fighter_bay" exclusive="1" x="-18" y="-20" h="4" />
+  <weapon size="large" prop="fighter_bay" exclusive="1" x="0" y="16" h="0" />
+  <weapon size="large" prop="fighter_bay" exclusive="1" x="0" y="-16" h="0" />
+  <weapon size="medium" prop="fighter_bay" x="28" y="16" h="-4" />
+  <weapon size="medium" prop="fighter_bay" x="28" y="-16" h="-4" />
+  <weapon size="medium" x="26" y="20" h="-4" />
+  <weapon size="medium" x="26" y="20" h="-4" />
+  <utility size="large" prop="systems">Unicorp PT-2200 Core System</utility>
+  <utility size="large" prop="accessory" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="medium" />
+  <utility size="medium" />
+  <structure size="large" prop="engines">Unicorp Eagle 7000 Engine</structure>
+  <structure size="large" prop="hull">Unicorp D-68 Heavy Plating</structure>
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="medium" />
+  <structure size="medium" />
+ </slots>
+ <stats>
+  <speed_mod>5</speed_mod>
+  <thrust_mod>5</thrust_mod>
+  <turn_mod>-10</turn_mod>
+  <cargo_mod>20</cargo_mod>
+  <cargo_inertia>-10</cargo_inertia>
+  <armour_mod>-10</armour_mod>
+  <ew_hide>-10</ew_hide>
+ </stats>
+ <tags>
+  <tag>pirate</tag>
+  <tag>transport</tag>
+ </tags>
+</ship>

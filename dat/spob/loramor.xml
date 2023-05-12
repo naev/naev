@@ -14,8 +14,8 @@
  </presence>
  <general>
   <class>M</class>
-  <population>1e+06</population>
-  <hide>2.000000</hide>
+  <population>2.5e+06</population>
+  <hide>0.600000</hide>
   <services>
    <land/>
    <refuel/>
@@ -35,4 +35,8 @@
   <item>Missiles 1</item>
   <item>Basic Outfits 1</item>
  </tech>
+ <tags>
+  <tag>tourism</tag>
+  <tag>rich</tag>
+ </tags>
 </spob>

@@ -4,7 +4,7 @@
  <base_type>Hawking</base_type>
  <GFX size="139" sx="12" sy="12">hawking_empire</GFX>
  <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Cruiser</class>
  <price>5500000</price>

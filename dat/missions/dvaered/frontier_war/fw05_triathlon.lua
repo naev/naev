@@ -39,8 +39,6 @@ local portrait = require "portrait"
 -- Non-persistent state
 local annoyers, compHitHook, competitors, followers, joyyesno, leader, score_pankration, score_stadion, score_throw, targets
 local checkMace, endPankration, populate_bar, spawnCompetitors, tamStage1, tamStage2, tamStage3 -- Forward-declared functions
--- luacheck: globals compDie compHit compHitS competitorIdle dehostilify endPankrationT endStadion endThrow endTimer enter introduction land message playerHit playerHitS spawnNpcs startPankration startStadion startThrow takeoff targetHit targetIdle testEscape timerIncrement timerIncrementT (Hook functions passed by name)
--- luacheck: globals approach discussDad discussHam discussKlk discussLbl discussNkv discussPvt discussSst discussWdw tamCommon (NPC functions passed by name)
 
 -- common hooks
 message = fw.message
@@ -214,10 +212,10 @@ function spawnNpcs()
 
             if playerRank == 10 then
                tk.msg("",fmt.f(_("You receive a {1} as a reward."), {_("Dvaered Vendetta")}))
-               player.addShip("Dvaered Vendetta", _("You obtained this ship as a reward from Mace Rocket Ballet."))
+               player.shipAdd("Dvaered Vendetta", _("You obtained this ship as a reward from Mace Rocket Ballet."))
             elseif playerRank == 9 then
                tk.msg("",fmt.f(_("You receive a {1} as a reward."), {_("Vendetta")}))
-               player.addShip("Vendetta", _("You obtained this ship as a reward from Mace Rocket Ballet."))
+               player.shipAdd("Vendetta", _("You obtained this ship as a reward from Mace Rocket Ballet."))
             elseif playerRank == 8 then
                tk.msg("",fmt.f(_("You receive a {1} and a {2} as a reward."), {_("Tricon Zephyr II Engine"),_("Emergency Shield Booster")}))
                player.outfitAdd("Tricon Zephyr II Engine")
@@ -373,10 +371,11 @@ function takeoff()
          player.pilot():control()
          player.pilot():face(mem.center)
 
+         local fwarlords = fw.fct_warlords()
          targets = {}
          for i = 1, 30 do
             pos = mem.center + vec2.newP( rnd.rnd(0,radius), rnd.angle() )
-            targets[i] = pilot.add( "Llama", "Warlords", pos, _("Target "))
+            targets[i] = pilot.add( "Llama", fwarlords, pos, _("Target "))
             targets[i]:control()
             targets[i]:setHostile() -- Just in case
             pos = mem.center + vec2.newP( rnd.rnd(0,radius), rnd.angle() )
@@ -426,10 +425,11 @@ function takeoff()
          p:memory().gather_range = 4*radius
       end
 
+      local fwarlords = fw.fct_warlords()
       annoyers = {}
       for i = 1, 10 do
          pos = mem.center + vec2.newP( rnd.rnd(0,radius-500), rnd.angle() )
-         annoyers[i] = pilot.add( "Dvaered Vendetta", "Warlords", pos, _("Shooter"))
+         annoyers[i] = pilot.add( "Dvaered Vendetta", fwarlords, pos, _("Shooter"))
          fw.equipVendettaMace( annoyers[i] )
          annoyers[i]:setSpeedLimit( .0001 )
          annoyers[i]:control()
@@ -473,7 +473,7 @@ function takeoff()
          mem.playerHitHook = hook.pilot( player.pilot(), "attacked", "playerHit" )
 
          -- Mark this one as player's opponent
-         competitors[5]:setFaction("Warlords")
+         competitors[5]:setFaction( fw.fct_warlords() )
          competitors[5]:setHostile()
          competitors[5]:setHilight()
          mem.duelsEnded = 0
@@ -610,10 +610,11 @@ end
 
 -- Spawn Competitors
 function spawnCompetitors( )
+   local fdhc = fw.fct_dhc()
    competitors = {} -- tam, leblanc, klank, strafer, caros, micoult, johnson, ernst, guo
    for i = 1, 9 do
       local pos = mem.center + vec2.newP( radius, i*math.pi/5 - math.pi/2 )
-      competitors[i] = pilot.add( "Dvaered Vendetta", "DHC", pos, mem.competitors_names[i])
+      competitors[i] = pilot.add( "Dvaered Vendetta", fdhc, pos, mem.competitors_names[i])
       fw.equipVendettaMace( competitors[i] )
       competitors[i]:memory().Cindex = i -- Store their index
       competitors[i]:setVisible()

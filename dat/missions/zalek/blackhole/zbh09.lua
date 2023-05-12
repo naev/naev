@@ -25,8 +25,7 @@ local vn = require "vn"
 local fmt = require "format"
 local zbh = require "common.zalek_blackhole"
 local fleet = require "fleet"
-
--- luacheck: globals land enter scout_discovered zach_say heartbeat_wormhole heartbeat_ferals feral_hail (Hook functions passed by name)
+local cinema = require "cinema"
 
 local reward = zbh.rewards.zbh09
 
@@ -103,7 +102,7 @@ OK, maybe a little. Let's get going!"]]))
 
    -- mission details
    misn.setTitle( title )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc(fmt.f(_("Investigate the mysterious signal coming from the {sys} system with Zach."),{sys=insys}))
 
    local c = commodity.new( N_("Zach"), N_("A Za'lek scientist.") )
@@ -207,9 +206,9 @@ function enter ()
       player.allowLand( false, _("Zach is analyzing the wormhole signal.") )
 
       if mem.wormholeknown then
-         system.mrkAdd( inwormhole:pos(), _("Wormhole") )
+         system.markerAdd( inwormhole:pos(), _("Wormhole") )
       else
-         system.mrkAdd( inwormhole:pos(), _("Suspicious Signal") )
+         system.markerAdd( inwormhole:pos(), _("Suspicious Signal") )
       end
 
       hook.timer( 5, "zach_say", _("Weird that Icarus didn't follow us through the jump…") )
@@ -265,7 +264,7 @@ end
 
 function zach_say( msg )
    player.autonavReset( 3 )
-   player.pilot():comm(fmt.f(_([[Zach: "{msg}"]]),{msg=msg}))
+   player.msg(fmt.f(_([[Zach: "{msg}"]]),{msg=msg}),true)
 end
 
 local zach_msg_known = {
@@ -320,13 +319,10 @@ function heartbeat_ferals ()
    local l = pack[1]
 
    if fstate == 0 then
-      player.cinematics( true )
+      cinema.on()
       camera.set( l )
       l:taskClear()
       l:moveto( l:pos() + (player.pos()-l:pos()):normalize() * 1000 )
-      local pp = player.pilot()
-      pp:control()
-      pp:brake()
       nexttime = 10
       fstate = 1
 
@@ -335,10 +331,8 @@ function heartbeat_ferals ()
       fstate = 2
 
    elseif fstate == 2 then
-      player.cinematics( false )
+      cinema.off()
       camera.set()
-      local pp = player.pilot()
-      pp:control(false)
       nexttime = 3
       fstate = 3
 
@@ -356,7 +350,7 @@ function heartbeat_ferals ()
    elseif fstate == 5 and player.pos():dist( l:pos() ) < 3000 then
 
       local pp = player.pilot()
-      player.cinematics( true )
+      cinema.on()
       camera.set( (l:pos()+pp:pos())/2 )
       camera.setZoom( 3 )
 
@@ -364,8 +358,6 @@ function heartbeat_ferals ()
       l:taskClear()
       l:brake()
       l:face( pp )
-      pp:control()
-      pp:brake()
       pp:face( l )
 
       local lp = l:pos()
@@ -396,7 +388,7 @@ function heartbeat_ferals ()
       end
       misn.osdCreate( title, { _("Survive!") } )
 
-      player.cinematics( false )
+      cinema.off()
       camera.set()
       camera.setZoom()
 

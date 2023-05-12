@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Dvaered Vigilance">
+ <lua>ships/lua/dvaered.lua</lua>
  <points>90</points>
  <base_type>Vigilance</base_type>
  <GFX size="95" sx="10" sy="10">vigilance_dvaered</GFX>
  <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>2200000</price>

@@ -18,25 +18,25 @@ skills.set.bite = {
       icon = "food-chain.webp",
    },
    ["bite2"] = {
-      --name = _("Cannibalism II"),
-      name = _("Cannibal II"),
-      tier = 2,
-      requires = { "bite1" },
-      shipvar = "cannibal2",
-      desc = _("Cannibalizing boarded ships will now restore 2 points of armour per 3 points of armour cannibalized, and boarding will cause your ship to perform a full cooldown cycle."),
-      icon = "food-chain.webp",
-   },
-   ["bite3"] = {
       name = _("The Bite"),
-      tier = 3,
+      tier = 2,
       outfit = "The Bite",
       slot = "the_bite",
-      requires = { "bite2" },
+      requires = { "bite1" },
       desc = function( p )
          local dmg = 10*math.sqrt(p:mass())
          return fmt.f(_("The ship will lunge at the target enemy and take a huge bite out of it. +800% thrust and +30% absorb for 3 seconds or until target ship is bitten. This ship will do {dmg:.0f} damage with its current mass. Has a 15 second cooldown period."),{dmg=dmg})
       end,
       icon = "fangs.webp",
+   },
+   ["bite3"] = {
+      --name = _("Cannibalism II"),
+      name = _("Cannibal II"),
+      tier = 3,
+      requires = { "bite2" },
+      shipvar = "cannibal2",
+      desc = _("Cannibalizing boarded ships will now restore 2 points of armour per 3 points of armour cannibalized, and boarding will cause your ship to perform a full cooldown cycle."),
+      icon = "food-chain.webp",
    },
    ["bite4"] = {
       name = _("Blood Lust"),
@@ -186,9 +186,9 @@ skills.set.health = {
       name = _("Reflective Shell"),
       tier = 5,
       requires = { "health4" },
-      desc = _("TODO damage reflection?"),
+      desc = _("Reflects 5% of damage back to attackers."),
+      outfit = "Reflective Shell",
       icon = "spiked-shell.webp",
-      -- TODO
    },
 }
 
@@ -248,7 +248,7 @@ skills.set.plasma = {
       name = _("Corrosion I"),
       tier = 1,
       outfit = "Corrosion I",
-      desc = _("Plasma burn duration increased by 50%."),
+      desc = _("Plasma burn duration increased by 50%. Bonus is halved for non-organ weapons."),
       icon = "acid-blob.webp",
    },
    ["plasma2"] = {
@@ -272,16 +272,17 @@ skills.set.plasma = {
       tier = 4,
       outfit = "Corrosion II",
       requires = { "plasma3" },
-      desc = _("Plasma burn duration further increased by 50%."),
+      desc = _("Plasma burn duration further increased by 50%. Bonus is halved for non-organ weapons."),
       icon = "acid-blob.webp",
    },
    ["plasma5"] = {
       name = _("Plasma Burst"),
       tier = 5,
       requires = { "plasma4" },
-      desc = _("creates an explosion of plasma affecting all ships around the pilot"),
-      -- TODO
+      desc = _("Creates an explosion of plasma affecting all ships around the pilot. Deals 100 damage with 50% penetration to all hostiles ships within 200 range. Deals an additional 200 damage over 10 seconds while lowering speed ,thrust, and turn by 25% and fire rate by 20%."),
+      outfit = "Plasma Burst",
       icon = "goo-skull.webp",
+      slot = "plasma_burst",
    },
 }
 

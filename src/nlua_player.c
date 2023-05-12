@@ -32,7 +32,8 @@
 #include "map.h"
 #include "map_overlay.h"
 #include "mission.h"
-#include "nlua_col.h"
+#include "ndata.h"
+#include "nlua_colour.h"
 #include "nlua_commodity.h"
 #include "nlua_outfit.h"
 #include "nlua_pilot.h"
@@ -47,6 +48,7 @@
 #include "player.h"
 #include "player_fleet.h"
 #include "player_inventory.h"
+#include "save.h"
 
 #define PLAYER_CHECK() if (player.p == NULL) return 0
 
@@ -55,6 +57,7 @@ static int playerL_getname( lua_State *L );
 static int playerL_shipname( lua_State *L );
 static int playerL_pay( lua_State *L );
 static int playerL_credits( lua_State *L );
+static int playerL_wealth( lua_State *L );
 static int playerL_msg( lua_State *L );
 static int playerL_msgClear( lua_State *L );
 static int playerL_msgToggle( lua_State *L );
@@ -74,6 +77,7 @@ static int playerL_autonavDest( lua_State *L );
 static int playerL_autonavAbort( lua_State *L );
 static int playerL_autonavReset( lua_State *L );
 /* Cinematics. */
+static int playerL_setSpeed( lua_State *L );
 static int playerL_cinematics( lua_State *L );
 static int playerL_damageSPFX( lua_State *L );
 static int playerL_screenshot( lua_State *L );
@@ -95,12 +99,13 @@ static int playerL_shipvarPop( lua_State *L );
 static int playerL_ships( lua_State *L );
 static int playerL_shipOutfits( lua_State *L );
 static int playerL_shipMetadata( lua_State *L );
+static int playerL_shipDeploy( lua_State *L );
 static int playerL_outfits( lua_State *L );
 static int playerL_numOutfit( lua_State *L );
-static int playerL_addOutfit( lua_State *L );
-static int playerL_rmOutfit( lua_State *L );
-static int playerL_addShip( lua_State *L );
-static int playerL_swapShip( lua_State *L );
+static int playerL_outfitAdd( lua_State *L );
+static int playerL_outfitRm( lua_State *L );
+static int playerL_shipAdd( lua_State *L );
+static int playerL_shipSwap( lua_State *L );
 /* Mission/event management stuff. */
 static int playerL_missions( lua_State *L );
 static int playerL_misnActive( lua_State *L );
@@ -108,7 +113,9 @@ static int playerL_misnDone( lua_State *L );
 static int playerL_misnDoneList( lua_State *L );
 static int playerL_evtActive( lua_State *L );
 static int playerL_evtDone( lua_State *L );
-/* Cargo space. */
+static int playerL_evtDoneList( lua_State *L );
+/* Fleet stuff. */
+static int playerL_fleetList( lua_State *L );
 static int playerL_fleetCargoFree( lua_State *L );
 static int playerL_fleetCargoUsed( lua_State *L );
 static int playerL_fleetCargoOwned( lua_State *L );
@@ -125,17 +132,20 @@ static int playerL_inventoryOwned( lua_State *L );
 static int playerL_teleport( lua_State *L );
 static int playerL_dt_mod( lua_State *L );
 static int playerL_fleetCapacity( lua_State *L );
-static int playerL_setFleetCapacity( lua_State *L );
+static int playerL_fleetCapacitySet( lua_State *L );
 static int playerL_chapter( lua_State *L );
 static int playerL_chapterSet( lua_State *L );
 static int playerL_infoButtonRegister( lua_State *L );
 static int playerL_infoButtonUnregister( lua_State *L );
 static int playerL_canDiscover( lua_State *L );
+static int playerL_save( lua_State *L );
+static int playerL_saveBackup( lua_State *L );
 static const luaL_Reg playerL_methods[] = {
    { "name", playerL_getname },
    { "ship", playerL_shipname },
    { "pay", playerL_pay },
    { "credits", playerL_credits },
+   { "wealth", playerL_wealth },
    { "msg", playerL_msg },
    { "msgClear", playerL_msgClear },
    { "msgToggle", playerL_msgToggle },
@@ -152,6 +162,7 @@ static const luaL_Reg playerL_methods[] = {
    { "autonavDest", playerL_autonavDest },
    { "autonavAbort", playerL_autonavAbort },
    { "autonavReset", playerL_autonavReset },
+   { "setSpeed", playerL_setSpeed },
    { "cinematics", playerL_cinematics },
    { "damageSPFX", playerL_damageSPFX },
    { "screenshot", playerL_screenshot },
@@ -168,18 +179,21 @@ static const luaL_Reg playerL_methods[] = {
    { "ships", playerL_ships },
    { "shipOutfits", playerL_shipOutfits },
    { "shipMetadata", playerL_shipMetadata },
+   { "shipDeploy", playerL_shipDeploy },
    { "outfits", playerL_outfits },
    { "numOutfit", playerL_numOutfit },
-   { "outfitAdd", playerL_addOutfit },
-   { "outfitRm", playerL_rmOutfit },
-   { "addShip", playerL_addShip },
-   { "swapShip", playerL_swapShip },
+   { "outfitAdd", playerL_outfitAdd },
+   { "outfitRm", playerL_outfitRm },
+   { "shipAdd", playerL_shipAdd },
+   { "shipSwap", playerL_shipSwap },
    { "missions", playerL_missions },
    { "misnActive", playerL_misnActive },
    { "misnDone", playerL_misnDone },
    { "misnDoneList", playerL_misnDoneList },
    { "evtActive", playerL_evtActive },
    { "evtDone", playerL_evtDone },
+   { "evtDoneList", playerL_evtDoneList },
+   { "fleetList", playerL_fleetList },
    { "fleetCargoFree", playerL_fleetCargoFree },
    { "fleetCargoUsed", playerL_fleetCargoUsed },
    { "fleetCargoOwned", playerL_fleetCargoOwned },
@@ -194,12 +208,14 @@ static const luaL_Reg playerL_methods[] = {
    { "teleport", playerL_teleport },
    { "dt_mod", playerL_dt_mod },
    { "fleetCapacity", playerL_fleetCapacity },
-   { "setFleetCapacity", playerL_setFleetCapacity },
+   { "fleetCapacitySet", playerL_fleetCapacitySet },
    { "chapter", playerL_chapter },
    { "chapterSet", playerL_chapterSet },
    { "infoButtonRegister", playerL_infoButtonRegister },
    { "infoButtonUnregister", playerL_infoButtonUnregister },
    { "canDiscover", playerL_canDiscover },
+   { "save", playerL_save },
+   { "saveBackup", playerL_saveBackup },
    {0,0}
 }; /**< Player Lua methods. */
 
@@ -295,6 +311,7 @@ static int playerL_pay( lua_State *L )
 
    return 0;
 }
+
 /**
  * @brief Gets how many credits the player has on him.
  *
@@ -322,6 +339,44 @@ static int playerL_credits( lua_State *L )
    }
    return 1;
 }
+
+/**
+ * @brief Gets how many credits the player owns both directly, and in the form of assets (ships, outfits, ...).
+ *
+ * @usage monies = player.wealth()
+ * @usage monies, readable = player.wealth( 2 )
+ *
+ *    @luatparam[opt] number decimal Optional argument that makes it return human readable form with so many decimals.
+ *    @luatreturn number The player's wealth in numerical form.
+ *    @luatreturn string The player's wealth in human-readable form.
+ * @luafunc wealth
+ */
+static int playerL_wealth( lua_State *L )
+{
+   PLAYER_CHECK();
+   const PlayerShip_t *ps = player_getShipStack();
+   const PlayerOutfit_t *po = player_getOutfits();
+   credits_t wealth = player.p->credits + pilot_worth( player.p );
+   /* Parse parameters. */
+   int decimals = luaL_optinteger(L,1,-1);
+
+   /* Compute total wealth. */
+   for (int i=0; i<array_size(ps); i++)
+      wealth += pilot_worth( ps[i].p  );
+   for (int i=0; i<array_size(po); i++)
+      wealth += po[i].q * po[i].o->price;
+
+   /* Push return. */
+   lua_pushnumber(L, wealth);
+   if (decimals >= 0) {
+      char buf[ ECON_CRED_STRLEN ];
+      credits2str( buf, wealth, decimals );
+      lua_pushstring(L, buf);
+      return 2;
+   }
+   return 1;
+}
+
 /**
  * @brief Sends the player an in-game message.
  *
@@ -370,7 +425,7 @@ static int playerL_msgToggle( lua_State *L )
  *
  * @usage player.omsgAdd( "some_message", 5 )
  *    @luatparam string msg Message to add.
- *    @luatparam[opt=10] number duration Duration to add message (if 0. the duration is infinite).
+ *    @luatparam[opt=10] number duration Duration to add message in seconds (if 0. the duration is infinite).
  *    @luatparam[opt=16] number fontsize Size of the font to use.
  *    @luatparam[opt=white] Colour col Colour to use for the text or white if not specified.
  *    @luatreturn number ID of the created overlay message.
@@ -407,7 +462,7 @@ static int playerL_omsgAdd( lua_State *L )
  * @usage player.omsgChange( omsg_id, "new message", 3 )
  *    @luatparam number id ID of the overlay message to change.
  *    @luatparam string msg Message to change to.
- *    @luatparam number duration New duration to set (0. for infinity).
+ *    @luatparam number duration New duration to set in seconds (0. for infinity).
  *    @luatreturn boolean true if all went well, false otherwise.
  * @luafunc omsgChange
  */
@@ -604,12 +659,12 @@ static int playerL_autonavDest( lua_State *L )
  *
  * @note Does not do anything if the player is not in autonav.
  *
- *    @luatparam string msg Abort message.
+ *    @luatparam[opt] string msg Abort message.
  * @luafunc autonavAbort
  */
 static int playerL_autonavAbort( lua_State *L )
 {
-   const char *str = luaL_checkstring(L,1);
+   const char *str = luaL_optstring(L,1,NULL);
    player_autonavAbort( str );
    return 0;
 }
@@ -631,6 +686,29 @@ static int playerL_autonavReset( lua_State *L )
 }
 
 /**
+ * @brief Sets the game speed directly.
+ *
+ *    @luatparam number speed Speed to set the game to. If omitted it will reset the game speed.
+ * @luafunc setSpeed
+ */
+static int playerL_setSpeed( lua_State *L )
+{
+   double speed = luaL_optnumber( L, 1, -1 );
+
+   if (speed > 0.) {
+      player.speed = speed;
+      sound_setSpeed( speed );
+      pause_setSpeed( speed );
+   }
+   else {
+      player.speed = 1.;
+      player_resetSpeed();
+   }
+
+   return 0;
+}
+
+/**
  * @brief Puts the game in cinematics mode or back to regular mode.
  *
  * Possible options are:<br/>
@@ -648,18 +726,19 @@ static int playerL_autonavReset( lua_State *L )
  */
 static int playerL_cinematics( lua_State *L )
 {
-   int b;
+   int b, f_gui, f_2x;
    const char *abort_msg;
-   int f_gui, f_2x;
+   double speed;
 
    /* Defaults. */
-   abort_msg = NULL;
-   f_gui     = 0;
-   f_2x      = 0;
+   abort_msg= NULL;
+   f_gui    = 0;
+   f_2x     = 0;
+   speed    = 1.;
 
    /* Parse parameters. */
    b = lua_toboolean( L, 1 );
-   if (lua_gettop(L) > 1) {
+   if (!lua_isnoneornil(L,2)) {
       if (!lua_istable(L,2)) {
          NLUA_ERROR( L, _("Second parameter to cinematics should be a table of options or omitted!") );
          return 0;
@@ -677,13 +756,17 @@ static int playerL_cinematics( lua_State *L )
       lua_getfield( L, 2, "no2x" );
       f_2x = lua_toboolean(L, -1);
       lua_pop( L, 1 );
+
+      lua_getfield( L, 2, "speed" );
+      speed = luaL_optnumber(L,-1,1.);
+      lua_pop( L, 1 );
    }
 
    if (b) {
       /* Reset speeds. This will override the player's ship base speed. */
-      player.speed = 1.;
-      sound_setSpeed( 1. );
-      pause_setSpeed( 1. );
+      player.speed = speed;
+      sound_setSpeed( speed );
+      pause_setSpeed( speed );
 
       /* Get rid of stuff that could be bothersome. */
       player_autonavAbort( abort_msg );
@@ -779,8 +862,14 @@ static int playerL_isLanded( lua_State *L )
  */
 static int playerL_takeoff( lua_State *L )
 {
+   PLAYER_CHECK();
+
    if (!landed) {
       NLUA_ERROR(L,_("Player must be landed to force takeoff."));
+      return 0;
+   }
+   if (!pilot_isSpaceworthy( player.p )) {
+      NLUA_ERROR(L,_("Player must be spaceworthy to force takeoff!"));
       return 0;
    }
 
@@ -859,7 +948,6 @@ static int playerL_land( lua_State *L )
  */
 static int playerL_allowLand( lua_State *L )
 {
-
    int b;
    const char *str = NULL;
 
@@ -963,6 +1051,7 @@ static PlayerShip_t *playerL_shipvarShip( lua_State *L, int idx )
  */
 static int playerL_shipvarPeek( lua_State *L )
 {
+   PLAYER_CHECK();
    const char *str  = luaL_checkstring(L,1);
    PlayerShip_t *ps = playerL_shipvarShip(L,2);
    lvar *var        = lvar_get( ps->p->shipvar, str );
@@ -981,6 +1070,7 @@ static int playerL_shipvarPeek( lua_State *L )
  */
 static int playerL_shipvarPush( lua_State *L )
 {
+   PLAYER_CHECK();
    const char *str  = luaL_checkstring(L,1);
    lvar var         = lvar_tovar( L, str, 2 );
    PlayerShip_t *ps = playerL_shipvarShip(L,3);
@@ -999,6 +1089,7 @@ static int playerL_shipvarPush( lua_State *L )
  */
 static int playerL_shipvarPop( lua_State *L )
 {
+   PLAYER_CHECK();
    const char *str  = luaL_checkstring(L,1);
    PlayerShip_t *ps = playerL_shipvarShip(L,2);
    lvar *var        = lvar_get( ps->p->shipvar, str );
@@ -1029,6 +1120,9 @@ static int playerL_ships( lua_State *L )
 
       lua_pushship(L, ships[i].p->ship); /* t, k, t, s */
       lua_setfield(L, -2, "ship"); /* t, k, t */
+
+      lua_pushboolean(L, ships[i].deployed); /* t, k, t, s */
+      lua_setfield(L, -2, "deployed"); /* t, k, t */
 
       lua_rawseti(L, -2, i+1); /* t */
    }
@@ -1168,6 +1262,23 @@ static int playerL_shipMetadata( lua_State *L )
 }
 
 /**
+ * @brief Sets the deployed status of a player's ship.
+ *
+ *    @luatparam string shipname Name of the ship to set deployed status of.
+ *    @luatparam[opt=false] boolean deploy Whether or not to set the deployed status of the ship.
+ * @luafunc shipDeploy
+ */
+static int playerL_shipDeploy( lua_State *L )
+{
+   PLAYER_CHECK();
+   const char *shipname = luaL_checkstring(L,1);
+   int deploy = lua_toboolean(L,2);
+   PlayerShip_t *ps = player_getPlayerShip( shipname );
+   ps->deployed = deploy;
+   return 0;
+}
+
+/**
  * @brief Gets all the outfits the player owns.
  *
  * If you want the quantity, call player.numOutfit() on the individual outfit.
@@ -1230,8 +1341,9 @@ static int playerL_numOutfit( lua_State *L )
  *    @luatparam[opt=1] number q Quantity to give.
  * @luafunc outfitAdd
  */
-static int playerL_addOutfit( lua_State *L  )
+static int playerL_outfitAdd( lua_State *L  )
 {
+   PLAYER_CHECK();
 
    /* Handle parameters. */
    const Outfit *o = luaL_validoutfit(L, 1);
@@ -1256,7 +1368,7 @@ static int playerL_addOutfit( lua_State *L  )
  *    @luatparam[opt] number q Quantity to remove (default 1).
  * @luafunc outfitRm
  */
-static int playerL_rmOutfit( lua_State *L )
+static int playerL_outfitRm( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
 
@@ -1311,7 +1423,7 @@ static int playerL_rmOutfit( lua_State *L )
  *    @luatreturn string The new ship's name.
  * @luafunc addShip
  */
-static int playerL_addShip( lua_State *L )
+static int playerL_shipAdd( lua_State *L )
 {
    PlayerShip_t *new_ship;
    /* Handle parameters. */
@@ -1337,9 +1449,9 @@ static int playerL_addShip( lua_State *L )
  *    @luatparam string ship Name of the ship to swap to. (this is name given by the player, not ship name)
  *    @luatparam[opt=false] boolean ignore_cargo Whether or not to ignore cargo and not move it, or try to move it over.
  *    @luatparam[opt=false] boolean remove If true removes the player's current ship (so it replaces and doesn't swap).
- * @luafunc swapShip
+ * @luafunc shipSwap
  */
-static int playerL_swapShip( lua_State *L )
+static int playerL_shipSwap( lua_State *L )
 {
    PLAYER_CHECK();
 
@@ -1476,6 +1588,51 @@ static int playerL_evtDone( lua_State *L )
       return 0;
    }
    lua_pushboolean( L, player_eventAlreadyDone( id ) );
+   return 1;
+}
+
+/**
+ * @brief Gets a list of all the events the player has done.
+ *
+ *    @luatreturn table List of all the events the player has done.
+ * @luafunc evtDoneList
+ */
+static int playerL_evtDoneList( lua_State *L )
+{
+   int *done = player_eventsDoneList();
+   lua_newtable(L);
+   for (int i=0; i<array_size(done); i++) {
+      event_toLuaTable( L, done[i] );
+      lua_rawseti(L,-2,i+1);
+   }
+   return 1;
+}
+
+/**
+ * @brief Lists the ships in the player's fleet.
+ *
+ *    @luatreturn table Table containing the pilots in the player fleet or false if they are not spawned yet.
+ * @luafunc fleetList
+ */
+static int playerL_fleetList( lua_State *L )
+{
+   int n = 1;
+   const PlayerShip_t* pstack = player_getShipStack();
+   lua_newtable(L);
+   for (int i=0; i<array_size(pstack); i++) {
+      const PlayerShip_t *ps = &pstack[i];
+      if (!ps->deployed)
+         continue;
+      /* We can avoid the spaceWorthy check as they will be set to false due to not having a pilot. */
+      /*if (!!pilot_isSpaceworthy(ps->p))
+         continue;*/
+
+      if (ps->p==NULL)
+         lua_pushboolean( L, 0 );
+      else
+         lua_pushpilot( L, ps->p->id );
+      lua_rawseti( L, -2, n++ );
+   }
    return 1;
 }
 
@@ -1689,7 +1846,6 @@ static int playerL_inventoryOwned( lua_State *L )
 static int playerL_teleport( lua_State *L )
 {
    Spob *pnt;
-   StarSystem *sys;
    const char *name, *pntname;
    int no_simulate, silent;
 
@@ -1706,8 +1862,8 @@ static int playerL_teleport( lua_State *L )
 
    /* Get a system. */
    if (lua_issystem(L,1)) {
-      sys   = luaL_validsystem(L,1);
-      name  = system_getIndex(sys->id)->name;
+      StarSystem *sys = luaL_validsystem(L,1);
+      name = system_getIndex(sys->id)->name;
    }
    /* Get a spob. */
    else if (lua_isspob(L,1)) {
@@ -1739,7 +1895,7 @@ static int playerL_teleport( lua_State *L )
          }
       }
       else
-         sys = system_get( sysname );
+         name = sysname;
    }
    else
       NLUA_INVALID_PARAMETER(L);
@@ -1832,23 +1988,33 @@ static int playerL_dt_mod( lua_State *L )
  *
  *    @luatreturn number Total fleet capacity of the player.
  *    @luatreturn number Currently used fleet capacity of the player.
+ *    @luatreturn boolean Can take off.
  * @luafunc fleetCapacity
  */
 static int playerL_fleetCapacity( lua_State *L )
 {
+   int nships = 0;
+   const PlayerShip_t *pships;
    pfleet_update();
    lua_pushnumber(L,player.fleet_capacity);
    lua_pushnumber(L,player.fleet_used);
-   return 2;
+   pships = player_getShipStack();
+   for (int i=0; i<array_size(pships); i++) {
+      if (!pships[i].deployed)
+         continue;
+      nships++;
+   }
+   lua_pushboolean(L, (nships==0) || (player.fleet_used <= player.fleet_capacity));
+   return 3;
 }
 
 /**
  * @brief Sets the fleet capacity of the player.
  *
  *    @luatparam number capacity Fleet capacity to set the player to.
- * @luafunc setFleetCapacity
+ * @luafunc fleetCapacitySet
  */
-static int playerL_setFleetCapacity( lua_State *L )
+static int playerL_fleetCapacitySet( lua_State *L )
 {
    player.fleet_capacity = luaL_checkinteger(L,1);
    return 0;
@@ -1928,4 +2094,54 @@ static int playerL_canDiscover( lua_State *L )
 {
    player.discover_off = !lua_toboolean(L,1);
    return 0;
+}
+
+/**
+ * @brief Saves the game.
+ *
+ *    @luatparam[opt="autosave"] string name What to name the save.
+ *    @luatparam[opt=nil] Spob|string Spob or name of spob to save the player at.
+ * @luafunc save
+ */
+static int playerL_save( lua_State *L )
+{
+   const char *savename = luaL_optstring( L, 1, "autosave" );
+   Spob *savespob = NULL;
+   Spob *prevspob;
+   if (!lua_isnoneornil(L,2))
+      savespob = luaL_validspob(L,2);
+
+   if (!landed && (savespob==NULL))
+      NLUA_ERROR(L,_("Unable to save when not landed and land spob is not specified!"));
+   else if (landed && (savespob!=land_spob))
+      NLUA_ERROR(L,_("Unable to save when landed and land_spob does not match landed spob!"));
+
+   if (savespob != NULL) {
+      prevspob = land_spob;
+      land_spob = savespob;
+   }
+   lua_pushboolean( L, save_all_with_name( savename ) );
+   if (savespob != NULL)
+      land_spob = prevspob;
+
+   return 1;
+}
+
+/**
+ * @brief Backs up the player's last autosave with a custom name.
+ *
+ *    @luatparam string name Name to give the copy of the autosave.
+ *    @luatreturn boolean true on success.
+ * @luafunc saveBackup
+ */
+static int playerL_saveBackup( lua_State *L )
+{
+   char file[PATH_MAX], backup[PATH_MAX];
+   const char *filename = luaL_checkstring(L,1); /* TODO sanitize path and such. */
+   if (strcmp(filename,"autosave")==0)
+      NLUA_ERROR(L,_("Can not back up save to 'autosave'."));
+   snprintf( file, sizeof(file), "saves/%s/autosave.ns", player.name );
+   snprintf( backup, sizeof(backup), "saves/%s/%s.ns", player.name, filename );
+   lua_pushboolean( L, ndata_copyIfExists(file, backup) );
+   return 1;
 }

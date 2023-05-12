@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Nohinohi">
+ <lua>ships/lua/soromid.lua</lua>
  <points>40</points>
  <base_type>Reaver</base_type>
  <GFX size="68">reaver_feral</GFX>
  <rarity>5</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <flags>
   <noplayer/>
  </flags>
@@ -29,8 +30,8 @@
   <weapon size="small" prop="bio_weapon" name="weap2" x="12" y="0" h="0">Stinger Organ III</weapon>
   <weapon size="small" prop="bio_weapon" name="weap3" x="12" y="0" h="0">Stinger Organ III</weapon>
   <utility size="small" prop="bio_systems" name="brain">Laevum Cerebrum II</utility>
-  <utility size="small" prop="bio_organ" name="adrenal_gland" />
-  <utility size="small" prop="bio_organ" name="the_bite" />
+  <utility size="small" prop="bio_organ" name="adrenal_gland">Adrenal Gland I</utility>
+  <utility size="small" prop="bio_organ" name="the_bite">The Bite</utility>
   <utility size="small" prop="accessory" />
   <structure size="small" prop="bio_engines" name="genedrive">Laevis Gene Drive II</structure>
   <structure size="small" prop="bio_hull" name="shell">Laevis Cortex II</structure>

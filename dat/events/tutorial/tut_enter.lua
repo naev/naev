@@ -14,14 +14,12 @@ local fmt = require "format"
 local tut = require "common.tutorial"
 local vn  = require "vn"
 
--- luacheck: globals evt_done tut_illegal tut_volatility (Hook functions passed by name)
-
 function create ()
    if tut.isDisabled() then evt.finish() end
 
    local enter_delay = 5
 
-   hook.land( "land", "evt_done" )
+   hook.land( "evt_done" )
 
    -- TODO we should probably allow looking at any faction not just empire
    if not var.peek("tut_illegal") and player.pilot():hasIllegal("Empire") then

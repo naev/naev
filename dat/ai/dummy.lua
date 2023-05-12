@@ -11,14 +11,13 @@ function create ()
 end
 
 -- No need for control
-function control () end
-function control_manual () end
+function control( _dt ) end
+function control_manual( _dt ) end
 
 -- No response
 function attacked ( _attacker ) end
 
 -- Does nothing
--- luacheck: globals idle (AI Task functions passed by name)
 function idle () end
 
 -- Brakes the pilot

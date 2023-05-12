@@ -1,9 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Za'lek Heavy Drone">
+ <lua>ships/lua/zalek.lua</lua>
  <points>40</points>
  <base_type>Za'lek Heavy Drone</base_type>
  <GFX size="45">zalek_drone_heavy</GFX>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine_zalek</sound>
  <class display="Robotic Fighter">Fighter</class>
  <price>350000</price>

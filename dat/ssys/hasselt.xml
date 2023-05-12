@@ -5,17 +5,16 @@
   <map_shader>haze_map.frag</map_shader>
   <features>#rHaze (-50% Shield and Shield Regen)#0</features>
   <radius>23000.000000</radius>
-  <stars>400</stars>
-  <interference>15.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>33.750000</interference>
  </general>
- <pos x="66.468747" y="904.819147"/>
+ <pos x="477.546965" y="1031.193006"/>
  <spobs>
   <spob>Hasselt II</spob>
   <spob>Hasselt IV</spob>
   <spob>Haurn</spob>
   <spob>Phosarrus</spob>
-  <spob>Yak Station</spob>
+  <spob>Yak Nest</spob>
   <spob>Zhang Lu</spob>
   <spob_virtual>Trade Lane (Soromid)</spob_virtual>
  </spobs>

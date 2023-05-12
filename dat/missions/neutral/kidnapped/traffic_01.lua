@@ -28,15 +28,21 @@
    Author: fart but based on Mission Ideas in wiki: wiki.naev.org/wiki/Mission_Ideas
 
 --]]
-
 local fmt = require "format"
 local neu = require "common.neutral"
+local vntk = require "vntk"
+local vn = require "vn"
+local portrait = require "portrait"
+local ccomm = require "common.comm"
 
 local reward = 200e3
 
 local badguys, broship -- Non-persistent state
 local spawn_baddies -- Forward-declared functions
--- luacheck: globals do_msg do_msg2 got_boarded got_hailed idle sys_enter (Hook functions passed by name)
+
+local npc_name = _("Ordinary Woman")
+local npc_portrait = "neutral/unique/fakesister.webp"
+local npc_image = portrait.getFullPath( npc_portrait )
 
 function create ()
    mem.targetsys = {system.get("Mural"),system.get("Darkstone"),system.get("Haleb")}
@@ -50,7 +56,7 @@ function create ()
    end
 
    -- Spaceport bar stuff
-   misn.setNPC( _("Ordinary Woman"), "neutral/unique/fakesister.webp", _("The woman waves at you a bit desperately.") )
+   misn.setNPC( npc_name, npc_portrait, _("The woman waves at you a bit desperately.") )
 end
 
 
@@ -58,11 +64,31 @@ end
 Mission entry point.
 --]]
 function accept ()
-   -- Mission details:
-   if not tk.yesno( _("In the Bar"), _([["I must find my dear brother! Please help me. I think he is in danger! I don't have a ship and he is the only family I have left. Could you please help me?"]]) ) then
-      tk.msg(_("Sorry, I can't"), _([["How can you be such a heartless person? What has this universe become?..."]]))
-      return
-   end
+   local accepted = false
+
+   vn.clear()
+   vn.scene()
+   local w = vn.newCharacter( npc_name, {image=npc_image} )
+
+   w(_([["I must find my dear brother! Please help me. I think he is in danger! I don't have a ship and he is the only family I have left. Could you please help me?"]]) )
+   vn.menu{
+      {_("Help her"), "accept"},
+      {_("Decline"), "decline"},
+   }
+
+   vn.label("decline")
+   w(_([["How can you be such a heartless person? What has this universe become?…"]]))
+   vn.done()
+
+   vn.label("accept")
+   w(_([[The woman calms down as you signal your willingness to help. "Oh, thank goodness! I was told where he usually hangs around. Please take me there and tell him that I have to talk to him.
+And please hurry. Someone was sent to assassinate him. I don't have much to give, but whatever I have saved, you can have."]]) )
+   vn.func( function () accepted = true end )
+
+   vn.run()
+
+   if not accepted then return end
+
    misn.accept()
 
    -- Some variables for keeping track of the mission
@@ -85,10 +111,6 @@ function accept ()
       misn.markerAdd( mem.targetsys[2], "low" ),
       misn.markerAdd( mem.targetsys[3], "low" )
    }
-
-   -- Some flavour text
-   tk.msg( _("In the Bar"), _([[The woman calms down as you signal your willingness to help. "Oh, thank goodness! I was told where he usually hangs around. Please take me there and tell him that I have to talk to him.
-    And please hurry. Someone was sent to assassinate him. I don't have much to give, but whatever I have saved, you can have."]]) )
 
    -- Set hooks
    hook.jumpin("sys_enter")
@@ -146,9 +168,7 @@ function sys_enter ()
       end
    else
       hook.timer( 3.0, "do_msg2" )
-      broship = pilot.add( "Gawain", "Independent", mem.bropla:pos() + vec2.new(-200,-200), _("Poppy Seed"), {ai="trader"} ) -- fast Gawain
-      broship:outfitRm("cores")
-      broship:cargoRm("all")
+      broship = pilot.add( "Gawain", "Independent", mem.bropla:pos() + vec2.new(-200,-200), _("Poppy Seed"), {ai="trader", naked=true} ) -- fast Gawain
       broship:outfitAdd("Unicorp D-2 Light Plating")
       broship:outfitAdd("Unicorp PT-68 Core System")
       broship:outfitAdd("Tricon Zephyr Engine")
@@ -161,7 +181,7 @@ function sys_enter ()
       broship:setFuel(true)
       broship:moveto(mem.bropla:pos() + vec2.new( 400, -400), false)
       -- just some moving around, stolen from baron missions ;D
-      mem.idlehook = hook.pilot(broship, "idle", "idle",broship,mem.bropla)
+      mem.idlehook = hook.pilot(broship, "idle", "idle",broship, mem.bropla)
       misn.osdActive(2)
       -- get point between jumpgate and broship to spawn mercenaries disencouraging him from following
       mem.jpt = get_nearest_jump(broship)
@@ -176,8 +196,14 @@ end
 
 -- if hailed: stop vessel let it be boarded
 function got_hailed(shipp)
-   tk.msg(_("Comm Channel"), _([[You radio the ship with a message saying you have his sister on board and that she has a message for him.
-    "My sister? What the heck could she want from me? Prepare for docking."]]))
+   vn.clear()
+   vn.scene()
+   local p = ccomm.newCharacter( vn, shipp )
+   vn.transition()
+   p(_([[You radio the ship with a message saying you have his sister on board and that she has a message for him.
+"My sister? What the heck could she want from me? Prepare for docking."]]))
+   vn.run()
+
    shipp:taskClear()
    shipp:brake()
    shipp:setActiveBoard(true)
@@ -193,11 +219,11 @@ function got_boarded(shipp)
    shipp:setActiveBoard(false)
    --get nearest jumppoints and let ship escape in this direction
    shipp:hyperspace(mem.jpt:dest())
-   tk.msg(_("The Deception"), _([[The woman stands next to you while the airlock opens. You see the grin on the man's face change to a baffled expression, then hear the sound of a blaster. Before you even realize what has happened, the lady rushes past you and closes the airlock.
-    You find an arrangement of credit chips she left in your ship along with a note: "Sorry."]]))
+   vntk.msg(_("The Deception"), _([[The woman stands next to you while the airlock opens. You see the grin on the man's face change to a baffled expression, then hear the sound of a blaster. Before you even realize what has happened, the lady rushes past you and closes the airlock.
+You find an arrangement of credit chips she left in your ship along with a note: "Sorry."]]))
    -- turn mercs hostile
    for i=1,#badguys do
-     badguys[i]:setHostile(true)
+      badguys[i]:setHostile(true)
    end
 
    player.pay(reward)
@@ -213,69 +239,26 @@ function idle(shipp,pplanet)
 end
 --delay for msgs because if no delay they will pop in mid transit from system to system. A wait function would be awesome...
 function do_msg ()
-   tk.msg( _("Wrong system"), _([["I don't think he is here. He must be in one of the other systems. Please hurry!"]]) )
+   player.msg(_([["I don't think he is here. He must be in one of the other systems. Please hurry!"]]),true)
 end
 function do_msg2 ()
-   tk.msg( _("Right system"), _([["I think this is it! We found him!"]]) )
+   player.msg(_([["I think this is it! We found him!"]]),true)
 end
 
 function spawn_baddies(sp)
    badguys = {}
    --hyenas
    for i=1,2 do
-      badguys[i] = pilot.add("Za'lek Light Drone", "Mercenary", sp, _("Mercenary") )
+      badguys[i] = pilot.add("Hyena", "Mercenary", sp, _("Mercenary") )
       badguys[i]:setHostile(false)
-
-      --Their outfits must be quite good
-      badguys[i]:outfitRm("all")
-      badguys[i]:outfitRm("cores")
-
-      badguys[i]:outfitAdd("Unicorp D-2 Light Plating")
-      badguys[i]:outfitAdd("Unicorp PT-16 Core System")
-      badguys[i]:outfitAdd("Tricon Zephyr Engine")
-
-      badguys[i]:outfitAdd("Laser Cannon MK2",3)
-      badguys[i]:outfitAdd("Improved Stabilizer") -- Just try to avoid fight with these fellas
-
-      badguys[i]:setHealth(100,100)
-      badguys[i]:setEnergy(100)
    end
    for i=3,4 do
       badguys[i] = pilot.add( "Lancelot", "Mercenary", sp, _("Mercenary") )
       badguys[i]:setHostile(false)
-
-      --Their outfits must be quite good
-      badguys[i]:outfitRm("all")
-      badguys[i]:outfitRm("cores")
-
-      badguys[i]:outfitAdd("Unicorp D-4 Light Plating")
-      badguys[i]:outfitAdd("Unicorp PT-68 Core System")
-      badguys[i]:outfitAdd("Tricon Zephyr II Engine")
-
-      badguys[i]:outfitAdd("Mass Driver")
-      badguys[i]:outfitAdd("Shredder",2)
-      badguys[i]:outfitAdd("Ripper Cannon")
-      badguys[i]:outfitAdd("Shield Capacitor I",2)
-
-      badguys[i]:setHealth(100,100)
-      badguys[i]:setEnergy(100)
    end
    for i=5,6 do
       badguys[i] = pilot.add( "Admonisher", "Mercenary", sp, _("Mercenary") )
       badguys[i]:setHostile(false)
-
-      badguys[i]:outfitRm("all")
-      badguys[i]:outfitRm("cores")
-
-      badguys[i]:outfitAdd("Unicorp D-12 Medium Plating")
-      badguys[i]:outfitAdd("Unicorp PT-200 Core System")
-      badguys[i]:outfitAdd("Tricon Cyclone Engine")
-
-      badguys[i]:outfitAdd("Razor Turret MK2",2)
-      badguys[i]:outfitAdd("TeraCom Headhunter Launcher",2)
-
-      badguys[i]:setHealth(100,100)
-      badguys[i]:setEnergy(100)
    end
    return badguys
 end

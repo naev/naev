@@ -1,22 +1,23 @@
 local fmt = require "format"
 local vn = require "vn"
+local vni = require "vnimage"
 local tut = require "common.tutorial"
 local poi = require "common.poi"
 
-local reward = outfit.get("Veil of Penelope")
+local misnvar = "poi_proteron_agent"
 
 return function ( mem )
    -- Must be locked
    if not mem.locked then return end
 
    -- Already done
-   if player.numOutfit( reward ) > 0 then
+   if var.peek( misnvar ) then
       return
    end
 
    return {
       type = "function",
-      ship = "Proteron Kahan",
+      ship = "Proteron Gauss",
       func = function ()
          if faction.known( "Proteron" ) then
             vn.na(_([[You enter the ship and make way to the bridge. The entire ship is oddly quiet as you pass through, with no signs of life. You reach the bridge and find the ship's systems have just enough energy left to power up, letting you jack in.]]))
@@ -32,8 +33,8 @@ return function ( mem )
          vn.disappear( sai, tut.shipai.transition )
 
          vn.scene()
-         local v01 = vn.newCharacter( poi.vn_soundonly( _("01"), {color={0.9,0.2,0.2}, pos="left"} ) )
-         local v02 = vn.newCharacter( poi.vn_soundonly( _("02"), {color={0.4,0.2,0.9}, pos="right"} ) )
+         local v01 = vn.newCharacter( vni.soundonly( _("01"), {color={0.9,0.2,0.2}, pos="left"} ) )
+         local v02 = vn.newCharacter( vni.soundonly( _("02"), {color={0.4,0.2,0.9}, pos="right"} ) )
          vn.transition()
 
          local function noise ()
@@ -84,13 +85,15 @@ return function ( mem )
          sai(_([["I see. Maybe you should continue exploring the ship. There might be something of use that the ship scanner has not been able to pick up."]]))
          vn.disappear( sai, tut.shipai.transition )
 
-         vn.na(fmt.f(_([[Following {shipai}'s advice, you continue to explore the ship and eventually reach the systems room. You notice there seems to be a device interfering with the radiation emitted. You can't tell who made it, but it seems that it was likely the main reason that the derelict was so hard to find. You manage to dislodge it to take it back to your ship for further analysis.]]),{shipai=tut.ainame()}))
-
+         local reward = poi.data_str(1)
+         vn.na(fmt.f(_([[Following {shipai}'s advice, you continue to explore the ship and eventually reach the systems room. Going over the systems, it seems like you can recover {reward}, which you promptly do so.]]),
+            {shipai=tut.ainame(), reward=reward}))
          vn.na(fmt.reward(reward))
 
          vn.func( function ()
-            player.outfitAdd( reward )
-            poi.log(fmt.f(_([[You found a derelict ship in the {sys} system with corrupted information about an agent. You also were able to find a strange device called {reward} from the ship.]]),
+            var.push( misnvar, true )
+            poi.data_give(1)
+            poi.log(fmt.f(_([[You found a derelict ship in the {sys} system with corrupted information about an agent. You also were able to recover {reward} from the ship.]]),
                {sys=mem.sys, reward=reward}))
          end )
       end,

@@ -2,11 +2,11 @@
 <ssys name="NGC-2836">
  <general>
   <radius>15000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="-302.978760" y="-1308.409462"/>
+ <pos x="-76.488028" y="-1199.746817"/>
  <spobs/>
  <jumps>
   <jump target="NGC-10180">

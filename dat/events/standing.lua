@@ -11,8 +11,6 @@
 local fmt = require "format"
 local lf = require "love.filesystem"
 
--- luacheck: globals mission_done (Hook functions passed by name)
-
 local factions = {}
 for k,v in ipairs(lf.enumerate("scripts/factions")) do
    local e = require( "factions."..string.gsub(v,".lua","") )
@@ -85,9 +83,9 @@ local function recalculate( domsg )
    end
 end
 
-function mission_done( m )
+function eventmission_done( data )
    -- Only update if there's a tag we care about
-   for t, b in pairs( m.tags ) do
+   for t, b in pairs( data.tags ) do
       local c = cap_tags_list[t]
       if c then
          recalculate( true )
@@ -99,5 +97,6 @@ end
 function create ()
    recalculate( false )
 
-   hook.mission_done( "mission_done" )
+   hook.mission_done( "eventmission_done" )
+   hook.event_done( "eventmission_done" )
 end

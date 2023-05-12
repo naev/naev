@@ -2,11 +2,11 @@
 <ssys name="Nava">
  <general>
   <radius>13000.000000</radius>
-  <stars>400</stars>
-  <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>25.000000</interference>
+  <nolanes/>
  </general>
- <pos x="895.000000" y="501.000000"/>
+ <pos x="885.301299" y="329.617717"/>
  <spobs>
   <spob>Anya</spob>
   <spob>HS-37</spob>

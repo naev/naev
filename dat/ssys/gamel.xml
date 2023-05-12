@@ -2,17 +2,12 @@
 <ssys name="Gamel">
  <general>
   <radius>14000.000000</radius>
-  <stars>200</stars>
-  <interference>3.030303</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>200</spacedust>
+  <interference>6.818181</interference>
  </general>
- <pos x="81.000000" y="134.000000"/>
+ <pos x="97.997977" y="437.063432"/>
  <spobs/>
  <jumps>
-  <jump target="Andres">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
   <jump target="Bastion">
    <autopos/>
    <hide>1.000000</hide>

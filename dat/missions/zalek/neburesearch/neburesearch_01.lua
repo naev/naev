@@ -32,7 +32,6 @@ local mensing_portrait = nebu_research.mensing.portrait
 
 local ships, transporter -- Non-persistent state
 local spawnTransporter, updateGoalDisplay -- Forward-declared functions
--- luacheck: globals ambushHail jumpin jumpout land startAmbush takeoff timer_transporterSafe transporterAttacked transporterDeath transporterJump transporterLand transporterShutup (Hook functions passed by name)
 
 -- Mission info stuff
 local osd_msg   = {}
@@ -41,7 +40,7 @@ osd_msg[2] = _("Land on {pnt} in the {sys} system")
 osd_msg[3] = _("Fly back to {pnt} in the {sys} system")
 
 local station = spob.get("PSO Monitor")
-local homeworld = spob.get("Bastion Station")
+local homeworld = spob.get("Bastion Center")
 local t_sys = {
     system.get("Ksher"),
     system.get("Sultan"),
@@ -110,7 +109,7 @@ function accept()
     -- Set up mission information
     mem.destsys = t_sys[1]
     misn.setTitle(_("Advanced Nebula Research"))
-    misn.setReward(fmt.credits(credits))
+    misn.setReward(credits)
     misn.setDesc(fmt.f(_("Escort the transport ship to the {station} in the {sys} system. Make sure to stay close to the transport ship and wait until they jumped out of the system safely."), {station=station, sys=t_sys[5]}))
     mem.nextsys = lmisn.getNextSystem(system.cur(), mem.destsys) -- This variable holds the system the player is supposed to jump to NEXT.
 

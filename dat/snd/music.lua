@@ -1,6 +1,6 @@
 --[[
-choose will get called with a string parameter indicating status valid
-parameters:
+choose will get called with a string parameter indicating status.
+Valid parameters:
    load - game is loading
    land - player landed
    takeoff - player took off
@@ -10,14 +10,23 @@ parameters:
 local audio = require "love.audio"
 local last_track -- last played track name
 local tracks = {} -- currently playing tracks (including fading)
-local music_stopped = false -- whether or not it is stopped
+local music_off = false -- disabled picking or changing music
 local music_situation -- current running situation
 local music_played = 0 -- elapsed play time for the current situation
 local music_vol = naev.conf().music -- music global volume
 
 local function tracks_stop ()
+   local remove = {}
    for k,v in ipairs( tracks ) do
       v.fade = -1
+      v.paused = nil
+      if v.elapsed <= 0 or v.m:isPaused() then
+         v.m:stop()
+         table.insert( remove, k )
+      end
+   end
+   for k=#remove, 1, -1 do
+      table.remove( tracks, k )
    end
 end
 
@@ -46,18 +55,19 @@ local function tracks_add( name, situation, params )
       vol   = 1,
       delay = params.delay,
       name  = name_orig,
+      elapsed = 0,
    }
    if not params.delay then
       m:play()
    end
-   tracks_stop () -- Only play one at a time
+   tracks_stop() -- Only play one at a time
    table.insert( tracks, t )
    return t
 end
 
 local function tracks_playing ()
    for k,v in ipairs( tracks ) do
-      if (not v.fade or v.fade > 0) and not v.m:isStopped() then
+      if (not v.fade or v.fade > 0) and (v.delay or not v.m:isStopped()) then
          return v
       end
    end
@@ -91,7 +101,7 @@ local factional = {
    Empire     = { "empire1.ogg", "empire2.ogg"; add_neutral = true },
    Sirius     = { "sirius1.ogg", "sirius2.ogg"; add_neutral = true },
    Dvaered    = { "dvaered1.ogg", "dvaered2.ogg"; add_neutral = true },
-   ["Za'lek"] = { "zalek1.ogg", "zalek2.ogg"; add_neutral = true },
+   ["Za'lek"] = { "zalek1.ogg", "zalek2.ogg", "approach.ogg"; add_neutral = true },
    Thurion    = { "motherload.ogg", "dark_city.ogg", "ambient1.ogg", "ambient3.ogg" },
    Proteron   = { "heartofmachine.ogg", "imminent_threat.ogg", "ambient4.ogg" },
 }
@@ -176,7 +186,11 @@ function choose_table.land ()
       if type(override)=="function" then
          local song = override()
          if song then
-            tracks_add( song, "land", params )
+            if type(song)=="table" then
+               tracks_add( song[ rnd.rnd(1, #song) ], "land", params )
+            else
+               tracks_add( song, "land", params )
+            end
             return true
          end
       else
@@ -200,7 +214,7 @@ function choose_table.land ()
       end
    end
 
-   tracks_add( music_list[ rnd.rnd(1, #music_list) ], "land", params )
+   tracks_add( music_list[ rnd.rnd(1,#music_list) ], "land", params )
    return true
 end
 
@@ -253,7 +267,7 @@ function choose_table.ambient ()
    -- System
    local override = system_ambient_songs[ sys:nameRaw() ]
    if override then
-      tracks_add( override[ rnd.rnd(1, #override) ], "ambient" )
+      tracks_add( override[ rnd.rnd(1,#override) ], "ambient" )
       return true
    end
 
@@ -330,6 +344,18 @@ function choose_table.ambient ()
 end
 
 
+local nebula_combat = {
+   "nebu_battle1.ogg",
+   "nebu_battle2.ogg",
+   "combat1.ogg",
+   "combat2.ogg",
+}
+local normal_combat = {
+   "combat3.ogg",
+   "combat1.ogg",
+   "combat2.ogg",
+   "vendetta.ogg",
+}
 -- Faction-specific combat songs
 local factional_combat = {
    Collective = { "collective2.ogg", "galacticbattle.ogg", "battlesomething1.ogg", "combat3.ogg" },
@@ -367,9 +393,9 @@ function choose_table.combat ()
 
    local nebu = nebu_dens > 0
    if nebu then
-      combat = { "nebu_battle1.ogg", "nebu_battle2.ogg", "combat1.ogg", "combat2.ogg", }
+      combat = nebula_combat
    else
-      combat = { "combat3.ogg", "combat1.ogg", "combat2.ogg", }
+      combat = normal_combat
    end
 
    if factional_combat[strongest] then
@@ -406,11 +432,6 @@ function choose_table.combat ()
 end
 
 function choose( str )
-   -- Don't change or play music if a mission or event doesn't want us to
-   if var.peek( "music_off" ) then
-      return
-   end
-
    -- Allow restricting play of music until a song finishes
    if var.peek( "music_wait" ) then
       if tracks_playing() then
@@ -461,7 +482,7 @@ local function should_combat ()
    end
 
    -- Nearby enemies targetting the player will also switch
-   local enemies = pp:getHostiles( enemy_dist, nil, true )
+   local enemies = pp:getEnemies( enemy_dist )
    for k,v in ipairs(enemies) do
       local tgt = v:target()
       if tgt and tgt:withPlayer() then
@@ -487,7 +508,7 @@ local function should_ambient ()
    end
 
    -- Enemies nearby
-   local enemies = pp:getHostiles( enemy_dist, nil, true )
+   local enemies = pp:getEnemies( enemy_dist )
    if #enemies > 0 then
       return false
    end
@@ -508,6 +529,7 @@ function update( dt )
    dt = math.min( dt, 0.1 ) -- Take smaller steps when lagging
    local remove = {}
    for k,v in ipairs(tracks) do
+      v.elapsed = v.elapsed + dt
       if v.delay then
          v.delay = v.delay - dt
          if v.delay < 0 then
@@ -525,10 +547,14 @@ function update( dt )
             if v.paused then
                v.m:pause()
             else
+               v.m:stop()
                table.insert( remove, k )
+               v = nil
             end
          end
-         v.m:setVolume( music_vol * v.vol, true )
+         if v then
+            v.m:setVolume( music_vol * v.vol, true )
+         end
       end
    end
    for k=#remove, 1, -1 do
@@ -536,7 +562,7 @@ function update( dt )
    end
 
    -- Not going to do anything
-   if music_stopped then
+   if music_off then
       return
    end
 
@@ -574,7 +600,7 @@ function update( dt )
 end
 
 function play( song )
-   music_stopped = false
+   music_off = false
    if song then
       tracks_add( song, "custom" )
       return
@@ -586,14 +612,18 @@ function play( song )
    end
 end
 
-function stop ()
+function stop( disable )
    tracks_stop()
-   music_stopped = true
+   if disable then
+      music_off = true
+   end
 end
 
-function pause ()
+function pause( disable )
    tracks_pause()
-   music_stopped = true
+   if disable then
+      music_off = true
+   end
 end
 
 function info ()

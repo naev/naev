@@ -23,14 +23,13 @@ local fmt = require "format"
 local zbh = require "common.zalek_blackhole"
 local fleet = require "fleet"
 
--- luacheck: globals land enter heartbeat feral_hail (Hook functions passed by name)
 
 local reward = zbh.rewards.zbh05
 local cargo_name = _("Special Supplies")
 local cargo_amount = 150 -- Amount of cargo to take
 
 local retpnt, retsys = spob.getS("Research Post Sigma-13")
-local destpnt, destsys = spob.getS( "Thaddius Station" )
+local destpnt, destsys = spob.getS( "Thaddius Terminal" )
 local atksys = system.get( "NGC-23" )
 
 function create ()
@@ -87,7 +86,7 @@ You can see the glee on his face when he goes back to looking at the charts on h
 
    -- mission details
    misn.setTitle( _("Saving Icarus") )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc( fmt.f(_("Pick up the necessary supplies at {pnt} ({sys} system) and bring them back to Zach at {retpnt} ({retsys} system)."),
       {pnt=destpnt, sys=destsys, retpnt=retpnt, retsys=retsys} ))
 

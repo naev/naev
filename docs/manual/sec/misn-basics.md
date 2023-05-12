@@ -311,8 +311,10 @@ Note that `_()` and friends all assume that you are inputting strings in English
 It is important to note that strings not shown to the player, e.g., strings representing faction names or ship names, do not need to be translated! So when adding a pilot you can just use directly the correct strings:
 
 ```lua
-pilot.add( "Hyena", "Mercenary" )
+pilot.add( "Hyena", "Mercenary", nil, _("Cool Dude") )
 ```
+
+Note that the name (`Cool Dude` in this case) does have to be translated!
 
 ### Formatting Text
 \label{sec:misn-basic-fmt}
@@ -395,7 +397,7 @@ Say our event only adds a small derelict in the system and we don't mind it shar
 
 ```lua
 function create ()
-   if not evt.claim( {system.get("Gamma Polaris")}, nil, true ) then
+   if not evt.claim( {system.get("Gamma Polaris")}, true ) then
       evt.finish(false)
    end
 
@@ -403,7 +405,7 @@ function create ()
 end
 ```
 
-In this case, the second parameter is set to `nil`, which defaults to trying to claim the system instead of just testing it, and more importantly, the third parameter is set to `true` which indicates that this event is trying to do an **inclusive** claim. Again, if the claiming fails, the event silently fails.
+In this case, the second parameter is set to `true` which indicates that this event is trying to do an **inclusive** claim. Again, if the claiming fails, the event silently fails.
 
 Claims can also be tested in an event/mission-neutral way with `naev.claimTest`. However, this can only test the claims. Only `misn.claim` and `evt.claim` can enforce claims for missions and events, respectively.
 

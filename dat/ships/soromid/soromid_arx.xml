@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Arx">
+ <lua>ships/lua/soromid.lua</lua>
  <points>200</points>
  <base_type>Arx</base_type>
  <GFX size="124" sx="12" sy="12">arx</GFX>
  <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound pitch="0.5">engine_soromid</sound>
  <class display="Bio-Carrier">Carrier</class>
  <price>18900000</price>
@@ -40,7 +41,7 @@
   <utility size="large" prop="bio_systems" name="brain">Immane Cerebrum I</utility>
   <utility size="large" prop="bio_organ" name="the_bite" />
   <utility size="large" prop="bio_organ" name="feral_rage" />
-  <utility size="large" prop="bio_organ" name="primal_yell" />
+  <utility size="large" prop="bio_organ" name="plasma_burst" />
   <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />

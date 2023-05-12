@@ -49,3 +49,7 @@ void nlua_unref( lua_State *L, int idx );
 
 /* Hack to handle resizes. */
 void nlua_resize (void);
+
+#if DEBUGGING
+void nlua_pushEnvTable( lua_State *L );
+#endif /* DEBUGGING */

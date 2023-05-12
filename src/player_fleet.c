@@ -120,9 +120,13 @@ int pfleet_deploy( PlayerShip_t *ps )
    escort_createRef( player.p, ps->p, &v, NULL, a, ESCORT_TYPE_FLEET, 1, -1 );
 
    /* Initialize. */
-   ai_pinit( ps->p, "player" );
+   ai_pinit( ps->p, "escort" );
    pilot_reset( ps->p );
+   pilot_setFlag( ps->p, PILOT_INVINC_PLAYER );
    pilot_rmFlag( ps->p, PILOT_PLAYER );
+
+   /* AI only knows how to use auto weapon sets. */
+   pilot_weaponAuto( ps->p );
 
    return 0;
 }

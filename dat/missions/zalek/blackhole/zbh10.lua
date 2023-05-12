@@ -15,7 +15,7 @@
 --[[
    Za'lek Black Hole 10
 
-   FInal showdown vs evil PI
+   Final showdown vs evil PI
 ]]--
 local vn = require "vn"
 local fmt = require "format"
@@ -24,7 +24,6 @@ local fleet = require "fleet"
 local love_shaders = require "love_shaders"
 local lmisn = require "lmisn"
 
--- luacheck: globals land enter heartbeat feral_hail feral_check pi_death (Hook functions passed by name)
 
 local reward = zbh.rewards.zbh10
 local title = _("Sigma-13 Showdown")

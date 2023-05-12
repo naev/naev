@@ -12,7 +12,7 @@
  <faction>Goddard</faction>
  <faction>Independent</faction>
  <faction>Soromid</faction>
- <faction>Traders Guild</faction>
+ <faction>Traders Society</faction>
  <faction>Za'lek</faction>
  <notes>
   <campaign>Nexus show their teeth</campaign>
@@ -29,11 +29,11 @@
 local pir = require "common.pirate"
 local fmt = require "format"
 local shark = require "common.shark"
+local equipopt = require "equipopt"
+local vn = require "vn"
 
 local badguys -- Non-persistent state
-local add_llama, bombers, corvette, cruiser, hvy_intercept, interceptors, rndNb -- Forward-declared functions
--- luacheck: globals BomberDead CorvetteDead CruiserDead FighterDead InterceptorDead LlamaDead ambush enter land (Hook functions passed by name)
--- luacheck: globals beginrun (NPC functions passed by name)
+local add_llama, bombers, choose, corvette, cruiser, hvy_intercept, interceptors, rndNb -- Forward-declared functions
 
 -- Mission constants
 local paypla, paysys = spob.getS("Darkshed")
@@ -45,54 +45,85 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC(_("Arnold Smith"), "neutral/unique/arnoldsmith.webp", _([[Arnold Smith is here. Perhaps he might have another job for you.]]))
+   misn.setNPC( shark.arnold.name, shark.arnold.portrait, shark.arnold.description )
 end
 
 function accept()
    mem.stage = 0
    mem.proba = 0.4  --the chances you have to get an ambush
+   local accepted = false
 
-   if tk.yesno(_("Nexus Shipyards needs you (again)"), fmt.f(_([[You sit at Smith's table and ask him if he has a job for you. "Of course," he answers. "But this time, it's... well...
-    "Listen, I need to give some background. As you know, Nexus designs are used far and wide in smaller militaries. The Empire is definitely our biggest customer, but the Frontier also notably makes heavy use of our Lancelot design, as do many independent systems. Still, competition is stiff; House Dvaered's Vendetta design, for instance, is quite popular with the FLF, ironically enough.
-    "But matters just got a little worse for us: it seems that House Sirius is looking to get in on the shipbuilding business as well, and the Frontier are prime targets. If they succeed, the Lancelot design could be completely pushed out of Frontier space, and we would be crushed in that market between House Dvaered and House Sirius. Sure, the FLF would still be using a few Pacifiers, but it would be a token business at best, and not to mention the authorities would start associating us with terrorism.
-    "So we've conducted a bit of espionage. We have an agent who has recorded some hopefully revealing conversations between a House Sirius sales manager and representatives of the Frontier. All we need you to do is meet with the agent, get the recordings, and bring them back to me on {pnt} in the {sys} system." You raise an eyebrow.
-    "It's not exactly legal. That being said, you're just doing the delivery, so you almost certainly won't be implicated. What do you say? Is this something you can do?"]]), {pnt=paypla, sys=paysys})) then
-      misn.accept()
-      tk.msg(_("The job"), fmt.f(_([["I'm glad to hear it. Go meet our agent on {pnt} in the {sys} system. Oh, yes, and I suppose I should mention that I'm known as 'James Neptune' to the agent. Good luck!"]]), {pnt=mem.mispla, sys=mem.missys}))
+   vn.clear()
+   vn.scene()
+   local arnold = vn.newCharacter( shark.vn_arnold() )
+   vn.transition( shark.arnold.transition )
 
-      misn.setTitle(_("Unfair Competition"))
-      misn.setReward(fmt.credits(shark.rewards.sh02))
-      misn.setDesc(_("Nexus Shipyards is in competition with House Sirius."))
-      misn.osdCreate(_("Unfair Competition"), {
-         fmt.f(_("Land on {pnt} in {sys} and meet the Nexus agent"), {pnt=mem.mispla, sys=mem.missys}),
-         fmt.f(_("Bring the recording back to {pnt} in the {sys} system"), {pnt=paypla, sys=paysys}),
-      })
-      misn.osdActive(1)
+   arnold(_([[You sit at Smith's table and ask him if he has a job for you. "Of course," he answers. "But this time, it's… well…"]]))
+   arnold(_([["Listen, I need to give some background. As you know, Nexus designs are used far and wide in smaller militaries. The Empire is definitely our biggest customer, but the Frontier also notably makes heavy use of our Lancelot design, as do many independent systems. Still, competition is stiff; House Dvaered's Vendetta design, for instance, is quite popular with the FLF, ironically enough."]]))
+   arnold(_([["But matters just got a little worse for us: it seems that House Sirius is looking to get in on the shipbuilding business as well, and the Frontier are prime targets. If they succeed, the Lancelot design could be completely pushed out of Frontier space, and we would be crushed in that market between House Dvaered and House Sirius. Sure, the FLF would still be using a few Pacifiers, but it would be a token business at best, and not to mention the authorities would start associating us with terrorism."]]))
+   arnold(fmt.f(_([["So we've conducted a bit of espionage. We have an agent who has recorded some hopefully revealing conversations between a House Sirius sales manager and representatives of the Frontier. All we need you to do is meet with the agent, get the recordings, and bring them back to me on {pnt} in the {sys} system." You raise an eyebrow.]]),
+      {pnt=paypla, sys=paysys}))
+   arnold(_([["It's not exactly legal. That being said, you're just doing the delivery, so you almost certainly won't be implicated. What do you say? Is this something you can do?"]]))
+   vn.menu{
+      {_([[Accept]]), "accept"},
+      {_([[Decline]]), "decline"},
+   }
 
-      mem.marker = misn.markerAdd(mem.mispla, "low")
+   vn.label("decline")
+   arnold(_([["OK, sorry to bother you."]]))
+   vn.done( shark.arnold.transition )
 
-      hook.land("land")
-      hook.enter("enter")
-   else
-      tk.msg(_("Sorry, not interested"), _([["OK, sorry to bother you."]]))
-   end
+   vn.label("accept")
+   vn.func( function () accepted = true end )
+   arnold(fmt.f(_([["I'm glad to hear it. Go meet our agent on {pnt} in the {sys} system. Oh, yes, and I suppose I should mention that I'm known as 'James Neptune' to the agent. Good luck!"]]),
+      {pnt=mem.mispla, sys=mem.missys}))
+
+   vn.done( shark.arnold.transition )
+   vn.run()
+
+   if not accepted then return end
+
+   misn.accept()
+
+   misn.setTitle(_("Unfair Competition"))
+   misn.setReward(shark.rewards.sh02)
+   misn.setDesc(_("Nexus Shipyards is in competition with House Sirius."))
+   misn.osdCreate(_("Unfair Competition"), {
+      fmt.f(_("Land on {pnt} in {sys} and meet the Nexus agent"), {pnt=mem.mispla, sys=mem.missys}),
+      fmt.f(_("Bring the recording back to {pnt} in the {sys} system"), {pnt=paypla, sys=paysys}),
+   })
+   misn.osdActive(1)
+
+   mem.marker = misn.markerAdd(mem.mispla, "low")
+
+   hook.land("land")
+   hook.enter("enter")
 end
 
 function land()
    --The player is landing on the mission planet to get the box
    if mem.stage == 0 and spob.cur() == mem.mispla then
-      mem.agent = misn.npcAdd("beginrun", _("Nexus's agent"), "neutral/unique/nexus_agent.webp", _([[This guy seems to be the agent Arnold Smith was talking about.]]))
+      mem.agent = misn.npcAdd("beginrun", shark.agent.name, shark.agent.portrait, _([[This guy seems to be the agent Arnold Smith was talking about.]]))
    end
 
    --Job is done
    if mem.stage == 1 and spob.cur() == paypla then
-      if misn.cargoRm(mem.records) then
-         tk.msg(_("Good job"), _([[The Nexus employee greets you as you reach the ground. "Excellent! I will just need to spend a few hectoseconds analyzing these recordings. See if you can find me in the bar soon; I might have another job for you."]]))
+      vn.clear()
+      vn.scene()
+      local arnold = vn.newCharacter( shark.vn_arnold() )
+      vn.transition( shark.arnold.transition )
+      arnold(_([[The Nexus employee greets you as you reach the ground. "Excellent! I will just need to spend a few hectoseconds analyzing these recordings. See if you can find me in the bar soon; I might have another job for you."]]))
+      vn.func( function ()
          pir.reputationNormalMission(rnd.rnd(2,3))
          player.pay(shark.rewards.sh02)
-         shark.addLog( _([[You helped Nexus Shipyards gather information in an attempt to sabotage competition from House Sirius. Arnold Smith said to meet him in the bar soon; he may have another job for you.]]) )
-         misn.finish(true)
-      end
+      end )
+      vn.sfxVictory()
+      vn.na(fmt.reward( shark.rewards.sh02 ))
+      vn.done( shark.arnold.transition )
+      vn.run()
+
+      shark.addLog( _([[You helped Nexus Shipyards gather information in an attempt to sabotage competition from House Sirius. Arnold Smith said to meet him in the bar soon; he may have another job for you.]]) )
+      misn.finish(true)
    end
 end
 
@@ -108,7 +139,13 @@ function enter()
 end
 
 function beginrun()
-   tk.msg(_("Time to go back to Alteris"), _([[You approach the agent and obtain the package without issue. Before you leave, he suggests that you stay vigilant. "They might come after you," he says.]]))
+   vn.clear()
+   vn.scene()
+   local agent = vn.newCharacter( shark.vn_agent() )
+   vn.transition()
+   agent(_([[You approach the agent and obtain the package without issue. Before you leave, he suggests that you stay vigilant. "They might come after you," he says.]]))
+   vn.run()
+
    local c = commodity.new(N_("Recorder"), N_("A holophone recorder."))
    mem.records = misn.cargoAdd(c, 0)  --Adding the cargo
    mem.stage = 1
@@ -175,22 +212,7 @@ function interceptors()
    local nb = rndNb( mem.nInterce )
    for i = 1, nb do
       badguys[i] = pilot.add( "Hyena", "Mercenary", nil, _("Mercenary") )
-      badguys[i]:setHostile()
-
-      --Their outfits must be quite good
-      badguys[i]:outfitRm("all")
-      badguys[i]:outfitRm("cores")
-
-      badguys[i]:outfitAdd("S&K Ultralight Combat Plating")
-      badguys[i]:outfitAdd("Milspec Orion 2301 Core System")
-      badguys[i]:outfitAdd("Tricon Zephyr Engine")
-
-      badguys[i]:outfitAdd("Gauss Gun",3)
-      badguys[i]:outfitAdd("Improved Stabilizer") -- Just try to avoid fight with these fellas
-
-      badguys[i]:setHealth(100,100)
-      badguys[i]:setEnergy(100)
-
+      badguys[i]:setHostile(true)
       hook.pilot( badguys[i], "death", "InterceptorDead")
    end
 end
@@ -200,24 +222,7 @@ function hvy_intercept()
    local nb = rndNb( mem.nFighter )
    for i = 1, nb do
       badguys[i] = pilot.add( "Lancelot", "Mercenary", nil, _("Mercenary") )
-      badguys[i]:setHostile()
-
-      --Their outfits must be quite good
-      badguys[i]:outfitRm("all")
-      badguys[i]:outfitRm("cores")
-
-      badguys[i]:outfitAdd("Unicorp D-4 Light Plating")
-      badguys[i]:outfitAdd("Unicorp PT-68 Core System")
-      badguys[i]:outfitAdd("Tricon Zephyr II Engine")
-
-      badguys[i]:outfitAdd("TeraCom Fury Launcher")
-      badguys[i]:outfitAdd("Laser Cannon MK2",2)
-      badguys[i]:outfitAdd("Laser Cannon MK1")
-      badguys[i]:outfitAdd("Reactor Class I")
-
-      badguys[i]:setHealth(100,100)
-      badguys[i]:setEnergy(100)
-
+      badguys[i]:setHostile(true)
       hook.pilot( badguys[i], "death", "FighterDead")
    end
 end
@@ -227,25 +232,7 @@ function corvette()
    local nb = rndNb( mem.nCorvett )
    for i = 1, nb do
       badguys[i] = pilot.add( "Admonisher", "Mercenary", nil, _("Mercenary") )
-      badguys[i]:setHostile()
-
-      badguys[i]:outfitRm("all")
-      badguys[i]:outfitRm("cores")
-
-      badguys[i]:outfitAdd("Unicorp D-12 Medium Plating")
-      badguys[i]:outfitAdd("Unicorp PT-200 Core System")
-      badguys[i]:outfitAdd("Tricon Cyclone Engine")
-
-      badguys[i]:outfitAdd("TeraCom Headhunter Launcher",2)
-      badguys[i]:outfitAdd("Razor Turret MK2")
-      badguys[i]:outfitAdd("Razor Turret MK1",2)
-
-      badguys[i]:outfitAdd("Shield Capacitor II")
-      badguys[i]:outfitAdd("Reactor Class I",2)
-
-      badguys[i]:setHealth(100,100)
-      badguys[i]:setEnergy(100)
-
+      badguys[i]:setHostile(true)
       hook.pilot( badguys[i], "death", "CorvetteDead")
    end
 end
@@ -255,26 +242,16 @@ function cruiser()
    if mem.nCruiser == 1 then
       local origin = pilot.choosePoint( faction.get("Mercenary") )
 
-      local badguy = pilot.add( "Kestrel", "Mercenary", origin, _("Mercenary") )
-      badguy:setHostile()
-
-      badguy:outfitRm("all")
-      badguy:outfitRm("cores")
-
-      badguy:outfitAdd("Unicorp D-48 Heavy Plating")
-      badguy:outfitAdd("Unicorp PT-500 Core System")
-      badguy:outfitAdd("Krain Remige Engine")
-
-      badguy:outfitAdd("Heavy Laser Turret",2)
-      badguy:outfitAdd("TeraCom Headhunter Launcher",4)
-
-      badguy:outfitAdd("Pinpoint Combat AI")
-      badguy:outfitAdd("Photo-Voltaic Nanobot Coating")
-      badguy:outfitAdd("Reactor Class III")
-      badguy:outfitAdd("Improved Stabilizer",3)
-      badguy:setHealth(100,100)
-      badguy:setEnergy(100)
-
+      local badguy = pilot.add( "Kestrel", "Mercenary", origin, _("Mercenary"), {naked=true} )
+      badguy:setHostile(true)
+      equipopt.generic( badguy, {
+         prefer = {
+            ["TeraCom Headhunter Launcher"] = 100,
+         },
+         type_range = {
+            ["Launcher"] = { max=4 },
+         },
+      } )
       hook.pilot( badguy, "death", "CruiserDead")
 
       -- Escort
@@ -295,24 +272,13 @@ function bombers()
    for i = 1, nb do
       local origin = pilot.choosePoint( faction.get("Mercenary") )
 
-      badguys[i] = pilot.add( "Ancestor", "Mercenary", origin, _("Mercenary") )
-      badguys[i]:setHostile()
-
-      badguys[i]:outfitRm("all")
-      badguys[i]:outfitRm("cores")
-
-      badguys[i]:outfitAdd("Unicorp D-2 Light Plating")
-      badguys[i]:outfitAdd("Unicorp PT-68 Core System")
-      badguys[i]:outfitAdd("Tricon Zephyr II Engine")
-
-      badguys[i]:outfitAdd("Unicorp Caesar IV Launcher",2)
-      badguys[i]:outfitAdd("Gauss Gun",2)
-
-      badguys[i]:outfitAdd("Reactor Class I")
-
-      badguys[i]:setHealth(100,100)
-      badguys[i]:setEnergy(100)
-
+      badguys[i] = pilot.add( "Ancestor", "Mercenary", origin, _("Mercenary"), {naked=true} )
+      badguys[i]:setHostile(true)
+      equipopt.generic( badguys[i], {
+         prefer = {
+            ["Unicorp Caesar IV Launcher"] = 100,
+         },
+      } )
       hook.pilot( badguys[i], "death", "BomberDead")
 
       -- Escort
@@ -334,7 +300,7 @@ function add_llama()
    --adding an useless Llama
    if mem.nLlamas == 1 then
       local useless = pilot.add( "Llama", "Mercenary", nil, _("Amateur Mercenary") )
-      useless:setHostile()
+      useless:setHostile(true)
       hook.pilot( useless, "death", "LlamaDead")
    end
 end

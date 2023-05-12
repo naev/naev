@@ -20,8 +20,6 @@ local fmt = require "format"
 local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
 
--- luacheck: globals enter land_flf leave (shared with derived mission flf_dvk07)
--- luacheck: globals pilot_death_rogue timer_lateFLF (Hook functions passed by name)
 
 local fleetFLF -- Non-persistent state (not reused by flf_dvk07, which "require"s this script)
 local rogue_spawnFLF, rogue_spawnRogue -- Forward-declared functions
@@ -91,7 +89,7 @@ function create ()
    -- Set mission details
    misn.setTitle( fmt.f( misn_title[mem.level], {sys=mem.missys} ) )
    misn.setDesc( desc )
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setReward( mem.credits )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
 

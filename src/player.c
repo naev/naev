@@ -47,6 +47,7 @@
 #include "nfile.h"
 #include "nlua_misn.h"
 #include "nlua_outfit.h"
+#include "nlua_ship.h"
 #include "nlua_var.h"
 #include "nstring.h"
 #include "ntime.h"
@@ -158,6 +159,7 @@ static int player_parseMetadata( xmlNodePtr parent );
 static void player_addOutfitToPilot( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s );
 static int player_runUpdaterScript( const char* type, const char* name, int q );
 static const Outfit* player_tryGetOutfit( const char* name, int q );
+static const Ship* player_tryGetShip( const char* name );
 static void player_tryAddLicense( const char* name );
 /* Render. */
 static void player_renderStealthUnderlay( double dt );
@@ -186,7 +188,7 @@ int player_init (void)
    if (player_outfits==NULL)
       player_outfits = array_create( PlayerOutfit_t );
    player_initSound();
-   memset( &player.ps, 0, sizeof(PlayerShip_t) );
+   memset( &player, 0, sizeof(PlayerShip_t) );
    return 0;
 }
 
@@ -473,6 +475,8 @@ static PlayerShip_t *player_newShipMake( const char *name )
       pilot_reset( ps->p );
       pilot_setPlayer( ps->p );
    }
+   /* Initialize parent weapon sets. */
+   ws_copy( ps->weapon_sets, ps->p->weapon_sets );
 
    if (player.p == NULL)
       ERR(_("Something seriously wonky went on, newly created player does not exist, bailing!"));
@@ -558,6 +562,9 @@ void player_swapShip( const char *shipname, int move_cargo )
    v     = player.p->solid->pos;
    dir   = player.p->solid->dir;
 
+   /* Copy over weapon sets. */
+   ws_copy( player.ps.p->weapon_sets, player.ps.weapon_sets );
+
    /* If the pilot is deployed, we must redeploy. */
    removed = 0;
    if (ps->p->id > 0) {
@@ -594,6 +601,9 @@ void player_swapShip( const char *shipname, int move_cargo )
    /* Fill the tank. */
    if (landed)
       land_refuel();
+
+   /* Clear targets. */
+   player_targetClearAll();
 
    /* Set some gui stuff. */
    gui_load( gui_pick() );
@@ -668,6 +678,7 @@ void player_rmShip( const char *shipname )
       /* Free player ship. */
       pilot_rmFlag( ps->p, PILOT_NOFREE );
       pilot_free( ps->p );
+      ws_free( ps->weapon_sets );
       free( ps->acquired );
 
       array_erase( &player_stack, ps, ps+1 );
@@ -721,7 +732,8 @@ void player_cleanup (void)
    free(player.name);
    player.name = NULL;
    free( player.ps.acquired );
-   memset( &player.ps, 0, sizeof(PlayerShip_t) );
+   player.ps.acquired = NULL;
+   ws_free( player.ps.weapon_sets );
 
    free(player_message_noland);
    player_message_noland = NULL;
@@ -735,7 +747,7 @@ void player_cleanup (void)
    info_buttonClear();
 
    array_free(player_outfits);
-   player_outfits  = NULL;
+   player_outfits = NULL;
 
    array_free(missions_done);
    missions_done = NULL;
@@ -757,9 +769,11 @@ void player_cleanup (void)
 
    /* clean up the stack */
    for (int i=0; i<array_size(player_stack); i++) {
-      pilot_rmFlag( player_stack[i].p, PILOT_NOFREE );
-      pilot_free( player_stack[i].p );
-      free( player_stack[i].acquired );
+      PlayerShip_t *ps = &player_stack[i];
+      pilot_rmFlag( ps->p, PILOT_NOFREE );
+      pilot_free( ps->p );
+      ws_free( ps->weapon_sets );
+      free( ps->acquired );
    }
    array_free(player_stack);
    player_stack = NULL;
@@ -892,7 +906,11 @@ void player_soundResume (void)
  */
 void player_warp( double x, double y )
 {
+   unsigned int target = cam_getTarget();
    vec2_cset( &player.p->solid->pos, x, y );
+   /* Have to move camera over to avoid moving stars when loading. */
+   if (target == player.p->id)
+      cam_setTargetPilot( target, 0 );
 }
 
 /**
@@ -1068,7 +1086,7 @@ static void player_renderAimHelper( double dt )
    r = 200.;
    gl_gameToScreenCoords( &x1, &y1, player.p->solid->pos.x, player.p->solid->pos.y );
 
-   b = pilot_aimAngle( player.p, target );
+   b = pilot_aimAngle( player.p, &target->solid->pos, &target->solid->vel );
 
    theta = 22.*M_PI/180.;
 
@@ -1286,30 +1304,26 @@ void player_update( Pilot *pplayer, const double dt )
 void player_updateSpecific( Pilot *pplayer, const double dt )
 {
    int engsound;
-   double pitch = 1., volume = 1.;
+   double pitch = 1.;
 
    /* Calculate engine sound to use. */
    if (pilot_isFlag(pplayer, PILOT_AFTERBURNER))
       engsound = pplayer->afterburner->outfit->u.afb.sound;
-   else if ((pplayer->solid->thrust > 1e-3) || (pplayer->solid->thrust < -1e-3)) {
-      /* See if is in hyperspace. */
-      if (pilot_isFlag(pplayer, PILOT_HYPERSPACE)) {
-         engsound = snd_hypEng;
-      }
-      else {
-         engsound = pplayer->ship->sound;
-         pitch = pplayer->ship->engine_pitch;
-         volume = conf.engine_vol;
-      }
+   else if (pilot_isFlag(pplayer, PILOT_HYPERSPACE))
+      engsound = snd_hypEng;
+   else if (pplayer->engine_glow > 0.) {
+      engsound = pplayer->ship->sound;
+      pitch = pplayer->ship->engine_pitch;
    }
    else
       engsound = -1;
+   if (engsound >= 0)
+      sound_volumeGroup( player_engine_group, conf.engine_vol * pplayer->engine_glow );
    /* See if sound must change. */
    if (player_lastEngineSound != engsound) {
       sound_stopGroup( player_engine_group );
       if (engsound >= 0) {
          sound_pitchGroup( player_engine_group, pitch );
-         sound_volumeGroup( player_engine_group, volume );
          sound_playGroup( player_engine_group, engsound, 0 );
       }
    }
@@ -1426,10 +1440,8 @@ void player_restoreControl( int reason, const char *str )
    if (reason != PINPUT_BRAKING) {
       pilot_rmFlag(player.p, PILOT_BRAKING);
       pilot_rmFlag(player.p, PILOT_COOLDOWN_BRAKE);
-      if (pilot_isFlag(player.p, PILOT_COOLDOWN)) {
-         gui_cooldownEnd();
+      if (pilot_isFlag(player.p, PILOT_COOLDOWN))
          pilot_cooldownEnd(player.p, str);
-      }
    }
 }
 
@@ -1607,7 +1619,7 @@ int player_land( int loud )
    }
    else if ((spob->lua_can_land!=LUA_NOREF) && !spob->can_land) {
       if (spob->land_msg)
-         player_message( "#%c%s>#0 %s", spob_getColourChar(spob),
+         player_message( _("#%c%s>#0 %s"), spob_getColourChar(spob),
                spob_name(spob), spob->land_msg );
       else
          player_message( "#r%s", _("You can't land here.") );
@@ -1616,13 +1628,13 @@ int player_land( int loud )
    else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
       if (spob_hasService(spob,SPOB_SERVICE_INHABITED)) { /* Basic services */
          if (spob->can_land)
-            player_message( "#%c%s>#0 %s", spob_getColourChar(spob),
+            player_message( _("#%c%s>#0 %s"), spob_getColourChar(spob),
                   spob_name(spob), spob->land_msg );
          else if (spob->land_override > 0)
-            player_message( "#%c%s>#0 %s", spob_getColourChar(spob),
+            player_message( _("#%c%s>#0 %s"), spob_getColourChar(spob),
                   spob_name(spob), _("Landing authorized.") );
          else { /* Hostile */
-            player_message( "#%c%s>#0 %s", spob_getColourChar(spob),
+            player_message( _("#%c%s>#0 %s"), spob_getColourChar(spob),
                   spob_name(spob), spob->land_msg );
             return PLAYER_LAND_DENIED;
          }
@@ -1711,14 +1723,6 @@ void player_checkLandAck( void )
    player_rmFlag(PLAYER_LANDACK);
    player_message( _("#%c%s>#0 Landing permission revoked."),
          spob_getColourChar(p), spob_name(p) );
-}
-
-/**
- * @brief Checks whether the player's ship is able to takeoff.
- */
-int player_canTakeoff(void)
-{
-   return !pilot_checkSpaceworthy(player.p);
 }
 
 /**
@@ -1940,8 +1944,11 @@ int player_jump (void)
 
    /* Try to hyperspace. */
    h = space_hyperspace(player.p);
-   if (h == -1)
-      player_message( "#r%s", _("You are too far from a jump point to initiate hyperspace."));
+   if (h == -1) {
+      player_hyperspacePreempt( 1 );
+      player_autonavStart();
+      //player_message( "#r%s", _("You are too far from a jump point to initiate hyperspace."));
+   }
    else if (h == -2)
       player_message( "#r%s", _("Hyperspace drive is offline."));
    else if (h == -3)
@@ -1959,6 +1966,7 @@ int player_jump (void)
 
       return 1;
    }
+
    return 0;
 }
 
@@ -2006,20 +2014,14 @@ void player_brokeHyperspace (void)
    /* reduce fuel */
    player.p->fuel -= player.p->fuel_consumption;
 
-   /* stop hyperspace */
+   /* Set the ptimer. */
+   player.p->ptimer = HYPERSPACE_FADEIN;
+
+   /* Update the map, we have to remove the player flags first or it breaks down. */
    pilot_rmFlag( player.p, PILOT_HYPERSPACE );
    pilot_rmFlag( player.p, PILOT_HYP_BEGIN );
    pilot_rmFlag( player.p, PILOT_HYP_BRAKE );
    pilot_rmFlag( player.p, PILOT_HYP_PREP );
-
-   /* Set the ptimer. */
-   player.p->ptimer = HYPERSPACE_FADEIN;
-
-   /* GIve some non-targetable time. */
-   player.p->itimer = PILOT_PLAYER_NONTARGETABLE_JUMPIN_DELAY;
-   pilot_setFlag( player.p, PILOT_NONTARGETABLE );
-
-   /* Update the map */
    map_jump();
 
    /* Add persisted pilots */
@@ -2028,8 +2030,6 @@ void player_brokeHyperspace (void)
       Pilot *p = pilot_stack[i];
 
       if (pilot_isFlag(p, PILOT_PERSIST) || pilot_isFlag(p, PILOT_PLAYER)) {
-         pilot_clearHooks(p);
-         ai_cleartasks(p);
          if (p != player.p)
             space_calcJumpInPos( cur_system, sys, &p->solid->pos, &p->solid->vel, &p->solid->dir, player.p );
 
@@ -2066,11 +2066,7 @@ void player_brokeHyperspace (void)
       }
    }
 
-   /* Update lua stuff. */
-   pilot_outfitLInitAll( player.p );
-
    /* Safe since this is run in the player hook section. */
-   pilot_outfitLOnjumpin( player.p );
    hooks_run( "jumpin" );
    hooks_run( "enter" );
    events_trigger( EVENT_TRIGGER_ENTER );
@@ -2129,7 +2125,10 @@ void player_targetSet( unsigned int id )
    player.p->nav_anchor = -1;
 
    /* The player should not continue following if the target pilot has been changed. */
-   if (player_isFlag(PLAYER_AUTONAV) && player.autonav == AUTONAV_PLT_FOLLOW)
+   if ((old != id) && player_isFlag(PLAYER_AUTONAV) &&
+      (player.autonav == AUTONAV_PLT_FOLLOW ||
+         player.autonav == AUTONAV_PLT_BOARD_APPROACH ||
+         player.autonav == AUTONAV_PLT_BOARD_BRAKE))
       player_autonavAbort(NULL);
 }
 
@@ -2951,6 +2950,8 @@ int* player_missionsDoneList (void)
  */
 void player_eventFinished( int id )
 {
+   HookParam h[2];
+
    /* Make sure not already done. */
    if (player_eventAlreadyDone(id))
       return;
@@ -2961,6 +2962,13 @@ void player_eventFinished( int id )
    array_push_back( &events_done, id );
 
    qsort( events_done, array_size(events_done), sizeof(int), cmp_int );
+
+   /* Run the completion hook. */
+   event_toLuaTable( naevL, id ); /* Push to stack. */
+   h[0].type = HOOK_PARAM_REF;
+   h[0].u.ref = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* Pops from stack. */
+   h[1].type = HOOK_PARAM_SENTINEL;
+   hooks_runParam( "event_done", h );
 }
 
 /**
@@ -3136,7 +3144,7 @@ int player_addEscorts (void)
          continue;
 
       /* Only deploy spaceworthy escorts. */
-      if (!!pilot_checkSpaceworthy(ps->p))
+      if (!pilot_isSpaceworthy(ps->p))
          continue;
 
       pfleet_deploy( ps );
@@ -3204,7 +3212,6 @@ int player_save( xmlTextWriterPtr writer )
       xmlw_elem(writer,"difficulty","%s",player.difficulty);
    if (player.gui != NULL)
       xmlw_elem(writer,"gui","%s",player.gui);
-   xmlw_elem(writer,"guiOverride","%d",player.guiOverride);
    xmlw_elem(writer,"mapOverlay","%d",ovr_isOpen());
    gui_radarGetRes( &player.radar_res );
    xmlw_elem(writer,"radar_res","%f",player.radar_res);
@@ -3437,20 +3444,19 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
    xmlw_attr(writer, "active_set", "%d", ship->active_set);
    xmlw_attr(writer, "aim_lines", "%d", ship->aimLines);
    for (int i=0; i<PILOT_WEAPON_SETS; i++) {
-      PilotWeaponSetOutfit *weaps = pilot_weapSetList( ship, i );
+      PilotWeaponSet *ws = &pship->weapon_sets[i];
+      PilotWeaponSetOutfit *weaps = ws->slots;
       xmlw_startElem(writer,"weaponset");
       /* Inrange isn't handled by autoweap for the player. */
-      xmlw_attr(writer,"inrange","%d",pilot_weapSetInrangeCheck(ship,i));
+      xmlw_attr(writer,"inrange","%d",ws->inrange);
+      xmlw_attr(writer,"manual","%d",ws->manual);
       xmlw_attr(writer,"id","%d",i);
       if (!ship->autoweap) {
-         const char *name = pilot_weapSetName(ship,i);
-         if (name != NULL)
-            xmlw_attr(writer,"name","%s",name);
-         xmlw_attr(writer,"type","%d",pilot_weapSetTypeCheck(ship,i));
+         xmlw_attr(writer,"type","%d",ws->type);
          for (int j=0; j<array_size(weaps); j++) {
             xmlw_startElem(writer,"weapon");
             xmlw_attr(writer,"level","%d",weaps[j].level);
-            xmlw_str(writer,"%d",weaps[j].slot->id);
+            xmlw_str(writer,"%d",weaps[j].slotid);
             xmlw_endElem(writer); /* "weapon" */
          }
       }
@@ -3568,6 +3574,9 @@ Spob* player_load( xmlNodePtr parent )
    /* Updates the fleet internals. */
    pfleet_update();
 
+   /* Update weapon set. */
+   pilot_weaponSetDefault( player.p );
+
    return pnt;
 }
 
@@ -3646,6 +3655,33 @@ static const Outfit* player_tryGetOutfit( const char *name, int q )
 }
 
 /**
+ * @brief Tries to get an ship for the player or looks for equivalents.
+ */
+static const Ship* player_tryGetShip( const char *name )
+{
+   const Ship *s = ship_getW( name );
+
+   /* Ship was found normally. */
+   if (s != NULL)
+      return s;
+   player_ran_updater = 1;
+
+   /* Try to find out equivalent. */
+   if (player_runUpdaterScript( "ship", name, 1 ) == 0)
+      return NULL;
+   else if (lua_type(naevL,-1) == LUA_TSTRING)
+      s = ship_get( lua_tostring(naevL,-1) );
+   else if (lua_isship(naevL,-1))
+      s = lua_toship(naevL,-1);
+   else
+      WARN(_("Ship '%s' in player save not found!"), name );
+
+   lua_pop(naevL,1);
+
+   return s;
+}
+
+/**
  * @brief Tries to get an outfit for the player or looks for equivalents.
  */
 static void player_tryAddLicense( const char *name )
@@ -3705,7 +3741,6 @@ static Spob* player_parse( xmlNodePtr parent )
       xmlr_ulong(node, "credits", player_creds);
       xmlr_strd(node, "gui", player.gui);
       xmlr_strd(node, "chapter", player.chapter);
-      xmlr_int(node, "guiOverride", player.guiOverride);
       xmlr_int(node, "mapOverlay", map_overlay_enabled);
       xmlr_float(node, "radar_res", player.radar_res);
       xmlr_int(node, "eq_outfitMode", player.eq_outfitMode);
@@ -3880,6 +3915,9 @@ static Spob* player_parse( xmlNodePtr parent )
    player_warp( pnt->pos.x + r*cos(a), pnt->pos.y + r*sin(a) );
    player.p->solid->dir = RNG(0,359) * M_PI/180.;
 
+   /* Initialize outfits. */
+   pilot_outfitLInitAll( player.p );
+
    /* initialize the system */
    space_init( sys->name, 0 );
    map_clear(); /* sets the map up */
@@ -4035,7 +4073,7 @@ static int player_parseEscorts( xmlNodePtr parent )
             WARN(_("Fleet ship '%s' is deployed despite not being marked for deployal!"), ps->p->name);
 
          /* Only deploy spaceworthy escorts. */
-         if (!!pilot_checkSpaceworthy(ps->p))
+         if (!pilot_isSpaceworthy(ps->p))
             WARN(_("Fleet ship '%s' is deployed despite not being space worthy!"), ps->p->name);
 
          pfleet_deploy( ps );
@@ -4175,7 +4213,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    xmlNodePtr node;
    Commodity *com;
    PilotFlags flags;
-   int autoweap, level, weapid, active_set, aim_lines, in_range, weap_type;
+   int autoweap, level, weapid, active_set, aim_lines, in_range, manual, weap_type;
    PlayerShip_t ps;
 
    memset( &ps, 0, sizeof(PlayerShip_t) );
@@ -4201,9 +4239,11 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    }
 
    /* Get the ship. */
-   ship_parsed = ship_get(model);
+   ship_parsed = player_tryGetShip( model );
    if (ship_parsed == NULL) {
       WARN(_("Player ship '%s' not found!"), model);
+
+      /* TODO we should probably parse the outfits and give them to the player. */
 
       /* Clean up. */
       free(name);
@@ -4386,7 +4426,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    if (fuel >= 0)
       ship->fuel = MIN(ship->fuel_max, fuel);
    /* ships can now be non-spaceworthy on save
-    * str = pilot_checkSpaceworthy( ship ); */
+    * str = pilot_isSpaceworthy( ship ); */
    if (!pilot_slotsCheckSafety( ship )) {
       DEBUG(_("Player ship '%s' failed slot validity check , removing all outfits and adding to stock."),
             ship->name );
@@ -4455,7 +4495,12 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          if (in_range > 0)
             pilot_weapSetInrange( ship, id, in_range );
 
-         if (autoweap) /* Autoweap handles everything except inrange. */
+         /* Set manual mode. */
+         xmlr_attr_int( cur, "manual", manual );
+         if (manual > 0)
+            pilot_weapSetManual( ship, id, manual );
+
+         if (autoweap) /* Autoweap handles everything except inrange and manual. */
             continue;
 
          /* Set type mode. */
@@ -4508,6 +4553,8 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       ship->active_set = active_set;
    else
       pilot_weaponSetDefault( ship );
+   /* Copy the weapon set over to the player ship, where we store it. */
+   ws_copy( ps.weapon_sets, ship->weapon_sets );
 
    /* Set aimLines */
    ship->aimLines = aim_lines;

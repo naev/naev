@@ -33,6 +33,7 @@ int dpl_saveSpob( const Spob *p )
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
    char *file, *cleanName;
+   int ret = 0;
    const char *lua_default = start_spob_lua_default();
 
    /* Create the writer. */
@@ -114,9 +115,11 @@ int dpl_saveSpob( const Spob *p )
       xmlw_elemEmpty( writer, "nomissionspawn" );
    if (spob_isFlag( p, SPOB_UNINHABITED ))
       xmlw_elemEmpty( writer, "uninhabited" );
+   if (spob_isFlag( p, SPOB_NOLANES ))
+      xmlw_elemEmpty( writer, "nolanes" );
    xmlw_endElem( writer ); /* "services" */
    if (spob_hasService( p, SPOB_SERVICE_LAND )) {
-      if (p->presence.faction > 0) {
+      if (p->presence.faction >= 0) {
          xmlw_startElem( writer, "commodities" );
          for (int i=0; i<array_size(p->commodities); i++) {
             Commodity *c = p->commodities[i];
@@ -151,16 +154,18 @@ int dpl_saveSpob( const Spob *p )
 
    /* Write data. */
    cleanName = uniedit_nameFilter( p->name );
-   asprintf( &file, "%s/%s.xml", conf.dev_save_spob, cleanName );
-   if (xmlSaveFileEnc( file, doc, "UTF-8" ) < 0)
-      WARN("Failed writing '%s'!", file);
+   SDL_asprintf( &file, "%s/%s.xml", conf.dev_save_spob, cleanName );
+   if (xmlSaveFileEnc( file, doc, "UTF-8" ) < 0) {
+      WARN("Failed to write '%s'!", file);
+      ret = -1;
+   }
 
    /* Clean up. */
    xmlFreeDoc(doc);
    free(cleanName);
    free(file);
 
-   return 0;
+   return ret;
 }
 
 /**

@@ -15,7 +15,7 @@
  <general>
   <class>O</class>
   <population>500000</population>
-  <hide>2.000000</hide>
+  <hide>0.600000</hide>
   <services>
    <land/>
    <refuel/>
@@ -25,4 +25,7 @@
   <description>Jomos is a small aquatic world that serves as a luxury resort for well-to-do Sirii. The relatively low gravity, combined with a rapidly changing weather system makes the world ideal for all kinds of spectacular water-oriented pastimes. The place is popular among the upper class of Paxadon, who like to get away from the crowded life there, but Sirii from all over the faction's space come here to relax.</description>
   <bar>Jomos' bar is a luxury bar first and foremost. It is usually the first place incoming tourists visit after disembarking their transport, and the local authorities want to make them feel welcome. There is music, the windows let in a lot of sunshine, and the interior is adorned with plants and small pieces of art. For regular spacers, however, this is of little use, as they are typically here on business, not for fun.</bar>
  </general>
+ <tags>
+  <tag>rich</tag>
+ </tags>
 </spob>

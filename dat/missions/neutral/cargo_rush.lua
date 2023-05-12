@@ -4,17 +4,9 @@
  <priority>5</priority>
  <chance>960</chance>
  <location>Computer</location>
- <faction>Dvaered</faction>
- <faction>Empire</faction>
- <faction>Frontier</faction>
- <faction>Goddard</faction>
- <faction>Independent</faction>
- <faction>Proteron</faction>
- <faction>Sirius</faction>
- <faction>Soromid</faction>
- <faction>Thurion</faction>
- <faction>Traders Guild</faction>
- <faction>Za'lek</faction>
+ <cond>
+  require("misn_test").cargo()
+ </cond>
  <notes>
   <tier>1</tier>
  </notes>
@@ -30,7 +22,6 @@ local vntk = require "vntk"
 local car = require "common.cargo"
 local lmisn = require "lmisn"
 
--- luacheck: globals land tick (Hook functions passed by name)
 
 local misn_title = {}
 -- Note: indexed from 0, to match mission tiers.
@@ -42,11 +33,11 @@ misn_title[4] = _("Emergency cargo delivery to {pnt} in {sys} ({tonnes})")
 
 local misn_desc = {}
 -- Note: indexed from 0, to match mission tiers.
-misn_desc[0] = _("Courier transport to {pnt} in the {sys} system.")
-misn_desc[1] = _("Priority shipment to {pnt} in the {sys} system.")
-misn_desc[2] = _("Pressing cargo delivery to {pnt} in the {sys} system.")
-misn_desc[3] = _("Urgent cargo delivery to {pnt} in the {sys} system.")
-misn_desc[4] = _("Emergency cargo delivery to {pnt} in the {sys} system.")
+misn_desc[0] = _("Courier transport of {amount} of {cargo} to {pnt} in the {sys} system.")
+misn_desc[1] = _("Priority shipment of {amount} of {cargo} to {pnt} in the {sys} system.")
+misn_desc[2] = _("Pressing cargo delivery of {amount} of {cargo} to {pnt} in the {sys} system.")
+misn_desc[3] = _("Urgent cargo delivery of {amount} of {cargo} to {pnt} in the {sys} system.")
+misn_desc[4] = _("Emergency cargo delivery of {amount} of {cargo} to {pnt} in the {sys} system.")
 
 local piracyrisk = {}
 piracyrisk[1] = _("#nPiracy Risk:#0 None")
@@ -56,16 +47,18 @@ piracyrisk[4] = _("#nPiracy Risk:#0 High")
 
 --=Landing=--
 
-local cargo_land = {}
-cargo_land[1] = _("The containers of {cargo} are carried out of your ship by a sullen group of workers. The job takes inordinately long to complete, and the leader pays you #g{credits}#0 without speaking a word.")
-cargo_land[2] = _("Shortly after you land, a team rushes the containers of {cargo} out of your vessel. Before you can even collect your thoughts, one of the workers presses a credit chip worth #g{credits}#0 in your hand and departs.")
-cargo_land[3] = _("The containers of {cargo} are unloaded by an exhausted-looking bunch of dockworkers. Still, they make fairly good time, delivering your pay of #g{credits}#0 upon completion of the job.")
-cargo_land[4] = _("The containers of {cargo} are unloaded by a team of robotic drones supervised by a human overseer, who hands you your pay of #g{credits}#0 when they finish.")
+local cargo_land = {
+   _("The containers of {cargo} are carried out of your ship by a sullen group of workers. The job takes inordinately long to complete, and the leader pays you #g{credits}#0 without speaking a word."),
+   _("Shortly after you land, a team rushes the containers of {cargo} out of your vessel. Before you can even collect your thoughts, one of the workers presses a credit chip worth #g{credits}#0 in your hand and departs."),
+   _("The containers of {cargo} are unloaded by an exhausted-looking bunch of dockworkers. Still, they make fairly good time, delivering your pay of #g{credits}#0 upon completion of the job."),
+   _("The containers of {cargo} are unloaded by a team of robotic drones supervised by a human overseer, who hands you your pay of #g{credits}#0 when they finish."),
+}
 
-local cargo_land_slow = {}
-cargo_land_slow[1] = _("The containers of {cargo} are carried out of your ship by a sullen group of workers. They are not happy that they have to work overtime because you were late. You are paid only {credits} of the {reward} you were promised.")
-cargo_land_slow[2] = _("Shortly after you land, a team rushes the containers of {cargo} out of your vessel. Your late arrival is stretching quite a few schedules! Your pay is only {credits} instead of {reward} because of that.")
-cargo_land_slow[3] = _("The containers of {cargo} are unloaded by an exhausted-looking bunch of dockworkers. You missed the deadline, so your reward is only {credits} instead of the {reward} you were hoping for.")
+local cargo_land_slow = {
+   _("The containers of {cargo} are carried out of your ship by a sullen group of workers. They are not happy that they have to work overtime because you were late. You are paid only {credits} of the {reward} you were promised."),
+   _("Shortly after you land, a team rushes the containers of {cargo} out of your vessel. Your late arrival is stretching quite a few schedules! Your pay is only {credits} instead of {reward} because of that."),
+   _("The containers of {cargo} are unloaded by an exhausted-looking bunch of dockworkers. You missed the deadline, so your reward is only {credits} instead of the {reward} you were hoping for."),
+}
 
 -- Create the mission
 function create()
@@ -90,8 +83,8 @@ function create()
       allowance = allowance + math.floor((mem.numjumps-1) / jumpsperstop) * stuperjump
    end
 
-   mem.timelimit  = time.get() + time.create(0, 0, allowance)
-   mem.timelimit2 = time.get() + time.create(0, 0, allowance * 1.2)
+   mem.timelimit  = time.get() + time.new(0, 0, allowance)
+   mem.timelimit2 = time.get() + time.new(0, 0, allowance * 1.2)
 
    local riskreward
    if mem.avgrisk == 0 then
@@ -115,10 +108,10 @@ function create()
    local distreward = math.log(300*commodity.price(mem.cargo))/80
    mem.reward     = 1.5^mem.tier * (mem.avgrisk*riskreward + mem.numjumps * jumpreward + mem.traveldist * distreward) * (1. + 0.05*rnd.twosigma())
 
-   misn.setTitle( fmt.f( misn_title[mem.tier], {pnt=mem.destplanet, sys=mem.destsys, tonnes=fmt.tonnes(mem.amount)} ) )
+   misn.setTitle( fmt.f( misn_title[mem.tier], {pnt=mem.destplanet, sys=mem.destsys, tonnes=fmt.tonnes_short(mem.amount)} ) )
    misn.markerAdd(mem.destplanet, "computer")
-   car.setDesc( fmt.f( misn_desc[mem.tier], {pnt=mem.destplanet, sys=mem.destsys} ), mem.cargo, mem.amount, mem.destplanet, mem.timelimit, piracyrisk )
-   misn.setReward( fmt.credits(mem.reward) )
+   car.setDesc( fmt.f( misn_desc[mem.tier], {cargo=_(mem.cargo), amount=fmt.tonnes(mem.amount), pnt=mem.destplanet, sys=mem.destsys} ), mem.cargo, mem.amount, mem.destplanet, mem.timelimit, piracyrisk )
+   misn.setReward(mem.reward)
 end
 
 -- Mission is accepted
@@ -149,7 +142,7 @@ function accept()
    mem.intime = true
    misn.cargoAdd(mem.cargo, mem.amount)
    hook.land("land")
-   hook.date(time.create(0, 0, 100), "tick") -- 100STU per tick
+   hook.date(time.new(0, 0, 100), "tick") -- 100STU per tick
    tick() -- set OSD
 end
 

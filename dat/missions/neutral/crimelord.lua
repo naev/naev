@@ -19,33 +19,59 @@ DESCRIPTION: Pirates chase you to Ogat.
 ]]--
 local fmt = require "format"
 local fleet = require "fleet"
+local equipopt = require "equipopt"
+local vn = require "vn"
+local vntk = require "vntk"
+local portrait = require "portrait"
+local ccomm = require "common.comm"
 
 local reward = 600e3
 
 local capship, defenders, thugs -- Non-persistent state
--- luacheck: globals capHailed enter jumpout land pilotKilled spawnBaddies (Hook functions passed by name)
+
+local npc_name = _("A detective")
+local npc_portrait = "neutral/unique/hunter.webp"
+local npc_image = portrait.getFullPath( npc_portrait )
 
 function create ()
    mem.targetsystem = system.get("Ogat")
-
-   misn.setNPC( _("A detective"), "neutral/unique/hunter.webp", _("A private detective is signalling you to come speak with him.") )
+   misn.setNPC( npc_name, npc_portrait, _("A private detective is signalling you to come speak with him.") )
 end
 
 function accept ()
    -- Note: this mission does not make any system claims.
-   if not tk.yesno( _("Crimelord"), fmt.f( _([[The private detective greets you and gets right down to business.
-   "I have tracked down and collected evidence against a local crime lord," he says. "The evidence is on this data disk. He would love nothing more than to get their hands on this.
-   I want you to bring this to my associates in the {sys} system. While the local authorities have proven corruptible, my associates will ensure that this criminal ends up in prison, where they belong. I must warn you, however:
-   This criminal has considerable influence and many friends. There's no doubt they will send some of their mercenaries to stop you. You'll need a fast ship to shake them off. My associates will compensate you generously when you reach {sys}.
-   Regrettably, you are not the first pilot I've contacted regarding this matter. Your predecessor was intercepted when they landed en route to {sys}. The crime lord has many underlings lurking in nearby spaceports -- you must NOT land until you've delivered the data."
-   Given the dangers, you're not sure whether the reward will make this worth your while. Do you accept?]]), {sys=mem.targetsystem}
-          ) ) then --if accepted
+   local accepted = false
+   vn.clear()
+   vn.scene()
+   local det = vn.newCharacter( npc_name, {image=npc_image} )
+   vn.transition()
+   det(fmt.f(_([[The private detective greets you and gets right down to business.
+   "I have tracked down and collected evidence against a local crime lord," he says. "The evidence is on this data disk. They would love nothing more than to get their hands on this. I want you to bring this to my associates in the {sys} system. While the local authorities have proven corruptible, my associates will ensure that this criminal ends up in prison, where they belong."]]),
+      {sys=mem.targetsystem}))
+   det(fmt.f(_([["I must warn you, however: This criminal has considerable influence and many friends. There's no doubt they will send some of their mercenaries to stop you. You'll need a fast ship to shake them off. My associates will compensate you generously when you reach {sys}.
+Regrettably, you are not the first pilot I've contacted regarding this matter. Your predecessor was intercepted when they landed en route to {sys}. The crime lord has many underlings lurking in nearby spaceports -- you must NOT land until you've delivered the data."
+Given the dangers, you're not sure whether the reward will make this worth your while. Do you accept?]]),
+      {sys=mem.targetsystem}))
+   vn.menu{
+      {_("Accept"),"accept"},
+      {_("Decline"),"decline"},
+   }
+
+   vn.label("decline")
+   vn.done()
+
+   vn.label("accept")
+   vn.func( function () accepted = true end )
+   det(_([[After quickly glancing around to make sure nobody's taken a particular interest, the detective presses the data stick into your hand.
+"Be careful out there. I doubt you'll be able to get far without being noticed."]]))
+
+   vn.run()
+
+   if not accepted then
       return
    end
 
    misn.accept()
-   tk.msg( _("Good luck"), _([[After quickly glancing around to make sure nobody's taken a particular interest, the detective presses the data stick into your hand.
-   "Be careful out there. I doubt you'll be able to get far without being noticed."]]) )
    misn.setTitle( _("Crimelord") )
    misn.setReward( _("A generous compensation") )
    misn.setDesc( fmt.f( _("Evade the thugs and deliver the evidence to {sys}"), {sys=mem.targetsystem} ) )
@@ -58,16 +84,20 @@ function accept ()
    hook.enter("enter")
    hook.jumpout("jumpout")
    hook.land("land")
-
 end
 
+local fct_baddie, fct_goodie
 function enter ()
+   fct_goodie = faction.dynAdd( nil, "crimelord_associates", _("Associates"), {ai="dvaered"} )
+   fct_baddie = faction.dynAdd( nil, "crimelord_thugs", _("Thugs"), {ai="dvaered" } )
+   fct_baddie:dynEnemy( fct_goodie )
+
    hook.timer(4.0, "spawnBaddies")
 
    if system.cur() == mem.targetsystem then
       local defenderships = { "Lancelot", "Lancelot", "Admonisher", "Pacifier", "Hawking", "Kestrel" }
       local jumpin = jump.pos(mem.targetsystem, mem.last_system)
-      defenders = fleet.add( 1, defenderships, "Associates", jumpin )
+      defenders = fleet.add( 1, defenderships, fct_goodie, jumpin )
       for pilot_number, pilot_object in pairs(defenders) do
          local rn = pilot_object:ship():nameRaw()
          if rn == "Lancelot" then
@@ -99,6 +129,7 @@ function jumpout ()
 end
 
 function spawnBaddies ()
+
    local ai
    if system.cur() ~= mem.targetsystem then
       ai = "baddiepos"
@@ -114,18 +145,10 @@ function spawnBaddies ()
    end
 
    local pp = player.pilot()
-   thugs = fleet.add( 4, "Admonisher", "Thugs", sp, _("Thug"), {ai=ai} )
+   thugs = fleet.add( 4, "Admonisher", fct_baddie, sp, _("Thug"), {ai=ai, naked=true} )
    for pilot_number, pilot_object in ipairs(thugs) do
-      -- TODO Modern optimized equipping, or at least a manual equip from "naked"
       pilot_object:setHostile(true)
-      pilot_object:outfitRm("all")
-      pilot_object:outfitAdd("Ripper Cannon")
-      pilot_object:outfitAdd("Plasma Blaster MK2", 2)
-      pilot_object:outfitAdd("Vulcan Gun", 2)
-      pilot_object:outfitAdd("Reactor Class II", 2)
-      pilot_object:outfitAdd("Milspec Jammer")
-      pilot_object:outfitAdd("Engine Reroute")
-      pilot_object:outfitAdd("Shield Capacitor II")
+      equipopt.dvaered( pilot_object, { launcher=0, turret=0, fighterbay=0 } )
       if ai=="baddiepos" then
          pilot_object:memory().guardpos = pp:pos()
       else
@@ -146,18 +169,29 @@ function pilotKilled ()
    mem.thugs_alive = mem.thugs_alive - 1
    if mem.thugs_alive == 0 then
       capship:hailPlayer()
-      hook.pilot(capship[1], "hail", "capHailed")
+      hook.pilot(capship, "hail", "capHailed")
    end
 end
 
 function capHailed ()
-   tk.msg( _("Mission Accomplished"), fmt.f( _("\"Excellent work. This data will ensure an arrest and swift prosecution. You've certainly done your part towards cleaning up the region. As for your compensation, I've had {credits} transferred to you.\""), {credits=fmt.credits(reward)} ) )
-   player.pay( reward )
+   vn.clear()
+   vn.scene()
+   local p = ccomm.newCharacter( vn, capship )
+   vn.transition()
+   p(fmt.f(_([["Excellent work. This data will ensure an arrest and swift prosecution. You've certainly done your part towards cleaning up the region. As for your compensation, I've had {credits} transferred to you."]]),
+      {credits=fmt.credits(reward)}))
+   vn.sfxVictory()
+   vn.func( function ()
+      player.pay( reward )
+   end )
+   vn.na(fmt.reward(reward))
+   vn.run()
+
    player.commClose()
    misn.finish(true)
 end
 
 function land ()
-   tk.msg( _("He told you so..."), _("As you step out of your ship and seal the airlock, you spot a burly man purposefully heading towards you. You turn to flee, but there are others closing in on your position. Surrounded, and with several laser pistols trained on you, you see no option but to surrender the evidence."))
+   vntk.msg( _("He told you so1…"), _("As you step out of your ship and seal the airlock, you spot a burly man purposefully heading towards you. You turn to flee, but there are others closing in on your position. Surrounded, and with several laser pistols trained on you, you see no option but to surrender the evidence."))
    misn.finish(false)
 end

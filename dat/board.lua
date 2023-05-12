@@ -314,7 +314,7 @@ local function can_cannibalize ()
    if player.shipvarPeek("cannibal") then
       return true
    end
-   for _k,o in ipairs(pp:outfitsList()) do
+   for _k,o in ipairs(pp:outfitsList("all")) do
       if o:tags().cannibal then
          return true
       end
@@ -397,8 +397,6 @@ end
 local function manage_cargo ()
    local clist, cnames = cargo_list ()
    if #cnames <= 0 then return end
-
-   luatk.setDefaultFont( lg.newFont(12) )
 
    local w, h = 300, 400
    local wdw = luatk.newWindow( nil, nil, w, h )

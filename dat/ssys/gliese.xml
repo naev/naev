@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Gliese">
+ <general>
+  <radius>11000.000000</radius>
+  <spacedust>400</spacedust>
+  <interference>105.750000</interference>
+  <nebula volatility="27.200000" hue="285.000000">600.000000</nebula>
+  <nolanes/>
+ </general>
+ <pos x="538.539598" y="-168.551712"/>
+ <spobs>
+  <spob>Gliese I</spob>
+  <spob>Gliese II</spob>
+  <spob>Gliese II-a</spob>
+  <spob>Gliese III</spob>
+  <spob>Gliese IV</spob>
+  <spob>Gliese VI</spob>
+  <spob_virtual>Empire Unpresence</spob_virtual>
+  <spob_virtual>Independent All Unpresence</spob_virtual>
+ </spobs>
+ <jumps>
+  <jump target="Arandon">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Gliese Minor">
+   <autopos/>
+   <hidden/>
+   <hide>0.300000</hide>
+  </jump>
+ </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
+</ssys>

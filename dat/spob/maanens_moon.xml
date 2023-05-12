@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Maanen's Moon">
+ <lua>spob/lua/maanens_moon.lua</lua>
+ <pos x="-9325.528927" y="5175.040881"/>
+ <GFX>
+  <space>moon-K00.webp</space>
+  <exterior>city3.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <base>20.000000</base>
+  <bonus>10.000000</bonus>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>K</class>
+  <population>3.4e+08</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+  </services>
+  <commodities/>
+  <description>Maanen's Moon was just beyond the effect of the Incident and, by finding itself on a major evacuation route, ended up becoming a hotspot for refugees. At the time, many damaged ships bringing refugees crashed or landed on the surface becoming immobile and have been integrated into the makeshift buildings that house the population. As commodities waned and more and more people kept coming, the local Imperial Governor declared a state of emergency that is still in effect today as famines and plagues wrack the population. Despite humanitarian aid from organizations such as the Red Star, the situation is dire. The governmental buildings are all located in a small area around the spaceport which is controlled with checkpoints by Imperial soldiers. Beyond the spaceport lies a sea of endless haphazard constructions that cover nearly the entire moon.</description>
+  <bar>Given that few ships wish land on Maanen's Moon, and exacerbated by the fact that even fewer are given clearance, the spaceport bar has few patrons, most of which are Imperial bureaucrats and military personal forced to live here to try to keep control of the population. Most of them look like they wish they could get permission to live off world.</bar>
+ </general>
+ <tags>
+  <tag>poor</tag>
+  <tag>urban</tag>
+  <tag>restricted</tag>
+  <tag>old</tag>
+  <tag>refugee</tag>
+ </tags>
+</spob>

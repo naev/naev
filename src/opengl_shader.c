@@ -13,19 +13,18 @@
 #include "nstring.h"
 #include "opengl.h"
 
-#define GLSL_VERSION    "#version 140\n\n" /**< Version to use for all shaders. */
+#define GLSL_VERSION    "#version 150\n\n" /**< Version to use for all shaders. */
 #define GLSL_SUBROUTINE "#define HAS_GL_ARB_shader_subroutine 1\n" /**< Has subroutines. */
 
 /*
  * Prototypes.
  */
-static void print_with_line_numbers( const char *str );
 static char* gl_shader_preprocess( size_t *size, const char *fbuf, size_t fbufsize, const char *prepend, const char *filename );
 static char* gl_shader_loadfile( const char *filename, size_t *size, const char *prepend );
 static GLuint gl_shader_compile( GLuint type, const char *buf,
       GLint length, const char *filename);
 static int gl_program_link( GLuint program );
-static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader );
+static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader, GLuint geometry_shader );
 static int gl_log_says_anything( const char* log );
 
 /**
@@ -75,7 +74,7 @@ static char* gl_shader_preprocess( size_t *size, const char *fbuf, size_t fbufsi
 
    /* Prepend useful information if available. */
    if (prepend != NULL) {
-      bufsize = asprintf( &buf, "%s%s", prepend, fbuf ) + 1 /* the null byte */;
+      bufsize = SDL_asprintf( &buf, "%s%s", prepend, fbuf ) + 1 /* the null byte */;
    }
    else {
       bufsize = fbufsize;
@@ -144,18 +143,6 @@ static char* gl_shader_preprocess( size_t *size, const char *fbuf, size_t fbufsi
    return buf;
 }
 
-static void print_with_line_numbers( const char *str )
-{
-   int counter = 0;
-   for (int i=0; str[i] != '\0'; i++) {
-      if ((i==0) || (str[i]=='\n'))
-         logprintf( stderr, 0, "\n%03d: ", ++counter );
-      if (str[i]!='\n')
-         logprintf( stderr, 0, "%c", str[i] );
-   }
-   logprintf( stderr, 0, "\n" );
-}
-
 /**
  * @brief Open and compile GLSL shader from ndata.
  */
@@ -222,13 +209,14 @@ static int gl_program_link( GLuint program )
  *
  *    @param[in] vertfile Vertex shader filename.
  *    @param[in] fragfile Fragment shader filename.
+ *    @param[in,opt] geomfile Optional geometry shader name.
  *    @return The shader compiled program or 0 on failure.
  */
-GLuint gl_program_vert_frag( const char *vertfile, const char *fragfile )
+GLuint gl_program_vert_frag( const char *vertfile, const char *fragfile, const char *geomfile )
 {
    char *vert_str, *frag_str, prepend[STRMAX];
    size_t vert_size, frag_size;
-   GLuint vertex_shader, fragment_shader, program;
+   GLuint vertex_shader, fragment_shader, geometry_shader, program;
 
    strncpy( prepend, GLSL_VERSION, sizeof(prepend)-1 );
    if (gl_has( OPENGL_SUBROUTINES ))
@@ -243,7 +231,16 @@ GLuint gl_program_vert_frag( const char *vertfile, const char *fragfile )
    free( vert_str );
    free( frag_str );
 
-   program = gl_program_make( vertex_shader, fragment_shader );
+   if (geomfile != NULL) {
+      size_t geom_size;
+      char *geom_str = gl_shader_loadfile( geomfile, &geom_size, prepend );
+      geometry_shader = gl_shader_compile( GL_GEOMETRY_SHADER, geom_str, geom_size, geomfile );
+      free( geom_str );
+   }
+   else
+      geometry_shader = 0;
+
+   program = gl_program_make( vertex_shader, fragment_shader, geometry_shader );
    if (program==0)
       WARN(_("Failed to link vertex shader '%s' and fragment shader '%s'!"), vertfile, fragfile);
 
@@ -277,7 +274,7 @@ GLuint gl_program_vert_frag_string( const char *vert, size_t vert_size, const ch
    free( fbuf );
 
    /* Link. */
-   return gl_program_make( vertex_shader, fragment_shader );
+   return gl_program_make( vertex_shader, fragment_shader, 0 );
 }
 
 /**
@@ -285,23 +282,29 @@ GLuint gl_program_vert_frag_string( const char *vert, size_t vert_size, const ch
  *
  *    @param vertex_shader Vertex shader to make program from.
  *    @param fragment_shader Fragment shader to make program from.
+ *    @param[opt] geometry_shader Optional geometry shader to amke program from.
  *    @return New shader program or 0 on failure.
  */
-static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader )
+static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader, GLuint geometry_shader )
 {
    GLuint program = 0;
    if (vertex_shader != 0 && fragment_shader != 0) {
       program = glCreateProgram();
       glAttachShader(program, vertex_shader);
       glAttachShader(program, fragment_shader);
+      if (geometry_shader != 0)
+         glAttachShader(program, geometry_shader);
+
       if (gl_program_link(program) == -1) {
          /* Spec specifies 0 as failure value for glCreateProgram() */
          program = 0;
       }
-   }
 
-   glDeleteShader(vertex_shader);
-   glDeleteShader(fragment_shader);
+      glDeleteShader(vertex_shader);
+      glDeleteShader(fragment_shader);
+      if (geometry_shader != 0)
+         glDeleteShader(geometry_shader);
+   }
 
    gl_checkErr();
 

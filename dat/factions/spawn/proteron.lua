@@ -1,7 +1,10 @@
 local scom = require "factions.spawn.lib.common"
 
-local sderivative = ship.get("Proteron Derivative")
-local skahan      = ship.get("Proteron Kahan")
+local seuler      = ship.get("Proteron Euler")
+local sdalton     = ship.get("Proteron Dalton")
+local shippocrates= ship.get("Proteron Hippocrates")
+local sgauss      = ship.get("Proteron Gauss")
+local spythagoras = ship.get("Proteron Pythagoras")
 local sarchimedes = ship.get("Proteron Archimedes")
 local swatson     = ship.get("Proteron Watson")
 
@@ -11,14 +14,14 @@ local function spawn_patrol ()
    local r = rnd.rnd()
 
    if r < 0.5 then
-      scom.addPilot( pilots, sderivative )
+      scom.addPilot( pilots, seuler )
    elseif r < 0.8 then
-      scom.addPilot( pilots, sderivative )
-      scom.addPilot( pilots, sderivative )
+      scom.addPilot( pilots, seuler )
+      scom.addPilot( pilots, seuler )
    else
-      scom.addPilot( pilots, sderivative )
-      scom.addPilot( pilots, sderivative )
-      scom.addPilot( pilots, sderivative )
+      scom.addPilot( pilots, sdalton )
+      scom.addPilot( pilots, sdalton )
+      scom.addPilot( pilots, sdalton )
    end
 
    return pilots
@@ -33,20 +36,14 @@ local function spawn_squad ()
    local r = rnd.rnd()
 
    if r < 0.5 then
-      scom.addPilot( pilots, sderivative )
-      scom.addPilot( pilots, sderivative )
-      scom.addPilot( pilots, sderivative )
-      scom.addPilot( pilots, sderivative )
+      scom.addPilot( pilots, sgauss )
+      scom.addPilot( pilots, shippocrates )
    elseif r < 0.8 then
-      scom.addPilot( pilots, skahan )
-      scom.addPilot( pilots, sderivative )
-      scom.addPilot( pilots, sderivative )
-      scom.addPilot( pilots, sderivative )
+      scom.addPilot( pilots, sgauss )
+      scom.addPilot( pilots, sgauss )
+      scom.addPilot( pilots, shippocrates )
    else
-      scom.addPilot( pilots, skahan )
-      scom.addPilot( pilots, skahan )
-      scom.addPilot( pilots, sderivative )
-      scom.addPilot( pilots, sderivative )
+      scom.addPilot( pilots, spythagoras )
    end
 
    return pilots
@@ -66,20 +63,13 @@ local function spawn_capship ()
 
    -- Generate the escorts
    if r < 0.5 then
-      scom.addPilot( pilots, sderivative )
-      scom.addPilot( pilots, sderivative )
-      scom.addPilot( pilots, sderivative )
-      scom.addPilot( pilots, sderivative )
+      scom.addPilot( pilots, sgauss )
+      scom.addPilot( pilots, shippocrates )
    elseif r < 0.8 then
-      scom.addPilot( pilots, skahan )
-      scom.addPilot( pilots, sderivative )
-      scom.addPilot( pilots, sderivative )
-      scom.addPilot( pilots, sderivative )
+      scom.addPilot( pilots, sgauss )
+      scom.addPilot( pilots, sgauss )
    else
-      scom.addPilot( pilots, skahan )
-      scom.addPilot( pilots, skahan )
-      scom.addPilot( pilots, sderivative )
-      scom.addPilot( pilots, sderivative )
+      scom.addPilot( pilots, spythagoras )
    end
 
    return pilots

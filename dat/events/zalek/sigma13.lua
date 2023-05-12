@@ -16,7 +16,6 @@ local vn = require "vn"
 local fmt = require "format"
 local zbh = require "common.zalek_blackhole"
 
--- luacheck: globals leave approach_zach (Hook functions passed by name)
 
 local sys1 = system.get("NGC-13674")
 local sys2 = system.get("Copernicus")

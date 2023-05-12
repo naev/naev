@@ -19,7 +19,7 @@ function hail ()
    if mem.setuphail then return end
 
    -- Doesn't make sense to bribe
-   mem.bribe_no = _("I'm out of here.")
+   mem.bribe_no = _([["I'm out of here."]])
 
    -- Override refuel chance
    mem.refuel = 0

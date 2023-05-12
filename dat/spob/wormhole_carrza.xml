@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Wormhole Carrza">
+ <display>#bWormhole#0</display>
+ <feature>#bWormhole#0</feature>
+ <lua>spob/lua/wormhole_carrza.lua</lua>
+ <marker>spobmarker_wormhole</marker>
+ <pos x="-15993.219885" y="-4427.532740"/>
+ <GFX/>
+ <general>
+  <class>Worm</class>
+  <population>0</population>
+  <hide>0.050000</hide>
+  <services>
+   <uninhabited/>
+  </services>
+ </general>
+ <tags>
+  <tag>wormhole</tag>
+ </tags>
+</spob>

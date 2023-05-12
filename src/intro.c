@@ -20,6 +20,7 @@
 #include "conf.h"
 #include "font.h"
 #include "log.h"
+#include "menu.h"
 #include "music.h"
 #include "ndata.h"
 #include "nstring.h"
@@ -63,7 +64,7 @@ static int has_side_gfx = 0;             /* Determines how wide to make the text
  */
 static int intro_load( const char *text );
 static void intro_cleanup (void);
-static void intro_event_handler( int *stop, double *offset, double *vel );
+static int intro_event_handler( int *stop, double *offset, double *vel );
 static void initialize_image( intro_img_t *img );
 static void load_image( intro_img_t *img, const char *img_file );
 static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition, const char *img_file );
@@ -154,13 +155,13 @@ static void initialize_image( intro_img_t *img )
  */
 static void load_image( intro_img_t *img, const char *img_file )
 {
-      img->tex = gl_newImage( img_file, 0 );
-      img->w = MIN( img->tex->w, IMAGE_WIDTH );
-      img->h = img->tex->h * img->w / img->tex->w;
-      img->x = (IMAGE_WIDTH + SIDE_MARGIN - img->w) / 2.0;
-      img->y = (double)SCREEN_H / 2.0 - (img->h / 2.0);
-      img->c.a = 0.0;
-      img->fade_rate = 0.1;
+   img->tex = gl_newImage( img_file, 0 );
+   img->w = MIN( img->tex->w, IMAGE_WIDTH );
+   img->h = img->tex->h * img->w / img->tex->w;
+   img->x = (IMAGE_WIDTH + SIDE_MARGIN - img->w) / 2.0;
+   img->y = (double)SCREEN_H / 2.0 - (img->h / 2.0);
+   img->c.a = 0.0;
+   img->fade_rate = 0.1;
 }
 
 /**
@@ -206,10 +207,17 @@ static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition,
  *    @brief stop Whether to stop the intro.
  *    @brief vel How fast the text should scroll.
  */
-static void intro_event_handler( int *stop, double *offset, double *vel )
+static int intro_event_handler( int *stop, double *offset, double *vel )
 {
    SDL_Event event; /* user key-press, mouse-push, etc. */
    while (SDL_PollEvent(&event)) {
+      if (event.type == SDL_QUIT) {
+         if (naev_isQuit() || menu_askQuit()) {
+            naev_quit();
+            return 1;
+         }
+      }
+
       if (event.type == SDL_WINDOWEVENT &&
             event.window.event == SDL_WINDOWEVENT_RESIZED) {
          naev_resize();
@@ -252,6 +260,7 @@ static void intro_event_handler( int *stop, double *offset, double *vel )
       else
          *vel = 16.;
    }
+   return 0;
 }
 
 /**
@@ -441,7 +450,8 @@ int intro_display( const char *text, const char *mus )
          SDL_Delay( 25 - tlag );
 
       /* Handle user events. */
-      intro_event_handler( &stop, &offset, &vel );
+      if (intro_event_handler( &stop, &offset, &vel ))
+         break;
 
    } /* while (!stop) */
 
@@ -451,7 +461,7 @@ int intro_display( const char *text, const char *mus )
    gl_freeTexture( transition.tex );
 
    /* Stop music, normal music will start shortly after. */
-   music_stop();
+   music_stop(0);
 
    /* Clean up after the introduction. */
    intro_cleanup();

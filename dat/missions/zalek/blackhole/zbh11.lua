@@ -25,7 +25,6 @@ local fmt = require "format"
 local sokoban = require "minigames.sokoban"
 local zbh = require "common.zalek_blackhole"
 
--- luacheck: globals land enter zach_say board_drone heartbeat heartbeat_bh (Hook functions passed by name)
 
 local retpnt, retsys = spob.getS("Research Post Sigma-13")
 local targetsys = system.get("Anubis Black Hole")
@@ -127,7 +126,7 @@ function land ()
       local z = vn.newCharacter( zbh.vn_zach() )
       vn.transition( zbh.zach.transition )
       vn.na(_([[Your ship lands on the station. The moment you and Zach get out of the ship, you hear a loud groan and amidst a shower of sparks, half the engine sputters and falls down onto the ground. As you take cover, your now imbalanced ship falls off to the side and slides on the metal floor in a cacophony of clangs and groans.]]))
-      z(_([["Maybe I should have increased the safety tolerance a bit more. Pretty lucky that this happened now and not while we were travelling through hyperspace. I guess we know know why the ships have security jump mechanisms."]]))
+      z(_([["Maybe I should have increased the safety tolerance a bit more. Pretty lucky that this happened now and not while we were travelling through hyperspace. I guess we now know why the ships have security jump mechanisms."]]))
       vn.menu{
          {fmt.f(_([["{shipname}! My ship!"]]),{shipname=player.pilot()}), "01ship"},
          {_([["We're not doing that again are we…"]]), "01again"},
@@ -141,7 +140,7 @@ function land ()
 
       vn.label("01ship")
       z(_([["Don't worry about the damage. I'll have the drones fix it up. A small price to pay for all the experimental data we were able to recover!"
-He gives a sign to the drones that start working like ants to lift the ship back up and stabilizer it, and then starts to lead you into the station.]]))
+He gives a sign to the drones that start working like ants to lift the ship back up and stabilize it, and then starts to lead you into the station.]]))
       z(_([["One of the major issues of creating antimatter is the volatility and energy requirements. Most of the time it is infeasible to generate in any large amounts, which is why its use is restricted to very particular experiments and military applications. You wouldn't imagine the amount of paperwork you need to get a single nanogram of antimatter!"]]))
       z(_([["Now normally, you slowly collect antimatter from nuclei collisions with careful slowing down of the anti-protons to avoid volatility issues. While this allows them to be generated anywhere, it's pretty impracticable with no way of scaling it up."]]))
       z(_([["The beauty of my colleagues, of Mie's research, is to take a completely different approach using hyper-relativistic acceleration in a Schwarzschild frame such that the Birkhoff-Kerr radiation does the brunt of the work. It's a really interesting novel take that was only theorized about. That is, up until now!"]]))
@@ -208,7 +207,7 @@ function enter ()
          hook.timer( 17, "zach_say", _("Actually, in this case it does though…") )
          hook.timer( 22, "zach_say", _("Statistically, we're more likely to survive.") )
          hook.timer( 27, "zach_say", _("I'll shut up now.") )
-         system.mrkAdd( jret:pos(), _("Safest Jump Point") )
+         system.markerAdd( jret:pos(), _("Safest Jump Point") )
          hook.timer( 30, "heartbeat" )
       end
 
@@ -258,7 +257,7 @@ function board_drone ()
    vn.transition( zbh.zach.transition )
    vn.na(_([[You hook up to the damage drone and are able to access the control panel. Since Zach seems to be distracted, it seems like you have to access it yourself.]]))
 
-   sokoban.vn{ levels={8,9}, header="Drone Control Panel"}
+   sokoban.vn{ levels={8,9}, header=_("Drone Control Panel") }
    vn.func( function ()
       if sokoban.completed() then
          mem.state = 2
@@ -297,7 +296,7 @@ function board_drone ()
    end
 
    misn.osdActive(2)
-   system.mrkAdd( jtarget:pos(), _("Jump Point") )
+   system.markerAdd( jtarget:pos(), _("Jump Point") )
    misn.markerMove( mem.mrk, retpnt )
    hook.timer( 1, "heartbeat_bh" )
 
@@ -308,7 +307,7 @@ end
 
 function zach_say( msg )
    player.autonavReset( 3 )
-   player.pilot():comm(fmt.f(_([[Zach: "{msg}"]]),{msg=msg}))
+   player.msg(fmt.f(_([[Zach: "{msg}"]]),{msg=msg}),true)
 end
 
 local hstate = 0

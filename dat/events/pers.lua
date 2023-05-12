@@ -8,7 +8,6 @@
 --]]
 local lf = require "love.filesystem"
 
--- luacheck: globals enter timer pers_attacked pers_death (Hook funtions passed by name)
 
 -- Parse directory to add personas
 local pers_func_list = {}
@@ -22,14 +21,15 @@ function create ()
    hook.enter("enter")
 end
 
-local htimer, pers_list, wtotal, spawned
+local htimer, pers_list, wtotal, spawned, spawn_chance
 function enter ()
    if htimer then
       hook.rm( htimer )
    end
 
    -- Must not be exclusively claimed
-   if not naev.claimTest( system.cur(), true ) then
+   local scur = system.cur()
+   if not naev.claimTest( scur, true ) then
       return
    end
 
@@ -58,6 +58,13 @@ function enter ()
       return a.w > b.w
    end )
 
+   -- Value gives a 50% chance of meeting one every 10 minutes of game time
+   -- (more often with time compression)
+   spawn_chance =  0.034064
+   if scur == system.get("Zied") then
+      spawn_chance = 0.3
+   end
+
    -- Time start timer
    spawned = {} -- Initialize spawned list
    htimer = hook.timer( rnd.rnd()*30, "timer" )
@@ -75,14 +82,21 @@ function pers_attacked( _p, attacker, dmg, pt )
 end
 
 function pers_death( _p, attacker, pt )
-   if pt.dmgp > pt.dmgo or attacker:withPlayer() then
+   if pt.dmgp > pt.dmgo or (attacker and attacker:withPlayer()) then
       if pt.ondeath then
          pt.ondeath( attacker, pt )
       end
    end
+   if pt.ondeathany then
+      pt.ondeathany( attacker, pt )
+   end
 end
 
 local function spawn_pers ()
+   if not pilot.canSpawn() then
+      return
+   end
+
    local r = rnd.rnd() * wtotal
    local w = 0
    for k,v in ipairs(pers_list) do
@@ -101,6 +115,7 @@ local function spawn_pers ()
                dmgo = 0,
                onattack = pp.onattack,
                ondeath = pp.ondeath,
+               ondeathany = pp.ondeathany,
             }
             hook.pilot( pp, "attacked", "pers_attacked", pt )
             hook.pilot( pp, "death", "pers_death", pt )
@@ -115,9 +130,8 @@ local function spawn_pers ()
 end
 
 function timer ()
-   -- Value gives a 50% chance of meeting one every 10 minutes of game time
-   -- (more often with time compression)
-   if rnd.rnd() < 0.034064 then
+   -- Spawn more in Zied
+   if rnd.rnd() < spawn_chance then
       spawn_pers()
    end
    htimer = hook.timer( 30, "timer" )

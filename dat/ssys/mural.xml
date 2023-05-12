@@ -2,15 +2,14 @@
 <ssys name="Mural">
  <general>
   <radius>14500.000000</radius>
-  <stars>475</stars>
+  <spacedust>475</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-117.123098" y="-267.114213"/>
+ <pos x="175.426579" y="65.357087"/>
  <spobs>
   <spob>Amphion</spob>
   <spob>Hrimfaxi</spob>
-  <spob>Janus Station</spob>
+  <spob>Janus Enclave</spob>
   <spob>Scinfaxi</spob>
   <spob>Zethus</spob>
   <spob_virtual>Trade Lane (Empire)</spob_virtual>

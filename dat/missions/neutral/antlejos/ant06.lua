@@ -29,7 +29,6 @@ local reward = ant.rewards.ant06
 local retpnt, retsys = spob.getS("Antlejos V")
 local mainsys = system.get("Knave")
 
--- luacheck: globals approaching enter land supplydeath supplyboard (Hook functions passed by name)
 
 function create ()
    if not misn.claim(mainsys) then misn.finish() end
@@ -80,7 +79,7 @@ He points towards a glancing burn mark on his abdomen. It looks like the shot fi
    misn.accept()
    misn.setTitle( _("Eliminate the PUAAA Supply Ship") )
    misn.setDesc(fmt.f(_("Eliminate the PUAAA supply ship at {sys}."),{sys=mainsys}))
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.osdCreate(_("Eliminate the PUAAA Supply Ship"), {
       fmt.f(_("Go to {sys}"),{sys=mainsys}),
       _("Destroy the PUAAA supply ship"),

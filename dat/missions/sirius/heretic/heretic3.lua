@@ -25,7 +25,6 @@ local srs = require "common.sirius"
 
 local de_fence, de_fence_2, sirius_be_serious -- Non-persistent state
 local flee -- Forward-declared functions
--- luacheck: globals death out_sys_failure return_to_base second_coming takeoff (Hook functions passed by name)
 
 function create()
    --this mission makes one mission claim, in Suna.
@@ -40,7 +39,7 @@ function create()
    if not misn.claim(mem.homesys) then
       misn.finish(false)
    end
-   misn.setReward( fmt.credits( mem.reward ) )
+   misn.setReward( mem.reward )
    misn.setTitle( _("The Assault") )
    misn.setNPC(_("Draga"), "sirius/unique/draga.webp", _("The familiar form of Draga is at a table with some officers. They look busy."))
 end

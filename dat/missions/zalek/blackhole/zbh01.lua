@@ -3,7 +3,7 @@
 <mission name="Za'lek Black Hole 1">
  <unique />
  <priority>4</priority>
- <chance>20</chance>
+ <chance>30</chance>
  <faction>Za'lek</faction>
  <cond>faction.playerStanding("Za'lek") &gt;= 0</cond>
  <location>Bar</location>
@@ -22,7 +22,6 @@ local vn = require "vn"
 local fmt = require "format"
 local zbh = require "common.zalek_blackhole"
 
--- luacheck: globals land enter heartbeat (Hook functions passed by name)
 
 local reward = zbh.rewards.zbh01
 local destpnt, destsys = spob.getS("Research Post Sigma-13")
@@ -75,7 +74,7 @@ He seems visibly distraught and you try to soothe him.]]))
 
    -- mission details
    misn.setTitle( _("Black Hole Research") )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc( fmt.f(_("Take Zach to see what happened to his colleagues at {pnt} in the {sys} system."),
       {pnt=destpnt, sys=destsys} ))
 

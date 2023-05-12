@@ -21,7 +21,7 @@
 #include "land.h"
 #include "land_outfits.h"
 #include "log.h"
-#include "nlua_col.h"
+#include "nlua_colour.h"
 #include "nlua_gfx.h"
 #include "nlua_outfit.h"
 #include "nluadef.h"
@@ -38,11 +38,13 @@ typedef struct custom_functions_s {
    int keyboard;
    int mouse;
    int resize;
+   int textinput;
 } custom_functions_t;
 static int cust_update( double dt, void* data );
 static void cust_render( double x, double y, double w, double h, void* data );
 static int cust_event( unsigned int wid, SDL_Event *event, void* data );
 static int cust_key( SDL_Keycode key, SDL_Keymod mod, int pressed, custom_functions_t *cf );
+static int cust_text( const char *str, custom_functions_t *cf );
 static int cust_mouse( int type, int button, double x, double y, custom_functions_t *cf );
 static int cust_event_window( SDL_WindowEventID event, Sint32 w, Sint32 h, custom_functions_t *cf );
 
@@ -408,6 +410,7 @@ static int tkL_merchantOutfit( lua_State *L )
  *    @luatparam Function keyboard Function to call when keyboard events are received.
  *    @luatparam Function mouse Function to call when mouse events are received.
  *    @luatparam Function resize Function to call when mouse events are received.
+ *    @luatparam Function textinput Function to call when textinput events are received.
  * @luafunc custom
  */
 static int tkL_custom( lua_State *L )
@@ -417,18 +420,21 @@ static int tkL_custom( lua_State *L )
    const char *caption = luaL_checkstring(L, 1);
    custom_functions_t *cf = calloc( 1, sizeof(custom_functions_t) );
 
-   /* Set up custom function pointers (working backward from top of stack). */
+   /* Set up custom function pointers. */
    cf->L = L;
-   luaL_checktype(L, -1, LUA_TFUNCTION);
-   cf->resize   = luaL_ref(L, LUA_REGISTRYINDEX);
-   luaL_checktype(L, -1, LUA_TFUNCTION);
-   cf->mouse    = luaL_ref(L, LUA_REGISTRYINDEX);
-   luaL_checktype(L, -1, LUA_TFUNCTION);
-   cf->keyboard = luaL_ref(L, LUA_REGISTRYINDEX);
-   luaL_checktype(L, -1, LUA_TFUNCTION);
-   cf->draw     = luaL_ref(L, LUA_REGISTRYINDEX);
-   luaL_checktype(L, -1, LUA_TFUNCTION);
-   cf->update   = luaL_ref(L, LUA_REGISTRYINDEX);
+#define GETFUNC( address, pos ) \
+do { \
+   lua_pushvalue( L, (pos) ); \
+   luaL_checktype(L, -1, LUA_TFUNCTION); \
+   (address) = luaL_ref(L, LUA_REGISTRYINDEX); \
+} while (0)
+   GETFUNC( cf->update,    4 );
+   GETFUNC( cf->draw,      5 );
+   GETFUNC( cf->keyboard,  6 );
+   GETFUNC( cf->mouse,     7 );
+   GETFUNC( cf->resize,    8 );
+   GETFUNC( cf->textinput, 9 );
+#undef GETFUNC
 
    /* Set done condition. */
    lua_pushboolean(L, 0);
@@ -444,6 +450,7 @@ static int tkL_custom( lua_State *L )
    luaL_unref(L, LUA_REGISTRYINDEX, cf->keyboard);
    luaL_unref(L, LUA_REGISTRYINDEX, cf->mouse);
    luaL_unref(L, LUA_REGISTRYINDEX, cf->resize);
+   luaL_unref(L, LUA_REGISTRYINDEX, cf->textinput);
 
    return 0;
 }
@@ -620,6 +627,9 @@ static int cust_event( unsigned int wid, SDL_Event *event, void* data )
       case SDL_KEYUP:
          return cust_key( event->key.keysym.sym, event->key.keysym.mod, 0, cf );
 
+      case SDL_TEXTINPUT:
+         return cust_text( event->text.text, cf );
+
       case SDL_WINDOWEVENT:
          return cust_event_window( event->window.event, event->window.data1, event->window.data2, cf );
 
@@ -638,6 +648,22 @@ static int cust_key( SDL_Keycode key, SDL_Keymod mod, int pressed, custom_functi
    lua_pushstring(L, SDL_GetKeyName(key));
    lua_pushstring(L, input_modToText(mod));
    if (cust_pcall( L, 3, 1 )) {
+      cf->done = 1;
+      WARN(_("Custom dialogue internal error: %s"), lua_tostring(L,-1));
+      lua_pop(L,1);
+      return 0;
+   }
+   b = lua_toboolean(L, -1);
+   lua_pop(L,1);
+   return b;
+}
+static int cust_text( const char *str, custom_functions_t *cf )
+{
+   int b;
+   lua_State *L = cf->L;
+   lua_rawgeti(L, LUA_REGISTRYINDEX, cf->textinput);
+   lua_pushstring(L, str);
+   if (cust_pcall( L, 1, 1 )) {
       cf->done = 1;
       WARN(_("Custom dialogue internal error: %s"), lua_tostring(L,-1));
       lua_pop(L,1);

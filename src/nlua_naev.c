@@ -20,11 +20,14 @@
 #include "input.h"
 #include "land.h"
 #include "log.h"
+#include "info.h"
+#include "menu.h"
 #include "nlua_evt.h"
 #include "nlua_misn.h"
 #include "nlua_system.h"
 #include "nluadef.h"
 #include "nstring.h"
+#include "pause.h"
 #include "player.h"
 #include "plugin.h"
 #include "semver.h"
@@ -46,6 +49,7 @@ static int naevL_keyDisableAll( lua_State *L );
 static int naevL_eventStart( lua_State *L );
 static int naevL_eventReload( lua_State *L );
 static int naevL_missionStart( lua_State *L );
+static int naevL_missionTest( lua_State *L );
 static int naevL_missionReload( lua_State *L );
 static int naevL_shadersReload( lua_State *L );
 static int naevL_isSimulation( lua_State *L );
@@ -55,6 +59,16 @@ static int naevL_cache( lua_State *L );
 static int naevL_trigger( lua_State *L );
 static int naevL_claimTest( lua_State *L );
 static int naevL_plugins( lua_State *L );
+static int naevL_menuInfo( lua_State *L );
+static int naevL_menuSmall( lua_State *L );
+static int naevL_isPaused( lua_State *L );
+static int naevL_pause( lua_State *L );
+static int naevL_unpause( lua_State *L );
+static int naevL_hasTextInput( lua_State *L );
+static int naevL_setTextInput( lua_State *L );
+#if DEBUGGING
+static int naevL_envs( lua_State *L );
+#endif /* DEBUGGING */
 static const luaL_Reg naev_methods[] = {
    { "version", naevL_version },
    { "versionTest", naevL_versionTest },
@@ -70,6 +84,7 @@ static const luaL_Reg naev_methods[] = {
    { "eventStart", naevL_eventStart },
    { "eventReload", naevL_eventReload },
    { "missionStart", naevL_missionStart },
+   { "missionTest", naevL_missionTest },
    { "missionReload", naevL_missionReload },
    { "shadersReload", naevL_shadersReload },
    { "isSimulation", naevL_isSimulation },
@@ -79,6 +94,16 @@ static const luaL_Reg naev_methods[] = {
    { "trigger", naevL_trigger },
    { "claimTest", naevL_claimTest },
    { "plugins", naevL_plugins },
+   { "menuInfo", naevL_menuInfo },
+   { "menuSmall", naevL_menuSmall },
+   { "isPaused", naevL_isPaused },
+   { "pause", naevL_pause },
+   { "unpause", naevL_unpause },
+   { "hasTextInput", naevL_hasTextInput },
+   { "setTextInput", naevL_setTextInput },
+#if DEBUGGING
+   { "envs", naevL_envs },
+#endif /* DEBUGGING */
    {0,0}
 }; /**< Naev Lua methods. */
 
@@ -174,13 +199,16 @@ static int naevL_language( lua_State *L )
  * @brief Gets how many days it has been since the player last played Naev.
  *
  *    @luatreturn number Number of days since the player last played.
+ *    @luatreturn number Number of days since any of the save games were played.
  * @luafunc lastplayed
  */
 static int naevL_lastplayed( lua_State *L )
 {
    double d = difftime( time(NULL), player.last_played );
+   double g = difftime( time(NULL), conf.last_played );
    lua_pushnumber(L, d/(3600.*24.)); /*< convert to days */
-   return 1;
+   lua_pushnumber(L, g/(3600.*24.)); /*< convert to days */
+   return 2;
 }
 
 /**
@@ -330,6 +358,22 @@ static int naevL_missionStart( lua_State *L )
 }
 
 /**
+ * @brief Tests a missions conditionals to see if it can be started by the player.
+ *
+ * Note that this tests the Lua conditionals, not the create function, so it may be possible that even though naev.missionTest returns true, the player can still not start the mission.
+ *
+ * @usage naev.missionTest( "Some Mission" )
+ *    @luatparam string misnname Name of the mision to test.
+ *    @luatreturn boolean true if the mission can be can be started, or false otherwise.
+ * @luafunc missionTest
+ */
+static int naevL_missionTest( lua_State *L )
+{
+   lua_pushboolean( L, mission_test( luaL_checkstring(L, 1) ) );
+   return 1;
+}
+
+/**
  * @brief Reloads an event's script, providing a convenient way to test and hopefully not corrupt the game's state.
  *        Use with caution, and only during development as a way to get quicker feedback.
  *
@@ -431,6 +475,7 @@ static int naevL_conf( lua_State *L )
    PUSH_BOOL( L, "minimize", conf.minimize );
    PUSH_BOOL( L, "colorblind", conf.colorblind );
    PUSH_DOUBLE( L, "bg_brightness", conf.bg_brightness );
+   PUSH_DOUBLE( L, "nebu_nonuniformity", conf.nebu_nonuniformity );
    PUSH_DOUBLE( L, "gamma_correction", conf.gamma_correction );
    PUSH_BOOL( L, "background_fancy", conf.background_fancy );
    PUSH_BOOL( L, "showfps", conf.fps_show );
@@ -450,7 +495,6 @@ static int naevL_conf( lua_State *L )
    PUSH_DOUBLE( L, "zoom_far", conf.zoom_far );
    PUSH_DOUBLE( L, "zoom_near", conf.zoom_near );
    PUSH_DOUBLE( L, "zoom_speed", conf.zoom_speed );
-   PUSH_DOUBLE( L, "zoom_stars", conf.zoom_stars );
    PUSH_INT( L, "font_size_console", conf.font_size_console );
    PUSH_INT( L, "font_size_intro", conf.font_size_intro );
    PUSH_INT( L, "font_size_def", conf.font_size_def );
@@ -460,12 +504,15 @@ static int naevL_conf( lua_State *L )
    PUSH_BOOL( L, "redirect_file", conf.redirect_file );
    PUSH_BOOL( L, "save_compress", conf.save_compress );
    PUSH_INT( L, "doubletap_sensitivity", conf.doubletap_sens );
+   PUSH_BOOL( L, "mouse_fly", conf.mouse_fly );
    PUSH_INT( L, "mouse_thrust", conf.mouse_thrust );
    PUSH_DOUBLE( L, "mouse_doubleclick", conf.mouse_doubleclick );
    PUSH_DOUBLE( L, "autonav_reset_dist", conf.autonav_reset_dist );
    PUSH_DOUBLE( L, "autonav_reset_shield", conf.autonav_reset_shield );
    PUSH_BOOL( L, "devmode", conf.devmode );
    PUSH_BOOL( L, "devautosave", conf.devautosave );
+   PUSH_BOOL( L, "lua_enet", conf.lua_enet );
+   PUSH_BOOL( L, "lua_repl", conf.lua_repl );
    PUSH_BOOL( L, "conf_nosave", conf.nosave );
    PUSH_STRING( L, "last_version", conf.lastversion );
    PUSH_BOOL( L, "translation_warning_seen", conf.translation_warning_seen );
@@ -528,7 +575,7 @@ static int naevL_trigger( lua_State *L )
    const char *hookname = luaL_checkstring(L,1);
 
    /* Set up hooks. */
-   if (lua_isnoneornil(L,2)) {
+   if (!lua_isnoneornil(L,2)) {
       /* Since this doesn't get saved and is triggered by Lua code, we can
        * actually pass references here. */
       hp[0].type = HOOK_PARAM_REF;
@@ -627,3 +674,172 @@ static int naevL_plugins( lua_State *L )
    }
    return 1;
 }
+
+/**
+ * @brief Opens the info menu window.
+ *
+ * Possible window targets are: <br />
+ *  - "main" : Main window.<br />
+ *  - "ship" : Ship info window.<br />
+ *  - "weapons" : Weapon configuration window.<br />
+ *  - "cargo" : Cargo view window.<br />
+ *  - "missions" : Mission view window.<br />
+ *  - "standings" : Standings view window.<br />
+ *
+ * @usage naev.menuInfo( "ship" ) -- Opens ship tab
+ *
+ *    @luatparam[opt="main"] string window parameter indicating the tab to open at.
+ * @luafunc menuInfo
+ */
+static int naevL_menuInfo( lua_State *L )
+{
+   const char *str;
+   int window;
+
+
+   if (menu_open)
+      return 0;
+
+   if (lua_gettop(L) > 0)
+      str = luaL_checkstring(L,1);
+   else {
+      /* No parameter. */
+      menu_info( INFO_DEFAULT );
+      return 0;
+   }
+
+   /* Parse string. */
+   if (strcasecmp( str, "main" )==0)
+      window = INFO_MAIN;
+   else if (strcasecmp( str, "ship" )==0)
+      window = INFO_SHIP;
+   else if (strcasecmp( str, "weapons" )==0)
+      window = INFO_WEAPONS;
+   else if (strcasecmp( str, "cargo" )==0)
+      window = INFO_CARGO;
+   else if (strcasecmp( str, "missions" )==0)
+      window = INFO_MISSIONS;
+   else if (strcasecmp( str, "standings" )==0)
+      window = INFO_STANDINGS;
+   else {
+      NLUA_ERROR(L,_("Invalid window info name '%s'."), str);
+      return 0;
+   }
+
+   /* Open window. */
+   menu_info( window );
+
+   return 0;
+}
+
+/**
+ * @brief Opens the small menu window.
+ *
+ * @usage naev.menuSmall()
+ *
+ *    @luatparam[opt=false] boolean info Show the info button.
+ *    @luatparam[opt=false] boolean options Show the options button.
+ *    @luatparam[opt=false] boolean allowsave Allow saving the game from the menu (either directly or by exiting the game from the menu).
+ * @luafunc menuSmall
+ */
+static int naevL_menuSmall( lua_State *L )
+{
+   menu_small( 0, lua_toboolean(L,1), lua_toboolean(L,2), lua_toboolean(L,3) );
+   return 0;
+}
+
+/**
+ * @brief Checks to see if the game is paused.
+ *
+ *    @luatreturn boolean Whether or not the game is currently paused.
+ * @luafunc pause
+ */
+static int naevL_isPaused( lua_State *L )
+{
+   lua_pushboolean( L, paused );
+   return 1;
+}
+
+/**
+ * @brief Pauses the game.
+ *
+ * @luafunc pause
+ */
+static int naevL_pause( lua_State *L )
+{
+   (void) L;
+   pause_game();
+   return 0;
+}
+
+/**
+ * @brief Unpauses the game.
+ *
+ * Can not be run while landed.
+ *
+ * @luafunc unpause
+ */
+static int naevL_unpause( lua_State *L )
+{
+   if (landed)
+      NLUA_ERROR(L, _("Unable to unpause the game when landed!"));
+   unpause_game();
+   return 0;
+}
+
+/**
+ * @brief Checks to see if text inputting is enabled.
+ *
+ *    @luatreturn boolean Whether or not text inputting is enabled.
+ * @luafunc hasTextInput
+ */
+static int naevL_hasTextInput( lua_State *L )
+{
+   lua_pushboolean( L, SDL_EventState( SDL_TEXTINPUT, SDL_QUERY ) == SDL_TRUE );
+   return 1;
+}
+
+/**
+ * @brief Enables or disables text inputting.
+ *
+ *    @luatparam boolean enable Whether text input events should be enabled.
+ *    @luatparam integer Text rectangle x position.
+ *    @luatparam integer Text rectangle y position.
+ *    @luatparam integer Text rectangle width.
+ *    @luatparam integer Text rectangle height.
+ * @luafunc setTextInput
+ */
+static int naevL_setTextInput( lua_State *L )
+{
+   if (lua_toboolean(L,1)) {
+      SDL_Rect input_pos;
+      input_pos.x = luaL_checkinteger(L,2);
+      input_pos.y = luaL_checkinteger(L,3);
+      input_pos.w = luaL_checkinteger(L,4);
+      input_pos.h = luaL_checkinteger(L,5);
+      SDL_EventState( SDL_TEXTINPUT, SDL_ENABLE );
+      SDL_StartTextInput();
+      SDL_SetTextInputRect( &input_pos );
+   }
+   else {
+      SDL_StopTextInput();
+      SDL_EventState( SDL_TEXTINPUT, SDL_DISABLE );
+   }
+   return 0;
+}
+
+#if DEBUGGING
+/**
+ * @brief Gets a table with all the active Naev environments.
+ *
+ * Only available only debug builds.
+ *
+ *    @luatreturn table Unordered table containing all the environments.
+ * @luafunc envs
+ */
+static int naevL_envs( lua_State *L )
+{
+   nlua_pushEnvTable( L );
+   return 1;
+}
+#endif /* DEBUGGING */

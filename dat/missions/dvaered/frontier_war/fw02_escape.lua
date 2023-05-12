@@ -28,7 +28,7 @@
    3) Goto an hospital
    4) Runaway
    5) Player has been hailed by Captain HewHew
-   6) Player has met the Empire and Pirate agent, but did not accept any of their offers
+   6) Player has met the Empire and Pirate agent, but did not accept any of their offers (yet?)
    7) Accepted Empire solution: can cross blockade of Arcturus->Goddard
    8) Accepted Pirate solution: can cross any blockade
    9) Accepted Pirate solution: can cross any blockade, but has paid cash
@@ -39,11 +39,10 @@ local portrait = require "portrait"
 local fw = require "common.frontier_war"
 local fmt = require "format"
 local pir = require "common.pirate"
+local cinema = require "cinema"
 
 local athooks, escort, hewhew, scanHooks, squad, strafer, target, zlkPilots, zlk_list -- Non-persistent state
-local rmScanHooksRaw, spawnEmpSquadron, spawnZlkSquadron -- Forward-declared functions
--- luacheck: globals backDialog convoyEnter enter escort_died escort_hailed gather hailMe killed_zlk land landBar loading rmScanHooks scanBloc spawnDrones spawnHewHew spawnStrafer straferDiscuss takeoff targetAttacked targetBoarded targetDied targetEscaped tick weNeed2land (Hook functions passed by name)
--- luacheck: globals discussHam discussNik discussStr discussThe discussTro fireSteal imperialAgent pirateDealer (NPC functions passed by name)
+local rmScanHooksRaw, spawnEmpSquadron, spawnZlkSquadron, barAgents -- Forward-declared functions
 
 escort_hailed = fw.escort_hailed -- common hooks
 
@@ -63,7 +62,7 @@ local fzlk = faction.get("Za'lek")
 local hampla, hamsys = spob.getS("Vilati Vilata")
 local reppla, repsys = spob.getS("Dvaer Prime")
 local pripla, prisys = spob.getS("Jorla")
-local zlkpla, zlksys = spob.getS("House Za'lek Central Station")
+local zlkpla, zlksys = spob.getS("House Za'lek Central")
 local intsys = system.get("Poltergeist")
 
 function create()
@@ -144,9 +143,11 @@ function land()
       tk.msg(_("Other help offer"), fmt.f(_([[As you land, someone is waiting for you at the spaceport. "Hello, friend! Seems like you're having some trouble with the authorities out there. Looks like the Za'lek have even enlisted the help of the Imperials. There are blockades everywhere on the borders of Imperial space. Even the paths to the secret jumps are impassable. It looks like the Empire wants to catch you at all costs, but luckily enough, I have the solution. I imagine you already have a fake transponder, but they seem to have identified it.  I bet you could use a replacement. I can sell you an genuine, fake transponder fresh from the Skulls and Bones factory."
    Clearly this is a pirate looking to make a few credits off your dire situation. But, the idea is not a bad one. The Imperial ships wouldn't be looking for a ship with a Skulls and Bones fake transponder. So you ask him how many credits he wants. "{number}" is the answer. "Sounds like a lot, right? But maybe it's a bargain in exchange for your life and the success of whatever unscrupulous mission you're trying to carry out. Maybe you don't have that many credits on you right now. That's ok.  I'll accept your word to pay me at some point. Well, your word and your DNA signature. That way I can find you if you try to cheat me."
    You know that if you agree, you will have to pay, no matter what happens, otherwise you will be hounded by hit men until the end of your, probably very short, life. However, paying {credits} might allow you to avoid the otherwise messy and compromising deal you would have to make with the Imperial secret services. Meet the fake transponder dealer at the bar if interested.]]), {number=fmt.number(fw.pirate_price), credits=fmt.credits(fw.pirate_price)}))
-      mem.pirag = misn.npcAdd("pirateDealer", _("Fake transponder dealer"), portrait.get("Pirate"), _("This shifty person is for sure one of the pirates that wants to sell you a fake transponder."))
-      mem.impag = misn.npcAdd("imperialAgent", _("Feather-hat agent"), portrait.get(), _("The Imperial agent looks like a non-descript trader, as there are so many in Imperial space."))
+      barAgents()
       mem.stage = 6
+
+   elseif mem.stage == 6 and spob.cur():faction() == faction.get("Empire") then
+      barAgents()
 
    -- Land to end the mission
    elseif mem.stage >= 4 and spob.cur() == reppla then
@@ -164,16 +165,17 @@ function land()
          shiplog.append( "frontier_war", _("You helped the Dvaered High Command to liberate Mr. Danftang, public relations executive at Goddard, who was imprisoned by the Za'lek for dubious reasons. This executive is likely to help House Dvaered from a diplomatic angle. Many unexpected events happened during this operation which forced you to make a deal with the Imperial secret service.") )
       elseif mem.stage == 8 then -- Pirate debt
          tk.msg(_("Everything is almost alright"), fmt.f(_([[You explain to the major the problems you encountered. You talk about the strange deal the Empire tried to make with you. "Yes, the Imperial intelligence services are formidable. It is very hard for us to hide our intentions from them. It was right for you not to accept their offer. So, you bought a pirate fake transponder, right? I hope it was not too expensive!"
-  When you tell him the sum you had to promise to pay, Major Tam squeaks. "Whawhawhat? {price} for a fake transponder! That is not trade, it is theft!" "Well, technically..." You answer "those folks are pirates, so it's their job to rob people." The major calms down "Alright. I'll take care of the payment, so that they don't kill you, but you'll have to refund us, don't forget that! Oh, and by the way, I made sure the Za'lek don't blame you personally for what happened. They should accept you in their space now."
+  When you tell him the sum you had to promise to pay, Major Tam squeaks. "Whawhawhat? {price} for a fake transponder! That is not trade, it is theft!" "Well, technically..." You answer "those folks are pirates, so it's their job to rob people." The major calms down "Alright. I'll take care of the payment, so that they don't kill you. We will need extra fundings by the Headquarters soon, I am afraid. Oh, and by the way, I made sure the Za'lek don't blame you personally for what happened. They should accept you in their space now."
    The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are {credits}."]]), {price=fmt.credits(fw.pirate_price), credits=fmt.credits(fw.credits_02)}))
          var.push("dv_pirate_debt", true)
-         shiplog.append( "frontier_war", _("You helped the Dvaered High Command to liberate Mr. Danftang, public relations executive at Goddard, who was imprisoned by the Za'lek for dubious reasons. This executive is likely to help House Dvaered from a diplomatic angle. Many unexpected events happened during this operation which forced you into debt with House Dvaered. It is very likely they won't entrust you with important missions until you repay them.") )
+         shiplog.append( "frontier_war", _("You helped the Dvaered High Command to liberate Mr. Danftang, public relations executive at Goddard, who was imprisoned by the Za'lek for dubious reasons. This executive is likely to help House Dvaered from a diplomatic angle. Many unexpected events happened during this operation which forced you into debt with House Dvaered.") )
       elseif mem.stage == 9 then -- Pirate cash
          tk.msg(_("No major problem to report"), fmt.f(_([[You explain to the major the problems you encountered. You talk about the strange deal the Empire tried to make with you. "Yes, the Imperial intelligence services are formidable. It is very hard for us to hide our intentions from them. It was right for you not to accept their offer. So, you bought a pirate fake transponder, right? I hope it was not too expensive!"
-   You consider requesting to be refunded for your mission expenses, but then you remember that the Dvaered are tightfisted and violent, so you give up and simply answer: "Oh, no... not... really."
-   Tam looks satisfied, and answers: "By the way, I made sure the Za'lek don't blame you personally for what happened. They should accept you in their space now."
-   The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are {credits}."]]), {credits=fmt.credits(fw.credits_02)}))
+   When you tell him the sum you paid, Major Tam squeaks. "Whawhawhat? {price} for a fake transponder! That is not trade, it is theft!" "Well, technically..." You answer "those folks are pirates, so it's their job to rob people." The major calms down "Alright. I'll refund you. We will need extra fundings by the Headquarters soon, I am afraid. By the way, I made sure the Za'lek don't blame you personally for what happened. They should accept you in their space now."
+   The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are {credits}."]]), {price=fmt.credits(fw.pirate_price), credits=fmt.credits(fw.credits_02)}))
          shiplog.append( "frontier_war", _("You helped the Dvaered High Command to liberate Mr. Danftang, public relations executive at Goddard, who was imprisoned by the Za'lek for dubious reasons. This executive is likely to help House Dvaered from a diplomatic angle. Many unexpected events happened during this operation, that forced you to buy a fake transponder at an outrageous price.") )
+      player.pay(fw.pirate_price)
+      var.push("dv_pirate_debt", true)
       else -- Normally, the player should not achieve that (maybe with a trick I did not foresee, but it should be Xtremely hard)
          tk.msg(_("No major problem to report"), fmt.f(_([[You explain to the major the problems you encountered. You talk about the strange deal the Empire tried to make with you. "Yes, the Imperial intelligence services are formidable. It is very hard for us to hide our intentions from them. It was right for you not to accept their offer. I guess it must have been very hard, and risky, to skirt the Imperial blockade, congratulations! Oh, and by the way, I made sure the Za'lek don't blame you personally for what happened. They should accept you in their space now."
   The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are {credits}."]]), {credits=fmt.credits(fw.credits_02)}))
@@ -203,6 +205,8 @@ function loading()
       misn.npcAdd("fireSteal", _("Captain Hamfresser"), fw.portrait_hamfresser, hamfr_des2)
    --elseif mem.stage == 4 then -- TODO: decide if we do that
       --player.takeoff()
+   elseif mem.stage == 6 and spob.cur():faction() == faction.get("Empire") then
+      barAgents()
    end
 end
 
@@ -295,7 +299,7 @@ function enter()
          origin = mem.lastSys
       end
 
-      strafer = pilot.add("Vendetta", "DHC", origin, _("Lieutenant Strafer"), {ai="baddie_norun"})
+      strafer = pilot.add("Vendetta", fw.fct_dhc(), origin, _("Lieutenant Strafer"), {ai="baddie_norun"})
       strafer:setHilight()
       strafer:setVisplayer()
 
@@ -426,9 +430,10 @@ end
 function targetAttacked()
    strafer:control(false)
    hook.rm(mem.attackhook)
+   local fwarlords = fw.fct_warlords()
    for i, j in ipairs(athooks) do
       hook.rm(j)
-      escort[i]:setFaction("Warlords") -- Hack so that Strafer attacks them and not the Sting
+      escort[i]:setFaction(fwarlords) -- Hack so that Strafer attacks them and not the Sting
    end
    target:setHostile(true)
 
@@ -471,11 +476,11 @@ function weNeed2land()
    tk.msg(_("We are in trouble"), _([[When you finally jump out, Hamfresser reports: "We hit an unexpected situation back there. After we destroyed the androids and got to the jail cell, we saw that there were three other prisoners along with the target, and far more human guards than expected. They blew up our first assault bot and we had to take them down with the paralysers, but one of the prisoners grabbed a weapon and, for some reason, started to fire on us. Fortunately for me, he just pierced my lung. That is a replaceable part.
    "Then, Tronk paralysed all the prisoners and we identified and recovered the target. That's why the guy is blue, actually. But in his hurry, Tronk used the extra-strength dose. According to the medic, it is worse that we first thought. Apparently, she can keep the guy alive for a few periods, but she needs a special medical device to save him. So at our next stop, I'm afraid we will have to steal the device at the spaceport's hospital. It really annoys me as that's the kind of operation that can get ugly very quickly, especially since we're still wanted by the Za'leks, but we have no choice. I'll just be waiting for your signal at the bar next time we land.
    "If I may, I'd advise you to land somewhere within 3 periods, otherwise the VIP is likely to die. Choose a place with a shipyard and an outfitter so that you'll be able to prepare your ship in case we need to escape quickly."]]))
-   mem.timelimit = time.get() + time.create(0,3,0)
+   mem.timelimit = time.get() + time.new(0,3,0)
    misn.osdCreate(_("Dvaered Escape"), {
       fmt.f(_("Land anywhere to let Hamfresser steal a medical device. Time left: {time}"), {time=(mem.timelimit - time.get())}),
    })
-   mem.datehook = hook.date(time.create(0, 0, 100), "tick")
+   mem.datehook = hook.date(time.new(0, 0, 100), "tick")
 end
 
 function tick()
@@ -588,9 +593,7 @@ function scanBloc()
    if mem.firstBloc then -- avoid having that happening twice in systems where there are 2 blocus
       tk.msg(_("Troubles straight ahead!"), _([[As you approach the jump point, your sensors pick up a squadron of military ships in a tight formation near the jump point. No doubt those ships are waiting for you, and it seems foolhardy to try to run the blockade.]]))
 
-      player.pilot():control()
-      player.pilot():brake() -- Normally, nobody should want to kill the player
-      player.cinematics( true )
+      cinema.on()
       camera.set( squad[1]:pos(), true ) -- TODO if possible: choose the right squad
 
       rmScanHooksRaw()
@@ -614,9 +617,8 @@ end
 -- The player discuss with Strafer
 function straferDiscuss()
    hook.rm(mem.prox)
+   cinema.off()
    camera.set( nil, true )
-   player.cinematics(false)
-   player.pilot():control(false)
 
    tk.msg(_("A friend in the dark"), fmt.f(_([[The Gawain hails you. When you respond, you hear a familiar voice. "Strafer here. I was wondering what was taking you so long. It looks like you had trouble with the Za'lek after all. There are blockades in {1}, {2}, {3} and {4}. They scan all ships. You have no chance to cross these systems alive. What did you to them to upset them like that? Anyway, I did not come empty-handed. I've have as much fuel as you want. Unfortunately, I can't board you as they would chase me as well, so I have jettisoned a few tanks at coordinates I will give to you. Just go there and scoop them. Good luck!"]]), zlk_list ) )
    strafer:control(false)  -- Strafer stops following the player
@@ -625,7 +627,7 @@ function straferDiscuss()
    local cfuel = commodity.new( N_("Fuel"), N_("Tanks of usable fuel."), {gfx_space="fuel.webp"})
    local pos = vec2.new( -1.2*system.cur():radius(), 0 )
    system.addGatherable( cfuel, 1, pos, vec2.new(0,0), 3600 ) -- Lasts for an houer
-   mem.Imark = system.mrkAdd( pos, _("FUEL") )
+   mem.Imark = system.markerAdd( pos, _("FUEL") )
    mem.gathHook = hook.gather("gather")
 end
 
@@ -639,7 +641,7 @@ function gather( comm, qtt )
    pilot.cargoRm( player.pilot(), comm, qtt )
    player.pilot():setFuel(true)
    player.msg( _("You filled your fuel tanks.") )
-   system.mrkRm(mem.Imark)
+   system.markerRm(mem.Imark)
 end
 
 -- Remove scan hooks
@@ -654,6 +656,12 @@ function rmScanHooksRaw()
       end
       scanHooks = nil
    end
+end
+
+-- Put Agents at the bar when landing/loading
+function barAgents()
+   mem.pirag = misn.npcAdd("pirateDealer", _("Fake transponder dealer"), portrait.get("Pirate"), _("This shifty person is for sure one of the pirates that wants to sell you a fake transponder."))
+   mem.impag = misn.npcAdd("imperialAgent", _("Feather-hat agent"), portrait.get(), _("The Imperial agent looks like a non-descript trader, as there are so many in Imperial space."))
 end
 
 -- Spawns the odd imperial pilot

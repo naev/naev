@@ -13,7 +13,7 @@
  </presence>
  <general>
   <class>K</class>
-  <population>50000</population>
+  <population>800000</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -21,11 +21,12 @@
    <bar/>
   </services>
   <commodities/>
-  <description>Once, Jasmine was a dead-end world in a dusty corner of Soromid space. But with the fairly recent discovery of the Gewirn-Point Zero jump traffic through the Gewirn system has increased, giving Jasmine an economic breath of fresh air. That said, Jasmine is little more than a stopover point to most spacers.</description>
+  <description>Jasmine was a dusty dead-end world on the border between Soromid and Empire space for a long time, until the blockade was lifted and trade was allowed. Despite that, the local economy never really took off, with the planet being more of a stop on the way to more successful worlds with vibrant industries and valuable resources. When the Incident happened and refugees from Imperial space started to flow in, the Soromid decided to use Jasmine as a temporary refugee camp for those without genetic modifications necessary to survive long-term in less hospitable Soromid planets. Although some were able to undergo genetic treatment, the truth is Jasmine is still inundated with refugees with poor future outlook.</description>
   <bar>This bar is a short walk from the spaceport, which itself is little more than a collection of crude pits in the ground that contain the bare essentials needed to service landed ships. Jasmine was never rich enough to afford a serious space port, and this does not seem likely to change.</bar>
  </general>
  <tags>
   <tag>poor</tag>
   <tag>rural</tag>
+  <tag>refugee</tag>
  </tags>
 </spob>

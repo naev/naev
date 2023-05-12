@@ -14,24 +14,25 @@
  </presence>
  <general>
   <class>G</class>
-  <population>7500</population>
+  <population>750000</population>
   <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
    <bar/>
+   <commodity/>
    <outfits/>
    <shipyard/>
    <blackmarket/>
   </services>
   <commodities/>
-  <description>A minor clan world in control of the whole Qorel Expanse, Qorellia might be seen as a civilian hub if only its traffic didn't entirely consist of pirate ships.</description>
-  <bar>A standard pirate bar, with the exception of the local militia making sure no troublemaker stays unharmed.</bar>
+  <description>The clan world in control of the whole Qorel Tunnel and center of power of the Raven clan, Qorellia is a lively planet with booming trade and markets, albeit consisting of mainly stolen goods. There also is an active stock market where pirates can invest and bet on other pirate's heists and operations. Despite the apparent chaos, the Raven clan prides themselves in getting things done and the planet infrastructure is surprisingly efficient. Qorellia might be seen as a civilian hub if only its traffic didn't entirely consist of pirate ships.</description>
+  <bar>A lively pirate bar, where the local militia make sure no troublemaker stays unharmed. While the main area is a large open area, there are many smaller private rooms where most of the deal and contract signing take place.</bar>
  </general>
  <tech>
-  <item>Systems Low</item>
   <item>Pirate Ships</item>
   <item>Kinetic 1</item>
+  <item>Kinetic 2</item>
   <item>Basic Outfits 1</item>
   <item>Star Maps</item>
   <item>Heavy Weapons 1</item>
@@ -43,9 +44,19 @@
   <item>Ion 2</item>
   <item>Missiles 1</item>
   <item>Hulls Low</item>
+  <item>Hulls Medium</item>
+  <item>Hulls High</item>
   <item>Engines Low</item>
+  <item>Engines Medium</item>
+  <item>Engines High</item>
+  <item>Systems Low</item>
   <item>Systems Medium</item>
   <item>Pirate Maps</item>
   <item>Pirate Elite Outfits</item>
+  <item>Raven Clan Tech</item>
  </tech>
+ <tags>
+  <tag>criminal</tag>
+  <tag>trade</tag>
+ </tags>
 </spob>

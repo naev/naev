@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="One-Wing Goddard">
+ <points>1000</points>
+ <base_type>One-Wing Goddard</base_type>
+ <gfx_space sx="1" sy="1">spob/space/derelict_goddard.webp</gfx_space>
+ <gfx_comm>spob/exterior/onewing_goddard.webp</gfx_comm>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class display="Station">Battleship</class>
+ <price>1</price>
+ <time_mod>1</time_mod>
+ <fabricator>N/A</fabricator>
+ <description>This is a base. It's for AI use only. Don't buy it. Seriously.</description>
+ <mission />
+ <movement>
+  <thrust>0.001</thrust>
+  <turn>0.001</turn>
+  <speed>0.001</speed>
+ </movement>
+ <health>
+  <absorb>80</absorb>
+  <shield>0</shield>
+  <armour>15000</armour>
+  <energy>0</energy>
+  <shield_regen>0</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>0</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>0</cpu>
+  <crew>1</crew>
+  <mass>5000</mass>
+  <fuel>0</fuel>
+  <fuel_consumption>100</fuel_consumption>
+  <cargo>0</cargo>
+ </characteristics>
+ <slots />
+ <tags>
+  <tag>noplayer</tag>
+ </tags>
+</ship>

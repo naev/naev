@@ -2,11 +2,12 @@
 <ssys name="Maron">
  <general>
   <radius>13000.000000</radius>
-  <stars>400</stars>
-  <interference>5.882350</interference>
+  <spacedust>400</spacedust>
+  <interference>47.000000</interference>
   <nebula volatility="0.250000">300.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="865.000000" y="406.000000"/>
+ <pos x="884.887503" y="253.529972"/>
  <spobs>
   <spob_virtual>Proteron Unpresence (Range 1)</spob_virtual>
   <spob_virtual>Thurion Local</spob_virtual>
@@ -25,4 +26,7 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

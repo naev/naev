@@ -1,6 +1,6 @@
 local fmt = require "format"
 local luatk = require "luatk"
-local lg = require 'love.graphics'
+--local lg = require 'love.graphics'
 --local audio = require 'love.audio'
 
 local active = 10 -- active time in seconds
@@ -59,8 +59,6 @@ local function recycle_interface ()
    if #clist <= 0 then
       return -1
    end
-
-   luatk.setDefaultFont( lg.newFont(12) )
 
    local w, h = 450, 400
    local lstw = 250
@@ -165,13 +163,13 @@ local function turnon( p, po )
    return true
 end
 
-local function turnoff( _p, po )
+local function turnoff( p, po )
    if not mem.active then
       return false
    end
    po:state("cooldown")
    po:progress(1)
-   mem.timer = cooldown
+   mem.timer = cooldown * p:shipstat("cooldown_mod",true)
    mem.active = false
    return true
 end

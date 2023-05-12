@@ -22,4 +22,8 @@
   <commodities/>
   <description>Adham is a cold, lifeless planet. The only reason a landing strip is here at all is that the planet hosts the three arctic-themed arenas for Totoran's gladiatorial games. While the landing zone and a small buffer around it is considered neutral territory, most of the planet's surface is subject to the destructive sport that is so popular among Totoran's visitors.</description>
  </general>
+ <tags>
+  <tag>tourism</tag>
+  <tag>rural</tag>
+ </tags>
 </spob>

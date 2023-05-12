@@ -31,7 +31,6 @@ local cat_colour = nil
 local owner_image = portrait.getFullPath( portrait.get() )
 local owner_colour = nil
 local owner -- Non-persistent state
--- luacheck: globals disable_restart enter event_check jumpin owner_board owner_gone owner_hail owner_hail_check (Hook functions passed by name)
 
 local meow = audio.newSource( "snd/sounds/meow.ogg" )
 

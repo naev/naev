@@ -4,7 +4,7 @@
  <base_type>Shark</base_type>
  <GFX size="54">shark_empire</GFX>
  <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Interceptor</class>
  <price>280000</price>

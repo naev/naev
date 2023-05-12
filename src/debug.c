@@ -13,20 +13,11 @@
 #include <signal.h>
 
 #if DEBUGGING
-#include <bfd.h>
-#include <unwind.h>
+#include <backtrace.h>
 
 #define __USE_GNU /* Grrr... */
 #include <dlfcn.h>
 #undef __USE_GNU
-
-#if !HAVE_STRSIGNAL
-extern const char *strsignal (int); /* From libiberty */
-#endif /* !HAVE_STRSIGNAL */
-
-#if MACOS
-#include <mach-o/dyld.h>
-#endif /* MACOS */
 #endif /* DEBUGGING */
 
 #include "naev.h"
@@ -37,21 +28,9 @@ extern const char *strsignal (int); /* From libiberty */
 #include "log.h"
 
 #if DEBUGGING
-static bfd *abfd      = NULL;
-static asymbol **syms = NULL;
-/* Initialize debugging flags. */
+static struct backtrace_state *debug_bs = NULL;
 DebugFlags debug_flags;
-#endif /* DEBUGGING */
 
-#ifdef bfd_get_section_flags
-/* We're dealing with a binutils version prior to 2.34 (2020-02-01) and must adapt the API as follows: */
-#define bfd_section_flags( section )    bfd_get_section_flags( abfd, section )
-#define bfd_section_vma( section )      bfd_get_section_vma( abfd, section )
-#define bfd_section_size( section )     bfd_get_section_size( section )
-#endif /* bfd_get_section_flags */
-
-
-#if DEBUGGING
 /**
  * @brief Gets the string related to the signal code.
  *
@@ -114,69 +93,70 @@ const char* debug_sigCodeToStr( int sig, int sig_code )
       }
 
    /* No suitable code found. */
+#if HAVE_STRSIGNAL
    return strsignal(sig);
+#else /* HAVE_STRSIGNAL */
+   {
+      static char buf[128];
+      snprintf( buf, sizeof(buf), _("signal %d"), sig );
+      return buf;
+   }
+#endif /* HAVE_STRSIGNAL */
 }
 #endif /* DEBUGGING */
 
 #if DEBUGGING
+typedef struct { void* data; uintptr_t pc; const char* file; int line; const char* func; } FrameInfo;
+
 /**
- * @brief Translates and displays the address as something humans can enjoy.
+ * @brief Callback for handling one frame of a backtrace, after function lookup has succeeded (or it failed but we supplied null data).
  */
-static void debug_translateAddress( void *address )
+static void debug_backtrace_syminfo_callback( void* data, uintptr_t pc, const char* symname, uintptr_t symval, uintptr_t symsize )
 {
-   const char *file = NULL, *func = NULL;
-   unsigned int line = 0;
-   asection *section;
-   bfd_vma vma = (uintptr_t) address;
+   (void) symsize;
+   FrameInfo *fi = data;
    Dl_info addr = {0};
+   dladdr( (void*) pc, &addr );
+   uintptr_t offset = pc - (symval ? symval : (uintptr_t)addr.dli_fbase);
+   pc -= (uintptr_t) addr.dli_fbase;
+   symname = symname ? symname : "??";
+   fi->func = fi->func ? fi->func : symname;
+   fi->file = fi->file ? fi->file : "??";
+   addr.dli_fname = addr.dli_fname ? addr.dli_fname : "??";
+   int width = snprintf( NULL, 0, "%s at %s:%u", fi->func, fi->file, fi->line );
+   int pad = MAX( 0, 80 - width );
+   LOGERR( "[%#14"PRIxPTR"] %s at %s:%u %*s| %s(%s+%#"PRIxPTR")", pc, fi->func, fi->file, fi->line, pad, "", addr.dli_fname, symval ? symname : "", offset );
+}
 
-   (void) dladdr( address, &addr );
-#if MACOS
-   vma -= (bfd_vma) _dyld_get_image_vmaddr_slide(0);
-#endif
 
-   for (section = abfd==NULL?NULL:abfd->sections; section != NULL; section = section->next) {
-      if ((bfd_section_flags(section) & SEC_ALLOC) == 0)
-         continue;
-
-      bfd_vma vma_sec = bfd_section_vma(section);
-      bfd_size_type size = bfd_section_size(section);
-      if (vma_sec > vma || vma >= vma_sec + size)
-         vma = (bfd_vma) (address - addr.dli_fbase);
-      if (vma_sec > vma || vma >= vma_sec + size)
-         continue;
-
-      (void) bfd_find_nearest_line(abfd, section, syms, vma - vma_sec, &file, &func, &line);
-      break;
-   }
-
-   do {
-#define TRY( str ) ((str != NULL && str[0]) ? str : "??")
-#define OPT( str ) ((str != NULL && str[0]) ? str : "")
-      bfd_vma offset = address - (addr.dli_saddr ? addr.dli_saddr : addr.dli_fbase);
-      int width = snprintf( NULL, 0, "%s at %s:%u", TRY(func), TRY(file), line );
-      int pad = MAX( 0, 80 - width );
-      LOGERR( "[%#14"BFD_VMA_FMT"x] %s at %s:%u %*s| %s(%s+%#"BFD_VMA_FMT"x)",
-              vma, TRY(func), TRY(file), line, pad, "",
-              TRY(addr.dli_fname), OPT(addr.dli_sname), offset );
-   } while (section!=NULL && bfd_find_inliner_info(abfd, &file, &func, &line));
+/**
+ * @brief Callback for handling one frame of a backtrace, after function lookup has failed.
+ */
+static void debug_backtrace_error_callback( void* data, const char* msg, int errnum )
+{
+   FrameInfo *fi = data;
+   (void) msg;
+   (void) errnum;
+   debug_backtrace_syminfo_callback( data, fi->pc, "??", 0, 0 );
 }
 
 /**
- * @brief Translates and displays the address as something humans can enjoy.
+ * @brief Callback for handling one frame of a backtrace.
  */
-static _Unwind_Reason_Code debug_unwindTrace( struct _Unwind_Context* ctx, void* data )
+static int debug_backtrace_full_callback( void* data, uintptr_t pc, const char* file, int line, const char* func )
 {
-   (void) data;
-   int ip_before_insn = 0;
-   uintptr_t ip = _Unwind_GetIPInfo( ctx, &ip_before_insn );
+   FrameInfo fi = { .data = data, .pc = pc, .file = file, .line = line, .func = func };
+   if (pc != 0 && ~pc != 0)
+      backtrace_syminfo( debug_bs, pc, debug_backtrace_syminfo_callback, debug_backtrace_error_callback, &fi );
 
-   if (!ip)
-      return _URC_END_OF_STACK;
-   if (!ip_before_insn)
-      ip -= 1;
-   debug_translateAddress( (void*) ip );
-   return _URC_NO_REASON;
+   return 0;
+}
+
+/**
+ * @brief Logs a backtrace to stderr.
+ */
+void debug_logBacktrace (void) {
+   backtrace_full( debug_bs, 1, debug_backtrace_full_callback, NULL, NULL );
 }
 
 #if HAVE_SIGACTION
@@ -190,15 +170,13 @@ static void debug_sigHandler( int sig )
    (void) unused;
 #endif /* HAVE_SIGACTION */
 
-   LOGERR( _("Naev received %s!"),
 #if HAVE_SIGACTION
-         debug_sigCodeToStr( info->si_signo, info->si_code )
+   LOGERR( _("Naev received %s!"), debug_sigCodeToStr( info->si_signo, info->si_code ) );
 #else /* HAVE_SIGACTION */
-         debug_sigCodeToStr( sig, 0 )
+   LOGERR( _("Naev received %s!"), debug_sigCodeToStr( sig, 0 ) );
 #endif /* HAVE_SIGACTION */
-	);
 
-   _Unwind_Backtrace( debug_unwindTrace, NULL );
+   debug_logBacktrace();
    LOGERR( _("Report this to project maintainer with the backtrace.") );
 
    /* Always exit. */
@@ -212,29 +190,12 @@ static void debug_sigHandler( int sig )
 void debug_sigInit (void)
 {
 #if DEBUGGING
-   bfd_init();
-
-   /* Read the executable. We need its full path, which Linux provides via procfs and Darwin/dlfcn-win32 dladdr() happens to provide. */
-#if LINUX
-   abfd = bfd_openr( "/proc/self/exe", NULL );
-#else
    Dl_info addr = {0};
-   (void) dladdr( debug_sigInit, &addr );
-   abfd = bfd_openr( addr.dli_fname, NULL );
-#endif
-   if (abfd != NULL) {
-      char **matching;
-      bfd_check_format_matches(abfd, bfd_object, &matching);
+#if WIN32
+   dladdr( debug_sigInit, &addr );  /* Get the filename using dlfcn-win32; libbacktrace fucks this up (as of 2022-08-18). */
+#endif /* WIN32 */
 
-      /* Read symbols */
-      if (bfd_get_file_flags(abfd) & HAS_SYMS) {
-         unsigned int size;
-         long symcount = bfd_read_minisymbols( abfd, /*dynamic:*/ FALSE, (void **)&syms, &size );
-         if ( symcount == 0 && abfd != NULL )
-            symcount = bfd_read_minisymbols( abfd, /*dynamic:*/ TRUE, (void **)&syms, &size );
-         assert(symcount >= 0);
-      }
-   }
+   debug_bs = backtrace_create_state( addr.dli_fname, /*threaded:*/ 1, NULL, NULL );
 
    /* Set up handler. */
 #if HAVE_SIGACTION
@@ -267,8 +228,6 @@ void debug_sigInit (void)
 void debug_sigClose (void)
 {
 #if DEBUGGING
-   bfd_close( abfd );
-   abfd = NULL;
    signal( SIGSEGV, SIG_DFL );
    signal( SIGFPE,  SIG_DFL );
    signal( SIGABRT, SIG_DFL );

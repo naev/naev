@@ -19,10 +19,9 @@ local fleet = require "fleet"
 require "proximity"
 local srs = require "common.sirius"
 local fmt = require "format"
+local achack = require "common.achack"
 
 local bhfleet, harja -- Non-persistent state
--- luacheck: globals attacked death enter grumble hail jumpin jumpout land (Hook functions passed by name)
--- luacheck: globals talkHarja talkJoanne (NPC functions passed by name)
 
 local grumblings = {
    _("Where's that Harja? He should be showing up any time now."),
@@ -55,7 +54,7 @@ function create()
 
    -- This mission auto-accepts, but a choice will be offered to the player later. No OSD yet.
    misn.accept()
-   misn.setReward(fmt.credits(reward))
+   misn.setReward(reward)
    misn.setDesc(fmt.f(_("Joanne has contacted you. She wants to meet you on {pnt} ({sys})."), {pnt=startplanet, sys=startsys}))
    hook.land("land")
    hook.load("land")
@@ -163,7 +162,7 @@ end
 function jumpin()
    if system.cur() == mem.destsys and mem.stage == stages.killAssociates then
       local bhships = {"Pirate Vendetta", "Pacifier", "Lancelot", "Hyena"}
-      bhfleet = fleet.add(1, bhships, "Achack_thugs", vec2.new(-3000, -7000), _("Bounty Hunter"))
+      bhfleet = fleet.add(1, bhships, achack.fct_thugs(), vec2.new(-3000, -7000), _("Bounty Hunter"))
       mem.alive = #bhfleet
       for i, j in ipairs(bhfleet) do
          j:control()
@@ -184,7 +183,7 @@ end
 function enter()
    if mem.stage == stages.finish then
       -- Remember, Harja will be with you. Always. Well, until the mission ends.
-      harja = pilot.add("Shark", "Achack_sirius", mem.enter_src, _("Harja's Shark"), {ai="trader"})
+      harja = pilot.add("Shark", achack.fct_sirius(), mem.enter_src, _("Harja's Shark"), {ai="trader"})
       harja:control()
       harja:setInvincible(true)
       harja:follow(player.pilot())

@@ -2,20 +2,31 @@
 <ssys name="Octantis">
  <general>
   <radius>18000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-121.957878" y="386.917924"/>
- <spobs/>
+ <pos x="535.370455" y="491.018111"/>
+ <spobs>
+  <spob>Octantis I</spob>
+  <spob>Wyrmwood</spob>
+  <spob_virtual>Miner Local</spob_virtual>
+ </spobs>
  <jumps>
-  <jump target="Corvus">
+  <jump target="Struve">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Wahri">
+  <jump target="Thirty Stars">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeB-standard</group>
+   <group>typeC-poor</group>
+   <radius>5000.000000</radius>
+   <pos x="0.000000" y="0.000000"/>
+  </asteroid>
+ </asteroids>
 </ssys>

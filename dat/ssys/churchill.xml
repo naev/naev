@@ -2,18 +2,17 @@
 <ssys name="Churchill">
  <general>
   <radius>24500.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="1117.842750" y="-723.145111"/>
+ <pos x="1321.239759" y="-604.750029"/>
  <spobs>
   <spob>Churchill I</spob>
   <spob>Churchill II</spob>
   <spob>Churchill IIa</spob>
   <spob>Lorelei</spob>
   <spob>Ururis</spob>
-  <spob>Violin Station</spob>
+  <spob>Violin Monastery</spob>
  </spobs>
  <jumps>
   <jump target="Eiderdown">
@@ -21,6 +20,10 @@
    <hide>1.000000</hide>
   </jump>
   <jump target="Muirat">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Porro">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

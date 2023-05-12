@@ -2,11 +2,12 @@
 <ssys name="Anger">
  <general>
   <radius>10000.000000</radius>
-  <stars>400</stars>
-  <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>33.075000</interference>
+  <nebula volatility="0.000000">400.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="750.675353" y="-143.313578"/>
+ <pos x="755.944082" y="-353.811046"/>
  <spobs>
   <spob>Anger I</spob>
   <spob>Anger II</spob>
@@ -17,10 +18,17 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Sten">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Tormulex">
    <pos x="-1261.740957" y="-1640.900352"/>
    <hidden/>
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

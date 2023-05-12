@@ -11,7 +11,10 @@
   <sys name="Eiderdown">
    <jump>Gilligan's Tomb</jump>
    <spob>Adrian</spob>
+   <spob>Eiderdown I</spob>
+   <spob>Eiderdown III</spob>
    <spob>Ember</spob>
+   <spob>Forge</spob>
   </sys>
   <sys name="Gilligan's Tomb">
    <jump>Adraia</jump>
@@ -25,7 +28,9 @@
   </sys>
   <sys name="Ulysses">
    <jump>Adraia</jump>
-   <spob>Socrates Military Academy</spob>
+   <spob>Socrates Academy Monastery</spob>
+   <spob>Ulysses III</spob>
+   <spob>Ulysses IV</spob>
    <spob>Ummula</spob>
    <spob>Vao Vos</spob>
   </sys>
@@ -33,15 +38,18 @@
    <jump>Adraia</jump>
    <jump>Aesir</jump>
    <jump>Botarn</jump>
-   <spob>Fort Sirius</spob>
    <spob>Sinass</spob>
+   <spob>Sirius Monastery</spob>
+   <spob>Vanir I</spob>
+   <spob>Vanir II</spob>
+   <spob>Vanir Ia</spob>
    <spob>Yrina</spob>
   </sys>
   <sys name="Aesir">
    <jump>Vanir</jump>
+   <spob>Aesir IV</spob>
    <spob>Gayathi</spob>
    <spob>Mutris</spob>
-   <spob>Sirius Ordnance</spob>
    <spob>Sirius Shipyards</spob>
    <spob>Urail</spob>
   </sys>
@@ -49,10 +57,14 @@
    <jump>Monogram</jump>
    <jump>Vanir</jump>
    <spob>Arashu</spob>
-   <spob>Dundrop Station</spob>
+   <spob>Botarn I</spob>
+   <spob>Dundrop Monastery</spob>
   </sys>
   <sys name="Monogram">
    <jump>Botarn</jump>
+   <spob>Monogram III</spob>
+   <spob>Monogram IV</spob>
+   <spob>Monogram V</spob>
    <spob>Oort Farming Station</spob>
    <spob>Saraab</spob>
    <spob>Wikon</spob>

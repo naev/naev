@@ -9,7 +9,7 @@ local eoutfits = require 'equipopt.outfits'
 --    @param p Pilot to equip
 --]]
 local function equip_generic( p, opt_params, cores, outfits )
-   opt_params  = opt_params or nil
+   opt_params  = opt_params or {}
    cores       = cores or "standard"
    outfits     = outfits or cores
 
@@ -20,6 +20,9 @@ local function equip_generic( p, opt_params, cores, outfits )
    -- Get stuff
    local ocores = ecores.get( p, { all=cores } )
    local ooutfits = eoutfits[ outfits ].set
+   if opt_params.outfits_add then
+      ooutfits = eoutfits.merge{ ooutfits, opt_params.outfits_add }
+   end
 
    -- Set some pilot meta-data
    local mem = p:memory()

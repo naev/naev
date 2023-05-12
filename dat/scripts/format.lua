@@ -17,10 +17,11 @@ If you pass a more exotic "number" value, you'll get a string back, but you won'
 --]]
 function format.number( number )
    local numberstring = ""
+   local separator = _(",%03d%s") -- separator for large numbers
    if number > -math.huge and number < math.huge then
       number = math.floor(number + 0.5)
       while number >= 1000 do
-         numberstring = string.format( ",%03d%s", number % 1000, numberstring )
+         numberstring = string.format( separator, number % 1000, numberstring )
          number = math.floor(number / 1000)
       end
       numberstring = number % 1000 .. numberstring

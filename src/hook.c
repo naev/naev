@@ -269,7 +269,6 @@ static int hook_parseParam( const HookParam *param )
             break;
          case HOOK_PARAM_REF:
             lua_rawgeti( naevL, LUA_REGISTRYINDEX, param[n].u.ref );
-            luaL_unref( naevL, LUA_REGISTRYINDEX, param[n].u.ref );
             break;
 
          default:
@@ -335,6 +334,7 @@ static int hook_runMisn( Hook *hook, const HookParam *param, int claims )
    if (misn_runFunc( misn, hook->u.misn.func, n ) < 0) { /* error has occurred */
       WARN(_("Hook [%s] '%d' -> '%s' failed"), hook->stack,
             hook->id, hook->u.misn.func);
+      hook_rmRaw( hook );
       return -1;
    }
    return 0;
@@ -350,8 +350,10 @@ static int hook_runMisn( Hook *hook, const HookParam *param, int claims )
  */
 static int hook_runEvent( Hook *hook, const HookParam *param, int claims )
 {
-   int ret;
-   int n;
+   int ret, n, id;
+
+   /* Simplicity. */
+   id = hook->id;
 
    /* Must match claims. */
    if ((claims > 0) && (event_testClaims( hook->u.event.parent, cur_system->id ) != claims))
@@ -364,25 +366,24 @@ static int hook_runEvent( Hook *hook, const HookParam *param, int claims )
    /* Set up hook parameters. */
    if (event_get(hook->u.event.parent) == NULL) {
       WARN(_("Hook [%s] '%d' -> '%s' failed, event does not exist. Deleting hook."), hook->stack,
-            hook->id, hook->u.event.func);
+            id, hook->u.event.func);
       hook->delete = 1; /* Set for deletion. */
       return -1;
    }
 
    event_runStart( hook->u.event.parent, hook->u.event.func );
-
    n = hook_parseParam( param );
 
    /* Add hook parameters. */
-   n += hookL_getarg( hook->id );
+   n += hookL_getarg( id );
 
    /* Run the hook. */
    ret = event_runFunc( hook->u.event.parent, hook->u.event.func, n );
    hook->ran_once = 1;
    if (ret < 0) {
-      hook_rmRaw( hook );
       WARN(_("Hook [%s] '%d' -> '%s' failed"), hook->stack,
             hook->id, hook->u.event.func);
+      hook_rmRaw( hook );
       return -1;
    }
    return 0;
@@ -727,7 +728,7 @@ void hooks_update( double dt )
    Hook *h;
 
    /* Don't update without player. */
-   if ((player.p == NULL) || player_isFlag(PLAYER_CREATING))
+   if ((player.p == NULL) || player_isFlag(PLAYER_CREATING) || player_isFlag(PLAYER_DESTROYED))
       return;
 
    /* Clear creation flags. */
@@ -891,9 +892,31 @@ static int hooks_executeParam( const char* stack, const HookParam *param )
          /* Run hook. */
          hook_run( h, param, j );
          run++;
+
+         /* If hook_cleanup was run, hook_list will be NULL */
+         if (hook_list==NULL)
+            break;
       }
+      if (hook_list==NULL)
+         break;
    }
    hook_runningstack--; /* not running hooks anymore */
+
+   /* Free reference parameters. */
+   if (param != NULL) {
+      int n = 0;
+      while (param[n].type != HOOK_PARAM_SENTINEL) {
+         switch (param[n].type) {
+            case HOOK_PARAM_REF:
+               luaL_unref( naevL, LUA_REGISTRYINDEX, param[n].u.ref );
+               break;
+
+            default:
+               break;
+         }
+         n++;
+      }
+   }
 
    /* Check claims. */
    if (run)
@@ -1082,9 +1105,6 @@ void hook_cleanup (void)
 {
    Hook *h;
 
-   if (hook_runningstack)
-      WARN(_("Running hook_cleanup while hook stack is being run!"));
-
    /* Clear queued hooks. */
    hq_clear();
 
@@ -1188,8 +1208,6 @@ int hook_save( xmlTextWriterPtr writer )
 int hook_load( xmlNodePtr parent )
 {
    xmlNodePtr node;
-
-   hook_cleanup();
 
    /* We're loading. */
    hook_loadingstack = 1;

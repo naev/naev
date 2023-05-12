@@ -93,9 +93,10 @@ static void opt_setScalefactor( unsigned int wid, const char *str );
 static void opt_setZoomFar( unsigned int wid, const char *str );
 static void opt_setZoomNear( unsigned int wid, const char *str );
 static void opt_setBGBrightness( unsigned int wid, const char *str );
-static void opt_setNebuBrightness( unsigned int wid, const char *str );
+static void opt_setNebuNonuniformity( unsigned int wid, const char *str );
+static void opt_setJumpBrightness( unsigned int wid, const char *str );
 static void opt_checkColorblind( unsigned int wid, const char *str );
-static void opt_checkBGFancy( unsigned int wid, const char *str );
+static void opt_checkHealth( unsigned int wid, const char *str );
 /* Audio. */
 static void opt_audio( unsigned int wid );
 static int opt_audioSave( unsigned int wid, const char *str );
@@ -232,16 +233,20 @@ static char** lang_list( int *n )
 {
    char **ls;
    LanguageOption *opts = gettext_languageOptions();
+   const char *syslang = gettext_getSystemLanguage();
+   double syscoverage = gettext_languageCoverage(syslang);
 
    /* Default English only. */
    ls = malloc( sizeof(char*)*128 );
-   ls[0] = strdup(_("system"));
+   SDL_asprintf( &ls[0], _("system (%s[%3.0f%%] %s#0)"), (syscoverage<0.8)?"#r":"", 100.*syscoverage, syslang );
    *n = 1;
 
    /* Try to open the available languages. */
    for (int i=0; i<array_size(opts); i++) {
       char **item = &ls[(*n)++];
-      asprintf( item, "[%3.0f%%] %s", 100.*opts[i].coverage, opts[i].language );
+      SDL_asprintf( item, "%s[%3.0f%%] %s",
+         (opts[i].coverage<0.8)?"#r":"",
+         100.*opts[i].coverage, opts[i].language );
       free( opts[i].language );
    }
    array_free( opts );
@@ -889,8 +894,15 @@ static void opt_setEngineLevel( unsigned int wid, const char *str )
 {
    char buf[32];
    double vol = window_getFaderValue(wid, str);
+   const char *label = _("Engine Volume");
+   double logvol = 1. / pow(2., (1.-vol) * 8.);
    conf.engine_vol = vol;
-   snprintf( buf, sizeof(buf), _("Engine Volume: %.0f%%"), vol*100. );
+   if (sound_disabled)
+      snprintf( buf, sizeof(buf), _("%s: %s"), label, _("Muted") );
+   else {
+      const double magic = -48. / log(0.00390625); /* -48 dB minimum divided by logarithm of volume floor. */
+      snprintf( buf, sizeof(buf), _("%s: %.2f (%.0f dB)"), label, vol, log(logvol) * magic );
+   }
    window_modifyText( wid, "txtEngine", buf );
 }
 
@@ -928,16 +940,13 @@ static void opt_setAudioLevel( unsigned int wid, const char *str )
  */
 static void opt_audioLevelStr( char *buf, int max, int type, double pos )
 {
-   double vol, magic;
-   const char *str;
-
-   str = type ? _("Music Volume") : _("Sound Volume");
-   vol = type ? music_getVolumeLog() : sound_getVolumeLog();
+   const char *str = type ? _("Music Volume") : _("Sound Volume");
+   double vol = type ? music_getVolumeLog() : sound_getVolumeLog();
 
    if (vol == 0.)
-      snprintf( buf, max, str, _("Muted") );
+      snprintf( buf, max, _("%s: %s"), str, _("Muted") );
    else {
-      magic = -48. / log(0.00390625); /* -48 dB minimum divided by logarithm of volume floor. */
+      const double magic = -48. / log(0.00390625); /* -48 dB minimum divided by logarithm of volume floor. */
       snprintf( buf, max, _("%s: %.2f (%.0f dB)"), str, pos, log(vol) * magic );
    }
 }
@@ -1304,12 +1313,12 @@ static void opt_video( unsigned int wid )
    nres  = 0;
    res_def = 0;
    if (j) {
-      asprintf( &res[0], "%dx%d", conf.width, conf.height );
+      SDL_asprintf( &res[0], "%dx%d", conf.width, conf.height );
       nres     = 1;
    }
    for (i=0; i<n; i++) {
       SDL_GetDisplayMode( display_index, i, &mode  );
-      asprintf( &res[ nres ], "%dx%d", mode.w, mode.h );
+      SDL_asprintf( &res[ nres ], "%dx%d", mode.w, mode.h );
 
       /* Make sure doesn't already exist. */
       for (k=0; k<nres; k++)
@@ -1393,8 +1402,8 @@ static void opt_video( unsigned int wid )
          conf.colorblind );
    y -= 25;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkBGFancy", _("Fancy and expensive background shaders"), opt_checkBGFancy,
-         conf.background_fancy );
+         "chkHealth", _("Health bars for pilots"), opt_checkHealth,
+         conf.healthbars );
    y -= 30;
    window_addText( wid, x, y-3, cw-20, 20, 0, "txtBGBrightness",
          NULL, NULL, NULL );
@@ -1403,12 +1412,19 @@ static void opt_video( unsigned int wid )
          conf.bg_brightness, opt_setBGBrightness );
    opt_setBGBrightness( wid, "fadBGBrightness" );
    y -= 20;
-   window_addText( wid, x, y-3, cw-20, 20, 0, "txtNebuBrightness",
+   window_addText( wid, x, y-3, cw-20, 20, 0, "txtNebuNonuniformity",
          NULL, NULL, NULL );
    y -= 20;
-   window_addFader( wid, x+20, y, cw-60, 20, "fadNebuBrightness", 0., 1.,
-         conf.nebu_brightness, opt_setNebuBrightness );
-   opt_setNebuBrightness( wid, "fadNebuBrightness" );
+   window_addFader( wid, x+20, y, cw-60, 20, "fadNebuNonuniformity", 0., 1.,
+         conf.nebu_nonuniformity, opt_setNebuNonuniformity );
+   opt_setNebuNonuniformity( wid, "fadNebuNonuniformity" );
+   y -= 20;
+   window_addText( wid, x, y-3, cw-20, 20, 0, "txtJumpBrightness",
+         NULL, NULL, NULL );
+   y -= 20;
+   window_addFader( wid, x+20, y, cw-60, 20, "fadJumpBrightness", 0., 1.,
+         conf.jump_brightness, opt_setJumpBrightness );
+   opt_setJumpBrightness( wid, "fadJumpBrightness" );
    y -= 20;
    window_addText( wid, x, y-3, cw-20, 20, 0, "txtMOpacity",
          NULL, NULL, NULL );
@@ -1526,11 +1542,10 @@ static void opt_checkColorblind( unsigned int wid, const char *str )
 /**
  * @brief Handles the fancy background checkbox.
  */
-static void opt_checkBGFancy( unsigned int wid, const char *str )
+static void opt_checkHealth( unsigned int wid, const char *str )
 {
    int f = window_checkboxState( wid, str );
-   conf.background_fancy = f;
-   background_load( cur_system->background );
+   conf.healthbars = f;
 }
 
 /**
@@ -1641,7 +1656,7 @@ static void opt_videoDefaults( unsigned int wid, const char *str )
    window_faderSetBoundedValue( wid, "fadZoomNear", log(ZOOM_NEAR_DEFAULT+1.) );
    window_faderSetBoundedValue( wid, "fadGammaCorrection", log(GAMMA_CORRECTION_DEFAULT) /* a.k.a. 0. */ );
    window_faderSetBoundedValue( wid, "fadBGBrightness", BG_BRIGHTNESS_DEFAULT );
-   window_faderSetBoundedValue( wid, "fadNebuBrightness", NEBU_BRIGHTNESS_DEFAULT );
+   window_faderSetBoundedValue( wid, "fadNebuNonuniformity", NEBU_NONUNIFORMITY_DEFAULT );
    window_faderSetBoundedValue( wid, "fadMapOverlayOpacity", MAP_OVERLAY_OPACITY_DEFAULT );
 }
 
@@ -1739,18 +1754,33 @@ static void opt_setBGBrightness( unsigned int wid, const char *str )
 }
 
 /**
+ * @brief Callback to set the nebula non-uniformity parameter.
+ *
+ *    @param wid Window calling the callback.
+ *    @param str Name of the widget calling the callback.
+ */
+static void opt_setNebuNonuniformity( unsigned int wid, const char *str )
+{
+   char buf[STRMAX_SHORT];
+   double fad = window_getFaderValue(wid, str);
+   conf.nebu_nonuniformity = fad;
+   snprintf( buf, sizeof(buf), _("Nebula non-uniformity: %.0f%%"), 100.*fad );
+   window_modifyText( wid, "txtNebuNonuniformity", buf );
+}
+
+/**
  * @brief Callback to set the background brightness.
  *
  *    @param wid Window calling the callback.
  *    @param str Name of the widget calling the callback.
  */
-static void opt_setNebuBrightness( unsigned int wid, const char *str )
+static void opt_setJumpBrightness( unsigned int wid, const char *str )
 {
    char buf[STRMAX_SHORT];
    double fad = window_getFaderValue(wid, str);
-   conf.nebu_brightness = fad;
-   snprintf( buf, sizeof(buf), _("Nebula brightness: %.0f%%"), 100.*fad );
-   window_modifyText( wid, "txtNebuBrightness", buf );
+   conf.jump_brightness = fad;
+   snprintf( buf, sizeof(buf), _("Jump Brightness: %.0f%%"), 100.*fad );
+   window_modifyText( wid, "txtJumpBrightness", buf );
 }
 
 /**
@@ -1798,7 +1828,7 @@ static void opt_plugins( unsigned int wid )
    n = array_size(plgs);
    if (n <= 0) {
       str = malloc( sizeof(char *) * 1 );
-      str[0] = strdup(_("No Active Plugins"));
+      str[0] = strdup(_("No Plugins Found"));
       n = 1;
    }
    else {

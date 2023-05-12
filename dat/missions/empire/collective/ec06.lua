@@ -7,7 +7,7 @@
  <done>Operation Black Trinity</done>
  <chance>100</chance>
  <location>Bar</location>
- <spob>Omega Station</spob>
+ <spob>Omega Enclave</spob>
  <tags>
   <tag>emp_cap_ch01_lrg</tag>
  </tags>
@@ -30,21 +30,22 @@
 require "proximity"
 local emp = require "common.empire"
 local fmt = require "format"
+local pilotai = require "pilotai"
+local equipopt = require "equipopt"
 
 -- Mission constants
-local misn_base = spob.get("Omega Station")
+local misn_base = spob.get("Omega Enclave")
 local misn_target_sys1 = system.get("C-59")
 local misn_target_sys2 = system.get("C-28")
 local misn_final_sys = system.get("C-00")
 
 local droneC, fleetC, fleetE, refesc, refship -- Non-persistent state
--- luacheck: globals col_dead fail_timer jumpin jumpout land refuelBroadcast (Hook functions passed by name)
 
 function create ()
-    local missys = {misn_target_sys1, misn_target_sys2, misn_final_sys}
-    if not misn.claim(missys) then
-        misn.finish( false )
-    end
+   local missys = {misn_target_sys1, misn_target_sys2, misn_final_sys}
+   if not misn.claim(missys) then
+      misn.finish( false )
+   end
 
    misn.setNPC( _("Keer"), "empire/unique/keer.webp", _("You see Commodore Keer at a table with a couple of other pilots. She motions for you to sit down with them.") )
 end
@@ -97,90 +98,120 @@ end
 
 -- Handles jumping to target system
 function jumpin ()
-    if system.cur() == misn_target_sys1 or system.cur() == misn_target_sys2 then
-        -- Remove collective pilots in most dangerous systems
-        pilot.clear()
-        pilot.toggleSpawn(false)
-    end
-    if mem.misn_stage == 0 then
-        -- Entering target system?
-        if system.cur() == misn_final_sys then
-            pilot.clear()
-            pilot.toggleSpawn(false)
+   if system.cur() == misn_target_sys1 or system.cur() == misn_target_sys2 then
+      -- Remove collective pilots in most dangerous systems
+      pilot.clear()
+      pilot.toggleSpawn(false)
+   end
+   if mem.misn_stage == 0 then
+      -- Entering target system?
+      if system.cur() == misn_final_sys then
+         pilot.clear()
+         pilot.toggleSpawn(false)
 
-            -- Create big battle
-            fleetE = {}
-            fleetC = {}
-            droneC = {}
-            local fleetCpos = vec2.new(0, 0)
-            mem.deathsC = 0
+         local function setup_pilot( p, pos )
+            pilotai.guard( p, pos )
+            local m = p:memory()
+            m.guarddodist = math.huge
+            mem.guardreturndist = math.huge
+         end
 
-            fleetE[#fleetE + 1] = pilot.add( "Empire Peacemaker", "Empire", mem.last_sys )
-            fleetE[#fleetE + 1] = pilot.add( "Empire Hawking", "Empire", mem.last_sys )
-            fleetE[#fleetE + 1] = pilot.add( "Empire Hawking", "Empire", mem.last_sys )
-            for i = 1, 6 do
-                fleetE[#fleetE + 1] = pilot.add( "Empire Pacifier", "Empire", mem.last_sys )
-            end
-            for i = 1, 15 do
-                fleetE[#fleetE + 1] = pilot.add( "Empire Lancelot", "Empire", mem.last_sys )
-            end
+         -- Create big battle
+         fleetE = {}
+         fleetC = {}
+         droneC = {}
+         local fleetCpos = vec2.new(0, 0)
+         local fleetEpos = jump.get( system.cur(), mem.last_sys ):pos()
+         mem.deathsC = 0
 
-            fleetC[#fleetC + 1] = pilot.add( "Goddard", "Empire", fleetCpos, _("Starfire"), {ai="collective"} )
-            hook.pilot(fleetC[#fleetC], "death", "col_dead")
-            fleetC[#fleetC]:setNoDisable()
-            fleetC[#fleetC]:setFaction( "Collective" )
-            if var.peek("trinity") then
-                fleetC[#fleetC + 1] = pilot.add( "Empire Hawking", "Empire", fleetCpos + vec2.new(300, 0), _("ESS Trinity") )
-                hook.pilot(fleetC[#fleetC], "death", "col_dead")
-                fleetC[#fleetC]:setNoDisable()
-                fleetC[#fleetC]:setFaction( "Collective" )
+         local emp_boss = pilot.add( "Empire Peacemaker", "Empire", mem.last_sys )
+         setup_pilot( emp_boss, fleetCpos )
+         table.insert( fleetE, emp_boss )
+         local h1 = pilot.add( "Empire Hawking", "Empire", mem.last_sys )
+         h1:setLeader( emp_boss )
+         setup_pilot( h1, fleetCpos )
+         table.insert( fleetE, h1 )
+         local h2 = pilot.add( "Empire Hawking", "Empire", mem.last_sys )
+         h2:setLeader( emp_boss )
+         setup_pilot( h2, fleetCpos )
+         table.insert( fleetE, h2 )
+         for i=1,6 do
+            local boss = pilot.add( "Empire Pacifier", "Empire", mem.last_sys )
+            for j=1,3 do
+               local f = pilot.add( "Empire Lancelot", "Empire", mem.last_sys )
+               f:setLeader( boss )
+               table.insert( fleetE, f )
             end
-            droneC = {}
-            for i = 1, 60 do
-                local pos = fleetCpos + vec2.new(rnd.rnd(-10000, 10000), rnd.rnd(-10000, 10000))
-                if i <= 10 then
-                    droneC[#droneC + 1] = pilot.add( "Heavy Drone", "Collective", pos, _("Collective Heavy Drone") )
-                else
-                    droneC[#droneC + 1] = pilot.add( "Drone", "Collective", pos, _("Collective Drone") )
-                end
-            end
+            setup_pilot( boss, fleetCpos )
+            table.insert( fleetE, boss )
+         end
 
-            for _, j in ipairs(fleetE) do
-                j:changeAI("empire_idle")
-                j:setVisible()
+         local starfire = pilot.add( "Goddard", "Collective", fleetCpos, _("Starfire"), {naked=true, ai="collective_norun"} )
+         equipopt.empire( starfire )
+         starfire:setNoDisable()
+         starfire:setVisible()
+         starfire:setHilight()
+         setup_pilot( starfire, fleetEpos )
+         hook.pilot(starfire, "death", "col_dead")
+         table.insert( fleetC, starfire )
+         if var.peek("trinity") then
+            local trinity = pilot.add( "Empire Hawking", "Collective", fleetCpos + vec2.new(300, 0), _("ESS Trinity"), {naked=true, ai="collective_norun"} )
+            equipopt.empire( trinity )
+            trinity:setNoDisable()
+            trinity:setHilight()
+            setup_pilot( trinity, fleetEpos )
+            hook.pilot(trinity, "death", "col_dead")
+            table.insert( fleetC, trinity )
+         end
+         droneC = {}
+         for i=1,6 do
+            local pos = fleetCpos + vec2.newP( 10e3*rnd.rnd(), rnd.angle() )
+            local bossdrone = pilot.add( "Heavy Drone", "Collective", pos, _("Collective Heavy Drone"), {ai="collective_norun"} )
+            for j=1,5 do
+               local d = pilot.add( "Drone", "Collective", pos+vec2.newP(100+100*rnd.rnd(), rnd.angle()), _("Collective Drone"), {ai="collective_norun"} )
+               d:setLeader( bossdrone )
+               setup_pilot( d, fleetEpos )
+               table.insert( droneC, d )
             end
+            setup_pilot( bossdrone, fleetEpos )
+            table.insert( droneC, bossdrone )
+         end
+         for i=1,5 do
+            local pos = fleetCpos + vec2.newP( 300+200*rnd.rnd(), rnd.angle() )
+            local d = pilot.add( "Heavy Drone", "Collective", pos, _("Collective Heavy Drone"), {ai="collective_norun"} )
+            d:setLeader( starfire )
+         end
+         for i=1,25 do
+            local pos = fleetCpos + vec2.newP( 300+200*rnd.rnd(), rnd.angle() )
+            local d = pilot.add( "Drone", "Collective", pos, _("Collective Drone"), {ai="collective_norun"} )
+            d:setLeader( starfire )
+         end
 
-            for _, j in ipairs(fleetC) do
-                j:changeAI("collective_norun")
-                j:setVisible()
-                j:setHilight()
-            end
-            for _, j in ipairs(droneC) do
-                j:changeAI("collective_norun")
-                j:setVisible()
-            end
+         for _, j in ipairs(fleetE) do
+            j:setFriendly(true)
+         end
 
-            fleetE[1]:broadcast(_("To all pilots, this is mission control! We are ready to begin our attack! Engage at will!"))
-            misn.osdActive(2)
-            mem.misn_stage = 1
-        else
-            misn.osdActive(1)
-            mem.misn_stage = 0
-        end
-    elseif mem.misn_stage == 1 and system.cur() ~= misn_final_sys then
-        pilot.clear()
-        pilot.toggleSpawn(false)
-        mem.misn_stage = 0
-        diff.apply("collective_dead")
-        hook.timer( 4.0, "fail_timer" )
-    end
+         emp_boss:broadcast(_("To all pilots, this is mission control! We are ready to begin our attack! Engage at will!"))
+         misn.osdActive(2)
+         mem.misn_stage = 1
+      else
+         misn.osdActive(1)
+         mem.misn_stage = 0
+      end
+   elseif mem.misn_stage == 1 and system.cur() ~= misn_final_sys then
+      pilot.clear()
+      pilot.toggleSpawn(false)
+      mem.misn_stage = 0
+      diff.apply("collective_dead")
+      hook.timer( 4.0, "fail_timer" )
+   end
 end
 
 
 function fail_timer ()
    tk.msg( _("Cowardly Behavior"), _([[You receive a message signed by Commodore Keer:
-    "There is no room for cowards in the Empire's fleet."
-    The signature does seem valid.]]) )
+"There is no room for cowards in the Empire's fleet."
+The signature does seem valid.]]) )
    emp.addCollectiveLog( _([[You abandoned your mission to help the Empire destroy the Collective. Commander Keer transmitted a message: "There is no room for cowards in the Empire's fleet."]]) )
    misn.finish( true )
 end
@@ -196,17 +227,12 @@ end
 
 local function addRefuelShip ()
    -- Create the pilot
-   refship = pilot.add( "Empire Rainmaker", "Empire", mem.last_sys, _("Fuel Tanker"), {ai="empire_refuel"} )
+   refship = pilot.add( "Empire Rainmaker", "Empire", mem.last_sys, _("Fuel Tanker"), {ai="empire_refuel", naked=true} )
+   equipopt.empire( refship, {fuel=1000} ) -- max fuel!
    refship:setFriendly()
    refship:setVisplayer()
    refship:setHilight()
    refship:setNoJump()
-
-   -- Maximize fuel
-   refship:outfitRm("all") -- Only will have fuel pods
-   local _w, _u, s = refship:ship():slots()
-   refship:outfitAdd( "Large Fuel Pod", s )
-   refship:setFuel( true ) -- Set fuel to max
 
    -- Add some escorts
    refesc = {}
@@ -217,19 +243,26 @@ local function addRefuelShip ()
    end
 
    -- Broadcast spam
-   hook.timer(10.0, "refuelBroadcast")
+   hook.timer(15.0, "refuelBroadcast")
 end
 
 
 -- Handles collective death
 function col_dead( _victim )
-    mem.deathsC = mem.deathsC + 1
-    if var.peek("trinity") and mem.deathsC < 2 then
-        return
-    end
-    misn.osdActive(3)
-    addRefuelShip()
-    mem.misn_stage = 4
+   mem.deathsC = mem.deathsC + 1
+   if var.peek("trinity") and mem.deathsC < 2 then
+      return
+   end
+   misn.osdActive(3)
+   addRefuelShip()
+   mem.misn_stage = 4
+
+   -- Change back to normal AI
+   for k,v in ipairs(fleetE) do
+      if v:exists() then
+         v:changeAI( "empire" )
+      end
+   end
 end
 
 

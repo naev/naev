@@ -42,6 +42,7 @@
 #define SPOB_NOMISNSPAWN (1<<2) /**< No missions spawn nor trigger on this spob. */
 #define SPOB_UNINHABITED (1<<3) /**< Force spob to be uninhabited. */
 #define SPOB_MARKED      (1<<4) /**< Spob is marked. */
+#define SPOB_NOLANES     (1<<5) /**< Spob doesn't connect with lanes. */
 #define SPOB_RADIUS      (1<<10) /**< Spob has radius defined. */
 #define spob_isFlag(p,f)    ((p)->flags & (f)) /**< Checks spob flag. */
 #define spob_setFlag(p,f)   ((p)->flags |= (f)) /**< Sets a spob flag. */
@@ -183,6 +184,7 @@ typedef struct SystemPresence_ {
 #define JP_KNOWN        (1<<1) /**< Jump point is known. */
 #define JP_HIDDEN       (1<<2) /**< Jump point is hidden. */
 #define JP_EXITONLY     (1<<3) /**< Jump point is exit only */
+#define JP_NOLANES      (1<<4) /**< Jump point doesn't create lanes. */
 #define jp_isFlag(j,f)    ((j)->flags & (f)) /**< Checks jump flag. */
 #define jp_setFlag(j,f)   ((j)->flags |= (f)) /**< Sets a jump flag. */
 #define jp_rmFlag(j,f)    ((j)->flags &= ~(f)) /**< Removes a jump flag. */
@@ -238,8 +240,8 @@ struct StarSystem_ {
    /* General. */
    char* name;             /**< star system name */
    vec2 pos;               /**< Position */
-   int stars;              /**< Amount of "stars" it has. */
-   double interference;    /**< in % @todo implement interference. */
+   int spacedust;          /**< Amount of "space dust" it has. */
+   double interference;    /**< Modifies global ew with a factor of 1/(1+interference/100). So 100 would half visibility. */
    double nebu_hue;        /**< Hue of the nebula (0. - 1.) */
    double nebu_density;    /**< Nebula density (0. - 1000.) */
    double nebu_volatility; /**< Damage per second. */
@@ -309,8 +311,8 @@ Spob *spob_new (void);
 const char *spob_name( const Spob *p );
 int spob_luaInit( Spob *spb );
 void spob_gfxLoad( Spob *p );
-int spob_hasSystem( const char* spobname );
-char* spob_getSystem( const char* spobname );
+int spob_hasSystem( const Spob *spb );
+const char* spob_getSystem( const char* spobname );
 Spob* spob_getAll (void);
 Spob* spob_get( const char* spobname );
 Spob* spob_getIndex( int ind );
@@ -331,6 +333,7 @@ int spob_setFaction( Spob *p, int faction );
 int spob_addCommodity( Spob *p, Commodity *c );
 int spob_addService( Spob *p, int service );
 int spob_rmService( Spob *p, int service );
+int spob_rename( Spob *p, char *newname );
 /* Land related stuff. */
 char spob_getColourChar( const Spob *p );
 const char *spob_getSymbol( const Spob *p );
@@ -407,7 +410,7 @@ StarSystem* system_get( const char* sysname );
 StarSystem* system_getIndex( int id );
 int system_index( const StarSystem *sys );
 int space_sysReachable( const StarSystem *sys );
-int space_sysReallyReachable( char* sysname );
+int space_sysReallyReachable( const char* sysname );
 int space_sysReachableFromSys( const StarSystem *target, const StarSystem *sys );
 char** space_getFactionSpob( int *factions, int landable );
 const char* space_getRndSpob( int landable, unsigned int services,
@@ -428,6 +431,7 @@ int system_hasSpob( const StarSystem *sys );
 /*
  * Hyperspace.
  */
+int space_jumpDistance( const Pilot *p, const JumpPoint *jp );
 int space_canHyperspace( const Pilot *p);
 int space_hyperspace( Pilot *p );
 int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, vec2 *pos, vec2 *vel, double *dir, const Pilot *p );

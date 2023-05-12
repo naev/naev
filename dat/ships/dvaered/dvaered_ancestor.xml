@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Dvaered Ancestor">
+ <lua>ships/lua/dvaered.lua</lua>
  <points>40</points>
  <base_type>Ancestor</base_type>
  <GFX size="65">ancestor_dvaered</GFX>
  <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Bomber</class>
  <price>550000</price>

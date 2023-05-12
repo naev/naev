@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Pirate's Cove">
+ <lua>spob/lua/pirate_clanworld.lua</lua>
+ <pos x="-123.975989" y="-3195.776183"/>
+ <GFX>
+  <space>moon-M06.webp</space>
+  <exterior>citadel.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Pirate</faction>
+  <base>200.000000</base>
+  <bonus>120.000000</bonus>
+  <range>4</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>100000</population>
+  <hide>0.200000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+   <blackmarket/>
+  </services>
+  <commodities/>
+  <description>Tucked away in the shadow of P-8493, Pirate's Cove is a den of swashbucklers and independent privateers from the southern region of Sirius Space. Not directly affiliated with any of the main pirate clans, the place is a chaotic mess where strength and cunning is the rule of law. The inhabitants live in a sprawling construction extending from the space port, full of small winding paths resembling a labyrinth more than a city. The constant electromagnetic interference from all the devices makes it so one can not rely on advanced navigation hardware, and it all comes down to memorization and use of crude maps. Outside the sprawling city, the planet is lush and wild, home to hundreds if not thousands of illegally obtained species that have escaped or been released. It is rumoured that some man-eating beasts also lurk in the forests, but people disappearing through misfortunes and murders is a more likely explanation.</description>
+  <bar>The adeptly named bar the Cove is located directly under the spaceport landing pads in a naturally formed cave. The owner has made some attempts to insulate it from the noise of constant pounding of ships landing and taking off to mixed success, however, most of the patrons do not seem to care much. The place is boisterous with constant fights breaking out and drunks passing out here and there, which surprisingly does not seem to phase the more hardened locals who are used to this sort of life. Other than the ever popular homebrewn grogs, the Cove is also famous for its fish and chips, although its better not to ask where the fish are being caught.</bar>
+ </general>
+ <tech>
+  <item>Pirate Ships</item>
+  <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Ion 1</item>
+  <item>Ion 2</item>
+  <item>Ion 3</item>
+  <item>Missiles 1</item>
+  <item>Hulls Low</item>
+  <item>Hulls Medium</item>
+  <item>Engines Low</item>
+  <item>Engines Medium</item>
+  <item>Systems Low</item>
+  <item>Systems Medium</item>
+  <item>Pirate Maps</item>
+  <item>Pirate Elite Outfits</item>
+  <item>Criminal Outfits</item>
+ </tech>
+ <tags>
+  <tag>criminal</tag>
+ </tags>
+</spob>

@@ -28,7 +28,7 @@ starfield.stars = {
 
 local starfield_frag = lf.read('bkg/shaders/starfield.frag')
 
-local cvs, texw, texh, nw, nh -- For static shader
+local cvs, texw, texh -- For static shader
 local shader, sstarfield, sf, sz, sb -- For dynamic shader
 
 local function star_add( added, num_added )
@@ -127,11 +127,11 @@ function starfield.init( params )
    shader = lg.newShader( string.format(starfield_frag, motionblur, rx, ry, rz, theta, phi, psi), love_shaders.vertexcode )
 
    if static then
-      nw, nh = gfx.dim()
       if params.size then
          texw = params.size
          texh = params.size
       else
+         local nw, nh = gfx.dim()
          texw = nw
          texh = nh
          local texs = 4096 / math.max( texw, texh )

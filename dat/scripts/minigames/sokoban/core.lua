@@ -378,7 +378,7 @@ function sokoban.draw()
    end
 
    local cy = y + h + 20
-   local controls = _("#barrow keys#0: move, #bz#0/#by#0/#br#0: undo/redo/restart, #bq#0: abort")
+   local controls = _("#barrow keys#0: move, #bz#0: undo, #by#0: redo, #br#0: restart, #bq#0: abort")
    local cw = lg.getFont():getWidth( controls ) + 10
    naev.gfx.clearDepth()
    setcol{ 0, 0, 0 }

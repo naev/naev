@@ -2,11 +2,12 @@
 <ssys name="Sigur">
  <general>
   <radius>28000.000000</radius>
-  <stars>400</stars>
-  <interference>30.434800</interference>
+  <spacedust>400</spacedust>
+  <interference>68.478300</interference>
   <nebula volatility="0.000000">300.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="359.000000" y="90.000000"/>
+ <pos x="389.157474" y="-202.803721"/>
  <spobs>
   <spob_virtual>Empire Unpresence</spob_virtual>
   <spob_virtual>Independent All Unpresence</spob_virtual>
@@ -25,4 +26,7 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

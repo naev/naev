@@ -21,9 +21,11 @@ local trader, attAttHook, defAttHook, hailhook, jumphook
 local reward
 local finvader, flocal
 
--- luacheck: globals attack attackerAttacked attackerDeath begin defenderAttacked defenderDeath defense hail hailagain hailme leave merchant startBattleIfReady (Hook functions passed by name)
-
 function create ()
+   -- Doesn't pilot.clear so inclusive claim
+   if not evt.claim( system.cur(), true ) then
+      evt.finish( false )
+   end
    source_system = system.cur()
    jumphook = hook.jumpin("begin")
    hook.land("leave")
@@ -153,10 +155,12 @@ local function getLeader(list)
    local p = chooseInList(list)
    if p == nil or not p:exists() then
       return nil
-   elseif p:leader() == nil or not p:leader():exists() then
+   end
+   local l = p:leader()
+   if l==nil then
       return p
    else
-      return p:leader()
+      return l
    end
 end
 

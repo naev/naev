@@ -2,11 +2,11 @@
 <ssys name="Fury">
  <general>
   <radius>17500.000000</radius>
-  <stars>140</stars>
-  <interference>11.111111</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>140</spacedust>
+  <interference>25.000000</interference>
+  <nolanes/>
  </general>
- <pos x="98.481300" y="236.146136"/>
+ <pos x="91.638645" y="533.481155"/>
  <spobs>
   <spob>Fury I</spob>
  </spobs>

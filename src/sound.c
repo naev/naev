@@ -58,8 +58,7 @@
 #include "nlua_spfx.h"
 
 #define SOUND_FADEOUT         100
-#define SOUND_VOICES          128   /**< Maximum number of simultaneous sounds to play, must be at least 16. */
-#define SOUND_BUFFER_SIZE     128   /**< Size of the buffer (in KiB) to use for music. */
+#define SOUND_VOICES           64   /**< Maximum number of simultaneous sounds to play, must be at least 16. */
 
 #define SOUND_SUFFIX_WAV   ".wav" /**< Suffix of sounds. */
 #define SOUND_SUFFIX_OGG   ".ogg" /**< Suffix of sounds. */
@@ -293,23 +292,14 @@ ov_callbacks sound_al_ovcall_noclose = {
  */
 static int sound_al_init (void)
 {
-   int ret;
+   int ret, nattribs = 0;
    ALuint s;
-   ALint freq;
-   ALint attribs[6] = { 0, 0, 0, 0, 0, 0 };
+   ALint attribs[10] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
    /* Default values. */
    ret = 0;
 
-   /* Log verbosity (if not specified). */
-#if DEBUG_PARANOID
-   nsetenv( "ALSOFT_LOGLEVEL", "3", 0 );
-   nsetenv( "ALSOFT_TRAP_AL_ERROR", "1", 0 );
-#elif DEBUGGING
-   nsetenv( "ALSOFT_LOGLEVEL", "2", 0 );
-#endif
-
-   /* we'll need a mutex */
+   /* We'll need a mutex */
    sound_lock = SDL_CreateMutex();
    soundLock();
 
@@ -321,12 +311,20 @@ static int sound_al_init (void)
       goto snderr_dev;
    }
 
+   /* Set good default for sources. */
+   attribs[0] = ALC_MONO_SOURCES;
+   attribs[1] = 256;
+   attribs[2] = ALC_STEREO_SOURCES;
+   attribs[3] = 16;
+   nattribs = 4;
+
    /* Query EFX extension. */
    if (conf.al_efx) {
       al_info.efx = alcIsExtensionPresent( al_device, "ALC_EXT_EFX" );
       if (al_info.efx == AL_TRUE) {
-         attribs[0] = ALC_MAX_AUXILIARY_SENDS;
-         attribs[1] = 4;
+         attribs[nattribs+0] = ALC_MAX_AUXILIARY_SENDS;
+         attribs[nattribs+1] = 4;
+         nattribs += 2;
       }
    }
    else
@@ -335,8 +333,9 @@ static int sound_al_init (void)
    /* Check more extensions. */
    al_info.output_limiter = alcIsExtensionPresent( al_device, "ALC_SOFT_output_limiter" );
    if (al_info.output_limiter) {
-      attribs[2] = ALC_OUTPUT_LIMITER_SOFT;
-      attribs[3] = ALC_TRUE;
+      attribs[nattribs+0] = ALC_OUTPUT_LIMITER_SOFT;
+      attribs[nattribs+1] = ALC_TRUE;
+      nattribs += 2;
    }
 
    /* Create the OpenAL context */
@@ -366,7 +365,9 @@ static int sound_al_init (void)
    }
 
    /* Get context information. */
-   alcGetIntegerv( al_device, ALC_FREQUENCY, sizeof(freq), &freq );
+   alcGetIntegerv( al_device, ALC_FREQUENCY, 1, &al_info.freq );
+   alcGetIntegerv( al_device, ALC_MONO_SOURCES, 1, &al_info.nmono );
+   alcGetIntegerv( al_device, ALC_STEREO_SOURCES, 1, &al_info.nstereo );
 
    /* Try to enable EFX. */
    if (al_info.efx == AL_TRUE) {
@@ -456,7 +457,6 @@ static int sound_al_init (void)
 
    /* Set up how sound works. */
    alDistanceModel( AL_INVERSE_DISTANCE_CLAMPED ); /* Clamping is fundamental so it doesn't sound like crap. */
-   alDopplerFactor( 1. );
    sound_env( SOUND_ENV_NORMAL, 0. );
 
    /* Check for errors. */
@@ -466,7 +466,7 @@ static int sound_al_init (void)
    soundUnlock();
 
    /* debug magic */
-   DEBUG(_("OpenAL started: %d Hz"), freq);
+   DEBUG(_("OpenAL started: %d Hz"), al_info.freq);
    DEBUG(_("Renderer: %s"), alGetString(AL_RENDERER));
    if (al_info.efx)
       DEBUG(_("Version: %s with EFX %d.%d"), alGetString(AL_VERSION),
@@ -1577,6 +1577,7 @@ void sound_speedGroup( int group, int enable )
  */
 void sound_volumeGroup( int group, double volume )
 {
+   double v;
    alGroup_t *g;
 
    if (sound_disabled)
@@ -1587,6 +1588,15 @@ void sound_volumeGroup( int group, double volume )
       return;
 
    g->volume = volume;
+
+   soundLock();
+   v = svolume * g->volume;
+   if (g->speed)
+      v *= svolume_speed;
+   for (int j=0; j<g->nsources; j++)
+      alSourcef( g->sources[j], AL_GAIN, v );
+   al_checkErr();
+   soundUnlock();
 }
 
 /**
@@ -1651,6 +1661,7 @@ int sound_env( SoundEnv_t env_type, double param )
       case SOUND_ENV_NORMAL:
          /* Set global parameters. */
          alSpeedOfSound( 3433. );
+         alDopplerFactor( 0.3 );
 
          if (al_info.efx == AL_TRUE) {
             /* Disconnect the effect. */
@@ -1667,6 +1678,7 @@ int sound_env( SoundEnv_t env_type, double param )
 
          /* Set global parameters. */
          alSpeedOfSound( 3433./(1. + f*2.) );
+         alDopplerFactor( 1.0 );
 
          if (al_info.efx == AL_TRUE) {
             if (al_info.efx_reverb == AL_TRUE) {
@@ -1898,7 +1910,7 @@ static int al_loadWav( ALuint *buf, SDL_RWops *rw )
    soundUnlock();
 
    /* Clean up. */
-   free( wav_buffer );
+   SDL_FreeWAV( wav_buffer );
    return 0;
 }
 
@@ -2084,7 +2096,7 @@ static void al_volumeUpdate (void)
    soundUnlock();
 
    /* Do special effects. */
-   spfxL_setSpeedVolume( svolume_speed );
+   spfxL_setSpeedVolume( svolume * svolume_speed );
 }
 
 /**

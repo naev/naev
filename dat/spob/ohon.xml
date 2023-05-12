@@ -7,8 +7,8 @@
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>2</range>
  </presence>
  <general>
@@ -24,7 +24,7 @@
    <outfits/>
   </services>
   <commodities/>
-  <description>Ohon is far from Mutris, but the hearts of its people are not. As devout as Sirians come, they labour in Sirichana's name and never miss a prayer.</description>
+  <description>Ohon was a quiet mainly residential world, mainly cattering to the Shaira echelon, and accomadating many of the touched after their visit to Mutris where they can continue their religious practices. When the Incident struck, many refugees fled from the Nebula towards House Sirius territory. The Arch-Canters decided to focus the refugees on Ohon, while trying to make more permanent accomodations. What was meant to be temporary became somewhat permanent, and Ohon still has large districts of slums accomodating refugees. While many do go on to become Touched and begin their pilgrimage to Mutris, even more continue to survive on Ohon.</description>
   <bar>The bar is fairly tidy. It doubles as a small place of worship for Sirian spacers who haven't got time to travel to the urban centres and still want to practise their spirituality.</bar>
  </general>
  <tech>
@@ -37,4 +37,7 @@
   <item>Basic Outfits 1</item>
   <item>Star Maps</item>
  </tech>
+ <tags>
+  <tag>refugee</tag>
+ </tags>
 </spob>

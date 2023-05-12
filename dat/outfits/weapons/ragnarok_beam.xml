@@ -20,8 +20,8 @@
   <heatup>60</heatup>
   <damage>
    <type>normal</type>
-   <penetrate>72</penetrate>
-   <physical>144</physical>
+   <penetrate>100</penetrate>
+   <physical>152</physical>
   </damage>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>

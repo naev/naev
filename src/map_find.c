@@ -578,15 +578,15 @@ static char **map_fuzzyOutfits( Outfit **o, const char *name )
 
    /* Do fuzzy search. */
    for (int i=0; i<array_size(o); i++) {
-      if (strcasestr( _(o[i]->name), name ) != NULL)
+      if (SDL_strcasestr( _(o[i]->name), name ) != NULL)
          array_push_back( &names, o[i]->name );
-      else if ((o[i]->typename != NULL) && strcasestr( o[i]->typename, name ) != NULL)
+      else if ((o[i]->typename != NULL) && SDL_strcasestr( o[i]->typename, name ) != NULL)
          array_push_back( &names, o[i]->name );
-      else if ((o[i]->condstr != NULL) && strcasestr( o[i]->condstr, name ) != NULL)
+      else if ((o[i]->condstr != NULL) && SDL_strcasestr( o[i]->condstr, name ) != NULL)
          array_push_back( &names, o[i]->name );
-      else if (strcasestr( o[i]->description, name ) != NULL)
+      else if (SDL_strcasestr( outfit_description(o[i]), name ) != NULL)
          array_push_back( &names, o[i]->name );
-      else if (strcasestr( o[i]->desc_short, name ) != NULL)
+      else if (SDL_strcasestr( outfit_summary(o[i], 0), name ) != NULL)
          array_push_back( &names, o[i]->name );
    }
 
@@ -675,7 +675,7 @@ static void map_showOutfitDetail( unsigned int wid, const char* wgtname, int x, 
 
    window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 128, 128 );
    l = outfit_getNameWithClass( outfit, buf, sizeof(buf) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", outfit->desc_short );
+   l += scnprintf( &buf[l], sizeof(buf)-l, " %s", pilot_outfitSummary( player.p, outfit, 0 ) );
    window_modifyText( wid, "txtDescShort", buf );
    th = gl_printHeightRaw( &gl_smallFont, 280, buf );
 
@@ -684,7 +684,7 @@ static void map_showOutfitDetail( unsigned int wid, const char* wgtname, int x, 
    else if (outfit_isFighterBay(outfit))
       mass += outfit_amount(outfit) * outfit->u.bay.ship_mass;
 
-   window_modifyText( wid, "txtDescription", _(outfit->description) );
+   window_modifyText( wid, "txtDescription", pilot_outfitDescription( player.p, outfit ) );
    credits2str( buf_price, outfit->price, 2 );
    credits2str( buf_money, player.p->credits, 2 );
    tonnes2str( buf_mass, (int)round( mass ) );
@@ -808,15 +808,15 @@ static char **map_fuzzyShips( Ship **s, const char *name )
 
    /* Do fuzzy search. */
    for (int i=0; i<array_size(s); i++) {
-      if (strcasestr( _(s[i]->name), name ) != NULL)
+      if (SDL_strcasestr( _(s[i]->name), name ) != NULL)
          array_push_back( &names, s[i]->name );
-      else if ((s[i]->license != NULL) && strcasestr( _(s[i]->license), name ) != NULL)
+      else if ((s[i]->license != NULL) && SDL_strcasestr( _(s[i]->license), name ) != NULL)
          array_push_back( &names, s[i]->name );
-      else if (strcasestr( _(ship_classDisplay( s[i] )), name ) != NULL)
+      else if (SDL_strcasestr( _(ship_classDisplay( s[i] )), name ) != NULL)
          array_push_back( &names, s[i]->name );
-      else if (strcasestr( _(s[i]->fabricator), name ) != NULL)
+      else if (SDL_strcasestr( _(s[i]->fabricator), name ) != NULL)
          array_push_back( &names, s[i]->name );
-      else if (strcasestr( _(s[i]->description), name ) != NULL)
+      else if (SDL_strcasestr( _(s[i]->description), name ) != NULL)
          array_push_back( &names, s[i]->name );
    }
 

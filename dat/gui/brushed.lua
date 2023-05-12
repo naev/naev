@@ -12,7 +12,7 @@ local fields_w, fields_x, fields_y, nav_spob, nav_pnt, popup_right_x, popup_righ
 local target_image_w, ta_flt_pane_x
 -- This script has a lot of globals. It really loves them.
 -- The below variables aren't part of the GUI API and aren't accessed via _G:
--- luacheck: globals autonav_hyp autonav_jumps bar_bg bar_frame bar_frame_light bar_light bar_lock bars button_disabled button_hilighted button_mouseover button_normal button_pressed buttontypes cargo circle_h circle_w col_ammo col_heat col_lgray col_stress col_text col_top_ammo col_top_heat col_top_stress col_unkn cooldown_omsg end_right end_right_h end_right_w ext_right field_bg_center field_bg_left field_bg_right field_frame_center field_frame_left field_frame_right field_h field_w first_time fleet_pane_b fleet_pane_m fleet_pane_t icon_autonav icon_beam icon_h icon_lockon icon_lockon2 icon_missile icon_money icon_nav_target icon_outfit icon_pnt_target icon_projectile icon_refire icon_w icon_weapon1 icon_weapon2 left_side_h left_side_w lmouse main mesg_w mesg_x mesg_y nav_hyp navstring planet_bg planet_pane_b planet_pane_m planet_pane_t pl_speed_x pl_speed_y pntflags popup_body popup_bottom popup_bottom2 popup_bottom_side_left popup_empty popup_left_x popup_left_y popup_pilot popup_right_x popup_right_y popup_top question question_h question_w right_side_x services smallfont_h speed_light speed_light_double speed_light_off stats ta_dir ta_flt_pane_h ta_flt_pane_h_b ta_flt_pane_h_m ta_flt_pane_w ta_flt_pane_w_b ta_flt_pane_w_m ta_flt_pane_y ta_gfx ta_gfx_draw_h ta_gfx_draw_w ta_pnt_center_x ta_pnt_center_y ta_pnt_faction_gfx ta_pnt_fact_x ta_pnt_fact_y ta_pnt_gfx ta_pnt_gfx_draw_h ta_pnt_gfx_draw_w ta_pnt_gfx_h ta_pnt_gfx_w ta_pnt_image_x ta_pnt_image_y ta_pnt_pane_h_b ta_pnt_pane_h_m ta_pnt_pane_w_b ta_pnt_pane_w_m target_bg target_frame target_image_h target_image_x target_image_y ta_stats ta_sx ta_sy tbar_left_h tbar_left_w tbar_right_h tbar_right_w tbar_w top_bar top_bar_center top_bar_left top_bar_right top_icon weapbars x_dist x_name x_speed y_dist y_name y_speed
+-- luacheck: globals autonav_hyp autonav_jumps bar_bg bar_frame bar_frame_light bar_light bar_lock bars button_disabled button_hilighted button_mouseover button_normal button_pressed buttontypes cargo circle_h circle_w col_ammo col_heat col_lgray col_stress col_text col_top_ammo col_top_heat col_top_stress col_unkn end_right end_right_h end_right_w ext_right field_bg_center field_bg_left field_bg_right field_frame_center field_frame_left field_frame_right field_h field_w first_time fleet_pane_b fleet_pane_m fleet_pane_t icon_autonav icon_beam icon_h icon_lockon icon_lockon2 icon_missile icon_money icon_nav_target icon_outfit icon_pnt_target icon_projectile icon_refire icon_w icon_weapon1 icon_weapon2 left_side_h left_side_w lmouse main mesg_w mesg_x mesg_y nav_hyp navstring planet_bg planet_pane_b planet_pane_m planet_pane_t pl_speed_x pl_speed_y pntflags popup_body popup_bottom popup_bottom2 popup_bottom_side_left popup_empty popup_left_x popup_left_y popup_pilot popup_right_x popup_right_y popup_top question question_h question_w right_side_x services smallfont_h speed_light speed_light_double speed_light_off stats ta_dir ta_flt_pane_h ta_flt_pane_h_b ta_flt_pane_h_m ta_flt_pane_w ta_flt_pane_w_b ta_flt_pane_w_m ta_flt_pane_y ta_gfx ta_gfx_draw_h ta_gfx_draw_w ta_pnt_center_x ta_pnt_center_y ta_pnt_faction_gfx ta_pnt_fact_x ta_pnt_fact_y ta_pnt_gfx ta_pnt_gfx_draw_h ta_pnt_gfx_draw_w ta_pnt_gfx_h ta_pnt_gfx_w ta_pnt_image_x ta_pnt_image_y ta_pnt_pane_h_b ta_pnt_pane_h_m ta_pnt_pane_w_b ta_pnt_pane_w_m target_bg target_frame target_image_h target_image_x target_image_y ta_stats ta_sx ta_sy tbar_left_h tbar_left_w tbar_right_h tbar_right_w tbar_w top_bar top_bar_center top_bar_left top_bar_right top_icon weapbars x_dist x_name x_speed y_dist y_name y_speed
 -- Unfortunately, it is an error to make any function a closure over more than 60 variables.
 -- Caution: the below **are** accessed via _G. So are others, which are both set and read exclusively via _G.
 -- luacheck: globals armour energy fuel shield (_G[v])
@@ -427,9 +427,20 @@ end
 function update_system()
 end
 
-local effects
+local effects = {}
 function update_effects()
-   effects = pp:effectGet()
+   effects = {}
+   local effects_added = {}
+   for k,e in ipairs(pp:effectGet()) do
+      local a = effects_added[ e.name ]
+      if not a then
+         a = #effects+1
+         effects[ a ] = e
+         e.n = 0
+         effects_added[ e.name ] = a
+      end
+      effects[ a ].n = effects[ a ].n + 1
+   end
 end
 
 local function renderBar( name, value, light, locked, prefix, mod_x, mod_y, heat, stress )
@@ -887,6 +898,9 @@ function render( _dt )
    local ex, ey = sysx-60, sysy+20
    for k,e in ipairs(effects) do
       gfx.renderTexRaw( e.icon, ex, ey, 32, 32 )
+      if e.n > 1 then
+         gfx.print( true, tostring(e.n), ex+24, ey+24, col_text )
+      end
       ex = ex - 48
    end
 
@@ -1064,21 +1078,22 @@ function mouse_move( x, y )
 end
 
 function actions.missions()
-   gui.menuInfo( "missions" )
+   naev.menuInfo( "missions" )
 end
 
 function actions.cargo()
-   gui.menuInfo( "cargo" )
+   naev.menuInfo( "cargo" )
 end
 
 function actions.ship()
-   gui.menuInfo( "ship" )
+   naev.menuInfo( "ship" )
 end
 
 function actions.weapons()
-   gui.menuInfo( "weapons" )
+   naev.menuInfo( "weapons" )
 end
 
+local cooldown_omsg
 function render_cooldown( _percent, seconds )
    local msg = _("Cooling down...\n%.1f seconds remaining"):format( seconds )
    local fail = true
@@ -1092,7 +1107,7 @@ function render_cooldown( _percent, seconds )
    end
 end
 
-function end_cooldown()
+function cooldown_end ()
    if cooldown_omsg ~= nil then
       player.omsgRm( cooldown_omsg )
       cooldown_omsg = nil

@@ -35,14 +35,14 @@ function cleanup( _p, _po )
    oshader:force_off()
 end
 
-function update( _p, po, dt )
+function update( p, po, dt )
    if not mem.timer then return end
    mem.timer = mem.timer - dt
    -- If active, we run until end
    if mem.active then
       oshader:update_on(dt)
       if mem.timer <= 0 then
-         mem.timer = cooldown
+         mem.timer = cooldown * p:shipstat("cooldown_mod",true)
          mem.active = false
          po:state( "cooldown" )
          po:progress(1)

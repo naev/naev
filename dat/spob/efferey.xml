@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Efferey">
+ <lua>spob/lua/pirate_clanworld.lua</lua>
  <pos x="1341.000000" y="967.000000"/>
  <GFX>
-  <space>000.webp</space>
+  <space>station-ring1.webp</space>
   <exterior>station00.webp</exterior>
  </GFX>
  <presence>
@@ -13,17 +14,18 @@
  </presence>
  <general>
   <class>2</class>
-  <population>1500</population>
-  <hide>1.000000</hide>
+  <population>6500</population>
+  <hide>0.800000</hide>
   <services>
    <land/>
    <refuel/>
    <missions/>
+   <commodity/>
    <outfits/>
    <blackmarket/>
   </services>
   <commodities/>
-  <description>Effetey's Efferey station is the southern most port of the Expanse in which you'll be able to refuel. Most of the pirate traffic from or to Vorca has to land here.</description>
+  <description>Effetey's Efferey station is the southern most port of the Tunnel in which allows refueling, and serves to expand the Raven clans influence in the southern systems. Despite being quite far away, nearly all the pirate traffic from and to the Black Lotus clan has to come through the station, making for lively exchanges and interactions.</description>
  </general>
  <tech>
   <item>Pirate Maps</item>
@@ -34,5 +36,6 @@
  </tech>
  <tags>
   <tag>criminal</tag>
+  <tag>station</tag>
  </tags>
 </spob>

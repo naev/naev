@@ -1,6 +1,6 @@
 [wrap-git]
 url = https://github.com/PhilipHazel/pcre2.git
-revision = pcre2-10.40
+revision = pcre2-10.42
 depth = 1
 
 patch_directory = pcre2

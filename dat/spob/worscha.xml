@@ -14,7 +14,7 @@
  </presence>
  <general>
   <class>M</class>
-  <population>2e+09</population>
+  <population>2e+07</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -32,7 +32,6 @@
  <tech>
   <item>Systems Low</item>
   <item>Hulls Medium</item>
-  <item>Laser 1</item>
   <item>Ion 2</item>
   <item>Basic Outfits 2</item>
   <item>Star Maps</item>

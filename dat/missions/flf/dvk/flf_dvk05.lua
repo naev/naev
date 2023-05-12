@@ -21,7 +21,7 @@ local fmt = require "format"
 local flf = require "missions.flf.flf_common"
 require "missions.flf.flf_pirates"
 
--- luacheck: globals enter land_flf leave misn_title pay_text setDescription (from base mission flf_pirates)
+-- luacheck: globals pay_text misn_title setDescription land_flf (inherited from mission above, TODO get rid of this hack)
 
 pay_text = {
    _([[Upon your return, Benito seems pleased to hear that the mission was successful. "Excellent," she says. "It's kind of an annoying detour, I know, but I appreciate your help very much. I'll try to have a better mission for you next time, eh?" You both grin and exchange some pleasantries before parting ways.]]),
@@ -62,7 +62,7 @@ function accept ()
 
       misn.setTitle( fmt.f( misn_title[mem.level], {sys=mem.missys} ) )
       mem.marker = misn.markerAdd( mem.missys, "high" )
-      misn.setReward( fmt.credits( mem.credits ) )
+      misn.setReward( mem.credits )
 
       mem.pirate_ships_left = 0
       mem.job_done = false

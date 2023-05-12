@@ -29,15 +29,12 @@ local reward = ant.rewards.ant02
 
 local returnpnt, returnsys = spob.getS("Antlejos V")
 
--- luacheck: globals land (Hook functions passed by name)
 
 function create ()
    if ant.datecheck() then misn.finish() end
 
-   mem.destpnt, mem.destsys = lmisn.getRandomSpobAtDistance( system.cur(), 5, 30, "Dvaered", true, function( _p )
-      -- TODO only look for industrial Dvaered planets
-      --return p:tags().industrial
-      return true
+   mem.destpnt, mem.destsys = lmisn.getRandomSpobAtDistance( system.cur(), 5, 30, "Dvaered", true, function( p )
+      return p:tags().industrial
    end )
    if not mem.destpnt then
       misn.finish()
@@ -77,7 +74,7 @@ function create ()
    misn.setTitle( _("Terraforming Antlejos") )
    misn.setDesc(fmt.f(_("Pick up the {cargo} at {pnt} in the {sys} system and deliver it to {retpnt}."),
       {cargo=cargo_name, pnt=mem.destpnt, sys=mem.destsys, retpnt=returnpnt}))
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.osdCreate(_("Terraforming Antlejos V"), {
       fmt.f(_("Pick up the {cargo} at {pnt} ({sys} system)"), {cargo=cargo_name, pnt=mem.destpnt, sys=mem.destsys}),
       fmt.f(_("Deliver the cargo to {pnt} ({sys} system)"), {pnt=returnpnt, sys=returnsys})

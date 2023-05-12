@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Kenvis">
+ <general>
+  <radius>15000.000000</radius>
+  <spacedust>400</spacedust>
+  <interference>0.000000</interference>
+ </general>
+ <pos x="335.876289" y="209.601477"/>
+ <spobs/>
+ <jumps>
+  <jump target="Qellan">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Tau Prime">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+ </jumps>
+</ssys>

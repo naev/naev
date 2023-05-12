@@ -26,17 +26,16 @@
    3) Taking off from Laars
    4) Land on Laars and get rewarded
 --]]
+-- luacheck: globals toocloseControl1 toocloseControl2 toocloseControl3 toocloseControl4 toocloseControl5 incomingControl1 incomingControl2 incomingControl3 incomingControl4 incomingControl5
 
 local fw = require "common.frontier_war"
 require "proximity"
 local portrait = require "portrait"
 local fmt = require "format"
+local cinema = require "cinema"
 
 local alpha, attackers, canland, controls, hamelsen, jules, spy, targpos, toldya, wrlrds -- Non-persistent state
 local StraferNspy, equipHyena, scheduleIncoming, spawn1Wrlrd, spawnAlpha, spawnBeta, strNpc -- Forward-declared functions
--- luacheck: globals beepMe checkClearance1 checkClearance2 checkClearance3 checkClearance4 checkClearance5 checkHamelsen deathOfStrafer flee hamelsenLanded imDoingNothing incomingHamelsen killerDied land loading message spawnControl spawnHam spawnKillers spawnWrlrd straferDied takeoff warlordTaunt (Hook functions passed by name)
--- luacheck: globals incomingControl1 incomingControl2 incomingControl3 incomingControl4 incomingControl5 toocloseControl1 toocloseControl2 toocloseControl3 toocloseControl4 toocloseControl5 (Dynamic proximity hooks)
--- luacheck: globals discussOff discussStr (NPC functions passed by name)
 
 message = fw.message -- common hooks
 
@@ -332,7 +331,7 @@ end
 
 -- Spawn one warlord
 function spawn1Wrlrd( origin )
-   wrlrds[mem.noWrlrd] = pilot.add( "Dvaered Goddard", "Warlords", origin, fw.lords[mem.noWrlrd] )
+   wrlrds[mem.noWrlrd] = pilot.add( "Dvaered Goddard", fw.fct_warlords(), origin, fw.lords[mem.noWrlrd] )
    wrlrds[mem.noWrlrd]:control()
 
    -- Decide if the Warlord will play at shooting at the player
@@ -410,23 +409,23 @@ local function incomingControl( self )
 end
 function incomingControl1()
    incomingControl( controls[1] )
-   hook.timer(0.5, "proximity", {anchor = controls[1], radius = 1000, funcname = ("checkClearance1")}) -- Just because I cannot pass an argument to proximity hooks :(
+   hook.timer(0.5, "proximity", {anchor = controls[1], radius = 1000, funcname = "checkClearance1"}) -- Just because I cannot pass an argument to proximity hooks :(
 end
 function incomingControl2()
    incomingControl( controls[2] )
-   hook.timer(0.5, "proximity", {anchor = controls[2], radius = 1000, funcname = ("checkClearance2")})
+   hook.timer(0.5, "proximity", {anchor = controls[2], radius = 1000, funcname = "checkClearance2"})
 end
 function incomingControl3()
    incomingControl( controls[3] )
-   hook.timer(0.5, "proximity", {anchor = controls[3], radius = 1000, funcname = ("checkClearance3")})
+   hook.timer(0.5, "proximity", {anchor = controls[3], radius = 1000, funcname = "checkClearance3"})
 end
 function incomingControl4()
    incomingControl( controls[4] )
-   hook.timer(0.5, "proximity", {anchor = controls[4], radius = 1000, funcname = ("checkClearance4")})
+   hook.timer(0.5, "proximity", {anchor = controls[4], radius = 1000, funcname = "checkClearance4"})
 end
 function incomingControl5()
    incomingControl( controls[5] )
-   hook.timer(0.5, "proximity", {anchor = controls[5], radius = 1000, funcname = ("checkClearance5")})
+   hook.timer(0.5, "proximity", {anchor = controls[5], radius = 1000, funcname = "checkClearance5"})
 end
 
 -- Player checks security clearance of a ship
@@ -471,7 +470,7 @@ function spawnHam()
    hamelsen:land(targpla)
 
    hook.pilot( hamelsen, "land", "hamelsenLanded" )
-   hook.timer(0.5, "proximity", {location = targpos, radius = 10000, funcname = ("incomingHamelsen"), focus = hamelsen})
+   hook.timer(0.5, "proximity", {location = targpos, radius = 10000, funcname = "incomingHamelsen", focus = hamelsen})
 
    -- Hamelsen's partner, whose purpose is to make a fight occur
    jules = pilot.add( "Hyena", "Independent", system.get("Beeklo") )
@@ -519,7 +518,7 @@ function incomingHamelsen()
    alpha[1]:comm( fmt.f(_("A-NightClaws Leader to {player}: intercept {plt} and confirm their security clearance code"), {player=player.name(), plt=hamelsen} ) )
    hamelsen:setHilight()
    hamelsen:setVisible()
-   hook.timer(0.5, "proximity", {anchor = hamelsen, radius = 1000, funcname = ("checkHamelsen")})
+   hook.timer(0.5, "proximity", {anchor = hamelsen, radius = 1000, funcname = "checkHamelsen"})
    misn.osdActive(2)
 end
 
@@ -562,12 +561,12 @@ function StraferNspy()
 
    -- First, teleport Strafer far away from any backup
    alpha[2]:rm()
-   alpha[2] = pilot.add( "Hyena", "DHC", strpos, _("Lieutenant Strafer") )
+   alpha[2] = pilot.add( "Hyena", fw.fct_dhc(), strpos, _("Lieutenant Strafer") )
    alpha[2]:setVisplayer()
    alpha[2]:control()
 
    -- Then put the fleeing spy
-   spy = pilot.add( "Schroedinger", "Warlords", spypos )
+   spy = pilot.add( "Schroedinger", fw.fct_warlords(), spypos )
    spy:setVisplayer()
    spy:control()
    spy:hyperspace( system.get("Gremlin") )
@@ -582,16 +581,15 @@ end
 
 -- Many enemies jump and kill Strafer
 function deathOfStrafer()
-   player.pilot():control()
-   player.pilot():brake()
-   player.cinematics( true, { gui = true } )
+   cinema.on{ gui=true }
    camera.set( alpha[2], false, 20000 )
 
    tk.msg( _("Something is happening at the station"), _([[You start to head to the station, but you hear a flurry of messages coming from the NightClaws squadron. A Schroedinger has managed to take off, unnoticed, from the High Command station, presumably carrying classified information. It managed to sneak through the blockade. The squadrons have been taken by surprise, but Strafer is catching up.]]) )
 
+   local fwarlords = fw.fct_warlords()
    attackers = {}
    for i = 1, 10 do
-      attackers[i] = pilot.add( "Hyena", "Warlords", system.get("Gremlin") )
+      attackers[i] = pilot.add( "Hyena", fwarlords, system.get("Gremlin") )
       attackers[i]:control()
       attackers[i]:attack( alpha[2] )
    end
@@ -601,9 +599,8 @@ end
 
 -- Strafer just died: now, there will be action for the player
 function straferDied()
+   cinema.off()
    camera.set( nil, true )
-   player.pilot():control( false )
-   player.cinematics( false )
    hook.timer( 1.0, "spawnKillers" )
 
    for i = 1, #attackers do
@@ -623,10 +620,11 @@ function spawnKillers()
    misn.osdDestroy()
    misn.osdCreate( _("The Meeting"), {_("Eliminate the hostile fighters")} )
 
+   local fwarlords = fw.fct_warlords()
    local killers = {}
-   killers[1] = pilot.add( "Hyena", "Warlords", haltpla, _("Curiatius"), {ai="baddie_norun"} )
-   killers[2] = pilot.add( "Shark", "Warlords", haltpla, _("Curiatius"), {ai="baddie_norun"} )
-   killers[3] = pilot.add( "Lancelot", "Warlords", haltpla, _("Curiatius"), {ai="baddie_norun"} )
+   killers[1] = pilot.add( "Hyena", fwarlords, haltpla, _("Curiatius"), {ai="baddie_norun"} )
+   killers[2] = pilot.add( "Shark", fwarlords, haltpla, _("Curiatius"), {ai="baddie_norun"} )
+   killers[3] = pilot.add( "Lancelot", fwarlords, haltpla, _("Curiatius"), {ai="baddie_norun"} )
 
    mem.deadkillers = 0
    for i = 1, #killers do

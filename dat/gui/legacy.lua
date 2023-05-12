@@ -45,11 +45,16 @@ function create()
 
    -- Load graphics
    local base = "gfx/gui/legacy/"
-   frame    = tex.open( base .. "minimal.png" )
-   energy   = tex.open( base .. "minimal_energy.png" )
-   fuel     = tex.open( base .. "minimal_fuel.png" )
-   gui.targetSpobGFX( tex.open( base .. "minimal_planet.png", 2, 2 ) )
-   gui.targetPilotGFX( tex.open( base .. "minimal_pilot.png", 2, 2 ) )
+   local function tex_open( name, sx, sy )
+      local t = tex.open( base .. name, sx, sy )
+      t:setWrap( "clamp" )
+      return t
+   end
+   frame    = tex_open( "minimal.png" )
+   energy   = tex_open( "minimal_energy.png" )
+   fuel     = tex_open( "minimal_fuel.png" )
+   gui.targetSpobGFX( tex_open( "minimal_planet.png", 2, 2 ) )
+   gui.targetPilotGFX( tex_open( "minimal_pilot.png", 2, 2 ) )
 
    -- OSD
    gui.osdInit( 30, screen_h-90, 150, 300 )
@@ -402,13 +407,29 @@ function render( _dt )
    render_warnings()
 end
 
-
 function update_faction()
 end
 
--- Game crashes if this isn't defined
-function render_cooldown ()
+local cooldown_omsg
+function render_cooldown( _percent, seconds )
+   local msg = _("Cooling down...\n%.1f seconds remaining"):format( seconds )
+   local fail = true
+   if cooldown_omsg ~= nil then
+      if player.omsgChange( cooldown_omsg, msg, seconds ) then
+         fail = false
+      end
+   end
+   if fail then
+      cooldown_omsg = player.omsgAdd( msg, seconds )
+   end
 end
 
-function end_cooldown ()
+function cooldown_end ()
+   if cooldown_omsg ~= nil then
+      player.omsgRm( cooldown_omsg )
+      cooldown_omsg = nil
+   end
+end
+
+function update_effects ()
 end

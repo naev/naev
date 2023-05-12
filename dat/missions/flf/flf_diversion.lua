@@ -19,8 +19,7 @@ local fleet = require "fleet"
 local fmt = require "format"
 local flf = require "missions.flf.flf_common"
 
--- luacheck: globals enter land leave pay_text success_text (shared with derived missions flf_dvk01, flf_dvk04)
--- luacheck: globals pilot_attacked_dv pilot_death_dv rm_attention timer_mission_success timer_spawn_dv update_dv (Hook functions passed by name)
+-- luacheck: globals success_text pay_text (inherited by missions that require this one, TODO get rid of this hack)
 
 success_text = {
    _("You receive a transmission from an FLF officer saying that the operation was completed, and you can now return to the base."),
@@ -57,7 +56,7 @@ function create ()
    -- Set mission details
    misn.setTitle( fmt.f( _("FLF: Diversion in {sys}"), {sys=mem.missys} ) )
    misn.setDesc( fmt.f( _("A fleet of FLF ships will be conducting an operation against the Dvaered forces. Create a diversion from this operation by wreaking havoc in the nearby {sys} system."), {sys=mem.missys} ) )
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setReward( mem.credits )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
 

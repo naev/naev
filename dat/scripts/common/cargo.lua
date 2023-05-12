@@ -151,6 +151,9 @@ function car.calculateRoute( missdist, always_available, use_hidden )
    local cargo
    local cargoes = difference(spob.cur():commoditiesSold(),destplanet:commoditiesSold())
    if #cargoes == 0 then
+      cargoes = commodity.getStandard()
+   end
+   if #cargoes == 0 then
       if always_available then
          cargo = nil
       else
@@ -171,7 +174,7 @@ end
 function car.getTransit( numjumps, traveldist )
    local pstats   = player.pilot():stats()
    local stuperpx = 1 / pstats.speed_max * 30
-   local arrivalt = time.get() + time.create(0, 0, traveldist * stuperpx +
+   local arrivalt = time.get() + time.new(0, 0, traveldist * stuperpx +
          numjumps * pstats.jump_delay + 10180 + 240 * numjumps)
    return arrivalt
 end

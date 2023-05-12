@@ -2,30 +2,28 @@
 <ssys name="Vost">
  <general>
   <radius>17890.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-573.390026" y="-686.373725"/>
+ <pos x="-405.893247" y="-495.177061"/>
  <spobs>
   <spob>Andors</spob>
   <spob>Andors Refining</spob>
   <spob>Aquilia</spob>
   <spob>Xavier</spob>
-  <spob_virtual>Trade Lane (Za'lek)</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Olympus">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Poltergeist">
-   <autopos/>
-   <hide>0.000000</hide>
-  </jump>
   <jump target="Procyon">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Regas">
+   <autopos/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

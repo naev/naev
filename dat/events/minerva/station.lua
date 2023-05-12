@@ -24,8 +24,6 @@ local window = require 'love.window'
 --local love_shaders = require 'love_shaders'
 
 local npc_patrons -- Non-persistent state
--- luacheck: globals bargreeter leave molecaught start_alter1 start_alter2 start_spapropaganda (Hook functions passed by name)
--- luacheck: globals approach_blackjack approach_chuckaluck approach_maikki approach_patron approach_scavengers approach_terminal (NPC functions passed by name)
 
 -- NPC Stuff
 local gambling_priority = 3
@@ -351,7 +349,7 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
             player.outfitAdd( ti[1] )
             player.msg( _("Gambling Bounty"), fmt.reward(ti[1]))
          elseif ti[2][2]=="ship" then
-            player.addShip( ti[1] )
+            player.shipAdd( ti[1] )
          else
             error(_("unknown tradein type"))
          end

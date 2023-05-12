@@ -24,7 +24,6 @@ local vn = require 'vn'
 
 local badevent, goodevent, missionevent, neutralevent -- forward-declared functions
 local derelict -- Non-persistent state
--- luacheck: globals board derelict_exploded destroyevent (Hook functions passed by name)
 
 local mission_list = {
    --[[
@@ -129,7 +128,7 @@ function create ()
    end
 
    -- Ignore claimed systems (don't want to ruin the atmosphere)
-   if not evt.claim( cursys, true ) then evt.finish() end
+   if not naev.claimTest( cursys, true ) then evt.finish() end
 
    -- Get the derelict's ship.
    local dship
@@ -151,7 +150,7 @@ function create ()
    -- Create the derelict.
    local dist  = rnd.rnd() * cursys:radius() * 0.8
    local pos   = vec2.newP( dist, rnd.angle() )
-   derelict    = pilot.add(dship, "Derelict", pos, _("Derelict"), {ai="dummy", naked=true})
+   derelict    = pilot.add(dship, "Derelict", pos, p_("ship", "Derelict"), {ai="dummy", naked=true})
    derelict:disable()
    derelict:intrinsicSet( "ew_hide", -75 ) -- Much more visible
    hook.pilot(derelict, "board", "board")
@@ -393,7 +392,7 @@ function goodevent()
       ["Map: Empire Core"] = _("Empire core systems"),
       ["Map: Za'lek Core"] = _("Za'lek core systems"),
       ["Map: Dvaered Core"] = _("Dvaered core systems"),
-      ["Map: Dvaered-Soromid Trade Route"] = _("Dvaered-Soromid trade route"),
+      ["Map: Empire-Soromid Trade Route"] = _("Dvaered-Soromid trade route"),
       ["Map: Sirius Core"] = _("Sirius core systems"),
       ["Map: Sirian Border Systems"] = _("Sirian border systems"),
       ["Map: The Frontier"] = _("Frontier systems"),

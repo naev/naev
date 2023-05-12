@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Wunomi's Moon">
+ <pos x="5948.378159" y="393.329279"/>
+ <GFX>
+  <space>moon-C01.webp</space>
+  <exterior>uninhabited-rocky-airless-04.webp</exterior>
+ </GFX>
+ <general>
+  <class>C</class>
+  <population>0</population>
+  <hide>0.200000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>Wunomi's Moon was originally a large asteroid that was adjusted and pushed into orbit of Wunomi's World to give it a more Earthly look. Technically, it is expected to crash into Wunomi's World in roughly 500 cycles, but the local government has planned to make more major adjustments by decreasing the mass to extend the period of orbit. Like Wunomi's World, Wunomi's Moon is strictly controlled, with permission needed for most activities.</description>
+ </general>
+</spob>

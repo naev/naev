@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Certitude">
+ <lua>ships/lua/thurion.lua</lua>
  <points>200</points>
  <base_type>Certitude</base_type>
  <GFX size="120" sx="12" sy="12">certitude</GFX>
  <rarity>3</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Battleship</class>
  <price>9000000</price>

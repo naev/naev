@@ -22,6 +22,7 @@
 #include "nlua_ship.h"
 #include "nlua_tex.h"
 #include "nluadef.h"
+#include "player.h"
 #include "rng.h"
 #include "slots.h"
 
@@ -40,6 +41,7 @@ static int outfitL_limit( lua_State *L );
 static int outfitL_icon( lua_State *L );
 static int outfitL_price( lua_State *L );
 static int outfitL_description( lua_State *L );
+static int outfitL_summary( lua_State *L );
 static int outfitL_unique( lua_State *L );
 static int outfitL_getShipStat( lua_State *L );
 static int outfitL_weapStats( lua_State *L );
@@ -62,6 +64,7 @@ static const luaL_Reg outfitL_methods[] = {
    { "icon", outfitL_icon },
    { "price", outfitL_price },
    { "description", outfitL_description },
+   { "summary", outfitL_summary },
    { "unique", outfitL_unique },
    { "shipstat", outfitL_getShipStat },
    { "weapstats", outfitL_weapStats },
@@ -425,13 +428,39 @@ static int outfitL_price( lua_State *L )
  * @usage description = o:description()
  *
  *    @luatparam String o Outfit to get the description of.
+ *    @luatparam[opt=player.pilot()] Pilot p Pilot to set description to.
  *    @luatreturn string The description (with translating).
  * @luafunc description
  */
 static int outfitL_description( lua_State *L )
 {
    const Outfit *o = luaL_validoutfit(L,1);
-   lua_pushstring(L, _(o->description));
+   if (lua_ispilot(L,2))
+      lua_pushstring(L, pilot_outfitDescription( luaL_validpilot(L,2), o ) );
+   else
+      lua_pushstring(L, pilot_outfitDescription( player.p, o ) );
+   return 1;
+}
+
+/**
+ * @brief Gets the summary of an outfit (translated).
+ *
+ * @usage summary = o:summary()
+ *
+ *    @luatparam String o Outfit to get the summary of.
+ *    @luatparam[opt=player.pilot()] Pilot p Pilot to set summary to.
+ *    @luatparam[opt=false] string noname Whether or not to hide the outfit name at the top.
+ *    @luatreturn string The summary (with translating).
+ * @luafunc summary
+ */
+static int outfitL_summary( lua_State *L )
+{
+   const Outfit *o = luaL_validoutfit(L,1);
+   int noname = lua_toboolean(L,3);
+   if (lua_ispilot(L,2))
+      lua_pushstring(L, pilot_outfitSummary( luaL_validpilot(L,2), o, !noname ) );
+   else
+      lua_pushstring(L, pilot_outfitSummary( player.p, o, !noname ) );
    return 1;
 }
 
@@ -687,6 +716,7 @@ static int outfitL_specificStats( lua_State *L )
          SETFIELD( "arc",        o->u.lau.arc );
          SETFIELD( "swivel",     o->u.lau.swivel );
          /* Ammo stuff. */
+         SETFIELD( "duration",   o->u.lau.duration );
          SETFIELD( "speed",      o->u.lau.speed );
          SETFIELD( "speed_max",  o->u.lau.speed_max );
          SETFIELD( "turn",       o->u.lau.turn );

@@ -2,6 +2,10 @@ local atk = require "ai.core.attack.util"
 
 local atk_corvette = {}
 
+function atk_corvette.init ()
+   mem.atk_pref_func = atk.prefer_capship
+end
+
 --[[
 -- Main control function for corvette behavior.
 --]]

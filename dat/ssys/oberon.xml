@@ -2,11 +2,10 @@
 <ssys name="Oberon">
  <general>
   <radius>13300.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="330.666667" y="267.066667"/>
+ <pos x="391.143819" y="462.723008"/>
  <spobs>
   <spob>M.K.</spob>
   <spob>Oberon I</spob>
@@ -17,15 +16,15 @@
  </spobs>
  <jumps>
   <jump target="Defa">
-   <pos x="-15366.904607" y="-17565.639958"/>
+   <pos x="-11193.320129" y="-9417.213120"/>
    <hide>0.000000</hide>
   </jump>
   <jump target="Shikima">
    <autopos/>
    <hide>0.000000</hide>
   </jump>
-  <jump target="Thirty Stars">
-   <pos x="19272.562144" y="8011.507651"/>
+  <jump target="Struve">
+   <autopos/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

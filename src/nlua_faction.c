@@ -19,7 +19,7 @@
 #include "array.h"
 #include "faction.h"
 #include "log.h"
-#include "nlua_col.h"
+#include "nlua_colour.h"
 #include "nlua_tex.h"
 #include "nluadef.h"
 
@@ -34,6 +34,7 @@ static int factionL_nameRaw( lua_State *L );
 static int factionL_longname( lua_State *L );
 static int factionL_areenemies( lua_State *L );
 static int factionL_areallies( lua_State *L );
+static int factionL_usesHiddenJumps( lua_State *L );
 static int factionL_modplayer( lua_State *L );
 static int factionL_modplayersingle( lua_State *L );
 static int factionL_modplayerraw( lua_State *L );
@@ -44,8 +45,10 @@ static int factionL_enemies( lua_State *L );
 static int factionL_allies( lua_State *L );
 static int factionL_logo( lua_State *L );
 static int factionL_colour( lua_State *L );
-static int factionL_isknown( lua_State *L );
+static int factionL_isKnown( lua_State *L );
 static int factionL_setKnown( lua_State *L );
+static int factionL_isInvisible( lua_State *L );
+static int factionL_isStatic( lua_State *L );
 static int factionL_tags( lua_State *L );
 static int factionL_dynAdd( lua_State *L );
 static int factionL_dynAlly( lua_State *L );
@@ -68,10 +71,13 @@ static const luaL_Reg faction_methods[] = {
    { "playerStandingDefault", factionL_playerstandingdefault },
    { "enemies", factionL_enemies },
    { "allies", factionL_allies },
+   { "usesHiddenJumps", factionL_usesHiddenJumps },
    { "logo", factionL_logo },
    { "colour", factionL_colour },
-   { "known", factionL_isknown },
+   { "known", factionL_isKnown },
    { "setKnown", factionL_setKnown },
+   { "invisible", factionL_isInvisible },
+   { "static", factionL_isStatic },
    { "tags", factionL_tags },
    { "dynAdd", factionL_dynAdd },
    { "dynAlly", factionL_dynAlly },
@@ -493,6 +499,20 @@ static int factionL_allies( lua_State *L )
 }
 
 /**
+ * @brief Gets whether or not a faction uses hidden jumps.
+ *
+ *    @luatparam Faction f Faction to get whether or not they use hidden jumps.
+ *    @luatreturn boolean true if the faction uses hidden jumps, false otherwise.
+ * @luafunc usesHiddenJumps
+ */
+static int factionL_usesHiddenJumps( lua_State *L )
+{
+   int f = luaL_validfaction(L,1);
+   lua_pushboolean( L, faction_usesHiddenJumps(f) );
+   return 1;
+}
+
+/**
  * @brief Gets the faction logo.
  *
  *    @luatparam Faction f Faction to get logo from.
@@ -535,7 +555,7 @@ static int factionL_colour( lua_State *L )
  *    @luatreturn boolean true if the player knows the faction.
  * @luafunc known
  */
-static int factionL_isknown( lua_State *L )
+static int factionL_isKnown( lua_State *L )
 {
    int fac = luaL_validfaction(L, 1);
    lua_pushboolean(L, faction_isKnown(fac));
@@ -556,6 +576,38 @@ static int factionL_setKnown( lua_State *L )
    int b   = lua_toboolean(L, 2);
    faction_setKnown( fac, b );
    return 0;
+}
+
+/**
+ * @brief Checks to see if a faction is invisible the player.
+ *
+ * @usage b = f:invisible()
+ *
+ *    @luatparam Faction f Faction to check if is invisible to the player.
+ *    @luatreturn boolean true if the faction is invisible to the player.
+ * @luafunc invisible
+ */
+static int factionL_isInvisible( lua_State *L )
+{
+   int fac = luaL_validfaction(L, 1);
+   lua_pushboolean(L, faction_isInvisible(fac));
+   return 1;
+}
+
+/**
+ * @brief Checks to see if a faction has a static standing with the player.
+ *
+ * @usage b = f:static()
+ *
+ *    @luatparam Faction f Faction to check if has a static standing to the player.
+ *    @luatreturn boolean true if the faction is static to the player.
+ * @luafunc static
+ */
+static int factionL_isStatic( lua_State *L )
+{
+   int fac = luaL_validfaction(L, 1);
+   lua_pushboolean(L, faction_isStatic(fac));
+   return 1;
 }
 
 /**
@@ -595,7 +647,10 @@ static int factionL_dynAdd( lua_State *L )
 {
    LuaFaction fac, newfac;
    const char *name, *display, *ai;
+   const glColour *colour;
    int clear_allies, clear_enemies;
+   double player;
+   int set_player;
 
    if (!lua_isnoneornil(L, 1))
       fac   = luaL_validfactionSilent(L,1); /* Won't error. */
@@ -603,6 +658,7 @@ static int factionL_dynAdd( lua_State *L )
       fac   = -1;
    name     = luaL_checkstring(L,2);
    display  = luaL_optstring(L,3,name);
+   set_player = 0;
 
    /* Just return existing and ignore the rest. */
    if (faction_exists(name)) {
@@ -627,21 +683,39 @@ static int factionL_dynAdd( lua_State *L )
       lua_getfield(L,4,"clear_enemies");
       clear_enemies = lua_toboolean(L,-1);
       lua_pop(L,1);
+
+      lua_getfield(L,4,"player");
+      if (lua_isnumber(L,-1)) {
+         player = lua_tonumber(L,-1);
+         set_player = 1;
+      }
+      lua_pop(L,1);
+
+      lua_getfield(L,4,"colour");
+      if (lua_isstring(L,-1))
+         colour = col_fromName( lua_tostring(L,-1) );
+      else
+         colour = lua_tocolour( L, -1 );
+      lua_pop(L,1);
    }
    else {
       ai             = NULL;
       clear_allies   = 0;
       clear_enemies  = 0;
+      player         = 0.;
+      colour         = NULL;
    }
 
    /* Create new faction. */
-   newfac = faction_dynAdd( fac, name, display, ai );
+   newfac = faction_dynAdd( fac, name, display, ai, colour );
 
    /* Clear if necessary. */
    if (clear_allies)
       faction_clearAlly( newfac );
    if (clear_enemies)
       faction_clearEnemy( newfac );
+   if (set_player)
+      faction_setPlayer( newfac, player );
 
    lua_pushfaction( L, newfac );
    return 1;

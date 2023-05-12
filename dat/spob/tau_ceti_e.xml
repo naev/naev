@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Tau Ceti e">
+ <pos x="3183.047860" y="-1809.968391"/>
+ <GFX>
+  <space>moon-M00.webp</space>
+  <exterior>uninhabited-rocky-green-04.webp</exterior>
+ </GFX>
+ <general>
+  <class>M</class>
+  <population>0</population>
+  <hide>0.400000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>Tau Ceti e was a well-developed that, despite the distance from Sol, took complete and irreversible damage to its ionosphere. Although the effects were not immediate, this led to a gradual breakdown of the entire atmosphere and destabilized the planet core. The effects were tremendous, and the population was forced to quickly flee as the cities flooded and burned, with less and less breathable atmosphere, until it eventually reached the desolate state you find it in. The planet is covered in ruins, with most, if not all, things of value already picked clean.</description>
+ </general>
+ <tags>
+  <tag>ruined</tag>
+ </tags>
+</spob>

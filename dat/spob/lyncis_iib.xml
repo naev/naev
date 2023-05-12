@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Lyncis IIb">
+ <pos x="4316.464176" y="-2566.272302"/>
+ <GFX>
+  <space>moon-H02.webp</space>
+  <exterior>uninhabited-rocky-yellow-02.webp</exterior>
+ </GFX>
+ <general>
+  <class>H</class>
+  <population>0</population>
+  <hide>0.400000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>One of the multiple moons considered for human settlement. In the end, due to the volatile nature of the planet's surface, Lyncis IIc was preferred which ended up being renamed New Xantusia.
+Lyncis IIb has an abnormally soft outer mantle, which combined with a highly unstable core and the gravitational pull of Lyncis II, leads to extreme undulations and tides of the surface. This makes anything short of floating constructions nearly instantly sink, however, floating constructions do not fare much better due to the highly abrasive sand that can be propelled at extreme velocities by storms. Despite all the dangers, Lyncis IIb is somewhat popular for the extreme sport of sand surfing when the weather permits.</description>
+ </general>
+</spob>

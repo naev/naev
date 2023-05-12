@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<spob name="Trader Area">
- <presence>
-  <faction>Traders Guild</faction>
-  <base>23.333333</base>
-  <bonus>11.666667</bonus>
-  <range>1</range>
- </presence>
-</spob>

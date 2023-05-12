@@ -2,11 +2,10 @@
 <ssys name="Castellan">
  <general>
   <radius>21540.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="316.155052" y="-693.384912"/>
+ <pos x="489.257208" y="-886.016857"/>
  <spobs>
   <spob>Castellan Epsilon</spob>
   <spob>Castellan I</spob>
@@ -23,6 +22,10 @@
   <jump target="Maus">
    <autopos/>
    <hidden/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Sarrii">
+   <autopos/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

@@ -2,16 +2,18 @@
 <ssys name="Arcanis">
  <general>
   <radius>14000.000000</radius>
-  <stars>500</stars>
-  <interference>11.111111</interference>
+  <spacedust>500</spacedust>
+  <interference>25.000000</interference>
   <nebula volatility="0.000000" hue="250.000000">200.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="311.000000" y="-81.000000"/>
+ <pos x="394.290137" y="-340.685870"/>
  <spobs>
+  <spob>Arcania</spob>
   <spob_virtual>Miner Small</spob_virtual>
  </spobs>
  <jumps>
-  <jump target="Raelid">
+  <jump target="Kruger">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
@@ -24,7 +26,7 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Zylex">
+  <jump target="Surano">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
@@ -36,4 +38,7 @@
    <pos x="4000.000000" y="6000.000000"/>
   </asteroid>
  </asteroids>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

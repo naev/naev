@@ -2,7 +2,9 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Alive Bounty">
  <priority>4</priority>
- <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+ <cond>
+   return require("misn_test").mercenary()
+ </cond>
  <chance>360</chance>
  <location>Computer</location>
  <faction>Empire</faction>
@@ -30,7 +32,7 @@ local lmisn = require "lmisn"
 local vntk = require "vntk"
 require "missions.neutral.pirbounty_dead"
 
--- luacheck: globals board_fail bounty_setup get_faction misn_title pay_capture_text pay_kill_text pilot_death share_text subdue_fail_text subdue_text succeed (from base mission neutral.pirbounty_dead)
+-- luacheck: globals pay_capture_text pay_kill_text misn_title pilot_death succeed bounty_setup board_fail (inherited from mission above, probably best to clean up )
 
 local kill_instead_text = {
    _([[As you return to your ship, you are contacted by an officer. "I see you were unable to capture {plt}," the officer says. "Disappointing. However, we would rather this pirate be dead than roaming free, so you will be paid {credits} if you finish them off right now."]]),
@@ -66,7 +68,11 @@ misn_title = {
    _("Dangerous Alive Bounty in {sys}"),
 }
 
-mem.misn_desc   = _("The pirate known as {pirname} was recently seen in the {sys} system. {fct} authorities want this pirate alive. {pirname} is believed to be flying a {shipclass}-class ship.")
+mem.misn_desc = _([[The pirate known as {pirname} was recently seen in the {sys} system. {fct} authorities want this pirate alive. {pirname} is believed to be flying a {shipclass}-class ship. The pirate may disappear if you take too long to reach the {sys} system.
+
+#nTarget:#0 {pirname} ({shipclass}-class ship)
+#nWanted:#0 Alive
+#nLast Seen:#0 {sys} system]])
 
 mem.osd_msg[2] = _("Capture {plt}")
 

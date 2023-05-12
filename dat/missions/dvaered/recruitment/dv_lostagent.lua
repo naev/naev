@@ -7,7 +7,7 @@
  <location>Bar</location>
  <faction>Dvaered</faction>
  <done>Dvaered Census 0</done>
- <cond>faction.playerStanding("Dvaered") &gt;= 20 and var.peek("es_cargo") == true and player.numOutfit("Mercenary License") &gt; 0 and (not diff.isApplied("flf_dead"))</cond>
+ <cond>faction.playerStanding("Dvaered") &gt;= 20 and player.numOutfit("Mercenary License") &gt; 0 and (not diff.isApplied("flf_dead"))</cond>
  <notes>
   <tier>3</tier>
   <campaign>Dvaered Recruitment</campaign>
@@ -17,7 +17,7 @@
 --[[
    Dvaered Delivery
    This is the mission of the Dvaered Recruitment arc when the player starts to commit with Dvaered.
-   The player has to transmit a parcel to an other private pilot on Zhiru. The destination of the parcel is the Empire.
+   The player has to transmit a parcel to another private pilot on Zhiru. The destination of the parcel is the Empire.
    But the other pilot is missing and the player has to do a series of tasks.
    At some point, the FLF is suspected to have abducted the agent (pretext to get the player enemy with them)
 
@@ -39,7 +39,6 @@ local vn       = require 'vn'
 local vntk     = require 'vntk'
 local dv       = require "common.dvaered"
 
--- luacheck: globals enter land loading escape scanned discussWithAg spawnSwan swanDisabled swanExploded swanBoarded assetBoardsSwan swanEscaped spawnSquad spawnDuchmol duchExploded duchEscaped duchAttacked message
 
 -- Define the cargo commodity
 local cargo_misn
@@ -56,7 +55,7 @@ local agentPort = "neutral/female1.webp"
 function create()
    mem.flfsys  = system.get("Theras")
    mem.flfoys  = system.get("Haleb") -- Origin of the target
-   mem.duchpnt, mem.duchsys  = spob.getS("Myuirr Station")
+   mem.duchpnt, mem.duchsys  = spob.getS("Fort Myuirr")
 
    if not misn.claim({mem.flfsys,mem.duchsys}) then misn.finish(false) end -- Claim
 
@@ -109,7 +108,7 @@ Oh, I almost forgot! There is one thing you are authorized to know: this cargo i
    -- Mission details
    mem.credits = 50e3
    misn.setTitle(_("Dvaered Delivery"))
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setReward( mem.credits )
    misn.setDesc( fmt.f(_("You have to transfer a parcel to the Empire at {pnt} ({sys})"), {pnt=mem.spob1,sys=sys}))
    mem.misn_marker = misn.markerAdd( mem.spob1 )
    mem.misn_state = 0
@@ -145,7 +144,6 @@ function enter()
       pilot.clear()
       mem.misn_state = 4
       hook.timer(3.0,"spawnSwan")
-      misn.osdActive(2)
 
    -- Player jump in Dvaered system to intercept Chilperic Duchmol
    elseif mem.misn_state == 6 and system.cur() == mem.duchsys then
@@ -174,7 +172,7 @@ But it is too risky to wait for them here. This means that we have to take the c
       }
 
       vn.label("no")
-      agent(_([[Well, pilot, I have two answers to that:
+      agent(_([[Well, pilot, I have three answers to that:
 1) The cargo is of the highest importance and has to be transported to a safe destination at all costs
 2) You have not been paid yet and if you want to, you'll have to do what I say
 3) You will be rewarded for that]]))
@@ -252,7 +250,7 @@ And again, be ensured that your initial reward will be dramatically increased fr
       misn.osdDestroy()
       misn.osdCreate( _("Dvaered Delivery (gone wild)"), {
          fmt.f(_("Go to {sys} and kill Chilperic Duchmol."), {sys=mem.duchsys} ),
-         fmt.f(_("Go back to {sys} and (hopefully) get your reward."), {sys=mem.sys2} ),
+         fmt.f(_("Go back to {pnt} and (hopefully) get your reward."), {pnt=mem.spob2} ),
       } )
 
    -- Player gets finally paid
@@ -266,7 +264,7 @@ And again, be ensured that your initial reward will be dramatically increased fr
       agent(fmt.f(_([[Hi, {name}. How do you do?]]),{name=player.name()}))
       vn.menu{
          {_("Very well for someone who met a guy named 'The Death Dealer'."), "well"},
-         {_("Well... Unless there is an other bastard I need to fight before you accept to pay me."), "meh"},
+         {_("Well... Unless there is another bastard I need to fight before you accept to pay me."), "meh"},
          {_("Am I going to get paid some day?"), "bad"},
       }
 
@@ -358,7 +356,7 @@ Your task will be to approach, engage and disable his ship. Only afterwards, squ
    agent(_([[That were teddy bears, of course. Didn't you read the sticker on it?]]))
    vn.menu{
       {_("Oh, thanks for the information!"), "lore_menu"},
-      {_("Actually, there was an other sticker on the box, where it was written 'bio-hazard, do not open without protection'. So I doubt there are really teddy bears in it."), "teddy"},
+      {_("Actually, there was another sticker on the box, where it was written 'bio-hazard, do not open without protection'. So I doubt there are really teddy bears in it."), "teddy"},
    }
 
    vn.label("teddy")
@@ -419,7 +417,7 @@ Then you would have to bare that monstrous responsibility on your shoulders. Jus
    misn.osdCreate( _("Dvaered Delivery (not going as expected)"), {
       fmt.f(_("Go to {sys} and disable Shaky Swan. Target is supposed to come from {syso}."), {sys=mem.flfsys, syso=mem.flfoys} ),
       _("Wait for squadron 138 to jump in to arrest Shaky Swan. DO NOT BOARD THE SHIP YOURSELF!"),
-      fmt.f(_("Go back to {sys} to get your reward."), {sys=mem.sys2} ),
+      fmt.f(_("Go back to {pnt} to get your reward."), {pnt=mem.spob2} ),
    } )
    misn.setReward( fmt.f(_("Hopefully more than {credits}"), {credits=fmt.credits( mem.credits )}) )
    misn.setDesc( _("You are helping the Empire investigate the disappearance of one of their agents") )
@@ -445,6 +443,7 @@ function swanDisabled()
    faction.modPlayerRaw(faction.get("FLF"), -5) -- Faction loss with the FLF.
    hook.rm(dhook)
    hook.timer(1.0,"spawnSquad")
+   misn.osdActive(2)
 end
 
 -- All ways to get Shaky Swan's interception to fail

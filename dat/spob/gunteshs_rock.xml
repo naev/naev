@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Guntesh's Rock">
+ <pos x="745.904244" y="-4173.354258"/>
+ <GFX>
+  <space>D03.webp</space>
+  <exterior>uninhabited-rocky-airless-01.webp</exterior>
+ </GFX>
+ <general>
+  <class>D</class>
+  <population>0</population>
+  <hide>2.700000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>Guntesh's Rock is an uninhabitable atmosphere-less planet that has been traditionally used as a reference point for astral navigation in the area, due to the high visibility from the extreme electromagnetic activity of its active core. The core has also ensured its uninhabitability, which has been further intensified by the Nebula taking over the system.</description>
+ </general>
+</spob>

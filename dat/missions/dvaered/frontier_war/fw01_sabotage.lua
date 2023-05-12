@@ -35,10 +35,11 @@ require "proximity"
 local fw = require "common.frontier_war"
 local fmt = require "format"
 local pir = require "common.pirate"
+local cinema = require "cinema"
 
 -- Mission constants
 local bombMass = 100
-local hampla, hamsys     = spob.getS("Stutee") --Morgan Station
+local hampla, hamsys     = spob.getS("Stutee") --Morgan Citadel
 local sabotpla, sabotsys = spob.getS(fw.wlrd_planet)
 local duelpla, duelsys   = spob.getS("Dvaer Prime")
 local intpla, intsys     = spob.getS("Timu")
@@ -49,8 +50,6 @@ local battleaddict, battleaddict2, hamelsen, klank, klank2, leblanc, randguy, ta
 local mypos, step -- location and spacing of the duel, initialized with the above pilots
 
 local equipGoddard, player_civilian, release_baddies -- Forward-declared functions
--- luacheck: globals battleaddict_killed beginDuel disableDuel enter enter1_message enter2_message everyoneLands fighterDuel killing land meeting message moreSound1 moreSound2 phalanx_attacked phalanx_boarded phalanx_died phalanx_safe spawn_phalanx (Hook functions passed by name)
--- luacheck: globals endMisn hamfresser majorTam (NPC functions passed by name)
 
 -- common hooks
 message = fw.message
@@ -190,12 +189,12 @@ function enter()
 
       klank = pilot.add( "Dvaered Goddard", "Dvaered", mypos + vec2.new(-step, step/2), _("General Klank") )
       klank:control(true)
-      klank:setFaction("DHC")
+      klank:setFaction( fw.fct_dhc() )
       equipGoddard( klank, true ) -- Klank's superior equipment should ensure victory
 
       battleaddict = pilot.add( "Dvaered Goddard", "Dvaered", mypos + vec2.new(step, step/2), _("Lord Battleaddict") )
       battleaddict:control(true)
-      battleaddict:setFaction("Warlords")
+      battleaddict:setFaction( fw.fct_warlords() )
       equipGoddard( battleaddict, false )
 
       klank:face(battleaddict)
@@ -221,10 +220,10 @@ function enter()
       randguy:control(true)
       randguy:face(klank)
 
-      player.pilot():control()
-      player.pilot():moveto( mypos + vec2.new(0, -step/2) ) -- To avoid being in the range
-      player.cinematics( true, { gui = true } )
-      player.pilot():setInvincible()
+      local pp = player.pilot()
+      cinema.on{ gui = true }
+      pp:taskClear()
+      pp:moveto( mypos + vec2.new(0, -step/2) ) -- To avoid being in the range
 
       camera.set( mypos + vec2.new(0, step/2), true )
 
@@ -291,10 +290,11 @@ function killing()
 end
 
 function release_baddies()
-   warlord:setFaction("Warlords")
+   local fwarlords = fw.fct_warlords()
+   warlord:setFaction( fwarlords )
    warlord:control(false)
    for i, j in ipairs(ps) do
-      j:setFaction("Warlords")
+      j:setFaction( fwarlords )
    end
 end
 
@@ -309,12 +309,12 @@ end
 -- Spawn the Phalanx to disable
 function spawn_phalanx()
    p = pilot.add( "Dvaered Phalanx", "Dvaered", intpla, _("Gorgon") )
-   p:setFaction("Warlords")
+   p:setFaction(fw.fct_warlords())
    p:setHilight()
    p:control()
 
    mem.nextsys = lmisn.getNextSystem(system.cur(), sabotsys)
-   p:hyperspace( mem.nextsys ) -- Go towards Battleaddict's place
+   p:hyperspace( mem.nextsys, true ) -- Go towards Battleaddict's place
 
    p:outfitRm("all")
    p:outfitRm("cores")
@@ -362,7 +362,7 @@ function phalanx_boarded()
    misn.cargoRm(mem.bomblet)
 
    player.unboard() -- Prevent the player form actually boarding the ship
-   p:setFaction("DHC")
+   p:setFaction( fw.fct_dhc() )
    p:control(true)
    p:taskClear()
    p:hyperspace( mem.nextsys )
@@ -453,12 +453,12 @@ end
 function fighterDuel()
    klank2 = pilot.add( "Dvaered Vendetta", "Dvaered", klank:pos(), _("General Klank") )
    klank2:control(true)
-   klank2:setFaction("DHC")
+   klank2:setFaction( fw.fct_dhc() )
    fw.equipVendettaMace( klank2 ) -- Klank's superior equipment should ensure victory once more
 
    battleaddict2 = pilot.add( "Dvaered Vendetta", "Dvaered", battleaddict:pos(), _("Lord Battleaddict") )
    battleaddict2:control(true)
-   battleaddict2:setFaction("Warlords")
+   battleaddict2:setFaction( fw.fct_warlords() )
 
    battleaddict2:broadcast( _("Shall we continue?") )
    hook.timer( 1.0, "message", {pilot = klank2, msg = _("Of course, we shall!")} )
@@ -496,9 +496,7 @@ function battleaddict_killed()
 
    hook.timer( 2.0, "everyoneLands" )
    camera.set( nil, true )
-   player.pilot():control( false )
-   player.cinematics( false )
-   player.pilot():setInvincible( false )
+   cinema.off()
 
    mem.stage = 7
    misn.osdActive(2)

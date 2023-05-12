@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Fyruse Monastery">
+ <lua>spob/lua/sirius_mil_restricted.lua</lua>
+ <pos x="3795.124991" y="8868.896979"/>
+ <GFX>
+  <space>station-fleetbase.webp</space>
+  <exterior>station05.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>20000</population>
+  <hide>2.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+  </services>
+  <commodities/>
+  <description>The Sirii have a rather extensive military infrastructure within their borders and Fyruse Monastery is part of that infrastructure. There's a regular detachment stationed here, making sure that law and order are maintained as well as can reasonably be expected in Esker and its neighbouring systems. Fyruse Monastery also acts as a border guard for Frontier space, though nobody really believes in the need for such.</description>
+  <bar>As Fyruse Monastery is a Sirius-only facility, the bar is divided into three sections, one for each echelon. In the rare event that a non-Sirius visitor is allowed on board, they are catered for in the Shaira section.</bar>
+ </general>
+ <tags>
+  <tag>restricted</tag>
+  <tag>station</tag>
+  <tag>military</tag>
+ </tags>
+</spob>

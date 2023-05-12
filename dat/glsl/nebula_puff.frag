@@ -3,8 +3,6 @@
 const float SCALAR = pow(2., 4./3.);
 
 uniform vec3 nebu_col;
-uniform float brightness;
-uniform mat4 projection;
 uniform float time;
 uniform vec2 r;
 

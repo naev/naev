@@ -72,6 +72,7 @@ typedef struct PlayerOutfit_s {
  */
 typedef struct PlayerShip_s {
    Pilot *p;      /**< Pilot. */
+   PilotWeaponSet weapon_sets[PILOT_WEAPON_SETS]; /**< All the weapon sets the pilot has. */
    int autoweap;  /**< Automatically update weapon sets. */
    int favourite; /**< Whether or not it is favourited. */
 
@@ -121,7 +122,6 @@ typedef struct Player_s {
 
    /* Options that we save. */
    char *gui;        /**< Player's GUI. */
-   int guiOverride;  /**< GUI is overridden (not default). */
    double radar_res; /**< Player's radar resolution. */
    int eq_outfitMode;/**< Equipment outfit mode. */
    int map_minimal;  /**< Map is set in minimal mode. */
@@ -204,7 +204,6 @@ void player_warp( double x, double y );
 int player_hasCredits( credits_t amount );
 credits_t player_modCredits( credits_t amount );
 void player_hailStart (void);
-int player_canTakeoff (void);
 /* Sounds. */
 void player_soundPlay( int sound, int once );
 void player_soundPlayGUI( int sound, int once );

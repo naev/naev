@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Za'lek Diablo">
+ <lua>ships/lua/zalek.lua</lua>
  <points>200</points>
  <base_type>Diablo</base_type>
  <GFX size="170" sx="12" sy="12">diablo</GFX>
  <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound pitch="0.5">engine_zalek</sound>
  <class>Carrier</class>
  <price>7000000</price>

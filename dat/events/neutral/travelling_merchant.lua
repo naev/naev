@@ -19,7 +19,7 @@ local love_shaders = require 'love_shaders'
 local der = require "common.derelict"
 local poi = require "common.poi"
 
-local p, broadcastid, hailed_player, timerdelay -- Non-persistent state
+local p, broadcastid, hailed_player, second_hail, timerdelay -- Non-persistent state
 
 local trader_name = _("Machiavellian Misi") -- Mireia Sibeko
 local trader_image = "misi.png"
@@ -34,13 +34,12 @@ local broadcastmsg = {
    _("…and that's how I was able to get a third liver haha. Oops is this on? Er, nevermind that. Outfits for sale!"),
 }
 
--- luacheck: globals board broadcast hail leave (Hook functions passed by name)
 
 function create ()
    local scur = system.cur()
 
    -- Inclusive claim
-   if not evt.claim( scur, nil, true ) then evt.finish() end
+   if not naev.claimTest( scur, true ) then evt.finish() end
 
    -- Check to see if a nearby spob is inhabited
    local function nearby_spob( pos )
@@ -129,6 +128,14 @@ function broadcast ()
    if not hailed_player and not var.peek('travelling_trader_hailed') then
       p:hailPlayer()
       hailed_player = true
+
+   elseif poi.data_get_gained() > 0 and
+         var.peek("travelling_trader_boarded") and
+         not var.peek("travelling_trader_hail2") and
+         not var.peek("travelling_trader_data") then
+      p:hailPlayer()
+      hailed_player = true
+      second_hail = true
    end
 end
 
@@ -139,12 +146,26 @@ function hail ()
       local mm = vn.newCharacter( trader_name,
          { image=trader_image, color=trader_colour, shader=love_shaders.hologram() } )
       vn.transition("electric")
-      mm:say( _('"Howdy Human! Er, I mean, Greetings! If you want to take a look at my wonderful, exquisite, propitious, meretricious, effulgent, … wait, what was I talking about? Oh yes, please come see my wares on my ship. You are welcome to board anytime!"') )
+      mm:say( _([["Howdy Human! Er, I mean, Greetings! If you want to take a look at my wonderful, exquisite, propitious, meretricious, effulgent, … wait, what was I talking about? Oh yes, please come see my wares on my ship. You are welcome to board anytime!"]]) )
       vn.done("electric")
       vn.run()
 
       var.push('travelling_trader_hailed', true)
       player.commClose()
+   elseif second_hail then
+      vn.clear()
+      vn.scene()
+      local mm = vn.newCharacter( trader_name,
+         { image=trader_image, color=trader_colour, shader=love_shaders.hologram() } )
+      vn.transition("electric")
+      mm:say(_([["Howdy Human! I have new propitiuous and meretricious wares available. Come see the wares on my ship!"]]))
+      vn.done("electric")
+      vn.run()
+
+      var.push('travelling_trader_hail2', true)
+      player.commClose()
+
+      second_hail = false
    end
 end
 
@@ -188,6 +209,7 @@ function board ()
       { "Operation Cold Metal",     "Left Boot" },
       { "Black Cat",                "Black Cat Doll" },
       { "Terraforming Antlejos 10", "Commemorative Stein" },
+      { "DIY Nerds",                "Homebrew Processing Unit" },
    }
    local event_rewards = {
    }
@@ -374,6 +396,7 @@ They grab a toolbox and rush over to your boarded ship. You decide not to follow
             pp:outfitRmIntrinsic( v )
          end
          pp:outfitAddIntrinsic( upgrade )
+         poi.data_take( upgrade_cost )
       end )
       vn.jump("special")
 

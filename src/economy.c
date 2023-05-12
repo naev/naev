@@ -777,6 +777,7 @@ static void economy_modifySystemCommodityPrice( StarSystem *sys )
       }
    }
    array_shrink( &avprice );
+   array_free( sys->averagePrice );
    sys->averagePrice = avprice;
 }
 
@@ -857,18 +858,13 @@ static void economy_calcUpdatedCommodityPrice(StarSystem *sys)
  */
 void economy_initialiseCommodityPrices(void)
 {
-   int i, j, k;
-   Spob *spob;
-   StarSystem *sys;
-   Commodity *com;
-   CommodityModifier *this, *next;
    /* First use spob attributes to set prices and variability */
-   for (k=0; k<array_size(systems_stack); k++) {
-      sys = &systems_stack[k];
-      for ( j=0; j<array_size(sys->spobs); j++ ) {
-         spob = sys->spobs[j];
+   for (int k=0; k<array_size(systems_stack); k++) {
+      StarSystem *sys = &systems_stack[k];
+      for (int j=0; j<array_size(sys->spobs); j++) {
+         Spob *spob = sys->spobs[j];
          /* Set up the commodity prices on the system, based on its attributes. */
-         for ( i=0; i<array_size(spob->commodities); i++ ) {
+         for (int i=0; i<array_size(spob->commodities); i++) {
             if (economy_calcPrice(spob, spob->commodities[i], &spob->commodityPrice[i]))
                return;
          }
@@ -876,25 +872,26 @@ void economy_initialiseCommodityPrices(void)
    }
 
    /* Modify prices and availability based on system attributes, and do some inter-spob averaging to smooth prices */
-   for ( i=0; i<array_size(systems_stack); i++ ) {
-      sys = &systems_stack[i];
+   for (int i=0; i<array_size(systems_stack); i++) {
+      StarSystem *sys = &systems_stack[i];
       economy_modifySystemCommodityPrice(sys);
    }
 
    /* Compute average prices for all systems */
-   for ( i=0; i<array_size(systems_stack); i++ ) {
-      sys = &systems_stack[i];
+   for (int i=0; i<array_size(systems_stack); i++) {
+      StarSystem *sys = &systems_stack[i];
       economy_smoothCommodityPrice(sys);
    }
 
    /* Smooth prices based on neighbouring systems */
-   for ( i=0; i<array_size(systems_stack); i++ ) {
-      sys = &systems_stack[i];
+   for (int i=0; i<array_size(systems_stack); i++) {
+      StarSystem *sys = &systems_stack[i];
       economy_calcUpdatedCommodityPrice(sys);
    }
    /* And now free temporary commodity information */
-   for ( i=0 ; i<array_size(commodity_stack); i++ ) {
-      com = &commodity_stack[i];
+   for (int i=0 ; i<array_size(commodity_stack); i++) {
+      CommodityModifier *this, *next;
+      Commodity *com = &commodity_stack[i];
       next = com->spob_modifier;
       com->spob_modifier = NULL;
       while (next != NULL) {
@@ -919,9 +916,8 @@ void economy_initialiseCommodityPrices(void)
  */
 void economy_initialiseSingleSystem( StarSystem *sys, Spob *spob )
 {
-   for (int i=0; i<array_size(spob->commodities); i++) {
-      economy_calcPrice(spob, spob->commodities[i], &spob->commodityPrice[i]);
-   }
+   for (int i=0; i<array_size(spob->commodities); i++)
+      economy_calcPrice( spob, spob->commodities[i], &spob->commodityPrice[i] );
    economy_modifySystemCommodityPrice(sys);
 }
 
@@ -1019,7 +1015,7 @@ int economy_sysLoad( xmlNodePtr parent )
                xmlNodePtr nodeSpob = cur->xmlChildrenNode;
                do {
                   xml_onlyNodes(nodeSpob);
-                  if (xml_isNode(nodeSpob, "spob") || xml_isNode(nodeSpob, "planet")) { /* TODO remove "planet" check in 0.11.0 */
+                  if (xml_isNode(nodeSpob, "spob")) {
                      xmlr_attr_strd(nodeSpob,"name",str);
                      Spob *spob = spob_get(str);
                      if (spob==NULL)

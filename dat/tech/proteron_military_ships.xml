@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tech name="Proteron Military Ships">
+ <item>Proteron Euler</item>
  <item>Proteron Archimedes</item>
- <item>Proteron Derivative</item>
- <item>Proteron Kahan</item>
+ <item>Proteron Pythagoras</item>
+ <item>Proteron Dalton</item>
+ <item>Proteron Gauss</item>
+ <item>Proteron Hippocrates</item>
  <item>Proteron Watson</item>
 </tech>

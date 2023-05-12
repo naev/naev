@@ -24,16 +24,12 @@
 #include "nluadef.h"
 #include "safelanes.h"
 
-
 /* diffs */
 static int safelanesL_get( lua_State *L );
-static int safelanesL_intersect( lua_State *L );
 static const luaL_Reg safelanesL_methods[] = {
    { "get", safelanesL_get },
-   { "intersect", safelanesL_intersect },
    {0,0}
 }; /**< Safelane Lua methods. */
-
 
 /**
  * @brief Loads the safelanes Lua library.
@@ -45,7 +41,6 @@ int nlua_loadSafelanes( nlua_env env )
    nlua_register(env, "safelanes", safelanesL_methods, 0);
    return 0;
 }
-
 
 /**
  * @brief Lua accessor functions to safe lane information.
@@ -145,35 +140,4 @@ static int safelanesL_get( lua_State *L )
    array_free( lanes );
 
    return 1;
-}
-
-
-/**
- * @brief Computes the intersection of a line segment and a circle.
- *
- *    @luatparam Vector center Center of the circle.
- *    @luatparam number radius Radius of the circle.
- *    @luatparam Vector p1 First point of the line segment.
- *    @luatparam Vector p2 Second point of the line segment.
- *    @luatreturn Vector|nil First point of collision or nil if no collision.
- *    @luatreturn Vector|nil Second point of collision or nil if single-point collision.
- * @luafunc intersect
- */
-static int safelanesL_intersect( lua_State *L )
-{
-   vec2 *center, *p1, *p2, crash[2];
-   double radius;
-
-   center = luaL_checkvector( L, 1 );
-   radius = luaL_checknumber( L, 2 );
-   p1     = luaL_checkvector( L, 3 );
-   p2     = luaL_checkvector( L, 4 );
-
-   int cnt = CollideLineCircle( p1, p2, center, radius, crash );
-   if (cnt>0)
-      lua_pushvector( L, crash[0] );
-   if (cnt>1)
-      lua_pushvector( L, crash[1] );
-
-   return cnt;
 }

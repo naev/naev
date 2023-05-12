@@ -3,7 +3,7 @@
  <points>30</points>
  <base_type>Drone</base_type>
  <GFX size="70">drone</GFX>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class display="Robotic Interceptor">Interceptor</class>

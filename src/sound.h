@@ -6,7 +6,7 @@
 /** @cond */
 #include "SDL_mutex.h"
 #include "SDL_rwops.h"
-#include "al.h"
+#include "nopenal.h"
 #include <vorbis/vorbisfile.h>
 /** @endcond */
 
@@ -36,6 +36,9 @@ typedef enum SoundEnv_e {
 } SoundEnv_t; /**< Type of environment. */
 
 typedef struct alInfo_s {
+   ALCint freq; /**< Store the frequency. */
+   ALCint nmono; /**< Number of mono sources. */
+   ALCint nstereo; /**< Number of stereo sources. */
    ALint output_limiter; /**< Whether or not context has output limiter. */
    ALint efx; /**< Whether or not context has efx extension. */
    ALint efx_major; /**< EFX major version. */

@@ -21,4 +21,7 @@
  </enemies>
  <lane_length_per_presence>250</lane_length_per_presence>
  <lane_base_cost>50</lane_base_cost>
+ <tags>
+  <tag>misn_cargo</tag>
+ </tags>
 </faction>

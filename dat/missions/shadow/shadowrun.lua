@@ -29,8 +29,6 @@ local shipname = _("Seiryuu")
 
 local seiryuu -- Non-persistent state
 local dateresolution -- Forward-declared functions
--- luacheck: globals abort board date enter land (Hook functions passed by name)
--- luacheck: globals jorek officer soldier1 soldier2 (NPC functions passed by name)
 
 function create ()
    if not misn.claim( {sys, sys2} ) then
@@ -69,8 +67,8 @@ function accept()
     Then Rebina takes her leave from you and gracefully departs the spaceport bar. You order yourself another drink. You've got the feeling you're going to need it.]]), {pnt=pnt, t1=mem.timelimit1, t2=mem.timelimit2, plt=shipname}))
 
       -- Set deadlines
-      mem.deadline1 = time.get() + time.create(0, mem.timelimit1, 0)
-      mem.deadline2 = time.get() + time.create(0, mem.timelimit2, 0)
+      mem.deadline1 = time.get() + time.new(0, mem.timelimit1, 0)
+      mem.deadline2 = time.get() + time.new(0, mem.timelimit2, 0)
 
       misn.setTitle(_("Shadowrun"))
       misn.setReward(_("You were promised riches..."))
@@ -83,7 +81,7 @@ function accept()
       mem.shadowrun = 2
 
       mem.dateres = 500
-      mem.datehook = hook.date(time.create(0, 0, mem.dateres), "date")
+      mem.datehook = hook.date(time.new(0, 0, mem.dateres), "date")
       hook.land("land")
       hook.enter("enter")
    else
@@ -160,18 +158,18 @@ function date()
 end
 
 function dateresolution(time)
-   if time - time.get() < time.create(0, 0, 5000) and mem.dateres > 30 then
+   if time - time.get() < time.new(0, 0, 5000) and mem.dateres > 30 then
       mem.dateres = 30
       hook.rm(mem.datehook)
-      mem.datehook = hook.date(time.create(0, 0, mem.dateres), "date")
-   elseif time - time.get() < time.create(0, 1, 0) and mem.dateres > 100 then
+      mem.datehook = hook.date(time.new(0, 0, mem.dateres), "date")
+   elseif time - time.get() < time.new(0, 1, 0) and mem.dateres > 100 then
       mem.dateres = 100
       hook.rm(mem.datehook)
-      mem.datehook = hook.date(time.create(0, 0, mem.dateres), "date")
-   elseif time - time.get() >= time.create(0, 1, 0) and mem.dateres < 500 then
+      mem.datehook = hook.date(time.new(0, 0, mem.dateres), "date")
+   elseif time - time.get() >= time.new(0, 1, 0) and mem.dateres < 500 then
       mem.dateres = 500
       hook.rm(mem.datehook)
-      mem.datehook = hook.date(time.create(0, 0, mem.dateres), "date")
+      mem.datehook = hook.date(time.new(0, 0, mem.dateres), "date")
    end
 end
 
@@ -208,7 +206,7 @@ function enter()
    -- Handle the Seiryuu, the last stop on this mission
    if mem.shadowrun >= 2 and system.cur() == sys2 then
       local mypos = vec2.new(-1500, 600)
-      seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", mypos , _("Seiryuu"), {ai="trader"} )
+      seiryuu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), mypos , _("Seiryuu"), {ai="trader"} )
 
       seiryuu:setActiveBoard(true)
       seiryuu:control()

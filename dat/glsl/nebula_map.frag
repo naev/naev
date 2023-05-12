@@ -27,6 +27,9 @@ void main (void)
    /* Calculate coordinates */
    vec2 rel_pos = localpos + globalpos;
    colour_out = nebula( vec4(0.0), rel_pos, time, hue, value, volatility, nebu_brightness );
-   colour_out.rgb *= brightness;
    colour_out.a *= a * alpha;
+   if (brightness < 1.0) {
+      vec4 base = vec4( hsv2rgb( vec3(hue, value, 1.0) ), 1.0 );
+      colour_out = mix( base, colour_out, brightness );
+   }
 }

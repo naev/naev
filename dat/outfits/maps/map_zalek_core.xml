@@ -1,22 +1,49 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <outfit name="Map: Za'lek Core">
  <general>
+  <rarity>0</rarity>
   <mass>0</mass>
   <price>25000</price>
   <description>This map contains the heart of Za'lek space, including its capital Ruadan and central hub, Za'lek.</description>
   <gfx_store>map_sector_02.webp</gfx_store>
  </general>
  <specific type="map">
+  <sys name="Qulam">
+   <jump>Za'lek</jump>
+   <spob>Cantina Center</spob>
+   <spob>Katar</spob>
+   <spob>Katar I</spob>
+   <spob>Qulam Primus</spob>
+  </sys>
+  <sys name="Garten">
+   <jump>Damien</jump>
+   <spob>Garten IV</spob>
+   <spob>Garten X</spob>
+   <spob>Kanel</spob>
+   <spob>Trinel</spob>
+  </sys>
+  <sys name="Hideyoshi's Star">
+   <jump>Za'lek</jump>
+   <spob>HS-5</spob>
+   <spob>HS-51</spob>
+   <spob>Jurai</spob>
+  </sys>
   <sys name="Ruadan">
    <jump>Damien</jump>
-   <jump>Vauban</jump>
-   <jump>Woreck</jump>
+   <spob>Hypergate Ruadan</spob>
    <spob>Ruadan Bastion</spob>
    <spob>Ruadan Gamma</spob>
    <spob>Ruadan II</spob>
+   <spob>Ruadan J-1</spob>
+   <spob>Ruadan J-2</spob>
    <spob>Ruadan Prime</spob>
    <spob>Ruadan Secundus</spob>
-   <spob>Ruadan Station</spob>
+   <spob>Ruadan Terminal</spob>
+  </sys>
+  <sys name="Regas">
+   <jump>Seiben</jump>
+   <spob>Jorla</spob>
+   <spob>Lugun</spob>
   </sys>
   <sys name="Damien">
    <jump>Garten</jump>
@@ -31,9 +58,10 @@
    <jump>Damien</jump>
    <jump>Hideyoshi's Star</jump>
    <jump>Qulam</jump>
+   <jump>Seelie</jump>
    <jump>Seiben</jump>
    <spob>Atryssa</spob>
-   <spob>House Za'lek Central Station</spob>
+   <spob>House Za'lek Central</spob>
    <spob>Ocata</spob>
    <spob>PRP-1</spob>
    <spob>PRP-2</spob>
@@ -44,39 +72,19 @@
    <spob>Za'lek IV</spob>
   </sys>
   <sys name="Seiben">
-   <jump>Poltergeist</jump>
+   <jump>Regas</jump>
    <jump>Za'lek</jump>
    <spob>Arcadia</spob>
    <spob>Gastan</spob>
    <spob>Seiben IV</spob>
    <spob>Seiben XI</spob>
   </sys>
-  <sys name="Qulam">
+  <sys name="Seelie">
    <jump>Za'lek</jump>
-   <spob>Cantina Station</spob>
-   <spob>Katar</spob>
-   <spob>Qulam Primus</spob>
-  </sys>
-  <sys name="Garten">
-   <jump>Damien</jump>
-   <spob>Garten IV</spob>
-   <spob>Garten X</spob>
-   <spob>Kanel</spob>
-   <spob>Trinel</spob>
-  </sys>
-  <sys name="Hideyoshi's Star">
-   <jump>Vauban</jump>
-   <jump>Za'lek</jump>
-  </sys>
-  <sys name="Vauban">
-   <jump>Hideyoshi's Star</jump>
-   <jump>Ruadan</jump>
-  </sys>
-  <sys name="Woreck">
-   <jump>Ruadan</jump>
-  </sys>
-  <sys name="Poltergeist">
-   <jump>Seiben</jump>
+   <spob>Fae</spob>
+   <spob>Oberon</spob>
+   <spob>Sidhe</spob>
+   <spob>Unseelie</spob>
   </sys>
  </specific>
 </outfit>

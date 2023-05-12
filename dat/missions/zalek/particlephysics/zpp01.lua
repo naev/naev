@@ -3,7 +3,7 @@
 <mission name="Za'lek Particle Physics 1">
  <unique />
  <priority>4</priority>
- <chance>20</chance>
+ <chance>30</chance>
  <faction>Za'lek</faction>
  <location>Bar</location>
  <cond>spob.cur() ~= spob.get("Katar I") and faction.playerStanding("Za'lek") &gt;= 0</cond>
@@ -22,14 +22,12 @@ local vn = require "vn"
 local fmt = require "format"
 local zpp = require "common.zalek_physics"
 
--- luacheck: globals land (Hook functions passed by name)
-
 local reward = zpp.rewards.zpp01
 local destpnt, destsys = spob.getS("Katar I")
 local cargo_amount = 30 -- Amount of cargo to take
 
 function create ()
-   misn.setNPC( _("Za'lek Scientist"), zpp.noona.portrait, _("You see a Za'lek scientist who seems to be looking or someone to do something for them.") )
+   misn.setNPC( _("Za'lek Scientist"), zpp.noona.portrait, _("You see a Za'lek scientist who seems to be looking for someone to do something for them.") )
 end
 
 function accept ()
@@ -88,7 +86,7 @@ That doesn't sound very reassuring.
 
    -- mission details
    misn.setTitle( _("Particle Physics") )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc( fmt.f(_("Take Noona and some equipment to {pnt} in the {sys} system."), {pnt=destpnt, sys=destsys} ))
 
    misn.markerAdd( destpnt )

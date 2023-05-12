@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <outfit name="Map: Pirate Strongholds">
  <general>
   <rarity>2</rarity>
@@ -9,14 +9,12 @@
  </general>
  <specific type="map">
   <sys name="New Haven">
-   <jump>Titus</jump>
    <spob>Green Eye</spob>
    <spob>New Haven</spob>
    <spob>Old Man Jack</spob>
    <spob>Red Eye</spob>
   </sys>
   <sys name="Kretogg">
-   <jump>Unicorn</jump>
    <spob>Kretogg I</spob>
    <spob>Kretogg II</spob>
    <spob>Kretogg III</spob>
@@ -24,68 +22,47 @@
    <spob>Warden's End</spob>
   </sys>
   <sys name="Teller">
-   <jump>Penn</jump>
    <spob>Jezza</spob>
    <spob>Killerog</spob>
    <spob>Old King Cole</spob>
    <spob>Sanchez</spob>
   </sys>
   <sys name="Effetey">
-   <jump>Frolina</jump>
-   <jump>Trohem</jump>
    <spob>Efferey</spob>
   </sys>
   <sys name="Qorel">
-   <jump>Ekkodu</jump>
-   <jump>Trask</jump>
    <spob>Qorellia</spob>
   </sys>
   <sys name="Terminus">
-   <jump>Akodu</jump>
    <spob>Foundation Station</spob>
   </sys>
-  <sys name="Unicorn">
-   <jump>Kretogg</jump>
-   <spob>Unicorn I</spob>
-   <spob>Unicorn II</spob>
+  <sys name="Alteris">
+   <spob>Alteris I</spob>
+   <spob>Alteris IV</spob>
+   <spob>Alteris V</spob>
+   <spob>Darkshed</spob>
+   <spob>Ozogo X</spob>
+   <spob>Takeru</spob>
   </sys>
-  <sys name="Trohem">
-   <jump>Effetey</jump>
-  </sys>
-  <sys name="Frolina">
-   <jump>Effetey</jump>
-  </sys>
-  <sys name="Ekkodu">
-   <jump>Qorel</jump>
-  </sys>
-  <sys name="Trask">
-   <jump>Qorel</jump>
-  </sys>
-  <sys name="Akodu">
-   <jump>Terminus</jump>
-  </sys>
-  <sys name="Penn">
-   <jump>Teller</jump>
-  </sys>
-  <sys name="Titus">
-   <jump>New Haven</jump>
-  </sys>
-
   <sys name="Suna">
+   <spob>Anifta</spob>
+   <spob>Suna I</spob>
+   <spob>Suna II</spob>
    <spob>The Wringer</spob>
   </sys>
-  <sys name="Alteris">
-   <spob>Darkshed</spob>
+  <sys name="Straight Row">
+   <spob>HZNSS-2</spob>
+   <spob>Rostra</spob>
+   <spob>Straight Row II</spob>
+   <spob>Thaddius Terminal</spob>
   </sys>
-
-  <sys name="Eridani">
+  <sys name="Khaas">
+   <spob>Khaas I</spob>
    <spob>The Crucible</spob>
   </sys>
-  <sys name="Doranthex">
-   <spob>Secundus Station</spob>
-  </sys>
-  <sys name="Brimstone">
-   <spob>Alleyway</spob>
+  <sys name="NGC-127">
+   <spob>P-8493</spob>
+   <spob>Pirate's Cove</spob>
   </sys>
  </specific>
 </outfit>

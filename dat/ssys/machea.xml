@@ -2,11 +2,12 @@
 <ssys name="Machea">
  <general>
   <radius>11000.000000</radius>
-  <stars>400</stars>
-  <interference>0.000000</interference>
+  <spacedust>400</spacedust>
+  <interference>32.000000</interference>
   <nebula volatility="0.000000">200.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="935.000000" y="371.375772"/>
+ <pos x="946.908758" y="184.937909"/>
  <spobs/>
  <jumps>
   <jump target="Maron">
@@ -14,4 +15,7 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

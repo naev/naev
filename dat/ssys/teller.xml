@@ -2,11 +2,12 @@
 <ssys name="Teller">
  <general>
   <radius>21000.000000</radius>
-  <stars>400</stars>
-  <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>58.050000</interference>
+  <nebula volatility="0.500000" hue="275.000000">350.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="890.448775" y="-70.202735"/>
+ <pos x="891.004520" y="-145.347513"/>
  <spobs>
   <spob>Jezza</spob>
   <spob>Killerog</spob>
@@ -14,7 +15,19 @@
   <spob>Sanchez</spob>
  </spobs>
  <jumps>
+  <jump target="Brumeria">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Fern">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Penn">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Seifer">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
@@ -30,4 +43,7 @@
    <pos x="-8123.311451" y="12401.361629"/>
   </exclusion>
  </asteroids>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

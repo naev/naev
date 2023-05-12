@@ -13,7 +13,7 @@
  </presence>
  <general>
   <class>M</class>
-  <population>6e+08</population>
+  <population>6e+07</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -40,4 +40,7 @@
   <item>Missiles 2</item>
   <item>Light Civilian Combat Ships</item>
  </tech>
+ <tags>
+  <tag>trade</tag>
+ </tags>
 </spob>

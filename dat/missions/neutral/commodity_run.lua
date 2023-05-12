@@ -2,20 +2,22 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Commodity Run">
  <priority>5</priority>
- <cond>var.peek("commodity_runs_active") == nil or var.peek("commodity_runs_active") &lt; 3</cond>
  <chance>90</chance>
  <location>Computer</location>
- <faction>Dvaered</faction>
- <faction>Empire</faction>
- <faction>Frontier</faction>
- <faction>Goddard</faction>
- <faction>Independent</faction>
- <faction>Proteron</faction>
- <faction>Sirius</faction>
- <faction>Soromid</faction>
- <faction>Thurion</faction>
- <faction>Traders Guild</faction>
- <faction>Za'lek</faction>
+ <cond>
+   local cra = var.peek("commodity_runs_active") or 0
+   if cra &gt;= 3 then
+      return false
+   end
+   local f = spob.cur():faction()
+   if f then
+      local ft = f:tags()
+      if ft.generic or ft.misn_cargo then
+         return true
+      end
+   end
+   return false
+ </cond>
  <notes>
   <tier>1</tier>
  </notes>
@@ -79,7 +81,7 @@ function create ()
 
    local last_run = var.peek( "last_commodity_run" )
    if last_run ~= nil then
-      local delay = time.create(0, 7, 0)
+      local delay = time.new(0, 7, 0)
       if time.get() < time.fromnumber(last_run) + delay then
          misn.finish(false)
       end
@@ -118,7 +120,7 @@ end
 
 
 function enter ()
-   if pilot.cargoHas( player.pilot(), mem.chosen_comm ) > 0 then
+   if player.fleetCargoOwned( mem.chosen_comm ) > 0 then
       misn.osdActive(2)
    else
       misn.osdActive(1)
@@ -127,14 +129,14 @@ end
 
 
 function land ()
-   local amount = pilot.cargoHas( player.pilot(), mem.chosen_comm )
-   local reward = amount * mem.price
+   local amount = player.fleetCargoOwned( mem.chosen_comm )
 
    if spob.cur() == mem.misplanet and amount > 0 then
+      amount = player.fleetCargoRm( mem.chosen_comm, amount )
+      local reward = amount * mem.price
       local txt = fmt.f(cargo_land[rnd.rnd(1, #cargo_land)],
             {cargo=_(mem.chosen_comm), credits=fmt.credits(reward)} )
       vntk.msg(_("Delivery success!"), txt)
-      pilot.cargoRm(player.pilot(), mem.chosen_comm, amount)
       player.pay(reward)
       if not pir.factionIsPirate( mem.paying_faction ) then
          pir.reputationNormalMission(rnd.rnd(2,3))

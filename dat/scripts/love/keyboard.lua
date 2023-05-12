@@ -12,5 +12,8 @@ function keyboard.setKeyRepeat( enable )
    keyboard._repeat = enable
 end
 
+-- One to one mapping with Naev API
+keyboard.setTextInput = naev.setTextInput
+keyboard.hasTextInput = naev.hasTextInput
 
 return keyboard

@@ -7,13 +7,13 @@
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
-  <population>7e+09</population>
+  <population>7e+07</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -40,4 +40,8 @@
   <item>Systems High</item>
   <item>Dvaered Elite Outfits</item>
  </tech>
+ <tags>
+  <tag>agriculture</tag>
+  <tag>industrial</tag>
+ </tags>
 </spob>

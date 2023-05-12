@@ -2,20 +2,20 @@
 <ssys name="Sonas">
  <general>
   <radius>10000.000000</radius>
-  <stars>400</stars>
-  <interference>5.882350</interference>
+  <spacedust>400</spacedust>
+  <interference>13.235288</interference>
   <nebula volatility="0.250000" hue="250.000000">300.000000</nebula>
  </general>
- <pos x="380.000000" y="-109.000000"/>
+ <pos x="483.118285" y="-371.990496"/>
  <spobs>
-  <spob>Cole Station</spob>
+  <spob>Cole Outpost</spob>
  </spobs>
  <jumps>
   <jump target="Arcanis">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Raelid">
+  <jump target="Zacron">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
@@ -24,4 +24,7 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

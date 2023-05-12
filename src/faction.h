@@ -17,13 +17,14 @@ typedef struct FactionGenerator_ {
    double weight; /**< Weight modifier. */
 } FactionGenerator;
 
-/* get stuff */
+/* Get stuff */
 int faction_isFaction( int f );
 int faction_exists( const char* name );
 int faction_get( const char* name );
 int* faction_getAll (void);
 int* faction_getAllVisible (void);
 int* faction_getKnown();
+int faction_isStatic( int id );
 int faction_isInvisible( int id );
 int faction_setInvisible( int id, int state );
 int faction_isKnown( int id );
@@ -53,7 +54,7 @@ int* faction_getGroup( int which );
 int faction_usesHiddenJumps( int f );
 const FactionGenerator* faction_generators( int f );
 
-/* set stuff */
+/* Set stuff */
 int faction_setKnown( int id, int state );
 
 /* player stuff */
@@ -71,7 +72,7 @@ double faction_reputationMax( int f );
 const glColour* faction_getColour( int f );
 char faction_getColourChar( int f );
 
-/* works with only factions */
+/* Works with only factions */
 int areEnemies( int a, int b );
 int areAllies( int a, int b );
 
@@ -83,4 +84,4 @@ void faction_clearKnown (void);
 
 /* Dynamic factions. */
 void factions_clearDynamic (void);
-int faction_dynAdd( int base, const char* name, const char* display, const char* ai );
+int faction_dynAdd( int base, const char* name, const char* display, const char* ai, const glColour* colour );

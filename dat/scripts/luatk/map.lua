@@ -35,13 +35,12 @@ function luatk_map.newMap( parent, x, y, w, h, options )
       table.insert( wgt.sys, sys )
       sysname[ s:nameRaw() ] = #wgt.sys
    end
-   local allsys = system.getAll()
-   for i,s in ipairs(allsys) do
+   for i,s in ipairs(system.getAll()) do
       if s:known() then
          addsys( s )
       else
          -- Could still be near a known system
-         for j,a in ipairs(s:adjacentSystems()) do
+         for j,a in ipairs(s:jumps()) do
             if a:known() then
                addsys( s )
                break

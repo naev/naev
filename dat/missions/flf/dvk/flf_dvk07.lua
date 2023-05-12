@@ -22,7 +22,7 @@ local fmt = require "format"
 local flf = require "missions.flf.flf_common"
 require "missions.flf.flf_rogue"
 
--- luacheck: globals enter land_flf leave (from base mission flf_rogue)
+-- luacheck: globals land_flf (inherited from mission above, TODO get rid of)
 
 function create ()
    mem.missys = system.get( "Sigur" )

@@ -523,7 +523,7 @@ const char* toolkit_setList( unsigned int wid, const char* name, const char* val
 const char* toolkit_setListPos( unsigned int wid, const char* name, int pos )
 {
    Widget *wgt = lst_getWgt( wid, name );
-   if (wgt == NULL)
+   if ((wgt == NULL) || (wgt->dat.lst.noptions<=0))
       return NULL;
 
    /* Set by pos. */

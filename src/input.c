@@ -648,11 +648,11 @@ void input_update( double dt )
 }
 
 #define KEY(s)    (strcmp(input_keybinds[keynum].name,s)==0) /**< Shortcut for ease. */
-#define INGAME()  (!toolkit_isOpen() && (value==KEY_RELEASE || !player_isFlag(PLAYER_CINEMATICS))) /**< Makes sure player is in game. */
+#define INGAME()  (!toolkit_isOpen() && ((value==KEY_RELEASE) || !player_isFlag(PLAYER_CINEMATICS))) /**< Makes sure player is in game. */
 #define NOHYP()   \
-((player.p != NULL) && !pilot_isFlag(player.p,PILOT_HYP_PREP) &&\
-!pilot_isFlag(player.p,PILOT_HYP_BEGIN) &&\
-!pilot_isFlag(player.p,PILOT_HYPERSPACE)) /**< Make sure the player isn't jumping. */
+   ((player.p != NULL) && !pilot_isFlag(player.p,PILOT_HYP_PREP) &&\
+   !pilot_isFlag(player.p,PILOT_HYP_BEGIN) &&\
+   !pilot_isFlag(player.p,PILOT_HYPERSPACE)) /**< Make sure the player isn't jumping. */
 #define NODEAD()  ((player.p != NULL) && !pilot_isFlag(player.p,PILOT_DEAD)) /**< Player isn't dead. */
 #define NOLAND()  ((player.p != NULL) && (!landed && !pilot_isFlag(player.p,PILOT_LANDING))) /**< Player isn't landed. */
 /**
@@ -804,7 +804,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
     * Combat
     */
    /* shooting primary weapon */
-   } else if (KEY("primary") && NODEAD() && !repeat) {
+   } else if (KEY("primary") && !repeat) {
       if (value==KEY_PRESS) {
          player_setFlag(PLAYER_PRIMARY);
       }
@@ -869,7 +869,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
     * secondary weapons
     */
    /* shooting secondary weapon */
-   } else if (KEY("secondary") && NODEAD() && !repeat) {
+   } else if (KEY("secondary") && !repeat) {
       if (value==KEY_PRESS) {
          player_setFlag(PLAYER_SECONDARY);
       }
@@ -1004,7 +1004,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       }
    /* opens a small menu */
    } else if (KEY("menu") && NODEAD() && !repeat) {
-      if (value==KEY_PRESS) menu_small();
+      if (value==KEY_PRESS) menu_small( 1, 1, 1, 1 );
 
    /* shows pilot information */
    } else if (KEY("info") && NOHYP() && NODEAD() && !repeat) {
@@ -1327,25 +1327,25 @@ int input_clickedJump( int jump, int autonav )
    if (!jp_isUsable(jp))
       return 0;
 
-   /* Update map path. */
+   if (autonav)
+      return 0;
+
    if (player.p->nav_hyperspace != jump)
       map_select( jp->target, 0 );
 
-   if (autonav) {
+   if ((jump == player.p->nav_hyperspace) && input_isDoubleClick( (void*)jp )) {
       player_targetHyperspaceSet( jump, 0 );
-      player_autonavStart();
-      return 1;
-   }
-
-   if (jump == player.p->nav_hyperspace && input_isDoubleClick( (void*)jp )) {
       if (space_canHyperspace(player.p))
          player_jump();
+      else
+         player_autonavStart();
+      return 1;
    }
    else
       player_targetHyperspaceSet( jump, 0 );
 
    input_clicked( (void*)jp );
-   return 1;
+   return 0;
 }
 
 /**

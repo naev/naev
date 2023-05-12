@@ -2,22 +2,25 @@
 <ssys name="Surano">
  <general>
   <radius>19250.000000</radius>
-  <stars>600</stars>
-  <interference>3.030303</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>600</spacedust>
+  <interference>24.750000</interference>
+  <nebula volatility="0.000000" hue="240.000000">150.000000</nebula>
  </general>
- <pos x="267.000000" y="-24.000000"/>
- <spobs/>
+ <pos x="332.613810" y="-417.613944"/>
+ <spobs>
+  <spob>Wormhole Surano</spob>
+ </spobs>
  <jumps>
-  <jump target="Draconis">
+  <jump target="Arcanis">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Tuoladis">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Raelid">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Thorndyke">
+  <jump target="Van Maanen">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
@@ -29,4 +32,7 @@
    <pos x="0.000000" y="0.000000"/>
   </asteroid>
  </asteroids>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

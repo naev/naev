@@ -2,11 +2,10 @@
 <ssys name="Xeric">
  <general>
   <radius>10000.000000</radius>
-  <stars>400</stars>
-  <interference>38.461500</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>40.000000</interference>
  </general>
- <pos x="-789.867057" y="-1196.104886"/>
+ <pos x="-579.995183" y="-989.244748"/>
  <spobs>
   <spob>Tesla Station</spob>
   <spob>Vaal</spob>

@@ -5,11 +5,11 @@
   <map_shader>haze_map.frag</map_shader>
   <features>#rHaze (-50% Shield and Shield Regen)#0</features>
   <radius>10000.000000</radius>
-  <stars>400</stars>
-  <interference>15.000000</interference>
-  <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>33.750000</interference>
+  <nolanes/>
  </general>
- <pos x="-125.736422" y="929.863358"/>
+ <pos x="328.938584" y="1160.818663"/>
  <spobs/>
  <jumps>
   <jump target="NGC-13322">

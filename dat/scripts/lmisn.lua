@@ -160,7 +160,7 @@ end
            return false
        end )
 
-   if #spobs == 0 then abort() end -- In case no suitable spobs are in range.
+   if #spobs == 0 then misn.finish(false) end -- In case no suitable spobs are in range.
 
    local index = rnd.rnd(1, #spobs)
    destspob = spobs[index][1]
@@ -185,6 +185,7 @@ function lmisn.getSysAtDistance( sys, min, max, filter, data, hidden )
 
    -- Run max times
    for i=1,max do
+      local added = 0
       local nopen = {}
       -- Get all the adjacent system of the current set
       for _j,s in ipairs(open) do
@@ -195,8 +196,13 @@ function lmisn.getSysAtDistance( sys, min, max, filter, data, hidden )
                nopen[ #nopen+1 ] = a
                close[ a:nameRaw() ] = a
                dist[  a:nameRaw() ] = i
+               added = added+1
             end
          end
+      end
+      -- Found all systems
+      if added==0 then
+         break
       end
       open = nopen -- New table becomes the old
    end
@@ -232,7 +238,7 @@ end
    @tparam[opt=system.cur()] System sys System to base distance calculations off of.
    @tparam number min Minimum jump distance to get spob at.
    @tparam number max Maximum jump distance to get spob at.
-   @tparam[opt=nil] Faction fct What faction to do landing checks with.
+   @tparam[opt=faction.get("Player")] Faction fct What faction to do landing checks with.
    @tparam[opt=false] boolean samefct Whether or not to only allow spobs to belong exactly to fct.
    @tparam[opt=nil] function filter Filtering function that returns a boolean and takes a spob being tested as a parameter.
    @param[opt=nil] data Custom data that will be passed to filter.
@@ -240,6 +246,7 @@ end
    @treturn table A table containing all the spobs matching the criteria. Can be empty if no matches found.
 --]]
 function lmisn.getSpobAtDistance( sys, min, max, fct, samefct, filter, data, hidden )
+   fct = fct or faction.get("Player")
    local pnts = {}
    local candidates = lmisn.getSysAtDistance( sys, min, max, lmisn.sysFilters.factionLandable( fct ), nil, hidden )
    if #candidates == 0 then

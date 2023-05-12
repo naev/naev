@@ -4,6 +4,10 @@ local __atk_g_capital -- Forward-declared functions
 
 local atk_capital = {}
 
+function atk_capital.init ()
+   mem.atk_pref_func = atk.prefer_capship
+end
+
 --[[
 -- Main control function for capital ship behavior.
 --]]

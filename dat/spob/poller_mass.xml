@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Poller Mass">
+ <lua>spob/lua/poller_mass.lua</lua>
+ <pos x="-6830.659875" y="-6470.534921"/>
+ <GFX>
+  <space>C01.webp</space>
+  <exterior>asteroid.webp</exterior>
+ </GFX>
+ <general>
+  <class>X</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>What was originally a fairly mineral rich world known as Poller D-4 quickly devolved into its current state in what became known as the Poller incident. While what happened is still officially under investigation, the common consensus is that a research project focusing on developing microrobots for mineral extraction lost control of a batch of self-replicating nanobots. These nanobots quickly began to reproduce by converting all matter into more nanobots, in the first public case of a grey-goo scenario.
+The Za'lek have made the best out of the situation by designating the now called Poller Mass as a waste disposal center. Pilots must take care to not make direct contact or they become part of the grey-goo itself.</description>
+ </general>
+ <tags>
+  <tag>garbage</tag>
+ </tags>
+</spob>

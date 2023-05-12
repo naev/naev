@@ -2,22 +2,27 @@
 <ssys name="Jommel">
  <general>
   <radius>12000.000000</radius>
-  <stars>400</stars>
-  <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>15.075000</interference>
+  <nebula volatility="0.000000" hue="240.000000">100.000000</nebula>
  </general>
- <pos x="470.933333" y="604.486667"/>
+ <pos x="671.638423" y="606.065862"/>
  <spobs>
   <spob_virtual>Miner Small</spob_virtual>
   <spob_virtual>Pirate Small</spob_virtual>
  </spobs>
  <jumps>
-  <jump target="Point Zero">
+  <jump target="Gewirn">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Stint">
    <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Syndania">
+   <autopos/>
+   <hidden/>
    <hide>1.000000</hide>
   </jump>
  </jumps>
@@ -29,4 +34,7 @@
    <density>0.500000</density>
   </asteroid>
  </asteroids>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

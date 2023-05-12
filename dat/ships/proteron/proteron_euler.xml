@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Proteron Euler">
+ <points>20</points>
+ <base_type>Euler</base_type>
+ <GFX size="45">euler</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Scout</class>
+ <price>200000</price>
+ <time_mod>0.9</time_mod>
+ <trail_generator x="-7" y="9" h="-9" always_under="1">proteronS</trail_generator>
+ <trail_generator x="-7" y="-9" h="-9" always_under="1">proteronS</trail_generator>
+ <trail_generator x="-7" y="0" h="13">proteronS</trail_generator>
+ <trail_generator x="-5" y="0" h="0">nebula</trail_generator>
+ <fabricator>Proteron</fabricator>
+ <description>The Proteron chose their battles carefully as their slow capital ships cannot retreat from a battle easily. Thus, they have rather large fleet of reconnaissance vessels with the Euler being the primarily used reconnaissance vessel. Not geared for combat, this ship relies on stealth and speed to avoid hostiles.</description>
+ <health>
+  <armour>30</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>2</crew>
+  <mass>24</mass>
+  <fuel>200</fuel>
+  <fuel_consumption>50</fuel_consumption>
+  <cargo>5</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="small" x="10" y="0" h="0" />
+  <utility size="small" prop="systems">Unicorp PT-16 Core System</utility>
+  <utility size="small" prop="accessory" />
+  <utility size="medium" />
+  <utility size="small" />
+  <utility size="small" />
+  <structure size="small" prop="engines">Nexus Dart 150 Engine</structure>
+  <structure size="small" prop="hull">Unicorp D-2 Light Plating</structure>
+  <structure size="small" />
+  <structure size="small" />
+ </slots>
+ <stats>
+  <speed_mod>5</speed_mod>
+  <cargo_mod>-25</cargo_mod>
+  <armour_mod>-10</armour_mod>
+  <ew_hide>20</ew_hide>
+  <ew_detect>25</ew_detect>
+  <ew_jump_detect>25</ew_jump_detect>
+  <misc_instant_jump>1</misc_instant_jump>
+ </stats>
+ <tags>
+  <tag>proteron</tag>
+ </tags>
+</ship>

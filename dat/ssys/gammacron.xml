@@ -2,11 +2,10 @@
 <ssys name="Gammacron">
  <general>
   <radius>16800.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-195.513889" y="-754.439815"/>
+ <pos x="-98.750611" y="-544.709560"/>
  <spobs>
   <spob>Gammacron IV</spob>
   <spob>Gammacron V</spob>

@@ -1,101 +1,35 @@
-local lanes = require 'ai.core.misc.lanes'
+local careful = require "ai.core.misc.careful"
 require 'ai.core.idle.generic'
+local atk = require "ai.core.attack.util"
 
 -- Keep generic as backup
 local idle_generic = idle
 
--- Fuses t2 into t1 avoiding duplicates
-local function __join_tables( t1, t2 )
-   local t = t1
-   for k,v in ipairs(t2) do
-      local found = false
-      for i,u in ipairs(t1) do
-         if u==v then
-            found = true
-            break
-         end
-      end
-      if not found then
-         table.insert( t, v )
-      end
-   end
-   return t
-end
-
--- Estimate the strength of a group of pilots
-local function __estimate_strength( pilots )
-   local str = 0
-   for k,p in ipairs(pilots) do
-      str = str + p:ship():points()
-   end
-   -- Diminishing returns for large strengths
-   -- ((x+1)**(1-n) - 1)/(1-n)
-   local n = 0.3
-   return (math.pow(str+1, 1-n) - 1) / (1-n)
-   --return str
-end
-
--- See if a target is vulnerable
-local function __vulnerable( p, plt, threshold, r )
-   if mem.vulnignore or not mem.natural then return true end
-   local pos = plt:pos()
-   r = r or math.pow( mem.lanedistance, 2 )
-   -- Make sure not in safe lanes
-   if lanes.getDistance2P( p, pos ) > r then
-      -- Check to see vulnerability
-      local H = 1+__estimate_strength( p:getHostiles( mem.vulnrange, pos, true ) )
-      local F = 1+__estimate_strength( __join_tables(
-            p:getAllies( mem.vulnrange, pos, true ),
-            p:getAllies( mem.vulnrange, nil, true ) ) )
-
-      if F*threshold >= H then
-         return true, F, H
-      end
-   end
-   return false
-end
-
 -- Get a nearby enemy using pirate heuristics
-local function __getenemy( p )
-   local pv = {}
-   local r = math.pow( mem.lanedistance, 2 )
-   -- Need to consider fighters here
-   for k,v in ipairs(p:getHostiles( mem.ambushclose, nil, true, false, true )) do
-      local vuln, F, H = __vulnerable( p, v, mem.vulnattack, r )
-      if vuln then
-         local d = ai.dist2( v )
-         table.insert( pv, {p=v, d=d, F=F, H=H} )
-      end
+local function __getenemy ()
+   local p, d = atk.preferred_enemy()
+   if p and d.v then -- Must be vulnerable
+      return p, d.F, d.H
    end
-   -- Attack nearest for now, would have to incorporate some other criteria here
-   table.sort( pv, function(a,b)
-      return a.d < b.d
-   end )
-
-   if #pv==0 then
-      return nil
-   end
-   return pv[1].p, pv[1].F, pv[1].H
 end
 
 -- Sees if there is an enemy nearby to engage
 local function __tryengage( p )
-   local enemy, F, H = __getenemy(p)
-   local stealth = p:flags("stealth")
-   if enemy ~= nil then
-      -- Some criterion to determine whether to rambo or try to attack from
-      -- stealth
-      if not stealth or F*mem.vulnrambo > H then
-         ai.stealth(false)
-         ai.pushtask( "attack", enemy )
-      else
-         ai.pushtask( "ambush_stalk", enemy )
-      end
-      return true
+   local enemy, F, H = __getenemy()
+   if not enemy then
+      return false
    end
-   return false
+   local stealth = p:flags("stealth")
+   -- Some criterion to determine whether to rambo or try to attack from
+   -- stealth
+   if not stealth or F*mem.vulnrambo > H then
+      ai.stealth(false)
+      ai.pushtask( "attack", enemy )
+   else
+      ai.pushtask( "ambush_stalk", enemy )
+   end
+   return true
 end
-
 
 -- Tries to loiter in roughly a straight line
 local function __loiter( p, taskname )
@@ -108,7 +42,7 @@ local function __loiter( p, taskname )
          targetdir = targetdir + rnd.sigma() * math.rad(15)
       end
    end
-   local target = lanes.getNonPointP( p, nil, nil, nil, targetdir )
+   local target = careful.getSafePoint( p, nil, nil, nil, targetdir )
    if target then
       local _m, a = (target - p:pos()):polar()
       mem.lastdirection = a -- bias towards moving in a straight line
@@ -117,7 +51,6 @@ local function __loiter( p, taskname )
    end
    return false
 end
-
 
 local function idle_leave ()
    -- Get a goal
@@ -156,8 +89,12 @@ end
 local function idle_nostealth ()
    local p = ai.pilot()
 
+   if mem.force_leave then
+      if idle_leave() then return end
+   end
+
    if mem.aggressive then
-      local enemy = __getenemy(p)
+      local enemy = __getenemy()
       if enemy ~= nil then
          ai.pushtask( "attack", enemy )
          return
@@ -177,7 +114,6 @@ local function idle_nostealth ()
 end
 
 -- Default task to run when idle
--- luacheck: globals idle (AI Task functions passed by name)
 function idle ()
    -- Not doing stealth stuff
    if not mem.stealth then
@@ -198,7 +134,7 @@ function idle ()
 
    -- Just be an asshole if not stealthed and aggressive
    if not stealth and mem.aggressive then
-      local enemy = __getenemy(p)
+      local enemy = __getenemy()
       if enemy ~= nil then
          ai.pushtask( "attack", enemy )
          return
@@ -225,7 +161,6 @@ function idle ()
 end
 
 -- Try to back off from the target
--- luacheck: globals backoff (AI Task functions passed by name)
 function backoff( target )
    if not target or not target:exists() then
       ai.poptask()
@@ -245,12 +180,19 @@ function backoff( target )
    local p = ai.pilot()
 
    -- Get away
-   ai.face( target, true )
+   local dir = ai.face( target, true )
    ai.accel()
 
    -- Afterburner handling.
    if ai.hasafterburner() and p:energy() > 30 then
       ai.weapset( 8, true )
+   end
+   if mem._o and dir < math.rad(25) then
+      if mem._o.blink_drive then
+         p:toggleOutfit( mem._o.blink_drive, true )
+      elseif mem._o.blink_engine then
+         p:toggleOutfit( mem._o.blink_engine, true )
+      end
    end
 
    -- When out of range pop task
@@ -279,8 +221,7 @@ control_funcs.ambush_stalk = function ()
       return
    end
    -- Ignore enemies that are in safe zone again
-   local r = math.pow( mem.lanedistance, 2 )
-   if lanes.getDistance2P( p, target:pos() ) < r then
+   if not careful.posIsGood( p, target:pos() ) then
       ai.poptask()
       return
    end
@@ -294,11 +235,11 @@ control_funcs.attack = function ()
    end
 
    local p = ai.pilot()
-   if not __vulnerable( p, target, mem.vulnabort ) then
+   if not careful.checkVulnerable( p, target, mem.vulnabort ) then
       ai.poptask()
 
       -- Try to get a new enemy
-      local enemy = __getenemy(p)
+      local enemy = __getenemy()
       if enemy ~= nil then
          ai.pushtask( "attack", enemy )
       else
@@ -312,8 +253,7 @@ end
 control_funcs.inspect_moveto = function ()
    local p = ai.pilot()
    local target = ai.taskdata()
-   local r = mem.lanedistance
-   if mem.natural and target and lanes.getDistance2P( p, target ) < r*r then
+   if mem.natural and target and not careful.posIsGood( p, target ) then
       ai.poptask()
       return false
    end
@@ -335,7 +275,7 @@ function should_attack( enemy, si )
    if not res then return false end
 
    -- Make sure vulnerable
-   if not __vulnerable( p, enemy, mem.vulnattack ) then
+   if not careful.checkVulnerable( p, enemy, mem.vulnattack ) then
       return false
    end
    return true
@@ -343,11 +283,9 @@ end
 
 -- Try to investigate
 function should_investigate( pos, _si )
-   local d = ai.dist2( pos )
-   local ec = mem.enemyclose or math.huge
-   if d < lanes.getDistance2P( ai.pilot(), pos ) then
+   if careful.posIsGood( ai.pilot(), pos ) then
       return false
-   elseif d < ec then
+   elseif ai.dist2(pos) < (mem.enemyclose or math.huge) then
       return true
    end
    return false
@@ -361,8 +299,9 @@ mem.aggressive    = true -- Pirates are aggressive
 mem.lanedistance  = 2000
 mem.enemyclose    = nil
 mem.ambushclose   = nil
-mem.vulnrange     = 4000
+mem.vulnrange     = 3000
 mem.vulnrambo     = 1.0
 mem.vulnattack    = 1.5 -- Vulnerability threshold to attack (higher is less vulnerable)
 mem.vulnabort     = 2.0 -- Vulnerability threshold to break off attack (lower is more vulnerable)
 mem.vulnignore    = false
+mem.atk_pref_func = atk.prefer_weaker -- Pirates prefer weaker targets

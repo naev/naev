@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Tepdania Prime">
+ <pos x="-1533.178601" y="2822.014165"/>
+ <GFX>
+  <space>J05.webp</space>
+  <exterior>gas.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <base>50.000000</base>
+  <bonus>25.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>J</class>
+  <population>8500</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Tepdania Prime was originally established by advances in technology allowed by Project Za'lek, before it would become Great House Za'lek. The planet is a J-class Gas Giant with an incredibly dense core formed of rare minerals and resources surrounded by a dense acidic atmosphere. The spaceport and only city of Tepdania Prime is located in a geostationary orbit inside the atmosphere, and protects itself from the local environment by an adaptively tuned shielding unit. The only entrance through the shielding unit is located in the aft and precise maneuvers are needed to get in and out. Specialized drones are used to guides the ships as a single mistake can easily cause the entire ship to spiral into the core. Despite the precariousness of the entire set-up, it is incredible well-designed and has continued with little to no modification since its inception. Mining of the core is done by special drones, and most of the work on the station is around the maintenance of said drones. Given that much of the technology used is not well understood and incompatible with modern approaches, there are no plans to replace or refurbish the station, which, once fails, will return Tepdania Prime to its original uncolonized state.</description>
+  <bar>The bar is located at the head of the station and undulates with the flow of the atmosphere. Similar to the rest of the station, it relies heavily on drones for serving drinks. Some look very ancient, nothing like the extremely optimized drones you would see on Za'lek worlds. Almost all food and drink is imported from other worlds given the space constraints limiting the use of hydroponics.</bar>
+ </general>
+ <tech>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Trade Ships</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Systems High</item>
+  <item>Hulls High</item>
+  <item>Engines High</item>
+  <item>Heavy Weapons 1</item>
+ </tech>
+ <tags>
+  <tag>mining</tag>
+  <tag>old</tag>
+ </tags>
+</spob>

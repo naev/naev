@@ -5,11 +5,10 @@
   <map_shader>plasmastorm_map.frag</map_shader>
   <features>#pPlasma Storm (-50% energy and -50% stress dissipation)#0</features>
   <radius>21500.000000</radius>
-  <stars>400</stars>
-  <interference>25.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>56.250000</interference>
  </general>
- <pos x="1313.421519" y="-668.973290"/>
+ <pos x="1451.458740" y="-370.262589"/>
  <spobs>
   <spob>Cornwal Ordinance</spob>
   <spob>Sollebor</spob>

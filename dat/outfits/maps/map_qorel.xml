@@ -1,82 +1,90 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Map: Qorel Expanse">
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Map: Qorel Tunnel">
  <general>
   <rarity>2</rarity>
   <mass>0</mass>
   <price>500000</price>
-  <description>This map contains the location of the jump points in and out of the Qorel expanse, a set of systems not accessible through standard jump points. Getting the location of these very special jump points is usually very costly to reduce the number of people having access to it.</description>
+  <description>This map contains the location of the jump points in and out of the Qorel Tunnel, a set of systems not accessible through standard jump points. Getting the location of these very special jump points is usually very costly to reduce the number of people having access to it.</description>
   <gfx_store>map_sector_02.webp</gfx_store>
  </general>
  <specific type="map">
-  <sys name="Acheron">
-   <jump>Terminus</jump>
-   <jump>Merisi</jump>
-  </sys>
-  <sys name="Merisi">
-   <jump>Borla</jump>
-   <jump>Acheron</jump>
-  </sys>
-  <sys name="Borla">
-   <jump>Merisi</jump>
-   <jump>Mural</jump>
-  </sys>
-  <sys name="Mural">
-   <jump>Borla</jump>
-   <jump>Salvador</jump>
-  </sys>
   <sys name="Terminus">
    <jump>Acheron</jump>
-  </sys>
-  <sys name="Pas">
-   <jump>Effetey</jump>
-  </sys>
-  <sys name="Provectus Nova">
-   <jump>Effetey</jump>
+   <jump>Flok</jump>
+   <spob>Foundation Station</spob>
   </sys>
   <sys name="Effetey">
+   <jump>Frolina</jump>
    <jump>Pas</jump>
-   <jump>Provectus Nova</jump>
-   <jump>Fried</jump>
+   <jump>Trohem</jump>
+   <spob>Efferey</spob>
+  </sys>
+  <sys name="Blacin">
+   <jump>Gremlin</jump>
+   <jump>Trohem</jump>
+   <jump>Wochii</jump>
+  </sys>
+  <sys name="Firk">
+   <jump>Doowa</jump>
+   <jump>Flok</jump>
+  </sys>
+  <sys name="Doowa">
+   <jump>Firk</jump>
+   <jump>Qorel</jump>
+  </sys>
+  <sys name="Trask">
+   <jump>Frolina</jump>
+   <jump>Qorel</jump>
+  </sys>
+  <sys name="Flok">
+   <jump>Firk</jump>
+   <jump>Terminus</jump>
+  </sys>
+  <sys name="Qorel">
+   <jump>Doowa</jump>
+   <jump>Eneguoz</jump>
+   <jump>Trask</jump>
+   <jump>Uhriabi</jump>
+   <spob>Qorellia</spob>
+  </sys>
+  <sys name="Frolina">
+   <jump>Effetey</jump>
+   <jump>Trask</jump>
+  </sys>
+  <sys name="Trohem">
+   <jump>Blacin</jump>
+   <jump>Effetey</jump>
   </sys>
   <sys name="Gremlin">
    <jump>Blacin</jump>
   </sys>
-  <sys name="Blacin">
-   <jump>Gremlin</jump>
-  </sys>
-  <sys name="Blunderbuss">
-   <jump>Ekkodu</jump>
-  </sys>
-  <sys name="Ekkodu">
-   <jump>Blunderbuss</jump>
-  </sys>
-  <sys name="Torg">
-   <jump>Firk</jump>
-  </sys>
-  <sys name="Firk">
-   <jump>Torg</jump>
-  </sys>
-  <sys name="Vlexon">
-   <jump>Doowa</jump>
-  </sys>
-  <sys name="Salvador">
-   <jump>Doowa</jump>
-   <jump>Hakoi</jump>
-   <jump>Mural</jump>
-  </sys>
-  <sys name="Doowa">
-   <jump>Vlexon</jump>
-   <jump>Salvador</jump>
-  </sys>
-  <sys name="Hakoi">
-   <jump>Trask</jump>
-   <jump>Salvador</jump>
-  </sys>
-  <sys name="Trask">
-   <jump>Hakoi</jump>
-  </sys>
-  <sys name="Fried">
+  <sys name="Pas">
    <jump>Effetey</jump>
+   <spob>Shangris Station</spob>
+  </sys>
+  <sys name="Provectus Nova">
+   <spob>Provectus Nova I</spob>
+   <spob>Provectus Nova Ia</spob>
+  </sys>
+  <sys name="Uhriabi">
+   <jump>Qorel</jump>
+   <spob>Mugen</spob>
+   <spob>Steiner Station</spob>
+   <spob>Uhriabi-17</spob>
+   <spob>Uhriabi-9</spob>
+  </sys>
+  <sys name="Eneguoz">
+   <jump>Qorel</jump>
+   <spob>Eneguoz II</spob>
+   <spob>Oma</spob>
+   <spob>Opa</spob>
+   <spob>Shiarta</spob>
+  </sys>
+  <sys name="Acheron">
+   <jump>Terminus</jump>
+  </sys>
+  <sys name="Wochii">
+   <jump>Blacin</jump>
   </sys>
  </specific>
 </outfit>

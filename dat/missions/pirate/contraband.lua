@@ -19,8 +19,7 @@ local pir = require "common.pirate"
 local car = require "common.cargo"
 local fmt = require "format"
 local lmisn = require "lmisn"
-
--- luacheck: globals land tick (Hook functions passed by name)
+local vntk = require "vntk"
 
 --[[
 --   Pirates shipping missions are always timed, but quite lax on the schedules
@@ -126,12 +125,12 @@ function create()
    local stuperpx   = 0.3 - 0.015 * mem.tier
    local stuperjump = 11000 - 200 * mem.tier
    local stupertakeoff = 12000 - 50 * mem.tier
-   mem.timelimit  = time.get() + time.create(0, 0, mem.traveldist * stuperpx + mem.numjumps * stuperjump + stupertakeoff + 240 * mem.numjumps)
+   mem.timelimit  = time.get() + time.new(0, 0, mem.traveldist * stuperpx + mem.numjumps * stuperjump + stupertakeoff + 240 * mem.numjumps)
 
    -- Allow extra time for refuelling stops.
    local jumpsperstop = 3 + math.min(mem.tier, 1)
    if mem.numjumps > jumpsperstop then
-      mem.timelimit:add(time.create( 0, 0, math.floor((mem.numjumps-1) / jumpsperstop) * stuperjump ))
+      mem.timelimit:add(time.new( 0, 0, math.floor((mem.numjumps-1) / jumpsperstop) * stuperjump ))
    end
 
    -- Choose amount of cargo and mission reward. This depends on the mission tier.
@@ -150,21 +149,21 @@ function create()
       car.setDesc( fmt.f( _("Smuggling contraband goods to {pnt} in the {sys} system.{msg}"), {pnt=mem.destplanet, sys=mem.destsys, msg=faction_text} ) .. "\n\n" .. _("#rWARNING:#0 Contraband is illegal in most systems and you will face consequences if caught by patrols."), mem.cargo, mem.amount, mem.destplanet, mem.timelimit )
    end
 
-   misn.setReward( fmt.credits(mem.reward) )
+   misn.setReward(mem.reward)
 end
 
 -- Mission is accepted
 function accept()
    local playerbest = car.getTransit( mem.numjumps, mem.traveldist )
    if mem.timelimit < playerbest then
-      if not tk.yesno( _("Too slow"), fmt.f(
+      if not vntk.yesno( _("Too slow"), fmt.f(
             _("This shipment must arrive within {time_limit}, but it will take at least {time} for your ship to reach {pnt}, missing the deadline. Accept the mission anyway?"),
 	    {time_limit=(mem.timelimit - time.get()), time=(playerbest - time.get()), pnt=mem.destplanet} ) ) then
          return
       end
    end
    if player.pilot():cargoFree() < mem.amount then
-      tk.msg( _("No room in ship"), fmt.f(
+      vntk.msg( _("No room in ship"), fmt.f(
          _("You don't have enough cargo space to accept this mission. It requires {tonnes_free} of free space ({tonnes_short} more than you have)."),
          { tonnes_free = fmt.tonnes(mem.amount), tonnes_short = fmt.tonnes( mem.amount - player.pilot():cargoFree() ) } ) )
       return
@@ -173,18 +172,18 @@ function accept()
    misn.accept()
 
    mem.carg_id = misn.cargoAdd( mem.cargo, mem.amount )
-   tk.msg( _("Mission Accepted"), fmt.f(
+   vntk.msg( _("Mission Accepted"), fmt.f(
       _("{tonnes} of {cargo} are loaded onto your ship."),
       {tonnes=fmt.tonnes(mem.amount), cargo=_(mem.cargo)} ) )
    hook.land( "land" ) -- only hook after accepting
-   hook.date(time.create(0, 0, 100), "tick") -- 100STU per tick
+   hook.date(time.new(0, 0, 100), "tick") -- 100STU per tick
    tick() -- set OSD
 end
 
 -- Land hook
 function land()
    if spob.cur() == mem.destplanet then
-         tk.msg( _("Successful Delivery"), fmt.f(
+         vntk.msg( _("Successful Delivery"), fmt.f(
             _("The containers of {cargo} are unloaded at the docks."), {cargo=_(mem.cargo)} ) )
       player.pay(mem.reward)
       local n = var.peek("ps_misn") or 0

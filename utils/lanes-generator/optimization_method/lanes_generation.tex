@@ -196,7 +196,7 @@ In practice, when the problem get larger, each node tends to be linked to only a
 
 The problem we are interested in consists in designing the best graph of lanes in some sense, given by a cost-function. In our application, the connectivity of the graph does not change during the optimization process. What changes is the impedance of each edge of the graph, that is influenced by the presence of a safe lane.
 
-A node is created for each inhabited asset of each system, as well as for each jump point, and internal edges are considered between each couple of nodes in the same system. The impedance of an internal edge is taken as equal to the invert of its length, and is changed when a safe lane is activated. External edges are considered between jump points of different systems, and their impedance is fixed. This creates a sparse graph that links the assets. A few edges are then suppressed in case they are too close from an other shorter edge.
+A node is created for each inhabited asset of each system, as well as for each jump point, and internal edges are considered between each couple of nodes in the same system. The impedance of an internal edge is taken as equal to the reciprocal of its length, and is changed when a safe lane is activated. External edges are considered between jump points of different systems, and their impedance is fixed. This creates a sparse graph that links the assets. A few edges are then suppressed in case they are too close to another shorter edge.
 
 \subsection{Parameter-dependant impedance}
 

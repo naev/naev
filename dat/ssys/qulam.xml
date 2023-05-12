@@ -2,13 +2,12 @@
 <ssys name="Qulam">
  <general>
   <radius>15000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-644.763483" y="-853.715546"/>
+ <pos x="-474.162853" y="-626.097534"/>
  <spobs>
-  <spob>Cantina Station</spob>
+  <spob>Cantina Center</spob>
   <spob>Katar</spob>
   <spob>Katar I</spob>
   <spob>Qulam Primus</spob>

@@ -2,7 +2,15 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Za'lek Test">
  <priority>3</priority>
- <cond>faction.playerStanding("Za'lek") &gt; 5 and spob.cur():services()["outfits"] == "Outfits"</cond>
+ <cond>
+   if faction.playerStanding("Za'lek") &lt; 0 then
+      return false
+   end
+   if spob.cur():services()["outfits"] == nil then
+      return false
+   end
+   return require("misn_test").computer()
+ </cond>
  <chance>450</chance>
  <location>Computer</location>
  <faction>Za'lek</faction>
@@ -19,41 +27,41 @@
              0 : everything normal
              1 : the player has forgotten the engine
 ]]
-
 local car = require "common.cargo"
 local fmt = require "format"
 local lmisn = require "lmisn"
 local zlk = require "common.zalek"
+local vntk = require "vntk"
 
 local isMounted, isOwned, rmTheOutfit -- Forward-declared functions
--- luacheck: globals baTotext backToControl backToNormal enter land noAnswer noAntext outOfControl outOftext slow slowtext speedtext takeoff teleport teleportation (Hook functions passed by name)
 
 local engines = {
-           _("engine with phase-change material cooling"),
-           _("engine controlled with Zermatt-Henry theory"),   --Some random scientists names
-           _("engine using a new electron propelling system"),
-           _("engine using the fifth law of thermodynamics"),      --In these times, there will maybe exist more thermo laws...
-           _("engine for system identification using the fe-method"),
-           _("engine with uncontrolled geometrical singularities"),
-           _("5-cycle-old child's engine invention"),
-           _("engine using ancestral propellant technology"),
-           _("UHP-nanobond engine"),
-           _("ancient engine discovered at an old crash site"),
-           _("engine controlled by the MegaSys Wondigs operating system"),
-           _("engine controlled by XF Cell-Ethyrial particles"),
-           _("engine with ancient Beeline Technology axis"),
-           _("unnamed engine prototype"),
-           _("engine constructed with experimental Bob-Bens technology"),
-           _("new IDS-1024 experimental engine design"),
-           _("engine with new Dili-Gent Circle conduction"),
-           _("engine with experimental DEI-Z controller"),
-           }
+   _("engine with phase-change material cooling"),
+   _("engine controlled with Zermatt-Henry theory"), -- Some random scientists names
+   _("engine using a new electron propelling system"),
+   _("engine using the fifth law of thermodynamics"), -- In these times, there will maybe exist more thermo laws...
+   _("engine for system identification using the fe-method"),
+   _("engine with uncontrolled geometrical singularities"),
+   _("5-cycle-old child's engine invention"),
+   _("engine using ancestral propellant technology"),
+   _("UHP-nanobond engine"),
+   _("ancient engine discovered at an old crash site"),
+   _("engine controlled by the MegaSys Wondigs operating system"),
+   _("engine controlled by XF Cell-Ethyrial particles"),
+   _("engine with ancient Beeline Technology axis"),
+   _("unnamed engine prototype"),
+   _("engine constructed with experimental Bob-Bens technology"),
+   _("new IDS-1024 experimental engine design"),
+   _("engine with new Dili-Gent Circle conduction"),
+   _("engine with experimental DEI-Z controller"),
+}
 
-local znpcs = {}
-znpcs[1] = _([[A group of university students greets you. "If your flight goes well, we will validate our aerospace course! The last engine exploded during the flight, but this one is much more reliable... Hopefully."]])
-znpcs[2] = _([[A very old Za'lek researcher needs you to fly with an instrumented device in order to take measurements.]])
-znpcs[3] = _([[A Za'lek student says: "Hello, I am preparing a Ph.D in system reliability. I need to make precise measurements on this engine in order to validate a stochastic failure model I developed."]])
-znpcs[4] = _([[A Za'lek researcher needs you to test the new propulsion system they have implemented in this engine.]])
+local znpcs = {
+   _([[A group of university students greets you. "If your flight goes well, we will validate our aerospace course! The last engine exploded during the flight, but this one is much more reliable… Hopefully."]]),
+   _([[A very old Za'lek researcher needs you to fly with an instrumented device in order to take measurements.]]),
+   _([[A Za'lek student says: "Hello, I am preparing a Ph.D in system reliability. I need to make precise measurements on this engine in order to validate a stochastic failure model I developed."]]),
+   _([[A Za'lek researcher needs you to test the new propulsion system they have implemented in this engine.]]),
+}
 
 function create()
    mem.origin_p, mem.origin_s = spob.cur()
@@ -69,11 +77,6 @@ function create()
       misn.finish(false)
    end
 
-   -- mission generics
-   --stuperpx   = 0.3 - 0.015 * tier
-   --stuperjump = 11000 - 75 * tier
-   --stupertakeoff = 15000
-
    -- Choose mission reward. This depends on the mission tier.
    local jumpreward = 1500
    local distreward = 0.30
@@ -85,28 +88,28 @@ function create()
    misn.setTitle( fmt.f( zlk.prefix.._("Test of {engine}"), {engine=typeOfEng} ))
    misn.markerAdd(mem.destplanet, "computer")
    car.setDesc( fmt.f(_("A Za'lek research team needs you to travel to {pnt} in {sys} using an engine in order to test it."), {pnt=mem.destplanet, sys=mem.destsys} ), nil, nil, mem.destplanet )
-   misn.setReward(fmt.credits(mem.reward))
+   misn.setReward(mem.reward)
 end
 
 function accept()
    if player.misnActive("Za'lek Test") then
-       tk.msg(_("You cannot accept this mission"), _("You are already testing another engine."))
+       vntk.msg(_("You cannot accept this mission"), _("You are already testing another engine."))
        return
    end
 
-   if misn.accept() then -- able to accept the mission
-      mem.stage = 0
-      player.outfitAdd("Za'lek Test Engine")
-      tk.msg( _("Mission Accepted"), znpcs[ rnd.rnd(1, #znpcs) ] )
-      tk.msg( _("Mission Accepted"), fmt.f( _("Za'lek technicians give you the engine. You will have to travel to {pnt} in {sys} with this engine. The system will automatically take measurements during the flight. Don't forget to equip the engine."), {pnt=mem.destplanet, sys=mem.destsys} ))
+   misn.accept()
 
-      misn.osdCreate(_("Za'lek Test"), {fmt.f(_("Fly to {pnt} in the {sys} system"), {pnt=mem.destplanet, sys=mem.destsys})})
-      mem.takehook = hook.takeoff( "takeoff" )
-      mem.enterhook = hook.enter("enter")
-   else
-      tk.msg( _("Too many missions"), _("You have too many active missions.") )
-      return
-   end
+   mem.stage = 0
+   player.outfitAdd("Za'lek Test Engine")
+   vntk.msg( _("Mission Accepted"), {
+      znpcs[ rnd.rnd(1, #znpcs) ],
+      fmt.f( _("Za'lek technicians give you the engine. You will have to travel to {pnt} in {sys} with this engine. The system will automatically take measurements during the flight. Don't forget to equip the engine."),
+         {pnt=mem.destplanet, sys=mem.destsys} ),
+   } )
+
+   misn.osdCreate(_("Za'lek Test"), {fmt.f(_("Fly to {pnt} in the {sys} system"), {pnt=mem.destplanet, sys=mem.destsys})})
+   mem.takehook = hook.takeoff( "takeoff" )
+   mem.enterhook = hook.enter("enter")
 
    mem.isSlow = false     --Flag to know if the pilot has limited speed
    mem.curplanet = spob.cur()
@@ -123,7 +126,7 @@ function takeoff()  --must trigger at every takeoff to check if the player forgo
 
       else   --Player has forgotten the engine
       mem.stage = 1
-      tk.msg( _("Didn't you forget something?"), _("It seems you forgot the engine you are supposed to test. Land again and put it on your ship.") )
+      vntk.msg( _("Didn't you forget something?"), _("It seems you forgot the engine you are supposed to test. Land again and put it on your ship.") )
    end
 end
 
@@ -156,8 +159,10 @@ function land()
    end
 
    if spob.cur() == mem.destplanet and mem.stage == 0 then
-      tk.msg( _("Successful Landing"), _("Happy to be still alive, you land.  An excited group of Za'lek scientists quickly remove the experimental engine and eagerly download your flight data before paying you your fee."))
       player.pay(mem.reward)
+
+      lmisn.sfxVictory()
+      vntk.msg( _("Successful Landing"), _([[Happy to be still alive, you land.  An excited group of Za'lek scientists quickly remove the experimental engine and eagerly download your flight data before paying you your fee.]]).."\n\n"..fmt.reward(mem.reward))
       player.outfitRm("Za'lek Test Engine")
 
       -- increase faction
@@ -167,7 +172,7 @@ function land()
    end
 
    if spob.cur() ~= mem.curplanet and mem.stage == 1 then  --Lands elsewhere without the engine
-      tk.msg( _("Mission failed"), _("You traveled without the engine."))
+      vntk.msg( _("Mission failed"), _("You traveled without the engine."))
       abort()
    end
 
@@ -186,7 +191,7 @@ function teleportation()
    local newsyslist = lmisn.getSysAtDistance(system.cur(), 1, 3)
    local newsys = newsyslist[rnd.rnd(1, #newsyslist)]
    player.teleport(newsys)
-   tk.msg(_("What the hell is happening?"), fmt.f(_("You suddenly feel a huge acceleration, as if your ship was going into hyperspace, then a sudden shock causes you to pass out. As you wake up, you find that your ship is damaged and you have ended up somewhere in the {sys} system!"), {sys=newsys}))
+   vntk.msg(_("What the hell is happening?"), fmt.f(_("You suddenly feel a huge acceleration, as if your ship was going into hyperspace, then a sudden shock causes you to pass out. As you wake up, you find that your ship is damaged and you have ended up somewhere in the {sys} system!"), {sys=newsys}))
    player.pilot():setHealth(50, 0)
    player.pilot():setEnergy(0)
 end
@@ -195,8 +200,7 @@ end
 function slow()
 
    -- Cancel autonav.
-   player.cinematics(true)
-   player.cinematics(false)
+   player.autonavAbort()
    camera.shake()
    audio.soundPlay( "empexplode" )
 
@@ -225,9 +229,8 @@ end
 
 --Player's ship run amok and behaves randomly
 function outOfControl()
-
    -- Cancel autonav.
-   player.cinematics(true)
+   player.autonavAbort()
    camera.shake()
 
    player.pilot():control()
@@ -241,9 +244,8 @@ end
 
 --The player can't control his ship anymore
 function noAnswer()
-
    -- Cancel autonav.
-   player.cinematics(true)
+   player.autonavAbort()
    camera.shake()
 
    player.pilot():control()
@@ -253,30 +255,29 @@ end
 
 --Just de-control the player's ship
 function backToControl()
-   player.cinematics(false)
    player.pilot():control(false)
    hook.timer(1.0, "baTotext")
 end
 
 --Displays texts
 function slowtext()
-   tk.msg(_("Where has the power gone?"), _("The engine makes a loud noise, and you notice that the engine has lost its ability to thrust at the rate that it's supposed to."))
+   vntk.msg(_("Where has the power gone?"), _("The engine makes a loud noise, and you notice that the engine has lost its ability to thrust at the rate that it's supposed to."))
 end
 
 function speedtext()
-   tk.msg(_("Power is back."), _("It seems the engine decided to work properly again."))
+   vntk.msg(_("Power is back."), _("It seems the engine decided to work properly again."))
 end
 
 function outOftext()
-   tk.msg(_("This wasn't supposed to happen"), _("Your ship is totally out of control. You curse under your breath at the defective engine."))
+   vntk.msg(_("This wasn't supposed to happen"), _("Your ship is totally out of control. You curse under your breath at the defective engine."))
 end
 
 function noAntext()
-   tk.msg(_("Engine is dead"), _("The engine has stopped working. It had better start working again soon; you don't want to die out here!"))
+   vntk.msg(_("Engine is dead"), _("The engine has stopped working. It had better start working again soon; you don't want to die out here!"))
 end
 
 function baTotext()
-   tk.msg(_("Back to normal"), _("The engine is working again. You breathe a sigh of relief."))
+   vntk.msg(_("Back to normal"), _("The engine is working again. You breathe a sigh of relief."))
 end
 
 function abort()

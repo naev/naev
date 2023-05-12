@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Virginis Alpha">
+ <pos x="11492.121551" y="2883.072709"/>
+ <GFX>
+  <space>G03.webp</space>
+  <exterior>mining_shaft.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <base>20.000000</base>
+  <bonus>10.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>G</class>
+  <population>173000</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>Virginis Alpha has a a violently dusty atmosphere that doesn't sit well with most spaceships. Just a single visit when a storm is raging can cause enough damage to almost write the ship off as lost. However, the important mineral resources almost ensure that there are always pilots foolish enough to risk it for a chance at making some quick credits. Virginis Alpha was colonized shortly after Spica, although the environment ensures that it will never be as prosperous. Those who immigrate from abroad quickly find themselves dreaming of going back; it is only the unlucky ones born at Virginis Alpha that do not know better who can get truly used to the planet.</description>
+ </general>
+ <tags>
+  <tag>mining</tag>
+  <tag>rural</tag>
+  <tag>old</tag>
+ </tags>
+</spob>

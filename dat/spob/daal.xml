@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Daal">
  <lua>spob/lua/highclass.lua</lua>
- <pos x="-10085.286858" y="-30267.838240"/>
+ <pos x="-8569.235935" y="-26348.291951"/>
  <GFX>
   <space>moon-M03.webp</space>
   <exterior>forest.webp</exterior>

@@ -25,7 +25,7 @@ function load ()
    if tex==nil then
       mem.tex = lg.newImage( "path/to/image.png" )
       mem.pos = mem.spob:pos()
-      mem.tw, mem.th = tex:getDimensions()
+      mem.tw, mem.th = tex:dim()
       mem.pos = mem.pos + vec2.new( -mem.tw/2, mem.th/2 )
    end
    return mem.tex.tex, (mem.tw+mem.th)/4

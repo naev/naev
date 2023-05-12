@@ -7,6 +7,10 @@
 
 #define PILOT_OUTFIT_LUA_UPDATE_DT     (1.0/10.0)   /* How often the Lua outfits run their update script (in seconds).  */
 
+/* Augmentations of normal pilot API. */
+const char* pilot_outfitDescription( const Pilot *pilot, const Outfit *o );
+const char* pilot_outfitSummary( const Pilot *p, const Outfit *o, int withname );
+
 /* Raw changes. */
 int pilot_addOutfitRaw( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s );
 int pilot_addOutfitTest( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s, int warn );
@@ -31,7 +35,7 @@ void pilot_fillAmmo( Pilot* pilot );
 /* Checks. */
 int pilot_slotsCheckSafety( const Pilot *p );
 int pilot_slotsCheckRequired( const Pilot *p );
-const char* pilot_checkSpaceworthy( const Pilot *p );
+int pilot_isSpaceworthy( const Pilot *p );
 int pilot_reportSpaceworthy( const Pilot *p, char *buf, int buffSize );
 const char* pilot_canEquip( const Pilot *p, const PilotOutfitSlot *s, const Outfit *o );
 
@@ -49,7 +53,8 @@ PilotOutfitSlot *pilot_getSlotByName( Pilot *pilot, const char *name );
 int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, vec2 *v );
 
 /* Lua outfit stuff. */
-int pilot_slotIsActive( const PilotOutfitSlot *o );
+int pilot_slotIsToggleable( const PilotOutfitSlot *o );
+int pilot_slotIsToggleable( const PilotOutfitSlot *o );
 int pilot_outfitLAdd( Pilot *pilot, PilotOutfitSlot *po );
 int pilot_outfitLRemove( Pilot *pilot, PilotOutfitSlot *po );
 void pilot_outfitLInitAll( Pilot *pilot );

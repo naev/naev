@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Za'lek Demon">
+ <lua>ships/lua/zalek.lua</lua>
  <points>100</points>
  <base_type>Demon</base_type>
  <GFX sx="12" sy="12">demon</GFX>
  <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound pitch="0.76">engine_zalek</sound>
  <class>Destroyer</class>
  <price>2400000</price>

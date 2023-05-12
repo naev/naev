@@ -223,7 +223,7 @@ static int texL_new( lua_State *L )
          NLUA_ERROR( L, _("Data has invalid type for texture") );
       if (w*h*ld->elem*4 != ld->size)
          NLUA_ERROR( L, _("Texture dimensions don't match data size!") );
-      asprintf( &name, "nlua_texture_%03d", ++nlua_tex_counter );
+      SDL_asprintf( &name, "nlua_texture_%03d", ++nlua_tex_counter );
       tex = gl_loadImageData( (void*)ld->data, w, h, sx, sy, name  );
       free( name );
       if (tex==NULL)

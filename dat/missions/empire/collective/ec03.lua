@@ -7,7 +7,7 @@
  <done>Collective Espionage 2</done>
  <chance>100</chance>
  <location>Bar</location>
- <spob>Omega Station</spob>
+ <spob>Omega Enclave</spob>
  <notes>
    <campaign>Collective</campaign>
    <tier>3</tier>
@@ -32,10 +32,9 @@ local emp = require "common.empire"
 
 -- Mission constants
 local dronequota = 5 -- The amount of drones the player must whack to win
-local misn_base = spob.get("Omega Station")
+local misn_base = spob.get("Omega Enclave")
 local misn_target_sys = system.get("C-59")
 
--- luacheck: globals death jumpin land (Hook functions passed by name)
 
 mem.osd_msg = {}
 
@@ -75,7 +74,7 @@ function accept ()
 
       -- Mission details
       misn.setTitle(_("Collective Distraction"))
-      misn.setReward( fmt.credits( mem.credits ) )
+      misn.setReward( mem.credits )
       misn.setDesc( fmt.f(_("Go to draw the Collective's attention in the {sys} system"), {sys=misn_target_sys} ))
 
       tk.msg( _("Collective Espionage"), fmt.f(_([["Here's the plan: we want to drop a commando team on {pnt} to set up more sophisticated surveillance. We've already got a team assembled. Your job will be to provide a distraction.
@@ -124,13 +123,13 @@ function land()
     "Stay alert. We'll probably need your assistance when they get back. Take the free time as a vacation. I heard the weather on Caladan is pretty nice this time of year, maybe you should visit them. We'll keep in touch."]]))
 
       -- Store time commando theoretically landed
-      var.push( "emp_commando", time.tonumber(time.get() + time.create( 0, 10, 0 )) )
+      var.push( "emp_commando", time.tonumber(time.get() + time.new( 0, 10, 0 )) )
 
       -- Rewards
       player.pay(mem.credits)
       faction.modPlayerSingle("Empire",5)
 
-      emp.addCollectiveLog( _([[You provided a distraction while a commando team was inserted into Eiroik for the Empire to set up more sophisticated surveillance of the Collective. Lt. Commander Dimitri said that they should be back in about 10 periods and that the Empire will probably need your assistance on Omega Station again at that time.]]) )
+      emp.addCollectiveLog( _([[You provided a distraction while a commando team was inserted into Eiroik for the Empire to set up more sophisticated surveillance of the Collective. Lt. Commander Dimitri said that they should be back in about 10 periods and that the Empire will probably need your assistance on Omega Enclave again at that time.]]) )
 
       misn.finish(true)
    end

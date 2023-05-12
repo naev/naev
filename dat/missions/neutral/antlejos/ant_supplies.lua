@@ -41,13 +41,12 @@ local levelup = {
    2500, -- +bad spaceships
 }
 
--- luacheck: globals land enter protest (Hook functions passed by name)
 
 function create ()
    mem.tier = rnd.rnd(1,3)
 
    -- Inclusive claiming, multiple missions can be done at the same time!
-   if not misn.claim( returnsys, false, true ) then misn.finish( false ) end
+   if not misn.claim( returnsys, true ) then misn.finish( false ) end
 
    mem.destpnt, mem.destsys, mem.numjumps, mem.traveldist = car.calculateRoute( rnd.rnd(3,5)+mem.tier, true )
    if not mem.destpnt then
@@ -65,7 +64,7 @@ function create ()
    end
    misn.setTitle( fmt.f(_("#oANTLEJOS:#0 {adj} delivery of supplies from {pnt} ({sys} system)"),
          {adj=adj, pnt=mem.destpnt, sys=mem.destsys}) )
-   misn.setReward( fmt.credits(mem.reward) )
+   misn.setReward(mem.reward)
 
    local desc = fmt.f(_("Pick up {cargo} at {pnt} in the {sys} system and bring them to {retpnt} to further accelerate the terraforming. Note that protestors from the PUAAA are expected to show up.\n"),
       {cargo=cargo_name, pnt=mem.destpnt, sys=mem.destsys, retpnt=returnpnt})

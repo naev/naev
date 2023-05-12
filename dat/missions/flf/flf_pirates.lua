@@ -121,7 +121,7 @@ function create ()
    -- Set mission details
    misn.setTitle( fmt.f( misn_title[mem.level], {sys=mem.missys} ) )
    misn.setDesc( desc )
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setReward( mem.credits )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
 

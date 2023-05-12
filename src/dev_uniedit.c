@@ -58,14 +58,18 @@ typedef enum UniEditMode_ {
    UNIEDIT_DEFAULT,  /**< Default editor mode. */
    UNIEDIT_JUMP,     /**< Jump point toggle mode. */
    UNIEDIT_NEWSYS,   /**< New system editor mode. */
+   UNIEDIT_ROTATE,   /**< Rotation mode. */
+
 } UniEditMode;
 
 typedef enum UniEditViewMode_ {
    UNIEDIT_VIEW_DEFAULT,
    UNIEDIT_VIEW_VIRTUALSPOBS,
    UNIEDIT_VIEW_RADIUS,
+   UNIEDIT_VIEW_NOLANES,
    UNIEDIT_VIEW_BACKGROUND,
    UNIEDIT_VIEW_ASTEROIDS,
+   UNIEDIT_VIEW_INTERFERENCE,
    UNIEDIT_VIEW_TECH,
    UNIEDIT_VIEW_PRESENCE_SUM,
    UNIEDIT_VIEW_PRESENCE,
@@ -89,12 +93,16 @@ static int uniedit_dragSys    = 0;  /**< Dragging system around. */
 static int uniedit_dragSel    = 0;  /**< Dragging selection box. */
 static double uniedit_dragSelX= 0;  /**< Dragging selection initial X position */
 static double uniedit_dragSelY= 0;  /**< Dragging selection initial Y position */
+static double uniedit_rotate  = 0.; /**< Rotated angle (in radians). */
+static double uniedit_rotate_cx = 0.; /**< Center position of rotation. */
+static double uniedit_rotate_cy = 0.; /**< Center position of rotation. */
 static StarSystem **uniedit_sys = NULL; /**< Selected systems. */
 static StarSystem *uniedit_tsys = NULL; /**< Temporarily clicked system. */
 static int uniedit_tadd       = 0;  /**< Temporarily clicked system should be added. */
 static double uniedit_mx      = 0.; /**< X mouse position. */
 static double uniedit_my      = 0.; /**< Y mouse position. */
 static double uniedit_dt      = 0.; /**< Deltatick. */
+static char** uniedit_tagslist = NULL; /**< List of tags. */
 
 static map_find_t *found_cur  = NULL;  /**< Pointer to found stuff. */
 static int found_ncur         = 0;     /**< Number of found stuff. */
@@ -122,6 +130,7 @@ static void uniedit_btnEditRmSpob( unsigned int wid, const char *unused );
 static void uniedit_btnEditAddSpob( unsigned int wid, const char *unused );
 static void uniedit_btnEditAddSpobAdd( unsigned int wid, const char *unused );
 static void uniedit_btnViewModeSet( unsigned int wid, const char *unused );
+static void uniedit_chkNolanes( unsigned int wid, const char *wgtname );
 /* System renaming. */
 static int uniedit_checkName( const char *name );
 static void uniedit_renameSys (void);
@@ -131,6 +140,13 @@ static void uniedit_newSys( double x, double y );
 static void uniedit_toggleJump( StarSystem *sys );
 static void uniedit_jumpAdd( StarSystem *sys, StarSystem *targ );
 static void uniedit_jumpRm( StarSystem *sys, StarSystem *targ );
+/* Tags. */
+static void uniedit_btnEditTags( unsigned int wid, const char *unused );
+static void uniedit_genTagsList( unsigned int wid );
+static void uniedit_btnAddTag( unsigned int wid, const char *unused );
+static void uniedit_btnRmTag( unsigned int wid, const char *unused );
+static void uniedit_btnNewTag( unsigned int wid, const char *unused );
+static void uniedit_btnTagsClose( unsigned int wid, const char *unused );
 /* Custom system editor widget. */
 static void uniedit_buttonZoom( unsigned int wid, const char* str );
 static void uniedit_render( double bx, double by, double w, double h, void *data );
@@ -224,8 +240,8 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
    buttonPos++;
 
    /* Rename system. */
-   window_addButtonKey( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnRename", _("Rename"), uniedit_btnRename, SDLK_r );
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnRename", _("Rename"), uniedit_btnRename );
    buttonPos++;
 
    /* Edit system. */
@@ -253,15 +269,11 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
    window_addButton( wid, 80, 20, 30, 30, "btnZoomOut", "-", uniedit_buttonZoom );
 
    /* Nebula. */
-   window_addText( wid, -20, -40, 100, 20, 0, "txtSNebula",
-         &gl_smallFont, &cFontGrey, _("Nebula:") );
-   window_addText( wid, -10, -40-gl_smallFont.h-5, 110, 60, 0, "txtNebula",
+   window_addText( wid, -10, -20, 110, 200, 0, "txtNebula",
          &gl_smallFont, NULL, _("N/A") );
 
    /* Presence. */
-   window_addText( wid, -20, -100, 100, 20, 0, "txtSPresence",
-         &gl_smallFont, &cFontGrey, _("Presence:") );
-   window_addText( wid, -10, -100-gl_smallFont.h-5, 110, 140, 0, "txtPresence",
+   window_addText( wid, -10, -80-gl_smallFont.h-5, 110, 200, 0, "txtPresence",
          &gl_smallFont, NULL, _("N/A") );
 
    /* Selected text. */
@@ -278,12 +290,36 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
 static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) wid;
-   (void) mod;
+   int n;
 
    switch (key) {
       /* Mode changes. */
       case SDLK_ESCAPE:
          uniedit_mode = UNIEDIT_DEFAULT;
+         return 1;
+
+      case SDLK_a:
+         if (mod & (KMOD_LCTRL | KMOD_RCTRL)) {
+            uniedit_deselect();
+            for (int i=0; i<array_size(systems_stack); i++)
+               uniedit_selectAdd( &systems_stack[i] );
+            return 1;
+         }
+         return 0;
+
+      case SDLK_r:
+         n = array_size(uniedit_sys);
+         if (n > 1) {
+            uniedit_mode = UNIEDIT_ROTATE;
+            uniedit_rotate = 0.; /* Initialize rotation. */
+            uniedit_rotate_cx = uniedit_rotate_cy = 0.;
+            for (int i=0; i<n; i++) {
+               uniedit_rotate_cx += uniedit_sys[i]->pos.x;
+               uniedit_rotate_cy += uniedit_sys[i]->pos.y;
+            }
+            uniedit_rotate_cx /= (double) n;
+            uniedit_rotate_cy /= (double) n;
+         }
          return 1;
 
       default:
@@ -390,15 +426,17 @@ static void uniedit_btnView( unsigned int wid_unused, const char *unused )
    window_setCancel( wid, window_close );
 
    /* Add virtual spob list. */
-   str   = malloc( sizeof(char*) * (array_size(factions)+1) );
+   n     = 9; /* Number of special cases. */
+   str   = malloc( sizeof(char*) * (array_size(factions)+n) );
    str[0]= strdup(_("Default"));
    str[1]= strdup(_("Virtual Spobs"));
    str[2]= strdup(_("System Radius"));
-   str[3]= strdup(_("Background"));
-   str[4]= strdup(_("Asteroids"));
-   str[5]= strdup(_("Tech"));
-   str[6]= strdup(_("Sum of Presences"));
-   n     = 7; /* Number of special cases. */
+   str[3]= strdup(_("No Lanes"));
+   str[4]= strdup(_("Background"));
+   str[5]= strdup(_("Asteroids"));
+   str[6]= strdup(_("Interference"));
+   str[7]= strdup(_("Tech"));
+   str[8]= strdup(_("Sum of Presences"));
    k     = n;
    for (int i=0; i<array_size(factions); i++) {
       int f = factions[i];
@@ -559,6 +597,28 @@ static void uniedit_renderRadius( double x, double y, double r )
    }
 }
 
+static void uniedit_renderNolanes( double x, double y, double r )
+{
+   const glColour c = { .r=1., .g=1., .b=1., .a=0.3 };
+
+   for (int i=0; i<array_size(systems_stack); i++) {
+      double tx, ty, sr;
+      StarSystem *sys = system_getIndex( i );
+
+      if (!sys_isFlag( sys, SYSTEM_NOLANES ))
+         continue;
+
+      tx = x + sys->pos.x*uniedit_zoom;
+      ty = y + sys->pos.y*uniedit_zoom;
+
+      /* draws the disk representing the faction */
+      sr = 5.*M_PI * uniedit_zoom;
+
+      (void) r;
+      gl_renderCircle( tx, ty, sr, &c, 1 );
+   }
+}
+
 static void uniedit_renderBackground( double x, double y, double r )
 {
    const glColour c = { .r=1., .g=1., .b=1., .a=0.3 };
@@ -598,6 +658,25 @@ static void uniedit_renderAsteroids( double x, double y, double r )
 
       /* Draw disk. */
       sr = 0.3*M_PI*sqrt(density) * uniedit_zoom;
+      (void) r;
+      gl_renderCircle( tx, ty, sr, &c, 1 );
+   }
+}
+
+static void uniedit_renderInterference( double x, double y, double r )
+{
+   const glColour c = { .r=1., .g=1., .b=1., .a=0.3 };
+
+   for (int i=0; i<array_size(systems_stack); i++) {
+      double tx, ty, sr;
+      StarSystem *sys = system_getIndex( i );
+
+      tx = x + sys->pos.x*uniedit_zoom;
+      ty = y + sys->pos.y*uniedit_zoom;
+
+      /* draws the disk representing the faction */
+      sr = 5.*M_PI*sqrt(sys->interference / 20.) * uniedit_zoom;
+
       (void) r;
       gl_renderCircle( tx, ty, sr, &c, 1 );
    }
@@ -679,12 +758,20 @@ void uniedit_renderMap( double bx, double by, double w, double h, double x, doub
          uniedit_renderRadius( x, y, r );
          break;
 
+      case UNIEDIT_VIEW_NOLANES:
+         uniedit_renderNolanes( x, y, r );
+         break;
+
       case UNIEDIT_VIEW_BACKGROUND:
          uniedit_renderBackground( x, y, r );
          break;
 
       case UNIEDIT_VIEW_ASTEROIDS:
          uniedit_renderAsteroids( x, y, r );
+         break;
+
+      case UNIEDIT_VIEW_INTERFERENCE:
+         uniedit_renderInterference( x, y, r );
          break;
 
       case UNIEDIT_VIEW_TECH:
@@ -709,6 +796,8 @@ void uniedit_renderMap( double bx, double by, double w, double h, double x, doub
 
    /* Render system names. */
    map_renderNames( bx, by, x, y, zoom, w, h, 1, 1. );
+
+   glClear( GL_DEPTH_BUFFER_BIT );
 }
 
 /**
@@ -869,7 +958,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
       return;
    }
 
-   /* Handle background. */
+   /* Handle asteroids. */
    else if (uniedit_viewmode == UNIEDIT_VIEW_ASTEROIDS) {
       if (array_size(sys->asteroids) > 0) {
          int l = 0;
@@ -879,6 +968,15 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
             for (int j=0; j<array_size(ast->groups); j++)
                l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", (l>0)?"\n":"", ast->groups[j]->name );
          }
+         toolkit_drawAltText( x, y, buf);
+      }
+      return;
+   }
+
+   /* Handle interference. */
+   else if (uniedit_viewmode == UNIEDIT_VIEW_INTERFERENCE) {
+      if (sys->interference > 0.) {
+         scnprintf( &buf[0], sizeof(buf), _("Interference: %.0f%%"), sys->interference );
          toolkit_drawAltText( x, y, buf);
       }
       return;
@@ -1029,7 +1127,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 
       case SDL_MOUSEWHEEL:
          /* Must be in bounds. */
-         if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
+         if ((mx < 0.) || (mx > w-130.) || (my < 60.) || (my > h))
             return 0;
 
          if (event->wheel.y > 0)
@@ -1041,7 +1139,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 
       case SDL_MOUSEBUTTONDOWN:
          /* Must be in bounds. */
-         if ((mx < 60.) || (mx > w) || (my < 0.) || (my > h-130))
+         if ((mx < 0.) || (mx > w-130.) || (my < 60.) || (my > h))
             return 0;
          window_setFocus( wid, "cstSysEdit" );
          lastClick = uniedit_lastClick;
@@ -1052,6 +1150,12 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          my -= h/2. - uniedit_ypos;
          mx /= uniedit_zoom;
          my /= uniedit_zoom;
+
+         /* Finish rotation. */
+         if (uniedit_mode == UNIEDIT_ROTATE) {
+            uniedit_mode = UNIEDIT_DEFAULT;
+            return 1;
+         }
 
          /* Create new system if applicable. */
          if (uniedit_mode == UNIEDIT_NEWSYS) {
@@ -1194,8 +1298,34 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 
       case SDL_MOUSEMOTION:
          /* Update mouse positions. */
-         uniedit_mx  = mx;
-         uniedit_my  = my;
+         uniedit_mx = mx;
+         uniedit_my = my;
+
+         /* Handle rotation. */
+         if (uniedit_mode == UNIEDIT_ROTATE) {
+            double a1, a2, amod;
+            double cx = mx - w/2. + uniedit_xpos;
+            double cy = my - h/2. + uniedit_ypos;
+            cx /= uniedit_zoom;
+            cy /= uniedit_zoom;
+            cx -= uniedit_rotate_cx;
+            cy -= uniedit_rotate_cy;
+            a1 = atan2( cy, cx );
+            cx -= rx / uniedit_zoom;
+            cy += ry / uniedit_zoom;
+            a2 = atan2( cy, cx );
+            amod = a1-a2;
+            uniedit_rotate += amod;
+            for (int i=0; i<array_size(uniedit_sys); i++) {
+               StarSystem *s = uniedit_sys[i];
+               double sx = s->pos.x - uniedit_rotate_cx;
+               double sy = s->pos.y - uniedit_rotate_cy;
+               double a = atan2( sy, sx );
+               double m = hypot( sx, sy );
+               s->pos.x = uniedit_rotate_cx + m*cos(a+amod);
+               s->pos.y = uniedit_rotate_cy + m*sin(a+amod);
+            }
+         }
 
          /* Handle dragging. */
          if (uniedit_drag) {
@@ -1262,6 +1392,7 @@ char *uniedit_nameFilter( const char *name )
  */
 static void uniedit_renameSys (void)
 {
+   int cancelall_prompt = 0;
    for (int i=0; i<array_size(uniedit_sys); i++) {
       char *name, *oldName, *newName, *filtered;
       StarSystem *sys = uniedit_sys[i];
@@ -1270,8 +1401,14 @@ static void uniedit_renameSys (void)
       name = dialogue_input( _("Rename Star System"), 1, 32, _("What do you want to rename #r%s#0?"), sys->name );
 
       /* Keep current name. */
-      if (name == NULL)
+      if (name == NULL) {
+         if (!cancelall_prompt && (i < array_size(uniedit_sys))) {
+            if (dialogue_YesNoRaw( _("Cancel batch renaming?"), _("Do you want to cancel renaming all selected star systems?")))
+               break;
+            cancelall_prompt = 1;
+         }
          continue;
+      }
 
       /* Try again. */
       if (uniedit_checkName( name )) {
@@ -1282,14 +1419,15 @@ static void uniedit_renameSys (void)
 
       /* Change the name. */
       filtered = uniedit_nameFilter(sys->name);
-      asprintf(&oldName, "dat/ssys/%s.xml", filtered);
+      SDL_asprintf(&oldName, "%s/%s.xml", conf.dev_save_sys, filtered);
       free(filtered);
 
       filtered = uniedit_nameFilter(name);
-      asprintf(&newName, "dat/ssys/%s.xml", filtered);
+      SDL_asprintf(&newName, "%s/%s.xml", conf.dev_save_sys, filtered);
       free(filtered);
 
-      rename(oldName, newName);
+      if (rename(oldName, newName))
+         WARN(_("Failed to rename '%s' to '%s'!"),oldName,newName);
 
       free(oldName);
       free(newName);
@@ -1333,7 +1471,7 @@ static void uniedit_newSys( double x, double y )
    sys->name   = name;
    sys->pos.x  = x;
    sys->pos.y  = y;
-   sys->stars  = STARS_DENSITY_DEFAULT;
+   sys->spacedust  = DUST_DENSITY_DEFAULT;
    sys->radius = RADIUS_DEFAULT;
 
    /* Select new system. */
@@ -1499,6 +1637,7 @@ void uniedit_selectText (void)
       l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", uniedit_sys[i]->name,
             (i == array_size(uniedit_sys)-1) ? "" : ", " );
    }
+
    if (l == 0)
       uniedit_deselect();
    else {
@@ -1507,19 +1646,26 @@ void uniedit_selectText (void)
       /* Presence text. */
       if (array_size(uniedit_sys) == 1) {
          StarSystem *sys = uniedit_sys[0];
-         map_updateFactionPresence( uniedit_wid, "txtPresence", sys, 1 );
 
-         if (sys->nebu_density<=0.)
-            snprintf( buf, sizeof(buf), _("None") );
-         else
-            snprintf( buf, sizeof(buf), _("%.0f Density\n%.1f Volatility"), sys->nebu_density, sys->nebu_volatility);
+         buf[0] = '\0';
+         l = 0;
+         if (sys->nebu_density > 0.)
+            l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f Density\n%.1f Volatility\n%.0f Hue"), sys->nebu_density, sys->nebu_volatility, sys->nebu_hue*360.);
+         if (sys->interference > 0.)
+            l += scnprintf( &buf[l], sizeof(buf)-l, _("%s%.1f Interference"), (l>0)?"\n":"", sys->interference);
+
          window_modifyText( uniedit_wid, "txtNebula", buf );
+
+         /* Update presence stuff. */
+         map_updateFactionPresence( uniedit_wid, "txtPresence", sys, 1 );
       }
       else {
          window_modifyText( uniedit_wid, "txtNebula", _("Multiple selected") );
          window_modifyText( uniedit_wid, "txtPresence", _("Multiple selected") );
       }
    }
+
+   window_moveWidget( uniedit_wid, "txtPresence", -10, -40-window_getTextHeight( uniedit_wid, "txtNebula" ) );
 }
 
 /**
@@ -1617,7 +1763,7 @@ static void uniedit_findSearch( unsigned int wid, const char *str )
       if (spob == NULL)
          continue;
 
-      char *sysname = spob_getSystem( spobs[i] );
+      const char *sysname = spob_getSystem( spobs[i] );
       if (sysname == NULL)
          continue;
 
@@ -1795,12 +1941,12 @@ static void uniedit_editSys (void)
    x = 20;
    y -= gl_defFont.h + 15;
 
-   s = _("Stars");
+   s = _("Dust");
    l = gl_printWidthRaw( NULL, s );
-   window_addText( wid, x, y, l, 20, 1, "txtStars",
+   window_addText( wid, x, y, l, 20, 1, "txtDust",
          NULL, NULL, s );
-   window_addInput( wid, x += l + 7, y, 50, 20, "inpStars", 4, 1, NULL );
-   window_setInputFilter( wid, "inpStars", INPUT_FILTER_NUMBER );
+   window_addInput( wid, x += l + 7, y, 50, 20, "inpDust", 4, 1, NULL );
+   window_setInputFilter( wid, "inpDust", INPUT_FILTER_NUMBER );
    x += 50 + 12;
 
    s = _("Interference");
@@ -1838,11 +1984,26 @@ static void uniedit_editSys (void)
    window_setInputFilter( wid, "inpHue", INPUT_FILTER_NUMBER );
    x += 50 + 12;
 
+   /* Next row. */
+   x = 20;
+   y -= gl_defFont.h + 15;
+
+   s = _("No lanes");
+   window_addCheckbox( wid, x, y, 100, gl_defFont.h, "chkNolanes", s, uniedit_chkNolanes, sys_isFlag( sys, SYSTEM_NOLANES ) );
+
+   /* Tags. */
+   x = 20;
+   y -= gl_defFont.h + 15;
+   l = scnprintf( buf, sizeof(buf), "#n%s#0", _("Tags: ") );
+   for (int i=0; i<array_size(sys->tags); i++)
+      l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", (i==0)?"":_(", "), sys->tags[i] );
+   window_addText( wid, x, y, UNIEDIT_EDIT_WIDTH-40, 20, 0, "txtTags", NULL, NULL, buf );
+
    /* Load values */
    snprintf( buf, sizeof(buf), "%g", sys->radius );
    window_setInput( wid, "inpRadius", buf );
-   snprintf( buf, sizeof(buf), "%d", sys->stars );
-   window_setInput( wid, "inpStars", buf );
+   snprintf( buf, sizeof(buf), "%d", sys->spacedust );
+   window_setInput( wid, "inpDust", buf );
    snprintf( buf, sizeof(buf), "%g", sys->interference );
    window_setInput( wid, "inpInterference", buf );
    snprintf( buf, sizeof(buf), "%g", sys->nebu_density );
@@ -1871,7 +2032,7 @@ static void uniedit_editGenList( unsigned int wid )
    if (widget_exists( wid, "lstSpobs" ))
       window_destroyWidget( wid, "lstSpobs" );
 
-   y = -175;
+   y = -180;
 
    /* Check to see if it actually has virtual spobs. */
    sys   = uniedit_sys[0];
@@ -1902,8 +2063,12 @@ static void uniedit_editGenList( unsigned int wid )
       window_addButton( wid, -20, y+3, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnRmSpob", _("Remove"), uniedit_btnEditRmSpob );
    if (!widget_exists( wid, "btnAddSpob" ))
-      window_addButton( wid, -40-BUTTON_WIDTH, y+3, BUTTON_WIDTH, BUTTON_HEIGHT,
+      window_addButton( wid, -20-(20+BUTTON_WIDTH), y+3, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnAddSpob", _("Add"), uniedit_btnEditAddSpob );
+
+   if (!widget_exists( wid, "btnEditTags" ))
+      window_addButton( wid, -20-(20+BUTTON_WIDTH)*2, y+3, BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnEditTags", _("Edit Tags"), uniedit_btnEditTags );
 }
 
 /**
@@ -1921,7 +2086,7 @@ static void uniedit_editSysClose( unsigned int wid, const char *name )
    scale = atof(window_getInput( wid, "inpRadius" )) / sys->radius;
    sysedit_sysScale(sys, scale);
 
-   sys->stars           = atoi(window_getInput( wid, "inpStars" ));
+   sys->spacedust       = atoi(window_getInput( wid, "inpDust" ));
    sys->interference    = atof(window_getInput( wid, "inpInterference" ));
    sys->nebu_density    = atof(window_getInput( wid, "inpNebula" ));
    sys->nebu_volatility = atof(window_getInput( wid, "inpVolatility" ));
@@ -2044,6 +2209,223 @@ static void uniedit_btnEditAddSpobAdd( unsigned int wid, const char *unused )
 }
 
 /**
+ * @brief Edits a spob's tags.
+ */
+static void uniedit_btnEditTags( unsigned int wid, const char *unused )
+{
+   (void) unused;
+   int y, w, bw;
+
+   /* Create the window. */
+   wid = window_create( "wdwSystemTagsEditor", _("System Tags Editor"), -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
+   window_setCancel( wid, uniedit_btnTagsClose );
+
+   w = (UNIEDIT_EDIT_WIDTH - 40 - 15) / 2.;
+   bw = (UNIEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4.;
+
+   /* Close button. */
+   window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT,
+         "btnClose", _("Close"), uniedit_btnTagsClose );
+   y = 20 + BUTTON_HEIGHT + 15;
+
+   /* Remove button. */
+   window_addButton( wid, -20-(w+15), y, w, BUTTON_HEIGHT,
+         "btnRm", _("Rm Tag"), uniedit_btnRmTag );
+
+   /* Add button. */
+   window_addButton( wid, -20, y, w, BUTTON_HEIGHT,
+         "btnAdd", _("Add Tag"), uniedit_btnAddTag );
+
+   /* New tag. */
+   window_addButton( wid, -20-(w+15), 20, w, BUTTON_HEIGHT,
+         "btnNew", _("New Tag"), uniedit_btnNewTag );
+
+   /* Generate list of tags. */
+   if (uniedit_tagslist == NULL) {
+      StarSystem *systems_all = system_getAll();
+      uniedit_tagslist = array_create( char* );
+      for (int i=0; i<array_size(systems_all); i++) {
+         StarSystem *s = &systems_all[i];
+         for (int j=0; j<array_size(s->tags); j++) {
+            char *t = s->tags[j];
+            int found = 0;
+            for (int k=0; k<array_size(uniedit_tagslist); k++)
+               if (strcmp(uniedit_tagslist[k], t)==0) {
+                  found = 1;
+                  break;
+               }
+            if (!found)
+               array_push_back( &uniedit_tagslist, strdup(t) );
+         }
+      }
+      qsort( uniedit_tagslist, array_size(uniedit_tagslist), sizeof(char*), strsort );
+   }
+
+   uniedit_genTagsList( wid );
+}
+
+/*
+ * Tags are closed so update tags.
+ */
+static void uniedit_btnTagsClose( unsigned int wid, const char *unused )
+{
+   char buf[STRMAX_SHORT];
+   StarSystem *s = uniedit_sys[0];
+   int l = scnprintf( buf, sizeof(buf), "#n%s#0", _("Tags: ") );
+   for (int i=0; i<array_size(s->tags); i++)
+      l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", ((i>0) ? _(", ") : ""), s->tags[i] );
+   window_modifyText( uniedit_widEdit, "txtTags", buf );
+
+   window_close( wid, unused );
+}
+
+/**
+ * @brief Generates the spob tech list.
+ */
+static void uniedit_genTagsList( unsigned int wid )
+{
+   StarSystem *s;
+   char **have, **lack;
+   int n, x, y, w, h, hpos, lpos, empty;
+
+   hpos = lpos = -1;
+
+   /* Destroy if exists. */
+   if (widget_exists( wid, "lstTagsHave" ) &&
+         widget_exists( wid, "lstTagsLacked" )) {
+      hpos = toolkit_getListPos( wid, "lstTagsHave" );
+      lpos = toolkit_getListPos( wid, "lstTagsLacked" );
+      window_destroyWidget( wid, "lstTagsHave" );
+      window_destroyWidget( wid, "lstTagsLacked" );
+   }
+
+   s = uniedit_sys[0];
+   w = (UNIEDIT_EDIT_WIDTH - 40 - 15) / 2.;
+   x = -20 - w - 15;
+   y = 20 + BUTTON_HEIGHT * 2 + 30;
+   h = UNIEDIT_EDIT_HEIGHT - y - 30;
+
+   /* Get all the techs the spob has. */
+   n = array_size(s->tags);
+   if (n>0) {
+      have = malloc( n * sizeof(char*) );
+      for (int i=0; i<n; i++)
+         have[i] = strdup(s->tags[i]);
+      empty = 0;
+   }
+   else {
+      have = malloc( sizeof(char*) );
+      have[n++] = strdup(_("None"));
+      empty = 1;
+   }
+
+   /* Add list. */
+   window_addList( wid, x, y, w, h, "lstTagsHave", have, n, 0, NULL, uniedit_btnRmTag );
+   x += w + 15;
+
+   /* Omit the techs that the spob already has from the list.  */
+   n = 0;
+   lack = malloc( array_size(uniedit_tagslist) * sizeof(char*) );
+   for (int i=0; i<array_size(uniedit_tagslist); i++) {
+      char *t = uniedit_tagslist[i];
+      if (empty)
+         lack[n++] = strdup(t);
+      else {
+         int found = 0;
+         for (int j=0; j<array_size(s->tags); j++)
+            if (strcmp( s->tags[j], t )==0) {
+               found = 1;
+               break;
+            }
+         if (!found)
+            lack[n++] = strdup( t );
+      }
+   }
+
+   /* Add list. */
+   window_addList( wid, x, y, w, h, "lstTagsLacked", lack, n, 0, NULL, uniedit_btnAddTag );
+
+   /* Restore positions. */
+   if (hpos != -1 && lpos != -1) {
+      toolkit_setListPos( wid, "lstTagsHave", hpos );
+      toolkit_setListPos( wid, "lstTagsLacked", lpos );
+   }
+}
+
+/**
+ * @brief Adds a tech to a spob.
+ */
+static void uniedit_btnAddTag( unsigned int wid, const char *unused )
+{
+   (void) unused;
+   const char *selected;
+   StarSystem *s;
+
+   selected = toolkit_getList( wid, "lstTagsLacked" );
+   if ((selected == NULL) || (strcmp(selected,_("None"))==0))
+      return;
+
+   s = uniedit_sys[0];
+   if (s->tags == NULL)
+      s->tags = array_create( char* );
+   array_push_back( &s->tags, strdup(selected) );
+
+   /* Regenerate the list. */
+   uniedit_genTagsList( wid );
+}
+
+/**
+ * @brief Removes a tech from a spob.
+ */
+static void uniedit_btnRmTag( unsigned int wid, const char *unused )
+{
+   (void) unused;
+   const char *selected;
+   StarSystem *s;
+   int i;
+
+   selected = toolkit_getList( wid, "lstTagsHave" );
+   if ((selected == NULL) || (strcmp(selected,_("None"))==0))
+      return;
+
+   s = uniedit_sys[0];
+   for (i=0; i<array_size(s->tags); i++)
+      if (strcmp( selected, s->tags[i] )==0)
+         break;
+   if (i >= array_size(s->tags))
+      return;
+   free( s->tags[i] );
+   array_erase( &s->tags, &s->tags[i], &s->tags[i+1] );
+
+   /* Regenerate the list. */
+   uniedit_genTagsList( wid );
+}
+
+/**
+ * @brief Adds a tech to a system.
+ */
+static void uniedit_btnNewTag( unsigned int wid, const char *unused )
+{
+   (void) unused;
+   StarSystem *s;
+
+   char *tag = dialogue_input( _("Add New System Tag"), 1, 128, _("Please write the new tag to add to the system.") );
+   if (tag==NULL)
+      return;
+
+   s = uniedit_sys[0];
+   if (s->tags == NULL)
+      s->tags = array_create( char* );
+   array_push_back( &s->tags, tag ); /* gets freed later */
+
+   /* Also add to list of all tags. */
+   array_push_back( &uniedit_tagslist, strdup(tag) );
+
+   /* Regenerate the list. */
+   uniedit_genTagsList( wid );
+}
+
+/**
  * @brief Renames the systems in the system editor.
  */
 static void uniedit_btnEditRename( unsigned int wid, const char *unused )
@@ -2086,21 +2468,31 @@ static void uniedit_btnViewModeSet( unsigned int wid, const char *unused )
       return;
    }
    else if (pos==3) {
-      uniedit_viewmode = UNIEDIT_VIEW_BACKGROUND;
+      uniedit_viewmode = UNIEDIT_VIEW_NOLANES;
       window_close( wid, unused );
       return;
    }
    else if (pos==4) {
-      uniedit_viewmode = UNIEDIT_VIEW_ASTEROIDS;
+      uniedit_viewmode = UNIEDIT_VIEW_BACKGROUND;
       window_close( wid, unused );
       return;
    }
    else if (pos==5) {
-      uniedit_viewmode = UNIEDIT_VIEW_TECH;
+      uniedit_viewmode = UNIEDIT_VIEW_ASTEROIDS;
       window_close( wid, unused );
       return;
    }
    else if (pos==6) {
+      uniedit_viewmode = UNIEDIT_VIEW_INTERFERENCE;
+      window_close( wid, unused );
+      return;
+   }
+   else if (pos==7) {
+      uniedit_viewmode = UNIEDIT_VIEW_TECH;
+      window_close( wid, unused );
+      return;
+   }
+   else if (pos==8) {
       uniedit_viewmode = UNIEDIT_VIEW_PRESENCE_SUM;
       window_close( wid, unused );
       return;
@@ -2116,4 +2508,14 @@ static void uniedit_btnViewModeSet( unsigned int wid, const char *unused )
 
    /* Close the window. */
    window_close( wid, unused );
+}
+
+static void uniedit_chkNolanes( unsigned int wid, const char *wgtname )
+{
+   int s = window_checkboxState( wid, wgtname );
+   StarSystem *sys = uniedit_sys[0];
+   if (s)
+      sys_setFlag( sys, SYSTEM_NOLANES );
+   else
+      sys_rmFlag( sys, SYSTEM_NOLANES );
 }

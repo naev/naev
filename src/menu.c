@@ -24,6 +24,7 @@
 #include "dev_uniedit.h"
 #include "dialogue.h"
 #include "gui.h"
+#include "hook.h"
 #include "info.h"
 #include "intro.h"
 #include "land.h"
@@ -66,6 +67,7 @@
 int menu_open = 0; /**< Stores the opened/closed menus. */
 
 static glTexture *main_naevLogo = NULL; /**< Naev Logo texture. */
+static int menu_small_allowsave = 1; /** Can save with small menu. */
 
 /*
  * prototypes
@@ -411,26 +413,27 @@ static void menu_main_cleanBG( unsigned int wid, const char *str )
 /**
  * @brief Opens the small in-game menu.
  */
-void menu_small (void)
+void menu_small( int docheck, int info, int options, int allowsave )
 {
    int can_save;
    unsigned int wid;
-   int y;
+   int y, h;
 
    /* Check if menu should be openable. */
-   if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED) ||
-         pilot_isFlag(player.p,PILOT_DEAD) ||
-         comm_isOpen() ||
+   if (docheck && (player_isFlag(PLAYER_DESTROYED) ||
          dialogue_isOpen() || /* Shouldn't open over dialogues. */
-         (menu_isOpen(MENU_MAIN) ||
-            menu_isOpen(MENU_SMALL) ||
-            menu_isOpen(MENU_DEATH) ))
+         (menu_isOpen(MENU_MAIN) || menu_isOpen(MENU_DEATH) )))
       return;
 
-   can_save = landed && !player_isFlag(PLAYER_NOSAVE);
+   if (menu_isOpen( MENU_SMALL ))
+      return;
 
-   y = 20 + (BUTTON_HEIGHT+20)*4;
-   wid = window_create( "wdwMenuSmall", _("Menu"), -1, -1, MENU_WIDTH, MENU_HEIGHT + BUTTON_HEIGHT + 20 );
+   can_save = allowsave && landed && !player_isFlag(PLAYER_NOSAVE);
+   menu_small_allowsave = allowsave;
+
+   h = MENU_HEIGHT - (BUTTON_HEIGHT+20)*(!info+!options);
+   y = 20 + (BUTTON_HEIGHT+20)*(2+!!info+!!options);
+   wid = window_create( "wdwMenuSmall", _("Menu"), -1, -1, MENU_WIDTH, h + BUTTON_HEIGHT + 20 );
 
    window_setCancel( wid, menu_small_resume );
 
@@ -438,18 +441,22 @@ void menu_small (void)
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnResume", _("Resume"), menu_small_resume, SDLK_r );
    y -= BUTTON_HEIGHT+20;
-   window_addButtonKey( wid, 20, y,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnInfo", _("Info"), menu_small_info, SDLK_i );
-   y -= BUTTON_HEIGHT+20;
+   if (info) {
+      window_addButtonKey( wid, 20, y,
+            BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnInfo", _("Info"), menu_small_info, SDLK_i );
+      y -= BUTTON_HEIGHT+20;
+   }
    window_addButtonKey( wid, 20, y,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSave", can_save ? _("Load / Save") : _("Load"), menu_small_load, SDLK_l );
    y -= BUTTON_HEIGHT+20;
-   window_addButtonKey( wid, 20, y,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnOptions", _("Options"), menu_options_button, SDLK_o );
-   y -= BUTTON_HEIGHT+20;
+   if (options) {
+      window_addButtonKey( wid, 20, y,
+            BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnOptions", _("Options"), menu_options_button, SDLK_o );
+      y -= BUTTON_HEIGHT+20;
+   }
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnExit", _("Exit to Title"), menu_small_exit, SDLK_x );
 
@@ -467,7 +474,7 @@ static void menu_small_load( unsigned int wid, const char *str )
    (void) str;
 
    load_refresh(); /* FIXME: Substitute proper cache invalidation in case of save_all() etc. */
-   load_loadSnapshotMenu( player.name );
+   load_loadSnapshotMenu( player.name, !menu_small_allowsave );
 }
 
 /**
@@ -507,14 +514,16 @@ static void menu_small_info( unsigned int wid, const char *str )
    menu_info( INFO_MAIN );
 }
 
-/**
- * @brief Closes the small in-game menu and goes back to the main menu.
- *    @param str Unused.
- */
-static void menu_small_exit( unsigned int wid, const char *str )
+static int menu_small_exit_hook( void* unused )
 {
-   (void) str;
-   unsigned int info_wid;
+   (void) unused;
+   unsigned int wid;
+
+   /* Still stuck in a dialogue, so we have to do another hook pass. */
+   if (dialogue_isOpen()) {
+      hook_addFunc( menu_small_exit_hook, NULL, "safe" );
+      return 0;
+   }
 
    /* if landed we must save anyways */
    if (landed && land_canSave()) {
@@ -524,7 +533,7 @@ static void menu_small_exit( unsigned int wid, const char *str )
 
    /* Close info menu if open. */
    if (menu_isOpen(MENU_INFO)) {
-      info_wid = window_get("wdwInfo");
+      unsigned int info_wid = window_get("wdwInfo");
       window_destroy( info_wid );
       menu_Close(MENU_INFO);
    }
@@ -534,9 +543,34 @@ static void menu_small_exit( unsigned int wid, const char *str )
    player_soundStop();
 
    /* Clean up. */
+   wid = window_get("wdwMenuSmall");
    window_destroy( wid );
    menu_Close(MENU_SMALL);
    menu_main();
+   return 0;
+}
+
+/**
+ * @brief Closes the small in-game menu and goes back to the main menu.
+ *    @param str Unused.
+ */
+static void menu_small_exit( unsigned int wid, const char *str )
+{
+   (void) wid;
+   (void) str;
+
+   if (!menu_small_allowsave && landed && land_canSave()) {
+      if (!dialogue_YesNoRaw(_("Exit to Menu?"),_("Are you sure you wish to exit to menu right now? The game #rwill not be saved#0 since last time you landed!") ))
+         return;
+   }
+
+   /* Break out of potential inner loops. */
+   SDL_Event event;
+   SDL_memset( &event, 0, sizeof(event) );
+   event.type = SDL_LOOPDONE;
+   SDL_PushEvent( &event );
+
+   hook_addFunc( menu_small_exit_hook, NULL, "safe" );
 }
 
 /**

@@ -211,6 +211,7 @@ int *generate_news( int faction )
    const char* fname;
    ntime_t curtime = ntime_get();
    int p = 0;
+   const char **tags;
 
    fname = (faction >= 0) ? faction_name( faction ) : NULL;
 
@@ -224,13 +225,23 @@ int *generate_news( int faction )
    }
 
    /* Put all acceptable news into buf */
+   tags = (faction >= 0) ? faction_tags( faction ) : NULL;
    for (int i=0; i<array_size(news_list); i++) {
       news_t *n = &news_list[i];
+      int match_tag = 0;
+
+      /* Check to see if matches tag. */
+      if (tags != NULL) {
+         for (int j=0; j<array_size(tags); j++) {
+            if (strcasecmp( tags[j], n->faction)==0) {
+               match_tag = 1;
+               break;
+            }
+         }
+      }
 
       /* if article is okay */
-      if ((strcmp(n->faction, "Generic") == 0)
-            || ((fname != NULL)
-               && (strcmp(n->faction, fname) == 0))) {
+      if (match_tag || ((fname != NULL) && (strcasecmp(n->faction, fname) == 0))) {
          if (n->date && (n->date != 0)) {
             char *article_time = ntime_pretty( n->date, 1 );
             p += scnprintf( buf+p, NEWS_MAX_LENGTH-p,

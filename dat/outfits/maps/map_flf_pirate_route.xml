@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <outfit name="Map: FLF-Pirate Route">
  <general>
   <rarity>2</rarity>
@@ -8,11 +8,11 @@
   <gfx_store>map_sector_01.webp</gfx_store>
  </general>
  <specific type="map">
-  <sys name="Tormulex">
-   <jump>Anger</jump>
-  </sys>
+  <sys name="Tormulex"/>
   <sys name="Anger">
-   <jump>Tormulex</jump>
+   <spob>Anger I</spob>
+   <spob>Anger II</spob>
+   <spob>Rage</spob>
   </sys>
  </specific>
 </outfit>

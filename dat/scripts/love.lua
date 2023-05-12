@@ -45,6 +45,7 @@ local function _clearfuncs()
       "mousereleased",
       "wheelmoved",
       "resize",
+      "textinput",
    }
    for k,v in ipairs(f) do
       love[v] = _noop
@@ -175,7 +176,9 @@ end
 function __resize( _w, _h )
    love.origin()
 end
-
+local function _textinput( str )
+   return love.textinput( str )
+end
 
 --[[
 -- Initialize
@@ -269,7 +272,7 @@ function love.exec( path )
    end
    love._focus = true
    love._started = true
-   naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse, _resize )
+   naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse, _resize, _textinput )
    -- Doesn't actually get here until the dialogue is closed
    love._started = false
 
@@ -318,7 +321,7 @@ function love.run()
    end
    love._focus = true
    love._started = true
-   naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse, _resize )
+   naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse, _resize, _textinput )
    -- Doesn't actually get here until the dialogue is closed
    love._started = false
 

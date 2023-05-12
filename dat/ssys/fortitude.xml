@@ -2,16 +2,15 @@
 <ssys name="Fortitude">
  <general>
   <radius>22750.000000</radius>
-  <stars>300</stars>
+  <spacedust>300</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-126.680556" y="-1.645062"/>
+ <pos x="-53.003995" y="268.547571"/>
  <spobs>
   <spob>Fortitude I</spob>
   <spob>Fortitude II</spob>
   <spob>Fortitude III</spob>
-  <spob>Omega Station</spob>
+  <spob>Omega Enclave</spob>
  </spobs>
  <jumps>
   <jump target="Acheron">

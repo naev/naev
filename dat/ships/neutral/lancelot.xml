@@ -3,7 +3,7 @@
  <points>40</points>
  <base_type>Lancelot</base_type>
  <GFX size="56">lancelot</GFX>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Fighter</class>
  <price>450000</price>

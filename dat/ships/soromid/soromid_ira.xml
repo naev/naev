@@ -1,9 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Ira">
+ <lua>ships/lua/soromid.lua</lua>
  <points>200</points>
  <base_type>Ira</base_type>
  <GFX size="112" sx="12" sy="12">ira</GFX>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <rarity>2</rarity>
  <sound pitch="0.6">engine_soromid</sound>
  <class display="Bio-Cruiser">Cruiser</class>
@@ -40,7 +41,7 @@
   <utility size="large" prop="bio_systems" name="brain">Ponderosum Cerebrum I</utility>
   <utility size="large" prop="bio_organ" name="the_bite" />
   <utility size="large" prop="bio_organ" name="feral_rage" />
-  <utility size="large" prop="bio_organ" name="primal_yell" />
+  <utility size="large" prop="bio_organ" name="plasma_burst" />
   <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />

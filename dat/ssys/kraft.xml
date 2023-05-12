@@ -2,11 +2,10 @@
 <ssys name="Kraft">
  <general>
   <radius>22000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="1131.097687" y="-369.643211"/>
+ <pos x="1112.182606" y="-260.820459"/>
  <spobs>
   <spob>Grindstone Shipyards</spob>
   <spob>Kraft I</spob>
@@ -15,15 +14,20 @@
   <spob>Kraft V</spob>
   <spob>Kraft VI</spob>
   <spob>Simoen</spob>
+  <spob_virtual>Trade Lane (Sirius)</spob_virtual>
  </spobs>
  <jumps>
+  <jump target="Monogram">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
   <jump target="Neon">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Sorrow">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>0.000000</hide>
   </jump>
  </jumps>
 </ssys>

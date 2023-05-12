@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Generic News">
- <location>land</location>
+ <location>load</location>
  <chance>100</chance>
 </event>
 --]]
@@ -12,7 +12,9 @@ local fmt = require "format"
 local lmisn = require "lmisn"
 local lf = require "love.filesystem"
 
--- luacheck: globals land (Hook funtions passed by name)
+-- TODO probably better to change the system to try to enforce an average number of articles or something instead of random time since last article and random chance
+local MIN_ARTICLES   = 3 -- Minimum number of articles to try to enforce
+local ARTICLE_CHANCE = 0.25 -- Chance a new article can appear
 
 local add_article, add_econ_article, add_header -- forward-declared functions
 
@@ -107,8 +109,8 @@ local function get_econ_article( cargo, pnt, credits )
 end
 
 function create()
+   hook.load( "land" )
    hook.land( "land" )
-   land()
 end
 
 -- create news
@@ -121,11 +123,11 @@ function land ()
       for i, article in ipairs( news.get( "header" ) ) do
          article:rm()
       end
-      evt.finish(false)
+      return
    end
    -- Needs a faction for there to be news
    local f = p:faction()
-   if f == nil then evt.finish(false) end
+   if f == nil then return end
    local my_faction = f:nameRaw()
 
    local t = override_list[my_faction]
@@ -134,6 +136,12 @@ function land ()
    end
 
    add_header( my_faction )
+   local n = #news.get( my_faction )
+   if n < MIN_ARTICLES then
+      for i=1,MIN_ARTICLES-n do
+         add_article( my_faction, true )
+      end
+   end
    add_article( my_faction )
    add_econ_article( my_faction )
 end
@@ -160,26 +168,30 @@ function add_header( my_faction )
    local cur_t = time.get()
    local head = sample_one( header_table[my_faction] )
    local body = sample_one( greeting_table[my_faction] )
-   local a = news.add( my_faction, head, body, cur_t + time.create( 0, 0, 1 ), 0, -1 ) -- Highest priority
+   local a = news.add( my_faction, head, body, cur_t + time.new( 0, 0, 1 ), 0, -1 ) -- Highest priority
    a:bind( "header" )
 end
 
-function add_article( my_faction )
-   local last_article = var.peek( "news_last_article" )
-   if last_article ~= nil then
-      local t = time.fromnumber( last_article )
-      if time.get() - t < time.create( 0, 1, 5000 ) then
-         return
+function add_article( my_faction, force )
+   if not force then
+      local last_article = var.peek( "news_last_article" )
+      if last_article ~= nil then
+         local t = time.fromnumber( last_article )
+         if time.get() - t < time.new( 0, 1, 5000 ) then
+            return false
+         end
       end
-   end
 
-   if rnd.rnd() > 0.25 then
-      return
+      if rnd.rnd() > ARTICLE_CHANCE then
+         return false
+      end
    end
 
    local function jointest( dest, src )
       for k,v in ipairs(src) do
-         if not v.test or v.test() then
+         -- Make sure it doesn't already exist and passes test
+         local tag = v.tag or v.head
+         if #news.get(tag)==0 and (not v.test or v.test()) then
             table.insert( dest, v )
          end
       end
@@ -193,7 +205,7 @@ function add_article( my_faction )
       jointest( alst, articles[ "Generic" ] )
    end
    if alst == nil or #alst <= 0 then
-      return
+      return false
    end
 
    -- Get the elemnt
@@ -205,20 +217,17 @@ function add_article( my_faction )
    if type(body)=="function" then
       body = body()
       if body == nil then
-         return -- Skip
+         return false -- Skip
       end
    end
 
-   -- Skip if already exists
-   if #news.get( tag ) > 0 then
-      return
-   end
-
    -- Add the news for roughly 10 periods
-   local exp = time.get() + time.create( 0, 10, 5000 * rnd.sigma() )
+   local exp = time.get() + time.new( 0, 10, 5000 * rnd.sigma() )
    local a = news.add( my_faction, _(head), body, exp, nil, priority )
    a:bind( tag )
    var.push( "news_last_article", time.get():tonumber() )
+
+   return true
 end
 
 
@@ -227,7 +236,7 @@ function add_econ_article( my_faction )
    local t = nil
    local generic = faction.get(my_faction):tags().generic
    if last_article ~= nil then t = time.fromnumber( last_article ) end
-   if (t == nil or time.get() - t > time.create( 0, 2, 0 ))
+   if (t == nil or time.get() - t > time.new( 0, 2, 0 ))
          and rnd.rnd() < 0.75 and generic then
       local planets = {}
       for i, s in ipairs( lmisn.getSysAtDistance( system.cur(), 2, 4 ) ) do
@@ -240,9 +249,9 @@ function add_econ_article( my_faction )
       end
       if #planets > 0 then
          local p = planets[ rnd.rnd( 1, #planets ) ]
-         local pd = time.get() - time.create(
+         local pd = time.get() - time.new(
                0, p:system():jumpDist() + rnd.rnd( 0, 1 ), 9000 * rnd.sigma() )
-         local exp = time.get() + time.create( 0, 5, 5000 * rnd.sigma() )
+         local exp = time.get() + time.new( 0, 5, 5000 * rnd.sigma() )
          local commchoices = p:commoditiesSold()
          local commod = commchoices[ rnd.rnd( 1, #commchoices ) ]
          local price = commod:priceAtTime( p, pd )
@@ -282,7 +291,7 @@ function add_econ_article( my_faction )
       -- Create news, expires immediately when time advances (i.e.
       -- when you take off from the planet).
       -- Lowest priority
-      local a = news.add( "Generic", _("Current Market Prices"), body, cur_t + time.create( 0, 0, 1 ), nil, 11 )
+      local a = news.add( "Generic", _("Current Market Prices"), body, cur_t + time.new( 0, 0, 1 ), nil, 11 )
       a:bind( "econ" )
    end
 end

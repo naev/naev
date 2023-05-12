@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Arcania">
+ <pos x="2848.347435" y="7692.931299"/>
+ <GFX>
+  <space>K02.webp</space>
+  <exterior>uninhabited-rocky-yellow-01.webp</exterior>
+ </GFX>
+ <general>
+  <class>K</class>
+  <population>0</population>
+  <hide>0.300000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>Arcania used to host the prestigious Arcania Military Academy which was highly coveted by the imperial forces. While the planet was not significantly affected by the Incident directly, changes in the star and gravitational field of the Arcanis system led the planet to sharing a new orbit with the Arcanis asteroid field to devastating effects. The constant pummeling of the planet surface by meteorites of all sizes has eliminated all traces of human occupation, clearing what were once cities to dust mixing with the arid sand of the planet surface.</description>
+ </general>
+ <tags>
+  <tag>ruined</tag>
+ </tags>
+</spob>

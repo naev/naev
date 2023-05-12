@@ -29,8 +29,6 @@ local vn = require 'vn'
 
 local student_portrait = nebu_research.student.portrait
 
--- luacheck: globals beginFirstScan beginSecondScan drainShields endSecondScan jumpin land noticeProblems startProblems stopProblems takeoff (Hook functions passed by name)
-
 -- Mission Constants
 local t_sys = { system.get("Doeston"), system.get("Iris") }
 local homeworld, homeworld_sys = spob.getS("Jorla")
@@ -191,8 +189,7 @@ end
 
 function startProblems()
    -- Cancel autonav.
-   player.cinematics(true)
-   player.cinematics(false)
+   player.autonavAbort()
    local ps = player.pilot()
    ps:control()
    mem.phook = hook.timer(0.1, "drainShields")

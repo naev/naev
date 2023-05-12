@@ -18,7 +18,6 @@
 -- TODO: this event is neutralized because the "Dvaered Base" mission has not been written yet
 
 local baddie, atthook, jumphook, source_system -- Non-persistent state.
--- luacheck: globals ambusher baddieBoard baddieDead begin leave playerAttacked (Hook functions passed by name)
 
 function create ()
    source_system = system.cur()
@@ -50,18 +49,18 @@ function ambusher()
 
    -- TODO: adjust requirements, use equipopt instead of manually equipping
    if vel >= 350 then
-      baddie = pilot.add( "Hyena", "Mercenary", source_system, _("Mercenary") )
+      baddie = pilot.add( "Hyena", "Mercenary", source_system, _("Mercenary"), {naked=true} )
    elseif vel >= 210 then
-      baddie = pilot.add( "Lancelot", "Mercenary", source_system, _("Mercenary") )
+      baddie = pilot.add( "Lancelot", "Mercenary", source_system, _("Mercenary"), {naked=true} )
    else
-      baddie = pilot.add( "Ancestor", "Mercenary", source_system, _("Mercenary") )
+      baddie = pilot.add( "Ancestor", "Mercenary", source_system, _("Mercenary"), {naked=true} )
    end
 
    baddie:setHostile()
-   baddie:outfitRm("all")
    baddie:outfitRm("cores")
    baddie:cargoRm("all")
 
+   -- TODO ideally use tricks to slow the ship down instead of relying on loadouts
    if vel >= 350 then
       baddie:outfitAdd("S&K Ultralight Combat Plating")
       baddie:outfitAdd("Milspec Thalos 2202 Core System")

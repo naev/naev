@@ -19,9 +19,9 @@
 require "proximity"
 local srs = require "common.sirius"
 local fmt = require "format"
+local achack = require "common.achack"
 
 local harja -- Non-persistent state
--- luacheck: globals board date death disable detectHarja enter hail jumpout land leave (Hook functions passed by name)
 
 local reward = 1e6
 
@@ -54,7 +54,7 @@ function accept()
 
    misn.accept()
    misn.setDesc(_("Joanne wants you to find Harja and interrogate him about his motives."))
-   misn.setReward(fmt.credits(reward))
+   misn.setReward(reward)
    misn.osdCreate(_("Joanne's Doubt"), {
       _("Find Harja in Sirius space"),
       _("Talk to Harja"),
@@ -64,7 +64,7 @@ function accept()
    mem.enterhook = hook.enter("enter")
    mem.enterhook = hook.jumpout("jumpout")
    hook.land("land")
-   mem.datehook = hook.date(time.create(0, 2, 0), "date")
+   mem.datehook = hook.date(time.new(0, 2, 0), "date")
 end
 
 -- Jump-out hook.
@@ -103,7 +103,7 @@ function date()
       end
       mem.spawnpoint = spawnpoints[rnd.rnd(#spawnpoints)]
 
-      harja = pilot.add("Shark", "Achack_sirius", mem.spawnpoint, _("Harja's Shark"), {ai="trader"})
+      harja = pilot.add("Shark", achack.fct_sirius(), mem.spawnpoint, _("Harja's Shark"), {ai="trader"})
       harja:memory().aggressive = true
       harja:control()
       harja:follow(player.pilot())

@@ -26,4 +26,7 @@
   <description>Nor was one of the first Dvaered worlds to be terraformed. Its abundance of gas and ore make it a strategic location and a prime target for the FLF. Due to repeated attacks and sabotage attempts, the Dvaered military has increased the frequency of patrols.</description>
   <bar>Typical of poorer Dvaered mining worlds, the Nor spaceport bar is cavernous, sparsely decorated and full of drunken Dvaereds trying to forget their hard labour.</bar>
  </general>
+ <tags>
+  <tag>old</tag>
+ </tags>
 </spob>

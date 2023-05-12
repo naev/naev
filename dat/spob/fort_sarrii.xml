@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Fort Sarrii">
+ <lua>spob/lua/dvaered_mil_restricted.lua</lua>
+ <pos x="-2675.964475" y="-6088.010868"/>
+ <GFX>
+  <space>station-fleetbase2.webp</space>
+  <exterior>snow.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>1112</population>
+  <hide>3.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Fort Sarrii serves as the garrison point for the nearby planet of Wayline. The Dvaered garrison don't want to have to be on the planet at all, so they had this station built.</description>
+ </general>
+ <tech>
+  <item>Engines Cargo</item>
+  <item>Engines Low</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+ </tech>
+ <tags>
+  <tag>restricted</tag>
+  <tag>military</tag>
+  <tag>station</tag>
+ </tags>
+</spob>

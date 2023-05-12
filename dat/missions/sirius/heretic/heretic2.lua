@@ -24,7 +24,6 @@ local fmt = require "format"
 local srs = require "common.sirius"
 
 local attackers, recon -- Non-persistent state
--- luacheck: globals death land out_sys_failure takeoff (Hook functions passed by name)
 
 function create()
    --this mission does make one system claim, in Suna.
@@ -43,7 +42,7 @@ function create()
    mem.deathcount = 0
    --set the mission stuff
    misn.setTitle(_("The Patrol"))
-   misn.setReward(fmt.credits(mem.reward))
+   misn.setReward(mem.reward)
    misn.setNPC(_("An Imposing Man"), "sirius/unique/draga.webp", _("This man leans against the bar while looking right at you."))
 end
 

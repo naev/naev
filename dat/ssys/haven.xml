@@ -2,21 +2,17 @@
 <ssys name="Haven">
  <general>
   <radius>14000.000000</radius>
-  <stars>300</stars>
-  <interference>11.111111</interference>
+  <spacedust>300</spacedust>
+  <interference>60.000000</interference>
   <nebula volatility="0.000000" hue="180.000000">200.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="40.300080" y="211.372260"/>
+ <pos x="33.937578" y="468.570007"/>
  <spobs>
   <spob>Haven</spob>
   <spob_virtual>Miner Small</spob_virtual>
  </spobs>
  <jumps>
-  <jump target="Andres">
-   <autopos/>
-   <hidden/>
-   <hide>1.000000</hide>
-  </jump>
   <jump target="Daled">
    <autopos/>
    <hide>1.000000</hide>
@@ -28,6 +24,11 @@
   <jump target="New Haven">
    <autopos/>
    <exitonly/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Rockbed">
+   <autopos/>
+   <hidden/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

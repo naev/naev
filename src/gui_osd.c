@@ -21,6 +21,9 @@
 typedef struct OSD_s {
    unsigned int id;  /**< OSD id. */
    int priority;     /**< Priority level. */
+   int skip;         /**< Not rendered. */
+   int hide;         /**< Actively hidden. */
+   int duplicates;   /**< How many duplicates of this OSD there are. */
    char *title;      /**< Title of the OSD. */
    char **titlew;    /**< Wrapped version of the title. */
 
@@ -132,8 +135,8 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
    /* Copy text. */
    osd->title  = strdup(title);
    osd->priority = priority;
-   osd->msg = array_create_size( char*, nitems );
-   osd->items = array_create_size( char**, nitems );
+   osd->msg    = array_create_size( char*, nitems );
+   osd->items  = array_create_size( char**, nitems );
    osd->titlew = array_create( char* );
    for (int i=0; i<nitems; i++) {
       array_push_back( &osd->msg, strdup( items[i] ) );
@@ -356,18 +359,11 @@ void osd_render (void)
 {
    double p;
    int l;
-   const glColour *c;
-   int *ignore;
-   int nignore;
-   int is_duplicate, duplicates;
-   char title[1024];
+   char title[STRMAX_SHORT];
 
    /* Nothing to render. */
    if (osd_list == NULL)
       return;
-
-   nignore = array_size(osd_list);
-   ignore  = calloc( nignore, sizeof( int ) );
 
    /* Background. */
    gl_renderRect( osd_x-5., osd_y-(osd_rh+5.), osd_w+10., osd_rh+10, &cBlackHilight );
@@ -377,47 +373,18 @@ void osd_render (void)
    l = 0;
    for (int k=0; k<array_size(osd_list); k++) {
       int x, w;
-      OSD_t *ll;
+      OSD_t *ll = &osd_list[k];
 
-      if (ignore[k])
+      if (ll->skip)
          continue;
 
-      ll = &osd_list[k];
       x = osd_x;
       w = osd_w;
 
-      /* Check how many duplicates we have, mark duplicates for ignoring */
-      duplicates = 0;
-      for (int m=k+1; m<array_size(osd_list); m++) {
-         if ((strcmp(osd_list[m].title, ll->title) == 0) &&
-               (array_size(osd_list[m].items) == array_size(ll->items)) &&
-               (osd_list[m].active == ll->active)) {
-            is_duplicate = 1;
-            for (int i=osd_list[m].active; i<array_size(osd_list[m].items); i++) {
-               if (array_size(osd_list[m].items[i]) == array_size(ll->items[i])) {
-                  for (int j=0; j<array_size(osd_list[m].items[i]); j++) {
-                     if (strcmp(osd_list[m].items[i][j], ll->items[i][j]) != 0 ) {
-                        is_duplicate = 0;
-                        break;
-                     }
-                  }
-               } else {
-                  is_duplicate = 0;
-               }
-               if (!is_duplicate)
-                  break;
-            }
-            if (is_duplicate) {
-               duplicates++;
-               ignore[m] = 1;
-            }
-         }
-      }
-
       /* Print title. */
       for (int i=0; i<array_size(ll->titlew); i++) {
-         if ((duplicates > 0) && (i==array_size(ll->titlew)-1)) {
-            snprintf( title, sizeof(title), "%s #b(%dx)#0", ll->titlew[i], duplicates+1 );
+         if ((ll->duplicates > 0) && (i==array_size(ll->titlew)-1)) {
+            snprintf( title, sizeof(title), "%s #b(%dx)#0", ll->titlew[i], ll->duplicates+1 );
             gl_printMaxRaw( &gl_smallFont, w, x, p, NULL, -1., title);
          }
          else
@@ -425,34 +392,24 @@ void osd_render (void)
          p -= gl_smallFont.h + 5.;
          l++;
       }
-      if (l >= osd_lines) {
-         free(ignore);
+      if (l >= osd_lines)
          return;
-      }
 
       /* Print items. */
       for (int i=ll->active; i<array_size(ll->items); i++) {
+         const glColour *c = (i == (int)ll->active) ? &cFontWhite : &cFontGrey;
          x = osd_x;
-         w = osd_w;
-         c = (i == (int)ll->active) ? &cFontWhite : &cFontGrey;
          for (int j=0; j<array_size(ll->items[i]); j++) {
-            gl_printMaxRaw( &gl_smallFont, w, x, p,
-                  c, -1., ll->items[i][j] );
-            if (j==0) {
-               w = osd_w - osd_hyphenLen;
+            gl_printRaw( &gl_smallFont, x, p, c, -1., ll->items[i][j] );
+            if (j==0)
                x = osd_x + osd_hyphenLen;
-            }
             p -= gl_smallFont.h + 5.;
             l++;
-            if (l >= osd_lines) {
-               free(ignore);
+            if (l >= osd_lines)
                return;
-            }
          }
       }
    }
-
-   free(ignore);
 }
 
 /**
@@ -460,39 +417,41 @@ void osd_render (void)
  */
 static void osd_calcDimensions (void)
 {
-   /* TODO decrease code duplication with osd_render */
-   OSD_t *ll;
    double len;
-   int *ignore;
-   int nignore;
-   int is_duplicate, duplicates;
 
    /* Nothing to render. */
    if (osd_list == NULL)
       return;
 
-   nignore = array_size(osd_list);
-   ignore  = calloc( nignore, sizeof( int ) );
+   /* Reset skips. */
+   for (int k=0; k<array_size(osd_list); k++) {
+      OSD_t *ll = &osd_list[k];
+      ll->skip = ll->hide;
+      ll->duplicates = 0;
+   }
 
    /* Render each thingy. */
    len = 0;
    for (int k=0; k<array_size(osd_list); k++) {
-      if (ignore[k])
-         continue;
+      int duplicates;
+      OSD_t *ll = &osd_list[k];
 
-      ll = &osd_list[k];
+      if (ll->skip)
+         continue;
 
       /* Check how many duplicates we have, mark duplicates for ignoring */
       duplicates = 0;
       for (int m=k+1; m<array_size(osd_list); m++) {
-         if ((strcmp(osd_list[m].title, ll->title) == 0) &&
-               (array_size(osd_list[m].items) == array_size(ll->items)) &&
-               (osd_list[m].active == ll->active)) {
-            is_duplicate = 1;
-            for (int i=osd_list[m].active; i<array_size(osd_list[m].items); i++) {
-               if (array_size(osd_list[m].items[i]) == array_size(ll->items[i])) {
-                  for (int j=0; j<array_size(osd_list[m].items[i]); j++) {
-                     if (strcmp(osd_list[m].items[i][j], ll->items[i][j]) != 0 ) {
+         OSD_t *lm = &osd_list[m];
+
+         if ((strcmp(lm->title, ll->title) == 0) &&
+               (array_size(lm->items) == array_size(ll->items)) &&
+               (lm->active == ll->active)) {
+            int is_duplicate = 1;
+            for (int i=lm->active; i<array_size(lm->items); i++) {
+               if (array_size(lm->items[i]) == array_size(ll->items[i])) {
+                  for (int j=0; j<array_size(lm->items[i]); j++) {
+                     if (strcmp(lm->items[i][j], ll->items[i][j]) != 0 ) {
                         is_duplicate = 0;
                         break;
                      }
@@ -505,13 +464,15 @@ static void osd_calcDimensions (void)
             }
             if (is_duplicate) {
                duplicates++;
-               ignore[m] = 1;
+               lm->skip = 1;
             }
          }
       }
+      ll->duplicates = duplicates;
 
       /* Print title. */
-      len += gl_smallFont.h + 5.;
+      for (int i=0; i<array_size(ll->titlew); i++)
+         len += gl_smallFont.h + 5.;
 
       /* Print items. */
       for (int i=ll->active; i<array_size(ll->items); i++)
@@ -519,7 +480,6 @@ static void osd_calcDimensions (void)
             len += gl_smallFont.h + 5.;
    }
    osd_rh = MIN( len, osd_h );
-   free(ignore);
 }
 
 /**
@@ -549,4 +509,67 @@ char **osd_getItems( unsigned int osd )
    if (o == NULL)
       return NULL;
    return o->msg;
+}
+
+/**
+ * @brief Sets the hidden state of an OSD.
+ *
+ *    @param osd OSD to set state of.
+ *    @param state Whether or not to hide the OSD.
+ */
+int osd_setHide( unsigned int osd, int state )
+{
+   OSD_t *o = osd_get(osd);
+   if (o == NULL)
+      return -1;
+
+   o->hide = state;
+   osd_calcDimensions();
+   return 0;
+}
+
+/**
+ * @brief Gets the hidden state of an OSD.
+ *
+ *    @param osd OSD to get state of.
+ *    @return Whether or not the OSD is hidden or -1 on error.
+ */
+int osd_getHide( unsigned int osd )
+{
+   OSD_t *o = osd_get(osd);
+   if (o == NULL)
+      return -1;
+   return o->hide;
+}
+
+/**
+ * @brief Sets the priority of the OSD.
+ *
+ *    @param osd OSD to set priority of.
+ *    @param state Priority of the OSD (lower is more important).
+ */
+int osd_setPriority( unsigned int osd, int priority )
+{
+   OSD_t *o = osd_get(osd);
+   if (o == NULL)
+      return -1;
+
+   o->priority = priority;
+   osd_sort();
+   osd_calcDimensions();
+   return 0;
+}
+
+/**
+ * @brief Gets the priority of an OSD.
+ *
+ *    @param osd OSD to get state of.
+ *    @return The priority of the OSD.
+ */
+int osd_getPriority( unsigned int osd )
+{
+   OSD_t *o = osd_get(osd);
+   if (o == NULL)
+      return -1;
+   return o->priority;
 }

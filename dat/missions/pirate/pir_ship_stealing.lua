@@ -4,7 +4,7 @@
  <priority>4</priority>
  <chance>10</chance>
  <location>Bar</location>
- <cond>faction.playerStanding("Pirate") &gt;= -20</cond>
+ <cond>faction.playerStanding("Pirate") &gt;= -20 and not player.misnActive("Stealing ships")</cond>
  <faction>Wild Ones</faction>
  <faction>Black Lotus</faction>
  <faction>Raven Clan</faction>
@@ -33,10 +33,9 @@ local swapship = require "swapship"
 local fmt = require "format"
 local portrait = require "portrait"
 local lmisn = require "lmisn"
-require "factions.equip.generic"
-
--- luacheck: globals enter land (Hook functions passed by name)
--- luacheck: globals equip_generic (From "factions.equip.generic")
+local equipopt = require "equipopt"
+local vn = require "vn"
+local vntk = require "vntk"
 
 local base_price = 100e3
 
@@ -136,6 +135,7 @@ local function damage_standing( size, fct )
    fct:modPlayerSingle( -base * modifier )
 end
 
+local pir_portrait
 function create ()
    mem.reward_faction = pir.systemClanP( system.cur() )
    mem.planet  = random_planet()
@@ -156,66 +156,89 @@ function create ()
 
    mem.price = price(mem.ship:size())
 
-   misn.setNPC( _("A Pirate informer"), portrait.get("Pirate"), _("A pirate informer is looking at you. Maybe they have some useful information to sell?") )
+   pir_portrait = portrait.get("Pirate")
+   misn.setNPC( _("A Pirate informer"), pir_portrait, _("A pirate informer is looking at you. Maybe they have some useful information to sell?") )
 end
 
 function accept()
-   if tk.yesno( _("Ship to steal"), fmt.f(_([["Hi, pilot. I have the location and security codes of an unattended {fct} {class}. Maybe it interests you, who knows?
-    "However, I'm going to sell that information only. It'd cost you {credits}, but the ship is probably worth much more if you can get to it."
-    Do you want to pay to know where that ship is?]]), {
-         fct=mem.faction, class=_(mem.ship:class()), credits=fmt.credits(mem.price)} ) ) then
-      if player.credits() >= mem.price then
-         tk.msg( _("Of course"), fmt.f(_([[You pay the informer, who tells you the ship in currently on {pnt}, in the {sys} system. He also gives you its security codes and warns you about patrols.
-    The pile of information he gives you also contains a way to land on the planet and to dissimulate your ship there.]]), {
-            pnt=mem.planet, sys=mem.system} ) )
+   local accepted = false
 
-         player.pay( -mem.price )
-         misn.accept()
+   vn.clear()
+   vn.scene()
+   local p = vn.newCharacter( _("Pirate Informer"), {image=portrait.getFullPath(pir_portrait)} )
+   vn.transition()
 
-	 local title = fmt.f(_("Stealing a {class}"), {class=_(mem.ship:class())} )
-	 local description = fmt.f( _("Land on {pnt} in the {sys} system and escape with your new {class}"),
-                                    {pnt=mem.planet, sys=mem.system, class=_(mem.ship:class())} )
-         misn.setTitle( title )
-         misn.setReward( fmt.f(_("A brand new {class}"), {class=_(mem.ship:class())} ) )
-         misn.setDesc( description )
+   p(fmt.f(_([["Hi, pilot. I have the location and security codes of an unattended {fct} {class}. Maybe it interests you, who knows?
+"However, I'm going to sell that information only. It'd cost you {credits}, but the ship is probably worth much more if you can get to it."
+Do you want to pay to know where that ship is?]]),
+      {fct=mem.faction, class=_(mem.ship:class()), credits=fmt.credits(mem.price)}))
+   vn.menu{
+      {fmt.f(_([[Pay {credits}]]),{credits=fmt.credits(mem.price)}), "pay"},
+      {_([[Leave]]), "leave"},
+   }
 
-         -- Mission marker
-         misn.markerAdd( mem.system, "low" )
+   vn.label("leave")
+   vn.done()
 
-         -- OSD
-         misn.osdCreate( title, {description})
+   vn.label("broke")
+   p(_([["Do you take me for a fool? Get out of here! Come back when you have enough money."]]) )
+   vn.done()
 
-         hook.land("land")
-         hook.enter("enter")
-      else
-         tk.msg( _("Not Enough Money"), _([["Do you take me for a fool? Get out of here! Come back when you have enough money."]]) )
-         misn.finish()
+   vn.label("pay")
+   vn.func( function ()
+      if player.credits() < mem.price then
+         vn.jump("broke")
+         return
       end
-   else
-      -- Why would we care?
-      return
-   end
+      player.pay( -mem.price )
+      accepted = true
+   end )
+   p(fmt.f(_([[You pay the informer, who tells you the ship in currently on {pnt}, in the {sys} system. He also gives you its security codes and warns you about patrols.
+The pile of information he gives you also contains a way to land on the planet and to dissimulate your ship there.]]),
+      {pnt=mem.planet, sys=mem.system}))
+
+   vn.run()
+
+   if not accepted then return end
+
+   misn.accept()
+
+   local title = fmt.f(_("Stealing a {class}"), {class=_(mem.ship:class())} )
+   local description = fmt.f( _("Land on {pnt} in the {sys} system and escape with your new {class}"),
+   {pnt=mem.planet, sys=mem.system, class=_(mem.ship:class())} )
+   misn.setTitle( title )
+   misn.setReward( fmt.f(_("A brand new {class}"), {class=_(mem.ship:class())} ) )
+   misn.setDesc( description )
+
+   -- Mission marker
+   misn.markerAdd( mem.system, "low" )
+
+   -- OSD
+   misn.osdCreate( title, {description})
+
+   hook.land("land")
+   hook.enter("enter")
 end
 
 function land()
    local landed, landsys = spob.cur()
    if landed == mem.planet then
       -- Try to swap ships
-      local tmp = pilot.add( mem.ship, "Independent" )
-      equip_generic( tmp )
+      local tmp = pilot.add( mem.ship, "Independent", nil, nil, {naked=true} )
+      equipopt.generic( tmp )
       if not swapship.swap( tmp, fmt.f(_("You acquired the ship through illegitimate means at {pnt} in the {sys} system. Yarr!"),{pnt=landed, sys=landsys}) ) then
          -- Failed to swap ship!
-         tk.msg( _("Ship left alone!"), _("Before you make it into the ship and take control of it, you realize you are not ready to deal with the logistics of moving your cargo over. You decide to leave the ship stealing business for later.") )
+         vntk.msg( _("Ship left alone!"), _("Before you make it into the ship and take control of it, you realize you are not ready to deal with the logistics of moving your cargo over. You decide to leave the ship stealing business for later.") )
          tmp:rm() -- Get rid of the temporary pilot
          return
       end
 
       -- Oh yeah, we stole the ship. \o/
-      tk.msg(
+      vntk.msg(
          _("Ship successfully stolen!"),
          fmt.f(
             _([[It took you a while, but you finally make it into the ship and take control of it with the access codes you were given. Hopefully, you will be able to sell this {ship}, or maybe even to use it.
-    Enemy ships will probably be after you as soon as you leave the atmosphere, so you should get ready and use the time you have on this planet wisely.]]),
+Enemy ships will probably be after you as soon as you leave the atmosphere, so you should get ready and use the time you have on this planet wisely.]]),
             {ship=mem.ship}
          )
       )

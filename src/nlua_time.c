@@ -20,7 +20,7 @@
 #include "ntime.h"
 
 /* Time methods. */
-static int timeL_create( lua_State *L );
+static int timeL_new( lua_State *L );
 static int timeL_add( lua_State *L );
 static int timeL_add__( lua_State *L );
 static int timeL_sub( lua_State *L );
@@ -34,7 +34,7 @@ static int timeL_inc( lua_State *L );
 static int timeL_tonumber( lua_State *L );
 static int timeL_fromnumber( lua_State *L );
 static const luaL_Reg time_methods[] = {
-   { "create", timeL_create },
+   { "new", timeL_new },
    { "add", timeL_add__ },
    { "__add", timeL_add },
    { "sub", timeL_sub__ },
@@ -68,7 +68,7 @@ int nlua_loadTime( nlua_env env )
  *
  * Usage is generally something as follows:
  * @code
- * time_limit = time.get() + time.create( 0, 5, 0 )
+ * time_limit = time.get() + time.new( 0, 5, 0 )
  * player.msg( string.format("You only have %s left!", time.str(time.get() - time_limit)) )
  *
  * -- Do stuff here
@@ -157,15 +157,15 @@ int lua_istime( lua_State *L, int ind )
 /**
  * @brief Creates a time. This can be absolute or relative.
  *
- * @usage t = time.create( 591, 3271, 12801 ) -- Gets a time near when the incident happened.
+ * @usage t = time.new( 591, 3271, 12801 ) -- Gets a time near when the incident happened.
  *
  *    @luatparam number cycles Cycles for the new time.
  *    @luatparam number periods Periods for the new time.
  *    @luatparam number seconds Seconds for the new time.
  *    @luatreturn Time A newly created time metatable.
- * @luafunc create
+ * @luafunc new
  */
-static int timeL_create( lua_State *L )
+static int timeL_new( lua_State *L )
 {
    int cycles, periods, seconds;
 
@@ -183,7 +183,7 @@ static int timeL_create( lua_State *L )
  *
  * Overrides the addition operator.
  *
- * @usage new_time = time.get() + time.create( 0, 5, 0 ) -- Adds 5 periods to the current date
+ * @usage new_time = time.get() + time.new( 0, 5, 0 ) -- Adds 5 periods to the current date
  *
  *    @luatparam Time t1 Time metatable to add to.
  *    @luatparam Time t2 Time metatable added.
@@ -224,7 +224,7 @@ static int timeL_add__( lua_State *L )
  *
  * Overrides the subtraction operator.
  *
- * @usage new_time = time.get() - time.create( 0, 3, 0 ) -- Subtracts 3 periods from the current date
+ * @usage new_time = time.get() - time.new( 0, 3, 0 ) -- Subtracts 3 periods from the current date
  *
  *    @luatparam Time t1 Time metatable to subtract from.
  *    @luatparam Time t2 Time metatable subtracted.
@@ -265,7 +265,7 @@ static int timeL_sub__( lua_State *L )
  *
  * It is recommended to check with < and <= instead of ==.
  *
- * @usage if time.create( 630, 5, 78) == time.get() then -- do something if they match
+ * @usage if time.new( 630, 5, 78) == time.get() then -- do something if they match
  *
  *    @luatparam Time t1 Time to compare for equality.
  *    @luatparam Time t2 Time to compare for equality.
@@ -283,7 +283,7 @@ static int timeL_eq( lua_State *L )
 /**
  * @brief Checks to see if a time is strictly larger than another.
  *
- * @usage if time.create( 630, 5, 78) < time.get() then -- do something if time is past UST 630:0005.78
+ * @usage if time.new( 630, 5, 78) < time.get() then -- do something if time is past UST 630:0005.78
  *
  *    @luatparam Time t1 Time to see if is is smaller than t2.
  *    @luatparam Time t2 Time see if is larger than t1.
@@ -301,7 +301,7 @@ static int timeL_lt( lua_State *L )
 /**
  * @brief Checks to see if a time is larger or equal to another.
  *
- * @usage if time.create( 630, 5, 78) <= time.get() then -- do something if time is past UST 630:0005.78
+ * @usage if time.new( 630, 5, 78) <= time.get() then -- do something if time is past UST 630:0005.78
  *
  *    @luatparam Time t1 Time to see if is is smaller or equal to than t2.
  *    @luatparam Time t2 Time see if is larger or equal to than t1.
@@ -334,7 +334,7 @@ static int timeL_get( lua_State *L )
  *
  * @usage strt = time.str() -- Gets current time
  * @usage strt = time.str( nil, 5 ) -- Gets current time with full decimals
- * @usage strt = time.str( time.get() + time.create(0,5,0) ) -- Gets time in 5 periods
+ * @usage strt = time.str( time.get() + time.new(0,5,0) ) -- Gets time in 5 periods
  * @usage strt = t:str() -- Gets the string of t
  *
  *    @luatparam Time t Time to convert to pretty format.  If omitted, current time is used.
@@ -362,9 +362,11 @@ static int timeL_str( lua_State *L )
 }
 
 /**
- * @brief Increases or decreases the time.
+ * @brief Increases or decreases the in-game time.
  *
- * @usage time.inc( time.create(0,0,100) ) -- Increments the time by 100 seconds.
+ * Note that this can trigger hooks and fail missions and the likes.
+ *
+ * @usage time.inc( time.new(0,0,100) ) -- Increments the time by 100 seconds.
  *
  *    @luatparam Time t Amount to increment or decrement the time by.
  * @luafunc inc

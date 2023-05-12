@@ -47,7 +47,6 @@ local mining = require "minigames.mining"
    1: Acquired something and flying back
 --]]
 mem.misn_state = nil
--- luacheck: globals enter land heartbeat (Hook functions passed by name)
 
 local reward_amount = tutnel.reward.nelly03
 local reward_cargo = commodity.get("Nickel")
@@ -78,7 +77,7 @@ function create ()
       misn.finish()
    end
 
-   misn.setNPC( tutnel.nelly.name, tutnel.nelly.portrait, _("You see a Nelly motioning to you at a table.") )
+   misn.setNPC( tutnel.nelly.name, tutnel.nelly.portrait, _("You see Nelly motioning to you at a table.") )
 end
 
 
@@ -163,7 +162,7 @@ She runs off out of the spaceport bar.]]))
 
    misn.setTitle( title )
    misn.setDesc(_("Help Nelly do some ad-hoc repairs on their ship by getting some materials from asteroids. There is no way this can go wrong, is there?"))
-   misn.setReward( fmt.credits(reward_amount) )
+   misn.setReward(reward_amount)
 
    hook.enter("enter")
    hook.land("land")
@@ -181,7 +180,7 @@ end
 
 local function nelly_say( msg )
    player.autonavReset( 3 )
-   player.pilot():comm(fmt.f(_([[Nelly: "{msg}"]]),{msg=msg}))
+   player.msg(fmt.f(_([[Nelly: "{msg}"]]),{msg=msg}),true)
 end
 
 local function drilltime ()
@@ -252,6 +251,7 @@ She gives a small reverence to the debris before coming back to her happy self.
    vn.run()
 
    mem.misn_state = 1
+   misn.markerAdd( mem.retpnt )
    misn.osdActive(3)
 end
 
@@ -260,7 +260,7 @@ function heartbeat ()
       local af = system.cur():asteroidFields()
       nelly_say(fmt.f(_("I've marked an asteroid field on your overlay. Use {overlaykey} to check it!"),
          {overlaykey=tut.getKey("overlay")}))
-      system.mrkAdd( af[ rnd.rnd(1,#af) ].pos )
+      system.markerAdd( af[ rnd.rnd(1,#af) ].pos )
       hb_state = hb_state+1
    elseif hb_state==2 then
       local af = system.cur():asteroidFields()
@@ -277,7 +277,7 @@ function heartbeat ()
       local pp = player.pilot()
       local a = asteroid.get( pp )
       if a:pos():dist( pp:pos() ) < 50 and a:vel():dist( pp:vel() ) < 15 then
-         system.mrkClear()
+         system.markerClear()
          drilltime()
          a:setTimer( -1 ) -- Get rid of the asteroid
          return -- We're done here

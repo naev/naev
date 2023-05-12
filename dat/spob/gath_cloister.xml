@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Gath Cloister">
+ <lua>spob/lua/sirius_mil_restricted.lua</lua>
+ <pos x="-4187.579162" y="-3678.679076"/>
+ <GFX>
+  <space>station-battlestation.webp</space>
+  <exterior>station03.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <base>60.000000</base>
+  <bonus>30.000000</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>5000</population>
+  <hide>2.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Gath Cloister is a local law enforcement and customs station. Although it delegates the defence of Sirius space to Inios Monastery, it maintains security in the sector and supports patrols that scan incoming vessels to enforce law and order.</description>
+ </general>
+ <tech>
+  <item>Hulls Low</item>
+  <item>Missiles 2</item>
+  <item>Ion 1</item>
+  <item>Ion 2</item>
+  <item>Heavy Civilian Combat Ships</item>
+  <item>Heavy Weapons 2</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Star Maps</item>
+  <item>Sirius Elite Outfits</item>
+ </tech>
+ <tags>
+  <tag>restricted</tag>
+  <tag>station</tag>
+  <tag>military</tag>
+ </tags>
+</spob>

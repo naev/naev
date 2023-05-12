@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Proteron Pythagoras">
+ <points>150</points>
+ <base_type>Pythagoras</base_type>
+ <GFX size="124" sx="12" sy="12">pythagoras</GFX>
+ <rarity>2</rarity>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Cruiser</class>
+ <price>6000000</price>
+ <time_mod>1.35</time_mod>
+ <trail_generator x="-45" y="0" h="9">proteron</trail_generator>
+ <trail_generator x="-39" y="0" h="-2" always_under="1">proteron</trail_generator>
+ <trail_generator x="-38" y="0" h="-8" always_under="1">proteron</trail_generator>
+ <trail_generator x="-10" y="10" h="2" always_under="1">nebula</trail_generator>
+ <trail_generator x="-10" y="-10" h="2" always_under="1">nebula</trail_generator>
+ <fabricator>Proteron</fabricator>
+ <license>Heavy Combat Vessel</license>
+ <cond>faction.playerStanding("Proteron") &gt;= 60</cond>
+ <condstr>You need at least 60 reputation with the Proteron.</condstr>
+ <description>While the Proteron mostly rely on heavy and powerful capital ships the Pythagoras is an exception. It is a light and fast cruiser often deployed in small skirmishes against medium sized ships. It can usually be found testing the defence of the enemy trying to find a weak spot for the heavy Proteron fleets to break through.</description>
+ <health>
+  <armour>1400</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>33</crew>
+  <mass>1000</mass>
+  <fuel_consumption>400</fuel_consumption>
+  <cargo>100</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="large" x="41" y="0" h="6" />
+  <weapon size="large" x="42" y="0" h="0" />
+  <weapon size="large" x="43" y="0" h="-6" />
+  <weapon size="large" x="0" y="7" h="3" />
+  <weapon size="large" x="0" y="-7" h="3" />
+  <weapon size="large" prop="fighter_bay" x="-26" y="8" h="1" />
+  <weapon size="large" prop="fighter_bay" x="-26" y="-8" h="1" />
+  <utility size="large" prop="systems">Unicorp PT-2200 Core System</utility>
+  <utility size="large" prop="accessory" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <structure size="large" prop="engines">Nexus Bolt 3500 Engine</structure>
+  <structure size="large" prop="hull">Unicorp D-48 Heavy Plating</structure>
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+ </slots>
+ <stats>
+  <speed_mod>5</speed_mod>
+  <thrust_mod>5</thrust_mod>
+  <turn_mod>5</turn_mod>
+  <shield_regen_mod>20</shield_regen_mod>
+ </stats>
+ <tags>
+  <tag>proteron</tag>
+ </tags>
+</ship>

@@ -73,7 +73,7 @@ static void ndata_testVersion (void)
    diff = naev_versionCompare( cbuf );
    if (diff != 0) {
       WARN( _("ndata version inconsistency with this version of Naev!") );
-      WARN( _("Expected ndata version %s got %s."), VERSION, cbuf );
+      WARN( _("Expected ndata version %s got %s."), naev_version( 0 ), cbuf );
       if (ABS(diff) > 2)
          ERR( _("Please get a compatible ndata version!") );
       if (ABS(diff) > 1)
@@ -256,7 +256,7 @@ static int ndata_enumerateCallback( void* data, const char* origdir, const char*
 
    dir_len = strlen( origdir );
    fmt = dir_len && origdir[dir_len-1]=='/' ? "%s%s" : "%s/%s";
-   asprintf( &path, fmt, origdir, fname );
+   SDL_asprintf( &path, fmt, origdir, fname );
    if (!PHYSFS_stat( path, &stat )) {
       WARN( _("PhysicsFS: Cannot stat %s: %s"), path,
             _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );

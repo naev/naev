@@ -2,12 +2,15 @@
 <ssys name="NGC-4363">
  <general>
   <radius>15000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="1082.583519" y="-81.802222"/>
- <spobs/>
+ <pos x="1456.178395" y="-990.601303"/>
+ <spobs>
+  <spob>P-4705</spob>
+  <spob>P-9199</spob>
+ </spobs>
  <jumps>
   <jump target="NGC-13747">
    <autopos/>

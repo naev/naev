@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ssys name="PSO">
  <general>
+  <background>pso</background>
+  <map_shader>pso_map.frag</map_shader>
   <radius>14500.000000</radius>
-  <stars>400</stars>
-  <interference>5.882350</interference>
-  <nebula volatility="0.000000" hue="310.000000">300.000000</nebula>
+  <spacedust>0</spacedust>
+  <interference>57.000000</interference>
  </general>
- <pos x="92.652554" y="-901.081222"/>
+ <pos x="235.552868" y="-1009.095355"/>
  <spobs>
   <spob>PSO 1251</spob>
   <spob>PSO 1324</spob>
@@ -25,6 +26,10 @@
   <jump target="NGC-2232">
    <pos x="8761.084891" y="-11521.187220"/>
    <hidden/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Oxuram">
+   <autopos/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Sultan">

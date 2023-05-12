@@ -8,8 +8,8 @@
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>2</range>
  </presence>
  <general>
@@ -25,7 +25,8 @@
    <outfits/>
   </services>
   <commodities/>
-  <description>Varia is a Dvaered world, so it can't be called lush or relaxing. But it's the next best thing. The climate on Varia is as close to old Earth's as makes no difference, and the inhabitants of this world typically lead healthy, long lives. In fact, the planet is so nice that some feel it is wasted on the Dvaered, who misuse the bounty the planet offers for their crude, destructive forms of entertainment.</description>
+  <description>Varia is a Dvaered world, so it can't be called lush or relaxing. But it's the next best thing. The climate on Varia is as close to old Earth's as makes no difference, and the inhabitants of this world typically lead healthy, long lives. In fact, the planet is so nice that some feel it is wasted on the Dvaered, who misuse the bounty the planet offers for their crude, destructive forms of entertainment.
+The headquarters of Schafer &amp; Kane Industries and their main fabrication plants are also located on Varia, which helps contribute greatly to the prosperity of the local population. Following traditional Dvaered design, S&amp;K Industries prioritize function over form, leading to very practical buildings that further clash with the planets natural beauty.</description>
   <bar>Varia's bar is more like a bar complex than a bar. With multiple rooms, each decorated in different styles and each serving different beverages, the discerning alcoholic with money to spare could spend all week here without ever getting bored. Most of the merchants and businesspeople prefer to stick to the main room, however.</bar>
  </general>
  <tech>
@@ -35,10 +36,11 @@
   <item>Star Maps</item>
   <item>Basic Outfits 2</item>
   <item>Missiles 1</item>
+  <item>S&amp;K Outfits</item>
  </tech>
  <tags>
   <tag>rich</tag>
   <tag>rural</tag>
-  <tag>tourism</tag>
+  <tag>industrial</tag>
  </tags>
 </spob>

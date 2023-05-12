@@ -7,12 +7,12 @@
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>2</range>
  </presence>
  <general>
-  <class>O</class>
+  <class>M</class>
   <population>1.5e+07</population>
   <hide>1.000000</hide>
   <services>
@@ -33,9 +33,16 @@
   <item>Hulls Low</item>
   <item>Hulls Medium</item>
   <item>Heavy Civilian Combat Ships</item>
+  <item>Ion 1</item>
+  <item>Ion 2</item>
+  <item>Ion 3</item>
   <item>Basic Outfits 1</item>
   <item>Star Maps</item>
+  <item>Heavy Weapons 1</item>
   <item>Heavy Weapons 2</item>
   <item>Systems Elite</item>
  </tech>
+ <tags>
+  <tag>industrial</tag>
+ </tags>
 </spob>

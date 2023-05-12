@@ -2,17 +2,13 @@
 <ssys name="Zylex">
  <general>
   <radius>14000.000000</radius>
-  <stars>400</stars>
-  <interference>11.111111</interference>
+  <spacedust>400</spacedust>
+  <interference>24.999999</interference>
   <nebula volatility="1.000000">400.000000</nebula>
  </general>
- <pos x="397.544000" y="-27.832000"/>
+ <pos x="467.722956" y="-295.064703"/>
  <spobs/>
  <jumps>
-  <jump target="Arcanis">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
   <jump target="Doeston">
    <autopos/>
    <hide>1.000000</hide>
@@ -22,4 +18,7 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

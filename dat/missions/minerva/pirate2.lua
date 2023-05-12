@@ -34,7 +34,6 @@ local drone2pos = vec2.new( -10000,   6000 )
 --    1: Get back to Minerva Station
 mem.misn_state = nil
 local badweaps, drone1, drone2 -- Non-persistent state
--- luacheck: globals drone_attacked drone_death drone_ranaway enter heartbeat land reinforcements_jumpin (Hook functions passed by name)
 
 function create ()
    if not misn.claim( mainsys ) then
@@ -179,7 +178,7 @@ function enter ()
       fzalek = faction.dynAdd( "Za'lek", "zalek_thugs", _("Za'lek") )
 
       drone1 = drone_create( drone1pos )
-      mem.drone1marker = system.mrkAdd( drone1:pos(), _("Za'lek Drone") )
+      mem.drone1marker = system.markerAdd( drone1:pos(), _("Za'lek Drone") )
 
       mem.drones_killed = 0
    end
@@ -187,19 +186,19 @@ end
 
 
 function drone_death ()
-   if not dvaered_weapons() then
+   if not mem.weap_ok then
       lmisn.fail(_("You were supposed to kill the drones with Dvaered-only weapons!"))
    end
    mem.drones_killed = mem.drones_killed+1
    if mem.drones_killed==1 then
-      system.mrkRm( mem.drone1marker )
+      system.markerRm( mem.drone1marker )
       drone2 = drone_create( drone2pos )
-      mem.drone2marker = system.mrkAdd( drone2:pos(), _("Za'lek Drone") )
+      mem.drone2marker = system.markerAdd( drone2:pos(), _("Za'lek Drone") )
       player.msg(_("You detected another Za'lek drone in the system!"))
       mem.zalek_inbound = false
       hook.timer( 0.5, "heartbeat" )
    elseif mem.drones_killed==2 then
-      system.mrkRm( mem.drone2marker )
+      system.markerRm( mem.drone2marker )
       mem.misn_state = 1
       misn.osdActive(2)
       pilot.toggleSpawn(true)

@@ -6,6 +6,9 @@
 --]]
 local lg = require 'love.graphics'
 local le = require 'love.event'
+local lk = require 'love.keyboard'
+local utf8 = require 'utf8'
+local vn = require "vn"
 
 local luatk = {
    _windows = {},
@@ -37,6 +40,11 @@ local luatk = {
          outline  = { 0.05, 0.05, 0.05 },
       },
    },
+   input = {
+      colour = {
+         text     = { 0.2,  0.8,  0.1  },
+      },
+   },
    _deffont = nil,
 }
 
@@ -44,18 +52,97 @@ local luatk = {
 -- Global functions
 --]]
 --[[--
+Gets whether or not the luatk has a window open.
+--]]
+function luatk.isOpen ()
+   return #luatk._windows>0
+end
+--[[--
 Runs the luatk. Should be used after the windows are set up.
 --]]
 function luatk.run ()
+   local f = lg.getFont()
+   local o = f:getOutline()
+   f:setOutline(1)
    luatk._love = true
    love.exec( 'scripts/luatk' )  -- luacheck: ignore
    luatk._love = false
+   f:setOutline(o)
+end
+--[[--
+Creates a custom state inside a vn state.
+
+A full example is shown below.
+@code
+vn.clear()
+vn.scene()
+vn.transition()
+vn.na("This is a test")
+luatk.vn( function ()
+   local wdw = luatk.msgInput( "Test", "Just a test", 50, function( str )
+      print( str )
+   end )
+end )
+vn.na("That was all!")
+vn.run()
+@endcode
+
+   @tparam function setup Function to set up the luatk.
+--]]
+function luatk.vn( setup )
+   local s = vn.custom()
+   s._init = function ()
+      setup()
+   end
+   s._draw = function ()
+      return luatk.draw()
+   end
+   s._mousepressed = function( _self, mx, my, button )
+      return luatk.mousepressed( mx, my, button )
+   end
+   s._mousereleased = function( _self, mx, my, button )
+      return luatk.mousereleased( mx, my, button )
+   end
+   s._mousemoved = function( _self, mx, my, dx, dy )
+      return luatk.mousemoved( mx, my, dx, dy )
+   end
+   s._keypressed = function( _self, key )
+      return luatk.keypressed( key )
+   end
+   s._textinput = function( _self, str )
+      return luatk.textinput( str )
+   end
+   local function _update( self, dt )
+      if #luatk._windows<=0 then
+         self.done = true
+         return
+      end
+      luatk.update( dt )
+   end
+   -- See reason for this hack in dat/scripts/luatk/main.lua
+   s._update = function( self, dt )
+      -- Start focus
+      local wdw = luatk._windows[ #luatk._windows ]
+      if not wdw then
+         return
+      end
+      for _k,wgt in ipairs(wdw._widgets) do
+         if wgt.focus then
+            wgt:focus()
+         end
+      end
+
+      s._update = _update
+      _update( self, dt )
+   end
+   return s
 end
 --[[--
 Closes the toolkit and all windows.
 --]]
 function luatk.close ()
    luatk._windows = {}
+   lk.setTextInput( false ) -- Hack as we can't use __gc
    if luatk._love then
       le.quit()
    end
@@ -199,6 +286,35 @@ function luatk.keypressed( key )
       end
    end
 
+   for _k,wgt in ipairs(wdw._widgets) do
+      -- TODO proper focus model
+      if wgt.keypressed then
+         if wgt:keypressed( key ) then
+            return true
+         end
+      end
+   end
+
+   return false
+end
+--[[--
+Handles text input.
+
+   @treturn string key Name of the key pressed.
+--]]
+function luatk.textinput( str )
+   local wdw = luatk._windows[ #luatk._windows ]
+   if not wdw then return false end
+
+   for _k,wgt in ipairs(wdw._widgets) do
+      -- TODO proper focus model
+      if wgt.textinput then
+         if wgt:textinput( str ) then
+            return true
+         end
+      end
+   end
+
    return false
 end
 
@@ -303,6 +419,9 @@ function luatk.Window:destroy()
          return
       end
    end
+   if #luatk._widgets <= 0 then
+      lk.setTextInput( false ) -- Hack as we can't use __gc
+   end
 end
 --[[--
 Sets the accept function to be run when enter is pressed.
@@ -344,6 +463,12 @@ end
 luatk.Widget = {}
 luatk.Widget_mt = { __index = luatk.Widget }
 function luatk.newWidget( parent, x, y, w, h )
+   if x < 0 then
+      x = parent.w - w + x
+   end
+   if y < 0 then
+      y = parent.h - h + y
+   end
    local wgt = { parent=parent, x=x, y=y, w=w, h=h }
    setmetatable( wgt, luatk.Widget_mt )
    table.insert( parent._widgets, wgt )
@@ -429,6 +554,12 @@ function luatk.Button:draw( bx, by )
       self.render( x, y, w, h )
    end
 end
+function luatk.Button:drawover( bx, by )
+   if self.mouseover and self.alt then
+      local x, y, w, _h = self:getDimensions()
+      luatk.drawAltText( bx+x+w, by+y, self.alt, 300 )
+   end
+end
 function luatk.Button:clicked()
    if self.disabled then
       return false
@@ -450,6 +581,12 @@ Disables a button widget.
 --]]
 function luatk.Button:disable()
    self.disabled = true
+end
+--[[--
+Sets the alt text of a button.
+--]]
+function luatk.Button:setAlt( alt )
+   self.alt = alt
 end
 function luatk.Button:getCol () return self.col end
 function luatk.Button:setCol( col ) self.col = col end
@@ -477,7 +614,7 @@ function luatk.newText( parent, x, y, w, h, text, col, align, font )
    wgt.text    = text
    wgt.col     = col or luatk.colour.text
    wgt.align   = align or "left"
-   wgt.font    = font or luatk._deffont or lg.newFont( 16 )
+   wgt.font    = font or luatk._deffont or lg.getFont()
    return wgt
 end
 function luatk.Text:draw( bx, by )
@@ -499,8 +636,27 @@ Gets the height of the text widget text.
    @treturn number Height of the text in the widget.
 --]]
 function luatk.Text:height ()
-   local _maxw, wrap = self.font:getWrap( self.text, self.w )
-   return self.font:getLineHeight() * #wrap
+   local _w, h = self:dimensions()
+   return h
+end
+--[[--
+Gets the maximum width of the text widget text.
+
+   @treturn number Width of the text in the widget.
+--]]
+function luatk.Text:width ()
+   local w, _h = self:dimensions()
+   return w
+end
+--[[--
+Gets the dimensions of the text widget text.
+
+   @treturn number Width of the text in the widget.
+   @treturn number Height of the text in the widget.
+--]]
+function luatk.Text:dimensions ()
+   local maxw, wrap = self.font:getWrap( self.text, self.w )
+   return maxw, self.font:getLineHeight() * #wrap
 end
 
 --[[
@@ -565,7 +721,7 @@ function luatk.newCheckbox( parent, x, y, w, h, text, handler, default )
    wgt.text    = text
    wgt.handler = handler
    wgt.state   = (default==true)
-   wgt.font    = luatk._deffont or lg.newFont( 12 )
+   wgt.font    = luatk._deffont or lg.getFont()
    wgt.fonth   = wgt.font:getHeight()
    return wgt
 end
@@ -613,7 +769,7 @@ function luatk.newFader( parent, x, y, w, h, min, max, def, handler, params )
    def = def or (min+max)*0.5
    wgt.val = math.min( math.max( def, min ), max )
    wgt.params = params
-   wgt.font = params.font or luatk._deffont or lg.newFont( 12 )
+   wgt.font = params.font or luatk._deffont or lg.getFont()
    return wgt
 end
 function luatk.Fader:draw( bx, by )
@@ -661,9 +817,11 @@ end
 function luatk.Fader:get()
    return self.val
 end
-function luatk.Fader:set( val )
+function luatk.Fader:set( val, no_handler )
    self.val = math.max( self.min, math.min( self.max, val ) )
-   self.handler( self, self.val )
+   if not no_handler then
+      self.handler( self, self.val )
+   end
 end
 
 --[[
@@ -754,13 +912,142 @@ end
 function luatk.List:get()
    return self.items[ self.selected ], self.selected
 end
-function luatk.List:set( idx )
+function luatk.List:set( idx, no_handler )
    self.selected = math.max( 1, math.min( idx, #self.items ) )
-   self.onselect( self:get() )
+   if not no_handler then
+      self.onselect( self:get() )
+   end
+end
+function luatk.List:setItem( itm, no_handler )
+   for k,v in ipairs(self.items) do
+      if v==itm then
+         return self:set( k, no_handler )
+      end
+   end
 end
 function luatk.List:setPos( pos )
    self.pos = pos * self.scrollh
    self.pos = math.max( 0, math.min( self.scrollh, self.pos ) )
+end
+
+--[[
+-- Input widget
+--]]
+luatk.Input = {}
+setmetatable( luatk.Input, { __index = luatk.Widget } )
+luatk.Input_mt = { __index = luatk.Input }
+function luatk.newInput( parent, x, y, w, h, max, params )
+   local wgt = luatk.newWidget( parent, x, y, w, h )
+   setmetatable( wgt, luatk.Input_mt )
+   params = params or {}
+   wgt.max     = max
+   wgt.params  = params
+   wgt.font    = params.font or luatk._deffont or lg.getFont()
+   wgt.fonth   = wgt.font:getHeight()
+   wgt.fontlh  = wgt.font:getLineHeight()
+   if (wgt.h-10) / wgt.font:getLineHeight() < 2 then
+      wgt.oneline = true
+   end
+   wgt.whitelist = params.whitelist
+   wgt.blacklist = params.blacklist
+   wgt.str     = ""
+   if params.str then
+      wgt:set( params.str )
+   end
+   wgt.cursor = 0
+   wgt.timer = 0
+   return wgt
+end
+function luatk.Input:focus ()
+   lk.setTextInput( true, self.parent.x+self.x, self.parent.y+self.y, self.w, self.h )
+end
+function luatk.Input:update( dt )
+   self.timer = self.timer + dt
+end
+function luatk.Input:draw( bx, by )
+   local x, y, w, h = bx+self.x, by+self.y, self.w, self.h
+
+   -- Background
+   lg.setColor( luatk.colour.selected )
+   lg.rectangle( "fill", x-2, y-2, w+4, h+4 )
+   lg.setColor( luatk.colour.dark )
+   lg.rectangle( "fill", x, y, w, h )
+
+   lg.setColor( luatk.input.colour.text )
+   local stry
+   if self.oneline then
+      stry = y+(h-self.fonth)*0.5
+   else
+      stry = y+5
+   end
+   lg.printf( self.str, self.font, x+5, stry, w-10 )
+
+   if math.fmod( math.floor(self.timer*1.1), 2 )==0 then
+      local fw = self.font:getWidth( utf8.sub( self.str, 1, self.cursor ) )
+      if self.oneline then
+         stry = y+(h-self.fontlh)*0.5
+      else
+         stry = y+5
+      end
+      lg.rectangle( "fill", x+5+fw+1, stry, 1, self.fontlh )
+   end
+end
+function luatk.Input:get ()
+   if not self.str or self.str=="" then
+      return nil
+   end
+   return self.str
+end
+function luatk.Input:_addStr( str )
+   local head = utf8.sub( self.str, 1, self.cursor )
+   local tail = utf8.sub( self.str, self.cursor+1, utf8.len(self.str) )
+   local body = ""
+   for c in utf8.gmatch( str, "." ) do
+      local doadd = true
+      if self.whitelist and not self.whitelist[ c ] then
+         doadd = false
+      end
+      if self.blacklist and self.blacklist[ c ] then
+         doadd = false
+      end
+      if doadd then
+         body = body..c
+         self.cursor = self.cursor+1
+      end
+   end
+   self.str = utf8.sub( head..body..tail, 1, self.max )
+end
+function luatk.Input:set( str )
+   self.str = ""
+   self:_addStr( str )
+end
+function luatk.Input:keypressed( key )
+   if key == "backspace" then
+      local l = utf8.len(self.str)
+      if l > 0 then
+         self.str = utf8.sub( self.str, 1, l-1 )
+         self.cursor = math.max( 0, self.cursor-1 )
+      end
+      self.timer = 0
+   elseif key == "left" then
+      self.cursor = math.max( 0, self.cursor-1 )
+      self.timer = 0
+   elseif key == "right" then
+      self.cursor = math.min( utf8.len(self.str), self.cursor+1 )
+      self.timer = 0
+   elseif key == "home" then
+      self.cursor = 0
+      self.timer = 0
+   elseif key == "end" then
+      self.cursor = utf8.len(self.str)
+      self.timer = 0
+   end
+   return true
+end
+function luatk.Input:textinput( str )
+   self.str = self.str or ""
+   self:_addStr( str )
+   return true
 end
 
 --[[
@@ -805,6 +1092,7 @@ function luatk.msg( title, msg )
    luatk.newButton( wdw, (w-50)/2, h+110-20-30, 50, 30, _("OK"), function( wgt )
       wgt.parent:destroy()
    end )
+   return wdw
 end
 function luatk.yesno( title, msg, funcyes, funcno )
    local w, h = msgbox_size( title, msg )
@@ -824,6 +1112,7 @@ function luatk.yesno( title, msg, funcyes, funcno )
          funcno()
       end
    end )
+   return wdw
 end
 function luatk.msgFader( title, msg, minval, maxval, def, funcdone )
    local w, h = msgbox_size( title, msg )
@@ -863,6 +1152,39 @@ function luatk.msgFader( title, msg, minval, maxval, def, funcdone )
    end
    wdw:setAccept( wdw_done_accept )
    wdw:setCancel( wdw_done_cancel )
+   return wdw
+end
+function luatk.msgInput( title, msg, max, funcdone, params )
+   local w, h = msgbox_size( title, msg )
+
+   local wdw = luatk.newWindow( nil, nil, w, 160 + h )
+   luatk.newText( wdw, 0, 10, w, 20, title, nil, "center" )
+   luatk.newText( wdw, 20, 40, w-40, h, msg )
+   local inp = luatk.newInput( wdw, 20, h+100-20-20, w-40, 35, max, params )
+   local bw = 120
+   local y = h+110-20-30+50
+   luatk.newButton( wdw, w-10-bw, y, bw, 30, _("Done"), function( wgt )
+      wgt.parent:destroy()
+      if funcdone then
+         funcdone( inp:get() )
+      end
+   end )
+   local function wdw_done( dying_wdw, val )
+      if funcdone then
+         funcdone( val )
+      end
+      dying_wdw:destroy()
+      return true
+   end
+   local function wdw_done_accept( dying_wdw )
+      return wdw_done( dying_wdw, inp:get() )
+   end
+   local function wdw_done_cancel( dying_wdw )
+      return wdw_done( dying_wdw, nil )
+   end
+   wdw:setAccept( wdw_done_accept )
+   wdw:setCancel( wdw_done_cancel )
+   return wdw
 end
 
 function luatk.drawAltText( bx, by, alt, w )

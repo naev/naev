@@ -72,41 +72,49 @@ int nlua_loadMusic( nlua_env env )
 static int musicL_choose( lua_State* L )
 {
    const char *situation = luaL_checkstring(L,1);
-   music_choose( situation );
+   if (music_choose( situation ))
+      NLUA_ERROR(L,"music.choose failed!");
    return 0;
 }
 
 /**
- * @brief Plays the loaded song.
+ * @brief Plays the loaded song. Will resume paused songs.
  *
  * @luafunc play
  */
 static int musicL_play( lua_State *L )
 {
    const char *str = luaL_optstring(L,1,NULL);
-   music_play( str );
+   if (music_play( str ))
+      NLUA_ERROR(L,"music.play failed!");
    return 0;
 }
 
 /**
  * @brief Pauses the music engine.
+ *
+ *    @luatparam boolean disable Whether or not to disable music changes until music.play() is called. This disables all in-game music changes such as taking off.
+ * @luafunc pause
  */
 static int musicL_pause( lua_State* L )
 {
-   (void) L;
-   music_pause();
+   int disable = lua_toboolean(L,1);
+   if (music_pause(disable))
+      NLUA_ERROR(L,"music.pause failed!");
    return 0;
 }
 
 /**
  * @brief Stops playing the current song.
  *
+ *    @luatparam boolean nodisable Whether or not to disable music changes until music.play() is called. This disables all in-game music changes such as taking off. Disables by false, set to true to only stop the current song.
  * @luafunc stop
  */
 static int musicL_stop( lua_State *L )
 {
-   (void) L;
-   music_stop();
+   int nodisable = lua_toboolean(L,1);
+   if (music_stop(!nodisable))
+      NLUA_ERROR(L,"music.stop failed!");
    return 0;
 }
 
@@ -118,8 +126,15 @@ static int musicL_stop( lua_State *L )
  */
 static int musicL_isPlaying( lua_State* L )
 {
-   MusicInfo_t *minfo = music_info();
-   lua_pushboolean(L, minfo->playing);
+   if (music_disabled) {
+      lua_pushboolean(L, 0);
+   }
+   else {
+      MusicInfo_t *minfo = music_info();
+      if (minfo==NULL)
+         NLUA_ERROR(L,"Failed to get music info!");
+      lua_pushboolean(L, minfo->playing);
+   }
    return 1;
 }
 
@@ -129,14 +144,22 @@ static int musicL_isPlaying( lua_State* L )
  * @usage songname, songplayed = music.current()
  *
  *    @luatreturn string The name of the current playing song or "none" if no song is playing.
- *    @luatreturn number The current offset inside the song (0. if music is none).
+ *    @luatreturn number The current offset inside the song (-1. if music is none).
  * @luafunc current
  */
 static int musicL_current( lua_State* L )
 {
-   MusicInfo_t *minfo = music_info();
-   lua_pushstring(L, minfo->name);
-   lua_pushnumber(L, minfo->pos);
+   if (music_disabled) {
+      lua_pushstring(L, "none");
+      lua_pushnumber(L, -1.);
+   }
+   else {
+      MusicInfo_t *minfo = music_info();
+      if (minfo==NULL)
+         NLUA_ERROR(L,"Failed to get music info!");
+      lua_pushstring(L, minfo->name);
+      lua_pushnumber(L, minfo->pos);
+   }
    return 2;
 }
 

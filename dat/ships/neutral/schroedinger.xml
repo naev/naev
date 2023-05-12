@@ -3,7 +3,7 @@
  <points>20</points>
  <base_type>Schroedinger</base_type>
  <GFX size="47">schroedinger</GFX>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Scout</class>
  <price>180000</price>

@@ -2,11 +2,12 @@
 <ssys name="Polaris">
  <general>
   <radius>12500.000000</radius>
-  <stars>400</stars>
-  <interference>50.000000</interference>
+  <spacedust>400</spacedust>
+  <interference>112.500000</interference>
   <nebula volatility="82.200000" hue="320.000000">800.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="662.000000" y="132.000000"/>
+ <pos x="658.400595" y="-143.441799"/>
  <spobs>
   <spob>Hypergate Polaris</spob>
  </spobs>
@@ -15,9 +16,16 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Proxima Centauri">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Sol">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

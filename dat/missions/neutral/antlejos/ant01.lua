@@ -26,7 +26,6 @@ local destpnt, destsys = spob.getS("Antlejos V")
 local cargo_amount = 20 -- Amount in mass
 local reward = ant.rewards.ant01
 
--- luacheck: globals land (Hook functions passed by name)
 
 function create ()
    misn.setNPC( _("Verner"), ant.verner.portrait, _("A bored individual that seems to be looking for someone to do a task for him.") )
@@ -79,7 +78,7 @@ function accept ()
 
    misn.setTitle( _("Verner's Request") )
    misn.setDesc(fmt.f(_("Verner asked you to take him to {pnt} in the {sys} system."), {pnt=destpnt, sys=destsys}))
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.osdCreate(_("Verner's Request"), {
       fmt.f(_("Take Verner to {pnt} ({sys} system)"), {pnt=destpnt, sys=destsys}),
    })

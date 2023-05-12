@@ -239,6 +239,8 @@ int can_swapEquipment( const char *shipname )
          land_errDialogueBuild( _("You have deployed fighters.") );
          return 0;
       }
+      /* Recall fighters. */
+      escort_clearDeployed( player.p );
    }
    return 1;
 }
@@ -622,17 +624,17 @@ static void misn_open( unsigned int wid )
    y = -60;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, 40, 0,
-         "txtSDate", NULL, NULL,
+         "txtSDate", NULL, &cFontGrey,
          _("Date:\n"
          "Free Space:"));
    window_addText( wid, w/2 + 110, y,
          w/2 - 130, 40, 0,
          "txtDate", NULL, NULL, NULL );
-   y -= 2 * gl_defFont.h + 50;
+   y -= 2 * gl_defFont.h + 30;
    window_addText( wid, w/2 + 10, y,
-         w/2 - 30, 20, 0,
-         "txtReward", &gl_defFont, NULL, _("#nReward:#0 None") );
-   y -= 20;
+         w/2 - 30, 50, 0,
+         "txtHeader", &gl_defFont, NULL, NULL );
+   y -= 50;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, y - 40 + h - 2*LAND_BUTTON_HEIGHT, 0,
          "txtDesc", &gl_defFont, NULL, NULL );
@@ -641,6 +643,7 @@ static void misn_open( unsigned int wid )
    map_show( wid, 20, 20, w/2 - 30, h/2 - 35, 0.75, 0., 0. );
 
    misn_genList(wid, 1);
+   space_clearComputerMarkers(); /* Don't want markers at the beginning. */
 }
 /**
  * @brief Autonav to selected mission.
@@ -779,7 +782,7 @@ static void misn_update( unsigned int wid, const char *str )
 
    active_misn = toolkit_getList( wid, "lstMission" );
    if (strcmp(active_misn,_("No Missions"))==0) {
-      window_modifyText( wid, "txtReward", _("#nReward:#0 None") );
+      window_modifyText( wid, "txtHeader", NULL );
       window_modifyText( wid, "txtDesc",
             _("There are no missions available here.") );
       window_disableButton( wid, "btnAcceptMission" );
@@ -791,8 +794,8 @@ static void misn_update( unsigned int wid, const char *str )
    sys = mission_sysComputerMark( misn );
    if (sys!=NULL)
       map_center( wid, sys->name );
-   snprintf( txt, sizeof(txt), _("#nReward:#0 %s"), misn->reward );
-   window_modifyText( wid, "txtReward", txt );
+   snprintf( txt, sizeof(txt), _("%s\n#nReward:#0 %s"), misn->title, misn->reward );
+   window_modifyText( wid, "txtHeader", txt );
    window_modifyText( wid, "txtDesc", misn->desc );
    window_enableButton( wid, "btnAcceptMission" );
    window_enableButton( wid, "btnAutonavMission" );
@@ -1082,10 +1085,13 @@ void land_genWindows( int load, int changetab )
    if (!regen) {
       landed = 1;
       music_choose("land"); /* Must be before hooks in case hooks change music. */
+
       /* We don't run the "land" hook when loading. If you want to have it do stuff when loading, use the "load" hook.
        * Note that you can use the same function for both hooks. */
       if (!load)
          hooks_run("land");
+      else
+         hooks_run("load"); /* Should be run before generating missions, so if the load hook cancels a mission, it can reappear. */
       events_trigger( EVENT_TRIGGER_LAND );
 
       /* An event, hook or the likes made Naev quit. */
@@ -1247,10 +1253,6 @@ void land( Spob* p, int load )
    /* Create all the windows. */
    land_genWindows( load, 0 );
 
-   /* Hack so that load can run player.takeoff(). */
-   if (load)
-      hooks_run( "load" );
-
    /* Just in case? */
    bar_regen();
 
@@ -1377,6 +1379,10 @@ static void land_changeTab( unsigned int wid, const char *wgt, int old, int tab 
    const char *torun_hook = NULL;
    unsigned int to_visit = 0;
 
+   /* Clear markers when not open. */
+   if (last_window == LAND_WINDOW_MISSION)
+      space_clearComputerMarkers();
+
    /* Find what switched. */
    for (int i=0; i<LAND_NUMWINDOWS; i++) {
       if (land_windowsMap[i] != tab)
@@ -1476,7 +1482,7 @@ void takeoff( int delay, int nosave )
          const PlayerShip_t *pe = &pships[i];
          if (!pe->deployed)
             continue;
-         if (!!pilot_checkSpaceworthy(pe->p)) {
+         if (!pilot_isSpaceworthy(pe->p)) {
             badfleet = 1;
             l += scnprintf( &badfleet_ships[l], sizeof(badfleet_ships)-l, "\n%s", pe->p->name );
          }
@@ -1485,8 +1491,14 @@ void takeoff( int delay, int nosave )
       /* Only care if the player has a fleet deployed. */
       if (nships > 0) {
          if (player.fleet_used > player.fleet_capacity) {
-            dialogue_msgRaw( _("Fleet not fit for flight"), _("You lack the fleet capacity to take off with all selected ships.") );
-            return;
+            if (!spob_hasService(land_spob, SPOB_SERVICE_SHIPYARD)) {
+               land_stranded(); /* Needs rescuing. */
+               return;
+            }
+            else {
+               dialogue_msgRaw( _("Fleet not fit for flight"), _("You lack the fleet capacity to take off with all selected ships.") );
+               return;
+            }
          }
          if (badfleet) {
             if (!dialogue_YesNo( _("Fleet not fit for flight"), "%s\n%s", _("The following ships in your fleet are not space worthy, are you sure you want to take off without them?"), badfleet_ships ))
@@ -1496,7 +1508,7 @@ void takeoff( int delay, int nosave )
    }
 
    /* Player's ship is not able to fly. */
-   if (!player_canTakeoff()) {
+   if (!pilot_isSpaceworthy(player.p)) {
       char message[STRMAX_SHORT];
       pilot_reportSpaceworthy( player.p, message, sizeof(message) );
       dialogue_msgRaw( _("Ship not fit for flight"), message );
@@ -1571,6 +1583,7 @@ void takeoff( int delay, int nosave )
 
    /* Add escorts and heal up. */
    player_addEscorts(); /* TODO only regenerate fleet if planet has a shipyard */
+   effect_clear( &player.p->effects );
    pilot_healLanded( player.p );
 
    hooks_run("enter");
@@ -1593,6 +1606,11 @@ void takeoff( int delay, int nosave )
 
       /* Update lua stuff. */
       pilot_outfitLInitAll( p );
+
+      /* Normal pilots stop here. */
+      if (!pilot_isWithPlayer( p ))
+         continue;
+
       pilot_outfitLOntakeoff( p );
 
       /* Set take off stuff. */

@@ -8,8 +8,8 @@
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>2</range>
  </presence>
  <general>
@@ -30,8 +30,8 @@
  </general>
  <tech>
   <item>Engines Medium</item>
+  <item>Ion 1</item>
   <item>Ion 2</item>
-  <item>Plasma 1</item>
   <item>Basic Outfits 1</item>
   <item>Star Maps</item>
   <item>Heavy Weapons 1</item>

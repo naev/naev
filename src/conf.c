@@ -124,6 +124,7 @@ void conf_setDefaults (void)
    conf.mesg_visible = 5;
    conf.map_overlay_opacity = MAP_OVERLAY_OPACITY_DEFAULT;
    conf.big_icons = BIG_ICONS_DEFAULT;
+   conf.always_radar = 0;
 
    /* Repeat. */
    conf.repeat_delay = 500;
@@ -134,7 +135,6 @@ void conf_setDefaults (void)
    conf.zoom_far     = ZOOM_FAR_DEFAULT;
    conf.zoom_near    = ZOOM_NEAR_DEFAULT;
    conf.zoom_speed   = ZOOM_SPEED_DEFAULT;
-   conf.zoom_stars   = 1.;
 
    /* Font sizes. */
    conf.font_size_console = FONT_SIZE_CONSOLE_DEFAULT;
@@ -147,9 +147,11 @@ void conf_setDefaults (void)
    conf.nosave       = 0;
    conf.devmode      = 0;
    conf.devautosave  = 0;
+   conf.lua_enet     = 0;
    conf.lua_repl     = 0;
-   conf.lastversion = strdup( "" );
+   conf.lastversion  = strdup( "" );
    conf.translation_warning_seen = 0;
+   memset( &conf.last_played, 0, sizeof(time_t) );
 
    /* Gameplay. */
    conf_setGameplayDefaults();
@@ -243,8 +245,10 @@ void conf_setVideoDefaults (void)
    conf.nebu_scale   = NEBULA_SCALE_FACTOR_DEFAULT;
    conf.minimize     = MINIMIZE_DEFAULT;
    conf.colorblind   = COLORBLIND_DEFAULT;
+   conf.healthbars   = HEALTHBARS_DEFAULT;
    conf.bg_brightness = BG_BRIGHTNESS_DEFAULT;
-   conf.nebu_brightness = NEBU_BRIGHTNESS_DEFAULT;
+   conf.nebu_nonuniformity = NEBU_NONUNIFORMITY_DEFAULT;
+   conf.jump_brightness = JUMP_BRIGHTNESS_DEFAULT;
    conf.gamma_correction = GAMMA_CORRECTION_DEFAULT;
    conf.background_fancy = BACKGROUND_FANCY_DEFAULT;
 
@@ -337,8 +341,14 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "borderless", conf.borderless );
       conf_loadBool( lEnv, "minimize", conf.minimize );
       conf_loadBool( lEnv, "colorblind", conf.colorblind );
+      conf_loadBool( lEnv, "healthbars", conf.healthbars );
       conf_loadFloat( lEnv, "bg_brightness", conf.bg_brightness );
-      conf_loadFloat( lEnv, "nebu_brightness", conf.nebu_brightness );
+      /* todo leave only nebu_nonuniformity sometime */
+      conf_loadFloat( lEnv, "nebu_brightness", conf.nebu_nonuniformity ); /* Old conf name. */
+      conf_loadFloat( lEnv, "nebu_uniformity", conf.nebu_nonuniformity );
+      conf_loadFloat( lEnv, "nebu_nonuniformity", conf.nebu_nonuniformity );
+      /* end todo */
+      conf_loadFloat( lEnv, "jump_brightness", conf.jump_brightness );
       conf_loadFloat( lEnv, "gamma_correction", conf.gamma_correction );
       conf_loadBool( lEnv, "background_fancy", conf.background_fancy );
 
@@ -371,6 +381,7 @@ int conf_loadConfig ( const char* file )
       conf_loadFloat( lEnv, "map_overlay_opacity", conf.map_overlay_opacity );
       conf.map_overlay_opacity = CLAMP(0, 1, conf.map_overlay_opacity);
       conf_loadBool( lEnv, "big_icons", conf.big_icons );
+      conf_loadBool( lEnv, "always_radar", conf.always_radar );
 
       /* Key repeat. */
       conf_loadInt( lEnv, "repeat_delay", conf.repeat_delay );
@@ -381,7 +392,6 @@ int conf_loadConfig ( const char* file )
       conf_loadFloat( lEnv, "zoom_far", conf.zoom_far );
       conf_loadFloat( lEnv, "zoom_near", conf.zoom_near );
       conf_loadFloat( lEnv, "zoom_speed", conf.zoom_speed );
-      conf_loadFloat( lEnv, "zoom_stars", conf.zoom_stars );
 
       /* Font size. */
       conf_loadInt( lEnv, "font_size_console", conf.font_size_console );
@@ -403,10 +413,12 @@ int conf_loadConfig ( const char* file )
       conf_loadFloat( lEnv, "autonav_reset_shield", conf.autonav_reset_shield );
       conf_loadBool( lEnv, "devmode", conf.devmode );
       conf_loadBool( lEnv, "devautosave", conf.devautosave );
+      conf_loadBool( lEnv, "lua_enet", conf.lua_enet );
       conf_loadBool( lEnv, "lua_repl", conf.lua_repl );
       conf_loadBool( lEnv, "conf_nosave", conf.nosave );
       conf_loadString( lEnv, "lastversion", conf.lastversion );
       conf_loadBool( lEnv, "translation_warning_seen", conf.translation_warning_seen );
+      conf_loadInt( lEnv, "last_played", conf.last_played );
 
       /* Debugging. */
       conf_loadBool( lEnv, "fpu_except", conf.fpu_except );
@@ -725,6 +737,9 @@ if (sizeof(buf) != pos) \
 #define  conf_saveInt(n,i)    \
 pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = %d\n", n, i);
 
+#define  conf_saveULong(n,i)    \
+pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = %lu\n", n, i);
+
 #define  conf_saveFloat(n,f)    \
 pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = %f\n", n, f);
 
@@ -877,20 +892,28 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("borderless",conf.borderless);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Minimize on focus loss"));
+   conf_saveComment(_("Minimize the game on focus loss."));
    conf_saveBool("minimize",conf.minimize);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Colorblind mode"));
+   conf_saveComment(_("Enables colourblind mode. Good for simulating colourblindness."));
    conf_saveBool("colorblind",conf.colorblind);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Enable health bars. These show hostility/friendliness and health of pilots on screen."));
+   conf_saveBool("healthbars",conf.healthbars);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Background brightness. 1 is normal brightness while setting it to 0 would make the backgrounds pitch black."));
    conf_saveFloat("bg_brightness",conf.bg_brightness);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Nebula brightness. 1 is normal brightness while setting it to 0 would make the nebula pitch black."));
-   conf_saveFloat("nebu_brightness",conf.nebu_brightness);
+   conf_saveComment(_("Nebula non-uniformity. 1 is normal nebula while setting it to 0 would make the nebula a solid colour."));
+   conf_saveFloat("nebu_nonuniformity",conf.nebu_nonuniformity);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Controls the intensity to which the screen fades when jumping. 1.0 would be pure white, while 0.0 would be pure black."));
+   conf_saveFloat("jump_brightness",conf.jump_brightness);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Gamma correction parameter. A value of 1 disables it (no curve)."))
@@ -950,7 +973,10 @@ int conf_saveConfig ( const char* file )
    conf_saveInt("mesg_visible",conf.mesg_visible);
    conf_saveComment(_("Opacity fraction (0-1) for the overlay map."));
    conf_saveFloat("map_overlay_opacity", conf.map_overlay_opacity);
+   conf_saveComment(_("Use bigger icons in the outfit, shipyard, and other lists."));
    conf_saveBool("big_icons", conf.big_icons);
+   conf_saveComment(_("Always show the radar and don't hide it when the overlay is active."));
+   conf_saveBool("always_radar", conf.always_radar);
    conf_saveEmptyLine();
 
    /* Key repeat. */
@@ -971,10 +997,6 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment(_("Zooming speed in factor increments per second"));
    conf_saveFloat("zoom_speed",conf.zoom_speed);
-   conf_saveEmptyLine();
-
-   conf_saveComment(_("Zooming modulation factor for the starry background"));
-   conf_saveFloat("zoom_stars",conf.zoom_stars);
    conf_saveEmptyLine();
 
    /* Fonts. */
@@ -1038,6 +1060,8 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("devautosave",conf.devautosave);
    conf_saveEmptyLine();
 
+   conf_saveComment(_("Enable the lua-enet library, for use by online/multiplayer mods (CAUTION: online Lua scripts may have security vulnerabilities!)"));
+   conf_saveBool("lua_enet",conf.lua_enet);
    conf_saveComment(_("Enable the experimental CLI based on lua-repl."));
    conf_saveBool("lua_repl",conf.lua_repl);
    conf_saveEmptyLine();
@@ -1052,6 +1076,10 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment(_("Indicates whether we've already warned about incomplete game translations."));
    conf_saveBool("translation_warning_seen",conf.translation_warning_seen);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Time Naev was last played. This gets refreshed each time you exit Naev."));
+   conf_saveULong("last_played",time(NULL));
    conf_saveEmptyLine();
 
    /* Debugging. */

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <decorator>
  <image>blackhole.webp</image>
- <x>-765.000000</x>
- <y>-490.000000</y>
+ <x>-490.000000</x>
+ <y>-240.000000</y>
  <detection_radius>200</detection_radius>
 </decorator>

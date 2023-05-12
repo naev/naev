@@ -9,7 +9,7 @@
  <colour>red</colour>
  <spawn>marauder</spawn>
  <standing>marauder</standing>
- <equip>pirate</equip>
+ <equip>marauder</equip>
  <useshiddenjumps/>
  <description>Pirate Marauders are the lowest and most vile of pirates. They are extremely aggressive and will attack most vessels unprovoked. Even the pirate clans have difficulty in dealing with them.</description>
  <allies>
@@ -26,9 +26,8 @@
   <enemy>Sirius</enemy>
   <enemy>Soromid</enemy>
   <enemy>Thurion</enemy>
-  <enemy>DHC</enemy>
   <enemy>Trader</enemy>
-  <enemy>Traders Guild</enemy>
+  <enemy>Traders Society</enemy>
   <enemy>Za'lek</enemy>
  </enemies>
  <tags>

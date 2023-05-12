@@ -4,7 +4,7 @@
  <base_type>Sindbad</base_type>
  <gfx_space sx="1" sy="1">spob/space/000.webp</gfx_space>
  <gfx_comm>spob/exterior/station00.webp</gfx_comm>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class display="Station">Battleship</class>
  <price>1</price>
@@ -43,11 +43,9 @@
   <weapon size="large" x="0" y="-40" h="5" />
   <weapon size="large" x="0" y="0" h="30" />
   <weapon size="large" x="0" y="0" h="30" />
-  <utility size="large" prop="systems">Dummy Systems</utility>
-  <structure size="large" prop="engines">Dummy Engine</structure>
-  <structure size="large" prop="hull">Dummy Plating</structure>
  </slots>
  <tags>
   <tag>noplayer</tag>
+  <tag>nocores</tag>
  </tags>
 </ship>

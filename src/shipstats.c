@@ -93,6 +93,7 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_ENERGY_MOD,         energy_mod,          N_("Energy Capacity") ),
    D__ELEM( SS_TYPE_D_ENERGY_REGEN_MOD,   energy_regen_mod,    N_("Energy Regeneration") ),
    D__ELEM( SS_TYPE_D_CPU_MOD,            cpu_mod,             N_("CPU Capacity") ),
+   DI_ELEM( SS_TYPE_D_COOLDOWN_MOD,       cooldown_mod,        N_("Ability Cooldown") ),
 
    DI_ELEM( SS_TYPE_D_JUMP_DELAY,         jump_delay,          N_("Jump Time") ),
    DI_ELEM( SS_TYPE_D_LAND_DELAY,         land_delay,          N_("Landing Time") ),
@@ -242,6 +243,9 @@ ShipStatList* ss_listFromXML( xmlNodePtr node )
          ll->d.i  = xml_getInt(node);
          break;
    }
+
+   /* Sort them. */
+   ss_sort( &ll );
 
    return ll;
 }

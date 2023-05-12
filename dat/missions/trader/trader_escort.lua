@@ -2,7 +2,9 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Trader Escort">
  <priority>5</priority>
- <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+ <cond>
+   require("misn_test").mercenary()
+ </cond>
  <chance>560</chance>
  <location>Computer</location>
  <faction>Dvaered</faction>
@@ -12,7 +14,7 @@
  <faction>Independent</faction>
  <faction>Sirius</faction>
  <faction>Soromid</faction>
- <faction>Traders Guild</faction>
+ <faction>Traders Society</faction>
  <faction>Za'lek</faction>
  <notes>
   <tier>3</tier>
@@ -27,8 +29,6 @@ local car = require "common.cargo"
 local fmt = require "format"
 local vntk = require "vntk"
 local escort = require "escort"
-
--- luacheck: globals success trader_create trader_attacked trader_safe spawn_ambush (Hook functions passed by name)
 
 local misn_title = {}
 misn_title[1] = _("Escort a tiny convoy to {pnt} in {sys}")
@@ -45,7 +45,7 @@ piracyrisk[4] = _("#nPiracy Risk:#0 High")
 
 function create()
    --This mission does not make any system claims
-   mem.destspob, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute()
+   mem.destspob, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute( 1 )
 
    if mem.destspob == nil then
       misn.finish(false)
@@ -90,7 +90,7 @@ function create()
    misn.setTitle( fmt.f( misn_title[mem.convoysize], {pnt=mem.destspob, sys=mem.destsys} ) )
    car.setDesc( fmt.f(_("A convoy of traders needs protection while they go to {pnt} ({sys} system). You must stick with the convoy at all times, waiting to jump or land until the entire convoy has done so."), {pnt=mem.destspob, sys=mem.destsys} ), mem.cargo, nil, mem.destspob, nil, piracyrisk )
    misn.markerAdd(mem.destspob, "computer")
-   misn.setReward( fmt.credits(mem.reward) )
+   misn.setReward(mem.reward)
 end
 
 function accept()
@@ -127,6 +127,7 @@ function accept()
    hook.enter( "spawn_ambush" )
 end
 
+-- luacheck: globals success
 function success ()
    local alive = escort.num_alive()
    local alive_frac = alive / mem.num_ships
@@ -136,9 +137,10 @@ function success ()
 
    if alive_frac >= 1 then
       vntk.msg( _("Success!"), fmt.f(_("You successfully escorted the trading convoy to the destination. There wasn't a single casualty and you are rewarded the full amount of #g{credits}#0."), {credits=fmt.credits(mem.reward)}) )
-      --faction.get("Traders Guild"):modPlayer(1)
+      faction.get("Traders Society"):modPlayer(rnd.rnd(2,3))
    elseif alive_frac >= 0.6 then
       vntk.msg( _("Success with Casualties"), fmt.f(_("You've arrived with the trading convoy more or less intact. Your pay is docked slightly due to the loss of part of the convoy. You receive #g{credits}#0 of the original promised reward of {reward}."), {credits=fmt.credits(mem.reward), reward=fmt.credits(reward_orig)}) )
+      faction.get("Traders Society"):modPlayer(1)
    else
       vntk.msg( _("Success with Heavy Casualties"), fmt.f(_("You arrive with what's left of the convoy. It's not much, but it's better than nothing. You are paid a steeply discounted amount of #g{credits}#0 from the {reward} originally promised."), {credits=fmt.credits(mem.reward), reward=fmt.credits(reward_orig)}) )
    end
@@ -147,17 +149,19 @@ function success ()
    misn.finish( true )
 end
 
+-- luacheck: globals trader_create
 function trader_create( p )
    for j, c in ipairs( p:cargoList() ) do
       p:cargoRm( c.name, c.q )
    end
    p:cargoAdd( mem.cargo, p:cargoFree() )
-   p:rename(_("Convoy"))
+   p:rename(_("Convoy ")..p:ship():name())
 end
 
 local last_spammed = 0
 local unsafe = false
 -- Handle the convoy getting attacked.
+-- luacheck: globals trader_attacked
 function trader_attacked( p, _attacker )
    unsafe = true
    p:control( false )

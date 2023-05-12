@@ -1,11 +1,12 @@
-local atk = require "ai.core.attack"
+local atklib = require "ai.core.attack"
+local atk = require "ai.core.attack.util"
 local atk_generic = require "ai.core.attack.generic"
 local fmt = require "format"
 local formation = require "formation"
 local lanes = require 'ai.core.misc.lanes'
 local scans = require 'ai.core.misc.scans'
 
-local choose_weapset, clean_task, gen_distress, gen_distress_attacked, handle_messages, lead_fleet, should_cooldown -- Forward-declared functions
+local choose_weapset, clean_task, gen_distress, gen_distress_attacked, handle_messages, lead_fleet, should_cooldown, consider_taunt -- Forward-declared functions
 
 --[[
 -- Variables to adjust AI
@@ -18,6 +19,7 @@ mem.atk_aim       = 1.0 -- Distance that marks aim
 mem.atk_board     = false -- Whether or not to board the target
 mem.atk_kill      = true -- Whether or not to finish off the target
 mem.atk_minammo   = 0.1 -- Percent of ammo necessary to do ranged attacks
+mem.vulnattack    = 1.5 -- Vulnerability threshold
 mem.ranged_ammo   = 0 -- How much ammo is left, we initialize to 0 here just in case
 mem.recharge      = false --whether to hold off shooting to avoid running dry of energy
 mem.enemyclose    = nil -- Distance at which an enemy is considered close
@@ -67,6 +69,8 @@ mem.Kd             = 20 -- Second control coefficient (this value is overwritten
 
 mem.target_bias    = vec2.new(0,0) -- Initialize land bias, just in case
 
+mem.elapsed       = 0 -- Time elapsed since pilot was created
+
 -- Required control rate that represents the number of seconds between each
 -- control() call
 control_rate   = 2
@@ -101,6 +105,7 @@ local stateinfo = {
    },
    backoff = {
       running  = true,
+      fighting = true,
       noattack = true,
    },
    runaway = {
@@ -137,7 +142,6 @@ end
 --[[
 -- Wrapper for the attack functions.
 --]]
--- luacheck: globals attack (AI Task functions passed by name)
 function attack( target )
    -- Don't go on the offensive when in the middle of cooling.
    if mem.cooldown then
@@ -160,7 +164,6 @@ end
 --[[
 -- Forced attack function that should focus on the enemy until enemy is killed
 --]]
--- luacheck: globals attack_forced_kill (AI Task functions passed by name)
 function attack_forced_kill( target )
    local lib = (mem.atk or atk_generic)
    lib.atk( target, true )
@@ -184,10 +187,12 @@ function lead_fleet( p )
 end
 
 -- Run instead of "control" when under manual control; use should be limited
-function control_manual ()
+function control_manual( dt )
+   mem.elapsed = mem.elapsed + dt
    local p = ai.pilot()
    local task = ai.taskname()
    local si = _stateinfo( task )
+   ai.combat( si.fighting )
 
    lead_fleet( p )
    handle_messages( si, false )
@@ -220,8 +225,8 @@ function handle_messages( si, dopush )
          end
       else
 
-         -- Special case leader is gone but we want to follow, so e ignore if they're non-existent.
-         if sender == l then
+         -- Special case leader is gone but we want to follow, so we ignore if they're non-existent.
+         if l==nil or sender==l then
             if msgtype == "hyperspace" then
                if dopush then
                   ai.pushtask("hyperspace", data)
@@ -258,7 +263,7 @@ function handle_messages( si, dopush )
             -- Messages coming from followers
             if sender:leader() == p then
                if msgtype == "f_attacked" then
-                  if not si.fighting and should_attack( data, si ) then
+                  if not si.fighting and should_attack( data, si, true ) then
                      -- Also signal to other followers
                      for k,v in ipairs(p:followers()) do
                         p:msg( v, "l_attacked", data )
@@ -275,7 +280,7 @@ function handle_messages( si, dopush )
                if msgtype == "form-pos" then
                   mem.form_pos = data
                elseif msgtype == "l_attacked" then
-                  if not si.fighting and should_attack( data, si ) then
+                  if not si.fighting and should_attack( data, si, true ) then
                      if dopush then
                         ai.pushtask("attack", data)
                         taskchange = true
@@ -333,12 +338,12 @@ end
 --[[
 -- Whether or not the pilot should try to attack an enemy.
 --]]
-function should_attack( enemy, si )
+function should_attack( enemy, si, aggressor )
    if not enemy or not enemy:exists() then
       return false
    end
 
-   if not mem.aggressive then
+   if not aggressor and not mem.aggressive then
       return false
    end
 
@@ -400,11 +405,29 @@ function should_investigate( pos, si )
       return false
    end
 
-   local d = mem.enemyclose or math.huge
-   if mem.doscans and rnd.rnd() < 0.2 and ai.dist2(pos) < d*d then
-      return true
+   -- Only care about scanning
+   if not mem.doscans or rnd.rnd() < 0.8 then
+      return false
    end
-   return false
+
+   -- Conmfort
+   local ec = mem.enemyclose or math.huge
+   local ec2 = ec*ec
+
+   -- Should be nearby
+   if ai.dist2(pos) > ec2 then
+      return false
+   end
+
+   -- Check to see if we want to go back to the lanes
+   if mem.natural and ec < math.huge then
+      local d, _pos = lanes.getDistance2P( ai.pilot(), pos )
+      if math.huge > d and d > ec2 then
+         return false
+      end
+   end
+
+   return true
 end
 
 --[[
@@ -416,7 +439,7 @@ end
 -- doing the task, or false otherwise.
 --]]
 control_funcs = {}
-function control_funcs.generic_attack( si )
+function control_funcs.generic_attack( si, noretarget )
    si = si or _stateinfo( ai.taskname() )
    local target = ai.taskdata()
    -- Needs to have a target
@@ -443,7 +466,7 @@ function control_funcs.generic_attack( si )
       -- Cool down, if necessary.
       should_cooldown()
 
-      atk.think( target, si )
+      atklib.think( target, si, noretarget )
    end
 
    -- Handle distress
@@ -452,13 +475,15 @@ function control_funcs.generic_attack( si )
 end
 
 -- Required "control" function
-function control ()
+function control( dt )
+   mem.elapsed = mem.elapsed + dt
    local p = ai.pilot()
-   local enemy = ai.getenemy()
+   local enemy = atk.preferred_enemy()
 
    -- Task information stuff
    local task = ai.taskname()
    local si = _stateinfo( task )
+   ai.combat( si.fighting )
 
    lead_fleet( p )
    local taskchange = handle_messages( si, true )
@@ -466,7 +491,7 @@ function control ()
    -- Select new leader
    local l = p:leader()
    if not mem.carried then -- carried ships don't change
-      if l == nil then
+      if l == nil and mem.autoleader then
          local candidate = ai.getBoss()
          if candidate ~= nil and candidate:exists() then
             p:setLeader( candidate )
@@ -576,9 +601,9 @@ function control ()
    -- Get new task
    if task == nil then
       -- See what decision to take
-      if should_attack( enemy, si ) then
+      if should_attack( enemy, si, false ) then
          ai.hostile(enemy) -- Should be done before taunting
-         taunt(enemy, true)
+         consider_taunt(enemy, true)
          ai.pushtask("attack", enemy)
       elseif l then -- Leader should be set already
          ai.pushtask("follow_fleet")
@@ -602,9 +627,9 @@ function control ()
    -- Enemy sighted, handled doing specific tasks
    if enemy ~= nil and mem.aggressive then
       -- See if really want to attack
-      if should_attack( enemy, si ) then
+      if should_attack( enemy, si, false ) then
          ai.hostile(enemy) -- Should be done before taunting
-         taunt(enemy, true)
+         consider_taunt(enemy, true)
          clean_task()
          ai.pushtask("attack", enemy)
       end
@@ -659,7 +684,7 @@ function control_funcs.runaway ()
       ai.hyperspace()
    else
       -- If far enough away, stop the task
-      local enemy = ai.getenemy() -- nearest enemy
+      local enemy = atk.preferred_enemy() -- nearest enemy
       if not enemy or (enemy and ai.dist(enemy) > mem.safe_distance) then
          ai.poptask()
          return true
@@ -681,7 +706,7 @@ function control_funcs.board ()
       return true
    end
    -- We want to think in case another attacker gets close
-   atk.think( target, si )
+   atklib.think( target, si )
    return true
 end
 function control_funcs.attack ()
@@ -689,7 +714,7 @@ function control_funcs.attack ()
 end
 function control_funcs.attack_forced ()
    -- Independent of control_funcs.attack
-   control_funcs.generic_attack()
+   control_funcs.generic_attack( nil, true )
    return true
 end
 function control_funcs.flyback () return true end
@@ -766,7 +791,7 @@ function attacked( attacker )
 
    -- Cooldown should be left running if not taking heavy damage.
    if mem.cooldown then
-      local _, pshield = p:health()
+      local _a, pshield = p:health()
       if pshield < 90 then
          mem.cooldown = false
          p:setCooldown( false )
@@ -796,7 +821,7 @@ function attacked( attacker )
       if mem.defensive then
          -- Some taunting
          ai.hostile(attacker) -- Should be done before taunting
-         taunt( attacker, false )
+         consider_taunt( attacker, false )
 
          -- Now pilot fights back
          clean_task( task )
@@ -811,7 +836,7 @@ function attacked( attacker )
 
    -- Let attacker profile handle it.
    elseif si.attack then
-      atk.attacked( attacker )
+      atklib.attacked( attacker )
 
    elseif task == "runaway" then
       if ai.taskdata() ~= attacker and not mem.norun then
@@ -833,6 +858,7 @@ function create_pre ()
    mem.tookoff    = p:flags("takingoff")
    mem.jumpedin   = p:flags("jumpingin")
    mem.carried    = p:flags("carried")
+   mem.mothership = p:mothership()
 
    -- Amount of faction lost when the pilot distresses at the player
    -- Should be roughly 1 for a 20 point llama and 4.38 for a 150 point hawking
@@ -853,8 +879,10 @@ function create_pre ()
       end
    end
 
+   mem.elapsed = 0 -- Restart elapsed timer
+
    -- Choose attack algorithm
-   atk.choose()
+   atklib.choose()
 end
 
 -- Finishes create stuff like choose attack and prepare plans
@@ -890,6 +918,16 @@ function taunt( _target, _offensive )
    -- Empty stub
 end
 
+-- Lower taunt frequency, at most once per X seconds per target
+mem._taunted = {}
+function consider_taunt( target, offensive )
+   local id = target:id()
+   local last_taunted = mem._taunted[id] or -100
+   if mem.elapsed - last_taunted > 15 then
+      taunt( target, offensive )
+      mem._taunted[id] = mem.elapsed
+   end
+end
 
 -- Handle distress signals
 function distress( pilot, attacker )
@@ -945,7 +983,7 @@ function distress( pilot, attacker )
    -- Already fighting
    if si.attack then
       -- Ignore if not interested in attacking
-      if not should_attack( badguy, si ) then return end
+      if not should_attack( badguy, si, false ) then return end
 
       local target = ai.taskdata()
 
@@ -959,7 +997,7 @@ function distress( pilot, attacker )
    elseif task ~= "runaway" and task ~= "refuel" then
       if not si.noattack and mem.aggressive then
          -- Ignore if not interested in attacking
-         if not should_attack( badguy, si ) then return end
+         if not should_attack( badguy, si, false ) then return end
          if p:inrange( badguy ) then -- TODO: something to help in the other case
             clean_task( task )
             ai.pushtask( "attack", badguy )

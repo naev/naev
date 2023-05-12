@@ -2,19 +2,19 @@
 <spob name="Darkshed">
  <pos x="-15535.629234" y="-9372.732177"/>
  <GFX>
-  <space>station-commerce2.webp</space>
+  <space>station-round2.webp</space>
   <exterior>station05.webp</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>0</class>
   <population>14000</population>
-  <hide>2.000000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -30,13 +30,17 @@
  </general>
  <tech>
   <item>Engines Cargo</item>
+  <item>Engines Medium</item>
   <item>Hulls Medium</item>
   <item>Systems Medium</item>
   <item>Systems High</item>
+  <item>Systems Elite</item>
   <item>Laser 1</item>
+  <item>Laser 2</item>
   <item>Ion 1</item>
   <item>Kinetic 1</item>
   <item>Plasma 1</item>
+  <item>Plasma 2</item>
   <item>High Tech Upgrades 2</item>
   <item>Star Maps</item>
   <item>Basic Outfits 2</item>
@@ -48,5 +52,6 @@
  <tags>
   <tag>criminal</tag>
   <tag>trade</tag>
+  <tag>station</tag>
  </tags>
 </spob>

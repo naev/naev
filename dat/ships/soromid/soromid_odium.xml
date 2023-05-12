@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Odium">
+ <lua>ships/lua/soromid.lua</lua>
  <points>60</points>
  <base_type>Odium</base_type>
  <GFX>odium</GFX>
  <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine_soromid</sound>
  <class display="Bio-Corvette">Corvette</class>
  <price>1350000</price>

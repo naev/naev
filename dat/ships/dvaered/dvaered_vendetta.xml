@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Dvaered Vendetta">
+ <lua>ships/lua/dvaered.lua</lua>
  <points>50</points>
  <base_type>Vendetta</base_type>
  <GFX size="49">vendetta_dvaered</GFX>
  <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Fighter</class>
  <price>450000</price>

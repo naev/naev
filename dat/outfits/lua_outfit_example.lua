@@ -11,10 +11,23 @@ API and must be set in the XML file. This only works for *Modifier* outfits!
 * You have access to the pilotoutfit API which is meant for manipulating po.
 * Use the <desc_extra> field in the XML when describing what the Lua does.
 --]]
+-- The 'notactive' variable controls whether the outfit is considered an active
+-- outfit or not. By default, it is set to nil and thus the outfit is
+-- considered an active outfit. It can be used to have outfits with custom
+-- descriptions or prices while not being an active outfit.
+notactive = false
 
 -- The onload is run once when the outfit Lua is loaded. Useful for setting up
 -- variables. The passed variable is the outfit itself.
 function onload( _o )
+end
+
+-- Called to get the extra description of the outfit. This gets appended to the
+-- summary and description, and should be short. The function receives the
+-- pilot p if applicable, and the current outfit o. The function should return
+-- a translated string.
+function descextra( _p, _o )
+   return _("This outfit is very cool.")
 end
 
 -- Called when the price of the outfit for the player is check
@@ -117,11 +130,14 @@ end
 
    Note that these are calculated with particles.
 --]]
+-- Triggered when a particle shot by p impacts the target. p may not exist if
+-- the pilot that shot the weapon ceased to exist.
 function onimpact( _p, _target, _pos, _vel )
 end
-function onmiss( _p, _pos, _vel ) -- _p may not exist
+--- Triggered when a particle times out without hitting a target. p may not
+--exist if the pilot that shot the weapon ceased to exist.
+function onmiss( _p, _pos, _vel )
 end
-
 
 --[[
    Example of an activated outfit implemented fully in Lua

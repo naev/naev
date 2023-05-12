@@ -25,7 +25,7 @@ function swapship.test( template )
 end
 
 --[[--
-   Swaps the player's ship. Performs checks to make sure things don't break. Use in place of player.swapShip() unless you really know what you're doing.
+   Swaps the player's ship. Performs checks to make sure things don't break. Use in place of player.shipSwap() unless you really know what you're doing.
 
    Can fail if the player can't copy all the mission cargo over.
 
@@ -107,8 +107,8 @@ function swapship.swap( template, acquired )
    end
 
    -- Create new ship and swap to it
-   local newship = player.addShip( template:ship(), nil, acquired )
-   player.swapShip( newship )
+   local newship = player.shipAdd( template:ship(), nil, acquired )
+   player.shipSwap( newship )
    pp = player.pilot() -- Update struct to new pilot
 
    -- Start with an empty ship

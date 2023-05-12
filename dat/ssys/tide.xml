@@ -2,11 +2,12 @@
 <ssys name="Tide">
  <general>
   <radius>13000.000000</radius>
-  <stars>400</stars>
-  <interference>42.857100</interference>
+  <spacedust>400</spacedust>
+  <interference>96.428500</interference>
   <nebula volatility="75.800000" hue="320.000000">800.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="754.212963" y="214.000000"/>
+ <pos x="715.183377" y="-64.364841"/>
  <spobs/>
  <jumps>
   <jump target="Antares">
@@ -18,4 +19,7 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

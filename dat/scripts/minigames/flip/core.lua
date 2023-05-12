@@ -209,8 +209,13 @@ function mg.draw ()
    end
 
    y = y + 10
-   setcol{ 1, 1, 1 }
-   lg.printf( "#n".._("Flip the blocks until they are all lit"), 0, by+y, nw, "center" )
+   if game_won then
+      setcol( colours.won )
+      lg.printf( _("Success!\nPress any key or click to continue…"), 0, by+y, nw, "center" )
+   else
+      setcol{ 1, 1, 1 }
+      lg.printf( "#n".._("Flip the blocks until they are all lit"), 0, by+y, nw, "center" )
+   end
 end
 
 function mg.update( dt )

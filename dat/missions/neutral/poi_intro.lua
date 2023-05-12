@@ -29,7 +29,6 @@ local lmisn = require "lmisn"
 local pilotai = require "pilotai"
 local love_shaders = require "love_shaders"
 
--- luacheck: globals delay_abort land approach_nelly enter enter_delay heartbeat nemesis_dead found board board_nelly (Hook functions passed by name)
 
 --[[
 States
@@ -216,7 +215,7 @@ She cackles maniacally.]]))
 She cackles maniacally.
 "Nice to meet you! My name is Nelly!"]]))
       vn.func( function ()
-         vn.push( "nelly_met", true )
+         var.push( "nelly_met", true )
       end )
    end
 
@@ -319,7 +318,7 @@ function heartbeat ()
 
    elseif cutscene == 2 then
       if nelly:pos():dist( player.pos() ) < 1000 then
-         nemesis = pilot.add( "Ancestor", fct_nemesis, pos + vec2.new( 5000, rnd.angle() ), _("Nemesis") )
+         nemesis = pilot.add( "Koala", fct_nemesis, pos + vec2.new( 5000, rnd.angle() ), _("Nemesis") )
          nelly:broadcast(_("Wait? We were followed?"))
          cutscene = 3
          broadcasted = 0
@@ -414,6 +413,7 @@ function nemesis_dead ()
    cutscene = 5
 end
 
+-- luacheck: globals found (used in POI framework)
 function found ()
    player.msg(_("You have found something!"),true)
 
@@ -463,7 +463,7 @@ function board( p )
    vn.na(_([[You attempt to go through the airlock when an authorization prompt opens up. Looking at the make of the ship, it seems heavily reinforced. It looks like you're going to have to break the code to gain complete access to the ship.]]))
 
    local sai = tut.vn_shipai{ pos="right" }
-   vn.appear( sai, "electric" )
+   vn.appear( sai, tut.shipai.transition )
    local fuzzy = "#o?#0"
    local exact = "#b!#0"
    sai(_([[Your ship AI materializes in front of you.
@@ -478,7 +478,7 @@ They turn quickly to you.
 "Remember, {exact} for exact matches and {fuzzy} for correct symbol but not position. Best of luck!"
 They dematerialize in a hurry.]]),
       {player=player.name(), exact=exact, fuzzy=fuzzy}))
-   vn.disappear( sai, "electric" )
+   vn.disappear( sai, tut.shipai.transition )
    nel(_([[Thinking deeply to herself she murmurs "I definitely know them…".]]))
    nel(_([[She turns again to you.
 "Try to crack the password, we need to see what's on the ship!"]]))
@@ -521,7 +521,7 @@ They dematerialize in a hurry.]]),
    vn.run()
 
    -- Clean up stuff
-   poi.misnDone( false ) -- Can't fail
+   poi.cleanup( false ) -- Can't fail
    p:setHilight(false)
    player.unboard()
 end
@@ -554,6 +554,7 @@ She rubs the cheese to her face.]]))
    -- Let her fly away
    nelly:setHilight(false)
    nelly:control(false)
+   nelly:setActiveBoard(false)
 
    pilot.toggleSpawn(true) -- Re-enable spawns
    player.unboard()

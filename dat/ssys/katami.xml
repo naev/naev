@@ -2,11 +2,12 @@
 <ssys name="Katami">
  <general>
   <radius>11000.000000</radius>
-  <stars>400</stars>
-  <interference>11.111100</interference>
-  <nebula volatility="0.000000">200.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>25.000000</interference>
+  <nebula volatility="0.000000" hue="270.000000">400.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="614.000000" y="450.000000"/>
+ <pos x="666.739717" y="249.416406"/>
  <spobs>
   <spob>Katami I</spob>
   <spob_virtual>Thurion Local</spob_virtual>
@@ -22,4 +23,7 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

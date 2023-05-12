@@ -31,4 +31,8 @@
   <item>Heavy Civilian Combat Ships</item>
   <item>Bulk Trade Ships</item>
  </tech>
+ <tags>
+  <tag>station</tag>
+  <tag>shipbuilding</tag>
+ </tags>
 </spob>

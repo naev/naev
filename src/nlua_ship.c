@@ -44,6 +44,7 @@ static int shipL_CPU( lua_State *L );
 static int shipL_gfxComm( lua_State *L );
 static int shipL_gfxTarget( lua_State *L );
 static int shipL_gfx( lua_State *L );
+static int shipL_dims( lua_State *L );
 static int shipL_price( lua_State *L );
 static int shipL_time_mod( lua_State *L );
 static int shipL_getSize( lua_State *L );
@@ -72,6 +73,7 @@ static const luaL_Reg shipL_methods[] = {
    { "gfxComm", shipL_gfxComm },
    { "gfxTarget", shipL_gfxTarget },
    { "gfx", shipL_gfx },
+   { "dims", shipL_dims },
    { "description", shipL_description },
    { "shipstat", shipL_getShipStat },
    { "shipstatDesc", shipL_getShipStatDesc },
@@ -622,6 +624,21 @@ static int shipL_gfx( lua_State *L )
    }
    lua_pushtex( L, tex );
    return 1;
+}
+
+/**
+ * @brief Gets the onscreen dimensions of the ship.
+ *
+ *    @luatreturn number Width of the ship.
+ *    @luatreturn number Height of the ship.
+ * @luafunc dims
+ */
+static int shipL_dims( lua_State *L )
+{
+   const Ship *s = luaL_validship(L,1);
+   lua_pushnumber( L, s->gfx_space->sw );
+   lua_pushnumber( L, s->gfx_space->sh );
+   return 2;
 }
 
 /**

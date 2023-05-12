@@ -41,10 +41,12 @@ typedef struct Task_ {
 typedef struct AI_Profile_ {
    char* name;       /**< Name of the profile. */
    nlua_env env;     /**< Assosciated Lua Environment. */
+   double control_rate; /**< Control rate of the AI. */
    int lua_mem;      /**< Initial memory state. */
    int ref_control;  /**< Profile control reference function. */
    int ref_control_manual; /**< Profile manual control reference function. */
    int ref_refuel;   /**< Profile refuel reference function. */
+   int ref_create;   /**< Run when pilot is created (or initialized in the case of persistent pilots). */
 } AI_Profile;
 
 /*
@@ -82,3 +84,4 @@ void ai_refuel( Pilot* refueler, unsigned int target );
 void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker );
 void ai_think( Pilot* pilot, const double dt );
 void ai_setPilot( Pilot *p );
+void ai_init( Pilot *p );

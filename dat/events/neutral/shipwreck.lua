@@ -23,13 +23,12 @@ local fmt = require "format"
 
 local shipname = _("August")
 local bctimer, derelict, timer_delay -- Non-persistent state
--- luacheck: globals broadcast destroyevent endevent rescue (Hook functions passed by name)
 
 function create ()
    local cursys = system.cur()
 
    -- Make sure system isn't claimed, but we don't claim it
-   if not evt.claim( cursys, true ) then evt.finish() end
+   if not naev.claimTest( cursys ) then evt.finish() end
 
    -- Don't do volatile systems
    local _nebu_dens, nebu_vol = cursys:nebula()

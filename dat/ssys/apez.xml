@@ -2,11 +2,10 @@
 <ssys name="Apez">
  <general>
   <radius>19687.500000</radius>
-  <stars>500</stars>
+  <spacedust>500</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-185.000000" y="-299.000000"/>
+ <pos x="101.095436" y="39.323443"/>
  <spobs>
   <spob>Apez II</spob>
   <spob>Apez V</spob>

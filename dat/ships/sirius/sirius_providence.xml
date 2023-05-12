@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Sirius Providence">
+ <lua>ships/lua/sirius.lua</lua>
  <points>120</points>
  <base_type>Providence</base_type>
  <GFX size="126" sx="12" sy="12">providence</GFX>
  <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Bulk Freighter</class>
  <price>5400000</price>

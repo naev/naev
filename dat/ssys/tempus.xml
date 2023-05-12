@@ -2,11 +2,12 @@
 <ssys name="Tempus">
  <general>
   <radius>13000.000000</radius>
-  <stars>400</stars>
-  <interference>5.882350</interference>
+  <spacedust>400</spacedust>
+  <interference>25.000000</interference>
   <nebula volatility="0.000000">100.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="692.000000" y="461.000000"/>
+ <pos x="741.012597" y="254.252452"/>
  <spobs>
   <spob_virtual>Thurion Local</spob_virtual>
  </spobs>
@@ -20,4 +21,7 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

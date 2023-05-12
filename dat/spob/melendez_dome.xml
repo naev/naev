@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Melendez Dome">
+ <pos x="5195.645644" y="1136.188782"/>
+ <GFX>
+  <space>station-round1.webp</space>
+  <exterior>traderoom.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <base>50.000000</base>
+  <bonus>25.000000</bonus>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>50000</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>The Melendez Dome was original a military listening post created during the faction wars. It was nearly destroyed and abandoned when the Empire was formed. However, after the third growth, it was rediscovered by an ambitious entrepreneur and recycled as a small-scale starship development research laboratory. This company would later be merged into the Melendez Corporation, and the station became an engine test center with the name it has kept until today: the Melendez Dome. Later, as part of an agreement with the Empire, the station was partially ceded to the Empire, and expanded with a racing facility for the recruitment and training of fighter pilots. While the Melendez Corporation still retains significant control of the station and operations, it is legally considered under Empire jurisdiction.</description>
+  <bar>The bar has a real-time feed showing the multiple race tracks in real-time. The counter is made of one of the original prototype engines for the Quicksilver model Courier ship, partially cut to both show the inner workings and to provide a flat counter top for serving drinks. Many of the patrons are viewing and making informal bets on the different races. Overall it is surprisingly less rowdy than one would expect from a competitive racing venue full of hot-shot young pilots trying to make a name for themselves.</bar>
+ </general>
+ <tech>
+  <item>Melendez Outfits</item>
+  <item>Melendez Ships</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Outfits 2</item>
+  <item>High Tech Upgrades 2</item>
+ </tech>
+ <tags>
+  <tag>station</tag>
+  <tag>melendez</tag>
+ </tags>
+</spob>

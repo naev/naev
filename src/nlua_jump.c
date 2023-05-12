@@ -18,6 +18,7 @@
 #include "nlua_vec2.h"
 #include "nlua_system.h"
 #include "land_outfits.h"
+#include "map_overlay.h"
 #include "log.h"
 
 RETURNS_NONNULL static JumpPoint *luaL_validjumpSystem( lua_State *L, int ind, int *offset );
@@ -25,6 +26,7 @@ RETURNS_NONNULL static JumpPoint *luaL_validjumpSystem( lua_State *L, int ind, i
 /* Jump metatable methods */
 static int jumpL_get( lua_State *L );
 static int jumpL_eq( lua_State *L );
+static int jumpL_tostring( lua_State *L );
 static int jumpL_radius( lua_State *L );
 static int jumpL_position( lua_State *L );
 static int jumpL_angle( lua_State *L );
@@ -37,6 +39,7 @@ static int jumpL_setKnown( lua_State *L );
 static const luaL_Reg jump_methods[] = {
    { "get", jumpL_get },
    { "__eq", jumpL_eq },
+   { "__tostring", jumpL_tostring },
    { "radius", jumpL_radius },
    { "pos", jumpL_position },
    { "angle", jumpL_angle },
@@ -114,7 +117,6 @@ LuaJump* luaL_checkjump( lua_State *L, int ind )
  */
 static JumpPoint *luaL_validjumpSystem( lua_State *L, int ind, int *offset )
 {
-   LuaJump *lj;
    JumpPoint *jp;
    StarSystem *a, *b;
 
@@ -124,7 +126,7 @@ static JumpPoint *luaL_validjumpSystem( lua_State *L, int ind, int *offset )
    b = NULL;
 
    if (lua_isjump(L, ind)) {
-      lj = luaL_checkjump(L, ind);
+      LuaJump *lj = luaL_checkjump(L, ind);
       a = system_getIndex( lj->srcid );
       b = system_getIndex( lj->destid );
       if (offset != NULL)
@@ -149,8 +151,8 @@ static JumpPoint *luaL_validjumpSystem( lua_State *L, int ind, int *offset )
       // noreturn
    }
 
-   if (b != NULL && a != NULL)
-         jp = jump_getTarget( b, a );
+   if ((b != NULL) && (a != NULL))
+      jp = jump_getTarget( b, a );
 
    if (jp == NULL)
       NLUA_ERROR(L, _("Jump is invalid"));
@@ -266,6 +268,23 @@ static int jumpL_eq( lua_State *L )
    a = luaL_checkjump(L,1);
    b = luaL_checkjump(L,2);
    lua_pushboolean(L,((a->srcid == b->srcid) && (a->destid == b->destid)));
+   return 1;
+}
+
+/**
+ * @brief Converts a jump to readable form. Mainly meant to be used for printing.
+ *
+ *    @luatparam Jump j Jump to print.
+ * @luafunc __tostring
+ */
+static int jumpL_tostring( lua_State *L )
+{
+   char buf[STRMAX_SHORT];
+   LuaJump *lj = luaL_checkjump(L,1);
+   StarSystem *src = system_getIndex( lj->srcid );
+   StarSystem *dst = system_getIndex( lj->destid );
+   snprintf( buf, sizeof(buf), _("Jump( %s -> %s )"), _(src->name), _(dst->name) );
+   lua_pushstring( L, buf );
    return 1;
 }
 
@@ -403,7 +422,6 @@ static int jumpL_setKnown( lua_State *L )
    int b, offset, changed;
    JumpPoint *jp;
 
-
    offset = 0;
    jp     = luaL_validjumpSystem( L, 1, &offset );
 
@@ -420,9 +438,12 @@ static int jumpL_setKnown( lua_State *L )
    else
       jp_rmFlag( jp, JP_KNOWN );
 
-   /* Update outfits image array - in the case it changes map owned status. */
-   if (changed)
+   if (changed) {
+      /* Update overlay. */
+      ovr_refresh();
+      /* Update outfits image array - in the case it changes map owned status. */
       outfits_updateEquipmentOutfits();
+   }
 
    return 0;
 }

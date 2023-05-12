@@ -38,15 +38,19 @@ class Presence:
 
 def readFactions(path):
     '''Returns a dictionary of Faction values by name. '''
-    tree = ET.parse(path)
     full = {}
-    for elem in tree.findall('faction'):
-        full[elem.findtext('name')] = Faction(
-            [Generator(gen.text, float(gen.attrib['weight'])) for gen in elem.findall('generator')],
-            bool(elem.find('invisible')),
-            float(elem.findtext('lane_base_cost', 0)),
-            float(elem.findtext('lane_length_per_presence', 0)),
-            bool(elem.find('useshiddenjumps')),
+
+    for fileName in glob.glob(os.path.join(path, '*.xml')):
+        tree = ET.parse(path+fileName)
+        root = tree.getroot()
+        name = root.attrib['name']
+
+        full[name] = Faction(
+            [Generator(gen.text, float(gen.attrib['weight'])) for gen in root.findall('generator')],
+            bool(root.find('invisible')),
+            float(root.findtext('lane_base_cost', 0)),
+            float(root.findtext('lane_length_per_presence', 0)),
+            bool(root.find('useshiddenjumps')),
         )
     return {n: f for n, f in full.items() if f.lane_length_per_presence and not f.invisible}
 
@@ -89,7 +93,7 @@ class Systems:
         path = '../../dat/ssys/'
         assets  = readAssets( '../../dat/spob/' )
         vassets  = readAssets( '../../dat/spob_virtual/' )
-        facinfo = readFactions( '../../dat/faction.xml' )
+        facinfo = readFactions( '../../dat/factions/' )
 
         self.facnames = list(facinfo)
         self.lane_base_cost    = {i: facinfo[facname].lane_base_cost           for i, facname in enumerate(self.facnames)}

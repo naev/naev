@@ -73,7 +73,8 @@ static Select_t *sysedit_select  = NULL; /**< Current system selection. */
 static int sysedit_nselect       = 0; /**< Number of selections in current system. */
 static int sysedit_mselect       = 0; /**< Memory allocated for selections. */
 static Select_t sysedit_tsel;         /**< Temporary selection. */
-static int  sysedit_tadd         = 0; /**< Add to selection. */
+static int sysedit_tadd          = 0; /**< Add to selection. */
+static char** sysedit_tagslist    = NULL; /**< List of existing tags. */
 
 /*
  * System editor stuff.
@@ -132,6 +133,12 @@ static void sysedit_btnTechEdit( unsigned int wid, const char *unused );
 static void sysedit_genTechList( unsigned int wid );
 static void sysedit_btnAddTech( unsigned int wid, const char *unused );
 static void sysedit_btnRmTech( unsigned int wid, const char *unused );
+static void sysedit_btnTagsEdit( unsigned int wid, const char *unused );
+static void sysedit_genTagsList( unsigned int wid );
+static void sysedit_btnAddTag( unsigned int wid, const char *unused );
+static void sysedit_btnRmTag( unsigned int wid, const char *unused );
+static void sysedit_btnNewTag( unsigned int wid, const char *unused );
+static void sysedit_btnTagsClose( unsigned int wid, const char *unused );
 static void sysedit_btnAddService( unsigned int wid, const char *unused );
 static void sysedit_btnRmService( unsigned int wid, const char *unused );
 static void sysedit_spobGFX( unsigned int wid_unused, const char *wgt );
@@ -349,6 +356,11 @@ static void sysedit_editPntClose( unsigned int wid, const char *unused )
    p->presence.range = atoi(window_getInput( sysedit_widEdit, "inpPresenceRange" ));
    p->hide           = atof(window_getInput( sysedit_widEdit, "inpHide" ));
 
+   for (int i=0; i<array_size(sysedit_tagslist); i++)
+      free( sysedit_tagslist[i] );
+   array_free( sysedit_tagslist );
+   sysedit_tagslist = NULL;
+
    /* Have to recompute presences if stuff changed. */
    space_reconstructPresences();
 
@@ -371,6 +383,7 @@ static void sysedit_btnNewSpob( unsigned int wid_unused, const char *unused )
    (void) unused;
    Spob *p, *b;
    char *name;
+   int good;
 
    /* Get new name. */
    name = dialogue_inputRaw( _("New Spob Creation"), 1, 32, _("What do you want to name the new spob?") );
@@ -391,7 +404,14 @@ static void sysedit_btnNewSpob( unsigned int wid_unused, const char *unused )
    p->name  = name;
 
    /* Base spob data off another. */
-   b                    = spob_get( space_getRndSpob(0, 0, NULL) );
+   good = 0;
+   while (!good) {
+      b = spob_get( space_getRndSpob(0, 0, NULL) );
+      good = !((b->class==NULL) ||
+            (b->gfx_spacePath==NULL) || (b->gfx_spaceName==NULL) ||
+            (b->gfx_exterior==NULL) || (b->gfx_exteriorPath==NULL));
+
+   }
    p->class             = strdup( b->class );
    p->gfx_spacePath     = strdup( b->gfx_spacePath );
    p->gfx_spaceName     = strdup( b->gfx_spaceName );
@@ -408,8 +428,10 @@ static void sysedit_btnNewSpob( unsigned int wid_unused, const char *unused )
    /* Update economy due to galaxy modification. */
    economy_execQueued();
 
-   if (conf.devautosave)
+   if (conf.devautosave) {
+      dsys_saveSystem( sysedit_sys );
       dpl_saveSpob( p );
+   }
 
    /* Reload graphics. */
    space_gfxLoad( sysedit_sys );
@@ -423,7 +445,8 @@ static void sysedit_btnNewAsteroids( unsigned int wid_unused, const char *unused
 {
    (void) wid_unused;
    (void) unused;
-   const char *title, *caption, *ret;
+   const char *title, *caption;
+   char *ret;
    const char *opts[] = {
       _("Asteroid Field"),
       _("Exclusion Zone"),
@@ -437,7 +460,7 @@ static void sysedit_btnNewAsteroids( unsigned int wid_unused, const char *unused
    dialogue_addChoice( title, caption, opts[1] );
    ret = dialogue_runChoice();
    if (ret==NULL)
-      ret = opts[0];
+      ret = strdup(opts[0]);
 
    if (strcmp(ret, opts[0])==0) {
       AsteroidAnchor *ast = &array_grow( &sysedit_sys->asteroids );
@@ -462,6 +485,9 @@ static void sysedit_btnNewAsteroids( unsigned int wid_unused, const char *unused
 
    if (conf.devautosave)
       dsys_saveSystem( sysedit_sys );
+
+   /* Must free. */
+   free(ret);
 }
 
 static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
@@ -470,43 +496,51 @@ static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
    (void) unused;
    for (int i=0; i<sysedit_nselect; i++) {
       Select_t *sel = &sysedit_select[i];
-      if (sel->type == SELECT_SPOB) {
-         char *name, *oldName, *newName, *filtered;
-         Spob *p = sysedit_sys[i].spobs[ sel->u.spob ];
+      if (sel->type != SELECT_SPOB)
+         continue;
 
-         /* Get new name. */
-         name = dialogue_input( _("New Spob Creation"), 1, 32,
-               _("What do you want to rename the spob #r%s#0?"), p->name );
-         if (name == NULL)
-            continue;
+      char *name, *oldName, *newName, *filtered;
+      Spob *p = sysedit_sys[i].spobs[ sel->u.spob ];
 
-         /* Check for collision. */
-         if (spob_exists( name )) {
-            dialogue_alert( _("Spob by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
-                  name, spob_getSystem( name ) );
-            free(name);
-            continue;
-         }
+      /* Get new name. */
+      name = dialogue_input( _("Rename Spob"), 1, 32,
+            _("What do you want to rename the spob #r%s#0?"), p->name );
+      if (name == NULL)
+         continue;
 
-         /* Rename. */
-         filtered = uniedit_nameFilter(p->name);
-         asprintf(&oldName, "dat/spob/%s.xml", filtered);
-         free(filtered);
-
-         filtered = uniedit_nameFilter(name);
-         asprintf(&newName, "dat/spob/%s.xml", filtered);
-         free(filtered);
-
-         rename(oldName, newName);
-
-         free(oldName);
-         free(newName);
-         free(p->name);
-
-         p->name = name;
-         window_modifyText( sysedit_widEdit, "txtName", p->name );
-         dpl_saveSpob( p );
+      /* Check for collision. */
+      if (spob_exists( name )) {
+         dialogue_alert( _("Spob by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
+               name, spob_getSystem( name ) );
+         free(name);
+         continue;
       }
+
+      /* Rename. */
+      filtered = uniedit_nameFilter(p->name);
+      SDL_asprintf(&oldName, "%s/%s.xml", conf.dev_save_spob, filtered);
+      free(filtered);
+
+      filtered = uniedit_nameFilter(name);
+      SDL_asprintf(&newName, "%s/%s.xml", conf.dev_save_spob, filtered);
+      free(filtered);
+
+      if (rename(oldName, newName))
+         WARN(_("Failed to rename '%s' to '%s'!"),oldName,newName);
+
+      /* Clean up. */
+      free(oldName);
+      free(newName);
+
+      /* Replace name in stack. */
+      spob_rename( p, name );
+
+      dsys_saveSystem( sysedit_sys );
+      dpl_saveSpob( p );
+
+      /* Rename input if called from edit window. */
+      if (window_existsID( sysedit_widEdit ))
+         window_modifyText( sysedit_widEdit, "txtName", p->name );
    }
 }
 
@@ -525,7 +559,7 @@ static void sysedit_btnRemove( unsigned int wid_unused, const char *unused )
          if (sel->type == SELECT_SPOB) {
             Spob *sp = sysedit_sys->spobs[ sel->u.spob ];
             filtered = uniedit_nameFilter( sp->name );
-            asprintf(&file, "dat/spob/%s.xml", filtered);
+            SDL_asprintf(&file, "%s/%s.xml", conf.dev_save_spob, filtered);
             remove(file);
 
             free(filtered);
@@ -678,7 +712,9 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
          .u.spob  = i,
       };
       int selected = sysedit_isSelected( &sel );
-      sysedit_renderSprite( p->gfx_space, x, y, p->pos.x, p->pos.y, 0, 0, NULL, selected, p->name );
+      /* TODO handle non-sprite rendering. */
+      if (p->gfx_space != NULL)
+         sysedit_renderSprite( p->gfx_space, x, y, p->pos.x, p->pos.y, 0, 0, NULL, selected, p->name );
    }
 
    /* Render jump points. */
@@ -764,6 +800,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
       glUseProgram(shaders.safelane.program);
       gl_renderShader( (x1+x2)/2., (y1+y2)/2., rw, rh, r, &shaders.safelane, &col, 1 );
    }
+   array_free( safelanes );
 
    /* Render cursor position. */
    gl_print( &gl_defFontMono, bx + 5., by + 65.,
@@ -1085,9 +1122,12 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             }
             sysedit_drag      = 0;
 
-            if (conf.devautosave)
+            if (conf.devautosave) {
+               dsys_saveSystem( sysedit_sys );
                for (int i=0; i<sysedit_nselect; i++)
-                  dpl_saveSpob(sysedit_sys->spobs[ sysedit_select[i].u.spob ]);
+                  if (sysedit_select[i].type == SELECT_SPOB)
+                     dpl_saveSpob( sys->spobs[ sysedit_select[i].u.spob ] );
+            }
          }
          if (sysedit_dragSel) {
             if ((SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD) &&
@@ -1102,10 +1142,12 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             sysedit_dragSel   = 0;
 
             /* Save all spobs in our selection - their positions might have changed. */
-            if (conf.devautosave)
+            if (conf.devautosave) {
+               dsys_saveSystem( sysedit_sys );
                for (int i=0; i<sysedit_nselect; i++)
                   if (sysedit_select[i].type == SELECT_SPOB)
                      dpl_saveSpob( sys->spobs[ sysedit_select[i].u.spob ] );
+            }
          }
          break;
 
@@ -1370,7 +1412,7 @@ static void sysedit_editPnt (void)
    snprintf( buf, sizeof(buf), "%s ", _("Faction:") );
    w = gl_printWidthRaw( NULL, buf );
    window_addText( wid, 20, y, 180, 15, 0, "txtFactionLabel", &gl_smallFont, NULL, buf );
-   snprintf( buf, sizeof(buf), "%s", p->presence.faction > 0 ? faction_name( p->presence.faction ) : _("None") );
+   snprintf( buf, sizeof(buf), "%s", p->presence.faction >= 0 ? faction_name( p->presence.faction ) : _("None") );
    window_addText( wid, 20 + w, y, 180, 15, 0, "txtFaction", &gl_smallFont, NULL, buf );
    y -= gl_defFont.h + 5;
 
@@ -1449,6 +1491,8 @@ static void sysedit_editPnt (void)
          "btnAddService", _("Add Service"), sysedit_btnAddService );
    window_addButton( wid, -20 - bw - 15, 35 + BUTTON_HEIGHT, bw, BUTTON_HEIGHT,
          "btnEditTech", _("Edit Tech"), sysedit_btnTechEdit );
+   window_addButton( wid, -20, 35 + BUTTON_HEIGHT, bw, BUTTON_HEIGHT,
+         "btnEditTags", _("Edit Tags"), sysedit_btnTagsEdit );
    window_addButton( wid, -20 - bw*3 - 15*3, 20, bw, BUTTON_HEIGHT,
          "btnDesc", _("Description"), sysedit_spobDesc );
    window_addButton( wid, -20 - bw*2 - 15*2, 20, bw, BUTTON_HEIGHT,
@@ -1510,6 +1554,19 @@ static void jp_type_check_exit_update( unsigned int wid, const char* str )
 }
 
 /**
+ * @brief Updates the jump point checkboxes.
+ */
+static void jp_type_check_nolanes_update( unsigned int wid, const char* str )
+{
+   int s = window_checkboxState( wid, str );
+   JumpPoint *j = &sysedit_sys->jumps[ sysedit_select[0].u.jump ];
+   if (s)
+      jp_setFlag( j, JP_NOLANES );
+   else
+      jp_rmFlag( j, JP_NOLANES );
+}
+
+/**
  * @brief Edits a jump.
  */
 static void sysedit_editJump (void)
@@ -1552,6 +1609,9 @@ static void sysedit_editJump (void)
    y -= 20;
    window_addCheckbox( wid, x, y, 100, 20,
          "chkExit", _("Exit only"), jp_type_check_exit_update, jp_exit );
+   y -= 20;
+   window_addCheckbox( wid, x, y, 100, 20,
+         "chkNolanes", _("No lanes"), jp_type_check_nolanes_update, jp_isFlag( j, JP_NOLANES ) );
    y -= 30;
 
    s = _("Hide"); /* TODO: if inpType == 0 disable hide box */
@@ -1676,7 +1736,7 @@ static void sysedit_editAsteroids (void)
 
 static void sysedit_genAsteroidsList( unsigned int wid )
 {
-   int hpos, apos;
+   int hpos, apos, nhave, navail;
    int x, y, w, h;
    AsteroidAnchor *ast = &sysedit_sys->asteroids[ sysedit_select[0].u.asteroid ];
    const AsteroidTypeGroup *astgroups;
@@ -1698,19 +1758,29 @@ static void sysedit_genAsteroidsList( unsigned int wid )
    h = 200;
 
    /* Find and add used asteroids. */
-   have = malloc( sizeof(char*) * array_size(ast->groups) );
-   for (int i=0; i<array_size(ast->groups); i++)
-      have[i] = strdup( ast->groups[i]->name );
-   window_addList( wid, x, y, w, h, "lstAsteroidsHave", have, array_size(ast->groups), 0, NULL, sysedit_btnRmAsteroid );
+   nhave = array_size(ast->groups);
+   if (nhave > 0) {
+      have = malloc( sizeof(char*) * nhave );
+      for (int i=0; i<nhave; i++)
+         have[i] = strdup( ast->groups[i]->name );
+   }
+   else
+      have = NULL;
+   window_addList( wid, x, y, w, h, "lstAsteroidsHave", have, nhave, 0, NULL, sysedit_btnRmAsteroid );
    x += w + 15;
 
    /* Load all asteroid types. */
    astgroups = astgroup_getAll();
-   available = malloc( sizeof(char*) * array_size(astgroups) );
-   for (int i=0; i<array_size(astgroups); i++)
-      available[i] = strdup( astgroups[i].name );
-   qsort( available, array_size(astgroups), sizeof(char*), strsort );
-   window_addList( wid, x, y, w, h, "lstAsteroidsAvailable", available, array_size(astgroups), 0, NULL, sysedit_btnAddAsteroid );
+   navail = array_size(astgroups);
+   if (navail > 0) {
+      available = malloc( sizeof(char*) * navail );
+      for (int i=0; i<navail; i++)
+         available[i] = strdup( astgroups[i].name );
+      qsort( available, navail, sizeof(char*), strsort );
+   }
+   else
+      available = NULL;
+   window_addList( wid, x, y, w, h, "lstAsteroidsAvailable", available, navail, 0, NULL, sysedit_btnAddAsteroid );
 
    /* Restore positions. */
    if (hpos != -1 && apos != -1) {
@@ -2201,6 +2271,225 @@ static void sysedit_btnRmTech( unsigned int wid, const char *unused )
    sysedit_genTechList( wid );
 }
 
+
+/**
+ * @brief Edits a spob's tags.
+ */
+static void sysedit_btnTagsEdit( unsigned int wid, const char *unused )
+{
+   (void) unused;
+   int y, w, bw;
+
+   /* Create the window. */
+   wid = window_create( "wdwSpobTagsEditor", _("Spob Tags Editor"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+   window_setCancel( wid, sysedit_btnTagsClose );
+
+   w = (SYSEDIT_EDIT_WIDTH - 40 - 15) / 2.;
+   bw = (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4.;
+
+   /* Close button. */
+   window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT,
+         "btnClose", _("Close"), sysedit_btnTagsClose );
+   y = 20 + BUTTON_HEIGHT + 15;
+
+   /* Remove button. */
+   window_addButton( wid, -20-(w+15), y, w, BUTTON_HEIGHT,
+         "btnRm", _("Rm Tag"), sysedit_btnRmTag );
+
+   /* Add button. */
+   window_addButton( wid, -20, y, w, BUTTON_HEIGHT,
+         "btnAdd", _("Add Tag"), sysedit_btnAddTag );
+
+   /* New tag. */
+   window_addButton( wid, -20-(w+15), 20, w, BUTTON_HEIGHT,
+         "btnNew", _("New Tag"), sysedit_btnNewTag );
+
+   /* Generate list of tags. */
+   if (sysedit_tagslist == NULL) {
+      Spob *spob_all = spob_getAll();
+      sysedit_tagslist = array_create( char* );
+      for (int i=0; i<array_size(spob_all); i++) {
+         Spob *s = &spob_all[i];
+         for (int j=0; j<array_size(s->tags); j++) {
+            char *t = s->tags[j];
+            int found = 0;
+            for (int k=0; k<array_size(sysedit_tagslist); k++)
+               if (strcmp(sysedit_tagslist[k], t)==0) {
+                  found = 1;
+                  break;
+               }
+            if (!found)
+               array_push_back( &sysedit_tagslist, strdup(t) );
+         }
+      }
+      qsort( sysedit_tagslist, array_size(sysedit_tagslist), sizeof(char*), strsort );
+   }
+
+   sysedit_genTagsList( wid );
+}
+
+/*
+ * Tags are closed so update tags.
+ */
+static void sysedit_btnTagsClose( unsigned int wid, const char *unused )
+{
+   char buf[STRMAX_SHORT];
+   Spob *p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
+   int l = scnprintf( buf, sizeof(buf), "#n%s#0", _("Tags:") );
+   for (int i=0; i<array_size(p->tags); i++)
+      l += scnprintf( &buf[l], sizeof(buf)-l, "%s %s", ((i>0) ? "," : ""), p->tags[i] );
+   window_modifyText( sysedit_widEdit, "txtTags", buf );
+
+   window_close( wid, unused );
+}
+
+/**
+ * @brief Generates the spob tech list.
+ */
+static void sysedit_genTagsList( unsigned int wid )
+{
+   Spob *p;
+   char **have, **lack;
+   int n, x, y, w, h, hpos, lpos, empty;
+
+   hpos = lpos = -1;
+
+   /* Destroy if exists. */
+   if (widget_exists( wid, "lstTagsHave" ) &&
+         widget_exists( wid, "lstTagsLacked" )) {
+      hpos = toolkit_getListPos( wid, "lstTagsHave" );
+      lpos = toolkit_getListPos( wid, "lstTagsLacked" );
+      window_destroyWidget( wid, "lstTagsHave" );
+      window_destroyWidget( wid, "lstTagsLacked" );
+   }
+
+   p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
+   w = (SYSEDIT_EDIT_WIDTH - 40 - 15) / 2.;
+   x = -20 - w - 15;
+   y = 20 + BUTTON_HEIGHT * 2 + 30;
+   h = SYSEDIT_EDIT_HEIGHT - y - 30;
+
+   /* Get all the techs the spob has. */
+   n = array_size(p->tags);
+   if (n>0) {
+      have = malloc( n * sizeof(char*) );
+      for (int i=0; i<n; i++)
+         have[i] = strdup(p->tags[i]);
+      empty = 0;
+   }
+   else {
+      have = malloc( sizeof(char*) );
+      have[n++] = strdup(_("None"));
+      empty = 1;
+   }
+
+   /* Add list. */
+   window_addList( wid, x, y, w, h, "lstTagsHave", have, n, 0, NULL, sysedit_btnRmTag );
+   x += w + 15;
+
+   /* Omit the techs that the spob already has from the list.  */
+   n = 0;
+   lack = malloc( array_size(sysedit_tagslist) * sizeof(char*) );
+   for (int i=0; i<array_size(sysedit_tagslist); i++) {
+      char *t = sysedit_tagslist[i];
+      if (empty)
+         lack[n++] = strdup(t);
+      else {
+         int found = 0;
+         for (int j=0; j<array_size(p->tags); j++)
+            if (strcmp( p->tags[j], t )==0) {
+               found = 1;
+               break;
+            }
+         if (!found)
+            lack[n++] = strdup( t );
+      }
+   }
+
+   /* Add list. */
+   window_addList( wid, x, y, w, h, "lstTagsLacked", lack, n, 0, NULL, sysedit_btnAddTag );
+
+   /* Restore positions. */
+   if (hpos != -1 && lpos != -1) {
+      toolkit_setListPos( wid, "lstTagsHave", hpos );
+      toolkit_setListPos( wid, "lstTagsLacked", lpos );
+   }
+}
+
+/**
+ * @brief Adds a tech to a spob.
+ */
+static void sysedit_btnAddTag( unsigned int wid, const char *unused )
+{
+   (void) unused;
+   const char *selected;
+   Spob *p;
+
+   selected = toolkit_getList( wid, "lstTagsLacked" );
+   if ((selected == NULL) || (strcmp(selected,_("None"))==0))
+      return;
+
+   p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
+   if (p->tags == NULL)
+      p->tags = array_create( char* );
+   array_push_back( &p->tags, strdup(selected) );
+
+   /* Regenerate the list. */
+   sysedit_genTagsList( wid );
+}
+
+/**
+ * @brief Removes a tech from a spob.
+ */
+static void sysedit_btnRmTag( unsigned int wid, const char *unused )
+{
+   (void) unused;
+   const char *selected;
+   Spob *p;
+   int i;
+
+   selected = toolkit_getList( wid, "lstTagsHave" );
+   if ((selected == NULL) || (strcmp(selected,_("None"))==0))
+      return;
+
+   p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
+
+   for (i=0; i<array_size(p->tags); i++)
+      if (strcmp( selected, p->tags[i] )==0)
+         break;
+   if (i >= array_size(p->tags))
+      return;
+   free( p->tags[i] );
+   array_erase( &p->tags, &p->tags[i], &p->tags[i+1] );
+
+   /* Regenerate the list. */
+   sysedit_genTagsList( wid );
+}
+
+/**
+ * @brief Adds a tech to a spob.
+ */
+static void sysedit_btnNewTag( unsigned int wid, const char *unused )
+{
+   (void) unused;
+   Spob *s;
+
+   char *tag = dialogue_input( _("Add New Spob Tag"), 1, 128, _("Please write the new tag to add to the spob.") );
+   if (tag==NULL)
+      return;
+
+   s = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
+   if (s->tags == NULL)
+      s->tags = array_create( char* );
+   array_push_back( &s->tags, tag ); /* gets freed later */
+
+   /* Also add to list of all tags. */
+   array_push_back( &sysedit_tagslist, strdup(tag) );
+
+   /* Regenerate the list. */
+   sysedit_genTagsList( wid );
+}
+
 /**
  * @brief Edits a spob's faction.
  */
@@ -2281,7 +2570,7 @@ static void sysedit_btnFactionSet( unsigned int wid, const char *unused )
    }
 
    /* Update the editor window. */
-   window_modifyText( sysedit_widEdit, "txtFaction", p->presence.faction > 0 ? faction_name( p->presence.faction ) : _("None") );
+   window_modifyText( sysedit_widEdit, "txtFaction", p->presence.faction >= 0 ? faction_name( p->presence.faction ) : _("None") );
 
    window_close( wid, unused );
 }
@@ -2348,6 +2637,7 @@ static void sysedit_spobGFX( unsigned int wid_unused, const char *wgt )
    j              = 0;
    for (size_t i=0; i<nfiles; i++) {
       PHYSFS_Stat path_stat;
+      const char *filepath;
       snprintf( buf, sizeof(buf), "%s/%s", path, files[i] );
       /* Ignore directories. */
       if (!PHYSFS_stat( buf, &path_stat )) {
@@ -2362,7 +2652,8 @@ static void sysedit_spobGFX( unsigned int wid_unused, const char *wgt )
          continue;
       cells[j].image   = t;
       cells[j].caption = strdup( files[i] );
-      c = strcmp(files[i], land ? p->gfx_exteriorPath : p->gfx_spacePath)==0 ? cOrange : cBlack;
+      filepath = (land ? p->gfx_exteriorPath : p->gfx_spacePath);
+      c = ((filepath==NULL) || strcmp(files[i], filepath)!=0) ? cBlack : cOrange;
       memcpy( &cells[j].bg, &c, sizeof(glColour) );
       j++;
    }

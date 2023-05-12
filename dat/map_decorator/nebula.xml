@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <decorator>
  <image>nebula.webp</image>
- <x>588.000000</x>
- <y>94.000000</y>
+ <x>700.000000</x>
+ <y>-50.000000</y>
  <detection_radius>300</detection_radius>
 </decorator>

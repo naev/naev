@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faction name="Traders Society">
+ <ai>trader</ai>
+ <logo>trader</logo>
+ <longname>Space Traders Society</longname>
+ <player>3</player>
+ <colour>blue</colour>
+ <known/>
+ <spawn>traders_society</spawn>
+ <standing>trader_society</standing>
+ <equip>trader</equip>
+ <description>The Space Traders Society is an organization that spans over all the different guilds, and serves to protect their interests against the Empire, Great Houses, and Soromid. Some of the prominent members include Astra Vigilis, Mining Vrata, and the Imperial Red Star.</description>
+ <allies>
+ </allies>
+ <enemies>
+  <enemy>Pirate</enemy>
+  <enemy>Marauder</enemy>
+  <enemy>Wild Ones</enemy>
+  <enemy>Dreamer Clan</enemy>
+  <enemy>Raven Clan</enemy>
+  <enemy>Black Lotus</enemy>
+  <enemy>Collective</enemy>
+ </enemies>
+ <tags>
+  <tag>generic</tag>
+ </tags>
+</faction>

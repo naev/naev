@@ -55,6 +55,7 @@ static int asteroid_creating = 0;
 /* Prototypes. */
 static int asttype_cmp( const void *p1, const void *p2 );
 static int asttype_parse( AsteroidType *at, const char *file );
+static int asteroid_loadPLG( AsteroidType *temp, const char *buf );
 static int astgroup_cmp( const void *p1, const void *p2 );
 static int astgroup_parse( AsteroidTypeGroup *ag, const char *file );
 static int asttype_load (void);
@@ -147,6 +148,9 @@ void asteroids_update( double dt )
          a->pos.x += a->vel.x * dt;
          a->pos.y += a->vel.y * dt;
 
+         /* Update angle. */
+         a->ang += a->spin * dt;
+
          /* Update scanned state if necessary. */
          if (a->scanned) {
             if (a->state == ASTEROID_FG)
@@ -173,7 +177,7 @@ void asteroids_update( double dt )
                   a->timer_max = a->timer = 10. + 20.*RNGF();
                   break;
                case ASTEROID_BG_TO_FG:
-                  a->timer_max = a->timer = 30. + 60.*RNGF();
+                  a->timer_max = a->timer = 90. + 30.*RNGF();
                   break;
 
                /* Special case needs to respawn. */
@@ -303,7 +307,7 @@ static int asteroid_init( Asteroid *ast, const AsteroidAnchor *field )
 {
    double mod, theta, wmax, r, r2;
    AsteroidType *at = NULL;
-   int outfield;
+   int outfield, id;
    int attempts = 0;
 
    ast->parent  = field->id;
@@ -349,14 +353,18 @@ static int asteroid_init( Asteroid *ast, const AsteroidAnchor *field )
       break;
    }
 
-   /* Randomly init the gfx ID */
+   /* Randomly init the gfx ID, and associated polygon */
+   id = RNG(0, array_size(at->gfxs)-1);
+   ast->gfx = at->gfxs[ id ];
+   ast->polygon = &at->polygon[ id ];
+
    ast->type = at;
-   ast->gfx = at->gfxs[ RNG(0, array_size(at->gfxs)-1) ];
    ast->armour = at->armour_min + RNGF() * (at->armour_max-at->armour_min);
 
-   /* And a random velocity */
-   theta = RNGF()*2.*M_PI;
-   mod   = RNGF()*field->maxspeed;
+   /* And a random velocity/spin */
+   theta     = RNGF()*2.*M_PI;
+   ast->spin = (1-2*RNGF())*field->maxspin;
+   mod       = RNGF()*field->maxspeed;
    vec2_pset( &ast->vel, mod, theta );
 
    /* Fade in stuff. */
@@ -554,6 +562,7 @@ static int asttype_parse( AsteroidType *at, const char *file )
    /* Set up the element. */
    memset( at, 0, sizeof(AsteroidType) );
    at->gfxs       = array_create( glTexture* );
+   at->polygon    = array_create( CollPoly );
    at->material   = array_create( AsteroidReward );
    at->damage     = 100;
    at->penetration = 100.;
@@ -581,6 +590,7 @@ static int asttype_parse( AsteroidType *at, const char *file )
 
       if (xml_isNode(node,"gfx")) {
          array_push_back( &at->gfxs, xml_parseTexture( node, SPOB_GFX_SPACE_PATH"asteroid/%s", 1, 1,  OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ) );
+         asteroid_loadPLG( at, xml_get(node) );
          continue;
       }
       else if (xml_isNode(node,"commodity")) {
@@ -636,6 +646,62 @@ if (o) WARN(_("Asteroid Type '%s' missing/invalid '%s' element"), at->name, s) /
    MELEMENT(at->armour_max <= 0.,"armour_max");
 #undef MELEMENT
 
+   return 0;
+}
+
+/**
+ * @brief Loads the collision polygon for an asteroid type.
+ *
+ *    @param temp AsteroidType to load into.
+ *    @param buf Name of the file.
+ */
+static int asteroid_loadPLG( AsteroidType *temp, const char *buf )
+{
+   char file[PATH_MAX];
+   CollPoly *polygon;
+   xmlDocPtr doc;
+   xmlNodePtr node;
+
+   snprintf( file, sizeof(file), "%s%s.xml", ASTEROID_POLYGON_PATH, buf );
+
+   /* There is only one polygon per gfx, but it has to be added to all the other polygons */
+   /* associated to each gfx of current AsteroidType. */
+   /* In case it fails to load for some reason, its size will be set to 0. */
+   polygon = &array_grow( &temp->polygon );
+   polygon->npt = 0;
+
+   /* See if the file does exist. */
+   if (!PHYSFS_exists(file)) {
+      WARN(_("%s xml collision polygon does not exist!\n \
+               Please use the script 'polygon_from_sprite.py'\n \
+               This file can be found in Naev's artwork repo."), file);
+      return 0;
+   }
+
+   /* Load the XML. */
+   doc  = xml_parsePhysFS( file );
+   if (doc == NULL)
+      return 0;
+
+   node = doc->xmlChildrenNode; /* First polygon node */
+   if (node == NULL) {
+      xmlFreeDoc(doc);
+      WARN(_("Malformed %s file: does not contain elements"), file);
+      return 0;
+   }
+
+   do { /* load the polygon data */
+      if (xml_isNode(node,"polygons")) {
+         xmlNodePtr cur = node->children;
+         do {
+            if (xml_isNode(cur,"polygon")) {
+               LoadPolygon( polygon, cur );
+            }
+         } while (xml_nextNode(cur));
+      }
+   } while (xml_nextNode(node));
+
+   xmlFreeDoc(doc);
    return 0;
 }
 
@@ -850,6 +916,13 @@ void asteroids_free (void)
       for (int j=0; j<array_size(at->gfxs); j++)
          gl_freeTexture(at->gfxs[j]);
       array_free(at->gfxs);
+
+      /* Free collision polygons. */
+      for (int j=0; j<array_size(at->polygon); j++) {
+         free(at->polygon[j].x);
+         free(at->polygon[j].y);
+      }
+      array_free(at->polygon);
    }
    array_free(asteroid_types);
    asteroid_types = NULL;

@@ -5,11 +5,10 @@
   <map_shader>stellarwind_map.frag</map_shader>
   <features>#bStellar Wind (1 fuel regen)#0</features>
   <radius>10000.000000</radius>
-  <stars>400</stars>
-  <interference>20.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>30.000000</interference>
  </general>
- <pos x="238.584571" y="280.786538"/>
+ <pos x="313.473924" y="521.521385"/>
  <spobs/>
  <jumps>
   <jump target="Defa">

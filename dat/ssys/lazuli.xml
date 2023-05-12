@@ -2,19 +2,25 @@
 <ssys name="Lazuli">
  <general>
   <radius>21000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="849.995077" y="-1042.282028"/>
+ <pos x="1229.501061" y="-1008.969506"/>
  <spobs>
-  <spob>Chriik</spob>
   <spob>Lazuli I</spob>
   <spob>Lazuli III</spob>
   <spob>Lazuli Ia</spob>
  </spobs>
  <jumps>
   <jump target="Lapis">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="NGC-127">
+   <pos x="3553.661923" y="-20393.513767"/>
+   <hide>0.300000</hide>
+  </jump>
+  <jump target="NGC-13564">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

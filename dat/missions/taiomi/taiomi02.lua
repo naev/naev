@@ -7,7 +7,6 @@
  <done>Taiomi 1</done>
  <notes>
   <campaign>Taiomi</campaign>
-  <tier>2</tier>
  </notes>
 </mission>
 --]]
@@ -22,10 +21,8 @@ local taiomi = require "common.taiomi"
 local der = require 'common.derelict'
 local pilotai = require "pilotai"
 
--- luacheck: globals enter heartbeat land spawn_fleet board_convoy (Hook functions passed by name)
-
 local reward = taiomi.rewards.taiomi02
-local title = _("Escaping Taiomi")
+local title = _("Information Hunting")
 local base, basesys = spob.getS("One-Wing Goddard")
 local N = 2
 
@@ -80,6 +77,15 @@ local function osd ()
 end
 
 function create ()
+   local claimsys = {}
+   for k,v in ipairs(convoysys) do
+      table.insert( claimsys, v.sys )
+   end
+   if not misn.claim( claimsys ) then
+      warn(_("Unable to claim system that should be claimable!"))
+      misn.finish(false)
+   end
+
    misn.accept()
 
    -- Mission details
@@ -90,7 +96,7 @@ function create ()
       desc = desc .. "\n" .. fmt.f(_("   {sysname}"),{sysname=v.sys})
    end
    misn.setDesc( desc )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
 
    for k,v in ipairs(convoysys) do
       misn.markerAdd( v.sys )
@@ -218,7 +224,7 @@ function heartbeat ()
 end
 
 function land ()
-   if mem.state < N or not spob.cur()==base then
+   if mem.state < N or spob.cur()~=base then
       return
    end
 
@@ -231,8 +237,7 @@ function land ()
    s(_([[Scavenger takes the data and there is a brief flicker of their lights.]]))
    s(_([["Very interesting. While the documents contain mainly mundane details that aren't particularly of importance to us, there is a lead to one of the experimental locations. I believe it should be possible to find more in-depth construction details there."]]))
    s(_([["I will be outside preparing our next steps."
-Scavenger backs out of the Goddard and returns to space.
-]]))
+Scavenger backs out of the Goddard and returns to space.]]))
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )
    vn.done( taiomi.scavenger.transition )

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Holly II">
+ <pos x="-4330.000000" y="-2500.000000"/>
+ <GFX>
+  <space>G00.webp</space>
+  <exterior>desertic3.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Traders Society</faction>
+  <base>50.000000</base>
+  <bonus>20.000000</bonus>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>F</class>
+  <population>5e+06</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>The Holly system is one of those statistical flukes that is almost bound to happen somewhere in the galaxy. Holly II is one of the trinary planetary system that currently exists here. Scientists have long predicted that the system will become unstable, especially with all the mining activity over the years, but there has been no appreciable change and so the miners continue, many arguing that their activites are actually contributing to the stability here!
+With Holly II having been created at much the same time and from much the same material as its siblings Holly I and Holly III it is similarly heavily volcanic and, aside from the extensive mining operations, has little to recommend it, having a toxic and corrosive atmosphere, volcanoes errupting daily and lava running down the valleys and cooling in the basins that shift regularly. Those living here seem to have adapted by spending time outside of working hours cultivating a healthy interest in all the most time consuming indoor activities that the galaxy has to offer.</description>
+  <bar>A high-class, though schizophrenic, looking bar with at seat service by servers wearing some very impressive costumes of every sort under the sun. It appears they compete to create the most impressive look they can with the tables they serve matching the style of their costumes. The results patchwork is rather jarring but novel, to say the least, and with clearly a lot of effort put in to create and maintain every aspect… probably to distract the patrons from the hard labour and life threatening conditions they face working here.</bar>
+ </general>
+ <tags>
+  <tag>old</tag>
+  <tag>mining</tag>
+  <tag>immigration</tag>
+ </tags>
+</spob>

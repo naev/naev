@@ -3,7 +3,7 @@
  <points>60</points>
  <base_type>Admonisher</base_type>
  <GFX size="68">admonisher</GFX>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Corvette</class>
  <price>950000</price>

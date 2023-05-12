@@ -2,7 +2,7 @@
 
 #include "lib/math.glsl"
 
-const float SPEED = 1.0; /**< Accretion disk rotation speed. */
+const float SPEED = 0.1; /**< Accretion disk rotation speed. */
 const float STEPS = 6.0; /**< Iterations on accretion disk layers. */
 const float SIZE  = 3.0 * %f; /**< Size of the black hole relative to texture. */
 /* Set up rotation matrix at compile-time for efficiency. */
@@ -98,7 +98,7 @@ vec4 raymarch_disk( vec3 ro, vec3 rd )
       distMult      *= clamp((SIZE*10.0-poslen) * (1.0/SIZE) * 0.2, 0.0, 1.0);
       distMult      *= distMult;
 
-      float u = poslen + u_time* SIZE*0.3 + intensity * SIZE * 0.2;
+      float u = poslen + u_time * SPEED * SIZE*0.3 + intensity * SIZE * 0.2;
 
       /* Disk rotation. */
       float r = u_time * SPEED;

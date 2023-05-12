@@ -60,14 +60,11 @@ extern StarSystem *systems_stack;
 #define MAPEDIT_SAVE_HEIGHT      500   /**< Open window height. */
 #define MAPEDIT_SAVE_TXT_WIDTH   300   /**< Text width. */
 
-#define MAPEDIT_FILENAME_MAX     128   /**< Max filename length. */
-#define MAPEDIT_NAME_MAX         128   /**< Maximum name length. */
-#define MAPEDIT_DESCRIPTION_MAX 1024   /**< Maximum description length. */
-
 typedef struct mapOutfitsList_s {
    char *fileName;
    char *mapName;
    char *description;
+   char *gfx_store;
    int numSystems;
    credits_t price;
    int rarity;
@@ -91,6 +88,8 @@ static double mapedit_mx      = 0.; /**< X mouse position. */
 static double mapedit_my      = 0.; /**< Y mouse position. */
 static unsigned int mapedit_widLoad = 0; /**< Load Map Outfit wid. */
 static char *mapedit_sLoadMapName = NULL; /**< Loaded Map Outfit. */
+static int mapedit_nospob     = 0; /**< Don't save spobs. */
+static int mapedit_hidden     = 0; /**< Mark hidden jump lanes too. */
 
 /*
  * Universe editor Prototypes.
@@ -110,6 +109,8 @@ static void mapedit_close( unsigned int wid, const char *wgt );
 static void mapedit_btnOpen( unsigned int wid_unused, const char *unused );
 static void mapedit_btnSaveMapAs( unsigned int wid_unused, const char *unused );
 static void mapedit_clear( unsigned int wid_unused, const char *unused );
+static void mapedit_chkSpob( unsigned int wid, const char *wgtname );
+static void mapedit_chkHidden( unsigned int wid, const char *wgtname );
 /* Keybindings handling. */
 static int mapedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 /* Loading of Map files. */
@@ -166,27 +167,27 @@ void mapedit_open( unsigned int wid_unused, const char *unused )
    /* Button : reset the current map. */
    buttonHPos = 2;
    window_addButtonKey( wid, -20-(BUTTON_WIDTH+20)*buttonHPos, 20+(BUTTON_HEIGHT+20)*buttonVPos, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClear", "Reset", mapedit_clear, SDLK_r );
+         "btnClear", _("Reset"), mapedit_clear, SDLK_r );
    buttonHPos--;
 
    /* Button : open map file. */
    window_addButtonKey( wid, -20-(BUTTON_WIDTH+20)*buttonHPos, 20+(BUTTON_HEIGHT+20)*buttonVPos, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnOpen", "Open", mapedit_btnOpen, SDLK_o );
+         "btnOpen", _("Open"), mapedit_btnOpen, SDLK_o );
    buttonHPos--;
 
    /* Button : save current map to file. */
    window_addButtonKey( wid, -20-(BUTTON_WIDTH+20)*buttonHPos, 20+(BUTTON_HEIGHT+20)*buttonVPos, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnSaveAs", "Save", mapedit_btnSaveMapAs, SDLK_s );
+         "btnSaveAs", _("Save"), mapedit_btnSaveMapAs, SDLK_s );
    buttonHPos = 0;
    buttonVPos--;
 
    /* Button : exit editor. */
    window_addButtonKey( wid, -20-(BUTTON_WIDTH+20)*buttonHPos, 20+(BUTTON_HEIGHT+20)*buttonVPos, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", "Exit", mapedit_close, SDLK_x );
+         "btnClose", _("Exit"), mapedit_close, SDLK_x );
 
    /* Filename. */
    window_addText( wid, -200, -40-textPos*parHeight-linesPos*lineHeight, 100, lineHeight, 0, "txtSFileName",
-         &gl_smallFont, NULL, "File Name:" );
+         &gl_smallFont, NULL, _("File Name:") );
    window_addInput( wid, -30, -40-textPos*parHeight-linesPos*lineHeight, 170, lineHeight, "inpFileName",
          1024, 1, &gl_smallFont );
    textPos++;
@@ -194,8 +195,8 @@ void mapedit_open( unsigned int wid_unused, const char *unused )
 
    /* Map name. */
    window_addText( wid, -200, -40-textPos*parHeight-linesPos*lineHeight, 100, lineHeight, 0, "txtSMapName",
-         &gl_smallFont, NULL, "Map Name:" );
-   window_addInput( wid, -30, -40-textPos*parHeight-(linesPos+1)*lineHeight, 170, lineHeight, "inpMapName",
+         &gl_smallFont, NULL, _("Map Name:") );
+   window_addInput( wid, -30, -40-textPos*parHeight-linesPos*lineHeight, 170, lineHeight, "inpMapName",
          1024, 1, &gl_smallFont );
    textPos++;
    linesPos++;
@@ -203,7 +204,7 @@ void mapedit_open( unsigned int wid_unused, const char *unused )
    /* Map description. */
    curLines = 7;
    window_addText( wid, -20, -40-textPos*parHeight-linesPos*lineHeight, 300-20, lineHeight, 0, "txtSDescription",
-         &gl_smallFont, NULL, "Description:" );
+         &gl_smallFont, NULL, _("Description:") );
    window_addInput( wid, -20, -40-textPos*parHeight-(linesPos+1)*lineHeight, 300-20, curLines*lineHeight, "inpDescription",
          32768, 0, &gl_smallFont );
    textPos++;
@@ -212,7 +213,7 @@ void mapedit_open( unsigned int wid_unused, const char *unused )
    /* Current Map # of systems. */
    curLines = 1;
    window_addText( wid, -20, -40-textPos*parHeight-linesPos*lineHeight, 300-20, 20, 0, "txtSCurrentNumSystems",
-         &gl_smallFont, NULL, "Number of Systems (up to 100):" );
+         &gl_smallFont, NULL, _("Number of Systems (up to 100):") );
    window_addText( wid, -20, -40-textPos*parHeight-linesPos*lineHeight, 60, curLines*lineHeight, 0, "txtCurrentNumSystems",
          &gl_smallFont, NULL, "N/A" );
    textPos++;
@@ -221,35 +222,55 @@ void mapedit_open( unsigned int wid_unused, const char *unused )
    /* Presence. */
    curLines = 5;
    window_addText( wid, -20, -40-textPos*parHeight-linesPos*lineHeight, 300-20, 20, 0, "txtSPresence",
-         &gl_smallFont, NULL, "Presence:" );
+         &gl_smallFont, NULL, _("Presence:") );
    window_addText( wid, -20, -40-textPos*parHeight-(linesPos+1)*lineHeight, 300-20, curLines*lineHeight, 0, "txtPresence",
-         &gl_smallFont, NULL, "No selection" );
+         &gl_smallFont, NULL, _("No selection") );
    textPos++;
    linesPos+=curLines+1;
 
    /* Outift attributes. */
    curLines = 1;
    window_addText( wid, -200, -40-textPos*parHeight-linesPos*lineHeight, 100, 20, 0, "txtSPrice",
-         &gl_smallFont, NULL, "Price:" );
+         &gl_smallFont, NULL, _("Price:") );
    window_addInput( wid, -30, -40-textPos*parHeight-linesPos*lineHeight, 170, lineHeight, "inpPrice",
          64, 1, &gl_smallFont );
    window_setInputFilter( wid, "inpPrice", INPUT_FILTER_NUMBER );
    textPos++;
-   linesPos+=curLines+1;
+   linesPos+=curLines;
+
+   curLines = 1;
+   window_addText( wid, -200, -40-textPos*parHeight-linesPos*lineHeight, 100, 20, 0, "txtSGFX",
+         &gl_smallFont, NULL, _("Graphics:") );
+   window_addInput( wid, -30, -40-textPos*parHeight-linesPos*lineHeight, 170, lineHeight, "inpGFX",
+         64, 1, &gl_smallFont );
+   textPos++;
+   linesPos+=curLines;
 
    curLines = 1;
    window_addText( wid, -200, -40-textPos*parHeight-linesPos*lineHeight, 100, 20, 0, "txtSRarity",
-         &gl_smallFont, NULL, "Rarity:" );
+         &gl_smallFont, NULL, _("Rarity:") );
    window_addInput( wid, -30, -40-textPos*parHeight-linesPos*lineHeight, 170, lineHeight, "inpRarity",
          64, 1, &gl_smallFont );
    window_setInputFilter( wid, "inpRarity", INPUT_FILTER_NUMBER );
    textPos++;
    linesPos+=curLines+1;
 
+   curLines = 1;
+   mapedit_nospob = 0;
+   window_addCheckbox( wid, -30, -40-textPos*parHeight-linesPos*lineHeight, 170, lineHeight, "chkSpob", _("Ignore Spobs"), mapedit_chkSpob, mapedit_nospob );
+   textPos++;
+   linesPos+=curLines+1;
+
+   curLines = 1;
+   mapedit_nospob = 0;
+   window_addCheckbox( wid, -30, -40-textPos*parHeight-linesPos*lineHeight, 170, lineHeight, "chkHidden", _("Set Hidden Jumps"), mapedit_chkHidden, mapedit_nospob );
+   textPos++;
+   linesPos+=curLines+1;
+
    curLines = 4;
    window_addText( wid, -20, -40-textPos*parHeight-linesPos*lineHeight, 300-20, curLines*lineHeight, 0, "txtSWarning",
          &gl_smallFont, NULL,
-         "Warning: Editor can't (yet) manage which details are mapped within a system. Review its changes before committing." );
+         _("Warning: Editor can't (yet) manage which details are mapped within a system. Review its changes before committing.") );
    textPos++;
    linesPos+=curLines+1;
 
@@ -312,6 +333,16 @@ static void mapedit_clear( unsigned int wid, const char *unused )
 
    /* Clear the map. */
    mapedit_deselect();
+}
+
+static void mapedit_chkSpob( unsigned int wid, const char *wgtname )
+{
+   mapedit_nospob = window_checkboxState( wid, wgtname );
+}
+
+static void mapedit_chkHidden( unsigned int wid, const char *wgtname )
+{
+   mapedit_hidden = window_checkboxState( wid, wgtname );
 }
 
 /**
@@ -488,7 +519,7 @@ static void mapedit_deselect (void)
    mapedit_msys   = 0;
 
    /* Change window stuff. */
-   window_modifyText( mapedit_wid, "txtSelected", "No selection" );
+   window_modifyText( mapedit_wid, "txtSelected", _("No selection") );
    window_modifyText( mapedit_wid, "txtCurrentNumSystems", "0" );
 }
 
@@ -562,11 +593,11 @@ void mapedit_selectText (void)
       if (mapedit_iLastClickedSystem != 0) {
          StarSystem *sys = system_getIndex( mapedit_iLastClickedSystem );
          map_updateFactionPresence( mapedit_wid, "txtPresence", sys, 1 );
-         snprintf( &buf[0], sizeof(buf), "Presence (%s)", sys->name );
+         snprintf( &buf[0], sizeof(buf), _("Presence (%s)"), sys->name );
          window_modifyText( mapedit_wid, "txtSPresence", buf );
       } else {
-         window_modifyText( mapedit_wid, "txtSPresence", "Presence" );
-         window_modifyText( mapedit_wid, "txtPresence", "No system yet clicked" );
+         window_modifyText( mapedit_wid, "txtSPresence", _("Presence") );
+         window_modifyText( mapedit_wid, "txtPresence", _("No system yet clicked") );
       }
    }
 }
@@ -646,11 +677,11 @@ void mapedit_loadMapMenu_open (void)
 
    /* Buttons */
    window_addButtonKey( mapedit_widLoad, -20, 20 + BUTTON_HEIGHT+20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnLoad", "Load", mapedit_loadMapMenu_load, SDLK_l );
+         "btnLoad", _("Load"), mapedit_loadMapMenu_load, SDLK_l );
    window_addButton( mapedit_widLoad, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnBack", "Back", mapedit_loadMapMenu_close );
+         "btnBack", _("Back"), mapedit_loadMapMenu_close );
    window_addButton( mapedit_widLoad, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnDelete", "Del", mapedit_loadMapMenu_close );
+         "btnDelete", _("Del"), mapedit_loadMapMenu_close );
 }
 
 /**
@@ -677,14 +708,14 @@ static void mapedit_loadMapMenu_update( unsigned int wdw, const char *str )
 
    /* Display text. */
    snprintf( buf, sizeof(buf),
-         "File Name:\n"
+       _("File Name:\n"
          "   %s\n"
          "Map name:\n"
          "   %s\n"
          "Description:\n"
          "   %s\n"
          "Systems:\n"
-         "   %i",
+         "   %i"),
          ns->fileName, ns->mapName, ns->description, ns->numSystems
    );
 
@@ -722,6 +753,10 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, const char *str )
    save = toolkit_getList( wdw, "lstMapOutfits" );
    if (strcmp(save,"None") == 0)
       return;
+
+   /* Reset defaults. */
+   mapedit_nospob = 0;
+   mapedit_hidden = 0;
 
    /* Get position. */
    pos = toolkit_getListPos( wdw, "lstMapOutfits" );
@@ -822,6 +857,7 @@ static void mapedit_btnSaveMapAs( unsigned int wdw, const char *unused )
    ns.fileName = strdup( window_getInput( wdw, "inpFileName" ) );
    ns.mapName = strdup( window_getInput( wdw, "inpMapName" ) );
    ns.description = strdup( window_getInput( wdw, "inpDescription" ) );
+   ns.gfx_store = strdup( window_getInput( wdw, "inpGFX" ) );
    ns.numSystems = mapedit_nsys;
    ns.price = atoll(window_getInput( wdw, "inpPrice" ));
    ns.rarity = atoi(window_getInput( wdw, "inpRarity" ));
@@ -831,6 +867,7 @@ static void mapedit_btnSaveMapAs( unsigned int wdw, const char *unused )
    free( ns.fileName );
    free( ns.mapName );
    free( ns.description );
+   free( ns.gfx_store );
 }
 
 /**
@@ -844,6 +881,7 @@ void mapedit_setGlobalLoadedInfos( mapOutfitsList_t* ns )
    window_setInput( mapedit_wid, "inpFileName",    ns->fileName );
    window_setInput( mapedit_wid, "inpMapName",     ns->mapName );
    window_setInput( mapedit_wid, "inpDescription", ns->description );
+   window_setInput( mapedit_wid, "inpGFX",         ns->gfx_store );
    snprintf( buf, sizeof(buf), "%i", ns->numSystems );
    window_modifyText( mapedit_wid, "txtCurrentNumSystems", buf );
    snprintf( buf, sizeof(buf), "%"CREDITS_PRI, ns->price );
@@ -877,10 +915,11 @@ static int mapedit_mapsList_refresh (void)
    newMapItem = NULL;
    for (size_t i=0; map_files[i]!=NULL; i++) {
       char *description = NULL;
+      char *gfx_store = NULL;
       credits_t price = 1000;
       int rarity = 0;
 
-      asprintf( &file, "%s%s", MAP_DATA_PATH, map_files[i] );
+      SDL_asprintf( &file, "%s%s", MAP_DATA_PATH, map_files[i] );
 
       doc = xml_parsePhysFS( file );
       if (doc == NULL) {
@@ -919,6 +958,7 @@ static int mapedit_mapsList_refresh (void)
                   xmlr_str(cur,"description",description);
                   xmlr_long(cur,"price",price);
                   xmlr_int(cur,"rarity",rarity);
+                  xmlr_str(cur,"gfx_store",gfx_store);
                } while (xml_nextNode(cur));
             }
             continue;
@@ -955,11 +995,12 @@ static int mapedit_mapsList_refresh (void)
 
       /* If the map is a regular one, then load it into the list */
       if (nSystems > 0) {
-         newMapItem               = &array_grow( &mapList );
+         newMapItem              = &array_grow( &mapList );
          newMapItem->numSystems  = nSystems;
          newMapItem->fileName    = strdup( map_files[ i ] );
          newMapItem->mapName     = strdup( name );
-         newMapItem->description = strdup( description != NULL ? description : "" );
+         newMapItem->description = strdup( (description != NULL) ? description : "" );
+         newMapItem->gfx_store   = strdup( (gfx_store != NULL) ? gfx_store : "" );
          newMapItem->price       = price;
          newMapItem->rarity      = rarity;
       }
@@ -967,6 +1008,8 @@ static int mapedit_mapsList_refresh (void)
       /* Clean up. */
       free(name);
       free(file);
+      free(description);
+      free(gfx_store);
   }
 
    /* Clean up. */
@@ -985,6 +1028,7 @@ static void mapsList_free (void)
       free( mapList[i].fileName );
       free( mapList[i].mapName );
       free( mapList[i].description );
+      free( mapList[i].gfx_store );
    }
    array_free(mapList);
    mapList = NULL;
@@ -1027,7 +1071,7 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t* ns )
    xmlw_elem( writer, "mass", "%d", 0 );
    xmlw_elem( writer, "price", "%"CREDITS_PRI, ns->price );
    xmlw_elem( writer, "description", "%s", ns->description );
-   xmlw_elem( writer, "gfx_store", "%s", "map.webp" );
+   xmlw_elem( writer, "gfx_store", "%s",  ns->gfx_store );
    xmlw_endElem( writer ); /* "general" */
 
    xmlw_startElem( writer, "specific" );
@@ -1044,7 +1088,7 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t* ns )
          /* Ignore hidden and exit-only jumps. */
          if (jp_isFlag(&s->jumps[j], JP_EXITONLY ))
             continue;
-         if (jp_isFlag(&s->jumps[j], JP_HIDDEN))
+         if (!mapedit_hidden && jp_isFlag(&s->jumps[j], JP_HIDDEN))
             continue;
          /* This is a normal jump. */
          for (int k=0; k < ns->numSystems; k++) {
@@ -1056,8 +1100,9 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t* ns )
       }
 
       /* Iterate spobs and add them */
-      for (int j=0; j < array_size(s->spobs); j++)
-         xmlw_elem( writer, "spob", "%s", s->spobs[j]->name );
+      if (!mapedit_nospob)
+         for (int j=0; j < array_size(s->spobs); j++)
+            xmlw_elem( writer, "spob", "%s", s->spobs[j]->name );
 
       xmlw_endElem( writer ); /* "sys" */
    }
@@ -1070,9 +1115,9 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t* ns )
    xmlFreeTextWriter(writer);
 
    /* Actually write data */
-   asprintf( &file, "%s/%s", conf.dev_save_map, ns->fileName );
+   SDL_asprintf( &file, "%s/%s", conf.dev_save_map, ns->fileName );
    if (xmlSaveFileEnc( file, doc, "UTF-8" ) < 0)
-      WARN("Failed writing '%s'!", file);
+      WARN(_("Failed writing '%s'!"), file);
    free( file );
 
    /* Clean up. */

@@ -7,8 +7,8 @@
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>2</range>
  </presence>
  <general>
@@ -21,12 +21,11 @@
    <bar/>
   </services>
   <commodities/>
-  <description>This farming facility provides the nearby systems with food. Some of the produce is shipped to the nearby world of Boowoy, but the majority is traded out of system.</description>
+  <description>This farming facility provides the nearby systems with food. Due to the heavy plasma storm activity in the system, it is generally easier to mass-produce vegetation in specially sealed stations with a fully controlled environment, instead of risking low yields on planets. The Yaroslav Farming Station is so successful at production, that although some of the produce is shipped to the nearby world of Boowoy, the majority is traded out of system.</description>
   <bar>Most visitors to this spaceport bar are here for the same reason. They want to buy food so they can sell it at a planet that imports it for a profit. Some merchants time their purchase right after one of the harvests that happen once every dozen decaperiods or so to get the lowest prices possible.</bar>
  </general>
  <tags>
   <tag>station</tag>
   <tag>agriculture</tag>
-  <tag>trade</tag>
  </tags>
 </spob>

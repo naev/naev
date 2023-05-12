@@ -1,14 +1,14 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<event name="Protera Blockade">
+<event name="Proteron Blockade">
  <location>enter</location>
  <chance>100</chance>
- <cond>system.cur() == system.get("Protera")</cond>
+ <cond>system.cur() == system.get("Leporis")</cond>
 </event>
 --]]
 
 --[[
-   Protera Blockade
+   Proteron Blockade
 
    This is just there to show off how the proteron are a bunch of fascist
    xenophobes who don't like outsiders. It also hides the fact that there is no
@@ -18,7 +18,6 @@
 local pos_top = vec2.new(-15000, 2500)
 local pos_bot = vec2.new(-11000, -6000)
 
--- luacheck: globals cleanup heartbeat (Hook functions passed by name)
 
 local function spawn_fleet( pos )
    local ships  = {}
@@ -27,12 +26,13 @@ local function spawn_fleet( pos )
    else
       ships[1] = "Proteron Archimedes"
    end
+   ships[2] = "Proteron Pythagoras"
 
-   for i=1,rnd.rnd(1,3) do
-      table.insert( ships, "Proteron Kahan" )
+   for i=1,rnd.rnd(1,2) do
+      table.insert( ships, "Proteron Gauss" )
    end
-   for i=1,rnd.rnd(4,6) do
-      table.insert( ships, "Proteron Derivative" )
+   for i=1,rnd.rnd(1,2) do
+      table.insert( ships, "Proteron Hippocrates" )
    end
 
    local plts = {}

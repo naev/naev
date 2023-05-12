@@ -1,6 +1,6 @@
 local fmt = require "format"
 local vn = require "vn"
-local vne = require "vn.extras"
+local vne = require "vnextras"
 local tut = require "common.tutorial"
 local poi = require "common.poi"
 

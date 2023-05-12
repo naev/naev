@@ -68,6 +68,8 @@ typedef struct EventData_ {
    char *cond; /**< Conditional Lua code to execute. */
    double chance; /**< Chance of appearing. */
    int priority; /**< Event priority: 0 = main plot, 5 = default, 10 = insignificant. */
+
+   char **tags; /**< Tags. */
 } EventData;
 
 /*
@@ -210,7 +212,6 @@ static int event_create( int dataid, unsigned int *id )
    nlua_loadTex(ev->env);
    nlua_loadBackground(ev->env);
    nlua_loadMusic(ev->env);
-   nlua_loadAudio(ev->env);
    nlua_loadTk(ev->env);
 
    /* Create the "mem" table for persistence. */
@@ -470,6 +471,23 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
          continue;
       }
 
+      /* Tags. */
+      if (xml_isNode(node,"tags")) {
+         xmlNodePtr cur = node->children;
+         temp->tags = array_create( char* );
+         do {
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur, "tag")) {
+               char *tmp = xml_get(cur);
+               if (tmp != NULL)
+                  array_push_back( &temp->tags, strdup(tmp) );
+               continue;
+            }
+            WARN(_("Event '%s' has unknown node in tags '%s'."), temp->name, cur->name );
+         } while (xml_nextNode(cur));
+         continue;
+      }
+
       /* Notes for the python mission mapping script. */
       else if (xml_isNode(node,"notes"))
          continue;
@@ -656,6 +674,12 @@ static void event_freeData( EventData *event )
    pcre2_code_free( event->chapter_re );
 
    free( event->cond );
+
+   for (int i=0; i<array_size(event->tags); i++)
+      free(event->tags[i]);
+   array_free(event->tags);
+
+   /* Clear the memory. */
 #if DEBUGGING
    memset( event, 0, sizeof(EventData) );
 #endif /* DEBUGGING */
@@ -891,4 +915,24 @@ int event_reload( const char *name )
    else
       *temp = save;
    return res;
+}
+
+void event_toLuaTable( lua_State *L, int eventid )
+{
+   const EventData *data = &event_data[ eventid ];
+
+   lua_newtable(L);
+
+   lua_pushstring(L, data->name);
+   lua_setfield(L,-2,"name");
+
+   lua_pushboolean(L, (data->flags & EVENT_FLAG_UNIQUE));
+   lua_setfield(L,-2,"unique");
+
+   lua_newtable(L);
+   for (int j=0; j<array_size(data->tags); j++) {
+      lua_pushboolean(L,1);
+      lua_setfield(L,-2,data->tags[j]);
+   }
+   lua_setfield(L,-2,"tags");
 }

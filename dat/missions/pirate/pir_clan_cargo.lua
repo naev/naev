@@ -29,8 +29,13 @@ local fleet = require "fleet"
 local fmt = require "format"
 local pir = require "common.pirate"
 local portrait = require "portrait"
+local vn = require "vn"
+local lmisn = require "lmisn"
+local vntk = require "vntk"
 
--- luacheck: globals enter invoke_enemies land (Hook functions passed by name)
+local npc_name = _("Pirate Lord")
+local npc_portrait = portrait.getMil("Pirate")
+local npc_image = portrait.getFullPath( npc_portrait )
 
 function create ()
    -- Note: this mission does not make any system claims.
@@ -48,19 +53,36 @@ function create ()
    mem.dest = planets[index][1]
    mem.sys = planets[index][2]
 
-   misn.setNPC( _("Pirate Lord"), portrait.getMil("Pirate"), _("You see a pirate lord raving about something. A significant crowd has gathered around.") )
+   misn.setNPC( npc_name, npc_portrait, _("You see a pirate lord raving about something. A significant crowd has gathered around.") )
 end
 
 
 function accept ()
+   local accepted = false
+
+   vn.clear()
+   vn.scene()
+   local p = vn.newCharacter( npc_name, {image=npc_image} )
+   vn.transition()
+   p(_([[It seems like this planet's clan is looking for a pilot to transport a package to another pirate world. Obviously, quite a few mercenaries or even fellow pirates would try to stop anyone transporting that package, and there is probably no need to say the only ways to the other pirate worlds are through hostile territory.
+
+Will you accept the mission?]]))
+   vn.menu{
+      {_([[Accept]]), "accept"},
+      {_([[Decline]]), "decline"},
+   }
+
+   vn.label("decline")
+   vn.done()
+
+   vn.label("accept")
+   vn.func( function () accepted = true end )
+   vn.na(_([[You roll up your sleeves and head off to your ship.]]))
+   vn.run()
+
+   if not accepted then return end
+
    misn.markerAdd( mem.dest, "low" )
-
-   -- Intro text
-   if not tk.yesno( _("Spaceport Bar"), _([[It seems like this planet's clan is looking for a pilot to transport a package to another pirate world. Obviously, quite a few mercenaries or even fellow pirates would try to stop anyone transporting that package, and there is probably no need to say the only ways to the other pirate worlds are through hostile territory.
-
-Will you accept the mission?]]) ) then
-      return
-   end
 
    -- Accept the mission
    misn.accept()
@@ -68,11 +90,10 @@ Will you accept the mission?]]) ) then
    -- Mission details
    mem.reward = rnd.rnd(10,20) * 100e3 -- Hey, this mission is probably hell, after all.
    misn.setTitle(_("Clans trade"))
-   misn.setReward( fmt.credits(mem.reward) )
+   misn.setReward(mem.reward)
    misn.setDesc( fmt.f(_("Deliver some boxes to the pirate clan of {pnt}, in the {sys} system."), {pnt=mem.dest, sys=mem.sys}) )
 
    -- Flavour text and mini-briefing
-   tk.msg( _("Spaceport Bar"), _([[You roll up your sleeves and head off to your ship.]]) )
    misn.osdCreate(_("Spaceport Bar"), {
       fmt.f(_("Deliver some boxes to the pirate clan of {pnt}, in the {sys} system."), {pnt=mem.dest, sys=mem.sys}),
    })
@@ -89,24 +110,25 @@ end
 
 function land()
    local landed = spob.cur()
-   if landed == mem.dest then
-      if misn.cargoRm(mem.packages) then
-         tk.msg( _("Mission Accomplished"), _("Your mission was a complete success! The clan you just gave the packages have already paid you.") )
-
-         player.pay(mem.reward)
-         faction.modPlayerSingle("Pirate",5);
-
-         local n = var.peek("ps_clancargo_misn") or 0
-         var.push("ps_clancargo_misn", n + 1)
-         -- The first time this mission is done, the player’s max standing is
-         -- increased by 5.
-         if n == 0 then
-             pir.modReputation( 5 )
-         end
-
-         misn.finish(true)
-      end
+   if landed ~= mem.dest then
+      return
    end
+
+   player.pay(mem.reward)
+   lmisn.sfxVictory()
+   vntk.msg( _("Mission Accomplished"), _("Your mission was a complete success! The clan you just gave the packages have already paid you.").."\n\n"..fmt.reward(mem.reward) )
+
+   faction.modPlayerSingle("Pirate",5)
+
+   local n = var.peek("ps_clancargo_misn") or 0
+   var.push("ps_clancargo_misn", n + 1)
+   -- The first time this mission is done, the player’s max standing is
+   -- increased by 5.
+   if n == 0 then
+      pir.modReputation( 5 )
+   end
+
+   misn.finish(true)
 end
 
 function enter ()
@@ -140,11 +162,6 @@ function enter ()
       end
    end
 end
-
-function abort()
-   misn.finish(false)
-end
-
 
 -- Mostly taken from es01.
 function invoke_enemies( enter_vect )

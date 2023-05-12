@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Kruger's Pocket">
+ <general>
+  <radius>3375.000000</radius>
+  <spacedust>400</spacedust>
+  <interference>3.825000</interference>
+  <nebula volatility="0.000000" hue="240.000000">50.000000</nebula>
+  <nolanes/>
+ </general>
+ <pos x="292.230903" y="-190.093557"/>
+ <spobs/>
+ <jumps>
+  <jump target="Cebus">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Kruger">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Scorpius">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+ </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeA-standard</group>
+   <radius>4000.000000</radius>
+   <pos x="0.000000" y="0.000000"/>
+  </asteroid>
+ </asteroids>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
+</ssys>

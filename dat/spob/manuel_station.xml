@@ -2,19 +2,19 @@
 <spob name="Manuel Station">
  <pos x="-6490.624381" y="-8887.528980"/>
  <GFX>
-  <space>station-shipyard.webp</space>
+  <space>station-shipyard4.webp</space>
   <exterior>station03.webp</exterior>
  </GFX>
  <presence>
   <faction>Goddard</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>0</class>
-  <population>2000</population>
-  <hide>2.000000</hide>
+  <population>20000</population>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -46,4 +46,8 @@
   <item>Missiles 1</item>
   <item>Missiles 2</item>
  </tech>
+ <tags>
+  <tag>station</tag>
+  <tag>trade</tag>
+ </tags>
 </spob>

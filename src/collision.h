@@ -23,6 +23,9 @@ typedef struct CollPoly_ {
 /* Loads a polygon data from xml. */
 void LoadPolygon( CollPoly* polygon, xmlNodePtr node );
 
+/* Rotates a polygon. */
+void RotatePolygon( CollPoly* rpolygon, CollPoly* ipolygon, float theta );
+
 /* Returns 1 if collision is detected */
 int CollideSprite( const glTexture* at, const int asx, const int asy, const vec2* ap,
       const glTexture* bt, const int bsx, const int bsy, const vec2* bp,

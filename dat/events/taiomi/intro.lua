@@ -22,7 +22,6 @@ local taiomi = require 'common.taiomi'
 local drones_create -- Forward-declared function
 local drone_faction = faction.get("Independent") -- Constant
 local drones, d_scav, evt_state -- Event state, never saved.
--- luacheck: globals cutscene00 cutscene01 cutscene02 cutscene03 enter land (Hook functions passed by name)
 
 --[[
 -- Event states:
@@ -98,7 +97,7 @@ function land ()
       d(_([["Hello again and welcome to our refuge. It may not seem like much, but it has been our home for generations now."]]))
       d(_([["As you have probably noticed, we are not organic beings such as you, however, we are equally sentient."]]))
       d(_([["Our encounters with humans have not been, in general, very fruitful and we have lost countless of our members over time. The few that remain were able to band together and stumble upon this quiet area, where we have been since."]]))
-      d(_([["We scavenge and collect what we can, allowing for our repairs and developments, however, it does not seem like we can continue like this forever."]]))
+      d(_([["We scavenge and collect what we can, allowing for our repairs and developments. Despite this, it does not seem like we can continue like this forever."]]))
       d(_([["Although most don't wish to admit it, our numbers are waning and we are unable to maintain them as before. Furthermore, changes in the universe are making it so that more and more humans approach our location, and clashes are inevitable."]]))
       d(_([["We have no choice but to take a large risk and try to move on. However, on our own we might not be able to pull it off before we are reverted to inert debris floating eternally in space."]]))
       d(_([["Although I hate to ask this of you, we do not have any alternative but to push forward. If you would be willing to help our plight, we would be very grateful. We can not offer much, but we may have ways of compensating your efforts. Please take your time to think it over and get in touch with me outside the ship if you are interested."]]))

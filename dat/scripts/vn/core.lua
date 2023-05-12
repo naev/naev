@@ -17,6 +17,7 @@ local log         = require "vn.log"
 local sdf         = require "vn.sdf"
 local opt         = require "vn.options"
 local luaspfx     = require "luaspfx"
+local luatk       = require "luatk"
 
 local vn = {
    speed = var.peek("vn_textspeed") or 0.025,
@@ -226,7 +227,12 @@ local function _draw()
    _draw_bg( x, y, w, h, vn.textbox_bg, nil, vn.textbox_bg_alpha )
    -- Draw text
    vn.setColor( vn._bufcol, vn.textbox_text_alpha )
-   graphics.setScissor( x, y+bh, w, h-2*bh )
+   -- We pad a bit here so that the top doesn't get cut off from certain
+   -- characters that extend above the font height
+   local padh = font:getLineHeight()-font:getHeight()
+   graphics.setScissor( x, y+bh-padh, w, h-2*bh+padh )
+   -- We're actually printing the entire text and using scissors to cut it out
+   -- TODO only show the visible text while not trying to render it
    y = y + vn._buffer_y
    graphics.printf( vn._buffer, font, x+bw, y+bh, w-3*bw )
    graphics.setScissor()
@@ -376,6 +382,12 @@ Key press handler.
    @tparam string key Name of the key pressed.
 --]]
 function vn.keypressed( key )
+   local tkopen = luatk.isOpen()
+   if not tkopen and string.lower(naev.keyGet( "menu" )) == key then
+      naev.menuSmall()
+      return true
+   end
+
    if vn._show_options then
       opt.keypressed( key )
       return true
@@ -399,7 +411,7 @@ function vn.keypressed( key )
    end
 
    if not vn._show_log then
-      if key=="tab" or key=="escape" then
+      if not tkopen and (key=="tab" or key=="escape") then
          vn._show_log = not vn._show_log
          log.open( vn.textbox_font )
          return true
@@ -423,7 +435,7 @@ end
 --[[--
 Mouse move handler.
 --]]
-function vn.mousemoved( mx, my )
+function vn.mousemoved( mx, my, dx, dy )
    if vn._show_options then
       opt.mousemoved( mx, my )
       return true
@@ -431,10 +443,14 @@ function vn.mousemoved( mx, my )
 
    if vn.show_options and _inbox( mx, my, vn.options_x, vn.options_y, vn.options_w, vn.options_h ) then
       vn._options_over = true
+      return true
    else
       vn._options_over = false
    end
-   return true
+
+   if vn.isDone() then return false end
+   local s = vn._states[ vn._state ]
+   return s:mousemoved( mx, my, dx, dy )
 end
 
 --[[--
@@ -474,8 +490,30 @@ Mouse released handler.
 function vn.mousereleased( mx, my, button )
    if vn._show_options then
       opt.mousereleased( mx, my, button )
+      return true
    end
-   return true
+
+   if vn.isDone() then return false end
+   local s = vn._states[ vn._state ]
+   return s:mousereleased( mx, my, button )
+end
+
+--[[--
+Mouse wheel handler.
+--]]
+function vn.wheelmoved( dx, dy )
+   if vn.isDone() then return false end
+   local s = vn._states[ vn._state ]
+   return s:wheelmoved( dx, dy )
+end
+
+--[[--
+Text input handler.
+--]]
+function vn.textinput( str )
+   if vn.isDone() then return false end
+   local s = vn._states[ vn._state ]
+   return s:textinput( str )
 end
 
 -- Helpers
@@ -483,16 +521,18 @@ end
 Makes the player say something.
 
    @tparam string what What is being said.
+   @tparam bool noclear Whether or not to clear the text buffer.
    @tparam bool nowait Whether or not to wait for player input when said.
 ]]
-function vn.me( what, nowait ) vn.say( "You", what, nowait ) end
+function vn.me( what, noclear, nowait ) vn.say( "You", what, noclear, nowait ) end
 --[[--
 Makes the narrator say something.
 
    @tparam string what What is being said.
+   @tparam bool noclear Whether or not to clear the text buffer.
    @tparam bool nowait Whether or not to wait for player input when said.
 ]]
-function vn.na( what, nowait ) vn.say( "Narrator", what, nowait ) end
+function vn.na( what, noclear, nowait ) vn.say( "Narrator", what, noclear, nowait ) end
 
 --[[
 -- State
@@ -509,7 +549,11 @@ function vn.State.new()
    s._draw = _dummy
    s._update = _dummy
    s._mousepressed = _dummy
+   s._mousereleased = _dummy
+   s._mousemoved = _dummy
+   s._wheelmoved = _dummy
    s._keypressed = _dummy
+   s._textinput = _dummy
    s.done = false
    return s
 end
@@ -531,8 +575,28 @@ function vn.State:mousepressed( mx, my, button )
    vn._checkDone()
    return ret
 end
+function vn.State:mousereleased( mx, my, button )
+   local ret = self:_mousereleased( mx, my, button )
+   vn._checkDone()
+   return ret
+end
+function vn.State:mousemoved( mx, my, dx, dy )
+   local ret = self:_mousemoved( mx, my, dx, dy )
+   vn._checkDone()
+   return ret
+end
+function vn.State:wheelmoved( dx, dy )
+   local ret = self:_wheelmoved( dx, dy )
+   vn._checkDone()
+   return ret
+end
 function vn.State:keypressed( key )
    local ret = self:_keypressed( key )
+   vn._checkDone()
+   return ret
+end
+function vn.State:textinput( key )
+   local ret = self:_textinput( key )
    vn._checkDone()
    return ret
 end
@@ -561,6 +625,9 @@ function vn.StateScene:_init()
 
    -- Set alpha to max (since transitions will be used in general)
    vn._globalalpha = 1
+
+   -- Clear stuff
+   vn._buffer = ""
 
    _finish(self)
 end
@@ -615,7 +682,7 @@ end
 -- Say
 --]]
 vn.StateSay = {}
-function vn.StateSay.new( who, what )
+function vn.StateSay.new( who, what, noclear )
    local s = vn.State.new()
    s._init = vn.StateSay._init
    s._update = vn.StateSay._update
@@ -624,6 +691,7 @@ function vn.StateSay.new( who, what )
    s._type = "Say"
    s.who = who
    s._what = what
+   s._noclear = noclear
    return s
 end
 function vn.StateSay:_init()
@@ -640,12 +708,20 @@ function vn.StateSay:_init()
    self._textbuf = table.concat( wrappedtext, "\n" )
    -- Set up initial buffer
    self._timer = vn.speed
+   if self._noclear then
+      self._pos = utf8.len( vn._buffer )
+      self._textbuf = vn._buffer .. self._textbuf
+      self._text = vn._buffer
+      vn._buffer = self._text
+   else
+      self._pos = utf8.next( self._textbuf )
+      self._text = ""
+      -- Initialize scroll
+      vn._buffer_y = 0
+   end
    self._len = utf8.len( self._textbuf )
-   self._pos = utf8.next( self._textbuf )
-   self._text = ""
    local c = vn._getCharacter( self.who )
    vn._bufcol = c.color or vn._default._bufcol
-   vn._buffer = self._text
    if c.hidetitle then
       vn._title = nil
    else
@@ -656,9 +732,6 @@ function vn.StateSay:_init()
       v.talking = false
    end
    c.talking = true
-
-   -- Initialize scroll
-   vn._buffer_y = 0
 end
 function vn.StateSay:_update( dt )
    self._timer = self._timer - dt
@@ -669,7 +742,7 @@ function vn.StateSay:_update( dt )
          return
       end
       self._pos = utf8.next( self._textbuf, self._pos )
-      self._text = string.sub( self._textbuf, 1, self._pos )
+      self._text = utf8.sub( self._textbuf, 1, self._pos )
       self._timer = self._timer + vn.speed
       vn._buffer = self._text
 
@@ -716,6 +789,7 @@ function vn.StateWait.new()
    s._init = vn.StateWait._init
    s._draw = vn.StateWait._draw
    s._mousepressed = vn.StateWait._mousepressed
+   s._wheelmoved = vn.StateWait._wheelmoved
    s._keypressed = vn.StateWait._keypressed
    s._type = "Wait"
    return s
@@ -769,14 +843,46 @@ end
 function vn.StateWait:_mousepressed( _mx, _my, _button )
    wait_scrollorfinish( self )
 end
+function vn.StateWait:_wheelmoved( _dx, dy )
+   if dy > 0 then -- upwards movement
+      vn._buffer_y = vn._buffer_y + vn.textbox_font:getLineHeight()
+      vn._buffer_y = math.min( 0, vn._buffer_y )
+      self._scrolled = _check_scroll( self._lines )
+      return true
+   elseif dy < 0 then -- downwards movement
+      vn._buffer_y = vn._buffer_y - vn.textbox_font:getLineHeight()
+      vn._buffer_y = math.max( vn._buffer_y, (vn.textbox_h - 40) - vn.textbox_font:getLineHeight() * (#self._lines) )
+      self._scrolled = _check_scroll( self._lines )
+      -- we don't check for finish, have to click for that
+      return true
+   end
+   return false
+end
 function vn.StateWait:_keypressed( key )
-   if key=="up" or key=="pageup" then
+   if key=="up" then
       if vn._buffer_y < 0 then
          vn._buffer_y = vn._buffer_y + vn.textbox_font:getLineHeight()
       end
+      vn._buffer_y = math.min( 0, vn._buffer_y )
+      self._scrolled = _check_scroll( self._lines )
+      return true
+   elseif key=="pageup" then
+      if vn._buffer_y < 0 then
+         local fonth = vn.textbox_font:getLineHeight()
+         local h = (math.floor( vn.textbox_h / fonth )-1) * fonth
+         vn._buffer_y = math.min( 0, vn._buffer_y+h )
+      end
+      self._scrolled = _check_scroll( self._lines )
+      return true
+   elseif key=="pagedown" then
+      local fonth = vn.textbox_font:getLineHeight()
+      local h = (math.floor( vn.textbox_h / fonth )-2) * fonth -- wait_scrollorfinish adds an extra line movement
+      vn._buffer_y = math.max( vn._buffer_y-h, (vn.textbox_h - 40) - vn.textbox_font:getLineHeight() * (#self._lines) )
+      wait_scrollorfinish( self )
       return true
    elseif key=="home" then
       vn._buffer_y = 0
+      self._scrolled = _check_scroll( self._lines )
       return true
    elseif key=="end" then
       vn._buffer_y = (vn.textbox_h - 40) - vn.textbox_font:getLineHeight() * (#self._lines)
@@ -789,7 +895,6 @@ function vn.StateWait:_keypressed( key )
       "space",
       "right",
       "down",
-      "pagedown",
       "escape",
    }
    local found = false
@@ -923,6 +1028,7 @@ function vn.StateMenu:_keypressed( key )
    if n==0 then n = n + 10 end
    if n > #self._items then return false end
    self:_choose(n)
+   return true
 end
 function vn.StateMenu:_choose( n )
    vn._sfx.ui.option:play()
@@ -1099,9 +1205,10 @@ vn.Character = {}
 --[[--
 Makes a character say something.
    @tparam string what What is being said.
+   @tparam bool noclear Whether or not to clear the text buffer.
    @tparam bool nowait Whether or not to wait for player input when said.
 --]]
-function vn.Character:say( what, nowait ) return vn.say( self.who, what, nowait ) end
+function vn.Character:say( what, noclear, nowait ) return vn.say( self.who, what, noclear, nowait ) end
 vn.Character_mt = { __index = vn.Character, __call = vn.Character.say }
 --[[--
 Creates a new character without adding it to the VN.
@@ -1120,8 +1227,10 @@ function vn.Character.new( who, params )
    if pimage ~= nil then
       local img
       if type(pimage)=='string' then
-         local searchpath = { "",
-               "gfx/vn/characters/" }
+         local searchpath = {
+            "",
+            "gfx/vn/characters/",
+         }
          for k,s in ipairs(searchpath) do
             local info = filesystem.getInfo( s..pimage )
             if info ~= nil then
@@ -1133,6 +1242,10 @@ function vn.Character.new( who, params )
          end
          if img == nil then
             error(string.format(_("vn: character image '%s' not found!"),pimage))
+         end
+         local iw, ih = img:getDimensions()
+         if iw <= 256 or ih <= 256 then
+            img:setFilter( "linear", "nearest" )
          end
       elseif pimage._type=="ImageData" then
          img = graphics.newImage( pimage )
@@ -1293,11 +1406,12 @@ Has a character say something.
 
    @tparam string who The name of the character that is saying something.
    @tparam string what What the character is saying.
+   @tparam[opt=false] bool noclear Whether or not to clear the text buffer.
    @tparam[opt=false] bool nowait Whether or not to introduce a wait or just skip to the next text right away (defaults to false).
 ]]
-function vn.say( who, what, nowait )
+function vn.say( who, what, noclear, nowait )
    vn._checkstarted()
-   table.insert( vn._states, vn.StateSay.new( who, what ) )
+   table.insert( vn._states, vn.StateSay.new( who, what, noclear ) )
    if not nowait then
       table.insert( vn._states, vn.StateWait.new() )
    end

@@ -22,7 +22,7 @@
 #include "nlua.h"
 #include "nlua_audio.h"
 #include "nlua_bkg.h"
-#include "nlua_col.h"
+#include "nlua_colour.h"
 #include "nlua_tex.h"
 #include "nlua_camera.h"
 #include "nlua_gfx.h"
@@ -47,8 +47,8 @@ typedef struct background_image_s {
    double angle; /**< Rotation (in radians). */
    glColour col; /**< Colour to use. */
 } background_image_t;
-static background_image_t *bkg_image_arr_bk = NULL; /**< Background image array to display (behind stars). */
-static background_image_t *bkg_image_arr_ft = NULL; /**< Background image array to display (in front of stars). */
+static background_image_t *bkg_image_arr_bk = NULL; /**< Background image array to display (behind dust). */
+static background_image_t *bkg_image_arr_ft = NULL; /**< Background image array to display (in front of dust). */
 
 static unsigned int bkg_idgen = 0; /**< ID generator for backgrounds. */
 
@@ -63,13 +63,13 @@ static int bkg_L_renderfg = LUA_NOREF; /**< Foreground rendering function. */
 static int bkg_L_renderov = LUA_NOREF; /**< Overlay rendering function. */
 
 /*
- * Background stars.
+ * Background dust.
  */
-#define STAR_BUF     250 /**< Area to leave around screen for stars, more = less repetition */
-static gl_vbo *star_vertexVBO = NULL; /**< Star Vertex VBO. */
-static unsigned int nstars = 0; /**< Total stars. */
-static GLfloat star_x = 0.; /**< Star X movement. */
-static GLfloat star_y = 0.; /**< Star Y movement. */
+#define STAR_BUF     250 /**< Area to leave around screen for dust, more = less repetition */
+static gl_vbo *dust_vertexVBO = NULL; /**< Star Vertex VBO. */
+static unsigned int ndust = 0; /**< Total dust. */
+static GLfloat dust_x = 0.; /**< Star X movement. */
+static GLfloat dust_y = 0.; /**< Star Y movement. */
 
 /*
  * Prototypes.
@@ -83,79 +83,77 @@ static int bkg_compare( const void *p1, const void *p2 );
 static void bkg_sort( background_image_t *arr );
 
 /**
- * @brief Initializes background stars.
+ * @brief Initializes background dust.
  *
- *    @param n Number of stars to add (stars per 800x640 screen).
+ *    @param n Number of dust to add (dust per 800x640 screen).
  */
 void background_initDust( int n )
 {
    GLfloat w, h, hw, hh;
    double size;
-   GLfloat *star_vertex;
+   GLfloat *dust_vertex;
 
    /* Calculate size. */
    size  = SCREEN_W*SCREEN_H+STAR_BUF*STAR_BUF;
    size /= pow2(conf.zoom_far);
 
-   /* Calculate star buffer. */
+   /* Calculate dust buffer. */
    w  = (SCREEN_W + 2.*STAR_BUF);
-   w += conf.zoom_stars * (w / conf.zoom_far - 1.);
+   w += (w / conf.zoom_far - 1.);
    h  = (SCREEN_H + 2.*STAR_BUF);
-   h += conf.zoom_stars * (h / conf.zoom_far - 1.);
+   h += (h / conf.zoom_far - 1.);
    hw = w / 2.;
    hh = h / 2.;
 
-   /* Calculate stars. */
+   /* Calculate dust. */
    size  *= n;
-   nstars = (unsigned int)(size/(800.*600.));
+   ndust = (unsigned int)(size/(800.*600.));
 
    /* Create data. */
-   star_vertex = malloc( nstars * sizeof(GLfloat) * 6 );
+   dust_vertex = malloc( ndust * sizeof(GLfloat) * 3 );
 
-   for (unsigned int i=0; i < nstars; i++) {
+   for (unsigned int i=0; i < ndust; i++) {
       /* Set the position. */
-      star_vertex[6*i+0] = RNGF()*w - hw;
-      star_vertex[6*i+1] = RNGF()*h - hh;
-      star_vertex[6*i+3] = star_vertex[6*i+0];
-      star_vertex[6*i+4] = star_vertex[6*i+1];
+      dust_vertex[3*i+0] = RNGF()*w - hw;
+      dust_vertex[3*i+1] = RNGF()*h - hh;
       /* Set the colour. */
-      star_vertex[6*i+2] = RNGF()*0.6 + 0.2;
-      star_vertex[6*i+5] = star_vertex[6*i+2];
+      dust_vertex[3*i+2] = RNGF()*0.6 + 0.2;
    }
 
    /* Recreate VBO. */
-   gl_vboDestroy( star_vertexVBO );
-   star_vertexVBO = gl_vboCreateStatic(
-         nstars * sizeof(GLfloat) * 6, star_vertex );
+   gl_vboDestroy( dust_vertexVBO );
+   dust_vertexVBO = gl_vboCreateStatic(
+         ndust * sizeof(GLfloat) * 3, dust_vertex );
 
-   free(star_vertex);
+   free(dust_vertex);
 }
 
 /**
- * @brief Displaces the stars, useful with camera.
+ * @brief Displaces the dust, useful with camera.
  */
 void background_moveDust( double x, double y )
 {
-   star_x += (GLfloat) x;
-   star_y += (GLfloat) y;
+   dust_x += (GLfloat) x;
+   dust_y += (GLfloat) y;
 }
 
 /**
- * @brief Renders the starry background.
+ * @brief Renders the dustry background.
  *
  *    @param dt Current delta tick.
  */
 void background_renderDust( const double dt )
 {
    (void) dt;
-   GLfloat x, y, h, w;
-   double z;
+   GLfloat h, w, m;
+   double z, angle;
    mat4 projection;
    int points = 1;
 
    /* Do some scaling for now. */
    z = cam_getZoom();
-   z = 1. * (1. - conf.zoom_stars) + z * conf.zoom_stars;
+   m = 1.;
+   angle = 0.;
    projection = gl_view_matrix;
    mat4_translate( &projection, SCREEN_W/2., SCREEN_H/2., 0 );
    mat4_scale( &projection, z, z, 1 );
@@ -171,67 +169,51 @@ void background_renderDust( const double dt )
 
       if (pilot_isFlag(player.p,PILOT_HYPERSPACE)) { /* hyperspace fancy effects */
          /* lines get longer the closer we are to finishing the jump */
-         GLfloat m = MAX( 0, HYPERSPACE_STARS_BLUR-player.p->ptimer );
-         m /= HYPERSPACE_STARS_BLUR;
-         m *= HYPERSPACE_STARS_LENGTH;
-         if (m > 1.) {
-            double angle = atan2( dy, dx );
-            x = m * cos( angle );
-            y = m * sin( angle );
+         m = MAX( 0, HYPERSPACE_DUST_BLUR-player.p->ptimer );
+         if (m > 0.) {
+            m *= HYPERSPACE_DUST_LENGTH / HYPERSPACE_DUST_BLUR;
+            angle = atan2( dy, dx );
             points = 0;
          }
       }
       else if (dt_mod * vmod > 500. ) {
-         /* Very short lines tend to flicker horribly. A stock Llama at 2x
-          * speed just so happens to make very short lines. A 5px minimum
-          * is long enough to (mostly) alleviate the flickering. */
-         /* TODO don't use GL_LINES. */
-         GLfloat m = MAX( 5., dt_mod * vmod/25. - 20 );
-         double angle = atan2( dy, dx );
-         x = m * cos( angle );
-         y = m * sin( angle );
+         angle = atan2( dy, dx );
+         m = (dt_mod * vmod) / 25. - 20.;
          points = 0;
       }
    }
 
    /* Calculate some dimensions. */
    w  = (SCREEN_W + 2.*STAR_BUF);
-   w += conf.zoom_stars * (w / conf.zoom_far - 1.);
+   w += (w / conf.zoom_far - 1.);
    h  = (SCREEN_H + 2.*STAR_BUF);
-   h += conf.zoom_stars * (h / conf.zoom_far - 1.);
+   h += (h / conf.zoom_far - 1.);
 
    /* Common shader stuff. */
-   glUseProgram(shaders.stars.program);
-   gl_uniformMat4(shaders.stars.projection, &projection);
-   glUniform2f(shaders.stars.star_xy, star_x, star_y);
-   glUniform3f(shaders.stars.dims, w, h, 1. / gl_screen.scale);
-   glUniform1i(shaders.stars.use_lines, !points);
+   glUseProgram(shaders.dust.program);
+   gl_uniformMat4(shaders.dust.projection, &projection);
+   glUniform2f(shaders.dust.offset_xy, dust_x, dust_y);
+   if (points)
+      glUniform3f(shaders.dust.dims, 2./gl_screen.scale, 0., 0.);
+   else
+      glUniform3f(shaders.dust.dims, MAX(1.,2.-m/20.)/gl_screen.scale, angle, m);
+   glUniform3f(shaders.dust.screen, w, h, 1. / gl_screen.scale);
+   glUniform1i(shaders.dust.use_lines, !points);
 
    /* Vertices. */
-   glEnableVertexAttribArray( shaders.stars.vertex );
-   glEnableVertexAttribArray( shaders.stars.brightness );
+   glEnableVertexAttribArray( shaders.dust.vertex );
+   glEnableVertexAttribArray( shaders.dust.brightness );
 
    /* Set up the vertices. */
-   if (points) {
-      gl_vboActivateAttribOffset( star_vertexVBO, shaders.stars.vertex, 0,
-            2, GL_FLOAT, 6 * sizeof(GLfloat) );
-      gl_vboActivateAttribOffset( star_vertexVBO, shaders.stars.brightness, 2 * sizeof(GLfloat),
-            1, GL_FLOAT, 6 * sizeof(GLfloat) );
-      glUniform2f(shaders.stars.xy, 0., 0.);
-      glDrawArrays( GL_POINTS, 0, nstars/2 );
-   }
-   else {
-      gl_vboActivateAttribOffset( star_vertexVBO, shaders.stars.vertex, 0,
-            2, GL_FLOAT, 3 * sizeof(GLfloat) );
-      gl_vboActivateAttribOffset( star_vertexVBO, shaders.stars.brightness, 2 * sizeof(GLfloat),
-            1, GL_FLOAT, 3 * sizeof(GLfloat) );
-      glUniform2f(shaders.stars.xy, x, y);
-      glDrawArrays( GL_LINES, 0, nstars );
-   }
+   gl_vboActivateAttribOffset( dust_vertexVBO, shaders.dust.vertex, 0,
+         2, GL_FLOAT, 3 * sizeof(GLfloat) );
+   gl_vboActivateAttribOffset( dust_vertexVBO, shaders.dust.brightness, 2 * sizeof(GLfloat),
+         1, GL_FLOAT, 3 * sizeof(GLfloat) );
+   glDrawArrays( GL_POINTS, 0, ndust );
 
    /* Disable vertex array. */
-   glDisableVertexAttribArray( shaders.stars.vertex );
-   glDisableVertexAttribArray( shaders.stars.brightness );
+   glDisableVertexAttribArray( shaders.dust.vertex );
+   glDisableVertexAttribArray( shaders.dust.brightness );
 
    glUseProgram(0);
 
@@ -405,7 +387,6 @@ static nlua_env background_create( const char *name )
    nlua_loadBackground(env);
    nlua_loadCamera(env);
    nlua_loadGFX(env);
-   nlua_loadAudio(env);
 
    /* Open file. */
    buf = ndata_read( path, &bufsize );
@@ -551,10 +532,10 @@ void background_free (void)
    nlua_freeEnv( bkg_cur_env );
    bkg_cur_env = LUA_NOREF;
 
-   gl_vboDestroy( star_vertexVBO );
-   star_vertexVBO = NULL;
+   gl_vboDestroy( dust_vertexVBO );
+   dust_vertexVBO = NULL;
 
-   nstars = 0;
+   ndust = 0;
 }
 
 /**

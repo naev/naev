@@ -57,9 +57,9 @@ static int systemL_isknown( lua_State *L );
 static int systemL_setknown( lua_State *L );
 static int systemL_hidden( lua_State *L );
 static int systemL_setHidden( lua_State *L );
-static int systemL_mrkClear( lua_State *L );
-static int systemL_mrkAdd( lua_State *L );
-static int systemL_mrkRm( lua_State *L );
+static int systemL_markerClear( lua_State *L );
+static int systemL_markerAdd( lua_State *L );
+static int systemL_markerRm( lua_State *L );
 static int systemL_tags( lua_State *L );
 static const luaL_Reg system_methods[] = {
    { "cur", systemL_cur },
@@ -88,9 +88,9 @@ static const luaL_Reg system_methods[] = {
    { "setKnown", systemL_setknown },
    { "hidden", systemL_hidden },
    { "setHidden", systemL_setHidden },
-   { "mrkClear", systemL_mrkClear },
-   { "mrkAdd", systemL_mrkAdd },
-   { "mrkRm", systemL_mrkRm },
+   { "markerClear", systemL_markerClear },
+   { "markerAdd", systemL_markerAdd },
+   { "markerRm", systemL_markerRm },
    { "tags", systemL_tags },
    {0,0}
 }; /**< System metatable methods. */
@@ -409,7 +409,6 @@ static int systemL_background( lua_State *L )
  *
  *    @luatparam System s System to get nebula parameters from.
  *    @luatreturn number The density of the system.
- *    @luatreturn number The volatility of the system.
  *    @luatreturn number The amount of nebula damage done per second.
  * @luafunc nebula
  */
@@ -905,6 +904,7 @@ static int systemL_setknown( lua_State *L )
 
    /* Update outfits image array. */
    outfits_updateEquipmentOutfits();
+   ovr_refresh(); /* Update overlay as necessary. */
 
    return 0;
 }
@@ -950,11 +950,11 @@ static int systemL_setHidden( lua_State *L )
  *
  * This can be dangerous and clash with other missions, do not try this at home kids.
  *
- * @usage system.mrkClear()
+ * @usage system.markerClear()
  *
- * @luafunc mrkClear
+ * @luafunc markerClear
  */
-static int systemL_mrkClear( lua_State *L )
+static int systemL_markerClear( lua_State *L )
 {
    (void) L;
    ovr_mrkClear();
@@ -964,15 +964,15 @@ static int systemL_mrkClear( lua_State *L )
 /**
  * @brief Adds a system marker.
  *
- * @usage mrk_id = system.mrkAdd( vec2.new( 50, 30 ), "Hello" ) -- Creates a marker at (50,30)
+ * @usage mrk_id = system.markerAdd( vec2.new( 50, 30 ), "Hello" ) -- Creates a marker at (50,30)
  *
  *    @luatparam Vec2 v Position to display marker at.
  *    @luatparam[opt] string str String to display next to marker.
  *    @luatparam[opt] number If specified, changes the marker to circle type marker and specifies the radius of the circle to use.
  *    @luatreturn number The id of the marker.
- * @luafunc mrkAdd
+ * @luafunc markerAdd
  */
-static int systemL_mrkAdd( lua_State *L )
+static int systemL_markerAdd( lua_State *L )
 {
    const char *str;
    vec2 *vec;
@@ -996,12 +996,12 @@ static int systemL_mrkAdd( lua_State *L )
 /**
  * @brief Removes a system marker.
  *
- * @usage system.mrkRm( mrk_id ) -- Removes a marker by mrk_id
+ * @usage system.markerRm( mrk_id ) -- Removes a marker by mrk_id
  *
  *    @luatparam number id ID of the marker to remove.
- * @luafunc mrkRm
+ * @luafunc markerRm
  */
-static int systemL_mrkRm( lua_State *L )
+static int systemL_markerRm( lua_State *L )
 {
    unsigned int id = luaL_checklong( L, 1 );
    ovr_mrkRm( id );

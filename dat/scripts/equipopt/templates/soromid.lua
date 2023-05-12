@@ -79,13 +79,22 @@ local function equip_soromid( p, opt_params  )
    end
    params = tmerge( params, opt_params )
 
+   -- Outfits
+   local outfits = soromid_outfits
+   if opt_params.outfits_add then
+      outfits = eoutfits.merge{ outfits, opt_params.outfits_add }
+   end
+
    -- Set cores
    local cores = opt_params.cores
    if not cores then
       if ps:tags().bioship then
-         local maxstage = bioship.maxstage( p )
-         local stage = math.max( 1, maxstage - prob.poisson_sample( 1 ) )
-         bioship.simulate( p, stage )
+         local stage = params.bioship_stage
+         if not stage then
+            local maxstage = bioship.maxstage( p )
+            stage = math.max( 1, maxstage - prob.poisson_sample( 1 ) )
+         end
+         bioship.simulate( p, stage, params.bioship_skills )
       else
          cores = ecores.get( p, { all="elite" } )
       end
@@ -96,8 +105,7 @@ local function equip_soromid( p, opt_params  )
    mem.equip = { type="soromid", level="elite" }
 
    -- Try to equip
-   return optimize.optimize( p, cores, soromid_outfits, params )
-   -- TODO randomly change some bio plasma weapons to weaker ones
+   return optimize.optimize( p, cores, outfits, params )
 end
 
 return equip_soromid

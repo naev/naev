@@ -21,8 +21,6 @@ local shiplover_image   = "shiplover.webp"
 local shiplover_priority= 5
 
 local question_data, reward -- Non-persistent state
--- luacheck: globals event_end (Hook functions passed by name)
--- luacheck: globals approach_shiplover (NPC functions passed by name)
 
 local function getNUnique( t, n )
    local o = {}
@@ -147,7 +145,7 @@ function create ()
    local pnt = spob.cur()
 
    -- Ignore claimed systems (don't want to ruin the atmosphere)
-   if not evt.claim( system.cur(), true ) then evt.finish() end
+   if not naev.claimTest( system.cur() ) then evt.finish() end
 
    -- Do not spawn on restricted spobs
    if pnt:tags().restricted then evt.finish() end
@@ -191,7 +189,7 @@ function create ()
       var.push( "shiplover_lastplayed", lastplayed )
    end
    lastplayed = time.fromnumber( lastplayed )
-   if lastplayed + time.create( 0, 10, 0 ) > time.get() then
+   if lastplayed + time.new( 0, 10, 0 ) > time.get() then
       evt.finish()
    end
 

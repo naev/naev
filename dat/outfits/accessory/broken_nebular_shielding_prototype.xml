@@ -9,7 +9,7 @@
   <mass>0</mass>
   <price>800000</price>
   <description>A broken prototype for a novel shielding device that is supposed to enable travel into the Sol Nebula. However, due to its malfunction you almost died. On the other hand it does seem to absorb harmful energy and emit heat radiation into space.</description>
-  <gfx_store>misc02.webp</gfx_store>
+  <gfx_store>nebula_shielding_prototype.webp</gfx_store>
  <rarity>6</rarity></general>
  <specific type="modification">
   <stress_dissipation>25</stress_dissipation>

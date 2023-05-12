@@ -2,11 +2,10 @@
 <ssys name="Capricorn">
  <general>
   <radius>28000.000000</radius>
-  <stars>200</stars>
+  <spacedust>200</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-99.202812" y="155.459061"/>
+ <pos x="-120.337409" y="442.987332"/>
  <spobs>
   <spob>Capricorn II</spob>
   <spob>Capricorn III</spob>
@@ -18,6 +17,10 @@
   <jump target="Daled">
    <autopos/>
    <hidden/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Mason">
+   <autopos/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Pontus">

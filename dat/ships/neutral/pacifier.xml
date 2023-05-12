@@ -3,7 +3,7 @@
  <points>90</points>
  <base_type>Pacifier</base_type>
  <GFX size="77" sx="10" sy="10">pacifier</GFX>
- <GUI>brushed</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>1900000</price>

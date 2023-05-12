@@ -2,11 +2,10 @@
 <ssys name="Olympus">
  <general>
   <radius>10000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-558.972460" y="-624.875498"/>
+ <pos x="-365.416727" y="-414.171189"/>
  <spobs/>
  <jumps>
   <jump target="Ganth">
