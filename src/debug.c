@@ -170,13 +170,11 @@ static void debug_sigHandler( int sig )
    (void) unused;
 #endif /* HAVE_SIGACTION */
 
-   LOGERR( _("Naev received %s!"),
 #if HAVE_SIGACTION
-         debug_sigCodeToStr( info->si_signo, info->si_code )
+   LOGERR( _("Naev received %s!"), debug_sigCodeToStr( info->si_signo, info->si_code ) );
 #else /* HAVE_SIGACTION */
-         debug_sigCodeToStr( sig, 0 )
+   LOGERR( _("Naev received %s!"), debug_sigCodeToStr( sig, 0 ) );
 #endif /* HAVE_SIGACTION */
-	);
 
    debug_logBacktrace();
    LOGERR( _("Report this to project maintainer with the backtrace.") );
