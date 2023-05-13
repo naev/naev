@@ -47,6 +47,7 @@ function create ()
    m:setNoDisable(true)
    m:setHostile(true)
    m:setVisible(true)
+   m:setInvincible(true)
    start_marker = m
 
    textoverlay.init( "#y".._("Test of Renewal").."#0",
