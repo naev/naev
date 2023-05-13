@@ -7,7 +7,7 @@
 </event>
 --]]
 local textoverlay = require "textoverlay"
---local chakra = require "luaspfx.chakra_explosion"
+local chakra = require "luaspfx.chakra_explosion"
 local srs = require "common.sirius"
 local fmt = require "format"
 
@@ -46,11 +46,11 @@ function create ()
    m:setNoDeath(true)
    m:setNoDisable(true)
    m:setHostile(true)
-   m:setInvisible(true)
+   m:setVisible(true)
    start_marker = m
 
    textoverlay.init( "#y".._("Test of Renewal").."#0",
-      "#y".._("Collect All the Orbs").."\n"..
+      "#y".._("Feather Drive through All the Orbs").."\n"..
       fmt.f(_("{key1}: use seeking chakra\n{key2}: use feather drive"),
          {key1=naev.keyGet("weapset1"),key2=naev.keyGet("weapset2")}).."#0",
       { length=8 } )
@@ -60,7 +60,7 @@ function create ()
    hook.pilot( pp, "exploded", "player_lost" )
 
    -- TODO proper puzzle
-   hook.custom( "puzzle01" )
+   hook.custom( "feather_drive", "puzzle01" )
 
    -- Anything will finish the event
    hook_done = hook.enter( "done" )
@@ -87,10 +87,64 @@ function player_lost ()
    end
 end
 
+local markers
 function puzzle01( p )
-   if p==start_marker then
+   if start_marker and p==start_marker then
       start_marker:rm()
       start_marker = nil
+
+      markers = {}
+      local n = 5
+      for i=1,n do
+         local mm = {}
+
+         local mp = {}
+         local lastpos = vec2.newP( 350+300*rnd.rnd(), math.pi*0.5*(i-1)/n*math.pi*2 )
+         table.insert( mp, lastpos )
+         for j=1,3 do
+            lastpos = lastpos + vec2.newP( 50*50*rnd.rnd(), rnd.angle() )
+            table.insert( mp, lastpos )
+         end
+         mm.pos = mp
+
+         local m = pilot.add("Psychic Orb", "Independent", vec2.new(), nil, {ai="dummy"} )
+         m:setNoDeath(true)
+         m:setNoDisable(true)
+         m:setHostile(true)
+         m:setVisible(true)
+         m:control(true)
+         m:moveto( mp[1] )
+         mm.p = m
+         mm.t = 1
+         m.h = hook.pilot( m.p, "idle", "puzzle01_idle" )
+         markers[i] = mm
+      end
+      return
+   end
+
+   if markers then
+      local n = 0
+      for i,m in ipairs(markers) do
+         if m.p and m.p==p then
+            n = i
+            break
+         end
+      end
+      if n==0 then
+         return
+      end
+      local mm = markers[n]
+      chakra( mm.p:pos(), vec2.new(), 100 )
+      mm.p:rm()
+      mm.p = nil
+
+      for i,m in ipairs(markers) do
+         if m.p and m.p:exists() then
+            return -- Not done yet
+         end
+      end
+   else
+      return -- ??
    end
 
    -- All done, so give ability
@@ -104,6 +158,21 @@ function puzzle01( p )
          {length=6})
    end
    hook.timer( 6, "cleanup" )
+end
+
+function puzzle01_idle( p )
+   local n = 0
+   for i,m in ipairs(markers) do
+      if m.p and m.p==p then
+         n = i
+         break
+      end
+   end
+   assert( n~=0 )
+   local mm = markers[n]
+   local mp = mm.pos
+   mm.t = math.fmod( mm.t, #mp )+1
+   mm.p:moveto( mp[mm.t] )
 end
 
 local function cleanup_player ()
