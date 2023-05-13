@@ -172,7 +172,7 @@ static void diff_hunkFailed( UniDiff_t *diff, UniHunk_t *hunk );
 static void diff_hunkSuccess( UniDiff_t *diff, UniHunk_t *hunk );
 static void diff_cleanup( UniDiff_t *diff );
 static void diff_cleanupHunk( UniHunk_t *hunk );
-/* Misc. */;
+/* Misc. */
 static int diff_checkUpdateUniverse (void);
 /* Externed. */
 int diff_save( xmlTextWriterPtr writer ); /**< Used in save.c */

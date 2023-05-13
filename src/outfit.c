@@ -58,25 +58,25 @@ static char **license_stack = NULL; /**< Stack of available licenses. */
 /*
  * Helper stuff for setting up short descriptions for outfits.
  */
-#define SDESC_ADD( l, temp, txt, args... ) \
-(l) += scnprintf( &(temp)->summary_raw[l], OUTFIT_SHORTDESC_MAX-(l), (txt), ## args )
-#define SDESC_COLOUR( l, temp, txt, val, args... ) \
+#define SDESC_ADD( l, temp, txt, ... ) \
+(l) += scnprintf( &(temp)->summary_raw[l], OUTFIT_SHORTDESC_MAX-(l), (txt), ## __VA_ARGS__ )
+#define SDESC_COLOUR( l, temp, txt, val, ... ) \
 SDESC_ADD( l, temp, "#%c", ((val)>0)?'g':(((val)<0)?'r':'0') ); \
-SDESC_ADD( l, temp, txt, (val), ## args ); \
+SDESC_ADD( l, temp, txt, (val), ## __VA_ARGS__ ); \
 SDESC_ADD( l, temp, "#0" )
 
-#define SDESC_COLOURT( l, temp, txt, threshold, val, args... ) \
+#define SDESC_COLOURT( l, temp, txt, threshold, val, ... ) \
 SDESC_ADD( l, temp, "#%c", ((val)>threshold)?'g':(((val)<threshold)?'r':'0') ); \
-SDESC_ADD( l, temp, txt, (val), ## args ); \
+SDESC_ADD( l, temp, txt, (val), ## __VA_ARGS__ ); \
 SDESC_ADD( l, temp, "#0" )
 
-#define SDESC_COND( l, temp, txt, val, args... ) \
+#define SDESC_COND( l, temp, txt, val, ... ) \
 if (fabs(val) > 1e-5) { \
-   SDESC_ADD( l, temp, txt, (val), ## args ); \
+   SDESC_ADD( l, temp, txt, (val), ## __VA_ARGS__ ); \
 }
-#define SDESC_COND_COLOUR( l, temp, txt, val, args... ) \
+#define SDESC_COND_COLOUR( l, temp, txt, val, ... ) \
 if (fabs(val) > 1e-5) { \
-   SDESC_COLOUR( l, temp, txt, (val), ## args ); \
+   SDESC_COLOUR( l, temp, txt, (val), ## __VA_ARGS__ ); \
 }
 
 /*

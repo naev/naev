@@ -380,7 +380,7 @@ static void shipyard_find( unsigned int wid, const char* str )
  */
 static void shipyard_rmouse( unsigned int wid, const char* widget_name )
 {
-    return shipyard_buy(wid, widget_name);
+    shipyard_buy(wid, widget_name);
 }
 
 /**

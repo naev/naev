@@ -55,7 +55,7 @@ typedef struct {
 #endif /* DEBUG_ARRAYS */
    size_t _reserved;      /**< Number of elements reserved */
    size_t _size;          /**< Number of elements in the array */
-   char alignas(max_align_t) _array[0];  /**< Begin of the array */
+   char alignas(max_align_t) _array[];  /**< Begin of the array */
 } _private_container;
 
 void *_array_create_helper(size_t e_size, size_t initial_size);

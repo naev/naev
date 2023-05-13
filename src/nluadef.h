@@ -30,11 +30,11 @@ NORETURN extern int luaL_typerror( lua_State *L, int narg, const char *tname );
  * debug stuff
  */
 #ifdef DEBUG_PARANOID
-#define NLUA_DEBUG(str, args...) \
-   (DEBUG("Lua: "str"\n", ## args), abort())
+#define NLUA_DEBUG(str, ...) \
+   (DEBUG("Lua: "str"\n", ## __VA_ARGS__), abort())
 #else /* DEBUG_PARANOID */
-#define NLUA_DEBUG(str, args...) \
-   (DEBUG("Lua: "str"\n", ## args))
+#define NLUA_DEBUG(str, ...) \
+   (DEBUG("Lua: "str"\n", ## __VA_ARGS__))
 #endif /* DEBUG_PARANOID */
 #define NLUA_INVALID_PARAMETER(L)    \
 { \
@@ -52,4 +52,4 @@ NORETURN extern int luaL_typerror( lua_State *L, int narg, const char *tname );
 /*
  * Error stuff.
  */
-#define NLUA_ERROR(L,str, args...)  (luaL_error(L,str, ## args))
+#define NLUA_ERROR(L,str, ...)  (luaL_error(L,str, ## __VA_ARGS__))

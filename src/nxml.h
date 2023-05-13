@@ -135,19 +135,19 @@ do {if (xmlTextWriterEndElement(w) < 0) { \
 /* other stuff */
 #define xmlw_elemEmpty(w,n)   \
 do { xmlw_startElem(w,n); xmlw_endElem(w); } while (0)
-#define xmlw_elem(w,n,str,args...) \
+#define xmlw_elem(w,n,str,...) \
 do { if (xmlTextWriterWriteFormatElement(w,(xmlChar*)n, \
-      str, ## args) < 0) { \
+      str, ## __VA_ARGS__) < 0) { \
    ERR("xmlw: unable to write format element"); return -1; } } while (0)
 #define xmlw_raw(w,b,l) \
 do {if (xmlTextWriterWriteRawLen(w,(xmlChar*)b,l) < 0) { \
    ERR("xmlw: unable to write raw element"); return -1; } } while (0)
-#define xmlw_attr(w,str,val...)  \
+#define xmlw_attr(w,str,...)  \
 do {if (xmlTextWriterWriteFormatAttribute(w,(xmlChar*)str, \
-      ## val) < 0) { \
+      ## __VA_ARGS__) < 0) { \
    ERR("xmlw: unable to write element attribute"); return -1; } } while (0)
-#define xmlw_str(w,str,val...) \
-do {if (xmlTextWriterWriteFormatString(w,str, ## val) < 0) { \
+#define xmlw_str(w,str,...) \
+do {if (xmlTextWriterWriteFormatString(w,str, ## __VA_ARGS__) < 0) { \
    ERR("xmlw: unable to write element data"); return -1; } } while (0)
 /* document level */
 #define xmlw_start(w) \

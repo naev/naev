@@ -16,7 +16,7 @@ copyright_holder = 'Naev Dev Team'
 
 # Tools
 cc = meson.get_compiler('c')
-c_args = cc.get_supported_arguments(['-Wshadow'])
+c_args = cc.get_supported_arguments(['-Wno-pedantic', '-Wshadow'])
 add_project_arguments(c_args, language: 'c')
 
 # Python module checks (For AUTHORS generation and soundtrack generation)
