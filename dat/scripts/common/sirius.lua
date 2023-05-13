@@ -48,6 +48,15 @@ function srs.obeliskEnter( oblk )
    end
    ssys:setHidden(false)
 
+   -- Clean up the escorts
+   for k,p in ipairs(pp:followers()) do
+      if p:flags("carried") then
+         p:rm()
+      else
+         p:setHide( true ) -- Don't remove or it'll mess cargo
+      end
+   end
+
    -- Stop and play different music
    music.stop()
    -- TODO sound
@@ -59,6 +68,11 @@ function srs.obeliskExit ()
    ssys:setKnown(false)
    for k,s in ipairs(system.getAll()) do
       s:setHidden(false)
+   end
+
+   -- Restore the escorts
+   for k,p in ipairs(player.pilot():followers()) do
+      p:setHide( false ) -- Don't remove or it'll mess cargo
    end
 end
 
