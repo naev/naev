@@ -20,7 +20,7 @@ function create ()
    srs.obeliskEnter( obelisk )
 
    -- Swap player's ship
-   local player_ship = player.shipAdd( "Astral Projection Lesser", _("Psyche"), _("Psychic powers."), true )
+   local player_ship = player.shipAdd( "Astral Projection", _("Psyche"), _("Psychic powers."), true )
    prevship = player.pilot():name() -- Ship to go back to
    player.shipSwap( player_ship, true )
 
@@ -88,7 +88,33 @@ function player_lost ()
    end
 end
 
+function puzzle01_addship ()
+   -- Spawn an enemy
+   local pos = player.pos() + vec2.newP( 800+400*rnd.rnd(), rnd.angle() )
+   local e = pilot.add( "Astral Projection Lesser", _("Independent"), pos, nil, {ai="baddie"})
+   e:setHostile(true)
+   e:setVisible(true)
+   e:intrinsicSet( { -- Ship is too fast otherwise
+      thrust_mod     = -30,
+      speed_mod      = -30,
+      turn_mod       = -30,
+      fwd_damage     = -60, -- Don't instagib player
+      armour_mod     = -50,
+      shield_mod     = -50,
+   }, true ) -- overwrite all
+   local emem = e:memory()
+   emem.control_no = _("No response.")
+
+   -- Readd ship when dead
+   hook.pilot( e, "exploded", "puzzle01_shipdeath" )
+end
+
+function puzzle01_shipdeath ()
+   hook.timer( 5, "puzzle01_addship" )
+end
+
 local markers
+local marker_ship = ship.get("Psychic Orb")
 function puzzle01( p )
    if start_marker and p==start_marker then
       start_marker:rm()
@@ -108,7 +134,7 @@ function puzzle01( p )
          end
          mm.pos = mp
 
-         local m = pilot.add("Psychic Orb", "Independent", vec2.new(), nil, {ai="dummy"} )
+         local m = pilot.add(marker_ship, "Independent", vec2.new(), nil, {ai="dummy"} )
          m:setNoDeath(true)
          m:setNoDisable(true)
          m:setHostile(true)
@@ -119,10 +145,22 @@ function puzzle01( p )
          mm.t = 1
          m.h = hook.pilot( m.p, "idle", "puzzle01_idle" )
          markers[i] = mm
+
+         -- Add an enemy
+         puzzle01_addship()
       end
       return
    end
 
+   -- Hit a "normal" ship
+   if p:ship() ~= marker_ship and p ~= player.pilot() then
+      chakra( p:pos(), vec2.new(), 100 )
+      p:rm()
+      hook.timer( 8, "puzzle01_addship" )
+      return
+   end
+
+   -- Hit a marker maybe?
    if markers then
       local n = 0
       for i,m in ipairs(markers) do
