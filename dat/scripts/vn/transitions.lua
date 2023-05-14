@@ -421,6 +421,44 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
 }
 ]]
 
+transitions._t.blinkin = [[
+#include "lib/sdf.glsl"
+#include "lib/blur.glsl"
+
+const vec4 FADECOLOUR = vec4( 0.0, 0.0, 0.0, 1.0 );
+
+vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
+{
+   vec2 uv = texture_coords-0.5;
+
+   float d = sdVesica( uv.yx, 0.8, progress );
+   float a = (1.0-smoothstep( 0.0, 0.2, -d )) * smoothstep(0.0, 1.0, progress*2.0);
+
+   vec4 c1 = Texel( texprev, p );
+   vec4 c2 = Texel( tex, p );
+   return mix( c1, c2, a );
+}
+]]
+
+transitions._t.blinkout = [[
+#include "lib/sdf.glsl"
+#include "lib/blur.glsl"
+
+const vec4 FADECOLOUR = vec4( 0.0, 0.0, 0.0, 1.0 );
+
+vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
+{
+   vec2 uv = texture_coords-0.5;
+
+   float d = sdVesica( uv.yx, 0.8, 1.0-progress );
+   float a = (1.0-smoothstep( 0.0, 0.2, -d )) * smoothstep(0.0, 1.0, progress*2.0);
+
+   vec4 c1 = Texel( texprev, p );
+   vec4 c2 = Texel( tex, p );
+   return mix( c1, c2, a );
+}
+]]
+
 transitions._t.slideleft = [[
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 {
