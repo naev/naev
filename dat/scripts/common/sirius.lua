@@ -6,6 +6,7 @@
 local pp_shaders = require "pp_shaders"
 local lf = require "love.filesystem"
 local audio = require 'love.audio'
+local luaspfx = require "luaspfx"
 
 local srs = {}
 
@@ -30,7 +31,7 @@ function srs.sfxGong()
    if not sfxGong then
       sfxGong = audio.newSource( 'snd/sounds/gamelan_gong.ogg' )
    end
-   sfxGong:play()
+   luaspfx.sfx( false, nil, sfxGong )
 end
 
 local ssys, sysr, obelisk, spos, sdir, hook_limits
