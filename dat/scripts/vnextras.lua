@@ -41,11 +41,12 @@ local function fullscreenStart( func, params )
    local name = params.name or _("Notebook")
    local colour = params.textcolour or {1, 1, 1}
    local log = vn.newCharacter( name, { color=colour, hidetitle=true } )
-   vn.transition()
+   vn.transition( params.transition )
    return log
 end
 
-local function fullscreenEnd( done, transition, length )
+local function fullscreenEnd( params )
+   params = params or {}
    vn.scene()
    vn.func( function ()
       vn.setBackground()
@@ -56,12 +57,14 @@ local function fullscreenEnd( done, transition, length )
       vn.textbox_y = textbox_y
       vn.textbox_font = textbox_font
       vn.show_options = true
-      if done then
+      if params.done then
          vn.textbox_bg_alpha = 0
          vn.show_options = false
       end
    end )
-   vn.transition( transition, length )
+   if not params.notransition then
+      vn.transition( params.transition, params.length )
+   end
 end
 
 --[[--
@@ -70,7 +73,8 @@ Converts the VN to behave like a notebook with hand-written text.
    @tparam[opt=_("Notebook")] string Name to give the "notebook" vn character.
    @treturn vn.Character The new character to use for the notebook.
 --]]
-function extras.notebookStart( name )
+function extras.notebookStart( name, params )
+   params = params or {}
    local nw, nh = naev.gfx.dim()
    local paperbg = love_shaders.paper( nw, nh )
    local oldify = love_shaders.oldify()
@@ -86,7 +90,8 @@ function extras.notebookStart( name )
    end, {
       name = name or _("Notebook"),
       textcolour = {0, 0, 0},
-      font = lg.newFont( _("fonts/CoveredByYourGrace-Regular.ttf"), 24 )
+      font = lg.newFont( _("fonts/CoveredByYourGrace-Regular.ttf"), 24 ),
+      transition = params.transition,
    } )
 end
 extras.notebookEnd = fullscreenEnd
@@ -97,7 +102,8 @@ Converts the VN to behave like a grainy flashback.
    @tparam[opt=_("Notebook")] string Name to give the "notebook" vn character.
    @treturn vn.Character The new character to use for the notebook.
 --]]
-function extras.flashbackTextStart( name )
+function extras.flashbackTextStart( name, params )
+   params = params or {}
    local nw, nh = naev.gfx.dim()
    return fullscreenStart( function ()
       --ft_oldify.shader:addPPShader( "final" )
@@ -108,7 +114,8 @@ function extras.flashbackTextStart( name )
    end, {
       name = name or _("Flashback"),
       textcolour = {0.8, 0.8, 0.8},
-      font = lg.newFont( 18 )
+      font = lg.newFont( 18 ),
+      transition = params.transition,
    } )
 end
 extras.flashbackTextEnd = fullscreenEnd
