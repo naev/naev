@@ -19,96 +19,13 @@ local fmt = require 'format'
 local tut = require 'common.tutorial'
 local der = require 'common.derelict'
 local pir = require "common.pirate"
-local poi = require "common.poi"
 local vn = require 'vn'
+local lf = require "love.filesystem"
 
-local badevent, goodevent, missionevent, neutralevent -- forward-declared functions
+local badevent, goodevent, specialevent, neutralevent -- forward-declared functions
 local derelict -- Non-persistent state
 
-local mission_list = {
-   --[[
-   {
-      name = "Mission Name",
-      cond = function () return true end, -- Some condition to be met, defaults to true if not set
-      weight = 1, -- how it should be weighted, defaults to 1
-   },
-   --]]
-   {
-      name = "Derelict Rescue",
-      repeatable = true,
-   },
-   {
-      name = "Point of Interest",
-      repeatable = true,
-      nolimit = true,
-      cond = function ()
-         return not player.misnActive( "Point of Interest - Intro" ) and (player.misnActive("Point of Interest") or 0) < 3
-      end,
-      func = function ()
-         local poiintro = "Point of Interest - Intro"
-
-         -- Tries to do the intro the first time
-         if not player.misnDone( poiintro ) then
-            if not naev.missionStart( poiintro ) then
-               -- Failed to start
-               neutralevent()
-            end
-            return
-         end
-
-         local poidata = poi.generate()
-         if not poidata then -- Failed to generate
-            neutralevent()
-            return
-         end
-
-         local accept = false
-         vn.clear()
-         vn.scene()
-         vn.sfx( der.sfx.board )
-         vn.music( der.sfx.ambient )
-         vn.transition()
-         if poidata.sys:known() then
-            vn.na(fmt.f(_([[While the derelict itself has been picked clean. You manage to find some interesting data remaining in the navigation log. It looks like you may be able to follow the lead to something of interest in the {sys} system. Do you wish to download the data?]]),
-               {sys="#b"..poidata.sys:name().."#0"}))
-         else
-            vn.na(_([[While the derelict itself has been picked clean. You manage to find some interesting data remaining in the navigation log. It looks like you may be able to follow the lead to something of interest in what appears to be a nearby system. Do you wish to download the data?]]))
-         end
-
-         vn.menu{
-            {_("Download the data"), "accept"},
-            {_("Leave."), "leave"},
-         }
-
-         vn.label("accept")
-         vn.func( function () accept = true end )
-         vn.na(_([[You download the data and mark the target system on your navigation console. With nothing else to do on the derelict, you leave it behind, and return to your ship.]]))
-         vn.jump("done")
-
-         vn.label("leave")
-         vn.na(_([[You leave the information alone and leave the derelict.]]))
-
-         vn.label("done")
-         vn.sfx( der.sfx.unboard )
-         vn.run()
-         player.unboard()
-
-         if accept then
-            poi.setup( poidata )
-            naev.missionStart("Point of Interest")
-            der.addMiscLog(fmt.f(_([[You found information on a point of interest aboard a derelict in the {sys} system.]]),{sys=system.cur()}))
-         else
-            der.addMiscLog(_([[You found information about a point of interest aboard a derelict, but decided not to download it.]]))
-         end
-      end,
-   },
-   {
-      name = "Black Cat",
-      cond = function ()
-         return (system.cur():presence("Wild Ones") > 0)
-      end,
-   },
-}
+local special_list
 
 function create ()
    local cursys = system.cur()
@@ -129,6 +46,22 @@ function create ()
 
    -- Ignore claimed systems (don't want to ruin the atmosphere)
    if not naev.claimTest( cursys, true ) then evt.finish() end
+
+
+   special_list = {}
+   --[[
+   return {
+      name = "Mission Name",
+      cond = function () return true end, -- Some condition to be met, defaults to true if not set
+      weight = 1, -- how it should be weighted, defaults to 1
+   },
+   --]]
+   for k,v in ipairs(lf.enumerate("events/derelict")) do
+      local sp = require ("events.derelict."..string.gsub(v,".lua","") )()
+      if sp then
+         table.insert( special_list, sp )
+      end
+   end
 
    -- Get the derelict's ship.
    local dship
@@ -218,7 +151,7 @@ function board()
    elseif prob <= goodprob then
       goodevent()
    else
-      missionevent()
+      specialevent()
    end
 end
 
@@ -564,11 +497,11 @@ function derelict_exploded()
    destroyevent()
 end
 
-function missionevent()
+function specialevent()
    -- Fetch all missions that haven't been flagged as done yet.
    local available_missions = {}
    local weights = 0
-   for _k,m in ipairs(mission_list) do
+   for _k,m in ipairs(special_list) do
       if (m.repeatable or not player.misnDone(m.name)) and (m.nolimit or not player.misnActive(m.name)) and (not m.cond or m.cond()) then
          weights = weights + (m.weight or 1)
          m.chance = weights
@@ -587,7 +520,9 @@ function missionevent()
    for _k,m in ipairs(available_missions) do
       if r < m.chance / weights then
          if m.func then
-            m.func()
+            if not m.func() then -- Failed to run
+               neutralevent()
+            end
          else
             naev.missionStart( m.name )
          end

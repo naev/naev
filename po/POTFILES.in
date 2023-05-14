@@ -2750,6 +2750,10 @@ dat/effects/lua/wormhole_exit.lua
 dat/events/bioship.lua
 dat/events/chapter1.lua
 dat/events/cinematic/DvdFLFbattle.lua
+dat/events/derelict.lua
+dat/events/derelict/blackcat.lua
+dat/events/derelict/poi.lua
+dat/events/derelict/rescue.lua
 dat/events/dev/system_tour.lua
 dat/events/discovery.lua
 dat/events/dvaered/fwA_treason.lua
@@ -2778,7 +2782,6 @@ dat/events/neutral/arandon_station.lua
 dat/events/neutral/baron_comm.lua
 dat/events/neutral/baron_flintley.lua
 dat/events/neutral/baron_prowl.lua
-dat/events/neutral/derelict.lua
 dat/events/neutral/kidnapped.lua
 dat/events/neutral/majesteka_stowaways.lua
 dat/events/neutral/poi.lua
