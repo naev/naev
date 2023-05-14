@@ -22,10 +22,10 @@ local pir = require "common.pirate"
 local vn = require 'vn'
 local lf = require "love.filesystem"
 
-local badevent, goodevent, specialevent, neutralevent -- forward-declared functions
+local badevent, goodevent, specialevent, neutralevent, derelict_msg -- forward-declared functions
 local derelict -- Non-persistent state
 
-local special_list
+local special_list, dospecial
 
 function create ()
    local cursys = system.cur()
@@ -51,7 +51,11 @@ function create ()
    special_list = {}
    --[[
    return {
-      name = "Mission Name",
+      mission = "Mission Name",
+      func = function (),
+         -- Function to run if defined, if it returns false it tries to run a neutral event instead
+         return true
+      end
       weight = 1, -- how it should be weighted, defaults to 1
    },
    --]]
@@ -66,21 +70,53 @@ function create ()
       return a.weight > b.weight
    end )
 
+   -- Have at least one special event
+   if #special_list > 0 and rnd.rnd() < 0.4 then
+      local weights = 0
+      for _k,sp in ipairs(special_list) do
+         weights = weights + sp.weight
+         sp.chance = weights
+      end
+      local r = rnd.rnd()
+      for _k,sp in ipairs(special_list) do
+         if r < sp.chance / weights then
+            dospecial = sp
+         end
+      end
+   end
+
+   -- If player is low on fuel make it more likely they get fuel
+   local pp = player.pilot()
+   local stats = pp:stats()
+   if stats.fuel < stats.fuel_consumption and rnd.rnd() < 0.8 then
+      dospecial = {
+         func = function ()
+            derelict_msg(_("Lucky find!"), _([[The derelict appears deserted, with almost everything of value long gone. As you explore the ship you suddenly pick up a back-up fuel tank hidden in the walls. The fuel is in a good state and you siphon it off to fill your ship's fuel tanks. Talk about good timing.]]), fmt.f(_([[Just as you were running out of fuel you found a derelict with some to spare in {sys}, what good fortune!]]), {sys=system.cur()}))
+            pp:setFuel( true )
+         end
+      }
+   end
+
    -- Get the derelict's ship.
    local dship
-   local r = rnd.rnd()
-   if r < 0.2 then
-      dship = "Llama"
-   elseif r < 0.3 then
-      dship = "Hyena"
-   elseif r < 0.5 then
-      dship = "Koala"
-   elseif r < 0.7 then
-      dship = "Quicksilver"
-   elseif r < 0.9 then
-      dship = "Mule"
-   else
-      dship = "Gawain"
+   if dospecial then
+      dship = dospecial.ship
+   end
+   if not dship then
+      local r = rnd.rnd()
+      if r < 0.2 then
+         dship = "Llama"
+      elseif r < 0.3 then
+         dship = "Hyena"
+      elseif r < 0.5 then
+         dship = "Koala"
+      elseif r < 0.7 then
+         dship = "Quicksilver"
+      elseif r < 0.9 then
+         dship = "Mule"
+      else
+         dship = "Gawain"
+      end
    end
 
    -- Create the derelict.
@@ -95,7 +131,7 @@ function create ()
    hook.land("destroyevent")
 end
 
-local function derelict_msg( title, text, log )
+function derelict_msg( title, text, log )
    vntk.msg( title, text, {
       pre = function ()
          vn.music( der.sfx.ambient )
@@ -125,36 +161,27 @@ end
 function board()
    player.unboard()
 
-   -- If player is low on fuel make it more likely they get fuel
-   local pp = player.pilot()
-   local stats = pp:stats()
-   if stats.fuel < stats.fuel_consumption and rnd.rnd() < 0.8 then
-      derelict_msg(_("Lucky find!"), _([[The derelict appears deserted, with almost everything of value long gone. As you explore the ship you suddenly pick up a back-up fuel tank hidden in the walls. The fuel is in a good state and you siphon it off to fill your ship's fuel tanks. Talk about good timing.]]), fmt.f(_([[Just as you were running out of fuel you found a derelict with some to spare in {sys}, what good fortune!]]), {sys=system.cur()}))
-      pp:setFuel( true )
-      destroyevent()
-      return
+   -- In case of special event loaded, just use that
+   if dospecial then
+      return specialevent( dospecial )
    end
 
    -- Roll for events
-   local badprob, neuprob, goodprob
+   local neuprob, goodprob
    if islucky() then
-      badprob = 0.025
-      neuprob = 0.15
-      goodprob = 0.6
+      goodprob = 0.75
+      neuprob = 0.95
    else
-      badprob = 0.125
-      neuprob = 0.25
       goodprob = 0.6
+      neuprob = 0.8
    end
    local prob = rnd.rnd()
-   if prob <= badprob then
-      badevent()
+   if prob <= goodprob then
+      goodevent()
    elseif prob <= neuprob then
       neutralevent()
-   elseif prob <= goodprob then
-      goodevent()
    else
-      specialevent()
+      badevent()
    end
 end
 
@@ -500,34 +527,16 @@ function derelict_exploded()
    destroyevent()
 end
 
-function specialevent()
-   -- If no specials are available, default to a neutral event.
-   if #special_list == 0 then
-      return neutralevent()
-   end
-
-   -- Compute the weights for the specials
-   local weights = 0
-   for _k,sp in ipairs(special_list) do
-      weights = weights + sp.weight
-      sp.chance = weights
-   end
-
-   -- Roll a random mission and start it.
-   local r = rnd.rnd()
-   for _k,sp in ipairs(special_list) do
-      if r < sp.chance / weights then
-         if sp.func then
-            if not sp.func() then -- Failed to run
-               return neutralevent()
-            end
-         else
-            naev.missionStart( sp.mission )
-         end
-         destroyevent()
-         return
+function specialevent( sp )
+   if sp.func then
+      if not sp.func() then -- Failed to run
+         return neutralevent()
       end
+   else
+      naev.missionStart( sp.mission )
    end
+   destroyevent()
+   return
 end
 
 function destroyevent()

@@ -11,5 +11,5 @@ if system.cur():presence("Wild Ones") <= 0 then
 end
 
 return {
-   mission = "Black Cat",
+   mission = misnname,
 }
