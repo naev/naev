@@ -52,16 +52,19 @@ function create ()
    --[[
    return {
       name = "Mission Name",
-      cond = function () return true end, -- Some condition to be met, defaults to true if not set
       weight = 1, -- how it should be weighted, defaults to 1
    },
    --]]
    for k,v in ipairs(lf.enumerate("events/derelict")) do
       local sp = require ("events.derelict."..string.gsub(v,".lua","") )()
       if sp then
+         sp.weight = sp.weight or 1
          table.insert( special_list, sp )
       end
    end
+   table.sort( special_list, function( a, b )
+      return a.weight > b.weight
+   end )
 
    -- Get the derelict's ship.
    local dship
@@ -498,33 +501,28 @@ function derelict_exploded()
 end
 
 function specialevent()
-   -- Fetch all missions that haven't been flagged as done yet.
-   local available_missions = {}
-   local weights = 0
-   for _k,m in ipairs(special_list) do
-      if (m.repeatable or not player.misnDone(m.name)) and (m.nolimit or not player.misnActive(m.name)) and (not m.cond or m.cond()) then
-         weights = weights + (m.weight or 1)
-         m.chance = weights
-         table.insert( available_missions, m )
-      end
+   -- If no specials are available, default to a neutral event.
+   if #special_list == 0 then
+      return neutralevent()
    end
 
-   -- If no missions are available, default to a neutral event.
-   if #available_missions == 0 then
-      neutralevent()
-      return
+   -- Compute the weights for the specials
+   local weights = 0
+   for _k,sp in ipairs(special_list) do
+      weights = weights + sp.weight
+      sp.chance = weights
    end
 
    -- Roll a random mission and start it.
    local r = rnd.rnd()
-   for _k,m in ipairs(available_missions) do
-      if r < m.chance / weights then
-         if m.func then
-            if not m.func() then -- Failed to run
-               neutralevent()
+   for _k,sp in ipairs(special_list) do
+      if r < sp.chance / weights then
+         if sp.func then
+            if not sp.func() then -- Failed to run
+               return neutralevent()
             end
          else
-            naev.missionStart( m.name )
+            naev.missionStart( sp.mission )
          end
          destroyevent()
          return

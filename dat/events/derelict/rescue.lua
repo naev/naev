@@ -1,4 +1,3 @@
 return {
-   name = "Derelict Rescue",
-   repeatable = true,
+   mission = "Derelict Rescue",
 }

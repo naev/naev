@@ -3,13 +3,18 @@ local der = require 'common.derelict'
 local vn = require 'vn'
 local fmt = require 'format'
 
+-- Don't give new POI until intro finished
+if player.misnActive( "Point of Interest - Intro" ) then
+   return nil
+end
+
+-- Limit max amount of POI to 3 (or try to at least)
+if (player.misnActive("Point of Interest") or 0) >= 3 then
+   return nil
+end
+
 return {
-   name = "Point of Interest",
-   repeatable = true,
-   nolimit = true,
-   cond = function ()
-      return not player.misnActive( "Point of Interest - Intro" ) and (player.misnActive("Point of Interest") or 0) < 3
-   end,
+   mission = "Point of Interest",
    func = function ()
       local poiintro = "Point of Interest - Intro"
 
