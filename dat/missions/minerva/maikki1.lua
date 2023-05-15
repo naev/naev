@@ -317,7 +317,7 @@ He downs his drink and orders another.]]))
    vn.jump( "menu_msg" )
 
    vn.label( "scavengers" )
-   om(_([["It's not uncommon to see scavengers around here. Although there are no where near as many as there were in Kex's time."]]))
+   om(_([["It's not uncommon to see scavengers around here. Although there are nowhere near as many as there were in Kex's time."]]))
    om(_([[He takes a long sip, gets close and whispers.
 "You wouldn't suppose they found something interesting?"]]))
    om(_([["Suppose not. However, you could ask them over there. Those two look like they could be scavengers."]]))
