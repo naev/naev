@@ -24,6 +24,7 @@ local usable_outfits = {
    ["Seeking Chakra"]            = "seeking_chakra",
    ["Feather Drive"]             = "feather_drive",
    ["Astral Projection"]         = "astral_projection",
+   ["Avatar of Sirichana"]       = "avatar_sirichana",
    ["Cleansing Flames"]          = "cleansing_flames",
    ["House of Mirrors"]          = "house_mirrors",
    ["Reality Rip"]               = "reality_rip",

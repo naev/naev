@@ -139,16 +139,23 @@ function atk.think( target, si, noretarget )
                p:outfitToggle( mem._o.cleansing_flames, true )
             end
          end
+         if mem._o.avatar_sirichana and f > fm * 0.4 and rnd.rnd() < 0.4 then
+            -- Want enemy to be in shooting range
+            local range = ai.getweaprange(3, 0) -- all turrets
+            if ai.dist( target ) < 0.8*range then
+               p:outfitToggle( mem._o.house_mirrors, true )
+            end
+         end
          if mem._o.house_mirrors and f > fm * 0.4 and rnd.rnd() < 0.5 then
             -- Want enemy to be in shooting range
-            local range = ai.getweaprange(3, 0) -- forward turrets
+            local range = ai.getweaprange(3, 0) -- all turrets
             if ai.dist( target ) < 0.8*range then
                p:outfitToggle( mem._o.house_mirrors, true )
             end
          end
          if mem._o.reality_rip and f > fm * 0.4 and rnd.rnd() < 0.5 then
             -- Want enemy to be close, but not too close
-            local range = ai.getweaprange(3, 0) -- forward turrets
+            local range = ai.getweaprange(3, 0) -- all turrets
             local d = ai.dist( target )
             if d > 300 and d < 0.8*range  then
                p:outfitToggle( mem._o.house_mirrors, true )
