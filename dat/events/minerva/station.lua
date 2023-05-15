@@ -571,13 +571,13 @@ end
 function approach_scavengers ()
    vn.clear()
    vn.scene()
-   --[[local scavA =]] vn.newCharacter( minerva.scavengera.name,
+   local scavA = vn.newCharacter( minerva.scavengera.name,
          { image=minerva.scavengera.image, color=minerva.scavengera.colour, pos="left" } )
-   local scavB = vn.newCharacter( minerva.scavengerb.name,
+   --[[local scavB =]] vn.newCharacter( minerva.scavengerb.name,
          { image=minerva.scavengerb.image, color=minerva.scavengerb.colour, pos="right" } )
    vn.transition()
-   -- TODO maybe more text?
-   scavB(_([["What are you looking at?"]]))
+   vn.na(_([[The scavengers fall silent as soon as they notice your presence.]]))
+   scavA(_([["What are you looking at?"]]))
    vn.done()
    vn.run()
 end
