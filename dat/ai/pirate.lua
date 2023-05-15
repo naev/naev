@@ -154,7 +154,16 @@ function hail ()
    -- Remove randomness from future calls
    if not mem.hailsetup then
       mem.refuel_base = mem.refuel_base or rnd.rnd( 2000, 4000 )
-      mem.bribe_base = mem.bribe_base or  math.sqrt( p:stats().mass ) * (300 * rnd.rnd() + 850)
+      if not mem.bribe_base then
+         local pp = player.pilot()
+         local worth = pp:worth()
+         for k,v in ipairs(pp:followers()) do
+            if not p:flags("carried") then
+               worth = worth+v:worth()
+            end
+         end
+         mem.bribe_base = (150 * rnd.rnd() + 425) * p:ship():points() * math.max( 0.5, worth / 700e3 )
+      end
       mem.bribe_rng = rnd.rnd()
       mem.hailsetup = true
    end

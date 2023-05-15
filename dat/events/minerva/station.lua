@@ -239,7 +239,7 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
    t:say( _([["IT IS POSSIBLE TO TRADE MINERVA TOKENS FOR GOODS AND SERVICES AT TERMINALS THROUGHOUT THE STATION. THANKS TO THE IMPERIAL DECREE 289.78 ARTICLE 478 SECTION 72, ALL TRADE-INS ARE NOT SUBJECT TO STANDARD IMPERIAL LICENSE RESTRICTIONS. FURTHERMORE, THEY ALL HAVE 'I Got This Sucker at Minerva Station' ENGRAVED ON THEM."]]) )
    vn.jump( "more_info" )
    vn.label( "info_chicken" )
-   t:say( _([["CYBORG CHICKEN IS OUR MOST POPULAR BLACKJACK DEALER. NO WHERE ELSE IN THE UNIVERSE WILL YOU BE ABLE TO PLAY CARD GAMES WITH AN AI-ENHANCED CHICKEN CYBORG. IT IS A ONCE AND A LIFE-TIME CHANCE THAT YOU SHOULD NOT MISS."]]) )
+   t:say( _([["CYBORG CHICKEN IS OUR MOST POPULAR BLACKJACK DEALER. NOWHERE ELSE IN THE UNIVERSE WILL YOU BE ABLE TO PLAY CARD GAMES WITH AN AI-ENHANCED CHICKEN CYBORG. IT IS A ONCE AND A LIFE-TIME CHANCE THAT YOU SHOULD NOT MISS."]]) )
    vn.jump( "more_info" )
 
    vn.label( "trade_notenough" )
@@ -571,13 +571,13 @@ end
 function approach_scavengers ()
    vn.clear()
    vn.scene()
-   --[[local scavA =]] vn.newCharacter( minerva.scavengera.name,
+   local scavA = vn.newCharacter( minerva.scavengera.name,
          { image=minerva.scavengera.image, color=minerva.scavengera.colour, pos="left" } )
-   local scavB = vn.newCharacter( minerva.scavengerb.name,
+   --[[local scavB =]] vn.newCharacter( minerva.scavengerb.name,
          { image=minerva.scavengerb.image, color=minerva.scavengerb.colour, pos="right" } )
    vn.transition()
-   -- TODO maybe more text?
-   scavB(_([["What are you looking at?"]]))
+   vn.na(_([[The scavengers fall silent as soon as they notice your presence.]]))
+   scavA(_([["What are you looking at?"]]))
    vn.done()
    vn.run()
 end
