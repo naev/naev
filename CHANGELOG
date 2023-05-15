@@ -3,6 +3,7 @@
    * Fixed sign error when buying artifats in the Baron Prince mission (sorry)
    * Fixed behaviour of naev.trigger with parameters
    * Fixed Lua spfx volume changing with game speed
+   * Fixed typos
 
 * 0.10.5
    * Start counting effect stacks from 1 not 2

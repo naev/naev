@@ -185,7 +185,7 @@ He looks at you with determination.
    })
 
    vn.label("help")
-   kex(fmt.f(_([["Great! I managed to look at the station delivery logs and it seems like there is a shady delivery heading here. If you could could go to the {sys} system. All you have to do is intercept it and get the incriminating evidence and it should be easy as pie! I'll send you the precise information later."]]), {sys=targetsys}))
+   kex(fmt.f(_([["Great! I managed to look at the station delivery logs and it seems like there is a shady delivery heading here. If you could go to the {sys} system. All you have to do is intercept it and get the incriminating evidence and it should be easy as pie! I'll send you the precise information later."]]), {sys=targetsys}))
    kex(_([["It would be ideal if you can disable the ship and find the evidence itself, however, given that it is always delivered in secured vaults, you should be able to recover the vault from the debris if you roll that way."]]))
    vn.func( function ()
       if mem.misn_state==nil then
