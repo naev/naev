@@ -7,7 +7,7 @@
  <chance>50</chance>
  <location>Bar</location>
  <notes>
-   <campaign>Academy Hack</campaign>
+  <campaign>Academy Hack</campaign>
  </notes>
 </mission>
  --]]
