@@ -167,7 +167,7 @@ She chuckles.
    zuri(_([["We represent those who want to stand up to this tyranny and oppression, and believe that a better universe is possible. Sure, there are those who dismissively label us as pirates or scoundrels, but that is because they represent the status quo. They do not want anyone to challenge their reign and want to continue their life of luxury."]]))
    zuri(_([["Of course, it is not that easy, as many people are complicit even against their own interests. They believe they can become part of the elite if they work hard enough, you know, the Imperial dream. However, that never happens, and they die a sad, depressed life filled with delusions of grandeur. This is not the universe we wish for humankind."]]))
    zuri(_([["It is not easy to go toe-to-toe with such a large establishment, which is why we have to work from the shadows and focus on small objectives, like Minerva Station. The Station has such potential, yet it is wasted on Za'lek and Dvaered squabbles. We wish to free the people of Minerva Station to live their full potential, even though we have to ruffle some feathers here and there."]]))
-   zuri(_([["So yes, maybe we are pirates. Pirates who dream of a better universe for you and I."
+   zuri(_([["So yes, maybe we are pirates. Pirates who dream of a better universe for you and me."
 Her eyes blaze with hard determination.]]))
    vn.jump("menu_msg")
 

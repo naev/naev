@@ -64366,7 +64366,7 @@ msgstr ""
 #: dat/missions/minerva/pirate5.lua:170
 msgid ""
 "\"So yes, maybe we are pirates. Pirates who dream of a better universe for "
-"you and I.\"\n"
+"you and me.\"\n"
 "Her eyes blaze with hard determination."
 msgstr ""
 
