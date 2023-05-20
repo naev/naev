@@ -234,7 +234,7 @@ She beams you a smile.
    vn.na(_([[Suddenly an alarm starts blaring throughout the ship.]]))
    -- Using boars as slang for Dvaered
    maikki(_([[The familiar and angry voice bellows in the distance.
-"Zuri! We've got incoming boars closing in our or position! Take care of it!"]]))
+"Zuri! We've got incoming boars closing in on our position! Take care of it!"]]))
    pir:rename(_("Zuri"))
    pir(_([["Shit, it looks like we have Dvaered company. Make sure they don't find our ship! I dunno, just shoot them or something! I'll be manning the turrets here."
 She rushes off into the depths of the ship.]]))
