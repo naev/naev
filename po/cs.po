@@ -62744,7 +62744,7 @@ msgstr ""
 #: dat/missions/minerva/pirate4.lua:236
 msgid ""
 "The familiar and angry voice bellows in the distance.\n"
-"\"Zuri! We've got incoming boars closing in our or position! Take care of it!"
+"\"Zuri! We've got incoming boars closing in on our position! Take care of it!"
 "\""
 msgstr ""
 
