@@ -8,6 +8,10 @@ local flow_base = {
    ["Sirius Preacher"]           = 160,
    ["Sirius Shama"]              = 80,
    ["Sirius Fidelity"]           = 50,
+   -- Projections
+   ["Astral Projection Greater"] = 320,
+   ["Astral Projection Normal"]  = 160,
+   ["Astral Projection Lesser"]  = 80,
    -- Outfits
    ["Small Flow Amplifier"]      = 50,
    ["Medium Flow Amplifier"]     = 100,
@@ -27,6 +31,10 @@ local flow_regen = {
    ["Sirius Preacher"]           = 3,
    ["Sirius Shama"]              = 2,
    ["Sirius Fidelity"]           = 1.5,
+   -- Projections
+   ["Astral Projection Greater"] = 32,
+   ["Astral Projection Normal"]  = 16,
+   ["Astral Projection Lesser"]  = 8,
    -- Outfits
    ["Small Flow Resonator"]      = 1,
    ["Medium Flow Resonator"]     = 2,
@@ -43,6 +51,10 @@ local flow_mod = {
    ["Sirius Preacher"]           = 1.3,
    ["Sirius Shama"]              = 1.3,
    ["Sirius Fidelity"]           = 1.3,
+   -- Projections
+   ["Astral Projection Greater"] = 1.3,
+   ["Astral Projection Normal"]  = 1.3,
+   ["Astral Projection Lesser"]  = 1.3,
    -- Outfits
    ["Astral Projection"]         = 1/1.3,
    ["Avatar of Sirichana"]       = 1/1.3,
