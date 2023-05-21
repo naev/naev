@@ -133,6 +133,7 @@ end
 function puzzle01 ()
    time_left = time_left - 0.1
    if time_left < 0 then
+      player.omsgRm( omsg_id )
       textoverlay.init( "#r".._("Test Failed").."#0", nil, {length=6})
       hook.timer( 6, "cleanup" )
       return

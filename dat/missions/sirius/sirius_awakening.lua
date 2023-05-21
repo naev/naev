@@ -144,7 +144,7 @@ They help you up.
    var.push("sirius_psychic",true)
 
    if not accepted then
-      -- Not interested in mission, so we just finish
+      -- Not interested in mission, so we just finish forever
       misn.finish(true)
       return
    end
