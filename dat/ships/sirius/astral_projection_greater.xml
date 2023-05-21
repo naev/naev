@@ -33,8 +33,10 @@
   <cpu>80</cpu>
  </characteristics>
  <slots>
-  <weapon size="small" x="10" y="-2" h="0">Greater Astral Cannon</weapon>
-  <weapon size="small" x="10" y="2" h="0">Greater Astral Cannon</weapon>
+  <weapon size="medium" x="10" y="-2" h="0">Greater Astral Cannon</weapon>
+  <weapon size="medium" x="10" y="2" h="0">Greater Astral Cannon</weapon>
+  <utility size="medium"/>
+  <utility size="medium"/>
  </slots>
  <stats>
   <stress_dissipation>10000</stress_dissipation>
