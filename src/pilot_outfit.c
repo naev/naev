@@ -399,6 +399,10 @@ int pilot_addOutfitIntrinsic( Pilot *pilot, const Outfit *outfit )
    ret = pilot_addOutfitRaw( pilot, outfit, s );
    if (pilot->id > 0 && ret==0)
       pilot_outfitLInit( pilot, s );
+
+   /* Recalculate the stats */
+   pilot_calcStats(pilot);
+
    return ret;
 }
 
@@ -409,6 +413,8 @@ int pilot_rmOutfitIntrinsic( Pilot *pilot, PilotOutfitSlot *s )
 {
    int ret = pilot_rmOutfitRaw( pilot, s );
    array_erase( &pilot->outfit_intrinsic, s, s+1 );
+   /* Recalculate the stats */
+   pilot_calcStats(pilot);
    return ret;
 }
 
