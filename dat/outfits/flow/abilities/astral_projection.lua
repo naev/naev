@@ -11,7 +11,7 @@ local function getStats( p, size )
    elseif size == 2 then
       flow_drain = 2
       flow_cost = 80
-      projection = ship.get("Astral Projection")
+      projection = ship.get("Astral Projection Normal")
    else
       flow_drain = 4
       flow_cost = 160
@@ -54,7 +54,7 @@ local function turnon( p, po )
 
    -- Astral proection
    local pos = p:pos() + vec2.newP( 20, p:dir() )
-   local np = pilot.add( mem.projection, p:faction(), pos, _("Lesser Astral Projection"), {ai="escort"} )
+   local np = pilot.add( mem.projection, p:faction(), pos, _("Astral Projection"), {ai="escort"} )
    mem.p = np
    np:effectAdd("Astral Projection")
 
