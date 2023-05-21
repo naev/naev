@@ -400,9 +400,6 @@ int pilot_addOutfitIntrinsic( Pilot *pilot, const Outfit *outfit )
    if (pilot->id > 0 && ret==0)
       pilot_outfitLInit( pilot, s );
 
-   /* Recalculate the stats */
-   pilot_calcStats(pilot);
-
    return ret;
 }
 
