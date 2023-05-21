@@ -20,7 +20,7 @@ function create ()
    srs.obeliskEnter( obelisk )
 
    -- Swap player's ship
-   local player_ship = player.shipAdd( "Astral Projection", _("Psyche"), _("Psychic powers."), true )
+   local player_ship = player.shipAdd( "Astral Projection Normal", _("Psyche"), _("Psychic powers."), true )
    prevship = player.pilot():name() -- Ship to go back to
    player.shipSwap( player_ship, true )
 
