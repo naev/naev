@@ -204,6 +204,9 @@ function create()
    track_w, track_h = tracking_light:dim()
    x_ammo = pl_pane_x + 39
    y_ammo = pl_pane_y - 27
+   if has_flow then
+      y_ammo = y_ammo - 28
+   end
 
    -- Missile lock warning
    missile_lock_text = _("Warning - Missile Lock-on Detected")
