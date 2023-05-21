@@ -1,10 +1,12 @@
 local misnname = "Derelict Rescue"
 
--- Lower duplicates by ignoring active
-if player.misnActive(misnname) then
-   return
-end
+return function ()
+   -- Lower duplicates by ignoring active
+   if player.misnActive(misnname) then
+      return
+   end
 
-return {
-   mission = misnname,
-}
+   return {
+      mission = misnname,
+   }
+end
