@@ -433,6 +433,12 @@ function update_ship()
    else
       first_time[2] = first_time[2] - 1
    end
+
+   -- If flow status changed, reset
+   local test_flow = (flow.max( pp ) > 0)
+   if has_flow ~= test_flow then
+      create()
+   end
 end
 
 function update_system()

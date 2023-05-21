@@ -437,6 +437,12 @@ end
 
 function update_ship()
    stats = pp:stats()
+
+   -- If flow status changed, reset
+   local test_flow = (flow.max( pp ) > 0)
+   if has_flow ~= test_flow then
+      create()
+   end
 end
 
 function update_system()
