@@ -1749,7 +1749,7 @@ static int pilotL_weapset( lua_State *L )
 
 static int luaL_checkweapset( lua_State *L, int idx )
 {
-   int ws = luaL_checkinteger(L,2);
+   int ws = luaL_checkinteger(L,idx);
    if ((ws < 0) || (ws > 9))
       NLUA_ERROR(L,_("Invalid weapon set '%d'!"),idx);
    return ws;
@@ -3126,6 +3126,8 @@ static int pilotL_setNoClear( lua_State *L )
 
 /**
  * @brief Adds an outfit to a specific slot.
+ *
+ *    @return 0 on failure to add, -1 on error to add, and 1 if added.
  */
 static int pilot_outfitAddSlot( Pilot *p, const Outfit *o, PilotOutfitSlot *s, int bypass_cpu, int bypass_slot)
 {
