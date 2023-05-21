@@ -37,12 +37,13 @@ function create ()
    }, true ) -- overwrite all
    local _n1, seeking_chakra = pp:outfitAdd( "Seeking Chakra" )
    local _n2, feather_drive = pp:outfitAdd( "Feather Drive" )
+   pp:outfitAddIntrinsic( "Astral Flow Amplifier" )
    pp:weapsetAdd( 1, seeking_chakra )
    pp:weapsetAdd( 2, feather_drive )
-   pp:outfitAddIntrinsic( "Astral Flow Amplifier" )
 
    -- First puzzle
    local m = pilot.add("Psychic Orb", "Independent", vec2.new(), nil, {ai="dummy"} )
+   m:effectAdd("Psychic Orb On")
    m:setNoDeath(true)
    m:setNoDisable(true)
    m:setHostile(true)
@@ -92,6 +93,7 @@ function puzzle01_addship ()
    -- Spawn an enemy
    local pos = player.pos() + vec2.newP( 800+400*rnd.rnd(), rnd.angle() )
    local e = pilot.add( "Astral Projection Lesser", _("Independent"), pos, nil, {ai="baddie"})
+   e:effectAdd("Psychic Orb On")
    e:setHostile(true)
    e:setVisible(true)
    e:intrinsicSet( { -- Ship is too fast otherwise
