@@ -7,7 +7,7 @@ local tut = require "common.tutorial"
 
 return function ()
    -- Must not be psychic
-   if var.peek("sirius_awakening") then
+   if var.peek("sirius_awakening") or srs.playerIsPsychic() then
       return
    end
 
