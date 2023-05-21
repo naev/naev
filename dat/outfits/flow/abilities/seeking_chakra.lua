@@ -72,6 +72,11 @@ function ontoggle( p, po, on )
 
    if mem.timer > 0 then return false end
 
+   -- Needs a target
+   local t = p:target()
+   if not t then return false end
+
+   -- Player should have enough flow
    local f = flow.get( p )
    if f < mem.flow_cost then
       return false
@@ -81,7 +86,7 @@ function ontoggle( p, po, on )
    local dir = p:dir()
    local sw, sh = p:ship():dims()
    local pos = p:pos()+vec2.newP( (sw+sh)*0.5+10, dir )
-   po:munition( p, mem.ref, p:target(), dir, pos )
+   po:munition( p, mem.ref, t, dir, pos )
    mem.timer = mem.cooldown * p:shipstat("cooldown_mod",true)
    po:state("cooldown")
    po:progress(1)
