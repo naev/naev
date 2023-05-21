@@ -3167,6 +3167,11 @@ static int pilot_outfitAddSlot( Pilot *p, const Outfit *o, PilotOutfitSlot *s, i
    /* Add ammo if needed. */
    if (ret==0)
       pilot_addAmmo( p, s, pilot_maxAmmoO(p,o) );
+
+   /* Update GUI if necessary. */
+   if (pilot_isPlayer(p))
+      gui_setShip();
+
    return 1;
 }
 
@@ -3225,16 +3230,21 @@ static int pilotL_outfitAdd( lua_State *L )
    }
 
    /* Update stats. */
-   if (added > 0)
+   if (added > 0) {
       pilot_calcStats( p );
 
-   /* Update the weapon sets. */
-   if ((added > 0) && p->autoweap)
-      pilot_weaponAuto(p);
+      /* Update the weapon sets. */
+      if (p->autoweap)
+         pilot_weaponAuto(p);
 
-   /* Update equipment window if operating on the player's pilot. */
-   if (player.p != NULL && player.p == p && added > 0)
-      outfits_updateEquipmentOutfits();
+      /* Update equipment window if operating on the player's pilot. */
+      if (player.p != NULL && player.p == p)
+         outfits_updateEquipmentOutfits();
+
+      /* Update GUI if necessary. */
+      if (pilot_isPlayer(p))
+         gui_setShip();
+   }
 
    lua_pushnumber(L,added);
    if (slotid < 0)
@@ -3296,16 +3306,21 @@ static int pilotL_outfitAddSlot( lua_State *L )
    added = (ret>0);
 
    /* Update stats. */
-   if (added > 0)
+   if (added > 0) {
       pilot_calcStats( p );
 
-   /* Update the weapon sets. */
-   if ((added > 0) && p->autoweap)
-      pilot_weaponAuto(p);
+      /* Update the weapon sets. */
+      if (p->autoweap)
+         pilot_weaponAuto(p);
 
-   /* Update equipment window if operating on the player's pilot. */
-   if (player.p != NULL && player.p == p && added > 0)
-      outfits_updateEquipmentOutfits();
+      /* Update equipment window if operating on the player's pilot. */
+      if (player.p != NULL && player.p == p)
+         outfits_updateEquipmentOutfits();
+
+      /* Update GUI if necessary. */
+      if (pilot_isPlayer(p))
+         gui_setShip();
+   }
 
    lua_pushboolean(L,added);
    return 1;
@@ -3446,6 +3461,11 @@ static int pilotL_outfitAddIntrinsic( lua_State *L )
    if (ret==0)
       pilot_calcStats(p);
    lua_pushboolean(L,ret);
+
+   /* Update GUI if necessary. */
+   if (pilot_isPlayer(p))
+      gui_setShip();
+
    return 1;
 }
 
