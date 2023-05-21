@@ -145,7 +145,7 @@ function puzzle01( p )
          m:moveto( mp[1] )
          mm.p = m
          mm.t = 1
-         m.h = hook.pilot( m.p, "idle", "puzzle01_idle" )
+         mm.h = hook.pilot( m.p, "idle", "puzzle01_idle" )
          markers[i] = mm
 
          -- Add an enemy
