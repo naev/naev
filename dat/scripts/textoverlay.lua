@@ -85,7 +85,8 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    local w, h
    if subtitle then
       w = math.max( title.w, subtitle.w )*1.5
-      h = (title.h * 1.5 + subtitle.h)*2
+      local _mw, st = subtitle.font:getWrap( subtitle.text, w )
+      h = (title.h * 1.5 + subtitle.h*#st)*2
    else
       w = title.w*1.5
       h = title.h*2
