@@ -1749,7 +1749,7 @@ static int pilotL_weapset( lua_State *L )
 
 static int luaL_checkweapset( lua_State *L, int idx )
 {
-   int ws = luaL_checkinteger(L,idx);
+   int ws = luaL_checkinteger(L,idx)-1;
    if ((ws < 0) || (ws > 9))
       NLUA_ERROR(L,_("Invalid weapon set '%d'!"),idx);
    return ws;
