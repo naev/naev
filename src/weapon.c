@@ -1071,10 +1071,12 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
                   ctex, csx, csy, cpos, crash );
       }
       /* Fallback using simple spherical collision. */
-      else {
+      else if (cpol != NULL) {
          return CollideCirclePolygon( &w->solid.pos, wc->range, cpol, cpos, crash );
       }
       /* TODO case no polygon and circle collision. */
+      else
+         assert( "TODO implement case no ship polygon and circle collision" );
    }
 }
 
