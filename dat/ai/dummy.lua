@@ -7,6 +7,7 @@ require 'ai.core.core'
 control_rate = 2
 
 function create ()
+   mem.comm_no = _("No response.")
    ai.pushtask( "brake" )
 end
 
