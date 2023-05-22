@@ -106,7 +106,7 @@ function puzzle01_addship ()
       shield_mod     = -50,
    }, true ) -- overwrite all
    local emem = e:memory()
-   emem.control_no = _("No response.")
+   emem.comm_no = _("No response.")
 
    -- Readd ship when dead
    hook.pilot( e, "exploded", "puzzle01_shipdeath" )
