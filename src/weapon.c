@@ -935,7 +935,7 @@ static void weapon_render( Weapon* w, double dt )
                glUniform2f( gfx->dimensions, r, r );
                glUniform1f( gfx->u_r, w->r );
                glUniform1f( gfx->u_time, w->life-w->timer );
-               glUniform1f( gfx->u_fade, 1.0 );
+               glUniform1f( gfx->u_fade, w->strength );
                gl_uniformMat4( gfx->projection, &projection );
 
                glEnableVertexAttribArray( gfx->vertex );
