@@ -24,5 +24,5 @@ void main (void)
    colour_out.a *= smoothstep( -0.1, 0.3, -d );
    colour_out += n * smoothstep( -0.4, 0.7, -d );
 
-   colour_out.a *= u_fade * min(u_time,1.0);
+   colour_out.a *= u_fade * min(10.0*u_time,1.0);
 }
