@@ -89,6 +89,7 @@ function player_lost ()
    end
 end
 
+local baddies = {}
 function puzzle01_addship ()
    -- Spawn an enemy
    local pos = player.pos() + vec2.newP( 800+400*rnd.rnd(), rnd.angle() )
@@ -109,6 +110,9 @@ function puzzle01_addship ()
 
    -- Readd ship when dead
    hook.pilot( e, "exploded", "puzzle01_shipdeath" )
+
+   -- keep track of them
+   table.insert( baddies, e )
 end
 
 function puzzle01_shipdeath ()
@@ -193,6 +197,13 @@ function puzzle01( p )
       end
    else
       return -- ??
+   end
+
+   -- Get rid of enemies
+   for k,v in ipairs(baddies) do
+      if v:exists() then
+         v:setHealth( -1, -1 )
+      end
    end
 
    -- All done, so give ability
