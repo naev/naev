@@ -93,7 +93,7 @@ function puzzle01_addship ()
    -- Spawn an enemy
    local pos = player.pos() + vec2.newP( 800+400*rnd.rnd(), rnd.angle() )
    local e = pilot.add( "Astral Projection Lesser", _("Independent"), pos, nil, {ai="baddie"})
-   e:effectAdd("Psychic Orb On")
+   e:effectAdd("Astral Projection")
    e:setHostile(true)
    e:setVisible(true)
    e:intrinsicSet( { -- Ship is too fast otherwise
@@ -119,9 +119,6 @@ local markers
 local marker_ship = ship.get("Psychic Orb")
 function puzzle01( p )
    if start_marker and p==start_marker then
-      start_marker:rm()
-      start_marker = nil
-
       markers = {}
       local n = 5
       for i=1,n do
@@ -136,7 +133,13 @@ function puzzle01( p )
          end
          mm.pos = mp
 
-         local m = pilot.add(marker_ship, "Independent", vec2.new(), nil, {ai="dummy"} )
+         local m = pilot.add(marker_ship, "Independent", start_marker:pos(), nil, {ai="dummy"} )
+         m:intrinsicSet( {
+            thrust     = 200,
+            speed      = 100,
+            turn       = 900,
+         }, true ) -- overwrite all
+         m:effectAdd("Psychic Orb On")
          m:setNoDeath(true)
          m:setNoDisable(true)
          m:setHostile(true)
@@ -147,10 +150,14 @@ function puzzle01( p )
          mm.t = 1
          mm.h = hook.pilot( m.p, "idle", "puzzle01_idle" )
          markers[i] = mm
-
-         -- Add an enemy
-         puzzle01_addship()
       end
+
+      -- Remove the start marker
+      start_marker:rm()
+      start_marker = nil
+
+      -- Add an enemy
+      hook.timer( 3, "puzzle01_addship" )
       return
    end
 

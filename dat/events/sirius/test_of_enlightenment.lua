@@ -130,7 +130,7 @@ function puzzle02_start ()
          speed      = 100,
          turn       = 900,
       }, true ) -- overwrite all
-      m.p:control()
+      m.p:control(true)
       m.t = 1
       hook.pilot( m.p, "idle", "puzzle02_idle" )
       local lastpos = m.p:pos()
