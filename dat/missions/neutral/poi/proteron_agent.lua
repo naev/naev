@@ -77,7 +77,7 @@ return function ( mem )
          vn.appear( sai, tut.shipai.transition )
          sai(_([["I'm afraid that is all that I was able to recover. Have you managed to make sense of it?"]]))
          vn.menu{
-            {_("I think I have idea."), "cont01"},
+            {_("I think I have an idea."), "cont01"},
             {_("Beats me."), "cont01"},
             {_("…"), "cont01"},
          }
