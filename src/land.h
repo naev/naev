@@ -57,7 +57,7 @@ void land_needsTakeoff( int delay );
 int land_canSave (void);
 int land_doneLoading (void);
 void land( Spob* p, int load );
-void land_genWindows( int load, int changetab );
+void land_genWindows( int load );
 void takeoff( int delay, int nosave );
 void land_cleanup (void);
 void land_exit (void);
