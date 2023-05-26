@@ -5,19 +5,43 @@ local function update( sp, dt )
    local d = sp:data()
    d.timer = d.timer - dt
 
+   local cleanup = false
    if not d.rot then
       for k,v in ipairs(d.r) do
          v.p = v.p + v.v * dt * 0.3
-         v.a = math.min( 1, 5*(0.5 - v.p:dist( center ) ) )
+         local dc = v.p:dist( center )
+         if dc>1.1 then
+            v.cleanup = true
+            cleanup = true
+         else
+            v.a = math.min( 1, 5*(0.5 - dc) )
+         end
       end
    else
       for k,v in ipairs(d.r) do
          v.p = v.p + v.v * dt * 0.3
          local x, _y = v.p:get()
-         v.a = math.min( 1, 5*(0.5 - math.abs(x-0.5)) )
+         if x>1.1 then
+            v.cleanup = true
+            cleanup = true
+         else
+            v.a = math.min( 1, 5*(0.5 - math.abs(x-0.5)) )
+         end
       end
    end
 
+   -- Rebuild table with valid elements only
+   if cleanup then
+      local nr = {}
+      for k,v in ipairs(d.r) do
+         if not v.cleanup then
+            table.insert( nr, v )
+         end
+      end
+      d.r = nr
+   end
+
+   -- Have to add a new one
    if d.timer <= 0 then
       local sz = 15 + 15*rnd.rnd()
 
