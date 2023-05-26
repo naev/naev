@@ -1140,6 +1140,7 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
       if (pilot_isFlag(p, PILOT_DELETE))
          continue;
 
+      /* Ignore if parent is self. */
       if (w->parent == pilot_stack[i]->id)
          continue; /* pilot is self */
 
