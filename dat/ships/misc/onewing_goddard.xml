@@ -2,7 +2,7 @@
 <ship name="One-Wing Goddard">
  <points>1000</points>
  <base_type>One-Wing Goddard</base_type>
- <gfx_space sx="1" sy="1">spob/space/derelict_goddard.webp</gfx_space>
+ <gfx_space sx="1" sy="1" polygon="derelict_goddard.webp">spob/space/derelict_goddard.webp</gfx_space>
  <gfx_comm>spob/exterior/onewing_goddard.webp</gfx_comm>
  <GUI>slim</GUI>
  <sound>engine</sound>
