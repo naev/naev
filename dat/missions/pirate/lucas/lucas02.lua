@@ -119,7 +119,7 @@ function accept ()
 
       vn.label("cont03_arr")
       lucas(_([["Wait, you are not surprised?"
-The lean in and whisper to you.
+They lean in and whisper to you.
 "Don't tell me you are a… Wait no, it's probably better to not know now."]]))
       vn.jump("cont03")
 

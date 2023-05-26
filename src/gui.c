@@ -1906,7 +1906,7 @@ int gui_load( const char* name )
 
    /* Recreate land window if landed. */
    if (landed) {
-      land_genWindows( 0, 1 );
+      land_genWindows( 0 );
       window_lower( land_wid );
    }
 
