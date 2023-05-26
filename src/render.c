@@ -209,16 +209,16 @@ void render_all( double game_dt, double real_dt )
    space_render( real_dt ); /* Nebula looks really weird otherwise. */
    hooks_run( "renderbg" );
    spobs_render();
-   spfx_render(SPFX_LAYER_BACK);
+   spfx_render(SPFX_LAYER_BACK, dt);
    weapons_render(WEAPON_LAYER_BG, dt);
    /* Middle stuff */
    player_renderUnderlay(dt);
    pilots_render();
    weapons_render(WEAPON_LAYER_FG, dt);
-   spfx_render(SPFX_LAYER_MIDDLE);
+   spfx_render(SPFX_LAYER_MIDDLE, dt);
    /* Foreground stuff */
    player_render(dt);
-   spfx_render(SPFX_LAYER_FRONT);
+   spfx_render(SPFX_LAYER_FRONT, dt);
    space_renderOverlay(dt);
    gui_renderReticles(dt);
    pilots_renderOverlay();
