@@ -745,6 +745,8 @@ static int ship_parse( Ship *temp, const char *filename )
       }
 
       if (xml_isNode(node,"gfx_space")) {
+         char *plg;
+
          /* Get path */
          char *buf = xml_get(node);
          if (buf==NULL) {
@@ -756,6 +758,12 @@ static int ship_parse( Ship *temp, const char *filename )
          /* Get sprite size. */
          xmlr_attr_int_def( node, "sx", sx, 8 );
          xmlr_attr_int_def( node, "sy", sy, 8 );
+
+         /* Get polygon. */
+         xmlr_attr_strd( node, "polygon", plg );
+         if (plg)
+            ship_loadPLG( temp, plg, sx*sy );
+         free( plg );
 
          /* Load the graphics. */
          ship_loadSpaceImage( temp, str, sx, sy );

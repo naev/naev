@@ -1076,7 +1076,7 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
       }
       /* TODO case no polygon and circle collision. */
       else
-         assert( "TODO implement case no ship polygon and circle collision" );
+         assert( "TODO implement case no ship polygon and circle collision"==NULL );
       return 0;
    }
 }
