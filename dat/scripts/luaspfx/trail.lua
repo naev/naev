@@ -1,8 +1,9 @@
 local lg = require 'love.graphics'
 local center = vec2.new( 0.5, 0.5 )
 
-local function update( sp, dt )
+local function render( sp, x, y, z, dt )
    local d = sp:data()
+   local sz = d.size * z
    d.timer = d.timer - dt
 
    local cleanup = false
@@ -20,12 +21,12 @@ local function update( sp, dt )
    else
       for k,v in ipairs(d.r) do
          v.p = v.p + v.v * dt * 0.3
-         local x, _y = v.p:get()
-         if x>1.1 then
+         local vx, _y = v.p:get()
+         if vx>1.1 then
             v.cleanup = true
             cleanup = true
          else
-            v.a = math.min( 1, 5*(0.5 - math.abs(x-0.5)) )
+            v.a = math.min( 1, 5*(0.5 - math.abs(vx-0.5)) )
          end
       end
    end
@@ -43,7 +44,7 @@ local function update( sp, dt )
 
    -- Have to add a new one
    if d.timer <= 0 then
-      local sz = 15 + 15*rnd.rnd()
+      local rz = 15 + 15*rnd.rnd()
 
       local ncol = naev.colour.new()
       local cs = d.colspread
@@ -57,15 +58,15 @@ local function update( sp, dt )
          table.insert( d.r, {
             p = vec2.newP( 1, r ),
             v = vec2.newP( -1, r ),
-            s = sz,
+            s = rz,
             a = 0,
 				c = col,
          } )
       else
          table.insert( d.r, {
-            p = vec2.new( 1, rnd.rnd()*(d.size-2*sz)/d.size+sz/d.size ),
+            p = vec2.new( 1, rnd.rnd()*(d.size-2*rz)/d.size+rz/d.size ),
             v = vec2.new( -1, 0 ),
-            s = sz,
+            s = rz,
             a = 0,
 				c = col,
          } )
@@ -73,12 +74,8 @@ local function update( sp, dt )
 
       d.timer = rnd.rnd()
    end
-end
 
-local function render( sp, x, y, z )
-   local d = sp:data()
-   local sz = d.size * z
-
+   -- Finally render the remaining
    lg.push()
    lg.translate( x, y )
    if d.rot then
@@ -103,7 +100,7 @@ local function trail( pos, point, params )
 
    local size = params.size or 300
 
-   local s = spfx.new( math.huge, update, nil, nil, render, pos, nil, nil, size )
+   local s = spfx.new( math.huge, nil, nil, nil, render, pos, nil, nil, size )
    local d  = s:data()
    d.timer  = 0
    d.size   = size
