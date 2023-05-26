@@ -293,7 +293,7 @@ static int poL_clear( lua_State *L )
  *
  *    @luatparam PilotOutfit po Pilot outfit originating the munition.
  *    @luatparam Pilot p Pilot generating the munition, used for faction and damaging purposes.
- *    @luatparam Outfit o Outfit to be used as a reference for the munition.
+ *    @luatparam[opt=po:outfit()] Outfit o Outfit to be used as a reference for the munition.
  *    @luatparam[opt=nil] Pilot t Pilot target to use for aiming and such.
  *    @luatparam[opt=p:dir()] number dir Direction the munition should face.
  *    @luatparam[opt=p:pos()] Vec2 pos Position to create the munition at.
@@ -304,7 +304,7 @@ static int poL_munition( lua_State *L )
 {
    PilotOutfitSlot *po = luaL_validpilotoutfit( L, 1 );
    Pilot *p    = luaL_validpilot( L, 2 );
-   const Outfit *o = luaL_optoutfit( L, 3, NULL );
+   const Outfit *o = luaL_optoutfit( L, 3, po->outfit );
    LuaPilot t  = nluaL_optarg( L, 4, p->id, luaL_checkpilot );
    double dir  = luaL_optnumber( L, 5, p->solid.dir );
    vec2 *vp    = luaL_optvector( L, 6, &p->solid.pos );
