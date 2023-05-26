@@ -1006,6 +1006,10 @@ static int ship_parse( Ship *temp, const char *filename )
    if (temp->license && !outfit_licenseExists(temp->license))
       WARN(_("Ship '%s' has inexistent license requirement '%s'!"), temp->name, temp->license);
 
+   /* Check polygon. */
+   if (temp->polygon == NULL)
+      WARN(_("Ship '%s' has no collision polygon!"), temp->name );
+
    /* ship validator */
 #define MELEMENT(o,s)      if (o) WARN( _("Ship '%s' missing '%s' element"), temp->name, s)
    MELEMENT(temp->name==NULL,"name");
