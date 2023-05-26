@@ -90,20 +90,23 @@ function player_lost ()
 end
 
 local baddies = {}
+local noadd = false
 function puzzle01_addship ()
+   if noadd then return end
    -- Spawn an enemy
    local pos = player.pos() + vec2.newP( 800+400*rnd.rnd(), rnd.angle() )
-   local e = pilot.add( "Astral Projection Lesser", _("Independent"), pos, nil, {ai="baddie"})
+   local e = pilot.add( "Astral Projection Lesser", _("Independent"), pos, nil, {ai="baddie_norun"})
    e:effectAdd("Astral Projection")
    e:setHostile(true)
    e:setVisible(true)
+   e:setNoDisable(true)
    e:intrinsicSet( { -- Ship is too fast otherwise
       thrust_mod     = -30,
       speed_mod      = -30,
       turn_mod       = -30,
-      fwd_damage     = -60, -- Don't instagib player
-      armour_mod     = -50,
-      shield_mod     = -50,
+      fwd_damage     = -30, -- Don't instagib player
+      armour_mod     = -90,
+      shield_mod     = -90,
    }, true ) -- overwrite all
    local emem = e:memory()
    emem.comm_no = _("No response.")
@@ -205,6 +208,7 @@ function puzzle01( p )
          v:setHealth( -1, -1 )
       end
    end
+   noadd = true
 
    -- All done, so give ability
    srs.sfxGong()
