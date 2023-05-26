@@ -1026,7 +1026,6 @@ static void land_setupTabs (void)
  * @brief Recreates the land windows.
  *
  *    @param load Is loading game?
- *    @param changetab Should it change to the last open tab?
  */
 void land_genWindows( int load )
 {
