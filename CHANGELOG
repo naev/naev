@@ -3,6 +3,7 @@
    * Fixed sign error when buying artifats in the Baron Prince mission (sorry)
    * Fixed behaviour of naev.trigger with parameters
    * Fixed Lua spfx volume changing with game speed
+   * Fixed memory leak in luaspfx trails
    * Fixed typos
 
 * 0.10.5
