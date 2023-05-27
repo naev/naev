@@ -1869,7 +1869,6 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
       pilot_renderFramebufferBase( p, gl_screen.fbo[2], gl_screen.nw, gl_screen.nh );
 
       glBindFramebuffer( GL_FRAMEBUFFER, fbo );
-      glClearColor( 0., 0., 0., 0. );
 
       glUseProgram( ed->program );
 
@@ -1901,7 +1900,6 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
       glDisableVertexAttribArray( ed->vertex );
 
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
-      glClearColor( 0., 0., 0., 1. );
    }
 }
 
