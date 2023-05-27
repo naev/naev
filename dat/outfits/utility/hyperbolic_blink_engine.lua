@@ -31,7 +31,7 @@ function update( p, po, dt )
             dist = dist * masslimit / m
          end
          local pos = p:pos()
-         luaspfx.blink( pos ) -- Blink afterimage
+         luaspfx.blink( p, pos ) -- Blink afterimage
          p:effectAdd( "Blink" ) -- Cool "blink in" effect
          -- Direction is random
          p:setPos( pos + vec2.newP( dist, p:dir()+(2*rnd.rnd()-1)*math.pi/6 ) )
