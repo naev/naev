@@ -93,7 +93,7 @@ function ontoggle( p, po, on )
    end
    local pos = p:pos()
    local newpos = pos + vec2.newP( dist, p:dir() )
-   blink( pos, (newpos-pos)*2+p:vel() ) -- Blink afterimage
+   blink( p, pos, (newpos-pos)*2+p:vel() ) -- Blink afterimage
    p:effectAdd( "Feather Drive" ) -- Cool "blink in" effect
    p:setPos( newpos )
    mem.timer = mem.cooldown * p:shipstat("cooldown_mod",true)
