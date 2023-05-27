@@ -670,7 +670,7 @@ void spfxL_update( double dt )
 /**
  * @brief Renders the Lua SPFX on the background.
  */
-void spfxL_renderbg (void)
+void spfxL_renderbg( double dt )
 {
    double z = cam_getZoom();
    spfx_lock();
@@ -692,7 +692,8 @@ void spfxL_renderbg (void)
       lua_pushnumber( naevL, pos.x );
       lua_pushnumber( naevL, pos.y );
       lua_pushnumber( naevL, z );
-      if (lua_pcall( naevL, 4, 0, 0) != 0) {
+      lua_pushnumber( naevL, dt );
+      if (lua_pcall( naevL, 5, 0, 0) != 0) {
          WARN(_("Spfx failed to run 'renderbg':\n%s"), lua_tostring( naevL, -1 ));
          lua_pop( naevL, 1 );
       }
@@ -703,7 +704,7 @@ void spfxL_renderbg (void)
 /**
  * @brief Renders the Lua SPFX in the midground.
  */
-void spfxL_rendermg (void)
+void spfxL_rendermg( double dt )
 {
    double z = cam_getZoom();
    spfx_lock();
@@ -733,7 +734,8 @@ void spfxL_rendermg (void)
       lua_pushnumber( naevL, pos.x );
       lua_pushnumber( naevL, pos.y );
       lua_pushnumber( naevL, z );
-      if (lua_pcall( naevL, 4, 0, 0) != 0) {
+      lua_pushnumber( naevL, dt );
+      if (lua_pcall( naevL, 5, 0, 0) != 0) {
          WARN(_("Spfx failed to run 'rendermg':\n%s"), lua_tostring( naevL, -1 ));
          lua_pop( naevL, 1 );
       }
@@ -744,7 +746,7 @@ void spfxL_rendermg (void)
 /**
  * @brief Renders the Lua SPFX in the foreground.
  */
-void spfxL_renderfg (void)
+void spfxL_renderfg( double dt )
 {
    double z = cam_getZoom();
    spfx_lock();
@@ -774,7 +776,8 @@ void spfxL_renderfg (void)
       lua_pushnumber( naevL, pos.x );
       lua_pushnumber( naevL, pos.y );
       lua_pushnumber( naevL, z );
-      if (lua_pcall( naevL, 4, 0, 0) != 0) {
+      lua_pushnumber( naevL, dt );
+      if (lua_pcall( naevL, 5, 0, 0) != 0) {
          WARN(_("Spfx failed to run 'renderfg':\n%s"), lua_tostring( naevL, -1 ));
          lua_pop( naevL, 1 );
       }
