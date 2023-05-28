@@ -1137,6 +1137,7 @@ dat/spob/kaira.xml
 dat/spob/kal_atok_obelisk.xml
 dat/spob/kal_maro_obelisk.xml
 dat/spob/kal_niut_obelisk.xml
+dat/spob/kal_sitra_obelisk.xml
 dat/spob/kanar.xml
 dat/spob/kanel.xml
 dat/spob/kansas_i.xml
@@ -3385,6 +3386,7 @@ dat/spob/lua/hypergate_ruadan.lua
 dat/spob/lua/kal_atok_obelisk.lua
 dat/spob/lua/kal_maro_obelisk.lua
 dat/spob/lua/kal_niut_obelisk.lua
+dat/spob/lua/kal_sitra_obelisk.lua
 dat/spob/lua/lib/hypergate.lua
 dat/spob/lua/lib/obelisk.lua
 dat/spob/lua/lib/spob.lua

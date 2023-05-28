@@ -125,6 +125,7 @@ local system_ambient_songs = {
    ["Test of Enlightenment"] = { "/snd/sounds/loops/kalimba_atmosphere.ogg" },
    ["Test of Alacrity"] = { "/snd/sounds/loops/kalimba_atmosphere.ogg" },
    ["Test of Renewal"] = { "/snd/sounds/loops/kalimba_atmosphere.ogg" },
+   ["Test of Devotion"] = { "/snd/sounds/loops/kalimba_atmosphere.ogg" },
 }
 
 --[[--
