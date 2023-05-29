@@ -40,6 +40,10 @@ function enter ()
       return
    end
 
+   -- Get rid of spawns
+   pilot.clear()
+   pilot.toggleSpawn(false)
+
    -- Hail hook
    hook.hail_spob( "comm_levo" )
    player.allowLand( false, _("You can not land until you clear the pirates from the system!") )
@@ -65,7 +69,7 @@ function enter ()
    pirboss:rename(piratename)
    spawn_pirate( "Pirate Shark", mainpos, pirboss )
    spawn_pirate( "Pirate Vendetta", mainpos, pirboss )
-   spawn_pirate( "Pirate Hyenna", mainpos, pirboss )
+   spawn_pirate( "Pirate Hyena", mainpos, pirboss )
 
    -- On the way to the Spob
    local pos1 = vec2.new( -5e3, 5e3 )
