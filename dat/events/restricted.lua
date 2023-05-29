@@ -22,6 +22,11 @@ function create ()
    -- We assume dominant faction is the one we want here
    sysfct = csys:faction()
 
+   -- Collective systems are restricted to avoid missions, but we don't want mines and stuff
+   if sysfct == faction.get("Collective") then
+      return
+   end
+
    -- Add space mines
    local L = lanes.get( sysfct, "non-hostile" )
    for i = 1,rnd.rnd(10,30) do

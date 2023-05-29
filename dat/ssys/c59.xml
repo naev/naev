@@ -38,4 +38,7 @@
    <pos x="-3119.102900" y="-2240.760926"/>
   </exclusion>
  </asteroids>
+ <tags>
+  <tag>restricted</tag>
+ </tags>
 </ssys>
