@@ -34,6 +34,7 @@ function create ()
    hook.enter( "enter" )
 end
 
+local pirboss
 local baddies = {}
 function enter ()
    if system.cur()~=mainsys then
@@ -51,6 +52,7 @@ function enter ()
    -- Spawn pirates
    local function spawn_pirate( shipname, pos, boss )
       local p = pilot.add( shipname, "Marauder", pos + vec2.newP( 100*rnd.rnd(), rnd.angle() ), nil, {ai="guard"} )
+      p:setHostile(true)
       local m = p:memory()
       m.bribe_no = _([["You ain't payin' yer wait outta this one!"]])
       m.refual_no = _([["Do I look like a fuel station?"]])
@@ -65,8 +67,9 @@ function enter ()
    end
 
    local mainpos = mainspb:pos() + vec2.newP( 200, rnd.angle() )
-   local pirboss = spawn_pirate( "Pirate Starbridge", mainpos )
+   pirboss = spawn_pirate( "Pirate Starbridge", mainpos )
    pirboss:rename(piratename)
+   pirboss:setVisplayer(true)
    spawn_pirate( "Pirate Shark", mainpos, pirboss )
    spawn_pirate( "Pirate Vendetta", mainpos, pirboss )
    spawn_pirate( "Pirate Hyena", mainpos, pirboss )
@@ -81,6 +84,17 @@ function enter ()
    local pos2 = vec2.new( -3e3, -3e3 )
    local miniboss2 = spawn_pirate( "Pirate Rhino", pos2 )
    spawn_pirate( "Pirate Vendetta", pos2, miniboss2 )
+
+   hook.timer( 5, "pirate_spam" )
+end
+
+function pirate_spam ()
+   if not pirboss or not pirboss:exists() then
+      return
+   end
+
+   pirboss:broadcast(_([["This system is now mine! Prepare to be dominated!"]]))
+   player.autonavReset( 5 )
 end
 
 function pir_gone ()
