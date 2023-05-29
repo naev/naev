@@ -18,19 +18,16 @@
 
 ]]--
 local pir = require "common.pirate"
-local portrait = require 'portrait'
 local vn = require 'vn'
+local vni = require "vnimage"
 local car = require "common.cargo"
 local fmt = require "format"
 
-
 -- TODO replace images with something meant for the VN
 local givername = _("Sweaty Individual")
-local giverportrait = portrait.get()
-local giverimage = portrait.getFullPath(giverportrait)
+local giverimage, giverportrait = vni.generic()
 local receivername = _("Burly Individual")
-local receiverimage = portrait.getFullPath(portrait.get())
-
+local receiverimage = vni.generic()
 
 function create()
    -- Note: this mission does not make any system claims.
