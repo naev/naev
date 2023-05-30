@@ -6,7 +6,10 @@
   <interference>13.235294</interference>
  </general>
  <pos x="-286.764052" y="-295.569978"/>
- <spobs/>
+ <spobs>
+  <spob>Dendria Alpha</spob>
+  <spob>Dendria Alpha-a</spob>
+ </spobs>
  <jumps>
   <jump target="Attaria">
    <autopos/>
