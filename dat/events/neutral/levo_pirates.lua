@@ -99,11 +99,17 @@ end
 
 function pir_gone ()
    -- Check if done
+   local left = 0
    for k,p in ipairs(baddies) do
       if p:exists() then
-         return
+         left = left+1
       end
    end
+   if left > 0 then
+      player.msg(fmt.f(_([[{left} pirates left to clean the blockade.]]),{left=left}))
+      return
+   end
+
    lmisn.sfxVictory()
    player.msg(fmt.f(_("You have cleared the blockade on {spb}!"),{spb=mainspb}))
    player.allowLand( true )
