@@ -55,7 +55,7 @@ local msg_cond = {
    -- Event hints
    {npc.test_evtHint("FLF/DV Derelicts"), _([["The FLF and the Dvaered sometimes clash in Surano. If you go there, you might find something of interest… Or not."]])},
    {npc.test_evtHint("Introducing Taiomi", function () return (player.chapter()~="0") end ), _([["I've heard that there are ghosts to the north of Dune. They seem to be around asteroid fields. As if such a thing could exist! Probably just a brave miner in a Llama!"]])},
-   npc.test_evtHint("Levo Pirates", _([["My sister claims there is a pirate blockade going on in the Levo system. I thought the Empire was supposed to bring peace and prosperity, not pirates and more pirates!"]])),
+   {npc.test_evtHint("Levo Pirates", _([["My sister claims there is a pirate blockade going on in the Levo system. I thought the Empire was supposed to bring peace and prosperity, not pirates and more pirates!"]]))},
    -- Mission Completion
    {npc.test_misnDone("Nebula Satellite"), _([["Heard some reckless scientists got someone to put a satellite inside the nebula for them. I thought everyone with half a brain knew to stay out of there, but oh well."]])},
    {npc.test_misnDone("Shadow Vigil"), _([["Did you hear? There was some big incident during a diplomatic meeting between the Empire and the Dvaered. Nobody knows what exactly happened, but both diplomats died. Now both sides are accusing the other of foul play. Could get ugly."]])},
