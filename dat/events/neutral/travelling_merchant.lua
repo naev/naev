@@ -411,7 +411,7 @@ They grab a toolbox and rush over to your boarded ship. You decide not to follow
       {cost=fmt.credits(99)}))
    mm(_([["I can offer you three different services, however, you can only have one active at a time on your ship. It is possible to change them if you wish though. In particular, I offer three services: Machiavellian Necessity, Machiavellian Fortune, and Machiavellian Virtue."]]))
    mm(_([["Machiavellian Necessity focuses on tweaking your weapon systems to be able to take decisive action when necessary."
-"Machiavellian Fortune will help you minimize the risks fickleness of fortune."
+"Machiavellian Fortune will help you minimize the risks of fickleness of fortune."
 "Finally, Machiavellian Virtue will make you a bulwark against unforeseen mishaps."]]))
    vn.jump("special")
 

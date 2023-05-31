@@ -5,6 +5,7 @@
       * Moved many missions to the vn system
       * Can sometimes find POI events with a pulse scanner equipped when entering systems
       * Changed the visuals for some of the nebulas
+      * Pirate bribes cost more depending on your fleet and are based on points not mass
       * diy-nerds: improved reward
    * Quality of Life
       * Make it explicit when all the escorts have jumped or landed
@@ -18,6 +19,7 @@
    * New Content
       * 4 new missions
          * Nebula refugees
+      * Many new events
       * Added the Space Trader Society faction
       * More points of interest
       * Many, many new systems and space objects
@@ -41,6 +43,9 @@
    * Fixed sign error when buying artifats in the Baron Prince mission (sorry)
    * Fixed behaviour of naev.trigger with parameters
    * Fixed Lua spfx volume changing with game speed
+   * Fixed memory leak in luaspfx trails
+   * Fixed missions doing things in systems they should not
+   * Fixed typos
 
 * 0.10.5
    * Start counting effect stacks from 1 not 2

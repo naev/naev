@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Dendria Alpha-a">
+ <pos x="-3216.117557" y="5491.319310"/>
+ <GFX>
+  <space>moon-P01.webp</space>
+  <exterior>asteroid.webp</exterior>
+ </GFX>
+ <general>
+  <class>P</class>
+  <population>0</population>
+  <hide>0.400000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>A small moon orbiting Dendria Alpha that exhibits a very deep surface layer of ice with a small inert core. Although there is no atmosphere, once every orbit it gets close enough to Dendria Alpha to melt the outer layer of ice, which then refreezes and erases any signs of ships that have visited the moon. Your ships sensors can pick up traces of bacterial life that probably flourish during the short period "summer" period, probably brought in by careless ships.</description>
+ </general>
+</spob>

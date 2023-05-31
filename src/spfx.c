@@ -1073,24 +1073,25 @@ static void spfx_renderStack( SPFX *spfx_stack )
  * @brief Renders the entire spfx layer.
  *
  *    @param layer Layer to render.
+ *    @param dt Delta tick during rendering.
  */
-void spfx_render( int layer )
+void spfx_render( int layer, double dt )
 {
    /* get the appropriate layer */
    switch (layer) {
       case SPFX_LAYER_FRONT:
          spfx_renderStack( spfx_stack_front );
-         spfxL_renderfg();
+         spfxL_renderfg( dt );
          break;
 
       case SPFX_LAYER_MIDDLE:
          spfx_renderStack( spfx_stack_middle );
-         spfxL_rendermg();
+         spfxL_rendermg( dt );
          break;
 
       case SPFX_LAYER_BACK:
          spfx_renderStack( spfx_stack_back );
-         spfxL_renderbg();
+         spfxL_renderbg( dt );
 
          /* Trails are special (for now?). */
          for (int i=0; i<array_size(trail_spfx_stack); i++) {

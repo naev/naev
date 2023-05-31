@@ -175,6 +175,7 @@ static int pilotL_cargoRm( lua_State *L );
 static int pilotL_cargoJet( lua_State *L );
 static int pilotL_cargoList( lua_State *L );
 static int pilotL_credits( lua_State *L );
+static int pilotL_worth( lua_State *L );
 static int pilotL_ship( lua_State *L );
 static int pilotL_points( lua_State *L );
 static int pilotL_idle( lua_State *L );
@@ -346,6 +347,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "cargoJet", pilotL_cargoJet },
    { "cargoList", pilotL_cargoList },
    { "credits", pilotL_credits },
+   { "worth", pilotL_worth },
    /* Manual AI control. */
    { "idle", pilotL_idle },
    { "control", pilotL_control },
@@ -4211,6 +4213,20 @@ static int pilotL_credits( lua_State *L )
    Pilot *p = luaL_validpilot(L,1);
    pilot_modCredits( p, luaL_optlong( L, 2, 0 ) );
    lua_pushnumber( L, p->credits );
+   return 1;
+}
+
+/**
+ * @brief Gets the worth of a pilot (total value of ship and outfits).
+ *
+ *    @luatparam Pilot p Pilot to get worth of.
+ *    @luatreturn number The credit worth of the pilot.
+ * @luafunc worth
+ */
+static int pilotL_worth( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   lua_pushnumber( L, pilot_worth(p) );
    return 1;
 }
 

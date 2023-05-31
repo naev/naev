@@ -57,6 +57,8 @@ local neutral_f = {
    {"neutral/female2n_nogog.webp"},
    {"neutral/female3n.webp"},
    {"neutral/female4n.webp"},
+   {"neutral/female5n.webp"},
+   {"neutral/female6n.webp"},
 }
 function vni.genericMale()
    local p = neutral_m[ rnd.rnd(1,#neutral_m) ]

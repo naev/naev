@@ -792,6 +792,8 @@ dat/spob/delta_pavonis_iia.xml
 dat/spob/delta_polaris_i.xml
 dat/spob/delta_polaris_ii.xml
 dat/spob/delta_polaris_vi.xml
+dat/spob/dendria_alpha.xml
+dat/spob/dendria_alphaa.xml
 dat/spob/deneb_iii.xml
 dat/spob/deneb_iiia.xml
 dat/spob/diabolos_station.xml
@@ -2588,6 +2590,7 @@ dat/unidiff/heavy_weapons_license.xml
 dat/unidiff/hypergates_1.xml
 dat/unidiff/hypergates_2.xml
 dat/unidiff/hypergates_3.xml
+dat/unidiff/levo_safe.xml
 dat/unidiff/onewing_goddard.xml
 dat/unidiff/raelid_outpost_death.xml
 dat/unidiff/raglan_outpost_death.xml
@@ -2733,8 +2736,11 @@ dat/events/neutral/arandon_station.lua
 dat/events/neutral/baron_comm.lua
 dat/events/neutral/baron_flintley.lua
 dat/events/neutral/baron_prowl.lua
+dat/events/neutral/dendria_pirates.lua
 dat/events/neutral/derelict.lua
 dat/events/neutral/kidnapped.lua
+dat/events/neutral/levo_pirates.lua
+dat/events/neutral/levo_pirates_epilogue.lua
 dat/events/neutral/majesteka_stowaways.lua
 dat/events/neutral/poi.lua
 dat/events/neutral/shadow_comm.lua

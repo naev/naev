@@ -3,7 +3,7 @@
 <event name="Majesteka Stowaways Aboard">
  <location>land</location>
  <chance>100</chance>
- <cond>spob.cur()==spob.get("Majesteka II")</cond>
+ <spob>Majesteka II</spob>
  <unique />
 </event>
 --]]

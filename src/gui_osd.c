@@ -143,7 +143,6 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
       array_push_back( &osd->items, array_create(char*) );
    }
 
-   osd_wordwrap( osd );
    osd_sort(); /* THIS INVALIDATES THE osd POINTER. */
    osd_calcDimensions();
 
@@ -153,15 +152,25 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
 /**
  * @brief Calculates the word-wrapped osd->items from osd->msg.
  */
-void osd_wordwrap( OSD_t* osd )
+static void osd_wordwrap( OSD_t* osd )
 {
    glPrintLineIterator iter;
+   char title[STRMAX_SHORT]; /* Needs to be in the scope of the entire function as it is used in gl_printLineIteratorNext indirectly. */
 
    /* Do title. */
    for (int i=0; i<array_size(osd->titlew); i++)
       free(osd->titlew[i]);
    array_resize( &osd->titlew, 0 );
-   gl_printLineIteratorInit( &iter, &gl_smallFont, osd->title, osd_w );
+
+   /* Handle the case same mission is repeated. */
+   if (osd->duplicates > 0) {
+      snprintf( title, sizeof(title), _("%s #b(%dx)#0"), osd->title, osd->duplicates+1 );
+      gl_printLineIteratorInit( &iter, &gl_smallFont, title, osd_w );
+   }
+   else
+      gl_printLineIteratorInit( &iter, &gl_smallFont, osd->title, osd_w );
+
+   /* Figure out the length. */
    while (gl_printLineIteratorNext( &iter )) {
       /* Copy text over. */
       int chunk_len = iter.l_end - iter.l_begin + 1;
@@ -319,7 +328,6 @@ int osd_getActive( unsigned int osd )
 int osd_setup( int x, int y, int w, int h )
 {
    /* Set offsets. */
-   int must_rewrap = (osd_w != w) && (osd_list != NULL);
    osd_x = x;
    osd_y = y;
    osd_w = w;
@@ -330,9 +338,6 @@ int osd_setup( int x, int y, int w, int h )
    osd_tabLen = gl_printWidthRaw( &gl_smallFont, "   " );
    osd_hyphenLen = gl_printWidthRaw( &gl_smallFont, "- " );
 
-   if (must_rewrap)
-      for (int i=0; i<array_size(osd_list); i++)
-         osd_wordwrap( &osd_list[i] );
    osd_calcDimensions();
 
    return 0;
@@ -359,7 +364,6 @@ void osd_render (void)
 {
    double p;
    int l;
-   char title[STRMAX_SHORT];
 
    /* Nothing to render. */
    if (osd_list == NULL)
@@ -383,12 +387,7 @@ void osd_render (void)
 
       /* Print title. */
       for (int i=0; i<array_size(ll->titlew); i++) {
-         if ((ll->duplicates > 0) && (i==array_size(ll->titlew)-1)) {
-            snprintf( title, sizeof(title), "%s #b(%dx)#0", ll->titlew[i], ll->duplicates+1 );
-            gl_printMaxRaw( &gl_smallFont, w, x, p, NULL, -1., title);
-         }
-         else
-            gl_printMaxRaw( &gl_smallFont, w, x, p, NULL, -1., ll->titlew[i]);
+         gl_printMaxRaw( &gl_smallFont, w, x, p, NULL, -1., ll->titlew[i]);
          p -= gl_smallFont.h + 5.;
          l++;
       }
@@ -430,8 +429,7 @@ static void osd_calcDimensions (void)
       ll->duplicates = 0;
    }
 
-   /* Render each thingy. */
-   len = 0;
+   /* Get duplicates. */
    for (int k=0; k<array_size(osd_list); k++) {
       int duplicates;
       OSD_t *ll = &osd_list[k];
@@ -469,6 +467,18 @@ static void osd_calcDimensions (void)
          }
       }
       ll->duplicates = duplicates;
+   }
+
+   /* Compute total length. */
+   len = 0;
+   for (int k=0; k<array_size(osd_list); k++) {
+      OSD_t *ll = &osd_list[k];
+
+      if (ll->skip)
+         continue;
+
+      /* Wordwrap. */
+      osd_wordwrap( ll );
 
       /* Print title. */
       for (int i=0; i<array_size(ll->titlew); i++)

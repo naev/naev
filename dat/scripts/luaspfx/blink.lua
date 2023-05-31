@@ -26,13 +26,13 @@ local function render( sp, x, y, z )
    lg.setShader( old_shader )
 end
 
-local function blink( pos, vel )
+local function blink( p, pos, vel )
    if not blink_shader then
       local blink_shader_frag = lf.read( "scripts/luaspfx/shaders/blink.frag" )
       blink_shader = lg.newShader( blink_shader_frag )
    end
 
-   local c = lg.newCanvas( player.pilot():render() )
+   local c = lg.newCanvas( p:render() )
    local s = spfx.new( ttl, update, render, nil, nil, pos, vel, nil, (c.w+c.h)*0.25 )
    local d  = s:data()
    d.canvas = c
