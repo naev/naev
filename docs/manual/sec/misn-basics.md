@@ -308,13 +308,23 @@ misn.setReward( _("Lots of good stuff!") )
 
 Note that `_()` and friends all assume that you are inputting strings in English.
 
-It is important to note that strings not shown to the player, e.g., strings representing faction names or ship names, do not need to be translated! So when adding a pilot you can just use directly the correct strings:
+It is important to note that strings not shown to the player, e.g., strings representing faction names or ship names, do not need to be translated! So when adding a pilot you can just use directly the correct strings for the ship and faction (e.g., `"Hyena"` and `"Mercenary"`):
 
 ```lua
 pilot.add( "Hyena", "Mercenary", nil, _("Cool Dude") )
 ```
 
 Note that the name (`Cool Dude` in this case) does have to be translated!
+
+For plurals you have to use `n_()` given that not all languages pluralize like in English. For example, if you want to indicate how many pirates are left, you could do something like:
+
+```lua
+player.msg(string.format(n_(
+    "%d pirate left!",
+    "%d pirates left!", left ), left ))
+```
+
+The above example says how many pirates are left based on the value of the variable `left`. In the case there is a single pirate left, the singular form should be used in English, which is the first parameter. For other cases, the plural form is used. The value of the variable `left` determines which is used based on translated language. Although the example above uses `string.format` to display the number value for illustrative purposes, it is recommended to format text with the `format` library explained below.
 
 ### Formatting Text
 \label{sec:misn-basic-fmt}
