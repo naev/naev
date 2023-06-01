@@ -104,7 +104,7 @@ function pirate_check ()
       if spotter==pirboss then
          spotter:comm(_("This system is under my control! Eat hot plasma!"))
       else
-         spotter:comm(_("This system is under {pirate} control! Scram!"))
+         spotter:comm(fmt.f(_("This system is under {pirate} control! Scram!"),{pirate=piratename}))
       end
       return
    end
