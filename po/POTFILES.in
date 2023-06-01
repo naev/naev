@@ -2747,6 +2747,7 @@ dat/events/neutral/shadow_comm.lua
 dat/events/neutral/shadow_comm2.lua
 dat/events/neutral/shiplover.lua
 dat/events/neutral/shipwreck.lua
+dat/events/neutral/surano_pirates.lua
 dat/events/neutral/travelling_merchant.lua
 dat/events/news.lua
 dat/events/news/dvaered.lua
