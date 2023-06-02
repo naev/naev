@@ -78,7 +78,7 @@ function create ()
    articles[1].date_to_rm = time.get()+time.new(0,20,0)
    news.add( articles )
 
-   neu.addMiscLog(fmt.f(_([[You helped clear a pirate blockade in the system of {sys}.]]),
+   neu.addMiscLog(fmt.f(_([[You helped clear a pirate blockade at the {sys} system. The locals were very grateful for your help.]]),
       {sys=mainsys}))
 
    evt.finish(true)

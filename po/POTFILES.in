@@ -2736,6 +2736,8 @@ dat/events/neutral/arandon_station.lua
 dat/events/neutral/baron_comm.lua
 dat/events/neutral/baron_flintley.lua
 dat/events/neutral/baron_prowl.lua
+dat/events/neutral/capricorn_pirates.lua
+dat/events/neutral/capricorn_pirates_epilogue.lua
 dat/events/neutral/dendria_pirates.lua
 dat/events/neutral/derelict.lua
 dat/events/neutral/kidnapped.lua
