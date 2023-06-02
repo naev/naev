@@ -7,7 +7,7 @@
 </event>
 --]]
 --[[
-   Save Capricorn!
+   Save Durea!
 
    Similar to the Levo Pirates, but now in Capricorn.
 --]]
@@ -16,7 +16,7 @@ local fmt = require 'format'
 local ccomm = require "common.comm"
 local lmisn = require "lmisn"
 
-local mainspb, mainsys = spob.getS("Capricorn")
+local mainspb, mainsys = spob.getS("Durea")
 local piratename = _("Brown Goatee")
 
 function create ()
@@ -68,16 +68,22 @@ function enter ()
    spawn_pirate( "Pirate Vendetta", mainpos, pirboss )
    spawn_pirate( "Pirate Hyena", mainpos, pirboss )
 
-   -- On the way to the Spob
-   local pos1 = vec2.new( -5e3, 5e3 )
-   local miniboss1 = spawn_pirate( "Pirate Vendetta", pos1)
+   -- On the way to the Spob from the south
+   local pos1 = vec2.new( 0, -16e3 )
+   local miniboss1 = spawn_pirate( "Pirate Rhino", pos1)
    spawn_pirate( "Pirate Hyena", pos1, miniboss1 )
    spawn_pirate( "Pirate Ancestor", pos1, miniboss1 )
 
-   -- In the asteroid field
-   local pos2 = vec2.new( -3e3, -3e3 )
+   -- On the way to the spob from the north
+   local pos2 = vec2.new( -10e3, 11e3 )
    local miniboss2 = spawn_pirate( "Pirate Rhino", pos2 )
    spawn_pirate( "Pirate Vendetta", pos2, miniboss2 )
+
+   -- Near uninhabited planet
+   local pos3 = vec2.new( 13e3, 3e3 )
+   local miniboss3 = spawn_pirate( "Pirate Admonisher", pos3 )
+   spawn_pirate( "Pirate Shark", pos3, miniboss3 )
+   spawn_pirate( "Pirate Hyena", pos3, miniboss3 )
 
    hook.timer( 5, "pirate_spam" )
 end
