@@ -66,13 +66,13 @@ function enter ()
    end
 
    local pos1 = vec2.new( -4e3, 8e3 )
-   local boss1 = spawn_pirate( "Pirate Kestral", pos1 )
+   local boss1 = spawn_pirate( "Pirate Kestrel", pos1 )
    for k,s in ipairs{ "Pirate Starbridge", "Pirate Vendetta", "Pirate Hyena", "Pirate Shark"} do
       spawn_pirate( s, pos1, boss1 )
    end
 
    local pos2 = vec2.new( 8.5e3, -2e3 )
-   local boss2 = spawn_pirate( "Pirate Kestral", pos2 )
+   local boss2 = spawn_pirate( "Pirate Kestrel", pos2 )
    for k,s in ipairs{ "Pirate Phalanx", "Pirate Ancestor", "Pirate Ancestor", "Pirate Shark"} do
       spawn_pirate( s, pos2, boss2 )
    end
@@ -95,10 +95,12 @@ end
 local pirhook
 function pirate_check ()
    local spotted = false
-   for k,p in ipairs(baddies:getVisible()) do
-      if p:withPlayer() then
-         spotted = true
-         break
+   for i,b in ipairs(baddies) do
+      for k,p in ipairs(b:getVisible()) do
+         if p:withPlayer() then
+            spotted = true
+            break
+         end
       end
    end
 
