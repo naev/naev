@@ -55,7 +55,7 @@ function enter ()
       p:setHostile(true)
       local m = p:memory()
       m.bribe_no = _([["You ain't payin' yer wait outta this one!"]])
-      m.refual_no = _([["Do I look like a fuel station?"]])
+      m.refuel_no = _([["Do I look like a fuel station?"]])
       if boss then
          p:setLeader( boss )
       end
