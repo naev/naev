@@ -2745,6 +2745,7 @@ dat/events/neutral/levo_pirates.lua
 dat/events/neutral/levo_pirates_epilogue.lua
 dat/events/neutral/majesteka_stowaways.lua
 dat/events/neutral/poi.lua
+dat/events/neutral/quai_pirates.lua
 dat/events/neutral/shadow_comm.lua
 dat/events/neutral/shadow_comm2.lua
 dat/events/neutral/shiplover.lua
