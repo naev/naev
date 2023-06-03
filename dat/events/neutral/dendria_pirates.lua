@@ -190,8 +190,8 @@ function pir_gone ()
    end
    if left > 0 then
       player.msg(fmt.f(n_(
-         [[{left} pirate left to clear the blockade.]],
-         [[{left} pirates left to clear the blockade.]], left),{left=left}))
+         [[{left} marauder left to clear the blockade.]],
+         [[{left} marauders left to clear the blockade.]], left),{left=left}))
       return
    end
 
