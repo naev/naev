@@ -16,6 +16,8 @@
 --[[
    Destroy Za'lek hacking station
 
+   TODO probably should be changed from Gammacron to Fried system
+
    This mission has two ways of being done:
    1. Using brute force and killing everything.
    2. Using stealth if the player boards the drone controllers or hacking center, they can disable drones.
@@ -141,7 +143,7 @@ She grins at you.]]), {sys=mainsys}))
    vn.menu( function ()
       local opts = {
          {_("Ask about the job"), "job"},
-         {_("Are you pirates?"), "pirate"},
+         {_([["Are you pirates?"]]), "pirate"},
          {_("Leave"), "leave"},
       }
       return opts

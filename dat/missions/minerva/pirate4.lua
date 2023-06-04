@@ -412,7 +412,7 @@ function followup ()
    local pir = vn.newCharacter( minerva.vn_zuri{ shader=love_shaders.hologram()} )
    local maikki = vn.newCharacter(_("Strangely Familiar Voice"), { color = minerva.maikkiP.colour } )
    vn.transition("electric")
-   vn.na(_("As everything settles down you receive an incoming transmission from the interrogation ship, and the individual apparently known as 'Zuri' appears on screen.."))
+   vn.na(_("As everything settles down you receive an incoming transmission from the interrogation ship, and the individual apparently known as 'Zuri' appears on screen."))
    pir(_([["Damn that was close. I never thought the Dvaered would be tricky enough to trail us over here. Pretty sure the damn mole had some sort of tracking device we must have missed."]]))
    pir(_([["I'm sure you have a lot of questions, however, now is not the time for answers. We can't linger here long, the Dvaered are bound to be back, and this time in larger numbers."]]))
    maikki(_([[The still familiar voice butts in.
