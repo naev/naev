@@ -131,6 +131,10 @@ local sirius_fyrra_m = {
    "sirius/sirius_fyrra_m3.webp",
    "sirius/sirius_fyrra_m4.webp",
    "sirius/sirius_fyrra_m5.webp",
+   {'sirius/sirius_fyrra_m1n.webp'},
+   {'sirius/sirius_fyrra_m1_v2.webp'},
+   {'sirius/sirius_fyrra_m1_v3.webp'},
+   {'sirius/sirius_fyrra_m1_v4.webp'},
 }
 local sirius_shaira_m = {
    "sirius/sirius_shaira_m1.webp",
@@ -160,6 +164,9 @@ function vni.sirius.shairaMale()
 end
 function vni.sirius.fyrraMale()
    local p = sirius_fyrra_m[ rnd.rnd(1,#sirius_fyrra_m) ]
+   if type(p)=="table" then
+      return p[1], p[1]
+   end
    return portrait.getFullPath(p), p
 end
 function vni.sirius.serraMale()
