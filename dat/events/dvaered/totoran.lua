@@ -3,7 +3,7 @@
 <event name="Totoran Station Events">
  <location>land</location>
  <chance>100</chance>
- <cond>spob.cur()==spob.get("Totoran")</cond>
+ <spob>Totoran</spob>
 </event>
 --]]
 

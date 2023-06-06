@@ -3,7 +3,7 @@
 <event name="Arandon Station Vault">
  <location>land</location>
  <chance>100</chance>
- <cond>spob.cur()==spob.get("Arandon Station")</cond>
+ <spob>Arandon Station</spob>
  <unique />
  <tags>
   <tag>fleetcap_10</tag>

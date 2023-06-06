@@ -128,6 +128,7 @@ dat/outfits/accessory/broken_nebular_shielding_prototype.xml
 dat/outfits/accessory/commemorative_stein.xml
 dat/outfits/accessory/dv_handbook.xml
 dat/outfits/accessory/fuzzy_dice.xml
+dat/outfits/accessory/goatee_marker.xml
 dat/outfits/accessory/key_chain.xml
 dat/outfits/accessory/left_boot.xml
 dat/outfits/accessory/love_letter.xml
@@ -825,6 +826,8 @@ dat/spob/delta_pavonis_iia.xml
 dat/spob/delta_polaris_i.xml
 dat/spob/delta_polaris_ii.xml
 dat/spob/delta_polaris_vi.xml
+dat/spob/dendria_alpha.xml
+dat/spob/dendria_alphaa.xml
 dat/spob/deneb_iii.xml
 dat/spob/deneb_iiia.xml
 dat/spob/diabolos_station.xml
@@ -2624,6 +2627,7 @@ dat/unidiff/antlejosv_7.xml
 dat/unidiff/antlejosv_8.xml
 dat/unidiff/antlejosv_9.xml
 dat/unidiff/collective_dead.xml
+dat/unidiff/durea_safe.xml
 dat/unidiff/flf_dead.xml
 dat/unidiff/flf_pirate_ally.xml
 dat/unidiff/flf_vs_empire.xml
@@ -2632,6 +2636,7 @@ dat/unidiff/heavy_weapons_license.xml
 dat/unidiff/hypergates_1.xml
 dat/unidiff/hypergates_2.xml
 dat/unidiff/hypergates_3.xml
+dat/unidiff/levo_safe.xml
 dat/unidiff/onewing_goddard.xml
 dat/unidiff/raelid_outpost_death.xml
 dat/unidiff/raglan_outpost_death.xml
@@ -2784,13 +2789,20 @@ dat/events/neutral/arandon_station.lua
 dat/events/neutral/baron_comm.lua
 dat/events/neutral/baron_flintley.lua
 dat/events/neutral/baron_prowl.lua
+dat/events/neutral/capricorn_pirates.lua
+dat/events/neutral/capricorn_pirates_epilogue.lua
+dat/events/neutral/dendria_pirates.lua
 dat/events/neutral/kidnapped.lua
+dat/events/neutral/levo_pirates.lua
+dat/events/neutral/levo_pirates_epilogue.lua
 dat/events/neutral/majesteka_stowaways.lua
 dat/events/neutral/poi.lua
+dat/events/neutral/quai_pirates.lua
 dat/events/neutral/shadow_comm.lua
 dat/events/neutral/shadow_comm2.lua
 dat/events/neutral/shiplover.lua
 dat/events/neutral/shipwreck.lua
+dat/events/neutral/surano_pirates.lua
 dat/events/neutral/travelling_merchant.lua
 dat/events/news.lua
 dat/events/news/dvaered.lua

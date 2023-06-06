@@ -149,7 +149,7 @@ static unsigned int repeat_keyCounter  = 0;  /**< Counter for key repeats. */
 /*
  * Mouse.
  */
-static double input_mouseTimer         = -1.; /**< Timer for hiding again. */
+static double input_mouseTimer         = 1.; /**< Timer for hiding again. */
 static int input_mouseCounter          = 1; /**< Counter for mouse display/hiding. */
 static unsigned int input_mouseClickLast = 0; /**< Time of last click (in ms) */
 static void *input_lastClicked         = NULL; /**< Pointer to the last-clicked item. */
@@ -383,7 +383,7 @@ void input_mouseHide (void)
 {
    input_mouseCounter--;
    if (input_mouseCounter <= 0) {
-      input_mouseTimer = MOUSE_HIDE;
+      input_mouseTimer = MIN( input_mouseTimer, MOUSE_HIDE );
       input_mouseCounter = 0;
    }
 }

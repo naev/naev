@@ -30,4 +30,7 @@
    <density>0.700000</density>
   </asteroid>
  </asteroids>
+ <tags>
+  <tag>restricted</tag>
+ </tags>
 </ssys>

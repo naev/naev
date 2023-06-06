@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Dendria Alpha">
+ <pos x="-2464.004923" y="5262.649718"/>
+ <GFX>
+  <space>J06.webp</space>
+ </GFX>
+ <general>
+  <class>J</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

@@ -241,6 +241,11 @@ function board ()
       for k,v in ipairs(olist) do
          table.insert( outfits, v )
       end
+
+      -- Defeated all the "Goatee" pirates
+      if player.evtDone("Quai Pirates") and player.evtDone("Levo Pirates") and player.evtDone("Capricorn Pirates") and player.evtDone("Surano Pirates") and player.evtDone("Dendria Pirates") then
+         table.insert( outfits, "Goatee Marker" )
+      end
    end
    -- Boarding sound
    der.sfx.board:play()

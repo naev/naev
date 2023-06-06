@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Goatee Marker">
+ <general>
+  <unique />
+  <typename>Accessory</typename>
+  <slot prop="accessory">utility</slot>
+  <size>small</size>
+  <priority>3</priority>
+  <mass>0</mass>
+  <price>1000000</price>
+  <description>A rare limited edition Goatee Marker, meant exclusive for drawing not only facial hair, but Goatees in particular. It seems to have been partially used and has the marauder logo on the bottom.</description>
+  <gfx_store>placeholder.webp</gfx_store>
+ <rarity>6</rarity></general>
+ <specific type="modification">
+  <cooldown_mod>-25</cooldown_mod>
+  <loot_mod>25</loot_mod>
+ </specific>
+</outfit>

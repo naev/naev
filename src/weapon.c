@@ -123,6 +123,7 @@ static unsigned int beam_idgen = 0; /**< Beam identifier generator. */
 static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
       const Pilot *pilot_target, const vec2 *pos, const vec2 *vel, double dir,
       double swivel, double time );
+static double weapon_aimTurretStatic( const vec2 *target_pos, const vec2 *pos, double dir, double swivel );
 static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
       double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time, int aim );
 static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
@@ -1641,6 +1642,34 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
 }
 
 /**
+ * @brief Gets the aim position of a turret weapon.
+ *
+ *    @param target_pos Target of the weapon.
+ *    @param pos Position of the turret.
+ *    @param dir Direction facing parent ship and turret.
+ *    @param swivel Maximum angle between weapon and straight ahead.
+ */
+static double weapon_aimTurretStatic( const vec2 *target_pos, const vec2 *pos, double dir, double swivel )
+{
+   double rx, ry, rdir, off;
+   /* Get the vector : shooter -> target */
+   rx = target_pos->x - pos->x;
+   ry = target_pos->y - pos->y;
+   rdir = ANGLE(rx,ry);
+
+   /* Calculate bounds. */
+   off = angle_diff( rdir, dir );
+   if (FABS(off) > swivel) {
+      if (off > 0.)
+         rdir = dir - swivel;
+      else
+         rdir = dir + swivel;
+   }
+
+   return rdir;
+}
+
+/**
  * @brief Computes precisely interception times for propelled weapons (rockets).
  *
  *    @param rdir tried shooting angle.
@@ -1702,8 +1731,17 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
 
    if (aim)
       rdir = weapon_aimTurret( outfit, parent, pilot_target, pos, vel, dir, outfit->u.blt.swivel, time );
-   else
-      rdir = dir;
+   else {
+      if (pilot_isPlayer(parent) && (SDL_ShowCursor(SDL_QUERY)==SDL_ENABLE)) {
+         double x, y;
+         vec2 target;
+         gl_screenToGameCoords( &x, &y, player.mousex, player.mousey );
+         vec2_csetmin( &target, x, y );
+         rdir = weapon_aimTurretStatic( &target, pos, dir, outfit->u.blt.swivel );
+      }
+      else
+         rdir = dir;
+   }
 
    /* Disperse as necessary. */
    if (outfit->u.blt.dispersion > 0.)
@@ -1788,8 +1826,17 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
       else
          rdir = dir;
    }
-   else
-      rdir = dir;
+   else {
+      if ((outfit->u.lau.swivel > 0.) && pilot_isPlayer(parent) && (SDL_ShowCursor(SDL_QUERY)==SDL_ENABLE)) {
+         double x, y;
+         vec2 target;
+         gl_screenToGameCoords( &x, &y, player.mousex, player.mousey );
+         vec2_csetmin( &target, x, y );
+         rdir = weapon_aimTurretStatic( &target, pos, dir, outfit->u.blt.swivel );
+      }
+      else
+         rdir = dir;
+   }
 
    /* Disperse as necessary. */
    if (outfit->u.blt.dispersion > 0.)

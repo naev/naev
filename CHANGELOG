@@ -16,10 +16,12 @@
       * Try to enforce minimum number of articles in the news
       * Independent patrol and bounty missions can be completed on more planets and stations
       * Can hide or prioritize missions from the info menu
+      * Manual aiming model aims at the mouse location when the mouse is visible
    * New Content
       * New mechanic for House Sirius called flow that allows unleashing psychic powers
       * 4 new missions
          * Nebula refugees
+      * Many new events
       * Added the Space Trader Society faction
       * More points of interest
       * Many, many new systems and space objects
@@ -44,6 +46,7 @@
    * Fixed behaviour of naev.trigger with parameters
    * Fixed Lua spfx volume changing with game speed
    * Fixed memory leak in luaspfx trails
+   * Fixed missions doing things in systems they should not
    * Fixed typos
 
 * 0.10.5
