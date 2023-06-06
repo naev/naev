@@ -184,6 +184,7 @@ void conf_setGameplayDefaults (void)
    conf.compression_velocity  = TIME_COMPRESSION_DEFAULT_MAX;
    conf.compression_mult      = TIME_COMPRESSION_DEFAULT_MULT;
    conf.save_compress         = SAVE_COMPRESSION_DEFAULT;
+   conf.mouse_hide            = MOUSE_HIDE_DEFAULT;
    conf.mouse_thrust          = MOUSE_THRUST_DEFAULT;
    conf.mouse_doubleclick     = MOUSE_DOUBLECLICK_TIME;
    conf.mouse_fly             = MOUSE_FLY_DEFAULT;
@@ -406,6 +407,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "redirect_file", conf.redirect_file );
       conf_loadBool( lEnv, "save_compress", conf.save_compress );
       conf_loadInt( lEnv, "doubletap_sensitivity", conf.doubletap_sens );
+      conf_loadFloat( lEnv, "mouse_hide", conf.mouse_hide );
       conf_loadBool( lEnv, "mouse_fly", conf.mouse_fly );
       conf_loadInt( lEnv, "mouse_thrust", conf.mouse_thrust );
       conf_loadFloat( lEnv, "mouse_doubleclick", conf.mouse_doubleclick );
@@ -1030,6 +1032,10 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment(_("Doubletap sensitivity (used for double tap accel for afterburner or double tap reverse for cooldown)"));
    conf_saveInt("doubletap_sensitivity",conf.doubletap_sens);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Time (in seconds) to wait until hiding mouse when not used."));
+   conf_saveBool("mouse_hide",conf.mouse_hide);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Whether or not clicking the middle mouse button toggles mouse flying mode."));

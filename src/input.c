@@ -34,8 +34,6 @@
 #include "weapon.h"
 #include "utf8.h"
 
-#define MOUSE_HIDE   (3.) /**< Time in seconds to wait before hiding mouse again. */
-
 /* keybinding structure */
 /**
  * @brief Naev Keybinding.
@@ -383,7 +381,7 @@ void input_mouseHide (void)
 {
    input_mouseCounter--;
    if (input_mouseCounter <= 0) {
-      input_mouseTimer = MIN( input_mouseTimer, MOUSE_HIDE );
+      input_mouseTimer = MIN( input_mouseTimer, conf.mouse_hide );
       input_mouseCounter = 0;
    }
 }
@@ -1491,7 +1489,7 @@ void input_handle( SDL_Event* event )
    if ((event->type == SDL_MOUSEMOTION)  ||
          (event->type == SDL_MOUSEBUTTONDOWN) ||
          (event->type == SDL_MOUSEBUTTONUP)) {
-      input_mouseTimer = MOUSE_HIDE;
+      input_mouseTimer = conf.mouse_hide;
       SDL_ShowCursor( SDL_ENABLE );
       ismouse = 1;
    }
