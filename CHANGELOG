@@ -5,6 +5,7 @@
    * Fixed Lua spfx volume changing with game speed
    * Fixed memory leak in luaspfx trails
    * Fixed missions doing things in systems they should not
+   * Fixed Adrenal Gland III's time speed up effect
    * Fixed typos
 
 * 0.10.5
