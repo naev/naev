@@ -171,4 +171,15 @@ function enter ()
    if system.cur() ~= mainsys then
       return
    end
+
+   -- Player meets up near Limbo IIA
+   --local meet_pos = vec2.new( -10700, 5500 )
 end
+
+--[[
+function start ()
+   -- General goes from Pultatis to Sollav
+
+   -- Warlord goes from Sollav to Provectus Nova
+end
+--]]
