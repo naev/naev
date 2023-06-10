@@ -379,10 +379,32 @@ end
 
 function bigguy_died( _p )
    if not warlord:exists() and not general:exists() then
+      -- Main objective is done
       mem.state = 3
       misn.osdActive(4)
       misn.markerMove( mem.mrk, base )
       player.msg("#g"..fmt.f(_([[Targets eliminated! Return to {spb}.]]),{spb=base}).."#0")
       pilot.toggleSpawn(true)
+
+      -- Have some nasty Imperials jump in
+      local j = jump.get( system.cur(), "Pultatis" )
+      local boss = pilot.add( "Empire Peacemaker", "Empire", j )
+      for k,s in ipairs{ "Empire Pacifier", "Empire Pacifier", "Empire Admonisher", "Empire Admonisher", "Empire Admonisher", "Empire Admonisher",
+            "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot" } do
+         local p = pilot.add( s, "Empire", j )
+         p:setLeader( boss )
+         p:setHostile(true)
+      end
+      boss:setHostile(true)
+      -- Go to where the action is
+      pilotai.guard( boss, meet_pos )
+
+      hook.timer( 5, "boss_yell", boss )
    end
+end
+
+function boss_yell( boss )
+   if not boss or not boss:exists() then return end
+
+   boss:broadcast(_([["In the name of the Emperor, cease fighting or perish!"]]))
 end
