@@ -33,6 +33,7 @@ static int vectorL_mul( lua_State *L );
 static int vectorL_div__( lua_State *L );
 static int vectorL_div( lua_State *L );
 static int vectorL_dot( lua_State *L );
+static int vectorL_cross( lua_State *L );
 static int vectorL_get( lua_State *L );
 static int vectorL_polar( lua_State *L );
 static int vectorL_set( lua_State *L );
@@ -57,6 +58,7 @@ static const luaL_Reg vector_methods[] = {
    { "__div", vectorL_div },
    { "div", vectorL_div__ },
    { "dot", vectorL_dot },
+   { "cross", vectorL_cross },
    { "get", vectorL_get },
    { "polar", vectorL_polar },
    { "set", vectorL_set },
@@ -506,7 +508,7 @@ static int vectorL_div__( lua_State *L )
  *
  *    @luatparam Vec2 a First vector.
  *    @luatparam Vec2 b Second vector.
- *    @luatreturn Vec2 The dot product.
+ *    @luatreturn number The dot product.
  * @luafunc dot
  */
 static int vectorL_dot( lua_State *L )
@@ -514,6 +516,22 @@ static int vectorL_dot( lua_State *L )
    vec2 *a = luaL_checkvector(L,1);
    vec2 *b = luaL_checkvector(L,2);
    lua_pushnumber( L, a->x*b->x + a->y*b->y );
+   return 1;
+}
+
+/**
+ * @brief Cross product of two vectors.
+ *
+ *    @luatparam Vec2 a First vector.
+ *    @luatparam Vec2 b Second vector.
+ *    @luatreturn number The cross product.
+ * @luafunc cross
+ */
+static int vectorL_cross( lua_State *L )
+{
+   vec2 *a = luaL_checkvector(L,1);
+   vec2 *b = luaL_checkvector(L,2);
+   lua_pushnumber( L, a->x*b->y - a->y*b->x );
    return 1;
 }
 
