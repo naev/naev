@@ -24,6 +24,7 @@ local lmisn = require "lmisn"
 local equipopt = require "equipopt"
 local pilotai = require "pilotai"
 
+local base = spob.get("Minerva Station")
 local reward_amount = minerva.rewards.pirate6
 local title = _("Limbo Mayhem")
 local zlk_name = "TODO"
@@ -62,7 +63,7 @@ function accept ()
       _("Eliminate the targets"),
       _("Return to Minerva Station"),
    } )
-   mem.mrk_mainsys = misn.markerAdd( mainsys )
+   mem.mrk = misn.markerAdd( mainsys )
 
    minerva.log.pirate( fmt.f(_("You accepted a job from Zuri to assassinate both a Za'lek General and Dvaered Warlord at the same time in the {sys} system."), {sys=mainsys}) )
 
@@ -73,7 +74,7 @@ function accept ()
 end
 
 function generate_npc ()
-   if spob.cur()==spob.get("Minerva Station") then
+   if spob.cur()==base then
       misn.npcAdd( "approach_zuri", minerva.zuri.name, minerva.zuri.portrait, minerva.zuri.description )
    end
 end
@@ -226,6 +227,7 @@ function start ()
    local csys = system.cur()
 
    -- Get rid of all pilots
+   pilot.toggleSpawn(false)
    pilotai.clear()
 
    -- Have the helper tal to the player
@@ -234,8 +236,17 @@ function start ()
    misn.osdActive(2)
    mem.state = 1
 
-   fzlk = faction.dynAdd( "Za'lek", "zlk_minerva", _("Za'lek"), {clear_allies=true, clear_enemies=true} )
-   fdvd = faction.dynAdd( "Dvaered", "dv_minerva", _("Dvaered"), {clear_allies=true, clear_enemies=true} )
+   local fct_player = faction.player()
+   local fct_zlk = faction.get("Za'lek")
+   local fct_dv = faction.get("Dvaered")
+   fzlk = faction.dynAdd( fct_zlk, "zlk_minerva", _("Za'lek"), {clear_allies=true, clear_enemies=true} )
+   fdvd = faction.dynAdd( fct_dv, "dv_minerva", _("Dvaered"), {clear_allies=true, clear_enemies=true} )
+   if fct_player:areEnemies( fct_zlk ) then
+      fzlk:dynEnemy( fct_player )
+   end
+   if fct_player:areEnemies( fct_dv ) then
+      fdvd:dynEnemy( fct_player )
+   end
 
    -- General goes from Pultatis to Sollav
    local zl_start = jump.get( csys, "Pultatis" )
@@ -266,18 +277,20 @@ function start ()
    warlord:control()
    warlord:moveto( dv_target:pos() )
 
-   hook.pilot( general, "exploded", "general_dead" )
-   hook.pilot( warlord, "exploded", "warlord_dead" )
+   hook.pilot( general, "exploded", "bigguy_died" )
+   hook.pilot( warlord, "exploded", "bigguy_died" )
    hook.pilot( general, "attacked", "preempt_attack" )
    hook.pilot( warlord, "attacked", "preempt_attack" )
    hook.timer( 10, "check_arrival" )
-   hook.timer( 5, "npc_chatter" )
+   hook.timer( 8, "npc_chatter" )
 end
 
 -- NPC will chatter with the player
 local chatter_state = 0
 local chatter = {
-   {_([[""]]), 7 },
+   {_([["Wait here, I'll start the strike when they get close."]]), 7 },
+   {_([["Haven't done this in ages."]]), 7 },
+   {_([["Any time now."]]), 7 },
 }
 function npc_chatter ()
    chatter_state = chatter_state+1
@@ -296,7 +309,11 @@ function preempt_attack( _p, attacker )
 
    attack_started = true
    mem.state = 2
-   -- TODO have the helper try to do something
+   misn.osdActive(3)
+
+   helper_npc:comm(_([["No! No! No! I'm out of here!"]]),true)
+   helper_npc:control(false)
+   pilotai.hyperspace( helper_npc )
 end
 
 local action_start
@@ -323,7 +340,9 @@ function action_start ()
    helper_npc:comm(_([["Go! Go! Go!"]]),true)
    helper_drone:comm(_([["TARGET ACQUIRED."]]),true)
 
+   helper_npc:setHilight(false)
    helper_npc:attack( general )
+   helper_drone:control(true)
    helper_drone:attack( warlord )
 
    hook.pilot( general, "attacked", "start_mayhem" )
@@ -358,8 +377,12 @@ function start_mayhem( p, attacker )
    fzlk:dynEnemy( fdvd )
 end
 
-function general_dead ()
-end
-
-function warlord_dead ()
+function bigguy_died( _p )
+   if not warlord:exists() and not general:exists() then
+      mem.state = 3
+      misn.osdActive(4)
+      misn.markerMove( mem.mrk, base )
+      player.msg("#g"..fmt.f(_([[Targets eliminated! Return to {spb}.]]),{spb=base}).."#0")
+      pilot.toggleSpawn(true)
+   end
 end
