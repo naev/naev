@@ -68,15 +68,46 @@ function accept ()
    minerva.log.pirate( fmt.f(_("You accepted a job from Zuri to assassinate both a Za'lek General and Dvaered Warlord at the same time in the {sys} system."), {sys=mainsys}) )
 
    hook.load("generate_npc")
-   hook.land("generate_npc")
+   hook.land("land")
    hook.enter("enter")
    generate_npc()
 end
 
-function generate_npc ()
-   if spob.cur()==base then
-      misn.npcAdd( "approach_zuri", minerva.zuri.name, minerva.zuri.portrait, minerva.zuri.description )
+function land ()
+   if spob.cur()~=base then return end
+
+   if mem.state==0 then
+      generate_npc ()
+      return
+   elseif mem.state > 1 and mem.state < 3 then
+      lmisn.fail(_("You were supposed to take out the targets!"))
+      return
    end
+
+   -- Mission completed
+   vn.clear()
+   vn.scene()
+   local zuri = vn.newCharacter( minerva.vn_zuri() )
+   vn.music( minerva.loops.pirate )
+   vn.transition()
+
+   vn.na(_([[You quickly land after the chaos, take a deep breath and get off your ship to find Zuri waiting for you.]]))
+   zuri(_([[""]]))
+
+   vn.sfxVictory()
+   vn.func( function () -- Rewards
+      player.pay( reward_amount )
+      minerva.log.pirate(_("You took down an advanced Za'lek hacking centre and got rewarded for your efforts.") )
+      faction.modPlayerSingle("Wild Ones", 5)
+   end )
+   vn.na(fmt.reward(reward_amount))
+   vn.run()
+   misn.finish(true)
+end
+
+function generate_npc ()
+   if spob.cur()~=base then return end
+   misn.npcAdd( "approach_zuri", minerva.zuri.name, minerva.zuri.portrait, minerva.zuri.description )
 end
 
 function approach_zuri ()
@@ -86,19 +117,7 @@ function approach_zuri ()
    vn.music( minerva.loops.pirate )
    vn.transition()
 
-   if mem.state==3 then
-      vn.na(_([[]]))
-      zuri(_([[""]]))
-      vn.sfxVictory()
-      vn.func( function () -- Rewards
-         player.pay( reward_amount )
-         minerva.log.pirate(_("You took down an advanced Za'lek hacking centre and got rewarded for your efforts.") )
-         faction.modPlayerSingle("Wild Ones", 5)
-      end )
-      vn.na(fmt.reward(reward_amount))
-      vn.run()
-      misn.finish(true)
-   elseif  mem.state==nil then
+   if  mem.state==nil then
       -- Not accepted
       vn.na(_([[You approach a strangely giddy Zuri calling you to her table.]]))
       zuri(_([["It looks like we finally have a nice window of opportunity! My sources indicate that a Za'lek General and Dvaered Warlord are going to be passing through the system at roughly the same time. You know what this means."
