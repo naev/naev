@@ -390,6 +390,12 @@ You have {amount}. Pay {cost} for replacing {replacement} with {upgrade}?]]),
       }
 
       vn.label( s.."_yes" )
+      vn.func( function ()
+         if poi.data_get() < upgrade_cost then
+            vn.jump("special_broke")
+            return
+         end
+      end )
       mm(_([["This will take a second."
 They grab a toolbox and rush over to your boarded ship. You decide not to follow as somethings are best left not known. At least they know what they are doing right?]]))
       mm(_([[Eventually, they come back covered in what seems to be fish parts and slime.
@@ -409,6 +415,10 @@ They grab a toolbox and rush over to your boarded ship. You decide not to follow
       mm(_([["OK, tell me if you change your mind."]]))
       vn.jump("special")
    end
+
+   vn.label("special_broke")
+   mm(_([["You'll need to get some Encrypted Data Matrices first to be able to get an upgrade!"]]))
+   vn.jump("special")
 
    vn.label("special_info")
    mm(_([["Throughout my travels, I've been in many a tight spot. I remember getting stuck with a broken engine capacitor in a lost asteroid field, no food, no equipment, and a hull leaking solar radiation. It was either adapt or perish, and me being here is a testament to my ship modification skills acquired under pressure."]]))
