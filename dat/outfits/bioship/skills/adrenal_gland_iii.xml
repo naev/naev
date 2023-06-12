@@ -22,6 +22,6 @@
   <heat_base>400</heat_base>
   <heat_cap>650</heat_cap>
   <time_mod>-25</time_mod>
-  <time_mod>+25</time_mod>
+  <time_speedup>25</time_speedup>
  </specific>
 </outfit>

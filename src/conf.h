@@ -14,6 +14,7 @@
 #define TIME_COMPRESSION_DEFAULT_MULT  200   /**< Default level of time compression multiplier. */
 #define REDIRECT_FILE_DEFAULT          1     /**< Whether output should be redirected to a file. */
 #define SAVE_COMPRESSION_DEFAULT       1     /**< Whether or not saved games should be compressed. */
+#define MOUSE_HIDE_DEFAULT             3.    /**< Time (in seconds) to hide mouse when not moved. */
 #define MOUSE_FLY_DEFAULT              1     /**< Whether or not middle clicking enables mouse flying. */
 #define MOUSE_THRUST_DEFAULT           1     /**< Whether or not to use mouse thrust controls. */
 #define MOUSE_DOUBLECLICK_TIME         0.5   /**< How long to consider double-clicks for. */
@@ -149,6 +150,7 @@ typedef struct PlayerConf_s {
    int redirect_file; /**< Redirect output to files. */
    int save_compress; /**< Compress saved game. */
    unsigned int doubletap_sens; /**< Double tap key sensibility (used for afterburn and cooldown). */
+   double mouse_hide; /**< Time to hide mouse. */
    int mouse_fly; /**< Whether middle clicking enables mouse flying or not. */
    int mouse_thrust; /**< Whether mouse flying controls thrust. */
    double mouse_doubleclick; /**< How long to consider double-clicks for. */
