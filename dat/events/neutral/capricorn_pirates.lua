@@ -41,7 +41,7 @@ function enter ()
 
    -- Hail hook
    hook.hail_spob( "comm_durea" )
-   player.allowLand( false, _("You can not land until you clear the pirates from the system!") )
+   player.landAllow( false, _("You can not land until you clear the pirates from the system!") )
 
    -- Spawn pirates
    local function spawn_pirate( shipname, pos, boss )
@@ -114,7 +114,7 @@ function pir_gone ()
 
    lmisn.sfxVictory()
    player.msg(fmt.f(_("You have cleared the blockade on {spb}!"),{spb=mainspb}))
-   player.allowLand( true )
+   player.landAllow( true )
    diff.apply( "Capricorn Safe" ) -- Removes 'restricted' tag
    evt.finish(true)
 end
