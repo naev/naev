@@ -136,7 +136,7 @@ function land()
       } )
 
    -- Player is running away
-   elseif (mem.stage == 1 or mem.stage == 3 or (mem.stage == 2 and (not spob.cur() == haltpla) )) then
+   elseif (mem.stage == 1 or mem.stage == 3 or (mem.stage == 2 and (spob.cur() ~= haltpla) )) then
       flee()
 
    -- Landing on Laars after Hamelsen
