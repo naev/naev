@@ -97,7 +97,7 @@ function land ()
    vn.sfxVictory()
    vn.func( function () -- Rewards
       player.pay( reward_amount )
-      minerva.log.pirate(_("You took down an advanced Za'lek hacking centre and got rewarded for your efforts.") )
+      minerva.log.pirate(_("TODO"))
       faction.modPlayerSingle("Wild Ones", 5)
    end )
    vn.na(fmt.reward(reward_amount))
