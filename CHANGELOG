@@ -1,12 +1,13 @@
 * 0.10.6 (unreleased)
    * Fixed potential segfault with invalid semver strings
-   * Fixed sign error when buying artifats in the Baron Prince mission (sorry)
+   * Fixed sign error when buying artifacts in the Baron Prince mission (sorry)
    * Fixed behaviour of naev.trigger with parameters
    * Fixed Lua spfx volume changing with game speed
    * Fixed memory leak in luaspfx trails
    * Fixed missions doing things in systems they should not
    * Fixed Adrenal Gland III's time speed up effect
    * Fixed Misi giving upgrades for free
+   * Fixed minor planet check in frontier war missions
    * Fixed typos
 
 * 0.10.5
