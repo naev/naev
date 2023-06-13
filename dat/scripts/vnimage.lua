@@ -144,6 +144,60 @@ vni.empireMilitaryMale = get_list( empire_mil_m )
 vni.empireMilitaryFemale = get_list( empire_mil_f )
 vni.empireMilitary = get_list( empire_mil_m, empire_mil_f )
 
+local dvaered_m = {
+   "dvaered/dv_civilian_m1.webp",
+   "dvaered/dv_civilian_m2.webp",
+   "dvaered/dv_civilian_m3.webp",
+   "dvaered/dv_civilian_m4.webp",
+   "dvaered/dv_civilian_m5.webp",
+   "dvaered/dv_civilian_m6.webp",
+   "dvaered/dv_civilian_m7.webp",
+   "dvaered/dv_civilian_m8.webp",
+   "dvaered/dv_civilian_m9.webp",
+   "dvaered/dv_civilian_m10.webp",
+   "dvaered/dv_civilian_m11.webp",
+}
+local dvaered_f = {
+   "dvaered/dv_civilian_f1.webp",
+   "dvaered/dv_civilian_f2.webp",
+   "dvaered/dv_civilian_f3.webp",
+   "dvaered/dv_civilian_f4.webp",
+   "dvaered/dv_civilian_f5.webp",
+   "dvaered/dv_civilian_f6.webp",
+   "dvaered/dv_civilian_f7.webp",
+   "dvaered/dv_civilian_f8.webp",
+   "dvaered/dv_civilian_f9.webp",
+   "dvaered/dv_civilian_f10.webp",
+   "dvaered/dv_civilian_f11.webp",
+}
+vni.dvaeredMale = get_list( dvaered_m )
+vni.dvaeredFemale = get_list( dvaered_f )
+vni.dvaered = get_list( dvaered_m, dvaered_f )
+
+local dvaered_mil_m = {
+   "dvaered/dv_military_m1.webp",
+   "dvaered/dv_military_m2.webp",
+   "dvaered/dv_military_m3.webp",
+   "dvaered/dv_military_m4.webp",
+   "dvaered/dv_military_m5.webp",
+   "dvaered/dv_military_m6.webp",
+   "dvaered/dv_military_m7.webp",
+   "dvaered/dv_military_m8.webp",
+}
+local dvaered_mil_f = {
+   "dvaered/dv_military_f1.webp",
+   "dvaered/dv_military_f2.webp",
+   "dvaered/dv_military_f3.webp",
+   "dvaered/dv_military_f4.webp",
+   "dvaered/dv_military_f5.webp",
+   "dvaered/dv_military_f6.webp",
+   "dvaered/dv_military_f7.webp",
+   "dvaered/dv_military_f8.webp",
+}
+vni.dvaeredMilitaryMale = get_list( dvaered_mil_m )
+vni.dvaeredMilitaryFemale = get_list( dvaered_mil_f )
+vni.dvaeredMilitary = get_list( dvaered_mil_m, dvaered_mil_f )
+
 local sirius_fyrra_m = {
    "sirius/sirius_fyrra_m1.webp",
    "sirius/sirius_fyrra_m2.webp",
@@ -188,6 +242,10 @@ vni.sirius.serraFemale = vni.sirius.fyrraFemale -- TODO
 vni.sirius.shaira = get_list( sirius_shaira_m, sirius_shaira_f )
 vni.sirius.fyrra = get_list( sirius_fyrra_m, sirius_fyrra_f )
 vni.sirius.serra = vni.sirius.fyrra -- TODO
+
+vni.sirius.anyMale = get_list( sirius_shaira_m, sirius_fyrra_m ) -- TODO
+vni.sirius.anyFeale = get_list( sirius_shaira_f, sirius_fyrra_f ) -- TODO
+vni.sirius.any = get_list( sirius_shaira_m, sirius_fyrra_m, sirius_shaira_f, sirius_fyrra_f ) -- TODO
 
 --[[--
 Creates a "SOUND ONLY" character for the VN.
