@@ -142,7 +142,7 @@ local empire_mil_f = {
 }
 vni.empireMilitaryMale = get_list( empire_mil_m )
 vni.empireMilitaryFemale = get_list( empire_mil_f )
-vni.empireMilitaryMale = get_list( empire_mil_m, empire_mil_f )
+vni.empireMilitary = get_list( empire_mil_m, empire_mil_f )
 
 local sirius_fyrra_m = {
    "sirius/sirius_fyrra_m1.webp",
