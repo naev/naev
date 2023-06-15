@@ -26,14 +26,13 @@ local equipopt = require "equipopt"
 local pilotai = require "pilotai"
 local love_shaders = require "love_shaders"
 
-local base = spob.get("Minerva Station")
-local _trialspb, trialsys = spob.getS("Jade Court")
+local base, mainsys = spob.getS("Minerva Station")
+local trialspb, trialsys = spob.getS("Jade Court")
 local reward_amount = minerva.rewards.pirate6
 local title = _("Limbo Mayhem")
-local zlk_name = "TODO"
-local dv_name = "WarlordTODO"
+local zlk_name = "Eisen"
+local dv_name = "Lord Battlebloke"
 
-local mainsys = system.get("Limbo")
 -- Mission states:
 --  nil: mission not accepted yet
 --    1. fly to position
@@ -96,9 +95,10 @@ function land ()
 
    vn.na(_([[You quickly land after the chaos, take a deep breath and get off your ship to find Zuri waiting for you.]]))
    vn.na(_([[You give her a brief overview of the situation, with both targets down.]]))
-   zuri(_([[""]]))
-
-   zuri(_([["Wait, what is that?"]]))
+   zuri(_([["Seems like you got the job done. I expected nothing less from such an ace pilot! If only me colleagues were half as reliable."
+She lets out a short sigh.]]))
+   zuri(_([["House Dvaered and House Za'lek must be seething now. I wouldn't be surprised if they bust out the main forces now and give us nicer fireworks to illuminate the sky. It's going to be messy, but where there's mayhem, there is opportunity!"]]))
+   zuri(_([["For our next step, we should... Wait, what is that?"]]))
 
    vn.move( zuri, "right" )
    local ecb = vn.Character.new( _("Empire Combat Bureaucrat"),
@@ -122,16 +122,21 @@ The Empire will not stand for such displays of brazen debauchery, and thus invok
    vn.disappear( ecb, "electric" )
    vn.move( zuri, "center" )
 
-   vn.na(_([["Without any fanfare, the Empire Combat Bureaucrat dematerializes and the bar breaks into chaos. Hey, is that the Minerva CEO running around?"]]))
-   zuri(_([[""]]))
-
+   vn.na(_([[Without any fanfare, the Empire Combat Bureaucrat dematerializes and the bar breaks into chaos. Hey, is that the Minerva CEO running around?]]))
+   zuri(_([[You turn back to Zuri who is seems to be thinking profously.
+"That was faster than expected. Never seen the Empire react so fast,.. but if we play our cards right... we could win big!"]]))
+   zuri(_([["Here, take this reward."
+She shoves a credit chip into your hand.
+"I'm going to have to make some calls and move some strings. Meet me up at the bar in a bit!"]]))
    vn.sfxVictory()
    vn.func( function () -- Rewards
       player.pay( reward_amount )
-      minerva.log.pirate(_("TODO"))
+      minerva.log.pirate(fmt.f(_("You took out a Za'lek General and Dvaered Warlord in the {sys} system. Upon informing Zuri of your accomplishment, an announcement that deliberations regarding the sovereignty of {spb} will be held at {trialspb} in the {trialsys} system. Zuri told you to meet up with her afterwards at bar at {spb}."),
+         {sys=mainsys, spb=base, trialspb=trialspb, trialsys=trialsys}))
       faction.modPlayerSingle("Wild Ones", 5)
    end )
    vn.na(fmt.reward(reward_amount))
+   zuri(_([[She joins the chaos of people running around the station and fades into the shadows.]]))
    vn.run()
    misn.finish(true)
 end
