@@ -100,9 +100,9 @@ She lets out a short sigh.]]))
    zuri(_([["House Dvaered and House Za'lek must be seething now. I wouldn't be surprised if they bust out the main forces now and give us nicer fireworks to illuminate the sky. It's going to be messy, but where there's mayhem, there is opportunity!"]]))
    zuri(_([["For our next step, we should... Wait, what is that?"]]))
 
-   vn.move( zuri, "right" )
+   vn.move( zuri, "left" )
    local ecb = vn.Character.new( _("Empire Combat Bureaucrat"),
-      { image=vni.empireMilitary(), pos="left", shader=love_shaders.hologram() } )
+      { image=vni.empireMilitary(), pos="right", shader=love_shaders.hologram() } )
    vn.appear( ecb, "electric" )
 
    -- TODO add sound?
@@ -346,12 +346,16 @@ function start ()
    hook.timer( 8, "npc_chatter" )
 end
 
-function zl_attacked ()
-   fzlk:setPlayerStanding(-100)
+function zl_attacked( _p, attacker )
+   if attacker:withPlayer() then
+      fzlk:setPlayerStanding(-100)
+   end
 end
 
-function dv_attacked ()
-   fdvd:setPlayerStanding(-100)
+function dv_attacked( _p, attacker )
+   if attacker:withPlayer() then
+      fdvd:setPlayerStanding(-100)
+   end
 end
 
 -- NPC will chatter with the player
