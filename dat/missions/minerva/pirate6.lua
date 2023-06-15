@@ -314,6 +314,7 @@ function start ()
          "Za'lek Heavy Drone", "Za'lek Heavy Drone", "Za'lek Heavy Drone", "Za'lek Heavy Drone", "Za'lek Heavy Drone" } do
       local p = pilot.add( s, fzlk, zl_start )
       p:setLeader( general )
+      hook.pilot( p, "attacked", "zl_attacked" )
    end
    general:setHilight(true)
    general:control(true)
@@ -329,6 +330,7 @@ function start ()
          "Dvaered Ancestor", "Dvaered Ancestor", "Dvaered Ancestor" } do
       local p = pilot.add( s, fdvd, dv_start )
       p:setLeader( warlord )
+      hook.pilot( p, "attacked", "dv_attacked" )
    end
    warlord:setHilight(true)
    warlord:control(true)
@@ -338,8 +340,18 @@ function start ()
    hook.pilot( warlord, "exploded", "bigguy_died" )
    hook.pilot( general, "attacked", "preempt_attack" )
    hook.pilot( warlord, "attacked", "preempt_attack" )
+   hook.pilot( general, "attacked", "zl_attacked" )
+   hook.pilot( warlord, "attacked", "dv_attacked" )
    hook.timer( 50, "check_arrival" )
    hook.timer( 8, "npc_chatter" )
+end
+
+function zl_attacked ()
+   fzlk:setPlayerStanding(-100)
+end
+
+function dv_attacked ()
+   fdvd:setPlayerStanding(-100)
 end
 
 -- NPC will chatter with the player
@@ -358,7 +370,9 @@ local chatter = {
    {_([[Bloody Iguana chomping on the captain's leg!]]), 8 },
    {_([[Almost crapped my trousers!]]), 7 },
    {_([[It gave me one look, and blam, I was outta there.]]), 7 },
-   {_([[Now I never board without my Iguana repellent!]]), 7 },
+   {_([[Now I never board without my Iguana repellent!]]), 9 },
+   {_([[Seriously though, you should get some too.]]), 8 },
+   {_([[It could really come in handy...]]), 7 },
 }
 function npc_chatter ()
    chatter_state = chatter_state+1
