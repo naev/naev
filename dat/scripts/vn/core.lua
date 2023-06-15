@@ -1400,7 +1400,7 @@ Moves a character to another position.
 
    @see vn.animation
    @tparam Character c Character to move.
-   @tparam[opt="center"] pos Position to move to. Can be either a [0,1] value, "center", "left", "right", "farleft", or "farright".
+   @tparam[opt="center"] string|number pos Position to move to. Can be either a [0,1] value, "center", "left", "right", "farleft", or "farright".
 --]]
 function vn.move( c, pos )
    local function runinit ()
