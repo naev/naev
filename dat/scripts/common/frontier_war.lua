@@ -16,24 +16,6 @@ fw.pirate_price = 10e6
 
 fw.wlrd_planet = "Buritt"
 
-fw.lords = {
-   _("Lord Jim"),
-   _("Lady Bitterfly"),
-   _("Lady Pointblank"),
-   _("Lord Chainsaw"),
-   _("Lord Painbishop"),
-   _("Lord Kriegsreich Hundertfeuer"),
-   _("Lady Blackswan"),
-   _("Lady Killington"),
-   _("Lord Richthofen"),
-   _("Lady Dewinter"),
-   _("Lord Easytrigger"),
-   _("Lady Sainte-Beuverie"),
-   _("Lord Louverture"),
-   _("Lord Abdelkiller"),
-   _("Lady Proserpina")
-}
-
 -- Character's portraits. TODO: create unique portraits for them
 fw.portrait_tam     = "major_tam.webp" -- Major Tam: main mission giver of this campaign
 fw.portrait_leblanc = "dvaered/dv_military_f8.webp" -- Captain Leblanc: secondary mission giver and partner for the second half of the campaign
