@@ -2,6 +2,7 @@ require 'ai.core.core'
 require 'ai.core.idle.advertiser'
 require 'ai.core.misc.distress'
 local fmt = require "format"
+local dv = require "common.dvaered"
 
 mem.lanes_useneutral = true
 mem.simplecombat = true
@@ -107,22 +108,7 @@ function create ()
          _("Fool"),
          _("Coward"),
       }
-      -- TODO probably merge this with 'common.frontier_war' into a separate module
-      local lords = { _("Lord Jim"),
-         _("Lady Bitterfly"),
-         _("Lady Pointblank"),
-         _("Lord Chainsaw"),
-         _("Lord Painbishop"),
-         _("Lord Kriegsreich Hundertfeuer"),
-         _("Lady Blackswan"),
-         _("Lady Killington"),
-         _("Lord Richthofen"),
-         _("Lady Dewinter"),
-         _("Lord Easytrigger"),
-         _("Lady Sainte-Beuverie"),
-         _("Lord Louverture"),
-         _("Lord Abdelkiller"),
-         _("Lady Proserpina") }
+      local lords = dv.warlords () -- Gets all warlorlds
       local r = rnd.rnd(1,#lords)
       local butthead = lords[r]
       table.remove( lords, r )

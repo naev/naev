@@ -29,6 +29,7 @@
 -- luacheck: globals toocloseControl1 toocloseControl2 toocloseControl3 toocloseControl4 toocloseControl5 incomingControl1 incomingControl2 incomingControl3 incomingControl4 incomingControl5
 
 local fw = require "common.frontier_war"
+local dv = require "common.dvaered"
 require "proximity"
 local portrait = require "portrait"
 local fmt = require "format"
@@ -331,7 +332,8 @@ end
 
 -- Spawn one warlord
 function spawn1Wrlrd( origin )
-   wrlrds[mem.noWrlrd] = pilot.add( "Dvaered Goddard", fw.fct_warlords(), origin, fw.lords[mem.noWrlrd] )
+   local lords = dv.warlords()
+   wrlrds[mem.noWrlrd] = pilot.add( "Dvaered Goddard", fw.fct_warlords(), origin, lords[mem.noWrlrd] )
    wrlrds[mem.noWrlrd]:control()
 
    -- Decide if the Warlord will play at shooting at the player

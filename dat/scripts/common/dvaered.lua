@@ -12,4 +12,25 @@ function dv.addStandardLog( text )
    shiplog.append("dvaered_standard", text)
 end
 
+-- Gets all alive warlords
+function dv.warlords ()
+   return {
+      _("Lord Jim"),
+      _("Lady Bitterfly"),
+      _("Lady Pointblank"),
+      _("Lord Chainsaw"),
+      _("Lord Painbishop"),
+      _("Lord Kriegsreich Hundertfeuer"),
+      _("Lady Blackswan"),
+      _("Lady Killington"),
+      _("Lord Richthofen"),
+      _("Lady Dewinter"),
+      _("Lord Easytrigger"),
+      _("Lady Sainte-Beuverie"),
+      _("Lord Louverture"),
+      _("Lord Abdelkiller"),
+      _("Lady Proserpina")
+   }
+end
+
 return dv
