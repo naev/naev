@@ -19,16 +19,19 @@
 --]]
 local minerva = require "common.minerva"
 local vn = require 'vn'
+local vni = require 'vnimage'
 local fmt = require "format"
 local lmisn = require "lmisn"
 local equipopt = require "equipopt"
 local pilotai = require "pilotai"
+local love_shaders = require "love_shaders"
 
 local base = spob.get("Minerva Station")
+local _trialspb, trialsys = spob.getS("Jade Court")
 local reward_amount = minerva.rewards.pirate6
 local title = _("Limbo Mayhem")
 local zlk_name = "TODO"
-local dv_name = "TODO"
+local dv_name = "WarlordTODO"
 
 local mainsys = system.get("Limbo")
 -- Mission states:
@@ -92,6 +95,34 @@ function land ()
    vn.transition()
 
    vn.na(_([[You quickly land after the chaos, take a deep breath and get off your ship to find Zuri waiting for you.]]))
+   vn.na(_([[You give her a brief overview of the situation, with both targets down.]]))
+   zuri(_([[""]]))
+
+   zuri(_([["Wait, what is that?"]]))
+
+   vn.move( zuri, "right" )
+   local ecb = vn.Character.new( _("Empire Combat Bureaucrat"),
+      { image=vni.empireMilitary(), pos="left", shader=love_shaders.hologram() } )
+   vn.appear( ecb, "electric" )
+
+   -- TODO add sound?
+   ecb(_([[Suddenly a siren indicating a station-wide announcement echoes throughout the station, and an Empire Combat Bureaucrat materializes in the middle of the spaceport bar.]]))
+   ecb(fmt.f(_([["Ahem."
+They clear their throat.
+"Attention Citizens of {spb}!"]]),
+      {spb=base}))
+   ecb(fmt.f(_([["It has been brought to the attention of the Empire, that the {sys} system has fallen into lawlessness. There have been reports of heavy pirate activity, scuffles between Great Houses, kidnappings, assassinations, and the likes."]]),
+      {sys=mainsys}))
+   ecb(fmt.f(_([[They hit their fist on a table in front of them.
+The Empire will not stand for such displays of brazen debauchery, and thus invokes EL2897 regarding the sovereignty of the {sys} system."]]),
+      {sys=mainsys}))
+   ecb(fmt.f(_([["All interested parties should proceed to the Jade Court in the {sys} system. Deliberations will begin once quorum is reached."]]),
+      {sys=trialsys}))
+   ecb(_([["The Empire is watching you."]]))
+   vn.disappear( ecb, "electric" )
+   vn.move( zuri, "center" )
+
+   vn.na(_([["Without any fanfare, the Empire Combat Bureaucrat dematerializes and the bar breaks into chaos. Hey, is that the Minerva CEO running around?"]]))
    zuri(_([[""]]))
 
    vn.sfxVictory()
@@ -271,7 +302,7 @@ function start ()
    local zl_start = jump.get( csys, "Pultatis" )
    local zl_target = jump.get( csys, "Sollav" )
 
-   general = pilot.add( "Za'lek Mephisto", fzlk, zl_start, zlk_name )
+   general = pilot.add( "Za'lek Mephisto", fzlk, zl_start, fmt.f(_("General {zl}"),{zl=zlk_name}) )
    for k,s in ipairs{ "Za'lek Demon", "Za'lek Demon", "Za'lek Sting", "Za'lek Sting", "Za'lek Sting",
          "Za'lek Heavy Drone", "Za'lek Heavy Drone", "Za'lek Heavy Drone", "Za'lek Heavy Drone", "Za'lek Heavy Drone" } do
       local p = pilot.add( s, fzlk, zl_start )
@@ -285,7 +316,7 @@ function start ()
    local dv_start = jump.get( csys, "Sollav" )
    local dv_target = jump.get( csys, "Provectus Nova" )
 
-   warlord = pilot.add( "Dvaered Goddard", fdvd, dv_start, dv_name )
+   warlord = pilot.add( "Dvaered Goddard", fdvd, dv_start, fmt.f(_("Warlord {dv}"),{dv=dv_name}) )
    for k,s in ipairs{ "Dvaered Retribution", "Dvaered Vigilance", "Dvaered Vigilance",
          "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta",
          "Dvaered Ancestor", "Dvaered Ancestor", "Dvaered Ancestor" } do
@@ -396,6 +427,23 @@ function start_mayhem( p, attacker )
    fzlk:dynEnemy( fdvd )
 end
 
+function spawn_empire ()
+   -- Have some nasty Imperials jump in
+   local j = jump.get( system.cur(), "Pultatis" )
+   local boss = pilot.add( "Empire Peacemaker", "Empire", j )
+   for k,s in ipairs{ "Empire Hawking", "Empire Hawking", "Empire Pacifier", "Empire Pacifier", "Empire Admonisher", "Empire Admonisher", "Empire Admonisher", "Empire Admonisher",
+         "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot" } do
+      local p = pilot.add( s, "Empire", j )
+      p:setLeader( boss )
+      p:setHostile(true)
+   end
+   boss:setHostile(true)
+   -- Go to where the action is
+   pilotai.guard( boss, meet_pos )
+   hook.timer( 5, "boss_yell", boss )
+   hook.pilot( boss, "exploded", "spawn_empire" ) -- They'll eventually overpower the player, although I doubt they'll every try to take them down
+end
+
 function bigguy_died( _p )
    if not warlord:exists() and not general:exists() then
       -- Main objective is done
@@ -404,21 +452,6 @@ function bigguy_died( _p )
       misn.markerMove( mem.mrk, base )
       player.msg("#g"..fmt.f(_([[Targets eliminated! Return to {spb}.]]),{spb=base}).."#0")
       pilot.toggleSpawn(true)
-
-      -- Have some nasty Imperials jump in
-      local j = jump.get( system.cur(), "Pultatis" )
-      local boss = pilot.add( "Empire Peacemaker", "Empire", j )
-      for k,s in ipairs{ "Empire Pacifier", "Empire Pacifier", "Empire Admonisher", "Empire Admonisher", "Empire Admonisher", "Empire Admonisher",
-            "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot" } do
-         local p = pilot.add( s, "Empire", j )
-         p:setLeader( boss )
-         p:setHostile(true)
-      end
-      boss:setHostile(true)
-      -- Go to where the action is
-      pilotai.guard( boss, meet_pos )
-
-      hook.timer( 5, "boss_yell", boss )
    end
 end
 
