@@ -285,6 +285,8 @@ function start ()
    pilot.toggleSpawn(false)
    pilotai.clear()
 
+   player.autonavReset( 3 )
+
    -- Have the helper tal to the player
    helper_npc:setHilight(false)
    helper_npc:comm( _("The targets have entered the system!"), true )
@@ -313,8 +315,8 @@ function start ()
       local p = pilot.add( s, fzlk, zl_start )
       p:setLeader( general )
    end
-   general:setHilight()
-   general:control()
+   general:setHilight(true)
+   general:control(true)
    general:moveto( zl_target:pos() )
 
    -- Warlord goes from Sollav to Provectus Nova
@@ -328,8 +330,8 @@ function start ()
       local p = pilot.add( s, fdvd, dv_start )
       p:setLeader( warlord )
    end
-   warlord:setHilight()
-   warlord:control()
+   warlord:setHilight(true)
+   warlord:control(true)
    warlord:moveto( dv_target:pos() )
 
    hook.pilot( general, "exploded", "bigguy_died" )
@@ -343,9 +345,9 @@ end
 -- NPC will chatter with the player
 local chatter_state = 0
 local chatter = {
-   {_([["Wait here, I'll start the strike when they get close."]]), 7 },
-   {_([["Haven't done this in ages."]]), 7 },
-   {_([["Any time now."]]), 7 },
+   {_([[Wait here, I'll start the strike when they get close.]]), 7 },
+   {_([[Haven't done this in ages.]]), 7 },
+   {_([[Any time now.]]), 7 },
 }
 function npc_chatter ()
    chatter_state = chatter_state+1
@@ -392,8 +394,10 @@ function check_arrival ()
 end
 
 function action_start ()
-   helper_npc:comm(_([["Go! Go! Go!"]]),true)
-   helper_drone:comm(_([["TARGET ACQUIRED."]]),true)
+   player.autonavReset( 5 )
+
+   helper_npc:comm(_([[Go! Go! Go!]]),true)
+   helper_drone:comm(_([[TARGET ACQUIRED.]]),true)
 
    helper_npc:setHilight(false)
    helper_npc:attack( general )
@@ -424,9 +428,11 @@ function start_mayhem( p, attacker )
 
       -- Have them duke it out
       if general:exists() then
+         general:control(false)
          pilotai.guard( general, meet_pos )
       end
       if warlord:exists() then
+         warlord:control(false)
          pilotai.guard( warlord, meet_pos )
       end
 
@@ -439,12 +445,12 @@ function start_mayhem( p, attacker )
    -- Say something
    if p==general then
       if not zl_spam then
-         p:broadcast(_([["Dvaered fire? The Za'lek fear no Dvaered!"]]))
+         p:broadcast(_([[Dvaered fire? The Za'lek fear no Dvaered!]]))
          zl_spam = true
       end
    else
       if not dv_spam then
-         p:broadcast(_([["Petty Za'leks. Time to coat my hull in blood!"]]))
+         p:broadcast(_([[Petty Za'leks. Time to coat my hull in blood!]]))
          dv_spam = true
       end
    end
@@ -481,5 +487,5 @@ end
 function boss_yell( boss )
    if not boss or not boss:exists() then return end
 
-   boss:broadcast(_([["In the name of the Emperor, cease fighting or perish!"]]))
+   boss:broadcast(_([[In the name of the Emperor, cease fighting or perish!]]))
 end
