@@ -643,6 +643,23 @@ function vn.StateCharacter.new( character, remove )
    s.remove = remove or false
    return s
 end
+local function _getpos( pos )
+   pos = pos or "center"
+   if type(pos)=="number" then
+      return pos
+   elseif pos == "center" then
+      return 0.5
+   elseif pos == "left" then
+      return 0.25
+   elseif pos == "right" then
+      return 0.75
+   elseif pos == "farleft" then
+      return 0.15
+   elseif pos == "farright" then
+      return 0.85
+   end
+   return 0.5
+end
 function vn.StateCharacter:_init()
    if self.remove then
       local found = false
@@ -661,20 +678,7 @@ function vn.StateCharacter:_init()
       table.insert( vn._characters, c )
       c.alpha = 1
       c.displayname = c.who -- reset name
-      local pos = self.character.pos or "center"
-      if type(pos)=="number" then
-         self.character.offset = pos
-      elseif pos == "center" then
-         self.character.offset = 0.5
-      elseif pos == "left" then
-         self.character.offset = 0.25
-      elseif pos == "right" then
-         self.character.offset = 0.75
-      elseif pos == "farleft" then
-         self.character.offset = 0.15
-      elseif pos == "farright" then
-         self.character.offset = 0.85
-      end
+      self.character.offset = _getpos( self.character.pos )
    end
    _finish(self)
 end
@@ -1389,6 +1393,25 @@ function vn.disappear( c, name, seconds, transition )
    for k,v in ipairs(c) do
       table.insert( vn._states, vn.StateCharacter.new( v, true ) )
    end
+end
+
+--[[--
+Moves a character to another position.
+
+   @see vn.animation
+   @tparam Character c Character to move.
+   @tparam[opt="center"] pos Position to move to. Can be either a [0,1] value, "center", "left", "right", "farleft", or "farright".
+--]]
+function vn.move( c, pos )
+   local function runinit ()
+      local cpos = c.offset
+      local tpos = _getpos( pos )
+      return { cpos, tpos }
+   end
+   vn.animation( 1, function( alpha, _dt, params )
+      local cpos, tpos = table.unpack(params)
+      c.offset = tpos*alpha + cpos*(1-alpha)
+   end, nil, "ease-in-out", runinit )
 end
 
 --[[--
