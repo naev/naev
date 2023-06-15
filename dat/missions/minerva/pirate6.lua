@@ -30,8 +30,8 @@ local base, mainsys = spob.getS("Minerva Station")
 local trialspb, trialsys = spob.getS("Jade Court")
 local reward_amount = minerva.rewards.pirate6
 local title = _("Limbo Mayhem")
-local zlk_name = "Eisen"
-local dv_name = "Lord Battlebloke"
+local zlk_name = _("Eisen")
+local dv_name = _("Lord Battlebloke")
 
 -- Mission states:
 --  nil: mission not accepted yet
