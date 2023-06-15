@@ -338,7 +338,7 @@ function start ()
    hook.pilot( warlord, "exploded", "bigguy_died" )
    hook.pilot( general, "attacked", "preempt_attack" )
    hook.pilot( warlord, "attacked", "preempt_attack" )
-   hook.timer( 10, "check_arrival" )
+   hook.timer( 50, "check_arrival" )
    hook.timer( 8, "npc_chatter" )
 end
 
@@ -347,12 +347,23 @@ local chatter_state = 0
 local chatter = {
    {_([[Wait here, I'll start the strike when they get close.]]), 7 },
    {_([[Haven't done this in ages.]]), 7 },
-   {_([[Any time now.]]), 7 },
+   {_([[Any time now.]]), 9 },
+   {_([[Say, since we've got some time to kill...]]), 6 },
+   {_([[Want to hear about the time I met a space iguana?]]), 7 },
+   {_([[So I was returning to Haven, when I saw a derelict.]]), 7 },
+   {_([[Being the fellow I am, I boarded it.]]), 6 },
+   {_([[Ship was all covered in blood and bodies.]]), 7 },
+   {_([[Fresh bodes means fresh goods, great I thought.]]), 7 },
+   {_([[Until I got to the command room.]]), 7 },
+   {_([[Bloody Iguana chomping on the captain's leg!]]), 8 },
+   {_([[Almost crapped my trousers!]]), 7 },
+   {_([[It gave me one look, and blam, I was outta there.]]), 7 },
+   {_([[Now I never board without my Iguana repellent!]]), 7 },
 }
 function npc_chatter ()
    chatter_state = chatter_state+1
    local s = chatter[ chatter_state ]
-   if not s or not helper_npc:exists() or mem.state>2 then return end
+   if not s or not helper_npc:exists() or mem.state>=2 then return end
    helper_npc:comm( s[1], true )
    if s[2] then
       hook.timer( s[2], "npc_chatter" )
@@ -360,6 +371,10 @@ function npc_chatter ()
 end
 
 function preempt_attack( _p, attacker )
+   if mem.state >= 2 then
+      return
+   end
+
    if not attacker or not attacker:withPlayer() then
       return
    end
@@ -368,7 +383,7 @@ function preempt_attack( _p, attacker )
    mem.state = 2
    misn.osdActive(3)
 
-   helper_npc:comm(_([["No! No! No! I'm out of here!"]]),true)
+   helper_npc:comm(_([[No! No! No! I'm out of here!]]),true)
    helper_npc:control(false)
    pilotai.hyperspace( helper_npc )
 end
@@ -385,7 +400,7 @@ function check_arrival ()
    local t = 10
    local pos_g = general:pos() + general:vel() * t
    local pos_w = warlord:pos() + warlord:vel() * t
-   if d < 5e3 and d > pos_g:dist( pos_w ) then
+   if d < pos_g:dist( pos_w ) then
       action_start ()
       return
    end
@@ -406,6 +421,8 @@ function action_start ()
 
    hook.pilot( general, "attacked", "start_mayhem" )
    hook.pilot( warlord, "attacked", "start_mayhem" )
+
+   mem.state = 2
 end
 
 local dv_spam, zl_spam, mayhem_setup
