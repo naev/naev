@@ -379,11 +379,11 @@ function check_arrival ()
    end
 
    -- See if they will start to get further away in 10 seconds as criteria for attack
-   local d = general:pos():dist( warlord )
+   local d = general:pos():dist( warlord:pos() )
    local t = 10
    local pos_g = general:pos() + general:vel() * t
    local pos_w = warlord:pos() + warlord:vel() * t
-   if d > pos_g:dist( pos_w ) then
+   if d < 5e3 and d > pos_g:dist( pos_w ) then
       action_start ()
       return
    end
@@ -404,32 +404,50 @@ function action_start ()
    hook.pilot( warlord, "attacked", "start_mayhem" )
 end
 
+local dv_spam, zl_spam, mayhem_setup
 function start_mayhem( p, attacker )
    if attacker~=helper_npc and attacker~=helper_drone then
       return
    end
 
-   -- They can die
-   helper_drone:setInvincible(false)
-   helper_npc:setInvincible(false)
+   if not mayhem_setup then
+      if helper_drone:exists() then
+         helper_drone:setInvincible(false)
+      end
 
-   -- At least npc tries to get away
-   helper_npc:control(false)
-   pilotai.hyperspace( helper_npc )
+      -- At least npc tries to get away
+      if helper_npc:exists() then
+         helper_npc:setInvincible(false)
+         helper_npc:control(false)
+         pilotai.hyperspace( helper_npc )
+      end
+
+      -- Have them duke it out
+      if general:exists() then
+         pilotai.guard( general, meet_pos )
+      end
+      if warlord:exists() then
+         pilotai.guard( warlord, meet_pos )
+      end
+
+      -- Make the factions enemies
+      fzlk:dynEnemy( fdvd )
+
+      mayhem_setup = true
+   end
 
    -- Say something
    if p==general then
-      p:broadcast(_([["Dvaered fire? The Za'lek fear no Dvaered!"]]))
+      if not zl_spam then
+         p:broadcast(_([["Dvaered fire? The Za'lek fear no Dvaered!"]]))
+         zl_spam = true
+      end
    else
-      p:broadcast(_([["Petty Za'leks. Time to coat my hull in blood!"]]))
+      if not dv_spam then
+         p:broadcast(_([["Petty Za'leks. Time to coat my hull in blood!"]]))
+         dv_spam = true
+      end
    end
-
-   -- Have them duke it out
-   pilotai.guard( general, meet_pos )
-   pilotai.guard( warlord, meet_pos )
-
-   -- Make the factions enemies
-   fzlk:dynEnemy( fdvd )
 end
 
 function spawn_empire ()
