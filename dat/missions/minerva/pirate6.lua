@@ -124,7 +124,7 @@ The Empire will not stand for such displays of brazen debauchery, and thus invok
 
    vn.na(_([[Without any fanfare, the Empire Combat Bureaucrat dematerializes and the bar breaks into chaos. Hey, is that the Minerva CEO running around?]]))
    zuri(_([[You turn back to Zuri who is seems to be thinking profously.
-"That was faster than expected. Never seen the Empire react so fast,.. but if we play our cards right... we could win big!"]]))
+"That was faster than expected. Never seen the Empire react so fast... but if we play our cards right... we could win big!"]]))
    zuri(_([["Here, take this reward."
 She shoves a credit chip into your hand.
 "I'm going to have to make some calls and move some strings. Meet me up at the bar in a bit!"]]))
