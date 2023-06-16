@@ -37,7 +37,8 @@ function create()
    -- Zuri gives the mission to go to court at minerva
    misn.setNPC( minerva.zuri.name, minerva.zuri.portrait, minerva.zuri.description )
    misn.setTitle( title )
-   misn.setDesc(_("TODO"))
+   misn.setDesc(fmt.f(_("The future of Minerva Station is at stake with deliberations being held at {spb} in the {sys} system. Zuri has aske you to take her to the courtroom to see if it is possible to influence the case."),
+      {sys=trialspb, spb=trialspb}))
    misn.setReward(_("The future of Minerva Station!"))
 end
 
@@ -50,25 +51,33 @@ function accept ()
    vn.music( minerva.loops.pirate )
    vn.transition()
 
-   vn.na(_([[]]))
-   zuri(_([[""]]))
+   vn.na(_([[You find Zuri waving to you at the bar. It seems like she finished whatever she had to do.]]))
+   zuri(fmt.f(_([["OK, I've got some help, they'll meet up with us on {spb}. I have no idea to expect out of all of this, but it seems like a pretty good damn chance to clear up Minerva Station if we play our cards right."]]),
+      {spb=trialspb}))
+   zuri(fmt.f(_([["I'll be going with you on your ship to {spb}. We don't really have much of a plan but to show up, and hope that all the data collected will be useful for us. You ready to take us to the {sys} system and do this?"]]),
+      {spb=trialspb, sys=trialsys}))
    vn.menu( {
-      {_("Accept."), "accept"},
+      {_("Let's go!"), "accept"},
       {_("Maybe later."), "decline"},
    } )
 
    vn.label("decline")
-   vn.na(_([[]]))
+   vn.na(_([[You tell Zuri to give you a bit of time to prepare and leave her waiting at the bar.]]))
    vn.done()
 
    vn.label("accept")
    vn.func( function () accepted = true end )
+   zuri(fmt.f(_([["Great! Take us to {spb} in the {sys} system."]]),
+      {spb=trialspb, sys=trialsys}))
 
    vn.run()
 
    if not accepted then
       return
    end
+
+   local c = commodity.new( N_("Zuri"), N_("A mysterious character that has been hiring you to 'free' Minerva Station.") )
+   misn.cargoAdd( c, 0 )
 
    mem.state = 0
 
