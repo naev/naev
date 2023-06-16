@@ -107,14 +107,16 @@ function trial_start ()
 - harper_ticket ("credits", "tokens", "free", "stole" )
 - strangelove_death ("unplug", "comforted", "shot", nil)
 --]]
+   local didtrial = false
+
    vn.clear()
    vn.scene()
    local zuri = vn.newCharacter( minerva.vn_zuri() )
    vn.music( minerva.loops.pirate )
    vn.transition()
 
-   vn.na(_([[]]))
-   zuri(_([[""]]))
+   vn.na(_([[You meet up with Zuri who is stretching her legs.]]))
+   zuri(_([["Ready to go to court? It's my first time not going as a defendant! Although I do feel quite like one. We must ensure the best for Minerva Station."]]))
    vn.menu{
       {_([[Go to the courtroom.]]), "01_start"},
       {_([[Maybe later.]]), "01_later"},
@@ -125,8 +127,14 @@ function trial_start ()
    vn.done()
 
    vn.label("01_start")
+   vn.func( function () didtrial = true end )
+   -- vn.music( ) -- TODO trial music
+   -- TODO background?
 
    vn.run()
+
+   -- Just finish if the player didn't actually go through with it
+   if not didtrial then return end
 
    -- Should takeoff and play cutscene
    mem.state = 1 -- state update ensures the trial doesn't repeat and the player can load a game directly into the cutscene
