@@ -5,7 +5,7 @@
  <marker>spobmarker_obelisk</marker>
  <pos x="14780.209704" y="5933.808522"/>
  <GFX>
-  <space>001.webp</space>
+  <space>obelisk_sirius.webp</space>
  </GFX>
  <presence>
   <faction>Sirius</faction>
