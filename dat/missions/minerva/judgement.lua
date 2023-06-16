@@ -1,11 +1,11 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Minerva Judgement">
- <priority>4</priority>
+ <priority>3</priority>
  <chance>100</chance>
  <location>Bar</location>
  <spob>Minerva Station</spob>
- <done>Minerva Pirates 5</done>
+ <done>Minerva Pirates 6</done>
  <notes>
   <campaign>Minerva</campaign>
  </notes>
@@ -34,10 +34,11 @@ local title = _("Minerva Judgement")
 function create()
    misn.finish(false)
 
+   -- Zuri gives the mission to go to court at minerva
    misn.setNPC( minerva.zuri.name, minerva.zuri.portrait, minerva.zuri.description )
-   misn.setDesc(_("Zuri wants you do help a Za'lek General and Dvaered Warlord finish each other off."))
-   misn.setReward(_("The future of Minerva Station!"))
    misn.setTitle( title )
+   misn.setDesc(_("TODO"))
+   misn.setReward(_("The future of Minerva Station!"))
 end
 
 function accept ()
@@ -51,12 +52,25 @@ function accept ()
 
    vn.na(_([[]]))
    zuri(_([[""]]))
+   vn.menu( {
+      {_("Accept."), "accept"},
+      {_("Maybe later."), "decline"},
+   } )
+
+   vn.label("decline")
+   vn.na(_([[]]))
+   vn.done()
+
+   vn.label("accept")
+   vn.func( function () accepted = true end )
 
    vn.run()
 
    if not accepted then
       return
    end
+
+   mem.state = 0
 
    misn.accept()
    misn.osdCreate( title, {
@@ -70,8 +84,13 @@ end
 
 -- Make sure can land on the Jade Court
 function enter ()
-   if system.cur()~=trialsys then return end
-   trialspb:landOverride(true)
+   if mem.state == 0 then
+      if system.cur()~=trialsys then return end
+      trialspb:landOverride(true)
+      return
+   end
+
+   -- TODO cutscene post-trial
 end
 
 function land ()
@@ -108,4 +127,8 @@ function trial_start ()
    vn.label("01_start")
 
    vn.run()
+
+   -- Should takeoff and play cutscene
+   mem.state = 1 -- state update ensures the trial doesn't repeat and the player can load a game directly into the cutscene
+   player.takeoff()
 end
