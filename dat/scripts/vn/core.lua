@@ -942,7 +942,7 @@ function vn.StateMenu:_init()
    end
    if __debugging then
       if self._items == nil then
-         warn(_("[VN]: menu has no options!"))
+         warn(_("vn: menu has no options!"))
       end
    end
    -- Set up the graphics stuff
@@ -1775,7 +1775,7 @@ function vn.run()
          if s._type=="Label" then
             local l = s.label
             if inlist( labels, l ) then
-               warn(fmt.f(_("[VN]: Duplicate label '{lbl}'!"),{lbl=l}))
+               warn(fmt.f(_("vn: Duplicate label '{lbl}'!"),{lbl=l}))
             end
             table.insert( labels, l )
          end
