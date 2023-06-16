@@ -18,6 +18,7 @@ local sdf         = require "vn.sdf"
 local opt         = require "vn.options"
 local luaspfx     = require "luaspfx"
 local luatk       = require "luatk"
+local fmt         = require "format"
 
 local vn = {
    speed = var.peek("vn_textspeed") or 0.025,
@@ -1766,6 +1767,19 @@ Runs the visual novel environment.
 function vn.run()
    if #vn._states == 0 then
       error( _("vn: run without any states") )
+   end
+   -- Check for duplicate labels
+   if __debugging then
+      local labels = {}
+      for k,s in ipairs( vn._states ) do
+         if s._type=="Label" then
+            local l = s.label
+            if inlist( labels, l ) then
+               warn(fmt.f(_("[VN]: Duplicate label '{lbl}'!"),{lbl=l}))
+            end
+            table.insert( labels, l )
+         end
+      end
    end
    love._vn = true
    love.exec( 'scripts/vn' )
