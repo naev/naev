@@ -9,6 +9,7 @@
  <done>Minerva Pirates 5</done>
  <notes>
   <campaign>Minerva</campaign>
+  <done_misn>Kex's Freedom 5</done_misn>
  </notes>
 </mission>
 --]]
@@ -153,7 +154,14 @@ function approach_zuri ()
    vn.music( minerva.loops.pirate )
    vn.transition()
 
-   if  mem.state==nil then
+   if not player.misnDone( "Kex's Freedom 5" ) then
+      vn.na(_([[You approach Zuri who seems a bit preoccupied.]]))
+      zuri(fmt.f(_([["Hey, {playername}. I'm still preparing our next steps. Maybe you can clean up other jobs you have left at the station?"]]),
+         {playername=player.name()}))
+      vn.done()
+   end
+
+   if mem.state==nil then
       -- Not accepted
       vn.na(_([[You approach a strangely giddy Zuri calling you to her table.]]))
       zuri(_([["It looks like we finally have a nice window of opportunity! My sources indicate that a Za'lek General and Dvaered Warlord are going to be passing through the system at roughly the same time. You know what this means."
