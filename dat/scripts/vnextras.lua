@@ -10,7 +10,7 @@ local lg = require 'love.graphics'
 local extras = {}
 
 -- Used to restore values
-local textbox_bg_alpha, textbox_font, textbox_h, textbox_w, textbox_x, textbox_y
+local textbox_bg_alpha, textbox_font, textbox_h, textbox_w, textbox_x, textbox_y, characters
 
 local function fullscreenStart( func, params )
    params = params or {}
@@ -20,6 +20,7 @@ local function fullscreenStart( func, params )
          func()
       end
       -- Store old values
+      characters = vn._characters
       textbox_bg_alpha = vn.textbox_bg_alpha
       textbox_h = vn.textbox_h
       textbox_w = vn.textbox_w
@@ -49,6 +50,7 @@ local function fullscreenEnd( done, transition, length )
    vn.scene()
    vn.func( function ()
       vn.setBackground()
+      vn._characters = characters
       vn.textbox_bg_alpha = textbox_bg_alpha
       vn.textbox_h = textbox_h
       vn.textbox_w = textbox_w
