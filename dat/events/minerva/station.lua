@@ -15,8 +15,8 @@
 --]]
 local fmt = require "format"
 local minerva = require 'common.minerva'
-local portrait = require "portrait"
 local vn = require 'vn'
+local vni = require 'vnimage'
 local blackjack = require 'minigames.blackjack'
 local chuckaluck = require 'minigames.chuckaluck'
 local lg = require 'love.graphics'
@@ -32,13 +32,14 @@ local terminal = minerva.terminal
 local blackjack_portrait = "blackjack.png"
 local chuckaluck_portrait, chuckaluck_image
 if var.peek("minerva_chuckaluck_change") then
-   chuckaluck_portrait = portrait.get() -- Becomes a random NPC
-   chuckaluck_image = portrait.getFullPath( chuckaluck_portrait )
+   -- Becomes a random NPC
+   chuckaluck_image, chuckaluck_portrait = vni.generic()
 else
    chuckaluck_portrait = minerva.mole.portrait
    chuckaluck_image = minerva.mole.image
 end
-local greeter_portrait = portrait.get() -- TODO replace?
+local blackjack_image = vni.generic()
+local greeter_image = vni.generic() -- TODO replace?
 
 -- Special
 local spaticketcost = 100
@@ -86,14 +87,19 @@ local patron_messages = {
 }
 
 function create()
+   local trial_start = player.misnDone( "Minerva Pirates 6" )
 
    -- Create NPCs
    mem.npc_terminal = evt.npcAdd( "approach_terminal", terminal.name, terminal.portrait, terminal.description, gambling_priority )
-   mem.npc_blackjack = evt.npcAdd( "approach_blackjack", _("Blackjack"), blackjack_portrait, _("Seems to be one of the more popular card games where you can play blackjack against a \"cyborg chicken\"."), gambling_priority )
+   if trial_start then
+      mem.npc_blackjack = evt.npcAdd( "approach_blackjack_nocc", _("Blackjack"), blackjack_portrait, _("Seems to be one of the more popular card games."), gambling_priority )
+   else
+      mem.npc_blackjack = evt.npcAdd( "approach_blackjack", _("Blackjack"), blackjack_portrait, _("Seems to be one of the more popular card games where you can play blackjack against a \"cyborg chicken\"."), gambling_priority )
+   end
    mem.npc_chuckaluck = evt.npcAdd( "approach_chuckaluck", _("Chuck-a-luck"), chuckaluck_portrait, _("A fast-paced luck-based betting game using dice."), gambling_priority )
 
    -- Some conditional NPCs
-   if player.misnDone("Maikki's Father 2") then
+   if player.misnDone("Maikki's Father 2") and not trial_start then
       local desclist = {
          _("You see Maikki enjoying a parfait."),
          _("You see Maikki talking on a transponder."),
@@ -109,16 +115,16 @@ function create()
    local msglist = rnd.permutation( patron_messages ) -- avoids duplicates
    for i = 1,npatrons do
       local name = patron_names[ rnd.rnd(1, #patron_names) ]
-      local img = portrait.get()
+      local img = vni.generic()
       local desc = patron_descriptions[ rnd.rnd(1, #patron_descriptions) ]
       local msg = msglist[i]
       local id = evt.npcAdd( "approach_patron", name, img, desc, 10 )
-      local npcdata = { name=name, image=portrait.getFullPath(img), message=msg }
+      local npcdata = { name=name, image=img, message=msg }
       npc_patrons[id] = npcdata
    end
 
    -- If scavengers are not dead, they sometimes appear
-   if var.peek("maikki_scavengers_alive") and rnd.rnd() < 0.05 then
+   if (not trial_start or player.misnDone("Minerva Judgement")) and var.peek("maikki_scavengers_alive") and rnd.rnd() < 0.05 then
       evt.npcAdd( "approach_scavengers", minerva.scavengers.name, minerva.scavengers.portrait, minerva.scavengers.description )
    end
 
@@ -176,8 +182,7 @@ end
 function bargreeter()
    vn.clear()
    vn.scene()
-   local g = vn.newCharacter( _("Greeter"),
-         { image=portrait.getFullPath( greeter_portrait ) } )
+   local g = vn.newCharacter( _("Greeter"), {image=greeter_image} )
    vn.transition()
    vn.na( _([[As soon as you enter the spaceport bar, a neatly dressed individual runs up to you and hands you a complementary drink. It is hard to make out what he is saying over all the background noise created by other patrons and gambling machines, but you try to make it out as best as you can.]]) )
    g:say( _([["Welcome to the Minerva Station resort! It appears to be your first time here. As you enjoy your complementary drink, let me briefly explain to you how this wonderful place works. It is all very exciting!"]]) )
@@ -383,6 +388,58 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
    random_event()
 end
 
+local function vn_blackjack( npc )
+   -- Resize the window
+   local lw, lh = window.getDesktopDimensions()
+   local textbox_h = vn.textbox_h
+   local textbox_x = vn.textbox_x
+   local textbox_y = vn.textbox_y
+   local dealer_x, dealer_newx
+   local blackjack_h = 500
+   local blackjack_x = math.min( lw-vn.textbox_w-100, textbox_x+200 )
+   local blackjack_y = (lh-blackjack_h)/2
+   local setup_blackjack = function (alpha)
+      if dealer_x == nil then
+         dealer_x = npc.offset -- cc.offset is only set up when the they appear in the VN
+         dealer_newx = 0.2
+      end
+      vn.textbox_h = textbox_h + (blackjack_h - textbox_h)*alpha
+      vn.textbox_x = textbox_x + (blackjack_x - textbox_x)*alpha
+      vn.textbox_y = textbox_y + (blackjack_y - textbox_y)*alpha
+      vn.namebox_alpha = 1-alpha
+      npc.offset = dealer_x + (dealer_newx - dealer_x)*alpha
+   end
+   vn.animation( 0.5, function (alpha) setup_blackjack(alpha) end )
+   local bj = vn.custom()
+   bj._init = function( self )
+      -- TODO play some blackjack music
+      blackjack.init( vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h, function ()
+         self.done = true
+         -- TODO go back to normal music
+      end )
+   end
+   bj._draw = function( _self )
+      local x, y, w, h =  vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
+      -- Horrible hack where we draw ontop of the textbox a background
+      lg.setColor( 0.5, 0.5, 0.5 )
+      lg.rectangle( "fill", x, y, w, h )
+      lg.setColor( 0, 0, 0 )
+      lg.rectangle( "fill", x+2, y+2, w-4, h-4 )
+
+      -- Draw blackjack game
+      blackjack.draw( x, y, w, h)
+   end
+   bj._keypressed = function( _self, key )
+      blackjack.keypressed( key )
+   end
+   bj._mousepressed = function( _self, mx, my, button )
+      blackjack.mousepressed( mx, my, button )
+   end
+   -- Undo the resize
+   vn.animation( 0.5, function (alpha) setup_blackjack(1-alpha) end )
+   return bj
+end
+
 function approach_blackjack()
    local firsttime = not var.peek("cc_known")
    -- Not adding to queue first
@@ -414,54 +471,39 @@ function approach_blackjack()
    vn.na( _("Cyborg Chicken eyes flutter as it seems like consciousness returns to its body.") )
    vn.jump("menu")
    vn.label( "blackjack" )
-   -- Resize the window
-   local lw, lh = window.getDesktopDimensions()
-   local textbox_h = vn.textbox_h
-   local textbox_x = vn.textbox_x
-   local textbox_y = vn.textbox_y
-   local dealer_x, dealer_newx
-   local blackjack_h = 500
-   local blackjack_x = math.min( lw-vn.textbox_w-100, textbox_x+200 )
-   local blackjack_y = (lh-blackjack_h)/2
-   local setup_blackjack = function (alpha)
-      if dealer_x == nil then
-         dealer_x = cc.offset -- cc.offset is only set up when the they appear in the VN
-         dealer_newx = 0.2
-      end
-      vn.textbox_h = textbox_h + (blackjack_h - textbox_h)*alpha
-      vn.textbox_x = textbox_x + (blackjack_x - textbox_x)*alpha
-      vn.textbox_y = textbox_y + (blackjack_y - textbox_y)*alpha
-      vn.namebox_alpha = 1-alpha
-      cc.offset = dealer_x + (dealer_newx - dealer_x)*alpha
-   end
-   vn.animation( 0.5, function (alpha) setup_blackjack(alpha) end )
-   local bj = vn.custom()
-   bj._init = function( self )
-      -- TODO play some blackjack music
-      blackjack.init( vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h, function ()
-         self.done = true
-         -- TODO go back to normal music
-      end )
-   end
-   bj._draw = function( _self )
-      local x, y, w, h =  vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
-      -- Horrible hack where we draw ontop of the textbox a background
-      lg.setColor( 0.5, 0.5, 0.5 )
-      lg.rectangle( "fill", x, y, w, h )
-      lg.setColor( 0, 0, 0 )
-      lg.rectangle( "fill", x+2, y+2, w-4, h-4 )
+   vn_blackjack( cc )
+   vn.label( "leave" )
+   vn.na( _("You leave the blackjack table behind and head back to the main area.") )
+   vn.run()
 
-      -- Draw blackjack game
-      blackjack.draw( x, y, w, h)
-   end
-   bj._keypressed = function( _self, key )
-      blackjack.keypressed( key )
-   end
-   bj._mousepressed = function( _self, mx, my, button )
-      blackjack.mousepressed( mx, my, button )
-   end
-   -- Undo the resize
-   vn.animation( 0.5, function (alpha) setup_blackjack(1-alpha) end )
+   -- Handle random bar events if necessary
+   random_event()
+end
+
+function approach_blackjack_nocc()
+   -- Not adding to queue first
+   local dealer = vn.newCharacter( _("Dealer"), {image=blackjack_image} )
+   vn.clear()
+   vn.scene()
+   vn.na(_([[You approach the blackjack table that seesm to have a new dealer.]]))
+   vn.label("menu")
+   vn.menu( {
+      { _("Play"), "blackjack" },
+      { _("Explanation"), "explanation" },
+      { _("Ask about Cyborg Chicken"), "cc" },
+      { _("Leave"), "leave" },
+   } )
+
+   vn.label( "explanation" )
+   dealer(_([["You've never played blackjack before? The objective of the card game is to get as close to a value of 21 without going over. All cards are worth their rank except for Jack, Queen, and King, which are all worth 10, and ace is worth either 1 or 11. The winner is whoever has a higher value without going over 21."]]))
+   vn.jump("menu")
+
+   vn.label( "cc" )
+   dealer(_([["Cyborg Chicken? Yeah, don't know what happened to it. I guess it must have broken down and is under repairs."]]))
+   vn.jump("menu")
+
+   vn.label( "blackjack" )
+   vn_blackjack( dealer )
    vn.label( "leave" )
    vn.na( _("You leave the blackjack table behind and head back to the main area.") )
    vn.run()
