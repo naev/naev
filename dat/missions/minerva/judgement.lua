@@ -197,7 +197,8 @@ function trial_start ()
 "Order! Order!"
 She hits her gavel.]]))
    vn.na(_([[Except for the odd cough, silence envelopes the room.]]))
-   judge(_([["We are gathered here to day to deliberate over the future of Minerva Station, which has been accused of falling into debauchery and lawlessness."]]))
+   judge(_([["We are gathered here to day to deliberate over the future of Minerva Station, which has been accused of falling into debauchery and lawlessness. These are very serious accusation that question the sovereignty of Minerva Station, which currently enjoys the privilege of independent rule."]]))
+   judge(_([[According to Principle of System Sovereignty, the parties who have claims on the system have the right for equal, fair, and honest deliberations of the partake in the distribution of powers.]]))
 
    vn.func( function ()
       zlk.pos = "farleft"
@@ -205,7 +206,7 @@ She hits her gavel.]]))
       ceo.pos = "farleft"
       maikki.pos = "farleft"
    end )
-   judge(_([["The three parties involved are House Za'lek..."]]))
+   judge(_([["In the case of Minerva Station, the three parties involved are House Za'lek..."]]))
    vn.appear( zlk, "slideup" )
    zlk(_([[The Za'lek lawyer does a short concise bow.
 "Your honour."]]))
@@ -229,11 +230,21 @@ She hits her gavel.]]))
    judge(_([["Is that the EJ-2891? Go on."
 The judge nods towards Maikki, giving her permission to speak.]]))
    maikki(_([["Your honour."
-She gives an impeccable formal bow.]]))
-   maikki(_([["I would like to submit an EJ-7777 motion to substitute the Minera CEO." ]]))
+Maikki gives an impeccable formal bow.]]))
+   maikki(_([["I would like to submit an EJ-7777 motion to substitute the Minera CEO."]]))
    judge(_([[The judge makes a curious expression and hovers down to collect the papers from Maikki. She quickly skims over it, and gives a sly grin.]]))
    judge(_([["Well it seems like the deliberations will be able to proceed today. Replacing the previous individual, we have Maisie McPherson, who will be representing the independent interests of Minerva Station. Please sit down."]]))
    vn.disappear( maikki, "slideup" )
+   judge(_([["All parties are present and accounted for. Let us proceed to the deliberations. Given the order of the filing, House Za'lek shall be the first to begin deliberations on the subject at hand."]]))
+
+   vn.scene()
+   vn.func( function ()
+      zlk.pos = "center"
+   end )
+   vn.newCharacter( zlk )
+   vn.transition( "slideright" )
+   zlk(_([[The Za'lek Lawyer clears their throat and begins.
+"Ladies and gentlemen, ]]))
 
    vn.run()
 
