@@ -19,6 +19,7 @@
 local minerva = require "common.minerva"
 local vn = require 'vn'
 local vni = require 'vnimage'
+local vne = require 'vnextras'
 local fmt = require "format"
 --local lmisn = require "lmisn"
 --local love_shaders = require "love_shaders"
@@ -235,7 +236,9 @@ Maikki gives an impeccable formal bow.]]))
    judge(_([[The judge makes a curious expression and hovers down to collect the papers from Maikki. She quickly skims over it, and gives a sly grin.]]))
    judge(_([["Well it seems like the deliberations will be able to proceed today. Replacing the previous individual, we have Maisie McPherson, who will be representing the independent interests of Minerva Station. Please sit down."]]))
    vn.disappear( maikki, "slideup" )
-   judge(_([["All parties are present and accounted for. Let us proceed to the deliberations. Given the order of the filing, House Za'lek shall be the first to begin deliberations on the subject at hand."]]))
+   vn.na(_([[You see Zuri out of the corner of your eye dragging away the body of the Minerva CEO. Is that even legal?]]))
+   judge(_([["All parties are present and accounted for. Let us proceed to the deliberations. Given the order of the filing, House Za'lek shall be the first to begin deliberations on the subject at hand. House Za'lek, please begin with your exposition."]]))
+   vn.na(_([[You hear some flutter of papers as the process begins its ascent.]]))
 
    vn.scene()
    vn.func( function ()
@@ -243,8 +246,33 @@ Maikki gives an impeccable formal bow.]]))
    end )
    vn.newCharacter( zlk )
    vn.transition( "slideright" )
-   zlk(_([[The Za'lek Lawyer clears their throat and begins.
-"Ladies and gentlemen, ]]))
+   zlk(_([[The Za'lek Lawyer stands up, clears their throat and begins.
+"Ladies and gentlemen, it is long known that Minerva Station is a stain on the galactic map. Despite all the excellent potential, it has been squandered away during cycles neither benefiting the Empire nor the Great Houses."]]))
+   zlk(_([["Today, I stand before you as the representative of House Za'lek, armed not only with legal expertise, but intellect that has guided our House to prosperity throughout the Empire. I shall present a compelling case as to why Minerva Station rightfully belongs to House Za'lek."]]))
+   local log = vne.flashbackTextStart(_("Narrator"))
+   log(_([[The Za'lek Lawyer gives a meticulously prepared and organized speech regarding the plans and benefits that House Za'lek can bring to Minerva Station with a focus on the track record of House Za'lek and the potential for refocusing the station as a cultural enlightenment center to improve collaboration among the great houses.]]))
+   vne.flashbackTextEnd()
+   zlk(_([["...In conclusion, I am confident that your wisdom and discernment will lead you to make the just and informed decision, aligning the fate of this space station with the unmatched expertise and vision of House Za'lek."]]))
+
+   vn.scene()
+   vn.newCharacter( judge )
+   vn.transition( "slideleft" )
+   judge(_([["Let us continue with House Dvaered."]]))
+
+   vn.scene()
+   vn.newCharacter( dvd )
+   vn.transition( "slideleft" )
+   dvd(_([[The Dvaered Representative briskly stands up and begins to talk with a loud voice that echoes in the room.
+"Ladies and gentlemen of the court, esteemed Judges, and respected attendees,"]]))
+   dvd(_([["Today, I stand before you as the representative of House Dvaered, a house known for its strength, determination, and unwavering pursuit of victory. I come before you with passion and conviction. I will argue why the ownership of Minerva Station belongs to House Dvaered."]]))
+   log = vne.flashbackTextStart(_("Narrator"))
+   log(_([[The Dvaered Representative goes on about how only House Dvaered can crush weakness, disobedience, and insubordination through rigorous discipline and ]]))
+   vne.flashbackTextEnd()
+   dvd(_([["...In conclusion, I ask you to embrace the spirit of House Dvaered. Our strength, our desire for conquest, our loyalty, and our commitment to justice make us the natural choice for owning Minerva Station."]]))
+
+   vn.scene()
+   vn.transition( "slideright" )
+   vn.na(_([[]]))
 
    vn.run()
 
