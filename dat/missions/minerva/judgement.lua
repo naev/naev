@@ -154,7 +154,7 @@ function trial_start ()
    vn.label("01_start")
    vn.func( function () didtrial = true end )
    vn.na(_([[The station seems to be crowded with the many simultaneous trials and ongoings. Watching people bustling around with unpredictable patterns is surprisingly entertaining, however, you remember your purpose and follow Zuri to the assigned courtroom.]]))
-   -- vn.music( ) -- TODO trial music
+    vn.music( 'snd/music/empire1.ogg' ) -- TODO trial music
    -- TODO background?
    vn.na(_([[After getting lost in the corridors overflowing with people several times, you make it to the courtroom. It seems to be quite packed and the ambience electric, with uncertainty about how the upcoming legal drama would unfold.]]))
    zuri(_([[Zuri turns to you.
@@ -240,10 +240,13 @@ Maikki gives an impeccable formal bow.]]))
    judge(_([["All parties are present and accounted for. Let us proceed to the deliberations. Given the order of the filing, House Za'lek shall be the first to begin deliberations on the subject at hand. House Za'lek, please begin with your exposition."]]))
    vn.na(_([[You hear some flutter of papers as the process begins its ascent.]]))
 
-   vn.scene()
+   -- Reset positions
    vn.func( function ()
       zlk.pos = "center"
+      dvd.pos = "center"
+      maikki.pos = "center"
    end )
+   vn.scene()
    vn.newCharacter( zlk )
    vn.transition( "slideright" )
    zlk(_([[The Za'lek Lawyer stands up, clears their throat and begins.
@@ -271,8 +274,14 @@ Maikki gives an impeccable formal bow.]]))
    dvd(_([["...In conclusion, I ask you to embrace the spirit of House Dvaered. Our strength, our desire for conquest, our loyalty, and our commitment to justice make us the natural choice for owning Minerva Station."]]))
 
    vn.scene()
+   vn.newCharacter( judge )
    vn.transition( "slideright" )
-   vn.na(_([[]]))
+   judge(_([["Last is the independent exposition."]]))
+
+   vn.scene()
+   vn.newCharacter( maikki )
+   vn.transition( "slideleft" )
+   maikki(_([["You honour."]]))
 
    vn.run()
 
