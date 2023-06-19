@@ -15,8 +15,17 @@ desc_list["generic"] = {
    _("A careless pirate spilling their drink all over."),
    _("A pirate relaxing after a long day of pillaging."),
    _("You see a pirate chilling at the bar."),
-   _("A happy looking pirate."),
+   _("A jovial looking pirate."),
    _("A pirate that smells weirdly of fish."),
+   _("A tattooed space buccaneer, lazily flipping a coin."),
+   _("A weathered space pirate keeping a watchful eye on the room."),
+   _("A grizzled pirate nursing a mug of grog."),
+   _("A lone pirate silently sipping a drink in the corner."),
+   _("A pirate with a menacing grin, scanning the room for trouble."),
+   _("A seasoned pirate studying a star chart."),
+   _("A swashbuckling space pirate, sipping on a neon-colored cocktail."),
+   _("A veteran space pirate, leaning back into their worn-out chair, puffing on a cigar."),
+   _("A suave-looking well-groomed pirate sipping some finely aged space rum."),
 }
 
 local msg_lore = {
