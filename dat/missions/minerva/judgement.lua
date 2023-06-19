@@ -38,8 +38,6 @@ local title = _("Minerva Judgement")
 --    1. fly to Jade Court
 
 function create()
-   misn.finish(false)
-
    -- Zuri gives the mission to go to court at minerva
    misn.setNPC( minerva.zuri.name, minerva.zuri.portrait, minerva.zuri.description )
    misn.setTitle( title )
@@ -281,7 +279,18 @@ Maikki gives an impeccable formal bow.]]))
    vn.scene()
    vn.newCharacter( maikki )
    vn.transition( "slideleft" )
-   maikki(_([["You honour."]]))
+   maikki(_([[Maikki stands up to begin her exposition.
+"You honour."]]))
+   maikki(_([["Today, we gather here to determine the fate of a celestial jewel, a bastion of hope, and a symbol of untethered possibility—the sovereignty of Minerva Station. I stand before you as an advocate for the voice of freedom, the embodiment of autonomy, and the guardian of neutrality."]]))
+   maikki(_([["We find ourselves in the midst of a clash between the titans of power and influence: the sly House Za'lek and the aggressive House Dvaered. They seek dominion over this station, driven by their thirst for control and their insatiable desire for conquest."]]))
+   maikki(_([["Yet, amidst this power struggle, we must not lose sight of the value inherent in independence. Minerva Station, free from the shackles of allegiance, stands as a sanctuary away from the clutches of power-hungry houses. In its independence, Minerva Station supports trade and diplomacy throughout the Empire."]]))
+   maikki(_([["To subject this station to the dominion of either House Za'lek or House Dvaered would be to shackle it, to stifle the boundless potential that has blossomed under its independent governance. Although foreign interference has created instability in the system, this is nothing that can not be solved by an independent government once free of Great House interference."]]))
+   maikki(_([["The choice is clear: we must uphold the independence of this station, for the stability of the Empire, for the advancement of science and knowledge, and for the preservation of our shared ideals."]]))
+
+   vn.scene()
+   vn.newCharacter( judge )
+   vn.transition( "slideright")
+   judge(_([["Let us proceed with the presentation of evidence."]]))
 
    vn.run()
 
