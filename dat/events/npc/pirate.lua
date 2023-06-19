@@ -92,14 +92,25 @@ local msg_tip = {
    _([["If you get caught with contraband, you can try to bribe your way out of it. Credits talk!"]]),
 }
 
+local fct_wildones = faction.get("Wild Ones")
+local fct_ravenclan = faction.get("Raven Clan")
+local fct_dreamerclan = faction.get("Dreamer Clan")
+local fct_blacklotus = faction.get("Black Lotus")
+local function test_wildones () return spob.cur():faction()==fct_wildones end
+local function test_ravenclan () return spob.cur():faction()==fct_ravenclan end
+local function test_dreamerclan () return spob.cur():faction()==fct_dreamerclan end
+local function test_blacklotus () return spob.cur():faction()==fct_blacklotus end
+local function test_chapter0 () return (player.chapter()=="0") end
+local function tneg( f ) return not f() end
+
 local msg_cond = {
-   { function () return spob.cur():faction()~="Wild Ones" end, _([["The Wild Ones clan is too out of control for me. It seems like all they want to do is pillage and destroy!"]]) },
-   { function () return spob.cur():faction()~="Black Lotus" end, _([["The Black Lotus pirates are so boring. All they do is paperwork and extortion. Can you call yourself a pirate if you don't pillage?"]]) },
-   { function () return spob.cur():faction()~="Dreamer Clan" end, _([["Dreamer Clan pirates never show up to the pirate assemblies. Probably doing too many illegal substances…"]]) },
-   { function () return spob.cur():faction()=="Raven Clan" end, _([["If it weren't for the Raven Clan pirates, piracy would have gone extinct ages ago! Our supplies and organization are second to none!"]]) },
-   { function () return spob.cur():faction()=="Dreamer Clan" end, _([["I ate a weird mushroom yesterday, and I haven't stopped tripping. Are you real?"]]) },
-   { function () return (player.chapter()=="0") end, _([["Ya noticed all the large constructions being built recently in space? They need a lot of rare resources which the resource ships great targets for plundering! Arr!"]]) },
-   { function () return (player.chapter()~="0") end, _([["There been news of all these hypergates going online throughout the Empire. Rumour's that the Black Lotus have one too!"]]) },
+   { tneg(test_wildones), _([["The Wild Ones clan is too out of control for me. It seems like all they want to do is pillage and destroy!"]]) },
+   { tneg(test_blacklotus), _([["The Black Lotus pirates are so boring. All they do is paperwork and extortion. Can you call yourself a pirate if you don't pillage?"]]) },
+   { tneg(test_dreamerclan),_([["Dreamer Clan pirates never show up to the pirate assemblies. Probably doing too many illegal substances…"]]) },
+   { test_ravenclan,_([["If it weren't for the Raven Clan pirates, piracy would have gone extinct ages ago! Our supplies and organization are second to none!"]]) },
+   { test_dreamerclan,_([["I ate a weird mushroom yesterday, and I haven't stopped tripping. Are you real?"]]) },
+   { test_chapter0,_([["Ya noticed all the large constructions being built recently in space? They need a lot of rare resources which the resource ships great targets for plundering! Arr!"]]) },
+   { tneg(test_chapter0), _([["There been news of all these hypergates going online throughout the Empire. Rumour's that the Black Lotus have one too!"]]) },
 }
 
 -- Returns a lore message for the given faction.
