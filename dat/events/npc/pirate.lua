@@ -34,12 +34,41 @@ local msg_lore = {
    _([["I swear I saw a bunch of cats in a trench coat pretending to be a pirate once. Must have been a weird dream. I should quite drinking…"]]),
    _([["There are four major pirate clans: the Wild Ones, the Ravens, the Dreamers, and the Black Lotus. It's sometimes hard for them to get along."]]),
    _([["Pirate assemblies are the pinnacle of pirate society. Booze! Grog! Fights! Shanties! Jigs! More Grog! It's great fun, just don't drink as much to forget it all!"]]),
-   -- This is the 'space pirate shanty'
-   _([["With me bottle of grog, I sail to the Sun
-there be nobody stoppin' me!
-For I was naught but a frog layin' in the bog
-dreaming of the wide black sea!
-Hey ho! Space pirates! Rum-dee Rum Rum!"]]),
+   -- This is the 'space pirate shanty' (by theElerd)
+--[[
+I lost my friend and fam’ly to a pirate raid
+The captain stood before me, I thought meself for dead
+Instead he told me rise up, come to the endless sea
+Into the black I followed, a pirate’s life for me.
+
+Yo ho yo ho a pirate life for me
+In endless black we gonna attack
+A pirate’s life for me
+
+Yo ho yo ho, up in the endless sea
+I may be hanged, don’t give a damn
+A pirate’s life for me
+
+The empire sent their warships, to capture our fair crew
+A thousand ships before us, and surely we were screwed
+The captain said “Me hearties! At last we sail to hell!”
+My life was maybe short, but I’m sure I’ve spent it well
+
+Yo ho yo ho go down on your knee
+Man the guns and hit them hard
+A pirate’s death for me
+
+Yo ho yo ho life with sword and gun
+May get you wealth, just fly in stealth
+But sure you won’t see home
+--]]
+   _([["Yo ho yo ho a pirate life for me
+In endless black we gonna attack
+A pirate’s life for me
+
+Yo ho yo ho, up in the endless sea
+I may be hanged, don’t give a damn
+A pirate’s life for me"]]),
    _([["I love the space pirate shanty, but every time I learn the lyrics I end up getting piss drunk and forget them the next morning…"]]),
 }
 
