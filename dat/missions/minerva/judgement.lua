@@ -291,6 +291,16 @@ Maikki gives an impeccable formal bow.]]))
    vn.newCharacter( judge )
    vn.transition( "slideright")
    judge(_([["Let us proceed with the presentation of evidence."]]))
+   log = vne.flashbackTextStart(_("Narrator"))
+   log(_([[First House Za'lek begins to present evidence, presenting results of economical and social growth in systems that were handed-over to the House in the original days. They also call in an expert who presents testimony and highlights the differences with House Dvaered. The Dvaered Representative raises objections, but they are overruled. Overall it is quite a scientific and dry exposition, albeit sound and well established on facts. ]]))
+   log(_([[Next comes House Dvaered that presents a more emotional defense of Dvaered prosperity, instead of relying on economic indicators, they use social analysis and questionnaire results to show increased levels of relative happiness compared to Za'lek territory, where objections by the Za'lek Lawyer are overruled. Finally, they bring a Dvaered expert to testify on how House Dvaered has a curtailing effect on piracy and unwanted behaviours. All in all, as expected from House Dvaered.]]))
+   log(_([[Next is Maikki's turn...]]))
+   vne.flashbackTextEnd{ characters={maikki} }
+
+   maikki(fmt.f(_([["Your honour, I do not believe House Za'lek and House Dvaered are being honest with the courtroom. They paint a picture of roses and hearts, when the reality of their proposal is uniformity and subjugation. I would like to call {playername} to the stand as my witness to set the record straight on the unscrupulous behaviour and depravity of House Za'lek and Dvaered."]]),
+      {playername=player.name()}))
+   vn.na(_([[There is an audible gasp among the crowd with both the Za'lek lawyer and Dvaered representative pushing for objectives that quickly get overruled.]]))
+   vn.na(_([[Before you have a chance to process what happened, you are ushered to a podium with a live microphone in front of you. The Empire rule codex is thrust under your hands, and you are forced to swear an oath of truthfulness. What could Maikki be thinking?]]))
 
    vn.run()
 
