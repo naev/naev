@@ -46,11 +46,11 @@ local function fullscreenStart( func, params )
    return log
 end
 
-local function fullscreenEnd( done, transition, length )
+local function fullscreenEnd( params )
+   params = params or {}
    vn.scene()
    vn.func( function ()
       vn.setBackground()
-      vn._characters = characters
       vn.textbox_bg_alpha = textbox_bg_alpha
       vn.textbox_h = textbox_h
       vn.textbox_w = textbox_w
@@ -58,12 +58,20 @@ local function fullscreenEnd( done, transition, length )
       vn.textbox_y = textbox_y
       vn.textbox_font = textbox_font
       vn.show_options = true
-      if done then
+      if params.done then
          vn.textbox_bg_alpha = 0
          vn.show_options = false
+      else
+         if params.characters then
+            for k,c in ipairs(params.characters) do
+               vn._characters.append( c )
+            end
+         else
+            vn._characters = characters
+         end
       end
    end )
-   vn.transition( transition, length )
+   vn.transition( params.transition, params.transition_length )
 end
 
 --[[--
