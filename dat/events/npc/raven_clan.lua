@@ -8,10 +8,14 @@ local msg_combined
 
 local desc_list = {}
 desc_list["generic"] = {
-   _("A clansperson enjoying some rum."),
-   _("A Raven clansperson trader."),
-   _("A clansperson merchant pilot."),
+   _("A Raven clansperson enjoying some rum."),
+   _("A Raven clansperson trader, engrossed in thought about upcoming deliveries.."),
+   _("A Raven clansperson merchant pilot, resting after a long haul."),
    _("A well-kempt Raven clansperson."),
+   _("A Raven clansperson calmly sipping their drink "),
+   _("A shrewd Raven clansperson, their fingers tapping rhythmically as they calculate profits and risks."),
+   _("A diplomatic Raven clansperson, gracefully navigating conversations with a keen ear for gathering valuable information."),
+   _("A silver-tongued Raven clansperson, effortlessly charming the bartender"),
 }
 
 local msg_lore = {

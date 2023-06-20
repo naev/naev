@@ -13,9 +13,9 @@ desc_list["generic"] = {
    _("The Wild Ones clansperson looks like they've seen some real shit."),
    _("A scarred  Wild Ones clansperson, leaning back in their chair with an air of nonchalant confidence."),
    _("A weathered Wild Ones clansperson with a permanent sneer etched on their face."),
-   _("A gruff Wild Ones clansman quietly nursing their drink."),
-   _("A wiry Wild Ones clansman, fingers tapping restlessly on the bar counter"),
-   _("A burly Wild Ones clansman, arms crossed and scowling"),
+   _("A gruff Wild Ones clansperson quietly nursing their drink."),
+   _("A wiry Wild Ones clansperson, fingers tapping restlessly on the bar counter"),
+   _("A burly Wild Ones clansperson, arms crossed and scowling"),
 }
 
 local msg_lore = {
