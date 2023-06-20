@@ -52,15 +52,15 @@ local msg_lore = {
    _([["I don't understand why we bother sending our research results to the Empire. These asshats can't understand the simplest formulas!"]]),
    _([["Do you know why many optimization algorithms require your objective function to be convex? It's not only because of the question of local minima, but also because if your function is locally concave around the current iterate, the next one will lead to a greater value of your objective function. There are still too many people who don't know this!"]]),
    _([["There are so many algorithms for solving the non-linear eigenvalues problem, I never know which one to choose. Which one do you prefer?"]]),
-   _([["I recently attended a very interesting conference about the history of applied mathematics before the space age. Even in those primitive times, people used to do numerical algebra. They didn't even have quantic computers back at that time! Imagine: they had to wait for hours to solve a problem with only a dozen billion degrees of freedom!"]]),
+   _([["I recently attended a very interesting conference about the history of applied mathematics before the space age. Even in those primitive times, people used to do numerical algebra. They didn't even have quantum computers back at that time! Imagine: they had to wait for hours to solve a problem with only a dozen billion degrees of freedom!"]]),
    _([["Last time I had to solve a deconvolution problem, its condition number was so high that its inverse reached numerical zero on Octuple Precision!"]]),
    _([["I am worried about my sister. She's on trial for 'abusive self-citing' and the public prosecutor has requested a life sentence."]]),
    _([["They opened two professor positions on precision machining in Atryssa Central Manufacturing Lab, and none in Bedimann Advanced Process Lab, but everyone knows that the BAPL needs reinforcement ever since three of its professors retired last cycle. People say it's because a member of Atryssa's lab posted a positive review of the president of the Za'lek central scientific recruitment committee."]]),
    _([["Even if our labs are the best in the galaxy, other factions have their own labs as well. For example, Dvaer Prime Lab for Advanced Mace Rocket Studies used to be very successful until it was nuked by mistake by a warlord during an invasion of the planet."]]),
    _([["Lately the drone software updates have been full of bugs. It's because the engineers are more interested in trying new research techniques rather than trying to reduce the accumulated technical debt."]]),
-   _([["High energy particle physics experiments are so cliché. Theoretical quantum hyperconductors is where the inderesting stuff happens!"]]),
+   _([["High energy particle physics experiments are so cliché. Theoretical quantum hyperconductors is where the interesting stuff happens!"]]),
    _([["House Za'lek is for researchers, run by researchers. Council members are chosen randomly and forced to fill their obligations to argue and decide about the future of House Za'lek. Lots of people complain, but this is the best way to avoid neopotism and corruption that is rampant in the Empire and other Houses!"]]),
-   _([["Stochastic meritocracy is the best way to run a Great House. House Za'lek randomly choses the council members from rsearchers to rule in the Za'lek Council. No sociology researcher has found a better system yet!"]]),
+   _([["Stochastic meritocracy is the best way to run a Great House. House Za'lek randomly chooses the council members from researchers to rule in the Za'lek Council. No sociology researcher has found a better system yet!"]]),
    _([["I think I'm getting overweight… Having drones around means I never have to do manual labour."]]),
    _([["Za'leks are a special kind of lazy. We would rather spend 100 periods programming drones to automate a process than spend 1 period doing it manually."]]),
    _([["Not many people want to join the military these days. Luckily we have all the drones to fill in!"]]),
@@ -72,7 +72,7 @@ local msg_lore_civilian_only = {
 }
 local msg_lore_researcher_only = {
    _([["I"m glad the Za'lek Council decided to open up to the rest of the galaxy. Although science is great, it is also nice to meet people who don't care about research impact metrics."]]),
-   _([["I was on the Za'lek Council onces. The meetings are endless and people get into fights over trivial things. The food and the bonus salary are great though, but I'm not sure if I would do it again."]]),
+   _([["I was on the Za'lek Council once. The meetings are endless and people get into fights over trivial things. The food and the bonus salary are great though, but I'm not sure if I would do it again."]]),
 }
 
 -- Organize civilian / researcher text

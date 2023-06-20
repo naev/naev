@@ -87,6 +87,11 @@ local taunt_list_offensive = {
    _("I'm trying to kill you. Is it working?"),
    _("I'm sorry, I just don't like you."),
    _("Sorry, but I'm a private tracker."),
+   _("Prepare to be plundered, ye interstellar fools!"),
+   _("Time to hand over the loot, ye spineless starfarers!"),
+   _("Say goodbye to yer valuables, ye cosmic weaklings!"),
+   _("By the stars, we'll strip ye of every shiny trinket ye hold dear!"),
+   _("Brace yourselves for a taste of cosmic plunder!"),
    _("Yo ho yo ho a pirate life for me!"), -- From the space pirate shanty
 }
 local taunt_list_defensive = {
@@ -105,8 +110,6 @@ local taunt_list_defensive = {
    _("Now you're in for it!"),
    _("Did you really think you would get away with that?"),
    _("I just painted this thing!"),
-   _("Rot."),
-   _("Burn."),
    _("I can't wait to see you burn."),
    _("Just. Stop. Moving."),
    _("Die already!"),
@@ -114,6 +117,14 @@ local taunt_list_defensive = {
    _("Stop dodging!"),
    _("Okay, that's enough of that!"),
    _("I'm gonna torrent you to bits!"),
+   _("Is that the best ye've got, ye scurvy galactic amateurs?"),
+   _("Bring it on, ye sorry excuse for spacefaring scum!"),
+   _("Ye aim worse than a blindfolded asteroid!"),
+   _("Ye call that an attack? Ye're more of a nuisance than a threat!"),
+   _("Ye'll have to do better than that, ye spineless space amoebas!"),
+   _("Is that the best ye got, ye cosmic cowards?"),
+   _("Ye'll need more than that to scratch me hull!"),
+   _("Ye're about as threatening as a malfunctioning Za'lek drone!"),
 }
 local pir_formations = {
    "echelon_left",
