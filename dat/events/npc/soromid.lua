@@ -7,24 +7,19 @@ local msg_combined
 
 local desc_list = {}
 desc_list["generic"] = {
-   _("A new human civilian is twirling their drink."),
+   _("A new-human civilian is twirling their drink."),
    _("A genetic-modified individual is idle at the bar."),
+   _("A post-human individual, sitting alone at the bar, lost in contemplation."),
 }
---desc_list["agriculture"] = {}
---desc_list["industrial"] = {}
---desc_list["mining"] = {}
---desc_list["tourism"] = {}
---desc_list["medical"] = {}
---desc_list["trade"] = {}
---desc_list["old"] = {}
---desc_list["immigration"] = {}
---desc_list["prison"] = {}
---desc_list["station"] = {}
---desc_list["government"] = {}
+desc_list["heavy"] = {
+   _("A new-human individual, genetically modified for high gravity environments."),
+   _("A Soromid civilian, biologically engineered to thrive in high gravity."),
+   _("A post-human with heavy gravity traits, enjoying their drink."),
+}
 
 local gfx_list = {
-   "soromid/soromid_heavy_civilian_1.webp",
-   "soromid/soromid_heavy_civilian_2.webp",
+   {"soromid/soromid_heavy_civilian_1.webp", "heavy"},
+   {"soromid/soromid_heavy_civilian_2.webp", "heavy"},
 }
 
 local msg_lore = {
@@ -98,19 +93,21 @@ return function ()
    -- Create a list of conditional messages
    msg_combined = npc.combine_cond( msg_cond )
 
-   -- Add tag-appropriate descriptions
-   local descriptions = npc.combine_desc( desc_list, tags )
-
    local function gen_npc()
       local name = _("Soromid Tribesperson")
-      local desc = descriptions[ rnd.rnd(1,#descriptions) ]
       local prt  = portrait.get( "Soromid" )
       local image = portrait.getFullPath( prt )
+      local civtype = "generic"
       -- TODO probably use tags to control what portraits get used
       if rnd.rnd() < 0.3 then
-         prt = gfx_list[ rnd.rnd(1,#gfx_list) ]
+         local srmid = gfx_list[ rnd.rnd(1,#gfx_list) ]
+         prt = srmid[1]
+         civtype = srmid[2]
          image = prt
       end
+      -- Soromid use descriptions based on type (or generic)
+      local descriptions = desc_list[ civtype ]
+      local desc = descriptions[ rnd.rnd(1,#descriptions) ]
       local msg
       local r = rnd.rnd()
       if r <= 0.45 then
