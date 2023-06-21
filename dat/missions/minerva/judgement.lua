@@ -131,6 +131,8 @@ function trial_start ()
    local judge = vn.Characters.new( _("Judge Holmes"), {image=vni.genericFemale()} ) -- TODO replace graphics
    local zlk = vn.Character.new( _("Za'lek Lawyer"), { image=zalek_image, color=zalek_colour } )
    local dvd = vn.Character.new( _("Dvaered Representative"), { image=dvaered_image, color=dvaered_colour } )
+   local scv = vn.Character.new( minerva.scavengera.name,
+         { image=minerva.scavengera.image, color=minerva.scavengera.colour, pos="farleft" } )
 
    vn.clear()
    vn.scene()
@@ -301,6 +303,119 @@ Maikki gives an impeccable formal bow.]]))
       {playername=player.name()}))
    vn.na(_([[There is an audible gasp among the crowd with both the Za'lek lawyer and Dvaered representative pushing for objectives that quickly get overruled.]]))
    vn.na(_([[Before you have a chance to process what happened, you are ushered to a podium with a live microphone in front of you. The Empire rule codex is thrust under your hands, and you are forced to swear an oath of truthfulness. What could Maikki be thinking?]]))
+
+   maikki(fmt.f(_([[{playername}, you can attest for the constant bickering and fighting between House Za'lek and House Dvaered at Minerva Station. Is it not true that you were dragged into a firefight right outside Minerva Station.]]),
+      {playername=player.name()}))
+   vn.menu{
+      {_([["House Za'lek provoked House Dvaered."]]), "01_cont"},
+      {_([["House Dvaered attacked House Za'lek."]]), "01_cont"},
+      {_([["Both houses were picking fights."]]), "01_cont"},
+   }
+
+   -- Set positions
+   vn.func( function ()
+      zlk.pos = "farleft"
+      dvd.pos = "farright"
+   end )
+   vn.label("01_cont")
+   local helped = var.peek("minerva_altercation_helped")
+   if helped == "dvaered" then
+      vn.appear( zlk, "slideup" )
+      zlk(fmt.f(_([["Objection! {playername} sided with the Dvaered and brutishly helped destroy a House Za'lek vessel!"]]),
+         {playername=player.name()}))
+      maikki(_([[Maikki frowns a bit.]]))
+      vn.disappear( zlk, "slideup" )
+   elseif helped == "zalek" then
+      vn.appear( dvd, "slideup" )
+      dvd(fmt.f(_([["Objection! {playername} joined the fight with House Za'lek and backstabbed the Dvaered vessel!"]]),
+         {playername=player.name()}))
+      maikki(_([[Maikki frowns a bit.]]))
+      vn.disappear( dvd, "slideup" )
+   else
+      maikki(_([["What is important is that such fighting creates uncertainty, and insecurity at Minerva Station."]]))
+   end
+   maikki(_([["Was or was not Minerva Station infiltrated by House Dvaered, who went so far to plant a mole employee in the gambling operations?"]]))
+   vn.na(_([[You state the facts you remember, avoiding mentioning the fact you helped kidnap them and so forth.]]))
+   maikki(_([["Your honour, this establishes that House Dvaered was actively attempting to undermine Minerva Station even though it is under independence rule!"]]))
+   maikki(_([["Furthermore, {playername}, is it true or not that House Za'lek established listening post in order to capture communications near Minerva Station and thus violate the sovereignty of the independent space?"]]))
+   vn.na(_([[You once again state the facts, avoiding mentioning you were the one who blew it all up.]]))
+   maikki(_([["See, Your Honour, not only can we put in doubt House Dvaered's ill intentions, House Za'lek was also undermining the independent of Minerva Station!"]]))
+   maikki(_([["House Dvaered and House Za'lek can not be trusted, and the only way to ensure the local prosperity is to ensure the independence of Minerva Station."
+Having finished her interrogation, Maikki sits down.]]))
+
+   local lied = 0
+   vn.func( function ()
+      zlk.pos = "center"
+      dvd.pos = "center"
+   end )
+   vn.scene()
+   vn.newCharacter( dvd )
+   vn.transition()
+   if helped=="zalek" then
+      dvd(fmt.f(_([["{playername}, although we already know you have a taste for House Dvaered, let us see how trustworthy you really are."]]),
+         {playername=player.name()}))
+   else
+      dvd(fmt.f(_([["{playername}, let us see how trustworthy you really are."]]),
+         {playername=player.name()}))
+   end
+   local scavengers_alive = var.peek( "maikki_scavengers_alive" )
+   dvd(fmt.f(_([["There have been reports of scavengers missing at the {stealthsys} system, you wouldn't know anything about that, would you?"]]),
+      {stealthsys=system.get("Zerantix")}))
+   vn.menu{
+      {_([["I have no idea what you are talking about."]]), "cont02_met"},
+      {_([["I remember blowing up scavengers there."]]), "cont02_blowup"},
+      {_([["I met some, but nothing happened."]]), "cont02_met"},
+   }
+
+   vn.label("cont02_met")
+   dvd(fmt.f(_([["Not only did {playername} meet up wit the scavengers, they blew them up, and left their remains in the Nebula!"]]),
+      {playername=player.name()}))
+   if scavengers_alive then
+      vn.appear( scv, "slideup" )
+      scv(_([["We're not dead!"]]))
+      vn.disappear( scv, "slideup" )
+      dvd(_([[Murmurs spread across the room as the Dvaered Representative frowns.]]))
+   else
+      dvd(fmt.f(_([["Here is the proof in the black box we recovered from the scavenger ships. We can see that the last moments clearly log {playername}'s ship attacking them."]]),
+         {playername=player.name()}))
+      lied = lied+1
+   end
+   vn.jump("cont02")
+
+   vn.label("cont02_blowup")
+   dvd(_([["So you admit to destroying civilian vessels in the Nebula, does this not make you a pirate? We ought to have a trial about your infamy, rather than the future of Minerva Station!"]]))
+   if scavengers_alive then
+      vn.appear( scv, "slideup" )
+      scv(_([["We're not dead!"]]))
+      vn.disappear( scv, "slideup" )
+      dvd(fmt.f(_([[The Dvaered representative looks puzzled.
+"{playername} may have not destroyed the scavengers as we have thought, but this does show that they do not speak the truth."]]),
+         {playername=player.name()}))
+      lied = lied+1
+   end
+   vn.jump("cont02")
+
+   local gave_drink = var.peek("maikki_gave_drink")
+   vn.label("cont02")
+   dvd(_([["I would like to ask about your relationship with the Independent Counsel, Maisie McPherson. What is your relationship?"]]))
+   vn.na(_([[Maikki objects, but is overruled.]]))
+   vn.menu{
+      {_([["Just met her."]]), "cont03_justmet"},
+      {_([["We are friends."]]), "cont03_friends"},
+      {_([["I have seen her at Minerva Station."]]), "cont03_station"},
+   }
+
+   vn.label("cont03")
+
+   vn.scene()
+   vn.newCharacter( zlk )
+   vn.transition()
+   zlk(_([[Finally, it is House Za'lek's interrogation.]]))
+   if helped=="dvaered" then
+      zlk(_([[""]]))
+   else
+   end
+
 
    vn.run()
 
