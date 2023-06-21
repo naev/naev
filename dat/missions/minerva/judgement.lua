@@ -378,7 +378,9 @@ Having finished her interrogation, Maikki sits down.]]))
    else
       dvd(fmt.f(_([["Here is the proof in the black box we recovered from the scavenger ships. We can see that the last moments clearly log {playername}'s ship attacking them."]]),
          {playername=player.name()}))
-      lied = lied+1
+      vn.func( function ()
+         lied = lied+1
+      end )
    end
    vn.jump("cont02")
 
@@ -391,31 +393,57 @@ Having finished her interrogation, Maikki sits down.]]))
       dvd(fmt.f(_([[The Dvaered representative looks puzzled.
 "{playername} may have not destroyed the scavengers as we have thought, but this does show that they do not speak the truth."]]),
          {playername=player.name()}))
-      lied = lied+1
+      vn.func( function ()
+         lied = lied+1
+      end )
    end
    vn.jump("cont02")
 
    local gave_drink = var.peek("maikki_gave_drink")
-   vn.label("cont02")
-   dvd(_([["I would like to ask about your relationship with the Independent Counsel, Maisie McPherson. What is your relationship?"]]))
-   vn.na(_([[Maikki objects, but is overruled.]]))
-   vn.menu{
-      {_([["Just met her."]]), "cont03_justmet"},
-      {_([["We are friends."]]), "cont03_friends"},
-      {_([["I have seen her at Minerva Station."]]), "cont03_station"},
-   }
+   if gave_drink then
+      vn.label("cont02")
+      dvd(_([["I would like to ask about your relationship with the Independent Counsel, Maisie McPherson. What is your relationship?"]]))
+      vn.na(_([[Maikki objects, but is overruled.]]))
+      vn.menu{
+         {_([["Just met her."]]), "cont03_justmet"},
+         {_([["We are friends."]]), "cont03_friends"},
+         {_([["I have seen her at Minerva Station."]]), "cont03_justmet"},
+      }
+
+      vn.label("cont03_justmet")
+      dvd(_([["Then I would like to ask the witness what is this."]]))
+      vn.na(_([[They show a clear picture of you buying Maikki a drink on Minerva station.]]))
+      vn.func( function ()
+         lied = lied+1
+      end )
+      vn.jump("cont03")
+
+      vn.label("cont03_friends")
+      dvd(_([["I would like to question the impartiality of the witness. With such a close relationship with the independent counsel, it is likely they have ulterior motivations regarding their declarations."]]))
+      vn.jump("cont03")
+   end
 
    vn.label("cont03")
+   dvd(_([["I have no further questions for the witness."]]))
 
    vn.scene()
    vn.newCharacter( zlk )
    vn.transition()
    zlk(_([[Finally, it is House Za'lek's interrogation.]]))
    if helped=="dvaered" then
-      zlk(_([[""]]))
+      zlk(fmt.f(_([["{playername}, although you seem to have a preference for joining House Dvaered in brutish ways against House Za'lek. Let us put that aside to analyze your personality and lack of trustworthiness."]]),
+         {playername=player.name()}))
    else
+      zlk(fmt.f(_([["{playername}, let us analyze your personality and lack of trustworthiness."]]),
+         {playername=player.name()}))
    end
+   zlk(_([[""]]))
 
+   vn.func( function ()
+      if lied then
+         vn.jump("somewhere")
+      end
+   end )
 
    vn.run()
 
