@@ -306,11 +306,13 @@ Maikki gives an impeccable formal bow.]]))
 
    maikki(fmt.f(_([[{playername}, you can attest for the constant bickering and fighting between House Za'lek and House Dvaered at Minerva Station. Is it not true that you were dragged into a firefight right outside Minerva Station.]]),
       {playername=player.name()}))
-   vn.menu{
-      {_([["House Za'lek provoked House Dvaered."]]), "01_cont"},
-      {_([["House Dvaered attacked House Za'lek."]]), "01_cont"},
-      {_([["Both houses were picking fights."]]), "01_cont"},
-   }
+   vn.menu( function ()
+      return rnd.permutation{
+         {_([["House Za'lek provoked House Dvaered."]]), "01_cont"},
+         {_([["House Dvaered attacked House Za'lek."]]), "01_cont"},
+         {_([["Both houses were picking fights."]]), "01_cont"},
+      }
+   end )
 
    -- Set positions
    vn.func( function ()
@@ -361,11 +363,13 @@ Having finished her interrogation, Maikki sits down.]]))
    local scavengers_alive = var.peek( "maikki_scavengers_alive" )
    dvd(fmt.f(_([["There have been reports of scavengers missing at the {stealthsys} system, you wouldn't know anything about that, would you?"]]),
       {stealthsys=system.get("Zerantix")}))
-   vn.menu{
-      {_([["I have no idea what you are talking about."]]), "cont02_met"},
-      {_([["I remember blowing up scavengers there."]]), "cont02_blowup"},
-      {_([["I met some, but nothing happened."]]), "cont02_met"},
-   }
+   vn.menu( function ()
+      return rnd.permutation{
+         {_([["I have no idea what you are talking about."]]), "cont02_met"},
+         {_([["I remember blowing up scavengers there."]]), "cont02_blowup"},
+         {_([["I met some, but nothing happened."]]), "cont02_met"},
+      }
+   end )
 
    vn.label("cont02_met")
    dvd(fmt.f(_([["Not only did {playername} meet up wit the scavengers, they blew them up, and left their remains in the Nebula!"]]),
@@ -404,11 +408,13 @@ Having finished her interrogation, Maikki sits down.]]))
       vn.label("cont02")
       dvd(_([["I would like to ask about your relationship with the Independent Counsel, Maisie McPherson. What is your relationship?"]]))
       vn.na(_([[Maikki objects, but is overruled.]]))
-      vn.menu{
-         {_([["Just met her."]]), "cont03_justmet"},
-         {_([["We are friends."]]), "cont03_friends"},
-         {_([["I have seen her at Minerva Station."]]), "cont03_justmet"},
-      }
+      vn.menu( function ()
+         return rnd.permutation{
+            {_([["Just met her."]]), "cont03_justmet"},
+            {_([["We are friends."]]), "cont03_friends"},
+            {_([["I have seen her at Minerva Station."]]), "cont03_justmet"},
+         }
+      end )
 
       vn.label("cont03_justmet")
       dvd(_([["Then I would like to ask the witness what is this."]]))
@@ -437,7 +443,72 @@ Having finished her interrogation, Maikki sits down.]]))
       zlk(fmt.f(_([["{playername}, let us analyze your personality and lack of trustworthiness."]]),
          {playername=player.name()}))
    end
-   zlk(_([[""]]))
+
+   local harper_ticket = var.peek("harper_ticket") -- "credits", "tokens", "free", "stole"
+   if harper_ticket=="free" or harper_ticket=="stole" then
+      zlk(_([["Do you know an individual know as Harper Bowdown?"]]))
+      vn.menu( function ()
+         return rnd.permutation{
+            {_([["Never met them."]]), "cont03_nomet"},
+            {_([["They gave me their winning ticket."]]), "cont03_gave"},
+            {_([["I took their winning ticket."]]), "cont03_took"},
+         }
+      end )
+
+      vn.label("cont03_nomet")
+      vn.func( function ()
+         lied = lied+1
+      end )
+      zlk(_([["Not only do we have a testimony from Harper Bowdown that you met them, but that you forcibly took their possessions, a winning ticket from a Minerva Station raffle!"]]))
+      vn.jump("cont03")
+
+      vn.label("cont03_gave")
+      vn.func( function ()
+         lied = lied+1
+      end )
+      zlk(_([["You say they gave you their winning ticket, but we have a testimony from Harper Bowdown where they say you intimidated and took the ticket by force!"]]))
+      vn.jump("cont03")
+
+      vn.label("cont03_took")
+      zlk(fmt.f(_([["Let it be noted that {playername} admits to using intimidation and force te deprive a legal Imperial citizen of their possessions!"]]),
+         {playername=player.name()}))
+      vn.jump("cont03")
+
+      vn.label("cont03")
+   end
+
+   local strangelove_death = var.peek("strangelove_death") -- "unplug", "comforted", "shot", nil
+   zlk(fmt.f(_([[The Za'lek Lawyer looks at their notes.
+"Let us see, {playername}, you wouldn't know what happened to the Za'lek Scientist Dr. Strangelove?"]]),
+   {playername=player.name()}))
+   vn.menu( function ()
+      return rnd.permutation{
+         {_([["He got what he deserved."]]), "cont04_deserve"},
+         {_([["I killed him."]]), "cont04_kill"},
+         {_([["He passed away."]]), "cont04_dead"},
+      }
+   end )
+
+   vn.label("cont04_dead")
+   vn.label("cont04_deserve")
+   if strangelove_death == "comforted" then
+   --else
+      vn.func( function ()
+         lied = lied+1
+      end )
+      zlk(fmt.f(_([["You see, {playername}, we were able to recover the black box from Dr. Strangelove's ship. The audio log makes it clear "]]),
+         {playername=player.name()}))
+   end
+   vn.jump("cont04")
+
+   vn.label("cont04_kill")
+   if strangelove_death == "comforted" then
+      vn.func( function ()
+         lied = lied+1
+      end )
+   --else
+   end
+   vn.jump("cont04")
 
    vn.func( function ()
       if lied then
