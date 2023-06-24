@@ -122,6 +122,9 @@ function trial_start ()
 - strangelove_death ("unplug", "comforted", "shot", nil)
 --]]
    local didtrial = false
+   local zl_points = 0
+   local dv_points = 0
+   local pir_points = 0
 
    -- Main characters
    local zuri = minerva.vn_zuri()
@@ -308,30 +311,54 @@ Maikki gives an impeccable formal bow.]]))
       {playername=player.name()}))
    vn.menu( function ()
       return rnd.permutation{
-         {_([["House Za'lek provoked House Dvaered."]]), "01_cont"},
-         {_([["House Dvaered attacked House Za'lek."]]), "01_cont"},
-         {_([["Both houses were picking fights."]]), "01_cont"},
+         {_([["House Za'lek provoked House Dvaered."]]), "01_dv"},
+         {_([["House Dvaered attacked House Za'lek."]]), "01_zl"},
+         {_([["Both houses were picking fights."]]), "01_both"},
       }
    end )
 
+   vn.label("01_dv")
+   vn.func( function ()
+      dv_points = dv_points+1
+   end )
+   vn.jump("01_cont")
+
+   vn.label("01_zl")
+   vn.func( function ()
+      zl_points = zl_points+1
+   end )
+   vn.jump("01_cont")
+
+   vn.label("01_zl")
+   vn.func( function ()
+      pir_points = pir_points+1
+   end )
+   vn.jump("01_cont")
+
+   vn.label("01_cont")
    -- Set positions
    vn.func( function ()
       zlk.pos = "farleft"
       dvd.pos = "farright"
    end )
-   vn.label("01_cont")
    local helped = var.peek("minerva_altercation_helped")
    if helped == "dvaered" then
       vn.appear( zlk, "slideup" )
       zlk(fmt.f(_([["Objection! {playername} sided with the Dvaered and brutishly helped destroy a House Za'lek vessel!"]]),
          {playername=player.name()}))
       maikki(_([[Maikki frowns a bit.]]))
+      vn.func( function ()
+         dv_points = dv_points-1
+      end )
       vn.disappear( zlk, "slideup" )
    elseif helped == "zalek" then
       vn.appear( dvd, "slideup" )
       dvd(fmt.f(_([["Objection! {playername} joined the fight with House Za'lek and backstabbed the Dvaered vessel!"]]),
          {playername=player.name()}))
       maikki(_([[Maikki frowns a bit.]]))
+      vn.func( function ()
+         zl_points = zl_points-1
+      end )
       vn.disappear( dvd, "slideup" )
    else
       maikki(_([["What is important is that such fighting creates uncertainty, and insecurity at Minerva Station."]]))
@@ -345,7 +372,6 @@ Maikki gives an impeccable formal bow.]]))
    maikki(_([["House Dvaered and House Za'lek can not be trusted, and the only way to ensure the local prosperity is to ensure the independence of Minerva Station."
 Having finished her interrogation, Maikki sits down.]]))
 
-   local lied = 0
    vn.func( function ()
       zlk.pos = "center"
       dvd.pos = "center"
@@ -365,13 +391,13 @@ Having finished her interrogation, Maikki sits down.]]))
       {stealthsys=system.get("Zerantix")}))
    vn.menu( function ()
       return rnd.permutation{
-         {_([["I have no idea what you are talking about."]]), "cont02_met"},
-         {_([["I remember blowing up scavengers there."]]), "cont02_blowup"},
-         {_([["I met some, but nothing happened."]]), "cont02_met"},
+         {_([["I have no idea what you are talking about."]]), "02_met"},
+         {_([["I remember blowing up scavengers there."]]), "02_blowup"},
+         {_([["I met some, but nothing happened."]]), "02_met"},
       }
    end )
 
-   vn.label("cont02_met")
+   vn.label("02_met")
    dvd(fmt.f(_([["Not only did {playername} meet up wit the scavengers, they blew them up, and left their remains in the Nebula!"]]),
       {playername=player.name()}))
    if scavengers_alive then
@@ -379,16 +405,19 @@ Having finished her interrogation, Maikki sits down.]]))
       scv(_([["We're not dead!"]]))
       vn.disappear( scv, "slideup" )
       dvd(_([[Murmurs spread across the room as the Dvaered Representative frowns.]]))
+      vn.func( function ()
+         zl_points = zl_points-1
+      end )
    else
       dvd(fmt.f(_([["Here is the proof in the black box we recovered from the scavenger ships. We can see that the last moments clearly log {playername}'s ship attacking them."]]),
          {playername=player.name()}))
       vn.func( function ()
-         lied = lied+1
+         pir_points = pir_points-1
       end )
    end
-   vn.jump("cont02")
+   vn.jump("02")
 
-   vn.label("cont02_blowup")
+   vn.label("02_blowup")
    dvd(_([["So you admit to destroying civilian vessels in the Nebula, does this not make you a pirate? We ought to have a trial about your infamy, rather than the future of Minerva Station!"]]))
    if scavengers_alive then
       vn.appear( scv, "slideup" )
@@ -398,38 +427,38 @@ Having finished her interrogation, Maikki sits down.]]))
 "{playername} may have not destroyed the scavengers as we have thought, but this does show that they do not speak the truth."]]),
          {playername=player.name()}))
       vn.func( function ()
-         lied = lied+1
+         pir_points = pir_points+1
       end )
    end
-   vn.jump("cont02")
+   vn.jump("02")
 
    local gave_drink = var.peek("maikki_gave_drink")
+   vn.label("02")
    if gave_drink then
-      vn.label("cont02")
       dvd(_([["I would like to ask about your relationship with the Independent Counsel, Maisie McPherson. What is your relationship?"]]))
       vn.na(_([[Maikki objects, but is overruled.]]))
       vn.menu( function ()
          return rnd.permutation{
-            {_([["Just met her."]]), "cont03_justmet"},
-            {_([["We are friends."]]), "cont03_friends"},
-            {_([["I have seen her at Minerva Station."]]), "cont03_justmet"},
+            {_([["Just met her."]]), "03_justmet"},
+            {_([["We are friends."]]), "03_friends"},
+            {_([["I have seen her at Minerva Station."]]), "03_justmet"},
          }
       end )
 
-      vn.label("cont03_justmet")
+      vn.label("03_justmet")
       dvd(_([["Then I would like to ask the witness what is this."]]))
       vn.na(_([[They show a clear picture of you buying Maikki a drink on Minerva station.]]))
       vn.func( function ()
-         lied = lied+1
+         dv_points = dv_points+1
       end )
-      vn.jump("cont03")
+      vn.jump("03_friends")
 
-      vn.label("cont03_friends")
+      vn.label("03_friends")
       dvd(_([["I would like to question the impartiality of the witness. With such a close relationship with the independent counsel, it is likely they have ulterior motivations regarding their declarations."]]))
-      vn.jump("cont03")
+      vn.jump("03")
    end
 
-   vn.label("cont03")
+   vn.label("03")
    dvd(_([["I have no further questions for the witness."]]))
 
    vn.scene()
@@ -449,70 +478,121 @@ Having finished her interrogation, Maikki sits down.]]))
       zlk(_([["Do you know an individual know as Harper Bowdown?"]]))
       vn.menu( function ()
          return rnd.permutation{
-            {_([["Never met them."]]), "cont03_nomet"},
-            {_([["They gave me their winning ticket."]]), "cont03_gave"},
-            {_([["I took their winning ticket."]]), "cont03_took"},
+            {_([["Never met them."]]), "04_nomet"},
+            {_([["They gave me their winning ticket."]]), "04_gave"},
+            {_([["I took their winning ticket."]]), "04_took"},
          }
       end )
 
-      vn.label("cont03_nomet")
+      vn.label("04_nomet")
       vn.func( function ()
-         lied = lied+1
+         pir_points = pir_points-1
       end )
       zlk(_([["Not only do we have a testimony from Harper Bowdown that you met them, but that you forcibly took their possessions, a winning ticket from a Minerva Station raffle!"]]))
-      vn.jump("cont03")
+      vn.jump("04")
 
-      vn.label("cont03_gave")
+      vn.label("04_gave")
       vn.func( function ()
-         lied = lied+1
+         pir_points = pir_points-1
       end )
       zlk(_([["You say they gave you their winning ticket, but we have a testimony from Harper Bowdown where they say you intimidated and took the ticket by force!"]]))
-      vn.jump("cont03")
+      vn.jump("cont04")
 
-      vn.label("cont03_took")
+      vn.label("cont04_took")
       zlk(fmt.f(_([["Let it be noted that {playername} admits to using intimidation and force te deprive a legal Imperial citizen of their possessions!"]]),
          {playername=player.name()}))
-      vn.jump("cont03")
-
-      vn.label("cont03")
+      vn.jump("cont04")
    end
 
+   vn.label("cont04")
    local strangelove_death = var.peek("strangelove_death") -- "unplug", "comforted", "shot", nil
    zlk(fmt.f(_([[The Za'lek Lawyer looks at their notes.
 "Let us see, {playername}, you wouldn't know what happened to the Za'lek Scientist Dr. Strangelove?"]]),
    {playername=player.name()}))
    vn.menu( function ()
       return rnd.permutation{
-         {_([["He got what he deserved."]]), "cont04_deserve"},
-         {_([["I killed him."]]), "cont04_kill"},
-         {_([["He passed away."]]), "cont04_dead"},
+         {_([["He got what he deserved."]]), "05_deserve"},
+         {_([["I killed him."]]), "05_kill"},
+         {_([["He passed away."]]), "05_dead"},
       }
    end )
 
-   vn.label("cont04_dead")
-   vn.label("cont04_deserve")
+   vn.label("05_dead")
+   vn.label("05_deserve")
    if strangelove_death == "comforted" then
-   --else
+      zlk(fmt.f(_([["You see, {playername}, we were able to recover the black box from Dr. Strangelove's ship. The audio log is not clear, but it seems like you were there at that moment."]]),
+         {playername=player.name()}))
+   else
       vn.func( function ()
-         lied = lied+1
+         pir_points = pir_points-1
       end )
-      zlk(fmt.f(_([["You see, {playername}, we were able to recover the black box from Dr. Strangelove's ship. The audio log makes it clear "]]),
+      zlk(fmt.f(_([["You see, {playername}, we were able to recover the black box from Dr. Strangelove's ship. The audio log makes it clear that you were the one to end their life."]]),
          {playername=player.name()}))
    end
-   vn.jump("cont04")
+   vn.jump("05")
 
-   vn.label("cont04_kill")
+   vn.label("05_kill")
+   --[[
    if strangelove_death == "comforted" then
       vn.func( function ()
          lied = lied+1
       end )
-   --else
    end
-   vn.jump("cont04")
-
+   --]]
    vn.func( function ()
-      if lied then
-         vn.jump("somewhere")
+      zl_points = zl_points+1
+   end )
+   zlk(fmt.f(_([["Your honour, {playername} confesses to the murder of Dr. Strangelove."]]),
+      {playername=player.name()}))
+   vn.jump("05")
+
+   vn.label("05")
+   zlk(fmt.f(_([["Although the exact details of what happened between {playername} and Dr. Strangelove is not clear, that should be subject to another trial, what is clear is that {playername} can not be trusted and their testimony should be invalidated."]]),
+      {playername=player.name()}))
+   zlk(_([["That is all I have to say."
+The Za'lek Lawyer sits down.]]))
+
+   vn.scene()
+   vn.newCharacter( judge )
+   vn.transition()
+   judge(fmt.f(_([["{playername}, you may return to your seat."]]),
+      {playername=player.name()}))
+   log = vne.flashbackTextStart(_("Narrator"))
+   log(_([[The dispositions continue with more formalities with all sides calling for motions and objecting, however, it does not seem like much is being added to the arguments.
+
+House Za'lek and House Dvaered seem to be generally on the passive, while Maikki is very aggressive pressing the houses without giving them much room to breath.
+
+Eventually when all argumentation is exhausted the different representatives repeat their main points before judgement is passed.]]))
+   vne.flashbackTextEnd()
+
+   --[[
+   The total points the player can get are below:
+
+   zl_points in [-2,+2]
+   dv_points in [-1,+2]
+   pir_points in [-3,+2]
+   --]]
+   local winner
+   vn.func( function ()
+      -- Case House Za'lek "wins"
+      if zl_points > dv_points and zl_points > pir_points then
+         winner="zalek"
+      -- Case House Dvaered "wins"
+      elseif dv_points > zl_points and dv_points > pir_points then
+         winner="dvaered"
+      -- Last case "pirates" win
+      else
+         winner="indepnedent"
+      end
+   end )
+   judge(_([[""]]))
+   judge( function ()
+      if winner=="zalek" then
+         return _([[""]])
+      elseif winner=="dvaered" then
+         return _([[""]])
+      else
+         return _([[""]])
       end
    end )
 
