@@ -19,15 +19,15 @@
 -- Find the Dvaered spy
 --]]
 local minerva = require "common.minerva"
-local portrait = require 'portrait'
 local vn = require 'vn'
+local vni = require 'vnimage'
 local love_shaders = require "love_shaders"
 local fmt = require "format"
 local lmisn = require "lmisn"
 
 local reward_amount = minerva.rewards.pirate3
 
-local harper_image = portrait.getFullPath( portrait.get() ) -- TODO replace?
+local harper_image = vni.generic() -- TODO unique?
 local harper_bribe_big = 1e6
 local harper_bribe_sml = 1e5
 local harper_bribe_tkn = 1000

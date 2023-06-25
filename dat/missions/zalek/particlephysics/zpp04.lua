@@ -18,11 +18,10 @@
    Player has to go get some stuff from artefact hunters and gets attacked on way back
 ]]--
 local vn = require "vn"
+local vni = require "vnimage"
 local fmt = require "format"
 local zpp = require "common.zalek_physics"
-local portrait = require "portrait"
 local fleet = require "fleet"
-
 
 local reward = zpp.rewards.zpp04
 local cargo_name = _("strange container")
@@ -32,7 +31,7 @@ local destpnt, destsys = spob.getS( "Thaddius Terminal" )
 local retpnt, retsys = spob.getS( "Katar I" )
 
 -- TODO redo the portrait
-mem.shady_dealer = portrait.get("Pirate")
+mem.shady_dealer_image, mem.shady_dealer_portrait = vni.pirate()
 
 function create ()
    if not misn.claim( destsys ) then
@@ -96,7 +95,7 @@ local npcguy
 function land ()
    local pcur = spob.cur()
    if mem.state==1 and pcur==destpnt then
-      npcguy = misn.npcAdd( "approach_guy", _("Shady Dealer"), mem.shady_dealer, _("A fairly shady dealer seems to be staring at you and beckoning for you to come over. Could this be the individual Noona told you to meet…?") )
+      npcguy = misn.npcAdd( "approach_guy", _("Shady Dealer"), mem.shady_dealer_portrait, _("A fairly shady dealer seems to be staring at you and beckoning for you to come over. Could this be the individual Noona told you to meet…?") )
 
    elseif mem.state==3 and pcur==retpnt then
       vn.clear()
@@ -124,7 +123,7 @@ function approach_guy ()
    local cargo_space = false
    vn.clear()
    vn.scene()
-   local d = vn.newCharacter( _("Shady Dealer"), {image=portrait.getFullPath(mem.shady_dealer)} )
+   local d = vn.newCharacter( _("Shady Dealer"), {image=mem.shady_dealer_image} )
    vn.transition()
    if talked_once then
       vn(_([[You once again approach the shady dealer.]]))

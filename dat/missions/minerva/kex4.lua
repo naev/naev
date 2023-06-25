@@ -19,9 +19,9 @@
    fight at the end.
 --]]
 local minerva  = require "common.minerva"
-local portrait = require 'portrait'
 local love_audio = require 'love.audio'
 local vn       = require 'vn'
+local vni      = require "vnimage"
 local equipopt = require 'equipopt'
 local reverb_preset = require 'reverb_preset'
 local fmt = require "format"
@@ -38,8 +38,7 @@ local enemies, pjie, thug_leader, thug_pilots -- Non-persistent state
 local targetplanet, targetsys = spob.getS("Jorlan")
 
 -- TODO custom graphic?
-mem.jie_portrait = portrait.get()
-mem.jie_image = portrait.getFullPath(mem.jie_portrait)
+mem.jie_image, mem.jie_portrait = vni.generic()
 
 local money_reward = minerva.rewards.kex4
 
