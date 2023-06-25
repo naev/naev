@@ -21,8 +21,7 @@ local vn = require 'vn'
 local vni = require 'vnimage'
 local vne = require 'vnextras'
 local fmt = require "format"
---local lmisn = require "lmisn"
---local love_shaders = require "love_shaders"
+local love_shaders = require "love_shaders"
 
 local zalek_image = "zalek_thug1.png"
 local dvaered_image = "dvaered_thug1.png"
@@ -93,17 +92,6 @@ function accept ()
 
    hook.land("land")
    hook.enter("enter")
-end
-
--- Make sure can land on the Jade Court
-function enter ()
-   if mem.state == 0 then
-      if system.cur()~=trialsys then return end
-      trialspb:landOverride(true)
-      return
-   end
-
-   -- TODO cutscene post-trial
 end
 
 function land ()
@@ -582,26 +570,86 @@ Eventually when all argumentation is exhausted the different representatives rep
          winner="dvaered"
       -- Last case "pirates" win
       else
-         winner="indepnedent"
+         winner="independent"
       end
    end )
-   judge(_([[""]]))
+   judge(_([["With the deliberations over, it is time to pass judgement."]]))
    judge( function ()
       if winner=="zalek" then
-         return _([[""]])
+         return _([["After carefully hearing the arguments presented by the different parties, sovereignty of Minerva Station shall be given to House Za'lek. It is a tough decision, however, House Za'lek offers the best guarantees to stability and prosperity for the station and the system."]])
       elseif winner=="dvaered" then
-         return _([[""]])
+         return _([["After carefully hearing the arguments presented by the different parties, sovereignty of Minerva Station shall be given to House Dvaered. It is a tough decision, however, House Dvaered offers the best guarantees for security and stability for Minerva station and the system."]])
       else
-         return _([[""]])
+         return _([["After carefully hearing the arguments presented by the different parties, sovereignty of Minerva Station shall be kept independent. It is a tough decision, however, independence offers the best continuity for Minerva Station. Additional supervision will be provided by the Empire until the situation improves."]])
       end
    end )
+   judge(_([["This concludes..."]]))
+
+   vn.scene()
+   local angrysong = 'snd/sounds/songs/feeling-good-08.ogg'
+   vn.music( angrysong )
+   vn.newCharacter( kex )
+   vn.transition("hexagon")
+   kex(_([[Suddenly, Kex flies up to the roof and perches himself on a small indentation.]]))
+   kex(_([["It's all a scam! Fraud! Fraud! Fraud! Fraud!"]]))
+   vn.na(_([[The people in the room gasp, but don't know how to react to the abrupt development. Security guards draw their weapons, but are hesitant to shoot.]]))
+   kex(_([["All this bickering and arguing, yet nothing really changes. Just greedy bastards trying to get their cut of the pie!"]]))
+   kex(_([["You really think this is about Minerva Station? And not the experimental weapon laboratory hidden within?"]]))
+   vn.na(_([[You can see the judge and House representatives shift around uncomfortably.]]))
+   kex(_([["Well, it all ends here!"]]))
+   vn.func( function () kex.shader = love_shaders.aura() end )
+   -- TODO activation sound
+   kex(_([[Kex's eyes glow red and you hear the activation sound of some sort of weapon.]]))
+   vn.func( function () kex.shader = nil end )
+   vn.disappear( kex, "slidedown" )
+   -- TODO crazy music / yelling?
+   vn.na(_([[As people start scrambling and yelling, you hear a shot and Kex falls down as chaos unfolds.]]))
+   vn.na(_([[You hear shots being fired left and right as you duck for cover. The Judge's levitating desk crashes in the background creating a small explosion as things take a turn for the worst.]]))
+   vn.menu{
+      {_([[Go for the door.]]),"06_getout"},
+      {_([[Try to find Kex.]]),"06_kex"},
+   }
+
+   vn.label("06_kex")
+   vn.na(_([["You try to make your way to where Kex fell, but don't find them. As the smoke keeps on filling the room, you have no choice but to head towards to the door and try to save yourself. You jump over bodies and try to push yourself out of the room."]]))
+   vn.jump("06")
+
+   vn.label("06_getout")
+   vn.na(_([[As smoke fills the room, you jump over bodies and try to push yourself out of the room.]]))
+   vn.jump("06")
+
+   vn.label("06")
+   vn.na(_([[You hug the corridors and try to get away from the mayhem, trying to stick low so that you don't get caught by Imperial soldiers that are starting to swarm the area.]]))
+   vn.na(_([[You are almost at the spaceport when suddenly you hear a rasping voice coming out from a side corridor.]]))
+
+   vn.scene()
+   vn.music( minerva.loops.pirate ) -- TODO make a bit sadder and slower
+   vn.newCharacter( zuri )
+   vn.transition()
+   zuri(fmt.f(_([["Hey {playername}..."
+Zuri coughs a bit, she doesn't look like she's in good shape and seems to be clutching something.]]),
+      {playername=player.name()}))
+   vn.na(_([[You get closer and you see that she is covered in a fair amount of blood and seems to be holding onto Kex!]]))
+   zuri(_([["Things didn't turn out quite how I expected..."
+She grimaces in pain as she talks.]]))
+   vn.na(_([[You shush her and try to help her stop her bleeding. This doesn't look too good.]]))
+   zuri(_([["I'm going to have to ask another favour of you..."
+She tries to adjust her position a bit to breath more easily, the pain is clear in her eyes.]]))
+   zuri(_([["I need you to take us to a meeting point, shouldn't be far from here."]]))
+   vn.menu{
+      {_([[Take her.]]),"07_accept"},
+      {_([[Come back in a bit.]]),"07_decline"},
+   }
 
    vn.run()
 
-   -- Just finish if the player didn't actually go through with it
-   if not didtrial then return end
+   if didtrial then
+      misn.finish(true)
+   end
+end
 
-   -- Should takeoff and play cutscene
-   mem.state = 1 -- state update ensures the trial doesn't repeat and the player can load a game directly into the cutscene
-   player.takeoff()
+-- Make sure can land on the Jade Court
+function enter ()
+   if system.cur()~=trialsys then return end
+   trialspb:landOverride(true)
 end
