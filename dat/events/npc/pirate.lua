@@ -101,7 +101,7 @@ local function test_ravenclan () return spob.cur():faction()==fct_ravenclan end
 local function test_dreamerclan () return spob.cur():faction()==fct_dreamerclan end
 local function test_blacklotus () return spob.cur():faction()==fct_blacklotus end
 local function test_chapter0 () return (player.chapter()=="0") end
-local function tneg( f ) return not f() end
+local function tneg( f ) return function () return not f() end end
 
 local msg_cond = {
    { tneg(test_wildones), _([["The Wild Ones clan is too out of control for me. It seems like all they want to do is pillage and destroy!"]]) },
