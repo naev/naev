@@ -64,7 +64,7 @@ local function fullscreenEnd( params )
       else
          if params.characters then
             for k,c in ipairs(params.characters) do
-               vn._characters.append( c )
+               table.insert( vn._characters, c )
             end
          else
             vn._characters = characters
