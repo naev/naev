@@ -120,7 +120,7 @@ function trial_start ()
    local kex = minerva.vn_kex()
    local maikki = minerva.vn_maikki()
    local ceo = minerva.vn_ceo()
-   local judge = vn.Character.new( _("Judge Holmes"), {image=vni.genericFemale()} ) -- TODO replace graphics
+   local judge = vn.Character.new( _("Judge Holmes"), { image=vni.genericFemale() } ) -- TODO replace graphics
    local zlk = vn.Character.new( _("Za'lek Lawyer"), { image=zalek_image, color=zalek_colour } )
    local dvd = vn.Character.new( _("Dvaered Representative"), { image=dvaered_image, color=dvaered_colour } )
    local scv = vn.Character.new( minerva.scavengera.name,
@@ -261,7 +261,7 @@ Maikki gives an impeccable formal bow.]]))
 "Ladies and gentlemen of the court, esteemed Judges, and respected attendees,"]]))
    dvd(_([["Today, I stand before you as the representative of House Dvaered, a house known for its strength, determination, and unwavering pursuit of victory. I come before you with passion and conviction. I will argue why the ownership of Minerva Station belongs to House Dvaered."]]))
    log = vne.flashbackTextStart(_("Narrator"))
-   log(_([[The Dvaered Representative goes on about how only House Dvaered can crush weakness, disobedience, and insubordination through rigorous discipline and ]]))
+   log(_([[The Dvaered Representative goes on about how only House Dvaered can crush weakness, disobedience, and insubordination through rigorous discipline and punishment. They argue how this has worked for many of their planets, turning them from dens of piracy, to beacons of order.]]))
    vne.flashbackTextEnd()
    dvd(_([["...In conclusion, I ask you to embrace the spirit of House Dvaered. Our strength, our desire for conquest, our loyalty, and our commitment to justice make us the natural choice for owning Minerva Station."]]))
 
