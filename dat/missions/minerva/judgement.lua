@@ -641,6 +641,16 @@ She tries to adjust her position a bit to breath more easily, the pain is clear 
    vn.run()
 
    if didtrial then
+      local winnerstr
+      if winner=="zalek" then
+         winnerstr = _([[ The judge ended up conceding Minerva Station to House Za'lek.]])
+      elseif winner=="dvaered" then
+         winnerstr = _([[ The judge ended up conceding Minerva Station to House Dvaered.]])
+      else
+         winnerstr = _([[ The judge ended up allowing Minerva Station to remain independent.]])
+      end
+      minerva.log.pirate(fmt.f(_([[You went with Zuri to participate in a trial to decide the future of Minerva Station. Maikki took the role of the Minerva Station defendant when the CEO passed out. You were called as a witness and your integrity was question.{winnerstr} Suddenly, Kex interrupted claimed that Minerva Station was a secret weapon laboratory, before trying to activate a weapon. This caused panic and a firefight to break out. You managed to escape with your life and found a seriously injured Zuri with an unconscious Kex who now need help getting off of {spb}.]]),
+         {winnerstr=winnerstr, spb=trialspb}))
       misn.finish(true)
    end
 end
