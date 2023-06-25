@@ -10,18 +10,16 @@
 --[[
    Pirate offers to sell the player a fake transponder. Might be better to have it be a small mission or campaign to be a bit more interesting given that it should be fairly strong.
 --]]
-local portrait = require 'portrait'
 local vn = require 'vn'
+local vni = require 'vnimage'
 local fmt = require "format"
 
 local pir_name = _("Shifty-Eyed Pirate")
-local pir_portrait = portrait.get()
-local pir_image = portrait.getFullPath(pir_portrait)
+local pir_image, pir_portrait = vni.pirate()
 local pir_description = _("You see a seedy pirate flashing looks at you, as if they had something interesting to show you.")
 
 local transponder = outfit.get("Fake Transponder")
 local cost = 1e6
-
 
 function create ()
    -- Player already has it somehow, so this event makes no sense
