@@ -553,7 +553,7 @@ Protocols don't cover this. What should we do?]]))
    l2g(_([[…]]))
    log(_([[ …]]),true)
    log(_([[ …]]),true)
-   vne.flashbackTextEnd{ done=true, transition="blur", length=3 }
+   vne.flashbackTextEnd{ done=true, transition="blur", transition_length=3 }
    vn.run()
    music.stop()
 

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Jade Court">
- <lua>spob/lua/empire_mil_restricted.lua</lua>
  <pos x="-2507.492761" y="-4718.400357"/>
  <GFX>
   <space>station-commerce.webp</space>
@@ -27,7 +26,6 @@
   <bar>This is just an ordinary bar. Lawyers don't come here much, as they all have their own private offices aboard the station.</bar>
  </general>
  <tags>
-  <tag>restricted</tag>
   <tag>station</tag>
  </tags>
 </spob>

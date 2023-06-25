@@ -358,14 +358,7 @@ They lift up their toy Lancelot. You can barely make out a golden Efreeti etched
       local nw, _nh = naev.gfx.dim()
       local shipgfx = lg.newImage( ship.get(question_data.answer):gfxComm() )
       local shipchar = vn.Character.new( "ship", {image=shipgfx, pos="left"} )
-      local slpos, slnewpos
-      local function runinit ()
-         slpos = sl.offset
-         slnewpos = 0.75
-      end
-      vn.animation( 1, function( alpha, _dt, _params )
-         sl.offset = slnewpos*alpha + slpos*(1-alpha)
-      end, nil, "ease-in-out", runinit )
+      vn.move( sl, 0.75 )
       vn.appear( shipchar )
       vn.func( function ()
          vn.menu_x = math.min( -1, 500 - nw/2 )
@@ -373,9 +366,7 @@ They lift up their toy Lancelot. You can barely make out a golden Efreeti etched
       sl(_([["Great! So take a look at this ship and listen carefully."]]) .. "\n\n" .. question_data.question)
       function restore_vn ()
          vn.disappear( shipchar )
-         vn.animation( 1, function( alpha, _dt, _params )
-            sl.offset = slpos*alpha + slnewpos*(1-alpha)
-         end, nil, "ease-in-out" )
+         vn.move( sl, "center" )
       end
    end
 

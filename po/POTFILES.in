@@ -2993,6 +2993,7 @@ dat/missions/flf/flf_pirates.lua
 dat/missions/flf/flf_pre01.lua
 dat/missions/flf/flf_pre02.lua
 dat/missions/flf/flf_rogue.lua
+dat/missions/minerva/judgement.lua
 dat/missions/minerva/kex1.lua
 dat/missions/minerva/kex2.lua
 dat/missions/minerva/kex3.lua
@@ -3005,6 +3006,7 @@ dat/missions/minerva/pirate2.lua
 dat/missions/minerva/pirate3.lua
 dat/missions/minerva/pirate4.lua
 dat/missions/minerva/pirate5.lua
+dat/missions/minerva/pirate6.lua
 dat/missions/neutral/animaltransport.lua
 dat/missions/neutral/antlejos/ant01.lua
 dat/missions/neutral/antlejos/ant02.lua

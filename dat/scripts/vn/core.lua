@@ -18,6 +18,7 @@ local sdf         = require "vn.sdf"
 local opt         = require "vn.options"
 local luaspfx     = require "luaspfx"
 local luatk       = require "luatk"
+local fmt         = require "format"
 
 local vn = {
    speed = var.peek("vn_textspeed") or 0.025,
@@ -628,6 +629,8 @@ function vn.StateScene:_init()
 
    -- Clear stuff
    vn._buffer = ""
+   vn._buffer_y = 0
+   vn._title = nil
 
    _finish(self)
 end
@@ -642,6 +645,23 @@ function vn.StateCharacter.new( character, remove )
    s.character = character
    s.remove = remove or false
    return s
+end
+local function _getpos( pos )
+   pos = pos or "center"
+   if type(pos)=="number" then
+      return pos
+   elseif pos == "center" then
+      return 0.5
+   elseif pos == "left" then
+      return 0.25
+   elseif pos == "right" then
+      return 0.75
+   elseif pos == "farleft" then
+      return 0.15
+   elseif pos == "farright" then
+      return 0.85
+   end
+   return 0.5
 end
 function vn.StateCharacter:_init()
    if self.remove then
@@ -661,20 +681,7 @@ function vn.StateCharacter:_init()
       table.insert( vn._characters, c )
       c.alpha = 1
       c.displayname = c.who -- reset name
-      local pos = self.character.pos or "center"
-      if type(pos)=="number" then
-         self.character.offset = pos
-      elseif pos == "center" then
-         self.character.offset = 0.5
-      elseif pos == "left" then
-         self.character.offset = 0.25
-      elseif pos == "right" then
-         self.character.offset = 0.75
-      elseif pos == "farleft" then
-         self.character.offset = 0.15
-      elseif pos == "farright" then
-         self.character.offset = 0.85
-      end
+      self.character.offset = _getpos( self.character.pos )
    end
    _finish(self)
 end
@@ -937,7 +944,7 @@ function vn.StateMenu:_init()
    end
    if __debugging then
       if self._items == nil then
-         warn(_("[VN]: menu has no options!"))
+         warn(_("vn: menu has no options!"))
       end
    end
    -- Set up the graphics stuff
@@ -1392,6 +1399,25 @@ function vn.disappear( c, name, seconds, transition )
 end
 
 --[[--
+Moves a character to another position.
+
+   @see vn.animation
+   @tparam Character c Character to move.
+   @tparam[opt="center"] string|number pos Position to move to. Can be either a [0,1] value, "center", "left", "right", "farleft", or "farright".
+--]]
+function vn.move( c, pos )
+   local function runinit ()
+      local cpos = c.offset
+      local tpos = _getpos( pos )
+      return { cpos, tpos }
+   end
+   vn.animation( 1, function( alpha, _dt, params )
+      local cpos, tpos = table.unpack(params)
+      c.offset = tpos*alpha + cpos*(1-alpha)
+   end, nil, "ease-in-out", runinit )
+end
+
+--[[--
 Starts a new scene.
 --]]
 function vn.scene()
@@ -1743,6 +1769,19 @@ Runs the visual novel environment.
 function vn.run()
    if #vn._states == 0 then
       error( _("vn: run without any states") )
+   end
+   -- Check for duplicate labels
+   if __debugging then
+      local labels = {}
+      for k,s in ipairs( vn._states ) do
+         if s._type=="Label" then
+            local l = s.label
+            if inlist( labels, l ) then
+               warn(fmt.f(_("vn: Duplicate label '{lbl}'!"),{lbl=l}))
+            end
+            table.insert( labels, l )
+         end
+      end
    end
    love._vn = true
    love.exec( 'scripts/vn' )

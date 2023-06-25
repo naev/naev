@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-06-11 12:23+0900\n"
+"POT-Creation-Date: 2023-06-20 14:41+0900\n"
 "PO-Revision-Date: 2023-01-30 00:36+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
@@ -1733,7 +1733,7 @@ msgstr "Saqueador"
 #. Add tag-appropriate descriptions
 #. hook.pilot( rampant, "idle", "idle" )
 #: dat/factions/marauder.xml:3 dat/factions/pirate.xml:2
-#: dat/events/npc/pirate.lua:95
+#: dat/events/npc/pirate.lua:144
 #: dat/missions/dvaered/recruitment/dv_intelligence.lua:91
 #: dat/missions/dvaered/recruitment/dv_intelligence.lua:135
 #: dat/missions/neutral/kidnapped/traffic_00.lua:70
@@ -29728,7 +29728,7 @@ msgid "Enjoy your last moments, criminal!"
 msgstr ""
 
 #. From the space pirate shanty
-#: dat/ai/empire.lua:27 dat/ai/pirate.lua:93
+#: dat/ai/empire.lua:27 dat/ai/pirate.lua:98
 msgid "You dare attack me?!"
 msgstr ""
 
@@ -30235,100 +30235,144 @@ msgid "Sorry, but I'm a private tracker."
 msgstr ""
 
 #: dat/ai/pirate.lua:90
-msgid "Hey ho! Space pirates! Rum-dee Rum Rum!"
+msgid "Prepare to be plundered, ye interstellar fools!"
+msgstr ""
+
+#: dat/ai/pirate.lua:91
+msgid "Time to hand over the loot, ye spineless starfarers!"
+msgstr ""
+
+#: dat/ai/pirate.lua:92
+msgid "Say goodbye to yer valuables, ye cosmic weaklings!"
+msgstr ""
+
+#: dat/ai/pirate.lua:93
+msgid "By the stars, we'll strip ye of every shiny trinket ye hold dear!"
 msgstr ""
 
 #: dat/ai/pirate.lua:94
-msgid "You think that you can take me on?"
+msgid "Brace yourselves for a taste of cosmic plunder!"
 msgstr ""
 
 #: dat/ai/pirate.lua:95
-msgid "Die!"
-msgstr ""
-
-#: dat/ai/pirate.lua:96
-msgid "You'll regret this!"
-msgstr ""
-
-#: dat/ai/pirate.lua:97
-msgid "You can either pray now or sit in hell later."
-msgstr ""
-
-#: dat/ai/pirate.lua:98
-msgid "Game over, you're dead!"
+msgid "Yo ho yo ho a pirate life for me!"
 msgstr ""
 
 #: dat/ai/pirate.lua:99
-msgid "I'm sorry things couldn't work out between us."
+msgid "You think that you can take me on?"
 msgstr ""
 
 #: dat/ai/pirate.lua:100
-msgid "Knock it off!"
+msgid "Die!"
 msgstr ""
 
 #: dat/ai/pirate.lua:101
-msgid "Shooting back isn't allowed!"
+msgid "You'll regret this!"
 msgstr ""
 
 #: dat/ai/pirate.lua:102
-msgid "You owe me 20 credits!"
+msgid "You can either pray now or sit in hell later."
 msgstr ""
 
 #: dat/ai/pirate.lua:103
-msgid "You owe me a new paint job!"
+msgid "Game over, you're dead!"
 msgstr ""
 
 #: dat/ai/pirate.lua:104
-msgid "Fred here said to shoot the red blip."
+msgid "I'm sorry things couldn't work out between us."
 msgstr ""
 
 #: dat/ai/pirate.lua:105
-msgid "Now you're in for it!"
+msgid "Knock it off!"
 msgstr ""
 
 #: dat/ai/pirate.lua:106
-msgid "Did you really think you would get away with that?"
+msgid "Shooting back isn't allowed!"
 msgstr ""
 
 #: dat/ai/pirate.lua:107
-msgid "I just painted this thing!"
+msgid "You owe me 20 credits!"
 msgstr ""
 
 #: dat/ai/pirate.lua:108
-msgid "Rot."
+msgid "You owe me a new paint job!"
 msgstr ""
 
 #: dat/ai/pirate.lua:109
-msgid "Burn."
+msgid "Fred here said to shoot the red blip."
 msgstr ""
 
 #: dat/ai/pirate.lua:110
-msgid "I can't wait to see you burn."
+msgid "Now you're in for it!"
 msgstr ""
 
 #: dat/ai/pirate.lua:111
-msgid "Just. Stop. Moving."
+msgid "Did you really think you would get away with that?"
 msgstr ""
 
 #: dat/ai/pirate.lua:112
-msgid "Die already!"
+msgid "I just painted this thing!"
 msgstr ""
 
 #: dat/ai/pirate.lua:113
+msgid "I can't wait to see you burn."
+msgstr ""
+
+#: dat/ai/pirate.lua:114
+msgid "Just. Stop. Moving."
+msgstr ""
+
+#: dat/ai/pirate.lua:115
+msgid "Die already!"
+msgstr ""
+
+#: dat/ai/pirate.lua:116
 msgid ""
 "Tell you what, if you can keep dodging for 20 hectoseconds I'll let you live."
 msgstr ""
 
-#: dat/ai/pirate.lua:114
+#: dat/ai/pirate.lua:117
 msgid "Stop dodging!"
 msgstr ""
 
-#: dat/ai/pirate.lua:115
+#: dat/ai/pirate.lua:118
 msgid "Okay, that's enough of that!"
 msgstr ""
 
-#: dat/ai/pirate.lua:116
+#: dat/ai/pirate.lua:119
 msgid "I'm gonna torrent you to bits!"
+msgstr ""
+
+#: dat/ai/pirate.lua:120
+msgid "Is that the best ye've got, ye scurvy galactic amateurs?"
+msgstr ""
+
+#: dat/ai/pirate.lua:121
+msgid "Bring it on, ye sorry excuse for spacefaring scum!"
+msgstr ""
+
+#: dat/ai/pirate.lua:122
+msgid "Ye aim worse than a blindfolded asteroid!"
+msgstr ""
+
+#: dat/ai/pirate.lua:123
+msgid "Ye call that an attack? Ye're more of a nuisance than a threat!"
+msgstr ""
+
+#: dat/ai/pirate.lua:124
+msgid "Ye'll have to do better than that, ye spineless space amoebas!"
+msgstr ""
+
+#: dat/ai/pirate.lua:125
+msgid "Is that the best ye got, ye cosmic cowards?"
+msgstr ""
+
+#: dat/ai/pirate.lua:126
+msgid "Ye'll need more than that to scratch me hull!"
+msgstr ""
+
+#: dat/ai/pirate.lua:127
+msgid "Ye're about as threatening as a malfunctioning Za'lek drone!"
 msgstr ""
 
 #. Some pirates do kill
@@ -30339,12 +30383,12 @@ msgstr ""
 #. Remove randomness from future calls
 #. Clean up
 #. Deal with refueling
-#: dat/ai/pirate.lua:186
+#: dat/ai/pirate.lua:197
 msgid "\"For you, only {credits} for a jump of fuel.\""
 msgstr ""
 
 #. Deal with bribeability
-#: dat/ai/pirate.lua:195
+#: dat/ai/pirate.lua:206
 msgid "\"You won't be able to slide out of this one!\""
 msgstr ""
 
@@ -40597,59 +40641,97 @@ msgid "You see a pirate chilling at the bar."
 msgstr ""
 
 #: dat/events/npc/pirate.lua:18
-msgid "A happy looking pirate."
+msgid "A jovial looking pirate."
 msgstr ""
 
 #: dat/events/npc/pirate.lua:19
 msgid "A pirate that smells weirdly of fish."
 msgstr ""
 
+#: dat/events/npc/pirate.lua:20
+msgid "A tattooed space buccaneer, lazily flipping a coin."
+msgstr ""
+
+#: dat/events/npc/pirate.lua:21
+msgid "A weathered space pirate keeping a watchful eye on the room."
+msgstr ""
+
+#: dat/events/npc/pirate.lua:22
+msgid "A grizzled pirate nursing a mug of grog."
+msgstr ""
+
 #: dat/events/npc/pirate.lua:23
-msgid "\"Hi mate. Money or your life! Heh heh, just messing with you.\""
+msgid "A lone pirate silently sipping a drink in the corner."
 msgstr ""
 
 #: dat/events/npc/pirate.lua:24
-msgid "\"Hey, look at these new scars I got!\""
+msgid "A pirate with a menacing grin, scanning the room for trouble."
 msgstr ""
 
 #: dat/events/npc/pirate.lua:25
+msgid "A seasoned pirate studying a star chart."
+msgstr ""
+
+#: dat/events/npc/pirate.lua:26
+msgid "A swashbuckling space pirate, sipping on a neon-colored cocktail."
+msgstr ""
+
+#: dat/events/npc/pirate.lua:27
+msgid ""
+"A veteran space pirate, leaning back into their worn-out chair, puffing on a "
+"cigar."
+msgstr ""
+
+#: dat/events/npc/pirate.lua:28
+msgid "A suave-looking well-groomed pirate sipping some finely aged space rum."
+msgstr ""
+
+#: dat/events/npc/pirate.lua:32
+msgid "\"Hi mate. Money or your life! Heh heh, just messing with you.\""
+msgstr ""
+
+#: dat/events/npc/pirate.lua:33
+msgid "\"Hey, look at these new scars I got!\""
+msgstr ""
+
+#: dat/events/npc/pirate.lua:34
 msgid ""
 "\"Have you heard of the Pirates' Code? They're more guidelines than rules…\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:26
+#: dat/events/npc/pirate.lua:35
 msgid ""
 "\"My gran once said to me, 'Never trust a pirate.' Well, she was right! I "
 "got a pretty credit chip outta her wallet last time I saw her, and I'd do it "
 "again.\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:27
+#: dat/events/npc/pirate.lua:36
 msgid ""
 "\"I don't understand why some pirates talk like 16th-century Earth pirates "
 "even though that planet is literally dead.\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:28
+#: dat/events/npc/pirate.lua:37
 msgid ""
 "\"I may be a pirate who blows up ships and steals for a living, but that "
 "inner nebula still kind of freaks me out.\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:29
+#: dat/events/npc/pirate.lua:38
 msgid ""
 "\"Damn Empire stopped my heist a few decaperiods ago. Just wait'll they see "
 "me again!\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:30
+#: dat/events/npc/pirate.lua:39
 msgid ""
 "\"There's a pirate clanworld I really wanted to get to, but they wouldn't "
 "let me in because I'm a 'small-time pirate'! Sometimes I think I'll never "
 "make it in this line of work…\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:31
+#: dat/events/npc/pirate.lua:40
 msgid ""
 "\"I was around before Haven was destroyed, you know! Funny times. All the "
 "pirates were panicking and the Empire was cheering thinking that we were "
@@ -40657,7 +40739,7 @@ msgid ""
 "New Haven and resumed business as usual.\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:32
+#: dat/events/npc/pirate.lua:41
 msgid ""
 "\"Back when I started out in this business all you could do was go around "
 "delivering packages for other people. Becoming a pirate was real hard back "
@@ -40666,49 +40748,78 @@ msgid ""
 "bit!\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:33
+#: dat/events/npc/pirate.lua:42
 msgid ""
 "\"Flying a real big ship is impressive, but it's still no pirate ship. I "
 "mean, I respect ya more if you're flying a Goddard than if you're flying a "
 "civilian Lancelot, but the best pirates fly the good old Pirate Kestrel!\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:34
+#: dat/events/npc/pirate.lua:43
 msgid ""
 "\"I swear I saw a bunch of cats in a trench coat pretending to be a pirate "
 "once. Must have been a weird dream. I should quite drinking…\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:35
+#: dat/events/npc/pirate.lua:44
 msgid ""
 "\"There are four major pirate clans: the Wild Ones, the Ravens, the "
 "Dreamers, and the Black Lotus. It's sometimes hard for them to get along.\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:36
+#: dat/events/npc/pirate.lua:45
 msgid ""
 "\"Pirate assemblies are the pinnacle of pirate society. Booze! Grog! Fights! "
 "Shanties! Jigs! More Grog! It's great fun, just don't drink as much to "
 "forget it all!\""
 msgstr ""
 
-#. This is the 'space pirate shanty'
-#: dat/events/npc/pirate.lua:38
+#. This is the 'space pirate shanty' (by theElerd)
+#.
+#. I lost my friend and fam’ly to a pirate raid
+#. The captain stood before me, I thought meself for dead
+#. Instead he told me rise up, come to the endless sea
+#. Into the black I followed, a pirate’s life for me.
+#.
+#. Yo ho yo ho a pirate life for me
+#. In endless black we gonna attack
+#. A pirate’s life for me
+#.
+#. Yo ho yo ho, up in the endless sea
+#. I may be hanged, don’t give a damn
+#. A pirate’s life for me
+#.
+#. The empire sent their warships, to capture our fair crew
+#. A thousand ships before us, and surely we were screwed
+#. The captain said “Me hearties! At last we sail to hell!”
+#. My life was maybe short, but I’m sure I’ve spent it well
+#.
+#. Yo ho yo ho go down on your knee
+#. Man the guns and hit them hard
+#. A pirate’s death for me
+#.
+#. Yo ho yo ho life with sword and gun
+#. May get you wealth, just fly in stealth
+#. But sure you won’t see home
+#. --
+#: dat/events/npc/pirate.lua:74
 msgid ""
-"\"With me bottle of grog, I sail to the Sun\n"
-"there be nobody stoppin' me!\n"
-"For I was naught but a frog layin' in the bog\n"
-"dreaming of the wide black sea!\n"
-"Hey ho! Space pirates! Rum-dee Rum Rum!\""
+"\"Yo ho yo ho a pirate life for me\n"
+"In endless black we gonna attack\n"
+"A pirate’s life for me\n"
+"\n"
+"Yo ho yo ho, up in the endless sea\n"
+"I may be hanged, don’t give a damn\n"
+"A pirate’s life for me\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:43
+#: dat/events/npc/pirate.lua:81
 msgid ""
 "\"I love the space pirate shanty, but every time I learn the lyrics I end up "
 "getting piss drunk and forget them the next morning…\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:47
+#: dat/events/npc/pirate.lua:85
 msgid ""
 "\"To infiltrate a naval base, I once switched into a Koala to pretend to be "
 "a deliveryperson. To my surprise, other space pirates and marauders didn't "
@@ -40716,88 +40827,88 @@ msgid ""
 "\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:48
+#: dat/events/npc/pirate.lua:86
 msgid ""
 "\"Y'know, I got into this business by accident to tell the truth. But what "
 "can you do? I could get a fake transponder and pretend to be someone else "
 "but I'd get caught eventually and I'd lose my fame as a pirate.\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:49
+#: dat/events/npc/pirate.lua:87
 msgid ""
 "\"One of my favourite things to do is buy a fake transponder and then "
 "deliver as much contraband as I can before I get caught. It's great fun, and "
 "finding out that my identity's been discovered gives me a rush!\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:50
+#: dat/events/npc/pirate.lua:88
 msgid ""
 "\"Just caught an old mate ferrying tourists for credits. Nearly puked out my "
 "grog! Your reputation won't survive for long working for our victims.\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:51
+#: dat/events/npc/pirate.lua:89
 msgid ""
 "\"There is nothing more off-putting to other pirates than normal work. It's "
 "the best way to tank your reputation with all pirates!\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:52
+#: dat/events/npc/pirate.lua:90
 msgid ""
 "\"Marauders don't list much to other pirates. If it's too much of a hassle "
 "to blast them to bits, you can always pay them to go away.\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:53
+#: dat/events/npc/pirate.lua:91
 msgid ""
 "\"Stealth works best when you have a ship equipped for the job. Try to keep "
 "your mass low and use stealth improving outfits.\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:54
+#: dat/events/npc/pirate.lua:92
 msgid ""
 "\"If you get caught with contraband, you can try to bribe your way out of "
 "it. Credits talk!\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:58
+#: dat/events/npc/pirate.lua:107
 msgid ""
 "\"The Wild Ones clan is too out of control for me. It seems like all they "
 "want to do is pillage and destroy!\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:59
+#: dat/events/npc/pirate.lua:108
 msgid ""
 "\"The Black Lotus pirates are so boring. All they do is paperwork and "
 "extortion. Can you call yourself a pirate if you don't pillage?\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:60
+#: dat/events/npc/pirate.lua:109
 msgid ""
 "\"Dreamer Clan pirates never show up to the pirate assemblies. Probably "
 "doing too many illegal substances…\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:61
+#: dat/events/npc/pirate.lua:110
 msgid ""
 "\"If it weren't for the Raven Clan pirates, piracy would have gone extinct "
 "ages ago! Our supplies and organization are second to none!\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:62
+#: dat/events/npc/pirate.lua:111
 msgid ""
 "\"I ate a weird mushroom yesterday, and I haven't stopped tripping. Are you "
 "real?\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:63
+#: dat/events/npc/pirate.lua:112
 msgid ""
 "\"Ya noticed all the large constructions being built recently in space? They "
 "need a lot of rare resources which the resource ships great targets for "
 "plundering! Arr!\""
 msgstr ""
 
-#: dat/events/npc/pirate.lua:64
+#: dat/events/npc/pirate.lua:113
 msgid ""
 "\"There been news of all these hypergates going online throughout the "
 "Empire. Rumour's that the Black Lotus have one too!\""
@@ -40905,71 +41016,92 @@ msgstr ""
 #. local fmt = require "format"
 #. State. Nothing persists.
 #: dat/events/npc/raven_clan.lua:11
-msgid "A clansperson enjoying some rum."
+msgid "A Raven clansperson enjoying some rum."
 msgstr ""
 
 #: dat/events/npc/raven_clan.lua:12
-msgid "A Raven clansperson trader."
+msgid ""
+"A Raven clansperson trader, engrossed in thought about upcoming deliveries.."
 msgstr ""
 
 #: dat/events/npc/raven_clan.lua:13
-msgid "A clansperson merchant pilot."
+msgid "A Raven clansperson merchant pilot, resting after a long haul."
 msgstr ""
 
 #: dat/events/npc/raven_clan.lua:14
 msgid "A well-kempt Raven clansperson."
 msgstr ""
 
+#: dat/events/npc/raven_clan.lua:15
+msgid "A Raven clansperson calmly sipping their drink "
+msgstr ""
+
+#: dat/events/npc/raven_clan.lua:16
+msgid ""
+"A shrewd Raven clansperson, their fingers tapping rhythmically as they "
+"calculate profits and risks."
+msgstr ""
+
+#: dat/events/npc/raven_clan.lua:17
+msgid ""
+"A diplomatic Raven clansperson, gracefully navigating conversations with a "
+"keen ear for gathering valuable information."
+msgstr ""
+
 #: dat/events/npc/raven_clan.lua:18
+msgid "A silver-tongued Raven clansperson, effortlessly charming the bartender"
+msgstr ""
+
+#: dat/events/npc/raven_clan.lua:22
 msgid ""
 "\"The Raven Clan is the backbone of the pirate clans. We keep everything "
 "running!\""
 msgstr ""
 
-#: dat/events/npc/raven_clan.lua:19
+#: dat/events/npc/raven_clan.lua:23
 msgid ""
 "\"The Wild Ones Clan are said to be very wild and unruly, but they are "
 "always quite keen to trade with us.\""
 msgstr ""
 
-#: dat/events/npc/raven_clan.lua:20
+#: dat/events/npc/raven_clan.lua:24
 msgid ""
 "\"It's hard being a grog dealer. All the clans are constantly asking for "
 "more!\""
 msgstr ""
 
-#: dat/events/npc/raven_clan.lua:21
+#: dat/events/npc/raven_clan.lua:25
 msgid ""
 "\"The Empire says they're hard on pirates, but most of their officials are "
 "already in our pockets!\""
 msgstr ""
 
-#: dat/events/npc/raven_clan.lua:22
+#: dat/events/npc/raven_clan.lua:26
 msgid ""
 "\"I hate dealing with the Dreamer Clan, they always forget to keep their "
 "promises and it's a pain in the ass to chase them down to get what they owe "
 "you.\""
 msgstr ""
 
-#: dat/events/npc/raven_clan.lua:23
+#: dat/events/npc/raven_clan.lua:27
 msgid ""
 "\"I remember when the Black Lotus Clan use to be a small-time mafia. Look at "
 "how organized they are now!\""
 msgstr ""
 
-#: dat/events/npc/raven_clan.lua:24
+#: dat/events/npc/raven_clan.lua:28
 msgid ""
 "\"The pirate assembly is always a great place to make trades. All the grog "
 "makes them be less stingy with their wallets!\""
 msgstr ""
 
-#: dat/events/npc/raven_clan.lua:28
+#: dat/events/npc/raven_clan.lua:32
 msgid ""
 "\"Them Empire patrols be lookin' mighty tough, but even when they spot yur "
 "contraband, it be easy enough to bribe 'em to look the other way.\""
 msgstr ""
 
-#: dat/events/npc/raven_clan.lua:32
+#: dat/events/npc/raven_clan.lua:36
 msgid ""
 "\"The Black Lotus have been requesting lots of high tech contraband lately. "
 "I think they must be building something fancy.\""
@@ -40980,7 +41112,7 @@ msgstr ""
 #. Need presence
 #. Create a list of conditional messages
 #. Add tag-appropriate descriptions
-#: dat/events/npc/raven_clan.lua:75
+#: dat/events/npc/raven_clan.lua:79
 #, fuzzy
 #| msgid "Wild Ones Clansperson"
 msgid "Raven Clan Clansperson"
@@ -41102,38 +41234,45 @@ msgstr ""
 #. local fmt = require "format"
 #. State. Nothing persists.
 #: dat/events/npc/soromid.lua:10
-msgid "A new human civilian is twirling their drink."
+msgid "A new-human civilian is twirling their drink."
 msgstr ""
 
 #: dat/events/npc/soromid.lua:11
 msgid "A genetic-modified individual is idle at the bar."
 msgstr ""
 
-#. desc_list["agriculture"] = {}
-#. desc_list["industrial"] = {}
-#. desc_list["mining"] = {}
-#. desc_list["tourism"] = {}
-#. desc_list["medical"] = {}
-#. desc_list["trade"] = {}
-#. desc_list["old"] = {}
-#. desc_list["immigration"] = {}
-#. desc_list["prison"] = {}
-#. desc_list["station"] = {}
-#. desc_list["government"] = {}
-#: dat/events/npc/soromid.lua:31
+#: dat/events/npc/soromid.lua:12
+msgid ""
+"A post-human individual, sitting alone at the bar, lost in contemplation."
+msgstr ""
+
+#: dat/events/npc/soromid.lua:15
+msgid ""
+"A new-human individual, genetically modified for high gravity environments."
+msgstr ""
+
+#: dat/events/npc/soromid.lua:16
+msgid "A Soromid civilian, biologically engineered to thrive in high gravity."
+msgstr ""
+
+#: dat/events/npc/soromid.lua:17
+msgid "A post-human with heavy gravity traits, enjoying their drink."
+msgstr ""
+
+#: dat/events/npc/soromid.lua:26
 msgid ""
 "Hello. Can I interest you in one of our galaxy famous cosmetic gene "
 "treatments? You look like you could use them…"
 msgstr ""
 
-#: dat/events/npc/soromid.lua:32
+#: dat/events/npc/soromid.lua:27
 msgid ""
 "\"Can you believe it? I was going to visit Sorom to find my roots, and then "
 "boom! It got burnt to a crisp! Even now, cycles later, I still can't believe "
 "it.\""
 msgstr ""
 
-#: dat/events/npc/soromid.lua:33
+#: dat/events/npc/soromid.lua:28
 msgid ""
 "\"Everyone knows that we Soromid altered ourselves to survive the deadly "
 "conditions on Sorom during the Great Quarantine. What you don't hear so "
@@ -41141,40 +41280,40 @@ msgid ""
 "price for survival.\""
 msgstr ""
 
-#: dat/events/npc/soromid.lua:34
+#: dat/events/npc/soromid.lua:29
 msgid ""
 "\"Our cosmetic gene treatments are even safer now for non-Soromids, with a "
 "rate of survival of 99.4%!\""
 msgstr ""
 
-#: dat/events/npc/soromid.lua:35
+#: dat/events/npc/soromid.lua:30
 msgid ""
 "\"We have been rebuilding and enhancing our bodies for so long, I say we've "
 "become a new species, one above human.\""
 msgstr ""
 
-#: dat/events/npc/soromid.lua:36
+#: dat/events/npc/soromid.lua:31
 msgid ""
 "\"The Soromid have been shunned and ridiculed by the Great Houses since "
 "inception. Over time they have had no choice but to learn to respect us, "
 "however, treatment as equals seems still far away.\""
 msgstr ""
 
-#: dat/events/npc/soromid.lua:37
+#: dat/events/npc/soromid.lua:32
 msgid ""
 "\"It feels good to be free of Empire interference. If we, the Soromid, were "
 "a Great House like the Dvaered or Za'lek, we would have much less freedom "
 "than what we enjoy today!\""
 msgstr ""
 
-#: dat/events/npc/soromid.lua:38
+#: dat/events/npc/soromid.lua:33
 msgid ""
 "\"I once went to Empire territory and got stared at and ridiculed for my "
 "looks. The Empire is such a backwards society. Probably all the paperwork "
 "and bureaucracy is rotting their brains.\""
 msgstr ""
 
-#: dat/events/npc/soromid.lua:39
+#: dat/events/npc/soromid.lua:34
 msgid ""
 "\"We sometimes get Za'lek researchers trying to find out the science behind "
 "our bioships. No matter how much they analyze them, they can never reproduce "
@@ -41182,59 +41321,59 @@ msgid ""
 "than a science!\""
 msgstr ""
 
-#: dat/events/npc/soromid.lua:40
+#: dat/events/npc/soromid.lua:35
 msgid ""
 "\"The Empire laughs at our bioships and calls us brutish cattle herders. "
 "However, they seem to laugh a lot less when their cruisers get bitten in "
 "half by a Soromid capship!\""
 msgstr ""
 
-#: dat/events/npc/soromid.lua:41
+#: dat/events/npc/soromid.lua:36
 msgid ""
 "\"I've heard of some bioships going missing during creation. It must be the "
 "will of the universe.\""
 msgstr ""
 
-#: dat/events/npc/soromid.lua:42
+#: dat/events/npc/soromid.lua:37
 msgid ""
 "\"We Soromid are split into tribes, each with their own traditions and "
 "customs. Tribes are mainly independent, but  Elder convene with each other "
 "periodically to decide what to do with things that affect us all.\""
 msgstr ""
 
-#: dat/events/npc/soromid.lua:43
+#: dat/events/npc/soromid.lua:38
 msgid ""
 "\"I have no idea how the Great Houses can organize them as they do. How can "
 "a single person manage and be in charge of billions and billions of humans? "
 "It makes no sense!\""
 msgstr ""
 
-#: dat/events/npc/soromid.lua:44
+#: dat/events/npc/soromid.lua:39
 msgid ""
 "\"There are those who wished we had all perished on Sorom, however, the "
 "Soromid do not go down without a fight!\""
 msgstr ""
 
-#: dat/events/npc/soromid.lua:45
+#: dat/events/npc/soromid.lua:40
 msgid ""
 "\"We never meant to become new humans, but when you are faced with the "
 "annihilation of your people, you have to take decisive action to save as "
 "many as you can.\""
 msgstr ""
 
-#: dat/events/npc/soromid.lua:46
+#: dat/events/npc/soromid.lua:41
 msgid ""
 "\"We do not easily forget the treatment the Empire gave us during the Great "
 "Quarantine. We will make sure that does not happen again.\""
 msgstr ""
 
-#: dat/events/npc/soromid.lua:47
+#: dat/events/npc/soromid.lua:42
 msgid ""
 "\"We have many stories about the Great Quarantine. It is important to not "
 "forget our past as we strive for a better future.\""
 msgstr ""
 
-#: dat/events/npc/soromid.lua:48
+#: dat/events/npc/soromid.lua:43
 msgid ""
 "\"Some think that making the Soromid inhabit the barely inhabitable is a "
 "sign of inferiority to the Great Houses. However, we see it as our pride and "
@@ -41242,40 +41381,40 @@ msgid ""
 "live harmonious with nature!\""
 msgstr ""
 
-#: dat/events/npc/soromid.lua:52
+#: dat/events/npc/soromid.lua:47
 msgid ""
 "\"Soromid Bioships are living creatures. If you train them properly they can "
 "learn to do all sorts of new tricks!\""
 msgstr ""
 
-#: dat/events/npc/soromid.lua:53
+#: dat/events/npc/soromid.lua:48
 msgid ""
 "\"If you screw up training your bioship you can always reset the skills. "
 "This comes at an experience penalty though.\""
 msgstr ""
 
-#: dat/events/npc/soromid.lua:54
+#: dat/events/npc/soromid.lua:49
 msgid ""
 "\"Plasma weapons are not like other weapons. Instead of only directly "
 "damaging ships, most of the damage comes from a corrosive effect that takes "
 "place over a few seconds!\""
 msgstr ""
 
-#: dat/events/npc/soromid.lua:55
+#: dat/events/npc/soromid.lua:50
 msgid ""
 "\"If used properly, plasma weapons are really good at taking down enemy "
 "ships. They do lack range and are hard to hit with, but if you get up close, "
 "the corrosion will melt your enemies away!\""
 msgstr ""
 
-#: dat/events/npc/soromid.lua:59
+#: dat/events/npc/soromid.lua:54
 msgid ""
 "\"They are building something big in Feye and apparently need all the rare "
 "minerals they can get. If you're a good miner, this may be a good way to "
 "make some quick credits.\""
 msgstr ""
 
-#: dat/events/npc/soromid.lua:60
+#: dat/events/npc/soromid.lua:55
 msgid ""
 "\"I hadn't been to Feye in a while and had my mind blown when I saw the new "
 "hypergate they built. Apparently it lets you go to far away systems in a "
@@ -41288,12 +41427,12 @@ msgstr ""
 #. Don't appear on restricted assets
 #. TODO military personnel
 #. Create a list of conditional messages
-#. Add tag-appropriate descriptions
-#: dat/events/npc/soromid.lua:105
+#: dat/events/npc/soromid.lua:97
 msgid "Soromid Tribesperson"
 msgstr ""
 
 #. TODO probably use tags to control what portraits get used
+#. Soromid use descriptions based on type (or generic)
 #. local fmt = require "format"
 #. State. Nothing persists.
 #: dat/events/npc/thurion.lua:10
@@ -41517,97 +41656,122 @@ msgstr ""
 msgid "The Wild Ones clansperson looks like they've seen some real shit."
 msgstr ""
 
+#: dat/events/npc/wild_ones.lua:14
+msgid ""
+"A scarred  Wild Ones clansperson, leaning back in their chair with an air of "
+"nonchalant confidence."
+msgstr ""
+
+#: dat/events/npc/wild_ones.lua:15
+msgid ""
+"A weathered Wild Ones clansperson with a permanent sneer etched on their "
+"face."
+msgstr ""
+
+#: dat/events/npc/wild_ones.lua:16
+msgid "A gruff Wild Ones clansperson quietly nursing their drink."
+msgstr ""
+
 #: dat/events/npc/wild_ones.lua:17
+msgid ""
+"A wiry Wild Ones clansperson, fingers tapping restlessly on the bar counter"
+msgstr ""
+
+#: dat/events/npc/wild_ones.lua:18
+msgid "A burly Wild Ones clansperson, arms crossed and scowling"
+msgstr ""
+
+#: dat/events/npc/wild_ones.lua:22
 msgid ""
 "\"Them Black Lotus think they be better'n us cuz they knows them 'business'. "
 "The only 'business' you need be the trigger of your cannons!\""
 msgstr ""
 
-#: dat/events/npc/wild_ones.lua:18
+#: dat/events/npc/wild_ones.lua:23
 msgid "\"We may seem like an unruly gang, but we get along well. Arr!\""
 msgstr ""
 
-#: dat/events/npc/wild_ones.lua:19
+#: dat/events/npc/wild_ones.lua:24
 msgid ""
 "\"If a crime is only punishable with a fee, then it is only a crime for the "
 "poor.\""
 msgstr ""
 
-#: dat/events/npc/wild_ones.lua:20
+#: dat/events/npc/wild_ones.lua:25
 msgid "\"We are naught but the symptom of a broken society. I mean, Arrr!\""
 msgstr ""
 
-#: dat/events/npc/wild_ones.lua:21
+#: dat/events/npc/wild_ones.lua:26
 msgid ""
 "\"There is not a merrier bunch of ragtags than the Wild Ones! Cast out by "
 "society we now find our purpose! Pillage!\""
 msgstr ""
 
-#: dat/events/npc/wild_ones.lua:22
+#: dat/events/npc/wild_ones.lua:27
 msgid ""
 "\"Many of us are exiles from Soromid tribes or refugees from the Empire. The "
 "Wild Ones are the only ones who welcome us with open arms!\""
 msgstr ""
 
-#: dat/events/npc/wild_ones.lua:23
+#: dat/events/npc/wild_ones.lua:28
 msgid ""
 "\"Have you seen the Pink Demon? They're so cool! I want to meet them in "
 "person.\""
 msgstr ""
 
-#: dat/events/npc/wild_ones.lua:24
+#: dat/events/npc/wild_ones.lua:29
 msgid ""
 "\"We get along well with the Raven Clan. They're quite reliable for pirates! "
 "Can't say the same about us. Harr!\""
 msgstr ""
 
-#: dat/events/npc/wild_ones.lua:25
+#: dat/events/npc/wild_ones.lua:30
 msgid ""
 "\"I wish the Dreamer Clan were closer. They've got some real nice shit if "
 "you know what I mean.\""
 msgstr ""
 
-#: dat/events/npc/wild_ones.lua:26
+#: dat/events/npc/wild_ones.lua:31
 msgid ""
 "\"My sibling is in the Black Lotus clan. When we meet up at a pirate "
 "assembly, all they talk about is money until I can get them nice and drunk.\""
 msgstr ""
 
-#: dat/events/npc/wild_ones.lua:27
+#: dat/events/npc/wild_ones.lua:32
 msgid ""
 "\"Sometimes it's almost like pillaging is too easy. Like, you know, the "
 "Empire is letting us instead of being an incompetent mess of a bureaucracy.\""
 msgstr ""
 
-#: dat/events/npc/wild_ones.lua:28
+#: dat/events/npc/wild_ones.lua:33
 msgid "\"I'm looking forward to the next pirate assembly. Time to party!\""
 msgstr ""
 
-#: dat/events/npc/wild_ones.lua:29
+#: dat/events/npc/wild_ones.lua:34
 msgid ""
 "\"It's not easy to get into raiding convoys, but in this eat-or-be-eaten "
 "world, you gotta do what you gotta do to survive. Ya'know?\""
 msgstr ""
 
-#: dat/events/npc/wild_ones.lua:30
+#: dat/events/npc/wild_ones.lua:35
 msgid ""
 "\"Hey, I have a confession to make. I once got my hands on a Dreame Clan "
 "pineapple pizza. They're quite delicious. Don't tell anyone I told you!\""
 msgstr ""
 
-#: dat/events/npc/wild_ones.lua:34
+#: dat/events/npc/wild_ones.lua:39
 msgid ""
 "\"You have to watch out when raiding Soromid convoys, sometimes their ships "
 "bite hard!\""
 msgstr ""
 
-#: dat/events/npc/wild_ones.lua:35
+#: dat/events/npc/wild_ones.lua:40
 msgid ""
 "\"Stealth and fake transponders are the best way to move around unnoticed. "
 "Pirate Admonishers are great at the job!\""
 msgstr ""
 
-#: dat/events/npc/wild_ones.lua:36
+#: dat/events/npc/wild_ones.lua:41
 msgid ""
 "\"You've got to learn your enemies when raiding. Empire lasers have long "
 "range, while Soromid plasma is short range, but can corrode your ship in a "
@@ -41619,7 +41783,7 @@ msgstr ""
 #. Need presence
 #. Create a list of conditional messages
 #. Add tag-appropriate descriptions
-#: dat/events/npc/wild_ones.lua:82
+#: dat/events/npc/wild_ones.lua:87
 msgid "Wild Ones Clansperson"
 msgstr "Membro do Clã Os Selvagens"
 
@@ -41748,7 +41912,7 @@ msgstr ""
 msgid ""
 "\"I recently attended a very interesting conference about the history of "
 "applied mathematics before the space age. Even in those primitive times, "
-"people used to do numerical algebra. They didn't even have quantic computers "
+"people used to do numerical algebra. They didn't even have quantum computers "
 "back at that time! Imagine: they had to wait for hours to solve a problem "
 "with only a dozen billion degrees of freedom!\""
 msgstr ""
@@ -41793,7 +41957,7 @@ msgstr ""
 #: dat/events/npc/zalek.lua:61
 msgid ""
 "\"High energy particle physics experiments are so cliché. Theoretical "
-"quantum hyperconductors is where the inderesting stuff happens!\""
+"quantum hyperconductors is where the interesting stuff happens!\""
 msgstr ""
 
 #: dat/events/npc/zalek.lua:62
@@ -41808,7 +41972,7 @@ msgstr ""
 #: dat/events/npc/zalek.lua:63
 msgid ""
 "\"Stochastic meritocracy is the best way to run a Great House. House Za'lek "
-"randomly choses the council members from rsearchers to rule in the Za'lek "
+"randomly chooses the council members from researchers to rule in the Za'lek "
 "Council. No sociology researcher has found a better system yet!\""
 msgstr ""
 
@@ -41859,7 +42023,7 @@ msgstr ""
 
 #: dat/events/npc/zalek.lua:75
 msgid ""
-"\"I was on the Za'lek Council onces. The meetings are endless and people get "
+"\"I was on the Za'lek Council once. The meetings are endless and people get "
 "into fights over trivial things. The food and the bonus salary are great "
 "though, but I'm not sure if I would do it again.\""
 msgstr ""

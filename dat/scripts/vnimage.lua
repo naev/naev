@@ -11,6 +11,32 @@ local fmt = require "format"
 
 local vni = {}
 
+local function _get_list( lst )
+   local p = lst[ rnd.rnd(1,#lst) ]
+   if type(p)=="table" then
+      return p[1], p[1]
+   end
+   return portrait.getFullPath(p), p
+end
+
+local function get_list( ... )
+   local arg = {...}
+   local n = #arg
+   if n==1 then
+      return function ()
+         _get_list( arg[1] )
+      end
+   end
+   return function ()
+      local r = rnd.rnd()
+      for k,v in ipairs(arg) do
+         if r <= k/n then
+            return _get_list( v )
+         end
+      end
+   end
+end
+
 local neutral_m = {
    "neutral/male1.webp",
    "neutral/male2.webp",
@@ -60,26 +86,9 @@ local neutral_f = {
    {"neutral/female5n.webp"},
    {"neutral/female6n.webp"},
 }
-function vni.genericMale()
-   local p = neutral_m[ rnd.rnd(1,#neutral_m) ]
-   if type(p)=="table" then
-      return p[1], p[1]
-   end
-   return portrait.getFullPath(p), p
-end
-function vni.genericFemale()
-   local p = neutral_f[ rnd.rnd(1,#neutral_f) ]
-   if type(p)=="table" then
-      return p[1], p[1]
-   end
-   return portrait.getFullPath(p), p
-end
-function vni.generic()
-   if rnd.rnd() < 0.5 then
-      return vni.genericFemale()
-   end
-   return vni.genericMale()
-end
+vni.genericMale = get_list( neutral_m )
+vni.genericFemale = get_list( neutral_f )
+vni.generic = get_list( neutral_m, neutral_f )
 
 local pirate_m = {
    "pirate/pirate1.webp",
@@ -110,20 +119,84 @@ local pirate_f = {
    "pirate/pirate_militia1.webp",
    "pirate/pirate_militia2.webp",
 }
-function vni.pirateMale()
-   local p = pirate_m[ rnd.rnd(1,#pirate_m) ]
-   return portrait.getFullPath(p), p
-end
-function vni.pirateFemale()
-   local p = pirate_f[ rnd.rnd(1,#pirate_f) ]
-   return portrait.getFullPath(p), p
-end
-function vni.pirate()
-   if rnd.rnd() < 0.5 then
-      return vni.pirateFemale()
-   end
-   return vni.pirateMale()
-end
+vni.pirateMale = get_list( pirate_m )
+vni.pirateFemale = get_list( pirate_f )
+vni.pirate = get_list( pirate_m, pirate_f )
+
+local empire_mil_m = {
+   "empire/empire_mil_m1.webp",
+   "empire/empire_mil_m2.webp",
+   "empire/empire_mil_m3.webp",
+   "empire/empire_mil_m4.webp",
+   "empire/empire_mil_m5.webp",
+   "empire/empire_mil_m6.webp",
+   "empire/empire_mil_m7.webp",
+   "empire/empire_mil_m8.webp",
+}
+local empire_mil_f = {
+   "empire/empire_mil_f1.webp",
+   "empire/empire_mil_f2.webp",
+   "empire/empire_mil_f3.webp",
+   "empire/empire_mil_f4.webp",
+   "empire/empire_mil_f5.webp",
+}
+vni.empireMilitaryMale = get_list( empire_mil_m )
+vni.empireMilitaryFemale = get_list( empire_mil_f )
+vni.empireMilitary = get_list( empire_mil_m, empire_mil_f )
+
+local dvaered_m = {
+   "dvaered/dv_civilian_m1.webp",
+   "dvaered/dv_civilian_m2.webp",
+   "dvaered/dv_civilian_m3.webp",
+   "dvaered/dv_civilian_m4.webp",
+   "dvaered/dv_civilian_m5.webp",
+   "dvaered/dv_civilian_m6.webp",
+   "dvaered/dv_civilian_m7.webp",
+   "dvaered/dv_civilian_m8.webp",
+   "dvaered/dv_civilian_m9.webp",
+   "dvaered/dv_civilian_m10.webp",
+   "dvaered/dv_civilian_m11.webp",
+}
+local dvaered_f = {
+   "dvaered/dv_civilian_f1.webp",
+   "dvaered/dv_civilian_f2.webp",
+   "dvaered/dv_civilian_f3.webp",
+   "dvaered/dv_civilian_f4.webp",
+   "dvaered/dv_civilian_f5.webp",
+   "dvaered/dv_civilian_f6.webp",
+   "dvaered/dv_civilian_f7.webp",
+   "dvaered/dv_civilian_f8.webp",
+   "dvaered/dv_civilian_f9.webp",
+   "dvaered/dv_civilian_f10.webp",
+   "dvaered/dv_civilian_f11.webp",
+}
+vni.dvaeredMale = get_list( dvaered_m )
+vni.dvaeredFemale = get_list( dvaered_f )
+vni.dvaered = get_list( dvaered_m, dvaered_f )
+
+local dvaered_mil_m = {
+   "dvaered/dv_military_m1.webp",
+   "dvaered/dv_military_m2.webp",
+   "dvaered/dv_military_m3.webp",
+   "dvaered/dv_military_m4.webp",
+   "dvaered/dv_military_m5.webp",
+   "dvaered/dv_military_m6.webp",
+   "dvaered/dv_military_m7.webp",
+   "dvaered/dv_military_m8.webp",
+}
+local dvaered_mil_f = {
+   "dvaered/dv_military_f1.webp",
+   "dvaered/dv_military_f2.webp",
+   "dvaered/dv_military_f3.webp",
+   "dvaered/dv_military_f4.webp",
+   "dvaered/dv_military_f5.webp",
+   "dvaered/dv_military_f6.webp",
+   "dvaered/dv_military_f7.webp",
+   "dvaered/dv_military_f8.webp",
+}
+vni.dvaeredMilitaryMale = get_list( dvaered_mil_m )
+vni.dvaeredMilitaryFemale = get_list( dvaered_mil_f )
+vni.dvaeredMilitary = get_list( dvaered_mil_m, dvaered_mil_f )
 
 local sirius_fyrra_m = {
    "sirius/sirius_fyrra_m1.webp",
@@ -158,55 +231,21 @@ local sirius_shaira_f = {
    "sirius/sirius_shaira_f5.webp",
 }
 vni.sirius = {}
-function vni.sirius.shairaMale()
-   local p = sirius_shaira_m[ rnd.rnd(1,#sirius_shaira_m) ]
-   return portrait.getFullPath(p), p
-end
-function vni.sirius.fyrraMale()
-   local p = sirius_fyrra_m[ rnd.rnd(1,#sirius_fyrra_m) ]
-   if type(p)=="table" then
-      return p[1], p[1]
-   end
-   return portrait.getFullPath(p), p
-end
-function vni.sirius.serraMale()
-   -- TODO
-   --local p = sirius_serra_m[ rnd.rnd(1,#sirius_serra_m) ]
-   --return portrait.getFullPath(p), p
-   return vni.sirius.fyrraMale()
-end
-function vni.sirius.shairaFemale()
-   local p = sirius_shaira_f[ rnd.rnd(1,#sirius_shaira_f) ]
-   return portrait.getFullPath(p), p
-end
-function vni.sirius.fyrraFemale()
-   local p = sirius_fyrra_f[ rnd.rnd(1,#sirius_fyrra_f) ]
-   return portrait.getFullPath(p), p
-end
-function vni.sirius.serraFemale()
-   -- TODO
-   --local p = sirius_serra_f[ rnd.rnd(1,#sirius_serra_f) ]
-   --return portrait.getFullPath(p), p
-   return vni.sirius.fyrraFemale()
-end
-function vni.sirius.shaira()
-   if rnd.rnd() < 0.5 then
-      return vni.sirius.shairaFemale()
-   end
-   return vni.sirius.shairaMale()
-end
-function vni.sirius.fyrra()
-   if rnd.rnd() < 0.5 then
-      return vni.sirius.fyrraFemale()
-   end
-   return vni.sirius.fyrraMale()
-end
-function vni.sirius.serra()
-   if rnd.rnd() < 0.5 then
-      return vni.sirius.serraFemale()
-   end
-   return vni.sirius.serraMale()
-end
+vni.sirius.shairaMale = get_list( sirius_shaira_m )
+vni.sirius.fyrraMale = get_list( sirius_fyrra_m )
+vni.sirius.serraMale = vni.sirius.fyrraMale -- TODO
+
+vni.sirius.shairaFemale = get_list( sirius_shaira_f )
+vni.sirius.fyrraFemale = get_list( sirius_fyrra_f )
+vni.sirius.serraFemale = vni.sirius.fyrraFemale -- TODO
+
+vni.sirius.shaira = get_list( sirius_shaira_m, sirius_shaira_f )
+vni.sirius.fyrra = get_list( sirius_fyrra_m, sirius_fyrra_f )
+vni.sirius.serra = vni.sirius.fyrra -- TODO
+
+vni.sirius.anyMale = get_list( sirius_shaira_m, sirius_fyrra_m ) -- TODO
+vni.sirius.anyFeale = get_list( sirius_shaira_f, sirius_fyrra_f ) -- TODO
+vni.sirius.any = get_list( sirius_shaira_m, sirius_fyrra_m, sirius_shaira_f, sirius_fyrra_f ) -- TODO
 
 --[[--
 Creates a "SOUND ONLY" character for the VN.

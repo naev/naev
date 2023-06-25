@@ -10,22 +10,26 @@ local lg = require 'love.graphics'
 local extras = {}
 
 -- Used to restore values
-local textbox_bg_alpha, textbox_font, textbox_h, textbox_w, textbox_x, textbox_y
+local textbox_bg_alpha, textbox_font, textbox_h, textbox_w, textbox_x, textbox_y, characters
 
 local function fullscreenStart( func, params )
    params = params or {}
    local nw, nh = naev.gfx.dim()
    vn.func( function ()
-      if func then
-         func()
-      end
       -- Store old values
+      characters = vn._characters
       textbox_bg_alpha = vn.textbox_bg_alpha
       textbox_h = vn.textbox_h
       textbox_w = vn.textbox_w
       textbox_x = vn.textbox_x
       textbox_y = vn.textbox_y
       textbox_font = vn.textbox_font
+   end )
+   vn.scene()
+   vn.func( function ()
+      if func then
+         func()
+      end
       -- New values
       if params.font then
          vn.textbox_font = params.font
@@ -37,7 +41,6 @@ local function fullscreenStart( func, params )
       vn.textbox_x = (nw-vn.textbox_w)/2
       vn.show_options = false
    end )
-   vn.scene()
    local name = params.name or _("Notebook")
    local colour = params.textcolour or {1, 1, 1}
    local log = vn.newCharacter( name, { color=colour, hidetitle=true } )
@@ -60,10 +63,18 @@ local function fullscreenEnd( params )
       if params.done then
          vn.textbox_bg_alpha = 0
          vn.show_options = false
+      else
+         if params.characters then
+            for k,c in ipairs(params.characters) do
+               table.insert( vn._characters, c )
+            end
+         else
+            vn._characters = characters
+         end
       end
    end )
    if not params.notransition then
-      vn.transition( params.transition, params.length )
+      vn.transition( params.transition, params.transition_length )
    end
 end
 

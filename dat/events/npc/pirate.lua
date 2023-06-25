@@ -15,8 +15,17 @@ desc_list["generic"] = {
    _("A careless pirate spilling their drink all over."),
    _("A pirate relaxing after a long day of pillaging."),
    _("You see a pirate chilling at the bar."),
-   _("A happy looking pirate."),
+   _("A jovial looking pirate."),
    _("A pirate that smells weirdly of fish."),
+   _("A tattooed space buccaneer, lazily flipping a coin."),
+   _("A weathered space pirate keeping a watchful eye on the room."),
+   _("A grizzled pirate nursing a mug of grog."),
+   _("A lone pirate silently sipping a drink in the corner."),
+   _("A pirate with a menacing grin, scanning the room for trouble."),
+   _("A seasoned pirate studying a star chart."),
+   _("A swashbuckling space pirate, sipping on a neon-colored cocktail."),
+   _("A veteran space pirate, leaning back into their worn-out chair, puffing on a cigar."),
+   _("A suave-looking well-groomed pirate sipping some finely aged space rum."),
 }
 
 local msg_lore = {
@@ -34,12 +43,41 @@ local msg_lore = {
    _([["I swear I saw a bunch of cats in a trench coat pretending to be a pirate once. Must have been a weird dream. I should quite drinking…"]]),
    _([["There are four major pirate clans: the Wild Ones, the Ravens, the Dreamers, and the Black Lotus. It's sometimes hard for them to get along."]]),
    _([["Pirate assemblies are the pinnacle of pirate society. Booze! Grog! Fights! Shanties! Jigs! More Grog! It's great fun, just don't drink as much to forget it all!"]]),
-   -- This is the 'space pirate shanty'
-   _([["With me bottle of grog, I sail to the Sun
-there be nobody stoppin' me!
-For I was naught but a frog layin' in the bog
-dreaming of the wide black sea!
-Hey ho! Space pirates! Rum-dee Rum Rum!"]]),
+   -- This is the 'space pirate shanty' (by theElerd)
+--[[
+I lost my friend and fam’ly to a pirate raid
+The captain stood before me, I thought meself for dead
+Instead he told me rise up, come to the endless sea
+Into the black I followed, a pirate’s life for me.
+
+Yo ho yo ho a pirate life for me
+In endless black we gonna attack
+A pirate’s life for me
+
+Yo ho yo ho, up in the endless sea
+I may be hanged, don’t give a damn
+A pirate’s life for me
+
+The empire sent their warships, to capture our fair crew
+A thousand ships before us, and surely we were screwed
+The captain said “Me hearties! At last we sail to hell!”
+My life was maybe short, but I’m sure I’ve spent it well
+
+Yo ho yo ho go down on your knee
+Man the guns and hit them hard
+A pirate’s death for me
+
+Yo ho yo ho life with sword and gun
+May get you wealth, just fly in stealth
+But sure you won’t see home
+--]]
+   _([["Yo ho yo ho a pirate life for me
+In endless black we gonna attack
+A pirate’s life for me
+
+Yo ho yo ho, up in the endless sea
+I may be hanged, don’t give a damn
+A pirate’s life for me"]]),
    _([["I love the space pirate shanty, but every time I learn the lyrics I end up getting piss drunk and forget them the next morning…"]]),
 }
 
@@ -54,14 +92,25 @@ local msg_tip = {
    _([["If you get caught with contraband, you can try to bribe your way out of it. Credits talk!"]]),
 }
 
+local fct_wildones = faction.get("Wild Ones")
+local fct_ravenclan = faction.get("Raven Clan")
+local fct_dreamerclan = faction.get("Dreamer Clan")
+local fct_blacklotus = faction.get("Black Lotus")
+local function test_wildones () return spob.cur():faction()==fct_wildones end
+local function test_ravenclan () return spob.cur():faction()==fct_ravenclan end
+local function test_dreamerclan () return spob.cur():faction()==fct_dreamerclan end
+local function test_blacklotus () return spob.cur():faction()==fct_blacklotus end
+local function test_chapter0 () return (player.chapter()=="0") end
+local function tneg( f ) return function () return not f() end end
+
 local msg_cond = {
-   { function () return spob.cur():faction()~="Wild Ones" end, _([["The Wild Ones clan is too out of control for me. It seems like all they want to do is pillage and destroy!"]]) },
-   { function () return spob.cur():faction()~="Black Lotus" end, _([["The Black Lotus pirates are so boring. All they do is paperwork and extortion. Can you call yourself a pirate if you don't pillage?"]]) },
-   { function () return spob.cur():faction()~="Dreamer Clan" end, _([["Dreamer Clan pirates never show up to the pirate assemblies. Probably doing too many illegal substances…"]]) },
-   { function () return spob.cur():faction()=="Raven Clan" end, _([["If it weren't for the Raven Clan pirates, piracy would have gone extinct ages ago! Our supplies and organization are second to none!"]]) },
-   { function () return spob.cur():faction()=="Dreamer Clan" end, _([["I ate a weird mushroom yesterday, and I haven't stopped tripping. Are you real?"]]) },
-   { function () return (player.chapter()=="0") end, _([["Ya noticed all the large constructions being built recently in space? They need a lot of rare resources which the resource ships great targets for plundering! Arr!"]]) },
-   { function () return (player.chapter()~="0") end, _([["There been news of all these hypergates going online throughout the Empire. Rumour's that the Black Lotus have one too!"]]) },
+   { tneg(test_wildones), _([["The Wild Ones clan is too out of control for me. It seems like all they want to do is pillage and destroy!"]]) },
+   { tneg(test_blacklotus), _([["The Black Lotus pirates are so boring. All they do is paperwork and extortion. Can you call yourself a pirate if you don't pillage?"]]) },
+   { tneg(test_dreamerclan),_([["Dreamer Clan pirates never show up to the pirate assemblies. Probably doing too many illegal substances…"]]) },
+   { test_ravenclan,_([["If it weren't for the Raven Clan pirates, piracy would have gone extinct ages ago! Our supplies and organization are second to none!"]]) },
+   { test_dreamerclan,_([["I ate a weird mushroom yesterday, and I haven't stopped tripping. Are you real?"]]) },
+   { test_chapter0,_([["Ya noticed all the large constructions being built recently in space? They need a lot of rare resources which the resource ships great targets for plundering! Arr!"]]) },
+   { tneg(test_chapter0), _([["There been news of all these hypergates going online throughout the Empire. Rumour's that the Black Lotus have one too!"]]) },
 }
 
 -- Returns a lore message for the given faction.
