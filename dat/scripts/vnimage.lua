@@ -24,7 +24,7 @@ local function get_list( ... )
    local n = #arg
    if n==1 then
       return function ()
-         _get_list( arg[1] )
+         return _get_list( arg[1] )
       end
    end
    return function ()
@@ -90,6 +90,10 @@ vni.genericMale = get_list( neutral_m )
 vni.genericFemale = get_list( neutral_f )
 vni.generic = get_list( neutral_m, neutral_f )
 
+vni.trader = vni.generic
+vni.traderMale = vni.genericMale
+vni.traderFemale = vni.genericFemale
+
 local pirate_m = {
    "pirate/pirate1.webp",
    "pirate/pirate2.webp",
@@ -123,6 +127,9 @@ vni.pirateMale = get_list( pirate_m )
 vni.pirateFemale = get_list( pirate_f )
 vni.pirate = get_list( pirate_m, pirate_f )
 
+vni.empire = vni.generic
+vni.empireMale = vni.genericMale
+vni.empireFemale = vni.genericFemale
 local empire_mil_m = {
    "empire/empire_mil_m1.webp",
    "empire/empire_mil_m2.webp",
@@ -197,6 +204,14 @@ local dvaered_mil_f = {
 vni.dvaeredMilitaryMale = get_list( dvaered_mil_m )
 vni.dvaeredMilitaryFemale = get_list( dvaered_mil_f )
 vni.dvaeredMilitary = get_list( dvaered_mil_m, dvaered_mil_f )
+
+vni.soromid = vni.generic
+vni.soromidMale = vni.genericMale
+vni.soromidFemale = vni.genericFemale
+
+vni.zalek = vni.generic
+vni.zalekMale = vni.genericMale
+vni.zalekFemale = vni.genericFemale
 
 local sirius_fyrra_m = {
    "sirius/sirius_fyrra_m1.webp",

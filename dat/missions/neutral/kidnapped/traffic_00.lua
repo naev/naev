@@ -18,9 +18,9 @@
       The first mission in a series of missions surrounding human trafficking. This mission consists of overhearing pirate a couple pirate conversations, disabling a trader ship, and returning the children home to their parents. It essentially sets up everything for the following 4 missions.
 --]]
 local fmt = require "format"
-local portrait = require "portrait"
 local neu = require "common.neutral"
 local vn = require "vn"
+local vni = require "vnimage"
 local vntk = require "vntk"
 
 -- TODO add some sort of reward I guess
@@ -62,11 +62,11 @@ function create()
 
 end
 
-local portrait1, portrait2
+local portrait1, portrait2, image1, image2
 function land1()
    if spob.cur() == pnt1 and not mem.eavesdropped1 and not mem.eavesdropped2 then
-      portrait1 = portrait.getMale("Pirate")
-      portrait2 = portrait.get("Pirate")
+      image1, portrait1 = vni.pirateMale()
+      image2, portrait2 = vni.pirate()
       mem.bar1pir1 = misn.npcAdd("firstpirates", _("Pirate"), portrait1, pir1_desc)
       mem.bar1pir2 = misn.npcAdd("firstpirates", _("Pirate"), portrait2, pir1_desc)
    end
@@ -74,8 +74,8 @@ end
 
 function land2()
    if spob.cur() == pnt2 and mem.eavesdropped1 and not mem.eavesdropped2 then
-      portrait1 = portrait.get("Pirate")
-      portrait2 = portrait.get("Pirate")
+      image1, portrait1 = vni.pirate()
+      image2, portrait2 = vni.pirate()
       mem.bar2pir1 = misn.npcAdd("secondpirates", _("Pirate"), portrait1, pir2_desc)
       mem.bar2pir2 = misn.npcAdd("secondpirates", _("Pirate"), portrait2, pir2_desc)
    end
@@ -84,8 +84,8 @@ end
 function firstpirates()
    vn.clear()
    vn.scene()
-   local p1 = vn.newCharacter( _("Pirate A"), {image=portrait.getFullPath(portrait1), pos="left"} )
-   local p2 = vn.newCharacter( _("Pirate B"), {image=portrait.getFullPath(portrait2), pos="right"} )
+   local p1 = vn.newCharacter( _("Pirate A"), {image=image1, pos="left"} )
+   local p2 = vn.newCharacter( _("Pirate B"), {image=image2, pos="right"} )
    vn.transition()
 
    p1(_([[You sit down at a table adjacent to these two pirates, ordering a drink and trying to act as inconspicuous as you can. You catch the pirates in mid-conversation. "…And he says to me 'I will give you everything, please just leave me alone!' So I take his credits, and all I get is 2K! He's clearly holding back on me, trust me, I know! So I trash his ship, and what do you know, he really didn't have any more. It's tough making any money these days, sometimes I think I gotta get into a different line o' work."]]))
@@ -114,8 +114,8 @@ end
 function secondpirates()
    vn.clear()
    vn.scene()
-   local p1 = vn.newCharacter( _("Pirate A"), {image=portrait.getFullPath(portrait1), pos="left"} )
-   vn.newCharacter( _("Pirate B"), {image=portrait.getFullPath(portrait2), pos="right"} )
+   local p1 = vn.newCharacter( _("Pirate A"), {image=image1, pos="left"} )
+   vn.newCharacter( _("Pirate B"), {image=image2, pos="right"} )
    vn.transition()
 
    vn.na(_([[You don't even bother sitting down too close to these two pirates considering how loudly they're talking. It doesn't take too much listening before you get exactly what you need as one of the pirates is telling his recent tales to the other.]]))

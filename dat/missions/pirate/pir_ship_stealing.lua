@@ -31,10 +31,10 @@
 local pir = require "common.pirate"
 local swapship = require "swapship"
 local fmt = require "format"
-local portrait = require "portrait"
 local lmisn = require "lmisn"
 local equipopt = require "equipopt"
 local vn = require "vn"
+local vni = require "vnimage"
 local vntk = require "vntk"
 
 local base_price = 100e3
@@ -135,7 +135,7 @@ local function damage_standing( size, fct )
    fct:modPlayerSingle( -base * modifier )
 end
 
-local pir_portrait
+local pir_portrait, pir_image
 function create ()
    mem.reward_faction = pir.systemClanP( system.cur() )
    mem.planet  = random_planet()
@@ -156,7 +156,7 @@ function create ()
 
    mem.price = price(mem.ship:size())
 
-   pir_portrait = portrait.get("Pirate")
+   pir_image, pir_portrait = vni.pirate()
    misn.setNPC( _("A Pirate informer"), pir_portrait, _("A pirate informer is looking at you. Maybe they have some useful information to sell?") )
 end
 
@@ -165,7 +165,7 @@ function accept()
 
    vn.clear()
    vn.scene()
-   local p = vn.newCharacter( _("Pirate Informer"), {image=portrait.getFullPath(pir_portrait)} )
+   local p = vn.newCharacter( _("Pirate Informer"), {image=pir_image} )
    vn.transition()
 
    p(fmt.f(_([["Hi, pilot. I have the location and security codes of an unattended {fct} {class}. Maybe it interests you, who knows?

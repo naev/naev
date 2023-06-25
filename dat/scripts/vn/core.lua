@@ -1775,11 +1775,13 @@ function vn.run()
       local labels = {}
       for k,s in ipairs( vn._states ) do
          if s._type=="Label" then
-            local l = s.label
-            if inlist( labels, l ) then
-               warn(fmt.f(_("vn: Duplicate label '{lbl}'!"),{lbl=l}))
-            end
-            table.insert( labels, l )
+            table.insert( labels, s.label )
+         end
+      end
+      table.sort( labels )
+      for k,v in ipairs(labels) do
+         if v==labels[k+1] then
+            warn(fmt.f(_("vn: Duplicate label '{lbl}'!"),{lbl=v}))
          end
       end
    end

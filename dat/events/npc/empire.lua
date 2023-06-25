@@ -1,5 +1,5 @@
 local fmt = require "format"
-local portrait = require "portrait"
+local vni = require "vnimage"
 local npc = require "common.npc"
 
 -- State. Nothing persists.
@@ -133,8 +133,7 @@ return function ()
    local function gen_npc()
       local name = _("Empire Citizen")
       local desc = descriptions[ rnd.rnd(1,#descriptions) ]
-      local prt  = portrait.get( "Empire" )
-      local image = portrait.getFullPath( prt )
+      local image, prt = vni.generic()
       local msg
       local r = rnd.rnd()
       if r <= 0.45 then

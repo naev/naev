@@ -18,10 +18,11 @@
 --]]
 local minerva = require "common.minerva"
 local vn = require 'vn'
-local vni = require 'vnimage'
 local vne = require 'vnextras'
 local fmt = require "format"
 local love_shaders = require "love_shaders"
+local love_audio = require 'love.audio'
+local reverb_preset = require 'reverb_preset'
 
 local zalek_image = "zalek_thug1.png"
 local dvaered_image = "dvaered_thug1.png"
@@ -120,7 +121,7 @@ function trial_start ()
    local kex = minerva.vn_kex()
    local maikki = minerva.vn_maikki()
    local ceo = minerva.vn_ceo()
-   local judge = vn.Character.new( _("Judge Holmes"), { image=vni.genericFemale() } ) -- TODO replace graphics
+   local judge = vn.Character.new( _("Judge Holmes"), { image="judge_holmes.webp" } )
    local zlk = vn.Character.new( _("Za'lek Lawyer"), { image=zalek_image, color=zalek_colour } )
    local dvd = vn.Character.new( _("Dvaered Representative"), { image=dvaered_image, color=dvaered_colour } )
    local scv = vn.Character.new( minerva.scavengera.name,
@@ -600,12 +601,13 @@ Eventually when all argumentation is exhausted the different representatives rep
    vn.na(_([[You can see the judge and House representatives shift around uncomfortably.]]))
    kex(_([["Well, it all ends here!"]]))
    vn.func( function () kex.shader = love_shaders.aura() end )
-   -- TODO activation sound
+   vn.sfx( "snd/sounds/activate3.ogg" ) -- activation sound
    kex(_([[Kex's eyes glow red and you hear the activation sound of some sort of weapon.]]))
    vn.func( function () kex.shader = nil end )
    vn.disappear( kex, "slideup" )
-   -- TODO crazy music / yelling?
+   vn.sfx( "snd/sounds/crowdpanic01.ogg" ) -- some yelling
    vn.na(_([[As people start scrambling and yelling, you hear a shot and Kex falls down as chaos unfolds.]]))
+   vn.sfx( "snd/sounds/autocannon.ogg" ) -- autocannon
    vn.na(_([[You hear shots being fired left and right as you duck for cover. The Judge's levitating desk crashes in the background creating a small explosion as things take a turn for the worst.]]))
    vn.menu{
       {_([[Go for the door.]]),"06_getout"},
@@ -625,7 +627,9 @@ Eventually when all argumentation is exhausted the different representatives rep
    vn.na(_([[You are almost at the spaceport when suddenly you hear a rasping voice coming out from a side corridor.]]))
 
    vn.scene()
-   vn.music( minerva.loops.pirate ) -- TODO make a bit sadder and slower
+   -- Music is a bit slower and sadder
+   love_audio.setEffect( "reverb_sad", reverb_preset.drugged() )
+   vn.music( minerva.loops.pirate, {pitch=0.6, effect="reverb_sad"} )
    vn.newCharacter( zuri )
    vn.transition()
    zuri(fmt.f(_([["Hey {playername}..."

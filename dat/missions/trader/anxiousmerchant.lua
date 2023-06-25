@@ -33,11 +33,11 @@
 ]]--
 local car = require "common.cargo"
 local fmt = require "format"
-local portrait = require "portrait"
 local vn = require "vn"
+local vni = require "vnimage"
 
 local npc_name = _("Anxious Merchant")
-local npc_portrait
+local npc_portrait, npc_image
 function create()
    -- Note: this mission does not make any system claims.
 
@@ -48,7 +48,7 @@ function create()
       misn.finish(false)
    end
 
-   npc_portrait = portrait.get("Trader")
+   npc_image, npc_portrait = vni.trader()
    misn.setNPC(npc_name, npc_portrait, _("You see a merchant at the bar in a clear state of anxiety.")) -- creates the merchant at the bar
 
    local stu_distance = 0.2 * mem.travel_dist
@@ -73,7 +73,7 @@ function accept()
 
    vn.clear()
    vn.scene()
-   local m = vn.newCharacter( npc_name, {image=portrait.getFullPath(npc_portrait)} )
+   local m = vn.newCharacter( npc_name, {image=npc_image} )
    m(_([[As you sit down, the merchant looks up at you with a panicked expression, "Ahh! What do you want? Can't you see I've enough on my plate as it is?" You tell the merchant to calm down and offer a drink. "Jeez, that's nice of you… Ha, maybe I can get a break today!"]]))
    m(_([[You grab a couple of drinks and hand one to the slightly more relaxed looking merchant as they start to talk. "So, I work for the Space Traders Society. I transport stuff for them and they pay me. Only problem is, I kinda strained my engines running from pirates on the way to the pick-up and now I'm realising that my engines just don't have the speed to get me back to beat the deadline. And to top it all off, I'm late on my bills as is; I can't afford new engines now! It's like I'm in the Sol nebula without a shield generator."]]))
    m(fmt.f(_([[You attempt to reassure the merchant by telling them that, surely, the company will cut them some slack. "Like hell they will! I've already been scolded by management for this exact same thing before! If I don't get this shipment of {tonnes} of {cargo} to {pnt}… I really need this job, you know? I don't know what to do…" The merchant pauses. "Unless… Say, you wouldn't be able to help me out here, would you? I'd just need you to take the cargo to {pnt} in the {sys} system. Could you? I'll give you the payment for the mission if you do it; it means a lot!"]]),

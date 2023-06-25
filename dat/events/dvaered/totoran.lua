@@ -12,10 +12,9 @@
 --]]
 
 local fmt = require "format"
-local vn = require 'vn'
-local portrait = require 'portrait'
+local vn = require "vn"
+local vni = require "vnimage"
 local gauntlet = require 'common.gauntlet'
-
 
 -- Unsaved global tables
 local bgnpcs
@@ -84,11 +83,11 @@ function create()
    bgnpcs = {}
    local function create_npc( names, descriptions, msglist, i )
       local name  = names[ rnd.rnd(1, #names) ]
-      local img   = portrait.get()
+      local img, prt = vni.generic()
       local desc  = descriptions[ rnd.rnd(1, #descriptions) ]
       local msg   = msglist[i]
-      local id    = evt.npcAdd( "approach_bgnpc", name, img, desc, 10 )
-      local npcdata = { name=name, image=portrait.getFullPath(img), message=msg }
+      local id    = evt.npcAdd( "approach_bgnpc", name, prt, desc, 10 )
+      local npcdata = { name=name, image=img, message=msg }
       bgnpcs[id]  = npcdata
    end
 
