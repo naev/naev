@@ -90,6 +90,10 @@ vni.genericMale = get_list( neutral_m )
 vni.genericFemale = get_list( neutral_f )
 vni.generic = get_list( neutral_m, neutral_f )
 
+vni.trader = vni.generic
+vni.traderMale = vni.genericMale
+vni.traderFemale = vni.genericFemale
+
 local pirate_m = {
    "pirate/pirate1.webp",
    "pirate/pirate2.webp",
