@@ -17,10 +17,10 @@
 ]]--
 local fmt = require "format"
 local vn  = require 'vn'
+local vni = require 'vnimage'
 local vntk= require 'vntk'
 local tut = require "common.tutorial"
 local der = require 'common.derelict'
-local portrait = require 'portrait'
 local audio = require 'love.audio'
 local luaspfx = require "luaspfx"
 local love_shaders = require "love_shaders"
@@ -28,7 +28,7 @@ local love_shaders = require "love_shaders"
 local cat_image = "blackcat.webp"
 local cat_colour = nil
 
-local owner_image = portrait.getFullPath( portrait.get() )
+local owner_image = vni.generic()
 local owner_colour = nil
 local owner -- Non-persistent state
 

@@ -16,11 +16,10 @@
 --]]
 
 local fmt      = require "format"
-local portrait = require "portrait"
 local vn       = require 'vn'
+local vni      = require 'vnimage'
 
-
-local port = portrait.getMil("Dvaered")
+local img, port = vni.dvaeredMilitary()
 
 function create()
    evt.npcAdd("approach", _("Dvaered soldier"),  port, _("A Dvaered soldier with many bruises on their face is looking at you."))
@@ -31,7 +30,7 @@ function approach()
 
    vn.clear()
    vn.scene()
-   local sol = vn.newCharacter( _("Dvaered soldier"), { image=portrait.getFullPath(port) } )
+   local sol = vn.newCharacter( _("Dvaered soldier"), { image=img } )
    local doaccept = false
 
    vn.transition( "hexagon" )

@@ -28,7 +28,7 @@ local fmt = require "format"
 local pilotname = require "pilotname"
 local lmisn = require "lmisn"
 local vn = require "vn"
-local portrait = require "portrait"
+local vni = require "vnimage"
 
 local spawn_target -- Forward-declared functions
 
@@ -39,8 +39,7 @@ local target_faction = "Independent"
 local reward = 450e3
 
 local givername = _("Shady Individual")
-mem.giverportrait = portrait.get()
-mem.giverimage = portrait.getFullPath(mem.giverportrait)
+mem.giverimage, mem.giverportrait = vni.generic()
 
 function create ()
    -- Lower probability on non-pirate places
