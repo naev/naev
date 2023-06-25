@@ -16,9 +16,6 @@ local function fullscreenStart( func, params )
    params = params or {}
    local nw, nh = naev.gfx.dim()
    vn.func( function ()
-      if func then
-         func()
-      end
       -- Store old values
       characters = vn._characters
       textbox_bg_alpha = vn.textbox_bg_alpha
@@ -27,6 +24,12 @@ local function fullscreenStart( func, params )
       textbox_x = vn.textbox_x
       textbox_y = vn.textbox_y
       textbox_font = vn.textbox_font
+   end )
+   vn.scene()
+   vn.func( function ()
+      if func then
+         func()
+      end
       -- New values
       if params.font then
          vn.textbox_font = params.font
@@ -38,7 +41,6 @@ local function fullscreenStart( func, params )
       vn.textbox_x = (nw-vn.textbox_w)/2
       vn.show_options = false
    end )
-   vn.scene()
    local name = params.name or _("Notebook")
    local colour = params.textcolour or {1, 1, 1}
    local log = vn.newCharacter( name, { color=colour, hidetitle=true } )
