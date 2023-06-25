@@ -42,6 +42,8 @@ local dv_name = _("Lord Battlebloke")
 mem.state = nil
 
 function create ()
+   if not var.peek("testing") then misn.finish(false) end
+
    if not misn.claim( mainsys ) then
       misn.finish( false )
    end
