@@ -572,6 +572,7 @@ Eventually when all argumentation is exhausted the different representatives rep
       else
          winner="independent"
       end
+      var.push("minerva_judgement_winner", winner)
    end )
    judge(_([["With the deliberations over, it is time to pass judgement."]]))
    judge( function ()
@@ -635,11 +636,7 @@ She grimaces in pain as she talks.]]))
    vn.na(_([[You shush her and try to help her stop her bleeding. This doesn't look too good.]]))
    zuri(_([["I'm going to have to ask another favour of you..."
 She tries to adjust her position a bit to breath more easily, the pain is clear in her eyes.]]))
-   zuri(_([["I need you to take us to a meeting point, shouldn't be far from here."]]))
-   vn.menu{
-      {_([[Take her.]]),"07_accept"},
-      {_([[Come back in a bit.]]),"07_decline"},
-   }
+   zuri(_([["Give me a second to catch my breath and we can go."]]))
 
    vn.run()
 
