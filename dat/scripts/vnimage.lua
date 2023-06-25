@@ -24,7 +24,7 @@ local function get_list( ... )
    local n = #arg
    if n==1 then
       return function ()
-         _get_list( arg[1] )
+         return _get_list( arg[1] )
       end
    end
    return function ()
