@@ -1,6 +1,6 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<event name="Minerva Judgement">
+<mission name="Minerva Judgement">
  <priority>3</priority>
  <chance>100</chance>
  <location>Bar</location>
@@ -9,7 +9,7 @@
  <notes>
   <campaign>Minerva</campaign>
  </notes>
-</event>
+</mission>
 --]]
 
 --[[
@@ -90,6 +90,7 @@ function accept ()
    } )
    mem.mrk = misn.markerAdd( trialspb )
 
+   hook.load("land")
    hook.land("land")
    hook.enter("enter")
 end
@@ -119,7 +120,7 @@ function trial_start ()
    local kex = minerva.vn_kex()
    local maikki = minerva.vn_maikki()
    local ceo = minerva.vn_ceo()
-   local judge = vn.Characters.new( _("Judge Holmes"), {image=vni.genericFemale()} ) -- TODO replace graphics
+   local judge = vn.Character.new( _("Judge Holmes"), {image=vni.genericFemale()} ) -- TODO replace graphics
    local zlk = vn.Character.new( _("Za'lek Lawyer"), { image=zalek_image, color=zalek_colour } )
    local dvd = vn.Character.new( _("Dvaered Representative"), { image=dvaered_image, color=dvaered_colour } )
    local scv = vn.Character.new( minerva.scavengera.name,
@@ -317,7 +318,7 @@ Maikki gives an impeccable formal bow.]]))
    end )
    vn.jump("01_cont")
 
-   vn.label("01_zl")
+   vn.label("01_both")
    vn.func( function ()
       pir_points = pir_points+1
    end )
