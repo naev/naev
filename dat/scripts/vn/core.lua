@@ -629,6 +629,8 @@ function vn.StateScene:_init()
 
    -- Clear stuff
    vn._buffer = ""
+   vn._buffer_y = 0
+   vn._title = nil
 
    _finish(self)
 end
