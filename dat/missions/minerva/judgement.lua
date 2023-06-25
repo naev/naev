@@ -603,7 +603,7 @@ Eventually when all argumentation is exhausted the different representatives rep
    -- TODO activation sound
    kex(_([[Kex's eyes glow red and you hear the activation sound of some sort of weapon.]]))
    vn.func( function () kex.shader = nil end )
-   vn.disappear( kex, "slidedown" )
+   vn.disappear( kex, "slideup" )
    -- TODO crazy music / yelling?
    vn.na(_([[As people start scrambling and yelling, you hear a shot and Kex falls down as chaos unfolds.]]))
    vn.na(_([[You hear shots being fired left and right as you duck for cover. The Judge's levitating desk crashes in the background creating a small explosion as things take a turn for the worst.]]))
