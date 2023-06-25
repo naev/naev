@@ -1,5 +1,5 @@
 --local fmt = require "format"
-local portrait = require "portrait"
+local vni = require "vnimage"
 local npc = require "common.npc"
 
 -- State. Nothing persists.
@@ -95,15 +95,16 @@ return function ()
 
    local function gen_npc()
       local name = _("Soromid Tribesperson")
-      local prt  = portrait.get( "Soromid" )
-      local image = portrait.getFullPath( prt )
-      local civtype = "generic"
+      local image, prt, civtype
       -- TODO probably use tags to control what portraits get used
       if rnd.rnd() < 0.3 then
          local srmid = gfx_list[ rnd.rnd(1,#gfx_list) ]
          prt = srmid[1]
          civtype = srmid[2]
          image = prt
+      else
+         image, prt = vni.soromid()
+         civtype = "generic"
       end
       -- Soromid use descriptions based on type (or generic)
       local descriptions = desc_list[ civtype ]

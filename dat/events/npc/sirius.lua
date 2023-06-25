@@ -1,5 +1,4 @@
 --local fmt = require "format"
---local portrait = require "portrait"
 local npc = require "common.npc"
 local vni = require "vnimage"
 
@@ -106,8 +105,8 @@ return function ()
       else
          echelon = "serra"
          name = _("Serra Acolyte")
-         image, prt = vni.sirius.serra()
          desc = desc_serra[ rnd.rnd(1,#desc_serra) ]
+         image, prt = vni.sirius.serra()
       end
       local msg
       r = rnd.rnd()

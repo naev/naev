@@ -1,5 +1,5 @@
 --local fmt = require "format"
-local portrait = require "portrait"
+local vni = require "vnimage"
 local npc = require "common.npc"
 local pir = require "common.pirate"
 
@@ -86,8 +86,7 @@ return function ()
    local function gen_npc()
       local name = _("Wild Ones Clansperson")
       local desc = descriptions[ rnd.rnd(1,#descriptions) ]
-      local prt  = portrait.get( "Pirate" )
-      local image = portrait.getFullPath( prt )
+      local image, prt = vni.pirate()
       local msg
       local r = rnd.rnd()
       if r <= 0.45 then
