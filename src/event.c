@@ -187,6 +187,7 @@ static int event_create( int dataid, unsigned int *id )
 {
    Event_t *ev;
    EventData *data;
+   unsigned int eid;
 
    if (event_active==NULL)
       event_active = array_create( Event_t );
@@ -195,9 +196,10 @@ static int event_create( int dataid, unsigned int *id )
    ev = &array_grow( &event_active );
    memset( ev, 0, sizeof(Event_t) );
    if ((id != NULL) && (*id != 0))
-      ev->id = *id;
+      eid = *id;
    else
-      ev->id = event_genID();
+      eid = event_genID();
+   ev->id = eid;
 
    /* Add the data. */
    ev->data = dataid;
@@ -231,7 +233,8 @@ static int event_create( int dataid, unsigned int *id )
    if ((id==NULL) || (*id==0))
       event_run( ev->id, "create" );
    if (id != NULL)
-      *id = ev->id;
+      *id = eid; /* The ev pointer can change and be invalidated in event_run,
+                    so we pass eid instead of ev->id. */
 
    return 0;
 }
