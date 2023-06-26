@@ -254,7 +254,10 @@ static void btn_updateHotkey( Widget *btn )
 static int btn_key( Widget* btn, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
 {
    (void) mod;
-   (void) isrepeat;
+
+   /* Ignore repeats. */
+   if (isrepeat)
+      return 0;
 
    /* Don't grab disabled events. Soft-disabling falls through. */
    if ((btn->dat.btn.disabled) && (!btn->dat.btn.softdisable))
