@@ -43,7 +43,7 @@ typedef struct custom_functions_s {
 static int cust_update( double dt, void* data );
 static void cust_render( double x, double y, double w, double h, void* data );
 static int cust_event( unsigned int wid, SDL_Event *event, void* data );
-static int cust_key( SDL_Keycode key, SDL_Keymod mod, int pressed, custom_functions_t *cf );
+static int cust_key( SDL_Keycode key, SDL_Keymod mod, int pressed, int isrepeat, custom_functions_t *cf );
 static int cust_text( const char *str, custom_functions_t *cf );
 static int cust_mouse( int type, int button, double x, double y, custom_functions_t *cf );
 static int cust_event_window( SDL_WindowEventID event, Sint32 w, Sint32 h, custom_functions_t *cf );
@@ -623,9 +623,9 @@ static int cust_event( unsigned int wid, SDL_Event *event, void* data )
          return cust_mouse( 4, -1, event->wheel.x, event->wheel.y, cf );
 
       case SDL_KEYDOWN:
-         return cust_key( event->key.keysym.sym, event->key.keysym.mod, 1, cf );
+         return cust_key( event->key.keysym.sym, event->key.keysym.mod, 1, event->key.repeat, cf );
       case SDL_KEYUP:
-         return cust_key( event->key.keysym.sym, event->key.keysym.mod, 0, cf );
+         return cust_key( event->key.keysym.sym, event->key.keysym.mod, 0, event->key.repeat, cf );
 
       case SDL_TEXTINPUT:
          return cust_text( event->text.text, cf );
@@ -639,15 +639,16 @@ static int cust_event( unsigned int wid, SDL_Event *event, void* data )
 
    return 0;
 }
-static int cust_key( SDL_Keycode key, SDL_Keymod mod, int pressed, custom_functions_t *cf )
+static int cust_key( SDL_Keycode key, SDL_Keymod mod, int pressed, int isrepeat, custom_functions_t *cf )
 {
    int b;
    lua_State *L = cf->L;
    lua_rawgeti(L, LUA_REGISTRYINDEX, cf->keyboard);
-   lua_pushboolean(L, pressed );
+   lua_pushboolean(L, pressed);
    lua_pushstring(L, SDL_GetKeyName(key));
    lua_pushstring(L, input_modToText(mod));
-   if (cust_pcall( L, 3, 1 )) {
+   lua_pushboolean(L, isrepeat);
+   if (cust_pcall( L, 4, 1 )) {
       cf->done = 1;
       WARN(_("Custom dialogue internal error: %s"), lua_tostring(L,-1));
       lua_pop(L,1);
