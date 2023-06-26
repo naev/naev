@@ -32,7 +32,7 @@ void window_setCancel( unsigned int wid, void (*cancel)(unsigned int,const char*
 void window_setBorder( unsigned int wid, int enable );
 void window_setFocus( unsigned int wid, const char* wgtname );
 void window_handleKeys( unsigned int wid,
-      int (*keyhandler)(unsigned int,SDL_Keycode,SDL_Keymod) );
+      int (*keyhandler)(unsigned int,SDL_Keycode,SDL_Keymod,int) );
 void window_handleEvents( unsigned int wid,
       int (*eventhandler)(unsigned int,SDL_Event*) );
 void window_move( unsigned int wid, int x, int y );

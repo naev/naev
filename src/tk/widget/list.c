@@ -18,7 +18,7 @@
 
 static void lst_render( Widget* lst, double bx, double by );
 static void lst_renderOverlay( Widget* lst, double bx, double by );
-static int lst_key( Widget* lst, SDL_Keycode key, SDL_Keymod mod );
+static int lst_key( Widget* lst, SDL_Keycode key, SDL_Keymod mod, int isrepeat );
 static int lst_mclick( Widget* lst, int button, int x, int y );
 static int lst_mdoubleclick( Widget* lst, int button, int x, int y );
 static int lst_mwheel( Widget* lst, SDL_MouseWheelEvent event );
@@ -197,11 +197,13 @@ static void lst_renderOverlay( Widget* lst, double bx, double by )
  *    @param lst List widget to handle event.
  *    @param key Key being handled.
  *    @param mod Mods when key is being pressed.
+ *    @param isrepeat Whether or not the key is repeating.
  *    @return 1 if the event was used, 0 if it wasn't.
  */
-static int lst_key( Widget* lst, SDL_Keycode key, SDL_Keymod mod )
+static int lst_key( Widget* lst, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
 {
    (void) mod;
+   (void) isrepeat;
 
    switch (key) {
       case SDLK_UP:

@@ -136,7 +136,7 @@ static void map_setup (void);
 static void map_updateInternal( CstMapWidget *cst, double dt );
 static void map_reset( CstMapWidget* cst, MapMode mode );
 static CstMapWidget* map_globalCustomData( unsigned int wid );
-static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
+static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod, int isrepeat );
 static void map_buttonZoom( unsigned int wid, const char* str );
 static void map_setMinimal( unsigned int wid, int value );
 static void map_buttonMarkSystem( unsigned int wid, const char* str );
@@ -174,9 +174,10 @@ void map_exit (void)
 /**
  * @brief Handles key input to the map window.
  */
-static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
+static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
 {
    (void) mod;
+   (void) isrepeat;
 
    if ((key == SDLK_SLASH) || (key == SDLK_f)) {
       map_inputFind( wid, NULL );

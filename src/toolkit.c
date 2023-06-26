@@ -970,7 +970,7 @@ void window_setBorder( unsigned int wid, int enable )
  *  itself grabs the input.
  */
 void window_handleKeys( unsigned int wid,
-      int (*keyhandler)(unsigned int,SDL_Keycode,SDL_Keymod) )
+      int (*keyhandler)(unsigned int,SDL_Keycode,SDL_Keymod,int) )
 {
    /* Get the window. */
    Window *wdw = window_wget( wid );
@@ -2045,11 +2045,12 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
    Widget *wgt;
    SDL_Keycode key;
    SDL_Keymod mod;
-   int ret;
+   int rep, ret;
 
    /* Event info. */
    key = event->key.keysym.sym;
    mod = event->key.keysym.mod;
+   rep = event->key.repeat;
 
    /* Hack to simulate key repetition */
    if (event->type == SDL_KEYDOWN)
@@ -2071,18 +2072,18 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
    /* Trigger event function if exists. */
    if (wgt != NULL) {
       if (wgt->keyevent != NULL) {
-         ret = wgt->keyevent( wgt, input_key, input_mod );
+         ret = wgt->keyevent( wgt, input_key, input_mod, rep );
          if (ret!=0)
             return ret;
       }
    }
 
-   if (input_key != 0 && !event->key.repeat) {
+   if (input_key != 0 && !rep) {
       /* Handle button hotkeys. We don't want a held-down key to keep activating buttons, so forbid "repeat". */
       for ( wgt = wdw->widgets; wgt != NULL; wgt = wgt->next ) {
          if ( ( wgt->type == WIDGET_BUTTON ) && ( wgt->dat.btn.key == input_key )
                && wgt->keyevent != NULL ) {
-            ret = wgt->keyevent( wgt, SDLK_RETURN, input_mod );
+            ret = wgt->keyevent( wgt, SDLK_RETURN, input_mod, rep );
             if (ret!=0)
                return ret;
          }
@@ -2112,7 +2113,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
 
    /* Finally the stuff gets passed to the custom key handler if it's defined. */
    if (wdw->keyevent != NULL) {
-      ret = (*wdw->keyevent)( wdw->id, input_key, input_mod );
+      ret = (*wdw->keyevent)( wdw->id, input_key, input_mod, rep );
       if (ret!=0)
          return ret;
    }

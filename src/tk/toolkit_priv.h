@@ -91,7 +91,7 @@ typedef struct Widget_ {
    unsigned int flags; /**< Widget flags. */
 
    /* Event abstraction. */
-   int (*keyevent) ( struct Widget_ *wgt, SDL_Keycode k, SDL_Keymod m ); /**< Key event handler function for the widget. */
+   int (*keyevent) ( struct Widget_ *wgt, SDL_Keycode key, SDL_Keymod mod, int isrepeat ); /**< Key event handler function for the widget. */
    int (*textevent) ( struct Widget_ *wgt, const char *text ); /**< Text event function handler for the widget. */
    int (*mmoveevent) ( struct Widget_ *wgt, int x, int y, int rx, int ry); /**< Mouse movement handler function for the widget. */
    int (*mclickevent) ( struct Widget_ *wgt, int button, int x, int y ); /**< Mouse click event handler function for the widget. */
@@ -164,7 +164,7 @@ typedef struct Window_ {
    void (*accept_fptr)(unsigned int wid,const char* name); /**< Triggered by hitting 'enter' with no widget that catches the keypress. */
    void (*cancel_fptr)(unsigned int wid,const char* name); /**< Triggered by hitting 'escape' with no widget that catches the keypress. */
    void (*cleanup_fptr)(unsigned int wid,const char* name); /**< Triggered when window is finally freed. */
-   int (*keyevent)(unsigned int wid,SDL_Keycode,SDL_Keymod); /**< User defined custom key event handler. */
+   int (*keyevent)(unsigned int wid,SDL_Keycode,SDL_Keymod,int); /**< User defined custom key event handler. */
    int (*eventevent)(unsigned int wid,SDL_Event *evt); /**< User defined event handler. */
 
    /* Position and dimensions. */

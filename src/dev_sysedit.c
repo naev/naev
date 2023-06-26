@@ -161,7 +161,7 @@ static void sysedit_editExclusion (void);
 static void sysedit_editExclusionClose( unsigned int wid, const char *unused );
 static void sysedit_btnExclusionDelete( unsigned int wid, const char *unused );
 /* Keybindings handling. */
-static int sysedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
+static int sysedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod, int isrepeat );
 /* Selection. */
 static int sysedit_selectCmp( const Select_t *a, const Select_t *b );
 static int sysedit_isSelected( const Select_t *s );
@@ -274,10 +274,11 @@ void sysedit_open( StarSystem *sys )
 /**
  * @brief Handles keybindings.
  */
-static int sysedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
+static int sysedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
 {
    (void) wid;
    (void) mod;
+   (void) isrepeat;
 
    switch (key) {
 

@@ -16,7 +16,7 @@
 #include "tk/toolkit_priv.h"
 
 static Widget *chk_getWgt( unsigned int wid, const char *name );
-static int chk_key( Widget* chk, SDL_Keycode key, SDL_Keymod mod );
+static int chk_key( Widget* chk, SDL_Keycode key, SDL_Keymod mod, int isrepeat );
 static int chk_mclick( Widget* chk, int button, int x, int y );
 static void chk_render( Widget* chk, double bx, double by );
 static void chk_cleanup( Widget* chk );
@@ -150,11 +150,13 @@ static void chk_toggleState( Widget *chk )
  *    @param chk Button widget to handle event.
  *    @param key Key being handled.
  *    @param mod Mods when key is being pressed.
+ *    @param isrepeat Whether or not the key is repeating.
  *    @return 1 if the event was used, 0 if it wasn't.
  */
-static int chk_key( Widget* chk, SDL_Keycode key, SDL_Keymod mod )
+static int chk_key( Widget* chk, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
 {
    (void) mod;
+   (void) isrepeat;
 
    if (chk->dat.chk.disabled)
       return 0;

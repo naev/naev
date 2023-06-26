@@ -1,21 +1,17 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file image.c
  *
  * @brief Image widget.
  */
 
-
 #include "tk/toolkit_priv.h"
-
 
 static void img_render( Widget* img, double bx, double by );
 static void img_freeLayers( Widget* img );
 static void img_cleanup( Widget* img );
-
 
 /**
  * @brief Adds an image widget to the window.
@@ -57,7 +53,6 @@ void window_addImage( unsigned int wid,
    wgt->h = (h > 0) ? h : ((image==NULL) ? 0 : wgt->dat.img.image->sh);
    toolkit_setPos( wdw, wgt, x, y );
 }
-
 
 /**
  * @brief Renders a image widget.
@@ -101,7 +96,6 @@ static void img_render( Widget* img, double bx, double by )
    }
 }
 
-
 /**
  * @brief Gets the image from an image widget
  *
@@ -126,7 +120,6 @@ glTexture* window_getImage( unsigned int wid, char* name )
    /* Get the value. */
    return (wgt) ? wgt->dat.img.image : NULL;
 }
-
 
 /**
  * Modifies an existing image's image.
@@ -164,7 +157,6 @@ void window_modifyImage( unsigned int wid,
       wgt->h = (h > 0) ? h : ((image==NULL) ? 0 : wgt->dat.img.image->sh);
 }
 
-
 /**
  * Modifies an existing image's colour.
  *
@@ -192,7 +184,6 @@ void window_imgColour( unsigned int wid,
    wgt->dat.img.colour = *colour;
 }
 
-
 /**
  * @brief Sets the image widget layers
  */
@@ -218,7 +209,6 @@ void window_modifyImageLayers( unsigned int wid,
    wgt->dat.img.nlayers = n;
 }
 
-
 /**
  * Free layer stuff.
  */
@@ -228,7 +218,6 @@ static void img_freeLayers( Widget* img )
    img->dat.img.layers  = NULL;
    img->dat.img.nlayers = 0;
 }
-
 
 static void img_cleanup( Widget* img )
 {
