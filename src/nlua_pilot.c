@@ -4814,12 +4814,14 @@ static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task )
 
    /* Must be on manual control. */
    if (!pilot_isFlag( p, PILOT_MANUAL_CONTROL)) {
-      NLUA_ERROR( L, _("Pilot is not on manual control.") );
+      NLUA_ERROR( L, _("Pilot '%s' is not on manual control."), p->name );
       return 0;
    }
 
    /* Creates the new task. */
    t = ai_newtask( L, p, task, 0, 1 );
+   if (t==NULL)
+      NLUA_ERROR( L, _("Failed to create new task for pilot '%s'."), p->name );
 
    return t;
 }
