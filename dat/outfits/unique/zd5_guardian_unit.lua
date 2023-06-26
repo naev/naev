@@ -26,7 +26,7 @@ function onhit( p, po, armour, _shield, _attacker )
       abs = math.min( e*efficiency, abs ) -- Check if enough energy
 
       if a + abs > armour then
-         p:setHealthAbs( 1 ) -- Keep alive
+         p:setHealthAbs( a+abs ) -- Keep alive
 
          p:setEnergy( e-abs/efficiency, true ) -- Drain health
          mem.absorbed = mem.absorbed + abs -- Count damage as absorbed
