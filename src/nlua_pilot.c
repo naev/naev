@@ -163,6 +163,7 @@ static int pilotL_ai( lua_State *L );
 static int pilotL_changeAI( lua_State *L );
 static int pilotL_setTemp( lua_State *L );
 static int pilotL_setHealth( lua_State *L );
+static int pilotL_setHealthAbs( lua_State *L );
 static int pilotL_addHealth( lua_State *L );
 static int pilotL_setEnergy( lua_State *L );
 static int pilotL_fillAmmo( lua_State *L );
@@ -303,6 +304,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "changeAI", pilotL_changeAI },
    { "setTemp", pilotL_setTemp },
    { "setHealth", pilotL_setHealth },
+   { "setHealthAbs", pilotL_setHealthAbs },
    { "addHealth", pilotL_addHealth },
    { "setEnergy", pilotL_setEnergy },
    { "fillAmmo", pilotL_fillAmmo },
@@ -3816,7 +3818,7 @@ static int pilotL_setTemp( lua_State *L )
 /**
  * @brief Sets the health of a pilot.
  *
- * This recovers the pilot's disabled state, although he may become disabled afterwards.
+ * This recovers the pilot's disabled state, although they may become disabled afterwards.
  *
  * @usage p:setHealth( 100, 100 ) -- Sets pilot to full health
  * @usage p:setHealth(  70,   0 ) -- Sets pilot to 70% armour
@@ -3847,6 +3849,51 @@ static int pilotL_setHealth( lua_State *L )
    p->armour = a * p->armour_max;
    p->shield = s * p->shield_max;
    p->stress = st * p->armour;
+
+   /* Clear death hooks if not dead. */
+   if (p->armour > 0.) {
+      pilot_rmFlag( p, PILOT_DISABLED );
+      pilot_rmFlag( p, PILOT_DEAD );
+      pilot_rmFlag( p, PILOT_DEATH_SOUND );
+      pilot_rmFlag( p, PILOT_EXPLODED );
+      pilot_rmFlag( p, PILOT_DELETE );
+      if (pilot_isPlayer(p))
+         player_rmFlag( PLAYER_DESTROYED );
+   }
+   pilot_rmFlag( p, PILOT_DISABLED_PERM ); /* Remove permanent disable. */
+
+   /* Update disable status. */
+   pilot_updateDisable(p, 0);
+
+   return 0;
+}
+
+/**
+ * @brief Sets the health of a pilot in absolute value.
+ *
+ * This recovers the pilot's disabled state, although they may become disabled afterwards.
+ *
+ *    @luatparam Pilot p Pilot to set health of.
+ *    @luatparam[opt=current armour] number armour Value to set armour to, in absolute value.
+ *    @luatparam[opt=current shield] number shield Value to set shield to, in absolute value
+ *    @luatparam[opt=current stress] number stress Value to set stress (disable damage) to, in absolute value.
+ * @luafunc setHealth
+ */
+static int pilotL_setHealthAbs( lua_State *L )
+{
+   Pilot *p;
+   double a, s, st;
+
+   /* Handle parameters. */
+   p  = luaL_validpilot(L,1);
+   a  = luaL_optnumber(L, 2, p->armour);
+   s  = luaL_optnumber(L, 3, p->shield);
+   st = luaL_optnumber(L,4,p->stress);
+
+   /* Set health. */
+   p->armour = CLAMP( 0., p->armour_max, a );
+   p->shield = CLAMP( 0., p->shield_max, s );
+   p->stress = CLAMP( 0., p->armour_max, st );
 
    /* Clear death hooks if not dead. */
    if (p->armour > 0.) {

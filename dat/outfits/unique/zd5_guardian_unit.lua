@@ -19,15 +19,14 @@ end
 
 function onhit( p, po, armour, _shield, _attacker )
    if mem.died then return end
-   local a = p:health(true)
+   local a = p:armour(true)
    if armour >= a then -- Lethal damage
       local abs = math.min( max_absorb - mem.absorbed, armour-a+1 )
       local e = p:energy(true)
       abs = math.min( e*efficiency, abs ) -- Check if enough energy
 
       if a + abs > armour then
-         local stats = p:stats()
-         p:setHealth( (a + abs)/stats.armour ) -- Try to add health
+         p:setHealthAbs( 1 ) -- Keep alive
 
          p:setEnergy( e-abs/efficiency, true ) -- Drain health
          mem.absorbed = mem.absorbed + abs -- Count damage as absorbed
