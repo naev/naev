@@ -381,8 +381,14 @@ end
 --[[--
 Key press handler.
    @tparam string key Name of the key pressed.
+   @tparam boolean isrepeat Whether or not the string is repeating.
 --]]
-function vn.keypressed( key )
+function vn.keypressed( key, isrepeat )
+   if love._vn_keyrepeat_check and isrepeat then
+      return false
+   end
+   love._vn_keyrepeat_check = false
+
    local tkopen = luatk.isOpen()
    if not tkopen and string.lower(naev.keyGet( "menu" )) == key then
       naev.menuSmall()
@@ -1786,6 +1792,7 @@ function vn.run()
       end
    end
    love._vn = true
+   love._vn_keyrepeat_check = true
    love.exec( 'scripts/vn' )
    love._vn = nil
    vn._started = false

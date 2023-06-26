@@ -157,12 +157,12 @@ local function _mouse( x, y, mtype, button )
       return love.wheelmoved( x, y )
    end
 end
-local function _keyboard( pressed, key, _mod )
+local function _keyboard( pressed, key, _mod, isrepeat )
    if not love.keyboard then return false end
    local k = string.lower( key )
    love.keyboard._keystate[ k ] = pressed
    if pressed then
-      return love.keypressed( k, k, false )
+      return love.keypressed( k, k, isrepeat )
    else
       return love.keyreleased( k, k )
    end
