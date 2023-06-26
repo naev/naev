@@ -170,6 +170,8 @@ static int pilotL_setNoboard( lua_State *L );
 static int pilotL_setNoDisable( lua_State *L );
 static int pilotL_setSpeedLimit( lua_State *L);
 static int pilotL_getHealth( lua_State *L );
+static int pilotL_getArmour( lua_State *L );
+static int pilotL_getShield( lua_State *L );
 static int pilotL_getEnergy( lua_State *L );
 static int pilotL_getLockon( lua_State *L );
 static int pilotL_getStats( lua_State *L );
@@ -280,6 +282,8 @@ static const luaL_Reg pilotL_methods[] = {
    { "faction", pilotL_faction },
    { "spaceworthy", pilotL_spaceworthy },
    { "health", pilotL_getHealth },
+   { "armour", pilotL_getArmour },
+   { "shield", pilotL_getShield },
    { "energy", pilotL_getEnergy },
    { "lockon", pilotL_getLockon },
    { "stats", pilotL_getStats },
@@ -4057,6 +4061,48 @@ static int pilotL_getHealth( lua_State *L )
    lua_pushboolean(L, pilot_isDisabled(p));
 
    return 4;
+}
+
+/**
+ * @brief Gets the pilot's armour.
+ *
+ * @usage armour = p:armour()
+ *
+ *    @luatparam Pilot p Pilot to get armour of.
+ *    @luatparam[opt=false] boolean absolute Whether or not it shouldn't be relative and be absolute instead.
+ *    @luatreturn number The armour in % [0:100] if relative or absolute value otherwise.
+ * @luafunc armour
+ */
+static int pilotL_getArmour( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   int absolute = lua_toboolean(L,2);
+   if (absolute)
+      lua_pushnumber(L, p->armour );
+   else
+      lua_pushnumber(L,(p->armour_max > 0.) ? p->armour / p->armour_max * 100. : 0. );
+   return 1;
+}
+
+/**
+ * @brief Gets the pilot's shield.
+ *
+ * @usage shield = p:shield()
+ *
+ *    @luatparam Pilot p Pilot to get shield of.
+ *    @luatparam[opt=false] boolean absolute Whether or not it shouldn't be relative and be absolute instead.
+ *    @luatreturn number The shield in % [0:100] if relative or absolute value otherwise.
+ * @luafunc shield
+ */
+static int pilotL_getShield( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   int absolute = lua_toboolean(L,2);
+   if (absolute)
+      lua_pushnumber(L, p->shield );
+   else
+      lua_pushnumber(L,(p->shield_max > 0.) ? p->shield / p->shield_max * 100. : 0. );
+   return 1;
 }
 
 /**
