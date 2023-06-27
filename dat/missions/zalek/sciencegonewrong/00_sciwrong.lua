@@ -258,10 +258,11 @@ function call_the_police ()
    end
 end
 
-function spwn_police ()
-   lance1 = pilot.add( "Empire Lancelot", "Empire", system.get("Provectus Nova"), nil, {naked=true} )
-   lance2 = pilot.add( "Empire Lancelot", "Empire", system.get("Provectus Nova"), nil, {naked=true} )
-   adm1 = pilot.add( "Empire Admonisher", "Empire", system.get("Provectus Nova"), nil, {naked=true} )
+function spwn_police () -- Get called to Waterhole
+   local spwnsys = system.get("Holly")
+   lance1 = pilot.add( "Empire Lancelot", "Empire", spwnsys, nil, {naked=true} )
+   lance2 = pilot.add( "Empire Lancelot", "Empire", spwnsys, nil, {naked=true} )
+   adm1 = pilot.add( "Empire Admonisher", "Empire", spwnsys, nil, {naked=true} )
 
    local eparams = {
       damage = 0, -- disable weapons only
