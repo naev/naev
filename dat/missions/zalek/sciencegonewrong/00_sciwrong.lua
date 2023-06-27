@@ -140,13 +140,13 @@ function first_trd()
 
    misn.markerMove(mem.misn_mark, mem.t_pla[2])
 
-   mem.lhook2 = hook.land("land2", "land")
+   if not mem.lhook2 then
+      mem.lhook2 = hook.land("land2", "land")
+   end
 end
 
 -- 2nd trade: Get player the stuff and make them pay, let them be hunted by the police squad
 function second_trd()
-   misn.npcRm(mem.bar2pir1)
-
    local traded = false
    vn.clear()
    vn.scene()
@@ -190,6 +190,7 @@ function second_trd()
    hook.rm(mem.lhook2)
    hook.enter("sys_enter")
    mem.traded1 = true
+   misn.npcRm(mem.bar2pir1)
 end
 
 -- 3rd trade: Get the stuff the scientist wants
