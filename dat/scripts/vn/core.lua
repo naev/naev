@@ -949,8 +949,8 @@ function vn.StateMenu:_init()
       self._items = self.items
    end
    if __debugging then
-      if self._items == nil then
-         warn(_("vn: menu has no options!"))
+      if self._items == nil or #self._items==0 then
+         error(_("vn: menu has no options!"))
       end
    end
    -- Set up the graphics stuff
