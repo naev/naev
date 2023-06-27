@@ -154,6 +154,8 @@ function second_trd()
 
    trader(fmt.f(_([["You approach the dealer and explain what you are looking for. He raises his eyebrow. "It will be {credits}. But if you get caught by the authorities, you're on your own. Far as I'm concerned, I never saw you. Deal?"]]), {credits=fmt.credits(pho_mny)}))
    vn.menu{
+      {fmt.f(_([[Pay {credits}.]]),{credits=fmt.credits(pho_mny)}), "accept"},
+      {_("Decline."), "decline"},
    }
 
    vn.label("decline")
