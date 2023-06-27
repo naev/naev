@@ -36,9 +36,9 @@ local npc_portrait = "neutral/unique/middleaged.webp"
 local npc_image = portrait.getFullPath( npc_portrait )
 
 function create ()
-    mem.cursys = system.cur()
-    mem.curplanet = spob.cur()
-    misn.setNPC( npc_name, npc_portrait, _("You see a middle-aged man, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot."))
+   mem.cursys = system.cur()
+   mem.curplanet = spob.cur()
+   misn.setNPC( npc_name, npc_portrait, _("You see a middle-aged man, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot."))
 end
 
 
