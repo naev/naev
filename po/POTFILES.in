@@ -3379,6 +3379,7 @@ dat/ships/lua/lib/flow.lua
 dat/ships/lua/lua_ship_example.lua
 dat/ships/lua/scavenger.lua
 dat/ships/lua/sirius.lua
+dat/ships/lua/sirius_dogma.lua
 dat/ships/lua/sirius_projection.lua
 dat/ships/lua/soromid.lua
 dat/ships/lua/thurion.lua
