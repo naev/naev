@@ -269,7 +269,7 @@ static int poL_set( lua_State *L )
    PilotOutfitSlot *po = luaL_validpilotoutfit(L,1);
    const char *name = luaL_checkstring(L,2);
    double value = luaL_checknumber(L,3);
-   ss_statsSet( &po->lua_stats, name, value, 1 );
+   po->lua_stats = ss_statsSetList( po->lua_stats, ss_typeFromName(name), value, 1, 0 );
    pilotoutfit_modified = 1;
    return 0;
 }
@@ -283,7 +283,8 @@ static int poL_set( lua_State *L )
 static int poL_clear( lua_State *L )
 {
    PilotOutfitSlot *po = luaL_validpilotoutfit(L,1);
-   ss_statsInit( &po->lua_stats );
+   ss_free( po->lua_stats );
+   po->lua_stats = NULL;
    pilotoutfit_modified = 1;
    return 0;
 }

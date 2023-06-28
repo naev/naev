@@ -464,6 +464,10 @@ int pilot_rmOutfitRaw( Pilot* pilot, PilotOutfitSlot *s )
       s->lua_mem = LUA_NOREF;
    }
 
+   /* CLean up stats. */
+   ss_free( s->lua_stats );
+   s->lua_stats = NULL;
+
    return ret;
 }
 
@@ -842,7 +846,7 @@ static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot )
 
    /* Lua mods apply their stats. */
    if (slot->lua_mem != LUA_NOREF)
-      ss_statsMerge( &pilot->stats, &slot->lua_stats );
+      ss_statsMergeFromList( &pilot->stats, slot->lua_stats );
 
    /* Has update function. */
    if (o->lua_update != LUA_NOREF)
@@ -934,15 +938,14 @@ void pilot_calcStats( Pilot* pilot )
       pilot_calcStatsSlot( pilot, pilot->outfits[i] );
 
    /* Merge stats. */
-   ss_statsMergeFromList( &pilot->stats, &pilot->ship_stats );
-   ss_statsMerge( &pilot->stats, &pilot->intrinsic_stats );
+   ss_statsMergeFromList( &pilot->stats, pilot->ship_stats );
+   ss_statsMergeFromList( &pilot->stats, pilot->intrinsic_stats );
 
    /* Compute effects. */
    effect_compute( &pilot->stats, pilot->effects );
 
    /* Apply system effects. */
-   if (cur_system->stats != NULL)
-      ss_statsMergeFromList( &pilot->stats, cur_system->stats );
+   ss_statsMergeFromList( &pilot->stats, cur_system->stats );
 
    /* Apply stealth malus. */
    if (pilot_isFlag(pilot, PILOT_STEALTH)) {
@@ -1173,7 +1176,6 @@ static int pilot_outfitLmem( PilotOutfitSlot *po, nlua_env env )
    int oldmem;
    /* Create the memory if necessary and initialize stats. */
    if (po->lua_mem == LUA_NOREF) {
-      ss_statsInit( &po->lua_stats );
       lua_newtable(naevL); /* mem */
       po->lua_mem = luaL_ref(naevL,LUA_REGISTRYINDEX); /* */
    }

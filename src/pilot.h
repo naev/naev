@@ -137,7 +137,7 @@ typedef struct PilotOutfitSlot_ {
 
    /* In the case of Lua stuff. */
    int lua_mem; /**< Lua reference to the memory table of the specific outfit. */
-   ShipStats lua_stats; /**< Intrinsic ship stats for the outfit calculated on the fly. Used only by Lua outfits. */
+   ShipStatList *lua_stats; /**< Intrinsic ship stats for the outfit calculated on the fly. Used only by Lua outfits. */
 } PilotOutfitSlot;
 
 /**

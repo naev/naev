@@ -870,7 +870,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    /* Display temporary bonuses. */
    if (slot->lua_mem != LUA_NOREF) {
       slen = strlen(alt);
-      ss_statsDesc( &slot->lua_stats, &alt[slen], sizeof(alt)-slen, 1 );
+      ss_statsListDesc( slot->lua_stats, &alt[slen], sizeof(alt)-slen, 1 );
    }
 
    /* Draw the text. */
