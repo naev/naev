@@ -3376,6 +3376,7 @@ dat/scripts/vntk.lua
 dat/ships/lua/dvaered.lua
 dat/ships/lua/lib/explode.lua
 dat/ships/lua/lib/flow.lua
+dat/ships/lua/lua_ship_example.lua
 dat/ships/lua/scavenger.lua
 dat/ships/lua/sirius.lua
 dat/ships/lua/sirius_projection.lua
