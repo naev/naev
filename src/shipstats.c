@@ -200,15 +200,13 @@ static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLoo
 static double ss_statsGetInternal( const ShipStats *s, ShipStatsType type );
 static int ss_statsGetLuaInternal( lua_State *L, const ShipStats *s, ShipStatsType type, int internal );
 
-ShipStatList* ss_statsSetList( ShipStatList *head, const char *name, double value, int overwrite )
+ShipStatList* ss_statsSetList( ShipStatList *head, ShipStatsType type, double value, int overwrite )
 {
    const ShipStatsLookup *sl;
    ShipStatList *ll;
    ShipStatsType type;
    int init = overwrite;
 
-   /* Try to get type. */
-   type = ss_typeFromName( name );
    if (type == SS_TYPE_NIL)
       return NULL;
    sl = &ss_lookup[ type ];

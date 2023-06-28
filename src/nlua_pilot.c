@@ -3636,7 +3636,8 @@ static int pilotL_intrinsicGet( lua_State *L )
 static int pilotL_shippropReset( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
-   ss_statsInit( &p->ship_stats );
+   ss_free( p->ship_stats );
+   p->ship_stats = NULL;
    pilot_calcStats( p );
    return 0;
 }
@@ -3649,7 +3650,6 @@ static int pilotL_shippropReset( lua_State *L )
  *    @luatparam Pilot p Pilot to set stat of.
  *    @luatparam string name Name of the stat to set. It is the same as in the xml.
  *    @luatparam number value Value to set the stat to.
- *    @luatparam boolean replace Whether or not to add to the stat or replace it.
  * @luafunc shippropSet
  */
 static int pilotL_shippropSet( lua_State *L )
@@ -3658,27 +3658,25 @@ static int pilotL_shippropSet( lua_State *L )
    Pilot *p = luaL_validpilot(L,1);
    const char *name;
    double value;
-   int replace;
 
    if (p->ship->lua_env != LUA_NOREF)
       NLUA_ERROR(L,_("Trying to set ship property of pilot '%s' flying ship '%s' with no ship Lua enabled!"), p->name, p->ship->name);
+
 
    /* Case individual parameter. */
    if (!lua_istable(L,2)) {
       name     = luaL_checkstring(L,2);
       value    = luaL_checknumber(L,3);
-      replace  = lua_toboolean(L,4);
-      ss_statsSet( &p->ship_stats, name, value, replace );
+      p->ship_stats = ss_statsSetList( p->ship_stats, ss_typeFromName(name), value, 1 );
       pilot_calcStats( p );
       return 0;
    }
-   replace = lua_toboolean(L,4);
    /* Case set of parameters. */
    lua_pushnil(L);
    while (lua_next(L,2) != 0) {
       name     = luaL_checkstring(L,-2);
       value    = luaL_checknumber(L,-1);
-      ss_statsSet( &p->ship_stats, name, value, replace );
+      p->ship_stats = ss_statsSetList( p->ship_stats, ss_typeFromName(name), value, 1 );
       lua_pop(L,1);
    }
    lua_pop(L,1);
@@ -3700,7 +3698,11 @@ static int pilotL_shippropGet( lua_State *L )
    Pilot *p          = luaL_validpilot(L,1);
    const char *name  = luaL_optstring(L,2,NULL);
    int internal      = lua_toboolean(L,3);
-   ss_statsGetLua( L, &p->ship_stats, name, internal );
+   ShipStats ss;
+   /* TODO get directly the stat from the list. */
+   ss_statsInit( &ss );
+   ss_statsMergeFromList( &ss, p->ship_stats );
+   ss_statsGetLua( L, &ss, name, internal );
    return 1;
 }
 
