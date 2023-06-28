@@ -1,4 +1,5 @@
 notactive = true
+local range = 3000
 
 -- Init function run on creation
 local t
@@ -12,8 +13,10 @@ function update( p, _po, dt )
       return
    end
 
+   local mod = p:shipstat("ew_detect",true)
+
    t = t-1
-   for k,a in ipairs(p:getAllies( 3000, nil, nil, nil, true )) do
+   for k,a in ipairs(p:getAllies( range*mod, nil, nil, nil, true )) do
       a:effectAdd("Shield Aura")
    end
 end
