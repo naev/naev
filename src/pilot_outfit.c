@@ -934,6 +934,8 @@ void pilot_calcStats( Pilot* pilot )
       pilot_calcStatsSlot( pilot, pilot->outfits[i] );
 
    /* Merge stats. */
+   if (pilot->ship->lua_env != LUA_NOREF)
+      ss_statsMerge( &pilot->stats, &pilot->ship_stats );
    ss_statsMerge( &pilot->stats, &pilot->intrinsic_stats );
 
    /* Compute effects. */
