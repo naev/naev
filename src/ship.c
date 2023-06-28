@@ -958,7 +958,7 @@ static int ship_parse( Ship *temp, const char *filename )
 
          /* Load array. */
          ss_statsInit( &temp->stats_array );
-         ss_statsModFromList( &temp->stats_array, temp->stats );
+         ss_statsMergeFromList( &temp->stats_array, temp->stats );
 
          /* Create description. */
          if (temp->stats != NULL) {

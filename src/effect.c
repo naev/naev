@@ -480,7 +480,7 @@ void effect_compute( ShipStats *s, const Effect *efxlist )
 {
    for (int i=0; i<array_size(efxlist); i++) {
       const Effect *e = &efxlist[i];
-      ss_statsModFromListScale( s, e->data->stats, e->scale );
+      ss_statsMergeFromListScale( s, e->data->stats, e->scale );
    }
 }
 

@@ -494,7 +494,7 @@ static int outfitL_getShipStat( lua_State *L )
    ShipStats ss;
    const Outfit *o = luaL_validoutfit(L,1);
    ss_statsInit( &ss );
-   ss_statsModFromList( &ss, o->stats );
+   ss_statsMergeFromList( &ss, o->stats );
    const char *str   = luaL_optstring(L,2,NULL);
    int internal      = lua_toboolean(L,3);
    ss_statsGetLua( L, &ss, str, internal );

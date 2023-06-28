@@ -444,7 +444,7 @@ int ss_statsMerge( ShipStats *dest, const ShipStats *src )
  *    @param list Single element to apply.
  *    @return 0 on success.
  */
-int ss_statsModSingle( ShipStats *stats, const ShipStatList *list )
+int ss_statsMergeSingle( ShipStats *stats, const ShipStatList *list )
 {
    char *ptr;
    char *fieldptr;
@@ -493,7 +493,7 @@ int ss_statsModSingle( ShipStats *stats, const ShipStatList *list )
  *    @param scale Scaling factor.
  *    @return 0 on success.
  */
-int ss_statsModSingleScale( ShipStats *stats, const ShipStatList *list, double scale )
+int ss_statsMergeSingleScale( ShipStats *stats, const ShipStatList *list, double scale )
 {
    char *ptr;
    char *fieldptr;
@@ -540,11 +540,11 @@ int ss_statsModSingleScale( ShipStats *stats, const ShipStatList *list, double s
  *    @param stats Stats to update.
  *    @param list List to update from.
  */
-int ss_statsModFromList( ShipStats *stats, const ShipStatList* list )
+int ss_statsMergeFromList( ShipStats *stats, const ShipStatList* list )
 {
    int ret = 0;
    for (const ShipStatList *ll = list; ll != NULL; ll = ll->next)
-      ret |= ss_statsModSingle( stats, ll );
+      ret |= ss_statsMergeSingle( stats, ll );
    return ret;
 }
 
@@ -555,11 +555,11 @@ int ss_statsModFromList( ShipStats *stats, const ShipStatList* list )
  *    @param list List to update from.
  *    @param scale Scaling factor.
  */
-int ss_statsModFromListScale( ShipStats *stats, const ShipStatList* list, double scale )
+int ss_statsMergeFromListScale( ShipStats *stats, const ShipStatList* list, double scale )
 {
    int ret = 0;
    for (const ShipStatList *ll = list; ll != NULL; ll = ll->next)
-      ret |= ss_statsModSingleScale( stats, ll, scale );
+      ret |= ss_statsMergeSingleScale( stats, ll, scale );
    return ret;
 }
 

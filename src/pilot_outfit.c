@@ -854,7 +854,7 @@ static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot )
       if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
          return;
       /* Add stats. */
-      ss_statsModFromList( s, o->stats );
+      ss_statsMergeFromList( s, o->stats );
 
    }
    else if (outfit_isAfterburner(o)) { /* Afterburner */
@@ -862,13 +862,13 @@ static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot )
       if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
          return;
       /* Add stats. */
-      ss_statsModFromList( s, o->stats );
+      ss_statsMergeFromList( s, o->stats );
       pilot_setFlag( pilot, PILOT_AFTERBURNER ); /* We use old school flags for this still... */
       pilot->energy_loss += pilot->afterburner->outfit->u.afb.energy; /* energy loss */
    }
    else {
       /* Always add stats for non mod/afterburners. */
-      ss_statsModFromList( s, o->stats );
+      ss_statsMergeFromList( s, o->stats );
    }
 }
 
@@ -943,7 +943,7 @@ void pilot_calcStats( Pilot* pilot )
 
    /* Apply system effects. */
    if (cur_system->stats != NULL)
-      ss_statsModFromList( &pilot->stats, cur_system->stats );
+      ss_statsMergeFromList( &pilot->stats, cur_system->stats );
 
    /* Apply stealth malus. */
    if (pilot_isFlag(pilot, PILOT_STEALTH)) {
