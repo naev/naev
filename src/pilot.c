@@ -3076,8 +3076,6 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
    pilot->dockpilot = dockpilot;
    pilot->parent = dockpilot; /* leader will default to mothership if exists. */
    pilot->dockslot = dockslot;
-   ss_statsInit( &pilot->ship_stats );
-   ss_statsInit( &pilot->intrinsic_stats );
 
    /* Basic information. */
    pilot->ship = ship;
@@ -3540,7 +3538,6 @@ void pilot_free( Pilot *p )
    /* Clear some useful things. */
    pilot_clearHooks(p);
    effect_cleanup( p->effects );
-   p->effects = NULL;
    pilot_cargoRmAll( p, 1 );
    escort_freeList(p);
 
@@ -3553,13 +3550,16 @@ void pilot_free( Pilot *p )
       spfx_trail_remove( p->trail[i] );
    }
    array_free(p->trail);
-   p->trail = NULL;
 
    /* We don't actually free internals of the pilot once we cleaned up stuff. */
    if (pilot_isFlag( p, PILOT_NOFREE )) {
       p->id = 0; /* Invalidate ID. */
       return;
    }
+
+   /* Clean up stats. */
+   ss_free( p->ship_stats );
+   ss_free( p->intrinsic_stats );
 
    lvar_freeArray( p->shipvar );
 

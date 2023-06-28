@@ -282,8 +282,8 @@ typedef struct Pilot_ {
    double heat_start; /**< Temperature at the start of a cooldown. */
 
    /* Ship statistics. */
-   ShipStats ship_stats; /**< Ship stats set by the Lua ship. Only valid if the Lua has ship defined. */
-   ShipStats intrinsic_stats; /**< Intrinsic statistics to the ship create on the fly. */
+   ShipStatList *ship_stats; /**< Ship stats set by the Lua ship. Only valid if the Lua has ship defined. */
+   ShipStatList *intrinsic_stats; /**< Intrinsic statistics to the ship create on the fly. */
    ShipStats stats;  /**< Pilot's copy of ship statistics, used for comparisons.. */
 
    /* Ship effects. */

@@ -3564,7 +3564,8 @@ static int pilotL_setFuel( lua_State *L )
 static int pilotL_intrinsicReset( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
-   ss_statsInit( &p->intrinsic_stats );
+   ss_free( p->intrinsic_stats );
+   p->intrinsic_stats = NULL;
    pilot_calcStats( p );
    return 0;
 }
@@ -3591,7 +3592,7 @@ static int pilotL_intrinsicSet( lua_State *L )
       name     = luaL_checkstring(L,2);
       value    = luaL_checknumber(L,3);
       replace  = lua_toboolean(L,4);
-      ss_statsSet( &p->intrinsic_stats, name, value, replace );
+      p->intrinsic_stats = ss_statsSetList( p->intrinsic_stats, ss_typeFromName(name), value, replace, 0 );
       pilot_calcStats( p );
       return 0;
    }
@@ -3601,7 +3602,7 @@ static int pilotL_intrinsicSet( lua_State *L )
    while (lua_next(L,2) != 0) {
       name     = luaL_checkstring(L,-2);
       value    = luaL_checknumber(L,-1);
-      ss_statsSet( &p->intrinsic_stats, name, value, replace );
+      p->intrinsic_stats = ss_statsSetList( p->intrinsic_stats, ss_typeFromName(name), value, replace, 0 );
       lua_pop(L,1);
    }
    lua_pop(L,1);
@@ -3623,7 +3624,11 @@ static int pilotL_intrinsicGet( lua_State *L )
    Pilot *p          = luaL_validpilot(L,1);
    const char *name  = luaL_optstring(L,2,NULL);
    int internal      = lua_toboolean(L,3);
-   ss_statsGetLua( L, &p->intrinsic_stats, name, internal );
+   ShipStats ss;
+   /* TODO get directly the stat from the list. */
+   ss_statsInit( &ss );
+   ss_statsMergeFromList( &ss, p->intrinsic_stats );
+   ss_statsGetLua( L, &ss, name, internal );
    return 1;
 }
 
@@ -3667,7 +3672,7 @@ static int pilotL_shippropSet( lua_State *L )
    if (!lua_istable(L,2)) {
       name     = luaL_checkstring(L,2);
       value    = luaL_checknumber(L,3);
-      p->ship_stats = ss_statsSetList( p->ship_stats, ss_typeFromName(name), value, 1 );
+      p->ship_stats = ss_statsSetList( p->ship_stats, ss_typeFromName(name), value, 1, 0 );
       pilot_calcStats( p );
       return 0;
    }
@@ -3676,7 +3681,7 @@ static int pilotL_shippropSet( lua_State *L )
    while (lua_next(L,2) != 0) {
       name     = luaL_checkstring(L,-2);
       value    = luaL_checknumber(L,-1);
-      p->ship_stats = ss_statsSetList( p->ship_stats, ss_typeFromName(name), value, 1 );
+      p->ship_stats = ss_statsSetList( p->ship_stats, ss_typeFromName(name), value, 1, 0 );
       lua_pop(L,1);
    }
    lua_pop(L,1);

@@ -348,7 +348,7 @@ int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline );
  * Manipulation.
  */
 int ss_statsSet( ShipStats *s, const char *name, double value, int overwrite );
-ShipStatList* ss_statsSetList( ShipStatList *head, ShipStatsType type, double value, int overwrite );
+ShipStatList* ss_statsSetList( ShipStatList *head, ShipStatsType type, double value, int overwrite, int raw );
 double ss_statsGet( const ShipStats *s, const char *name );
 int ss_statsGetLua( lua_State *L, const ShipStats *s, const char *name, int internal );
 int ss_statsGetLuaTable( lua_State *L, const ShipStats *s, int internal );

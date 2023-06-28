@@ -200,11 +200,10 @@ static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLoo
 static double ss_statsGetInternal( const ShipStats *s, ShipStatsType type );
 static int ss_statsGetLuaInternal( lua_State *L, const ShipStats *s, ShipStatsType type, int internal );
 
-ShipStatList* ss_statsSetList( ShipStatList *head, ShipStatsType type, double value, int overwrite )
+ShipStatList* ss_statsSetList( ShipStatList *head, ShipStatsType type, double value, int overwrite, int raw )
 {
    const ShipStatsLookup *sl;
    ShipStatList *ll;
-   ShipStatsType type;
    int init = overwrite;
 
    if (type == SS_TYPE_NIL)
@@ -249,11 +248,17 @@ ShipStatList* ss_statsSetList( ShipStatList *head, ShipStatsType type, double va
    /* Set the data. */
    switch (sl->data) {
       case SS_DATA_TYPE_DOUBLE:
-         ll->d.d *= value / 100.;
+         if (raw)
+            ll->d.d *= value;
+         else
+            ll->d.d *= value / 100.;
          break;
 
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
-         ll->d.d += value / 100.;
+         if (raw)
+            ll->d.d += value;
+         else
+            ll->d.d += value / 100.;
          break;
 
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
