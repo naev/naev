@@ -4071,6 +4071,8 @@ static int pilotL_getStats( lua_State *L )
 /**
  * @brief Gets a shipstat from a Pilot by name, or a table containing all the ship stats if not specified.
  *
+ * @usage local mod = p:shipstat("tur_damage",true) -- Gets turret damage bonus with internal representation
+ *
  *    @luatparam Pilot p Pilot to get ship stat of.
  *    @luatparam[opt=nil] string name Name of the ship stat to get.
  *    @luatparam[opt=false] boolean internal Whether or not to use the internal representation.
