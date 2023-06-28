@@ -200,6 +200,80 @@ static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLoo
 static double ss_statsGetInternal( const ShipStats *s, ShipStatsType type );
 static int ss_statsGetLuaInternal( lua_State *L, const ShipStats *s, ShipStatsType type, int internal );
 
+ShipStatList* ss_statsSetList( ShipStatList *head, const char *name, double value, int overwrite )
+{
+   const ShipStatsLookup *sl;
+   ShipStatList *ll;
+   ShipStatsType type;
+   int init = overwrite;
+
+   /* Try to get type. */
+   type = ss_typeFromName( name );
+   if (type == SS_TYPE_NIL)
+      return NULL;
+   sl = &ss_lookup[ type ];
+
+   /* See if there is an element to modify or overwrite. */
+   if (head != NULL) {
+      for (ShipStatList *l=head; l!=NULL; l=l->next) {
+         if (type==l->type) {
+            ll = l;
+            break;
+         }
+      }
+   }
+
+   /* Allocate. */
+   if (ll==NULL) {
+      ll = malloc( sizeof(ShipStatList) );
+      ll->next    = head;
+      ll->target  = 0;
+      ll->type    = type;
+      init        = 1; /* Force initialization. */
+   }
+
+   if (init) {
+      switch (sl->data) {
+         case SS_DATA_TYPE_DOUBLE:
+            ll->d.d = 1.;
+            break;
+         case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
+         case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
+            ll->d.d = 0.;
+            break;
+         case SS_DATA_TYPE_BOOLEAN:
+         case SS_DATA_TYPE_INTEGER:
+            ll->d.i = 0;
+            break;
+      }
+   }
+
+   /* Set the data. */
+   switch (sl->data) {
+      case SS_DATA_TYPE_DOUBLE:
+         ll->d.d *= value / 100.;
+         break;
+
+      case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
+         ll->d.d += value / 100.;
+         break;
+
+      case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
+         ll->d.d += value;
+         break;
+
+      case SS_DATA_TYPE_BOOLEAN:
+         ll->d.i |= (fabs(value) > 1e-5);
+         break;
+
+      case SS_DATA_TYPE_INTEGER:
+         ll->d.i += round(value);
+         break;
+   }
+
+   return head;
+}
+
 /**
  * @brief Creates a shipstat list element from an xml node.
  *
@@ -539,9 +613,12 @@ int ss_statsMergeSingleScale( ShipStats *stats, const ShipStatList *list, double
  *
  *    @param stats Stats to update.
  *    @param list List to update from.
+ *    @return 0 on success.
  */
 int ss_statsMergeFromList( ShipStats *stats, const ShipStatList* list )
 {
+   if (list==NULL)
+      return 0;
    int ret = 0;
    for (const ShipStatList *ll = list; ll != NULL; ll = ll->next)
       ret |= ss_statsMergeSingle( stats, ll );
@@ -554,9 +631,12 @@ int ss_statsMergeFromList( ShipStats *stats, const ShipStatList* list )
  *    @param stats Stats to update.
  *    @param list List to update from.
  *    @param scale Scaling factor.
+ *    @return 0 on success.
  */
 int ss_statsMergeFromListScale( ShipStats *stats, const ShipStatList* list, double scale )
 {
+   if (list==NULL)
+      return 0;
    int ret = 0;
    for (const ShipStatList *ll = list; ll != NULL; ll = ll->next)
       ret |= ss_statsMergeSingleScale( stats, ll, scale );
@@ -843,8 +923,15 @@ int ss_statsSet( ShipStats *s, const char *name, double value, int overwrite )
             *destdbl *= v;
          break;
 
-      case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
+         destdbl  = (double*) &ptr[ sl->offset ];
+         if (overwrite)
+            *destdbl = value / 100.;
+         else
+            *destdbl += value / 100.;
+         break;
+
+      case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
          destdbl  = (double*) &ptr[ sl->offset ];
          if (overwrite)
             *destdbl = value;
