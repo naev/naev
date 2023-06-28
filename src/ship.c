@@ -831,6 +831,7 @@ static int ship_parse( Ship *temp, const char *filename )
       xmlr_strd(node,"condstr",temp->condstr);
       xmlr_strd(node,"fabricator",temp->fabricator);
       xmlr_strd(node,"description",temp->description);
+      xmlr_strd(node,"desc_extra",temp->desc_extra);
       xmlr_int(node,"points",temp->points);
       xmlr_int(node,"rarity",temp->rarity);
       xmlr_strd(node,"lua",temp->lua_file);
@@ -1160,6 +1161,7 @@ void ships_free (void)
       free(s->name);
       free(s->class_display);
       free(s->description);
+      free(s->desc_extra);
       free(s->gui);
       free(s->base_type);
       free(s->fabricator);

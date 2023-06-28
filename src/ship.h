@@ -107,6 +107,7 @@ typedef struct Ship_ {
    char *condstr;    /**< Human readable conditional. */
    char *fabricator; /**< Company or organization that fabricates it. */
    char *description;/**< Shipyard description. */
+   char *desc_extra; /**< Extra description. */
 
    /* movement */
    double thrust;    /**< Ship's thrust in "pixel/sec^2" (not multiplied by mass) */
