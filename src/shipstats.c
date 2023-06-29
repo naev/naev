@@ -203,7 +203,7 @@ static int ss_statsGetLuaInternal( lua_State *L, const ShipStats *s, ShipStatsTy
 ShipStatList* ss_statsSetList( ShipStatList *head, ShipStatsType type, double value, int overwrite, int raw )
 {
    const ShipStatsLookup *sl;
-   ShipStatList *ll;
+   ShipStatList *ll = NULL;
    int init = overwrite;
 
    if (type == SS_TYPE_NIL)
