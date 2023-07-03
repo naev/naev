@@ -3664,9 +3664,8 @@ static int pilotL_shippropSet( lua_State *L )
    const char *name;
    double value;
 
-   if (p->ship->lua_env != LUA_NOREF)
+   if (p->ship->lua_env == LUA_NOREF)
       NLUA_ERROR(L,_("Trying to set ship property of pilot '%s' flying ship '%s' with no ship Lua enabled!"), p->name, p->ship->name);
-
 
    /* Case individual parameter. */
    if (!lua_istable(L,2)) {
