@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<effect name="Psychic Divinity">
+ <description>TODO</description>
+ <duration>10</duration>
+ <icon>/gfx/misc/icons/oni.webp</icon>
+ <overwrite>sirius_divinity</overwrite>
+ <buff/>
+ <stats>
+  <fwd_damage>1</fwd_damage>
+  <tur_damage>1</tur_damage>
+  <launch_damage>1</launch_damage>
+ </stats>
+</effect>

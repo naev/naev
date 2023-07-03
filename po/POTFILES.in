@@ -80,6 +80,7 @@ dat/effects/hypergate_exit.xml
 dat/effects/paralyzing_plasma.xml
 dat/effects/plasma_burn.xml
 dat/effects/plasma_burn_ii.xml
+dat/effects/psychic_divinity.xml
 dat/effects/psychic_orb_off.xml
 dat/effects/psychic_orb_on.xml
 dat/effects/ride_of_the_valkyries.xml
@@ -3379,6 +3380,7 @@ dat/ships/lua/lib/flow.lua
 dat/ships/lua/lua_ship_example.lua
 dat/ships/lua/scavenger.lua
 dat/ships/lua/sirius.lua
+dat/ships/lua/sirius_divinity.lua
 dat/ships/lua/sirius_dogma.lua
 dat/ships/lua/sirius_projection.lua
 dat/ships/lua/soromid.lua

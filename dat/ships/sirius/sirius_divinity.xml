@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Sirius Divinity">
- <lua>ships/lua/sirius.lua</lua>
+ <lua>ships/lua/sirius_divinity.lua</lua>
  <points>200</points>
  <base_type>Divinity</base_type>
  <GFX size="140" sx="12" sy="12">divinity</GFX>
@@ -17,6 +17,7 @@
  <cond>faction.playerStanding("Sirius") &gt;= 70</cond>
  <condstr>You need at least 70 reputation with House Sirius.</condstr>
  <description>Whilst the Dogma is said to form the core of any Sirian fleet, few combat pilots would dismiss the significance of the Divinity. Though not exceptionally formidable in direct combat, the Divinity's ability to field a multitude of fighters gives it unparalleled flexibility in combat, serving as a key logistical vessel in any sizable fleet.</description>
+ <desc_extra>Every second applies a buff to all fighters within 3000 range that has a base effect of -20% damage with 8% bonus damage per 100 flow. Range is affected by detection.</desc_extra>
  <health>
   <armour>1400</armour>
   <armour_regen>0</armour_regen>
