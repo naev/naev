@@ -18,7 +18,7 @@
 
 static void inp_render( Widget* inp, double bx, double by );
 static int inp_isBreaker(char c);
-static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod );
+static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod, int isrepeat );
 static int inp_text( Widget* inp, const char *buf );
 static int inp_addKey( Widget* inp, uint32_t ch );
 static int inp_rangeToWidth( Widget *inp, int start_pos, int end_pos );
@@ -253,11 +253,13 @@ static int inp_isBreaker(char c)
  *    @param inp Input widget to handle event.
  *    @param key Key being handled.
  *    @param mod Mods when key is being pressed.
+ *    @param isrepeat Whether or not the key is repeating.
  *    @return 1 if the event was used, 0 if it wasn't.
  */
-static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
+static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
 {
    (void) mod;
+   (void) isrepeat;
    int w;
 
    /*

@@ -75,7 +75,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
 static int map_system_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data );
 /* Misc. */
-static int map_system_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
+static int map_system_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod, int isrepeat );
 void map_system_show( int wid, int x, int y, int w, int h);
 
 static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float outfitSpace, float shipSpace );
@@ -141,9 +141,10 @@ void map_system_cleanup( unsigned int wid, const char *str )
 /**
  * @brief Handles key input to the map window.
  */
-static int map_system_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
+static int map_system_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
 {
    (void) mod;
+   (void) isrepeat;
    if (key == SDLK_m) {
       window_close( wid, NULL );
       return 1;

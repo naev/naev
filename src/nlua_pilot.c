@@ -4364,6 +4364,8 @@ static int pilotL_getStats( lua_State *L )
 /**
  * @brief Gets a shipstat from a Pilot by name, or a table containing all the ship stats if not specified.
  *
+ * @usage local mod = p:shipstat("tur_damage",true) -- Gets turret damage bonus with internal representation
+ *
  *    @luatparam Pilot p Pilot to get ship stat of.
  *    @luatparam[opt=nil] string name Name of the ship stat to get.
  *    @luatparam[opt=false] boolean internal Whether or not to use the internal representation.
@@ -5114,12 +5116,14 @@ static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task )
 
    /* Must be on manual control. */
    if (!pilot_isFlag( p, PILOT_MANUAL_CONTROL)) {
-      NLUA_ERROR( L, _("Pilot is not on manual control.") );
+      NLUA_ERROR( L, _("Pilot '%s' is not on manual control."), p->name );
       return 0;
    }
 
    /* Creates the new task. */
    t = ai_newtask( L, p, task, 0, 1 );
+   if (t==NULL)
+      NLUA_ERROR( L, _("Failed to create new task for pilot '%s'."), p->name );
 
    return t;
 }

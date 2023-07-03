@@ -9,7 +9,7 @@
   <mass>1</mass>
   <price>450000</price>
   <description>This is an upgrade to the sensor systems that is able to learn from nearby hostile ships common weaknesses. The AI is able to extract subtle features that the human eye misses and extrapolate into great detail to point out weaknesses in enemy ships. The more ships it is able to analyse and extrapolate from, the stronger the effect.</description>
-  <desc_extra>10% additional damage for each hostile ship of same class or higher within 2000 distance.</desc_extra>
+  <desc_extra>10% additional damage for each hostile ship of same class or higher within 2000 distance. Range is affected by detection bonus.</desc_extra>
   <gfx_store>misc04.webp</gfx_store>
   </general>
  <specific type="modification">

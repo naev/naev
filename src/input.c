@@ -1559,7 +1559,7 @@ void input_handle( SDL_Event* event )
          break;
 
       case SDL_KEYUP:
-         if (event->key.repeat !=0)
+         if (event->key.repeat != 0)
             return;
          input_keyevent(KEY_RELEASE, event->key.keysym.sym, event->key.keysym.mod, 0);
          break;

@@ -1,19 +1,15 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file rect.c
  *
  * @brief Rectangle widget.
  */
 
-
 #include "tk/toolkit_priv.h"
 
-
 static void rct_render( Widget* rct, double bx, double by );
-
 
 /**
  * @brief Adds a rectangle widget to a window.
@@ -58,7 +54,6 @@ void window_addRect( unsigned int wid,
    wgt->h = (double) h;
    toolkit_setPos( wdw, wgt, x, y );
 }
-
 
 /**
  * @brief Renders a rectangle widget.

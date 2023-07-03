@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file text.c
  *
  * @brief Text widget.
  */
-
 
 /** @cond */
 #include <stdlib.h>
@@ -16,10 +14,8 @@
 #include "nstring.h"
 #include "tk/toolkit_priv.h"
 
-
 static void txt_render( Widget* txt, double bx, double by );
 static void txt_cleanup( Widget* txt );
-
 
 /**
  * @brief Adds a text widget to the window.
@@ -66,7 +62,6 @@ void window_addText( const unsigned int wid,
    toolkit_setPos( wdw, wgt, x, y );
 }
 
-
 /**
  * @brief Renders a text widget.
  *
@@ -91,7 +86,6 @@ static void txt_render( Widget* txt, double bx, double by )
             &txt->dat.txt.colour, -1., txt->dat.txt.text );
 }
 
-
 /**
  * @brief Clean up function for the text widget.
  *
@@ -101,7 +95,6 @@ static void txt_cleanup( Widget* txt )
 {
    free(txt->dat.txt.text);
 }
-
 
 /**
  * @brief Modifies an existing text widget.
@@ -131,7 +124,6 @@ void window_modifyText( const unsigned int wid,
       free(wgt->dat.txt.text);
    wgt->dat.txt.text = (newstring) ?  strdup(newstring) : NULL;
 }
-
 
 /**
  * @brief Gets the content height of a text box, without drawing.

@@ -142,7 +142,7 @@ end
 
 function targetBoard()
    player.unboard()
-   tk.msg(_([[In the ship]]), {
+   vntk.msg(_([[In the ship]]), {
       _([[You make your way through the living ship after taking care of its crew. You note the feeling that the ship is personally angry at you which, given the rumours that Soromid ships are alive, gives you the creeps. In any case, you begin to search through the ship and the handheld in your pocket starts beeping.]]),
       _([[You manage to locate a box on a table in the crews' chambers. Apparently nobody expected anyone to be foolish enough to try to do what you are doing. You grab the box and head back to your ship. You should make sure to avoid any Soromid patrols on the way back. You don't think they will be too happy with you if they manage to scan your ship.]])
    })

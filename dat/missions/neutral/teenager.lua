@@ -36,9 +36,9 @@ local npc_portrait = "neutral/unique/middleaged.webp"
 local npc_image = portrait.getFullPath( npc_portrait )
 
 function create ()
-    mem.cursys = system.cur()
-    mem.curplanet = spob.cur()
-    misn.setNPC( npc_name, npc_portrait, _("You see a middle-aged man, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot."))
+   mem.cursys = system.cur()
+   mem.curplanet = spob.cur()
+   misn.setNPC( npc_name, npc_portrait, _("You see a middle-aged man, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot."))
 end
 
 
@@ -83,7 +83,8 @@ local hk_exploded
 function enter()
    if system.cur() == mem.cursys and mem.targetlive then
       local location = vec2.newP(rnd.rnd() * system.cur():radius(), rnd.angle())
-      target = pilot.add( "Gawain", "Independent", location, _("Credence") )
+      local fct = faction.dynAdd( "Independent", "teenager", _("Independent"), {clear_enemies=true, clear_allies=true} )
+      target = pilot.add( "Gawain", fct, location, _("Credence") )
       target:control()
       target:memory().aggressive = true
       target:setHilight(true)

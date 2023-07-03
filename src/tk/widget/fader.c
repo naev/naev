@@ -14,7 +14,7 @@
 static void fad_render( Widget* fad, double bx, double by );
 static int fad_mclick( Widget* fad, int button, int x, int y );
 static int fad_mmove( Widget* fad, int x, int y, int rx, int ry );
-static int fad_key( Widget* fad, SDL_Keycode key, SDL_Keymod mod );
+static int fad_key( Widget* fad, SDL_Keycode key, SDL_Keymod mod, int isrepeat );
 static void fad_setValue( Widget *fad, double value );
 static void fad_scrolldone( Widget *wgt );
 
@@ -175,11 +175,13 @@ static int fad_mclick( Widget* fad, int button, int x, int y )
  *    @param fad Fader widget to handle event.
  *    @param key Key being handled.
  *    @param mod Mods when key is being pressed.
+ *    @param isrepeat Whether or not the key is repeating.
  *    @return 1 if the event was used, 0 if it wasn't.
  */
-static int fad_key( Widget* fad, SDL_Keycode key, SDL_Keymod mod )
+static int fad_key( Widget* fad, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
 {
    (void) mod;
+   (void) isrepeat;
    int ret;
    double cur;
 

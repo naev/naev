@@ -1095,7 +1095,7 @@ Task *ai_newtask( lua_State *L, Pilot *p, const char *func, int subtask, int pos
    Task *t, *curtask, *pointer;
 
    if (p->ai==NULL) {
-      WARN(_("Trying to create new task for pilot '%s' that has no AI!"), p->name);
+      NLUA_ERROR( L, _("Trying to create new task for pilot '%s' that has no AI!"), p->name );
       return NULL;
    }
 
@@ -1184,6 +1184,8 @@ static Task* ai_createTask( lua_State *L, int subtask )
 
    /* Creates a new AI task. */
    Task *t = ai_newtask( L, cur_pilot, func, subtask, 0 );
+   if (t==NULL)
+      NLUA_ERROR( L, _("Failed to create new task for pilot '%s'."), cur_pilot->name );
 
    /* Set the data. */
    if (lua_gettop(L) > 1) {

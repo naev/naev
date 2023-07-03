@@ -112,7 +112,7 @@ static void mapedit_clear( unsigned int wid_unused, const char *unused );
 static void mapedit_chkSpob( unsigned int wid, const char *wgtname );
 static void mapedit_chkHidden( unsigned int wid, const char *wgtname );
 /* Keybindings handling. */
-static int mapedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
+static int mapedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod, int isrepeat );
 /* Loading of Map files. */
 static void mapedit_loadMapMenu_open (void);
 static void mapedit_loadMapMenu_close( unsigned int wdw, const char *str );
@@ -289,9 +289,10 @@ void mapedit_open( unsigned int wid_unused, const char *unused )
 /**
  * @brief Handles keybindings.
  */
-static int mapedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
+static int mapedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
 {
    (void) mod;
+   (void) isrepeat;
 
    switch (key) {
       /* Mode changes. */

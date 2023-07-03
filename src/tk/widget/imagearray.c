@@ -18,7 +18,7 @@
 static void iar_render( Widget* iar, double bx, double by );
 static void iar_renderOverlay( Widget* iar, double bx, double by );
 /* Key. */
-static int iar_key( Widget* iar, SDL_Keycode key, SDL_Keymod mod );
+static int iar_key( Widget* iar, SDL_Keycode key, SDL_Keymod mod, int isrepeat );
 /* Mouse. */
 static int iar_mclick( Widget* iar, int button, int x, int y );
 static int iar_mdoubleclick( Widget* iar, int button, int x, int y );
@@ -293,11 +293,13 @@ static void iar_renderOverlay( Widget* iar, double bx, double by )
  *    @param iar Image array widget to handle event.
  *    @param key Key being handled.
  *    @param mod Mods when key is being pressed.
+ *    @param isrepeat Whether or not the key is repeating.
  *    @return 1 if the event was used, 0 if it wasn't.
  */
-static int iar_key( Widget* iar, SDL_Keycode key, SDL_Keymod mod )
+static int iar_key( Widget* iar, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
 {
    (void) mod;
+   (void) isrepeat;
 
    switch (key) {
       case SDLK_UP:

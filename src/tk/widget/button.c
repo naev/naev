@@ -14,7 +14,7 @@
 #include "tk/toolkit_priv.h"
 
 static int btn_mclick( Widget* btn, int button, int x, int y );
-static int btn_key( Widget* btn, SDL_Keycode key, SDL_Keymod mod );
+static int btn_key( Widget* btn, SDL_Keycode key, SDL_Keymod mod, int isrepeat );
 static void btn_render( Widget* btn, double bx, double by );
 static void btn_cleanup( Widget* btn );
 static Widget* btn_get( unsigned int wid, const char* name );
@@ -248,11 +248,16 @@ static void btn_updateHotkey( Widget *btn )
  *    @param btn Button widget to handle event.
  *    @param key Key being handled.
  *    @param mod Mods when key is being pressed.
+ *    @param isrepeat Whether or not the key is repeating.
  *    @return 1 if the event was used, 0 if it wasn't.
  */
-static int btn_key( Widget* btn, SDL_Keycode key, SDL_Keymod mod )
+static int btn_key( Widget* btn, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
 {
    (void) mod;
+
+   /* Ignore repeats. */
+   if (isrepeat)
+      return 0;
 
    /* Don't grab disabled events. Soft-disabling falls through. */
    if ((btn->dat.btn.disabled) && (!btn->dat.btn.softdisable))

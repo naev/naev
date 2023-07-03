@@ -167,7 +167,7 @@ static void uniedit_btnNew( unsigned int wid_unused, const char *unused );
 static void uniedit_btnOpen( unsigned int wid_unused, const char *unused );
 static void uniedit_btnFind( unsigned int wid_unused, const char *unused );
 /* Keybindings handling. */
-static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
+static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod, int isrepeat );
 
 /**
  * @brief Opens the system editor interface.
@@ -287,9 +287,10 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
 /**
  * @brief Handles keybindings.
  */
-static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
+static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
 {
    (void) wid;
+   (void) isrepeat;
    int n;
 
    switch (key) {
