@@ -343,7 +343,12 @@ void shipyard_update( unsigned int wid, const char* str )
    window_resizeWidget( wid, "txtDDesc", w-sw-40-(20+iw+20+128), th );
    window_moveWidget( wid, "txtDDesc", 20+iw+20+tw+20, y );
    y = MIN( y-th, -40-SHIP_GFX_H-20 );
-   window_modifyText( wid, "txtDescription", _(ship->description) );
+   if (ship->desc_extra) {
+      scnprintf( &buf[0], sizeof(buf), "%s\n%s", _(ship->description), _(ship->desc_extra) );
+      window_modifyText( wid, "txtDescription", buf );
+   }
+   else
+      window_modifyText( wid, "txtDescription", _(ship->description) );
    window_resizeWidget( wid, "txtDescription", w-(20+iw+20) - (sw+40), y-20+h-bh );
    window_moveWidget( wid, "txtDescription", 20+iw+20, y );
 
