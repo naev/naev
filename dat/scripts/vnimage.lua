@@ -231,6 +231,9 @@ local sirius_shaira_m = {
    "sirius/sirius_shaira_m4.webp",
    "sirius/sirius_shaira_m5.webp",
 }
+local sirius_serra_m = {
+   "sirius/sirius_serra_m1.webp",
+}
 local sirius_fyrra_f = {
    "sirius/sirius_fyrra_f1.webp",
    "sirius/sirius_fyrra_f2.webp",
@@ -245,22 +248,26 @@ local sirius_shaira_f = {
    "sirius/sirius_shaira_f4.webp",
    "sirius/sirius_shaira_f5.webp",
 }
+local sirius_serra_f = {
+   "sirius/sirius_serra_f1.webp",
+   "sirius/sirius_serra_f2.webp",
+}
 vni.sirius = {}
 vni.sirius.shairaMale = get_list( sirius_shaira_m )
 vni.sirius.fyrraMale = get_list( sirius_fyrra_m )
-vni.sirius.serraMale = vni.sirius.fyrraMale -- TODO
+vni.sirius.serraMale = get_list( sirius_serra_m )
 
 vni.sirius.shairaFemale = get_list( sirius_shaira_f )
 vni.sirius.fyrraFemale = get_list( sirius_fyrra_f )
-vni.sirius.serraFemale = vni.sirius.fyrraFemale -- TODO
+vni.sirius.serraFemale = get_list( sirius_serra_f )
 
 vni.sirius.shaira = get_list( sirius_shaira_m, sirius_shaira_f )
 vni.sirius.fyrra = get_list( sirius_fyrra_m, sirius_fyrra_f )
-vni.sirius.serra = vni.sirius.fyrra -- TODO
+vni.sirius.serra = get_list( sirius_serra_m, sirius_serra_f )
 
-vni.sirius.anyMale = get_list( sirius_shaira_m, sirius_fyrra_m ) -- TODO
-vni.sirius.anyFeale = get_list( sirius_shaira_f, sirius_fyrra_f ) -- TODO
-vni.sirius.any = get_list( sirius_shaira_m, sirius_fyrra_m, sirius_shaira_f, sirius_fyrra_f ) -- TODO
+vni.sirius.anyMale = get_list( sirius_shaira_m, sirius_fyrra_m, sirius_serra_m )
+vni.sirius.anyFeale = get_list( sirius_shaira_f, sirius_fyrra_f, sirius_serra_f )
+vni.sirius.any = get_list( sirius_shaira_m, sirius_fyrra_m, sirius_serra_m, sirius_shaira_f, sirius_fyrra_f, sirius_serra_f )
 
 --[[--
 Creates a "SOUND ONLY" character for the VN.
