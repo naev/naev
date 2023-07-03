@@ -274,7 +274,7 @@ ShipStatList* ss_statsSetList( ShipStatList *head, ShipStatsType type, double va
          break;
    }
 
-   return head;
+   return ll;
 }
 
 /**
