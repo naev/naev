@@ -313,11 +313,19 @@ void shipyard_update( unsigned int wid, const char* str )
    k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("License:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_license );
    if (ship->condstr) {
+      int meets_reqs = 0;
+      int blackmarket = 0;
+      if (land_spob != NULL) {
+         blackmarket = land_spob->services & SPOB_SERVICE_BLACKMARKET;
+         meets_reqs = (player_hasLicense(ship->license) && cond_check(ship->cond));
+      }
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Requires:") );
       if (cond_check( ship->cond ))
          l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(ship->condstr) );
+      else if (blackmarket)
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s#0", _("Not Necessary (Blackmarket)") );
       else
-         l += scnprintf( &buf[l], sizeof(buf)-l, "\n#r%s#0", _(ship->condstr) );
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s%s#0", meets_reqs ? "" : "#r", _(ship->condstr) );
    }
 
    /* Calculate layout. */
