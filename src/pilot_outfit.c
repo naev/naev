@@ -312,6 +312,7 @@ int pilot_addOutfitRaw( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s )
 
    /* Disable lua for now. */
    s->lua_mem = LUA_NOREF;
+   s->lua_stats = NULL;
 
    /* Initialize if active thingy if necessary. */
    pilot_outfitLAdd( pilot, s );
