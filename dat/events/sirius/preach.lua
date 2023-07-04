@@ -158,10 +158,6 @@ function theFunBegins()
    if not evt.claim({system.cur()}) then evt.finish(false) end
    claimed = true
 
-   -- Only increment if we can actually do stuff
-   local si_convert = var.peek("si_convert") or 0
-   var.push( "si_convert", si_convert+1 )
-
    if rep < 0 then
       local dist = vec2.dist(jump.get(system.cur(),curr):pos(),player.pos()) --please note the order of system.cur() and curr matters!
       if dist < 6000 then
@@ -169,6 +165,11 @@ function theFunBegins()
          return
       end
    end
+
+   -- Only increment if we can actually do stuff
+   local si_convert = var.peek("si_convert") or 0
+   var.push( "si_convert", si_convert+1 )
+
    --summon a preacher from the jump point and highlight him and take control and focus on him
    preacher = pilot.add("Sirius Preacher", "Sirius", curr, _("Sirius Reverence"), {ai="sirius_norun"})
    preacher:intrinsicSet( "armour_mod", 400 )
