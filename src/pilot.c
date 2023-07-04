@@ -3563,6 +3563,10 @@ void pilot_free( Pilot *p )
 
    pilot_weapSetFree(p);
 
+   /* Clean up outfit slots. */
+   for (int i=0; i<array_size(p->outfits); i++) {
+      ss_free( p->outfits[i]->lua_stats );
+   }
    array_free(p->outfits);
    array_free(p->outfit_structure);
    array_free(p->outfit_utility);
