@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <effect name="Psychic Divinity">
  <description>TODO</description>
- <duration>10</duration>
+ <duration>1</duration>
  <icon>/gfx/misc/icons/oni.webp</icon>
  <overwrite>sirius_divinity</overwrite>
  <buff/>
