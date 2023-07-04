@@ -831,17 +831,20 @@ int events_saveActive( xmlTextWriterPtr writer )
  */
 int events_loadActive( xmlNodePtr parent )
 {
+   int failed = 0;
    xmlNodePtr node = parent->xmlChildrenNode;
 
    /* cleanup old events */
    events_cleanup();
 
    do {
-      if (xml_isNode(node,"events"))
-         if (events_parseActive( node ) < 0) return -1;
+      if (xml_isNode(node,"events")) {
+         int ret = events_parseActive( node );
+         failed |= ret;
+      }
    } while (xml_nextNode(node));
 
-   return 0;
+   return failed;
 }
 
 /**
@@ -893,8 +896,14 @@ static int events_parseActive( xmlNodePtr parent )
       /* Get the data. */
       cur = node->xmlChildrenNode;
       do {
-         if (xml_isNode(cur,"lua"))
-            nxml_unpersistLua( ev->env, cur );
+         if (xml_isNode(cur,"lua")) {
+            int ret = nxml_unpersistLua( ev->env, cur );
+            if (ret) {
+               WARN(_("Event with data '%s' failed to unpersist Lua, skipping."), event_dataName(data));
+               event_remove( id );
+               return -1;
+            }
+         }
       } while (xml_nextNode(cur));
 
       /* Claims. */
