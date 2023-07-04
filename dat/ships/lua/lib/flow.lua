@@ -6,7 +6,7 @@ local flow_base = {
    ["Sirius Dogma"]              = 500,
    ["Sirius Providence"]         = 300,
    ["Sirius Preacher"]           = 160,
-   ["Sirius Shama"]              = 80,
+   ["Sirius Shaman"]             = 80,
    ["Sirius Fidelity"]           = 50,
    -- Projections
    ["Astral Projection Greater"] = 320,
@@ -71,8 +71,8 @@ function flow.has( p )
    return sm._flow_mod~=nil
 end
 
-function flow.get( p )
-   local sm = p:shipMemory()
+function flow.get( p, sm )
+   sm = sm or p:shipMemory()
    return sm._flow or 0
 end
 
