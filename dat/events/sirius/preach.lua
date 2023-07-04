@@ -15,6 +15,9 @@
 local fleet = require "fleet"
 local fmt = require "format"
 local cinema = require "cinema"
+local vn = require "vn"
+local vni = require "vnimage"
+local love_shaders = require "love_shaders"
 
 local restoreControl -- Forward-declared function
 local attackers, curr, follower, followers, hailHook, praiser, preacher, rep, target -- Event state, never saved.
@@ -383,7 +386,7 @@ local function release_player ()
    camera.set()
 end
 
---releases the player after the cutscene
+-- releases the player after the cutscene
 function release()
    release_player ()
    --if the attacks have already started, we shouldn't set a target yet
@@ -392,18 +395,30 @@ function release()
    end
 end
 
---when hailed back, show the message
+-- when hailed back, show the message
 function hail()
-   tk.msg(_("The preaching begins..."), _([[A Sirian appears on your viewscreen. He seems different than most Sirii you've met. He regards you with a neutral, yet intense, gaze.
-    "Man is cruel and deceptive," he says. "You deserve more than you shall ever get from humanity. Your only hope is to follow the Holy One, Sirichana. He shall guide you to peace and wisdom. He is the sole refuge for humans like you and me. You MUST follow him!"
-    You feel a brief but overpowering urge to follow him, but it passes and your head clears. The Sirian ship makes no further attempt to communicate with you.]]))
+   vn.clear()
+   vn.scene()
+   local vnp = vn.newCharacter( _("Preacher"), {
+      image=vni.sirius.any(), -- TODO should be specific echelon?
+      shader=love_shaders.hologram(),
+   } )
+   vn.transition("electric")
+
+   vnp(_([[A Sirian appears on your viewscreen. They seems different than most Sirii you've met. They regards you with a neutral, yet intense, gaze.]]))
+   vnp(_([["Man is cruel and deceptive," he says. "You deserve more than you shall ever get from humanity. Your only hope is to follow the Holy One, Sirichana. They shall guide you to peace and wisdom. They are the sole refuge for humans like you and me. You MUST follow them!"]]))
+   vn.na(_([[You feel a brief but overpowering urge to follow them, but it passes and your head clears. The Sirian ship makes no further attempt to communicate with you.]]))
+   vn.done("electric")
+
+   vn.run()
+
    player.commClose()
    hook.rm(hailHook) --no more hailing
 end
 
 --everything is done
 function cleanup()
-   release_player ()
+   release_player()
    evt.finish(true)
 end
 
