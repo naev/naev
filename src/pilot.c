@@ -3544,11 +3544,10 @@ void pilot_free( Pilot *p )
    pilot_rmHostile(p);
 
    /* Free animated trail. */
-   for (int i=0; i<array_size(p->trail); i++) {
-      p->trail[i]->ontop = 0;
+   for (int i=0; i<array_size(p->trail); i++)
       spfx_trail_remove( p->trail[i] );
-   }
    array_free(p->trail);
+   p->trail = NULL;
 
    /* We don't actually free internals of the pilot once we cleaned up stuff. */
    if (pilot_isFlag( p, PILOT_NOFREE )) {

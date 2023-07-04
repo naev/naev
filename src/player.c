@@ -592,7 +592,7 @@ void player_swapShip( const char *shipname, int move_cargo )
 
    /* Clean up, AFTER cargo is updated. */
    if (!ps->deployed && removed)
-      pilot_free( ps->p );
+      pilot_free( ps->p ); /* Has PILOT_NOFREE flag. */
 
    /* Copy position back. */
    player.p->solid.pos = v;
