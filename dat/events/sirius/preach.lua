@@ -3,7 +3,15 @@
 <event name="Preacher">
  <location>enter</location>
  <chance>10</chance>
- <cond>system.cur():presence(faction.get("Sirius"))&gt;50 and (not player.evtActive ("Preacher")) and ( (var.peek("si_convert")==nil) or rnd.rnd(1,var.peek("si_convert")+1)==1)</cond>
+ <cond>
+   if system.cur():presence(faction.get("Sirius"))&lt;50 then
+      return false
+   end
+   if player.evtActive("Preacher")) then
+      return false
+   end
+   return ((var.peek("si_convert")==nil) or rnd.rnd(1,var.peek("si_convert")+1)==1)
+ </cond>
  <unique />
  <notes>
   <tier>1</tier>
@@ -121,7 +129,7 @@ function create()
 
    -- Start the fun when the player jumps
    hook.jumpin("funStartsSoon")
-   hook.land("cleanup") --oops he landed
+   hook.land("cleanup") --oops they landed
 end
 
 --Start the real mission after a short delay
@@ -151,7 +159,8 @@ function theFunBegins()
    claimed = true
 
    -- Only increment if we can actually do stuff
-   var.push( "si_convert", (var.peek("si_convert") or 0)+1 )
+   local si_convert = var.peek("si_convert") or 0
+   var.push( "si_convert", si_convert+1 )
 
    if rep < 0 then
       local dist = vec2.dist(jump.get(system.cur(),curr):pos(),player.pos()) --please note the order of system.cur() and curr matters!
