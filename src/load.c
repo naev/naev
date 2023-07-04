@@ -1155,6 +1155,7 @@ static int load_gameInternalHook( void *data )
    xmlNodePtr node;
    xmlDocPtr doc;
    Spob *pnt;
+   int misn_failed = 0, evt_failed = 0;
    const char **sdata = data;
    const char *file = sdata[0];
    const char *version = sdata[1];
@@ -1194,8 +1195,8 @@ static int load_gameInternalHook( void *data )
    /* Load more stuff. */
    space_sysLoad(node);
    var_load(node);
-   missions_loadActive(node);
-   events_loadActive(node);
+   misn_failed = missions_loadActive(node);
+   evt_failed = events_loadActive(node);
    news_loadArticles( node );
    hook_load(node);
 
@@ -1230,6 +1231,10 @@ static int load_gameInternalHook( void *data )
    gui_setShip();
 
    xmlFreeDoc(doc);
+
+   if (misn_failed || evt_failed)
+      /* TODO say exactly what failed to load. */
+      dialogue_alert( _("Saved game '%s' failed to load some missions/events properly!"), file);
 
    /* Set loaded. */
    save_loaded = 1;
