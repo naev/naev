@@ -3574,8 +3574,7 @@ void pilot_free( Pilot *p )
    array_free(p->outfit_intrinsic);
 
    /* Clean up data. */
-   if (p->ai != NULL)
-      ai_destroy(p); /* Must be destroyed first if applicable. */
+   ai_destroy(p); /* Must be destroyed first if applicable. */
 
    free(p->name);
    /* Case if pilot is the player. */
