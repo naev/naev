@@ -3244,7 +3244,6 @@ static void pilot_init_trails( Pilot* p )
    for (int g=0; g<n; g++)
       if (pilot_trail_generated( p, g ))
          array_push_back( &p->trail, spfx_trail_create( p->ship->trail_emitters[g].trail_spec ) );
-   array_shrink( &p->trail );
 }
 
 /**
