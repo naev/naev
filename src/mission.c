@@ -1449,7 +1449,7 @@ static int missions_parseActive( xmlNodePtr parent )
       if (xml_isNode(node, "mission")) {
          xmlNodePtr cur;
          const MissionData *data;
-         int misn_failed;
+         int misn_failed = 0;
          Mission *misn = calloc( 1, sizeof(Mission) );
 
          /* process the attributes to create the mission */
