@@ -398,6 +398,7 @@ int pilot_addOutfitIntrinsic( Pilot *pilot, const Outfit *outfit )
       pilot->outfit_intrinsic = array_create( PilotOutfitSlot );
 
    s = &array_grow( &pilot->outfit_intrinsic );
+   memset( s, 0, sizeof(PilotOutfitSlot) );
    ret = pilot_addOutfitRaw( pilot, outfit, s );
    if (pilot->id > 0 && ret==0)
       pilot_outfitLInit( pilot, s );
