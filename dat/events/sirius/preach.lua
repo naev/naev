@@ -1,6 +1,6 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<event name="Preacher">
+<event name="Sirius Preacher">
  <location>enter</location>
  <chance>10</chance>
  <cond>
