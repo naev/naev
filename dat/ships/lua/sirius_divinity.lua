@@ -18,11 +18,13 @@ function update( p, dt )
    mem.t = mem.t + DT
 
    local f = flow.get( p )
-   local mod = f*0.08-20
-   local rmod = p:shipstat("ew_detect",true)
-   for k,v in ipairs(p:getAllies( RANGE*rmod )) do
-      if v:leader()==p and v:memory().carried then
-         v:effectAdd( "Psychic Divinity", nil, mod )
+   local mod = math.max( f*0.08-20, 0 )
+   if mod > 0 then
+      local rmod = p:shipstat("ew_detect",true)
+      for k,v in ipairs(p:getAllies( RANGE*rmod )) do
+         if v:leader()==p and v:memory().carried then
+            v:effectAdd( "Psychic Divinity", nil, mod )
+         end
       end
    end
 end

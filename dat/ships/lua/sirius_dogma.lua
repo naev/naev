@@ -3,7 +3,7 @@ require "ships.lua.sirius"
 
 function update( p, _dt )
    local f = flow.get( p )
-   local mod = f*0.04-10
+   local mod = math.max( f*0.04-10, 0 )
    p:shippropSet{
       fwd_damage = mod,
       tur_damage = mod,
