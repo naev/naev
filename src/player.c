@@ -166,6 +166,7 @@ static void player_renderStealthUnderlay( double dt );
 static void player_renderStealthOverlay( double dt );
 static void player_renderAimHelper( double dt );
 /* Misc. */
+static void player_rmPlayerShip( PlayerShip_t *ps );
 static int player_filterSuitableSpob( Spob *p );
 static void player_spobOutOfRangeMsg (void);
 static int player_outfitCompare( const void *arg1, const void *arg2 );
@@ -661,6 +662,14 @@ credits_t player_shipPrice( const char *shipname )
    return pilot_worth( ship );
 }
 
+static void player_rmPlayerShip( PlayerShip_t *ps )
+{
+   pilot_rmFlag( ps->p, PILOT_NOFREE );
+   pilot_free( ps->p );
+   ws_free( ps->weapon_sets );
+   free( ps->acquired );
+}
+
 /**
  * @brief Removes one of the player's ships.
  *
@@ -676,10 +685,7 @@ void player_rmShip( const char *shipname )
          continue;
 
       /* Free player ship. */
-      pilot_rmFlag( ps->p, PILOT_NOFREE );
-      pilot_free( ps->p );
-      ws_free( ps->weapon_sets );
-      free( ps->acquired );
+      player_rmPlayerShip( ps );
 
       array_erase( &player_stack, ps, ps+1 );
    }
@@ -768,13 +774,8 @@ void player_cleanup (void)
    pilots_cleanAll();
 
    /* clean up the stack */
-   for (int i=0; i<array_size(player_stack); i++) {
-      PlayerShip_t *ps = &player_stack[i];
-      pilot_rmFlag( ps->p, PILOT_NOFREE );
-      pilot_free( ps->p );
-      ws_free( ps->weapon_sets );
-      free( ps->acquired );
-   }
+   for (int i=0; i<array_size(player_stack); i++)
+      player_rmPlayerShip( &player_stack[i] );
    array_free(player_stack);
    player_stack = NULL;
    /* nothing left */
