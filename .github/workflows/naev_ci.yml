@@ -40,9 +40,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - image: naev-steamfrankenruntime
-            config: linux_steamruntime_scout.ini
-            wrap_mode: default
           - image: naev-steamruntime
             config: linux_steamruntime.ini
             wrap_mode: default

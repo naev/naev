@@ -10,7 +10,7 @@ Th Naev engine explanations assume you have access to the Naev data. This can be
 | --- | --- |
 | Linux | `/usr/share/naev/dat` |
 | Mac OS X | `/Applications/Naev.app/Contents/Resources/dat` |
-| Windows | `%ProgramFiles(x86)%\Naev\dat` |
+| Windows | `\%ProgramFiles(x86)\%\Naev\dat` |
 
 Most changes will only take place when you restart Naev, although it is possible to force Naev to reload a mission or event with `naev.missionReload` or `naev.eventReload`.
 
@@ -24,7 +24,7 @@ Plugins are found at the following locations by default, and are automatically l
 | --- | --- |
 | Linux | `~/.local/share/naev/plugins` |
 | Mac OS X |  `~/Library/Application Support/org.naev.Naev/plugins` |
-| Windows | `%APPDATA%\naev\plugins` |
+| Windows | `\%APPDATA\%\naev\plugins` |
 
 Note that plugins can use either a directory structure or be compressed as zip files (while still having the appropriate directory structure). For example, it is possible to add a single mission by creating a plugin with the follow structure:
 
