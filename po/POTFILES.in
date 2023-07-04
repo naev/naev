@@ -3382,7 +3382,11 @@ dat/ships/lua/scavenger.lua
 dat/ships/lua/sirius.lua
 dat/ships/lua/sirius_divinity.lua
 dat/ships/lua/sirius_dogma.lua
+dat/ships/lua/sirius_fidelity.lua
+dat/ships/lua/sirius_preacher.lua
 dat/ships/lua/sirius_projection.lua
+dat/ships/lua/sirius_providence.lua
+dat/ships/lua/sirius_shaman.lua
 dat/ships/lua/soromid.lua
 dat/ships/lua/thurion.lua
 dat/ships/lua/zalek.lua

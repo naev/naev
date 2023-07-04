@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Sirius Shaman">
- <lua>ships/lua/sirius.lua</lua>
+ <lua>ships/lua/sirius_shaman.lua</lua>
  <points>40</points>
  <base_type>Shaman</base_type>
  <rarity>2</rarity>
@@ -16,6 +16,7 @@
  <cond>faction.playerStanding("Sirius") &gt;= 30</cond>
  <condstr>You need at least 30 reputation with House Sirius.</condstr>
  <description>Though its relatively sleek form may cause it to be mistaken for a light fighter from a distance, the Shaman is anything but. A purpose-built light missile platform, few enemies escape the reach of the Shaman.</description>
+ <desc_extra>For every 10 flow above 25 flow, increases launcher fire rate and range by 5% and lock-on, calibration, and reload rates by 10%.</desc_extra>
  <health>
   <armour>50</armour>
   <armour_regen>0</armour_regen>

@@ -17,8 +17,8 @@ function update( p, dt )
    end
    mem.t = mem.t + DT
 
-   local f = flow.get( p )
-   local mod = math.max( f*0.08-20, 0 )
+   local f = flow.get( p, mem )
+   local mod = math.max( (f-250)*0.08, 0 )
    if mod > 0 then
       local rmod = p:shipstat("ew_detect",true)
       for k,v in ipairs(p:getAllies( RANGE*rmod )) do
