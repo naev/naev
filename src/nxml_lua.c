@@ -396,9 +396,11 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
    xmlNodePtr node;
    char *name, *type, *buf, *num, *data;
    size_t len;
+   int ret = 0;
 
    node = parent->xmlChildrenNode;
    do {
+      int failed = 0;
       if (xml_isNode(node,"data")) {
          /* Get general info. */
          xmlr_attr_strd(node,"name",name);
@@ -445,15 +447,19 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
             if (pnt != NULL) {
                lua_pushspob(L,spob_index(pnt));
             }
-            else
+            else {
                WARN(_("Failed to load nonexistent spob '%s'"), xml_get(node));
+               failed = 1;
+            }
          }
          else if (strcmp(type,SYSTEM_METATABLE)==0) {
             StarSystem *ss = system_get(xml_get(node));
             if (ss != NULL)
                lua_pushsystem(L,system_index( ss ));
-            else
+            else {
                WARN(_("Failed to load nonexistent system '%s'"), xml_get(node));
+               failed = 1;
+            }
          }
          else if (strcmp(type,FACTION_METATABLE)==0) {
             lua_pushfaction(L,faction_get(xml_get(node)));
@@ -471,8 +477,10 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
                LuaJump lj = {.srcid = ss->id, .destid = dest->id};
                lua_pushjump(L,lj);
             }
-            else
+            else {
                WARN(_("Failed to load nonexistent jump from '%s' to '%s'"), xml_get(node), buf);
+               failed = 1;
+            }
             free(buf);
          }
          else if (strcmp(type,COMMODITY_METATABLE)==0)
@@ -492,22 +500,24 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
              * article, audio, canvas, colour, data, file, font, linopt, pilot, pilotoutfit, shader, tex, transform.
              * */
             WARN(_("Unknown Lua data type!"));
-            free(type);
-            free(name);
-            lua_pop(L,1);
-            return -1;
+            failed = 1;
          }
 
          /* Set field. */
-         lua_settable(L, -3);
+         if (!failed)
+            lua_settable(L, -3);
+         else
+            lua_pop(L,1);
 
          /* cleanup */
          free(type);
          free(name);
+
+         ret |= failed;
       }
    } while (xml_nextNode(node));
 
-   return 0;
+   return ret;
 }
 
 /**
