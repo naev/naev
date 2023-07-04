@@ -266,7 +266,7 @@ vni.sirius.fyrra = get_list( sirius_fyrra_m, sirius_fyrra_f )
 vni.sirius.serra = get_list( sirius_serra_m, sirius_serra_f )
 
 vni.sirius.anyMale = get_list( sirius_shaira_m, sirius_fyrra_m, sirius_serra_m )
-vni.sirius.anyFeale = get_list( sirius_shaira_f, sirius_fyrra_f, sirius_serra_f )
+vni.sirius.anyFemale = get_list( sirius_shaira_f, sirius_fyrra_f, sirius_serra_f )
 vni.sirius.any = get_list( sirius_shaira_m, sirius_fyrra_m, sirius_serra_m, sirius_shaira_f, sirius_fyrra_f, sirius_serra_f )
 
 --[[--
