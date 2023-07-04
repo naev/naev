@@ -1439,6 +1439,7 @@ static int missions_parseActive( xmlNodePtr parent )
    const char **items;
    int nitems, active;
    xmlNodePtr node;
+   int failed = 0;
 
    if (player_missions == NULL)
       player_missions = array_create( Mission* );
@@ -1448,8 +1449,8 @@ static int missions_parseActive( xmlNodePtr parent )
       if (xml_isNode(node, "mission")) {
          xmlNodePtr cur;
          const MissionData *data;
+         int misn_failed;
          Mission *misn = calloc( 1, sizeof(Mission) );
-         array_push_back( &player_missions, misn );
 
          /* process the attributes to create the mission */
          xmlr_attr_strd(node, "data", buf);
@@ -1539,15 +1540,27 @@ static int missions_parseActive( xmlNodePtr parent )
             if (xml_isNode(cur,"claims"))
                misn->claims = claim_xmlLoad( cur );
 
-            if (xml_isNode(cur,"lua"))
+            if (xml_isNode(cur,"lua")) {
                /* start the unpersist routine */
-               nxml_unpersistLua( misn->env, cur );
+               int ret = nxml_unpersistLua( misn->env, cur );
+               if (ret) {
+                  WARN(_("Mission '%s' from saved game failed to unpersist Lua properly - ignoring."), data->name);
+                  misn_failed = -1;
+               }
+            }
 
          } while (xml_nextNode(cur));
+
+         if (misn_failed) {
+            failed = -1;
+            mission_cleanup( misn );
+         }
+         else
+            array_push_back( &player_missions, misn );
       }
    } while (xml_nextNode(node));
 
-   return 0;
+   return failed;
 }
 
 int mission_reload( const char *name )
