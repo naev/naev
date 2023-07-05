@@ -8,6 +8,9 @@
  <faction>Dvaered</faction>
  <faction>Empire</faction>
  <faction>Goddard</faction>
+ <cond>
+   return require("test_misn").reweight_active()
+ </cond>
  <notes>
   <tier>2</tier>
  </notes>

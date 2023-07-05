@@ -9,6 +9,9 @@
    if spob.cur():tags().station then
       return false
    end
+   if not require("test_misn").reweight_active() then
+      return false
+   end
    local count = 0
    for i, p in ipairs(system.cur():spobs()) do
       if p:services()["inhabited"] then

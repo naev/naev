@@ -5,7 +5,12 @@
  <priority>3</priority>
  <chance>10</chance>
  <location>Bar</location>
- <cond>system.get("Ogat"):jumpDist() == 4 and player.jumps() &gt;= 4</cond>
+ <cond>
+   if system.get("Ogat"):jumpDist() ~= 4 or player.jumps() &lt; 4 then
+      return false
+   end
+   return require("misn_test").reweight_active()
+ </cond>
  <notes>
   <tier>2</tier>
  </notes>

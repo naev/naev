@@ -6,7 +6,16 @@
  <chance>5</chance>
  <location>Bar</location>
  <faction>Dvaered</faction>
- <cond>(player.numOutfit("Mercenary License") &gt; 0) and (spob.cur():tags().station == nil)</cond>
+ <cond>
+   local misn_test = require "misn_test"
+   if spob.cur():tags().station then
+      return false
+   end
+   if not misn_test.mercenary() then
+      return false
+   end
+   return misn_test.reweight_active()
+ </cond>
  <notes>
   <tier>3</tier>
  </notes>
