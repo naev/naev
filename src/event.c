@@ -686,6 +686,8 @@ static void event_freeData( EventData *event )
    free( event->chapter );
    pcre2_code_free( event->chapter_re );
 
+   array_free( event->factions );
+
    free( event->cond );
 
    if (event->chunk != LUA_NOREF)
