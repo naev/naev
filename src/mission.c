@@ -143,6 +143,11 @@ const MissionData* mission_getFromName( const char* name )
  */
 static int mission_init( Mission* mission, const MissionData* misn, int genid, int create, unsigned int *id )
 {
+   if (misn->chunk == LUA_NOREF) {
+      WARN(_("Trying to initialize mission '%s' that has no loaded Lua chunk!"), misn->name);
+      return -1;
+   }
+
    /* clear the mission */
    memset( mission, 0, sizeof(Mission) );
    mission->env = LUA_NOREF;
@@ -168,7 +173,7 @@ static int mission_init( Mission* mission, const MissionData* misn, int genid, i
    nlua_setenv(naevL, mission->env, "mem");
 
    /* load the file */
-   if (nlua_dobufenv(mission->env, misn->lua, strlen(misn->lua), misn->sourcefile) != 0) {
+   if (nlua_dochunkenv(mission->env, misn->chunk, misn->sourcefile) != 0) {
       WARN(_("Error loading mission file: %s\n"
           "%s\n"
           "Most likely Lua file has improper syntax, please check"),
@@ -246,7 +251,7 @@ static int mission_meetConditionals( const MissionData *misn )
 
    /* Must meet Lua condition. */
    if (misn->avail.cond != NULL) {
-      int c = cond_check(misn->avail.cond);
+      int c = cond_checkChunk( misn->avail.cond_chunk, misn->avail.cond );
       if (c < 0) {
          WARN(_("Conditional for mission '%s' failed to run"), misn->name);
          return 1;
@@ -380,6 +385,25 @@ int mission_test( const char *name )
       return -1;
 
    return mission_meetConditionals( mdat );
+}
+
+const char *mission_availabilityStr( MissionAvailability loc )
+{
+   switch (loc) {
+      case MIS_AVAIL_UNSET:
+         return "unset";
+      case MIS_AVAIL_NONE:
+         return "none";
+      case MIS_AVAIL_COMPUTER:
+         return "computer";
+      case MIS_AVAIL_BAR:
+         return "bar";
+      case MIS_AVAIL_LAND:
+         return "land";
+      case MIS_AVAIL_ENTER:
+         return "enter";
+   }
+   return NULL;
 }
 
 /**
@@ -792,6 +816,12 @@ static void mission_freeData( MissionData* mission )
    free(mission->avail.cond);
    free(mission->avail.done);
 
+   if (mission->chunk != LUA_NOREF)
+      luaL_unref( naevL, LUA_REGISTRYINDEX, mission->chunk );
+
+   if (mission->avail.cond_chunk != LUA_NOREF)
+      luaL_unref( naevL, LUA_REGISTRYINDEX, mission->avail.cond_chunk );
+
    for (int i=0; i<array_size(mission->tags); i++)
       free(mission->tags[i]);
    array_free(mission->tags);
@@ -969,8 +999,10 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
    memset( temp, 0, sizeof(MissionData) );
 
    /* Defaults. */
+   temp->chunk = LUA_NOREF;
    temp->avail.priority = 5;
    temp->avail.loc = MIS_AVAIL_UNSET;
+   temp->avail.cond_chunk = LUA_NOREF;
 
    /* get the name */
    xmlr_attr_strd(parent,"name",temp->name);
@@ -1027,6 +1059,14 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
       WARN(_("Unknown node '%s' in mission '%s'"),node->name,temp->name);
    } while (xml_nextNode(node));
 
+   /* Compile conditional chunk. */
+   if (temp->avail.cond != NULL) {
+      temp->avail.cond_chunk = cond_compile( temp->avail.cond );
+      if (temp->avail.cond_chunk == LUA_NOREF || temp->avail.cond_chunk == LUA_REFNIL)
+         WARN(_("Mission '%s' failed to compile Lua conditional!"), temp->name);
+   }
+
+   /* Compile regex for chapter matching. */
    if (temp->avail.chapter != NULL) {
       int errornumber;
       PCRE2_SIZE erroroffset;
@@ -1168,16 +1208,18 @@ static int mission_parseFile( const char* file, MissionData *temp )
    temp->lua = filebuf;
    temp->sourcefile = strdup(file);
 
-#ifdef DEBUGGING
-   /* Check to see if syntax is valid. */
-   int ret = luaL_loadbuffer(naevL, temp->lua, strlen(temp->lua), temp->name );
-   if (ret == LUA_ERRSYNTAX) {
-      WARN(_("Mission Lua '%s' syntax error: %s"),
-            file, lua_tostring(naevL,-1) );
-   } else {
-      lua_pop(naevL, 1);
+   /* Clear chunk if already loaded. */
+   if (temp->chunk != LUA_NOREF) {
+      luaL_unref( naevL, LUA_REGISTRYINDEX, temp->chunk );
+      temp->chunk = LUA_NOREF;
    }
-#endif /* DEBUGGING */
+
+   /* Load the chunk. */
+   int ret = luaL_loadbuffer(naevL, temp->lua, strlen(temp->lua), temp->name );
+   if (ret == LUA_ERRSYNTAX)
+      WARN(_("Mission Lua '%s' syntax error: %s"), file, lua_tostring(naevL,-1) );
+   else
+      temp->chunk = luaL_ref( naevL, LUA_REGISTRYINDEX );
 
    /* Clean up. */
    xmlFreeDoc(doc);

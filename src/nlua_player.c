@@ -1491,7 +1491,9 @@ static int playerL_shipSwap( lua_State *L )
 /**
  * @brief Gets the list of the player's active missions.
  *
- *    @luatreturn table Table containing the names of active missions as values.
+ * @usage n = \#player.missions() -- number of active missions
+ *
+ *    @luatreturn table Table containing the metadat of active missions as tables. Fields include "name", "desc", "reward", "loc", "chance", "spob", "system", "chapter", "cond", "done", "priority", "unique", and "tags".
  * @luafunc missions
  */
 static int playerL_missions( lua_State *L )
@@ -1503,9 +1505,81 @@ static int playerL_missions( lua_State *L )
    int j = 1;
    lua_newtable(L);
    for (int i=0; i<array_size(player_missions); i++) {
-      if (player_missions[i]->id == 0)
+      const Mission *pm = player_missions[i];
+      const MissionData *md = pm->data;
+      const MissionAvail_t *ma = &md->avail;
+      if (pm->id == 0)
          continue;
-      lua_pushstring( L, player_missions[i]->data->name );
+
+      lua_newtable(L);
+
+      lua_pushstring( L, md->name );
+      lua_setfield(L,-2,"name");
+
+      if (pm->title != NULL) {
+         lua_pushstring( L, pm->title );
+         lua_setfield(L,-2,"title");
+      }
+
+      if (pm->desc != NULL) {
+         lua_pushstring( L, pm->desc );
+         lua_setfield(L,-2,"desc");
+      }
+
+      if (pm->reward != NULL) {
+         lua_pushstring( L, pm->reward );
+         lua_setfield(L,-2,"reward");
+      }
+
+      lua_pushstring( L, mission_availabilityStr(ma->loc) );
+      lua_setfield(L,-2,"loc");
+
+      lua_pushinteger( L, ma->chance );
+      lua_setfield(L,-2,"chance");
+
+      if (ma->spob != NULL) {
+         lua_pushstring( L, ma->spob );
+         lua_setfield(L,-2,"spob");
+      }
+
+      if (ma->system != NULL) {
+         lua_pushstring( L, ma->system );
+         lua_setfield(L,-2,"system");
+      }
+
+      if (ma->chapter != NULL) {
+         lua_pushstring( L, ma->chapter );
+         lua_setfield(L,-2,"chapter");
+      }
+
+      /* TODO factions. */
+
+      if (ma->cond != NULL) {
+         lua_pushstring( L, ma->cond );
+         lua_setfield(L,-2,"cond");
+      }
+
+      if (ma->done != NULL) {
+         lua_pushstring( L, ma->done );
+         lua_setfield(L,-2,"done");
+      }
+
+      lua_pushinteger( L, ma->priority );
+      lua_setfield(L,-2,"priority");
+
+      if (mis_isFlag(md,MISSION_UNIQUE)) {
+         lua_pushboolean( L, 1 );
+         lua_setfield(L,-2,"unique");
+      }
+
+      lua_newtable(L);
+      for (int t=0; t<array_size(md->tags); t++) {
+         lua_pushstring( L, md->tags[t] );
+         lua_pushboolean( L, 1 );
+         lua_rawset( L, -3 );
+      }
+      lua_setfield(L,-2,"tags");
+
       lua_rawseti( L, -2, j++ );
    }
    return 1;

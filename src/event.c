@@ -55,6 +55,7 @@ typedef struct EventData_ {
    char *name; /**< Name of the event. */
    char *sourcefile; /**< Source file code. */
    char *lua; /**< Lua code. */
+   int chunk; /**< Lua chunk. */
    unsigned int flags; /**< Bit flags. */
 
    /* For specific cases. */
@@ -66,6 +67,7 @@ typedef struct EventData_ {
 
    EventTrigger_t trigger; /**< What triggers the event. */
    char *cond; /**< Conditional Lua code to execute. */
+   int cond_chunk; /**< Chunk of the conditional Lua code. */
    double chance; /**< Chance of appearing. */
    int priority; /**< Event priority: 0 = main plot, 5 = default, 10 = insignificant. */
 
@@ -221,7 +223,7 @@ static int event_create( int dataid, unsigned int *id )
    nlua_setenv(naevL, ev->env, "mem");
 
    /* Load file. */
-   if (nlua_dobufenv(ev->env, data->lua, strlen(data->lua), data->sourcefile) != 0) {
+   if (nlua_dochunkenv(ev->env, data->chunk, data->sourcefile) != 0) {
       WARN(_("Error loading event file: %s\n"
             "%s\n"
             "Most likely Lua file has improper syntax, please check"),
@@ -389,7 +391,7 @@ void events_trigger( EventTrigger_t trigger )
 
       /* Test conditional. */
       if (ed->cond != NULL) {
-         int c = cond_check(ed->cond);
+         int c = cond_checkChunk( ed->cond_chunk, ed->cond );
          if (c<0) {
             WARN(_("Conditional for event '%s' failed to run."), ed->name);
             continue;
@@ -422,7 +424,9 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
    memset( temp, 0, sizeof(EventData) );
 
    /* Defaults. */
+   temp->chunk = LUA_NOREF;
    temp->trigger = EVENT_TRIGGER_NULL;
+   temp->cond_chunk = LUA_NOREF;
 
    /* get the name */
    xmlr_attr_strd(parent, "name", temp->name);
@@ -501,6 +505,14 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
    /* Process. */
    temp->chance /= 100.;
 
+   /* Compile conditional chunk. */
+   if (temp->cond != NULL) {
+      temp->cond_chunk = cond_compile( temp->cond );
+      if (temp->cond_chunk == LUA_NOREF || temp->cond_chunk == LUA_REFNIL)
+         WARN(_("Event '%s' failed to compile Lua conditional!"), temp->name);
+   }
+
+   /* Compile regex for chapter matching. */
    if (temp->chapter != NULL) {
       int errornumber;
       PCRE2_SIZE erroroffset;
@@ -587,11 +599,7 @@ static int event_parseFile( const char* file, EventData *temp )
    xmlDocPtr doc;
    char *filebuf;
    const char *pos, *start_pos;
-
-#ifdef DEBUGGING
-   /* To check if event is valid. */
    int ret;
-#endif /* DEBUGGING */
 
    /* Load string. */
    filebuf = ndata_read( file, &bufsize );
@@ -642,16 +650,18 @@ static int event_parseFile( const char* file, EventData *temp )
    temp->lua = strdup(filebuf);
    temp->sourcefile = strdup(file);
 
-#ifdef DEBUGGING
+   /* Clear chunk if already loaded. */
+   if (temp->chunk != LUA_NOREF) {
+      luaL_unref( naevL, LUA_REGISTRYINDEX, temp->chunk );
+      temp->chunk = LUA_NOREF;
+   }
+
    /* Check to see if syntax is valid. */
    ret = luaL_loadbuffer(naevL, temp->lua, strlen(temp->lua), temp->name );
-   if (ret == LUA_ERRSYNTAX) {
-      WARN(_("Event Lua '%s' syntax error: %s"),
-            file, lua_tostring(naevL,-1) );
-   } else {
-      lua_pop(naevL, 1);
-   }
-#endif /* DEBUGGING */
+   if (ret == LUA_ERRSYNTAX)
+      WARN(_("Event Lua '%s' syntax error: %s"), file, lua_tostring(naevL,-1) );
+   else
+      temp->chunk = luaL_ref( naevL, LUA_REGISTRYINDEX );
 
    /* Clean up. */
    xmlFreeDoc(doc);
@@ -677,6 +687,12 @@ static void event_freeData( EventData *event )
    pcre2_code_free( event->chapter_re );
 
    free( event->cond );
+
+   if (event->chunk != LUA_NOREF)
+      luaL_unref( naevL, LUA_REGISTRYINDEX,event->chunk );
+
+   if (event->cond_chunk != LUA_NOREF)
+      luaL_unref( naevL, LUA_REGISTRYINDEX,event->cond_chunk );
 
    for (int i=0; i<array_size(event->tags); i++)
       free(event->tags[i]);

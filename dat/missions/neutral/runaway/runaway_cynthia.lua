@@ -5,7 +5,20 @@
  <priority>4</priority>
  <chance>11</chance>
  <location>Bar</location>
-  <system>Gamma Polaris</system>
+ <cond>
+   -- Must be "nearby" Gamma Polaris
+   local d = system.jumpDist("Gamma Polaris")
+   if d &gt; 4 then
+      return false
+   end
+   -- Must not be near Zhiru
+   local _p, s = spob.getS("Zhiru")
+   d = s:jumpDist()
+   if d &lt; 3 then
+      return false
+   end
+   return require("misn_test").reweight_active()
+ </cond>
  <notes>
   <tier>1</tier>
  </notes>

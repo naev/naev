@@ -5,7 +5,12 @@
  <priority>3</priority>
  <chance>20</chance>
  <location>Bar</location>
- <cond>require("common.pirate").systemPresence() &gt; 0</cond>
+ <cond>
+   if require("common.pirate").systemPresence() &lt; 0 then
+      return false
+   end
+   return require("misn_test").reweight_active()
+ </cond>
  <notes>
   <tier>1</tier>
  </notes>

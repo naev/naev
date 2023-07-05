@@ -36,6 +36,7 @@ int nlua_dobufenv(nlua_env env,
                   size_t sz,
                   const char *name);
 int nlua_dofileenv(nlua_env env, const char *filename);
+int nlua_dochunkenv( nlua_env env, int chunk, const char *name );
 int nlua_loadStandard( nlua_env env );
 int nlua_errTrace( lua_State *L );
 int nlua_pcall( nlua_env env, int nargs, int nresults );

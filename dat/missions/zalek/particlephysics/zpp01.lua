@@ -6,7 +6,15 @@
  <chance>30</chance>
  <faction>Za'lek</faction>
  <location>Bar</location>
- <cond>spob.cur() ~= spob.get("Katar I") and faction.playerStanding("Za'lek") &gt;= 0</cond>
+ <cond>
+   if spob.cur() == spob.get("Katar I") then
+      return false
+   end
+   if faction.playerStanding("Za'lek") &lt; 0 then
+      return false
+   end
+   return require("misn_test").reweight_active()
+ </cond>
  <notes>
   <campaign>Za'lek Particle Physics</campaign>
   <tier>1</tier>

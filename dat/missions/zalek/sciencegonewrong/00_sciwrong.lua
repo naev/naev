@@ -6,6 +6,7 @@
  <chance>10</chance>
  <location>Bar</location>
  <faction>Za'lek</faction>
+ <cond>return require("misn_test").reweight_active()</cond>
  <notes>
   <tier>2</tier>
  </notes>

@@ -48,6 +48,7 @@ typedef struct MissionAvail_s {
    int *factions; /**< Array (array.h): To certain factions. */
 
    char *cond; /**< Condition that must be met (Lua). */
+   int cond_chunk; /**< Chunk representing the condition. */
    char *done; /**< Previous mission that must have been done. */
 
    int priority; /**< Mission priority: 0 = main plot, 5 = default, 10 = insignificant. */
@@ -66,6 +67,7 @@ typedef struct MissionData_ {
    unsigned int flags; /**< Flags to store binary properties */
    char *lua; /**< Lua data to use. */
    char *sourcefile; /**< Source file name. */
+   int chunk; /**< Lua mission data chunk. */
 
    /* Tags. */
    char **tags; /**< Mission tags with more information. */
@@ -119,6 +121,7 @@ int mission_accept( Mission* mission ); /* player accepted mission for computer/
 void missions_run( MissionAvailability loc, int faction, const Spob *pnt, const StarSystem *sys );
 int mission_start( const char *name, unsigned int *id );
 int mission_test( const char *name );
+const char *mission_availabilityStr( MissionAvailability loc );
 
 /*
  * misc

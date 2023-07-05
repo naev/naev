@@ -3,7 +3,18 @@
 <event name="Kidnapped">
  <location>enter</location>
  <chance>15</chance>
- <cond>player.misnDone("Kidnapped") == false and player.misnActive("Kidnapped") == false and system.cur() == system.get("Arcturus") and player.outfitNum("Mercenary License") &gt; 0</cond>
+ <cond>
+   if player.misnDone("Kidnapped") or player.misnActive("Kidnapped") then
+      return false
+   end
+   if system.cur() ~= system.get("Arcturus") then
+      return false
+   end
+   if player.numOutfit("Mercenary License") &lt;= 0 then
+      return false
+   end
+   return require("misn_test").reweight_active()
+ </cond>
  <notes>
   <campaign>Kidnapping</campaign>
   <tier>3</tier>

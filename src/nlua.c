@@ -277,6 +277,29 @@ int nlua_dofileenv( nlua_env env, const char *filename )
    return 0;
 }
 
+/*
+ * @brief Run code from chunk in Lua environment.
+ *
+ *    @param env Lua environment.
+ *    @param chunk Chunk to run.
+ *    @return 0 on success.
+ */
+int nlua_dochunkenv( nlua_env env, int chunk, const char *name )
+{
+   int ret;
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, chunk );
+   nlua_pushenv(naevL, env);
+   lua_setfenv(naevL, -2);
+   ret = nlua_pcall( env, 0, LUA_MULTRET );
+   if (ret != 0)
+      return ret;
+#if DEBUGGING
+   lua_pushstring( naevL, name );
+   nlua_setenv( naevL, env, "__name" );
+#endif /* DEBUGGING */
+   return 0;
+}
+
 #if DEBUGGING
 void nlua_pushEnvTable( lua_State *L )
 {

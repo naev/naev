@@ -5,7 +5,12 @@
  <priority>3</priority>
  <chance>20</chance>
  <location>Bar</location>
- <cond>system.get("Klantar"):jumpDist() &lt; 3</cond>
+ <cond>
+   if system.get("Klantar"):jumpDist() &gt;= 3 then
+      return false
+   end
+   return require("misn_test").reweight_active()
+ </cond>
  <notes>
   <campaign>Shadow</campaign>
  </notes>

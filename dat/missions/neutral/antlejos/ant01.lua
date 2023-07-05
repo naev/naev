@@ -5,7 +5,14 @@
  <priority>4</priority>
  <chance>5</chance>
  <location>Bar</location>
- <cond>system.jumpDist("Antlejos") &gt; 3 and system.jumpDist("Antlejos") &lt; 13</cond>
+ <cond>
+   -- Must be "nearby" Antlejos
+   local d = system.jumpDist("Antlejos")
+   if d &lt; 4 or d &gt; 12 then
+      return false
+   end
+   return require("misn_test").reweight_active()
+ </cond>
  <notes>
   <tier>1</tier>
   <campaign>Terraforming Antlejos</campaign>

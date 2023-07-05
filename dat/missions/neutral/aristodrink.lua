@@ -5,6 +5,7 @@
  <priority>4</priority>
  <chance>5</chance>
  <location>Bar</location>
+ <cond>return require("misn_test").reweight_active()</cond>
  <notes>
   <tier>1</tier>
  </notes>

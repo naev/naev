@@ -3,7 +3,12 @@
 <mission name="Empire Shipping 1">
  <unique />
  <priority>2</priority>
- <cond>faction.playerStanding("Empire") &gt;= 0 and faction.playerStanding("Dvaered") &gt;= 0 and faction.playerStanding("FLF") &lt; 10</cond>
+ <cond>
+   if faction.playerStanding("Empire") &lt; 0 or faction.playerStanding("Dvaered") &lt; 0 or faction.playerStanding("FLF") &gt;= 10 then
+      return false
+   end
+   return require("misn_test").reweight_active()
+ </cond>
  <chance>35</chance>
  <done>Soromid Long Distance Recruitment</done>
  <location>Bar</location>

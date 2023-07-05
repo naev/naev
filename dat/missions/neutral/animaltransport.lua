@@ -6,7 +6,12 @@
  <chance>10</chance>
  <location>Bar</location>
  <faction>Sirius</faction>
- <cond>spob.cur():tags().station==nil</cond>
+ <cond>
+   if spob.cur():tags().station then
+      return false
+   end
+   return require("misn_test").reweight_active()
+ </cond>
  <notes>
   <tier>1</tier>
  </notes>

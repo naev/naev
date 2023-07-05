@@ -5,7 +5,12 @@
  <priority>4</priority>
  <chance>30</chance>
  <faction>Za'lek</faction>
- <cond>faction.playerStanding("Za'lek") &gt;= 0</cond>
+ <cond>
+   if faction.playerStanding("Za'lek") &lt; 0 then
+      return false
+   end
+   return require("misn_test").reweight_active()
+ </cond>
  <location>Bar</location>
  <done>Za'lek Particle Physics 6</done>
  <notes>
