@@ -16,6 +16,7 @@
       return false
    end
    return true
+ </cond>
  <notes>
   <campaign>Nebula Research</campaign>
  </notes>
