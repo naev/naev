@@ -19,11 +19,11 @@
 </mission>
 --]]
 --[[
--- This is the third mission in the anti-FLF Dvaered campaign. The player joins the battle to destroy the FLF base.
--- stack variable flfbase_intro:
---      1 - The player has turned in the FLF agent or rescued the Dvaered crew. Conditional for dv_antiflf02
---      2 - The player has rescued the FLF agent. Conditional for flf_pre02
---      3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
+   This is the third mission in the anti-FLF Dvaered campaign. The player joins the battle to destroy the FLF base.
+   stack variable flfbase_intro:
+        1 - The player has turned in the FLF agent or rescued the Dvaered crew. Conditional for dv_antiflf02
+        2 - The player has rescued the FLF agent. Conditional for flf_pre02
+        3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
 --]]
 
 local fleet = require "fleet"

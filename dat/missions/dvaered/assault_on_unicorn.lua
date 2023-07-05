@@ -2,12 +2,28 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Assault on Unicorn">
  <priority>3</priority>
- <cond>player.outfitNum("Mercenary License") &gt; 0 and faction.playerStanding("Dvaered") &gt; 5 and system.cur() == system.get("Amaroq") and not var.peek("assault_on_unicorn_check")</cond>
+ <cond>
+   if faction.playerStanding("Dvaered") &lt; 5 then
+      return false
+   end
+   if system.get("Unicorn"):jumpDist() &gt; 5 then
+      return false
+   end
+   if player.misnActive("Assault on Unicorn") then
+      return false
+   end
+   local misn_test = require "misn_test"
+   if not misn_test.mercenary() then
+      return false
+   end
+   return true
+ </cond>
+ <faction>Dvaered</faction>
  <chance>36</chance>
  <location>Computer</location>
  <done>Empire Shipping 3</done>
  <notes>
-   <tier>3</tier>
+  <tier>3</tier>
  </notes>
 </mission>
  --]]
@@ -20,11 +36,12 @@
 local pir = require 'common.pirate'
 local fmt = require "format"
 local dv  = require "common.dvaered"
+local vntk = require "vntk"
+local lmisn = require "lmisn"
 
 -- Mission constants
 local misn_target_sys = system.get("Unicorn")
 -- local misn_return_sys = system.get("Amaroq")
-
 
 local function update_osd()
    local osd_msg = {}
@@ -53,8 +70,6 @@ function accept ()
    -- This mission makes no system claims.
    if misn.accept() then
       mem.pirates_killed = 0
-      -- Makes sure only one copy of the mission can run.
-      var.push( "assault_on_unicorn_check", true)
       mem.planet_start = spob.cur()
       mem.marker2 = misn.markerAdd( mem.planet_start, "low" )
       mem.pirates_killed = 0
@@ -90,15 +105,11 @@ end
 
 function land()
    if spob.cur() == mem.planet_start and mem.pirates_killed > 0 then
-      var.pop( "assault_on_unicorn_check" )
-
-      tk.msg(_("Mission accomplished"), fmt.f(_("As you land, you see a Dvaered military official approaching. Thanking you for your hard and diligent work, he hands you the bounty you've earned, a number of chips worth {credits}."), {credits=fmt.credits(mem.bounty_earned)}))
+      lmisn.sfxMoney()
       player.pay(mem.bounty_earned)
       faction.modPlayerSingle( "Dvaered", math.pow( mem.bounty_earned, 0.5 ) / 100 )
+      vntk.msg(_("Mission accomplished"), fmt.f(_("As you land, you see a Dvaered military official approaching. Thanking you for your hard and diligent work, he hands you the bounty you've earned, a number of chips worth {credits}."),
+         {credits=fmt.credits(mem.bounty_earned)}))
       misn.finish(true)
    end
-end
-
-function abort ()
-   var.pop( "assault_on_unicorn_check" )
 end
