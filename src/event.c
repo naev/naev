@@ -66,6 +66,7 @@ typedef struct EventData_ {
 
    EventTrigger_t trigger; /**< What triggers the event. */
    char *cond; /**< Conditional Lua code to execute. */
+   int cond_chunk; /**< Chunk of the conditional Lua code. */
    double chance; /**< Chance of appearing. */
    int priority; /**< Event priority: 0 = main plot, 5 = default, 10 = insignificant. */
 
@@ -389,7 +390,7 @@ void events_trigger( EventTrigger_t trigger )
 
       /* Test conditional. */
       if (ed->cond != NULL) {
-         int c = cond_check(ed->cond);
+         int c = cond_checkChunk( ed->cond_chunk, ed->cond );
          if (c<0) {
             WARN(_("Conditional for event '%s' failed to run."), ed->name);
             continue;
@@ -501,6 +502,14 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
    /* Process. */
    temp->chance /= 100.;
 
+   /* Compile conditional chunk. */
+   if (temp->cond != NULL) {
+      temp->cond_chunk = cond_compile( temp->cond );
+      if (temp->cond_chunk == LUA_NOREF || temp->cond_chunk == LUA_REFNIL)
+         WARN(_("Event '%s' failed to compile Lua conditional!"), temp->name);
+   }
+
+   /* Compile regex for chapter matching. */
    if (temp->chapter != NULL) {
       int errornumber;
       PCRE2_SIZE erroroffset;
@@ -677,6 +686,9 @@ static void event_freeData( EventData *event )
    pcre2_code_free( event->chapter_re );
 
    free( event->cond );
+
+   if (event->cond_chunk != LUA_NOREF)
+      luaL_unref( naevL, LUA_REGISTRYINDEX,event->cond_chunk );
 
    for (int i=0; i<array_size(event->tags); i++)
       free(event->tags[i]);
