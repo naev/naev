@@ -174,9 +174,9 @@ void shipyard_update( unsigned int wid, const char* str )
    int i, tw, th, y, w, h, sw, iw, bh;
    Ship* ship;
    char lbl[STRMAX], buf[STRMAX], buf_price[ECON_CRED_STRLEN], buf_credits[ECON_CRED_STRLEN];
-   char buf_license[STRMAX_SHORT];
    double aspect, gw, gh;
    size_t k = 0, l = 0;
+   int blackmarket = ((land_spob!=NULL) && spob_hasService( land_spob, SPOB_SERVICE_BLACKMARKET ));
 
    i = toolkit_getImageArrayPos( wid, "iarShipyard" );
 
@@ -217,14 +217,6 @@ void shipyard_update( unsigned int wid, const char* str )
    window_modifyText( wid, "txtStats", ship->desc_stats );
    price2str( buf_price, ship_buyPrice(ship), player.p->credits, 2 );
    credits2str( buf_credits, player.p->credits, 2 );
-
-   if (ship->license == NULL)
-      strncpy( buf_license, _("None"), sizeof(buf_license)-1 );
-   else if (player_hasLicense( ship->license ) ||
-         (land_spob != NULL && spob_hasService( land_spob, SPOB_SERVICE_BLACKMARKET )))
-      strncpy( buf_license, _(ship->license), sizeof(buf_license)-1 );
-   else
-      snprintf( buf_license, sizeof(buf_license), "#r%s#0", _(ship->license) );
 
    k += scnprintf( &lbl[k], sizeof(lbl)-k, "%s", _("Model:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "%s", _(ship->name) );
@@ -310,14 +302,22 @@ void shipyard_update( unsigned int wid, const char* str )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n\n%s", buf_price );
    k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Money:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_credits );
-   k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("License:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_license );
-   if (ship->condstr) {
-      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Requires:") );
-      if (cond_check( ship->cond ))
-         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(ship->condstr) );
+   if (ship->license) {
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("License:") );
+      if (blackmarket || player_hasLicense( ship->license ))
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(ship->license) );
       else
-         l += scnprintf( &buf[l], sizeof(buf)-l, "\n#r%s#0", _(ship->condstr) );
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n#r%s#0", _(ship->license) );
+   }
+   if (ship->cond) {
+      int meets_reqs = 0;
+      if (land_spob != NULL)
+         meets_reqs = cond_check(ship->cond);
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Requires:") );
+      if (blackmarket)
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s#0", _("Not Necessary (Blackmarket)") );
+      else
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s%s#0", meets_reqs ? "" : "#r", _(ship->condstr) );
    }
 
    /* Calculate layout. */

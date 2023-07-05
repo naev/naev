@@ -495,11 +495,14 @@ void outfits_update( unsigned int wid, const char *str )
          l += scnprintf( &buf[l], sizeof(buf)-l, "\n#r%s#0", _(outfit->license) );
    }
    if (outfit->cond) {
+      int meets_reqs = 0;
+      if (land_spob != NULL)
+         meets_reqs = cond_check(outfit->cond);
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Requires:") );
-      if (cond_check(outfit->cond))
-         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(outfit->condstr) );
+      if (blackmarket)
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s#0", _("Not Necessary (Blackmarket)") );
       else
-         l += scnprintf( &buf[l], sizeof(buf)-l, "\n#r%s#0", _(outfit->condstr) );
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s%s#0", meets_reqs ? "" : "#r", _(outfit->condstr) );
    }
    window_modifyText( wid, "txtSDesc", lbl );
    window_modifyText( wid, "txtDDesc", buf );

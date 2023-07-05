@@ -3455,6 +3455,8 @@ src/land.h
 src/land_outfits.c
 src/land_outfits.h
 src/land_shipyard.c
+src/land_shipyard.c
+src/land_shipyard.c
 src/land_shipyard.h
 src/land_trade.c
 src/land_trade.h
