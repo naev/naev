@@ -155,6 +155,11 @@ int cond_checkChunk( int chunk, const char *cond )
    char buf[STRMAX_SHORT];
    int ret;
 
+   if (chunk==LUA_NOREF) {
+      WARN(_("Trying to run Lua Conditional chunk that is not referenced!"));
+      return 0;
+   }
+
    ret = nlua_dochunkenv( cond_env, chunk, "Lua Conditional" );
    switch (ret) {
       case LUA_ERRRUN:

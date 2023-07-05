@@ -275,7 +275,7 @@ int nlua_dochunkenv( nlua_env env, int chunk, const char *name )
    int ret;
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, chunk );
    nlua_pushenv(naevL, env);
-   lua_setfenv(naevL, -1);
+   lua_setfenv(naevL, -2);
    ret = nlua_pcall( env, 0, LUA_MULTRET );
    if (ret != 0)
       return ret;

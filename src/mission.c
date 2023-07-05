@@ -246,8 +246,7 @@ static int mission_meetConditionals( const MissionData *misn )
 
    /* Must meet Lua condition. */
    if (misn->avail.cond != NULL) {
-      //int c = cond_checkChunk( misn->avail.cond_chunk, misn->avail.cond );
-      int c = cond_check( misn->avail.cond );
+      int c = cond_checkChunk( misn->avail.cond_chunk, misn->avail.cond );
       if (c < 0) {
          WARN(_("Conditional for mission '%s' failed to run"), misn->name);
          return 1;
