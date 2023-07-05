@@ -36,6 +36,8 @@
 local pir = require 'common.pirate'
 local fmt = require "format"
 local dv  = require "common.dvaered"
+local vntk = require "vntk"
+local lmisn = require "lmisn"
 
 -- Mission constants
 local misn_target_sys = system.get("Unicorn")
@@ -68,7 +70,6 @@ function accept ()
    -- This mission makes no system claims.
    if misn.accept() then
       mem.pirates_killed = 0
-      -- Makes sure only one copy of the mission can run.
       mem.planet_start = spob.cur()
       mem.marker2 = misn.markerAdd( mem.planet_start, "low" )
       mem.pirates_killed = 0
@@ -104,9 +105,11 @@ end
 
 function land()
    if spob.cur() == mem.planet_start and mem.pirates_killed > 0 then
-      tk.msg(_("Mission accomplished"), fmt.f(_("As you land, you see a Dvaered military official approaching. Thanking you for your hard and diligent work, he hands you the bounty you've earned, a number of chips worth {credits}."), {credits=fmt.credits(mem.bounty_earned)}))
+      lmisn.sfxMoney()
       player.pay(mem.bounty_earned)
       faction.modPlayerSingle( "Dvaered", math.pow( mem.bounty_earned, 0.5 ) / 100 )
+      vntk.msg(_("Mission accomplished"), fmt.f(_("As you land, you see a Dvaered military official approaching. Thanking you for your hard and diligent work, he hands you the bounty you've earned, a number of chips worth {credits}."),
+         {credits=fmt.credits(mem.bounty_earned)}))
       misn.finish(true)
    end
 end
