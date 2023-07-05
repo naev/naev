@@ -9,7 +9,7 @@
    if f then
       local ft = f:tags()
       if ft.generic or ft.misn_cargo then
-         return true
+         return require("misn_test").reweight_active()
       end
    end
    return false

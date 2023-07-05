@@ -3,7 +3,16 @@
 <mission name="Soromid Long Distance Recruitment">
  <unique />
  <priority>4</priority>
- <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true and var.peek("es_misn") ~= nil and var.peek("es_misn") &gt;= 2</cond>
+ <cond>
+   if faction.playerStanding("Empire") &lt; 0 then
+      return false
+   end
+   local es_misn = var.peek("es_misn") or 0
+   if var.peek("es_cargo") ~= true and es_misn &lt; 2 then
+      return false
+   end
+   return require("misn_test").reweight_active()
+ </cond>
  <chance>30</chance>
  <location>Bar</location>
  <faction>Empire</faction>

@@ -4,15 +4,23 @@
  <location>enter</location>
  <chance>4</chance>
  <cond>
-  not var.peek("baron_hated") and
-  not player.misnDone("Baron") and
-  not player.misnActive("Baron") and
-  (
-     system.cur():faction() == faction.get("Empire") or
-     system.cur():faction() == faction.get("Dvaered") or
-     system.cur():faction() == faction.get("Sirius")
-  ) and
-  player.wealth() > 1e6
+   if var.peek("baron_hated") or
+      player.misnDone("Baron") or
+      player.misnActive("Baron") then
+      return false
+   end
+   local sf = system.cur():faction()
+   if not inlist( {
+      faction.get("Empire"),
+      faction.get("Dvaered"),
+      faction.get("Sirius"),
+   }, sf )
+      return false
+   end
+   if player.wealth() &lt; 1e6 then
+      return false
+   end
+   return require("misn_test").reweight_active()
  </cond>
  <notes>
   <campaign>Baron Sauterfeldt</campaign>

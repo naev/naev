@@ -3,7 +3,15 @@
 <mission name="A Shark Bites">
  <unique />
  <priority>3</priority>
- <cond>spob.cur() ~= spob.get("Ulios") and player.numOutfit("Mercenary License") &gt; 0</cond>
+ <cond>
+   if spob.cur() == spob.get("Ulios") then
+      return false
+   end
+   if player.numOutfit("Mercenary License") &lt;= 0 then
+      return false
+   end
+   return require("misn_test").reweight_active()
+ </cond>
  <chance>5</chance>
  <location>Bar</location>
  <faction>Dvaered</faction>

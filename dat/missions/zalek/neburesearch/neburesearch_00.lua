@@ -6,6 +6,7 @@
  <chance>100</chance>
  <location>Bar</location>
  <spob>Jorla</spob>
+ <cond>return require("misn_test").reweight_active()</cond>
  <notes>
   <campaign>Nebula Research</campaign>
   <tier>2</tier>

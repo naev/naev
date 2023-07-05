@@ -21,7 +21,7 @@
    for k,v in ipairs(spob.getAll()) do
       if v:tags().refugee then
          if v:system():jumpDist() &lt; 6 then
-            return true
+            return require("misn_test").reweight_active()
          end
       end
    end
