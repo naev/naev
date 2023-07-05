@@ -18,7 +18,7 @@
    end
    return true
  </cond>
- <faction>Dvared</faction>
+ <faction>Dvaered</faction>
  <chance>36</chance>
  <location>Computer</location>
  <done>Empire Shipping 3</done>
