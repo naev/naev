@@ -2,7 +2,12 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Long Distance Empire Shipping">
  <priority>3</priority>
- <cond>faction.playerStanding("Empire") &gt;= 0</cond>
+ <cond>
+   if faction.playerStanding("Empire") &lt; 0 then
+      return false
+   end
+   return require("misn_test").computer()
+ </cond>
  <chance>350</chance>
  <done>Empire Long Distance Recruitment</done>
  <location>Computer</location>

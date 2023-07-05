@@ -6,13 +6,10 @@
  <chance>100</chance>
  <location>Computer</location>
 </mission>
- --]]
---[[
---
--- Rehabilitation Mission
---
 --]]
-
+--[[
+   Rehabilitation Mission
+--]]
 require "missions.rehab_common"
 
 mem.fac = faction.get("Sirius")

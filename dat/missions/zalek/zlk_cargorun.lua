@@ -5,6 +5,7 @@
  <priority>4</priority>
  <chance>10</chance>
  <faction>Za'lek</faction>
+ <cond>return require("misn_test").reweight_active()</cond>
  <location>Bar</location>
  <notes>
   <tier>1</tier>

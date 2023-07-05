@@ -3,7 +3,12 @@
 <mission name="Dvaered Long Distance Recruitment">
  <unique />
  <priority>4</priority>
- <cond>faction.playerStanding("Empire") &gt;= 0</cond>
+ <cond>
+   if faction.playerStanding("Empire") &lt; 0 then
+      return false
+   end
+   return require("misn_test").reweight_active()
+ </cond>
  <chance>75</chance>
  <done>Soromid Long Distance Recruitment</done>
  <location>Bar</location>

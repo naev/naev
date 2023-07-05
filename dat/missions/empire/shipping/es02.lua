@@ -3,8 +3,13 @@
 <mission name="Empire Shipping 3">
  <unique />
  <priority>2</priority>
- <cond>faction.playerStanding("Empire") &gt;= 0 and faction.playerStanding("Dvaered") &gt;= 0 and faction.playerStanding("FLF") &lt; 10</cond>
- <chance>50</chance>
+ <cond>
+   if faction.playerStanding("Empire") &lt; 0 or faction.playerStanding("Dvaered") &lt; 0 or faction.playerStanding("FLF") &gt;= 10 then
+      return false
+   end
+   return true
+ </cond>
+ <chance>100</chance>
  <done>Empire Shipping 2</done>
  <location>Bar</location>
  <spob>Halir</spob>
