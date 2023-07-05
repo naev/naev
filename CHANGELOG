@@ -17,6 +17,7 @@
       * Independent patrol and bounty missions can be completed on more planets and stations
       * Can hide or prioritize missions from the info menu
       * Manual aiming model aims at the mouse location when the mouse is visible
+      * Missions are introduced less all at once to the player
    * New Content
       * New mechanic for House Sirius called flow to unlock psychic powers
          * Gives passive bonuses to Sirius ships
@@ -43,6 +44,7 @@
       * Typo and wording fixes
       * Fixed many corner case crashes in the editor
       * Fixed cargo missions not being generated in some parts of the universe
+      * Game no longer crashes when loading save with persisted Lua pointing to inexistent systems/spobs
 
 * 0.10.6 (unreleased)
    * Fixed potential segfault with invalid semver strings
