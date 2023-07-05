@@ -246,7 +246,8 @@ static int mission_meetConditionals( const MissionData *misn )
 
    /* Must meet Lua condition. */
    if (misn->avail.cond != NULL) {
-      int c = cond_check(misn->avail.cond);
+      //int c = cond_checkChunk( misn->avail.cond_chunk, misn->avail.cond );
+      int c = cond_check( misn->avail.cond );
       if (c < 0) {
          WARN(_("Conditional for mission '%s' failed to run"), misn->name);
          return 1;
@@ -811,6 +812,9 @@ static void mission_freeData( MissionData* mission )
    free(mission->avail.cond);
    free(mission->avail.done);
 
+   if (mission->avail.cond_chunk != LUA_NOREF)
+      luaL_unref( naevL, LUA_REGISTRYINDEX, mission->avail.cond_chunk );
+
    for (int i=0; i<array_size(mission->tags); i++)
       free(mission->tags[i]);
    array_free(mission->tags);
@@ -990,6 +994,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
    /* Defaults. */
    temp->avail.priority = 5;
    temp->avail.loc = MIS_AVAIL_UNSET;
+   temp->avail.cond_chunk = LUA_NOREF;
 
    /* get the name */
    xmlr_attr_strd(parent,"name",temp->name);
@@ -1046,6 +1051,14 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
       WARN(_("Unknown node '%s' in mission '%s'"),node->name,temp->name);
    } while (xml_nextNode(node));
 
+   /* Compile conditional chunk. */
+   if (temp->avail.cond != NULL) {
+      temp->avail.cond_chunk = cond_compile( temp->avail.cond );
+      if (temp->avail.cond_chunk == LUA_NOREF || temp->avail.cond_chunk == LUA_REFNIL)
+         WARN(_("Mission '%s' failed to compile Lua conditional!"), temp->name);
+   }
+
+   /* Compile regex for chapter matching. */
    if (temp->avail.chapter != NULL) {
       int errornumber;
       PCRE2_SIZE erroroffset;

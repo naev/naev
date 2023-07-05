@@ -48,6 +48,7 @@ typedef struct MissionAvail_s {
    int *factions; /**< Array (array.h): To certain factions. */
 
    char *cond; /**< Condition that must be met (Lua). */
+   int cond_chunk; /**< Chunk representing the condition. */
    char *done; /**< Previous mission that must have been done. */
 
    int priority; /**< Mission priority: 0 = main plot, 5 = default, 10 = insignificant. */
