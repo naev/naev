@@ -1523,6 +1523,8 @@ static int playerL_missions( lua_State *L )
          lua_setfield(L,-2,"chapter");
       }
 
+      /* TODO factions. */
+
       if (ma->cond != NULL) {
          lua_pushstring( L, ma->cond );
          lua_setfield(L,-2,"cond");
@@ -1535,6 +1537,19 @@ static int playerL_missions( lua_State *L )
 
       lua_pushinteger( L, ma->priority );
       lua_setfield(L,-2,"priority");
+
+      if (mis_isFlag(md,MISSION_UNIQUE)) {
+         lua_pushboolean( L, 1 );
+         lua_setfield(L,-2,"unique");
+      }
+
+      lua_newtable(L);
+      for (int t=0; t<array_size(md->tags); t++) {
+         lua_pushstring( L, md->tags[t] );
+         lua_pushboolean( L, 1 );
+         lua_rawset( L, -3 );
+      }
+      lua_setfield(L,-2,"tags");
 
       lua_rawseti( L, -2, j++ );
    }
