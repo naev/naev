@@ -3,7 +3,15 @@
 <mission name="Empire Long Distance Recruitment">
  <unique />
  <priority>4</priority>
- <cond>faction.playerStanding("Empire") &gt;= 0 and spob.cur()~=spob.get("Halir")</cond>
+ <cond>
+   if faction.playerStanding("Empire") &lt; 0 then
+      return false
+   end
+   if spob.cut()==spob.get("Halir") then
+      return false
+   end
+   return require("misn_test").reweight_active()
+ </cond>
  <chance>100</chance>
  <done>Sirius Long Distance Recruitment</done>
  <location>Bar</location>

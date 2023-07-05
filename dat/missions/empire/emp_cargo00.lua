@@ -6,7 +6,12 @@
  <chance>30</chance>
  <location>Bar</location>
  <faction>Empire</faction>
- <cond>player.credits() &gt;= 200e3</cond>
+ <cond>
+   if player.credits() &lt; 200e3 then
+      return false
+   end
+   return require("misn_test").reweight_active()
+ </cond>
  <notes>
   <tier>1</tier>
  </notes>
