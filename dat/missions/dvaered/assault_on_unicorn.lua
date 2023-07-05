@@ -7,7 +7,7 @@
  <location>Computer</location>
  <done>Empire Shipping 3</done>
  <notes>
-   <tier>3</tier>
+  <tier>3</tier>
  </notes>
 </mission>
  --]]
@@ -24,7 +24,6 @@ local dv  = require "common.dvaered"
 -- Mission constants
 local misn_target_sys = system.get("Unicorn")
 -- local misn_return_sys = system.get("Amaroq")
-
 
 local function update_osd()
    local osd_msg = {}

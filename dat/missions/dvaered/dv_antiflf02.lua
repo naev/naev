@@ -5,7 +5,12 @@
  <priority>2</priority>
  <chance>10</chance>
  <location>Bar</location>
- <cond>var.peek("flfbase_intro") == 1</cond>
+ <cond>
+   if var.peek("flfbase_intro") ~= 1 then
+      return false
+   end
+   return require("misn_test").reweight_active()
+ </cond>
  <faction>Dvaered</faction>
  <notes>
   <done_misn name="Take the Dvaered crew home"/>
