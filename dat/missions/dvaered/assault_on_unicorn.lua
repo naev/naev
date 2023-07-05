@@ -2,7 +2,23 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Assault on Unicorn">
  <priority>3</priority>
- <cond>player.numOutfit("Mercenary License") &gt; 0 and faction.playerStanding("Dvaered") &gt; 5 and system.cur() == system.get("Amaroq") and not var.peek("assault_on_unicorn_check")</cond>
+ <cond>
+   if faction.playerStanding("Dvaered") &lt; 5 then
+      return false
+   end
+   -- TODO
+   if system.cur() ~= system.get("Amaroq") then
+      return false
+   end
+   if var.peek("assault_on_unicorn_check") then
+      return false
+   end
+   local misn_test = require "misn_test"
+   if not misn_test.mercenary() then
+      return false
+   end
+   return misn_test.reweight_active()
+ </cond>
  <chance>36</chance>
  <location>Computer</location>
  <done>Empire Shipping 3</done>
