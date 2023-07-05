@@ -303,11 +303,12 @@ void shipyard_update( unsigned int wid, const char* str )
    k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Money:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_credits );
    if (ship->license) {
+      int meets_reqs = player_hasLicense( ship->license );;
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("License:") );
-      if (blackmarket || player_hasLicense( ship->license ))
-         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(ship->license) );
+      if (blackmarket)
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s#0", _("Not Necessary (Blackmarket)") );
       else
-         l += scnprintf( &buf[l], sizeof(buf)-l, "\n#r%s#0", _(ship->license) );
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s%s#0", meets_reqs ? "" : "#r", _(ship->license) );
    }
    if (ship->cond) {
       int meets_reqs = 0;

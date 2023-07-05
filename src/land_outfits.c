@@ -488,11 +488,12 @@ void outfits_update( unsigned int wid, const char *str )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_price );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_credits );
    if (outfit->license) {
+      int meets_reqs = player_hasLicense( outfit->license );
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("License:") );
-      if (blackmarket || player_hasLicense( outfit->license ))
-         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(outfit->license) );
+      if (blackmarket)
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s#0", _("Not Necessary (Blackmarket)") );
       else
-         l += scnprintf( &buf[l], sizeof(buf)-l, "\n#r%s#0", _(outfit->license) );
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s%s#0", meets_reqs ? "" : "#r", _(outfit->license) );
    }
    if (outfit->cond) {
       int meets_reqs = 0;
