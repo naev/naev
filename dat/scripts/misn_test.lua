@@ -53,4 +53,19 @@ function misn_test.mercenary()
    return misn_test.computer()
 end
 
+--[[--
+   @brief Reweights mission chance based on number of uinque active missions
+--]]
+function misn_test.reweight_active()
+   local n = 0
+   for k,v in ipairs(player.missions()) do
+      if v.unique then
+         n = n+1
+      end
+   end
+   local HIGH = 12 -- Value at which mission is no longer given
+   local LOW  = 6 -- Value at which mission is always given
+   return (1-(n-LOW)/(HIGH-LOW) < rnd.rnd())
+end
+
 return misn_test
