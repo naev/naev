@@ -1468,7 +1468,7 @@ static int playerL_shipSwap( lua_State *L )
 /**
  * @brief Gets the list of the player's active missions.
  *
- * @usage n = #player.missions() -- number of active missions
+ * @usage n = \#player.missions() -- number of active missions
  *
  *    @luatreturn table Table containing the metadat of active missions as tables. Fields include "name", "desc", "reward", "loc", "chance", "spob", "system", "chapter", "cond", "done", "priority", "unique", and "tags".
  * @luafunc missions
