@@ -14,7 +14,7 @@
       faction.get("Empire"),
       faction.get("Dvaered"),
       faction.get("Sirius"),
-   }, sf )
+   }, sf ) then
       return false
    end
    if player.wealth() &lt; 1e6 then
