@@ -134,6 +134,7 @@ const StarSystem* mission_getSystemMarker( const Mission* misn );
 MissionMarkerType mission_markerTypeSpobToSystem( MissionMarkerType t );
 MissionMarkerType mission_markerTypeSystemToSpob( MissionMarkerType t );
 void mission_toLuaTable( lua_State *L, const MissionData *m );
+const char **mission_loadFailed (void);
 
 /*
  * cargo stuff
