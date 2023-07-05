@@ -1232,9 +1232,19 @@ static int load_gameInternalHook( void *data )
 
    xmlFreeDoc(doc);
 
-   if (misn_failed || evt_failed)
-      /* TODO say exactly what failed to load. */
-      dialogue_alert( _("Saved game '%s' failed to load some missions/events properly!"), file);
+   if (misn_failed || evt_failed) {
+      char buf[STRMAX];
+      unsigned int l = 0;
+      const char **misn_failed_str = mission_loadFailed();
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("Saved game '%s' failed to load some missions/events properly!"), file);
+      if (misn_failed) {
+         l += scnprintf( &buf[l], sizeof(buf)-l, _("\nIn particular, the following missions have failed to load and been removed:"));
+         for (int i=0; i<array_size(misn_failed_str); i++)
+            l += scnprintf( &buf[l], sizeof(buf)-l, _("\n   #r%s#0"), misn_failed_str[i]);
+      }
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("\nNote that, in general, you should be able to find the missions/events again and start them without penalty."));
+      dialogue_alert( buf );
+   }
 
    /* Set loaded. */
    save_loaded = 1;

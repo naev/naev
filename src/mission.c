@@ -45,6 +45,7 @@
  */
 static unsigned int mission_id = 0; /**< Mission ID generator. */
 Mission **player_missions = NULL; /**< Player's active missions. */
+static char **player_missions_failed = NULL; /**< Name of missions that failed to load. */
 
 /*
  * mission stack
@@ -463,6 +464,11 @@ void mission_toLuaTable( lua_State *L , const MissionData *m )
       lua_setfield(L,-2,m->tags[j]);
    }
    lua_setfield(L,-2,"tags");
+}
+
+const char **mission_loadFailed (void)
+{
+   return (const char**) player_missions_failed;
 }
 
 /**
@@ -1196,6 +1202,10 @@ void missions_free (void)
    /* Free the player mission stack. */
    array_free( player_missions );
    player_missions = NULL;
+
+   /* Frees failed missions. */
+   array_free( player_missions_failed );
+   player_missions_failed = NULL;
 }
 
 /**
@@ -1208,6 +1218,10 @@ void missions_cleanup (void)
       free( player_missions[i] );
    }
    array_erase( &player_missions, array_begin(player_missions), array_end(player_missions) );
+
+   for (int i=0; i<array_size(player_missions_failed); i++)
+      free( player_missions_failed[i] );
+   array_erase( &player_missions_failed, array_begin(player_missions_failed), array_end(player_missions_failed) );
 }
 
 /**
@@ -1444,6 +1458,9 @@ static int missions_parseActive( xmlNodePtr parent )
    if (player_missions == NULL)
       player_missions = array_create( Mission* );
 
+   if (player_missions_failed == NULL)
+      player_missions_failed = array_create( char* );
+
    node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node, "mission")) {
@@ -1457,12 +1474,14 @@ static int missions_parseActive( xmlNodePtr parent )
          data = mission_get( mission_getID(buf) );
          if (data == NULL) {
             WARN(_("Mission '%s' from saved game not found in game - ignoring."), buf);
+            array_push_back( &player_missions_failed, strdup(buf) );
             free(buf);
             continue;
          }
          else {
             if (mission_init( misn, data, 0, 0, NULL )) {
                WARN(_("Mission '%s' from saved game failed to load properly - ignoring."), buf);
+               array_push_back( &player_missions_failed, strdup(buf) );
                free(buf);
                continue;
             }
@@ -1552,6 +1571,7 @@ static int missions_parseActive( xmlNodePtr parent )
          } while (xml_nextNode(cur));
 
          if (misn_failed) {
+            array_push_back( &player_missions_failed, strdup(data->name) );
             failed = -1;
             mission_cleanup( misn );
          }

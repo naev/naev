@@ -133,8 +133,11 @@ void dialogue_alert( const char *fmt, ... )
 {
    char msg[STRMAX_SHORT];
    va_list ap;
-   unsigned int wdw;
-   int h, done;
+   int w,h;
+   glFont* font;
+   unsigned int msg_wid;
+   int done;
+   const char *caption = _("Warning");
 
    if (fmt == NULL) return;
    else { /* get the message */
@@ -143,14 +146,15 @@ void dialogue_alert( const char *fmt, ... )
       va_end(ap);
    }
 
-   h = gl_printHeightRaw( &gl_defFont, 260, msg );
+   font = dialogue_getSize( caption, msg, &w, &h );
 
-   /* create the window */
-   wdw = window_create( "dlgAlert", _("Warning"), -1, -1, 300, 90 + h );
-   window_setData( wdw, &done );
-   window_addText( wdw, 20, -30, 260, h,  0, "txtAlert",
-         &gl_defFont, NULL, msg );
-   window_addButton( wdw, 135, 20, 50, 30, "btnOK", _("OK"),
+   /* create the window, can't reuse dialogue_msg since we need to have a
+    * different window name. */
+   msg_wid = window_create( "dlgAlert", caption, -1, -1, w, 110 + h );
+   window_setData( msg_wid, &done );
+   window_addText( msg_wid, 20, -40, w-40, h, 0, "txtMsg",
+         font, NULL, msg );
+   window_addButton( msg_wid, (w-50)/2, 20, 50, 30, "btnOK", _("OK"),
          dialogue_close );
 
    toolkit_loop( &done, NULL );
