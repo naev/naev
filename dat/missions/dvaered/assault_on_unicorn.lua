@@ -6,19 +6,19 @@
    if faction.playerStanding("Dvaered") &lt; 5 then
       return false
    end
-   -- TODO
-   if system.cur() ~= system.get("Amaroq") then
+   if system.get("Unicorn"):jumpDist() &gt; 5 then
       return false
    end
-   if var.peek("assault_on_unicorn_check") then
+   if player.misnActive("Assault on Unicorn") then
       return false
    end
    local misn_test = require "misn_test"
    if not misn_test.mercenary() then
       return false
    end
-   return misn_test.reweight_active()
+   return true
  </cond>
+ <faction>Dvared</faction>
  <chance>36</chance>
  <location>Computer</location>
  <done>Empire Shipping 3</done>
@@ -69,7 +69,6 @@ function accept ()
    if misn.accept() then
       mem.pirates_killed = 0
       -- Makes sure only one copy of the mission can run.
-      var.push( "assault_on_unicorn_check", true)
       mem.planet_start = spob.cur()
       mem.marker2 = misn.markerAdd( mem.planet_start, "low" )
       mem.pirates_killed = 0
@@ -105,15 +104,9 @@ end
 
 function land()
    if spob.cur() == mem.planet_start and mem.pirates_killed > 0 then
-      var.pop( "assault_on_unicorn_check" )
-
       tk.msg(_("Mission accomplished"), fmt.f(_("As you land, you see a Dvaered military official approaching. Thanking you for your hard and diligent work, he hands you the bounty you've earned, a number of chips worth {credits}."), {credits=fmt.credits(mem.bounty_earned)}))
       player.pay(mem.bounty_earned)
       faction.modPlayerSingle( "Dvaered", math.pow( mem.bounty_earned, 0.5 ) / 100 )
       misn.finish(true)
    end
-end
-
-function abort ()
-   var.pop( "assault_on_unicorn_check" )
 end
