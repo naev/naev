@@ -67,6 +67,7 @@ typedef struct MissionData_ {
    unsigned int flags; /**< Flags to store binary properties */
    char *lua; /**< Lua data to use. */
    char *sourcefile; /**< Source file name. */
+   int chunk; /**< Lua mission data chunk. */
 
    /* Tags. */
    char **tags; /**< Mission tags with more information. */
