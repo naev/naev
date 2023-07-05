@@ -10,7 +10,7 @@
    if system.cur() ~= system.get("Arcturus") then
       return false
    end
-   if player.numOutfit("Mercenary License") &lt;= 0 then
+   if not misn_test.mercenary() then
       return false
    end
    return require("misn_test").reweight_active()
