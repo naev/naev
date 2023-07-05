@@ -64,7 +64,7 @@ function misn_test.reweight_active()
       end
    end
    local HIGH = 8 -- Value at which mission is no longer given
-   local LOW  = 4 -- Value at which mission is always given
+   local LOW  = 3 -- Value at which mission is always given
    return (1-(n-LOW)/(HIGH-LOW) < rnd.rnd())
 end
 
