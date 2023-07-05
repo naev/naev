@@ -17,6 +17,7 @@
       * Independent patrol and bounty missions can be completed on more planets and stations
       * Can hide or prioritize missions from the info menu
       * Manual aiming model aims at the mouse location when the mouse is visible
+      * Missions are introduced less all at once to the player
    * New Content
       * 6 new missions
          * Finish the Minerva campaign
