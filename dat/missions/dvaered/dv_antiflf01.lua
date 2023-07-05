@@ -6,21 +6,20 @@
  <chance>100</chance>
  <location>None</location>
  <notes>
-   <done_evt name="FLF/DV Derelicts">If you choose to help the Dvaered</done_evt>
-   <campaign>Doom the FLF</campaign>
+  <done_evt name="FLF/DV Derelicts">If you choose to help the Dvaered</done_evt>
+  <campaign>Doom the FLF</campaign>
  </notes>
 </mission>
  --]]
 --[[
--- This is the first mission in the anti-FLF Dvaered campaign. The player is tasked with ferrying home some Dvaered people.
--- stack variable flfbase_flfshipkilled: Used to determine whether the player destroyed the FLF derelict, as requested. Affects the reward.
--- stack variable flfbase_intro:
---      1 - The player has turned in the FLF agent or rescued the Dvaered crew. Conditional for dv_antiflf02
---      2 - The player has rescued the FLF agent. Conditional for flf_pre02
---      3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
+   This is the first mission in the anti-FLF Dvaered campaign. The player is tasked with ferrying home some Dvaered people.
+   stack variable flfbase_flfshipkilled: Used to determine whether the player destroyed the FLF derelict, as requested. Affects the reward.
+   stack variable flfbase_intro:
+        1 - The player has turned in the FLF agent or rescued the Dvaered crew. Conditional for dv_antiflf02
+        2 - The player has rescued the FLF agent. Conditional for flf_pre02
+        3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
 --]]
 local dv = require "common.dvaered"
-
 
 function create()
    faction.get("FLF"):setKnown(true)
