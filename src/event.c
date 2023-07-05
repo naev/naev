@@ -650,6 +650,12 @@ static int event_parseFile( const char* file, EventData *temp )
    temp->lua = strdup(filebuf);
    temp->sourcefile = strdup(file);
 
+   /* Clear chunk if already loaded. */
+   if (temp->chunk != LUA_NOREF) {
+      luaL_unref( naevL, LUA_REGISTRYINDEX, temp->chunk );
+      temp->chunk = LUA_NOREF;
+   }
+
    /* Check to see if syntax is valid. */
    ret = luaL_loadbuffer(naevL, temp->lua, strlen(temp->lua), temp->name );
    if (ret == LUA_ERRSYNTAX)

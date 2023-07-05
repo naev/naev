@@ -35,7 +35,7 @@
       * Added support for disabling specific patrol lanes from being generated
       * Support for Lua scripting for ships
       * Changed api of evt.claim and misn.claim
-      * Missions/events load conditionals as chunks instead of compiling each time
+      * Missions/events load Lua as chunks instead of compiling each time
    * Fixes
       * Typo and wording fixes
       * Fixed many corner case crashes in the editor
