@@ -382,6 +382,25 @@ int mission_test( const char *name )
    return mission_meetConditionals( mdat );
 }
 
+const char *mission_availabilityStr( MissionAvailability loc )
+{
+   switch (loc) {
+      case MIS_AVAIL_UNSET:
+         return "unset";
+      case MIS_AVAIL_NONE:
+         return "none";
+      case MIS_AVAIL_COMPUTER:
+         return "computer";
+      case MIS_AVAIL_BAR:
+         return "bar";
+      case MIS_AVAIL_LAND:
+         return "land";
+      case MIS_AVAIL_ENTER:
+         return "enter";
+   }
+   return NULL;
+}
+
 /**
  * @brief Gets the name of the mission marker target.
  */
