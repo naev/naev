@@ -6,7 +6,12 @@
  <chance>10</chance>
  <location>Bar</location>
  <done>Dvaered Shopping</done>
- <cond>var.peek("flfbase_intro") == 3</cond>
+ <cond>
+   if var.peek("flfbase_intro") ~= 3 then
+      return false
+   end
+   return require("misn_test").reweight_active()
+ </cond>
  <faction>Dvaered</faction>
  <notes>
   <requires name="The Dvaered know where Sindbad is"/>
