@@ -7,7 +7,7 @@
    if system.cur():presence(faction.get("Sirius"))&lt;50 then
       return false
    end
-   if player.evtActive("Preacher") then
+   if player.evtActive("Sirius Preacher") then
       return false
    end
    return ((var.peek("si_convert")==nil) or rnd.rnd(1,var.peek("si_convert")+1)==1)
