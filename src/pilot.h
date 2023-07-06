@@ -17,7 +17,7 @@
 #include "space.h"
 #include "spfx.h"
 #include "lvar.h"
-#include "quadtree.h"
+#include "intlist.h"
 
 #define PLAYER_ID       1 /**< Player pilot ID. */
 
