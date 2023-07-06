@@ -3445,6 +3445,8 @@ src/info.c
 src/info.h
 src/input.c
 src/input.h
+src/intlist.c
+src/intlist.h
 src/intro.c
 src/intro.h
 src/joystick.c
@@ -3656,6 +3658,8 @@ src/player_inventory.c
 src/player_inventory.h
 src/plugin.c
 src/plugin.h
+src/quadtree.c
+src/quadtree.h
 src/queue.c
 src/queue.h
 src/render.c
