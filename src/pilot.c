@@ -60,6 +60,10 @@ static unsigned int pilot_id = PLAYER_ID; /**< Stack of pilot ids to assure uniq
 static Pilot** pilot_stack = NULL; /**< All the pilots in space. (Player may have other Pilot objects, e.g. backup ships.) */
 static Quadtree pilot_quadtree; /**< Quadtree for the pilots. */
 static IntList pilot_qtquery; /**< Quadtree query. */
+static int qt_init = 0;
+/* A simple grid search procedure was used to determine the following parameters. */
+static int qt_max_elem = 4;
+static int qt_depth = 6;
 
 /* misc */
 static const double pilot_commTimeout  = 15.; /**< Time for text above pilot to time out. */
@@ -3757,8 +3761,10 @@ void pilots_newSystem (void)
    for (int i=0; i < array_size(pilot_stack); i++)
       pilot_init_trails( pilot_stack[i] );
 
-   /* TODO play with quadtree settings and see how well it can scale. */
-   qt_create( &pilot_quadtree, -r, -r, r, r, 128, 5 );
+   if (qt_init)
+      qt_destroy( &pilot_quadtree );
+   qt_create( &pilot_quadtree, -r, -r, r, r, qt_max_elem, qt_depth );
+   qt_init = 1;
 }
 
 /**
@@ -4157,4 +4163,10 @@ int pilot_hasIllegal( const Pilot *p, int faction )
    }
    /* Nothing to see here sir. */
    return 0;
+}
+
+void pilot_quadtreeParams( int max_elem, int depth )
+{
+   qt_max_elem = max_elem;
+   qt_depth = depth;
 }

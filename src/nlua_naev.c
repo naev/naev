@@ -67,6 +67,7 @@ static int naevL_pause( lua_State *L );
 static int naevL_unpause( lua_State *L );
 static int naevL_hasTextInput( lua_State *L );
 static int naevL_setTextInput( lua_State *L );
+static int naevL_quadtreeParams( lua_State *L );
 #if DEBUGGING
 static int naevL_envs( lua_State *L );
 #endif /* DEBUGGING */
@@ -103,6 +104,7 @@ static const luaL_Reg naev_methods[] = {
    { "unpause", naevL_unpause },
    { "hasTextInput", naevL_hasTextInput },
    { "setTextInput", naevL_setTextInput },
+   { "quadtreeParams", naevL_quadtreeParams },
 #if DEBUGGING
    { "envs", naevL_envs },
 #endif /* DEBUGGING */
@@ -840,6 +842,14 @@ static int naevL_setTextInput( lua_State *L )
       SDL_StopTextInput();
       SDL_EventState( SDL_TEXTINPUT, SDL_DISABLE );
    }
+   return 0;
+}
+
+static int naevL_quadtreeParams( lua_State *L )
+{
+   int max_elem = luaL_checkinteger( L, 1 );
+   int depth = luaL_checkinteger( L, 2 );
+   pilot_quadtreeParams( max_elem, depth );
    return 0;
 }
 
