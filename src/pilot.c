@@ -1751,13 +1751,19 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
    double dist, rad2;
    Solid s; /* Only need to manipulate mass and vel. */
    Damage ddmg;
+   const IntList *qt;
+   int qx, qy, qr;
 
    rad2 = radius*radius;
    ddmg = *dmg;
 
-   for (int i=0; i<array_size(pilot_stack); i++) {
+   qx = round(x);
+   qy = round(y);
+   qr = ceil(radius);
+   qt = pilot_collideQuery( qx-qr, qy-qr, qx+qr, qy+qr );
+   for (int i=0; i<il_size(qt); i++) {
+      Pilot *p = pilot_stack[ il_get( qt, i, 0 ) ];
       double rx, ry;
-      Pilot *p = pilot_stack[i];
 
       /* Calculate a bit. */
       rx = p->solid.pos.x - x;
