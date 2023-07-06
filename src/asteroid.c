@@ -197,7 +197,7 @@ void asteroids_update( double dt )
          }
 
          /* Add to quadtree if in foreground. */
-         if (1) {//a->state == ASTEROID_FG) { // Not sure why this doesn't work
+         if (a->state == ASTEROID_FG) {
             int x, y, w2, h2;
             x = round(a->pos.x);
             y = round(a->pos.y);

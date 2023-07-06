@@ -264,7 +264,7 @@ int qt_insert (Quadtree* qt, int id, int x1, int y1, int x2, int y2 )
    il_set(&qt->elts, new_element, elt_idx_top, y1);
    il_set(&qt->elts, new_element, elt_idx_rgt, x2);
    il_set(&qt->elts, new_element, elt_idx_btm, y2);
-   il_set(&qt->elts, new_element, elt_idx_id, id);
+   il_set(&qt->elts, new_element, elt_idx_id,  id);
 
    // Insert the element to the appropriate leaf node(s).
    node_insert(qt, 0, 0, qt->root_mx, qt->root_my, qt->root_sx, qt->root_sy, new_element);
@@ -324,8 +324,8 @@ void qt_query( Quadtree* qt, IntList* out, int qlft, int qtop, int qrgt, int qbt
    if (qt->temp_size < elt_cap) {
       qt->temp_size = elt_cap;
       qt->temp = realloc(qt->temp, qt->temp_size * sizeof(*qt->temp));
-      memset(qt->temp, 0, qt->temp_size * sizeof(*qt->temp));
    }
+   memset(qt->temp, 0, qt->temp_size * sizeof(*qt->temp));
 
    // For each leaf node, look for elements that intersect.
    il_create(&leaves, nd_num);
@@ -344,17 +344,14 @@ void qt_query( Quadtree* qt, IntList* out, int qlft, int qtop, int qrgt, int qbt
          const int rgt = il_get(&qt->elts, element, elt_idx_rgt);
          const int btm = il_get(&qt->elts, element, elt_idx_btm);
          if (!qt->temp[element] && element != omit_element && intersect(qlft,qtop,qrgt,qbtm, lft,top,rgt,btm)) {
-            il_set(out, il_push_back(out), 0, element);
+            const int id = il_get(&qt->elts, element, elt_idx_id);
+            il_set(out, il_push_back(out), 0, id);
             qt->temp[element] = 1;
          }
          elt_node_index = il_get(&qt->enodes, elt_node_index, enode_idx_next);
       }
    }
    il_destroy(&leaves);
-
-   // Unmark the elements that were inserted.
-   for (int j=0; j < il_size(out); ++j)
-      qt->temp[il_get(out, j, 0)] = 0;
 }
 
 void qt_cleanup( Quadtree* qt )
