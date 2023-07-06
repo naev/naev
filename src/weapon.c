@@ -33,6 +33,7 @@
 #include "player.h"
 #include "rng.h"
 #include "spfx.h"
+#include "intlist.h"
 
 #define weapon_isSmart(w)     (w->think != NULL) /**< Checks if the weapon w is smart. */
 
@@ -102,6 +103,7 @@ static size_t weapon_vboSize   = 0; /**< Size of the VBO. */
 
 /* Internal stuff. */
 static unsigned int beam_idgen = 0; /**< Beam identifier generator. */
+static IntList weapon_qtquery; /**< For querying collisions. */
 
 /*
  * Prototypes
@@ -160,6 +162,7 @@ void weapon_init (void)
 {
    wfrontLayer = array_create(Weapon*);
    wbackLayer  = array_create(Weapon*);
+   il_create( &weapon_qtquery, 1 );
 }
 
 /**
@@ -1039,7 +1042,6 @@ static void weapon_updateCollide( Weapon* w, double dt, WeaponLayer layer )
    Pilot *const* pilot_stack;
    int isjammed;
    int x1, y1, x2, y2;
-   const IntList *qt;
 
    gfx = NULL;
    polygon = NULL;
@@ -1106,9 +1108,9 @@ static void weapon_updateCollide( Weapon* w, double dt, WeaponLayer layer )
    }
 
    /* Get what collides. */
-   qt = pilot_collideQuery( x1, y1, x2, y2 );
-   for (int i=0; i<il_size(qt); i++) {
-      Pilot *p = pilot_stack[ il_get( qt, i, 0 ) ];
+   pilot_collideQueryIL( &weapon_qtquery, x1, y1, x2, y2 );
+   for (int i=0; i<il_size(&weapon_qtquery); i++) {
+      Pilot *p = pilot_stack[ il_get( &weapon_qtquery, i, 0 ) ];
 
       /* Ignore pilots being deleted. */
       if (pilot_isFlag(p, PILOT_DELETE))
@@ -2355,6 +2357,9 @@ void weapon_exit (void)
    weapon_vboData = NULL;
    gl_vboDestroy( weapon_vbo );
    weapon_vbo = NULL;
+
+   /* Clean up the queries. */
+   il_destroy( &weapon_qtquery );
 }
 
 /**
