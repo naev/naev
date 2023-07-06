@@ -1,22 +1,10 @@
 local flow = require "ships.lua.lib.flow"
 require "ships.lua.sirius"
 
-local DT    = 1
+update_dt = 1 -- Update once per second
 local RANGE = 3000
 
-local super_init = init
-function init( p )
-   super_init( p )
-   mem.t = 0
-end
-
-function update( p, dt )
-   mem.t = mem.t - dt
-   if mem.t > 0 then
-      return
-   end
-   mem.t = mem.t + DT
-
+function update( p )
    local f = flow.get( p, mem )
    local mod = math.max( (f-250)*0.08, 0 )
    if mod > 0 then

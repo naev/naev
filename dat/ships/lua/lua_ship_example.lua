@@ -3,6 +3,9 @@
 Example of what can be done with Lua ship API to extend regular ship functionality.
 
 --]]
+
+update_dt = 0.1 -- Determines how often the 'update' function gets called. Defaults to 0.1 if not set.
+
 -- The init is run when the pilot is created or enters a new system (takeoff/jumpin)
 function init( _p )
 end

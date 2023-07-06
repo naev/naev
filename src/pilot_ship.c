@@ -111,6 +111,14 @@ int pilot_shipLUpdate( Pilot *p, double dt )
    if (p->ship->lua_update == LUA_NOREF)
       return 0;
 
+   /* Use timer. */
+   if (p->ship->lua_dt > 0.) {
+      p->lua_ship_timer -= dt;
+      if (p->lua_ship_timer > 0.)
+         return 0;
+      p->lua_ship_timer += p->ship->lua_dt;
+   }
+
    oldmem = pilot_shipLmem( p );
 
    /* Set up the function: update( p ) */

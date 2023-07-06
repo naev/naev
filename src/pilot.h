@@ -350,6 +350,7 @@ typedef struct Pilot_ {
 
    /* Ship Lua. */
    int lua_ship_mem; /**< Ship memory. */
+   double lua_ship_timer; /**< Lua ship timer. */
 
    /* Misc */
    double comm_msgTimer; /**< Message timer for the comm. */

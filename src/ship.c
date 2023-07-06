@@ -690,6 +690,7 @@ static int ship_parse( Ship *temp, const char *filename )
    temp->lua_init    = LUA_NOREF;
    temp->lua_cleanup = LUA_NOREF;
    temp->lua_update  = LUA_NOREF;
+   temp->lua_dt      = 0.1;
    temp->lua_explode_init = LUA_NOREF;
    temp->lua_explode_update = LUA_NOREF;
 
@@ -1128,6 +1129,10 @@ int ships_load (void)
       free( dat );
 
       /* Check functions as necessary. */
+      nlua_getenv( naevL, env, "update_dt" );
+      if (!lua_isnoneornil(naevL,-1))
+         s->lua_dt         = luaL_checknumber(naevL,-1);
+      lua_pop(naevL,1);
       s->lua_init       = nlua_refenvtype( env, "init",     LUA_TFUNCTION );
       s->lua_cleanup    = nlua_refenvtype( env, "cleanup",  LUA_TFUNCTION );
       s->lua_update     = nlua_refenvtype( env, "update",   LUA_TFUNCTION );
