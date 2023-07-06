@@ -34,6 +34,7 @@
 #include "player.h"
 #include "rng.h"
 #include "spfx.h"
+#include "intlist.h"
 
 #define weapon_isSmart(w)     (w->think != NULL) /**< Checks if the weapon w is smart. */
 
@@ -86,8 +87,6 @@ typedef struct Weapon_ {
    int sy;              /**< Current Y sprite to use. */
    Trail_spfx *trail;   /**< Trail graphic if applicable, else NULL. */
 
-   /* position update and render */
-   void (*update)(struct Weapon_*, double, WeaponLayer); /**< Updates the weapon */
    void (*think)(struct Weapon_*, double); /**< for the smart missiles */
 
    WeaponStatus status; /**< Weapon status - to check for jamming */
@@ -115,6 +114,7 @@ static size_t weapon_vboSize   = 0; /**< Size of the VBO. */
 
 /* Internal stuff. */
 static unsigned int beam_idgen = 0; /**< Beam identifier generator. */
+static IntList weapon_qtquery; /**< For querying collisions. */
 
 /*
  * Prototypes
@@ -135,8 +135,10 @@ static double weapon_computeTimes( double rdir, double rx, double ry, double dvx
       double vmin, double acc, double *tt );
 /* Updating. */
 static void weapon_render( Weapon* w, double dt );
+static void weapons_updateLayerCollide( double dt, WeaponLayer layer );
 static void weapons_updateLayer( double dt, const WeaponLayer layer );
-static void weapon_update( Weapon* w, double dt, WeaponLayer layer );
+static void weapon_updateCollide( Weapon* w, double dt, WeaponLayer layer );
+static void weapon_update( Weapon* w, double dt );
 static void weapon_sample_trail( Weapon* w );
 /* Destruction. */
 static void weapon_destroy( Weapon* w );
@@ -173,6 +175,7 @@ void weapon_init (void)
 {
    wfrontLayer = array_create(Weapon*);
    wbackLayer  = array_create(Weapon*);
+   il_create( &weapon_qtquery, 1 );
 }
 
 /**
@@ -588,6 +591,25 @@ static void think_beam( Weapon* w, double dt )
 }
 
 /**
+ * @brief Purges unnecessary weapons.
+ */
+void weapons_updatePurge (void)
+{
+   /* Actually purge and remove weapons. */
+   weapons_purgeLayer( wbackLayer );
+   weapons_purgeLayer( wfrontLayer );
+}
+
+/**
+ * @brief Handles weapon collisions.
+ */
+void weapons_updateCollide( double dt )
+{
+   weapons_updateLayerCollide(dt,WEAPON_LAYER_BG);
+   weapons_updateLayerCollide(dt,WEAPON_LAYER_FG);
+}
+
+/**
  * @brief Updates all the weapon layers.
  *
  *    @param dt Current delta tick.
@@ -597,10 +619,6 @@ void weapons_update( double dt )
    /* When updating, just mark weapons for deletion. */
    weapons_updateLayer(dt,WEAPON_LAYER_BG);
    weapons_updateLayer(dt,WEAPON_LAYER_FG);
-
-   /* Actually purge and remove weapons. */
-   weapons_purgeLayer( wbackLayer );
-   weapons_purgeLayer( wfrontLayer );
 }
 
 /**
@@ -609,7 +627,7 @@ void weapons_update( double dt )
  *    @param dt Current delta tick.
  *    @param layer Layer to update.
  */
-static void weapons_updateLayer( double dt, const WeaponLayer layer )
+static void weapons_updateLayerCollide( double dt, WeaponLayer layer )
 {
    Weapon **wlayer;
 
@@ -733,7 +751,7 @@ static void weapons_updateLayer( double dt, const WeaponLayer layer )
 
       /* Only increment if weapon wasn't destroyed. */
       if (!weapon_isFlag(w, WEAPON_FLAG_DESTROYED))
-         weapon_update(w,dt,layer);
+         weapon_updateCollide(w,dt,layer);
    }
 }
 
@@ -750,6 +768,38 @@ static void weapons_purgeLayer( Weapon** layer )
          array_erase( &layer, &layer[i], &layer[i+1] );
          i--;
       }
+   }
+}
+
+/**
+ * @brief Updates all the weapons in the layer.
+ *
+ *    @param dt Current delta tick.
+ *    @param layer Layer to update.
+ */
+static void weapons_updateLayer( double dt, WeaponLayer layer )
+{
+   Weapon **wlayer;
+
+   /* Choose layer. */
+   switch (layer) {
+      case WEAPON_LAYER_BG:
+         wlayer = wbackLayer;
+         break;
+      case WEAPON_LAYER_FG:
+         wlayer = wfrontLayer;
+         break;
+
+      default:
+         WARN(_("Unknown weapon layer!"));
+         return;
+   }
+
+   for (int i=0; i<array_size(wlayer); i++) {
+      Weapon *w = wlayer[i];
+      /* Only increment if weapon wasn't destroyed. */
+      if (!weapon_isFlag(w, WEAPON_FLAG_DESTROYED))
+         weapon_update( w, dt );
    }
 }
 
@@ -1089,16 +1139,18 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
  *    @param dt Current delta tick.
  *    @param layer Layer to which the weapon belongs.
  */
-static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
+static void weapon_updateCollide( Weapon* w, double dt, WeaponLayer layer )
 {
    vec2 crash[2];
    WeaponCollision wc;
    Pilot *const* pilot_stack = pilot_getAll();
+   int x1, y1, x2, y2;
 
    /* Get the sprite direction to speed up calculations. */
    wc.w = w;
    wc.beam = outfit_isBeam(w->outfit);
    if (!wc.beam) {
+      int x, y, w2, h2;
       const CollPoly *plg;
       int n;
       wc.gfx = outfit_gfx(w->outfit);
@@ -1109,10 +1161,14 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
          wc.polygon = &plg[n];
          wc.range = wc.gfx->size; /* Range is set to size in this case. */
       }
-      else {
-         wc.polygon = NULL;
-         wc.range = wc.gfx->col_size;
-      }
+      x = round(w->solid.pos.x);
+      y = round(w->solid.pos.y);
+      w2 = ceil(wc.gfx->tex->sw * 0.5);
+      h2 = ceil(wc.gfx->tex->sh * 0.5);
+      x1 = x-w2;
+      y1 = y-h2;
+      x2 = x+w2;
+      y2 = y+h2;
    }
    else {
       Pilot *p = pilot_get( w->parent );
@@ -1132,23 +1188,40 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
       wc.gfx = NULL;
       wc.polygon = NULL;
       wc.range = w->outfit->u.bem.range; /* Set beam range. */
+
+      x1 = round(w->solid.pos.x);
+      y1 = round(w->solid.pos.y);
+      x2 = x1 + ceil( w->outfit->u.bem.range * cos(w->solid.dir) );
+      y2 = y1 + ceil( w->outfit->u.bem.range * sin(w->solid.dir) );
+      if (x1 < x2) {
+         int t = x1;
+         x1 = x2;
+         x2 = t;
+      }
+      if (y1 < y2) {
+         int t = y1;
+         y1 = y2;
+         y2 = t;
+      }
    }
 
-   for (int i=0; i<array_size(pilot_stack); i++) {
-      Pilot *p = pilot_stack[i];
+   /* Get what collides. */
+   pilot_collideQueryIL( &weapon_qtquery, x1, y1, x2, y2 );
+   for (int i=0; i<il_size(&weapon_qtquery); i++) {
+      Pilot *p = pilot_stack[ il_get( &weapon_qtquery, i, 0 ) ];
 
       /* Ignore pilots being deleted. */
       if (pilot_isFlag(p, PILOT_DELETE))
          continue;
 
       /* Ignore if parent is self. */
-      if (w->parent == pilot_stack[i]->id)
+      if (w->parent == p->id)
          continue; /* pilot is self */
 
       /* Smart weapons only collide with their target */
       if (weapon_isSmart(w)) {
          int isjammed = ((w->status == WEAPON_STATUS_JAMMED) || (w->status == WEAPON_STATUS_JAMMED_SLOWED));
-         if (!isjammed && (pilot_stack[i]->id != w->target))
+         if (!isjammed && (p->id != w->target))
             continue;
       }
 
@@ -1215,8 +1288,17 @@ static void weapon_update( Weapon* w, double dt, WeaponLayer layer )
          }
       }
    }
+}
 
-   /* smart weapons also get to think their next move */
+/**
+ * @brief Updates an individual weapon.
+ *
+ *    @param w Weapon to update.
+ *    @param dt Current delta tick.
+ */
+static void weapon_update( Weapon* w, double dt )
+{
+   /* Smart weapons also get to think their next move */
    if (weapon_isSmart(w))
       (*w->think)( w, dt );
 
@@ -1943,7 +2025,6 @@ static Weapon* weapon_create( PilotOutfitSlot* po, const Outfit *ref,
       w->lua_mem = luaL_ref( naevL, LUA_REGISTRYINDEX );
    }
    w->outfit   = outfit; /* non-changeable */
-   w->update   = weapon_update;
    w->strength = 1.;
    w->r        = RNGF(); /* Set unique value. */
 
@@ -2278,6 +2359,9 @@ void weapon_exit (void)
    weapon_vboData = NULL;
    gl_vboDestroy( weapon_vbo );
    weapon_vbo = NULL;
+
+   /* Clean up the queries. */
+   il_destroy( &weapon_qtquery );
 }
 
 /**

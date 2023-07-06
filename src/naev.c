@@ -914,7 +914,7 @@ void fps_setPos( double x, double y )
  *
  *    @param[in] dt Current delta tick.
  */
-void display_fps( const double dt )
+void fps_display( double dt )
 {
    double x,y;
    double dt_mod_base = 1.;
@@ -946,6 +946,16 @@ void display_fps( const double dt )
    y = SCREEN_H / 3. - gl_defFontMono.h / 2.;
    gl_printMidRaw( &gl_defFontMono, SCREEN_W, 0., y,
          &cFontWhite, -1., _("PAUSED") );
+}
+
+/**
+ * @brief Gets the current FPS.
+ *
+ *    @return Current FPS as displayed to the player.
+ */
+double fps_current (void)
+{
+   return fps;
 }
 
 /**
@@ -1006,11 +1016,18 @@ void update_routine( double dt, int enter_sys )
       ntime_update( dt );
    }
 
-   /* Update engine stuff. */
-   space_update(dt, real_dt);
-   weapons_update(dt);
-   spfx_update(dt, real_dt);
-   pilots_update(dt);
+   /* Clean up dead elements and build quadtrees. */
+   pilots_updatePurge();
+   weapons_updatePurge();
+
+   /* Core stuff independent of collisions. */
+   space_update( dt, real_dt );
+   spfx_update( dt, real_dt );
+
+   /* First compute weapon collisions. */
+   weapons_updateCollide( dt );
+   pilots_update( dt );
+   weapons_update( dt ); /* Has weapons think and update positions. */
 
    /* Update camera. */
    cam_update( dt );

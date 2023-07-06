@@ -7,7 +7,7 @@
    if faction.playerStanding("Empire") &lt; 0 then
       return false
    end
-   if spob.cut()==spob.get("Halir") then
+   if spob.cur()==spob.get("Halir") then
       return false
    end
    return require("misn_test").reweight_active()

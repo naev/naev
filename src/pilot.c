@@ -47,6 +47,7 @@
 #include "player.h"
 #include "player_autonav.h"
 #include "pilot_ship.h"
+#include "quadtree.h"
 #include "rng.h"
 #include "weapon.h"
 
@@ -57,6 +58,8 @@ static unsigned int pilot_id = PLAYER_ID; /**< Stack of pilot ids to assure uniq
 
 /* stack of pilots */
 static Pilot** pilot_stack = NULL; /**< All the pilots in space. (Player may have other Pilot objects, e.g. backup ships.) */
+static Quadtree pilot_quadtree; /**< Quadtree for the pilots. */
+static IntList pilot_qtquery; /**< Quadtree query. */
 
 /* misc */
 static const double pilot_commTimeout  = 15.; /**< Time for text above pilot to time out. */
@@ -761,6 +764,17 @@ PilotOutfitSlot* pilot_getDockSlot( Pilot* p )
    p->dockpilot = 0;
    p->dockslot = -1;
    return NULL;
+}
+
+const IntList *pilot_collideQuery( int x1, int y1, int x2, int y2 )
+{
+   qt_query( &pilot_quadtree, &pilot_qtquery, x1, y1, x2, y2, -1 );
+   return &pilot_qtquery;
+}
+
+void pilot_collideQueryIL( IntList *il, int x1, int y1, int x2, int y2 )
+{
+   qt_query( &pilot_quadtree, il, x1, y1, x2, y2, -1 );
 }
 
 /**
@@ -3631,6 +3645,7 @@ void pilot_stackRemove( Pilot *p )
 void pilots_init (void)
 {
    pilot_stack = array_create_size( Pilot*, PILOT_SIZE_MIN );
+   il_create( &pilot_qtquery, 1 );
 }
 
 /**
@@ -3658,6 +3673,10 @@ void pilots_free (void)
    player.p = NULL;
    free( player.ps.acquired );
    memset( &player.ps, 0, sizeof(PlayerShip_t) );
+
+   /* Clean up quadtree. */
+   qt_destroy( &pilot_quadtree );
+   il_destroy( &pilot_qtquery );
 }
 
 /**
@@ -3726,9 +3745,14 @@ void pilots_clean( int persist )
  */
 void pilots_newSystem (void)
 {
+   double r = cur_system->radius * 1.1;
+
    pilot_updateSensorRange();
    for (int i=0; i < array_size(pilot_stack); i++)
       pilot_init_trails( pilot_stack[i] );
+
+   /* TODO play with quadtree settings and see how well it can scale. */
+   qt_create( &pilot_quadtree, -r, -r, r, r, 128, 5 );
 }
 
 /**
@@ -3759,11 +3783,9 @@ void pilots_cleanAll (void)
 }
 
 /**
- * @brief Updates all the pilots.
- *
- *    @param dt Delta tick for the update.
+ * @brief Purges pilots set for deletion.
  */
-void pilots_update( double dt )
+void pilots_updatePurge (void)
 {
    /* Delete loop - this should be atomic or we get hook fuckery! */
    for (int i=array_size(pilot_stack)-1; i>=0; i--) {
@@ -3777,6 +3799,35 @@ void pilots_update( double dt )
          pilot_erase( p );
    }
 
+   /* Second loop sets up quadtrees. */
+   qt_clear( &pilot_quadtree ); /* Empty it. */
+   for (int i=0; i<array_size(pilot_stack); i++) {
+      Pilot *p = pilot_stack[i];
+      int x, y, w2, h2;
+
+      /* Ignore pilots being deleted. */
+      if (pilot_isFlag(p, PILOT_DELETE))
+         continue;
+
+      /* Ignore hidden pilots. */
+      if (pilot_isFlag(p, PILOT_HIDE))
+         continue;
+
+      x = round(p->solid.pos.x);
+      y = round(p->solid.pos.y);
+      w2 = ceil(p->ship->gfx_space->sw * 0.5);
+      h2 = ceil(p->ship->gfx_space->sh * 0.5);
+      qt_insert( &pilot_quadtree, i, x-w2, y-h2, x+w2, y+h2 );
+   }
+}
+
+/**
+ * @brief Updates all the pilots.
+ *
+ *    @param dt Delta tick for the update.
+ */
+void pilots_update( double dt )
+{
    /* Have all the pilots think. */
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];

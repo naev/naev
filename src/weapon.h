@@ -40,6 +40,8 @@ void weapon_hitAI( Pilot *p, const Pilot *shooter, double dmg );
 /*
  * Update.
  */
+void weapons_updatePurge (void);
+void weapons_updateCollide( double dt );
 void weapons_update( double dt );
 void weapons_render( const WeaponLayer layer, double dt );
 
