@@ -17,6 +17,7 @@
 #include "space.h"
 #include "spfx.h"
 #include "lvar.h"
+#include "quadtree.h"
 
 #define PLAYER_ID       1 /**< Player pilot ID. */
 
@@ -449,6 +450,7 @@ int pilot_dock( Pilot *p, Pilot *target );
 ntime_t pilot_hyperspaceDelay( Pilot *p );
 void pilot_untargetAsteroid( int anchor, int asteroid );
 PilotOutfitSlot* pilot_getDockSlot( Pilot* p );
+const IntList *pilot_collideQuery( int x1, int y1, int x2, int y2 );
 
 /*
  * Creation.

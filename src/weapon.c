@@ -1038,6 +1038,8 @@ static void weapon_updateCollide( Weapon* w, double dt, WeaponLayer layer )
    vec2 crash[2];
    Pilot *const* pilot_stack;
    int isjammed;
+   int x1, y1, x2, y2;
+   const IntList *qt;
 
    gfx = NULL;
    polygon = NULL;
@@ -1046,6 +1048,8 @@ static void weapon_updateCollide( Weapon* w, double dt, WeaponLayer layer )
    /* Get the sprite direction to speed up calculations. */
    b     = outfit_isBeam(w->outfit);
    if (!b) {
+      int x, y, w2, h2;
+
       gfx = outfit_gfx(w->outfit);
       gl_getSpriteFromDir( &w->sx, &w->sy, gfx, w->solid->dir );
       n = gfx->sx * w->sy + w->sx;
@@ -1061,6 +1065,14 @@ static void weapon_updateCollide( Weapon* w, double dt, WeaponLayer layer )
          if (array_size(w->outfit->u.lau.polygon) == 0)
             usePolyW = 0;
       }
+      x = round(w->solid->pos.x);
+      y = round(w->solid->pos.y);
+      w2 = ceil(gfx->sw * 0.5);
+      h2 = ceil(gfx->sh * 0.5);
+      x1 = x-w2;
+      y1 = y-h2;
+      x2 = x+w2;
+      y2 = y+h2;
    }
    else {
       Pilot *p = pilot_get( w->parent );
@@ -1076,20 +1088,37 @@ static void weapon_updateCollide( Weapon* w, double dt, WeaponLayer layer )
          }
          w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
       }
+
+      x1 = round(w->solid->pos.x);
+      y1 = round(w->solid->pos.y);
+      x2 = x1 + ceil( w->outfit->u.bem.range * cos(w->solid->dir) );
+      y2 = y1 + ceil( w->outfit->u.bem.range * sin(w->solid->dir) );
+      if (x1 < x2) {
+         int t = x1;
+         x1 = x2;
+         x2 = t;
+      }
+      if (y1 < y2) {
+         int t = y1;
+         y1 = y2;
+         y2 = t;
+      }
    }
 
-   for (int i=0; i<array_size(pilot_stack); i++) {
-      Pilot *p = pilot_stack[i];
+   /* Get what collides. */
+   qt = pilot_collideQuery( x1, y1, x2, y2 );
+   for (int i=0; i<il_size(qt); i++) {
+      Pilot *p = pilot_stack[ il_get( qt, i, 0 ) ];
 
       /* Ignore pilots being deleted. */
       if (pilot_isFlag(p, PILOT_DELETE))
          continue;
 
-      if (w->parent == pilot_stack[i]->id)
+      if (w->parent == p->id)
          continue; /* pilot is self */
 
-      psx = pilot_stack[i]->tsx;
-      psy = pilot_stack[i]->tsy;
+      psx = p->tsx;
+      psy = p->tsy;
 
       /* See if the ship has a collision polygon. */
       usePoly = usePolyW;
@@ -1120,7 +1149,7 @@ static void weapon_updateCollide( Weapon* w, double dt, WeaponLayer layer )
       /* smart weapons only collide with their target */
       else if (weapon_isSmart(w)) {
          isjammed = ((w->status == WEAPON_STATUS_JAMMED) || (w->status == WEAPON_STATUS_JAMMED_SLOWED));
-         if ((((pilot_stack[i]->id == w->target) && !isjammed) || isjammed) &&
+         if ((((p->id == w->target) && !isjammed) || isjammed) &&
                weapon_checkCanHit(w,p) ) {
             if (usePoly) {
                int k = p->ship->gfx_space->sx * psy + psx;
