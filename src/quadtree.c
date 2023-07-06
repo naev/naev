@@ -73,7 +73,7 @@ static int intersect( int l1, int t1, int r1, int b1, int l2, int t2, int r2, in
    return l2 <= r1 && r2 >= l1 && t2 <= b1 && b2 >= t1;
 }
 
-void leaf_insert( Quadtree* qt, int node, int depth, int mx, int my, int sx, int sy, int element )
+static void leaf_insert( Quadtree* qt, int node, int depth, int mx, int my, int sx, int sy, int element )
 {
    // Insert the element node to the leaf.
    const int nd_fc = il_get(&qt->nodes, node, node_idx_fc);
