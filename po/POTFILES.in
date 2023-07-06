@@ -2763,6 +2763,7 @@ dat/events/derelict/poi.lua
 dat/events/derelict/rescue.lua
 dat/events/derelict/sirius_awakening.lua
 dat/events/dev/benchmark.lua
+dat/events/dev/quadtreebenchmark.lua
 dat/events/dev/system_tour.lua
 dat/events/discovery.lua
 dat/events/dvaered/fwA_treason.lua
