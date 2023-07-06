@@ -1150,16 +1150,21 @@ static int pilotL_getInrange( lua_State *L )
    vec2 *v = luaL_checkvector(L,1);
    double d = luaL_checknumber(L,2);
    int dis = lua_toboolean(L,3);
-   Pilot *const* pilot_stack;
+   int x, y, r;
+   const IntList *qt;
+   Pilot *const* pilot_stack = pilot_getAll();
 
    d = pow2(d); /* Square it. */
 
    /* Now put all the matching pilots in a table. */
-   pilot_stack = pilot_getAll();
+   x = round(v->x);
+   y = round(v->y);
+   r = ceil(d*0.5);
+   qt = pilot_collideQuery( x-r, y-r, x+r, y+r );
    lua_newtable(L);
    k = 1;
-   for (int i=0; i<array_size(pilot_stack); i++) {
-      Pilot *p = pilot_stack[i];
+   for (int i=0; i<il_size(qt); i++) {
+      Pilot *p = pilot_stack[ il_get( qt, i, 0 ) ];
 
       /* Check if dead. */
       if (pilot_isFlag(p, PILOT_DELETE))
