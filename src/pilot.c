@@ -772,13 +772,13 @@ PilotOutfitSlot* pilot_getDockSlot( Pilot* p )
 
 const IntList *pilot_collideQuery( int x1, int y1, int x2, int y2 )
 {
-   qt_query( &pilot_quadtree, &pilot_qtquery, x1, y1, x2, y2, -1 );
+   qt_query( &pilot_quadtree, &pilot_qtquery, x1, y1, x2, y2 );
    return &pilot_qtquery;
 }
 
 void pilot_collideQueryIL( IntList *il, int x1, int y1, int x2, int y2 )
 {
-   qt_query( &pilot_quadtree, il, x1, y1, x2, y2, -1 );
+   qt_query( &pilot_quadtree, il, x1, y1, x2, y2 );
 }
 
 /**

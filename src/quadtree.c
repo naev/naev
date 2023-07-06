@@ -315,7 +315,7 @@ void qt_remove( Quadtree* qt, int element )
    il_erase(&qt->elts, element);
 }
 
-void qt_query( Quadtree* qt, IntList* out, int qlft, int qtop, int qrgt, int qbtm, int omit_element )
+void qt_query( Quadtree* qt, IntList* out, int qlft, int qtop, int qrgt, int qbtm )
 {
    // Find the leaves that intersect the specified query rectangle.
    IntList leaves = {0};
@@ -343,7 +343,7 @@ void qt_query( Quadtree* qt, IntList* out, int qlft, int qtop, int qrgt, int qbt
          const int top = il_get(&qt->elts, element, elt_idx_top);
          const int rgt = il_get(&qt->elts, element, elt_idx_rgt);
          const int btm = il_get(&qt->elts, element, elt_idx_btm);
-         if (!qt->temp[element] && element != omit_element && intersect(qlft,qtop,qrgt,qbtm, lft,top,rgt,btm)) {
+         if (!qt->temp[element] && intersect(qlft,qtop,qrgt,qbtm, lft,top,rgt,btm)) {
             const int id = il_get(&qt->elts, element, elt_idx_id);
             il_set(out, il_push_back(out), 0, id);
             qt->temp[element] = 1;

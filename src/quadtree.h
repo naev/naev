@@ -69,7 +69,7 @@ void qt_remove( Quadtree* qt, int element );
 void qt_cleanup( Quadtree* qt );
 
 // Outputs a list of elements found in the specified rectangle.
-void qt_query( Quadtree* qt, IntList* out, int x1, int y1, int x2, int y2, int omit_element );
+void qt_query( Quadtree* qt, IntList* out, int x1, int y1, int x2, int y2 );
 
 // Traverses all the nodes in the tree, calling 'branch' for branch nodes and 'leaf'
 // for leaf nodes.

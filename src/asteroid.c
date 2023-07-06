@@ -1156,5 +1156,5 @@ void asteroid_explode( Asteroid *a, int max_rarity, double mining_bonus )
 
 void asteroid_collideQueryIL( AsteroidAnchor *anc, IntList *il, int x1, int y1, int x2, int y2 )
 {
-   qt_query( &anc->qt, il, x1, y1, x2, y2, -1 );
+   qt_query( &anc->qt, il, x1, y1, x2, y2 );
 }
