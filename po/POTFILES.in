@@ -2710,6 +2710,7 @@ dat/effects/lua/wormhole_exit.lua
 dat/events/bioship.lua
 dat/events/chapter1.lua
 dat/events/cinematic/DvdFLFbattle.lua
+dat/events/dev/benchmark.lua
 dat/events/dev/system_tour.lua
 dat/events/discovery.lua
 dat/events/dvaered/fwA_treason.lua
