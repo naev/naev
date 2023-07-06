@@ -1095,12 +1095,12 @@ static void weapon_updateCollide( Weapon* w, double dt, WeaponLayer layer )
       y1 = round(w->solid->pos.y);
       x2 = x1 + ceil( w->outfit->u.bem.range * cos(w->solid->dir) );
       y2 = y1 + ceil( w->outfit->u.bem.range * sin(w->solid->dir) );
-      if (x1 < x2) {
+      if (x1 > x2) {
          int t = x1;
          x1 = x2;
          x2 = t;
       }
-      if (y1 < y2) {
+      if (y1 > y2) {
          int t = y1;
          y1 = y2;
          y2 = t;
