@@ -11,6 +11,7 @@
 #include "physics.h"
 #include "damagetype.h"
 #include "nxml.h"
+#include "quadtree.h"
 
 #define ASTEROID_DEFAULT_DENSITY    1.  /**< Default density of an asteroid field. */
 #define ASTEROID_DEFAULT_MAXSPEED   20. /**< Max speed of asteroids in an asteroid field. */
@@ -113,6 +114,9 @@ typedef struct AsteroidAnchor_ {
    double maxspin;/**< Maxmimum spin the asteroids can have in the field. */
    double thrust; /**< Thrust applied when out of radius towards center. */
    double margin; /**< Extra margin to use when doing distance computations. */
+   /* Collision stuff. */
+   Quadtree qt;   /**< Handles collisions. */
+   int qt_init;   /**< Whether or not the quadtree has been initialized. */
 } AsteroidAnchor;
 
 /**
@@ -148,3 +152,4 @@ int asteroids_inField( const vec2 *p );
 void asteroids_computeInternals( AsteroidAnchor *a );
 void asteroid_hit( Asteroid *a, const Damage *dmg, int max_rarity, double mine_bonus );
 void asteroid_explode( Asteroid *a, int max_rarity, double mine_bonus );
+void asteroid_collideQueryIL( AsteroidAnchor *anc, IntList *il, int x1, int y1, int x2, int y2 );

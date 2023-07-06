@@ -1161,6 +1161,8 @@ static void weapon_updateCollide( Weapon* w, double dt, WeaponLayer layer )
          wc.polygon = &plg[n];
          wc.range = wc.gfx->size; /* Range is set to size in this case. */
       }
+
+      /* Determine quadtree location. */
       x = round(w->solid.pos.x);
       y = round(w->solid.pos.y);
       w2 = ceil(wc.gfx->tex->sw * 0.5);
@@ -1189,6 +1191,7 @@ static void weapon_updateCollide( Weapon* w, double dt, WeaponLayer layer )
       wc.polygon = NULL;
       wc.range = w->outfit->u.bem.range; /* Set beam range. */
 
+      /* Determine quadtree location. */
       x1 = round(w->solid.pos.x);
       y1 = round(w->solid.pos.y);
       x2 = x1 + ceil( w->outfit->u.bem.range * cos(w->solid.dir) );
@@ -1254,9 +1257,11 @@ static void weapon_updateCollide( Weapon* w, double dt, WeaponLayer layer )
             pow2( ast->radius + ast->margin + wc.range ))
          continue;
 
-      for (int j=0; j<ast->nb; j++) {
+      /* Quadtree collisions. */
+      asteroid_collideQueryIL( ast, &weapon_qtquery, x1, y1, x2, y2 );
+      for (int j=0; j<il_size(&weapon_qtquery); j++) {
+         Asteroid *a = &ast->asteroids[ il_get( &weapon_qtquery, j, 0 ) ];
          int coll;
-         Asteroid *a = &ast->asteroids[j];
          if (a->state != ASTEROID_FG)
             continue;
 

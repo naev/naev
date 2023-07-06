@@ -40,7 +40,11 @@
       * Support for Lua scripting for ships
       * Changed api of evt.claim and misn.claim
       * Missions/events load Lua as chunks instead of compiling each time
+<<<<<<< Updated upstream
       * Significant speed-ups in collision detection with quadtrees
+=======
+      * Use quadtrees for collisions greatly speeding up the game with lots of ships
+>>>>>>> Stashed changes
    * Fixes
       * Typo and wording fixes
       * Fixed many corner case crashes in the editor

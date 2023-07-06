@@ -88,6 +88,7 @@ void asteroids_update( double dt )
             exc->affects = 0;
       }
 
+      qt_clear( &ast->qt );
       for (int j=0; j<ast->nb; j++) {
          double offx, offy, d;
          Asteroid *a = &ast->asteroids[j];
@@ -151,14 +152,7 @@ void asteroids_update( double dt )
          /* Update angle. */
          a->ang += a->spin * dt;
 
-         /* Update scanned state if necessary. */
-         if (a->scanned) {
-            if (a->state == ASTEROID_FG)
-               a->scan_alpha = MIN( a->scan_alpha+SCAN_FADE*dt, 1.);
-            else
-               a->scan_alpha = MAX( a->scan_alpha-SCAN_FADE*dt, 0.);
-         }
-
+         /* igure out state change if applicable. */
          a->timer -= dt;
          if (a->timer < 0.) {
             switch (a->state) {
@@ -192,6 +186,24 @@ void asteroids_update( double dt )
             }
             /* States should be in proper order. */
             a->state = (a->state+1) % ASTEROID_STATE_MAX;
+         }
+
+         /* Update scanned state if necessary. */
+         if (a->scanned) {
+            if (a->state == ASTEROID_FG)
+               a->scan_alpha = MIN( a->scan_alpha+SCAN_FADE*dt, 1.);
+            else
+               a->scan_alpha = MAX( a->scan_alpha-SCAN_FADE*dt, 0.);
+         }
+
+         /* Add to quadtree if in foreground. */
+         if (1) {//a->state == ASTEROID_FG) { // Not sure why this doesn't work
+            int x, y, w2, h2;
+            x = round(a->pos.x);
+            y = round(a->pos.y);
+            w2 = ceil(a->gfx->sw*0.5);
+            h2 = ceil(a->gfx->sh*0.5);
+            qt_insert( &ast->qt, j, x-w2, y-h2, x+w2, y+h2 );
          }
       }
    }
@@ -248,6 +260,7 @@ void asteroids_init (void)
    /* Set up asteroids. */
    for (int i=0; i<array_size(cur_system->asteroids); i++) {
       AsteroidAnchor *ast = &cur_system->asteroids[i];
+      int qx, qy, qr;
       ast->id = i;
 
       /* Add graphics to debris. */
@@ -259,6 +272,15 @@ void asteroids_init (void)
                array_push_back( &debris_gfx, (glTexture*)at->gfxs[x] );
          }
       }
+
+      /* Build quadtree. */
+      if (ast->qt_init)
+         qt_destroy( &ast->qt );
+      qx = round(ast->pos.x);
+      qy = round(ast->pos.y);
+      qr = ceil(ast->radius);
+      qt_create( &ast->qt, qx-qr, qy-qr, qx+qr, qy+qr, 128, 5 );
+      ast->qt_init = 1;
 
       /* Add the asteroids to the anchor */
       ast->asteroids = realloc( ast->asteroids, (ast->nb) * sizeof(Asteroid) );
@@ -890,6 +912,8 @@ static void debris_renderSingle( const Debris *d, double cx, double cy )
  */
 void asteroid_free( AsteroidAnchor *ast )
 {
+   if (ast->qt_init)
+      qt_destroy( &ast->qt );
    free(ast->label);
    free(ast->asteroids);
    array_free(ast->groups);
@@ -1128,4 +1152,9 @@ void asteroid_explode( Asteroid *a, int max_rarity, double mining_bonus )
    asteroid_init( a, field );
    a->state = ASTEROID_BG_TO_XX;
    a->timer_max = a->timer = 0.5;
+}
+
+void asteroid_collideQueryIL( AsteroidAnchor *anc, IntList *il, int x1, int y1, int x2, int y2 )
+{
+   qt_query( &anc->qt, il, x1, y1, x2, y2, -1 );
 }
