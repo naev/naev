@@ -574,7 +574,7 @@ static int pilotL_choosePoint( lua_State *L )
 /**
  * @brief Adds a ship with an AI and faction to the system (instead of a predefined fleet).
  *
- * @usage p = pilot.add( "Empire Shark", nil, "Empire" ) -- Creates a standard Empire Shark.
+ * @usage p = pilot.add( "Empire Shark", "Empire" ) -- Creates a standard Empire Shark.
  * @usage p = pilot.add( "Pirate Hyena", "Pirate", _("Blackbeard") ) -- Just adds the pilot (will jump in or take off).
  * @usage p = pilot.add( "Llama", "Trader", nil, _("Trader Llama"), {ai="dummy"} ) -- Overrides AI with dummy ai.
  * @usage p = pilot.add( "Gawain", "Civilian", vec2.new( 1000, 200 ) ) -- Pilot won't jump in, will just appear.
