@@ -42,6 +42,7 @@ static int naevL_lastplayed( lua_State *L );
 static int naevL_ticks( lua_State *L );
 static int naevL_ticksGame( lua_State *L );
 static int naevL_clock( lua_State *L );
+static int naevL_fps( lua_State *L );
 static int naevL_keyGet( lua_State *L );
 static int naevL_keyEnable( lua_State *L );
 static int naevL_keyEnableAll( lua_State *L );
@@ -77,6 +78,7 @@ static const luaL_Reg naev_methods[] = {
    { "ticks", naevL_ticks },
    { "ticksGame", naevL_ticksGame },
    { "clock", naevL_clock },
+   { "fps", naevL_fps },
    { "keyGet", naevL_keyGet },
    { "keyEnable", naevL_keyEnable },
    { "keyEnableAll", naevL_keyEnableAll },
@@ -248,6 +250,18 @@ static int naevL_ticks( lua_State *L )
 static int naevL_clock( lua_State *L )
 {
    lua_pushnumber(L, (double)clock() / (double)CLOCKS_PER_SEC );
+   return 1;
+}
+
+/**
+ * @brief Gets the current game FPS as displayed to the player.
+ *
+ *    @luatreturn number Current FPS as displayed to the player.
+ * @luafunc fps
+ */
+static int naevL_fps( lua_State *L )
+{
+   lua_pushnumber(L, fps_current());
    return 1;
 }
 

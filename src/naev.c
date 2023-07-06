@@ -914,7 +914,7 @@ void fps_setPos( double x, double y )
  *
  *    @param[in] dt Current delta tick.
  */
-void display_fps( const double dt )
+void fps_display( double dt )
 {
    double x,y;
    double dt_mod_base = 1.;
@@ -946,6 +946,16 @@ void display_fps( const double dt )
    y = SCREEN_H / 3. - gl_defFontMono.h / 2.;
    gl_printMidRaw( &gl_defFontMono, SCREEN_W, 0., y,
          &cFontWhite, -1., _("PAUSED") );
+}
+
+/**
+ * @brief Gets the current FPS.
+ *
+ *    @return Current FPS as displayed to the player.
+ */
+double fps_current (void)
+{
+   return fps;
 }
 
 /**
