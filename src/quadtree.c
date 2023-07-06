@@ -325,6 +325,7 @@ void qt_query( Quadtree* qt, IntList* out, int qlft, int qtop, int qrgt, int qbt
       qt->temp_size = elt_cap;
       qt->temp = realloc(qt->temp, qt->temp_size * sizeof(*qt->temp));
    }
+   /* TODO try to figure out a way to avoid the memset every call. */
    memset(qt->temp, 0, qt->temp_size * sizeof(*qt->temp));
 
    // For each leaf node, look for elements that intersect.
