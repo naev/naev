@@ -55,6 +55,9 @@ void qt_create( Quadtree* qt, int x1, int y1, int x2, int y2, int max_elements, 
 // Destroys the quadtree.
 void qt_destroy( Quadtree* qt );
 
+// Clears the quadtree making it empty.
+void qt_clear( Quadtree* qt );
+
 // Inserts a new element to the tree.
 // Returns an index to the new element.
 int qt_insert( Quadtree* qt, int id, int x1, int y1, int x2, int y2 );

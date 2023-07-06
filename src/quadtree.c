@@ -209,7 +209,7 @@ void qt_create( Quadtree* qt, int x1, int y1, int x2, int y2, int max_elements, 
 {
    qt->max_elements = max_elements;
    qt->max_depth = max_depth;
-   qt->temp = 0;
+   qt->temp = NULL;
    qt->temp_size = 0;
    il_create(&qt->nodes, node_num);
    il_create(&qt->elts, elt_num);
@@ -228,6 +228,22 @@ void qt_create( Quadtree* qt, int x1, int y1, int x2, int y2, int max_elements, 
    // Center
    qt->root_mx = x1 + half_width;
    qt->root_my = y1 + half_height;
+}
+
+void qt_clear( Quadtree* qt )
+{
+   free(qt->temp);
+   qt->temp = NULL;
+   qt->temp_size = 0;
+
+   il_clear( &qt->nodes );
+   il_clear( &qt->elts );
+   il_clear( &qt->enodes );
+
+   // Insert the root node to the qt.
+   il_insert(&qt->nodes);
+   il_set(&qt->nodes, 0, node_idx_fc, -1);
+   il_set(&qt->nodes, 0, node_idx_num, 0);
 }
 
 void qt_destroy( Quadtree* qt )
