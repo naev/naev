@@ -20,14 +20,14 @@ function create ()
    pilot.toggleSpawn(false)
    player.pilot():setInvincible(true)
    local function add_pilot( ship, faction )
-      local pos = vec2.newP( 8000*math.sqrt(rnd.rnd()), rnd.angle() )
+      local pos = vec2.newP( system.cur():radius()*0.9*math.sqrt(rnd.rnd()), rnd.angle() )
       local p = pilot.add( ship, faction, pos )
       p:setVisplayer(true)
    end
-   for i = 1,120 do
+   for i = 1,200 do
       add_pilot( "Empire Lancelot", "Empire" )
    end
-   for i = 1,180 do
+   for i = 1,300 do
       add_pilot( "Drone", "Collective" )
    end
 
