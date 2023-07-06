@@ -952,13 +952,69 @@ static int pilotL_getPilots( lua_State *L )
    return 1;
 }
 
+static int getFriendOrFoeTest( const Pilot *p, const Pilot *plt, int friend, double dd, int inrange, int dis, int fighters, const vec2 *v, LuaFaction lf )
+{
+   /* Check if dead. */
+   if (pilot_isFlag(plt, PILOT_DELETE))
+      return 0;
+
+   /* Ignore fighters unless specified. */
+   if (!fighters && pilot_isFlag(plt, PILOT_CARRIED))
+      return 0;
+
+   /* Check distance if necessary. */
+   if ((dd >= 0.) &&
+         vec2_dist2(&plt->solid->pos, v) > dd)
+      return 0;
+
+   /* Check if disabled. */
+   if (dis && pilot_isDisabled(plt))
+      return 0;
+
+   /* Check appropriate faction. */
+   if (friend) {
+      if (p==NULL) {
+         if (!areAllies( lf, plt->faction ))
+            return 0;
+      }
+      else {
+         if (!pilot_areAllies( p, plt ))
+            return 0;
+      }
+   }
+   else {
+      if (p==NULL) {
+         if (!areEnemies( lf, plt->faction ))
+            return 0;
+      }
+      else {
+         if (inrange) {
+            if (!pilot_validEnemy( p, plt ))
+               return 0;
+         }
+         else {
+            if (!pilot_areEnemies( p, plt ))
+               return 0;
+         }
+      }
+   }
+
+   /* Need extra check for friends. */
+   if ((p!=NULL) && inrange && friend) {
+      if (!pilot_inRangePilot( p, plt, NULL ))
+         return 0;
+   }
+
+   return 1;
+}
+
 /*
  * Helper to get nearby friends or foes.
  */
 static int pilotL_getFriendOrFoe( lua_State *L, int friend )
 {
    int k;
-   double dd, d2;
+   double dd;
    Pilot *p;
    double dist;
    int inrange, dis, fighters;
@@ -992,68 +1048,36 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
    }
 
    dd = pow2(dist);
-   d2 = -1.;
 
    /* Now put all the matching pilots in a table. */
    pilot_stack = pilot_getAll();
    lua_newtable(L);
    k = 1;
-   for (int i=0; i<array_size(pilot_stack); i++) {
-      Pilot *plt = pilot_stack[i];
+   if (dist < INFINITY) {
+      int x, y, r;
+      const IntList *qt;
+      x = round(v->x);
+      y = round(v->y);
+      r = ceil(dist);
+      qt = pilot_collideQuery( x-r, y-r, x+r, y+r );
+      for (int i=0; i<il_size(qt); i++) {
+         Pilot *plt = pilot_stack[ il_get( qt, i, 0 ) ];
 
-      /* Check if dead. */
-      if (pilot_isFlag(plt, PILOT_DELETE))
-         continue;
-
-      /* Ignore fighters unless specified. */
-      if (!fighters && pilot_isFlag(plt, PILOT_CARRIED))
-         continue;
-
-      /* Check distance if necessary. */
-      if ((dist >= 0.) &&
-            vec2_dist2(&plt->solid->pos, v) > dd)
-         continue;
-
-      /* Check if disabled. */
-      if (dis && pilot_isDisabled(plt))
-         continue;
-
-      /* Check appropriate faction. */
-      if (friend) {
-         if (p==NULL) {
-            if (!areAllies( lf, plt->faction ))
-               continue;
-         }
-         else {
-            if (!pilot_areAllies( p, plt ))
-               continue;
+         if (getFriendOrFoeTest( p, plt, friend, dd, inrange, dis, fighters, v, lf )) {
+            lua_pushpilot(L, plt->id); /* value */
+            lua_rawseti(L,-2, k++); /* table[key] = value */
          }
       }
-      else {
-         if (p==NULL) {
-            if (!areEnemies( lf, plt->faction ))
-               continue;
-         }
-         else {
-            if (inrange) {
-               if (!pilot_validEnemy( p, plt ))
-                  continue;
-            }
-            else {
-               if (!pilot_areEnemies( p, plt ))
-                  continue;
-            }
+   }
+   else {
+      for (int i=0; i<array_size(pilot_stack); i++) {
+         Pilot *plt = pilot_stack[i];
+
+         if (getFriendOrFoeTest( p, plt, friend, dd, inrange, dis, fighters, v, lf )) {
+            lua_pushpilot(L, plt->id); /* value */
+            lua_rawseti(L,-2, k++); /* table[key] = value */
          }
       }
-
-      /* Need extra check for friends. */
-      if ((p!=NULL) && inrange && friend) {
-         if (!pilot_inRangePilot( p, plt, &d2 ))
-            continue;
-      }
-
-      lua_pushpilot(L, plt->id); /* value */
-      lua_rawseti(L,-2, k++); /* table[key] = value */
    }
    return 1;
 }
@@ -1159,7 +1183,7 @@ static int pilotL_getInrange( lua_State *L )
    /* Now put all the matching pilots in a table. */
    x = round(v->x);
    y = round(v->y);
-   r = ceil(d*0.5);
+   r = ceil(d);
    qt = pilot_collideQuery( x-r, y-r, x+r, y+r );
    lua_newtable(L);
    k = 1;
