@@ -1118,6 +1118,8 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
  *    @luatparam[opt=false] boolean fighters Whether or not to count deployed fighters.
  *    @luatreturn {Pilot,...} A table containing the pilots.
  * @luafunc getAllies
+ * @see getEnemies
+ * @see getInrange
  */
 static int pilotL_getAllies( lua_State *L )
 {
@@ -1138,6 +1140,8 @@ static int pilotL_getAllies( lua_State *L )
  *    @luatparam[opt=false] boolean fighters Whether or not to count deployed fighters.
  *    @luatreturn {Pilot,...} A table containing the pilots.
  * @luafunc getEnemies
+ * @see getAllies
+ * @see getInrange
  */
 static int pilotL_getEnemies( lua_State *L )
 {
@@ -1145,12 +1149,17 @@ static int pilotL_getEnemies( lua_State *L )
 }
 
 /**
- * @brief Gets visible pilots to a pilot within a certain distance.
+ * @brief Gets visible pilots to a pilot.
+ *
+ * @note This function can not use quadtrees and is much slower than getEnemies, getAllies, or getInrange.
  *
  *    @luatparam Pilot pilot Pilot to get visible pilots of.
  *    @luatparam[opt=false] boolean disabled Whether or not to count disabled pilots.
  *    @luatreturn {Pilot,...} A table containing the pilots.
  * @luafunc getVisible
+ * @see getEnemies
+ * @see getAllies
+ * @see getInrange
  */
 static int pilotL_getVisible( lua_State *L )
 {
@@ -1189,6 +1198,8 @@ static int pilotL_getVisible( lua_State *L )
  *    @luatparam[opt=false] boolean disabled Whether or not to count disabled pilots.
  *    @luatreturn {Pilot,...} A table containing the pilots.
  * @luafunc getInrange
+ * @see getEnemies
+ * @see getAllies
  */
 static int pilotL_getInrange( lua_State *L )
 {
@@ -1258,7 +1269,7 @@ static int pilotL_eq( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to convert to string.
  *    @luatreturn string The current name of the pilot or "(inexistent pilot)" if not existent.
- * @luafunc name
+ * @luafunc __tostring
  */
 static int pilotL_tostring( lua_State *L )
 {
