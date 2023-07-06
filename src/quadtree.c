@@ -324,9 +324,8 @@ void qt_query( Quadtree* qt, IntList* out, int qlft, int qtop, int qrgt, int qbt
    if (qt->temp_size < elt_cap) {
       qt->temp_size = elt_cap;
       qt->temp = realloc(qt->temp, qt->temp_size * sizeof(*qt->temp));
+      memset(qt->temp, 0, qt->temp_size * sizeof(*qt->temp));
    }
-   /* TODO try to figure out a way to avoid the memset every call. */
-   memset(qt->temp, 0, qt->temp_size * sizeof(*qt->temp));
 
    // For each leaf node, look for elements that intersect.
    il_create(&leaves, nd_num);
@@ -345,14 +344,21 @@ void qt_query( Quadtree* qt, IntList* out, int qlft, int qtop, int qrgt, int qbt
          const int rgt = il_get(&qt->elts, element, elt_idx_rgt);
          const int btm = il_get(&qt->elts, element, elt_idx_btm);
          if (!qt->temp[element] && intersect(qlft,qtop,qrgt,qbtm, lft,top,rgt,btm)) {
-            const int id = il_get(&qt->elts, element, elt_idx_id);
-            il_set(out, il_push_back(out), 0, id);
+            il_set(out, il_push_back(out), 0, element);
             qt->temp[element] = 1;
          }
          elt_node_index = il_get(&qt->enodes, elt_node_index, enode_idx_next);
       }
    }
    il_destroy(&leaves);
+
+   /* Unmark the elements that were inserted, and convert to IDs. */
+   for (int j=0; j < il_size(out); ++j) {
+      const int element = il_get(out, j, 0);
+      const int id = il_get(&qt->elts, element, elt_idx_id);
+      qt->temp[element] = 0;
+      il_set(out, j, 0, id);
+   }
 }
 
 void qt_cleanup( Quadtree* qt )
