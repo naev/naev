@@ -20,14 +20,14 @@ function create ()
    pilot.toggleSpawn(false)
    player.pilot():setInvincible(true)
    local function add_pilot( ship, faction )
-      local pos = vec2.newP( 5000*math.sqrt(rnd.rnd()), rnd.angle() )
+      local pos = vec2.newP( 8000*math.sqrt(rnd.rnd()), rnd.angle() )
       local p = pilot.add( ship, faction, pos )
       p:setVisplayer(true)
    end
-   for i = 1,40 do
+   for i = 1,120 do
       add_pilot( "Empire Lancelot", "Empire" )
    end
-   for i = 1,60 do
+   for i = 1,180 do
       add_pilot( "Drone", "Collective" )
    end
 
@@ -60,9 +60,12 @@ function average ()
          wrst = dt
       end
    end
+   local data = {DT=DT,avg=avg/#dt_list,wrst=wrst,elapsed=naev.ticks()-start_time}
    print(fmt.f([[
 Real time to do {DT} seconds: {elapsed} s
 Average FPS over {DT} seconds: {avg} s
 Worst FPS over {DT} seconds: {wrst} s]],
-      {DT=DT,avg=avg/#dt_list,wrst=wrst,elapsed=naev.ticks()-start_time}))
+   data ))
+
+   naev.trigger("benchmark", data)
 end
