@@ -188,6 +188,7 @@ function scans.get_target ()
    local pv = {}
    do
       local inserted = {}
+      -- TODO probably try to change this to getInrange() instead to be a bit faster
       for k,v in ipairs(p:getVisible()) do
          -- Only care about leaders
          local l = v:leader()
@@ -234,6 +235,5 @@ function scans.get_target ()
    end
    return pv[1].p
 end
-
 
 return scans
