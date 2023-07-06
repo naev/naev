@@ -914,7 +914,7 @@ void fps_setPos( double x, double y )
  *
  *    @param[in] dt Current delta tick.
  */
-void display_fps( const double dt )
+void fps_display( const double dt )
 {
    double x,y;
    double dt_mod_base = 1.;

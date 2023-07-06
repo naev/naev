@@ -72,7 +72,7 @@ extern Uint32 SDL_LOOPDONE;
 extern const double fps_min;
 extern double elapsed_time_mod;
 void fps_setPos( double x, double y );
-void display_fps( const double dt );
+void fps_display( const double dt );
 void naev_resize (void);
 void naev_toggleFullscreen (void);
 void update_routine( double dt, int enter_sys );
