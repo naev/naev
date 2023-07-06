@@ -1006,7 +1006,7 @@ void update_routine( double dt, int enter_sys )
       ntime_update( dt );
    }
 
-   /* Clean up dead elements. */
+   /* Clean up dead elements and build quadtrees. */
    pilots_updatePurge();
    weapons_updatePurge();
 
@@ -1014,12 +1014,10 @@ void update_routine( double dt, int enter_sys )
    space_update( dt, real_dt );
    spfx_update( dt, real_dt );
 
-   /* Update physics and builds collision trees. */
-   pilots_updatePhysics( dt );
-   weapons_update( dt );
-
-   /* Have pilots think. */
-   pilots_updateThink( dt );
+   /* First compute weapon collisions. */
+   weapons_updateCollide( dt );
+   pilots_update( dt );
+   weapons_update( dt ); /* Has weapons think and update positions. */
 
    /* Update camera. */
    cam_update( dt );

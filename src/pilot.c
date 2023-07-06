@@ -3696,7 +3696,7 @@ void pilots_updatePurge (void)
  *
  *    @param dt Delta tick for the update.
  */
-void pilots_updateThink( double dt )
+void pilots_update( double dt )
 {
    /* Have all the pilots think. */
    for (int i=0; i<array_size(pilot_stack); i++) {
@@ -3738,10 +3738,7 @@ void pilots_updateThink( double dt )
             ai_think( p, dt );
       }
    }
-}
 
-void pilots_updatePhysics( double dt )
-{
    /* Now update all the pilots. */
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
