@@ -83,7 +83,7 @@ void leaf_insert( Quadtree* qt, int node, int depth, int mx, int my, int sx, int
 
    // If the leaf is full, split it.
    if (il_get(&qt->nodes, node, node_idx_num) == qt->max_elements && depth < qt->max_depth) {
-      int fc = 0, j = 0;
+      int fc = 0;
       IntList elts = {0};
       il_create(&elts, 1);
 
@@ -109,14 +109,14 @@ void leaf_insert( Quadtree* qt, int node, int depth, int mx, int my, int sx, int
       il_set(&qt->nodes, node, node_idx_fc, fc);
 
       // Initialize the new child nodes.
-      for (j=0; j < 4; ++j) {
+      for (int j=0; j < 4; ++j) {
          il_set(&qt->nodes, fc+j, node_idx_fc, -1);
          il_set(&qt->nodes, fc+j, node_idx_num, 0);
       }
 
       // Transfer the elements in the former leaf node to its new children.
       il_set(&qt->nodes, node, node_idx_num, -1);
-      for (j=0; j < il_size(&elts); ++j)
+      for (int j=0; j < il_size(&elts); ++j)
          node_insert(qt, node, depth, mx, my, sx, sy, il_get(&elts, j, 0));
       il_destroy(&elts);
    }
@@ -184,7 +184,6 @@ static void find_leaves( IntList* out, const Quadtree* qt, int node, int depth,
 static void node_insert( Quadtree* qt, int index, int depth, int mx, int my, int sx, int sy, int element )
 {
    // Find the leaves and insert the element to all the leaves found.
-   int j = 0;
    IntList leaves = {0};
 
    const int lft = il_get(&qt->elts, element, elt_idx_lft);
@@ -194,7 +193,7 @@ static void node_insert( Quadtree* qt, int index, int depth, int mx, int my, int
 
    il_create(&leaves, nd_num);
    find_leaves(&leaves, qt, index, depth, mx, my, sx, sy, lft, top, rgt, btm);
-   for (j=0; j < il_size(&leaves); ++j) {
+   for (int j=0; j < il_size(&leaves); ++j) {
       const int nd_mx = il_get(&leaves, j, nd_idx_mx);
       const int nd_my = il_get(&leaves, j, nd_idx_my);
       const int nd_sx = il_get(&leaves, j, nd_idx_sx);
@@ -259,7 +258,6 @@ int qt_insert (Quadtree* qt, int id, int x1, int y1, int x2, int y2 )
 void qt_remove( Quadtree* qt, int element )
 {
    // Find the leaves.
-   int j = 0;
    IntList leaves = {0};
 
    const int lft = il_get(&qt->elts, element, elt_idx_lft);
@@ -271,7 +269,7 @@ void qt_remove( Quadtree* qt, int element )
    find_leaves(&leaves, qt, 0, 0, qt->root_mx, qt->root_my, qt->root_sx, qt->root_sy, lft, top, rgt, btm);
 
    // For each leaf node, remove the element node.
-   for (j=0; j < il_size(&leaves); ++j) {
+   for (int j=0; j < il_size(&leaves); ++j) {
       const int nd_index = il_get(&leaves, j, nd_idx_index);
 
       // Walk the list until we find the element node.
@@ -304,7 +302,6 @@ void qt_remove( Quadtree* qt, int element )
 void qt_query( Quadtree* qt, IntList* out, int qlft, int qtop, int qrgt, int qbtm, int omit_element )
 {
    // Find the leaves that intersect the specified query rectangle.
-   int j = 0;
    IntList leaves = {0};
    const int elt_cap = il_size(&qt->elts);
 
@@ -319,7 +316,7 @@ void qt_query( Quadtree* qt, IntList* out, int qlft, int qtop, int qrgt, int qbt
    find_leaves(&leaves, qt, 0, 0, qt->root_mx, qt->root_my, qt->root_sx, qt->root_sy, qlft, qtop, qrgt, qbtm);
 
    il_clear(out);
-   for (j=0; j < il_size(&leaves); ++j) {
+   for (int j=0; j < il_size(&leaves); ++j) {
       const int nd_index = il_get(&leaves, j, nd_idx_index);
 
       // Walk the list and add elements that intersect.
@@ -340,7 +337,7 @@ void qt_query( Quadtree* qt, IntList* out, int qlft, int qtop, int qrgt, int qbt
    il_destroy(&leaves);
 
    // Unmark the elements that were inserted.
-   for (j=0; j < il_size(out); ++j)
+   for (int j=0; j < il_size(out); ++j)
       qt->temp[il_get(out, j, 0)] = 0;
 }
 
@@ -360,11 +357,10 @@ void qt_cleanup( Quadtree* qt )
       const int node = il_get(&to_process, il_size(&to_process)-1, 0);
       const int fc = il_get(&qt->nodes, node, node_idx_fc);
       int num_empty_leaves = 0;
-      int j = 0;
       il_pop_back(&to_process);
 
       // Loop through the children.
-      for (j=0; j < 4; ++j) {
+      for (int j=0; j < 4; ++j) {
          const int child = fc + j;
 
          // Increment empty leaf count if the child is an empty

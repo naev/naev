@@ -10,7 +10,6 @@
  * And generally all Stackoverflow-posted code is by default licensed with CC BY-SA 4.0:
  * https://creativecommons.org/licenses/by-sa/4.0/
  */
-
 #include "intlist.h"
 #include <stdlib.h>
 #include <string.h>
