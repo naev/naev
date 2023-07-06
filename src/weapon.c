@@ -574,19 +574,25 @@ static void think_beam( Weapon* w, const double dt )
 }
 
 /**
+ * @brief Purges unnecessary weapons.
+ */
+void weapons_updatePurge (void)
+{
+   /* Actually purge and remove weapons. */
+   weapons_purgeLayer( wbackLayer );
+   weapons_purgeLayer( wfrontLayer );
+}
+
+/**
  * @brief Updates all the weapon layers.
  *
  *    @param dt Current delta tick.
  */
-void weapons_update( const double dt )
+void weapons_update( double dt )
 {
    /* When updating, just mark weapons for deletion. */
    weapons_updateLayer(dt,WEAPON_LAYER_BG);
    weapons_updateLayer(dt,WEAPON_LAYER_FG);
-
-   /* Actually purge and remove weapons. */
-   weapons_purgeLayer( wbackLayer );
-   weapons_purgeLayer( wfrontLayer );
 }
 
 /**

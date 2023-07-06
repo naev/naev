@@ -3674,11 +3674,9 @@ void pilots_cleanAll (void)
 }
 
 /**
- * @brief Updates all the pilots.
- *
- *    @param dt Delta tick for the update.
+ * @brief Purges pilots set for deletion.
  */
-void pilots_update( double dt )
+void pilots_updatePurge (void)
 {
    /* Delete loop - this should be atomic or we get hook fuckery! */
    for (int i=array_size(pilot_stack)-1; i>=0; i--) {
@@ -3691,7 +3689,15 @@ void pilots_update( double dt )
       if (pilot_isFlag(p, PILOT_DELETE))
          pilot_erase( p );
    }
+}
 
+/**
+ * @brief Updates all the pilots.
+ *
+ *    @param dt Delta tick for the update.
+ */
+void pilots_updateThink( double dt )
+{
    /* Have all the pilots think. */
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
@@ -3732,7 +3738,10 @@ void pilots_update( double dt )
             ai_think( p, dt );
       }
    }
+}
 
+void pilots_updatePhysics( double dt )
+{
    /* Now update all the pilots. */
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];

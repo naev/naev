@@ -1006,11 +1006,20 @@ void update_routine( double dt, int enter_sys )
       ntime_update( dt );
    }
 
-   /* Update engine stuff. */
-   space_update(dt, real_dt);
-   weapons_update(dt);
-   spfx_update(dt, real_dt);
-   pilots_update(dt);
+   /* Clean up dead elements. */
+   pilots_updatePurge();
+   weapons_updatePurge();
+
+   /* Core stuff independent of collisions. */
+   space_update( dt, real_dt );
+   spfx_update( dt, real_dt );
+
+   /* Update physics and builds collision trees. */
+   pilots_updatePhysics( dt );
+   weapons_update( dt );
+
+   /* Have pilots think. */
+   pilots_updateThink( dt );
 
    /* Update camera. */
    cam_update( dt );

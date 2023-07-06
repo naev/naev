@@ -488,7 +488,9 @@ void pilot_setTurn( Pilot *p, double turn );
  * update
  */
 void pilot_update( Pilot* pilot, double dt );
-void pilots_update( double dt );
+void pilots_updatePurge (void);
+void pilots_updateThink( double dt );
+void pilots_updatePhysics( double dt );
 void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh );
 void pilots_render (void);
 void pilots_renderOverlay (void);
