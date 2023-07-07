@@ -4,6 +4,9 @@
  <unique />
  <priority>4</priority>
  <chance>30</chance>
+ <cond>
+   return require("misn_test").reweight_active()
+ </cond>
  <location>Bar</location>
  <faction>Dvaered</faction>
  <notes>

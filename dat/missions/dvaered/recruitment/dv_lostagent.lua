@@ -7,7 +7,18 @@
  <location>Bar</location>
  <faction>Dvaered</faction>
  <done>Dvaered Census 0</done>
- <cond>faction.playerStanding("Dvaered") &gt;= 20 and player.outfitNum("Mercenary License") &gt; 0 and (not diff.isApplied("flf_dead"))</cond>
+ <cond>
+   if faction.playerStanding("Dvaered") &lt;= 20 then
+      return false
+   end
+   if diff.isApplied("flf_dead") then
+      return false
+   end
+   local misn_test = require "misn_test"
+   if not misn_test.mercenary() then
+      return false
+   end
+   return misn_test.reweight_active()
  <notes>
   <tier>3</tier>
   <campaign>Dvaered Recruitment</campaign>

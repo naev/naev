@@ -5,7 +5,12 @@
  <chance>150</chance>
  <location>Computer</location>
  <faction>Dvaered</faction>
- <cond>var.peek("dp_available") == true</cond>
+ <cond>
+   if var.peek("dp_available") ~= true then
+      return false
+   end
+   return require("misn_test").computer()
+ </cond>
  <notes>
   <tier>2</tier>
   <campaign>Dvaered Recruitment</campaign>

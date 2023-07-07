@@ -7,7 +7,12 @@
  <location>Bar</location>
  <faction>Dvaered</faction>
  <done>Dvaered Delivery</done>
- <cond>faction.playerStanding("Dvaered") &gt;= 20</cond>
+ <cond>
+   if faction.playerStanding("Dvaered") &lt; 20 then
+      return false
+   end
+   return require("misn_test").reweight_active()
+ </cond>
  <notes>
   <campaign>Dvaered Recruitment</campaign>
  </notes>

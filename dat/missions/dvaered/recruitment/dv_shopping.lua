@@ -7,7 +7,18 @@
  <location>Bar</location>
  <faction>Dvaered</faction>
  <done>Dvaered Negotiation 2</done>
- <cond>faction.playerStanding("Dvaered") &gt;= 20 and system.get("Goddard"):jumpDist() &lt; 10 and not (spob.cur():services().shipyard == nil)</cond>
+ <cond>
+   if faction.playerStanding("Dvaered") &lt; 20 then
+      return false
+   end
+   if system.get("Goddard"):jumpDist() &gt;= 10 then
+      return false
+   end
+   if spob.cur():services().shipyard == nil then
+      return false
+   end
+   return require("misn_test").reweight_active()
+ </cond>
  <notes>
   <campaign>Dvaered Recruitment</campaign>
  </notes>
@@ -37,7 +48,6 @@ local pir      = require "common.pirate"
 local lmisn    = require "lmisn"
 
 local DvFleet, noPirates
-
 
 local agentPort = "dvaered/dv_military_m2.webp"
 local trickPort = "pirate/pirate2.webp"
