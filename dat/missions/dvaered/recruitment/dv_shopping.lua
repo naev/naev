@@ -46,6 +46,7 @@ local vntk     = require 'vntk'
 local dv       = require "common.dvaered"
 local pir      = require "common.pirate"
 local lmisn    = require "lmisn"
+local love_shaders = require "love_shaders"
 
 local DvFleet, noPirates
 
@@ -161,7 +162,7 @@ function enter()
       mem.conv_leader:memory().formation = "vee" -- This is less of a death trap if the player is just behind the leader
       DvFleet( true, mem.godpnt )
 
-      local target = system.get("Ogat")
+      local target = system.get("Arcturus")
       mem.conv_leader:control()
       mem.conv_leader:hyperspace( target )
       misn.osdCreate( _("Dvaered Shopping"), {
@@ -315,8 +316,9 @@ function veryBadThings()
    vn.clear()
    vn.scene()
    vn.na(_([[You get hailed by a Hyena and a communication channel is opened between you, Colonel Okran and the Hyena in question.]]))
-   local sol = vn.newCharacter( _("Colonel Okran"), { image=portrait.getFullPath(agentPort) } )
-   local trick = vn.newCharacter( _("???"), { image=portrait.getFullPath(trickPort) } )
+   local sol = vn.newCharacter( _("Colonel Okran"), { image=portrait.getFullPath(agentPort), shader=love_shaders.hologram() } )
+   local trick = vn.newCharacter( _("???"), { image=portrait.getFullPath(trickPort), shader=love_shaders.hologram() } )
+   vn.transition("electric")
    trick(_([["Yo, Okran! How are you, mate? Enyoyin' your new toy? Hewhewhew!"]]))
    sol(_([["I am sorry, but I do not know you, citizen."]]))
    trick(_([["Ya do not know me? Hewhewhew! Of course! But really, you were expectin' to do all your shameful manoeuvring without ever meeting me? Ya all know that you are still subjects to his Imperial Majesty, right? No! You forgot that! Luckily, I'm here to remind that to you!"]]))
@@ -338,7 +340,7 @@ So, seriously, what do you think of that? You chose the Dvaered way, we make it 
 Oh. If ya manage to kill Okran right now, you won't need to meet me. Just land on any Dvaered planet and you'll understand everything! All ya got to do is destroying a Dvaered Goddard! Piece of cake, right?
 Bye, mate!"]]), {pnt=mem.tripnt,sys=mem.trisys}))
    vn.na(_([[The Hyena goes away, letting you alone with the group of angry Dvaered.]]))
-   vn.done()
+   vn.done("electric")
    vn.run()
 
    -- Update mission details
@@ -362,7 +364,7 @@ Bye, mate!"]]), {pnt=mem.tripnt,sys=mem.trisys}))
    mem.conv_leader:control(false)
    mem.trickster:taskClear()
    mem.trickster:runaway( mem.conv_leader, true ) -- Trickster just runs away without a goal because he is a freak
-   hook.timer( 2., "Hewhewhew" )
+   hook.timer( 2, "Hewhewhew" )
    mem.trickster:setInvincible()
 end
 
