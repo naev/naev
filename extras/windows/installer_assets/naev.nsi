@@ -36,13 +36,14 @@ InstallDirRegKey HKLM "SOFTWARE\${PACKAGE}" ""
 RequestExecutionLevel admin
 ShowInstDetails show
 ShowUninstDetails show
-VIProductVersion "${VERSION}.0"
-VIAddVersionKey "ProductName" "${PACKAGE}"
-VIAddVersionKey "CompanyName" "${NAEV_DEV}"
-VIAddVersionKey "ProductVersion" "${VERSION}"
-VIAddVersionKey "FileVersion" "${VERSION}"
-VIAddVersionKey "FileDescription" "${PACKAGE}"
-VIAddVersionKey "LegalCopyright" "${NAEV_DEV}"
+; This is problematic for nightlies, and it's really just used for some extra version metadata.
+;VIProductVersion "${VERSION}.0"
+;VIAddVersionKey "ProductName" "${PACKAGE}"
+;VIAddVersionKey "CompanyName" "${NAEV_DEV}"
+;VIAddVersionKey "ProductVersion" "${VERSION}"
+;VIAddVersionKey "FileVersion" "${VERSION}"
+;VIAddVersionKey "FileDescription" "${PACKAGE}"
+;VIAddVersionKey "LegalCopyright" "${NAEV_DEV}"
 
 ;--------------------------------
 ;Interface Settings
