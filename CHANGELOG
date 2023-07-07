@@ -1,4 +1,4 @@
-* 0.10.6 (unreleased)
+* 0.10.6
    * Fixed potential segfault with invalid semver strings
    * Fixed sign error when buying artifacts in the Baron Prince mission (sorry)
    * Fixed behaviour of naev.trigger with parameters
