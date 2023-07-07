@@ -209,6 +209,14 @@ int mission_accept( Mission* mission )
 }
 
 /**
+ * @brief Returns all the missions.
+ */
+const MissionData *mission_list (void)
+{
+   return mission_stack;
+}
+
+/**
  * @brief Checks to see if mission is already running.
  *
  *    @param misn Mission to check if is already running.
