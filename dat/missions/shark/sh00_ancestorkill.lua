@@ -7,10 +7,11 @@
    if spob.cur() == spob.get("Ulios") then
       return false
    end
+   local misn_test = require "misn_test"
    if not misn_test.mercenary() then
       return false
    end
-   return require("misn_test").reweight_active()
+   return misn_test.reweight_active()
  </cond>
  <chance>5</chance>
  <location>Bar</location>
