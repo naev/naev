@@ -8,6 +8,7 @@
    * Fixed Adrenal Gland III's time speed up effect
    * Fixed Misi giving upgrades for free
    * Fixed minor planet check in frontier war missions
+   * Fixed silent installs on windows
    * Fixed typos
 
 * 0.10.5
