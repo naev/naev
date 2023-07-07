@@ -6,9 +6,7 @@
 </event>
 --]]
 --[[
--- Tests system / overlay rendering by screenshotting each one.
--- To use: land, put this line in the Lua console, and take off:
--- naev.eventStart("System Tour")
+   Benchmarks some skirmish to see how efficient Naev can handle the chaos
 --]]
 local fmt = require "format"
 
