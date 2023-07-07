@@ -169,6 +169,7 @@ function approach_nelly()
    vn.clear()
    vn.scene()
    local nel = vn.newCharacter( tutnel.vn_nelly() )
+   vn.transition( tutnel.nelly.transition )
 
    local dvaered = {_("How did you end up in Dvaered Space?"), "nelly_story"}
    local warlord = {_("Isn't it a bit odd, how the Dvaered society works, with those Warlords?"), "warlords"}

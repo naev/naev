@@ -202,7 +202,7 @@ function land()
    if mem.misn_state == 0 and spob.cur() == mem.godpnt then
       vn.clear()
       vn.scene()
-      vn.transition( )
+      vn.transition()
       vn.na(_([[After landing, Okran tells you and the rest of the escort pilots to wait for him at the spaceport's bar. As a member of his crew, you are granted access to the special VIP customers restricted bar.
 The walls are covered with pictures of different versions of the Goddard battlecruiser, each of which is accompanied by a small explicative text and a series of important facts: "Did you know that 365 Goddards Mk VII-DM were constructed between UST-510 and UST-567? This model is the most successful ever, and about 120 of them are reportedly still in use at date of UST-601."]]))
       vn.na(_([[Some time later, Colonel Okran finally comes and shows you a fancy key-chain representing a crossed-eyed gorilla lifting a Goddard cruiser. "They have nice goodies!" Before you have time to ask one for yourself, it is time to depart.]]))
@@ -315,10 +315,10 @@ end
 function veryBadThings()
    vn.clear()
    vn.scene()
-   vn.na(_([[You get hailed by a Hyena and a communication channel is opened between you, Colonel Okran and the Hyena in question.]]))
    local sol = vn.newCharacter( _("Colonel Okran"), { image=portrait.getFullPath(agentPort), shader=love_shaders.hologram() } )
    local trick = vn.newCharacter( _("???"), { image=portrait.getFullPath(trickPort), shader=love_shaders.hologram() } )
    vn.transition("electric")
+   vn.na(_([[You get hailed by a Hyena and a communication channel is opened between you, Colonel Okran and the Hyena in question.]]))
    trick(_([["Yo, Okran! How are you, mate? Enyoyin' your new toy? Hewhewhew!"]]))
    sol(_([["I am sorry, but I do not know you, citizen."]]))
    trick(_([["Ya do not know me? Hewhewhew! Of course! But really, you were expectin' to do all your shameful manoeuvring without ever meeting me? Ya all know that you are still subjects to his Imperial Majesty, right? No! You forgot that! Luckily, I'm here to remind that to you!"]]))
@@ -383,6 +383,7 @@ function discussWithTrickster()
    vn.clear()
    vn.scene()
    local trick = vn.newCharacter( _("The Trickster"), { image=portrait.getFullPath(trickPort) } )
+   vn.transition()
    trick(fmt.f(_([["Aye, {player}, how do you do?"]]), {player=player.name()}))
    vn.menu{
       {_([["Very well, thank you. And you?"]]), "thank"},

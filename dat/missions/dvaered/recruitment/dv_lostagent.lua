@@ -242,6 +242,7 @@ A seemingly-unarmed man steps forward. He must be the imperial agent in charge o
       vn.clear()
       vn.scene()
       local agent = vn.newCharacter( _("Intermediate"), { image=portrait.getFullPath(agentPort) } )
+      vn.transition()
       vn.na(_([[Bony Boudica was waiting for you at the dock.]]))
       agent(fmt.f(_([[Hi, {name}. Did you have fun out there with the Imperial pilots?
 Meanwhile, our boy Ak-Ak did make his investigation. He got his cyborgs to break a few knees and now we know what happened to the lost pilot.]]),{name=player.name()}))
@@ -272,6 +273,7 @@ And again, be ensured that your initial reward will be dramatically increased fr
       vn.clear()
       vn.scene()
       local agent = vn.newCharacter( _("Intermediate"), { image=portrait.getFullPath(agentPort) } )
+      vn.transition()
       vn.na(_([[After landing, you once again meet Bony Boudica. And hopefully now, she has a nice reward for you.]]))
       agent(fmt.f(_([[Hi, {name}. How do you do?]]),{name=player.name()}))
       vn.menu{
@@ -336,6 +338,7 @@ function discussWithAg()
    vn.clear()
    vn.scene()
    local agent = vn.newCharacter( _("Bony Boudica"), { image=portrait.getFullPath(agentPort) } )
+   vn.transition()
 
    agent(fmt.f(_([[I don't know how much you did understand of our conversation on the spaceport, but we need you now to disable the ship of a pilot surnamed 'Shaky Swan'. He is supposed to be hanging around {sys} in the near future.]]),{sys=mem.flfsys}))
 
