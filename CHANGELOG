@@ -47,7 +47,7 @@
       * Fixed cargo missions not being generated in some parts of the universe
       * Game no longer crashes when loading save with persisted Lua pointing to inexistent systems/spobs
 
-* 0.10.6 (unreleased)
+* 0.10.6
    * Fixed potential segfault with invalid semver strings
    * Fixed sign error when buying artifacts in the Baron Prince mission (sorry)
    * Fixed behaviour of naev.trigger with parameters
