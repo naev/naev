@@ -5,7 +5,7 @@ local love_shaders = require 'love_shaders'
 
 local explosion_shader, explosion_sfx
 
-local function do_damage( pos, radius, damage, penetration, parent )
+local function do_damage( pos, radius, damage, penetration, parent, dmgtype, disable )
    local pp = player.pilot()
    for k,p in ipairs(pilot.getInrange( pos, radius )) do
       local norm, angle = (p:pos() - pos):polar()
@@ -14,7 +14,9 @@ local function do_damage( pos, radius, damage, penetration, parent )
       local mass = math.pow( dmg / 15, 2 )
 
       -- Damage and knockback
-      p:damage( dmg, 0, penetration, "normal", parent )
+      local dis = dmg * disable
+      dmg = dmg * (1-disable)
+      p:damage( dmg, dis, penetration, dmgtype, parent )
       p:knockback( mass, vec2.newP( mod*radius, angle ), pos, 1 )
 
       -- Shake the screen for the player
@@ -91,7 +93,9 @@ local function explosion( pos, vel, radius, damage, params )
 
    -- Do damage if applicable
    if damage then
-      do_damage( pos, radius, damage, params.penetration, params.parent )
+      local dmgtype = params.dmgtype or "normal"
+      local disable = params.disable or 0
+      do_damage( pos, radius, damage, params.penetration, params.parent, dmgtype, disable )
    end
 
    -- Create the explosions
