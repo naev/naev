@@ -49,6 +49,7 @@ static int naevL_keyEnableAll( lua_State *L );
 static int naevL_keyDisableAll( lua_State *L );
 static int naevL_eventStart( lua_State *L );
 static int naevL_eventReload( lua_State *L );
+static int naevL_missionList( lua_State *L );
 static int naevL_missionStart( lua_State *L );
 static int naevL_missionTest( lua_State *L );
 static int naevL_missionReload( lua_State *L );
@@ -86,6 +87,7 @@ static const luaL_Reg naev_methods[] = {
    { "keyDisableAll", naevL_keyDisableAll },
    { "eventStart", naevL_eventStart },
    { "eventReload", naevL_eventReload },
+   { "missionList", naevL_missionList },
    { "missionStart", naevL_missionStart },
    { "missionTest", naevL_missionTest },
    { "missionReload", naevL_missionReload },
@@ -348,6 +350,23 @@ static int naevL_eventStart( lua_State *L )
       bar_regen();
 
    lua_pushboolean( L, !ret );
+   return 1;
+}
+
+/**
+ * @brief Lists all the missions in the game.
+ *
+ *    @luatreturn table A table of all the missions in the game.
+ * @luafunc missionList
+ */
+static int naevL_missionList( lua_State *L )
+{
+   const MissionData *misns = mission_list();
+   lua_newtable(L);
+   for (int i=0; i<array_size(misns); i++) {
+      lua_pushstring(L, misns->name);
+      lua_rawseti(L,-2,i+1);
+   }
    return 1;
 }
 
