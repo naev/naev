@@ -77,4 +77,6 @@ docs/manual/naev_dev_manual.pdf
 docs/manual/naev_dev_manual.toc
 
 .vscode
+.kdev4
+*.kdev4
 .cache
