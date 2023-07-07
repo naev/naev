@@ -19,6 +19,7 @@
       return false
    end
    return misn_test.reweight_active()
+ </cond>
  <notes>
   <tier>3</tier>
   <campaign>Dvaered Recruitment</campaign>
