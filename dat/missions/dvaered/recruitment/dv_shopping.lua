@@ -87,7 +87,7 @@ I would like you to specially take the anti-bomber role. For that, I recommend y
    -- Mission details
    local nextsys = lmisn.getNextSystem(system.cur(), mem.godsys)
    misn.setTitle(_("Dvaered Shopping"))
-   misn.setReward( fmt.f("", {credits=fmt.credits(pay)}) )
+   misn.setReward( pay )
    misn.setDesc( fmt.f(_("You accepted to fly with a fleet of Dvaered ships that will escort a freshly-bought Dvaered Goddard battlecruiser.")))
    mem.misn_marker = misn.markerAdd( system.cur() )
    mem.misn_state = 0
