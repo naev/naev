@@ -4,6 +4,7 @@ local emp = require "luaspfx.emp"
 local explib = require "ships.lua.lib.explode"
 
 explode_init, explode_update = explib{
+   disable = 0.4, -- Significant disable damage
    boom_func = function( p )
       mem.timer = 0.05 * (mem.dtimer - mem.timer) / mem.dtimer
 

@@ -49,6 +49,8 @@ explode_init, explode_update = explib{
       local d = math.max( 0, 2 * (a * (1+math.sqrt(p:fuel()+1)/28)))
       local prms = {
          penetration = 1,
+         dmgtype = "ion",
+         disable = 0.2,
       }
       spfx.debris( p:mass(), mem.r, p:pos(), p:vel() )
       chakra( p:pos(), p:vel(), r )

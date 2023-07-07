@@ -28,6 +28,8 @@ explode_init, explode_update = explib{
       local d = math.max( 0, 2 * (a * (1+math.sqrt(p:fuel()+1)/28)))
       local prms = {
          penetration = 1,
+         disable = 0.7, -- Mainly disabling damage
+         dmgtype = "ion",
       }
       spfx.debris( p:mass(), mem.r, p:pos(), p:vel() )
       emp( p:pos(), p:vel(), r*1.2 )
