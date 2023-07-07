@@ -2765,6 +2765,7 @@ dat/events/derelict/sirius_awakening.lua
 dat/events/dev/quadtree_benchmark.lua
 dat/events/dev/skirmish_benchmark.lua
 dat/events/dev/system_tour.lua
+dat/events/dev/test_conditionals.lua
 dat/events/discovery.lua
 dat/events/dvaered/fwA_treason.lua
 dat/events/dvaered/fwB_repay.lua
