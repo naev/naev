@@ -14,8 +14,10 @@ local _sfx
 local function _sfx_load ()
    audio = require 'love.audio'
    _sfx = {
+      bingo = audio.newSource( 'snd/sounds/jingles/success.ogg' ),
       money = audio.newSource( 'snd/sounds/jingles/money.ogg' ),
       victory = audio.newSource( 'snd/sounds/jingles/victory.ogg' ),
+      eerie = audio.newSource( 'snd/sounds/jingles/eerie.ogg' ),
    }
 end
 
@@ -39,6 +41,25 @@ function lmisn.sfxMoney ()
    luaspfx.sfx( false, nil, sfx )
 end
 
+--[[--
+   Plays a jingle indicating success. Meant more for small good things advancing missions rather than completion.
+--]]
+function lmisn.sfxBingo()
+   if not _sfx then _sfx_load() end
+
+   local sfx = _sfx.bingo:clone()
+   luaspfx.sfx( false, nil, sfx )
+end
+
+--[[--
+   Plays a weird eerie sfx.
+--]]
+function lmisn.sfxEerie ()
+   if not _sfx then _sfx_load() end
+
+   local sfx = _sfx.eerie:clone()
+   luaspfx.sfx( false, nil, sfx )
+end
 
 --[[--
    Returns a complete or filtered table of landable spobs (that is, landable, inhabitable, and not restricted)
