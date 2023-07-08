@@ -86,6 +86,14 @@ function create ()
    if not misn.claim( mem.missys ) then misn.finish( false ) end
 
    local planets = mem.missys:spobs()
+   local newplanets = {}
+   for k,v in ipairs(planets) do
+      if (v:tags().nosightseeing ~= true) then
+         table.insert( newplanets, v )
+      end
+   end
+   planets = newplanets
+
    local numpoints = rnd.rnd( 2, #planets )
    mem.attractions = numpoints
    mem.points = {}
