@@ -5,8 +5,11 @@
  <priority>4</priority>
  <chance>100</chance>
  <location>Bar</location>
- <spob>Jorla</spob>
- <cond>return require("misn_test").reweight_active()</cond>
+ <cond>
+   if system.get("Regas"):jumpDist() &gt; 3 then
+      return false
+   end
+   return require("misn_test").reweight_active()</cond>
  <notes>
   <campaign>Nebula Research</campaign>
   <tier>2</tier>

@@ -4,9 +4,12 @@
  <unique />
  <priority>4</priority>
  <done>Shielding Prototype Funding</done>
- <chance>100</chance>
+ <chance>10</chance>
  <location>Bar</location>
- <spob>Jorla</spob>
+ <cond>
+   if system.get("Regas"):jumpDist() &gt; 3 then
+      return false
+   end</cond>
  <tags>
   <tag>zlk_cap_ch01_med</tag>
  </tags>
