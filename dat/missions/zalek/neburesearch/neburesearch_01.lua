@@ -6,7 +6,11 @@
  <done>Novice Nebula Research</done>
  <chance>100</chance>
  <location>Bar</location>
- <spob>Vilati Vilata</spob>
+ <cond>
+   if system.get("Daan"):jumpDist() &gt; 2 then
+      return false
+   end
+   return true</cond>
  <notes>
   <campaign>Nebula Research</campaign>
  </notes>
@@ -42,21 +46,25 @@ osd_msg[3] = _("Fly back to {pnt} in the {sys} system")
 local station = spob.get("PSO Monitor")
 local homeworld = spob.get("Bastion Center")
 local t_sys = {
+    system.get("Daravon"),
     system.get("Ksher"),
-    system.get("Sultan"),
-    system.get("Faust"),
     system.get("PSO"),
+    system.get("Faust"),
+    system.get("Allous"),
+    system.get("Sultan"),
     system.get("Amaroq"),
     system.get("Ksher"),
     system.get("Daravon"),
     system.get("Pultatis"),
 }
 local t_planet = {
-    [1] = spob.get("Qoman"),
-    [5] = station,
-    [6] = spob.get("Qoman"),
-    [7] = spob.get("Vilati Vilata"),
-    [8] = homeworld,
+    [1] = spob.get("Vilati Vilata"),
+    [2] = spob.get("Qoman"),
+    [5] = spob.get("Allous Citadel"),
+    [7] = station,
+    [8] = spob.get("Qoman"),
+    [9] = spob.get("Vilati Vilata"),
+    [10] = homeworld,
 }
 
 local credits = nebu_research.rewards.credits01
@@ -102,15 +110,20 @@ function accept()
     vn.scene()
     mensing = vn.newCharacter( nebu_research.vn_mensing() )
     mensing(_([["While the data recorded by Robert is of good quality, he seems to have completely forgotten that we need reference data of similarly dense nebulae. We have already installed his sensors on a transport ship. The nearby PSO nebula should be a good candidate but there are the pirate systems in between. Also the target systems are controlled by the Dvaered. Hard to say whether the Dvaered or the pirates are more dangerous. So this is why we need an escort."]]))
-    mensing(fmt.f(_([["We will travel through {sys2}, {sys3}, and {sys4}. Just passing through the systems should be sufficient. Also, I want to visit the {station} station before returning back to {pnt}. You have to make sure no one shoots us down during our expedition."]]), {sys2=t_sys[2], sys3=t_sys[3], sys4=t_sys[4], station=station, pnt=homeworld}))
+    mensing(fmt.f(_([["We will travel through {sys2}, {sys3}, and {sys4}. Just passing through the systems should be sufficient. Also, I want to visit the {station} station before returning back to {pnt}. You have to make sure no one shoots us down during our expedition."]]), {sys2=t_sys[3], sys3=t_sys[4], sys4=t_sys[6], station=station, pnt=homeworld}))
     vn.done()
     vn.run()
 
     -- Set up mission information
-    mem.destsys = t_sys[1]
+    if mem.origin == spob.get("Vilati Vilata") then
+        mem.destsys = t_sys[2]
+        mem.stage = 2
+    else
+        mem.destsys = t_sys[1]
+    end
     misn.setTitle(_("Advanced Nebula Research"))
     misn.setReward(credits)
-    misn.setDesc(fmt.f(_("Escort the transport ship to the {station} in the {sys} system. Make sure to stay close to the transport ship and wait until they jumped out of the system safely."), {station=station, sys=t_sys[5]}))
+    misn.setDesc(fmt.f(_("Escort the transport ship to the {station} in the {sys} system. Make sure to stay close to the transport ship and wait until they jumped out of the system safely."), {station=station, sys=t_sys[7]}))
     mem.nextsys = lmisn.getNextSystem(system.cur(), mem.destsys) -- This variable holds the system the player is supposed to jump to NEXT.
 
     misn.accept()
@@ -124,7 +137,7 @@ function accept()
 end
 
 function updateGoalDisplay()
-    local osd_index = {1, 0, 0, 0, 2, 2, 2, 3}
+    local osd_index = {1, 1, 0, 0, 2, 0, 2, 2, 2, 3}
     local omsg = {}
     local osd_active = 1
     for s, i in ipairs(osd_index) do
@@ -162,7 +175,7 @@ function jumpin()
         mem.nextsys = lmisn.getNextSystem(system.cur(), mem.destsys)
         updateGoalDisplay()
         spawnTransporter()
-        if not mem.ambush and system.cur():faction() == faction.get("Dvaered") and system.cur():jumpDist(t_sys[5]) < 5 then
+        if not mem.ambush and system.cur():faction() == faction.get("Dvaered") and system.cur():jumpDist(t_sys[5]) < 6 then
             hook.timer(2.0, "startAmbush")
         elseif system.cur()==system.get("Daan") or system.cur()==system.get("Provectus Nova") then
             local ambushers = fleet.add( 1,  {"Pirate Admonisher", "Pirate Vendetta", "Pirate Hyena", "Pirate Hyena"}, "Marauder", vec2.new(0,7500), nil, {ai="baddie_norun"} )
