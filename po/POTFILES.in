@@ -922,6 +922,7 @@ dat/spob/excelcior.xml
 dat/spob/eye_of_night_i.xml
 dat/spob/eye_of_night_ii.xml
 dat/spob/eye_of_night_iii.xml
+dat/spob/eye_of_night_station.xml
 dat/spob/facett_nest.xml
 dat/spob/fae.xml
 dat/spob/fairfax_nest.xml
@@ -2629,6 +2630,7 @@ dat/unidiff/antlejosv_8.xml
 dat/unidiff/antlejosv_9.xml
 dat/unidiff/collective_dead.xml
 dat/unidiff/durea_safe.xml
+dat/unidiff/eye_of_night_station.xml
 dat/unidiff/flf_dead.xml
 dat/unidiff/flf_pirate_ally.xml
 dat/unidiff/flf_vs_empire.xml
@@ -2858,6 +2860,7 @@ dat/events/restricted.lua
 dat/events/shipai.lua
 dat/events/shiplog.lua
 dat/events/sirius/achack04.lua
+dat/events/sirius/eye_of_night_mystery.lua
 dat/events/sirius/preach.lua
 dat/events/sirius/test_of_alacrity.lua
 dat/events/sirius/test_of_enlightenment.lua

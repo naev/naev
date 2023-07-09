@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Eye of Night Station">
+ <display>Ruined Station</display>
+ <pos x="8314" y="-21828"/>
+ <GFX>
+  <space>001.webp</space>
+  <exterior>station_scene.webp</exterior>
+ </GFX>
+ <general>
+  <class>0</class>
+  <population>0</population>
+  <hide>0.100000</hide>
+  <services>
+   <land/>
+   <nomissionspawn/>
+  </services>
+  <description>An eerily quiet station. Although it seems to be fully functional, it's almost as like everyone onboard was mysteriously vanished an instant before you arrived. Why is there nobody here?</description>
+ </general>
+ <tags>
+  <tag>ruined</tag>
+  <tag>nonpc</tag>
+  <tag>nonews</tag>
+  <tag>nosightseeing</tag>
+ </tags>
+</spob>
