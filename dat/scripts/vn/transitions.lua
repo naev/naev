@@ -425,8 +425,6 @@ transitions._t.blinkin = [[
 #include "lib/sdf.glsl"
 #include "lib/blur.glsl"
 
-const vec4 FADECOLOUR = vec4( 0.0, 0.0, 0.0, 1.0 );
-
 vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 {
    vec2 uv = texture_coords-0.5;
@@ -443,8 +441,6 @@ vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 transitions._t.blinkout = [[
 #include "lib/sdf.glsl"
 #include "lib/blur.glsl"
-
-const vec4 FADECOLOUR = vec4( 0.0, 0.0, 0.0, 1.0 );
 
 vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 {
