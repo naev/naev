@@ -1527,12 +1527,24 @@ end
 --[[--
 Sets the pitch for playing music.
 
-   @tparam string|nil filename Name of the music to change pitch of or all if nil.
+   @tparam table|string|nil data Name of the music to change pitch of or all if nil. Passing the table returned from vn.music can also be done to specify the music.
    @tparam number p Pitch to set.
 --]]
-function vn.musicPitch( filename, p )
+function vn.musicPitch( data, p )
    vn.func( function ()
-      lmusic.setPitch( filename, p )
+      lmusic.setPitch( data, p )
+   end )
+end
+
+--[[--
+Sets the volume for playing music.
+
+   @tparam table|string|nil data Name of the music to change volume of or all if nil. Passing the table returned from vn.music can also be done to specify the music.
+   @tparam number p Volume to set.
+--]]
+function vn.musicVolume( data, p )
+   vn.func( function ()
+      lmusic.setVolume( data, p )
    end )
 end
 
