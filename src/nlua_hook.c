@@ -983,7 +983,8 @@ static int hookL_custom( lua_State *L )
  *    <li> "jump" : triggered when pilot jumps to hyperspace (before he actually jumps out).</li>
  *    <li> "hail" : triggered when pilot is hailed.</li>
  *    <li> "land" : triggered when pilot is landing (right when starting land descent).</li>
- *    <li> "attacked" : triggered when the pilot is attacked. </li>
+ *    <li> "attacked" : triggered when the pilot is attacked.</li>
+ *    <li> "discovered" : triggered when the pilot is in stealth and discovered by another pilot (not necessarily the player).</li>
  *    <li> "idle" : triggered when the pilot becomes idle in manual control.</li>
  *    <li> "lockon" : triggered when the pilot locked on a missile on it's target.</li>
  *    <li> "stealth" : triggered when the pilot either enters or leaves stealth.</li>
