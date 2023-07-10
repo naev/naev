@@ -87,7 +87,7 @@ return function ()
          end )
          vne.flashbackTextEnd{ notransition=true }
 
-         vn.scene()
+         --vn.scene() -- vn.scene() is done in vne.flashbackTextEnd
          local sai = vn.newCharacter( tut.vn_shipai() )
          vn.transition( "blinkout" )
 
