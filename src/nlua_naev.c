@@ -356,7 +356,7 @@ static int naevL_eventStart( lua_State *L )
 /**
  * @brief Lists all the missions in the game.
  *
- *    @luatreturn table A table of all the missions in the game.
+ *    @luatreturn table A table of all the missions in the game, each as a table.
  * @luafunc missionList
  */
 static int naevL_missionList( lua_State *L )
@@ -364,7 +364,7 @@ static int naevL_missionList( lua_State *L )
    const MissionData *misns = mission_list();
    lua_newtable(L);
    for (int i=0; i<array_size(misns); i++) {
-      lua_pushstring(L, misns[i].name);
+      misn_pushMissionData( L, &misns[i] );
       lua_rawseti(L,-2,i+1);
    }
    return 1;

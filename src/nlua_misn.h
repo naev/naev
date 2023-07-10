@@ -16,3 +16,6 @@ int misn_loadCondLibs( lua_State *L ); /* safe read only stuff */
 
 /* individual library stuff */
 int nlua_loadMisn( nlua_env env );
+
+/* Useful stuff. */
+void misn_pushMissionData( lua_State *L, const MissionData *md );
