@@ -1304,6 +1304,7 @@ static int playerL_shipDeploy( lua_State *L )
  *
  * @usage player.outfits() -- A table of all the player's outfits.
  *
+ *    @luatparam[opt=false] bool unequipped_only Whether or not to check only the unequipped outfits and not equipped outfits. Defaults to false.
  *   @luatreturn {Outfit,...} Table of outfits.
  * @luafunc outfits
  */
@@ -1315,10 +1316,33 @@ static int playerL_outfits( lua_State *L )
    }
 
    const PlayerOutfit_t *outfits = player_getOutfits();
+   int unequipped_only = lua_toboolean(L, 1);
+   const PlayerShip_t* pstack = player_getShipStack();
+   int n = 1;
+   /* Set up and get owned outfits. */
    lua_newtable(L);
    for (int i=0; i<array_size(outfits); i++) {
       lua_pushoutfit(L, outfits[i].o );
-      lua_rawseti(L, -2, i+1);
+      lua_rawseti(L, -2, n++);
+   }
+   /* Add all outfits on player ships. */
+   if (!unequipped_only) {
+      for (int i=0; i<array_size(pstack); i++) {
+         for (int j=0; j<array_size(pstack[i].p->outfits); j++) {
+            const Outfit *o = pstack[i].p->outfits[j]->outfit;
+            int found = 0;
+            for (int k=0; k<array_size(outfits); k++) {
+               if (outfits[k].o==o) {
+                  found = 1;
+                  break;
+               }
+            }
+            if (found) {
+               lua_pushoutfit(L, o);
+               lua_rawseti(L, -2, n++);
+            }
+         }
+      }
    }
    return 1;
 }
