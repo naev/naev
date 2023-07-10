@@ -60,13 +60,27 @@ function donext( data )
    end
    local curtest = tests[ cur ]
    if not curtest then
-      print("max_elem, depth,         avg,        wrst")
+      local csvfile = file.new("quadtree_benchmark.csv")
+      local csvfile_f = file.new("quadtree_benchmark_full.csv")
+      csvfile:open("w")
+      csvfile_f:open("w")
+      local function log( msg )
+         print( msg )
+         csvfile:write( msg )
+      end
+      log("max_elem, depth,         avg,        wrst")
       for k,t in ipairs(tests) do
          local avg, avgstd = computestats( t.avg )
          local wrst, wrststd = computestats( t.wrst )
-         print(string.format("% 8d,% 6d, %.2f (%.1f), %.2f (%.1f)",
+         log(string.format("% 8d,% 6d, %.2f (%.1f), %.2f (%.1f)",
             t.max_elem, t.depth, avg, avgstd, wrst, wrststd ))
+         for i = 1,#t.avg do
+            csvfile_f:write(string.format("% 8d,% 6d, %.2f, %.2f",
+               t.max_elem, t.depth, t.avg[i], t.wrst[i] ))
+         end
       end
+      csvfile:close()
+      csvfile_f:close()
       evt.finish()
       return
    end
