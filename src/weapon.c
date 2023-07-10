@@ -1151,22 +1151,26 @@ static void weapon_updateCollide( Weapon* w, double dt, WeaponLayer layer )
    wc.beam = outfit_isBeam(w->outfit);
    if (!wc.beam) {
       int x, y, w2, h2;
-      const CollPoly *plg;
-      int n;
       wc.gfx = outfit_gfx(w->outfit);
       if (wc.gfx->tex != NULL) {
+         const CollPoly *plg;
+         int n;
          gl_getSpriteFromDir( &w->sx, &w->sy, wc.gfx->tex, w->solid.dir );
          n = wc.gfx->tex->sx * w->sy + w->sx;
          plg = outfit_plg(w->outfit);
          wc.polygon = &plg[n];
          wc.range = wc.gfx->size; /* Range is set to size in this case. */
       }
+      else {
+         wc.polygon = NULL;
+         wc.range = wc.gfx->col_size;
+      }
 
       /* Determine quadtree location. */
       x = round(w->solid.pos.x);
       y = round(w->solid.pos.y);
-      w2 = ceil(wc.gfx->tex->sw * 0.5);
-      h2 = ceil(wc.gfx->tex->sh * 0.5);
+      w2 = ceil(wc.range * 0.5);
+      h2 = ceil(wc.range * 0.5);
       x1 = x-w2;
       y1 = y-h2;
       x2 = x+w2;
