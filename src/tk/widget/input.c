@@ -479,8 +479,8 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
  */
 static int inp_rangeToWidth( Widget *inp, int start_pos, int end_pos )
 {
-   char c;
    int w;
+   char c = '\0';
 
    if (end_pos >= 0) {
       if (end_pos <= start_pos)
