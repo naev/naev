@@ -23,8 +23,7 @@ function create ()
    hook.takeoff( "takeoff" )
 end
 
-function outfit_buy( outfitname )
-   local o = outfit.get(outfitname)
+function outfit_buy( o )
    local tbroad = o:typeBroad()
    local isturret = o:specificstats().isturret
 
@@ -143,8 +142,7 @@ function outfit_buy( outfitname )
    end
 end
 
-function ship_buy( shipname )
-   local s = ship.get(shipname)
+function ship_buy( s )
 
    if not var.peek( "tut_buyship" ) then
       vn.clear()

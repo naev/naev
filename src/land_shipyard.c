@@ -431,7 +431,7 @@ static void shipyard_buy( unsigned int wid, const char* str )
 
    /* Run hook. */
    hparam[0].type    = HOOK_PARAM_STRING;
-   hparam[0].u.str   = ship->name;
+   hparam[0].u.ship  = ship;
    hparam[1].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "ship_buy", hparam );
    land_needsTakeoff( 1 );

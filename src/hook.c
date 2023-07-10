@@ -38,6 +38,8 @@
 #include "nlua_evt.h"
 #include "nlua_hook.h"
 #include "nlua_pilot.h"
+#include "nlua_outfit.h"
+#include "nlua_ship.h"
 #include "nstring.h"
 #include "nxml.h"
 #include "player.h"
@@ -257,6 +259,12 @@ static int hook_parseParam( const HookParam *param )
             break;
          case HOOK_PARAM_PILOT:
             lua_pushpilot( naevL, param[n].u.lp );
+            break;
+         case HOOK_PARAM_SHIP:
+            lua_pushship( naevL, param[n].u.ship );
+            break;
+         case HOOK_PARAM_OUTFIT:
+            lua_pushoutfit( naevL, param[n].u.outfit );
             break;
          case HOOK_PARAM_FACTION:
             lua_pushfaction( naevL, param[n].u.lf );

@@ -488,8 +488,7 @@ function outfits ()
    mem.hk_land_outfits = nil
 end
 
-function outfit_buy( name, _q )
-   local o = outfit.get( name )
+function outfit_buy( o, _q )
    local t = o:type()
    if t=="Map" or t=="Local Map" or t=="License" or t=="GUI" or t=="Unknown" then
       return

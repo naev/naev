@@ -2320,8 +2320,8 @@ static void equipment_sellShip( unsigned int wid, const char* str )
          _("You have sold your ship %s for %s."), name, buf );
 
    /* Run hook. */
-   hparam[0].type    = HOOK_PARAM_STRING;
-   hparam[0].u.str   = s->name;
+   hparam[0].type    = HOOK_PARAM_SHIP;
+   hparam[0].u.ship  = s;
    hparam[1].type    = HOOK_PARAM_STRING;
    hparam[1].u.str   = name;
    hparam[2].type    = HOOK_PARAM_SENTINEL;

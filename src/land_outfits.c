@@ -922,8 +922,8 @@ static void outfits_buy( unsigned int wid, const char *str )
 
    /* Actually buy the outfit. */
    outfits_updateEquipmentOutfits();
-   hparam[0].type    = HOOK_PARAM_STRING;
-   hparam[0].u.str   = outfit->name;
+   hparam[0].type    = HOOK_PARAM_OUTFIT;
+   hparam[0].u.outfit= outfit;
    hparam[1].type    = HOOK_PARAM_NUMBER;
    hparam[1].u.num   = q;
    hparam[2].type    = HOOK_PARAM_SENTINEL;
@@ -1029,8 +1029,8 @@ static void outfits_sell( unsigned int wid, const char *str )
       player_modCredits( outfit->price * player_rmOutfit( outfit, q ) );
 
    outfits_updateEquipmentOutfits();
-   hparam[0].type    = HOOK_PARAM_STRING;
-   hparam[0].u.str   = outfit->name;
+   hparam[0].type    = HOOK_PARAM_OUTFIT;
+   hparam[0].u.outfit= outfit;
    hparam[1].type    = HOOK_PARAM_NUMBER;
    hparam[1].u.num   = q;
    hparam[2].type    = HOOK_PARAM_SENTINEL;

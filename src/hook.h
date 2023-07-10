@@ -21,6 +21,8 @@ typedef enum HookParamType_e {
    HOOK_PARAM_STRING,   /**< String parameter. */
    HOOK_PARAM_BOOL,     /**< Boolean parameter. */
    HOOK_PARAM_PILOT,    /**< Pilot hook parameter. */
+   HOOK_PARAM_SHIP,     /**< Ship hook parameter. */
+   HOOK_PARAM_OUTFIT,   /**< Outfit hook parameter. */
    HOOK_PARAM_FACTION,  /**< Faction hook parameter. */
    HOOK_PARAM_SPOB,     /**< Spob hook parameter. */
    HOOK_PARAM_JUMP,     /**< Jump point hook parameter. */
@@ -39,6 +41,8 @@ typedef struct HookParam_s {
       const char *str; /**< String parameter. */
       int b;         /**< Boolean parameter. */
       LuaPilot lp;   /**< Hook parameter pilot data. */
+      const Ship *ship; /**< Hook parameter ship data. */
+      const Outfit *outfit; /**< Hook parameter outfit data. */
       LuaFaction lf; /**< Hook parameter faction data. */
       LuaSpob la;    /**< Hook parameter spob data. */
       LuaJump lj;    /**< Hook parameter jump data. */

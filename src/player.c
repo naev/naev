@@ -619,12 +619,12 @@ void player_swapShip( const char *shipname, int move_cargo )
    /* Run hook. */
    hparam[0].type    = HOOK_PARAM_STRING;
    hparam[0].u.str   = player.p->name;
-   hparam[1].type    = HOOK_PARAM_STRING;
-   hparam[1].u.str   = player.p->ship->name;
+   hparam[1].type    = HOOK_PARAM_SHIP;
+   hparam[1].u.str   = player.p->ship;
    hparam[2].type    = HOOK_PARAM_STRING;
    hparam[2].u.str   = ps->p->name;
-   hparam[3].type    = HOOK_PARAM_STRING;
-   hparam[3].u.str   = ps->p->ship->name;
+   hparam[3].type    = HOOK_PARAM_SHIP;
+   hparam[3].u.str   = ps->p->ship;
    hparam[4].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "ship_swap", hparam );
 
