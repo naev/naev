@@ -62,8 +62,8 @@ static Quadtree pilot_quadtree; /**< Quadtree for the pilots. */
 static IntList pilot_qtquery; /**< Quadtree query. */
 static int qt_init = 0;
 /* A simple grid search procedure was used to determine the following parameters. */
-static int qt_max_elem = 4;
-static int qt_depth = 6;
+static int qt_max_elem = 2;
+static int qt_depth = 5;
 
 /* misc */
 static const double pilot_commTimeout  = 15.; /**< Time for text above pilot to time out. */

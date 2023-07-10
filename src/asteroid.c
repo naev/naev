@@ -279,7 +279,7 @@ void asteroids_init (void)
       qx = round(ast->pos.x);
       qy = round(ast->pos.y);
       qr = ceil(ast->radius);
-      qt_create( &ast->qt, qx-qr, qy-qr, qx+qr, qy+qr, 128, 5 );
+      qt_create( &ast->qt, qx-qr, qy-qr, qx+qr, qy+qr, 2, 5 );
       ast->qt_init = 1;
 
       /* Add the asteroids to the anchor */
