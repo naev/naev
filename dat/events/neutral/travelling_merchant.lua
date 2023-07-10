@@ -31,6 +31,7 @@ local der = require "common.derelict"
 local poi = require "common.poi"
 
 local p, broadcastid, hailed_player, second_hail, timerdelay -- Non-persistent state
+local gen_outfits -- Forward declaration
 
 local trader_name = _("Machiavellian Misi") -- Mireia Sibeko
 local trader_image = "misi.png"
@@ -45,7 +46,7 @@ local broadcastmsg = {
    _("…and that's how I was able to get a third liver haha. Oops is this on? Er, nevermind that. Outfits for sale!"),
 }
 
-
+local misi_outfits
 function create ()
    local scur = system.cur()
 
@@ -104,6 +105,9 @@ function create ()
    p:control()
    p:brake()
 
+   -- Get outfits
+   misi_outfits = gen_outfits()
+
    -- Set up hooks
    timerdelay = 10
    broadcastid = 1
@@ -122,65 +126,7 @@ function leave ()
     evt.finish()
 end
 
-function broadcast ()
-   -- End the event if for any reason the trader stops existing
-   if not p:exists() then
-      evt.finish()
-      return
-   end
-
-   -- Cycle through broadcasts
-   if broadcastid > #broadcastmsg then broadcastid = 1 end
-   p:broadcast( broadcastmsg[broadcastid], true )
-   broadcastid = broadcastid+1
-   timerdelay = timerdelay * 1.5
-   hook.timer( timerdelay, "broadcast" )
-
-   if not hailed_player and not var.peek('travelling_trader_hailed') then
-      p:hailPlayer()
-      hailed_player = true
-
-   elseif poi.data_get_gained() > 0 and
-         var.peek("travelling_trader_boarded") and
-         not var.peek("travelling_trader_hail2") and
-         not var.peek("travelling_trader_data") then
-      p:hailPlayer()
-      hailed_player = true
-      second_hail = true
-   end
-end
-
-function hail ()
-   if not var.peek('travelling_trader_hailed') then
-      vn.clear()
-      vn.scene()
-      local mm = vn.newCharacter( trader_name,
-         { image=trader_image, color=trader_colour, shader=love_shaders.hologram() } )
-      vn.transition("electric")
-      mm:say( _([["Howdy Human! Er, I mean, Greetings! If you want to take a look at my wonderful, exquisite, propitious, meretricious, effulgent, … wait, what was I talking about? Oh yes, please come see my wares on my ship. You are welcome to board anytime!"]]) )
-      vn.done("electric")
-      vn.run()
-
-      var.push('travelling_trader_hailed', true)
-      player.commClose()
-   elseif second_hail then
-      vn.clear()
-      vn.scene()
-      local mm = vn.newCharacter( trader_name,
-         { image=trader_image, color=trader_colour, shader=love_shaders.hologram() } )
-      vn.transition("electric")
-      mm:say(_([["Howdy Human! I have new propitiuous and meretricious wares available. Come see the wares on my ship!"]]))
-      vn.done("electric")
-      vn.run()
-
-      var.push('travelling_trader_hail2', true)
-      player.commClose()
-
-      second_hail = false
-   end
-end
-
-function board ()
+function gen_outfits ()
    --[[
       Ideas
    * Vampiric weapon that removes shield regen, but regenerates shield by doing damage.
@@ -263,6 +209,83 @@ function board ()
          table.insert( outfits, "Squadron Synchronizer Module" )
       end
    end
+
+   return outfits
+end
+
+local newoutfits = false
+function broadcast ()
+   -- End the event if for any reason the trader stops existing
+   if not p:exists() then
+      evt.finish()
+      return
+   end
+
+   -- Check to see if has new outfits
+   for k,o in ipairs(misi_outfits) do
+      if not var.peek("misi_o_"..o) then
+         newoutfits = true
+         break
+      end
+   end
+
+   -- Cycle through broadcasts
+   if broadcastid > #broadcastmsg then broadcastid = 1 end
+   p:broadcast( broadcastmsg[broadcastid], true )
+   broadcastid = broadcastid+1
+   timerdelay = timerdelay * 1.5
+   hook.timer( timerdelay, "broadcast" )
+
+   if not hailed_player and not var.peek('travelling_trader_hailed') then
+      p:hailPlayer()
+      hailed_player = true
+
+   elseif poi.data_get_gained() > 0 and
+         var.peek("travelling_trader_boarded") and
+         not var.peek("travelling_trader_hail2") and
+         not var.peek("travelling_trader_data") then
+      p:hailPlayer()
+      hailed_player = true
+      second_hail = true
+
+   elseif newoutfits then
+      -- With new outfits point it out to the player
+      p:comm(_("I have new wares you might want to see!"), true)
+      player.autonavReset(1)
+   end
+end
+
+function hail ()
+   if not var.peek('travelling_trader_hailed') then
+      vn.clear()
+      vn.scene()
+      local mm = vn.newCharacter( trader_name,
+         { image=trader_image, color=trader_colour, shader=love_shaders.hologram() } )
+      vn.transition("electric")
+      mm:say( _([["Howdy Human! Er, I mean, Greetings! If you want to take a look at my wonderful, exquisite, propitious, meretricious, effulgent, … wait, what was I talking about? Oh yes, please come see my wares on my ship. You are welcome to board anytime!"]]) )
+      vn.done("electric")
+      vn.run()
+
+      var.push('travelling_trader_hailed', true)
+      player.commClose()
+   elseif second_hail then
+      vn.clear()
+      vn.scene()
+      local mm = vn.newCharacter( trader_name,
+         { image=trader_image, color=trader_colour, shader=love_shaders.hologram() } )
+      vn.transition("electric")
+      mm:say(_([["Howdy Human! I have new propitiuous and meretricious wares available. Come see the wares on my ship!"]]))
+      vn.done("electric")
+      vn.run()
+
+      var.push('travelling_trader_hail2', true)
+      player.commClose()
+
+      second_hail = false
+   end
+end
+
+function board ()
    -- Boarding sound
    der.sfx.board:play()
 
@@ -312,6 +335,18 @@ They get uncomfortably close
          vn.func( function ()
             var.push("travelling_trader_data",true)
          end )
+      else
+         local sillyphrases = {
+            _("Guaranteed to not smell like they were plundered from some stinky old derelict!"),
+            _("Part of a complete breakfast!"),
+            _("Buy one and get zero free!"),
+            _("Now free of flesh-eating bacteria!"),
+            _("Goes well with a side of rice!"),
+            _("Now with fewer side effects!"),
+         }
+
+         mm(fmt.f(_([["I haven't seen you in a while old friend! I've gotten some new wares you may want to see. Always the best quality! {sillyphrase}"]]),
+            {sillyphrase = sillyphrases[ rnd.rnd(1,#sillyphrases) ]}))
       end
    end
 
@@ -320,9 +355,13 @@ They get uncomfortably close
    vn.label("menu_direct")
    vn.menu( function ()
       local opts = {
-         { _("Shop"), "bazaar" },
          { _("Leave"), "leave" },
       }
+      if newoutfits then
+         table.insert( opts, 1, { _("Shop (#rNew Wares!#0)"), "bazaar" } )
+      else
+         table.insert( opts, 1, { _("Shop"), "bazaar" } )
+      end
       if var.peek("travelling_trader_data") then
          table.insert( opts, 2, { _("Special Services"), "special" } )
       end
@@ -331,7 +370,13 @@ They get uncomfortably close
 
    vn.label("bazaar")
    vn.func( function ()
-      tk.merchantOutfit( store_name, outfits )
+      -- Mark outfits as seen
+      for k,o in ipairs(misi_outfits) do
+         var.push("misi_o_"..o,true)
+      end
+      newoutfits = false
+      -- Open store
+      tk.merchantOutfit( store_name, misi_outfits )
    end )
    vn.jump("menu")
 
