@@ -19,11 +19,10 @@
 local vn = require "vn"
 local fmt = require "format"
 local vni = require "vnimage"
-local portrait = require "portrait"
 local flow = require "ships.lua.lib.flow"
 
 -- TODO better portrait? Maybe reusable character?
-local talker_portrait, talker_image = vni.sirius.fyrra()
+local talker_image, talker_portrait = vni.sirius.fyrra()
 local title = _("Psychic Awakening")
 local obelisk, obelisksys = spob.getS("Kal Atok Obelisk")
 local target = outfit.get("Seeking Chakra")
@@ -48,7 +47,7 @@ function accept ()
    local accepted
    vn.clear()
    vn.scene()
-   local f = vn.newCharacter( _("Staring Fyrra"), { image=portrait.getFullPath(talker_image) } )
+   local f = vn.newCharacter( _("Staring Fyrra"), { image=talker_image } )
    vn.na(_([[The Fyrra echelon individual seems to be clearly staring at you. After you notice, your head starts to throb painfully. You hold on tight to your conscience and manage to not pass out.]]))
    vn.na(_([[Believing the individual to be somehow related to your headaches, you approach them.]]))
    f(_([[The stare at you even as you get close before yelping in astonishment.
