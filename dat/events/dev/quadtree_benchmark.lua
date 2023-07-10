@@ -66,7 +66,7 @@ function donext( data )
       csvfile_f:open("w")
       local function log( msg )
          print( msg )
-         csvfile:write( msg )
+         csvfile:write( msg.."\n")
       end
       log("max_elem, depth,         avg,        wrst")
       for k,t in ipairs(tests) do
@@ -75,7 +75,7 @@ function donext( data )
          log(string.format("% 8d,% 6d, %.2f (%.1f), %.2f (%.1f)",
             t.max_elem, t.depth, avg, avgstd, wrst, wrststd ))
          for i = 1,#t.avg do
-            csvfile_f:write(string.format("% 8d,% 6d, %.2f, %.2f",
+            csvfile_f:write(string.format("% 8d,% 6d, %.2f, %.2f\n",
                t.max_elem, t.depth, t.avg[i], t.wrst[i] ))
          end
       end
