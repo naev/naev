@@ -40,6 +40,8 @@ local maindiff = "Eye of Night Station"
 mem.state = 0
 
 function create ()
+   evt.finish(false) -- not done yet
+
    if not evt.claim{mainsys} then
       evt.finish(false)
       return
