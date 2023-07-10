@@ -1243,7 +1243,7 @@ static int load_gameInternalHook( void *data )
             l += scnprintf( &buf[l], sizeof(buf)-l, _("\n   #r%s#0"), misn_failed_str[i]);
       }
       l += scnprintf( &buf[l], sizeof(buf)-l, _("\nNote that, in general, you should be able to find the missions/events again and start them without penalty."));
-      dialogue_alert( buf );
+      dialogue_alertRaw( buf );
    }
 
    /* Set loaded. */
