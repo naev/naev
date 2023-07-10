@@ -2350,6 +2350,8 @@ static int outfit_parse( Outfit* temp, const char* file )
                   temp->slot.type = OUTFIT_SLOT_WEAPON;
                else if (strcmp(cprop,"intrinsic") == 0)
                   temp->slot.type = OUTFIT_SLOT_NA;
+               else if (strcmp(cprop,"none") == 0)
+                  temp->slot.type = OUTFIT_SLOT_NA;
                else
                   WARN(_("Outfit '%s' has unknown slot type '%s'."), temp->name, cprop);
 
