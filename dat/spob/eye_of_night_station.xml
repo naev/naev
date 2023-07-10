@@ -6,6 +6,12 @@
   <space>001.webp</space>
   <exterior>station_scene.webp</exterior>
  </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <base>0</base>
+  <bonus>0</bonus>
+  <range>0</range>
+ </presence>
  <general>
   <class>0</class>
   <population>0</population>
