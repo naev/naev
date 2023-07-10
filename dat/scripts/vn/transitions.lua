@@ -447,7 +447,7 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
    vec2 sdfuv = uv-0.5;
 
    float d = sdVesica( sdfuv.yx, 0.8, 1.0-progress );
-   float a = (1.0-smoothstep( 0.0, 0.2, -d )) * smoothstep(0.0, 1.0, progress*2.0);
+   float a = (smoothstep( 0.0, 0.2, -d )) * smoothstep(0.0, 1.0, progress*2.0);
 
    vec4 c1 = Texel( texprev, uv );
    vec4 c2 = Texel( tex, uv );
