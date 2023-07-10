@@ -3,7 +3,18 @@
 <event name="Travelling Merchant">
  <location>enter</location>
  <chance>5</chance>
- <cond>require("common.pirate").systemPresence() &gt; 100 and system.cur():presence("Independent") &gt; 100 and player.credits() &gt;= 1e6 and not system.cur():tags().restricted</cond>
+ <cond>
+   if require("common.pirate").systemPresence() &lt; 100 or system.cur():presence("Independent") &lt; 100 then
+      return false
+   end
+   if system.cur():tags().restricted then
+      return false
+   end
+   if player.credits() &lt; 1e6 and not var.peek("travelling_trader_hailed") then
+      return false
+   end
+   return true
+ </cond>
 </event>
 --]]
 --[[
