@@ -257,6 +257,11 @@ function board ()
       if player.evtDone("Quai Pirates") and player.evtDone("Levo Pirates") and player.evtDone("Capricorn Pirates") and player.evtDone("Surano Pirates") and player.evtDone("Dendria Pirates") then
          table.insert( outfits, "Goatee Marker" )
       end
+
+      -- Chapter 1
+      if player.fleetCapacity() > 0 then
+         table.insert( outfits, "Squadron Synchronizer Module" )
+      end
    end
    -- Boarding sound
    der.sfx.board:play()
