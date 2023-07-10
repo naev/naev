@@ -9,7 +9,7 @@
    if spob.cur():tags().station then
       return false
    end
-   if not require("test_misn").reweight_active() then
+   if not require("misn_test").reweight_active() then
       return false
    end
    local count = 0

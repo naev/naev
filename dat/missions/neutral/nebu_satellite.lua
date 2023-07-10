@@ -9,7 +9,7 @@
  <faction>Empire</faction>
  <faction>Goddard</faction>
  <cond>
-   return require("test_misn").reweight_active()
+   return require("misn_test").reweight_active()
  </cond>
  <notes>
   <tier>2</tier>
