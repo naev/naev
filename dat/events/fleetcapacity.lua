@@ -14,9 +14,9 @@ local cap_tags_list = {
    ["fleetcap_10"] = 10,
 }
 
-local function compute_capacity( data )
+local function compute_capacity( tags )
    local cap = 0
-   for t,j in pairs(data.tags) do
+   for t,j in pairs(tags) do
       cap = cap + (cap_tags_list[t] or 0)
    end
    return cap
@@ -34,10 +34,14 @@ local function recalculate( domsg )
    cap = 100
 
    for i,e in ipairs(player.evtDoneList()) do
-      cap = cap + compute_capacity( e )
+      cap = cap + compute_capacity( e.tags )
    end
    for i,m in ipairs(player.misnDoneList()) do
-      cap = cap + compute_capacity( m )
+      cap = cap + compute_capacity( m.tags )
+   end
+   for i,o in pairs(player.outfits()) do
+      local q = player.outfitNum(o)
+      cap = cap + q*compute_capacity( o:tags() )
    end
 
    player.fleetCapacitySet( cap )
@@ -59,9 +63,21 @@ function eventmission_done( data )
    end
 end
 
+function tagsbuy( o, _q )
+   -- Only update if there's a tag we care about
+   for t, b in pairs( o:tags() ) do
+      local c = cap_tags_list[t]
+      if c then
+         recalculate( true )
+         return
+      end
+   end
+end
+
 function create ()
    recalculate( false )
 
    hook.mission_done( "eventmission_done" )
    hook.event_done( "eventmission_done" )
+   hook.outfit_buy( "tagsbuy" )
 end
