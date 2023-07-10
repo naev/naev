@@ -10,6 +10,7 @@
  */
 /* Alert. */
 PRINTF_FORMAT( 1, 2 ) void dialogue_alert( const char *fmt, ... ); /* does not pause execution */
+void dialogue_alertRaw( const char *msg ); /* does not pause execution */
 /* Message. */
 PRINTF_FORMAT( 2, 3 ) void dialogue_msg( const char *caption, const char *fmt, ... );
 void dialogue_msgRaw( const char *caption, const char *msg );

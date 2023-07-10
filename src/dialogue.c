@@ -133,11 +133,6 @@ void dialogue_alert( const char *fmt, ... )
 {
    char msg[STRMAX_SHORT];
    va_list ap;
-   int w,h;
-   glFont* font;
-   unsigned int msg_wid;
-   int done;
-   const char *caption = _("Warning");
 
    if (fmt == NULL) return;
    else { /* get the message */
@@ -145,6 +140,22 @@ void dialogue_alert( const char *fmt, ... )
       vsnprintf(msg, sizeof(msg), fmt, ap);
       va_end(ap);
    }
+
+   dialogue_alertRaw( msg );
+}
+
+/**
+ * @brief Displays an alert popup with only an ok button and a message.
+ *
+ *    @param msg String to display.
+ */
+void dialogue_alertRaw( const char *msg )
+{
+   int w,h;
+   glFont* font;
+   unsigned int msg_wid;
+   int done;
+   const char *caption = _("Warning");
 
    font = dialogue_getSize( caption, msg, &w, &h );
 
