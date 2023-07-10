@@ -28,6 +28,7 @@ local tut = require "common.tutorial"
 local pilotai = require "pilotai"
 local pp_shaders = require "pp_shaders"
 local lg = require "love.graphics"
+local der = require 'common.derelict'
 
 local mainspb = spob.get("Eye of Night Station")
 local mainsys = system.get("Eye of Night")
@@ -163,23 +164,45 @@ function land ()
       return
    end
 
-   local bgalpha = 0
+   local effectstr = 0
+
    vn.clear()
    vn.scene()
    vn.setBackground( function ()
-      if bgalpha > 0 then
+      if effectstr > 0 then
          local nw, nh = naev.gfx.dim()
-         vn.setColor( {0, 0, 0, bgalpha} )
+         vn.setColor( {0, 0, 0, effectstr} )
          lg.rectangle("fill", 0, 0, nw, nh )
       end
    end )
    vn.transition()
+   local mbg = vn.music( der.sfx.ambient )
+   -- Maybe creepy_guitar.ogg?
+   local mfg = vn.music( "snd/sounds/loop/alienplanet.ogg", {volume=0} ) -- Slowly gets stronger
 
+   -- Changes the strength of the event
+   local function effect_change( str )
+      vn.func( function ()
+         effectstr = str
+      end )
+      vn.musicVolume( mbg, 1-effectstr )
+      vn.musicVolume( mfg, effectstr )
+   end
+
+   vn.na(_([[The station systems confirm your ship and the landing dock gates open and you navigate your ship to an empty landing pad. Looking around, you can't see any other ships, which is quite odd.]]))
+   vn.na(fmt.f(_([[You expect {shipai} to butt in and tell you to leave or something like that, but your comm is silent. Furthermore, it seems like {shipai} is offline. They must be pouting somewhere aboard the ship right now.]]),
+      {shipai=tut.ainame()}))
+   vn.na(_([[Having come this far, you decide to enter the station and find the origin of the distress signal.]]))
+   effect_change( 0.05 ) -- Start to get stronger
+   vn.na(_([[You enter the main hallway of the station, what strikes you is the complete absence of people, despite the fact that that station seems to be in perfect condition. Furthermore, there are signs of recent human activity such as footprints and a dropped pen.]]))
+   vn.na(_([[What do you do?]]))
+   vn.menu{
+   }
 
    vn.scene()
    vn.setBackground( function ()
       local nw, nh = naev.gfx.dim()
-      vn.setColor( {1, 1, 1, bgalpha} )
+      vn.setColor( {1, 1, 1, effectstr} )
       lg.rectangle("fill", 0, 0, nw, nh )
    end )
    vn.transition( "blinkout" )
