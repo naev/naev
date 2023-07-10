@@ -14,6 +14,22 @@
 function create()
    -- Run over all missions and test conditionals
    for k,m in ipairs(naev.missionList()) do
-      naev.missionTest( m )
+      if not inlist( {
+         "computer", "bar", "land",
+      }, m.loc ) then
+         naev.missionTest( m.name )
+      end
    end
+   hook.load("load_game")
+end
+
+function load_game ()
+   for k,m in ipairs(naev.missionList()) do
+      if inlist( {
+         "computer", "bar", "land",
+      }, m.loc ) then
+         naev.missionTest( m.name )
+      end
+   end
+   evt.finish()
 end
