@@ -364,7 +364,7 @@ static int naevL_missionList( lua_State *L )
    const MissionData *misns = mission_list();
    lua_newtable(L);
    for (int i=0; i<array_size(misns); i++) {
-      lua_pushstring(L, misns->name);
+      lua_pushstring(L, misns[i].name);
       lua_rawseti(L,-2,i+1);
    }
    return 1;
