@@ -1342,10 +1342,10 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps, in
       l = 0;
    if (dps > 0.)
       l += scnprintf( &buf[l], (max_len-l),
-            _("%.2f DPS [%.2f EPS]"), dps, eps );
+            _("%.2f DPS [%.2f EPS]\n"), dps, eps );
    if (s->ship->desc_extra != NULL)
-      l += scnprintf( &buf[l], (max_len-l), "%s", s->ship->desc_extra );
-   l += ss_statsDesc( &s->stats, &buf[l], (max_len-l), l );
+      l += scnprintf( &buf[l], (max_len-l), "%s\n", _(s->ship->desc_extra) );
+   l += ss_statsDesc( &s->stats, &buf[l], (max_len-l), 0 );
    return l;
 }
 

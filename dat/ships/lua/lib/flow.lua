@@ -189,9 +189,9 @@ function flow.size( p )
 end
 
 local prefix = {
-   _("Lesser"),
-   _("Normal"),
-   _("Greater"),
+   p_("flow prefix", "Lesser"),
+   p_("flow prefix", "Normal"),
+   p_("flow prefix", "Greater"),
 }
 function flow.prefix( s )
    return prefix[s]

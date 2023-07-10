@@ -92,7 +92,7 @@ return function ()
          vn.transition( "blinkout" )
 
          vn.na(fmt.f(_("You awake to your ship AI {shipai} looming over you."),{shipai=tut.ainame()}))
-         sai(fmt.f(_([["Are you alright {pilotname}? You usually wake up after a single electric shock, but this time you did not respond and had me worried."]]),{pilotname=pilot.name()}))
+         sai(fmt.f(_([["Are you alright {pilotname}? You usually wake up after a single electric shock, but this time you did not respond and had me worried."]]),{pilotname=player.name()}))
 
          vn.menu{
             {_([["Electric shock?"]]), "cont02"},

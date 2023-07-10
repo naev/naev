@@ -81,6 +81,7 @@ function create ()
       for _k,sp in ipairs(special_list) do
          if r < sp.chance / weights then
             dospecial = sp
+            break
          end
       end
    end
