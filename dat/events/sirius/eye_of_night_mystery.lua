@@ -78,9 +78,40 @@ function intro ()
    hook.timer( 1, "check_dist" )
 end
 
-local playerpos, playervel, playershield, playerarmour, playerenergy, pirpos, pirvel, piroutfits
+local player_status, badguy_status
 local did_msg = false
 local badguy
+
+local function save_pilot( p, dooutfits )
+   local t = {
+      pos = p:pos(),
+      vel = p:vel(),
+      arm = p:armour(),
+      shi = p:shield(),
+      ene = p:energy(),
+   }
+   if dooutfits then
+      t.out = p:outfits()
+   end
+   return t
+end
+local function restore_pilot( p, t )
+   if t==nil then
+      return
+   end
+   p:setPos( t.pos )
+   p:setVel( t.vel )
+   p:setHealth( t.arm, t.shi )
+   p:setEnergy( t.ene )
+   if t.out then
+      for k,o in ipairs(t.out) do
+         if o then
+            p:outfitAddSlot( o, k, true, true )
+         end
+      end
+   end
+end
+
 function check_dist ()
    if mainspb:pos():dist( player.pos() ) > 5e3 then
       hook.timer( 1, "check_dist" )
@@ -141,14 +172,12 @@ function check_dist ()
    badguy:attack( pp )
 
    -- Just in case store here
-   playerpos = pp:pos()
-   playervel = pp:vel()
-   playerarmour, playershield = pp:health()
-   playerenergy = pp:energy()
-
-   pirpos = badguy:pos()
-   pirvel = badguy:vel()
-   piroutfits = badguy:outfits()
+   player_status = save_pilot( pp )
+   player_status.followers = {}
+   for k,f in ipairs(pp:followers()) do
+      player_status.followers[ f:id() ] = save_pilot(f)
+   end
+   badguy_status = save_pilot( badguy, true )
 end
 
 function pir_attacked( _p, attacker )
@@ -156,14 +185,12 @@ function pir_attacked( _p, attacker )
       return
    end
    local pp = player.pilot()
-   playerpos = pp:pos()
-   playervel = pp:vel()
-   playerarmour, playershield = pp:health()
-   playerenergy = pp:energy()
-
-   pirpos = badguy:pos()
-   pirvel = badguy:vel()
-   piroutfits = badguy:outfits()
+   player_status = save_pilot( pp )
+   player_status.followers = {}
+   for k,f in ipairs(pp:followers()) do
+      player_status.followers[ f:id() ] = save_pilot(f)
+   end
+   badguy_status = save_pilot( badguy, true )
 end
 
 function pir_dead ()
@@ -553,7 +580,6 @@ end
 
 function shader_update( dt )
    shader_fadeout:_update( dt )
-   print( shader_fadeout.dt )
    if shader_fadeout._dt < 0 then
       shader_fadeout.shader:rmPPShader()
       hook.rm( hook_update )
@@ -565,19 +591,15 @@ function takeoff ()
    local pp = player.pilot()
 
    -- Restore the pilot
-   pp:setPos( playerpos )
-   pp:setVel( playervel )
-   pp:setHealth( playerarmour, playershield )
-   pp:setEnergy( playerenergy )
+   restore_pilot( pp, player_status )
+   player_status.followers = {}
+   for k,f in ipairs(pp:followers()) do
+      restore_pilot( f, player_status.followers[ f:id() ] )
+   end
 
    -- Restore the pirate
-   local pir = pilot.add( "Pirate Hyena", "Marauder", pirpos, nil, {naked=true, ai="guard"} )
-   pir:setVel( pirvel )
-   for k,o in ipairs(piroutfits) do
-      if o then
-         pir:outfitAddSlot( o, k, true, true )
-      end
-   end
+   local pir = pilot.add( "Pirate Hyena", "Marauder", mainspb:pos(), nil, {naked=true, ai="guard"} )
+   restore_pilot( pir, badguy_status )
    pir:setHostile(true)
 
    diff.remove( maindiff )
