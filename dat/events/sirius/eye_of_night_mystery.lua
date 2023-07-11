@@ -7,7 +7,8 @@
    if faction.playerStanding("Sirius") &lt; 0 then
       return false
    end
-   if not var.peek("sirius_awakening") then
+   local srs = require "common.sirius"
+   if var.peek("sirius_awakening") or srs.playerIsPsychic() then
       return false
    end
    return true
@@ -37,9 +38,9 @@ local mainspb = spob.get("Eye of Night Station")
 local mainsys = system.get("Eye of Night")
 local maindiff = "Eye of Night Station"
 
-function create ()
-   evt.finish(false) -- not done yet
+local event_done = false
 
+function create ()
    if not evt.claim{mainsys} then
       evt.finish(false)
       return
@@ -48,7 +49,6 @@ function create ()
    -- Somewhat persistent
    evt.save()
 
-   hook.land( "land" )
    hook.enter( "enter_checkend" )
    hook.timer( 10+5*rnd.rnd(), "intro" )
 end
@@ -59,11 +59,13 @@ function enter_checkend ()
       if diff.isApplied(maindiff) then
          diff.remove(maindiff)
       end
-      evt.finish(false)
+      evt.finish( event_done )
    end
 
    -- Start the distress signal again
-   hook.timer( 10+5*rnd.rnd(), "intro" )
+   if not event_done then
+      hook.timer( 10+5*rnd.rnd(), "intro" )
+   end
 end
 
 function intro ()
@@ -76,6 +78,7 @@ function intro ()
    hook.timer( 1, "check_dist" )
 end
 
+local playerpos, playervel, playershield, playerarmour, playerenergy, pirpos, pirvel, piroutfits
 local did_msg = false
 local badguy
 function check_dist ()
@@ -131,12 +134,27 @@ function check_dist ()
    badguy = pilot.add( "Pirate Hyena", "Marauder", mainspb:pos() + vec2.newP( 300, off:angle() ), nil, {stealth=true, ai="guard"} )
    badguy:setHostile(true)
    badguy:setNoDisable(true)
-   hook.pilot( badguy, "discovered", "discover_pir" )
+   hook.pilot( badguy, "attacked", "pir_attacked" )
    hook.pilot( badguy, "death", "pir_dead" )
+   badguy:control()
+   local pp = player.pilot()
+   badguy:attack( pp )
+
+   -- Just in case store here
+   playerpos = pp:pos()
+   playervel = pp:vel()
+   playerarmour, playershield = pp:health()
+   playerenergy = pp:energy()
+
+   pirpos = badguy:pos()
+   pirvel = badguy:vel()
+   piroutfits = badguy:outfits()
 end
 
-local playerpos, playervel, playershield, playerarmour, playerenergy, pirpos, pirvel, piroutfits
-function discover_pir ()
+function pir_attacked( _p, attacker )
+   if not attacker:withPlayer() then
+      return
+   end
    local pp = player.pilot()
    playerpos = pp:pos()
    playervel = pp:vel()
@@ -153,8 +171,12 @@ function pir_dead ()
    hook.land( "land" )
 end
 
-local shader_fadeout
+local shader_fadeout, hook_update
 function land ()
+   if event_done then
+      evt.finish(true)
+   end
+
    -- Once the spob is created, landing will abort the event
    if spob.cur() ~= mainspb then
       if diff.isApplied( maindiff ) then
@@ -512,9 +534,9 @@ vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 }
    ]]
       shader_fadeout = { shader=pp_shaders.newShader( fadein_pixelcode ) }
-      shader_fadeout._dt = 0
+      shader_fadeout._dt = 0.0
       shader_fadeout._update = function( self, dt )
-         self._dt = self._dt + dt * 1/5
+         self._dt = self._dt + dt * 1/3
          self.shader:send( "u_progress", math.min( 1, self._dt ) )
       end
       shader_fadeout.shader:addPPShader("final", 99)
@@ -524,12 +546,19 @@ vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 
    var.push("sirius_awakening", true)
    hook.takeoff( "takeoff" )
-   hook.timer( 5, "shader_cleanup" )
+   hook_update = hook.update("shader_update")
+   event_done = true
    player.takeoff()
 end
 
-function shader_cleanup ()
-   shader_fadeout.shader:rmPPShader()
+function shader_update( dt )
+   shader_fadeout:_update( dt )
+   print( shader_fadeout.dt )
+   if shader_fadeout._dt < 0 then
+      shader_fadeout.shader:rmPPShader()
+      hook.rm( hook_update )
+      evt.finish(true)
+   end
 end
 
 function takeoff ()
@@ -551,6 +580,6 @@ function takeoff ()
    end
    pir:setHostile(true)
 
+   diff.remove( maindiff )
    player.allowSave( true )
-   evt.finish(true)
 end
