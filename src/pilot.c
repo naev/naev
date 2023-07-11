@@ -3561,6 +3561,7 @@ void pilot_free( Pilot *p )
    /* Clear some useful things. */
    pilot_clearHooks(p);
    effect_cleanup( p->effects );
+   p->effects = NULL;
    pilot_cargoRmAll( p, 1 );
    escort_freeList(p);
 
