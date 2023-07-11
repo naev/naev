@@ -42,6 +42,7 @@
 #include "nlua_system.h"
 #include "nlua_time.h"
 #include "nlua_vec2.h"
+#include "nlua_misn.h"
 #include "nluadef.h"
 #include "nstring.h"
 #include "pause.h"
