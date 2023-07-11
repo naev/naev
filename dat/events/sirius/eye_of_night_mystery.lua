@@ -31,6 +31,7 @@ local pilotai = require "pilotai"
 local pp_shaders = require "pp_shaders"
 local lg = require "love.graphics"
 local der = require 'common.derelict'
+local lmusic = require "lmusic"
 
 local mainspb = spob.get("Eye of Night Station")
 local mainsys = system.get("Eye of Night")
@@ -182,11 +183,16 @@ function land ()
 
    -- Changes the strength of the event
    local function effect_change( str )
+      local estart, eend
       vn.func( function ()
-         effectstr = math.max( str, effectstr )
+         estart = effectstr
+         eend = math.max( str, effectstr )
       end )
-      vn.musicVolume( mbg, 1-effectstr )
-      vn.musicVolume( mfg, effectstr )
+      vn.animation( 2.5, function (progress)
+         effectstr = estart*(1-progress) + eend*progress
+         lmusic.setVolume( mbg.m, 1-effectstr )
+         lmusic.setVolume( mfg.m, effectstr )
+      end )
    end
 
    local bar_enter, commodity_enter, shipyard_enter, outfitter_enter, last
@@ -231,7 +237,7 @@ What do you do?]])
 
    vn.label("hangar")
    effect_change( 0.2 )
-   vn.label(_([[You go back to the hangar, however, it seems a bit weird. The air around you gets heavy, and you almost feel like the space around you begins to warp. You are pretty sure you are moving forward, but when you realize it, you are back where you started at the main hallway of the station.]]))
+   vn.na(_([[You go back to the hangar, however, it seems a bit weird. The air around you gets heavy, and you almost feel like the space around you begins to warp. You are pretty sure you are moving forward, but when you realize it, you are back where you started at the main hallway of the station.]]))
    vn.jump("hallway01")
 
    vn.label("commodityexchange")
