@@ -16,6 +16,21 @@ return function ()
       return
    end
 
+   -- We want to prioritize "Eye of Night Mystery" start, so wait until the player knows sirius space a lot
+   if not system.get("Eye of Night"):known() then
+      return
+   end
+   local known_sirian_sys = 0
+   local fsirius = faction.get("Sirius")
+   for k,s in ipairs(system.getAll()) do
+      if s:known() and s:faction() == fsirius then
+         known_sirian_sys = known_sirian_sys+1
+      end
+   end
+   if known_sirian_sys < 10 then
+      return
+   end
+
    return {
       ship = ship.get("Sirius Preacher"),
       weight = 3,
