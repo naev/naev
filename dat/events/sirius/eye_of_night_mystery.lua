@@ -7,9 +7,9 @@
    if faction.playerStanding("Sirius") &lt; 0 then
       return false
    end
-   --if not var.peek("sirius_awakening") then
-   --   return false
-   --end
+   if not var.peek("sirius_awakening") then
+      return false
+   end
    return true
  </cond>
  <location>enter</location>
@@ -20,6 +20,8 @@
    Small mystery revolving around the ethereal Eye of Night Station.
 
    Gives the player psychic awakening if they have not gotten it already.
+   This should be the main way to get it as it's at the entry point of Sirius
+   space and should call the player's attention.
 --]]
 local vn = require "vn"
 local fmt = require "format"
@@ -185,21 +187,298 @@ function land ()
    -- Changes the strength of the event
    local function effect_change( str )
       vn.func( function ()
-         effectstr = str
+         effectstr = math.max( str, effectstr )
       end )
       vn.musicVolume( mbg, 1-effectstr )
       vn.musicVolume( mfg, effectstr )
    end
 
+   local bar_enter, commodity_enter, shipyard_enter, outfitter_enter, last
+   local bar_drink, cardkey, bar_look, outfitter_look
+
+   last = "hallway01"
    vn.na(_([[The station systems confirm your ship and the landing dock gates open and you navigate your ship to an empty landing pad. Looking around, you can't see any other ships, which is quite odd.]]))
    vn.na(fmt.f(_([[You expect {shipai} to butt in and tell you to leave or something like that, but your comm is silent. Furthermore, it seems like {shipai} is offline. They must be pouting somewhere aboard the ship right now.]]),
       {shipai=tut.ainame()}))
    vn.na(_([[Having come this far, you decide to enter the station and find the origin of the distress signal.]]))
-   effect_change( 0.05 ) -- Start to get stronger
+   effect_change( 0.1 ) -- Start to get stronger
    vn.na(_([[You enter the main hallway of the station, what strikes you is the complete absence of people, despite the fact that that station seems to be in perfect condition. Furthermore, there are signs of recent human activity such as footprints and a dropped pen.]]))
-   vn.na(_([[What do you do?]]))
+   vn.jump("hallway01")
+
+   vn.label("hallway01")
+   vn.na( function ()
+      if last=="hallway01" then
+         return _([[You are at the main hallway.
+What do you do?]])
+      end
+      return _([[You head back to the main hallway.
+What do you do?]])
+   end )
+   vn.func( function () last = "hallway01" end )
+   vn.menu( function ()
+      local opts = {
+         {_("Go down the hallway"), "hallway02_try"},
+         {_("Return to the hangar"), "hangar"},
+      }
+      if not bar_enter then
+         table.insert( opts, 1, {"Go to the room on the left", "spaceportbar"} )
+      else
+         table.insert( opts, 1, {"Go to the spaceport bar", "spaceportbar"} )
+      end
+      if not commodity_enter then
+         table.insert( opts, 1, {"Go to the room on the left", "commodityexchange"} )
+      else
+         table.insert( opts, 1, {"Go to the commodity exchange", "commodityexchange"} )
+      end
+      return opts
+   end )
+
+   vn.label("hangar")
+   effect_change( 0.2 )
+   vn.label(_([[You go back to the hangar, however, it seems a bit weird. The air around you gets heavy, and you almost feel like the space around you begins to warp. You are pretty sure you are moving forward, but when you realize it, you are back where you started at the main hallway of the station.]]))
+   vn.jump("hallway01")
+
+   vn.label("commodityexchange")
+   effect_change( 0.2 )
+   vn.na( function ()
+      if last == "commodityexchange" then
+         return _([[You are at the commodity exchange depot.
+What do you do?]])
+      elseif commodity_enter then
+         return _([[You return to the commodity exchange depot.
+What do you do?]])
+      end
+      commodity_enter = true
+      return _([[You enter what seems to be the commodity exchange depot. Goods are neatly organized throughout the room. Everything is perfectly clean, without a smudge of dust, almost as if it was cleaned seconds ago.
+What do you do?]])
+   end )
+   vn.func( function () last = "commodityexchange" end )
    vn.menu{
+      {_([[Look around]]), "commodityexchange_look"},
+      {_([[Return to the main hallway]]), "hallway01"},
    }
+
+   vn.label("commodityexchange_look")
+   --vn.func( function () commodity_looked = true end )
+   vn.na(_([[You look around the room. Nothing seems to really remarkable. You find an opened drink on a table near the back, and large amounts of minerals and some assorted goods.]]))
+   effect_change( 0.25 )
+   vn.sfxEerie()
+   vn.na(_([[Eventually, you find a ledger with logs of commodity exchanges. Hey wait, some of the dates are in the future...]]))
+   vn.jump("commodityexchange")
+
+   vn.label("spaceportbar")
+   effect_change( 0.2 )
+   vn.func( function ()
+      if bar_enter then
+         vn.jump("spaceport_bar_menu")
+      end
+   end )
+   vn.na(_([[You enter a somewhat dimly lit room. Not wanting to walk into a trap, you first listen to see if anything is there. Other than the humming and beeps of the functional station electrical systems, you don't here anything. Eventually your eyes fully adjust to the darkness.]]))
+   vn.na(_([[It seems to be the spaceport bar, with very dim cozy lights to create an intimate environment. However, given the current circumstances, it feels more sinister than cozy. You make it behind the bar, and quickly turn the lights to max, almost blinding you for a second.]]))
+   vn.na(_([[While not being exactly clean, with dirt amplified by the now bright lights, nothing really seems too blatantly out of place.]]))
+   vn.label("spaceport_bar_menu")
+   vn.na( function ()
+      if last == "spaceportbar" then
+         return _([[You are at the spaceport bar.
+What do you do?]])
+      elseif bar_enter then
+         return _([[You return to the spaceport bar.
+What do you do?]])
+      end
+      bar_enter = true
+      return _([[What do you do?]])
+   end )
+   vn.func( function () last = "spaceportbar" end )
+   vn.menu( function ()
+      local opts = {
+         {_([[Look around]]), "spaceport_bar_look"},
+         {_([[Return to the main hallway]]), "hallway01"},
+      }
+      if bar_look and not bar_drink then
+         table.insert( opts, 1, {_([[Drink the cocktail mixer]]), "spaceport_bar_drink"} )
+      end
+      return opts
+   end )
+
+   vn.label("spaceport_bar_look")
+   effect_change( 0.25 )
+   vn.func( function ()
+      bar_look = true
+      if bar_drink then
+         vn.jump("spaceport_bar_look_drink")
+      end
+   end )
+   vn.na(_([[You began to look around more carefully. There is a large assortment of bottles of drinks from Sirius space, many are still unopened. Behind the bar there is a cocktail mixer that is cold to the touch.]]))
+   vn.na(_([[You look around the tables and found an assortment of half-empty drinks on coasters that are still wet. It's almost as if people were here until a moment ago.]]))
+   vn.na(_([[You look around the rest of the bar, including the lavatories, and find nothing particularly interesting. However, for a reason you can't quite fathom, you feel a strange attraction to the cocktail mixer you found behind the bar.]]))
+   vn.jump("spaceport_bar_menu")
+
+   vn.label("spaceport_bar_look_drink")
+   vn.na(_([[You once again look around the bar,including the lavatories, and find nothing particularly interesting.]]))
+   vn.jump("spaceport_bar_menu")
+
+   vn.label("spaceport_bar_drink")
+   vn.func( function () bar_drink = true end )
+   vn.na(_([[You approach the cocktail mixer which almost seems to draw you in. You grab an empty glass, and pour yourself a drink. A clear pale blue liquid fills the glass, with a viscosity similar to water.]]))
+   vn.na(_([[You take a gulp of air, and bring the glass up to your nose to take a whiff. The almost unnoticeable slightly tangy aroma seems to enter your nostrils and resonate in your skull.]]))
+   vn.na(_([[Finally, you bring the glass to your lips and take a careful small sip. The taste is almost electric, jolting your entire nervous system into action. You put the glass down and notice it is empty. Did you drink it all? ]]))
+   effect_change( 0.35 )
+   vn.jump("spaceport_bar_menu")
+
+   vn.label("hallway02_try")
+   vn.func( function ()
+      if bar_drink then
+         vn.jump("hallway02")
+      end
+   end )
+   vn.label("hallway02_lost")
+   vn.na(_([[You go further down the hallway, which seems to twist and turn oddly for a station. You find a fork and take a random direction and keep on going. You soon find another fork and take another direction. Feels oddly long for a hallway.]]))
+   vn.sfxEerie()
+   effect_change( 0.2 )
+   vn.na(_([[You keep on going on, finding forks and trying to go forward, however, before you know it, you are back to where you started.]]))
+   vn.jump("hallway01")
+
+   vn.label("hallway02")
+   vn.na(_([[You go further down the hallway, which seems to twist and turn oddly for a station. You find a fork and take a random direction and keep on going. You soon find another fork and take another direction. Feels oddly long for a hallway.]]))
+   effect_change( 0.5 )
+   vn.na(_([[You keep on going and eventually find yourself at the end of the hallway, with a door on your left, one on your right, and another one straight in front of you."]]))
+   vn.label("hallway02_menu")
+   vn.na( function ()
+      if last=="hallway02" then
+         return _([[You are deep down the main hallway.
+What do you do?]])
+      end
+      return _([[You head back to the main hallway.
+What do you do?]])
+   end )
+   vn.func( function () last = "hallway02" end )
+   vn.menu( function ()
+      local opts = {
+         {_("Go to the room at the end of the hallway"), "controlroom"},
+         {_("Go back to beginning of the hallway"), "hallway01"},
+      }
+      if not outfitter_enter then
+         table.insert( opts, 1, {"Go to the room on the left", "outfitter"} )
+      else
+         table.insert( opts, 1, {"Go to the outfitter", "outfitter"} )
+      end
+      if not shipyard_enter then
+         table.insert( opts, 1, {"Go to the room on the left", "shipyard"} )
+      else
+         table.insert( opts, 1, {"Go to the shipyard", "shipyard"} )
+      end
+      return opts
+   end )
+
+   vn.label("shipyard")
+   effect_change( 0.6 )
+   vn.na( function ()
+      if last == "shipyard" then
+         return _([[You are at the shipyard.
+What do you do?]])
+      elseif shipyard_enter then
+         return _([[You return to the shipyard.
+What do you do?]])
+      end
+      shipyard_enter = true
+      return _([[You enter a really big room with cranes and robotic arms all over. It takes you a while to realize that it is actually a shipyard. They look very different when they are devoid of ships.
+What do you do?]])
+   end )
+   vn.func( function () last = "shipyard" end )
+   vn.menu{
+      {_([[Look around]]), "shipyard_look"},
+      {_([[Return to the main hallway]]), "hallway02_menu"},
+   }
+
+   vn.label("shipyard_look")
+   --vn.func( function () shipyard_look = true end )
+   vn.na(_([[You walk around the vast room looking at all the devices here and there. They all seem to be functional and well maintained. Although it is quite obvious that there are no complete ships, you do find some spare parts and cores. Although there are many valuables, you do not find anything that gives you any information of what happened at the station.]]))
+   effect_change( 0.7 )
+   vn.jump("shipyard")
+
+   vn.label("outfitter")
+   effect_change( 0.6 )
+   vn.na( function ()
+      if last == "outfitter" then
+         return _([[You are at the outfitter.
+What do you do?]])
+      elseif outfitter_enter then
+         return _([[You return to the outfitter.
+What do you do?]])
+      end
+      outfitter_enter = true
+      return _([[You enter a compact room, the walls are covered with racks containing all sorts of gadgets and ship parts. You can make out several ion cannons. Without people it takes you a while to realize that it is most likely the outfitter.
+What do you do?]])
+   end )
+   vn.func( function () last = "outfitter" end )
+   vn.menu( function ()
+      local opts = {
+         {_([[Look around]]), "outfitter_look"},
+         {_([[Return to the main hallway]]), "hallway02_menu"},
+      }
+      if outfitter_look and not cardkey then
+         table.insert( opts, 1, {_([[Reach into the box]]), "outfitter_box"} )
+      end
+      return opts
+   end )
+
+   vn.label("outfitter_look")
+   vn.func( function ()
+      if cardkey then
+         vn.jump("outfitter_look_cardkey")
+      end
+   end )
+   vn.na(_([[You begin to shuffle through racks, it seems to be full of fully usable outfits from mainly House Sirius, although some MilSpec is mixed in for good measure. Some look like they would even make a good upgrade for your ship, however, that is not what you are here for.]]))
+   vn.sfxEerie()
+   vn.na(_([[You continue methodologically searching around the room. You finish looking at everything and are about to give up and return to the hallway when you notice there is a black box in the middle of the room. You surely couldn't have missed it, could you?]]))
+   vn.func( function () outfitter_look = true end )
+   effect_change( 0.7 )
+   vn.jump("outfitter")
+
+   vn.label("outfitter_look_cardkey")
+   vn.na(_([[You look around again but find nothing of interest.]]))
+   vn.jump("outfitter")
+
+   vn.label("outfitter_box")
+   vn.na(_([[You almost feel as if the box is staring back at you as you look it down. Although it seems small and like you could pick it up, you feel like you have to stick your hand in it, although you cannot explain why.]]))
+   vn.na(_([[As your anxiety builds up, you grab tho box and slowly stick your arm into it. It feels, weirdly fuzzy, but at the same time as if some sort of pressure was clamping down on your hand.]]))
+   vn.na(_([[You get the impression that your arm is extending infinitely into the abyss when suddenly you feel something bump into your fingers. You quickly snatch it and pull it out of the box.]]))
+   vn.na(_([[You gasp for breath as you realize you must have forgotten to breathe during the whole ordeal. Looking down at what you pulled out of the box, it looks like it is a cardkey to open some door.]]))
+   vn.func( function () cardkey = true end )
+   effect_change( 0.9 )
+   vn.jump("outfitter")
+
+   vn.label("controlroom_locked")
+   vn.na(_([[You try to activate the door, but to no avail. It seems to be powered up and locked, with no way to force yourself through. Looks like you'll have to find some way to open it.]]))
+   effect_change( 0.6 )
+   vn.jump("hallway02_menu")
+
+   vn.label("controlroom")
+   vn.func( function ()
+      if not cardkey then
+         vn.jump("controlroom_locked")
+      end
+   end )
+   effect_change( 1.0 )
+   vn.na(_([[You tap the cardkey you found and the door opens with cold air billowing forth until it envelopes you completely.]]))
+   vn.menu{
+      {_("Enter the room"), "controlroom_enter"},
+      {_("Enter the room"), "controlroom_enter"},
+      {_("Enter the room"), "controlroom_enter"},
+   }
+   vn.label("controlroom_enter")
+   vn.na(_([[You enter the room, it seems quite small and is poorly lit. A light flickers in one of the corners, reflecting on a large command chair with its back to you. Wait, is there someone there?]]))
+   vn.menu{
+      {_("Approach the chair"), "controlroom_approach"},
+      {_("Approach the chair"), "controlroom_approach"},
+      {_("Approach the chair"), "controlroom_approach"},
+   }
+   vn.label("controlroom_approach")
+   vn.na(_([[You hesitantly approach the chair, sweat dripping down your suit.]]))
+   vn.na(_([[The distance between you and the chair feels like it is growing instead of shrinking as you slowly approach it.]]))
+   vn.na(_([[Almost there...]]))
+   vn.musicStop()
+   vn.na(_([[The room grows eerie calm as the chair slowly turns around, only to find yourself staring at you. The other you grins at you and your head starts to throb.]]))
 
    vn.scene()
    vn.setBackground( function ()
