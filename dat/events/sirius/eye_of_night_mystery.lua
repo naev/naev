@@ -169,12 +169,12 @@ function land ()
 
    vn.clear()
    vn.scene()
-   vn.setBackground( function ()
-      if effectstr > 0 then
+   vn.func( function ()
+      vn.setBackground( function ()
          local nw, nh = naev.gfx.dim()
          vn.setColor( {0, 0, 0, effectstr} )
          lg.rectangle("fill", 0, 0, nw, nh )
-      end
+      end )
    end )
    vn.transition()
    local mbg = vn.music( der.sfx.ambient )
@@ -188,7 +188,7 @@ function land ()
          estart = effectstr
          eend = math.max( str, effectstr )
       end )
-      vn.animation( 2.5, function (progress)
+      vn.animation( 0.5, function (progress)
          effectstr = estart*(1-progress) + eend*progress
          lmusic.setVolume( mbg.m, 1-effectstr )
          lmusic.setVolume( mfg.m, effectstr )
@@ -228,7 +228,7 @@ What do you do?]])
          table.insert( opts, 1, {"Go to the spaceport bar", "spaceportbar"} )
       end
       if not commodity_enter then
-         table.insert( opts, 1, {"Go to the room on the left", "commodityexchange"} )
+         table.insert( opts, 1, {"Go to the room on the right", "commodityexchange"} )
       else
          table.insert( opts, 1, {"Go to the commodity exchange", "commodityexchange"} )
       end
@@ -365,7 +365,7 @@ What do you do?]])
          table.insert( opts, 1, {"Go to the outfitter", "outfitter"} )
       end
       if not shipyard_enter then
-         table.insert( opts, 1, {"Go to the room on the left", "shipyard"} )
+         table.insert( opts, 1, {"Go to the room on the right", "shipyard"} )
       else
          table.insert( opts, 1, {"Go to the shipyard", "shipyard"} )
       end
@@ -483,10 +483,14 @@ What do you do?]])
    vn.na(_([[The room grows eerie calm as the chair slowly turns around, only to find yourself staring at you. The other you grins at you and your head starts to throb.]]))
 
    vn.scene()
-   vn.setBackground( function ()
-      local nw, nh = naev.gfx.dim()
-      vn.setColor( {1, 1, 1, effectstr} )
-      lg.rectangle("fill", 0, 0, nw, nh )
+   vn.func( function ()
+      vn.textbox_bg_alpha = 0
+      vn.show_options = false
+      vn.setBackground( function ()
+         local nw, nh = naev.gfx.dim()
+         vn.setColor( {1, 1, 1, 1} )
+         lg.rectangle("fill", 0, 0, nw, nh )
+      end )
    end )
    vn.transition( "blinkout" )
 
@@ -513,7 +517,7 @@ vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
          self._dt = self._dt + dt * 1/5
          self.shader:send( "u_progress", math.min( 1, self._dt ) )
       end
-      shader_fadeout.shader:addPPShader("game", 99)
+      shader_fadeout.shader:addPPShader("final", 99)
    end )
 
    vn.run()
