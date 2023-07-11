@@ -1520,7 +1520,11 @@ Stops certain playing music.
 --]]
 function vn.musicStop( filename )
    vn.func( function ()
-      lmusic.stop( filename )
+      if type(filename)=="table" and filename.m then
+         lmusic.stop( filename.m )
+      else
+         lmusic.stop( filename )
+      end
    end )
 end
 
@@ -1532,7 +1536,11 @@ Sets the pitch for playing music.
 --]]
 function vn.musicPitch( data, p )
    vn.func( function ()
-      lmusic.setPitch( data, p )
+      if type(data)=="table" and data.m then
+         lmusic.setPitch( data.m, p )
+      else
+         lmusic.setPitch( data, p )
+      end
    end )
 end
 
@@ -1544,7 +1552,11 @@ Sets the volume for playing music.
 --]]
 function vn.musicVolume( data, p )
    vn.func( function ()
-      lmusic.setVolume( data, p )
+      if type(data)=="table" and data.m then
+         lmusic.setVolume( data.m, p )
+      else
+         lmusic.setVolume( data, p )
+      end
    end )
 end
 
