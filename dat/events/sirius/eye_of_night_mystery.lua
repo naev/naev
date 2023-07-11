@@ -36,11 +36,6 @@ local mainspb = spob.get("Eye of Night Station")
 local mainsys = system.get("Eye of Night")
 local maindiff = "Eye of Night Station"
 
--- States:
---  0: event triggered
---  1: player finished landing
-mem.state = 0
-
 function create ()
    evt.finish(false) -- not done yet
 
@@ -167,6 +162,7 @@ function land ()
       end
       return
    end
+   player.allowSave( false ) -- In case the player quits while VN is open or something weird
 
    local effectstr = 0
 
@@ -516,7 +512,6 @@ vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 
    vn.run()
 
-   player.allowSave( false )
    var.push("sirius_awakening", true)
    hook.takeoff( "takeoff" )
    hook.timer( 5, "shader_cleanup" )
