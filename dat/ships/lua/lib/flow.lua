@@ -13,9 +13,9 @@ local flow_base = {
    ["Astral Projection Normal"]  = 160,
    ["Astral Projection Lesser"]  = 80,
    -- Outfits
-   ["Small Flow Amplifier"]      = 50,
-   ["Medium Flow Amplifier"]     = 100,
-   ["Large Flow Amplifier"]      = 200,
+   ["Small Flow Amplifier"]      = 60,
+   ["Medium Flow Amplifier"]     = 120,
+   ["Large Flow Amplifier"]      = 240,
    ["Small Meditation Chamber"]  = 50,
    ["Medium Meditation Chamber"] = 100,
    ["Large Meditation Chamber"]  = 200,
