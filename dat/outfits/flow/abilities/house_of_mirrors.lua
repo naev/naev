@@ -120,7 +120,7 @@ function update( p, po, dt )
       -- Spin them around and shoot
       mem.off = mem.off + 0.2 * math.pi * dt
       local t = p:target()
-      if t and not p:faction():areEnemies( t:faction() ) then
+      if t and not p:areEnemies( t ) then
          t = nil
       end
       local bp = p:pos()
