@@ -98,7 +98,7 @@ function abort ()
 end
 
 -- Clears pilots include the player's escorts
-local function clear_pilots ()
+function clear_pilots ()
    gauntlet.clear_pilots()
 end
 
@@ -438,7 +438,7 @@ function wave_end ()
       local s = 1.2 -- time to display each message
       local f = (n+2)*s
       player.omsgAdd( string.format( "#p".._("WAVE %d CLEAR").."#0", mem.wave_round ), f )
-      clear_pilots()
+      hook.safe( "clear_pilots" ) -- can't be done in the same frame as it is run on an enemy hook
       sfx_clear:play()
       for k,v in pairs(score_str) do
          local start = k*s
