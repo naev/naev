@@ -26,6 +26,10 @@
          * Finish the Minerva campaign
          * Nebula refugees
       * Many new events
+         * Abandoned stations with secrets
+         * Greedy pirates looking for domination
+         * Challenges of the mind
+         * Mysterious signals
       * Added the Space Trader Society faction
       * More points of interest
       * Many, many new systems and space objects
@@ -46,7 +50,7 @@
       * Typo and wording fixes
       * Fixed many corner case crashes in the editor
       * Fixed cargo missions not being generated in some parts of the universe
-      * Game no longer crashes when loading save with persisted Lua pointing to inexistent systems/spobs
+      * Game no longer crashes when loading save with persisted Lua pointing to nonexistent systems/spobs
 
 * 0.10.6
    * Fixed potential segfault with invalid semver strings
