@@ -1,10 +1,13 @@
 * 0.11.0 (unreleased)
    * Gameplay Changes
       * Universe significantly overworked to me more consistent with lore
+         * More landable uninhabited spobs, unique locations, and things to discover
+         * Reviewed and corrected many descriptions and placement of spobs and systems
+         * More in-depth and fleshed out tag system for locations
       * Planet properties affect quantity of missions available
       * Moved many missions to the vn system
       * Can sometimes find POI events with a pulse scanner equipped when entering systems
-      * Changed the visuals for some of the nebulas
+      * Changed the visuals for some of the nebulas (PSO, Mizar)
       * Pirate bribes cost more depending on your fleet and are based on points not mass
       * Missions are introduced less all at once to the player
       * diy-nerds: improved reward
@@ -33,9 +36,12 @@
          * Challenges of the mind
          * Mysterious signals
          * More points of interest
-      * New NPC graphics
-      * Added the Space Trader Society faction
       * Many, many new systems and space objects
+         * 67 new star systems with 123 new space objects
+         * New graphics for space objects
+      * New NPC graphics
+      * More NPC and news messages
+      * Added the Space Trader Society faction
       * Custom death animations for many ships
       * More ways to increase fleet capacity
    * Engine
