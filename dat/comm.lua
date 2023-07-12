@@ -67,7 +67,7 @@ local function nearby_bribeable( plt, difffactok )
    local pp = player.pilot()
    local ret = {}
    for k,v in ipairs(pp:getVisible()) do
-      if (v:faction() == plt:faction() or (difffactok and not v:faction():areEnemies(plt:faction()))) and can_bribe(v) then
+      if (v:faction() == plt:faction() or (difffactok and not v:areEnemies(plt))) and can_bribe(v) then
          local flt = bribe_fleet( v )
          if flt then
             for i,p in ipairs(flt) do
