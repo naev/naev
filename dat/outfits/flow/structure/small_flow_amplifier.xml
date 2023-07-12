@@ -9,7 +9,7 @@
   <gfx_store>placeholder.webp</gfx_store>
   <limit>flow_amplifier</limit>
   <description>Although all Sirius ships are equipped with internal flow amplifiers, some are also created as independent units for ships without builtin flow capabilities. Flow Amplifiers are specially tuned to the crew and allow significantly amplifying their psychic abilities to aid the ship with different abilities.</description>
-  <desc_extra>Provides 50 maximum flow capacity and allows a ship to use flow and allows gaining 10% flow per damage received</desc_extra>
+  <desc_extra>Provides 50 maximum flow capacity and allows a ship to use flow and allows gaining 10% of damage received as flow.</desc_extra>
  </general>
  <specific type="modification">
   <lua>outfits/flow/flow_amplifier.lua</lua>
