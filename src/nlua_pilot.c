@@ -112,6 +112,8 @@ static int pilotL_evasion( lua_State *L );
 static int pilotL_temp( lua_State *L );
 static int pilotL_mass( lua_State *L );
 static int pilotL_faction( lua_State *L );
+static int pilotL_areEnemies( lua_State *L );
+static int pilotL_areAllies( lua_State *L );
 static int pilotL_spaceworthy( lua_State *L );
 static int pilotL_setPosition( lua_State *L );
 static int pilotL_setVelocity( lua_State *L );
@@ -284,6 +286,8 @@ static const luaL_Reg pilotL_methods[] = {
    { "mass", pilotL_mass },
    { "cooldown", pilotL_cooldown },
    { "faction", pilotL_faction },
+   { "areEnemies", pilotL_areEnemies },
+   { "areAllies", pilotL_areAllies },
    { "spaceworthy", pilotL_spaceworthy },
    { "health", pilotL_getHealth },
    { "armour", pilotL_getArmour },
@@ -2553,6 +2557,38 @@ static int pilotL_faction( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
    lua_pushfaction(L,p->faction);
+   return 1;
+}
+
+/**
+ * @brief Checks to see if two pilots are enemies.
+ *
+ *    @luatparam Pilot p Pilot to check.
+ *    @luatparam Pilot t Target pilot to check.
+ *    @luatreturn boolean true if both p and t are enemies, false otherwise.
+ * @luafunc areEnemies
+ */
+static int pilotL_areEnemies( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   Pilot *t = luaL_validpilot(L,2);
+   lua_pushboolean(L,pilot_areEnemies(p,t));
+   return 1;
+}
+
+/**
+ * @brief Checks to see if two pilots are allies.
+ *
+ *    @luatparam Pilot p Pilot to check.
+ *    @luatparam Pilot t Target pilot to check.
+ *    @luatreturn boolean true if both p and t are allies, false otherwise.
+ * @luafunc areAllies
+ */
+static int pilotL_areAllies( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   Pilot *t = luaL_validpilot(L,2);
+   lua_pushboolean(L,pilot_areAllies(p,t));
    return 1;
 }
 
