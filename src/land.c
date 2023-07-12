@@ -47,6 +47,7 @@
 #include "player.h"
 #include "player_fleet.h"
 #include "rng.h"
+#include "render.h"
 #include "save.h"
 #include "shiplog.h"
 #include "toolkit.h"
