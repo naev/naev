@@ -14,6 +14,7 @@ local gauntlet_gui = require 'missions.dvaered.gauntlet.gui'
 local tables = require 'missions.dvaered.gauntlet.tables'
 local fmt = require "format"
 local equipopt = require 'equipopt'
+local flow = require "ships.lua.lib.flow"
 
 local logidstr = "log_gauntlet"
 local enemies, enemy_faction, gmods, wave_enemies, wave_killed -- Non-persistent state
@@ -238,6 +239,7 @@ function wave_round_setup ()
    end
    pp:fillAmmo() -- Have to fill ammo or deployed fighters get "lost"
    -- TODO reset outfit cooldown stuff
+   flow.reset( pp )
    pp:setPos( vec2.new( 0, 0 ) ) -- teleport to middle
    pp:setVel( vec2.new( 0, 0 ) )
 
