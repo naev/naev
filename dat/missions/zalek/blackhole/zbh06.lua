@@ -131,12 +131,13 @@ function enter ()
    end
 
    -- Fleets should have leaders with different speeds or they clump together
-   if player.pilot():ship():size() >= 5 then
-      create_fleet{"Za'lek Demon", "Za'lek Sting", "Za'lek Heavy Drone", "Za'lek Heavy Drone"}
+   local _fcp, fleet_used = player.fleetCapacity()
+   if fleet_used > 120 then
+      create_fleet{"Za'lek Demon", "Za'lek Heavy Drone", "Za'lek Heavy Drone"}
       create_fleet{"Za'lek Sting", "Za'lek Bomber Drone", "Za'lek Bomber Drone" }
       create_fleet{"Za'lek Heavy Drone", "Za'lek Light Drone", "Za'lek Light Drone"}
    else
-      create_fleet{"Za'lek Demon", "Za'lek Heavy Drone", "Za'lek Heavy Drone"}
+      create_fleet{"Za'lek Sting", "Za'lek Heavy Drone", "Za'lek Heavy Drone"}
       create_fleet{"Za'lek Heavy Drone", "Za'lek Light Drone", "Za'lek Light Drone"}
       create_fleet{"Za'lek Light Drone", "Za'lek Light Drone"}
    end
