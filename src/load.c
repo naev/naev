@@ -35,6 +35,7 @@
 #include "outfit.h"
 #include "player.h"
 #include "plugin.h"
+#include "render.h"
 #include "save.h"
 #include "shiplog.h"
 #include "start.h"
