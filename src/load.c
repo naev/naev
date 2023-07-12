@@ -1148,7 +1148,7 @@ static int load_gameInternal( const char* file, const char* version )
 }
 
 /**
- * @brief Loads a game .Meant to be run in a function hook.
+ * @brief Loads a game. Meant to be run in a function hook.
  */
 static int load_gameInternalHook( void *data )
 {
@@ -1173,6 +1173,7 @@ static int load_gameInternalHook( void *data )
    /* Clean up possible stuff that should be cleaned. */
    unidiff_universeDefer( 1 );
    player_cleanup();
+   render_postprocessCleanup();
 
    /* Welcome message - must be before space_init. */
    player_message( _("#gWelcome to %s!"), APPNAME );
