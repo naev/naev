@@ -3,7 +3,7 @@
 <mission name="The macho teenager">
  <unique />
  <priority>4</priority>
- <chance>5</chance>
+ <chance>10</chance>
  <location>Bar</location>
  <faction>Dvaered</faction>
  <cond>

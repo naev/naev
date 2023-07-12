@@ -2,8 +2,8 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Hot dogs from space">
  <unique />
- <priority>1</priority>
- <chance>5</chance>
+ <priority>3</priority>
+ <chance>10</chance>
  <location>Bar</location>
  <cond>
    if spob.cur():tags().station then
