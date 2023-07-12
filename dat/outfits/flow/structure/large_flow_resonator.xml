@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Large Flow Resonator">
+ <general>
+  <typename>Flow Modifier</typename>
+  <slot>structure</slot>
+  <size>large</size>
+  <mass>120</mass>
+  <price>400000</price>
+  <gfx_store>placeholder.webp</gfx_store>
+  <description>By tapping into the flow of each individual, the flow resonator can tune and establish a direct link between the flow amplifier and the personal flow generation. This allows the ship to gain flow regeneration, albeit to only half of the full potential.</description>
+  <desc_extra>Provides 4 flow regeneration per second up to 50% maximum capacity.</desc_extra>
+ </general>
+ <specific type="modification">
+ </specific>
+ <tags>
+  <tag>flow</tag>
+ </tags>
+</outfit>

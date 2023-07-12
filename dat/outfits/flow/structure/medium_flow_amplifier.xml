@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Small Flow Amplifier">
+<outfit name="Medium Flow Amplifier">
  <general>
   <typename>Flow Amplifier</typename>
   <slot>structure</slot>
-  <size>small</size>
-  <mass>40</mass>
-  <price>200000</price>
+  <size>medium</size>
+  <mass>80</mass>
+  <price>400000</price>
   <gfx_store>placeholder.webp</gfx_store>
   <limit>flow_amplifier</limit>
   <description>Although all Sirius ships are equipped with internal flow amplifiers, some are also created as independent units for ships without builtin flow capabilities. Flow Amplifiers are specially tuned to the crew and allow significantly amplifying their psychic abilities to aid the ship with different abilities.</description>
-  <desc_extra>Provides 50 maximum flow capacity and allows a ship to use flow and allows gaining 10% of damage received as flow. Requires psychic powers.</desc_extra>
+  <desc_extra>Provides 100 maximum flow capacity and allows a ship to use flow and allows gaining 10% of damage received as flow. Requires psychic powers.</desc_extra>
  </general>
  <specific type="modification">
   <lua>outfits/flow/flow_amplifier.lua</lua>
