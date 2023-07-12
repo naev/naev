@@ -19,7 +19,11 @@ function init( spb )
          if player.outfitNum( o ) <= 0 then
             local desc = _("You need the following flow abilities to be able to activate the Obelisk:")
             for i,r in ipairs(reqs) do
-               desc = desc.."\n"..o:name()
+               if player.outfitNum( r ) <= 0 then
+                  desc = desc.."\n#r"..r:name().."#0"
+               else
+                  desc = desc.."\n"..r:name()
+               end
             end
             return false, desc
          end
