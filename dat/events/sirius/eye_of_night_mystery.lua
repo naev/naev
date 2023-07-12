@@ -152,9 +152,11 @@ function check_dist ()
    vn.jump("01_cont")
 
    vn.label("01_cont")
-   sai(_([["My analysis indicates that it would be safest to ignore the distress signal and continue along our way."
-{shipai} looks unreasonably nervous for a rational being made of silicon and logic modules.]]))
-   vn.na(_([[{shipai} dematerializes leaving you once again at command of your ship.]]))
+   sai(fmt.f(_([["My analysis indicates that it would be safest to ignore the distress signal and continue along our way."
+{shipai} looks unreasonably nervous for a rational being made of silicon and logic modules.]]),
+      {shipai=tut.ainame()}))
+   vn.na(fmt.f(_([[{shipai} dematerializes leaving you once again at command of your ship.]]),
+      {shipai=tut.ainame()}))
 
    vn.done( tut.shipai.transition )
    vn.run()

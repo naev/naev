@@ -1,11 +1,15 @@
 * 0.11.0 (unreleased)
    * Gameplay Changes
-      * Universe significantly overworked to me more consistent with lore
+      * Universe significantly overworked to be more consistent with lore
+         * More landable uninhabited spobs, unique locations, and things to discover
+         * Reviewed and corrected many descriptions and placement of spobs and systems
+         * More in-depth and fleshed out tag system for locations
       * Planet properties affect quantity of missions available
       * Moved many missions to the vn system
       * Can sometimes find POI events with a pulse scanner equipped when entering systems
-      * Changed the visuals for some of the nebulas
+      * Changed the visuals for some of the nebulas (PSO, Mizar)
       * Pirate bribes cost more depending on your fleet and are based on points not mass
+      * Missions are introduced less all at once to the player
       * diy-nerds: improved reward
    * Quality of Life
       * Make it explicit when all the escorts have jumped or landed
@@ -17,7 +21,8 @@
       * Independent patrol and bounty missions can be completed on more planets and stations
       * Can hide or prioritize missions from the info menu
       * Manual aiming model aims at the mouse location when the mouse is visible
-      * Missions are introduced less all at once to the player
+      * Travelling merchant tells you when new wares are available and should be easier to find
+      * Lua Love API should be better at handling input and not apply keys held before started
    * New Content
       * New mechanic for House Sirius called flow to unlock psychic powers
          * Gives passive bonuses to Sirius ships
@@ -30,9 +35,13 @@
          * Greedy pirates looking for domination
          * Challenges of the mind
          * Mysterious signals
-      * Added the Space Trader Society faction
-      * More points of interest
+         * More points of interest
       * Many, many new systems and space objects
+         * 67 new star systems with 123 new space objects
+         * New graphics for space objects
+      * New NPC graphics
+      * More NPC and news messages
+      * Added the Space Trader Society faction
       * Custom death animations for many ships
       * More ways to increase fleet capacity
    * Engine
@@ -46,11 +55,25 @@
       * Changed api of evt.claim and misn.claim
       * Missions/events load Lua as chunks instead of compiling each time
       * Significant speed-ups in collision detection with quadtrees
+      * Hooks "outfit_buy", "outfit_sell", "ship_sell", and "ship_swap" pass Lua objects instead of strings
+      * Ships can have extra descriptions that show up on mouse over
+      * More Lua API added such as pilot.armour, pilot.shield, or naev.missionList
+      * Soromid NPCs can have custom descriptions based on genetics
+      * Improved VN API with vn.move, vn.musicVolume, etc.
+      * Improved VN handling of non-ascii fonts
+      * Support for generating munitions from outfits
+      * Improved derelict script to handle custom derelicts better
+      * Removed some custom environment and string handling functions for standard SDL ones (requires 2.0.18 now)
+      * Better handling of user locales
+      * Weaker effects shouldn't overwrite stronger ones anymore
+      * Require OpenGL 3.2 for geometry shaders now
    * Fixes
       * Typo and wording fixes
       * Fixed many corner case crashes in the editor
       * Fixed cargo missions not being generated in some parts of the universe
       * Game no longer crashes when loading save with persisted Lua pointing to nonexistent systems/spobs
+      * Minor improvements to many existing missions
+      * Fixed crash when events trigger other events on creation
 
 * 0.10.6
    * Fixed potential segfault with invalid semver strings
