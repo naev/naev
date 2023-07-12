@@ -438,6 +438,7 @@ function wave_end ()
       local s = 1.2 -- time to display each message
       local f = (n+2)*s
       player.omsgAdd( string.format( "#p".._("WAVE %d CLEAR").."#0", mem.wave_round ), f )
+      clear_pilots()
       sfx_clear:play()
       for k,v in pairs(score_str) do
          local start = k*s
