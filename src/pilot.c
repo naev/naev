@@ -2655,7 +2655,7 @@ void pilot_sample_trails( Pilot* p, int none )
    TrailMode mode;
 
    /* Ignore for simulation. */
-   if (!space_isSimulationEffects())
+   if (!space_needsEffects())
       return;
 
    /* No trails to sample. */

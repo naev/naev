@@ -82,7 +82,7 @@ void debris_add( double mass, double r, double px, double py,
 {
    int n;
 
-   if (!space_isSimulationEffects())
+   if (!space_needsEffects())
       return;
 
    /* Lazy allocator. */

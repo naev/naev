@@ -1518,7 +1518,7 @@ int space_isSimulation( void )
 /**
  * @brief returns whether or not we're simulating with effects.
  */
-int space_isSimulationEffects (void)
+int space_needsEffects (void)
 {
    return space_simulating_effects;
 }
@@ -1672,6 +1672,7 @@ void space_init( const char* sysname, int do_simulate )
             pilot_rmFlag( p, PILOT_HIDE );
       }
    }
+   space_simulating_effects = 1;
    space_simulating = 0;
 
    /* Refresh overlay if necessary (player kept it open). */
