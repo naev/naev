@@ -1151,6 +1151,8 @@ char pilot_getFactionColourChar( const Pilot *p )
       return 'F';
    else if (pilot_isHostile(p))
       return 'H';
+   else if (pilot_isFlag(p, PILOT_BRIBED))
+      return 'N';
    return faction_getColourChar(p->faction);
 }
 
