@@ -66,6 +66,7 @@
       * Removed some custom environment and string handling functions for standard SDL ones (requires 2.0.18 now)
       * Better handling of user locales
       * Weaker effects shouldn't overwrite stronger ones anymore
+      * Spobs can use communication graphics
       * Require OpenGL 3.2 for geometry shaders now
    * Fixes
       * Typo and wording fixes
