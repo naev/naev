@@ -92,7 +92,7 @@ function comm.newCharacter( vn_in, plt )
    -- Set up the namebox
    comm.nameboxUpdate( plt )
 
-   return vn.newCharacter( plt:name(), { image=shipgfx } )
+   return vn.newCharacter( plt:name(), { image=shipgfx, isportrait=true } )
 end
 
 function comm.newCharacterSpob( vn_in, spb, bribed )
@@ -104,7 +104,7 @@ function comm.newCharacterSpob( vn_in, spb, bribed )
    -- Set up the namebox
    comm.nameboxUpdateSpob( spb, bribed )
 
-   return vn.newCharacter( spb:name(), { image=spbgfx } )
+   return vn.newCharacter( spb:name(), { image=spbgfx, isportrait=true } )
 end
 
 --[[--
