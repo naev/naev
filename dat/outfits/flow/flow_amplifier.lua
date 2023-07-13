@@ -1,5 +1,7 @@
 local flow = require "ships.lua.lib.flow"
 
+notactive = false
+
 function init( p )
    flow.recalculate( p )
 end
