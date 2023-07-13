@@ -5,7 +5,7 @@ local fmt = require "format"
 local srs = require "common.sirius"
 
 function descextra( _p, o )
-   local powers
+   local powers = ""
    if not srs.playerIsPsychic() then
       powers = "\n#r".._("Requires psychic powers to use.").."#0"
    end
