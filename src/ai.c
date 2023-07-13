@@ -173,6 +173,7 @@ static int aiL_iface( lua_State *L ); /* iface(number/pointer) */
 static int aiL_dir( lua_State *L ); /* dir(number/pointer) */
 static int aiL_idir( lua_State *L ); /* idir(number/pointer) */
 static int aiL_drift_facing( lua_State *L ); /* drift_facing(number/pointer) */
+static int aiL_interceptPos( lua_State *L );
 static int aiL_brake( lua_State *L ); /* brake() */
 static int aiL_getnearestspob( lua_State *L ); /* Vec2 getnearestspob() */
 static int aiL_getspobfrompos( lua_State *L ); /* Vec2 getspobfrompos() */
@@ -189,6 +190,7 @@ static int aiL_sethyptarget( lua_State *L );
 static int aiL_nearhyptarget( lua_State *L ); /* pointer rndhyptarget() */
 static int aiL_rndhyptarget( lua_State *L ); /* pointer rndhyptarget() */
 static int aiL_hyperspace( lua_State *L ); /* [number] hyperspace() */
+static int aiL_canHyperspace( lua_State *L );
 
 /* escorts */
 static int aiL_dock( lua_State *L ); /* dock( number ) */
@@ -278,6 +280,7 @@ static const luaL_Reg aiL_methods[] = {
    { "dir", aiL_dir },
    { "idir", aiL_idir },
    { "drift_facing", aiL_drift_facing },
+   { "interceptPos", aiL_interceptPos },
    { "brake", aiL_brake },
    { "stop", aiL_stop },
    { "relvel", aiL_relvel },
@@ -288,6 +291,7 @@ static const luaL_Reg aiL_methods[] = {
    { "nearhyptarget", aiL_nearhyptarget },
    { "rndhyptarget", aiL_rndhyptarget },
    { "hyperspace", aiL_hyperspace },
+   { "canHyperspace", aiL_canHyperspace },
    { "dock", aiL_dock },
    /* combat */
    { "aim", aiL_aim },
@@ -2149,9 +2153,24 @@ static int aiL_idir( lua_State *L )
  */
 static int aiL_drift_facing( lua_State *L )
 {
-    double drift = angle_diff(VANGLE(cur_pilot->solid.vel), cur_pilot->solid.dir);
-    lua_pushnumber(L, drift);
-    return 1;
+   double drift = angle_diff(VANGLE(cur_pilot->solid.vel), cur_pilot->solid.dir);
+   lua_pushnumber(L, drift);
+   return 1;
+}
+
+/**
+ * @brief Attempts to make the pilot pass through a given point.
+ *
+ *    @luatparam Vec2 v Target position to pass through.
+ *    @luatreturn boolean true if the pilot will pass through the point, false otherwise.
+ * @luafunc interceptPos
+ */
+static int aiL_interceptPos( lua_State *L )
+{
+   const vec2 *v = luaL_checkvector( L, 1 );
+   int ret = pilot_interceptPos( cur_pilot, v->x, v->y );
+   lua_pushboolean( L, ret );
+   return 1;
 }
 
 /**
@@ -2600,6 +2619,18 @@ static int aiL_rndhyptarget( lua_State *L )
 
    /* Return Jump. */
    lua_pushjump( L, lj );
+   return 1;
+}
+
+/**
+ * @brief Gets whether or not the pilot can hyperspace.
+ *
+ *    @luatreturn boolean Whether or not the pilot can hyperspace.
+ * @luafunc canHyperspace
+ */
+static int aiL_canHyperspace( lua_State *L )
+{
+   lua_pushboolean(L, space_canHyperspace(cur_pilot));
    return 1;
 }
 
