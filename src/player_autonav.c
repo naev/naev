@@ -158,7 +158,7 @@ void player_autonavEnd (void)
 /**
  * @brief Starts autonav and closes the window.
  */
-void player_autonavStartWindow( unsigned int wid, const char *str)
+void player_autonavStartWindow( unsigned int wid, const char *str )
 {
    (void) str;
    player_hyperspacePreempt( 1 );
