@@ -442,6 +442,7 @@ function update_ship()
 end
 
 function update_system()
+   update_ship ()
 end
 
 local effects = {}

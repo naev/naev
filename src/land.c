@@ -1620,6 +1620,11 @@ void takeoff( int delay, int nosave )
 
    /* Reset speed */
    player_autonavResetSpeed();
+
+   /* Landing is a special case where the player's gear can change and trigger
+    * all sorts of things. We have to refresh the GUI to reflect those changes.
+    * This is particular important for Lua-side mechanics such as flow. */
+   gui_setSystem();
 }
 
 /**
