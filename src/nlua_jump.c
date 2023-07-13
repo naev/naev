@@ -16,6 +16,7 @@
 
 #include "nluadef.h"
 #include "nlua_vec2.h"
+#include "nlua_pilot.h"
 #include "nlua_system.h"
 #include "land_outfits.h"
 #include "map_overlay.h"
@@ -34,6 +35,7 @@ static int jumpL_hidden( lua_State *L );
 static int jumpL_exitonly( lua_State *L );
 static int jumpL_system( lua_State *L );
 static int jumpL_dest( lua_State *L );
+static int jumpL_jumpDist( lua_State *L );
 static int jumpL_isKnown( lua_State *L );
 static int jumpL_setKnown( lua_State *L );
 static const luaL_Reg jump_methods[] = {
@@ -47,6 +49,7 @@ static const luaL_Reg jump_methods[] = {
    { "exitonly", jumpL_exitonly },
    { "system", jumpL_system },
    { "dest", jumpL_dest },
+   { "jumpDist", jumpL_jumpDist },
    { "known", jumpL_isKnown },
    { "setKnown", jumpL_setKnown },
    {0,0}
@@ -390,6 +393,24 @@ static int jumpL_dest( lua_State *L )
 {
    JumpPoint *jp = luaL_validjump(L,1);
    lua_pushsystem(L,jp->targetid);
+   return 1;
+}
+
+
+/**
+ * @brief Gets the distance from the jump point at which the pilot can jump.
+ *
+ * @usage d = j:jumpDist( player.pilot() )
+ *    @luatparam Jump j Jump to get the jump distance of.
+ *    @luatparam Pilot p Pilot to get information for.
+ *    @luatreturn number The distance from the jump at which the pilot can jump.
+ * @luafunc dest
+ */
+static int jumpL_jumpDist( lua_State *L )
+{
+   JumpPoint *jp = luaL_validjump(L,1);
+   Pilot *p = luaL_validpilot(L,2);
+   lua_pushnumber( L, space_jumpDistance(p,jp) );
    return 1;
 }
 

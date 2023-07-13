@@ -1535,10 +1535,7 @@ static int pilotL_withPlayer( lua_State *L )
  */
 static int pilotL_nav( lua_State *L )
 {
-   Pilot *p;
-
-   /* Get pilot. */
-   p = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
    if (p->target == 0)
       return 0;
 
@@ -1568,10 +1565,7 @@ static int pilotL_nav( lua_State *L )
  */
 static int pilotL_navSpob( lua_State *L )
 {
-   Pilot *p;
-
-   /* Get pilot. */
-   p = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
    if (p->target == 0)
       return 0;
 
@@ -1593,10 +1587,7 @@ static int pilotL_navSpob( lua_State *L )
  */
 static int pilotL_navJump( lua_State *L )
 {
-   Pilot *p;
-
-   /* Get pilot. */
-   p = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
    if (p->target == 0)
       return 0;
 
