@@ -89,6 +89,8 @@ static int pilotL_inrangeAsteroid( lua_State *L );
 static int pilotL_scandone( lua_State *L );
 static int pilotL_withPlayer( lua_State *L );
 static int pilotL_nav( lua_State *L );
+static int pilotL_navSpob( lua_State *L );
+static int pilotL_navJump( lua_State *L );
 static int pilotL_weapsetActive( lua_State *L );
 static int pilotL_weapset( lua_State *L );
 static int pilotL_weapsetType( lua_State *L );
@@ -263,6 +265,8 @@ static const luaL_Reg pilotL_methods[] = {
    { "scandone", pilotL_scandone },
    { "withPlayer", pilotL_withPlayer },
    { "nav", pilotL_nav },
+   { "navSpob", pilotL_navSpob },
+   { "navJump", pilotL_navJump },
    { "weapsetActive", pilotL_weapsetActive },
    { "weapset", pilotL_weapset },
    { "weapsetType", pilotL_weapsetType },
@@ -1522,8 +1526,6 @@ static int pilotL_withPlayer( lua_State *L )
 /**
  * @brief Gets the nav target of the pilot.
  *
- * This will only terminate when the target following pilot disappears (land, death, jump, etc...).
- *
  * @usage spob, hyperspace = p:nav()
  *
  *    @luatparam Pilot p Pilot to get nav info of.
@@ -1533,7 +1535,6 @@ static int pilotL_withPlayer( lua_State *L )
  */
 static int pilotL_nav( lua_State *L )
 {
-   LuaSystem ls;
    Pilot *p;
 
    /* Get pilot. */
@@ -1551,11 +1552,65 @@ static int pilotL_nav( lua_State *L )
    if (p->nav_hyperspace < 0)
       lua_pushnil(L);
    else {
-      ls = cur_system->jumps[ p->nav_hyperspace ].targetid;
+      LuaSystem ls = cur_system->jumps[ p->nav_hyperspace ].targetid;
       lua_pushsystem( L, ls );
    }
 
    return 2;
+}
+
+/**
+ * @brief Gets the nav spob target of the pilot.
+ *
+ *    @luatparam Pilot p Pilot to get nav info of.
+ *    @luatreturn Spob|nil The pilot's spob target.
+ * @luafunc navSpob
+ */
+static int pilotL_navSpob( lua_State *L )
+{
+   Pilot *p;
+
+   /* Get pilot. */
+   p = luaL_validpilot(L,1);
+   if (p->target == 0)
+      return 0;
+
+   /* Get spob target. */
+   if (p->nav_spob < 0)
+      lua_pushnil(L);
+   else
+      lua_pushspob( L, cur_system->spobs[ p->nav_spob ]->id );
+
+   return 1;
+}
+
+/**
+ * @brief Gets the nav jump target of the pilot.
+ *
+ *    @luatparam Pilot p Pilot to get nav info of.
+ *    @luatreturn Jump|nil The pilot's hyperspace target.
+ * @luafunc navJump
+ */
+static int pilotL_navJump( lua_State *L )
+{
+   Pilot *p;
+
+   /* Get pilot. */
+   p = luaL_validpilot(L,1);
+   if (p->target == 0)
+      return 0;
+
+   /* Get hyperspace target. */
+   if (p->nav_hyperspace < 0)
+      lua_pushnil(L);
+   else {
+      LuaJump lj;
+      lj.srcid = cur_system->id;
+      lj.destid = cur_system->jumps[ p->nav_hyperspace ].targetid;
+      lua_pushjump( L, lj );
+   }
+
+   return 1;
 }
 
 /**
