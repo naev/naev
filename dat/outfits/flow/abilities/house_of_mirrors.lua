@@ -29,7 +29,7 @@ function descextra( p, _o )
    else
       size = 0
    end
-   local s = "#y".._([[TODO]]).."#0"
+   local s = "#y".._([[Creates a number of copies of the ship that rotate around and shoot at the current target if hostile. Each copy does only 20% of the damage of the ship.]]).."#0"
    for i=1,3 do
       local cost, drain, copies = getStats( nil, i )
       local pfx = flow.prefix(i)

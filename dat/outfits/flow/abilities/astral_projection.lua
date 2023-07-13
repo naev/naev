@@ -28,7 +28,7 @@ function descextra( p, _o )
    else
       size = 0
    end
-   local s = "#y".._([[TODO]]).."#0"
+   local s = "#y".._([[Creates an astral projection that temporarily fights for the ship.]]).."#0"
    for i=1,3 do
       local cost, drain = getStats( nil, i )
       local pfx = flow.prefix(i)

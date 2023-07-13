@@ -39,7 +39,7 @@ function descextra( p, _o )
    else
       size = 0
    end
-   local s = "#y".._([[TODO]]).."#0"
+   local s = "#y".._([[Teleports the ship forward a short range while draining energy of all hostile ships hit in the path, restoring energy of the ship. Efficiency is decreased if mass is above the limit.]]).."#0"
    for i=1,3 do
       local cost, masslimit, range, cooldown, drain = getStats( nil, i )
       local pfx = flow.prefix(i)
