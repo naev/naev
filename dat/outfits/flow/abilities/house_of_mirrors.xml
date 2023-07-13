@@ -14,4 +14,7 @@
  <specific type="modification">
   <lua>outfits/flow/abilities/house_of_mirrors.lua</lua>
  </specific>
+ <tags>
+  <tag>flow_ability</tag>
+ </tags>
 </outfit>
