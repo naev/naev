@@ -2224,6 +2224,13 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
                spob->gfx_exteriorPath = xml_getStrd(cur);
                continue;
             }
+            if (xml_isNode(cur,"comm")) { /* communication gfx */
+               char str[PATH_MAX];
+               snprintf( str, sizeof(str), SPOB_GFX_COMM_PATH"%s", xml_get(cur));
+               spob->gfx_comm = strdup(str);
+               spob->gfx_commPath = xml_getStrd(cur);
+               continue;
+            }
             WARN(_("Unknown node '%s' in spob '%s'"),node->name,spob->name);
          } while (xml_nextNode(cur));
          continue;
@@ -3585,15 +3592,13 @@ void space_exit (void)
       array_free(spb->tags);
 
       /* graphics */
-      if (spb->gfx_spaceName != NULL) {
-         gl_freeTexture( spb->gfx_space );
-         free(spb->gfx_spaceName);
-         free(spb->gfx_spacePath);
-      }
-      if (spb->gfx_exterior != NULL) {
-         free(spb->gfx_exterior);
-         free(spb->gfx_exteriorPath);
-      }
+      gl_freeTexture( spb->gfx_space );
+      free(spb->gfx_spaceName);
+      free(spb->gfx_spacePath);
+      free(spb->gfx_exterior);
+      free(spb->gfx_exteriorPath);
+      free(spb->gfx_comm);
+      free(spb->gfx_commPath);
 
       /* Landing. */
       free(spb->land_msg);

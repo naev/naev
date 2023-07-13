@@ -58,6 +58,7 @@ static int spobL_landOverride( lua_State *L );
 static int spobL_getLandOverride( lua_State *L );
 static int spobL_gfxSpace( lua_State *L );
 static int spobL_gfxExterior( lua_State *L );
+static int spobL_gfxComm( lua_State *L );
 static int spobL_shipsSold( lua_State *L );
 static int spobL_outfitsSold( lua_State *L );
 static int spobL_commoditiesSold( lua_State *L );
@@ -91,6 +92,7 @@ static const luaL_Reg spob_methods[] = {
    { "getLandOverride", spobL_getLandOverride },
    { "gfxSpace", spobL_gfxSpace },
    { "gfxExterior", spobL_gfxExterior },
+   { "gfxComm", spobL_gfxComm },
    { "shipsSold", spobL_shipsSold },
    { "outfitsSold", spobL_outfitsSold },
    { "commoditiesSold", spobL_commoditiesSold },
@@ -795,6 +797,23 @@ static int spobL_gfxExterior( lua_State *L )
       return 0;
 
    lua_pushtex( L, gl_newImage( p->gfx_exterior, 0 ) );
+   return 1;
+}
+
+/**
+ * @brief Gets the texture of the spob for the communication window.
+ *
+ * @usage gfx = p:gfxComm()
+ *    @luatparam Spob p Spob Spob to get texture of.
+ *    @luatreturn Tex The communication texture of the spob.
+ * @luafunc gfxComm
+ */
+static int spobL_gfxComm( lua_State *L )
+{
+   Spob *p = luaL_validspob(L,1);
+   if (p->gfx_comm==NULL)
+      return spobL_gfxSpace(L);
+   lua_pushtex( L, gl_newImage( p->gfx_comm, 0 ) );
    return 1;
 }
 
