@@ -2351,6 +2351,14 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
          spob->lua_file = strdup( str );
    }
 
+#if DEBUGGING
+   /* Check for graphics. */
+   if ((spob->gfx_exterior != NULL) && !PHYSFS_exists(spob->gfx_exterior))
+      WARN(_("Can not find exterior graphic '%s' for spob '%s'!"), spob->gfx_exterior, spob->name);
+   if ((spob->gfx_comm != NULL) && !PHYSFS_exists(spob->gfx_comm))
+      WARN(_("Can not find comm graphic '%s' for spob '%s'!"), spob->gfx_comm, spob->name);
+#endif /* DEBUGGING */
+
 /*
  * Verification
  */
