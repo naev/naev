@@ -1,3 +1,5 @@
+local srs = require "common.sirius"
+
 local flow = {}
 
 local flow_base = {
@@ -13,12 +15,12 @@ local flow_base = {
    ["Astral Projection Normal"]  = 160,
    ["Astral Projection Lesser"]  = 80,
    -- Outfits
-   ["Small Flow Amplifier"]      = 60,
-   ["Medium Flow Amplifier"]     = 120,
-   ["Large Flow Amplifier"]      = 240,
-   ["Small Meditation Chamber"]  = 50,
-   ["Medium Meditation Chamber"] = 100,
-   ["Large Meditation Chamber"]  = 200,
+   ["Large Flow Amplifier"]      = 400,
+   ["Medium Flow Amplifier"]     = 200,
+   ["Small Flow Amplifier"]      = 100,
+   ["Large Meditation Chamber"]  = 280,
+   ["Medium Meditation Chamber"] = 140,
+   ["Small Meditation Chamber"]  = 70,
    ["Astral Flow Amplifier"]     = 100,
 }
 flow.list_base = flow_base
@@ -29,16 +31,16 @@ local flow_regen = {
    ["Sirius Dogma"]              = 7,
    ["Sirius Providence"]         = 5,
    ["Sirius Preacher"]           = 3,
-   ["Sirius Shama"]              = 2,
+   ["Sirius Shaman"]             = 2,
    ["Sirius Fidelity"]           = 1.5,
    -- Projections
    ["Astral Projection Greater"] = 32,
    ["Astral Projection Normal"]  = 16,
    ["Astral Projection Lesser"]  = 8,
    -- Outfits
-   ["Small Flow Resonator"]      = 1,
-   ["Medium Flow Resonator"]     = 2,
-   ["Large Flow Resonator"]      = 4,
+   ["Large Flow Resonator"]      = 6,
+   ["Medium Flow Resonator"]     = 4,
+   ["Small Flow Resonator"]      = 2,
    ["Astral Flow Amplifier"]     = 10,
 }
 flow.list_regen = flow_regen
@@ -143,16 +145,19 @@ end
 function flow.recalculate( p )
    local sm = p:shipMemory()
    local has_amplifier = false
+   local fm, fb, fr
 
-   local fm = flow_mod[ p:ship():nameRaw() ] or 1
-   local fb = flow_base[ p:ship():nameRaw() ] or 0
-   local fr = flow_regen[ p:ship():nameRaw() ] or 0
-   for k,v in ipairs(p:outfitsList("all")) do
-      fm = fm * (flow_mod[ v:nameRaw() ] or 1)
-      fb = fb + (flow_base[ v:nameRaw() ] or 0)
-      fr = fr + (flow_regen[ v:nameRaw() ] or 0)
-      if v:tags().flow_amplifier then
-         has_amplifier = true
+   if srs.playerIsPsychic() then
+      fm = flow_mod[ p:ship():nameRaw() ] or 1
+      fb = flow_base[ p:ship():nameRaw() ] or 0
+      fr = flow_regen[ p:ship():nameRaw() ] or 0
+      for k,v in ipairs(p:outfitsList("all")) do
+         fm = fm * (flow_mod[ v:nameRaw() ] or 1)
+         fb = fb + (flow_base[ v:nameRaw() ] or 0)
+         fr = fr + (flow_regen[ v:nameRaw() ] or 0)
+         if v:tags().flow_amplifier then
+            has_amplifier = true
+         end
       end
    end
    if has_amplifier then
