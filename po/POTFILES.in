@@ -3184,6 +3184,7 @@ dat/outfits/flow/abilities/seeking_chakra.lua
 dat/outfits/flow/astral_projection/astral_cannon.lua
 dat/outfits/flow/astral_projection/lesser_astral_cannon.lua
 dat/outfits/flow/flow_amplifier.lua
+dat/outfits/flow/structure/flow_resonator.lua
 dat/outfits/flow/structure/meditation_chamber.lua
 dat/outfits/launchers/space_mine_layer.lua
 dat/outfits/lib/bioplasma.lua
