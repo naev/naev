@@ -1865,6 +1865,12 @@ int gui_load( const char* name )
 
    /* Create Lua state. */
    gui_env = nlua_newEnv();
+   nlua_loadStandard( gui_env );
+   nlua_loadGFX( gui_env );
+   nlua_loadGUI( gui_env );
+   nlua_loadTk( gui_env );
+
+   /* Run script. */
    if (nlua_dobufenv( gui_env, buf, bufsize, path ) != 0) {
       WARN(_("Failed to load GUI Lua: %s\n"
             "%s\n"
@@ -1876,10 +1882,6 @@ int gui_load( const char* name )
       return -1;
    }
    free(buf);
-   nlua_loadStandard( gui_env );
-   nlua_loadGFX( gui_env );
-   nlua_loadGUI( gui_env );
-   nlua_loadTk( gui_env );
 
    /* Load references. */
 #define LUA_FUNC(funcname) gui_lua_##funcname = nlua_refenvtype( gui_env, #funcname, LUA_TFUNCTION );
