@@ -77,6 +77,7 @@ static int playerL_autonav( lua_State *L );
 static int playerL_autonavDest( lua_State *L );
 static int playerL_autonavAbort( lua_State *L );
 static int playerL_autonavReset( lua_State *L );
+static int playerL_autonavEnd( lua_State *L );
 /* Cinematics. */
 static int playerL_setSpeed( lua_State *L );
 static int playerL_cinematics( lua_State *L );
@@ -163,6 +164,7 @@ static const luaL_Reg playerL_methods[] = {
    { "autonavDest", playerL_autonavDest },
    { "autonavAbort", playerL_autonavAbort },
    { "autonavReset", playerL_autonavReset },
+   { "autonavEnd", playerL_autonavEnd },
    { "setSpeed", playerL_setSpeed },
    { "cinematics", playerL_cinematics },
    { "damageSPFX", playerL_damageSPFX },
@@ -696,6 +698,19 @@ static int playerL_autonavReset( lua_State *L )
    double timer = luaL_optnumber(L,1,0.);
    player_autonavResetSpeed();
    player.autonav_timer = timer;
+   return 0;
+}
+
+/**
+ * @brief Ends the autonav system. You probably want to use player.autonavAbort instead of this.
+ *
+ * @luafunc autonavEnd
+ * @see autonavAbort
+ */
+static int playerL_autonavEnd( lua_State *L )
+{
+   (void) L;
+   player_autonavEnd();
    return 0;
 }
 
