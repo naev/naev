@@ -133,6 +133,7 @@ static int pilotL_setVisible( lua_State *L );
 static int pilotL_setHilight( lua_State *L );
 static int pilotL_setBribed( lua_State *L );
 static int pilotL_getColour( lua_State *L );
+static int pilotL_colourChar( lua_State *L );
 static int pilotL_getHostile( lua_State *L );
 static int pilotL_flags( lua_State *L );
 static int pilotL_hasIllegal( lua_State *L );
@@ -298,6 +299,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "shipstat", pilotL_getShipStat },
    { "detectedDistance", pilotL_getDetectedDistance },
    { "colour", pilotL_getColour },
+   { "colourChar", pilotL_colourChar },
    { "hostile", pilotL_getHostile },
    { "flags", pilotL_flags },
    { "hasIllegal", pilotL_hasIllegal },
@@ -4707,6 +4709,23 @@ static int pilotL_getColour( lua_State *L )
    Pilot *p = luaL_validpilot(L,1);
    const glColour *col = pilot_getColour(p);
    lua_pushcolour( L, *col );
+   return 1;
+}
+
+/**
+ * @brief Gets the pilot's colour character based on hostility or friendliness to the player. For use with functions that print to the screen.
+ *
+ *    @luatparam Pilot p Pilot to get the colour of.
+ *    @luatreturn string Character representing the pilot's colour for use with specila printing characters.
+ * @luafunc colour
+ */
+static int pilotL_colourChar( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   char str[2];
+   str[0] = pilot_getFactionColourChar( p );
+   str[1] = '\0';
+   lua_pushstring(L,str);
    return 1;
 }
 
