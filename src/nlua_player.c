@@ -74,6 +74,7 @@ static int playerL_jumps( lua_State *L );
 static int playerL_fuel( lua_State *L );
 static int playerL_refuel( lua_State *L );
 static int playerL_autonav( lua_State *L );
+static int playerL_autonavSetPos( lua_State *L );
 static int playerL_autonavDest( lua_State *L );
 static int playerL_autonavAbort( lua_State *L );
 static int playerL_autonavReset( lua_State *L );
@@ -165,6 +166,7 @@ static const luaL_Reg playerL_methods[] = {
    { "fuel", playerL_fuel },
    { "refuel", playerL_refuel },
    { "autonav", playerL_autonav },
+   { "autonavSetPos", playerL_autonavSetPos },
    { "autonavDest", playerL_autonavDest },
    { "autonavAbort", playerL_autonavAbort },
    { "autonavReset", playerL_autonavReset },
@@ -648,6 +650,22 @@ static int playerL_autonav( lua_State *L )
    PLAYER_CHECK();
    lua_pushboolean( L, player_isFlag( PLAYER_AUTONAV ) );
    return 1;
+}
+
+/**
+ * @brief Indicates the player where their autonav target position is.
+ *
+ *    @luatparam Vec2|nil pos Position to mark as autonav destination or nil to clear.
+ * @luafunc autonavSetPos
+ */
+static int playerL_autonavSetPos( lua_State *L )
+{
+   const vec2 *pos = luaL_optvector(L,1,NULL);
+   if (pos==NULL)
+      ovr_autonavClear();
+   else
+      ovr_autonavPos( pos->x, pos->y );
+   return 0;
 }
 
 /**
