@@ -79,11 +79,14 @@ static int playerL_autonavAbort( lua_State *L );
 static int playerL_autonavReset( lua_State *L );
 static int playerL_autonavEnd( lua_State *L );
 /* Cinematics. */
+static int playerL_dt_default( lua_State *L );
+static int playerL_speed( lua_State *L );
 static int playerL_setSpeed( lua_State *L );
 static int playerL_cinematics( lua_State *L );
 static int playerL_damageSPFX( lua_State *L );
 static int playerL_screenshot( lua_State *L );
 /* Board stuff. */
+static int playerL_tryBoard( lua_State *L );
 static int playerL_unboard( lua_State *L );
 /* Land stuff. */
 static int playerL_isLanded( lua_State *L );
@@ -165,10 +168,13 @@ static const luaL_Reg playerL_methods[] = {
    { "autonavAbort", playerL_autonavAbort },
    { "autonavReset", playerL_autonavReset },
    { "autonavEnd", playerL_autonavEnd },
+   { "dt_default", playerL_dt_default },
+   { "speed", playerL_speed },
    { "setSpeed", playerL_setSpeed },
    { "cinematics", playerL_cinematics },
    { "damageSPFX", playerL_damageSPFX },
    { "screenshot", playerL_screenshot },
+   { "tryBoard", playerL_tryBoard },
    { "unboard", playerL_unboard },
    { "isLanded", playerL_isLanded },
    { "takeoff", playerL_takeoff },
@@ -714,20 +720,34 @@ static int playerL_autonavEnd( lua_State *L )
    return 0;
 }
 
+static int playerL_dt_default( lua_State *L )
+{
+   lua_pushnumber( L, player_dt_default() );
+   return 1;
+}
+
+static int playerL_speed( lua_State *L )
+{
+   lua_pushnumber( L, player.speed );
+   return 1;
+}
+
 /**
  * @brief Sets the game speed directly.
  *
  *    @luatparam number speed Speed to set the game to. If omitted it will reset the game speed.
+ *    @luatparam[opt=speed] number sound Sound speed to set to.
  * @luafunc setSpeed
  */
 static int playerL_setSpeed( lua_State *L )
 {
    double speed = luaL_optnumber( L, 1, -1 );
+   double sound = luaL_optnumber( L, 2, speed );
 
    if (speed > 0.) {
       player.speed = speed;
-      sound_setSpeed( speed );
       pause_setSpeed( speed );
+      sound_setSpeed( sound );
    }
    else {
       player.speed = 1.;
@@ -851,6 +871,33 @@ static int playerL_screenshot( lua_State *L )
    (void) L;
    player_screenshot();
    return 0;
+}
+
+/**
+ * @brief Tries to make the player board their target.
+ *
+ *    @luatparam boolean noisy Whether or not to do player messages.
+ *    @luatreturn string Status of the boarding attempt. Can be "impossible", "retry", "ok", or "error".
+ * @luafunc tryBoard
+ */
+static int playerL_tryBoard( lua_State *L )
+{
+   int ret = player_tryBoard( lua_toboolean(L,1) );
+   switch (ret) {
+      case PLAYER_BOARD_IMPOSSIBLE:
+         lua_pushstring(L,"impossible");
+         break;
+      case PLAYER_BOARD_RETRY:
+         lua_pushstring(L,"retry");
+         break;
+      case PLAYER_BOARD_OK:
+         lua_pushstring(L,"ok");
+         break;
+      default:
+         lua_pushstring(L,"error");
+         break;
+   }
+   return 1;
 }
 
 /**
