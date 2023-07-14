@@ -1,6 +1,6 @@
 local fmt = require "format"
 
-local autonav, target_pos, target_spb, target_plt, instant_jump, autonav_tryland
+local autonav, target_pos, target_spb, target_plt, instant_jump
 local autonav_jump_approach, autonav_jump_brake
 local autonav_pos_approach
 local autonav_spob_approach, autonav_spob_land_approach, autonav_spob_land_brake
@@ -26,7 +26,6 @@ local function autonav_setup ()
    target_spb = nil
    target_plt = nil
    map_npath = 0
-   autonav_tryland = false
    tc_rampdown = false
    tc_down     = 0
    player.autonavSetPos()
@@ -126,7 +125,15 @@ function autonav_system ()
       sysstr = _("Unknown")
    end
    player.msg("#o"..fmt.f(_("Autonav: travelling to {sys}."),{sys=sysstr}).."#0")
-   if pilot.canHyperspace(player.pilot()) then
+
+   local pp = player.pilot()
+   local jmp = pp:navJump()
+   local pos = jmp:pos()
+   local t = (pp:pos()-pos):angle()
+   local d = jmp:jumpDist( pp )
+   target_pos = pos + vec2.newP( math.max(0.8*d, d-30), t )
+
+   if pilot.canHyperspace(pp) then
       autonav = autonav_jump_brake
    else
       autonav = autonav_jump_approach
@@ -136,7 +143,6 @@ end
 function autonav_spob( spb, tryland )
    autonav_setup()
    target_spb = spb
-   autonav_tryland = true
    local pos = spb:pos()
    target_pos = pos + vec2.newP( 0.6*spb:radius(), (player.pos()-pos):angle() )
 
@@ -289,12 +295,7 @@ function autonav_jump_approach ()
    if not jmp then
       return autonav_abort()
    end
-   local pos = jmp:pos()
-   local t = (pp:pos()-pos):angle()
-   local d = jmp:jumpDist( pp )
-   pos = pos + vec2.newP( math.max(0.8*d, d-30), t )
-   local ret
-   ret, d = autonav_approach( pos, false )
+   local ret, d = autonav_approach( target_pos, false )
    if ret then
       autonav = autonav_jump_brake
    elseif not tc_rampdown and map_npath<=1 then
@@ -311,7 +312,7 @@ function autonav_jump_brake ()
    local jmp = pp:navJump()
    local ret
    if instant_jump then
-      ret = ai.interceptPos( jmp:pos() )
+      ret = ai.interceptPos( target_pos )
       if not ret and ai.canHyperspace() then
          ret = true
       end
@@ -349,14 +350,10 @@ function autonav_pos_approach ()
 end
 
 function autonav_spob_approach ()
-   local ret, d = autonav_approach( target_spb:pos(), true )
+   local ret, d = autonav_approach( target_pos, true )
    if ret then
       local spobstr = "#"..target_spb:colourChar()..target_spb:name().."#o"
-      if autonav_tryland then
-         player.msg("#o"..fmt.f(_("Autonav: landing on {spob}."),{spob=spobstr}).."#0")
-      else
-         player.msg("#o"..fmt.f(_("Autonav: approaching {spob}."),{spob=spobstr}).."#0")
-      end
+      player.msg("#o"..fmt.f(_("Autonav: arrived at {spob}."),{spob=spobstr}).."#0")
       return autonav_end()
    elseif not tc_rampdown then
       autonav_rampdown( d )
@@ -364,7 +361,7 @@ function autonav_spob_approach ()
 end
 
 function autonav_spob_land_approach ()
-   local ret, d = autonav_approach( target_spb:pos(), true )
+   local ret, d = autonav_approach( target_pos, true )
    if ret then
       autonav = autonav_spob_land_brake
    elseif not tc_rampdown then
@@ -458,9 +455,6 @@ function autonav_plt_board_approach ()
 end
 
 function autonav_think( dt )
-   local _dest
-   _dest, map_npath = player.autonavDest()
-
    if autonav_timer > 0 then
       autonav_timer = autonav_timer - dt
    end
@@ -491,4 +485,38 @@ function autonav_update( realdt )
    tc_mod = tc_mod + 0.2 * realdt * (tc_max - tc_base )
    tc_mod = math.min( tc_mod, tc_max )
    player.setSpeed( tc_mod, tc_mod / dt_default, true )
+end
+
+function autonav_enter ()
+   local dest
+   dest, map_npath = player.autonavDest()
+   if autonav==autonav_jump_approach or autonav==autonav_jump_brake then
+      if not dest then
+         dest = system.cur()
+      end
+      local pp = player.pilot()
+      local jmp = pp:navJump()
+      local sysstr
+      if dest:known() then
+         sysstr = dest:name()
+      else
+         sysstr = _("Unknown")
+      end
+
+      if jmp==nil then
+         player.msg("#o"..fmt.f(_("Autonav arrived at the {sys} system."),{sys=sysstr}).."#0")
+         return autonav_end()
+      end
+
+      player.msg("#o"..fmt.f(n_(
+         "Autonav continuing until {sys} ({n} jump left).",
+         "Autonav continuing until {sys} ({n} jumps left).",
+         map_npath),{sys=sysstr,n=map_npath}).."#0")
+
+      local pos = jmp:pos()
+      local t = (pp:pos()-pos):angle()
+      local d = jmp:jumpDist( pp )
+      target_pos = pos + vec2.newP( math.max(0.8*d, d-30), t )
+      autonav = autonav_jump_approach
+   end
 end

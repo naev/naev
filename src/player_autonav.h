@@ -32,3 +32,4 @@ void player_autonavSpob( const char *name, int tryland );
 void player_autonavPil( unsigned int p );
 void player_autonavBoard( unsigned int p );
 void player_autonavReset( double s );
+void player_autonavEnter (void);

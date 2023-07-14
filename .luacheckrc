@@ -136,6 +136,7 @@ stds.API_autonav = {globals={
    "autonav_abort",
    "autonav_think",
    "autonav_update",
+   "autonav_enter",
 }}
 stds.API_spob = {globals={
    "mem",

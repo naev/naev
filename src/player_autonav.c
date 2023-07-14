@@ -57,6 +57,7 @@ static int func_end           = LUA_NOREF;
 static int func_abort         = LUA_NOREF;
 static int func_think         = LUA_NOREF;
 static int func_update        = LUA_NOREF;
+static int func_enter         = LUA_NOREF;
 
 /*
  * Prototypes.
@@ -100,6 +101,7 @@ int player_autonavInit (void)
    func_abort  = nlua_refenvtype( env, "autonav_abort",  LUA_TFUNCTION );
    func_think  = nlua_refenvtype( env, "autonav_think",  LUA_TFUNCTION );
    func_update = nlua_refenvtype( env, "autonav_update", LUA_TFUNCTION );
+   func_enter  = nlua_refenvtype( env, "autonav_enter",  LUA_TFUNCTION );
 
    return 0;
 }
@@ -1006,4 +1008,17 @@ void player_updateAutonav( double dt )
    pause_setSpeed( tc_mod );
    sound_setSpeed( tc_mod / player_dt_default() );
 #endif
+}
+
+void player_autonavEnter (void)
+{
+   /* Must be autonaving. */
+   if (!player_isFlag(PLAYER_AUTONAV))
+      return;
+
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_enter );
+   if (nlua_pcall( autonav_env, 0, 0 )) {
+      WARN("%s",lua_tostring(naevL,-1));
+      lua_pop(naevL, 1);
+   }
 }

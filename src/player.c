@@ -2053,21 +2053,7 @@ void player_brokeHyperspace (void)
    }
 
    /* Disable autonavigation if arrived. */
-   if (player_isFlag(PLAYER_AUTONAV)) {
-      if (player.p->nav_hyperspace == -1) {
-         player_message( _("#oAutonav arrived at the %s system."), _(cur_system->name) );
-         player_autonavEnd();
-      }
-      else {
-         destsys = map_getDestination( &map_npath );
-         player_message( n_(
-                  "#oAutonav continuing until %s (%d jump left).",
-                  "#oAutonav continuing until %s (%d jumps left).",
-                  map_npath),
-               (sys_isKnown(destsys) ? _(destsys->name) : _("Unknown")),
-               map_npath );
-      }
-   }
+   player_autonavEnter();
 
    /* Safe since this is run in the player hook section. */
    hooks_run( "jumpin" );
