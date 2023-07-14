@@ -897,63 +897,6 @@ double pilot_brakeDist( const Pilot *p, vec2 *pos )
 }
 
 /**
- * @brief Attempts to make the pilot pass through a given point.
- *
- * @todo Rewrite this using a superior method.
- *
- *    @param p Pilot to control.
- *    @param x Destination X position.
- *    @param y Destination Y position.
- *    @return 1 if pilot will pass through the point, 0 otherwise.
- */
-int pilot_interceptPos( Pilot *p, double x, double y )
-{
-   double px, py, target, face, diff, fdiff;
-
-   px = p->solid.pos.x;
-   py = p->solid.pos.y;
-
-   /* Target angle for the pilot's vel */
-   target = atan2( y - py, x - px );
-
-   /* Current angle error. */
-   diff = angle_diff( VANGLE(p->solid.vel), target );
-
-   if (ABS(diff) < MIN_DIR_ERR) {
-      pilot_setThrust(p, 0.);
-      return 1;
-   }
-   else if (ABS(diff) > M_PI / 1.5) {
-      face = target;
-      fdiff = pilot_face(p, face);
-
-      /* Apply thrust if within 180 degrees. */
-      if (FABS(fdiff) < M_PI)
-         pilot_setThrust(p, 1.);
-      else
-         pilot_setThrust(p, 0.);
-
-      return 0;
-   }
-   else if (diff > M_PI_4)
-      face = target + M_PI_4;
-   else if (diff < -M_PI_4)
-      face = target - M_PI_4;
-   else
-      face = target + diff;
-
-   fdiff = pilot_face(p, face);
-
-   /* Must be in proper quadrant, +/- 45 degrees. */
-   if (fdiff < M_PI_4)
-      pilot_setThrust(p, 1.);
-   else
-      pilot_setThrust(p, 0.);
-
-   return 0;
-}
-
-/**
  * @brief Begins active cooldown, reducing hull and outfit temperatures.
  *
  *    @param p Pilot that should cool down.

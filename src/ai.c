@@ -173,7 +173,6 @@ static int aiL_iface( lua_State *L ); /* iface(number/pointer) */
 static int aiL_dir( lua_State *L ); /* dir(number/pointer) */
 static int aiL_idir( lua_State *L ); /* idir(number/pointer) */
 static int aiL_drift_facing( lua_State *L ); /* drift_facing(number/pointer) */
-static int aiL_interceptPos( lua_State *L );
 static int aiL_brake( lua_State *L ); /* brake() */
 static int aiL_brakeDist( lua_State *L );
 static int aiL_getnearestspob( lua_State *L ); /* Vec2 getnearestspob() */
@@ -281,7 +280,6 @@ static const luaL_Reg aiL_methods[] = {
    { "dir", aiL_dir },
    { "idir", aiL_idir },
    { "drift_facing", aiL_drift_facing },
-   { "interceptPos", aiL_interceptPos },
    { "brake", aiL_brake },
    { "brakeDist", aiL_brakeDist },
    { "stop", aiL_stop },
@@ -2103,7 +2101,7 @@ static int aiL_dir( lua_State *L )
 }
 
 /**
- * @brief calculates angle between pilot facing and intercept-course to target.
+ * @brief Calculates angle between pilot facing and intercept-course to target.
  *
  *    @luatparam Pilot|Vec2 target Position or pilot to compare facing to
  *    @luatreturn number The facing offset to intercept-course to the target (in radians).
@@ -2182,21 +2180,6 @@ static int aiL_drift_facing( lua_State *L )
 {
    double drift = angle_diff(VANGLE(cur_pilot->solid.vel), cur_pilot->solid.dir);
    lua_pushnumber(L, drift);
-   return 1;
-}
-
-/**
- * @brief Attempts to make the pilot pass through a given point.
- *
- *    @luatparam Vec2 v Target position to pass through.
- *    @luatreturn boolean true if the pilot will pass through the point, false otherwise.
- * @luafunc interceptPos
- */
-static int aiL_interceptPos( lua_State *L )
-{
-   const vec2 *v = luaL_checkvector( L, 1 );
-   int ret = pilot_interceptPos( cur_pilot, v->x, v->y );
-   lua_pushboolean( L, ret );
    return 1;
 }
 

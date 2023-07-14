@@ -260,7 +260,7 @@ end
 local function autonav_approach( pos, count_target )
    local pp = player.pilot()
    local stats = pp:stats()
-   local off = ai.face( pos )
+   local off = ai.iface( pos )
    if off < math.rad(10) then
       ai.accel(1)
    else
@@ -340,16 +340,11 @@ function autonav_jump_brake ()
    local ret
    -- With instant jumping we can just focus on getting in range
    if instant_jump then
-      ret = ai.interceptPos( target_pos )
-      if not ret and ai.canHyperspace() then
-         ret = true
-      else
-         ai.accel(1)
-      end
+      ret = autonav_approach( target_pos, true )
    else
       local _d, pos = ai.brakeDist()
       if pos:dist( target_pos ) > jmp:jumpDist(pp) then
-         ret = ai.interceptPos( target_pos )
+         ret = autonav_approach( target_pos, true )
       else
          ret = ai.brake()
       end

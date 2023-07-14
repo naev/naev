@@ -424,7 +424,6 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
 double pilot_face( Pilot* p, const double dir );
 int pilot_brake( Pilot* p );
 double pilot_brakeDist( const Pilot *p, vec2 *pos );
-int pilot_interceptPos( Pilot *p, double x, double y );
 void pilot_cooldown( Pilot *p, int dochecks );
 void pilot_cooldownEnd( Pilot *p, const char *reason );
 double pilot_aimAngle( Pilot *p, const vec2* pos, const vec2* vel );
