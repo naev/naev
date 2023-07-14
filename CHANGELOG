@@ -24,6 +24,7 @@
       * Travelling merchant tells you when new wares are available and should be easier to find
       * Lua Love API should be better at handling input and not apply keys held before started
       * Autonav should be significantly better at reaching targets efficiently
+      * Increase time compression when disabled
    * New Content
       * New mechanic for House Sirius called flow to unlock psychic powers
          * Gives passive bonuses to Sirius ships
