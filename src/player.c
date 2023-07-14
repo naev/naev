@@ -1979,10 +1979,9 @@ int player_jump (void)
 void player_brokeHyperspace (void)
 {
    ntime_t t;
-   StarSystem *sys, *destsys;
+   StarSystem *sys;
    JumpPoint *jp;
    Pilot *const* pilot_stack;
-   int map_npath;
 
    /* First run jump hook. */
    hooks_run( "jumpout" );
