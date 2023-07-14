@@ -91,6 +91,7 @@ static int playerL_unboard( lua_State *L );
 /* Land stuff. */
 static int playerL_isLanded( lua_State *L );
 static int playerL_takeoff( lua_State *L );
+static int playerL_tryLand( lua_State *L );
 static int playerL_land( lua_State *L );
 static int playerL_landAllow( lua_State *L );
 static int playerL_landWindow( lua_State *L );
@@ -178,6 +179,7 @@ static const luaL_Reg playerL_methods[] = {
    { "unboard", playerL_unboard },
    { "isLanded", playerL_isLanded },
    { "takeoff", playerL_takeoff },
+   { "tryLand", playerL_tryLand },
    { "land", playerL_land },
    { "landAllow", playerL_landAllow },
    { "landWindow", playerL_landWindow },
@@ -952,6 +954,33 @@ static int playerL_takeoff( lua_State *L )
    land_queueTakeoff();
 
    return 0;
+}
+
+/**
+ * @brief Tries to make the player land.
+ *
+ *    @luatparam boolean noisy Whether or not to do player messages.
+ *    @luatreturn string Status of the boarding attempt. Can be "impossible", "retry", "ok", or "error".
+ * @luafunc tryBoard
+ */
+static int playerL_tryLand( lua_State *L )
+{
+   int ret = player_land( lua_toboolean(L,1) );
+   switch (ret) {
+      case PLAYER_LAND_DENIED:
+         lua_pushstring(L,"impossible");
+         break;
+      case PLAYER_LAND_OK:
+         lua_pushstring(L,"ok");
+         break;
+      case PLAYER_LAND_AGAIN:
+         lua_pushstring(L,"retry");
+         break;
+      default:
+         lua_pushstring(L,"error");
+         break;
+   }
+   return 1;
 }
 
 /**

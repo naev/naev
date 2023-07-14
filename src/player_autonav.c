@@ -14,6 +14,7 @@
 
 #include "player.h"
 
+#include "ai.h"
 #include "array.h"
 #include "board.h"
 #include "conf.h"
@@ -22,6 +23,12 @@
 #include "pilot.h"
 #include "pilot_ew.h"
 #include "player.h"
+#include "ndata.h"
+#include "nlua.h"
+#include "nlua_vec2.h"
+#include "nlua_pilot.h"
+#include "nlua_spob.h"
+#include "nlua_system.h"
 #include "sound.h"
 #include "space.h"
 #include "toolkit.h"
@@ -36,6 +43,16 @@ static double last_shield; /**< Player's last shield value. */
 static double last_armour; /**< Player's last armour value. */
 static int target_known = 0; /**< Is the target known? */
 
+static nlua_env autonav_env   = LUA_NOREF; /**< Autonav environment. */
+static int func_system        = LUA_NOREF;
+static int func_spob          = LUA_NOREF;
+static int func_pilot         = LUA_NOREF;
+static int func_board         = LUA_NOREF;
+static int func_pos           = LUA_NOREF;
+static int func_abort         = LUA_NOREF;
+static int func_think         = LUA_NOREF;
+static int func_update        = LUA_NOREF;
+
 /*
  * Prototypes.
  */
@@ -45,6 +62,38 @@ static int player_autonavApproach( const vec2 *pos, double *dist2, int count_tar
 static void player_autonavFollow( const vec2 *pos, const vec2 *vel, const int follow, double *dist2 );
 static int player_autonavApproachBoard( const vec2 *pos, const vec2 *vel, double *dist2, double sw );
 static int player_autonavBrake (void);
+
+
+int player_autonavInit (void)
+{
+   nlua_env env = nlua_newEnv();
+   nlua_loadStandard( env );
+   nlua_loadAI( env );
+
+   size_t bufsize;
+   char *buf = ndata_read( AUTONAV_PATH, &bufsize );
+   if (nlua_dobufenv(env, buf, bufsize, AUTONAV_PATH) != 0) {
+      WARN( _("Error loading file: %s\n"
+            "%s\n"
+            "Most likely Lua file has improper syntax, please check"),
+            AUTONAV_PATH, lua_tostring(naevL,-1));
+      free(buf);
+      return -1;
+   }
+   free(buf);
+   autonav_env = env;
+
+   func_system = nlua_refenvtype( env, "autonav_system", LUA_TFUNCTION );
+   func_spob   = nlua_refenvtype( env, "autonav_spob",   LUA_TFUNCTION );
+   func_pilot  = nlua_refenvtype( env, "autonav_pilot",  LUA_TFUNCTION );
+   func_board  = nlua_refenvtype( env, "autonav_board",  LUA_TFUNCTION );
+   func_pos    = nlua_refenvtype( env, "autonav_pos",    LUA_TFUNCTION );
+   func_abort  = nlua_refenvtype( env, "autonav_abort",  LUA_TFUNCTION );
+   func_think  = nlua_refenvtype( env, "autonav_think",  LUA_TFUNCTION );
+   func_update = nlua_refenvtype( env, "autonav_update", LUA_TFUNCTION );
+
+   return 0;
+}
 
 /**
  * @brief Resets the game speed.
@@ -171,14 +220,27 @@ void player_autonavStartWindow( unsigned int wid, const char *str )
  */
 void player_autonavPos( double x, double y )
 {
+   vec2 pos;
+
    if (player_autonavSetup())
       return;
 
+   pos.x = x;
+   pos.y = y;
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_pos );
+   lua_pushvector( naevL, pos );
+   if (nlua_pcall( autonav_env, 1, 0 )) {
+      WARN("%s",lua_tostring(naevL,-1));
+      lua_pop(naevL, 1);
+   }
+   vec2_cset( &player.autonav_pos, x, y );
+/*
    player_message(_("#oAutonav: heading to target position."));
    player.autonav    = AUTONAV_POS_APPROACH;
    player.autonavmsg = strdup( _("position" ));
    player.autonavcol = '0';
    vec2_cset( &player.autonav_pos, x, y );
+*/
 }
 
 /**
@@ -186,17 +248,23 @@ void player_autonavPos( double x, double y )
  */
 void player_autonavSpob( const char *name, int tryland )
 {
-   Spob *p;
-   vec2 pos;
-   double a;
+   Spob *spb;
 
    if (player_autonavSetup())
       return;
-   p = spob_get( name );
-   player.autonavmsg = strdup( spob_name(p) );
-   player.autonavcol = spob_getColourChar( p );
-   pos = p->pos;
 
+   spb = spob_get( name );
+
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_spob );
+   lua_pushspob( naevL, spob_index(spb) );
+   lua_pushboolean( naevL, tryland );
+   if (nlua_pcall( autonav_env, 2, 0 )) {
+      WARN("%s",lua_tostring(naevL,-1));
+      lua_pop(naevL, 1);
+   }
+   player.autonav_pos = spb->pos;
+
+#if 0
    /* Don't target center, but position offset in the direction of the player. */
    a = ANGLE( player.p->solid.pos.x - pos.x,
               player.p->solid.pos.y - pos.y );
@@ -211,6 +279,7 @@ void player_autonavSpob( const char *name, int tryland )
       player.autonav = AUTONAV_SPOB_APPROACH;
       player_message(_("#oAutonav: approaching #%c%s#0."), player.autonavcol, player.autonavmsg );
    }
+#endif
 }
 
 /**
@@ -223,11 +292,13 @@ void player_autonavPil( unsigned int p )
    if (player_autonavSetup() || !inrange)
       return;
 
-   target_known = (inrange > 0);
-   player_message(_("#oAutonav: following %s."), (target_known) ? pilot->name : _("Unknown") );
-   player.autonav    = AUTONAV_PLT_FOLLOW;
-   player.autonavmsg = strdup( pilot->name );
-   player.autonavcol = '0';
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_pilot );
+   lua_pushpilot( naevL, p );
+   if (nlua_pcall( autonav_env, 1, 0 )) {
+      WARN("%s",lua_tostring(naevL,-1));
+      lua_pop(naevL, 1);
+   }
+   player.autonav_pos = pilot->solid.pos;
 }
 
 /**
@@ -246,10 +317,13 @@ void player_autonavBoard( unsigned int p )
       return;
    }
 
-   player_message(_("#oAutonav: boarding %s."), pilot->name );
-   player.autonav    = AUTONAV_PLT_BOARD_APPROACH;
-   player.autonavmsg = strdup( pilot->name );
-   player.autonavcol = '0';
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_board );
+   lua_pushpilot( naevL, p );
+   if (nlua_pcall( autonav_env, 1, 0 )) {
+      WARN("%s",lua_tostring(naevL,-1));
+      lua_pop(naevL, 1);
+   }
+   player.autonav_pos = pilot->solid.pos;
 }
 
 /**
@@ -770,9 +844,23 @@ int player_autonavShouldResetSpeed (void)
  */
 void player_thinkAutonav( Pilot *pplayer, double dt )
 {
+   int oldmem;
+
    if (player.autonav_timer > 0.)
       player.autonav_timer -= dt;
 
+   ai_thinkSetup();
+   oldmem = ai_setPilot( pplayer ); /* Uses AI functionality. */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_think );
+   lua_pushnumber( naevL, dt );
+   if (nlua_pcall( autonav_env, 1, 0 )) {
+      WARN("%s",lua_tostring(naevL,-1));
+      lua_pop(naevL, 1);
+   }
+   ai_unsetPilot( oldmem );
+   ai_thinkApply( pplayer );
+
+#if 0
    player_autonavShouldResetSpeed();
    if ((player.autonav == AUTONAV_JUMP_APPROACH) ||
          (player.autonav == AUTONAV_JUMP_BRAKE)) {
@@ -791,6 +879,7 @@ void player_thinkAutonav( Pilot *pplayer, double dt )
    /* Keep on moving. */
    else
       player_autonav();
+#endif
 }
 
 /**
@@ -843,6 +932,13 @@ void player_updateAutonav( double dt )
    if (!player_isFlag(PLAYER_AUTONAV))
       return;
 
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_update );
+   lua_pushnumber( naevL, dt );
+   if (nlua_pcall( autonav_env, 1, 0 )) {
+      WARN("%s",lua_tostring(naevL,-1));
+      lua_pop(naevL, 1);
+   }
+#if 0
    /* Ramping down. */
    if (tc_rampdown) {
       if (tc_mod != tc_base) {
@@ -863,4 +959,5 @@ void player_updateAutonav( double dt )
       tc_mod = player.tc_max;
    pause_setSpeed( tc_mod );
    sound_setSpeed( tc_mod / player_dt_default() );
+#endif
 }

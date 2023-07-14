@@ -16,6 +16,8 @@ enum {
    AUTONAV_PLT_BOARD_BRAKE,/**< Player is going to brake to board. */
 };
 
+int player_autonavInit (void);
+
 void player_thinkAutonav( Pilot *pplayer, double dt );
 void player_updateAutonav( double dt );
 void player_autonavResetSpeed (void);

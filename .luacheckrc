@@ -125,6 +125,16 @@ stds.API_spawn = {globals={
    "decrease",                          -- C function: system_rmCurrentPresence()
    "spawn",                             -- C function: system_scheduler()
 }}
+stds.API_autonav = {globals={
+   "autonav_system",
+   "autonav_spob",
+   "autonav_pilot",
+   "autonav_board",
+   "autonav_pos",
+   "autonav_abort",
+   "autonav_think",
+   "autonav_update",
+}}
 stds.API_spob = {globals={
    "mem",
    "init",     -- C function: spob_luaInit
@@ -216,6 +226,7 @@ stds.API_mem = {globals={
 }}
 
 files["dat/ai/**/*.lua"].std = STANDARD .. "+ai+API_ai"
+files["dat/autonav.lua"].std = STANDARD .. "+ai+API_autonav"
 files["dat/autoequip.lua"].std = STANDARD .. TK .. "+API_autoequip"
 files["dat/bkg/**/*.lua"].std = STANDARD .. GFX .. "+bkg+camera+API_background"
 files["dat/board.lua"].std = STANDARD .. "+API_board"
