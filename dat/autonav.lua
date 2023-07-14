@@ -129,9 +129,8 @@ function autonav_system ()
    local pp = player.pilot()
    local jmp = pp:navJump()
    local pos = jmp:pos()
-   local t = (pp:pos()-pos):angle()
    local d = jmp:jumpDist( pp )
-   target_pos = pos + vec2.newP( math.max(0.8*d, d-30), t )
+   target_pos = pos + (pp:pos()-pos):normalize( math.max(0.8*d, d-30) )
 
    if pilot.canHyperspace(pp) then
       autonav = autonav_jump_brake
@@ -143,8 +142,9 @@ end
 function autonav_spob( spb, tryland )
    autonav_setup()
    target_spb = spb
+   local pp = player.pilot()
    local pos = spb:pos()
-   target_pos = pos + vec2.newP( 0.6*spb:radius(), (player.pos()-pos):angle() )
+   target_pos = pos + (pp:pos()-pos):normalize( 0.6*spb:radius() )
 
    local spobstr = "#"..spb:colourChar()..spb:name().."#o"
    if tryland then
@@ -514,9 +514,8 @@ function autonav_enter ()
          map_npath),{sys=sysstr,n=map_npath}).."#0")
 
       local pos = jmp:pos()
-      local t = (pp:pos()-pos):angle()
       local d = jmp:jumpDist( pp )
-      target_pos = pos + vec2.newP( math.max(0.8*d, d-30), t )
+      target_pos = pos + (pp:pos()-pos):normalize( math.max(0.8*d, d-30) )
       autonav = autonav_jump_approach
    end
 end
