@@ -166,12 +166,14 @@ static int aiL_scandone( lua_State *L );
 /* movement */
 static int aiL_accel( lua_State *L ); /* accel(number); number <= 1. */
 static int aiL_turn( lua_State *L ); /* turn(number); abs(number) <= 1. */
-static int aiL_face( lua_State *L ); /* face( number/pointer, bool) */
 static int aiL_careful_face( lua_State *L ); /* face( number/pointer, bool) */
 static int aiL_aim( lua_State *L ); /* aim(number) */
-static int aiL_iface( lua_State *L ); /* iface(number/pointer) */
 static int aiL_dir( lua_State *L ); /* dir(number/pointer) */
+static int aiL_face( lua_State *L ); /* face( number/pointer, bool) */
+static int aiL_iface( lua_State *L ); /* iface(number/pointer) */
 static int aiL_idir( lua_State *L ); /* idir(number/pointer) */
+static int aiL_follow_accurate( lua_State *L ); /* follow_accurate() */
+static int aiL_face_accurate( lua_State *L ); /* face_accurate() */
 static int aiL_drift_facing( lua_State *L ); /* drift_facing(number/pointer) */
 static int aiL_brake( lua_State *L ); /* brake() */
 static int aiL_getnearestspob( lua_State *L ); /* Vec2 getnearestspob() */
@@ -181,8 +183,6 @@ static int aiL_getlandspob( lua_State *L ); /* Vec2 getlandspob() */
 static int aiL_land( lua_State *L ); /* bool land() */
 static int aiL_stop( lua_State *L ); /* stop() */
 static int aiL_relvel( lua_State *L ); /* relvel( number ) */
-static int aiL_follow_accurate( lua_State *L ); /* follow_accurate() */
-static int aiL_face_accurate( lua_State *L ); /* face_accurate() */
 
 /* Hyperspace. */
 static int aiL_sethyptarget( lua_State *L );
@@ -2115,7 +2115,6 @@ static int aiL_idir( lua_State *L )
    Pilot* p;
    double diff, heading_offset_azimuth, drift_radial, drift_azimuthal;
    double speedmap;
-   /*char announcebuffer[255] = " ", announcebuffer2[128];*/
 
    /* Get first parameter, aka what to face. */
    p  = NULL;
@@ -2127,7 +2126,7 @@ static int aiL_idir( lua_State *L )
    else NLUA_INVALID_PARAMETER(L);
 
    if (vec==NULL) {
-      if (p == NULL)
+      if (p==NULL)
          return 0; /* Return silently when attempting to face an invalid pilot. */
       /* Establish the current pilot velocity and position vectors */
       vec2_cset( &drift, VX(p->solid.vel) - VX(cur_pilot->solid.vel), VY(p->solid.vel) - VY(cur_pilot->solid.vel));
@@ -2154,7 +2153,7 @@ static int aiL_idir( lua_State *L )
        * 1 - 1/(|x|+1) does a pretty nice job of mapping the reals to the interval (0...1). That forms the core of this angle calculation
        * there is nothing special about the scaling parameter of 200; it can be tuned to get any behavior desired. A lower
        * number will give a more dramatic 'lead' */
-      speedmap = -1*copysign(1 - 1 / (FABS(drift_azimuthal/200) + 1), drift_azimuthal) * M_PI_2;
+      speedmap = -1.*copysign(1. - 1. / (FABS(drift_azimuthal/200.) + 1.), drift_azimuthal) * M_PI_2;
       diff = angle_diff(heading_offset_azimuth, speedmap);
 
    }
