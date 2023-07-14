@@ -2220,6 +2220,8 @@ static int aiL_brake( lua_State *L )
 /**
  * @brief Gets the brake distance of a pilot.
  *
+ * @TODO merge with ai.minbrakedist or something? It's redundant
+ *
  *    @luatreturn boolean Whether braking is finished.
  *    @luafunc brake
  */
