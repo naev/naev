@@ -23,6 +23,7 @@
 #include "pilot.h"
 #include "pilot_ew.h"
 #include "player.h"
+#include "map_overlay.h"
 #include "ndata.h"
 #include "nlua.h"
 #include "nlua_vec2.h"
@@ -200,6 +201,7 @@ void player_autonavEnd (void)
    player_autonavResetSpeed();
    free( player.autonavmsg );
    player.autonavmsg = NULL;
+   ovr_autonavClear();
    /* Get rid of acceleration. */
    player_accelOver();
 }
