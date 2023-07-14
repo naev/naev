@@ -15,6 +15,7 @@ local function autonav_setup ()
    target_plt = nil
    map_npath = 0
    autonav_tryland = false
+   player.autonavSetPos()
    instant_jump = pp:shipstat("misc_instant_jump")
 
    conf = naev.conf()
@@ -195,13 +196,14 @@ local function autonav_approach( pos, count_target )
 
    local speed = stats.speed
    local vmod = pp:vel():mod()
-   local t = math.min( 1.5*speed, vmod / stats.thrust * stats.mass )
+   local t = math.min( 1.5*speed, vmod / stats.thrust )
    local vel = math.min( speed, vmod )
    stats.turn = math.rad(stats.turn) -- TODO probably change the code
 
-   local dist = vel*(t+1.1*math.pi/stats.turn) - 0.5*(stats.thrust/stats.mass)*t*t
+   local dist = vel*(t+1.1*math.pi/stats.turn) - 0.5*stats.thrust*t*t
 
    local d = pos:dist( pp:pos() )
+
    dist = d - dist
    local retd
    if count_target then
@@ -221,7 +223,7 @@ local function autonav_follow( pos, vel, follow )
    local pp = player.pilot()
    local stats = pp:stats()
 
-   local timeFactor = math.pi/stats.turn + stats.speed/stats.thrust*stats.mass
+   local timeFactor = math.pi/stats.turn + stats.speed/stats.thrust
 
    local Kp = 10
    local Kd = math.max( 5, 10.84*timeFactor-10.82 )
@@ -336,7 +338,7 @@ end
 function autonav_spob_land_brake ()
    local ret = ai.brake()
    if not ret then
-      if player.land(false)=="impossible" then
+      if player.tryLand(false)=="impossible" then
          autonav_abort()
       else
          autonav = autonav_spob_land_approach
