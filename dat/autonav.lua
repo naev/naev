@@ -260,7 +260,7 @@ local function autonav_approach_vel( pos, vel, radius )
    local point = pos + vec2.newP( radius, angle )
    local dir = (point-pp:pos())*Kp + (vel-pp:vel())*Kd
 
-   local off = ai.face( dir )
+   local off = ai.face( dir:angle() )
    if math.abs(off) < math.rad(10) and dir:mod() > 300 then
       ai.accel(1)
    else
