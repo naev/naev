@@ -263,8 +263,6 @@ local function autonav_approach( pos, count_target )
    local off = ai.iface( pos )
    if off < math.rad(10) then
       ai.accel(1)
-   else
-      ai.accel(0)
    end
 
    local speed = stats.speed
@@ -311,8 +309,6 @@ local function autonav_approach_vel( pos, vel, radius )
    local off = ai.face( dir:angle() )
    if math.abs(off) < math.rad(10) and dir:mod() > 300 then
       ai.accel(1)
-   else
-      ai.accel(0)
    end
 
    return pos:dist( pp:pos() )
