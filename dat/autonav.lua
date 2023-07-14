@@ -13,6 +13,9 @@ tc_mod = 0
 map_npath = 0
 tc_down = 0
 
+--[[
+Common code for setting decent defaults and global variables when starting autonav.
+--]]
 local function autonav_setup ()
    -- Get player / game info
    local pp = player.pilot()
@@ -104,16 +107,25 @@ local function shouldResetSpeed ()
    return false
 end
 
+--[[
+Triggered when a mission or the likes temporarily disables autonav.
+--]]
 function autonav_reset( time )
    resetSpeed()
    autonav_timer = math.max( autonav_timer, time )
 end
 
+--[[
+Triggers when autonav is successfully terminated or cleaning up.
+--]]
 function autonav_end ()
    resetSpeed()
    player.autonavEnd()
 end
 
+--[[
+Autonav to a system, destination is in the player's nav
+--]]
 function autonav_system ()
    autonav_setup()
    local dest
@@ -139,6 +151,9 @@ function autonav_system ()
    end
 end
 
+--[[
+Autonav to a spob, potentially trying to land
+--]]
 function autonav_spob( spb, tryland )
    autonav_setup()
    target_spb = spb
@@ -157,6 +172,9 @@ function autonav_spob( spb, tryland )
 
 end
 
+--[[
+Autonav to follow a target pilot
+--]]
 function autonav_pilot( plt )
    autonav_setup()
    target_plt = plt
@@ -172,14 +190,20 @@ function autonav_pilot( plt )
    autonav = autonav_plt_follow
 end
 
+--[[
+Autonav to board a pilot
+--]]
 function autonav_board( plt )
    autonav_setup()
    target_plt = plt
    local pltstr = "#"..plt:colourChar()..plt:name().."#o"
-   player.msg("#o"..fmt.f(_("Autonav: boarding{plt}."),{plt=pltstr}).."#0")
+   player.msg("#o"..fmt.f(_("Autonav: boarding {plt}."),{plt=pltstr}).."#0")
    autonav = autonav_plt_board_approach
 end
 
+--[[
+Autonav to a position specified by the plyaer
+--]]
 function autonav_pos( pos )
    autonav_setup()
    player.msg("#o".._("Autonav: heading to target position.").."#0")
@@ -188,6 +212,9 @@ function autonav_pos( pos )
    target_pos = pos
 end
 
+--[[
+Autonav was forcibly aborted for a reason or other.
+--]]
 function autonav_abort( reason )
    if reason then
       player.msg("#r"..fmt.f(_("Autonav: aborted due to '{reason}'!"),{reason=reason}).."#0")
@@ -229,6 +256,7 @@ local function autonav_rampdown( d )
    end
 end
 
+-- For getting close to a static target
 local function autonav_approach( pos, count_target )
    local pp = player.pilot()
    local stats = pp:stats()
@@ -264,6 +292,7 @@ local function autonav_approach( pos, count_target )
    return false, retd
 end
 
+-- For approaching a target with velocity, and staying at a radius distance
 local function autonav_approach_vel( pos, vel, radius )
    local pp = player.pilot()
    local stats = pp:stats()
@@ -289,26 +318,8 @@ local function autonav_approach_vel( pos, vel, radius )
    return pos:dist( pp:pos() )
 end
 
-local function autonav_jump_check ()
-   local pp = player.pilot()
-   if not pp:navJump() then
-      autonav_abort(_("Target changed to current system"))
-      return false
-   end
-   local fuel, consumption = player.fuel()
-   if fuel < consumption then
-      autonav_abort(_("Not enough fuel for autonav to continue"))
-      return false
-   end
-
-   return true
-end
-
+-- Approaching a jump point, target position is stored in target_pos
 function autonav_jump_approach ()
-   if not autonav_jump_check() then
-      return
-   end
-
    local pp = player.pilot()
    local jmp = pp:navJump()
    if not jmp then
@@ -322,20 +333,19 @@ function autonav_jump_approach ()
    end
 end
 
+-- Breaking at a jump point, target position is stored in target_pos
 function autonav_jump_brake ()
-   if not autonav_jump_check() then
-      return
-   end
-
    local pp = player.pilot()
    local jmp = pp:navJump()
    local ret
+   -- With instant jumping we can just focus on getting in range
    if instant_jump then
       ret = ai.interceptPos( target_pos )
       if not ret and ai.canHyperspace() then
          ret = true
+      else
+         ai.accel(1)
       end
-      ai.accel(1)
    else
       local _d, pos = ai.brakeDist()
       if pos:dist( target_pos ) > jmp:jumpDist(pp) then
@@ -348,8 +358,9 @@ function autonav_jump_brake ()
    if ret then
       if ai.canHyperspace() then
          ai.hyperspace()
+      else
+         autonav = autonav_jump_approach
       end
-      autonav = autonav_jump_approach
    end
 
    if not tc_rampdown and map_npath<=1 then
@@ -358,6 +369,7 @@ function autonav_jump_brake ()
    end
 end
 
+-- Approaching a position specified by target_pos
 function autonav_pos_approach ()
    local ret, d = autonav_approach( target_pos, true )
    if ret then
@@ -368,6 +380,7 @@ function autonav_pos_approach ()
    end
 end
 
+-- Approaching a spob, not interested in landing
 function autonav_spob_approach ()
    local ret, d = autonav_approach( target_pos, true )
    if ret then
@@ -379,6 +392,7 @@ function autonav_spob_approach ()
    end
 end
 
+-- Approaching a spob to try to land
 function autonav_spob_land_approach ()
    local ret, d = autonav_approach( target_pos, true )
    if ret then
@@ -388,11 +402,12 @@ function autonav_spob_land_approach ()
    end
 end
 
+-- Going for the landing approach
 function autonav_spob_land_brake ()
    local ret = ai.brake()
    if ret then
       if player.tryLand(false)=="impossible" then
-         autonav_abort()
+         return autonav_abort()
       else
          autonav = autonav_spob_land_approach
       end
@@ -404,6 +419,7 @@ function autonav_spob_land_brake ()
    end
 end
 
+-- Following a target pilot
 function autonav_plt_follow ()
    local plt = target_plt
    local target_known = false
@@ -437,6 +453,7 @@ function autonav_plt_follow ()
    end
 end
 
+-- Geting close to board a pilot
 function autonav_plt_board_approach ()
    local plt = target_plt
    local target_known = false
@@ -473,6 +490,7 @@ function autonav_plt_board_approach ()
    end
 end
 
+-- Run quite often when the player tries to think. dt is game time
 function autonav_think( dt )
    if autonav_timer > 0 then
       autonav_timer = autonav_timer - dt
@@ -483,6 +501,7 @@ function autonav_think( dt )
    end
 end
 
+-- Run with the physics backend where realdt is user time
 function autonav_update( realdt )
    -- If we reset we skip the iteration
    if shouldResetSpeed() then
@@ -522,11 +541,20 @@ function autonav_enter ()
          sysstr = _("Unknown")
       end
 
+      -- Made it to target
       if jmp==nil then
          player.msg("#o"..fmt.f(_("Autonav arrived at the {sys} system."),{sys=sysstr}).."#0")
          return autonav_end()
       end
 
+      -- Must have fuel to continue
+      local fuel, consumption = player.fuel()
+      if fuel < consumption then
+         autonav_abort(_("Not enough fuel for autonav to continue"))
+         return false
+      end
+
+      -- Keep on going
       player.msg("#o"..fmt.f(n_(
          "Autonav continuing until {sys} ({n} jump left).",
          "Autonav continuing until {sys} ({n} jumps left).",
