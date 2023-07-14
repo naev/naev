@@ -1895,7 +1895,7 @@ static int aiL_careful_face( lua_State *L )
    /* Init the force */
    vec2_cset( &F, 0., 0.) ;
    vec2_cset( &F1, tv->x - cur_pilot->solid.pos.x, tv->y - cur_pilot->solid.pos.y) ;
-   dist = VMOD(F1) + 0.1; /* Avoid / 0*/
+   dist = VMOD(F1) + 0.1; /* Avoid / 0 */
    vec2_cset( &F1, F1.x * k_goal / dist, F1.y * k_goal / dist) ;
 
    /* Cycle through all the pilots in order to compute the force */
@@ -2075,7 +2075,7 @@ static int aiL_dir( lua_State *L )
    int n;
 
    /* Get first parameter, aka what to face. */
-   n  = -2;
+   n = -2;
    vec = NULL;
    if (lua_ispilot(L,1)) {
       const Pilot *p = luaL_validpilot(L,1);
