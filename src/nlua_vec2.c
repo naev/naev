@@ -716,15 +716,17 @@ static int vectorL_angle( lua_State *L )
 /**
  * @brief Normalizes a vector.
  *    @luatparam Vec2 v Vector to normalize.
+ *    @luatparam[opt=1] number n Length to normalize the vector to.
  *    @luatreturn Vec2 Normalized vector.
  * @luafunc normalize
  */
 static int vectorL_normalize( lua_State *L )
 {
    vec2 *v = luaL_checkvector(L,1);
-   double m = VMOD(*v);
-   v->x /= m;
-   v->y /= m;
+   double n = luaL_optnumber(L,2,1.);
+   double m = n/VMOD(*v);
+   v->x *= m;
+   v->y *= m;
    lua_pushvector(L, *v);
    return 1;
 }
