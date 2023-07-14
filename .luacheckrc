@@ -132,6 +132,7 @@ stds.API_autonav = {globals={
    "autonav_board",
    "autonav_pos",
    "autonav_end",
+   "autonav_reset",
    "autonav_abort",
    "autonav_think",
    "autonav_update",

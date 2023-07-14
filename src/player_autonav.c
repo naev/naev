@@ -121,8 +121,6 @@ void player_autonavResetSpeed (void)
  */
 void player_autonavStart (void)
 {
-   StarSystem *dest;
-
    /* Not under manual control or disabled. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
          pilot_isDisabled(player.p))
@@ -136,24 +134,23 @@ void player_autonavStart (void)
    }
 
    if (player.p->fuel < player.p->fuel_consumption) {
-      player_message(_("#rNot enough fuel to jump for autonav."));
+      player_message("#r%s#0",_("Not enough fuel to jump for autonav."));
       return;
    }
 
    if (pilot_isFlag( player.p, PILOT_NOJUMP)) {
-      player_message(_("#rHyperspace drive is offline."));
+      player_message("#r%s#0",_("Hyperspace drive is offline."));
       return;
    }
 
    if (player_autonavSetup())
       return;
 
-   dest = map_getDestination(NULL);
-   player_message(_("#oAutonav: travelling to %s."), (sys_isKnown(dest) ? _(dest->name) : _("Unknown")) );
-   if (space_canHyperspace(player.p))
-      player.autonav = AUTONAV_JUMP_BRAKE;
-   else
-      player.autonav = AUTONAV_JUMP_APPROACH;
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_system );
+   if (nlua_pcall( autonav_env, 0, 0 )) {
+      WARN("%s",lua_tostring(naevL,-1));
+      lua_pop(naevL, 1);
+   }
 }
 
 /**
@@ -405,24 +402,21 @@ void player_autonavAbort( const char *reason )
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
 
-   if (player_isFlag(PLAYER_AUTONAV)) {
-      if (reason != NULL)
-         player_message(_("#rAutonav: aborted due to '%s'!"), reason);
-      else
-         player_message(_("#rAutonav: aborted!"));
-      player_rmFlag(PLAYER_AUTONAV);
+   /* Run Lua function. */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_abort );
+   if (reason != NULL)
+      lua_pushstring( naevL, reason );
+   else
+      lua_pushnil( naevL );
+   if (nlua_pcall( autonav_env, 1, 0 )) {
+      WARN("%s",lua_tostring(naevL,-1));
+      lua_pop(naevL, 1);
+   }
 
-      /* Get rid of acceleration. */
-      player_accelOver();
-
-      /* Break possible hyperspacing. */
-      if (pilot_isFlag(player.p, PILOT_HYP_PREP)) {
-         pilot_hyperspaceAbort(player.p);
-         player_message(_("#oAutonav: aborting hyperspace sequence."));
-      }
-
-      /* Reset time compression. */
-      player_autonavEnd();
+   /* Break possible hyperspacing. */
+   if (pilot_isFlag(player.p, PILOT_HYP_PREP)) {
+      pilot_hyperspaceAbort(player.p);
+      player_message("#o%s#0",_("Autonav: aborting hyperspace sequence."));
    }
 }
 
@@ -787,7 +781,7 @@ static int player_autonavBrake (void)
 
 void player_autonavReset( double s )
 {
-   lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_end );
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_reset );
    lua_pushnumber( naevL, s );
    if (nlua_pcall( autonav_env, 1, 0 )) {
       WARN("%s",lua_tostring(naevL,-1));

@@ -103,17 +103,22 @@ local function shouldResetSpeed ()
    end
 end
 
+function autonav_reset( time )
+   resetSpeed()
+   autonav_timer = math.max( autonav_timer, time )
+end
+
 function autonav_end ()
    resetSpeed()
    player.autonavEnd()
 end
 
-function autonav_system( sys )
+function autonav_system ()
    autonav_setup()
    local dest
    dest, map_npath = player.autonavDest()
    local sysstr
-   if sys:known() then
+   if dest:known() then
       sysstr = dest:name()
    else
       sysstr = _("Unknown")
@@ -268,7 +273,7 @@ local function autonav_jump_check ()
       autonav_abort(_("Target changed to current system"))
       return false
    end
-   local fuel, consumption = pp:fuel()
+   local fuel, consumption = player.fuel()
    if fuel < consumption then
       autonav_abort(_("Not enough fuel for autonav to continue"))
       return false
@@ -289,7 +294,7 @@ function autonav_jump_approach ()
    end
    local pos = jmp:pos()
    local t = (pp:pos()-jmp:pos()):angle()
-   local d = jump:jumpDist()
+   local d = jmp:jumpDist( pp )
    pos = pos + vec2.newP( math.max(0.8*d, d-30), t )
    local ret
    ret, d = autonav_approach( pos, false )
@@ -315,7 +320,7 @@ function autonav_jump_brake ()
       end
       ai.accel(1)
    else
-      local pos = ai.brakeDist()
+      local _d, pos = ai.brakeDist()
       if pos:dist( pp:pos() ) > jmp:jumpDist(pp) then
          ret = ai.interceptPos( jmp:pos() )
       else
