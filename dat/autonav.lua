@@ -335,27 +335,18 @@ end
 
 -- Breaking at a jump point, target position is stored in target_pos
 function autonav_jump_brake ()
-   local pp = player.pilot()
-   local jmp = pp:navJump()
    local ret
    -- With instant jumping we can just focus on getting in range
    if instant_jump then
       ret = autonav_approach( target_pos, true )
    else
-      local _d, pos = ai.brakeDist()
-      if pos:dist( target_pos ) > jmp:jumpDist(pp) then
-         ret = autonav_approach( target_pos, true )
-      else
-         ret = ai.brake()
-      end
+      ret = ai.brake()
    end
 
-   if ret then
-      if ai.canHyperspace() then
-         ai.hyperspace()
-      else
-         autonav = autonav_jump_approach
-      end
+   if ai.canHyperspace() then
+      ai.hyperspace()
+   elseif ret then
+      autonav = autonav_jump_approach
    end
 
    if not tc_rampdown and map_npath<=1 then
@@ -400,12 +391,10 @@ end
 -- Going for the landing approach
 function autonav_spob_land_brake ()
    local ret = ai.brake()
-   if ret then
-      if player.tryLand(false)=="impossible" then
-         return autonav_abort()
-      else
-         autonav = autonav_spob_land_approach
-      end
+   if player.tryLand(false)=="impossible" then
+      return autonav_abort()
+   elseif ret then
+      autonav = autonav_spob_land_approach
    end
 
    if not tc_rampdown then

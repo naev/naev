@@ -174,7 +174,6 @@ static int aiL_dir( lua_State *L ); /* dir(number/pointer) */
 static int aiL_idir( lua_State *L ); /* idir(number/pointer) */
 static int aiL_drift_facing( lua_State *L ); /* drift_facing(number/pointer) */
 static int aiL_brake( lua_State *L ); /* brake() */
-static int aiL_brakeDist( lua_State *L );
 static int aiL_getnearestspob( lua_State *L ); /* Vec2 getnearestspob() */
 static int aiL_getspobfrompos( lua_State *L ); /* Vec2 getspobfrompos() */
 static int aiL_getrndspob( lua_State *L ); /* Vec2 getrndspob() */
@@ -281,7 +280,6 @@ static const luaL_Reg aiL_methods[] = {
    { "idir", aiL_idir },
    { "drift_facing", aiL_drift_facing },
    { "brake", aiL_brake },
-   { "brakeDist", aiL_brakeDist },
    { "stop", aiL_stop },
    { "relvel", aiL_relvel },
    { "follow_accurate", aiL_follow_accurate },
@@ -2198,23 +2196,6 @@ static int aiL_brake( lua_State *L )
 
    lua_pushboolean(L, ret);
    return 1;
-}
-
-/**
- * @brief Gets the brake distance of a pilot.
- *
- * @TODO merge with ai.minbrakedist or something? It's redundant
- *
- *    @luatreturn boolean Whether braking is finished.
- *    @luafunc brake
- */
-static int aiL_brakeDist( lua_State *L )
-{
-   vec2 pos;
-   double d = pilot_brakeDist( cur_pilot, &pos );
-   lua_pushnumber( L, d );
-   lua_pushvector( L, pos );
-   return 2;
 }
 
 /**

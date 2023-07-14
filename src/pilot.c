@@ -849,54 +849,6 @@ int pilot_brake( Pilot *p )
 }
 
 /**
- * @brief Gets the braking distance for a pilot.
- *
- *    @param p Pilot to get the braking distance of.
- *    @param[out] pos Estimated final position once braked.
- *    @return Estimated Braking distance based on current speed.
- */
-double pilot_brakeDist( const Pilot *p, vec2 *pos )
-{
-   double fdiff, bdiff, ftime, btime;
-   double vang, speed, dist;
-
-   if (pilot_isStopped(p)) {
-      if (pos != NULL)
-         *pos = p->solid.pos;
-
-      return 0;
-   }
-
-   vang  = VANGLE(p->solid.vel);
-   speed = MIN( VMOD(p->solid.vel), p->speed );
-
-   /* Calculate the time to face backward and apply forward thrust. */
-   bdiff = angle_diff(p->solid.dir, vang + M_PI);
-   btime = ABS(bdiff) / p->turn + speed / (p->thrust / p->solid.mass);
-   dist  = (ABS(bdiff) / p->turn) * speed +
-         (speed / (p->thrust / p->solid.mass)) * (speed / 2.);
-
-   if (p->stats.misc_reverse_thrust) {
-      /* Calculate the time to face forward and apply reverse thrust. */
-      fdiff = angle_diff(p->solid.dir, vang);
-      ftime = ABS(fdiff) / p->turn + speed /
-            (p->thrust / p->solid.mass * PILOT_REVERSE_THRUST);
-
-      /* Faster to use reverse thrust. */
-      if (ftime < btime)
-         dist = (ABS(fdiff) / p->turn) * speed + (speed /
-               (p->thrust / p->solid.mass * PILOT_REVERSE_THRUST)) * (speed / 2.);
-   }
-
-   if (pos != NULL)
-      vec2_cset( pos,
-            p->solid.pos.x + cos(vang) * dist,
-            p->solid.pos.y + sin(vang) * dist);
-
-   return dist;
-}
-
-/**
  * @brief Begins active cooldown, reducing hull and outfit temperatures.
  *
  *    @param p Pilot that should cool down.
