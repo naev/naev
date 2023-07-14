@@ -106,7 +106,7 @@ function autonav_system( sys )
       sysstr = _("Unknown")
    end
    player.msg("#o"..fmt.f(_("Autonav: travelling to {sys}."),{sys=sysstr}).."#0")
-   if ai.canHyperspace() then
+   if pilot.canHyperspace(player.pilot()) then
       autonav = autonav_jump_brake
    else
       autonav = autonav_jump_approach
