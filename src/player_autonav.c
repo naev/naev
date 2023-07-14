@@ -352,20 +352,18 @@ void player_thinkAutonav( Pilot *pplayer, double dt )
  */
 void player_updateAutonav( double dt )
 {
-#if 0
-   const double dis_dead = 5.0;
-   const double dis_mod  = 0.5;
-   const double dis_max  = 4.0;
-   const double dis_ramp = 6.0;
-#endif
+   static double tc_mod  = 1.0;
+   const double dis_dead = 1.0; /* Time it takes to start ramping up. */
+   const double dis_mod  = 2.0;
+   //const double dis_max  = 5.0;
+   //const double dis_ramp = 3.0;
 
    if (paused || (player.p==NULL) ||
          pilot_isFlag(player.p, PILOT_DEAD) ||
          player_isFlag( PLAYER_CINEMATICS ))
       return;
 
-   /* TODO fix disabling stuff, maybe handle in autonav? */
-#if 0
+   /* TODO maybe handle in autonav? */
    /* We handle disabling here. */
    if (pilot_isFlag(player.p, PILOT_DISABLED)) {
       /* It is somewhat like:
@@ -379,14 +377,19 @@ void player_updateAutonav( double dt )
        *
        * For triangles we have to add the rectangle and triangle areas.
        */
-      /* 5 second deadtime. */
-      if (player.p->dtimer_accum < dis_dead)
+      double tc_base = player_dt_default() * player.speed;
+      double dis_max = MAX( 5., player.p->dtimer / 10. );
+      double dis_ramp = (dis_max-tc_base) / dis_mod;
+
+      double time_left = player.p->dtimer - player.p->dtimer_accum;
+      /* Initial deadtime. */
+      if ((player.p->dtimer_accum < dis_dead) || (time_left < dis_dead))
          tc_mod = tc_base;
       else {
          /* Ramp down. */
-         if (player.p->dtimer - player.p->dtimer_accum < dis_dead + (dis_max-tc_base)*dis_ramp/2 + tc_base*dis_ramp)
+         if (time_left < dis_dead + (dis_max-tc_base)*dis_ramp/2. + tc_base*dis_ramp)
             tc_mod = MAX( tc_base, tc_mod - dis_mod*dt );
-         /* Normal. */
+         /* Ramp up. */
          else
             tc_mod = MIN( dis_max, tc_mod + dis_mod*dt );
       }
@@ -394,7 +397,6 @@ void player_updateAutonav( double dt )
       sound_setSpeed( tc_mod / player_dt_default() );
       return;
    }
-#endif
 
    /* Must be autonaving. */
    if (!player_isFlag(PLAYER_AUTONAV))
