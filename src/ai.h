@@ -59,6 +59,7 @@ AI_Profile* ai_getProfile( const char *name );
  */
 int ai_load (void);
 void ai_exit (void);
+int nlua_loadAI( nlua_env env );
 
 /*
  * Init, destruction.
@@ -85,4 +86,6 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker );
 void ai_think( Pilot* pilot, const double dt );
 int ai_setPilot( Pilot *p );
 void ai_unsetPilot( int oldmem );
+void ai_thinkSetup (void);
+void ai_thinkApply( Pilot *p );
 void ai_init( Pilot *p );
