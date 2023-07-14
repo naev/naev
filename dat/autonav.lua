@@ -157,6 +157,7 @@ function autonav_pos( pos )
    autonav_setup()
    player.msg("#o".._("Autonav: heading to target position.").."#0")
    autonav = autonav_pos_approach
+   player.autonavSetPos( pos )
    target_pos = pos
 end
 
@@ -196,6 +197,7 @@ local function autonav_approach( pos, count_target )
    local vmod = pp:vel():mod()
    local t = math.min( 1.5*speed, vmod / stats.thrust * stats.mass )
    local vel = math.min( speed, vmod )
+   stats.turn = math.rad(stats.turn) -- TODO probably change the code
 
    local dist = vel*(t+1.1*math.pi/stats.turn) - 0.5*(stats.thrust/stats.mass)*t*t
 
