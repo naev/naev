@@ -196,6 +196,7 @@ static int pilotL_credits( lua_State *L );
 static int pilotL_worth( lua_State *L );
 static int pilotL_ship( lua_State *L );
 static int pilotL_points( lua_State *L );
+static int pilotL_radius( lua_State *L );
 static int pilotL_idle( lua_State *L );
 static int pilotL_control( lua_State *L );
 static int pilotL_memory( lua_State *L );
@@ -373,6 +374,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "effectGet", pilotL_effectGet },
    /* Ship. */
    { "ship", pilotL_ship },
+   { "radius", pilotL_radius },
    { "points", pilotL_points },
    /* Cargo and moolah. */
    { "cargoFree", pilotL_cargoFree },
@@ -4916,6 +4918,20 @@ static int pilotL_ship( lua_State *L )
 {
    Pilot *p  = luaL_validpilot(L,1);
    lua_pushship(L, p->ship);
+   return 1;
+}
+
+/**
+ * @brief Gets the rough radius of the ship, useful for collision stuff.
+ *
+ *    @luatparam Pilot p Pilot to get radius of.
+ *    @luatreturn number THe radius of the pilot.
+ * @luafunc radius
+ */
+static int pilotL_radius( lua_State *L )
+{
+   Pilot *p  = luaL_validpilot(L,1);
+   lua_pushnumber(L, PILOT_SIZE_APPROX * 0.5 * (p->ship->gfx_space->sw+p->ship->gfx_space->sh));
    return 1;
 }
 
