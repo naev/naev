@@ -260,9 +260,7 @@ local function autonav_approach_vel( pos, vel, radius )
       ai.accel(0)
    end
 
-   if radius > 0 then
-      return pos:dist( pp:pos() )
-   end
+   return pos:dist( pp:pos() )
 end
 
 local function autonav_jump_check ()
