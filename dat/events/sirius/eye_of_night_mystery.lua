@@ -230,7 +230,7 @@ function land ()
    vn.transition()
    local mbg = vn.music( der.sfx.ambient )
    -- Maybe creepy_guitar.ogg?
-   local mfg = vn.music( "snd/sounds/loop/alienplanet.ogg", {volume=0} ) -- Slowly gets stronger
+   local mfg = vn.music( "snd/sounds/loops/alienplanet.ogg", {volume=0} ) -- Slowly gets stronger
 
    -- Changes the strength of the event
    local function effect_change( str )
@@ -274,14 +274,14 @@ What do you do?]])
          {_("Return to the hangar"), "hangar"},
       }
       if not bar_enter then
-         table.insert( opts, 1, {"Go to the room on the left", "spaceportbar"} )
+         table.insert( opts, 1, {_("Go to the room on the left"), "spaceportbar"} )
       else
-         table.insert( opts, 1, {"Go to the spaceport bar", "spaceportbar"} )
+         table.insert( opts, 1, {_("Go to the spaceport bar"), "spaceportbar"} )
       end
       if not commodity_enter then
-         table.insert( opts, 1, {"Go to the room on the right", "commodityexchange"} )
+         table.insert( opts, 1, {_("Go to the room on the right"), "commodityexchange"} )
       else
-         table.insert( opts, 1, {"Go to the commodity exchange", "commodityexchange"} )
+         table.insert( opts, 1, {_("Go to the commodity exchange"), "commodityexchange"} )
       end
       return opts
    end )
@@ -411,14 +411,14 @@ What do you do?]])
          {_("Go back to beginning of the hallway"), "hallway01"},
       }
       if not outfitter_enter then
-         table.insert( opts, 1, {"Go to the room on the left", "outfitter"} )
+         table.insert( opts, 1, {_("Go to the room on the left"), "outfitter"} )
       else
-         table.insert( opts, 1, {"Go to the outfitter", "outfitter"} )
+         table.insert( opts, 1, {_("Go to the outfitter"), "outfitter"} )
       end
       if not shipyard_enter then
-         table.insert( opts, 1, {"Go to the room on the right", "shipyard"} )
+         table.insert( opts, 1, {_("Go to the room on the right"), "shipyard"} )
       else
-         table.insert( opts, 1, {"Go to the shipyard", "shipyard"} )
+         table.insert( opts, 1, {_("Go to the shipyard"), "shipyard"} )
       end
       return opts
    end )
