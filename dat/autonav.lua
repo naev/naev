@@ -66,13 +66,13 @@ local function shouldResetSpeed ()
 
    local reset_dist = conf.autonav_reset_dist
    local reset_shield = conf.autonav_reset_shield
-   local will_reset = false
+   local will_reset = (autonav_timer > 0)
 
    local armour, shield = pp:health()
    local lowhealth = (shield < last_shield and reset_shield) or (armour < last_armour)
 
    -- First check enemies in distance which should be fast
-   if reset_dist > 0 then
+   if not will_reset and reset_dist > 0 then
       for k,p in ipairs(pp:getEnemies( reset_dist )) do
          will_reset = true
          autonav_timer = math.max( autonav_timer, 0 )
@@ -98,9 +98,11 @@ local function shouldResetSpeed ()
    last_shield = shield
    last_armour = armour
 
-   if will_reset or autonav_timer > 0 then
+   if will_reset then
       resetSpeed()
+      return true
    end
+   return false
 end
 
 function autonav_reset( time )
@@ -153,7 +155,7 @@ function autonav_pilot( plt )
    autonav_setup()
    target_plt = plt
    local pltstr
-   local _inrng, fuzzy = plt:inrange()
+   local _inrng, fuzzy = player.pilot():inrange( plt )
    if fuzzy then
       pltstr = _("Unknown")
    else
@@ -166,6 +168,7 @@ end
 
 function autonav_board( plt )
    autonav_setup()
+   target_plt = plt
    local pltstr = "#"..plt:colourChar()..plt:name().."#o"
    player.msg("#o"..fmt.f(_("Autonav: boarding{plt}."),{plt=pltstr}).."#0")
    autonav = autonav_plt_board_approach
@@ -185,7 +188,7 @@ function autonav_abort( reason )
    else
       player.msg("#r".._("Autonav: aborted!").."#0")
    end
-   resetSpeed()
+   autonav_end()
 end
 
 local function autonav_rampdown( d )
@@ -236,7 +239,7 @@ local function autonav_approach( pos, count_target )
    return false, retd
 end
 
-local function autonav_follow( pos, vel, follow )
+local function autonav_approach_vel( pos, vel, radius )
    local pp = player.pilot()
    local stats = pp:stats()
 
@@ -244,11 +247,6 @@ local function autonav_follow( pos, vel, follow )
 
    local Kp = 10
    local Kd = math.max( 5, 10.84*timeFactor-10.82 )
-   local radius = 100
-
-   if not follow or vel:mod() <= 0 then
-      radius = 0
-   end
 
    local angle = math.pi + vel:angle()
 
@@ -262,7 +260,7 @@ local function autonav_follow( pos, vel, follow )
       ai.accel(0)
    end
 
-   if not follow then
+   if radius > 0 then
       return pos:dist( pp:pos() )
    end
 end
@@ -293,7 +291,7 @@ function autonav_jump_approach ()
       return autonav_abort()
    end
    local pos = jmp:pos()
-   local t = (pp:pos()-jmp:pos()):angle()
+   local t = (pp:pos()-pos):angle()
    local d = jmp:jumpDist( pp )
    pos = pos + vec2.newP( math.max(0.8*d, d-30), t )
    local ret
@@ -397,7 +395,7 @@ function autonav_plt_follow ()
    local inrng = false
    if plt:exists() then
       local fuzzy
-      inrng, fuzzy = plt:inrange()
+      inrng, fuzzy = player.pilot():inrange( plt )
       target_known = not fuzzy
    end
 
@@ -414,7 +412,11 @@ function autonav_plt_follow ()
    end
 
    local canboard = plt:flags("disabled") or plt:flags("boardable")
-   local d = autonav_follow( plt:pos(), plt:vel(), not canboard )
+   local radius = 2*plt:radius()
+   if canboard then
+      radius = 0
+   end
+   local d = autonav_approach_vel( plt:pos(), plt:vel(), radius )
    if canboard and not tc_rampdown then
       autonav_rampdown( d )
    end
@@ -426,7 +428,7 @@ function autonav_plt_board_approach ()
    local inrng = false
    if plt:exists() then
       local fuzzy
-      inrng, fuzzy = plt:inrange()
+      inrng, fuzzy = player.pilot():inrange( plt )
       target_known = not fuzzy
    end
 
@@ -442,21 +444,17 @@ function autonav_plt_board_approach ()
       return autonav_end()
    end
 
-   -- TODO
-   local ret, d = false, 0
-   --local ret, d = autonav_approach_board( plt:pos(), plt:vel(), 50 )
+   local d = autonav_approach_vel( plt:pos(), plt:vel(), 0 )
    if not tc_rampdown then
       autonav_rampdown( d )
    end
 
    -- Finally try to board
-   if ret then
-      local brd = player.tryBoard(false)
-      if brd=="ok" then
-         autonav_end()
-      elseif brd~="retry" then
-         autonav_abort()
-      end
+   local brd = player.tryBoard(false)
+   if brd=="ok" then
+      autonav_end()
+   elseif brd~="retry" then
+      autonav_abort()
    end
 end
 
@@ -468,14 +466,17 @@ function autonav_think( dt )
       autonav_timer = autonav_timer - dt
    end
 
-   shouldResetSpeed()
-
    if autonav then
       autonav()
    end
 end
 
 function autonav_update( realdt )
+   -- If we reset we skip the iteration
+   if shouldResetSpeed() then
+      return
+   end
+
    local dt_default = player.dt_default()
    if tc_rampdown then
       if tc_mod ~= tc_base then
