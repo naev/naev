@@ -79,6 +79,7 @@
 #define INTRO_PATH               "intro"
 #define RESCUE_PATH              "rescue.lua"
 #define AUTOEQUIP_PATH           "autoequip.lua"
+#define AUTONAV_PATH             "autonav.lua"
 #define COMM_PATH                "comm.lua"
 #define BOARD_PATH               "board.lua"
 #define SAVE_UPDATER_PATH        "save_updater.lua"

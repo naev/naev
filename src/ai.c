@@ -175,6 +175,7 @@ static int aiL_idir( lua_State *L ); /* idir(number/pointer) */
 static int aiL_drift_facing( lua_State *L ); /* drift_facing(number/pointer) */
 static int aiL_interceptPos( lua_State *L );
 static int aiL_brake( lua_State *L ); /* brake() */
+static int aiL_brakeDist( lua_State *L );
 static int aiL_getnearestspob( lua_State *L ); /* Vec2 getnearestspob() */
 static int aiL_getspobfrompos( lua_State *L ); /* Vec2 getspobfrompos() */
 static int aiL_getrndspob( lua_State *L ); /* Vec2 getrndspob() */
@@ -282,6 +283,7 @@ static const luaL_Reg aiL_methods[] = {
    { "drift_facing", aiL_drift_facing },
    { "interceptPos", aiL_interceptPos },
    { "brake", aiL_brake },
+   { "brakeDist", aiL_brakeDist },
    { "stop", aiL_stop },
    { "relvel", aiL_relvel },
    { "follow_accurate", aiL_follow_accurate },
@@ -428,6 +430,43 @@ void ai_unsetPilot( int oldmem )
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, oldmem );
    nlua_setenv( naevL, env, "mem"); /* pm */
    luaL_unref( naevL, LUA_REGISTRYINDEX, oldmem );
+}
+
+/**
+ * @brief Sets up the pilot for thinking.
+ */
+void ai_thinkSetup (void)
+{
+   /* Clean up some variables */
+   pilot_acc         = 0.;
+   pilot_turn        = 0.;
+   pilot_flags       = 0;
+}
+
+/**
+ * @brief Applies the result of thinking.
+ *
+ *    @param p Pilot to apply to.
+ */
+void ai_thinkApply( Pilot *p )
+{
+   /* Make sure pilot_acc and pilot_turn are legal */
+   pilot_acc   = CLAMP( -1., 1., pilot_acc );
+   pilot_turn  = CLAMP( -1., 1., pilot_turn );
+
+   /* Set turn and thrust. */
+   pilot_setTurn( p, pilot_turn );
+   pilot_setThrust( p, pilot_acc );
+
+   /* fire weapons if needed */
+   if (ai_isFlag(AI_PRIMARY))
+      pilot_shoot(p, 0); /* primary */
+   if (ai_isFlag(AI_SECONDARY))
+      pilot_shoot(p, 1 ); /* secondary */
+
+   /* other behaviours. */
+   if (ai_isFlag(AI_DISTRESS))
+      pilot_distress(p, NULL, aiL_distressmsg);
 }
 
 /**
@@ -624,6 +663,12 @@ static int ai_loadEquip (void)
    return 0;
 }
 
+int nlua_loadAI( nlua_env env )
+{
+   nlua_register(env, "ai", aiL_methods, 0);
+   return 0;
+}
+
 /**
  * @brief Initializes an AI_Profile and adds it to the stack.
  *
@@ -752,10 +797,7 @@ void ai_think( Pilot* pilot, const double dt )
    oldmem = ai_setPilot(pilot);
    env = cur_pilot->ai->env; /* set the AI profile to the current pilot's */
 
-   /* Clean up some variables */
-   pilot_acc         = 0;
-   pilot_turn        = 0.;
-   pilot_flags       = 0;
+   ai_thinkSetup();
    /* So the way this works is that, for other than the player, we reset all
     * the weapon sets every frame, so that the AI has to redo them over and
     * over. Now, this is a horrible hack so shit works and needs a proper fix.
@@ -820,23 +862,8 @@ void ai_think( Pilot* pilot, const double dt )
       }
    }
 
-   /* make sure pilot_acc and pilot_turn are legal */
-   pilot_acc   = CLAMP( -1., 1., pilot_acc );
-   pilot_turn  = CLAMP( -1., 1., pilot_turn );
-
-   /* Set turn and thrust. */
-   pilot_setTurn( cur_pilot, pilot_turn );
-   pilot_setThrust( cur_pilot, pilot_acc );
-
-   /* fire weapons if needed */
-   if (ai_isFlag(AI_PRIMARY))
-      pilot_shoot(cur_pilot, 0); /* primary */
-   if (ai_isFlag(AI_SECONDARY))
-      pilot_shoot(cur_pilot, 1 ); /* secondary */
-
-   /* other behaviours. */
-   if (ai_isFlag(AI_DISTRESS))
-      pilot_distress(cur_pilot, NULL, aiL_distressmsg);
+   /* Applies local variables to the pilot. */
+   ai_thinkApply( cur_pilot );
 
    /* Restore memory. */
    ai_unsetPilot( oldmem );
@@ -2188,6 +2215,23 @@ static int aiL_brake( lua_State *L )
 
    lua_pushboolean(L, ret);
    return 1;
+}
+
+/**
+ * @brief Gets the brake distance of a pilot.
+ *
+ * @TODO merge with ai.minbrakedist or something? It's redundant
+ *
+ *    @luatreturn boolean Whether braking is finished.
+ *    @luafunc brake
+ */
+static int aiL_brakeDist( lua_State *L )
+{
+   vec2 pos;
+   double d = pilot_brakeDist( cur_pilot, &pos );
+   lua_pushnumber( L, d );
+   lua_pushvector( L, pos );
+   return 2;
 }
 
 /**

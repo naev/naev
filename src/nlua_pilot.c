@@ -196,6 +196,7 @@ static int pilotL_credits( lua_State *L );
 static int pilotL_worth( lua_State *L );
 static int pilotL_ship( lua_State *L );
 static int pilotL_points( lua_State *L );
+static int pilotL_radius( lua_State *L );
 static int pilotL_idle( lua_State *L );
 static int pilotL_control( lua_State *L );
 static int pilotL_memory( lua_State *L );
@@ -217,6 +218,7 @@ static int pilotL_attack( lua_State *L );
 static int pilotL_board( lua_State *L );
 static int pilotL_runaway( lua_State *L );
 static int pilotL_gather( lua_State *L );
+static int pilotL_canHyperspace( lua_State *L );
 static int pilotL_hyperspace( lua_State *L );
 static int pilotL_stealth( lua_State *L );
 static int pilotL_tryStealth( lua_State *L );
@@ -372,6 +374,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "effectGet", pilotL_effectGet },
    /* Ship. */
    { "ship", pilotL_ship },
+   { "radius", pilotL_radius },
    { "points", pilotL_points },
    /* Cargo and moolah. */
    { "cargoFree", pilotL_cargoFree },
@@ -404,6 +407,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "board", pilotL_board },
    { "runaway", pilotL_runaway },
    { "gather", pilotL_gather },
+   { "canHyperspace", pilotL_canHyperspace },
    { "hyperspace", pilotL_hyperspace },
    { "stealth", pilotL_stealth },
    { "tryStealth", pilotL_tryStealth },
@@ -4918,6 +4922,20 @@ static int pilotL_ship( lua_State *L )
 }
 
 /**
+ * @brief Gets the rough radius of the ship, useful for collision stuff.
+ *
+ *    @luatparam Pilot p Pilot to get radius of.
+ *    @luatreturn number THe radius of the pilot.
+ * @luafunc radius
+ */
+static int pilotL_radius( lua_State *L )
+{
+   Pilot *p  = luaL_validpilot(L,1);
+   lua_pushnumber(L, PILOT_SIZE_APPROX * 0.5 * (p->ship->gfx_space->sw+p->ship->gfx_space->sh));
+   return 1;
+}
+
+/**
  * @brief Gets the points the pilot costs.
  *
  * Note currently equivalent to p:ship():points().
@@ -5572,6 +5590,20 @@ static int pilotL_gather( lua_State *L )
    t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
 
    return 0;
+}
+
+/**
+ * @brief Checks to see if the pilot can currently hyperspace (as in has target jump and is in range).
+ *
+ *    @luatparam Pilot p Pilot to check if they can hyperspace.
+ *    @luatreturn boolean Whether or not the pilot can hyperspace.
+ * @luafunc canHyperspace
+ */
+static int pilotL_canHyperspace( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   lua_pushboolean(L, space_canHyperspace(p));
+   return 1;
 }
 
 /**

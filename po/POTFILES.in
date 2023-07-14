@@ -2729,6 +2729,7 @@ dat/ai/thurion.lua
 dat/ai/trader.lua
 dat/ai/zalek.lua
 dat/autoequip.lua
+dat/autonav.lua
 dat/bkg/blackhole.lua
 dat/bkg/crimson_gauntlet.lua
 dat/bkg/default.lua

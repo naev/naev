@@ -22,11 +22,11 @@ local reward
 local finvader, flocal
 
 function create ()
-   -- Doesn't pilot.clear so inclusive claim
-   if not evt.claim( system.cur(), true ) then
-      evt.finish( false )
-   end
    source_system = system.cur()
+   hook.safe( "setup" ) -- delay the jumpin hook one frame
+end
+
+function setup ()
    jumphook = hook.jumpin("begin")
    hook.land("leave")
 end
@@ -40,7 +40,8 @@ function begin ()
       if thissystem == s then areAdj = true end
    end
 
-   if not evt.claim(thissystem) or not areAdj then
+   -- Doesn't pilot.clear so inclusive claim
+   if not evt.claim(thissystem, true) or not areAdj then
       evt.finish(false)
    end
 
