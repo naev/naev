@@ -1461,14 +1461,14 @@ static int aiL_getnearestpilot( lua_State *L )
  */
 static int aiL_getdistance( lua_State *L )
 {
-   vec2 *v;
+   const vec2 *v;
 
    /* vector as a parameter */
    if (lua_isvector(L,1))
       v = lua_tovector(L,1);
    /* pilot as parameter */
    else if (lua_ispilot(L,1)) {
-      Pilot *p = luaL_validpilot(L,1);
+      const Pilot *p = luaL_validpilot(L,1);
       v = &p->solid.pos;
    }
    /* wrong parameter */
@@ -1488,14 +1488,14 @@ static int aiL_getdistance( lua_State *L )
  */
 static int aiL_getdistance2( lua_State *L )
 {
-   vec2 *v;
+   const vec2 *v;
 
    /* vector as a parameter */
    if (lua_isvector(L,1))
       v = lua_tovector(L,1);
    /* pilot as parameter */
    else if (lua_ispilot(L,1)) {
-      Pilot *p = luaL_validpilot(L,1);
+      const Pilot *p = luaL_validpilot(L,1);
       v = &p->solid.pos;
    }
    /* wrong parameter */
@@ -1515,7 +1515,7 @@ static int aiL_getdistance2( lua_State *L )
  */
 static int aiL_getflybydistance( lua_State *L )
 {
-   vec2 *v;
+   const vec2 *v;
    vec2 perp_motion_unit, offset_vect;
    int offset_distance;
 
@@ -1524,7 +1524,7 @@ static int aiL_getflybydistance( lua_State *L )
       v = lua_tovector(L,1);
    /* pilot id as parameter */
    else if (lua_ispilot(L,1)) {
-      Pilot *p = luaL_validpilot(L,1);
+      const Pilot *p = luaL_validpilot(L,1);
       v = &p->solid.pos;
 
       /*vec2_cset(&v, VX(pilot->solid.pos) - VX(cur_pilot->solid.pos), VY(pilot->solid.pos) - VY(cur_pilot->solid.pos) );*/
@@ -1560,7 +1560,7 @@ static int aiL_minbrakedist( lua_State *L )
 
    /* More complicated calculation based on relative velocity. */
    if (lua_gettop(L) > 0) {
-      Pilot *p = luaL_validpilot(L,1);
+      const Pilot *p = luaL_validpilot(L,1);
 
       /* Set up the vectors. */
       vec2_cset( &vv, p->solid.vel.x - cur_pilot->solid.vel.x,
@@ -1601,7 +1601,7 @@ static int aiL_minbrakedist( lua_State *L )
  */
 static int aiL_isbribed( lua_State *L )
 {
-   Pilot *p = luaL_validpilot(L,1);
+   const Pilot *p = luaL_validpilot(L,1);
    lua_pushboolean(L, pilot_isWithPlayer(p) && pilot_isFlag(cur_pilot, PILOT_BRIBED));
    return 1;
 }
@@ -1653,7 +1653,7 @@ static int aiL_isstopped( lua_State *L )
  */
 static int aiL_isenemy( lua_State *L )
 {
-   Pilot *p = luaL_validpilot(L,1);
+   const Pilot *p = luaL_validpilot(L,1);
 
    /* Player needs special handling in case of hostility. */
    if (pilot_isWithPlayer(p)) {
@@ -1675,7 +1675,7 @@ static int aiL_isenemy( lua_State *L )
  */
 static int aiL_isally( lua_State *L )
 {
-   Pilot *p = luaL_validpilot(L,1);
+   const Pilot *p = luaL_validpilot(L,1);
 
    /* Player needs special handling in case of friendliness. */
    if (pilot_isWithPlayer(p)) {
@@ -1767,7 +1767,7 @@ static int aiL_turn( lua_State *L )
  */
 static int aiL_face( lua_State *L )
 {
-   vec2 *tv; /* get the position to face */
+   const vec2 *tv; /* get the position to face */
    double k_diff, k_vel, diff, vx, vy, dx, dy;
    int vel;
 
@@ -1861,10 +1861,8 @@ static int aiL_careful_face( lua_State *L )
 {
    vec2 *tv, F, F1;
    Pilot* p;
-   Pilot *p_i;
    double k_diff, k_goal, k_enemy, k_mult,
-          d, diff, dist, factor;
-   int i;
+          d, diff, dist;
    Pilot *const* pilot_stack;
 
    /* Init some variables */
@@ -1901,24 +1899,30 @@ static int aiL_careful_face( lua_State *L )
    vec2_cset( &F1, F1.x * k_goal / dist, F1.y * k_goal / dist) ;
 
    /* Cycle through all the pilots in order to compute the force */
-   for (i=0; i<array_size(pilot_stack); i++) {
-      p_i = pilot_stack[i];
+   /* TODO probably limit the range we check using quadtrees. */
+   for (int i=0; i<array_size(pilot_stack); i++) {
+      const Pilot *p_i = pilot_stack[i];
 
       /* Valid pilot isn't self, is in range, isn't the target and isn't disabled */
-      if (pilot_isDisabled(p_i) ) continue;
-      if (p_i->id == cur_pilot->id) continue;
-      if (p_i->id == p->id) continue;
-      if (pilot_inRangePilot(cur_pilot, p_i, NULL) != 1) continue;
+      if (pilot_isDisabled(p_i) )
+         continue;
+      if (p_i->id == cur_pilot->id)
+         continue;
+      if (p_i->id == p->id)
+         continue;
+      if (pilot_inRangePilot(cur_pilot, p_i, NULL) != 1)
+         continue;
 
       /* If the enemy is too close, ignore it*/
       dist = vec2_dist(&p_i->solid.pos, &cur_pilot->solid.pos);
-      if (dist < 750) continue;
+      if (dist < 750.)
+         continue;
 
       k_mult = pilot_relhp( p_i, cur_pilot ) * pilot_reldps( p_i, cur_pilot );
 
       /* Check if friendly or not */
       if (areEnemies(cur_pilot->faction, p_i->faction)) {
-         factor = k_enemy * k_mult / (dist*dist*dist);
+         double factor = k_enemy * k_mult / (dist*dist*dist);
          vec2_cset( &F, F.x + factor * (cur_pilot->solid.pos.x - p_i->solid.pos.x),
                 F.y + factor * (cur_pilot->solid.pos.y - p_i->solid.pos.y) );
       }
@@ -1951,11 +1955,11 @@ static int aiL_aim( lua_State *L )
    double diff, mod, angle;
 
    if (lua_isasteroid(L,1)) {
-      Asteroid *a = luaL_validasteroid(L,1);
+      const Asteroid *a = luaL_validasteroid(L,1);
       angle = pilot_aimAngle( cur_pilot, &a->pos, &a->vel );
    }
    else {
-      Pilot *p = luaL_validpilot(L,1);
+      const Pilot *p = luaL_validpilot(L,1);
       angle = pilot_aimAngle( cur_pilot, &p->solid.pos, &p->solid.vel );
    }
 
@@ -2067,7 +2071,6 @@ static int aiL_dir( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
    vec2 *vec, sv, tv; /* get the position to face */
-   Pilot* p;
    double diff;
    int n;
 
@@ -2075,7 +2078,7 @@ static int aiL_dir( lua_State *L )
    n  = -2;
    vec = NULL;
    if (lua_ispilot(L,1)) {
-      p = luaL_validpilot(L,1);
+      const Pilot *p = luaL_validpilot(L,1);
       vec2_cset( &tv, VX(p->solid.pos), VY(p->solid.pos) );
    }
    else if (lua_isvector(L,1))
@@ -2460,8 +2463,8 @@ static int aiL_hyperspace( lua_State *L )
 
    /* Find the target jump. */
    if (!lua_isnoneornil(L,1)) {
-      JumpPoint *jp = luaL_validjump( L, 1 );
-      LuaJump *lj = luaL_checkjump( L, 1 );
+      const JumpPoint *jp = luaL_validjump( L, 1 );
+      const LuaJump *lj = luaL_checkjump( L, 1 );
       if (lj->srcid != cur_system->id)
          NLUA_ERROR(L, _("Jump point must be in current system."));
       cur_pilot->nav_hyperspace = jp - cur_system->jumps;
@@ -2702,11 +2705,7 @@ static int aiL_follow_accurate( lua_State *L )
    angle = luaL_checknumber(L,3);
    Kp = luaL_checknumber(L,4);
    Kd = luaL_checknumber(L,5);
-
-   if (lua_isnoneornil(L, 6))
-      method = "velocity";
-   else
-      method = luaL_checkstring(L,6);
+   method = luaL_optstring(L,6,"velocity");
 
    if (strcmp( method, "absolute" ) == 0)
       angle2 = angle;
