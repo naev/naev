@@ -248,7 +248,7 @@ int pilot_dock( Pilot *p, Pilot *target )
  *    @param p Pilot to see if has deployed ships.
  *    @return 1 if pilot has deployed ships, 0 otherwise.
  */
-int pilot_hasDeployed( Pilot *p )
+int pilot_hasDeployed( const Pilot *p )
 {
    for (int i=0; i<array_size(p->outfits); i++) {
       if (p->outfits[i]->outfit == NULL)

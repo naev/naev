@@ -758,10 +758,8 @@ int pilot_areEnemies( const Pilot *p, const Pilot *target )
  */
 PilotOutfitSlot* pilot_getDockSlot( Pilot* p )
 {
-   Pilot* dockpilot;
-
    if ((p->dockpilot != 0) && (p->dockslot != -1)) {
-      dockpilot = pilot_get(p->dockpilot);
+      Pilot *dockpilot = pilot_get(p->dockpilot);
       if (dockpilot != NULL)
          return dockpilot->outfits[p->dockslot];
    }
@@ -2923,7 +2921,7 @@ int pilot_numOutfit( const Pilot *p, const Outfit *o )
  *    @param amount Amount to check for.
  *    @return 1 if they have enough, 0 otherwise.
  */
-int pilot_hasCredits( Pilot *p, credits_t amount )
+int pilot_hasCredits( const Pilot *p, credits_t amount )
 {
    if (amount < 0)
       return 1;
