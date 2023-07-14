@@ -242,6 +242,7 @@ end
 local function autonav_approach_vel( pos, vel, radius )
    local pp = player.pilot()
    local stats = pp:stats()
+   stats.turn = math.rad(stats.turn) -- TODO probably change the code
 
    local timeFactor = math.pi/stats.turn + stats.speed/stats.thrust
 
