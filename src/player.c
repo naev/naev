@@ -1481,9 +1481,7 @@ void player_targetSpobSet( int id )
    gui_forceBlink();
    gui_setNav();
 
-   if ((player.autonav == AUTONAV_SPOB_LAND_APPROACH) ||
-         (player.autonav == AUTONAV_SPOB_APPROACH) ||
-         (player.autonav == AUTONAV_SPOB_LAND_BRAKE))
+   if (player.autonav==AUTONAV_SPOB)
       player_autonavAbort(NULL);
 }
 
@@ -1804,8 +1802,7 @@ void player_targetHyperspaceSet( int id, int nomsg )
       player_soundPlayGUI(snd_nav,1);
    gui_setNav();
 
-   if (!nomsg && (old != id) && ((player.autonav == AUTONAV_JUMP_APPROACH) ||
-         (player.autonav == AUTONAV_JUMP_BRAKE)))
+   if (!nomsg && (old != id) && (player.autonav==AUTONAV_JUMP))
       player_autonavAbort(NULL);
 
    hooks_run( "target_hyperspace" );
@@ -2113,10 +2110,7 @@ void player_targetSet( unsigned int id )
    player.p->nav_anchor = -1;
 
    /* The player should not continue following if the target pilot has been changed. */
-   if ((old != id) && player_isFlag(PLAYER_AUTONAV) &&
-      (player.autonav == AUTONAV_PLT_FOLLOW ||
-         player.autonav == AUTONAV_PLT_BOARD_APPROACH ||
-         player.autonav == AUTONAV_PLT_BOARD_BRAKE))
+   if ((old != id) && player_isFlag(PLAYER_AUTONAV) && (player.autonav==AUTONAV_PILOT))
       player_autonavAbort(NULL);
 }
 

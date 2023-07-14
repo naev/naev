@@ -5,15 +5,10 @@
 
 /* Autonav states. */
 enum {
-   AUTONAV_JUMP_APPROACH,  /**< Player is approaching a jump. */
-   AUTONAV_JUMP_BRAKE,     /**< Player is braking at a jump. */
-   AUTONAV_POS_APPROACH,   /**< Player is going to a position. */
-   AUTONAV_SPOB_APPROACH,   /**< Player is going to a spob. */
-   AUTONAV_SPOB_LAND_APPROACH,/**< Player is going to land on a spob. */
-   AUTONAV_SPOB_LAND_BRAKE, /**< Player is braking to land at a spob. */
-   AUTONAV_PLT_FOLLOW,     /**< Player is following a pilot. */
-   AUTONAV_PLT_BOARD_APPROACH,/**< Player is trying to board a pilot. */
-   AUTONAV_PLT_BOARD_BRAKE,/**< Player is going to brake to board. */
+   AUTONAV_JUMP,  /**< Player is going to jump. */
+   AUTONAV_POS,   /**< Player is going to a position. */
+   AUTONAV_SPOB,  /**< Player is going to a spob. */
+   AUTONAV_PILOT, /**< Player is going to a pilot. */
 };
 
 int player_autonavInit (void);
@@ -23,9 +18,7 @@ void player_updateAutonav( double dt );
 void player_autonavResetSpeed (void);
 void player_autonavStart (void);
 void player_autonavEnd (void);
-void player_autonavAbortJump( const char *reason );
 void player_autonavAbort( const char *reason );
-int player_autonavShouldResetSpeed (void);
 void player_autonavStartWindow( unsigned int wid, const char *str );
 void player_autonavPos( double x, double y );
 void player_autonavSpob( const char *name, int tryland );

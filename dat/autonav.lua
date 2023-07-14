@@ -197,6 +197,25 @@ function autonav_abort( reason )
    autonav_end()
 end
 
+--[[
+tint is the integral of the time in per time units.
+
+ tc_mod
+    ^
+    |
+    |\
+    | \
+    |  \___
+    |
+    +------> time
+    0   3
+
+We decompose integral in a rectangle (3*1) and a triangle (3*(tc_mod-1.))/2.
+This is the "elapsed time" when linearly decreasing the tc_mod. Which we can
+use to calculate the actual "game time" that'll pass when decreasing the
+tc_mod to 1 during 3 seconds. This can be used then to compare when we want to
+start decrementing.
+--]]
 local function autonav_rampdown( d )
    local pp = player.pilot()
    local speed = pp:stats().speed
