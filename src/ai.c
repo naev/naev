@@ -2227,9 +2227,8 @@ static int aiL_brake( lua_State *L )
  */
 static int aiL_brakeDist( lua_State *L )
 {
-   double d;
    vec2 pos;
-   d = pilot_brakeDist( cur_pilot, &pos );
+   double d = pilot_brakeDist( cur_pilot, &pos );
    lua_pushnumber( L, d );
    lua_pushvector( L, pos );
    return 2;

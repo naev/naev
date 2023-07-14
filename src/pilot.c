@@ -855,7 +855,7 @@ int pilot_brake( Pilot *p )
  *    @param[out] pos Estimated final position once braked.
  *    @return Estimated Braking distance based on current speed.
  */
-double pilot_brakeDist( Pilot *p, vec2 *pos )
+double pilot_brakeDist( const Pilot *p, vec2 *pos )
 {
    double fdiff, bdiff, ftime, btime;
    double vang, speed, dist;

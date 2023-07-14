@@ -319,8 +319,8 @@ function autonav_jump_brake ()
       ai.accel(1)
    else
       local _d, pos = ai.brakeDist()
-      if pos:dist( pp:pos() ) > jmp:jumpDist(pp) then
-         ret = ai.interceptPos( jmp:pos() )
+      if pos:dist( target_pos ) > jmp:jumpDist(pp) then
+         ret = ai.interceptPos( target_pos )
       else
          ret = ai.brake()
       end
