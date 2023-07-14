@@ -1159,10 +1159,7 @@ void sound_setSpeed( double s )
 
    /* We implement the brown noise here. */
    playing = (snd_compression_gain > 0.);
-   if (player.tc_max > 2.)
-      v = CLAMP( 0, 1., MAX( (s-2)/10., (s-2) / (player.tc_max-2) ) );
-   else
-      v = CLAMP( 0, 1., (s-2)/10. );
+   v = CLAMP( 0, 1., (s-2)/10. );
 
    if (v > 0.) {
       if (snd_compression >= 0) {

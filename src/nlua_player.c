@@ -722,8 +722,7 @@ static int playerL_autonavAbort( lua_State *L )
 static int playerL_autonavReset( lua_State *L )
 {
    double timer = luaL_optnumber(L,1,0.);
-   player_autonavResetSpeed();
-   player.autonav_timer = timer;
+   player_autonavReset( timer );
    return 0;
 }
 

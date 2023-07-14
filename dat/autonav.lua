@@ -91,7 +91,7 @@ local function shouldResetSpeed ()
    end
 end
 
-local function autonav_end ()
+function autonav_end ()
    resetSpeed()
    player.autonavEnd()
 end

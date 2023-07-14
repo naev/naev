@@ -1267,10 +1267,8 @@ void player_think( Pilot* pplayer, const double dt )
       player_rmFlag(PLAYER_SECONDARY_L);
    }
 
-   if (fired) {
-      player.autonav_timer = MAX( player.autonav_timer, 1. );
-      player_autonavResetSpeed();
-   }
+   if (fired)
+      player_autonavReset( 1 );
 
    if (!player_isFlag(PLAYER_AUTONAV)) {
       acc = player_acc;
@@ -1894,8 +1892,7 @@ void player_hailStart (void)
    player_message( _("#rReceiving hail! Press #b%s#0 to respond."), buf );
 
    /* Reset speed. */
-   player_autonavResetSpeed();
-   player.autonav_timer = MAX( player.autonav_timer, 10. );
+   player_autonavReset( 10. );
 }
 
 /**

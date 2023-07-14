@@ -34,6 +34,7 @@
 #include "space.h"
 #include "toolkit.h"
 
+#if 0
 extern double player_acc; /**< Player acceleration. */
 
 static double tc_mod    = 1.; /**< Time compression modifier. */
@@ -43,6 +44,7 @@ static int tc_rampdown  = 0; /**< Ramping down time compression? */
 static double last_shield; /**< Player's last shield value. */
 static double last_armour; /**< Player's last armour value. */
 static int target_known = 0; /**< Is the target known? */
+#endif
 
 static nlua_env autonav_env   = LUA_NOREF; /**< Autonav environment. */
 static int func_system        = LUA_NOREF;
@@ -50,6 +52,8 @@ static int func_spob          = LUA_NOREF;
 static int func_pilot         = LUA_NOREF;
 static int func_board         = LUA_NOREF;
 static int func_pos           = LUA_NOREF;
+static int func_reset         = LUA_NOREF;
+static int func_end           = LUA_NOREF;
 static int func_abort         = LUA_NOREF;
 static int func_think         = LUA_NOREF;
 static int func_update        = LUA_NOREF;
@@ -58,11 +62,13 @@ static int func_update        = LUA_NOREF;
  * Prototypes.
  */
 static int player_autonavSetup (void);
+#if 0
 static void player_autonav (void);
 static int player_autonavApproach( const vec2 *pos, double *dist2, int count_target );
 static void player_autonavFollow( const vec2 *pos, const vec2 *vel, const int follow, double *dist2 );
 static int player_autonavApproachBoard( const vec2 *pos, const vec2 *vel, double *dist2, double sw );
 static int player_autonavBrake (void);
+#endif
 
 
 int player_autonavInit (void)
@@ -89,6 +95,8 @@ int player_autonavInit (void)
    func_pilot  = nlua_refenvtype( env, "autonav_pilot",  LUA_TFUNCTION );
    func_board  = nlua_refenvtype( env, "autonav_board",  LUA_TFUNCTION );
    func_pos    = nlua_refenvtype( env, "autonav_pos",    LUA_TFUNCTION );
+   func_reset  = nlua_refenvtype( env, "autonav_reset",  LUA_TFUNCTION );
+   func_end    = nlua_refenvtype( env, "autonav_end",    LUA_TFUNCTION );
    func_abort  = nlua_refenvtype( env, "autonav_abort",  LUA_TFUNCTION );
    func_think  = nlua_refenvtype( env, "autonav_think",  LUA_TFUNCTION );
    func_update = nlua_refenvtype( env, "autonav_update", LUA_TFUNCTION );
@@ -101,8 +109,10 @@ int player_autonavInit (void)
  */
 void player_autonavResetSpeed (void)
 {
+#if 0
    tc_mod = 1.;
    tc_rampdown = 0;
+#endif
    player_resetSpeed();
 }
 
@@ -160,7 +170,9 @@ static int player_autonavSetup (void)
 
    /* Autonav is mutually-exclusive with other autopilot methods. */
    player_restoreControl( PINPUT_AUTONAV, NULL );
+   player_setFlag(PLAYER_AUTONAV);
 
+#if 0
    if (!player_isFlag(PLAYER_AUTONAV)) {
       tc_base   = player_dt_default() * player.speed;
       tc_mod    = tc_base;
@@ -174,8 +186,6 @@ static int player_autonavSetup (void)
    }
 
    /* Safe values. */
-   free( player.autonavmsg );
-   player.autonavmsg = NULL;
    tc_rampdown  = 0;
    tc_down      = 0.;
    last_shield  = player.p->shield / player.p->shield_max;
@@ -189,21 +199,33 @@ static int player_autonavSetup (void)
    /* Make sure time acceleration starts immediately. */
    player.autonav_timer = 0.;
 
+#endif
    return 0;
 }
 
+static int autonav_ending = 0;
 /**
  * @brief Ends the autonav.
  */
 void player_autonavEnd (void)
 {
+   /* Don't allow recursive end chaining. */
+   if (autonav_ending)
+      return;
+
+   autonav_ending = 1;
    player_rmFlag(PLAYER_AUTONAV);
-   player_autonavResetSpeed();
-   free( player.autonavmsg );
-   player.autonavmsg = NULL;
    ovr_autonavClear();
-   /* Get rid of acceleration. */
    player_accelOver();
+
+   /* End it. */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_end );
+   if (nlua_pcall( autonav_env, 0, 0 )) {
+      WARN("%s",lua_tostring(naevL,-1));
+      lua_pop(naevL, 1);
+   }
+
+   autonav_ending = 0;
 }
 
 /**
@@ -235,14 +257,14 @@ void player_autonavPos( double x, double y )
       WARN("%s",lua_tostring(naevL,-1));
       lua_pop(naevL, 1);
    }
+#if 0
    vec2_cset( &player.autonav_pos, x, y );
-/*
    player_message(_("#oAutonav: heading to target position."));
    player.autonav    = AUTONAV_POS_APPROACH;
    player.autonavmsg = strdup( _("position" ));
    player.autonavcol = '0';
    vec2_cset( &player.autonav_pos, x, y );
-*/
+#endif
 }
 
 /**
@@ -264,7 +286,6 @@ void player_autonavSpob( const char *name, int tryland )
       WARN("%s",lua_tostring(naevL,-1));
       lua_pop(naevL, 1);
    }
-   player.autonav_pos = spb->pos;
 
 #if 0
    /* Don't target center, but position offset in the direction of the player. */
@@ -300,7 +321,6 @@ void player_autonavPil( unsigned int p )
       WARN("%s",lua_tostring(naevL,-1));
       lua_pop(naevL, 1);
    }
-   player.autonav_pos = pilot->solid.pos;
 }
 
 /**
@@ -325,12 +345,12 @@ void player_autonavBoard( unsigned int p )
       WARN("%s",lua_tostring(naevL,-1));
       lua_pop(naevL, 1);
    }
-   player.autonav_pos = pilot->solid.pos;
 }
 
 /**
  * @brief Handles common time accel ramp-down for autonav to positions and spobs.
  */
+#if 0
 static void player_autonavRampdown( double d )
 {
    double t, tint;
@@ -344,6 +364,7 @@ static void player_autonavRampdown( double d )
       tc_down     = (tc_mod-tc_base) / 3.;
    }
 }
+#endif
 
 /**
  * @brief Aborts regular interstellar autonav, but not in-system autonav.
@@ -405,6 +426,7 @@ void player_autonavAbort( const char *reason )
    }
 }
 
+#if 0
 /**
  * @brief Handles the autonavigation process for the player.
  */
@@ -598,7 +620,9 @@ static void player_autonav (void)
          break;
    }
 }
+#endif
 
+#if 0
 /**
  * @brief Handles approaching a position with autonav.
  *
@@ -646,7 +670,9 @@ static int player_autonavApproach( const vec2 *pos, double *dist2, int count_tar
    }
    return 0;
 }
+#endif
 
+#if 0
 /**
  * @brief Handles following a moving point with autonav (PD controller).
  *
@@ -692,7 +718,9 @@ static void player_autonavFollow( const vec2 *pos, const vec2 *vel, const int fo
    if (!follow)
       *dist2 = vec2_dist( pos, &player.p->solid.pos );
 }
+#endif
 
+#if 0
 static int player_autonavApproachBoard( const vec2 *pos, const vec2 *vel, double *dist2, double sw )
 {
    double d, timeFactor;
@@ -727,7 +755,9 @@ static int player_autonavApproachBoard( const vec2 *pos, const vec2 *vel, double
       return 0;
    return 1;
 }
+#endif
 
+#if 0
 /**
  * @brief Handles the autonav braking.
  *
@@ -753,6 +783,17 @@ static int player_autonavBrake (void)
 
    return ret;
 }
+#endif
+
+void player_autonavReset( double s )
+{
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_end );
+   lua_pushnumber( naevL, s );
+   if (nlua_pcall( autonav_env, 1, 0 )) {
+      WARN("%s",lua_tostring(naevL,-1));
+      lua_pop(naevL, 1);
+   }
+}
 
 /**
  * @brief Checks whether the speed should be reset due to damage or missile locks.
@@ -761,6 +802,7 @@ static int player_autonavBrake (void)
  */
 int player_autonavShouldResetSpeed (void)
 {
+#if 0
    double shield, armour;
    int will_reset, lowhealth;
    double reset_dist, reset_shield;
@@ -835,6 +877,7 @@ int player_autonavShouldResetSpeed (void)
       player_autonavResetSpeed();
       return 1;
    }
+#endif
    return 0;
 }
 
@@ -848,8 +891,10 @@ void player_thinkAutonav( Pilot *pplayer, double dt )
 {
    int oldmem;
 
+#if 0
    if (player.autonav_timer > 0.)
       player.autonav_timer -= dt;
+#endif
 
    ai_thinkSetup();
    oldmem = ai_setPilot( pplayer ); /* Uses AI functionality. */
@@ -891,16 +936,20 @@ void player_thinkAutonav( Pilot *pplayer, double dt )
  */
 void player_updateAutonav( double dt )
 {
+#if 0
    const double dis_dead = 5.0;
    const double dis_mod  = 0.5;
    const double dis_max  = 4.0;
    const double dis_ramp = 6.0;
+#endif
 
    if (paused || (player.p==NULL) ||
          pilot_isFlag(player.p, PILOT_DEAD) ||
          player_isFlag( PLAYER_CINEMATICS ))
       return;
 
+   /* TODO fix disabling stuff, maybe handle in autonav? */
+#if 0
    /* We handle disabling here. */
    if (pilot_isFlag(player.p, PILOT_DISABLED)) {
       /* It is somewhat like:
@@ -929,6 +978,7 @@ void player_updateAutonav( double dt )
       sound_setSpeed( tc_mod / player_dt_default() );
       return;
    }
+#endif
 
    /* Must be autonaving. */
    if (!player_isFlag(PLAYER_AUTONAV))
