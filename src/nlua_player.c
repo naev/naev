@@ -756,20 +756,24 @@ static int playerL_speed( lua_State *L )
  *
  *    @luatparam number speed Speed to set the game to. If omitted it will reset the game speed.
  *    @luatparam[opt=speed] number sound Sound speed to set to.
+ *    @luatparam[opt=false] boolean noset Avoid setting player.speed. Useful for autonav.
  * @luafunc setSpeed
  */
 static int playerL_setSpeed( lua_State *L )
 {
    double speed = luaL_optnumber( L, 1, -1 );
    double sound = luaL_optnumber( L, 2, speed );
+   int noset = lua_toboolean( L, 3 );
 
    if (speed > 0.) {
-      player.speed = speed;
+      if (!noset)
+         player.speed = speed;
       pause_setSpeed( speed );
       sound_setSpeed( sound );
    }
    else {
-      player.speed = 1.;
+      if (!noset)
+         player.speed = 1.;
       player_resetSpeed();
    }
 

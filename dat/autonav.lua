@@ -8,41 +8,53 @@ local autonav_plt_follow, autonav_plt_board_approach
 local autonav_timer, tc_base, tc_mod, tc_max, tc_rampdown, tc_down
 local conf, last_shield, last_armour, map_npath
 
+-- Some defaults
+tc_mod = 0
+map_npath = 0
+tc_down = 0
+
 local function autonav_setup ()
+   -- Get player / game info
    local pp = player.pilot()
+   instant_jump = pp:shipstat("misc_instant_jump")
+   conf = naev.conf()
+   local stats = pp:stats()
+
+   -- Some safe defaults
+   autonav = nil
    target_pos = nil
    target_spb = nil
    target_plt = nil
    map_npath = 0
    autonav_tryland = false
-   player.autonavSetPos()
-   instant_jump = pp:shipstat("misc_instant_jump")
-
-   conf = naev.conf()
-   local stats = pp:stats()
-   tc_base = player.dt_default() * player.speed()
-   tc_mod = tc_base
    tc_rampdown = false
+   tc_down     = 0
+   player.autonavSetPos()
+
+   -- Set time compression maximum
    tc_max = conf.compression_velocity / stats.speed_max
    if conf.compression_mult >= 1 then
       tc_max = math.min( tc_max, conf.compression_mult )
    end
    tc_max = math.max( 1, tc_max )
 
-   tc_rampdown = false
-   tc_down     = 0
+   -- Set initial time compression base
+   tc_base = player.dt_default() * player.speed()
+   tc_mod = math.max( tc_base, tc_mod )
+   player.setSpeed( tc_mod, nil, true )
 
+   -- Initialize health
    last_shield, last_armour = pp:health()
 
-   player.setSpeed( tc_mod )
-
+   -- Start timer to begin time compressing right away
    autonav_timer = 0
 end
 
 local function resetSpeed ()
    tc_mod = 1
    tc_rampdown = false
-   player.setSpeed() -- restore sped
+   tc_down = 0
+   player.setSpeed( nil, nil, true ) -- restore sped
 end
 
 local function shouldResetSpeed ()
@@ -250,7 +262,26 @@ local function autonav_follow( pos, vel, follow )
    end
 end
 
+local function autonav_jump_check ()
+   local pp = player.pilot()
+   if not pp:navJump() then
+      autonav_abort(_("Target changed to current system"))
+      return false
+   end
+   local fuel, consumption = pp:fuel()
+   if fuel < consumption then
+      autonav_abort(_("Not enough fuel for autonav to continue"))
+      return false
+   end
+
+   return true
+end
+
 function autonav_jump_approach ()
+   if not autonav_jump_check() then
+      return
+   end
+
    local pp = player.pilot()
    local jmp = pp:navJump()
    if not jmp then
@@ -259,7 +290,7 @@ function autonav_jump_approach ()
    local pos = jmp:pos()
    local t = (pp:pos()-jmp:pos()):angle()
    local d = jump:jumpDist()
-   pos = pos + vec2.newP( math.max(0.8*d, d-30), t );
+   pos = pos + vec2.newP( math.max(0.8*d, d-30), t )
    local ret
    ret, d = autonav_approach( pos, false )
    if ret then
@@ -270,6 +301,10 @@ function autonav_jump_approach ()
 end
 
 function autonav_jump_brake ()
+   if not autonav_jump_check() then
+      return
+   end
+
    local pp = player.pilot()
    local jmp = pp:navJump()
    local ret
@@ -337,7 +372,7 @@ end
 
 function autonav_spob_land_brake ()
    local ret = ai.brake()
-   if not ret then
+   if ret then
       if player.tryLand(false)=="impossible" then
          autonav_abort()
       else
@@ -440,7 +475,7 @@ function autonav_update( realdt )
    if tc_rampdown then
       if tc_mod ~= tc_base then
          tc_mod = math.max( tc_base, tc_mod - tc_down*realdt )
-         player.setSpeed( tc_mod, tc_mod / dt_default )
+         player.setSpeed( tc_mod, tc_mod / dt_default, true )
       end
       return
    end
@@ -450,5 +485,5 @@ function autonav_update( realdt )
    end
    tc_mod = tc_mod + 0.2 * realdt * (tc_max - tc_base )
    tc_mod = math.min( tc_mod, tc_max )
-   player.setSpeed( tc_mod, tc_mod / dt_default )
+   player.setSpeed( tc_mod, tc_mod / dt_default, true )
 end
