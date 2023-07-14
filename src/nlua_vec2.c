@@ -345,7 +345,8 @@ static int vectorL_add__( lua_State *L )
  */
 static int vectorL_sub( lua_State *L )
 {
-   vec2 vout, *v1;
+   const vec2 *v1;
+   vec2 vout;
    double x, y;
 
    /* Get self. */
@@ -353,7 +354,7 @@ static int vectorL_sub( lua_State *L )
 
    /* Get rest of parameters. */
    if (lua_isvector(L,2)) {
-      vec2 *v2 = lua_tovector(L,2);
+      const vec2 *v2 = lua_tovector(L,2);
       x = v2->x;
       y = v2->y;
    }
@@ -380,7 +381,7 @@ static int vectorL_sub__( lua_State *L )
 
    /* Get rest of parameters. */
    if (lua_isvector(L,2)) {
-      vec2 *v2 = lua_tovector(L,2);
+      const vec2 *v2 = lua_tovector(L,2);
       x = v2->x;
       y = v2->y;
    }
@@ -415,18 +416,18 @@ static int vectorL_mul( lua_State *L )
 
    if (lua_isnumber(L,1)) {
       double d = lua_tonumber(L,1);
-      vec2 *v  = luaL_checkvector(L,2);
+      const vec2 *v  = luaL_checkvector(L,2);
       vec2_cset( &vout, v->x * d, v->y * d );
    }
    else {
       if (lua_isnumber(L,2)) {
-         vec2 *v  = luaL_checkvector(L,1);
+         const vec2 *v  = luaL_checkvector(L,1);
          double d = lua_tonumber(L,2);
          vec2_cset( &vout, v->x * d, v->y * d );
       }
       else {
-         vec2 *v1 = luaL_checkvector(L,1);
-         vec2 *v2 = luaL_checkvector(L,2);
+         const vec2 *v1 = luaL_checkvector(L,1);
+         const vec2 *v2 = luaL_checkvector(L,2);
          vec2_cset( &vout, v1->x * v2->x, v1->y * v2->y );
       }
    }
@@ -437,16 +438,13 @@ static int vectorL_mul( lua_State *L )
 }
 static int vectorL_mul__( lua_State *L )
 {
-   vec2 *v1;
-
-   /* Get parameters. */
-   v1 = luaL_checkvector(L,1);
+   vec2 *v1 = luaL_checkvector(L,1);
    if (lua_isnumber(L,2)) {
       double mod = luaL_checknumber(L,2);
       vec2_cset( v1, v1->x * mod, v1->y * mod );
    }
    else {
-      vec2 *v2 = luaL_checkvector(L,2);
+      const vec2 *v2 = luaL_checkvector(L,2);
       vec2_cset( v1, v1->x * v2->x, v1->y * v2->y );
    }
 
@@ -468,16 +466,14 @@ static int vectorL_mul__( lua_State *L )
  */
 static int vectorL_div( lua_State *L )
 {
-   vec2 vout, *v1;
-
-   /* Get parameters. */
-   v1    = luaL_checkvector(L,1);
+   vec2 vout;
+   const vec2 *v1 = luaL_checkvector(L,1);
    if (lua_isnumber(L,2)) {
       double mod = lua_tonumber(L,2);
       vec2_cset( &vout, v1->x / mod, v1->y / mod );
    }
    else {
-      vec2 *v2 = luaL_checkvector(L,2);
+      const vec2 *v2 = luaL_checkvector(L,2);
       vec2_cset( &vout, v1->x / v2->x, v1->y / v2->y );
    }
 
@@ -486,16 +482,13 @@ static int vectorL_div( lua_State *L )
 }
 static int vectorL_div__( lua_State *L )
 {
-   vec2 *v1;
-
-   /* Get parameters. */
-   v1    = luaL_checkvector(L,1);
+   vec2 *v1 = luaL_checkvector(L,1);
    if (lua_isnumber(L,2)) {
       double mod = lua_tonumber(L,2);
       vec2_cset( v1, v1->x / mod, v1->y / mod );
    }
    else {
-      vec2 *v2 = luaL_checkvector(L,2);
+      const vec2 *v2 = luaL_checkvector(L,2);
       vec2_cset( v1, v1->x / v2->x, v1->y / v2->y );
    }
 
