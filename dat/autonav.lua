@@ -1,4 +1,5 @@
 local fmt = require "format"
+local lanes = require "ai.core.misc.lanes"
 
 local autonav, target_pos, target_spb, target_plt, instant_jump
 local autonav_jump_approach, autonav_jump_brake
@@ -7,11 +8,13 @@ local autonav_spob_approach, autonav_spob_land_approach, autonav_spob_land_brake
 local autonav_plt_follow, autonav_plt_board_approach
 local autonav_timer, tc_base, tc_mod, tc_max, tc_rampdown, tc_down
 local conf, last_shield, last_armour, map_npath
+local path, use_lanes
 
 -- Some defaults
 tc_mod = 0
 map_npath = 0
 tc_down = 0
+use_lanes = true
 
 --[[
 Common code for setting decent defaults and global variables when starting autonav.
@@ -24,13 +27,15 @@ local function autonav_setup ()
    local stats = pp:stats()
 
    -- Some safe defaults
-   autonav = nil
-   target_pos = nil
-   target_spb = nil
-   target_plt = nil
-   map_npath = 0
+   autonav     = nil
+   target_pos  = nil
+   target_spb  = nil
+   target_plt  = nil
+   map_npath   = 0
    tc_rampdown = false
    tc_down     = 0
+   path        = nil
+   use_lanes   = var.peek("autonav_uselanes") and not pp:flags("stealth")
    player.autonavSetPos()
 
    -- Set time compression maximum
@@ -143,6 +148,13 @@ function autonav_system ()
    local pos = jmp:pos()
    local d = jmp:jumpDist( pp )
    target_pos = pos + (pp:pos()-pos):normalize( math.max(0.8*d, d-30) )
+
+   if use_lanes then
+      lanes.clearCache( pp )
+      path = lanes.getRouteP( pp, target_pos )
+   else
+      path = {target_pos}
+   end
 
    if pilot.canHyperspace(pp) then
       autonav = autonav_jump_brake
@@ -321,10 +333,14 @@ function autonav_jump_approach ()
    if not jmp then
       return autonav_abort()
    end
-   local ret, d = autonav_approach( target_pos, false )
+   local ret, d = autonav_approach( path[1], false )
    if ret then
-      autonav = autonav_jump_brake
-   elseif not tc_rampdown and map_npath<=1 then
+      if #path > 1 then
+         table.remove( path, 1 )
+      else
+         autonav = autonav_jump_brake
+      end
+   elseif not tc_rampdown and map_npath<=1 and #path==1 then
       autonav_rampdown( d )
    end
 end
@@ -544,6 +560,13 @@ function autonav_enter ()
       local pos = jmp:pos()
       local d = jmp:jumpDist( pp )
       target_pos = pos + (pp:pos()-pos):normalize( math.max(0.8*d, d-30) )
+      if use_lanes then
+         lanes.clearCache( pp )
+         path = lanes.getRouteP( pp, target_pos )
+         table.remove( path, 1 ) -- Remove first node
+      else
+         path = {target_pos}
+      end
       autonav = autonav_jump_approach
    end
 end
