@@ -3176,7 +3176,7 @@ static int player_saveEscorts( xmlTextWriterPtr writer )
  */
 int player_save( xmlTextWriterPtr writer )
 {
-   char **guis;
+   const char **guis;
    int cycles, periods, seconds;
    double rem;
    const PlayerItem *inventory;

@@ -49,6 +49,7 @@
 #include "player.h"
 #include "player_fleet.h"
 #include "player_inventory.h"
+#include "player_gui.h"
 #include "save.h"
 
 #define PLAYER_CHECK() if (player.p == NULL) return 0
@@ -121,6 +122,10 @@ static int playerL_misnDoneList( lua_State *L );
 static int playerL_evtActive( lua_State *L );
 static int playerL_evtDone( lua_State *L );
 static int playerL_evtDoneList( lua_State *L );
+/* Handle GUI. */
+static int playerL_gui( lua_State *L );
+static int playerL_guiList( lua_State *L );
+static int playerL_guiSet( lua_State *L );
 /* Fleet stuff. */
 static int playerL_fleetList( lua_State *L );
 static int playerL_fleetCargoFree( lua_State *L );
@@ -206,6 +211,9 @@ static const luaL_Reg playerL_methods[] = {
    { "evtActive", playerL_evtActive },
    { "evtDone", playerL_evtDone },
    { "evtDoneList", playerL_evtDoneList },
+   { "gui", playerL_gui },
+   { "guiList", playerL_guiList },
+   { "guiSet", playerL_guiSet },
    { "fleetList", playerL_fleetList },
    { "fleetCargoFree", playerL_fleetCargoFree },
    { "fleetCargoUsed", playerL_fleetCargoUsed },
@@ -1800,6 +1808,54 @@ static int playerL_evtDoneList( lua_State *L )
       lua_rawseti(L,-2,i+1);
    }
    return 1;
+}
+
+/**
+ * @brief Gets the player's current GUI.
+ *
+ *    @luatreturn string The player's current GUI.
+ * @luafunc gui
+ */
+static int playerL_gui( lua_State *L )
+{
+   lua_pushstring(L,gui_pick());
+   return 1;
+}
+
+/**
+ * @brief Lists the GUIs the player can use.
+ *
+ *    @luatreturn table Table containing the names of all the GUIs the player can use.
+ * @luafunc guiList
+ */
+static int playerL_guiList( lua_State *L )
+{
+   const char **gui = player_guiList();
+
+   lua_newtable(L);
+   for (int i=0; i<array_size(gui); i++) {
+      lua_pushstring( L, gui[i] );
+      lua_rawseti( L, -2, i+1 );
+   }
+
+   return 1;
+}
+
+/**
+ * @brief Sets the player's GUI.
+ *
+ *    @luatreturn string The player's current GUI.
+ * @luafunc guiSet
+ */
+static int playerL_guiSet( lua_State *L )
+{
+   const char *name = luaL_checkstring(L,1);
+   if (!gui_exists(name))
+      NLUA_ERROR(L,_("GUI '%s' does not exist!"),name);
+   free( player.gui );
+   player.gui = strdup(name);
+   gui_load( gui_pick() );
+   return 0;
 }
 
 /**

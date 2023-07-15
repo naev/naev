@@ -9,6 +9,8 @@
 /** @cond */
 #include <stdlib.h>
 
+#include "physfs.h"
+
 #include "naev.h"
 /** @endcond */
 
@@ -1836,12 +1838,24 @@ const char* gui_pick (void)
 }
 
 /**
+ * @brief Checks to see if a GUI exists.
+ *
+ *    @return non-zero if filename exists. zero otherwise.
+ */
+int gui_exists( const char *name )
+{
+   char path[PATH_MAX];
+   snprintf( path, sizeof(path), GUI_PATH"%s.lua", name );
+   return PHYSFS_exists( path );
+}
+
+/**
  * @brief Attempts to load the actual GUI.
  *
  *    @param name Name of the GUI to load.
  *    @return 0 on success.
  */
-int gui_load( const char* name )
+int gui_load( const char *name )
 {
    char *buf, path[PATH_MAX];
    size_t bufsize;

@@ -20,7 +20,8 @@ typedef enum RadarShape_ {
  */
 int gui_init (void);
 void gui_free (void);
-int gui_load( const char* name );
+int gui_exists( const char *name );
+int gui_load( const char *name );
 void gui_cleanup (void);
 void gui_reload (void);
 
