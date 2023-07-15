@@ -8,13 +8,14 @@ local autonav_spob_approach, autonav_spob_land_approach, autonav_spob_land_brake
 local autonav_plt_follow, autonav_plt_board_approach
 local autonav_timer, tc_base, tc_mod, tc_max, tc_rampdown, tc_down
 local conf, last_shield, last_armour, map_npath
-local path, use_lanes
+local path, uselanes_jump, uselanes_spob
 
 -- Some defaults
 tc_mod = 0
 map_npath = 0
 tc_down = 0
-use_lanes = true
+uselanes_jump = true
+uselanes_spob = false
 
 --[[
 Common code for setting decent defaults and global variables when starting autonav.
@@ -35,7 +36,9 @@ local function autonav_setup ()
    tc_rampdown = false
    tc_down     = 0
    path        = nil
-   use_lanes   = var.peek("autonav_uselanes") and not pp:flags("stealth")
+   local stealth = pp:flags("stealth")
+   uselanes_jump = var.peek("autonav_uselanes_jump") and not stealth
+   uselanes_spob = var.peek("autonav_uselanes_spob") and not stealth
    player.autonavSetPos()
 
    -- Set time compression maximum
@@ -149,7 +152,7 @@ function autonav_system ()
    local d = jmp:jumpDist( pp )
    target_pos = pos + (pp:pos()-pos):normalize( math.max(0.8*d, d-30) )
 
-   if use_lanes then
+   if uselanes_jump then
       lanes.clearCache( pp )
       path = lanes.getRouteP( pp, target_pos )
    else
@@ -172,6 +175,13 @@ function autonav_spob( spb, tryland )
    local pp = player.pilot()
    local pos = spb:pos()
    target_pos = pos + (pp:pos()-pos):normalize( 0.6*spb:radius() )
+
+   if uselanes_spob then
+      lanes.clearCache( pp )
+      path = lanes.getRouteP( pp, target_pos )
+   else
+      path = {target_pos}
+   end
 
    local spobstr = "#"..spb:colourChar()..spb:name().."#o"
    if tryland then
@@ -380,23 +390,33 @@ end
 
 -- Approaching a spob, not interested in landing
 function autonav_spob_approach ()
-   local ret, d = autonav_approach( target_pos, true )
+   local ret = autonav_approach( path[1], true )
    if ret then
-      local spobstr = "#"..target_spb:colourChar()..target_spb:name().."#o"
-      player.msg("#o"..fmt.f(_("Autonav: arrived at {spob}."),{spob=spobstr}).."#0")
-      return autonav_end()
+      if #path > 1 then
+         table.remove( path, 1 )
+      else
+         local spobstr = "#"..target_spb:colourChar()..target_spb:name().."#o"
+         player.msg("#o"..fmt.f(_("Autonav: arrived at {spob}."),{spob=spobstr}).."#0")
+         return autonav_end()
+      end
    elseif not tc_rampdown then
-      autonav_rampdown( d )
+      -- Use distance to end
+      autonav_rampdown( player.pos():dist(target_pos) )
    end
 end
 
 -- Approaching a spob to try to land
 function autonav_spob_land_approach ()
-   local ret, d = autonav_approach( target_pos, true )
+   local ret = autonav_approach( path[1], true )
    if ret then
-      autonav = autonav_spob_land_brake
+      if #path > 1 then
+         table.remove( path, 1 )
+      else
+         autonav = autonav_spob_land_brake
+      end
    elseif not tc_rampdown then
-      autonav_rampdown( d )
+      -- Use distance to end
+      autonav_rampdown( player.pos():dist(target_pos) )
    end
 end
 
@@ -560,7 +580,7 @@ function autonav_enter ()
       local pos = jmp:pos()
       local d = jmp:jumpDist( pp )
       target_pos = pos + (pp:pos()-pos):normalize( math.max(0.8*d, d-30) )
-      if use_lanes then
+      if uselanes_jump then
          lanes.clearCache( pp )
          path = lanes.getRouteP( pp, target_pos )
          table.remove( path, 1 ) -- Remove first node
