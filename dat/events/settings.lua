@@ -1,10 +1,13 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<event name="Autonav Settings">
+<event name="Settings">
  <location>load</location>
  <chance>100</chance>
  <unique />
 </event>
+--]]
+--[[
+   General settings.
 --]]
 local luatk = require "luatk"
 
@@ -21,7 +24,7 @@ function create ()
    end
 
    -- Set an info button up
-   player.infoButtonRegister( _("Autonav Settings"), autonav_gui, 2, "A" )
+   player.infoButtonRegister( _("Settings"), autonav_gui, 1, "A" )
 end
 
 function autonav_gui ()
@@ -30,12 +33,14 @@ function autonav_gui ()
    local w, h = 600, 420
    local wdw = luatk.newWindow( nil, nil, w, h )
    wdw:setCancel( luatk.close )
-   luatk.newText( wdw, 0, 10, w, 20, _("Autonav Settings"), nil, "center" )
+   luatk.newText( wdw, 0, 10, w, 20, _("Player Settings"), nil, "center" )
 
    local y = 40
-   chk_uselanes_jump = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("#nUse Lanes:#0 autonav will travel on patrol lanes when jumping"), nil, uselanes_jump )
+   luatk.newText( wdw, 20, y, w-40, 20, "#n".._("Autonav Settings") )
+   y = y + 20
+   chk_uselanes_jump = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Use patrol lanes when jumping"), nil, uselanes_jump )
    y = y + 30
-   chk_uselanes_spob = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("#nUse Lanes:#0 autonav will travel on patrol lanes when travelling to a space object"), nil, uselanes_spob )
+   chk_uselanes_spob = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Use patrol lanes when travelling to a space object"), nil, uselanes_spob )
    luatk.newButton( wdw, -20, -20, 80, 40, _("Close"), luatk.close )
    luatk.run()
 

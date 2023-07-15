@@ -2764,7 +2764,6 @@ dat/effects/lua/fadeout.lua
 dat/effects/lua/hypergate_enter.lua
 dat/effects/lua/wormhole_enter.lua
 dat/effects/lua/wormhole_exit.lua
-dat/events/autonav_settings.lua
 dat/events/bioship.lua
 dat/events/chapter1.lua
 dat/events/cinematic/DvdFLFbattle.lua
@@ -2866,6 +2865,7 @@ dat/events/pirate/shipcheck.lua
 dat/events/poi.lua
 dat/events/proteron/blockade.lua
 dat/events/restricted.lua
+dat/events/settings.lua
 dat/events/shipai.lua
 dat/events/shiplog.lua
 dat/events/sirius/achack04.lua
