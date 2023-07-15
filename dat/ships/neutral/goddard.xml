@@ -3,7 +3,6 @@
  <points>200</points>
  <base_type>Goddard</base_type>
  <GFX size="125" sx="12" sy="12">goddard</GFX>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Battleship</class>
  <price>7500000</price>

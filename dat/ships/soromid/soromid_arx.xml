@@ -5,7 +5,6 @@
  <base_type>Arx</base_type>
  <GFX size="124" sx="12" sy="12">arx</GFX>
  <rarity>2</rarity>
- <GUI>slim</GUI>
  <sound pitch="0.5">engine_soromid</sound>
  <class display="Bio-Carrier">Carrier</class>
  <price>18900000</price>

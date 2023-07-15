@@ -57,6 +57,7 @@
 #include "sound.h"
 #include "space.h"
 #include "spfx.h"
+#include "start.h"
 #include "toolkit.h"
 #include "unidiff.h"
 
@@ -1819,9 +1820,9 @@ void gui_setGeneric( const Pilot* pilot )
 /**
  * @brief Determines which GUI should be used.
  */
-char* gui_pick (void)
+const char* gui_pick (void)
 {
-   char* gui;
+   const char* gui;
 
    /* Don't do set a gui if player is dead. This can be triggered through
     * naev_resize and can cause an issue if player is dead. */
@@ -1830,7 +1831,7 @@ char* gui_pick (void)
    else if (player.gui != NULL)
       gui = player.gui;
    else
-      gui = player.p->ship->gui;
+      gui = start_gui();
    return gui;
 }
 

@@ -93,6 +93,6 @@ void gui_setRadarResolution( double res );
 void gui_setRadarRel( int mod );
 void gui_getOffset( double *x, double *y );
 glTexture* gui_hailIcon (void);
-char* gui_pick (void);
+const char* gui_pick (void);
 int gui_onScreenPilot( double *rx, double *ry, const Pilot *pilot );
 int gui_onScreenSpob( double *rx, double *ry, const JumpPoint *jp, const Spob *pnt );

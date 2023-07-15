@@ -3,7 +3,6 @@
  <points>20</points>
  <base_type>Llama</base_type>
  <GFX size="47">llama</GFX>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Yacht</class>
  <price>120000</price>

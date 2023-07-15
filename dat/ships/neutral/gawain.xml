@@ -3,7 +3,6 @@
  <points>20</points>
  <base_type>Gawain</base_type>
  <GFX size="56">gawain</GFX>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class display="Luxury Yacht">Yacht</class>
  <price>500000</price>

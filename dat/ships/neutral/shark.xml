@@ -3,7 +3,6 @@
  <points>30</points>
  <base_type>Shark</base_type>
  <GFX size="54">shark</GFX>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Interceptor</class>
  <price>250000</price>

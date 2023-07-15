@@ -5,7 +5,6 @@
  <base_type>Divinity</base_type>
  <GFX size="140" sx="12" sy="12">divinity</GFX>
  <rarity>2</rarity>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Carrier</class>
  <price>11000000</price>

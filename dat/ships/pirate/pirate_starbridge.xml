@@ -4,7 +4,6 @@
  <base_type>Starbridge</base_type>
  <GFX sx="10" sy="10">starbridge_pirate</GFX>
  <rarity>2</rarity>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>1850000</price>

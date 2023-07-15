@@ -5,7 +5,6 @@
  <base_type>Astral Projection Lesser</base_type>
  <gfx_space sx="8" sy="8" size="60" polygon="apparition_fighter">ship/apparition/apparition_fighter.webp</gfx_space>
  <gfx_comm>outfit/store/placeholder.webp</gfx_comm>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Interceptor</class>
  <price>1</price>

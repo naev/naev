@@ -4,7 +4,6 @@
  <base_type>Rainmaker</base_type>
  <GFX size="128" sx="12" sy="12">rainmaker_empire</GFX>
  <rarity>2</rarity>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Bulk Freighter</class>
  <price>5000000</price>

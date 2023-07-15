@@ -485,9 +485,6 @@ static PlayerShip_t *player_newShipMake( const char *name )
    if (player.p == NULL)
       ERR(_("Something seriously wonky went on, newly created player does not exist, bailing!"));
 
-   /* Add GUI. */
-   player_guiAdd( player_ship->gui );
-
    /* money. */
    player.p->credits = player_creds;
    player_creds = 0;
@@ -4233,9 +4230,6 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
       return -1;
    }
-
-   /* Add GUI if applicable. */
-   player_guiAdd( ship_parsed->gui );
 
    /* Create the ship. */
    ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), flags );

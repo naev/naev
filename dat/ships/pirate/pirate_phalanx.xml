@@ -4,7 +4,6 @@
  <base_type>Phalanx</base_type>
  <GFX size="95" sx="10" sy="10">phalanx_pirate</GFX>
  <rarity>2</rarity>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Corvette</class>
  <price>925000</price>

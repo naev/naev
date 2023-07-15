@@ -5,7 +5,6 @@
  <base_type>Scintillation</base_type>
  <GFX size="70">scintillation</GFX>
  <rarity>3</rarity>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Bomber</class>
  <price>750000</price>

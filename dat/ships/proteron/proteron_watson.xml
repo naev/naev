@@ -4,7 +4,6 @@
  <base_type>Watson</base_type>
  <GFX size="124" sx="12" sy="12">watson</GFX>
  <rarity>3</rarity>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Carrier</class>
  <price>11000000</price>

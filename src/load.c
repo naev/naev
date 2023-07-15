@@ -1220,10 +1220,8 @@ static int load_gameInternalHook( void *data )
    player_addEscorts();
 
    /* Load the GUI. */
-   if (gui_load( gui_pick() )) {
-      if (player.p->ship->gui != NULL)
-         gui_load( player.p->ship->gui );
-   }
+   if (gui_load( gui_pick() ))
+      gui_load( start_gui() ); /* Failed so use fallback... */
 
    /* Land the player. */
    land( pnt, 1 );

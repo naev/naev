@@ -5,7 +5,6 @@
  <base_type>Dogma</base_type>
  <GFX size="128" sx="12" sy="12">dogma</GFX>
  <rarity>2</rarity>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Battleship</class>
  <price>9400000</price>

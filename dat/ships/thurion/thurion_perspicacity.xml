@@ -5,7 +5,6 @@
  <base_type>Perspicacity</base_type>
  <GFX size="50">perspicacity</GFX>
  <rarity>3</rarity>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Interceptor</class>
  <price>350000</price>

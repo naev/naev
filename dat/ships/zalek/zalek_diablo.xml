@@ -5,7 +5,6 @@
  <base_type>Diablo</base_type>
  <GFX size="170" sx="12" sy="12">diablo</GFX>
  <rarity>2</rarity>
- <GUI>slim</GUI>
  <sound pitch="0.5">engine_zalek</sound>
  <class>Carrier</class>
  <price>7000000</price>

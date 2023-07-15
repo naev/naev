@@ -5,7 +5,6 @@
  <base_type>Mephisto</base_type>
  <GFX size="156" sx="12" sy="12">mephisto</GFX>
  <rarity>2</rarity>
- <GUI>slim</GUI>
  <sound pitch="0.5">engine_zalek</sound>
  <class>Battleship</class>
  <price>9100000</price>

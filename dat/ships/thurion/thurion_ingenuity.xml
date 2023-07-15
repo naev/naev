@@ -5,7 +5,6 @@
  <base_type>Ingenuity</base_type>
  <GFX>ingenuity</GFX>
  <rarity>3</rarity>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Fighter</class>
  <price>650000</price>
