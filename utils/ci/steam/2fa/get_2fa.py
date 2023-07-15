@@ -56,7 +56,7 @@ if result == 'OK':
                 body = str(email_message.get_payload())
 
             # Write parsed TFA code to file
-            file.write(str(body.split('\n')[5])+"\n")
+            file.write(str(body.split('\n')[10])+"\n")
         else:
             print("Could not parse the message for some reason..")
             exit(1)
