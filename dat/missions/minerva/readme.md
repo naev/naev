@@ -47,5 +47,5 @@ obligatory sync points.
 #### Final branch
 
 1. **judgement:** trial about the future of minerva station
-1. **finale1:** TODO
-1. **finale2:** TODO
+1. **finale1:** escape the court and meet up with Zuri's colleague
+1. **finale2:** break into Minerva Station and go to New Haven

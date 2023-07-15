@@ -1,6 +1,6 @@
 ## Taiomi Campaign
 
-Chapter 1 campaign where the player helps some escaped collective drones leave
+Chapter 1+ campaign where the player helps some escaped collective drones leave
 the human inhabited space.
 
 The campaign lets the player indirectly choose their antagonist when they raid
