@@ -435,7 +435,7 @@ function update_ship()
    end
 
    -- If flow status changed, reset
-   local test_flow = (flow.max( pp ) > 0)
+   local test_flow = (flowlib.max( pp ) > 0)
    if has_flow ~= test_flow then
       create()
    end
