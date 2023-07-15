@@ -160,11 +160,11 @@ static void info_buttonRegen (void)
    wid = info_windows[ INFO_WIN_MAIN ];
    window_dimWindow( wid, &w, &h );
    cols = (w-20) / (20+BUTTON_WIDTH);
-   rows = 1 + (array_size(info_buttons) + 1) / cols;
+   rows = 1 + (array_size(info_buttons)) / cols;
 
    for (int i=0; i<array_size(info_buttons); i++) {
       InfoButton_t *btn = &info_buttons[i];
-      int r = (i+2)/cols, c = (i+2)%cols;
+      int r = (i+1)/cols, c = (i+1)%cols;
       if (widget_exists( wid, btn->button ))
          window_destroyWidget( wid, btn->button );
       window_addButtonKey( wid, -20 - c*(20+BUTTON_WIDTH), 20 + r*(20+BUTTON_HEIGHT),
