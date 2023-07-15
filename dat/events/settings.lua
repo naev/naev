@@ -11,7 +11,7 @@
 --]]
 local luatk = require "luatk"
 
-local autonav_gui, uselanes_jump, uselanes_spob
+local settings, uselanes_jump, uselanes_spob, pick_gui
 
 function create ()
    -- Load variables
@@ -24,10 +24,10 @@ function create ()
    end
 
    -- Set an info button up
-   player.infoButtonRegister( _("Settings"), autonav_gui, 1, "A" )
+   player.infoButtonRegister( _("Settings"), settings, 1, "A" )
 end
 
-function autonav_gui ()
+function settings ()
    local chk_uselanes_jump, chk_uselanes_spob
 
    local w, h = 600, 420
@@ -36,11 +36,17 @@ function autonav_gui ()
    luatk.newText( wdw, 0, 10, w, 20, _("Player Settings"), nil, "center" )
 
    local y = 40
-   luatk.newText( wdw, 20, y, w-40, 20, "#n".._("Autonav Settings") )
+   luatk.newText( wdw, 20, y, w-40, 20, "#n".._("Autonav") )
    y = y + 20
    chk_uselanes_jump = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Use patrol lanes when jumping"), nil, uselanes_jump )
    y = y + 30
    chk_uselanes_spob = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Use patrol lanes when travelling to a space object"), nil, uselanes_spob )
+   y = y + 40
+
+   luatk.newText( wdw, 20, y, w-40, 20, "#n".._("GUI") )
+   y = y + 20
+   luatk.newButton( wdw, 20, y, 80, 40, _("Pick GUI"), pick_gui )
+
    luatk.newButton( wdw, -20, -20, 80, 40, _("Close"), luatk.close )
    luatk.run()
 
@@ -49,4 +55,25 @@ function autonav_gui ()
    uselanes_spob = chk_uselanes_spob:get()
    var.push( "autonav_uselanes_jump", uselanes_jump )
    var.push( "autonav_uselanes_spob", uselanes_spob )
+end
+
+function pick_gui ()
+   local w, h = 220, 300
+   local wdw = luatk.newWindow( nil, nil, w, h )
+   luatk.newText( wdw, 0, 10, w, 20, _("Select GUI"), nil, "center" )
+
+   local lst_guis = luatk.newList( wdw, 20, 40, w-40, h-120, player.guiList() )
+   lst_guis:setItem( player.gui() )
+
+   local function wdw_load ()
+      player.guiSet( lst_guis:get() )
+      wdw:destroy()
+   end
+   local function wdw_close ()
+      wdw:destroy()
+   end
+   wdw:setAccept( wdw_load )
+   wdw:setCancel( wdw_close )
+   luatk.newButton( wdw, -20, -20, 80, 40, _("Close"), wdw_close )
+   luatk.newButton( wdw, 20, -20, 80, 40, _("Load"), wdw_load )
 end
