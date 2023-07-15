@@ -422,8 +422,9 @@ function autonav_plt_follow ()
       return autonav_end()
    end
 
+   local pp = player.pilot()
    local canboard = plt:flags("disabled") or plt:flags("boardable")
-   local radius = 2*plt:radius()
+   local radius = math.max( 100, 1.5*(pp:radius()+plt:radius()) )
    if canboard then
       radius = 0
    end
