@@ -39,7 +39,7 @@
   <structure size="small" />
  </slots>
  <stats>
-  <ew_hide>20</ew_hide>
+  <ew_hide>-17</ew_hide>
   <ew_detect>25</ew_detect>
   <ew_jump_detect>25</ew_jump_detect>
   <misc_instant_jump>1</misc_instant_jump>

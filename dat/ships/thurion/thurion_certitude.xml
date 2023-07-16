@@ -61,7 +61,7 @@
   <shield_mod>10</shield_mod>
   <shield_regen_mod>15</shield_regen_mod>
   <heat_dissipation>10</heat_dissipation>
-  <ew_hide>30</ew_hide>
+  <ew_hide>-25</ew_hide>
   <misc_instant_jump>1</misc_instant_jump>
   <nebu_absorb>15</nebu_absorb>
  </stats>

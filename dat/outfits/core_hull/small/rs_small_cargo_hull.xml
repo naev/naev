@@ -17,8 +17,8 @@
   <armour>60</armour>
   <cargo_inertia>-10</cargo_inertia>
   <cargo_mod>10</cargo_mod>
-  <ew_hide>-20</ew_hide>
-  <ew_evade>30</ew_evade>
+  <ew_hide>25</ew_hide>
+  <ew_evade>-25</ew_evade>
   <jam_chance>42</jam_chance>
  </specific>
 </outfit>

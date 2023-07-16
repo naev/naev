@@ -12,7 +12,7 @@
  </general>
  <specific type="modification" group="6">
   <active cooldown="5" />
-  <ew_evade>20</ew_evade>
+  <ew_evade>-18</ew_evade>
   <jam_chance>80</jam_chance>
   <energy_loss>25</energy_loss>
  </specific>

@@ -143,7 +143,7 @@ function enter ()
       local j1 = jump.get( atksys, retsys )
       local j2 = jump.get( atksys, "NGC-1001" )
       local p = pilot.add( "Za'lek Scout Drone", zbh.evilpi(), j1:pos()+(j2:pos()-j1:pos()):mul(0.8), nil, {ai="baddie"} )
-      p:intrinsicSet( "ew_hide", -50 ) -- Easier to spot
+      p:intrinsicSet( "ew_hide", 100 ) -- Easier to spot
       p:control(true)
       p:stealth()
       hook.pilot( p, "discovered", "scout_discovered" )
@@ -189,7 +189,7 @@ function enter ()
       local function spawn_drone( shipname, pos )
          local p = pilot.add( shipname, fevil, fuzz_pos(pos) )
          -- We are nice and make the drones easier to see for this mission
-         p:intrinsicSet( "ew_hide", -50 )
+         p:intrinsicSet( "ew_hide", 100 )
          return p
       end
 

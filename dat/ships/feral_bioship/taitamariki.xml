@@ -38,7 +38,7 @@
   <structure size="medium" prop="bio_hull" name="shell">Mediocris Cortex II</structure>
  </slots>
  <stats>
-  <ew_hide>10</ew_hide>
+  <ew_hide>-10</ew_hide>
  </stats>
  <tags>
   <tag>noplayer</tag>

@@ -99,9 +99,9 @@ static const ShipStatsLookup ss_lookup[] = {
    DI_ELEM( SS_TYPE_D_LAND_DELAY,         land_delay,          N_("Landing Time") ),
    DI_ELEM( SS_TYPE_D_CARGO_INERTIA,      cargo_inertia,       N_("Cargo Inertia") ),
 
-   D__ELEM( SS_TYPE_D_EW_HIDE,            ew_hide,             N_("Concealment") ),
-   D__ELEM( SS_TYPE_D_EW_EVADE,           ew_evade,            N_("Evasion") ),
-   D__ELEM( SS_TYPE_D_EW_STEALTH,         ew_stealth,          N_("Stealth") ),
+   DI_ELEM( SS_TYPE_D_EW_HIDE,            ew_hide,             N_("Detected Range") ),
+   DI_ELEM( SS_TYPE_D_EW_EVADE,           ew_evade,            N_("Evasion Range") ),
+   DI_ELEM( SS_TYPE_D_EW_STEALTH,         ew_stealth,          N_("Stealth Range") ),
    D__ELEM( SS_TYPE_D_EW_DETECT,          ew_detect,           N_("Detection") ),
    D__ELEM( SS_TYPE_D_EW_TRACK,           ew_track,            N_("Tracking") ),
    D__ELEM( SS_TYPE_D_EW_JUMPDETECT,      ew_jump_detect,      N_("Jump Detection") ),

@@ -49,7 +49,7 @@
  <stats>
   <cargo_mod>20</cargo_mod>
   <cargo_inertia>-30</cargo_inertia>
-  <ew_hide>30</ew_hide>
+  <ew_hide>-25</ew_hide>
   <nebu_absorb>15</nebu_absorb>
  </stats>
  <tags>

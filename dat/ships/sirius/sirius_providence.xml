@@ -59,7 +59,7 @@
   <stress_dissipation>20</stress_dissipation>
   <cargo_mod>40</cargo_mod>
   <cargo_inertia>-30</cargo_inertia>
-  <ew_hide>-10</ew_hide>
+  <ew_hide>10</ew_hide>
  </stats>
  <tags>
   <tag>sirius</tag>

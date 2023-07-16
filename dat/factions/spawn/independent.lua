@@ -21,8 +21,8 @@ local sgoddard    = ship.get("Goddard")
 -- Make pilot more visible
 local function _advert( p )
    -- They want to be seen
-   p:intrinsicSet( "ew_hide", -75 )
-   p:intrinsicSet( "ew_evade", -75 )
+   p:intrinsicSet( "ew_hide", 300 )
+   p:intrinsicSet( "ew_evade", 300 )
 end
 
 local function spawn_advert ()

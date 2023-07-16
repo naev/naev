@@ -14,6 +14,6 @@
   <cargo>3</cargo>
   <absorb>3</absorb>
   <armour>60</armour>
-  <ew_hide>15</ew_hide>
+  <ew_hide>-15</ew_hide>
  </specific>
 </outfit>

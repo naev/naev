@@ -36,7 +36,7 @@
   <structure size="small" prop="bio_hull" name="shell">Laevis Cortex II</structure>
  </slots>
  <stats>
-  <ew_hide>10</ew_hide>
+  <ew_hide>-10</ew_hide>
  </stats>
  <tags>
   <tag>feral</tag>

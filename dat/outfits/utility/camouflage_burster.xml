@@ -12,7 +12,7 @@
   <limit>camouflage burster</limit>
  </general>
  <specific type="modification">
-  <ew_stealth>80</ew_stealth>
+  <ew_stealth>-45</ew_stealth>
   <lua>outfits/utility/camouflage_burster.lua</lua>
  </specific>
 </outfit>

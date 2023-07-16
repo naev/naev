@@ -60,7 +60,7 @@
   <cargo_mod>20</cargo_mod>
   <cargo_inertia>-10</cargo_inertia>
   <armour_mod>-10</armour_mod>
-  <ew_hide>-10</ew_hide>
+  <ew_hide>10</ew_hide>
  </stats>
  <tags>
   <tag>pirate</tag>

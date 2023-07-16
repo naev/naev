@@ -46,7 +46,7 @@
  </slots>
  <stats>
   <armour_mod>-10</armour_mod>
-  <ew_hide>10</ew_hide>
+  <ew_hide>-10</ew_hide>
  </stats>
  <tags>
   <tag>soromid</tag>

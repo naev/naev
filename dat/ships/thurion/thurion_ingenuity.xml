@@ -43,7 +43,7 @@
   <structure size="small" />
  </slots>
  <stats>
-  <ew_hide>30</ew_hide>
+  <ew_hide>-25</ew_hide>
   <nebu_absorb>15</nebu_absorb>
  </stats>
 </ship>
