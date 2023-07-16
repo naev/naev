@@ -529,9 +529,9 @@ void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o )
  *    @param o Outfit slot to check.
  *    @return The level to which it belongs (or -1 if it isn't set).
  */
-int pilot_weapSetCheck( Pilot* p, int id, PilotOutfitSlot *o )
+int pilot_weapSetCheck( Pilot* p, int id, const PilotOutfitSlot *o )
 {
-   PilotWeaponSet *ws = pilot_weapSet(p,id);
+   const PilotWeaponSet *ws = pilot_weapSet(p,id);
    for (int i=0; i<array_size(ws->slots); i++)
       if (ws->slots[i].slotid == o->id)
          return ws->slots[i].level;

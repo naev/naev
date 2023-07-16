@@ -83,7 +83,7 @@ static void equipment_genLists( unsigned int wid );
 static void equipment_toggleFav( unsigned int wid, const char *wgt );
 static void equipment_toggleDeploy( unsigned int wid, const char *wgt );
 static void equipment_renderColumn( double x, double y, double w, double h,
-      PilotOutfitSlot *lst, const char *txt,
+      const PilotOutfitSlot *lst, const char *txt,
       int selected, Outfit *o, Pilot *p, CstSlotWidget *wgt );
 static void equipment_renderSlots( double bx, double by, double bw, double bh, void *data );
 static void equipment_renderMisc( double bx, double by, double bw, double bh, void *data );
@@ -92,7 +92,7 @@ static void equipment_renderOverlayColumn( double x, double y, double h,
 static void equipment_renderOverlaySlots( double bx, double by, double bw, double bh,
       void *data );
 static void equipment_renderShip( double bx, double by, double bw, double bh, void *data );
-static int equipment_mouseInColumn( double y, double h, int n, double my );
+static int equipment_mouseInColumn( const PilotOutfitSlot *lst, double y, double h, double my );
 static int equipment_mouseSlots( unsigned int wid, SDL_Event* event,
       double x, double y, double w, double h, double rx, double ry, void *data );
 /* Misc. */
@@ -442,7 +442,7 @@ void equipment_slotWidget( unsigned int wid,
  * @brief Renders an outfit column.
  */
 static void equipment_renderColumn( double x, double y, double w, double h,
-      PilotOutfitSlot *lst, const char *txt,
+      const PilotOutfitSlot *lst, const char *txt,
       int selected, Outfit *o, Pilot *p, CstSlotWidget *wgt )
 {
    const glColour *c, *dc, *rc;
@@ -462,6 +462,10 @@ static void equipment_renderColumn( double x, double y, double w, double h,
 
    /* Iterate for all the slots. */
    for (int i=0; i<array_size(lst); i++) {
+      /* Skip slots hat are empty and the player can't do anything about. */
+      if (lst[i].sslot->locked && (lst[i].outfit == NULL))
+         continue;
+
       /* Choose default colour. */
       if (wgt->weapons >= 0) {
          int level = pilot_weapSetCheck( p, wgt->weapons, &lst[i] );
@@ -706,6 +710,11 @@ static void equipment_renderOverlayColumn( double x, double y, double h,
    for (int i=0; i<array_size(lst); i++) {
       int subtitle = 0;
       int top = 0;
+
+      /* Skip slots hat are empty and the player can't do anything about. */
+      if (lst[i].sslot->locked && (lst[i].outfit == NULL))
+         continue;
+
       if (lst[i].outfit != NULL) {
          /* See if needs a subtitle. */
          if ((outfit_isLauncher(lst[i].outfit) ||
@@ -967,15 +976,20 @@ static void equipment_renderShip( double bx, double by,
 /**
  * @brief Handles a mouse press in column.
  *
+ *    @param lst List of items in the column.
  *    @param y Y position of the column.
  *    @param h Height of column.
- *    @param n Number of elements in column.
  *    @param my Mouse press position.
  *    @return Number pressed (or -1 if none).
  */
-static int equipment_mouseInColumn( double y, double h, int n, double my )
+static int equipment_mouseInColumn( const PilotOutfitSlot *lst, double y, double h, double my )
 {
-   for (int i=0; i<n; i++) {
+   for (int i=0; i<array_size(lst); i++) {
+      /* Skip slots hat are empty and the player can't do anything about. */
+      if (lst[i].sslot->locked && (lst[i].outfit == NULL))
+         continue;
+
+      /* See if in position. */
       if ((my > y) && (my < y+h+20.))
          return i;
       y -= h+20.;
@@ -1001,7 +1015,7 @@ static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
       double mx, double my, double y, double h, PilotOutfitSlot* os,
       Pilot *p, int selected, CstSlotWidget *wgt )
 {
-   int ret = equipment_mouseInColumn( y, h, array_size(os), my );
+   int ret = equipment_mouseInColumn( os, y, h, my );
    if (ret < 0)
       return 0;
 
