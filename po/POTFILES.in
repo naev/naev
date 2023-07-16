@@ -2728,6 +2728,7 @@ dat/ai/soromid.lua
 dat/ai/stationary.lua
 dat/ai/thurion.lua
 dat/ai/trader.lua
+dat/ai/wild_ones.lua
 dat/ai/zalek.lua
 dat/autoequip.lua
 dat/autonav.lua
