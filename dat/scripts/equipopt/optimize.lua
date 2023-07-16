@@ -175,7 +175,7 @@ function optimize.goodness_default( o, p )
       end
    end
    -- Ewarfare attributes
-   local ew = 3*(1-os.ew_detect) + 3*(1-os.ew_hide)
+   local ew = 3*(1-1/os.ew_detect) + 3*(1-1/os.ew_hide)
    -- Custom weight
    local w = goodness_special[o.name] or 1
    local g = p.constant + w*(base + p.move*move + p.health*health + p.energy*energy + p.weap*weap + p.ew*ew)

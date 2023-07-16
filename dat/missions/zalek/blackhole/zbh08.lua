@@ -189,7 +189,7 @@ function enter ()
       local function spawn_drone( shipname, pos )
          local p = pilot.add( shipname, fevil, fuzz_pos(pos) )
          -- We are nice and make the drones easier to see for this mission
-         p:intrinsicSet( "ew_hide", -50 )
+         p:intrinsicSet( "ew_hide", 100 )
          return p
       end
 
