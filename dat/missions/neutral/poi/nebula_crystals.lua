@@ -36,23 +36,21 @@ return function ( mem )
          if var.peek( "poi_nebula_crystals" ) then
             vn.na(fmt.f(_("Once you gain access to the ship, a quick scan finds large amounts of nebula radiation. You approach the source and find a large cache of {cargo}. Given that there seems to be nothing else of interest on the ship, you fit as much as you can take and leave."),
                {cargo=cargo}))
-
-            add_crystals()
-         end
-
-         local sai = tut.vn_shipai()
-         vn.appear( sai, tut.shipai.transition )
-         sai(_([[Your ship AI materializes once you access the system.
+         else
+            local sai = tut.vn_shipai()
+            vn.appear( sai, tut.shipai.transition )
+            sai(_([[Your ship AI materializes once you access the system.
 "I am detecting a large amount of unknown radiation. It seems to be coming from the inside of this derelict. I am sending you a rough location."]]))
 
-         vn.na(fmt.f(_([[You scour the ship heading towards the location sent to you by {shipai}. Eventually you reach the cargo hold which seems to be glowing faintly. You carefully open the hatch and find what seem to be a small mountain of some sort of crystal.]]),
-            {shipai=tut.ainame()}))
+            vn.na(fmt.f(_([[You scour the ship heading towards the location sent to you by {shipai}. Eventually you reach the cargo hold which seems to be glowing faintly. You carefully open the hatch and find what seem to be a small mountain of some sort of crystal.]]),
+               {shipai=tut.ainame()}))
 
-         sai(_([["BEGINNING SCANNING… … … … …SCAN COMPLETE."
+            sai(_([["BEGINNING SCANNING… … … … …SCAN COMPLETE."
 "It seems like these crystals have a very similar signal to the Nebula. I would hypothesize that they are of Nebula origin. I would guess many individuals would want to get their hands on them. It should not be difficult to sell them if you are so inclined. I would recommend taking as many as possible"]]))
 
-         vn.na(fmt.f(_([[Heeding {shipai}'s advice, you load as many {cargo} as you can. You also perform a quick search of the rest of the ship and find nothing useful, other than the {cargo}.]]),
-            {shipai=tut.ainame(), cargo=cargo}))
+            vn.na(fmt.f(_([[Heeding {shipai}'s advice, you load as many {cargo} as you can. You also perform a quick search of the rest of the ship and find nothing useful, other than the {cargo}.]]),
+               {shipai=tut.ainame(), cargo=cargo}))
+         end
 
          add_crystals()
       end,
