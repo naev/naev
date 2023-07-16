@@ -2,6 +2,8 @@
 
 Campaign where the player does odd shady tasks for Rebina.
 
+TODO more missions and maybe some sort of closure or conclusion?
+
 ### Campaign Sheet
 
 * **Name:** Shadow
