@@ -43,7 +43,6 @@
   <cargo_mod>20</cargo_mod>
   <armour_mod>10</armour_mod>
   <cargo_inertia>-20</cargo_inertia>
-  <ew_hide>-10</ew_hide>
  </stats>
  <tags>
   <tag>standard</tag>

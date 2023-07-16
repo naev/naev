@@ -43,7 +43,7 @@
   <cargo_mod>30</cargo_mod>
   <armour_mod>20</armour_mod>
   <cargo_inertia>-20</cargo_inertia>
-  <ew_hide>-20</ew_hide>
+  <ew_hide>25</ew_hide>
  </stats>
  <tags>
   <tag>transport</tag>

@@ -54,7 +54,7 @@
  <stats>
   <turn_mod>-10</turn_mod>
   <armour_mod>-10</armour_mod>
-  <ew_hide>10</ew_hide>
+  <ew_hide>-10</ew_hide>
   <fbay_health>50</fbay_health>
   <fbay_damage>50</fbay_damage>
   <fbay_reload>-10</fbay_reload>

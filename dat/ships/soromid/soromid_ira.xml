@@ -55,7 +55,7 @@
   <turn_mod>5</turn_mod>
   <thrust_mod>5</thrust_mod>
   <armour_mod>-20</armour_mod>
-  <ew_hide>10</ew_hide>
+  <ew_hide>-10</ew_hide>
   <fwd_damage>10</fwd_damage>
   <tur_damage>-10</tur_damage>
  </stats>

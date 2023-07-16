@@ -52,7 +52,7 @@
   <launch_range>15</launch_range>
   <ammo_capacity>50</ammo_capacity>
   <cpu_mod>10</cpu_mod>
-  <ew_hide>30</ew_hide>
+  <ew_hide>-25</ew_hide>
   <nebu_absorb>15</nebu_absorb>
  </stats>
 </ship>

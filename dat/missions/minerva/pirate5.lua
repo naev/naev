@@ -253,7 +253,7 @@ function enter ()
       dc:setVisplayer(true)
       dc:setHilight(true)
       -- Controllers can't detect anything
-      dc:intrinsicSet( "ew_hide", -75 )
+      dc:intrinsicSet( "ew_hide", 300 )
       dc:intrinsicSet( "ew_detect", -1000 )
       -- Much more bulky than normal
       dc:intrinsicSet( "shield", 500 )
@@ -276,7 +276,7 @@ function enter ()
    local function spawn_drone( shipname, pos )
       local p = pilot.add( shipname, "Za'lek", fuzz_pos(pos) )
       -- We are nice and make the drones easier to see for this mission
-      p:intrinsicSet( "ew_hide", -50 )
+      p:intrinsicSet( "ew_hide", 100 )
       table.insert( all_ships, p )
       return p
    end

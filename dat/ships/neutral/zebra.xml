@@ -54,7 +54,7 @@
   <turn_mod>-20</turn_mod>
   <cargo_mod>40</cargo_mod>
   <cargo_inertia>-30</cargo_inertia>
-  <ew_hide>-20</ew_hide>
+  <ew_hide>25</ew_hide>
  </stats>
  <tags>
   <tag>standard</tag>

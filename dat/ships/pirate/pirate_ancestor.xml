@@ -41,7 +41,7 @@
   <cpu_mod>-25</cpu_mod>
   <speed_mod>5</speed_mod>
   <cargo_mod>15</cargo_mod>
-  <ew_hide>10</ew_hide>
+  <ew_hide>-10</ew_hide>
   <shield_mod>-10</shield_mod>
   <launch_rate>15</launch_rate>
   <launch_range>10</launch_range>

@@ -1783,7 +1783,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Time Constant:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Detected at:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Evasion:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Stealth:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Stealth at:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Absorption:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Shield:") );

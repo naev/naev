@@ -630,10 +630,10 @@ end
 function stealthheartbeat ()
    local pp = player.pilot()
    local dist= math.min ( pscavA:pos():dist(pp:pos()), pscavB:pos():dist(pp:pos()) )
-   if not pp:flags("stealth") and dist < 1000 / (1+pp:shipstat("ew_hide")/100) then
+   if not pp:flags("stealth") and dist < 1000 * pp:shipstat("ew_hide",true) then
       if mem.stealthfailing==nil then
          mem.stealthfailing = 0
-         player.msg( _("#rYou are about to be discovered!"), true )
+         player.msg( "#r".._("You are about to be discovered!"), true )
       end
       mem.stealthfailing = mem.stealthfailing+1
       if mem.stealthfailing > 6 then
@@ -643,14 +643,14 @@ function stealthheartbeat ()
             p:taskClear()
             p:hyperspace( cutscenesys )
          end
-         player.msg( _("#rYou have been detected! Stealth failed!"), true )
+         player.msg( "#r".._("You have been detected! Stealth failed!"), true )
          hook.rm( stealthbroadcasthook )
          return
       end
-   elseif dist > 2000 * (1+pp:shipstat("ew_detect")/100) then
+   elseif dist > 2000 * pp:shipstat("ew_detect",true) then
       if mem.stealthfailing==nil then
          mem.stealthfailing = 0
-         player.msg( _("#rYou are about to lose track of the scavengers!!"), true )
+         player.msg( "#r".._("You are about to lose track of the scavengers!!"), true )
       end
       mem.stealthfailing = mem.stealthfailing+1
       if mem.stealthfailing > 6 then
@@ -659,7 +659,7 @@ function stealthheartbeat ()
          if wreck ~= nil then
             wreck:rm()
          end
-         player.msg( _("#rYou lost track of the scavengers! Stealth failed!"), true )
+         player.msg( "#r".._("You lost track of the scavengers! Stealth failed!"), true )
          hook.rm( stealthbroadcasthook )
          return
       end

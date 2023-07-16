@@ -10,6 +10,6 @@
   <gfx_store>/gfx/misc/icons/chameleon-glyph.webp</gfx_store>
  </general>
  <specific type="modification">
-  <ew_hide>15</ew_hide>
+  <ew_hide>-15</ew_hide>
  </specific>
 </outfit>

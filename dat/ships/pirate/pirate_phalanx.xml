@@ -49,7 +49,7 @@
   <thrust_mod>-5</thrust_mod>
   <cargo_mod>15</cargo_mod>
   <energy_mod>10</energy_mod>
-  <ew_hide>10</ew_hide>
+  <ew_hide>-10</ew_hide>
   <launch_range>20</launch_range>
   <ammo_capacity>10</ammo_capacity>
  </stats>

@@ -11,7 +11,7 @@
   <limit>scrambler</limit>
  </general>
  <specific type="modification">
-  <ew_evade>5</ew_evade>
+  <ew_evade>-5</ew_evade>
   <jam_chance>25</jam_chance>
  </specific>
 </outfit>

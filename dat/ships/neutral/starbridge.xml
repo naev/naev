@@ -48,7 +48,7 @@
   <shield_mod>5</shield_mod>
   <speed_mod>5</speed_mod>
   <turn_mod>5</turn_mod>
-  <ew_hide>5</ew_hide>
+  <ew_hide>-5</ew_hide>
  </stats>
  <tags>
   <tag>standard</tag>

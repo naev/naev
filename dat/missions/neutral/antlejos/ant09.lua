@@ -251,7 +251,7 @@ function enter ()
    mothership:brake()
    mothership:setHostile(true)
    -- Can't detect anything
-   mothership:intrinsicSet( "ew_hide", -75 )
+   mothership:intrinsicSet( "ew_hide", 300 )
    mothership:intrinsicSet( "ew_detect", -1000 )
    -- Much more bulky than normal
    mothership:intrinsicSet( "shield", 500 )
