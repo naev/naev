@@ -4,7 +4,7 @@ local pirlib = require "ai.core.misc.pirate"
 local fmt = require "format"
 
 local taunt_list = {
-   _("Bruh!"),
+   _("Soul!"),
    _("Prepare to be blissed out by the Dreamers' cosmic vibes!"),
    _("Resistance is futile against the Dreamers' groovy onslaught!"),
    _("Your ship's about to be caught in our cosmic embrace, soul."),
