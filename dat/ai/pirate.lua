@@ -23,4 +23,12 @@ function create ()
 end
 
 hail = pirlib.hail
-taunt = pirlib.taunt
+
+function taunt( target, offense )
+   -- Only 50% of actually taunting.
+   if rnd.rnd(0,1) == 0 then
+      return
+   end
+
+   pirlib.taunt( target, offense )
+end

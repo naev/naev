@@ -1,16 +1,11 @@
 --[[
-   Pirate AI helper stuff
+   The now Glorious Pirate AI helper stuff
+
+   Common stuff that can likely be shared across pirate AIs.
 --]]
 local pirate = {}
 
 local fmt = require "format"
-
-local function join_tables( a, b )
-   for _k,v in ipairs(b) do
-      table.insert( a, v )
-   end
-   return a
-end
 
 local bribe_prompt_common = {
    _([["Pay up {credits} or it's the end of the line."]]),
@@ -20,7 +15,7 @@ local bribe_prompt_common = {
    _([["This is a toll road, pay up {credits} or die."]]),
    _([["So this is the part where you pay up or get shot up. Your choice. What'll be, {credits} or…"]]),
 }
-pirate.bribe_prompt_list = join_tables( {
+pirate.bribe_prompt_list = tmergei( {
    _([["It'll cost you {credits} for me to ignore your pile of rubbish."]]),
    _([["I'm in a good mood so I'll let you go for {credits}."]]),
    _([["Send me {credits} or you're dead."]]),
@@ -29,7 +24,7 @@ pirate.bribe_prompt_list = join_tables( {
    _([["If you're willing to negotiate I'll gladly take {credits} to not kill you."]]),
    _([["Pay up or don't. {credits} now just means I'll wait till later to collect the rest."]]),
 }, bribe_prompt_common )
-pirate.bribe_prompt_nearby_list = join_tables( {
+pirate.bribe_prompt_nearby_list = tmergei( {
    _([["It'll cost you {credits} for us to ignore your pile of rubbish."]]),
    _([["We're in a good mood so we'll let you go for {credits}."]]),
    _([["Send us {credits} or you're dead."]]),
@@ -116,7 +111,7 @@ pirate.taunt_list_defensive = {
    _("Ye'll need more than that to scratch me hull!"),
    _("Ye're about as threatening as a malfunctioning Za'lek drone!"),
 }
-local pir_formations = {
+pirate.formations = {
    "echelon_left",
    "echelon_right",
    "vee",
@@ -140,7 +135,7 @@ function pirate.create ()
    mem.ambushclose= 4000 + 1000 * ps:size()
    mem.enemyclose = mem.ambushclose
    mem.stealth    = p:flags("stealth") -- Follow however they were spawned
-   mem.formation  = pir_formations[ rnd.rnd(1,#pir_formations) ]
+   mem.formation  = pirate.formations[ rnd.rnd(1,#pirate.formations) ]
 end
 
 function pirate.playerWorth ()
@@ -164,6 +159,8 @@ function pirate.hailSetup ()
          mem.bribe_base = (150 * rnd.rnd() + 425) * p:ship():points() * math.max( 0.5, worth / 700e3 )
       end
       mem.bribe_rng = rnd.rnd()
+      mem.bribe_chance = 0.95
+      mem.refuel_standing = 60
       mem.hailsetup = true
    end
 end
@@ -185,14 +182,14 @@ function pirate.hail ()
    -- Deal with refueling
    local standing = p:faction():playerStanding()
    mem.refuel = mem.refuel_base
-   if standing > 60 then
+   if standing >= mem.refuel_standing then
       mem.refuel = mem.refuel * 0.5
    end
    mem.refuel_msg = fmt.f(_([["For you, only {credits} for a jump of fuel."]]), {credits=fmt.credits(mem.refuel)})
 
    -- Deal with bribeability
    mem.bribe = mem.bribe_base
-   if mem.allowbribe or (mem.natural and (mem.bribe_rng < 0.95 or mem.bribe_base < 50e3)) then
+   if mem.allowbribe or (mem.natural and (mem.bribe_rng <= mem.bribe_chance or mem.bribe_base < 50e3)) then
       mem.bribe_prompt = fmt.f(pirate.bribe_prompt_list[ rnd.rnd(1,#pirate.bribe_prompt_list) ], {credits=fmt.credits(mem.bribe)})
       mem.bribe_prompt_nearby = pirate.bribe_prompt_nearby_list[ rnd.rnd(1,#pirate.bribe_prompt_nearby_list) ]
       mem.bribe_paid = pirate.bribe_paid_list[ rnd.rnd(1,#pirate.bribe_paid_list) ]
@@ -202,11 +199,6 @@ function pirate.hail ()
 end
 
 function pirate.taunt( target, offense )
-   -- Only 50% of actually taunting.
-   if rnd.rnd(0,1) == 0 then
-      return
-   end
-
    -- some taunts
    local taunts
    if offense then
@@ -214,7 +206,6 @@ function pirate.taunt( target, offense )
    else
       taunts = pirate.taunt_list_defensive
    end
-
    ai.pilot():comm(target, taunts[ rnd.rnd(1,#taunts) ])
 end
 
