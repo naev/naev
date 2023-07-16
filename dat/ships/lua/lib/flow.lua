@@ -159,6 +159,17 @@ function flow.recalculate( p )
             has_amplifier = true
          end
       end
+
+      -- Get bonus from abilities to player
+      if p==player.pilot() then
+         local fam = 1
+         for k,o in ipairs(player.outfits()) do
+            if o:tags().flow_ability then
+               fam = fam + 0.05
+            end
+         end
+         fm = fm * fam
+      end
    end
    if has_amplifier then
       sm._flow_mod = fm
