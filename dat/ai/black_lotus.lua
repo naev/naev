@@ -28,6 +28,10 @@ function create ()
    create_pre()
    pirlib.create()
    create_post()
+
+   -- Decent money
+   local ps = ai.pilot():ship()
+   ai.setcredits( rnd.rnd(ps:price()/50, ps:price()/20) )
 end
 
 function hail ()
