@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faction name="Black Lotus">
- <ai>pirate</ai>
+ <ai>black_lotus</ai>
  <logo>blacklotus</logo>
  <longname>Black Lotus Pirate Clan</longname>
  <player>-20</player>

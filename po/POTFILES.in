@@ -2658,6 +2658,7 @@ dat/ai/baddie.lua
 dat/ai/baddie_norun.lua
 dat/ai/baddiepatrol.lua
 dat/ai/baddiepos.lua
+dat/ai/black_lotus.lua
 dat/ai/civilian.lua
 dat/ai/collective.lua
 dat/ai/collective_norun.lua
