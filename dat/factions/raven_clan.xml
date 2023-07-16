@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faction name="Raven Clan">
- <ai>pirate</ai>
+ <ai>raven_clan</ai>
  <logo>ravenclan</logo>
  <longname>Raven Pirate Clan</longname>
  <player>-20</player>

@@ -2722,6 +2722,7 @@ dat/ai/pirate_norun.lua
 dat/ai/player.lua
 dat/ai/proteron.lua
 dat/ai/proteron_dissident.lua
+dat/ai/raven_clan.lua
 dat/ai/scout.lua
 dat/ai/sirius.lua
 dat/ai/sirius_norun.lua
