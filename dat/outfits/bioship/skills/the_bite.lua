@@ -113,7 +113,7 @@ function descextra( p, o )
       if improved then
          dmg = dmg * 1.5
       end
-      dmg = fmt.number(dmg)
+      dmg = "#o"..fmt.number(dmg).."#0"
 
       if improved then
          return fmt.f(_("Makes the ship lunge for {duration} seconds at the target to take a bite out of it for {damage} damage ({mass}) [Strong Jaws]. On succesful bite, weapon damage is increased by 25% for 10 seconds [Blood Lust], and 25% of bitten armour is restored to the ship [Strong Jaws]."),
