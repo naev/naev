@@ -2689,6 +2689,7 @@ dat/ai/core/misc/lanes.lua
 dat/ai/core/misc/pirate.lua
 dat/ai/core/misc/scans.lua
 dat/ai/core/setup.lua
+dat/ai/dreamer_clan.lua
 dat/ai/drone_miner.lua
 dat/ai/dummy.lua
 dat/ai/dvaered.lua
