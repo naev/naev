@@ -138,7 +138,7 @@ function create ()
    create_pre()
 
    local p = ai.pilot()
-   local ps = ai.pilot():ship()
+   local ps = p:ship()
 
    -- Some pirates do kill
    if rnd.rnd() < 0.1 then
@@ -198,7 +198,7 @@ function hail ()
 
    -- Deal with bribeability
    mem.bribe = mem.bribe_base
-   if mem.allowbribe or (mem.natural and mem.bribe_rng < 0.95) then
+   if mem.allowbribe or (mem.natural and (mem.bribe_rng < 0.95 or mem.bribe_base < 50e3)) then
       mem.bribe_prompt = fmt.f(bribe_prompt_list[ rnd.rnd(1,#bribe_prompt_list) ], {credits=fmt.credits(mem.bribe)})
       mem.bribe_prompt_nearby = bribe_prompt_nearby_list[ rnd.rnd(1,#bribe_prompt_nearby_list) ]
       mem.bribe_paid = bribe_paid_list[ rnd.rnd(1,#bribe_paid_list) ]
