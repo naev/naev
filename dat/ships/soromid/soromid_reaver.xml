@@ -5,7 +5,6 @@
  <base_type>Reaver</base_type>
  <GFX size="68">reaver</GFX>
  <rarity>2</rarity>
- <GUI>slim</GUI>
  <sound>engine_soromid</sound>
  <class display="Bio-Fighter">Fighter</class>
  <price>670000</price>

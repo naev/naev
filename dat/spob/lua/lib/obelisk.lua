@@ -50,7 +50,7 @@ function obelisk.comm ()
       if canactivate then
          table.insert( opts, 1, {_("Activate"),"activate"} )
       else
-         table.insert( opts, 1, "#r"..{_("Activate"),"cant_activate"}.."#0" )
+         table.insert( opts, 1, {"#r".._("Activate").."#0","cant_activate"} )
       end
       return opts
    end )

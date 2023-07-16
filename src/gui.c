@@ -9,6 +9,8 @@
 /** @cond */
 #include <stdlib.h>
 
+#include "physfs.h"
+
 #include "naev.h"
 /** @endcond */
 
@@ -57,6 +59,7 @@
 #include "sound.h"
 #include "space.h"
 #include "spfx.h"
+#include "start.h"
 #include "toolkit.h"
 #include "unidiff.h"
 
@@ -1819,9 +1822,9 @@ void gui_setGeneric( const Pilot* pilot )
 /**
  * @brief Determines which GUI should be used.
  */
-char* gui_pick (void)
+const char* gui_pick (void)
 {
-   char* gui;
+   const char* gui;
 
    /* Don't do set a gui if player is dead. This can be triggered through
     * naev_resize and can cause an issue if player is dead. */
@@ -1830,8 +1833,20 @@ char* gui_pick (void)
    else if (player.gui != NULL)
       gui = player.gui;
    else
-      gui = player.p->ship->gui;
+      gui = start_gui();
    return gui;
+}
+
+/**
+ * @brief Checks to see if a GUI exists.
+ *
+ *    @return non-zero if filename exists. zero otherwise.
+ */
+int gui_exists( const char *name )
+{
+   char path[PATH_MAX];
+   snprintf( path, sizeof(path), GUI_PATH"%s.lua", name );
+   return PHYSFS_exists( path );
 }
 
 /**
@@ -1840,7 +1855,7 @@ char* gui_pick (void)
  *    @param name Name of the GUI to load.
  *    @return 0 on success.
  */
-int gui_load( const char* name )
+int gui_load( const char *name )
 {
    char *buf, path[PATH_MAX];
    size_t bufsize;
@@ -1865,6 +1880,12 @@ int gui_load( const char* name )
 
    /* Create Lua state. */
    gui_env = nlua_newEnv();
+   nlua_loadStandard( gui_env );
+   nlua_loadGFX( gui_env );
+   nlua_loadGUI( gui_env );
+   nlua_loadTk( gui_env );
+
+   /* Run script. */
    if (nlua_dobufenv( gui_env, buf, bufsize, path ) != 0) {
       WARN(_("Failed to load GUI Lua: %s\n"
             "%s\n"
@@ -1876,10 +1897,6 @@ int gui_load( const char* name )
       return -1;
    }
    free(buf);
-   nlua_loadStandard( gui_env );
-   nlua_loadGFX( gui_env );
-   nlua_loadGUI( gui_env );
-   nlua_loadTk( gui_env );
 
    /* Load references. */
 #define LUA_FUNC(funcname) gui_lua_##funcname = nlua_refenvtype( gui_env, #funcname, LUA_TFUNCTION );

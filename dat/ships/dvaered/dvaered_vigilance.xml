@@ -5,7 +5,6 @@
  <base_type>Vigilance</base_type>
  <GFX size="95" sx="10" sy="10">vigilance_dvaered</GFX>
  <rarity>2</rarity>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>2200000</price>

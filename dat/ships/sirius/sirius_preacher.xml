@@ -5,7 +5,6 @@
  <base_type>Preacher</base_type>
  <GFX size="70" sx="10" sy="10">preacher</GFX>
  <rarity>2</rarity>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Corvette</class>
  <price>1200000</price>

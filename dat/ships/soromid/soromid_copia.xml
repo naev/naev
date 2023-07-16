@@ -5,7 +5,6 @@
  <base_type>Copia</base_type>
  <GFX size="132" sx="12" sy="12">copia</GFX>
  <rarity>2</rarity>
- <GUI>slim</GUI>
  <sound>engine_soromid</sound>
  <class display="Bio-Freighter">Bulk Freighter</class>
  <price>5500000</price>

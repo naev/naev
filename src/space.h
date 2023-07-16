@@ -123,6 +123,8 @@ typedef struct Spob_ {
    char *gfx_spacePath;    /**< Name of the gfx_space for saving purposes. */
    char *gfx_exterior;     /**< Don't actually load the texture */
    char *gfx_exteriorPath; /**< Name of the gfx_exterior for saving purposes. */
+   char *gfx_comm;         /**< Name of the texture. */
+   char *gfx_commPath;     /**< Communication image path. */
 
    /* Misc. */
    char **tags;         /**< Spob tags. */
@@ -393,7 +395,7 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount );
  */
 void space_update( double dt, double real_dt );
 int space_isSimulation (void);
-int space_isSimulationEffects (void);
+int space_needsEffects (void);
 
 /*
  * Graphics.

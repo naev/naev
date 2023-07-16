@@ -4,7 +4,6 @@
  <base_type>Hippocrates</base_type>
  <GFX size="88" sx="10" sy="10">hippocrates</GFX>
  <rarity>3</rarity>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>1900000</price>

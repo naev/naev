@@ -2518,7 +2518,6 @@ void map_select( const StarSystem *sys, char shifted )
          if (array_size(map_path)==0) {
             player_hyperspacePreempt(0);
             player_targetHyperspaceSet( -1, 0 );
-            player_autonavAbortJump(NULL);
             autonav = 0;
          }
          else  {
@@ -2535,7 +2534,6 @@ void map_select( const StarSystem *sys, char shifted )
       }
       else { /* unreachable. */
          player_targetHyperspaceSet( -1, 0 );
-         player_autonavAbortJump(NULL);
          autonav = 0;
       }
    }

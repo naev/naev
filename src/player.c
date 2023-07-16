@@ -190,6 +190,9 @@ int player_init (void)
       player_outfits = array_create( PlayerOutfit_t );
    player_initSound();
    memset( &player, 0, sizeof(PlayerShip_t) );
+
+   player_autonavInit();
+
    return 0;
 }
 
@@ -481,9 +484,6 @@ static PlayerShip_t *player_newShipMake( const char *name )
 
    if (player.p == NULL)
       ERR(_("Something seriously wonky went on, newly created player does not exist, bailing!"));
-
-   /* Add GUI. */
-   player_guiAdd( player_ship->gui );
 
    /* money. */
    player.p->credits = player_creds;
@@ -1264,20 +1264,20 @@ void player_think( Pilot* pplayer, const double dt )
       player_rmFlag(PLAYER_SECONDARY_L);
    }
 
-   if (fired) {
-      player.autonav_timer = MAX( player.autonav_timer, 1. );
-      player_autonavResetSpeed();
+   if (fired)
+      player_autonavReset( 1 );
+
+   if (!player_isFlag(PLAYER_AUTONAV)) {
+      acc = player_acc;
+      /* Have to handle the case the player is doing reverse. This takes priority
+      * over normal accel. */
+      if (player_isFlag(PLAYER_REVERSE) && player.p->stats.misc_reverse_thrust
+            && !pilot_isFlag(player.p, PILOT_HYP_PREP)
+            && !pilot_isFlag(player.p, PILOT_HYPERSPACE) )
+         acc = -PILOT_REVERSE_THRUST;
+
+      pilot_setThrust( pplayer, acc );
    }
-
-   acc = player_acc;
-   /* Have to handle the case the player is doing reverse. This takes priority
-    * over normal accel. */
-   if (player_isFlag(PLAYER_REVERSE) && player.p->stats.misc_reverse_thrust
-         && !pilot_isFlag(player.p, PILOT_HYP_PREP)
-         && !pilot_isFlag(player.p, PILOT_HYPERSPACE) )
-      acc = -PILOT_REVERSE_THRUST;
-
-   pilot_setThrust( pplayer, acc );
 }
 
 /**
@@ -1478,9 +1478,7 @@ void player_targetSpobSet( int id )
    gui_forceBlink();
    gui_setNav();
 
-   if ((player.autonav == AUTONAV_SPOB_LAND_APPROACH) ||
-         (player.autonav == AUTONAV_SPOB_APPROACH) ||
-         (player.autonav == AUTONAV_SPOB_LAND_BRAKE))
+   if (player.autonav==AUTONAV_SPOB)
       player_autonavAbort(NULL);
 }
 
@@ -1801,8 +1799,7 @@ void player_targetHyperspaceSet( int id, int nomsg )
       player_soundPlayGUI(snd_nav,1);
    gui_setNav();
 
-   if (!nomsg && (old != id) && ((player.autonav == AUTONAV_JUMP_APPROACH) ||
-         (player.autonav == AUTONAV_JUMP_BRAKE)))
+   if (!nomsg && (old != id) && (player.autonav==AUTONAV_JUMP))
       player_autonavAbort(NULL);
 
    hooks_run( "target_hyperspace" );
@@ -1889,8 +1886,7 @@ void player_hailStart (void)
    player_message( _("#rReceiving hail! Press #b%s#0 to respond."), buf );
 
    /* Reset speed. */
-   player_autonavResetSpeed();
-   player.autonav_timer = MAX( player.autonav_timer, 10. );
+   player_autonavReset( 10. );
 }
 
 /**
@@ -1977,10 +1973,9 @@ int player_jump (void)
 void player_brokeHyperspace (void)
 {
    ntime_t t;
-   StarSystem *sys, *destsys;
+   StarSystem *sys;
    JumpPoint *jp;
    Pilot *const* pilot_stack;
-   int map_npath;
 
    /* First run jump hook. */
    hooks_run( "jumpout" );
@@ -2051,21 +2046,7 @@ void player_brokeHyperspace (void)
    }
 
    /* Disable autonavigation if arrived. */
-   if (player_isFlag(PLAYER_AUTONAV)) {
-      if (player.p->nav_hyperspace == -1) {
-         player_message( _("#oAutonav arrived at the %s system."), _(cur_system->name) );
-         player_autonavEnd();
-      }
-      else {
-         destsys = map_getDestination( &map_npath );
-         player_message( n_(
-                  "#oAutonav continuing until %s (%d jump left).",
-                  "#oAutonav continuing until %s (%d jumps left).",
-                  map_npath),
-               (sys_isKnown(destsys) ? _(destsys->name) : _("Unknown")),
-               map_npath );
-      }
-   }
+   player_autonavEnter();
 
    /* Safe since this is run in the player hook section. */
    hooks_run( "jumpin" );
@@ -2126,10 +2107,7 @@ void player_targetSet( unsigned int id )
    player.p->nav_anchor = -1;
 
    /* The player should not continue following if the target pilot has been changed. */
-   if ((old != id) && player_isFlag(PLAYER_AUTONAV) &&
-      (player.autonav == AUTONAV_PLT_FOLLOW ||
-         player.autonav == AUTONAV_PLT_BOARD_APPROACH ||
-         player.autonav == AUTONAV_PLT_BOARD_BRAKE))
+   if ((old != id) && player_isFlag(PLAYER_AUTONAV) && (player.autonav==AUTONAV_PILOT))
       player_autonavAbort(NULL);
 }
 
@@ -3198,7 +3176,7 @@ static int player_saveEscorts( xmlTextWriterPtr writer )
  */
 int player_save( xmlTextWriterPtr writer )
 {
-   char **guis;
+   const char **guis;
    int cycles, periods, seconds;
    double rem;
    const PlayerItem *inventory;
@@ -4252,9 +4230,6 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
       return -1;
    }
-
-   /* Add GUI if applicable. */
-   player_guiAdd( ship_parsed->gui );
 
    /* Create the ship. */
    ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), flags );

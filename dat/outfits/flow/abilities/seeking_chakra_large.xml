@@ -12,7 +12,7 @@
   <trackmin>0</trackmin>
   <trackmax>1000</trackmax>
   <ammo_mass>1</ammo_mass>
-  <gfx type="shader" size="30" col_size="28">particles/chakra.frag</gfx>
+  <gfx type="shader" size="25" col_size="20">particles/chakra.frag</gfx>
   <sound>missile</sound>
   <sound_hit>bansheeexp</sound_hit>
   <spfx_shield>ChakraM</spfx_shield>

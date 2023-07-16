@@ -5,7 +5,6 @@
  <base_type>Vox</base_type>
  <GFX sx="12" sy="12">vox</GFX>
  <rarity>2</rarity>
- <GUI>slim</GUI>
  <sound pitch="0.5">engine_soromid</sound>
  <class display="Bio-Battleship">Battleship</class>
  <price>23000000</price>

@@ -26,3 +26,5 @@ void ovr_mrkClear (void);
 unsigned int ovr_mrkAddPoint( const char *text, double x, double y );
 unsigned int ovr_mrkAddCircle( const char *text, double x, double y, double r );
 void ovr_mrkRm( unsigned int id );
+void ovr_autonavPos( double x, double y );
+void ovr_autonavClear (void);

@@ -89,6 +89,8 @@ static int pilotL_inrangeAsteroid( lua_State *L );
 static int pilotL_scandone( lua_State *L );
 static int pilotL_withPlayer( lua_State *L );
 static int pilotL_nav( lua_State *L );
+static int pilotL_navSpob( lua_State *L );
+static int pilotL_navJump( lua_State *L );
 static int pilotL_weapsetActive( lua_State *L );
 static int pilotL_weapset( lua_State *L );
 static int pilotL_weapsetType( lua_State *L );
@@ -112,6 +114,8 @@ static int pilotL_evasion( lua_State *L );
 static int pilotL_temp( lua_State *L );
 static int pilotL_mass( lua_State *L );
 static int pilotL_faction( lua_State *L );
+static int pilotL_areEnemies( lua_State *L );
+static int pilotL_areAllies( lua_State *L );
 static int pilotL_spaceworthy( lua_State *L );
 static int pilotL_setPosition( lua_State *L );
 static int pilotL_setVelocity( lua_State *L );
@@ -131,6 +135,7 @@ static int pilotL_setVisible( lua_State *L );
 static int pilotL_setHilight( lua_State *L );
 static int pilotL_setBribed( lua_State *L );
 static int pilotL_getColour( lua_State *L );
+static int pilotL_colourChar( lua_State *L );
 static int pilotL_getHostile( lua_State *L );
 static int pilotL_flags( lua_State *L );
 static int pilotL_hasIllegal( lua_State *L );
@@ -191,6 +196,7 @@ static int pilotL_credits( lua_State *L );
 static int pilotL_worth( lua_State *L );
 static int pilotL_ship( lua_State *L );
 static int pilotL_points( lua_State *L );
+static int pilotL_radius( lua_State *L );
 static int pilotL_idle( lua_State *L );
 static int pilotL_control( lua_State *L );
 static int pilotL_memory( lua_State *L );
@@ -212,6 +218,7 @@ static int pilotL_attack( lua_State *L );
 static int pilotL_board( lua_State *L );
 static int pilotL_runaway( lua_State *L );
 static int pilotL_gather( lua_State *L );
+static int pilotL_canHyperspace( lua_State *L );
 static int pilotL_hyperspace( lua_State *L );
 static int pilotL_stealth( lua_State *L );
 static int pilotL_tryStealth( lua_State *L );
@@ -260,6 +267,8 @@ static const luaL_Reg pilotL_methods[] = {
    { "scandone", pilotL_scandone },
    { "withPlayer", pilotL_withPlayer },
    { "nav", pilotL_nav },
+   { "navSpob", pilotL_navSpob },
+   { "navJump", pilotL_navJump },
    { "weapsetActive", pilotL_weapsetActive },
    { "weapset", pilotL_weapset },
    { "weapsetType", pilotL_weapsetType },
@@ -284,6 +293,8 @@ static const luaL_Reg pilotL_methods[] = {
    { "mass", pilotL_mass },
    { "cooldown", pilotL_cooldown },
    { "faction", pilotL_faction },
+   { "areEnemies", pilotL_areEnemies },
+   { "areAllies", pilotL_areAllies },
    { "spaceworthy", pilotL_spaceworthy },
    { "health", pilotL_getHealth },
    { "armour", pilotL_getArmour },
@@ -294,6 +305,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "shipstat", pilotL_getShipStat },
    { "detectedDistance", pilotL_getDetectedDistance },
    { "colour", pilotL_getColour },
+   { "colourChar", pilotL_colourChar },
    { "hostile", pilotL_getHostile },
    { "flags", pilotL_flags },
    { "hasIllegal", pilotL_hasIllegal },
@@ -362,6 +374,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "effectGet", pilotL_effectGet },
    /* Ship. */
    { "ship", pilotL_ship },
+   { "radius", pilotL_radius },
    { "points", pilotL_points },
    /* Cargo and moolah. */
    { "cargoFree", pilotL_cargoFree },
@@ -394,6 +407,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "board", pilotL_board },
    { "runaway", pilotL_runaway },
    { "gather", pilotL_gather },
+   { "canHyperspace", pilotL_canHyperspace },
    { "hyperspace", pilotL_hyperspace },
    { "stealth", pilotL_stealth },
    { "tryStealth", pilotL_tryStealth },
@@ -1516,8 +1530,6 @@ static int pilotL_withPlayer( lua_State *L )
 /**
  * @brief Gets the nav target of the pilot.
  *
- * This will only terminate when the target following pilot disappears (land, death, jump, etc...).
- *
  * @usage spob, hyperspace = p:nav()
  *
  *    @luatparam Pilot p Pilot to get nav info of.
@@ -1527,11 +1539,7 @@ static int pilotL_withPlayer( lua_State *L )
  */
 static int pilotL_nav( lua_State *L )
 {
-   LuaSystem ls;
-   Pilot *p;
-
-   /* Get pilot. */
-   p = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
    if (p->target == 0)
       return 0;
 
@@ -1545,11 +1553,59 @@ static int pilotL_nav( lua_State *L )
    if (p->nav_hyperspace < 0)
       lua_pushnil(L);
    else {
-      ls = cur_system->jumps[ p->nav_hyperspace ].targetid;
+      LuaSystem ls = cur_system->jumps[ p->nav_hyperspace ].targetid;
       lua_pushsystem( L, ls );
    }
 
    return 2;
+}
+
+/**
+ * @brief Gets the nav spob target of the pilot.
+ *
+ *    @luatparam Pilot p Pilot to get nav info of.
+ *    @luatreturn Spob|nil The pilot's spob target.
+ * @luafunc navSpob
+ */
+static int pilotL_navSpob( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   if (p->target == 0)
+      return 0;
+
+   /* Get spob target. */
+   if (p->nav_spob < 0)
+      lua_pushnil(L);
+   else
+      lua_pushspob( L, cur_system->spobs[ p->nav_spob ]->id );
+
+   return 1;
+}
+
+/**
+ * @brief Gets the nav jump target of the pilot.
+ *
+ *    @luatparam Pilot p Pilot to get nav info of.
+ *    @luatreturn Jump|nil The pilot's hyperspace target.
+ * @luafunc navJump
+ */
+static int pilotL_navJump( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   if (p->target == 0)
+      return 0;
+
+   /* Get hyperspace target. */
+   if (p->nav_hyperspace < 0)
+      lua_pushnil(L);
+   else {
+      LuaJump lj;
+      lj.srcid = cur_system->id;
+      lj.destid = cur_system->jumps[ p->nav_hyperspace ].targetid;
+      lua_pushjump( L, lj );
+   }
+
+   return 1;
 }
 
 /**
@@ -2553,6 +2609,38 @@ static int pilotL_faction( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
    lua_pushfaction(L,p->faction);
+   return 1;
+}
+
+/**
+ * @brief Checks to see if two pilots are enemies.
+ *
+ *    @luatparam Pilot p Pilot to check.
+ *    @luatparam Pilot t Target pilot to check.
+ *    @luatreturn boolean true if both p and t are enemies, false otherwise.
+ * @luafunc areEnemies
+ */
+static int pilotL_areEnemies( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   Pilot *t = luaL_validpilot(L,2);
+   lua_pushboolean(L,pilot_areEnemies(p,t));
+   return 1;
+}
+
+/**
+ * @brief Checks to see if two pilots are allies.
+ *
+ *    @luatparam Pilot p Pilot to check.
+ *    @luatparam Pilot t Target pilot to check.
+ *    @luatreturn boolean true if both p and t are allies, false otherwise.
+ * @luafunc areAllies
+ */
+static int pilotL_areAllies( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   Pilot *t = luaL_validpilot(L,2);
+   lua_pushboolean(L,pilot_areAllies(p,t));
    return 1;
 }
 
@@ -4675,6 +4763,23 @@ static int pilotL_getColour( lua_State *L )
 }
 
 /**
+ * @brief Gets the pilot's colour character based on hostility or friendliness to the player. For use with functions that print to the screen.
+ *
+ *    @luatparam Pilot p Pilot to get the colour of.
+ *    @luatreturn string Character representing the pilot's colour for use with specila printing characters.
+ * @luafunc colour
+ */
+static int pilotL_colourChar( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   char str[2];
+   str[0] = pilot_getFactionColourChar( p );
+   str[1] = '\0';
+   lua_pushstring(L,str);
+   return 1;
+}
+
+/**
  * @brief Returns whether the pilot is hostile to the player.
  *
  * @usage p:hostile()
@@ -4813,6 +4918,20 @@ static int pilotL_ship( lua_State *L )
 {
    Pilot *p  = luaL_validpilot(L,1);
    lua_pushship(L, p->ship);
+   return 1;
+}
+
+/**
+ * @brief Gets the rough radius of the ship, useful for collision stuff.
+ *
+ *    @luatparam Pilot p Pilot to get radius of.
+ *    @luatreturn number THe radius of the pilot.
+ * @luafunc radius
+ */
+static int pilotL_radius( lua_State *L )
+{
+   Pilot *p  = luaL_validpilot(L,1);
+   lua_pushnumber(L, PILOT_SIZE_APPROX * 0.5 * (p->ship->gfx_space->sw+p->ship->gfx_space->sh));
    return 1;
 }
 
@@ -5471,6 +5590,20 @@ static int pilotL_gather( lua_State *L )
    t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
 
    return 0;
+}
+
+/**
+ * @brief Checks to see if the pilot can currently hyperspace (as in has target jump and is in range).
+ *
+ *    @luatparam Pilot p Pilot to check if they can hyperspace.
+ *    @luatreturn boolean Whether or not the pilot can hyperspace.
+ * @luafunc canHyperspace
+ */
+static int pilotL_canHyperspace( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   lua_pushboolean(L, space_canHyperspace(p));
+   return 1;
 }
 
 /**

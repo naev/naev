@@ -5,7 +5,6 @@
  <base_type>Apprehension</base_type>
  <GFX size="90" sx="12" sy="12">apprehension</GFX>
  <rarity>3</rarity>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>2300000</price>

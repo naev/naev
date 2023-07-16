@@ -4,7 +4,6 @@
  <points>26</points>
  <base_type>Za'lek Light Drone</base_type>
  <GFX size="40">zalek_drone_light</GFX>
- <GUI>slim</GUI>
  <sound>engine_zalek</sound>
  <class display="Robotic Interceptor">Interceptor</class>
  <price>90000</price>

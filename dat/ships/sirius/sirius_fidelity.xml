@@ -5,7 +5,6 @@
  <base_type>Fidelity</base_type>
  <GFX size="60">fidelity</GFX>
  <rarity>2</rarity>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Interceptor</class>
  <price>320000</price>

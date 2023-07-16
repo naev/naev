@@ -423,8 +423,6 @@ void pilot_updateDisable( Pilot* p, unsigned int shooter );
 void pilot_explode( double x, double y, double radius, const Damage *dmg, const Pilot *parent );
 double pilot_face( Pilot* p, const double dir );
 int pilot_brake( Pilot* p );
-double pilot_brakeDist( Pilot *p, vec2 *pos );
-int pilot_interceptPos( Pilot *p, double x, double y );
 void pilot_cooldown( Pilot *p, int dochecks );
 void pilot_cooldownEnd( Pilot *p, const char *reason );
 double pilot_aimAngle( Pilot *p, const vec2* pos, const vec2* vel );
@@ -442,12 +440,12 @@ int pilot_numOutfit( const Pilot *p, const Outfit *o );
 void pilot_dpseps( const Pilot *p, double *pdps, double *peps );
 
 /* Misc. */
-int pilot_hasCredits( Pilot *p, credits_t amount );
+int pilot_hasCredits( const Pilot *p, credits_t amount );
 credits_t pilot_modCredits( Pilot *p, credits_t amount );
 int pilot_refuelStart( Pilot *p );
 void pilot_hyperspaceAbort( Pilot* p );
 void pilot_clearTimers( Pilot *pilot );
-int pilot_hasDeployed( Pilot *p );
+int pilot_hasDeployed( const Pilot *p );
 int pilot_dock( Pilot *p, Pilot *target );
 ntime_t pilot_hyperspaceDelay( Pilot *p );
 void pilot_untargetAsteroid( int anchor, int asteroid );

@@ -41,9 +41,6 @@
 #define BUTTON_WIDTH    135 /**< Button width, standard across menus. */
 #define BUTTON_HEIGHT   30 /**< Button height, standard across menus. */
 
-#define SETGUI_WIDTH    400 /**< GUI selection window width. */
-#define SETGUI_HEIGHT   300 /**< GUI selection window height. */
-
 #define menu_Open(f)    (menu_open |= (f)) /**< Marks a menu as opened. */
 #define menu_Close(f)   (menu_open &= ~(f)) /**< Marks a menu as closed. */
 
@@ -105,8 +102,6 @@ static int logWidgetsReady=0;
 /* information menu */
 static void info_close( unsigned int wid, const char *str );
 static void info_openMain( unsigned int wid );
-static void info_setGui( unsigned int wid, const char *str );
-static void setgui_load( unsigned int wdw, const char *str );
 static void info_openShip( unsigned int wid );
 static void info_openWeapons( unsigned int wid );
 static void info_openCargo( unsigned int wid );
@@ -165,11 +160,11 @@ static void info_buttonRegen (void)
    wid = info_windows[ INFO_WIN_MAIN ];
    window_dimWindow( wid, &w, &h );
    cols = (w-20) / (20+BUTTON_WIDTH);
-   rows = 1 + (array_size(info_buttons) + 1) / cols;
+   rows = 1 + (array_size(info_buttons)) / cols;
 
    for (int i=0; i<array_size(info_buttons); i++) {
       InfoButton_t *btn = &info_buttons[i];
-      int r = (i+2)/cols, c = (i+2)%cols;
+      int r = (i+1)/cols, c = (i+1)%cols;
       if (widget_exists( wid, btn->button ))
          window_destroyWidget( wid, btn->button );
       window_addButtonKey( wid, -20 - c*(20+BUTTON_WIDTH), 20 + r*(20+BUTTON_HEIGHT),
@@ -426,9 +421,6 @@ static void info_openMain( unsigned int wid )
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", _("Close"), info_close );
-   window_addButtonKey( wid, -20-(20+BUTTON_WIDTH), 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnSetGUI", _("Set GUI"), info_setGui, SDLK_g );
 
    /* TODO probably add alt text with descriptions. */
    lic = player_getLicenses();
@@ -463,93 +455,6 @@ static void info_openMain( unsigned int wid )
    window_setFocus( wid, "lstInventory" );
 
    info_buttonRegen();
-}
-
-/**
- * @brief Closes the GUI selection menu.
- *
- *    @param wdw Window triggering function.
- *    @param str Unused.
- */
-static void setgui_close( unsigned int wdw, const char *str )
-{
-   (void) str;
-   window_destroy( wdw );
-}
-
-/**
- * @brief Allows the player to set a different GUI.
- *
- *    @param wid Window id.
- *    @param name of widget.
- */
-static void info_setGui( unsigned int wid, const char *str )
-{
-   (void) str;
-   char **guis;
-   int nguis;
-   char **gui_copy;
-
-   /* Get the available GUIs. */
-   guis = player_guiList();
-   nguis = array_size( guis );
-
-   /* In case there are none. */
-   if (guis == NULL) {
-      WARN(_("No GUI available."));
-      dialogue_alert( _("There are no GUI available, this means something went wrong somewhere. Inform the Naev maintainer.") );
-      return;
-   }
-
-   /* window */
-   wid = window_create( "wdwSetGUI", _("Select GUI"), -1, -1, SETGUI_WIDTH, SETGUI_HEIGHT );
-   window_setCancel( wid, setgui_close );
-
-   /* Copy GUI. */
-   gui_copy = malloc( sizeof(char*) * nguis );
-   for (int i=0; i<nguis; i++)
-      gui_copy[i] = strdup( guis[i] );
-
-   /* List */
-   window_addList( wid, 20, -50,
-         SETGUI_WIDTH-BUTTON_WIDTH/2 - 60, SETGUI_HEIGHT-70,
-         "lstGUI", gui_copy, nguis, 0, NULL, NULL );
-   toolkit_setList( wid, "lstGUI", gui_pick() );
-
-   /* buttons */
-   window_addButton( wid, -20, 20, BUTTON_WIDTH/2, BUTTON_HEIGHT,
-         "btnBack", _("Close"), setgui_close );
-   window_addButton( wid, -20, 30 + BUTTON_HEIGHT, BUTTON_WIDTH/2, BUTTON_HEIGHT,
-         "btnLoad", _("Load"), setgui_load );
-
-   /* default action */
-   window_setAccept( wid, setgui_load );
-}
-
-/**
- * @brief Loads a GUI.
- *
- *    @param wdw Window triggering function.
- *    @param str Unused.
- */
-static void setgui_load( unsigned int wdw, const char *str )
-{
-   (void) str;
-   int wid = window_get( "wdwSetGUI" );
-   const char *gui = toolkit_getList( wid, "lstGUI" );
-
-   if (strcmp(gui,_("None")) == 0)
-      return;
-
-   /* Set the GUI. */
-   free( player.gui );
-   player.gui = strdup( gui );
-
-   /* Close menus before loading for proper rendering. */
-   setgui_close(wdw, NULL);
-
-   /* Load the GUI. */
-   gui_load( gui_pick() );
 }
 
 /**

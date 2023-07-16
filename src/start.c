@@ -28,6 +28,7 @@ typedef struct ndata_start_s {
    char *ship;       /**< Default starting ship model. */
    char *shipname;   /**< Default starting ship name. */
    char *acquired;   /**< How the player acquired their first ship. */
+   char *gui;        /**< Starting GUI. */
    unsigned int credits; /**< Starting credits. */
    ntime_t date;     /**< Starting date. */
    char *system;     /**< Starting system. */
@@ -83,6 +84,7 @@ int start_load (void)
             xmlr_strd( cur, "mission", start_data.mission );
             xmlr_strd( cur, "event",   start_data.event );
             xmlr_strd( cur, "chapter", start_data.chapter );
+            xmlr_strd( cur, "gui", start_data.gui );
 
             if (xml_isNode(cur,"ship")) {
                xmlr_attr_strd( cur, "name", start_data.shipname );
@@ -133,6 +135,8 @@ int start_load (void)
    MELEMENT( start_data.name==NULL, "name" );
    MELEMENT( start_data.credits==0, "credits" );
    MELEMENT( start_data.ship==NULL, "ship" );
+   MELEMENT( start_data.gui==NULL, "gui" );
+   MELEMENT( start_data.acquired==NULL, "acquired" );
    MELEMENT( start_data.system==NULL, "player system" );
    MELEMENT( start_data.chapter==NULL, "chapter" );
    MELEMENT( !date_set, "date" );
@@ -149,6 +153,7 @@ void start_cleanup (void)
    free( start_data.name );
    free( start_data.shipname );
    free( start_data.acquired );
+   free( start_data.gui );
    free( start_data.ship );
    free( start_data.system );
    free( start_data.mission );
@@ -192,6 +197,15 @@ const char* start_shipname (void)
 const char* start_acquired (void)
 {
    return start_data.acquired;
+}
+
+/**
+ * @brief Gets the module's starting ship was acquired.
+ *    @return The default GUI of the player.
+ */
+const char* start_gui (void)
+{
+   return start_data.gui;
 }
 
 /**

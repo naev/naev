@@ -94,6 +94,7 @@ function create ()
          func = function ()
             derelict_msg(_("Lucky find!"), _([[The derelict appears deserted, with almost everything of value long gone. As you explore the ship you suddenly pick up a back-up fuel tank hidden in the walls. The fuel is in a good state and you siphon it off to fill your ship's fuel tanks. Talk about good timing.]]), fmt.f(_([[Just as you were running out of fuel you found a derelict with some to spare in {sys}, what good fortune!]]), {sys=system.cur()}))
             pp:setFuel( true )
+            return true
          end
       }
    end

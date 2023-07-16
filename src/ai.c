@@ -166,12 +166,14 @@ static int aiL_scandone( lua_State *L );
 /* movement */
 static int aiL_accel( lua_State *L ); /* accel(number); number <= 1. */
 static int aiL_turn( lua_State *L ); /* turn(number); abs(number) <= 1. */
-static int aiL_face( lua_State *L ); /* face( number/pointer, bool) */
 static int aiL_careful_face( lua_State *L ); /* face( number/pointer, bool) */
 static int aiL_aim( lua_State *L ); /* aim(number) */
-static int aiL_iface( lua_State *L ); /* iface(number/pointer) */
 static int aiL_dir( lua_State *L ); /* dir(number/pointer) */
+static int aiL_face( lua_State *L ); /* face( number/pointer, bool) */
+static int aiL_iface( lua_State *L ); /* iface(number/pointer) */
 static int aiL_idir( lua_State *L ); /* idir(number/pointer) */
+static int aiL_follow_accurate( lua_State *L ); /* follow_accurate() */
+static int aiL_face_accurate( lua_State *L ); /* face_accurate() */
 static int aiL_drift_facing( lua_State *L ); /* drift_facing(number/pointer) */
 static int aiL_brake( lua_State *L ); /* brake() */
 static int aiL_getnearestspob( lua_State *L ); /* Vec2 getnearestspob() */
@@ -181,14 +183,13 @@ static int aiL_getlandspob( lua_State *L ); /* Vec2 getlandspob() */
 static int aiL_land( lua_State *L ); /* bool land() */
 static int aiL_stop( lua_State *L ); /* stop() */
 static int aiL_relvel( lua_State *L ); /* relvel( number ) */
-static int aiL_follow_accurate( lua_State *L ); /* follow_accurate() */
-static int aiL_face_accurate( lua_State *L ); /* face_accurate() */
 
 /* Hyperspace. */
 static int aiL_sethyptarget( lua_State *L );
 static int aiL_nearhyptarget( lua_State *L ); /* pointer rndhyptarget() */
 static int aiL_rndhyptarget( lua_State *L ); /* pointer rndhyptarget() */
 static int aiL_hyperspace( lua_State *L ); /* [number] hyperspace() */
+static int aiL_canHyperspace( lua_State *L );
 
 /* escorts */
 static int aiL_dock( lua_State *L ); /* dock( number ) */
@@ -288,6 +289,7 @@ static const luaL_Reg aiL_methods[] = {
    { "nearhyptarget", aiL_nearhyptarget },
    { "rndhyptarget", aiL_rndhyptarget },
    { "hyperspace", aiL_hyperspace },
+   { "canHyperspace", aiL_canHyperspace },
    { "dock", aiL_dock },
    /* combat */
    { "aim", aiL_aim },
@@ -424,6 +426,43 @@ void ai_unsetPilot( int oldmem )
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, oldmem );
    nlua_setenv( naevL, env, "mem"); /* pm */
    luaL_unref( naevL, LUA_REGISTRYINDEX, oldmem );
+}
+
+/**
+ * @brief Sets up the pilot for thinking.
+ */
+void ai_thinkSetup (void)
+{
+   /* Clean up some variables */
+   pilot_acc         = 0.;
+   pilot_turn        = 0.;
+   pilot_flags       = 0;
+}
+
+/**
+ * @brief Applies the result of thinking.
+ *
+ *    @param p Pilot to apply to.
+ */
+void ai_thinkApply( Pilot *p )
+{
+   /* Make sure pilot_acc and pilot_turn are legal */
+   pilot_acc   = CLAMP( -1., 1., pilot_acc );
+   pilot_turn  = CLAMP( -1., 1., pilot_turn );
+
+   /* Set turn and thrust. */
+   pilot_setTurn( p, pilot_turn );
+   pilot_setThrust( p, pilot_acc );
+
+   /* fire weapons if needed */
+   if (ai_isFlag(AI_PRIMARY))
+      pilot_shoot(p, 0); /* primary */
+   if (ai_isFlag(AI_SECONDARY))
+      pilot_shoot(p, 1 ); /* secondary */
+
+   /* other behaviours. */
+   if (ai_isFlag(AI_DISTRESS))
+      pilot_distress(p, NULL, aiL_distressmsg);
 }
 
 /**
@@ -620,6 +659,12 @@ static int ai_loadEquip (void)
    return 0;
 }
 
+int nlua_loadAI( nlua_env env )
+{
+   nlua_register(env, "ai", aiL_methods, 0);
+   return 0;
+}
+
 /**
  * @brief Initializes an AI_Profile and adds it to the stack.
  *
@@ -748,10 +793,7 @@ void ai_think( Pilot* pilot, const double dt )
    oldmem = ai_setPilot(pilot);
    env = cur_pilot->ai->env; /* set the AI profile to the current pilot's */
 
-   /* Clean up some variables */
-   pilot_acc         = 0;
-   pilot_turn        = 0.;
-   pilot_flags       = 0;
+   ai_thinkSetup();
    /* So the way this works is that, for other than the player, we reset all
     * the weapon sets every frame, so that the AI has to redo them over and
     * over. Now, this is a horrible hack so shit works and needs a proper fix.
@@ -816,23 +858,8 @@ void ai_think( Pilot* pilot, const double dt )
       }
    }
 
-   /* make sure pilot_acc and pilot_turn are legal */
-   pilot_acc   = CLAMP( -1., 1., pilot_acc );
-   pilot_turn  = CLAMP( -1., 1., pilot_turn );
-
-   /* Set turn and thrust. */
-   pilot_setTurn( cur_pilot, pilot_turn );
-   pilot_setThrust( cur_pilot, pilot_acc );
-
-   /* fire weapons if needed */
-   if (ai_isFlag(AI_PRIMARY))
-      pilot_shoot(cur_pilot, 0); /* primary */
-   if (ai_isFlag(AI_SECONDARY))
-      pilot_shoot(cur_pilot, 1 ); /* secondary */
-
-   /* other behaviours. */
-   if (ai_isFlag(AI_DISTRESS))
-      pilot_distress(cur_pilot, NULL, aiL_distressmsg);
+   /* Applies local variables to the pilot. */
+   ai_thinkApply( cur_pilot );
 
    /* Restore memory. */
    ai_unsetPilot( oldmem );
@@ -1434,14 +1461,14 @@ static int aiL_getnearestpilot( lua_State *L )
  */
 static int aiL_getdistance( lua_State *L )
 {
-   vec2 *v;
+   const vec2 *v;
 
    /* vector as a parameter */
    if (lua_isvector(L,1))
       v = lua_tovector(L,1);
    /* pilot as parameter */
    else if (lua_ispilot(L,1)) {
-      Pilot *p = luaL_validpilot(L,1);
+      const Pilot *p = luaL_validpilot(L,1);
       v = &p->solid.pos;
    }
    /* wrong parameter */
@@ -1461,14 +1488,14 @@ static int aiL_getdistance( lua_State *L )
  */
 static int aiL_getdistance2( lua_State *L )
 {
-   vec2 *v;
+   const vec2 *v;
 
    /* vector as a parameter */
    if (lua_isvector(L,1))
       v = lua_tovector(L,1);
    /* pilot as parameter */
    else if (lua_ispilot(L,1)) {
-      Pilot *p = luaL_validpilot(L,1);
+      const Pilot *p = luaL_validpilot(L,1);
       v = &p->solid.pos;
    }
    /* wrong parameter */
@@ -1488,7 +1515,7 @@ static int aiL_getdistance2( lua_State *L )
  */
 static int aiL_getflybydistance( lua_State *L )
 {
-   vec2 *v;
+   const vec2 *v;
    vec2 perp_motion_unit, offset_vect;
    int offset_distance;
 
@@ -1497,7 +1524,7 @@ static int aiL_getflybydistance( lua_State *L )
       v = lua_tovector(L,1);
    /* pilot id as parameter */
    else if (lua_ispilot(L,1)) {
-      Pilot *p = luaL_validpilot(L,1);
+      const Pilot *p = luaL_validpilot(L,1);
       v = &p->solid.pos;
 
       /*vec2_cset(&v, VX(pilot->solid.pos) - VX(cur_pilot->solid.pos), VY(pilot->solid.pos) - VY(cur_pilot->solid.pos) );*/
@@ -1533,7 +1560,7 @@ static int aiL_minbrakedist( lua_State *L )
 
    /* More complicated calculation based on relative velocity. */
    if (lua_gettop(L) > 0) {
-      Pilot *p = luaL_validpilot(L,1);
+      const Pilot *p = luaL_validpilot(L,1);
 
       /* Set up the vectors. */
       vec2_cset( &vv, p->solid.vel.x - cur_pilot->solid.vel.x,
@@ -1574,7 +1601,7 @@ static int aiL_minbrakedist( lua_State *L )
  */
 static int aiL_isbribed( lua_State *L )
 {
-   Pilot *p = luaL_validpilot(L,1);
+   const Pilot *p = luaL_validpilot(L,1);
    lua_pushboolean(L, pilot_isWithPlayer(p) && pilot_isFlag(cur_pilot, PILOT_BRIBED));
    return 1;
 }
@@ -1626,7 +1653,7 @@ static int aiL_isstopped( lua_State *L )
  */
 static int aiL_isenemy( lua_State *L )
 {
-   Pilot *p = luaL_validpilot(L,1);
+   const Pilot *p = luaL_validpilot(L,1);
 
    /* Player needs special handling in case of hostility. */
    if (pilot_isWithPlayer(p)) {
@@ -1648,7 +1675,7 @@ static int aiL_isenemy( lua_State *L )
  */
 static int aiL_isally( lua_State *L )
 {
-   Pilot *p = luaL_validpilot(L,1);
+   const Pilot *p = luaL_validpilot(L,1);
 
    /* Player needs special handling in case of friendliness. */
    if (pilot_isWithPlayer(p)) {
@@ -1740,7 +1767,7 @@ static int aiL_turn( lua_State *L )
  */
 static int aiL_face( lua_State *L )
 {
-   vec2 *tv; /* get the position to face */
+   const vec2 *tv; /* get the position to face */
    double k_diff, k_vel, diff, vx, vy, dx, dy;
    int vel;
 
@@ -1834,10 +1861,8 @@ static int aiL_careful_face( lua_State *L )
 {
    vec2 *tv, F, F1;
    Pilot* p;
-   Pilot *p_i;
    double k_diff, k_goal, k_enemy, k_mult,
-          d, diff, dist, factor;
-   int i;
+          d, diff, dist;
    Pilot *const* pilot_stack;
 
    /* Init some variables */
@@ -1870,28 +1895,34 @@ static int aiL_careful_face( lua_State *L )
    /* Init the force */
    vec2_cset( &F, 0., 0.) ;
    vec2_cset( &F1, tv->x - cur_pilot->solid.pos.x, tv->y - cur_pilot->solid.pos.y) ;
-   dist = VMOD(F1) + 0.1; /* Avoid / 0*/
+   dist = VMOD(F1) + 0.1; /* Avoid / 0 */
    vec2_cset( &F1, F1.x * k_goal / dist, F1.y * k_goal / dist) ;
 
    /* Cycle through all the pilots in order to compute the force */
-   for (i=0; i<array_size(pilot_stack); i++) {
-      p_i = pilot_stack[i];
+   /* TODO probably limit the range we check using quadtrees. */
+   for (int i=0; i<array_size(pilot_stack); i++) {
+      const Pilot *p_i = pilot_stack[i];
 
       /* Valid pilot isn't self, is in range, isn't the target and isn't disabled */
-      if (pilot_isDisabled(p_i) ) continue;
-      if (p_i->id == cur_pilot->id) continue;
-      if (p_i->id == p->id) continue;
-      if (pilot_inRangePilot(cur_pilot, p_i, NULL) != 1) continue;
+      if (pilot_isDisabled(p_i) )
+         continue;
+      if (p_i->id == cur_pilot->id)
+         continue;
+      if (p_i->id == p->id)
+         continue;
+      if (pilot_inRangePilot(cur_pilot, p_i, NULL) != 1)
+         continue;
 
       /* If the enemy is too close, ignore it*/
       dist = vec2_dist(&p_i->solid.pos, &cur_pilot->solid.pos);
-      if (dist < 750) continue;
+      if (dist < 750.)
+         continue;
 
       k_mult = pilot_relhp( p_i, cur_pilot ) * pilot_reldps( p_i, cur_pilot );
 
       /* Check if friendly or not */
       if (areEnemies(cur_pilot->faction, p_i->faction)) {
-         factor = k_enemy * k_mult / (dist*dist*dist);
+         double factor = k_enemy * k_mult / (dist*dist*dist);
          vec2_cset( &F, F.x + factor * (cur_pilot->solid.pos.x - p_i->solid.pos.x),
                 F.y + factor * (cur_pilot->solid.pos.y - p_i->solid.pos.y) );
       }
@@ -1924,11 +1955,11 @@ static int aiL_aim( lua_State *L )
    double diff, mod, angle;
 
    if (lua_isasteroid(L,1)) {
-      Asteroid *a = luaL_validasteroid(L,1);
+      const Asteroid *a = luaL_validasteroid(L,1);
       angle = pilot_aimAngle( cur_pilot, &a->pos, &a->vel );
    }
    else {
-      Pilot *p = luaL_validpilot(L,1);
+      const Pilot *p = luaL_validpilot(L,1);
       angle = pilot_aimAngle( cur_pilot, &p->solid.pos, &p->solid.vel );
    }
 
@@ -2040,15 +2071,14 @@ static int aiL_dir( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
    vec2 *vec, sv, tv; /* get the position to face */
-   Pilot* p;
    double diff;
    int n;
 
    /* Get first parameter, aka what to face. */
-   n  = -2;
+   n = -2;
    vec = NULL;
    if (lua_ispilot(L,1)) {
-      p = luaL_validpilot(L,1);
+      const Pilot *p = luaL_validpilot(L,1);
       vec2_cset( &tv, VX(p->solid.pos), VY(p->solid.pos) );
    }
    else if (lua_isvector(L,1))
@@ -2072,7 +2102,7 @@ static int aiL_dir( lua_State *L )
 }
 
 /**
- * @brief calculates angle between pilot facing and intercept-course to target.
+ * @brief Calculates angle between pilot facing and intercept-course to target.
  *
  *    @luatparam Pilot|Vec2 target Position or pilot to compare facing to
  *    @luatreturn number The facing offset to intercept-course to the target (in radians).
@@ -2085,7 +2115,6 @@ static int aiL_idir( lua_State *L )
    Pilot* p;
    double diff, heading_offset_azimuth, drift_radial, drift_azimuthal;
    double speedmap;
-   /*char announcebuffer[255] = " ", announcebuffer2[128];*/
 
    /* Get first parameter, aka what to face. */
    p  = NULL;
@@ -2097,7 +2126,7 @@ static int aiL_idir( lua_State *L )
    else NLUA_INVALID_PARAMETER(L);
 
    if (vec==NULL) {
-      if (p == NULL)
+      if (p==NULL)
          return 0; /* Return silently when attempting to face an invalid pilot. */
       /* Establish the current pilot velocity and position vectors */
       vec2_cset( &drift, VX(p->solid.vel) - VX(cur_pilot->solid.vel), VY(p->solid.vel) - VY(cur_pilot->solid.vel));
@@ -2124,7 +2153,7 @@ static int aiL_idir( lua_State *L )
        * 1 - 1/(|x|+1) does a pretty nice job of mapping the reals to the interval (0...1). That forms the core of this angle calculation
        * there is nothing special about the scaling parameter of 200; it can be tuned to get any behavior desired. A lower
        * number will give a more dramatic 'lead' */
-      speedmap = -1*copysign(1 - 1 / (FABS(drift_azimuthal/200) + 1), drift_azimuthal) * M_PI_2;
+      speedmap = -1.*copysign(1. - 1. / (FABS(drift_azimuthal/200.) + 1.), drift_azimuthal) * M_PI_2;
       diff = angle_diff(heading_offset_azimuth, speedmap);
 
    }
@@ -2149,9 +2178,9 @@ static int aiL_idir( lua_State *L )
  */
 static int aiL_drift_facing( lua_State *L )
 {
-    double drift = angle_diff(VANGLE(cur_pilot->solid.vel), cur_pilot->solid.dir);
-    lua_pushnumber(L, drift);
-    return 1;
+   double drift = angle_diff(VANGLE(cur_pilot->solid.vel), cur_pilot->solid.dir);
+   lua_pushnumber(L, drift);
+   return 1;
 }
 
 /**
@@ -2433,8 +2462,8 @@ static int aiL_hyperspace( lua_State *L )
 
    /* Find the target jump. */
    if (!lua_isnoneornil(L,1)) {
-      JumpPoint *jp = luaL_validjump( L, 1 );
-      LuaJump *lj = luaL_checkjump( L, 1 );
+      const JumpPoint *jp = luaL_validjump( L, 1 );
+      const LuaJump *lj = luaL_checkjump( L, 1 );
       if (lj->srcid != cur_system->id)
          NLUA_ERROR(L, _("Jump point must be in current system."));
       cur_pilot->nav_hyperspace = jp - cur_system->jumps;
@@ -2604,6 +2633,18 @@ static int aiL_rndhyptarget( lua_State *L )
 }
 
 /**
+ * @brief Gets whether or not the pilot can hyperspace.
+ *
+ *    @luatreturn boolean Whether or not the pilot can hyperspace.
+ * @luafunc canHyperspace
+ */
+static int aiL_canHyperspace( lua_State *L )
+{
+   lua_pushboolean(L, space_canHyperspace(cur_pilot));
+   return 1;
+}
+
+/**
  * @brief Gets the relative velocity of a pilot.
  *
  *    @luatreturn number Relative velocity.
@@ -2663,11 +2704,7 @@ static int aiL_follow_accurate( lua_State *L )
    angle = luaL_checknumber(L,3);
    Kp = luaL_checknumber(L,4);
    Kd = luaL_checknumber(L,5);
-
-   if (lua_isnoneornil(L, 6))
-      method = "velocity";
-   else
-      method = luaL_checkstring(L,6);
+   method = luaL_optstring(L,6,"velocity");
 
    if (strcmp( method, "absolute" ) == 0)
       angle2 = angle;

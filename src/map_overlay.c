@@ -22,7 +22,11 @@
 #include "safelanes.h"
 #include "space.h"
 
-const double OVERLAY_FADEIN = 1.0/3.0; /**< How long it takes to fade in newly discovered things. */
+static const double OVERLAY_FADEIN = 1.0/3.0; /**< How long it takes to fade in newly discovered things. */
+
+static int autonav_pos = 0;
+static double autonav_pos_x = 0.;
+static double autonav_pos_y = 0.;
 
 /**
  * Structure for map overlay size.
@@ -699,10 +703,10 @@ void ovr_render( double dt )
    ovr_mrkRenderAll( res, 0 );
 
    /* Check if player has goto target. */
-   if (player_isFlag(PLAYER_AUTONAV) && (player.autonav == AUTONAV_POS_APPROACH)) {
+   if (autonav_pos) {
       glColour col = cRadar_hilight;
       col.a = 0.6;
-      map_overlayToScreenPos( &x, &y, player.autonav_pos.x, player.autonav_pos.y );
+      map_overlayToScreenPos( &x, &y, autonav_pos_x, autonav_pos_y );
       glUseProgram( shaders.selectposition.program );
       gl_renderShader( x, y, 9., 9., 0., &shaders.selectposition, &col, 1 );
       gl_printMarkerRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, _("TARGET") );
@@ -1061,4 +1065,16 @@ void ovr_mrkRm( unsigned int id )
       array_erase( &ovr_markers, &m[0], &m[1] );
       break;
    }
+}
+
+void ovr_autonavPos( double x, double y )
+{
+   autonav_pos = 1;
+   autonav_pos_x = x;
+   autonav_pos_y = y;
+}
+
+void ovr_autonavClear (void)
+{
+   autonav_pos = 0;
 }

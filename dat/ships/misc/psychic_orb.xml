@@ -3,7 +3,6 @@
  <points>1</points>
  <base_type>Psychic Orb</base_type>
  <GFX size="46">koala</GFX><!-- TODO fix-->
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class display="Unknown">Interceptor</class>
  <price>1</price>

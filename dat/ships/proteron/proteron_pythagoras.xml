@@ -4,7 +4,6 @@
  <base_type>Pythagoras</base_type>
  <GFX size="124" sx="12" sy="12">pythagoras</GFX>
  <rarity>2</rarity>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Cruiser</class>
  <price>6000000</price>

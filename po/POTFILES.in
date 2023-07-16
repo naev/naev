@@ -280,6 +280,12 @@ dat/outfits/flow/astral_projection/astral_cannon.xml
 dat/outfits/flow/astral_projection/greater_astral_cannon.xml
 dat/outfits/flow/astral_projection/lesser_astral_cannon.xml
 dat/outfits/flow/internal_flow_amplifier.xml
+dat/outfits/flow/structure/large_flow_amplifier.xml
+dat/outfits/flow/structure/large_flow_resonator.xml
+dat/outfits/flow/structure/large_meditation_chamber.xml
+dat/outfits/flow/structure/medium_flow_amplifier.xml
+dat/outfits/flow/structure/medium_flow_resonator.xml
+dat/outfits/flow/structure/medium_meditation_chamber.xml
 dat/outfits/flow/structure/small_flow_amplifier.xml
 dat/outfits/flow/structure/small_flow_resonator.xml
 dat/outfits/flow/structure/small_meditation_chamber.xml
@@ -2723,6 +2729,7 @@ dat/ai/thurion.lua
 dat/ai/trader.lua
 dat/ai/zalek.lua
 dat/autoequip.lua
+dat/autonav.lua
 dat/bkg/blackhole.lua
 dat/bkg/crimson_gauntlet.lua
 dat/bkg/default.lua
@@ -2858,6 +2865,7 @@ dat/events/pirate/shipcheck.lua
 dat/events/poi.lua
 dat/events/proteron/blockade.lua
 dat/events/restricted.lua
+dat/events/settings.lua
 dat/events/shipai.lua
 dat/events/shiplog.lua
 dat/events/sirius/achack04.lua
@@ -3001,6 +3009,7 @@ dat/missions/flf/flf_pirates.lua
 dat/missions/flf/flf_pre01.lua
 dat/missions/flf/flf_pre02.lua
 dat/missions/flf/flf_rogue.lua
+dat/missions/minerva/finale1.lua
 dat/missions/minerva/judgement.lua
 dat/missions/minerva/kex1.lua
 dat/missions/minerva/kex2.lua
@@ -3178,6 +3187,8 @@ dat/outfits/flow/abilities/seeking_chakra.lua
 dat/outfits/flow/astral_projection/astral_cannon.lua
 dat/outfits/flow/astral_projection/lesser_astral_cannon.lua
 dat/outfits/flow/flow_amplifier.lua
+dat/outfits/flow/structure/flow_resonator.lua
+dat/outfits/flow/structure/meditation_chamber.lua
 dat/outfits/launchers/space_mine_layer.lua
 dat/outfits/lib/bioplasma.lua
 dat/outfits/lib/mining_drill.lua

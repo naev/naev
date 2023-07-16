@@ -4,7 +4,6 @@
  <points>200</points>
  <base_type>Ira</base_type>
  <GFX size="112" sx="12" sy="12">ira</GFX>
- <GUI>slim</GUI>
  <rarity>2</rarity>
  <sound pitch="0.6">engine_soromid</sound>
  <class display="Bio-Cruiser">Cruiser</class>

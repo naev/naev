@@ -8,9 +8,9 @@
   <price>200000</price>
   <gfx_store>placeholder.webp</gfx_store>
   <description>By tapping into the flow of each individual, the flow resonator can tune and establish a direct link between the flow amplifier and the personal flow generation. This allows the ship to gain flow regeneration, albeit to only half of the full potential.</description>
-  <desc_extra>Provides 1 flow regeneration per second up to 50% maximum capacity</desc_extra>
  </general>
  <specific type="modification">
+  <lua>outfits/flow/structure/flow_resonator.lua</lua>
  </specific>
  <tags>
   <tag>flow</tag>

@@ -345,7 +345,8 @@ static int vectorL_add__( lua_State *L )
  */
 static int vectorL_sub( lua_State *L )
 {
-   vec2 vout, *v1;
+   const vec2 *v1;
+   vec2 vout;
    double x, y;
 
    /* Get self. */
@@ -353,7 +354,7 @@ static int vectorL_sub( lua_State *L )
 
    /* Get rest of parameters. */
    if (lua_isvector(L,2)) {
-      vec2 *v2 = lua_tovector(L,2);
+      const vec2 *v2 = lua_tovector(L,2);
       x = v2->x;
       y = v2->y;
    }
@@ -380,7 +381,7 @@ static int vectorL_sub__( lua_State *L )
 
    /* Get rest of parameters. */
    if (lua_isvector(L,2)) {
-      vec2 *v2 = lua_tovector(L,2);
+      const vec2 *v2 = lua_tovector(L,2);
       x = v2->x;
       y = v2->y;
    }
@@ -415,18 +416,18 @@ static int vectorL_mul( lua_State *L )
 
    if (lua_isnumber(L,1)) {
       double d = lua_tonumber(L,1);
-      vec2 *v  = luaL_checkvector(L,2);
+      const vec2 *v  = luaL_checkvector(L,2);
       vec2_cset( &vout, v->x * d, v->y * d );
    }
    else {
       if (lua_isnumber(L,2)) {
-         vec2 *v  = luaL_checkvector(L,1);
+         const vec2 *v  = luaL_checkvector(L,1);
          double d = lua_tonumber(L,2);
          vec2_cset( &vout, v->x * d, v->y * d );
       }
       else {
-         vec2 *v1 = luaL_checkvector(L,1);
-         vec2 *v2 = luaL_checkvector(L,2);
+         const vec2 *v1 = luaL_checkvector(L,1);
+         const vec2 *v2 = luaL_checkvector(L,2);
          vec2_cset( &vout, v1->x * v2->x, v1->y * v2->y );
       }
    }
@@ -437,16 +438,13 @@ static int vectorL_mul( lua_State *L )
 }
 static int vectorL_mul__( lua_State *L )
 {
-   vec2 *v1;
-
-   /* Get parameters. */
-   v1 = luaL_checkvector(L,1);
+   vec2 *v1 = luaL_checkvector(L,1);
    if (lua_isnumber(L,2)) {
       double mod = luaL_checknumber(L,2);
       vec2_cset( v1, v1->x * mod, v1->y * mod );
    }
    else {
-      vec2 *v2 = luaL_checkvector(L,2);
+      const vec2 *v2 = luaL_checkvector(L,2);
       vec2_cset( v1, v1->x * v2->x, v1->y * v2->y );
    }
 
@@ -468,16 +466,14 @@ static int vectorL_mul__( lua_State *L )
  */
 static int vectorL_div( lua_State *L )
 {
-   vec2 vout, *v1;
-
-   /* Get parameters. */
-   v1    = luaL_checkvector(L,1);
+   vec2 vout;
+   const vec2 *v1 = luaL_checkvector(L,1);
    if (lua_isnumber(L,2)) {
       double mod = lua_tonumber(L,2);
       vec2_cset( &vout, v1->x / mod, v1->y / mod );
    }
    else {
-      vec2 *v2 = luaL_checkvector(L,2);
+      const vec2 *v2 = luaL_checkvector(L,2);
       vec2_cset( &vout, v1->x / v2->x, v1->y / v2->y );
    }
 
@@ -486,16 +482,13 @@ static int vectorL_div( lua_State *L )
 }
 static int vectorL_div__( lua_State *L )
 {
-   vec2 *v1;
-
-   /* Get parameters. */
-   v1    = luaL_checkvector(L,1);
+   vec2 *v1 = luaL_checkvector(L,1);
    if (lua_isnumber(L,2)) {
       double mod = lua_tonumber(L,2);
       vec2_cset( v1, v1->x / mod, v1->y / mod );
    }
    else {
-      vec2 *v2 = luaL_checkvector(L,2);
+      const vec2 *v2 = luaL_checkvector(L,2);
       vec2_cset( v1, v1->x / v2->x, v1->y / v2->y );
    }
 
@@ -513,8 +506,8 @@ static int vectorL_div__( lua_State *L )
  */
 static int vectorL_dot( lua_State *L )
 {
-   vec2 *a = luaL_checkvector(L,1);
-   vec2 *b = luaL_checkvector(L,2);
+   const vec2 *a = luaL_checkvector(L,1);
+   const vec2 *b = luaL_checkvector(L,2);
    lua_pushnumber( L, a->x*b->x + a->y*b->y );
    return 1;
 }
@@ -529,8 +522,8 @@ static int vectorL_dot( lua_State *L )
  */
 static int vectorL_cross( lua_State *L )
 {
-   vec2 *a = luaL_checkvector(L,1);
-   vec2 *b = luaL_checkvector(L,2);
+   const vec2 *a = luaL_checkvector(L,1);
+   const vec2 *b = luaL_checkvector(L,2);
    lua_pushnumber( L, a->x*b->y - a->y*b->x );
    return 1;
 }
@@ -547,8 +540,7 @@ static int vectorL_cross( lua_State *L )
  */
 static int vectorL_get( lua_State *L )
 {
-   vec2 *v1 = luaL_checkvector(L,1);
-
+   const vec2 *v1 = luaL_checkvector(L,1);
    /* Push the vector. */
    lua_pushnumber(L, v1->x);
    lua_pushnumber(L, v1->y);
@@ -569,7 +561,7 @@ static int vectorL_get( lua_State *L )
  */
 static int vectorL_polar( lua_State *L )
 {
-   vec2 *v1 = luaL_checkvector(L,1);
+   const vec2 *v1 = luaL_checkvector(L,1);
    lua_pushnumber(L, VMOD(*v1));
    lua_pushnumber(L, VANGLE(*v1));
    return 2;
@@ -636,7 +628,7 @@ static int vectorL_setP( lua_State *L )
  */
 static int vectorL_distance( lua_State *L )
 {
-   vec2 *v1, *v2;
+   const vec2 *v1, *v2;
    double dist;
 
    /* Get self. */
@@ -672,7 +664,7 @@ static int vectorL_distance( lua_State *L )
  */
 static int vectorL_distance2( lua_State *L )
 {
-   vec2 *v1, *v2;
+   const vec2 *v1, *v2;
    double dist2;
 
    /* Get self. */
@@ -703,7 +695,7 @@ static int vectorL_distance2( lua_State *L )
  */
 static int vectorL_mod( lua_State *L )
 {
-   vec2 *v = luaL_checkvector(L,1);
+   const vec2 *v = luaL_checkvector(L,1);
    lua_pushnumber(L, VMOD(*v));
    return 1;
 }
@@ -716,7 +708,7 @@ static int vectorL_mod( lua_State *L )
  */
 static int vectorL_angle( lua_State *L )
 {
-   vec2 *v = luaL_checkvector(L,1);
+   const vec2 *v = luaL_checkvector(L,1);
    lua_pushnumber(L, VANGLE(*v));
    return 1;
 }
@@ -724,15 +716,17 @@ static int vectorL_angle( lua_State *L )
 /**
  * @brief Normalizes a vector.
  *    @luatparam Vec2 v Vector to normalize.
+ *    @luatparam[opt=1] number n Length to normalize the vector to.
  *    @luatreturn Vec2 Normalized vector.
  * @luafunc normalize
  */
 static int vectorL_normalize( lua_State *L )
 {
    vec2 *v = luaL_checkvector(L,1);
-   double m = VMOD(*v);
-   v->x /= m;
-   v->y /= m;
+   double n = luaL_optnumber(L,2,1.);
+   double m = n/VMOD(*v);
+   v->x *= m;
+   v->y *= m;
    lua_pushvector(L, *v);
    return 1;
 }
@@ -749,10 +743,10 @@ static int vectorL_normalize( lua_State *L )
  */
 static int vectorL_collideLineLine( lua_State *L )
 {
-   vec2 *s1 = luaL_checkvector(L,1);
-   vec2 *e1 = luaL_checkvector(L,2);
-   vec2 *s2 = luaL_checkvector(L,3);
-   vec2 *e2 = luaL_checkvector(L,4);
+   const vec2 *s1 = luaL_checkvector(L,1);
+   const vec2 *e1 = luaL_checkvector(L,2);
+   const vec2 *s2 = luaL_checkvector(L,3);
+   const vec2 *e2 = luaL_checkvector(L,4);
    vec2 crash;
    int ret = CollideLineLine( s1->x, s1->y, e1->x, e1->y, s2->x, s2->y, e2->x, e2->y, &crash );
    lua_pushinteger( L, ret );
@@ -773,7 +767,8 @@ static int vectorL_collideLineLine( lua_State *L )
  */
 static int vectorL_collideCircleLine( lua_State *L )
 {
-   vec2 *center, *p1, *p2, crash[2];
+   const vec2 *center, *p1, *p2;
+   vec2 crash[2];
    double radius;
 
    center = luaL_checkvector( L, 1 );

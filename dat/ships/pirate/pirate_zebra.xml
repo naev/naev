@@ -4,7 +4,6 @@
  <base_type>Zebra</base_type>
  <GFX size="120" sx="12" sy="12">zebra_pirate</GFX>
  <rarity>2</rarity>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Carrier</class>
  <price>8000000</price>

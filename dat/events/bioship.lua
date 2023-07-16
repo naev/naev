@@ -11,7 +11,6 @@ local bioship = require "bioship"
 local textoverlay = require "textoverlay"
 local audio = require 'love.audio'
 
-
 local function bioship_click ()
    bioship.window()
    update_bioship()
@@ -105,7 +104,13 @@ function bioship_pay( amount, _reason )
    end
 
    -- Add exp
-   exp = exp + math.floor(amount / 1e3)
+   local BREAKPOINT = 500e3
+   if amount > BREAKPOINT then
+      local div = BREAKPOINT/1e3
+      exp = exp + math.floor( div / math.sqrt(div) * math.sqrt(amount / 1e3) + 0.5 )
+   else
+      exp = exp + math.floor( amount / 1e3 )
+   end
    exp = math.min( exp, bioship.exptostage( maxstage ) )
    pp:shipvarPush("bioshipexp",exp)
 

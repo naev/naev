@@ -5,7 +5,6 @@
  <base_type>Providence</base_type>
  <GFX size="126" sx="12" sy="12">providence</GFX>
  <rarity>2</rarity>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Bulk Freighter</class>
  <price>5400000</price>

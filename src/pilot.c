@@ -758,10 +758,8 @@ int pilot_areEnemies( const Pilot *p, const Pilot *target )
  */
 PilotOutfitSlot* pilot_getDockSlot( Pilot* p )
 {
-   Pilot* dockpilot;
-
    if ((p->dockpilot != 0) && (p->dockslot != -1)) {
-      dockpilot = pilot_get(p->dockpilot);
+      Pilot *dockpilot = pilot_get(p->dockpilot);
       if (dockpilot != NULL)
          return dockpilot->outfits[p->dockslot];
    }
@@ -844,111 +842,6 @@ int pilot_brake( Pilot *p )
       if (isstopped)
          return 1;
    }
-
-   return 0;
-}
-
-/**
- * @brief Gets the braking distance for a pilot.
- *
- *    @param p Pilot to get the braking distance of.
- *    @param[out] pos Estimated final position once braked.
- *    @return Estimated Braking distance based on current speed.
- */
-double pilot_brakeDist( Pilot *p, vec2 *pos )
-{
-   double fdiff, bdiff, ftime, btime;
-   double vang, speed, dist;
-
-   if (pilot_isStopped(p)) {
-      if (pos != NULL)
-         *pos = p->solid.pos;
-
-      return 0;
-   }
-
-   vang  = VANGLE(p->solid.vel);
-   speed = MIN( VMOD(p->solid.vel), p->speed );
-
-   /* Calculate the time to face backward and apply forward thrust. */
-   bdiff = angle_diff(p->solid.dir, vang + M_PI);
-   btime = ABS(bdiff) / p->turn + speed / (p->thrust / p->solid.mass);
-   dist  = (ABS(bdiff) / p->turn) * speed +
-         (speed / (p->thrust / p->solid.mass)) * (speed / 2.);
-
-   if (p->stats.misc_reverse_thrust) {
-      /* Calculate the time to face forward and apply reverse thrust. */
-      fdiff = angle_diff(p->solid.dir, vang);
-      ftime = ABS(fdiff) / p->turn + speed /
-            (p->thrust / p->solid.mass * PILOT_REVERSE_THRUST);
-
-      /* Faster to use reverse thrust. */
-      if (ftime < btime)
-         dist = (ABS(fdiff) / p->turn) * speed + (speed /
-               (p->thrust / p->solid.mass * PILOT_REVERSE_THRUST)) * (speed / 2.);
-   }
-
-   if (pos != NULL)
-      vec2_cset( pos,
-            p->solid.pos.x + cos(vang) * dist,
-            p->solid.pos.y + sin(vang) * dist);
-
-   return dist;
-}
-
-/**
- * @brief Attempts to make the pilot pass through a given point.
- *
- * @todo Rewrite this using a superior method.
- *
- *    @param p Pilot to control.
- *    @param x Destination X position.
- *    @param y Destination Y position.
- *    @return 1 if pilot will pass through the point, 0 otherwise.
- */
-int pilot_interceptPos( Pilot *p, double x, double y )
-{
-   double px, py, target, face, diff, fdiff;
-
-   px = p->solid.pos.x;
-   py = p->solid.pos.y;
-
-   /* Target angle for the pilot's vel */
-   target = atan2( y - py, x - px );
-
-   /* Current angle error. */
-   diff = angle_diff( VANGLE(p->solid.vel), target );
-
-   if (ABS(diff) < MIN_DIR_ERR) {
-      pilot_setThrust(p, 0.);
-      return 1;
-   }
-   else if (ABS(diff) > M_PI / 1.5) {
-      face = target;
-      fdiff = pilot_face(p, face);
-
-      /* Apply thrust if within 180 degrees. */
-      if (FABS(fdiff) < M_PI)
-         pilot_setThrust(p, 1.);
-      else
-         pilot_setThrust(p, 0.);
-
-      return 0;
-   }
-   else if (diff > M_PI_4)
-      face = target + M_PI_4;
-   else if (diff < -M_PI_4)
-      face = target - M_PI_4;
-   else
-      face = target + diff;
-
-   fdiff = pilot_face(p, face);
-
-   /* Must be in proper quadrant, +/- 45 degrees. */
-   if (fdiff < M_PI_4)
-      pilot_setThrust(p, 1.);
-   else
-      pilot_setThrust(p, 0.);
 
    return 0;
 }
@@ -1151,6 +1044,8 @@ char pilot_getFactionColourChar( const Pilot *p )
       return 'F';
    else if (pilot_isHostile(p))
       return 'H';
+   else if (pilot_isFlag(p, PILOT_BRIBED))
+      return 'N';
    return faction_getColourChar(p->faction);
 }
 
@@ -2655,7 +2550,7 @@ void pilot_sample_trails( Pilot* p, int none )
    TrailMode mode;
 
    /* Ignore for simulation. */
-   if (!space_isSimulationEffects())
+   if (!space_needsEffects())
       return;
 
    /* No trails to sample. */
@@ -3026,7 +2921,7 @@ int pilot_numOutfit( const Pilot *p, const Outfit *o )
  *    @param amount Amount to check for.
  *    @return 1 if they have enough, 0 otherwise.
  */
-int pilot_hasCredits( Pilot *p, credits_t amount )
+int pilot_hasCredits( const Pilot *p, credits_t amount )
 {
    if (amount < 0)
       return 1;

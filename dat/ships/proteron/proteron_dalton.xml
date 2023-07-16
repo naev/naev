@@ -4,7 +4,6 @@
  <base_type>Dalton</base_type>
  <GFX size="40">dalton</GFX>
  <rarity>3</rarity>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Interceptor</class>
  <price>280000</price>

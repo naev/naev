@@ -447,6 +447,8 @@ end
 
 function update_system()
    sysname = system.cur():name()
+
+   update_ship()
 end
 
 local effects = {}

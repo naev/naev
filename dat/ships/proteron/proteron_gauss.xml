@@ -4,7 +4,6 @@
  <base_type>Gauss</base_type>
  <GFX size="100" sx="10" sy="10">gauss</GFX>
  <rarity>3</rarity>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>2200000</price>

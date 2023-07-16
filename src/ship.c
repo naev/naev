@@ -818,7 +818,6 @@ static int ship_parse( Ship *temp, const char *filename )
          continue;
       }
 
-      xmlr_strd(node,"GUI",temp->gui);
       if (xml_isNode(node,"sound")) {
          xmlr_attr_float_def( node, "pitch", temp->engine_pitch, 1. );
          temp->sound = sound_get( xml_get(node) );
@@ -1017,7 +1016,6 @@ static int ship_parse( Ship *temp, const char *filename )
    MELEMENT(temp->name==NULL,"name");
    MELEMENT(temp->base_type==NULL,"base_type");
    MELEMENT((temp->gfx_space==NULL) || (temp->gfx_comm==NULL),"GFX");
-   MELEMENT(temp->gui==NULL,"GUI");
    MELEMENT(temp->class==SHIP_CLASS_NULL,"class");
    MELEMENT(temp->points==0,"points");
    MELEMENT(temp->price==0,"price");
@@ -1167,7 +1165,6 @@ void ships_free (void)
       free(s->class_display);
       free(s->description);
       free(s->desc_extra);
-      free(s->gui);
       free(s->base_type);
       free(s->fabricator);
       free(s->license);

@@ -5,7 +5,6 @@
  <base_type>Certitude</base_type>
  <GFX size="120" sx="12" sy="12">certitude</GFX>
  <rarity>3</rarity>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Battleship</class>
  <price>9000000</price>

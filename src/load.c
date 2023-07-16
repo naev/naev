@@ -35,6 +35,7 @@
 #include "outfit.h"
 #include "player.h"
 #include "plugin.h"
+#include "render.h"
 #include "save.h"
 #include "shiplog.h"
 #include "start.h"
@@ -1148,7 +1149,7 @@ static int load_gameInternal( const char* file, const char* version )
 }
 
 /**
- * @brief Loads a game .Meant to be run in a function hook.
+ * @brief Loads a game. Meant to be run in a function hook.
  */
 static int load_gameInternalHook( void *data )
 {
@@ -1173,6 +1174,7 @@ static int load_gameInternalHook( void *data )
    /* Clean up possible stuff that should be cleaned. */
    unidiff_universeDefer( 1 );
    player_cleanup();
+   render_postprocessCleanup();
 
    /* Welcome message - must be before space_init. */
    player_message( _("#gWelcome to %s!"), APPNAME );
@@ -1218,10 +1220,8 @@ static int load_gameInternalHook( void *data )
    player_addEscorts();
 
    /* Load the GUI. */
-   if (gui_load( gui_pick() )) {
-      if (player.p->ship->gui != NULL)
-         gui_load( player.p->ship->gui );
-   }
+   if (gui_load( gui_pick() ))
+      gui_load( start_gui() ); /* Failed so use fallback... */
 
    /* Land the player. */
    land( pnt, 1 );

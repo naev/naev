@@ -8,6 +8,7 @@
  */
 #define SPOB_GFX_SPACE_PATH      "gfx/spob/space/" /**< Location of spob space graphics. */
 #define SPOB_GFX_EXTERIOR_PATH   "gfx/spob/exterior/" /**< Location of spob exterior graphics (when landed). */
+#define SPOB_GFX_COMM_PATH       "gfx/spob/comm/" /**< Location of spob communication graphics (when hailed). */
 #define GFX_PATH                 "gfx/" /**< Location of the graphics root. */
 #define OVERLAY_GFX_PATH         "gfx/overlays/" /**< Location of overlays such as those used with graphics and ships. */
 #define GUI_GFX_PATH             "gfx/gui/" /**< Location of the GUI graphics. */
@@ -78,6 +79,7 @@
 #define INTRO_PATH               "intro"
 #define RESCUE_PATH              "rescue.lua"
 #define AUTOEQUIP_PATH           "autoequip.lua"
+#define AUTONAV_PATH             "autonav.lua"
 #define COMM_PATH                "comm.lua"
 #define BOARD_PATH               "board.lua"
 #define SAVE_UPDATER_PATH        "save_updater.lua"

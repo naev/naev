@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Large Meditation Chamber">
+ <general>
+  <typename>Flow Modifier</typename>
+  <slot>structure</slot>
+  <size>large</size>
+  <mass>120</mass>
+  <price>200000</price>
+  <gfx_store>placeholder.webp</gfx_store>
+  <description>A meditation chamber integrated directly into the ship. This allows the crew to aid the ship's flow capabilities and acts as an auxiliary flow buffer. A flow amplifier is required for the meditation chamber to take effect.</description>
+ </general>
+ <specific type="modification">
+  <lua>outfits/flow/structure/meditation_chamber.lua</lua>
+ </specific>
+ <tags>
+  <tag>flow</tag>
+ </tags>
+</outfit>

@@ -4,7 +4,6 @@
  <base_type>Sindbad</base_type>
  <gfx_space sx="1" sy="1" polygon="000.webp">spob/space/000.webp</gfx_space>
  <gfx_comm>spob/exterior/station00.webp</gfx_comm>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class display="Station">Battleship</class>
  <price>1</price>

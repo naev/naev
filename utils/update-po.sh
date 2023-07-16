@@ -38,11 +38,10 @@ deterministic_sort() { LC_ALL=C sort; }
 # language detection and gives them unwanted "c-format" or "lua-format" tags.
 
 # shellcheck disable=SC2046
-po/credits_pot.py \
+po/credits_pot.py po/credits.pot \
    dat/intro \
    dat/AUTHORS \
    $(cd artwork; find_files gfx/loading txt | sed 's|^|artwork/|') \
-   > po/credits.pot
 
 (
    echo po/physfs.pot

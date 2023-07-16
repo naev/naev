@@ -7,10 +7,10 @@
   <mass>30</mass>
   <price>50000</price>
   <gfx_store>placeholder.webp</gfx_store>
-  <description>A small meditation chamber integrated directly into the ship. This allows the crew to aid the ship's flow capabilities and acts as an auxiliary flow buffer. A flow amplifier is required for the meditation chamber to take effect.</description>
-  <desc_extra>Provides 50 maximum flow capacity</desc_extra>
+  <description>A meditation chamber integrated directly into the ship. This allows the crew to aid the ship's flow capabilities and acts as an auxiliary flow buffer. A flow amplifier is required for the meditation chamber to take effect.</description>
  </general>
  <specific type="modification">
+  <lua>outfits/flow/structure/meditation_chamber.lua</lua>
  </specific>
  <tags>
   <tag>flow</tag>

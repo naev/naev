@@ -1331,7 +1331,7 @@ static void weapon_sample_trail( Weapon* w )
    double a, dx, dy;
    TrailMode mode;
 
-   if (!space_isSimulationEffects())
+   if (!space_needsEffects())
       return;
 
    /* Compute the engine offset. */

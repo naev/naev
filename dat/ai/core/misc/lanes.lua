@@ -234,7 +234,6 @@ local function closestPointLine( a, b, p )
    return a + ab * t
 end
 
-
 -- Caches lanes locally in pilot's memory
 local function getCacheP( p )
    local mem = p:memory()
@@ -251,6 +250,13 @@ local function getCachePH( p )
       mem.__lanes_H = lanes.get( p:faction(), "hostile" )
    end
    return mem.__lanes_H
+end
+
+-- Clears the cache for persistent pilots and such
+function lanes.clearCache( p )
+   local mem = p:memory()
+   mem.__lanes = nil
+   mem.__lanes_H = nil
 end
 
 

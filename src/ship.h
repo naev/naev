@@ -146,9 +146,6 @@ typedef struct Ship_ {
    /* Collision polygon */
    CollPoly *polygon; /**< Array (array.h): Collision polygons. */
 
-   /* GUI interface */
-   char* gui;        /**< Name of the GUI the ship uses by default. */
-
    /* Sound */
    int sound;        /**< Sound engine uses. */
    double engine_pitch; /**< Sets the base pitch of the engine. */

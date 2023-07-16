@@ -5,7 +5,6 @@
  <base_type>Demon</base_type>
  <GFX sx="12" sy="12">demon</GFX>
  <rarity>2</rarity>
- <GUI>slim</GUI>
  <sound pitch="0.76">engine_zalek</sound>
  <class>Destroyer</class>
  <price>2400000</price>

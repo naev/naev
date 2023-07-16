@@ -4,7 +4,6 @@
  <points>24</points>
  <base_type>Za'lek Scout Drone</base_type>
  <GFX size="38">zalek_drone_scout</GFX>
- <GUI>slim</GUI>
  <sound>engine_zalek</sound>
  <class display="Robotic Scout">Scout</class>
  <price>180000</price>

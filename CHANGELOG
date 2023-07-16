@@ -12,6 +12,9 @@
       * Missions are introduced less all at once to the player
       * diy-nerds: improved reward
    * Quality of Life
+      * Significantly improved autonav
+         * Configurable and can use lanes
+         * More efficient at reaching target locations
       * Make it explicit when all the escorts have jumped or landed
       * Player ship is no longer translucent when in stealth as it is redundant with the stealth icon
       * Show enemy/ally factions in the faction standing info window
@@ -23,6 +26,7 @@
       * Manual aiming model aims at the mouse location when the mouse is visible
       * Travelling merchant tells you when new wares are available and should be easier to find
       * Lua Love API should be better at handling input and not apply keys held before started
+      * Increase time compression when disabled
       * Inverted how hide, evasion, and stealth values work. Now lower is better
    * New Content
       * New mechanic for House Sirius called flow to unlock psychic powers
@@ -67,6 +71,7 @@
       * Removed some custom environment and string handling functions for standard SDL ones (requires 2.0.18 now)
       * Better handling of user locales
       * Weaker effects shouldn't overwrite stronger ones anymore
+      * Spobs can use communication graphics
       * Require OpenGL 3.2 for geometry shaders now
    * Fixes
       * Typo and wording fixes

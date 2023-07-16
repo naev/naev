@@ -77,6 +77,8 @@ int dpl_saveSpob( const Spob *p )
       xmlw_elem( writer, "space", "%s", p->gfx_spacePath );
    if (p->gfx_exteriorPath != NULL)
       xmlw_elem( writer, "exterior", "%s", p->gfx_exteriorPath );
+   if (p->gfx_commPath != NULL)
+      xmlw_elem( writer, "comm", "%s", p->gfx_commPath );
    xmlw_endElem( writer ); /* "GFX" */
 
    /* Presence. */

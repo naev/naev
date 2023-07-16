@@ -4,7 +4,6 @@
  <points>40</points>
  <base_type>Za'lek Bomber Drone</base_type>
  <GFX size="48">zalek_drone_bomber</GFX>
- <GUI>slim</GUI>
  <sound>engine_zalek</sound>
  <class display="Robotic Bomber">Bomber</class>
  <price>250000</price>

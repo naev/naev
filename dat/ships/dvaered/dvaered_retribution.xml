@@ -5,7 +5,6 @@
  <base_type>Retribution</base_type>
  <GFX size="128" sx="12" sy="12">retribution_dvaered</GFX>
  <rarity>2</rarity>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Cruiser</class>
  <price>5000000</price>

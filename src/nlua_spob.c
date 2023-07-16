@@ -48,6 +48,7 @@ static int spobL_population( lua_State *L );
 static int spobL_radius( lua_State *L );
 static int spobL_faction( lua_State *L );
 static int spobL_colour( lua_State *L );
+static int spobL_colourChar( lua_State *L );
 static int spobL_class( lua_State *L );
 static int spobL_classLong( lua_State *L );
 static int spobL_position( lua_State *L );
@@ -58,6 +59,7 @@ static int spobL_landOverride( lua_State *L );
 static int spobL_getLandOverride( lua_State *L );
 static int spobL_gfxSpace( lua_State *L );
 static int spobL_gfxExterior( lua_State *L );
+static int spobL_gfxComm( lua_State *L );
 static int spobL_shipsSold( lua_State *L );
 static int spobL_outfitsSold( lua_State *L );
 static int spobL_commoditiesSold( lua_State *L );
@@ -81,6 +83,7 @@ static const luaL_Reg spob_methods[] = {
    { "radius", spobL_radius },
    { "faction", spobL_faction },
    { "colour", spobL_colour },
+   { "colourChar", spobL_colourChar },
    { "class", spobL_class },
    { "classLong", spobL_classLong },
    { "pos", spobL_position },
@@ -91,6 +94,7 @@ static const luaL_Reg spob_methods[] = {
    { "getLandOverride", spobL_getLandOverride },
    { "gfxSpace", spobL_gfxSpace },
    { "gfxExterior", spobL_gfxExterior },
+   { "gfxComm", spobL_gfxComm },
    { "shipsSold", spobL_shipsSold },
    { "outfitsSold", spobL_outfitsSold },
    { "commoditiesSold", spobL_commoditiesSold },
@@ -577,7 +581,7 @@ static int spobL_faction( lua_State *L )
  *
  * @usage col = p:colour()
  *
- *    @luatparam Pilot p Spob to get the colour of.
+ *    @luatparam Spob spb Spob to get the colour of.
  *    @luatreturn Colour The spob's colour.
  * @luafunc colour
  */
@@ -586,6 +590,25 @@ static int spobL_colour( lua_State *L )
    Spob *p = luaL_validspob(L,1);
    const glColour *col = spob_getColour( p );
    lua_pushcolour( L, *col );
+   return 1;
+}
+
+/**
+ * @brief Gets a spob's colour based on its friendliness or hostility to the player.
+ *
+ * @usage col = p:colourChar()
+ *
+ *    @luatparam Spob spb Spob to get the colour of.
+ *    @luatreturn string The spob's colour character for use with special printing sequences..
+ * @luafunc colourChar
+ */
+static int spobL_colourChar( lua_State *L )
+{
+   Spob *p = luaL_validspob(L,1);
+   char str[2];
+   str[0] = spob_getColourChar( p );
+   str[1] = '\0';
+   lua_pushstring( L, str );
    return 1;
 }
 
@@ -795,6 +818,23 @@ static int spobL_gfxExterior( lua_State *L )
       return 0;
 
    lua_pushtex( L, gl_newImage( p->gfx_exterior, 0 ) );
+   return 1;
+}
+
+/**
+ * @brief Gets the texture of the spob for the communication window.
+ *
+ * @usage gfx = p:gfxComm()
+ *    @luatparam Spob p Spob Spob to get texture of.
+ *    @luatreturn Tex The communication texture of the spob.
+ * @luafunc gfxComm
+ */
+static int spobL_gfxComm( lua_State *L )
+{
+   Spob *p = luaL_validspob(L,1);
+   if (p->gfx_comm==NULL)
+      return spobL_gfxSpace(L);
+   lua_pushtex( L, gl_newImage( p->gfx_comm, 0 ) );
    return 1;
 }
 

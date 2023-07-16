@@ -3,7 +3,6 @@
  <points>110</points>
  <base_type>Zebra</base_type>
  <GFX size="120" sx="12" sy="12">zebra</GFX>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Bulk Freighter</class>
  <price>3500000</price>

@@ -7,9 +7,9 @@
 void player_guiCleanup (void);
 
 /* Manipulation. */
-int player_guiAdd( char* name );
-void player_guiRm( char* name );
-int player_guiCheck( char* name );
+int player_guiAdd( const char* name );
+void player_guiRm( const char* name );
+int player_guiCheck( const char* name );
 
 /* High level. */
-char** player_guiList (void);
+const char** player_guiList (void);

@@ -5,7 +5,6 @@
  <base_type>Astral Projection Greater</base_type>
  <gfx_space sx="12" sy="12" size="60" polygon="apparition_cruiser">ship/apparition/apparition_cruiser.webp</gfx_space>
  <gfx_comm>outfit/store/placeholder.webp</gfx_comm>
- <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Cruiser</class>
  <price>1</price>

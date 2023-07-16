@@ -5,7 +5,6 @@
  <base_type>Nyx</base_type>
  <GFX size="96" sx="10" sy="10">nyx</GFX>
  <rarity>2</rarity>
- <GUI>slim</GUI>
  <sound pitch="0.75">engine_soromid</sound>
  <class display="Bio-Destroyer">Destroyer</class>
  <price>2900000</price>

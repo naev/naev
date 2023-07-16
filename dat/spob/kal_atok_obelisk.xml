@@ -6,6 +6,7 @@
  <pos x="8040.138268" y="-4638.671909"/>
  <GFX>
   <space>obelisk_sirius.webp</space>
+  <comm>obelisk_sirius_comm.webp</comm>
  </GFX>
  <presence>
   <faction>Sirius</faction>

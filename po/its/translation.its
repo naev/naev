@@ -33,7 +33,6 @@
   <its:translateRule selector="/spob/general/class" translate="yes"/>
   <its:translateRule selector="/spob/general/bar" translate="yes"/>
   <its:translateRule selector="/spob/general/description" translate="yes"/>
-  <its:translateRule selector="/spob/tags/tag" translate="yes"/>
 
   <!-- Ships -->
   <its:translateRule selector="/ship/@name" translate="yes"/>
@@ -67,7 +66,6 @@
   <its:translateRule selector="/unidiff/spob/bar" translate="yes"/>
   <its:translateRule selector="/unidiff/spob/description" translate="yes"/>
   <its:translateRule selector="/unidiff/spob/displayname" translate="yes"/>
-  <its:translateRule selector="/unidiff/spob/tag_add" translate="yes"/>
 
   <!-- Difficulty -->
   <its:translateRule selector="/difficulty/@name" translate="yes"/>

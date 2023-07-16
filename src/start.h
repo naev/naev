@@ -18,6 +18,7 @@ const char* start_name (void);
 const char* start_ship (void);
 const char* start_shipname (void);
 const char* start_acquired (void);
+const char* start_gui (void);
 unsigned int start_credits (void);
 ntime_t start_date (void);
 const char* start_system (void);
