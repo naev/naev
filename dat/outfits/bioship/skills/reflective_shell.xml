@@ -8,7 +8,7 @@
   <price>0</price>
   <description>TODO</description>
   <gfx_store>/gfx/misc/icons/spiked-shell.webp</gfx_store>
-  <desc_extra>Reflect 5% of damage back to attackers.</desc_extra>
+  <desc_extra>Reflect 5% of damage back to attackers. Reflected damage is affected by turret damage bonus.</desc_extra>
  </general>
  <specific type="modification">
   <lua>outfits/bioship/skills/reflective_shell.lua</lua>

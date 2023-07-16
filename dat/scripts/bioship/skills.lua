@@ -186,7 +186,7 @@ skills.set.health = {
       name = _("Reflective Shell"),
       tier = 5,
       requires = { "health4" },
-      desc = _("Reflects 5% of damage back to attackers."),
+      desc = _("Reflects 5% of damage back to attackers. Reflected damage is affected by turret damage bonus."),
       outfit = "Reflective Shell",
       icon = "spiked-shell.webp",
    },
