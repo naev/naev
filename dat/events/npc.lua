@@ -89,8 +89,16 @@ function land ()
                      break
                   end
                end
-               -- Also try make sure it's not a message e have seen before
-               if npcrep or npccache[ npcdata.msg ] then
+               -- Also try make sure it's not a message we have seen before
+               -- in case of multiple messages, we concatenate into one
+               local cachemsg = npcdata.msg
+               if type(cachemsg)=="table" then
+                  cachemsg = ""
+                  for j,m in ipairs(npcdata.msg) do
+                     cachemsg = cachemsg..m
+                  end
+               end
+               if npcrep or npccache[ cachemsg ] then
                   npcdata = v.create() -- Try to recreate
                else
                   break
