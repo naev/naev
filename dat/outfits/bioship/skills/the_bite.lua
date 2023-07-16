@@ -113,15 +113,16 @@ function descextra( p, o )
       if improved then
          dmg = dmg * 1.5
       end
+      dmg = fmt.number(dmg)
 
       if improved then
-         return fmt.f(_("Makes the ship lunge for {duration} seconds at the target to take a bite out of it for {damage:.0f} damage ({mass}) [Strong Jaws]. On succesful bite, weapon damage is increased by 25% for 10 seconds [Blood Lust], and 25% of bitten armour is restored to the ship [Strong Jaws]."),
+         return fmt.f(_("Makes the ship lunge for {duration} seconds at the target to take a bite out of it for {damage} damage ({mass}) [Strong Jaws]. On succesful bite, weapon damage is increased by 25% for 10 seconds [Blood Lust], and 25% of bitten armour is restored to the ship [Strong Jaws]."),
             {damage=dmg, mass=fmt.tonnes_short(mass), duration=dur } )
       elseif lust then
-         return fmt.f(_("Makes the ship lunge for {duration} seconds at the target to take a bite out of it for {damage:.0f} damage ({mass}). On succesful bite, weapon damage is increased by 25% for 10 seconds [Blood Lust]."),
+         return fmt.f(_("Makes the ship lunge for {duration} seconds at the target to take a bite out of it for {damage} damage ({mass}). On succesful bite, weapon damage is increased by 25% for 10 seconds [Blood Lust]."),
             {damage=dmg, mass=fmt.tonnes_short(mass), duration=dur } )
       else
-         return fmt.f(_("Makes the ship lunge at the target for {duration} seconds to take a bite out of it for {damage:.0f} damage ({mass})."),
+         return fmt.f(_("Makes the ship lunge at the target for {duration} seconds to take a bite out of it for {damage} damage ({mass})."),
             {damage=dmg, mass=fmt.tonnes_short(mass), duration=dur } )
       end
    end

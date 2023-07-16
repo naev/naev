@@ -28,6 +28,7 @@
       * Lua Love API should be better at handling input and not apply keys held before started
       * Increase time compression when disabled
       * Inverted how hide, evasion, and stealth values work. Now lower is better
+      * Hide locked slots without outfits as the player can't do anything with them
    * New Content
       * New mechanic for House Sirius called flow to unlock psychic powers
          * Gives passive bonuses to Sirius ships
