@@ -18,7 +18,7 @@
       * Make it explicit when all the escorts have jumped or landed
       * Player ship is no longer translucent when in stealth as it is redundant with the stealth icon
       * Show enemy/ally factions in the faction standing info window
-      * Space dust is properly antialiased
+      * Space dust is properly anti-aliased
       * Minor speed ups to patrol lane computations
       * Try to enforce minimum number of articles in the news
       * Independent patrol and bounty missions can be completed on more planets and stations
@@ -50,6 +50,7 @@
       * Added the Space Trader Society faction
       * Custom death animations for many ships
       * More ways to increase fleet capacity
+      * The pirate clans are now more differentiated in terms of AI behaviour and taunts
    * Engine
       * Map system viewer is more compact
       * Added hook.hail_spob
