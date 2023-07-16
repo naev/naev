@@ -727,6 +727,7 @@ static void equipment_renderOverlayColumn( double x, double y, double h,
          display = NULL;
          if ((i==mover) && wgt->canmodify) {
             if (lst[i].sslot->locked) {
+               top = 1;
                display = _("Locked");
                c = &cFontRed;
             }
