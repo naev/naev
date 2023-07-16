@@ -1443,9 +1443,14 @@ Has a character say something.
 ]]
 function vn.say( who, what, noclear, nowait )
    vn._checkstarted()
-   table.insert( vn._states, vn.StateSay.new( who, what, noclear ) )
-   if not nowait then
-      table.insert( vn._states, vn.StateWait.new() )
+   if type(what)~="table" then
+      what = {what}
+   end
+   for k,s in ipairs(what) do
+      table.insert( vn._states, vn.StateSay.new( who, s, noclear ) )
+      if not nowait then
+         table.insert( vn._states, vn.StateWait.new() )
+      end
    end
 end
 
