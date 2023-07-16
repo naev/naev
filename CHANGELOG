@@ -23,6 +23,7 @@
       * Manual aiming model aims at the mouse location when the mouse is visible
       * Travelling merchant tells you when new wares are available and should be easier to find
       * Lua Love API should be better at handling input and not apply keys held before started
+      * Inverted how hide, evasion, and stealth values work. Now lower is better
    * New Content
       * New mechanic for House Sirius called flow to unlock psychic powers
          * Gives passive bonuses to Sirius ships
