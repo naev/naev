@@ -18,7 +18,9 @@ local taunt_list = {
    _("Your demise is imminent!"),
    _("The pack feasts tonight!"),
    _("Ah look, a rabbit caught in the headlights!"),
-   _("Looks like a tasty morsel!"),
+   _("Looks like a tasty morsel came to play!"),
+   _("The hunt is on!"),
+   _("I love the thrill of the hunt!"),
 }
 
 function create ()
