@@ -2685,6 +2685,7 @@ dat/ai/core/idle/wait.lua
 dat/ai/core/misc/careful.lua
 dat/ai/core/misc/distress.lua
 dat/ai/core/misc/lanes.lua
+dat/ai/core/misc/pirate.lua
 dat/ai/core/misc/scans.lua
 dat/ai/core/setup.lua
 dat/ai/drone_miner.lua
