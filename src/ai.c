@@ -127,7 +127,7 @@ static int ai_sort( const void *p1, const void *p2 );
 /* Task management. */
 static void ai_taskGC( Pilot* pilot );
 static Task* ai_createTask( lua_State *L, int subtask );
-static int ai_tasktarget( lua_State *L, Task *t );
+static int ai_tasktarget( lua_State *L, const Task *t );
 
 /*
  * AI routines for Lua
@@ -1226,7 +1226,7 @@ static Task* ai_createTask( lua_State *L, int subtask )
 /**
  * @brief Pushes a task target.
  */
-static int ai_tasktarget( lua_State *L, Task *t )
+static int ai_tasktarget( lua_State *L, const Task *t )
 {
    if (t->dat == LUA_NOREF)
       return 0;
@@ -1283,7 +1283,7 @@ static int aiL_poptask( lua_State *L )
  */
 static int aiL_taskname( lua_State *L )
 {
-   Task *t = ai_curTask( cur_pilot );
+   const Task *t = ai_curTask( cur_pilot );
    if (t)
       lua_pushstring(L, t->name);
    else
@@ -1300,7 +1300,7 @@ static int aiL_taskname( lua_State *L )
  */
 static int aiL_taskdata( lua_State *L )
 {
-   Task *t = ai_curTask( cur_pilot );
+   const Task *t = ai_curTask( cur_pilot );
 
    /* Must have a task. */
    if (t == NULL)
@@ -1358,7 +1358,7 @@ static int aiL_popsubtask( lua_State *L )
  */
 static int aiL_subtaskname( lua_State *L )
 {
-   Task *t = ai_curTask( cur_pilot );
+   const Task *t = ai_curTask( cur_pilot );
    if ((t != NULL) && (t->subtask != NULL))
       lua_pushstring(L, t->subtask->name);
    else
@@ -1375,7 +1375,7 @@ static int aiL_subtaskname( lua_State *L )
  */
 static int aiL_subtaskdata( lua_State *L )
 {
-   Task *t = ai_curTask( cur_pilot );
+    const Task *t = ai_curTask( cur_pilot );
    /* Must have a subtask. */
    if ((t == NULL) || (t->subtask == NULL))
       return 0;
@@ -2209,11 +2209,13 @@ static int aiL_brake( lua_State *L )
 static int aiL_getnearestspob( lua_State *L )
 {
    double dist, d;
-   int i, j;
+   int j;
    LuaSpob spob;
 
    /* cycle through spobs */
-   for (dist=HUGE_VAL, j=-1, i=0; i<array_size(cur_system->spobs); i++) {
+   dist = HUGE_VAL;
+   j = -1;
+   for (int i=0; i<array_size(cur_system->spobs); i++) {
       if (!spob_hasService(cur_system->spobs[i],SPOB_SERVICE_INHABITED))
          continue;
       d = vec2_dist( &cur_system->spobs[i]->pos, &cur_pilot->solid.pos );
@@ -2243,15 +2245,16 @@ static int aiL_getnearestspob( lua_State *L )
  */
 static int aiL_getspobfrompos( lua_State *L )
 {
-   vec2 *pos;
-   double dist, d;
-   int i, j;
+   int j;
+   double dist;
    LuaSpob spob;
-
-   pos = luaL_checkvector(L,1);
+   const vec2 *pos = luaL_checkvector(L,1);
 
    /* cycle through spobs */
-   for (dist=HUGE_VAL, j=-1, i=0; i<array_size(cur_system->spobs); i++) {
+   dist = HUGE_VAL;
+   j = -1;
+   for (int i=0; i<array_size(cur_system->spobs); i++) {
+      double d;
       if (!spob_hasService(cur_system->spobs[i],SPOB_SERVICE_INHABITED))
          continue;
       d = vec2_dist( &cur_system->spobs[i]->pos, pos );
@@ -2309,7 +2312,7 @@ static int aiL_getlandspob( lua_State *L )
    int *ind;
    int id;
    LuaSpob spob;
-   Spob *p;
+   const Spob *p;
    int only_friend;
 
    /* If pilot can't land ignore. */
@@ -2367,12 +2370,12 @@ static int aiL_getlandspob( lua_State *L )
  */
 static int aiL_land( lua_State *L )
 {
-   Spob *spob;
+   const Spob *spob;
    HookParam hparam;
 
    if (!lua_isnoneornil(L,1)) {
       int i;
-      Spob *pnt = luaL_validspob( L, 1 );
+      const Spob *pnt = luaL_validspob( L, 1 );
 
       /* Find the spob. */
       for (i=0; i < array_size(cur_system->spobs); i++) {
@@ -2470,7 +2473,7 @@ static int aiL_hyperspace( lua_State *L )
    }
 
    dist = space_hyperspace(cur_pilot);
-   if (dist == 0.) {
+   if (dist == 0) {
       pilot_shootStop( cur_pilot, 0 );
       pilot_shootStop( cur_pilot, 1 );
       return 0;
@@ -2489,8 +2492,8 @@ static int aiL_hyperspace( lua_State *L )
  */
 static int aiL_sethyptarget( lua_State *L )
 {
-   JumpPoint *jp;
-   LuaJump *lj;
+   const JumpPoint *jp;
+   const LuaJump *lj;
    vec2 vec;
    double a, rad;
 
@@ -2525,7 +2528,7 @@ static int aiL_sethyptarget( lua_State *L )
  */
 static int aiL_nearhyptarget( lua_State *L )
 {
-   JumpPoint *jp;
+   const JumpPoint *jp;
    double mindist, dist;
    LuaJump lj;
 
@@ -2533,7 +2536,7 @@ static int aiL_nearhyptarget( lua_State *L )
    mindist = INFINITY;
    jp      = NULL;
    for (int i=0; i < array_size(cur_system->jumps); i++) {
-      JumpPoint *jiter = &cur_system->jumps[i];
+      const JumpPoint *jiter = &cur_system->jumps[i];
       int useshidden = faction_usesHiddenJumps( cur_pilot->faction );
 
       /* We want only standard jump points to be used. */
@@ -2655,7 +2658,7 @@ static int aiL_relvel( lua_State *L )
    double dot, mod;
    vec2 vv, pv;
    int absolute;
-   Pilot *p = luaL_validpilot(L,1);
+   const Pilot *p = luaL_validpilot(L,1);
 
    if (lua_gettop(L) > 1)
       absolute = lua_toboolean(L,2);
@@ -2695,7 +2698,7 @@ static int aiL_follow_accurate( lua_State *L )
 {
    vec2 point, cons, goal, pv;
    double radius, angle, Kp, Kd, angle2;
-   Pilot *p, *target;
+   const Pilot *p, *target;
    const char *method;
 
    p = cur_pilot;
@@ -2750,7 +2753,8 @@ static int aiL_face_accurate( lua_State *L )
 {
    vec2 point, cons, goal, *pos, *vel;
    double radius, angle, Kp, Kd;
-   Pilot *p = cur_pilot;
+   const Pilot *p = cur_pilot;
+
    pos = lua_tovector(L,1);
    vel = lua_tovector(L,2);
    radius = luaL_checknumber(L,3);
@@ -2834,7 +2838,7 @@ static int aiL_combat( lua_State *L )
  */
 static int aiL_settarget( lua_State *L )
 {
-   Pilot *p = luaL_validpilot(L,1);
+   const Pilot *p = luaL_validpilot(L,1);
    pilot_setTarget( cur_pilot, p->id );
    return 0;
 }
@@ -2848,7 +2852,7 @@ static int aiL_settarget( lua_State *L )
  */
 static int aiL_setasterotarget( lua_State *L )
 {
-   LuaAsteroid_t *la = luaL_checkasteroid(L,1);
+   const LuaAsteroid_t *la = luaL_checkasteroid(L,1);
 
    /* Set the target asteroid. */
    cur_pilot->nav_anchor = la->parent;
@@ -2951,10 +2955,10 @@ static int aiL_weapSet( lua_State *L )
       /* Active weapon sets only care about keypresses. */
       /* activate */
       if (type && !on)
-         pilot_weapSetPress(p, id, +1 );
+         pilot_weapSetPress( p, id, +1 );
       /* deactivate */
       if (!type && on)
-         pilot_weapSetPress(p, id, +1 );
+         pilot_weapSetPress( p, id, +1 );
    }
    else {
       /* weapset type is weapon or change */
@@ -3042,9 +3046,7 @@ static int aiL_shoot( lua_State *L )
  */
 static int aiL_getenemy( lua_State *L )
 {
-   unsigned int id;
-
-   id = pilot_getNearestEnemy(cur_pilot);
+   unsigned int id = pilot_getNearestEnemy(cur_pilot);
 
    if (id==0) /* No enemy found */
       return 0;
@@ -3121,7 +3123,7 @@ static int aiL_getenemy_heuristic( lua_State *L )
  */
 static int aiL_hostile( lua_State *L )
 {
-   Pilot *p = luaL_validpilot(L,1);
+   const Pilot *p = luaL_validpilot(L,1);
 
    if (pilot_isWithPlayer(p))
       pilot_setHostile(cur_pilot);
@@ -3186,7 +3188,7 @@ static int aiL_getweapammo( lua_State *L )
  */
 static int aiL_canboard( lua_State *L )
 {
-   Pilot *p = luaL_validpilot(L,1);
+   const Pilot *p = luaL_validpilot(L,1);
 
    /* Must be disabled. */
    if (!pilot_isDisabled(p)) {
@@ -3208,7 +3210,7 @@ static int aiL_canboard( lua_State *L )
  */
 static int aiL_relsize( lua_State *L )
 {
-   Pilot *p = luaL_validpilot(L,1);
+   const Pilot *p = luaL_validpilot(L,1);
    lua_pushnumber(L, pilot_relsize(cur_pilot, p));
    return 1;
 }
@@ -3222,7 +3224,7 @@ static int aiL_relsize( lua_State *L )
  */
 static int aiL_reldps( lua_State *L )
 {
-   Pilot *p = luaL_validpilot(L,1);
+   const Pilot *p = luaL_validpilot(L,1);
    lua_pushnumber(L, pilot_reldps(cur_pilot, p));
    return 1;
 }
@@ -3236,7 +3238,7 @@ static int aiL_reldps( lua_State *L )
  */
 static int aiL_relhp( lua_State *L )
 {
-   Pilot *p = luaL_validpilot(L,1);
+   const Pilot *p = luaL_validpilot(L,1);
    lua_pushnumber(L, pilot_relhp(cur_pilot, p));
    return 1;
 }
@@ -3348,9 +3350,7 @@ static int aiL_distress( lua_State *L )
  */
 static int aiL_getBoss( lua_State *L )
 {
-   unsigned int id;
-
-   id = pilot_getBoss( cur_pilot );
+   unsigned int id = pilot_getBoss( cur_pilot );
 
    if (id==0) /* No boss found */
       return 0;
