@@ -15,6 +15,22 @@ missions, equipment, and ships; Even the galaxy itself grows larger with each
 release. For the literarily-inclined, there are large amounts of lore
 accompanying everything from planets to equipment.
 
+## GETTING NAEV
+
+Naev is on steam, itch.io, flathub, many linux distributions and more! If you
+don't feel up to the task of compiling it yourself, please see the [Naev
+website](https://naev.org/downloads/) for different ways to get started playing
+Naev!
+
+## PLUGINS
+
+Plugins are supported since version 0.10.0. Although we do not have a plugin
+manager yet ([help wanted!](https://github.com/naev/naev/issues/2180 ), you can
+look at existing plugins registered on the [naev plugins
+repository](https://github.com/naev/naev-plugins) and install them manually. If
+you want to get started making your own, please take a look at the [Naev
+Development Manual](https://naev.org/devmanual/) (WIP).
+
 ## DEPENDENCIES
 
 Naev's dependencies are intended to be widely available. In addition to a
