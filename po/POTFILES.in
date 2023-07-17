@@ -2841,6 +2841,7 @@ dat/events/news/trader.lua
 dat/events/news/zalek.lua
 dat/events/news/zalek_campaign.lua
 dat/events/npc.lua
+dat/events/npc/dreamer_clan.lua
 dat/events/npc/dvaered.lua
 dat/events/npc/empire.lua
 dat/events/npc/flf.lua
