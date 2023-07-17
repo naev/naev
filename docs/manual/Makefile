@@ -9,7 +9,7 @@ version.tex: ../../dat/VERSION
 	tr -d "\n" < $< >> $@
 	echo "}" >> $@
 
-naev_dev_manual.pdf: naev_dev_manual.tex Naev.png llama
+naev_dev_manual.pdf: naev_dev_manual.tex Naev.png llama version.tex
 	latexmk -pdf -pdflatex="$(TEX)" naev_dev_manual
 
 Naev.png: ../../artwork/gfx/Naev.webp
