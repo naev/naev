@@ -20,13 +20,13 @@ local vn = require 'vn'
 --local vni = require 'vnimage'
 local fmt = require "format"
 --local lmisn = require "lmisn"
---local equipopt = require "equipopt"
---local pilotai = require "pilotai"
+local pilotai = require "pilotai"
 --local love_shaders = require "love_shaders"
 local love_audio = require 'love.audio'
 local reverb_preset = require 'reverb_preset'
 
-local _trialspb, trialsys = spob.getS("Jade Court")
+-- Assumes the trialsys -> Kobopos -> Logania systems are connected
+local trialspb, trialsys = spob.getS("Jade Court")
 local badsys = system.get("Kobopos")
 local destsys = system.get("Logania")
 local title = _("Escape the Courts")
@@ -102,11 +102,83 @@ She sort of slumps at the wall, you're not sure if she's still concious.]]))
 end
 
 function enter ()
-   --[[
    local scur = system.cur()
-   if scur==trialsys then
-   elseif scur==badsys then
-   elseif scur==destsys then
+   if scur==trialsys and mem.state==0 then
+      local fct = faction.get("Empire")
+
+      pilotai.clear()
+
+      local function add_blockade( jp )
+         local pos = jp:pos()
+         local m, a = pos:polar()
+         pos = vec2.newP( m-100, a ) -- Slightly towards the system center
+
+         local l = pilot.add( "Empire Peacemaker", fct, pos, nil, {ai="guard"} )
+         l:setHostile(true)
+         for k,s in ipairs{ "Empire Pacifier", "Empire Pacifier", "Empire Admonisher", "Empire Admonisher", "Empire Shark", "Empire Shark", "Empire Shark" } do
+            local p = pilot.add( s, fct, pos+vec2.newP(100,rnd.angle()), nil, {ai="guard"} )
+            p:setLeader( l )
+            p:setHostile(true)
+         end
+      end
+
+      -- Create blockades on all jump points except the one we want
+      for k,j in ipairs(scur:jumps()) do
+         if not j:hidden() and not j:exitonly() and j:dest() ~= badsys then
+            add_blockade( j )
+         elseif j:dest() ~= badsys then
+            -- Tiny blockade on the target system, player should be able to plow through
+            local l
+            for i=1,2 do
+               local p = pilot.add( "Empire Shark", fct, j:pos() + vec2.newP( 50, rnd.angle() ), nil, {ai="guard"} )
+               if not l then
+                  l = p
+               else
+                  p:setLeader(l)
+               end
+               p:setHostile(true)
+            end
+         end
+      end
+
+      hook.timer( 7, "spawn bogeys" )
+      mem.state=1
+   --elseif scur==badsys then
+   --elseif scur==destsys then
    end
-   --]]
+end
+
+local bogey_spawner = 0
+local bogeys = {
+   { "Empire Shark", "Empire Shark", "Empire Lancelot" },
+   { "Empire Admonisher", "Empire Admonisher" },
+   { "Empire Pacifier", "Empire Lancelot", "Empire Lancelot" },
+   { "Empire Hawking", "Empire Admonisher", "Empire Adominsher" },
+   { "Empire Peacemaker", "Empire Pacifier", "Empire Pacifier" },
+}
+function spawn_bogeys ()
+   bogey_spawner = bogey_spawner+1
+   if bogey_spawner > #bogeys or system.cur()~=trialsys then
+      return
+   end
+
+   local jmp = jump.get( system.cur(), badsys )
+
+   local fct = faction.get("Empire")
+   local l
+   for k,s in ipairs(bogeys[ bogey_spawner ]) do
+      local p = pilot.add( bogeys[1], fct, trialspb, nil, {ai="patrol"} )
+      if not l then
+         l = p
+      else
+         p:setLeader( l )
+      end
+      p:setHostile(true)
+      -- They will naturally go to the jump point and attack the player
+      local m = p:memory()
+      m.guardpos = { trialspb:pos(), jmp:pos() }
+   end
+
+   -- They keep on coming!
+   hook.timer( 7, "spawn_bogeys" )
 end
