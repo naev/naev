@@ -64,6 +64,7 @@ utils/model-view-c/*.bin
 
 docs/manual/Naev.png
 docs/manual/images/*
+docs/manual/version.tex
 docs/manual/_markdown_naev_dev_manual/
 docs/manual/_minted-naev_dev_manual/
 docs/manual/naev_dev_manual.aux

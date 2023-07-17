@@ -4,8 +4,13 @@ TEX := lualatex -shell-escape
 
 all: naev_dev_manual.pdf llama
 
+version.tex: ../../dat/VERSION
+	echo -n "\version{" > $@
+	tr -d "\n" < $< >> $@
+	echo "}" >> $@
+
 naev_dev_manual.pdf: naev_dev_manual.tex Naev.png llama
-	latexmk -pdf -pdflatex="$(TEX)" naev_deV_manual
+	latexmk -pdf -pdflatex="$(TEX)" naev_dev_manual
 
 Naev.png: ../../artwork/gfx/Naev.webp
 	gm convert "$<" "$@"
