@@ -9,7 +9,7 @@ local msg_combined
 local desc_list = {}
 desc_list["generic"] = {
    _("A Dreamer clan soul, with a pocketful of star-shaped stickers, playfully distributing them to fellow bar patrons as a symbol of interconnectedness."),
-   _("A pirate drumming on bongo drums with infectious energy"),
+   _("A pirate drumming on bongo drums with infectious energy."),
    _("A blissed-out Dreamer practicing meditative yoga poses in a corner."),
    _("A pirate creating abstract artwork on a portable canvas."),
    _("A Dreamer clan soul who seems to fade in and out of the concious reality."),
