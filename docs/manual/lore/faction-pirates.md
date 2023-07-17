@@ -39,3 +39,19 @@ They inhabit the pocket of space between House Za'lek and House Dvaered, where t
 The newest of the main pirate clans, the Dreamer Clan was able to capitalize on the Incident and establish itself as a force to be reckoned with. Formed mainly by refugees and outcasts of the so-called "civilized society", the Dreamer Clan is formed by individuals who do not want to follow rules. They have no hierarchy and form an eclectic and anarchistic bunch, giving lots of leeway for personal freedom and using voting and other systems to decide how to take action. They heavily rely on piracy, and most individuals pursue artistic talents when not raiding nearby convoys or scavenging from wrecks from the Incident. They are also renown for being a large hub of illicit substances, which their members use freely and some claim to get Sirius-like psychic powers from substance abuse.
 
 They are located in the Nebula, near House Sirius and the Frontier, making use of abandoned planets and stations, which they adapt to their purposes. Although they tend to have little contact with other pirates outside of assemblies, they have lots of trade with the Raven Clan, which wants access to the lucrative drug trade. Although in general less organized than other clans, they can be ruthless at raiding convoys, sometimes going deep into House Sirius space.
+
+## Independent Pirates
+
+Formed by individuals that have given up on society and turned to piracy to make a living. They form a large part of all pirates and end up doing lots of the grunt work for the clans. As long as they do not cause problems they are welcome at all pirate clansworlds.
+
+## Marauders
+
+Usually formed by individuals that are not fit by the clans due to extreme violence, no critical thinking, problematic behaviour, no hygiene, or all of the above. They are tolerated by other pirates, who tend to exploit them and give them scraps, but they usually end up with short life spans.
+
+## Pirate Assemblies
+
+Usually occurring once a cycle, pirate assemblies are as formal of a gathering as you can find in the pirate world. They are usually held at more neutral pirate clansworld, such as those of the Raven Clan, and consist of several decaperiods of partying and lawmaking. The main event consists of the meeting of the Pirate Lords who will listen to proposals and decide on courses of actions, while letting their crew loose.
+
+The assemblies tend to be a good opportunity for the Pirate Lords to calculate each other strengths, where they tend to bring significant ships from their fleet. In many ways, the pirate assemblies tend to not only determine the future of the space pirates, but also tend to shape the future of the galaxy.
+
+The events tend to also attract the attention of other actors in the galaxy, with most Great Houses and the Empire sending somewhat undercover agents to try to get a glimpse of what is going on and gain advantage over other Great Houses. It is also common for less scrupulous merchants to show up as it can be a very profitable opportunity to sell grog and equipment to the drunken pirates.
