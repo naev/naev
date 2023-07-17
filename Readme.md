@@ -25,7 +25,7 @@ Naev!
 ## PLUGINS
 
 Plugins are supported since version 0.10.0. Although we do not have a plugin
-manager yet ([help wanted!](https://github.com/naev/naev/issues/2180 ), you can
+manager yet ([help wanted!](https://github.com/naev/naev/issues/2180)), you can
 look at existing plugins registered on the [naev plugins
 repository](https://github.com/naev/naev-plugins) and install them manually. If
 you want to get started making your own, please take a look at the [Naev
