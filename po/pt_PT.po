@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-07-16 01:21+0900\n"
-"PO-Revision-Date: 2023-01-31 23:56+0000\n"
+"PO-Revision-Date: 2023-07-18 00:02+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Portugal) <https://hosted.weblate.org/projects/"
 "naev/naev/pt_PT/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.16-dev\n"
+"X-Generator: Weblate 5.0-dev\n"
 
 #: physfs.c:1
 msgid "no error"
@@ -1412,27 +1412,21 @@ msgstr "A antimatéria está a contaminar a tua nave!"
 #: dat/effects/astral_projection.xml:2
 #: dat/outfits/flow/abilities/astral_projection.xml:2
 #: dat/outfits/flow/abilities/astral_projection.lua:57
-#, fuzzy
-#| msgid "Attraction"
 msgid "Astral Projection"
-msgstr "Atração"
+msgstr "Projeção astral"
 
 #: dat/effects/astral_projection.xml:3
-#, fuzzy
-#| msgid "Shields are being boosted."
 msgid "Ship is being projected."
-msgstr "Os escudos estão a ser reforçados."
+msgstr "A nave está a ser projetada."
 
 #: dat/effects/avatar_of_sirichana.xml:2
 #: dat/outfits/flow/abilities/avatar_of_sirichana.xml:2
-#, fuzzy
-#| msgid "For Sirichana!"
 msgid "Avatar of Sirichana"
-msgstr "Por Sirichana!"
+msgstr "Avatar de Sirichana"
 
 #: dat/effects/avatar_of_sirichana.xml:3
 msgid "You are an avatar of Sirichana!"
-msgstr ""
+msgstr "És um avatar de Sirichana!"
 
 #: dat/effects/blink.xml:2
 msgid "Blink"
@@ -1451,24 +1445,20 @@ msgid "The ship has had a taste of blood and wants more!"
 msgstr "A nave saboreou sangue e quer mais!"
 
 #: dat/effects/chakra_burn.xml:2
-#, fuzzy
-#| msgid "Plasma Burn"
 msgid "Chakra Burn"
-msgstr "Queimadura de plasma"
+msgstr "Queimadura de Chakra"
 
 #: dat/effects/chakra_burn.xml:3
-#, fuzzy
-#| msgid "Your ship just blinked!"
 msgid "Your ship is being burned by chakra!"
-msgstr "A tua nave acabou de saltar!"
+msgstr "A tua nave está a ser queimada pelo chakra!"
 
 #: dat/effects/chakra_corruption.xml:2
 msgid "Chakra Corruption"
-msgstr ""
+msgstr "Corrupção de Chakra"
 
 #: dat/effects/chakra_corruption.xml:3
 msgid "Your ship is corrupted by chakra damage!"
-msgstr ""
+msgstr "A tua nave está corrompida por dano de chakra!"
 
 #: dat/effects/crippling_plasma.xml:2
 #: dat/outfits/bioship/skills/crippling_plasma.xml:2
@@ -1506,16 +1496,12 @@ msgstr "Desaparecendo!"
 
 #: dat/effects/feather_drive.xml:2
 #: dat/outfits/flow/abilities/feather_drive.xml:2
-#, fuzzy
-#| msgid "Father's Pride"
 msgid "Feather Drive"
-msgstr "Father's Pride"
+msgstr "Feather Drive"
 
 #: dat/effects/feather_drive.xml:3
-#, fuzzy
-#| msgid "Your ship just blinked!"
 msgid "Your ship just used Feather DRive!"
-msgstr "A tua nave acabou de saltar!"
+msgstr "A tua nave acabou de usar Feather DRive!"
 
 #. Attack tree
 #. For everyone!
@@ -1527,11 +1513,13 @@ msgstr "Fúria selvagem I"
 
 #: dat/effects/fractured_reality.xml:2
 msgid "Fractured Reality"
-msgstr ""
+msgstr "Realidade fraturada"
 
 #: dat/effects/fractured_reality.xml:3
 msgid "Reality is not really what it seems! Or is this the true reality?"
 msgstr ""
+"A realidade não é realmente o que parece! Ou será esta a verdadeira "
+"realidade?"
 
 #: dat/effects/hypergate_enter.xml:2
 msgid "Hypergate Enter"
@@ -11570,6 +11558,10 @@ msgid ""
 "that it seems like large nebula crystals have started to grow on the station "
 "ruins. Wait, is this really Arandon Station?"
 msgstr ""
+"Outrora um movimentado centro comercial, a estação ficou irremediavelmente "
+"destruída no Incidente, e foi apanhada limpa por catadores. Uma coisa "
+"inexplicável é que parece que grandes cristais de nebulosa começaram a "
+"crescer nas ruínas da estação. Espere, isto é realmente a Estação Arandon?"
 
 #: dat/spob/arashu.xml:2
 msgid "Arashu"
@@ -24103,6 +24095,11 @@ msgid ""
 "storage and ship moorings for pilots who travel through this region of space "
 "a lot."
 msgstr ""
+"A Estação Turnpike é uma instalação de comércio semi-privatizada. Ela está "
+"localizada num dos principais cruzamentos no espaço do Império, tornando-se "
+"uma oportunidade bem-vinda para os comerciantes trocarem entre si. A estação "
+"também oferece armazenamento privado e amarrações de navios para pilotos que "
+"viajam muito por esta região do espaço."
 
 #: dat/spob/turnpike_station.xml:29
 msgid ""
@@ -37421,10 +37418,8 @@ msgid "\"Hello?\""
 msgstr "\"Olá\""
 
 #: dat/events/neutral/capricorn_pirates.lua:137
-#, fuzzy
-#| msgid "Are you sure?"
 msgid "\"Are you all right?\""
-msgstr "Tens a certeza?"
+msgstr "\"Estás bem?\""
 
 #: dat/events/neutral/capricorn_pirates.lua:142
 msgid ""
@@ -40837,7 +40832,7 @@ msgstr "Vês um civil olhando fixamente para uma mesa."
 
 #: dat/events/npc/empire.lua:13
 msgid "A civilian is swishing their drink."
-msgstr "Um civil está a abanar a sua bebida."
+msgstr "Um civil está a agitar a sua bebida."
 
 #: dat/events/npc/empire.lua:14
 msgid "An individual is sitting idly at the bar."
@@ -41785,10 +41780,8 @@ msgid "A pirate who may have had too much grog."
 msgstr ""
 
 #: dat/events/npc/pirate.lua:15
-#, fuzzy
-#| msgid "A civilian is swishing their drink."
 msgid "A careless pirate spilling their drink all over."
-msgstr "Um civil está a abanar a sua bebida."
+msgstr "Um pirata descuidado a derramar a bebida por toda parte."
 
 #: dat/events/npc/pirate.lua:16
 msgid "A pirate relaxing after a long day of pillaging."
@@ -41819,10 +41812,8 @@ msgid "A grizzled pirate nursing a mug of grog."
 msgstr ""
 
 #: dat/events/npc/pirate.lua:23
-#, fuzzy
-#| msgid "A civilian is swishing their drink."
 msgid "A lone pirate silently sipping a drink in the corner."
-msgstr "Um civil está a abanar a sua bebida."
+msgstr "Um pirata solitário a beber silenciosamente uma bebida no canto."
 
 #: dat/events/npc/pirate.lua:24
 msgid "A pirate with a menacing grin, scanning the room for trouble."
@@ -42195,10 +42186,8 @@ msgid "A well-kempt Raven clansperson."
 msgstr ""
 
 #: dat/events/npc/raven_clan.lua:15
-#, fuzzy
-#| msgid "A civilian is swishing their drink."
 msgid "A Raven clansperson calmly sipping their drink "
-msgstr "Um civil está a abanar a sua bebida."
+msgstr "Um membro do clã Raven a beber calmamente a bebida "
 
 #: dat/events/npc/raven_clan.lua:16
 msgid ""
@@ -42395,10 +42384,8 @@ msgstr ""
 #. local fmt = require "format"
 #. State. Nothing persists.
 #: dat/events/npc/soromid.lua:10
-#, fuzzy
-#| msgid "A civilian is swishing their drink."
 msgid "A new-human civilian is twirling their drink."
-msgstr "Um civil está a abanar a sua bebida."
+msgstr "Um novo civil humano está a mexer na bebida."
 
 #: dat/events/npc/soromid.lua:11
 msgid "A genetic-modified individual is idle at the bar."
@@ -44687,10 +44674,8 @@ msgid "Go to the room on the left"
 msgstr ""
 
 #: dat/events/sirius/eye_of_night_mystery.lua:279
-#, fuzzy
-#| msgid "No space port here\n"
 msgid "Go to the spaceport bar"
-msgstr "Não há porto espacial aqui\n"
+msgstr "Ir ao porto espacial"
 
 #: dat/events/sirius/eye_of_night_mystery.lua:282
 #: dat/events/sirius/eye_of_night_mystery.lua:419
@@ -44796,10 +44781,8 @@ msgid ""
 msgstr ""
 
 #: dat/events/sirius/eye_of_night_mystery.lua:342
-#, fuzzy
-#| msgid "\"What did you do?\""
 msgid "What do you do?"
-msgstr "\"O que fizeste?\""
+msgstr "O que fazes?"
 
 #: dat/events/sirius/eye_of_night_mystery.lua:351
 msgid "Drink the cocktail mixer"
@@ -71657,10 +71640,8 @@ msgid "You approach Zuri."
 msgstr ""
 
 #: dat/missions/minerva/pirate5.lua:146
-#, fuzzy
-#| msgid "Are you sure?"
 msgid "\"Are you pirates?\""
-msgstr "Tens a certeza?"
+msgstr "\"Vocês são piratas?\""
 
 #: dat/missions/minerva/pirate5.lua:153
 msgid ""
@@ -92711,8 +92692,8 @@ msgid ""
 "forward you {credits}. Do you need help buying and equipping the outfit?\""
 msgstr ""
 "\"Ouvi dizer que este lugar vende o #oCanhão de Iões#0. Se quiseres derrubar "
-"naves de forma não letal, o #odano de iões#0 é a melhor aposta. Aqui, pega "
-"em {credits}. Precisas de ajuda para comprar e instalar o equipamento?\""
+"naves de forma não letal, o #odano de iões#0 é a melhor aposta. Pega nestes "
+"{credits}. Precisas de ajuda para comprar e instalar o equipamento?\""
 
 #: dat/missions/tutorial/nelly01.lua:217
 msgid "Get useful advice"
@@ -92728,7 +92709,7 @@ msgid ""
 "Tab#0 and make sure to equip it at the #oEquipment Tab#0 before taking off. "
 "Once you get that done, let's head back to {pnt} in {sys}.\""
 msgstr ""
-"\"OK! Estás a tomar a iniciativa. Compra o {outfit} no separador #oOutfits#0 "
+"\"OK! Estás a tomar a iniciativa. Compra o {outfit} no separador #oArmador#0 "
 "e certifica-te de instalá-lo no separador #oEquipamento#0 antes de descolar. "
 "Depois de fazeres isso, vamos voltar para {pnt} em {sys}.\""
 
@@ -92737,8 +92718,8 @@ msgid ""
 "\"OK! I'll guide you through it. For now, please go to the #oOutfits Tab#0 "
 "of the landing window.\""
 msgstr ""
-"\"OK! Vou guiar-te. Por enquanto, vai ao separador #oEquipamentos#0 da "
-"janela de aterragem.\""
+"\"OK! Vou guiar-te. Por enquanto, vai ao separador #oArmador#0 da janela de "
+"aterragem.\""
 
 #. Get rid of cargo
 #. Hook the outfits
@@ -94061,11 +94042,11 @@ msgid ""
 "believe I can be of help. As your new Ship AI, would you like to give me a "
 "name?\""
 msgstr ""
-"\"De qualquer modo, a partir de agora, serei o a tua IA da nave, mas não te "
-"preocupes se receberes um nova nave, serei transferida sem qualquer "
-"problema. Se tiveres quaisquer perguntas ou comentários sobre como funciona "
-"a tua nave ou como fazer as coisas, creio que posso ser útil. Como a tua "
-"nova IA da nave, gostarias de me dar um nome?\""
+"\"De qualquer modo, a partir de agora, serei a Inteligência Artificial (IA) "
+"da tua nave, mas não te preocupes, se receberes uma nova nave, serei "
+"transferida sem qualquer problema. Se tiveres quaisquer perguntas ou "
+"comentários sobre como funciona a tua nave ou como fazer as coisas, creio "
+"que posso ser útil. Como IA da tua nave, gostarias de me dar um nome?\""
 
 #. Can't use rename here
 #: dat/missions/tutorial/tutorial.lua:75
@@ -113846,10 +113827,9 @@ msgid " [locked]"
 msgstr " [bloqueado]"
 
 #: src/equipment.c:1345
-#, fuzzy, c-format
-#| msgid "%.2f DPS [%.2f EPS]"
+#, c-format
 msgid "%.2f DPS [%.2f EPS]\n"
-msgstr "%.2f danos/seg [%.2f energia/seg]"
+msgstr "%.2f danos/seg [%.2f energia/seg]\n"
 
 #: src/equipment.c:1384 src/equipment.c:2051
 msgid "Invalid Escort"
@@ -114102,7 +114082,7 @@ msgstr "Só mostrar equipamentos compatíveis c/ a nave atual"
 
 #: src/equipment.c:1970 src/land_outfits.c:771
 msgid "Show only light outfits"
-msgstr "Mostrar apenas equipamentos ligeiros"
+msgstr "Só mostrar equipamentos ligeiros"
 
 #: src/equipment.c:1971 src/land_outfits.c:772
 msgid "Show only medium outfits"
@@ -116937,28 +116917,28 @@ msgid "This system does not offer missions"
 msgstr "Este sistema não oferece missões"
 
 #: src/map_system.c:533
-#, fuzzy
-#| msgid "This system does not have a trade outlet"
 msgid ""
 "\n"
 "This system does not have a trade outlet"
-msgstr "Este sistema não tem um ponto de venda comercial"
+msgstr ""
+"\n"
+"Este sistema não tem um ponto de venda comercial"
 
 #: src/map_system.c:534
-#, fuzzy
-#| msgid "This system does not sell ship equipment"
 msgid ""
 "\n"
 "This system does not sell ship equipment"
-msgstr "Este sistema não vende equipamentos para naves"
+msgstr ""
+"\n"
+"Este sistema não vende equipamentos para naves"
 
 #: src/map_system.c:535
-#, fuzzy
-#| msgid "This system does not sell ships"
 msgid ""
 "\n"
 "This system does not sell ships"
-msgstr "Este sistema não vende naves"
+msgstr ""
+"\n"
+"Este sistema não vende naves"
 
 #: src/map_system.c:712
 #, c-format
