@@ -101,13 +101,14 @@ local function getMessage( lst )
    return lst[ rnd.rnd(1, #lst) ]
 end
 
+local fct = faction.get("Empire")
 return function ()
    local cur, scur = spob.cur()
    local presence = scur:presences()["Empire"] or 0
    local tags = cur:tags()
 
    local w = 0
-   if cur:faction() == faction.get("Empire") then
+   if cur:faction() == fct then
       w = 1
    elseif presence>0 then
       w = 0.2 -- Fewer NPC

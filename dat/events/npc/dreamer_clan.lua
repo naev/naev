@@ -52,6 +52,7 @@ local function getMessage( lst )
    return lst[ rnd.rnd(1, #lst) ]
 end
 
+local fct = faction.get("Dreamer Clan")
 return function ()
    local cur, scur = spob.cur()
    local tags = cur:tags()
@@ -62,7 +63,7 @@ return function ()
    end
 
    local w = 0
-   if cur:faction() == faction.get("Dreamer Clan") then
+   if cur:faction() == fct then
       w = 1
    elseif presence>0 then
       w = 0.2 -- Fewer NPC
