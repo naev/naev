@@ -1442,6 +1442,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          1./temp->u.blt.delay * temp->u.blt.dmg.damage * (double)temp->u.blt.shots, temp->u.blt.dmg.damage * (double)temp->u.blt.shots );
    SDESC_COND( l, temp, _("\n%.2f Disable/s [%.0f Disable]"),
          1./temp->u.blt.delay * temp->u.blt.dmg.disable * (double)temp->u.blt.shots, temp->u.blt.dmg.disable * (double)temp->u.blt.shots );
+   SDESC_COND( l, temp, _("\n%.0f Hit Radius%s"), temp->u.blt.radius, (outfit_isProp(temp,OUTFIT_PROP_WEAP_FRIENDLYFIRE)?"!!":"") );
    SDESC_ADD(  l, temp, _("\n%.1f Shots Per Second"), 1./temp->u.blt.delay );
    SDESC_COND( l, temp, _("\n%.1f EPS [%.0f Energy]"),
          1./temp->u.blt.delay * temp->u.blt.energy, temp->u.blt.energy );
@@ -1807,6 +1808,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
          1. / temp->u.lau.delay * temp->u.lau.dmg.damage * (double)temp->u.lau.shots, temp->u.lau.dmg.damage * (double)temp->u.lau.shots );
    SDESC_COND( l, temp, _("\n%.1f Disable/s [%.0f Disable]"),
          1. / temp->u.lau.delay * temp->u.lau.dmg.disable * (double)temp->u.lau.shots, temp->u.lau.dmg.disable * (double)temp->u.lau.shots );
+   SDESC_COND( l, temp, _("\n%.0f Hit Radius%s"), temp->u.lau.radius, (outfit_isProp(temp,OUTFIT_PROP_WEAP_FRIENDLYFIRE)?"!!":"") );
    SDESC_ADD(  l, temp, _("\n%.1f Shots Per Second"), 1. / temp->u.lau.delay );
    SDESC_ADD(  l, temp, _("\n%s Range [%.1f duration]"), num2strU( outfit_range(temp), 0 ), temp->u.lau.duration );
    if (temp->u.lau.thrust > 0.) {
