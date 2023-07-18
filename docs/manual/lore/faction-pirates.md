@@ -10,9 +10,9 @@ The four main clans are the Black Lotus, Wild Ones, Raven Clan, and Dreamer clan
 * Leading Structure: Pirate Assembly
 * Government: Aristocracy (varies by clan)
 * Formation: Beginning of History
-* Homweorld: Varies by Clan
+* Homeworld: Varies by Clan
 * Important Figures:
-    * ???
+    * Pirate Lords
 
 ## Wild Ones Clan
 

@@ -6,8 +6,8 @@ House Dvaered is one of the major factions in the Naev universe. It evolved from
 
 * Leader: None
 * Leading Structure: High Command Generals
-* Government:Meritocracy
-* Formation: 331
+* Government: Meritocracy
+* Formation: UST 331
 * Homeworld: Dvaered High Command (Dvaer system)
 * Important Figures:
     * Warlords

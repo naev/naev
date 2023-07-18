@@ -8,7 +8,7 @@ The House Za'lek is a major faction in Naev.
 * Leading Structure:
 * Government: Stochastic Meritocracy
 * Formation: UST 72
-* Homweorld: Ruadan Prime (Ruadan system)
+* Homeworld: Ruadan Prime (Ruadan system)
 * Important Figures:
     * ???
 
