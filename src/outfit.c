@@ -653,6 +653,16 @@ const Damage *outfit_damage( const Outfit* o )
    return NULL;
 }
 /**
+ * @brief Gets the outfit's explosion radius.
+ *    @param o Outfit to get information from.
+ */
+double outfit_radius( const Outfit* o )
+{
+   if (outfit_isBolt(o)) return o->u.blt.radius;
+   else if (outfit_isLauncher(o)) return o->u.lau.radius;
+   return 0.;
+}
+/**
  * @brief Gets the outfit's delay.
  *    @param o Outfit to get information from.
  */
@@ -1320,6 +1330,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"swivel",temp->u.blt.swivel);
       xmlr_float(node,"dispersion",temp->u.blt.dispersion);
       xmlr_float(node,"speed_dispersion",temp->u.blt.speed_dispersion);
+      xmlr_float(node,"radius",temp->u.blt.radius);
       xmlr_int(node,"shots",temp->u.blt.shots);
       xmlr_int(node,"mining_rarity",temp->u.blt.mining_rarity);
       xmlr_strd(node,"lua",temp->lua_file);
@@ -1642,6 +1653,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"swivel",temp->u.lau.swivel);
       xmlr_float(node,"dispersion",temp->u.blt.dispersion);
       xmlr_float(node,"speed_dispersion",temp->u.blt.speed_dispersion);
+      xmlr_float(node,"radius",temp->u.blt.radius);
       xmlr_int(node,"shots",temp->u.blt.shots);
       xmlr_int(node,"mining_rarity",temp->u.lau.mining_rarity);
       xmlr_strd(node,"lua",temp->lua_file);

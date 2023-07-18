@@ -25,6 +25,7 @@
                                                    when timer is up. */
 #define OUTFIT_PROP_WEAP_BLOWUP_SHIELD (1<<13) /**< Weapon blows up (shield spfx)
                                                    when timer is up. */
+#define OUTFIT_PROP_WEAP_FRIENDLYFIRE  (1<<14) /**< Weapon damages all ships when blowing up. */
 
 /* Outfit filter labels. [Doc comments are also translator notes and must precede the #define.] */
 /** Color-coded abbreviation for "Weapon [outfit]", short enough to use as a tab/column title. */
@@ -145,6 +146,8 @@ typedef struct OutfitBoltData_ {
    double falloff;   /**< Point at which damage falls off. */
    double energy;    /**< Energy usage */
    Damage dmg;       /**< Damage done. */
+   double radius;    /**< Explosion radius .*/
+
    double heatup;    /**< How long it should take for the weapon to heat up (approx). */
    double heat;      /**< Heat per shot. */
    double trackmin;  /**< Ewarfare minimal tracking. */
@@ -227,6 +230,7 @@ typedef struct OutfitLauncherData_ {
    double thrust;    /**< Acceleration */
    double energy;    /**< Energy usage */
    Damage dmg;       /**< Damage done. */
+   double radius;    /**< Explosion radius. */
 
    OutfitGFX gfx;    /**< Rendering information. */
    int sound;        /**< sound to play */
@@ -455,6 +459,7 @@ const CollPoly* outfit_plg( const Outfit* o );
 int outfit_spfxArmour( const Outfit* o );
 int outfit_spfxShield( const Outfit* o );
 const Damage *outfit_damage( const Outfit* o );
+double outfit_radius( const Outfit* o );
 double outfit_delay( const Outfit* o );
 int outfit_amount( const Outfit* o );
 double outfit_energy( const Outfit* o );
