@@ -602,7 +602,6 @@ static void cli_input( unsigned int wid, const char *unused )
          size_t lmsg;
          const char *msg = lua_tolstring(naevL, -1, &lmsg);
          const char *tp = msg + lmsg - (sizeof(LUA_QL("<eof>")) - 1);
-         const char *s;
          if (strstr(msg, LUA_QL("<eof>")) == tp) {
             /* Pop the loaded buffer. */
             lua_pop(naevL, 1);
@@ -610,7 +609,7 @@ static void cli_input( unsigned int wid, const char *unused )
          }
          else {
             /* Real error, spew message and break. */
-            s = lua_tostring(naevL, -1);
+            const char *s = lua_tostring(naevL, -1);
             WARN( "%s", s );
             cli_printCoreString( s, 1 );
             lua_settop(naevL, 0);
