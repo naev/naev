@@ -33,6 +33,7 @@
    <penetrate>100</penetrate>
    <physical>500</physical>
   </damage>
+  <radius friendlyfire="1">15</radius>
   <ai>unguided</ai>
  </specific>
  <tags>
