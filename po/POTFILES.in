@@ -402,6 +402,7 @@ dat/outfits/utility/blink_drive.xml
 dat/outfits/utility/boarding_androids_mk1.xml
 dat/outfits/utility/boarding_androids_mk2.xml
 dat/outfits/utility/camouflage_burster.xml
+dat/outfits/utility/catalytic_energy_drill.xml
 dat/outfits/utility/cloaking_device.xml
 dat/outfits/utility/combat_hologram_projector.xml
 dat/outfits/utility/combatai/agility_combat_ai.xml
@@ -3212,6 +3213,7 @@ dat/outfits/unique/zd5_guardian_unit.lua
 dat/outfits/utility/berserk_chip.lua
 dat/outfits/utility/blink_drive.lua
 dat/outfits/utility/camouflage_burster.lua
+dat/outfits/utility/catalytic_energy_drill.lua
 dat/outfits/utility/cloaking_device.lua
 dat/outfits/utility/combat_hologram_projector.lua
 dat/outfits/utility/cryogenic_repair_nanobots.lua
