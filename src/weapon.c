@@ -150,9 +150,9 @@ static void weapon_explodeLayer( WeaponLayer layer,
 static void weapons_purgeLayer( Weapon** layer );
 /* Hitting. */
 static int weapon_checkCanHit( const Weapon* w, const Pilot *p );
-static void weapon_hit( Weapon *w, Pilot *ptarget, const vec2 *pos, const WeaponCollision *wc );
+static void weapon_hit( Weapon *w, Pilot *ptarget, const vec2 *pos );
 static void weapon_miss( Weapon *w );
-static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, const vec2* pos, const WeaponCollision *wc );
+static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, const vec2* pos );
 static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
       vec2 pos[2], double dt );
 static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
@@ -1117,7 +1117,7 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
          return CollidePolygon( &cpol[k], cpos, wc->polygon, &w->solid.pos, crash );
       }
       /* Case texture on texture collision. */
-      else if (wc->gfx->tex!=NULL) {
+      else if ((wc->gfx != NULL) && (wc->gfx->tex!=NULL)) {
          return CollideSprite( wc->gfx->tex, w->sx, w->sy, &w->solid.pos,
                   ctex, csx, csy, cpos, crash );
       }
@@ -1247,7 +1247,7 @@ static void weapon_updateCollide( Weapon* w, double dt, WeaponLayer layer )
          /* No return because beam can still think, it's not
          * destroyed like the other weapons.*/
       else {
-         weapon_hit( w, p, crash, &wc );
+         weapon_hit( w, p, crash );
          return; /* Weapon is destroyed. */
       }
    }
@@ -1292,7 +1292,7 @@ static void weapon_updateCollide( Weapon* w, double dt, WeaponLayer layer )
          if (wc.beam)
             weapon_hitAstBeam( w, a, layer, crash, dt );
          else {
-            weapon_hitAst( w, a, layer, crash, &wc );
+            weapon_hitAst( w, a, layer, crash );
             return; /* Weapon is destroyed. */
          }
       }
@@ -1395,12 +1395,21 @@ void weapon_hitAI( Pilot *p, const Pilot *shooter, double dmg )
       ai_attacked( p, shooter->id, dmg );
 }
 
-static void weapon_hitExplode( Weapon *w, const Damage *dmg, const vec2 *pos, const WeaponCollision *wc, double radius )
+static void weapon_hitExplode( Weapon *w, const Damage *dmg, const vec2 *pos, double radius )
 {
    Pilot *const* pilot_stack = pilot_getAll();
    int x, y, r, x1, y1, x2, y2;
    Pilot *parent = pilot_get( w->parent );
+   WeaponCollision wc;
 
+   /* Circle explosion. */
+   wc.w     = w;
+   wc.gfx   = NULL;
+   wc.beam  = 0;
+   wc.range = radius;
+   wc.polygon = NULL;
+
+   /* Set up coordinates. */
    x = round(pos->x);
    y = round(pos->y);
    r = ceil(radius);
@@ -1431,7 +1440,7 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, const vec2 *pos, co
       }
 
       /* Test if hit. */
-      if (!weapon_testCollision( wc, p->ship->gfx_space, p->tsx, p->tsy,
+      if (!weapon_testCollision( &wc, p->ship->gfx_space, p->tsx, p->tsy,
                &p->solid.pos, p->ship->polygon, crash ))
          continue;
 
@@ -1449,7 +1458,7 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, const vec2 *pos, co
 
       /* Early in-range check with the asteroid field. */
       if (vec2_dist2( &w->solid.pos, &ast->pos ) >
-            pow2( ast->radius + ast->margin + wc->range ))
+            pow2( ast->radius + ast->margin + wc.range ))
          continue;
 
       /* Quadtree collisions. */
@@ -1464,12 +1473,12 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, const vec2 *pos, co
          if (a->polygon->npt!=0) {
             CollPoly rpoly;
             RotatePolygon( &rpoly, a->polygon, (float) a->ang );
-            coll = weapon_testCollision( wc, a->gfx, 0, 0, &a->pos, &rpoly, crash );
+            coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, &rpoly, crash );
             free(rpoly.x);
             free(rpoly.y);
          }
          else
-            coll = weapon_testCollision( wc, a->gfx, 0, 0, &a->pos, NULL, crash );
+            coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, NULL, crash );
 
          /* Missed. */
          if (!coll)
@@ -1486,9 +1495,8 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, const vec2 *pos, co
  *    @param w Weapon involved in the collision.
  *    @param ptarget Pilot that got hit.
  *    @param pos Position of the hit.
- *    @param wc Weapon collision information.
  */
-static void weapon_hit( Weapon *w, Pilot *ptarget, const vec2 *pos, const WeaponCollision *wc )
+static void weapon_hit( Weapon *w, Pilot *ptarget, const vec2 *pos )
 {
    int s, spfx;
    double damage, radius;
@@ -1513,7 +1521,7 @@ static void weapon_hit( Weapon *w, Pilot *ptarget, const vec2 *pos, const Weapon
             w->solid.vel.x, w->solid.vel.y );
 
    if (radius > 0.) {
-      weapon_hitExplode( w, &dmg, pos, wc, radius );
+      weapon_hitExplode( w, &dmg, pos, radius );
    }
    else {
       Pilot *parent = pilot_get( w->parent );
@@ -1574,9 +1582,8 @@ static void weapon_miss( Weapon *w )
  *    @param a Asteroid that got hit.
  *    @param layer Layer to which the weapon belongs.
  *    @param pos Position of the hit.
- *    @param wc Weapon collision information.
  */
-static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, const vec2* pos, const WeaponCollision *wc )
+static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, const vec2* pos )
 {
    int s, spfx;
    Damage dmg;
@@ -1602,7 +1609,7 @@ static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, const vec2
    spfx_add( spfx, pos->x, pos->y,VX(a->vel), VY(a->vel), layer );
 
    if (radius > 0.) {
-      weapon_hitExplode( w, &dmg, pos, wc, radius );
+      weapon_hitExplode( w, &dmg, pos, radius );
    }
    else {
       Pilot *parent = pilot_get( w->parent );

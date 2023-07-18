@@ -1240,7 +1240,7 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
 
    /* Comomn properties. */
    xmlr_attr_float(node, "spin", gfx->spin);
-   if (gfx->spin != 0)
+   if (gfx->spin != 0.)
       outfit_setProp( temp, OUTFIT_PROP_WEAP_SPIN );
 
    /* Split by type. */
@@ -1303,7 +1303,6 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
 {
    ShipStatList *ll;
    xmlNodePtr node;
-   char *buf;
    double C, area;
    double dshield, darmour, dknockback;
    int l;
@@ -1330,11 +1329,21 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"swivel",temp->u.blt.swivel);
       xmlr_float(node,"dispersion",temp->u.blt.dispersion);
       xmlr_float(node,"speed_dispersion",temp->u.blt.speed_dispersion);
-      xmlr_float(node,"radius",temp->u.blt.radius);
       xmlr_int(node,"shots",temp->u.blt.shots);
       xmlr_int(node,"mining_rarity",temp->u.blt.mining_rarity);
       xmlr_strd(node,"lua",temp->lua_file);
+      if (xml_isNode(node,"radius")) {
+         char *buf;
+         temp->u.blt.radius = xml_getFloat(node);
+         xmlr_attr_strd(node,"friendlyfire",buf);
+         if (buf != NULL) {
+            outfit_setProp(temp, OUTFIT_PROP_WEAP_FRIENDLYFIRE);
+            free(buf);
+         }
+         continue;
+      }
       if (xml_isNode(node,"range")) {
+         char *buf;
          xmlr_attr_strd(node,"blowup",buf);
          if (buf != NULL) {
             if (strcmp(buf,"armour")==0)
@@ -1653,10 +1662,19 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"swivel",temp->u.lau.swivel);
       xmlr_float(node,"dispersion",temp->u.blt.dispersion);
       xmlr_float(node,"speed_dispersion",temp->u.blt.speed_dispersion);
-      xmlr_float(node,"radius",temp->u.blt.radius);
       xmlr_int(node,"shots",temp->u.blt.shots);
       xmlr_int(node,"mining_rarity",temp->u.lau.mining_rarity);
       xmlr_strd(node,"lua",temp->lua_file);
+      if (xml_isNode(node,"radius")) {
+         char *buf;
+         temp->u.lau.radius = xml_getFloat(node);
+         xmlr_attr_strd(node,"friendlyfire",buf);
+         if (buf != NULL) {
+            outfit_setProp(temp, OUTFIT_PROP_WEAP_FRIENDLYFIRE);
+            free(buf);
+         }
+         continue;
+      }
 
       if (!outfit_isTurret(temp))
          xmlr_float(node,"arc",temp->u.lau.arc); /* This is in semi-arc like swivel. */
