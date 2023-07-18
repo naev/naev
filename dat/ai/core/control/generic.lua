@@ -374,6 +374,13 @@ function should_attack( enemy, si, aggressor )
          end
          -- TODO maybe add a check to see if nearby fighting leader?
       end
+      local lmd = mem.leadermaxdist
+      if lmd then
+         local d = l:pos():dist2( enemy:pos() )
+         if d > lmd*lmd then
+            return false
+         end
+      end
    end
 
    -- Check to see if we want to go back to the lanes
