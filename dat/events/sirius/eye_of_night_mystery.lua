@@ -104,11 +104,7 @@ local function restore_pilot( p, t )
    p:setHealth( t.arm, t.shi )
    p:setEnergy( t.ene )
    if t.out then
-      for k,o in ipairs(t.out) do
-         if o then
-            p:outfitAddSlot( o, k, true, true )
-         end
-      end
+      p:outfitsEquip( t.out )
    end
 end
 
