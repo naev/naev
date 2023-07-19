@@ -281,20 +281,11 @@ end
 -- For getting close to a static target
 local function autonav_approach( pos, count_target )
    local pp = player.pilot()
-   local stats = pp:stats()
    local off = ai.iface( pos )
    if off < math.rad(10) then
       ai.accel(1)
    end
-
-   local speed = stats.speed
-   local vmod = pp:vel():mod()
-   local t = math.min( 1.5*speed, vmod / stats.thrust )
-   local vel = math.min( speed, vmod )
-   stats.turn = math.rad(stats.turn) -- TODO probably change the code
-
-   local dist = vel*(t+1.1*math.pi/stats.turn) - 0.5*stats.thrust*t*t
-
+   local dist = ai.minbrakedist()
    local d = pos:dist( pp:pos() )
 
    dist = d - dist
