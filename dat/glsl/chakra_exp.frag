@@ -25,9 +25,9 @@ vec4 effect( vec4 color, sampler2D tex, vec2 texture_coords, vec2 screen_coords 
    d = max( d, -sdCircle( uv, 2.8*(progress-0.5) ) );
    vec2 nuv = 3.0 * uv + vec2(u_r);
    float n = 0.3*snoise( u_grain * nuv );
-   colour.a *= smoothstep( -0.2, 0.2, -d );
+   colour.a *= smoothstep( -0.2, 0.2, -d ) * (n+0.6);
 
-   colour   += 0.6 * n * smoothstep( -0.1, 0.1, -d );
+   colour   += 0.6 * smoothstep( -0.1, 0.1, -d );
 
    return colour;
 }

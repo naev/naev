@@ -21,8 +21,8 @@ void main (void)
    float d = sdEgg( uv, b );
    vec2 nuv = vec2(3.0,8.0) * uv * vec2( exp(uv.x), pow(uv.y,0.5) );
    float n = 0.3*snoise( nuv + 3.0*vec2(u_time,u_r) );
-   colour_out.a *= smoothstep( -0.1, 0.3, -d );
-   colour_out += n * smoothstep( -0.4, 0.7, -d );
+   colour_out.a *= smoothstep( -0.1, 0.3, -d ) * (n+0.6);
+   colour_out += smoothstep( -0.4, 0.7, -d );
 
    colour_out.a *= u_fade * min(10.0*u_time,1.0);
 }
