@@ -16,6 +16,7 @@
          * Configurable and can use lanes
          * More efficient at reaching target locations
       * Make it explicit when all the escorts have jumped or landed
+      * Escorts will keep their same loadout until the game restarts
       * Player ship is no longer translucent when in stealth as it is redundant with the stealth icon
       * Show enemy/ally factions in the faction standing info window
       * Space dust is properly anti-aliased

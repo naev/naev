@@ -10,6 +10,8 @@ local fmt = require "format"
 local vntk = require "vntk"
 local aisetup = require "ai.core.setup"
 
+local escort_outfits
+
 --[[--
 Initializes the library by setting all the necessary hooks.
 
@@ -141,6 +143,7 @@ function _escort_e_death( p )
          player.msg( "#r"..fmt.f(_("{plt} has been lost!"), {plt=p} ).."#0" )
 
          table.remove(_escort_convoy, k)
+         table.remove(escort_outfits, k);
          table.remove(mem._escort.ships, k)
 
          if escort.num_alive() <= 0 then
@@ -222,20 +225,43 @@ Spawns the escorts at location. This can be useful at the beginning if you want 
    @return table Table of newly created pilots.
 --]]
 function escort.spawn( pos )
+   local have_outfits = (escort_outfits ~= nil)
    pos = pos or mem._escort.origin
 
    -- Set up the new convoy for the new system
    exited = {}
    _escort_convoy = {}
+   if not have_outfits then
+      escort_outfits = {}
+   end
    local l
    for k,s in ipairs( mem._escort.ships ) do
-      local p = pilot.add( s, mem._escort.faction, pos, nil, mem._escort.params.pilot_params )
+      local params = tcopy( mem._escort.params.pilot_params or {} )
+      local donaked = params.naked -- Probably the script is using fcreate to do something
+      if have_outfits then
+         params.naked = true
+      end
+      local p = pilot.add( s, mem._escort.faction, pos, nil, params )
       if not l then
          l = p
       else
          p:setLeader( l )
       end
-      table.insert( _escort_convoy, p )
+      _escort_convoy[k] = p
+      if not donaked then
+         if have_outfits then
+            for i,o in ipairs(escort_outfits[k]) do
+               if o then
+                  p:outfitAddSlot( o, i, true, true )
+               end
+            end
+         else
+            escort_outfits[k] = {}
+            for i,o in ipairs(p:outfits()) do
+               escort_outfits[k][i] = o
+            end
+         end
+      end
    end
 
    -- See if we have a post-processing function
