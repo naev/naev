@@ -102,6 +102,7 @@ static int pilotL_weapsetSetInrange( lua_State *L );
 static int pilotL_actives( lua_State *L );
 static int pilotL_outfitsList( lua_State *L );
 static int pilotL_outfits( lua_State *L );
+static int pilotL_outfitsEquip( lua_State *L );
 static int pilotL_outfitGet( lua_State *L );
 static int pilotL_outfitToggle( lua_State *L );
 static int pilotL_outfitReady( lua_State *L );
@@ -280,6 +281,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "actives", pilotL_actives },
    { "outfitsList", pilotL_outfitsList },
    { "outfits", pilotL_outfits },
+   { "outfitsEquip", pilotL_outfitsEquip },
    { "outfitGet", pilotL_outfitGet },
    { "outfitToggle", pilotL_outfitToggle },
    { "outfitReady", pilotL_outfitReady },
@@ -2367,6 +2369,44 @@ static int pilotL_outfits( lua_State *L )
          lua_pushoutfit( L, p->outfits[i]->outfit );
       lua_rawseti( L, -2, i+1 );
    }
+   return 1;
+}
+
+/**
+ * @brief Equips a pilot with a set of outfits.
+ *
+ *    @luatparam Pilot p Pilot to set equipment of.
+ *    @luatparam table o Table of outfits to equip the pilot (should be likely taken from pilot.outfits). The key should be the slot id and the value should be the outfit or false if there is no outfit in that slot.
+ *    @luatreturn boolean If all the outfits were equipped successfully or not.
+ * @luafunc outfits
+ * @see outfits
+ */
+static int pilotL_outfitsEquip( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   int ret = 0;
+   /* Process outputs. */
+   for (int i=1; ; i++) {
+      const Outfit *o;
+      PilotOutfitSlot *s;
+
+      lua_rawgeti(L,2,i);
+      if (lua_isnil(L,-1)) {
+         lua_pop(L,1);
+         break;
+      }
+
+      /* No outfit. */
+      if (!lua_toboolean(L,-1))
+         continue;
+
+      o = luaL_validoutfit(L,-1);
+      s = p->outfits[i-1];
+      ret |= pilot_outfitAddSlot( p, o, s, 1, 1 );
+
+      lua_pop(L,1);
+   }
+   lua_pushboolean(L,!ret);
    return 1;
 }
 
