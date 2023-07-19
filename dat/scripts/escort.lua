@@ -28,7 +28,7 @@ Below is a more complex example where the player becomes the leader and the esco
 @code
 -- Initialize the library and give the player two escorts that will guard them / help them out
 function start_convoy ()
-   escort.init( {"Lancelot", "Lancelot"}, {faction=faction.get("Mercenary"), followplayer=true, nofailifdead=true, func_pilot_death="escort_died"} )
+   escort.init( {"Lancelot", "Lancelot"}, {faction=faction.get("Mercenary"), nofailifdead=true, func_pilot_death="escort_died"} )
 end
 -- The escort died
 function escort_died( _p )
@@ -62,7 +62,7 @@ function escort.init( ships, params )
       ships_orig = ships,
       ships = tcopy(ships),
       faction = params.faction or faction.get("Independent"),
-      followplayer = params.followplayer,
+      followplayer = true,
       nofailifdead = params.nofailifdead,
       hooks = {
          jumpin   = hook.jumpin(  "_escort_jumpin" ),
@@ -127,13 +127,16 @@ function escort.pilots ()
 end
 
 --[[--
-Sets the destination of the
+Sets the destination of the escort convoy.
+
+Disables the escorts from following the player.
 
    @tparam system|spob dest Destination of the escorts.
    @tparam string success Name of the global function to call on success.
    @tparam[opt] string failure Name of the global function to call on failure. Default will give a vntk message and fail the mission.
 --]]
 function escort.setDest( dest, success, failure )
+   mem._escort.followplayer = false
    if dest.system then
       mem._escort.destspob = dest
       mem._escort.destsys = dest:system()
@@ -145,6 +148,16 @@ function escort.setDest( dest, success, failure )
    mem._escort.func_failure = failure or "_escort_failure"
 
    mem._escort.nextsys = lmisn.getNextSystem(system.cur(), mem._escort.destsys)
+end
+
+--[[--
+Disables the escorts destination target and makes them follow the player.
+--]]
+function escort.setFollow ()
+   mem._escort.followplayer = true
+   mem._escort.destspob = nil
+   mem._escort.destsys = nil
+   mem._escort.nextsys = nil
 end
 
 local exited
