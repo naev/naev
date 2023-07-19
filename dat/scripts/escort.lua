@@ -250,16 +250,9 @@ function escort.spawn( pos )
       _escort_convoy[k] = p
       if not donaked then
          if have_outfits then
-            for i,o in ipairs(escort_outfits[k]) do
-               if o then
-                  p:outfitAddSlot( o, i, true, true )
-               end
-            end
+            p:outfitsEquip( escort_outfits[k] )
          else
-            escort_outfits[k] = {}
-            for i,o in ipairs(p:outfits()) do
-               escort_outfits[k][i] = o
-            end
+            escort_outfits[k] = p:outfits()
          end
       end
    end
