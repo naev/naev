@@ -93,8 +93,8 @@ local function shouldResetSpeed ()
    if not will_reset and lowhealth then
       for k,p in ipairs(pp:getVisible()) do
          if pp:areEnemies(p) then
-            local inrange, fuzzy = pp:inrange( p )
-            if inrange and not fuzzy then
+            local inrange, known = pp:inrange( p )
+            if inrange and known then
                if lowhealth then
                   will_reset = true
                   autonav_timer = math.max( autonav_timer, 2 )
@@ -201,11 +201,11 @@ function autonav_pilot( plt )
    autonav_setup()
    target_plt = plt
    local pltstr
-   local _inrng, fuzzy = player.pilot():inrange( plt )
-   if fuzzy then
-      pltstr = _("Unknown")
-   else
+   local _inrng, known = player.pilot():inrange( plt )
+   if known then
       pltstr = "#"..plt:colourChar()..plt:name().."#o"
+   else
+      pltstr = _("Unknown")
    end
 
    player.msg("#o"..fmt.f(_("Autonav: following {plt}."),{plt=pltstr}).."#0")
@@ -441,9 +441,7 @@ function autonav_plt_follow ()
    local target_known = false
    local inrng = false
    if plt:exists() then
-      local fuzzy
-      inrng, fuzzy = player.pilot():inrange( plt )
-      target_known = not fuzzy
+      inrng, target_known = player.pilot():inrange( plt )
    end
 
    if not inrng then
@@ -476,9 +474,7 @@ function autonav_plt_board_approach ()
    local target_known = false
    local inrng = false
    if plt:exists() then
-      local fuzzy
-      inrng, fuzzy = player.pilot():inrange( plt )
-      target_known = not fuzzy
+      inrng, target_known = player.pilot():inrange( plt )
    end
 
    if not inrng then
