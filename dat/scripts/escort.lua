@@ -1,6 +1,43 @@
 --[[--
 Library for dealing with escorts in missions.
 
+Can be used either to provide the player with a few perishable escorts, or provide a set of escorts the player has to follow and guard to the destination.
+
+Below is a simple example of a convoy that the player has to protect while it goes on to some spob.
+@code
+-- This is an example of using the API to provide a fleet the player has to
+-- guard starting from the start_convoy function that sets it up
+-- The mission will automatically fail if all the escorts die
+function start_convoy ()
+   -- Initialize the library with the pilots the player has to escort
+   escort.init( {"Koala", "Llama"}, {faction=faction.get("Independent")} )
+   -- Set the destination target, the escorts will try to go there automagically
+   escort.setDest( spob.get("Darkshed"), "convoy success" )
+end
+-- This function will be run  when the player lands on the destination
+function convoy_success ()
+   local alive = escort.num_alive()
+   -- Do something based on the number of escorts that are alive
+   do_something( alive )
+   -- Cleans up the library
+   escort.exit()
+end
+@endcode
+
+Below is a more complex example where the player becomes the leader and the escorts follow and protect the player.
+@code
+-- Initialize the library and give the player two escorts that will guard them / help them out
+function start_convoy ()
+   escort.init( {"Lancelot", "Lancelot"}, {faction=faction.get("Mercenary"), followplayer=true, nofailifdead=true, func_pilot_death="escort_died"} )
+end
+-- The escort died
+function escort_died( _p )
+   if escort.num_alive() <= 0 then
+      -- All the escorts are dead
+   end
+end
+@endcode
+
 @module escort
 --]]
 local escort = {}
@@ -24,7 +61,9 @@ function escort.init( ships, params )
       params = params,
       ships_orig = ships,
       ships = tcopy(ships),
-      faction = params.faction or "Independent",
+      faction = params.faction or faction.get("Independent"),
+      followplayer = params.followplayer,
+      nofailifdead = params.nofailifdead,
       hooks = {
          jumpin   = hook.jumpin(  "_escort_jumpin" ),
          jumpout  = hook.jumpout( "_escort_jumpout" ),
@@ -122,18 +161,20 @@ function escort.reset_ai ()
       p:taskClear()
    end
 
-   local l = _escort_convoy[1]
-   if not l or not l:exists() then return end
-   l:control(true)
-   local scur = system.cur()
-   if scur == mem._escort.destsys then
-      if mem._escort.destspob then
-         l:land( mem._escort.destspob )
+   if not mem._escort.followplayer then
+      local l = _escort_convoy[1]
+      if not l or not l:exists() then return end
+      l:control(true)
+      local scur = system.cur()
+      if scur == mem._escort.destsys then
+         if mem._escort.destspob then
+            l:land( mem._escort.destspob )
+         else
+            run_success()
+         end
       else
-         run_success()
+         l:hyperspace( lmisn.getNextSystem( scur, mem._escort.destsys ) )
       end
-   else
-      l:hyperspace( lmisn.getNextSystem( scur, mem._escort.destsys ) )
    end
 end
 
@@ -143,25 +184,37 @@ function _escort_e_death( p )
          player.msg( "#r"..fmt.f(_("{plt} has been lost!"), {plt=p} ).."#0" )
 
          table.remove(_escort_convoy, k)
-         table.remove(escort_outfits, k);
+         table.remove(escort_outfits, k)
          table.remove(mem._escort.ships, k)
 
          if escort.num_alive() <= 0 then
-            lmisn.fail( n_("The escort has been lost!","All escorts have been lost!",#mem._escort.ships_orig) )
-         end
-
-         -- Set a new leader and tell them to move on
-         if k==1 then
-            local l = _escort_convoy[1]
-            l:setLeader()
-            l:setHilight(true)
-            for i,e in ipairs(_escort_convoy) do
-               if i~=1 then
-                  e:taskClear()
-                  e:setLeader( l )
+            local msg
+            if #mem._escort.ships_orig==1 then
+               msg = _("The escort has been lost!")
+            else
+               msg = _("All escorts have been lost!")
+            end
+            if not mem._escort.followplayer then
+               lmisn.fail( msg )
+            else
+               player.msg("#r"..msg.."#0")
+            end
+         else
+            -- Set a new leader and tell them to move on
+            if not mem._escort.followplayer then
+               if k==1 then
+                  local l = _escort_convoy[1]
+                  l:setLeader()
+                  l:setHilight(true)
+                  for i,e in ipairs(_escort_convoy) do
+                     if i~=1 then
+                        e:taskClear()
+                        e:setLeader( l )
+                     end
+                  end
+                  escort.reset_ai()
                end
             end
-            escort.reset_ai()
          end
 
          if mem._escort.params.func_pilot_death then
@@ -204,7 +257,7 @@ function _escort_e_land( p, landed_spob )
 end
 
 function _escort_e_jump( p, j )
-   if j:dest() == mem._escort.nextsys then
+   if not mem._escort.followplayer and j:dest() == mem._escort.nextsys then
       table.insert( exited, p )
       if p:exists() then
          player.msg( "#g"..fmt.f(_("{plt} has jumped to {sys}."), {plt=p, sys=j:dest()} ).."#0" )
@@ -235,6 +288,9 @@ function escort.spawn( pos )
       escort_outfits = {}
    end
    local l
+   if mem._escort.followplayer then
+      l = player.pilot()
+   end
    for k,s in ipairs( mem._escort.ships ) do
       local params = tcopy( mem._escort.params.pilot_params or {} )
       local donaked = params.naked -- Probably the script is using fcreate to do something
@@ -282,19 +338,21 @@ function escort.spawn( pos )
       minspeed = math.min( p:stats().speed_max, minspeed )
    end
 
-   -- Have the leader move as slow as the slowest ship
-   l:setSpeedLimit( minspeed )
-   l:setHilight(true)
-   -- Moving to system
-   escort.reset_ai()
+   if not mem._escort.followplayer then
+      -- Have the leader move as slow as the slowest ship
+      l:setSpeedLimit( minspeed )
+      l:setHilight(true)
+      -- Moving to system
+      escort.reset_ai()
 
-   -- Mark destination
-   local scur = system.cur()
-   if mem._escort.nextsys ~= scur then
-      system.markerAdd( jump.get( scur, mem._escort.nextsys ):pos() )
-   else
-      if mem._escort.destspob then
-         system.markerAdd( mem._escort.destspob:pos() )
+      -- Mark destination
+      local scur = system.cur()
+      if mem._escort.nextsys ~= scur then
+         system.markerAdd( jump.get( scur, mem._escort.nextsys ):pos() )
+      else
+         if mem._escort.destspob then
+            system.markerAdd( mem._escort.destspob:pos() )
+         end
       end
    end
 
@@ -322,10 +380,16 @@ end
 
 local function update_left ()
    local ships_alive = {}
-   for i,p in ipairs(exited) do
-      for j,v in ipairs(_escort_convoy) do
-         if v==p then
-            table.insert( ships_alive, mem._escort.ships[j] )
+   if mem._escort.followplayer then
+      for j,_p in ipairs(_escort_convoy) do
+         table.insert( ships_alive, mem._escort.ships[j] )
+      end
+   else
+      for i,p in ipairs(exited) do
+         for j,v in ipairs(_escort_convoy) do
+            if v==p then
+               table.insert( ships_alive, mem._escort.ships[j] )
+            end
          end
       end
    end
@@ -334,7 +398,7 @@ end
 
 function _escort_jumpout()
    update_left ()
-   if #exited <= 0 then
+   if not mem._escort.nofailifdead and #exited <= 0 then
       lmisn.fail( _("You jumped before the convoy you were escorting.") )
    end
    mem._escort.origin = system.cur()
@@ -357,7 +421,7 @@ end
 
 function _escort_land()
    update_left ()
-   if spob.cur() ~= mem._escort.destspob or escort.num_alive() <= 0 then
+   if not mem._escort.nofailifdead and (spob.cur() ~= mem._escort.destspob or escort.num_alive() <= 0) then
       _G[mem._escort.func_failure]()
    else
       run_success()
