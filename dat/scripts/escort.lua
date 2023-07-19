@@ -4,7 +4,7 @@ Library for dealing with escorts in missions.
 Can be used either to provide the player with a few perishable escorts, or provide a set of escorts the player has to follow and guard to the destination.
 
 Below is a simple example of a convoy that the player has to protect while it goes on to some spob.
-@code
+```
 -- This is an example of using the API to provide a fleet the player has to
 -- guard starting from the start_convoy function that sets it up
 -- The mission will automatically fail if all the escorts die
@@ -22,10 +22,10 @@ function convoy_success ()
    -- Cleans up the library
    escort.exit()
 end
-@endcode
+```
 
 Below is a more complex example where the player becomes the leader and the escorts follow and protect the player.
-@code
+```
 -- Initialize the library and give the player two escorts that will guard them / help them out
 function start_convoy ()
    escort.init( {"Lancelot", "Lancelot"}, {faction=faction.get("Mercenary"), nofailifdead=true, func_pilot_death="escort_died"} )
@@ -36,7 +36,7 @@ function escort_died( _p )
       -- All the escorts are dead
    end
 end
-@endcode
+```
 
 @module escort
 --]]
