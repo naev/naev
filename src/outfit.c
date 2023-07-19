@@ -1375,10 +1375,14 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       /* Special effects. */
       if (xml_isNode(node,"spfx_shield")) {
          temp->u.blt.spfx_shield = spfx_get(xml_get(node));
+         if (temp->u.blt.spfx_shield < 0)
+            WARN(_("Outfit '%s' has unknown spfx_shield '%s'!"),temp->name,xml_get(node));
          continue;
       }
       if (xml_isNode(node,"spfx_armour")) {
          temp->u.blt.spfx_armour = spfx_get(xml_get(node));
+         if (temp->u.blt.spfx_armour < 0)
+            WARN(_("Outfit '%s' has unknown spfx_armour '%s'!"),temp->name,xml_get(node));
          continue;
       }
 
