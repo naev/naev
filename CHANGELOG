@@ -83,6 +83,7 @@
       * Game no longer crashes when loading save with persisted Lua pointing to nonexistent systems/spobs
       * Minor improvements to many existing missions
       * Fixed crash when events trigger other events on creation
+      * Fixed autonav sometimes having trouble landing with reverse thrusters
 
 * 0.10.6
    * Fixed potential segfault with invalid semver strings
