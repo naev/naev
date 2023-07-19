@@ -382,11 +382,13 @@ function _escort_takeoff ()
 end
 
 function _escort_jumpin ()
-   if system.cur() ~= mem._escort.nextsys then
+   if mem._escort.nextsys and system.cur() ~= mem._escort.nextsys then
       lmisn.fail( _("You jumped into the wrong system.") )
       return
    end
-   mem._escort.nextsys = lmisn.getNextSystem(system.cur(), mem._escort.destsys)
+   if mem._escort.destsys then
+      mem._escort.nextsys = lmisn.getNextSystem(system.cur(), mem._escort.destsys)
+   end
    -- We want to defer it one frame in case an enter hook clears all pilots
    hook.safe( "_escort_spawn" )
 end
@@ -436,7 +438,7 @@ function _escort_land()
    update_left ()
    if not mem._escort.nofailifdead and (spob.cur() ~= mem._escort.destspob or escort.num_alive() <= 0) then
       _G[mem._escort.func_failure]()
-   else
+   elseif spob.cur()==mem._escort.destspob then
       run_success()
    end
 end
