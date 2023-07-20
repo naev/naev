@@ -217,8 +217,6 @@ static int spfx_base_parse( SPFX_Base *temp, const char *filename )
    } while (xml_nextNode(node));
 
    /* Convert from ms to s. */
-   temp->anim /= 1000.;
-   temp->ttl  /= 1000.;
    if (temp->ttl == 0.)
       temp->ttl = temp->anim;
 

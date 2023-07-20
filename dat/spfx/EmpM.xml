@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spfx name="EmpM">
  <gfx sx="6" sy="5">empm.webp</gfx>
- <anim>450</anim>
+ <anim>0.450</anim>
 </spfx>

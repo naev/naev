@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spfx name="ChakraXS">
- <anim>1500</anim>
+ <anim>1.5</anim>
  <shader>
   <vert>project_pos.vert</vert>
   <frag>chakra_exp.frag</frag>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spfx name="Dbr4">
  <gfx sx="6" sy="6">debris4.webp</gfx>
- <ttl>15000</ttl>
- <anim>5000</anim>
+ <ttl>15</ttl>
+ <anim>5</anim>
 </spfx>
