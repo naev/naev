@@ -19,8 +19,8 @@ vec4 effect( vec4 color, sampler2D tex, vec2 texture_coords, vec2 screen_coords 
     */
    {
       /* Base shape. */
-      float d = sdCircle( uv, 1.0*progress-0.1 );
-      d = max( d, -sdCircle( uv, 0.6*progress-0.4 )*0.5 );
+      float d = sdCircle( uv, 1.0*progress );
+      d = max( d, -sdCircle( uv, 0.6*progress-0.3 )*0.5 );
       colour.rgb -= vec3( 1.0, 0.5, 0.2 )*3.0*progress - 0.5;
       colour.a *= smoothstep( -0.0, 0.2, -d ) * max(0.0, 2.0-progress);
       colour.a *= min(1.0, 6.0-6.0*progress);
