@@ -606,6 +606,7 @@ dat/slots/systems.xml
 dat/spfx/ChakraM.xml
 dat/spfx/ChakraS.xml
 dat/spfx/ChakraXS.xml
+dat/spfx/EmpBlastM.xml
 dat/spfx/EmpM.xml
 dat/spfx/EmpS.xml
 dat/spfx/PlaM.xml
@@ -3336,6 +3337,7 @@ dat/scripts/luaspfx/chakra_explosion.lua
 dat/scripts/luaspfx/cleansing_flames.lua
 dat/scripts/luaspfx/core.lua
 dat/scripts/luaspfx/emp.lua
+dat/scripts/luaspfx/emp_blast.lua
 dat/scripts/luaspfx/explosion.lua
 dat/scripts/luaspfx/feather_drive.lua
 dat/scripts/luaspfx/pheromones.lua

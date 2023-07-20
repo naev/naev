@@ -19,8 +19,8 @@
   <gfx spin="0.3">empgrenade_blue.png</gfx>
   <sound>grenadefire</sound>
   <sound_hit>empexplode</sound_hit>
-  <spfx_shield>EmpM</spfx_shield>
-  <spfx_armour>EmpM</spfx_armour>
+  <spfx_shield>EmpBlastM</spfx_shield>
+  <spfx_armour>EmpBlastM</spfx_armour>
   <duration blowup="shield">1.3</duration>
   <thrust>0</thrust>
   <speed>500</speed>
@@ -30,7 +30,7 @@
    <physical>8</physical>
    <disable>70</disable>
   </damage>
-  <radius friendlyfire="1">15</radius>
+  <radius friendlyfire="1">25</radius>
   <ai>unguided</ai>
  </specific>
 </outfit>
