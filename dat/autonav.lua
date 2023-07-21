@@ -359,6 +359,12 @@ function autonav_jump_brake ()
    if ai.canHyperspace() then
       ai.hyperspace()
    elseif ret then
+      -- Recompute the location for a better position
+      local pp = player.pilot()
+      local jmp = pp:navJump()
+      local pos = jmp:pos()
+      local d = jmp:jumpDist( pp )
+      target_pos = pos + (pp:pos()-pos):normalize( math.max(0.8*d, d-30) )
       autonav = autonav_jump_approach
    end
 
@@ -417,6 +423,10 @@ function autonav_spob_land_brake ()
    if player.tryLand(false)=="impossible" then
       return autonav_abort()
    elseif ret then
+      -- Reset to good position
+      local pp = player.pilot()
+      local pos = target_spb:pos()
+      target_pos = pos + (pp:pos()-pos):normalize( 0.6*target_spb:radius() )
       autonav = autonav_spob_land_approach
    end
 
