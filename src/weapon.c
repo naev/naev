@@ -88,6 +88,8 @@ typedef struct Weapon_ {
    int sy;              /**< Current Y sprite to use. */
    Trail_spfx *trail;   /**< Trail graphic if applicable, else NULL. */
 
+   double armour;       /**< Health status of the weapon. */
+
    void (*think)(struct Weapon_*, double); /**< for the smart missiles */
 
    WeaponStatus status; /**< Weapon status - to check for jamming */
@@ -2106,6 +2108,12 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
       w->solid.speed_max = w->outfit->u.lau.speed_max;
       if (w->outfit->u.lau.speed > 0.)
          w->solid.speed_max = -1; /* No limit. */
+   }
+
+   /* Handle health if necessary. */
+   if (w->outfit->u.lau.armour > 0.) {
+      w->armour = w->outfit->u.lau.armour;
+      weapon_setFlag( w, WEAPON_FLAG_HITTABLE );
    }
 
    /* Handle seekers. */

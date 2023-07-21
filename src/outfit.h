@@ -232,6 +232,10 @@ typedef struct OutfitLauncherData_ {
    Damage dmg;       /**< Damage done. */
    double radius;    /**< Explosion radius. */
 
+   /* Health stuff. */
+   double armour;    /**< Core health. */
+   double dmg_absorb; /**< Damage absorption. */
+
    OutfitGFX gfx;    /**< Rendering information. */
    int sound;        /**< sound to play */
    int sound_hit;    /**< Sound to play on hit. */

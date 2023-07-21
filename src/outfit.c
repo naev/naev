@@ -1665,9 +1665,11 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"lockon",temp->u.lau.lockon);
       xmlr_float(node,"iflockon",temp->u.lau.iflockon);
       xmlr_float(node,"swivel",temp->u.lau.swivel);
-      xmlr_float(node,"dispersion",temp->u.blt.dispersion);
-      xmlr_float(node,"speed_dispersion",temp->u.blt.speed_dispersion);
-      xmlr_int(node,"shots",temp->u.blt.shots);
+      xmlr_float(node,"dispersion",temp->u.lau.dispersion);
+      xmlr_float(node,"speed_dispersion",temp->u.lau.speed_dispersion);
+      xmlr_float(node,"armour",temp->u.lau.armour);
+      xmlr_float(node,"absorb",temp->u.lau.dmg_absorb);
+      xmlr_int(node,"shots",temp->u.lau.shots);
       xmlr_int(node,"mining_rarity",temp->u.lau.mining_rarity);
       xmlr_strd(node,"lua",temp->lua_file);
       if (xml_isNode(node,"radius")) {
@@ -1827,6 +1829,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       SDESC_ADD(  l, temp, _("\n%.0f Maximum Speed"), temp->u.lau.speed_max );
    SDESC_ADD(  l, temp, _("\n%.1f Seconds to Reload"), temp->u.lau.reload_time );
    SDESC_COND( l, temp, _("\n%.1f EPS [%.0f Energy]"), temp->u.lau.delay * temp->u.lau.energy, temp->u.lau.energy );
+   SDESC_COND( l, temp, _("\n%.1f MJ Armour [%.0f%%]"), temp->u.lau.armour, temp->u.lau.dmg_absorb*100.);
    SDESC_COND( l, temp, _("\n%.0f%% Jam Resistance"), temp->u.lau.resist * 100. );
    sdesc_miningRarity( &l, temp, temp->u.lau.mining_rarity );
 
