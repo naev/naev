@@ -981,7 +981,6 @@ static void map_render( double bx, double by, double w, double h, void *data )
 {
    CstMapWidget *cst = data;
    double x,y,z,r;
-   glColour col;
    StarSystem *sys;
    double dt = naev_getrealdt();
 
@@ -1033,11 +1032,6 @@ static void map_render( double bx, double by, double w, double h, void *data )
    if (cst->alpha_markers > 0.)
       map_renderNotes( bx, by, x, y, z, w, h, 0, EASE_ALPHA(cst->alpha_markers) );
 
-   /* Values from cRadar_tSpob */
-   col.r = cRadar_tSpob.r;
-   col.g = cRadar_tSpob.g;
-   col.b = cRadar_tSpob.b;
-
    /* Selected system. */
    if (map_selected != -1) {
       sys = system_getIndex( map_selected );
@@ -1050,7 +1044,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
    /* Current spob. */
    gl_renderCircle( x + cur_system->pos.x * z,
          y + cur_system->pos.y * z,
-         1.5*r, &col, 0 );
+         1.5*r, &cRadar_tSpob, 0 );
 
    glClear( GL_DEPTH_BUFFER_BIT );
 }
