@@ -65,7 +65,8 @@ const EffectData *effect_get( const char *name );
  */
 int effect_update( Effect **efxlist, double dt );
 int effect_add( Effect **efxlist, const EffectData *efx, double duration, double strength, unsigned int parent );
-int effect_rm( Effect **efxlist, const EffectData *efx, int all );
+int effect_rm( Effect **efxlist, int idx );
+int effect_rmType( Effect **efxlist, const EffectData *efx, int all );
 void effect_clearSpecific( Effect **efxlist, int debuffs, int buffs, int others );
 void effect_clear( Effect **efxlist );
 void effect_compute( ShipStats *s, const Effect *efxlist );

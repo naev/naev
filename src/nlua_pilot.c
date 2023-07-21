@@ -3935,19 +3935,26 @@ static int pilotL_effectAdd( lua_State *L )
  * @brief Removes an effect from the pilot.
  *
  *    @luatparam Pilot p Pilot to remove effect from.
- *    @luatparam string name Name of the effect to add.
- *    @luatparam boolean all Remove all instances of the effect or only the most first instance.
+ *    @luatparam string|integer name Name of the effect to add or index in the case of being a number.
+ *    @luatparam boolean all Remove all instances of the effect or only the most first instance. Only valid in the case the name is specified as a string.
  * @luafunc effectRm
  */
 static int pilotL_effectRm( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
-   const char *effectname = luaL_checkstring(L,2);
-   int all = lua_toboolean(L,3);
-   const EffectData *efx = effect_get( effectname );
-   if (efx != NULL) {
-      if (effect_rm( &p->effects, efx, all ))
+   if (lua_isnumber(L,2)) {
+      int idx = lua_tointeger(L,2);
+      if (effect_rm( &p->effects, idx ))
          pilot_calcStats( p );
+   }
+   else {
+      const char *effectname = luaL_checkstring(L,2);
+      int all = lua_toboolean(L,3);
+      const EffectData *efx = effect_get( effectname );
+      if (efx != NULL) {
+         if (effect_rmType( &p->effects, efx, all ))
+            pilot_calcStats( p );
+      }
    }
    return 0;
 }
