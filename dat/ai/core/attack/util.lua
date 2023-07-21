@@ -8,7 +8,7 @@ local atk = {}
 
 mem.lanedistance = mem.lanedistance or mem.enemyclose or 3e3
 --mem.atk_pref_func = nil
-mem.atk_pref_range = 5e3
+mem.atk_pref_range = 5e3 -- Range to prefer to attack from
 
 --[[
 --Attempts to maintain a constant distance from nearby things
