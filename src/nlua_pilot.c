@@ -1091,7 +1091,7 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
    pilot_stack = pilot_getAll();
    lua_newtable(L);
    k = 1;
-   if (dist < INFINITY) {
+   if (dist >= 0. && dist < INFINITY) {
       int x, y, r;
       const IntList *qt;
       x = round(v->x);
