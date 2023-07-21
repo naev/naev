@@ -1610,8 +1610,9 @@ void space_init( const char* sysname, int do_simulate )
    if ((player.p != NULL) && do_simulate)
       music_choose(NULL);
 
-   /* Reset new trails. */
+   /* Reset new trails and set up quadtrees. */
    pilots_newSystem();
+   weapon_newSystem();
 
    /* Reset any schedules and used presence. */
    for (int i=0; i<array_size(cur_system->presence); i++) {

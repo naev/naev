@@ -48,7 +48,8 @@ typedef enum WeaponStatus_ {
 } WeaponStatus;
 
 /* Weapon flags. */
-#define WEAPON_FLAG_DESTROYED    1
+#define WEAPON_FLAG_DESTROYED       (1<<0) /* Is awaiting clean up. */
+#define WEAPON_FLAG_HITTABLE        (1<<1) /* Can be hit by stuff. */
 #define weapon_isFlag(w,f)    ((w)->flags & (f))
 #define weapon_setFlag(w,f)   ((w)->flags |= (f))
 #define weapon_rmFlag(w,f)    ((w)->flags &= ~(f))
@@ -114,6 +115,8 @@ static size_t weapon_vboSize   = 0; /**< Size of the VBO. */
 
 /* Internal stuff. */
 static unsigned int beam_idgen = 0; /**< Beam identifier generator. */
+static int qt_init = 0; /**< Whether or not the quadtree was created. */
+static Quadtree weapon_quadtree; /**< Quadtree for weapons. */
 static IntList weapon_qtquery; /**< For querying collisions. */
 static IntList weapon_qtexp; /**< For querying collisions from explosions. */
 
@@ -147,7 +150,7 @@ static void weapon_free( Weapon* w );
 static void weapon_explodeLayer( WeaponLayer layer,
       double x, double y, double radius,
       const Pilot *parent, int mode );
-static void weapons_purgeLayer( Weapon** layer );
+static void weapons_purgeLayer( Weapon** weaplayer, WeaponLayer layer );
 /* Hitting. */
 static int weapon_checkCanHit( const Weapon* w, const Pilot *p );
 static void weapon_hit( Weapon *w, Pilot *ptarget, const vec2 *pos );
@@ -178,6 +181,18 @@ void weapon_init (void)
    wbackLayer  = array_create(Weapon*);
    il_create( &weapon_qtquery, 1 );
    il_create( &weapon_qtexp, 1 );
+}
+
+/**
+ * @brief Sets up collision stuff for a new system.
+ */
+void weapon_newSystem (void)
+{
+   double r = cur_system->radius * 1.1;
+   if (qt_init)
+      qt_destroy( &weapon_quadtree );
+   qt_create( &weapon_quadtree, -r, -r, r, r, 4, 6 ); /* TODO tune parameters. */
+   qt_init = 1;
 }
 
 /**
@@ -597,9 +612,12 @@ static void think_beam( Weapon* w, double dt )
  */
 void weapons_updatePurge (void)
 {
+   /* Clear quadtree. */
+   qt_clear( &weapon_quadtree );
+
    /* Actually purge and remove weapons. */
-   weapons_purgeLayer( wbackLayer );
-   weapons_purgeLayer( wfrontLayer );
+   weapons_purgeLayer( wbackLayer, WEAPON_LAYER_BG );
+   weapons_purgeLayer( wfrontLayer, WEAPON_LAYER_FG );
 }
 
 /**
@@ -760,16 +778,42 @@ static void weapons_updateLayerCollide( double dt, WeaponLayer layer )
 /**
  * @brief Purges weapons marked for deletion.
  *
+ *    @param weaplayer List of weapons to purge.
  *    @param layer Layer to purge weapons from.
  */
-static void weapons_purgeLayer( Weapon** layer )
+static void weapons_purgeLayer( Weapon** weaplayer, WeaponLayer layer )
 {
-   for (int i=0; i<array_size(layer); i++) {
-      if (weapon_isFlag(layer[i],WEAPON_FLAG_DESTROYED)) {
-         weapon_free(layer[i]);
-         array_erase( &layer, &layer[i], &layer[i+1] );
-         i--;
-      }
+   for (int i=array_size(weaplayer)-1; i>=0; i--) {
+      Weapon *w  = weaplayer[i];
+      if (!weapon_isFlag(w,WEAPON_FLAG_DESTROYED))
+         continue;
+      weapon_free( w );
+      array_erase( &weaplayer, &weaplayer[i], &weaplayer[i+1] );
+   }
+
+   /* Do a second pass to add the quadtree elements. */
+   for (int i=0; i<array_size(weaplayer); i++) {
+      const Weapon *w  = weaplayer[i];
+      int x, y, w2, h2;
+      const OutfitGFX *gfx;
+      double range;
+
+      if (!weapon_isFlag(w,WEAPON_FLAG_HITTABLE))
+         continue;
+
+      gfx = outfit_gfx(w->outfit);
+      if (gfx->tex != NULL)
+         range = gfx->size;
+      else
+         range = gfx->col_size;
+
+      /* Determine quadtree location, and insert. */
+      x = round(w->solid.pos.x);
+      y = round(w->solid.pos.y);
+      w2 = ceil(range * 0.5);
+      h2 = ceil(range * 0.5);
+      /* This hack is pretty ugly, but it allows us to store both foreground and background using a single ID. */
+      qt_insert( &weapon_quadtree, (layer==WEAPON_LAYER_FG) ? i : -i-1, x-w2, y-h2, x+w2, y+h2 );
    }
 }
 
@@ -2472,6 +2516,7 @@ void weapon_exit (void)
    weapon_vbo = NULL;
 
    /* Clean up the queries. */
+   qt_destroy( &weapon_quadtree );
    il_destroy( &weapon_qtquery );
    il_destroy( &weapon_qtexp );
 }
