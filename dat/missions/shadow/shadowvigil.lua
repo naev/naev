@@ -156,7 +156,7 @@ function accept_m()
      fmt.f(_("Follow the group to {spb} and land"),{spb=refuelsys}),
      _("Follow the flight leader to the rendezvous location"),
      _("Escort the Imperial diplomat"),
-     _("Report back to Rebina"),
+     fmt.f(_("Report back to Rebina ({sys} system)"),{sys=rebinasys}),
    })
 
    hook.land("land")
