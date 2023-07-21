@@ -1210,7 +1210,7 @@ static const char* pilot_outfitLDescExtra( const Pilot *p, const Outfit *o )
 
    /* Set up the function: init( p, po ) */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, o->lua_descextra); /* f */
-   if (p != NULL)
+   if ((p != NULL) && (p->id > 0)) /* Needs valid ID. */
       lua_pushpilot( naevL, p->id ); /* f, p */
    else
       lua_pushnil( naevL ); /* f, p */
