@@ -27,12 +27,12 @@ local vntk = require "vntk"
 
 -- Mission constants
 local rebinasys = system.get("Pas")
-local refuelspob, refuelsys = spob.getS("Nova Shakar")
+local refuelspob, refuelsys = spob.getS("Semper") -- Qex
 local misssys = {
-   system.get("Qex"),           -- Escort meeting point
+   system.get("Shakar"),        -- Escort meeting point
    refuelsys,                   -- Refuel stop
-   system.get("Borla"),         -- Protegee meeting point
-   system.get("Doranthex"),     -- Final destination
+   system.get("Eneguoz"),       -- Protegee meeting point
+   system.get("Ogat"),          -- Final destination
 }
 
 local ambush, diplomat, dvaerplomat, escorts, seiryuu -- Non-persistent state
@@ -353,6 +353,7 @@ function jumpin()
             for i, j in ipairs(ambush) do
                if j:exists() then
                   --j:setHilight(true)
+                  --j:setVisible(true)
                   j:setHostile(true)
                   hook.pilot(j, "death", "attackerDeath")
 
