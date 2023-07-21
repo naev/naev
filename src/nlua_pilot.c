@@ -1085,7 +1085,10 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
       fighters = lua_toboolean(L,6);
    }
 
-   dd = pow2(dist);
+   if (dist > 0.)
+      dd = pow2(dist);
+   else
+      dd = -1.;
 
    /* Now put all the matching pilots in a table. */
    pilot_stack = pilot_getAll();
