@@ -3973,6 +3973,9 @@ static int pilotL_effectGet( lua_State *L )
       lua_pushnumber(L,e->timer);
       lua_setfield(L,-2,"timer");
 
+      lua_pushnumber(L,e->timer);
+      lua_setfield(L,-2,"strength");
+
       lua_pushnumber(L,e->data->duration);
       lua_setfield(L,-2,"duration");
 
