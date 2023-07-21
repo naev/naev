@@ -3,6 +3,9 @@
    Shadow Common Functions
 
 --]]
+local portrait = require "portrait"
+local vn = require "vn"
+
 local shadow = {}
 
 function shadow.addLog( text )
@@ -63,6 +66,13 @@ end
 function shadow.fct_diplomatic ()
    local _f1, _f2, _f3, f4 = make_fct()
    return f4
+end
+
+function shadow.vn_rebina( params )
+   return vn.Character.new( _("Rebina"),
+         tmerge( {
+            image = portrait.getFullPath("neutral/unique/rebina_casual.webp"),
+         }, params ) )
 end
 
 return shadow
