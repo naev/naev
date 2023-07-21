@@ -1017,8 +1017,8 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    //col_out = sdf_notemarker( colour, uv_rel );
    //col_out = sm_highlight( colour, tex, uv, px );
    //col_out = sm( colour, tex, uv, px );
-   //col_out = electric( colour, tex, uv, px );
-   col_out = electric2( colour, tex, uv, px );
+   col_out = electric( colour, tex, uv, px );
+   //col_out = electric2( colour, tex, uv, px );
 
    return mix( bg(uv), col_out, col_out.a );
 }
