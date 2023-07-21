@@ -457,7 +457,7 @@ function update_effects()
    local debuff_col = colour.new("Hostile")
    effects = {}
    local effects_added = {}
-   for k,e in ipairs(pp:effectGet()) do
+   for k,e in ipairs(pp:effects()) do
       local a = effects_added[ e.name ]
       if not a then
          a = #effects+1

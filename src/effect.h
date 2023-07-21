@@ -48,7 +48,7 @@ typedef struct Effect_ {
    unsigned int parent; /**< Pilot it is being applied to. */
    double timer;        /**< Time left on the effect. */
    double duration;     /**< Duration of this effect. */
-   double scale;        /**< Scales the effect. */
+   double strength;        /**< Scales the effect. */
    double r;            /**< Random number. */
    double elapsed;      /**< Total elapsed time. */
 } Effect;
@@ -64,7 +64,7 @@ const EffectData *effect_get( const char *name );
  * Effect list stuff.
  */
 int effect_update( Effect **efxlist, double dt );
-int effect_add( Effect **efxlist, const EffectData *efx, double duration, double scale, unsigned int parent );
+int effect_add( Effect **efxlist, const EffectData *efx, double duration, double strength, unsigned int parent );
 int effect_rm( Effect **efxlist, const EffectData *efx, int all );
 void effect_clearSpecific( Effect **efxlist, int debuffs, int buffs, int others );
 void effect_clear( Effect **efxlist );

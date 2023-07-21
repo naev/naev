@@ -286,11 +286,11 @@ int effect_update( Effect **efxlist, double dt )
  *    @param efxlist List of effects.
  *    @param efx Effect to add.
  *    @param duration Duration of the effect or set to negative for default.
- *    @param scale Scaling effect.
+ *    @param strength Scaling strength of the effect.
  *    @param parent Pilot the effect is being added to.
  *    @return 0 on success.
  */
-int effect_add( Effect **efxlist, const EffectData *efx, double duration, double scale, unsigned int parent )
+int effect_add( Effect **efxlist, const EffectData *efx, double duration, double strength, unsigned int parent )
 {
    Effect *e = NULL;
    int overwrite = 0;
@@ -309,17 +309,17 @@ int effect_add( Effect **efxlist, const EffectData *efx, double duration, double
             e = el;
             if (e->data == efx) {
                /* Case the effect is weaker when both are the same, we just ignore. */
-               if (el->scale > scale)
+               if (el->strength > strength)
                   return 0;
                /* Case the base effect has a longer timer with same strength we ignore. */
-               if ((fabs(el->scale-scale)<1e-5) && (el->timer > duration))
+               if ((fabs(el->strength-strength)<1e-5) && (el->timer > duration))
                   return 0;
                /* Procede to overwrite. */
                overwrite = 1;
             }
             else {
                /* Here we remove the effect and replace it as they overlap while not being exactly the same.
-                * Can't do a scale check because they may not be comparable. */
+                * Can't do a strength check because they may not be comparable. */
                if (e->data->lua_remove != LUA_NOREF) {
                   lua_rawgeti(naevL, LUA_REGISTRYINDEX, e->data->lua_remove); /* f */
                   lua_pushpilot(naevL, e->parent);
@@ -343,7 +343,7 @@ int effect_add( Effect **efxlist, const EffectData *efx, double duration, double
    e->data  = efx;
    e->duration = duration;
    e->timer = e->duration;
-   e->scale = scale;
+   e->strength = strength;
    e->parent = parent;
 
    /* Run Lua if necessary. */
@@ -480,7 +480,7 @@ void effect_compute( ShipStats *s, const Effect *efxlist )
 {
    for (int i=0; i<array_size(efxlist); i++) {
       const Effect *e = &efxlist[i];
-      ss_statsMergeFromListScale( s, e->data->stats, e->scale );
+      ss_statsMergeFromListScale( s, e->data->stats, e->strength );
    }
 }
 

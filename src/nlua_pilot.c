@@ -373,7 +373,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "effectClear", pilotL_effectClear },
    { "effectAdd", pilotL_effectAdd },
    { "effectRm", pilotL_effectRm },
-   { "effectGet", pilotL_effectGet },
+   { "effects", pilotL_effectGet },
    /* Ship. */
    { "ship", pilotL_ship },
    { "radius", pilotL_radius },
@@ -3957,7 +3957,7 @@ static int pilotL_effectRm( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to get effects of.
  *    @luatreturn table Table of effects which are treated as tables with "name" and "timer" elements.
- * @luafunc effectGet
+ * @luafunc effects
  */
 static int pilotL_effectGet( lua_State *L )
 {
