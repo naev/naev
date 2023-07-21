@@ -25,9 +25,10 @@ local ai_setup = require "ai.core.setup"
 
 -- Mission constants
 local rebinasys = system.get("Pas")
+local refuelspob, refuelsys = spob.getS("Nova Shakar")
 local misssys = {
    system.get("Qex"),           -- Escort meeting point
-   system.get("Shakar"),        -- Refuel stop
+   refuelsys,                   -- Refuel stop
    system.get("Borla"),         -- Protegee meeting point
    system.get("Doranthex"),     -- Final destination
 }
@@ -106,6 +107,7 @@ function accept_m()
    mem.origin = system.cur() -- The place where the AI ships spawn from.
    mem.chattered = false
    mem.kills = 0 -- Counter to keep track of enemy kills.
+   seiryuu:setHilight(false) -- No need to highlight anymore
 
    mem.accepted = false
    mem.missend = false
@@ -122,7 +124,7 @@ function accept_m()
 
    misn.osdCreate(_("Shadow Vigil"), {
      fmt.f(_("Fly to the {sys} system and join the other escorts"), {sys=misssys[1]}),
-     _("Follow the group to Nova Shakar and land"),
+     fmt.f(_("Follow the group to {spb} and land"),{spb=refuelsys}),
      _("Follow the flight leader to the rendezvous location"),
      _("Escort the Imperial diplomat"),
      _("Report back to Rebina"),
@@ -149,7 +151,7 @@ end
 function land()
    if mem.landfail then
       tk.msg(_("You abandoned your charge!"), _("You have landed, but you were supposed to escort the diplomat. Your mission is a failure!"))
-   elseif spob.cur() == spob.get("Nova Shakar") and mem.stage == 2 then
+   elseif spob.cur()==refuelspob and mem.stage == 2 then
       local dist = system.cur():jumpDist(misssys[4])
       local refueltext = n_(
          "While you handle the post-land and refuel operations, you get a comm from the flight leader, audio only. He tells you that this will be the last place where you can refuel, and that you need to make sure to have at least %d jump worth of fuel on board for the next leg of the journey. You will be left behind if you can't keep up.",
@@ -164,7 +166,7 @@ end
 
 -- Function hooked to takeoff.
 function takeoff()
-   if mem.stage == 3 and mem.landfail then -- We're taking off from Nova Shakar. Can't be anything else.
+   if mem.stage == 3 and mem.landfail then -- We're taking off from refuelspob. Can't be anything else.
       jumpin()
    end
 end
@@ -254,7 +256,7 @@ function jumpin()
          for i, j in ipairs(escorts) do
             if not mem.alive[i] then j:rm() end -- Dead escorts stay dead.
             if j:exists() then
-               j:land(spob.get("Nova Shakar"))
+               j:land(refuelspob)
             end
          end
       elseif system.cur() == misssys[3] then -- case join up with diplomat
@@ -321,7 +323,8 @@ function jumpin()
             mem.kills = 0
             for i, j in ipairs(ambush) do
                if j:exists() then
-                  j:setHilight(true)
+                  --j:setHilight(true)
+                  j:setHostile(true)
                   hook.pilot(j, "death", "attackerDeath")
 
                   -- Just in case.
@@ -364,7 +367,7 @@ function escortStart()
    mem.stage = 2 -- Fly to the refuel planet.
    misn.osdActive(2)
    misn.markerRm(mem.marker) -- No marker. Player has to follow the NPCs.
-   escorts[1]:comm(_("There you are at last. Fancy boat you've got there. We're gonna head to Nova Shakar first, to grab some fuel. Just stick with us, okay?"))
+   escorts[1]:comm(fmt.f(_("There you are at last. Fancy boat you've got there. We're gonna head to {spb} first, to grab some fuel. Just stick with us, okay?"),{spb=refuelspob}))
    local nextjump = lmisn.getNextSystem( system.cur(), misssys[mem.stage] )
    for i, j in pairs(escorts) do
       if j:exists() then
