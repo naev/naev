@@ -348,12 +348,11 @@ function jumpin()
                {"Pirate Ancestor", "Pirate Hyena", "Pirate Hyena"},
                {"Pirate Ancestor", "Pirate Vendetta", "Pirate Hyena", "Pirate Hyena"}
             }
-            ambush = fleet.add( 1,  ambush_ships[3 - mem.jp2go], shadow.fct_pirates(), vec2.new(0, 0), _("Pirate Attacker"), {ai="baddie_norun"} )
+            ambush = fleet.add( 1,  ambush_ships[3-mem.jp2go], shadow.fct_pirates(), vec2.new(0, 0), _("Pirate Attacker"), {ai="baddie_norun"} )
             mem.kills = 0
             for i, j in ipairs(ambush) do
                if j:exists() then
-                  --j:setHilight(true)
-                  --j:setVisible(true)
+                  j:setHilight(true)
                   j:setHostile(true)
                   hook.pilot(j, "death", "attackerDeath")
 
@@ -371,7 +370,7 @@ function jumpin()
          end
       end
 
-   elseif system.cur() == mem.seirsys then -- not escorting.
+   elseif system.cur()==mem.seirsys then -- not escorting.
       -- case enter system where Seiryuu is
       seiryuu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), vec2.new(0, -2000), _("Seiryuu"), {ai="trader"} )
       seiryuu:setInvincible(true)
