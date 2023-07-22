@@ -432,7 +432,6 @@ static void think_seeker( Weapon* w, double dt )
 static void think_beam( Weapon* w, double dt )
 {
    Pilot *p, *t;
-   AsteroidAnchor *field;
    Asteroid *ast;
    double diff, mod;
    vec2 v;
@@ -460,7 +459,7 @@ static void think_beam( Weapon* w, double dt )
 
    /* Get the targets. */
    if (p->nav_asteroid != -1) {
-      field = &cur_system->asteroids[p->nav_anchor];
+      AsteroidAnchor *field = &cur_system->asteroids[p->nav_anchor];
       ast = &field->asteroids[p->nav_asteroid];
    }
    else
