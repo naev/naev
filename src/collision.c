@@ -964,6 +964,24 @@ int CollideLineCircle( const vec2* p1, const vec2* p2,
 #undef FY
 
 /**
+ * @brief Computes the collision between two circles.
+ */
+int CollideCircleCircle( const vec2 *p1, double r1,
+      const vec2 *p2, double r2, vec2 crash[2] )
+{
+   double dist2 = vec2_dist2( p1, p2 );
+
+   /* No intersection. */
+   if (dist2 > pow2(r1+r2))
+      return 0;
+
+   crash->x = (p1->x * r1 + p2->x * r2) / (r1+r2);
+   crash->y = (p1->y * r1 + p2->y * r2) / (r1+r2);
+   return 1;
+}
+
+/**
+ * @brief Calculates the area of intersection between two circles.
  */
 double CollideCircleIntersection( const vec2 *p1, double r1,
       const vec2 *p2, double r2 )

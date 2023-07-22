@@ -46,6 +46,8 @@ int CollidePolygon( const CollPoly* at, const vec2* ap,
       const CollPoly* bt, const vec2* bp, vec2* crash );
 int CollideLineCircle( const vec2* p1, const vec2* p2,
       const vec2 *cc, double cr, vec2 crash[2] );
+int CollideCircleCircle( const vec2 *p1, double r1,
+      const vec2 *p2, double r2, vec2 crash[2] );
 
 /* Intersection area. */
 double CollideCircleIntersection( const vec2 *p1, double r1,
