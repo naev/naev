@@ -41,7 +41,7 @@ typedef struct Weapon_ {
    WeaponLayer layer;   /**< Weapon layer. */
    unsigned int flags;  /**< Weapon flags. */
    Solid solid;         /**< Actually has its own solid :) */
-   unsigned int ID;     /**< Only used for beam weapons. */
+   unsigned int id;     /**< Unique weapon id. */
 
    int faction;         /**< faction of pilot that shot it */
    unsigned int parent; /**< pilot that shot it */

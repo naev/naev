@@ -2316,7 +2316,7 @@ unsigned int beam_start( PilotOutfitSlot *po,
    w  = &array_grow(&weapon_stack);
    w->layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
    weapon_create( w, po, NULL, 0., dir, pos, vel, parent, target, 0., aim );
-   w->ID = ++beam_idgen;
+   w->id = ++beam_idgen;
    w->mount = po;
    w->timer2 = 0.;
 
@@ -2331,7 +2331,7 @@ unsigned int beam_start( PilotOutfitSlot *po,
       gl_vboData( weapon_vbo, size, weapon_vboData );
    }
 
-   return w->ID;
+   return w->id;
 }
 
 /**
@@ -2351,7 +2351,7 @@ void beam_end( unsigned int beam )
    /* Now try to destroy the beam. */
    for (int i=0; i<array_size(weapon_stack); i++) {
       Weapon *w = &weapon_stack[i];
-      if (w->ID == beam) { /* Found it. */
+      if (w->id == beam) { /* Found it. */
          weapon_miss( w );
          break;
       }
