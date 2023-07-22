@@ -17,7 +17,10 @@
 #include "array.h"
 #include "nlua.h"
 #include "nluadef.h"
+#include "nlua_faction.h"
 #include "nlua_outfit.h"
+#include "nlua_vec2.h"
+#include "nlua_pilot.h"
 
 /* Prototypes. */
 static Weapon *munition_get( LuaMunition *lm );
@@ -27,6 +30,11 @@ static int munitionL_eq( lua_State *L );
 static int munitionL_tostring( lua_State *L );
 static int munitionL_clear( lua_State *L );
 static int munitionL_getAll( lua_State *L );
+static int munitionL_pos( lua_State *L );
+static int munitionL_vel( lua_State *L );
+static int munitionL_faction( lua_State *L );
+static int munitionL_parent( lua_State *L );
+static int munitionL_target( lua_State *L );
 static int munitionL_outfit( lua_State *L );
 static const luaL_Reg munitionL_methods[] = {
    /* General. */
@@ -34,6 +42,12 @@ static const luaL_Reg munitionL_methods[] = {
    { "__tostring", munitionL_tostring },
    { "clear", munitionL_clear },
    { "getAll", munitionL_getAll },
+   /* Get properties. */
+   { "pos", munitionL_pos },
+   { "vel", munitionL_vel },
+   { "faction", munitionL_faction },
+   { "parent", munitionL_parent },
+   { "target", munitionL_target },
    { "outfit", munitionL_outfit },
    /* End sentinal. */
    {0,0},
@@ -225,6 +239,76 @@ static int munitionL_getAll( lua_State *L )
       lua_pushmunition( L, w );
       lua_rawseti( L, -2, n++ );
    }
+   return 1;
+}
+
+/**
+ * @brief Gets the position of the munition.
+ *
+ *    @luatparam Munition m Munition to get property of.
+ *    @luatreturn Vec2 Position of the munition.
+ * @luafunc pos
+ */
+static int munitionL_pos( lua_State *L )
+{
+   Weapon *w = luaL_validmunition( L, 1 );
+   lua_pushvector( L, w->solid.pos );
+   return 1;
+}
+
+/**
+ * @brief Gets the velocity of the munition.
+ *
+ *    @luatparam Munition m Munition to get property of.
+ *    @luatreturn Vec2 Velocity of the munition.
+ * @luafunc vel
+ */
+static int munitionL_vel( lua_State *L )
+{
+   Weapon *w = luaL_validmunition( L, 1 );
+   lua_pushvector( L, w->solid.vel );
+   return 1;
+}
+
+/**
+ * @brief Gets the faction of the munition.
+ *
+ *    @luatparam Munition m Munition to get property of.
+ *    @luatreturn Faction Faction of the munition.
+ * @luafunc faction
+ */
+static int munitionL_faction( lua_State *L )
+{
+   Weapon *w = luaL_validmunition( L, 1 );
+   lua_pushfaction( L, w->faction );
+   return 1;
+}
+
+/**
+ * @brief Gets the parent of the munition.
+ *
+ *    @luatparam Munition m Munition to get property of.
+ *    @luatreturn Pilot Parent of the munition.
+ * @luafunc parent
+ */
+static int munitionL_parent( lua_State *L )
+{
+   Weapon *w = luaL_validmunition( L, 1 );
+   lua_pushpilot( L, w->parent );
+   return 1;
+}
+
+/**
+ * @brief Gets the target of the munition.
+ *
+ *    @luatparam Munition m Munition to get property of.
+ *    @luatreturn Pilot Target of the munition.
+ * @luafunc target
+ */
+static int munitionL_target( lua_State *L )
+{
+   Weapon *w = luaL_validmunition( L, 1 );
+   lua_pushpilot( L, w->parent );
    return 1;
 }
 

@@ -207,8 +207,7 @@ LuaFaction luaL_validfaction( lua_State *L, int ind )
  */
 LuaFaction* lua_pushfaction( lua_State *L, LuaFaction faction )
 {
-   LuaFaction *f;
-   f = (LuaFaction*) lua_newuserdata(L, sizeof(LuaFaction));
+   LuaFaction *f = (LuaFaction*) lua_newuserdata(L, sizeof(LuaFaction));
    *f = faction;
    luaL_getmetatable(L, FACTION_METATABLE);
    lua_setmetatable(L, -2);
