@@ -48,8 +48,7 @@ typedef struct WeaponCollision_ {
 } WeaponCollision;
 
 /* Weapon layers. */
-static Weapon** wbackLayer = NULL; /**< behind pilots */
-static Weapon** wfrontLayer = NULL; /**< in front of pilots, behind player */
+static Weapon* weapon_stack = NULL;
 
 /* Graphics. */
 static gl_vbo  *weapon_vbo     = NULL; /**< Weapon VBO. */
@@ -75,25 +74,19 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
       double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time, int aim );
 static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
       double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time, int aim );
-static Weapon* weapon_create( PilotOutfitSlot* po, const Outfit *ref,
+static int weapon_create( Weapon *w, PilotOutfitSlot* po, const Outfit *ref,
       double T, double dir, const vec2* pos, const vec2* vel,
       const Pilot *parent, const unsigned int target, double time, int aim );
 static double weapon_computeTimes( double rdir, double rx, double ry, double dvx, double dvy, double pxv,
       double vmin, double acc, double *tt );
 /* Updating. */
 static void weapon_render( Weapon* w, double dt );
-static void weapons_updateLayerCollide( double dt, WeaponLayer layer );
-static void weapons_updateLayer( double dt, const WeaponLayer layer );
 static void weapon_updateCollide( Weapon* w, double dt );
 static void weapon_update( Weapon* w, double dt );
 static void weapon_sample_trail( Weapon* w );
 /* Destruction. */
 static void weapon_destroy( Weapon* w );
 static void weapon_free( Weapon* w );
-static void weapon_explodeLayer( WeaponLayer layer,
-      double x, double y, double radius,
-      const Pilot *parent, int mode );
-static void weapons_purgeLayer( Weapon** weaplayer, WeaponLayer layer );
 /* Hitting. */
 static int weapon_checkCanHit( const Weapon* w, const Pilot *p );
 static void weapon_damage( Weapon *w, const Damage *dmg );
@@ -120,8 +113,7 @@ static void weapon_setTurn( Weapon *w, double turn );
  */
 void weapon_init (void)
 {
-   wfrontLayer = array_create(Weapon*);
-   wbackLayer  = array_create(Weapon*);
+   weapon_stack = array_create(Weapon);
    il_create( &weapon_qtquery, 1 );
    il_create( &weapon_qtexp, 1 );
 }
@@ -151,9 +143,7 @@ void weapon_minimap( double res, double w,
       double h, const RadarShape shape, double alpha )
 {
    int rc, p;
-   const glColour *c;
    GLsizei offset;
-   Pilot *par;
 
    /* Get offset. */
    p = 0;
@@ -165,9 +155,11 @@ void weapon_minimap( double res, double w,
       rc = 0;
 
    /* Draw the points for weapons on all layers. */
-   for (int i=0; i<array_size(wbackLayer); i++) {
+   /* TODO quadtree look-up. */
+   for (int i=0; i<array_size(weapon_stack); i++) {
       double x, y;
-      Weapon *wp = wbackLayer[i];
+      const glColour *c;
+      Weapon *wp = &weapon_stack[i];
 
       /* Make sure is in range. */
       if (!pilot_inRange( player.p, wp->solid.pos.x, wp->solid.pos.y ))
@@ -191,53 +183,13 @@ void weapon_minimap( double res, double w,
          if (wp->target == PLAYER_ID)
             c = &cHostile;
          else {
-            par = pilot_get(wp->parent);
+            const Pilot *par = pilot_get(wp->parent);
             if ((par!=NULL) && pilot_isHostile(par))
                c = &cHostile;
             else
                c = &cNeutral;
          }
       }
-
-      /* Set the colour. */
-      weapon_vboData[ offset + 4*p + 0 ] = c->r;
-      weapon_vboData[ offset + 4*p + 1 ] = c->g;
-      weapon_vboData[ offset + 4*p + 2 ] = c->b;
-      weapon_vboData[ offset + 4*p + 3 ] = alpha;
-
-      /* Put the pixel. */
-      weapon_vboData[ 2*p + 0 ] = x;
-      weapon_vboData[ 2*p + 1 ] = y;
-
-      /* "Add" pixel. */
-      p++;
-   }
-   for (int i=0; i<array_size(wfrontLayer); i++) {
-      double x, y;
-      Weapon *wp = wfrontLayer[i];
-
-      /* Make sure is in range. */
-      if (!pilot_inRange( player.p, wp->solid.pos.x, wp->solid.pos.y ))
-         continue;
-
-      /* Get radar position. */
-      x = (wp->solid.pos.x - player.p->solid.pos.x) / res;
-      y = (wp->solid.pos.y - player.p->solid.pos.y) / res;
-
-      /* Make sure in range. */
-      if (shape==RADAR_RECT && (ABS(x)>w/2. || ABS(y)>h/2.))
-         continue;
-      if (shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y)) > rc))
-         continue;
-
-      /* Choose colour based on if it'll hit player. */
-      if (outfit_isSeeker(wp->outfit) && (wp->target != PLAYER_ID))
-         c = &cNeutral;
-      else if ((wp->target == PLAYER_ID && wp->target != wp->parent) ||
-            areEnemies(FACTION_PLAYER, wp->faction))
-         c = &cHostile;
-      else
-         c = &cNeutral;
 
       /* Set the colour. */
       weapon_vboData[ offset + 4*p + 0 ] = c->r;
@@ -559,8 +511,38 @@ void weapons_updatePurge (void)
    qt_clear( &weapon_quadtree );
 
    /* Actually purge and remove weapons. */
-   weapons_purgeLayer( wbackLayer, WEAPON_LAYER_BG );
-   weapons_purgeLayer( wfrontLayer, WEAPON_LAYER_FG );
+   for (int i=array_size(weapon_stack)-1; i>=0; i--) {
+      Weapon *w  = &weapon_stack[i];
+      if (!weapon_isFlag(w,WEAPON_FLAG_DESTROYED))
+         continue;
+      weapon_free( w );
+      array_erase( &weapon_stack, &weapon_stack[i], &weapon_stack[i+1] );
+   }
+
+   /* Do a second pass to add the quadtree elements. */
+   for (int i=0; i<array_size(weapon_stack); i++) {
+      const Weapon *w  = &weapon_stack[i];
+      int x, y, w2, h2;
+      const OutfitGFX *gfx;
+      double range;
+
+      if (!weapon_isFlag(w,WEAPON_FLAG_HITTABLE))
+         continue;
+
+      gfx = outfit_gfx(w->outfit);
+      if (gfx->tex != NULL)
+         range = gfx->size;
+      else
+         range = gfx->col_size;
+
+      /* Determine quadtree location, and insert. */
+      x = round(w->solid.pos.x);
+      y = round(w->solid.pos.y);
+      w2 = ceil(range * 0.5);
+      h2 = ceil(range * 0.5);
+      /* This hack is pretty ugly, but it allows us to store both foreground and background using a single ID. */
+      qt_insert( &weapon_quadtree, i, x-w2, y-h2, x+w2, y+h2 );
+   }
 }
 
 /**
@@ -568,48 +550,8 @@ void weapons_updatePurge (void)
  */
 void weapons_updateCollide( double dt )
 {
-   weapons_updateLayerCollide(dt,WEAPON_LAYER_BG);
-   weapons_updateLayerCollide(dt,WEAPON_LAYER_FG);
-}
-
-/**
- * @brief Updates all the weapon layers.
- *
- *    @param dt Current delta tick.
- */
-void weapons_update( double dt )
-{
-   /* When updating, just mark weapons for deletion. */
-   weapons_updateLayer(dt,WEAPON_LAYER_BG);
-   weapons_updateLayer(dt,WEAPON_LAYER_FG);
-}
-
-/**
- * @brief Updates all the weapons in the layer.
- *
- *    @param dt Current delta tick.
- *    @param layer Layer to update.
- */
-static void weapons_updateLayerCollide( double dt, WeaponLayer layer )
-{
-   Weapon **wlayer;
-
-   /* Choose layer. */
-   switch (layer) {
-      case WEAPON_LAYER_BG:
-         wlayer = wbackLayer;
-         break;
-      case WEAPON_LAYER_FG:
-         wlayer = wfrontLayer;
-         break;
-
-      default:
-         WARN(_("Unknown weapon layer!"));
-         return;
-   }
-
-   for (int i=0; i<array_size(wlayer); i++) {
-      Weapon *w = wlayer[i];
+   for (int i=0; i<array_size(weapon_stack); i++) {
+      Weapon *w = &weapon_stack[i];
 
       /* Ignore destroyed wapons. */
       if (weapon_isFlag(w, WEAPON_FLAG_DESTROYED))
@@ -719,73 +661,14 @@ static void weapons_updateLayerCollide( double dt, WeaponLayer layer )
 }
 
 /**
- * @brief Purges weapons marked for deletion.
- *
- *    @param weaplayer List of weapons to purge.
- *    @param layer Layer to purge weapons from.
- */
-static void weapons_purgeLayer( Weapon** weaplayer, WeaponLayer layer )
-{
-   for (int i=array_size(weaplayer)-1; i>=0; i--) {
-      Weapon *w  = weaplayer[i];
-      if (!weapon_isFlag(w,WEAPON_FLAG_DESTROYED))
-         continue;
-      weapon_free( w );
-      array_erase( &weaplayer, &weaplayer[i], &weaplayer[i+1] );
-   }
-
-   /* Do a second pass to add the quadtree elements. */
-   for (int i=0; i<array_size(weaplayer); i++) {
-      const Weapon *w  = weaplayer[i];
-      int x, y, w2, h2;
-      const OutfitGFX *gfx;
-      double range;
-
-      if (!weapon_isFlag(w,WEAPON_FLAG_HITTABLE))
-         continue;
-
-      gfx = outfit_gfx(w->outfit);
-      if (gfx->tex != NULL)
-         range = gfx->size;
-      else
-         range = gfx->col_size;
-
-      /* Determine quadtree location, and insert. */
-      x = round(w->solid.pos.x);
-      y = round(w->solid.pos.y);
-      w2 = ceil(range * 0.5);
-      h2 = ceil(range * 0.5);
-      /* This hack is pretty ugly, but it allows us to store both foreground and background using a single ID. */
-      qt_insert( &weapon_quadtree, (layer==WEAPON_LAYER_FG) ? i : -i-1, x-w2, y-h2, x+w2, y+h2 );
-   }
-}
-
-/**
- * @brief Updates all the weapons in the layer.
+ * @brief Updates all the weapons.
  *
  *    @param dt Current delta tick.
- *    @param layer Layer to update.
  */
-static void weapons_updateLayer( double dt, WeaponLayer layer )
+void weapons_update( double dt )
 {
-   Weapon **wlayer;
-
-   /* Choose layer. */
-   switch (layer) {
-      case WEAPON_LAYER_BG:
-         wlayer = wbackLayer;
-         break;
-      case WEAPON_LAYER_FG:
-         wlayer = wfrontLayer;
-         break;
-
-      default:
-         WARN(_("Unknown weapon layer!"));
-         return;
-   }
-
-   for (int i=0; i<array_size(wlayer); i++) {
-      Weapon *w = wlayer[i];
+   for (int i=0; i<array_size(weapon_stack); i++) {
+      Weapon *w = &weapon_stack[i];
       /* Only increment if weapon wasn't destroyed. */
       if (!weapon_isFlag(w, WEAPON_FLAG_DESTROYED))
          weapon_update( w, dt );
@@ -800,23 +683,11 @@ static void weapons_updateLayer( double dt, WeaponLayer layer )
  */
 void weapons_render( const WeaponLayer layer, double dt )
 {
-   Weapon** wlayer;
-
-   switch (layer) {
-      case WEAPON_LAYER_BG:
-         wlayer = wbackLayer;
-         break;
-      case WEAPON_LAYER_FG:
-         wlayer = wfrontLayer;
-         break;
-
-      default:
-         WARN(_("Unknown weapon layer!"));
-         return;
+   for (int i=0; i<array_size(weapon_stack); i++) {
+      Weapon *w = &weapon_stack[i];
+      if (w->layer==layer)
+         weapon_render( w, dt );
    }
-
-   for (int i=0; i<array_size(wlayer); i++)
-      weapon_render( wlayer[i], dt );
 }
 
 static void weapon_renderBeam( Weapon* w, double dt )
@@ -1314,16 +1185,9 @@ static void weapon_updateCollide( Weapon* w, double dt )
    if (outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_POINTDEFENSE )) {
       qt_query( &weapon_quadtree, &weapon_qtquery, x1, y1, x2, y2 );
       for (int i=0; i<il_size(&weapon_qtquery); i++) {
-         int qtid = il_get( &weapon_qtquery, i, 0 );
-         Weapon *whit;
+         Weapon *whit = &weapon_stack[ il_get( &weapon_qtquery, i, 0 ) ];
          WeaponCollision wchit;
          int coll;
-         //const OutfitGFX *gfx = outfit_gfx(w->outfit);
-
-         if (qtid > 0)
-            whit = wfrontLayer[ qtid ];
-         else
-            whit = wbackLayer[ -qtid-1 ];
 
          wchit.gfx = outfit_gfx(w->outfit);
          if (wchit.gfx->tex != NULL) {
@@ -1555,16 +1419,10 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, const vec2 *pos, do
    if (outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_POINTDEFENSE )) {
       qt_query( &weapon_quadtree, &weapon_qtquery, x1, y1, x2, y2 );
       for (int i=0; i<il_size(&weapon_qtquery); i++) {
-         int qtid = il_get( &weapon_qtquery, i, 0 );
-         Weapon *whit;
+         Weapon *whit = &weapon_stack[ il_get( &weapon_qtquery, i, 0 ) ];
          WeaponCollision wchit;
          vec2 crash[2];
          int coll;
-
-         if (qtid > 0)
-            whit = wfrontLayer[ qtid ];
-         else
-            whit = wbackLayer[ -qtid-1 ];
 
          wchit.gfx = outfit_gfx(w->outfit);
          if (wchit.gfx->tex != NULL) {
@@ -2267,6 +2125,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
 /**
  * @brief Creates a new weapon.
  *
+ *    @param w Weapon to create.
  *    @param po Outfit slot which spawned the weapon.
  *    @param ref Reference outfit to use, does not have to be the outfit in the slot, but will default to it if set to NULL.
  *    @param T temperature of the shooter.
@@ -2279,7 +2138,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
  *    @param aim Whether or not to aim.
  *    @return A pointer to the newly created weapon.
  */
-static Weapon* weapon_create( PilotOutfitSlot* po, const Outfit *ref,
+static int weapon_create( Weapon *w, PilotOutfitSlot* po, const Outfit *ref,
       double T, double dir, const vec2* pos, const vec2* vel,
       const Pilot* parent, const unsigned int target, double time, int aim )
 {
@@ -2287,11 +2146,10 @@ static Weapon* weapon_create( PilotOutfitSlot* po, const Outfit *ref,
    Pilot *pilot_target;
    AsteroidAnchor *field;
    Asteroid *ast;
-   Weapon* w;
    const Outfit *outfit = (ref==NULL) ? po->outfit : ref;
 
    /* Create basic features */
-   w           = calloc( 1, sizeof(Weapon) );
+   memset( w, 0, sizeof(Weapon) );
    w->dam_mod  = 1.; /* Default of 100% damage. */
    w->dam_as_dis_mod = 0.; /* Default of 0% damage to disable. */
    w->faction  = parent->faction; /* non-changeable */
@@ -2377,7 +2235,7 @@ static Weapon* weapon_create( PilotOutfitSlot* po, const Outfit *ref,
    /* Set life to timer. */
    w->life = w->timer;
 
-   return w;
+   return 0;
 }
 
 /**
@@ -2399,8 +2257,7 @@ void weapon_add( PilotOutfitSlot *po, const Outfit *ref,
       const vec2* pos, const vec2* vel,
       const Pilot *parent, unsigned int target, double time, int aim )
 {
-   WeaponLayer layer;
-   Weapon *w, **m;
+   Weapon *w;
    size_t bufsize;
    const Outfit *o = (ref==NULL) ? po->outfit : ref;
 
@@ -2412,27 +2269,12 @@ void weapon_add( PilotOutfitSlot *po, const Outfit *ref,
    }
 #endif /* DEBUGGING */
 
-   layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
-   w     = weapon_create( po, ref, T, dir, pos, vel, parent, target, time, aim );
-   w->layer = layer;
-
-   /* set the proper layer */
-   switch (layer) {
-      case WEAPON_LAYER_BG:
-         m = &array_grow(&wbackLayer);
-         break;
-      case WEAPON_LAYER_FG:
-         m = &array_grow(&wfrontLayer);
-         break;
-
-      default:
-         WARN(_("Unknown weapon layer!"));
-         return;
-   }
-   *m = w;
+   w  = &array_grow(&weapon_stack);
+   w->layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
+   weapon_create( w, po, ref, T, dir, pos, vel, parent, target, time, aim );
 
    /* Grow the vertex stuff if needed. */
-   bufsize = array_reserved(wfrontLayer) + array_reserved(wbackLayer);
+   bufsize = array_reserved(weapon_stack);
    if (bufsize != weapon_vboSize) {
       GLsizei size;
       weapon_vboSize = bufsize;
@@ -2462,8 +2304,7 @@ unsigned int beam_start( PilotOutfitSlot *po,
       double dir, const vec2* pos, const vec2* vel,
       const Pilot *parent, const unsigned int target, int aim )
 {
-   WeaponLayer layer;
-   Weapon *w, **m;
+   Weapon *w;
    GLsizei size;
    size_t bufsize;
 
@@ -2472,30 +2313,15 @@ unsigned int beam_start( PilotOutfitSlot *po,
       return -1;
    }
 
-   layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
-   w = weapon_create( po, NULL, 0., dir, pos, vel, parent, target, 0., aim );
+   w  = &array_grow(&weapon_stack);
+   w->layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
+   weapon_create( w, po, NULL, 0., dir, pos, vel, parent, target, 0., aim );
    w->ID = ++beam_idgen;
    w->mount = po;
    w->timer2 = 0.;
-   w->layer = layer;
-
-   /* set the proper layer */
-   switch (layer) {
-      case WEAPON_LAYER_BG:
-         m = &array_grow(&wbackLayer);
-         break;
-      case WEAPON_LAYER_FG:
-         m = &array_grow(&wfrontLayer);
-         break;
-
-      default:
-         ERR(_("Invalid WEAPON_LAYER specified"));
-         return -1;
-   }
-   *m = w;
 
    /* Grow the vertex stuff if needed. */
-   bufsize = array_reserved(wfrontLayer) + array_reserved(wbackLayer);
+   bufsize = array_reserved(weapon_stack);
    if (bufsize != weapon_vboSize) {
       weapon_vboSize = bufsize;
       size = sizeof(GLfloat) * (2+4) * weapon_vboSize;
@@ -2511,30 +2337,10 @@ unsigned int beam_start( PilotOutfitSlot *po,
 /**
  * @brief Ends a beam weapon.
  *
- *    @param parent ID of the parent of the beam.
  *    @param beam ID of the beam to destroy.
  */
-void beam_end( const unsigned int parent, unsigned int beam )
+void beam_end( unsigned int beam )
 {
-   WeaponLayer layer;
-   Weapon **curLayer;
-
-   layer = (parent==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
-
-   /* set the proper layer */
-   switch (layer) {
-      case WEAPON_LAYER_BG:
-         curLayer = wbackLayer;
-         break;
-      case WEAPON_LAYER_FG:
-         curLayer = wfrontLayer;
-         break;
-
-      default:
-         ERR(_("Invalid WEAPON_LAYER specified"));
-         return;
-   }
-
 #if DEBUGGING
    if (beam==0) {
       WARN(_("Trying to remove beam with ID 0!"));
@@ -2543,9 +2349,10 @@ void beam_end( const unsigned int parent, unsigned int beam )
 #endif /* DEBUGGING */
 
    /* Now try to destroy the beam. */
-   for (int i=0; i<array_size(curLayer); i++) {
-      if (curLayer[i]->ID == beam) { /* Found it. */
-         weapon_miss(curLayer[i]);
+   for (int i=0; i<array_size(weapon_stack); i++) {
+      Weapon *w = &weapon_stack[i];
+      if (w->ID == beam) { /* Found it. */
+         weapon_miss( w );
          break;
       }
    }
@@ -2599,8 +2406,6 @@ static void weapon_free( Weapon* w )
 #ifdef DEBUGGING
    memset(w, 0, sizeof(Weapon));
 #endif /* DEBUGGING */
-
-   free(w);
 }
 
 /**
@@ -2609,16 +2414,12 @@ static void weapon_free( Weapon* w )
 void weapon_clear (void)
 {
    /* Don't forget to stop the sounds. */
-   for (int i=0; i < array_size(wbackLayer); i++) {
-      sound_stop(wbackLayer[i]->voice);
-      weapon_free(wbackLayer[i]);
+   for (int i=0; i < array_size(weapon_stack); i++) {
+      Weapon *w = &weapon_stack[i];
+      sound_stop( w->voice );
+      weapon_free( w );
    }
-   array_erase( &wbackLayer, array_begin(wbackLayer), array_end(wbackLayer) );
-   for (int i=0; i < array_size(wfrontLayer); i++) {
-      sound_stop(wfrontLayer[i]->voice);
-      weapon_free(wfrontLayer[i]);
-   }
-   array_erase( &wfrontLayer, array_begin(wfrontLayer), array_end(wfrontLayer) );
+   array_erase( &weapon_stack, array_begin(weapon_stack), array_end(weapon_stack) );
 }
 
 /**
@@ -2628,11 +2429,8 @@ void weapon_exit (void)
 {
    weapon_clear();
 
-   /* Destroy front layer. */
-   array_free(wbackLayer);
-
-   /* Destroy back layer. */
-   array_free(wfrontLayer);
+   /* Destroy weapon stack. */
+   array_free( weapon_stack );
 
    /* Destroy VBO. */
    free( weapon_vboData );
@@ -2644,58 +2442,4 @@ void weapon_exit (void)
    qt_destroy( &weapon_quadtree );
    il_destroy( &weapon_qtquery );
    il_destroy( &weapon_qtexp );
-}
-
-/**
- * @brief Clears possible exploded weapons.
- */
-void weapon_explode( double x, double y, double radius,
-      int dtype, double damage,
-      const Pilot *parent, int mode )
-{
-   (void) dtype;
-   (void) damage;
-   weapon_explodeLayer( WEAPON_LAYER_FG, x, y, radius, parent, mode );
-   weapon_explodeLayer( WEAPON_LAYER_BG, x, y, radius, parent, mode );
-}
-
-/**
- * @brief Explodes all the things on a layer.
- */
-static void weapon_explodeLayer( WeaponLayer layer,
-      double x, double y, double radius,
-      const Pilot *parent, int mode )
-{
-   (void)parent;
-   Weapon **curLayer;
-   double rad2;
-
-   /* set the proper layer */
-   switch (layer) {
-      case WEAPON_LAYER_BG:
-         curLayer = wbackLayer;
-         break;
-      case WEAPON_LAYER_FG:
-         curLayer = wfrontLayer;
-         break;
-
-      default:
-         ERR(_("Invalid WEAPON_LAYER specified"));
-         return;
-   }
-
-   rad2 = radius*radius;
-
-   /* Now try to destroy the weapons affected. */
-   for (int i=0; i<array_size(curLayer); i++) {
-      Weapon *w = curLayer[i];
-      if (((mode & EXPL_MODE_MISSILE) && outfit_isLauncher(w->outfit)) ||
-            ((mode & EXPL_MODE_BOLT) && outfit_isBolt(w->outfit))) {
-
-         double dist = pow2(w->solid.pos.x - x) + pow2(w->solid.pos.y - y);
-
-         if (dist < rad2)
-            weapon_destroy( w );
-      }
-   }
 }

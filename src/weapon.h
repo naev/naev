@@ -87,14 +87,11 @@ void weapon_add( PilotOutfitSlot *po, const Outfit *ref, double T,
 unsigned int beam_start( PilotOutfitSlot *po,
       double dir, const vec2* pos, const vec2* vel,
       const Pilot *parent, const unsigned int target, int aim );
-void beam_end( const unsigned int parent, unsigned int beam );
+void beam_end( unsigned int beam );
 
 /*
  * Misc stuff.
  */
-void weapon_explode( double x, double y, double radius,
-      int dtype, double damage,
-      const Pilot *parent, int mode );
 void weapon_hitAI( Pilot *p, const Pilot *shooter, double dmg );
 
 /*

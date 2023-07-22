@@ -822,7 +822,7 @@ unsigned int pilot_weaponSetShootStop( Pilot* p, PilotWeaponSet *ws, int level )
                continue;
          }
 
-         beam_end( p->id, pos->u.beamid );
+         beam_end( pos->u.beamid );
          pilot_stopBeam(p, pos);
       }
    }
@@ -1442,7 +1442,7 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
          return 0;
       /* Beams use stimer to represent minimum time until shutdown. */
       if (o->u.beamid>0) {
-         beam_end( p->id, o->u.beamid );
+         beam_end( o->u.beamid );
          pilot_stopBeam(p, o);
       }
    }

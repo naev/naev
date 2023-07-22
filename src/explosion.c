@@ -104,7 +104,9 @@ void expl_explodeDamage( double x, double y, double radius,
    if (mode & EXPL_MODE_SHIP)
       pilot_explode( x, y, radius, dmg, parent );
 
+#if 0
    /* Explosion affects missiles and bolts. */
    if ((mode & EXPL_MODE_MISSILE) || (mode & EXPL_MODE_BOLT))
       weapon_explode( x, y, radius, dmg->type, dmg->damage, parent, mode );
+#endif
 }

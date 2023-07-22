@@ -1265,7 +1265,7 @@ void player_think( Pilot* pplayer, const double dt )
    }
 
    if (fired)
-      player_autonavReset( 1 );
+      player_autonavReset( 1. );
 
    if (!player_isFlag(PLAYER_AUTONAV)) {
       acc = player_acc;
