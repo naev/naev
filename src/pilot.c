@@ -2902,7 +2902,7 @@ static void pilot_refuel( Pilot *p, double dt )
  *    @param p Pilot to calculate hyperspace delay for.
  *    @return The hyperspace delay.
  */
-ntime_t pilot_hyperspaceDelay( Pilot *p )
+ntime_t pilot_hyperspaceDelay( const Pilot *p )
 {
    int stu = (int)(NT_PERIOD_SECONDS * p->stats.jump_delay);
    return ntime_create( 0, 0, stu );
