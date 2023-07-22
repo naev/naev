@@ -127,12 +127,23 @@ Weapon *weapon_getStack (void)
 }
 
 /**
+ * @brief Compare id (for use with bsearch)
+ */
+static int weapon_cmp( const void *ptr1, const void *ptr2 )
+{
+   const Weapon *w1, *w2;
+   w1 = (const Weapon*) ptr1;
+   w2 = (const Weapon*) ptr2;
+   return w1->id - w2->id;
+}
+
+/**
  * @brief Gets a weapon by ID.
  */
 Weapon *weapon_getID( unsigned int id )
 {
-   /* TODO binary search. */
-   return &weapon_stack[0];
+   const Weapon wid = { .id = id };
+   return bsearch( &wid, weapon_stack, array_size(weapon_stack), sizeof(Weapon), weapon_cmp );
 }
 
 /**
