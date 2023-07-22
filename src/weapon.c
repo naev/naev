@@ -2277,7 +2277,6 @@ static int weapon_create( Weapon *w, PilotOutfitSlot* po, const Outfit *ref,
  *
  *    @param po Outfit slot which spawns the weapon.
  *    @param ref Reference outfit to use for computing damage and properties.
- *    @param T Temperature of the shooter.
  *    @param dir Direction of the shooter.
  *    @param pos Position of the slot (absolute).
  *    @param vel Velocity of the slot (absolute).
@@ -2287,12 +2286,12 @@ static int weapon_create( Weapon *w, PilotOutfitSlot* po, const Outfit *ref,
  *    @param aim Whether or not to aim.
  */
 void weapon_add( PilotOutfitSlot *po, const Outfit *ref,
-      double T, double dir,
-      const vec2* pos, const vec2* vel,
-      const Pilot *parent, unsigned int target, double time, int aim )
+      double dir, const vec2* pos, const vec2* vel,
+      const Pilot *parent, int target, double time, int aim )
 {
    Weapon *w;
    size_t bufsize;
+   double T = po->heat_T;
    const Outfit *o = (ref==NULL) ? po->outfit : ref;
 
 #if DEBUGGING

@@ -313,7 +313,7 @@ static int poL_munition( lua_State *L )
    vec2 *vp    = luaL_optvector( L, 6, &p->solid.pos );
    vec2 *vv    = luaL_optvector( L, 7, &p->solid.vel );
 
-   weapon_add( po, o, po->heat_T, dir, vp, vv, p, t, 0., 1 );
+   weapon_add( po, o,dir, vp, vv, p, t, 0., 1 );
    return 0;
 }
 

@@ -1030,7 +1030,7 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfi
  *    @param aim Whether or not to aim.
  *    @return 0 if nothing was shot and 1 if something was shot.
  */
-int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, int target, double time, int aim )
+int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, unsigned int target, double time, int aim )
 {
    vec2 vp, vv;
    double rate_mod, energy_mod;
@@ -1081,7 +1081,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, int target, double time, in
       pilot_heatAddSlot( p, w );
       if (!outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY )) {
          for (int i=0; i<w->outfit->u.blt.shots; i++)
-            weapon_add( w, NULL, w->heat_T, p->solid.dir,
+            weapon_add( w, NULL, p->solid.dir,
                   &vp, &vv, p, target, time, aim );
       }
    }
@@ -1144,7 +1144,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, int target, double time, in
       pilot_heatAddSlot( p, w );
       if (!outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY )) {
          for (int i=0; i<w->outfit->u.lau.shots; i++)
-            weapon_add( w, NULL, w->heat_T, p->solid.dir,
+            weapon_add( w, NULL, p->solid.dir,
                   &vp, &vv, p, target, time, aim );
       }
 

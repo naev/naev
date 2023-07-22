@@ -81,9 +81,9 @@ Weapon *weapon_getID( unsigned int id );
 /*
  * Addition.
  */
-void weapon_add( PilotOutfitSlot *po, const Outfit *ref, double T,
+void weapon_add( PilotOutfitSlot *po, const Outfit *ref,
       double dir, const vec2* pos, const vec2* vel,
-      const Pilot *parent, const unsigned int target, double time, int aim );
+      const Pilot *parent, int target, double time, int aim );
 
 /*
  * Beam weapons.
