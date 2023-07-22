@@ -143,7 +143,10 @@ static int weapon_cmp( const void *ptr1, const void *ptr2 )
 Weapon *weapon_getID( unsigned int id )
 {
    const Weapon wid = { .id = id };
-   return bsearch( &wid, weapon_stack, array_size(weapon_stack), sizeof(Weapon), weapon_cmp );
+   Weapon *w = bsearch( &wid, weapon_stack, array_size(weapon_stack), sizeof(Weapon), weapon_cmp );
+   if (weapon_isFlag(w,WEAPON_FLAG_DESTROYED))
+      return NULL;
+   return w;
 }
 
 /**
@@ -2446,6 +2449,8 @@ void weapon_clear (void)
       weapon_free( w );
    }
    array_erase( &weapon_stack, array_begin(weapon_stack), array_end(weapon_stack) );
+   /* We can restart the idgen. */
+   weapon_idgen = 0; /* May mess up Lua stuff... */
 }
 
 /**
