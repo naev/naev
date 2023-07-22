@@ -98,10 +98,10 @@ Weapon* luaL_validmunition( lua_State *L, int ind )
    return w;
 }
 /**
- * @brief Pushes a munition on the stack.
+ * @brief Pushes a weapon as a munition on the stack.
  *
  *    @param L Lua state to push munition into.
- *    @param munition Munition to push.
+ *    @param w Weapon to push as munition.
  *    @return Newly pushed munition.
  */
 LuaMunition* lua_pushmunition( lua_State *L, const Weapon *w )
