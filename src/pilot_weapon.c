@@ -71,12 +71,8 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 {
    int ret, s;
    Pilot *pt;
-   AsteroidAnchor *field;
-   Asteroid *ast;
    double time;
-   int isstealth;
-
-   isstealth = pilot_isFlag( p, PILOT_STEALTH );
+   int isstealth = pilot_isFlag( p, PILOT_STEALTH );
 
    ret = 0;
    for (int i=0; i<array_size(ws->slots); i++) {
@@ -119,8 +115,8 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
          time = pilot_weapFlyTime( o, p, &pt->solid.pos, &pt->solid.vel);
       /* Looking for a closer targeted asteroid */
       else if (p->nav_asteroid != -1) {
-         field = &cur_system->asteroids[p->nav_anchor];
-         ast = &field->asteroids[p->nav_asteroid];
+         AsteroidAnchor *field = &cur_system->asteroids[p->nav_anchor];
+         Asteroid *ast = &field->asteroids[p->nav_asteroid];
          time = pilot_weapFlyTime( o, p, &ast->pos, &ast->vel);
       }
 

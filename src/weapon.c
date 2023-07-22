@@ -1805,7 +1805,7 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
 
    /* Try to predict where the enemy will be. */
    t = time;
-   if (t == INFINITY)  /*Postprocess (t = INFINITY means target is not hittable)*/
+   if (t == INFINITY)  /* Postprocess (t = INFINITY means target is not hittable) */
       t = 0.;
 
    /* Position is calculated on where it should be */
@@ -2315,6 +2315,39 @@ void weapon_add( PilotOutfitSlot *po, const Outfit *ref,
          weapon_vbo = gl_vboCreateStream( size, NULL );
       gl_vboData( weapon_vbo, size, weapon_vboData );
    }
+}
+
+/**
+ * @brief Gets the fly time for a weapon target.
+ */
+double weapon_targetFlyTime( const Outfit *o, const Pilot *p, const WeaponTarget *t )
+{
+   switch (t->type) {
+      case WEAPON_TARGET_PILOT:
+         {
+            const Pilot *pt = pilot_get( t->u.id );
+            if (pt==NULL)
+               return 0.;
+            return pilot_weapFlyTime( o, p, &pt->solid.pos, &pt->solid.vel );
+         }
+         break;
+      case WEAPON_TARGET_WEAPON:
+         {
+            const Weapon *w = weapon_getID( t->u.id );
+            if (w==NULL)
+               return 0.;
+            return pilot_weapFlyTime( o, p, &w->solid.pos, &w->solid.vel );
+         }
+         break;
+      case WEAPON_TARGET_ASTEROID:
+         {
+            const AsteroidAnchor *field = &cur_system->asteroids[t->u.ast.anchor];
+            const Asteroid *ast = &field->asteroids[t->u.ast.asteroid];
+            return pilot_weapFlyTime( o, p, &ast->pos, &ast->vel );
+         }
+         break;
+   }
+   return 0.;
 }
 
 /**

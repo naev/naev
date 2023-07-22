@@ -33,6 +33,23 @@ typedef enum WeaponStatus_ {
 #define weapon_setFlag(w,f)   ((w)->flags |= (f))
 #define weapon_rmFlag(w,f)    ((w)->flags &= ~(f))
 
+typedef enum WeaponTargetType_ {
+   WEAPON_TARGET_PILOT,
+   WEAPON_TARGET_WEAPON,
+   WEAPON_TARGET_ASTEROID,
+} WeaponTargetType;
+
+typedef struct WeaponTarget_ {
+   WeaponTargetType type; /* Target type. */
+   union {
+      unsigned int id;   /* For pilot/weapons. */
+      struct {
+         int anchor;
+         int asteroid;
+      } ast; /* For asteroids. */
+   } u;
+} WeaponTarget;
+
 /**
  * @struct Weapon
  *
@@ -78,39 +95,32 @@ typedef struct Weapon_ {
 Weapon *weapon_getStack (void);
 Weapon *weapon_getID( unsigned int id );
 
-/*
- * Addition.
- */
+/* Addition. */
 void weapon_add( PilotOutfitSlot *po, const Outfit *ref,
       double dir, const vec2* pos, const vec2* vel,
       const Pilot *parent, int target, double time, int aim );
 
-/*
- * Beam weapons.
- */
+/* Targetting. */
+double weapon_targetFlyTime( const Outfit *o, const Pilot *p, const WeaponTarget *t );
+
+/* Beam weapons. */
 unsigned int beam_start( PilotOutfitSlot *po,
       double dir, const vec2* pos, const vec2* vel,
       const Pilot *parent, const unsigned int target, int aim );
 void beam_end( unsigned int beam );
 
-/*
- * Misc stuff.
- */
+/* Misc stuff. */
 void weapon_hitAI( Pilot *p, const Pilot *shooter, double dmg );
 const IntList *weapon_collideQuery( int x1, int y1, int x2, int y2 );
 void weapon_collideQueryIL( IntList *il, int x1, int y1, int x2, int y2 );
 
-/*
- * Update.
- */
+/* Update. */
 void weapons_updatePurge (void);
 void weapons_updateCollide( double dt );
 void weapons_update( double dt );
 void weapons_render( const WeaponLayer layer, double dt );
 
-/*
- * Clean.
- */
+/* Clean. */
 void weapon_init (void);
 void weapon_newSystem (void);
 void weapon_clear (void);
