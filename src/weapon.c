@@ -60,7 +60,8 @@ typedef enum WeaponStatus_ {
  * @brief In-game representation of a weapon.
  */
 typedef struct Weapon_ {
-   unsigned int flags;  /**< Weapno flags. */
+   WeaponLayer layer;   /**< Weapon layer. */
+   unsigned int flags;  /**< Weapon flags. */
    Solid solid;         /**< Actually has its own solid :) */
    unsigned int ID;     /**< Only used for beam weapons. */
 
@@ -159,7 +160,7 @@ static void weapon_damage( Weapon *w, const Damage *dmg );
 static void weapon_hitPilot( Weapon *w, Pilot *ptarget, const vec2 *pos );
 static void weapon_miss( Weapon *w );
 static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, const vec2* pos );
-static void weapon_hitWeapon( Weapon* w, Weapon *t, WeaponLayer layer, const vec2* pos );
+static void weapon_hitWeapon( Weapon* w, Weapon *t, const vec2* pos );
 static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
       vec2 pos[2], double dt );
 static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
@@ -1417,7 +1418,7 @@ static void weapon_updateCollide( Weapon* w, double dt, WeaponLayer layer )
             weapon_hitAstBeam( w, a, layer, crash, dt );
 #endif
          if (!wc.beam) {
-            weapon_hitWeapon( w, whit, layer, crash );
+            weapon_hitWeapon( w, whit, crash );
             return; /* Weapon is destroyed. */
          }
       }
@@ -1612,6 +1613,55 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, const vec2 *pos, do
          asteroid_hit( a, dmg, mining_rarity, mining_bonus );
       }
    }
+
+   /* Finally do a point defense test. */
+   if (outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_POINTDEFENSE )) {
+      qt_query( &weapon_quadtree, &weapon_qtquery, x1, y1, x2, y2 );
+      for (int i=0; i<il_size(&weapon_qtquery); i++) {
+         int qtid = il_get( &weapon_qtquery, i, 0 );
+         Weapon *whit;
+         WeaponCollision wchit;
+         vec2 crash[2];
+         int coll;
+
+         if (qtid > 0)
+            whit = wfrontLayer[ qtid ];
+         else
+            whit = wbackLayer[ -qtid-1 ];
+
+         wchit.gfx = outfit_gfx(w->outfit);
+         if (wchit.gfx->tex != NULL) {
+            const CollPoly *plg;
+            int n;
+            plg = outfit_plg(w->outfit);
+            if (plg == NULL) {
+               gl_getSpriteFromDir( &w->sx, &w->sy, wchit.gfx->tex, w->solid.dir );
+               n = wchit.gfx->tex->sx * w->sy + w->sx;
+               wchit.polygon = &plg[n];
+            }
+            else
+               wchit.polygon = NULL;
+            wchit.range = wchit.gfx->size; /* Range is set to size in this case. */
+         }
+         else {
+            wchit.polygon = NULL;
+            wchit.range = wchit.gfx->col_size;
+         }
+
+         /* Actually test the collision. */
+         coll = weapon_testCollision( &wc, wchit.gfx->tex, whit->sx, whit->sy, &whit->solid.pos, wchit.polygon, wchit.range, crash );
+         if (!coll)
+            continue;
+
+         /* Handle the hit. */
+#if 0
+         if (wc.beam)
+            weapon_hitAstBeam( w, a, layer, crash, dt );
+#endif
+         if (!wc.beam)
+            weapon_damage( whit, dmg );
+      }
+   }
 }
 
 /**
@@ -1746,7 +1796,7 @@ static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, const vec2
 /**
  * @brief Weapon hit another weapon.
  */
-static void weapon_hitWeapon( Weapon* w, Weapon *t, WeaponLayer layer, const vec2* pos )
+static void weapon_hitWeapon( Weapon* w, Weapon *t, const vec2* pos )
 {
    int s, spfx;
    Damage dmg;
@@ -1769,7 +1819,7 @@ static void weapon_hitWeapon( Weapon* w, Weapon *t, WeaponLayer layer, const vec
 
    /* Add the spfx */
    spfx = outfit_spfxArmour(w->outfit);
-   spfx_add( spfx, pos->x, pos->y, VX(t->solid.vel), VY(t->solid.vel), layer );
+   spfx_add( spfx, pos->x, pos->y, VX(t->solid.vel), VY(t->solid.vel), w->layer );
 
    if (radius > 0.)
       weapon_hitExplode( w, &dmg, pos, radius );
@@ -1777,6 +1827,12 @@ static void weapon_hitWeapon( Weapon* w, Weapon *t, WeaponLayer layer, const vec
       weapon_damage( t, &dmg );
 }
 
+/**
+ * @brief Applies damage to a weapon.
+ *
+ *    @param w Weapon being damaged.
+ *    @param dmg Damage being applied.
+ */
 static void weapon_damage( Weapon *w, const Damage *dmg )
 {
    assert( outfit_isLauncher(w->outfit) );
@@ -2428,6 +2484,7 @@ void weapon_add( PilotOutfitSlot *po, const Outfit *ref,
 
    layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
    w     = weapon_create( po, ref, T, dir, pos, vel, parent, target, time, aim );
+   w->layer = layer;
 
    /* set the proper layer */
    switch (layer) {
@@ -2490,6 +2547,7 @@ unsigned int beam_start( PilotOutfitSlot *po,
    w->ID = ++beam_idgen;
    w->mount = po;
    w->timer2 = 0.;
+   w->layer = layer;
 
    /* set the proper layer */
    switch (layer) {
