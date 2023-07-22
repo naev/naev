@@ -204,9 +204,9 @@ static int asteroidL_getAll( lua_State *L )
    int n = 1;
    lua_newtable(L);
    for (int i=0; i<array_size(cur_system->asteroids); i++) {
-      AsteroidAnchor *ast = &cur_system->asteroids[i];
+      const AsteroidAnchor *ast = &cur_system->asteroids[i];
       for (int j=0; j<ast->nb; j++) {
-         Asteroid *a = &ast->asteroids[j];
+         const Asteroid *a = &ast->asteroids[j];
          LuaAsteroid_t la = {
             .parent = a->parent,
             .id = a->id,
@@ -354,33 +354,33 @@ static int asteroidL_exists( lua_State *L )
  */
 static int asteroidL_state( lua_State *L )
 {
-   Asteroid *ast = luaL_validasteroid(L,1);
+   const Asteroid *ast = luaL_validasteroid(L,1);
    const char *state = NULL;
    switch (ast->state) {
-         case ASTEROID_FG:
-            state = "FG";
-            break;
-         case ASTEROID_XB:
-            state = "XB";
-            break;
-         case ASTEROID_BX:
-            state = "BX";
-            break;
-         case ASTEROID_XX_TO_BG:
-            state = "XX_TO_BG";
-            break;
-         case ASTEROID_FG_TO_BG:
-            state = "FG_TO_BG";
-            break;
-         case ASTEROID_BG_TO_FG:
-            state = "BG_TO_FG";
-            break;
-         case ASTEROID_BG_TO_XX:
-            state = "BG_TO_XX";
-            break;
-         case ASTEROID_XX:
-            state = "XX";
-            break;
+      case ASTEROID_FG:
+         state = "FG";
+         break;
+      case ASTEROID_XB:
+         state = "XB";
+         break;
+      case ASTEROID_BX:
+         state = "BX";
+         break;
+      case ASTEROID_XX_TO_BG:
+         state = "XX_TO_BG";
+         break;
+      case ASTEROID_FG_TO_BG:
+         state = "FG_TO_BG";
+         break;
+      case ASTEROID_BG_TO_FG:
+         state = "BG_TO_FG";
+         break;
+      case ASTEROID_BG_TO_XX:
+         state = "BG_TO_XX";
+         break;
+      case ASTEROID_XX:
+         state = "XX";
+         break;
    }
    lua_pushstring( L, state );
    return 1;
@@ -427,7 +427,7 @@ static int asteroidL_setState( lua_State *L )
  */
 static int asteroidL_field( lua_State *L )
 {
-   LuaAsteroid_t *la = luaL_checkasteroid(L,1);
+   const LuaAsteroid_t *la = luaL_checkasteroid(L,1);
    lua_pushinteger(L,la->parent+1);
    return 1;
 }
@@ -441,7 +441,7 @@ static int asteroidL_field( lua_State *L )
  */
 static int asteroidL_pos( lua_State *L )
 {
-   Asteroid *a = luaL_validasteroid(L,1);
+   const Asteroid *a = luaL_validasteroid(L,1);
    lua_pushvector(L,a->pos);
    return 1;
 }
@@ -455,7 +455,7 @@ static int asteroidL_pos( lua_State *L )
  */
 static int asteroidL_vel( lua_State *L )
 {
-   Asteroid *a = luaL_validasteroid(L,1);
+   const Asteroid *a = luaL_validasteroid(L,1);
    lua_pushvector(L,a->vel);
    return 1;
 }
@@ -499,7 +499,7 @@ static int asteroidL_setVel( lua_State *L )
  */
 static int asteroidL_scanned( lua_State *L )
 {
-   Asteroid *a = luaL_validasteroid(L,1);
+   const Asteroid *a = luaL_validasteroid(L,1);
    lua_pushboolean(L,a->scanned);
    return 1;
 }
@@ -514,7 +514,7 @@ static int asteroidL_scanned( lua_State *L )
  */
 static int asteroidL_timer( lua_State *L )
 {
-   Asteroid *a = luaL_validasteroid(L,1);
+   const Asteroid *a = luaL_validasteroid(L,1);
    lua_pushnumber(L,a->timer);
    lua_pushnumber(L,a->timer_max);
    return 2;
@@ -544,7 +544,7 @@ static int asteroidL_setTimer( lua_State *L )
  */
 static int asteroidL_armour( lua_State *L )
 {
-   Asteroid *a = luaL_validasteroid(L,1);
+   const Asteroid *a = luaL_validasteroid(L,1);
    lua_pushnumber(L,a->armour);
    return 1;
 }
