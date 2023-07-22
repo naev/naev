@@ -1389,10 +1389,14 @@ static void weapon_updateCollide( Weapon* w, double dt, WeaponLayer layer )
          if (wchit.gfx->tex != NULL) {
             const CollPoly *plg;
             int n;
-            gl_getSpriteFromDir( &w->sx, &w->sy, wchit.gfx->tex, w->solid.dir );
-            n = wchit.gfx->tex->sx * w->sy + w->sx;
             plg = outfit_plg(w->outfit);
-            wchit.polygon = &plg[n];
+            if (plg == NULL) {
+               gl_getSpriteFromDir( &w->sx, &w->sy, wchit.gfx->tex, w->solid.dir );
+               n = wchit.gfx->tex->sx * w->sy + w->sx;
+               wchit.polygon = &plg[n];
+            }
+            else
+               wchit.polygon = NULL;
             wchit.range = wchit.gfx->size; /* Range is set to size in this case. */
          }
          else {
@@ -1400,7 +1404,8 @@ static void weapon_updateCollide( Weapon* w, double dt, WeaponLayer layer )
             wchit.range = wchit.gfx->col_size;
          }
 
-         coll = weapon_testCollision( &wc, wchit.gfx->tex, whit->sx, whit->sy, &whit->solid.pos, wchit.polygon, 0., crash );
+         /* Actually test the collision. */
+         coll = weapon_testCollision( &wc, wchit.gfx->tex, whit->sx, whit->sy, &whit->solid.pos, wchit.polygon, wchit.range, crash );
          if (!coll)
             continue;
 
