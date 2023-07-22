@@ -56,7 +56,7 @@ static GLfloat *weapon_vboData = NULL; /**< Data of weapon VBO. */
 static size_t weapon_vboSize   = 0; /**< Size of the VBO. */
 
 /* Internal stuff. */
-static unsigned int beam_idgen = 0; /**< Beam identifier generator. */
+static unsigned int weapon_idgen = 0; /**< Beam identifier generator. */
 static int qt_init = 0; /**< Whether or not the quadtree was created. */
 static Quadtree weapon_quadtree; /**< Quadtree for weapons. */
 static IntList weapon_qtquery; /**< For querying collisions. */
@@ -2167,6 +2167,9 @@ static int weapon_create( Weapon *w, PilotOutfitSlot* po, const Outfit *ref,
 
    /* Create basic features */
    memset( w, 0, sizeof(Weapon) );
+   w->id = ++weapon_idgen;
+   w->layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
+   w->mount = po;
    w->dam_mod  = 1.; /* Default of 100% damage. */
    w->dam_as_dis_mod = 0.; /* Default of 0% damage to disable. */
    w->faction  = parent->faction; /* non-changeable */
@@ -2287,7 +2290,6 @@ void weapon_add( PilotOutfitSlot *po, const Outfit *ref,
 #endif /* DEBUGGING */
 
    w  = &array_grow(&weapon_stack);
-   w->layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
    weapon_create( w, po, ref, T, dir, pos, vel, parent, target, time, aim );
 
    /* Grow the vertex stuff if needed. */
@@ -2331,11 +2333,7 @@ unsigned int beam_start( PilotOutfitSlot *po,
    }
 
    w  = &array_grow(&weapon_stack);
-   w->layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
    weapon_create( w, po, NULL, 0., dir, pos, vel, parent, target, 0., aim );
-   w->id = ++beam_idgen;
-   w->mount = po;
-   w->timer2 = 0.;
 
    /* Grow the vertex stuff if needed. */
    bufsize = array_reserved(weapon_stack);
