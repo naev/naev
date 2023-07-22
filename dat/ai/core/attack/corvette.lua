@@ -36,7 +36,7 @@ function atk_corvette.atk( target, dokill )
    -- Close enough to melee
    -- TODO: Corvette-specific attack functions.
    else
-      if target:stats().mass < 500 then
+      if target:mass() < 500 then
         atk.space_sup( target, dist )
       else
         mem.aggressive = true

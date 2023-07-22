@@ -50,7 +50,7 @@ function hail ()
    -- Remove randomness from future calls
    if not mem.hailsetup then
       mem.refuel_base = rnd.rnd( 2000, 4000 )
-      mem.bribe_base = math.sqrt( p:stats().mass ) * (300 * rnd.rnd() + 850)
+      mem.bribe_base = math.sqrt( p:mass() ) * (300 * rnd.rnd() + 850)
       mem.bribe_rng = rnd.rnd()
       mem.hailsetup = true
    end

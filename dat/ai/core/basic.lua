@@ -610,7 +610,7 @@ function _run_hyp( data )
          local dir = ai.dir(jp_pos)
          __zigzag(dir, math.rad(70))
       else
-         if jdist > 3*bdist and plt:stats().mass < 600 then
+         if jdist > 3*bdist and plt:mass() < 600 then
             jdir = ai.careful_face(jp_pos)
          else --Heavy ships should rush to jump point
             jdir = ai.face( jp_pos, nil, true )

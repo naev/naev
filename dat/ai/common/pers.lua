@@ -16,7 +16,7 @@ function create ()
    ai.setcredits( rnd.rnd(price/60, price/15) )
 
    -- Expensive bribe
-   mem.bribe = math.sqrt( p:stats().mass ) * (1500 * rnd.rnd() + 4500)
+   mem.bribe = math.sqrt( p:mass() ) * (1500 * rnd.rnd() + 4500)
 
    -- Refuel
    mem.refuel = rnd.rnd( 1000, 3000 )

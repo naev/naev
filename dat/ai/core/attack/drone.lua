@@ -96,7 +96,7 @@ function atk_drone.atk( target, dokill )
 
    -- Otherwise melee
    else
-      if target:stats().mass < 200 then
+      if target:mass() < 200 then
          __atk_d_space_sup( target, dist )
       else
          __atk_d_flyby( target, dist )

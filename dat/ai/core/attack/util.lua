@@ -293,7 +293,7 @@ local function ___atk_g_ranged_dogfight( target, dist )
       end
    else
       -- Test if we should zz
-      if ai.pilot():stats().mass < 400 and atk.decide_zz( target, dist ) then
+      if ai.pilot():mass() < 400 and atk.decide_zz( target, dist ) then
          ai.pushsubtask("_attack_zigzag", target)
       end
    end
