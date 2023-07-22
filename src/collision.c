@@ -859,8 +859,7 @@ int CollideCirclePolygon( const vec2* ap, double ar,
 int CollideCircleSprite( const vec2 *ap, double ar, const glTexture* bt,
       const int bsx, const int bsy, const vec2* bp,vec2* crash )
 {
-   int r;
-   int ax1,ax2, ay1,ay2;
+   int r, acx,acy, ax1,ax2, ay1,ay2;
    int bx1,bx2, by1,by2;
    int inter_x0, inter_x1, inter_y0, inter_y1;
    int rbsy;
@@ -876,10 +875,12 @@ int CollideCircleSprite( const vec2 *ap, double ar, const glTexture* bt,
 
    /* a - cube coordinates */
    r = ceil(ar);
-   ax1 = (int)VX(*ap) - r;
-   ay1 = (int)VY(*ap) - r;
-   ax2 = (int)VX(*ap) + r;
-   ay2 = (int)VY(*ap) + r;
+   acx = (int) VX(*ap);
+   acy = (int) VY(*ap);
+   ax1 = acx - r;
+   ay1 = acy - r;
+   ax2 = acx + r;
+   ay2 = acy + r;
 
    /* b - cube coordinates */
    bx1 = (int)VX(*bp) - (int)(bt->sw)/2;
@@ -907,7 +908,7 @@ int CollideCircleSprite( const vec2 *ap, double ar, const glTexture* bt,
       for (int x=inter_x0; x<=inter_x1; x++) {
          /* compute offsets for surface before pass to TransparentPixel test */
          if ((!gl_isTrans(bt, bbx + x, bby + y))) {
-            if (y*x+x*x < r*r) {
+            if (pow2(x-acx)+pow2(y-acy) < r*r) {
                crash->x = x;
                crash->y = y;
                return 1;
