@@ -2474,3 +2474,14 @@ void weapon_exit (void)
    il_destroy( &weapon_qtquery );
    il_destroy( &weapon_qtexp );
 }
+
+const IntList *weapon_collideQuery( int x1, int y1, int x2, int y2 )
+{
+   qt_query( &weapon_quadtree, &weapon_qtquery, x1, y1, x2, y2 );
+   return &weapon_qtquery;
+}
+
+void weapon_collideQueryIL( IntList *il, int x1, int y1, int x2, int y2 )
+{
+   qt_query( &weapon_quadtree, il, x1, y1, x2, y2 );
+}

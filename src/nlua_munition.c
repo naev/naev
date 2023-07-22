@@ -30,6 +30,7 @@ static int munitionL_eq( lua_State *L );
 static int munitionL_tostring( lua_State *L );
 static int munitionL_clear( lua_State *L );
 static int munitionL_getAll( lua_State *L );
+static int munitionL_getInrange( lua_State *L );
 static int munitionL_pos( lua_State *L );
 static int munitionL_vel( lua_State *L );
 static int munitionL_faction( lua_State *L );
@@ -42,6 +43,7 @@ static const luaL_Reg munitionL_methods[] = {
    { "__tostring", munitionL_tostring },
    { "clear", munitionL_clear },
    { "getAll", munitionL_getAll },
+   { "getInrange", munitionL_getInrange },
    /* Get properties. */
    { "pos", munitionL_pos },
    { "vel", munitionL_vel },
@@ -223,19 +225,58 @@ static int munitionL_clear( lua_State *L )
 /**
  * @brief Gets all the munitions in the system.
  *
+ *    @luatparam boolean onlyhittable Whether or not to only get hittable munitions, or all of them.
  *    @luatreturn table A table containing all the munitions in the system.
  * @luafunc getAll
  */
 static int munitionL_getAll( lua_State *L )
 {
    const Weapon *weapon_stack = weapon_getStack();
+   int onlyhittable = lua_toboolean(L,1);
    int n = 1;
    lua_newtable(L);
    for (int i=0; i<array_size(weapon_stack); i++) {
       const Weapon *w = &weapon_stack[i];
       if (weapon_isFlag(w,WEAPON_FLAG_DESTROYED))
          continue;
+      if (onlyhittable && !weapon_isFlag(w,WEAPON_FLAG_HITTABLE))
+         continue;
+      lua_pushmunition( L, w );
+      lua_rawseti( L, -2, n++ );
+   }
+   return 1;
+}
 
+/**
+ * @brief Get munitions in range. Note that this can only get hittable munitions.
+ *
+ *    @luatparam Vec2 pos Position from which to get munitions.
+ *    @luatparam number range Range to get munitions from.
+ *    @luatreturn table A table containing all the munitions found in range.
+ * @luafunc getInrange
+ */
+static int munitionL_getInrange( lua_State *L )
+{
+   const Weapon *weapon_stack = weapon_getStack();
+   const IntList *qt;
+   int n = 1;
+   const vec2 *pos = luaL_checkvector(L,1);
+   double range = luaL_checknumber(L,2);
+   double r2 = pow2(range);
+   int x, y, r;
+
+   x = round( pos->x );
+   y = round( pos->y );
+   r = ceil( range );
+
+   lua_newtable(L);
+   qt = weapon_collideQuery( x-r, y-r, x+r, y+r );
+   for (int i=0; i<il_size(qt); i++) {
+      const Weapon *w = &weapon_stack[ il_get(qt, i, 0) ];
+      if (weapon_isFlag(w,WEAPON_FLAG_DESTROYED))
+         continue;
+      if (vec2_dist2( &w->solid.pos, pos ) > r2 )
+         continue;
       lua_pushmunition( L, w );
       lua_rawseti( L, -2, n++ );
    }

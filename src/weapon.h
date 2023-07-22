@@ -6,6 +6,7 @@
 #include "outfit.h"
 #include "physics.h"
 #include "pilot.h"
+#include "quadtree.h"
 
 /**
  * @enum WeaponLayer
@@ -96,6 +97,8 @@ void beam_end( unsigned int beam );
  * Misc stuff.
  */
 void weapon_hitAI( Pilot *p, const Pilot *shooter, double dmg );
+const IntList *weapon_collideQuery( int x1, int y1, int x2, int y2 );
+void weapon_collideQueryIL( IntList *il, int x1, int y1, int x2, int y2 );
 
 /*
  * Update.
