@@ -11,6 +11,7 @@ local conf, last_shield, last_armour, map_npath
 local path, uselanes_jump, uselanes_spob
 
 -- Some defaults
+autonav_timer = 0
 tc_mod = 0
 map_npath = 0
 tc_down = 0
