@@ -806,14 +806,25 @@ void asteroids_renderOverlay (void)
  */
 void asteroids_render (void)
 {
-   double cx, cy;
+   double cx, cy, z;
    cam_getPos( &cx, &cy );
+   z = cam_getZoom();
    cx -= SCREEN_W/2.;
    cy -= SCREEN_H/2.;
 
    /* Render the asteroids & debris. */
    for (int i=0; i<array_size(cur_system->asteroids); i++) {
       AsteroidAnchor *ast = &cur_system->asteroids[i];
+      double x, y, r;
+
+      /* See if the asteroid field is in range, if not skip. */
+      gl_gameToScreenCoords( &x, &y, ast->pos.x, ast->pos.y );
+      r = ast->radius * z;
+      if ((x < -r) || (x > SCREEN_W+r) ||
+         (y < -r) || (y > SCREEN_H+r))
+         continue;
+
+      /* Render all asteroids. */
       for (int j=0; j<ast->nb; j++)
         asteroid_renderSingle( &ast->asteroids[j] );
    }
