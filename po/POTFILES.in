@@ -3660,6 +3660,8 @@ src/nlua_linopt.c
 src/nlua_linopt.h
 src/nlua_misn.c
 src/nlua_misn.h
+src/nlua_munition.c
+src/nlua_munition.h
 src/nlua_music.c
 src/nlua_music.h
 src/nlua_naev.c

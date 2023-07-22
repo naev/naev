@@ -119,6 +119,23 @@ void weapon_init (void)
 }
 
 /**
+ * @brief Gets the weapon stack. Do not manipulate directly.
+ */
+Weapon *weapon_getStack (void)
+{
+   return weapon_stack;
+}
+
+/**
+ * @brief Gets a weapon by ID.
+ */
+Weapon *weapon_getID( unsigned int id )
+{
+   /* TODO binary search. */
+   return &weapon_stack[0];
+}
+
+/**
  * @brief Sets up collision stuff for a new system.
  */
 void weapon_newSystem (void)

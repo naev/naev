@@ -74,6 +74,9 @@ typedef struct Weapon_ {
    WeaponStatus status; /**< Weapon status - to check for jamming */
 } Weapon;
 
+Weapon *weapon_getStack (void);
+Weapon *weapon_getID( unsigned int id );
+
 /*
  * Addition.
  */

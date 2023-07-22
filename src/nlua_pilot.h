@@ -13,6 +13,9 @@
 
 /**
  * @brief Lua Pilot wrapper.
+ *
+ * TODO probably wrap pilots with id + index, so we can try the index look-up
+ * first and fall back to bsearch otherwise.
  */
 typedef unsigned int LuaPilot; /**< Wrapper for a Pilot. */
 
