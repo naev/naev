@@ -163,7 +163,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
 static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
       vec2 pos[2], double dt );
 static int weapon_testCollision( const WeaponCollision *wc, const glTexture *ctex,
-   int csx, int csy, const vec2 *cpos, const CollPoly *cpol, vec2 crash[2] );
+   int csx, int csy, const vec2 *cpos, const CollPoly *cpol, double cradius, vec2 crash[2] );
 /* think */
 static void think_seeker( Weapon* w, double dt );
 static void think_beam( Weapon* w, double dt );
@@ -1138,11 +1138,12 @@ static int weapon_checkCanHit( const Weapon* w, const Pilot *p )
  *    @param csy Collision target texture y sprite.
  *    @param cpos Collision target pos.
  *    @param cpol Collision target collision polygon (NULL if none).
+ *    @param cradius Collision radius fallback (if no texture and polygon are provided).
  *    @param[out] crash Crash location, which is only set if collision is detected.
  *    @return Number of collisions detected (0 to 2)
  */
 static int weapon_testCollision( const WeaponCollision *wc, const glTexture *ctex,
-   int csx, int csy, const vec2 *cpos, const CollPoly *cpol, vec2 crash[2] )
+   int csx, int csy, const vec2 *cpos, const CollPoly *cpol, double cradius, vec2 crash[2] )
 {
    const Weapon *w = wc->w;
    if (wc->beam) {
@@ -1151,30 +1152,54 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
          return CollideLinePolygon( &w->solid.pos, w->solid.dir,
                wc->range, &cpol[k], cpos, crash);
       }
-      else {
+      else if (ctex!=NULL) {
          return CollideLineSprite( &w->solid.pos, w->solid.dir,
                wc->range, ctex, csx, csy, cpos, crash);
       }
+      else {
+         vec2 endpoint;
+         endpoint.x = w->solid.pos.x + cos(w->solid.dir) * wc->range;
+         endpoint.y = w->solid.pos.y + sin(w->solid.dir) * wc->range;
+         return CollideLineCircle( &w->solid.pos, &endpoint, cpos, cradius, crash );
+      }
    }
-   else {
+   /* Try to do polygon first. */
+   else if (cpol != NULL) {
+      int k = ctex->sx * csy + csx;
       /* Case full polygon on polygon collision. */
-      if ((wc->polygon!=NULL) && (cpol!=NULL)) {
-         int k = ctex->sx * csy + csx;
+      if (wc->polygon!=NULL) {
          return CollidePolygon( &cpol[k], cpos, wc->polygon, &w->solid.pos, crash );
       }
+      /* GFX on polygon. */
+      else if (wc->gfx != NULL)
+         return CollideSpritePolygon( &cpol[k], cpos, wc->gfx->tex, w->sx, w->sy, &w->solid.pos, crash );
+      else {
+         return CollideCirclePolygon( &w->solid.pos, wc->range, &cpol[k], cpos, crash );
+      }
+   }
+   /* Try to do texture next. */
+   else if (ctex != NULL) {
+      /* GFX on polygon. */
+      if (wc->polygon!=NULL)
+         return CollideSpritePolygon( wc->polygon, &w->solid.pos, ctex, csx, csy, cpos, crash );
       /* Case texture on texture collision. */
-      else if ((wc->gfx != NULL) && (wc->gfx->tex!=NULL)) {
+      else if (wc->gfx != NULL)
          return CollideSprite( wc->gfx->tex, w->sx, w->sy, &w->solid.pos,
                   ctex, csx, csy, cpos, crash );
-      }
-      /* Fallback using simple spherical collision. */
-      else if (cpol != NULL) {
-         return CollideCirclePolygon( &w->solid.pos, wc->range, cpol, cpos, crash );
-      }
       /* TODO case no polygon and circle collision. */
       else
-         assert( "TODO implement case no ship polygon and circle collision"==NULL );
-      return 0;
+         return CollideCircleSprite( &w->solid.pos, wc->range, ctex, csx, csy, cpos, crash );
+   }
+   /* Finally radius only. */
+   else {
+      /* GFX on polygon. */
+      if (wc->polygon!=NULL)
+         return CollideSpritePolygon( wc->polygon, &w->solid.pos, ctex, csx, csy, cpos, crash );
+      /* Case texture on texture collision. */
+      else if (wc->gfx != NULL)
+         return CollideCircleSprite( cpos, cradius, wc->gfx->tex, w->sx, w->sy, &w->solid.pos, crash );
+      else
+         return CollideCircleCircle( &w->solid.pos, wc->range, cpos, cradius, crash );
    }
 }
 
@@ -1284,7 +1309,7 @@ static void weapon_updateCollide( Weapon* w, double dt, WeaponLayer layer )
 
       /* Test if hit. */
       if (!weapon_testCollision( &wc, p->ship->gfx_space, p->tsx, p->tsy,
-            &p->solid.pos, p->ship->polygon, crash ))
+            &p->solid.pos, p->ship->polygon, 0., crash ))
          continue;
 
       /* Handle the hit. */
@@ -1323,12 +1348,12 @@ static void weapon_updateCollide( Weapon* w, double dt, WeaponLayer layer )
          if (a->polygon->npt!=0) {
             CollPoly rpoly;
             RotatePolygon( &rpoly, a->polygon, (float) a->ang );
-            coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, &rpoly, crash );
+            coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, &rpoly, 0., crash );
             free(rpoly.x);
             free(rpoly.y);
          }
          else
-            coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, NULL, crash );
+            coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, NULL, 0., crash );
 
          /* Missed. */
          if (!coll)
@@ -1341,6 +1366,52 @@ static void weapon_updateCollide( Weapon* w, double dt, WeaponLayer layer )
             weapon_hitAst( w, a, layer, crash );
             return; /* Weapon is destroyed. */
          }
+      }
+   }
+
+   /* Finally do a point defense test. */
+   if (outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_POINTDEFENSE )) {
+      qt_query( &weapon_quadtree, &weapon_qtquery, x1, y1, x2, y2 );
+      for (int i=0; i<il_size(&weapon_qtquery); i++) {
+         int qtid = il_get( &weapon_qtquery, i, 0 );
+         Weapon *whit;
+         WeaponCollision wchit;
+         int coll;
+         //const OutfitGFX *gfx = outfit_gfx(w->outfit);
+
+         if (qtid > 0)
+            whit = wfrontLayer[ qtid ];
+         else
+            whit = wbackLayer[ -qtid-1 ];
+
+         wchit.gfx = outfit_gfx(w->outfit);
+         if (wchit.gfx->tex != NULL) {
+            const CollPoly *plg;
+            int n;
+            gl_getSpriteFromDir( &w->sx, &w->sy, wchit.gfx->tex, w->solid.dir );
+            n = wchit.gfx->tex->sx * w->sy + w->sx;
+            plg = outfit_plg(w->outfit);
+            wchit.polygon = &plg[n];
+            wchit.range = wchit.gfx->size; /* Range is set to size in this case. */
+         }
+         else {
+            wchit.polygon = NULL;
+            wchit.range = wchit.gfx->col_size;
+         }
+
+         coll = weapon_testCollision( &wc, wchit.gfx->tex, whit->sx, whit->sy, &whit->solid.pos, wchit.polygon, 0., crash );
+         if (!coll)
+            continue;
+
+         /* Handle the hit. */
+#if 0
+         if (wc.beam)
+            weapon_hitAstBeam( w, a, layer, crash, dt );
+         else {
+            weapon_hitAst( w, a, layer, crash );
+            return; /* Weapon is destroyed. */
+         }
+#endif
       }
    }
 }
@@ -1487,7 +1558,7 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, const vec2 *pos, do
 
       /* Test if hit. */
       if (!weapon_testCollision( &wc, p->ship->gfx_space, p->tsx, p->tsy,
-               &p->solid.pos, p->ship->polygon, crash ))
+               &p->solid.pos, p->ship->polygon, 0., crash ))
          continue;
 
       /* Have pilot take damage and get real damage done. */
@@ -1519,12 +1590,12 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, const vec2 *pos, do
          if (a->polygon->npt!=0) {
             CollPoly rpoly;
             RotatePolygon( &rpoly, a->polygon, (float) a->ang );
-            coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, &rpoly, crash );
+            coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, &rpoly, 0., crash );
             free(rpoly.x);
             free(rpoly.y);
          }
          else
-            coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, NULL, crash );
+            coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, NULL, 0., crash );
 
          /* Missed. */
          if (!coll)

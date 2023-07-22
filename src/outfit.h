@@ -26,6 +26,7 @@
 #define OUTFIT_PROP_WEAP_BLOWUP_SHIELD (1<<13) /**< Weapon blows up (shield spfx)
                                                    when timer is up. */
 #define OUTFIT_PROP_WEAP_FRIENDLYFIRE  (1<<14) /**< Weapon damages all ships when blowing up. */
+#define OUTFIT_PROP_WEAP_POINTDEFENSE  (1<<15) /**< Weapon can hit ammunitions. */
 
 /* Outfit filter labels. [Doc comments are also translator notes and must precede the #define.] */
 /** Color-coded abbreviation for "Weapon [outfit]", short enough to use as a tab/column title. */

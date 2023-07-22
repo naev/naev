@@ -1682,6 +1682,10 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
          }
          continue;
       }
+      if (xml_isNode(node,"pointdefense")) {
+         outfit_setProp(temp, OUTFIT_PROP_WEAP_POINTDEFENSE);
+         continue;
+      }
 
       if (!outfit_isTurret(temp))
          xmlr_float(node,"arc",temp->u.lau.arc); /* This is in semi-arc like swivel. */

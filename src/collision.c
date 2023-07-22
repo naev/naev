@@ -359,7 +359,7 @@ void RotatePolygon( CollPoly* rpolygon, CollPoly* ipolygon, float theta )
  *    @param[in] y Coordinate of point.
  *    @return 1 on collision, 0 else.
  */
-int PointInPolygon( const CollPoly* at, const vec2* ap,
+static int PointInPolygon( const CollPoly* at, const vec2* ap,
       float x, float y )
 {
    float vprod, sprod, angle;
@@ -405,7 +405,7 @@ int PointInPolygon( const CollPoly* at, const vec2* ap,
  *    @param[out] crash coordinates of the intersection.
  *    @return 1 on collision, 0 else.
  */
-int LineOnPolygon( const CollPoly* at, const vec2* ap,
+static int LineOnPolygon( const CollPoly* at, const vec2* ap,
       float x1, float y1, float x2, float y2, vec2* crash )
 {
    float xi, xip, yi, yip;
@@ -842,6 +842,81 @@ int CollideCirclePolygon( const vec2* ap, double ar,
 
    /* We hit. */
    return 1;
+}
+
+/**
+ * @brief Checks whether or not a sprite collides with a polygon.
+ *
+ *    @param[in] ap Position in space of circle a.
+ *    @param[in] ar Radius of circle a.
+ *    @param[in] bt Texture b.
+ *    @param[in] bsx Position of x of sprite b.
+ *    @param[in] bsy Position of y of sprite b.
+ *    @param[in] bp Position in space of sprite b.
+ *    @param[out] crash Actual position of the collision (only set on collision).
+ *    @return 1 on collision, 0 else.
+ */
+int CollideCircleSprite( const vec2 *ap, double ar, const glTexture* bt,
+      const int bsx, const int bsy, const vec2* bp,vec2* crash )
+{
+   int r;
+   int ax1,ax2, ay1,ay2;
+   int bx1,bx2, by1,by2;
+   int inter_x0, inter_x1, inter_y0, inter_y1;
+   int rbsy;
+   int bbx, bby;
+
+#if DEBUGGING
+   /* Make sure the surfaces have transparency maps. */
+   if (bt->trans == NULL) {
+      WARN(_("Texture '%s' has no transparency map"), bt->name);
+      return 0;
+   }
+#endif /* DEBUGGING */
+
+   /* a - cube coordinates */
+   r = ceil(ar);
+   ax1 = (int)VX(*ap) - r;
+   ay1 = (int)VY(*ap) - r;
+   ax2 = (int)VX(*ap) + r;
+   ay2 = (int)VY(*ap) + r;
+
+   /* b - cube coordinates */
+   bx1 = (int)VX(*bp) - (int)(bt->sw)/2;
+   by1 = (int)VY(*bp) - (int)(bt->sh)/2;
+   bx2 = bx1 + bt->sw - 1;
+   by2 = by1 + bt->sh - 1;
+
+   /* check if bounding boxes intersect */
+   if ((bx2 < ax1) || (ax2 < bx1)) return 0;
+   if ((by2 < ay1) || (ay2 < by1)) return 0;
+
+   /* define the remaining binding box */
+   inter_x0 = MAX( ax1, bx1 );
+   inter_x1 = MIN( ax2, bx2 );
+   inter_y0 = MAX( ay1, by1 );
+   inter_y1 = MIN( ay2, by2 );
+
+   /* real vertical sprite value (flipped) */
+   rbsy = bt->sy - bsy - 1;
+
+   /* set up the base points */
+   bbx =  bsx*(int)(bt->sw) - bx1;
+   bby = rbsy*(int)(bt->sh) - by1;
+   for (int y=inter_y0; y<=inter_y1; y++) {
+      for (int x=inter_x0; x<=inter_x1; x++) {
+         /* compute offsets for surface before pass to TransparentPixel test */
+         if ((!gl_isTrans(bt, bbx + x, bby + y))) {
+            if (y*x+x*x < r*r) {
+               crash->x = x;
+               crash->y = y;
+               return 1;
+            }
+         }
+      }
+   }
+
+   return 0;
 }
 
 static int linePointOnSegment( double d1, double x1, double y1, double x2, double y2, double x, double y )
