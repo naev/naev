@@ -155,9 +155,11 @@ static void weapon_explodeLayer( WeaponLayer layer,
 static void weapons_purgeLayer( Weapon** weaplayer, WeaponLayer layer );
 /* Hitting. */
 static int weapon_checkCanHit( const Weapon* w, const Pilot *p );
-static void weapon_hit( Weapon *w, Pilot *ptarget, const vec2 *pos );
+static void weapon_damage( Weapon *w, const Damage *dmg );
+static void weapon_hitPilot( Weapon *w, Pilot *ptarget, const vec2 *pos );
 static void weapon_miss( Weapon *w );
 static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, const vec2* pos );
+static void weapon_hitWeapon( Weapon* w, Weapon *t, WeaponLayer layer, const vec2* pos );
 static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
       vec2 pos[2], double dt );
 static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
@@ -1319,7 +1321,7 @@ static void weapon_updateCollide( Weapon* w, double dt, WeaponLayer layer )
          /* No return because beam can still think, it's not
          * destroyed like the other weapons.*/
       else {
-         weapon_hit( w, p, crash );
+         weapon_hitPilot( w, p, crash );
          return; /* Weapon is destroyed. */
       }
    }
@@ -1413,11 +1415,11 @@ static void weapon_updateCollide( Weapon* w, double dt, WeaponLayer layer )
 #if 0
          if (wc.beam)
             weapon_hitAstBeam( w, a, layer, crash, dt );
-         else {
-            weapon_hitAst( w, a, layer, crash );
+#endif
+         if (!wc.beam) {
+            weapon_hitWeapon( w, whit, layer, crash );
             return; /* Weapon is destroyed. */
          }
-#endif
       }
    }
 }
@@ -1619,7 +1621,7 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, const vec2 *pos, do
  *    @param ptarget Pilot that got hit.
  *    @param pos Position of the hit.
  */
-static void weapon_hit( Weapon *w, Pilot *ptarget, const vec2 *pos )
+static void weapon_hitPilot( Weapon *w, Pilot *ptarget, const vec2 *pos )
 {
    int s, spfx;
    double damage, radius;
@@ -1643,9 +1645,8 @@ static void weapon_hit( Weapon *w, Pilot *ptarget, const vec2 *pos )
             w->solid.pos.x, w->solid.pos.y,
             w->solid.vel.x, w->solid.vel.y );
 
-   if (radius > 0.) {
+   if (radius > 0.)
       weapon_hitExplode( w, &dmg, pos, radius );
-   }
    else {
       Pilot *parent = pilot_get( w->parent );
       /* Have pilot take damage and get real damage done. */
@@ -1731,9 +1732,8 @@ static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, const vec2
    spfx = outfit_spfxArmour(w->outfit);
    spfx_add( spfx, pos->x, pos->y,VX(a->vel), VY(a->vel), layer );
 
-   if (radius > 0.) {
+   if (radius > 0.)
       weapon_hitExplode( w, &dmg, pos, radius );
-   }
    else {
       Pilot *parent = pilot_get( w->parent );
       double mining_bonus = (parent != NULL) ? parent->stats.mining_bonus : 1.;
@@ -1741,6 +1741,58 @@ static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, const vec2
    }
 
    weapon_destroy(w);
+}
+
+/**
+ * @brief Weapon hit another weapon.
+ */
+static void weapon_hitWeapon( Weapon* w, Weapon *t, WeaponLayer layer, const vec2* pos )
+{
+   int s, spfx;
+   Damage dmg;
+   const Damage *odmg;
+   double radius;
+   /* Get general details. */
+   odmg              = outfit_damage( w->outfit );
+   radius            = outfit_radius( w->outfit );
+   dmg.damage        = MAX( 0., w->dam_mod * w->strength * odmg->damage );
+   dmg.penetration   = odmg->penetration;
+   dmg.type          = odmg->type;
+   dmg.disable       = odmg->disable;
+
+   /* Play sound if they have it. */
+   s = outfit_soundHit(w->outfit);
+   if (s != -1)
+      w->voice = sound_playPos( s,
+            w->solid.pos.x, w->solid.pos.y,
+            w->solid.vel.x, w->solid.vel.y );
+
+   /* Add the spfx */
+   spfx = outfit_spfxArmour(w->outfit);
+   spfx_add( spfx, pos->x, pos->y, VX(t->solid.vel), VY(t->solid.vel), layer );
+
+   if (radius > 0.)
+      weapon_hitExplode( w, &dmg, pos, radius );
+   else
+      weapon_damage( t, &dmg );
+}
+
+static void weapon_damage( Weapon *w, const Damage *dmg )
+{
+   assert( outfit_isLauncher(w->outfit) );
+
+   double damage_armour;
+   double absorb = 1. - CLAMP( 0., 1., w->outfit->u.lau.dmg_absorb - dmg->penetration );
+
+   dtype_calcDamage( NULL, &damage_armour, absorb, NULL, dmg, NULL );
+   w->armour -= damage_armour + dmg->disable;
+
+   /* Still alive so nothing really happens. */
+   if (w->armour > 0.)
+      return;
+
+   /* Bye bye. */
+   weapon_destroy( w );
 }
 
 /**
