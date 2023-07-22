@@ -44,7 +44,6 @@
 static void pilot_weapSetUpdateOutfits( Pilot* p, PilotWeaponSet *ws );
 static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level );
 static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfit *o, int level, double time, int aim );
-static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time, int aim );
 static void pilot_weapSetUpdateRange( const Pilot *p, PilotWeaponSet *ws );
 unsigned int pilot_weaponSetShootStop( Pilot* p, PilotWeaponSet *ws, int level );
 
@@ -952,7 +951,7 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfi
       for (int i=0; i<array_size(ws->slots); i++) {
          PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
          if (pos->outfit == o && (level == -1 || level == ws->slots[i].level)) {
-            ret += pilot_shootWeapon( p, pos, 0, aim );
+            ret += pilot_shootWeapon( p, pos, p->target, 0., aim );
             pos->inrange = ws->inrange; /* State if the weapon has to be turn off when out of range. */
          }
       }
@@ -1016,7 +1015,7 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfi
       return 0;
 
    /* Shoot the weapon. */
-   ret += pilot_shootWeapon( p, p->outfits[ ws->slots[minh].slotid ], time, aim );
+   ret += pilot_shootWeapon( p, p->outfits[ ws->slots[minh].slotid ], p->target, time, aim );
 
    return ret;
 }
@@ -1026,11 +1025,12 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfi
  *
  *    @param p Pilot that is shooting.
  *    @param w Pilot's outfit to shoot.
+ *    @param target Target shooting at.
  *    @param time Expected flight time.
  *    @param aim Whether or not to aim.
  *    @return 0 if nothing was shot and 1 if something was shot.
  */
-static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time, int aim )
+int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, int target, double time, int aim )
 {
    vec2 vp, vv;
    double rate_mod, energy_mod;
@@ -1082,7 +1082,7 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time, int aim
       if (!outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY )) {
          for (int i=0; i<w->outfit->u.blt.shots; i++)
             weapon_add( w, NULL, w->heat_T, p->solid.dir,
-                  &vp, &vv, p, p->target, time, aim );
+                  &vp, &vv, p, target, time, aim );
       }
    }
 
@@ -1107,7 +1107,7 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time, int aim
       w->state = PILOT_OUTFIT_ON;
       if (!outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY )) {
          w->u.beamid = beam_start( w, p->solid.dir,
-               &vp, &p->solid.vel, p, p->target, aim );
+               &vp, &p->solid.vel, p, target, aim );
       }
 
       w->timer = w->outfit->u.bem.duration;
@@ -1123,7 +1123,7 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time, int aim
    else if (outfit_isLauncher(w->outfit)) {
 
       /* Shooter can't be the target - safety check for the player.p */
-      if ((w->outfit->u.lau.ai != AMMO_AI_UNGUIDED) && (p->id==p->target))
+      if ((w->outfit->u.lau.ai != AMMO_AI_UNGUIDED) && (p->id==target))
          return 0;
 
       /* Must have ammo left. */
@@ -1145,7 +1145,7 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time, int aim
       if (!outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY )) {
          for (int i=0; i<w->outfit->u.lau.shots; i++)
             weapon_add( w, NULL, w->heat_T, p->solid.dir,
-                  &vp, &vv, p, p->target, time, aim );
+                  &vp, &vv, p, target, time, aim );
       }
 
       pilot_rmAmmo( p, w, 1 );

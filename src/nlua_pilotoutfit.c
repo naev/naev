@@ -32,6 +32,7 @@ static int poL_progress( lua_State *L );
 static int poL_set( lua_State *L );
 static int poL_clear( lua_State *L );
 static int poL_munition( lua_State *L );
+static int poL_shoot( lua_State *L );
 static const luaL_Reg poL_methods[] = {
    { "slot", poL_slot },
    { "outfit", poL_outfit },
@@ -40,6 +41,7 @@ static const luaL_Reg poL_methods[] = {
    { "set", poL_set },
    { "clear", poL_clear },
    { "munition", poL_munition },
+   { "shoot", poL_shoot },
    {0,0}
 }; /**< Pilot outfit metatable methods. */
 
@@ -313,4 +315,28 @@ static int poL_munition( lua_State *L )
 
    weapon_add( po, o, po->heat_T, dir, vp, vv, p, t, 0., 1 );
    return 0;
+}
+
+/**
+ * @brief Shoots at an object.
+ *
+ *    @luatparam PilotOutfit po Pilot outfit originating the munition.
+ *    @luatparam Pilot p Pilot shooting, used for faction and damaging purposes.
+ *    @luatparam Pilot t Target pilot to shoot at.
+ *    @luatreturn boolean true if was able to shoot, false otherwise.
+ * @luafunc shoot
+ */
+static int poL_shoot( lua_State *L )
+{
+   PilotOutfitSlot *po = luaL_validpilotoutfit( L, 1 );
+   Pilot *p    = luaL_validpilot( L, 2 );
+   LuaPilot t  = nluaL_optarg( L, 3, p->id, luaL_checkpilot );
+   double time = 0.;
+   int ret;
+   Pilot *pt = pilot_get( t );
+   if (pt != NULL)
+      time = pilot_weapFlyTime( po->outfit, p, &pt->solid.pos, &pt->solid.vel );
+   ret = pilot_shootWeapon( p, po, t, time, 1 );
+   lua_pushboolean( L, ret );
+   return 1;
 }

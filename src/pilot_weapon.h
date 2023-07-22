@@ -17,6 +17,7 @@ void pilot_weapSetFree( Pilot* p );
 /* Shooting. */
 int pilot_shoot( Pilot* p, int level );
 void pilot_shootStop( Pilot* p, int level );
+int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, int target, double time, int aim );
 void pilot_stopBeam( Pilot *p, PilotOutfitSlot *w );
 void pilot_getRateMod( double *rate_mod, double* energy_mod,
       const Pilot* p, const Outfit* o );
