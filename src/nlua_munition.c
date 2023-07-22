@@ -25,10 +25,16 @@ static Weapon *munition_get( LuaMunition *lm );
 /* Munition metatable methods. */
 static int munitionL_eq( lua_State *L );
 static int munitionL_tostring( lua_State *L );
+static int munitionL_clear( lua_State *L );
+static int munitionL_getAll( lua_State *L );
+static int munitionL_outfit( lua_State *L );
 static const luaL_Reg munitionL_methods[] = {
    /* General. */
    { "__eq", munitionL_eq },
    { "__tostring", munitionL_tostring },
+   { "clear", munitionL_clear },
+   { "getAll", munitionL_getAll },
+   { "outfit", munitionL_outfit },
    /* End sentinal. */
    {0,0},
 }; /**< Munition metatable methods. */
@@ -185,5 +191,53 @@ static int munitionL_tostring( lua_State *L )
       lua_pushstring(L,_(w->outfit->name));
    else
       lua_pushstring(L,"(inexistent munition)");
+   return 1;
+}
+
+/**
+ * @brief Clears all the munitions in the system.
+ *
+ * @luafunc clear
+ */
+static int munitionL_clear( lua_State *L )
+{
+   (void) L;
+   weapon_clear();
+   return 0;
+}
+
+/**
+ * @brief Gets all the munitions in the system.
+ *
+ *    @luatreturn table A table containing all the munitions in the system.
+ * @luafunc getAll
+ */
+static int munitionL_getAll( lua_State *L )
+{
+   const Weapon *weapon_stack = weapon_getStack();
+   int n = 1;
+   lua_newtable(L);
+   for (int i=0; i<array_size(weapon_stack); i++) {
+      const Weapon *w = &weapon_stack[i];
+      if (weapon_isFlag(w,WEAPON_FLAG_DESTROYED))
+         continue;
+
+      lua_pushmunition( L, w );
+      lua_rawseti( L, -2, n++ );
+   }
+   return 1;
+}
+
+/**
+ * @brief Gets the outfit corresponding to the munition.
+ *
+ *    @luatparam Munition m Munition to get corresponding outfit of.
+ *    @luatreturn Outfit The outfit corresponding to the munition.
+ * @luafunc outfit
+ */
+static int munitionL_outfit( lua_State *L )
+{
+   Weapon *w = luaL_validmunition( L, 1 );
+   lua_pushoutfit( L, w->outfit );
    return 1;
 }
