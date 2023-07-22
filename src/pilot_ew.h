@@ -7,6 +7,10 @@
 
 #define EW_JUMP_BONUS_RANGE   2500.
 
+#define EW_ASTEROID_DIST      7.5e3
+#define EW_JUMPDETECT_DIST    7.5e3
+#define EW_SPOBDETECT_DIST  20e3 /* TODO something better than this. */
+
 /*
  * Sensors and range.
  */

@@ -12,6 +12,7 @@
 #include "conf.h"
 #include "font.h"
 #include "gui.h"
+#include "quadtree.h"
 #include "input.h"
 #include "log.h"
 #include "naev.h"
@@ -27,6 +28,7 @@ static const double OVERLAY_FADEIN = 1.0/3.0; /**< How long it takes to fade in 
 static int autonav_pos = 0;
 static double autonav_pos_x = 0.;
 static double autonav_pos_y = 0.;
+static IntList ovr_qtquery; /**< For querying collisions. */
 
 /**
  * Structure for map overlay size.
@@ -553,6 +555,17 @@ void ovr_initAlpha (void)
    ovr_dt = 0.;
 }
 
+int ovr_init (void)
+{
+   il_create( &ovr_qtquery, 1 );
+   return 0;
+}
+
+void ovr_exit (void)
+{
+   il_destroy( &ovr_qtquery );
+}
+
 /**
  * @brief Properly opens or closes the overlay map.
  *
@@ -737,8 +750,16 @@ void ovr_render( double dt )
    /* Render the asteroids */
    for (int i=0; i<array_size(cur_system->asteroids); i++) {
       AsteroidAnchor *ast = &cur_system->asteroids[i];
-      for (int j=0; j<ast->nb; j++)
-         gui_renderAsteroid( &ast->asteroids[j], w, h, res, 1 );
+      double range = EW_ASTEROID_DIST * player.p->stats.ew_detect; /* TODO don't hardcode. */
+      int ax, ay, r;
+      ax = round(player.p->solid.pos.x);
+      ay = round(player.p->solid.pos.y);
+      r = ceil(range);
+      asteroid_collideQueryIL( ast, &ovr_qtquery, ax-r, ay-r, ax+r, ay+r );
+      for (int j=0; j<il_size(&ovr_qtquery); j++) {
+         Asteroid *a = &ast->asteroids[ il_get( &ovr_qtquery, j, 0 ) ];
+         gui_renderAsteroid( a, w, h, res, 1 );
+      }
    }
 
    /* Render pilots. */

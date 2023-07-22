@@ -20,10 +20,6 @@
 #include "player_autonav.h"
 #include "space.h"
 
-#define EW_ASTEROID_DIST      7.5e3
-#define EW_JUMPDETECT_DIST    7.5e3
-#define EW_SPOBDETECT_DIST  20e3 /* TODO something better than this. */
-
 static double ew_interference = 1.; /**< Interference factor. */
 
 /*

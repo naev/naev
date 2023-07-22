@@ -7,6 +7,10 @@
 #include "SDL.h"
 /** @endcond */
 
+/* Init/Exit. */
+int ovr_init (void);
+void ovr_exit (void);
+
 /* Map overlay. */
 int ovr_isOpen (void);
 int ovr_input( SDL_Event *event );

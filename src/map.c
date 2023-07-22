@@ -22,6 +22,7 @@
 #include "mapData.h"
 #include "map_find.h"
 #include "map_system.h"
+#include "map_overlay.h"
 #include "mission.h"
 #include "nebula.h"
 #include "ndata.h"
@@ -155,7 +156,7 @@ static void map_onClose( unsigned int wid, const char *str );
  */
 int map_init (void)
 {
-   return 0;
+   return ovr_init();
 }
 
 /**
@@ -169,6 +170,8 @@ void map_exit (void)
       array_free( decorator_stack );
       decorator_stack = NULL;
    }
+
+   ovr_exit();
 }
 
 /**

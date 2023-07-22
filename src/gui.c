@@ -22,6 +22,7 @@
 #include "conf.h"
 #include "dialogue.h"
 #include "economy.h"
+#include "quadtree.h"
 #include "font.h"
 #include "gui_omsg.h"
 #include "gui_osd.h"
@@ -79,6 +80,7 @@ static gl_vbo *gui_radar_select_vbo = NULL;
 
 static int gui_getMessage     = 1; /**< Whether or not the player should receive messages. */
 static char *gui_name         = NULL; /**< Name of the GUI (for errors and such). */
+static IntList gui_qtquery; /**< For querying collisions. */
 
 extern unsigned int land_wid; /**< From land.c */
 
@@ -945,11 +947,19 @@ void gui_radarRender( double x, double y )
    if (f != 0)
       gui_renderPilot( pilot_stack[f], radar->shape, radar->w, radar->h, radar->res, 0 );
 
-   /* render the asteroids */
+   /* Render the asteroids */
    for (int i=0; i<array_size(cur_system->asteroids); i++) {
       AsteroidAnchor *ast = &cur_system->asteroids[i];
-      for (int j=0; j<ast->nb; j++)
-         gui_renderAsteroid( &ast->asteroids[j], radar->w, radar->h, radar->res, 0 );
+      double range = EW_ASTEROID_DIST * player.p->stats.ew_detect; /* TODO don't hardcode. */
+      int ax, ay, r;
+      ax = round(player.p->solid.pos.x);
+      ay = round(player.p->solid.pos.y);
+      r = ceil(range);
+      asteroid_collideQueryIL( ast, &gui_qtquery, ax-r, ay-r, ax+r, ay+r );
+      for (int j=0; j<il_size(&gui_qtquery); j++) {
+         Asteroid *a = &ast->asteroids[ il_get( &gui_qtquery, j, 0 ) ];
+         gui_renderAsteroid( a, radar->w, radar->h, radar->res, 0 );
+      }
    }
 
    /* Render the player. */
@@ -1600,14 +1610,10 @@ int gui_init (void)
 {
    GLfloat vertex[16];
 
-   /*
-    * radar
-    */
+   /* radar */
    gui_setRadarResolution( player.radar_res );
 
-   /*
-    * messages
-    */
+   /* Messages */
    gui_mesg_x = 20;
    gui_mesg_y = 30;
    gui_mesg_w = SCREEN_W - 400;
@@ -1619,10 +1625,7 @@ int gui_init (void)
       }
    }
 
-   /*
-    * VBO.
-    */
-
+   /* VBO. */
    if (gui_radar_select_vbo == NULL) {
       vertex[0] = -1.5;
       vertex[1] = 1.5;
@@ -1643,20 +1646,17 @@ int gui_init (void)
       gui_radar_select_vbo = gl_vboCreateStatic( sizeof(GLfloat) * 16, vertex );
    }
 
-   /*
-    * OSD
-    */
+   /* OSD */
    osd_setup( 30., SCREEN_H-90., 150., 300. );
 
-   /*
-    * Set viewport.
-    */
+   /* Set viewport. */
    gui_setViewport( 0., 0., gl_screen.w, gl_screen.h );
 
-   /*
-    * Icons.
-    */
+   /* Icons. */
    gui_ico_hail = gl_newSprite( GUI_GFX_PATH"hail.webp", 5, 2, 0 );
+
+   /* Quadtrees. */
+   il_create( &gui_qtquery, 1 );
 
    return 0;
 }
@@ -2007,6 +2007,8 @@ void gui_free (void)
    gui_target_spob = NULL;
    gl_freeTexture( gui_target_pilot );
    gui_target_pilot = NULL;
+
+   il_destroy( &gui_qtquery );
 
    omsg_cleanup();
 }
