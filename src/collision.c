@@ -908,7 +908,7 @@ int CollideCircleSprite( const vec2 *ap, double ar, const glTexture* bt,
       for (int x=inter_x0; x<=inter_x1; x++) {
          /* compute offsets for surface before pass to TransparentPixel test */
          if ((!gl_isTrans(bt, bbx + x, bby + y))) {
-            if (pow2(x-acx)+pow2(y-acy) < r*r) {
+            if (pow2(x-acx)+pow2(y-acy) <= r*r) {
                crash->x = x;
                crash->y = y;
                return 1;
