@@ -65,7 +65,6 @@ static void debris_renderSingle( const Debris *d, double cx, double cy );
 static void debris_init( Debris *deb );
 static int asteroid_init( Asteroid *ast, const AsteroidAnchor *field );
 
-
 /**
  * @brief Controls fleet spawning.
  *
@@ -795,7 +794,7 @@ void asteroids_renderOverlay (void)
 
    /* Render the debris. */
    for (int j=0; j<array_size(debris_stack); j++) {
-      Debris *d = &debris_stack[j];
+      const Debris *d = &debris_stack[j];
       if (d->height > 1.)
          debris_renderSingle( d, cx, cy );
    }
@@ -814,7 +813,7 @@ void asteroids_render (void)
 
    /* Render the asteroids & debris. */
    for (int i=0; i<array_size(cur_system->asteroids); i++) {
-      AsteroidAnchor *ast = &cur_system->asteroids[i];
+      const AsteroidAnchor *ast = &cur_system->asteroids[i];
       double x, y, r;
 
       /* See if the asteroid field is in range, if not skip. */
@@ -831,7 +830,7 @@ void asteroids_render (void)
 
    /* Render the debris. */
    for (int j=0; j<array_size(debris_stack); j++) {
-      Debris *d = &debris_stack[j];
+      const Debris *d = &debris_stack[j];
       if (d->height <= 1.)
          debris_renderSingle( d, cx, cy );
    }
