@@ -12,10 +12,12 @@
  * @enum WeaponLayer
  * @brief Designates the layer the weapon is on.
  * Automatically set up on creation (player is front, rest is back).
+ * Only really matters for rendering order.
  */
-typedef enum { WEAPON_LAYER_BG, WEAPON_LAYER_FG } WeaponLayer;
-
-#define weapon_isSmart(w)     (w->think != NULL) /**< Checks if the weapon w is smart. */
+typedef enum {
+   WEAPON_LAYER_BG,
+   WEAPON_LAYER_FG
+} WeaponLayer;
 
 /* Weapon status */
 typedef enum WeaponStatus_ {
@@ -32,6 +34,7 @@ typedef enum WeaponStatus_ {
 #define weapon_isFlag(w,f)    ((w)->flags & (f))
 #define weapon_setFlag(w,f)   ((w)->flags |= (f))
 #define weapon_rmFlag(w,f)    ((w)->flags &= ~(f))
+#define weapon_isSmart(w)     (w->think != NULL) /**< Checks if the weapon w is smart. */
 
 typedef enum WeaponTargetType_ {
    WEAPON_TARGET_PILOT,
