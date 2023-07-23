@@ -47,18 +47,21 @@ typedef struct WeaponCollision_ {
    const CollPoly *polygon;/**< Collision polygon of the weapon if applicable. */
 } WeaponCollision;
 
+/**
+ * @brief Represents a weapon hitting something.
+ */
 typedef struct WeaponHit_ {
-   TargetType type;
+   TargetType type; /* Class of object hit. */
    union {
-      Pilot    *plt;
-      Asteroid *ast;
-      Weapon   *wpn;
+      Pilot    *plt; /* Hit a pilot. */
+      Asteroid *ast; /* Hit an asteroid. */
+      Weapon   *wpn; /* Hit a weapon. */
    } u;
-   const vec2 *pos;
+   const vec2 *pos; /* Location of the hit, can be 2d array in the case of beams. */
 } WeaponHit;
 
 /* Weapon layers. */
-static Weapon* weapon_stack = NULL;
+static Weapon* weapon_stack = NULL; /**< All the weapon munitions are piled up here. */
 
 /* Graphics. */
 static gl_vbo  *weapon_vbo     = NULL; /**< Weapon VBO. */
@@ -66,7 +69,7 @@ static GLfloat *weapon_vboData = NULL; /**< Data of weapon VBO. */
 static size_t weapon_vboSize   = 0; /**< Size of the VBO. */
 
 /* Internal stuff. */
-static unsigned int weapon_idgen = 0; /**< Beam identifier generator. */
+static unsigned int weapon_idgen = 0; /**< Weapon identifier generator. */
 static int qt_init = 0; /**< Whether or not the quadtree was created. */
 static Quadtree weapon_quadtree; /**< Quadtree for weapons. */
 static IntList weapon_qtquery; /**< For querying collisions. */
