@@ -293,13 +293,37 @@ static int poL_clear( lua_State *L )
    return 0;
 }
 
+static Target lua_totarget( lua_State *L, int idx )
+{
+   Target t;
+   /* Handle target. */
+   if (lua_isnoneornil(L,idx))
+      t.type = TARGET_NONE;
+   if (lua_ispilot(L,idx)) {
+      t.type = TARGET_PILOT;
+      t.u.id = lua_topilot(L,idx);
+   }
+   else if (lua_isasteroid(L,idx)) {
+      const LuaAsteroid_t *ast = lua_toasteroid(L,idx);
+      t.type = TARGET_ASTEROID;
+      t.u.ast.anchor = ast->parent;
+      t.u.ast.asteroid = ast->id;
+   }
+   else if (lua_ismunition(L,idx)) {
+      const LuaMunition *lm = lua_tomunition(L,idx);
+      t.type = TARGET_WEAPON;
+      t.u.id = lm->id;
+   }
+   return t;
+}
+
 /**
  * @brief Creates a munition.
  *
  *    @luatparam PilotOutfit po Pilot outfit originating the munition.
  *    @luatparam Pilot p Pilot generating the munition, used for faction and damaging purposes.
  *    @luatparam[opt=po:outfit()] Outfit o Outfit to be used as a reference for the munition.
- *    @luatparam[opt=nil] Pilot t Pilot target to use for aiming and such.
+ *    @luatparam[opt=nil] Pilot|Munition|Asteroid|nil t Target pilot to shoot at.
  *    @luatparam[opt=p:dir()] number dir Direction the munition should face.
  *    @luatparam[opt=p:pos()] Vec2 pos Position to create the munition at.
  *    @luatparam[opt=p:vel()] Vec2 vel Initial velocity of the munition. The munition's base velocity gets added to this.
@@ -310,29 +334,10 @@ static int poL_munition( lua_State *L )
    PilotOutfitSlot *po = luaL_validpilotoutfit( L, 1 );
    Pilot *p    = luaL_validpilot( L, 2 );
    const Outfit *o = luaL_optoutfit( L, 3, po->outfit );
-   //LuaPilot t  = nluaL_optarg( L, 4, p->id, luaL_checkpilot );
+   Target t = lua_totarget( L, 4 );
    double dir  = luaL_optnumber( L, 5, p->solid.dir );
    vec2 *vp    = luaL_optvector( L, 6, &p->solid.pos );
    vec2 *vv    = luaL_optvector( L, 7, &p->solid.vel );
-   Target t;
-   /* Handle target. */
-   if (lua_isnoneornil(L,4))
-      t.type = TARGET_NONE;
-   if (lua_ispilot(L,4)) {
-      t.type = TARGET_PILOT;
-      t.u.id = lua_topilot(L,4);
-   }
-   else if (lua_isasteroid(L,4)) {
-      const LuaAsteroid_t *ast = lua_toasteroid(L,4);
-      t.type = TARGET_ASTEROID;
-      t.u.ast.anchor = ast->parent;
-      t.u.ast.asteroid = ast->id;
-   }
-   else if (lua_ismunition(L,4)) {
-      const LuaMunition *lm = lua_tomunition(L,4);
-      t.type = TARGET_WEAPON;
-      t.u.id = lm->id;
-   }
 
    weapon_add( po, o,dir, vp, vv, p, &t, 0., 1 );
    return 0;
@@ -343,7 +348,7 @@ static int poL_munition( lua_State *L )
  *
  *    @luatparam PilotOutfit po Pilot outfit originating the munition.
  *    @luatparam Pilot p Pilot shooting, used for faction and damaging purposes.
- *    @luatparam Pilot t Target pilot to shoot at.
+ *    @luatparam[opt=nil] Pilot|Munition|Asteroid|nil t Target pilot to shoot at.
  *    @luatreturn boolean true if was able to shoot, false otherwise.
  * @luafunc shoot
  */
@@ -351,13 +356,10 @@ static int poL_shoot( lua_State *L )
 {
    PilotOutfitSlot *po = luaL_validpilotoutfit( L, 1 );
    Pilot *p    = luaL_validpilot( L, 2 );
-   LuaPilot t  = nluaL_optarg( L, 3, p->id, luaL_checkpilot );
-   double time = 0.;
+   Target t    = lua_totarget( L, 3 );
+   double time = weapon_targetFlyTime( po->outfit, p, &t );
    int ret;
-   Pilot *pt = pilot_get( t );
-   if (pt != NULL)
-      time = pilot_weapFlyTime( po->outfit, p, &pt->solid.pos, &pt->solid.vel );
-   ret = pilot_shootWeapon( p, po, NULL, time, 1 );
+   ret = pilot_shootWeapon( p, po, &t, time, 1 );
    lua_pushboolean( L, ret );
    return 1;
 }
