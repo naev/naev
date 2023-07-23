@@ -30,7 +30,7 @@ function update( p, po, _dt )
    if not (m  and pos:dist2( m:pos() ) < range2) or mem.tpilot then
 
       -- Try to prioritize munitions
-      local mall = munition.getInrange( pos, range )
+      local mall = munition.getInrange( pos, range, p )
       if #mall > 0 then
          m = mall[ rnd.rnd(1,#mall) ] -- Just get a random one
          mem.target = m
