@@ -1464,12 +1464,7 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, const vec2 *pos, do
             continue;
 
          /* Handle the hit. */
-#if 0
-         if (wc.beam)
-            weapon_hitAstBeam( w, a, layer, crash, dt );
-#endif
-         if (!wc.beam)
-            weapon_damage( whit, dmg );
+         weapon_damage( whit, dmg );
       }
    }
 }
