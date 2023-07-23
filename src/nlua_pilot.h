@@ -11,6 +11,9 @@
 
 #define PILOT_METATABLE   "pilot" /**< Pilot metatable identifier. */
 
+/* Helper. */
+#define luaL_optpilot(L,ind,def)   nluaL_optarg(L,ind,def,luaL_validpilot)
+
 /**
  * @brief Lua Pilot wrapper.
  *
