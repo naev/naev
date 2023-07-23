@@ -526,7 +526,7 @@ int can_swap( const char *shipname )
 int shipyard_canTrade( const char *shipname, const Spob *spob )
 {
    const Ship *ship = ship_get( shipname );
-   credits_t price = ship_buyPrice(ship) - player_shipPrice(player.p->name);
+   credits_t price = ship_buyPrice(ship) - player_shipPrice(player.p->name,0);
    return shipyard_canAcquire( ship, spob, price );
 }
 
@@ -550,7 +550,7 @@ static void shipyard_trade( unsigned int wid, const char* str )
    ship = shipyard_list[i];
 
    credits_t targetprice = ship_buyPrice(ship);
-   credits_t playerprice = player_shipPrice(player.p->name);
+   credits_t playerprice = player_shipPrice(player.p->name,0);
 
    if (land_errDialogue( ship->name, "tradeShip" ))
       return;

@@ -4855,7 +4855,7 @@ static int pilotL_credits( lua_State *L )
 static int pilotL_worth( lua_State *L )
 {
    const Pilot *p = luaL_validpilot(L,1);
-   lua_pushnumber( L, pilot_worth(p), lua_toboolean(L,2) );
+   lua_pushnumber( L, pilot_worth(p, lua_toboolean(L,2)) );
    return 1;
 }
 

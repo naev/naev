@@ -1753,7 +1753,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
    eq_wgt.selected = ps;
 
    /* update text */
-   credits2str( buf_price, player_shipPrice(shipname), 2 ); /* sell price */
+   credits2str( buf_price, player_shipPrice(shipname,0), 2 ); /* sell price */
    cargo = pilot_cargoFree(ship) + pilot_cargoUsed(ship);
    nt = ntime_pretty( pilot_hyperspaceDelay( ship ), 2 );
 
@@ -2309,7 +2309,7 @@ static void equipment_sellShip( unsigned int wid, const char* str )
       return;
 
    /* Calculate price. */
-   price = player_shipPrice(shipname);
+   price = player_shipPrice(shipname,0);
    credits2str( buf, price, 2 );
 
    /* Check if player really wants to sell. */
