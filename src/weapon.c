@@ -603,60 +603,14 @@ void weapons_updateCollide( double dt )
          case OUTFIT_TYPE_LAUNCHER:
          case OUTFIT_TYPE_TURRET_LAUNCHER:
             w->timer -= dt;
-            if (w->timer < 0.) {
-               int spfx = -1;
-               /* See if we need armour death sprite. */
-               if (outfit_isProp(w->outfit, OUTFIT_PROP_WEAP_BLOWUP_ARMOUR))
-                  spfx = outfit_spfxArmour(w->outfit);
-               /* See if we need shield death sprite. */
-               else if (outfit_isProp(w->outfit, OUTFIT_PROP_WEAP_BLOWUP_SHIELD))
-                  spfx = outfit_spfxShield(w->outfit);
-               /* Add death sprite if needed. */
-               if (spfx != -1) {
-                  int s;
-                  spfx_add( spfx, w->solid.pos.x, w->solid.pos.y,
-                        w->solid.vel.x, w->solid.vel.y,
-                        SPFX_LAYER_MIDDLE ); /* presume middle. */
-                  /* Add sound if explodes and has it. */
-                  s = outfit_soundHit(w->outfit);
-                  if (s != -1)
-                     w->voice = sound_playPos(s,
-                           w->solid.pos.x,
-                           w->solid.pos.y,
-                           w->solid.vel.x,
-                           w->solid.vel.y);
-               }
+            if (w->timer < 0.)
                weapon_miss(w);
-               break;
-            }
             break;
 
          case OUTFIT_TYPE_BOLT:
          case OUTFIT_TYPE_TURRET_BOLT:
             w->timer -= dt;
             if (w->timer < 0.) {
-               int spfx = -1;
-               /* See if we need armour death sprite. */
-               if (outfit_isProp(w->outfit, OUTFIT_PROP_WEAP_BLOWUP_ARMOUR))
-                  spfx = outfit_spfxArmour(w->outfit);
-               /* See if we need shield death sprite. */
-               else if (outfit_isProp(w->outfit, OUTFIT_PROP_WEAP_BLOWUP_SHIELD))
-                  spfx = outfit_spfxShield(w->outfit);
-               /* Add death sprite if needed. */
-               if (spfx != -1) {
-                  int s;
-                  spfx_add( spfx, w->solid.pos.x, w->solid.pos.y,
-                        w->solid.vel.x, w->solid.vel.y,
-                        SPFX_LAYER_MIDDLE ); /* presume middle. */
-                  /* Add sound if explodes and has it. */
-                  s = outfit_soundHit(w->outfit);
-                  if (s != -1)
-                     w->voice = sound_playPos(s,
-                           w->solid.pos.x,
-                           w->solid.pos.y,
-                           w->solid.vel.x,
-                           w->solid.vel.y);
-               }
                weapon_miss(w);
                break;
             }
@@ -1565,6 +1519,31 @@ static void weapon_hitPilot( Weapon *w, Pilot *ptarget, const vec2 *pos )
  */
 static void weapon_miss( Weapon *w )
 {
+   int spfx = -1;
+
+   /* See if we need armour death sprite. */
+   if (outfit_isProp(w->outfit, OUTFIT_PROP_WEAP_BLOWUP_ARMOUR))
+      spfx = outfit_spfxArmour(w->outfit);
+   /* See if we need shield death sprite. */
+   else if (outfit_isProp(w->outfit, OUTFIT_PROP_WEAP_BLOWUP_SHIELD))
+      spfx = outfit_spfxShield(w->outfit);
+
+   /* Add death sprite if needed. */
+   if (spfx != -1) {
+      int s;
+      spfx_add( spfx, w->solid.pos.x, w->solid.pos.y,
+            w->solid.vel.x, w->solid.vel.y,
+            (w->layer==WEAPON_LAYER_FG) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE );
+      /* Add sound if explodes and has it. */
+      s = outfit_soundHit(w->outfit);
+      if (s != -1)
+         w->voice = sound_playPos(s,
+               w->solid.pos.x,
+               w->solid.pos.y,
+               w->solid.vel.x,
+               w->solid.vel.y);
+   }
+
    /* On hit weapon effects. */
    if (w->outfit->lua_onmiss != LUA_NOREF) {
       Pilot *parent = pilot_get( w->parent );
@@ -1582,6 +1561,24 @@ static void weapon_miss( Weapon *w )
          WARN( _("Outfit '%s' -> '%s':\n%s"), w->outfit->name, "onmiss", lua_tostring(naevL,-1) );
          lua_pop(naevL, 1);
       }
+   }
+
+   /* Explodes when it misses. */
+   if (outfit_isProp(w->outfit, OUTFIT_PROP_WEAP_MISS_EXPLODE)) {
+      double damage, radius;
+      Damage dmg;
+      const Damage *odmg;
+
+      /* Get general details. */
+      odmg              = outfit_damage( w->outfit );
+      damage            = w->dam_mod * w->strength * odmg->damage;
+      radius            = outfit_radius( w->outfit );
+      dmg.damage        = MAX( 0., damage * (1.-w->dam_as_dis_mod) );
+      dmg.penetration   = odmg->penetration;
+      dmg.type          = odmg->type;
+      dmg.disable       = MAX( 0., w->dam_mod * w->strength * odmg->disable + damage * w->dam_as_dis_mod );
+
+      weapon_hitExplode( w, &dmg, &w->solid.pos, radius );
    }
 
    weapon_destroy(w);

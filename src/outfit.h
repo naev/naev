@@ -19,16 +19,17 @@
 #define OUTFIT_PROP_UNIQUE             (1<<0)  /**< Unique item (can only have one). Not sellable.*/
 #define OUTFIT_PROP_SHOOT_DRY          (1<<1)  /**< Weapon that doesn't actually create particles. Should be handled in ontoggle. */
 #define OUTFIT_PROP_TEMPLATE           (1<<2)  /**< Outfit is meant to be used as a template for other outfits. Ignores warnings. */
-#define OUTFIT_PROP_WEAP_SECONDARY     (1<<10) /**< Is a secondary weapon? */
-#define OUTFIT_PROP_WEAP_SPIN          (1<<11) /**< Should weapon spin around? */
-#define OUTFIT_PROP_WEAP_BLOWUP_ARMOUR (1<<12) /**< Weapon blows up (armour spfx)
+#define OUTFIT_PROP_WEAP_SECONDARY     (1<<3) /**< Is a secondary weapon? */
+#define OUTFIT_PROP_WEAP_SPIN          (1<<4) /**< Should weapon spin around? */
+#define OUTFIT_PROP_WEAP_BLOWUP_ARMOUR (1<<5) /**< Weapon blows up (armour spfx)
                                                    when timer is up. */
-#define OUTFIT_PROP_WEAP_BLOWUP_SHIELD (1<<13) /**< Weapon blows up (shield spfx)
+#define OUTFIT_PROP_WEAP_BLOWUP_SHIELD (1<<6) /**< Weapon blows up (shield spfx)
                                                    when timer is up. */
-#define OUTFIT_PROP_WEAP_FRIENDLYFIRE  (1<<14) /**< Weapon damages all ships when blowing up. */
-#define OUTFIT_PROP_WEAP_POINTDEFENSE  (1<<15) /**< Weapon can hit ammunitions. */
-#define OUTFIT_PROP_WEAP_MISS_SHIPS    (1<<16) /**< Weapon can not hit ships. */
-#define OUTFIT_PROP_WEAP_MISS_ASTEROIDS (1<<17) /**< Weapon can not hit asteroids. */
+#define OUTFIT_PROP_WEAP_FRIENDLYFIRE  (1<<8) /**< Weapon damages all ships when blowing up. */
+#define OUTFIT_PROP_WEAP_POINTDEFENSE  (1<<9) /**< Weapon can hit ammunitions. */
+#define OUTFIT_PROP_WEAP_MISS_SHIPS    (1<<10) /**< Weapon can not hit ships. */
+#define OUTFIT_PROP_WEAP_MISS_ASTEROIDS (1<<11) /**< Weapon can not hit asteroids. */
+#define OUTFIT_PROP_WEAP_MISS_EXPLODE  (1<<12) /**< The weapon particle blows up on miss. */
 
 /* Outfit filter labels. [Doc comments are also translator notes and must precede the #define.] */
 /** Color-coded abbreviation for "Weapon [outfit]", short enough to use as a tab/column title. */
