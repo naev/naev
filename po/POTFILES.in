@@ -3805,6 +3805,7 @@ src/spfx.c
 src/spfx.h
 src/start.c
 src/start.h
+src/target.h
 src/tech.c
 src/tech.h
 src/threadpool.c
