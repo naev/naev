@@ -1433,7 +1433,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
 
    /* Post processing. */
    temp->u.blt.swivel  *= M_PI/180.;
-   temp->u.blt.dispersion *= M_PI/100.;
+   temp->u.blt.dispersion *= M_PI/180.;
    if (outfit_isTurret(temp))
       temp->u.blt.swivel = M_PI;
    /*
