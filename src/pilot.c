@@ -4003,9 +4003,10 @@ double pilot_relhp( const Pilot* cur_pilot, const Pilot* p )
  * @brief Gets the price or worth of a pilot in credits.
  *
  *    @param p Pilot to get worth of.
+ *    @param count_unique Whether or not to count the cost of unique outfits.
  *    @return Worth of the pilot.
  */
-credits_t pilot_worth( const Pilot *p )
+credits_t pilot_worth( const Pilot *p, int count_unique )
 {
    /* Ship price is base price + outfit prices. */
    credits_t price = ship_basePrice( p->ship );
@@ -4013,7 +4014,7 @@ credits_t pilot_worth( const Pilot *p )
       if (p->outfits[i]->outfit == NULL)
          continue;
       /* Don't count unique outfits. */
-      if (outfit_isProp(p->outfits[i]->outfit, OUTFIT_PROP_UNIQUE))
+      if (!count_unique && outfit_isProp(p->outfits[i]->outfit, OUTFIT_PROP_UNIQUE))
          continue;
       price += p->outfits[i]->outfit->price;
    }
@@ -4080,6 +4081,12 @@ int pilot_hasIllegal( const Pilot *p, int faction )
    return 0;
 }
 
+/**
+ * @brief Sets the quad tree parameters. Can have significant impact on performance.
+ *
+ *    @param max_elem Maximum elements to add to a leaf before splitting.
+ *    @param depth Maximum depth to use.
+ */
 void pilot_quadtreeParams( int max_elem, int depth )
 {
    qt_max_elem = max_elem;

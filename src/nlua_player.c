@@ -382,11 +382,11 @@ static int playerL_wealth( lua_State *L )
    if (player.p != NULL) {
       const PlayerShip_t *ps = player_getShipStack();
       const PlayerOutfit_t *po = player_getOutfits();
-      wealth = player.p->credits + pilot_worth( player.p );
+      wealth = player.p->credits + pilot_worth( player.p, 0 );
 
       /* Compute total wealth. */
       for (int i=0; i<array_size(ps); i++)
-         wealth += pilot_worth( ps[i].p  );
+         wealth += pilot_worth( ps[i].p, 0 );
       for (int i=0; i<array_size(po); i++)
          wealth += po[i].q * po[i].o->price;
    }

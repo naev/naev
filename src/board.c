@@ -264,7 +264,7 @@ void pilot_boardComplete( Pilot *p )
    /* In the case of the player take fewer credits. */
    if (pilot_isPlayer(target)) {
       char creds[ ECON_CRED_STRLEN ];
-      credits_t worth   = MIN( 0.1*pilot_worth(target), target->credits );
+      credits_t worth   = MIN( 0.1*pilot_worth(target,0), target->credits );
       p->credits       += worth * p->stats.loot_mod;
       target->credits  -= worth;
       credits2str( creds, worth, 2 );

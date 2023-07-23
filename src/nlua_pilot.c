@@ -4848,13 +4848,14 @@ static int pilotL_credits( lua_State *L )
  * @brief Gets the worth of a pilot (total value of ship and outfits).
  *
  *    @luatparam Pilot p Pilot to get worth of.
+ *    @luatparam[opt=false] boolean count_unique Whether or not to count unique outfits too.
  *    @luatreturn number The credit worth of the pilot.
  * @luafunc worth
  */
 static int pilotL_worth( lua_State *L )
 {
    const Pilot *p = luaL_validpilot(L,1);
-   lua_pushnumber( L, pilot_worth(p) );
+   lua_pushnumber( L, pilot_worth(p), lua_toboolean(L,2) );
    return 1;
 }
 

@@ -387,9 +387,7 @@ typedef struct Pilot_ {
 #include "pilot_weapon.h"
 #include "pilot_ew.h"
 
-/*
- * Getting pilot stuff.
- */
+/* Getting pilot stuff. */
 Pilot*const* pilot_getAll (void);
 Pilot* pilot_get( unsigned int id );
 Pilot* pilot_getTarget( Pilot *p );
@@ -413,9 +411,7 @@ double pilot_relsize( const Pilot* cur_pilot, const Pilot* p );
 double pilot_reldps( const Pilot* cur_pilot, const Pilot* p );
 double pilot_relhp( const Pilot* cur_pilot, const Pilot* p );
 
-/*
- * Combat.
- */
+/* Combat. */
 void pilot_setTarget( Pilot* p, unsigned int id );
 double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
       const Damage *dmg, const Outfit *outfit, int lua_mem, int reset );
@@ -429,35 +425,16 @@ void pilot_cooldown( Pilot *p, int dochecks );
 void pilot_cooldownEnd( Pilot *p, const char *reason );
 double pilot_aimAngle( Pilot *p, const vec2* pos, const vec2* vel );
 
-/*
- * Faction stuff.
- */
-int pilot_validEnemy( const Pilot* p, const Pilot* target );
-int pilot_validEnemyDist( const Pilot* p, const Pilot* target, double *dist );
-int pilot_areAllies( const Pilot *p, const Pilot *target );
-int pilot_areEnemies( const Pilot *p, const Pilot *target );
-
 /* Outfits */
 int pilot_numOutfit( const Pilot *p, const Outfit *o );
 void pilot_dpseps( const Pilot *p, double *pdps, double *peps );
 
-/* Misc. */
+/* Money. */
+credits_t pilot_worth( const Pilot *p, int count_unique );
 int pilot_hasCredits( const Pilot *p, credits_t amount );
 credits_t pilot_modCredits( Pilot *p, credits_t amount );
-int pilot_refuelStart( Pilot *p );
-void pilot_hyperspaceAbort( Pilot* p );
-void pilot_clearTimers( Pilot *pilot );
-int pilot_hasDeployed( const Pilot *p );
-int pilot_dock( Pilot *p, Pilot *target );
-ntime_t pilot_hyperspaceDelay( const Pilot *p );
-void pilot_untargetAsteroid( int anchor, int asteroid );
-PilotOutfitSlot* pilot_getDockSlot( Pilot* p );
-const IntList *pilot_collideQuery( int x1, int y1, int x2, int y2 );
-void pilot_collideQueryIL( IntList *il, int x1, int y1, int x2, int y2 );
 
-/*
- * Creation.
- */
+/* Creation. */
 unsigned int pilot_create( const Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const vec2* pos, const vec2* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot );
@@ -471,9 +448,7 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
 void pilot_delete( Pilot *p );
 void pilot_dead( Pilot* p, unsigned int killer );
 
-/*
- * Init and cleanup.
- */
+/* Init and cleanup. */
 void pilot_stackRemove( Pilot *p );
 void pilots_init (void);
 void pilots_free (void);
@@ -483,15 +458,11 @@ void pilots_clear (void);
 void pilots_cleanAll (void);
 void pilot_free( Pilot* p );
 
-/*
- * Movement.
- */
+/* Movement. */
 void pilot_setThrust( Pilot *p, double thrust );
 void pilot_setTurn( Pilot *p, double turn );
 
-/*
- * update
- */
+/* Update. */
 void pilot_update( Pilot* pilot, double dt );
 void pilots_updatePurge (void);
 void pilots_update( double dt );
@@ -501,16 +472,16 @@ void pilots_renderOverlay (void);
 void pilot_render( Pilot* pilot );
 void pilot_renderOverlay( Pilot* p );
 
-/*
- * communication
- */
+/* Communication. */
 void pilot_broadcast( Pilot *p, const char *msg, int ignore_int );
 void pilot_distress( Pilot *p, Pilot *attacker, const char *msg );
 void pilot_setCommMsg( Pilot *p, const char *s );
 
-/*
- * faction
- */
+/* Faction stuff. */
+int pilot_validEnemy( const Pilot* p, const Pilot* target );
+int pilot_validEnemyDist( const Pilot* p, const Pilot* target, double *dist );
+int pilot_areAllies( const Pilot *p, const Pilot *target );
+int pilot_areEnemies( const Pilot *p, const Pilot *target );
 void pilot_setHostile( Pilot *p );
 void pilot_rmHostile( Pilot *p );
 void pilot_setFriendly( Pilot *p );
@@ -520,12 +491,19 @@ int pilot_isNeutral( const Pilot *p );
 int pilot_isFriendly( const Pilot *p );
 char pilot_getFactionColourChar( const Pilot *p );
 
-/*
- * Misc details.
- */
-credits_t pilot_worth( const Pilot *p );
+/* Misc details. */
 void pilot_msg( Pilot *p, Pilot *receiver, const char *type, unsigned int index );
 void pilot_clearTrails( Pilot *p );
 void pilot_sample_trails( Pilot* p, int none );
 int pilot_hasIllegal( const Pilot *p, int faction );
+int pilot_refuelStart( Pilot *p );
+void pilot_hyperspaceAbort( Pilot* p );
+void pilot_clearTimers( Pilot *pilot );
+int pilot_hasDeployed( const Pilot *p );
+int pilot_dock( Pilot *p, Pilot *target );
+ntime_t pilot_hyperspaceDelay( const Pilot *p );
+void pilot_untargetAsteroid( int anchor, int asteroid );
+PilotOutfitSlot* pilot_getDockSlot( Pilot* p );
+const IntList *pilot_collideQuery( int x1, int y1, int x2, int y2 );
+void pilot_collideQueryIL( IntList *il, int x1, int y1, int x2, int y2 );
 void pilot_quadtreeParams( int max_elem, int depth );

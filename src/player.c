@@ -635,9 +635,10 @@ void player_swapShip( const char *shipname, int move_cargo )
  * @brief Calculates the price of one of the player's ships.
  *
  *    @param shipname Name of the ship.
+ *    @param count_unique Whether or not to count unique outfits too.
  *    @return The price of the ship in credits.
  */
-credits_t player_shipPrice( const char *shipname )
+credits_t player_shipPrice( const char *shipname, int count_unique )
 {
    Pilot *ship = NULL;
 
@@ -659,7 +660,7 @@ credits_t player_shipPrice( const char *shipname )
       return -1;
    }
 
-   return pilot_worth( ship );
+   return pilot_worth( ship, count_unique );
 }
 
 static void player_rmPlayerShip( PlayerShip_t *ps )
@@ -2549,8 +2550,8 @@ static int player_shipsCompare( const void *arg1, const void *arg2 )
       return +1;
 
    /* Get prices. */
-   p1 = pilot_worth( ps1->p );
-   p2 = pilot_worth( ps2->p );
+   p1 = pilot_worth( ps1->p, 0 );
+   p2 = pilot_worth( ps2->p, 0 );
 
    /* Compare price INVERSELY */
    if (p1 < p2)
