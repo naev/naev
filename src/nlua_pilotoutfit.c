@@ -359,7 +359,7 @@ static int poL_shoot( lua_State *L )
    Target t    = lua_totarget( L, 3 );
    double time = weapon_targetFlyTime( po->outfit, p, &t );
    int ret;
-   ret = pilot_shootWeapon( p, po, &t, time, 1 );
+   ret = pilot_shootWeapon( p, po, &t, time, -1 );
    lua_pushboolean( L, ret );
    return 1;
 }

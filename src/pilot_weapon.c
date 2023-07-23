@@ -1052,7 +1052,7 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfi
  *    @param w Pilot's outfit to shoot.
  *    @param target Target shooting at.
  *    @param time Expected flight time.
- *    @param aim Whether or not to aim.
+ *    @param aim Whether or not to aim, if negative, indicates that it is automatically shot.
  *    @return 0 if nothing was shot and 1 if something was shot.
  */
 int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target, double time, int aim )
@@ -1088,16 +1088,14 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target, doubl
    vp.x += p->solid.pos.x;
    vp.y += p->solid.pos.y;
 
-   /*
-    * regular bolt weapons
-    */
+   /* Regular bolt weapons. */
    if (outfit_isBolt(w->outfit)) {
       /* enough energy? */
       if (outfit_energy(w->outfit)*energy_mod > p->energy)
          return 0;
 
       /* Lua test. */
-      if ((w->outfit->lua_ontoggle != LUA_NOREF) &&
+      if ((aim >= 0) && (w->outfit->lua_ontoggle != LUA_NOREF) &&
             !pilot_outfitLOntoggle( p, w, 1 ))
          return 0;
 
@@ -1130,7 +1128,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target, doubl
          return 0;
 
       /* Lua test. */
-      if ((w->outfit->lua_ontoggle != LUA_NOREF) &&
+      if ((aim>=0) && (w->outfit->lua_ontoggle != LUA_NOREF) &&
             !pilot_outfitLOntoggle( p, w, 1 ))
          return 0;
 
@@ -1175,7 +1173,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target, doubl
          return 0;
 
       /* Lua test. */
-      if ((w->outfit->lua_ontoggle != LUA_NOREF) &&
+      if ((aim>=0) && (w->outfit->lua_ontoggle != LUA_NOREF) &&
             !pilot_outfitLOntoggle( p, w, 1 ))
          return 0;
 
@@ -1211,7 +1209,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target, doubl
          return 0;
 
       /* Lua test. */
-      if ((w->outfit->lua_ontoggle != LUA_NOREF) &&
+      if ((aim>=0) && (w->outfit->lua_ontoggle != LUA_NOREF) &&
             !pilot_outfitLOntoggle( p, w, 1 ))
          return 0;
 

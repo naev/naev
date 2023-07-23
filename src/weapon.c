@@ -67,7 +67,7 @@ static IntList weapon_qtexp; /**< For querying collisions from explosions. */
  */
 /* Creation. */
 static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
-      const Pilot *pilot_target, const vec2 *pos, const vec2 *vel, double dir,
+      const Target *target, const vec2 *pos, const vec2 *vel, double dir,
       double swivel, double time );
 static double weapon_aimTurretStatic( const vec2 *target_pos, const vec2 *pos, double dir, double swivel );
 static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
@@ -144,7 +144,7 @@ Weapon *weapon_getID( unsigned int id )
 {
    const Weapon wid = { .id = id };
    Weapon *w = bsearch( &wid, weapon_stack, array_size(weapon_stack), sizeof(Weapon), weapon_cmp );
-   if (weapon_isFlag(w,WEAPON_FLAG_DESTROYED))
+   if ((w==NULL) || weapon_isFlag(w,WEAPON_FLAG_DESTROYED))
       return NULL;
    return w;
 }
@@ -511,7 +511,7 @@ static void think_beam( Weapon* w, double dt )
    switch (w->outfit->type) {
       case OUTFIT_TYPE_BEAM:
          if (w->outfit->u.bem.swivel > 0.)
-            w->solid.dir = weapon_aimTurret( w->outfit, p, t, &w->solid.pos, &p->solid.vel, p->solid.dir, w->outfit->u.bem.swivel, 0. );
+            w->solid.dir = weapon_aimTurret( w->outfit, p, &w->target, &w->solid.pos, &p->solid.vel, p->solid.dir, w->outfit->u.bem.swivel, 0. );
          else
             w->solid.dir = p->solid.dir;
          break;
@@ -1780,32 +1780,52 @@ static void weapon_hitAstBeam( Weapon* w, Asteroid* a, vec2 pos[2], double dt )
  *
  *    @param outfit Weapon outfit.
  *    @param parent Parent of the weapon.
- *    @param pilot_target Target of the weapon.
+ *    @param target Target of the weapon.
  *    @param pos Position of the turret.
  *    @param vel Velocity of the turret.
  *    @param dir Direction facing parent ship and turret.
  *    @param time Expected flight time.
  *    @param swivel Maximum angle between weapon and straight ahead.
+ *    @return The direction to aim.
  */
 static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
-      const Pilot *pilot_target, const vec2 *pos, const vec2 *vel, double dir,
+      const Target *target, const vec2 *pos, const vec2 *vel, double dir,
       double swivel, double time )
 {
+   const Pilot *pilot_target = NULL;
    const vec2 *target_pos, *target_vel;
    double rx, ry, x, y, t, lead, rdir, off;
 
-   if (pilot_target != NULL) {
-      target_pos = &pilot_target->solid.pos;
-      target_vel = &pilot_target->solid.vel;
-   }
-   else {
-      if (parent->nav_asteroid < 0)
+   switch (target->type) {
+      case TARGET_NONE:
          return dir;
 
-      AsteroidAnchor *field = &cur_system->asteroids[parent->nav_anchor];
-      Asteroid *ast = &field->asteroids[parent->nav_asteroid];
-      target_pos = &ast->pos;
-      target_vel = &ast->vel;
+      case TARGET_PILOT:
+         pilot_target = pilot_get( target->u.id );
+         if (pilot_target==NULL)
+            return dir;
+         target_pos = &pilot_target->solid.pos;
+         target_vel = &pilot_target->solid.vel;
+         break;
+
+      case TARGET_ASTEROID:
+         {
+            const AsteroidAnchor *field = &cur_system->asteroids[ target->u.ast.asteroid ];
+            const Asteroid *ast = &field->asteroids[ target->u.ast.asteroid ];
+            target_pos = &ast->pos;
+            target_vel = &ast->vel;
+         }
+         break;
+
+      case TARGET_WEAPON:
+         {
+            const Weapon *wtarget = weapon_getID( target->u.id );
+            if (wtarget==NULL)
+               return dir;
+            target_pos = &wtarget->solid.pos;
+            target_vel = &wtarget->solid.vel;
+         }
+         break;
    }
 
    /* Get the vector : shooter -> target */
@@ -1971,17 +1991,10 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
 {
    vec2 v;
    double mass, rdir, acc, m;
-   Pilot *pilot_target;
    const OutfitGFX *gfx;
 
-   /* Only difference is the direction of fire */
-   if (w->target.type == TARGET_PILOT) /* Must have valid target */
-      pilot_target = pilot_get( w->target.u.id );
-   else /* fire straight or at asteroid */
-      pilot_target = NULL;
-
    if (aim)
-      rdir = weapon_aimTurret( outfit, parent, pilot_target, pos, vel, dir, outfit->u.blt.swivel, time );
+      rdir = weapon_aimTurret( outfit, parent, &w->target, pos, vel, dir, outfit->u.blt.swivel, time );
    else {
       if (pilot_isPlayer(parent) && (SDL_ShowCursor(SDL_QUERY)==SDL_ENABLE)) {
          double x, y;
@@ -2060,20 +2073,13 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    (void) T;
    vec2 v;
    double mass, rdir, m;
-   Pilot *pilot_target;
    const OutfitGFX *gfx;
-
-   /* Only difference is the direction of fire */
-   if (w->target.type == TARGET_PILOT) /* Must have valid target */
-      pilot_target = pilot_get( w->target.u.id );
-   else /* fire straight or at asteroid */
-      pilot_target = NULL;
 
    if (aim) {
       if (outfit->type == OUTFIT_TYPE_TURRET_LAUNCHER)
-         rdir = weapon_aimTurret( outfit, parent, pilot_target, pos, vel, dir, M_PI, time );
+         rdir = weapon_aimTurret( outfit, parent, &w->target, pos, vel, dir, M_PI, time );
       else if (outfit->u.lau.swivel > 0.)
-         rdir = weapon_aimTurret( outfit, parent, pilot_target, pos, vel, dir, outfit->u.lau.swivel, time );
+         rdir = weapon_aimTurret( outfit, parent, &w->target, pos, vel, dir, outfit->u.lau.swivel, time );
       else
          rdir = dir;
    }
@@ -2138,8 +2144,11 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
       w->r     = RNGF(); /* Used for jamming. */
 
       /* If they are seeking a pilot, increment lockon counter. */
-      if (pilot_target != NULL)
-         pilot_target->lockons++;
+      if (w->target.type == TARGET_PILOT) {
+         Pilot *pilot_target = pilot_get( w->target.u.id );
+         if (pilot_target != NULL)
+            pilot_target->lockons++;
+      }
    }
    else
       w->status = WEAPON_STATUS_OK;

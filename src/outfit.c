@@ -33,6 +33,7 @@
 #include "nlua_outfit.h"
 #include "nlua_camera.h"
 #include "nlua_hook.h"
+#include "nlua_munition.h"
 #include "nstring.h"
 #include "nstring.h"
 #include "nxml.h"
@@ -1342,6 +1343,10 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          }
          continue;
       }
+      if (xml_isNode(node,"pointdefense")) {
+         outfit_setProp(temp, OUTFIT_PROP_WEAP_POINTDEFENSE);
+         continue;
+      }
       if (xml_isNode(node,"range")) {
          char *buf;
          xmlr_attr_strd(node,"blowup",buf);
@@ -2633,6 +2638,7 @@ int outfit_load (void)
       nlua_loadGFX( env );
       nlua_loadPilotOutfit( env );
       nlua_loadCamera( env );
+      nlua_loadMunition( env );
 
       /* Run code. */
       if (nlua_dobufenv( env, dat, sz, o->lua_file ) != 0) {
