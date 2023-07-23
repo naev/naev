@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Guardian Overseer">
+ <general>
+  <slot>weapon</slot>
+  <size>large</size>
+  <license>Heavy Weapon</license>
+  <mass>60</mass>
+  <price>850000</price>
+  <description>TODO</description>
+  <gfx_store>placeholder.webp</gfx_store>
+  <cpu>-200</cpu>
+ </general>
+ <specific type="turret bolt">
+  <lua>outfits/pointdefense/pointdefense.lua</lua>
+  <gfx>ripperM.png</gfx>
+  <sound>ripper</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>1.2</delay>
+  <speed>1300</speed>
+  <range>1000</range>
+  <falloff>850</falloff>
+  <energy>70</energy>
+  <heatup>80</heatup>
+  <trackmin>5000</trackmin>
+  <trackmax>5000</trackmax>
+  <damage>
+   <type>normal</type>
+   <penetrate>34</penetrate>
+   <physical>50</physical>
+  </damage>
+  <pointdefense />
+ </specific>
+</outfit>

@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Guardian Interceptor">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Medium Weapon</license>
+  <mass>30</mass>
+  <price>120000</price>
+  <description>TODO</description>
+  <gfx_store>laserturret.webp</gfx_store>
+  <cpu>-24</cpu>
+ </general>
+ <specific type="turret bolt">
+  <lua>outfits/pointdefense/pointdefense.lua</lua>
+  <gfx>laser2M.png</gfx>
+  <sound>laser</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>0.5</delay>
+  <speed>1500</speed>
+  <range>800</range>
+  <falloff>650</falloff>
+  <energy>8</energy>
+  <heatup>60</heatup>
+  <trackmin>3600</trackmin>
+  <trackmax>3600</trackmax>
+  <damage>
+   <type>normal</type>
+   <penetrate>10</penetrate>
+   <physical>5</physical>
+  </damage>
+  <pointdefense />
+ </specific>
+</outfit>
