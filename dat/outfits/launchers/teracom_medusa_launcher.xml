@@ -37,6 +37,8 @@
    <physical>40</physical>
    <disable>200</disable>
   </damage>
+  <armour>30</armour>
+  <absorb>20</absorb>
   <ai>smart</ai>
  </specific>
 </outfit>

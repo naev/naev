@@ -32,6 +32,8 @@
    <penetrate>60</penetrate>
    <physical>100</physical>
   </damage>
+  <armour>15</armour>
+  <absorb>20</absorb>
   <ai>unguided</ai>
  </specific>
  <tags>

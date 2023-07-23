@@ -37,5 +37,7 @@
    <physical>600</physical>
   </damage>
   <ai>smart</ai>
+  <armour>60</armour>
+  <absorb>30</absorb>
  </specific>
 </outfit>

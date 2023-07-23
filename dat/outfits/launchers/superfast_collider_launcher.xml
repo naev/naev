@@ -35,6 +35,8 @@
   </damage>
   <radius friendlyfire="1">15</radius>
   <ai>unguided</ai>
+  <armour>50</armour>
+  <absorb>30</absorb>
  </specific>
  <tags>
   <tag>dvaered</tag>

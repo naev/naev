@@ -27,7 +27,7 @@
   <trail_generator x="-7">fire-missile</trail_generator>
   <duration blowup="armour">8</duration>
   <thrust>300</thrust>
-  <turn>25</turn>
+  <turn>35</turn>
   <speed_max>800</speed_max>
   <resist>10</resist>
   <damage>
@@ -36,5 +36,7 @@
    <physical>80</physical>
   </damage>
   <ai>smart</ai>
+  <armour>15</armour>
+  <absorb>0</absorb>
  </specific>
 </outfit>

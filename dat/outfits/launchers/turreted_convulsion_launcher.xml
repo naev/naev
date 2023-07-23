@@ -38,6 +38,8 @@ This launcher is mounted on a turret and has more ammo capacity than the standar
    <penetrate>12</penetrate>
    <physical>150</physical>
   </damage>
+  <armour>10</armour>
+  <absorb>0</absorb>
   <ai>smart</ai>
  </specific>
 </outfit>

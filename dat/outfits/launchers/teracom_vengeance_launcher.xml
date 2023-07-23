@@ -36,6 +36,8 @@
    <penetrate>36</penetrate>
    <physical>400</physical>
   </damage>
+  <armour>40</armour>
+  <absorb>30</absorb>
   <ai>smart</ai>
  </specific>
 </outfit>

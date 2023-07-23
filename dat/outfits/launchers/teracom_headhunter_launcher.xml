@@ -38,6 +38,8 @@ This is TeraCom's model Headhunter launcher. Though somewhat pricey and demandin
    <penetrate>24</penetrate>
    <physical>160</physical>
   </damage>
+  <armour>25</armour>
+  <absorb>10</absorb>
   <ai>smart</ai>
  </specific>
 </outfit>
