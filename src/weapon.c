@@ -1530,6 +1530,10 @@ static void weapon_hit( Weapon *w, WeaponHit *hit )
       Asteroid *ast = hit->u.ast;
       Pilot *parent = pilot_get( w->parent );
       double mining_bonus = (parent != NULL) ? parent->stats.mining_bonus : 1.;
+      int spfx = outfit_spfxArmour(w->outfit);
+      spfx_add( spfx, hit->pos->x, hit->pos->y,
+            VX(wpn->solid.vel), VY(wpn->solid.vel),
+            SPFX_LAYER_MIDDLE );
       asteroid_hit( ast, &dmg, outfit_miningRarity(w->outfit), mining_bonus );
    }
    else if (hit->type==TARGET_WEAPON) {
