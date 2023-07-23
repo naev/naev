@@ -314,23 +314,23 @@ static int poL_munition( lua_State *L )
    double dir  = luaL_optnumber( L, 5, p->solid.dir );
    vec2 *vp    = luaL_optvector( L, 6, &p->solid.pos );
    vec2 *vv    = luaL_optvector( L, 7, &p->solid.vel );
-   WeaponTarget t;
+   Target t;
    /* Handle target. */
    if (lua_isnoneornil(L,4))
-      t.type = WEAPON_TARGET_NONE;
+      t.type = TARGET_NONE;
    if (lua_ispilot(L,4)) {
-      t.type = WEAPON_TARGET_PILOT;
+      t.type = TARGET_PILOT;
       t.u.id = lua_topilot(L,4);
    }
    else if (lua_isasteroid(L,4)) {
       const LuaAsteroid_t *ast = lua_toasteroid(L,4);
-      t.type = WEAPON_TARGET_ASTEROID;
+      t.type = TARGET_ASTEROID;
       t.u.ast.anchor = ast->parent;
       t.u.ast.asteroid = ast->id;
    }
    else if (lua_ismunition(L,4)) {
       const LuaMunition *lm = lua_tomunition(L,4);
-      t.type = WEAPON_TARGET_WEAPON;
+      t.type = TARGET_WEAPON;
       t.u.id = lm->id;
    }
 

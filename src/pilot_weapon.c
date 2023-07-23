@@ -935,21 +935,21 @@ double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const vec2 *pos,
  *    @param[out] wt Weapon target structure set up.
  *    @return The pilot pointer if applicable.
  */
-Pilot *pilot_weaponTarget( Pilot *p, WeaponTarget *wt )
+Pilot *pilot_weaponTarget( Pilot *p, Target *wt )
 {
    Pilot *pt = pilot_getTarget( p );
    if (pt != NULL) {
-      wt->type = WEAPON_TARGET_PILOT;
+      wt->type = TARGET_PILOT;
       wt->u.id = pt->id;
       return pt;
    }
    else if (p->nav_asteroid != -1) {
-      wt->type = WEAPON_TARGET_ASTEROID;
+      wt->type = TARGET_ASTEROID;
       wt->u.ast.anchor = p->nav_anchor;
       wt->u.ast.asteroid = p->nav_asteroid;
       return NULL;
    }
-   wt->type = WEAPON_TARGET_NONE;
+   wt->type = TARGET_NONE;
    return NULL;
 }
 
@@ -963,7 +963,7 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfi
    double rate_mod, energy_mod;
    int maxp, minh;
    double q, maxt;
-   WeaponTarget wt;
+   Target wt;
 
    /* Store number of shots. */
    ret = 0;
@@ -1055,7 +1055,7 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfi
  *    @param aim Whether or not to aim.
  *    @return 0 if nothing was shot and 1 if something was shot.
  */
-int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const WeaponTarget *target, double time, int aim )
+int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target, double time, int aim )
 {
    vec2 vp, vv;
    double rate_mod, energy_mod;
@@ -1106,7 +1106,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const WeaponTarget *target,
       pilot_heatAddSlot( p, w );
       if (!outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY )) {
          for (int i=0; i<w->outfit->u.blt.shots; i++) {
-            WeaponTarget wt;
+            Target wt;
             if (target == NULL) {
                pilot_weaponTarget( p, &wt );
                target = &wt;
@@ -1137,7 +1137,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const WeaponTarget *target,
       /** @todo Handle warmup stage. */
       w->state = PILOT_OUTFIT_ON;
       if (!outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY )) {
-         WeaponTarget wt;
+         Target wt;
          if (target == NULL) {
             pilot_weaponTarget( p, &wt );
             target = &wt;
@@ -1157,7 +1157,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const WeaponTarget *target,
     * must be a secondary weapon
     */
    else if (outfit_isLauncher(w->outfit)) {
-      WeaponTarget wt;
+      Target wt;
       /* Must have ammo left. */
       if (w->u.ammo.quantity <= 0)
          return 0;
@@ -1171,7 +1171,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const WeaponTarget *target,
          pilot_weaponTarget( p, &wt );
          target = &wt;
       }
-      if ((w->outfit->u.lau.ai != AMMO_AI_UNGUIDED) && (target->type!=WEAPON_TARGET_PILOT))
+      if ((w->outfit->u.lau.ai != AMMO_AI_UNGUIDED) && (target->type!=TARGET_PILOT))
          return 0;
 
       /* Lua test. */

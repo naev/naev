@@ -50,7 +50,7 @@ typedef struct Weapon_ {
 
    int faction;         /**< faction of pilot that shot it */
    unsigned int parent; /**< pilot that shot it */
-   WeaponTarget target; /**< Weapon target. */
+   Target target; /**< Weapon target. */
    const Outfit* outfit; /**< related outfit that fired it or whatnot */
 
    double real_vel;     /**< Keeps track of the real velocity. */
@@ -85,15 +85,15 @@ Weapon *weapon_getID( unsigned int id );
 /* Addition. */
 void weapon_add( PilotOutfitSlot *po, const Outfit *ref,
       double dir, const vec2* pos, const vec2* vel,
-      const Pilot *parent, const WeaponTarget *target, double time, int aim );
+      const Pilot *parent, const Target *target, double time, int aim );
 
 /* Targetting. */
-double weapon_targetFlyTime( const Outfit *o, const Pilot *p, const WeaponTarget *t );
+double weapon_targetFlyTime( const Outfit *o, const Pilot *p, const Target *t );
 
 /* Beam weapons. */
 unsigned int beam_start( PilotOutfitSlot *po,
       double dir, const vec2* pos, const vec2* vel,
-      const Pilot *parent, const WeaponTarget *target, int aim );
+      const Pilot *parent, const Target *target, int aim );
 void beam_end( unsigned int beam );
 
 /* Misc stuff. */
