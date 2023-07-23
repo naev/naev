@@ -3203,6 +3203,7 @@ dat/outfits/launchers/space_mine_layer.lua
 dat/outfits/lib/bioplasma.lua
 dat/outfits/lib/mining_drill.lua
 dat/outfits/lua_outfit_example.lua
+dat/outfits/pointdefense/pointdefense.lua
 dat/outfits/structure/nebular_shielding_prototype.lua
 dat/outfits/unique/bioship_pheromone_emitter.lua
 dat/outfits/unique/executor_shield_aura.lua
