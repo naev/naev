@@ -55,10 +55,8 @@ function update( p, po, _dt )
             end
          end
       end
-   end
-
    -- Prefer munitions over pilots
-   if mem.tpilot then
+   elseif mem.tpilot then
       -- Try to prioritize munitions
       local mall = munition.getInrange( pos, range, p )
       if #mall > 0 then
