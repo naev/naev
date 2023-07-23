@@ -100,8 +100,8 @@ static void weapon_free( Weapon* w );
 /* Hitting. */
 static int weapon_checkCanHit( const Weapon* w, const Pilot *p );
 static void weapon_damage( Weapon *w, const Damage *dmg );
-static void weapon_hit( Weapon *w, WeaponHit *hit );
-static void weapon_hitBeam( Weapon* w, WeaponHit *hit, double dt );
+static void weapon_hit( Weapon *w, const WeaponHit *hit );
+static void weapon_hitBeam( Weapon* w, const WeaponHit *hit, double dt );
 static void weapon_miss( Weapon *w );
 static int weapon_testCollision( const WeaponCollision *wc, const glTexture *ctex,
    int csx, int csy, const vec2 *cpos, const CollPoly *cpol, double cradius, vec2 crash[2] );
@@ -1476,7 +1476,13 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, const vec2 *pos, do
    }
 }
 
-static void weapon_hit( Weapon *w, WeaponHit *hit )
+/**
+ * @brief A bolt/launcher weapon hit something.
+ *
+ *    @param w Weapon involved in the collision.
+ *    @param hit The actual hit.
+ */
+static void weapon_hit( Weapon *w, const WeaponHit *hit )
 {
    int s;
    double damage, radius;
@@ -1532,8 +1538,7 @@ static void weapon_hit( Weapon *w, WeaponHit *hit )
       double mining_bonus = (parent != NULL) ? parent->stats.mining_bonus : 1.;
       int spfx = outfit_spfxArmour(w->outfit);
       spfx_add( spfx, hit->pos->x, hit->pos->y,
-            VX(wpn->solid.vel), VY(wpn->solid.vel),
-            SPFX_LAYER_MIDDLE );
+            VX(ast->vel), VY(ast->vel), SPFX_LAYER_MIDDLE );
       asteroid_hit( ast, &dmg, outfit_miningRarity(w->outfit), mining_bonus );
    }
    else if (hit->type==TARGET_WEAPON) {
@@ -1646,13 +1651,13 @@ static void weapon_damage( Weapon *w, const Damage *dmg )
 }
 
 /**
- * @brief Weapon hit the pilot.
+ * @brief A beam weapon hit something.
  *
  *    @param w Weapon involved in the collision.
  *    @param hit The actual hit.
  *    @param dt Current delta tick.
  */
-static void weapon_hitBeam( Weapon *w, WeaponHit *hit, double dt )
+static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt )
 {
    Pilot *parent;
    double damage;
