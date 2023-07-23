@@ -26,7 +26,6 @@ local function autonav_setup ()
    local pp = player.pilot()
    instant_jump = pp:shipstat("misc_instant_jump")
    conf = naev.conf()
-   local stats = pp:stats()
 
    -- Some safe defaults
    autonav     = nil
@@ -43,7 +42,7 @@ local function autonav_setup ()
    player.autonavSetPos()
 
    -- Set time compression maximum
-   tc_max = conf.compression_velocity / stats.speed_max
+   tc_max = conf.compression_velocity / pp:speedMax()
    if conf.compression_mult >= 1 then
       tc_max = math.min( tc_max, conf.compression_mult )
    end
@@ -268,7 +267,7 @@ start decrementing.
 --]]
 local function autonav_rampdown( d )
    local pp = player.pilot()
-   local speed = pp:stats().speed
+   local speed = pp:speed()
 
    local vel = math.min( 1.5*speed, pp:vel():mod() )
    local t   = d / vel * (1 - 0.075 * tc_base)
@@ -307,10 +306,9 @@ end
 -- For approaching a target with velocity, and staying at a radius distance
 local function autonav_approach_vel( pos, vel, radius )
    local pp = player.pilot()
-   local stats = pp:stats()
-   stats.turn = math.rad(stats.turn) -- TODO probably change the code
+   local turn = math.rad(pp:turn()) -- TODO probably change the code
 
-   local timeFactor = math.pi/stats.turn + stats.speed/stats.thrust
+   local timeFactor = math.pi/turn + pp:speed() / pp:thrust()
 
    local Kp = 10
    local Kd = math.max( 5, 10.84*timeFactor-10.82 )
