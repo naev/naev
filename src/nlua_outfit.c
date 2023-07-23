@@ -43,6 +43,10 @@ static int outfitL_price( lua_State *L );
 static int outfitL_description( lua_State *L );
 static int outfitL_summary( lua_State *L );
 static int outfitL_unique( lua_State *L );
+static int outfitL_friendlyfire( lua_State *L );
+static int outfitL_pointdefense( lua_State *L );
+static int outfitL_miss_ships( lua_State *L );
+static int outfitL_miss_asteroids( lua_State *L );
 static int outfitL_getShipStat( lua_State *L );
 static int outfitL_weapStats( lua_State *L );
 static int outfitL_specificStats( lua_State *L );
@@ -66,6 +70,10 @@ static const luaL_Reg outfitL_methods[] = {
    { "description", outfitL_description },
    { "summary", outfitL_summary },
    { "unique", outfitL_unique },
+   { "friendlyfire", outfitL_friendlyfire },
+   { "pointdefense", outfitL_pointdefense },
+   { "missShips", outfitL_miss_ships },
+   { "missAsteroids", outfitL_miss_asteroids },
    { "shipstat", outfitL_getShipStat },
    { "weapstats", outfitL_weapStats },
    { "specificstats", outfitL_specificStats },
@@ -464,6 +472,13 @@ static int outfitL_summary( lua_State *L )
    return 1;
 }
 
+static int getprop( lua_State *L, int prop )
+{
+   const Outfit *o = luaL_validoutfit(L,1);
+   lua_pushboolean(L, outfit_isProp(o, prop));
+   return 1;
+}
+
 /**
  * @brief Gets whether or not an outfit is unique
  *
@@ -475,9 +490,55 @@ static int outfitL_summary( lua_State *L )
  */
 static int outfitL_unique( lua_State *L )
 {
-   const Outfit *o = luaL_validoutfit(L,1);
-   lua_pushboolean(L, outfit_isProp(o, OUTFIT_PROP_UNIQUE));
-   return 1;
+   return getprop( L, OUTFIT_PROP_UNIQUE );
+}
+
+/**
+ * @brief Gets whether or not a weapon outfit can do friendly fire.
+ *
+ *    @luatparam String o Outfit to get the property of of.
+ *    @luatreturn boolean Whether or not the outfit can do friendly fire damage.
+ * @luafunc friendlyfire
+ */
+static int outfitL_friendlyfire( lua_State *L )
+{
+   return getprop( L, OUTFIT_PROP_WEAP_FRIENDLYFIRE );
+}
+
+/**
+ * @brief Gets whether or not a weapon outfit is point defense.
+ *
+ *    @luatparam String o Outfit to get the property of of.
+ *    @luatreturn boolean Whether or not the outfit is point defense.
+ * @luafunc pointdefense
+ */
+static int outfitL_pointdefense( lua_State *L )
+{
+   return getprop( L, OUTFIT_PROP_WEAP_POINTDEFENSE );
+}
+
+/**
+ * @brief Gets whether or not a weapon outfit misses ships.
+ *
+ *    @luatparam String o Outfit to get the property of of.
+ *    @luatreturn boolean Whether or not the outfit misses ships.
+ * @luafunc missShips
+ */
+static int outfitL_miss_ships( lua_State *L )
+{
+   return getprop( L, OUTFIT_PROP_WEAP_MISS_SHIPS );
+}
+
+/**
+ * @brief Gets whether or not a weapon outfit misses asteroids.
+ *
+ *    @luatparam String o Outfit to get the property of of.
+ *    @luatreturn boolean Whether or not the outfit misses asteroids.
+ * @luafunc missAsteroids
+ */
+static int outfitL_miss_asteroids( lua_State *L )
+{
+   return getprop( L, OUTFIT_PROP_WEAP_MISS_ASTEROIDS );
 }
 
 /**
