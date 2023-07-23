@@ -1347,6 +1347,14 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          outfit_setProp(temp, OUTFIT_PROP_WEAP_POINTDEFENSE);
          continue;
       }
+      if (xml_isNode(node,"miss_ships")) {
+         outfit_setProp(temp, OUTFIT_PROP_WEAP_MISS_SHIPS);
+         continue;
+      }
+      if (xml_isNode(node,"miss_asteroids")) {
+         outfit_setProp(temp, OUTFIT_PROP_WEAP_MISS_ASTEROIDS);
+         continue;
+      }
       if (xml_isNode(node,"range")) {
          char *buf;
          xmlr_attr_strd(node,"blowup",buf);
@@ -1519,6 +1527,18 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"swivel",temp->u.bem.swivel);
       xmlr_int(node,"mining_rarity",temp->u.bem.mining_rarity);
       xmlr_strd(node,"lua",temp->lua_file);
+      if (xml_isNode(node,"pointdefense")) {
+         outfit_setProp(temp, OUTFIT_PROP_WEAP_POINTDEFENSE);
+         continue;
+      }
+      if (xml_isNode(node,"miss_ships")) {
+         outfit_setProp(temp, OUTFIT_PROP_WEAP_MISS_SHIPS);
+         continue;
+      }
+      if (xml_isNode(node,"miss_asteroids")) {
+         outfit_setProp(temp, OUTFIT_PROP_WEAP_MISS_ASTEROIDS);
+         continue;
+      }
 
       if (xml_isNode(node, "duration")) {
          xmlr_attr_float(node, "min", temp->u.bem.min_duration);
@@ -1689,6 +1709,14 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       }
       if (xml_isNode(node,"pointdefense")) {
          outfit_setProp(temp, OUTFIT_PROP_WEAP_POINTDEFENSE);
+         continue;
+      }
+      if (xml_isNode(node,"miss_ships")) {
+         outfit_setProp(temp, OUTFIT_PROP_WEAP_MISS_SHIPS);
+         continue;
+      }
+      if (xml_isNode(node,"miss_asteroids")) {
+         outfit_setProp(temp, OUTFIT_PROP_WEAP_MISS_ASTEROIDS);
          continue;
       }
 

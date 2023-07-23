@@ -27,6 +27,8 @@
                                                    when timer is up. */
 #define OUTFIT_PROP_WEAP_FRIENDLYFIRE  (1<<14) /**< Weapon damages all ships when blowing up. */
 #define OUTFIT_PROP_WEAP_POINTDEFENSE  (1<<15) /**< Weapon can hit ammunitions. */
+#define OUTFIT_PROP_WEAP_MISS_SHIPS    (1<<16) /**< Weapon can not hit ships. */
+#define OUTFIT_PROP_WEAP_MISS_ASTEROIDS (1<<17) /**< Weapon can not hit asteroids. */
 
 /* Outfit filter labels. [Doc comments are also translator notes and must precede the #define.] */
 /** Color-coded abbreviation for "Weapon [outfit]", short enough to use as a tab/column title. */

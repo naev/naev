@@ -1134,88 +1134,92 @@ static void weapon_updateCollide( Weapon* w, double dt )
       }
    }
 
-   /* Get what collides. */
-   pilot_collideQueryIL( &weapon_qtquery, x1, y1, x2, y2 );
-   for (int i=0; i<il_size(&weapon_qtquery); i++) {
-      Pilot *p = pilot_stack[ il_get( &weapon_qtquery, i, 0 ) ];
+   /* Get colliding pilots. */
+   if (!outfit_isProp(w->outfit,OUTFIT_PROP_WEAP_MISS_SHIPS)) {
+      pilot_collideQueryIL( &weapon_qtquery, x1, y1, x2, y2 );
+      for (int i=0; i<il_size(&weapon_qtquery); i++) {
+         Pilot *p = pilot_stack[ il_get( &weapon_qtquery, i, 0 ) ];
 
-      /* Ignore pilots being deleted. */
-      if (pilot_isFlag(p, PILOT_DELETE))
-         continue;
-
-      /* Ignore if parent is self. */
-      if (w->parent == p->id)
-         continue; /* pilot is self */
-
-      /* Smart weapons only collide with their target */
-      if (weapon_isSmart(w)) {
-         int isjammed = ((w->status == WEAPON_STATUS_JAMMED) || (w->status == WEAPON_STATUS_JAMMED_SLOWED));
-         if (!isjammed && (w->target.type==TARGET_PILOT) && (p->id != w->target.u.id))
-            continue;
-      }
-
-      /* Check to see if it can hit. */
-      if (!weapon_checkCanHit(w,p))
-         continue;
-
-      /* Test if hit. */
-      if (!weapon_testCollision( &wc, p->ship->gfx_space, p->tsx, p->tsy,
-            &p->solid.pos, p->ship->polygon, 0., crash ))
-         continue;
-
-      /* Handle the hit. */
-      if (wc.beam)
-         weapon_hitBeam( w, p, crash, dt );
-         /* No return because beam can still think, it's not
-         * destroyed like the other weapons.*/
-      else {
-         weapon_hitPilot( w, p, crash );
-         return; /* Weapon is destroyed. */
-      }
-   }
-
-   /* Collide with asteroids*/
-   for (int i=0; i<array_size(cur_system->asteroids); i++) {
-      AsteroidAnchor *ast = &cur_system->asteroids[i];
-
-      /* Early in-range check with the asteroid field. */
-      if (vec2_dist2( &w->solid.pos, &ast->pos ) >
-            pow2( ast->radius + ast->margin + wc.range ))
-         continue;
-
-      /* Quadtree collisions. */
-      asteroid_collideQueryIL( ast, &weapon_qtquery, x1, y1, x2, y2 );
-      for (int j=0; j<il_size(&weapon_qtquery); j++) {
-         Asteroid *a = &ast->asteroids[ il_get( &weapon_qtquery, j, 0 ) ];
-         int coll;
-         if (a->state != ASTEROID_FG)
+         /* Ignore pilots being deleted. */
+         if (pilot_isFlag(p, PILOT_DELETE))
             continue;
 
-         /* In-range check with the actual asteroid. */
-         /* This is advantageous because we are going to rotate the polygon afterwards. */
-         if (vec2_dist2( &w->solid.pos, &a->pos ) > pow2( wc.range ))
-            continue;
+         /* Ignore if parent is self. */
+         if (w->parent == p->id)
+            continue; /* pilot is self */
 
-         if (a->polygon->npt!=0) {
-            CollPoly rpoly;
-            RotatePolygon( &rpoly, a->polygon, (float) a->ang );
-            coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, &rpoly, 0., crash );
-            free(rpoly.x);
-            free(rpoly.y);
+         /* Smart weapons only collide with their target */
+         if (weapon_isSmart(w)) {
+            int isjammed = ((w->status == WEAPON_STATUS_JAMMED) || (w->status == WEAPON_STATUS_JAMMED_SLOWED));
+            if (!isjammed && (w->target.type==TARGET_PILOT) && (p->id != w->target.u.id))
+               continue;
          }
-         else
-            coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, NULL, 0., crash );
 
-         /* Missed. */
-         if (!coll)
+         /* Check to see if it can hit. */
+         if (!weapon_checkCanHit(w,p))
+            continue;
+
+         /* Test if hit. */
+         if (!weapon_testCollision( &wc, p->ship->gfx_space, p->tsx, p->tsy,
+               &p->solid.pos, p->ship->polygon, 0., crash ))
             continue;
 
          /* Handle the hit. */
          if (wc.beam)
-            weapon_hitAstBeam( w, a, crash, dt );
+            weapon_hitBeam( w, p, crash, dt );
+            /* No return because beam can still think, it's not
+            * destroyed like the other weapons.*/
          else {
-            weapon_hitAst( w, a, crash );
+            weapon_hitPilot( w, p, crash );
             return; /* Weapon is destroyed. */
+         }
+      }
+   }
+
+   /* Collide with asteroids. */
+   if (!outfit_isProp(w->outfit,OUTFIT_PROP_WEAP_MISS_ASTEROIDS)) {
+      for (int i=0; i<array_size(cur_system->asteroids); i++) {
+         AsteroidAnchor *ast = &cur_system->asteroids[i];
+
+         /* Early in-range check with the asteroid field. */
+         if (vec2_dist2( &w->solid.pos, &ast->pos ) >
+               pow2( ast->radius + ast->margin + wc.range ))
+            continue;
+
+         /* Quadtree collisions. */
+         asteroid_collideQueryIL( ast, &weapon_qtquery, x1, y1, x2, y2 );
+         for (int j=0; j<il_size(&weapon_qtquery); j++) {
+            Asteroid *a = &ast->asteroids[ il_get( &weapon_qtquery, j, 0 ) ];
+            int coll;
+            if (a->state != ASTEROID_FG)
+               continue;
+
+            /* In-range check with the actual asteroid. */
+            /* This is advantageous because we are going to rotate the polygon afterwards. */
+            if (vec2_dist2( &w->solid.pos, &a->pos ) > pow2( wc.range ))
+               continue;
+
+            if (a->polygon->npt!=0) {
+               CollPoly rpoly;
+               RotatePolygon( &rpoly, a->polygon, (float) a->ang );
+               coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, &rpoly, 0., crash );
+               free(rpoly.x);
+               free(rpoly.y);
+            }
+            else
+               coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, NULL, 0., crash );
+
+            /* Missed. */
+            if (!coll)
+               continue;
+
+            /* Handle the hit. */
+            if (wc.beam)
+               weapon_hitAstBeam( w, a, crash, dt );
+            else {
+               weapon_hitAst( w, a, crash );
+               return; /* Weapon is destroyed. */
+            }
          }
       }
    }
