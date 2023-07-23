@@ -1,9 +1,10 @@
-local range, range2
+local range, range2, hitships
 
 function onload( o )
    local _dps, _disps, _eps, _tmin, _tmax
    _dps, _disps, _eps, range, _tmin, _tmax = o:weapstats()
    range2 = range*range
+   hitships = not o:missShips()
 end
 
 function init( _p, _po )
@@ -38,7 +39,7 @@ function update( p, po, _dt )
       end
 
       -- If no current target, shoot at enemies too
-      if not m then
+      if not m and hitships then
          local pall = p:getEnemies( range )
          if #pall > 0 then
             m = pall[ rnd.rnd(1,#mall) ]
