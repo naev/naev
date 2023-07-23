@@ -65,6 +65,7 @@
 #define menu_Open(f)    (menu_open |= (f)) /**< Marks a menu as opened. */
 #define menu_Close(f)   (menu_open &= ~(f)) /**< Marks a menu as closed. */
 int menu_open = 0; /**< Stores the opened/closed menus. */
+int bg_needs_reset = 1; /**< Whether or not it needs a reset. */
 
 static glTexture *main_naevLogo = NULL; /**< Naev Logo texture. */
 static int menu_small_allowsave = 1; /** Can save with small menu. */
@@ -105,6 +106,12 @@ static void menu_options_button( unsigned int wid, const char *str );
  */
 static int menu_main_bkg_system (void)
 {
+   if (!bg_needs_reset) {
+      pause_setSpeed( 1. );
+      sound_setSpeed( 1. );
+      return 0;
+   }
+
    const nsave_t *saves;
    const char *sys;
    double cx, cy;
@@ -150,7 +157,7 @@ static int menu_main_bkg_system (void)
    cy += SCREEN_H/8. / conf.zoom_far;
 
    /* Initialize. */
-   space_init( sys, 1 ); /* Simulation makes it look more lively. */
+   space_init( sys, 1 ); /* More lively with simulation. */
    cam_setTargetPos( cx, cy, 0 );
    cam_setZoom( conf.zoom_far );
    pause_setSpeed( 1. );
@@ -376,7 +383,9 @@ static void menu_main_credits( unsigned int wid, const char *str )
    window_destroy( wid );
    menu_Close(MENU_MAIN);
    intro_display( "AUTHORS", "credits" );
+   bg_needs_reset = 0;
    menu_main();
+   bg_needs_reset = 1;
    /* We'll need to start music again. */
    music_choose("load");
 }
@@ -757,7 +766,9 @@ static void menu_editors_close( unsigned int wid, const char *str )
    menu_Close( MENU_EDITORS );
 
    /* Restores Main Menu */
+   bg_needs_reset = 0;
    menu_main();
+   bg_needs_reset = 1;
 
    return;
 }

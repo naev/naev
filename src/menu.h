@@ -16,21 +16,15 @@
 #define menu_isOpen(f)  (menu_open & (f)) /**< Checks if a certain menu is opened. */
 extern int menu_open; /**< Used internally by menu_isOpen() */
 
-/*
- * Menu opening routines.
- */
+/* Menu opening routines. */
 void menu_main (void);
 void menu_small( int docheck, int info, int options, int allowsave );
 void menu_death (void);
 int menu_askQuit (void);
 
-/*
- * Closing.
- */
+/* Closing. */
 void menu_main_close (void);
 void menu_small_close (void);
 
-/*
- * Misc.
- */
+/* Misc. */
 void menu_main_resize (void);
