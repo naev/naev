@@ -265,11 +265,36 @@ static int munitionL_getAll( lua_State *L )
    return 1;
 }
 
+static int weapon_isHostile( const Weapon *w, const Pilot *p )
+{
+   if (p->id == w->parent)
+      return 0;
+
+   if ((w->target.type==TARGET_PILOT) && (w->target.u.id==p->id))
+      return 1;
+
+   /* Let hostiles hit player. */
+   if (p->faction == FACTION_PLAYER) {
+      const Pilot *parent = pilot_get(w->parent);
+      if (parent != NULL) {
+         if (pilot_isHostile(parent))
+            return 1;
+      }
+   }
+
+   /* Hit non-allies. */
+   if (areEnemies(w->faction, p->faction))
+      return 1;
+
+   return 0;
+}
+
 /**
  * @brief Get munitions in range. Note that this can only get hittable munitions.
  *
  *    @luatparam Vec2 pos Position from which to get munitions.
  *    @luatparam number range Range to get munitions from.
+ *    @luatparam[opt=nil] Pilot|nil Pilot to check hostility to.
  *    @luatreturn table A table containing all the munitions found in range.
  * @luafunc getInrange
  */
@@ -280,6 +305,7 @@ static int munitionL_getInrange( lua_State *L )
    int n = 1;
    const vec2 *pos = luaL_checkvector(L,1);
    double range = luaL_checknumber(L,2);
+   const Pilot *p = luaL_optpilot(L,3,NULL);
    double r2 = pow2(range);
    int x, y, r;
 
@@ -292,6 +318,8 @@ static int munitionL_getInrange( lua_State *L )
    for (int i=0; i<il_size(qt); i++) {
       const Weapon *w = &weapon_stack[ il_get(qt, i, 0) ];
       if (weapon_isFlag(w,WEAPON_FLAG_DESTROYED))
+         continue;
+      if ((p!=NULL) && !weapon_isHostile(w,p))
          continue;
       if (vec2_dist2( &w->solid.pos, pos ) > r2 )
          continue;
