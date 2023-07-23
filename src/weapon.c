@@ -47,6 +47,16 @@ typedef struct WeaponCollision_ {
    const CollPoly *polygon;/**< Collision polygon of the weapon if applicable. */
 } WeaponCollision;
 
+typedef struct WeaponHit_ {
+   TargetType type;
+   union {
+      Pilot    *plt;
+      Asteroid *ast;
+      Weapon   *wpn;
+   } u;
+   const vec2 *pos;
+} WeaponHit;
+
 /* Weapon layers. */
 static Weapon* weapon_stack = NULL;
 
@@ -90,10 +100,8 @@ static void weapon_free( Weapon* w );
 /* Hitting. */
 static int weapon_checkCanHit( const Weapon* w, const Pilot *p );
 static void weapon_damage( Weapon *w, const Damage *dmg );
-static void weapon_hitPilot( Weapon *w, Pilot *ptarget, const vec2 *pos );
+static void weapon_hit( Weapon *w, WeaponHit *hit );
 static void weapon_miss( Weapon *w );
-static void weapon_hitAst( Weapon* w, Asteroid* a, const vec2* pos );
-static void weapon_hitWeapon( Weapon* w, Weapon *t, const vec2* pos );
 static void weapon_hitBeam( Weapon* w, Pilot* p, vec2 pos[2], double dt );
 static void weapon_hitAstBeam( Weapon* w, Asteroid* a, vec2 pos[2], double dt );
 static int weapon_testCollision( const WeaponCollision *wc, const glTexture *ctex,
@@ -1093,6 +1101,7 @@ static void weapon_updateCollide( Weapon* w, double dt )
       pilot_collideQueryIL( &weapon_qtquery, x1, y1, x2, y2 );
       for (int i=0; i<il_size(&weapon_qtquery); i++) {
          Pilot *p = pilot_stack[ il_get( &weapon_qtquery, i, 0 ) ];
+         WeaponHit hit;
 
          /* Ignore pilots being deleted. */
          if (pilot_isFlag(p, PILOT_DELETE))
@@ -1119,12 +1128,15 @@ static void weapon_updateCollide( Weapon* w, double dt )
             continue;
 
          /* Handle the hit. */
+         hit.type    = TARGET_PILOT;
+         hit.u.plt   = p;
+         hit.pos     = crash;
          if (wc.beam)
             weapon_hitBeam( w, p, crash, dt );
             /* No return because beam can still think, it's not
             * destroyed like the other weapons.*/
          else {
-            weapon_hitPilot( w, p, crash );
+            weapon_hit( w, &hit );
             return; /* Weapon is destroyed. */
          }
       }
@@ -1145,6 +1157,8 @@ static void weapon_updateCollide( Weapon* w, double dt )
          for (int j=0; j<il_size(&weapon_qtquery); j++) {
             Asteroid *a = &ast->asteroids[ il_get( &weapon_qtquery, j, 0 ) ];
             int coll;
+            WeaponHit hit;
+
             if (a->state != ASTEROID_FG)
                continue;
 
@@ -1168,10 +1182,13 @@ static void weapon_updateCollide( Weapon* w, double dt )
                continue;
 
             /* Handle the hit. */
+            hit.type    = TARGET_ASTEROID;
+            hit.u.ast   = a;
+            hit.pos     = crash;
             if (wc.beam)
                weapon_hitAstBeam( w, a, crash, dt );
             else {
-               weapon_hitAst( w, a, crash );
+               weapon_hit( w, &hit );
                return; /* Weapon is destroyed. */
             }
          }
@@ -1216,7 +1233,11 @@ static void weapon_updateCollide( Weapon* w, double dt )
             weapon_hitAstBeam( w, a, crash, dt );
 #endif
          if (!wc.beam) {
-            weapon_hitWeapon( w, whit, crash );
+            WeaponHit hit;
+            hit.type    = TARGET_WEAPON;
+            hit.u.wpn   = whit;
+            hit.pos     = crash;
+            weapon_hit( w, &hit );
             return; /* Weapon is destroyed. */
          }
       }
@@ -1456,18 +1477,10 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, const vec2 *pos, do
    }
 }
 
-/**
- * @brief Weapon hit the pilot.
- *
- *    @param w Weapon involved in the collision.
- *    @param ptarget Pilot that got hit.
- *    @param pos Position of the hit.
- */
-static void weapon_hitPilot( Weapon *w, Pilot *ptarget, const vec2 *pos )
+static void weapon_hit( Weapon *w, WeaponHit *hit )
 {
-   int s, spfx;
+   int s;
    double damage, radius;
-   WeaponLayer spfx_layer;
    Damage dmg;
    const Damage *odmg;
 
@@ -1487,26 +1500,47 @@ static void weapon_hitPilot( Weapon *w, Pilot *ptarget, const vec2 *pos )
             w->solid.pos.x, w->solid.pos.y,
             w->solid.vel.x, w->solid.vel.y );
 
-   if (radius > 0.)
-      weapon_hitExplode( w, &dmg, pos, radius );
-   else {
-      Pilot *parent = pilot_get( w->parent );
-      /* Have pilot take damage and get real damage done. */
-      damage = pilot_hit( ptarget, &w->solid, parent, &dmg, w->outfit, w->lua_mem, 1 );
-      /* Inform AI that it's been hit. */
-      weapon_hitAI( ptarget, parent, damage );
+   /* Explosive weapons blow up and hit everything in range. */
+   if (radius > 0.) {
+      weapon_hitExplode( w, &dmg, hit->pos, radius );
+      weapon_destroy(w);
+      return;
    }
 
-   /* Get the layer. */
-   spfx_layer = (ptarget==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
-   /* Choose spfx. */
-   if (ptarget->shield > 0.)
-      spfx = outfit_spfxShield(w->outfit);
-   else
-      spfx = outfit_spfxArmour(w->outfit);
-   /* Add sprite, layer depends on whether player shot or not. */
-   spfx_add( spfx, pos->x, pos->y,
-         VX(ptarget->solid.vel), VY(ptarget->solid.vel), spfx_layer );
+   if (hit->type==TARGET_PILOT) {
+      Pilot *ptarget = hit->u.plt;
+      Pilot *parent = pilot_get( w->parent );
+      int spfx;
+
+      /* Have pilot take damage and get real damage done. */
+      double realdmg = pilot_hit( ptarget, &w->solid, parent, &dmg, w->outfit, w->lua_mem, 1 );
+      /* Inform AI that it's been hit. */
+      weapon_hitAI( ptarget, parent, realdmg );
+
+      /* Choose spfx. */
+      if (ptarget->shield > 0.)
+         spfx = outfit_spfxShield(w->outfit);
+      else
+         spfx = outfit_spfxArmour(w->outfit);
+      /* Add sprite, layer depends on whether player shot or not. */
+      spfx_add( spfx, hit->pos->x, hit->pos->y,
+            VX(ptarget->solid.vel), VY(ptarget->solid.vel),
+            (w->layer==WEAPON_LAYER_FG) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK );
+   }
+   else if (hit->type==TARGET_ASTEROID) {
+      Asteroid *ast = hit->u.ast;
+      Pilot *parent = pilot_get( w->parent );
+      double mining_bonus = (parent != NULL) ? parent->stats.mining_bonus : 1.;
+      asteroid_hit( ast, &dmg, outfit_miningRarity(w->outfit), mining_bonus );
+   }
+   else if (hit->type==TARGET_WEAPON) {
+      Weapon *wpn = hit->u.wpn;
+      int spfx = outfit_spfxArmour(w->outfit);
+      spfx_add( spfx, hit->pos->x, hit->pos->y,
+            VX(wpn->solid.vel), VY(wpn->solid.vel),
+            (w->layer==WEAPON_LAYER_FG) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK );
+      weapon_damage( wpn, &dmg );
+   }
 
    /* no need for the weapon particle anymore */
    weapon_destroy(w);
@@ -1582,83 +1616,6 @@ static void weapon_miss( Weapon *w )
    }
 
    weapon_destroy(w);
-}
-
-/**
- * @brief Weapon hit an asteroid.
- *
- *    @param w Weapon involved in the collision.
- *    @param a Asteroid that got hit.
- *    @param pos Position of the hit.
- */
-static void weapon_hitAst( Weapon* w, Asteroid* a, const vec2* pos )
-{
-   int s, spfx;
-   Damage dmg;
-   const Damage *odmg;
-   double radius;
-   /* Get general details. */
-   odmg              = outfit_damage( w->outfit );
-   radius            = outfit_radius( w->outfit );
-   dmg.damage        = MAX( 0., w->dam_mod * w->strength * odmg->damage );
-   dmg.penetration   = odmg->penetration;
-   dmg.type          = odmg->type;
-   dmg.disable       = odmg->disable;
-
-   /* Play sound if they have it. */
-   s = outfit_soundHit(w->outfit);
-   if (s != -1)
-      w->voice = sound_playPos( s,
-            w->solid.pos.x, w->solid.pos.y,
-            w->solid.vel.x, w->solid.vel.y );
-
-   /* Add the spfx */
-   spfx = outfit_spfxArmour(w->outfit);
-   spfx_add( spfx, pos->x, pos->y,VX(a->vel), VY(a->vel), w->layer );
-
-   if (radius > 0.)
-      weapon_hitExplode( w, &dmg, pos, radius );
-   else {
-      Pilot *parent = pilot_get( w->parent );
-      double mining_bonus = (parent != NULL) ? parent->stats.mining_bonus : 1.;
-      asteroid_hit( a, &dmg, outfit_miningRarity(w->outfit), mining_bonus );
-   }
-
-   weapon_destroy(w);
-}
-
-/**
- * @brief Weapon hit another weapon.
- */
-static void weapon_hitWeapon( Weapon* w, Weapon *t, const vec2* pos )
-{
-   int s, spfx;
-   Damage dmg;
-   const Damage *odmg;
-   double radius;
-   /* Get general details. */
-   odmg              = outfit_damage( w->outfit );
-   radius            = outfit_radius( w->outfit );
-   dmg.damage        = MAX( 0., w->dam_mod * w->strength * odmg->damage );
-   dmg.penetration   = odmg->penetration;
-   dmg.type          = odmg->type;
-   dmg.disable       = odmg->disable;
-
-   /* Play sound if they have it. */
-   s = outfit_soundHit(w->outfit);
-   if (s != -1)
-      w->voice = sound_playPos( s,
-            w->solid.pos.x, w->solid.pos.y,
-            w->solid.vel.x, w->solid.vel.y );
-
-   /* Add the spfx */
-   spfx = outfit_spfxArmour(w->outfit);
-   spfx_add( spfx, pos->x, pos->y, VX(t->solid.vel), VY(t->solid.vel), w->layer );
-
-   if (radius > 0.)
-      weapon_hitExplode( w, &dmg, pos, radius );
-   else
-      weapon_damage( t, &dmg );
 }
 
 /**
