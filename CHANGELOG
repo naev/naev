@@ -28,7 +28,7 @@
       * Travelling merchant tells you when new wares are available and should be easier to find
       * Lua Love API should be better at handling input and not apply keys held before started
       * Increase time compression when disabled
-      * Inverted how hide, evasion, and stealth values work. Now lower is better
+      * Inverted how hide, evasion, and stealth value percent bonuses work. Now lower is better
       * Hide locked slots without outfits as the player can't do anything with them
    * New Content
       * New mechanic for House Sirius called flow to unlock psychic powers
@@ -76,6 +76,7 @@
       * Weaker effects shouldn't overwrite stronger ones anymore
       * Spobs can use communication graphics
       * Require OpenGL 3.2 for geometry shaders now
+      * Support for advanced collisions such as weapon on weapon, allowing for point defense weapons
    * Fixes
       * Typo and wording fixes
       * Fixed many corner case crashes in the editor
