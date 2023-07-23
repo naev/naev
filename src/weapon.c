@@ -101,9 +101,8 @@ static void weapon_free( Weapon* w );
 static int weapon_checkCanHit( const Weapon* w, const Pilot *p );
 static void weapon_damage( Weapon *w, const Damage *dmg );
 static void weapon_hit( Weapon *w, WeaponHit *hit );
+static void weapon_hitBeam( Weapon* w, WeaponHit *hit, double dt );
 static void weapon_miss( Weapon *w );
-static void weapon_hitBeam( Weapon* w, Pilot* p, vec2 pos[2], double dt );
-static void weapon_hitAstBeam( Weapon* w, Asteroid* a, vec2 pos[2], double dt );
 static int weapon_testCollision( const WeaponCollision *wc, const glTexture *ctex,
    int csx, int csy, const vec2 *cpos, const CollPoly *cpol, double cradius, vec2 crash[2] );
 /* think */
@@ -1132,7 +1131,7 @@ static void weapon_updateCollide( Weapon* w, double dt )
          hit.u.plt   = p;
          hit.pos     = crash;
          if (wc.beam)
-            weapon_hitBeam( w, p, crash, dt );
+            weapon_hitBeam( w, &hit, dt );
             /* No return because beam can still think, it's not
             * destroyed like the other weapons.*/
          else {
@@ -1186,7 +1185,7 @@ static void weapon_updateCollide( Weapon* w, double dt )
             hit.u.ast   = a;
             hit.pos     = crash;
             if (wc.beam)
-               weapon_hitAstBeam( w, a, crash, dt );
+               weapon_hitBeam( w, &hit, dt );
             else {
                weapon_hit( w, &hit );
                return; /* Weapon is destroyed. */
@@ -1646,16 +1645,13 @@ static void weapon_damage( Weapon *w, const Damage *dmg )
  * @brief Weapon hit the pilot.
  *
  *    @param w Weapon involved in the collision.
- *    @param p Pilot that got hit.
- *    @param pos Position of the hit.
+ *    @param hit The actual hit.
  *    @param dt Current delta tick.
  */
-static void weapon_hitBeam( Weapon* w, Pilot* p, vec2 pos[2], double dt )
+static void weapon_hitBeam( Weapon *w, WeaponHit *hit, double dt )
 {
    Pilot *parent;
-   int spfx;
    double damage;
-   WeaponLayer spfx_layer;
    Damage dmg;
    const Damage *odmg;
 
@@ -1668,69 +1664,56 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, vec2 pos[2], double dt )
    dmg.type          = odmg->type;
    dmg.disable       = MAX( 0., w->dam_mod * w->strength * odmg->disable * dt + damage * w->dam_as_dis_mod );
 
-   /* Have pilot take damage and get real damage done. */
-   damage = pilot_hit( p, &w->solid, parent, &dmg, w->outfit, w->lua_mem, 1 );
+   if (hit->type==TARGET_PILOT) {
+      Pilot *p = hit->u.plt;
 
-   /* Add sprite, layer depends on whether player shot or not. */
-   if (w->timer2 == -1.) {
-      /* Get the layer. */
-      spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
+      /* Have pilot take damage and get real damage done. */
+      double realdmg = pilot_hit( p, &w->solid, parent, &dmg, w->outfit, w->lua_mem, 1 );
 
-      /* Choose spfx. */
-      if (p->shield > 0.)
-         spfx = outfit_spfxShield(w->outfit);
-      else
-         spfx = outfit_spfxArmour(w->outfit);
+      /* Add sprite, layer depends on whether player shot or not. */
+      if (w->timer2 == -1.) {
+         int spfx;
+         /* Get the layer. */
+         WeaponLayer spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
 
-      /* Add graphic. */
-      spfx_add( spfx, pos[0].x, pos[0].y,
-            VX(p->solid.vel), VY(p->solid.vel), spfx_layer );
-      spfx_add( spfx, pos[1].x, pos[1].y,
-            VX(p->solid.vel), VY(p->solid.vel), spfx_layer );
-      w->timer2 = -2.;
+         /* Choose spfx. */
+         if (p->shield > 0.)
+            spfx = outfit_spfxShield(w->outfit);
+         else
+            spfx = outfit_spfxArmour(w->outfit);
 
-      /* Inform AI that it's been hit, to not saturate ai Lua with messages. */
-      weapon_hitAI( p, parent, damage );
+         /* Add graphic. */
+         spfx_add( spfx, hit->pos[0].x, hit->pos[0].y,
+               VX(p->solid.vel), VY(p->solid.vel), spfx_layer );
+         spfx_add( spfx, hit->pos[1].x, hit->pos[1].y,
+               VX(p->solid.vel), VY(p->solid.vel), spfx_layer );
+         w->timer2 = -2.;
+
+         /* Inform AI that it's been hit, to not saturate ai Lua with messages. */
+         weapon_hitAI( p, parent, realdmg );
+      }
    }
-}
+   else if (hit->type==TARGET_ASTEROID) {
+      Asteroid *a = hit->u.ast;
+      double mining_bonus = (parent != NULL) ? parent->stats.mining_bonus : 1.;
+      asteroid_hit( a, &dmg, outfit_miningRarity(w->outfit), mining_bonus );
 
-/**
- * @brief Weapon hit an asteroid.
- *
- *    @param w Weapon involved in the collision.
- *    @param a Asteroid that got hit.
- *    @param pos Position of the hit.
- *    @param dt Current delta tick.
- */
-static void weapon_hitAstBeam( Weapon* w, Asteroid* a, vec2 pos[2], double dt )
-{
-   Damage dmg;
-   const Damage *odmg;
-   Pilot *parent;
-   double mining_bonus;
+      /* Add sprite. */
+      if (w->timer2 == -1.) {
+         int spfx = outfit_spfxArmour(w->outfit);
 
-   /* Get general details. */
-   odmg              = outfit_damage( w->outfit );
-   dmg.damage        = MAX( 0., w->dam_mod * w->strength * odmg->damage * dt );
-   dmg.penetration   = odmg->penetration;
-   dmg.type          = odmg->type;
-   dmg.disable       = odmg->disable * dt;
-
-   parent = pilot_get( w->parent );
-   mining_bonus = (parent != NULL) ? parent->stats.mining_bonus : 1.;
-   asteroid_hit( a, &dmg, outfit_miningRarity(w->outfit), mining_bonus );
-
-   /* Add sprite. */
-   if (w->timer2 == -1.) {
-      int spfx = outfit_spfxArmour(w->outfit);
-
-      /* Add graphic. */
-      spfx_add( spfx, pos[0].x, pos[0].y,
-            VX(a->vel), VY(a->vel), SPFX_LAYER_MIDDLE );
-      spfx_add( spfx, pos[1].x, pos[1].y,
-            VX(a->vel), VY(a->vel), SPFX_LAYER_MIDDLE );
-      w->timer2 = -2.;
+         /* Add graphic. */
+         spfx_add( spfx, hit->pos[0].x, hit->pos[0].y,
+               VX(a->vel), VY(a->vel), SPFX_LAYER_MIDDLE );
+         spfx_add( spfx, hit->pos[1].x, hit->pos[1].y,
+               VX(a->vel), VY(a->vel), SPFX_LAYER_MIDDLE );
+         w->timer2 = -2.;
+      }
    }
+   /* TODO implement for weapon collisions too.
+   else if (hit->type==TARGET_WEAPON) {
+   }
+   */
 }
 
 /**
@@ -1768,7 +1751,7 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
 
       case TARGET_ASTEROID:
          {
-            const AsteroidAnchor *field = &cur_system->asteroids[ target->u.ast.asteroid ];
+            const AsteroidAnchor *field = &cur_system->asteroids[ target->u.ast.anchor ];
             const Asteroid *ast = &field->asteroids[ target->u.ast.asteroid ];
             target_pos = &ast->pos;
             target_vel = &ast->vel;
