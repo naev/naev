@@ -115,7 +115,7 @@ static double fps       = 0.; /**< FPS to finally display. */
 static double fps_cur   = 0.; /**< FPS accumulator to trigger change. */
 static double fps_x     =  15.; /**< FPS X position. */
 static double fps_y     = -15.; /**< FPS Y position. */
-const double fps_min    = 1./30.; /**< Minimum fps to run at. */
+const double fps_min    = 1./15.; /**< Minimum fps to run at. */
 double elapsed_time_mod = 0.; /**< Elapsed modified time. */
 
 static nlua_env load_env = LUA_NOREF; /**< Environment for displaying load messages and stuff. */
@@ -969,7 +969,7 @@ static void update_all (void)
       fps_skipped = 1;
       return;
    }
-   else if (game_dt > fps_min) { /* we'll force a minimum FPS for physics to work alright. */
+   else if (game_dt > fps_min) { /* We'll force a minimum FPS for physics to work alright. */
       int n;
       double nf, microdt, accumdt;
 
