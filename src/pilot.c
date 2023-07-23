@@ -598,17 +598,13 @@ double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int di
  */
 Pilot* pilot_get( unsigned int id )
 {
-   int m;
-
-   if (id==PLAYER_ID)
-      return player.p; /* special case player.p */
-
-   m = pilot_getStackPos(id);
-
-   if ((m==-1) || (pilot_isFlag(pilot_stack[m], PILOT_DELETE)))
+   const Pilot pid = { .id = id };
+   const Pilot *pidptr = &pid;
+   /* binary search */
+   Pilot **pp = bsearch(&pidptr, pilot_stack, array_size(pilot_stack), sizeof(Pilot*), pilot_cmp);
+   if ((pp==NULL) || (pilot_isFlag(*pp, PILOT_DELETE)))
       return NULL;
-   else
-      return pilot_stack[m];
+   return *pp;
 }
 
 /**
