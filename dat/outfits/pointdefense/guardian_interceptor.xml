@@ -4,6 +4,7 @@
   <slot>weapon</slot>
   <size>medium</size>
   <license>Medium Weapon</license>
+  <typename>Point Defense</typename>
   <mass>30</mass>
   <price>120000</price>
   <description>TODO</description>

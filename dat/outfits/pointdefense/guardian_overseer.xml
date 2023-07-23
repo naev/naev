@@ -4,6 +4,7 @@
   <slot>weapon</slot>
   <size>large</size>
   <license>Heavy Weapon</license>
+  <typename>Point Defense</typename>
   <mass>60</mass>
   <price>850000</price>
   <description>TODO</description>
