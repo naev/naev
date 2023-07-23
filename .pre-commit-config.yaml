@@ -3,7 +3,7 @@
 minimum_pre_commit_version: '2.17.0'
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.0.1
+  rev: v4.4.0
   hooks:
     - id: trailing-whitespace
     - id: end-of-file-fixer
@@ -16,7 +16,7 @@ repos:
     - id: mixed-line-ending
     - id: pretty-format-json
 - repo: https://github.com/shellcheck-py/shellcheck-py
-  rev: v0.8.0.3
+  rev: v0.9.0.5
   hooks:
     - id: shellcheck
 - repo: local
