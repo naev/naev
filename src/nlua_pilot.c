@@ -114,6 +114,10 @@ static int pilotL_dir( lua_State *L );
 static int pilotL_evasion( lua_State *L );
 static int pilotL_temp( lua_State *L );
 static int pilotL_mass( lua_State *L );
+static int pilotL_thrust( lua_State *L );
+static int pilotL_speed( lua_State *L );
+static int pilotL_speed_max( lua_State *L );
+static int pilotL_turn( lua_State *L );
 static int pilotL_faction( lua_State *L );
 static int pilotL_areEnemies( lua_State *L );
 static int pilotL_areAllies( lua_State *L );
@@ -293,6 +297,10 @@ static const luaL_Reg pilotL_methods[] = {
    { "evasion", pilotL_evasion },
    { "temp", pilotL_temp },
    { "mass", pilotL_mass },
+   { "thrust", pilotL_thrust },
+   { "speed", pilotL_speed },
+   { "speedMax", pilotL_speed_max },
+   { "turn", pilotL_turn },
    { "cooldown", pilotL_cooldown },
    { "faction", pilotL_faction },
    { "areEnemies", pilotL_areEnemies },
@@ -2636,6 +2644,63 @@ static int pilotL_mass( lua_State *L )
 {
    const Pilot *p = luaL_validpilot(L,1);
    lua_pushnumber( L, p->solid.mass );
+   return 1;
+}
+
+/**
+ * @brief Gets the thrust of a pilot.
+ *
+ *    @luatparam Pilot p Pilot to get thrust of.
+ *    @luatreturn number The pilot's current thrust.
+ * @luafunc thrust
+ */
+static int pilotL_thrust( lua_State *L )
+{
+   const Pilot *p = luaL_validpilot(L,1);
+   lua_pushnumber( L, p->thrust/p->solid.mass );
+   return 1;
+}
+
+/**
+ * @brief Gets the speed of a pilot.
+ *
+ *    @luatparam Pilot p Pilot to get speed of.
+ *    @luatreturn number The pilot's current speed.
+ * @luafunc speed
+ */
+static int pilotL_speed( lua_State *L )
+{
+   const Pilot *p = luaL_validpilot(L,1);
+   lua_pushnumber( L, p->speed );
+   return 1;
+}
+
+/**
+ * @brief Gets the maximum speed of a pilot.
+ *
+ *    @luatparam Pilot p Pilot to get maximum speed of.
+ *    @luatreturn number The pilot's current maximum speed.
+ * @luafunc speedMax
+ * @see speed
+ */
+static int pilotL_speed_max( lua_State *L )
+{
+   const Pilot *p = luaL_validpilot(L,1);
+   lua_pushnumber( L, solid_maxspeed( &p->solid, p->speed, p->thrust ) );
+   return 1;
+}
+
+/**
+ * @brief Gets the turn of a pilot.
+ *
+ *    @luatparam Pilot p Pilot to get turn of.
+ *    @luatreturn number The pilot's current turn (in degrees per second).
+ * @luafunc turn
+ */
+static int pilotL_turn( lua_State *L )
+{
+   const Pilot *p = luaL_validpilot(L,1);
+   lua_pushnumber( L, p->turn * 180. / M_PI ); /* TODO use radians. */
    return 1;
 }
 
