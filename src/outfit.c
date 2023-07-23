@@ -1779,6 +1779,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    /* Post processing. */
+   temp->u.lau.dmg_absorb /= 100.;
    temp->u.lau.swivel *= M_PI/180.;
    temp->u.lau.arc *= M_PI/180.;
    /* Note that arc will be 0. for turrets. */
