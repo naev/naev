@@ -1697,6 +1697,12 @@ static int gui_prepFunc( int func_ref, const char *func_name )
    }
 #endif /* DEBUGGING */
 
+   /* Must have a player. */
+   if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
+      (player.p == NULL) || pilot_isFlag(player.p,PILOT_DEAD)) {
+      return -1;
+   }
+
    /* Set up function. */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_ref );
 #if DEBUGGING
@@ -2190,11 +2196,12 @@ int gui_handleEvent( SDL_Event *evt )
       case SDL_MOUSEMOTION:
          if (!gui_L_mmove)
             break;
-         gui_prepFunc( gui_lua_mouse_move, "mouse_move" );
-         gui_eventToScreenPos( &x, &y, evt->motion.x, evt->motion.y );
-         lua_pushnumber( naevL, x );
-         lua_pushnumber( naevL, y );
-         gui_runFunc( "mouse_move", 2, 0 );
+         if (gui_prepFunc( gui_lua_mouse_move, "mouse_move" )==0) {
+            gui_eventToScreenPos( &x, &y, evt->motion.x, evt->motion.y );
+            lua_pushnumber( naevL, x );
+            lua_pushnumber( naevL, y );
+            gui_runFunc( "mouse_move", 2, 0 );
+         }
          break;
 
       /* Mouse click. */
@@ -2202,15 +2209,16 @@ int gui_handleEvent( SDL_Event *evt )
       case SDL_MOUSEBUTTONUP:
          if (!gui_L_mclick)
             break;
-         gui_prepFunc( gui_lua_mouse_click, "mouse_click" );
-         lua_pushnumber( naevL, evt->button.button+1 );
-         gui_eventToScreenPos( &x, &y, evt->button.x, evt->button.y );
-         lua_pushnumber( naevL, x );
-         lua_pushnumber( naevL, y );
-         lua_pushboolean( naevL, (evt->type==SDL_MOUSEBUTTONDOWN) );
-         gui_runFunc( "mouse_click", 4, 1 );
-         ret = lua_toboolean( naevL, -1 );
-         lua_pop( naevL, 1 );
+         if (gui_prepFunc( gui_lua_mouse_click, "mouse_click" )) {
+            lua_pushnumber( naevL, evt->button.button+1 );
+            gui_eventToScreenPos( &x, &y, evt->button.x, evt->button.y );
+            lua_pushnumber( naevL, x );
+            lua_pushnumber( naevL, y );
+            lua_pushboolean( naevL, (evt->type==SDL_MOUSEBUTTONDOWN) );
+            gui_runFunc( "mouse_click", 4, 1 );
+            ret = lua_toboolean( naevL, -1 );
+            lua_pop( naevL, 1 );
+         }
          break;
 
       /* Not interested in the rest. */
