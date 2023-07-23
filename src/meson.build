@@ -373,6 +373,7 @@ headers = files(
    'space_fdecl.h',
    'spfx.h',
    'start.h',
+   'target.h',
    'tech.h',
    'threadpool.h',
    'tk/toolkit_priv.h',

@@ -76,7 +76,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
       double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time, int aim );
 static int weapon_create( Weapon *w, PilotOutfitSlot* po, const Outfit *ref,
       double T, double dir, const vec2* pos, const vec2* vel,
-      const Pilot *parent, const unsigned int target, double time, int aim );
+      const Pilot* parent, const WeaponTarget *target, double time, int aim );
 static double weapon_computeTimes( double rdir, double rx, double ry, double dvx, double dvy, double pxv,
       double vmin, double acc, double *tt );
 /* Updating. */
@@ -191,6 +191,7 @@ void weapon_minimap( double res, double w,
       double x, y;
       const glColour *c;
       Weapon *wp = &weapon_stack[i];
+      int isplayer;
 
       /* Make sure is in range. */
       if (!pilot_inRange( player.p, wp->solid.pos.x, wp->solid.pos.y ))
@@ -207,11 +208,11 @@ void weapon_minimap( double res, double w,
          continue;
 
       /* Choose colour based on if it'll hit player. */
-      if ((outfit_isSeeker(wp->outfit) && (wp->target != PLAYER_ID)) ||
-            (wp->faction == FACTION_PLAYER))
+      isplayer = ((wp->target.type==WEAPON_TARGET_PILOT) && (wp->target.u.id==PLAYER_ID));
+      if ((outfit_isSeeker(wp->outfit) && !isplayer) || (wp->faction == FACTION_PLAYER))
          c = &cNeutral;
       else {
-         if (wp->target == PLAYER_ID)
+         if (isplayer)
             c = &cHostile;
          else {
             const Pilot *par = pilot_get(wp->parent);
@@ -282,14 +283,14 @@ static void weapon_setTurn( Weapon *w, double turn )
 static void think_seeker( Weapon* w, double dt )
 {
    double diff;
-   Pilot *p;
+   const Pilot *p;
    vec2 v;
    double turn_max, d, jc, speed_mod;
 
-   if (w->target == w->parent)
-      return; /* no self shooting */
+   if (w->target.type != WEAPON_TARGET_PILOT)
+      return; /* Ignore no targets. */
 
-   p = pilot_get(w->target); /* no null pilot */
+   p = pilot_get(w->target.u.id); /* No null pilot */
    if (p==NULL) {
       weapon_setThrust( w, 0. );
       weapon_setTurn( w, 0. );
@@ -458,13 +459,22 @@ static void think_beam( Weapon* w, double dt )
    }
 
    /* Get the targets. */
-   if (p->nav_asteroid != -1) {
-      AsteroidAnchor *field = &cur_system->asteroids[p->nav_anchor];
-      ast = &field->asteroids[p->nav_asteroid];
+   t = NULL;
+   ast = NULL;
+   switch (w->target.type) {
+      case WEAPON_TARGET_PILOT:
+         t = pilot_get( w->target.u.id );
+         break;
+      case WEAPON_TARGET_ASTEROID:
+         {
+            const AsteroidAnchor *field = &cur_system->asteroids[ w->target.u.ast.anchor ];
+            ast = &field->asteroids[ w->target.u.ast.asteroid ];
+         }
+         break;
+      default:
+         turn_off = 1;
+         break;
    }
-   else
-      ast = NULL;
-   t = (w->target != w->parent) ? pilot_get(w->target) : NULL;
 
    /* Check the beam is still in range. */
    if (slot->inrange) {
@@ -510,7 +520,6 @@ static void think_beam( Weapon* w, double dt )
          /* If target is dead beam stops moving. Targeting
           * self is invalid so in that case we ignore the target.
           */
-         t = (w->target != w->parent) ? pilot_get(w->target) : NULL;
          if (t == NULL) {
             if (ast != NULL) {
                diff = angle_diff(w->solid.dir, /* Get angle to target pos */
@@ -936,7 +945,7 @@ static int weapon_checkCanHit( const Weapon* w, const Pilot *p )
       return 0;
 
    /* Always hit target. */
-   if (w->target == p->id)
+   if ((w->target.type==WEAPON_TARGET_PILOT) && (w->target.u.id==p->id))
       return 1;
 
    /* Can never hit same faction, unless explicitly targetted (see above). */
@@ -1141,7 +1150,7 @@ static void weapon_updateCollide( Weapon* w, double dt )
       /* Smart weapons only collide with their target */
       if (weapon_isSmart(w)) {
          int isjammed = ((w->status == WEAPON_STATUS_JAMMED) || (w->status == WEAPON_STATUS_JAMMED_SLOWED));
-         if (!isjammed && (p->id != w->target))
+         if (!isjammed && (w->target.type==WEAPON_TARGET_PILOT) && (p->id != w->target.u.id))
             continue;
       }
 
@@ -1966,8 +1975,8 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
    const OutfitGFX *gfx;
 
    /* Only difference is the direction of fire */
-   if ((w->parent!=w->target) && (w->target != 0)) /* Must have valid target */
-      pilot_target = pilot_get(w->target);
+   if (w->target.type == WEAPON_TARGET_PILOT) /* Must have valid target */
+      pilot_target = pilot_get( w->target.u.id );
    else /* fire straight or at asteroid */
       pilot_target = NULL;
 
@@ -2055,8 +2064,8 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    const OutfitGFX *gfx;
 
    /* Only difference is the direction of fire */
-   if ((w->parent!=w->target) && (w->target != 0)) /* Must have valid target */
-      pilot_target = pilot_get(w->target);
+   if (w->target.type == WEAPON_TARGET_PILOT) /* Must have valid target */
+      pilot_target = pilot_get( w->target.u.id );
    else /* fire straight or at asteroid */
       pilot_target = NULL;
 
@@ -2129,8 +2138,6 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
       w->r     = RNGF(); /* Used for jamming. */
 
       /* If they are seeking a pilot, increment lockon counter. */
-      if (pilot_target == NULL)
-         pilot_target = pilot_get(w->target);
       if (pilot_target != NULL)
          pilot_target->lockons++;
    }
@@ -2170,12 +2177,9 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
  */
 static int weapon_create( Weapon *w, PilotOutfitSlot* po, const Outfit *ref,
       double T, double dir, const vec2* pos, const vec2* vel,
-      const Pilot* parent, const unsigned int target, double time, int aim )
+      const Pilot* parent, const WeaponTarget *target, double time, int aim )
 {
    double mass, rdir;
-   Pilot *pilot_target;
-   AsteroidAnchor *field;
-   Asteroid *ast;
    const Outfit *outfit = (ref==NULL) ? po->outfit : ref;
 
    /* Create basic features */
@@ -2187,7 +2191,7 @@ static int weapon_create( Weapon *w, PilotOutfitSlot* po, const Outfit *ref,
    w->dam_as_dis_mod = 0.; /* Default of 0% damage to disable. */
    w->faction  = parent->faction; /* non-changeable */
    w->parent   = parent->id; /* non-changeable */
-   w->target   = target; /* non-changeable */
+   memcpy( &w->target, target, sizeof(WeaponTarget) ); /* non-changeable */
    w->lua_mem  = LUA_NOREF;
    if (po != NULL && po->lua_mem != LUA_NOREF) {
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
@@ -2198,8 +2202,8 @@ static int weapon_create( Weapon *w, PilotOutfitSlot* po, const Outfit *ref,
    w->r        = RNGF(); /* Set unique value. */
 
    /* Inform the target. */
-   if (!(outfit_isBeam(w->outfit))) {
-      pilot_target = pilot_get(target);
+   if (!(outfit_isBeam(w->outfit)) && (w->target.type==WEAPON_TARGET_PILOT)) {
+      Pilot *pilot_target = pilot_get( w->target.u.id );
       if (pilot_target != NULL)
          pilot_target->projectiles++;
    }
@@ -2216,14 +2220,32 @@ static int weapon_create( Weapon *w, PilotOutfitSlot* po, const Outfit *ref,
       case OUTFIT_TYPE_BEAM:
       case OUTFIT_TYPE_TURRET_BEAM:
          rdir = dir;
-         if (aim && (outfit->type == OUTFIT_TYPE_TURRET_BEAM)) {
-            pilot_target = pilot_get(target);
-            if ((w->parent != w->target) && (pilot_target != NULL))
-               rdir = vec2_angle(pos, &pilot_target->solid.pos);
-            else if (parent->nav_asteroid >= 0) {
-               field = &cur_system->asteroids[parent->nav_anchor];
-               ast = &field->asteroids[parent->nav_asteroid];
-               rdir = vec2_angle(pos, &ast->pos);
+         if (aim && (outfit->type==OUTFIT_TYPE_TURRET_BEAM)) {
+            AsteroidAnchor *field;
+            Asteroid *ast;
+            Weapon *wtarget;
+            switch (w->target.type) {
+               case WEAPON_TARGET_NONE:
+                  break;
+
+               case WEAPON_TARGET_PILOT:
+                  if (w->parent != w->target.u.id) {
+                     Pilot *pilot_target = pilot_get( w->target.u.id );
+                     rdir = vec2_angle(pos, &pilot_target->solid.pos);
+                  }
+                  break;
+
+               case WEAPON_TARGET_ASTEROID:
+                  field = &cur_system->asteroids[ w->target.u.ast.anchor ];
+                  ast = &field->asteroids[ w->target.u.ast.asteroid ];
+                  rdir = vec2_angle(pos, &ast->pos);
+                  break;
+
+               case WEAPON_TARGET_WEAPON:
+                  wtarget = weapon_getID( w->target.u.id );
+                  if (wtarget != NULL)
+                     rdir = vec2_angle( pos, &wtarget->solid.pos );
+                  break;
             }
          }
 
@@ -2286,7 +2308,7 @@ static int weapon_create( Weapon *w, PilotOutfitSlot* po, const Outfit *ref,
  */
 void weapon_add( PilotOutfitSlot *po, const Outfit *ref,
       double dir, const vec2* pos, const vec2* vel,
-      const Pilot *parent, int target, double time, int aim )
+      const Pilot *parent, const WeaponTarget *target, double time, int aim )
 {
    Weapon *w;
    size_t bufsize;
@@ -2323,6 +2345,8 @@ void weapon_add( PilotOutfitSlot *po, const Outfit *ref,
 double weapon_targetFlyTime( const Outfit *o, const Pilot *p, const WeaponTarget *t )
 {
    switch (t->type) {
+      case WEAPON_TARGET_NONE:
+         return 0.;
       case WEAPON_TARGET_PILOT:
          {
             const Pilot *pt = pilot_get( t->u.id );
@@ -2358,7 +2382,7 @@ double weapon_targetFlyTime( const Outfit *o, const Pilot *p, const WeaponTarget
  *    @param pos Position of the slot (absolute).
  *    @param vel Velocity of the slot (absolute).
  *    @param parent Pilot shooter.
- *    @param target Target ID that is getting shot.
+ *    @param target Target that is getting shot.
  *    @param aim Whether or not to aim.
  *    @return The identifier of the beam weapon.
  *
@@ -2366,7 +2390,7 @@ double weapon_targetFlyTime( const Outfit *o, const Pilot *p, const WeaponTarget
  */
 unsigned int beam_start( PilotOutfitSlot *po,
       double dir, const vec2* pos, const vec2* vel,
-      const Pilot *parent, const unsigned int target, int aim )
+      const Pilot *parent, const WeaponTarget *target, int aim )
 {
    Weapon *w;
    GLsizei size;
@@ -2436,8 +2460,6 @@ static void weapon_destroy( Weapon* w )
  */
 static void weapon_free( Weapon* w )
 {
-   Pilot *pilot_target = pilot_get( w->target );
-
    /* Stop playing sound if beam weapon. */
    if (outfit_isBeam(w->outfit)) {
       sound_stop( w->voice );
@@ -2445,7 +2467,9 @@ static void weapon_free( Weapon* w )
             w->solid.pos.x, w->solid.pos.y,
             w->solid.vel.x, w->solid.vel.y );
    }
-   else {
+   else if (w->target.type==WEAPON_TARGET_PILOT) {
+      Pilot *pilot_target = pilot_get( w->target.u.id );
+
       /* Decrement target lockons if needed */
       if (pilot_target != NULL) {
          pilot_target->projectiles--;

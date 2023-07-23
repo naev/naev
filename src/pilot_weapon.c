@@ -929,6 +929,31 @@ double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const vec2 *pos,
 }
 
 /**
+ * @brief Gets the weapon target of a pilot.
+ *
+ *    @param p Pilot to get weapon targot of.
+ *    @param[out] wt Weapon target structure set up.
+ *    @return The pilot pointer if applicable.
+ */
+Pilot *pilot_weaponTarget( Pilot *p, WeaponTarget *wt )
+{
+   Pilot *pt = pilot_getTarget( p );
+   if (pt != NULL) {
+      wt->type = WEAPON_TARGET_PILOT;
+      wt->u.id = pt->id;
+      return pt;
+   }
+   else if (p->nav_asteroid != -1) {
+      wt->type = WEAPON_TARGET_ASTEROID;
+      wt->u.ast.anchor = p->nav_anchor;
+      wt->u.ast.asteroid = p->nav_asteroid;
+      return NULL;
+   }
+   wt->type = WEAPON_TARGET_NONE;
+   return NULL;
+}
+
+/**
  * @brief Calculates and shoots the appropriate weapons in a weapon set matching an outfit.
  */
 static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfit *o, int level, double time, int aim )
@@ -938,16 +963,20 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfi
    double rate_mod, energy_mod;
    int maxp, minh;
    double q, maxt;
+   WeaponTarget wt;
 
    /* Store number of shots. */
    ret = 0;
+
+   /* Set up target. */
+   pilot_weaponTarget( p, &wt );
 
    /** @TODO Make beams not fire all at once. */
    if (outfit_isBeam(o)) {
       for (int i=0; i<array_size(ws->slots); i++) {
          PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
          if (pos->outfit == o && (level == -1 || level == ws->slots[i].level)) {
-            ret += pilot_shootWeapon( p, pos, p->target, 0., aim );
+            ret += pilot_shootWeapon( p, pos, NULL, 0., aim );
             pos->inrange = ws->inrange; /* State if the weapon has to be turn off when out of range. */
          }
       }
@@ -1011,7 +1040,7 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfi
       return 0;
 
    /* Shoot the weapon. */
-   ret += pilot_shootWeapon( p, p->outfits[ ws->slots[minh].slotid ], p->target, time, aim );
+   ret += pilot_shootWeapon( p, p->outfits[ ws->slots[minh].slotid ], NULL, time, aim );
 
    return ret;
 }
@@ -1026,7 +1055,7 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfi
  *    @param aim Whether or not to aim.
  *    @return 0 if nothing was shot and 1 if something was shot.
  */
-int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, unsigned int target, double time, int aim )
+int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const WeaponTarget *target, double time, int aim )
 {
    vec2 vp, vv;
    double rate_mod, energy_mod;
@@ -1076,9 +1105,15 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, unsigned int target, double
       p->energy  -= energy;
       pilot_heatAddSlot( p, w );
       if (!outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY )) {
-         for (int i=0; i<w->outfit->u.blt.shots; i++)
+         for (int i=0; i<w->outfit->u.blt.shots; i++) {
+            WeaponTarget wt;
+            if (target == NULL) {
+               pilot_weaponTarget( p, &wt );
+               target = &wt;
+            }
             weapon_add( w, NULL, p->solid.dir,
                   &vp, &vv, p, target, time, aim );
+         }
       }
    }
 
@@ -1102,6 +1137,11 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, unsigned int target, double
       /** @todo Handle warmup stage. */
       w->state = PILOT_OUTFIT_ON;
       if (!outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY )) {
+         WeaponTarget wt;
+         if (target == NULL) {
+            pilot_weaponTarget( p, &wt );
+            target = &wt;
+         }
          w->u.beamid = beam_start( w, p->solid.dir,
                &vp, &p->solid.vel, p, target, aim );
       }
@@ -1117,17 +1157,21 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, unsigned int target, double
     * must be a secondary weapon
     */
    else if (outfit_isLauncher(w->outfit)) {
-
-      /* Shooter can't be the target - safety check for the player.p */
-      if ((w->outfit->u.lau.ai != AMMO_AI_UNGUIDED) && (p->id==target))
-         return 0;
-
+      WeaponTarget wt;
       /* Must have ammo left. */
       if (w->u.ammo.quantity <= 0)
          return 0;
 
       /* enough energy? */
       if (outfit_energy(w->outfit)*energy_mod > p->energy)
+         return 0;
+
+      /* Shooter can't be the target - safety check for the player.p */
+      if (target == NULL) {
+         pilot_weaponTarget( p, &wt );
+         target = &wt;
+      }
+      if ((w->outfit->u.lau.ai != AMMO_AI_UNGUIDED) && (target->type!=WEAPON_TARGET_PILOT))
          return 0;
 
       /* Lua test. */

@@ -5,6 +5,8 @@
 
 #include "pilot.h"
 
+#include "target.h"
+
 #define WEAPSET_INRANGE_PLAYER_DEF  0 /**< Default weaponset inrange parameter for the player. */
 
 #define WEAPSET_TYPE_CHANGE   0  /**< Changes weaponsets. */
@@ -15,9 +17,10 @@
 void pilot_weapSetFree( Pilot* p );
 
 /* Shooting. */
+Pilot *pilot_weaponTarget( Pilot *p, WeaponTarget *wt );
 int pilot_shoot( Pilot* p, int level );
 void pilot_shootStop( Pilot* p, int level );
-int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, unsigned int target, double time, int aim );
+int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const WeaponTarget *target, double time, int aim );
 void pilot_stopBeam( Pilot *p, PilotOutfitSlot *w );
 void pilot_getRateMod( double *rate_mod, double* energy_mod,
       const Pilot* p, const Outfit* o );

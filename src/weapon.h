@@ -7,6 +7,7 @@
 #include "physics.h"
 #include "pilot.h"
 #include "quadtree.h"
+#include "target.h"
 
 /**
  * @enum WeaponLayer
@@ -36,23 +37,6 @@ typedef enum WeaponStatus_ {
 #define weapon_rmFlag(w,f)    ((w)->flags &= ~(f))
 #define weapon_isSmart(w)     (w->think != NULL) /**< Checks if the weapon w is smart. */
 
-typedef enum WeaponTargetType_ {
-   WEAPON_TARGET_PILOT,
-   WEAPON_TARGET_WEAPON,
-   WEAPON_TARGET_ASTEROID,
-} WeaponTargetType;
-
-typedef struct WeaponTarget_ {
-   WeaponTargetType type; /* Target type. */
-   union {
-      unsigned int id;   /* For pilot/weapons. */
-      struct {
-         int anchor;
-         int asteroid;
-      } ast; /* For asteroids. */
-   } u;
-} WeaponTarget;
-
 /**
  * @struct Weapon
  *
@@ -66,7 +50,7 @@ typedef struct Weapon_ {
 
    int faction;         /**< faction of pilot that shot it */
    unsigned int parent; /**< pilot that shot it */
-   unsigned int target; /**< target to hit, only used by seeking things */
+   WeaponTarget target; /**< Weapon target. */
    const Outfit* outfit; /**< related outfit that fired it or whatnot */
 
    double real_vel;     /**< Keeps track of the real velocity. */
@@ -101,7 +85,7 @@ Weapon *weapon_getID( unsigned int id );
 /* Addition. */
 void weapon_add( PilotOutfitSlot *po, const Outfit *ref,
       double dir, const vec2* pos, const vec2* vel,
-      const Pilot *parent, int target, double time, int aim );
+      const Pilot *parent, const WeaponTarget *target, double time, int aim );
 
 /* Targetting. */
 double weapon_targetFlyTime( const Outfit *o, const Pilot *p, const WeaponTarget *t );
@@ -109,7 +93,7 @@ double weapon_targetFlyTime( const Outfit *o, const Pilot *p, const WeaponTarget
 /* Beam weapons. */
 unsigned int beam_start( PilotOutfitSlot *po,
       double dir, const vec2* pos, const vec2* vel,
-      const Pilot *parent, const unsigned int target, int aim );
+      const Pilot *parent, const WeaponTarget *target, int aim );
 void beam_end( unsigned int beam );
 
 /* Misc stuff. */

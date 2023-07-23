@@ -111,7 +111,7 @@ static void info_buttonClick( unsigned int wid, const char *str );
 static void standings_close( unsigned int wid, const char *str );
 static void ship_update( unsigned int wid );
 static void weapons_genList( unsigned int wid );
-static void weapons_update( unsigned int wid, const char *str );
+static void weapons_updateList( unsigned int wid, const char *str );
 static void weapons_autoweap( unsigned int wid, const char *str );
 static void weapons_fire( unsigned int wid, const char *str );
 static void weapons_inrange( unsigned int wid, const char *str );
@@ -649,7 +649,7 @@ static void weapons_genList( unsigned int wid )
    window_addList( wid, 20+180+20, -40,
          w - (20+180+20+20), 180,
          "lstWeapSets", buf, PILOT_WEAPON_SETS,
-         0, weapons_update, NULL );
+         0, weapons_updateList, NULL );
    window_setFocus( wid, "lstWeapSets" );
 
    /* Restore position. */
@@ -660,7 +660,7 @@ static void weapons_genList( unsigned int wid )
 /**
  * @brief Updates the weapon sets.
  */
-static void weapons_update( unsigned int wid, const char *str )
+static void weapons_updateList( unsigned int wid, const char *str )
 {
    (void) str;
    int pos;

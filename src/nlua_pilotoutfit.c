@@ -15,8 +15,10 @@
 #include "nlua_pilotoutfit.h"
 
 #include "log.h"
+#include "nlua_asteroid.h"
 #include "nlua_outfit.h"
 #include "nlua_pilot.h"
+#include "nlua_munition.h"
 #include "nlua_vec2.h"
 #include "nluadef.h"
 #include "slots.h"
@@ -308,12 +310,31 @@ static int poL_munition( lua_State *L )
    PilotOutfitSlot *po = luaL_validpilotoutfit( L, 1 );
    Pilot *p    = luaL_validpilot( L, 2 );
    const Outfit *o = luaL_optoutfit( L, 3, po->outfit );
-   LuaPilot t  = nluaL_optarg( L, 4, p->id, luaL_checkpilot );
+   //LuaPilot t  = nluaL_optarg( L, 4, p->id, luaL_checkpilot );
    double dir  = luaL_optnumber( L, 5, p->solid.dir );
    vec2 *vp    = luaL_optvector( L, 6, &p->solid.pos );
    vec2 *vv    = luaL_optvector( L, 7, &p->solid.vel );
+   WeaponTarget t;
+   /* Handle target. */
+   if (lua_isnoneornil(L,4))
+      t.type = WEAPON_TARGET_NONE;
+   if (lua_ispilot(L,4)) {
+      t.type = WEAPON_TARGET_PILOT;
+      t.u.id = lua_topilot(L,4);
+   }
+   else if (lua_isasteroid(L,4)) {
+      const LuaAsteroid_t *ast = lua_toasteroid(L,4);
+      t.type = WEAPON_TARGET_ASTEROID;
+      t.u.ast.anchor = ast->parent;
+      t.u.ast.asteroid = ast->id;
+   }
+   else if (lua_ismunition(L,4)) {
+      const LuaMunition *lm = lua_tomunition(L,4);
+      t.type = WEAPON_TARGET_WEAPON;
+      t.u.id = lm->id;
+   }
 
-   weapon_add( po, o,dir, vp, vv, p, t, 0., 1 );
+   weapon_add( po, o,dir, vp, vv, p, &t, 0., 1 );
    return 0;
 }
 
@@ -336,7 +357,7 @@ static int poL_shoot( lua_State *L )
    Pilot *pt = pilot_get( t );
    if (pt != NULL)
       time = pilot_weapFlyTime( po->outfit, p, &pt->solid.pos, &pt->solid.vel );
-   ret = pilot_shootWeapon( p, po, t, time, 1 );
+   ret = pilot_shootWeapon( p, po, NULL, time, 1 );
    lua_pushboolean( L, ret );
    return 1;
 }
