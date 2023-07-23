@@ -133,7 +133,7 @@ function land ()
       local level = ant.unidiffLevel()
       local total = ant.supplied_total()
       for l = 1,#levelup do
-         if level < l and total > levelup[l] then
+         if level < l and total >= levelup[l] then
             -- TODO better messages
             vntk.msg(_("Terraforming Progress"),_("Through the new supplies and volunteers, Antlejos V has been able to expand its facilities."))
             ant.unidiff( ant.unidiff_list[level+1] )
