@@ -46,7 +46,7 @@ function scans.investigate( target )
 
    -- Guess the pilot will be randomly between the current position and the
    -- future position if they go in the same direction with the same velocity
-   local ttl = ai.dist(target) / p:stats().speed_max
+   local ttl = ai.dist(target) / p:speedMax()
    local fpos = target:pos() + vec2.newP( target:vel():mod()*ttl, target:dir() ) * rnd.rnd()
    ai.pushtask("inspect_moveto", fpos )
 end

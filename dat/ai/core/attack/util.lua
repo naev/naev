@@ -378,7 +378,7 @@ local function ___atk_g_ranged_strafe( target, dist )
    --From now, if ship doesn't manage to stabilize within a few seconds, shoot anyway
    if dist < 1.5*range and not mem.inzone then
       mem.inzone = true
-      ai.settimer(1, mod/p:stats().speed*0.7 )
+      ai.settimer(1, mod/p:speed()*0.7 )
    end
 end
 local function ___atk_g_ranged_kite( target, dist )
@@ -392,7 +392,7 @@ local function ___atk_g_ranged_kite( target, dist )
    local selfpos = p:pos()
    local _unused, targetdir = (selfpos-targetpos):polar()
    local velmod, veldir = p:vel():polar()
-   if velmod < 0.8*p:stats().speed or math.abs(targetdir-veldir) > math.rad(30) then
+   if velmod < 0.8*p:speed() or math.abs(targetdir-veldir) > math.rad(30) then
       local dir = ai.face( target, true )
       if math.abs(math.pi-dir) < math.rad(30) then
          ai.accel()
@@ -423,7 +423,7 @@ function atk.ranged( target, dist )
 
    -- Pilot thinks dogfight is the best
    if ai.relhp(target)*ai.reldps(target) >= 0.25
-         or ai.getweapspeed(4) < target:stats().speed_max*1.2
+         or ai.getweapspeed(4) < target:speedMax()*1.2
          or range < ai.getweaprange(1)*1.5 then
       ___atk_g_ranged_dogfight( target, dist )
    elseif target:target()==ai.pilot() and dist < range and ai.hasprojectile() then

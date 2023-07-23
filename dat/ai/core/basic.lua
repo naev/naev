@@ -93,9 +93,8 @@ local function __zigzag_run_decide( self, target )
    -- Some AI will not do fancy maneuvers
    if mem.simplecombat then return false end
    -- Try to figure it out
-   local ss = self:stats()
-   local relspe = ss.speed_max/target:stats().speed_max
-   return ( ss.mass <= 400
+   local relspe = self:speedMax() / target:speedMax()
+   return ( self:mass() <= 400
             and relspe <= 1.01
             and ai.hasprojectile()
             and (not ai.hasafterburner() or self:energy() < 10)
