@@ -78,6 +78,7 @@
       * Require OpenGL 3.2 for geometry shaders now
       * Support for advanced collisions such as weapon on weapon, allowing for point defense weapons
    * Fixes
+      * Main menu more responsive when changing windows
       * Typo and wording fixes
       * Fixed many corner case crashes in the editor
       * Fixed cargo missions not being generated in some parts of the universe
