@@ -28,6 +28,7 @@ static Weapon *munition_get( LuaMunition *lm );
 /* Munition metatable methods. */
 static int munitionL_eq( lua_State *L );
 static int munitionL_tostring( lua_State *L );
+static int munitionL_exists( lua_State *L );
 static int munitionL_clear( lua_State *L );
 static int munitionL_getAll( lua_State *L );
 static int munitionL_getInrange( lua_State *L );
@@ -41,6 +42,7 @@ static const luaL_Reg munitionL_methods[] = {
    /* General. */
    { "__eq", munitionL_eq },
    { "__tostring", munitionL_tostring },
+   { "exists", munitionL_exists },
    { "clear", munitionL_clear },
    { "getAll", munitionL_getAll },
    { "getInrange", munitionL_getInrange },
@@ -186,6 +188,8 @@ static Weapon *munition_get( LuaMunition *lm )
       return &weapon_stack[lm->idx];
 
    w = weapon_getID( lm->id );
+   if (w==NULL)
+      return NULL;
    lm->idx = w-weapon_stack; /* For next look ups. */
    return w;
 }
@@ -207,6 +211,20 @@ static int munitionL_tostring( lua_State *L )
       lua_pushstring(L,_(w->outfit->name));
    else
       lua_pushstring(L,"(inexistent munition)");
+   return 1;
+}
+
+/**
+ * @brief Checks to see if a munition still exists.
+ *
+ *    @luatparam Munition m Munition to see if still exists.
+ *    @luatreturn boolean true if the munition still exists.
+ * @luafunc exists
+ */
+static int munitionL_exists( lua_State *L )
+{
+   LuaMunition *lm = luaL_checkmunition( L, 1 );
+   lua_pushboolean(L, munition_get(lm)!=NULL);
    return 1;
 }
 
