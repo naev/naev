@@ -1201,6 +1201,7 @@ static void weapon_updateCollide( Weapon* w, double dt )
          Weapon *whit = &weapon_stack[ il_get( &weapon_qtquery, i, 0 ) ];
          WeaponCollision wchit;
          int coll;
+         WeaponHit hit;
 
          wchit.gfx = outfit_gfx(w->outfit);
          if (wchit.gfx->tex != NULL) {
@@ -1227,15 +1228,12 @@ static void weapon_updateCollide( Weapon* w, double dt )
             continue;
 
          /* Handle the hit. */
-#if 0
+         hit.type    = TARGET_WEAPON;
+         hit.u.wpn   = whit;
+         hit.pos     = crash;
          if (wc.beam)
-            weapon_hitAstBeam( w, a, crash, dt );
-#endif
-         if (!wc.beam) {
-            WeaponHit hit;
-            hit.type    = TARGET_WEAPON;
-            hit.u.wpn   = whit;
-            hit.pos     = crash;
+            weapon_hitBeam( w, &hit, dt );
+         else {
             weapon_hit( w, &hit );
             return; /* Weapon is destroyed. */
          }
@@ -1683,7 +1681,7 @@ static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt )
       if (w->timer2 == -1.) {
          int spfx;
          /* Get the layer. */
-         WeaponLayer spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
+         WeaponLayer spfx_layer = (w->layer==WEAPON_LAYER_FG) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
 
          /* Choose spfx. */
          if (p->shield > 0.)
@@ -1719,10 +1717,24 @@ static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt )
          w->timer2 = -2.;
       }
    }
-   /* TODO implement for weapon collisions too.
    else if (hit->type==TARGET_WEAPON) {
+      Weapon *wpn = hit->u.wpn;
+      weapon_damage( wpn, &dmg );
+
+      /* Add sprite. */
+      if (w->timer2 == -1.) {
+         int spfx = outfit_spfxArmour(w->outfit);
+         /* Get the layer. */
+         WeaponLayer spfx_layer = (w->layer==WEAPON_LAYER_FG) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
+
+         /* Add graphic. */
+         spfx_add( spfx, hit->pos[0].x, hit->pos[0].y,
+               VX(wpn->solid.vel), VY(wpn->solid.vel), spfx_layer );
+         spfx_add( spfx, hit->pos[1].x, hit->pos[1].y,
+               VX(wpn->solid.vel), VY(wpn->solid.vel), spfx_layer );
+         w->timer2 = -2.;
+      }
    }
-   */
 }
 
 /**
