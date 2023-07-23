@@ -351,8 +351,8 @@ dat/outfits/misc/light_combat_vessel_license.xml
 dat/outfits/misc/medium_combat_vessel_license.xml
 dat/outfits/misc/medium_weapon_license.xml
 dat/outfits/misc/mercenary_license.xml
-dat/outfits/pointdefense/guardian_interceptor.xml
-dat/outfits/pointdefense/guardian_overseer.xml
+dat/outfits/pointdefense/guardian_interceptor_system.xml
+dat/outfits/pointdefense/guardian_overseer_system.xml
 dat/outfits/structure/active_plating.xml
 dat/outfits/structure/adaptive_stealth_plating.xml
 dat/outfits/structure/auxiliary_processing_unit_i.xml
