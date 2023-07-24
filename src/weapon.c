@@ -986,7 +986,7 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
          return CollidePolygon( &cpol[k], cpos, wc->polygon, &w->solid.pos, crash );
       }
       /* GFX on polygon. */
-      else if (wc->gfx != NULL)
+      else if (wc->gfx->tex != NULL)
          return CollideSpritePolygon( &cpol[k], cpos, wc->gfx->tex, w->sx, w->sy, &w->solid.pos, crash );
       /* Circle on polygon. */
       else
@@ -998,7 +998,7 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
       if (wc->polygon!=NULL)
          return CollideSpritePolygon( wc->polygon, &w->solid.pos, ctex, csx, csy, cpos, crash );
       /* Case texture on texture collision. */
-      else if (wc->gfx != NULL)
+      else if (wc->gfx->tex != NULL)
          return CollideSprite( wc->gfx->tex, w->sx, w->sy, &w->solid.pos,
                   ctex, csx, csy, cpos, crash );
       /* TODO case no polygon and circle collision. */
@@ -1011,7 +1011,7 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
       if (wc->polygon!=NULL)
          return CollideSpritePolygon( wc->polygon, &w->solid.pos, ctex, csx, csy, cpos, crash );
       /* Case texture on texture collision. */
-      else if (wc->gfx != NULL)
+      else if (wc->gfx->tex != NULL)
          return CollideCircleSprite( cpos, cradius, wc->gfx->tex, w->sx, w->sy, &w->solid.pos, crash );
       /* Trivial circle on circle case. */
       else
