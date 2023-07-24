@@ -1340,9 +1340,15 @@ void weapon_hitAI( Pilot *p, const Pilot *shooter, double dmg )
       ai_attacked( p, shooter->id, dmg );
 }
 
-static void weapon_hitExplode( Weapon *w, const Damage *dmg, const vec2 *pos, double radius )
+/**
+ * @brief A weapon hit something and decided to explode.
+ *
+ *    @param w Weapon exploding.
+ *    @param dmg Damage it does.
+ *    @param radius Radius of the explosion.
+ */
+static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius )
 {
-   Pilot *const* pilot_stack = pilot_getAll();
    int x, y, r, x1, y1, x2, y2;
    Pilot *parent = pilot_get( w->parent );
    WeaponCollision wc;
@@ -1355,8 +1361,8 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, const vec2 *pos, do
    wc.polygon = NULL;
 
    /* Set up coordinates. */
-   x = round(pos->x);
-   y = round(pos->y);
+   x = round(w->solid.pos.x);
+   y = round(w->solid.pos.y);
    r = ceil(radius);
    x1 = x-r;
    y1 = y-r;
@@ -1364,72 +1370,77 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, const vec2 *pos, do
    y2 = y+r;
 
    /* Test pilots. */
-   pilot_collideQueryIL( &weapon_qtexp, x1, y1, x2, y2 );
-   for (int i=0; i<il_size(&weapon_qtexp); i++) {
-      vec2 crash[2];
-      double damage;
-      Pilot *p = pilot_stack[ il_get( &weapon_qtexp, i, 0 ) ];
+   if (!outfit_isProp(w->outfit,OUTFIT_PROP_WEAP_MISS_SHIPS)) {
+      Pilot *const* pilot_stack = pilot_getAll();
+      pilot_collideQueryIL( &weapon_qtexp, x1, y1, x2, y2 );
+      for (int i=0; i<il_size(&weapon_qtexp); i++) {
+         vec2 crash[2];
+         double damage;
+         Pilot *p = pilot_stack[ il_get( &weapon_qtexp, i, 0 ) ];
 
-      /* Ignore pilots being deleted. */
-      if (pilot_isFlag(p, PILOT_DELETE))
-         continue;
-
-      if (!outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_FRIENDLYFIRE )) {
-         /* Ignore if parent is self. */
-         if (w->parent == p->id)
-            continue; /* pilot is self */
-
-         /* Check to see if it can hit. */
-         if (!weapon_checkCanHit( w, p ))
+         /* Ignore pilots being deleted. */
+         if (pilot_isFlag(p, PILOT_DELETE))
             continue;
+
+         if (!outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_FRIENDLYFIRE )) {
+            /* Ignore if parent is self. */
+            if (w->parent == p->id)
+               continue; /* pilot is self */
+
+            /* Check to see if it can hit. */
+            if (!weapon_checkCanHit( w, p ))
+               continue;
+         }
+
+         /* Test if hit. */
+         if (!weapon_testCollision( &wc, p->ship->gfx_space, p->tsx, p->tsy,
+                  &p->solid.pos, p->ship->polygon, 0., crash ))
+            continue;
+
+         /* Have pilot take damage and get real damage done. */
+         damage = pilot_hit( p, &w->solid, parent, dmg, w->outfit, w->lua_mem, 1 );
+         /* Inform AI that it's been hit. */
+         weapon_hitAI( p, parent, damage );
       }
-
-      /* Test if hit. */
-      if (!weapon_testCollision( &wc, p->ship->gfx_space, p->tsx, p->tsy,
-               &p->solid.pos, p->ship->polygon, 0., crash ))
-         continue;
-
-      /* Have pilot take damage and get real damage done. */
-      damage = pilot_hit( p, &w->solid, parent, dmg, w->outfit, w->lua_mem, 1 );
-      /* Inform AI that it's been hit. */
-      weapon_hitAI( p, parent, damage );
    }
 
    /* Test asteroids. */
-   double mining_bonus = (parent != NULL) ? parent->stats.mining_bonus : 1.;
-   int mining_rarity = outfit_miningRarity( w->outfit );
-   for (int i=0; i<array_size(cur_system->asteroids); i++) {
-      AsteroidAnchor *ast = &cur_system->asteroids[i];
+   if (!outfit_isProp(w->outfit,OUTFIT_PROP_WEAP_MISS_ASTEROIDS)) {
+      double mining_bonus = (parent != NULL) ? parent->stats.mining_bonus : 1.;
+      int mining_rarity = outfit_miningRarity( w->outfit );
+      for (int i=0; i<array_size(cur_system->asteroids); i++) {
+         AsteroidAnchor *ast = &cur_system->asteroids[i];
 
-      /* Early in-range check with the asteroid field. */
-      if (vec2_dist2( &w->solid.pos, &ast->pos ) >
-            pow2( ast->radius + ast->margin + wc.range ))
-         continue;
-
-      /* Quadtree collisions. */
-      asteroid_collideQueryIL( ast, &weapon_qtquery, x1, y1, x2, y2 );
-      for (int j=0; j<il_size(&weapon_qtquery); j++) {
-         Asteroid *a = &ast->asteroids[ il_get( &weapon_qtquery, j, 0 ) ];
-         vec2 crash[2];
-         int coll;
-         if (a->state != ASTEROID_FG)
+         /* Early in-range check with the asteroid field. */
+         if (vec2_dist2( &w->solid.pos, &ast->pos ) >
+               pow2( ast->radius + ast->margin + wc.range ))
             continue;
 
-         if (a->polygon->npt!=0) {
-            CollPoly rpoly;
-            RotatePolygon( &rpoly, a->polygon, (float) a->ang );
-            coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, &rpoly, 0., crash );
-            free(rpoly.x);
-            free(rpoly.y);
+         /* Quadtree collisions. */
+         asteroid_collideQueryIL( ast, &weapon_qtquery, x1, y1, x2, y2 );
+         for (int j=0; j<il_size(&weapon_qtquery); j++) {
+            Asteroid *a = &ast->asteroids[ il_get( &weapon_qtquery, j, 0 ) ];
+            vec2 crash[2];
+            int coll;
+            if (a->state != ASTEROID_FG)
+               continue;
+
+            if (a->polygon->npt!=0) {
+               CollPoly rpoly;
+               RotatePolygon( &rpoly, a->polygon, (float) a->ang );
+               coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, &rpoly, 0., crash );
+               free(rpoly.x);
+               free(rpoly.y);
+            }
+            else
+               coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, NULL, 0., crash );
+
+            /* Missed. */
+            if (!coll)
+               continue;
+
+            asteroid_hit( a, dmg, mining_rarity, mining_bonus );
          }
-         else
-            coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, NULL, 0., crash );
-
-         /* Missed. */
-         if (!coll)
-            continue;
-
-         asteroid_hit( a, dmg, mining_rarity, mining_bonus );
       }
    }
 
@@ -1503,7 +1514,7 @@ static void weapon_hit( Weapon *w, const WeaponHit *hit )
 
    /* Explosive weapons blow up and hit everything in range. */
    if (radius > 0.) {
-      weapon_hitExplode( w, &dmg, hit->pos, radius );
+      weapon_hitExplode( w, &dmg, radius );
       weapon_destroy(w);
       return;
    }
@@ -1616,7 +1627,7 @@ static void weapon_miss( Weapon *w )
       dmg.type          = odmg->type;
       dmg.disable       = MAX( 0., w->dam_mod * w->strength * odmg->disable + damage * w->dam_as_dis_mod );
 
-      weapon_hitExplode( w, &dmg, &w->solid.pos, radius );
+      weapon_hitExplode( w, &dmg, radius );
    }
 
    weapon_destroy(w);
