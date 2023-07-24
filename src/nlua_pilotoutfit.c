@@ -14,6 +14,7 @@
 
 #include "nlua_pilotoutfit.h"
 
+#include "array.h"
 #include "log.h"
 #include "nlua_asteroid.h"
 #include "nlua_outfit.h"
@@ -349,6 +350,7 @@ static int poL_munition( lua_State *L )
  *    @luatparam PilotOutfit po Pilot outfit originating the munition.
  *    @luatparam Pilot p Pilot shooting, used for faction and damaging purposes.
  *    @luatparam[opt=nil] Pilot|Munition|Asteroid|nil t Target pilot to shoot at.
+ *    @luatparam[opt=false] boolean stagger Whether or not to stagger similar outfits.
  *    @luatreturn boolean true if was able to shoot, false otherwise.
  * @luafunc shoot
  */
@@ -357,9 +359,74 @@ static int poL_shoot( lua_State *L )
    PilotOutfitSlot *po = luaL_validpilotoutfit( L, 1 );
    Pilot *p    = luaL_validpilot( L, 2 );
    Target t    = lua_totarget( L, 3 );
-   double time = weapon_targetFlyTime( po->outfit, p, &t );
+   int stagger = lua_toboolean( L, 4 );
+   double time;
    int ret;
+   int has_ammo;
+
+   /* The particular weapon can't fire, so ignore. */
+   if (po->timer > 0.) {
+      lua_pushboolean(L,0);
+      return 1;
+   }
+
+   /* Out of ammo. */
+   has_ammo = outfit_isLauncher(po->outfit) || outfit_isFighterBay(po->outfit);
+   if (has_ammo && (po->u.ammo.quantity <= 0)) {
+      lua_pushboolean(L,0);
+      return 1;
+   }
+
+   /* See if we should stagger the outfits. */
+   if (stagger) {
+      double q, maxt, rate_mod, energy_mod;
+      int maxp, minh;
+
+      /* Calculate rate modifier. */
+      pilot_getRateMod( &rate_mod, &energy_mod, p, po->outfit );
+
+      /* Find optimal outfit, coolest that can fire. */
+      minh  = -1;
+      maxt  = 0.;
+      maxp  = -1;
+      q     = 0.;
+      for (int i=0; i<array_size(p->outfits); i++) {
+         PilotOutfitSlot *pos = p->outfits[i];
+         if (pos->outfit != po->outfit)
+            continue;
+         /* Launcher only counts with ammo. */
+         if (has_ammo && (pos->u.ammo.quantity <= 0))
+            continue;
+         /* Get coolest that can fire. */
+         if (pos->timer <= 0.) {
+            if (has_ammo) {
+               if ((minh < 0) || (p->outfits[ minh ]->u.ammo.quantity < pos->u.ammo.quantity))
+                  minh = i;
+            }
+            else {
+               if ((minh < 0) || (p->outfits[ minh ]->heat_T > pos->heat_T))
+                  minh = i;
+            }
+         }
+
+         /* Save some stuff. */
+         if ((maxp < 0) || (pos->timer > maxt)) {
+            maxp = i;
+            maxt = pos->timer;
+         }
+         q += 1.;
+      }
+
+      /* Only fire if the last weapon to fire fired more than (q-1)/q ago. */
+      if ((minh < 0) || (maxt > rate_mod * outfit_delay(po->outfit) * ((q-1.) / q))) {
+         lua_pushboolean(L,0);
+         return 1;
+      }
+   }
+
+   time = weapon_targetFlyTime( po->outfit, p, &t );
    ret = pilot_shootWeapon( p, po, &t, time, -1 );
+
    lua_pushboolean( L, ret );
    return 1;
 }
