@@ -116,6 +116,7 @@ static void weapons_autoweap( unsigned int wid, const char *str );
 static void weapons_fire( unsigned int wid, const char *str );
 static void weapons_inrange( unsigned int wid, const char *str );
 static void weapons_manual( unsigned int wid, const char *str );
+static void weapons_volley( unsigned int wid, const char *str );
 static void aim_lines( unsigned int wid, const char *str );
 static void weapons_renderLegend( double bx, double by, double bw, double bh, void* data );
 static void info_openStandings( unsigned int wid );
@@ -599,6 +600,10 @@ static void info_openWeapons( unsigned int wid )
    window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
          "chkManual", _("Enable manual aiming mode."), weapons_manual,
          pilot_weapSetManualCheck( player.p, info_eq_weaps.weapons ) );
+   y -= 30;
+   window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
+         "chkVolley", _("Enable volley mode."), weapons_volley,
+         pilot_weapSetVolleyCheck( player.p, info_eq_weaps.weapons ) );
    y -= 40;
    window_addText( wid, x, y, wlen, 20, 0, "txtGlobal", NULL, NULL,
          _("Global Settings"));
@@ -768,6 +773,15 @@ static void weapons_manual( unsigned int wid, const char *str )
 {
    int state = window_checkboxState( wid, str );
    pilot_weapSetManual( player.p, info_eq_weaps.weapons, state );
+}
+
+/**
+ * @brief Sets the volley aim property.
+ */
+static void weapons_volley( unsigned int wid, const char *str )
+{
+   int state = window_checkboxState( wid, str );
+   pilot_weapSetVolley( player.p, info_eq_weaps.weapons, state );
 }
 
 /**

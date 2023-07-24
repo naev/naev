@@ -371,6 +371,32 @@ void pilot_weapSetManual( Pilot* p, int id, int manual )
 }
 
 /**
+ * @brief Checks the current weapon set volley property.
+ *
+ *    @param p Pilot to manipulate.
+ *    @param id ID of the weapon set to check.
+ *    @return The volley mode of the weapon set.
+ */
+int pilot_weapSetVolleyCheck( Pilot *p, int id )
+{
+   PilotWeaponSet *ws = pilot_weapSet(p,id);
+   return ws->volley;
+}
+
+/**
+ * @brief Changes the weapon set volley property.
+ *
+ *    @param p Pilot to manipulate.
+ *    @param id ID of the weapon set.
+ *    @param volley Whether or not to have volley aiming.
+ */
+void pilot_weapSetVolley( Pilot* p, int id, int volley )
+{
+   PilotWeaponSet *ws = pilot_weapSet(p,id);
+   ws->volley = volley;
+}
+
+/**
  * @brief Gets the name of a weapon set.
  */
 const char *pilot_weapSetName( Pilot* p, int id )

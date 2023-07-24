@@ -3430,6 +3430,7 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
       /* Inrange isn't handled by autoweap for the player. */
       xmlw_attr(writer,"inrange","%d",ws->inrange);
       xmlw_attr(writer,"manual","%d",ws->manual);
+      xmlw_attr(writer,"volley","%d",ws->volley);
       xmlw_attr(writer,"id","%d",i);
       if (!ship->autoweap) {
          xmlw_attr(writer,"type","%d",ws->type);
@@ -4187,13 +4188,12 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot 
 static int player_parseShip( xmlNodePtr parent, int is_player )
 {
    char *name, *model;
-   int id, fuel;
+   int id, autoweap, fuel, aim_lines, active_set;
    const Ship *ship_parsed;
    Pilot* ship;
    xmlNodePtr node;
    Commodity *com;
    PilotFlags flags;
-   int autoweap, level, weapid, active_set, aim_lines, in_range, manual, weap_type;
    PlayerShip_t ps;
 
    memset( &ps, 0, sizeof(PlayerShip_t) );
@@ -4444,6 +4444,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       /* Parse weapon sets. */
       cur = node->xmlChildrenNode;
       do { /* Load each weapon set. */
+         int in_range, manual, weap_type, volley;
          xmlNodePtr ccur;
 
          xml_onlyNodes(cur);
@@ -4475,6 +4476,11 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          if (manual > 0)
             pilot_weapSetManual( ship, id, manual );
 
+         /* Set volley mode. */
+         xmlr_attr_int( cur, "volley", volley );
+         if (volley > 0)
+            pilot_weapSetVolley( ship, id, volley );
+
          if (autoweap) /* Autoweap handles everything except inrange and manual. */
             continue;
 
@@ -4489,6 +4495,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          /* Parse individual weapons. */
          ccur = cur->xmlChildrenNode;
          do {
+            int level, weapid;
             /* Only nodes. */
             xml_onlyNodes(ccur);
 
