@@ -68,6 +68,6 @@ function update( p, po, _dt )
 
    -- Try to shoot the target if we have one
    if m then
-      po:shoot( p, m )
+      po:shoot( p, m, true )
    end
 end
