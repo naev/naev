@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Spittle Tubuloid">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Medium Weapon</license>
+  <typename>Point Defense</typename>
+  <mass>27</mass>
+  <price>390000</price>
+  <description>TODO</description>
+  <desc_extra>Automatically fires at nearby missiles and interceptors.</desc_extra>
+  <gfx_store>placeholder.webp</gfx_store>
+  <cpu>-30</cpu>
+ </general>
+ <specific type="turret bolt">
+  <lua>outfits/pointdefense/pointdefense.lua</lua>
+  <gfx type="shader" size="10" col_size="10">particles/spittle.frag</gfx>
+  <sound>plasma</sound>
+  <spfx_shield>PlaS2</spfx_shield>
+  <spfx_armour>PlaS2</spfx_armour>
+  <delay>0.8</delay>
+  <speed>100</speed>
+  <range>900</range>
+  <falloff>850</falloff>
+  <energy>5</energy>
+  <heatup>60</heatup>
+  <trackmin>0</trackmin>
+  <trackmax>0</trackmax>
+  <damage>
+   <type>impact</type>
+   <penetrate>0</penetrate>
+   <physical>4</physical>
+  </damage>
+  <pointdefense />
+  <miss_ships />
+  <shots>5</shots>
+  <dispersion>80</dispersion>
+  <speed_dispersion>20</speed_dispersion>
+ </specific>
+</outfit>
