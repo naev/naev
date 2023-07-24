@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Spittle Tubuloid">
+<outfit name="Spittle Tubuloid Cluster">
  <general>
   <slot>weapon</slot>
   <size>medium</size>
@@ -7,7 +7,7 @@
   <typename>Point Defense</typename>
   <mass>27</mass>
   <price>390000</price>
-  <description>TODO</description>
+  <description>Actually consisting of a small colony of space-hardened parasites, known as Spittle Tubuloids, that leech from the ship energy systems to provide defensive cover. They have been genetically engineered to detect the weak radiation and gravitational signals of incoming ordinances to activate their defense mechanism of spitting large bubbles of plasma. Although the bubbles are quite weak compared to engineered weapons, their numbers allow them to efficiently protect the ship they are attached to from non-armoured missiles.</description>
   <desc_extra>Automatically fires at nearby missiles and interceptors.</desc_extra>
   <gfx_store>placeholder.webp</gfx_store>
   <cpu>-30</cpu>
