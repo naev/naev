@@ -70,9 +70,9 @@ PilotWeaponSet* pilot_weapSet( Pilot* p, int id )
 static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 {
    int ret, s;
-   Pilot *pt;
    double time;
    int isstealth = pilot_isFlag( p, PILOT_STEALTH );
+   int target_set = 0;
 
    ret = 0;
    for (int i=0; i<array_size(ws->slots); i++) {
@@ -109,15 +109,19 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       /* If inrange is set we only fire at targets in range. */
       time = INFINITY;  /* With no target we just set time to infinity. */
 
-      /* Calculate time to target if it is there. */
-      pt = pilot_getTarget( p );
-      if (pt != NULL)
-         time = pilot_weapFlyTime( o, p, &pt->solid.pos, &pt->solid.vel);
-      /* Looking for a closer targeted asteroid */
-      else if (p->nav_asteroid != -1) {
-         AsteroidAnchor *field = &cur_system->asteroids[p->nav_anchor];
-         Asteroid *ast = &field->asteroids[p->nav_asteroid];
-         time = pilot_weapFlyTime( o, p, &ast->pos, &ast->vel);
+      /* Lazy target setting. */
+      if (!target_set) {
+         /* Calculate time to target if it is there. */
+         Pilot *pt = pilot_getTarget( p );
+         if (pt != NULL)
+            time = pilot_weapFlyTime( o, p, &pt->solid.pos, &pt->solid.vel);
+         /* Looking for a closer targeted asteroid */
+         else if (p->nav_asteroid != -1) {
+            AsteroidAnchor *field = &cur_system->asteroids[p->nav_anchor];
+            Asteroid *ast = &field->asteroids[p->nav_asteroid];
+            time = pilot_weapFlyTime( o, p, &ast->pos, &ast->vel);
+         }
+         target_set = 1;
       }
 
       /* Only "inrange" outfits. */
