@@ -38,7 +38,6 @@
 #define PILOT_TAKEOFF_DELAY      1. /**< Delay for takeoff animation. */
 /* Refueling. */
 #define PILOT_REFUEL_TIME        3. /**< Time to complete refueling. */
-#define PILOT_REFUEL_QUANTITY    100 /**< Amount transferred per refuel. */
 /* Misc. */
 #define PILOT_SIZE_APPROX        0.8   /**< approximation for pilot size */
 #define PILOT_WEAPON_SETS        10    /**< Number of weapon sets the pilot has. */
