@@ -1154,11 +1154,6 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target, doubl
       /** @todo Handle warmup stage. */
       w->state = PILOT_OUTFIT_ON;
       if (!outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY )) {
-         Target wt;
-         if (target == NULL) {
-            pilot_weaponTarget( p, &wt );
-            target = &wt;
-         }
          w->u.beamid = beam_start( w, p->solid.dir,
                &vp, &p->solid.vel, p, target, aim );
       }
@@ -1169,9 +1164,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target, doubl
    }
 
    /*
-    * missile launchers
-    *
-    * must be a secondary weapon
+    * Missile launchers
     */
    else if (outfit_isLauncher(w->outfit)) {
       Target wt;
