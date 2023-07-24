@@ -10,7 +10,8 @@
    if system.get("Daan"):jumpDist() &gt; 2 then
       return false
    end
-   return true</cond>
+   return true
+ </cond>
  <notes>
   <campaign>Nebula Research</campaign>
  </notes>

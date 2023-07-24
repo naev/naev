@@ -9,7 +9,9 @@
  <cond>
    if system.get("Regas"):jumpDist() &gt; 3 then
       return false
-   end</cond>
+   end
+   return true
+ </cond>
  <tags>
   <tag>zlk_cap_ch01_med</tag>
  </tags>
