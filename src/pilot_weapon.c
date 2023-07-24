@@ -43,13 +43,13 @@
  */
 static void pilot_weapSetUpdateOutfits( Pilot* p, PilotWeaponSet *ws );
 static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level );
-static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfit *o, int level, double time, int aim );
+static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfit *o, int level, const Target *target, double time, int aim );
 static void pilot_weapSetUpdateRange( const Pilot *p, PilotWeaponSet *ws );
 unsigned int pilot_weaponSetShootStop( Pilot* p, PilotWeaponSet *ws, int level );
 
 /**
  * @brief Gets a weapon set from id.
- *
+
  *    @param p Pilot to get weapon set from.
  *    @param id ID of the weapon set.
  *    @return The weapon set matching id.
@@ -73,6 +73,7 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
    double time;
    int isstealth = pilot_isFlag( p, PILOT_STEALTH );
    int target_set = 0;
+   Target wt;
 
    ret = 0;
    for (int i=0; i<array_size(ws->slots); i++) {
@@ -87,20 +88,22 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       if ((level != -1) && (ws->slots[i].level != level))
          continue;
 
-      /* Only run once for each weapon type in the group. */
-      s = 0;
-      for (int j=0; j<i; j++) {
-         /* Only active outfits. */
-         if ((level != -1) && (ws->slots[j].level != level))
-            continue;
-         /* Found a match. */
-         if (p->outfits[ ws->slots[j].slotid ]->outfit == o) {
-            s = 1;
-            break;
+      /* Only run once for each weapon type in the group if not volley. */
+      if (!ws->volley) {
+         s = 0;
+         for (int j=0; j<i; j++) {
+            /* Only active outfits. */
+            if ((level != -1) && (ws->slots[j].level != level))
+               continue;
+            /* Found a match. */
+            if (p->outfits[ ws->slots[j].slotid ]->outfit == o) {
+               s = 1;
+               break;
+            }
          }
+         if (s!=0)
+            continue;
       }
-      if (s!=0)
-         continue;
 
       /* Only "locked on" outfits. */
       if (outfit_isSeeker(o) && (pos->u.ammo.lockon_timer > 0.))
@@ -111,16 +114,8 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 
       /* Lazy target setting. */
       if (!target_set) {
-         /* Calculate time to target if it is there. */
-         Pilot *pt = pilot_getTarget( p );
-         if (pt != NULL)
-            time = pilot_weapFlyTime( o, p, &pt->solid.pos, &pt->solid.vel);
-         /* Looking for a closer targeted asteroid */
-         else if (p->nav_asteroid != -1) {
-            AsteroidAnchor *field = &cur_system->asteroids[p->nav_anchor];
-            Asteroid *ast = &field->asteroids[p->nav_asteroid];
-            time = pilot_weapFlyTime( o, p, &ast->pos, &ast->vel);
-         }
+         pilot_weaponTarget( p, &wt );
+         time = weapon_targetFlyTime( o, p, &wt );
          target_set = 1;
       }
 
@@ -129,7 +124,10 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
          continue;
 
       /* Shoot the weapon of the weaponset. */
-      ret += pilot_shootWeaponSetOutfit( p, ws, o, level, time, !ws->manual );
+      if (ws->volley)
+         ret += pilot_shootWeapon( p, pos, &wt, time, !ws->manual );
+      else
+         ret += pilot_shootWeaponSetOutfit( p, ws, o, level, &wt, time, !ws->manual );
    }
 
    /* Destealth when attacking. */
@@ -986,27 +984,23 @@ Pilot *pilot_weaponTarget( Pilot *p, Target *wt )
 /**
  * @brief Calculates and shoots the appropriate weapons in a weapon set matching an outfit.
  */
-static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfit *o, int level, double time, int aim )
+static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfit *o, int level, const Target *target, double time, int aim )
 {
    int ret;
    int is_launcher, is_bay;
    double rate_mod, energy_mod;
    int maxp, minh;
    double q, maxt;
-   Target wt;
 
    /* Store number of shots. */
    ret = 0;
-
-   /* Set up target. */
-   pilot_weaponTarget( p, &wt );
 
    /** @TODO Make beams not fire all at once. */
    if (outfit_isBeam(o)) {
       for (int i=0; i<array_size(ws->slots); i++) {
          PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
          if (pos->outfit == o && (level == -1 || level == ws->slots[i].level)) {
-            ret += pilot_shootWeapon( p, pos, NULL, 0., aim );
+            ret += pilot_shootWeapon( p, pos, target, 0., aim );
             pos->inrange = ws->inrange; /* State if the weapon has to be turn off when out of range. */
          }
       }
@@ -1070,7 +1064,7 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfi
       return 0;
 
    /* Shoot the weapon. */
-   ret += pilot_shootWeapon( p, p->outfits[ ws->slots[minh].slotid ], NULL, time, aim );
+   ret += pilot_shootWeapon( p, p->outfits[ ws->slots[minh].slotid ], target, time, aim );
 
    return ret;
 }
@@ -1134,11 +1128,6 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target, doubl
       pilot_heatAddSlot( p, w );
       if (!outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY )) {
          for (int i=0; i<w->outfit->u.blt.shots; i++) {
-            Target wt;
-            if (target == NULL) {
-               pilot_weaponTarget( p, &wt );
-               target = &wt;
-            }
             weapon_add( w, NULL, p->solid.dir,
                   &vp, &vv, p, target, time, aim );
          }
