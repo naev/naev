@@ -698,14 +698,11 @@ double pilot_weapSetSpeed( Pilot* p, int id, int level )
  */
 double pilot_weapSetAmmo( Pilot* p, int id, int level )
 {
-   PilotWeaponSet *ws;
-   int amount, nammo;
-   double ammo;
-
-   ammo = 0.;
-   nammo = 0;
-   ws = pilot_weapSet(p,id);
+   PilotWeaponSet *ws = pilot_weapSet(p,id);
+   double ammo = 0.;
+   int nammo = 0;
    for (int i=0; i<array_size(ws->slots); i++) {
+      int amount;
       PilotOutfitSlot *s = p->outfits[ ws->slots[i].slotid ];
       if ((level >= 0) && (ws->slots[i].level != level))
          continue;
@@ -1084,7 +1081,6 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target, doubl
    vec2 vp, vv;
    double rate_mod, energy_mod;
    double energy;
-   int dockslot = -1;
 
    /* Make sure weapon has outfit. */
    if (w->outfit == NULL)
@@ -1215,6 +1211,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target, doubl
     * Fighter bays.
     */
    else if (outfit_isFighterBay(w->outfit)) {
+      int dockslot = -1;
 
       /* Must have ammo left. */
       if (w->u.ammo.quantity <= 0)
@@ -1542,9 +1539,7 @@ int pilot_outfitOn( Pilot *p, PilotOutfitSlot *o )
  */
 int pilot_outfitOffAll( Pilot *p )
 {
-   int nchg;
-
-   nchg = 0;
+   int nchg = 0;
    for (int i=0; i<array_size(p->outfits); i++) {
       PilotOutfitSlot *o = p->outfits[i];
       /* Picky about our outfits. */
