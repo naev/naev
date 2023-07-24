@@ -9,10 +9,6 @@
 
 #define WEAPSET_INRANGE_PLAYER_DEF  0 /**< Default weaponset inrange parameter for the player. */
 
-#define WEAPSET_TYPE_CHANGE   0  /**< Changes weaponsets. */
-#define WEAPSET_TYPE_WEAPON   1  /**< Activates weapons (while held down). */
-#define WEAPSET_TYPE_ACTIVE   2  /**< Toggles outfits (if on it deactivates). */
-
 /* Freedom. */
 void pilot_weapSetFree( Pilot* p );
 
@@ -49,7 +45,7 @@ void pilot_weapSetCopy( PilotWeaponSet *dest, const PilotWeaponSet *src );
 
 /* Properties. */
 int pilot_weapSetTypeCheck( Pilot* p, int id );
-void pilot_weapSetType( Pilot* p, int id, int type );
+void pilot_weapSetType( Pilot* p, int id, WeaponSetType type );
 int pilot_weapSetInrangeCheck( Pilot* p, int id );
 void pilot_weapSetInrange( Pilot* p, int id, int inrange );
 int pilot_weapSetManualCheck( Pilot *p, int id );

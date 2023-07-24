@@ -150,6 +150,12 @@ typedef struct PilotWeaponSetOutfit_ {
    int slotid;             /**< ID of the slot associated with the weapon set. */
 } PilotWeaponSetOutfit;
 
+typedef enum WeaponSetType_ {
+   WEAPSET_TYPE_CHANGE=0, /**< Changes weaponsets. */
+   WEAPSET_TYPE_WEAPON=1, /**< Activates weapons (while held down). */
+   WEAPSET_TYPE_ACTIVE=2, /**< Toggles outfits (if on it deactivates). */
+} WeaponSetType;
+
 /**
  * @brief A weapon set represents a set of weapons that have an action.
  *
@@ -157,7 +163,7 @@ typedef struct PilotWeaponSetOutfit_ {
  *  However they can also be used to launch weapons.
  */
 typedef struct PilotWeaponSet_ {
-   int type;      /**< Type of the weaponset. */
+   WeaponSetType type; /**< Type of the weaponset. */
    int active;    /**< Whether or not it's currently firing. */
    PilotWeaponSetOutfit *slots; /**< Slots involved with the weapon set. */
    /* Only applicable to weapon type. */

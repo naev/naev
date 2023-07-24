@@ -306,7 +306,7 @@ int pilot_weapSetTypeCheck( Pilot* p, int id )
  *    @param id ID of the weapon set.
  *    @param type The mode (a WEAPSET_TYPE constant).
  */
-void pilot_weapSetType( Pilot* p, int id, int type )
+void pilot_weapSetType( Pilot* p, int id, WeaponSetType type )
 {
    PilotWeaponSet *ws = pilot_weapSet(p,id);
    ws->type = type;
