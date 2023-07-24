@@ -1757,9 +1757,6 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
    double rx, ry, x, y, t, lead, rdir, off;
 
    switch (target->type) {
-      case TARGET_NONE:
-         return dir;
-
       case TARGET_PILOT:
          pilot_target = pilot_get( target->u.id );
          if (pilot_target==NULL)
@@ -1786,6 +1783,10 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
             target_vel = &wtarget->solid.vel;
          }
          break;
+
+      //case TARGET_NONE:
+      default:
+         return dir;
    }
 
    /* Get the vector : shooter -> target */
