@@ -27,11 +27,11 @@ local vntk = require "vntk"
 
 local kidnappers -- Non-persistent state
 
-local sys1 = system.get("Arcturus")
-local sys2 = system.get("Goddard")
-local pnt1, sys3 = spob.getS("Praxis")
-local pnt2, sys4 = spob.getS("Seanich")
-local pnthome = spob.get("Brooks")
+local pnthome, sys1 = spob.get("Ian") -- Nartur, home system
+local sys2 = system.get("Goddard") -- Showdown system
+-- These are the two systems to get hints first
+local pnt1, sys3 = spob.getS("Waterhole's Moon") -- Waterhole
+local pnt2, sys4 = spob.getS("Shangris Station") -- Pas
 
 -- NPCs
 local pir1_desc = _([[The two pirates seem to be talking rather quietly, but loud enough for you to overhear if you are careful.]])
@@ -226,7 +226,8 @@ You watch her return to her family. A child jumps into her arms, and you climb u
 
       vn.run()
 
-      neu.addMiscLog( _([[You successfully rescued a couple dozen children who were kidnapped by a child trafficking ring after two parents asked for your help rescuing their own children. Said parents said that they would like to make an effort to fight the human trafficking problem directly and invited you to meet them again in the future on Brooks if you're willing to aid them in this quest.]]) )
+      neu.addMiscLog(fmt.f(_([[You successfully rescued a couple dozen children who were kidnapped by a child trafficking ring after two parents asked for your help rescuing their own children. Said parents said that they would like to make an effort to fight the human trafficking problem directly and invited you to meet them again in the future on {spb} if you're willing to aid them in this quest.]]),
+         {spb=pnthome}))
       misn.finish(true)
    end
 end
