@@ -37,6 +37,8 @@ local pnt2, sys4 = spob.getS("Shangris Station") -- Pas
 local pir1_desc = _([[The two pirates seem to be talking rather quietly, but loud enough for you to overhear if you are careful.]])
 local pir2_desc = _([[The pirates have both drank their wallet's worth today, so eavesdropping shouldn't be too much of an issue.]])
 
+local reward = 300e3
+
 function create()
    if not misn.claim( {system.get("Goddard")}, true ) then
       warn(_("Something has gone wrong! Claim that should work has failed!"))
@@ -222,7 +224,9 @@ function land3()
 You watch her return to her family. A child jumps into her arms, and you climb up into your ship.]]),
          {player=player.name()}))
 
-      --TODO should probably give some reward
+      vn.na(_([[After getting into your ship you get a notification of a credit transfer. Looks like no good deed goes unrewarded.]]))
+      vn.sfxVictory()
+      vn.na(fmt.reward(reward))
 
       vn.run()
 
