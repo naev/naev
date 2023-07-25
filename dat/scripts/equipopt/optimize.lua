@@ -23,7 +23,7 @@ for k,o in ipairs(outfit.getAll()) do
    os.mass = o:mass()
    os.cpu = o:cpu()
    outfit_stats[o:nameRaw()] = os
-   if o:type() == "Fighter Bay" then
+   if os.type == "Fighter Bay" then
       local ss = o:specificstats()
       local s = ss.ship
       local slots = s:getSlots()
