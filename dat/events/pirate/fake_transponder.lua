@@ -3,7 +3,19 @@
 <event name="Pirate Fake Transponder">
   <unique/>
  <location>land</location>
- <cond>require("common.pirate").factionIsPirate( spob.cur():faction() ) and faction.playerStanding("Pirate") &gt;= -20 and player.credits() &gt;= 500e3</cond>
+ <cond>
+   local pir = require("common.pirate")
+   if not pir.factionIsPirate( spob.cur():faction() ) then
+      return false
+   end
+   if faction.playerStanding("Pirate") &lt; -20 then
+      return false
+   end
+   if player.credits() &lt; 1e6 then
+      return false
+   end
+   return true
+  </cond>
  <chance>50</chance>
 </event>
 --]]
