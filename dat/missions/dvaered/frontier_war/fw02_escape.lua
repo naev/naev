@@ -23,13 +23,13 @@
 
    Stages :
    0) Goto find Hamfresser
-   1) Goto the interception
+   1) Goto the interception (intsys)
    2) Start to run away
    3) Goto an hospital
    4) Runaway
    5) Player has been hailed by Captain HewHew
    6) Player has met the Empire and Pirate agent, but did not accept any of their offers (yet?)
-   7) Accepted Empire solution: can cross blockade of Arcturus->Goddard
+   7) Accepted Empire solution: can cross blockade of dealsys->dealjump
    8) Accepted Pirate solution: can cross any blockade
    9) Accepted Pirate solution: can cross any blockade, but has paid cash
 --]]
@@ -41,7 +41,7 @@ local fmt = require "format"
 local pir = require "common.pirate"
 local cinema = require "cinema"
 
-local athooks, escort, hewhew, scanHooks, squad, strafer, target, zlkPilots, zlk_list -- Non-persistent state
+local athooks, escort, hewhew, scanHooks, squad, strafer, target, zlkPilots -- Non-persistent state
 local rmScanHooksRaw, spawnEmpSquadron, spawnZlkSquadron, barAgents -- Forward-declared functions
 
 escort_hailed = fw.escort_hailed -- common hooks
@@ -59,11 +59,44 @@ local straf_desc = _("The pilot is the only one in the group who looks like the 
 -- Mission constants
 local commMass = 4
 local fzlk = faction.get("Za'lek")
-local hampla, hamsys = spob.getS("Vilati Vilata")
-local reppla, repsys = spob.getS("Dvaer Prime")
-local pripla, prisys = spob.getS("Jorla")
-local zlkpla, zlksys = spob.getS("House Za'lek Central")
-local intsys = system.get("Poltergeist")
+local hampla, hamsys = spob.getS("Vilati Vilata") -- Where the player meets up to start the stuff
+local reppla, repsys = spob.getS("Dvaer Prime") -- Where the player has to run back to after interception
+local pripla, prisys = spob.getS("Bastion Center") -- Military base where the captured person starts
+local zlkpla, zlksys = spob.getS("House Za'lek Central") -- Target delivery place of the captured person
+local intsys = system.get("Hargen") -- Where the action happens, should be between prisys and zlksys
+local dealsys = system.get("Van Maanen")
+local dealjump =  system.get("Surano")
+
+--[[
+   Blockades are defined from intsys and should limit the player's
+   movement to repsys. The zlk_list and emp_list list the systems that
+   have a blockade, and the zlk_lisj and emp_lisj indicate the jumps at
+   the systems that are being blockaded.
+--]]
+-- Za'lek Blocus
+local zlk_list = { -- Systems with patrols
+   system.get("Pultatis"),
+   system.get("Stone Table"),
+   system.get("Xavier"),
+   system.get("Straight Row")
+}
+local zlk_lisj = { -- Index refers to zlk_list
+   {system.get("Provectus Nova"), system.get("Limbo")}, -- from Pultatis
+   {system.get("Sollav")}, -- from Stone Table
+   {system.get("Sheffield")}, -- from Xavier
+   {system.get("Nunavut")}, -- from Straight Row
+}
+-- Empire Blocus
+local emp_list = {
+   system.get("Majesteka"),
+   system.get("Tepdania"),
+   system.get("Van Maanen"),
+}
+local emp_lisj = {
+   {system.get("Hubfar")}, -- From Majesteka
+   {system.get("Ianella")}, -- From Tepdania
+   {system.get("Surano"),system.get("Kruger")}, -- From Van Maanen
+}
 
 function create()
    if spob.cur() == hampla then
@@ -140,8 +173,8 @@ function land()
 
    -- Land at an Imperial planet and meet the agents
    elseif mem.stage == 5 and spob.cur():faction() == faction.get("Empire") then
-      tk.msg(_("Other help offer"), fmt.f(_([[As you land, someone is waiting for you at the spaceport. "Hello, friend! Seems like you're having some trouble with the authorities out there. Looks like the Za'lek have even enlisted the help of the Imperials. There are blockades everywhere on the borders of Imperial space. Even the paths to the secret jumps are impassable. It looks like the Empire wants to catch you at all costs, but luckily enough, I have the solution. I imagine you already have a fake transponder, but they seem to have identified it.  I bet you could use a replacement. I can sell you an genuine, fake transponder fresh from the Skulls and Bones factory."
-   Clearly this is a pirate looking to make a few credits off your dire situation. But, the idea is not a bad one. The Imperial ships wouldn't be looking for a ship with a Skulls and Bones fake transponder. So you ask him how many credits he wants. "{number}" is the answer. "Sounds like a lot, right? But maybe it's a bargain in exchange for your life and the success of whatever unscrupulous mission you're trying to carry out. Maybe you don't have that many credits on you right now. That's ok.  I'll accept your word to pay me at some point. Well, your word and your DNA signature. That way I can find you if you try to cheat me."
+      tk.msg(_("Other help offer"), fmt.f(_([[As you land, someone is waiting for you at the spaceport. "Hello, friend! Seems like you're having some trouble with the authorities out there. Looks like the Za'lek have even enlisted the help of the Imperials. There are blockades everywhere on the borders of Imperial space. Even the paths to the secret jumps are impassable. It looks like the Empire wants to catch you at all costs, but luckily enough, I have the solution. I imagine you already have a fake transponder, but they seem to have identified it. I bet you could use a replacement. I can sell you an genuine, fake transponder fresh from the Skulls and Bones factory."
+   Clearly this is a pirate looking to make a few credits off your dire situation. But, the idea is not a bad one. The Imperial ships wouldn't be looking for a ship with a Skulls and Bones fake transponder. So you ask him how many credits he wants. "{number}" is the answer. "Sounds like a lot, right? But maybe it's a bargain in exchange for your life and the success of whatever unscrupulous mission you're trying to carry out. Maybe you don't have that many credits on you right now. That's ok. I'll accept your word to pay me at some point. Well, your word and your DNA signature. That way I can find you if you try to cheat me."
    You know that if you agree, you will have to pay, no matter what happens, otherwise you will be hounded by hit men until the end of your, probably very short, life. However, paying {credits} might allow you to avoid the otherwise messy and compromising deal you would have to make with the Imperial secret services. Meet the fake transponder dealer at the bar if interested.]]), {number=fmt.number(fw.pirate_price), credits=fmt.credits(fw.pirate_price)}))
       barAgents()
       mem.stage = 6
@@ -325,15 +358,6 @@ function enter()
    end
 
    if mem.stage >= 4 then
-      -- Zlk Blocus:
-      -- Pultatis -> Provectus Nova
-      --          -> Limbo
-      -- Stone Table -> Sollav
-      -- Xavier -> Sheffield
-      -- Straight Row -> Nunavut
-      zlk_list = { system.get("Pultatis"), system.get("Stone Table"), system.get("Xavier"), system.get("Straight Row") }
-      local zlk_lisj = { {"Provectus Nova", "Limbo"}, {"Sollav"}, {"Sheffield"}, {"Nunavut"} }
-
       mem.index = fw.elt_inlist( system.cur(), zlk_list )
       if mem.index > 0 then -- /!\ We did not claim this system /!\
          pilot.toggleSpawn("Za'lek")
@@ -355,18 +379,6 @@ function enter()
       end
 
    -- Empire Blocus:
-   -- Overture -> Pas
-   --          -> Waterhole
-   -- Eneguoz  -> Hakoi
-   -- Mural -> Salvador
-   -- Arcturus -> Goddard /!\ This one is passable if deal with the empire /!\
-   -- (Delta Pavonis -> Goddard) ? TODO: this one is not necessary
-   -- Fortitude -> Pontus
-   --           -> Acheron
-   -- Merisi -> Acheron
-      local emp_list = { system.get("Overture"), system.get("Eneguoz"), system.get("Mural"), system.get("Arcturus"),
-                         system.get("Delta Pavonis"), system.get("Fortitude"), system.get("Merisi") }
-      local emp_lisj = { {"Pas", "Waterhole"}, {"Hakoi"}, {"Salvador"}, {"Goddard"}, {"Goddard"}, {"Pontus", "Acheron"}, {"Acheron"} }
 
       mem.index = fw.elt_inlist( system.cur(), emp_list )
       if mem.index > 0 then -- /!\ We did not claim this system /!\
@@ -378,7 +390,7 @@ function enter()
          for i, j in ipairs(emp_lisj[mem.index]) do
             local jp = jump.get( system.cur(), j )
             local pos = jp:pos()
-            if system.cur() == system.get("Arcturus") and j == "Goddard" and mem.stage == 7 then -- Special case: JP from Arcturus to Goddard
+            if system.cur()==dealsys and j==system.get(dealjump) and mem.stage == 7 then -- Special case: jump from dealsys to dealjump
                spawnEmpSquadron( pos, false )
             else
                spawnEmpSquadron( pos, (mem.stage < 8) )
@@ -711,15 +723,15 @@ function pirateDealer()
    end
 end
 function imperialAgent()
-   if tk.yesno(_("Deal with the Empire"), fmt.f(_([[As you approach, the agent seems to recognize you immediately. "Hello, {player}. I guess they told you that I may have a solution to your little... problem." You look suspiciously at the agent and ask: "What do you want in exchange?" The agent smiles: "Simple. I want to speak with the Dvaered captain. Give me 10 hectoseconds on the spacedock alone with him, not more, and the commander of the fleet in Arcturus will forget to scan your ship when you jump to Goddard."
-   This is certainly an unusual request. You think of all the state secrets a wounded Hamfresser is able to give to the Empire in 10 hectoseconds. But, Hamfresser is a professional after all, trained avoid revealing any valuable information. But, probably the Imperial agent is a professional as well, trained to recover valuable information. And the pirate proposition still holds. So you answer:]]), {player=player.name()})) then
+   if tk.yesno(_("Deal with the Empire"), fmt.f(_([[As you approach, the agent seems to recognize you immediately. "Hello, {player}. I guess they told you that I may have a solution to your little... problem." You look suspiciously at the agent and ask: "What do you want in exchange?" The agent smiles: "Simple. I want to speak with the Dvaered captain. Give me 10 hectoseconds on the spacedock alone with him, not more, and the commander of the fleet in {dealsys} will forget to scan your ship when you jump to {dealjump}."
+   This is certainly an unusual request. You think of all the state secrets a wounded Hamfresser is able to give to the Empire in 10 hectoseconds. But, Hamfresser is a professional after all, trained avoid revealing any valuable information. But, probably the Imperial agent is a professional as well, trained to recover valuable information. And the pirate proposition still holds. So you answer:]]), {player=player.name(),dealsys=dealsys, dealjump=dealjump})) then
       tk.msg(_("You made the only good choice"),_([[After accepting, you invite the agent to follow you to the dock. You enter your ship, where the commandos are waiting for you, and inform Hamfresser about the situation. He anxiously looks at the two other remaining members of his team. Nikolov grimaces and Therus nervously hits the wall. "If you think we have no other choice..." says the captain. After removing his uniform jacket (where his name and rank are written), Hamfresser takes a deep breath and joins the Imperial agent outside, in front of the ship. From a window, you see them having what looks like a peaceful conversation.
    After a while, Hamfresser returns to the ship and the agent waves to indicate that you're allowed to take off. Nikolov asks her captain: "And?" "Who knows what these Imperial weirdos wanted to know? I tried to dodge all the questions, but... well... You never know."]]))
       misn.osdDestroy()
       misn.osdCreate( _("Dvaered Escape"), {
-         fmt.f(_("Escape to {pnt} in {sys}. Thanks to your deal with the Empire, the squadron in Arcturus won't prevent you from jumping to Goddard"), {pnt=reppla, sys=repsys}),
+         fmt.f(_("Escape to {pnt} in {sys}. Thanks to your deal with the Empire, the squadron in {dealsys} won't prevent you from jumping to {dealjump}"), {pnt=reppla, sys=repsys, dealsys=dealsys, dealjump=dealjump}),
       } )
-      misn.markerAdd( system.get("Arcturus"), "plot" )
+      misn.markerAdd( dealsys, "plot" )
       misn.npcRm(mem.impag)
       mem.stage = 7
    else
