@@ -587,22 +587,25 @@ static void outfits_changeTab( unsigned int wid, const char *wgt, int old, int t
  *    @return Number of outfits.
  */
 int outfits_filter( const Outfit **outfits, int n,
-      int(*filter)( const Outfit *o ), const char *name )
+      int(*filter)( const Outfit* ), const char *name )
 {
    int j = 0;
    for (int i=0; i<n; i++) {
+      const Outfit *o = outfits[i];
+
+      /* First run filter. */
       if ((filter != NULL) && !filter(outfits[i]))
          continue;
 
+      /* Try to match name somewhere. */
       if (name!=NULL) {
-         if ((SDL_strcasestr( _(outfits[i]->name), name )==NULL) &&
-               (SDL_strcasestr( _(outfits[i]->typename), name)==NULL))
+         if ((SDL_strcasestr(_(o->name), name)==NULL) &&
+               ((o->typename==NULL) || (SDL_strcasestr(_(o->typename), name)==NULL)))
             continue;
       }
 
       /* Shift matches downward. */
-      outfits[j] = outfits[i];
-      j++;
+      outfits[j++] = o;
    }
 
    return j;
