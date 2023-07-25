@@ -103,7 +103,10 @@ function create()
       misn.finish(false)
    end
 
-   if not misn.claim ( intsys ) then
+   local claimsys = {intsys} -- Exclusive claim
+   tmerge( claimsys, zlk_list ) -- can be inclusive
+   tmerge( claimsys, emp_list ) -- can be inclusive
+   if not misn.claim( claimsys ) then -- TODO only exclusively claim intsys, and inclusively claim the rest
       misn.finish(false)
    end
 
@@ -297,7 +300,7 @@ end
 
 function enter()
    -- Intercept the ship
-   if mem.stage == 1 and system.cur() == intsys then
+   if mem.stage==1 and system.cur()==intsys then
       mem.stand0 = fzlk:playerStanding() -- To reset it after the fight
 
       pilot.toggleSpawn(false)
