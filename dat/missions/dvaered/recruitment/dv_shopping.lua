@@ -56,7 +56,7 @@ local solPort = portrait.getMil("Dvaered")
 
 function create()
    mem.godpnt, mem.godsys  = spob.getS("Zhiru") -- Target of the escort
-   mem.tripnt, mem.trisys  = spob.getS("Darkshed") -- Where you meet the trickster
+   mem.tripnt, mem.trisys  = spob.getS("Shangris Station") -- Where you meet the trickster
 
    if not misn.claim({mem.godsys,mem.trisys}) then misn.finish(false) end -- Claim
 
