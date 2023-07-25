@@ -24,6 +24,8 @@ local pilotai = require "pilotai"
 --local love_shaders = require "love_shaders"
 local love_audio = require 'love.audio'
 local reverb_preset = require 'reverb_preset'
+local ccomm = require "common.comm"
+local der = require 'common.derelict'
 
 -- Assumes the trialsys -> Kobopos -> Logania systems are connected
 local trialspb, trialsys = spob.getS("Jade Court")
@@ -101,6 +103,7 @@ She sort of slumps at the wall, you're not sure if she's still concious.]]))
    hook.enter("enter")
 end
 
+local pinkdemon
 function enter ()
    local scur = system.cur()
    if scur==trialsys and mem.state==0 then
@@ -144,7 +147,20 @@ function enter ()
       hook.timer( 7, "spawn bogeys" )
       mem.state=1
    --elseif scur==badsys then
-   --elseif scur==destsys then
+   elseif scur==destsys then
+
+      pilot.clear()
+      pilot.toggleSpawn(false)
+
+      local pos = vec2.new( 5e3, 6e3 )
+      pinkdemon = minerva.pink_demon( pos, {stealth=true} )
+      hook.pilot( pinkdemon, "board", "maikki_board" )
+      hook.pilot( pinkdemon, "hail", "maikki_hail" )
+      hook.pilot( pinkdemon, "discovered", "maikki_discovered" )
+      pinkdemon:control(true)
+      pinkdemon:stealth()
+      pinkdemon:setInvincible(true)
+      pinkdemon:setFriendly(true)
    end
 end
 
@@ -181,4 +197,38 @@ function spawn_bogeys ()
 
    -- They keep on coming!
    hook.timer( 7, "spawn_bogeys" )
+end
+
+function maikki_discovered ()
+   hook.timer( 5, "maikki_hailPlayer" )
+   pinkdemon:hailPlayer()
+end
+
+function maikki_hailPlayer ()
+end
+
+function maikki_hail ()
+   vn.clear()
+   vn.scene()
+   local p = ccomm.newCharacter( vn, pinkdemon )
+   vn.transition()
+
+   p(_([[]]))
+
+   vn.run()
+end
+
+function maikki_board ()
+   vn.clear()
+   vn.scene()
+   --[[
+   local zuri = vn.newCharacter( minerva.vn_zuri() )
+   love_audio.setEffect( "reverb_sad", reverb_preset.drugged() )
+   vn.music( minerva.loops.pirate, {pitch=0.6, effect="reverb_sad"} )
+   --]]
+   vn.sfx( der.sfx.board )
+   vn.transition()
+
+   vn.sfx( der.sfx.unboard )
+   vn.run()
 end
