@@ -600,7 +600,7 @@ int outfits_filter( const Outfit **outfits, int n,
       /* Try to match name somewhere. */
       if (name!=NULL) {
          if ((SDL_strcasestr(_(o->name), name)==NULL) &&
-               ((o->typename==NULL) || (SDL_strcasestr(_(o->typename), name)==NULL)))
+               (SDL_strcasestr(_(outfit_getType(o)), name)==NULL))
             continue;
       }
 
