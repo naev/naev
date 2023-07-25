@@ -180,7 +180,7 @@ function optimize.goodness_default( o, p )
    local w = goodness_special[o.name] or 1
    local g = p.constant + w*(base + p.move*move + p.health*health + p.energy*energy + p.weap*weap + p.ew*ew)
    --print(string.format("% 32s [%6.3f]: base=%6.3f, move=%6.3f, health=%6.3f, weap=%6.3f, ew=%6.3f", o.name, g * (p.prefer[o.name] or 1), w*base, w*move, w*health, w*weap, w*ew))
-   return g * (p.prefer[o.name] or 1)
+   return g * (p.prefer[o.name] or p.prefer[o.type] or 1)
 end
 
 
