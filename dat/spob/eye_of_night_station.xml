@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Eye of Night Station">
  <display>Ruined Station</display>
- <pos x="8314" y="-21828"/>
+ <pos x="8314.000000" y="-21828.000000"/>
  <GFX>
   <space>001.webp</space>
   <exterior>station_scene.webp</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>0</base>
-  <bonus>0</bonus>
+  <base>0.000000</base>
+  <bonus>0.000000</bonus>
   <range>0</range>
  </presence>
  <general>
@@ -20,6 +20,7 @@
    <land/>
    <nomissionspawn/>
   </services>
+  <commodities/>
   <description>An eerily quiet station. Although it seems to be fully functional, it's almost as like everyone onboard was mysteriously vanished an instant before you arrived. Why is there nobody here?</description>
  </general>
  <tags>

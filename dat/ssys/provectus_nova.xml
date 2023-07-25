@@ -13,7 +13,7 @@
   <spob_virtual>Trade Lane (Za'lek)</spob_virtual>
  </spobs>
  <jumps>
-  <jump target="Holly">
+  <jump target="Goddard">
    <autopos/>
    <hide>0.000000</hide>
   </jump>
