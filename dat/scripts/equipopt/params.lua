@@ -20,7 +20,8 @@ function params.default( overwrite )
       -- Range of type, this is dangerous as minimum values could lead to the
       -- optimization problem not having a solution with high minimums
       type_range  = {
-         ["Launcher"] = { max=2 },
+         ["Launcher"] = { max=2 }, -- typebroad
+         ["Point Defense"] = { max=2 }, -- typename
       },
       -- Outfit names that the pilot should prefer (multiplies weights)
       prefer = {
