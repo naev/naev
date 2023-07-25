@@ -637,6 +637,7 @@ static int pilotL_choosePoint( lua_State *L )
  *    @luatparam[opt] table parameters Table of extra keyword arguments. Supported arguments:
  *                    "ai" (string): AI to give the pilot. Defaults to the faction's AI.
  *                    "naked" (boolean): Whether or not to have the pilot spawn without outfits. Defaults to false.
+ *                    "stealth" (boolean): Whether or not to have the pilot spawn in stealth mode. Defaults to false.
  *    @luatreturn Pilot The created pilot.
  * @luafunc add
  */
