@@ -76,6 +76,12 @@ function params.merchant( overwrite )
       t_range     = 1e3,
       cargo       = 2,
       forward     = 0.5, -- Less forward weapons
+      prefer      = {
+         ["Point Defense"] = 1.1,
+         ["Fighter Bay"] = 1.1,
+         ["Bolt Cannon"] = 0.9,
+         ["Beam Cannon"] = 0.9,
+      },
    }, overwrite )
 end
 
