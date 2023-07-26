@@ -17,7 +17,7 @@
 --]]
 local minerva = require "common.minerva"
 local vn = require 'vn'
---local vni = require 'vnimage'
+local vni = require 'vnimage'
 local fmt = require "format"
 --local lmisn = require "lmisn"
 local pilotai = require "pilotai"
@@ -109,6 +109,7 @@ function enter ()
    if scur==trialsys and mem.state==0 then
       local fct = faction.get("Empire")
 
+      -- Soft clearing should make things feel a bit more alive
       pilotai.clear()
 
       local function add_blockade( jp )
@@ -205,7 +206,6 @@ function spawn_bogeys ()
 end
 
 function maikki_discovered ()
-   pinkdemon:setFriendly(true)
    hook.timer( 5, "maikki_hailPlayer" )
 end
 
@@ -247,8 +247,33 @@ function maikki_board ()
    love_audio.setEffect( "reverb_sad", reverb_preset.drugged() )
    vn.music( minerva.loops.pirate, {pitch=0.6, effect="reverb_sad"} )
    --]]
+   local pir1 = vn.newCharacter( _("Pirate A"), {image=vni.pirate(), pos="left"} )
+   local pir2 = vn.newCharacter( _("Pirate B"), {image=vni.pirate(), pos="right"} )
+   local unknown = vn.newCharacter( _("???"), {color=minerva.maikkiP.colour} )
    vn.sfx( der.sfx.board )
-   vn.transition()
+   vn.transition( "slideup" )
+
+   vn.na(fmt.f(_([[You dock with the {ship}, and as soon as the airlock opens, you are greeted with a swarm of pirates with weapons in front of them.]]),
+      {ship=pinkdemon}))
+   vn.menu{
+      {_([[Throw your hands in the air.]]), "01_cont"},
+      {_([[Try to tackle the pirates.]]), "01_cont"},
+      {_([[Draw your weapon.]]), "01_cont"},
+   }
+
+   vn.label("01_cont")
+   unknown(_([["STOOOOOOOOOOOOOOOOOOOOP!"
+A powerful booming voice echoes through your ship, instantly defusing the situation.]]))
+
+   -- Move the pirates out of the way
+   vn.move( pir1, -1 )
+   vn.move( pir2, 2 )
+
+   vn.scene()
+   local maikki = minerva.vn_maikkiP()
+   vn.music( minerva.loops.maikki ) -- TODO more aggressive
+   vn.transition( "slideup" )
+   maikki(_([[]]))
 
    vn.sfx( der.sfx.unboard )
    vn.run()
