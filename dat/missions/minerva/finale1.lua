@@ -146,9 +146,14 @@ function enter ()
 
       hook.timer( 7, "spawn bogeys" )
       mem.state=1
-   --elseif scur==badsys then
-   elseif scur==destsys then
+   elseif scur==badsys then
+      -- Just some random patrols here and there, player can stealth or brute force through
+      pilot.clear()
+      pilot.toggleSpawn(false)
 
+
+   elseif scur==destsys then
+      -- All's quiet on the front
       pilot.clear()
       pilot.toggleSpawn(false)
 
@@ -160,7 +165,6 @@ function enter ()
       pinkdemon:control(true)
       pinkdemon:stealth()
       pinkdemon:setInvincible(true)
-      pinkdemon:setFriendly(true)
    end
 end
 
@@ -200,11 +204,12 @@ function spawn_bogeys ()
 end
 
 function maikki_discovered ()
+   pinkdemon:setFriendly(true)
    hook.timer( 5, "maikki_hailPlayer" )
-   pinkdemon:hailPlayer()
 end
 
 function maikki_hailPlayer ()
+   pinkdemon:hailPlayer()
 end
 
 function maikki_hail ()
@@ -213,9 +218,24 @@ function maikki_hail ()
    local p = ccomm.newCharacter( vn, pinkdemon )
    vn.transition()
 
-   p(_([[]]))
+   p(_([["I see you made it past the patrols in {sys}. Talk about bad timing for them to be doing military exercises. Luck is not in our favour."]]))
+   vn.menu{
+      {_([["Who are you?"]]), "01_cont"},
+      {_([["It was a drag."]]), "01_cont"},
+      {_([["You're Zuri's colleague?"]]), "01_cont"},
+      {_([["Glad to be here."]]), "01_cont"},
+      {_([["…"]]), "01_cont"},
+   }
+
+   vn.label("01_cont")
+   p(_([["Come here and board and we can talk."]]))
 
    vn.run()
+
+   pinkdemon:setActiveBoard(true)
+   misn.osdCreate{
+      fmt.f(_("Board the {ship}"),{ship=pinkdemon}),
+   }
 end
 
 function maikki_board ()
