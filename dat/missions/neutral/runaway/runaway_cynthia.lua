@@ -82,7 +82,10 @@ You wonder who she is, but you dare not ask. Do you accept?]]),
 
    misn.accept()
 
-   misn.osdCreate(_("The Runaway"), {_("Deliver Cynthia to Zhiru in the Goddard system")})
+   misn.osdCreate(_("The Runaway"), {
+      fmt.f(_("Deliver Cynthia to {spb} ({sys} system)"),
+         {spb=targetworld, sys=targetworld_sys}),
+   })
    misn.osdActive(1)
 
    local c = commodity.new( cargoname, cargodesc )
@@ -109,7 +112,8 @@ function land ()
    vntk.msg( _("The Runaway"), _([[As you walk into the docking bay, she warns you to look out behind you.
 When you look back to where she was, nothing remains but a tidy pile of credit chips and a worthless pendant.]]).."\n\n"..fmt.reward(reward) )
 
-   neu.addMiscLog( _([[You gave a teenage girl named Cynthia a lift to Zhiru. When you got there, she suddenly disappeared, leaving behind a tidy pile of credit chips and a worthless pendant.]]) )
+   neu.addMiscLog(fmt.f(_([[You gave a teenage girl named Cynthia a lift to {spb}. When you got there, she suddenly disappeared, leaving behind a tidy pile of credit chips and a worthless pendant.]])),
+      {spb=targetworld})
 
    misn.finish(true)
 end
