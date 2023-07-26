@@ -271,6 +271,16 @@ function minerva.pink_demon( pos, params )
    return p
 end
 
+function minerva.fct_wildones()
+   local id = "minerva_wildones"
+   local f = faction.exists( id )
+   if f then
+      return f
+   end
+   return faction.dynAdd( "Wild Ones", id, _("Wild Ones"),
+         {clear_enemies=true, clear_allies=true, player=0} )
+end
+
 --[[
 List of mission variables:
 

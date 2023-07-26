@@ -159,6 +159,7 @@ function enter ()
 
       local pos = vec2.new( 5e3, 6e3 )
       pinkdemon = minerva.pink_demon( pos, {stealth=true} )
+      pinkdemon:setFaction( minerva.fct_wildones() ) -- Non-hostile faction
       hook.pilot( pinkdemon, "board", "maikki_board" )
       hook.pilot( pinkdemon, "hail", "maikki_hail" )
       hook.pilot( pinkdemon, "discovered", "maikki_discovered" )
