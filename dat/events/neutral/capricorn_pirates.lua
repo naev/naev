@@ -93,7 +93,7 @@ function pirate_spam ()
       return
    end
 
-   pirboss:broadcast(_([["Har har har. Nothing like system domination!"]]))
+   pirboss:broadcast(_("Har har har. Nothing like system domination!"))
    player.autonavReset( 5 )
 end
 
