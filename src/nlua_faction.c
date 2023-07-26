@@ -655,7 +655,7 @@ static int factionL_tags( lua_State *L )
  *    @luatparam Faction|nil base Faction to base it off of or nil for new faction.
  *    @luatparam string name Name to give the faction.
  *    @luatparam[opt] string display Display name to give the faction.
- *    @luatparam[opt] table params Table of parameters. Options include "ai" (string) to set the AI to use, "clear_allies" (boolean) to clear all allies, and "clear_enemies" (boolean) to clear all enemies.
+ *    @luatparam[opt] table params Table of parameters. Options include "ai" (string) to set the AI to use, "clear_allies" (boolean) to clear all allies, "clear_enemies" (boolean) to clear all enemies, "player" (number) to set the default player standing, "colour" (string|colour) which represents the factional colours.
  * @luafunc dynAdd
  */
 static int factionL_dynAdd( lua_State *L )
