@@ -3257,6 +3257,7 @@ dat/scripts/common/derelict.lua
 dat/scripts/common/dvaered.lua
 dat/scripts/common/empire.lua
 dat/scripts/common/ferals.lua
+dat/scripts/common/foodbiz.lua
 dat/scripts/common/frontier.lua
 dat/scripts/common/frontier_war.lua
 dat/scripts/common/gauntlet.lua

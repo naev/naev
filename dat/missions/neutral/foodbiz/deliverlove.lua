@@ -5,7 +5,18 @@
  <priority>4</priority>
  <chance>50</chance>
  <location>Bar</location>
- <spob>Zeo</spob>
+ <cond>
+   local t = spob.cur():tags()
+   if t.refugee or t.poor or t.restricted then
+      return false
+   end
+   local _spb, sys = spob.getS("Zhiru")
+   local d = sys:jumpDist()
+   if d < 3 and d > 7 then
+      return false
+   end
+   return require("misn_test").reweight_active()
+ </cond>
  <notes>
   <tier>1</tier>
  </notes>
@@ -112,7 +123,7 @@ function accept ()
    if not accepted then return end
 
    -- Add Mission Cargo and set up the computer
-
+   var.push("foodbiz_spb",spob.cur():nameRaw()) -- Be flexible with the location
    misn.accept()
    local c = commodity.new( cargoname, cargodesc )
    misn.cargoAdd( c, 1 )
