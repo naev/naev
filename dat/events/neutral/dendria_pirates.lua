@@ -74,7 +74,7 @@ function pirate_spam ()
       return
    end
 
-   pirboss:broadcast(_([["This system is now mine! Prepare to be dominated!"]]))
+   pirboss:broadcast(_("This system is now mine! Prepare to be dominated!"))
    player.autonavReset( 5 )
 
    hook.timer( 3, "pirate_check" )
@@ -116,7 +116,7 @@ function pirate_hail ()
       local opts = {
          {fmt.f(_([[Pay {creds} (You have {money}).]]),{creds=fmt.credits(cost), money=fmt.credits(player.credits())}), "pay"},
          {_([["Isn't this Empire space?"]]), "space"},
-         {_([["'{pirate}' doesn't sound very intimidating."]]), "taunt"},
+         {fmt.f(_([["'{pirate}' doesn't sound very intimidating."]]),{pirate=piratename}), "taunt"},
          {_([[Close channel.]]), "leave"},
       }
       if pir.maxClanStanding() > 0 or pir.isPirateShip(player.pilot()) then
