@@ -12,7 +12,7 @@
    end
    local _spb, sys = spob.getS("Zhiru")
    local d = sys:jumpDist()
-   if d < 3 and d > 7 then
+   if d &lt; 3 and d &gt; 7 then
       return false
    end
    return require("misn_test").reweight_active()
