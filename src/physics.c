@@ -18,10 +18,10 @@
 static double angle_cleanup( double a )
 {
    if (FABS(a) >= 2.*M_PI) {
-      double na = fmod(a, 2.*M_PI);
-      if (a < 0.)
-         na += 2.*M_PI;
-      return  na;
+      a = fmod(a, 2.*M_PI);
+   }
+   if (a < 0.) {
+       a += 2.*M_PI;
    }
    return a;
 }
