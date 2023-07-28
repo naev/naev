@@ -58,7 +58,12 @@ local function star_add( added, num_added )
    local move  = 0.02 + nmove
    local scale = 1.0 - (1 - nmove/0.2)/5
    scale = scale * 0.75
-   bkg.image( img, x, y, move, scale ) -- On the background
+   -- Now, none of this makes sense, the "star dust" should be rendered on top
+   -- of the star because it moves faster the stars and should be closer,
+   -- however, it seems like this is actually a bit jarring, even though it's
+   -- more correct, so we just mess things up and make the star render in front
+   -- of the space dust. Has to move faster than the nebula to not be really really weird.
+   bkg.image( img, x, y, move, scale, nil, nil, true )
    return num
 end
 

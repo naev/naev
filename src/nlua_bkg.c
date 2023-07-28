@@ -78,8 +78,8 @@ static int bkgL_clear( lua_State *L )
  *    @luatparam[opt=0] number move Fraction of a pixel to move when the player moves one pixel. A value of 0 indicates static and centered.
  *    @luatparam[opt=1] number scale How much to scale the image.
  *    @luatparam[opt=0] Rotation angle, in radians.
- *    @luatparam[opt] Colour col Colour to tint image.
- *    @luatparam[opt=false] boolean foreground Whether or not it should be rendered above the stars.
+ *    @luatparam[opt=nil] Colour col Colour to tint image.
+ *    @luatparam[opt=false] boolean foreground Whether or not it should be rendered above the space dust.
  *    @luatreturn number ID of the background.
  * @luafunc image
  */
