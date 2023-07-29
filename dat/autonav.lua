@@ -356,13 +356,13 @@ local function autonav_instant_jump_final_approach ()
 
    -- The reference angle is the running direction of player.
    local pp_vel = pp:vel()
-   local ref_vec = vec2.new( pp_vel:get() ):normalize()
+   local ref_vec = pp_vel:normalize() -- does a copy
 
    local x = vec2.dot( ref_vec, jmp_r_pos )
 
    if x < 0 then
-     -- player passed by the jump point.
-     return true
+      -- player passed by the jump point.
+      return true
    end
 
    -- Estimate the turning time and the running distance.
