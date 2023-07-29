@@ -13,6 +13,10 @@ endif
 if meson.get_compiler('c', native: true).has_argument('-Wno-implicit-fallthrough')
    add_project_arguments('-Wno-implicit-fallthrough', language : 'c', native: true)
 endif
+# And let's not warn about all of the casts in the code base.
+if meson.get_compiler('c').has_argument('-Wno-pedantic')
+   add_project_arguments('-Wno-pedantic', language : 'c')
+endif
 
 libm = cc.find_library('m', required : false)
 libdl = cc.find_library('dl', required : false)

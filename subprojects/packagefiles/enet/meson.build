@@ -1,7 +1,7 @@
 project('enet', 'c', version: '1.3.17')
 
 cc = meson.get_compiler('c')
-c_args = cc.get_supported_arguments(['-Wno-maybe-uninitialized', '-Wno-unused-parameter'])
+c_args = cc.get_supported_arguments(['-Wno-maybe-uninitialized', '-Wno-pedantic', '-Wno-unused-parameter'])
 add_project_arguments(c_args, language: 'c')
 
 if cc.has_function('fcntl')

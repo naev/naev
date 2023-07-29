@@ -1,7 +1,7 @@
-project('pcre2', 'c', version: '10.41', license: 'BSD-3')
+project('pcre2', 'c', version: '10.42', license: 'BSD-3')
 
 c_compiler = meson.get_compiler('c')
-c_args = c_compiler.get_supported_arguments(['-Wno-parentheses'])
+c_args = c_compiler.get_supported_arguments(['-Wno-overlength-strings', '-Wno-parentheses'])
 add_project_arguments(c_args, language : 'c')
 
 pcre2_h = configure_file(input : 'src/pcre2.h.generic',
