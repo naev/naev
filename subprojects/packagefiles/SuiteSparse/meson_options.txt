@@ -1,0 +1,1 @@
+option('blas_integer', type: 'string' , value:'int32_t' , description: 'Override this if your BLAS library uses 64-bit indices.')

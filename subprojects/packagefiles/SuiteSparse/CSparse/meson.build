@@ -1,4 +1,5 @@
-source = files([
+source = [
+   configure_file(input: 'Config/cs.h.in', output: 'cs.h', configuration: config),
    'Source/cs_add.c',
    'Source/cs_amd.c',
    'Source/cs_chol.c',
@@ -50,7 +51,7 @@ source = files([
    'Source/cs_usolve.c',
    'Source/cs_util.c',
    'Source/cs_utsolve.c',
-])
+]
 
 include = include_directories([
    'Include',
