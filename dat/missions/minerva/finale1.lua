@@ -242,11 +242,6 @@ end
 function maikki_board ()
    vn.clear()
    vn.scene()
-   --[[
-   local zuri = vn.newCharacter( minerva.vn_zuri() )
-   love_audio.setEffect( "reverb_sad", reverb_preset.drugged() )
-   vn.music( minerva.loops.pirate, {pitch=0.6, effect="reverb_sad"} )
-   --]]
    local pir1 = vn.newCharacter( _("Pirate A"), {image=vni.pirate(), pos="left"} )
    local pir2 = vn.newCharacter( _("Pirate B"), {image=vni.pirate(), pos="right"} )
    local unknown = vn.newCharacter( _("???"), {color=minerva.maikkiP.colour} )
@@ -262,6 +257,9 @@ function maikki_board ()
    }
 
    vn.label("01_cont")
+   --love_audio.setEffect( "reverb_sad", reverb_preset.drugged() )
+   --vn.music( minerva.loops.pirate, {pitch=0.6, effect="reverb_sad"} )
+   vn.music( minerva.loops.maikki ) -- TODO more aggressive
    unknown(_([["STOOOOOOOOOOOOOOOOOOOOP!"
 A powerful booming voice echoes through your ship, instantly defusing the situation.]]))
 
@@ -271,9 +269,35 @@ A powerful booming voice echoes through your ship, instantly defusing the situat
 
    vn.scene()
    local maikki = minerva.vn_maikkiP()
-   vn.music( minerva.loops.maikki ) -- TODO more aggressive
    vn.transition( "slideup" )
-   maikki(_([[]]))
+   vn.na(_([[The pirates give way and the source of the powerful voice appears before you. It's a small recognizable figure that you know quite well.]]))
+   vn.menu{
+      {_([["Maikki?"]]), "02_cont"},
+      {_([["Pirate?"]]), "02_cont"},
+      {_([["…"]]), "02_cont"},
+   }
+
+   vn.label("02_cont")
+   maikki(_([["Ah ha ha! Surprised to see me in my true form? Never thought a Pirate Lord could enjoy parfaits? Arrr!"
+She winks at you.]]))
+   maikki(_([["Speaking of which, where's Zuri?"]]))
+   vn.menu{
+      {_([["She's seen better days."]]), "03_cont"},
+      {_([["She's bleeding out."]]), "03_cont"},
+   }
+
+   vn.label("03_cont")
+   vn.na(fmt.f(_([[You quickly explain the situation and Maikki quickly orders her troops to pick up Zuri and Kex and take them to the infirmary aboard the {ship}, which seems to be surprisingly state of the art. The pirate head surgeon quickly gets Zuri prepped up and starts running analysis.]]),
+      {ship=pinkdemon}))
+    vn.na(_([[As Kex does not seem to have life threatening issues, you are left with him and Maikki in the waiting room.]]))
+    maikki(_([[Maikki looks fondly at Kex and speaks softly, "Oh father, why did it have to be this way?"]]))
+    vn.menu{
+      {_([["You knew?"]]), "04_cont"},
+      {_([["Father?"]]), "04_cont"},
+    }
+
+    vn.label("04_cont")
+    maikki(_([[]]))
 
    vn.sfx( der.sfx.unboard )
    vn.run()
