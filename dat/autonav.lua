@@ -2,7 +2,7 @@ local fmt = require "format"
 local lanes = require "ai.core.misc.lanes"
 
 local autonav, target_pos, target_spb, target_plt, instant_jump
-local autonav_jump_approach, autonav_jump_brake
+local autonav_jump_delay, autonav_jump_approach, autonav_jump_brake
 local autonav_pos_approach
 local autonav_spob_approach, autonav_spob_land_approach, autonav_spob_land_brake
 local autonav_plt_follow, autonav_plt_board_approach
@@ -326,6 +326,23 @@ local function autonav_approach_vel( pos, vel, radius )
    return pos:dist( pp:pos() )
 end
 
+-- Jumped into a system and delaying until velocity is somewhat normal
+function autonav_jump_delay ()
+   -- Ignore autonav until speed is acceptable
+   local pp = player.pilot()
+   if pp:vel():mod() > 1.5 * pp:speedMax() then
+      return
+   end
+
+   -- Determine how to do lanes
+   if uselanes_jump then
+      path = lanes.getRouteP( pp, target_pos )
+   else
+      path = {target_pos}
+   end
+   autonav = autonav_jump_approach
+end
+
 -- Approaching a jump point, target position is stored in target_pos
 function autonav_jump_approach ()
    local pp = player.pilot()
@@ -620,11 +637,7 @@ function autonav_enter ()
       target_pos = pos + (pp:pos()-pos):normalize( math.max(0.8*d, d-30) )
       if uselanes_jump then
          lanes.clearCache( pp )
-         path = lanes.getRouteP( pp, target_pos )
-         table.remove( path, 1 ) -- Remove first node
-      else
-         path = {target_pos}
       end
-      autonav = autonav_jump_approach
+      autonav = autonav_jump_delay
    end
 end
