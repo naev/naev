@@ -345,12 +345,54 @@ function autonav_jump_approach ()
    end
 end
 
+-- More approaching a jump point and turning in the direction of the jump out.
+local function autonav_instant_jump_final_approach ()
+   -- This function assumes there is the jump point in the front of player.
+   local pp = player.pilot()
+
+   local jmp = pp:navJump()
+   local jmp_pos = jmp:pos()
+   local jmp_r_pos = jmp_pos - pp:pos()
+
+   -- The reference angle is the running direction of player.
+   local pp_vel = pp:vel()
+   local ref_vec = vec2.new( pp_vel:get() ):normalize()
+
+   local x = vec2.dot( ref_vec, jmp_r_pos )
+
+   if x < 0 then
+     -- player passed by the jump point.
+     return true
+   end
+
+   -- Estimate the turning time and the running distance.
+   local jmpout_dir = -jmp:angle()
+   local diff_dir = ((pp:dir() - jmpout_dir) / (2.0 * math.pi) + 0.5) % 1.0 - 0.5
+   local turn_time = math.abs(diff_dir) * 360 / pp:turn()
+   local turn_dist = turn_time * vec2.dot( ref_vec, pp_vel )
+
+   -- The distance to the position where player can jump out.
+   local y = vec2.cross( ref_vec, jmp_r_pos )
+   local jmp_dist = math.sqrt( x * x + y * y ) - jmp:jumpDist( pp )
+
+   if jmp_dist <= turn_dist then
+      -- Turning in the direction of the jump out.
+      ai.accel(0)
+      ai.face( jmpout_dir )
+   else
+      -- Approaching the jump point.
+      ai.face( jmp_pos )
+      ai.accel(1)
+   end
+   return false
+end
+
 -- Breaking at a jump point, target position is stored in target_pos
 function autonav_jump_brake ()
    local ret
    -- With instant jumping we can just focus on getting in range
    if instant_jump then
-      ret = autonav_approach( target_pos, true )
+      ret = autonav_instant_jump_final_approach()
    else
       ret = ai.brake()
    end
