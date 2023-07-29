@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="INSS-3">
- <pos x="-540.665429" y="14054.067443"/>
+ <pos x="12889.149175" y="6520.269007"/>
  <GFX>
   <space>station-agriculture.webp</space>
   <exterior>forest.webp</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>6.666667</base>
-  <bonus>3.333333</bonus>
+  <base>6.666670</base>
+  <bonus>3.333330</bonus>
   <range>1</range>
  </presence>
  <general>
@@ -22,7 +22,7 @@
    <commodity/>
   </services>
   <commodities/>
-  <description>Somewhat curiously, Imperial Nutrient Supply Station 3 is actually owned by House Dvaered. Though initially constructed by the Empire, the station was ceded to House Dvaered as part of its official inception. INSS-3 still provides food for the Imperial colonies at Tau Prime and Draconis, though the price of food there has gone up by a fair margin ever since the change in ownership.</description>
+  <description>Somewhat curiously, Imperial Nutrient Supply Station 3 is actually owned by House Dvaered. Though initially constructed by the Empire, the station was ceded to House Dvaered as part of its official inception. INSS-3 still provides food for the Imperial colonies at Virgo and Van Maanen, though the price of food there has gone up by a fair margin ever since the change in ownership.</description>
   <bar>The bar is not much to speak of. The Dvaered have shown a greater interest in farming than in public relations, so the spaceport bar has been largely neglected. It's a wonder the basic facilities are even functional at all.</bar>
  </general>
  <tags>
