@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-07-16 01:21+0900\n"
-"PO-Revision-Date: 2023-04-17 00:52+0000\n"
-"Last-Translator: Theodore DA <my.super.garbage.collector@gmail.com>\n"
+"PO-Revision-Date: 2023-07-31 00:10+0000\n"
+"Last-Translator: John Donne <akheron@zaclys.net>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.17-dev\n"
+"X-Generator: Weblate 5.0-dev\n"
 
 #: physfs.c:1
 msgid "no error"
@@ -1438,7 +1438,7 @@ msgstr ""
 
 #: dat/effects/ambush_hunter.xml:3
 msgid "The ship has caught other ships by surprise!"
-msgstr "Le vaisseau à pris les autres par surprise !"
+msgstr "Le vaisseau à pris les autres vaisseaux par surprise !"
 
 #: dat/effects/antimatter_taint.xml:2
 msgid "Antimatter Taint"
@@ -1454,7 +1454,7 @@ msgstr ""
 #: dat/outfits/flow/abilities/astral_projection.xml:2
 #: dat/outfits/flow/abilities/astral_projection.lua:57
 msgid "Astral Projection"
-msgstr ""
+msgstr "Projection Astrale"
 
 #: dat/effects/astral_projection.xml:3
 #, fuzzy
@@ -1465,15 +1465,16 @@ msgstr "Les boucliers sont en train d'être boostées."
 #: dat/effects/avatar_of_sirichana.xml:2
 #: dat/outfits/flow/abilities/avatar_of_sirichana.xml:2
 msgid "Avatar of Sirichana"
-msgstr ""
+msgstr "Avatar de Sirichana"
 
 #: dat/effects/avatar_of_sirichana.xml:3
 msgid "You are an avatar of Sirichana!"
-msgstr ""
+msgstr "Vous êtes un avatar de Sirichana !"
 
 #: dat/effects/blink.xml:2
+#, fuzzy
 msgid "Blink"
-msgstr ""
+msgstr "Clignement"
 
 #: dat/effects/blink.xml:3
 #, fuzzy
@@ -1536,8 +1537,9 @@ msgid "Fading in!"
 msgstr ""
 
 #: dat/effects/fadeout.xml:2
+#, fuzzy
 msgid "Fade-Out"
-msgstr ""
+msgstr "Disparition"
 
 #: dat/effects/fadeout.xml:3
 #, fuzzy
@@ -1567,11 +1569,13 @@ msgstr "Rage sauvage I"
 
 #: dat/effects/fractured_reality.xml:2
 msgid "Fractured Reality"
-msgstr ""
+msgstr "Réalité fragmentée"
 
 #: dat/effects/fractured_reality.xml:3
 msgid "Reality is not really what it seems! Or is this the true reality?"
 msgstr ""
+"La réalité n'est pas vraiment ce qu'elle semble être ! Ou est-ce la "
+"véritable réalité ?"
 
 #: dat/effects/hypergate_enter.xml:2
 msgid "Hypergate Enter"
@@ -1613,11 +1617,11 @@ msgstr "Brûlure plasma II"
 
 #: dat/effects/psychic_divinity.xml:2
 msgid "Psychic Divinity"
-msgstr ""
+msgstr "Divinité psychique"
 
 #: dat/effects/psychic_orb_off.xml:2
 msgid "Psychic Orb Off"
-msgstr ""
+msgstr "Orbe psychique inactif"
 
 #: dat/effects/psychic_orb_off.xml:3
 msgid "A psychic orb that is off."
@@ -1625,7 +1629,7 @@ msgstr ""
 
 #: dat/effects/psychic_orb_on.xml:2
 msgid "Psychic Orb On"
-msgstr ""
+msgstr "Orbe psychique activé"
 
 #: dat/effects/psychic_orb_on.xml:3
 msgid "A psychic orb that is on."
@@ -1641,7 +1645,7 @@ msgstr "Le rayon Valkyrie épuise vos boucliers !"
 
 #: dat/effects/shieldaura.xml:2
 msgid "Shield Aura"
-msgstr ""
+msgstr "Aura de bouclier"
 
 #: dat/effects/shieldaura.xml:3
 msgid "Under the effects of a shield aura."
@@ -1980,7 +1984,7 @@ msgstr "Mineur"
 
 #: dat/factions/nasin.xml:2
 msgid "Nasin"
-msgstr ""
+msgstr "Nasin"
 
 #: dat/factions/pirate.xml:6
 msgid "Galactic Space Pirates"
@@ -2008,7 +2012,7 @@ msgstr "Protéron"
 
 #: dat/factions/proteron.xml:5
 msgid "Fallen House Proteron"
-msgstr "Maison Perdue De Protéron"
+msgstr "Maison déchue Protéron"
 
 #: dat/factions/proteron.xml:11
 msgid ""
@@ -2100,7 +2104,7 @@ msgstr ""
 
 #: dat/factions/strangelove.xml:2
 msgid "Strangelove"
-msgstr ""
+msgstr "Strangelove"
 
 #: dat/factions/thurion.xml:2
 msgid "Thurion"
@@ -2155,16 +2159,12 @@ msgid "Trader"
 msgstr "Marchand"
 
 #: dat/factions/traders_society.xml:2
-#, fuzzy
-#| msgid "Trader"
 msgid "Traders Society"
-msgstr "Marchand"
+msgstr "Société des Négociants"
 
 #: dat/factions/traders_society.xml:5
-#, fuzzy
-#| msgid "Space Traders Guild"
 msgid "Space Traders Society"
-msgstr "Guilde des Commerçants de l’Espace"
+msgstr "Société des Négociants Spaciaux"
 
 #: dat/factions/traders_society.xml:12
 msgid ""
@@ -2173,6 +2173,11 @@ msgid ""
 "Great Houses, and Soromid. Some of the prominent members include Astra "
 "Vigilis, Mining Vrata, and the Imperial Red Star."
 msgstr ""
+"La Société des Négociants Spaciaux est une organisation dont l'influence "
+"s'étend à travers toutes les autres guildes, et qui agit pour protéger leurs "
+"intérêts contre l'Empire, les Grandes Maisons et Soromid. Astra Vigilis, "
+"Mining Vrata et l'Étoile Rouge Impériale sont quelques-uns de ses membres "
+"éminents."
 
 #: dat/factions/wild_ones.xml:2
 #, fuzzy
@@ -2275,7 +2280,7 @@ msgstr ""
 
 #: dat/outfits/accessory/black_cat_doll.xml:2
 msgid "Black Cat Doll"
-msgstr "Poupée Chat Noir"
+msgstr "Poupée chat noir"
 
 #: dat/outfits/accessory/black_cat_doll.xml:11
 msgid ""
@@ -2320,7 +2325,7 @@ msgstr ""
 
 #: dat/outfits/accessory/dv_handbook.xml:2
 msgid "Handbook for Dvaered Good Manners"
-msgstr "Livre De Poche Sur Les Bonnes Manières Dvaered"
+msgstr "Manuel sur les bonnes manières Dvaered"
 
 #: dat/outfits/accessory/dv_handbook.xml:11
 msgid ""
@@ -2357,7 +2362,7 @@ msgstr ""
 #: dat/outfits/accessory/fuzzy_dice.xml:12
 #: dat/outfits/intrinsic/machiavellian_fortune.xml:10
 msgid "#pImproves luck!#0"
-msgstr ""
+msgstr "#pAugmente la chance !#0"
 
 #: dat/outfits/accessory/goatee_marker.xml:2
 #, fuzzy
@@ -2374,16 +2379,18 @@ msgstr ""
 
 #: dat/outfits/accessory/key_chain.xml:2
 msgid "Fancy Key Chain"
-msgstr ""
+msgstr "Porte-clés fantaisie"
 
 #: dat/outfits/accessory/key_chain.xml:11
 msgid ""
 "A small statue of a crossed-eyed gorilla lifting a Goddard Battlecruiser."
 msgstr ""
+"Une petite statue représentant un gorille louchant qui soulève un croiseur "
+"de combat Goddard."
 
 #: dat/outfits/accessory/left_boot.xml:2
 msgid "Left Boot"
-msgstr ""
+msgstr "Botte gauche"
 
 #: dat/outfits/accessory/left_boot.xml:11
 msgid ""
@@ -2391,10 +2398,13 @@ msgid ""
 "and is full of confetti. You're not sure what to do with it, but it might "
 "liven up the ship."
 msgstr ""
+"La botte gauche d'un officiel de haut rang de l'Empire. Elle ne semble pas "
+"vous aller et est remplie de confettis. Vous n'êtes pas certain de savoir "
+"quoi en faire, mais elle pourrait égayer le vaisseau."
 
 #: dat/outfits/accessory/left_boot.xml:13
 msgid "#pSmells funky.#0"
-msgstr ""
+msgstr "#pSent bizarre.#0"
 
 #: dat/outfits/accessory/love_letter.xml:2
 msgid "Love Letter"
@@ -2410,7 +2420,7 @@ msgstr ""
 
 #: dat/outfits/accessory/love_letter.xml:13
 msgid "#rLove is in the air.#0"
-msgstr ""
+msgstr "#rDe l'amour dans l'air.#0"
 
 #: dat/outfits/accessory/pentagram_of_valor.xml:2
 msgid "Pentagram of Valor"
