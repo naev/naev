@@ -374,7 +374,7 @@ local function autonav_instant_jump_final_approach ()
 
    -- The reference angle is the running direction of player.
    local pp_vel = pp:vel()
-   local ref_vec = pp_vel:normalize() -- does a copy
+   local ref_vec = vec2.copy(pp_vel):normalize() -- need to copy
 
    local x = vec2.dot( ref_vec, jmp_r_pos )
 
@@ -390,8 +390,7 @@ local function autonav_instant_jump_final_approach ()
    local turn_dist = turn_time * vec2.dot( ref_vec, pp_vel )
 
    -- The distance to the position where player can jump out.
-   local y = vec2.cross( ref_vec, jmp_r_pos )
-   local jmp_dist = math.sqrt( x * x + y * y ) - jmp:jumpDist( pp )
+   local jmp_dist = jmp_r_pos:dist() - jmp:jumpDist( pp )
 
    if jmp_dist <= turn_dist then
       -- Turning in the direction of the jump out.
