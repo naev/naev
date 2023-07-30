@@ -7,7 +7,7 @@ local autonav_pos_approach
 local autonav_spob_approach, autonav_spob_land_approach, autonav_spob_land_brake
 local autonav_plt_follow, autonav_plt_board_approach
 local autonav_timer, tc_base, tc_mod, tc_max, tc_rampdown, tc_down
-local last_shield, last_armour, map_npath, reset_shield, reset_dist
+local last_shield, last_armour, map_npath, reset_shield, reset_dist, reset_lockon
 local path, uselanes_jump, uselanes_spob
 
 -- Some defaults
@@ -40,6 +40,7 @@ local function autonav_setup ()
    uselanes_spob = var.peek("autonav_uselanes_spob") and not stealth
    reset_shield = var.peek("autonav_reset_shield")
    reset_dist = var.peek("autonav_reset_dist")
+   reset_lockon = true
    player.autonavSetPos()
 
    -- Set time compression maximum
@@ -71,7 +72,7 @@ end
 
 local function shouldResetSpeed ()
    local pp = player.pilot()
-   if pp:lockon() > 0 then
+   if reset_lockon and pp:lockon() > 0 then
       resetSpeed()
       return true
    end

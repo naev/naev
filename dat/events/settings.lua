@@ -13,7 +13,7 @@ local luatk = require "luatk"
 local fmt = require "format"
 
 local settings, uselanes_jump, uselanes_spob, pick_gui
-local reset_dist, reset_shield
+local reset_dist, reset_shield, compr_speed, compr_max
 
 local AUTONAV_MAX_DIST  = 10e3 -- quite a reasonable distance
 local COMPR_SPEED_MIN   = 1e3 -- Old default was 5e3
@@ -32,6 +32,8 @@ function create ()
    end
    reset_shield = var.peek("autonav_reset_shield")
    reset_dist = var.peek("autonav_reset_dist")
+   compr_speed = var.peek("autonav_compr_speed")
+   compr_max = var.peek("autonav_compr_max")
 
    -- Set an info button up
    player.infoButtonRegister( _("Settings"), settings, 1, "A" )
@@ -84,14 +86,14 @@ function settings ()
    y = y + 40
    local txt_compr_speed = luatk.newText( wdw, 20, y, w-40, 20, _("Compression velocity target:") )
    local tw = txt_compr_speed:dimensions()
-   local fad_compr_speed = luatk.newFader( wdw, 40+tw, y, w-70-tw, 30, COMPR_SPEED_MIN, COMPR_SPEED_MAX, nil, function ( _fdr, val )
-      var.push("autonav_compr_speed", val)
+   luatk.newFader( wdw, 40+tw, y, w-70-tw, 30, COMPR_SPEED_MIN, COMPR_SPEED_MAX, compr_speed, function ( _fdr, val )
+      compr_speed = val
    end, {labels=true} )
    y = y + 40
    local txt_compr_max = luatk.newText( wdw, 20, y, w-40, 20, _("Maximum compression:") )
    tw = txt_compr_max:dimensions()
-   local fad_compr_max = luatk.newFader( wdw, 40+tw, y, w-70-tw, 30, COMPR_MIN, COMPR_MAX, nil, function ( _fdr, val )
-      var.push("autonav_compr_max", val)
+   luatk.newFader( wdw, 40+tw, y, w-70-tw, 30, COMPR_MIN, COMPR_MAX, compr_max, function ( _fdr, val )
+      compr_max = val
    end, {labels=true} )
    y = y + 40
    chk_uselanes_jump = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Use patrol lanes when jumping"), nil, uselanes_jump )
@@ -113,8 +115,8 @@ function settings ()
    var.push( "autonav_uselanes_spob", uselanes_spob )
    var.push( "autonav_reset_dist", reset_dist )
    var.push( "autonav_reset_shield", reset_shield )
-   var.push( "autonav_compr_speed", fad_compr_speed:get() )
-   var.push( "autonav_compr_max", fad_compr_max:get() )
+   var.push( "autonav_compr_speed", compr_speed )
+   var.push( "autonav_compr_max", compr_max )
 end
 
 function pick_gui ()
