@@ -255,7 +255,7 @@ function luatk.mousemoved( mx, my )
       if not wgt._pressed then
          wgt.mouseover = inbounds
       end
-      if inbounds and wgt.mmoved then
+      if (inbounds or wgt._pressed) and wgt.mmoved then
          wgt.mmoved( wgt, x-wgt.x, y-wgt.y )
       end
    end
