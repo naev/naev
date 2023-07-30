@@ -11,7 +11,7 @@
  </general>
  <specific type="bolt">
   <lua>outfits/flow/astral_projection/astral_cannon.lua</lua>
-  <gfx type="shader" size="18" col_size="12">particles/chakra.frag</gfx>
+  <gfx type="shader" size="10" col_size="7">particles/chakra.frag</gfx>
   <sound>ion</sound>
   <spfx_shield>ChakraXS</spfx_shield>
   <spfx_armour>ChakraXS</spfx_armour>
