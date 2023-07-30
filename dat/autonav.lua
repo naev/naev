@@ -46,10 +46,7 @@ local function autonav_setup ()
    -- Set time compression maximum
    tc_max = var.peek("autonav_compr_speed") / pp:speedMax()
    local compr_max = var.peek("autonav_compr_max")
-   if compr_max >= 1 then
-      tc_max = math.min( tc_max, compr_max )
-   end
-   tc_max = math.max( 1, tc_max )
+   tc_max = math.max( 1, math.min( tc_max, compr_max ) )
 
    -- Set initial time compression base
    tc_base = player.dt_default() * player.speed()
