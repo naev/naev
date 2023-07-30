@@ -7,7 +7,7 @@ local autonav_pos_approach
 local autonav_spob_approach, autonav_spob_land_approach, autonav_spob_land_brake
 local autonav_plt_follow, autonav_plt_board_approach
 local autonav_timer, tc_base, tc_mod, tc_max, tc_rampdown, tc_down
-local conf, last_shield, last_armour, map_npath
+local last_shield, last_armour, map_npath, reset_shield, reset_dist
 local path, uselanes_jump, uselanes_spob
 
 -- Some defaults
@@ -25,7 +25,6 @@ local function autonav_setup ()
    -- Get player / game info
    local pp = player.pilot()
    instant_jump = pp:shipstat("misc_instant_jump")
-   conf = naev.conf()
 
    -- Some safe defaults
    autonav     = nil
@@ -39,12 +38,15 @@ local function autonav_setup ()
    local stealth = pp:flags("stealth")
    uselanes_jump = var.peek("autonav_uselanes_jump") and not stealth
    uselanes_spob = var.peek("autonav_uselanes_spob") and not stealth
+   reset_shield = var.peek("autonav_reset_shield")
+   reset_dist = var.peek("autonav_reset_dist")
    player.autonavSetPos()
 
    -- Set time compression maximum
-   tc_max = conf.compression_velocity / pp:speedMax()
-   if conf.compression_mult >= 1 then
-      tc_max = math.min( tc_max, conf.compression_mult )
+   tc_max = var.peek("autonav_compr_velocity") / pp:speedMax()
+   local compr_max = var.peek("autonav_compr_max")
+   if compr_max >= 1 then
+      tc_max = math.min( tc_max, compr_max )
    end
    tc_max = math.max( 1, tc_max )
 
@@ -74,8 +76,6 @@ local function shouldResetSpeed ()
       return true
    end
 
-   local reset_dist = conf.autonav_reset_dist
-   local reset_shield = conf.autonav_reset_shield
    local will_reset = (autonav_timer > 0)
 
    local armour, shield = pp:health()

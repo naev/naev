@@ -26,8 +26,8 @@ function create ()
       uselanes_jump = true
       var.push( "autonav_uselanes_jump", true )
    end
-   reset_shield = var.peek("autonav_reset_shield") or 1
-   reset_dist = var.peek("autonav_reset_dist") or 5e3
+   reset_shield = var.peek("autonav_reset_shield")
+   reset_dist = var.peek("autonav_reset_dist")
 
    -- Set an info button up
    player.infoButtonRegister( _("Settings"), settings, 1, "A" )
@@ -44,7 +44,7 @@ function settings ()
 
    local function update_autonav( _fad, value )
       local msg = _("Stop Speedup At: ")
-      if value > 1 then
+      if value >= 1 then
          reset_dist = math.huge
          reset_shield = 1
          msg = msg.._("Enemy Presence")

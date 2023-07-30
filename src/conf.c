@@ -188,8 +188,6 @@ void conf_setGameplayDefaults (void)
    conf.mouse_thrust          = MOUSE_THRUST_DEFAULT;
    conf.mouse_doubleclick     = MOUSE_DOUBLECLICK_TIME;
    conf.mouse_fly             = MOUSE_FLY_DEFAULT;
-   conf.autonav_reset_dist    = AUTONAV_RESET_DIST_DEFAULT;
-   conf.autonav_reset_shield  = AUTONAV_RESET_SHIELD_DEFAULT;
    conf.zoom_manual           = MANUAL_ZOOM_DEFAULT;
 }
 
@@ -1014,14 +1012,6 @@ int conf_saveConfig ( const char* file )
    conf_saveInt("font_size_small",conf.font_size_small);
 
    /* Misc. */
-   conf_saveComment(_("Sets the velocity (px/s) to compress up to when time compression is enabled."));
-   conf_saveFloat("compression_velocity",conf.compression_velocity);
-   conf_saveEmptyLine();
-
-   conf_saveComment(_("Sets the multiplier to compress up to when time compression is enabled."));
-   conf_saveFloat("compression_mult",conf.compression_mult);
-   conf_saveEmptyLine();
-
    conf_saveComment(_("Redirects log and error output to files"));
    conf_saveBool("redirect_file",conf.redirect_file);
    conf_saveEmptyLine();
@@ -1048,14 +1038,6 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment(_("Maximum interval to count as a double-click (0 disables)."));
    conf_saveFloat("mouse_doubleclick",conf.mouse_doubleclick);
-   conf_saveEmptyLine();
-
-   conf_saveComment(_("Enemy distance at which autonav speed resets."));
-   conf_saveFloat("autonav_reset_dist",conf.autonav_reset_dist);
-   conf_saveEmptyLine();
-
-   conf_saveComment(_("Shield value at which autonav speed resets."));
-   conf_saveFloat("autonav_reset_shield",conf.autonav_reset_shield);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Enables developer mode (universe editor and the likes)"));

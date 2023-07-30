@@ -16,6 +16,17 @@ local luatk = require "luatk"
 
 -- Runs on saves older than 0.11.0
 local function updater0110( _did0100, _did090 )
+   local conf = naev.conf()
+   local function set_var( name, default )
+      local v = var.peek(name) or default
+      var.push( name, v )
+   end
+   -- Move some old configuration values to player variables
+   -- TODO eliminate around 0.12.0 or so
+   set_var( "autonav_reset_speed", conf.autonav_reset_speed )
+   set_var( "autonav_reset_dist", conf.autonav_reset_dist )
+   set_var( "autonav_compr_velocity", conf.compression_velocity )
+   set_var( "autonav_compr_max", conf.compression_mult )
 end
 
 -- Runs on saves older than 0.10.0
@@ -192,7 +203,7 @@ function create ()
       did0100 = true
    end
    -- Run on saves older than 0.10.0
-   if naev.versionTest( save_version, "0.11.0-alpha.1") < 0 then
+   if naev.versionTest( save_version, "0.11.0-alpha.3") < 0 then
       updater0110( did0100, did090 )
       didupdate = true
    end

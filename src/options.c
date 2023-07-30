@@ -76,7 +76,6 @@ static void opt_needRestart (void);
 /* Gameplay. */
 static char** lang_list( int *n );
 static void opt_gameplay( unsigned int wid );
-static void opt_setAutonavResetSpeed( unsigned int wid, const char *str );
 static void opt_setMapOverlayOpacity( unsigned int wid, const char *str );
 static void opt_OK( unsigned int wid, const char *str );
 static int opt_gameplaySave( unsigned int wid, const char *str );
@@ -378,19 +377,6 @@ static void opt_gameplay( unsigned int wid )
    y  = by;
    cw += 80;
 
-   /* Autonav abort. */
-   window_addText( wid, x, y, cw-130, 20, 0, "txtAAutonav",
-         NULL, NULL, _("Stop Speedup At:") );
-   y -= 20;
-
-   /* Autonav abort fader. */
-   window_addText( wid, x, y, cw, 20, 1, "txtAutonav",
-         NULL, NULL, NULL );
-   y -= 20;
-   window_addFader( wid, x, y, cw, 20, "fadAutonav", 0., 1.,
-         0., opt_setAutonavResetSpeed );
-   y -= 40;
-
    window_addText( wid, x, y, cw, 20, 0, "txtSettings",
          NULL, cHeader, _("Settings:") );
    y -= 25;
@@ -437,9 +423,7 @@ static int opt_gameplaySave( unsigned int wid, const char *str )
 {
    (void) str;
    int f, p, newlang;
-   const char *vmsg, *tmax;
-   const char *s;
-   double reset;
+   const char *vmsg, *s;
    const Difficulty *difficulty;
 
    /* List. */
@@ -508,26 +492,9 @@ static int opt_gameplaySave( unsigned int wid, const char *str )
    if (!conf.mouse_fly)
       player_rmFlag( PLAYER_MFLY );
 
-   /* Faders. */
-   reset = window_getFaderValue(wid, "fadAutonav");
-   if (reset >= 1.0) {
-      conf.autonav_reset_dist    = INFINITY;
-      conf.autonav_reset_shield  = 1.;
-   }
-   else if (reset > 0.5) {
-      conf.autonav_reset_dist    = (reset-0.5) / 0.5 * AUTONAV_RESET_DIST_MAX;
-      conf.autonav_reset_shield  = 1.;
-   }
-   else {
-      conf.autonav_reset_dist    = -1.;
-      conf.autonav_reset_shield  = reset / 0.5;
-   }
-
    /* Input boxes. */
    vmsg = window_getInput( wid, "inpMSG" );
-   tmax = window_getInput( wid, "inpTMax" );
    conf.mesg_visible = atoi(vmsg);
-   conf.compression_mult = atoi(tmax);
    if (conf.mesg_visible == 0)
       conf.mesg_visible = INPUT_MESSAGES_DEFAULT;
 
@@ -540,23 +507,19 @@ static int opt_gameplaySave( unsigned int wid, const char *str )
 static void opt_gameplayDefaults( unsigned int wid, const char *str )
 {
    (void) str;
-   char vmsg[16], tmax[16];
+   char vmsg[16];
 
    /* Restore. */
    /* Checkboxes. */
    window_checkboxSet( wid, "chkZoomManual", MANUAL_ZOOM_DEFAULT );
    window_checkboxSet( wid, "chkDoubletap", DOUBLETAP_SENSITIVITY_DEFAULT );
+   window_checkboxSet( wid, "chkMouseFly", MOUSE_FLY_DEFAULT );
    window_checkboxSet( wid, "chkMouseThrust", MOUSE_THRUST_DEFAULT );
    window_checkboxSet( wid, "chkCompress", SAVE_COMPRESSION_DEFAULT );
-
-   /* Faders. */
-   window_faderValue( wid, "fadAutonav", 0.75 ); /* TODO Not really good to hardcode this here :/. */
 
    /* Input boxes. */
    snprintf( vmsg, sizeof(vmsg), "%d", INPUT_MESSAGES_DEFAULT );
    window_setInput( wid, "inpMSG", vmsg );
-   snprintf( tmax, sizeof(tmax), "%d", TIME_COMPRESSION_DEFAULT_MULT );
-   window_setInput( wid, "inpTMax", tmax );
 }
 
 /**
@@ -565,8 +528,7 @@ static void opt_gameplayDefaults( unsigned int wid, const char *str )
 static void opt_gameplayUpdate( unsigned int wid, const char *str )
 {
    (void) str;
-   char vmsg[16], tmax[16];
-   double reset;
+   char vmsg[16];
 
    /* Checkboxes. */
    window_checkboxSet( wid, "chkZoomManual", conf.zoom_manual );
@@ -575,46 +537,9 @@ static void opt_gameplayUpdate( unsigned int wid, const char *str )
    window_checkboxSet( wid, "chkMouseThrust", conf.mouse_thrust );
    window_checkboxSet( wid, "chkCompress", conf.save_compress );
 
-   /* Faders. */
-   reset = 0.;
-   if (conf.autonav_reset_dist > 0.)
-      reset = MIN( 1.0, 0.5 + 0.5 * conf.autonav_reset_dist / AUTONAV_RESET_DIST_MAX );
-   else
-      reset = MAX( 0.0, 0.5 * conf.autonav_reset_shield );
-   window_faderValue( wid, "fadAutonav", reset );
-
    /* Input boxes. */
    snprintf( vmsg, sizeof(vmsg), "%d", conf.mesg_visible );
    window_setInput( wid, "inpMSG", vmsg );
-   snprintf( tmax, sizeof(tmax), "%g", conf.compression_mult );
-   window_setInput( wid, "inpTMax", tmax );
-}
-
-/**
- * @brief Callback to set autonav abort threshold.
- *
- *    @param wid Window calling the callback.
- *    @param str Name of the widget calling the callback.
- */
-static void opt_setAutonavResetSpeed( unsigned int wid, const char *str )
-{
-   char buf[STRMAX_SHORT];
-   double autonav_reset;
-
-   /* Set fader. */
-   autonav_reset = window_getFaderValue(wid, str);
-
-   /* Generate message. */
-   if (autonav_reset >= 1.0)
-      snprintf( buf, sizeof(buf), _("Enemy Presence") );
-   else if (autonav_reset > 0.5)
-      snprintf( buf, sizeof(buf), _("Enemy within %s distance"), num2strU( (autonav_reset - 0.5) / 0.5 * AUTONAV_RESET_DIST_MAX, 0) );
-   else if (autonav_reset > 0.)
-      snprintf( buf, sizeof(buf), _("%.0f%% Shield"), autonav_reset / 0.5 * 100. );
-   else
-      snprintf( buf, sizeof(buf), _("Armour Damage") );
-
-   window_modifyText( wid, "txtAutonav", buf );
 }
 
 /**
