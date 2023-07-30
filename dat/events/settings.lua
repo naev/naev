@@ -40,7 +40,7 @@ function create ()
 end
 
 function settings ()
-   local txt_autonav, fad_autonav
+   local txt_autonav, fad_autonav, txt_compr
    local chk_uselanes_jump, chk_uselanes_spob
 
    local w, h = 600, 420
@@ -75,6 +75,13 @@ function settings ()
    else
       autonav_value = math.max( 0, 0.5 * reset_shield )
    end
+   local function update_ship_tc ()
+      local pp = player.pilot()
+      local tc_max = compr_speed / pp:speedMax()
+      tc_max = math.max( 1, math.min( tc_max, compr_max ) )
+      local msg = fmt.f(_("Your current ship will have a time compression factor of #o{tc_max:.1f}x#0."),{tc_max=tc_max})
+      txt_compr:set( msg )
+   end
 
    local y = 40
    luatk.newText( wdw, 20, y, w-40, 20, "#n".._("Autonav") )
@@ -88,14 +95,19 @@ function settings ()
    local tw = txt_compr_speed:dimensions()
    luatk.newFader( wdw, 40+tw, y, w-70-tw, 30, COMPR_SPEED_MIN, COMPR_SPEED_MAX, compr_speed, function ( _fdr, val )
       compr_speed = val
+      update_ship_tc()
    end, {labels=true} )
    y = y + 40
    local txt_compr_max = luatk.newText( wdw, 20, y, w-40, 20, _("Maximum compression:") )
    tw = txt_compr_max:dimensions()
    luatk.newFader( wdw, 40+tw, y, w-70-tw, 30, COMPR_MIN, COMPR_MAX, compr_max, function ( _fdr, val )
       compr_max = val
+      update_ship_tc()
    end, {labels=true} )
    y = y + 40
+   txt_compr = luatk.newText( wdw, 20, y, w-40, 20 )
+   update_ship_tc()
+   y = y + 30
    chk_uselanes_jump = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Use patrol lanes when jumping"), nil, uselanes_jump )
    y = y + 30
    chk_uselanes_spob = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Use patrol lanes when travelling to a space object"), nil, uselanes_spob )
