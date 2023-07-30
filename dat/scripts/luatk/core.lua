@@ -464,6 +464,10 @@ end
 luatk.Widget = {}
 luatk.Widget_mt = { __index = luatk.Widget }
 function luatk.newWidget( parent, x, y, w, h )
+   x = x or 0
+   y = y or 0
+   w = w or 0
+   h = h or 0
    if x < 0 then
       x = parent.w - w + x
    end
