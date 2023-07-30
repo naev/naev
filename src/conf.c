@@ -181,8 +181,6 @@ void conf_setGameplayDefaults (void)
 {
    conf.difficulty            = DIFFICULTY_DEFAULT;
    conf.doubletap_sens        = DOUBLETAP_SENSITIVITY_DEFAULT;
-   conf.compression_velocity  = TIME_COMPRESSION_DEFAULT_MAX;
-   conf.compression_mult      = TIME_COMPRESSION_DEFAULT_MULT;
    conf.save_compress         = SAVE_COMPRESSION_DEFAULT;
    conf.mouse_hide            = MOUSE_HIDE_DEFAULT;
    conf.mouse_thrust          = MOUSE_THRUST_DEFAULT;

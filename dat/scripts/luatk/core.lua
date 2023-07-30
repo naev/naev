@@ -9,6 +9,7 @@ local le = require 'love.event'
 local lk = require 'love.keyboard'
 local utf8 = require 'utf8'
 local vn = require "vn"
+local fmt = require "format"
 
 local luatk = {
    _windows = {},
@@ -796,14 +797,14 @@ function luatk.Fader:draw( bx, by )
       local ly = y + h + 5
       lg.setColor( luatk.scrollbar.colour.label )
       if off * w > 40 then
-         lg.printf( tostring(self.min), self.font, x-30, ly, 60, "center" )
+         lg.printf( fmt.number(self.min), self.font, x-30, ly, 60, "center" )
       end
       if off * w < w-40 then
-         lg.printf( tostring(self.max), self.font, x+w-30, ly, 60, "center" )
+         lg.printf( fmt.number(self.max), self.font, x+w-30, ly, 60, "center" )
       end
       lg.setColor( luatk.colour.text )
       lg.setColor( luatk.scrollbar.colour.value )
-      lg.printf( tostring(math.floor(self.val+0.5)), self.font, cx-30, ly, 60, "center" )
+      lg.printf( fmt.number(math.floor(self.val+0.5)), self.font, cx-30, ly, 60, "center" )
    end
 end
 function luatk.Fader:pressed( mx, _my )

@@ -25,8 +25,12 @@ local function updater0110( _did0100, _did090 )
    -- TODO eliminate around 0.12.0 or so
    set_var( "autonav_reset_speed", conf.autonav_reset_speed )
    set_var( "autonav_reset_dist", conf.autonav_reset_dist )
-   set_var( "autonav_compr_velocity", conf.compression_velocity )
-   set_var( "autonav_compr_max", conf.compression_mult )
+   set_var( "autonav_compr_speed", conf.compression_velocity )
+   if conf.compression_mult==200 then -- Take the opportunity to lower default from 200 to 50
+      set_var( "autonav_compr_max", 50 )
+   else
+      set_var( "autonav_compr_max", conf.compression_mult )
+   end
 end
 
 -- Runs on saves older than 0.10.0

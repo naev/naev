@@ -15,7 +15,11 @@ local fmt = require "format"
 local settings, uselanes_jump, uselanes_spob, pick_gui
 local reset_dist, reset_shield
 
-local AUTONAV_MAX_DIST = 10e3
+local AUTONAV_MAX_DIST  = 10e3 -- quite a reasonable distance
+local COMPR_SPEED_MIN   = 1e3 -- Old default was 5e3
+local COMPR_SPEED_MAX   = 10e3
+local COMPR_MIN         = 10 -- Old default was 200
+local COMPR_MAX         = 200
 
 function create ()
    -- Load variables
@@ -78,6 +82,18 @@ function settings ()
    fad_autonav = luatk.newFader( wdw, 20, y, w-40, 20, 0, 1, nil, update_autonav )
    fad_autonav:set( autonav_value )
    y = y + 40
+   local txt_compr_speed = luatk.newText( wdw, 20, y, w-40, 20, _("Compression velocity target:") )
+   local tw = txt_compr_speed:dimensions()
+   local fad_compr_speed = luatk.newFader( wdw, 40+tw, y, w-70-tw, 30, COMPR_SPEED_MIN, COMPR_SPEED_MAX, nil, function ( _fdr, val )
+      var.push("autonav_compr_speed", val)
+   end, {labels=true} )
+   y = y + 40
+   local txt_compr_max = luatk.newText( wdw, 20, y, w-40, 20, _("Maximum compression:") )
+   tw = txt_compr_max:dimensions()
+   local fad_compr_max = luatk.newFader( wdw, 40+tw, y, w-70-tw, 30, COMPR_MIN, COMPR_MAX, nil, function ( _fdr, val )
+      var.push("autonav_compr_max", val)
+   end, {labels=true} )
+   y = y + 40
    chk_uselanes_jump = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Use patrol lanes when jumping"), nil, uselanes_jump )
    y = y + 30
    chk_uselanes_spob = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Use patrol lanes when travelling to a space object"), nil, uselanes_spob )
@@ -97,6 +113,8 @@ function settings ()
    var.push( "autonav_uselanes_spob", uselanes_spob )
    var.push( "autonav_reset_dist", reset_dist )
    var.push( "autonav_reset_shield", reset_shield )
+   var.push( "autonav_compr_speed", fad_compr_speed:get() )
+   var.push( "autonav_compr_max", fad_compr_max:get() )
 end
 
 function pick_gui ()
