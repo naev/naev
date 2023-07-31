@@ -1,6 +1,7 @@
 # Lua GDB Helpers
 # Copyright (c) 2010 Michal Kottman
 # License: MIT
+# Taken from https://github.com/mkottman/lua-gdb-helper
 
 define luavalue
 	if $argc == 0
