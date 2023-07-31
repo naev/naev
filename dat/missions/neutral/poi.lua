@@ -54,7 +54,9 @@ function create ()
       },
    }
    if poi.data_get_gained() > 0 then
-      table.insert( reward_list, { type="data" } )
+      table.insert( reward_list, {
+         type="data",
+      } )
    end
 
    -- Parse directory to add potential rewards
@@ -67,8 +69,27 @@ function create ()
       end
    end
 
+   -- Compute total weight
+   local wtotal = 0
+   for k,v in ipairs(reward_list) do
+      local w = v.weight or 1
+      v.weight = w
+      wtotal = wtotal + w
+   end
+   table.sort( reward_list, function( a, b )
+      return a.weight > b.weight
+   end )
+
    -- Choose a random reward and stick to it
-   mem.reward = reward_list[ rnd.rnd(1,#reward_list) ]
+   local r = wtotal*rnd.rnd()
+   local waccum = 0
+   for k,v in ipairs(reward_list) do
+      waccum = waccum + v.weight
+      if r <= waccum then
+         mem.reward = r
+         break
+      end
+   end
 
    poi.misnSetup{ sys=mem.sys, found="found", risk=mem.risk }
 end
