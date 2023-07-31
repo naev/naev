@@ -18,25 +18,18 @@ function atk_drone.think( target, _si )
       return
    end
 
-   --local enemy    = ai.getenemy_size(0, 200)  -- find a small ship to attack
-   local enemy = atk.preferred_enemy()
-   local nearest_enemy = ai.getenemy()
-   local dist     = ai.dist(target)
+   -- Don't switch targets if close to current one
+   local dist  = ai.dist( target )
    local range = ai.getweaprange(3, 0)
+   if dist < range * mem.atk_changetarget then
+      return
+   end
 
-   -- Get new target if it's closer
-   --prioritize targets within the size limit
+   -- Prioritize preferred target
+   local enemy = atk.preferred_enemy( atk.prefer_capship )
    if enemy ~= target and enemy ~= nil then
-      -- Shouldn't switch targets if close
-      if dist > range * mem.atk_changetarget then
-         ai.pushtask("attack", enemy )
-      end
-
-   elseif nearest_enemy ~= target and nearest_enemy ~= nil then
-      -- Shouldn't switch targets if close
-      if dist > range * mem.atk_changetarget then
-         ai.pushtask("attack", nearest_enemy )
-      end
+      ai.pushtask("attack", enemy )
+      return
    end
 end
 
