@@ -2,7 +2,7 @@ local atk = require "ai.core.attack.util"
 
 function idle ()
    if mem.aggressive then
-      local enemy = atk.preferred_enemy()
+      local enemy = atk.preferred_enemy( nil, true )
       if enemy ~= nil and should_attack( enemy ) then
          ai.pushtask( "attack", enemy )
          return

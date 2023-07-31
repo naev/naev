@@ -492,7 +492,7 @@ end
 --[[
 Tries to find a preferred enemy.
 --]]
-function atk.preferred_enemy( pref_func )
+function atk.preferred_enemy( pref_func, checkvuln )
    pref_func = mem.atk_pref_func or pref_func or atk.prefer_similar
    local p = ai.pilot()
    local r = math.pow( mem.lanedistance, 2 )
@@ -500,10 +500,17 @@ function atk.preferred_enemy( pref_func )
    for k,h in ipairs( p:getEnemies( mem.enemyclose, nil, false, false, true ) ) do
       local w = h:memory().vulnerability or 0
       if w < math.huge then -- math.huge can be used to make the AI try not to target
-         local v, F, H = careful.checkVulnerable( p, h, mem.vulnattack, r )
-         if not v then
+         local v, F, H
+         if not checkvuln then
+            v = true
             F = 1
             H = 1
+         else
+            v, F, H = careful.checkVulnerable( p, h, mem.vulnattack, r )
+            if not v then
+               F = 1
+               H = 1
+            end
          end
          -- Insert some randomness for less consistency
          w = w + (0.9+0.2*rnd.rnd())*pref_func( p, h, v, F, H ) -- Compute pref function
