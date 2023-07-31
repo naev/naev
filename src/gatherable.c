@@ -49,12 +49,12 @@ void gatherable_cleanup (void)
  *    @param qtt Quantity to add.
  *    @param player_only Whether the gatherable can only be gathered by the player.
  */
-int gatherable_init( const Commodity* com, vec2 pos, vec2 vel, double lifeleng, int qtt, unsigned int player_only )
+int gatherable_init( const Commodity* com, const vec2 *pos, const vec2 *vel, double lifeleng, int qtt, unsigned int player_only )
 {
    Gatherable *g = &array_grow( &gatherable_stack );
    g->type = com;
-   g->pos = pos;
-   g->vel = vel;
+   g->pos = *pos;
+   g->vel = *vel;
    g->timer = 0.;
    g->quantity = qtt;
    g->sx = RNG( 0, com->gfx_space->sx );
@@ -107,7 +107,7 @@ void gatherable_free( void )
 void gatherable_render( void )
 {
    for (int i=0; i < array_size(gatherable_stack); i++) {
-      Gatherable *gat = &gatherable_stack[i];
+      const Gatherable *gat = &gatherable_stack[i];
       gl_renderSprite( gat->type->gfx_space, gat->pos.x, gat->pos.y, gat->sx, gat->sy, NULL );
    }
 }
@@ -119,14 +119,14 @@ void gatherable_render( void )
  *    @param rad radius.
  *    @return The id of the closest gatherable, or -1 if none is found.
  */
-int gatherable_getClosest( vec2 pos, double rad )
+int gatherable_getClosest( const vec2 *pos, double rad )
 {
    int curg = -1;
    double mindist = INFINITY;
 
    for (int i=0; i < array_size(gatherable_stack); i++) {
       Gatherable *gat = &gatherable_stack[i];
-      double curdist = vec2_dist(&pos, &gat->pos);
+      double curdist = vec2_dist(pos, &gat->pos);
       if ( (curdist<mindist) && (curdist<rad) ) {
          curg = i;
          mindist = curdist;

@@ -2875,7 +2875,7 @@ static int aiL_getGatherable( lua_State *L )
    else
       rad = lua_tonumber(L,1);
 
-   i = gatherable_getClosest( cur_pilot->solid.pos, rad );
+   i = gatherable_getClosest( &cur_pilot->solid.pos, rad );
 
    if (i != -1)
       lua_pushnumber(L,i);
