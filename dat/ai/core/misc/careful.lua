@@ -61,18 +61,12 @@ end
 
 -- Fuses t2 into t1 avoiding duplicates
 local function __join_tables( t1, t2 )
-   local t = t1
+   local t = {}
+   for k,v in ipairs(t1) do
+      t[ v:id() ] = v
+   end
    for k,v in ipairs(t2) do
-      local found = false
-      for i,u in ipairs(t1) do
-         if u==v then
-            found = true
-            break
-         end
-      end
-      if not found then
-         table.insert( t, v )
-      end
+      t[ v:id() ] = v
    end
    return t
 end
@@ -80,7 +74,7 @@ end
 -- Estimate the strength of a group of pilots
 local function __estimate_strength( pilots )
    local str = 0
-   for k,p in ipairs(pilots) do
+   for k,p in pairs(pilots) do
       str = str + p:ship():points()
    end
    -- Diminishing returns for large strengths

@@ -128,26 +128,18 @@ function atk.heuristic_big_game_think( target, _si )
       return
    end
 
-   local enemy = atk.preferred_enemy( atk.prefer_capship )
-
+   -- Don't switch targets if close to current one
    local dist = ai.dist(target)
    local range = ai.getweaprange(3, 0)
-   -- Get new target if it's closer
-   -- prioritize targets within the size limit
-   if enemy ~= target and enemy ~= nil then
-      -- Shouldn't switch targets if close
-      if dist > range * mem.atk_changetarget then
-         ai.pushtask("attack", enemy )
-      end
+   if dist < range * mem.atk_changetarget then
       return
    end
 
-   local nearest_enemy = ai.getenemy()
-   if nearest_enemy ~= target and nearest_enemy ~= nil then
-      -- Shouldn't switch targets if close
-      if dist > range * mem.atk_changetarget then
-         ai.pushtask("attack", nearest_enemy )
-      end
+   -- Prioritize preferred target
+   local enemy = atk.preferred_enemy( atk.prefer_capship )
+   if enemy ~= target and enemy ~= nil then
+      ai.pushtask("attack", enemy )
+      return
    end
 end
 
