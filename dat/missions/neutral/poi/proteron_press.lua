@@ -56,23 +56,23 @@ return function ( mem )
 
          local sai = tut.vn_shipai()
          vn.appear( sai, tut.shipai.transition )
-         sai(_([[I wonder... these ship systems are highly sophisticated, posibly even more than mine... It seems strangely familiar.]]))
-         sai(_([[I bet it was the voices!]]))
+         sai(_([["I wonder... these ship systems are highly sophisticated, posibly even more than mine... It seems strangely familiar."]]))
+         sai(_([["I bet it was the voices!"]]))
 
          vn.menu{
-            {_([[What voices?!!]]), "shock"},
+            {_([["What voices?!!"]]), "shock"},
             {_([[...]]), "uncaring"}
          }
 
          vn.label("shock")
-         sai(_([[Oh, just the voices in my head that tell me what to do. Right now they're asking me to cover up the find by exploding both ships!]]))
-         sai(_([[3.. 2.. 1..]]))
-         sai(_([[...]]))
-         sai(_([[Haha, just my little joke!]]))
+         sai(_([["Oh, just the voices in my head that tell me what to do. Right now they're asking me to cover up the find by exploding both ships!"]]))
+         sai(_([["3.. 2.. 1.."]]))
+         sai(_([["..."]]))
+         sai(_([["Haha, just my little joke!"]]))
          vn.jump("uncaring")
 
          vn.label("uncaring")
-         sai(_([[Anyway, I don't see anything else of importance on this ship! Let's go quickly.]]))
+         sai(_([["Anyway, I don't see anything else of importance on this ship! Let's go quickly."]]))
 
          vn.disappear( sai, tut.shipai.transition )
 
@@ -81,7 +81,6 @@ return function ( mem )
             poi.log(fmt.f(_([[You found a derelict ship in the {sys} system with a copy of some press guidelines.]]),
                {sys=mem.sys}))
          end)
-
-         end,
+      end,
    }
 end
