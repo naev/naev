@@ -22,7 +22,7 @@ return function ( mem )
          if faction.known( "Proteron" ) then
             vn.na(_([[You enter the ship and make way to the bridge. The entire ship is oddly quiet as you pass through, with no signs of life. You reach the bridge and find the ship's systems have just enough energy left to power up, letting you jack in.]]))
          else
-            vn.na(_([[You enter the ship enter the derelict, which is of a make you do not fully recognize, and make way to the bridge. The entire ship is oddly quiet as you pass through, with no signs of life. You reach the bridge and find the ship's systems have just enough energy left to power up, letting you jack in.]]))
+            vn.na(_([[You enter the ship enter the derelict, which is of a make you do not fully recognize, and make your way to the bridge. The entire ship is oddly quiet as you pass through, with no signs of life. You reach the bridge and find the ship's systems have just enough energy left to power up, letting you jack in.]]))
          end
 
          local sai = tut.vn_shipai()
