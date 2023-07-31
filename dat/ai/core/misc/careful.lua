@@ -90,11 +90,20 @@ function careful.checkVulnerable( p, plt, threshold )
    local pos = plt:pos()
    -- Make sure not in safe lanes
    if always_yes or careful.posIsGood( p, pos ) then
+      local H
+      local F
       -- Check to see vulnerability
-      local H = 1+__estimate_strength( p:getEnemies( mem.vulnrange, pos ) )
-      local F = 1+__estimate_strength( __join_tables(
-            p:getAllies( mem.vulnrange, pos, true ),
-            p:getAllies( mem.vulnrange, nil, true ) ) )
+      if mem.careful then
+         -- Pilot actually cares about their fighting chances
+         H = 1+__estimate_strength( p:getEnemies( mem.vulnrange, pos ) )
+         F = 1+__estimate_strength( __join_tables(
+               p:getAllies( mem.vulnrange, pos, true ),
+               p:getAllies( mem.vulnrange, nil, true ) ) )
+      else
+         -- Pilot does not really
+         H = 1
+         F = 1
+      end
 
       if always_yes or F*threshold >= H then
          return true, F, H
