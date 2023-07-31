@@ -1006,6 +1006,10 @@ static int getFriendOrFoeTest( const Pilot *p, const Pilot *plt, int friend, dou
    if (pilot_isFlag(plt, PILOT_DELETE))
       return 0;
 
+   /* Ignore self. */
+   if (p->id==plt->id)
+      return 0;
+
    /* Ignore fighters unless specified. */
    if (!fighters && pilot_isFlag(plt, PILOT_CARRIED))
       return 0;
