@@ -129,7 +129,7 @@ void gatherable_update( double dt )
 
          /* Try to pick up. */
          if (gatherable_gather( g, p ))
-            continue;
+            break;
       }
    }
 }
