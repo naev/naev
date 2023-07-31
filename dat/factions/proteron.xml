@@ -2,13 +2,13 @@
 <faction name="Proteron">
  <ai>proteron</ai>
  <logo>proteron</logo>
- <longname>Fallen House Proteron</longname>
+ <longname>Sovereign Proteron Autarchy</longname>
  <player>-50</player>
  <colour>purple</colour>
  <spawn>proteron</spawn>
  <standing>proteron</standing>
  <equip>proteron</equip>
- <description>Fallen House Proteron was an Imperial Great House that decided to move and attack the Emperor himself. This caused the Incident and left the universe irreversibly ravaged.</description>
+ <description>The Sovereign Proteron Autarchy was an Imperial Great House that decided to move and attack the Emperor himself. This caused the Incident and left the universe irreversibly ravaged.</description>
  <allies>
  </allies>
  <enemies>
