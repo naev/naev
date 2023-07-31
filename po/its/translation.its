@@ -59,7 +59,7 @@
   <its:translateRule selector="/ssys/general/features" translate="yes"/>
 
   <!-- Asteroids -->
-  <its:translateRule selector="/ssys/scanned" translate="yes"/>
+  <its:translateRule selector="/asteroid/scanned" translate="yes"/>
 
   <!-- Unidiff -->
   <its:translateRule selector="/unidiff/system/features" translate="yes"/>
