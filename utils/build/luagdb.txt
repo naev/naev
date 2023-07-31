@@ -1,0 +1,182 @@
+# Lua GDB Helpers
+# Copyright (c) 2010 Michal Kottman
+# License: MIT
+
+define luavalue
+	if $argc == 0
+		help luavalue
+	else
+		if $argc == 2
+			set $L = $arg1
+		else
+			set $L = L
+		end
+		set $obj = index2adr($L, $arg0)
+	end
+end
+document luavalue
+	luavalue <index> [L]
+	Provides a pointer to a TValue from a stack index. By default, uses the current variable
+	L as a lua_State pointer, but can be specified as the second argument. The return value
+	is passed in variable $obj.
+end
+
+define luaprinttable
+	if $argc != 1
+		help luaprinttable
+	else
+		printf " { "
+		set $t = $arg0
+		set $node = $t->node
+		set $i = 0
+		set $last = 1 << $t->lsizenode
+		# hash part
+		while $i < $last
+			set $node = $t->node + $i
+			set $key = $node->i_key
+			if $key.tvk.tt > 0
+				if $key.tvk.tt == 4
+					# string key
+					set $ts = &($key.tvk.value->gc->ts)
+					set $str = (char *)($ts + 1)
+					printf "%s = ", $str
+				else
+					printf "<%s> = ", lua_typename(L, $key.tvk.tt)
+				end
+				set $val = &($node->i_val)
+				luaprint $val
+				printf ",\n"
+			end
+			set $i = $i + 1
+		end
+		# array part
+		set $i = 0
+		while $i < $t->sizearray
+			set $val = $t->array + $i
+			luaprint $val
+			printf ", "
+			set $i = $i + 1
+		end
+		printf " } "
+	end
+end
+document luaprinttable
+	luaprinttable <table>
+	Pretty-prints a Lua Table. Expects a pointer to Table.
+end
+
+define luaprint
+	if $argc == 0
+		help luaprint
+	else
+		set $v = $arg0
+		set $val = &($v.value)
+		set $type = $v.tt
+
+		if $type == 0
+			printf "nil"
+		end
+		# boolean
+		if $type == 1
+			if $val->b > 0
+				printf "true"
+			else
+				printf "false"
+			end
+		end
+		# lightudata
+		if $type == 2
+			printf "<ludata>%p", $val->p
+		end
+		# number
+		if $type == 3
+			printf "%f", $val->n
+		end
+		# string
+		if $type == 4
+			set $ts = &($val->gc->ts)
+			set $str = (char *)($ts + 1)
+			printf "'%s'", $str
+		end
+		# table
+		if $type == 5
+			set $tab = &($val->gc->h)
+			printf "<tab> %p ", $tab
+			if $argc == 2
+				luaprinttable $tab
+				if $tab.metatable
+					printf " metatable="
+					luaprinttable $tab.metatable
+				end
+			end
+		end
+		# userdata
+		if $type == 7
+			set $uv = $val->gc.u->uv
+			printf "<udata> %p size=%d", &($val->gc.u) + 1, $uv.len
+			if $argc == 2 && $uv.metatable
+				printf " metatable="
+				luaprinttable $uv.metatable
+			end
+			if $argc == 2 && $uv.env
+				printf " env="
+				luaprinttable $uv.env
+			end
+		end
+		# other
+		if $type > 5 && $type != 7
+			printf "<%s> %p", lua_typename(L, $type), $val
+		end
+	end
+end
+document luaprint
+	luaprint <value> [verbose]
+	Pretty-prints a TValue passed as argument. Expects a pointer to a TValue. When verbose is 1,
+	expands tables, metatables and userdata environments.
+end
+
+define luastack
+	if $argc == 0
+		set $L = L
+	else
+		set $L = $arg0
+	end
+	printf "Lua stack trace: %d items\n", lua_gettop($L)
+	set $ptr = $L->base
+	set $idx = 1
+	while $ptr < $L->top
+		printf "%03d: ", $idx
+		luaprint $ptr
+		printf "\n"
+		set $ptr = $ptr + 1
+		set $idx = $idx + 1
+	end
+end
+document luastack
+	luastack [L]
+	Prints values on the Lua C stack. Without arguments, uses the current value of "L"
+	as the lua_State*. You can provide an alternate lua_State as the first argument.
+end
+
+define luatrace
+	if $argc == 0
+		set $L = L
+	else
+		set $L = $arg0
+	end
+	if luaL_loadstring ($L, "return debug.traceback()") == 0
+		if lua_pcall($L, 0, 1, 0) == 0
+			printf "%s\n", lua_tolstring ($L, -1, 0)
+		else
+			printf "ERROR: %s\n", lua_tolstring ($L, -1, 0)
+		end
+		call lua_settop ($L, -2)
+	end
+end
+document luatrace
+	luatraceback [L]
+	Dumps Lua execution stack, as debug.traceback() does. Without
+	arguments, uses the current value of "L" as the
+	lua_State*. You can provide an alternate lua_State as the
+	first argument.
+end

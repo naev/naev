@@ -9,4 +9,5 @@ commands
    quit
 end
 echo .gdbinit: running naev with gdb wrapper\n
+source @source_root@/utils/build/luagdb.txt
 run

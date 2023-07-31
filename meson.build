@@ -367,6 +367,14 @@ if buildExec.disabled() == false
       }
    )
 
+   gdbinit = configure_file(
+      input: join_paths('utils','build','gdbinit'),
+      output: '.gdbinit',
+      configuration: {
+         'source_root': meson.source_root(),
+      }
+   )
+
    if host_machine.system() not in ['windows', 'darwin']
       install_data(
          'gpl.txt',
