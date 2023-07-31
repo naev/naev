@@ -1080,6 +1080,13 @@ int conf_saveConfig ( const char* file )
    conf_saveString("dev_save_spob",conf.dev_save_spob);
    conf_saveEmptyLine();
 
+   /* TODO remove the following in 0.12.0 */
+   conf_saveComment(_("The following are for legacy purposes and will be removed in 0.12.0."))
+   conf_saveFloat("compression_velocity",conf.compression_velocity);
+   conf_saveFloat("compression_mult",conf.compression_mult);
+   conf_saveFloat("autonav_reset_dist",conf.autonav_reset_dist);
+   conf_saveFloat("autonav_reset_shield",conf.autonav_reset_shield);
+
    /*
     * Keybindings.
     */
