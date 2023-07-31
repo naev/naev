@@ -1007,7 +1007,7 @@ static int getFriendOrFoeTest( const Pilot *p, const Pilot *plt, int friend, dou
       return 0;
 
    /* Ignore self. */
-   if (p->id==plt->id)
+   if ((p!=NULL) && (p->id==plt->id))
       return 0;
 
    /* Ignore fighters unless specified. */
