@@ -114,7 +114,6 @@ unsigned int escort_create( Pilot *p, const char *ship,
 {
    const Ship *s;
    Pilot *pe;
-   unsigned int e;
    PilotFlags f;
    unsigned int parent;
 
@@ -133,8 +132,7 @@ unsigned int escort_create( Pilot *p, const char *ship,
       pilot_setFlagRaw( f, PILOT_CARRIED );
 
    /* Create the pilot. */
-   e = pilot_create( s, NULL, p->faction, "escort", dir, pos, vel, f, parent, dockslot );
-   pe = pilot_get(e);
+   pe = pilot_create( s, NULL, p->faction, "escort", dir, pos, vel, f, parent, dockslot );
    pe->parent = parent;
 
    /* Make invincible to player. */
@@ -172,9 +170,9 @@ unsigned int escort_create( Pilot *p, const char *ship,
 
    /* Add to escort list. */
    if (add != 0)
-      escort_addList( p, ship, type, e, 1 );
+      escort_addList( p, ship, type, pe->id, 1 );
 
-   return e;
+   return pe->id;
 }
 
 /**

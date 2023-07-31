@@ -3193,7 +3193,7 @@ static void pilot_init_trails( Pilot* p )
  *
  * @sa pilot_init
  */
-unsigned int pilot_create( const Ship* ship, const char* name, int faction, const char *ai,
+Pilot *pilot_create( const Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const vec2* pos, const vec2* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot )
 {
@@ -3234,7 +3234,7 @@ unsigned int pilot_create( const Ship* ship, const char* name, int faction, cons
    /* Pilot creation hook. */
    pilot_runHook( p, PILOT_HOOK_CREATION );
 
-   return p->id;
+   return p;
 }
 
 /**

@@ -645,7 +645,6 @@ static int pilotL_add( lua_State *L )
 {
    const Ship *ship;
    const char *pilotname, *ai;
-   unsigned int p;
    double a, r;
    vec2 vv, vp, vn;
    LuaFaction lf;
@@ -654,7 +653,7 @@ static int pilotL_add( lua_State *L )
    JumpPoint *jump;
    PilotFlags flags;
    int ignore_rules;
-   Pilot *pplt;
+   Pilot *p;
 
    /* Default values. */
    pilot_clearFlagsRaw( flags );
@@ -776,12 +775,15 @@ static int pilotL_add( lua_State *L )
 
    /* Create the pilot. */
    p = pilot_create( ship, pilotname, lf, ai, a, &vp, &vv, flags, 0, 0 );
-   lua_pushpilot(L,p);
-   pplt = pilot_get( p );
+   lua_pushpilot(L,p->id);
+   if (jump==NULL) {
+      ai_newtask( L, p, "idle_wait", 0, 1 );
+      p->timer[0] = p->tcontrol;
+   }
 
    /* TODO don't have space_calcJumpInPos called twice when stealth creating. */
    if ((jump != NULL) && pilot_isFlagRaw( flags, PILOT_STEALTH )) {
-      space_calcJumpInPos( cur_system, jump->from, &pplt->solid.pos, &pplt->solid.vel, &pplt->solid.dir, pplt );
+      space_calcJumpInPos( cur_system, jump->from, &p->solid.pos, &p->solid.vel, &p->solid.dir, p );
    }
    return 1;
 }
