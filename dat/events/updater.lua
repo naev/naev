@@ -17,19 +17,22 @@ local luatk = require "luatk"
 -- Runs on saves older than 0.11.0
 local function updater0110( _did0100, _did090 )
    local conf = naev.conf()
-   local function set_var( name, default )
+   local function set_var( name, default, olddefault )
       local v = var.peek(name) or default
+      if v <= 0 then -- Case not set or erased
+         v = olddefault
+      end
       var.push( name, v )
    end
    -- Move some old configuration values to player variables
    -- TODO eliminate around 0.12.0 or so
-   set_var( "autonav_reset_speed", conf.autonav_reset_speed )
-   set_var( "autonav_reset_dist", conf.autonav_reset_dist )
-   set_var( "autonav_compr_speed", conf.compression_velocity )
+   set_var( "autonav_reset_shield", conf.autonav_reset_shield, 1 )
+   set_var( "autonav_reset_dist", conf.autonav_reset_dist, 3e3 )
+   set_var( "autonav_compr_speed", conf.compression_velocity, 5e3 )
    if conf.compression_mult==200 then -- Take the opportunity to lower default from 200 to 50
       set_var( "autonav_compr_max", 50 )
    else
-      set_var( "autonav_compr_max", conf.compression_mult )
+      set_var( "autonav_compr_max", conf.compression_mult, 50  )
    end
 end
 
