@@ -113,6 +113,7 @@
  */
 static AI_Profile* profiles = NULL; /**< Array of AI_Profiles loaded. */
 static nlua_env equip_env = LUA_NOREF; /**< Equipment enviornment. */
+static IntList ai_qtquery; /*< Quadtree query. */
 
 /*
  * prototypes
@@ -625,6 +626,9 @@ int ai_load (void)
    else
       DEBUG( n_("Loaded %d AI Profile", "Loaded %d AI Profiles", array_size(profiles) ), array_size(profiles) );
 
+   /* Create collision stuff. */
+   il_create( &ai_qtquery, 1 );
+
    /* Load equipment thingy. */
    return ai_loadEquip();
 }
@@ -771,6 +775,9 @@ void ai_exit (void)
    /* Free equipment Lua. */
    nlua_freeEnv(equip_env);
    equip_env = LUA_NOREF;
+
+   /* Clean up query stuff. */
+   il_destroy( &ai_qtquery );
 }
 
 /**
@@ -882,7 +889,6 @@ void ai_init( Pilot *p )
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->ai->ref_create );
    ai_run( p->ai->env, 0 ); /* run control */
    ai_unsetPilot( oldmem );
-
 }
 
 /**
@@ -3032,19 +3038,50 @@ static int aiL_shoot( lua_State *L )
 /**
  * @brief Gets the nearest enemy.
  *
+ *    @luatparam[opt=nil] Vec2 radius Distance to search for an enemy. If not specified tries to find the nearest enemy.
  *    @luatreturn Pilot|nil
  *    @luafunc getenemy
  */
 static int aiL_getenemy( lua_State *L )
 {
-   unsigned int id = pilot_getNearestEnemy(cur_pilot);
+   if (lua_isnoneornil(L,1)) {
+      unsigned int id = pilot_getNearestEnemy(cur_pilot);
+      if (id==0) /* No enemy found */
+         return 0;
+      lua_pushpilot(L, id);
+      return 1;
+   }
+   else {
+      double range = luaL_checknumber(L,1);
+      double r2 = pow2(range);
+      unsigned int tp = 0;
+      double d = 0.;
+      int x, y, r;
+      Pilot *const* pilot_stack = pilot_getAll();
 
-   if (id==0) /* No enemy found */
-      return 0;
+      r = ceil(range);
+      x = round(cur_pilot->solid.pos.x);
+      y = round(cur_pilot->solid.pos.y);
+      pilot_collideQueryIL( &ai_qtquery, x-r, y-r, x+r, y+r );
+      for (int i=0; i<il_size(&ai_qtquery); i++ ) {
+         const Pilot *p = pilot_stack[ il_get( &ai_qtquery, i, 0 ) ];
+         double td;
 
-   lua_pushpilot(L, id);
+         if (vec2_dist2(&p->solid.pos, &cur_pilot->solid.pos) > r2)
+            continue;
 
-   return 1;
+         if (!pilot_validEnemy( cur_pilot, p ))
+            continue;
+
+         /* Check distance. */
+         td = vec2_dist2(&p->solid.pos, &cur_pilot->solid.pos);
+         if (!tp || (td < d)) {
+            d  = td;
+            tp = p->id;
+         }
+      }
+      return tp;
+   }
 }
 
 /**
