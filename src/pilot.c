@@ -2537,10 +2537,6 @@ void pilot_update( Pilot* pilot, double dt )
    gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
          pilot->ship->gfx_space, pilot->solid.dir );
 
-   /* See if there is commodities to gather. */
-   if (!pilot_isDisabled(pilot))
-      gatherable_gather( pilot );
-
    /* Update the trail. */
    pilot_sample_trails( pilot, 0 );
 
