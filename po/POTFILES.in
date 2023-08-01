@@ -643,7 +643,6 @@ dat/spob/agino.xml
 dat/spob/ahmed.xml
 dat/spob/aillis.xml
 dat/spob/akios_terminal.xml
-dat/spob/akra_bastion.xml
 dat/spob/akra_iii.xml
 dat/spob/akra_v.xml
 dat/spob/akrikos.xml
@@ -787,6 +786,10 @@ dat/spob/castellan_epsilon.xml
 dat/spob/castellan_i.xml
 dat/spob/castellan_iii.xml
 dat/spob/castellan_vi.xml
+dat/spob/castellum_hystera.xml
+dat/spob/castellum_telika.xml
+dat/spob/castrum_akra.xml
+dat/spob/castrum_sigma.xml
 dat/spob/cebus_prime.xml
 dat/spob/cerberus_i.xml
 dat/spob/cerberus_ii.xml
@@ -1094,7 +1097,6 @@ dat/spob/hypergate_ruadan.xml
 dat/spob/hystera_i.xml
 dat/spob/hystera_ia.xml
 dat/spob/hystera_ii.xml
-dat/spob/hystera_keep.xml
 dat/spob/hzmm01.xml
 dat/spob/hznss1.xml
 dat/spob/hznss2.xml
@@ -1621,7 +1623,6 @@ dat/spob/shickhaw_iv.xml
 dat/spob/shikima_ii.xml
 dat/spob/shion.xml
 dat/spob/sidhe.xml
-dat/spob/sigma_bastion.xml
 dat/spob/silverstone.xml
 dat/spob/simoen.xml
 dat/spob/sinass.xml
@@ -1720,7 +1721,6 @@ dat/spob/taxumi_iii.xml
 dat/spob/taxumi_iiia.xml
 dat/spob/telika_ii.xml
 dat/spob/telika_iii.xml
-dat/spob/telika_keep.xml
 dat/spob/tenalp.xml
 dat/spob/tepdania_customs.xml
 dat/spob/tepdania_prime.xml

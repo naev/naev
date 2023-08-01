@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Sigma Bastion">
+<spob name="Castrum Sigma">
  <lua>spob/lua/proteron_mil_restricted.lua</lua>
  <pos x="3150.528370" y="-2234.267876"/>
  <GFX>
