@@ -84,11 +84,16 @@ return function ( mem )
          sai(_([["Anyway, I don't see anything else of importance on this ship! Let's go quickly."]]))
 
          vn.disappear( sai, tut.shipai.transition )
+         local reward = poi.data_str(1)
+         vn.na(fmt.f(_([[Despite what {shipai} says (or perhaps because of it), you explore the ship and find {reward}, which isn't listed on the manifest, though you suppose that's par for the record with encrypted items.]]),
+         {shipai=tut.ainame(), reward=reward}))
+         vn.na(fmt.reward(reward))
 
          vn.func( function ()
             var.push( misnvar, true )
-            poi.log(fmt.f(_([[You found a derelict ship in the {sys} system with a copy of some press guidelines.]]),
-               {sys=mem.sys}))
+            poi.data_give(1)
+            poi.log(fmt.f(_([[You found a derelict ship in the {sys} system with corrupted information about an agent. You also were able to recover {reward} from the ship.]]),
+               {sys=mem.sys, reward=reward}))
          end)
       end,
    }
