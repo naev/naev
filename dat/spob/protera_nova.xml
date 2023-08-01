@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Protera Nova">
+ <pos x="187.238109" y="1185.841360"/>
+ <GFX>
+  <space>moon-P02.webp</space>
+  <exterior>hangar1.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Proteron</faction>
+  <base>50.000000</base>
+  <bonus>20.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>P</class>
+  <population>500</population>
+  <hide>0.200000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>You see a massive crater around the severely damaged ship dominating the landscape, with signs indicating that the shockwave travelled all over the relatively small planet.</description>
+  <bar>The ship's old bar has been restored to an acceptable state. You're told, oddly enough, that a bar is never supposed to have seats in Proteron culture, but here, considering that the installation skews at a rather worrying angle, there are at least toeholds to keep you from falling.</bar>
+ </general>
+</spob>

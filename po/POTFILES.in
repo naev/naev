@@ -1012,7 +1012,6 @@ dat/spob/gliese_ii.xml
 dat/spob/gliese_iia.xml
 dat/spob/gliese_iii.xml
 dat/spob/gliese_iv.xml
-dat/spob/gliese_v.xml
 dat/spob/gliese_vi.xml
 dat/spob/goddard_iii.xml
 dat/spob/goddard_iv.xml
@@ -1476,6 +1475,7 @@ dat/spob/possum_ii.xml
 dat/spob/praxis.xml
 dat/spob/priscus.xml
 dat/spob/procyon_shipyards.xml
+dat/spob/protera_nova.xml
 dat/spob/protera_sigma.xml
 dat/spob/provectus_nova_i.xml
 dat/spob/provectus_nova_ia.xml
