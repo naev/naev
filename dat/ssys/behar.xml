@@ -17,6 +17,11 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Gliese">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Iris">
    <autopos/>
    <hide>1.000000</hide>

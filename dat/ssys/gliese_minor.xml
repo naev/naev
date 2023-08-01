@@ -9,6 +9,7 @@
  <pos x="579.012195" y="-157.111922"/>
  <spobs>
   <spob>Protera Nova</spob>
+  <spob_virtual>Proteron Unpresence</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Gliese">
@@ -16,4 +17,7 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <tags>
+  <tag>restricted</tag>
+ </tags>
 </ssys>
