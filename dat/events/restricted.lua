@@ -50,13 +50,14 @@ local msg_list = {
    ["Za'lek"] = _("WARNING: Entering militarized zone. Unauthorized access will be met with force."),
    ["Dvaered"] = _("WARNING: YOU HAVE ENTERED A RESTRICTED ZONE. LEAVE IMMEDIATELY OR FACE THE CONSEQUENCES."),
    ["Empire"] = _("WARNING: This is a restricted military system. Unauthorized ships will be shot on sight."),
+   ["Proteron"] = _("WARNING: Violating travel restrictions endangers both you and the State. Leave now, before we enforce the death penalty.")
 }
 local msg_delay
 function msg_buoy ()
    local msg = msg_list[ sysfct:nameRaw() ]
    if not msg then
       -- Gneeric message
-      msg = _("WARNING: Unauthorized entry to restricted area will be met with force. Leave immediately.")
+      msg = _("WARNING: Unauthorized entry to a restricted area will be met with lethal force. Leave immediately.")
    end
    if not msg_delay then
       -- Probably going to die but be nice and add reset autonav the first time
