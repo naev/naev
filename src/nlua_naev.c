@@ -534,8 +534,6 @@ static int naevL_conf( lua_State *L )
    PUSH_INT( L, "font_size_intro", conf.font_size_intro );
    PUSH_INT( L, "font_size_def", conf.font_size_def );
    PUSH_INT( L, "font_size_small", conf.font_size_small );
-   PUSH_DOUBLE( L, "compression_velocity", conf.compression_velocity );
-   PUSH_DOUBLE( L, "compression_mult", conf.compression_mult );
    PUSH_BOOL( L, "redirect_file", conf.redirect_file );
    PUSH_BOOL( L, "save_compress", conf.save_compress );
    PUSH_INT( L, "doubletap_sensitivity", conf.doubletap_sens );
@@ -543,8 +541,6 @@ static int naevL_conf( lua_State *L )
    PUSH_BOOL( L, "mouse_fly", conf.mouse_fly );
    PUSH_INT( L, "mouse_thrust", conf.mouse_thrust );
    PUSH_DOUBLE( L, "mouse_doubleclick", conf.mouse_doubleclick );
-   PUSH_DOUBLE( L, "autonav_reset_dist", conf.autonav_reset_dist );
-   PUSH_DOUBLE( L, "autonav_reset_shield", conf.autonav_reset_shield );
    PUSH_BOOL( L, "devmode", conf.devmode );
    PUSH_BOOL( L, "devautosave", conf.devautosave );
    PUSH_BOOL( L, "lua_enet", conf.lua_enet );
@@ -556,6 +552,11 @@ static int naevL_conf( lua_State *L )
    PUSH_STRING( L, "dev_save_sys", conf.dev_save_sys );
    PUSH_STRING( L, "dev_save_map", conf.dev_save_map );
    PUSH_STRING( L, "dev_save_spob", conf.dev_save_spob );
+   /* TODO remove the following in 0.12.0 */
+   PUSH_DOUBLE( L, "compression_velocity", conf.compression_velocity );
+   PUSH_DOUBLE( L, "compression_mult", conf.compression_mult );
+   PUSH_DOUBLE( L, "autonav_reset_dist", conf.autonav_reset_dist );
+   PUSH_DOUBLE( L, "autonav_reset_shield", conf.autonav_reset_shield );
    return 1;
 }
 #undef PUSH_STRING

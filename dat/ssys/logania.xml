@@ -6,7 +6,9 @@
   <interference>0.000000</interference>
  </general>
  <pos x="-240.806496" y="-99.372086"/>
- <spobs/>
+ <spobs>
+  <spob_virtual>Miner Local</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Kobopos">
    <autopos/>
@@ -17,4 +19,11 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeC-standard</group>
+   <radius>3700.000000</radius>
+   <pos x="5366.037186" y="5829.768795"/>
+  </asteroid>
+ </asteroids>
 </ssys>

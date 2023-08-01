@@ -2,12 +2,12 @@ local fmt = require "format"
 local lanes = require "ai.core.misc.lanes"
 
 local autonav, target_pos, target_spb, target_plt, instant_jump
-local autonav_jump_approach, autonav_jump_brake
+local autonav_jump_delay, autonav_jump_approach, autonav_jump_brake
 local autonav_pos_approach
 local autonav_spob_approach, autonav_spob_land_approach, autonav_spob_land_brake
 local autonav_plt_follow, autonav_plt_board_approach
 local autonav_timer, tc_base, tc_mod, tc_max, tc_rampdown, tc_down
-local conf, last_shield, last_armour, map_npath
+local last_shield, last_armour, map_npath, reset_shield, reset_dist, reset_lockon
 local path, uselanes_jump, uselanes_spob
 
 -- Some defaults
@@ -25,7 +25,6 @@ local function autonav_setup ()
    -- Get player / game info
    local pp = player.pilot()
    instant_jump = pp:shipstat("misc_instant_jump")
-   conf = naev.conf()
 
    -- Some safe defaults
    autonav     = nil
@@ -39,14 +38,15 @@ local function autonav_setup ()
    local stealth = pp:flags("stealth")
    uselanes_jump = var.peek("autonav_uselanes_jump") and not stealth
    uselanes_spob = var.peek("autonav_uselanes_spob") and not stealth
+   reset_shield = var.peek("autonav_reset_shield")
+   reset_dist = var.peek("autonav_reset_dist")
+   reset_lockon = true
    player.autonavSetPos()
 
    -- Set time compression maximum
-   tc_max = conf.compression_velocity / pp:speedMax()
-   if conf.compression_mult >= 1 then
-      tc_max = math.min( tc_max, conf.compression_mult )
-   end
-   tc_max = math.max( 1, tc_max )
+   tc_max = var.peek("autonav_compr_speed") / pp:speedMax()
+   local compr_max = var.peek("autonav_compr_max")
+   tc_max = math.max( 1, math.min( tc_max, compr_max ) )
 
    -- Set initial time compression base
    tc_base = player.dt_default() * player.speed()
@@ -69,13 +69,11 @@ end
 
 local function shouldResetSpeed ()
    local pp = player.pilot()
-   if pp:lockon() > 0 then
+   if reset_lockon and pp:lockon() > 0 then
       resetSpeed()
       return true
    end
 
-   local reset_dist = conf.autonav_reset_dist
-   local reset_shield = conf.autonav_reset_shield
    local will_reset = (autonav_timer > 0)
 
    local armour, shield = pp:health()
@@ -326,6 +324,23 @@ local function autonav_approach_vel( pos, vel, radius )
    return pos:dist( pp:pos() )
 end
 
+-- Jumped into a system and delaying until velocity is somewhat normal
+function autonav_jump_delay ()
+   -- Ignore autonav until speed is acceptable
+   local pp = player.pilot()
+   if pp:vel():mod() > 1.5 * pp:speedMax() then
+      return
+   end
+
+   -- Determine how to do lanes
+   if uselanes_jump then
+      path = lanes.getRouteP( pp, target_pos )
+   else
+      path = {target_pos}
+   end
+   autonav = autonav_jump_approach
+end
+
 -- Approaching a jump point, target position is stored in target_pos
 function autonav_jump_approach ()
    local pp = player.pilot()
@@ -345,12 +360,53 @@ function autonav_jump_approach ()
    end
 end
 
+-- More approaching a jump point and turning in the direction of the jump out.
+local function autonav_instant_jump_final_approach ()
+   -- This function assumes there is the jump point in the front of player.
+   local pp = player.pilot()
+
+   local jmp = pp:navJump()
+   local jmp_pos = jmp:pos()
+   local jmp_r_pos = jmp_pos - pp:pos()
+
+   -- The reference angle is the running direction of player.
+   local pp_vel = pp:vel()
+   local ref_vec = vec2.copy(pp_vel):normalize() -- need to copy
+
+   local x = vec2.dot( ref_vec, jmp_r_pos )
+
+   if x < 0 then
+      -- player passed by the jump point.
+      return true
+   end
+
+   -- Estimate the turning time and the running distance.
+   local jmpout_dir = -jmp:angle()
+   local diff_dir = ((pp:dir() - jmpout_dir) / (2.0 * math.pi) + 0.5) % 1.0 - 0.5
+   local turn_time = math.abs(diff_dir) * 360 / pp:turn()
+   local turn_dist = turn_time * vec2.dot( ref_vec, pp_vel )
+
+   -- The distance to the position where player can jump out.
+   local jmp_dist = jmp_r_pos:dist() - jmp:jumpDist( pp )
+
+   if jmp_dist <= turn_dist then
+      -- Turning in the direction of the jump out.
+      ai.accel(0)
+      ai.face( jmpout_dir )
+   else
+      -- Approaching the jump point.
+      ai.face( jmp_pos )
+      ai.accel(1)
+   end
+   return false
+end
+
 -- Breaking at a jump point, target position is stored in target_pos
 function autonav_jump_brake ()
    local ret
    -- With instant jumping we can just focus on getting in range
    if instant_jump then
-      ret = autonav_approach( target_pos, true )
+      ret = autonav_instant_jump_final_approach()
    else
       ret = ai.brake()
    end
@@ -578,11 +634,7 @@ function autonav_enter ()
       target_pos = pos + (pp:pos()-pos):normalize( math.max(0.8*d, d-30) )
       if uselanes_jump then
          lanes.clearCache( pp )
-         path = lanes.getRouteP( pp, target_pos )
-         table.remove( path, 1 ) -- Remove first node
-      else
-         path = {target_pos}
       end
-      autonav = autonav_jump_approach
+      autonav = autonav_jump_delay
    end
 end

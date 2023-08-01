@@ -441,7 +441,7 @@ int pilot_hasCredits( const Pilot *p, credits_t amount );
 credits_t pilot_modCredits( Pilot *p, credits_t amount );
 
 /* Creation. */
-unsigned int pilot_create( const Ship* ship, const char* name, int faction, const char *ai,
+Pilot *pilot_create( const Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const vec2* pos, const vec2* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot );
 Pilot* pilot_createEmpty( const Ship* ship, const char* name,

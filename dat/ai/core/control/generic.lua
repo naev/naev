@@ -485,7 +485,6 @@ end
 function control( dt )
    mem.elapsed = mem.elapsed + dt
    local p = ai.pilot()
-   local enemy = atk.preferred_enemy()
 
    -- Task information stuff
    local task = ai.taskname()
@@ -599,6 +598,7 @@ function control( dt )
       if lr then
          local d, pos = lanes.getDistance2P( p, p:pos() )
          if d < math.huge and d > lr*lr then
+            local enemy = atk.preferred_enemy( nil, true )
             ai.pushtask( "return_lane", {enemy, pos} )
             return
          end
@@ -607,6 +607,7 @@ function control( dt )
 
    -- Get new task
    if task == nil then
+      local enemy = atk.preferred_enemy( nil, true )
       -- See what decision to take
       if should_attack( enemy, si, false ) then
          ai.hostile(enemy) -- Should be done before taunting
@@ -632,7 +633,8 @@ function control( dt )
    end
 
    -- Enemy sighted, handled doing specific tasks
-   if enemy ~= nil and mem.aggressive then
+   if mem.aggressive then
+      local enemy = atk.preferred_enemy( nil, true )
       -- See if really want to attack
       if should_attack( enemy, si, false ) then
          ai.hostile(enemy) -- Should be done before taunting

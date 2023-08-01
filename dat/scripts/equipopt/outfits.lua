@@ -39,6 +39,9 @@ outfits.standard.weapons = {
    "Laser Turret MK1", "Turreted Gauss Gun", "Plasma Turret MK1",
    "Laser Cannon MK1", "Gauss Gun", "Plasma Blaster MK1",
    "Ion Cannon",
+   -- Point Defense
+   "Guardian Overseer System",
+   "Guardian Interception System",
 }
 outfits.standard.utility = {
    --"Unicorp Scrambler", "Unicorp Light Afterburner",

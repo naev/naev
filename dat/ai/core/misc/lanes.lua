@@ -239,7 +239,7 @@ local function getCacheP( p )
    local mem = p:memory()
    if not mem.__lanes then
       local standing = (mem.lanes_useneutral and "non-hostile") or "friendly"
-      mem.__lanes = lanes.get( p:faction(), standing )
+      mem.__lanes = lanes.get( p:faction(), standing, p:withPlayer() )
    end
    return mem.__lanes
 end
@@ -247,7 +247,7 @@ end
 local function getCachePH( p )
    local mem = p:memory()
    if not mem.__lanes_H then
-      mem.__lanes_H = lanes.get( p:faction(), "hostile" )
+      mem.__lanes_H = lanes.get( p:faction(), "hostile", p:withPlayer() )
    end
    return mem.__lanes_H
 end
@@ -261,7 +261,7 @@ end
 
 
 -- Same as safelanes.get but does caching
-function lanes.get( f, standing )
+function lanes.get( f, standing, isplayer )
    -- We try to cache the lane graph per system
    local nc = naev.cache()
    if not nc.lanes then nc.lanes = {} end
@@ -273,7 +273,7 @@ function lanes.get( f, standing )
    local key = f:nameRaw()..standing
    if not ncl.L[key] then
       local L = {}
-      L.lanes  = safelanes.get( f, standing )
+      L.lanes  = safelanes.get( f, standing, nil, isplayer )
       L.v, L.e = safelanesToGraph( L.lanes )
       ncl.L[key] = L
    end

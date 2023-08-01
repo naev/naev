@@ -3077,6 +3077,7 @@ dat/missions/neutral/poi/data_intro.lua
 dat/missions/neutral/poi/gate_safety.lua
 dat/missions/neutral/poi/nebula_crystals.lua
 dat/missions/neutral/poi/proteron_agent.lua
+dat/missions/neutral/poi/proteron_press.lua
 dat/missions/neutral/poi/soromid_biologist.lua
 dat/missions/neutral/poi/zalek_drone.lua
 dat/missions/neutral/poi_intro.lua
@@ -3257,6 +3258,7 @@ dat/scripts/common/derelict.lua
 dat/scripts/common/dvaered.lua
 dat/scripts/common/empire.lua
 dat/scripts/common/ferals.lua
+dat/scripts/common/foodbiz.lua
 dat/scripts/common/frontier.lua
 dat/scripts/common/frontier_war.lua
 dat/scripts/common/gauntlet.lua

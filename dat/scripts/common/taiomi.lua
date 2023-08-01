@@ -159,7 +159,7 @@ function taiomi.laboratory ()
    if fct == "Soromid" then
       return spob.getS( "Soromid Databank" )
    end
-   return spob.getS( "Zhiru" )
+   return spob.getS( "Jaan" )
 end
 
 function taiomi.scavenger_escort ()

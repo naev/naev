@@ -1,7 +1,7 @@
 project('sdl2-image', 'c', version: '2.0.5')
 
 cc = meson.get_compiler('c')
-c_args = cc.get_supported_arguments(['-Wno-misleading-indentation', '-Wno-sign-compare', '-Wno-unused-function', '-Wno-unused-parameter'])
+c_args = cc.get_supported_arguments(['-Wno-misleading-indentation', '-Wno-pedantic', '-Wno-sign-compare', '-Wno-unused-function', '-Wno-unused-parameter'])
 add_project_arguments(c_args, language: 'c')
 
 

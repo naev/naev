@@ -4,6 +4,7 @@
 local vn = require 'vn'
 local colour = require 'colour'
 local fmt = require "format"
+local equipopt = require "equipopt"
 
 local minerva = {
    -- Main Characters
@@ -251,6 +252,33 @@ function minerva.maikki_mood_get()
       end
    end
    return mood
+end
+
+-- Spawns the pink demon at location pos
+function minerva.pink_demon( pos, params )
+   params = tmerge( {naked=true}, params or {} )
+   local p = pilot.add( "Pirate Kestrel", "Wild Ones", pos, _("Pink Demon"), params )
+   equipopt.pirate( p, {
+      type_range = {
+         ["Launcher"] = { max = 0 },
+         ["Turret Launcher"] = { max = 0 },
+      }
+   } )
+   p:intrinsicSet( "fwd_damage", 15 )
+   p:intrinsicSet( "tur_damage", 15 )
+   p:intrinsicSet( "fwd_dam_as_dis", 30 )
+   p:intrinsicSet( "tur_dam_as_dis", 30 )
+   return p
+end
+
+function minerva.fct_wildones()
+   local id = "minerva_wildones"
+   local f = faction.exists( id )
+   if f then
+      return f
+   end
+   return faction.dynAdd( "Wild Ones", id, _("Wild Ones"),
+         {clear_enemies=true, clear_allies=true, player=0} )
 end
 
 --[[

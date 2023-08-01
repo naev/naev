@@ -10,17 +10,7 @@ return function ()
    if pirates > 300 then
       table.insert( pers, {
          spawn = function ()
-            local p = pilot.add( "Pirate Kestrel", "Wild Ones", nil, _("Pink Demon"), {naked=true, ai="pers_pirate"} )
-            equipopt.pirate( p, {
-               type_range = {
-                  ["Launcher"] = { max = 0 },
-                  ["Turret Launcher"] = { max = 0 },
-               }
-            } )
-            p:intrinsicSet( "fwd_damage", 15 )
-            p:intrinsicSet( "tur_damage", 15 )
-            p:intrinsicSet( "fwd_dam_as_dis", 30 )
-            p:intrinsicSet( "tur_dam_as_dis", 30 )
+            local p = require("common.minerva").pink_demon( nil, {ai="pers_pirate"} )
             local m = p:memory()
             m.taunt = _("Ho ho ho and a bottle of rum!")
             m.comm_greet = _([["What are you doing here?"]])

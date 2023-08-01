@@ -113,6 +113,7 @@
  */
 static AI_Profile* profiles = NULL; /**< Array of AI_Profiles loaded. */
 static nlua_env equip_env = LUA_NOREF; /**< Equipment enviornment. */
+static IntList ai_qtquery; /*< Quadtree query. */
 
 /*
  * prototypes
@@ -204,8 +205,6 @@ static int aiL_hasturrets( lua_State *L ); /* bool hasturrets() */
 static int aiL_hasfighterbays( lua_State *L ); /* bool hasfighterbays() */
 static int aiL_hasafterburner( lua_State *L ); /* bool hasafterburner() */
 static int aiL_getenemy( lua_State *L ); /* number getenemy() */
-static int aiL_getenemy_size( lua_State *L ); /* number getenemy_size() */
-static int aiL_getenemy_heuristic( lua_State *L ); /* number getenemy_heuristic() */
 static int aiL_hostile( lua_State *L ); /* hostile( number ) */
 static int aiL_getweaprange( lua_State *L ); /* number getweaprange() */
 static int aiL_getweapspeed( lua_State *L ); /* number getweapspeed() */
@@ -302,8 +301,6 @@ static const luaL_Reg aiL_methods[] = {
    { "hasafterburner", aiL_hasafterburner },
    { "shoot", aiL_shoot },
    { "getenemy", aiL_getenemy },
-   { "getenemy_size", aiL_getenemy_size },
-   { "getenemy_heuristic", aiL_getenemy_heuristic },
    { "hostile", aiL_hostile },
    { "getweaprange", aiL_getweaprange },
    { "getweapspeed", aiL_getweapspeed },
@@ -625,6 +622,9 @@ int ai_load (void)
    else
       DEBUG( n_("Loaded %d AI Profile", "Loaded %d AI Profiles", array_size(profiles) ), array_size(profiles) );
 
+   /* Create collision stuff. */
+   il_create( &ai_qtquery, 1 );
+
    /* Load equipment thingy. */
    return ai_loadEquip();
 }
@@ -771,6 +771,9 @@ void ai_exit (void)
    /* Free equipment Lua. */
    nlua_freeEnv(equip_env);
    equip_env = LUA_NOREF;
+
+   /* Clean up query stuff. */
+   il_destroy( &ai_qtquery );
 }
 
 /**
@@ -882,7 +885,6 @@ void ai_init( Pilot *p )
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->ai->ref_create );
    ai_run( p->ai->env, 0 ); /* run control */
    ai_unsetPilot( oldmem );
-
 }
 
 /**
@@ -2873,7 +2875,7 @@ static int aiL_getGatherable( lua_State *L )
    else
       rad = lua_tonumber(L,1);
 
-   i = gatherable_getClosest( cur_pilot->solid.pos, rad );
+   i = gatherable_getClosest( &cur_pilot->solid.pos, rad );
 
    if (i != -1)
       lua_pushnumber(L,i);
@@ -3032,78 +3034,50 @@ static int aiL_shoot( lua_State *L )
 /**
  * @brief Gets the nearest enemy.
  *
+ *    @luatparam[opt=nil] Vec2 radius Distance to search for an enemy. If not specified tries to find the nearest enemy.
  *    @luatreturn Pilot|nil
  *    @luafunc getenemy
  */
 static int aiL_getenemy( lua_State *L )
 {
-   unsigned int id = pilot_getNearestEnemy(cur_pilot);
-
-   if (id==0) /* No enemy found */
-      return 0;
-
-   lua_pushpilot(L, id);
-
-   return 1;
-}
-
-/**
- * @brief Gets the nearest enemy within specified size bounds.
- *
- *  @luatparam number lb Lower size bound
- *  @luatparam number ub upper size bound
- *  @luatreturn Pilot
- *  @luafunc getenemy_size
- */
-static int aiL_getenemy_size( lua_State *L )
-{
-   unsigned int id;
-   unsigned int LB, UB;
-
-   NLUA_MIN_ARGS(2);
-
-   LB = luaL_checklong(L,1);
-   UB = luaL_checklong(L,2);
-
-   if (LB > UB) {
-      NLUA_ERROR(L, _("Invalid Bounds"));
-      return 0;
+   if (lua_isnoneornil(L,1)) {
+      unsigned int id = pilot_getNearestEnemy(cur_pilot);
+      if (id==0) /* No enemy found */
+         return 0;
+      lua_pushpilot(L, id);
+      return 1;
    }
+   else {
+      double range = luaL_checknumber(L,1);
+      double r2 = pow2(range);
+      unsigned int tp = 0;
+      double d = 0.;
+      int x, y, r;
+      Pilot *const* pilot_stack = pilot_getAll();
 
-   id = pilot_getNearestEnemy_size( cur_pilot, LB, UB );
+      r = ceil(range);
+      x = round(cur_pilot->solid.pos.x);
+      y = round(cur_pilot->solid.pos.y);
+      pilot_collideQueryIL( &ai_qtquery, x-r, y-r, x+r, y+r );
+      for (int i=0; i<il_size(&ai_qtquery); i++ ) {
+         const Pilot *p = pilot_stack[ il_get( &ai_qtquery, i, 0 ) ];
+         double td;
 
-   if (id==0) /* No enemy found */
-      return 0;
+         if (vec2_dist2(&p->solid.pos, &cur_pilot->solid.pos) > r2)
+            continue;
 
-   lua_pushpilot(L, id);
-   return 1;
-}
+         if (!pilot_validEnemy( cur_pilot, p ))
+            continue;
 
-/**
- * @brief Gets the nearest enemy within specified heuristic.
- *
- *  @luatparam number mass goal mass map (0-1)
- *  @luatparam number dps goal DPS map (0-1)
- *  @luatparam number hp goal HP map (0-1)
- *  @luatparam number range weighting for range (typically > 1)
- *  @luatreturn Pilot the best fitting target
- *  @luafunc getenemy_heuristic
- */
-static int aiL_getenemy_heuristic( lua_State *L )
-{
-   double mass_factor    = luaL_checknumber(L,1);
-   double health_factor  = luaL_checknumber(L,2);
-   double damage_factor  = luaL_checknumber(L,3);
-   double range_factor   = luaL_checknumber(L,4);
-
-   unsigned int id = pilot_getNearestEnemy_heuristic( cur_pilot,
-         mass_factor, health_factor, damage_factor, 1./range_factor );
-
-   if (id==0) /* No enemy found */
-      return 0;
-
-   lua_pushpilot(L, id);
-   return 1;
+         /* Check distance. */
+         td = vec2_dist2(&p->solid.pos, &cur_pilot->solid.pos);
+         if (!tp || (td < d)) {
+            d  = td;
+            tp = p->id;
+         }
+      }
+      return tp;
+   }
 }
 
 /**
@@ -3115,10 +3089,8 @@ static int aiL_getenemy_heuristic( lua_State *L )
 static int aiL_hostile( lua_State *L )
 {
    const Pilot *p = luaL_validpilot(L,1);
-
    if (pilot_isWithPlayer(p))
       pilot_setHostile(cur_pilot);
-
    return 0;
 }
 

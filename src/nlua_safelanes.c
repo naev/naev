@@ -60,6 +60,7 @@ int nlua_loadSafelanes( nlua_env env )
  *    @luatparam[opt] Faction f If present, only return this faction's lanes.
  *    @luatparam[opt] string standing What type of lanes to get. Either nil for specific faction only, "friendly", "neutral", "hostile", "non-friendly", or "non-hostile".
  *    @luatparam[opt=system.cur()] System s The system whose lanes we want.
+ *    @luatparam[opt=false] boolean onlyknown Whether or not to limit the lanes to those known to the player.
  *    @luatreturn table The list of matching safe lanes, each of which is a table where:
  *                lane[1] and lane[2] are the endpoints (type vec2),
  *                and lane.faction is the owner's Faction.
@@ -67,11 +68,9 @@ int nlua_loadSafelanes( nlua_env env )
  */
 static int safelanesL_get( lua_State *L )
 {
-   int i, j, faction, standing;
+   int faction, standing, onlyknown;
    StarSystem *sys;
    SafeLane *lanes;
-   Spob *pnt;
-   JumpPoint *jmp;
    const char *std;
 
    if (!lua_isnoneornil(L,1))
@@ -83,6 +82,7 @@ static int safelanesL_get( lua_State *L )
       sys = luaL_validsystem( L, 3 );
    else
       sys = cur_system;
+   onlyknown = lua_toboolean(L,4);
 
    /* Translate standing into number. */
    standing = 0;
@@ -101,15 +101,39 @@ static int safelanesL_get( lua_State *L )
          NLUA_ERROR(L,_("Unknown standing type '%s'!"), std);
    }
 
+   /* Get and process the lanes. */
    lanes = safelanes_get( faction, standing, sys );
    lua_newtable( L );
-   for (i=0; i<array_size(lanes); i++) {
+   for (int i=0; i<array_size(lanes); i++) {
+      const SafeLane *l = &lanes[i];
+      if (onlyknown) {
+         /* Have to do a knowness check. */
+         int known = 1;
+         for (int j=0; j<2; j++) {
+            switch (l->point_type[j]) {
+               case SAFELANE_LOC_SPOB:
+                  if (!spob_isKnown( spob_getIndex( l->point_id[j] )))
+                     known = 0;
+                  break;
+               case SAFELANE_LOC_DEST_SYS:
+                  if (!jp_isKnown( jump_getTarget( system_getIndex(l->point_id[j]), sys)))
+                     known = 0;
+                  break;
+               default:
+                  NLUA_ERROR( L, _("Safe-lane vertex type is invalid.") );
+            }
+         }
+         if (!known)
+            continue;
+      }
       lua_newtable( L );
-      for (j=0; j<2; j++) {
-         switch (lanes[i].point_type[j]) {
+      for (int j=0; j<2; j++) {
+         const Spob *pnt;
+         const JumpPoint *jmp;
+         switch (l->point_type[j]) {
             case SAFELANE_LOC_SPOB:
-               pnt = spob_getIndex( lanes[i].point_id[j] );
-               //lua_pushspob( L, lanes[i].point_id[j] );
+               pnt = spob_getIndex( l->point_id[j] );
+               //lua_pushspob( L, l->point_id[j] );
 #ifdef DEBUGGING
                if (pnt==NULL)
                   NLUA_ERROR(L, _("Spob is invalid"));
@@ -118,9 +142,9 @@ static int safelanesL_get( lua_State *L )
                break;
             case SAFELANE_LOC_DEST_SYS:
                //jump.srcid = system_index( sys );
-               //jump.destid = lanes[i].point_id[j];
+               //jump.destid = l->point_id[j];
                //lua_pushjump( L, jump );
-               jmp = jump_getTarget( system_getIndex(lanes[i].point_id[j]), sys );
+               jmp = jump_getTarget( system_getIndex(l->point_id[j]), sys );
 #ifdef DEBUGGING
                if (jmp==NULL)
                   NLUA_ERROR(L, _("Jump is invalid"));
@@ -133,7 +157,7 @@ static int safelanesL_get( lua_State *L )
          lua_rawseti( L, -2, j+1 );
       }
       lua_pushstring( L, "faction" ); /* key */
-      lua_pushfaction( L, lanes[i].faction ); /* value */
+      lua_pushfaction( L, l->faction ); /* value */
       lua_rawset( L, -3 );
       lua_rawseti( L, -2, i+1 );
    }

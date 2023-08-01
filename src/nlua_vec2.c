@@ -23,6 +23,7 @@
 /* Vector metatable methods */
 static int vectorL_new( lua_State *L );
 static int vectorL_newP( lua_State *L );
+static int vectorL_copy( lua_State *L );
 static int vectorL_tostring( lua_State *L );
 static int vectorL_add__( lua_State *L );
 static int vectorL_add( lua_State *L );
@@ -48,6 +49,7 @@ static int vectorL_collideCircleLine( lua_State *L );
 static const luaL_Reg vector_methods[] = {
    { "new", vectorL_new },
    { "newP", vectorL_newP },
+   { "copy", vectorL_copy },
    { "__tostring", vectorL_tostring },
    { "__add", vectorL_add },
    { "add", vectorL_add__ },
@@ -229,6 +231,20 @@ static int vectorL_newP( lua_State *L )
 
    vec2_pset( &v, m, a );
    lua_pushvector(L, v);
+   return 1;
+}
+
+/**
+ * @brief Copies a vector.
+ *
+ *    @luatparam Vec2 v Vector to copy.
+ *    @luatreturn Vec2 A copy of v.
+ * @luafunc copy
+ */
+static int vectorL_copy( lua_State *L )
+{
+   const vec2 *v = luaL_checkvector(L,1);
+   lua_pushvector( L, *v );
    return 1;
 }
 

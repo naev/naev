@@ -30,7 +30,7 @@ end
 Tries to generate a new setting for a point of interest.
    @treturn table A table of parameters for the point of interest mission or nil if failed to generate.
 --]]
-function poi.generate( force )
+function poi.generate( force, filename )
    -- Must have done intro mission
    if not force and (player.misnActive("Point of Interest - Intro") or not player.misnDone("Point of Interest - Intro")) then
       return
@@ -51,6 +51,7 @@ function poi.generate( force )
    return {
       sys = sys,
       risk = risk,
+      reward = filename,
    }
 end
 
@@ -61,6 +62,7 @@ Sets up a point of interest mission. Meant to be called before starting the poin
 function poi.setup( params )
    local risk = params.risk or 0
    local sys = system.get( params.sys )
+   local reward = params.reward
 
    if var.peek("_poi_system") ~= nil or var.peek("_poi_risk") ~= nil then
       warn(_("Point of Interest variables being overwritten!"))
@@ -68,11 +70,13 @@ function poi.setup( params )
 
    var.push( "_poi_system", sys:nameRaw() )
    var.push( "_poi_risk", risk )
+   var.push( "_poi_reward", reward )
 end
 
 function poi.start ()
    local sys = var.peek("_poi_system")
    local risk = var.peek("_poi_risk")
+   local reward = var.peek("_poi_reward")
    if sys==nil or risk==nil then
       warn(_("Point of Interest not properly initialized!"))
    end
@@ -82,7 +86,8 @@ function poi.start ()
    -- Clean up
    var.pop( "_poi_system" )
    var.pop( "_poi_risk" )
-   return sys, risk
+   var.pop( "_poi_reward" )
+   return sys, risk, reward
 end
 
 local pos, timer, path, goal, mrk

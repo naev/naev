@@ -9,6 +9,7 @@ local le = require 'love.event'
 local lk = require 'love.keyboard'
 local utf8 = require 'utf8'
 local vn = require "vn"
+local fmt = require "format"
 
 local luatk = {
    _windows = {},
@@ -255,7 +256,7 @@ function luatk.mousemoved( mx, my )
       if not wgt._pressed then
          wgt.mouseover = inbounds
       end
-      if inbounds and wgt.mmoved then
+      if (inbounds or wgt._pressed) and wgt.mmoved then
          wgt.mmoved( wgt, x-wgt.x, y-wgt.y )
       end
    end
@@ -463,6 +464,10 @@ end
 luatk.Widget = {}
 luatk.Widget_mt = { __index = luatk.Widget }
 function luatk.newWidget( parent, x, y, w, h )
+   x = x or 0
+   y = y or 0
+   w = w or 0
+   h = h or 0
    if x < 0 then
       x = parent.w - w + x
    end
@@ -796,14 +801,14 @@ function luatk.Fader:draw( bx, by )
       local ly = y + h + 5
       lg.setColor( luatk.scrollbar.colour.label )
       if off * w > 40 then
-         lg.printf( tostring(self.min), self.font, x-30, ly, 60, "center" )
+         lg.printf( fmt.number(self.min), self.font, x-30, ly, 60, "center" )
       end
       if off * w < w-40 then
-         lg.printf( tostring(self.max), self.font, x+w-30, ly, 60, "center" )
+         lg.printf( fmt.number(self.max), self.font, x+w-30, ly, 60, "center" )
       end
       lg.setColor( luatk.colour.text )
       lg.setColor( luatk.scrollbar.colour.value )
-      lg.printf( tostring(math.floor(self.val+0.5)), self.font, cx-30, ly, 60, "center" )
+      lg.printf( fmt.number(math.floor(self.val+0.5)), self.font, cx-30, ly, 60, "center" )
    end
 end
 function luatk.Fader:pressed( mx, _my )

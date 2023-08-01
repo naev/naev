@@ -500,6 +500,7 @@ static int spobL_eq( lua_State *L )
  *    @luatparam Spob p Spob to get the translated name of.
  *    @luatreturn string The translated name of the spob.
  * @luafunc name
+ * @see nameRaw
  */
 static int spobL_name( lua_State *L )
 {

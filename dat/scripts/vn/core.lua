@@ -1807,16 +1807,36 @@ function vn.run()
    end
    -- Check for duplicate labels
    if __debugging then
+      local jumps = {}
       local labels = {}
+      local menu_jumps = {}
       for k,s in ipairs( vn._states ) do
          if s._type=="Label" then
             table.insert( labels, s.label )
+         elseif s._type=="Jump" then
+            table.insert( jumps, s.label )
+         elseif s._type=="Menu" then
+            if type(s.items)=="table" then
+               for i,m in ipairs(s.items) do
+                  table.insert( menu_jumps, m[2] )
+               end
+            end
          end
       end
       table.sort( labels )
       for k,v in ipairs(labels) do
          if v==labels[k+1] then
             warn(fmt.f(_("vn: Duplicate label '{lbl}'!"),{lbl=v}))
+         end
+      end
+      for k,v in ipairs(jumps) do
+         if not inlist( labels, v ) then
+            warn(fmt.f(_("vn: Jump to non-existent label '{lbl}'!"),{lbl=v}))
+         end
+      end
+      for k,v in ipairs(menu_jumps) do
+         if not inlist( labels, v ) then
+            warn(fmt.f(_("vn: Manu has jump to non-existent label '{lbl}'!"),{lbl=v}))
          end
       end
    end

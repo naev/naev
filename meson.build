@@ -1,5 +1,5 @@
 project('naev', 'c',
-   version : '0.11.0-alpha.2',
+   version : '0.11.0-alpha.3',
    default_options : [
       'optimization=g',
       'c_std=gnu11',
@@ -364,6 +364,14 @@ if buildExec.disabled() == false
          'zip_overlay' : zip_overlay.full_path(),
          'debug' : debug,
          'debug_paranoid' : paranoid,
+      }
+   )
+
+   gdbinit = configure_file(
+      input: join_paths('utils','build','gdbinit'),
+      output: '.gdbinit',
+      configuration: {
+         'source_root': meson.source_root(),
       }
    )
 

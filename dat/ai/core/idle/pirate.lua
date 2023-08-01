@@ -7,7 +7,7 @@ local idle_generic = idle
 
 -- Get a nearby enemy using pirate heuristics
 local function __getenemy ()
-   local p, d = atk.preferred_enemy()
+   local p, d = atk.preferred_enemy( nil, true )
    if p and d.v then -- Must be vulnerable
       return p, d.F, d.H
    end

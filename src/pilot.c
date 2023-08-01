@@ -2537,10 +2537,6 @@ void pilot_update( Pilot* pilot, double dt )
    gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
          pilot->ship->gfx_space, pilot->solid.dir );
 
-   /* See if there is commodities to gather. */
-   if (!pilot_isDisabled(pilot))
-      gatherable_gather( pilot );
-
    /* Update the trail. */
    pilot_sample_trails( pilot, 0 );
 
@@ -3193,7 +3189,7 @@ static void pilot_init_trails( Pilot* p )
  *
  * @sa pilot_init
  */
-unsigned int pilot_create( const Ship* ship, const char* name, int faction, const char *ai,
+Pilot *pilot_create( const Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const vec2* pos, const vec2* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot )
 {
@@ -3234,7 +3230,7 @@ unsigned int pilot_create( const Ship* ship, const char* name, int faction, cons
    /* Pilot creation hook. */
    pilot_runHook( p, PILOT_HOOK_CREATION );
 
-   return p->id;
+   return p;
 }
 
 /**

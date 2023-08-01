@@ -10,16 +10,12 @@
  */
 /* Gameplay options */
 #define DOUBLETAP_SENSITIVITY_DEFAULT  250   /**< Default afterburner sensitivity. */
-#define TIME_COMPRESSION_DEFAULT_MAX   5000. /**< Maximum default level of time compression (target speed to match). */
-#define TIME_COMPRESSION_DEFAULT_MULT  200   /**< Default level of time compression multiplier. */
 #define REDIRECT_FILE_DEFAULT          1     /**< Whether output should be redirected to a file. */
 #define SAVE_COMPRESSION_DEFAULT       1     /**< Whether or not saved games should be compressed. */
 #define MOUSE_HIDE_DEFAULT             3.    /**< Time (in seconds) to hide mouse when not moved. */
 #define MOUSE_FLY_DEFAULT              1     /**< Whether or not middle clicking enables mouse flying. */
 #define MOUSE_THRUST_DEFAULT           1     /**< Whether or not to use mouse thrust controls. */
 #define MOUSE_DOUBLECLICK_TIME         0.5   /**< How long to consider double-clicks for. */
-#define AUTONAV_RESET_DIST_DEFAULT     5000. /**< Distance of an enemy to reset autonav speed at. */
-#define AUTONAV_RESET_SHIELD_DEFAULT   1.    /**< Shield level (0-1) to reset autonav speed at. 1 means at enemy presence, 0 means at armour damage. */
 #define MANUAL_ZOOM_DEFAULT            0     /**< Whether or not to enable manual zoom controls. */
 #define ZOOM_FAR_DEFAULT               0.5   /**< Far zoom distance (smaller is further) */
 #define ZOOM_NEAR_DEFAULT              1.0   /**< Close zoom distance (bigger is larger) */

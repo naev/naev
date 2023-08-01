@@ -49,7 +49,7 @@ local targetworlds = {
   spob.get("Emperor's Fist")
 }
 local catchworld = spob.get("Torloth")
-local homeworld = spob.get("Zhiru")
+local homeworld, homesys = spob.getS("Zhiru")
 
 function create ()
    misn.setNPC( _("Old Man"), "neutral/unique/cynthia_father.webp", _("An old man sits at a table with some missing person papers.") )
@@ -136,7 +136,8 @@ function land ()
       --Set up the *secret* OSD text
       misn.osdCreate( _("The Search for Cynthia"), {
          _("Catch Cynthia on Torloth in Cygnus"),
-         _("Return Cynthia to her father on Zhiru in the Goddard system"),
+         fmt.f(_("Return Cynthia to her father on {spb} ({sys} system)"),
+            {spb=homeworld, sys=homesys})
       } )
 
       for i,marker in ipairs(mem.search_markers) do
@@ -187,7 +188,8 @@ function land ()
       vn.func( function ()
          misn.osdCreate( _("The Search for Cynthia"), {
             _("Catch Cynthia on Torloth in Cygnus"),
-            _("Go to Zhiru in Goddard to lie to Cynthia's father"),
+            fmt.f(_("Go to {spb} ({sys} system) to lie to Cynthia's father"),
+               {spb=homeworld, sys=homesys}),
          } )
       end )
       cynthia(_([["Please, please, please don't ever come looking for me again, I beg of you!"]]))

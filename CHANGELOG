@@ -32,6 +32,7 @@
       * Inverted how hide, evasion, and stealth value percent bonuses work. Now lower is better
       * Hide locked slots without outfits as the player can't do anything with them
       * Added volley mode to weapon sets that makes weapons fire as fast as possible, instead of staggered
+      * Autonav options are now player-specific and accessible via the info menu settings button
    * New Content
       * New mechanic for House Sirius called flow to unlock psychic powers
          * Gives passive bonuses to Sirius ships

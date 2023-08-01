@@ -25,10 +25,10 @@
 --local tut = require "common.tutorial"
 local poi = require "common.poi"
 local lf = require "love.filesystem"
-
+local fmt = require "format"
 
 function create ()
-   mem.sys, mem.risk = poi.start()
+   mem.sys, mem.risk, mem.reward = poi.start()
    mem.rewardrisk = mem.risk
 
    -- We do a soft claim on the final system
@@ -46,29 +46,64 @@ function create ()
    mem.risk = 2
    mem.locked = true
 
-   -- Roll for rewards here to disallow save scumming
-   local reward_list = {
-      {
-         type = "credits",
-         value = (100e3 + 100e3*rnd.rnd()) * (mem.rewardrisk*0.5+1),
-      },
-   }
-   if poi.data_get_gained() > 0 then
-      table.insert( reward_list, { type="data" } )
-   end
+   -- Choose the reward, which basically means the type of POI
+   -- It can either be forced from the outside, or chosen randomly from a generated list
+   -- Generated here to disallow save scumming
+   if mem.reward then
+      -- Specified during creation
+      local reward = require( mem.reward )( mem )
+      if not reward then
+         error(fmt.f(_("Something went wrong when starting to force start POI '{poiname}'!"),{poiname=mem.reward}))
+      end
+      reward.requirename = mem.reward
+      mem.reward = reward
+   else
+      -- Create a random reward
+      local reward_list = {
+         {
+            type = "credits",
+            value = (100e3 + 100e3*rnd.rnd()) * (mem.rewardrisk*0.5+1),
+            weight = 0.5, -- less likely
+         },
+      }
+      if poi.data_get_gained() > 0 then
+         table.insert( reward_list, {
+            type="data",
+         } )
+      end
 
-   -- Parse directory to add potential rewards
-   for k,v in ipairs(lf.enumerate("missions/neutral/poi")) do
-      local requirename = "missions.neutral.poi."..string.gsub(v,".lua","")
-      local reward = require( requirename )( mem )
-      if reward then
-         reward.requirename = requirename
-         table.insert( reward_list, reward )
+      -- Parse directory to add potential rewards
+      for k,v in ipairs(lf.enumerate("missions/neutral/poi")) do
+         local requirename = "missions.neutral.poi."..string.gsub(v,".lua","")
+         local reward = require( requirename )( mem )
+         if reward then
+            reward.requirename = requirename
+            table.insert( reward_list, reward )
+         end
+      end
+
+      -- Compute total weight
+      local wtotal = 0
+      for k,v in ipairs(reward_list) do
+         local w = v.weight or 1
+         v.weight = w
+         wtotal = wtotal + w
+      end
+      table.sort( reward_list, function( a, b )
+         return a.weight > b.weight
+      end )
+
+      -- Choose a random reward and stick to it
+      local r = wtotal*rnd.rnd()
+      local waccum = 0
+      for k,v in ipairs(reward_list) do
+         waccum = waccum + v.weight
+         if r <= waccum then
+            mem.reward = r
+            break
+         end
       end
    end
-
-   -- Choose a random reward and stick to it
-   mem.reward = reward_list[ rnd.rnd(1,#reward_list) ]
 
    poi.misnSetup{ sys=mem.sys, found="found", risk=mem.risk }
 end
