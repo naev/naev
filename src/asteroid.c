@@ -1148,7 +1148,7 @@ void asteroid_explode( Asteroid *a, int max_rarity, double mining_bonus )
                pos.y += (RNGF()*30.-15.);
                vel.x += (RNGF()*20.-10.);
                vel.y += (RNGF()*20.-10.);
-               gatherable_init( mat->material, pos, vel, -1., RNG(1,5), 0 );
+               gatherable_init( mat->material, &pos, &vel, -1., RNG(1,5), 0 );
             }
             break;
          }
