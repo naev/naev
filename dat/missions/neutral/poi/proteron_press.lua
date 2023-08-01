@@ -86,7 +86,7 @@ return function ( mem )
          vn.disappear( sai, tut.shipai.transition )
          local reward = poi.data_str(1)
          vn.na(fmt.f(_([[Despite what {shipai} says (or perhaps because of it), you explore the ship and find {reward}, which isn't listed on the manifest, though you suppose that's par for the record with encrypted items.]]),
-            {shipai=tut.ainame(), reward=reward}))
+         {shipai=tut.ainame(), reward=reward}))
          vn.na(fmt.reward(reward))
 
          vn.func( function ()
