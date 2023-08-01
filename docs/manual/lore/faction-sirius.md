@@ -5,7 +5,7 @@ The House Sirius is one of the major factions in Naev.
 ## The Facts
 
 * Leader: Sirichana
-* Leading Structure: Sirichana as interpreted by the Serra
+* Leading Structure: Tribunal of Arch-Canters
 * Government: Constitutional Theocracy
 * Formation: UST 97
 * Homeworld: Crater City (Ruadan system)
@@ -38,7 +38,7 @@ One may wonder how Sirichana could inspire faith in so many souls, spread over s
 
 It begins anywhere in Sirius space, on any world, in any echelon. There are some who feel the call, the irresistible urge to come forth. Those individuals leave their homes, sell their possessions and embark on a pilgrimage to Mutris. Those who can't afford the fare right away will raise the money through intensive labor until they can, or die trying. Once on Mutris, the pilgrims will flock to Crater City, the holy city of the Sirii and the seat of Sirichana himself.
 
-Crater City is indeed built in a massive crater, a legacy left by the forces that once rendered Mutris sterile during the Faction Wars. Streets and houses now cover its slopes, and in its center stands a tall, tall spire, the Tower of Sirichana. There is not a major road, not a square in Crater City that does not have a direct view on the Tower. To this place the pilgrims come, and here they will reside, moving in to a suitable empty home and taking up whatever tasks need doing. They live in Crater City with their fellow pilgrims, sometimes for years on end. Nobody knows how long they will stay in Crater City, only that they have come for one thing.
+Crater City is indeed built in a massive crater, a legacy left by the forces that once rendered Mutris sterile during the Faction Wars. Streets and houses now cover its slopes, and in its center stands a tall, tall spire, the Tower of Sirichana. There is not a major road, not a square in Crater City that does not have a direct view on the Tower. To this place the pilgrims come, and here they will reside, moving in to a suitable empty home and taking up whatever tasks need doing. They live in Crater City with their fellow pilgrims, sometimes for cycles on end. Nobody knows how long they will stay in Crater City, only that they have come for one thing.
 
 And then it happens. The one thing all the pilgrims have waited for. From the top of his Tower, Sirichana speaks to them. All who live in Crater City leave whatever they're doing and stand in the streets to hear his words. There are no records of this event, so nobody knows how long it lasts or what he says to them. But when he finishes speaking, his listeners are no longer the pilgrims they were before. They are now the Touched, those who carry a fragment of Sirichana's will within themselves.
 
