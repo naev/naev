@@ -38,20 +38,27 @@ return function ( mem )
          vn.scene()
          local log = vne.flashbackTextStart()
 
-         log(_([[Point 1: #n It is necessary to state and imply in all publications including but not limited to articles, reports and papers that the State is as right as possible. This statement does NOT mean that the State always makes the right decisions. The State merely makes the best decisions based on the known information, but there is no guarantee that that represents all the pertinent information.]]))
-         log(_([[Point 2: #n This of course begs the question: What to do when the State declares a decision as an error? Such decisions are invariably the fault of the individuals in charge, who will be disciplined for their failures. As such, failures must be represented as the failures of individuals.]]))
-         log(_([[Point 3: #n Following the same principle of State power not resting in individual hands, when a decision is not officially made, it is meaningless to state that one side is right. Instead of taking such sides, a reporter must strive instead to highlight the environment that ensures that the decisions are made by those who are best equipped and qualified to make them.]]))
-         log(_([[Point 4: #n For this very reason, it is mandatory to highlight the role of the State in any success. For the people to have faith in the State, they must know that it may err, but never is it in error.]]))
-         log(_([[Point 5: #n In the interest of keeping the State safe and secure from threats from within and without, it is thus necessary to mention all people who deviate from the above guidelines as dangerous dissidents in all current and future publications such as those listed in (1) and to correct previous articles.]]))
-         log(_([[Point 6: #n If a dissident is quoted, which may only be done during their trial, this dissident opinion must be countered by an immediately following government opinion of equal or greater size.]]))
-         log(_([[Point 7: #n Failure to follow any of the guidelines listed here is grounds for arrest, trial and summary execution.]]))
+         log(_([[Point 1:
+         It is necessary to state and imply in all publications including but not limited to articles, reports and papers that the State is as right as possible. This statement does NOT mean that the State always makes the right decisions. The State merely makes the best decisions based on the known information, but there is no guarantee that that represents all the pertinent information.]]))
+         log(_([[Point 2:
+         This of course begs the question: What to do when the State declares a decision as an error? Such decisions are invariably the fault of the individuals in charge, who will be disciplined for their failures. As such, failures must be represented as the failures of individuals.]]))
+         log(_([[Point 3:
+         Following the same principle of State power not resting in individual hands, when a decision is not officially made, it is meaningless to state that one side is right. Instead of taking such sides, a reporter must strive instead to highlight the environment that ensures that the decisions are made by those who are best equipped and qualified to make them.]]))
+         log(_([[Point 4:
+         For this very reason, it is mandatory to highlight the role of the State in any success. For the people to have faith in the State, they must know that it may err, but never is it in error.]]))
+         log(_([[Point 5:
+         In the interest of keeping the State safe and secure from threats from within and without, it is thus necessary to mention all people who deviate from the above guidelines as dangerous dissidents in all current and future publications such as those listed in (1) and to correct previous articles to follow the same.]]))
+         log(_([[Point 6:
+         If a dissident is quoted, which may only be done during their trial, this dissident opinion must be countered by an immediately following government opinion of equal or greater size.]]))
+         log(_([[Point 7:
+         Failure to follow any of the guidelines listed here is grounds for arrest, trial and summary execution.]]))
          log(_([[Long live the Sov...n Pr...n A...chy!]]))
 
          vne.flashbackTextEnd()
          vn.na(_([[Some of the text on that last page was illegible, and the logo following it was indecipherable. Still, a curious document. You wonder who could have made it.]]))
 
          if faction.known("Proteron") then
-            vn.na(_([[You suspect this might be a document of the former Great House Proteron, given their reputation for autocracy.]]))
+            vn.na(_([[You suspect this might be a document of the Sovereign Proteron Autarchy, given their reputation for autocracy.]]))
          end
 
          local sai = tut.vn_shipai()
@@ -66,7 +73,9 @@ return function ( mem )
 
          vn.label("shock")
          sai(_([["Oh, just the voices in my head that tell me what to do. Right now they're asking me to cover up the find by exploding both ships!"]]))
-         sai(_([["3.. 2.. 1.."]]))
+         sai(_([["3..."]]))
+         sai(_([["2..."]]))
+         sai(_([["1..."]]))
          sai(_([["..."]]))
          sai(_([["Haha, just my little joke!"]]))
          vn.jump("uncaring")
@@ -75,11 +84,16 @@ return function ( mem )
          sai(_([["Anyway, I don't see anything else of importance on this ship! Let's go quickly."]]))
 
          vn.disappear( sai, tut.shipai.transition )
+         local reward = poi.data_str(1)
+         vn.na(fmt.f(_([[Despite what {shipai} says (or perhaps because of it), you explore the ship and find {reward}, which isn't listed on the manifest, though you suppose that's par for the record with encrypted items.]]),
+         {shipai=tut.ainame(), reward=reward}))
+         vn.na(fmt.reward(reward))
 
          vn.func( function ()
             var.push( misnvar, true )
-            poi.log(fmt.f(_([[You found a derelict ship in the {sys} system with a copy of some press guidelines.]]),
-               {sys=mem.sys}))
+            poi.data_give(1)
+            poi.log(fmt.f(_([[You found a derelict ship in the {sys} system with corrupted information about an agent. You also were able to recover {reward} from the ship.]]),
+               {sys=mem.sys, reward=reward}))
          end)
       end,
    }

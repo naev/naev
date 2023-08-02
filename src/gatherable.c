@@ -211,6 +211,16 @@ static int gatherable_gather( Gatherable *gat, Pilot *p )
 {
    int q;
 
+   /* Must not be dead. */
+   if (pilot_isFlag( p, PILOT_DELETE ) ||
+         pilot_isFlag( p, PILOT_DEAD ))
+      return 0;
+
+   /* Must not be hidden nor invisible. */
+   if (pilot_isFlag( p, PILOT_HIDE ) ||
+         pilot_isFlag( p, PILOT_INVISIBLE))
+      return 0;
+
    /* Disabled pilots can't pick up stuff. */
    if (pilot_isDisabled(p))
       return 0;
