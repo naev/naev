@@ -3453,6 +3453,7 @@ dat/spob/lua/lowclass.lua
 dat/spob/lua/maanens_moon.lua
 dat/spob/lua/pirate_clanworld.lua
 dat/spob/lua/poller_mass.lua
+dat/spob/lua/proteron_mil_protera_nova.lua
 dat/spob/lua/proteron_mil_restricted.lua
 dat/spob/lua/sirius_mil_mutris.lua
 dat/spob/lua/sirius_mil_restricted.lua
