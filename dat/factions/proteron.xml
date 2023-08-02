@@ -18,6 +18,13 @@
   <enemy>Dreamer Clan</enemy>
   <enemy>Raven Clan</enemy>
   <enemy>Black Lotus</enemy>
+  <enemy>Empire</enemy>
+  <enemy>Za'lek</enemy>
+  <enemy>Dvaered</enemy>
+  <enemy>Soromid</enemy>
+  <enemy>Sirius</enemy>
+  <enemy>Thurion</enemy>
+  <enemy>Goddard</enemy>
  </enemies>
  <lane_length_per_presence>250</lane_length_per_presence>
  <lane_base_cost>50</lane_base_cost>
