@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Ruadan Bastion">
+<spob name="Ruadan Host">
  <lua>spob/lua/zalek_mil_ruadan.lua</lua>
  <pos x="11792.645737" y="7261.141426"/>
  <GFX>
@@ -23,7 +23,7 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Ruadan Bastion houses the Za'lek military concentrated around Ruadan Prime. Like Ruadan Prime, very few people are allowed to land here, and those that are allowed face intense security scrutiny.</description>
+  <description>Ruadan Host houses the Za'lek military concentrated around Ruadan Prime. Like Ruadan Prime, very few people are allowed to land here, and those that are allowed face intense security scrutiny.</description>
  </general>
  <tech>
   <item>Laser 1</item>
