@@ -7,8 +7,8 @@
  </general>
  <pos x="1101.458916" y="414.424765"/>
  <spobs>
+  <spob>Castrum Sigma</spob>
   <spob>Protera Sigma</spob>
-  <spob>Sigma Bastion</spob>
  </spobs>
  <jumps>
   <jump target="Apik">

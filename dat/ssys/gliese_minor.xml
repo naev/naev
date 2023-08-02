@@ -8,16 +8,16 @@
  </general>
  <pos x="579.012195" y="-157.111922"/>
  <spobs>
-  <spob>Gliese V</spob>
+  <spob>Protera Nova</spob>
+  <spob_virtual>Proteron Unpresence</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Gliese">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Nasona">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
  </jumps>
+ <tags>
+  <tag>restricted</tag>
+ </tags>
 </ssys>

@@ -17,10 +17,6 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Gliese">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
   <jump target="Nasona">
    <autopos/>
    <hide>1.000000</hide>

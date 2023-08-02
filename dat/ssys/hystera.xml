@@ -7,10 +7,10 @@
  </general>
  <pos x="1117.139827" y="497.472970"/>
  <spobs>
+  <spob>Castellum Hystera</spob>
   <spob>Hystera I</spob>
   <spob>Hystera II</spob>
   <spob>Hystera Ia</spob>
-  <spob>Hystera Keep</spob>
  </spobs>
  <jumps>
   <jump target="Korifa">
