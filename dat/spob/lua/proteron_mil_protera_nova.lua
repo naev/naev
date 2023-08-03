@@ -5,19 +5,17 @@ local fmt = require "format"
 local love_shaders = require "love_shaders"
 
 local contact_var = "protera_nova_first_contact"
+
+
 function init( spb )
    return luaspob.init( spb, {
-      std_land = 0,
       std_bribe = 100,
       msg_granted = {
          _([["You may land on the Directrix."]]),
       },
       msg_notyet = {
          _([["You may not approach the Directrix."]]),
-      },
-      msg_cantbribe = {
-         _([["Please report this bug, you should not be able to see this code."]]),
-      },
+      }
    } )
 end
 
@@ -36,7 +34,9 @@ function comm()
    vn.clear()
    vn.scene()
    if var.peek(contact_var) then
-   ccomm.newCharacterSpob( vn, mem.spob, mem.bribed )
+   --ccomm.newCharacterSpob( vn, mem.spob, mem.bribed )
+   --TODO: spb ought to be custom character to avoid being flagged hostile
+   luaspob.customNeutralSpob(vn, mem.spob)
    vn.transition()
    vn.na(fmt.f(_("You establish a communication channel with the ensigns at {spb}, who chatter excitedly at you."),
       {spb=mem.spob}))
@@ -69,8 +69,8 @@ function comm()
    vn.na(_([["bob, have you started pretending to uphold the ideals of the Proteron to imaginary enemies again?"]])) --bob is intentionally smallcase, do not attempt to change.
    vn.na(_([["Wait, why isn't the video on? Turn the video on! I want to see which holo you spawned this time!"]]))
 
-   vn.disappear(spb)
-   local bob = vn.newCharacter(_("bobblehat"), {image="neutral/male1n.webp", color=nil, shader=love_shaders.hologram(), pos="left"})
+   vn.disappear(spb) --It's no longer a comm channel, it's now a regular conversation
+   local bob = vn.newCharacter(_("bobblehat"), {image="neutral/male2n.webp", color=nil, shader=love_shaders.hologram(), pos="left"})
    local Jen = vn.newCharacter(_("Jennet"), {image="neutral/female1n.webp", color=nil, shader=love_shaders.hologram(), pos="right"})
    Jen(_([[Oh. This isn't a holo, is it? This is real. You weren't playing around this time.]])) --Double quotes dropped to highlight the context change (usual comm -> convo)
    bob(_([[For your information, ensign Jennet, I was never "playing around". I was practicing in order to better defend our glorious Autarchy.]]))
@@ -90,7 +90,7 @@ function comm()
       }
       if faction.playerStanding("Proteron")>=30 then
          opts = {
-         { _("Tell me your rank and name, now, and I won't have you executed for insubordination and disorderly conduct!"), "threat"},
+         { _("Tell me your rank and name, now, and I won't have you executed for \ninsubordination and disorderly conduct!"), "threat"},
          { _("State your name and rank to me, the senior officer."), "cont2"}
          }
       end

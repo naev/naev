@@ -24,10 +24,10 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>You see a massive crater around the severely damaged ship dominating the landscape, with signs indicating that the shockwave travelled all over the relatively small planet. People inside are bustling around, trying to keep this aged and damaged ship in good enough condition to keep them alive and ready to report to active duty should the call come.</description>
+  <description>The outside of this huge ship is marked "CCS Direc.. Commis...", with the rest inside the ground or scattered in fragments on the planet's surface. There is a massive crater around the severely damaged ship, with signs indicating that the shockwave from its crash travelled all over the relatively small planet. People inside are bustling around, trying to keep this aged and damaged ship in good enough condition to keep them alive and ready to report to active duty should the call come.</description>
   <bar>The ship's old bar has been restored to an acceptable state. A bar is not supposed to have seats in Proteron culture, but here, considering that the installation skews at a rather worrying angle, there are at least toe- and hand-holds to keep you from falling. The bar has a muted atmosphere, with most people focusing on one task or another while managing their drinks. Some people are eyeing you, not sure what to make of an outsider.</bar>
  </general>
  <tech>
-  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
  </tech>
 </spob>
