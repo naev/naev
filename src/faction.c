@@ -832,7 +832,6 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
  *    - "kill" : Pilot death.
  *    - "distress" : Pilot distress signal.
  *    - "script" : Either a mission or an event.
- *
  */
 void faction_modPlayer( int f, double mod, const char *source )
 {
@@ -1201,7 +1200,8 @@ double faction_reputationMax( int f )
 int areEnemies( int a, int b )
 {
    /* luckily our factions aren't masochistic */
-   if (a==b) return 0;
+   if (a==b)
+      return 0;
 
    /* Make sure they're valid. */
    if (!faction_isFaction(a) || !faction_isFaction(b))
