@@ -794,7 +794,7 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
 
       /* Parse return. */
       if (!lua_isnumber( naevL, -1 ))
-         WARN( _("Lua script for faction '%s' did not return a number from 'standing:hit(...)'."), faction->name );
+         WARN(_("Lua script for faction '%s' did not return a %s from '%s'."), faction->name, _("number"), "hit" );
       else
          faction->player = lua_tonumber( naevL, -1 );
       lua_pop( naevL, 1 );
@@ -1090,7 +1090,7 @@ const char *faction_getStandingTextAtValue( int f, double value )
 
       /* Parse return. */
       if (!lua_isstring( naevL, -1 )) {
-         WARN( _("Lua script for faction '%s' did not return a string from 'standing:text_rank(...)'."), faction->name );
+         WARN(_("Lua script for faction '%s' did not return a %s from '%s'."), faction->name, _("string"), "text_rank" );
          r = _("???");
       }
       else
@@ -1139,7 +1139,7 @@ const char *faction_getStandingBroad( int f, int bribed, int override )
 
    /* Parse return. */
    if (!lua_isstring( naevL, -1 )) {
-      WARN( _("Lua script for faction '%s' did not return a string from 'standing:text_broad(...)'."), faction->name );
+      WARN(_("Lua script for faction '%s' did not return a %s from '%s'."), faction->name, _("string"), "text_broad" );
       r = _("???");
    }
    else
@@ -1182,7 +1182,7 @@ double faction_reputationMax( int f )
 
    /* Parse return. */
    if (!lua_isnumber( naevL, -1 )) {
-      WARN( _("Lua script for faction '%s' did not return a string from 'standing:reputation_max(...)'."), faction->name );
+      WARN(_("Lua script for faction '%s' did not return a %s from '%s'."), faction->name, _("number"), "reputation_max" );
       r =  0.;
    }
    else
