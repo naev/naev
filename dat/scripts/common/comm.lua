@@ -103,6 +103,12 @@ function comm.newCharacter( vn_in, plt )
    return vn.newCharacter( plt:name(), { image=shipgfx, isportrait=true } )
 end
 
+--[[
+   Valid params:
+   * bribed: whether or not is bribed
+   * hostile: whether or not is hostile
+   * faction_str: overwrite faction standing string
+--]]
 function comm.newCharacterSpob( vn_in, spb, params )
    params = params or {}
    vn = vn_in
