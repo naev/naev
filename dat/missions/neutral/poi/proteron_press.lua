@@ -25,9 +25,9 @@ return function ( mem )
       ship = "Proteron Euler",
       func = function()
          if faction.known( "Proteron" ) then
-            vn.na(_([[You enter the ship and make way to the bridge. The entire ship is oddly quiet as you pass through, with no signs of life. You reach the bridge and find the ship's systems have just enough energy left to power up, letting you jack in.]]))
+            vn.na(_([[You enter the derelict and make way to the bridge. The entire ship is oddly quiet as you pass through, with no signs of life. You reach the bridge and find the ship's systems have just enough energy left to power up, letting you jack in.]]))
          else
-            vn.na(_([[You enter the ship enter the derelict, which is of a make you do not fully recognize, and make your way to the bridge. The entire ship is oddly quiet as you pass through, with no signs of life. You reach the bridge and find the ship's systems have just enough energy left to power up, letting you jack in.]]))
+            vn.na(_([[You enter the derelict, which is of a make you do not fully recognize, and make your way to the bridge. The entire ship is oddly quiet as you pass through, with no signs of life. You reach the bridge and find the ship's systems have just enough energy left to power up, letting you jack in.]]))
          end
 
          vn.na(_([[The ship's systems list only one item of interest in the manifest: a press guidelines document.]]))
