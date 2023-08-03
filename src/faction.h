@@ -67,6 +67,7 @@ double faction_getPlayerDef( int f );
 int faction_isPlayerFriend( int f );
 int faction_isPlayerEnemy( int f );
 const char *faction_getStandingText( int f );
+const char *faction_getStandingTextAtValue( int f, double value );
 const char *faction_getStandingBroad( int f, int bribed, int override );
 double faction_reputationMax( int f );
 const glColour* faction_getColour( int f );

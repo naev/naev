@@ -433,8 +433,10 @@ static int factionL_setplayerstanding( lua_State *L )
  * @brief Gets the player's standing with the faction.
  *
  * @usage if f:playerStanding() > 70 then -- Player is an ally
+ * @usage _v, str = f:playerStanding(50) -- Get the standing text for a value of 50
  *
  *    @luatparam Faction f Faction to get player's standing with.
+ *    @luatparam number value Faction standing value to get string of.
  *    @luatreturn number The value of the standing and the human readable string.
  *    @luatreturn string The text corresponding to the standing (translated).
  * @luafunc playerStanding
@@ -442,9 +444,13 @@ static int factionL_setplayerstanding( lua_State *L )
 static int factionL_playerstanding( lua_State *L )
 {
    int f    = luaL_validfaction( L, 1 );
-   double n = faction_getPlayer( f );
+   double n;
+   if (!lua_isnoneornil(L,2))
+      n = luaL_checknumber(L,2);
+   else
+      n = faction_getPlayer( f );
    lua_pushnumber( L, n );
-   lua_pushstring( L, faction_getStandingText( f ) );
+   lua_pushstring( L, faction_getStandingTextAtValue( f, n ) );
    return 2;
 }
 
