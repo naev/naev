@@ -36,7 +36,7 @@ function comm()
    vn.clear()
    vn.scene()
    if var.peek(contact_var) then
-   --local spb = ccomm.newCharacterSpob( vn, mem.spob, mem.bribed )
+   ccomm.newCharacterSpob( vn, mem.spob, mem.bribed )
    vn.transition()
    vn.na(fmt.f(_("You establish a communication channel with the ensigns at {spb}, who chatter excitedly at you."),
       {spb=mem.spob}))
