@@ -123,6 +123,14 @@ function comm.newCharacterSpob( vn_in, spb, params )
    return vn.newCharacter( spb:name(), { image=spbgfx, isportrait=true } )
 end
 
+--[[
+   Cleans up after the communication channel (removing namebox stuff).
+--]]
+function comm.cleanup( vn_in )
+   vn = vn_in
+   vn.setForeground()
+end
+
 --[[--
    Sets a custom message and handler for a pilot.
 
