@@ -110,7 +110,11 @@ stds.API_loadscreen = {globals={
 stds.API_autoequip = {globals={"autoequip"}}            -- C function: equipment_autoequipShip()
 stds.API_equip = {globals={"equip", "equip_generic"}}   -- C function: ai_create
 stds.API_faction = {globals={
-   "standing",                          -- C functions: faction_{modPlayerLua,isPlayerFriend,getStandingBroad,getStandingText}()
+   "hit",            -- C functions: faction_modPlayerLua
+   "text_rank",      -- C functions: faction_getStandingText
+   "text_broad",     -- C functions: faction_getStandingBroad
+   "reputation_max", -- C functions: faction_reputationMax
+   "friendly_at",
 }}
 stds.API_land = {globals={"land"}}      -- C function: spob_updateLand()
 stds.API_rescue = {globals={"rescue"}}  -- C function: land_stranded

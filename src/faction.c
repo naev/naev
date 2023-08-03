@@ -77,9 +77,8 @@ typedef struct Faction_ {
    nlua_env sched_env; /**< Lua scheduler script. */
 
    /* Behaviour. */
-   nlua_env env; /**< Faction specific environment. */
-   double friendly_at;  /**< value of "standing.friendly_at" */
-   int lua_standing;    /**< "faction_player_friend" */
+   double friendly_at;  /**< Value of "standing.friendly_at" */
+   nlua_env lua_env; /**< Faction specific environment. */
    int lua_hit;         /**< "standing.hit" */
    int lua_text_rank;   /**< "standing.text_rank" */
    int lua_text_broad;  /**< "standing.text_broad" */
@@ -774,21 +773,20 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
 
    old   = faction->player;
 
-   if (faction->env == LUA_NOREF)
+   if (faction->lua_env == LUA_NOREF)
       faction->player += mod;
    else {
 
       /* Set up the function:
        * standing:hit( current, amount, source, secondary ) */
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_hit );
-      lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_standing );
       lua_pushnumber(  naevL, faction->player );
       lua_pushnumber(  naevL, mod );
       lua_pushstring(  naevL, source );
       lua_pushboolean( naevL, secondary );
 
       /* Call function. */
-      if (nlua_pcall( faction->env, 5, 1 )) { /* An error occurred. */
+      if (nlua_pcall( faction->lua_env, 4, 1 )) { /* An error occurred. */
          WARN(_("Faction '%s': %s"), faction->name, lua_tostring(naevL,-1));
          lua_pop( naevL, 1 );
          return;
@@ -1061,18 +1059,17 @@ const char *faction_getStandingText( int f )
 
    faction = &faction_stack[f];
 
-   if (faction->env == LUA_NOREF)
+   if (faction->lua_env == LUA_NOREF)
       return _("???");
    else {
       const char *r;
       /* Set up the method:
        * standing:text_rank( standing ) */
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_text_rank );
-      lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_standing );
       lua_pushnumber( naevL, faction->player );
 
       /* Call function. */
-      if (nlua_pcall( faction->env, 2, 1 )) {
+      if (nlua_pcall( faction->lua_env, 1, 1 )) {
          /* An error occurred. */
          WARN( _("Faction '%s': %s"), faction->name, lua_tostring( naevL, -1 ) );
          lua_pop( naevL, 1 );
@@ -1087,7 +1084,6 @@ const char *faction_getStandingText( int f )
       else
          r = lua_tostring( naevL, -1 ); /* Should be translated already. */
       lua_pop( naevL, 1 );
-
       return r;
    }
 }
@@ -1111,19 +1107,18 @@ const char *faction_getStandingBroad( int f, int bribed, int override )
 
    faction = &faction_stack[f];
 
-   if (faction->env == LUA_NOREF)
+   if (faction->lua_env == LUA_NOREF)
       return _("???");
 
    /* Set up the method:
       * standing:text_broad( standing, bribed, override ) */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_text_broad );
-   lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_standing );
    lua_pushnumber( naevL, faction->player );
    lua_pushboolean( naevL, bribed );
-   lua_pushnumber( naevL, override );
+   lua_pushinteger( naevL, override );
 
    /* Call function. */
-   if (nlua_pcall( faction->env, 4, 1 )) {
+   if (nlua_pcall( faction->lua_env, 3, 1 )) {
       /* An error occurred. */
       WARN( _("Faction '%s': %s"), faction->name, lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );
@@ -1138,7 +1133,6 @@ const char *faction_getStandingBroad( int f, int bribed, int override )
    else
       r = lua_tostring( naevL, -1 );
    lua_pop( naevL, 1 );
-
    return r;
 }
 
@@ -1159,16 +1153,15 @@ double faction_reputationMax( int f )
 
    faction = &faction_stack[f];
 
-   if (faction->env == LUA_NOREF)
+   if (faction->lua_env == LUA_NOREF)
       return 0.;
 
    /* Set up the method:
       * standing:reputation_max( standing ) */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_reputation_max );
-   lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_standing );
 
    /* Call function. */
-   if (nlua_pcall( faction->env, 1, 1 )) {
+   if (nlua_pcall( faction->lua_env, 0, 1 )) {
       /* An error occurred. */
       WARN( _("Faction '%s': %s"), faction->name, lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );
@@ -1183,7 +1176,6 @@ double faction_reputationMax( int f )
    else
       r = lua_tonumber( naevL, -1 );
    lua_pop( naevL, 1 );
-
    return r;
 }
 
@@ -1275,8 +1267,12 @@ static int faction_parse( Faction* temp, const char *file )
    /* Clear memory. */
    memset( temp, 0, sizeof(Faction) );
    temp->equip_env   = LUA_NOREF;
-   temp->env         = LUA_NOREF;
    temp->sched_env   = LUA_NOREF;
+   temp->lua_env     = LUA_NOREF;
+   temp->lua_hit     = LUA_NOREF;
+   temp->lua_text_rank = LUA_NOREF;
+   temp->lua_text_broad = LUA_NOREF;
+   temp->lua_reputation_max = LUA_NOREF;
 
    xmlr_attr_strd(parent,"name",temp->name);
    if (temp->name == NULL)
@@ -1399,37 +1395,29 @@ static void faction_addStandingScript( Faction* temp, const char* scriptname )
    size_t ndat;
 
    snprintf( buf, sizeof(buf), FACTIONS_PATH"standing/%s.lua", scriptname );
-   temp->env = nlua_newEnv();
+   temp->lua_env = nlua_newEnv();
 
-   nlua_loadStandard( temp->env );
+   nlua_loadStandard( temp->lua_env );
    dat = ndata_read( buf, &ndat );
-   if (nlua_dobufenv(temp->env, dat, ndat, buf) != 0) {
+   if (nlua_dobufenv(temp->lua_env, dat, ndat, buf) != 0) {
       WARN(_("Failed to run standing script: %s\n"
             "%s\n"
             "Most likely Lua file has improper syntax, please check"),
             buf, lua_tostring(naevL,-1));
-      nlua_freeEnv( temp->env );
-      temp->env = LUA_NOREF;
+      nlua_freeEnv( temp->lua_env );
+      temp->lua_env = LUA_NOREF;
    }
    free(dat);
 
    /* Set up the references. */
-   temp->lua_standing      = nlua_refenvtype( temp->env, "standing", LUA_TTABLE );
-   temp->lua_hit           = nlua_reffield( temp->lua_standing, "hit" );
-   temp->lua_text_broad    = nlua_reffield( temp->lua_standing, "text_broad" );
-   temp->lua_text_rank     = nlua_reffield( temp->lua_standing, "text_rank" );
-   temp->lua_reputation_max= nlua_reffield( temp->lua_standing, "reputation_max" );
+   temp->lua_hit           = nlua_refenvtype( temp->lua_env, "hit",        LUA_TFUNCTION );
+   temp->lua_text_broad    = nlua_refenvtype( temp->lua_env, "text_broad", LUA_TFUNCTION );
+   temp->lua_text_rank     = nlua_refenvtype( temp->lua_env, "text_rank",  LUA_TFUNCTION );
+   temp->lua_reputation_max= nlua_refenvtype( temp->lua_env, "reputation_max", LUA_TFUNCTION );
 
-   if (temp->lua_standing != LUA_NOREF) {
-      lua_rawgeti( naevL, LUA_REGISTRYINDEX, temp->lua_standing );
-      lua_getfield( naevL, -1, "friendly_at" );
-      temp->friendly_at = lua_tonumber( naevL, -1 );
-      lua_pop( naevL, 2 );
-   }
-   else {
-      WARN(_("Standing script did not set the \"standing\" variable: %s"), buf);
-      temp->friendly_at = 0.;
-   }
+   nlua_getenv( naevL, temp->lua_env, "friendly_at" );
+   temp->friendly_at = lua_tonumber( naevL, -1 );
+   lua_pop( naevL, 1 );
 }
 
 /**
@@ -1484,7 +1472,7 @@ static int faction_parseSocial( const char *file )
 
       /* Standing scripts. */
       if (xml_isNode(node, "standing")) {
-         if (base->env != LUA_NOREF)
+         if (base->lua_env != LUA_NOREF)
             WARN(_("Faction '%s' has duplicate 'standing' tag."), base->name);
          faction_addStandingScript( base, xml_raw(node) );
          continue;
@@ -1557,7 +1545,7 @@ static int faction_parseSocial( const char *file )
       }
    } while (xml_nextNode(node));
 
-   if ((base->env==LUA_NOREF) && !faction_isFlag( base, FACTION_STATIC ))
+   if ((base->lua_env==LUA_NOREF) && !faction_isFlag( base, FACTION_STATIC ))
       WARN(_("Faction '%s' has no Lua and isn't static!"), base->name);
 
    xmlFreeDoc(doc);
@@ -1593,8 +1581,12 @@ int factions_load (void)
    f->name        = strdup("Player");
    f->flags       = FACTION_STATIC | FACTION_INVISIBLE;
    f->equip_env   = LUA_NOREF;
-   f->env         = LUA_NOREF;
    f->sched_env   = LUA_NOREF;
+   f->lua_env     = LUA_NOREF;
+   f->lua_hit     = LUA_NOREF;
+   f->lua_text_rank = LUA_NOREF;
+   f->lua_text_broad = LUA_NOREF;
+   f->lua_reputation_max = LUA_NOREF;
    f->allies      = array_create( int );
    f->enemies     = array_create( int );
 
@@ -1691,7 +1683,7 @@ static void faction_freeOne( Faction *f )
    array_free(f->allies);
    array_free(f->enemies);
    nlua_freeEnv( f->sched_env );
-   nlua_freeEnv( f->env );
+   nlua_freeEnv( f->lua_env );
    if (!faction_isFlag(f, FACTION_DYNAMIC))
       nlua_freeEnv( f->equip_env );
    for (int i=0; i<array_size(f->tags); i++)
@@ -1887,7 +1879,7 @@ int faction_dynAdd( int base, const char* name, const char* display, const char*
    f->allies      = array_create( int );
    f->enemies     = array_create( int );
    f->equip_env   = LUA_NOREF;
-   f->env         = LUA_NOREF;
+   f->lua_env     = LUA_NOREF;
    f->sched_env   = LUA_NOREF;
    f->flags       = FACTION_STATIC | FACTION_INVISIBLE | FACTION_DYNAMIC | FACTION_KNOWN;
    faction_addStandingScript( f, "static" );

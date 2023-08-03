@@ -1,7 +1,6 @@
 -- Nasin faction standing script
 local sbase = require "factions.standing.lib.base"
-
-standing = sbase.newStanding{
+sbase.init{
    fct            = faction.get("Nasin"),
    cap_kill       = 20,
    delta_distress = {-1, 0},    -- Maximum change constraints
