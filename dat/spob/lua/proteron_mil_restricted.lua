@@ -11,7 +11,7 @@ function init( spb )
          _([["You are not authorized to land here."]]),
       },
       msg_cantbribe = {
-         _([["We Proteron don't take kindly to bribery."]]),
+         _([["The Sovereign Proteron Autarchy does not take bribes."]]),
       },
    } )
 end
