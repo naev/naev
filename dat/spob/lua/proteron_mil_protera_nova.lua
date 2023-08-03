@@ -34,9 +34,11 @@ function comm()
    vn.clear()
    vn.scene()
    if var.peek(contact_var) then
-   --ccomm.newCharacterSpob( vn, mem.spob, mem.bribed )
-   --TODO: spb ought to be custom character to avoid being flagged hostile
-   luaspob.customNeutralSpob(vn, mem.spob)
+   if faction.playerStanding("Proteron")<0 then
+      ccomm.newCharacterSpob( vn, mem.spob, {faction_str="Neutral", name_colour=colour.new("Yellow")} )
+   else
+      ccomm.newCharacterSpob( vn, mem.spob)
+   end
    vn.transition()
    vn.na(fmt.f(_("You establish a communication channel with the ensigns at {spb}, who chatter excitedly at you."),
       {spb=mem.spob}))
@@ -52,7 +54,7 @@ function comm()
 
    mem.spob:canLand() -- forcess a refresh of condition
    else
-   local spb = ccomm.newCharacterSpob( vn, mem.spob, mem.bribed )
+   local spb = ccomm.newCharacterSpob( vn, mem.spob )
    vn.transition()
    vn.na(fmt.f(_("You establish a communication channel with {spb}. Some opera seems to be playing in the background with someone shouting at someone else to turn it off. \nYou wonder what base would be this poorly managed."),
       {spb=mem.spob}))
@@ -99,7 +101,7 @@ function comm()
    vn.label("clueless")
    bob(_([[Your rank in the SPA, soldier!]]))
    Jen(_([[bob, I don't think they're from the SPA. They seem to be outsiders.]]))
-   bob(_([[Well, no harm in introducing ourselves, I suppose.]]))
+   bob(_([[Well, no harm in introducing ourselves, I suppose. We're stuck here anyhow and so are they.]]))
    vn.jump("cont2")
 
    vn.label("threat")
