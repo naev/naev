@@ -108,7 +108,7 @@ function luaspob.comm ()
    local fct = mem.spob:faction()
    vn.clear()
    vn.scene()
-   local spb = ccomm.newCharacterSpob( vn, mem.spob, mem.bribed )
+   local spb = ccomm.newCharacterSpob( vn, mem.spob, mem )
    vn.transition()
    vn.na(fmt.f(_("You establish a communication channel with the authorities at {spb}."),
       {spb=mem.spob}))

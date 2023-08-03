@@ -95,14 +95,15 @@ function comm.newCharacter( vn_in, plt )
    return vn.newCharacter( plt:name(), { image=shipgfx, isportrait=true } )
 end
 
-function comm.newCharacterSpob( vn_in, spb, bribed )
+function comm.newCharacterSpob( vn_in, spb, params )
+   params = params or {}
    vn = vn_in
 
    -- Graphics
    local spbgfx = lg.newImage( spb:gfxComm() )
 
    -- Set up the namebox
-   comm.nameboxUpdateSpob( spb, bribed )
+   comm.nameboxUpdateSpob( spb, params.bribed )
 
    return vn.newCharacter( spb:name(), { image=spbgfx, isportrait=true } )
 end
