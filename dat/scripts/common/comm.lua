@@ -39,7 +39,7 @@ local function nameboxUpdateInternal( obj, params )
    end
    local facname = (fac:known() and fac:name()) or _("Unknown")
    local namebox_text = string.format("%s\n%s\n%s", facname, obj:name(), faction_str )
-   local namebox_col = fac:colour()
+   local namebox_col = params.name_colour or fac:colour()
    if namebox_col then namebox_col = {namebox_col:rgb()}
    else namebox_col = {1,1,1}
    end
@@ -108,6 +108,7 @@ end
    * bribed: whether or not is bribed
    * hostile: whether or not is hostile
    * faction_str: overwrite faction standing string
+   * name_colour: gives the colour of the namebox
 --]]
 function comm.newCharacterSpob( vn_in, spb, params )
    params = params or {}
