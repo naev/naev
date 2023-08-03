@@ -1051,6 +1051,18 @@ char faction_getColourChar( int f )
  */
 const char *faction_getStandingText( int f )
 {
+   return faction_getStandingTextAtValue( f, faction_stack[f].player );
+}
+
+/**
+ * @brief Gets the player's standing in human readable form.
+ *
+ *    @param f Faction to get standing of.
+ *    @param value Value to get the readable string from.
+ *    @return Human readable player's standing (in player's native language).
+ */
+const char *faction_getStandingTextAtValue( int f, double value )
+{
    Faction *faction;
 
    /* Escorts always have the same standing. */
@@ -1066,7 +1078,7 @@ const char *faction_getStandingText( int f )
       /* Set up the method:
        * standing:text_rank( standing ) */
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_text_rank );
-      lua_pushnumber( naevL, faction->player );
+      lua_pushnumber( naevL, value );
 
       /* Call function. */
       if (nlua_pcall( faction->lua_env, 1, 1 )) {
