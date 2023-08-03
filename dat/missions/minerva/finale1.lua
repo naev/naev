@@ -175,7 +175,7 @@ local bogeys = {
    { "Empire Shark", "Empire Shark", "Empire Lancelot" },
    { "Empire Admonisher", "Empire Admonisher" },
    { "Empire Pacifier", "Empire Lancelot", "Empire Lancelot" },
-   { "Empire Hawking", "Empire Admonisher", "Empire Adominsher" },
+   { "Empire Hawking", "Empire Admonisher", "Empire Admonisher" },
    { "Empire Peacemaker", "Empire Pacifier", "Empire Pacifier" },
 }
 function spawn_bogeys ()
@@ -297,7 +297,8 @@ She winks at you.]]))
     }
 
     vn.label("04_cont")
-    maikki(_([[]]))
+    maikki(_([["I knew you were thick, but you're thicker than molasses!"]]))
+    maikki(_([[""]]))
 
    vn.sfx( der.sfx.unboard )
    vn.run()
