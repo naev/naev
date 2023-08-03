@@ -1134,13 +1134,13 @@ const char *faction_getStandingBroad( int f, int bribed, int override )
       /* An error occurred. */
       WARN( _("Faction '%s': %s"), faction->name, lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );
-      return "???";
+      return _("???");
    }
 
    /* Parse return. */
    if (!lua_isstring( naevL, -1 )) {
       WARN( _("Lua script for faction '%s' did not return a string from 'standing:text_broad(...)'."), faction->name );
-      r = "???";
+      r = _("???");
    }
    else
       r = lua_tostring( naevL, -1 );
