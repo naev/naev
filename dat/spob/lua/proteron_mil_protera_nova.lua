@@ -54,7 +54,7 @@ function comm()
 
    mem.spob:canLand() -- forcess a refresh of condition
    else
-   local spb = ccomm.newCharacterSpob( vn, mem.spob )
+   ccomm.newCharacterSpob( vn, mem.spob )
    vn.transition()
    vn.na(fmt.f(_("You establish a communication channel with {spb}. Some opera seems to be playing in the background with someone shouting at someone else to turn it off. \nYou wonder what base would be this poorly managed."),
       {spb=mem.spob}))
@@ -71,7 +71,10 @@ function comm()
    vn.na(_([["bob, have you started pretending to uphold the ideals of the Proteron to imaginary enemies again?"]])) --bob is intentionally smallcase, do not attempt to change.
    vn.na(_([["Wait, why isn't the video on? Turn the video on! I want to see which holo you spawned this time!"]]))
 
-   vn.disappear(spb) --It's no longer a comm channel, it's now a regular conversation
+   --vn.disappear(spb) --It's no longer a comm channel, it's now a regular conversation
+   vn.scene()
+   vn.func( function() ccomm.cleanup(vn) end)
+   vn.transition()
    local bob = vn.newCharacter(_("bobblehat"), {image="neutral/male2n.webp", color=nil, shader=love_shaders.hologram(), pos="left"})
    local Jen = vn.newCharacter(_("Jennet"), {image="neutral/female1n.webp", color=nil, shader=love_shaders.hologram(), pos="right"})
    Jen(_([[Oh. This isn't a holo, is it? This is real. You weren't playing around this time.]])) --Double quotes dropped to highlight the context change (usual comm -> convo)
@@ -92,7 +95,7 @@ function comm()
       }
       if faction.playerStanding("Proteron")>=30 then
          opts = {
-         { _("Tell me your rank and name, now, and I won't have you executed for \ninsubordination and disorderly conduct!"), "threat"},
+         { _("Tell me your rank and name, now, and I won't have you executed for insubordination and disorderly conduct!"), "threat"},
          { _("State your name and rank to me, the senior officer."), "cont2"}
          }
       end
@@ -105,8 +108,8 @@ function comm()
    vn.jump("cont2")
 
    vn.label("threat")
-   Jen(_([[Sir, sorry, sir! Will not happen again, sir!]])) --Sir here being a gender-neutral term of command; feel free to change should the need arise.
-   --Technically speaking, you never proved your rank, but I suppose an ensign is easily intimidated.
+   Jen(_([[Sir, sorry, sir!]])) --Sir here being a gender-neutral term of command; feel free to change should the need arise.
+   Jen(_([[Will not happen again, sir!]]))--Technically speaking, you never proved your rank, but I suppose an ensign is easily intimidated.
    vn.jump("cont2")
 
    vn.label("cont2")
