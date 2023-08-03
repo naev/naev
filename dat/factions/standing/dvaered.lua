@@ -1,3 +1,3 @@
 -- Dvaered faction standing script
 local sbase = require "factions.standing.lib.base"
-standing = sbase.newStanding( require("factions.dvaered") )
+sbase.init( require("factions.dvaered") )
