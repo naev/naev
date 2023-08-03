@@ -1,3 +1,3 @@
 -- Soromid faction standing script
 local sbase = require "factions.standing.lib.base"
-standing = sbase.newStanding( require("factions.soromid") )
+sbase.init( require("factions.soromid") )

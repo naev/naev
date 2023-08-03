@@ -17,11 +17,6 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Gliese Minor">
-   <autopos/>
-   <hidden/>
-   <hide>0.200000</hide>
-  </jump>
   <jump target="Polaris">
    <autopos/>
    <hide>1.000000</hide>

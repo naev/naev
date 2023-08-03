@@ -126,7 +126,7 @@ function comm_levo( commspb )
 
    vn.clear()
    vn.scene()
-   local spb = ccomm.newCharacterSpob( vn, mainspb, false )
+   local spb = ccomm.newCharacterSpob( vn, mainspb )
    vn.transition()
    vn.na(fmt.f(_("You establish a communication channel with the authorities at {spb}."),
       {spb=mainspb}))

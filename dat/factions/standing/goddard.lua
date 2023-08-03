@@ -1,3 +1,3 @@
 -- Goddard faction standing script
 local sbase = require "factions.standing.lib.base"
-standing = sbase.newStanding( require("factions.goddard") )
+sbase.init( require("factions.goddard") )

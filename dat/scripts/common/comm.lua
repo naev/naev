@@ -13,28 +13,33 @@ local function _draw_bg( x, y, w, h, col, border_col, alpha )
    lg.rectangle( "fill", x+2, y+2, w-4, h-4 )
 end
 
-local function nameboxUpdateInternal( obj, bribed, hostile )
+local function nameboxUpdateInternal( obj, params )
+   params = params or {}
    local fac = obj:faction()
    local nw, _nh = naev.gfx.dim()
    vn.menu_x = math.min( -1, 500 - nw/2 )
    vn.namebox_alpha = 0
    local namebox_font = vn.namebox_font
    local faction_str
-   if bribed then
-      faction_str = "#g".._("Bribed").."#0"
+   if params.faction_str then
+      faction_str = params.faction_str
    else
-      local _std, str = fac:playerStanding()
-      if hostile then
-         faction_str = "#r".._("Hostile").."#0"
-      elseif not fac:known() then
-         faction_str = _("Unknown")
+      if params.bribed then
+         faction_str = "#g".._("Bribed").."#0"
       else
-         faction_str = str
+         local _std, str = fac:playerStanding()
+         if params.hostile then
+            faction_str = "#r".._("Hostile").."#0"
+         elseif not fac:known() then
+            faction_str = _("Unknown")
+         else
+            faction_str = str
+         end
       end
    end
    local facname = (fac:known() and fac:name()) or _("Unknown")
    local namebox_text = string.format("%s\n%s\n%s", facname, obj:name(), faction_str )
-   local namebox_col = fac:colour()
+   local namebox_col = params.name_colour or fac:colour()
    if namebox_col then namebox_col = {namebox_col:rgb()}
    else namebox_col = {1,1,1}
    end
@@ -76,11 +81,14 @@ local function nameboxUpdateInternal( obj, bribed, hostile )
 end
 
 function comm.nameboxUpdate( plt )
-   return nameboxUpdateInternal( plt, plt:flags("bribed"), plt:hostile() )
+   return nameboxUpdateInternal( plt, {
+      bribed = plt:flags("bribed"),
+      hostile = plt:hostile(),
+   } )
 end
 
-function comm.nameboxUpdateSpob( spb, bribed )
-   return nameboxUpdateInternal( spb, bribed, false )
+function comm.nameboxUpdateSpob( spb, params )
+   return nameboxUpdateInternal( spb, params )
 end
 
 function comm.newCharacter( vn_in, plt )
@@ -95,16 +103,32 @@ function comm.newCharacter( vn_in, plt )
    return vn.newCharacter( plt:name(), { image=shipgfx, isportrait=true } )
 end
 
-function comm.newCharacterSpob( vn_in, spb, bribed )
+--[[
+   Valid params:
+   * bribed: whether or not is bribed
+   * hostile: whether or not is hostile
+   * faction_str: overwrite faction standing string
+   * name_colour: gives the colour of the namebox
+--]]
+function comm.newCharacterSpob( vn_in, spb, params )
+   params = params or {}
    vn = vn_in
 
    -- Graphics
    local spbgfx = lg.newImage( spb:gfxComm() )
 
    -- Set up the namebox
-   comm.nameboxUpdateSpob( spb, bribed )
+   comm.nameboxUpdateSpob( spb, params )
 
    return vn.newCharacter( spb:name(), { image=spbgfx, isportrait=true } )
+end
+
+--[[
+   Cleans up after the communication channel (removing namebox stuff).
+--]]
+function comm.cleanup( vn_in )
+   vn = vn_in
+   vn.setForeground()
 end
 
 --[[--

@@ -1,7 +1,6 @@
 -- Trader faction standing script
 local sbase = require "factions.standing.lib.base"
-
-standing = sbase.newStanding{
+sbase.init{
    fct            = faction.get("Traders Society"),
    cap_kill       = 0,
    delta_distress = {-1.5, 0},  -- Maximum change constraints

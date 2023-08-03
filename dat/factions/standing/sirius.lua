@@ -1,3 +1,3 @@
 -- Sirius faction standing script
 local sbase = require "factions.standing.lib.base"
-standing = sbase.newStanding( require("factions.sirius") )
+sbase.init( require("factions.sirius") )
