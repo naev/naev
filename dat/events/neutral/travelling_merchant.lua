@@ -499,6 +499,9 @@ They grab a toolbox and rush over to your boarded ship. You decide not to follow
    mm(_([["Machiavellian Necessity focuses on tweaking your weapon systems to be able to take decisive action when necessary."
 "Machiavellian Fortune will help you minimize the risks of fickleness of fortune."
 "Finally, Machiavellian Virtue will make you a bulwark against unforeseen mishaps."]]))
+   for k,v in pairs(upgrade_list) do
+      mm(v:summary())
+   end
    vn.jump("special")
 
    vn.label("leave")
