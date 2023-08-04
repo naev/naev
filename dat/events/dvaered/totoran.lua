@@ -134,7 +134,7 @@ function approach_guide ()
    }
 
    vn.label("information")
-   guide(_("What would you like to know about?"))
+   guide(_([["What would you like to know about?"]]))
    vn.label("menu_info_raw")
    vn.menu{
       { _("Crimson Gauntlet"), "info_overview" },
@@ -145,27 +145,28 @@ function approach_guide ()
    }
 
    vn.label("info_overview")
-   guide(_("The Crimson Gauntlet allows you to experience combat with your ships in virtual reality, without having to worry about any real damage. All you do is scan your ship and its outfits, and you will be ready to participate in all the challenges."))
+   guide(_([["The Crimson Gauntlet allows you to experience combat with your ships in virtual reality, without having to worry about any real damage. All you do is scan your ship and its outfits, and you will be ready to participate in all the challenges."]]))
    vn.jump("menu_info")
 
    vn.label("info_gauntlet")
    -- incident is 593:3726.4663
-   guide(_("The Crimson Gauntlet was founded originally in mid-UST 568, as a program for training Dvaered Military. Of course, back then they did not have such good virtual reality technology and instead relied on actual combat. However, as the number of accidents and casualties grew, they ended up starting a move to virtual reality, and now the Crimson Gauntlet boasts some of the best full immersion virtual reality experiences in the Universe."))
-   guide(_("Eventually, to encourage the warrior spirit among the general population, in UST 588, 20 cycles after its creation, the Crimson Gauntlet was open to the general public as a virtual reality experience. This is one of the few places in the universe where you can experience hard space combat without having a fear of dying. If your ship is destroyed, you are only dropped out of the virtual reality environment."))
-   guide(_("Many famous pilots have had their formation here, and it is also frequented by scouting agencies from across the Universe to find good pilots. Not to mention all the prizes that can be won from competing in the tournaments."))
+   guide(_([["The Crimson Gauntlet was founded originally in mid-UST 568, as a program for training Dvaered Military. Of course, back then they did not have such good virtual reality technology and instead relied on actual combat. However, as the number of accidents and casualties grew, they ended up starting a move to virtual reality, and now the Crimson Gauntlet boasts some of the best full immersion virtual reality experiences in the Universe."]]))
+   guide(_([["Eventually, to encourage the warrior spirit among the general population, in UST 588, 20 cycles after its creation, the Crimson Gauntlet was open to the general public as a virtual reality experience. This is one of the few places in the universe where you can experience hard space combat without having a fear of dying. If your ship is destroyed, you are only dropped out of the virtual reality environment."]]))
+   guide(_([["Many famous pilots have had their formation here, and it is also frequented by scouting agencies from across the Universe to find good pilots. Not to mention all the prizes that can be won from competing in the tournaments."]]))
    vn.jump("menu_info")
 
    vn.label("info_challenge")
-   guide(_("The Crimson Gauntlet Challenge is a set of challenges split into three types: skirmisher, for small ships like fighters and bombers; warrior, for ships like corvettes and destroyers; and warlord, for the larger ships such as cruisers or carriers. Once you enter a specific challenge, you will face waves of increasingly hard opponents which you must defeat."))
-   guide(_("You get bonus points depending on your ship class with respect to the category. Using smaller ships will give you a bonus in general. You also get a bonus for clearing the waves faster. If you are defeated, the total score up until your loss will be used to compute your rewards. As this is all done in virtual reality, you don't have to worry about any damage to your real ships!"))
+   guide(_([["The Crimson Gauntlet Challenge is a set of challenges split into three types: skirmisher, for small ships like fighters and bombers; warrior, for ships like corvettes and destroyers; and warlord, for the larger ships such as cruisers or carriers. Once you enter a specific challenge, you will face waves of increasingly hard opponents which you must defeat."]]))
+   guide(_([["You get bonus points depending on your ship class with respect to the category. Using smaller ships will give you a bonus in general. You also get a bonus for clearing the waves faster. If you are defeated, the total score up until your loss will be used to compute your rewards. As this is all done in virtual reality, you don't have to worry about any damage to your real ships!"]]))
    vn.jump("menu_info")
 
    vn.label("info_emblems")
-   guide("TODO")
+   guide(_([["The Totoran Emblems represent the honour you have gained in the Crimson Gauntlet Arena, and can be used to unlock harder challenges and even special upgrades for your ships! The harder the challenges you undertake, the more Emblems you can obtain, allowing to truly test the limits of your piloting skills."]]))
+   guide(_([["The Emblems come from the traditional Dvaered practices of rewarding feats of skilled captains on the battlefield. Where not only was the accumulation of Emblems a symbol of status, but it could also be used for bartering and adorning one's ships. Although this practice has fallen a bit out of favour with the current economy, it still lives on in the Crimson Gauntlet!"]]))
    vn.jump("menu_info")
 
    vn.label("menu_info")
-   guide(_("Is there anything else you would like to know about?"))
+   guide(_([["Is there anything else you would like to know about?"]]))
    vn.jump("menu_info_raw")
 
    vn.label("trade_menu")
@@ -180,7 +181,7 @@ function approach_guide ()
          description=_("Unlocks the Double Damage Enemies Perk, which causes all enemies to double the amount of damage. While this increases the challenge difficulty, it also immensely increases the rewards.")},
       {name=_("Unlock No Healing Perk"), cost=2500, type="var", var="gauntlet_unlock_nohealing",
          description=_("Unlocks the No Healing Perk, which makes it so you don't get healed between waves. While this increases the challenge difficulty, it also increases the rewards.")},
-      {name=_("Gauntlet Deluxe"), cost=2500, type="intrinsic", outfit=outfit.get("Gauntlet Deluxe")},
+      {name=_("Gauntlet Deluxe (Ship Upgrade)"), cost=2500, type="intrinsic", outfit=outfit.get("Gauntlet Deluxe")},
    }
    local tradein_item = nil
    local handler = function (idx)
