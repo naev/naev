@@ -202,7 +202,7 @@ function approach_guide ()
       if t.type == "var" then
          tradein_item.description = t.description
       elseif t.type == "intrinsic" then
-         tradein_item.description = t.outfit:description()
+         tradein_item.description = t.outfit:summary().."\n"..t.outfit:description()
       else
          error(_("unknown tradein type"))
       end
