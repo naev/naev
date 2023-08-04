@@ -77,6 +77,7 @@ local function _setdefaults()
    vn._default.menu_y = nil
    vn._default._postshader = nil
    vn._default._draw_fg = nil
+   vn._default._draw_mg = nil
    vn._default._draw_bg = nil
    vn._default._updatefunc = nil
    -- Options
@@ -256,6 +257,11 @@ local function _draw()
       graphics.print( vn._title, font, x+bw, y+bh )
    end
 
+   -- Custom Namebox
+   if vn._draw_mg then
+      vn._draw_mg()
+   end
+
    -- Options
    if vn.show_options then
       x = vn.options_x
@@ -275,7 +281,7 @@ local function _draw()
       graphics.setShader()
    end
 
-   -- Draw if necessary
+   -- Draw current state if necessary
    if not vn.isDone() then
       local s = vn._states[ vn._state ]
       s:draw()
@@ -1578,6 +1584,7 @@ function vn.done( ... )
    vn.func( function ()
       vn._globalalpha = 0
       vn._draw_fg = nil
+      vn._draw_mg = nil
       vn._draw_bg = nil
       vn._postshader = nil
       vn._update = nil
@@ -1740,6 +1747,15 @@ Sets the foreground drawing function. Drawn in front the VN stuff.
 --]]
 function vn.setForeground( drawfunc )
    vn._draw_fg = drawfunc
+end
+
+--[[--
+Sets the middle drawing function. Drawn in right in front of the normal "namebox".
+
+   @tparam func drawfunc Function to call to draw the middle or nil to disable.
+--]]
+function vn.setMiddle( drawfunc )
+   vn._draw_mg = drawfunc
 end
 
 --[[--
