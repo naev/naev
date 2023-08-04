@@ -77,7 +77,7 @@ local function nameboxUpdateInternal( obj, params )
          logo:draw( x+namebox_text_w+10+bw + (logo_size-logo_w*logo_scale)*0.5, y+bh + (logo_size-logo_h*logo_scale)*0.5, 0, logo_scale )
       end
    end
-   vn.setForeground( render_namebox )
+   vn.setMiddle( render_namebox )
 end
 
 function comm.nameboxUpdate( plt )
@@ -128,7 +128,7 @@ end
 --]]
 function comm.cleanup( vn_in )
    vn = vn_in
-   vn.setForeground()
+   vn.setMiddle()
 end
 
 --[[--
