@@ -182,6 +182,7 @@ function approach_guide ()
       {name=_("Unlock No Healing Perk"), cost=2500, type="var", var="gauntlet_unlock_nohealing",
          description=_("Unlocks the No Healing Perk, which makes it so you don't get healed between waves. While this increases the challenge difficulty, it also increases the rewards.")},
       {name=_("Gauntlet Deluxe (Ship Upgrade)"), cost=2500, type="intrinsic", outfit=outfit.get("Gauntlet Deluxe")},
+      {name=_("Gauntlet Supreme (Ship Upgrade)"), cost=2500, type="intrinsic", outfit=outfit.get("Gauntlet Supreme")},
    }
    local tradein_item = nil
    local handler = function (idx)

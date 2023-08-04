@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Gauntlet Supreme">
+ <general>
+  <slot>intrinsic</slot>
+  <mass>0</mass>
+  <price>1000000</price>
+  <description>This service focuses on refining and polishing the launcher systems to maximize the missile fire power of the ship. It is a comprehensive and in-depth optimization that has to be done on a per-ship basis, with specialized technicians tuning everything for maximum efficiency. Due to the nature of the service, only one can be applied to each ship.</description>
+  <desc_extra>#oDoubles effect when using unguided launchers.#0</desc_extra>
+  <gfx_store>placeholder.webp</gfx_store>
+  <rarity>6</rarity>
+ </general>
+ <specific type="modification">
+  <lua>outfits/intrinsic/gauntlet_supreme.lua</lua>
+  <launch_damage>5</launch_damage>
+ </specific>
+</outfit>
