@@ -424,8 +424,10 @@ They get uncomfortably close
       end )
       mm(fmt.f(_([["I would be able to provide my special services for, let's say, {cost}, how does that sound?"
 
+{upgrade_desc}
+
 You have {amount}. Pay {cost} for {upgrade}?]]),
-         {amount=poi.data_str(poi.data_get()), cost=poi.data_str(upgrade_cost), upgrade=upgrade} ))
+         {amount=poi.data_str(poi.data_get()), cost=poi.data_str(upgrade_cost), upgrade=upgrade, upgrade_desc=upgrade:summary()} ))
       vn.menu{
          { _("Pay"), s.."_yes" },
          { _("Back"), s.."_no" },
@@ -442,8 +444,10 @@ You have {amount}. Pay {cost} for {upgrade}?]]),
       mm( function ()
          return fmt.f(_([["It seems like I have already upgraded your current ship with {replacement}. Would you like to replace it with {upgrade} for 2 Encrypted Data Matrices?"
 
+{upgrade_desc}
+
 You have {amount}. Pay {cost} for replacing {replacement} with {upgrade}?]]),
-            {amount=poi.data_str(poi.data_get()), cost=poi.data_str(upgrade_cost), upgrade=upgrade, replacement=replacement} )
+            {amount=poi.data_str(poi.data_get()), cost=poi.data_str(upgrade_cost), upgrade=upgrade, replacement=replacement, upgrade_desc=upgrade:summary()} )
       end )
       vn.menu{
          { _("Pay"), s.."_yes" },
