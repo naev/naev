@@ -6,6 +6,12 @@ local love_shaders = require "love_shaders"
 
 local contact_var = "protera_nova_first_contact"
 
+--[[
+Protera Nova
+
+This planet is unique in that it is inaccessible except by attempting to bribe the authorities, at which point you are allowed to land by some ensigns.
+This landing script (and planet) form part of
+--]]
 
 function init( spb )
    return luaspob.init( spb, {
@@ -35,7 +41,8 @@ function comm()
    vn.scene()
    if var.peek(contact_var) then
    if faction.playerStanding("Proteron")<0 then
-      ccomm.newCharacterSpob( vn, mem.spob, {faction_str="Neutral", name_colour=colour.new("Yellow")} )
+      local _n, str = faction.get("Proteron"):playerStanding(0)
+      ccomm.newCharacterSpob( vn, mem.spob, {faction_str=str, name_colour=colour.new("Yellow")} )
    else
       ccomm.newCharacterSpob( vn, mem.spob)
    end
