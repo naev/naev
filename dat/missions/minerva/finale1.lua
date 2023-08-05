@@ -90,6 +90,7 @@ She sort of slumps at the wall, you're not sure if she's still concious.]]))
    end
 
    local c = commodity.new( N_("Zuri and Kex"), N_("A heavily wounded Zuri holding Kex. They are both unconscious."))
+   c:illegalto( "Empire" )
    misn.cargoAdd( c, 0 )
 
    misn.accept()
