@@ -103,7 +103,7 @@ She sort of slumps at the wall, you're not sure if she's still concious.]]))
    hook.enter("enter")
 end
 
-local pinkdemon
+local pinkdemon, baddie_ships, emp_boss
 function enter ()
    local scur = system.cur()
    if scur==trialsys and mem.state==0 then
@@ -152,6 +152,80 @@ function enter ()
       pilot.clear()
       pilot.toggleSpawn(false)
 
+      local routeA = {
+         spob.get("Kayel"):pos(),
+         jump.get( badsys, "Jade" ):pos(),
+      }
+      local posB = vec2.new( 1e3, 1.6e3 )
+      local routeC = {
+         vec2.new( 5e3, 2e3 ),
+         vec2.new( 12e3, 3e3 ),
+         vec2.new( 10e3, 11e3 ),
+         vec2.new( 3e3, 8e3 ),
+      }
+      local routeD = {
+         vec2.new( 3e3, 2.6e3 ),
+         vec2.new( -7.5e3, 14e3 ),
+      }
+      local posE = vec2.new( 18e3, 6e3 )
+
+      baddie_ships = {}
+      local function fuzz_pos( pos, max_offset )
+         max_offset = max_offset or 100
+         return vec2.newP(max_offset*rnd.rnd(), rnd.angle()) + pos
+      end
+      local function spawn_baddie( shipname, pos )
+         local p = pilot.add( shipname, "Empire", fuzz_pos(pos) )
+         -- We are nice and make the ships easier to see for this mission
+         p:intrinsicSet( "ew_hide", 100 )
+         table.insert( baddie_ships, p )
+         return p
+      end
+      local function add_patrol_group( route, ships, start )
+         start = start or rnd.rnd(1,#route)
+         local pos = route[ start ]
+         local l
+         for k, s in ipairs( ships ) do
+            local p = spawn_baddie( s, pos )
+            if k==1 then
+               l = p
+               pilotai.patrol( p, route )
+            else
+               p:setLeader( l )
+            end
+         end
+         return l
+      end
+      local function add_guard_group( pos, ships )
+         local l
+         for k, s in ipairs( ships ) do
+            local p = spawn_baddie( s, pos )
+            if k==1 then
+               l = p
+               p:changeAI("guard")
+               local aimem = p:memory()
+               aimem.guardpos = pos
+               aimem.guarddodist = 6e3
+               aimem.guardreturndist = 12e3
+            else
+               p:setLeader( l )
+            end
+         end
+      end
+
+      local pacifier = ship.get("Empire Pacifier" )
+      local admonisher = ship.get("Empire Admonisher")
+      local lancelot = ship.get("Empire Lancelot")
+      local shark = ship.get("Empire Shark")
+      add_patrol_group( routeA, { admonisher, shark, shark } )
+      emp_boss = add_guard_group( posB, { "Empire Peacemaker", pacifier, pacifier, lancelot, lancelot, lancelot, lancelot, lancelot, lancelot } )
+      add_patrol_group( routeC, { admonisher, shark, shark, shark, shark } )
+      add_patrol_group( routeD, { admonisher, shark, shark } )
+      add_patrol_group( posE, { "Empire Rainmaker", admonisher, admonisher, lancelot, lancelot, lancelot, lancelot, lancelot, lancelot } )
+
+      -- Tell the player to f off
+      hook.timer( 5.0,  "message_first" )
+      hook.timer( 15.0, "message_hostile" )
 
    elseif scur==destsys then
       -- All's quiet on the front
@@ -203,6 +277,16 @@ function spawn_bogeys ()
 
    -- They keep on coming!
    hook.timer( 7, "spawn_bogeys" )
+end
+
+function message_first ()
+   emp_boss:broadcast( fmt.f(_("Following Imperial Decree ED-17838, {sys} is under lockdown for military exercises. All non-affiliated personal must evacuate the system."), {sys=badsys}), true )
+end
+
+function message_hostile ()
+   for k,p in pairs(baddie_ships) do
+      p:setHostile(true)
+   end
 end
 
 function maikki_discovered ()
