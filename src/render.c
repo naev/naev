@@ -10,6 +10,7 @@
 #include "hook.h"
 #include "map_overlay.h"
 #include "naev.h"
+#include "menu.h"
 #include "opengl.h"
 #include "pause.h"
 #include "player.h"
@@ -241,11 +242,15 @@ void render_all( double game_dt, double real_dt )
    ovr_render( real_dt ); /* Using real_dt is sort of a hack for now. */
    hooks_run( "rendertop" );
    fps_display( real_dt ); /* Exception using real_dt. */
-   toolkit_render( real_dt );
+   if (!menu_open)
+      toolkit_render( real_dt );
 
    /* Final post-processing. */
    if (pp_final)
       render_fbo_list( dt, pp_shaders_list[PP_LAYER_FINAL], &cur, 1 );
+
+   if (menu_open)
+      toolkit_render( real_dt );
 
    /* check error every loop */
    gl_checkErr();
