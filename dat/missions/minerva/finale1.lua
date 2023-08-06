@@ -18,6 +18,7 @@
 local minerva = require "common.minerva"
 local vn = require 'vn'
 local vni = require 'vnimage'
+local vne = require "vnextras"
 local fmt = require "format"
 --local lmisn = require "lmisn"
 local pilotai = require "pilotai"
@@ -26,11 +27,13 @@ local love_audio = require 'love.audio'
 local reverb_preset = require 'reverb_preset'
 local ccomm = require "common.comm"
 local der = require 'common.derelict'
+local tut = require 'common.tutorial'
 
 -- Assumes the trialsys -> Kobopos -> Logania systems are connected
 local trialspb, trialsys = spob.getS("Jade Court")
 local badsys = system.get("Kobopos")
 local destsys = system.get("Logania")
+local recoupspob, recoupsys = spob.getS("Regensburg")
 local title = _("Escape the Courts")
 
 -- Mission states:
@@ -150,6 +153,7 @@ function enter ()
       mem.state=1
    elseif scur==badsys then
       -- Just some random patrols here and there, player can stealth or brute force through
+      -- TODO probably too similar to pirate5 that was quite recent, maybe make it less of an overt stealth mission
       pilot.clear()
       pilot.toggleSpawn(false)
 
@@ -374,17 +378,80 @@ She winks at you.]]))
    vn.label("03_cont")
    vn.na(fmt.f(_([[You quickly explain the situation and Maikki quickly orders her troops to pick up Zuri and Kex and take them to the infirmary aboard the {ship}, which seems to be surprisingly state of the art. The pirate head surgeon quickly gets Zuri prepped up and starts running analysis.]]),
       {ship=pinkdemon}))
-    vn.na(_([[As Kex does not seem to have life threatening issues, you are left with him and Maikki in the waiting room.]]))
-    maikki(_([[Maikki looks fondly at Kex and speaks softly, "Oh father, why did it have to be this way?"]]))
-    vn.menu{
+   vn.na(_([[As Kex does not seem to have life threatening issues, you are left with him and Maikki in the waiting room.]]))
+   maikki(_([[Maikki looks fondly at Kex and speaks softly, "Oh father, why did it have to be this way?"]]))
+   vn.menu{
       {_([["You knew?"]]), "04_cont"},
       {_([["Father?"]]), "04_cont"},
-    }
+   }
 
-    vn.label("04_cont")
-    maikki(_([["I knew you were thick, but you're thicker than molasses!"]]))
-    maikki(_([[""]]))
+   vn.label("04_cont")
+   maikki(_([[She abruptly changes back to her piratey self.
+"I knew you were thick, but you're thicker than molasses!"]]))
+   maikki(_([["The unlucky fowl is my father! Of course he wasn't always this way, but you should know that better than I."]]))
+   maikki(_([["Just my luck to cross the entire galaxy chasing my fool of a father, and when I finally find them, they've been transformed into a fowl, and, and, to make things WORSE, I can't even talk to them because they seem be offline or some shit."]]))
+   maikki(_([["What's a girl gotta do to bloody enjoy a normal family, just for ONCE!"
+She closes her eyes and rubs her temples.]]))
+   maikki(_([["And Zuri, my poor, dear, Zuri, is yet again under life-saving surgery. At this rate, I don't think she's going to have a single one of her original organs..."]]))
+   maikki(_([["This whole ordeal has become quite a mess. I'm really glad I was finally able to find my father, but things haven't really been going our way."]]))
+   local winner = var.peek("minerva_judgement_winner")
+   if winner=="independent" then
+      maikki(_([["At least the judge didn't assign Minerva Station to the Dvaered brutes or Za'lek popsicles, however, with the current situation, I don't think it helps much."]]))
+   else
+      local badguys
+      if winner=="zalek" then
+         badguys = _("Za'lek")
+      else
+         badguys = _("Dvaered")
+      end
+      maikki(fmt.f(_([["Not to mention the bloody judge assigned Minerva Station to the damn {badguys}. Not that it matters much, but it's just salting the wounds."]]),
+         {badguys=badguys}))
+   end
+   vn.label("05_menu")
+   vn.menu{
+      {_("Ask about Zuri's health"), "05_zuri"},
+      {_("Ask about her father"), "05_father"},
+      {_("Ask about next plans (continue)"), "05_cont"},
+   }
 
-   vn.sfx( der.sfx.unboard )
+   vn.label("05_zuri")
+   maikki(_([["She's a tough cookie to crack. We've been together through much harder times. Pirate doctors are second to none when it comes to experience."
+You sense a some worry and uneasiness despite the strong words.]]))
+   maikki(_([["One time, we were doing your standard hit operation in Delta Pavonis, some Empire Combat Bureaucrat had a bounty on the head, and I figure we might as well cash in. Sources said they would be flying a Pacifier, no deal, right? Turns out it was a bloody Peacemaker with a full entourage."]]))
+   maikki(_([["Was about to back off when a second Peacemaker jumped in behind us. The bastards set us up for a trap. With no way out, we charged the Bureaucrat asshole and smashed the captain's bridge right into the fighter bay, and went to fight our way through the ship."]]))
+   maikki(_([["While we were trying to take hold of the hangar, Zuri grabbed a bunch of weapons and charged basically charged through the ship. When we found her in the bridge, she had somehow managed to single-handedly cross the entire ship and capture it by herself!"]]))
+   maikki(_([["Of course, she had nearly blown herself into two, and was riddled with laser holes, but we were lucky that the field surgeon was with us and was able to somehow stabilize her while I rammed the peacemaker into the second one."]]))
+   maikki(_([["We ended up escaping with 17 people crammed in a Lancelot, and somehow made it back to New Haven. It took Zuri nearly a cycle to recover, but then she was better than ever. She's got be fine this time too!"]]))
+   vn.jump("05_menu")
+
+   vn.label("05_father")
+   maikki(_([["He wasn't really with us when I was a child. He'd always be searching for artefacts in the nebula or whatnot. But, he would have the best stories when he would come back. He always was the life of the party. It's what made me become a pilot."]]))
+   maikki(_([["Then, one day, he didn't come back. Eaten by the Nebula, killed by scavengers, taken prisoner by the Dvaered, blah blah blah. The rumours were awful."]]))
+   maikki(_([["My mother took it really poorly, her health deteriorated fast. When she died, I decided I would try to find my father and find out why he did that, you know?"]]))
+   maikki(_([["Took me long enough, but I never expected to find him like this..."]]))
+   vn.jump("05_menu")
+
+   vn.label("05_cont")
+   maikki(_([["I guess you can sort of expect that whatever plans I had are probably moot at this point. Too many unknowns at this point, we should head to a haven and recoup a bit. Have to figure out what happened to my father and also wait until Zuri wakes up."]]))
+   maikki(fmt.f(_([["For now, we should get out of here, lest the Imperials come down from {badsys}. I know some people at {spob} in the {sys} system. We can head there for now."]]),
+      {spob=recoupspob, sys=recoupsys, badsys=badsys}))
+
+   local log = vne.flashbackTextStart()
+   log(fmt.f(_([[You tell {shipai} to set your ship's autonav to follow the Pink Demon and ride with Maikki to {spob}.
+
+During the ride, you talk with her about the entire experience up until now, without missing any details of your interactions with Kex and the dealings with Dr. Strangelove. She is enthralled in all talk of Kex and inquisitive asking many questions the entire time. while flying the ship.
+
+The ride is fairly smooth, surprising you with how effortlessly Maikki seems avoiding patrol on the way to the destination.]]),
+      {spob=recoupspob, shipai=tut.ainame()}))
+   vn.func( function ()
+      player.land( recoupspob )
+   end )
+   vne.flashbackTextEnd{ notransition=true }
+   maikki = minerva.vn_maikkiP()
+   vn.transition()
+
+   maikki(_([[""]]))
    vn.run()
+
+   misn.finish(true)
 end
