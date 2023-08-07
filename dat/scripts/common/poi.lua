@@ -95,7 +95,7 @@ function _poi_enter ()
    -- This was due to a bug that snuck in around 2023-07-30ish
    -- TODO probably remove for 0.11.0 release
    if type(mem.reward)~="table" then
-      warn(_("corrupt POI detected, removing!"))
+      warn("corrupt POI detected, removing!")
       misn.finish(false)
    end
 
