@@ -307,6 +307,28 @@ function lmisn.getRandomSpobAtDistance( sys, min, max, fct, samefct, filter, dat
    return spob.getS( candidates[ rnd.rnd(1,#candidates) ] )
 end
 
+function lmisn.calculateDistance( origin_sys, origin_pos, dest_sys, dest_pos, params )
+   local traveldist = 0
+   local pos = origin_pos
+
+   local jumps = origin_sys:jumpPath( dest_sys, params.use_hidden )
+   if jumps then
+      for k, v in ipairs(jumps) do
+         -- We're not in the destination system yet.
+         -- So, get the next system on the route, and the distance between
+         -- our entry point and the jump point to the next system.
+         -- Then, set the exit jump point as the next entry point.
+         local j, r = jump.get( v:system(), v:dest() )
+         traveldist = traveldist + vec2.dist(pos, j:pos())
+         pos = r:pos()
+      end
+   end
+
+   -- We ARE in the destination system now, so route from the entry point to the destination planet.
+   traveldist = traveldist + vec2.dist( pos, dest_pos )
+   return traveldist
+end
+
 --[[--
    Wrapper for player.misnActive that works on a table of missions.
 
