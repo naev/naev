@@ -90,7 +90,7 @@ function jumpin()
    end
 end
 
-function death(pilot,killer)
+function death( pilot, killer )
    if pir.factionIsPirate(pilot:faction()) and killer:withPlayer() then
       local reward_earned = pilot:ship():price()/10
       mem.pirates_killed = mem.pirates_killed + 1
