@@ -307,7 +307,19 @@ function lmisn.getRandomSpobAtDistance( sys, min, max, fct, samefct, filter, dat
    return spob.getS( candidates[ rnd.rnd(1,#candidates) ] )
 end
 
+--[[--
+Calculates the distance (in pixels) from a position in a system to a position in another system.
+
+   @tparam System origin_sys System to calculate distance from.
+   @tparam Vec2 origin_pos Position to calculate distance from.
+   @tparam System dest_sys Target system to calculate distance to.
+   @tparam Vec2 dest_pos Target position to calculate distance to.
+   @tparam table params Table of parameters. Currently supported are "use_hidden".
+   @return The distance travelled
+   @return The jumpPath leading to the target system
+--]]
 function lmisn.calculateDistance( origin_sys, origin_pos, dest_sys, dest_pos, params )
+   params = params or {}
    local traveldist = 0
    local pos = origin_pos
 
@@ -322,11 +334,13 @@ function lmisn.calculateDistance( origin_sys, origin_pos, dest_sys, dest_pos, pa
          traveldist = traveldist + vec2.dist(pos, j:pos())
          pos = r:pos()
       end
+   else
+      jumps = {}
    end
 
    -- We ARE in the destination system now, so route from the entry point to the destination planet.
    traveldist = traveldist + vec2.dist( pos, dest_pos )
-   return traveldist
+   return traveldist, jumps
 end
 
 --[[--
