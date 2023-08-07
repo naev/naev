@@ -104,6 +104,10 @@ function create ()
          end
       end
    end
+   if not mem.reward then
+      warn("poi: started up without reward!")
+      misn.finish(false)
+   end
 
    poi.misnSetup{ sys=mem.sys, found="found", risk=mem.risk }
 end
