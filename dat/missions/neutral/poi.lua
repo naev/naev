@@ -99,7 +99,7 @@ function create ()
       for k,v in ipairs(reward_list) do
          waccum = waccum + v.weight
          if r <= waccum then
-            mem.reward = r
+            mem.reward = v
             break
          end
       end
