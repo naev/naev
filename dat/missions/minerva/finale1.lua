@@ -20,12 +20,11 @@ local vn = require 'vn'
 local vni = require 'vnimage'
 local vne = require "vnextras"
 local fmt = require "format"
---local lmisn = require "lmisn"
 local pilotai = require "pilotai"
---local love_shaders = require "love_shaders"
 local love_audio = require 'love.audio'
 local reverb_preset = require 'reverb_preset'
 local ccomm = require "common.comm"
+local lmisn = require "lmisn"
 local der = require 'common.derelict'
 local tut = require 'common.tutorial'
 
@@ -444,12 +443,18 @@ During the ride, you talk with her about the entire experience up until now, wit
 The ride is fairly smooth, surprising you with how effortlessly Maikki seems avoiding patrol on the way to the destination.]]),
       {spob=recoupspob, shipai=tut.ainame()}))
    vn.func( function ()
+      -- Simulate the elapsed time for moving over
+      local dist, jumps = lmisn.calculateDistance( system.cur(), player.pos(), recoupsys, recoupspob:pos() )
+      local elapsed = dist / pinkdemon:speedMax() + #jumps * pinkdemon:stats().jump_delay
+      time.inc( time.new( 0, 0, elapsed ) )
+      -- Land on the spob
       player.land( recoupspob )
    end )
    vne.flashbackTextEnd{ notransition=true }
    maikki = minerva.vn_maikkiP()
    vn.transition()
 
+   vn.na(_([[You land]]))
    maikki(_([[""]]))
    vn.run()
 
