@@ -2648,6 +2648,7 @@ dat/unidiff/eye_of_night_station.xml
 dat/unidiff/flf_dead.xml
 dat/unidiff/flf_pirate_ally.xml
 dat/unidiff/flf_vs_empire.xml
+dat/unidiff/gliese_lockin.xml
 dat/unidiff/heavy_combat_vessel_license.xml
 dat/unidiff/heavy_weapons_license.xml
 dat/unidiff/hypergates_1.xml
@@ -2878,6 +2879,7 @@ dat/events/pirate/fake_transponder.lua
 dat/events/pirate/shipcheck.lua
 dat/events/poi.lua
 dat/events/proteron/blockade.lua
+dat/events/proteron/gliese_strand.lua
 dat/events/restricted.lua
 dat/events/settings.lua
 dat/events/shipai.lua
