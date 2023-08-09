@@ -36,6 +36,7 @@ local function spawn_fleet( pos )
    end
 
    local plts = {}
+   local stand, _str = faction.get("Proteron"):playerStanding()
    for k,s in ipairs(ships) do
       local leader = plts[1]
       local p = pilot.add( s, "Proteron", pos, nil, {ai="guard"} )
@@ -43,7 +44,7 @@ local function spawn_fleet( pos )
       aimem.enemyclose    = 10e3
       aimem.guarddodist   = 10e3
       aimem.guardreturndist = 15e3
-      p:setHostile(true) -- TODO change this when something can make them non-hostile
+      p:setHostile(stand<0)
       if leader then
          p:setLeader( leader )
       end
@@ -71,7 +72,8 @@ end
 
 function heartbeat( proteron_blockade )
    local pp = player.pilot()
-   for k,p in ipairs(proteron_blockade) do
+   local stand, _str = faction.get("Proteron"):playerStanding()
+   for k,p in ipairs(proteron_blockade) and stand < 0 do
       if p:inrange( pp ) then
          p:broadcast( _("Unknown vessel trying to breach blockade. All ships engage!"), true)
          return
