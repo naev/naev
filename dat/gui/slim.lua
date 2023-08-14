@@ -3,6 +3,7 @@
 --]]
 local flow = require "ships.lua.lib.flow"
 local fmt = require "format"
+local formation = require "formation"
 local playerform = require "playerform"
 
 local radar_gfx, radar_x, radar_y, screen_h, screen_w
@@ -26,6 +27,10 @@ function create()
    --Get player
    pp = player.pilot()
    pname = player.name()
+
+   -- Set default formation
+   local savedform = var.peek("player_formation") or "Circle"
+   player.pilot():memory().formation = formation.keys[savedform]
 
    --Get sizes
    screen_w, screen_h = gfx.dim()
