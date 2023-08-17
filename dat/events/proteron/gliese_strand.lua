@@ -17,15 +17,17 @@ local vn = require "vn"
 local tut = require "common.tutorial"
 
 function create ()
-   player.saveBackup("pre-stranding")
+   player.saveBackup("pre-Gliese-stranding")
    var.push("gliese_lockedin", true)
    local _j, r = jump.get("Behar", "Gliese")
    r = r:pos()
    diff.apply("gliese_lockin")
-   hook.timer(5, "ohno", r)
+---[[
+   hook.timer(6, "ohno", r)
 end
 
 function ohno(pos)
+--]]
    camera.set(pos)
 ---[[
    hook.timer(1, "cheated")
@@ -43,11 +45,11 @@ function cheated()
    vn.disappear( sai, tut.shipai.transition )
    vn.run()
 ---[[
-   hook.enter("cleanup")
+   hook.timer(1, "cleanup")
 end
 
 function cleanup ()
+--]]
    camera.set()
    evt.finish()
---]]
 end
