@@ -149,8 +149,7 @@ Commodity* luaL_validcommodity( lua_State *L, int ind )
  */
 Commodity** lua_pushcommodity( lua_State *L, Commodity* commodity )
 {
-   Commodity **o;
-   o = (Commodity**) lua_newuserdata(L, sizeof(Commodity*));
+   Commodity **o = (Commodity**) lua_newuserdata(L, sizeof(Commodity*));
    *o = commodity;
    luaL_getmetatable(L, COMMODITY_METATABLE);
    lua_setmetatable(L, -2);

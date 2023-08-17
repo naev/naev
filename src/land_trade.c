@@ -110,8 +110,9 @@ void commodity_exchange_open( unsigned int wid )
    ngoods  = array_size( land_spob->commodities );
 
    /* Count always sellable goods. */
-   for (int i=0; i<array_size(player.p->commodities); i++) {
-      PilotCommodity *pc = &player.p->commodities[i];
+   PilotCommodity* pclist = pfleet_cargoList();
+   for (int i=0; i<array_size(pclist); i++) {
+      PilotCommodity *pc = &pclist[i];
       if (pc->id > 0) /* Ignore mission stuff. */
          continue;
       if (!commodity_isFlag(pc->commodity, COMMODITY_FLAG_ALWAYS_CAN_SELL))
@@ -126,8 +127,8 @@ void commodity_exchange_open( unsigned int wid )
       j = 0;
 
       /* First add special sellable. */
-      for (int i=0; i<array_size(player.p->commodities); i++) {
-         PilotCommodity *pc = &player.p->commodities[i];
+      for (int i=0; i<array_size(pclist); i++) {
+         PilotCommodity *pc = &pclist[i];
          if (pc->id > 0) /* Ignore mission stuff. */
             continue;
          if (!commodity_isFlag(pc->commodity, COMMODITY_FLAG_ALWAYS_CAN_SELL))
@@ -152,6 +153,7 @@ void commodity_exchange_open( unsigned int wid )
       cgoods[0].image = NULL;
       cgoods[0].caption = strdup(_("None"));
    }
+   array_free(pclist);
 
    /* set up the goods to buy/sell */
    iconsize = 128;

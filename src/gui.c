@@ -2209,7 +2209,7 @@ int gui_handleEvent( SDL_Event *evt )
       case SDL_MOUSEBUTTONUP:
          if (!gui_L_mclick)
             break;
-         if (gui_prepFunc( gui_lua_mouse_click, "mouse_click" )) {
+         if (gui_prepFunc( gui_lua_mouse_click, "mouse_click" )==0) {
             lua_pushnumber( naevL, evt->button.button+1 );
             gui_eventToScreenPos( &x, &y, evt->button.x, evt->button.y );
             lua_pushnumber( naevL, x );

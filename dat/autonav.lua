@@ -306,15 +306,16 @@ local function autonav_approach_vel( pos, vel, radius )
    local pp = player.pilot()
    local turn = math.rad(pp:turn()) -- TODO probably change the code
 
-   local timeFactor = math.pi/turn + pp:speed() / pp:thrust()
+   local rvel = vel - pp:vel()
+   local timeFactor = math.pi/turn + rvel:mod() / pp:thrust() / 2
 
    local Kp = 10
-   local Kd = math.max( 5, 10.84*timeFactor-10.82 )
+   local Kd = math.max( 5, 10*timeFactor )
 
    local angle = math.pi + vel:angle()
 
    local point = pos + vec2.newP( radius, angle )
-   local dir = (point-pp:pos())*Kp + (vel-pp:vel())*Kd
+   local dir = (point-pp:pos())*Kp + rvel*Kd
 
    local off = ai.face( dir:angle() )
    if math.abs(off) < math.rad(10) and dir:mod() > 300 then

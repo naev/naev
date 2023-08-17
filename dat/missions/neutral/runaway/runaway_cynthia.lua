@@ -112,8 +112,8 @@ function land ()
    vntk.msg( _("The Runaway"), _([[As you walk into the docking bay, she warns you to look out behind you.
 When you look back to where she was, nothing remains but a tidy pile of credit chips and a worthless pendant.]]).."\n\n"..fmt.reward(reward) )
 
-   neu.addMiscLog(fmt.f(_([[You gave a teenage girl named Cynthia a lift to {spb}. When you got there, she suddenly disappeared, leaving behind a tidy pile of credit chips and a worthless pendant.]])),
-      {spb=targetworld})
+   neu.addMiscLog(fmt.f(_([[You gave a teenage girl named Cynthia a lift to {spb}. When you got there, she suddenly disappeared, leaving behind a tidy pile of credit chips and a worthless pendant.]]),
+      {spb=targetworld}))
 
    misn.finish(true)
 end

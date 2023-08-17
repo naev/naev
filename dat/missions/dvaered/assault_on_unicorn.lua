@@ -90,11 +90,8 @@ function jumpin()
    end
 end
 
-function death(pilot,killer)
-   if pir.factionIsPirate( pilot:faction() )
-         and (killer == player.pilot()
-            or killer:leader() == player.pilot()) then
-
+function death( pilot, killer )
+   if pir.factionIsPirate(pilot:faction()) and killer:withPlayer() then
       local reward_earned = pilot:ship():price()/10
       mem.pirates_killed = mem.pirates_killed + 1
       mem.bounty_earned = math.min( mem.max_payment, mem.bounty_earned + reward_earned )
