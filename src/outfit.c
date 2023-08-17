@@ -2116,9 +2116,6 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 {
    xmlNodePtr node;
    char *buf;
-   StarSystem *system_stack;
-   Spob *spob;
-   JumpPoint *jump;
 
    node = parent->children;
 
@@ -2142,7 +2139,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
          }
 
          free(buf);
-         array_grow( &temp->u.map->systems ) = sys;
+         array_push_back( &temp->u.map->systems, sys );
 
          xmlNodePtr cur = node->children;
          do {
@@ -2150,16 +2147,18 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 
             if (xml_isNode(cur,"spob")) {
                buf = xml_get(cur);
-               if ((buf != NULL) && ((spob = spob_get(buf)) != NULL))
-                  array_grow( &temp->u.map->spobs ) = spob;
+               Spob *spob = (buf != NULL) ? spob_get(buf) : NULL;
+               if ((buf != NULL) && (spob != NULL))
+                  array_push_back( &temp->u.map->spobs, spob );
                else
                   WARN(_("Map '%s' has invalid spob '%s'"), temp->name, buf);
             }
             else if (xml_isNode(cur,"jump")) {
+               JumpPoint *jump;
                buf = xml_get(cur);
                if ((buf != NULL) && ((jump = jump_get(xml_get(cur),
                      temp->u.map->systems[array_size(temp->u.map->systems)-1] )) != NULL))
-                  array_grow( &temp->u.map->jumps ) = jump;
+                  array_push_back( &temp->u.map->jumps, jump );
                else
                   WARN(_("Map '%s' has invalid jump point '%s'"), temp->name, buf);
             }
@@ -2172,13 +2171,14 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
          snprintf( temp->summary_raw, OUTFIT_SHORTDESC_MAX, "%s", xml_get(node) );
       }
       else if (xml_isNode(node,"all")) { /* Add everything to the map */
-         system_stack = system_getAll();
+         StarSystem *system_stack = system_getAll();
          for (int i=0;i<array_size(system_stack);i++) {
-            array_grow( &temp->u.map->systems ) = &system_stack[i];
+            StarSystem *ss = &system_stack[i];
+            array_push_back( &temp->u.map->systems, ss );
             for (int j=0;j<array_size(system_stack[i].spobs);j++)
-               array_grow( &temp->u.map->spobs ) = system_stack[i].spobs[j];
+               array_push_back( &temp->u.map->spobs, ss->spobs[j] );
             for (int j=0;j<array_size(system_stack[i].jumps);j++)
-               array_grow( &temp->u.map->jumps ) = &system_stack[i].jumps[j];
+               array_push_back( &temp->u.map->jumps, &ss->jumps[j] );
          }
       }
       else
