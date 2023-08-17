@@ -2920,7 +2920,7 @@ int map_map( const Outfit *map )
       else {
          int found = 0;
          for (int j=0; j<array_size(map->u.map->systems);j++) {
-            const StarSystem *ss = map->u.map->systems[i];
+            const StarSystem *ss = map->u.map->systems[j];
             if (strcmp( ss->name, sysname )==0) {
                found = 1;
                break;
