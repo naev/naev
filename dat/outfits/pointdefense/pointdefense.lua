@@ -21,15 +21,24 @@ end
 function update( p, po, _dt )
    local pos = p:pos()
    local m = mem.target
+
    -- Clear target if doesn't exist
-   if m and not m:exists() then
+   if not m or not m:exists() then
       mem.target = nil
       mem.tpilot = false
       m = nil
+   else
+      -- Do range check
+      local d2 = pos:dist2( m:pos() )
+      if d2 > range2 then
+         mem.target = nil
+         mem.tpilot = false
+         m = nil
+      end
    end
-   -- See if we want to retarget
-   if not (m and pos:dist2( m:pos() ) < range2) then
 
+   -- See if we want to retarget, want to prioritize munitions
+   if not m or mem.tpilot then
       -- Try to prioritize munitions
       local mall = munition.getInrange( pos, range, p )
       if #mall > 0 then
@@ -54,15 +63,6 @@ function update( p, po, _dt )
                mem.tpilot = true
             end
          end
-      end
-   -- Prefer munitions over pilots
-   elseif mem.tpilot then
-      -- Try to prioritize munitions
-      local mall = munition.getInrange( pos, range, p )
-      if #mall > 0 then
-         m = mall[ rnd.rnd(1,#mall) ] -- Just get a random one
-         mem.target = m
-         mem.tpilot = false
       end
    end
 

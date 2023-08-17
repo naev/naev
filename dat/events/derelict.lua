@@ -201,7 +201,7 @@ function neutralevent()
          fmt.f(_([[You searched a derelict in {sys} and ended up spending an inordinate amount of time playing an ancient computer game!]]), {sys=system.cur()})
       },
       {
-         _("Errie Derelict"),
+         _("Eerie Derelict"),
          _([[You are exploring the derelict ship when you hear a strange creaking noise. You decide to follow it to see what is causing it, but you never seem to be able to pinpoint the source. After about an hour of fruitlessly opening up panels, pressing your ear against the deck and running hull scans from your own ship, you decide to give up and leave the derelict to its creepy creaking.]]),
          fmt.f(_([[You searched an empty, creaking derelict in {sys}.]]), {sys=system.cur()})
       },

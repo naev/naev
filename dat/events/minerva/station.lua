@@ -352,7 +352,6 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
          minerva.tokens_pay( -ti[2][1] )
          if ti[2][2]=="outfit" then
             player.outfitAdd( ti[1] )
-            player.msg( _("Gambling Bounty"), fmt.reward(ti[1]))
          elseif ti[2][2]=="ship" then
             player.shipAdd( ti[1] )
          else
@@ -629,7 +628,7 @@ function approach_maikki ()
    vn.scene()
    local maikki = vn.newCharacter( minerva.vn_maikki() )
    --local kex = minerva.vn_kex{ pos=0, rotation=30*math.pi/180., shader=love_shaders.aura() }
-   local kex = minerva.vn_kex{ pos=0, rotation=30*math.pi/180. }
+   local kex = minerva.vn_kex{ pos=0, rotation=math.rad(30) }
    vn.music( minerva.loops.maikki )
    vn.transition("hexagon")
    vn.na(_("You find Maikki, who beams you a smile as you approach."))

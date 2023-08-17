@@ -99,10 +99,14 @@ function create ()
       for k,v in ipairs(reward_list) do
          waccum = waccum + v.weight
          if r <= waccum then
-            mem.reward = r
+            mem.reward = v
             break
          end
       end
+   end
+   if not mem.reward then
+      warn("poi: started up without reward!")
+      misn.finish(false)
    end
 
    poi.misnSetup{ sys=mem.sys, found="found", risk=mem.risk }

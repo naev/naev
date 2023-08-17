@@ -289,6 +289,7 @@ List of mission variables:
 - maikki_scavengers_alive (true, nil)
 - harper_ticket ("credits", "tokens", "free", "stole" )
 - strangelove_death ("unplug", "comforted", "shot", nil)
+- minerva_judgement_winner ("zalek", "dvaered", "independent")
 
 --]]
 

@@ -92,6 +92,13 @@ end
 
 local pos, timer, path, goal, mrk
 function _poi_enter ()
+   -- This was due to a bug that snuck in around 2023-07-30ish
+   -- TODO probably remove for 0.11.0 release
+   if type(mem.reward)~="table" then
+      warn("corrupt POI detected, removing!")
+      misn.finish(false)
+   end
+
    if system.cur() ~= mem.poi.sys then
       pos = nil
       goal = nil

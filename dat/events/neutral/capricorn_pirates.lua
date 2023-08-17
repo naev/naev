@@ -115,7 +115,7 @@ function pir_gone ()
    lmisn.sfxVictory()
    player.msg(fmt.f(_("You have cleared the blockade on {spb}!"),{spb=mainspb}))
    player.landAllow( true )
-   diff.apply( "Capricorn Safe" ) -- Removes 'restricted' tag
+   diff.apply( "Durea Safe" ) -- Removes 'restricted' tag
    evt.finish(true)
 end
 

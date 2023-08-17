@@ -1,11 +1,11 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<event name="Durea Pirates Epilogue">
+<event name="Capricorn Pirates Epilogue">
  <unique/>
  <location>land</location>
  <chance>100</chance>
  <spob>Durea</spob>
- <cond>player.evtDone("Durea Pirates")</cond>
+ <cond>player.evtDone("Capricorn Pirates")</cond>
 </event>
 --]]
 --[[
