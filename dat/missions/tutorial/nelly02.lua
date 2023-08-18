@@ -371,7 +371,7 @@ function land ()
          player.pay( reward_amount )
       end )
       nel(_([["I'm going to get my ship fixed and hopefully next time we meet it'll be in space. Have fun!"
-She runs off to where here ship is stored with the repair parts in hand.]]))
+She runs off to where her ship is stored with the repair parts in hand.]]))
       vn.done( tutnel.nelly.transition )
       vn.run()
 
