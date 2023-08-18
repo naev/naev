@@ -69,13 +69,12 @@ PilotWeaponSet* pilot_weapSet( Pilot* p, int id )
  */
 static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 {
-   int ret, s;
-   double time;
+   int ret = 0;
+   double time = INFINITY;  /* With no target we just set time to infinity. */
    int isstealth = pilot_isFlag( p, PILOT_STEALTH );
    int target_set = 0;
    Target wt;
 
-   ret = 0;
    for (int i=0; i<array_size(ws->slots); i++) {
       PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
       const Outfit *o = pos->outfit;
@@ -90,7 +89,7 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 
       /* Only run once for each weapon type in the group if not volley. */
       if (!ws->volley) {
-         s = 0;
+         int s = 0;
          for (int j=0; j<i; j++) {
             /* Only active outfits. */
             if ((level != -1) && (ws->slots[j].level != level))
@@ -108,9 +107,6 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       /* Only "locked on" outfits. */
       if (outfit_isSeeker(o) && (pos->u.ammo.lockon_timer > 0.))
          continue;
-
-      /* If inrange is set we only fire at targets in range. */
-      time = INFINITY;  /* With no target we just set time to infinity. */
 
       /* Lazy target setting. */
       if (!target_set) {
