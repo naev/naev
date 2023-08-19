@@ -70,9 +70,9 @@ PilotWeaponSet* pilot_weapSet( Pilot* p, int id )
 static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 {
    int ret = 0;
-   double time = INFINITY;  /* With no target we just set time to infinity. */
    int isstealth = pilot_isFlag( p, PILOT_STEALTH );
    int target_set = 0;
+   double time;
    Target wt;
 
    for (int i=0; i<array_size(ws->slots); i++) {
