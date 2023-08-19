@@ -111,9 +111,9 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       /* Lazy target setting. */
       if (!target_set) {
          pilot_weaponTarget( p, &wt );
-         time = weapon_targetFlyTime( o, p, &wt );
          target_set = 1;
       }
+      time = weapon_targetFlyTime( o, p, &wt );
 
       /* Only "inrange" outfits. */
       if (ws->inrange && outfit_duration(o) < time)
