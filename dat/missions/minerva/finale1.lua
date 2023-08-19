@@ -438,9 +438,9 @@ You sense a some worry and uneasiness despite the strong words.]]))
    local log = vne.flashbackTextStart()
    log(fmt.f(_([[You tell {shipai} to set your ship's autonav to follow the Pink Demon and ride with Maikki to {spob}.
 
-During the ride, you talk with her about the entire experience up until now, without missing any details of your interactions with Kex and the dealings with Dr. Strangelove. She is enthralled in all talk of Kex and inquisitive asking many questions the entire time. while flying the ship.
+During the ride, you talk with her about the entire experience up until now, without missing any details of your interactions with Kex and the dealings with Dr. Strangelove. She is enthralled in all talk of Kex and inquisitive asking many questions the entire time while flying the ship.
 
-The ride is fairly smooth, surprising you with how effortlessly Maikki seems avoiding patrol on the way to the destination.]]),
+The ride is fairly smooth, surprising you with how effortlessly Maikki seems to avoid patrols on the way to your destination.]]),
       {spob=recoupspob, shipai=tut.ainame()}))
    vn.func( function ()
       -- Simulate the elapsed time for moving over
@@ -454,8 +454,9 @@ The ride is fairly smooth, surprising you with how effortlessly Maikki seems avo
    maikki = minerva.vn_maikkiP()
    vn.transition()
 
-   vn.na(_([[You land]]))
-   maikki(_([[""]]))
+   vn.na(_([[You land with Makki on {spob} through what seems to be a hidden landing pad, away from the main spaceport.]]))
+   maikki(_([[Despite being quite flustered with the situation, Maikki seems intent on trying to manage the situation.
+"I'm going to get a full briefing and diagnostic on both Zuri and Kex. Since this will take a while, meet up with me at the bar and I'll fill you out with the important details."]]))
    vn.run()
 
    misn.finish(true)
