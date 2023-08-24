@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Jade Court">
+ <lua>spob/lua/jadecourt.lua</lua>
  <pos x="-2507.492761" y="-4718.400357"/>
  <GFX>
   <space>station-commerce.webp</space>

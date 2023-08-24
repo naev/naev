@@ -3444,6 +3444,7 @@ dat/spob/lua/hypergate_gamma_polaris.lua
 dat/spob/lua/hypergate_kiwi.lua
 dat/spob/lua/hypergate_ngc14549.lua
 dat/spob/lua/hypergate_ruadan.lua
+dat/spob/lua/jadecourt.lua
 dat/spob/lua/kal_atok_obelisk.lua
 dat/spob/lua/kal_maro_obelisk.lua
 dat/spob/lua/kal_niut_obelisk.lua
