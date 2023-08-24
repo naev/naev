@@ -10,6 +10,54 @@ function luaspob.init( spb, init_params )
    mem.std_land = mem.params.std_land or 0 -- Needed for can_land
 end
 
+local function msg_bribed_def ()
+   return {
+      _([["Make it quick."]]),
+      _([["Don't let anyone see you."]]),
+      _([["Be quiet about this."]]),
+   }
+end
+
+local function msg_denied_def ()
+   return {
+      _([["Landing request denied."]]),
+         _([["Landing not authorized."]]),
+         _([["Landing denied."]]),
+   }
+end
+
+local function msg_granted_def ()
+   return {
+      _([["Permission to land granted."]]),
+      _([["You are clear to land."]]),
+      _([["Proceed to land."]]),
+      _([["Landing authorized."]]),
+   }
+end
+
+local function msg_cantbribe_def ()
+   return {
+      _([["We do not accept bribes."]]),
+   }
+end
+
+local function msg_trybribe_def ()
+   return {
+      _([["I'll let you land for the modest price of {credits}."
+
+Pay {credits}?]]),
+      _([["Some {credits} would make me reconsider letting you land."
+
+Pay {credits}?]]),
+   }
+end
+
+local function msg_dangerous_def ()
+   return {
+      _([["I'm not dealing with dangerous criminals like you!"]]),
+   }
+end
+
 function luaspob.load ()
    -- Basic stuff
    local fct = mem.spob:faction()
@@ -24,37 +72,13 @@ function luaspob.load ()
    mem.std_bribe = mem.params.std_bribe or -30
    mem.std_dangerous = mem.params.std_dangerous or -30
 
-   mem.msg_bribed = mem.params.msg_bribed or {
-      _([["Make it quick."]]),
-      _([["Don't let anyone see you."]]),
-      _([["Be quiet about this."]]),
-   }
-   mem.msg_denied = mem.params.msg_denied or {
-      _([["Landing request denied."]]),
-      _([["Landing not authorized."]]),
-      _([["Landing denied."]]),
-   }
+   mem.msg_bribed = mem.params.msg_bribed or msg_bribed_def()
+   mem.msg_denied = mem.params.msg_denied or msg_denied_def()
    mem.msg_notyet = mem.params.msg_notyet or mem.msg_denied
-   mem.msg_granted = mem.params.msg_granted or {
-      _([["Permission to land granted."]]),
-      _([["You are clear to land."]]),
-      _([["Proceed to land."]]),
-      _([["Landing authorized."]]),
-   }
-   mem.msg_cantbribe = mem.params.msg_cantbribe or {
-      _([["We do not accept bribes."]]),
-   }
-   mem.msg_trybribe = mem.params.msg_trybribe or {
-      _([["I'll let you land for the modest price of {credits}."
-
-Pay {credits}?]]),
-      _([["Some {credits} would make me reconsider letting you land."
-
-Pay {credits}?]]),
-   }
-   mem.msg_dangerous = mem.params.msg_dangerous or {
-      _([["I'm not dealing with dangerous criminals like you!"]]),
-   }
+   mem.msg_granted = mem.params.msg_granted or msg_granted_def()
+   mem.msg_cantbribe = mem.params.msg_cantbribe or msg_cantbribe_def()
+   mem.msg_trybribe = mem.params.msg_trybribe or msg_trybribe_def()
+   mem.msg_dangerous = mem.params.msg_dangerous or msg_dangerous_def()
 
    -- Randomly choose
    local function choose( tbl )
