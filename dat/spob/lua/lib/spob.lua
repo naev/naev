@@ -4,6 +4,12 @@ local ccomm = require "common.comm"
 
 local luaspob = {}
 
+local f_empire = faction.get("Empire")
+local f_dvaered = faction.get("Dvaered")
+local f_zalek = faction.get("Za'lek")
+local f_sirius = faction.get("Sirius")
+local f_soromid = faction.get("Soromid")
+
 function luaspob.init( spb, init_params )
    mem.spob = spb
    mem.params = init_params or {}
@@ -21,18 +27,53 @@ end
 local function msg_denied_def ()
    return {
       _([["Landing request denied."]]),
-         _([["Landing not authorized."]]),
-         _([["Landing denied."]]),
+      _([["Landing not authorized."]]),
+      _([["Landing denied."]]),
    }
 end
 
 local function msg_granted_def ()
-   return {
+   local msg_def = {
       _([["Permission to land granted."]]),
       _([["You are clear to land."]]),
       _([["Proceed to land."]]),
       _([["Landing authorized."]]),
    }
+
+   local fct = mem.spob:faction()
+   if fct == f_empire then
+      return {
+         _([["Paperwork approved. Landing authorized."]]),
+         _([["Landing papers in order. Proceed to land."]]),
+         _([["Landing authorization accredited."]]),
+      }
+   elseif fct == f_zalek then
+      return {
+         _([["CONTROL DRONE AUTHORIZING LANDING."]]),
+         _([["LANDING ALGORITHM INITIALIZED. PROCEED TO LANDING PAD."]]),
+         _([["INITIALIZING LANDING PROCEDURE. AUTHORIZATION GRANTED."]]),
+      }
+   elseif fct == f_soromid then
+      return {
+         _([["Welcome Wanderer. Proceed to land."]]),
+         _([["Landing sanctioned, continue to ship nests."]]),
+         _([["Greetings Traveller. Land at free ship nest."]]),
+      }
+   elseif fct == f_sirius then
+      return {
+         _([["Landing authorized. May Sirichana guide you."]]),
+         fmt.f(_([["You are clear to land. Proceed to landing chamber {num}."]]), {num=rnd.rnd(1,100)}),
+         _([["Landing accepted. Welcome to Sirichana's domain."]]),
+      }
+   elseif fct == f_dvaered then
+      return {
+         _([["Hostilities not detected. Touch down now."]]),
+         _([["Green for landing. No dawdling."]]),
+         _([["Permission granted. Make it swift."]]),
+         _([["Landing authorized. Make sure to power down weapons."]]),
+      }
+   end
+   return msg_def
 end
 
 local function msg_cantbribe_def ()
