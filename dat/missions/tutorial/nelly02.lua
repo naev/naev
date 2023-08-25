@@ -298,7 +298,7 @@ function idle ()
 end
 
 function disable ()
-   player.msg(fmt.f(_([[Nelly: "You disabled it! Now get on top of the ship and board it with {boardkey}!"]]),{boardkey=tut.getKey("board")}),true)
+   player.msg(fmt.f(_([[Nelly: "You disabled it! Now get on top of the ship and board it with {boardkey}!"]]),{boardkey=tut.getKey("approach")}),true)
 end
 
 function board ()
