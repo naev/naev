@@ -2910,8 +2910,28 @@ int map_map( const Outfit *map )
    for (int i=0; i<array_size(map->u.map->systems);i++)
       sys_setFlag(map->u.map->systems[i], SYSTEM_KNOWN);
 
-   for (int i=0; i<array_size(map->u.map->spobs);i++)
-      spob_setKnown(map->u.map->spobs[i]);
+   for (int i=0; i<array_size(map->u.map->spobs);i++) {
+      Spob *spb = map->u.map->spobs[i];
+      spob_setKnown( spb );
+#if DEBUGGING
+      const char *sysname = spob_getSystem( spb->name );
+      if (sysname == NULL)
+         WARN(_("Map '%s' is trying to set spob '%s' as known when it has no system!"), map->name, spb->name );
+      else {
+         int found = 0;
+         for (int j=0; j<array_size(map->u.map->systems);j++) {
+            const StarSystem *ss = map->u.map->systems[j];
+            if (strcmp( ss->name, sysname )==0) {
+               found = 1;
+               break;
+            }
+         }
+         if (!found)
+            WARN(_("Map '%s' is trying to set spob '%s' as known when it is not in the system list! '%s' is in the '%s' system!"),
+                  map->name, spb->name, spb->name, sysname );
+      }
+#endif /* DEBUGGING */
+   }
 
    for (int i=0; i<array_size(map->u.map->jumps);i++)
       jp_setFlag(map->u.map->jumps[i], JP_KNOWN);
@@ -2933,7 +2953,7 @@ int map_isUseless( const Outfit* map )
          return 0;
 
    for (int i=0; i<array_size(map->u.map->spobs);i++) {
-      Spob *p = map->u.map->spobs[i];
+      const Spob *p = map->u.map->spobs[i];
       if (!spob_hasSystem( p ) )
          continue;
       if (!spob_isKnown(p))

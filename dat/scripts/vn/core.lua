@@ -77,6 +77,7 @@ local function _setdefaults()
    vn._default.menu_y = nil
    vn._default._postshader = nil
    vn._default._draw_fg = nil
+   vn._default._draw_mg = nil
    vn._default._draw_bg = nil
    vn._default._updatefunc = nil
    -- Options
@@ -256,6 +257,11 @@ local function _draw()
       graphics.print( vn._title, font, x+bw, y+bh )
    end
 
+   -- Custom Namebox
+   if vn._draw_mg then
+      vn._draw_mg()
+   end
+
    -- Options
    if vn.show_options then
       x = vn.options_x
@@ -275,7 +281,7 @@ local function _draw()
       graphics.setShader()
    end
 
-   -- Draw if necessary
+   -- Draw current state if necessary
    if not vn.isDone() then
       local s = vn._states[ vn._state ]
       s:draw()
@@ -961,12 +967,14 @@ function vn.StateMenu:_init()
    self._tb = tb
    self._b = b
    -- Get longest line
+   local wmin = 300
+   local wmax = 900
    local w = 0
    local h = 0
    self._elem = {}
    for k,v in ipairs(self._items) do
       local text = string.format("#w%d#0. %s", k, v[1])
-      local sw, wrapped = font:getWrap( text, 900 )
+      local sw, wrapped = font:getWrap( text, wmax )
       sw = sw + 2*tb
       local sh =  2*tb + font:getHeight() + font:getLineHeight() * (#wrapped-1)
       local elem = { text, 0, h, sw, sh }
@@ -976,7 +984,7 @@ function vn.StateMenu:_init()
       h = h + sh + b
       self._elem[k] = elem
    end
-   self._w = math.max( w, 300 )
+   self._w = math.max( w, wmin ) -- enforce minimum size
    self._h = h-b
    self._x = (love.w-self._w)/2
    self._y = (love.h-self._h)/2-100
@@ -1018,7 +1026,7 @@ function vn.StateMenu:_draw()
       vn.setColor( col )
       graphics.rectangle( "fill", gx+x, gy+y, w, h )
       vn.setColor( {0.7, 0.7, 0.7} )
-      graphics.print( text, font, gx+x+tb, gy+y+tb )
+      graphics.printf( text, font, gx+x+tb, gy+y+tb, w-tb*2 )
    end
 end
 function vn.StateMenu:_mousepressed( mx, my, button )
@@ -1576,6 +1584,7 @@ function vn.done( ... )
    vn.func( function ()
       vn._globalalpha = 0
       vn._draw_fg = nil
+      vn._draw_mg = nil
       vn._draw_bg = nil
       vn._postshader = nil
       vn._update = nil
@@ -1738,6 +1747,15 @@ Sets the foreground drawing function. Drawn in front the VN stuff.
 --]]
 function vn.setForeground( drawfunc )
    vn._draw_fg = drawfunc
+end
+
+--[[--
+Sets the middle drawing function. Drawn in right in front of the normal "namebox".
+
+   @tparam func drawfunc Function to call to draw the middle or nil to disable.
+--]]
+function vn.setMiddle( drawfunc )
+   vn._draw_mg = drawfunc
 end
 
 --[[--

@@ -308,6 +308,42 @@ function lmisn.getRandomSpobAtDistance( sys, min, max, fct, samefct, filter, dat
 end
 
 --[[--
+Calculates the distance (in pixels) from a position in a system to a position in another system.
+
+   @tparam System origin_sys System to calculate distance from.
+   @tparam Vec2 origin_pos Position to calculate distance from.
+   @tparam System dest_sys Target system to calculate distance to.
+   @tparam Vec2 dest_pos Target position to calculate distance to.
+   @tparam table params Table of parameters. Currently supported are "use_hidden".
+   @return The distance travelled
+   @return The jumpPath leading to the target system
+--]]
+function lmisn.calculateDistance( origin_sys, origin_pos, dest_sys, dest_pos, params )
+   params = params or {}
+   local traveldist = 0
+   local pos = origin_pos
+
+   local jumps = origin_sys:jumpPath( dest_sys, params.use_hidden )
+   if jumps then
+      for k, v in ipairs(jumps) do
+         -- We're not in the destination system yet.
+         -- So, get the next system on the route, and the distance between
+         -- our entry point and the jump point to the next system.
+         -- Then, set the exit jump point as the next entry point.
+         local j, r = jump.get( v:system(), v:dest() )
+         traveldist = traveldist + vec2.dist(pos, j:pos())
+         pos = r:pos()
+      end
+   else
+      jumps = {}
+   end
+
+   -- We ARE in the destination system now, so route from the entry point to the destination planet.
+   traveldist = traveldist + vec2.dist( pos, dest_pos )
+   return traveldist, jumps
+end
+
+--[[--
    Wrapper for player.misnActive that works on a table of missions.
 
    @usage if anyMissionActive( { "Cargo", "Cargo Rush" } ) then -- at least one Cargo or Cargo Rush is active

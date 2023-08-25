@@ -1029,6 +1029,9 @@ static int playerL_land( lua_State *L )
    if (sysname == NULL)
       NLUA_ERROR(L,_("Spob '%s' is not in a system!"), spob->name);
 
+   /* Unboard just in case. */
+   board_unboard();
+
    if (strcmp(sysname,cur_system->name) != 0) {
       /* Refer to playerL_teleport for the voodoo that happens here. */
       pilot_rmFlag( player.p, PILOT_HYPERSPACE );
@@ -2196,6 +2199,9 @@ static int playerL_teleport( lua_State *L )
       NLUA_ERROR( L, _("System '%s' does not exist."), name );
       return 0;
    }
+
+   /* Unboard just in case. */
+   board_unboard();
 
    /* Jump out hook is run first. */
    hooks_run( "jumpout" );

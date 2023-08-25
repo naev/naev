@@ -30,7 +30,7 @@ local love_shaders = require 'love_shaders'
 local der = require "common.derelict"
 local poi = require "common.poi"
 
-local p, broadcastid, hailed_player, second_hail, timerdelay -- Non-persistent state
+local p, broadcastid, hailed_player, second_hail, timerdelay, broadcast_first -- Non-persistent state
 local gen_outfits -- Forward declaration
 
 local trader_name = _("Machiavellian Misi") -- Mireia Sibeko
@@ -109,6 +109,7 @@ function create ()
    misi_outfits = gen_outfits()
 
    -- Set up hooks
+   broadcast_first = false
    timerdelay = 10
    broadcastid = 1
    broadcastmsg = rnd.permutation( broadcastmsg )
@@ -231,10 +232,6 @@ function broadcast ()
 
    -- Cycle through broadcasts
    if broadcastid > #broadcastmsg then broadcastid = 1 end
-   p:broadcast( broadcastmsg[broadcastid], true )
-   broadcastid = broadcastid+1
-   timerdelay = timerdelay * 1.5
-   hook.timer( timerdelay, "broadcast" )
 
    if not hailed_player and not var.peek('travelling_trader_hailed') then
       p:hailPlayer()
@@ -248,11 +245,20 @@ function broadcast ()
       hailed_player = true
       second_hail = true
 
-   elseif newoutfits then
+   end
+
+   if not hailed_player and newoutfits and not broadcast_first then
       -- With new outfits point it out to the player
       p:comm(_("I have new wares you might want to see!"), true)
       player.autonavReset(1)
+      broadcast_first = true
+   else
+      p:broadcast( broadcastmsg[broadcastid], true )
    end
+
+   broadcastid = broadcastid+1
+   timerdelay = timerdelay * 1.5
+   hook.timer( timerdelay, "broadcast" )
 end
 
 function hail ()
@@ -424,8 +430,10 @@ They get uncomfortably close
       end )
       mm(fmt.f(_([["I would be able to provide my special services for, let's say, {cost}, how does that sound?"
 
+{upgrade_desc}
+
 You have {amount}. Pay {cost} for {upgrade}?]]),
-         {amount=poi.data_str(poi.data_get()), cost=poi.data_str(upgrade_cost), upgrade=upgrade} ))
+         {amount=poi.data_str(poi.data_get()), cost=poi.data_str(upgrade_cost), upgrade=upgrade, upgrade_desc=upgrade:summary()} ))
       vn.menu{
          { _("Pay"), s.."_yes" },
          { _("Back"), s.."_no" },
@@ -442,8 +450,10 @@ You have {amount}. Pay {cost} for {upgrade}?]]),
       mm( function ()
          return fmt.f(_([["It seems like I have already upgraded your current ship with {replacement}. Would you like to replace it with {upgrade} for 2 Encrypted Data Matrices?"
 
+{upgrade_desc}
+
 You have {amount}. Pay {cost} for replacing {replacement} with {upgrade}?]]),
-            {amount=poi.data_str(poi.data_get()), cost=poi.data_str(upgrade_cost), upgrade=upgrade, replacement=replacement} )
+            {amount=poi.data_str(poi.data_get()), cost=poi.data_str(upgrade_cost), upgrade=upgrade, replacement=replacement, upgrade_desc=upgrade:summary()} )
       end )
       vn.menu{
          { _("Pay"), s.."_yes" },
@@ -489,6 +499,9 @@ They grab a toolbox and rush over to your boarded ship. You decide not to follow
    mm(_([["Machiavellian Necessity focuses on tweaking your weapon systems to be able to take decisive action when necessary."
 "Machiavellian Fortune will help you minimize the risks of fickleness of fortune."
 "Finally, Machiavellian Virtue will make you a bulwark against unforeseen mishaps."]]))
+   for k,v in pairs(upgrade_list) do
+      mm(v:summary())
+   end
    vn.jump("special")
 
    vn.label("leave")

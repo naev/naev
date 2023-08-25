@@ -5,7 +5,7 @@ function foodbiz.michalspob ()
    if not spb then
       spb = "Zeo"
    end
-   return spob.get(spb)
+   return spob.getS(spb)
 end
 
 return foodbiz

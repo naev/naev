@@ -1,7 +1,6 @@
 -- Thurion faction standing script
 local sbase = require "factions.standing.lib.base"
-
-standing = sbase.newStanding{
+sbase.init{
    fct            = faction.get("Thurion"),
    cap_kill       = 10,
    delta_distress = {-1, 0},    -- Maximum change constraints

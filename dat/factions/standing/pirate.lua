@@ -1,7 +1,6 @@
 -- Pirate faction standing script
 local spir = require "factions.standing.lib.pirate"
-
-standing = spir.newPirateStanding{
+spir.init{
    fct            = faction.get("Pirate"),
    text = {
       [20] = _("Respected"),
@@ -10,6 +9,6 @@ standing = spir.newPirateStanding{
    },
 }
 
-function standing.hit( _self, current, _amount, _source, _secondary )
+function hit( current, _amount, _source, _secondary )
    return current -- Doesn't change through hits
 end

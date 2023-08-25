@@ -115,7 +115,7 @@ function pir_gone ()
    lmisn.sfxVictory()
    player.msg(fmt.f(_("You have cleared the blockade on {spb}!"),{spb=mainspb}))
    player.landAllow( true )
-   diff.apply( "Capricorn Safe" ) -- Removes 'restricted' tag
+   diff.apply( "Durea Safe" ) -- Removes 'restricted' tag
    evt.finish(true)
 end
 
@@ -126,7 +126,7 @@ function comm_durea( commspb )
 
    vn.clear()
    vn.scene()
-   local spb = ccomm.newCharacterSpob( vn, mainspb, false )
+   local spb = ccomm.newCharacterSpob( vn, mainspb )
    vn.transition()
    vn.na(fmt.f(_("You establish a communication channel with the authorities at {spb}."),
       {spb=mainspb}))
