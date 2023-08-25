@@ -61,6 +61,7 @@
       * Custom death animations for many ships
       * More ways to increase fleet capacity
       * The pirate clans are now more differentiated in terms of AI behaviour and taunts
+      * More factional landing messages
    * Engine
       * Map system viewer is more compact
       * Added hook.hail_spob
