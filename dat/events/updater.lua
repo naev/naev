@@ -28,6 +28,7 @@ local function updater0110( _did0100, _did090 )
    -- TODO merge into the AI message for the release
    luatk.msg(_([[Input Change]]),fmt.f(_([[From 0.11.0-alpha.4 and onwards, the 'board' and 'land' keys have been merged into a single one called 'approach'. The 'approach' key defaults to {keybind}, and will first try to board your current target (if applicable), before trying to land on your space target object. Please rebind the key as necessary.]]),
       {keybind=tut.getKey("approach")}))
+   luatk.run()
 
    -- Move some old configuration values to player variables
    -- TODO eliminate around 0.12.0 or so
