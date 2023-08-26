@@ -24,6 +24,12 @@ local function updater0110( _did0100, _did090 )
       end
       var.push( name, v )
    end
+
+   -- TODO merge into the AI message for the release
+   luatk.msg(_([[Input Change]]),fmt.f(_([[From 0.11.0-alpha.4 and onwards, the 'board' and 'land' keys have been merged into a single one called 'approach'. The 'approach' key defaults to {keybind}, and will first try to board your current target (if applicable), before trying to land on your space target object. Please rebind the key as necessary.]]),
+      {keybind=tut.getKey("approach")}))
+   luatk.run()
+
    -- Move some old configuration values to player variables
    -- TODO eliminate around 0.12.0 or so
    set_var( "autonav_reset_shield", conf.autonav_reset_shield, 1 )
@@ -210,7 +216,7 @@ function create ()
       did0100 = true
    end
    -- Run on saves older than 0.10.0
-   if naev.versionTest( save_version, "0.11.0-alpha.3") < 0 then
+   if naev.versionTest( save_version, "0.11.0-alpha.4") < 0 then
       updater0110( did0100, did090 )
       didupdate = true
    end
