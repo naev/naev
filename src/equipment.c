@@ -487,11 +487,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       /* Draw background. */
       bc = *dc;
       bc.a = 0.4;
-      if (i==selected)
-         c = &cGreen;
-      else
-         c = &bc;
-      toolkit_drawRect( x, y, w, h, c, NULL );
+      toolkit_drawRect( x, y, w, h, &bc, NULL );
 
       if (lst[i].outfit != NULL) {
          /* Draw bugger. */
@@ -521,9 +517,10 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       }
 
       /* Draw outline. */
+      if (i==selected)
+         toolkit_drawOutlineThick( x, y, w, h, 3, 5, &cGreen, NULL );
       if (rc != NULL)
          toolkit_drawOutlineThick( x, y, w, h, 1, 3, rc, NULL );
-      // toolkit_drawOutline( x-1, y-1, w+3, h+3, 0, &cBlack, NULL );
       /* Go to next one. */
       y -= h+20;
    }
