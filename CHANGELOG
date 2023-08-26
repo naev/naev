@@ -34,6 +34,7 @@
       * Added volley mode to weapon sets that makes weapons fire as fast as possible, instead of staggered
       * Autonav options are now player-specific and accessible via the info menu settings button
       * Travelling merchant gives full details of the intrinsic outfits they provide
+      * Selected slots in the equipment window will only show outfits that fit
    * New Content
       * New mechanic for House Sirius called flow to unlock psychic powers
          * Gives passive bonuses to Sirius ships
