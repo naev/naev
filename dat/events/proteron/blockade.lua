@@ -3,7 +3,7 @@
 <event name="Proteron Blockade">
  <location>enter</location>
  <chance>100</chance>
- <cond>system.cur() == system.get("Leporis")</cond>
+ <system>Leporis</system>
 </event>
 --]]
 
@@ -36,7 +36,6 @@ local function spawn_fleet( pos )
    end
 
    local plts = {}
-   local stand, _str = faction.get("Proteron"):playerStanding()
    for k,s in ipairs(ships) do
       local leader = plts[1]
       local p = pilot.add( s, "Proteron", pos, nil, {ai="guard"} )
@@ -44,7 +43,6 @@ local function spawn_fleet( pos )
       aimem.enemyclose    = 10e3
       aimem.guarddodist   = 10e3
       aimem.guardreturndist = 15e3
-      p:setHostile(stand<0)
       if leader then
          p:setLeader( leader )
       end
@@ -71,9 +69,14 @@ function create ()
 end
 
 function heartbeat( proteron_blockade )
+   -- If not hostile, ignore
+   if not faction.get("Proteron"):areEnemies( faction.player() ) then
+      return
+   end
+
+   -- Have the first ship that sees the player broadcast
    local pp = player.pilot()
-   local stand, _str = faction.get("Proteron"):playerStanding()
-   for k,p in ipairs(proteron_blockade) and stand < 0 do
+   for k,p in ipairs(proteron_blockade) do
       if p:inrange( pp ) then
          p:broadcast( _("Unknown vessel trying to breach blockade. All ships engage!"), true)
          return
