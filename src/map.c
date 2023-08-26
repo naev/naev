@@ -2651,7 +2651,7 @@ static SysNode *A_gc;
 static SysNode* A_newNode( StarSystem* sys );
 static int A_g( const SysNode* n );
 static double A_d( const SysNode* n );
-static bool A_less( const SysNode *op1, const SysNode *op2 );
+static int A_less( const SysNode *op1, const SysNode *op2 );
 static SysNode* A_add( SysNode *first, SysNode *cur );
 static SysNode* A_rm( SysNode *first, StarSystem *cur );
 static SysNode* A_in( SysNode *first, StarSystem *cur );
@@ -2682,7 +2682,7 @@ static double A_d( const SysNode* n )
    return n->d;
 }
 /** @brief op1 is less than op2. */
-static bool A_less( const SysNode *op1, const SysNode *op2 )
+static int A_less( const SysNode *op1, const SysNode *op2 )
 {
     return (A_g(op1) < A_g(op2)) || (A_g(op1) == A_g(op2) && A_d(op1) < A_d(op2));
 }
