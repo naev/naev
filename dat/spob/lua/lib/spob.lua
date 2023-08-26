@@ -9,6 +9,7 @@ local f_dvaered = faction.get("Dvaered")
 local f_zalek = faction.get("Za'lek")
 local f_sirius = faction.get("Sirius")
 local f_soromid = faction.get("Soromid")
+local f_proteron = faction.get("Proteron")
 
 function luaspob.init( spb, init_params )
    mem.spob = spb
@@ -71,6 +72,13 @@ local function msg_granted_def ()
          _([["Green for landing. No dawdling."]]),
          _([["Permission granted. Make it swift."]]),
          _([["Landing authorized. Make sure to power down weapons."]]),
+      }
+   elseif fct == f_proteron then
+      return {
+         _([["You loyalty to the Circle is noted. Commence landing when ready."]]), -- The landing request implicitly has a declaration of belief in the Circle
+         fmt.f(_([["Landing ID X{num1}-{num2}, you are cleared to land. Follow the rules."]]), {num1=rnd.rnd(0, 9), num2=rnd.rnd(0, 99)}), --ID of an individual land request
+         _([["You may land. Act appropriately while landed."]]), -- A true Proteron would not need to be told, but you are an outsider.
+         _([["We have received your loyalty oath, pilot. You may land."]]), -- Colonel Cathcart smiles down on us
       }
    end
    return msg_def
