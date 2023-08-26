@@ -766,12 +766,6 @@ int conf_saveConfig ( const char* file )
    size_t oldsize;
    char buf[32*1024];
    size_t pos;
-   SDL_Keycode key;
-   char keyname[17];
-   KeybindType type;
-   const char *typename;
-   SDL_Keymod mod;
-   const char *modname;
 
    pos         = 0;
    oldfooter   = NULL;
@@ -1094,11 +1088,18 @@ int conf_saveConfig ( const char* file )
    conf_saveComment(_("Keybindings"));
    conf_saveEmptyLine();
 
-   /* Use an extra character in keyname to make sure it's always zero-terminated */
-   keyname[sizeof(keyname)-1] = '\0';
-
    /* Iterate over the keybinding names */
    for (int i=0; keybind_info[i][0] != NULL; i++) {
+      SDL_Keycode key;
+      KeybindType type;
+      const char *typename;
+      SDL_Keymod mod;
+      const char *modname;
+      char keyname[17];
+
+      /* Use an extra character in keyname to make sure it's always zero-terminated */
+      keyname[sizeof(keyname)-1] = '\0';
+
       /* Save a comment line containing the description */
       conf_saveComment(input_getKeybindDescription( keybind_info[i][0] ));
 

@@ -487,11 +487,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       /* Draw background. */
       bc = *dc;
       bc.a = 0.4;
-      if (i==selected)
-         c = &cGreen;
-      else
-         c = &bc;
-      toolkit_drawRect( x, y, w, h, c, NULL );
+      toolkit_drawRect( x, y, w, h, &bc, NULL );
 
       if (lst[i].outfit != NULL) {
          /* Draw bugger. */
@@ -521,9 +517,10 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       }
 
       /* Draw outline. */
+      if (i==selected)
+         toolkit_drawOutlineThick( x, y, w, h, 3, 5, &cGreen, NULL );
       if (rc != NULL)
          toolkit_drawOutlineThick( x, y, w, h, 1, 3, rc, NULL );
-      // toolkit_drawOutline( x-1, y-1, w+3, h+3, 0, &cBlack, NULL );
       /* Go to next one. */
       y -= h+20;
    }
@@ -592,27 +589,27 @@ static void equipment_renderSlots( double bx, double by, double bw, double bh, v
    equipment_calculateSlots( p, bw, bh, &w, &h, &n, &m );
    tw = bw / (double)n;
 
-   /* Draw weapon outfits. */
-   x  = bx + (tw-w)/2;
+   /* Draw structure outfits. */
+   x  = bx + (tw-w)/2 + 2*tw;
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderColumn( x, y, w, h,
-         p->outfit_weapon, _("Weapon"),
+         p->outfit_structure, _("Structure"),
          selected, wgt->outfit, p, wgt );
 
    /* Draw systems outfits. */
-   selected -= array_size(p->outfit_weapon);
-   x += tw;
+   selected -= array_size(p->outfit_structure);
+   x -= tw;
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderColumn( x, y, w, h,
          p->outfit_utility, _("Utility"),
          selected, wgt->outfit, p, wgt );
 
-   /* Draw structure outfits. */
+   /* Draw weapon outfits. */
    selected -= array_size(p->outfit_utility);
-   x += tw;
+   x -= tw;
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderColumn( x, y, w, h,
-         p->outfit_structure, _("Structure"),
+         p->outfit_weapon, _("Weapon"),
          selected, wgt->outfit, p, wgt );
 }
 /**
@@ -803,7 +800,6 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    int pos;
    const Outfit *o;
    CstSlotWidget *wgt;
-   size_t slen;
 
    /* Get data. */
    wgt = (CstSlotWidget*) data;
@@ -819,33 +815,27 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    mover    = wgt->mouseover;
 
    /* Render weapon outfits. */
-   x  = bx + (tw-w)/2;
+   x  = bx + (tw-w)/2 + 2*tw;
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderOverlayColumn( x, y, h,
-         p->outfit_weapon, mover, wgt );
-   mover    -= array_size(p->outfit_weapon);
-   x += tw;
+         p->outfit_structure, mover, wgt );
+   mover    -= array_size(p->outfit_structure);
+   x -= tw;
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderOverlayColumn( x, y, h,
          p->outfit_utility, mover, wgt );
    mover    -= array_size(p->outfit_utility);
-   x += tw;
+   x -= tw;
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderOverlayColumn( x, y, h,
-         p->outfit_structure, mover, wgt );
+         p->outfit_weapon, mover, wgt );
 
    /* Mouse must be over something. */
    if (wgt->mouseover < 0)
       return;
 
    /* Get the slot. */
-   if (wgt->mouseover < array_size(p->outfit_weapon))
-      slot = &p->outfit_weapon[wgt->mouseover];
-   else if (wgt->mouseover < array_size(p->outfit_weapon) + array_size(p->outfit_utility))
-      slot = &p->outfit_utility[ wgt->mouseover - array_size(p->outfit_weapon) ];
-   else
-      slot = &p->outfit_structure[ wgt->mouseover -
-         array_size(p->outfit_weapon) - array_size(p->outfit_utility) ];
+   slot = p->outfits[wgt->mouseover];
 
    /* For comfortability. */
    o = slot->outfit;
@@ -879,7 +869,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
 
    /* Display temporary bonuses. */
    if (slot->lua_mem != LUA_NOREF) {
-      slen = strlen(alt);
+      size_t slen = strlen(alt);
       ss_statsListDesc( slot->lua_stats, &alt[slen], sizeof(alt)-slen, 1 );
    }
 
@@ -1023,8 +1013,14 @@ static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
    if (event->type == SDL_MOUSEBUTTONDOWN) {
       /* Normal mouse usage. */
       if (wgt->weapons < 0) {
-         if (event->button.button == SDL_BUTTON_LEFT)
-            wgt->slot = selected + ret;
+         if (event->button.button == SDL_BUTTON_LEFT) {
+            int sel = selected + ret;
+            if (wgt->slot==sel)
+               wgt->slot = -1;
+            else
+               wgt->slot = sel;
+            equipment_regenLists( wid, 1, 0 );
+         }
          else if ((event->button.button == SDL_BUTTON_RIGHT) &&
                wgt->canmodify && !os[ret].sslot->locked) {
             equipment_swapSlot( wid, p, &os[ret] );
@@ -1128,18 +1124,18 @@ static int equipment_mouseSlots( unsigned int wid, SDL_Event* event,
    equipment_calculateSlots( p, bw, bh, &w, &h, &n, &m );
    tw = bw / (double)n;
 
-   /* Render weapon outfits. */
+   /* Go over each column and pass mouse event. */
    selected = 0;
-   x  = (tw-w)/2;
+   x  = (tw-w)/2 + 2*tw;
    y  = bh - (h+20) + (h+20-h)/2 - 10;
    if ((mx > x-10) && (mx < x+w+10)) {
       int ret = equipment_mouseColumn( wid, event, mx, my, y, h,
-            p->outfit_weapon, p, selected, wgt );
+            p->outfit_structure, p, selected, wgt );
       if (ret)
          return !!(event->type == SDL_MOUSEBUTTONDOWN);
    }
-   selected += array_size(p->outfit_weapon);
-   x += tw;
+   selected += array_size(p->outfit_structure);
+   x -= tw;
    if ((mx > x-10) && (mx < x+w+10)) {
       int ret = equipment_mouseColumn( wid, event, mx, my, y, h,
             p->outfit_utility, p, selected, wgt );
@@ -1147,10 +1143,10 @@ static int equipment_mouseSlots( unsigned int wid, SDL_Event* event,
          return !!(event->type == SDL_MOUSEBUTTONDOWN);
    }
    selected += array_size(p->outfit_utility);
-   x += tw;
+   x -= tw;
    if ((mx > x-10) && (mx < x+w+10)) {
       int ret = equipment_mouseColumn( wid, event, mx, my, y, h,
-            p->outfit_structure, p, selected, wgt );
+            p->outfit_weapon, p, selected, wgt );
       if (ret)
          return !!(event->type == SDL_MOUSEBUTTONDOWN);
    }
@@ -1417,15 +1413,8 @@ static void equipment_toggleDeploy( unsigned int wid, const char *wgt )
  */
 static void equipment_genLists( unsigned int wid )
 {
-   /* Ship list. */
    equipment_genShipList( wid );
-
-   /* Outfit list. */
    equipment_genOutfitList( wid );
-
-   /* Update window. */
-   equipment_updateOutfits(wid, NULL);
-   equipment_updateShips(wid, NULL);
 }
 
 /**
@@ -1519,12 +1508,22 @@ static void equipment_genShipList( unsigned int wid )
          sw, sh, EQUIPMENT_SHIPS, iconsize, iconsize,
          cships, nships, equipment_updateShips, equipment_rightClickShips, equipment_transChangeShip );
    toolkit_setImageArrayAccept( wid, EQUIPMENT_SHIPS, equipment_transChangeShip );
+
+   equipment_updateShips(wid, NULL);
 }
 
 static int equipment_filter( const Outfit *o ) {
-   Pilot *p;
+   Pilot *p = (eq_wgt.selected==NULL) ? NULL : eq_wgt.selected->p;
    const PlayerShip_t *ps;
 
+   /* Filter only those that fit slot. */
+   if ((p!=NULL) && (eq_wgt.slot >= 0)) {
+      const PilotOutfitSlot *pos = p->outfits[ eq_wgt.slot ];
+      if (!outfit_fitsSlot( o, &pos->sslot->slot ))
+         return 0;
+   }
+
+   /* Standard filtering. */
    switch (equipment_outfitMode) {
       case 0:
          return 1;
@@ -1532,18 +1531,15 @@ static int equipment_filter( const Outfit *o ) {
       case 1: /* Fits any ship of the player. */
          ps = player_getShipStack();
          for (int j=0; j < array_size(ps); j++) {
-            p = ps[j].p;
-            for (int i=0; i < array_size(p->outfits); i++) {
-               if (outfit_fitsSlot( o, &p->outfits[i]->sslot->slot ))
+            const Pilot *pp = ps[j].p;
+            for (int i=0; i < array_size(pp->outfits); i++) {
+               if (outfit_fitsSlot( o, &pp->outfits[i]->sslot->slot ))
                   return 1;
             }
          }
          return 0;
 
       case 2: /* Fits currently selected ship. */
-         if (eq_wgt.selected==NULL)
-            return 1;
-         p = eq_wgt.selected->p;
          if (p==NULL)
             return 1;
          for (int i=0; i < array_size(p->outfits); i++) {
@@ -1679,6 +1675,8 @@ static void equipment_genOutfitList( unsigned int wid )
          equipment_rightClickOutfits );
 
    toolkit_setImageArrayAccept( wid, EQUIPMENT_OUTFITS, equipment_rightClickOutfits );
+
+   equipment_updateOutfits(wid, NULL);
 }
 
 /**

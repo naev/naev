@@ -65,7 +65,6 @@ const char *keybind_info[][3] = {
    /* Fighting */
    { "primary", N_("Fire Primary Weapon"), N_("Fires primary weapons.") },
    { "face", N_("Face Target"), N_("Faces the targeted ship if one is targeted, otherwise faces targeted spob or jump point.") },
-   { "board", N_("Board Target"), N_("Attempts to board the targeted ship.") },
    /* Secondary Weapons */
    { "secondary", N_("Fire Secondary Weapon"), N_("Fires secondary weapons.") },
    { "weapset1", N_("Weapon Set 1"), N_("Activates weapon set 1.") },
@@ -87,8 +86,8 @@ const char *keybind_info[][3] = {
    { "e_clear", N_("Escort Clear Commands"), N_("Clears your escorts of commands.") },
    /* Space Navigation */
    { "autonav", N_("Autonavigation On"), N_("Initializes the autonavigation system.") },
-   { "target_spob", N_("Target Spob"), N_("Cycles through spob targets.") },
-   { "land", N_("Land"), N_("Attempts to land on the targeted spob or targets the nearest landable spob. Requests permission if necessary.") },
+   { "target_spob", N_("Target Spob"), N_("Cycles through space object targets.") },
+   { "approach", N_("Approach"), N_("Attempts to approach the targeted ship or space object, or targets the nearest landable space object. Requests landing permission if necessary. Prioritizes ships over space objects.") },
    { "thyperspace", N_("Target Jumpgate"), N_("Cycles through jump points.") },
    { "starmap", N_("Star Map"), N_("Opens the star map.") },
    { "jump", N_("Initiate Jump"), N_("Attempts to jump via a jump point.") },
@@ -216,7 +215,6 @@ void input_setDefault ( int wasd )
    else
       input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, NMOD_ANY );
 
-   input_setKeybind( "board", KEYBIND_KEYBOARD, SDLK_b, NMOD_NONE );
    /* Secondary Weapons */
    input_setKeybind( "secondary", KEYBIND_KEYBOARD, SDLK_LSHIFT, NMOD_ANY );
    input_setKeybind( "weapset1", KEYBIND_KEYBOARD, SDLK_1, NMOD_ANY );
@@ -239,7 +237,7 @@ void input_setDefault ( int wasd )
    /* Space Navigation */
    input_setKeybind( "autonav", KEYBIND_KEYBOARD, SDLK_j, NMOD_CTRL );
    input_setKeybind( "target_spob", KEYBIND_KEYBOARD, SDLK_p, NMOD_NONE );
-   input_setKeybind( "land", KEYBIND_KEYBOARD, SDLK_l, NMOD_NONE );
+   input_setKeybind( "approach", KEYBIND_KEYBOARD, SDLK_l, NMOD_NONE );
    input_setKeybind( "thyperspace", KEYBIND_KEYBOARD, SDLK_h, NMOD_NONE );
    input_setKeybind( "starmap", KEYBIND_KEYBOARD, SDLK_m, NMOD_NONE );
    input_setKeybind( "jump", KEYBIND_KEYBOARD, SDLK_j, NMOD_NONE );
@@ -839,14 +837,6 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (INGAME() && NODEAD() && KEY("target_clear")) {
       if (value==KEY_PRESS) player_targetClear();
 
-   /* board them ships */
-   } else if (KEY("board") && INGAME() && NOHYP() && NODEAD() && !repeat) {
-      if (value==KEY_PRESS) {
-         player_restoreControl( 0, NULL );
-         if (player_tryBoard(0) ==  PLAYER_BOARD_RETRY)
-            player_board();
-      }
-
    /*
     * Escorts.
     */
@@ -913,14 +903,20 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (KEY("target_spob") && INGAME() && NOHYP() && NOLAND() && NODEAD()) {
       if (value==KEY_PRESS) player_targetSpob();
    /* target nearest spob or attempt to land */
-   } else if (KEY("land") && INGAME() && NOHYP() && NOLAND() && NODEAD()) {
+   } else if (KEY("approach") && INGAME() && NOHYP() && NOLAND() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) {
-         if (player.p->nav_spob != -1) {
-            if (player_land(0) == PLAYER_LAND_AGAIN) {
-               player_autonavSpob( cur_system->spobs[player.p->nav_spob]->name, 1 );
-            }
-         } else
-            player_land(1);
+         player_restoreControl( 0, NULL );
+         int board_status = player_tryBoard(0);
+         if (board_status == PLAYER_BOARD_RETRY)
+            player_board();
+         else {
+            if (player.p->nav_spob != -1) {
+               if (player_land(0) == PLAYER_LAND_AGAIN) {
+                  player_autonavSpob( cur_system->spobs[player.p->nav_spob]->name, 1 );
+               }
+            } else
+               player_land(1);
+         }
       }
    } else if (KEY("thyperspace") && NOHYP() && NOLAND() && NODEAD()) {
       if (value==KEY_PRESS) player_targetHyperspace();
