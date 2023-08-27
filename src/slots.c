@@ -29,6 +29,7 @@ typedef struct SlotProperty_s {
    int required;     /**< Required slot property. */
    int exclusive;    /**< Exclusive slot property. */
    int locked;       /**< Locked and not modifyable by the player. */
+   glTexture *icon;  /**< Texture to use for the slot. */
 } SlotProperty_t;
 
 static SlotProperty_t *sp_array = NULL; /**< Slot property array. */
@@ -86,6 +87,13 @@ int sp_load (void)
             sp->locked = 1;
             continue;
          }
+         if (xml_isNode( cur, "icon" )) {
+            char path[STRMAX_SHORT];
+            snprintf( path, sizeof(path), "gfx/slots/%s", xml_get(cur) );
+            sp->icon = xml_parseTexture( cur, path, 1, 1, 0 );
+            continue;
+         }
+
 
          WARN(_("Slot Property '%s' has unknown node '%s'."), node->name, cur->name);
       } while (xml_nextNode(cur));
@@ -110,6 +118,7 @@ void sp_cleanup (void)
       free( sp->name );
       free( sp->display );
       free( sp->description );
+      gl_freeTexture( sp->icon );
    }
    array_free( sp_array );
    sp_array = NULL;
@@ -192,4 +201,14 @@ int sp_locked( unsigned int spid )
    if (sp_check(spid))
       return 0;
    return sp_array[ spid-1 ].locked;
+}
+
+/**
+ * @brief Gets the icon associated with the slot.
+ */
+const glTexture * sp_icon( unsigned int spid )
+{
+   if (sp_check(spid))
+      return 0;
+   return sp_array[ spid-1 ].icon;
 }

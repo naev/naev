@@ -242,7 +242,12 @@ static void iar_render( Widget* iar, double bx, double by )
          }
 
          /* Slot type. */
-         if (cell->slottype != NULL) {
+         if (cell->sloticon != NULL) {
+            gl_renderScaleAspect( cell->sloticon,
+                  xcurs + iar->dat.iar.iw - 10., ycurs + iar->dat.iar.ih + 2.,
+                  15., 15., NULL );
+         }
+         else if (cell->slottype != NULL) {
             /* Slot size letter. */
             gl_printMaxRaw( &gl_smallFont, iar->dat.iar.iw,
                   xcurs + iar->dat.iar.iw - 10., ycurs + iar->dat.iar.ih + 4.,
