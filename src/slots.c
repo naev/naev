@@ -90,7 +90,7 @@ int sp_load (void)
          if (xml_isNode( cur, "icon" )) {
             char path[STRMAX_SHORT];
             snprintf( path, sizeof(path), "gfx/slots/%s", xml_get(cur) );
-            sp->icon = xml_parseTexture( cur, path, 1, 1, 0 );
+            sp->icon = xml_parseTexture( cur, path, 1, 1, OPENGL_TEX_SDF );
             continue;
          }
 

@@ -243,9 +243,15 @@ static void iar_render( Widget* iar, double bx, double by )
 
          /* Slot type. */
          if (cell->sloticon != NULL) {
-            gl_renderScaleAspect( cell->sloticon,
-                  xcurs + iar->dat.iar.iw - 10., ycurs + iar->dat.iar.ih + 2.,
-                  15., 15., NULL );
+            double sw = 15.;
+            double sh = 15.;
+            double sx = xcurs + iar->dat.iar.iw - 10.;
+            double sy = ycurs + iar->dat.iar.ih + 2.;
+
+            if (cell->sloticon->flags & OPENGL_TEX_SDF)
+               gl_renderSDF( cell->sloticon, sx, sy, sw, sh, &cWhite, 0., 1. );
+            else
+               gl_renderScaleAspect( cell->sloticon, sx, sy, sw, sh, NULL );
          }
          else if (cell->slottype != NULL) {
             /* Slot size letter. */

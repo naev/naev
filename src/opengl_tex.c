@@ -147,7 +147,7 @@ static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h, int tight )
       /* Check each pixel individually. */
       for (int i=0; i<h; i++)
          for (int j=0; j<w; j++) /* sets each bit to be 1 if not transparent or 0 if is */
-            t[i*w+j] |= SDL_IsTrans(s,j,i);
+            t[i*w+j] |= !SDL_IsTrans(s,j,i); /* Flipped with tight version, this is not good :/ */
    }
 
    return t;
@@ -304,6 +304,9 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
       free( trans );
       glTexImage2D( GL_TEXTURE_2D, 0, GL_RED, surface->w, surface->h, 0, GL_RED, GL_FLOAT, dataf );
       free( dataf );
+
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
    }
    else {
       glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch&-surface->pitch, 8 ) );
