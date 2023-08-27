@@ -15,6 +15,7 @@
 #include "naev.h"
 /** @endcond */
 
+#include "distance_field.h"
 #include "array.h"
 #include "conf.h"
 #include "gui.h"
@@ -48,7 +49,7 @@ static glTexList* texture_list = NULL; /**< Texture list. */
  */
 /* misc */
 static int SDL_IsTrans( SDL_Surface* s, int x, int y );
-static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h );
+static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h, int tight );
 static size_t gl_transSize( const int w, const int h );
 /* glTexture */
 static GLuint gl_texParameters( unsigned int flags );
@@ -113,11 +114,11 @@ static int SDL_IsTrans( SDL_Surface* s, int x, int y )
  *    @param s Surface to map it's transparency.
  *    @param w Width to map.
  *    @param h Height to map.
+ *    @param tight Whether or not to store transparency per bit or
  *    @return 0 on success.
  */
-static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h )
+static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h, int tight )
 {
-   size_t size;
    uint8_t *t;
 
    /* Get limit.s */
@@ -126,19 +127,28 @@ static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h )
    if (h < 0)
       h = s->h;
 
-   /* alloc memory for just enough bits to hold all the data we need */
-   size = gl_transSize(w, h);
-   t = malloc(size);
-   if (t==NULL) {
-      WARN(_("Out of Memory"));
-      return NULL;
-   }
-   memset(t, 0, size); /* important, must be set to zero */
+   if (tight) {
+      /* alloc memory for just enough bits to hold all the data we need */
+      size_t size = gl_transSize(w, h);
+      t = malloc(size);
+      if (t==NULL) {
+         WARN(_("Out of Memory"));
+         return NULL;
+      }
+      memset(t, 0, size); /* important, must be set to zero */
 
-   /* Check each pixel individually. */
-   for (int i=0; i<h; i++)
-      for (int j=0; j<w; j++) /* sets each bit to be 1 if not transparent or 0 if is */
-         t[(i*w+j)/8] |= (SDL_IsTrans(s,j,i)) ? 0 : (1<<((i*w+j)%8));
+      /* Check each pixel individually. */
+      for (int i=0; i<h; i++)
+         for (int j=0; j<w; j++) /* sets each bit to be 1 if not transparent or 0 if is */
+            t[(i*w+j)/8] |= (SDL_IsTrans(s,j,i)) ? 0 : (1<<((i*w+j)%8));
+   }
+   else {
+      t = malloc( w*h );
+      /* Check each pixel individually. */
+      for (int i=0; i<h; i++)
+         for (int j=0; j<w; j++) /* sets each bit to be 1 if not transparent or 0 if is */
+            t[i*w+j] |= SDL_IsTrans(s,j,i);
+   }
 
    return t;
 }
@@ -287,9 +297,19 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
 
    /* now load the texture data up */
    SDL_LockSurface( surface );
-   glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch&-surface->pitch, 8 ) );
-   glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
-         surface->w, surface->h, 0, surface->format->Amask ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, surface->pixels );
+   if (flags & OPENGL_TEX_SDF) {
+      double vmax;
+      uint8_t *trans = SDL_MapTrans( surface, surface->w, surface->h, 0 );
+      GLfloat *dataf = make_distance_mapbf( trans, surface->w, surface->h, &vmax );
+      free( trans );
+      glTexImage2D( GL_TEXTURE_2D, 0, GL_RED, surface->w, surface->h, 0, GL_RED, GL_FLOAT, dataf );
+      free( dataf );
+   }
+   else {
+      glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch&-surface->pitch, 8 ) );
+      glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
+            surface->w, surface->h, 0, surface->format->Amask ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, surface->pixels );
+   }
    SDL_UnlockSurface( surface );
 
    /* Create mipmaps. */
@@ -407,7 +427,7 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
 
    if (trans == NULL) {
       SDL_LockSurface(surface);
-      trans = SDL_MapTrans( surface, w, h );
+      trans = SDL_MapTrans( surface, w, h, 1 );
       SDL_UnlockSurface(surface);
 
       if (cachefile != NULL) {
@@ -645,7 +665,6 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
  */
 static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, unsigned int flags )
 {
-   glTexture *texture;
    SDL_Surface *surface;
 
    /* Placeholder for warnings. */
@@ -665,11 +684,8 @@ static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, unsigne
    }
 
    if (flags & OPENGL_TEX_MAPTRANS)
-      texture = gl_loadImagePadTrans( path, surface, rw, flags, surface->w, surface->h, 1, 1, 1 );
-   else
-      texture = gl_loadImagePad( path, surface, flags, surface->w, surface->h, 1, 1, 1 );
-
-   return texture;
+      return gl_loadImagePadTrans( path, surface, rw, flags, surface->w, surface->h, 1, 1, 1 );
+   return gl_loadImagePad( path, surface, flags, surface->w, surface->h, 1, 1, 1 );
 }
 
 /**
