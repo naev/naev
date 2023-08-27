@@ -887,25 +887,6 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
 }
 
 /**
- * @brief Copy a texture array.
- */
-glTexture** gl_copyTexArray( glTexture **tex, int *n )
-{
-   glTexture **t;
-
-   if (array_size(tex) == 0) {
-      *n = 0;
-      return NULL;
-   }
-
-   t = malloc( array_size(tex) * sizeof(glTexture*) );
-   for (int i=0; i<array_size(tex); i++)
-      t[i] = gl_dupTexture( tex[i] );
-   *n = array_size(tex);
-   return t;
-}
-
-/**
  * @brief Initializes the opengl texture subsystem.
  *
  *    @return 0 on success.
@@ -929,19 +910,29 @@ void gl_exitTextures (void)
 }
 
 /**
+ * @brief Copy a texture array.
+ */
+glTexture** gl_copyTexArray( glTexture **tex )
+{
+   glTexture **t;
+   int n = array_size(tex);
+
+   if (n <= 0)
+      return NULL;
+
+   t = array_create_size( glTexture*, n );
+   for (int i=0; i<array_size(tex); i++)
+      array_push_back( &t, gl_dupTexture( tex[i] ) );
+   return t;
+}
+
+/**
  * @brief Adds an element to a texture array.
  */
-glTexture** gl_addTexArray( glTexture **tex, int *n, glTexture *t )
+glTexture** gl_addTexArray( glTexture **tex, glTexture *t )
 {
-   if (tex==NULL) {
-      tex = malloc( sizeof(glTexture*) );
-      tex[0] = t;
-      *n = 1;
-      return tex;
-   }
-
-   *n += 1;
-   tex = realloc( tex, (*n)*sizeof(glTexture*) );
-   tex[*n-1] = t;
+   if (tex==NULL)
+      tex = array_create_size( glTexture*, 1 );
+   array_push_back( &tex, t );
    return tex;
 }

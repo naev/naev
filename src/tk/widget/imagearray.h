@@ -16,7 +16,6 @@ typedef struct ImageArrayCell_ {
    char *slottype; /**< Type of slot. */
    /* Additional layers can be set if needed. */
    glTexture** layers; /**< Layers to be added. */
-   int nlayers; /**< Total number of layers. */
 } ImageArrayCell;
 
 /**

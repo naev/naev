@@ -737,10 +737,10 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits, 
          }
 
          /* Layers. */
-         coutfits[i].layers = gl_copyTexArray( o->gfx_overlays, &coutfits[i].nlayers );
+         coutfits[i].layers = gl_copyTexArray( o->gfx_overlays );
          if (o->rarity > 0) {
             t = rarity_texture( o->rarity );
-            coutfits[i].layers = gl_addTexArray( coutfits[i].layers, &coutfits[i].nlayers, t );
+            coutfits[i].layers = gl_addTexArray( coutfits[i].layers, t );
          }
       }
    }

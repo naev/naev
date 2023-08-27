@@ -10,6 +10,7 @@
 #include <stdlib.h>
 /** @endcond */
 
+#include "array.h"
 #include "nstring.h"
 #include "opengl.h"
 #include "tk/toolkit_priv.h"
@@ -219,7 +220,7 @@ static void iar_render( Widget* iar, double bx, double by )
                   iar->dat.iar.iw, iar->dat.iar.ih, NULL );
 
          /* layers */
-         for (int k=0; k<cell->nlayers; k++) {
+         for (int k=0; k<array_size(cell->layers); k++) {
 
             if (cell->layers[k] != NULL)
                gl_renderScaleAspect( cell->layers[k],
@@ -502,9 +503,9 @@ static void iar_cleanup( Widget* iar )
       free( cell->alt );
       free( cell->slottype );
 
-      for (int j=0; j<cell->nlayers; j++)
+      for (int j=0; j<array_size(cell->layers); j++)
          gl_freeTexture( cell->layers[j] );
-      free( cell->layers );
+      array_free( cell->layers );
    }
    free( iar->dat.iar.images );
 }

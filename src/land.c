@@ -423,12 +423,12 @@ static int bar_genList( unsigned int wid )
          p->caption = strdup( npc_getName(i) );
          if (bg!=NULL) {
             p->image = gl_dupTexture( bg );
-            p->layers = gl_addTexArray( p->layers, &p->nlayers, gl_dupTexture( npc_getTexture(i) ) );
+            p->layers = gl_addTexArray( p->layers, gl_dupTexture( npc_getTexture(i) ) );
          }
          else
             p->image = gl_dupTexture( npc_getTexture(i) );
          if (npc_isImportant(i))
-            p->layers = gl_addTexArray( p->layers, &p->nlayers, gl_newImage( OVERLAY_GFX_PATH"portrait_exclamation.webp", 0 ) );
+            p->layers = gl_addTexArray( p->layers, gl_newImage( OVERLAY_GFX_PATH"portrait_exclamation.webp", 0 ) );
       }
    }
    window_addImageArray( wid, 20, -40,
