@@ -463,17 +463,14 @@ static int iar_mmove( Widget* iar, int x, int y, int rx, int ry )
 {
    (void) rx;
    (void) ry;
-   double hmax;
 
    /* Update mouse position. */
    iar->dat.iar.mx = x;
    iar->dat.iar.my = y;
 
    if (iar->status == WIDGET_STATUS_SCROLLING) {
-
+      double hmax = iar_maxPos( iar );
       y = CLAMP( 15, iar->h - 15., iar->h - y );
-
-      hmax = iar_maxPos( iar );
       iar->dat.iar.pos = (y - 15.) * hmax / (iar->h - 30.);
 
       /* Does boundary checks. */
@@ -498,18 +495,16 @@ static int iar_mmove( Widget* iar, int x, int y, int rx, int ry )
  */
 static void iar_cleanup( Widget* iar )
 {
-   if (iar->dat.iar.nelements > 0) { /* Free each text individually */
-      for (int i=0; i<iar->dat.iar.nelements; i++) {
-         ImageArrayCell *cell = &iar->dat.iar.images[i];
-         gl_freeTexture( cell->image );
-         free( cell->caption );
-         free( cell->alt );
-         free( cell->slottype );
+   for (int i=0; i<iar->dat.iar.nelements; i++) {
+      ImageArrayCell *cell = &iar->dat.iar.images[i];
+      gl_freeTexture( cell->image );
+      free( cell->caption );
+      free( cell->alt );
+      free( cell->slottype );
 
-         for (int j=0; j<cell->nlayers; j++)
-            gl_freeTexture( cell->layers[j] );
-         free( cell->layers );
-      }
+      for (int j=0; j<cell->nlayers; j++)
+         gl_freeTexture( cell->layers[j] );
+      free( cell->layers );
    }
    free( iar->dat.iar.images );
 }
@@ -603,12 +598,8 @@ static int iar_focusImage( Widget* iar, double bx, double by )
  */
 static void iar_focus( Widget* iar, double bx, double by )
 {
-   double y;
-   double scroll_pos, hmax;
-   int selected;
-
    /* Test for item click. */
-   selected = iar_focusImage( iar, bx, by );
+   int selected = iar_focusImage( iar, bx, by );
    if (selected >= 0) {
       iar->dat.iar.selected = selected;
       if (iar->dat.iar.fptr != NULL)
@@ -616,6 +607,7 @@ static void iar_focus( Widget* iar, double bx, double by )
    }
    /* Scrollbar click. */
    else if (bx > iar->w - 10.) {
+      double scroll_pos, hmax, y;
       /* Get bar position (center). */
       hmax = iar_maxPos( iar );
       if (hmax == 0.)
