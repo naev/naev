@@ -147,7 +147,7 @@ static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h, int tight )
       /* Check each pixel individually. */
       for (int i=0; i<h; i++)
          for (int j=0; j<w; j++) /* sets each bit to be 1 if not transparent or 0 if is */
-            t[i*w+j] |= !SDL_IsTrans(s,j,i); /* Flipped with tight version, this is not good :/ */
+            t[i*w+j] |= SDL_IsTrans(s,j,i); /* Flipped with tight version, this is not good :/ */
    }
 
    return t;
