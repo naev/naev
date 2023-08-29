@@ -1021,7 +1021,7 @@ void map_system_buyCommodPrice( unsigned int wid, const char *str )
       njumps = 0;
    }
    else {
-      syslist=map_getJumpPath( cur_system->name, cur_sys_sel->name, 1, 0, NULL);
+      syslist=map_getJumpPath( cur_system->name, NULL, cur_sys_sel->name, 1, 0, NULL, NULL);
       if ( syslist == NULL ) {
          /* no route */
          dialogue_msg( _("Unavailable"), _("Commodity prices for %s are not available here at the moment."), _(cur_spobObj_sel->name) );

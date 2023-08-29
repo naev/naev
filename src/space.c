@@ -848,7 +848,7 @@ int space_sysReallyReachable( const char* sysname )
 
    if (strcmp(sysname,cur_system->name)==0)
       return 1;
-   path = map_getJumpPath( cur_system->name, sysname, 1, 1, NULL );
+   path = map_getJumpPath( cur_system->name, NULL, sysname, 1, 1, NULL, NULL );
    if (path != NULL) {
       array_free(path);
       return 1;

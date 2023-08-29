@@ -487,7 +487,7 @@ static int systemL_jumpdistance( lua_State *L )
       return 1;
    }
 
-   s = map_getJumpPath( start, goal, k, h, NULL );
+   s = map_getJumpPath( start, NULL, goal, k, h, NULL, NULL );
    if (s==NULL) {
       lua_pushnumber(L, HUGE_VAL);
       return 1;
@@ -535,7 +535,7 @@ static int systemL_jumpPath( lua_State *L )
    sysp  = luaL_validsystem(L,2);
    goal  = sysp->name;
 
-   s = map_getJumpPath( start, goal, 1, h, NULL );
+   s = map_getJumpPath( start, NULL, goal, 1, h, NULL, NULL );
    if (s == NULL)
       return 0;
 
