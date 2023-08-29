@@ -949,10 +949,10 @@ static void equipment_renderShip( double bx, double by,
    }
 #endif /* DEBUGGING */
 
-   if ((eq_wgt.slot >= 0) && (eq_wgt.slot < array_size(p->outfit_weapon))) {
+   if ((eq_wgt.slot >= 0) && p->outfits[eq_wgt.slot]->sslot->slot.type==OUTFIT_SLOT_WEAPON) {
       p->tsx = sx;
       p->tsy = sy;
-      pilot_getMount( p, &p->outfit_weapon[eq_wgt.slot], &v );
+      pilot_getMount( p, p->outfits[eq_wgt.slot], &v );
       px += pw/2.;
       py += ph/2.;
       v.x *= pw / p->ship->gfx_space->sw;
