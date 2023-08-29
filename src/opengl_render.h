@@ -88,6 +88,9 @@ void gl_renderScaleAspect( const glTexture* texture,
 /* blits the entire image, absolute pos */
 void gl_renderStatic( const glTexture* texture,
       double bx, double by, const glColour *c );
+void gl_renderSDF( const glTexture *texture,
+      double x, double y, double w, double h,
+      const glColour *c, double angle, double outline );
 
 extern gl_vbo *gl_squareVBO;
 extern gl_vbo *gl_circleVBO;

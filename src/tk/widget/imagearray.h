@@ -14,9 +14,9 @@ typedef struct ImageArrayCell_ {
    int quantity; /**< Corresponding quantity. */
    glColour bg; /**< Background colour. */
    char *slottype; /**< Type of slot. */
+   const glTexture *sloticon; /**< Icon for type of slot. */
    /* Additional layers can be set if needed. */
    glTexture** layers; /**< Layers to be added. */
-   int nlayers; /**< Total number of layers. */
 } ImageArrayCell;
 
 /**
