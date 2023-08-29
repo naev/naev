@@ -349,7 +349,7 @@ static void bar_open( unsigned int wid )
          _("Take Off"), land_buttonTakeoff, SDLK_t );
    window_addButtonKey( wid, -20 - bw - 20, 20,
          bw, bh, "btnApproach",
-         _("Approach"), bar_approach, SDLK_a );
+         p_("bar", "Approach"), bar_approach, SDLK_a );
 
    /* Bar description. */
    window_addText( wid, iw + 40, -40, w - iw - 60, dh, 0,
