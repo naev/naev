@@ -115,7 +115,9 @@ static double fps       = 0.; /**< FPS to finally display. */
 static double fps_cur   = 0.; /**< FPS accumulator to trigger change. */
 static double fps_x     =  15.; /**< FPS X position. */
 static double fps_y     = -15.; /**< FPS Y position. */
-const double fps_min    = 1./15.; /**< Minimum fps to run at. */
+const double fps_min    = 1./25.; /**< Minimum fps to run at. 1/25 seems to
+                                       be acceptable value for fast ships. 1/15
+                                       can cause issues with hyenas and such. */
 double elapsed_time_mod = 0.; /**< Elapsed modified time. */
 
 static nlua_env load_env = LUA_NOREF; /**< Environment for displaying load messages and stuff. */
