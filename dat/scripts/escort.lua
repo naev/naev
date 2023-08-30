@@ -394,21 +394,27 @@ function _escort_jumpin ()
 end
 
 local function update_left ()
+   local ships_outfits = {}
    local ships_alive = {}
    if mem._escort.followplayer then
-      for j,_p in ipairs(_escort_convoy) do
-         table.insert( ships_alive, mem._escort.ships[j] )
+      for j,p in ipairs(_escort_convoy) do
+         if p:exists() then
+            table.insert( ships_alive, mem._escort.ships[j] )
+            table.insert( ships_outfits, escort_outfits[j] )
+         end
       end
    else
       for i,p in ipairs(exited) do
          for j,v in ipairs(_escort_convoy) do
             if v==p then
                table.insert( ships_alive, mem._escort.ships[j] )
+               table.insert( ships_outfits, escort_outfits[j] )
             end
          end
       end
    end
    mem._escort.ships = ships_alive
+   escort_outfits = ships_outfits
 end
 
 function _escort_jumpout()
