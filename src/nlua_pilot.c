@@ -2409,7 +2409,13 @@ static int pilotL_outfitsEquip( lua_State *L )
       PilotOutfitSlot *s;
 
       lua_rawgeti(L,2,i);
-      if (lua_isnil(L,-1) || (i > array_size(p->outfits))) {
+      if (lua_isnil(L,-1)) {
+         lua_pop(L,1);
+         break;
+      }
+
+      if (i > array_size(p->outfits)) {
+         WARN(_("Trying to equip more outfits than slots available on pilot '%s'!"), p->name);
          lua_pop(L,1);
          break;
       }
