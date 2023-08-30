@@ -2409,7 +2409,7 @@ static int pilotL_outfitsEquip( lua_State *L )
       PilotOutfitSlot *s;
 
       lua_rawgeti(L,2,i);
-      if (lua_isnil(L,-1)) {
+      if (lua_isnil(L,-1) || (i > array_size(p->outfits))) {
          lua_pop(L,1);
          break;
       }
