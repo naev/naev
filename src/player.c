@@ -505,7 +505,7 @@ void player_swapShip( const char *shipname, int move_cargo )
    Pilot *ship;
    vec2 v;
    double dir;
-   int removed;
+   int removed, hyptarget;
    PlayerShip_t *ps = NULL;
    PlayerShip_t ptemp;
 
@@ -520,6 +520,9 @@ void player_swapShip( const char *shipname, int move_cargo )
       WARN( _("Unable to swap player.p with ship '%s': ship does not exist!"), shipname );
       return;
    }
+
+   /* Save some variables to restore later. */
+   hyptarget = player.p->nav_hyperspace;
 
    /* Run onremove hook for all old outfits. */
    for (int i=0; i<array_size(player.p->outfits); i++)
@@ -605,6 +608,7 @@ void player_swapShip( const char *shipname, int move_cargo )
 
    /* Clear targets. */
    player_targetClearAll();
+   player.p->nav_hyperspace = hyptarget; /* Special case restore hyperspace target. */
 
    /* Set some gui stuff. */
    gui_load( gui_pick() );
@@ -1400,14 +1404,16 @@ void player_weapSetPress( int id, double value, int repeat )
 
    type = (value>=0) ? +1 : -1;
 
-   if (toolkit_isOpen() && (type>0 || pilot_weapSet(player.p,id)->type != WEAPSET_TYPE_WEAPON))
-      return;
+   if (type > 0) {
+      if (toolkit_isOpen())
+         return;
 
-   if ((type>0) && (pilot_isFlag(player.p, PILOT_HYP_PREP) ||
-         pilot_isFlag(player.p, PILOT_HYPERSPACE) ||
-         pilot_isFlag(player.p, PILOT_LANDING) ||
-         pilot_isFlag(player.p, PILOT_TAKEOFF)))
-      return;
+      if ((pilot_isFlag(player.p, PILOT_HYP_PREP) ||
+            pilot_isFlag(player.p, PILOT_HYPERSPACE) ||
+            pilot_isFlag(player.p, PILOT_LANDING) ||
+            pilot_isFlag(player.p, PILOT_TAKEOFF)))
+         return;
+   }
 
    pilot_weapSetPress( player.p, id, type );
 }

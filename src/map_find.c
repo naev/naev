@@ -273,68 +273,16 @@ static int map_findDistance( StarSystem *sys, Spob *spob, int *jumps, double *di
    }
 
    /* Calculate jump path. */
-   slist = map_getJumpPath( cur_system->name, sys->name, 0, 1, NULL );
+   slist = map_getJumpPath( cur_system->name, &player.p->solid.pos, sys->name, 0, 1, NULL, &d );
    *jumps = array_size( slist );
    if (slist==NULL)
       /* Unknown. */
       return -1;
 
-   /* Distance to first jump point. */
-   vs = &player.p->solid.pos;
-   for (int j=0; j < array_size(cur_system->jumps); j++) {
-      if (cur_system->jumps[j].target == slist[0]) {
-         ve = &cur_system->jumps[j].pos;
-         break;
-      }
-   }
-   if (ve == NULL) {
-      WARN(_("Jump to first system not found!"));
-      d = 0.;
-   }
-   else
-      d = vec2_dist( vs, ve );
-
-   /* Calculate distance. */
-   for (i=0; i<(*jumps-1); i++) {
-      StarSystem *ss = slist[i];
-
-      /* Search jump points. */
-      for (int j=0; j < array_size(ss->jumps); j++) {
-
-         /* Get previous jump. */
-         if (i == 0) {
-            if (ss->jumps[j].target == cur_system)
-               vs = &ss->jumps[j].pos;
-         }
-         else {
-            if (ss->jumps[j].target == slist[i-1])
-               vs = &ss->jumps[j].pos;
-         }
-
-         /* Get next jump. */
-         if (ss->jumps[j].target == slist[i+1]) {
-            ve = &ss->jumps[j].pos;
-            break;
-         }
-      }
-
-      /* Use current position. */
-      if (i==0)
-         vs = &player.p->solid.pos;
-
-#ifdef DEBUGGING
-      if ((vs==NULL) || (ve==NULL)) {
-         WARN( _("Matching jumps not found, something is up...") );
-         continue;
-      }
-#endif /* DEBUGGING */
-
-      /* Calculate. */
-      d += vec2_dist( vs, ve );
-   }
-
    /* Account final travel to spob for spob targets. */
+   i = *jumps - 1;
    if (spob != NULL) {
+      vs = NULL;
       if (i > 0) {
          StarSystem *ss = slist[ i ];
          for (int j=0; j < array_size(ss->jumps); j++) {

@@ -34,6 +34,9 @@
       * Added volley mode to weapon sets that makes weapons fire as fast as possible, instead of staggered
       * Autonav options are now player-specific and accessible via the info menu settings button
       * Travelling merchant gives full details of the intrinsic outfits they provide
+      * Selected slots in the equipment window will only show outfits that fit
+      * Autonav routes consider distance travelled in-system
+      * Made stress more visible in the slim GUI
    * New Content
       * New mechanic for House Sirius called flow to unlock psychic powers
          * Gives passive bonuses to Sirius ships
@@ -61,6 +64,7 @@
       * Custom death animations for many ships
       * More ways to increase fleet capacity
       * The pirate clans are now more differentiated in terms of AI behaviour and taunts
+      * More factional landing messages
    * Engine
       * Map system viewer is more compact
       * Added hook.hail_spob
@@ -95,6 +99,7 @@
       * Minor improvements to many existing missions
       * Fixed crash when events trigger other events on creation
       * Fixed autonav sometimes having trouble landing with reverse thrusters
+      * Qex races should be much less laggy now
 
 * 0.10.6
    * Fixed potential segfault with invalid semver strings

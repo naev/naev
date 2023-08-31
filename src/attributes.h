@@ -7,6 +7,12 @@
    #define __has_attribute( x ) 0
 #endif
 
+#if __has_attribute( warn_unused_result )
+   #define USE_RESULT __attribute__ ( ( warn_unused_result ) )
+#else
+   #define USE_RESULT
+#endif
+
 // Nullability
 #if __has_attribute( nonnull )
    #define NONNULL( ... ) __attribute__( ( nonnull( __VA_ARGS__ ) ) )

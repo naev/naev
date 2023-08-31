@@ -15,6 +15,7 @@
 #include "naev.h"
 /** @endcond */
 
+#include "distance_field.h"
 #include "array.h"
 #include "conf.h"
 #include "gui.h"
@@ -48,7 +49,7 @@ static glTexList* texture_list = NULL; /**< Texture list. */
  */
 /* misc */
 static int SDL_IsTrans( SDL_Surface* s, int x, int y );
-static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h );
+static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h, int tight );
 static size_t gl_transSize( const int w, const int h );
 /* glTexture */
 static GLuint gl_texParameters( unsigned int flags );
@@ -113,11 +114,11 @@ static int SDL_IsTrans( SDL_Surface* s, int x, int y )
  *    @param s Surface to map it's transparency.
  *    @param w Width to map.
  *    @param h Height to map.
+ *    @param tight Whether or not to store transparency per bit or
  *    @return 0 on success.
  */
-static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h )
+static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h, int tight )
 {
-   size_t size;
    uint8_t *t;
 
    /* Get limit.s */
@@ -126,19 +127,28 @@ static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h )
    if (h < 0)
       h = s->h;
 
-   /* alloc memory for just enough bits to hold all the data we need */
-   size = gl_transSize(w, h);
-   t = malloc(size);
-   if (t==NULL) {
-      WARN(_("Out of Memory"));
-      return NULL;
-   }
-   memset(t, 0, size); /* important, must be set to zero */
+   if (tight) {
+      /* alloc memory for just enough bits to hold all the data we need */
+      size_t size = gl_transSize(w, h);
+      t = malloc(size);
+      if (t==NULL) {
+         WARN(_("Out of Memory"));
+         return NULL;
+      }
+      memset(t, 0, size); /* important, must be set to zero */
 
-   /* Check each pixel individually. */
-   for (int i=0; i<h; i++)
-      for (int j=0; j<w; j++) /* sets each bit to be 1 if not transparent or 0 if is */
-         t[(i*w+j)/8] |= (SDL_IsTrans(s,j,i)) ? 0 : (1<<((i*w+j)%8));
+      /* Check each pixel individually. */
+      for (int i=0; i<h; i++)
+         for (int j=0; j<w; j++) /* sets each bit to be 1 if not transparent or 0 if is */
+            t[(i*w+j)/8] |= (SDL_IsTrans(s,j,i)) ? 0 : (1<<((i*w+j)%8));
+   }
+   else {
+      t = malloc( w*h );
+      /* Check each pixel individually. */
+      for (int i=0; i<h; i++)
+         for (int j=0; j<w; j++) /* sets each bit to be 1 if not transparent or 0 if is */
+            t[i*w+j] |= !SDL_IsTrans(s,j,i); /* Flipped with tight version, this is not good :/ */
+   }
 
    return t;
 }
@@ -287,9 +297,22 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
 
    /* now load the texture data up */
    SDL_LockSurface( surface );
-   glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch&-surface->pitch, 8 ) );
-   glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
-         surface->w, surface->h, 0, surface->format->Amask ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, surface->pixels );
+   if (flags & OPENGL_TEX_SDF) {
+      double vmax;
+      uint8_t *trans = SDL_MapTrans( surface, surface->w, surface->h, 0 );
+      GLfloat *dataf = make_distance_mapbf( trans, surface->w, surface->h, &vmax );
+      free( trans );
+      glTexImage2D( GL_TEXTURE_2D, 0, GL_RED, surface->w, surface->h, 0, GL_RED, GL_FLOAT, dataf );
+      free( dataf );
+
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+   }
+   else {
+      glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch&-surface->pitch, 8 ) );
+      glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
+            surface->w, surface->h, 0, surface->format->Amask ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, surface->pixels );
+   }
    SDL_UnlockSurface( surface );
 
    /* Create mipmaps. */
@@ -305,6 +328,9 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
       /* Now generate the mipmaps. */
       glGenerateMipmap(GL_TEXTURE_2D);
    }
+
+   /* Unbind the texture. */
+   glBindTexture(GL_TEXTURE_2D, 0);
 
    /* cleanup */
    if (freesur)
@@ -407,7 +433,7 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
 
    if (trans == NULL) {
       SDL_LockSurface(surface);
-      trans = SDL_MapTrans( surface, w, h );
+      trans = SDL_MapTrans( surface, w, h, 1 );
       SDL_UnlockSurface(surface);
 
       if (cachefile != NULL) {
@@ -645,7 +671,6 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
  */
 static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, unsigned int flags )
 {
-   glTexture *texture;
    SDL_Surface *surface;
 
    /* Placeholder for warnings. */
@@ -665,11 +690,8 @@ static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, unsigne
    }
 
    if (flags & OPENGL_TEX_MAPTRANS)
-      texture = gl_loadImagePadTrans( path, surface, rw, flags, surface->w, surface->h, 1, 1, 1 );
-   else
-      texture = gl_loadImagePad( path, surface, flags, surface->w, surface->h, 1, 1, 1 );
-
-   return texture;
+      return gl_loadImagePadTrans( path, surface, rw, flags, surface->w, surface->h, 1, 1, 1 );
+   return gl_loadImagePad( path, surface, flags, surface->w, surface->h, 1, 1, 1 );
 }
 
 /**
@@ -887,25 +909,6 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
 }
 
 /**
- * @brief Copy a texture array.
- */
-glTexture** gl_copyTexArray( glTexture **tex, int *n )
-{
-   glTexture **t;
-
-   if (array_size(tex) == 0) {
-      *n = 0;
-      return NULL;
-   }
-
-   t = malloc( array_size(tex) * sizeof(glTexture*) );
-   for (int i=0; i<array_size(tex); i++)
-      t[i] = gl_dupTexture( tex[i] );
-   *n = array_size(tex);
-   return t;
-}
-
-/**
  * @brief Initializes the opengl texture subsystem.
  *
  *    @return 0 on success.
@@ -929,19 +932,29 @@ void gl_exitTextures (void)
 }
 
 /**
+ * @brief Copy a texture array.
+ */
+glTexture** gl_copyTexArray( glTexture **tex )
+{
+   glTexture **t;
+   int n = array_size(tex);
+
+   if (n <= 0)
+      return NULL;
+
+   t = array_create_size( glTexture*, n );
+   for (int i=0; i<array_size(tex); i++)
+      array_push_back( &t, gl_dupTexture( tex[i] ) );
+   return t;
+}
+
+/**
  * @brief Adds an element to a texture array.
  */
-glTexture** gl_addTexArray( glTexture **tex, int *n, glTexture *t )
+glTexture** gl_addTexArray( glTexture **tex, glTexture *t )
 {
-   if (tex==NULL) {
-      tex = malloc( sizeof(glTexture*) );
-      tex[0] = t;
-      *n = 1;
-      return tex;
-   }
-
-   *n += 1;
-   tex = realloc( tex, (*n)*sizeof(glTexture*) );
-   tex[*n-1] = t;
+   if (tex==NULL)
+      tex = array_create_size( glTexture*, 1 );
+   array_push_back( &tex, t );
    return tex;
 }

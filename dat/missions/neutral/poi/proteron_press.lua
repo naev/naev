@@ -92,7 +92,7 @@ return function ( mem )
          vn.func( function ()
             var.push( misnvar, true )
             poi.data_give(1)
-            poi.log(fmt.f(_([[You found a derelict ship in the {sys} system with corrupted information about an agent. You also were able to recover {reward} from the ship.]]),
+            poi.log(fmt.f(_([[You found a derelict ship in the {sys} system with a dessicated copy of some press guidelines. You also were able to recover {reward} from the ship.]]),
                {sys=mem.sys, reward=reward}))
          end)
       end,

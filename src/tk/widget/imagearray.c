@@ -10,6 +10,7 @@
 #include <stdlib.h>
 /** @endcond */
 
+#include "array.h"
 #include "nstring.h"
 #include "opengl.h"
 #include "tk/toolkit_priv.h"
@@ -185,14 +186,18 @@ static void iar_render( Widget* iar, double bx, double by )
          continue;
 
       for (int i=0; i<xelem; i++) {
+         ImageArrayCell *cell;
+
          xcurs = floor(x + i * w + (i+.5) * xspace);
 
          /* Get position. */
          pos = j*xelem + i;
 
          /* Out of elements. */
-         if ((pos) >= iar->dat.iar.nelements)
+         if (pos >= iar->dat.iar.nelements)
             break;
+
+         cell = &iar->dat.iar.images[pos];
 
          is_selected = (iar->dat.iar.selected == pos) ? 1 : 0;
 
@@ -201,7 +206,7 @@ static void iar_render( Widget* iar, double bx, double by )
             bgcolour = toolkit_col;
          } else {
             fontcolour = &cFontWhite;
-            bgcolour = &iar->dat.iar.images[pos].bg;
+            bgcolour = &cell->bg;
             if (bgcolour->a <= 0.)
                bgcolour = toolkit_colDark;
          }
@@ -209,37 +214,50 @@ static void iar_render( Widget* iar, double bx, double by )
          toolkit_drawRect( xcurs, ycurs, w, h, bgcolour, NULL );
 
          /* image */
-         if (iar->dat.iar.images[pos].image != NULL)
-            gl_renderScaleAspect( iar->dat.iar.images[pos].image,
+         if (cell->image != NULL)
+            gl_renderScaleAspect( cell->image,
                   xcurs + 5., ycurs + gl_smallFont.h + 7.,
                   iar->dat.iar.iw, iar->dat.iar.ih, NULL );
 
          /* layers */
-         for (int k=0; k<iar->dat.iar.images[pos].nlayers; k++)
-            if (iar->dat.iar.images[pos].layers[k] != NULL)
-               gl_renderScaleAspect( iar->dat.iar.images[pos].layers[k],
+         for (int k=0; k<array_size(cell->layers); k++) {
+
+            if (cell->layers[k] != NULL)
+               gl_renderScaleAspect( cell->layers[k],
                      xcurs + 5., ycurs + gl_smallFont.h + 7.,
                      iar->dat.iar.iw, iar->dat.iar.ih, NULL );
+         }
 
          /* caption */
-         if (iar->dat.iar.images[pos].caption != NULL)
+         if (cell->caption != NULL)
             gl_printMidRaw( &gl_smallFont, iar->dat.iar.iw, xcurs + 5., ycurs + 5.,
-                     fontcolour, -1., iar->dat.iar.images[pos].caption );
+                     fontcolour, -1., cell->caption );
 
          /* quantity. */
-         if (iar->dat.iar.images[pos].quantity > 0) {
+         if (cell->quantity > 0) {
             /* Quantity number. */
             gl_printMax( &gl_smallFont, iar->dat.iar.iw,
                   xcurs + 5., ycurs + iar->dat.iar.ih + 4.,
-                  fontcolour, "%d", iar->dat.iar.images[pos].quantity );
+                  fontcolour, "%d", cell->quantity );
          }
 
          /* Slot type. */
-         if (iar->dat.iar.images[pos].slottype != NULL) {
+         if (cell->sloticon != NULL) {
+            double sw = 15.;
+            double sh = 15.;
+            double sx = xcurs + iar->dat.iar.iw - 10.;
+            double sy = ycurs + iar->dat.iar.ih + 2.;
+
+            if (cell->sloticon->flags & OPENGL_TEX_SDF)
+               gl_renderSDF( cell->sloticon, sx, sy, sw, sh, &cWhite, 0., 1. );
+            else
+               gl_renderScaleAspect( cell->sloticon, sx, sy, sw, sh, NULL );
+         }
+         else if (cell->slottype != NULL) {
             /* Slot size letter. */
             gl_printMaxRaw( &gl_smallFont, iar->dat.iar.iw,
                   xcurs + iar->dat.iar.iw - 10., ycurs + iar->dat.iar.ih + 4.,
-                  fontcolour, -1., iar->dat.iar.images[pos].slottype );
+                  fontcolour, -1., cell->slottype );
          }
 
          /* outline */
@@ -457,17 +475,14 @@ static int iar_mmove( Widget* iar, int x, int y, int rx, int ry )
 {
    (void) rx;
    (void) ry;
-   double hmax;
 
    /* Update mouse position. */
    iar->dat.iar.mx = x;
    iar->dat.iar.my = y;
 
    if (iar->status == WIDGET_STATUS_SCROLLING) {
-
+      double hmax = iar_maxPos( iar );
       y = CLAMP( 15, iar->h - 15., iar->h - y );
-
-      hmax = iar_maxPos( iar );
       iar->dat.iar.pos = (y - 15.) * hmax / (iar->h - 30.);
 
       /* Does boundary checks. */
@@ -492,19 +507,17 @@ static int iar_mmove( Widget* iar, int x, int y, int rx, int ry )
  */
 static void iar_cleanup( Widget* iar )
 {
-   if (iar->dat.iar.nelements > 0) { /* Free each text individually */
-      for (int i=0; i<iar->dat.iar.nelements; i++) {
-         gl_freeTexture( iar->dat.iar.images[i].image );
-         free( iar->dat.iar.images[i].caption );
-         free( iar->dat.iar.images[i].alt );
-         free( iar->dat.iar.images[i].slottype );
+   for (int i=0; i<iar->dat.iar.nelements; i++) {
+      ImageArrayCell *cell = &iar->dat.iar.images[i];
+      gl_freeTexture( cell->image );
+      free( cell->caption );
+      free( cell->alt );
+      free( cell->slottype );
 
-         for (int j=0; j<iar->dat.iar.images[i].nlayers; j++)
-            gl_freeTexture( iar->dat.iar.images[i].layers[j] );
-         free( iar->dat.iar.images[i].layers );
-      }
+      for (int j=0; j<array_size(cell->layers); j++)
+         gl_freeTexture( cell->layers[j] );
+      array_free( cell->layers );
    }
-
    free( iar->dat.iar.images );
 }
 
@@ -597,12 +610,8 @@ static int iar_focusImage( Widget* iar, double bx, double by )
  */
 static void iar_focus( Widget* iar, double bx, double by )
 {
-   double y;
-   double scroll_pos, hmax;
-   int selected;
-
    /* Test for item click. */
-   selected = iar_focusImage( iar, bx, by );
+   int selected = iar_focusImage( iar, bx, by );
    if (selected >= 0) {
       iar->dat.iar.selected = selected;
       if (iar->dat.iar.fptr != NULL)
@@ -610,6 +619,7 @@ static void iar_focus( Widget* iar, double bx, double by )
    }
    /* Scrollbar click. */
    else if (bx > iar->w - 10.) {
+      double scroll_pos, hmax, y;
       /* Get bar position (center). */
       hmax = iar_maxPos( iar );
       if (hmax == 0.)

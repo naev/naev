@@ -3,6 +3,8 @@
  */
 #pragma once
 
+#include "opengl_tex.h"
+
 /* Load/exit. */
 int sp_load (void);
 void sp_cleanup (void);
@@ -14,3 +16,4 @@ const char *sp_description( unsigned int sp );
 int sp_required( unsigned int spid );
 int sp_exclusive( unsigned int spid );
 int sp_locked( unsigned int spid );
+const glTexture * sp_icon( unsigned int spid );

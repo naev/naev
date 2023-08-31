@@ -3,7 +3,7 @@
 <event name="Proteron Blockade">
  <location>enter</location>
  <chance>100</chance>
- <cond>system.cur() == system.get("Leporis")</cond>
+ <system>Leporis</system>
 </event>
 --]]
 
@@ -43,7 +43,6 @@ local function spawn_fleet( pos )
       aimem.enemyclose    = 10e3
       aimem.guarddodist   = 10e3
       aimem.guardreturndist = 15e3
-      p:setHostile(true) -- TODO change this when something can make them non-hostile
       if leader then
          p:setLeader( leader )
       end
@@ -70,6 +69,12 @@ function create ()
 end
 
 function heartbeat( proteron_blockade )
+   -- If not hostile, ignore
+   if not faction.get("Proteron"):areEnemies( faction.player() ) then
+      return
+   end
+
+   -- Have the first ship that sees the player broadcast
    local pp = player.pilot()
    for k,p in ipairs(proteron_blockade) do
       if p:inrange( pp ) then

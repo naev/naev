@@ -276,7 +276,7 @@ function board_drone ()
    vn.na(_([[As you are finally able to access the data, you see Zach was peering over your shoulder most of the time.]]))
    z(_([["Your form could use some work, but not bad for not having formal training. Here, let me look at the data."]]))
    z(_([[He jacks his cyberdeck into the drone interface and begins inputting commands at a dizzying speed. He begins to hum to himself as he blazes across the filesystem, scouring every nook and cranny in every directory in a semi-automated fashion. Finally, he seems happy with what he found.]]))
-   z(_([["This is most peculiar, although there was a mistake in the calculations which caused the drone to malfunction, the theoretical formulations seem to be all correct. I'll have to think of the implications, but this does seem to indicate that there is a lot of untapped potentially."]]))
+   z(_([["This is most peculiar, although there was a mistake in the calculations which caused the drone to malfunction, the theoretical formulations seem to be all correct. I'll have to think of the implications, but this does seem to indicate that there is a lot of untapped potential."]]))
    z(fmt.f(_([["If you can take the ship to the position I've marked on the map, the AI should be able to take us back to {sys}."]]),
       {sys=retsys}))
    z(_([[Without saying anything else, he plops down on a chair and starts analyzing the data on his cyberdeck while spinning around slowly in the chair, once again humming to himself.]]))

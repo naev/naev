@@ -274,6 +274,77 @@ void gl_renderTexture( const glTexture* texture,
 }
 
 /**
+ * @brief SDF Texture blitting backend.
+ *
+ *    @param texture Texture to blit.
+ *    @param x X position of the texture on the screen. (units pixels)
+ *    @param y Y position of the texture on the screen. (units pixels)
+ *    @param w Width on the screen. (units pixels)
+ *    @param h Height on the screen. (units pixels)
+ *    @param c Colour to use (modifies texture colour).
+ *    @param angle Rotation to apply (radians ccw around the center).
+ *    @param outline Thickness of the outline.
+ */
+void gl_renderSDF( const glTexture *texture,
+      double x, double y, double w, double h,
+      const glColour *c, double angle, double outline )
+{
+   // Half width and height
+   double hw, hh;
+   mat4 projection, tex_mat;
+
+   glUseProgram(shaders.texturesdf.program);
+
+   /* Bind the texture. */
+   glBindTexture( GL_TEXTURE_2D, texture->texture );
+
+   /* Must have colour for now. */
+   if (c == NULL)
+      c = &cWhite;
+
+   hw = w/2.;
+   hh = h/2.;
+
+   /* Set the vertex. */
+   projection = gl_view_matrix;
+   if (angle==0.) {
+     mat4_translate( &projection, x, y, 0. );
+     mat4_scale( &projection, w, h, 1. );
+   }
+   else {
+     mat4_translate( &projection, x+hw, y+hh, 0. );
+     mat4_rotate2d( &projection, angle );
+     mat4_translate( &projection, -hw, -hh, 0. );
+     mat4_scale( &projection, w, h, 1. );
+   }
+   glEnableVertexAttribArray( shaders.texturesdf.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texturesdf.vertex,
+         0, 2, GL_FLOAT, 0 );
+
+   /* Set the texture. */
+   tex_mat = (texture->flags & OPENGL_TEX_VFLIP) ? mat4_ortho(-1, 1, 2, 0, 1, -1) : mat4_identity();
+   mat4_scale( &tex_mat, texture->srw, texture->srh, 1. );
+
+   /* Set shader uniforms. */
+   gl_uniformColor(shaders.texturesdf.color, c);
+   gl_uniformMat4(shaders.texturesdf.projection, &projection);
+   gl_uniformMat4(shaders.texturesdf.tex_mat, &tex_mat);
+   glUniform1f( shaders.texturesdf.m, 0.01 );
+   //glUniform1f( shaders.texturesdf.outline, outline );
+
+   /* Draw. */
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   /* Clear state. */
+   glDisableVertexAttribArray( shaders.texturesdf.vertex );
+
+   /* anything failed? */
+   gl_checkErr();
+
+   glUseProgram(0);
+}
+
+/**
  * @brief Texture blitting backend for interpolated texture.
  *
  * Value blitted is  ta*inter + tb*(1.-inter).

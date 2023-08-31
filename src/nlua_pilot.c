@@ -2414,6 +2414,12 @@ static int pilotL_outfitsEquip( lua_State *L )
          break;
       }
 
+      if (i > array_size(p->outfits)) {
+         WARN(_("Trying to equip more outfits than slots available on pilot '%s'!"), p->name);
+         lua_pop(L,1);
+         break;
+      }
+
       /* No outfit. */
       if (!lua_toboolean(L,-1))
          continue;

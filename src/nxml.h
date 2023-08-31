@@ -22,6 +22,7 @@
 #include "libxml/xmlwriter.h"
 /** @endcond */
 
+#include "attributes.h"
 #include "log.h"
 #include "opengl.h"
 
@@ -161,7 +162,7 @@ do {if (xmlTextWriterEndDocument(w) < 0) { \
  * Functions for generic complex reading.
  */
 xmlDocPtr xml_parsePhysFS( const char* filename );
-glTexture* xml_parseTexture( xmlNodePtr node,
+USE_RESULT glTexture* xml_parseTexture( xmlNodePtr node,
       const char *path, int defsx, int defsy,
       const unsigned int flags );
 int xml_parseTime( xmlNodePtr node, time_t *t );

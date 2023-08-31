@@ -298,7 +298,7 @@ function idle ()
 end
 
 function disable ()
-   player.msg(fmt.f(_([[Nelly: "You disabled it! Now get on top of the ship and board it with {boardkey}!"]]),{boardkey=tut.getKey("board")}),true)
+   player.msg(fmt.f(_([[Nelly: "You disabled it! Now get on top of the ship and board it with {boardkey}!"]]),{boardkey=tut.getKey("approach")}),true)
 end
 
 function board ()
@@ -371,7 +371,7 @@ function land ()
          player.pay( reward_amount )
       end )
       nel(_([["I'm going to get my ship fixed and hopefully next time we meet it'll be in space. Have fun!"
-She runs off to where here ship is stored with the repair parts in hand.]]))
+She runs off to where her ship is stored with the repair parts in hand.]]))
       vn.done( tutnel.nelly.transition )
       vn.run()
 

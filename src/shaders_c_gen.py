@@ -110,6 +110,14 @@ SHADERS = [
       subroutines = {},
    ),
    Shader(
+      name = "texturesdf",
+      vs_path = "texture.vert",
+      fs_path = "texturesdf.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "color", "tex_mat", "sampler", "m", "outline"],
+      subroutines = {},
+   ),
+   Shader(
       name = "stealthoverlay",
       vs_path = "texture.vert",
       fs_path = "stealthoverlay.frag",

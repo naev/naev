@@ -2510,7 +2510,11 @@ void map_select( const StarSystem *sys, char shifted )
 
       /* Try to make path if is reachable. */
       if (space_sysReachable(sys)) {
-         map_path = map_getJumpPath( cur_system->name, sys->name, 0, 1, map_path );
+         const vec2 *posstart = NULL;
+         if (player.p != NULL) {
+            posstart = &player.p->solid.pos;
+         }
+         map_path = map_getJumpPath( cur_system->name, posstart, sys->name, 0, 1, map_path, NULL );
 
          if (array_size(map_path)==0) {
             player_hyperspacePreempt(0);
@@ -2639,11 +2643,15 @@ typedef struct SysNode_ {
    struct SysNode_ *parent; /**< Parent node. */
    StarSystem* sys; /**< System in node. */
    int g; /**< step */
+   double d; /**< the distance to go access the systems. */
+   const vec2 *pos; /**< position of the entry of the system. */
 } SysNode; /**< System Node for use in A* pathfinding. */
 static SysNode *A_gc;
 /* prototypes */
 static SysNode* A_newNode( StarSystem* sys );
-static int A_g( SysNode* n );
+static int A_g( const SysNode* n );
+static double A_d( const SysNode* n );
+static int A_less( const SysNode *op1, const SysNode *op2 );
 static SysNode* A_add( SysNode *first, SysNode *cur );
 static SysNode* A_rm( SysNode *first, StarSystem *cur );
 static SysNode* A_in( SysNode *first, StarSystem *cur );
@@ -2664,9 +2672,19 @@ static SysNode* A_newNode( StarSystem* sys )
    return n;
 }
 /** @brief Gets the g from a node. */
-static int A_g( SysNode* n )
+static int A_g( const SysNode* n )
 {
    return n->g;
+}
+/** @brief Gets the d from a node. */
+static double A_d( const SysNode* n )
+{
+   return n->d;
+}
+/** @brief op1 is less than op2. */
+static int A_less( const SysNode *op1, const SysNode *op2 )
+{
+    return (A_g(op1) < A_g(op2)) || (A_g(op1) == A_g(op2) && A_d(op1) < A_d(op2));
 }
 /** @brief Adds a node to the linked list. */
 static SysNode* A_add( SysNode *first, SysNode *cur )
@@ -2698,8 +2716,8 @@ static SysNode* A_rm( SysNode *first, StarSystem *cur )
    n = p->next;
    do {
       if (n->sys == cur) {
-         n->next = NULL;
          p->next = n->next;
+         n->next = NULL;
          break;
       }
       p = n;
@@ -2733,7 +2751,7 @@ static SysNode* A_lowest( SysNode *first )
    n = first;
    lowest = n;
    do {
-      if (n->g < lowest->g)
+      if (A_less(n, lowest))
          lowest = n;
    } while ((n=n->next) != NULL);
    return lowest;
@@ -2766,14 +2784,16 @@ void map_setZoom( unsigned int wid, double zoom )
  * @brief Gets the jump path between two systems.
  *
  *    @param sysstart Name of the system to start from.
+ *    @param posstart Position to start from. (Ignored it if old_data != NULL or posstart == NULL.
  *    @param sysend Name of the system to end at.
  *    @param ignore_known Whether or not to ignore if systems and jump points are known.
  *    @param show_hidden Whether or not to use hidden jumps points.
  *    @param old_data the old path (if we're merely extending)
+ *    @param o_distance output the sum of the distances to go across the systems if it's not NULL.
  *    @return Array (array.h): the systems in the path. NULL on failure.
  */
-StarSystem** map_getJumpPath( const char* sysstart, const char* sysend,
-    int ignore_known, int show_hidden, StarSystem** old_data )
+StarSystem** map_getJumpPath( const char* sysstart, const vec2 *posstart, const char* sysend,
+    int ignore_known, int show_hidden, StarSystem** old_data, double *o_distance )
 {
    int j, cost, njumps, ojumps;
    StarSystem *ssys, *esys, **res;
@@ -2807,11 +2827,26 @@ StarSystem** map_getJumpPath( const char* sysstart, const char* sysend,
       return NULL;
    }
 
+   /* initial entry position */
+   const vec2 *p_pos_entry = (ojumps > 0) ? NULL : posstart;
+   if (ojumps > 0) {
+      const char *prev_name = sysstart;
+      if (ojumps > 1) {
+         prev_name = old_data[ojumps - 2]->name;
+      }
+      const JumpPoint* jp = jump_get(prev_name, ssys);
+      if (jp != NULL) {
+         p_pos_entry = &jp->pos;
+      }
+   }
+
    /* start the linked lists */
    open     = closed = NULL;
    cur      = A_newNode( ssys );
    cur->parent = NULL;
    cur->g   = 0;
+   cur->d   = 0.0;
+   cur->pos = p_pos_entry;
    open     = A_add( open, cur ); /* Initial open node is the start system */
 
    j = 0;
@@ -2848,31 +2883,44 @@ StarSystem** map_getJumpPath( const char* sysstart, const char* sysend,
          if (!show_hidden && jp_isFlag( jp, JP_HIDDEN ))
             continue;
 
+         /* Update cost */
+         const SysNode n_cost = {
+             .g = cost,
+             .d = A_d(cur) + ((cur->pos != NULL) ? vec2_dist(cur->pos, &jp->pos) : 0.0)
+         };
+
          /* Check to see if it's already in the closed set. */
          ccost = A_in(closed, sys);
-         if ((ccost != NULL) && (cost >= A_g(ccost)))
+         if ((ccost != NULL) && !A_less(&n_cost, ccost))
             continue;
             //closed = A_rm( closed, sys );
 
          /* Remove if it exists and current is better. */
          ocost = A_in(open, sys);
          if (ocost != NULL) {
-            if (cost < A_g(ocost))
+            if (A_less(&n_cost, ocost))
                open = A_rm( open, sys ); /* New path is better */
             else
                continue; /* This node is worse, so ignore it. */
          }
 
          /* Create the node. */
+         const JumpPoint *jp_entry = jump_getTarget(cur->sys, sys);
          neighbour         = A_newNode( sys );
          neighbour->parent = cur;
-         neighbour->g      = cost;
+         neighbour->g      = n_cost.g;
+         neighbour->d      = n_cost.d;
+         neighbour->pos    = (jp_entry != NULL) ? &jp_entry->pos : NULL;
          open              = A_add( open, neighbour );
       }
 
       /* Safety check in case not linked. */
       if (open == NULL)
          break;
+   }
+
+   if (o_distance != NULL) {
+       *o_distance = cur->d;
    }
 
    /* Build path backwards if not broken from loop. */
@@ -2910,8 +2958,28 @@ int map_map( const Outfit *map )
    for (int i=0; i<array_size(map->u.map->systems);i++)
       sys_setFlag(map->u.map->systems[i], SYSTEM_KNOWN);
 
-   for (int i=0; i<array_size(map->u.map->spobs);i++)
-      spob_setKnown(map->u.map->spobs[i]);
+   for (int i=0; i<array_size(map->u.map->spobs);i++) {
+      Spob *spb = map->u.map->spobs[i];
+      spob_setKnown( spb );
+#if DEBUGGING
+      const char *sysname = spob_getSystem( spb->name );
+      if (sysname == NULL)
+         WARN(_("Map '%s' is trying to set spob '%s' as known when it has no system!"), map->name, spb->name );
+      else {
+         int found = 0;
+         for (int j=0; j<array_size(map->u.map->systems);j++) {
+            const StarSystem *ss = map->u.map->systems[j];
+            if (strcmp( ss->name, sysname )==0) {
+               found = 1;
+               break;
+            }
+         }
+         if (!found)
+            WARN(_("Map '%s' is trying to set spob '%s' as known when it is not in the system list! '%s' is in the '%s' system!"),
+                  map->name, spb->name, spb->name, sysname );
+      }
+#endif /* DEBUGGING */
+   }
 
    for (int i=0; i<array_size(map->u.map->jumps);i++)
       jp_setFlag(map->u.map->jumps[i], JP_KNOWN);
@@ -2933,7 +3001,7 @@ int map_isUseless( const Outfit* map )
          return 0;
 
    for (int i=0; i<array_size(map->u.map->spobs);i++) {
-      Spob *p = map->u.map->spobs[i];
+      const Spob *p = map->u.map->spobs[i];
       if (!spob_hasSystem( p ) )
          continue;
       if (!spob_isKnown(p))

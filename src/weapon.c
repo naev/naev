@@ -2327,12 +2327,12 @@ double weapon_targetFlyTime( const Outfit *o, const Pilot *p, const Target *t )
 {
    switch (t->type) {
       case TARGET_NONE:
-         return 0.;
+         return HUGE_VAL;
       case TARGET_PILOT:
          {
             const Pilot *pt = pilot_get( t->u.id );
             if (pt==NULL)
-               return 0.;
+               return HUGE_VAL;
             return pilot_weapFlyTime( o, p, &pt->solid.pos, &pt->solid.vel );
          }
          break;
@@ -2340,7 +2340,7 @@ double weapon_targetFlyTime( const Outfit *o, const Pilot *p, const Target *t )
          {
             const Weapon *w = weapon_getID( t->u.id );
             if (w==NULL)
-               return 0.;
+               return HUGE_VAL;
             return pilot_weapFlyTime( o, p, &w->solid.pos, &w->solid.vel );
          }
          break;
@@ -2352,7 +2352,7 @@ double weapon_targetFlyTime( const Outfit *o, const Pilot *p, const Target *t )
          }
          break;
    }
-   return 0.;
+   return HUGE_VAL;
 }
 
 /**

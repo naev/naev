@@ -8,6 +8,7 @@
 #include "SDL.h"
 /** @endcond */
 
+#include "attributes.h"
 #include "colour.h"
 #include "physics.h"
 
@@ -25,6 +26,7 @@
 #define OPENGL_TEX_MIPMAPS    (1<<1) /**< Creates mipmaps. */
 #define OPENGL_TEX_VFLIP      (1<<2) /**< Assume loaded from an image (where positive y means down). */
 #define OPENGL_TEX_SKIPCACHE  (1<<3) /**< Skip caching checks and create new texture. */
+#define OPENGL_TEX_SDF        (1<<4) /**< Convert to an SDF. Only the alpha channel gets used. */
 
 /**
  * @brief Abstraction for rendering sprite sheets.
@@ -63,19 +65,19 @@ void gl_exitTextures (void);
 /*
  * Creating.
  */
-glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const char* name );
-glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
+USE_RESULT glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const char* name );
+USE_RESULT glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
       unsigned int flags, int w, int h, int sx, int sy, int freesur );
-glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWops *rw,
+USE_RESULT glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWops *rw,
       unsigned int flags, int w, int h, int sx, int sy, int freesur );
-glTexture* gl_loadImage( SDL_Surface* surface, const unsigned int flags ); /* Frees the surface. */
-glTexture* gl_newImage( const char* path, const unsigned int flags );
-glTexture* gl_newImageRWops( const char* path, SDL_RWops *rw, const unsigned int flags ); /* Does not close the RWops. */
-glTexture* gl_newSprite( const char* path, const int sx, const int sy,
+USE_RESULT glTexture* gl_loadImage( SDL_Surface* surface, const unsigned int flags ); /* Frees the surface. */
+USE_RESULT glTexture* gl_newImage( const char* path, const unsigned int flags );
+USE_RESULT glTexture* gl_newImageRWops( const char* path, SDL_RWops *rw, const unsigned int flags ); /* Does not close the RWops. */
+USE_RESULT glTexture* gl_newSprite( const char* path, const int sx, const int sy,
       const unsigned int flags );
-glTexture* gl_newSpriteRWops( const char* path, SDL_RWops *rw,
+USE_RESULT glTexture* gl_newSpriteRWops( const char* path, SDL_RWops *rw,
    const int sx, const int sy, const unsigned int flags );
-glTexture* gl_dupTexture( const glTexture *texture );
+USE_RESULT glTexture* gl_dupTexture( const glTexture *texture );
 
 /*
  * Clean up.
@@ -92,5 +94,5 @@ int gl_fboCreate( GLuint *fbo, GLuint *tex, GLsizei width, GLsizei height );
  */
 int gl_isTrans( const glTexture* t, const int x, const int y );
 void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir );
-glTexture** gl_copyTexArray( glTexture **tex, int *n );
-glTexture** gl_addTexArray( glTexture **tex, int *n, glTexture *t );
+glTexture** gl_copyTexArray( glTexture **tex );
+glTexture** gl_addTexArray( glTexture **tex, glTexture *t );
