@@ -588,10 +588,10 @@ static void info_openWeapons( unsigned int wid )
          _("Current Weapon Set Settings"));
    y -= 20;
    window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
-         "chkFire", _("Enable instant Mode"), weapons_fire,
-         (pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons )==WEAPSET_TYPE_WEAPON) );
+         "chkInstant", _("Enable instant Mode"), weapons_fire,
+         (pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons )==WEAPSET_TYPE_ACTIVE) );
    y -= 30;
-   window_addText( wid, x+10, y, wlen, 20, 0, "txtSInstant", NULL, NULL, _("(Weapons fire when this weapon set key is pressed)"));
+   window_addText( wid, x+10, y, wlen, 20, 0, "txtSInstant", NULL, NULL, _("(Outfits active while this weapon set key is pressed)"));
    y -= 20;
    window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
          "chkInrange", _("Only shoot weapons that are in range"), weapons_inrange,
@@ -677,8 +677,8 @@ static void weapons_updateList( unsigned int wid, const char *str )
    info_eq_weaps.weapons = pos;
 
    /* Update fire mode. */
-   window_checkboxSet( wid, "chkFire",
-         (pilot_weapSetTypeCheck( player.p, pos ) == WEAPSET_TYPE_WEAPON) );
+   window_checkboxSet( wid, "chkInstant",
+         (pilot_weapSetTypeCheck( player.p, pos ) == WEAPSET_TYPE_ACTIVE) );
 
    /* Update inrange. */
    window_checkboxSet( wid, "chkInrange",
@@ -729,11 +729,11 @@ static void weapons_fire( unsigned int wid, const char *str )
 
    /* See how to handle. */
    t = pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons );
-   if (t == WEAPSET_TYPE_ACTIVE)
+   if (t == WEAPSET_TYPE_TOGGLE)
       return;
 
    if (state)
-      c = WEAPSET_TYPE_WEAPON;
+      c = WEAPSET_TYPE_ACTIVE;
    else
       c = WEAPSET_TYPE_CHANGE;
    pilot_weapSetType( player.p, info_eq_weaps.weapons, c );

@@ -151,8 +151,8 @@ typedef struct PilotWeaponSetOutfit_ {
 
 typedef enum WeaponSetType_ {
    WEAPSET_TYPE_CHANGE=0, /**< Changes weaponsets. */
-   WEAPSET_TYPE_WEAPON=1, /**< Activates weapons (while held down). */
-   WEAPSET_TYPE_ACTIVE=2, /**< Toggles outfits (if on it deactivates). */
+   WEAPSET_TYPE_ACTIVE=1, /**< Activates weapons (while held down). */
+   WEAPSET_TYPE_TOGGLE=2, /**< Toggles outfits (if on it deactivates). */
 } WeaponSetType;
 
 /**

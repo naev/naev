@@ -87,6 +87,10 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       if ((level != -1) && (ws->slots[i].level != level))
          continue;
 
+      /* Only weapons, TODO probably better check. */
+      if (pos->sslot->slot.type!=OUTFIT_SLOT_WEAPON)
+         continue;
+
       /* Only run once for each weapon type in the group if not volley. */
       if (!ws->volley) {
          int s = 0;
@@ -175,19 +179,57 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          }
          break;
 
-      case WEAPSET_TYPE_WEAPON:
+      case WEAPSET_TYPE_ACTIVE:
          /* Activation philosophy here is to turn on while pressed and off
           * when it's not held anymore. */
-         if (type > 0)
+
+         /* Must not be disabled or cooling down. */
+         if ((pilot_isDisabled(p)) || (pilot_isFlag(p, PILOT_COOLDOWN)))
+            return;
+
+         /* Clear change variables. */
+         l  = array_size(ws->slots);
+         n = 0;
+         pilotoutfit_modified = 0;
+
+         if (type > 0) {
             ws->active = 1;
+
+            /* Turn on outfits. */
+            for (int i=0; i<l; i++) {
+               PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
+               if (pos->state != PILOT_OUTFIT_OFF)
+                  continue;
+
+               n += pilot_outfitOn( p, pos );
+            }
+         }
          else if (type < 0) {
             ws->active = 0;
             if (pilot_weaponSetShootStop( p, ws, -1 )) /* De-activate weapon set. */
-               pilot_calcStats( p ); /* Just in case there is a activated outfit here. */
+               n += 1; /* To trigger calcStats. */
+
+            /* Turn off outfits. */
+            for (int i=0; i<l; i++) {
+               PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
+               if (pos->state != PILOT_OUTFIT_ON)
+                  continue;
+
+               n += pilot_outfitOff( p, pos );
+            }
+         }
+
+         /* Must recalculate stats. */
+         if ((n > 0) || pilotoutfit_modified) {
+            /* pilot_destealth should run calcStats already. */
+            if (isstealth && (type>0))
+               pilot_destealth( p );
+            else
+               pilot_calcStats( p );
          }
          break;
 
-      case WEAPSET_TYPE_ACTIVE:
+      case WEAPSET_TYPE_TOGGLE:
          /* The behaviour here is more complex. What we do is consider a group
           * to be entirely off if not all outfits are either on or cooling down.
           * In the case it's deemed to be off, all outfits that are off get turned
@@ -211,8 +253,11 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
             }
          }
 
-         /* Turn them off. */
+         /* Clear change variables. */
          n = 0;
+         pilotoutfit_modified = 0;
+
+         /* Turn them off. */
          if (on) {
             for (int i=0; i<l; i++) {
                PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
@@ -224,7 +269,6 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          }
          /* Turn them on. */
          else {
-            pilotoutfit_modified = 0;
             for (int i=0; i<l; i++) {
                PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
                if (pos->state != PILOT_OUTFIT_OFF)
@@ -232,20 +276,18 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
 
                n += pilot_outfitOn( p, pos );
             }
-            /* Recalculate if anything changed. */
-            if (pilotoutfit_modified)
-               pilot_calcStats( p );
          }
          /* Must recalculate stats. */
-         if (n > 0) {
+         if ((n > 0) || pilotoutfit_modified) {
             /* pilot_destealth should run calcStats already. */
-            if (isstealth)
+            if (isstealth && (type>0))
                pilot_destealth( p );
             else
                pilot_calcStats( p );
          }
 
          break;
+
    }
 }
 
@@ -265,7 +307,7 @@ void pilot_weapSetUpdate( Pilot* p )
          continue;
 
       /* Weapons must get "fired" every turn. */
-      if (ws->type == WEAPSET_TYPE_WEAPON) {
+      if (ws->type == WEAPSET_TYPE_ACTIVE) {
          if (ws->active)
             pilot_weapSetFire( p, ws, -1 );
       }
@@ -310,8 +352,8 @@ void pilot_weapSetType( Pilot* p, int id, WeaponSetType type )
    ws->type = type;
 
    /* Set levels just in case. */
-   if ((ws->type == WEAPSET_TYPE_WEAPON) ||
-         (ws->type == WEAPSET_TYPE_ACTIVE))
+   if ((ws->type == WEAPSET_TYPE_ACTIVE) ||
+         (ws->type == WEAPSET_TYPE_TOGGLE))
       for (int i=0; i<array_size(ws->slots); i++)
          ws->slots[i].level = 0;
 }
@@ -404,8 +446,8 @@ const char *pilot_weapSetName( Pilot* p, int id )
       return _("Unused");
    switch (ws->type) {
       case WEAPSET_TYPE_CHANGE: return _("Weapons - Switched");  break;
-      case WEAPSET_TYPE_WEAPON: return _("Weapons - Instant");   break;
-      case WEAPSET_TYPE_ACTIVE: return _("Abilities - Toggled"); break;
+      case WEAPSET_TYPE_ACTIVE: return _("Outfits - Instant"); break;
+      case WEAPSET_TYPE_TOGGLE: return _("Outfits - Toggled"); break;
    }
    return NULL;
 }
@@ -1320,12 +1362,12 @@ void pilot_weaponAuto( Pilot *p )
    pilot_weapSetType( p, 1, WEAPSET_TYPE_CHANGE );
    pilot_weapSetType( p, 2, WEAPSET_TYPE_CHANGE );
    pilot_weapSetType( p, 3, WEAPSET_TYPE_CHANGE );
-   pilot_weapSetType( p, 4, WEAPSET_TYPE_WEAPON );
-   pilot_weapSetType( p, 5, WEAPSET_TYPE_WEAPON );
-   pilot_weapSetType( p, 6, WEAPSET_TYPE_ACTIVE );
-   pilot_weapSetType( p, 7, WEAPSET_TYPE_ACTIVE );
-   pilot_weapSetType( p, 8, WEAPSET_TYPE_ACTIVE );
-   pilot_weapSetType( p, 9, WEAPSET_TYPE_WEAPON );
+   pilot_weapSetType( p, 4, WEAPSET_TYPE_ACTIVE );
+   pilot_weapSetType( p, 5, WEAPSET_TYPE_ACTIVE );
+   pilot_weapSetType( p, 6, WEAPSET_TYPE_TOGGLE );
+   pilot_weapSetType( p, 7, WEAPSET_TYPE_TOGGLE );
+   pilot_weapSetType( p, 8, WEAPSET_TYPE_TOGGLE );
+   pilot_weapSetType( p, 9, WEAPSET_TYPE_ACTIVE );
 
    /* All should be inrange. */
    if (!pilot_isPlayer(p))
@@ -1450,8 +1492,8 @@ void pilot_weaponSafe( Pilot *p )
          array_erase( &ws->slots, &ws->slots[l-n], &ws->slots[l] );
 
       /* See if we must overwrite levels. */
-      if ((ws->type == WEAPSET_TYPE_WEAPON) ||
-            (ws->type == WEAPSET_TYPE_ACTIVE))
+      if ((ws->type == WEAPSET_TYPE_ACTIVE) ||
+            (ws->type == WEAPSET_TYPE_TOGGLE))
          for (int i=0; i<array_size(ws->slots); i++)
             ws->slots[i].level = 0;
 

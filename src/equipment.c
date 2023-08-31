@@ -1048,7 +1048,7 @@ static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
                   (os->sslot->slot.type == OUTFIT_SLOT_UTILITY)) {
                pilot_weapSetRmSlot( p, wgt->weapons, OUTFIT_SLOT_WEAPON );
                pilot_weapSetAdd( p, wgt->weapons, &os[ret], 0 );
-               pilot_weapSetType( p, wgt->weapons, WEAPSET_TYPE_ACTIVE );
+               pilot_weapSetType( p, wgt->weapons, WEAPSET_TYPE_TOGGLE );
             }
             /* Case change weapon groups or active weapon. */
             else {
@@ -1057,7 +1057,7 @@ static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
                if (pilot_weapSetTypeCheck( p, wgt->weapons) == WEAPSET_TYPE_CHANGE)
                   pilot_weapSetType( p, wgt->weapons, WEAPSET_TYPE_CHANGE );
                else {
-                  pilot_weapSetType( p, wgt->weapons, WEAPSET_TYPE_WEAPON );
+                  pilot_weapSetType( p, wgt->weapons, WEAPSET_TYPE_ACTIVE );
                   level = 0;
                }
                pilot_weapSetAdd( p, wgt->weapons, &os[ret], level );

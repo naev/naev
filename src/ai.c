@@ -2934,7 +2934,7 @@ static int aiL_weapSet( lua_State *L )
 
    ws = &p->weapon_sets[id];
 
-   if (ws->type == WEAPSET_TYPE_ACTIVE) {
+   if (ws->type == WEAPSET_TYPE_TOGGLE) {
       /* Check if outfit is on */
       int on = 1;
       int l  = array_size(ws->slots);
