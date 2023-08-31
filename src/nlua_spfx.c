@@ -677,6 +677,7 @@ void spfxL_renderbg( double dt )
    for (int i=0; i<array_size(lua_spfx); i++) {
       vec2 pos;
       LuaSpfxData_t *ls = &lua_spfx[i];
+      double r = ls->radius;
 
       /* Skip no rendering. */
       if ((ls->render_bg == LUA_NOREF) || (ls->flags & SPFX_CLEANUP))
@@ -684,6 +685,13 @@ void spfxL_renderbg( double dt )
 
       /* Convert coordinates. */
       gl_gameToScreenCoords( &pos.x, &pos.y, ls->pos.x, ls->pos.y );
+
+      /* If radius is defined see if in screen. */
+      if ((r > 0.) && ((pos.x < -r) || (pos.y < -r) ||
+            (pos.x > SCREEN_W+r) || (pos.y > SCREEN_H+r)))
+         continue;
+
+      /* Invert y axis. */
       pos.y = SCREEN_H-pos.y;
 
       /* Render. */
