@@ -667,10 +667,7 @@ void spfxL_update( double dt )
    spfx_unlock();
 }
 
-/**
- * @brief Renders the Lua SPFX on the background.
- */
-void spfxL_renderbg( double dt )
+static void spfxL_renderLayer( int func, const char *funcname, double dt )
 {
    double z = cam_getZoom();
    spfx_lock();
@@ -678,9 +675,22 @@ void spfxL_renderbg( double dt )
       vec2 pos;
       LuaSpfxData_t *ls = &lua_spfx[i];
       double r = ls->radius;
+      int funcref;
+
+      switch (func) {
+         case 0:
+            funcref = ls->render_bg;
+            break;
+         case 1:
+            funcref = ls->render_mg;
+            break;
+         case 2:
+            funcref = ls->render_fg;
+            break;
+      }
 
       /* Skip no rendering. */
-      if ((ls->render_bg == LUA_NOREF) || (ls->flags & SPFX_CLEANUP))
+      if ((funcref == LUA_NOREF) || (ls->flags & SPFX_CLEANUP))
          continue;
 
       /* Convert coordinates. */
@@ -695,18 +705,26 @@ void spfxL_renderbg( double dt )
       pos.y = SCREEN_H-pos.y;
 
       /* Render. */
-      lua_rawgeti( naevL, LUA_REGISTRYINDEX, ls->render_bg );
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, funcref );
       lua_pushspfx( naevL, ls->id );
       lua_pushnumber( naevL, pos.x );
       lua_pushnumber( naevL, pos.y );
       lua_pushnumber( naevL, z );
       lua_pushnumber( naevL, dt );
       if (lua_pcall( naevL, 5, 0, 0) != 0) {
-         WARN(_("Spfx failed to run 'renderbg':\n%s"), lua_tostring( naevL, -1 ));
+         WARN(_("Spfx failed to run '%s':\n%s"), funcname, lua_tostring( naevL, -1 ));
          lua_pop( naevL, 1 );
       }
    }
    spfx_unlock();
+}
+
+/**
+ * @brief Renders the Lua SPFX on the background.
+ */
+void spfxL_renderbg( double dt )
+{
+   spfxL_renderLayer( 0, "renderbg", dt );
 }
 
 /**
@@ -714,41 +732,7 @@ void spfxL_renderbg( double dt )
  */
 void spfxL_rendermg( double dt )
 {
-   double z = cam_getZoom();
-   spfx_lock();
-   for (int i=0; i<array_size(lua_spfx); i++) {
-      vec2 pos;
-      LuaSpfxData_t *ls = &lua_spfx[i];
-      double r = ls->radius;
-
-      /* Skip no rendering. */
-      if ((ls->render_mg == LUA_NOREF) || (ls->flags & SPFX_CLEANUP))
-         continue;
-
-      /* Convert coordinates. */
-      gl_gameToScreenCoords( &pos.x, &pos.y, ls->pos.x, ls->pos.y );
-
-      /* If radius is defined see if in screen. */
-      if ((r > 0.) && ((pos.x < -r) || (pos.y < -r) ||
-            (pos.x > SCREEN_W+r) || (pos.y > SCREEN_H+r)))
-         continue;
-
-      /* Invert y axis. */
-      pos.y = SCREEN_H-pos.y;
-
-      /* Render. */
-      lua_rawgeti( naevL, LUA_REGISTRYINDEX, ls->render_mg );
-      lua_pushspfx( naevL, ls->id );
-      lua_pushnumber( naevL, pos.x );
-      lua_pushnumber( naevL, pos.y );
-      lua_pushnumber( naevL, z );
-      lua_pushnumber( naevL, dt );
-      if (lua_pcall( naevL, 5, 0, 0) != 0) {
-         WARN(_("Spfx failed to run 'rendermg':\n%s"), lua_tostring( naevL, -1 ));
-         lua_pop( naevL, 1 );
-      }
-   }
-   spfx_unlock();
+   spfxL_renderLayer( 1, "rendermg", dt );
 }
 
 /**
@@ -756,41 +740,7 @@ void spfxL_rendermg( double dt )
  */
 void spfxL_renderfg( double dt )
 {
-   double z = cam_getZoom();
-   spfx_lock();
-   for (int i=0; i<array_size(lua_spfx); i++) {
-      vec2 pos;
-      LuaSpfxData_t *ls = &lua_spfx[i];
-      double r = ls->radius;
-
-      /* Skip no rendering. */
-      if ((ls->render_fg == LUA_NOREF) || (ls->flags & SPFX_CLEANUP))
-         continue;
-
-      /* Convert coordinates. */
-      gl_gameToScreenCoords( &pos.x, &pos.y, ls->pos.x, ls->pos.y );
-
-      /* If radius is defined see if in screen. */
-      if ((r > 0.) && ((pos.x < -r) || (pos.y < -r) ||
-            (pos.x > SCREEN_W+r) || (pos.y > SCREEN_H+r)))
-         continue;
-
-      /* Invert y axis. */
-      pos.y = SCREEN_H-pos.y;
-
-      /* Render. */
-      lua_rawgeti( naevL, LUA_REGISTRYINDEX, ls->render_fg );
-      lua_pushspfx( naevL, ls->id );
-      lua_pushnumber( naevL, pos.x );
-      lua_pushnumber( naevL, pos.y );
-      lua_pushnumber( naevL, z );
-      lua_pushnumber( naevL, dt );
-      if (lua_pcall( naevL, 5, 0, 0) != 0) {
-         WARN(_("Spfx failed to run 'renderfg':\n%s"), lua_tostring( naevL, -1 ));
-         lua_pop( naevL, 1 );
-      }
-   }
-   spfx_unlock();
+   spfxL_renderLayer( 2, "rendermg", dt );
 }
 
 /**
