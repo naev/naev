@@ -834,10 +834,12 @@ static int pilotL_remove( lua_State *L )
 /**
  * @brief Removes a pilot as if it exploded.
  *
+ * Note that this triggers the exploded hook which can cause the explosion to fail unlike pilot.rm.
+ *
  * @usage p:exploded() -- pilot will be destroyed
  *
  *    @luatparam Pilot p Pilot to remove.
- *    @luatreturn boolean true if exploded succeeded, false otherwise
+ *    @luatreturn boolean true if exploded succeeded, false otherwise (such as when stopped by a hook).
  * @luafunc explode
  */
 static int pilotL_explode( lua_State *L )
