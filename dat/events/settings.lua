@@ -30,10 +30,10 @@ function create ()
       uselanes_jump = true
       var.push( "autonav_uselanes_jump", true )
    end
-   reset_shield = var.peek("autonav_reset_shield")
-   reset_dist = var.peek("autonav_reset_dist")
-   compr_speed = var.peek("autonav_compr_speed")
-   compr_max = var.peek("autonav_compr_max")
+   reset_shield = var.peek("autonav_reset_shield") or 1
+   reset_dist = var.peek("autonav_reset_dist") or 3e3
+   compr_speed = var.peek("autonav_compr_speed") or 5e3
+   compr_max = var.peek("autonav_compr_max") or 50
 
    -- Set an info button up
    player.infoButtonRegister( _("Settings"), settings, 1, "A" )
