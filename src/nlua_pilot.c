@@ -66,6 +66,7 @@ static PilotOutfitSlot *luaL_checkslot( lua_State *L, Pilot *p, int idx );
 static int pilotL_add( lua_State *L );
 static int pilotL_clone( lua_State *L );
 static int pilotL_remove( lua_State *L );
+static int pilotL_explode( lua_State *L );
 static int pilotL_clear( lua_State *L );
 static int pilotL_clearSelect( lua_State *L );
 static int pilotL_canSpawn( lua_State *L );
@@ -252,6 +253,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "add", pilotL_add },
    { "clone", pilotL_clone },
    { "rm", pilotL_remove },
+   { "explode", pilotL_explode },
    { "get", pilotL_getPilots },
    { "getAllies", pilotL_getAllies },
    { "getEnemies", pilotL_getEnemies },
@@ -828,6 +830,39 @@ static int pilotL_remove( lua_State *L )
 
    return 0;
 }
+
+/**
+ * @brief Removes a pilot as if it exploded.
+ *
+ * @usage p:exploded() -- pilot will be destroyed
+ *
+ *    @luatparam Pilot p Pilot to remove.
+ *    @luatreturn boolean true if exploded succeeded, false otherwise
+ * @luafunc explode
+ */
+static int pilotL_explode( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+
+   /* Run exploded hook that can be cancelled. */
+   pilot_setFlag( p, PILOT_EXPLODED );
+   pilot_runHook( p, PILOT_HOOK_EXPLODED );
+   if (!pilot_isFlag( p, PILOT_EXPLODED )) {
+      lua_pushboolean(L,0);
+      return 1;
+   }
+
+   /* Player is destroyed. */
+   if (pilot_isPlayer(p))
+      player_destroyed();
+
+   /* Deletes the pilot. */
+   pilot_delete(p);
+
+   lua_pushboolean(L,1);
+   return 0;
+}
+
 /**
  * @brief Removes all pilots belonging to a faction from the system.
  *
