@@ -639,10 +639,10 @@ const char* space_getRndSpob( int landable, unsigned int services,
       for (int j=0; j<array_size(systems_stack[i].spobs); j++) {
          Spob *pnt = systems_stack[i].spobs[j];
 
-         if (services && spob_hasService(pnt, services) != services)
+         if (services && (spob_hasService(pnt, services) != services))
             continue;
 
-         if (filter != NULL && !filter(pnt))
+         if ((filter != NULL) && !filter(pnt))
             continue;
 
          array_push_back( &tmp, pnt );
