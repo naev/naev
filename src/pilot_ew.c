@@ -39,8 +39,8 @@ static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close, in
  */
 double pilot_ewScanTime( const Pilot *p )
 {
-   /* Here larger is "better", so we divide by ew_hide instead of multiplying. */
-   return pow( p->solid.mass, 1./3. ) * 1.25 / p->stats.ew_hide * p->stats.ew_scanned_time;
+   /* Here larger is "better", so we divide by ew_hide and ew_evade instead of multiplying. */
+   return pow( p->solid.mass, 1./3. ) * 1.25 / (p->stats.ew_hide * p->stats.ew_evade) * p->stats.ew_scanned_time;
 }
 
 /**
