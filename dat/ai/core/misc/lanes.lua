@@ -452,13 +452,13 @@ function lanes.getRoute( L, target, pos )
    local S = dijkstra_full( lv, le, tv, sv )
 
    -- No path or target is closer so just go straight
-   if #S == 0 or S[1]:dist(target) > 1e-5 then
+   if #S==0 or pos:dist2( S[1] ) > pos:dist2(target) then
       return { target }
    end
 
    -- Add the final point if necessary (it is only approximated due to
    -- djistra)
-   if S[#S]:dist( target ) > 1e-5 then
+   if S[#S]:dist2( target ) > 1e-5 then
       table.insert( S, target )
    end
 
