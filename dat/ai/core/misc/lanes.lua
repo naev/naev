@@ -451,8 +451,8 @@ function lanes.getRoute( L, target, pos )
    local tv = nearestVertex( lv, target )
    local S = dijkstra_full( lv, le, tv, sv )
 
-   -- No path so just go straight
-   if #S == 0 then
+   -- No path or target is closer so just go straight
+   if #S == 0 or S[1]:dist(target) > 1e-5 then
       return { target }
    end
 
