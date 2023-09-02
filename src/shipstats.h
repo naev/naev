@@ -239,8 +239,8 @@ typedef struct ShipStats_ {
 
    /* Stealth. */
    double ew_hide;         /**< Electronic warfare hide modifier. */
-   double ew_evade;
-   double ew_stealth;
+   double ew_signature;    /**< Electronic warfare signature modifier. */
+   double ew_stealth;      /**< Electronic warfare stealth modifier. */
    double ew_detect;       /**< Electronic warfare detection modifier. */
    double ew_track;
    double ew_jump_detect;  /**< Electronic warfare jump point detection modifier. */

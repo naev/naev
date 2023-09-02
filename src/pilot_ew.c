@@ -39,8 +39,8 @@ static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close, in
  */
 double pilot_ewScanTime( const Pilot *p )
 {
-   /* Here larger is "better", so we divide by ew_hide and ew_evade instead of multiplying. */
-   return pow( p->solid.mass, 1./3. ) * 1.25 / (p->stats.ew_hide * p->stats.ew_evade) * p->stats.ew_scanned_time;
+   /* Here larger is "better", so we divide by ew_hide and ew_signature instead of multiplying. */
+   return pow( p->solid.mass, 1./3. ) * 1.25 / (p->stats.ew_hide * p->stats.ew_signature) * p->stats.ew_scanned_time;
 }
 
 /**
@@ -81,7 +81,7 @@ int pilot_ewScanCheck( const Pilot *p )
 static void pilot_ewUpdate( Pilot *p )
 {
    p->ew_detection = p->ew_mass * p->ew_asteroid * p->stats.ew_hide;
-   p->ew_signature   = p->ew_detection * 0.75 * ew_interference * p->stats.ew_evade;
+   p->ew_signature   = p->ew_detection * 0.75 * ew_interference * p->stats.ew_signature;
    /* For stealth we apply the ew_asteroid and ew_interference bonus outside of the max, so that it can go below 1000 with in-system features. */
    p->ew_stealth   = MAX( 1000., p->ew_mass * p->stats.ew_hide * 0.25 * p->stats.ew_stealth ) * p->ew_asteroid * ew_interference * p->ew_jumppoint;
 }
@@ -226,7 +226,7 @@ int pilot_inRange( const Pilot *p, double x, double y )
    if (d < pow2(sense))
       return 1;
    /* points can't evade.
-   sense = MAX( 0., sr * p->stats.ew_evade );
+   sense = MAX( 0., sr * p->stats.ew_signature );
    if (d > pow2(sense))
       return -1;
    */
