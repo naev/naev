@@ -103,7 +103,7 @@ They lean forward and get a bit more serious.
    }
 
    vn.label("stealthtut")
-   g(_([["Oh boy, you're not going to deliver this cake in one piece without stealth. It's very simple. All ships have three main statistics: range they are detected at, evasion range, and stealth range. Detection determines how far away ships can detect your presence, while evasion range controls how well they can target your ship and identify it. When within evasion range, ships can then scan you which does nasty things like melting cakes."]]))
+   g(_([["Oh boy, you're not going to deliver this cake in one piece without stealth. It's very simple. All ships have three main statistics: range they are detected at, signature range, and stealth range. Detection determines how far away ships can detect your presence, while signature range controls how well they can target your ship and identify it. When within signature range, ships can then scan you which does nasty things like melting cakes."]]))
    g(fmt.f(_([["To avoid getting spotted and scanned, you can go into stealth with {key}. When in stealth, you move much slower than normal, however, ships can only detect you when they are within your stealth range. No detection, no scanning, no problems. You can only stealth if there are no ships nearby, and it is easier to stealth in asteroids or systems with interference. And if you get detected while in stealth, your cover will be blown."]]),
       {key=string.format("#b%s#0",naev.keyGet("stealth"))}))
    g(fmt.f(_([["So as long as you stealth with {key} and stay away from ships, you won't be scanned and the cake will be alright."]]),

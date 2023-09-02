@@ -81,7 +81,7 @@ int pilot_ewScanCheck( const Pilot *p )
 static void pilot_ewUpdate( Pilot *p )
 {
    p->ew_detection = p->ew_mass * p->ew_asteroid * p->stats.ew_hide;
-   p->ew_evasion   = p->ew_detection * 0.75 * ew_interference * p->stats.ew_evade;
+   p->ew_signature   = p->ew_detection * 0.75 * ew_interference * p->stats.ew_evade;
    /* For stealth we apply the ew_asteroid and ew_interference bonus outside of the max, so that it can go below 1000 with in-system features. */
    p->ew_stealth   = MAX( 1000., p->ew_mass * p->stats.ew_hide * 0.25 * p->stats.ew_stealth ) * p->ew_asteroid * ew_interference * p->ew_jumppoint;
 }
@@ -122,7 +122,7 @@ void pilot_ewUpdateDynamic( Pilot *p, double dt )
       return;
 
    /* Must be in evasion range. */
-   if (vec2_dist2( &p->solid.pos, &t->solid.pos ) < pow2( MAX( 0., p->stats.ew_detect * p->stats.ew_track * t->ew_evasion ) )) {
+   if (vec2_dist2( &p->solid.pos, &t->solid.pos ) < pow2( MAX( 0., p->stats.ew_detect * p->stats.ew_track * t->ew_signature ) )) {
       p->scantimer -= dt;
 
       if (p->scantimer < 0.) {
@@ -261,7 +261,7 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2 )
 
    /* No stealth so normal detection. */
    d = (dist2!=NULL ? *dist2 : vec2_dist2( &p->solid.pos, &target->solid.pos ) );
-   if (d < pow2( MAX( 0., p->stats.ew_detect * p->stats.ew_track * target->ew_evasion )))
+   if (d < pow2( MAX( 0., p->stats.ew_detect * p->stats.ew_track * target->ew_signature )))
       return 1;
    else if  (d < pow2( MAX( 0., p->stats.ew_detect * target->ew_detection )))
       return -1;
@@ -389,7 +389,7 @@ int pilot_inRangeJump( const Pilot *p, int i )
 double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double trackmin, double trackmax )
 {
    double mod = p->stats.ew_track * p->stats.ew_detect;
-   return CLAMP( 0., 1., (t->ew_evasion * mod - trackmin) / (trackmax - trackmin) );
+   return CLAMP( 0., 1., (t->ew_signature * mod - trackmin) / (trackmax - trackmin) );
 }
 
 /**

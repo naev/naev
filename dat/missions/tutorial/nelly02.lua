@@ -548,7 +548,7 @@ She frowns.
    nel(_([["I'll try to be brief. So ship sensors are based on detecting gravitational anomalies, and thus the mass of a ship plays a critical role in being detected. Smaller ships like yachts or interceptors are much harder to detect than carriers or battleship."]]))
    nel(p_("Nelly", [["Each ship has three important electronic warfare statistics:
 - #oDetection#0 determines the distance at which a ship appears on the radar.
-- #oEvasion#0 determines the distance at which a ship is fully detected, that is, ship type and faction are visible. It also plays a role in how missiles and weapons track the ship.
+- #oSignature#0 determines the distance at which a ship is fully detected, that is, ship type and faction are visible. It also plays a role in how missiles and weapons track the ship.
 - #oStealth#0 determines the distance at which the ship is undetected when in stealth mode"]]))
    nel(fmt.f(_([["You can activate stealth mode with {stealthkey} when far enough away from other ships. When stealthed, your ship will be completely invisible to all ships. However, if a ship gets within the #ostealth#0 distance of your ship, it will slowly uncover you."]]),{stealthkey=tut.getKey("stealth")}))
    nel(_([["Besides making your ship invisible to other ships, #ostealth#0 slows down your ship heavily to mask your gravitational presence. This also has the effect of letting you jump out from jumpoints further away."]]))

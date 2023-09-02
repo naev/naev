@@ -22,7 +22,7 @@ local sgoddard    = ship.get("Goddard")
 local function _advert( p )
    -- They want to be seen
    p:intrinsicSet( "ew_hide", 300 )
-   p:intrinsicSet( "ew_evade", 300 )
+   p:intrinsicSet( "ew_signature", 300 )
 end
 
 local function spawn_advert ()

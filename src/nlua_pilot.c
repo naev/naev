@@ -112,7 +112,7 @@ static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
 static int pilotL_isStopped( lua_State *L );
 static int pilotL_dir( lua_State *L );
-static int pilotL_evasion( lua_State *L );
+static int pilotL_signature( lua_State *L );
 static int pilotL_temp( lua_State *L );
 static int pilotL_mass( lua_State *L );
 static int pilotL_thrust( lua_State *L );
@@ -296,7 +296,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "vel", pilotL_velocity },
    { "isStopped", pilotL_isStopped },
    { "dir", pilotL_dir },
-   { "evasion", pilotL_evasion },
+   { "signature", pilotL_signature },
    { "temp", pilotL_temp },
    { "mass", pilotL_mass },
    { "thrust", pilotL_thrust },
@@ -2634,18 +2634,18 @@ static int pilotL_isStopped( lua_State *L )
 }
 
 /**
- * @brief Gets the pilot's evasion.
+ * @brief Gets the pilot's signature.
  *
- * @usage d = p:evasion()
+ * @usage d = p:signature()
  *
- *    @luatparam Pilot p Pilot to get the evasion of.
- *    @luatreturn number The pilot's current evasion value.
- * @luafunc evasion
+ *    @luatparam Pilot p Pilot to get the signature of.
+ *    @luatreturn number The pilot's current signature value.
+ * @luafunc signature
  */
-static int pilotL_evasion( lua_State *L )
+static int pilotL_signature( lua_State *L )
 {
    const Pilot *p = luaL_validpilot(L,1);
-   lua_pushnumber( L, p->ew_evasion );
+   lua_pushnumber( L, p->ew_signature );
    return 1;
 }
 
@@ -4641,7 +4641,7 @@ static int pilotL_getStats( lua_State *L )
    PUSH_DOUBLE( L, "energy_regen", p->energy_regen );
    /* Stats. */
    PUSH_DOUBLE( L, "ew_detection", p->ew_detection );
-   PUSH_DOUBLE( L, "ew_evasion", p->ew_evasion );
+   PUSH_DOUBLE( L, "ew_signature", p->ew_signature );
    PUSH_DOUBLE( L, "ew_stealth", p->ew_stealth );
    PUSH_DOUBLE( L, "jump_delay", ntime_convertSeconds( pilot_hyperspaceDelay(p) ) );
    PUSH_INT( L, "jumps", pilot_getJumps(p) );
