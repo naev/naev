@@ -1532,7 +1532,7 @@ int space_needsEffects (void)
 void space_init( const char* sysname, int do_simulate )
 {
    int n, s;
-   const double fps_min_simulation = fps_min * 2.;
+   const double fps_min_simulation = fps_min;
    StarSystem *oldsys = cur_system;
 
    /* cleanup some stuff */
