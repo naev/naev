@@ -511,15 +511,20 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
 
    /* Check if already there. */
    for (int i=0; i<array_size(ws->slots); i++) {
-      if (ws->slots[i].slotid == o->id) {
-         ws->slots[i].level = level;
+      if (ws->slots[i].slotid != o->id)
+         continue;
 
-         /* Update if needed. */
-         if (id == p->active_set)
-            pilot_weapSetUpdateOutfits( p, ws );
-         return;
-      }
+      ws->slots[i].level = level;
+
+      /* Update if needed. */
+      if (id == p->active_set)
+         pilot_weapSetUpdateOutfits( p, ws );
+      return;
    }
+
+   /* See if we have to change weapon set type. */
+   if ((ws->type == WEAPSET_TYPE_CHANGE) && outfit_isWeapon(oo))
+      pilot_weapSetType( p, id, WEAPSET_TYPE_ACTIVE );
 
    /* Add it. */
    slot        = &array_grow( &ws->slots );
