@@ -42,7 +42,7 @@ function params.default( overwrite )
       -- Weapon stuff
       t_absorb    = 0.2, -- assumed target absorption
       t_speed     = 250, -- assumed target speed
-      t_track     = 10e3, -- ew_evasion enemies we want to target
+      t_track     = 10e3, -- ew_signature enemies we want to target
       duration    = 15, -- estimated fight time duration
       range       = 2e3, -- ideal minimum range we want
       damage      = 1, -- weight for normal damage

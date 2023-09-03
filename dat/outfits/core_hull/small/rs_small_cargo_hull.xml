@@ -18,7 +18,7 @@
   <cargo_inertia>-10</cargo_inertia>
   <cargo_mod>10</cargo_mod>
   <ew_hide>25</ew_hide>
-  <ew_evade>-25</ew_evade>
+  <ew_signature>-25</ew_signature>
   <jam_chance>42</jam_chance>
  </specific>
 </outfit>

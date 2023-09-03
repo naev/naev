@@ -43,7 +43,7 @@ typedef enum ShipStatsType_ {
 
    /* Electronic warfare. */
    SS_TYPE_D_EW_HIDE,         /**< Electronic warfare hide modifier. (affects ew_detection) */
-   SS_TYPE_D_EW_EVADE,        /**< Electronic warfare evasion modifier. (affects ew_evasion) */
+   SS_TYPE_D_EW_SIGNATURE,    /**< Electronic warfare signature modifier. (affects ew_signature) */
    SS_TYPE_D_EW_STEALTH,      /**< Electronic warfare stealth modifier. (affects ew_stealth) */
    SS_TYPE_D_EW_DETECT,       /**< Electronic warfare detection modifier. */
    SS_TYPE_D_EW_TRACK,        /**< Electronic warfare tracking modifier. */
@@ -239,8 +239,8 @@ typedef struct ShipStats_ {
 
    /* Stealth. */
    double ew_hide;         /**< Electronic warfare hide modifier. */
-   double ew_evade;
-   double ew_stealth;
+   double ew_signature;    /**< Electronic warfare signature modifier. */
+   double ew_stealth;      /**< Electronic warfare stealth modifier. */
    double ew_detect;       /**< Electronic warfare detection modifier. */
    double ew_track;
    double ew_jump_detect;  /**< Electronic warfare jump point detection modifier. */
