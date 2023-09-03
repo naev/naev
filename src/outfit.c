@@ -463,6 +463,22 @@ int outfit_isToggleable( const Outfit *o )
 }
 
 /**
+ * @brief Checks to see if an outfit is a weapon.
+ *    @param o Outfit to check.
+ *    @return 1 if o is a weapon.
+ */
+int outfit_isWeapon( const Outfit *o )
+{
+   return ( (o->type==OUTFIT_TYPE_BOLT) ||
+            (o->type==OUTFIT_TYPE_BEAM) ||
+            (o->type==OUTFIT_TYPE_TURRET_BOLT) ||
+            (o->type==OUTFIT_TYPE_TURRET_BEAM) ||
+            (o->type==OUTFIT_TYPE_LAUNCHER) ||
+            (o->type==OUTFIT_TYPE_TURRET_LAUNCHER) ||
+            (o->type==OUTFIT_TYPE_FIGHTER_BAY));
+}
+
+/**
  * @brief Checks if outfit is a fixed mounted weapon.
  *    @param o Outfit to check.
  *    @return 1 if o is a weapon (beam/bolt).
