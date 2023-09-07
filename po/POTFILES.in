@@ -3254,6 +3254,7 @@ dat/scripts/colour.lua
 dat/scripts/common/achack.lua
 dat/scripts/common/antlejos.lua
 dat/scripts/common/baron.lua
+dat/scripts/common/bounty.lua
 dat/scripts/common/cargo.lua
 dat/scripts/common/census.lua
 dat/scripts/common/comm.lua
