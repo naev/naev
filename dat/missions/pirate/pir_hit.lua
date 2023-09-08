@@ -109,7 +109,11 @@ function create ()
    -- Set mission details
    misn.setTitle( fmt.f( pir.prefix(mem.paying_faction)..misn_title[mem.level], {sys=mem.missys} ) )
 
-   local mdesc = fmt.f( _("A meddlesome {fct} pilot known as {plt} was recently seen in the {sys} system. Local crime lords want this pilot dead. {plt} is known to be flying a {shipclass}-class ship. The pilot may disappear if you take too long to reach the {sys} system.{msg}"), {fct=_(mem.target_faction), plt=mem.name, sys=mem.missys, shipclass=_(ship.get(mem.pship):classDisplay()), msg=faction_text } )
+   local mdesc = fmt.f( _([[A meddlesome {fct} pilot known as {plt} was recently seen in the {sys} system. Local crime lords want this pilot dead. {plt} is known to be flying a {shipclass}-class ship. The pilot may disappear if you take too long to reach the {sys} system.{msg}
+
+#Target:#0 {plt} ({shipclass}-class ship)
+#nWanted:#0 Dead
+#nLast Seen:#0 {sys} system]]), {fct=_(mem.target_faction), plt=mem.name, sys=mem.missys, shipclass=_(ship.get(mem.pship):classDisplay()), msg=faction_text } )
    if not pir.factionIsPirate( spob.cur():faction() ) then
       -- We're not on a pirate stronghold, so include a clear warning that the
       -- mission is in fact illegal.
