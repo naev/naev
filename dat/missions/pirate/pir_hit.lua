@@ -37,6 +37,35 @@ misn_title[4] = _("Big Assassination Job in {sys}")
 misn_title[5] = _("Dangerous Assassination Job in {sys}")
 misn_title[6] = _("Highly Dangerous Assassination Job in {sys}")
 
+-- Reasons
+local reason_list = {
+   _(" for excessive amounts of pineapple on pizza"),
+   _(" for messing with 'the business'"),
+   _(" for cozying up to the wrong pirate clans"),
+   _(" for increasing their bribe fees"),
+   _(" for being too nosy"),
+   _(" for winning in blackjack"),
+   _(" for being a beacon of order and peace"),
+   _(" for thwarting piracy"),
+   _(" for not respecting the pirate code"),
+   _(" for throwing out pineapple pizza"),
+   _(" for being a tool of bourgeoisie oppression"),
+   _(" for putting fellow pirates in prison"),
+   _(" for being an asshole"),
+   _(" for taking a Pirate Lord's landing spot"),
+   _(" for abandoning a pet cat"),
+   _(" for using pirates as scapegoats in insurance fraud and not giving a cut of the share"),
+   _(" for disrespecting poor people"),
+   _(" for fomenting class warfare"),
+   _(" for not respecting human freedom"),
+   _(" for just being a piece of shit human"),
+   _(" for spitting sunflower seeds on the space station floor"),
+   _(" for not properly recycling their garbage"),
+   _(" for hosting a lame party"),
+   _(" for raising tariffs on cheese imports"),
+   _(" for making fun of the space pirate shanty"),
+}
+
 local hunters = {}
 local hunter_hits = {}
 
@@ -106,14 +135,18 @@ function create ()
    mem.level = level_setup()
    mem.pship, mem.credits, mem.reputation = bounty_setup()
 
+   -- Get reason
+   local reason = reason_list[ rnd.rnd(1,#reason_list) ]
+
    -- Set mission details
    misn.setTitle( fmt.f( pir.prefix(mem.paying_faction)..misn_title[mem.level], {sys=mem.missys} ) )
 
-   local mdesc = fmt.f( _([[A meddlesome {fct} pilot known as {plt} was recently seen in the {sys} system. Local crime lords want this pilot dead. {plt} is known to be flying a {shipclass}-class ship. The pilot may disappear if you take too long to reach the {sys} system.{msg}
+   local mdesc = fmt.f( _([[A meddlesome {fct} pilot known as {plt} was recently seen in the {sys} system. Local crime lords want this pilot dead{reason}. {plt} is known to be flying a {shipclass}-class ship. The pilot may disappear if you take too long to reach the {sys} system.{msg}
 
 #nTarget:#0 {plt} ({shipclass}-class ship)
 #nWanted:#0 Dead
-#nLast Seen:#0 {sys} system]]), {fct=_(mem.target_faction), plt=mem.name, sys=mem.missys, shipclass=_(ship.get(mem.pship):classDisplay()), msg=faction_text } )
+#nLast Seen:#0 {sys} system]]),
+      {fct=_(mem.target_faction), plt=mem.name, sys=mem.missys, shipclass=_(ship.get(mem.pship):classDisplay()), msg=faction_text, reason=reason } )
    if pir.factionIsClan(mem.paying_faction) then
       mdesc = mdesc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
          {fct=mem.paying_faction})
