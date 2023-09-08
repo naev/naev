@@ -906,7 +906,8 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (KEY("approach") && INGAME() && NOHYP() && NOLAND() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) {
          player_restoreControl( 0, NULL );
-         int board_status = player_tryBoard(0);
+         /* Only do noisy if there is no land target. */
+         int board_status = player_tryBoard( player.p->nav_spob<0 );
          if (board_status == PLAYER_BOARD_RETRY)
             player_board();
          else {
