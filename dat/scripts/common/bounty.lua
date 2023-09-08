@@ -97,6 +97,7 @@ function bounty.init( system, targetname, targetship, targetfaction, reward, par
    b.targetfactionfunc = params.targetfactionfunc
    b.payingfaction   = params.payingfaction or faction.get("Independent")
    b.jumps_permitted = params.jumps_permitted or (system.cur():jumpDist(b.system) + rnd.rnd(3,5))
+   b.alive_only      = params.alive_only
    -- Custom messages (can be tables of messages from which one will be chosen)
    b.msg_subdue      = params.msg_subdue or msg_subdue_def
    b.msg_kill        = params.msg_killed or msg_killed_def
@@ -210,6 +211,19 @@ end
 function _bounty_disable ()
 end
 
+-- Succeed the mission, make the player head to a planet for pay
+function succeed ()
+   local b = mem._bounty
+
+   b.job_done = true
+   misn.osdActive( 3 )
+   if b.marker ~= nil then
+      misn.markerRm( b.marker )
+   end
+   hook.rm( b.pir_jump_hook )
+   hook.rm( b.pir_land_hook )
+end
+
 function _bounty_board ()
    local b = mem._bounty
 
@@ -244,8 +258,12 @@ function _bounty_attacked( _p, attacker, dmg )
    end
 end
 
-function pilot_death( _p, attacker )
+function _bounty_death( _p, attacker )
    local b = mem._bounty
+
+   if b.alive_only then
+      lmisn.fail( fmt.f( _("{plt} has been killed."), {plt=mem.name} ) )
+   end
 
    if attacker and attacker:withPlayer() then
       succeed()
@@ -286,7 +304,7 @@ function pilot_death( _p, attacker )
    end
 end
 
-function pilot_jump ()
+function _bounty_jump ()
    local b = mem._bounty
    lmisn.fail( fmt.f( msg[1], {plt=b.targetname} ) )
 end
@@ -349,24 +367,11 @@ function spawn_bounty( params )
    hook.pilot( target_ship, "disable", "_bounty_disable" )
    hook.pilot( target_ship, "board", "_bounty_board" )
    hook.pilot( target_ship, "attacked", "_bounty_attacked" )
-   b.death_hook = hook.pilot( target_ship, "death", "pilot_death" )
-   b.pir_jump_hook = hook.pilot( target_ship, "jump", "pilot_jump" )
-   b.pir_land_hook = hook.pilot( target_ship, "land", "pilot_jump" )
+   b.death_hook = hook.pilot( target_ship, "death", "_bounty_death" )
+   b.pir_jump_hook = hook.pilot( target_ship, "jump", "_bounty_jump" )
+   b.pir_land_hook = hook.pilot( target_ship, "land", "_bounty_jump" )
 
    return target_ship
-end
-
--- Succeed the mission, make the player head to a planet for pay
-function succeed ()
-   local b = mem._bounty
-
-   b.job_done = true
-   misn.osdActive( 3 )
-   if b.marker ~= nil then
-      misn.markerRm( b.marker )
-   end
-   hook.rm( b.pir_jump_hook )
-   hook.rm( b.pir_land_hook )
 end
 
 return bounty

@@ -1,11 +1,11 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<mission name="Dead Or Alive Bounty">
+<mission name="Bounty">
  <priority>4</priority>
  <cond>
    return require("misn_test").mercenary()
  </cond>
- <chance>360</chance>
+ <chance>660</chance>
  <location>Computer</location>
  <faction>Dvaered</faction>
  <faction>Empire</faction>
@@ -43,10 +43,24 @@ local misn_title = {
    _("Dangerous Dead or Alive Bounty in {sys}"),
 }
 
-local desc_ref = _([[The pirate known as {pirname} was recently seen in the {sys} system. {fct} authorities want this pirate dead or alive. {pirname} is believed to be flying a {shipclass}-class ship. The pirate may disappear if you take too long to reach the {sys} system.
+local misn_desc = _([[The pirate known as {pirname} was recently seen in the {sys} system. {fct} authorities want this pirate dead or alive. {pirname} is believed to be flying a {shipclass}-class ship. The pirate may disappear if you take too long to reach the {sys} system.
 
 #nTarget:#0 {pirname} ({shipclass}-class ship)
 #nWanted:#0 Dead or Alive
+#nLast Seen:#0 {sys} system]])
+
+local misn_title_alive = {
+   _("Tiny Alive Bounty in {sys}"),
+   _("Small Alive Bounty in {sys}"),
+   _("Moderate Alive Bounty in {sys}"),
+   _("High Alive Bounty in {sys}"),
+   _("Dangerous Alive Bounty in {sys}"),
+}
+
+local misn_desc_alive = _([[The pirate known as {pirname} was recently seen in the {sys} system. {fct} authorities want this pirate alive. {pirname} is believed to be flying a {shipclass}-class ship. The pirate may disappear if you take too long to reach the {sys} system.
+
+#nTarget:#0 {pirname} ({shipclass}-class ship)
+#nWanted:#0 Alive
 #nLast Seen:#0 {sys} system]])
 
 -- luacheck: globals get_faction
@@ -131,6 +145,18 @@ function create ()
    local pname = pilotname.pirate()
    local pship, reward, reputation = bounty_setup()
 
+   -- See if alive only
+   local title, desc = misn_title, misn_desc
+   local osd_objective
+   local alive_only = (rnd.rnd() > 0.5)
+   if alive_only then
+      reward = reward * 1.5
+      reputation = reputation * 1.5
+      title = misn_title_alive
+      desc = misn_desc_alive
+      osd_objective = _("Capture {plt}")
+   end
+
    -- Faction prefix
    local prefix = ""
    if not payingfaction:static() then
@@ -138,20 +164,22 @@ function create ()
    end
 
    -- Set mission details
-   misn.setTitle( prefix..fmt.f(misn_title[mem.level], {sys=missys}) )
-   local desc = fmt.f( desc_ref,
+   misn.setTitle( prefix..fmt.f(title[mem.level], {sys=missys}) )
+   local mdesc = fmt.f( desc,
       {pirname=pname, sys=missys, fct=payingfaction, shipclass=_(ship.get(pship):classDisplay()) })
    if not payingfaction:static() then
-      desc = desc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
+      mdesc = mdesc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
          {fct=payingfaction})
    end
-   misn.setDesc( desc )
+   misn.setDesc( mdesc )
    misn.setReward( reward )
 
    bounty.init( missys, pname, pship, nil, reward, {
       payingfaction = payingfaction,
       reputation = reputation,
       targetfactionfunc = "get_faction", -- have to pass by name
+      alive_only = alive_only,
+      osd_objective = osd_objective,
    } )
 end
 
