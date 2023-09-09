@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-06-11 11:58+0900\n"
-"PO-Revision-Date: 2023-09-09 23:18+0000\n"
+"PO-Revision-Date: 2023-09-09 23:26+0000\n"
 "Last-Translator: Nicolas <nicolas.rr.arnaud@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev-0-10-x/"
 "fr/>\n"
@@ -107554,34 +107554,35 @@ msgstr "Invalid pilot hook type: '%s'"
 msgid ""
 "'creation' pilot hook can not be set on a specific pilot, only globally."
 msgstr ""
+"'creation' pilot hook can not be set on a specific pilot, only globally."
 
 #: src/nlua_jump.c:158 src/nlua_safelanes.c:126
 msgid "Jump is invalid"
-msgstr ""
+msgstr "Jump is invalid"
 
 #: src/nlua_jump.c:237
 msgid "No matching jump points found."
-msgstr ""
+msgstr "No matching jump points found."
 
 #: src/nlua_jump.c:286
 #, c-format
 msgid "Jump( %s -> %s )"
-msgstr ""
+msgstr "Saut( %s -> %s )"
 
 #: src/nlua_linopt.c:202
 msgid ""
 "Number of columns in a linear optimization problem must be greater than 0!"
 msgstr ""
+"Number of columns in a linear optimization problem must be greater than 0!"
 
 #: src/nlua_linopt.c:317
-#, fuzzy, c-format
-#| msgid "Unknown weapon status for '%s'"
+#, c-format
 msgid "Unknown column kind '%s'!"
-msgstr "Type de colonne inconnu '%s' !"
+msgstr "Unknown column kind '%s'!"
 
 #: src/nlua_linopt.c:389
 msgid "Table lengths don't match!"
-msgstr ""
+msgstr "Table lengths don't match!"
 
 #: src/nlua_linopt.c:714
 msgid "glpk: too over 1 second to optimize!"
