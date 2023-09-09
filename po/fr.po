@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-06-11 11:58+0900\n"
-"PO-Revision-Date: 2023-09-09 14:43+0000\n"
+"PO-Revision-Date: 2023-09-09 23:18+0000\n"
 "Last-Translator: Nicolas <nicolas.rr.arnaud@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev-0-10-x/"
 "fr/>\n"
@@ -1673,7 +1673,7 @@ msgstr ""
 #: dat/events/taiomi/find.lua:48 dat/events/taiomi/find.lua:60
 #: dat/missions/tutorial/nelly01.lua:330 dat/scripts/common/derelict.lua:19
 msgid "Derelict"
-msgstr "Vagabond"
+msgstr "Épave"
 
 #: dat/factions/dreamer_clan.xml:2
 msgid "Dreamer Clan"
@@ -8176,7 +8176,7 @@ msgstr ""
 #: dat/spob/vinooso.xml:42 dat/spob/vracha.xml:29 dat/spob/warnecke.xml:61
 #: dat/spob/wigheta.xml:31 dat/spob/wonclock.xml:48 dat/spob/zhiru.xml:46
 msgid "research"
-msgstr ""
+msgstr "recherche"
 
 #: dat/spob/abacus.xml:29 dat/spob/adrian.xml:29 dat/spob/ahmed.xml:43
 #: dat/spob/andors.xml:42 dat/spob/arrakis.xml:30 dat/spob/atalanta.xml:41
@@ -8197,7 +8197,7 @@ msgstr ""
 #: dat/spob/waldar.xml:47 dat/spob/waterholes_moon.xml:33 dat/spob/zesta.xml:28
 #: dat/spob/zhang_lu.xml:42 dat/spob/zuner.xml:32
 msgid "rural"
-msgstr ""
+msgstr "rural"
 
 #: dat/spob/adham.xml:2
 msgid "Adham"
@@ -8424,7 +8424,7 @@ msgstr ""
 #: dat/spob/warei.xml:36 dat/spob/wellen.xml:45 dat/spob/zalebus.xml:53
 #: dat/spob/zhiru.xml:45
 msgid "urban"
-msgstr ""
+msgstr "urbain"
 
 #: dat/spob/agino.xml:50 dat/spob/amphion.xml:30 dat/spob/atalanta.xml:42
 #: dat/spob/bolero.xml:53 dat/spob/cetrat.xml:40 dat/spob/colley.xml:32
@@ -8678,10 +8678,8 @@ msgstr "Structure"
 #: dat/spob/violin_station.xml:29 dat/spob/warnecke.xml:62
 #: dat/spob/wigheta.xml:32 dat/spob/wildwood_station.xml:30
 #: dat/spob/yak_station.xml:31
-#, fuzzy
-#| msgid "Utility"
 msgid "military"
-msgstr "Utilitaire"
+msgstr "Militaire"
 
 #: dat/spob/akios_station.xml:52 dat/spob/akra_station.xml:44
 #: dat/spob/allan.xml:29 dat/spob/alleyway.xml:30
@@ -9532,7 +9530,7 @@ msgstr ""
 
 #: dat/spob/andors_refining.xml:2
 msgid "Andors Refining"
-msgstr "Andors Refining"
+msgstr "Andors Raffinage"
 
 #: dat/spob/andors_refining.xml:24
 msgid ""
@@ -10119,7 +10117,7 @@ msgstr ""
 
 #: dat/spob/avoss.xml:2
 msgid "Avoss"
-msgstr ""
+msgstr "Avoss"
 
 #: dat/spob/avoss.xml:25
 msgid ""
@@ -10135,27 +10133,27 @@ msgstr ""
 
 #: dat/spob/awowa_iv.xml:2
 msgid "Awowa IV"
-msgstr ""
+msgstr "Awowa IV"
 
 #: dat/spob/awowa_v.xml:2
 msgid "Awowa V"
-msgstr ""
+msgstr "Awowa V"
 
 #: dat/spob/baba_yaga.xml:2
 msgid "Baba Yaga"
-msgstr ""
+msgstr "Baba Yaga"
 
 #: dat/spob/babylon_i.xml:2
 msgid "Babylon I"
-msgstr ""
+msgstr "Babylon I"
 
 #: dat/spob/babylon_ii.xml:2
 msgid "Babylon II"
-msgstr ""
+msgstr "Babylon II"
 
 #: dat/spob/babylon_iia.xml:2
 msgid "Babylon IIa"
-msgstr ""
+msgstr "Babylon IIa"
 
 #: dat/spob/baf_i.xml:2
 msgid "Baf I"
@@ -10192,13 +10190,13 @@ msgid ""
 "sent out to the defence forces. It also maintains a small contingent of "
 "Za'lek vessels at home to serve as a in-system guard."
 msgstr ""
-"Ces chantiers navals sont l'un des endroits où les navires Za'lek sont "
-"construits et envoyés aux forces de défense. Il maintient également un petit "
-"contingent de navires Za'lek chez lui pour servir de garde dans le système."
+"Ces chantiers sont l'un des endroits où les navires Za'lek sont construits "
+"et envoyés aux forces de défense. Il maintient également un petit contingent "
+"de vaisseaux Za'lek sur place pour servir de garde dans le système."
 
 #: dat/spob/beeklo_ii.xml:2
 msgid "Beeklo II"
-msgstr ""
+msgstr "Beeklo II"
 
 #: dat/spob/beene.xml:2
 msgid "Beene"
@@ -10212,6 +10210,12 @@ msgid ""
 "bioships. This supply of minerals means Beene is quite an important "
 "strategic location for Soromid fleets."
 msgstr ""
+"Beene est riche en toutes sortes de minéraux courants, et les Soromid "
+"utilisent donc ce monde comme n'importe qui le ferait : comme une source de "
+"matières premières. Les éléments extraits ici sont transformés en paquets "
+"standard utilisés par les vaisseaux biologiques soromides. Cet "
+"approvisionnement en minerais fait de Beene un lieu stratégique important "
+"pour les flottes soromides."
 
 #: dat/spob/beene.xml:30
 msgid ""
@@ -10224,7 +10228,7 @@ msgstr ""
 
 #: dat/spob/behemoth.xml:2
 msgid "Behemoth"
-msgstr ""
+msgstr "Behemoth"
 
 #: dat/spob/belltower_station.xml:2
 msgid "Belltower Station"
@@ -10298,7 +10302,7 @@ msgstr ""
 
 #: dat/spob/berkhere.xml:2
 msgid "Berkhere"
-msgstr ""
+msgstr "Berkhere"
 
 #: dat/spob/berkhere.xml:27
 msgid ""
@@ -10344,7 +10348,7 @@ msgstr ""
 
 #: dat/spob/bolero.xml:2
 msgid "Bolero"
-msgstr ""
+msgstr "Bolero"
 
 #: dat/spob/bolero.xml:29
 msgid ""
@@ -10356,6 +10360,14 @@ msgid ""
 "nostalgia to all those who were able to visit Earth before the Incident. "
 "However, some people avoid it for exactly the same reason…"
 msgstr ""
+"Bolero est l'une des planètes les plus prospères de l'Empire. La population "
+"y est prospère et les conditions climatiques y sont clémentes. Bien qu'elle "
+"soit encore considérée comme en arrière plan en raison de sa localisation, "
+"elle joue un rôle de plus en plus important dans la politique impériale. La "
+"popularité de Bolero s'explique en grande partie par son climat semblable à "
+"celui de la Terre, qui donne un sentiment de nostalgie rassurant à tous ceux "
+"qui ont pu visiter la Terre avant l'Incident. Cependant, certains l'évitent "
+"pour la même raison…"
 
 #: dat/spob/bolero.xml:30
 msgid ""
@@ -10366,6 +10378,13 @@ msgid ""
 "in with the patrons, with the majority of people looking like temporary "
 "visitors, either arriving for vacations or business trips."
 msgstr ""
+"Tirant le meilleur parti de la ressemblance de Boléro avec la Terre, le bar "
+"est un pub à l'ancienne, avec un plafond bas, de la bière chaude et de la "
+"bonne nourriture. L'atmosphère est chaleureuse et accueillante, les clients "
+"sont tous polis et joyeux et les videurs sont à peine visibles. Il semble y "
+"avoir relativement peu de locaux parmi les clients, la majorité des gens "
+"ayant l'air d'être des visiteurs temporaires, arrivant soit pour des "
+"vacances, soit pour des voyages d'affaires."
 
 #: dat/spob/bon_sebb.xml:2
 msgid "Bon Sebb"
@@ -25956,7 +25975,7 @@ msgstr "Pour la Frontière !"
 
 #: dat/ai/flf.lua:16
 msgid "You'll make great target practice!"
-msgstr "You'll make great target practice!"
+msgstr "Vous ferez un excellent exercice de tir !"
 
 #: dat/ai/flf.lua:17
 msgid "Purge the oppressors!"
@@ -25997,14 +26016,12 @@ msgstr "\"Les sauvages dans ton genre ne comprennent que la violence !\""
 
 #. Handle refueling.
 #: dat/ai/flf.lua:84
-#, fuzzy
-#| msgid "\"I can transfer some fuel for {credits}.\""
 msgid "\"I should be able to spare some fuel for {credits}.\""
-msgstr "\"Je peux transférer du carburant pour {credits}.\""
+msgstr "\"Je devrais pouvoir libérer un peu de carburant pour {credits}.\""
 
 #: dat/ai/flf.lua:86
 msgid "\"I can't spare fuel for you.\""
-msgstr ""
+msgstr "\"Je ne peux pas vous donner de carburant.\""
 
 #: dat/ai/frontier_police.lua:15
 msgid "\"The Frontier does not lower itself to common scum.\""
@@ -26312,11 +26329,11 @@ msgstr "À l'abordage !"
 
 #: dat/ai/pirate.lua:69
 msgid "Yohoho!"
-msgstr "Yohoho!"
+msgstr "Yohoho !"
 
 #: dat/ai/pirate.lua:70
 msgid "Arr!"
-msgstr "Arr!"
+msgstr "Arr !"
 
 #: dat/ai/pirate.lua:71
 msgid "What's a ship like you doing in a place like this?"
@@ -26365,7 +26382,7 @@ msgstr ""
 
 #: dat/ai/pirate.lua:82
 msgid "Nothing personal."
-msgstr "Ça n'a rien de personnel."
+msgstr "Rien de personnel."
 
 #: dat/ai/pirate.lua:83
 msgid "Just business."
@@ -27233,7 +27250,7 @@ msgstr ""
 #: src/info.c:1609 src/land_outfits.c:166 src/map.c:376 src/map_find.c:1022
 #: src/map_system.c:202
 msgid "Close"
-msgstr ""
+msgstr "Fermer"
 
 #: dat/board.lua:413 src/info.c:916
 msgid "Jettison"
@@ -31879,7 +31896,7 @@ msgstr ""
 #: dat/events/neutral/derelict.lua:79 dat/events/poi.lua:134
 #: dat/missions/neutral/poi_intro.lua:94
 msgid "Download the data"
-msgstr ""
+msgstr "Télécharger les données"
 
 #: dat/events/neutral/derelict.lua:85 dat/events/poi.lua:140
 msgid ""
@@ -31947,7 +31964,7 @@ msgstr ""
 #: dat/events/neutral/derelict.lua:229 dat/events/neutral/derelict.lua:284
 #: dat/missions/neutral/derelict_rescue.lua:28
 msgid "Empty derelict"
-msgstr ""
+msgstr "Épave vide"
 
 #: dat/events/neutral/derelict.lua:230
 msgid ""
@@ -31958,12 +31975,12 @@ msgstr ""
 
 #: dat/events/neutral/derelict.lua:231
 msgid "You searched an empty derelict in {sys}."
-msgstr ""
+msgstr "Vous avez recherché une épave vide dans {sys}."
 
 #: dat/events/neutral/derelict.lua:234 dat/events/neutral/derelict.lua:244
 #: dat/events/neutral/derelict.lua:274
 msgid "Distracting Derelict"
-msgstr ""
+msgstr "Épave Distrayante"
 
 #: dat/events/neutral/derelict.lua:235
 msgid ""
@@ -32536,7 +32553,7 @@ msgstr ""
 #. Create question
 #: dat/events/neutral/shiplover.lua:113
 msgid "\"What is the name of this ship?\""
-msgstr ""
+msgstr "\"Quel est le nom de ce vaisseau ?\""
 
 #. elseif difficulty == 2 then
 #. Create the log if necessary.
@@ -32654,11 +32671,11 @@ msgstr ""
 
 #: dat/events/neutral/shiplover.lua:297
 msgid "\"Aren't you too young to be here?\""
-msgstr ""
+msgstr "\"N'es-tu pas trop jeune pour être ici ?\""
 
 #: dat/events/neutral/shiplover.lua:308
 msgid "\"You know I own a real one.\""
-msgstr ""
+msgstr "\"Tu sais que j'en possède un vrai.\""
 
 #: dat/events/neutral/shiplover.lua:314
 msgid ""
@@ -32700,7 +32717,7 @@ msgstr ""
 #. Met, didn't play quiz and came back
 #: dat/events/neutral/shiplover.lua:339
 msgid "You once again approach the ship enthusiast."
-msgstr ""
+msgstr "Vous vous approchez à nouveau du passionné de vaisseaux."
 
 #: dat/events/neutral/shiplover.lua:340
 msgid ""
@@ -40945,11 +40962,11 @@ msgstr ""
 #. TODO integrate into vn
 #: dat/events/updater.lua:58 dat/missions/tutorial/tutorial.lua:54
 msgid "Name Ship AI"
-msgstr ""
+msgstr "Nom de l'IA du Vaisseau"
 
 #: dat/events/updater.lua:58 dat/missions/tutorial/tutorial.lua:54
 msgid "Please enter a name for your Ship AI"
-msgstr ""
+msgstr "Veuillez saisir un nom pour votre IA de Vaisseau"
 
 #. Can't use rename here
 #: dat/events/updater.lua:76 dat/missions/tutorial/tutorial.lua:83
@@ -52852,15 +52869,15 @@ msgstr ""
 #, lua-format
 msgid "Destroy at least %d drone"
 msgid_plural "Destroy at least %d drones"
-msgstr[0] "Destroy at least %d drone"
-msgstr[1] "Destroy at least %d drones"
+msgstr[0] "Détruits au moins %d drone"
+msgstr[1] "Détruits au moins %d drones"
 
 #: dat/missions/empire/collective/ec03.lua:48
 #, lua-format
 msgid "%d remaining"
 msgid_plural "%d remaining"
-msgstr[0] "%d remaining"
-msgstr[1] "%d remaining"
+msgstr[0] "%d restant"
+msgstr[1] "%d restants"
 
 #: dat/missions/empire/collective/ec03.lua:57
 msgid "You see Lt. Commander Dimitri at the bar, as usual."
@@ -54751,11 +54768,11 @@ msgid_plural ""
 "You do not have enough space to load the packages. You need to make room for "
 "%d more tonnes."
 msgstr[0] ""
-"You do not have enough space to load the packages. You need to make room for "
-"%d more tonne."
+"Vous n'avez pas assez de place pour charger les colis. Vous devez faire de "
+"la place pour %d tonne supplémentaire."
 msgstr[1] ""
-"You do not have enough space to load the packages. You need to make room for "
-"%d more tonnes."
+"Vous n'avez pas assez de place pour charger les colis. Vous devez faire de "
+"la place pour %d tonnes supplémentaire."
 
 #. Update mission
 #: dat/missions/empire/shipping/es01.lua:94
@@ -56129,10 +56146,11 @@ msgid_plural ""
 "There is an Empire patrol with {n} ships in the {sys} system. Eliminate this "
 "patrol."
 msgstr[0] ""
-"There is {n} Empire ship patrolling the {sys} system. Eliminate this ship."
+"Il y a {n} vaisseau de l'Empire qui patrouille dans le système {sys}. "
+"Éliminez ce vaisseau."
 msgstr[1] ""
-"There is an Empire patrol with {n} ships in the {sys} system. Eliminate this "
-"patrol."
+"Il y a une patrouille de l'Empire avec {n} vaisseaux dans le système {sys}. "
+"Éliminez cette patrouille."
 
 #: dat/missions/flf/flf_empatrol.lua:52
 msgid " There is a Pacifier among them, so you must proceed with caution."
@@ -56147,8 +56165,10 @@ msgstr ""
 msgid " You will be accompanied by {n} other FLF pilot for this mission."
 msgid_plural ""
 " You will be accompanied by {n} other FLF pilots for this mission."
-msgstr[0] " You will be accompanied by {n} other FLF pilot for this mission."
-msgstr[1] " You will be accompanied by {n} other FLF pilots for this mission."
+msgstr[0] ""
+"Vous serez accompagné par {n} autre pilote de la FLF pour cette mission."
+msgstr[1] ""
+"Vous serez accompagné par {n} autres pilotes de la FLF pour cette mission."
 
 #: dat/missions/flf/flf_empatrol.lua:86 dat/missions/flf/flf_patrol.lua:161
 #: dat/missions/flf/flf_pirates.lua:162
@@ -56260,10 +56280,11 @@ msgid_plural ""
 "There is a Dvaered patrol with {n} ships in the {sys} system. Eliminate this "
 "patrol."
 msgstr[0] ""
-"There is {n} Dvaered ship patrolling the {sys} system. Eliminate this ship."
+"Il y a {n} vaisseaux Dvaered qui patrouille dans le système {sys}. Éliminez "
+"ce vaisseau."
 msgstr[1] ""
-"There is a Dvaered patrol with {n} ships in the {sys} system. Eliminate this "
-"patrol."
+"Il y a une patrouille Dvaered avec {n} vaisseaux dans le système {sys}. "
+"Éliminez cette patrouille."
 
 #: dat/missions/flf/flf_patrol.lua:55
 msgid " There is a Vigilance among them, so you must proceed with caution."
@@ -56368,11 +56389,11 @@ msgid_plural ""
 "There is a pirate group with {n} ships disturbing FLF operations in the "
 "{sys} system. Eliminate this group."
 msgstr[0] ""
-"There is {n} pirate ship disturbing FLF operations in the {sys} system. "
-"Eliminate this ship."
+"Il y a {n} vaisseau pirate qui perturbe les opérations FLF dans le système "
+"{sys}. Éliminez ce vaisseau."
 msgstr[1] ""
-"There is a pirate group with {n} ships disturbing FLF operations in the "
-"{sys} system. Eliminate this group."
+"Il y a un groupe de pirates avec {n} vaisseaux qui perturbent les opérations "
+"FLF dans le système {sys}. Éliminez ce groupe."
 
 #: dat/missions/flf/flf_pirates.lua:59
 msgid " There is a Phalanx among them, so you must proceed with caution."
@@ -57007,10 +57028,10 @@ msgid_plural ""
 "There is a squadron of rogue FLF ships with {n} ships in the {sys} system. "
 "Eliminate this squadron."
 msgstr[0] ""
-"There is {n} rogue FLF ship in the {sys} system. Eliminate this ship."
+"Il y a {n} vaisseau FLF rebelle dans le système {sys}. Éliminez ce navire."
 msgstr[1] ""
-"There is a squadron of rogue FLF ships with {n} ships in the {sys} system. "
-"Eliminate this squadron."
+"Il y a un escadron de vaisseaux FLF rebelles avec {n} vaisseaux dans le "
+"système {sys}. Éliminez cet escadron."
 
 #. Spawn a rogue FLF squad with n ships.
 #: dat/missions/flf/flf_rogue.lua:183
@@ -68693,8 +68714,8 @@ msgstr ""
 #, lua-format
 msgid "Go to indicated point (%d remaining)"
 msgid_plural "Go to indicated point (%d remaining)"
-msgstr[0] "Go to indicated point (%d remaining)"
-msgstr[1] "Go to indicated point (%d remaining)"
+msgstr[0] "Allez au point indiqué (%d restant)"
+msgstr[1] "Allez au point indiqué (%d restants)"
 
 #: dat/missions/neutral/patrol.lua:171 dat/missions/neutral/patrol.lua:302
 msgid "Patrol"
@@ -75077,8 +75098,8 @@ msgstr ""
 #, lua-format
 msgid "You need to gain %d more reputation"
 msgid_plural "You need to gain %d more reputation"
-msgstr[0] "You need to gain %d more reputation"
-msgstr[1] "You need to gain %d more reputation"
+msgstr[0] "Vous devez gagner %d réputation en plus"
+msgstr[1] "Vous devez gagner %d réputation en plus"
 
 #: dat/missions/rehab_common.lua:52
 msgid ""
@@ -84232,7 +84253,7 @@ msgstr "\"Vous m'avez donné le nom de '{ainame}', est-ce correct ?\""
 
 #: dat/missions/tutorial/tutorial.lua:76
 msgid "Continue with '{ainame}'"
-msgstr "Poursuivre avec '{airname}'"
+msgstr "Poursuivre avec '{ainame}'"
 
 #: dat/missions/tutorial/tutorial.lua:90
 msgid ""
@@ -84346,6 +84367,11 @@ msgid ""
 "your #bmouse pointer#0 automatically. It's up to you which method you prefer "
 "to use.\""
 msgstr ""
+"\"Parfait ! C'était assez facile, non ? Je recommande cette façon de voler, "
+"connue sous le nom de \"vol au clavier\". Cependant, il y a une autre façon "
+"de voler si vous le souhaitez : appuyez sur {mouseflykey} sur votre console "
+"et votre vaisseau suivra automatiquement le #bpointeur de la souris#0. C'est "
+"à vous de choisir la méthode que vous préférez utiliser.\""
 
 #: dat/missions/tutorial/tutorial.lua:170
 msgid ""
@@ -84353,6 +84379,9 @@ msgid ""
 "As you can see, you completed your first objective of the Tutorial mission, "
 "so the next objective is now being focused.\""
 msgstr ""
+"\"Vous avez peut-être aussi remarqué l'affichage de la mission sur votre "
+"écran. Comme vous pouvez le voir, vous avez atteint le premier objectif de "
+"la mission du tutoriel, et l'objectif suivant est maintenant actif.\""
 
 #: dat/missions/tutorial/tutorial.lua:171
 msgid ""
@@ -84362,6 +84391,12 @@ msgid ""
 "or alternatively by pressing certain buttons on your control console. How "
 "about you try landing on {pnt}?\""
 msgstr ""
+"\"A ce propos, parlons de l'atterrissage. Toutes sortes d'actions, comme "
+"atterrir sur des planètes, contacter un vaisseau aborder des vaisseaux "
+"désemparés, et sauter vers d'autres systèmes peuvent être accomplies en "
+"#bdouble-cliquant#0 sur une cible appropriée, ou en appuyant sur certains "
+"boutons sur votre console de contrôle. Et si vous essayiez d'atterrir sur "
+"{pnt} ?\""
 
 #: dat/missions/tutorial/tutorial.lua:172
 msgid ""
@@ -84372,6 +84407,14 @@ msgid ""
 "with {targetplanetkey}, and then using the {landkey}. You can also #bdouble "
 "click#0 on the planet to engage the same behaviour. Give it a try!\""
 msgstr ""
+"\"Pour atterrir sur {pnt}, vous devez ralentir votre vaisseau au dessus de "
+"la planète, et engager le système d'atterrissage. Vous pouvez le faire "
+"manuellement avec les touches de mouvement et enclencher votre train "
+"d'atterrissage avec {landkey}, ou tout cela peut être fait automatiquement "
+"en ciblant la planète soit en #bcliquant#0 sur elle, soit avec "
+"{targetplanetkey}, et en utilisant ensuite {landkey}. Vous pouvez également #"
+"bdouble cliquer#0 sur la planète pour obtenir le même comportement. Essayez !"
+"\""
 
 #: dat/missions/tutorial/tutorial.lua:185
 msgid ""
@@ -84380,6 +84423,11 @@ msgid ""
 "appreciate this feature in your ship in time, especially as you travel from "
 "system to system delivering goods and such, given the vastness of space.\""
 msgstr ""
+"\"Bon travail ! Comme vous pouvez le constater, l'utilisation des fonctions "
+"Autonav de votre vaisseau a permis de réduire considérablement la durée "
+"perçue de votre voyage. Vous apprécierez cette fonction de votre vaisseau "
+"avec le temps, surtout lorsque vous voyagerez de système en système pour "
+"livrer des marchandises et autres, étant donné l'immensité de l'espace.\""
 
 #: dat/missions/tutorial/tutorial.lua:186
 msgid ""
@@ -84391,6 +84439,15 @@ msgid ""
 "around, but they don't guarantee your safety. When starting out it is "
 "probably best to not stray too far.\""
 msgstr ""
+"\"J'espère que vous avez remarqué certaines des caractéristiques de la carte "
+"d'ensemble lorsque vous l'avez activée. Non seulement les objets tels que "
+"les planètes, les vaisseaux et les astéroïdes sont visibles sur la carte "
+"d'ensemble, mais les #oroutes de patrouille#0 de faction sont également "
+"représentées par des lignes épaisses. Ces itinéraires indiquent les zones "
+"communément patouillées et utilisées par les vaisseaux. S'en tenir à ces "
+"routes est généralement la meilleure façon de se déplacer, mais elles ne "
+"garantissent pas votre sécurité. Au début, il est préférable de ne pas trop "
+"s'éloigner.\""
 
 #: dat/missions/tutorial/tutorial.lua:187
 msgid ""
@@ -84402,6 +84459,14 @@ msgid ""
 "ornament like my late previous owner after encountering… Anyway, on to the "
 "drone.\""
 msgstr ""
+"\"Nous allons maintenant nous entraîner au combat. Vous n'en aurez pas "
+"besoin si vous vous cantonnez aux systèmes sécurisés du noyau de l'Empire, "
+"mais malheureusement, nous risquons de rencontrer des vaisseaux hostiles si "
+"vous vous aventurez plus loin, et vous devez donc savoir comment vous "
+"défendre. Heureusement, votre vaisseau est pré-équipé d'un canon laser à la "
+"pointe de la technologie, justement pour cette raison ! Si tout se passe "
+"bien, vous ne finirez pas en ornement de vaisseau comme mon regretté "
+"propriétaire précédent après avoir rencontré... Bref, passons au drone.\""
 
 #: dat/missions/tutorial/tutorial.lua:188
 msgid ""
@@ -84415,6 +84480,15 @@ msgid ""
 "remedy that by pressing {cooldownkey} or double tapping {reversekey} to "
 "engage active cooling.\""
 msgstr ""
+"\"Je vais lancer un drone d'entraînement au combat à partir de {pnt} pour "
+"que vous puissiez vous battre. Ne vous inquiétez pas, notre drone n'a pas "
+"d'armes et ne vous blessera pas. Ciblez le drone en cliquant dessus ou en "
+"appuyant sur {targethostilekey}, puis utilisez vos armes, contrôlées par "
+"{primarykey} et {secondarykey}, pour éliminer le drone !\".\n"
+"\"Ah, oui, encore un conseil avant de lancer le drone : si vos armes "
+"commencent à perdre leur précision, c'est qu'elles sont en surchauffe. Vous "
+"pouvez y remédier en appuyant sur {cooldownkey} ou en double-tapant "
+"{reversekey} pour activer le refroidissement actif.\""
 
 #: dat/missions/tutorial/tutorial.lua:190
 msgid ""
@@ -84422,6 +84496,10 @@ msgid ""
 "it. Being an artificial intelligence it is unable to compute feelings you "
 "know? Not like me, ha ha. HUMOUR PROCEDURE TERMINATED\""
 msgstr ""
+"\"On dit que l'intelligence artificielle du Drone est un peu bizarre, mais "
+"n'y prêtez pas attention. En tant qu'intelligence artificielle, elle est "
+"incapable de calculer les sentiments, vous savez ? Pas comme moi, ha ha. "
+"PROCÉDURE D'HUMOUR TERMINÉE\""
 
 #: dat/missions/tutorial/tutorial.lua:214
 msgid ""
@@ -84437,6 +84515,19 @@ msgid ""
 "you can do on a planet. When you are done, click the '#bTake Off#0' button "
 "so we can continue.\""
 msgstr ""
+"\"Excellent ! L'atterrissage a réussi. En tant qu'IA de votre vaisseau, je "
+"suis chargé de guider votre vaisseau et d'effectuer la procédure "
+"d'atterrissage, ce qui a permis de réduire considérablement les malheurs des "
+"procédures d'atterrissage manuelles contrôlées par des humains. Lorsque vous "
+"atterrissez, votre vaisseau est ravitaillé automatiquement et vous pouvez "
+"discuter avec des civils au bar, acheter de nouveaux composants, configurer "
+"votre vaisseau et, surtout, accepter des missions de l'ordinateur de "
+"mission. Pourquoi ne pas regarder autour de nous ? Comme vous pouvez le "
+"voir, nous sommes actuellement sur l'onglet Débarquement, où vous pouvez "
+"vous renseigner sur la planète et acheter une carte locale. Cliquez sur tous "
+"les autres onglets ci-dessous et je vous montrerai ce que vous pouvez faire "
+"d'autre sur une planète. Lorsque vous aurez terminé, cliquez sur le bouton "
+"'#bDécollage#0' pour que nous puissions continuer.\""
 
 #: dat/missions/tutorial/tutorial.lua:234
 msgid ""
@@ -84448,6 +84539,14 @@ msgid ""
 "talking to bar patrons, who knows what good tips or interesting jobs they "
 "will have available for you.\""
 msgstr ""
+"\"Voici le Bar du Spatioport, où vous pouvez lire les dernières nouvelles ("
+"comme vous pouvez le voir sur votre droite en ce moment), mais plus "
+"important encore, vous pouvez rencontrer d'autres pilotes, des civils, et "
+"plus encore ! Cliquez sur quelqu'un dans le bar, puis cliquez sur le bouton "
+"'#bApprocher#0' pour l'approcher. Les personnages importants sont signalés "
+"par un point d'exclamation rouge. En général, je recommande de parler "
+"régulièrement aux clients des bars, qui sait quels bons tuyaux ou quels "
+"emplois intéressants ils auront à vous proposer.\""
 
 #: dat/missions/tutorial/tutorial.lua:240
 msgid ""
@@ -84459,6 +84558,15 @@ msgid ""
 "mission. Since many missions involve cargo, you can also see how much free "
 "space is available in your ship in the top-right.\""
 msgstr ""
+"\"C'est l'Ordinateur de Missions, où vous pouvez trouver les missions de "
+"base dans la base de données officielle des missions. Les missions vous "
+"permettent de gagner votre vie en tant que pilote, alors je vous recommande "
+"de consulter souvent cet écran pour voir où se trouvent les opportunités de "
+"gagner de l'argent ! Vous pouvez voir que chaque mission fait l'objet d'un "
+"bref résumé et qu'en cliquant dessus, vous pourrez obtenir plus "
+"d'informations sur la mission. Étant donné que de nombreuses missions "
+"impliquent du fret, vous pouvez également voir l'espace libre disponible "
+"dans votre vaisseau en haut à droite.\""
 
 #: dat/missions/tutorial/tutorial.lua:241
 msgid ""
@@ -84469,6 +84577,13 @@ msgid ""
 "added to your active missions, which you can review via the Info screen by "
 "pressing {infokey}.\""
 msgstr ""
+"\"Lorsque vous choisissez des missions, faites attention à leur "
+"rémunération. Vous devez trouver un équilibre entre le choix de missions que "
+"vous êtes capable d'accomplir et le fait d'être payé le plus possible pour "
+"les accomplir. Une fois que vous avez choisi une mission, cliquez sur le "
+"bouton '#bAccepter#0' en bas à droite et elle sera ajoutée à vos missions "
+"actives, que vous pouvez consulter via l'écran Info en appuyant sur "
+"{infokey}.\""
 
 #: dat/missions/tutorial/tutorial.lua:242
 msgid ""
@@ -84477,6 +84592,10 @@ msgid ""
 "computer. That is why I recommend also checking the spaceport bar often when "
 "travelling.\""
 msgstr ""
+"\"Au fur et à mesure que vous gagnerez en réputation auprès d'autres "
+"factions et personnages, vous aurez accès à des missions plus compliquées et "
+"mieux rémunérées sur l'ordinateur de missions. C'est pourquoi je vous "
+"recommande de consulter souvent le bar du spatioport lorsque vous voyagez.\""
 
 #: dat/missions/tutorial/tutorial.lua:249
 msgid ""
@@ -84489,6 +84608,16 @@ msgid ""
 "Mule Bulk Cargo Starship. As my previous owner found out, they don't do too "
 "well in combat, however.\""
 msgstr ""
+"\"Voici l'Équipementier où vous pouvez acheter de nouveaux équipements pour "
+"améliorer votre vaisseau ! Vous pouvez équiper votre vaisseau de nouvelles "
+"armes, d'un espace de chargement supplémentaire, de systèmes centraux plus "
+"puissants, et bien plus encore ! Des cartes régionales vous permettant "
+"d'explorer plus facilement la galaxie peuvent également être achetées ici, "
+"ainsi que les licences nécessaires à l'acquisition d'armes et de vaisseaux "
+"haut de gamme. Par exemple, vous aurez besoin d'une Licence de Grand "
+"Vaisseau Civil pour acheter un Vaisseau Cargo Mule de la Corporation "
+"Melendez. Comme mon ancien propriétaire l'a découvert, ils ne sont pas très "
+"performants au combat, cependant.\""
 
 #: dat/missions/tutorial/tutorial.lua:250
 msgid ""
@@ -84504,6 +84633,18 @@ msgid ""
 "starmap screen. After buying new outfits make sure to equip them in the "
 "#oEquipment#0 window.\""
 msgstr ""
+"Comme vous pouvez le voir, une série d'onglets en haut de votre écran vous "
+"permet de filtrer les équipements par type : 'W' pour les armes, 'U' pour "
+"les services, 'S' pour les structures, 'Noyaux' pour les noyaux, et 'Autre' "
+"pour tout ce qui n'entre pas dans ces catégories, notamment les cartes "
+"régionales et les licences. Lorsque vous voyez un équipement qui vous "
+"intéresse, cliquez dessus pour obtenir plus d'informations, puis cliquez sur "
+"le bouton '#bAcheter#0' pour l'acheter ou sur le bouton '#bVendre#0' pour le "
+"vendre si vous en avez un en votre possession. Si vous ne voyez pas l’"
+"équipement que vous recherchez, vous pouvez le chercher en cliquant sur le "
+"bouton '#bRechercher#0' sur l'écran de la carte stellaire. Après avoir "
+"acheté de nouveaux équipements, assurez-vous de les équiper dans la fenêtre "
+"#oÉquipement#0.\""
 
 #: dat/missions/tutorial/tutorial.lua:257
 msgid ""
@@ -84517,6 +84658,15 @@ msgid ""
 "for, you can search for it via the '#bFind Ships#0' button on the starmap "
 "screen.\""
 msgstr ""
+"\"Voici le Chantier, où vous pouvez acheter de nouveaux vaisseaux pour "
+"remplacer celui que vous avez ou pour enrichir votre collection ! Sur la "
+"gauche de l'écran, vous verrez les vaisseaux disponibles sur la planète où "
+"vous vous trouvez. Cliquez sur un vaisseau qui vous intéresse. Vous pouvez "
+"ensuite acheter le vaisseau à l'aide du bouton '#bAcheter#0' ou échanger "
+"votre vaisseau actuel contre le nouveau vaisseau à l'aide du bouton "
+"'#bÉchanger#0\"' Si vous ne voyez pas le vaisseau que vous cherchez, vous "
+"pouvez le rechercher à l'aide du bouton '#bRechercher#0' sur l'écran de la "
+"carte stellaire.\""
 
 #: dat/missions/tutorial/tutorial.lua:258
 msgid ""
@@ -84527,6 +84677,13 @@ msgid ""
 "the different outfits you can equip them with. Note that some ships also "
 "require licenses before you can buy them.\""
 msgstr ""
+"\"Vous n'avez probablement pas assez de crédits pour acheter un nouveau "
+"vaisseau maintenant, mais plus tard, lorsque vous aurez économisé "
+"suffisamment, vous voudrez probablement améliorer votre vaisseau, en "
+"fonction du type de tâches que vous aurez à accomplir. Les différents "
+"vaisseaux ont des forces et des faiblesses différentes qui interagissent "
+"avec les différents équipements dont vous pouvez les doter. Notez que "
+"certains vaisseaux nécessitent des licences avant de pouvoir être achetés.\""
 
 #. TODO cut up
 #: dat/missions/tutorial/tutorial.lua:266
@@ -84543,6 +84700,19 @@ msgid ""
 "along with the ship, so do keep that in mind if there's an outfit you need "
 "to keep.\""
 msgstr ""
+"\"Voici l'écran Équipement, qui n'est disponible que sur les planètes dotées "
+"d'une pourvoirie ou d'un chantier naval. Ici, vous pouvez équiper votre "
+"vaisseau avec toutes les tenues que vous avez achetées a l'#oÉquipementer#0. "
+"Si et seulement si la planète actuelle dispose d'un chantier naval, vous "
+"pouvez également le faire avec n'importe quel autre vaisseau que vous "
+"possédez, et vous pouvez échanger le vaisseau que vous pilotez actuellement "
+"en sélectionnant un autre vaisseau et en cliquant sur le bouton '#bÉchanger#"
+"0' ou en #bdouble-cliquant#0 sur ce vaisseau. Vous pouvez également vendre "
+"ces autres vaisseaux, mais pas votre vaisseau actuel, à l'aide du bouton "
+"'#bVendre#0', si vous décidez que vous n'en avez plus besoin. Si vous vendez "
+"un vaisseau qui possède encore des équipements ceux-ci seront également "
+"vendues avec le vaisseau, alors gardez cela à l'esprit si vous souhaitez "
+"conserver un équipement.\""
 
 #: dat/missions/tutorial/tutorial.lua:267
 msgid ""
@@ -84550,6 +84720,10 @@ msgid ""
 "have weapons equipped, as you will need those later for practicing combat "
 "and flying around space without any weapons can be very risky anyway.\""
 msgstr ""
+"\"Si vous apportez des modifications à votre vaisseau, veillez à ce qu'il "
+"soit toujours équipé d'armes, car vous en aurez besoin plus tard pour vous "
+"entraîner au combat et voler dans l'espace sans armes peut être très risqué "
+"de toute façon.\""
 
 #. TODO cut up
 #: dat/missions/tutorial/tutorial.lua:275
@@ -84564,6 +84738,18 @@ msgid ""
 "the commodity you're buying or selling at once. This will reduce the number "
 "of times you have to click on the Buy and Sell buttons.\""
 msgstr ""
+"\"Ceci est l'écran des Marchandises, où vous pouvez acheter et vendre des "
+"marchandises. Les prix des marchandises varient d'une planète à l'autre et "
+"même dans le temps. Vous pouvez donc utiliser cet écran pour tenter de "
+"gagner de l'argent en achetant au plus bas et en vendant au plus haut. "
+"Cliquez sur une marchandise pour obtenir des informations à son sujet, "
+"notamment son prix moyen par tonne, et cliquez sur les boutons '#bAcheter#0' "
+"et '#bVendre#0' pour acheter ou vendre une partie de la marchandise, "
+"respectivement. Il est utile de maintenir les touches #bShift#0 et/ou #bCtrl#"
+"0 enfoncées pour ajuster le modificateur du nombre de tonnes de la "
+"marchandise que vous achetez ou vendez en une seule fois. Cela permet de "
+"réduire le nombre de fois où vous devez cliquer sur les boutons d'achat et "
+"de vente.\""
 
 #: dat/missions/tutorial/tutorial.lua:276
 msgid ""
@@ -84572,6 +84758,11 @@ msgid ""
 "for various price overviews. The news terminal at the bar also includes "
 "price information for specific nearby planets.\""
 msgstr ""
+"\"Si vous ne savez pas ce qu'il est rentable d'acheter ou de vendre, vous "
+"pouvez appuyer sur {starmapkey} pour afficher la carte stellaire, puis "
+"cliquer sur le bouton '#bMode#0' pour obtenir différents aperçus des prix. "
+"Le terminal d'informations de la barre comprend également des informations "
+"sur les prix de certaines planètes proches.\""
 
 #: dat/missions/tutorial/tutorial.lua:311
 msgid ""
@@ -84584,6 +84775,16 @@ msgid ""
 "using the Autonav functionality available on all ships. You can trust me as "
 "I've only had under 4 fatal accidents.\""
 msgstr ""
+"\"Bon retour dans l'espace, {playername} ! Après un atterrissage, le jeu "
+"sera automatiquement sauvegardé, vous n'aurez donc pas à craindre de perdre "
+"votre progression. Poursuivons maintenant notre discussion sur les "
+"déplacements dans l'espace. Comme nous l'avons déjà mentionné, vous pouvez "
+"vous déplacer dans l'espace manuellement, sans problème. Cependant, vous "
+"devrez souvent parcourir de grandes distances, et naviguer partout "
+"manuellement peut s'avérer un peu fastidieux. Une bonne option est de "
+"déléguer les déplacements à moi, l'IA de votre vaisseau, en utilisant la "
+"fonctionnalité Autonav disponible sur tous les vaisseaux. Vous pouvez me "
+"faire confiance, car je n'ai eu que moins de quatre accidents mortels.\""
 
 #: dat/missions/tutorial/tutorial.lua:312
 msgid ""
@@ -84597,6 +84798,17 @@ msgid ""
 "in whatever fashion is deemed necessary. This can be configured from your "
 "ship's #oOptions#0 menu, which you can access by pressing {menukey}."
 msgstr ""
+"\"Autonav est simple et élégant. Appuyez simplement sur {overlaykey} pour "
+"ouvrir la carte de votre vaisseau, puis faites un #bclic droit#0 sur "
+"n'importe quel endroit, planète, vaisseau ou point de saut pour y emmener "
+"votre vaisseau ! Le voyage sera tout aussi long, mais la compression du "
+"temps vous permet de vous éloigner de vos commandes, ce qui donne "
+"l'impression que le temps passe plus vite. Et ne vous inquiétez pas : si des "
+"pilotes hostiles sont détectés, le système Autonav vous alerte "
+"automatiquement pour que vous puissiez observer la situation et réagir de la "
+"manière que vous jugerez nécessaire. Ce système peut être configuré à partir "
+"du menu #oOptions#0 de votre vaisseau, auquel vous pouvez accéder en "
+"appuyant sur {menukey}."
 
 #: dat/missions/tutorial/tutorial.lua:313
 msgid ""
@@ -84604,6 +84816,9 @@ msgid ""
 "to see it highlighted on your overlay map which you can activate with "
 "{overlaykey}.\""
 msgstr ""
+"\"Pourquoi n'essayez-vous pas d'utiliser l'Autonav pour survoler {pnt} ? "
+"Vous devriez le voir en surbrillance sur votre carte superposée que vous "
+"pouvez activer avec {overlaykey}.\""
 
 #: dat/missions/tutorial/tutorial.lua:327
 msgid ""
@@ -84614,6 +84829,13 @@ msgid ""
 "clicking#0 on them, or by selecting them with {targetnextkey} and then "
 "pressing {hailkey}.\""
 msgstr ""
+"\"Vous vous êtes très bien débrouillé, {playername} ! Comme vous pouvez le "
+"constater, le voyage a consommé du carburant. Vous consommez du carburant à "
+"chaque fois que vous effectuez un saut et vous pouvez faire le plein en "
+"atterrissant sur une planète amie. Si vous êtes dans le pétrin, vous pouvez "
+"également acheter du carburant à d'autres pilotes dans le système ; appelez "
+"un pilote en #double-cliquant#0 sur lui, ou en le sélectionnant avec "
+"{targetnextkey} et en appuyant ensuite sur {hailkey}.\""
 
 #: dat/missions/tutorial/tutorial.lua:328
 msgid ""
@@ -84622,6 +84844,11 @@ msgid ""
 "others; pirates will happily take your offer and may even sell you fuel "
 "afterwards, but many other factions may be less forthcoming.\""
 msgstr ""
+"\"Ah, cela me rappelle que vous pouvez également tenter de soudoyer des "
+"navires hostiles, comme les pirates, en les contactant Les pirates "
+"accepteront volontiers votre offre et pourront même vous vendre du carburant "
+"par la suite, mais beaucoup d'autres factions se montreront plus réticentes."
+"\""
 
 #: dat/missions/tutorial/tutorial.lua:329
 msgid ""
@@ -84633,6 +84860,15 @@ msgid ""
 "head to the nearest planet and check out the spaceport bar to see if anybody "
 "can offer us some work to get started out.\""
 msgstr ""
+"\"Je crois que c'est ça ! Je dois dire que vous êtes un pilote né et que "
+"votre nouveau vaisseau vous convient parfaitement ! Ceci conclut le tutoriel "
+"de base, mais au fur et à mesure que vous rencontrerez de nouvelles choses, "
+"j'apparaîtrai périodiquement. Si vous avez besoin de rafraîchir vos "
+"connaissances ou de modifier mes paramètres, vous pouvez le faire à partir "
+"du menu #oInfo#0 que vous ouvrez avec {infokey}. Maintenant, partons à "
+"l'aventure ! Je vous recommande de vous rendre sur la planète la plus proche "
+"et de jeter un coup d'œil au bar du spatioport pour voir si quelqu'un peut "
+"nous offrir un peu de travail pour démarrer.\""
 
 #. Normal finish of the tutorial
 #: dat/missions/tutorial/tutorial.lua:334
@@ -84640,6 +84876,8 @@ msgid ""
 "Your Ship AI gave you a tutorial on how to pilot your ship. Hopefully you "
 "will fare better than their late previous owner."
 msgstr ""
+"L'IA de votre vaisseau vous a donné un tutoriel sur la façon de piloter "
+"votre vaisseau. Espérons que vous ferez mieux que son défunt propriétaire."
 
 #: dat/missions/tutorial/tutorial.lua:352
 msgid ""
@@ -84649,6 +84887,12 @@ msgid ""
 "repair technology. But even then, armour regeneration is usually much slower "
 "than shield regeneration.\""
 msgstr ""
+"\"Excellent travail pour éliminer ce drone ! Comme vous l'avez peut-être "
+"remarqué, le bouclier se régénère avec le temps, ce qui n'est pas le cas de "
+"l'armure. Ce n'est pas universel, bien sûr ; certains vaisseaux, en "
+"particulier les plus grands, sont dotés d'une technologie avancée de "
+"réparation de l'armure. Mais même dans ce cas, la régénération de l'armure "
+"est généralement beaucoup plus lente que celle du bouclier.\""
 
 #: dat/missions/tutorial/tutorial.lua:353
 msgid ""
@@ -84660,6 +84904,14 @@ msgid ""
 "Alternatively, you can cool off your ship instantly by landing on any planet "
 "or station.\""
 msgstr ""
+"\"Vous avez peut-être aussi remarqué que vos compteurs de chaleur "
+"augmentaient et que vos armes devenaient moins précises à mesure que votre "
+"vaisseau et vos armes chauffaient. C'est normal, mais trop de chaleur peut "
+"rendre vos armes difficiles à utiliser, c'est pourquoi il est recommandé "
+"d'utiliser le refroidissement actif lorsque c'est possible. Vous pouvez "
+"activer le refroidissement actif en appuyant sur {cooldownkey} ou en tapant "
+"deux fois sur {reversekey}. Vous pouvez également refroidir votre vaisseau "
+"instantanément en atterrissant sur une planète ou une station.\""
 
 #: dat/missions/tutorial/tutorial.lua:354
 msgid ""
@@ -84670,6 +84922,13 @@ msgid ""
 "reputation with the various factions. You will likely be referencing it a "
 "lot as we explore the galaxy.\""
 msgstr ""
+"\"Il est également intéressant de noter que vous pouvez configurer le tir de "
+"vos armes à partir de l'écran #oInfo#0, auquel vous pouvez accéder en "
+"appuyant sur {infokey} ou en cliquant sur le bouton situé en haut de votre "
+"écran. L'écran #oInfo#0 vous permet également d'afficher des informations "
+"sur votre vaisseau, votre cargaison, vos missions en cours et votre "
+"réputation auprès des différentes factions. Vous y ferez sans doute souvent "
+"référence au cours de notre exploration de la galaxie.\""
 
 #: dat/missions/tutorial/tutorial.lua:355
 msgid ""
@@ -84680,6 +84939,14 @@ msgid ""
 "to the locals, or buying maps. Once you have found a jump point, you can use "
 "it by #bright-click#0ing on it or using the {jumpkey}.\""
 msgstr ""
+"\"Je pense que nous devrions essayer de nous aventurer en dehors de ce "
+"système. Il existe de nombreux systèmes dans l'univers ; celui-ci n'est "
+"qu'une infime partie de ce que l'on peut y trouver ! Les voyages à travers "
+"les systèmes se font par l'intermédiaire de points de saut. Comme pour les "
+"planètes, vous devez les trouver en explorant la région, en parlant aux "
+"habitants ou en achetant des cartes. Une fois que vous avez trouvé un point "
+"de saut, vous pouvez l'utiliser avec un #bclic-droit#0 sur lui ou en "
+"utilisant {jumpkey}.\""
 
 #: dat/missions/tutorial/tutorial.lua:356
 msgid ""
@@ -84691,6 +84958,14 @@ msgid ""
 "route to get there, but you will find that this method of travel greatly "
 "simplifies things.\""
 msgstr ""
+"\"Mais il existe un meilleur moyen de naviguer entre les systèmes ! En "
+"appuyant sur {starmapkey}, vous pouvez ouvrir votre #oCarte Stellaire#0. La #"
+"oCarte Stellaire#0 vous montre tous les systèmes que vous connaissez "
+"actuellement. Grâce à votre #oCarte Stellaire#0, vous pouvez cliquer sur un "
+"système et cliquer sur le bouton '#bAutonav#0' pour être automatiquement "
+"transporté vers ce système ! Bien sûr, cela ne fonctionne que si vous "
+"connaissez un itinéraire valable pour vous y rendre, mais vous verrez que "
+"cette méthode de voyage simplifie grandement les choses.\""
 
 #: dat/missions/tutorial/tutorial.lua:357
 msgid ""
@@ -84700,281 +84975,278 @@ msgid ""
 "do some exploration to find the second jump point. Let's see what you've "
 "learned!\""
 msgstr ""
+"\"Pourquoi ne pas essayer de sauter dans le système {sys} voisin ? Vous "
+"devriez voir un indicateur sur votre carte ; les missions utilisent souvent "
+"ces indicateurs pour vous montrer où aller ensuite. Vous devrez effectuer "
+"deux sauts et peut-être faire un peu d'exploration pour trouver le deuxième "
+"point de saut. Voyons ce que vous avez appris !\""
 
 #: dat/missions/tutorial/tutorial.lua:363
 msgid "Captain T. Practice"
-msgstr ""
+msgstr "Capitaine T. Practice"
 
 #. Don't distress just in case
 #: dat/missions/tutorial/tutorial.lua:390
 msgid "Bring on the pain!"
-msgstr ""
+msgstr "Que la douleur commence !"
 
 #: dat/missions/tutorial/tutorial.lua:391
-#, fuzzy
-#| msgid "You're no match for the Dvaered!"
 msgid "You're no match for the fearsome T. Practice!"
-msgstr "Nous ne pouvez pas résister face à la puissance des Dvaered !"
+msgstr "Vous n'êtes pas de taille à affronter le redoutable T. Practice !"
 
 #: dat/missions/tutorial/tutorial.lua:392
-#, fuzzy
-#| msgid "I've destroyed ships twice the size of yours!"
 msgid "I've been shot by ships ten times your size!"
-msgstr "J'ai détruit des vaisseaux deux fois plus grands que le tien !"
+msgstr "J'ai été touché par des navires dix fois plus gros que vous !"
 
 #: dat/missions/tutorial/tutorial.lua:393
 msgid "Let's get it on!"
-msgstr ""
+msgstr "C'est parti !"
 
 #: dat/missions/tutorial/tutorial.lua:394
 msgid "I  haven't got all day."
-msgstr ""
+msgstr "Je n'ai pas toute la journée."
 
 #: dat/missions/tutorial/tutorial.lua:395
 msgid "You're as threatening as an unborn child!"
-msgstr ""
+msgstr "Vous êtes aussi menaçante qu'un enfant à naître !"
 
 #: dat/missions/tutorial/tutorial.lua:396
 msgid "I've snacked on foes much larger than yourself!"
-msgstr ""
+msgstr "J'ai grignoté des ennemis bien plus grands que toi !"
 
 #: dat/missions/tutorial/tutorial.lua:397
 msgid "Who's your daddy? I am!"
-msgstr ""
+msgstr "Qui est ton papa ? C'est moi !"
 
 #: dat/missions/tutorial/tutorial.lua:398
 msgid "You're less intimidating than a fruit cake!"
-msgstr ""
+msgstr "Vous êtes moins intimidant qu'un gâteau aux fruits !"
 
 #: dat/missions/tutorial/tutorial.lua:399
 msgid "My ship is the best in the galaxy!"
-msgstr ""
+msgstr "Mon vaisseau est le meilleur de la galaxie !"
 
 #: dat/missions/tutorial/tutorial.lua:400
 msgid "Bow down before me, and I may spare your life!"
-msgstr ""
+msgstr "Prosterne-toi devant moi, et j'épargnerai ta vie !"
 
 #: dat/missions/tutorial/tutorial.lua:401
 msgid "Someone's about to set you up the bomb."
-msgstr ""
+msgstr "Quelqu'un est sur le point de vous préparer une bombe."
 
 #: dat/missions/tutorial/tutorial.lua:402
 msgid "Your crew quarters are as pungent as an over-ripe banana!"
-msgstr ""
+msgstr "Vos quartiers d'équipage sont aussi âcres qu'une banane trop mûre !"
 
 #: dat/missions/tutorial/tutorial.lua:403
 msgid "I'm invincible, I cannot be vinced!"
-msgstr ""
+msgstr "Je suis invincible, je ne peux pas être vaincu !"
 
 #: dat/missions/tutorial/tutorial.lua:404
 msgid "You think you can take me?"
-msgstr ""
+msgstr "Tu penses que tu peux m'avoir ?"
 
 #: dat/missions/tutorial/tutorial.lua:405
 msgid "When I'm done, you'll look like pastrami!"
-msgstr ""
+msgstr "Quand j'aurai fini, tu auras l'air d'un pastrami !"
 
 #: dat/missions/tutorial/tutorial.lua:406
 msgid "I've got better things to do. Hurry up and die!"
-msgstr ""
+msgstr "J'ai mieux à faire. Dépêchez-vous de mourir !"
 
 #: dat/missions/tutorial/tutorial.lua:407
 msgid "You call that a barrage? Pah!"
-msgstr ""
+msgstr "Vous appelez ça un barrage ? Pah !"
 
 #: dat/missions/tutorial/tutorial.lua:408
 msgid "You mother isn't much to look at, either!"
-msgstr ""
+msgstr "Ta mère n'est pas très belle non plus !"
 
 #: dat/missions/tutorial/tutorial.lua:409
 msgid "You're not exactly a crack-shot, are you?"
-msgstr ""
+msgstr "Vous n'êtes pas vraiment un crack, n'est-ce pas ?"
 
 #: dat/missions/tutorial/tutorial.lua:410
 msgid "I've had meals that gave me more resistance than you!"
-msgstr ""
+msgstr "J'ai eu des repas qui m'ont donné plus de fil à retordre que vous !"
 
 #: dat/missions/tutorial/tutorial.lua:411
 msgid "You're a pathetic excuse for a pilot!"
-msgstr ""
+msgstr "Tu n'es qu'une excuse pathétique pour un pilote !"
 
 #: dat/missions/tutorial/tutorial.lua:412
 msgid "Surrender or face destruction!"
-msgstr ""
+msgstr "Se rendre ou être détruit !"
 
 #: dat/missions/tutorial/tutorial.lua:413
 msgid "That all you got?"
-msgstr ""
+msgstr "C'est tout ce que vous avez ?"
 
 #: dat/missions/tutorial/tutorial.lua:414
 msgid "I am Iron Man!"
-msgstr ""
+msgstr "Je suis Iron Man !"
 
 #: dat/missions/tutorial/tutorial.lua:415
 msgid "My shields are holding fine!"
-msgstr ""
+msgstr "Mes boucliers tiennent bien !"
 
 #: dat/missions/tutorial/tutorial.lua:416
 msgid "You'd be dead if I'd remembered to pack my weapons!"
-msgstr ""
+msgstr "Vous seriez mort si j'avais pensé à prendre mes armes !"
 
 #: dat/missions/tutorial/tutorial.lua:417
 msgid "I'll end you!"
-msgstr ""
+msgstr "Je vais t'achever !"
 
 #: dat/missions/tutorial/tutorial.lua:418
 msgid "… Right after I finish eating this bucket of fried chicken!"
-msgstr ""
+msgstr "... Juste après avoir fini de manger ce seau de poulet frit !"
 
 #: dat/missions/tutorial/tutorial.lua:419
 msgid "{pnt} Fried Chicken. Eat only the best."
-msgstr ""
+msgstr "{pnt} Poulet frit. Ne manger que le meilleur."
 
 #: dat/missions/tutorial/tutorial.lua:420
 msgid "This is your last chance to surrender!"
-msgstr ""
+msgstr "C'est votre dernière chance de vous rendre !"
 
 #: dat/missions/tutorial/tutorial.lua:421
 msgid "Don't do school, stay in milk."
-msgstr ""
+msgstr "Ne va pas à l'école, reste dans le lait."
 
 #: dat/missions/tutorial/tutorial.lua:422
 msgid "I'm going to report you to the NPC Rights watchdog."
-msgstr ""
+msgstr "Je vais vous signaler à l'organisme de surveillance des droits des PNJ."
 
 #: dat/missions/tutorial/tutorial.lua:423
 msgid "Keep going, see what happens!"
-msgstr ""
+msgstr "Continuez, voyez ce qui se passe !"
 
 #: dat/missions/tutorial/tutorial.lua:424
-#, fuzzy
-#| msgid "You can't bribe me!"
 msgid "You don't scare me!"
-msgstr "Je ne serai pas corrompu !"
+msgstr "Vous ne me faites pas peur !"
 
 #: dat/missions/tutorial/tutorial.lua:425
 msgid "What do you think this is, knitting hour?"
-msgstr ""
+msgstr "Qu'est-ce que tu crois que c'est, l'heure du tricot ?"
 
 #: dat/missions/tutorial/tutorial.lua:426
 msgid "I mean, good lord, man."
-msgstr ""
+msgstr "Je veux dire, bon sang, mec."
 
 #: dat/missions/tutorial/tutorial.lua:427
 msgid "It's been several minutes of non-stop banter!"
-msgstr ""
+msgstr "Cela fait plusieurs minutes que l'on ne s'arrête pas de plaisanter !"
 
 #: dat/missions/tutorial/tutorial.lua:428
 msgid "Haven't I sufficiently annoyed you yet?"
-msgstr ""
+msgstr "Je ne vous ai pas encore suffisamment ennuyé ?"
 
 #: dat/missions/tutorial/tutorial.lua:429
 msgid "Go on, shoot me."
-msgstr ""
+msgstr "Allez-y, tirez sur moi."
 
 #: dat/missions/tutorial/tutorial.lua:430
 msgid "You can do it! I believe in you."
-msgstr ""
+msgstr "Tu peux le faire ! Je crois en vous."
 
 #: dat/missions/tutorial/tutorial.lua:431
 msgid "Shoot me!"
-msgstr ""
+msgstr "Tirez-moi dessus !"
 
 #: dat/missions/tutorial/tutorial.lua:432
 msgid "Okay, listen. I'm doing this for attention."
-msgstr ""
+msgstr "Ok, écoutez. Je fais ça pour attirer l'attention."
 
 #: dat/missions/tutorial/tutorial.lua:433
 msgid "But if you don't shoot me, I'll tell the galaxy your terrible secret."
 msgstr ""
+"Mais si tu ne me tires pas dessus, je révélerai à la galaxie ton terrible "
+"secret."
 
 #: dat/missions/tutorial/tutorial.lua:436
-#, fuzzy
-#| msgid "Okay, that's enough of that!"
 msgid "Okay, that's about enough."
-msgstr "Arrête ça tout de suite !"
+msgstr "D'accord, c'est à peu près suffisant."
 
 #: dat/missions/tutorial/tutorial.lua:437
 msgid "You can stop now."
-msgstr ""
+msgstr "Vous pouvez arrêter maintenant."
 
 #: dat/missions/tutorial/tutorial.lua:438
 msgid "I was wrong about you."
-msgstr ""
+msgstr "J'avais tort à ton sujet."
 
 #: dat/missions/tutorial/tutorial.lua:439
 msgid "Forgive and forget?"
-msgstr ""
+msgstr "Pardonner et oublier ?"
 
 #: dat/missions/tutorial/tutorial.lua:440
 msgid "Let's be pals, I'll buy you an ale!"
-msgstr ""
+msgstr "Soyons amis, je t'offres une bière !"
 
 #: dat/missions/tutorial/tutorial.lua:441
 msgid "Game over, you win."
-msgstr ""
+msgstr "La partie est terminée, tu as gagné."
 
 #: dat/missions/tutorial/tutorial.lua:442
 msgid "I've got a wife and kids! And a cat!"
-msgstr ""
+msgstr "J'ai une femme et des enfants ! Et un chat !"
 
 #: dat/missions/tutorial/tutorial.lua:443
 msgid "Surely you must have some mercy?"
-msgstr ""
+msgstr "Tu dois sûrement avoir un peut de pitié ?"
 
 #: dat/missions/tutorial/tutorial.lua:444
 msgid "Please stop!"
-msgstr ""
+msgstr "Arrêtes, s'il te plaît !"
 
 #: dat/missions/tutorial/tutorial.lua:445
 msgid "I'm sorry!"
-msgstr ""
+msgstr "Je suis désolé !"
 
 #: dat/missions/tutorial/tutorial.lua:446
-#, fuzzy
-#| msgid "\"Just leave me alone!\""
 msgid "Leave me alone!"
-msgstr "\"Laissez moi tranquille !\""
+msgstr "Laisses moi tranquille !"
 
 #: dat/missions/tutorial/tutorial.lua:447
 msgid "What did I ever do to you?"
-msgstr ""
+msgstr "Qu'est-ce que je t'ai fait ?"
 
 #: dat/missions/tutorial/tutorial.lua:448
 msgid "I didn't sign up for this!"
-msgstr ""
+msgstr "Je n'ai pas signé pour ça !"
 
 #: dat/missions/tutorial/tutorial.lua:449
 msgid "Not my ship, anything but my ship!"
-msgstr ""
+msgstr "Pas mon vaisseau, tout sauf mon vaisseau !"
 
 #: dat/missions/tutorial/tutorial.lua:450
 msgid "We can talk this out!"
-msgstr ""
+msgstr "On peut en parler !"
 
 #: dat/missions/tutorial/tutorial.lua:451
 msgid "I'm scared! Hold me."
-msgstr ""
+msgstr "J'ai peur ! Prends-moi dans tes bras."
 
 #: dat/missions/tutorial/tutorial.lua:452
 msgid "Make the bad man go away, mommy!"
-msgstr ""
+msgstr "Fais partir le méchant, maman !"
 
 #: dat/missions/tutorial/tutorial.lua:453
 msgid "If you don't stop I'll cry!"
-msgstr ""
+msgstr "Si tu n'arrêtes pas, je vais pleurer !"
 
 #: dat/missions/tutorial/tutorial.lua:454
 msgid "Here I go, filling my cabin up with tears."
-msgstr ""
+msgstr "Et voilà que je remplis ma cabine de larmes."
 
 #: dat/missions/tutorial/tutorial.lua:455
 msgid "U- oh it a-pears my te-rs hav- da--age t-e co-mand cons-le."
-msgstr ""
+msgstr "U- oh Il se-ble qu- -es l--mes on en-om-agé la cons-le -e co-mandes."
 
 #: dat/missions/tutorial/tutorial.lua:456
 msgid "I a- T. Pr-ct---! Y-- w--l fe-r m- na-e --- Bzzzt!"
-msgstr ""
+msgstr "Je --is T. Pr-ct--- ! T- --aindr-- -on no- --inten--- Bzzzt !"
 
 #. Aborting finishes the mission properly
 #.
@@ -92430,9 +92702,7 @@ msgid "Your ship is missing %d core outfit. How do you want to resolve this?"
 msgid_plural ""
 "Your ship is missing %d core outfits. How do you want to resolve this?"
 msgstr[0] ""
-"Your ship is missing %d core outfit. How do you want to resolve this?"
 msgstr[1] ""
-"Your ship is missing %d core outfits. How do you want to resolve this?"
 
 #. Run callback.
 #. If ship is now spaceworthy, bail out.
@@ -92446,13 +92716,15 @@ msgid_plural ""
 "may have somewhat lower performance than usual. You should get to a planet "
 "with a proper shipyard and outfitter."
 msgstr[0] ""
-"After adding the missing outfit, your ship is now spaceworthy, though it may "
-"have somewhat lower performance than usual. You should get to a planet with "
-"a proper shipyard and outfitter."
+"Après avoir ajouté l'équipement manquant, votre vaisseau est maintenant en "
+"état de naviguer dans l'espace, bien qu'il soit un peu moins performant que "
+"d'habitude. Vous devriez arriver sur une planète dotée d'un chantier et d'un "
+"équipementier adéquats."
 msgstr[1] ""
-"After adding the missing outfits, your ship is now spaceworthy, though it "
-"may have somewhat lower performance than usual. You should get to a planet "
-"with a proper shipyard and outfitter."
+"Après avoir ajouté les équipement manquants, votre vaisseau est maintenant "
+"en état de naviguer dans l'espace, bien qu'il soit un peu moins performant "
+"que d'habitude. Vous devriez arriver sur une planète dotée d'un chantier et "
+"d'un équipementier adéquats."
 
 #: dat/rescue.lua:383
 msgid ""
@@ -95465,8 +95737,8 @@ msgstr[1] "%d t"
 #, lua-format
 msgid "%s jump"
 msgid_plural "%s jumps"
-msgstr[0] "%s jump"
-msgstr[1] "%s jumps"
+msgstr[0] "%s saut"
+msgstr[1] "%s sauts"
 
 #. -- A version of string.gsub returning just the string. --
 #. --
@@ -96036,7 +96308,7 @@ msgstr ""
 #: dat/scripts/luatk/core.lua:1158 dat/scripts/vn/options.lua:51
 #: src/dialogue.c:490
 msgid "Done"
-msgstr ""
+msgstr "Fait"
 
 #. OK, so we actually use a pseudo update to initialize the focus and then pass
 #. over to the normal focus. This has to be done, otherwise the focus gets set
@@ -99391,11 +99663,11 @@ msgstr ""
 
 #: dat/scripts/vn/options.lua:39
 msgid "Enable autoscroll to end of text."
-msgstr ""
+msgstr "Activer le défilement automatique jusqu'à la fin du texte."
 
 #: dat/scripts/vn/options.lua:46
 msgid "#nText Speed#0: {val:.3f} seconds per character"
-msgstr ""
+msgstr "#nVitesse #0: {val:.3f} secondes par caractère"
 
 #. --
 #. Transitions for the Visual Novel framework.
@@ -100655,7 +100927,7 @@ msgstr ""
 #: src/SDL_keynames.h:151
 msgctxt "keyname"
 msgid "Find"
-msgstr ""
+msgstr "Rechercher"
 
 #: src/SDL_keynames.h:152
 msgctxt "keyname"
@@ -101192,8 +101464,8 @@ msgstr[1] "Loaded %d AI Profiles"
 #, c-format
 msgid "Loaded %d AI Profile"
 msgid_plural "Loaded %d AI Profiles"
-msgstr[0] "Loaded %d AI Profile"
-msgstr[1] "Loaded %d AI Profiles"
+msgstr[0] "%d Profile d'IA chargé"
+msgstr[1] "%d Profiles d'IA chargés"
 
 #: src/ai.c:590 src/board.c:86 src/comm.c:158 src/land.c:1651 src/naev.c:536
 #: src/player.c:3594
@@ -101636,8 +101908,8 @@ msgstr[1] "Loaded %d Commodities"
 #, c-format
 msgid "Loaded %d Commodity"
 msgid_plural "Loaded %d Commodities"
-msgstr[0] "Loaded %d Commodity"
-msgstr[1] "Loaded %d Commodities"
+msgstr[0] "%d Marchandise Chargé"
+msgstr[1] "%d Marchandises Chargées"
 
 #: src/cond.c:31
 msgid "Failed to load standard Lua libraries."
@@ -102688,7 +102960,7 @@ msgstr ""
 
 #: src/dev_uniedit.c:248 src/map.c:381 src/map_find.c:1020
 msgid "Find"
-msgstr ""
+msgstr "Rechercher"
 
 #: src/dev_uniedit.c:257
 msgid "Nebula:"
@@ -102897,8 +103169,8 @@ msgstr ""
 #, c-format
 msgid "Input must be at least %d character long!"
 msgid_plural "Input must be at least %d characters long!"
-msgstr[0] "Input must be at least %d character long!"
-msgstr[1] "Input must be at least %d characters long!"
+msgstr[0] "L'entrée doit comporter au moins %d caractère !"
+msgstr[1] "L'entrée doit comporter au moins %d caractères !"
 
 #: src/dialogue.c:1061
 msgid "Dialogue counter not in sync!"
@@ -103186,56 +103458,54 @@ msgstr ""
 #: src/equipment.c:1766 src/info.c:573 src/land_shipyard.c:229
 #: src/map_system.c:654
 msgid "Model:"
-msgstr ""
+msgstr "Modèle :"
 
 #: src/equipment.c:1767 src/info.c:574 src/land.c:1322 src/land_shipyard.c:231
 #: src/map_system.c:655
 msgid "Class:"
-msgstr ""
+msgstr "Classe :"
 
 #: src/equipment.c:1768
 msgid "Acquired Date:"
-msgstr ""
+msgstr "Date d’Acquisition :"
 
 #: src/equipment.c:1772
 msgid "Value:"
-msgstr ""
+msgstr "Valeur :"
 
 #: src/equipment.c:1774 src/land_shipyard.c:238
 msgid "Fleet Capacity:"
-msgstr ""
+msgstr "Capacité de la flotte :"
 
 #: src/equipment.c:1775 src/info.c:575 src/land_shipyard.c:235
 #: src/map_system.c:658
 msgid "Crew:"
-msgstr ""
+msgstr "Équipage :"
 
 #: src/equipment.c:1776 src/info.c:577 src/land_outfits.c:425
 #: src/land_shipyard.c:251 src/map_find.c:637 src/map_system.c:634
 #: src/map_system.c:661
 msgid "Mass:"
-msgstr ""
+msgstr "Masse :"
 
 #: src/equipment.c:1777 src/info.c:578
-#, fuzzy
-#| msgid "Time: "
 msgid "Jump Time:"
-msgstr "Heure : "
+msgstr "Temps de Saut :"
 
 #: src/equipment.c:1778 src/info.c:579 src/land_shipyard.c:255
 #: src/map_system.c:662
 msgid "Thrust:"
-msgstr ""
+msgstr "Poussée :"
 
 #: src/equipment.c:1779 src/info.c:580 src/land_shipyard.c:260
 #: src/map_system.c:664
 msgid "Speed:"
-msgstr ""
+msgstr "Vitesse :"
 
 #: src/equipment.c:1780 src/info.c:581 src/land_shipyard.c:265
 #: src/map_system.c:666
 msgid "Turn:"
-msgstr ""
+msgstr "Virage :"
 
 #: src/equipment.c:1781 src/info.c:582 src/land_shipyard.c:270
 #: src/map_system.c:668
@@ -103244,55 +103514,49 @@ msgstr ""
 
 #: src/equipment.c:1782
 msgid "Detected at:"
-msgstr ""
+msgstr "Détecté à :"
 
 #: src/equipment.c:1783
-#, fuzzy
-#| msgid "Faction:"
 msgid "Evasion:"
-msgstr "Faction :"
+msgstr "Évasion :"
 
 #: src/equipment.c:1784
 msgid "Stealth:"
-msgstr ""
+msgstr "Furtivité :"
 
 #. Misc
 #: src/equipment.c:1786 src/info.c:584 src/land_shipyard.c:275
 #: src/map_system.c:670
 msgid "Absorption:"
-msgstr ""
+msgstr "Absorption :"
 
 #: src/equipment.c:1787 src/info.c:585 src/land_shipyard.c:280
 #: src/map_system.c:672
 msgid "Shield:"
-msgstr ""
+msgstr "Bouclier :"
 
 #: src/equipment.c:1788 src/info.c:586 src/land_shipyard.c:285
 #: src/map_system.c:674
 msgid "Armour:"
-msgstr ""
+msgstr "Armure :"
 
 #: src/equipment.c:1789 src/info.c:587 src/land_shipyard.c:290
 #: src/map_system.c:676
 msgid "Energy:"
-msgstr ""
+msgstr "Énergie :"
 
 #: src/equipment.c:1790 src/info.c:588 src/land_shipyard.c:297
 #: src/map_system.c:678
-#, fuzzy
-#| msgid "Spaceworthy"
 msgid "Cargo Space:"
-msgstr "Capable d'aller dans l'espace"
+msgstr "Espace de Stockage :"
 
 #: src/equipment.c:1793
 msgid "Ship Status:"
-msgstr ""
+msgstr "Statut du vaisseau :"
 
 #: src/equipment.c:1796
-#, fuzzy
-#| msgid "Time: "
 msgid "Time Flown:"
-msgstr "Heure : "
+msgstr "Temps de vol :"
 
 #: src/equipment.c:1797
 #, fuzzy
@@ -103641,8 +103905,8 @@ msgstr[1] "Loaded %d Events"
 #, c-format
 msgid "Loaded %d Event"
 msgid_plural "Loaded %d Events"
-msgstr[0] "Loaded %d Event"
-msgstr[1] "Loaded %d Events"
+msgstr[0] "%d Événement Chargé"
+msgstr[1] "%d Événements Chargés"
 
 #: src/event.c:577 src/mission.c:1095 src/nxml.c:85
 #, c-format
@@ -103865,8 +104129,8 @@ msgstr[1] "Loaded %d Factions"
 #, c-format
 msgid "Loaded %d Faction"
 msgid_plural "Loaded %d Factions"
-msgstr[0] "Loaded %d Faction"
-msgstr[1] "Loaded %d Factions"
+msgstr[0] "%d Faction Chargée"
+msgstr[1] "%d Factions Chargées"
 
 #: src/font.c:1157
 #, c-format
@@ -103926,8 +104190,8 @@ msgstr ""
 #, c-format
 msgid "%d ton of %s gathered"
 msgid_plural "%d tons of %s gathered"
-msgstr[0] "%d ton of %s gathered"
-msgstr[1] "%d tons of %s gathered"
+msgstr[0] "%d tonne de %s rassemblé"
+msgstr[1] "%d tonnes de %s rassemblés"
 
 #: src/gatherable.c:200
 msgid "No more cargo space available"
@@ -104087,57 +104351,48 @@ msgstr ""
 
 #: src/info.c:384 src/load.c:740
 msgid "Date:"
-msgstr ""
+msgstr "Date :"
 
 #: src/info.c:385 src/land.c:1326 src/land_outfits.c:427
 #: src/land_shipyard.c:311 src/land_trade.c:91 src/map_find.c:639
 msgid "Money:"
-msgstr ""
+msgstr "Argent :"
 
 #: src/info.c:386
 msgid "Current Ship:"
-msgstr ""
+msgstr "Vaisseau Actuel :"
 
 #: src/info.c:388
-#, fuzzy
-#| msgid "Spaceworthy"
 msgid "Cargo (fleet):"
-msgstr "Capable d'aller dans l'espace"
+msgstr "Contenance (flotte) :"
 
 #: src/info.c:389
-#, fuzzy
-#| msgid "Gameplay"
 msgid "Time played:"
-msgstr "Gameplay"
+msgstr "Temps de jeu :"
 
 #: src/info.c:390
-#, fuzzy
-#| msgid "Time Over"
 msgid "Times died:"
-msgstr "Temps écoulé"
+msgstr "Nombre de morts :"
 
 #: src/info.c:391
-#, fuzzy
-#| msgid "%s jump"
-#| msgid_plural "%s jumps"
 msgid "Times jumped:"
-msgstr "%s jump"
+msgstr "Nombre de sauts :"
 
 #: src/info.c:392
 msgid "Times landed:"
-msgstr ""
+msgstr "Nombre d’atterrissages :"
 
 #: src/info.c:393
 msgid "Damage done:"
-msgstr ""
+msgstr "Dommages causés :"
 
 #: src/info.c:394
 msgid "Damage taken:"
-msgstr ""
+msgstr "Dommages subis :"
 
 #: src/info.c:395
 msgid "Ships destroyed:"
-msgstr ""
+msgstr "Vaisseaux détruits :"
 
 #: src/info.c:428
 msgid "Set GUI"
@@ -104669,11 +104924,11 @@ msgstr ""
 #. Space Navigation
 #: src/input.c:91
 msgid "Autonavigation On"
-msgstr "Pilote automatique activé"
+msgstr "Autonav activé"
 
 #: src/input.c:91
 msgid "Initializes the autonavigation system."
-msgstr "Initialise le système de pilote automatique."
+msgstr "Initialise le système Autonav."
 
 #: src/input.c:92
 #, fuzzy
@@ -105062,8 +105317,8 @@ msgstr ""
 #, c-format
 msgid "%d joystick detected"
 msgid_plural "%d joysticks detected"
-msgstr[0] "%d joystick detected"
-msgstr[1] "%d joysticks detected"
+msgstr[0] "%d joystick détecté"
+msgstr[1] "%d joysticks détectés"
 
 #: src/joystick.c:152
 msgid "Unable to initialize the joystick subsystem"
@@ -105089,8 +105344,12 @@ msgstr ""
 #, c-format
 msgid "You have %d tonne more cargo than the new ship can hold."
 msgid_plural "You have %d tonnes more cargo than the new ship can hold."
-msgstr[0] "You have %d tonne more cargo than the new ship can hold."
-msgstr[1] "You have %d tonnes more cargo than the new ship can hold."
+msgstr[0] ""
+"Vous avez %d tonne de cargaison en plus que ce que le nouveau navire peut "
+"contenir."
+msgstr[1] ""
+"Vous avez %d tonnes de cargaison en plus que ce que le nouveau navire peut "
+"contenir."
 
 #: src/land.c:239
 #, fuzzy
@@ -105112,7 +105371,7 @@ msgstr ""
 
 #: src/land.c:621 src/map.c:384
 msgid "Autonav"
-msgstr "Pilote automatique"
+msgstr "Autonav"
 
 #: src/land.c:628
 msgid ""
@@ -105614,21 +105873,17 @@ msgstr ""
 
 #. window
 #: src/load.c:506
-#, fuzzy
-#| msgid "Pilot: "
 msgid "Load Pilot"
-msgstr "Pilote : "
+msgstr "Charger Pilote"
 
 #: src/load.c:520 src/load.c:601
 #, c-format
 msgid "%s (#r%s#0)"
-msgstr ""
+msgstr " %s (#r%s#0)"
 
 #: src/load.c:549
-#, fuzzy
-#| msgid "Screenshot"
 msgid "Snapshots"
-msgstr "Capture d'écran"
+msgstr "Instantanés"
 
 #. TODO we should print the full OS path if possible here.
 #: src/load.c:557
@@ -105637,97 +105892,91 @@ msgid ""
 "Naev has detected saves in pre-0.10.0 format, and has automatically migrated "
 "them to the new format. Old saves have been backed up at '%s'."
 msgstr ""
+"Naev a détecté les sauvegardes au format pré-0.10.0, et les a "
+"automatiquement migrées vers le nouveau format. Les anciennes sauvegardes "
+"ont été sauvegardées à '%s'."
 
 #: src/load.c:582
-#, fuzzy, c-format
-#| msgid "Trying to destroy weapon not found in stack!"
+#, c-format
 msgid "Player '%s' not found in list of saves!"
-msgstr "Essai de détruire une arme non existante dans le tas !"
+msgstr "Le joueur '%s' n'a pas été trouvé dans la liste des sauvegardes !"
 
 #. window
 #: src/load.c:588
 msgid "Load Snapshot"
-msgstr ""
+msgstr "Charger Instantané"
 
 #: src/load.c:628
-#, fuzzy
-#| msgid "Cave canem!"
 msgid "Save As"
-msgstr "Cave canem !"
+msgstr "Sauvegarder..."
 
 #: src/load.c:666
-#, fuzzy
-#| msgid "Cave canem!"
 msgid "Save game"
-msgstr "Cave canem !"
+msgstr "Sauvegarder"
 
 #: src/load.c:666
 msgid "Please give the new snapshot a name:"
-msgstr ""
+msgstr "Veuillez donner un nom au nouvel instantané :"
 
 #: src/load.c:672 src/player.c:258
 msgid "Overwrite"
-msgstr ""
+msgstr "Écraser"
 
 #: src/load.c:673
 #, c-format
 msgid "You already have a snapshot named '%s'. Overwrite?"
-msgstr ""
+msgstr "Vous avez déjà un instantané nommé '%s'. Écraser ?"
 
 #: src/load.c:681
 msgid ""
 "Failed to save the game! You should exit and check the log to see what "
 "happened and then file a bug report!"
 msgstr ""
+"Échec de la sauvegarde du jeu ! Vous devriez quitter le jeu et vérifier le "
+"journal pour voir ce qui s'est passé et ensuite remplir un rapport de bug !"
 
 #: src/load.c:724
 #, c-format
 msgid "%s (options)"
-msgstr ""
+msgstr " %s (options)"
 
 #: src/load.c:727
 #, c-format
 msgid "%s (this save)"
-msgstr ""
+msgstr " %s (cette sauvegarde)"
 
 #: src/load.c:733
-#, fuzzy
-#| msgid "Faction:"
 msgid "Version:"
-msgstr "Faction :"
+msgstr "Version :"
 
 #: src/load.c:738
 msgid "Difficulty:"
-msgstr ""
+msgstr "Difficulté :"
 
 #: src/load.c:742
 msgid "Chapter:"
-msgstr ""
+msgstr "Chapitre :"
 
 #: src/load.c:744
 msgid "Spob:"
-msgstr ""
+msgstr "Localisation :"
 
 #: src/load.c:748
-#, fuzzy
-#| msgid "Name: "
 msgid "Ship Name:"
-msgstr "Nom : "
+msgstr "Nom du Vaisseau :"
 
 #: src/load.c:750
-#, fuzzy
-#| msgid "   * Ship Models"
 msgid "Ship Model:"
-msgstr "   * Modèles de vaisseau"
+msgstr "Modèle de Vaisseau :"
 
 #: src/load.c:792 src/load.c:948 src/load.c:983
 #, c-format
 msgid "Unable to delete %s"
-msgstr ""
+msgstr "Impossible de supprimer %s"
 
 #: src/load.c:940 src/load.c:977
 msgid "Permanently Delete?"
-msgstr ""
+msgstr "Supprimer définitivement ?"
 
 #: src/load.c:941
 #, c-format
@@ -105735,11 +105984,13 @@ msgid ""
 "Are you sure you want to permanently delete the character '%s'?\n"
 "#rThis is an undoable action!#0"
 msgstr ""
+"Êtes-vous sûr de vouloir supprimer définitivement le personnage '%s' ?\n"
+"#rCette action est irréversible!#0"
 
 #: src/load.c:951 src/load.c:991
 #, c-format
 msgid "Unable to delete '%s' directory"
-msgstr ""
+msgstr "Impossible de supprimer le répertoire '%s'"
 
 #: src/load.c:978
 #, c-format
@@ -105747,48 +105998,51 @@ msgid ""
 "Are you sure you want to permanently delete the snapshot '%s'?\n"
 "#rThis is an undoable action!#0"
 msgstr ""
+"Êtes-vous sûr de vouloir supprimer définitivement l'instantané '%s' ?\n"
+"#rCette action est irréversible!#0"
 
 #: src/load.c:1061 src/load.c:1123
 msgid "Saved game file seems to have been deleted."
-msgstr ""
+msgstr "Le fichier sauvegarde semble avoir été supprimé."
 
 #: src/load.c:1084 src/load.c:1242
 #, c-format
 msgid "Saved game '%s' invalid!"
-msgstr ""
+msgstr "Sauvegarde '%s' invalide !"
 
 #. Welcome message - must be before space_init.
 #: src/load.c:1177 src/player.c:319
 #, c-format
 msgid "#gWelcome to %s!"
-msgstr ""
+msgstr "#gBienvenue à %s !"
 
 #: src/load.c:1190
 msgid "Old version detected. Sanitizing ships for slots"
 msgstr ""
+"Ancienne version détectée. Assainissement des vaisseaux pour les emplacements"
 
 #: src/log.c:124
 msgid "Unable to redirect stdout to file"
-msgstr ""
+msgstr "Unable to redirect stdout to file"
 
 #: src/log.c:128
 msgid "Unable to redirect stderr to file"
-msgstr ""
+msgstr "Unable to redirect stderr to file"
 
 #: src/log.c:267
 #, c-format
 msgid "An error occurred while buffering %s!"
-msgstr ""
+msgstr "An error occurred while buffering %s!"
 
 #: src/log.h:18
 #, c-format
 msgid "WARNING %s:%d [%s]: "
-msgstr ""
+msgstr "WARNING %s:%d [%s] : "
 
 #: src/log.h:20
 #, c-format
 msgid "Warning: [%s] "
-msgstr ""
+msgstr "Warning: [%s] "
 
 #: src/log.h:22
 #, c-format
@@ -105808,11 +106062,11 @@ msgstr ""
 
 #: src/map.c:348
 msgid "Standing:"
-msgstr ""
+msgstr "Relation :"
 
 #: src/map.c:362
 msgid "Space Objects:"
-msgstr ""
+msgstr "Objets Spatiaux :"
 
 #: src/map.c:369
 msgid "Services:"
@@ -105821,35 +106075,27 @@ msgstr "Services :"
 #. Commodity button
 #: src/map.c:378
 msgid "Mode"
-msgstr ""
+msgstr "Mode"
 
 #. create the window.
 #: src/map.c:391 src/map_system.c:193
-#, fuzzy
-#| msgid "System: "
 msgid "System Info"
-msgstr "Système : "
+msgstr "Système"
 
 #: src/map.c:394
-#, fuzzy
-#| msgid "Toggle Speed"
 msgid "Toggle Note"
-msgstr "Vitesse de jeu"
+msgstr "Note"
 
 #: src/map.c:489 src/map.c:497
-#, fuzzy, c-format
-#| msgid "%s jump"
-#| msgid_plural "%s jumps"
+#, c-format
 msgid "%d jump"
 msgid_plural "%d jumps"
-msgstr[0] "%s jump"
-msgstr[1] "%s jumps"
+msgstr[0] "%d saut"
+msgstr[1] "%d sauts"
 
 #: src/map.c:491
-#, fuzzy
-#| msgid "Autonav"
 msgid "Autonav: "
-msgstr "Pilote automatique"
+msgstr "Autonav :"
 
 #: src/map.c:562
 #, c-format
@@ -105956,15 +106202,13 @@ msgid "Minimal View"
 msgstr ""
 
 #: src/map.c:2213
-#, fuzzy
-#| msgid "System: "
 msgid "Add System Note"
-msgstr "Système : "
+msgstr "Ajouter une note sur le système"
 
 #: src/map.c:2213
 #, c-format
 msgid "Write a note about the #o%s#0 system:"
-msgstr ""
+msgstr "Écrire une note a propos du système #o%s#0 :"
 
 #: src/map.c:3105
 #, fuzzy, c-format
@@ -105979,8 +106223,8 @@ msgstr[1] "Loaded %d map decorators"
 #, c-format
 msgid "Loaded %d map decorator"
 msgid_plural "Loaded %d map decorators"
-msgstr[0] "Loaded %d map decorator"
-msgstr[1] "Loaded %d map decorators"
+msgstr[0] "%d décorateur de carte chargé"
+msgstr[1] "%d décorateurs de carte chargés"
 
 #: src/map.c:3124
 #, c-format
@@ -106022,8 +106266,8 @@ msgstr ""
 #, c-format
 msgid "%d jump, %.0fk distance"
 msgid_plural "%d jumps, %.0fk distance"
-msgstr[0] "%d jump, %.0fk distance"
-msgstr[1] "%d jumps, %.0fk distance"
+msgstr[0] "%d saut, %.0fk distance"
+msgstr[1] "%d sauts, %.0fk distance"
 
 #: src/map_find.c:399
 #, c-format
@@ -106042,14 +106286,11 @@ msgstr ""
 
 #: src/map_find.c:958
 msgid "System"
-msgstr ""
+msgstr "Système"
 
 #: src/map_find.c:962 src/map_find.c:1030
-#, fuzzy
-#| msgid "       with %d Planet"
-#| msgid_plural "       with %d Planets"
 msgid "Space Objects"
-msgstr "       with %d Planet"
+msgstr "Objets Spatiaux"
 
 #: src/map_find.c:966
 msgid "Outfit"
@@ -106062,19 +106303,19 @@ msgstr ""
 
 #: src/map_find.c:1000
 msgid "Find…"
-msgstr ""
+msgstr "Recherche…"
 
 #: src/map_find.c:1010
 msgid "Enter keyword to search for:"
-msgstr ""
+msgstr "Saisir le mot-clé à rechercher :"
 
 #: src/map_find.c:1027
 msgid "Systems"
-msgstr ""
+msgstr "Systèmes"
 
 #: src/map_find.c:1036
 msgid "Ships"
-msgstr ""
+msgstr "Vaisseaux"
 
 #: src/map_overlay.c:708
 msgid "TARGET"
@@ -106082,7 +106323,7 @@ msgstr ""
 
 #: src/map_system.c:205
 msgid "Buy commodity price info"
-msgstr ""
+msgstr "Acheter des informations sur le prix des marchandises"
 
 #: src/map_system.c:311
 #, c-format
@@ -106104,8 +106345,8 @@ msgstr "Système : %s\n"
 #, c-format
 msgid "%d-star system\n"
 msgid_plural "%d-star system\n"
-msgstr[0] "%d-star system\n"
-msgstr[1] "%d-star system\n"
+msgstr[0] "Système de %d-étoile\n"
+msgstr[1] "Système de %d-étoiles\n"
 
 #: src/map_system.c:400
 msgid "Nebula: Volatile, "
@@ -106179,7 +106420,7 @@ msgstr ""
 
 #: src/map_system.c:490
 msgid "     Unknown system\n"
-msgstr ""
+msgstr "     Système Inconnu\n"
 
 #: src/map_system.c:507
 #, c-format
@@ -106187,105 +106428,107 @@ msgid ""
 "Spob: %s\n"
 "Planetary class: %s    Population: roughly %s\n"
 msgstr ""
+"Nom : %s\n"
+"Classe planétaire : %s    Population : ~%s\n"
 
 #: src/map_system.c:509
 msgid "No space port here\n"
-msgstr ""
+msgstr "Pas de port spatial ici\n"
 
 #: src/map_system.c:511
 msgid "You can land here\n"
-msgstr ""
+msgstr "Vous pouvez atterrir ici\n"
 
 #: src/map_system.c:513
 msgid "Not advisable to land here\n"
-msgstr ""
+msgstr "Il est déconseillé d'atterrir ici\n"
 
 #: src/map_system.c:515
 msgid "You cannot land here\n"
-msgstr ""
+msgstr "Vous ne pouvez pas atterrir ici\n"
 
 #. Add a description
 #: src/map_system.c:521
 msgid "No description available"
-msgstr ""
+msgstr "Aucune description disponible"
 
 #: src/map_system.c:526
 msgid "This system is landable"
-msgstr ""
+msgstr "Atterrissage possible"
 
 #: src/map_system.c:526
 msgid "This system is not landable"
-msgstr ""
+msgstr "Atterrissage impossible"
 
 #: src/map_system.c:527
 msgid "This system is inhabited"
-msgstr ""
+msgstr "Habité"
 
 #: src/map_system.c:527
 msgid "This system is not inhabited"
-msgstr ""
+msgstr "Inhabité"
 
 #: src/map_system.c:528
 msgid "You can refuel here"
-msgstr ""
+msgstr "Ravitaillement possible"
 
 #: src/map_system.c:528
 msgid "You cannot refuel here"
-msgstr ""
+msgstr "Ravitaillement impossible"
 
 #: src/map_system.c:529
 msgid "This system has a bar"
-msgstr ""
+msgstr "Possède un bar"
 
 #: src/map_system.c:529
 msgid "This system does not have a bar"
-msgstr ""
+msgstr "Ne possède pas de bar"
 
 #: src/map_system.c:530
 msgid "This system offers missions"
-msgstr ""
+msgstr "Offre des missions"
 
 #: src/map_system.c:530
 msgid "This system does not offer missions"
-msgstr ""
+msgstr "N'offre pas de missions"
 
 #: src/map_system.c:531
 msgid "This system has a trade outlet"
-msgstr ""
+msgstr "Possède un point de vente"
 
 #: src/map_system.c:531
 msgid "This system does not have a trade outlet"
-msgstr ""
+msgstr "Ne possède pas de point de vente"
 
 #: src/map_system.c:532
 msgid "This system sells ship equipment"
-msgstr "Ce système vend de l'équipement pour vaisseaux"
+msgstr "Vend de l'équipement pour vaisseaux"
 
 #: src/map_system.c:532
 msgid "This system does not sell ship equipment"
-msgstr "Ce système ne vend pas d'équipement pour vaisseaux"
+msgstr "Ne vend pas d'équipement pour vaisseaux"
 
 #: src/map_system.c:533
 msgid "This system sells ships"
-msgstr "Ce système vend des vaisseaux"
+msgstr "Vend des vaisseaux"
 
 #: src/map_system.c:533
 msgid "This system does not sell ships"
-msgstr "Ce système ne vend pas de vaisseaux"
+msgstr "Ne vend pas de vaisseaux"
 
 #: src/map_system.c:710
 #, c-format
 msgid "#nYou have:#0 %d tonne, purchased at %s/t\n"
 msgid_plural "#nYou have:#0 %d tonnes, purchased at %s/t\n"
-msgstr[0] "#nYou have:#0 %d tonne, purchased at %s/t\n"
-msgstr[1] "#nYou have:#0 %d tonnes, purchased at %s/t\n"
+msgstr[0] "#nVous avez:#0 %d tonne, achetée à %s/t\n"
+msgstr[1] "#nVous avez:#0 %d tonnes, achetées à %s/t\n"
 
 #: src/map_system.c:716
 #, c-format
 msgid "#nYou have:#0 %d tonne\n"
 msgid_plural "#nYou have:#0 %d tonnes\n"
-msgstr[0] "#nYou have:#0 %d tonne\n"
-msgstr[1] "#nYou have:#0 %d tonnes\n"
+msgstr[0] "#nVous avez :#0 %d tonne\n"
+msgstr[1] "#nVous avez :#0 %d tonnes\n"
 
 #: src/map_system.c:720
 msgid "Average price seen here:"
@@ -106454,7 +106697,7 @@ msgstr "Retourner au Menu Principal"
 #: src/mission.c:104 src/nlua_player.c:1489 src/nlua_player.c:1515
 #, c-format
 msgid "Mission '%s' not found in stack"
-msgstr ""
+msgstr "Mission '%s' not found in stack"
 
 #: src/mission.c:156
 msgid "No description."
@@ -106467,151 +106710,152 @@ msgid ""
 "%s\n"
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
+"Error loading mission file: %s\n"
+"%s\n"
+"Most likely Lua file has improper syntax, please check"
 
 #: src/mission.c:278
 #, c-format
 msgid "Conditional for mission '%s' failed to run"
-msgstr ""
+msgstr "Conditional for mission '%s' failed to run"
 
 #: src/mission.c:377 src/mission.c:399 src/mission.c:421 src/mission.c:479
 #: src/mission.c:575 src/mission.c:623 src/space.c:3703 src/space.c:3757
 #: src/space.c:3788 src/space.c:3843
 msgid "Unknown marker type."
-msgstr ""
+msgstr "Unknown marker type."
 
 #: src/mission.c:464
 #, c-format
 msgid "Mission Marker to system '%s' does not exist"
-msgstr ""
+msgstr "Mission Marker to system '%s' does not exist"
 
 #: src/mission.c:474
 #, c-format
 msgid "Mission Marker to spob '%s' does not exist"
-msgstr ""
+msgstr "Mission Marker to spob '%s' does not exist"
 
 #: src/mission.c:569 src/mission.c:617
-#, c-format
+#, c-format, fuzzy
 msgid "Marked spob '%s' is not in any system!"
-msgstr ""
+msgstr "Marked spob '%s' is not in any system!"
 
 #. not found
 #: src/mission.c:662
 #, c-format
 msgid "Mission '%s' attempting to unlink nonexistent cargo %d."
-msgstr ""
+msgstr "Mission '%s' attempting to unlink nonexistent cargo %d."
 
 #: src/mission.c:690
 #, c-format
 msgid "Failed to remove mission cargo '%d' for mission '%s'."
-msgstr ""
+msgstr "Failed to remove mission cargo '%d' for mission '%s'."
 
 #: src/mission.c:947
 #, c-format
 msgid "Mission in %s has invalid or no name"
-msgstr ""
+msgstr "Mission in %s has invalid or no name"
 
 #: src/mission.c:962
 #, c-format
 msgid "Mission '%s' has unknown location '%s'!"
-msgstr ""
+msgstr "Mission '%s' has unknown location '%s'!"
 
 #: src/mission.c:990
 #, c-format
 msgid "Mission '%s' has unknown node in tags '%s'."
-msgstr ""
+msgstr "Mission '%s' has unknown node in tags '%s'."
 
 #. Notes for the python mission mapping script
 #: src/mission.c:996
 #, c-format
 msgid "Unknown node '%s' in mission '%s'"
-msgstr ""
+msgstr "Unknown node '%s' in mission '%s'"
 
 #: src/mission.c:1011
 #, c-format
 msgid "Mission '%s' missing/invalid '%s' element"
-msgstr ""
+msgstr "Mission '%s' missing/invalid '%s' element"
 
 #: src/mission.c:1070
-#, fuzzy, c-format
-#| msgid "Loaded %d Mission"
-#| msgid_plural "Loaded %d Missions"
+#, c-format
 msgid "Loaded %d Mission in %.3f s"
 msgid_plural "Loaded %d Missions in %.3f s"
-msgstr[0] "%d mission chargée"
-msgstr[1] "%d missions chargées"
+msgstr[0] "Loaded %d Mission in %.3f s"
+msgstr[1] "Loaded %d Missions in %.3f s"
 
 #: src/mission.c:1073
 #, c-format
 msgid "Loaded %d Mission"
 msgid_plural "Loaded %d Missions"
-msgstr[0] "%d mission chargée"
-msgstr[1] "%d missions chargées"
+msgstr[0] "Loaded %d Mission"
+msgstr[1] "Loaded %d Missions"
 
 #: src/mission.c:1108
-#, c-format
+#, c-format, fuzzy
 msgid "Mission '%s' has create function but no XML header!"
-msgstr ""
+msgstr "Mission '%s' has create function but no XML header!"
 
 #: src/mission.c:1117
 #, c-format
 msgid "Mission file '%s' has missing XML header!"
-msgstr ""
+msgstr "Mission file '%s' has missing XML header!"
 
 #: src/mission.c:1124
 #, c-format
 msgid "Unable to parse document XML header for Mission '%s'"
-msgstr ""
+msgstr "Unable to parse document XML header for Mission '%s'"
 
 #: src/mission.c:1130
 #, c-format
 msgid "Malformed XML header for '%s' mission: missing root element '%s'"
-msgstr ""
+msgstr "Malformed XML header for '%s' mission: missing root element '%s'"
 
 #: src/mission.c:1144
 #, c-format
 msgid "Mission Lua '%s' syntax error: %s"
-msgstr ""
+msgstr "Mission Lua '%s' syntax error: %s"
 
 #: src/mission.c:1337
 msgid "Mission cargo without name!"
-msgstr ""
+msgstr "Mission cargo without name!"
 
 #: src/mission.c:1349
 #, c-format
 msgid "Mission temporary cargo '%s' missing description!"
-msgstr ""
+msgstr "Mission temporary cargo '%s' missing description!"
 
 #: src/mission.c:1426
 #, c-format
 msgid "Mission '%s' from saved game not found in game - ignoring."
-msgstr ""
+msgstr "Mission '%s' from saved game not found in game - ignoring."
 
 #: src/mission.c:1432
 #, c-format
 msgid "Mission '%s' from saved game failed to load properly - ignoring."
-msgstr ""
+msgstr "Mission '%s' from saved game failed to load properly - ignoring."
 
 #: src/mission.c:1480
 msgid "Inconsistency with 'nitems' in save file."
-msgstr ""
+msgstr "Inconsistency with 'nitems' in save file."
 
 #. error has occurred
 #: src/music.c:79 src/music.c:102 src/music.c:207 src/music.c:248
 #: src/music.c:269 src/music.c:287 src/music.c:304 src/music.c:325
 #, c-format
 msgid "Error while running music function '%s': %s"
-msgstr ""
+msgstr "Error while running music function '%s': %s"
 
 #: src/music.c:130
 msgid "Music has invalid value, clamping to [0:1]."
-msgstr ""
+msgstr "Music has invalid value, clamping to [0:1]."
 
 #: src/music.c:178
 #, c-format
 msgid "Loaded %d Song"
 msgid_plural "Loaded %d Songs"
-msgstr[0] "%d musique chargée"
-msgstr[1] "%d musiques chargées"
+msgstr[0] "Loaded %d Song"
+msgstr[1] "Loaded %d Songs"
 
 #: src/music.c:366
 #, c-format
@@ -106620,51 +106864,54 @@ msgid ""
 "%s\n"
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
+"Error loading music file: %s\n"
+"%s\n"
+"Most likely Lua file has improper syntax, please check"
 
 #: src/naev.c:195 src/naev.c:1077 src/nlua_naev.c:169 src/nlua_naev.c:171
 #, c-format
 msgid "Failed to parse version string '%s'!"
-msgstr ""
+msgstr "Failed to parse version string '%s'!"
 
 #: src/naev.c:207
 #, c-format
 msgid "Unable to initialize SDL: %s"
-msgstr ""
+msgstr "Unable to initialize SDL: %s"
 
 #: src/naev.c:226 src/opengl.c:487
 #, c-format
 msgid "Unable to initialize SDL Video: %s"
-msgstr ""
+msgstr "Unable to initialize SDL Video: %s"
 
 #: src/naev.c:250
 #, c-format
 msgid "Unable to create config directory '%s'"
-msgstr ""
+msgstr "Unable to create config directory '%s'"
 
 #. now that we can find translations
 #: src/naev.c:263
 #, c-format
 msgid "Loaded configuration: %s"
-msgstr ""
+msgstr "Loaded configuration: %s"
 
 #: src/naev.c:265
 msgid "Read locations, searched in order:"
-msgstr ""
+msgstr "Read locations, searched in order:"
 
 #. Logging the cache path is noisy, noisy is good at the DEBUG level.
 #: src/naev.c:270
 #, c-format
 msgid "Cache location: %s"
-msgstr ""
+msgstr "Cache location: %s"
 
 #: src/naev.c:271
 #, c-format
 msgid "Write location: %s\n"
-msgstr ""
+msgstr "Write location: %s\n"
 
 #: src/naev.c:279
 msgid "Failed to load module start data."
-msgstr ""
+msgstr "Failed to load module start data."
 
 #.
 #. * OpenGL
@@ -106672,46 +106919,46 @@ msgstr ""
 #. initializes video output
 #: src/naev.c:294
 msgid "Initializing video output failed, exiting…"
-msgstr ""
+msgstr "Initializing video output failed, exiting…"
 
 #: src/naev.c:311
 msgid "Initializing subsystems…"
-msgstr ""
+msgstr "Initialisation des sous-systèmes…"
 
 #: src/naev.c:319
 msgid "Error initializing joystick input"
-msgstr ""
+msgstr "Error initializing joystick input"
 
 #: src/naev.c:322 src/naev.c:329
 msgid "Failure to open any joystick, falling back to default keybinds"
-msgstr ""
+msgstr "Failure to open any joystick, falling back to default keybinds"
 
 #: src/naev.c:338
 msgid "Sound is disabled!"
-msgstr ""
+msgstr "Sound is disabled!"
 
 #: src/naev.c:343
 msgid "Problem setting up sound!"
-msgstr ""
+msgstr "Problem setting up sound!"
 
 #. Initializes the nebula
 #. An error has happened
 #: src/naev.c:353
 msgid "Unable to initialize the Nebula subsystem!"
-msgstr ""
+msgstr "Unable to initialize the Nebula subsystem!"
 
 #: src/naev.c:376
 #, c-format
 msgid "Reached main menu in %.3f s"
-msgstr ""
+msgstr "Reached main menu in %.3f s"
 
 #: src/naev.c:378
 msgid "Reached main menu"
-msgstr ""
+msgstr "Reached main menu"
 
 #: src/naev.c:401
 msgid "Incomplete Translation"
-msgstr ""
+msgstr "Traduction Incomplète"
 
 #: src/naev.c:402
 #, c-format
@@ -106720,6 +106967,9 @@ msgid ""
 "remaining text will be English. Language settings are available in the \"%s"
 "\" screen."
 msgstr ""
+"%s est partiellement traduit (%.0f%%) dans votre langue (%s), mais le reste "
+"du texte sera en anglais. Les paramètres linguistiques sont disponibles dans "
+"l'écran \"%s\"."
 
 #: src/naev.c:414
 msgid "Welcome to Naev"
@@ -106742,122 +106992,109 @@ msgid ""
 "look at naev.org; it has all the relevant links. And again, thank you for "
 "playing!"
 msgstr ""
+"Bienvenue dans la version %s de Naev et merci de jouer ! Nous espérons que "
+"vous apprécierez ce jeu et tout ce qu'il a à offrir. Il s'agit d'un projet "
+"passionnel développé exclusivement par des bénévoles et nous sommes très "
+"heureux de savoir que d'autres personnes aiment ce jeu autant que nous !\n"
+"    Bien sûr, veuillez noter qu'il s'agit d'un jeu incomplet. Vous "
+"rencontrerez des intrigues sans issue, des intrigues manquantes, et peut-"
+"être même quelques bugs, bien que nous essayions de les réduire au minimum. "
+"Préparez-vous donc à quelques difficultés pour l'instant. Cela dit, nous "
+"travaillons sur ce jeu tous les jours et espérons un jour terminer ce projet "
+"gigantesque qui est entre nos mains. Peut-être deviendrez-vous l'un d'entre "
+"nous, qui sait ?\n"
+"    Pour plus d'informations sur le jeu et son état de développement, jetez "
+"un coup d'œil à naev.org ; vous y trouverez tous les liens nécessaires. Et "
+"encore une fois, merci de jouer !"
 
 #: src/naev.c:531
 #, c-format
 msgid "Something went wrong when loading Lua libraries for '%s'!"
-msgstr ""
+msgstr "Something went wrong when loading Lua libraries for '%s'!"
 
 #. error has occurred
 #: src/naev.c:565 src/naev.c:593
 #, c-format
 msgid "Loadscreen '%s': '%s'"
-msgstr ""
+msgstr "Loadscreen '%s': '%s'"
 
 #. order is very important as they're interdependent
 #: src/naev.c:621
-#, fuzzy
-#| msgid "Loading Completed!"
 msgid "Loading Commodities…"
-msgstr "Chargement terminé !"
+msgstr "Chargement des marchandises…"
 
 #. dep for space
 #: src/naev.c:624
-#, fuzzy
-#| msgid "Loading Special Effects..."
 msgid "Loading Special Effects…"
-msgstr "Chargement des effets spéciaux..."
+msgstr "Chargement des effets spéciaux…"
 
 #. no dep
 #: src/naev.c:627
-#, fuzzy
-#| msgid "Loading Events..."
 msgid "Loading Effects…"
-msgstr "Chargement des évènements..."
+msgstr "Chargement des évènements…"
 
 #. no dep
 #: src/naev.c:630
 msgid "Loading Damage Types…"
-msgstr ""
+msgstr "Chargement des types de dommage…"
 
 #. dep for outfits
 #: src/naev.c:633
-#, fuzzy
-#| msgid "Loaded %d Outfit"
-#| msgid_plural "Loaded %d Outfits"
 msgid "Loading Outfits…"
-msgstr "Loaded %d Outfit"
+msgstr "Chargement des équipements…"
 
 #. dep for ships, factions
 #: src/naev.c:636
-#, fuzzy
-#| msgid "Loading Ships..."
 msgid "Loading Ships…"
-msgstr "Chargement des vaisseaux..."
+msgstr "Chargement des vaisseaux…"
 
 #. dep for fleet
 #: src/naev.c:639
-#, fuzzy
-#| msgid "Loading Factions..."
 msgid "Loading Factions…"
-msgstr "Chargement des factions..."
+msgstr "Chargement des factions…"
 
 #: src/naev.c:645
-#, fuzzy
-#| msgid "Loading AI..."
 msgid "Loading AI…"
-msgstr "Chargement de l'intelligence artificielle..."
+msgstr "Chargement de l'IA…"
 
 #. dep for fleets
 #: src/naev.c:648
-#, fuzzy
-#| msgid "Loading Techs..."
 msgid "Loading Techs…"
-msgstr "Chargement des technologies..."
+msgstr "Chargement des technologies…"
 
 #. dep for space
 #: src/naev.c:651
-#, fuzzy
-#| msgid "Loading the Universe..."
 msgid "Loading the Universe…"
-msgstr "Chargement de l'univers..."
+msgstr "Chargement de l'univers…"
 
 #. dep for events/missions
 #: src/naev.c:654
-#, fuzzy
-#| msgid "Loading Events..."
 msgid "Loading Events…"
-msgstr "Chargement des évènements..."
+msgstr "Chargement des évènements…"
 
 #: src/naev.c:657
-#, fuzzy
-#| msgid "Loading Missions..."
 msgid "Loading Missions…"
-msgstr "Chargement des missions..."
+msgstr "Chargement des missions…"
 
 #: src/naev.c:660
-#, fuzzy
-#| msgid "Loading the Universe..."
 msgid "Loading the UniDiffs…"
-msgstr "Chargement de l'univers..."
+msgstr "Chargement des UniDiffs…"
 
 #: src/naev.c:663
-#, fuzzy
-#| msgid "Faction:"
 msgid "Populating Maps…"
-msgstr "Faction :"
+msgstr "Peuplement des cartes…"
 
 #: src/naev.c:666
 msgid "Calculating Patrols…"
-msgstr ""
+msgstr "Calcul des patrouilles…"
 
 #: src/naev.c:669
 msgid "Initializing Details…"
-msgstr ""
+msgstr "Initialisation des détails…"
 
 #: src/naev.c:672
 msgid "Too many loading stages, please increase LOADING_STAGES"
-msgstr ""
+msgstr "Too many loading stages, please increase LOADING_STAGES"
 
 #. Initialize player stuff.
 #: src/naev.c:682
@@ -106866,182 +107103,186 @@ msgstr "Chargement terminé !"
 
 #: src/naev.c:834
 msgid "clock_gettime failed, disabling POSIX time."
-msgstr ""
+msgstr "clock_gettime failed, disabling POSIX time."
 
 #: src/naev.c:859
 msgid "clock_gettime failed!"
-msgstr ""
+msgstr "clock_gettime failed!"
 
 #: src/naev.c:946
 msgid "PAUSED"
-msgstr ""
+msgstr "EN PAUSE"
 
 #: src/naev.c:1044
 msgid "Icon (icon.webp) not found!"
-msgstr ""
+msgstr "Icon (icon.webp) not found!"
 
 #: src/naev.c:1049
 msgid "Unable to load icon.webp!"
-msgstr ""
+msgstr "Unable to load icon.webp!"
 
 #: src/naev.c:1104
 #, c-format
 msgid "SDL: %d.%d.%d [compiled: %d.%d.%d]"
-msgstr ""
+msgstr "SDL: %d.%d.%d [compiled: %d.%d.%d]"
 
 #: src/naev.c:1114
 msgid "SDL is newer than compiled version"
-msgstr ""
+msgstr "SDL is newer than compiled version"
 
 #: src/naev.c:1116
 msgid "SDL is older than compiled version."
-msgstr ""
+msgstr "SDL is older than compiled version."
 
 #: src/naev_version.c:33
 msgid " debug"
-msgstr ""
+msgstr " debug"
 
 #: src/ndata.c:66
 msgid ""
 "Unable to find game data. You may need to install, specify a datapath, or "
 "run using naev.sh (if developing)."
 msgstr ""
+"Unable to find game data. You may need to install, specify a datapath, or "
+"run using naev.sh (if developing)."
 
 #: src/ndata.c:75
 msgid "ndata version inconsistency with this version of Naev!"
-msgstr ""
+msgstr "ndata version inconsistency with this version of Naev!"
 
 #: src/ndata.c:76
 #, c-format
 msgid "Expected ndata version %s got %s."
-msgstr ""
+msgstr "Expected ndata version %s got %s."
 
 #: src/ndata.c:78
 msgid "Please get a compatible ndata version!"
-msgstr ""
+msgstr "Please get a compatible ndata version!"
 
 #: src/ndata.c:80
 msgid ""
 "Naev will probably crash now as the versions are probably not compatible."
 msgstr ""
+"Naev will probably crash now as the versions are probably not compatible."
 
 #: src/ndata.c:102
 msgid "Cannot determine data path, using current directory."
-msgstr ""
+msgstr "Cannot determine data path, using current directory."
 
 #: src/ndata.c:115
 #, c-format
 msgid "Added datapath from conf.lua file: %s"
-msgstr ""
+msgstr "Added datapath from conf.lua file: %s"
 
 #: src/ndata.c:119 src/ndata.c:125 src/ndata.c:130 src/ndata.c:135
 #, c-format
 msgid "Trying default datapath: %s"
-msgstr ""
+msgstr "Trying default datapath: %s"
 
 #: src/ndata.c:163 src/ndata.c:177 src/nfile.c:442 src/nfile.c:456
 #: src/nfile.c:550
 #, c-format
 msgid "Error occurred while opening '%s': %s"
-msgstr ""
+msgstr "Error occurred while opening '%s': %s"
 
 #: src/ndata.c:169 src/nfile.c:448
 #, c-format
 msgid "Error occurred while opening '%s': It is not a regular file"
-msgstr ""
+msgstr "Error occurred while opening '%s': It is not a regular file"
 
 #: src/ndata.c:186 src/nfile.c:463 src/nfile.c:470
 #, c-format
 msgid "Error occurred while seeking '%s': %s"
-msgstr ""
+msgstr "Error occurred while seeking '%s': %s"
 
 #: src/ndata.c:208 src/nfile.c:491
 #, c-format
 msgid "Error occurred while reading '%s': %s"
-msgstr ""
+msgstr "Error occurred while reading '%s': %s"
 
 #: src/ndata.c:321 src/ndata.c:351 src/nfile.c:382 src/nfile.c:413
 #, c-format
 msgid "Failure to copy '%s' to '%s': %s"
-msgstr ""
+msgstr "Failure to copy '%s' to '%s': %s"
 
 #: src/ndata.h:64
 msgid ""
 "Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold.ttf,"
 "IBMPlexSansJP-Medium.otf"
 msgstr ""
+"Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold.ttf"
+",IBMPlexSansJP-Medium.otf"
 
 #. *< Default font path.
 #: src/ndata.h:65
 msgid "SourceCodePro-Semibold.ttf,D2CodingBold.ttf,IBMPlexSansJP-Medium.otf"
-msgstr ""
+msgstr "SourceCodePro-Semibold.ttf,D2CodingBold.ttf,IBMPlexSansJP-Medium.otf"
 
 #: src/news.c:261
-#, fuzzy
-#| msgid "Available Ships"
 msgid "No news is available."
-msgstr "Vaisseaux disponibles"
+msgstr "Pas de nouvelles disponibles"
 
 #: src/news.c:521
 #, c-format
 msgid "Event is missing '%s', skipping."
-msgstr ""
+msgstr "Event is missing '%s', skipping."
 
 #: src/nfile.c:126
 msgid "Cannot determine config path, using current directory."
-msgstr ""
+msgstr "Cannot determine config path, using current directory."
 
 #: src/nfile.c:132
 msgid "$XDG_CONFIG_HOME isn't set, using current directory."
-msgstr "$XDG_CONFIG_HOME n'est pas défini, le répertoire actuel est utilisé."
+msgstr "$XDG_CONFIG_HOME isn't set, using current directory."
 
 #: src/nfile.c:141 src/nfile.c:184
 #, c-format
 msgid "%%APPDATA%% isn't set, using current directory."
-msgstr ""
+msgstr "%%APPDATA%% isn't set, using current directory."
 
 #: src/nfile.c:169
 msgid "Cannot determine cache path, using current directory."
-msgstr ""
+msgstr "Cannot determine cache path, using current directory."
 
 #: src/nfile.c:175
 msgid "$XDG_CACHE_HOME isn't set, using current directory."
-msgstr "$XDG_CACHE_HOME n'est pas défini, le répertoire actuel est utilisé."
+msgstr "$XDG_CACHE_HOME isn't set, using current directory."
 
 #: src/nfile.c:283 src/save.c:158 src/save.c:165
 #, c-format
 msgid "Dir '%s' does not exist and unable to create: %s"
-msgstr ""
+msgstr "Dir '%s' does not exist and unable to create: %s"
 
 #: src/nfile.c:522
 #, c-format
 msgid "Unable to touch file '%s': %s"
-msgstr ""
+msgstr "Unable to touch file '%s': %s"
 
 #: src/nfile.c:559
 #, c-format
 msgid "Error occurred while writing '%s': %s"
-msgstr ""
+msgstr "Error occurred while writing '%s': %s"
 
 #: src/nfile.c:568
 #, c-format
 msgid "Error occurred while closing '%s': %s"
-msgstr ""
+msgstr "Error occurred while closing '%s': %s"
 
 #: src/nfile.c:606
 msgid ""
 "First argument to nfile_concatPaths was NULL. This is probably an error."
 msgstr ""
+"First argument to nfile_concatPaths was NULL. This is probably an error."
 
 #: src/nlua.c:172
 #, c-format
 msgid "LUA PANIC: %s"
-msgstr ""
+msgstr "LUA PANIC: %s"
 
 #: src/nlua.c:338
 #, c-format
 msgid "Unable to load common script '%s'!"
-msgstr ""
+msgstr "Unable to load common script '%s'!"
 
 #: src/nlua.c:343
 #, c-format
@@ -107049,6 +107290,8 @@ msgid ""
 "Failed to run '%s':\n"
 "%s"
 msgstr ""
+"Failed to run '%s':\n"
+"%s"
 
 #: src/nlua.c:348
 #, c-format
@@ -107056,14 +107299,16 @@ msgid ""
 "Failed to load '%s':\n"
 "%s"
 msgstr ""
+"Failed to load '%s':\n"
+"%s"
 
 #: src/nlua.c:459
 msgid "Failed to create new Lua state."
-msgstr ""
+msgstr "Failed to create new Lua state."
 
 #: src/nlua.c:549 src/nlua.c:555
 msgid " package.path not found."
-msgstr ""
+msgstr " package.path not found."
 
 #. Didn't get to load it.
 #: src/nlua.c:595
@@ -107072,114 +107317,110 @@ msgid ""
 "\n"
 "   no ndata path '%s'"
 msgstr ""
+"\n"
+"   no ndata path '%s'"
 
 #: src/nlua.c:677 src/nlua.c:683
 msgid "package.loaders must be a table"
-msgstr ""
+msgstr "package.loaders must be a table"
 
 #: src/nlua.c:688
-#, fuzzy, c-format
-#| msgid "Trying to destroy weapon not found in stack!"
+#, c-format
 msgid "module '%s' not found:%s"
-msgstr "Essai de détruire une arme non existante dans le tas !"
+msgstr "module '%s' not found:%s"
 
 #: src/nlua_asteroid.c:116
 #, c-format
 msgid "Asteroid field '%d' is out of range!"
-msgstr ""
+msgstr "Asteroid field '%d' is out of range!"
 
 #: src/nlua_asteroid.c:121
 #, c-format
 msgid "Asteroid '%d' in field '%d' is out of range!"
-msgstr ""
+msgstr "Asteroid '%d' in field '%d' is out of range!"
 
 #: src/nlua_asteroid.c:131
-#, fuzzy
-#| msgid " Asteroid Field density %g\n"
 msgid "Asteroid is invalid"
-msgstr "Densité du champ d'astéroïdes %g\n"
+msgstr "Asteroid is invalid"
 
 #: src/nlua_audio.c:214
 msgid "OGG: Vorbis hole detected in music!"
-msgstr ""
+msgstr "OGG: Vorbis hole detected in music!"
 
 #: src/nlua_audio.c:219
 msgid "OGG: Invalid stream section or corrupt link in music!"
-msgstr ""
+msgstr "OGG: Invalid stream section or corrupt link in music!"
 
 #: src/nlua_audio.c:410 src/nlua_audio.c:790
 #, c-format
 msgid "Timed out while waiting for audio thread of '%s' to finish!"
-msgstr ""
+msgstr "Timed out while waiting for audio thread of '%s' to finish!"
 
 #: src/nlua_audio.c:412 src/nlua_audio.c:792
 msgid "Timed out while waiting for audio thread to finish!"
-msgstr ""
+msgstr "Timed out while waiting for audio thread to finish!"
 
 #: src/nlua_audio.c:580
 #, c-format
 msgid "Audio '%s' does not appear to be a Vorbis bitstream."
-msgstr ""
+msgstr "Audio '%s' does not appear to be a Vorbis bitstream."
 
 #: src/nlua_audio.c:653
-#, fuzzy
-#| msgid "Loading Completed!"
 msgid "Unimplemented"
-msgstr "Chargement terminé !"
+msgstr "Unimplemented"
 
 #: src/nlua_audio.c:875 src/nlua_audio.c:926
 #, c-format
 msgid "Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"
-msgstr ""
+msgstr "Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"
 
 #: src/nlua_audio.c:982
 #, c-format
 msgid "Unknown duration source '%s'! Should be either 'seconds' or 'samples'!"
-msgstr ""
+msgstr "Unknown duration source '%s'! Should be either 'seconds' or 'samples'!"
 
 #: src/nlua_audio.c:1590
 #, c-format
 msgid "Usupported audio effect type '%s'!"
-msgstr ""
+msgstr "Usupported audio effect type '%s'!"
 
 #: src/nlua_audio.c:1608
-#, fuzzy, c-format
-#| msgid "Unknown weapon status for '%s'"
+#, c-format
 msgid "Unknown audio effect '%s'!"
-msgstr "Type de statut de vaisseau inconnu '%s' !"
+msgstr "Unknown audio effect '%s'!"
 
 #: src/nlua_canvas.c:218 src/nlua_pilot.c:5686 src/opengl_tex.c:227
 msgid "Error setting up framebuffer!"
-msgstr ""
+msgstr "Error setting up framebuffer!"
 
 #: src/nlua_canvas.c:255
 msgid "Unexpected parameter"
-msgstr ""
+msgstr "Unexpected parameter"
 
 #: src/nlua_colour.c:185
 #, c-format
 msgid "Colour '%s' does not exist!"
-msgstr ""
+msgstr "Colour '%s' does not exist!"
 
 #: src/nlua_commodity.c:139
 msgid "Commodity is invalid."
-msgstr ""
+msgstr "Commodity is invalid."
 
 #: src/nlua_commodity.c:221
 #, c-format
 msgid "Commodity '%s' not found!"
-msgstr ""
+msgstr "Commodity '%s' not found!"
 
 #: src/nlua_commodity.c:351 src/nlua_commodity.c:387 src/nlua_player.c:1844
 #: src/nlua_player.c:1864
 #, c-format
 msgid "Spob '%s' does not belong to a system."
-msgstr ""
+msgstr "Spob '%s' does not belong to a system."
 
 #: src/nlua_commodity.c:356 src/nlua_commodity.c:392
 #, c-format
 msgid "Spob '%s' can not find its system '%s'."
-msgstr ""
+msgstr "Spob '%s' can not find its system '%s'."
 
 #: src/nlua_commodity.c:537
 #, c-format
@@ -107187,123 +107428,127 @@ msgid ""
 "Trying to create new cargo '%s' that would shadow existing non-temporary "
 "cargo!"
 msgstr ""
+"Trying to create new cargo '%s' that would shadow existing non-temporary "
+"cargo!"
 
 #: src/nlua_data.c:181
 #, c-format
 msgid "unknown data type '%s'"
-msgstr ""
+msgstr "unknown data type '%s'"
 
 #: src/nlua_data.c:192
 msgid "position argument must be positive!"
-msgstr ""
+msgstr "position argument must be positive!"
 
 #: src/nlua_data.c:195
 #, c-format
 msgid "position argument out of bounds: %d of %d elements"
-msgstr ""
+msgstr "position argument out of bounds: %d of %d elements"
 
 #: src/nlua_data.c:291
 #, c-format
 msgid "size mismatch: out of bound access dest: %d of %d elements"
-msgstr ""
+msgstr "size mismatch: out of bound access dest: %d of %d elements"
 
 #: src/nlua_data.c:293
 #, c-format
 msgid "size mismatch: out of bound access of source: %d of %d elements"
-msgstr ""
+msgstr "size mismatch: out of bound access of source: %d of %d elements"
 
 #: src/nlua_data.c:327
 #, c-format
 msgid "size mismatch: A has %d elements but B has %d elements"
-msgstr ""
+msgstr "size mismatch: A has %d elements but B has %d elements"
 
 #: src/nlua_data.c:329 src/nlua_data.c:383
 #, c-format
 msgid "%s is only implemented for number types"
-msgstr ""
+msgstr "%s is only implemented for number types"
 
 #: src/nlua_data.c:379 src/nlua_data.c:381
 #, c-format
 msgid "size mismatch for data: got %dx%dx4x%d, expected %d"
-msgstr ""
+msgstr "size mismatch for data: got %dx%dx4x%d, expected %d"
 
 #: src/nlua_evt.c:146
 #, c-format
 msgid "Event '%s' -> '%s': %s"
-msgstr ""
+msgstr "Event '%s' -> '%s': %s"
 
 #: src/nlua_evt.c:240 src/nlua_misn.c:952
 msgid "Invalid NPC ID!"
-msgstr ""
+msgstr "Invalid NPC ID!"
 
 #: src/nlua_evt.c:321
 msgid "Event trying to claim but already has."
-msgstr ""
+msgstr "Event trying to claim but already has."
 
 #: src/nlua_faction.c:667
 #, c-format
 msgid "Trying to overwrite existing faction '%s' with dynamic faction!"
-msgstr ""
+msgstr "Trying to overwrite existing faction '%s' with dynamic faction!"
 
 #: src/nlua_faction.c:738 src/nlua_faction.c:762
 msgid "Can only add allies to dynamic factions"
-msgstr ""
+msgstr "Can only add allies to dynamic factions"
 
 #: src/nlua_file.c:259 src/nlua_file.c:290
 msgid "file not open!"
-msgstr ""
+msgstr "file not open!"
 
 #: src/nlua_file.c:443
 #, c-format
 msgid "Directory '%s' enumerate error: %s"
-msgstr ""
+msgstr "Directory '%s' enumerate error: %s"
 
 #: src/nlua_font.c:182
 #, c-format
 msgid "failed to load font '%s'"
-msgstr ""
+msgstr "failed to load font '%s'"
 
 #: src/nlua_gfx.c:217 src/nlua_gfx.c:274 src/nlua_gfx.c:338
 #, c-format
 msgid ""
 "Texture '%s' trying to render out of bounds (X position) sprite: %d > %d."
 msgstr ""
+"Texture '%s' trying to render out of bounds (X position) sprite: %d > %d."
 
 #: src/nlua_gfx.c:220 src/nlua_gfx.c:277 src/nlua_gfx.c:341
 #, c-format
 msgid ""
 "Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d."
 msgstr ""
+"Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d."
 
 #: src/nlua_gfx.c:567
 msgid "Trying to draw too many lines in one call!"
-msgstr ""
+msgstr "Trying to draw too many lines in one call!"
 
 #: src/nlua_gfx.c:712
 msgid "width has to be a positive value."
-msgstr ""
+msgstr "width has to be a positive value."
 
 #: src/nlua_hook.c:272
 msgid "Mission not in stack trying to hook, forgot to run misn.accept()?"
-msgstr ""
+msgstr "Mission not in stack trying to hook, forgot to run misn.accept()?"
 
 #: src/nlua_hook.c:292
 msgid "Attempting to set a hook outside of a mission or event."
-msgstr ""
+msgstr "Attempting to set a hook outside of a mission or event."
 
 #: src/nlua_hook.c:297
 msgid "No hook target was set."
-msgstr ""
+msgstr "No hook target was set."
 
 #: src/nlua_hook.c:1014
 msgid "Invalid parameter #1 for hook.pilot, expecting pilot or nil."
-msgstr ""
+msgstr "Invalid parameter #1 for hook.pilot, expecting pilot or nil."
 
 #. hook_type not valid
 #: src/nlua_hook.c:1039
 #, c-format
 msgid "Invalid pilot hook type: '%s'"
-msgstr ""
+msgstr "Invalid pilot hook type: '%s'"
 
 #: src/nlua_hook.c:1045
 msgid ""
@@ -109174,8 +109419,8 @@ msgstr ""
 #, c-format
 msgid "Name collision! %d outfit is named '%s'"
 msgid_plural "Name collision! %d outfits are named '%s'"
-msgstr[0] "Name collision! %d outfit is named '%s'"
-msgstr[1] "Name collision! %d outfits are named '%s'"
+msgstr[0] "Collision de nom ! %d équipement est nommé '%s'"
+msgstr[1] "Collision de nom ! %d équipements sont nommés '%s'"
 
 #: src/outfit.c:2620
 #, fuzzy, c-format
@@ -109190,8 +109435,8 @@ msgstr[1] "Loaded %d Outfits"
 #, c-format
 msgid "Loaded %d Outfit"
 msgid_plural "Loaded %d Outfits"
-msgstr[0] "Loaded %d Outfit"
-msgstr[1] "Loaded %d Outfits"
+msgstr[0] "%d Équipement Chargé"
+msgstr[1] "%d Équipements Chargés"
 
 #: src/outfit.c:2639
 #, c-format
@@ -109543,11 +109788,11 @@ msgstr ""
 #. Get the name.
 #: src/player.c:247
 msgid "Player Name"
-msgstr ""
+msgstr "Nom du Joueur"
 
 #: src/player.c:248
 msgid "Please write your name:"
-msgstr ""
+msgstr "Veuillez écrire votre nom :"
 
 #: src/player.c:259
 #, c-format
@@ -110067,7 +110312,7 @@ msgstr ""
 
 #: src/player_autonav.c:786
 msgid "Not enough fuel for autonav to continue"
-msgstr "Pas assez de carburant pour continuer en pilote automatique"
+msgstr "Pas assez de carburant pour le système autonav"
 
 #: src/player_fleet.c:58
 #, fuzzy
@@ -110357,8 +110602,8 @@ msgstr[1] "Loaded %d Ships"
 #, c-format
 msgid "Loaded %d Ship"
 msgid_plural "Loaded %d Ships"
-msgstr[0] "Loaded %d Ship"
-msgstr[1] "Loaded %d Ships"
+msgstr[0] "%d Vaisseau Chargé"
+msgstr[1] "%d Vaisseaux Chargés"
 
 #: src/shiplog.c:185
 msgid "Warning - log not found: creating it"
@@ -110825,8 +111070,8 @@ msgstr ""
 #, c-format
 msgid "Loaded %d Sound"
 msgid_plural "Loaded %d Sounds"
-msgstr[0] "Loaded %d Sound"
-msgstr[1] "Loaded %d Sounds"
+msgstr[0] "%d Son Chargé"
+msgstr[1] "%d Sons Chargés"
 
 #. Group matched but no free source found..
 #: src/sound.c:1475
@@ -111327,8 +111572,8 @@ msgstr ""
 #, c-format
 msgid "Loaded %d Star System"
 msgid_plural "Loaded %d Star Systems"
-msgstr[0] "Loaded %d Star System"
-msgstr[1] "Loaded %d Star Systems"
+msgstr[0] "%d Système Stellaire Chargé"
+msgstr[1] "%d Systèmes Stellaire Chargés"
 
 #: src/space.c:3377
 #, fuzzy, c-format
@@ -111483,8 +111728,8 @@ msgstr[1] "Loaded %d tech groups"
 #, c-format
 msgid "Loaded %d tech group"
 msgid_plural "Loaded %d tech groups"
-msgstr[0] "Loaded %d tech group"
-msgstr[1] "Loaded %d tech groups"
+msgstr[0] "%d Groupe Tech. Chargé"
+msgstr[1] "%d Groupes Tech. Chargés"
 
 #: src/tech.c:259
 msgid "tech node does not have 'name' attribute"
@@ -111661,8 +111906,8 @@ msgstr[1] "Loaded %d UniDiffs"
 #, c-format
 msgid "Loaded %d UniDiff"
 msgid_plural "Loaded %d UniDiffs"
-msgstr[0] "Loaded %d UniDiff"
-msgstr[1] "Loaded %d UniDiffs"
+msgstr[0] "%d UniDiff Chargé"
+msgstr[1] "%d UniDiff Chargés"
 
 #: src/unidiff.c:311
 #, c-format
@@ -111719,8 +111964,8 @@ msgstr ""
 #, c-format
 msgid "Unidiff '%s' failed to apply %d hunk."
 msgid_plural "Unidiff '%s' failed to apply %d hunks."
-msgstr[0] "Unidiff '%s' failed to apply %d hunk."
-msgstr[1] "Unidiff '%s' failed to apply %d hunks."
+msgstr[0] "Unidiff '%s' a échoué à appliquer %d morceau."
+msgstr[1] "Unidiff '%s' a échoué à appliquer %d morceaux."
 
 #: src/unidiff.c:926
 #, c-format
