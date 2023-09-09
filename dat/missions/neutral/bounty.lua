@@ -227,7 +227,7 @@ function create ()
 
    -- Reason for the bounty
    local reason = ""
-   local reasons = reason_list[ payingfaction:name() ]
+   local reasons = reason_list[ payingfaction:nameRaw() ]
    if reasons then
       reason = fmt.f( reasons[ rnd.rnd(1,#reasons) ], {spb=spob.cur()} )
    end
