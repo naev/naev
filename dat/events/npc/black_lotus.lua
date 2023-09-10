@@ -75,7 +75,7 @@ return function ()
    local descriptions = npc.combine_desc( desc_list, tags )
 
    local function gen_npc()
-      local name = _("Black Lotus Clan Clansperson")
+      local name = _("Black Lotus Associate")
       local desc = descriptions[ rnd.rnd(1,#descriptions) ]
       local image, prt = vni.pirate()
       local msg
