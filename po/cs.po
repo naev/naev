@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-09-11 04:51+0900\n"
+"POT-Creation-Date: 2023-09-11 05:21+0900\n"
 "PO-Revision-Date: 2023-04-06 10:52+0000\n"
 "Last-Translator: David Doubek <David.Doubek42@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -41955,7 +41955,7 @@ msgid "White Shield"
 msgstr ""
 
 #: dat/events/pers/indep.lua:60
-msgid "\"The White Shield brings justice for al!\""
+msgid "\"The White Shield brings justice for all!\""
 msgstr ""
 
 #: dat/events/pers/indep.lua:61
@@ -42688,7 +42688,7 @@ msgstr ""
 msgid "Weapon Sets"
 msgstr ""
 
-#: dat/events/shipai.lua:109 src/input.c:56
+#: dat/events/shipai.lua:109
 msgid "Stealth"
 msgstr ""
 
@@ -105005,7 +105005,7 @@ msgstr ""
 msgid "failed to set fallback font"
 msgstr ""
 
-#: dat/scripts/luatk/core.lua:1171 dat/scripts/vn/options.lua:51
+#: dat/scripts/luatk/core.lua:1171 dat/scripts/vn/options.lua:52
 #: src/dialogue.c:505
 msgid "Done"
 msgstr ""
@@ -107333,8 +107333,7 @@ msgstr ""
 msgid "Oyster"
 msgstr ""
 
-#. Console-main.
-#: dat/scripts/pilotname/pirate.lua:402 src/input.c:123
+#: dat/scripts/pilotname/pirate.lua:402
 msgid "Paste"
 msgstr ""
 
@@ -108384,15 +108383,16 @@ msgstr ""
 #. Set up
 #. Insert start and end state if necessary
 #. table.insert( vn._states, vn.StateEnd.new() )
-#: dat/scripts/vn/options.lua:36
+#. Translator note VN stands for Visual Novel
+#: dat/scripts/vn/options.lua:37
 msgid "VN Options"
 msgstr ""
 
-#: dat/scripts/vn/options.lua:39
+#: dat/scripts/vn/options.lua:40
 msgid "Enable autoscroll to end of text."
 msgstr ""
 
-#: dat/scripts/vn/options.lua:46
+#: dat/scripts/vn/options.lua:47
 msgid "#nText Speed#0: {val:.3f} seconds per character"
 msgstr ""
 
@@ -111325,7 +111325,7 @@ msgid "#gWelcome to the Lua console!"
 msgstr ""
 
 #. Create the window.
-#: src/console.c:680 src/input.c:111
+#: src/console.c:680
 msgid "Lua Console"
 msgstr ""
 
@@ -113677,6 +113677,7 @@ msgstr ""
 
 #. Movement
 #: src/input.c:52
+msgctxt "keybinding"
 msgid "Accelerate"
 msgstr ""
 
@@ -113685,6 +113686,7 @@ msgid "Makes your ship accelerate forward."
 msgstr ""
 
 #: src/input.c:53
+msgctxt "keybinding"
 msgid "Turn Left"
 msgstr ""
 
@@ -113693,6 +113695,7 @@ msgid "Makes your ship turn left."
 msgstr ""
 
 #: src/input.c:54
+msgctxt "keybinding"
 msgid "Turn Right"
 msgstr ""
 
@@ -113701,6 +113704,7 @@ msgid "Makes your ship turn right."
 msgstr ""
 
 #: src/input.c:55
+msgctxt "keybinding"
 msgid "Reverse"
 msgstr ""
 
@@ -113710,11 +113714,17 @@ msgid ""
 msgstr ""
 
 #: src/input.c:56
+msgctxt "keybinding"
+msgid "Stealth"
+msgstr ""
+
+#: src/input.c:56
 msgid "Tries to enter stealth mode."
 msgstr ""
 
 #. Targeting
 #: src/input.c:58
+msgctxt "keybinding"
 msgid "Target Next"
 msgstr ""
 
@@ -113723,6 +113733,7 @@ msgid "Cycles through ship targets."
 msgstr ""
 
 #: src/input.c:59
+msgctxt "keybinding"
 msgid "Target Previous"
 msgstr ""
 
@@ -113731,6 +113742,7 @@ msgid "Cycles backwards through ship targets."
 msgstr ""
 
 #: src/input.c:60
+msgctxt "keybinding"
 msgid "Target Nearest"
 msgstr ""
 
@@ -113739,6 +113751,7 @@ msgid "Targets the nearest non-disabled ship."
 msgstr ""
 
 #: src/input.c:61
+msgctxt "keybinding"
 msgid "Target Next Hostile"
 msgstr ""
 
@@ -113747,6 +113760,7 @@ msgid "Cycles through hostile ship targets."
 msgstr ""
 
 #: src/input.c:62
+msgctxt "keybinding"
 msgid "Target Previous Hostile"
 msgstr ""
 
@@ -113755,6 +113769,7 @@ msgid "Cycles backwards through hostile ship targets."
 msgstr ""
 
 #: src/input.c:63
+msgctxt "keybinding"
 msgid "Target Nearest Hostile"
 msgstr ""
 
@@ -113763,6 +113778,7 @@ msgid "Targets the nearest hostile ship."
 msgstr ""
 
 #: src/input.c:64
+msgctxt "keybinding"
 msgid "Clear Target"
 msgstr ""
 
@@ -113772,6 +113788,7 @@ msgstr ""
 
 #. Fighting
 #: src/input.c:66
+msgctxt "keybinding"
 msgid "Fire Primary Weapon"
 msgstr ""
 
@@ -113780,6 +113797,7 @@ msgid "Fires primary weapons."
 msgstr ""
 
 #: src/input.c:67
+msgctxt "keybinding"
 msgid "Face Target"
 msgstr ""
 
@@ -113791,6 +113809,7 @@ msgstr ""
 
 #. Secondary Weapons
 #: src/input.c:69
+msgctxt "keybinding"
 msgid "Fire Secondary Weapon"
 msgstr ""
 
@@ -113799,6 +113818,7 @@ msgid "Fires secondary weapons."
 msgstr ""
 
 #: src/input.c:70
+msgctxt "keybinding"
 msgid "Weapon Set 1"
 msgstr ""
 
@@ -113807,6 +113827,7 @@ msgid "Activates weapon set 1."
 msgstr ""
 
 #: src/input.c:71
+msgctxt "keybinding"
 msgid "Weapon Set 2"
 msgstr ""
 
@@ -113815,6 +113836,7 @@ msgid "Activates weapon set 2."
 msgstr ""
 
 #: src/input.c:72
+msgctxt "keybinding"
 msgid "Weapon Set 3"
 msgstr ""
 
@@ -113823,6 +113845,7 @@ msgid "Activates weapon set 3."
 msgstr ""
 
 #: src/input.c:73
+msgctxt "keybinding"
 msgid "Weapon Set 4"
 msgstr ""
 
@@ -113831,6 +113854,7 @@ msgid "Activates weapon set 4."
 msgstr ""
 
 #: src/input.c:74
+msgctxt "keybinding"
 msgid "Weapon Set 5"
 msgstr ""
 
@@ -113839,6 +113863,7 @@ msgid "Activates weapon set 5."
 msgstr ""
 
 #: src/input.c:75
+msgctxt "keybinding"
 msgid "Weapon Set 6"
 msgstr ""
 
@@ -113847,6 +113872,7 @@ msgid "Activates weapon set 6."
 msgstr ""
 
 #: src/input.c:76
+msgctxt "keybinding"
 msgid "Weapon Set 7"
 msgstr ""
 
@@ -113855,6 +113881,7 @@ msgid "Activates weapon set 7."
 msgstr ""
 
 #: src/input.c:77
+msgctxt "keybinding"
 msgid "Weapon Set 8"
 msgstr ""
 
@@ -113863,6 +113890,7 @@ msgid "Activates weapon set 8."
 msgstr ""
 
 #: src/input.c:78
+msgctxt "keybinding"
 msgid "Weapon Set 9"
 msgstr ""
 
@@ -113871,6 +113899,7 @@ msgid "Activates weapon set 9."
 msgstr ""
 
 #: src/input.c:79
+msgctxt "keybinding"
 msgid "Weapon Set 0"
 msgstr ""
 
@@ -113880,6 +113909,7 @@ msgstr ""
 
 #. Escorts
 #: src/input.c:81
+msgctxt "keybinding"
 msgid "Target Next Escort"
 msgstr ""
 
@@ -113888,6 +113918,7 @@ msgid "Cycles through your escorts."
 msgstr ""
 
 #: src/input.c:82
+msgctxt "keybinding"
 msgid "Target Previous Escort"
 msgstr ""
 
@@ -113896,6 +113927,7 @@ msgid "Cycles backwards through your escorts."
 msgstr ""
 
 #: src/input.c:83
+msgctxt "keybinding"
 msgid "Escort Attack Command"
 msgstr ""
 
@@ -113904,6 +113936,7 @@ msgid "Orders escorts to attack your target."
 msgstr ""
 
 #: src/input.c:84
+msgctxt "keybinding"
 msgid "Escort Hold Command"
 msgstr ""
 
@@ -113912,6 +113945,7 @@ msgid "Orders escorts to hold their formation."
 msgstr ""
 
 #: src/input.c:85
+msgctxt "keybinding"
 msgid "Escort Return Command"
 msgstr ""
 
@@ -113920,6 +113954,7 @@ msgid "Orders escorts to return to your ship hangars."
 msgstr ""
 
 #: src/input.c:86
+msgctxt "keybinding"
 msgid "Escort Clear Commands"
 msgstr ""
 
@@ -113929,14 +113964,18 @@ msgstr ""
 
 #. Space Navigation
 #: src/input.c:88
+#, fuzzy
+#| msgid "An invitation"
+msgctxt "keybinding"
 msgid "Autonavigation On"
-msgstr ""
+msgstr "Pozvánka"
 
 #: src/input.c:88
 msgid "Initializes the autonavigation system."
 msgstr ""
 
 #: src/input.c:89
+msgctxt "keybinding"
 msgid "Target Spob"
 msgstr ""
 
@@ -113945,6 +113984,7 @@ msgid "Cycles through space object targets."
 msgstr ""
 
 #: src/input.c:90
+msgctxt "keybinding"
 msgid "Approach"
 msgstr ""
 
@@ -113956,14 +113996,16 @@ msgid ""
 msgstr ""
 
 #: src/input.c:91
-msgid "Target Jumpgate"
+msgctxt "keybinding"
+msgid "Target Jump Point"
 msgstr ""
 
 #: src/input.c:91
 msgid "Cycles through jump points."
 msgstr ""
 
-#: src/input.c:92 src/map.c:253 src/outfit.c:904
+#: src/input.c:92
+msgctxt "keybinding"
 msgid "Star Map"
 msgstr ""
 
@@ -113972,6 +114014,7 @@ msgid "Opens the star map."
 msgstr ""
 
 #: src/input.c:93
+msgctxt "keybinding"
 msgid "Initiate Jump"
 msgstr ""
 
@@ -113980,14 +114023,18 @@ msgid "Attempts to jump via a jump point."
 msgstr ""
 
 #: src/input.c:94
+#, fuzzy
+#| msgid "Universe Map"
+msgctxt "keybinding"
 msgid "Overlay Map"
-msgstr ""
+msgstr "Mapa vesmíru"
 
 #: src/input.c:94
 msgid "Opens the in-system overlay map."
 msgstr ""
 
 #: src/input.c:95
+msgctxt "keybinding"
 msgid "Mouse Flight"
 msgstr ""
 
@@ -113996,6 +114043,7 @@ msgid "Toggles mouse flying."
 msgstr ""
 
 #: src/input.c:96
+msgctxt "keybinding"
 msgid "Active Cooldown"
 msgstr ""
 
@@ -114005,6 +114053,7 @@ msgstr ""
 
 #. Communication
 #: src/input.c:98
+msgctxt "keybinding"
 msgid "Log Scroll Up"
 msgstr ""
 
@@ -114013,6 +114062,7 @@ msgid "Scrolls the log upwards."
 msgstr ""
 
 #: src/input.c:99
+msgctxt "keybinding"
 msgid "Log Scroll Down"
 msgstr ""
 
@@ -114021,6 +114071,7 @@ msgid "Scrolls the log downwards."
 msgstr ""
 
 #: src/input.c:100
+msgctxt "keybinding"
 msgid "Hail Target"
 msgstr ""
 
@@ -114029,8 +114080,11 @@ msgid "Attempts to initialize communication with the targeted ship."
 msgstr ""
 
 #: src/input.c:101
+#, fuzzy
+#| msgid "Autonav"
+msgctxt "keybinding"
 msgid "Autohail"
-msgstr ""
+msgstr "Autopilot"
 
 #: src/input.c:101
 msgid "Automatically initialize communication with a ship that is hailing you."
@@ -114038,6 +114092,7 @@ msgstr ""
 
 #. Misc.
 #: src/input.c:103
+msgctxt "keybinding"
 msgid "Radar Zoom In"
 msgstr ""
 
@@ -114046,6 +114101,7 @@ msgid "Zooms in on the radar."
 msgstr ""
 
 #: src/input.c:104
+msgctxt "keybinding"
 msgid "Radar Zoom Out"
 msgstr ""
 
@@ -114054,6 +114110,7 @@ msgid "Zooms out on the radar."
 msgstr ""
 
 #: src/input.c:105
+msgctxt "keybinding"
 msgid "Screenshot"
 msgstr ""
 
@@ -114062,6 +114119,7 @@ msgid "Takes a screenshot."
 msgstr ""
 
 #: src/input.c:106
+msgctxt "keybinding"
 msgid "Toggle Fullscreen"
 msgstr ""
 
@@ -114070,6 +114128,7 @@ msgid "Toggles between windowed and fullscreen mode."
 msgstr ""
 
 #: src/input.c:107
+msgctxt "keybinding"
 msgid "Pause"
 msgstr ""
 
@@ -114078,6 +114137,7 @@ msgid "Pauses the game."
 msgstr ""
 
 #: src/input.c:108
+msgctxt "keybinding"
 msgid "Toggle Speed"
 msgstr ""
 
@@ -114086,19 +114146,30 @@ msgid "Toggles speed modifier."
 msgstr ""
 
 #: src/input.c:109
+#, fuzzy
+#| msgid "Main Menu"
+msgctxt "keybinding"
 msgid "Small Menu"
-msgstr ""
+msgstr "Hlavní nabídka"
 
 #: src/input.c:109
 msgid "Opens the small in-game menu."
 msgstr ""
 
 #: src/input.c:110
+#, fuzzy
+#| msgid "Main Menu"
+msgctxt "keybinding"
 msgid "Information Menu"
-msgstr ""
+msgstr "Hlavní nabídka"
 
 #: src/input.c:110
 msgid "Opens the information menu."
+msgstr ""
+
+#: src/input.c:111
+msgctxt "keybinding"
+msgid "Lua Console"
 msgstr ""
 
 #: src/input.c:111
@@ -114106,6 +114177,7 @@ msgid "Opens the Lua console."
 msgstr ""
 
 #: src/input.c:112
+msgctxt "keybinding"
 msgid "Switch Tab 1"
 msgstr ""
 
@@ -114114,6 +114186,7 @@ msgid "Switches to tab 1."
 msgstr ""
 
 #: src/input.c:113
+msgctxt "keybinding"
 msgid "Switch Tab 2"
 msgstr ""
 
@@ -114122,6 +114195,7 @@ msgid "Switches to tab 2."
 msgstr ""
 
 #: src/input.c:114
+msgctxt "keybinding"
 msgid "Switch Tab 3"
 msgstr ""
 
@@ -114130,6 +114204,7 @@ msgid "Switches to tab 3."
 msgstr ""
 
 #: src/input.c:115
+msgctxt "keybinding"
 msgid "Switch Tab 4"
 msgstr ""
 
@@ -114138,6 +114213,7 @@ msgid "Switches to tab 4."
 msgstr ""
 
 #: src/input.c:116
+msgctxt "keybinding"
 msgid "Switch Tab 5"
 msgstr ""
 
@@ -114146,6 +114222,7 @@ msgid "Switches to tab 5."
 msgstr ""
 
 #: src/input.c:117
+msgctxt "keybinding"
 msgid "Switch Tab 6"
 msgstr ""
 
@@ -114154,6 +114231,7 @@ msgid "Switches to tab 6."
 msgstr ""
 
 #: src/input.c:118
+msgctxt "keybinding"
 msgid "Switch Tab 7"
 msgstr ""
 
@@ -114162,6 +114240,7 @@ msgid "Switches to tab 7."
 msgstr ""
 
 #: src/input.c:119
+msgctxt "keybinding"
 msgid "Switch Tab 8"
 msgstr ""
 
@@ -114170,6 +114249,7 @@ msgid "Switches to tab 8."
 msgstr ""
 
 #: src/input.c:120
+msgctxt "keybinding"
 msgid "Switch Tab 9"
 msgstr ""
 
@@ -114178,11 +114258,18 @@ msgid "Switches to tab 9."
 msgstr ""
 
 #: src/input.c:121
+msgctxt "keybinding"
 msgid "Switch Tab 0"
 msgstr ""
 
 #: src/input.c:121
 msgid "Switches to tab 0."
+msgstr ""
+
+#. Console-main.
+#: src/input.c:123
+msgctxt "keybinding"
+msgid "Paste"
 msgstr ""
 
 #: src/input.c:123
@@ -115059,6 +115146,10 @@ msgstr "Neznámý node '%s' na Lua Var stacku!"
 #, c-format
 msgid "Unknown var type '%s'"
 msgstr "Neznámý var typ '%s'"
+
+#: src/map.c:253 src/outfit.c:904
+msgid "Star Map"
+msgstr ""
 
 #: src/map.c:352
 msgid "Standing:"
