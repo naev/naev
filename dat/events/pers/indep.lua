@@ -57,7 +57,7 @@ return function ()
             local p = pilot.add("Sirius Dogma", "Independent", nil, _("White Shield"), {naked=true, ai="pers_patrol"})
             equipopt.sirius( p )
             local m = p:memory()
-            m.comm_greet = _([["The White Shield brings justice for al!"]])
+            m.comm_greet = _([["The White Shield brings justice for all!"]])
             m.taunt = _("Prepare to face justice!")
             m.bribe_no = _([["There is nothing but justice!"]])
             m.whiteknight = true
