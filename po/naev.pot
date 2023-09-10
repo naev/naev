@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.11.0-alpha.4\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-09-11 04:47+0900\n"
+"POT-Creation-Date: 2023-09-11 04:51+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1564,11 +1564,7 @@ msgstr ""
 #: dat/missions/dvaered/recruitment/dv_intelligence.lua:91
 #: dat/missions/dvaered/recruitment/dv_intelligence.lua:135
 #: dat/missions/dvaered/recruitment/dv_propaganda.lua:100
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:404 dat/missions/minerva/kex3.lua:371
-=======
-#: dat/missions/minerva/finale1.lua:403 dat/missions/minerva/kex3.lua:371
->>>>>>> Stashed changes
 #: dat/missions/minerva/pirate6.lua:310 dat/scripts/common/dvaered.lua:6
 #: dat/scripts/common/dvaered.lua:11
 msgid "Dvaered"
@@ -1996,11 +1992,7 @@ msgstr ""
 #. basically the distance that the map can have at
 #. - create enemy ships
 #: dat/factions/zalek.xml:2 dat/ssys/zalek.xml:2
-<<<<<<< Updated upstream
 #: dat/events/dvaered/fwB_repay.lua:90 dat/missions/minerva/finale1.lua:402
-=======
-#: dat/events/dvaered/fwB_repay.lua:90 dat/missions/minerva/finale1.lua:401
->>>>>>> Stashed changes
 #: dat/missions/minerva/pirate2.lua:178 dat/missions/minerva/pirate5.lua:245
 #: dat/missions/minerva/pirate6.lua:309
 #: dat/missions/zalek/blackhole/zbh03.lua:161
@@ -35674,11 +35666,7 @@ msgstr ""
 #: dat/events/neutral/travelling_merchant.lua:95
 #: dat/missions/dvaered/recruitment/dv_shopping.lua:308
 #: dat/missions/dvaered/recruitment/dv_shopping.lua:319
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:335 dat/missions/minerva/maikki1.lua:71
-=======
-#: dat/missions/minerva/finale1.lua:334 dat/missions/minerva/maikki1.lua:71
->>>>>>> Stashed changes
 #: dat/missions/minerva/maikki2.lua:94 dat/missions/shadow/shadowvigil.lua:61
 #: src/faction.c:1074 src/faction.c:1087 src/faction.c:1093 src/faction.c:1122
 #: src/faction.c:1136 src/faction.c:1142
@@ -35803,13 +35791,8 @@ msgid "\"Yes\""
 msgstr ""
 
 #: dat/events/neutral/travelling_merchant.lua:322 dat/events/pers/indep.lua:74
-<<<<<<< Updated upstream
 #: dat/events/taiomi/intro.lua:202 dat/missions/minerva/finale1.lua:316
 #: dat/missions/minerva/finale1.lua:365 dat/missions/minerva/maikki2.lua:459
-=======
-#: dat/events/taiomi/intro.lua:202 dat/missions/minerva/finale1.lua:315
-#: dat/missions/minerva/finale1.lua:364 dat/missions/minerva/maikki2.lua:459
->>>>>>> Stashed changes
 #: dat/missions/zalek/blackhole/zbh03.lua:54
 msgid "\"…\""
 msgstr ""
@@ -43432,11 +43415,7 @@ msgid "\"Could it be that {quote}?\""
 msgstr ""
 
 #: dat/events/taiomi/system.lua:166 dat/events/taiomi/system.lua:595
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:312
-=======
-#: dat/missions/minerva/finale1.lua:311
->>>>>>> Stashed changes
 msgid "\"Who are you?\""
 msgstr ""
 
@@ -60894,47 +60873,27 @@ msgstr ""
 #. Mission states:
 #. nil: mission not accepted yet
 #. 1. escape jade court
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:48
 msgid "Meet up with Zuri at her hiding spot?"
 msgstr ""
 
 #: dat/missions/minerva/finale1.lua:49
-=======
-#: dat/missions/minerva/finale1.lua:47
-msgid "Meet up with Zuri at her hiding spot?"
-msgstr ""
-
-#: dat/missions/minerva/finale1.lua:48
->>>>>>> Stashed changes
 msgid ""
 "A wounded Zuri needs to rendezvous with her colleagues in the {sys} system."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:51
 msgid "??"
 msgstr ""
 
 #: dat/missions/minerva/finale1.lua:63
-=======
-#: dat/missions/minerva/finale1.lua:50
-msgid "??"
-msgstr ""
-
-#: dat/missions/minerva/finale1.lua:62
->>>>>>> Stashed changes
 msgid ""
 "You find Zuri clutching her wound in one hand and holding Kex with the "
 "other. Although she's in really rough shape she flashes you a grin as you "
 "approach."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:64
-=======
-#: dat/missions/minerva/finale1.lua:63
->>>>>>> Stashed changes
 msgid ""
 "\"Hey {player}, ready to get out of here? My colleague should be waiting for "
 "us in the {sys} system.\"\n"
@@ -60942,7 +60901,6 @@ msgid ""
 "blood."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:68
 msgid "Save Zuri"
 msgstr ""
@@ -60952,48 +60910,25 @@ msgid "Prepare more"
 msgstr ""
 
 #: dat/missions/minerva/finale1.lua:73
-=======
-#: dat/missions/minerva/finale1.lua:67
-msgid "Save Zuri"
-msgstr ""
-
-#: dat/missions/minerva/finale1.lua:68 dat/missions/minerva/finale2.lua:127
-msgid "Prepare more"
-msgstr ""
-
-#: dat/missions/minerva/finale1.lua:72
->>>>>>> Stashed changes
 msgid ""
 "\"I'll be waiting.\"\n"
 "She sort of slumps at the wall, you're not sure if she's still concious."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:79
-=======
-#: dat/missions/minerva/finale1.lua:78
->>>>>>> Stashed changes
 msgid ""
 "You manage to help get Zuri up to her feet, and begin to drag her to the "
 "spaceport."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:80
-=======
-#: dat/missions/minerva/finale1.lua:79
->>>>>>> Stashed changes
 msgid ""
 "With all the commotion going on the Jade Court, most of the security is "
 "preoccupied and barely give you a second glance as they run around following "
 "orders."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:81
-=======
-#: dat/missions/minerva/finale1.lua:80
->>>>>>> Stashed changes
 msgid ""
 "Eventually you make it unnoticed to the spaceport and manage sneak both "
 "Zuri, who seems to be breathing very hard, and Kex into ship. As soon as you "
@@ -61002,39 +60937,26 @@ msgid ""
 msgstr ""
 
 #. blaring alarm
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:83
-=======
-#: dat/missions/minerva/finale1.lua:82
->>>>>>> Stashed changes
 msgid ""
 "Suddenly, an alarm starts blaring. It seems like the situation is getting "
 "worse and the station is headed for a lock down."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:84
-=======
-#: dat/missions/minerva/finale1.lua:83
->>>>>>> Stashed changes
 msgid ""
 "As the station gates begin to close, you deftly activate your ship, hit the "
 "accelerator and aim for free space. It's a close call with the spaceport "
 "almost clamping down on your ship, but you break through."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:85
-=======
-#: dat/missions/minerva/finale1.lua:84
->>>>>>> Stashed changes
 msgid ""
 "You almost begin to celebrate, but it seems like it a short while you won't "
 "be alone anymore. There are bogeys on your tail!"
 msgstr ""
 
 #. If not accepted, mem.state will still be nil
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:94
 msgid "Zuri and Kex"
 msgstr ""
@@ -61044,26 +60966,11 @@ msgid "A heavily wounded Zuri holding Kex. They are both unconscious."
 msgstr ""
 
 #: dat/missions/minerva/finale1.lua:100 dat/missions/minerva/pirate5.lua:67
-=======
-#: dat/missions/minerva/finale1.lua:93
-msgid "Zuri and Kex"
-msgstr ""
-
-#: dat/missions/minerva/finale1.lua:93
-msgid "A heavily wounded Zuri holding Kex. They are both unconscious."
-msgstr ""
-
-#: dat/missions/minerva/finale1.lua:99 dat/missions/minerva/pirate5.lua:67
->>>>>>> Stashed changes
 #: dat/missions/pirate/raid.lua:172
 msgid "Go to the {sys} system"
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:101
-=======
-#: dat/missions/minerva/finale1.lua:100
->>>>>>> Stashed changes
 msgid "Rendezvous with Zuri's Colleague"
 msgstr ""
 
@@ -61079,27 +60986,18 @@ msgstr ""
 #. Non-hostile faction
 #. They will naturally go to the jump point and attack the player
 #. They keep on coming!
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:287
-=======
-#: dat/missions/minerva/finale1.lua:286
->>>>>>> Stashed changes
 msgid ""
 "Following Imperial Decree ED-17838, {sys} is under lockdown for military "
 "exercises. All non-affiliated personal must evacuate the system."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:310
-=======
-#: dat/missions/minerva/finale1.lua:309
->>>>>>> Stashed changes
 msgid ""
 "\"I see you made it past the patrols in {sys}. Talk about bad timing for "
 "them to be doing military exercises. Luck is not in our favour.\""
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:313
 msgid "\"It was a drag.\""
 msgstr ""
@@ -61121,55 +61019,23 @@ msgid "Board the {ship}"
 msgstr ""
 
 #: dat/missions/minerva/finale1.lua:333
-=======
-#: dat/missions/minerva/finale1.lua:312
-msgid "\"It was a drag.\""
-msgstr ""
-
-#: dat/missions/minerva/finale1.lua:313
-msgid "\"You're Zuri's colleague?\""
-msgstr ""
-
-#: dat/missions/minerva/finale1.lua:314
-msgid "\"Glad to be here.\""
-msgstr ""
-
-#: dat/missions/minerva/finale1.lua:319
-msgid "\"Come here and board and we can talk.\""
-msgstr ""
-
-#: dat/missions/minerva/finale1.lua:325
-msgid "Board the {ship}"
-msgstr ""
-
-#: dat/missions/minerva/finale1.lua:332
->>>>>>> Stashed changes
 #: dat/missions/neutral/kidnapped/traffic_00.lua:89
 #: dat/missions/neutral/kidnapped/traffic_00.lua:119
 msgid "Pirate A"
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:334
-=======
-#: dat/missions/minerva/finale1.lua:333
->>>>>>> Stashed changes
 #: dat/missions/neutral/kidnapped/traffic_00.lua:90
 #: dat/missions/neutral/kidnapped/traffic_00.lua:120
 msgid "Pirate B"
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:339
-=======
-#: dat/missions/minerva/finale1.lua:338
->>>>>>> Stashed changes
 msgid ""
 "You dock with the {ship}, and as soon as the airlock opens, you are greeted "
 "with a swarm of pirates with weapons in front of them."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:342
 msgid "Throw your hands in the air."
 msgstr ""
@@ -61179,28 +61045,13 @@ msgid "Try to tackle the pirates."
 msgstr ""
 
 #: dat/missions/minerva/finale1.lua:344
-=======
-#: dat/missions/minerva/finale1.lua:341
-msgid "Throw your hands in the air."
-msgstr ""
-
-#: dat/missions/minerva/finale1.lua:342
-msgid "Try to tackle the pirates."
-msgstr ""
-
-#: dat/missions/minerva/finale1.lua:343
->>>>>>> Stashed changes
 msgid "Draw your weapon."
 msgstr ""
 
 #. love_audio.setEffect( "reverb_sad", reverb_preset.drugged() )
 #. vn.music( minerva.loops.pirate, {pitch=0.6, effect="reverb_sad"} )
 #. TODO more aggressive
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:351
-=======
-#: dat/missions/minerva/finale1.lua:350
->>>>>>> Stashed changes
 msgid ""
 "\"STOOOOOOOOOOOOOOOOOOOOP!\"\n"
 "A powerful booming voice echoes through your ship, instantly defusing the "
@@ -61208,17 +61059,12 @@ msgid ""
 msgstr ""
 
 #. Move the pirates out of the way
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:361
-=======
-#: dat/missions/minerva/finale1.lua:360
->>>>>>> Stashed changes
 msgid ""
 "The pirates give way and the source of the powerful voice appears before "
 "you. It's a small recognizable figure that you know quite well."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:363
 msgid "\"Maikki?\""
 msgstr ""
@@ -61228,24 +61074,12 @@ msgid "\"Pirate?\""
 msgstr ""
 
 #: dat/missions/minerva/finale1.lua:369
-=======
-#: dat/missions/minerva/finale1.lua:362
-msgid "\"Maikki?\""
-msgstr ""
-
-#: dat/missions/minerva/finale1.lua:363
-msgid "\"Pirate?\""
-msgstr ""
-
-#: dat/missions/minerva/finale1.lua:368
->>>>>>> Stashed changes
 msgid ""
 "\"Ah ha ha! Surprised to see me in my true form? Never thought a Pirate Lord "
 "could enjoy parfaits? Arrr!\"\n"
 "She winks at you."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:371
 msgid "\"Speaking of which, where's Zuri?\""
 msgstr ""
@@ -61259,21 +61093,6 @@ msgid "\"She's bleeding out.\""
 msgstr ""
 
 #: dat/missions/minerva/finale1.lua:378
-=======
-#: dat/missions/minerva/finale1.lua:370
-msgid "\"Speaking of which, where's Zuri?\""
-msgstr ""
-
-#: dat/missions/minerva/finale1.lua:372
-msgid "\"She's seen better days.\""
-msgstr ""
-
-#: dat/missions/minerva/finale1.lua:373
-msgid "\"She's bleeding out.\""
-msgstr ""
-
-#: dat/missions/minerva/finale1.lua:377
->>>>>>> Stashed changes
 msgid ""
 "You quickly explain the situation and Maikki quickly orders her troops to "
 "pick up Zuri and Kex and take them to the infirmary aboard the {ship}, which "
@@ -61281,27 +61100,18 @@ msgid ""
 "gets Zuri prepped up and starts running analysis."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:380
-=======
-#: dat/missions/minerva/finale1.lua:379
->>>>>>> Stashed changes
 msgid ""
 "As Kex does not seem to have life threatening issues, you are left with him "
 "and Maikki in the waiting room."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:381
-=======
-#: dat/missions/minerva/finale1.lua:380
->>>>>>> Stashed changes
 msgid ""
 "Maikki looks fondly at Kex and speaks softly, \"Oh father, why did it have "
 "to be this way?\""
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:383
 msgid "\"You knew?\""
 msgstr ""
@@ -61311,37 +61121,18 @@ msgid "\"Father?\""
 msgstr ""
 
 #: dat/missions/minerva/finale1.lua:388
-=======
-#: dat/missions/minerva/finale1.lua:382
-msgid "\"You knew?\""
-msgstr ""
-
-#: dat/missions/minerva/finale1.lua:383
-msgid "\"Father?\""
-msgstr ""
-
-#: dat/missions/minerva/finale1.lua:387
->>>>>>> Stashed changes
 msgid ""
 "She abruptly changes back to her piratey self.\n"
 "\"I knew you were thick, but you're thicker than molasses!\""
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:390
-=======
-#: dat/missions/minerva/finale1.lua:389
->>>>>>> Stashed changes
 msgid ""
 "\"The unlucky fowl is my father! Of course he wasn't always this way, but "
 "you should know that better than I.\""
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:391
-=======
-#: dat/missions/minerva/finale1.lua:390
->>>>>>> Stashed changes
 msgid ""
 "\"Just my luck to cross the entire galaxy chasing my fool of a father, and "
 "when I finally find them, they've been transformed into a fowl, and, and, to "
@@ -61349,68 +61140,43 @@ msgid ""
 "some shit.\""
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:392
-=======
-#: dat/missions/minerva/finale1.lua:391
->>>>>>> Stashed changes
 msgid ""
 "\"What's a girl gotta do to bloody enjoy a normal family, just for ONCE!\"\n"
 "She closes her eyes and rubs her temples."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:394
-=======
-#: dat/missions/minerva/finale1.lua:393
->>>>>>> Stashed changes
 msgid ""
 "\"And Zuri, my poor, dear, Zuri, is yet again under life-saving surgery. At "
 "this rate, I don't think she's going to have a single one of her original "
 "organs...\""
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:395
-=======
-#: dat/missions/minerva/finale1.lua:394
->>>>>>> Stashed changes
 msgid ""
 "\"This whole ordeal has become quite a mess. I'm really glad I was finally "
 "able to find my father, but things haven't really been going our way.\""
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:398
-=======
-#: dat/missions/minerva/finale1.lua:397
->>>>>>> Stashed changes
 msgid ""
 "\"At least the judge didn't assign Minerva Station to the Dvaered brutes or "
 "Za'lek popsicles, however, with the current situation, I don't think it "
 "helps much.\""
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:406
-=======
-#: dat/missions/minerva/finale1.lua:405
->>>>>>> Stashed changes
 msgid ""
 "\"Not to mention the bloody judge assigned Minerva Station to the damn "
 "{badguys}. Not that it matters much, but it's just salting the wounds.\""
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:411
-=======
-#: dat/missions/minerva/finale1.lua:410
->>>>>>> Stashed changes
 msgid "Ask about Zuri's health"
 msgstr ""
 
 #. Normal chitchat
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:412 dat/missions/minerva/maikki1.lua:185
 msgid "Ask about her father"
 msgstr ""
@@ -61420,28 +61186,13 @@ msgid "Ask about next plans (continue)"
 msgstr ""
 
 #: dat/missions/minerva/finale1.lua:417
-=======
-#: dat/missions/minerva/finale1.lua:411 dat/missions/minerva/maikki1.lua:185
-msgid "Ask about her father"
-msgstr ""
-
-#: dat/missions/minerva/finale1.lua:412
-msgid "Ask about next plans (continue)"
-msgstr ""
-
-#: dat/missions/minerva/finale1.lua:416
->>>>>>> Stashed changes
 msgid ""
 "\"She's a tough cookie to crack. We've been together through much harder "
 "times. Pirate doctors are second to none when it comes to experience.\"\n"
 "You sense a some worry and uneasiness despite the strong words."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:419
-=======
-#: dat/missions/minerva/finale1.lua:418
->>>>>>> Stashed changes
 msgid ""
 "\"One time, we were doing your standard hit operation in Delta Pavonis, some "
 "Empire Combat Bureaucrat had a bounty on the head, and I figure we might as "
@@ -61449,11 +61200,7 @@ msgid ""
 "Turns out it was a bloody Peacemaker with a full entourage.\""
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:420
-=======
-#: dat/missions/minerva/finale1.lua:419
->>>>>>> Stashed changes
 msgid ""
 "\"Was about to back off when a second Peacemaker jumped in behind us. The "
 "bastards set us up for a trap. With no way out, we charged the Bureaucrat "
@@ -61461,11 +61208,7 @@ msgid ""
 "went to fight our way through the ship.\""
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:421
-=======
-#: dat/missions/minerva/finale1.lua:420
->>>>>>> Stashed changes
 msgid ""
 "\"While we were trying to take hold of the hangar, Zuri grabbed a bunch of "
 "weapons and charged basically charged through the ship. When we found her in "
@@ -61473,11 +61216,7 @@ msgid ""
 "and capture it by herself!\""
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:422
-=======
-#: dat/missions/minerva/finale1.lua:421
->>>>>>> Stashed changes
 msgid ""
 "\"Of course, she had nearly blown herself into two, and was riddled with "
 "laser holes, but we were lucky that the field surgeon was with us and was "
@@ -61485,22 +61224,14 @@ msgid ""
 "one.\""
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:423
-=======
-#: dat/missions/minerva/finale1.lua:422
->>>>>>> Stashed changes
 msgid ""
 "\"We ended up escaping with 17 people crammed in a Lancelot, and somehow "
 "made it back to New Haven. It took Zuri nearly a cycle to recover, but then "
 "she was better than ever. She's got be fine this time too!\""
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:427
-=======
-#: dat/missions/minerva/finale1.lua:426
->>>>>>> Stashed changes
 msgid ""
 "\"He wasn't really with us when I was a child. He'd always be searching for "
 "artefacts in the nebula or whatnot. But, he would have the best stories when "
@@ -61508,41 +61239,25 @@ msgid ""
 "become a pilot.\""
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:428
-=======
-#: dat/missions/minerva/finale1.lua:427
->>>>>>> Stashed changes
 msgid ""
 "\"Then, one day, he didn't come back. Eaten by the Nebula, killed by "
 "scavengers, taken prisoner by the Dvaered, blah blah blah. The rumours were "
 "awful.\""
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:429
-=======
-#: dat/missions/minerva/finale1.lua:428
->>>>>>> Stashed changes
 msgid ""
 "\"My mother took it really poorly, her health deteriorated fast. When she "
 "died, I decided I would try to find my father and find out why he did that, "
 "you know?\""
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:430
 msgid "\"Took me long enough, but I never expected to find him like this...\""
 msgstr ""
 
 #: dat/missions/minerva/finale1.lua:434
-=======
-#: dat/missions/minerva/finale1.lua:429
-msgid "\"Took me long enough, but I never expected to find him like this...\""
-msgstr ""
-
-#: dat/missions/minerva/finale1.lua:433
->>>>>>> Stashed changes
 msgid ""
 "\"I guess you can sort of expect that whatever plans I had are probably moot "
 "at this point. Too many unknowns at this point, we should head to a haven "
@@ -61550,22 +61265,14 @@ msgid ""
 "wait until Zuri wakes up.\""
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:435
-=======
-#: dat/missions/minerva/finale1.lua:434
->>>>>>> Stashed changes
 msgid ""
 "\"For now, we should get out of here, lest the Imperials come down from "
 "{badsys}. I know some people at {spob} in the {sys} system. We can head "
 "there for now.\""
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:439
-=======
-#: dat/missions/minerva/finale1.lua:438
->>>>>>> Stashed changes
 msgid ""
 "You tell {shipai} to set your ship's autonav to follow the Pink Demon and "
 "ride with Maikki to {spob}.\n"
@@ -61581,21 +61288,13 @@ msgstr ""
 
 #. Simulate the elapsed time for moving over
 #. Land on the spob
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:457
-=======
-#: dat/missions/minerva/finale1.lua:456
->>>>>>> Stashed changes
 msgid ""
 "You land with Makki on {spob} through what seems to be a hidden landing pad, "
 "away from the main spaceport."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: dat/missions/minerva/finale1.lua:458
-=======
-#: dat/missions/minerva/finale1.lua:457
->>>>>>> Stashed changes
 msgid ""
 "Despite being quite flustered with the situation, Maikki seems intent on "
 "trying to manage the situation.\n"
