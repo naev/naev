@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-09-11 05:21+0900\n"
-"PO-Revision-Date: 2023-09-10 19:49+0000\n"
+"PO-Revision-Date: 2023-09-10 20:59+0000\n"
 "Last-Translator: Nicolas <nicolas.rr.arnaud@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
 "Language: fr\n"
@@ -123263,11 +123263,11 @@ msgstr ""
 
 #: src/player.c:4572
 msgid "You have destealthed."
-msgstr "Vous avez découvert #%c%s#0."
+msgstr "Vous sortez du mode furtif."
 
 #: src/player.c:4578
 msgid "You have entered stealth mode."
-msgstr "Vous avez découvert #%c%s#0."
+msgstr "Vous entrez en mode furtif."
 
 #: src/player.c:4583
 msgid "Unable to stealth: missiles locked on!"
