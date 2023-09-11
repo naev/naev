@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-09-11 05:21+0900\n"
-"PO-Revision-Date: 2023-09-10 19:49+0000\n"
+"POT-Creation-Date: 2023-09-11 05:59+0900\n"
+"PO-Revision-Date: 2023-09-10 20:59+0000\n"
 "Last-Translator: Nicolas <nicolas.rr.arnaud@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
 "Language: fr\n"
@@ -46312,7 +46312,7 @@ msgstr ""
 msgid "Weapon Sets"
 msgstr "Groupe d'armes 1"
 
-#: dat/events/shipai.lua:109
+#: dat/events/shipai.lua:109 src/input.c:56
 msgid "Stealth"
 msgstr ""
 
@@ -111136,7 +111136,8 @@ msgstr ""
 msgid "Oyster"
 msgstr ""
 
-#: dat/scripts/pilotname/pirate.lua:402
+#. Console-main.
+#: dat/scripts/pilotname/pirate.lua:402 src/input.c:123
 msgid "Paste"
 msgstr ""
 
@@ -115122,7 +115123,7 @@ msgid "#gWelcome to the Lua console!"
 msgstr ""
 
 #. Create the window.
-#: src/console.c:680
+#: src/console.c:680 src/input.c:111
 msgid "Lua Console"
 msgstr ""
 
@@ -117477,7 +117478,6 @@ msgstr ""
 
 #. Movement
 #: src/input.c:52
-msgctxt "keybinding"
 msgid "Accelerate"
 msgstr ""
 
@@ -117486,7 +117486,6 @@ msgid "Makes your ship accelerate forward."
 msgstr ""
 
 #: src/input.c:53
-msgctxt "keybinding"
 msgid "Turn Left"
 msgstr ""
 
@@ -117495,7 +117494,6 @@ msgid "Makes your ship turn left."
 msgstr ""
 
 #: src/input.c:54
-msgctxt "keybinding"
 msgid "Turn Right"
 msgstr ""
 
@@ -117504,18 +117502,12 @@ msgid "Makes your ship turn right."
 msgstr ""
 
 #: src/input.c:55
-msgctxt "keybinding"
 msgid "Reverse"
 msgstr ""
 
 #: src/input.c:55
 msgid ""
 "Makes your ship face the direction you're moving from. Useful for braking."
-msgstr ""
-
-#: src/input.c:56
-msgctxt "keybinding"
-msgid "Stealth"
 msgstr ""
 
 #: src/input.c:56
@@ -117526,7 +117518,6 @@ msgstr ""
 #: src/input.c:58
 #, fuzzy
 #| msgid "Target Next"
-msgctxt "keybinding"
 msgid "Target Next"
 msgstr "Cible suivante"
 
@@ -117537,7 +117528,6 @@ msgstr ""
 #: src/input.c:59
 #, fuzzy
 #| msgid "Target Previous"
-msgctxt "keybinding"
 msgid "Target Previous"
 msgstr "Cible précédente"
 
@@ -117548,7 +117538,6 @@ msgstr ""
 #: src/input.c:60
 #, fuzzy
 #| msgid "Target Nearest"
-msgctxt "keybinding"
 msgid "Target Nearest"
 msgstr "Cible la plus proche"
 
@@ -117559,7 +117548,6 @@ msgstr ""
 #: src/input.c:61
 #, fuzzy
 #| msgid "Target Next Hostile"
-msgctxt "keybinding"
 msgid "Target Next Hostile"
 msgstr "Cible hostile suivante"
 
@@ -117570,7 +117558,6 @@ msgstr ""
 #: src/input.c:62
 #, fuzzy
 #| msgid "Target Previous Hostile"
-msgctxt "keybinding"
 msgid "Target Previous Hostile"
 msgstr "Cible hostile précédente"
 
@@ -117581,7 +117568,6 @@ msgstr ""
 #: src/input.c:63
 #, fuzzy
 #| msgid "Target Nearest Hostile"
-msgctxt "keybinding"
 msgid "Target Nearest Hostile"
 msgstr "Cible hostile la plus proche"
 
@@ -117592,7 +117578,6 @@ msgstr ""
 #: src/input.c:64
 #, fuzzy
 #| msgid "Clear Target"
-msgctxt "keybinding"
 msgid "Clear Target"
 msgstr "Annuler le ciblage"
 
@@ -117604,7 +117589,6 @@ msgstr ""
 #: src/input.c:66
 #, fuzzy
 #| msgid "Heavy Weapon"
-msgctxt "keybinding"
 msgid "Fire Primary Weapon"
 msgstr "Armes"
 
@@ -117615,7 +117599,6 @@ msgstr ""
 #: src/input.c:67
 #, fuzzy
 #| msgid "Face Target"
-msgctxt "keybinding"
 msgid "Face Target"
 msgstr "Faire face à la cible"
 
@@ -117629,7 +117612,6 @@ msgstr ""
 #: src/input.c:69
 #, fuzzy
 #| msgid "Heavy Weapon"
-msgctxt "keybinding"
 msgid "Fire Secondary Weapon"
 msgstr "Armes"
 
@@ -117640,7 +117622,6 @@ msgstr ""
 #: src/input.c:70
 #, fuzzy
 #| msgid "Weapon Set 1"
-msgctxt "keybinding"
 msgid "Weapon Set 1"
 msgstr "Groupe d'armes 1"
 
@@ -117651,7 +117632,6 @@ msgstr "Activer le groupe d'armes 1"
 #: src/input.c:71
 #, fuzzy
 #| msgid "Weapon Set 2"
-msgctxt "keybinding"
 msgid "Weapon Set 2"
 msgstr "Groupe d'armes 2"
 
@@ -117662,7 +117642,6 @@ msgstr "Activer le groupe d'armes 2"
 #: src/input.c:72
 #, fuzzy
 #| msgid "Weapon Set 1"
-msgctxt "keybinding"
 msgid "Weapon Set 3"
 msgstr "Groupe d'armes 1"
 
@@ -117673,7 +117652,6 @@ msgstr ""
 #: src/input.c:73
 #, fuzzy
 #| msgid "Weapon Set 1"
-msgctxt "keybinding"
 msgid "Weapon Set 4"
 msgstr "Groupe d'armes 1"
 
@@ -117684,7 +117662,6 @@ msgstr ""
 #: src/input.c:74
 #, fuzzy
 #| msgid "Weapon Set 1"
-msgctxt "keybinding"
 msgid "Weapon Set 5"
 msgstr "Groupe d'armes 1"
 
@@ -117695,7 +117672,6 @@ msgstr ""
 #: src/input.c:75
 #, fuzzy
 #| msgid "Weapon Set 1"
-msgctxt "keybinding"
 msgid "Weapon Set 6"
 msgstr "Groupe d'armes 1"
 
@@ -117706,7 +117682,6 @@ msgstr ""
 #: src/input.c:76
 #, fuzzy
 #| msgid "Weapon Set 1"
-msgctxt "keybinding"
 msgid "Weapon Set 7"
 msgstr "Groupe d'armes 1"
 
@@ -117717,7 +117692,6 @@ msgstr ""
 #: src/input.c:77
 #, fuzzy
 #| msgid "Weapon Set 1"
-msgctxt "keybinding"
 msgid "Weapon Set 8"
 msgstr "Groupe d'armes 1"
 
@@ -117728,7 +117702,6 @@ msgstr ""
 #: src/input.c:78
 #, fuzzy
 #| msgid "Weapon Set 1"
-msgctxt "keybinding"
 msgid "Weapon Set 9"
 msgstr "Groupe d'armes 1"
 
@@ -117739,7 +117712,6 @@ msgstr ""
 #: src/input.c:79
 #, fuzzy
 #| msgid "Weapon Set 1"
-msgctxt "keybinding"
 msgid "Weapon Set 0"
 msgstr "Groupe d'armes 1"
 
@@ -117751,7 +117723,6 @@ msgstr ""
 #: src/input.c:81
 #, fuzzy
 #| msgid "Target Next Escort"
-msgctxt "keybinding"
 msgid "Target Next Escort"
 msgstr "Escorte suivante"
 
@@ -117762,7 +117733,6 @@ msgstr "Alterne entre les escortes"
 #: src/input.c:82
 #, fuzzy
 #| msgid "Target Previous Escort"
-msgctxt "keybinding"
 msgid "Target Previous Escort"
 msgstr "Escorte précédente"
 
@@ -117773,7 +117743,6 @@ msgstr "Alterne entre les escortes"
 #: src/input.c:83
 #, fuzzy
 #| msgid "Escort Attack Command"
-msgctxt "keybinding"
 msgid "Escort Attack Command"
 msgstr "Commande d'attaque des escortes"
 
@@ -117784,7 +117753,6 @@ msgstr "Ordonne aux escortes d'attaquer votre cible"
 #: src/input.c:84
 #, fuzzy
 #| msgid "Escort Attack Command"
-msgctxt "keybinding"
 msgid "Escort Hold Command"
 msgstr "Commande d'attaque des escortes"
 
@@ -117795,7 +117763,6 @@ msgstr "Ordonne aux escortes d'attaquer votre cible"
 #: src/input.c:85
 #, fuzzy
 #| msgid "Escort Attack Command"
-msgctxt "keybinding"
 msgid "Escort Return Command"
 msgstr "Commande d'attaque des escortes"
 
@@ -117806,7 +117773,6 @@ msgstr ""
 #: src/input.c:86
 #, fuzzy
 #| msgid "Escort Attack Command"
-msgctxt "keybinding"
 msgid "Escort Clear Commands"
 msgstr "Commande d'attaque des escortes"
 
@@ -117818,7 +117784,6 @@ msgstr ""
 #: src/input.c:88
 #, fuzzy
 #| msgid "Autonavigation On"
-msgctxt "keybinding"
 msgid "Autonavigation On"
 msgstr "Autonav activé"
 
@@ -117829,7 +117794,6 @@ msgstr "Initialise le système Autonav."
 #: src/input.c:89
 #, fuzzy
 #| msgid "Target Spob"
-msgctxt "keybinding"
 msgid "Target Spob"
 msgstr "Cible suivante"
 
@@ -117840,7 +117804,6 @@ msgid "Cycles through space object targets."
 msgstr "Alterne entre les planètes du système"
 
 #: src/input.c:90
-msgctxt "keybinding"
 msgid "Approach"
 msgstr ""
 
@@ -117854,7 +117817,6 @@ msgstr ""
 #: src/input.c:91
 #, fuzzy
 #| msgid "Jump Point"
-msgctxt "keybinding"
 msgid "Target Jump Point"
 msgstr "Heure : "
 
@@ -117862,10 +117824,7 @@ msgstr "Heure : "
 msgid "Cycles through jump points."
 msgstr ""
 
-#: src/input.c:92
-#, fuzzy
-#| msgid "Star Map"
-msgctxt "keybinding"
+#: src/input.c:92 src/map.c:253 src/outfit.c:904
 msgid "Star Map"
 msgstr "Carte des étoiles"
 
@@ -117876,7 +117835,6 @@ msgstr "Ouvre la carte des étoiles."
 #: src/input.c:93
 #, fuzzy
 #| msgid "Adaptive Jump"
-msgctxt "keybinding"
 msgid "Initiate Jump"
 msgstr "Saut d'adaptation"
 
@@ -117887,7 +117845,6 @@ msgstr ""
 #: src/input.c:94
 #, fuzzy
 #| msgid "Universe Map"
-msgctxt "keybinding"
 msgid "Overlay Map"
 msgstr "Carte de l'Univers"
 
@@ -117898,7 +117855,6 @@ msgstr ""
 #: src/input.c:95
 #, fuzzy
 #| msgid "Mouse Flight"
-msgctxt "keybinding"
 msgid "Mouse Flight"
 msgstr "Vol à la souris"
 
@@ -117907,7 +117863,6 @@ msgid "Toggles mouse flying."
 msgstr "Activer/désactiver le vol à la souris"
 
 #: src/input.c:96
-msgctxt "keybinding"
 msgid "Active Cooldown"
 msgstr ""
 
@@ -117919,7 +117874,6 @@ msgstr ""
 #: src/input.c:98
 #, fuzzy
 #| msgid "Log Scroll Up"
-msgctxt "keybinding"
 msgid "Log Scroll Up"
 msgstr "Défilement du journal vers le haut"
 
@@ -117930,7 +117884,6 @@ msgstr "Fait défiler le journal vers le haut"
 #: src/input.c:99
 #, fuzzy
 #| msgid "Log Scroll Down"
-msgctxt "keybinding"
 msgid "Log Scroll Down"
 msgstr "Défilement du journal vers le bas"
 
@@ -117941,7 +117894,6 @@ msgstr "Fait défiler le journal vers le bas"
 #: src/input.c:100
 #, fuzzy
 #| msgid "Face Target"
-msgctxt "keybinding"
 msgid "Hail Target"
 msgstr "Faire face à la cible"
 
@@ -117952,7 +117904,6 @@ msgstr ""
 #: src/input.c:101
 #, fuzzy
 #| msgid "Autonav"
-msgctxt "keybinding"
 msgid "Autohail"
 msgstr "Autonav"
 
@@ -117962,7 +117913,6 @@ msgstr ""
 
 #. Misc.
 #: src/input.c:103
-msgctxt "keybinding"
 msgid "Radar Zoom In"
 msgstr ""
 
@@ -117971,7 +117921,6 @@ msgid "Zooms in on the radar."
 msgstr ""
 
 #: src/input.c:104
-msgctxt "keybinding"
 msgid "Radar Zoom Out"
 msgstr ""
 
@@ -117982,7 +117931,6 @@ msgstr ""
 #: src/input.c:105
 #, fuzzy
 #| msgid "Screenshot"
-msgctxt "keybinding"
 msgid "Screenshot"
 msgstr "Capture d'écran"
 
@@ -117993,7 +117941,6 @@ msgstr "Prend une capture d'écran"
 #: src/input.c:106
 #, fuzzy
 #| msgid "Toggle Fullscreen"
-msgctxt "keybinding"
 msgid "Toggle Fullscreen"
 msgstr "Plein écran"
 
@@ -118003,8 +117950,8 @@ msgstr "Bascule entre le plein écran et le mode fenêtré"
 
 #: src/input.c:107
 #, fuzzy
+#| msgctxt "keyname"
 #| msgid "Pause"
-msgctxt "keybinding"
 msgid "Pause"
 msgstr "Pause"
 
@@ -118015,7 +117962,6 @@ msgstr "Met le jeu en pause"
 #: src/input.c:108
 #, fuzzy
 #| msgid "Toggle Speed"
-msgctxt "keybinding"
 msgid "Toggle Speed"
 msgstr "Vitesse de jeu"
 
@@ -118027,7 +117973,6 @@ msgstr "Modifie la vitesse du jeu"
 #, fuzzy
 #| msgctxt "adj delivery"
 #| msgid "Small"
-msgctxt "keybinding"
 msgid "Small Menu"
 msgstr "Armes Légères"
 
@@ -118038,7 +117983,6 @@ msgstr ""
 #: src/input.c:110
 #, fuzzy
 #| msgid "Information Menu"
-msgctxt "keybinding"
 msgid "Information Menu"
 msgstr "Menu d'information"
 
@@ -118047,18 +117991,12 @@ msgid "Opens the information menu."
 msgstr "Ouvre le menu d'information"
 
 #: src/input.c:111
-msgctxt "keybinding"
-msgid "Lua Console"
-msgstr ""
-
-#: src/input.c:111
 msgid "Opens the Lua console."
 msgstr ""
 
 #: src/input.c:112
 #, fuzzy
 #| msgid "Switch Tab 1"
-msgctxt "keybinding"
 msgid "Switch Tab 1"
 msgstr "Onglet 1"
 
@@ -118069,7 +118007,6 @@ msgstr "Passe à l'onglet 1"
 #: src/input.c:113
 #, fuzzy
 #| msgid "Switch Tab 1"
-msgctxt "keybinding"
 msgid "Switch Tab 2"
 msgstr "Onglet 1"
 
@@ -118080,7 +118017,6 @@ msgstr ""
 #: src/input.c:114
 #, fuzzy
 #| msgid "Switch Tab 1"
-msgctxt "keybinding"
 msgid "Switch Tab 3"
 msgstr "Onglet 1"
 
@@ -118091,7 +118027,6 @@ msgstr ""
 #: src/input.c:115
 #, fuzzy
 #| msgid "Switch Tab 1"
-msgctxt "keybinding"
 msgid "Switch Tab 4"
 msgstr "Onglet 1"
 
@@ -118102,7 +118037,6 @@ msgstr ""
 #: src/input.c:116
 #, fuzzy
 #| msgid "Switch Tab 1"
-msgctxt "keybinding"
 msgid "Switch Tab 5"
 msgstr "Onglet 1"
 
@@ -118113,7 +118047,6 @@ msgstr ""
 #: src/input.c:117
 #, fuzzy
 #| msgid "Switch Tab 1"
-msgctxt "keybinding"
 msgid "Switch Tab 6"
 msgstr "Onglet 1"
 
@@ -118124,7 +118057,6 @@ msgstr ""
 #: src/input.c:118
 #, fuzzy
 #| msgid "Switch Tab 1"
-msgctxt "keybinding"
 msgid "Switch Tab 7"
 msgstr "Onglet 1"
 
@@ -118135,7 +118067,6 @@ msgstr ""
 #: src/input.c:119
 #, fuzzy
 #| msgid "Switch Tab 1"
-msgctxt "keybinding"
 msgid "Switch Tab 8"
 msgstr "Onglet 1"
 
@@ -118146,7 +118077,6 @@ msgstr ""
 #: src/input.c:120
 #, fuzzy
 #| msgid "Switch Tab 1"
-msgctxt "keybinding"
 msgid "Switch Tab 9"
 msgstr "Onglet 1"
 
@@ -118157,18 +118087,11 @@ msgstr ""
 #: src/input.c:121
 #, fuzzy
 #| msgid "Switch Tab 1"
-msgctxt "keybinding"
 msgid "Switch Tab 0"
 msgstr "Onglet 1"
 
 #: src/input.c:121
 msgid "Switches to tab 0."
-msgstr ""
-
-#. Console-main.
-#: src/input.c:123
-msgctxt "keybinding"
-msgid "Paste"
 msgstr ""
 
 #: src/input.c:123
@@ -119047,10 +118970,6 @@ msgstr ""
 #, c-format
 msgid "Unknown var type '%s'"
 msgstr ""
-
-#: src/map.c:253 src/outfit.c:904
-msgid "Star Map"
-msgstr "Carte des étoiles"
 
 #: src/map.c:352
 msgid "Standing:"
@@ -123263,11 +123182,11 @@ msgstr ""
 
 #: src/player.c:4572
 msgid "You have destealthed."
-msgstr "Vous avez découvert #%c%s#0."
+msgstr "Vous sortez du mode furtif."
 
 #: src/player.c:4578
 msgid "You have entered stealth mode."
-msgstr "Vous avez découvert #%c%s#0."
+msgstr "Vous entrez en mode furtif."
 
 #: src/player.c:4583
 msgid "Unable to stealth: missiles locked on!"
@@ -125488,6 +125407,18 @@ msgstr ""
 #: dat/outfits/bioship/generate.py:480
 msgid "Immanis Cortex III"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Star Map"
+#~ msgctxt "keybinding"
+#~ msgid "Star Map"
+#~ msgstr "Carte des étoiles"
+
+#, fuzzy
+#~| msgid "Pause"
+#~ msgctxt "keybinding"
+#~ msgid "Pause"
+#~ msgstr "Pause"
 
 #, fuzzy
 #~| msgid "Akra Station"
