@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-06-11 11:58+0900\n"
-"PO-Revision-Date: 2023-09-11 15:20+0000\n"
+"PO-Revision-Date: 2023-09-12 02:08+0000\n"
 "Last-Translator: Nicolas <nicolas.rr.arnaud@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev-0-10-x/"
 "fr/>\n"
@@ -888,7 +888,7 @@ msgstr "MULE"
 
 #: artwork/gfx/loading/pacifier.webp.txt:1
 msgid "PACIFIER"
-msgstr "SUCETTER"
+msgstr "SUCETTE"
 
 #: artwork/gfx/loading/peacemaker.webp.txt:1
 msgid "EMPIRE PEACEMAKER"
@@ -28233,7 +28233,7 @@ msgstr ""
 
 #: dat/start.xml:5
 msgid "Your first space-worthy ship!"
-msgstr ""
+msgstr "Votre premier vaisseau spatial !"
 
 #: dat/unidiff/antlejosv_1.xml:4
 msgid ""
@@ -42162,7 +42162,7 @@ msgstr ""
 #: dat/missions/tutorial/tutorial.lua:104
 #: dat/missions/tutorial/tutorial.lua:113
 msgid "Nevermind"
-msgstr ""
+msgstr "Changer d'avis"
 
 #: dat/events/shipai.lua:77
 msgid ""
@@ -64608,7 +64608,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:909
 msgid "Return to {name} in the {sys} system"
-msgstr "Retour à {nom} dans le système {sys}"
+msgstr "Retour à {name} dans le système {sys}"
 
 #. Clear scavengers if exist
 #. Unboard
@@ -69553,17 +69553,17 @@ msgstr ""
 #. Note: indexed from 0 to match mission tiers.
 #: dat/missions/neutral/cargo.lua:35
 msgid "Small shipment of {amount} of {cargo} to {pnt} in the {sys} system."
-msgstr "Petit envoi de {montant} de {cargo} à {pnt} dans le système {sys}."
+msgstr "Petit envoi de {amount} de {cargo} à {pnt} dans le système {sys}."
 
 #: dat/missions/neutral/cargo.lua:36
 msgid "Medium shipment of {amount} of {cargo} to {pnt} in the {sys} system."
-msgstr "Envoi moyen de {montant} de {cargo} à {pnt} dans le système {sys}."
+msgstr "Envoi moyen de {amount} de {cargo} à {pnt} dans le système {sys}."
 
 #: dat/missions/neutral/cargo.lua:37
 msgid ""
 "Sizable cargo delivery of {amount} of {cargo} to {pnt} in the {sys} system."
 msgstr ""
-"Livraison importante de {montant} de {cargo} à {pnt} dans le système {sys}."
+"Livraison importante de {amount} de {cargo} à {pnt} dans le système {sys}."
 
 #: dat/missions/neutral/cargo.lua:38
 msgid ""
@@ -69574,8 +69574,7 @@ msgstr ""
 #: dat/missions/neutral/cargo.lua:39
 msgid ""
 "Bulk freight delivery of {amount} of {cargo} to {pnt} in the {sys} system."
-msgstr ""
-"Livraison en vrac de {montant} de {cargo} à {pnt} dans le système {sys}."
+msgstr "Livraison en vrac de {amount} de {cargo} à {pnt} dans le système {sys}."
 
 #. =Landing=--
 #: dat/missions/neutral/cargo.lua:49 dat/missions/neutral/cargo_rush.lua:58
@@ -69705,7 +69704,7 @@ msgstr "Livraison urgente de {amount} de {cargo} à {pnt} dans le système {sys}
 msgid ""
 "Emergency cargo delivery of {amount} of {cargo} to {pnt} in the {sys} system."
 msgstr ""
-"Livraison d'urgence de {montant} de {cargo} à {pnt} dans le système {sys}."
+"Livraison d'urgence de {amount} de {cargo} à {pnt} dans le système {sys}."
 
 #: dat/missions/neutral/cargo_rush.lua:65
 msgid ""
@@ -69827,7 +69826,7 @@ msgstr ""
 
 #: dat/missions/neutral/commodity_run.lua:47
 msgid "Commodity Delivery"
-msgstr ""
+msgstr "Livraison de Marchandise"
 
 #. A script may require "missions.neutral.commodity_run" and override this
 #. with a table of (raw) commodity names to choose from.
@@ -84220,7 +84219,7 @@ msgstr "Recherche de {name}"
 #: dat/missions/taiomi/taiomi05.lua:96 dat/missions/taiomi/taiomi05.lua:97
 #: dat/missions/taiomi/taiomi05.lua:101
 msgid "Search for {name} ({sys})"
-msgstr "Recherche de {nom} ({sys})"
+msgstr "Recherche de {name} ({sys})"
 
 #: dat/missions/taiomi/taiomi05.lua:98
 msgid "Scavenger must survive"
@@ -87623,7 +87622,7 @@ msgstr ""
 #: dat/missions/tutorial/tutorial.lua:35 dat/missions/tutorial/tutorial.lua:136
 #: dat/scripts/common/tutorial.lua:45
 msgid "Tutorial"
-msgstr ""
+msgstr "Tutoriel"
 
 #: dat/missions/tutorial/tutorial.lua:36
 msgid "Your Ship AI has offered to teach you how to fly your ship."
@@ -103865,7 +103864,7 @@ msgstr ""
 #: src/SDL_keynames.h:101
 msgctxt "keyname"
 msgid "Delete"
-msgstr ""
+msgstr "Supprimer"
 
 #: src/SDL_keynames.h:102
 msgctxt "keyname"
@@ -106276,7 +106275,7 @@ msgstr ""
 #. create the window
 #: src/dialogue.c:149 src/options.c:177
 msgid "Warning"
-msgstr ""
+msgstr "Avertissement"
 
 #: src/dialogue.c:414
 msgid "Unknown button clicked in YesNo dialogue!"
@@ -106430,16 +106429,16 @@ msgstr ""
 #: src/equipment.c:320 src/land.c:349 src/land.c:615 src/land.c:1341
 #: src/land_outfits.c:161 src/land_shipyard.c:95 src/land_trade.c:73
 msgid "Take Off"
-msgstr ""
+msgstr "Décoller"
 
 #. Check if player really wants to sell.
 #: src/equipment.c:324 src/equipment.c:2299
 msgid "Sell Ship"
-msgstr "Vendre le vaisseau"
+msgstr "Vendre Vaisseau"
 
 #: src/equipment.c:328
 msgid "Swap Ship"
-msgstr ""
+msgstr "Échanger Vaisseau"
 
 #: src/equipment.c:332
 msgid "Unequip"
@@ -106447,7 +106446,7 @@ msgstr "Déséquiper"
 
 #: src/equipment.c:336
 msgid "Autoequip"
-msgstr "Déséquiper"
+msgstr "Auto-équiper"
 
 #: src/equipment.c:371
 msgid "Available Ships"
@@ -106471,7 +106470,7 @@ msgstr "Vitesse de jeu"
 
 #: src/equipment.c:595 src/outfit.c:299
 msgid "Weapon"
-msgstr ""
+msgstr "Arme"
 
 #: src/equipment.c:603 src/outfit.c:297
 msgid "Utility"
@@ -106483,7 +106482,7 @@ msgstr "Structure"
 
 #: src/equipment.c:645
 msgid "Fleet Capacity"
-msgstr ""
+msgstr "Capacité de Flotte"
 
 #. Render CPU.
 #: src/equipment.c:658
@@ -106502,15 +106501,15 @@ msgstr ""
 
 #: src/equipment.c:721
 msgid "Locked"
-msgstr ""
+msgstr "Vérouillé"
 
 #: src/equipment.c:730
 msgid "Right click to remove"
-msgstr ""
+msgstr "Clique droit pour supprimer"
 
 #: src/equipment.c:741
 msgid "Right click to add"
-msgstr ""
+msgstr "Clique droit pour ajouter"
 
 #: src/equipment.c:851
 #, c-format
@@ -106523,7 +106522,7 @@ msgstr ""
 
 #: src/equipment.c:859
 msgid " [locked]"
-msgstr ""
+msgstr "[verouillé]"
 
 #: src/equipment.c:1345
 #, c-format
@@ -106532,34 +106531,34 @@ msgstr ""
 
 #: src/equipment.c:1382 src/equipment.c:2049
 msgid "Invalid Escort"
-msgstr ""
+msgstr "Escorte Invalide"
 
 #: src/equipment.c:1382 src/equipment.c:2049
 #, c-format
 msgid "You can not set your ship '%s' as an escort!"
-msgstr ""
+msgstr "Vous ne pouvez pas définir votre vaisseau '%s' comme escorte !"
 
 #: src/equipment.c:1485
 #, c-format
 msgid "Ship Stats\n"
-msgstr ""
+msgstr "Stats du Vaisseau\n"
 
 #: src/equipment.c:1577 src/land_outfits.c:322 src/shiplog.c:489
 #: src/shiplog.c:534
 msgid "All"
-msgstr ""
+msgstr "Tout"
 
 #: src/equipment.c:1610
 msgid "Very little space on equipment outfit tabs!"
-msgstr ""
+msgstr "Très peu d'espace sur les onglets d'équipement !"
 
 #: src/equipment.c:1620 src/land_outfits.c:358
 msgid "Filter…"
-msgstr ""
+msgstr "Filtre…"
 
 #: src/equipment.c:1750
 msgid "You do not remember how you acquired this ship."
-msgstr ""
+msgstr "Vous ne vous souvenez pas de la façon dont vous avez acquis ce navire."
 
 #: src/equipment.c:1766 src/info.c:573 src/land_shipyard.c:229
 #: src/map_system.c:654
@@ -106573,7 +106572,7 @@ msgstr "Classe :"
 
 #: src/equipment.c:1768
 msgid "Acquired Date:"
-msgstr "Date d’Acquisition :"
+msgstr "Obtention :"
 
 #: src/equipment.c:1772
 msgid "Value:"
@@ -106659,7 +106658,7 @@ msgstr "Espace de Stockage :"
 
 #: src/equipment.c:1793
 msgid "Ship Status:"
-msgstr "Statut du vaisseau :"
+msgstr "Statut :"
 
 #: src/equipment.c:1796
 msgid "Time Flown:"
@@ -107399,11 +107398,11 @@ msgstr ""
 
 #: src/info.c:59
 msgid "Main"
-msgstr ""
+msgstr "Principal"
 
 #: src/info.c:60 src/map_find.c:970
 msgid "Ship"
-msgstr ""
+msgstr "Vaisseau"
 
 #: src/info.c:61
 msgid "Weapons"
@@ -107411,19 +107410,19 @@ msgstr "Armes"
 
 #: src/info.c:62
 msgid "Cargo"
-msgstr ""
+msgstr "Cargo"
 
 #: src/info.c:63 src/land.c:999 src/space.c:172
 msgid "Missions"
-msgstr ""
+msgstr "Missions"
 
 #: src/info.c:64
 msgid "Standings"
-msgstr ""
+msgstr "Relations"
 
 #: src/info.c:65
 msgid "Ship log"
-msgstr ""
+msgstr "Journal"
 
 #: src/info.c:267
 #, c-format
@@ -107539,39 +107538,40 @@ msgstr ""
 
 #: src/info.c:679
 msgid "Current Weapon Set Settings"
-msgstr ""
+msgstr "Réglages de l'Arme Active"
 
 #: src/info.c:682
 msgid "Enable instant Mode"
-msgstr ""
+msgstr "Activer le mode instantané"
 
 #: src/info.c:685
 msgid "(Weapons fire when this weapon set key is pressed)"
 msgstr ""
+"(Les armes se déclenchent lorsque la touche réglé pour l'arme est enfoncée)"
 
 #: src/info.c:688
 msgid "Only shoot weapons that are in range"
-msgstr ""
+msgstr "Ne tirez que sur les armes qui sont à portée"
 
 #: src/info.c:692
 msgid "Enable manual aiming mode."
-msgstr ""
+msgstr "Activer le mode de visée manuelle."
 
 #: src/info.c:696
 msgid "Global Settings"
-msgstr ""
+msgstr "Paramètres globaux"
 
 #: src/info.c:699
 msgid "Automatically handle weapons"
-msgstr ""
+msgstr "Gestion automatique des armes"
 
 #: src/info.c:702
 msgid "Dogfight aiming helper"
-msgstr ""
+msgstr "Aide à la visée pour les duels"
 
 #: src/info.c:792
 msgid "Enable autoweapons?"
-msgstr ""
+msgstr "Activer les armes automatiques ?"
 
 #: src/info.c:793
 msgid ""
@@ -107583,23 +107583,24 @@ msgstr ""
 #: src/info.c:835
 msgid "You can not set all your weapon sets to fire groups!"
 msgstr ""
+"Vous ne pouvez pas régler tous vos jeux d'armes sur des groupes de tirs !"
 
 #: src/info.c:885
 msgctxt "info"
 msgid "Legend"
-msgstr ""
+msgstr "Légende"
 
 #: src/info.c:889
 msgid "Outfit that can be activated"
-msgstr ""
+msgstr "Équipement activable"
 
 #: src/info.c:893
 msgid "Secondary Weapon (Right click toggles)"
-msgstr ""
+msgstr "Arme Secondaire (le clic droit permet de basculer)"
 
 #: src/info.c:897
 msgid "Primary Weapon (Left click toggles)"
-msgstr ""
+msgstr "Arme Principale (le clic droit permet de basculer)"
 
 #: src/info.c:963
 msgid " [#bMission#0]"
@@ -107661,11 +107662,11 @@ msgstr ""
 #. Make sure you have missions.
 #: src/info.c:1312 src/land.c:687 src/land.c:749 src/land.c:784
 msgid "No Missions"
-msgstr ""
+msgstr "Pas de Missions"
 
 #: src/info.c:1314
 msgid "You currently have no active missions."
-msgstr ""
+msgstr "Vous n'avez actuellement aucune mission active."
 
 #: src/info.c:1513
 msgid ""
@@ -107679,6 +107680,8 @@ msgid ""
 "This will delete ALL \"%s\" log entries. This operation cannot be undone. "
 "Are you sure?"
 msgstr ""
+"Cette opération supprime TOUTES les entrées \"%s\" du journal de bord. Cette "
+"opération ne peut pas être annulée. Êtes-vous sûr ?"
 
 #: src/info.c:1548
 msgid "Log message"
@@ -107686,48 +107689,48 @@ msgstr ""
 
 #: src/info.c:1571 src/info.c:1579
 msgid "Add a log entry"
-msgstr ""
+msgstr "Ajouter au journal"
 
 #: src/info.c:1571
 msgid "Add an entry to your diary:"
-msgstr ""
+msgstr "Ajoutez une en†rée dans vos notes :"
 
 #: src/info.c:1574
 msgid "Your Diary"
-msgstr ""
+msgstr "Vos Notes"
 
 #: src/info.c:1579
 #, c-format
 msgid "Add an entry to the log titled '%s':"
-msgstr ""
+msgstr "Ajouter une entrée dans le journal intitulée '%s' :"
 
 #: src/info.c:1585
 msgid "Cannot add log"
-msgstr ""
+msgstr "Impossible d'ajouter une entrée"
 
 #: src/info.c:1585
 msgid "Cannot find this log!  Something went wrong here!"
-msgstr ""
+msgstr "Impossible de trouver ce journal !  Quelque chose s'est mal passé ici !"
 
 #: src/info.c:1614
 msgid "View Entry"
-msgstr ""
+msgstr "Voir"
 
 #: src/info.c:1617
 msgid "Add Entry"
-msgstr ""
+msgstr "Ajouter"
 
 #: src/info.c:1623
 msgid "Select log type:"
-msgstr ""
+msgstr "Selectionner le type de journal :"
 
 #: src/info.c:1627
 msgid "Select log title:"
-msgstr ""
+msgstr "Selectionner le titre du journal :"
 
 #: src/info.c:1631
 msgid "Log entries:"
-msgstr ""
+msgstr "Entrées du journal"
 
 #: src/info.c:1655
 #, c-format
@@ -107737,7 +107740,7 @@ msgstr ""
 #. Movement
 #: src/input.c:54
 msgid "Accelerate"
-msgstr ""
+msgstr "Accélérer"
 
 #: src/input.c:54
 msgid "Makes your ship accelerate forward."
@@ -108485,12 +108488,12 @@ msgstr ""
 #: src/land.c:875
 #, c-format
 msgid "%s (%s-class)"
-msgstr ""
+msgstr "%s (%s-classe)"
 
 #: src/land.c:879
 #, c-format
 msgid "roughly %s"
-msgstr ""
+msgstr "~ %s"
 
 #: src/land.c:886 src/load.c:351 src/load.c:356 src/map.c:803 src/map.c:817
 #: src/map.c:824 src/map.c:855 src/map.c:877
@@ -108500,19 +108503,19 @@ msgstr ", "
 #: src/land.c:908
 #, c-format
 msgid "Buy Local Map (%s)"
-msgstr ""
+msgstr "Acheter une carte du secteur (%s)"
 
 #: src/land.c:990
 msgid "Landing Main"
-msgstr ""
+msgstr "Débarquement"
 
 #: src/land.c:1004 src/map_find.c:1033 src/space.c:174
 msgid "Outfits"
-msgstr ""
+msgstr "Équipements"
 
 #: src/land.c:1009 src/space.c:175
 msgid "Shipyard"
-msgstr ""
+msgstr "Chantier"
 
 #: src/land.c:1015
 msgctxt "service"
@@ -108521,12 +108524,12 @@ msgstr "Équipement"
 
 #: src/land.c:1020 src/space.c:173
 msgid "Commodity"
-msgstr ""
+msgstr "Marchandise"
 
 #. Player stats.
 #: src/land.c:1321
 msgid "Stationed at:"
-msgstr ""
+msgstr "Stationé à :"
 
 #: src/land.c:1324
 msgid "Population:"
@@ -108538,11 +108541,11 @@ msgstr "Espace Libre :"
 
 #: src/land.c:1351
 msgid "No refueling services."
-msgstr ""
+msgstr "Pas de service de ravitaillement."
 
 #: src/land.c:1355
 msgid "Game will not be saved."
-msgstr ""
+msgstr "Le jeu ne serra pas sauvegardé."
 
 #: src/land.c:1499 src/land.c:1504
 msgid "Fleet not fit for flight"
@@ -108583,11 +108586,11 @@ msgstr ""
 
 #: src/land_outfits.c:171 src/land_trade.c:71
 msgid "Sell"
-msgstr ""
+msgstr "Vendre"
 
 #: src/land_outfits.c:175 src/land_shipyard.c:103 src/land_trade.c:69
 msgid "Buy"
-msgstr ""
+msgstr "Acheter"
 
 #: src/land_outfits.c:179
 msgid "Find Outfits"
@@ -108595,26 +108598,26 @@ msgstr ""
 
 #: src/land_outfits.c:322
 msgid "Other"
-msgstr ""
+msgstr "Autre"
 
 #. Set up keys.
 #: src/land_outfits.c:424 src/map_find.c:636 src/map_system.c:633
 msgid "Owned:"
-msgstr ""
+msgstr "Possédés :"
 
 #: src/land_outfits.c:426 src/land_shipyard.c:309 src/map_find.c:638
 #: src/map_system.c:635 src/map_system.c:682
 msgid "Price:"
-msgstr ""
+msgstr "Prix :"
 
 #: src/land_outfits.c:491 src/land_shipyard.c:313 src/map_find.c:640
 #: src/map_system.c:683
 msgid "License:"
-msgstr ""
+msgstr "License :"
 
 #: src/land_outfits.c:498 src/land_shipyard.c:316
 msgid "Requires:"
-msgstr ""
+msgstr "Nécessite :"
 
 #.
 #: src/land_outfits.c:634 src/land_outfits.c:900 src/land_outfits.c:1009
@@ -108688,15 +108691,15 @@ msgstr "Vous ne pouvez pas vendre cette équipement !"
 
 #: src/land_shipyard.c:99
 msgid "Trade-In"
-msgstr ""
+msgstr "Échanger"
 
 #: src/land_shipyard.c:107
 msgid "Find Ships"
-msgstr ""
+msgstr "Trouver Vaisseaux"
 
 #: src/land_shipyard.c:233 src/map_system.c:657
 msgid "Fabricator:"
-msgstr ""
+msgstr "Fabricant :"
 
 #. Weapons & Manoeuvrability
 #: src/land_shipyard.c:242
@@ -108810,7 +108813,7 @@ msgstr "Espace Libre (flotte) :"
 
 #: src/land_trade.c:92
 msgid "Market Price:"
-msgstr ""
+msgstr "Prix du Marché :"
 
 #: src/land_trade.c:93
 msgid "Average price here:"
@@ -109288,19 +109291,19 @@ msgstr ""
 #. Create window.
 #: src/map_find.c:197 src/map_find.c:740 src/map_find.c:873
 msgid "Search Results"
-msgstr ""
+msgstr "Résultats"
 
 #: src/map_find.c:211
 msgid "Select"
-msgstr ""
+msgstr "Sélectionner"
 
 #: src/map_find.c:291
 msgid "Jump to first system not found!"
-msgstr ""
+msgstr "Sauter au premier système non trouvé !"
 
 #: src/map_find.c:327
 msgid "Matching jumps not found, something is up..."
-msgstr ""
+msgstr "Sauts correspondants non trouvés, il y a un problème..."
 
 #: src/map_find.c:386
 msgid "unknown route"
@@ -109321,12 +109324,12 @@ msgstr ""
 #: src/map_find.c:742
 #, c-format
 msgid "Search results for outfits matching '%s':"
-msgstr ""
+msgstr "Résultats de la recherche d'équipement correspondant à '%s' :"
 
 #: src/map_find.c:874
 #, c-format
 msgid "Search results for ships matching '%s':"
-msgstr ""
+msgstr "Résultats de la recherche de vaisseau correspondant à '%s' :"
 
 #: src/map_find.c:958
 msgid "System"
@@ -109338,12 +109341,12 @@ msgstr "Objets Spatiaux"
 
 #: src/map_find.c:966
 msgid "Outfit"
-msgstr ""
+msgstr "Équipement"
 
 #: src/map_find.c:976
 #, c-format
 msgid "%s matching '%s' not found!"
-msgstr ""
+msgstr "Aucun %s trouvé pour %s !"
 
 #: src/map_find.c:1000
 msgid "Find…"
@@ -114166,15 +114169,15 @@ msgstr ""
 
 #: src/space.c:169
 msgid "Inhabited"
-msgstr ""
+msgstr "Inhabité"
 
 #: src/space.c:170
 msgid "Refuel"
-msgstr ""
+msgstr "Ravitaillement"
 
 #: src/space.c:176
 msgid "Blackmarket"
-msgstr ""
+msgstr "Marché noir"
 
 #: src/space.c:216
 msgid "Civilian Station"
@@ -114194,67 +114197,67 @@ msgstr "Station Robotique"
 
 #: src/space.c:224
 msgid "Geothermal"
-msgstr ""
+msgstr "Géothermique"
 
 #: src/space.c:226
 msgid "Geomorteus"
-msgstr ""
+msgstr "Morte"
 
 #: src/space.c:228
 msgid "Geoinactive"
-msgstr ""
+msgstr "Géoinactive"
 
 #: src/space.c:230
 msgid "Asteroid/Moon"
-msgstr ""
+msgstr "Astéroïde/Lune"
 
 #: src/space.c:232
 msgid "Geoplastic"
-msgstr ""
+msgstr "Géoplastique"
 
 #: src/space.c:234
 msgid "Geometallic"
-msgstr ""
+msgstr "Géométalique"
 
 #: src/space.c:236
 msgid "Geocrystaline"
-msgstr ""
+msgstr "Géocrystaline"
 
 #: src/space.c:238
 msgid "Desert"
-msgstr ""
+msgstr "Désertique"
 
 #: src/space.c:240
 msgid "Gas Supergiant"
-msgstr ""
+msgstr "Supergéante Gazeuse"
 
 #: src/space.c:242
 msgid "Gas Giant"
-msgstr ""
+msgstr "Géante Gazeuse"
 
 #: src/space.c:244
 msgid "Adaptable"
-msgstr ""
+msgstr "Adaptable"
 
 #: src/space.c:246
 msgid "Marginal"
-msgstr ""
+msgstr "Marginal"
 
 #: src/space.c:248
 msgid "Terrestrial"
-msgstr ""
+msgstr "Exo-Terre"
 
 #: src/space.c:250
 msgid "Reducing"
-msgstr ""
+msgstr "Réductrice"
 
 #: src/space.c:252
 msgid "Pelagic"
-msgstr ""
+msgstr "Pélagique"
 
 #: src/space.c:254
 msgid "Glaciated"
-msgstr ""
+msgstr "Glacé"
 
 #: src/space.c:258
 msgid "Rogue"
@@ -114262,17 +114265,18 @@ msgstr "Voleur"
 
 #: src/space.c:260
 msgid "Ultragiants"
-msgstr ""
+msgstr "Ultragéante"
 
 #: src/space.c:397
 #, c-format
 msgid "Spob '%s' not in system. Not initializing economy."
-msgstr ""
+msgstr "'%s' absent du système. Pas d'initialisation de l'économie."
 
 #: src/space.c:509
 #, c-format
 msgid "Unable to find jump in point for '%s' in '%s': not connected"
 msgstr ""
+"Impossible de trouver le point de saut pour '%s' dans '%s' : non connecté"
 
 #: src/space.c:924 src/space.c:934
 #, c-format
