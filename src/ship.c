@@ -520,7 +520,6 @@ static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine
 static int ship_loadPLG( Ship *temp, const char *buf, int size_hint )
 {
    char file[PATH_MAX];
-   CollPoly *polygon;
    xmlDocPtr doc;
    xmlNodePtr node;
 
@@ -553,7 +552,7 @@ static int ship_loadPLG( Ship *temp, const char *buf, int size_hint )
          temp->polygon = array_create_size( CollPoly, size_hint );
          do {
             if (xml_isNode(cur,"polygon")) {
-               polygon = &array_grow( &temp->polygon );
+               CollPoly *polygon = &array_grow( &temp->polygon );
                LoadPolygon( polygon, cur );
             }
          } while (xml_nextNode(cur));
