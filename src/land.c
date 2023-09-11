@@ -255,6 +255,8 @@ int can_swapEquipment( const char *shipname )
  */
 int land_errDialogue( const char *name, const char *type )
 {
+   int blackmarket = (land_spob!=NULL) && spob_hasService(land_spob, SPOB_SERVICE_BLACKMARKET);
+
    errorlist_ptr = NULL;
    if (strcmp(type,"tradeShip")==0)
       shipyard_canTrade( name, land_spob );
@@ -267,7 +269,7 @@ int land_errDialogue( const char *name, const char *type )
    else if (strcmp(type,"sellShip")==0)
       can_sell( name );
    else if (strcmp(type,"buyOutfit")==0)
-      outfit_canBuy( name, land_spob );
+      outfit_canBuy( name, blackmarket );
    else if (strcmp(type,"sellOutfit")==0)
       outfit_canSell( name );
    else if (strcmp(type,"buyCommodity")==0)
@@ -866,6 +868,7 @@ void land_updateMainTab (void)
    char buf[STRMAX], cred[ECON_CRED_STRLEN], tons[STRMAX_SHORT];
    size_t l = 0;
    const Outfit *o;
+   int blackmarket = (land_spob!=NULL) && spob_hasService(land_spob, SPOB_SERVICE_BLACKMARKET);
 
    /* Update credits. */
    tonnes2str( tons, player.p->cargo_free );
@@ -912,7 +915,7 @@ void land_updateMainTab (void)
    }
 
    /* Make sure player can click it. */
-   if (!outfit_canBuy(LOCAL_MAP_NAME, land_spob))
+   if (!outfit_canBuy(LOCAL_MAP_NAME, blackmarket))
       window_disableButtonSoft( land_windows[0], "btnMap" );
 }
 
@@ -1129,7 +1132,7 @@ void land_genWindows( int load )
       misn_open( land_getWid(LAND_WINDOW_MISSION) );
    /* Outfits. */
    if (should_open( SPOB_SERVICE_OUTFITS, LAND_WINDOW_OUTFITS ))
-      outfits_open( land_getWid(LAND_WINDOW_OUTFITS), NULL );
+      outfits_open( land_getWid(LAND_WINDOW_OUTFITS), NULL, spob_hasService(land_spob, SPOB_SERVICE_BLACKMARKET) );
    /* Shipyard. */
    if (should_open( SPOB_SERVICE_SHIPYARD, LAND_WINDOW_SHIPYARD ))
       shipyard_open( land_getWid(LAND_WINDOW_SHIPYARD) );
