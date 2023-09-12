@@ -20,7 +20,7 @@
    <refuel/>
   </services>
   <commodities/>
-  <description>This is the seat of the Frontier Council, the over-arching political body representing the Frontier to the rest of the galaxy. While the Council does not rule the Frontier worlds as such, it does set global policies such as trade taxes and constitutional standards.</description>
+  <description>This is the seat of the Frontier Council, the over-arching political body representing the Frontier to the rest of the galaxy. While the Council does not rule the Frontier worlds as such, it does set region-wide policies such as trade taxes and constitutional standards.</description>
  </general>
  <tags>
   <tag>restricted</tag>
