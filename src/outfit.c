@@ -1631,7 +1631,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    SDESC_COND( l, temp, _("\n%.0f Disable/s"),  temp->u.bem.dmg.disable );
    SDESC_COND( l, temp, _("\n%.1f EPS"),        temp->u.bem.energy );
    SDESC_ADD(  l, temp, _("\n%.1f Duration"),   temp->u.bem.duration );
-   SDESC_ADD(  l, temp, _(" (%.1f minimum)"),   temp->u.bem.min_duration );
+   SDESC_COND( l, temp, _(" (%.1f minimum)"),   temp->u.bem.min_duration );
    SDESC_ADD(  l, temp, _("\n%.1f Cooldown"),   temp->u.bem.duration );
    SDESC_ADD(  l, temp, _("\n%s Range"),        num2strU(temp->u.bem.range,0) );
    SDESC_COND( l, temp, _("\n%.1f second heat up"),temp->u.bem.heatup );
