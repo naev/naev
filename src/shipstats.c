@@ -108,9 +108,9 @@ static const ShipStatsLookup ss_lookup[] = {
    DI_ELEM( SS_TYPE_D_EW_STEALTH_TIMER,   ew_stealth_timer,    N_("Stealth Discovered Speed") ),
    DI_ELEM( SS_TYPE_D_EW_SCANNED_TIME,    ew_scanned_time,     N_("Scanned Speed") ),
 
-   D__ELEM( SS_TYPE_D_LAUNCH_RATE,        launch_rate,         N_("Fire Rate (Launcher)") ),
+   D__ELEM( SS_TYPE_D_LAUNCH_RATE,        launch_rate,         N_("Fire Rate (Launcher:)") ),
    D__ELEM( SS_TYPE_D_LAUNCH_RANGE,       launch_range,        N_("Launch Range") ),
-   D__ELEM( SS_TYPE_D_LAUNCH_DAMAGE,      launch_damage,       N_("Damage (Launcher)") ),
+   D__ELEM( SS_TYPE_D_LAUNCH_DAMAGE,      launch_damage,       N_("Damage (Launcher:)") ),
    D__ELEM( SS_TYPE_D_AMMO_CAPACITY,      ammo_capacity,       N_("Ammo Capacity") ),
    DI_ELEM( SS_TYPE_D_LAUNCH_LOCKON,      launch_lockon,       N_("Launch Lock-on") ),
    DI_ELEM( SS_TYPE_D_LAUNCH_CALIBRATION, launch_calibration,  N_("Launch Calibration") ),
@@ -149,21 +149,21 @@ static const ShipStatsLookup ss_lookup[] = {
    DI_ELEM( SS_TYPE_D_JUMP_WARMUP,        jump_warmup,         N_("Jump Warmup") ),
    D__ELEM( SS_TYPE_D_MINING_BONUS,       mining_bonus,        N_("Mining Bonus") ),
 
-   A__ELEM( SS_TYPE_A_THRUST,             thrust,              N_("kN/tonne Thrust") ),
-   A__ELEM( SS_TYPE_A_TURN,               turn,                N_("deg/s Turn Rate") ),
-   A__ELEM( SS_TYPE_A_SPEED,              speed,               N_("m/s Maximum Speed") ),
-   A__ELEM( SS_TYPE_A_ENERGY,             energy,              N_("MJ Energy Capacity") ),
-   A__ELEM( SS_TYPE_A_ENERGY_REGEN,       energy_regen,        N_("MW Energy Regeneration") ),
-   AI_ELEM( SS_TYPE_A_ENERGY_REGEN_MALUS, energy_regen_malus,  N_("MW Energy Usage") ),
-   AI_ELEM( SS_TYPE_A_ENERGY_LOSS,        energy_loss,         N_("MW Energy Usage") ),
-   A__ELEM( SS_TYPE_A_SHIELD,             shield,              N_("MJ Shield Capacity") ),
-   A__ELEM( SS_TYPE_A_SHIELD_REGEN,       shield_regen,        N_("MW Shield Regeneration") ),
-   AI_ELEM( SS_TYPE_A_SHIELD_REGEN_MALUS, shield_regen_malus,  N_("MW Shield Usage") ),
-   A__ELEM( SS_TYPE_A_ARMOUR,             armour,              N_("MJ Armour") ),
-   A__ELEM( SS_TYPE_A_ARMOUR_REGEN,       armour_regen,        N_("MW Armour Regeneration") ),
-   AI_ELEM( SS_TYPE_A_ARMOUR_REGEN_MALUS, armour_regen_malus,  N_("MW Armour Damage") ),
-   A__ELEM( SS_TYPE_A_DAMAGE,             damage,              N_("MW Damage") ),
-   A__ELEM( SS_TYPE_A_DISABLE,            disable,             N_("MW Disable") ),
+   A__ELEM( SS_TYPE_A_THRUST,             thrust,              N_("Thrust (kN/tonne)") ),
+   A__ELEM( SS_TYPE_A_TURN,               turn,                N_("Turn Rate (deg/s)") ),
+   A__ELEM( SS_TYPE_A_SPEED,              speed,               N_("Maximum Speed (m/s)") ),
+   A__ELEM( SS_TYPE_A_ENERGY,             energy,              N_("Energy Capacity (MJ)") ),
+   A__ELEM( SS_TYPE_A_ENERGY_REGEN,       energy_regen,        N_("Energy Regeneration (MW)") ),
+   AI_ELEM( SS_TYPE_A_ENERGY_REGEN_MALUS, energy_regen_malus,  N_("Energy Usage (MW)") ),
+   AI_ELEM( SS_TYPE_A_ENERGY_LOSS,        energy_loss,         N_("Energy Usage (MW)") ),
+   A__ELEM( SS_TYPE_A_SHIELD,             shield,              N_("Shield Capacity (MJ)") ),
+   A__ELEM( SS_TYPE_A_SHIELD_REGEN,       shield_regen,        N_("Shield Regeneration (MW)") ),
+   AI_ELEM( SS_TYPE_A_SHIELD_REGEN_MALUS, shield_regen_malus,  N_("Shield Usage (MW)") ),
+   A__ELEM( SS_TYPE_A_ARMOUR,             armour,              N_("Armour (MW)") ),
+   A__ELEM( SS_TYPE_A_ARMOUR_REGEN,       armour_regen,        N_("Armour Regeneration (MW)") ),
+   AI_ELEM( SS_TYPE_A_ARMOUR_REGEN_MALUS, armour_regen_malus,  N_("Armour Damage (MW)") ),
+   A__ELEM( SS_TYPE_A_DAMAGE,             damage,              N_("Damage (MW)") ),
+   A__ELEM( SS_TYPE_A_DISABLE,            disable,             N_("Disable (MW)") ),
 
    A__ELEM( SS_TYPE_A_CPU_MAX,            cpu_max,             N_("CPU Capacity") ),
    A__ELEM( SS_TYPE_A_ENGINE_LIMIT,       engine_limit,        N_("Engine Mass Limit") ),
@@ -176,9 +176,9 @@ static const ShipStatsLookup ss_lookup[] = {
    P__ELEM( SS_TYPE_P_NEBULA_ABSORB,      nebu_absorb,         N_("Nebula Resistance") ),
    P__ELEM( SS_TYPE_P_JAMMING_CHANCE,     jam_chance,          N_("Missile jamming chance") ),
 
-   I__ELEM( SS_TYPE_I_FUEL,               fuel,                N_("units Fuel") ),
-   I__ELEM( SS_TYPE_I_CARGO,              cargo,               N_("tonnes Cargo Space") ),
-   I__ELEM( SS_TYPE_I_CREW,               crew,                N_("crew") ),
+   I__ELEM( SS_TYPE_I_FUEL,               fuel,                N_("Fuel (units)") ),
+   I__ELEM( SS_TYPE_I_CARGO,              cargo,               N_("Cargo Space (tonnes)") ),
+   I__ELEM( SS_TYPE_I_CREW,               crew,                N_("crew (units)") ),
 
    B__ELEM( SS_TYPE_B_HIDDEN_JUMP_DETECT, misc_hidden_jump_detect, N_("Hidden Jump Detection") ),
    B__ELEM( SS_TYPE_B_INSTANT_JUMP,       misc_instant_jump,   N_("Instant Jump") ),
@@ -725,10 +725,11 @@ static int ss_printD( char *buf, int len, int newline, double d, const ShipStats
 {
    if (FABS(d) < 1e-10)
       return 0;
-   return scnprintf( buf, len, "%s#%s%+g%% %s#0",
+
+   return scnprintf( buf, len, p_("shipstats","%s#%s%s: %+g%%#0"),
          (newline) ? "\n" : "",
          ss_printD_colour( d, sl ),
-         d*100., _(sl->display) );
+         _(sl->display), d*100.);
 }
 
 /**
@@ -738,10 +739,10 @@ static int ss_printA( char *buf, int len, int newline, double d, const ShipStats
 {
    if (FABS(d) < 1e-10)
       return 0;
-   return scnprintf( buf, len, "%s#%s%+g %s#0",
+   return scnprintf( buf, len, p_("shipstats","%s#%s%s: %+g#0"),
          (newline) ? "\n" : "",
          ss_printD_colour( d, sl ),
-         d, _(sl->display) );
+         _(sl->display), d);
 }
 
 /**
@@ -751,10 +752,10 @@ static int ss_printI( char *buf, int len, int newline, int i, const ShipStatsLoo
 {
    if (i == 0)
       return 0;
-   return scnprintf( buf, len, "%s#%s%+d %s#0",
+   return scnprintf( buf, len, p_("shipstats","%s#%s%s: %+d#0"),
          (newline) ? "\n" : "",
          ss_printI_colour( i, sl ),
-         i, _(sl->display) );
+         _(sl->display), i);
 }
 
 /**
@@ -764,7 +765,7 @@ static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLoo
 {
    if (!b)
       return 0;
-   return scnprintf( buf, len, "%s#%s%s#0",
+   return scnprintf( buf, len, p_("shipstats","%s#%s%s#0"),
          (newline) ? "\n" : "",
          ss_printI_colour( b, sl ),
          _(sl->display) );
