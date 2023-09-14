@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.11.0-alpha.4\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-09-14 16:32+0200\n"
+"POT-Creation-Date: 2023-09-14 16:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -116070,6 +116070,14 @@ msgstr ""
 msgid "Armours damages"
 msgstr ""
 
+#. Standard types.
+#: src/outfit.c:1457 src/outfit.c:1459 src/outfit.c:1645 src/outfit.c:1647
+#: src/outfit.c:1655 src/outfit.c:1872 src/outfit.c:1874 src/outfit.c:1876
+#: src/outfit.c:1902 src/outfit.c:1945 src/outfit.c:1947 src/shipstats.c:54
+#: src/shipstats.c:56 src/shipstats.c:64 src/shipstats.c:66
+msgid "%"
+msgstr ""
+
 #: src/outfit.c:1459 src/outfit.c:1647 src/outfit.c:1874
 msgid "Shields damages"
 msgstr ""
@@ -116083,12 +116091,18 @@ msgstr ""
 msgid "CPU"
 msgstr ""
 
+#: src/outfit.c:1463 src/outfit.c:1651 src/outfit.c:1878 src/outfit.c:2031
+#: src/outfit.c:2101 src/outfit.c:2173 src/shipstats.c:173
+msgid "PFLOP"
+msgstr ""
+
 #: src/outfit.c:1465 src/outfit.c:1653 src/outfit.c:1880 src/outfit.c:2033
 #: src/outfit.c:2103 src/outfit.c:2175
 msgid "Mass"
 msgstr ""
 
-#: src/outfit.c:1465 src/outfit.c:2033 src/outfit.c:2103 src/outfit.c:2105
+#: src/outfit.c:1465 src/outfit.c:1653 src/outfit.c:1880 src/outfit.c:1928
+#: src/outfit.c:2033 src/outfit.c:2103 src/outfit.c:2105 src/outfit.c:2108
 #: src/outfit.c:2175 src/shipstats.c:157 src/shipstats.c:174
 #: src/shipstats.c:185
 msgid "t"
@@ -116106,7 +116120,8 @@ msgstr ""
 msgid "Damage rate"
 msgstr ""
 
-#: src/outfit.c:1471 src/outfit.c:1475 src/shipstats.c:175
+#: src/outfit.c:1471 src/outfit.c:1475 src/outfit.c:1481 src/outfit.c:1659
+#: src/outfit.c:1906 src/outfit.c:1911 src/outfit.c:1917 src/shipstats.c:175
 msgid "/sec"
 msgstr ""
 
@@ -116122,7 +116137,8 @@ msgstr ""
 msgid "Hit radius"
 msgstr ""
 
-#: src/outfit.c:1479 src/outfit.c:1487 src/outfit.c:1500 src/outfit.c:1915
+#: src/outfit.c:1479 src/outfit.c:1487 src/outfit.c:1500 src/outfit.c:1669
+#: src/outfit.c:1888 src/outfit.c:1894 src/outfit.c:1915 src/outfit.c:1919
 #: src/shipstats.c:176 src/shipstats.c:177
 msgid "m"
 msgstr ""
@@ -116135,14 +116151,19 @@ msgstr ""
 msgid "Energy"
 msgstr ""
 
+#: src/outfit.c:1483 src/outfit.c:1939 src/outfit.c:1943 src/shipstats.c:160
+#: src/shipstats.c:164 src/shipstats.c:167
+msgid "MJ"
+msgstr ""
+
 #: src/outfit.c:1485 src/outfit.c:1661 src/outfit.c:1941 src/outfit.c:2112
 msgid "Power"
 msgstr ""
 
-#: src/outfit.c:1485 src/outfit.c:2112 src/shipstats.c:161 src/shipstats.c:162
-#: src/shipstats.c:163 src/shipstats.c:165 src/shipstats.c:166
-#: src/shipstats.c:168 src/shipstats.c:169 src/shipstats.c:170
-#: src/shipstats.c:171
+#: src/outfit.c:1485 src/outfit.c:1661 src/outfit.c:1941 src/outfit.c:2112
+#: src/shipstats.c:161 src/shipstats.c:162 src/shipstats.c:163
+#: src/shipstats.c:165 src/shipstats.c:166 src/shipstats.c:168
+#: src/shipstats.c:169 src/shipstats.c:170 src/shipstats.c:171
 msgid "MW"
 msgstr ""
 
@@ -116150,7 +116171,8 @@ msgstr ""
 msgid "Speed"
 msgstr ""
 
-#: src/outfit.c:1489 src/outfit.c:2110
+#: src/outfit.c:1489 src/outfit.c:1926 src/outfit.c:1932 src/outfit.c:1935
+#: src/outfit.c:2110
 msgid "m/sec"
 msgstr ""
 
@@ -116158,7 +116180,9 @@ msgstr ""
 msgid "Heat up"
 msgstr ""
 
-#: src/outfit.c:1491 src/outfit.c:2029 src/outfit.c:2178 src/outfit.c:2180
+#: src/outfit.c:1491 src/outfit.c:1665 src/outfit.c:1667 src/outfit.c:1671
+#: src/outfit.c:1884 src/outfit.c:1886 src/outfit.c:1921 src/outfit.c:1937
+#: src/outfit.c:2029 src/outfit.c:2178 src/outfit.c:2180
 msgid "sec"
 msgstr ""
 
@@ -116166,7 +116190,7 @@ msgstr ""
 msgid "Dispersion"
 msgstr ""
 
-#: src/outfit.c:1493 src/outfit.c:1496
+#: src/outfit.c:1493 src/outfit.c:1496 src/outfit.c:1674 src/outfit.c:1896
 msgid "deg"
 msgstr ""
 
@@ -116290,10 +116314,6 @@ msgstr ""
 
 #: src/outfit.c:2106
 msgid "Only one can be equipped"
-msgstr ""
-
-#: src/outfit.c:2108
-msgid "kN"
 msgstr ""
 
 #: src/outfit.c:2110
@@ -117581,11 +117601,6 @@ msgstr ""
 msgid "Empty"
 msgstr ""
 
-#. Standard types.
-#: src/shipstats.c:54 src/shipstats.c:56 src/shipstats.c:64 src/shipstats.c:66
-msgid "%"
-msgstr ""
-
 #: src/shipstats.c:90
 msgid "Turn"
 msgstr ""
@@ -117826,10 +117841,6 @@ msgstr ""
 msgid "m/s"
 msgstr ""
 
-#: src/shipstats.c:160 src/shipstats.c:164 src/shipstats.c:167
-msgid "MJ"
-msgstr ""
-
 #: src/shipstats.c:162 src/shipstats.c:163
 msgid "Energy Usage"
 msgstr ""
@@ -117840,10 +117851,6 @@ msgstr ""
 
 #: src/shipstats.c:166
 msgid "Shield Usage"
-msgstr ""
-
-#: src/shipstats.c:173
-msgid "PFLOP"
 msgstr ""
 
 #: src/shipstats.c:175
