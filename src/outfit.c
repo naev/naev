@@ -84,6 +84,23 @@ static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent );
 static int outfit_loadPLG( Outfit *temp, const char *buf );
 static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node );
 static void sdesc_miningRarity( int *l, Outfit *temp, int rarity );
+/* Display */
+
+typedef struct s_Outfitstat {
+    const char *name;
+    const char *unit;
+    int precision;
+    int color;
+    int color_threshold;
+    int hide_zero;
+} t_os_stat;
+
+t_os_stat os_opts(const char *name, const char *unit, int color, double threshold, int hidenull, int precision);
+int os_printD( char *buf, int len, double value, t_os_stat opts);
+int os_printD_range( char *buffer, int i, double minValue, double maxValue, t_os_stat opts);
+int os_printS( char *buffer, int i, const char *value, t_os_stat opts);
+int os_printS_range( char *buffer, int i, const char *minValue, const char *maxValue, t_os_stat opts);
+
 
 static int outfit_cmp( const void *p1, const void *p2 )
 {
@@ -1443,15 +1460,15 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    l = os_printD( temp->summary_raw, l, dknockback * 100,
                  os_opts(_("Knockback damages"),"%",1, 100., 1, 0) );
    l = os_printD( temp->summary_raw, l, temp->cpu,
-                 os_opts(_("CPU"), "", 1, 0, 1, 0) );
+                 os_opts(_("CPU"), "PFLOP", 1, 0, 1, 0) );
    l = os_printD( temp->summary_raw, l, temp->mass,
                  os_opts(_("Mass"), _("t"), 0, 0, 1, 0) );
    l = os_printD( temp->summary_raw, l, temp->u.blt.dmg.penetration * 100.,
                  os_opts(_("Penetration"), "", 0, 0, 0, 0) );
    l = os_printD( temp->summary_raw, l, temp->u.blt.dmg.damage,
-                 os_opts(_("Damages"), "", 0, 0, 1, 0) );
+                 os_opts(_("Damage"), "", 0, 0, 1, 0) );
    l = os_printD( temp->summary_raw, l, (double)temp->u.blt.shots * temp->u.blt.dmg.damage / temp->u.blt.delay,
-                 os_opts(_("Damages rate"), _("/sec"), 0, 0, 1, 2) );
+                 os_opts(_("Damage rate"), _("/sec"), 0, 0, 1, 2) );
    l = os_printD( temp->summary_raw, l, temp->u.blt.dmg.disable,
                  os_opts(_("Disables"), "", 0, 0, 1, 0) );
    l = os_printD( temp->summary_raw, l, (double) temp->u.blt.shots * temp->u.blt.dmg.disable / temp->u.blt.delay,
@@ -1461,15 +1478,15 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    l = os_printD( temp->summary_raw, l, temp->u.blt.radius,
                  os_opts(radius, _("m"), 0, 0, 1, 0) );
    l = os_printD( temp->summary_raw, l, 1./temp->u.blt.delay,
-                 os_opts(_("Shots rate"), "/sec", 0, 0, 0, 1) );
+                 os_opts(_("Rate of fire"), "/sec", 0, 0, 0, 1) );
    l = os_printD( temp->summary_raw, l, temp->u.blt.energy,
                  os_opts(_("Energy"), "MJ", 0, 0, 1, 0) );
    l = os_printD( temp->summary_raw, l, (double)temp->u.blt.energy / temp->u.blt.delay,
-                 os_opts(_("Energy rate"), _("MJ/sec"), 0, 0, 1, 2) );
+                 os_opts(_("Power"), _("MW"), 0, 0, 1, 2) );
    l = os_printS( temp->summary_raw, l, num2strU( temp->u.blt.range, 0 ),
                  os_opts(_("Range"), _("m"), 0, 0, 0, 0) );
    l = os_printD( temp->summary_raw, l, temp->u.blt.speed,
-                 os_opts(_("Speed"), _("m/s"), 0, 0, 0, 0) );
+                 os_opts(_("Speed"), _("m/sec"), 0, 0, 0, 0) );
    l = os_printD( temp->summary_raw, l, temp->u.blt.heatup,
                  os_opts(_("Heat up"), _("sec"), 0, 0, 1, 1) );
    l = os_printD( temp->summary_raw, l, temp->u.blt.dispersion * 180./M_PI,
@@ -1631,17 +1648,17 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    l = os_printD( temp->summary_raw, l, dknockback * 100,
                  os_opts(_("Knockback damages"),"%",1, 100., 1, 0) );
    l = os_printD( temp->summary_raw, l, temp->cpu,
-                 os_opts(_("CPU"),"",1, 0, 1, 0) );
+                 os_opts(_("CPU"),"PFLOP",1, 0, 1, 0) );
    l = os_printD( temp->summary_raw, l, temp->mass,
                  os_opts(_("Mass"),"t",0, 0, 1, 0) );
    l = os_printD( temp->summary_raw, l, temp->u.bem.dmg.penetration * 100,
                  os_opts(_("Penetration"),"%",0, 0, 0, 0) );
-   l = os_printD( temp->summary_raw, l, temp->u.bem.dmg.damage * temp->u.bem.duration / (temp->u.bem.duration + temp->u.bem.delay),
-                 os_opts(_("Damages rate"),"/sec",0 , 0, 0, 0) );
    l = os_printD( temp->summary_raw, l, temp->u.bem.dmg.disable,
                  os_opts(_("Disables"),"",0 , 0, 1, 0) );
+   l = os_printD( temp->summary_raw, l, temp->u.bem.dmg.damage * temp->u.bem.duration / (temp->u.bem.duration + temp->u.bem.delay),
+                 os_opts(_("Damage rate"),"/sec",0 , 0, 0, 0) );
    l = os_printD( temp->summary_raw, l, temp->u.bem.energy,
-                 os_opts(_("Energy rate"),"MJ/sec",0 , 0, 1, 0) );
+                 os_opts(_("Power"),"MW",0 , 0, 1, 0) );
    l = os_printD_range( temp->summary_raw, l,
                  temp->u.bem.min_duration,
                  temp->u.bem.duration,
@@ -1858,15 +1875,15 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    l = os_printD( temp->summary_raw, l, dknockback * 100,
                  os_opts(_("Knockback damages"),"%",1, 100., 1, 0) );
    l = os_printD( temp->summary_raw, l, temp->cpu,
-                 os_opts(_("CPU"),"",1, 0, 1, 0) );
+                 os_opts(_("CPU"),"PFLOP",1, 0, 1, 0) );
    l = os_printD( temp->summary_raw, l, temp->mass,
                  os_opts(_("Mass"),"t",0, 0, 1, 0) );
 
    if (outfit_isSeeker(temp)) {
       l = os_printD( temp->summary_raw, l, temp->u.lau.lockon,
-                    os_opts(_("Lock-on time"),"s",0, 0, 0, 0) );
+                    os_opts(_("Lock-on time"),"sec",0, 0, 0, 0) );
       l = os_printD( temp->summary_raw, l, temp->u.lau.iflockon,
-                     os_opts(_("In-flight calibration time"),"s",0, 0, 0, 0) );
+                     os_opts(_("In-flight calibration time"),"sec",0, 0, 0, 0) );
       l = os_printD_range( temp->summary_raw, l, temp->u.lau.trackmin, temp->u.lau.trackmax,
                           os_opts(_("Tracking range"),"m",0, 0, 0, 0) );
    }
@@ -1886,51 +1903,46 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    l = os_printD( temp->summary_raw, l, temp->u.lau.dmg.damage * (double)temp->u.lau.shots,
                  os_opts(_("Damage"),"",0, 0, 1, 0) );
    l = os_printD( temp->summary_raw, l, temp->u.lau.dmg.damage * (double)temp->u.lau.shots / temp->u.lau.delay,
-                 os_opts(_("Damage rate"),"/s",0, 0, 1, 0) );
+                 os_opts(_("Damage rate"),"/sec",0, 0, 1, 0) );
 
    l = os_printD( temp->summary_raw, l, temp->u.lau.dmg.disable * (double)temp->u.lau.shots,
                  os_opts(_("Disable"),"",0, 0, 1, 0) );
    l = os_printD( temp->summary_raw, l, temp->u.lau.dmg.disable * (double)temp->u.lau.shots / temp->u.lau.delay,
-                 os_opts(_("Disable rate"),"/s",0, 0, 1, 0) );
+                 os_opts(_("Disable rate"),"/sec",0, 0, 1, 0) );
    char radius[18];
    sprintf(radius, outfit_isProp(temp, OUTFIT_PROP_WEAP_FRIENDLYFIRE) ? "#r!! %s !!#0" : "%s", _("Hit radius"));
    l = os_printD( temp->summary_raw, l, temp->u.lau.radius,
                  os_opts(radius, _("m"), 0, 0, 1, 0) );
    l = os_printD( temp->summary_raw, l, 1. / temp->u.lau.delay,
-                 os_opts(_("Shots rate"),"/sec",0, 0, 0, 0) );
+                 os_opts(_("Rate of fire"),"/sec",0, 0, 0, 0) );
    l = os_printS( temp->summary_raw, l, num2strU( outfit_range(temp), 0 ),
                  os_opts(_("Range"),"m",0, 0, 0, 0) );
    l = os_printD( temp->summary_raw, l, temp->u.lau.duration,
-                 os_opts(_("Duration"),"s",0, 0, 0, 0) );
+                 os_opts(_("Duration"),"sec",0, 0, 0, 0) );
 
    if (temp->u.lau.thrust > 0.) {
       if (temp->u.lau.speed > 0.)
          l = os_printD( temp->summary_raw, l, temp->u.lau.speed,
-                       os_opts(_("Initial Speed"),"m/s",0, 0, 0, 0) );
+                       os_opts(_("Initial Speed"),"m/sec",0, 0, 0, 0) );
       l = os_printD( temp->summary_raw, l, temp->u.lau.thrust,
                     os_opts(_("Thrust"),"kN",0, 0, 0, 0) );
    }
    else
       l = os_printD( temp->summary_raw, l, temp->u.lau.speed,
-                    os_opts(_("Initial Speed"),"m/s",0, 0, 1, 0) );
+                    os_opts(_("Initial Speed"),"m/sec",0, 0, 1, 0) );
    if (!(temp->u.lau.thrust > 0. && temp->u.lau.speed > 0.))
       l = os_printD( temp->summary_raw, l, temp->u.lau.speed_max,
-                    os_opts(_("Maximum Speed"),"m/s",0, 0, 0, 0) );
+                    os_opts(_("Maximum Speed"),"m/sec",0, 0, 0, 0) );
    l = os_printD( temp->summary_raw, l, temp->u.lau.reload_time,
-                 os_opts(_("Reload time"),"s",0, 0, 0, 0) );
-   // Energy
+                 os_opts(_("Reload time"),"sec",0, 0, 0, 0) );
    l = os_printD( temp->summary_raw, l, temp->u.lau.energy,
                  os_opts(_("Energy"),"MJ",0, 0, 1, 0) );
-   // Energy rate
    l = os_printD( temp->summary_raw, l, temp->u.lau.delay * temp->u.lau.energy,
-                 os_opts(_("Energy rate"),"MJ/s",0, 0, 1, 0) );
-   // Armour
+                 os_opts(_("Power"),"MW",0, 0, 1, 0) );
    l = os_printD( temp->summary_raw, l, temp->u.lau.armour,
                  os_opts(_("Armour"),"MJ",0, 0, 1, 0) );
-   // Absorbtion
    l = os_printD( temp->summary_raw, l, temp->u.lau.dmg_absorb * 100.,
                  os_opts(_("Absorbtion"),"%",0, 0, 1, 0) );
-   // Jam Resistance
    l = os_printD( temp->summary_raw, l, temp->u.lau.resist * 100.,
                  os_opts(_("Jam Resistance"),"%",0, 0, 1, 0) );
    sdesc_miningRarity( &l, temp, temp->u.lau.mining_rarity );
@@ -2014,9 +2026,9 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       SDESC_ADD( l, temp, "\n#r%s#0", _("Activated Outfit") );
    if (temp->u.mod.active && temp->u.mod.cooldown > 0.)
       l = os_printD( temp->summary_raw, l, temp->u.mod.cooldown,
-                    os_opts(_("Cooldown"),_(" s"),0, 0, 1, 0) );
+                    os_opts(_("Cooldown"),_("sec"),0, 0, 1, 0) );
    l = os_printD( temp->summary_raw, l, temp->cpu,
-                  os_opts(_("CPU"), "",1, 0, 1, 0) );
+                  os_opts(_("CPU"), "PFLOP",1, 0, 1, 0) );
    l = os_printD( temp->summary_raw, l, temp->mass,
                   os_opts(_("Mass"),_("t"),0, 0, 1, 0) );
 }
@@ -2086,18 +2098,18 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    SDESC_ADD( l, temp, "\n#r%s#0", _("Activated Outfit") );
 
    l = os_printD( temp->summary_raw, l, temp->cpu,
-                  os_opts(_("CPU"), "",1, 0, 1, 0) );
+                  os_opts(_("CPU"), "PFLOP",1, 0, 1, 0) );
    l = os_printD( temp->summary_raw, l, temp->mass,
                   os_opts(_("Mass"),_("t"),0, 0, 1, 0) );
    l = os_printD( temp->summary_raw, l, temp->u.afb.mass_limit,
                   os_opts(_("Max. Effective Mass"),_("t"),0, 0, 0, 0) );
    SDESC_ADD( l, temp, "\n%s", _("Only one can be equipped") );
    l = os_printD( temp->summary_raw, l, temp->u.afb.thrust + 100.,
-                  os_opts(_("Thrust"),_("%"),0, 0, 0, 0) );
+                  os_opts(_("Thrust"),_("kN"),0, 0, 0, 0) );
    l = os_printD( temp->summary_raw, l, temp->u.afb.speed + 100.,
-                  os_opts(_("Max. Speed"),_("%"),0, 0, 0, 0) );
+                  os_opts(_("Max. Speed"),_("m/sec"),0, 0, 0, 0) );
    l = os_printD( temp->summary_raw, l, temp->u.afb.energy,
-                  os_opts(_("Energy"),_(" /sec"),0, 0, 1, 0) );
+                  os_opts(_("Power"),_("MW"),0, 0, 1, 0) );
    l = os_printD( temp->summary_raw, l, temp->u.afb.rumble,
                   os_opts(_("Rumble"), "",0, 0, 1, 0) );
 
@@ -2158,14 +2170,14 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
    l = 0;
    SDESC_ADD( l, temp, "%s", _(outfit_getType(temp)) );
    l = os_printD( temp->summary_raw, l, temp->cpu,
-                  os_opts(_("CPU"), "",1, 0, 1, 0) );
+                  os_opts(_("CPU"), "PFLOP",1, 0, 1, 0) );
    l = os_printD( temp->summary_raw, l, temp->mass,
                   os_opts(_("Mass"),_("t"),0, 0, 1, 0) );
-   SDESC_ADD( l, temp, _("\nHolds %d ships"), temp->u.bay.amount );
+   SDESC_ADD( l, temp, _("\n  Holds %d ships"), temp->u.bay.amount );
    l = os_printD( temp->summary_raw, l, temp->u.bay.delay,
-                  os_opts(_("Shots delay"),_("s"),0, 0, 1, 1) );
+                  os_opts(_("Shots delay"),_("sec"),0, 0, 1, 1) );
    l = os_printD( temp->summary_raw, l, temp->u.bay.reload_time,
-                  os_opts(_("Reload delay"),_("s"),0, 0, 1, 1) );
+                  os_opts(_("Reload delay"),_("sec"),0, 0, 1, 1) );
 
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */

@@ -495,26 +495,6 @@ int outfit_mapParse(void);
 void outfit_free (void);
 
 /*
- * struct to help with printing outfit stats
- *
- */
-typedef struct s_Outfitstat {
-    const char *name;
-    const char *unit;
-    int precision;
-    int color;
-    int color_threshold;
-    int hide_zero;
-} t_os_stat;
-
-t_os_stat os_opts(const char *name, const char *unit, int color, double threshold, int hidenull, int precision);
-int os_printD( char *buf, int len, double value, t_os_stat opts);
-int os_printD_range( char *buffer, int i, double minValue, double maxValue, t_os_stat opts);
-int os_printS( char *buffer, int i, const char *value, t_os_stat opts);
-int os_printS_range( char *buffer, int i, const char *minValue, const char *maxValue, t_os_stat opts);
-int os_printI( char *buf, int len, int value, t_os_stat opts);
-
-/*
  * Misc.
  */
 int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s );
