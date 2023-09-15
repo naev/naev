@@ -25,8 +25,10 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Another gas giant, another Soromid outpost. This particular outpost is rather larger than some due to the large amount of mineral and element extraction performed here. The planet is high in organic matter as well as elements used to produce them, this makes it an, almost literal, gold mine for Soromid building materials.</description>
-  <bar>As per the case for many Soromid bars in less than hospitable places, the atmosphere in this bar is rather stuffy with an element of danger for non-Soromids, the air isn't too great either. Most of the drinks here are served with straws, which is a thoughtful touch for those traders who are forced to wear air-breathers.</bar>
+  <description>Another gas giant, another Soromid outpost. This particular outpost is rather larger than some due to the large amounts of mineral and element extraction performed here.
+Because the planet is high in organic matter as well as the elements used to produce them, it's an almost literal gold mine for Soromid building materials.</description>
+  <bar>Typical of many Soromid bars in less than hospitable places, there's an element of danger for an unaccostomed visitor. The atmosphere in this bar is rather stuffy and the air not so pleasant to non-Soromids.
+Most of the drinks here are served with straws, which is a thoughtful touch for those traders who are forced to wear air-breathers.</bar>
  </general>
  <tech>
   <item>Systems Low</item>
