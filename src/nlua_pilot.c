@@ -1427,8 +1427,6 @@ static int pilotL_exists( lua_State *L )
 static int pilotL_target( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
-   if (p->target == 0)
-      return 0;
    /* Must be valid. */
    if (pilot_getTarget(p) == NULL)
       return 0;
@@ -1627,8 +1625,6 @@ static int pilotL_nav( lua_State *L )
 static int pilotL_navSpob( lua_State *L )
 {
    const Pilot *p = luaL_validpilot(L,1);
-   if (p->target == 0)
-      return 0;
 
    /* Get spob target. */
    if (p->nav_spob < 0)
@@ -1649,8 +1645,6 @@ static int pilotL_navSpob( lua_State *L )
 static int pilotL_navJump( lua_State *L )
 {
    const Pilot *p = luaL_validpilot(L,1);
-   if (p->target == 0)
-      return 0;
 
    /* Get hyperspace target. */
    if (p->nav_hyperspace < 0)
