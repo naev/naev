@@ -105,7 +105,7 @@ With that said he hurries and leaves the bar.]]))
 
    -- Set up mission information
    misn.setTitle( _("Novice Nebula Research") )
-   misn.setReward( fmt.f( _("{credits} and the gratitude of a student"), {credits=fmt.credits(50e3)} ) )
+   misn.setReward( fmt.f( _("{credits} and the gratitude of a student"), {credits=fmt.credits(credits)} ) )
    misn.setDesc( _("You have been asked by a Za'lek student to fly into the Nebula for some kind of research.") )
    mem.misn_marker = misn.markerAdd( t_sys[1], "low" )
 
