@@ -35,6 +35,7 @@ local student_portrait = nebu_research.student.portrait
 local t_sys = { system.get("Doeston"), system.get("Iris") }
 local homeworld, homeworld_sys = spob.getS("Jorla")
 local credits = nebu_research.rewards.credits00
+local amount = 5
 -- Mission states:
 --  nil: mission not accepted yet
 --   0: go to doeston
@@ -61,13 +62,13 @@ function accept()
    student(_([["Hello there! You are a pilot, right? For my project I require a ship that can go to the Nebula. Certainly you must be interested in the proposal of researching the phenomenon that cut us off from mankind's patrimony."]]))
 
    -- Check for cargo space
-   if player.pilot():cargoFree() <  5 then
+   if player.pilot():cargoFree() < amount then
       student(_([["Unfortunately it looks like your ship does not has enough free cargo space."
 He leaves the bar. It appears he has given up finding a pilot, at least for now.]]))
       vn.done()
    end
    student(fmt.f(_([[He pauses for a moment.
-"As this is the point where any other pilots I asked backed out, I should start by mentioning that due to some unfortunate circumstances the payment for this mission will be only {credits}."]]), {credits=fmt.credits(50e3)}))
+"As this is the point where any other pilots I asked backed out, I should start by mentioning that due to some unfortunate circumstances the payment for this mission will be only {credits}."]]), {credits=fmt.credits(credits)}))
    student(_([["But rest assured, you will be mentioned in the acknowledgment section of my next paper!"]]))
    vn.menu( {
       { _("Accept the job"), "accept" },
@@ -101,7 +102,7 @@ With that said he hurries and leaves the bar.]]))
 
    -- Add cargo
    local c = commodity.new( N_("Nebula Sensor Suite"), N_("A heavy suite with lots of fancy looking sensors.") )
-   mem.cargo = misn.cargoAdd(c, 5)
+   mem.cargo = misn.cargoAdd(c, amount)
 
    -- Set up mission information
    misn.setTitle( _("Novice Nebula Research") )
