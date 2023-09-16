@@ -210,6 +210,8 @@ function noticeProblems()
    vn.transition("fade")
    vn.na(_("Suddenly you lose control of your ship. Apparently most core systems were shut down. Something drains your ship's energy and there are black outs in several parts of your ship."))
    vn.na(_("You realize that your shields are down as well. In an environment like this... That's it, you're going to die here! You knew accepting this mission was a mistake from the very first moment."))
+   vn.done()
+   vn.run()
    hook.timer(10.0, "stopProblems")
 end
 
