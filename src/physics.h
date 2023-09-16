@@ -11,6 +11,19 @@
 #define SOLID_UPDATE_RK4      0 /**< Default Runge-Kutta 3-4 update. */
 #define SOLID_UPDATE_EULER    1 /**< Simple Euler update. */
 
+extern const char UNIT_TIME[];
+extern const char UNIT_PER_TIME[];
+extern const char UNIT_DISTANCE[];
+extern const char UNIT_SPEED[];
+extern const char UNIT_ENERGY[];
+extern const char UNIT_POWER[];
+extern const char UNIT_ANGLE[];
+extern const char UNIT_ROTATION[];
+extern const char UNIT_MASS[];
+extern const char UNIT_CPU[];
+extern const char UNIT_UNIT[];
+extern const char UNIT_PERCENT[];
+
 /**
  * @brief Represents a solid in the game.
  */

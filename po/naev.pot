@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.11.0-alpha.4\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-09-14 16:52+0200\n"
+"POT-Creation-Date: 2023-09-12 22:14+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6928,7 +6928,7 @@ msgstr ""
 #: src/land_outfits.c:435 src/land_outfits.c:436 src/land_outfits.c:437
 #: src/land_outfits.c:438 src/land_trade.c:205 src/land_trade.c:209
 #: src/land_trade.c:210 src/land_trade.c:211 src/map.c:659 src/map.c:660
-#: src/outfit.c:294 src/outfit.c:313
+#: src/outfit.c:295 src/outfit.c:314
 msgid "N/A"
 msgstr ""
 
@@ -7072,7 +7072,7 @@ msgstr ""
 #: dat/scripts/common/poi.lua:213 src/equipment.c:1828 src/gui.c:1544
 #: src/map.c:593 src/map.c:599 src/map.c:605 src/map.c:611 src/map.c:617
 #: src/map.c:623 src/map.c:1918 src/map.c:2211 src/map_overlay.c:233
-#: src/map_system.c:476 src/outfit.c:302 src/outfit.c:321 src/outfit.c:934
+#: src/map_system.c:476 src/outfit.c:303 src/outfit.c:322 src/outfit.c:935
 #: src/plugin.c:154 src/plugin.c:156 src/plugin.c:158 src/ship.c:215
 #, c-format
 msgid "Unknown"
@@ -28858,7 +28858,6 @@ msgstr ""
 #. Strafer stops following the player
 #. Add some fuel, far away so that no npc gathers it
 #: dat/board.lua:130 dat/missions/dvaered/frontier_war/fw02_escape.lua:642
-#: src/shipstats.c:184
 msgid "Fuel"
 msgstr ""
 
@@ -29154,7 +29153,7 @@ msgstr ""
 #: dat/missions/neutral/diy-nerds.lua:84
 #: dat/missions/neutral/nebu_satellite.lua:77
 #: dat/missions/neutral/teenager.lua:64
-#: dat/missions/pirate/lucas/lucas01.lua:89
+#: dat/missions/pirate/lucas/lucas01.lua:91
 #: dat/missions/pirate/lucas/lucas02.lua:135
 #: dat/missions/pirate/lucas/lucas02.lua:323 dat/spob/lua/lib/spob.lua:223
 msgid "Refuse"
@@ -41135,7 +41134,7 @@ msgstr ""
 msgid "{shield:.0f}% Shield"
 msgstr ""
 
-#: dat/events/settings.lua:68 src/shipstats.c:169
+#: dat/events/settings.lua:68
 msgid "Armour Damage"
 msgstr ""
 
@@ -41164,7 +41163,7 @@ msgstr ""
 msgid "Use patrol lanes when travelling to a space object"
 msgstr ""
 
-#: dat/events/settings.lua:116 src/outfit.c:905 src/outfit.c:932
+#: dat/events/settings.lua:116 src/outfit.c:906 src/outfit.c:933
 msgid "GUI"
 msgstr ""
 
@@ -48427,7 +48426,7 @@ msgstr ""
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:68
 #: dat/missions/neutral/teenager.lua:63
 #: dat/missions/pirate/contraband_cake.lua:83 dat/missions/pirate/hitman.lua:56
-#: dat/missions/pirate/hitman2.lua:54 dat/missions/pirate/lucas/lucas01.lua:88
+#: dat/missions/pirate/hitman2.lua:54 dat/missions/pirate/lucas/lucas01.lua:90
 #: dat/missions/pirate/lucas/lucas02.lua:134
 #: dat/missions/pirate/pir_clan_cargo.lua:71
 #: dat/missions/pirate/pir_hit_intro.lua:98
@@ -70381,8 +70380,8 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant06.lua:86
 #: dat/missions/neutral/antlejos/ant07.lua:74
 #: dat/missions/neutral/antlejos/ant09.lua:85
-#: dat/missions/pirate/lucas/lucas01.lua:126
-#: dat/missions/pirate/lucas/lucas01.lua:155
+#: dat/missions/pirate/lucas/lucas01.lua:128
+#: dat/missions/pirate/lucas/lucas01.lua:157
 #: dat/missions/pirate/pir_hit_intro.lua:130
 #: dat/missions/tutorial/nelly03.lua:160
 #: dat/missions/zalek/blackhole/zbh02.lua:90
@@ -79830,38 +79829,38 @@ msgstr ""
 #. 2: visited last spob and got family
 #. Get closest refugee planet
 #. First spob is closest one, second one is fixed
-#: dat/missions/pirate/lucas/lucas01.lua:74
+#: dat/missions/pirate/lucas/lucas01.lua:76
 msgid "The person looks stressed and worn out."
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:85
+#: dat/missions/pirate/lucas/lucas01.lua:87
 msgid ""
 "You approach the stressed out individual gnawing at their nails at the bar."
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:86
+#: dat/missions/pirate/lucas/lucas01.lua:88
 msgid ""
 "\"Say, you wouldn't be able to help me find my family? I'll pay, I promise!\""
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:93
+#: dat/missions/pirate/lucas/lucas01.lua:95
 msgid "They go back to chewing their nails."
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:100
+#: dat/missions/pirate/lucas/lucas01.lua:102
 msgid ""
 "\"My name is Lucas, I was a Nebula refugee. When I was very young, me and my "
 "family escaped the Incident, but I don't know what happened and I got "
 "separated.\""
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:101
+#: dat/missions/pirate/lucas/lucas01.lua:103
 msgid ""
 "\"I guess I never really thought about it too much, just did what I was told "
 "and went with the flow, but then one day I couldn't. You understand?\""
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:102
+#: dat/missions/pirate/lucas/lucas01.lua:104
 msgid ""
 "The pause and tighten their fists.\n"
 "\"I guess there was always something missing in me, like something "
@@ -79869,14 +79868,14 @@ msgid ""
 "it, didn't understand.\""
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:104
+#: dat/missions/pirate/lucas/lucas01.lua:106
 msgid ""
 "\"One day it snapped, and I had a dream remembering stuff I had forgotten "
 "about: my family. I guess I had repressed it for so long. Survival instincts "
 "maybe?\""
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:105
+#: dat/missions/pirate/lucas/lucas01.lua:107
 msgid ""
 "\"Since then I've been trying to find my family with the credits I was able "
 "to scrounge up working. I don't think they had as much luck as I had, they "
@@ -79885,49 +79884,49 @@ msgid ""
 "eyes away. We are humans too!\""
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:106
+#: dat/missions/pirate/lucas/lucas01.lua:108
 msgid ""
 "\"I've narrowed it down a bit, I think they should be on {spb} in the {sys} "
 "system. Please try to find them! I'll give you all the information I have. "
 "Here take this locket, it is the only thing I have from them.\""
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:108
+#: dat/missions/pirate/lucas/lucas01.lua:110
 msgid ""
 "They hand you an old locket that looks like is missing half of it. It is "
 "fairly simple and made of some resistant metal alloy, but bears signs of "
 "heavy use."
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:109
+#: dat/missions/pirate/lucas/lucas01.lua:111
 msgid "\"I'll be waiting here.\""
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:117
+#: dat/missions/pirate/lucas/lucas01.lua:119
 msgid ""
 "You promised to help Lucas, the ex-Nebula refugee, find his family who may "
 "not have made it far from the Nebula."
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:120
+#: dat/missions/pirate/lucas/lucas01.lua:122
 msgid "Old Pendant"
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:120
+#: dat/missions/pirate/lucas/lucas01.lua:122
 msgid "An old locket belonging to Lucas."
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:124
+#: dat/missions/pirate/lucas/lucas01.lua:126
 msgid "Search for the family at {pnt} ({sys} system)"
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:141
+#: dat/missions/pirate/lucas/lucas01.lua:143
 msgid ""
 "You land and begin to ask around to see if there are any traces of Lucas "
 "family."
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:142
+#: dat/missions/pirate/lucas/lucas01.lua:144
 msgid ""
 "As you converse with many of the refugees at {spb}, you begin to appreciate "
 "the magnitude of the Incident calamity. Many refugees are missing or "
@@ -79935,7 +79934,7 @@ msgid ""
 "to heal."
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:144
+#: dat/missions/pirate/lucas/lucas01.lua:146
 msgid ""
 "Feeling like searching for a needle in a haystack, you are almost about to "
 "give up when you find an older one-armed refugee. They take a close look at "
@@ -79943,7 +79942,7 @@ msgid ""
 "same locket on {spb} in the {sys} system."
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:146
+#: dat/missions/pirate/lucas/lucas01.lua:148
 msgid ""
 "From their story, it seems like {spb} is a horrible traumatic place, a "
 "refugee limbo where atrocities are commonplace. It also seems like the "
@@ -79951,45 +79950,45 @@ msgid ""
 "it."
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:148
+#: dat/missions/pirate/lucas/lucas01.lua:150
 msgid ""
 "They give you the location of the cell where they were and wish you luck. "
 "Looks like you have a lead."
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:153
+#: dat/missions/pirate/lucas/lucas01.lua:155
 msgid "Search for the family at {pnt} ({sys} system, bribe if necessary)"
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:166
+#: dat/missions/pirate/lucas/lucas01.lua:168
 msgid ""
 "You manage to land on {spb}. Although things are quite quiet and clean "
 "around the spaceport, it all takes a turn for the worse once you pass the "
 "checkpoints and head into the slums towards the location you were given."
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:168
+#: dat/missions/pirate/lucas/lucas01.lua:170
 msgid ""
 "The atmosphere is dark, almost oppressive, and you feel like you are given "
 "many stares by the locals. It seems likely that they do not get many "
 "visitors."
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:169
+#: dat/missions/pirate/lucas/lucas01.lua:171
 msgid ""
 "Eventually you get to the cell you were told about. It seems to be locked. "
 "You take a look to see if you can override it."
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:176
+#: dat/missions/pirate/lucas/lucas01.lua:178
 msgid "Lucas' Father"
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:176
+#: dat/missions/pirate/lucas/lucas01.lua:178
 msgid "A very weakened old man."
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:183
+#: dat/missions/pirate/lucas/lucas01.lua:185
 msgid ""
 "You open the cell and find yourself with a very weakened old man. At first "
 "they are scared to death, believing you have come to take their meager "
@@ -79997,7 +79996,7 @@ msgid ""
 "mention that Lucas sent you, and pass out."
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:184
+#: dat/missions/pirate/lucas/lucas01.lua:186
 msgid ""
 "You quickly look around to see if there is anyone else there. Once you "
 "confirm that the man is the only person you pick them up and make your way "
@@ -80006,55 +80005,55 @@ msgid ""
 "people seem to take less notice of you than when you came in."
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:185
+#: dat/missions/pirate/lucas/lucas01.lua:187
 msgid ""
 "Eventually you reach the spaceport checkpoint. The guards raise an eyebrow "
 "at the old man you're carrying, but once you show them the receipt of your "
-"spaceship, they let you through."
+"spaceship, the let you through."
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:186
+#: dat/missions/pirate/lucas/lucas01.lua:188
 msgid ""
 "The old man is in not very good shape and seems to fall into a deep slumber "
 "when you set them aboard the ship, would be best to try to head back to "
 "Lucas as soon as possible."
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:190
+#: dat/missions/pirate/lucas/lucas01.lua:192
 msgid ""
 "You fail to override the cell. As you are attracting too much suspicion, you "
 "decide to head back to the spaceport area. You'll have to come back if you "
 "want to try again."
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:201
+#: dat/missions/pirate/lucas/lucas01.lua:203
 msgid ""
 "You land and quickly go find Lucas, who then follows you back to your ship."
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:202
+#: dat/missions/pirate/lucas/lucas01.lua:204
 msgid ""
 "When Lucas sees the old man, his eyes tear up and he kneels to take a closer "
 "look.\n"
 "\"Dear old man, what have they done to you?\""
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:204
+#: dat/missions/pirate/lucas/lucas01.lua:206
 msgid ""
 "Still kneeling, Lucas shuffles forward and emotively hugs the old man. "
 "Probably not the reunion they were looking for, but better than nothing "
 "nonetheless."
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:205
+#: dat/missions/pirate/lucas/lucas01.lua:207
 msgid ""
-"After a solemn while, Lucas kisses the old man on the cheek and turns to "
+"After a solemn while, Lucas kisses the old man on the check and turns to "
 "you.\n"
 "\"Thank you for what you've done. I think I can take care of it from now on. "
 "I have to see what happened to the others.\""
 msgstr ""
 
-#: dat/missions/pirate/lucas/lucas01.lua:207
+#: dat/missions/pirate/lucas/lucas01.lua:209
 msgid ""
 "You help Lucas take the old man off the ship, and also return the locket. "
 "Lucas thanks you fervently for all you've done and hands you a credit chip. "
@@ -100235,7 +100234,7 @@ msgid ""
 msgstr ""
 
 #. if luatk.yesno( _("Remove Afterburner?"), _("Your ship already has an afterburner. Remove to learn the new skill?")A)
-#: dat/scripts/bioship/skills.lua:75 src/outfit.c:901 src/outfit.c:928
+#: dat/scripts/bioship/skills.lua:75 src/outfit.c:902 src/outfit.c:929
 msgid "Afterburner"
 msgstr ""
 
@@ -108685,7 +108684,7 @@ msgid ""
 "                This file can be found in Naev's artwork repo."
 msgstr ""
 
-#: src/asteroid.c:710 src/outfit.c:1200 src/ship.c:545 src/ship.c:676
+#: src/asteroid.c:710 src/outfit.c:1201 src/ship.c:545 src/ship.c:676
 #: src/space.c:1823 src/space.c:2165 src/space.c:2892
 #, c-format
 msgid "Malformed %s file: does not contain elements"
@@ -109870,7 +109869,7 @@ msgstr ""
 msgid "Bonus Presence"
 msgstr ""
 
-#: src/dev_sysedit.c:1462 src/outfit.c:1487 src/outfit.c:1669 src/outfit.c:1919
+#: src/dev_sysedit.c:1462
 msgid "Range"
 msgstr ""
 
@@ -110415,8 +110414,8 @@ msgstr ""
 msgid "Spob '%s' has saved economy data but doesn't exist!"
 msgstr ""
 
-#: src/effect.c:57 src/faction.c:1275 src/faction.c:1454 src/outfit.c:2421
-#: src/outfit.c:2916 src/plugin.c:42 src/spfx.c:1129 src/start.c:70
+#: src/effect.c:57 src/faction.c:1275 src/faction.c:1454 src/outfit.c:2337
+#: src/outfit.c:2832 src/plugin.c:42 src/spfx.c:1129 src/start.c:70
 #: src/tech.c:249 src/tech.c:345
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
@@ -110527,15 +110526,15 @@ msgstr ""
 msgid "Toggle Display"
 msgstr ""
 
-#: src/equipment.c:596 src/outfit.c:296
+#: src/equipment.c:596 src/outfit.c:297
 msgid "Structure"
 msgstr ""
 
-#: src/equipment.c:604 src/outfit.c:298
+#: src/equipment.c:604 src/outfit.c:299
 msgid "Utility"
 msgstr ""
 
-#: src/equipment.c:612 src/outfit.c:300
+#: src/equipment.c:612 src/outfit.c:301
 msgid "Weapon"
 msgstr ""
 
@@ -111461,7 +111460,7 @@ msgstr ""
 msgid "Weapons"
 msgstr ""
 
-#: src/info.c:60 src/shipstats.c:185
+#: src/info.c:60
 msgid "Cargo"
 msgstr ""
 
@@ -112076,7 +112075,7 @@ msgstr ""
 msgid "Cycles through jump points."
 msgstr ""
 
-#: src/input.c:92 src/map.c:253 src/outfit.c:903
+#: src/input.c:92 src/map.c:253 src/outfit.c:904
 msgid "Star Map"
 msgstr ""
 
@@ -115872,142 +115871,142 @@ msgstr ""
 msgid "Total Conversion"
 msgstr ""
 
-#: src/outfit.c:123
+#: src/outfit.c:124
 #, c-format
 msgid "Outfit '%s' not found in stack."
 msgstr ""
 
-#: src/outfit.c:315
+#: src/outfit.c:316
 msgid "Small"
 msgstr ""
 
-#: src/outfit.c:317
+#: src/outfit.c:318
 msgid "Medium"
 msgstr ""
 
-#: src/outfit.c:319
+#: src/outfit.c:320
 msgid "Large"
 msgstr ""
 
-#: src/outfit.c:399
+#: src/outfit.c:400
 #, c-format
 msgid ""
 "\n"
 "#%c%s #%c%s #0slot"
 msgstr ""
 
-#: src/outfit.c:426
+#: src/outfit.c:427
 #, c-format
 msgid "'%s' does not match any outfit slot sizes."
 msgstr ""
 
-#: src/outfit.c:893
+#: src/outfit.c:894
 msgid "NULL"
 msgstr ""
 
-#: src/outfit.c:894
+#: src/outfit.c:895
 msgid "Bolt Cannon"
 msgstr ""
 
-#: src/outfit.c:895
+#: src/outfit.c:896
 msgid "Beam Cannon"
 msgstr ""
 
-#: src/outfit.c:896
+#: src/outfit.c:897
 msgid "Bolt Turret"
 msgstr ""
 
-#: src/outfit.c:897
+#: src/outfit.c:898
 msgid "Beam Turret"
 msgstr ""
 
-#: src/outfit.c:898 src/outfit.c:925
+#: src/outfit.c:899 src/outfit.c:926
 msgid "Launcher"
 msgstr ""
 
-#: src/outfit.c:899
+#: src/outfit.c:900
 msgid "Turret Launcher"
 msgstr ""
 
-#: src/outfit.c:900
+#: src/outfit.c:901
 msgid "Ship Modification"
 msgstr ""
 
-#: src/outfit.c:902 src/outfit.c:929
+#: src/outfit.c:903 src/outfit.c:930
 msgid "Fighter Bay"
 msgstr ""
 
-#: src/outfit.c:904 src/outfit.c:931
+#: src/outfit.c:905 src/outfit.c:932
 msgid "Local Map"
 msgstr ""
 
-#: src/outfit.c:906 src/outfit.c:933
+#: src/outfit.c:907 src/outfit.c:934
 msgid "License"
 msgstr ""
 
-#: src/outfit.c:923
+#: src/outfit.c:924
 msgid "Bolt Weapon"
 msgstr ""
 
-#: src/outfit.c:924
+#: src/outfit.c:925
 msgid "Beam Weapon"
 msgstr ""
 
 #. else if (outfit_isTurret(o))     return N_("Turret");
-#: src/outfit.c:927
+#: src/outfit.c:928
 msgid "Modification"
 msgstr ""
 
-#: src/outfit.c:930
+#: src/outfit.c:931
 msgid "Map"
 msgstr ""
 
-#: src/outfit.c:945
+#: src/outfit.c:946
 msgid "Unguided"
 msgstr ""
 
-#: src/outfit.c:946
+#: src/outfit.c:947
 msgid "Seek"
 msgstr ""
 
-#: src/outfit.c:947
+#: src/outfit.c:948
 msgid "Smart"
 msgstr ""
 
-#: src/outfit.c:951
+#: src/outfit.c:952
 #, c-format
 msgid "Outfit '%s' is not a launcher outfit"
 msgstr ""
 
-#: src/outfit.c:1087
+#: src/outfit.c:1088
 #, c-format
 msgid "Invalid outfit type: '%s'"
 msgstr ""
 
-#: src/outfit.c:1100
+#: src/outfit.c:1101
 msgid "Can mine uncommon and rare minerals"
 msgstr ""
 
-#: src/outfit.c:1102
+#: src/outfit.c:1103
 msgid "Can mine uncommon minerals"
 msgstr ""
 
-#: src/outfit.c:1142
+#: src/outfit.c:1143
 #, c-format
 msgid "Unknown damage type '%s'"
 msgstr ""
 
-#: src/outfit.c:1145
+#: src/outfit.c:1146
 #, c-format
 msgid "Damage has unknown node '%s'"
 msgstr ""
 
-#: src/outfit.c:1174
+#: src/outfit.c:1175
 #, c-format
 msgid "Trying to load polygon for non-compatible outfit '%s'!"
 msgstr ""
 
-#: src/outfit.c:1182
+#: src/outfit.c:1183
 #, c-format
 msgid ""
 "%s xml collision polygon does not exist!\n"
@@ -116015,502 +116014,548 @@ msgid ""
 "found in Naev's artwork repo."
 msgstr ""
 
-#: src/outfit.c:1237
+#: src/outfit.c:1238
 #, c-format
 msgid "Trying to load graphics for non-compatible outfit '%s'!"
 msgstr ""
 
-#: src/outfit.c:1265
+#: src/outfit.c:1266
 #, c-format
 msgid "Outfit '%s' has GFX shader but no 'size' set!"
 msgstr ""
 
-#: src/outfit.c:1273
+#: src/outfit.c:1274
 #, c-format
 msgid "Outfit '%s' has unknown gfx type '%s'!"
 msgstr ""
 
-#: src/outfit.c:1288
+#: src/outfit.c:1289
 #, c-format
 msgid ""
 "Outfit '%s': the number of collision polygons is wrong.\n"
 "                npolygon = %i and sx*sy = %i"
 msgstr ""
 
-#: src/outfit.c:1370 src/outfit.c:1780
+#: src/outfit.c:1371 src/outfit.c:1745
 #, c-format
 msgid "Outfit '%s' has invalid blowup property: '%s'"
 msgstr ""
 
-#: src/outfit.c:1395
+#: src/outfit.c:1396
 #, c-format
 msgid "Outfit '%s' has unknown spfx_shield '%s'!"
 msgstr ""
 
-#: src/outfit.c:1401
+#: src/outfit.c:1402
 #, c-format
 msgid "Outfit '%s' has unknown spfx_armour '%s'!"
 msgstr ""
 
-#: src/outfit.c:1426 src/outfit.c:1627 src/outfit.c:1849 src/outfit.c:2018
-#: src/outfit.c:2090 src/outfit.c:2165 src/outfit.c:2250 src/outfit.c:2269
-#: src/outfit.c:2308 src/outfit.c:2344 src/outfit.c:2377 src/outfit.c:2572
-#: src/outfit.c:2665
+#: src/outfit.c:1427 src/outfit.c:1604 src/outfit.c:1814 src/outfit.c:1950
+#: src/outfit.c:2019 src/outfit.c:2085 src/outfit.c:2166 src/outfit.c:2185
+#: src/outfit.c:2224 src/outfit.c:2260 src/outfit.c:2293 src/outfit.c:2488
+#: src/outfit.c:2581
 #, c-format
 msgid "Outfit '%s' has unknown node '%s'"
 msgstr ""
 
-#: src/outfit.c:1452
+#: src/outfit.c:1453 src/outfit.c:1619 src/outfit.c:1833
 #, c-format
-msgctxt "outfitstats"
 msgid "%s [%s]"
 msgstr ""
 
-#: src/outfit.c:1457 src/outfit.c:1645 src/outfit.c:1872
-msgid "Armours damages"
+#: src/outfit.c:1456 src/outfit.c:1622 src/outfit.c:1836
+#, c-format
+msgid ""
+"\n"
+"     %.0f%% vs armour"
 msgstr ""
 
-#. Standard types.
-#: src/outfit.c:1457 src/outfit.c:1459 src/outfit.c:1645 src/outfit.c:1647
-#: src/outfit.c:1655 src/outfit.c:1872 src/outfit.c:1874 src/outfit.c:1876
-#: src/outfit.c:1902 src/outfit.c:1945 src/outfit.c:1947 src/shipstats.c:54
-#: src/shipstats.c:56 src/shipstats.c:64 src/shipstats.c:66
-msgid "%"
+#: src/outfit.c:1457 src/outfit.c:1623 src/outfit.c:1837
+#, c-format
+msgid ""
+"\n"
+"     %.0f%% vs shield"
 msgstr ""
 
-#: src/outfit.c:1459 src/outfit.c:1647 src/outfit.c:1874
-msgid "Shields damages"
+#: src/outfit.c:1458 src/outfit.c:1624 src/outfit.c:1838
+#, c-format
+msgid ""
+"\n"
+"     %.0f%% knockback"
 msgstr ""
 
-#: src/outfit.c:1461 src/outfit.c:1649 src/outfit.c:1876
-msgid "Knockback damages"
+#: src/outfit.c:1459 src/outfit.c:1625 src/outfit.c:1839 src/outfit.c:2027
+#: src/outfit.c:2092
+#, c-format
+msgid ""
+"\n"
+"%.0f CPU"
 msgstr ""
 
-#: src/outfit.c:1463 src/outfit.c:1651 src/outfit.c:1878 src/outfit.c:2031
-#: src/outfit.c:2101 src/outfit.c:2173
-msgid "CPU"
+#: src/outfit.c:1460 src/outfit.c:1626 src/outfit.c:1840 src/outfit.c:1962
+#: src/outfit.c:2028 src/outfit.c:2093
+#, c-format
+msgid ""
+"\n"
+"%.0f Mass"
 msgstr ""
 
-#: src/outfit.c:1463 src/outfit.c:1651 src/outfit.c:1878 src/outfit.c:2031
-#: src/outfit.c:2101 src/outfit.c:2173 src/shipstats.c:173
-msgid "PFLOP"
+#: src/outfit.c:1461 src/outfit.c:1627 src/outfit.c:1858
+#, c-format
+msgid ""
+"\n"
+"%.0f%% Penetration"
 msgstr ""
 
-#: src/outfit.c:1465 src/outfit.c:1653 src/outfit.c:1880 src/outfit.c:2033
-#: src/outfit.c:2103 src/outfit.c:2175
-msgid "Mass"
+#: src/outfit.c:1462 src/outfit.c:1859
+#, c-format
+msgid ""
+"\n"
+"%.2f DPS [%.0f Damage]"
 msgstr ""
 
-#: src/outfit.c:1465 src/outfit.c:1653 src/outfit.c:1880 src/outfit.c:1928
-#: src/outfit.c:2033 src/outfit.c:2103 src/outfit.c:2105 src/outfit.c:2108
-#: src/outfit.c:2175 src/shipstats.c:157 src/shipstats.c:174
-#: src/shipstats.c:185
-msgid "t"
+#: src/outfit.c:1464
+#, c-format
+msgid ""
+"\n"
+"%.2f Disable/s [%.0f Disable]"
 msgstr ""
 
-#: src/outfit.c:1467 src/outfit.c:1655 src/outfit.c:1902
-msgid "Penetration"
+#: src/outfit.c:1466 src/outfit.c:1863
+#, c-format
+msgid ""
+"\n"
+"%.0f Hit Radius%s"
 msgstr ""
 
-#: src/outfit.c:1469 src/outfit.c:1904 src/shipstats.c:170
-msgid "Damage"
+#: src/outfit.c:1467 src/outfit.c:1864
+#, c-format
+msgid ""
+"\n"
+"%.1f Shots Per Second"
 msgstr ""
 
-#: src/outfit.c:1471 src/outfit.c:1659 src/outfit.c:1906
-msgid "Damage rate"
+#: src/outfit.c:1468 src/outfit.c:1877
+#, c-format
+msgid ""
+"\n"
+"%.1f EPS [%.0f Energy]"
 msgstr ""
 
-#: src/outfit.c:1471 src/outfit.c:1475 src/outfit.c:1481 src/outfit.c:1659
-#: src/outfit.c:1906 src/outfit.c:1911 src/outfit.c:1917 src/shipstats.c:175
-msgid "/sec"
+#: src/outfit.c:1470 src/outfit.c:1636
+#, c-format
+msgid ""
+"\n"
+"%s Range"
 msgstr ""
 
-#: src/outfit.c:1473 src/outfit.c:1657
-msgid "Disables"
+#: src/outfit.c:1471 src/outfit.c:1873
+#, c-format
+msgid ""
+"\n"
+"%.0f Speed"
 msgstr ""
 
-#: src/outfit.c:1475
-msgid "Disables rate"
+#: src/outfit.c:1472 src/outfit.c:1637
+#, c-format
+msgid ""
+"\n"
+"%.1f second heat up"
 msgstr ""
 
-#: src/outfit.c:1477 src/outfit.c:1913
-msgid "Hit radius"
+#: src/outfit.c:1473
+#, c-format
+msgid ""
+"\n"
+"%.1f Degree Dispersion"
 msgstr ""
 
-#: src/outfit.c:1479 src/outfit.c:1487 src/outfit.c:1500 src/outfit.c:1669
-#: src/outfit.c:1888 src/outfit.c:1894 src/outfit.c:1915 src/outfit.c:1919
-#: src/shipstats.c:176 src/shipstats.c:177
-msgid "m"
+#: src/outfit.c:1475 src/outfit.c:1639 src/outfit.c:1853
+#, c-format
+msgid ""
+"\n"
+"%.1f Degree Swivel"
 msgstr ""
 
-#: src/outfit.c:1481 src/outfit.c:1917
-msgid "Rate of fire"
+#: src/outfit.c:1476 src/outfit.c:1845 src/outfit.c:1851
+#, c-format
+msgid ""
+"\n"
+"%s Optimal Tracking"
 msgstr ""
 
-#: src/outfit.c:1483 src/outfit.c:1939
-msgid "Energy"
+#: src/outfit.c:1477 src/outfit.c:1846 src/outfit.c:1852
+#, c-format
+msgid ""
+"\n"
+"%s Minimal Tracking"
 msgstr ""
 
-#: src/outfit.c:1483 src/outfit.c:1939 src/outfit.c:1943 src/shipstats.c:160
-#: src/shipstats.c:164 src/shipstats.c:167
-msgid "MJ"
-msgstr ""
-
-#: src/outfit.c:1485 src/outfit.c:1661 src/outfit.c:1941 src/outfit.c:2112
-msgid "Power"
-msgstr ""
-
-#: src/outfit.c:1485 src/outfit.c:1661 src/outfit.c:1941 src/outfit.c:2112
-#: src/shipstats.c:161 src/shipstats.c:162 src/shipstats.c:163
-#: src/shipstats.c:165 src/shipstats.c:166 src/shipstats.c:168
-#: src/shipstats.c:169 src/shipstats.c:170 src/shipstats.c:171
-msgid "MW"
-msgstr ""
-
-#: src/outfit.c:1489 src/shipstats.c:89
-msgid "Speed"
-msgstr ""
-
-#: src/outfit.c:1489 src/outfit.c:1926 src/outfit.c:1932 src/outfit.c:1935
-#: src/outfit.c:2110
-msgid "m/sec"
-msgstr ""
-
-#: src/outfit.c:1491 src/outfit.c:1671
-msgid "Heat up"
-msgstr ""
-
-#: src/outfit.c:1491 src/outfit.c:1665 src/outfit.c:1667 src/outfit.c:1671
-#: src/outfit.c:1884 src/outfit.c:1886 src/outfit.c:1921 src/outfit.c:1937
-#: src/outfit.c:2029 src/outfit.c:2178 src/outfit.c:2180
-msgid "sec"
-msgstr ""
-
-#: src/outfit.c:1493
-msgid "Dispersion"
-msgstr ""
-
-#: src/outfit.c:1493 src/outfit.c:1496 src/outfit.c:1674 src/outfit.c:1896
-msgid "deg"
-msgstr ""
-
-#: src/outfit.c:1496 src/outfit.c:1674 src/outfit.c:1896
-msgid "Swivel"
-msgstr ""
-
-#: src/outfit.c:1500 src/outfit.c:1894 src/shipstats.c:111
-msgid "Tracking"
-msgstr ""
-
-#: src/outfit.c:1504 src/outfit.c:1678 src/outfit.c:2126 src/outfit.c:2183
-#: src/outfit.c:2284 src/outfit.c:2321 src/outfit.c:2353 src/outfit.c:2394
-#: src/outfit.c:2669
+#: src/outfit.c:1481 src/outfit.c:1643 src/outfit.c:2046 src/outfit.c:2099
+#: src/outfit.c:2200 src/outfit.c:2237 src/outfit.c:2269 src/outfit.c:2310
+#: src/outfit.c:2585
 #, c-format
 msgid "Outfit '%s' missing/invalid '%s' element"
 msgstr ""
 
-#: src/outfit.c:1665 src/outfit.c:1921
-msgid "Duration"
+#: src/outfit.c:1628
+#, c-format
+msgid ""
+"\n"
+"%.2f DPS [%s]"
 msgstr ""
 
-#: src/outfit.c:1667 src/outfit.c:2029
-msgid "Cooldown"
+#: src/outfit.c:1631
+#, c-format
+msgid ""
+"\n"
+"%.0f Disable/s"
 msgstr ""
 
-#: src/outfit.c:1837
+#: src/outfit.c:1632 src/outfit.c:2033
+#, c-format
+msgid ""
+"\n"
+"%.1f EPS"
+msgstr ""
+
+#: src/outfit.c:1633
+#, c-format
+msgid ""
+"\n"
+"%.1f Duration"
+msgstr ""
+
+#: src/outfit.c:1634
+#, c-format
+msgid " (%.1f minimum)"
+msgstr ""
+
+#: src/outfit.c:1635
+#, c-format
+msgid ""
+"\n"
+"%.1f Cooldown"
+msgstr ""
+
+#: src/outfit.c:1802
 #, c-format
 msgid "Ammo '%s' has unknown ai type '%s'."
 msgstr ""
 
 #. Condition for not taking max_speed into account.
-#: src/outfit.c:1862
+#: src/outfit.c:1827
 #, c-format
 msgid "Max speed of ammo '%s' will be ignored."
 msgstr ""
 
-#: src/outfit.c:1884
-msgid "Lock-on time"
+#: src/outfit.c:1843
+#, c-format
+msgid ""
+"\n"
+"%.1f Second Lock-on"
 msgstr ""
 
-#: src/outfit.c:1886
-msgid "In-flight calibration time"
+#: src/outfit.c:1844
+#, c-format
+msgid ""
+"\n"
+"%.1f Second In-Flight Calibration"
 msgstr ""
 
-#: src/outfit.c:1888
-msgid "Tracking range"
-msgstr ""
-
-#: src/outfit.c:1891
+#: src/outfit.c:1849
 msgid ""
 "\n"
 "No Seeking"
 msgstr ""
 
-#: src/outfit.c:1900
+#: src/outfit.c:1857
 #, c-format
 msgid ""
 "\n"
-"  Holds %d ammo"
+"Holds %d ammo"
 msgstr ""
 
-#: src/outfit.c:1909 src/shipstats.c:171
-msgid "Disable"
+#: src/outfit.c:1861
+#, c-format
+msgid ""
+"\n"
+"%.1f Disable/s [%.0f Disable]"
 msgstr ""
 
-#: src/outfit.c:1911
-msgid "Disable rate"
+#: src/outfit.c:1865
+#, c-format
+msgid ""
+"\n"
+"%s Range [%.1f duration]"
 msgstr ""
 
-#: src/outfit.c:1926 src/outfit.c:1932
-msgid "Initial Speed"
+#: src/outfit.c:1868
+#, c-format
+msgid ""
+"\n"
+"%.0f Initial Speed (%.0f Thrust)"
 msgstr ""
 
-#: src/outfit.c:1928 src/outfit.c:2108 src/shipstats.c:91 src/shipstats.c:157
-msgid "Thrust"
+#: src/outfit.c:1870
+#, c-format
+msgid ""
+"\n"
+"%.0f Thrust"
 msgstr ""
 
-#: src/outfit.c:1935 src/shipstats.c:159
-msgid "Maximum Speed"
+#: src/outfit.c:1875
+#, c-format
+msgid ""
+"\n"
+"%.0f Maximum Speed"
 msgstr ""
 
-#: src/outfit.c:1937
-msgid "Reload time"
+#: src/outfit.c:1876 src/outfit.c:2096
+#, c-format
+msgid ""
+"\n"
+"%.1f Seconds to Reload"
 msgstr ""
 
-#: src/outfit.c:1943 src/shipstats.c:167
-msgid "Armour"
+#: src/outfit.c:1878
+#, c-format
+msgid ""
+"\n"
+"%.1f MJ Armour [%.0f%%]"
 msgstr ""
 
-#: src/outfit.c:1945
-msgid "Absorbtion"
+#: src/outfit.c:1879
+#, c-format
+msgid ""
+"\n"
+"%.0f%% Jam Resistance"
 msgstr ""
 
-#: src/outfit.c:1947
-msgid "Jam Resistance"
-msgstr ""
-
-#: src/outfit.c:1951
+#: src/outfit.c:1883
 #, c-format
 msgid "Outfit '%s' missing '%s' element"
 msgstr ""
 
-#: src/outfit.c:1976
+#: src/outfit.c:1908
 #, c-format
 msgid "Outfit '%s' has no speed nor thrust set!"
 msgstr ""
 
-#: src/outfit.c:1978
+#: src/outfit.c:1910
 #, c-format
 msgid "Outfit '%s' has longer 'iflockon' than ammo 'duration'"
 msgstr ""
 
-#: src/outfit.c:2026 src/outfit.c:2098
-msgid "Activated Outfit"
+#: src/outfit.c:1958 src/outfit.c:2026
+msgid ""
+"\n"
+"#rActivated Outfit#0"
 msgstr ""
 
-#: src/outfit.c:2105
-msgid "Max. Effective Mass"
+#: src/outfit.c:1960
+#, c-format
+msgid " #r(%.1f s Cooldown)#0"
 msgstr ""
 
-#: src/outfit.c:2106
-msgid "Only one can be equipped"
-msgstr ""
-
-#: src/outfit.c:2110
-msgid "Max. Speed"
-msgstr ""
-
-#: src/outfit.c:2114
-msgid "Rumble"
-msgstr ""
-
-#: src/outfit.c:2176
+#: src/outfit.c:1961
 #, c-format
 msgid ""
 "\n"
-"  Holds %d ships"
+"%+.0f CPU"
 msgstr ""
 
-#: src/outfit.c:2178
-msgid "Shots delay"
+#: src/outfit.c:2029
+msgid ""
+"\n"
+"Only one can be equipped"
 msgstr ""
 
-#: src/outfit.c:2180
-msgid "Reload delay"
+#: src/outfit.c:2030
+#, c-format
+msgid ""
+"\n"
+"%.0f Maximum Effective Mass"
 msgstr ""
 
-#: src/outfit.c:2220
+#: src/outfit.c:2031
+#, c-format
+msgid ""
+"\n"
+"%.0f%% Thrust"
+msgstr ""
+
+#: src/outfit.c:2032
+#, c-format
+msgid ""
+"\n"
+"%.0f%% Maximum Speed"
+msgstr ""
+
+#: src/outfit.c:2034
+#, c-format
+msgid ""
+"\n"
+"%.1f Rumble"
+msgstr ""
+
+#: src/outfit.c:2094
+#, c-format
+msgid ""
+"\n"
+"%.1f Seconds Per Launch"
+msgstr ""
+
+#: src/outfit.c:2095
+#, c-format
+msgid ""
+"\n"
+"Holds %d ships"
+msgstr ""
+
+#: src/outfit.c:2136
 #, c-format
 msgid "Map '%s' has invalid system '%s'"
 msgstr ""
 
-#: src/outfit.c:2238
+#: src/outfit.c:2154
 #, c-format
 msgid "Map '%s' has invalid spob '%s'"
 msgstr ""
 
-#: src/outfit.c:2247
+#: src/outfit.c:2163
 #, c-format
 msgid "Map '%s' has invalid jump point '%s'"
 msgstr ""
 
-#: src/outfit.c:2350
+#: src/outfit.c:2266
 #, c-format
 msgid "GUI (Graphical User Interface)"
 msgstr ""
 
-#: src/outfit.c:2457
+#: src/outfit.c:2373
 #, c-format
 msgid "Outfit '%s' has invalid or no name"
 msgstr ""
 
-#: src/outfit.c:2513
+#: src/outfit.c:2429
 #, c-format
 msgid "Outfit '%s' has an slot type invalid."
 msgstr ""
 
-#: src/outfit.c:2525
+#: src/outfit.c:2441
 #, c-format
 msgid "Outfit '%s' has unknown slot type '%s'."
 msgstr ""
 
-#: src/outfit.c:2546
+#: src/outfit.c:2462
 #, c-format
 msgid "Empty faction string for outfit '%s' legality!"
 msgstr ""
 
-#: src/outfit.c:2552
+#: src/outfit.c:2468
 #, c-format
 msgid "Outfit '%s' has no factions defined in <illegalto> block!"
 msgstr ""
 
-#: src/outfit.c:2555
+#: src/outfit.c:2471
 #, c-format
 msgid "Outfit '%s' has unknown general node '%s'"
 msgstr ""
 
-#: src/outfit.c:2589
+#: src/outfit.c:2505
 #, c-format
 msgid "Outfit '%s' has unknown node in tags '%s'."
 msgstr ""
 
-#: src/outfit.c:2598
+#: src/outfit.c:2514
 #, c-format
 msgid "Outfit '%s' element 'specific' missing property 'type'"
 msgstr ""
 
-#: src/outfit.c:2614
+#: src/outfit.c:2530
 #, c-format
 msgid "Outfit '%s' has group '%d', should be in the 1-%d range"
 msgstr ""
 
-#: src/outfit.c:2625
+#: src/outfit.c:2541
 #, c-format
 msgid "Outfit '%s' is of type NONE"
 msgstr ""
 
-#: src/outfit.c:2738
+#: src/outfit.c:2654
 #, c-format
 msgid "Duplicated outfit name '%s' detected!"
 msgstr ""
 
-#: src/outfit.c:2751
+#: src/outfit.c:2667
 #, c-format
 msgid "Outfit '%s' failed to read Lua '%s'!"
 msgstr ""
 
-#: src/outfit.c:2766
+#: src/outfit.c:2682
 #, c-format
 msgid ""
 "Outfit '%s' Lua error:\n"
 "%s"
 msgstr ""
 
-#: src/outfit.c:2805
+#: src/outfit.c:2721
 #, c-format
 msgid ""
 "Outfit '%s' has 'ontoggle' Lua function defined, but is set as 'notactive'!"
 msgstr ""
 
-#: src/outfit.c:2827
+#: src/outfit.c:2743
 #, c-format
 msgid "Name collision! %d outfit is named '%s'"
 msgid_plural "Name collision! %d outfits are named '%s'"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/outfit.c:2836
+#: src/outfit.c:2752
 #, c-format
 msgid "Loaded %d Outfit in %.3f s"
 msgid_plural "Loaded %d Outfits in %.3f s"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/outfit.c:2839
+#: src/outfit.c:2755
 #, c-format
 msgid "Loaded %d Outfit"
 msgid_plural "Loaded %d Outfits"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/outfit.c:2855
+#: src/outfit.c:2771
 #, c-format
 msgid "Fighter Bay Outfit '%s' has not found ship '%s'!"
 msgstr ""
 
-#: src/outfit.c:2869
+#: src/outfit.c:2785
 msgid ""
 "\n"
 "#rIllegal to:#0"
 msgstr ""
 
-#: src/outfit.c:2871
+#: src/outfit.c:2787
 #, c-format
 msgid ""
 "\n"
 "#r- %s#0"
 msgstr ""
 
-#: src/outfit.c:2882
+#: src/outfit.c:2798
 #, c-format
 msgid ""
 "Outfit '%s' lua load error -> 'load':\n"
 "%s"
 msgstr ""
 
-#: src/outfit.c:2890
+#: src/outfit.c:2806
 #, c-format
 msgid "Outfit '%s' has inexistent license requirement '%s'!"
-msgstr ""
-
-#: src/outfit.c:3072
-#, c-format
-msgctxt "outfitstats"
-msgid "%s: %.*f%s"
-msgstr ""
-
-#: src/outfit.c:3080
-#, c-format
-msgctxt "outfitstats"
-msgid "%s: %s%s"
-msgstr ""
-
-#: src/outfit.c:3093
-#, c-format
-msgctxt "outfitstats"
-msgid "%s: %d%s"
-msgstr ""
-
-#: src/outfit.c:3107
-#, c-format
-msgctxt "outfitstats"
-msgid "%s: %.*f%s - %.*f%s"
-msgstr ""
-
-#: src/outfit.c:3117
-#, c-format
-msgctxt "outfitstats"
-msgid "%s: %s%s - %s%s"
 msgstr ""
 
 #.
@@ -117601,327 +117646,361 @@ msgstr ""
 msgid "Empty"
 msgstr ""
 
-#: src/shipstats.c:90
+#: src/shipstats.c:84
+msgid "Speed"
+msgstr ""
+
+#: src/shipstats.c:85
 msgid "Turn"
 msgstr ""
 
-#: src/shipstats.c:92
+#: src/shipstats.c:86
+msgid "Thrust"
+msgstr ""
+
+#: src/shipstats.c:87
 msgid "Cargo Space"
 msgstr ""
 
-#: src/shipstats.c:93
+#: src/shipstats.c:88
 msgid "Fuel Cpacity"
 msgstr ""
 
-#: src/shipstats.c:94
+#: src/shipstats.c:89
 msgid "Armour Strength"
 msgstr ""
 
-#: src/shipstats.c:95 src/shipstats.c:168
+#: src/shipstats.c:90
 msgid "Armour Regeneration"
 msgstr ""
 
-#: src/shipstats.c:96
+#: src/shipstats.c:91
 msgid "Shield Strength"
 msgstr ""
 
-#: src/shipstats.c:97 src/shipstats.c:165
+#: src/shipstats.c:92
 msgid "Shield Regeneration"
 msgstr ""
 
-#: src/shipstats.c:98 src/shipstats.c:160
+#: src/shipstats.c:93
 msgid "Energy Capacity"
 msgstr ""
 
-#: src/shipstats.c:99 src/shipstats.c:161
+#: src/shipstats.c:94
 msgid "Energy Regeneration"
 msgstr ""
 
-#: src/shipstats.c:100 src/shipstats.c:173
+#: src/shipstats.c:95 src/shipstats.c:168
 msgid "CPU Capacity"
 msgstr ""
 
-#: src/shipstats.c:101
+#: src/shipstats.c:96
 msgid "Ability Cooldown"
 msgstr ""
 
-#: src/shipstats.c:103
+#: src/shipstats.c:98
 msgid "Jump Time"
 msgstr ""
 
-#: src/shipstats.c:104
+#: src/shipstats.c:99
 msgid "Landing Time"
 msgstr ""
 
-#: src/shipstats.c:105
+#: src/shipstats.c:100
 msgid "Cargo Inertia"
 msgstr ""
 
-#: src/shipstats.c:107
+#: src/shipstats.c:102
 msgid "Detected Range"
 msgstr ""
 
-#: src/shipstats.c:108
+#: src/shipstats.c:103
 msgid "Signature Range"
 msgstr ""
 
-#: src/shipstats.c:109
+#: src/shipstats.c:104
 msgid "Stealth Range"
 msgstr ""
 
-#: src/shipstats.c:110
+#: src/shipstats.c:105
 msgid "Detection"
 msgstr ""
 
-#: src/shipstats.c:112
+#: src/shipstats.c:106
+msgid "Tracking"
+msgstr ""
+
+#: src/shipstats.c:107
 msgid "Jump Detection"
 msgstr ""
 
-#: src/shipstats.c:113
+#: src/shipstats.c:108
 msgid "Stealth Discovered Speed"
 msgstr ""
 
-#: src/shipstats.c:114
+#: src/shipstats.c:109
 msgid "Scanned Speed"
 msgstr ""
 
-#: src/shipstats.c:116
+#: src/shipstats.c:111
 msgid "Fire Rate (Launcher)"
 msgstr ""
 
-#: src/shipstats.c:117
+#: src/shipstats.c:112
 msgid "Launch Range"
 msgstr ""
 
-#: src/shipstats.c:118
+#: src/shipstats.c:113
 msgid "Damage (Launcher)"
 msgstr ""
 
-#: src/shipstats.c:119
+#: src/shipstats.c:114
 msgid "Ammo Capacity"
 msgstr ""
 
-#: src/shipstats.c:120
+#: src/shipstats.c:115
 msgid "Launch Lock-on"
 msgstr ""
 
-#: src/shipstats.c:121
+#: src/shipstats.c:116
 msgid "Launch Calibration"
 msgstr ""
 
-#: src/shipstats.c:122
+#: src/shipstats.c:117
 msgid "Ammo Reload Rate"
 msgstr ""
 
-#: src/shipstats.c:124
+#: src/shipstats.c:119
 msgid "Fighter Damage"
 msgstr ""
 
-#: src/shipstats.c:125
+#: src/shipstats.c:120
 msgid "Fighter Health"
 msgstr ""
 
-#: src/shipstats.c:126
+#: src/shipstats.c:121
 msgid "Fighter Movement"
 msgstr ""
 
-#: src/shipstats.c:127
+#: src/shipstats.c:122
 msgid "Fighter Bay Capacity"
 msgstr ""
 
-#: src/shipstats.c:128
+#: src/shipstats.c:123
 msgid "Fighter Bay Launch Rate"
 msgstr ""
 
-#: src/shipstats.c:129
+#: src/shipstats.c:124
 msgid "Fighter Reload Rate"
 msgstr ""
 
-#: src/shipstats.c:131
+#: src/shipstats.c:126
 msgid "Heat (Cannon)"
 msgstr ""
 
-#: src/shipstats.c:132
+#: src/shipstats.c:127
 msgid "Damage (Cannon)"
 msgstr ""
 
-#: src/shipstats.c:133
+#: src/shipstats.c:128
 msgid "Fire Rate (Cannon)"
 msgstr ""
 
-#: src/shipstats.c:134
+#: src/shipstats.c:129
 msgid "Energy Usage (Cannon)"
 msgstr ""
 
-#: src/shipstats.c:135
+#: src/shipstats.c:130
 msgid "Damage as Disable (Cannon)"
 msgstr ""
 
-#: src/shipstats.c:137
+#: src/shipstats.c:132
 msgid "Heat (Turret)"
 msgstr ""
 
-#: src/shipstats.c:138
+#: src/shipstats.c:133
 msgid "Damage (Turret)"
 msgstr ""
 
-#: src/shipstats.c:139
+#: src/shipstats.c:134
 msgid "Tracking (Turret)"
 msgstr ""
 
-#: src/shipstats.c:140
+#: src/shipstats.c:135
 msgid "Fire Rate (Turret)"
 msgstr ""
 
-#: src/shipstats.c:141
+#: src/shipstats.c:136
 msgid "Energy Usage (Turret)"
 msgstr ""
 
-#: src/shipstats.c:142
+#: src/shipstats.c:137
 msgid "Damage as Disable (Turret)"
 msgstr ""
 
-#: src/shipstats.c:144
+#: src/shipstats.c:139
 msgid "Heat Dissipation"
 msgstr ""
 
-#: src/shipstats.c:145
+#: src/shipstats.c:140
 msgid "Stress Dissipation"
 msgstr ""
 
-#: src/shipstats.c:146 src/shipstats.c:186
+#: src/shipstats.c:141
 msgid "Crew"
 msgstr ""
 
-#: src/shipstats.c:147
+#: src/shipstats.c:142
 msgid "Ship Mass"
 msgstr ""
 
-#: src/shipstats.c:148 src/shipstats.c:174
+#: src/shipstats.c:143 src/shipstats.c:169
 msgid "Engine Mass Limit"
 msgstr ""
 
-#: src/shipstats.c:149
+#: src/shipstats.c:144
 msgid "Boarding Bonus"
 msgstr ""
 
-#: src/shipstats.c:150
+#: src/shipstats.c:145
 msgid "Time Constant"
 msgstr ""
 
-#: src/shipstats.c:151
+#: src/shipstats.c:146
 msgid "Action Speed"
 msgstr ""
 
-#: src/shipstats.c:152
+#: src/shipstats.c:147
 msgid "Ship Cooldown Time"
 msgstr ""
 
-#: src/shipstats.c:153
+#: src/shipstats.c:148
 msgid "Jump Distance"
 msgstr ""
 
-#: src/shipstats.c:154
+#: src/shipstats.c:149
 msgid "Jump Warmup"
 msgstr ""
 
-#: src/shipstats.c:155
+#: src/shipstats.c:150
 msgid "Mining Bonus"
 msgstr ""
 
-#: src/shipstats.c:158
-msgid "Turn Rate"
+#: src/shipstats.c:152
+msgid "kN/tonne Thrust"
 msgstr ""
 
-#: src/shipstats.c:158
-msgid "deg/sec"
+#: src/shipstats.c:153
+msgid "deg/s Turn Rate"
+msgstr ""
+
+#: src/shipstats.c:154
+msgid "m/s Maximum Speed"
+msgstr ""
+
+#: src/shipstats.c:155
+msgid "MJ Energy Capacity"
+msgstr ""
+
+#: src/shipstats.c:156
+msgid "MW Energy Regeneration"
+msgstr ""
+
+#: src/shipstats.c:157 src/shipstats.c:158
+msgid "MW Energy Usage"
 msgstr ""
 
 #: src/shipstats.c:159
-msgid "m/s"
+msgid "MJ Shield Capacity"
 msgstr ""
 
-#: src/shipstats.c:162 src/shipstats.c:163
-msgid "Energy Usage"
+#: src/shipstats.c:160
+msgid "MW Shield Regeneration"
+msgstr ""
+
+#: src/shipstats.c:161
+msgid "MW Shield Usage"
+msgstr ""
+
+#: src/shipstats.c:162
+msgid "MJ Armour"
+msgstr ""
+
+#: src/shipstats.c:163
+msgid "MW Armour Regeneration"
 msgstr ""
 
 #: src/shipstats.c:164
-msgid "Shield Capacity"
+msgid "MW Armour Damage"
+msgstr ""
+
+#: src/shipstats.c:165
+msgid "MW Damage"
 msgstr ""
 
 #: src/shipstats.c:166
-msgid "Shield Usage"
+msgid "MW Disable"
 msgstr ""
 
-#: src/shipstats.c:175
+#: src/shipstats.c:170
 msgid "Fuel Regeneration"
 msgstr ""
 
-#: src/shipstats.c:176
+#: src/shipstats.c:171
 msgid "Asteroid Scanner Range"
 msgstr ""
 
-#: src/shipstats.c:177
+#: src/shipstats.c:172
 msgid "Nebula Visibility"
 msgstr ""
 
-#: src/shipstats.c:179
+#: src/shipstats.c:174
 msgid "Damage Absorption"
 msgstr ""
 
-#: src/shipstats.c:181
+#: src/shipstats.c:176
 msgid "Nebula Resistance"
 msgstr ""
 
-#: src/shipstats.c:182
+#: src/shipstats.c:177
 msgid "Missile jamming chance"
 msgstr ""
 
-#: src/shipstats.c:184 src/shipstats.c:186
-msgid "u"
+#: src/shipstats.c:179
+msgid "units Fuel"
 msgstr ""
 
-#: src/shipstats.c:188
+#: src/shipstats.c:180
+msgid "tonnes Cargo Space"
+msgstr ""
+
+#: src/shipstats.c:181
+msgid "crew"
+msgstr ""
+
+#: src/shipstats.c:183
 msgid "Hidden Jump Detection"
 msgstr ""
 
-#: src/shipstats.c:189
+#: src/shipstats.c:184
 msgid "Instant Jump"
 msgstr ""
 
-#: src/shipstats.c:190
+#: src/shipstats.c:185
 msgid "Reverse Thrusters"
 msgstr ""
 
-#: src/shipstats.c:417
+#: src/shipstats.c:412
 #, c-format
 msgid "ss_lookup: %s should have id %d but has %d"
 msgstr ""
 
-#: src/shipstats.c:690
+#: src/shipstats.c:685
 #, c-format
 msgid "ss_typeFromName: No ship stat matching '%s'"
 msgstr ""
 
-#: src/shipstats.c:722 src/shipstats.c:736
-#, c-format
-msgctxt "shipstats"
-msgid "%s#%s%s: %+g%s#0"
-msgstr ""
-
-#: src/shipstats.c:750
-#, c-format
-msgctxt "shipstats"
-msgid "%s#%s%s: %+d%s#0"
-msgstr ""
-
-#: src/shipstats.c:764
-#, c-format
-msgctxt "shipstats"
-msgid "%s#%s%s#0"
-msgstr ""
-
-#: src/shipstats.c:910 src/shipstats.c:1044 src/shipstats.c:1063
+#: src/shipstats.c:913 src/shipstats.c:1047 src/shipstats.c:1066
 #, c-format
 msgid "Unknown ship stat type '%s'!"
 msgstr ""
