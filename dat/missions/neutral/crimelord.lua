@@ -40,6 +40,9 @@ local npc_image = portrait.getFullPath( npc_portrait )
 
 function create ()
    mem.targetsystem = system.get("Ogat")
+   if not misn.claim( mem.targetsystem, true ) then
+      misn.finish( false )
+   end
    misn.setNPC( npc_name, npc_portrait, _("A private detective is signalling you to come speak with him.") )
 end
 
@@ -97,7 +100,10 @@ function enter ()
    fct_baddie = faction.dynAdd( nil, "crimelord_thugs", _("Thugs"), {ai="dvaered" } )
    fct_baddie:dynEnemy( fct_goodie )
 
-   hook.timer(4.0, "spawnBaddies")
+   -- Only spawn if system can handle inclusive claims
+   if naev.claimTest( system.cur(), true ) then
+      hook.timer(4.0, "spawnBaddies")
+   end
 
    if system.cur() == mem.targetsystem then
       local defenderships = { "Lancelot", "Lancelot", "Admonisher", "Pacifier", "Hawking", "Kestrel" }

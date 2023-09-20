@@ -40,7 +40,7 @@
   <thrust_mod>70</thrust_mod>
   <armour_mod>-50</armour_mod>
   <fwd_firerate>10</fwd_firerate>
-  <ew_evade>-10</ew_evade>
+  <ew_signature>-10</ew_signature>
   <loot_mod>20</loot_mod>
  </stats>
  <tags>

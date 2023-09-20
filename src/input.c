@@ -88,7 +88,7 @@ const char *keybind_info[][3] = {
    { "autonav", N_("Autonavigation On"), N_("Initializes the autonavigation system.") },
    { "target_spob", N_("Target Spob"), N_("Cycles through space object targets.") },
    { "approach", N_("Approach"), N_("Attempts to approach the targeted ship or space object, or targets the nearest landable space object. Requests landing permission if necessary. Prioritizes ships over space objects.") },
-   { "thyperspace", N_("Target Jumpgate"), N_("Cycles through jump points.") },
+   { "thyperspace", N_("Target Jump Point"), N_("Cycles through jump points.") },
    { "starmap", N_("Star Map"), N_("Opens the star map.") },
    { "jump", N_("Initiate Jump"), N_("Attempts to jump via a jump point.") },
    { "overlay", N_("Overlay Map"), N_("Opens the in-system overlay map.") },
@@ -906,7 +906,8 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (KEY("approach") && INGAME() && NOHYP() && NOLAND() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) {
          player_restoreControl( 0, NULL );
-         int board_status = player_tryBoard(0);
+         /* Only do noisy if there is no land target. */
+         int board_status = player_tryBoard( player.p->nav_spob<0 );
          if (board_status == PLAYER_BOARD_RETRY)
             player_board();
          else {

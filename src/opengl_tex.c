@@ -53,7 +53,7 @@ static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h, int tight );
 static size_t gl_transSize( const int w, const int h );
 /* glTexture */
 static GLuint gl_texParameters( unsigned int flags );
-static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int freesur );
+static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int freesur, double *vmax );
 static glTexture* gl_loadNewImage( const char* path, unsigned int flags );
 static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, unsigned int flags );
 /* List. */
@@ -285,9 +285,10 @@ glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const ch
  *    @param surface Surface to load into a texture.
  *    @param flags Flags to use.
  *    @param freesur Whether or not to free the surface.
+ *    @param[out] vmax The maximum value in the case of an SDF texture.
  *    @return The opengl texture id.
  */
-static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int freesur )
+static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int freesur, double *vmax )
 {
    GLuint texture;
    GLfloat param;
@@ -298,17 +299,17 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
    /* now load the texture data up */
    SDL_LockSurface( surface );
    if (flags & OPENGL_TEX_SDF) {
-      double vmax;
       uint8_t *trans = SDL_MapTrans( surface, surface->w, surface->h, 0 );
-      GLfloat *dataf = make_distance_mapbf( trans, surface->w, surface->h, &vmax );
+      GLfloat *dataf = make_distance_mapbf( trans, surface->w, surface->h, vmax );
       free( trans );
-      glTexImage2D( GL_TEXTURE_2D, 0, GL_RED, surface->w, surface->h, 0, GL_RED, GL_FLOAT, dataf );
-      free( dataf );
-
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+      glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
+      glTexImage2D( GL_TEXTURE_2D, 0, GL_RED, surface->w, surface->h, 0, GL_RED, GL_FLOAT, dataf );
+      free( dataf );
    }
    else {
+      *vmax = 0.;
       glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch&-surface->pitch, 8 ) );
       glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
             surface->w, surface->h, 0, surface->format->Amask ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, surface->pixels );
@@ -491,7 +492,7 @@ glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
    texture->sx    = (double) sx;
    texture->sy    = (double) sy;
 
-   texture->texture = gl_loadSurface( surface, flags, freesur );
+   texture->texture = gl_loadSurface( surface, flags, freesur, &texture->vmax );
 
    texture->sw    = texture->w / texture->sx;
    texture->sh    = texture->h / texture->sy;

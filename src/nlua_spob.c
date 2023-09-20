@@ -248,7 +248,6 @@ static int spobL_cur( lua_State *L )
 
 static int spobL_getBackend( lua_State *L, int system, int landable )
 {
-   int *factions;
    char **spobs;
    const char *rndspob;
    Spob *pnt;
@@ -264,7 +263,7 @@ static int spobL_getBackend( lua_State *L, int system, int landable )
 
    /* Get a spob by faction */
    else if (lua_isfaction(L,1)) {
-      factions = array_create( int );
+      int *factions = array_create( int );
       array_push_back( &factions, lua_tofaction(L,1) );
       spobs  = space_getFactionSpob( factions, landable );
       array_free( factions );
@@ -291,7 +290,7 @@ static int spobL_getBackend( lua_State *L, int system, int landable )
    /* Get a spob from faction list */
    else if (lua_istable(L,1)) {
       /* Get table length and preallocate. */
-      factions = array_create_size( int, lua_objlen(L,1) );
+      int *factions = array_create_size( int, lua_objlen(L,1) );
       /* Load up the table. */
       lua_pushnil(L);
       while (lua_next(L, -2) != 0) {

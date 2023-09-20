@@ -268,8 +268,8 @@ typedef struct Pilot_ {
    double energy_loss; /**< Linear loss that bypasses the actual RC circuit stuff. */
 
    /* Defensive Electronic Warfare. */
-   double ew_detection; /**< Main detection. */
-   double ew_evasion;   /**< Evasion. */
+   double ew_detection; /**< Main detection. Affects both signature and stealth.*/
+   double ew_signature;   /**< Signature. Used for tracking and blurring identification. */
    double ew_stealth;   /**< Stealth. */
    /* Defensive Electronic Warfare. */
    double ew_mass;      /**< Mass factor. */

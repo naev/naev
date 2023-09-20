@@ -65,7 +65,7 @@ local function update( s, dt )
 
    -- Detect nearby enemies
    for k,p in ipairs(triggers) do
-      local ew = p:evasion()
+      local ew = p:signature()
       -- if perfectly tracked, we don't have to do fancy computations
       if ew > d.trackmax then
          trigger( s, d )
@@ -94,7 +94,7 @@ local function render( sp, x, y, z )
 
    -- Render for player
    local pp = player.pilot()
-   local ew = pp:evasion()
+   local ew = pp:signature()
    if d.hostile or not d.fct or d.fct:areEnemies(pp:faction()) then
       if ew > d.trackmin then
          local r = math.min( (ew - d.trackmin) / (d.trackmax - d.trackmin), 1 ) * d.range * z

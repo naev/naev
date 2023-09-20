@@ -76,7 +76,7 @@ void fps_display( double dt );
 double fps_current (void);
 void naev_resize (void);
 void naev_toggleFullscreen (void);
-void update_routine( double dt, int enter_sys );
+void update_routine( double dt, int dohooks );
 const char *naev_version( int long_version );
 int naev_versionCompare( const char *version );
 void naev_quit (void);

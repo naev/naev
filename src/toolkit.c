@@ -84,6 +84,7 @@ static void toolkit_expose( Window *wdw, int expose );
 static void window_renderBorder( Window* w );
 /* Death. */
 static void widget_kill( Widget *wgt );
+static void window_cleanup( Window *wdw );
 static void window_remove( Window *wdw );
 static void toolkit_purgeDead (void);
 
@@ -1096,14 +1097,13 @@ void window_kill( Window *wdw )
 }
 
 /**
- * @brief Frees up a window.
+ * @brief Cleans up the window, should be done before window_remove
  *
- *    @param wdw Window to remove.
+ *    @param wdw Window to clean up.
+ * @see window_remove
  */
-static void window_remove( Window *wdw )
+static void window_cleanup( Window *wdw )
 {
-   Widget *wgt;
-
    /* Run the close function first. */
    if (wdw->close_fptr != NULL)
       wdw->close_fptr( wdw->id, wdw->name );
@@ -1113,6 +1113,17 @@ static void window_remove( Window *wdw )
    if (wdw->cleanup_fptr != NULL)
       wdw->cleanup_fptr( wdw->id, wdw->name );
    wdw->cleanup_fptr = NULL;
+}
+
+/**
+ * @brief Frees up a window. Make sure to clean up the window first.
+ *
+ *    @param wdw Window to remove.
+ * @see window_cleanup
+ */
+static void window_remove( Window *wdw )
+{
+   Widget *wgt;
 
    /* Destroy the window. */
    free(wdw->name);
@@ -2169,6 +2180,8 @@ static void toolkit_purgeDead (void)
       if (window_isFlag( wdw, WINDOW_KILL )) {
          /* Save target. */
          Window *wkill = wdw;
+         /* Clean up while still in list. */
+         window_cleanup( wdw );
          /* Reattach linked list. */
          if (wlast == NULL)
             windows = wdw->next;
@@ -2657,6 +2670,7 @@ void toolkit_exit (void)
    while (windows!=NULL) {
       wdw      = windows;
       windows  = windows->next;
+      window_cleanup(wdw);
       window_remove(wdw);
    }
 

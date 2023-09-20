@@ -1404,14 +1404,16 @@ void player_weapSetPress( int id, double value, int repeat )
 
    type = (value>=0) ? +1 : -1;
 
-   if (toolkit_isOpen() && (type>0 || pilot_weapSet(player.p,id)->type != WEAPSET_TYPE_WEAPON))
-      return;
+   if (type > 0) {
+      if (toolkit_isOpen())
+         return;
 
-   if ((type>0) && (pilot_isFlag(player.p, PILOT_HYP_PREP) ||
-         pilot_isFlag(player.p, PILOT_HYPERSPACE) ||
-         pilot_isFlag(player.p, PILOT_LANDING) ||
-         pilot_isFlag(player.p, PILOT_TAKEOFF)))
-      return;
+      if ((pilot_isFlag(player.p, PILOT_HYP_PREP) ||
+            pilot_isFlag(player.p, PILOT_HYPERSPACE) ||
+            pilot_isFlag(player.p, PILOT_LANDING) ||
+            pilot_isFlag(player.p, PILOT_TAKEOFF)))
+         return;
+   }
 
    pilot_weapSetPress( player.p, id, type );
 }

@@ -53,7 +53,7 @@ function update( p, po, _dt )
          if #pall > 0 then
             local ptarget = {}
             for k,e in ipairs(pall) do
-               if e:evasion() < trackmin then
+               if e:signature() < trackmin then
                   table.insert( ptarget, e )
                end
             end
