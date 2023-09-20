@@ -41,6 +41,7 @@
 
 typedef struct LandOutfitData_ {
    const Outfit **outfits;
+   int blackmarket;
 } LandOutfitData;
 
 static iar_data_t *iar_data = NULL; /**< Stored image array positions. */
@@ -101,8 +102,6 @@ static void outfits_onClose( unsigned int wid, const char *str )
 {
    (void) str;
    LandOutfitData *data = window_getData( wid );
-   if (data==NULL)
-      return;
    array_free( data->outfits );
    free( data );
 }
@@ -113,22 +112,20 @@ static void outfits_onClose( unsigned int wid, const char *str )
  *    @param wid Window ID to open at.
  *    @param outfits Array (array.h): Outfits to sell. Will be freed.
  *                   Set to NULL if this is the landed player store.
+ *    @param blackmarket Whether or not the outfit seller is a black market.
  */
-void outfits_open( unsigned int wid, const Outfit **outfits )
+void outfits_open( unsigned int wid, const Outfit **outfits, int blackmarket )
 {
    int w, h, iw, ih, bw, bh, off;
    LandOutfitData *data = NULL;
 
    /* initialize the outfit mode. */
    outfit_Mode = 0;
-
-   /* Set up window data. */
-   if (outfits!=NULL) {
-      data           = malloc( sizeof( LandOutfitData ) );
-      data->outfits  = outfits;
-      window_setData( wid, data );
-      window_onClose( wid, outfits_onClose );
-   }
+   data = malloc( sizeof( LandOutfitData ) );
+   data->outfits = outfits;
+   data->blackmarket = blackmarket;
+   window_setData( wid, data );
+   window_onClose( wid, outfits_onClose );
 
    /* Mark as generated. */
    if (outfits==NULL)
@@ -155,7 +152,7 @@ void outfits_open( unsigned int wid, const Outfit **outfits )
 
    /* buttons */
    off = -20;
-   if (data==NULL) {
+   if (data->outfits==NULL) {
       window_addButtonKey( wid, off, 20,
             bw, bh, "btnCloseOutfits",
             _("Take Off"), land_buttonTakeoff, SDLK_t );
@@ -225,7 +222,7 @@ void outfits_regenList( unsigned int wid, const char *str )
    data = window_getData( wid );
 
    /* Must exist. */
-   if ((data==NULL) && (land_getWid( LAND_WINDOW_OUTFITS ) == 0))
+   if ((data->outfits==NULL) && (land_getWid( LAND_WINDOW_OUTFITS ) == 0))
       return;
 
    /* Save focus. */
@@ -378,7 +375,7 @@ static void outfits_genList( unsigned int wid )
    data = window_getData( wid );
    array_free( iar_outfits[active] );
    /* Use custom list; default to landed outfits. */
-   iar_outfits[active] = data!=NULL ? array_copy( Outfit*, data->outfits ) : tech_getOutfit( land_spob->tech );
+   iar_outfits[active] = (data->outfits!=NULL) ? array_copy( Outfit*, data->outfits ) : tech_getOutfit( land_spob->tech );
    noutfits = outfits_filter( (const Outfit**)iar_outfits[active], array_size(iar_outfits[active]), tabfilters[active], filtertext );
    coutfits = outfits_imageArrayCells( (const Outfit**)iar_outfits[active], &noutfits, player.p );
 
@@ -418,7 +415,9 @@ void outfits_update( unsigned int wid, const char *str )
    /* Get dimensions. */
    outfits_getSize( wid, &w, &h, &iw, &ih, NULL, NULL );
 
-   blackmarket = ((land_spob!=NULL) && spob_hasService( land_spob, SPOB_SERVICE_BLACKMARKET ));
+   /* See if black market. */
+   LandOutfitData *data = window_getData( wid );
+   blackmarket = data->blackmarket;
 
    /* Set up keys. */
    k += scnprintf( &lbl[k], sizeof(lbl)-k, "%s", _("Owned:") );
@@ -466,7 +465,7 @@ void outfits_update( unsigned int wid, const char *str )
    else
       window_disableButtonSoft( wid, "btnSellOutfit" );
 
-   if ((outfit_canBuy(outfit->name, land_spob) > 0) && canbuy)
+   if ((outfit_canBuy(outfit->name, blackmarket) > 0) && canbuy)
       window_enableButton( wid, "btnBuyOutfit" );
    else
       window_disableButtonSoft( wid, "btnBuyOutfit" );
@@ -801,11 +800,11 @@ static void outfit_Popdown( unsigned int wid, const char* str )
 /**
  * @brief Checks to see if the player can buy the outfit.
  *    @param name Outfit to buy.
- *    @param spob Where the player is shopping.
+ *    @param blackmarket Whether or not it is a black market.
  */
-int outfit_canBuy( const char *name, const Spob *spob )
+int outfit_canBuy( const char *name, int blackmarket )
 {
-   int failure, blackmarket, canbuy, cansell;
+   int failure, canbuy, cansell;
    credits_t price;
    const Outfit *outfit;
    char buf[ECON_CRED_STRLEN];
@@ -813,7 +812,6 @@ int outfit_canBuy( const char *name, const Spob *spob )
    failure = 0;
    outfit  = outfit_get(name);
    outfit_getPrice( outfit, &price, &canbuy, &cansell );
-   blackmarket = ((spob!=NULL) && spob_hasService(spob, SPOB_SERVICE_BLACKMARKET));
 
    /* Unique. */
    if (outfit_isProp(outfit, OUTFIT_PROP_UNIQUE) && (player_outfitOwnedTotal(outfit)>0)) {

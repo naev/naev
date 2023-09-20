@@ -8,7 +8,7 @@
       return false
    end
    local es_misn = var.peek("es_misn") or 0
-   if var.peek("es_cargo") ~= true and es_misn &lt; 2 then
+   if var.peek("es_cargo") ~= true or es_misn &lt; 2 then
       return false
    end
    return require("misn_test").reweight_active()

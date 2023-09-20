@@ -687,6 +687,9 @@ static void spfxL_renderLayer( int func, const char *funcname, double dt )
          case 2:
             funcref = ls->render_fg;
             break;
+         default:
+            WARN(_("Unknown render layer '%d'!"), func);
+            return;
       }
 
       /* Skip no rendering. */

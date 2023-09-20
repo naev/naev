@@ -256,10 +256,6 @@ static int map_findDistance( StarSystem *sys, Spob *spob, int *jumps, double *di
    StarSystem **slist;
    double d;
    int i;
-   vec2 *vs, *ve;
-
-   /* Defaults. */
-   ve = NULL;
 
    /* Special case it's the current system. */
    if (sys == cur_system) {
@@ -282,7 +278,8 @@ static int map_findDistance( StarSystem *sys, Spob *spob, int *jumps, double *di
    /* Account final travel to spob for spob targets. */
    i = *jumps - 1;
    if (spob != NULL) {
-      vs = NULL;
+      vec2 *ve = &spob->pos;
+      vec2 *vs = NULL;
       if (i > 0) {
          StarSystem *ss = slist[ i ];
          for (int j=0; j < array_size(ss->jumps); j++) {
@@ -292,8 +289,8 @@ static int map_findDistance( StarSystem *sys, Spob *spob, int *jumps, double *di
             }
          }
       }
-
-      ve = &spob->pos;
+      else
+         vs = &player.p->solid.pos; /* No jumps, grab from current location. */
 
       assert( vs != NULL );
       assert( ve != NULL );

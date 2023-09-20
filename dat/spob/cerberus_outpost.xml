@@ -23,7 +23,9 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Named after the guardian dog of the underworld for its role in monitoring and observing the immense Sol nebula. It was created shortly after the nebula stabilized. Exact details are confidential and there's more than enough military influence to make it suspicious. With all the conspiracy theories around the Incident, one can never be too sure where reality ends and fiction begins. Although a shipyard is present at the station, it does not offer any ships for sale and is mainly used to repair and maintain ships that have been damaged by forays into the depths of the nebula.</description>
+  <description>Aptly named after the guardian dog of the underworld, Cerberus Outpost was established soon after the stabilization of the immense Sol Nebula.
+While the station's stated purpose is to monitor and research the effects of the nebula, its exact details are confidential; to some, there's more than enough military influence in the station to make it suspicious. With all the theories around the Incident, one can never be too sure where reality ends and fiction begins.
+Although a shipyard is present at the station, it does not offer any ships for sale and is mainly used to repair and maintain ships that have been damaged by forays into the depths of the nebula.</description>
   <bar>The bar is maintained by off-duty scientists and soldiers. It's rather small and has a minuscule selection of beverages. There's little ambient noise; it seems as though boredom has gotten the best of most of the souls aboard.</bar>
  </general>
  <tech/>

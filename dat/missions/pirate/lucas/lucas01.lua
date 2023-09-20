@@ -53,9 +53,6 @@ local reward = 300e3
 -- 2: visited last spob and got family
 mem.stage = 0
 
-local first_spob, first_sys
-local last_spob, last_sys = spob.getS("Maanen's Moon")
-
 function create ()
    -- Get closest refugee planet
    local candidates = lmisn.getSpobAtDistance( nil, 0, math.huge, nil, false, function( s )
@@ -70,7 +67,8 @@ function create ()
    end )
 
    -- First spob is closest one, second one is fixed
-   first_spob, first_sys = candidates[1], candidates[1]:system()
+   mem.first_spob, mem.first_sys = candidates[1], candidates[1]:system()
+   mem.last_spob, mem.last_sys = spob.getS("Maanen's Moon")
    mem.return_spob, mem.return_sys = spob.cur()
 
    misn.setNPC( lcs.lucas.name, lcs.lucas.portrait, _([[The person looks stressed and worn out.]]) )
@@ -106,7 +104,7 @@ function accept ()
    lucas(_([["One day it snapped, and I had a dream remembering stuff I had forgotten about: my family. I guess I had repressed it for so long. Survival instincts maybe?"]]))
    lucas(_([["Since then I've been trying to find my family with the credits I was able to scrounge up working. I don't think they had as much luck as I had, they are probably stuck on some refugee world. The governments don't care for us at all. They just toss refugees into barely habitable planets and turn their eyes away. We are humans too!"]]))
    lucas(fmt.f(_([["I've narrowed it down a bit, I think they should be on {spb} in the {sys} system. Please try to find them! I'll give you all the information I have. Here take this locket, it is the only thing I have from them."]]),
-      {spb=first_spob, sys=first_sys}))
+      {spb=mem.first_spob, sys=mem.first_sys}))
    vn.na(_([[They hand you an old locket that looks like is missing half of it. It is fairly simple and made of some resistant metal alloy, but bears signs of heavy use.]]))
    lucas(_([["I'll be waiting here."]]))
    vn.done( lcs.lucas.transition )
@@ -124,18 +122,18 @@ function accept ()
 
    misn.osdCreate(_(title), {
       fmt.f(_([[Search for the family at {pnt} ({sys} system)]]),
-         {pnt=first_spob, sys=first_sys}),
+         {pnt=mem.first_spob, sys=mem.first_sys}),
       fmt.f(_([[Return to {pnt} ({sys} system)]]),
          {pnt=mem.return_spob, sys=mem.return_sys}),
    })
-   mem.mrk = misn.markerAdd( first_spob )
+   mem.mrk = misn.markerAdd( mem.first_spob )
 
    hook.land("land")
 end
 
 function land ()
    local spb = spob.cur()
-   if mem.stage==0 and spb==first_spob then
+   if mem.stage==0 and spb==mem.first_spob then
       vn.clear()
       vn.scene()
       vn.transition()
@@ -144,23 +142,23 @@ function land ()
       vn.na(fmt.f(_([[As you converse with many of the refugees at {spb}, you begin to appreciate the magnitude of the Incident calamity. Many refugees are missing or searching for family members, with deep psychological scars that are unable to heal.]]),
          {spb=spb}))
       vn.na(fmt.f(_([[Feeling like searching for a needle in a haystack, you are almost about to give up when you find an older one-armed refugee. They take a close look at the locket and mention that they used to share a cell with someone using the same locket on {spb} in the {sys} system.]]),
-         {spb=last_spob, sys=last_sys}))
+         {spb=mem.last_spob, sys=mem.last_sys}))
       vn.na(fmt.f(_([[From their story, it seems like {spb} is a horrible traumatic place, a refugee limbo where atrocities are commonplace. It also seems like the planet is locked down, you'll likely have to bribe the authorities to access it.]]),
-         {spb=last_spob}))
+         {spb=mem.last_spob}))
       vn.na(_([[They give you the location of the cell where they were and wish you luck. Looks like you have a lead.]]))
 
       vn.run()
 
       misn.osdCreate(_(title), {
          fmt.f(_([[Search for the family at {pnt} ({sys} system, bribe if necessary)]]),
-            {pnt=last_spob, sys=last_sys}),
+            {pnt=mem.last_spob, sys=mem.last_sys}),
          fmt.f(_([[Return to {pnt} ({sys} system)]]),
             {pnt=mem.return_spob, sys=mem.return_sys}),
       })
-      misn.markerMove( mem.mrk, last_spob )
+      misn.markerMove( mem.mrk, mem.last_spob )
       mem.stage = 1
 
-   elseif mem.stage==1 and spb==last_spob then
+   elseif mem.stage==1 and spb==mem.last_spob then
       vn.clear()
       vn.scene()
       vn.transition()
@@ -184,7 +182,7 @@ function land ()
       end )
       vn.na(_([[You open the cell and find yourself with a very weakened old man. At first they are scared to death, believing you have come to take their meager possessions or their life, however, you are able to calm them down when you mention that Lucas sent you, and pass out.]]))
       vn.na(_([[You quickly look around to see if there is anyone else there. Once you confirm that the man is the only person you pick them up and make your way back to the spaceport. Likely due to malnourishment, the old man is a much lighter load than you had expected. On the way back, surprisingly enough, people seem to take less notice of you than when you came in.]]))
-      vn.na(_([[Eventually you reach the spaceport checkpoint. The guards raise an eyebrow at the old man you're carrying, but once you show them the receipt of your spaceship, the let you through.]]))
+      vn.na(_([[Eventually you reach the spaceport checkpoint. The guards raise an eyebrow at the old man you're carrying, but once you show them the receipt of your spaceship, they let you through.]]))
       vn.na(_([[The old man is in not very good shape and seems to fall into a deep slumber when you set them aboard the ship, would be best to try to head back to Lucas as soon as possible.]]))
       vn.done()
 
@@ -204,7 +202,7 @@ function land ()
       lucas(_([[When Lucas sees the old man, his eyes tear up and he kneels to take a closer look.
 "Dear old man, what have they done to you?"]]))
       lucas(_([[Still kneeling, Lucas shuffles forward and emotively hugs the old man. Probably not the reunion they were looking for, but better than nothing nonetheless.]]))
-      lucas(_([[After a solemn while, Lucas kisses the old man on the check and turns to you.
+      lucas(_([[After a solemn while, Lucas kisses the old man on the cheek and turns to you.
 "Thank you for what you've done. I think I can take care of it from now on. I have to see what happened to the others."]]))
       vn.na(_([[You help Lucas take the old man off the ship, and also return the locket. Lucas thanks you fervently for all you've done and hands you a credit chip. He then heads off with his father towards the nearest medical center.]]))
 

@@ -639,10 +639,10 @@ const char* space_getRndSpob( int landable, unsigned int services,
       for (int j=0; j<array_size(systems_stack[i].spobs); j++) {
          Spob *pnt = systems_stack[i].spobs[j];
 
-         if (services && spob_hasService(pnt, services) != services)
+         if (services && (spob_hasService(pnt, services) != services))
             continue;
 
-         if (filter != NULL && !filter(pnt))
+         if ((filter != NULL) && !filter(pnt))
             continue;
 
          array_push_back( &tmp, pnt );
@@ -1532,7 +1532,7 @@ int space_needsEffects (void)
 void space_init( const char* sysname, int do_simulate )
 {
    int n, s;
-   const double fps_min_simulation = fps_min * 2.;
+   const double fps_min_simulation = fps_min;
    StarSystem *oldsys = cur_system;
 
    /* cleanup some stuff */
@@ -1651,11 +1651,11 @@ void space_init( const char* sysname, int do_simulate )
       ntime_allowUpdate( 0 );
       n = SYSTEM_SIMULATE_TIME_PRE / fps_min_simulation;
       for (int i=0; i<n; i++)
-         update_routine( fps_min_simulation, 1 );
+         update_routine( fps_min_simulation, 0 );
       space_simulating_effects = 1;
       n = SYSTEM_SIMULATE_TIME_POST / fps_min_simulation;
       for (int i=0; i<n; i++)
-         update_routine( fps_min_simulation, 1 );
+         update_routine( fps_min_simulation, 0 );
       ntime_allowUpdate( 1 );
       sound_disabled = s;
       /*

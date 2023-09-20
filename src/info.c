@@ -172,7 +172,7 @@ static void info_buttonRegen (void)
             BUTTON_WIDTH, BUTTON_HEIGHT,
             btn->button, btn->caption, info_buttonClick, btn->key );
    }
-   window_resizeWidget( wid, "lstInventory", w-80-240-40-40, h-90 - rows*(20+BUTTON_HEIGHT) );
+   window_resizeWidget( wid, "lstInventory", w-80-300-40-40, h-90 - rows*(20+BUTTON_HEIGHT) );
    window_moveWidget( wid, "lstInventory", -20, -70 );
 }
 
@@ -292,8 +292,8 @@ void menu_info( int window )
    }
 
    /* Dimensions. */
-   w = 640;
-   h = 680;
+   w = 700;
+   h = 700;
 
    /* Create the window. */
    info_wid = window_create( "wdwInfo", _("Info"), -1, -1, w, h );
@@ -392,7 +392,7 @@ static void info_openMain( unsigned int wid )
    k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Damage done:") );
    k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Damage taken:") );
    k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Ships destroyed:") );
-   window_addText( wid, 20, 20, 120, h-80, 0, "txtDPilot", &gl_smallFont, &cFontGrey, str );
+   window_addText( wid, 20, 20, 160, h-80, 0, "txtDPilot", &gl_smallFont, &cFontGrey, str );
 
    credits2str( creds, player.p->credits, 2 );
    l += scnprintf( &str[l], sizeof(str)-l, "%s", player.name );
@@ -413,8 +413,8 @@ static void info_openMain( unsigned int wid )
    l += scnprintf( &str[l], sizeof(str)-l, "\n%s", "" );
    l += scnprintf( &str[l], sizeof(str)-l, _("%s MJ"), num2strU(player.dmg_taken_shield + player.dmg_taken_armour, 0) );
    l += scnprintf( &str[l], sizeof(str)-l, "\n%s", num2strU(destroyed, 0) );
-   window_addText( wid, 160, 20,
-         w-80-160-40+20-180, h-80,
+   window_addText( wid, 200, 20,
+         w-80-200-40+20-180, h-80,
          0, "txtPilot", &gl_smallFont, NULL, str );
    free(nt);
 
@@ -449,9 +449,9 @@ static void info_openMain( unsigned int wid )
       }
       qsort( &inventory[nlic], ninv, sizeof(char*), strsort );
    }
-   window_addText( wid, -20, -40, w-80-240-40-40, 20, 1, "txtList",
+   window_addText( wid, -20, -40, w-80-300-40-40, 20, 1, "txtList",
          NULL, NULL, _("Inventory") );
-   window_addList( wid, -20, -70, w-80-240-40-40, h-110-BUTTON_HEIGHT,
+   window_addList( wid, -20, -70, w-80-300-40-40, h-110-BUTTON_HEIGHT,
          "lstInventory", inventory, n, 0, NULL, NULL );
    window_setFocus( wid, "lstInventory" );
 
@@ -498,8 +498,8 @@ static void info_openShip( unsigned int wid )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Fuel:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Stats:") );
-   window_addText( wid, 20, -40, 100, h-60, 0, "txtSDesc", &gl_smallFont, &cFontGrey, buf );
-   window_addText( wid, 160, -40, w-20-20-20-160-180., h-60, 0, "txtDDesc", &gl_smallFont,
+   window_addText( wid, 20, -40, 160, h-60, 0, "txtSDesc", &gl_smallFont, &cFontGrey, buf );
+   window_addText( wid, 200, -40, w-20-20-20-200-180., h-60, 0, "txtDDesc", &gl_smallFont,
          NULL, NULL );
 
    /* Custom widget. */
