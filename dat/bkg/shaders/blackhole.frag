@@ -42,8 +42,8 @@ const mat3 R = Rx * Ry * Rz; /**< Final camera rotation matrix. */
 const mat3 Rinv = Rinvz * Rinvy * Rinvx;
 
 /* Uniforms. Most is hardcoded. */
-uniform float u_time = 0.0;
-uniform vec3 u_camera= vec3( 0.0, 0.0, 1.0 );
+uniform float u_time;
+uniform vec3 u_camera;
 uniform sampler2D u_bgtex;
 
 /* Value Noise. */

@@ -217,7 +217,7 @@ int gl_fboCreate( GLuint *fbo, GLuint *tex, GLsizei width, GLsizei height )
    /* Create the render buffer. */
    glGenTextures(1, tex);
    glBindTexture(GL_TEXTURE_2D, *tex);
-   glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
@@ -258,7 +258,7 @@ glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const ch
    texture->texture = gl_texParameters( 0 );
 
    /* Copy over. */
-   glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, w, h, 0, GL_RGBA, GL_FLOAT, data );
+   glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_FLOAT, data );
    glBindTexture( GL_TEXTURE_2D, 0 );
 
    /* Check errors. */
@@ -311,7 +311,7 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
    else {
       *vmax = 0.;
       glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch&-surface->pitch, 8 ) );
-      glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
+      glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA8,
             surface->w, surface->h, 0, surface->format->Amask ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, surface->pixels );
    }
    SDL_UnlockSurface( surface );

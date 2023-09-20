@@ -1,10 +1,10 @@
 #include "lib/sdf.glsl"
 #include "lib/simplex.glsl"
 
-uniform float u_time = 0.0;
-uniform float u_speed = 1.0;
-uniform float u_grain = 1.0;
-uniform float u_r = 0.0;
+uniform float u_time;
+uniform float u_speed;
+uniform float u_grain;
+uniform float u_r;
 
 vec4 effect( vec4 color, sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 {

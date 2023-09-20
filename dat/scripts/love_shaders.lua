@@ -463,8 +463,8 @@ function love_shaders.circuit( params )
    local pixelcode = string.format([[
 #include "lib/math.glsl"
 
-uniform float u_time = 0.0;
-uniform vec3 u_camera = vec3( 0.0, 0.0, 1.0 );
+uniform float u_time;
+uniform vec3 u_camera;
 
 const float strength = %f;
 const float speed    = %f;
@@ -582,8 +582,8 @@ function love_shaders.windy( params )
    local pixelcode = string.format([[
 #include "lib/simplex.glsl"
 
-uniform float u_time = 0.0;
-uniform vec3 u_camera = vec3( 0.0, 0.0, 1.0 );
+uniform float u_time;
+uniform vec3 u_camera;
 
 const float strength = %f;
 const float speed    = %f;

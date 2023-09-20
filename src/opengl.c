@@ -235,9 +235,9 @@ static void GLAPIENTRY gl_debugCallback( GLenum source, GLenum type, GLuint id, 
  */
 static int gl_setupAttributes( int fallback )
 {
-   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, fallback ? 3 : 4);
-   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, fallback ? 1 : 0);
-   SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+   SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1); /* Ideally want double buffering. */
    if (conf.fsaa > 1) {
       SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
@@ -407,7 +407,7 @@ static int gl_defState (void)
 {
    glDisable( GL_DEPTH_TEST ); /* set for doing 2d */
    glEnable(  GL_BLEND ); /* alpha blending ftw */
-   glEnable(  GL_LINE_SMOOTH ); /* We use SDF shaders for most shapes, but star trails & map routes are thin & anti-aliased. */
+   // glEnable(  GL_LINE_SMOOTH ); /* We use SDF shaders for most shapes, but star trails & map routes are thin & anti-aliased. */
 #if DEBUG_GL
    glEnable(  GL_DEBUG_OUTPUT ); /* Log errors immediately.. */
    glDebugMessageCallback( gl_debugCallback, 0 );
@@ -417,6 +417,8 @@ static int gl_defState (void)
 
    /* Set the blending/shading model to use. */
    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ); /* good blend model */
+
+   gl_checkErr();
 
    return 0;
 }
@@ -438,7 +440,7 @@ static int gl_setupScaling (void)
    /* Combine scale factor from OS with the one in Naev's config */
    gl_screen.scale = fmax(gl_screen.dwscale, gl_screen.dhscale) / conf.scalefactor;
    glLineWidth(1. / gl_screen.scale);
-   glPointSize(1. / gl_screen.scale + 2.0);
+   // glPointSize(1. / gl_screen.scale + 2.0);
 
    /* New window is real window scaled. */
    gl_screen.nw = (double)gl_screen.rw * gl_screen.scale;
@@ -464,6 +466,8 @@ static int gl_setupScaling (void)
    gl_screen.hscale  = (double)gl_screen.nh / (double)gl_screen.h;
    gl_screen.mxscale = (double)gl_screen.w / (double)gl_screen.rw;
    gl_screen.myscale = (double)gl_screen.h / (double)gl_screen.rh;
+
+   gl_checkErr();
 
    return 0;
 }

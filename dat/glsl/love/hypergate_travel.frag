@@ -1,9 +1,9 @@
 #include "lib/math.glsl"
 #include "lib/blend.glsl"
 
-uniform float u_progress = 0.0;
+uniform float u_progress;
 uniform sampler2D u_prevtex;
-uniform vec3 u_colour = vec3( 0.0, 0.8, 0.6 );
+uniform vec3 u_colour;
 
 vec2 off( float progress, float x, float theta )
 {

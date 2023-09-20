@@ -1,7 +1,7 @@
 #include "lib/simplex.glsl"
 
-uniform float u_time = 0.0;
-uniform vec3 u_camera = vec3(1.0); /* xy corresponds to screen space */
+uniform float u_time;
+uniform vec3 u_camera; /* xy corresponds to screen space */
 
 const vec3 COL_BACK  = vec3( 0.35, 0.3, 1.0 );
 const vec3 COL_FRONT = vec3( 1.5, 0.65, 0.9 );

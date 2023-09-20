@@ -530,7 +530,8 @@ function graphics.newShader( pixelcode, vertexcode )
    vertexcode = vertexcode or _vertexcode
 
    local prepend = [[
-#version 140
+#version 300 es
+precision mediump float;
 #define _LOVE
 // Syntax sugar
 #define Image           sampler2D
@@ -547,7 +548,7 @@ uniform mat4 ClipSpaceFromView;
 uniform mat4 ClipSpaceFromLocal;
 uniform mat3 ViewNormalFromLocal;
 uniform vec4 love_ScreenSize;
-uniform vec4 ConstantColor = vec4(1.0);
+uniform vec4 ConstantColor; // XXX = vec4(1.0);
 
 // Compatibility
 #define TransformMatrix             ViewSpaceFromLocal

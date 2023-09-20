@@ -3,8 +3,8 @@
 #include "lib/gamma.glsl"
 
 /* Common uniforms for special effects. */
-uniform float u_time = 0.0;   /**< Elapsed time. */
-uniform float u_r = 0.0;      /**< Random seed. */
+uniform float u_time;   /**< Elapsed time. */
+uniform float u_r;      /**< Random seed. */
 
 /* Main constants. */
 const float CAM_DIST = 2.0;         /**< Distance of the camera from the origin. Defaults to 2.0. */
@@ -21,15 +21,15 @@ const float BRIGHTNESS_RADIUS_OFFSET = 1.3;/**< Determines the radius-dependent 
 const float CONTRAST = 1.0;         /**< Final colour contrast. Higher values correspond to less contrast. Defaults 1.0. */
 
 /* Uniforms. */
-uniform float u_smokiness = 0.588;     /**< Lower value saturates the explosion, while higher values give it a smokey look. Default to 0.588. */
-uniform float u_grain = 0.5;           /**< Determines the details of the explosions. Increasing it likely requires increasing step size. Defaults to 0.5. */
-uniform float u_speed = 0.4;           /**< How fast the animation plays. Total play time is 1.0/u_speed. */
-uniform vec4 u_colorbase = vec4( 1.2, 0.9, 0.5, 0.7); /**< Base colour of the explosion. Defaults to {1.2, 0.9, 0.5, 0.7}. */
-uniform vec4 u_colorsmoke = vec4( 0.15, 0.15, 0.15, 0.1); /**< Colour to use for the smoke, most likely shouldn't be changed. Defaults to {0.15, 0.15, 0.15, 0.1}. */
-uniform int u_steps = 16;              /**< How many steps to march. Defaults to 16. */
-uniform float u_roll_speed = 1.0;      /**< How fast the sphere cloud effects roll. Defaults to 1.0. */
-uniform float u_roll_dampening = 0.7;  /**< How fast the sphere cloud effects roll gets dampened. Defaults to 0.7. */
-uniform float u_smoke_fade = 1.4;      /**< Determines how the smake fades. Larger values leave more smoke at the end. Defaults to 1.4. */
+uniform float u_smokiness;     /**< Lower value saturates the explosion, while higher values give it a smokey look. Default to 0.588. */
+uniform float u_grain;           /**< Determines the details of the explosions. Increasing it likely requires increasing step size. Defaults to 0.5. */
+uniform float u_speed;           /**< How fast the animation plays. Total play time is 1.0/u_speed. */
+uniform vec4 u_colorbase; /**< Base colour of the explosion. Defaults to {1.2, 0.9, 0.5, 0.7}. */
+uniform vec4 u_colorsmoke; /**< Colour to use for the smoke, most likely shouldn't be changed. Defaults to {0.15, 0.15, 0.15, 0.1}. */
+uniform int u_steps;              /**< How many steps to march. Defaults to 16. */
+uniform float u_roll_speed;      /**< How fast the sphere cloud effects roll. Defaults to 1.0. */
+uniform float u_roll_dampening;  /**< How fast the sphere cloud effects roll gets dampened. Defaults to 0.7. */
+uniform float u_smoke_fade;      /**< Determines how the smake fades. Larger values leave more smoke at the end. Defaults to 1.4. */
 
 /* Noise function to use. Has to be in the [0,1] range. */
 float noise( vec3 x )

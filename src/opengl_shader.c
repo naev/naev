@@ -13,7 +13,7 @@
 #include "nstring.h"
 #include "opengl.h"
 
-#define GLSL_VERSION    "#version 150\n\n" /**< Version to use for all shaders. */
+#define GLSL_VERSION    "#version 300 es\nprecision mediump float;\n\n" /**< Version to use for all shaders. */
 #define GLSL_SUBROUTINE "#define HAS_GL_ARB_shader_subroutine 1\n" /**< Has subroutines. */
 
 /*
@@ -241,8 +241,10 @@ GLuint gl_program_vert_frag( const char *vertfile, const char *fragfile, const c
       geometry_shader = 0;
 
    program = gl_program_make( vertex_shader, fragment_shader, geometry_shader );
-   if (program==0)
+   if (program==0) {
       WARN(_("Failed to link vertex shader '%s' and fragment shader '%s'!"), vertfile, fragfile);
+      abort();
+   }
 
    return program;
 }

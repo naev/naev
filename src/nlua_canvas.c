@@ -181,6 +181,12 @@ int canvas_new( LuaCanvas_t *lc, int w, int h )
    glGenFramebuffers( 1, &lc->fbo );
    glBindFramebuffer(GL_FRAMEBUFFER, lc->fbo);
 
+   // XXX use GL_UNSIGNED_BYTE
+   glBindTexture( GL_TEXTURE_2D, lc->tex->texture );
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+   glBindTexture( GL_TEXTURE_2D, 0 );
+
+
    /* Attach the colour buffer. */
    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, lc->tex->texture, 0);
 

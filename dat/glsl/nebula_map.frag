@@ -1,11 +1,11 @@
 #include "lib/nebula.glsl"
 
 uniform float hue;
-uniform float brightness = 1.0;
+uniform float brightness;
 uniform float time;
 uniform vec2 globalpos;
 uniform float alpha;
-uniform float volatility = 0.0;
+uniform float volatility;
 in vec2 localpos;
 out vec4 colour_out;
 

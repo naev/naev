@@ -1,6 +1,6 @@
 #include "lib/nebula.glsl"
 
-uniform float brightness = 1.0;
+uniform float brightness;
 uniform float time;
 uniform vec2 globalpos;
 uniform float alpha;

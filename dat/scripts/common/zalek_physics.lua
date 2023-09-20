@@ -55,7 +55,7 @@ function zpp.shader_focal ()
    local pixelcode = [[
 #include "lib/simplex.glsl"
 
-uniform float u_time = 0.0;
+uniform float u_time;
 
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
@@ -103,10 +103,10 @@ function zpp.shader_nebula ()
 const float hue         = 300.0;
 const float view        = 300.0;
 const float sf          = %f;
-uniform float u_time    = 0.0;
+uniform float u_time;
 uniform vec3 u_camera   = vec3(0.0, 0.0, 1.0);
-uniform float u_progress= 0.0;
-uniform float u_mode    = 0;
+uniform float u_progress;
+uniform float u_mode;
 
 vec4 nebula_bg( vec2 screen_coords )
 {

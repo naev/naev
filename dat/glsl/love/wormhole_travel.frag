@@ -1,8 +1,8 @@
 #include "lib/simplex.glsl"
 
-uniform float u_time = 0.0;
-uniform float u_progress = 0.0;
-uniform int u_invert = 0;
+uniform float u_time;
+uniform float u_progress;
+uniform int u_invert;
 
 const vec3 col_outter = vec3( 0.0, 0.8, 1.0 );
 

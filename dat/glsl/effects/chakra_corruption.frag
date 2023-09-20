@@ -4,10 +4,10 @@
 uniform vec3 dimensions;
 uniform sampler2D u_tex;
 
-uniform float u_r       = 0.0;
-uniform float u_timer   = 0.0;
-uniform float u_elapsed = 0.0;
-uniform float u_dir     = 0.0;
+uniform float u_r;
+uniform float u_timer;
+uniform float u_elapsed;
+uniform float u_dir;
 
 const float FADE  = 0.3;
 const vec4 COLOUR = vec4( 1.0, 0.8, 0.0, 1.0 );

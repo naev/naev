@@ -2,9 +2,9 @@ uniform sampler2D MainTex;
 in vec4 VaryingTexCoord;
 out vec4 color_out;
 
-uniform vec2 shake_pos = vec2( 0.0, 0.0 );
-uniform vec2 shake_vel = vec2( 0.0, 0.0 );
-uniform float shake_force = 0.0;
+uniform vec2 shake_pos;
+uniform vec2 shake_vel;
+uniform float shake_force;
 
 const float VEL_FACTOR = 1.0/8.0;
 

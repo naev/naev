@@ -3,9 +3,9 @@
 
 //uniform vec3 dimensions;
 
-uniform float u_r       = 0.0;
-uniform float u_time    = 0.0;
-uniform float u_fade    = 1.0;
+uniform float u_r;
+uniform float u_time;
+uniform float u_fade;
 
 in vec2 pos;
 out vec4 colour_out;

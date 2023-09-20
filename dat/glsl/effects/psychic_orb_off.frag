@@ -4,10 +4,10 @@
 uniform vec3 dimensions;
 uniform sampler2D u_tex;
 
-uniform float u_r       = 0.0;
+uniform float u_r;
 //uniform float u_timer   = 0.0;
-uniform float u_elapsed = 0.0;
-uniform float u_dir     = 0.0;
+uniform float u_elapsed;
+uniform float u_dir;
 
 in vec2 tex_coord;
 in vec2 tex_scale;

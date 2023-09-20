@@ -25,7 +25,7 @@ const float SCALE = 1.0/900.0;
 const float TIME_SCALE = 1.0/50.0;
 const float VISIBILITY = 700.0;
 
-uniform float u_time = 0.0;
+uniform float u_time;
 uniform vec3 u_camera;
 
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )

@@ -5,8 +5,8 @@ in vec4 VaryingTexCoord;
 out vec4 color_out;
 
 uniform vec4 love_ScreenSize;
-uniform float damage_strength = 0.0; /**< 0 to 1 value where 1 indicates a ton of damage. */
-uniform float u_time = 0.0; /**< Constantly increasing timer value. */
+uniform float damage_strength; /**< 0 to 1 value where 1 indicates a ton of damage. */
+uniform float u_time; /**< Constantly increasing timer value. */
 
 const float OFFSET_MOD  = 13.0; /**< How many pixels to multiply by. */
 const float OFFSET_MAX  = 5.0; /**< Maximum offset in pixels. */
