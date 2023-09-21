@@ -1809,9 +1809,14 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
    if (t == INFINITY)  /* Postprocess (t = INFINITY means target is not hittable) */
       t = 0.;
 
+   double t_parent = t;
+   /* Launch the missiles in the estimated direction of the target. */
+   if (outfit_isLauncher(outfit) && outfit->u.lau.ai != AMMO_AI_UNGUIDED)
+      t_parent = 0.;
+
    /* Position is calculated on where it should be */
-   x = (target_pos->x + target_vel->x*t) - (pos->x + vel->x*t);
-   y = (target_pos->y + target_vel->y*t) - (pos->y + vel->y*t);
+   x = (target_pos->x + target_vel->x*t) - (pos->x + vel->x*t_parent);
+   y = (target_pos->y + target_vel->y*t) - (pos->y + vel->y*t_parent);
 
    /* Compute both the angles we want. */
    if (pilot_target != NULL) {
