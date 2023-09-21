@@ -314,7 +314,7 @@ static void think_seeker( Weapon* w, double dt )
       case WEAPON_STATUS_LOCKING: /* Check to see if we can get a lock on. */
          w->timer2 -= dt;
          if (w->timer2 >= 0.)
-            weapon_setThrust( w, w->outfit->u.lau.thrust * w->outfit->mass );
+            weapon_setThrust( w, w->outfit->u.lau.thrust * w->outfit->u.lau.ammo_mass );
          else
             w->status = WEAPON_STATUS_OK; /* Weapon locked on. */
          /* Can't get jammed while locking on. */
@@ -339,7 +339,7 @@ static void think_seeker( Weapon* w, double dt )
                   else if (r < 0.8) {
                      w->status = WEAPON_STATUS_JAMMED;
                      weapon_setTurn( w, 0. );
-                     weapon_setThrust( w, w->outfit->u.lau.thrust * w->outfit->mass );
+                     weapon_setThrust( w, w->outfit->u.lau.thrust * w->outfit->u.lau.ammo_mass );
                   }
                   else {
                      w->status = WEAPON_STATUS_JAMMED_SLOWED;
