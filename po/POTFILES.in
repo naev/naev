@@ -3079,6 +3079,7 @@ dat/missions/neutral/poi/gate_safety.lua
 dat/missions/neutral/poi/nebula_crystals.lua
 dat/missions/neutral/poi/proteron_agent.lua
 dat/missions/neutral/poi/proteron_press.lua
+dat/missions/neutral/poi/red_rackham.lua
 dat/missions/neutral/poi/soromid_biologist.lua
 dat/missions/neutral/poi/zalek_drone.lua
 dat/missions/neutral/poi_intro.lua

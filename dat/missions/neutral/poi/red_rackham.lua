@@ -89,7 +89,6 @@ If this keeps up, the clan is going to tear itself apart. I think it's time to g
             vn.na(fmt.f(_(
                [[As you finish reading and arrive at the ship's cargo hold, you realize it's full of crudely scavenged, but functional {reward}. You load up as much as you can, pondering what you've learned about Red Rackham. You wonder, how could such a dangerous pirate just disappear without a trace?]]), {
                reward = reward,
-               rewardmsg = fmt.reward(reward)
             }))
          else
             vn.na(_(
@@ -112,7 +111,6 @@ They've taken over entire ship now, with Rackham himself leading the charge. He 
             vn.na(fmt.f(_(
                [[You carefully pocket the captain's notebook, your hands shaking in anticipation, then head to the cargo hold. Sure enough, you're greeted by hundreds of tons of pure {reward}, a sizeable haul even by modern standards. You load up as much as you can and then head back to your ship, pondering the unlikely end to this strange treasure hunt. You wonder idly if your name will show up some day in the legend of Red Rackham's treasure.]]), {
                reward = reward,
-               rewardmsg = fmt.reward(reward)
             }))
          end
 
