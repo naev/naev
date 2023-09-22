@@ -1014,12 +1014,14 @@ static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
       /* Normal mouse usage. */
       if (wgt->weapons < 0) {
          if (event->button.button == SDL_BUTTON_LEFT) {
-            int sel = selected + ret;
-            if (wgt->slot==sel)
-               wgt->slot = -1;
-            else
-               wgt->slot = sel;
-            equipment_regenLists( wid, 1, 0 );
+            if (wgt->canmodify) {
+               int sel = selected + ret;
+               if (wgt->slot==sel)
+                  wgt->slot = -1;
+               else
+                  wgt->slot = sel;
+               equipment_regenLists( wid, 1, 0 );
+            }
          }
          else if ((event->button.button == SDL_BUTTON_RIGHT) &&
                wgt->canmodify && !os[ret].sslot->locked) {
