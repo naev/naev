@@ -376,8 +376,8 @@ A powerful booming voice echoes through your ship, instantly defusing the situat
    vn.move( pir2, 2 )
 
    vn.scene()
-   local maikki = minerva.vn_maikkiP()
-   vn.transition( "slideup" )
+   local maikki = vn.newCharacter( minerva.vn_maikkiP() )
+   vn.transition( "hexagon" )
    vn.na(_([[The pirates give way and the source of the powerful voice appears before you. It's a small recognizable figure that you know quite well.]]))
    vn.menu{
       {_([["Maikki?"]]), "02_cont"},
