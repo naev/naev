@@ -41,7 +41,6 @@ local title = _("Escape the Courts")
 mem.state = nil
 
 function create ()
-   misn.finish(false)
    if not misn.claim{trialsys, badsys, destsys} then
       misn.finish( false )
    end
@@ -114,6 +113,7 @@ function enter ()
 
       -- Soft clearing should make things feel a bit more alive
       pilotai.clear()
+      pilot.toggleSpawn(false)
 
       local function add_blockade( jp )
          local pos = jp:pos()
@@ -148,7 +148,8 @@ function enter ()
          end
       end
 
-      hook.timer( 7, "spawn bogeys" )
+      hook.timer( 3, "player_warning" )
+      hook.timer( 11, "spawn_bogeys" )
       mem.state=1
    elseif scur==badsys then
       -- Just some random patrols here and there, player can stealth or brute force through
@@ -248,9 +249,14 @@ function enter ()
    end
 end
 
+function player_warning ()
+   pilot.broadcast( trialspb:name(), fmt.f(_("Unauthorized departure. Fleets engage {player}!"),{player=player.pilot():name()}) )
+end
+
 local bogey_spawner = 0
 local bogeys = {
-   { "Empire Shark", "Empire Shark", "Empire Lancelot" },
+   { "Empire Shark", "Empire Shark" },
+   { "Empire Lancelot", "Empire Lancelot" },
    { "Empire Admonisher", "Empire Admonisher" },
    { "Empire Pacifier", "Empire Lancelot", "Empire Lancelot" },
    { "Empire Hawking", "Empire Admonisher", "Empire Admonisher" },
@@ -267,7 +273,7 @@ function spawn_bogeys ()
    local fct = faction.get("Empire")
    local l
    for k,s in ipairs(bogeys[ bogey_spawner ]) do
-      local p = pilot.add( bogeys[1], fct, trialspb, nil, {ai="patrol"} )
+      local p = pilot.add( s, fct, trialspb, nil, {ai="baddiepatrol"} )
       if not l then
          l = p
       else
@@ -279,8 +285,15 @@ function spawn_bogeys ()
       m.guardpos = { trialspb:pos(), jmp:pos() }
    end
 
+   -- Spam stuff everytime they spawn
+   local pp = player.pilot()
+   local inr, nofuz = l:inrange( pp )
+   if inr and nofuz then
+      l:broadcast(fmt.f(_("Engaging {player}!"),{player=pp:name()}))
+   end
+
    -- They keep on coming!
-   hook.timer( 7, "spawn_bogeys" )
+   hook.timer( 7+3*bogey_spawner, "spawn_bogeys" )
 end
 
 function message_first ()
