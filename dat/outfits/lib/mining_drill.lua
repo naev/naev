@@ -26,10 +26,10 @@ function drill.ontoggle( p, _po, on )
 
    -- See if there's an asteroid targetted
    local a = p:targetAsteroid()
-   if not a or not p:inrangeAsteroid( a ) then
+   if not a or not p:inrange( a ) then
       -- Get nearest if not found
       a = asteroid.get( p )
-      if not a or not p:inrangeAsteroid( a ) then
+      if not a or not p:inrange( a ) then
          if mem.isp then
             player.msg("#r".._("No asteroids available to mine"))
          end

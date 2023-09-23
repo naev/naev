@@ -86,7 +86,6 @@ static int pilotL_setTarget( lua_State *L );
 static int pilotL_targetAsteroid( lua_State *L );
 static int pilotL_setTargetAsteroid( lua_State *L );
 static int pilotL_inrange( lua_State *L );
-static int pilotL_inrangeAsteroid( lua_State *L );
 static int pilotL_scandone( lua_State *L );
 static int pilotL_withPlayer( lua_State *L );
 static int pilotL_nav( lua_State *L );
@@ -270,7 +269,6 @@ static const luaL_Reg pilotL_methods[] = {
    { "targetAsteroid", pilotL_targetAsteroid },
    { "setTargetAsteroid", pilotL_setTargetAsteroid },
    { "inrange", pilotL_inrange },
-   { "inrangeAsteroid", pilotL_inrangeAsteroid },
    { "scandone", pilotL_scandone },
    { "withPlayer", pilotL_withPlayer },
    { "nav", pilotL_nav },
@@ -1505,54 +1503,53 @@ static int pilotL_setTargetAsteroid( lua_State *L )
 /**
  * @brief Checks to see if a target pilot is in range of a pilot.
  *
+ * TODO add supports for spobs and jump points.
+ *
  * @usage detected, scanned = p:inrange( target )
  *
  *    @luatparam Pilot p Pilot to see if another pilot is in range.
- *    @luatparam Pilot target Target pilot.
+ *    @luatparam Pilot|Asteroid|Vec2 target Target pilot or asteroid to check if in range.
  *    @luatreturn boolean True if the pilot is visible at all.
- *    @luatreturn boolean True if the pilot is visible and well-defined (not fuzzy)
+ *    @luatreturn boolean True if the pilot is visible and well-defined (not fuzzy). Always true if target is not a Pilot.
  * @luafunc inrange
  */
 static int pilotL_inrange( lua_State *L )
 {
    /* Parse parameters. */
    const Pilot *p = luaL_validpilot(L,1);
-   const Pilot *t = luaL_validpilot(L,2);
+   if (lua_ispilot(L,2)) {
+      const Pilot *t = luaL_validpilot(L,2);
 
-   /* Check if in range. */
-   int ret = pilot_inRangePilot( p, t, NULL );
-   if (ret == 1) { /* In range. */
-      lua_pushboolean(L,1);
-      lua_pushboolean(L,1);
+      /* Check if in range. */
+      int ret = pilot_inRangePilot( p, t, NULL );
+      if (ret == 1) { /* In range. */
+         lua_pushboolean(L,1);
+         lua_pushboolean(L,1);
+      }
+      else if (ret == 0) { /* Not in range. */
+         lua_pushboolean(L,0);
+         lua_pushboolean(L,0);
+      }
+      else { /* Detected fuzzy. */
+         lua_pushboolean(L,1);
+         lua_pushboolean(L,0);
+      }
+      return 2;
    }
-   else if (ret == 0) { /* Not in range. */
-      lua_pushboolean(L,0);
-      lua_pushboolean(L,0);
-   }
-   else { /* Detected fuzzy. */
-      lua_pushboolean(L,1);
-      lua_pushboolean(L,0);
-   }
-   return 2;
-}
+   else if (lua_isasteroid(L,2)) {
+      const LuaAsteroid_t *la = luaL_checkasteroid(L,2);
 
-/**
- * @brief Checks to see if an asteroid is in range of a pilot.
- *
- *    @luatparam Pilot p Pilot checking to see if an asteroid is in range.
- *    @luatparam Asteroid a Asteroid to check to see if is in range.
- *    @luatreturn boolean true if in range, false otherwise.
- * @luafunc inrangeAsteroid
- */
-static int pilotL_inrangeAsteroid( lua_State *L )
-{
-   /* Parse parameters. */
-   const Pilot *p = luaL_validpilot(L,1);
-   LuaAsteroid_t *la = luaL_checkasteroid(L,2);
-
-   /* Check if in range. */
-   lua_pushboolean(L, pilot_inRangeAsteroid( p, la->id, la->parent ));
-   return 1;
+      /* Check if in range. */
+      lua_pushboolean(L, pilot_inRangeAsteroid( p, la->id, la->parent ));
+      lua_pushboolean(L,1);
+      return 2;
+   }
+   else {
+      const vec2 *v = luaL_checkvector(L,2);
+      lua_pushboolean(L, pilot_inRange( p, v->x, v->y ) );
+      lua_pushboolean(L,1);
+      return 2;
+   }
 }
 
 /**
