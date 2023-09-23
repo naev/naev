@@ -240,7 +240,11 @@ local function sys_strongest_faction( sys, combat )
    if strongest == nil then
       local strongest_amount = 0
       for k, v in pairs( sys:presences() ) do
-         if (not combat or faction.get(k):playerStanding() < 0) and v > strongest_amount then
+         local f = faction.get(k)
+         if f:tags().pirate then
+            k = "Pirate" -- We don't distinguish between pirate factions ATM
+         end
+         if (not combat or f:playerStanding() < 0) and v > strongest_amount then
             strongest = k
             strongest_amount = v
          end
