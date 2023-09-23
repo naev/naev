@@ -234,6 +234,20 @@ function choose_table.takeoff ()
    return true
 end
 
+local function sys_strongest_faction( sys, combat )
+   sys = sys or system.cur()
+   local strongest = var.peek("music_ambient_force")
+   if strongest == nil then
+      local strongest_amount = 0
+      for k, v in pairs( sys:presences() ) do
+         if (not combat or faction.get(k):playerStanding() < 0) and v > strongest_amount then
+            strongest = k
+            strongest_amount = v
+         end
+      end
+   end
+   return strongest
+end
 
 -- Save old data
 local last_sysFaction  = nil
@@ -265,7 +279,6 @@ function choose_table.ambient ()
 
    -- Get information about the current system
    local sys       = system.cur()
-   local factions  = sys:presences()
    local nebu_dens = sys:nebula()
 
    -- System
@@ -275,16 +288,7 @@ function choose_table.ambient ()
       return true
    end
 
-   local strongest = var.peek("music_ambient_force")
-   if strongest == nil then
-      local strongest_amount = 0
-      for k, v in pairs( factions ) do
-         if v > strongest_amount then
-            strongest = k
-            strongest_amount = v
-         end
-      end
-   end
+   local strongest = sys_strongest_faction( sys, false )
 
    -- Check to see if changing faction zone
    if strongest ~= last_sysFaction then
@@ -383,17 +387,7 @@ function choose_table.combat ()
    local nebu_dens = sys:nebula()
    local combat
 
-   local strongest = var.peek("music_combat_force")
-   if strongest == nil then
-      local presences = sys:presences()
-      local strongest_amount = 0
-      for k, v in pairs( presences ) do
-         if faction.get(k):playerStanding() < 0 and v > strongest_amount then
-            strongest = k
-            strongest_amount = v
-         end
-      end
-   end
+   local strongest = sys_strongest_faction( sys, true )
 
    local nebu = nebu_dens > 0
    if nebu then
