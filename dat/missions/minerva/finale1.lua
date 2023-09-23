@@ -115,6 +115,9 @@ function enter ()
       pilotai.clear()
       pilot.toggleSpawn(false)
 
+      -- No relanding
+      player.landAllow( false, _("You can't land right now!") )
+
       local function add_blockade( jp )
          local pos = jp:pos()
          local m, a = pos:polar()
@@ -216,6 +219,7 @@ function enter ()
                p:setLeader( l )
             end
          end
+         return l
       end
 
       local pacifier = ship.get("Empire Pacifier" )
@@ -226,7 +230,7 @@ function enter ()
       emp_boss = add_guard_group( posB, { "Empire Peacemaker", pacifier, pacifier, lancelot, lancelot, lancelot, lancelot, lancelot, lancelot } )
       add_patrol_group( routeC, { admonisher, shark, shark, shark, shark } )
       add_patrol_group( routeD, { admonisher, shark, shark } )
-      add_patrol_group( posE, { "Empire Rainmaker", admonisher, admonisher, lancelot, lancelot, lancelot, lancelot, lancelot, lancelot } )
+      add_guard_group( posE, { "Empire Rainmaker", admonisher, admonisher, lancelot, lancelot, lancelot, lancelot, lancelot, lancelot } )
 
       -- Tell the player to f off
       hook.timer( 5.0,  "message_first" )
@@ -236,6 +240,7 @@ function enter ()
       -- All's quiet on the front
       pilot.clear()
       pilot.toggleSpawn(false)
+      misn.osdActive( 2 )
 
       local pos = vec2.new( 5e3, 6e3 )
       pinkdemon = minerva.pink_demon( pos, {stealth=true} )
@@ -320,7 +325,8 @@ function maikki_hail ()
    local p = ccomm.newCharacter( vn, pinkdemon )
    vn.transition()
 
-   p(_([["I see you made it past the patrols in {sys}. Talk about bad timing for them to be doing military exercises. Luck is not in our favour."]]))
+   p(fmt.f(_([["I see you made it past the patrols in {sys}. Talk about bad timing for them to be doing military exercises. Luck is not in our favour."]]),
+      {sys=badsys}))
    vn.menu{
       {_([["Who are you?"]]), "01_cont"},
       {_([["It was a drag."]]), "01_cont"},
@@ -335,9 +341,10 @@ function maikki_hail ()
    vn.run()
 
    pinkdemon:setActiveBoard(true)
-   misn.osdCreate{
+   misn.osdCreate( title, {
       fmt.f(_("Board the {ship}"),{ship=pinkdemon}),
-   }
+   } )
+   player.commClose()
 end
 
 function maikki_board ()
