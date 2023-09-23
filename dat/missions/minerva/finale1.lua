@@ -348,6 +348,11 @@ function maikki_hail ()
 end
 
 function maikki_board ()
+   player.unboard()
+   hook.safe( "maikki_board_safe" )
+end
+
+function maikki_board_safe ()
    vn.clear()
    vn.scene()
    local pir1 = vn.newCharacter( _("Pirate A"), {image=vni.pirate(), pos="left"} )
