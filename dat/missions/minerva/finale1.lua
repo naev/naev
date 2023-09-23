@@ -474,7 +474,8 @@ The ride is fairly smooth, surprising you with how effortlessly Maikki seems to 
    maikki = minerva.vn_maikkiP()
    vn.transition()
 
-   vn.na(_([[You land with Makki on {spob} through what seems to be a hidden landing pad, away from the main spaceport.]]))
+   vn.na(fmt.f(_([[You land with Makki on {spob} through what seems to be a hidden landing pad, away from the main spaceport.]]),
+      {spob=recoupspob}))
    maikki(_([[Despite being quite flustered with the situation, Maikki seems intent on trying to manage the situation.
 "I'm going to get a full briefing and diagnostic on both Zuri and Kex. Since this will take a while, meet up with me at the bar and I'll fill you out with the important details."]]))
    vn.run()
