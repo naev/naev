@@ -571,6 +571,7 @@ void load_loadSnapshotMenu( const char *name, int disablesave )
    char **names;
    player_saves_t *ps;
    int n, can_save;
+   char *t;
 
    ps = NULL;
    for (int i=0; i<array_size(load_saves); i++) {
@@ -584,6 +585,13 @@ void load_loadSnapshotMenu( const char *name, int disablesave )
       return;
    }
    load_player = ps;
+
+   /* Since this function can be called from the small menu, we cannot rely on
+      the value of the selected_player variable at this point. With a recursive
+      call, name and selected_player can be the same. */
+   t = strdup( name );
+   free( selected_player );
+   selected_player = t;
 
    /* window */
    wid = window_create( "wdwLoadSnapshotMenu", _("Load Snapshot"), -1, -1, LOAD_WIDTH, LOAD_HEIGHT );

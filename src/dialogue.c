@@ -62,7 +62,7 @@ static int dialogue_custom_event( unsigned int wid, SDL_Event *event );
  * Prototypes.
  */
 /* extern */
-extern void main_loop( int update ); /* from naev.c */
+extern void main_loop( int nested ); /* from naev.c */
 /* generic */
 static void dialogue_close( unsigned int wid, const char *str );
 static void dialogue_cancel( unsigned int wid, const char *str );

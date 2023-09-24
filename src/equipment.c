@@ -949,10 +949,10 @@ static void equipment_renderShip( double bx, double by,
    }
 #endif /* DEBUGGING */
 
-   if ((eq_wgt.slot >= 0) && (eq_wgt.slot < array_size(p->outfit_weapon))) {
+   if ((eq_wgt.slot >= 0) && p->outfits[eq_wgt.slot]->sslot->slot.type==OUTFIT_SLOT_WEAPON) {
       p->tsx = sx;
       p->tsy = sy;
-      pilot_getMount( p, &p->outfit_weapon[eq_wgt.slot], &v );
+      pilot_getMount( p, p->outfits[eq_wgt.slot], &v );
       px += pw/2.;
       py += ph/2.;
       v.x *= pw / p->ship->gfx_space->sw;
@@ -1770,7 +1770,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
 
    /* Stealth stuff. */
    num2str( sdet, ship->ew_detection, 0 );
-   num2str( seva, ship->ew_evasion, 0 );
+   num2str( seva, ship->ew_signature, 0 );
    num2str( sste, ship->ew_stealth, 0 );
    num2str( smass, ship->solid.mass, 0 );
    num2str( sfuel, ship->fuel_max, 0 );
@@ -1795,7 +1795,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Turn:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Time Constant:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Detected at:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Evasion:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Signature:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Stealth at:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Absorption:") );

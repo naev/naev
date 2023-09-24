@@ -329,8 +329,7 @@ void gl_renderSDF( const glTexture *texture,
    gl_uniformColor(shaders.texturesdf.color, c);
    gl_uniformMat4(shaders.texturesdf.projection, &projection);
    gl_uniformMat4(shaders.texturesdf.tex_mat, &tex_mat);
-   glUniform1f( shaders.texturesdf.m, 0.01 );
-   //glUniform1f( shaders.texturesdf.outline, outline );
+   glUniform1f( shaders.texturesdf.m, texture->vmax );
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );

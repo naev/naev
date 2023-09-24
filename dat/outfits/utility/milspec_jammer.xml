@@ -13,7 +13,7 @@
  <specific type="modification" group="6">
   <active cooldown="5" />
   <energy_loss>50</energy_loss>
-  <ew_evade>-25</ew_evade>
+  <ew_signature>-25</ew_signature>
   <jam_chance>100</jam_chance>
  </specific>
 </outfit>

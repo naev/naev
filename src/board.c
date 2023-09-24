@@ -129,7 +129,8 @@ int player_tryBoard( int noisy )
             (!pilot_isDisabled(p) && !pilot_isFlag(p,PILOT_BOARDABLE)) ||
             pilot_isFlag(p,PILOT_NOBOARD)) {
          player_targetClear();
-         player_message( "#r%s", _("You need a target to board first!") );
+         if (noisy)
+            player_message( "#r%s", _("You need a target to board first!") );
          return PLAYER_BOARD_IMPOSSIBLE;
       }
    }
@@ -139,15 +140,18 @@ int player_tryBoard( int noisy )
 
    /* More checks. */
    if (pilot_isFlag(p,PILOT_NOBOARD)) {
-      player_message( "#r%s", _("Target ship can not be boarded.") );
+      if (noisy)
+         player_message( "#r%s", _("Target ship can not be boarded.") );
       return PLAYER_BOARD_IMPOSSIBLE;
    }
    else if (!pilot_isDisabled(p) && !pilot_isFlag(p,PILOT_BOARDABLE)) {
-      player_message( "#r%s", _("You cannot board a ship that isn't disabled!") );
+      if (noisy)
+         player_message( "#r%s", _("You cannot board a ship that isn't disabled!") );
       return PLAYER_BOARD_IMPOSSIBLE;
    }
    else if (pilot_isFlag(p,PILOT_BOARDED)) {
-      player_message( "#r%s", _("Your target cannot be boarded again.") );
+      if (noisy)
+         player_message( "#r%s", _("Your target cannot be boarded again.") );
       return PLAYER_BOARD_IMPOSSIBLE;
    }
    else if (vec2_dist(&player.p->solid.pos,&p->solid.pos) >

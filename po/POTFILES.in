@@ -3052,6 +3052,7 @@ dat/missions/neutral/antlejos/ant09.lua
 dat/missions/neutral/antlejos/ant10.lua
 dat/missions/neutral/antlejos/ant_supplies.lua
 dat/missions/neutral/aristodrink.lua
+dat/missions/neutral/bounty.lua
 dat/missions/neutral/cargo.lua
 dat/missions/neutral/cargo_rush.lua
 dat/missions/neutral/commodity_run.lua
@@ -3071,8 +3072,6 @@ dat/missions/neutral/nebu_satellite.lua
 dat/missions/neutral/new_europe_refugees.lua
 dat/missions/neutral/oldwoman.lua
 dat/missions/neutral/patrol.lua
-dat/missions/neutral/pirbounty_alive.lua
-dat/missions/neutral/pirbounty_dead.lua
 dat/missions/neutral/poi.lua
 dat/missions/neutral/poi/caretaker.lua
 dat/missions/neutral/poi/data_intro.lua
@@ -3254,6 +3253,7 @@ dat/scripts/colour.lua
 dat/scripts/common/achack.lua
 dat/scripts/common/antlejos.lua
 dat/scripts/common/baron.lua
+dat/scripts/common/bounty.lua
 dat/scripts/common/cargo.lua
 dat/scripts/common/census.lua
 dat/scripts/common/comm.lua

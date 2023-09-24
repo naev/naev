@@ -51,6 +51,7 @@ typedef struct glTexture_ {
    /* data */
    GLuint texture; /**< the opengl texture itself */
    uint8_t* trans; /**< maps the transparency */
+   double vmax; /**< Maximum value for SDF textures. */
 
    /* properties */
    uint8_t flags; /**< flags used for texture properties */

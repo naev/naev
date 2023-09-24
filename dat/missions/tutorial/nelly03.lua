@@ -251,7 +251,7 @@ She gives a small reverence to the debris before coming back to her happy self.
    vn.run()
 
    mem.misn_state = 1
-   misn.markerAdd( mem.retpnt )
+   misn.markerMove( mem.misn_marker, mem.retpnt )
    misn.osdActive(3)
 end
 
