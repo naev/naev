@@ -950,6 +950,7 @@ static int ship_parse( Ship *temp, const char *filename )
          } while (xml_nextNode(cur));
 
          /* Load array. */
+         ss_sort( &temp->stats );
          ss_statsInit( &temp->stats_array );
          ss_statsMergeFromList( &temp->stats_array, temp->stats );
 

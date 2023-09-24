@@ -2563,6 +2563,9 @@ static int outfit_parse( Outfit* temp, const char* file )
          else if (outfit_isLicense(temp))
             outfit_parseSLicense( temp, node );
 
+         /* Sort stats. */
+         ss_sort( &temp->stats );
+
          /* We add the ship stats to the description here. */
          if (temp->summary_raw != NULL) {
             l = strlen(temp->summary_raw);
