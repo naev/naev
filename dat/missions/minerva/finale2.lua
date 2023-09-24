@@ -33,9 +33,10 @@ local title = _("Minerva Station Redux")
 
 -- Mission states:
 --  nil: mission not accepted yet
---    1. get to Minerva Station
---    2. hack the gibson
---    3.
+--    1. Get to Minerva Station
+--    2. Hack the gibson
+--    3. Won fight
+--    4. On way to darkshed
 mem.state = nil
 
 function create ()
@@ -132,7 +133,7 @@ function accept ()
    vn.done()
 
    vn.label("accept")
-   vn.func( function () mem.state=0 end )
+   vn.func( function () mem.state=1 end )
 
    vn.run()
 
@@ -152,4 +153,10 @@ function accept ()
 end
 
 function enter ()
+   local scur = system.cur()
+   if scur==mainsys and mem.state==0 then
+      -- TODO add some enemies or something
+      pilot.clear()
+      pilot.toggleSpawn(false)
+   end
 end
