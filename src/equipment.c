@@ -62,6 +62,7 @@ static CstSlotWidget eq_wgt; /**< Equipment widget. */
 static double equipment_dir      = 0.; /**< Equipment dir. */
 static unsigned int equipment_lastick = 0; /**< Last tick. */
 static unsigned int equipment_wid   = 0; /**< Global wid. */
+static int equipment_creating    = 0; /**< Whether or not creating. */
 static int ship_mode = 0; /**< Ship mode. */
 static iar_data_t *iar_data = NULL; /**< Stored image array positions. */
 static Outfit ***iar_outfits = NULL; /**< Outfits associated with the image array cells. */
@@ -307,6 +308,7 @@ void equipment_open( unsigned int wid )
 
    /* Set global WID. */
    equipment_wid = wid;
+   equipment_creating = 1;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
@@ -412,6 +414,7 @@ void equipment_open( unsigned int wid )
 
    /* Focus the ships image array. */
    window_setFocus( wid , EQUIPMENT_SHIPS );
+   equipment_creating = 0;
 }
 
 /**
@@ -1252,6 +1255,10 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
    char *selship;
    const char *s;
    char *focused;
+
+   /* Ignore when creating, should be generated correctly anyway. */
+   if (equipment_creating)
+      return;
 
    /* Default.s */
    nship    = 0;
