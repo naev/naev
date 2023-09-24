@@ -34,13 +34,22 @@
 #include "weapon.h"
 #include "utf8.h"
 
+#define KST_STRCMP_ENUM(name,str) if (!strcmp(str,#name)) return name;
+
+unsigned long hash(const char *name) {
+    unsigned long hash = 5381;
+    for (int i=0; name[i]!='\0'; i++) {
+        hash = ((hash << 5) + hash) + name[i];
+    }
+    return hash;
+}
 /* keybinding structure */
 /**
  * @brief Naev Keybinding.
  */
 typedef struct Keybind_ {
    int disabled; /**< Whether or not it's disabled. */
-   const char *brief, detailed; /** */
+   const char *brief, *detailed; /**< Descriptions of the keybinds */
    KeybindType type; /**< type, defined in player.h */
    SDL_Keycode key; /**< key/axis/button event number */
    SDL_Keymod mod; /**< Key modifiers (where applicable). */
@@ -63,7 +72,7 @@ typedef enum KeySemanticType_ {
    KST_AUTONAV,
    KST_APPROACH,
    KST_MOUSE_FLYING,
-   KST_JUMP
+   KST_JUMP,
 
    KST_TARGET_NEXT,
    KST_TARGET_PREV,
@@ -102,7 +111,7 @@ typedef enum KeySemanticType_ {
    KST_ESCORT_ATTACK,
    KST_ESCORT_HALT,
    KST_ESCORT_RETURN,
-   KST_ESCORT_CLEAR
+   KST_ESCORT_CLEAR,
 
    KST_COMM_HAIL,
    KST_COMM_RECEIVE,
