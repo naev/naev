@@ -55,163 +55,90 @@ typedef struct Keybind_ {
    SDL_Keymod mod; /**< Key modifiers (where applicable). */
 } Keybind;
 
-/**
- * @brief Naev internal key types
- */
-typedef enum KeySemanticType_ {
-   KST_ACCEL=0,
-   KST_LEFT,
-   KST_RIGHT,
-   KST_REVERSE,
-   KST_FACE,
-
-   KST_STEALTH,
-   KST_GAME_SPEED,
-   KST_PAUSE,
-
-   KST_AUTONAV,
-   KST_APPROACH,
-   KST_MOUSE_FLYING,
-   KST_JUMP,
-
-   KST_TARGET_NEXT,
-   KST_TARGET_PREV,
-   KST_TARGET_CLOSE,
-   KST_TARGET_SPOB,
-   KST_TARGET_JUMP,
-
-   KST_HTARGET_NEXT,
-   KST_HTARGET_PREV,
-   KST_HTARGET_CLOSE,
-
-   KST_TARGET_CLEAR,
-
-   KST_FIRE_PRIMARY,
-   KST_FIRE_SECONDARY,
-   KST_INIT_COOLDOWN,
-
-   KST_TAB_1,
-   KST_TAB_2,
-   KST_TAB_3,
-   KST_TAB_4,
-   KST_TAB_5,
-   KST_TAB_6,
-   KST_TAB_7,
-   KST_TAB_8,
-   KST_TAB_9,
-   KST_TAB_0,
-
-   KST_LOCAL_MAP,
-   KST_GLOBAL_MAP,
-
-   KST_MENU_SMALL,
-   KST_MENU_INFO,
-   KST_MENU_LUA,
-
-   KST_ESCORT_ATTACK,
-   KST_ESCORT_HALT,
-   KST_ESCORT_RETURN,
-   KST_ESCORT_CLEAR,
-
-   KST_COMM_HAIL,
-   KST_COMM_RECEIVE,
-   KST_COMM_UP,
-   KST_COMM_DOWN
-
-   KST_ZOOM_IN,
-   KST_ZOOM_OUT,
-
-   KST_FULLSCREEN,
-
-   KST_SCREENSHOT,
-
-   KST_PASTE,
-
-} KeySemanticType;
 
 
 /* Description of each key semantic type */
 const char *keybind_info[KST_PASTE+1][2] = {
    /* Movement */
-   { N_("Accelerate"), N_("Makes your ship accelerate forward.") },
-   { N_("Turn Left"), N_("Makes your ship turn left.") },
-   { N_("Turn Right"), N_("Makes your ship turn right.") },
-   { N_("Reverse"), N_("Makes your ship face the direction you're moving from. Useful for braking.") },
-   { N_("Face Target"), N_("Faces the targeted ship if one is targeted, otherwise faces targeted spob or jump point.") },
+   [KST_ACCEL]={ N_("Accelerate"), N_("Makes your ship accelerate forward.") },
+   [KST_LEFT]={ N_("Turn Left"), N_("Makes your ship turn left.") },
+   [KST_RIGHT]={ N_("Turn Right"), N_("Makes your ship turn right.") },
+   [KST_REVERSE]={ N_("Reverse"), N_("Makes your ship face the direction you're moving from. Useful for braking.") },
+   [KST_FACE]={ N_("Face Target"), N_("Faces the targeted ship if one is targeted, otherwise faces targeted spob or jump point.") },
 
    /*Gameplay modifiers*/
-   { N_("Stealth"), N_("Tries to enter stealth mode.") },
-   { N_("Toggle Speed"), N_("Toggles speed modifier.") },
-   { N_("Pause"), N_("Pauses the game.") },
+   [KST_STEALTH]={ N_("Stealth"), N_("Tries to enter stealth mode.") },
+   [KST_GAME_SPEED]={ N_("Toggle Speed"), N_("Toggles speed modifier.") },
+   [KST_PAUSE]={ N_("Pause"), N_("Pauses the game.") },
 
    /*Movement modifiers*/
-   { N_("Autonavigation On"), N_("Initializes the autonavigation system.") },
-   { N_("Approach"), N_("Attempts to approach the targeted ship or space object, or targets the nearest landable space object. Requests landing permission if necessary. Prioritizes ships over space objects.") },
-   { N_("Mouse Flight"), N_("Toggles mouse flying.") },
-   { N_("Initiate Jump"), N_("Attempts to jump via a jump point.") },
+   [KST_AUTONAV]={ N_("Autonavigation On"), N_("Initializes the autonavigation system.") },
+   [KST_APPROACH]={ N_("Approach"), N_("Attempts to approach the targeted ship or space object, or targets the nearest landable space object. Requests landing permission if necessary. Prioritizes ships over space objects.") },
+   [KST_MOUSE_FLYING]={ N_("Mouse Flight"), N_("Toggles mouse flying.") },
+   [KST_JUMP]={ N_("Initiate Jump"), N_("Attempts to jump via a jump point.") },
 
    /* Targeting */
-   { N_("Target Next"), N_("Cycles through ship targets.") },
-   { N_("Target Previous"), N_("Cycles backwards through ship targets.") },
-   { N_("Target Nearest"), N_("Targets the nearest non-disabled ship.") },
-   { N_("Target Spob"), N_("Cycles through space object targets.") },
-   { N_("Target Jumpgate"), N_("Cycles through jump points.") },
+   [KST_TARGET_NEXT]={ N_("Target Next"), N_("Cycles through ship targets.") },
+   [KST_TARGET_PREV]={ N_("Target Previous"), N_("Cycles backwards through ship targets.") },
+   [KST_TARGET_CLOSE]={ N_("Target Nearest"), N_("Targets the nearest non-disabled ship.") },
+   [KST_TARGET_SPOB]={ N_("Target Spob"), N_("Cycles through space object targets.") },
+   [KST_TARGET_JUMP]={ N_("Target Jumpgate"), N_("Cycles through jump points.") },
 
    /**Hostile targets**/
-   { N_("Target Next Hostile"), N_("Cycles through hostile ship targets.") },
-   { N_("Target Previous Hostile"), N_("Cycles backwards through hostile ship targets.") },
-   { N_("Target Nearest Hostile"), N_("Targets the nearest hostile ship.") },
+   [KST_HTARGET_NEXT]={ N_("Target Next Hostile"), N_("Cycles through hostile ship targets.") },
+   [KST_HTARGET_NEXT]={ N_("Target Previous Hostile"), N_("Cycles backwards through hostile ship targets.") },
+   [KST_HTARGET_CLOSE]={ N_("Target Nearest Hostile"), N_("Targets the nearest hostile ship.") },
 
-   { N_("Clear Target"), N_("Clears the currently-targeted ship, spob or jump point.") },
+   [KST_TARGET_CLEAR]={ N_("Clear Target"), N_("Clears the currently-targeted ship, spob or jump point.") },
 
    /* Fighting */
-   { N_("Fire Primary Weapon"), N_("Fires primary weapons.") },
-   { N_("Fire Secondary Weapon"), N_("Fires secondary weapons.") },
-   { N_("Active Cooldown"), N_("Begins active cooldown.") },
+   [KST_FIRE_PRIMARY]={ N_("Fire Primary Weapon"), N_("Fires primary weapons.") },
+   [KST_FIRE_SECONDARY]={ N_("Fire Secondary Weapon"), N_("Fires secondary weapons.") },
+   [KST_INIT_COOLDOWN]={ N_("Active Cooldown"), N_("Begins active cooldown.") },
 
    /*Switching tabs*/
-   { N_("Switch Tab 1"), N_("Switches to tab 1.") },
-   { N_("Switch Tab 2"), N_("Switches to tab 2.") },
-   { N_("Switch Tab 3"), N_("Switches to tab 3.") },
-   { N_("Switch Tab 4"), N_("Switches to tab 4.") },
-   { N_("Switch Tab 5"), N_("Switches to tab 5.") },
-   { N_("Switch Tab 6"), N_("Switches to tab 6.") },
-   { N_("Switch Tab 7"), N_("Switches to tab 7.") },
-   { N_("Switch Tab 8"), N_("Switches to tab 8.") },
-   { N_("Switch Tab 9"), N_("Switches to tab 9.") },
-   { N_("Switch Tab 0"), N_("Switches to tab 0.") },
+   [KST_TAB_1]={ N_("Switch Tab 1"), N_("Switches to tab 1.") },
+   [KST_TAB_2]={ N_("Switch Tab 2"), N_("Switches to tab 2.") },
+   [KST_TAB_3]={ N_("Switch Tab 3"), N_("Switches to tab 3.") },
+   [KST_TAB_4]={ N_("Switch Tab 4"), N_("Switches to tab 4.") },
+   [KST_TAB_5]={ N_("Switch Tab 5"), N_("Switches to tab 5.") },
+   [KST_TAB_6]={ N_("Switch Tab 6"), N_("Switches to tab 6.") },
+   [KST_TAB_7]={ N_("Switch Tab 7"), N_("Switches to tab 7.") },
+   [KST_TAB_8]={ N_("Switch Tab 8"), N_("Switches to tab 8.") },
+   [KST_TAB_9]={ N_("Switch Tab 9"), N_("Switches to tab 9.") },
+   [KST_TAB_0]={ N_("Switch Tab 0"), N_("Switches to tab 0.") },
 
    /*Map manipulation*/
-   { N_("Overlay Map"), N_("Opens the in-system overlay map.") },
-   { N_("Star Map"), N_("Opens the star map.") },
+   [KST_LOCAL_MAP]={ N_("Overlay Map"), N_("Opens the in-system overlay map.") },
+   [KST_GLOBAL_MAP]={ N_("Star Map"), N_("Opens the star map.") },
 
    /*Menus*/
-   { N_("Small Menu"), N_("Opens the small in-game menu.") },
-   { N_("Information Menu"), N_("Opens the information menu.") },
-   { N_("Lua Console"), N_("Opens the Lua console.") },
+   [KST_MENU_SMALL]={ N_("Small Menu"), N_("Opens the small in-game menu.") },
+   [KST_MENU_INFO]={ N_("Information Menu"), N_("Opens the information menu.") },
+   [KST_MENU_LUA]={ N_("Lua Console"), N_("Opens the Lua console.") },
 
    /* Escorts */
-   { N_("Target Next Escort"), N_("Cycles through your escorts.") },
-   { N_("Target Previous Escort"), N_("Cycles backwards through your escorts.") },
-   { N_("Escort Attack Command"), N_("Orders escorts to attack your target.") },
-   { N_("Escort Hold Command"), N_("Orders escorts to hold their formation.") },
-   { N_("Escort Return Command"), N_("Orders escorts to return to your ship hangars.") },
-   { N_("Escort Clear Commands"), N_("Clears your escorts of commands.") },
+   [KST_ESCORT_NEXT]={ N_("Target Next Escort"), N_("Cycles through your escorts.") },
+   [KST_ESCORT_PREV]={ N_("Target Previous Escort"), N_("Cycles backwards through your escorts.") },
+   [KST_ESCORT_ATTACK]={ N_("Escort Attack Command"), N_("Orders escorts to attack your target.") },
+   [KST_ESCORT_HOLD]={ N_("Escort Hold Command"), N_("Orders escorts to hold their formation.") },
+   [KST_ESCORT_RETURN]={ N_("Escort Return Command"), N_("Orders escorts to return to your ship hangars.") },
+   [KST_ESCORT_CLEAR]={ N_("Escort Clear Commands"), N_("Clears your escorts of commands.") },
 
    /* Communication */
-   { N_("Hail Target"), N_("Attempts to initialize communication with the targeted ship.") },
-   { N_("Autohail"), N_("Automatically initialize communication with a ship that is hailing you.") },
-   { N_("Log Scroll Up"), N_("Scrolls the log upwards.") },
-   { N_("Log Scroll Down"), N_("Scrolls the log downwards.") },
+   [KST_COMM_HAIL]={ N_("Hail Target"), N_("Attempts to initialize communication with the targeted ship.") },
+   [KST_COMM_RECEIVE]={ N_("Autohail"), N_("Automatically initialize communication with a ship that is hailing you.") },
+   [KST_COMM_UP]={ N_("Log Scroll Up"), N_("Scrolls the log upwards.") },
+   [KST_COMM_DOWN]={ N_("Log Scroll Down"), N_("Scrolls the log downwards.") },
 
    /* Display options */
-   { N_("Radar Zoom In"), N_("Zooms in on the radar.") },
-   { N_("Radar Zoom Out"), N_("Zooms out on the radar.") },
+   [KST_ZOOM_IN]={ N_("Radar Zoom In"), N_("Zooms in on the radar.") },
+   [KST_ZOOM_OUT]={ N_("Radar Zoom Out"), N_("Zooms out on the radar.") },
 
-   { N_("Toggle Fullscreen"), N_("Toggles between windowed and fullscreen mode.") },
+   [KST_FULLSCREEN]={ N_("Toggle Fullscreen"), N_("Toggles between windowed and fullscreen mode.") },
 
-   { N_("Screenshot"), N_("Takes a screenshot.") },
-   { N_("Paste"), N_("Paste from the operating system's clipboard.") },
+   [KST_SCREENSHOT]={ N_("Screenshot"), N_("Takes a screenshot.") },
+   [KST_PASTE]={ N_("Paste"), N_("Paste from the operating system's clipboard.") },
 };
 
 static Keybind input_keybinds[KST_PASTE+1]; /**< contains the players keybindings */
@@ -496,17 +423,12 @@ SDL_Keycode input_keyConv( const char *name )
  *    @param key The key to bind to.
  *    @param mod Modifiers to check for.
  */
-void input_setKeybind( const char *keybind, KeybindType type, SDL_Keycode key, SDL_Keymod mod )
+void input_setKeybind( KeySemanticType keybind, KeybindType type, SDL_Keycode key, SDL_Keymod mod )
 {
-   for (int i=0; i<input_numbinds; i++) {
-      if (strcmp(keybind, input_keybinds[i].name)==0) {
-         input_keybinds[i].type = type;
-         input_keybinds[i].key = key;
-         /* Non-keyboards get mod NMOD_ANY to always match. */
-         input_keybinds[i].mod = (type==KEYBIND_KEYBOARD) ? mod : NMOD_ANY;
-         return;
-      }
-   }
+   input_keybinds[keybind].type = type;
+   input_keybinds[keybind].key = key;
+   /* Non-keyboards get mod NMOD_ANY to always match. */
+   input_keybinds[keybind].mod = (type==KEYBIND_KEYBOARD) ? mod : NMOD_ANY;
    WARN(_("Unable to set keybinding '%s', that command doesn't exist"), keybind);
 }
 
@@ -518,17 +440,13 @@ void input_setKeybind( const char *keybind, KeybindType type, SDL_Keycode key, S
  *    @param[out] mod Stores the modifiers used with the keybinding.
  *    @return The key associated with the keybinding.
  */
-SDL_Keycode input_getKeybind( const char *keybind, KeybindType *type, SDL_Keymod *mod )
+SDL_Keycode input_getKeybind( KeySemanticType keybind, KeybindType *type, SDL_Keymod *mod )
 {
-   for (int i=0; i<input_numbinds; i++) {
-      if (strcmp(keybind, input_keybinds[i].name)==0) {
-         if (type != NULL)
-            (*type) = input_keybinds[i].type;
-         if (mod != NULL)
-            (*mod) = input_keybinds[i].mod;
-         return input_keybinds[i].key;
-      }
-   }
+   if (type != NULL)
+      (*type) = input_keybinds[keybind].type;
+   if (mod != NULL)
+      (*mod) = input_keybinds[keybind].mod;
+   return input_keybinds[keybind].key;
    WARN(_("Unable to get keybinding '%s', that command doesn't exist"), keybind);
    return (SDL_Keycode)-1;
 }

@@ -17,6 +17,83 @@
 #define KEY_PRESS    ( 1.) /**< Key is pressed. */
 #define KEY_RELEASE  (-1.) /**< Key is released. */
 
+
+/**
+ * @brief Naev internal key types
+ */
+typedef enum KeySemanticType_ {
+   KST_ACCEL=0,
+   KST_LEFT,
+   KST_RIGHT,
+   KST_REVERSE,
+   KST_FACE,
+
+   KST_STEALTH,
+   KST_GAME_SPEED,
+   KST_PAUSE,
+
+   KST_AUTONAV,
+   KST_APPROACH,
+   KST_MOUSE_FLYING,
+   KST_JUMP,
+
+   KST_TARGET_NEXT,
+   KST_TARGET_PREV,
+   KST_TARGET_CLOSE,
+   KST_TARGET_SPOB,
+   KST_TARGET_JUMP,
+
+   KST_HTARGET_NEXT,
+   KST_HTARGET_PREV,
+   KST_HTARGET_CLOSE,
+
+   KST_TARGET_CLEAR,
+
+   KST_FIRE_PRIMARY,
+   KST_FIRE_SECONDARY,
+   KST_INIT_COOLDOWN,
+
+   KST_TAB_1,
+   KST_TAB_2,
+   KST_TAB_3,
+   KST_TAB_4,
+   KST_TAB_5,
+   KST_TAB_6,
+   KST_TAB_7,
+   KST_TAB_8,
+   KST_TAB_9,
+   KST_TAB_0,
+
+   KST_LOCAL_MAP,
+   KST_GLOBAL_MAP,
+
+   KST_MENU_SMALL,
+   KST_MENU_INFO,
+   KST_MENU_LUA,
+
+   KST_ESCORT_NEXT,
+   KST_ESCORT_PREV,
+   KST_ESCORT_ATTACK,
+   KST_ESCORT_HALT,
+   KST_ESCORT_RETURN,
+   KST_ESCORT_CLEAR,
+
+   KST_COMM_HAIL,
+   KST_COMM_RECEIVE,
+   KST_COMM_UP,
+   KST_COMM_DOWN
+
+   KST_ZOOM_IN,
+   KST_ZOOM_OUT,
+
+   KST_FULLSCREEN,
+
+   KST_SCREENSHOT,
+
+   KST_PASTE,
+
+} KeySemanticType;
+
 /* input types */
 typedef enum {
    KEYBIND_NULL, /**< Null keybinding. */
@@ -38,9 +115,9 @@ extern const int   input_numbinds;
  */
 void input_setDefault( int wasd );
 SDL_Keycode input_keyConv( const char *name );
-void input_setKeybind( const char *keybind, KeybindType type, SDL_Keycode key, SDL_Keymod mod );
+void input_setKeybind( KeySemanticType keybind, KeybindType type, SDL_Keycode key, SDL_Keymod mod );
 const char *input_modToText( SDL_Keymod mod );
-SDL_Keycode input_getKeybind( const char *keybind, KeybindType *type, SDL_Keymod *mod );
+SDL_Keycode input_getKeybind( KeySemanticType keybind, KeybindType *type, SDL_Keymod *mod );
 void input_getKeybindDisplay( const char *keybind, char *buf, int len );
 const char *input_getKeybindDescription( const char *keybind );
 const char *input_keyAlreadyBound( KeybindType type, SDL_Keycode key, SDL_Keymod mod );
