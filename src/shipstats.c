@@ -781,12 +781,11 @@ static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLoo
  */
 int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline )
 {
-   int i, left, newl;
    const ShipStatsLookup *sl;
-   i     = 0;
-   newl  = newline;
+   int i     = 0;
+   int newl  = newline;
    for ( ; ll != NULL; ll=ll->next) {
-      left  = len-i;
+      int left  = len-i;
       if (left < 0)
          break;
       sl    = &ss_lookup[ ll->type ];
