@@ -1893,8 +1893,8 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
 
    l = os_printD( temp->summary_raw, l, temp->u.lau.dmg.disable * (double)temp->u.lau.shots, disable_opts);
    l = os_printD( temp->summary_raw, l, temp->u.lau.dmg.disable * (double)temp->u.lau.shots / temp->u.lau.delay, disable_rate_opts);
-   char radius[18];
-   sprintf(radius, outfit_isProp(temp, OUTFIT_PROP_WEAP_FRIENDLYFIRE) ? "#r!! %s !!#0" : "%s", _("Hit radius"));
+   char radius[STRMAX_SHORT];
+   snprintf(radius, sizeof(radius), outfit_isProp(temp, OUTFIT_PROP_WEAP_FRIENDLYFIRE) ? "#r!! %s !!#0" : "%s", _("Hit radius"));
    l = os_printD( temp->summary_raw, l, temp->u.lau.radius, (os_opts){radius, UNIT_DISTANCE, 0, 0, 1, 0} );
    l = os_printD( temp->summary_raw, l, 1. / temp->u.lau.delay, fire_rate_opts);
    l = os_printD( temp->summary_raw, l, outfit_range(temp) , range_opts );
