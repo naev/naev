@@ -12,6 +12,19 @@
 #include "nstring.h"
 #include "physics.h"
 
+const char UNIT_TIME[] = N_("sec");
+const char UNIT_PER_TIME[] = N_("/sec");
+const char UNIT_DISTANCE[] = N_("m");
+const char UNIT_SPEED[] = N_("m/sec");
+const char UNIT_ENERGY[] = N_("MJ");
+const char UNIT_POWER[] = N_("MW");
+const char UNIT_ANGLE[] = N_("deg");
+const char UNIT_ROTATION[] = N_("deg/sec");
+const char UNIT_MASS[] = N_("t");
+const char UNIT_CPU[] = N_("PFLOP");
+const char UNIT_UNIT[] = N_("u");
+const char UNIT_PERCENT[] = N_("%");
+
 /*
  * M I S C
  */
