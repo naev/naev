@@ -1496,8 +1496,8 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    l = os_printD( temp->summary_raw, l, (double)temp->u.blt.shots * temp->u.blt.dmg.damage / temp->u.blt.delay, damage_rate_opts);
    l = os_printD( temp->summary_raw, l, temp->u.blt.dmg.disable, disable_opts);
    l = os_printD( temp->summary_raw, l, (double) temp->u.blt.shots * temp->u.blt.dmg.disable / temp->u.blt.delay, disable_rate_opts);
-   char radius[18];
-   sprintf(radius, outfit_isProp(temp, OUTFIT_PROP_WEAP_FRIENDLYFIRE) ? "#r!! %s !!#0" : "%s", _("Hit radius"));
+   char radius[STRMAX_SHORT];
+   snprintf(radius, sizeof(radisu), outfit_isProp(temp, OUTFIT_PROP_WEAP_FRIENDLYFIRE) ? "#r!! %s !!#0" : "%s", _("Hit radius"));
    l = os_printD( temp->summary_raw, l, temp->u.blt.radius,
                  (os_opts){radius, UNIT_DISTANCE, 0, 0, 1, 0});
    l = os_printD( temp->summary_raw, l, 1./temp->u.blt.delay, fire_rate_opts);
