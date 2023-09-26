@@ -204,6 +204,7 @@ ShipStatList* ss_statsSetList( ShipStatList *head, ShipStatsType type, double va
 {
    const ShipStatsLookup *sl;
    ShipStatList *ll = NULL;
+   ShipStatList *newhead = head;
    int init = overwrite;
 
    if (type == SS_TYPE_NIL)
@@ -222,7 +223,7 @@ ShipStatList* ss_statsSetList( ShipStatList *head, ShipStatsType type, double va
 
    /* Allocate. */
    if (ll==NULL) {
-      ll = malloc( sizeof(ShipStatList) );
+      newhead = ll = malloc( sizeof(ShipStatList) );
       ll->next    = head;
       ll->target  = 0;
       ll->type    = type;
@@ -274,7 +275,7 @@ ShipStatList* ss_statsSetList( ShipStatList *head, ShipStatsType type, double va
          break;
    }
 
-   return ll;
+   return newhead;
 }
 
 /**
