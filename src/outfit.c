@@ -106,12 +106,12 @@ static os_opts cpu_opts = { N_("CPU"), UNIT_CPU, 1, 0, 1, 0 };
 static os_opts mass_opts = { N_("Mass"), UNIT_MASS, 0, 0, 1, 0 };
 static os_opts penetration_opts = { N_("Penetration"), UNIT_PERCENT, 0, 0, 1, 0 };
 static os_opts damage_opts = {N_("Damage"), "", 0, 0, 1, 0};
-static os_opts damage_rate_opts = {N_("Damage Rate"), UNIT_PER_TIME, 0, 0, 1, 2};
+static os_opts damage_rate_opts = {N_("Damage Rate"), UNIT_PER_TIME, 0, 0, 1, 1 };
 static os_opts disable_opts = {N_("Disable"), "", 0, 0, 1, 0};
-static os_opts disable_rate_opts = {N_("Disable Rate"), UNIT_PER_TIME, 0, 0, 1, 2};
-static os_opts fire_rate_opts = {N_("Fire Rate"), UNIT_PER_TIME, 0, 0, 0, 1};
+static os_opts disable_rate_opts = {N_("Disable Rate"), UNIT_PER_TIME, 0, 0, 1, 1 };
+static os_opts fire_rate_opts = {N_("Fire Rate"), UNIT_PER_TIME, 0, 0, 0, 1 };
 static os_opts energy_opts = { N_("Energy"), UNIT_ENERGY, 0, 0, 1, 0 };
-static os_opts power_opts = { N_("Power"), UNIT_POWER, 0, 0, 1, 10};
+static os_opts power_opts = { N_("Power"), UNIT_POWER, 0, 0, 1, 1 };
 static os_opts range_opts = { N_("Range"), UNIT_DISTANCE, 0, 0, 1, 0 };
 static os_opts speed_opts = { N_("Speed"), UNIT_SPEED, 0, 0, 1, 0 };
 static os_opts heatup_opts = { N_("Heat Up"), UNIT_TIME, 0, 0, 1, 1 };
@@ -1497,7 +1497,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    l = os_printD( temp->summary_raw, l, temp->u.blt.dmg.disable, disable_opts);
    l = os_printD( temp->summary_raw, l, (double) temp->u.blt.shots * temp->u.blt.dmg.disable / temp->u.blt.delay, disable_rate_opts);
    char radius[STRMAX_SHORT];
-   snprintf(radius, sizeof(radisu), outfit_isProp(temp, OUTFIT_PROP_WEAP_FRIENDLYFIRE) ? "#r!! %s !!#0" : "%s", _("Hit radius"));
+   snprintf(radius, sizeof(radius), outfit_isProp(temp, OUTFIT_PROP_WEAP_FRIENDLYFIRE) ? "#r!! %s !!#0" : "%s", _("Hit radius"));
    l = os_printD( temp->summary_raw, l, temp->u.blt.radius,
                  (os_opts){radius, UNIT_DISTANCE, 0, 0, 1, 0});
    l = os_printD( temp->summary_raw, l, 1./temp->u.blt.delay, fire_rate_opts);
