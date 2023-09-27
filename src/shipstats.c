@@ -720,7 +720,7 @@ static int ss_printD( char *buf, int len, int newline, double d, const ShipStats
    if (FABS(d) < 1e-10)
       return 0;
 
-   return scnprintf( buf, len, p_("shipstats","%s#%s%s: %+g%s#0"),
+   return scnprintf( buf, len, p_("shipstats_double","%s#%s%s: %+g %s#0"),
          (newline) ? "\n" : "",
          ss_printD_colour( d, sl ),
          _(sl->display), d*100.,
@@ -734,7 +734,7 @@ static int ss_printA( char *buf, int len, int newline, double d, const ShipStats
 {
    if (FABS(d) < 1e-10)
       return 0;
-   return scnprintf( buf, len, p_("shipstats","%s#%s%s: %+g%s#0"),
+   return scnprintf( buf, len, p_("shipstats_absolute","%s#%s%s: %+g %s#0"),
          (newline) ? "\n" : "",
          ss_printD_colour( d, sl ),
          _(sl->display), d,
@@ -748,7 +748,7 @@ static int ss_printI( char *buf, int len, int newline, int i, const ShipStatsLoo
 {
    if (i == 0)
       return 0 ;
-   return scnprintf( buf, len, p_("shipstats","%s#%s%s: %+d%s#0"),
+   return scnprintf( buf, len, p_("shipstats_integer","%s#%s%s: %+d %s#0"),
          (newline) ? "\n" : "",
          ss_printI_colour( i, sl ),
          _(sl->display), i,
@@ -762,7 +762,7 @@ static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLoo
 {
    if (!b)
       return 0;
-   return scnprintf( buf, len, p_("shipstats","%s#%s%s#0"),
+   return scnprintf( buf, len, p_("shipstats_boolean","%s#%s%s#0"),
          (newline) ? "\n" : "",
          ss_printI_colour( b, sl ),
          _(sl->display) );

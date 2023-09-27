@@ -99,6 +99,7 @@ typedef const t_os_stat os_opts;
 int os_printD( char *buf, int len, double value, os_opts opts);
 int os_printD_range( char *buffer, int i, double minValue, double maxValue, t_os_stat opts);
 
+
 static os_opts darmour_opts = { N_("Armour Damages"), UNIT_PERCENT, 1, 100, 0, 0 };
 static os_opts dshield_opts = { N_("Shield Damages"), UNIT_PERCENT, 1, 100, 0, 0 };
 static os_opts dknockback_opts = { N_("Knockback Damages"), UNIT_PERCENT, 0, 0, 1, 0 };
@@ -132,8 +133,6 @@ static os_opts jam_res_opts = { N_("Jam Resistance"), UNIT_PERCENT, 0, 0, 1, 0 }
 static os_opts max_mass_opts = { N_("Max Effective Mass"), UNIT_MASS, 0, 0, 1, 0 };
 static os_opts rumble_opts = { N_("Rumble"), "", 0, 0, 1, 1 };
 static os_opts shots_delay_opts = { N_("Shots Delay"), UNIT_TIME, 0, 0, 1, 1 };
-
-
 
 static int outfit_cmp( const void *p1, const void *p2 )
 {
@@ -3007,7 +3006,7 @@ void outfit_free (void)
  * @brief Print an outfit double statistic line
  *
  */
-int os_printD( char *buffer, int i, double value, t_os_stat opts)
+int os_printD( char *buffer, int i, double value, t_os_stat opts )
 {
    if (opts.hide_zero && fabs(value) < 1e-2)
        return i;
@@ -3016,12 +3015,13 @@ int os_printD( char *buffer, int i, double value, t_os_stat opts)
       i += scnprintf(buffer + i, ItoL(i),
                      value > opts.color_threshold ? "#g" :
                      value < opts.color_threshold ? "#r" : "");
-   i += scnprintf(buffer + i, ItoL(i), p_("outfitstats", "%s: %.*f%s"), opts.name, opts.precision, value, opts.unit);
+   /* The brochure of the International System of Units declares in chapter 5: "a space separates the number and the symbol %". The ISO 31-0 standard also specifies a space, and the TeX typesetting system encourages using one. */
+   i += scnprintf(buffer + i, ItoL(i), p_("outfitstats", "%s: %.*f %s"), opts.name, opts.precision, value, opts.unit);
    i += scnprintf(buffer + i, ItoL(i), "#0");
    return i;
 }
 
-int os_printD_range( char *buffer, int i, double minValue, double maxValue, t_os_stat opts)
+int os_printD_range( char *buffer, int i, double minValue, double maxValue, t_os_stat opts )
 {
    if (opts.hide_zero && fabs(maxValue) < 1e-2)
        return i;
