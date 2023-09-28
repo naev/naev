@@ -96,22 +96,24 @@ typedef struct s_Outfitstat {
 } t_os_stat;
 typedef const t_os_stat os_opts;
 
+/* Printing functions. */
 int os_printD( char *buf, int len, double value, os_opts opts);
 int os_printD_range( char *buffer, int i, double minValue, double maxValue, t_os_stat opts);
+int os_printD_rate( char *buffer, int i, double val, t_os_stat val_opts, int multiplier, double rate, t_os_stat rate_opts );
 
-
+/* Helpers for different attributes. */
 static os_opts darmour_opts = { N_("Armour Damages"), UNIT_PERCENT, 1, 100, 0, 0 };
 static os_opts dshield_opts = { N_("Shield Damages"), UNIT_PERCENT, 1, 100, 0, 0 };
 static os_opts dknockback_opts = { N_("Knockback Damages"), UNIT_PERCENT, 0, 0, 1, 0 };
 static os_opts cpu_opts = { N_("CPU"), UNIT_CPU, 1, 0, 1, 0 };
 static os_opts mass_opts = { N_("Mass"), UNIT_MASS, 0, 0, 1, 0 };
 static os_opts penetration_opts = { N_("Penetration"), UNIT_PERCENT, 0, 0, 1, 0 };
-static os_opts damage_opts = {N_("Damage"), "", 0, 0, 1, 0};
-static os_opts damage_rate_opts = {N_("Damage Rate"), UNIT_PER_TIME, 0, 0, 1, 1 };
-static os_opts disable_opts = {N_("Disable"), "", 0, 0, 1, 0};
+static os_opts damage_opts = {N_("Damage"), "", 0, 1, 1, 0};
+static os_opts dps_opts = {N_("Damage Rate"), UNIT_PER_TIME, 0, 0, 1, 1 };
+static os_opts disable_opts = {N_("Disable"), "", 0, 1, 1, 0};
 static os_opts disable_rate_opts = {N_("Disable Rate"), UNIT_PER_TIME, 0, 0, 1, 1 };
 static os_opts fire_rate_opts = {N_("Fire Rate"), UNIT_PER_TIME, 0, 0, 0, 1 };
-static os_opts energy_opts = { N_("Energy"), UNIT_ENERGY, 0, 0, 1, 0 };
+static os_opts energy_opts = { N_("Energy"), UNIT_ENERGY, 0, 1, 1, 0 };
 static os_opts power_opts = { N_("Power"), UNIT_POWER, 0, 0, 1, 1 };
 static os_opts range_opts = { N_("Range"), UNIT_DISTANCE, 0, 0, 1, 0 };
 static os_opts speed_opts = { N_("Speed"), UNIT_SPEED, 0, 0, 1, 0 };
@@ -1490,18 +1492,23 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    l = os_printD( temp->summary_raw, l, dknockback * 100, dknockback_opts);
    l = os_printD( temp->summary_raw, l, temp->cpu, cpu_opts);
    l = os_printD( temp->summary_raw, l, temp->mass, mass_opts);
+   /* Higher level stats. */
+   l = os_printD_rate( temp->summary_raw, l,
+         temp->u.blt.dmg.damage, damage_opts, temp->u.blt.shots,
+         (double)temp->u.blt.shots * temp->u.blt.dmg.damage / temp->u.blt.delay, dps_opts );
+   l = os_printD_rate( temp->summary_raw, l,
+         temp->u.blt.dmg.disable, disable_opts, temp->u.blt.shots,
+         (double) temp->u.blt.shots * temp->u.blt.dmg.disable / temp->u.blt.delay, disable_rate_opts );
+   l = os_printD_rate( temp->summary_raw, l,
+         temp->u.blt.energy, energy_opts, 1,
+         (double)temp->u.blt.energy / temp->u.blt.delay, power_opts );
+   /* Standard stats. */
    l = os_printD( temp->summary_raw, l, temp->u.blt.dmg.penetration * 100., penetration_opts);
-   l = os_printD( temp->summary_raw, l, temp->u.blt.dmg.damage, damage_opts);
-   l = os_printD( temp->summary_raw, l, (double)temp->u.blt.shots * temp->u.blt.dmg.damage / temp->u.blt.delay, damage_rate_opts);
-   l = os_printD( temp->summary_raw, l, temp->u.blt.dmg.disable, disable_opts);
-   l = os_printD( temp->summary_raw, l, (double) temp->u.blt.shots * temp->u.blt.dmg.disable / temp->u.blt.delay, disable_rate_opts);
+   l = os_printD( temp->summary_raw, l, 1./temp->u.blt.delay, fire_rate_opts);
    char radius[STRMAX_SHORT];
    snprintf(radius, sizeof(radius), outfit_isProp(temp, OUTFIT_PROP_WEAP_FRIENDLYFIRE) ? "#r!! %s !!#0" : "%s", _("Hit radius"));
    l = os_printD( temp->summary_raw, l, temp->u.blt.radius,
                  (os_opts){radius, UNIT_DISTANCE, 0, 0, 1, 0});
-   l = os_printD( temp->summary_raw, l, 1./temp->u.blt.delay, fire_rate_opts);
-   l = os_printD( temp->summary_raw, l, temp->u.blt.energy, energy_opts);
-   l = os_printD( temp->summary_raw, l, (double)temp->u.blt.energy / temp->u.blt.delay, power_opts);
    l = os_printD( temp->summary_raw, l, temp->u.blt.range, range_opts);
    l = os_printD( temp->summary_raw, l, temp->u.blt.speed, speed_opts);
    l = os_printD( temp->summary_raw, l, temp->u.blt.heatup, heatup_opts);
@@ -1657,15 +1664,19 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    l = os_printD( temp->summary_raw, l, dknockback * 100, dknockback_opts);
    l = os_printD( temp->summary_raw, l, temp->cpu, cpu_opts);
    l = os_printD( temp->summary_raw, l, temp->mass, mass_opts);
-   l = os_printD( temp->summary_raw, l, temp->u.bem.dmg.penetration * 100, penetration_opts);
+   /* Higher level stats. */
+   /* TODO how to display DPS and damage? */
+   l = os_printD( temp->summary_raw, l, temp->u.bem.dmg.damage * temp->u.bem.duration / (temp->u.bem.duration + temp->u.bem.delay), dps_opts);
    l = os_printD( temp->summary_raw, l, temp->u.bem.dmg.disable, disable_rate_opts);
-   l = os_printD( temp->summary_raw, l, temp->u.bem.dmg.damage * temp->u.bem.duration / (temp->u.bem.duration + temp->u.bem.delay), damage_rate_opts);
    l = os_printD( temp->summary_raw, l, temp->u.bem.energy, power_opts);
+   /* Standard stats. */
+   l = os_printD( temp->summary_raw, l, temp->u.bem.dmg.penetration * 100, penetration_opts);
    l = os_printD_range( temp->summary_raw, l,
                  temp->u.bem.min_duration,
                  temp->u.bem.duration,
                  duration_opts);
    l = os_printD( temp->summary_raw, l, temp->u.bem.duration, cooldown_opts);
+   /* TODO display off time. */
    l = os_printD( temp->summary_raw, l, temp->u.bem.range, range_opts);
    l = os_printD( temp->summary_raw, l, temp->u.bem.heatup, heatup_opts);
    if (!outfit_isTurret(temp))
@@ -1871,7 +1882,18 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    l = os_printD( temp->summary_raw, l, dknockback * 100, dknockback_opts);
    l = os_printD( temp->summary_raw, l, temp->cpu, cpu_opts );
    l = os_printD( temp->summary_raw, l, temp->mass, mass_opts );
-
+   /* Higher level stats. */
+   l = os_printD_rate( temp->summary_raw, l,
+         temp->u.lau.dmg.damage, damage_opts, temp->u.lau.shots,
+         temp->u.lau.dmg.damage * (double)temp->u.lau.shots / temp->u.lau.delay, dps_opts );
+   l = os_printD_rate( temp->summary_raw, l,
+         temp->u.lau.dmg.disable, disable_opts, temp->u.lau.shots,
+         temp->u.lau.dmg.disable * (double)temp->u.lau.shots / temp->u.lau.delay, disable_rate_opts );
+   l = os_printD_rate( temp->summary_raw, l,
+         temp->u.lau.energy, energy_opts, 1,
+         temp->u.lau.delay * temp->u.lau.energy, power_opts );
+   /* Standard stats. */
+   l = os_printD( temp->summary_raw, l, temp->u.lau.dmg.penetration * 100., penetration_opts );
    if (outfit_isSeeker(temp)) {
       l = os_printD( temp->summary_raw, l, temp->u.lau.lockon, lockon_opts );
       l = os_printD( temp->summary_raw, l, temp->u.lau.iflockon, inflight_calib_opts );
@@ -1886,12 +1908,6 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    }
 
    SDESC_ADD(  l, temp, _("\n  Holds %d ammo"), temp->u.lau.amount );
-   l = os_printD( temp->summary_raw, l, temp->u.lau.dmg.penetration * 100., penetration_opts );
-   l = os_printD( temp->summary_raw, l, temp->u.lau.dmg.damage * (double)temp->u.lau.shots, damage_opts);
-   l = os_printD( temp->summary_raw, l, temp->u.lau.dmg.damage * (double)temp->u.lau.shots / temp->u.lau.delay, damage_rate_opts);
-
-   l = os_printD( temp->summary_raw, l, temp->u.lau.dmg.disable * (double)temp->u.lau.shots, disable_opts);
-   l = os_printD( temp->summary_raw, l, temp->u.lau.dmg.disable * (double)temp->u.lau.shots / temp->u.lau.delay, disable_rate_opts);
    char radius[STRMAX_SHORT];
    snprintf(radius, sizeof(radius), outfit_isProp(temp, OUTFIT_PROP_WEAP_FRIENDLYFIRE) ? "#r!! %s !!#0" : "%s", _("Hit radius"));
    l = os_printD( temp->summary_raw, l, temp->u.lau.radius, (os_opts){radius, UNIT_DISTANCE, 0, 0, 1, 0} );
@@ -1909,8 +1925,6 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    if (!(temp->u.lau.thrust > 0. && temp->u.lau.speed > 0.))
       l = os_printD( temp->summary_raw, l, temp->u.lau.speed_max, max_speed_opts );
    l = os_printD( temp->summary_raw, l, temp->u.lau.reload_time, reload_opts );
-   l = os_printD( temp->summary_raw, l, temp->u.lau.energy, energy_opts);
-   l = os_printD( temp->summary_raw, l, temp->u.lau.delay * temp->u.lau.energy, power_opts);
    l = os_printD( temp->summary_raw, l, temp->u.lau.armour, armour_opts);
    l = os_printD( temp->summary_raw, l, temp->u.lau.dmg_absorb * 100., absorp_opts);
    l = os_printD( temp->summary_raw, l, temp->u.lau.resist * 100., jam_res_opts);
@@ -3033,6 +3047,29 @@ int os_printD_range( char *buffer, int i, double minValue, double maxValue, t_os
    i += scnprintf(buffer + i, ItoL(i), p_("outfitstats", "%s: %.*f %s - %.*f %s"), opts.name,
                   opts.precision, minValue, opts.unit,
                   opts.precision, maxValue, opts.unit);
+   i += scnprintf(buffer + i, ItoL(i), "#0");
+   return i;
+}
+
+int os_printD_rate( char *buffer, int i, double val, t_os_stat val_opts, int multiplier, double rate, t_os_stat rate_opts )
+{
+   if (val_opts.hide_zero && fabs(val) < 1e-2)
+       return i;
+   i += scnprintf(buffer + i, ItoL(i), "\n");
+   if (val_opts.color)
+      i += scnprintf(buffer + i, ItoL(i),
+                     val > val_opts.color_threshold ? "#g" :
+                     val < val_opts.color_threshold ? "#r" : "");
+
+   char mult[128];
+   if (multiplier > 1)
+      snprintf( mult, sizeof(mult), p_("multiplier", " x %d"), multiplier );
+   else
+      mult[0] = '\0';
+
+   i += scnprintf(buffer + i, ItoL(i), p_("outfitstats", "%s: %.*f%s %s [%.*f %s]"), val_opts.name,
+                  val_opts.precision, val, mult, val_opts.unit,
+                  rate_opts.precision, rate, rate_opts.unit );
    i += scnprintf(buffer + i, ItoL(i), "#0");
    return i;
 }
