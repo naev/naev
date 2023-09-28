@@ -115,7 +115,7 @@ static os_opts energy_opts = { N_("Energy"), UNIT_ENERGY, 0, 0, 1, 0 };
 static os_opts power_opts = { N_("Power"), UNIT_POWER, 0, 0, 1, 1 };
 static os_opts range_opts = { N_("Range"), UNIT_DISTANCE, 0, 0, 1, 0 };
 static os_opts speed_opts = { N_("Speed"), UNIT_SPEED, 0, 0, 1, 0 };
-static os_opts heatup_opts = { N_("Heat Up"), UNIT_TIME, 0, 0, 1, 1 };
+static os_opts heatup_opts = { N_("Overheat"), UNIT_TIME, 0, 0, 1, 1 };
 static os_opts dispersion_opts = { N_("Dispersion"), UNIT_ANGLE, 0, 0, 1, 1 };
 static os_opts swivel_opts = { N_("Swivel"), UNIT_ANGLE, 0, 0, 1, 1 };
 static os_opts tracking_opts = { N_("Tracking"), UNIT_DISTANCE, 0, 0, 1, 0 };
@@ -3030,7 +3030,7 @@ int os_printD_range( char *buffer, int i, double minValue, double maxValue, t_os
       i += scnprintf(buffer + i, ItoL(i),
                      maxValue > opts.color_threshold ? "#g" :
                      maxValue < opts.color_threshold ? "#r" : "");
-   i += scnprintf(buffer + i, ItoL(i), p_("outfitstats", "%s: %.*f%s - %.*f%s"), opts.name,
+   i += scnprintf(buffer + i, ItoL(i), p_("outfitstats", "%s: %.*f %s - %.*f %s"), opts.name,
                   opts.precision, minValue, opts.unit,
                   opts.precision, maxValue, opts.unit);
    i += scnprintf(buffer + i, ItoL(i), "#0");
