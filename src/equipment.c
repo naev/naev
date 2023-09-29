@@ -1799,7 +1799,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Crew:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Mass:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Jump Time:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Thrust:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Accel:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Speed:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Turn:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Time Constant:") );
@@ -1851,40 +1851,44 @@ void equipment_updateShips( unsigned int wid, const char* str )
       if (player.fleet_capacity > 0)
          l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d", ship->ship->points );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%s%.0f#0", EQ_COMP( ship->crew, ship->ship->crew, 0 ) );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s#0 %s", smass, n_( "tonne", "tonnes", ship->solid.mass ) );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s#0 %s", smass, UNIT_MASS );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
       l += scnprintf( &buf[l], sizeof(buf)-l, _("%s average"), nt );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("#%c%s%.0f#0 kN/tonne"),
-            EQ_COMP( ship->thrust/ship->solid.mass, ship->ship->thrust/ship->ship->mass, 0 ) );
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("\n#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)"),
-            EQ_COMP( ship->speed, ship->ship->speed, 0 ), EQ_COMP( solid_maxspeed( &ship->solid, ship->speed, ship->thrust ),
-               solid_maxspeed( &ship->solid, ship->ship->speed, ship->ship->thrust), 0 ) );
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("\n#%c%s%.0f#0 deg/s"),
-            EQ_COMP( ship->turn*180./M_PI, ship->ship->turn*180./M_PI, 0 ) );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f%%", ship->stats.time_mod * ship->ship->dt_default * 100 );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s\n", sdet );
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (%.1f secs for scan)"), seva, pilot_ewScanTime(ship) );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s\n", sste );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("#%c%s%.0f#0 %s"),
+            EQ_COMP( ship->thrust/ship->solid.mass, ship->ship->thrust/ship->ship->mass, 0 ), UNIT_ACCEL );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("\n#%c%s%.0f#0 %s (max #%c%s%.0f#0 %s)"),
+            EQ_COMP( ship->speed, ship->ship->speed, 0 ), UNIT_SPEED,
+            EQ_COMP( solid_maxspeed( &ship->solid, ship->speed, ship->thrust ),
+               solid_maxspeed( &ship->solid, ship->ship->speed, ship->ship->thrust), 0 ), UNIT_SPEED );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("\n#%c%s%.0f#0 %s"),
+            EQ_COMP( ship->turn*180./M_PI, ship->ship->turn*180./M_PI, 0 ), UNIT_ROTATION );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f%%", ship->stats.time_mod * ship->ship->dt_default*100. );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s %s\n", sdet, UNIT_DISTANCE );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%s %s (%.1f sec for scan)"), seva, UNIT_DISTANCE, pilot_ewScanTime(ship) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s %s\n", sste, UNIT_DISTANCE );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
       /* Health. */
-      l += scnprintf( &buf[l], sizeof(buf)-l, "#%c%s%.0f%%\n", EQ_COMP( ship->dmg_absorb * 100, ship->ship->dmg_absorb * 100, 0 ) );
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"),
-            EQ_COMP( ship->shield_max, ship->ship->shield, 0 ), EQ_COMP( ship->shield_regen, ship->ship->shield_regen, 0 ) );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"),
-            EQ_COMP( ship->armour_max, ship->ship->armour, 0 ), EQ_COMP( ship->armour_regen, ship->ship->armour_regen, 0 ) );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"),
-            EQ_COMP( ship->energy_max, ship->ship->energy, 0 ), EQ_COMP( ship->energy_regen, ship->ship->energy_regen, 0 ) );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "#%c%s%.0f%%\n", EQ_COMP( ship->dmg_absorb*100., ship->ship->dmg_absorb*100., 0 ) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("#%c%s%.0f#0 %s (#%c%s%.1f#0 %s)"),
+            EQ_COMP( ship->shield_max, ship->ship->shield, 0 ), UNIT_ENERGY,
+            EQ_COMP( ship->shield_regen, ship->ship->shield_regen, 0 ), UNIT_POWER );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("#%c%s%.0f#0 %s (#%c%s%.1f#0 %s)"),
+            EQ_COMP( ship->armour_max, ship->ship->armour, 0 ), UNIT_ENERGY,
+            EQ_COMP( ship->armour_regen, ship->ship->armour_regen, 0 ), UNIT_POWER );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("#%c%s%.0f#0 %s (#%c%s%.1f#0 %s)"),
+            EQ_COMP( ship->energy_max, ship->ship->energy, 0 ), UNIT_ENERGY,
+            EQ_COMP( ship->energy_regen, ship->ship->energy_regen, 0 ), UNIT_POWER );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
       /* Misc. */
       l += scnprintf( &buf[l], sizeof(buf)-l, _("%d / #%c%s%d#0 %s"),
-            pilot_cargoUsed(ship), EQ_COMP( cargo, ship->ship->cap_cargo, 0 ), n_( "tonne", "tonnes", ship->ship->cap_cargo ) );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+            pilot_cargoUsed(ship), EQ_COMP( cargo, ship->ship->cap_cargo, 0 ), UNIT_MASS );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
       l += scnprintf( &buf[l], sizeof(buf)-l, _("%s %s (%d %s)"),
-            sfuel, n_( "unit", "units", ship->fuel_max ), jumps, n_( "jump", "jumps", jumps ) );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+            sfuel, UNIT_UNIT, jumps, n_( "jump", "jumps", jumps ) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%s#0", spaceworthy ? '0' : 'r', errorReport );
    }
    else {
@@ -1896,9 +1900,9 @@ void equipment_updateShips( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", num2strU(ps->jumped_times,0) );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", num2strU(ps->landed_times,0) );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("%s MJ"), num2strU(ps->dmg_done_shield+ps->dmg_done_armour,0) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%s %s"), num2strU(ps->dmg_done_shield+ps->dmg_done_armour,0), UNIT_ENERGY );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("%s MJ"), num2strU(ps->dmg_taken_shield+ps->dmg_taken_armour,0) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%s %s"), num2strU(ps->dmg_taken_shield+ps->dmg_taken_armour,0), UNIT_ENERGY );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", num2strU(destroyed,0) );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
       for (int i=0; i<array_size(ps->p->outfit_intrinsic); i++)
