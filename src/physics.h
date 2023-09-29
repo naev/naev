@@ -44,9 +44,6 @@ typedef struct Solid_ {
 double solid_maxspeed( const Solid *s, double speed, double thrust );
 void solid_init( Solid* dest, double mass, double dir,
       const vec2* pos, const vec2* vel, int update );
-Solid* solid_create( double mass, double dir,
-      const vec2* pos, const vec2* vel, int update );
-void solid_free( Solid* src );
 
 /*
  * misc

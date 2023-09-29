@@ -282,32 +282,3 @@ void solid_init( Solid* dest, double mass, double dir,
          break;
    }
 }
-
-/**
- * @brief Creates a new Solid.
- *
- *    @param mass Mass to set solid to.
- *    @param dir Solid initial direction.
- *    @param pos Initial solid position.
- *    @param vel Initial solid velocity.
- *    @return A newly created solid.
- */
-Solid* solid_create( double mass, double dir,
-      const vec2* pos, const vec2* vel, int update )
-{
-   Solid* dyn = malloc(sizeof(Solid));
-   if (dyn==NULL)
-      ERR(_("Out of Memory"));
-   solid_init( dyn, mass, dir, pos, vel, update );
-   return dyn;
-}
-
-/**
- * @brief Frees an existing solid.
- *
- *    @param src Solid to free.
- */
-void solid_free( Solid* src )
-{
-   free(src);
-}
