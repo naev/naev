@@ -1847,7 +1847,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_price );
       if (player.fleet_capacity > 0)
          l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d", ship->ship->points );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%s%.0f#0", EQ_COMP( ship->crew, ship->ship->crew, 0 ) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%s%d#0", EQ_COMP( (int)floor(ship->crew), ship->ship->crew, 0 ) );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s#0 %s", num2strU(ship->solid.mass,0), UNIT_MASS );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
       l += scnprintf( &buf[l], sizeof(buf)-l, _("%s average"), nt );
