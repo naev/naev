@@ -12,6 +12,10 @@
 #include "nstring.h"
 #include "physics.h"
 
+/**
+ * Lists of names for some internal units we use. These just translate them
+ * game values to human readable form.
+ */
 const char UNIT_TIME[]        = N_("sec");
 const char UNIT_PER_TIME[]    = N_("/sec");
 const char UNIT_DISTANCE[]    = N_("m");
@@ -25,8 +29,8 @@ const char UNIT_CPU[]         = N_("PFLOP");
 const char UNIT_UNIT[]        = N_("u");
 const char UNIT_PERCENT[]     = N_("%");
 
-/*
- * M I S C
+/**
+ * @brief Converts an angle to the [0, 2*M_PI] range.
  */
 static double angle_cleanup( double a )
 {
@@ -70,7 +74,6 @@ double angle_diff( double ref, double a )
  *
  *   since dt isn't actually differential this gives us ERROR!
  *   so watch out with big values for dt
- *
  */
 static void solid_update_euler( Solid *obj, double dt )
 {
@@ -99,7 +102,7 @@ static void solid_update_euler( Solid *obj, double dt )
    ax = th*cdir / obj->mass;
    ay = th*sdir / obj->mass;
 
-   /* Symplectic Euler */
+   /* Symplectic Euler should reduce a bit the approximation error. */
    vx += ax*dt;
    vy += ay*dt;
    px += vx*dt;
