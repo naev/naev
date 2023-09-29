@@ -97,9 +97,9 @@ typedef struct s_Outfitstat {
 typedef const t_os_stat os_opts;
 
 /* Printing functions. */
-int os_printD( char *buf, int len, double value, const os_opts *opts );
-int os_printD_range( char *buffer, int i, double minValue, double maxValue, const t_os_stat *opts );
-int os_printD_rate( char *buffer, int i, double val, const t_os_stat *val_opts, int multiplier, double rate, const t_os_stat *rate_opts );
+static int os_printD( char *buf, int len, double value, const os_opts *opts );
+static int os_printD_range( char *buffer, int i, double minValue, double maxValue, const t_os_stat *opts );
+static int os_printD_rate( char *buffer, int i, double val, const t_os_stat *val_opts, int multiplier, double rate, const t_os_stat *rate_opts );
 
 /* Helpers for different attributes. */
 static os_opts darmour_opts = { N_("Armour Damage"), UNIT_PERCENT, 1, 100, 0, 0 };
@@ -3034,8 +3034,13 @@ void outfit_free (void)
 /**
  * @brief Writes an outfit statistic to a buffer.
  *
+ *    @param buffer Buffer to write to.
+ *    @param i Position to write at.
+ *    @param value Value to write.
+ *    @param opts Format to use to write value.
+ *    @return Up until where was written in the buffer.
  */
-int os_printD( char *buffer, int i, double value, const t_os_stat *opts )
+static int os_printD( char *buffer, int i, double value, const t_os_stat *opts )
 {
    const int MAXLEN = OUTFIT_SHORTDESC_MAX-i;
 
@@ -3049,11 +3054,22 @@ int os_printD( char *buffer, int i, double value, const t_os_stat *opts )
                      value < opts->color_threshold ? "#r" : "");
    /* The brochure of the International System of Units declares in chapter 5: "a space separates the number and the symbol %". The ISO 31-0 standard also specifies a space, and the TeX typesetting system encourages using one. */
    i += scnprintf(buffer + i, MAXLEN, p_("outfitstats", "%s: %s %s"), opts->name, num2strU( value, opts->precision ), opts->unit );
-   i += scnprintf(buffer + i, MAXLEN, "#0");
+   if (opts->color)
+      i += scnprintf(buffer + i, MAXLEN, "#0");
    return i;
 }
 
-int os_printD_range( char *buffer, int i, double minValue, double maxValue, const t_os_stat *opts )
+/**
+ * @brief Writes an outfit statistic representing a range between two values to a buffer.
+ *
+ *    @param buffer Buffer to write to.
+ *    @param i Position to write at.
+ *    @param minValue Lower value bound.
+ *    @param maxValue Upper value bound.
+ *    @param opts Format to use to write value.
+ *    @return Up until where was written in the buffer.
+ */
+static int os_printD_range( char *buffer, int i, double minValue, double maxValue, const t_os_stat *opts )
 {
    const int MAXLEN = OUTFIT_SHORTDESC_MAX-i;
    char buf1[NUM2STRLEN], buf2[NUM2STRLEN];
@@ -3071,11 +3087,24 @@ int os_printD_range( char *buffer, int i, double minValue, double maxValue, cons
                      maxValue < opts->color_threshold ? "#r" : "");
    i += scnprintf(buffer + i, MAXLEN, p_("outfitstats", "%s: %s %s - %s %s"), opts->name,
          buf1, opts->unit, buf2, opts->unit );
-   i += scnprintf(buffer + i, MAXLEN, "#0");
+   if (opts->color)
+      i += scnprintf(buffer + i, MAXLEN, "#0");
    return i;
 }
 
-int os_printD_rate( char *buffer, int i, double val, const t_os_stat *val_opts, int multiplier, double rate, const t_os_stat *rate_opts )
+/**
+ * @brief Writes an outfit statistic representing a "per unit" value and rate of change value.
+ *
+ *    @param buffer Buffer to write to.
+ *    @param i Position to write at.
+ *    @param val Main "per unit value".
+ *    @param val_opts Format used to write val.
+ *    @param multiplier Multiplication value for val, or <=1 to disable.
+ *    @param rate Rate of change value.
+ *    @param rate_opts Format to use to write rate.
+ *    @return Up until where was written in the buffer.
+ */
+static int os_printD_rate( char *buffer, int i, double val, const t_os_stat *val_opts, int multiplier, double rate, const t_os_stat *rate_opts )
 {
    const int MAXLEN = OUTFIT_SHORTDESC_MAX-i;
    char mult[128];
@@ -3100,6 +3129,7 @@ int os_printD_rate( char *buffer, int i, double val, const t_os_stat *val_opts, 
 
    i += scnprintf(buffer + i, MAXLEN, p_("outfitstats", "%s: %s%s %s [%s %s]"), val_opts->name,
                   buf1, mult, val_opts->unit, buf2, rate_opts->unit );
-   i += scnprintf(buffer + i, MAXLEN, "#0");
+   if (val_opts->color)
+      i += scnprintf(buffer + i, MAXLEN, "#0");
    return i;
 }
