@@ -737,7 +737,7 @@ static int ss_printA( char *buf, int len, int newline, double d, const ShipStats
    return scnprintf( buf, len, p_("shipstats_absolute","%s#%s%s: %+g %s#0"),
          (newline) ? "\n" : "",
          ss_printD_colour( d, sl ),
-         _(sl->display), d,
+         _(sl->display), d, /* TODO probably use num2strU here, but we want the sign enforced. */
          _(sl->unit));
 }
 
