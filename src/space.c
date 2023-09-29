@@ -1568,7 +1568,7 @@ void space_init( const char* sysname, int do_simulate )
 
       player_message(_("#oEntering System %s on %s."), _(sysname), nt);
       if (cur_system->nebu_volatility > 0.)
-         player_message(_("#rWARNING - Volatile nebula detected in %s! Taking %.1f MW damage!"), _(sysname), cur_system->nebu_volatility);
+         player_message(_("#rWARNING - Volatile nebula detected in %s! Taking %.1f %s damage!"), _(sysname), cur_system->nebu_volatility, UNIT_POWER );
       free(nt);
 
       /* Handle background */
