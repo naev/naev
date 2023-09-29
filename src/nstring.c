@@ -120,7 +120,7 @@ int scnprintf( char* text, size_t maxlen, const char* fmt, ... )
 int num2str( char dest[NUM2STRLEN], double n, int decimals )
 {
    /* Don't use decimals if not necessary. */
-   if (fmod(n,1.) < 1e-3)
+   if (fabs(fmod(n,1.)) < 1e-3)
       decimals = 0;
 
    if (n >= 1e15)
