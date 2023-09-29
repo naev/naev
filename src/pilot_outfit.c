@@ -565,7 +565,7 @@ int pilot_reportSpaceworthy( const Pilot *p, char *buf, int bufSize )
    SPACEWORTHY_CHECK( p->cpu < 0, _("!! Insufficient CPU") );
 
    /* Movement. */
-   SPACEWORTHY_CHECK( p->thrust < 0, _("!! Insufficient Thrust") );
+   SPACEWORTHY_CHECK( p->thrust < 0, _("!! Insufficient Acceleration") );
    SPACEWORTHY_CHECK( p->speed < 0,  _("!! Insufficient Speed") );
    SPACEWORTHY_CHECK( p->turn < 0,   _("!! Insufficient Turn") );
 
