@@ -15,6 +15,7 @@ extern const char UNIT_TIME[];
 extern const char UNIT_PER_TIME[];
 extern const char UNIT_DISTANCE[];
 extern const char UNIT_SPEED[];
+extern const char UNIT_ACCEL[];
 extern const char UNIT_ENERGY[];
 extern const char UNIT_POWER[];
 extern const char UNIT_ANGLE[];

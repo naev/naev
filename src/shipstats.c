@@ -154,7 +154,7 @@ static const ShipStatsLookup ss_lookup[] = {
    DI_ELEM( SS_TYPE_D_JUMP_WARMUP,        jump_warmup,         N_("Jump Warmup") ),
    D__ELEM( SS_TYPE_D_MINING_BONUS,       mining_bonus,        N_("Mining Bonus") ),
 
-   A__ELEM( SS_TYPE_A_THRUST,             thrust,              N_("Thrust"),              UNIT_MASS ),
+   A__ELEM( SS_TYPE_A_THRUST,             thrust,              N_("Thrust"),              UNIT_ACCEL ),
    A__ELEM( SS_TYPE_A_TURN,               turn,                N_("Turn Rate"),           UNIT_TIME ),
    A__ELEM( SS_TYPE_A_SPEED,              speed,               N_("Maximum Speed"),       UNIT_SPEED ),
    A__ELEM( SS_TYPE_A_ENERGY,             energy,              N_("Energy Capacity"),     UNIT_ENERGY ),

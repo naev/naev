@@ -102,18 +102,18 @@ int os_printD_range( char *buffer, int i, double minValue, double maxValue, cons
 int os_printD_rate( char *buffer, int i, double val, const t_os_stat *val_opts, int multiplier, double rate, const t_os_stat *rate_opts );
 
 /* Helpers for different attributes. */
-static os_opts darmour_opts = { N_("Armour Damages"), UNIT_PERCENT, 1, 100, 0, 0 };
-static os_opts dshield_opts = { N_("Shield Damages"), UNIT_PERCENT, 1, 100, 0, 0 };
-static os_opts dknockback_opts = { N_("Knockback Damages"), UNIT_PERCENT, 0, 0, 1, 0 };
+static os_opts darmour_opts = { N_("Armour Damage"), UNIT_PERCENT, 1, 100, 0, 0 };
+static os_opts dshield_opts = { N_("Shield Damage"), UNIT_PERCENT, 1, 100, 0, 0 };
+static os_opts dknockback_opts = { N_("Knockback"), UNIT_PERCENT, 0, 0, 1, 0 };
 static os_opts cpu_opts = { N_("CPU"), UNIT_CPU, 1, 0, 1, 0 };
 static os_opts mass_opts = { N_("Mass"), UNIT_MASS, 0, 0, 1, 0 };
 static os_opts penetration_opts = { N_("Penetration"), UNIT_PERCENT, 0, 0, 1, 0 };
-static os_opts damage_opts = {N_("Damage"), "", 0, 1, 1, 1 };
-static os_opts dps_opts = {N_("Damage Rate"), UNIT_PER_TIME, 0, 0, 1, 1 };
-static os_opts disable_opts = {N_("Disable"), "", 0, 1, 1, 0};
-static os_opts disable_rate_opts = {N_("Disable Rate"), UNIT_PER_TIME, 0, 0, 1, 1 };
+static os_opts damage_opts = {N_("Damage"), UNIT_ENERGY, 0, 1, 1, 1 };
+static os_opts dps_opts = {N_("Damage Rate"), UNIT_POWER, 0, 0, 1, 1 };
+static os_opts disable_opts = {N_("Disable"), UNIT_ENERGY, 0, 1, 1, 1 };
+static os_opts disable_rate_opts = {N_("Disable Rate"), UNIT_POWER, 0, 0, 1, 1 };
 static os_opts fire_rate_opts = {N_("Fire Rate"), UNIT_PER_TIME, 0, 0, 0, 1 };
-static os_opts energy_opts = { N_("Energy"), UNIT_ENERGY, 0, 1, 1, 0 };
+static os_opts energy_opts = { N_("Energy"), UNIT_ENERGY, 0, 1, 1, 1 };
 static os_opts power_opts = { N_("Power"), UNIT_POWER, 0, 0, 1, 1 };
 static os_opts range_opts = { N_("Range"), UNIT_DISTANCE, 0, 0, 1, 0 };
 static os_opts speed_opts = { N_("Speed"), UNIT_SPEED, 0, 0, 1, 0 };
@@ -125,8 +125,8 @@ static os_opts duration_opts = { N_("Duration"), UNIT_TIME, 0, 0, 1, 1 };
 static os_opts cooldown_opts = { N_("Cooldown"), UNIT_TIME, 0, 0, 1, 1 };
 static os_opts lockon_opts = { N_("Lock On"), UNIT_TIME, 0, 0, 1, 0 };
 static os_opts inflight_calib_opts = { N_("Inflight Calibration"), UNIT_TIME, 0, 0, 1, 1 };
-static os_opts initial_speed_opts = { N_("Initial Speed"), UNIT_SPEED, 0, 0, 1, 0 };
-static os_opts thrust_opts = { N_("Thrust"), UNIT_MASS, 0, 0, 1, 0 };
+static os_opts initial_speed_opts = { N_("Launch Speed"), UNIT_SPEED, 0, 0, 1, 0 };
+static os_opts thrust_opts = { N_("Thrust"), UNIT_ACCEL, 0, 0, 1, 0 };
 static os_opts max_speed_opts = { N_("Max Speed"), UNIT_SPEED, 0, 0, 1, 0 };
 static os_opts reload_opts = { N_("Reload Time"), UNIT_TIME, 0, 0, 1, 1 };
 static os_opts armour_opts = { N_("Armour"), UNIT_ENERGY, 0, 0, 1, 1 };

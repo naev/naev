@@ -18,10 +18,11 @@
  */
 const char UNIT_TIME[]        = N_("sec");
 const char UNIT_PER_TIME[]    = N_("/sec");
-const char UNIT_DISTANCE[]    = N_("m");
-const char UNIT_SPEED[]       = N_("m/sec");
-const char UNIT_ENERGY[]      = N_("MJ");
-const char UNIT_POWER[]       = N_("MW");
+const char UNIT_DISTANCE[]    = N_("km");
+const char UNIT_SPEED[]       = N_("km/sec");
+const char UNIT_ACCEL[]       = N_("km/sec²");
+const char UNIT_ENERGY[]      = N_("GJ");
+const char UNIT_POWER[]       = N_("GW");
 const char UNIT_ANGLE[]       = N_("°");
 const char UNIT_ROTATION[]    = N_("°/sec");
 const char UNIT_MASS[]        = N_("t");
