@@ -155,7 +155,7 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_MINING_BONUS,       mining_bonus,        N_("Mining Bonus") ),
 
    A__ELEM( SS_TYPE_A_THRUST,             thrust,              N_("Thrust"),              UNIT_ACCEL ),
-   A__ELEM( SS_TYPE_A_TURN,               turn,                N_("Turn Rate"),           UNIT_TIME ),
+   A__ELEM( SS_TYPE_A_TURN,               turn,                N_("Turn Rate"),           UNIT_ROTATION ),
    A__ELEM( SS_TYPE_A_SPEED,              speed,               N_("Maximum Speed"),       UNIT_SPEED ),
    A__ELEM( SS_TYPE_A_ENERGY,             energy,              N_("Energy Capacity"),     UNIT_ENERGY ),
    A__ELEM( SS_TYPE_A_ENERGY_REGEN,       energy_regen,        N_("Energy Regeneration"), UNIT_POWER ),
@@ -171,7 +171,7 @@ static const ShipStatsLookup ss_lookup[] = {
    A__ELEM( SS_TYPE_A_DISABLE,            disable,             N_("Disable"),             UNIT_POWER ),
 
    A__ELEM( SS_TYPE_A_CPU_MAX,            cpu_max,             N_("CPU Capacity"),        UNIT_CPU ),
-   A__ELEM( SS_TYPE_A_ENGINE_LIMIT,       engine_limit,        N_("Engine Mass Limit"),   UNIT_TIME ),
+   A__ELEM( SS_TYPE_A_ENGINE_LIMIT,       engine_limit,        N_("Engine Mass Limit"),   UNIT_MASS ),
    A__ELEM( SS_TYPE_A_FUEL_REGEN,         fuel_regen,          N_("Fuel Regeneration"),   UNIT_PER_TIME ),
    A__ELEM( SS_TYPE_A_ASTEROID_SCAN,      asteroid_scan,       N_("Asteroid Scanner Range"), UNIT_DISTANCE ),
    A__ELEM( SS_TYPE_A_NEBULA_VISIBILITY,  nebu_visibility,     N_("Nebula Visibility"),   UNIT_DISTANCE ),
