@@ -61,9 +61,9 @@ typedef struct ShipStatsLookup_ {
    ELEM( t, n, dsp, u, SS_DATA_TYPE_DOUBLE_ABSOLUTE, 1 )
 
 #define P__ELEM( t, n, dsp ) \
-   ELEM( t, n, dsp, N_("%"), SS_DATA_TYPE_DOUBLE, 0 )
+   ELEM( t, n, dsp, N_("%"), SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT, 0 )
 #define PI_ELEM( t, n, dsp ) \
-   ELEM( t, n, dsp, N_("%"), SS_DATA_TYPE_DOUBLE, 1 )
+   ELEM( t, n, dsp, N_("%"), SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT, 1 )
 
 #define I__ELEM( t, n, dsp, u ) \
    ELEM( t, n, dsp, u, SS_DATA_TYPE_INTEGER, 0 )
