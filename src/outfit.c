@@ -3053,7 +3053,7 @@ static int os_printD( char *buffer, int i, double value, const t_os_stat *opts )
                      value > opts->color_threshold ? "#g" :
                      value < opts->color_threshold ? "#r" : "");
    /* The brochure of the International System of Units declares in chapter 5: "a space separates the number and the symbol %". The ISO 31-0 standard also specifies a space, and the TeX typesetting system encourages using one. */
-   i += scnprintf(buffer + i, MAXLEN, p_("outfitstats", "%s: %s %s"), opts->name, num2strU( value, opts->precision ), opts->unit );
+   i += scnprintf(buffer + i, MAXLEN, p_("outfitstats", "%s: %s %s"), _(opts->name), num2strU( value, opts->precision ), opts->unit );
    if (opts->color)
       i += scnprintf(buffer + i, MAXLEN, "#0");
    return i;
@@ -3085,7 +3085,7 @@ static int os_printD_range( char *buffer, int i, double minValue, double maxValu
       i += scnprintf(buffer + i, MAXLEN,
                      maxValue > opts->color_threshold ? "#g" :
                      maxValue < opts->color_threshold ? "#r" : "");
-   i += scnprintf(buffer + i, MAXLEN, p_("outfitstats", "%s: %s %s - %s %s"), opts->name,
+   i += scnprintf(buffer + i, MAXLEN, p_("outfitstats", "%s: %s %s - %s %s"), _(opts->name),
          buf1, opts->unit, buf2, opts->unit );
    if (opts->color)
       i += scnprintf(buffer + i, MAXLEN, "#0");
@@ -3127,7 +3127,7 @@ static int os_printD_rate( char *buffer, int i, double val, const t_os_stat *val
    num2str( buf1, val, val_opts->precision );
    num2str( buf2, rate, rate_opts->precision );
 
-   i += scnprintf(buffer + i, MAXLEN, p_("outfitstats", "%s: %s%s %s [%s %s]"), val_opts->name,
+   i += scnprintf(buffer + i, MAXLEN, p_("outfitstats", "%s: %s%s %s [%s %s]"), _(val_opts->name),
                   buf1, mult, val_opts->unit, buf2, rate_opts->unit );
    if (val_opts->color)
       i += scnprintf(buffer + i, MAXLEN, "#0");
