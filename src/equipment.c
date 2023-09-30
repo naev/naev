@@ -521,7 +521,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
 
       /* Draw outline. */
       if (i==selected)
-         toolkit_drawOutlineThick( x, y, w, h, 3, 5, &cGreen, NULL );
+         toolkit_drawOutlineThick( x, y, w, h, 5, 7, &cGreen, NULL );
       if (rc != NULL)
          toolkit_drawOutlineThick( x, y, w, h, 1, 3, rc, NULL );
       /* Go to next one. */
