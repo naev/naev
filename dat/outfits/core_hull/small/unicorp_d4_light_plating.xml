@@ -5,7 +5,7 @@
   <slot prop="hull">structure</slot>
   <size>small</size>
   <priority>7</priority>
-  <mass>60</mass>
+  <mass>50</mass>
   <price>30000</price>
   <description>Commonly found on civilian vessels, the D-4 plating is popular with ship manufacturers due to its low cost and adequate, if uninspiring performance.</description>
   <gfx_store>base_hull_s.webp</gfx_store>

@@ -1,18 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Nexus Dart 150 Engine">
+<outfit name="Nexus Dart 160 Engine">
  <general>
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>small</size>
-  <mass>8</mass>
+  <mass>10</mass>
   <price>45000</price>
-  <description>The Dart 150 is a well-rounded engine for light vessels. While it doesn't excel in speed, it offers good handling and power efficiency for a reasonable price. A very popular engine among civilian and military users alike.</description>
+  <description>The Dart 160 is a well-rounded engine for light vessels. While it doesn't excel in speed, it offers good handling and power efficiency for a reasonable price. A very popular engine among civilian and military users alike.</description>
   <gfx_store>nexus_engine_s.webp</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">
   <energy_regen_malus>6</energy_regen_malus>
-  <engine_limit>150</engine_limit>
+  <engine_limit>160</engine_limit>
   <fuel>400</fuel>
   <speed>300</speed>
   <thrust>165</thrust>

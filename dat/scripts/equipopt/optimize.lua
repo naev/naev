@@ -102,7 +102,7 @@ local special_ships = {}
 special_ships["Drone"] = function( p )
    for k,o in ipairs{
       "Milspec Orion 2301 Core System",
-      "Nexus Dart 150 Engine",
+      "Nexus Dart 160 Engine",
       "Nexus Light Stealth Plating",
       "Neutron Disruptor",
       "Neutron Disruptor",
@@ -114,7 +114,7 @@ end
 special_ships["Heavy Drone"] = function( p )
    for k,o in ipairs{
       "Milspec Thalos 3602 Core System",
-      "Unicorp Hawk 350 Engine",
+      "Unicorp Hawk 360 Engine",
       choose_one{"Nexus Light Stealth Plating", "S&K Light Combat Plating"},
       "Shatterer Launcher",
       "Shatterer Launcher",

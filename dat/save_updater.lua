@@ -24,6 +24,9 @@ end
    value indicating the amount of credits to refund the player.
 --]]
 local outfit_list = {
+   -- Below is a list of changes from 0.10.0 to 0.11.0
+   ["Unicorp Hawk 350 Engine"] = "Unicorp Hawk 360 Engine",
+   ["Nexus Dart 150 Engine"] = "Nexus Dart 160 Engine",
    -- Below is a list of changes from 0.9.0 to 0.10.0
    ["Drone Fighter Bay"] = "Drone Bay",
    ["Empire Lancelot Fighter Bay"] = "Empire Lancelot Bay",
@@ -355,7 +358,7 @@ local outfit_list = {
    ["Unicorp PT-600 Core System"] = "Unicorp PT-310 Core System",
    ["Unicorp PT-1000 Core System"] = "Unicorp PT-2200 Core System",
    ["Unicorp PT-100 Core System"] = "Unicorp PT-16 Core System",
-   ["Unicorp Hawk 150 Engine"] = "Nexus Dart 150 Engine",
+   ["Unicorp Hawk 150 Engine"] = "Nexus Dart 160 Engine", -- Modified for 0.11.0
    ["Unicorp Falcon 550 Engine"] = "Unicorp Falcon 1300 Engine",
    ["Unicorp Falcon 1200 Engine"] = "Unicorp Falcon 1300 Engine",
    ["Unicorp Eagle 6500 Engine"] = "Unicorp Eagle 7000 Engine",
@@ -395,7 +398,7 @@ local outfit_list = {
    ["Plasma Blaster MK3"] = 26e3,
    ["Plasma Blaster MK2"] = 17e3,
    ["Plasma Blaster MK1"] = 9e3,
-   ["Nexus Dart 300 Engine"] = "Nexus Dart 150 Engine",
+   ["Nexus Dart 300 Engine"] = "Nexus Dart 160 Engine", -- Modified for 0.11.0
    ["Nexus Bolt 6500 Engine"] = "Nexus Bolt 3500 Engine",
    ["Nexus Bolt 4500 Engine"] = "Nexus Bolt 3500 Engine",
    ["Nexus Arrow 550 Engine"] = "Nexus Arrow 700 Engine",

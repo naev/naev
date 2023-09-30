@@ -106,16 +106,16 @@ end
 -- STANDARD ENGINES
 local seng = {}
 seng["Scout"] = function ()
-   return "Nexus Dart 150 Engine"
+   return "Nexus Dart 160 Engine"
 end
 seng["Interceptor"] = function ()
-   return "Nexus Dart 150 Engine"
+   return "Nexus Dart 160 Engine"
 end
 seng["Fighter"] = function ()
-   return "Unicorp Hawk 350 Engine"
+   return "Unicorp Hawk 360 Engine"
 end
 seng["Bomber"] = function ()
-   return "Unicorp Hawk 350 Engine"
+   return "Unicorp Hawk 360 Engine"
 end
 seng["Corvette"] = function ()
    return "Nexus Arrow 700 Engine"
@@ -133,10 +133,10 @@ seng["Carrier"] = function ()
    return "Unicorp Eagle 7000 Engine"
 end
 seng["Yacht"] = function ()
-   return "Nexus Dart 150 Engine"
+   return "Nexus Dart 160 Engine"
 end
 seng["Courier"] = function ()
-   return "Unicorp Hawk 350 Engine"
+   return "Unicorp Hawk 360 Engine"
 end
 seng["Freighter"] = function ()
    return choose_one{ "Unicorp Falcon 1300 Engine", "Melendez Buffalo XL Engine" }
@@ -314,7 +314,7 @@ cores.elite.hulls["Gawain"] = function ()
    return choose_one{ "Unicorp D-2 Light Plating", "Nexus Light Stealth Plating" }
 end
 cores.elite.engines["Gawain"] = function ()
-   return choose_one{ "Nexus Dart 150 Engine", "Tricon Zephyr Engine" }
+   return choose_one{ "Nexus Dart 160 Engine", "Tricon Zephyr Engine" }
 end
 cores.elite.systems["Proteron Hippocrates"] = function ()
    return "Milspec Thalos 5402 Core System"

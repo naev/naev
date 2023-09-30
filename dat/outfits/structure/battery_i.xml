@@ -4,7 +4,7 @@
   <typename>Energy Modifier</typename>
   <slot>structure</slot>
   <size>small</size>
-  <mass>40</mass>
+  <mass>30</mass>
   <price>25000</price>
   <description>A large battery unit designed to hold 250 MJ of energy. Small enough to mount on many light vessels.</description>
   <gfx_store>capacitor-g.webp</gfx_store>

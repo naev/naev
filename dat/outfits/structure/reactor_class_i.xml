@@ -4,7 +4,7 @@
   <typename>Power Modifier</typename>
   <slot>structure</slot>
   <size>small</size>
-  <mass>50</mass>
+  <mass>25</mass>
   <price>30000</price>
   <gfx_store>reactor_i.webp</gfx_store>
   <description>Adding a complementary reactor to your ship is a great way to get that extra energy boost you need. This does not replace the existing reactor but works alongside it and hooks up directly to the energy flux.</description>
