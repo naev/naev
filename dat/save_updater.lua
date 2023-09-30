@@ -25,6 +25,7 @@ end
 --]]
 local outfit_list = {
    -- Below is a list of changes from 0.10.0 to 0.11.0
+   ["Unicorp Falcon 1300 Engine"] = "Unicorp Falcon 1400 Engine",
    ["Unicorp Hawk 350 Engine"] = "Unicorp Hawk 360 Engine",
    ["Nexus Dart 150 Engine"] = "Nexus Dart 160 Engine",
    -- Below is a list of changes from 0.9.0 to 0.10.0
@@ -359,8 +360,8 @@ local outfit_list = {
    ["Unicorp PT-1000 Core System"] = "Unicorp PT-2200 Core System",
    ["Unicorp PT-100 Core System"] = "Unicorp PT-16 Core System",
    ["Unicorp Hawk 150 Engine"] = "Nexus Dart 160 Engine", -- Modified for 0.11.0
-   ["Unicorp Falcon 550 Engine"] = "Unicorp Falcon 1300 Engine",
-   ["Unicorp Falcon 1200 Engine"] = "Unicorp Falcon 1300 Engine",
+   ["Unicorp Falcon 550 Engine"] = "Unicorp Falcon 1400 Engine",
+   ["Unicorp Falcon 1200 Engine"] = "Unicorp Falcon 1400 Engine",
    ["Unicorp Eagle 6500 Engine"] = "Unicorp Eagle 7000 Engine",
    ["Unicorp Eagle 4500 Engine"] = "Unicorp Eagle 7000 Engine",
    ["Unicorp D-8 Medium Plating"] = "Unicorp D-12 Medium Plating",

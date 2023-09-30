@@ -12,7 +12,7 @@
  </general>
  <specific type="modification">
   <energy_regen_malus>25</energy_regen_malus>
-  <engine_limit>700</engine_limit>
+  <engine_limit>650</engine_limit>
   <fuel>600</fuel>
   <speed>230</speed>
   <thrust>130</thrust>

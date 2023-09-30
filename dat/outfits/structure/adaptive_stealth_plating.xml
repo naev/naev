@@ -12,6 +12,7 @@
  </general>
  <specific type="modification">
   <ew_hide>-15</ew_hide>
-  <engine_limit_rel>-15</engine_limit_rel>
+  <engine_limit_rel>-5</engine_limit_rel>
+  <armour_mod>-10</armour_mod>
  </specific>
 </outfit>

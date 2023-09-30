@@ -63,7 +63,7 @@ local pirate_cores = {
       end,
    ["Pirate Starbridge"] = function (p)
          local c = ecores.get( p, { systems=pirate_class, hulls=pirate_class } )
-         table.insert( c, choose_one{ "Unicorp Falcon 1300 Engine", "Krain Patagium Engine", } )
+         table.insert( c, choose_one{ "Unicorp Falcon 1400 Engine", "Krain Patagium Engine", } )
          return c
       end,
 }

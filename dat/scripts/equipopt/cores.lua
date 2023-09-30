@@ -121,7 +121,7 @@ seng["Corvette"] = function ()
    return "Nexus Arrow 700 Engine"
 end
 seng["Destroyer"] = function ()
-   return "Unicorp Falcon 1300 Engine"
+   return "Unicorp Falcon 1400 Engine"
 end
 seng["Cruiser"] = function ()
    return "Nexus Bolt 3500 Engine"
@@ -139,7 +139,7 @@ seng["Courier"] = function ()
    return "Unicorp Hawk 360 Engine"
 end
 seng["Freighter"] = function ()
-   return choose_one{ "Unicorp Falcon 1300 Engine", "Melendez Buffalo XL Engine" }
+   return choose_one{ "Unicorp Falcon 1400 Engine", "Melendez Buffalo XL Engine" }
 end
 seng["Armoured Transport"] = seng["Freighter"]
 seng["Bulk Freighter"] = function ()
@@ -291,7 +291,7 @@ cores.standard.engines["Kestrel"] = function ()
 end
 cores.standard.engines["Pirate Kestrel"] = cores.standard.engines["Kestrel"]
 cores.standard.engines["Starbridge"] = function ()
-   return choose_one{ "Unicorp Falcon 1300 Engine", "Krain Patagium Engine" }
+   return choose_one{ "Unicorp Falcon 1400 Engine", "Krain Patagium Engine" }
 end
 cores.standard.engines["Pirate Starbridge"] = cores.standard.engines["Starbridge"]
 cores.standard.systems["Proteron Hippocrates"] = function ()
