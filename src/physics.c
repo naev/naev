@@ -16,19 +16,19 @@
  * Lists of names for some internal units we use. These just translate them
  * game values to human readable form.
  */
-const char UNIT_TIME[]        = N_("sec");
-const char UNIT_PER_TIME[]    = N_("/sec");
-const char UNIT_DISTANCE[]    = N_("km");
-const char UNIT_SPEED[]       = N_("km/s");
-const char UNIT_ACCEL[]       = N_("km/s²");
-const char UNIT_ENERGY[]      = N_("GJ");
-const char UNIT_POWER[]       = N_("GW");
-const char UNIT_ANGLE[]       = N_("°");
-const char UNIT_ROTATION[]    = N_("°/s");
-const char UNIT_MASS[]        = N_("t");
-const char UNIT_CPU[]         = N_("PFLOP");
-const char UNIT_UNIT[]        = N_("u");
-const char UNIT_PERCENT[]     = N_("%");
+const char _UNIT_TIME[]       = N_("sec");
+const char _UNIT_PER_TIME[]   = N_("/sec");
+const char _UNIT_DISTANCE[]   = N_("km");
+const char _UNIT_SPEED[]      = N_("km/s");
+const char _UNIT_ACCEL[]      = N_("km/s²");
+const char _UNIT_ENERGY[]     = N_("GJ");
+const char _UNIT_POWER[]      = N_("GW");
+const char _UNIT_ANGLE[]      = N_("°");
+const char _UNIT_ROTATION[]   = N_("°/s");
+const char _UNIT_MASS[]       = N_("t");
+const char _UNIT_CPU[]        = N_("PFLOP");
+const char _UNIT_UNIT[]       = N_("u");
+const char _UNIT_PERCENT[]    = N_("%");
 
 /**
  * @brief Converts an angle to the [0, 2*M_PI] range.
