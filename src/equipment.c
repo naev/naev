@@ -1170,6 +1170,9 @@ static int equipment_mouseSlots( unsigned int wid, SDL_Event* event,
  */
 static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot )
 {
+   /* Slot can be changed later in land_refuel() so have to save early. */
+   int selslot = eq_wgt.slot;
+
    /* Remove outfit. */
    if (slot->outfit != NULL) {
       int ret;
@@ -1222,8 +1225,9 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
    pilot_calcStats( p );
    pilot_healLanded( p );
 
-   /* Redo the outfits thingy. */
+   /* Redo the outfits thingy, while conserving slot. */
    equipment_regenLists( wid, 1, 1 );
+   eq_wgt.slot = selslot;
 
    /* Update outfits. */
    outfits_updateEquipmentOutfits();
