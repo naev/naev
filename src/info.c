@@ -399,8 +399,8 @@ static void info_openMain( unsigned int wid )
    l += scnprintf( &str[l], sizeof(str)-l, "\n%s", nt );
    l += scnprintf( &str[l], sizeof(str)-l, "\n\n%s", creds );
    l += scnprintf( &str[l], sizeof(str)-l, "\n%s", player.p->name );
-   l += scnprintf( &str[l], sizeof(str)-l, "\n%.0f (%d %s)",
-         player.p->fuel, pilot_getJumps(player.p), n_( "jump", "jumps", pilot_getJumps(player.p) ) );
+   l += scnprintf( &str[l], sizeof(str)-l, "\n%.0f %s (%d %s)",
+         player.p->fuel, UNIT_UNIT, pilot_getJumps(player.p), n_( "jump", "jumps", pilot_getJumps(player.p) ) );
    cargo_used = pfleet_cargoUsed();
    cargo_total = cargo_used + pfleet_cargoFree();
    l += scnprintf( &str[l], sizeof(str)-l, "\n%d / %d %s", cargo_used, cargo_total, UNIT_MASS );

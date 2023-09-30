@@ -11,19 +11,32 @@
 #define SOLID_UPDATE_RK4      0 /**< Default Runge-Kutta 3-4 update. */
 #define SOLID_UPDATE_EULER    1 /**< Simple Euler update. */
 
-extern const char UNIT_TIME[];
-extern const char UNIT_PER_TIME[];
-extern const char UNIT_DISTANCE[];
-extern const char UNIT_SPEED[];
-extern const char UNIT_ACCEL[];
-extern const char UNIT_ENERGY[];
-extern const char UNIT_POWER[];
-extern const char UNIT_ANGLE[];
-extern const char UNIT_ROTATION[];
-extern const char UNIT_MASS[];
-extern const char UNIT_CPU[];
-extern const char UNIT_UNIT[];
-extern const char UNIT_PERCENT[];
+extern const char _UNIT_TIME[];
+extern const char _UNIT_PER_TIME[];
+extern const char _UNIT_DISTANCE[];
+extern const char _UNIT_SPEED[];
+extern const char _UNIT_ACCEL[];
+extern const char _UNIT_ENERGY[];
+extern const char _UNIT_POWER[];
+extern const char _UNIT_ANGLE[];
+extern const char _UNIT_ROTATION[];
+extern const char _UNIT_MASS[];
+extern const char _UNIT_CPU[];
+extern const char _UNIT_UNIT[];
+extern const char _UNIT_PERCENT[];
+#define UNIT_TIME       _(_UNIT_TIME)
+#define UNIT_PER_TIME   _(_UNIT_PER_TIME)
+#define UNIT_DISTANCE   _(_UNIT_DISTANCE)
+#define UNIT_SPEED      _(_UNIT_SPEED)
+#define UNIT_ACCEL      _(_UNIT_ACCEL)
+#define UNIT_ENERGY     _(_UNIT_ENERGY)
+#define UNIT_POWER      _(_UNIT_POWER)
+#define UNIT_ANGLE      _(_UNIT_ANGLE)
+#define UNIT_ROTATION   _(_UNIT_ROTATION)
+#define UNIT_MASS       _(_UNIT_MASS)
+#define UNIT_CPU        _(_UNIT_CPU)
+#define UNIT_UNIT       _(_UNIT_UNIT)
+#define UNIT_PERCENT    _(_UNIT_PERCENT)
 
 /**
  * @brief Represents a solid in the game.

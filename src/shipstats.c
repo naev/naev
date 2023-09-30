@@ -61,9 +61,9 @@ typedef struct ShipStatsLookup_ {
    ELEM( t, n, dsp, u, SS_DATA_TYPE_DOUBLE_ABSOLUTE, 1 )
 
 #define P__ELEM( t, n, dsp ) \
-   ELEM( t, n, dsp, N_("%"), SS_DATA_TYPE_DOUBLE, 0 )
+   ELEM( t, n, dsp, N_("%"), SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT, 0 )
 #define PI_ELEM( t, n, dsp ) \
-   ELEM( t, n, dsp, N_("%"), SS_DATA_TYPE_DOUBLE, 1 )
+   ELEM( t, n, dsp, N_("%"), SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT, 1 )
 
 #define I__ELEM( t, n, dsp, u ) \
    ELEM( t, n, dsp, u, SS_DATA_TYPE_INTEGER, 0 )
@@ -154,36 +154,36 @@ static const ShipStatsLookup ss_lookup[] = {
    DI_ELEM( SS_TYPE_D_JUMP_WARMUP,        jump_warmup,         N_("Jump Warmup") ),
    D__ELEM( SS_TYPE_D_MINING_BONUS,       mining_bonus,        N_("Mining Bonus") ),
 
-   A__ELEM( SS_TYPE_A_THRUST,             thrust,              N_("Thrust"),              UNIT_ACCEL ),
-   A__ELEM( SS_TYPE_A_TURN,               turn,                N_("Turn Rate"),           UNIT_ROTATION ),
-   A__ELEM( SS_TYPE_A_SPEED,              speed,               N_("Maximum Speed"),       UNIT_SPEED ),
-   A__ELEM( SS_TYPE_A_ENERGY,             energy,              N_("Energy Capacity"),     UNIT_ENERGY ),
-   A__ELEM( SS_TYPE_A_ENERGY_REGEN,       energy_regen,        N_("Energy Regeneration"), UNIT_POWER ),
-   AI_ELEM( SS_TYPE_A_ENERGY_REGEN_MALUS, energy_regen_malus,  N_("Energy Usage"),        UNIT_POWER ),
-   AI_ELEM( SS_TYPE_A_ENERGY_LOSS,        energy_loss,         N_("Energy Usage"),        UNIT_POWER ),
-   A__ELEM( SS_TYPE_A_SHIELD,             shield,              N_("Shield Capacity"),     UNIT_ENERGY ),
-   A__ELEM( SS_TYPE_A_SHIELD_REGEN,       shield_regen,        N_("Shield Regeneration"), UNIT_POWER ),
-   AI_ELEM( SS_TYPE_A_SHIELD_REGEN_MALUS, shield_regen_malus,  N_("Shield Usage"),        UNIT_POWER ),
-   A__ELEM( SS_TYPE_A_ARMOUR,             armour,              N_("Armour"),              UNIT_ENERGY ),
-   A__ELEM( SS_TYPE_A_ARMOUR_REGEN,       armour_regen,        N_("Armour Regeneration"), UNIT_POWER ),
-   AI_ELEM( SS_TYPE_A_ARMOUR_REGEN_MALUS, armour_regen_malus,  N_("Armour Damage"),       UNIT_POWER ),
-   A__ELEM( SS_TYPE_A_DAMAGE,             damage,              N_("Damage"),              UNIT_POWER ),
-   A__ELEM( SS_TYPE_A_DISABLE,            disable,             N_("Disable"),             UNIT_POWER ),
+   A__ELEM( SS_TYPE_A_THRUST,             thrust,              N_("Thrust"),              _UNIT_ACCEL ),
+   A__ELEM( SS_TYPE_A_TURN,               turn,                N_("Turn Rate"),           _UNIT_ROTATION ),
+   A__ELEM( SS_TYPE_A_SPEED,              speed,               N_("Maximum Speed"),       _UNIT_SPEED ),
+   A__ELEM( SS_TYPE_A_ENERGY,             energy,              N_("Energy Capacity"),     _UNIT_ENERGY ),
+   A__ELEM( SS_TYPE_A_ENERGY_REGEN,       energy_regen,        N_("Energy Regeneration"), _UNIT_POWER ),
+   AI_ELEM( SS_TYPE_A_ENERGY_REGEN_MALUS, energy_regen_malus,  N_("Energy Usage"),        _UNIT_POWER ),
+   AI_ELEM( SS_TYPE_A_ENERGY_LOSS,        energy_loss,         N_("Energy Usage"),        _UNIT_POWER ),
+   A__ELEM( SS_TYPE_A_SHIELD,             shield,              N_("Shield Capacity"),     _UNIT_ENERGY ),
+   A__ELEM( SS_TYPE_A_SHIELD_REGEN,       shield_regen,        N_("Shield Regeneration"), _UNIT_POWER ),
+   AI_ELEM( SS_TYPE_A_SHIELD_REGEN_MALUS, shield_regen_malus,  N_("Shield Usage"),        _UNIT_POWER ),
+   A__ELEM( SS_TYPE_A_ARMOUR,             armour,              N_("Armour"),              _UNIT_ENERGY ),
+   A__ELEM( SS_TYPE_A_ARMOUR_REGEN,       armour_regen,        N_("Armour Regeneration"), _UNIT_POWER ),
+   AI_ELEM( SS_TYPE_A_ARMOUR_REGEN_MALUS, armour_regen_malus,  N_("Armour Damage"),       _UNIT_POWER ),
+   A__ELEM( SS_TYPE_A_DAMAGE,             damage,              N_("Damage"),              _UNIT_POWER ),
+   A__ELEM( SS_TYPE_A_DISABLE,            disable,             N_("Disable"),             _UNIT_POWER ),
 
-   A__ELEM( SS_TYPE_A_CPU_MAX,            cpu_max,             N_("CPU Capacity"),        UNIT_CPU ),
-   A__ELEM( SS_TYPE_A_ENGINE_LIMIT,       engine_limit,        N_("Engine Mass Limit"),   UNIT_MASS ),
-   A__ELEM( SS_TYPE_A_FUEL_REGEN,         fuel_regen,          N_("Fuel Regeneration"),   UNIT_PER_TIME ),
-   A__ELEM( SS_TYPE_A_ASTEROID_SCAN,      asteroid_scan,       N_("Asteroid Scanner Range"), UNIT_DISTANCE ),
-   A__ELEM( SS_TYPE_A_NEBULA_VISIBILITY,  nebu_visibility,     N_("Nebula Visibility"),   UNIT_DISTANCE ),
+   A__ELEM( SS_TYPE_A_CPU_MAX,            cpu_max,             N_("CPU Capacity"),        _UNIT_CPU ),
+   A__ELEM( SS_TYPE_A_ENGINE_LIMIT,       engine_limit,        N_("Engine Mass Limit"),   _UNIT_MASS ),
+   A__ELEM( SS_TYPE_A_FUEL_REGEN,         fuel_regen,          N_("Fuel Regeneration"),   _UNIT_PER_TIME ),
+   A__ELEM( SS_TYPE_A_ASTEROID_SCAN,      asteroid_scan,       N_("Asteroid Scanner Range"), _UNIT_DISTANCE ),
+   A__ELEM( SS_TYPE_A_NEBULA_VISIBILITY,  nebu_visibility,     N_("Nebula Visibility"),   _UNIT_DISTANCE ),
 
    P__ELEM( SS_TYPE_P_ABSORB,             absorb,              N_("Damage Absorption") ),
 
    P__ELEM( SS_TYPE_P_NEBULA_ABSORB,      nebu_absorb,         N_("Nebula Resistance") ),
    P__ELEM( SS_TYPE_P_JAMMING_CHANCE,     jam_chance,          N_("Missile jamming chance") ),
 
-   I__ELEM( SS_TYPE_I_FUEL,               fuel,                N_("Fuel"),                UNIT_UNIT ),
-   I__ELEM( SS_TYPE_I_CARGO,              cargo,               N_("Cargo"),               UNIT_MASS ),
-   I__ELEM( SS_TYPE_I_CREW,               crew,                N_("Crew"),                UNIT_UNIT ),
+   I__ELEM( SS_TYPE_I_FUEL,               fuel,                N_("Fuel"),                _UNIT_UNIT ),
+   I__ELEM( SS_TYPE_I_CARGO,              cargo,               N_("Cargo"),               _UNIT_MASS ),
+   I__ELEM( SS_TYPE_I_CREW,               crew,                N_("Crew"),                _UNIT_UNIT ),
 
    B__ELEM( SS_TYPE_B_HIDDEN_JUMP_DETECT, misc_hidden_jump_detect, N_("Hidden Jump Detection") ),
    B__ELEM( SS_TYPE_B_INSTANT_JUMP,       misc_instant_jump,   N_("Instant Jump") ),

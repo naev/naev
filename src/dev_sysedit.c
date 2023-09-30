@@ -1459,7 +1459,7 @@ static void sysedit_editPnt (void)
    window_setInputFilter( wid, "inpPresenceBonus", INPUT_FILTER_NUMBER );
    x += 50 + 10;
 
-   s = _("Range");
+   s = p_("sysedit", "Range");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtPresenceRange",
          NULL, NULL, s );

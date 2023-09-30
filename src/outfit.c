@@ -102,39 +102,39 @@ static int os_printD_range( char *buffer, int i, double minValue, double maxValu
 static int os_printD_rate( char *buffer, int i, double val, const t_os_stat *val_opts, int multiplier, double rate, const t_os_stat *rate_opts );
 
 /* Helpers for different attributes. */
-static os_opts darmour_opts = { N_("Armour Damage"), UNIT_PERCENT, 1, 100, 0, 0 };
-static os_opts dshield_opts = { N_("Shield Damage"), UNIT_PERCENT, 1, 100, 0, 0 };
-static os_opts dknockback_opts = { N_("Knockback"), UNIT_PERCENT, 0, 0, 1, 0 };
-static os_opts cpu_opts = { N_("CPU"), UNIT_CPU, 1, 0, 1, 0 };
-static os_opts mass_opts = { N_("Mass"), UNIT_MASS, 0, 0, 1, 0 };
-static os_opts penetration_opts = { N_("Penetration"), UNIT_PERCENT, 0, 0, 1, 0 };
-static os_opts damage_opts = {N_("Damage"), UNIT_ENERGY, 0, 1, 1, 1 };
-static os_opts dps_opts = {N_("Damage Rate"), UNIT_POWER, 0, 0, 1, 1 };
-static os_opts disable_opts = {N_("Disable"), UNIT_ENERGY, 0, 1, 1, 1 };
-static os_opts disable_rate_opts = {N_("Disable Rate"), UNIT_POWER, 0, 0, 1, 1 };
-static os_opts fire_rate_opts = {N_("Fire Rate"), UNIT_PER_TIME, 0, 0, 0, 1 };
-static os_opts energy_opts = { N_("Energy"), UNIT_ENERGY, 0, 1, 1, 1 };
-static os_opts power_opts = { N_("Power"), UNIT_POWER, 0, 0, 1, 1 };
-static os_opts range_opts = { N_("Range"), UNIT_DISTANCE, 0, 0, 1, 0 };
-static os_opts speed_opts = { N_("Speed"), UNIT_SPEED, 0, 0, 1, 0 };
-static os_opts heatup_opts = { N_("Overheat"), UNIT_TIME, 0, 0, 1, 1 };
-static os_opts dispersion_opts = { N_("Dispersion"), UNIT_ANGLE, 0, 0, 1, 0 };
-static os_opts swivel_opts = { N_("Swivel"), UNIT_ANGLE, 0, 0, 1, 0 };
-static os_opts tracking_opts = { N_("Tracking"), UNIT_DISTANCE, 0, 0, 1, 0 };
-static os_opts duration_opts = { N_("Duration"), UNIT_TIME, 0, 0, 1, 1 };
-static os_opts cooldown_opts = { N_("Cooldown"), UNIT_TIME, 0, 0, 1, 1 };
-static os_opts lockon_opts = { N_("Lock On"), UNIT_TIME, 0, 0, 1, 0 };
-static os_opts inflight_calib_opts = { N_("Inflight Calibration"), UNIT_TIME, 0, 0, 1, 1 };
-static os_opts initial_speed_opts = { N_("Launch Speed"), UNIT_SPEED, 0, 0, 1, 0 };
-static os_opts thrust_opts = { N_("Accel"), UNIT_ACCEL, 0, 0, 1, 0 };
-static os_opts max_speed_opts = { N_("Max Speed"), UNIT_SPEED, 0, 0, 1, 0 };
-static os_opts reload_opts = { N_("Reload Time"), UNIT_TIME, 0, 0, 1, 1 };
-static os_opts armour_opts = { N_("Armour"), UNIT_ENERGY, 0, 0, 1, 1 };
-static os_opts absorp_opts = { N_("Absorption"), UNIT_PERCENT, 0, 0, 1, 1 };
-static os_opts jam_res_opts = { N_("Jam Resistance"), UNIT_PERCENT, 0, 0, 1, 0 };
-static os_opts max_mass_opts = { N_("Max Effective Mass"), UNIT_MASS, 0, 0, 1, 0 };
-static os_opts rumble_opts = { N_("Rumble"), "", 0, 0, 1, 1 };
-static os_opts shots_delay_opts = { N_("Shots Delay"), UNIT_TIME, 0, 0, 1, 1 };
+static os_opts darmour_opts = { N_("Armour Damage"), _UNIT_PERCENT, 1, 100, 0, 0 };
+static os_opts dshield_opts = { N_("Shield Damage"), _UNIT_PERCENT, 1, 100, 0, 0 };
+static os_opts dknockback_opts = { N_("Knockback"), _UNIT_PERCENT, 0, 0, 1, 0 };
+static os_opts cpu_opts = { N_("CPU"), _UNIT_CPU, 1, 0, 1, 0 };
+static os_opts mass_opts = { N_("Mass"), _UNIT_MASS, 0, 0, 1, 0 };
+static os_opts penetration_opts = { N_("Penetration"), _UNIT_PERCENT, 0, 0, 1, 0 };
+static os_opts damage_opts = {N_("Damage"), _UNIT_ENERGY, 0, 1, 1, 1 };
+static os_opts dps_opts = {N_("Damage Rate"), _UNIT_POWER, 0, 0, 1, 1 };
+static os_opts disable_opts = {N_("Disable"), _UNIT_ENERGY, 0, 1, 1, 1 };
+static os_opts disable_rate_opts = {N_("Disable Rate"), _UNIT_POWER, 0, 0, 1, 1 };
+static os_opts fire_rate_opts = {N_("Fire Rate"), _UNIT_PER_TIME, 0, 0, 0, 1 };
+static os_opts energy_opts = { N_("Energy"), _UNIT_ENERGY, 0, 1, 1, 1 };
+static os_opts power_opts = { N_("Power"), _UNIT_POWER, 0, 0, 1, 1 };
+static os_opts range_opts = { N_("Range"), _UNIT_DISTANCE, 0, 0, 1, 0 };
+static os_opts speed_opts = { N_("Speed"), _UNIT_SPEED, 0, 0, 1, 0 };
+static os_opts heatup_opts = { N_("Overheat"), _UNIT_TIME, 0, 0, 1, 1 };
+static os_opts dispersion_opts = { N_("Dispersion"), _UNIT_ANGLE, 0, 0, 1, 0 };
+static os_opts swivel_opts = { N_("Swivel"), _UNIT_ANGLE, 0, 0, 1, 0 };
+static os_opts tracking_opts = { N_("Tracking"), _UNIT_DISTANCE, 0, 0, 1, 0 };
+static os_opts duration_opts = { N_("Duration"), _UNIT_TIME, 0, 0, 1, 1 };
+static os_opts cooldown_opts = { N_("Cooldown"), _UNIT_TIME, 0, 0, 1, 1 };
+static os_opts lockon_opts = { N_("Lock On"), _UNIT_TIME, 0, 0, 1, 0 };
+static os_opts inflight_calib_opts = { N_("Inflight Calibration"), _UNIT_TIME, 0, 0, 1, 1 };
+static os_opts initial_speed_opts = { N_("Launch Speed"), _UNIT_SPEED, 0, 0, 1, 0 };
+static os_opts thrust_opts = { N_("Accel"), _UNIT_ACCEL, 0, 0, 1, 0 };
+static os_opts max_speed_opts = { N_("Max Speed"), _UNIT_SPEED, 0, 0, 1, 0 };
+static os_opts reload_opts = { N_("Reload Time"), _UNIT_TIME, 0, 0, 1, 1 };
+static os_opts armour_opts = { N_("Armour"), _UNIT_ENERGY, 0, 0, 1, 1 };
+static os_opts absorp_opts = { N_("Absorption"), _UNIT_PERCENT, 0, 0, 1, 1 };
+static os_opts jam_res_opts = { N_("Jam Resistance"), _UNIT_PERCENT, 0, 0, 1, 0 };
+static os_opts max_mass_opts = { N_("Max Effective Mass"), _UNIT_MASS, 0, 0, 1, 0 };
+static os_opts rumble_opts = { N_("Rumble"), NULL, 0, 0, 1, 1 };
+static os_opts shots_delay_opts = { N_("Shots Delay"), _UNIT_TIME, 0, 0, 1, 1 };
 
 static int outfit_cmp( const void *p1, const void *p2 )
 {
@@ -1510,7 +1510,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       snprintf(radius, sizeof(radius), outfit_isProp(temp, OUTFIT_PROP_WEAP_FRIENDLYFIRE) ? p_("friendlyfire","#r!! %s !!#0") : "%s", _("Hit radius"));
       t_os_stat radius_opts = {
          .name = radius,
-         .unit = UNIT_DISTANCE,
+         .unit = _UNIT_DISTANCE,
          .color = 0,
          .color_threshold = 0,
          .hide_zero = 1,
@@ -1920,7 +1920,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       snprintf(radius, sizeof(radius), outfit_isProp(temp, OUTFIT_PROP_WEAP_FRIENDLYFIRE) ? p_("friendlyfire","#r!! %s !!#0") : "%s", _("Hit radius"));
       t_os_stat radius_opts = {
          .name = radius,
-         .unit = UNIT_DISTANCE,
+         .unit = _UNIT_DISTANCE,
          .color = 0,
          .color_threshold = 0,
          .hide_zero = 1,
@@ -3053,7 +3053,7 @@ static int os_printD( char *buffer, int i, double value, const t_os_stat *opts )
                      value > opts->color_threshold ? "#g" :
                      value < opts->color_threshold ? "#r" : "");
    /* The brochure of the International System of Units declares in chapter 5: "a space separates the number and the symbol %". The ISO 31-0 standard also specifies a space, and the TeX typesetting system encourages using one. */
-   i += scnprintf(buffer + i, MAXLEN, p_("outfitstats", "%s: %s %s"), opts->name, num2strU( value, opts->precision ), opts->unit );
+   i += scnprintf(buffer + i, MAXLEN, p_("outfitstats", "%s: %s %s"), _(opts->name), num2strU( value, opts->precision ), opts->unit ? _(opts->unit) : "" );
    if (opts->color)
       i += scnprintf(buffer + i, MAXLEN, "#0");
    return i;
@@ -3085,8 +3085,8 @@ static int os_printD_range( char *buffer, int i, double minValue, double maxValu
       i += scnprintf(buffer + i, MAXLEN,
                      maxValue > opts->color_threshold ? "#g" :
                      maxValue < opts->color_threshold ? "#r" : "");
-   i += scnprintf(buffer + i, MAXLEN, p_("outfitstats", "%s: %s %s - %s %s"), opts->name,
-         buf1, opts->unit, buf2, opts->unit );
+   i += scnprintf(buffer + i, MAXLEN, p_("outfitstats", "%s: %s %s - %s %s"), _(opts->name),
+         buf1, _(opts->unit), buf2, _(opts->unit) );
    if (opts->color)
       i += scnprintf(buffer + i, MAXLEN, "#0");
    return i;
@@ -3127,8 +3127,8 @@ static int os_printD_rate( char *buffer, int i, double val, const t_os_stat *val
    num2str( buf1, val, val_opts->precision );
    num2str( buf2, rate, rate_opts->precision );
 
-   i += scnprintf(buffer + i, MAXLEN, p_("outfitstats", "%s: %s%s %s [%s %s]"), val_opts->name,
-                  buf1, mult, val_opts->unit, buf2, rate_opts->unit );
+   i += scnprintf(buffer + i, MAXLEN, p_("outfitstats", "%s: %s%s %s [%s %s]"), _(val_opts->name),
+                  buf1, mult, _(val_opts->unit), buf2, _(rate_opts->unit) );
    if (val_opts->color)
       i += scnprintf(buffer + i, MAXLEN, "#0");
    return i;
