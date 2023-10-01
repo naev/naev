@@ -1870,7 +1870,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    if (!outfit_isProp(temp,OUTFIT_PROP_TEMPLATE)) {
       temp->mass -= temp->u.lau.ammo_mass*temp->u.lau.amount;
       if (temp->mass < 0.)
-         WARN(_("Outfit '%s' has negative mass when subtracting ammo mass!"), temp->name);
+         WARN(_("Launcher outfit '%s' has negative mass when subtracting ammo mass!"), temp->name);
    }
    temp->u.lau.dmg_absorb /= 100.;
    temp->u.lau.swivel *= M_PI/180.;
@@ -2161,12 +2161,17 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
       WARN(_("Outfit '%s' has unknown node '%s'"),temp->name, node->name);
    } while (xml_nextNode(node));
 
+   /* Post-processing. */
+   temp->mass -= temp->u.bay.ship_mass*temp->u.bay.amount;
+   if (temp->mass < 0.)
+      WARN(_("Fighter bay outfit '%s' has negative mass when subtracting ship mass!"), temp->name);
+
    /* Set short description. */
    temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
    l = 0;
    SDESC_ADD( l, temp, "%s", _(outfit_getType(temp)) );
    l = os_printD( temp->summary_raw, l, temp->cpu, &cpu_opts );
-   l = os_printD( temp->summary_raw, l, temp->mass, &mass_opts );
+   l = os_printD( temp->summary_raw, l, temp->mass+temp->u.bay.ship_mass*temp->u.bay.amount, &mass_opts );
    SDESC_ADD( l, temp, _("\n  Holds %d ships"), temp->u.bay.amount );
    l = os_printD( temp->summary_raw, l, temp->u.bay.delay, &shots_delay_opts );
    l = os_printD( temp->summary_raw, l, temp->u.bay.reload_time, &reload_opts );
@@ -2861,7 +2866,7 @@ int outfit_loadPost (void)
          o->illegaltoS = NULL;
 
          int l = strlen( o->summary_raw );
-         SDESC_ADD( l, o, _("\n#rIllegal to:#0") );
+         SDESC_ADD( l, o, "\n#r%s#0", _("Illegal to:") );
          for (int j=0; j<array_size(o->illegalto); j++)
             SDESC_ADD( l, o, _("\n#r- %s#0"), _(faction_name(o->illegalto[j])) );
       }
