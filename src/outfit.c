@@ -1154,7 +1154,7 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
    xmlNodePtr cur;
 
    /* Defaults. */
-   dmg->type         = start_dtype_default();
+   dmg->type         = dtype_get( start_dtype_default() );
    dmg->damage       = 0.;
    dmg->penetration  = 0.;
    dmg->disable      = 0.;

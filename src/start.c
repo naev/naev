@@ -39,7 +39,7 @@ typedef struct ndata_start_s {
    char *event;      /**< Starting event. */
    char *chapter;    /**< Starting chapter. */
    char *spob_lua_default; /**< Default Lua script for spobs. */
-   int dtype_default; /**< Default damage type. */
+   char *dtype_default; /**< Default damage type. */
 } ndata_start_t;
 static ndata_start_t start_data; /**< The actual starting data. */
 
@@ -124,11 +124,7 @@ int start_load (void)
       }
 
       xmlr_strd( node, "spob_lua_default", start_data.spob_lua_default );
-
-      if (xml_isNode(node,"dtype_default")) {
-         start_data.dtype_default = dtype_get( xml_get(node) );
-         continue;
-      }
+      xmlr_strd( node, "dtype_default", start_data.dtype_default );
 
       WARN(_("'%s' has unknown node '%s'."), START_DATA_PATH, node->name);
    } while (xml_nextNode(node));
@@ -167,6 +163,7 @@ void start_cleanup (void)
    free( start_data.event );
    free( start_data.chapter );
    free( start_data.spob_lua_default );
+   free( start_data.dtype_default );
    memset( &start_data, 0, sizeof(start_data) );
 }
 
@@ -293,7 +290,7 @@ const char* start_spob_lua_default (void)
  * @brief Gets the default damage type.
  *    @return The default damage type.
  */
-int start_dtype_default (void)
+const char* start_dtype_default (void)
 {
    return start_data.dtype_default;
 }
