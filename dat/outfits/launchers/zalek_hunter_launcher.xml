@@ -7,7 +7,7 @@
   <cond>faction.playerStanding("Za'lek") &gt;= 30</cond>
   <condstr>You need at least 30 reputation with House Za'lek.</condstr>
   <rarity>2</rarity>
-  <mass>28</mass>
+  <mass>30</mass>
   <price>220000</price>
   <description>The Za'lek began to find conventional missiles and torpedoes to be woefully primitive compared to their miniaturized drone technology. Thus, they began work on kamikaze drone fabricators to replace them. The results have born deadly fruit with the hunter-killer drone. It accelerates towards its target and unleashes its ferromagnetohydraulic payload to deadly effect.</description>
   <gfx_store>grenadelauncher.webp</gfx_store>
