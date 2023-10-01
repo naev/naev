@@ -1867,6 +1867,11 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    /* Post processing. */
+   if (!outfit_isProp(temp,OUTFIT_PROP_TEMPLATE)) {
+      temp->mass -= temp->u.lau.ammo_mass*temp->u.lau.amount;
+      if (temp->mass < 0.)
+         WARN(_("Outfit '%s' has negative mass when subtracting ammo mass!"), temp->name);
+   }
    temp->u.lau.dmg_absorb /= 100.;
    temp->u.lau.swivel *= M_PI/180.;
    temp->u.lau.arc *= M_PI/180.;
@@ -1889,7 +1894,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    l = os_printD( temp->summary_raw, l, dshield*100., &dshield_opts );
    l = os_printD( temp->summary_raw, l, dknockback*100., &dknockback_opts );
    l = os_printD( temp->summary_raw, l, temp->cpu, &cpu_opts );
-   l = os_printD( temp->summary_raw, l, temp->mass, &mass_opts );
+   l = os_printD( temp->summary_raw, l, temp->mass+temp->u.lau.ammo_mass*temp->u.lau.amount, &mass_opts ); /* Include ammo. */
    /* Higher level stats. */
    l = os_printD_rate( temp->summary_raw, l,
          temp->u.lau.dmg.damage, &damage_opts, temp->u.lau.shots,
