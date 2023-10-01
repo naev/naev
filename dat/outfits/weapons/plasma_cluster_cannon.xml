@@ -27,7 +27,7 @@
   <trackmax>6000</trackmax>
   <swivel>22</swivel>
   <damage>
-   <type>impact</type>
+   <type>plasma</type>
    <penetrate>48</penetrate>
    <physical>36</physical>
   </damage>

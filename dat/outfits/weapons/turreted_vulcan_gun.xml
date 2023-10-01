@@ -25,7 +25,7 @@
   <trackmin>1000</trackmin>
   <trackmax>4000</trackmax>
   <damage>
-   <type>impact</type>
+   <type>kinetic</type>
    <penetrate>36</penetrate>
    <physical>8</physical>
   </damage>

@@ -27,7 +27,7 @@
   <trackmin>0</trackmin>
   <trackmax>0</trackmax>
   <damage>
-   <type>impact</type>
+   <type>plasma</type>
    <penetrate>0</penetrate>
    <physical>4</physical>
   </damage>

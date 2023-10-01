@@ -29,7 +29,7 @@
   <thrust>300</thrust>
   <speed>800</speed>
   <damage>
-   <type>impact</type>
+   <type>plasma</type>
    <penetrate>100</penetrate>
    <physical>500</physical>
   </damage>

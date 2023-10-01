@@ -73,4 +73,5 @@
 
   <!-- Damage Type -->
   <its:translateRule selector="/dtype/@name" translate="yes"/>
+  <its:translateRule selector="/dtype/@display" translate="yes"/>
 </its:rules>

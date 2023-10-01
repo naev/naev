@@ -51,9 +51,9 @@ dat/commodities/yttrium.xml
 dat/damagetype/armourbreaker.xml
 dat/damagetype/emp.xml
 dat/damagetype/explosion_splash.xml
-dat/damagetype/impact.xml
 dat/damagetype/ion.xml
 dat/damagetype/nebula.xml
+dat/damagetype/plasma.xml
 dat/damagetype/shieldbreaker.xml
 dat/difficulty/default.xml
 dat/difficulty/easy_mode.xml

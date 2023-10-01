@@ -32,7 +32,7 @@
   <speed_max>800</speed_max>
   <resist>20</resist>
   <damage>
-   <type>impact</type>
+   <type>kinetic</type>
    <penetrate>12</penetrate>
    <physical>20</physical>
   </damage>
