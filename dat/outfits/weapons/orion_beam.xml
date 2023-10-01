@@ -18,7 +18,7 @@
   <energy>30</energy>
   <heatup>50</heatup>
   <damage>
-   <type>normal</type>
+   <type>energy</type>
    <penetrate>36</penetrate>
    <physical>76</physical>
   </damage>

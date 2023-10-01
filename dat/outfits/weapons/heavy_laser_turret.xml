@@ -26,7 +26,7 @@
   <trackmin>2400</trackmin>
   <trackmax>9600</trackmax>
   <damage>
-   <type>normal</type>
+   <type>energy</type>
    <penetrate>62</penetrate>
    <physical>48</physical>
   </damage>

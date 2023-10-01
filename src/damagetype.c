@@ -184,21 +184,10 @@ const char* dtype_damageTypeToStr( int type )
  */
 int dtype_load (void)
 {
-   const DTYPE normal = {
-      .name = strdup(N_("normal")),
-      .display = strdup(N_("#gEnergy#0")),
-      .sdam = 1.,
-      .adam = 1.,
-      .knock = 0.,
-      .soffset = 0,
-      .aoffset = 0,
-   };
    char **dtype_files = ndata_listRecursive( DTYPE_DATA_PATH );
 
    /* Load up the individual damage types. */
    dtype_types = array_create(DTYPE);
-   array_push_back( &dtype_types, normal );
-
    for (int i=0; i<array_size(dtype_files); i++) {
       DTYPE dtype;
       int ret = DTYPE_parse( &dtype, dtype_files[i] );

@@ -15,4 +15,5 @@
  </player>
  <date scu="603" stp="3726" stu="2871" />
  <spob_lua_default>spob/lua/default.lua</spob_lua_default>
+ <dtype_default>energy</dtype_default>
 </Start>

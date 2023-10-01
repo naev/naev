@@ -42,6 +42,7 @@
 #include "ship.h"
 #include "slots.h"
 #include "spfx.h"
+#include "start.h"
 #include "unistd.h"
 
 #define outfit_setProp(o,p)      ((o)->properties |= p) /**< Checks outfit property. */
@@ -1153,7 +1154,7 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
    xmlNodePtr cur;
 
    /* Defaults. */
-   dmg->type         = dtype_get("normal");
+   dmg->type         = start_dtype_default();
    dmg->damage       = 0.;
    dmg->penetration  = 0.;
    dmg->disable      = 0.;

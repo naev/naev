@@ -18,7 +18,7 @@
   <heatup>35</heatup>
   <swivel>22</swivel>
   <damage>
-   <type>normal</type>
+   <type>energy</type>
    <penetrate>12</penetrate>
    <physical>62</physical>
   </damage>

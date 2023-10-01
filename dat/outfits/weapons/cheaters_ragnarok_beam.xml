@@ -16,7 +16,7 @@
   <turn>35</turn>
   <energy>20</energy>
   <damage>
-   <type>normal</type>
+   <type>energy</type>
    <penetrate>100</penetrate>
    <physical>130</physical>
    <disable>18</disable>

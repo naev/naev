@@ -27,7 +27,7 @@
   <trackmax>3000</trackmax>
   <swivel>22</swivel>
   <damage>
-   <type>normal</type>
+   <type>energy</type>
    <penetrate>24</penetrate>
    <physical>52</physical>
   </damage>

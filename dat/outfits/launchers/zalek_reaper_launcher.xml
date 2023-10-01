@@ -35,7 +35,7 @@
   <speed_max>220</speed_max>
   <resist>100</resist>
   <damage>
-   <type>normal</type>
+   <type>kinetic</type>
    <penetrate>80</penetrate>
    <physical>800</physical>
   </damage>
