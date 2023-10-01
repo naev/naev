@@ -45,8 +45,8 @@ extern int landed;
 extern Spob* land_spob;
 
 /* Tracking for which tabs have been generated. */
-#define land_tabGenerate(w)       (land_generated |= (1 << w)) /**< Mark tab generated. */
-#define land_tabGenerated(w)     (land_generated & (1 << w)) /**< Check if tab has been generated. */
+#define land_tabGenerate(w)   (land_generated |= (1 << w)) /**< Mark tab generated. */
+#define land_tabGenerated(w)  (land_generated & (1 << w)) /**< Check if tab has been generated. */
 extern unsigned int land_generated;
 
 /*

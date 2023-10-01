@@ -43,7 +43,7 @@ function create()
    col_shield = colour.new(  42/255,  57/255,  162/255 )
    col_armour = colour.new(  80/255,  80/255,  80/255 )
    col_energy = colour.new(  36/255,  125/255,  51/255 )
-   col_flow = colour.new( 189/255, 166/255, 85/255 )
+   col_flow   = colour.new( 189/255, 166/255, 85/255 )
    col_fuel   = colour.new(  135/255,  24/255,  50/255 )
    col_heat   = colour.new(  80/255,  27/255,  24/255 )
    col_stress = colour.new(  45/255,  48/255,  102/255 )
@@ -161,6 +161,7 @@ function create()
    bars = { "shield", "armour", "energy", "fuel" }
    if has_flow then
       table.insert( bars, "flow" )
+      bar_x = bar_x - bar_w
    end
    for k,v in ipairs( bars ) do
       _G[ "x_" .. v ] = bar_x + (k-1)*(bar_w + 6)

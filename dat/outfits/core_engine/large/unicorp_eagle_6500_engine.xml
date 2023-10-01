@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Unicorp Eagle 7000 Engine">
+<outfit name="Unicorp Eagle 6500 Engine">
  <general>
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
@@ -7,12 +7,12 @@
   <priority>7</priority>
   <mass>65</mass>
   <price>400000</price>
-  <description>The Eagle 7000 is Unicorp's largest and highest-capacity engine, though perhaps not a flagship model. Its relatively low price makes it attractive to captains on a tight budget if their performance demands aren't too great, and its efficiency makes it an attractive option for heavy cruisers that need as much battery power for their weapons as possible.</description>
+  <description>The Eagle 6500 is Unicorp's largest and highest-capacity engine, though perhaps not a flagship model. Its relatively low price makes it attractive to captains on a tight budget if their performance demands aren't too great, and its efficiency makes it an attractive option for heavy cruisers that need as much battery power for their weapons as possible.</description>
   <gfx_store>unicorp_engine_l.webp</gfx_store>
  </general>
  <specific type="modification">
   <energy_regen_malus>100</energy_regen_malus>
-  <engine_limit>7000</engine_limit>
+  <engine_limit>6500</engine_limit>
   <fuel>1600</fuel>
   <speed>65</speed>
   <thrust>37</thrust>

@@ -565,7 +565,7 @@ int pilot_reportSpaceworthy( const Pilot *p, char *buf, int bufSize )
    SPACEWORTHY_CHECK( p->cpu < 0, _("!! Insufficient CPU") );
 
    /* Movement. */
-   SPACEWORTHY_CHECK( p->thrust < 0, _("!! Insufficient Thrust") );
+   SPACEWORTHY_CHECK( p->thrust < 0, _("!! Insufficient Acceleration") );
    SPACEWORTHY_CHECK( p->speed < 0,  _("!! Insufficient Speed") );
    SPACEWORTHY_CHECK( p->turn < 0,   _("!! Insufficient Turn") );
 
@@ -893,7 +893,7 @@ void pilot_calcStats( Pilot* pilot )
     * Set up the basic stuff
     */
    /* mass */
-   pilot->solid.mass   = pilot->ship->mass;
+   pilot->solid.mass    = pilot->ship->mass;
    pilot->base_mass     = pilot->solid.mass;
    /* cpu */
    pilot->cpu           = 0.;
@@ -1030,16 +1030,10 @@ void pilot_calcStats( Pilot* pilot )
       pilot->energy_tau = 1.;
 
    /* Cargo has to be reset. */
-   pilot_cargoCalc(pilot);
-
-   /* Calculate mass. */
-   pilot->solid.mass = MAX( s->mass_mod*pilot->ship->mass + pilot->stats.cargo_inertia*pilot->mass_cargo + pilot->mass_outfit, 0.);
+   pilot_cargoCalc(pilot); /* Calls pilot_updateMass. */
 
    /* Calculate the heat. */
    pilot_heatCalc( pilot );
-
-   /* Modulate by mass. */
-   pilot_updateMass( pilot );
 
    /* Update GUI as necessary. */
    gui_setGeneric( pilot );
@@ -1098,6 +1092,9 @@ void pilot_updateMass( Pilot *pilot )
 {
    double mass, factor;
 
+   /* Recompute effective mass if something changed. */
+   pilot->solid.mass = MAX( pilot->stats.mass_mod*pilot->ship->mass + pilot->stats.cargo_inertia*pilot->mass_cargo + pilot->mass_outfit, 0.);
+
    /* Set limit. */
    mass = pilot->solid.mass;
    if ((pilot->stats.engine_limit > 0.) && (mass > pilot->stats.engine_limit))
@@ -1121,6 +1118,10 @@ void pilot_updateMass( Pilot *pilot )
    }
    /* Need to recalculate electronic warfare mass change. */
    pilot_ewUpdateStatic( pilot );
+
+   /* Update ship stuff. */
+   if (pilot_isPlayer(pilot))
+      gui_setShip();
 }
 
 /**

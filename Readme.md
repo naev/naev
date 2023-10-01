@@ -159,6 +159,7 @@ Naev's translation is handled with gettext. (It's custom, but C and Lua code can
 
 When content like missions is updated, new translatable text must be made available to Weblate.
 The key manual step is to regenerate the `po/naev.pot` file (`meson compile naev-pot` in the build dir) and commit it.
+To avoid merge conflicts, it is recommended to not include updated `po/naev.pot` in a pull request that isn't exclusively about translation.
 
 Under the hood: `po/POTFILES.in` is a catalog of files that may have translatable text.
 We keep it synced using pre-commit hooks (or manually: `meson compile potfiles`).

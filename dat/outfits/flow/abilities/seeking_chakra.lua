@@ -44,7 +44,7 @@ function descextra( p, _o )
          pfx = "#b"..pfx.."#n"
       end
       s = s.."\n"..fmt.f(_("#n{prefix}:#0 {cost} flow, {cooldown} s cooldown, {range} range, {damage} damage, {disable} disable, {penetration}% penetration, {strength}% debuff, {duration} s duration"),
-         {prefix=pfx, cost=cost, range=refstats.duration*refstats.speed_max, damage=damage, disable=disable, penetration=100*penetration, cooldown=cooldown, strength=25*strength, duration=duration}).."#0"
+         {prefix=pfx, cost=cost, range=fmt.number(refstats.duration*refstats.speed_max), damage=damage, disable=disable, penetration=100*penetration, cooldown=cooldown, strength=25*strength, duration=duration}).."#0"
    end
    return s
 end

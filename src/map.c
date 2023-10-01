@@ -839,15 +839,15 @@ static void map_update( unsigned int wid )
          dmg = sys->nebu_volatility;
          if (sys->nebu_volatility > 50.) {
             p += scnprintf(&buf[p], sizeof(buf)-p, "#r" );
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("Volatile %sNebula (%.1f MW)"), adj, dmg);
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Volatile %sNebula (%.1f %s)"), adj, dmg, UNIT_POWER);
          }
          else if (sys->nebu_volatility > 20.) {
             p += scnprintf(&buf[p], sizeof(buf)-p, "#o" );
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("Dangerous %sNebula (%.1f MW)"), adj, dmg);
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Dangerous %sNebula (%.1f %s)"), adj, dmg, UNIT_POWER);
          }
          else if (sys->nebu_volatility > 0.) {
             p += scnprintf(&buf[p], sizeof(buf)-p, "#y" );
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("Unstable %sNebula (%.1f MW)"), adj, dmg);
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Unstable %sNebula (%.1f %s)"), adj, dmg, UNIT_POWER);
          }
          else
             p += scnprintf(&buf[p], sizeof(buf)-p, _("%sNebula"), adj);

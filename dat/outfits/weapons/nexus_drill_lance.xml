@@ -4,7 +4,7 @@
   <typename>Mining System</typename>
   <slot>weapon</slot>
   <size>medium</size>
-  <mass>100</mass>
+  <mass>18</mass>
   <price>310000</price>
   <description>Mining lances are known for their destructive capabilities, unfortunately, such power can be detrimental for the extraction of sensible materials. The Nexus Drill Lance takes a different approach, and instead of maximizing power, it operates on less efficient but more stable wavelengths. While this allows it to extract materials that other mining lances are incapable of, it also has the downside of significantly lowering the amount of extractable materials.</description>
   <gfx_store>drill_lance.webp</gfx_store>

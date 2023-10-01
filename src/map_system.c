@@ -659,28 +659,28 @@ static void map_system_array_update( unsigned int wid, const char* str )
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 %s", _("Fabricator:"), _(ship->fabricator) );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "    #n%s#0 %d", _("Crew:"), ship->crew );
       /* Weapons & Manoeuvrability */
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 %.0f %s", _("CPU:"), ship->cpu, n_( "teraflop", "teraflops", ship->cpu ) );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 %.0f %s", _("CPU:"), ship->cpu, UNIT_CPU );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "    #n%s#0 %s", _("Mass:"), buf_mass );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 ", _("Thrust:") );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f kN/tonne"), ship->thrust );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 ", _("Accel:") );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f %s"), ship->thrust, UNIT_ACCEL );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "    #n%s#0 ", _("Speed:") );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f m/s"), ship->speed );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f %s"), ship->speed, UNIT_SPEED );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 ", _("Turn:") );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f deg/s"), ship->turn*180./M_PI );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f %s"), ship->turn*180./M_PI, UNIT_ROTATION );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "    #n%s#0 %.0f%%", _("Time Constant:"), ship->dt_default*100. );
       /* Misc */
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 ", _("Absorption:") );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f%% damage"), ship->dmg_absorb*100. );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 ", _("Shield:") );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f MJ (%.1f MW)"), ship->shield, ship->shield_regen );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f %s (%.1f %s)"), ship->shield, UNIT_ENERGY, ship->shield_regen, UNIT_POWER );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "    #n%s#0 ", _("Armour:") );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f MJ (%.1f MW)"), ship->armour, ship->armour_regen );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f %s (%.1f %s)"), ship->armour, UNIT_ENERGY, ship->armour_regen, UNIT_POWER );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 ", _("Energy:") );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f MJ (%.1f MW)"), ship->energy, ship->energy_regen );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f M%s(%.1f %s)"), ship->energy, UNIT_ENERGY, ship->energy_regen, UNIT_POWER );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 %s", _("Cargo Space:"), buf_cargo );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 %d %s", _("Fuel:"), ship->fuel, n_( "unit", "units", ship->fuel ) );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 %d %s", _("Fuel:"), ship->fuel, UNIT_UNIT );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "  #n%s#0 %d %s", _("Fuel Use:"),
-         ship->fuel_consumption, n_( "unit", "units", ship->fuel_consumption ) );
+         ship->fuel_consumption, UNIT_UNIT );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 %s", _("Price:"), buf_price );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "  #n%s#0 %s", _("License:"), buf_license );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n%s", ship->desc_stats );

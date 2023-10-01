@@ -4,7 +4,7 @@
   <slot>weapon</slot>
   <size>small</size>
   <license>Medium Weapon</license>
-  <mass>14</mass>
+  <mass>8</mass>
   <price>47000</price>
   <description>A turret-mounted particle beam. The smallest possible turreted beam weapon, used as a last-ditch weapon against light enemies.</description>
   <gfx_store>particle_beam.webp</gfx_store>
@@ -18,7 +18,7 @@
   <energy>10</energy>
   <heatup>35</heatup>
   <damage>
-   <type>normal</type>
+   <type>energy</type>
    <penetrate>6</penetrate>
    <physical>50</physical>
   </damage>

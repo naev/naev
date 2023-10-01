@@ -7,17 +7,17 @@
   <cond>faction.playerStanding("Sirius") &gt;= 50</cond>
   <condstr>You need at least 50 reputation with House Sirius.</condstr>
   <rarity>2</rarity>
-  <mass>260</mass>
+  <mass>130</mass>
   <price>1300000</price>
   <gfx_store>fidelity_fighter.webp</gfx_store>
   <description>This bay launches three Sirius Fidelity fighters. Weak individually, they are stronger when working together in groups. Quite apropos, given Sirian society.</description>
-  <cpu>-450</cpu>
+  <cpu>-440</cpu>
  </general>
  <specific type="fighter bay" secondary="1">
   <delay>4</delay>
   <reload_time>180</reload_time>
   <amount>3</amount>
   <ship>Sirius Fidelity</ship>
-  <ship_mass>50</ship_mass>
+  <ship_mass>20</ship_mass>
  </specific>
 </outfit>

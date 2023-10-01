@@ -26,7 +26,7 @@
  </health>
  <characteristics>
   <crew>9</crew>
-  <mass>130</mass>
+  <mass>140</mass>
   <fuel>600</fuel>
   <fuel_consumption>200</fuel_consumption>
   <cargo>25</cargo>
@@ -40,10 +40,11 @@
   <utility size="medium" prop="accessory" />
   <utility size="medium" />
   <utility size="medium" />
+  <utility size="medium" />
   <utility size="small" />
   <utility size="small" />
   <structure size="medium" prop="engines">Nexus Arrow 700 Engine</structure>
-  <structure size="medium" prop="hull">Unicorp D-12 Medium Plating</structure>
+  <structure size="medium" prop="hull">Unicorp D-23 Medium Plating</structure>
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />

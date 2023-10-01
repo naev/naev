@@ -10,11 +10,12 @@ repos:
     - id: check-xml
     - id: check-yaml
     - id: check-added-large-files
-    - id: check-merge-conflict
     - id: check-executables-have-shebangs
     - id: check-shebang-scripts-are-executable
     - id: mixed-line-ending
     - id: pretty-format-json
+    - id: check-merge-conflict
+      args: [--assume-in-merge]
 - repo: https://github.com/shellcheck-py/shellcheck-py
   rev: v0.9.0.5
   hooks:

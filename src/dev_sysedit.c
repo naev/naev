@@ -1459,7 +1459,7 @@ static void sysedit_editPnt (void)
    window_setInputFilter( wid, "inpPresenceBonus", INPUT_FILTER_NUMBER );
    x += 50 + 10;
 
-   s = _("Range");
+   s = p_("sysedit", "Range");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtPresenceRange",
          NULL, NULL, s );
@@ -1696,7 +1696,7 @@ static void sysedit_editAsteroids (void)
    window_addInput( wid, x + l + 8, y, 80, 20, "inpMaxspeed", 10, 1, NULL );
    window_setInputFilter( wid, "inpMaxspeed", INPUT_FILTER_NUMBER );
    y -= 30;
-   s = _("Thrust: ");
+   s = _("Accel: ");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtThrust", NULL, NULL, s );
    window_addInput( wid, x + l + 8, y, 80, 20, "inpThrust", 10, 1, NULL );

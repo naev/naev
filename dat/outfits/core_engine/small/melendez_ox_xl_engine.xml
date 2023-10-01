@@ -5,14 +5,14 @@
   <slot prop="engines">structure</slot>
   <size>small</size>
   <priority>7</priority>
-  <mass>15</mass>
+  <mass>25</mass>
   <price>95000</price>
   <description>Among the most powerful engines available for small vessels, the Ox XL excels at enabling merchants to haul moderate amounts of cargo from system to system with minimal refuelling stops.</description>
   <gfx_store>engine1.webp</gfx_store>
  </general>
  <specific type="modification">
   <energy_regen_malus>15</energy_regen_malus>
-  <engine_limit>400</engine_limit>
+  <engine_limit>420</engine_limit>
   <fuel>500</fuel>
   <speed>225</speed>
   <thrust>115</thrust>

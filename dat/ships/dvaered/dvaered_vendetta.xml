@@ -24,7 +24,7 @@
  </health>
  <characteristics>
   <crew>4</crew>
-  <mass>100</mass>
+  <mass>140</mass>
   <fuel_consumption>100</fuel_consumption>
   <cargo>15</cargo>
  </characteristics>
@@ -38,8 +38,10 @@
   <utility size="small" prop="systems">Unicorp PT-68 Core System</utility>
   <utility size="small" prop="accessory" />
   <utility size="small" />
-  <structure size="small" prop="engines">Unicorp Hawk 350 Engine</structure>
-  <structure size="small" prop="hull">Unicorp D-4 Light Plating</structure>
+  <utility size="small" />
+  <structure size="small" prop="engines">Unicorp Hawk 360 Engine</structure>
+  <structure size="small" prop="hull">Unicorp D-9 Light Plating</structure>
+  <structure size="small" />
   <structure size="small" />
  </slots>
  <stats>

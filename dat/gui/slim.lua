@@ -707,9 +707,12 @@ function render( dt, dt_mod )
       ex = ex - 48
    end
 
-   --Player pane
+   -- Player pane
    gfx.renderTex( player_pane_t, pl_pane_x, pl_pane_y )
    local filler_h = #wset * 28 -- extend the pane according to the number of weapon bars
+   if has_flow then
+      filler_h = filler_h + 28
+   end
    filler_h = math.max( filler_h - 6, 0 )
 
    gfx.renderTexRaw( player_pane_m, pl_pane_x + 33, pl_pane_y - filler_h, pl_pane_w_b, filler_h)

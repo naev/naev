@@ -93,7 +93,7 @@ local function explosion( pos, vel, radius, damage, params )
 
    -- Do damage if applicable
    if damage then
-      local dmgtype = params.dmgtype or "normal"
+      local dmgtype = params.dmgtype -- nil will default to raw damage
       local disable = params.disable or 0
       do_damage( pos, radius, damage, params.penetration, params.parent, dmgtype, disable )
    end

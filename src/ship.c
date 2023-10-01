@@ -520,7 +520,6 @@ static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine
 static int ship_loadPLG( Ship *temp, const char *buf, int size_hint )
 {
    char file[PATH_MAX];
-   CollPoly *polygon;
    xmlDocPtr doc;
    xmlNodePtr node;
 
@@ -553,7 +552,7 @@ static int ship_loadPLG( Ship *temp, const char *buf, int size_hint )
          temp->polygon = array_create_size( CollPoly, size_hint );
          do {
             if (xml_isNode(cur,"polygon")) {
-               polygon = &array_grow( &temp->polygon );
+               CollPoly *polygon = &array_grow( &temp->polygon );
                LoadPolygon( polygon, cur );
             }
          } while (xml_nextNode(cur));
@@ -734,13 +733,6 @@ static int ship_parse( Ship *temp, const char *filename )
 
          /* Load the graphics. */
          ship_loadGFX( temp, buf, sx, sy, !noengine );
-
-         /* Validity check: there must be 1 polygon per sprite. */
-         if ((temp->polygon != NULL) && array_size(temp->polygon) != sx*sy) {
-            WARN(_("Ship '%s': the number of collision polygons is wrong.\n \
-                    npolygon = %i and sx*sy = %i"),
-                    temp->name, array_size(temp->polygon), sx*sy);
-         }
 
          continue;
       }
@@ -958,6 +950,7 @@ static int ship_parse( Ship *temp, const char *filename )
          } while (xml_nextNode(cur));
 
          /* Load array. */
+         ss_sort( &temp->stats );
          ss_statsInit( &temp->stats_array );
          ss_statsMergeFromList( &temp->stats_array, temp->stats );
 
@@ -1010,8 +1003,16 @@ static int ship_parse( Ship *temp, const char *filename )
    /* Check polygon. */
    if (temp->polygon == NULL)
       WARN(_("Ship '%s' has no collision polygon!"), temp->name );
+   else {
+      /* Validity check: there must be 1 polygon per sprite. */
+      if (array_size(temp->polygon) != sx*sy) {
+         WARN(_("Ship '%s': the number of collision polygons is wrong.\n \
+                  npolygon = %i and sx*sy = %i"),
+                  temp->name, array_size(temp->polygon), sx*sy);
+      }
+   }
 
-   /* ship validator */
+   /* Ship XML validator */
 #define MELEMENT(o,s)      if (o) WARN( _("Ship '%s' missing '%s' element"), temp->name, s)
    MELEMENT(temp->name==NULL,"name");
    MELEMENT(temp->base_type==NULL,"base_type");

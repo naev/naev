@@ -65,7 +65,7 @@ function settings ()
       else
          reset_dist = -1
          reset_shield = 0
-         msg = msg.._("Armour Damage")
+         msg = msg..p_("settings", "Armour Damage")
       end
       txt_autonav:set( msg )
    end

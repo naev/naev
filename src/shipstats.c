@@ -21,7 +21,7 @@
 typedef enum StatDataType_ {
    SS_DATA_TYPE_DOUBLE,          /**< Relative [0:inf] value. */
    SS_DATA_TYPE_DOUBLE_ABSOLUTE, /**< Absolute double value. */
-   SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT, /**< Absolute double value as a percent. */
+   SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT, /**< Absolute percent double value. */
    SS_DATA_TYPE_INTEGER,         /**< Absolute integer value. */
    SS_DATA_TYPE_BOOLEAN          /**< Boolean value, defaults 0. */
 } StatDataType;
@@ -36,6 +36,7 @@ typedef struct ShipStatsLookup_ {
    ShipStatsType type;  /**< Type of the stat. */
    const char *name;    /**< Name to look into XML for, must match name in the structure. */
    const char *display; /**< Display name for visibility by player. */
+   const char *unit;    /**< Unit of the stat. */
    StatDataType data;   /**< Type of data for the stat. */
    int inverted;        /**< Indicates whether the good value is inverted, by
                              default positive is good, with this set negative
@@ -46,33 +47,37 @@ typedef struct ShipStatsLookup_ {
 } ShipStatsLookup;
 
 /* Flexible do everything macro. */
-#define ELEM( t, n, dsp, d , i) \
-   { .type=t, .name=#n, .display=dsp, .data=d, .inverted=i, .offset=offsetof( ShipStats, n ) }
+#define ELEM( t, n, dsp, u, d , i) \
+   { .type=t, .name=#n, .display=dsp, .unit=u, .data=d, .inverted=i, .offset=offsetof( ShipStats, n ) }
 /* Standard types. */
 #define D__ELEM( t, n, dsp ) \
-   ELEM( t, n, dsp, SS_DATA_TYPE_DOUBLE, 0 )
-#define A__ELEM( t, n, dsp ) \
-   ELEM( t, n, dsp, SS_DATA_TYPE_DOUBLE_ABSOLUTE, 0 )
-#define P__ELEM( t, n, dsp ) \
-   ELEM( t, n, dsp, SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT, 0 )
-#define I__ELEM( t, n, dsp ) \
-   ELEM( t, n, dsp, SS_DATA_TYPE_INTEGER, 0 )
-#define B__ELEM( t, n, dsp ) \
-   ELEM( t, n, dsp, SS_DATA_TYPE_BOOLEAN, 0 )
-/* Inverted types. */
+   ELEM( t, n, dsp, N_("%"), SS_DATA_TYPE_DOUBLE, 0 )
 #define DI_ELEM( t, n, dsp ) \
-   ELEM( t, n, dsp, SS_DATA_TYPE_DOUBLE, 1 )
-#define AI_ELEM( t, n, dsp ) \
-   ELEM( t, n, dsp, SS_DATA_TYPE_DOUBLE_ABSOLUTE, 1 )
+   ELEM( t, n, dsp, N_("%"), SS_DATA_TYPE_DOUBLE, 1 )
+
+#define A__ELEM( t, n, dsp, u ) \
+   ELEM( t, n, dsp, u, SS_DATA_TYPE_DOUBLE_ABSOLUTE, 0 )
+#define AI_ELEM( t, n, dsp, u) \
+   ELEM( t, n, dsp, u, SS_DATA_TYPE_DOUBLE_ABSOLUTE, 1 )
+
+#define P__ELEM( t, n, dsp ) \
+   ELEM( t, n, dsp, N_("%"), SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT, 0 )
 #define PI_ELEM( t, n, dsp ) \
-   ELEM( t, n, dsp, SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT, 1 )
+   ELEM( t, n, dsp, N_("%"), SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT, 1 )
+
+#define I__ELEM( t, n, dsp, u ) \
+   ELEM( t, n, dsp, u, SS_DATA_TYPE_INTEGER, 0 )
 #define II_ELEM( t, n, dsp ) \
-   ELEM( t, n, dsp, SS_DATA_TYPE_INTEGER, 1 )
+   ELEM( t, n, dsp, u, SS_DATA_TYPE_INTEGER, 1 )
+
+#define B__ELEM( t, n, dsp ) \
+   ELEM( t, n, dsp, NULL, SS_DATA_TYPE_BOOLEAN, 0 )
 #define BI_ELEM( t, n, dsp ) \
-   ELEM( t, n, dsp, SS_DATA_TYPE_BOOLEAN, 1 )
+   ELEM( t, n, dsp, NULL, SS_DATA_TYPE_BOOLEAN, 1 )
+
 /** Nil element. */
 #define N__ELEM( t ) \
-   { .type=t, .name=NULL, .display=NULL, .inverted=0, .offset=0 }
+   { .type=t, .name=NULL, .display=NULL, .unit=NULL, .inverted=0, .offset=0 }
 
 /**
  * The ultimate look up table for ship stats, everything goes through this.
@@ -149,36 +154,36 @@ static const ShipStatsLookup ss_lookup[] = {
    DI_ELEM( SS_TYPE_D_JUMP_WARMUP,        jump_warmup,         N_("Jump Warmup") ),
    D__ELEM( SS_TYPE_D_MINING_BONUS,       mining_bonus,        N_("Mining Bonus") ),
 
-   A__ELEM( SS_TYPE_A_THRUST,             thrust,              N_("kN/tonne Thrust") ),
-   A__ELEM( SS_TYPE_A_TURN,               turn,                N_("deg/s Turn Rate") ),
-   A__ELEM( SS_TYPE_A_SPEED,              speed,               N_("m/s Maximum Speed") ),
-   A__ELEM( SS_TYPE_A_ENERGY,             energy,              N_("MJ Energy Capacity") ),
-   A__ELEM( SS_TYPE_A_ENERGY_REGEN,       energy_regen,        N_("MW Energy Regeneration") ),
-   AI_ELEM( SS_TYPE_A_ENERGY_REGEN_MALUS, energy_regen_malus,  N_("MW Energy Usage") ),
-   AI_ELEM( SS_TYPE_A_ENERGY_LOSS,        energy_loss,         N_("MW Energy Usage") ),
-   A__ELEM( SS_TYPE_A_SHIELD,             shield,              N_("MJ Shield Capacity") ),
-   A__ELEM( SS_TYPE_A_SHIELD_REGEN,       shield_regen,        N_("MW Shield Regeneration") ),
-   AI_ELEM( SS_TYPE_A_SHIELD_REGEN_MALUS, shield_regen_malus,  N_("MW Shield Usage") ),
-   A__ELEM( SS_TYPE_A_ARMOUR,             armour,              N_("MJ Armour") ),
-   A__ELEM( SS_TYPE_A_ARMOUR_REGEN,       armour_regen,        N_("MW Armour Regeneration") ),
-   AI_ELEM( SS_TYPE_A_ARMOUR_REGEN_MALUS, armour_regen_malus,  N_("MW Armour Damage") ),
-   A__ELEM( SS_TYPE_A_DAMAGE,             damage,              N_("MW Damage") ),
-   A__ELEM( SS_TYPE_A_DISABLE,            disable,             N_("MW Disable") ),
+   A__ELEM( SS_TYPE_A_THRUST,             thrust,              N_("Thrust"),              _UNIT_ACCEL ),
+   A__ELEM( SS_TYPE_A_TURN,               turn,                N_("Turn Rate"),           _UNIT_ROTATION ),
+   A__ELEM( SS_TYPE_A_SPEED,              speed,               N_("Maximum Speed"),       _UNIT_SPEED ),
+   A__ELEM( SS_TYPE_A_ENERGY,             energy,              N_("Energy Capacity"),     _UNIT_ENERGY ),
+   A__ELEM( SS_TYPE_A_ENERGY_REGEN,       energy_regen,        N_("Energy Regeneration"), _UNIT_POWER ),
+   AI_ELEM( SS_TYPE_A_ENERGY_REGEN_MALUS, energy_regen_malus,  N_("Energy Usage"),        _UNIT_POWER ),
+   AI_ELEM( SS_TYPE_A_ENERGY_LOSS,        energy_loss,         N_("Energy Usage"),        _UNIT_POWER ),
+   A__ELEM( SS_TYPE_A_SHIELD,             shield,              N_("Shield Capacity"),     _UNIT_ENERGY ),
+   A__ELEM( SS_TYPE_A_SHIELD_REGEN,       shield_regen,        N_("Shield Regeneration"), _UNIT_POWER ),
+   AI_ELEM( SS_TYPE_A_SHIELD_REGEN_MALUS, shield_regen_malus,  N_("Shield Usage"),        _UNIT_POWER ),
+   A__ELEM( SS_TYPE_A_ARMOUR,             armour,              N_("Armour"),              _UNIT_ENERGY ),
+   A__ELEM( SS_TYPE_A_ARMOUR_REGEN,       armour_regen,        N_("Armour Regeneration"), _UNIT_POWER ),
+   AI_ELEM( SS_TYPE_A_ARMOUR_REGEN_MALUS, armour_regen_malus,  N_("Armour Damage"),       _UNIT_POWER ),
+   A__ELEM( SS_TYPE_A_DAMAGE,             damage,              N_("Damage"),              _UNIT_POWER ),
+   A__ELEM( SS_TYPE_A_DISABLE,            disable,             N_("Disable"),             _UNIT_POWER ),
 
-   A__ELEM( SS_TYPE_A_CPU_MAX,            cpu_max,             N_("CPU Capacity") ),
-   A__ELEM( SS_TYPE_A_ENGINE_LIMIT,       engine_limit,        N_("Engine Mass Limit") ),
-   A__ELEM( SS_TYPE_A_FUEL_REGEN,         fuel_regen,          N_("Fuel Regeneration") ),
-   A__ELEM( SS_TYPE_A_ASTEROID_SCAN,      asteroid_scan,       N_("Asteroid Scanner Range") ),
-   A__ELEM( SS_TYPE_A_NEBULA_VISIBILITY,  nebu_visibility,     N_("Nebula Visibility") ),
+   A__ELEM( SS_TYPE_A_CPU_MAX,            cpu_max,             N_("CPU Capacity"),        _UNIT_CPU ),
+   A__ELEM( SS_TYPE_A_ENGINE_LIMIT,       engine_limit,        N_("Engine Mass Limit"),   _UNIT_MASS ),
+   A__ELEM( SS_TYPE_A_FUEL_REGEN,         fuel_regen,          N_("Fuel Regeneration"),   _UNIT_PER_TIME ),
+   A__ELEM( SS_TYPE_A_ASTEROID_SCAN,      asteroid_scan,       N_("Asteroid Scanner Range"), _UNIT_DISTANCE ),
+   A__ELEM( SS_TYPE_A_NEBULA_VISIBILITY,  nebu_visibility,     N_("Nebula Visibility"),   _UNIT_DISTANCE ),
 
    P__ELEM( SS_TYPE_P_ABSORB,             absorb,              N_("Damage Absorption") ),
 
    P__ELEM( SS_TYPE_P_NEBULA_ABSORB,      nebu_absorb,         N_("Nebula Resistance") ),
    P__ELEM( SS_TYPE_P_JAMMING_CHANCE,     jam_chance,          N_("Missile jamming chance") ),
 
-   I__ELEM( SS_TYPE_I_FUEL,               fuel,                N_("units Fuel") ),
-   I__ELEM( SS_TYPE_I_CARGO,              cargo,               N_("tonnes Cargo Space") ),
-   I__ELEM( SS_TYPE_I_CREW,               crew,                N_("crew") ),
+   I__ELEM( SS_TYPE_I_FUEL,               fuel,                N_("Fuel"),                _UNIT_UNIT ),
+   I__ELEM( SS_TYPE_I_CARGO,              cargo,               N_("Cargo"),               _UNIT_MASS ),
+   I__ELEM( SS_TYPE_I_CREW,               crew,                N_("Crew"),                _UNIT_UNIT ),
 
    B__ELEM( SS_TYPE_B_HIDDEN_JUMP_DETECT, misc_hidden_jump_detect, N_("Hidden Jump Detection") ),
    B__ELEM( SS_TYPE_B_INSTANT_JUMP,       misc_instant_jump,   N_("Instant Jump") ),
@@ -204,6 +209,7 @@ ShipStatList* ss_statsSetList( ShipStatList *head, ShipStatsType type, double va
 {
    const ShipStatsLookup *sl;
    ShipStatList *ll = NULL;
+   ShipStatList *newhead = head;
    int init = overwrite;
 
    if (type == SS_TYPE_NIL)
@@ -222,7 +228,7 @@ ShipStatList* ss_statsSetList( ShipStatList *head, ShipStatsType type, double va
 
    /* Allocate. */
    if (ll==NULL) {
-      ll = malloc( sizeof(ShipStatList) );
+      newhead = ll = malloc( sizeof(ShipStatList) );
       ll->next    = head;
       ll->target  = 0;
       ll->type    = type;
@@ -274,7 +280,7 @@ ShipStatList* ss_statsSetList( ShipStatList *head, ShipStatsType type, double va
          break;
    }
 
-   return ll;
+   return newhead;
 }
 
 /**
@@ -691,15 +697,9 @@ ShipStatsType ss_typeFromName( const char *name )
  */
 static const char* ss_printD_colour( double d, const ShipStatsLookup *sl )
 {
-   if (sl->inverted) {
-      if (d < 0.)
-         return "g";
-      return "r";
-   }
-
-   if (d > 0.)
-      return "g";
-   return "r";
+   if (sl->inverted)
+      return d < 0. ? "g" : "r";
+   return d > 0. ? "g" : "r";
 }
 
 /**
@@ -707,15 +707,9 @@ static const char* ss_printD_colour( double d, const ShipStatsLookup *sl )
  */
 static const char* ss_printI_colour( int i, const ShipStatsLookup *sl )
 {
-   if (sl->inverted) {
-      if (i < 0)
-         return "g";
-      return "r";
-   }
-
-   if (i > 0)
-      return "g";
-   return "r";
+   if (sl->inverted)
+         return i < 0 ? "g" : "r";
+   return i > 0 ? "g" : "r";
 }
 
 /**
@@ -725,10 +719,12 @@ static int ss_printD( char *buf, int len, int newline, double d, const ShipStats
 {
    if (FABS(d) < 1e-10)
       return 0;
-   return scnprintf( buf, len, "%s#%s%+g%% %s#0",
+
+   return scnprintf( buf, len, p_("shipstats_double","%s#%s%s: %+g %s#0"),
          (newline) ? "\n" : "",
          ss_printD_colour( d, sl ),
-         d*100., _(sl->display) );
+         _(sl->display), d*100.,
+         _(sl->unit));
 }
 
 /**
@@ -738,10 +734,11 @@ static int ss_printA( char *buf, int len, int newline, double d, const ShipStats
 {
    if (FABS(d) < 1e-10)
       return 0;
-   return scnprintf( buf, len, "%s#%s%+g %s#0",
+   return scnprintf( buf, len, p_("shipstats_absolute","%s#%s%s: %+g %s#0"),
          (newline) ? "\n" : "",
          ss_printD_colour( d, sl ),
-         d, _(sl->display) );
+         _(sl->display), d, /* TODO probably use num2strU here, but we want the sign enforced. */
+         _(sl->unit));
 }
 
 /**
@@ -750,11 +747,12 @@ static int ss_printA( char *buf, int len, int newline, double d, const ShipStats
 static int ss_printI( char *buf, int len, int newline, int i, const ShipStatsLookup *sl )
 {
    if (i == 0)
-      return 0;
-   return scnprintf( buf, len, "%s#%s%+d %s#0",
+      return 0 ;
+   return scnprintf( buf, len, p_("shipstats_integer","%s#%s%s: %+d %s#0"),
          (newline) ? "\n" : "",
          ss_printI_colour( i, sl ),
-         i, _(sl->display) );
+         _(sl->display), i,
+         _(sl->unit));
 }
 
 /**
@@ -764,7 +762,7 @@ static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLoo
 {
    if (!b)
       return 0;
-   return scnprintf( buf, len, "%s#%s%s#0",
+   return scnprintf( buf, len, p_("shipstats_boolean","%s#%s%s#0"),
          (newline) ? "\n" : "",
          ss_printI_colour( b, sl ),
          _(sl->display) );
@@ -781,12 +779,11 @@ static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLoo
  */
 int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline )
 {
-   int i, left, newl;
    const ShipStatsLookup *sl;
-   i     = 0;
-   newl  = newline;
+   int i     = 0;
+   int newl  = newline;
    for ( ; ll != NULL; ll=ll->next) {
-      left  = len-i;
+      int left  = len-i;
       if (left < 0)
          break;
       sl    = &ss_lookup[ ll->type ];

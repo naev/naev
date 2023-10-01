@@ -221,7 +221,6 @@ void pilot_cargoCalc( Pilot* pilot )
 {
    pilot->mass_cargo  = pilot_cargoUsed( pilot );
    pilot->cargo_free  = pilot->cap_cargo - pilot->mass_cargo;
-   pilot->solid.mass = pilot->ship->mass + pilot->stats.cargo_inertia * pilot->mass_cargo + pilot->mass_outfit;
    pilot_updateMass( pilot );
 }
 

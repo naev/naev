@@ -4,6 +4,7 @@
          * More landable uninhabited spobs, unique locations, and things to discover
          * Reviewed and corrected many descriptions and placement of spobs and systems
          * More in-depth and fleshed out tag system for locations
+      * Ship slots and mass limits reworked such that smaller ships get more utility/structural slots to work with
       * Point defense systems that can shoot down missiles and torpedoes
       * Planet properties affect quantity of missions available
       * Moved many missions to the vn system
@@ -37,6 +38,7 @@
       * Selected slots in the equipment window will only show outfits that fit
       * Autonav routes consider distance travelled in-system
       * Made stress more visible in the slim GUI
+      * Reworked how stats are displayed to be more visible and intuitive
    * New Content
       * New mechanic for House Sirius called flow to unlock psychic powers
          * Gives passive bonuses to Sirius ships

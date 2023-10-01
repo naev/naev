@@ -4,7 +4,7 @@
   <slot>weapon</slot>
   <size>small</size>
   <license>Medium Weapon</license>
-  <mass>30</mass>
+  <mass>12</mass>
   <price>48000</price>
   <description>The Plasma Cannon is a scaled-up version of the Plasma Blaster design for use on Corvettes. It manages to pack a markedly stronger punch, but the engineering complexities of fitting such a powerful weapon into a small slot lead to much higher dependence on guidance from the ship's central computer.</description>
   <gfx_store>plasma_cannon.webp</gfx_store>
@@ -27,7 +27,7 @@
   <trackmax>3000</trackmax>
   <swivel>22</swivel>
   <damage>
-   <type>impact</type>
+   <type>plasma</type>
    <penetrate>24</penetrate>
    <physical>28</physical>
   </damage>

@@ -48,6 +48,7 @@
 #include "player_autonav.h"
 #include "pilot_ship.h"
 #include "quadtree.h"
+#include "start.h"
 #include "rng.h"
 #include "weapon.h"
 
@@ -2234,7 +2235,7 @@ void pilot_update( Pilot* pilot, double dt )
    /* Damage effect. */
    if ((pilot->stats.damage > 0.) || (pilot->stats.disable > 0.)) {
       Damage dmg;
-      dmg.type          = dtype_get("normal");
+      dmg.type          = dtype_get("raw");
       dmg.damage        = pilot->stats.damage * dt;
       dmg.penetration   = 1.; /* Full penetration. */
       dmg.disable       = pilot->stats.disable * dt;

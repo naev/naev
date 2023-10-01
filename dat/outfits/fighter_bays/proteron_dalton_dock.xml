@@ -5,17 +5,17 @@
   <size>medium</size>
   <license>Light Combat Vessel</license>
   <rarity>2</rarity>
-  <mass>90</mass>
+  <mass>85</mass>
   <price>740000</price>
   <gfx_store>dalton_dock.webp</gfx_store>
   <description>This fighter bay allows your ship to carry twin Proteron Dalton class interceptors. It comes with all the devices required for the maintenance and flight of the interceptors.</description>
-  <cpu>-170</cpu>
+  <cpu>-165</cpu>
  </general>
  <specific type="fighter bay" secondary="1">
   <delay>5</delay>
   <reload_time>240</reload_time>
   <amount>2</amount>
   <ship>Proteron Dalton</ship>
-  <ship_mass>60</ship_mass>
+  <ship_mass>15</ship_mass>
  </specific>
 </outfit>

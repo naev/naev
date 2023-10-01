@@ -20,7 +20,7 @@
  </health>
  <characteristics>
   <crew>12</crew>
-  <mass>200</mass>
+  <mass>300</mass>
   <fuel_consumption>200</fuel_consumption>
   <cargo>50</cargo>
  </characteristics>
@@ -38,7 +38,8 @@
   <utility size="medium" />
   <utility size="medium" />
   <structure size="medium" prop="engines">Krain Patagium Engine</structure>
-  <structure size="medium" prop="hull">Unicorp D-24 Medium Plating</structure>
+  <structure size="medium" prop="hull">Unicorp D-38 Medium Plating</structure>
+  <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />

@@ -5,7 +5,7 @@
   <size>medium</size>
   <license>Heavy Weapon</license>
   <rarity>1</rarity>
-  <mass>40</mass>
+  <mass>16</mass>
   <price>105000</price>
   <description>By modulating the frequency of the basic Ripper Cannon, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Heavy Ripper Cannon. The main drawback to this model is its increased bulk, which makes it unsuitable for smaller ships.</description>
   <gfx_store>ripper.webp</gfx_store>
@@ -27,7 +27,7 @@
   <trackmax>7200</trackmax>
   <swivel>22</swivel>
   <damage>
-   <type>normal</type>
+   <type>energy</type>
    <penetrate>48</penetrate>
    <physical>48</physical>
   </damage>

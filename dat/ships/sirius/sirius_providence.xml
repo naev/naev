@@ -27,7 +27,7 @@
  </health>
  <characteristics>
   <crew>28</crew>
-  <mass>1250</mass>
+  <mass>1450</mass>
   <fuel_consumption>400</fuel_consumption>
   <cargo>340</cargo>
  </characteristics>
@@ -35,20 +35,18 @@
   <weapon size="large" prop="fighter_bay" x="-24" y="12" h="-3" />
   <weapon size="large" prop="fighter_bay" x="-24" y="-12" h="-3" />
   <weapon size="medium" x="35" y="-9" h="-6" />
-  <weapon size="medium" x="35" y="0" h="6" />
   <weapon size="medium" x="35" y="9" h="-6" />
   <utility size="large" prop="systems">Unicorp PT-2200 Core System</utility>
   <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
-  <utility size="large" />
-  <structure size="large" prop="engines">Nexus Bolt 3500 Engine</structure>
-  <structure size="large" prop="hull">Unicorp D-48 Heavy Plating</structure>
+  <utility size="medium" />
+  <structure size="large" prop="engines">Nexus Bolt 3000 Engine</structure>
+  <structure size="large" prop="hull">Unicorp D-58 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />
-  <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />
  </slots>

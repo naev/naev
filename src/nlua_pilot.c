@@ -44,6 +44,7 @@
 #include "player.h"
 #include "rng.h"
 #include "space.h"
+#include "start.h"
 #include "weapon.h"
 
 /*
@@ -86,7 +87,6 @@ static int pilotL_setTarget( lua_State *L );
 static int pilotL_targetAsteroid( lua_State *L );
 static int pilotL_setTargetAsteroid( lua_State *L );
 static int pilotL_inrange( lua_State *L );
-static int pilotL_inrangeAsteroid( lua_State *L );
 static int pilotL_scandone( lua_State *L );
 static int pilotL_withPlayer( lua_State *L );
 static int pilotL_nav( lua_State *L );
@@ -270,7 +270,6 @@ static const luaL_Reg pilotL_methods[] = {
    { "targetAsteroid", pilotL_targetAsteroid },
    { "setTargetAsteroid", pilotL_setTargetAsteroid },
    { "inrange", pilotL_inrange },
-   { "inrangeAsteroid", pilotL_inrangeAsteroid },
    { "scandone", pilotL_scandone },
    { "withPlayer", pilotL_withPlayer },
    { "nav", pilotL_nav },
@@ -1427,8 +1426,6 @@ static int pilotL_exists( lua_State *L )
 static int pilotL_target( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
-   if (p->target == 0)
-      return 0;
    /* Must be valid. */
    if (pilot_getTarget(p) == NULL)
       return 0;
@@ -1507,54 +1504,53 @@ static int pilotL_setTargetAsteroid( lua_State *L )
 /**
  * @brief Checks to see if a target pilot is in range of a pilot.
  *
+ * TODO add supports for spobs and jump points.
+ *
  * @usage detected, scanned = p:inrange( target )
  *
  *    @luatparam Pilot p Pilot to see if another pilot is in range.
- *    @luatparam Pilot target Target pilot.
+ *    @luatparam Pilot|Asteroid|Vec2 target Target pilot or asteroid to check if in range.
  *    @luatreturn boolean True if the pilot is visible at all.
- *    @luatreturn boolean True if the pilot is visible and well-defined (not fuzzy)
+ *    @luatreturn boolean True if the pilot is visible and well-defined (not fuzzy). Always true if target is not a Pilot.
  * @luafunc inrange
  */
 static int pilotL_inrange( lua_State *L )
 {
    /* Parse parameters. */
    const Pilot *p = luaL_validpilot(L,1);
-   const Pilot *t = luaL_validpilot(L,2);
+   if (lua_ispilot(L,2)) {
+      const Pilot *t = luaL_validpilot(L,2);
 
-   /* Check if in range. */
-   int ret = pilot_inRangePilot( p, t, NULL );
-   if (ret == 1) { /* In range. */
-      lua_pushboolean(L,1);
-      lua_pushboolean(L,1);
+      /* Check if in range. */
+      int ret = pilot_inRangePilot( p, t, NULL );
+      if (ret == 1) { /* In range. */
+         lua_pushboolean(L,1);
+         lua_pushboolean(L,1);
+      }
+      else if (ret == 0) { /* Not in range. */
+         lua_pushboolean(L,0);
+         lua_pushboolean(L,0);
+      }
+      else { /* Detected fuzzy. */
+         lua_pushboolean(L,1);
+         lua_pushboolean(L,0);
+      }
+      return 2;
    }
-   else if (ret == 0) { /* Not in range. */
-      lua_pushboolean(L,0);
-      lua_pushboolean(L,0);
-   }
-   else { /* Detected fuzzy. */
-      lua_pushboolean(L,1);
-      lua_pushboolean(L,0);
-   }
-   return 2;
-}
+   else if (lua_isasteroid(L,2)) {
+      const LuaAsteroid_t *la = luaL_checkasteroid(L,2);
 
-/**
- * @brief Checks to see if an asteroid is in range of a pilot.
- *
- *    @luatparam Pilot p Pilot checking to see if an asteroid is in range.
- *    @luatparam Asteroid a Asteroid to check to see if is in range.
- *    @luatreturn boolean true if in range, false otherwise.
- * @luafunc inrangeAsteroid
- */
-static int pilotL_inrangeAsteroid( lua_State *L )
-{
-   /* Parse parameters. */
-   const Pilot *p = luaL_validpilot(L,1);
-   LuaAsteroid_t *la = luaL_checkasteroid(L,2);
-
-   /* Check if in range. */
-   lua_pushboolean(L, pilot_inRangeAsteroid( p, la->id, la->parent ));
-   return 1;
+      /* Check if in range. */
+      lua_pushboolean(L, pilot_inRangeAsteroid( p, la->id, la->parent ));
+      lua_pushboolean(L,1);
+      return 2;
+   }
+   else {
+      const vec2 *v = luaL_checkvector(L,2);
+      lua_pushboolean(L, pilot_inRange( p, v->x, v->y ) );
+      lua_pushboolean(L,1);
+      return 2;
+   }
 }
 
 /**
@@ -1627,8 +1623,6 @@ static int pilotL_nav( lua_State *L )
 static int pilotL_navSpob( lua_State *L )
 {
    const Pilot *p = luaL_validpilot(L,1);
-   if (p->target == 0)
-      return 0;
 
    /* Get spob target. */
    if (p->nav_spob < 0)
@@ -1649,8 +1643,6 @@ static int pilotL_navSpob( lua_State *L )
 static int pilotL_navJump( lua_State *L )
 {
    const Pilot *p = luaL_validpilot(L,1);
-   if (p->target == 0)
-      return 0;
 
    /* Get hyperspace target. */
    if (p->nav_hyperspace < 0)
@@ -4627,9 +4619,9 @@ static int pilotL_getStats( lua_State *L )
    PUSH_INT( L, "fuel_consumption", p->fuel_consumption );
    PUSH_DOUBLE( L, "mass", p->solid.mass );
    /* Movement. */
-   PUSH_DOUBLE( L, "thrust", p->thrust / p->solid.mass );
+   PUSH_DOUBLE( L, "thrust", p->thrust/p->solid.mass );
    PUSH_DOUBLE( L, "speed", p->speed );
-   PUSH_DOUBLE( L, "turn", p->turn * 180. / M_PI ); /* Convert back to grad. */
+   PUSH_DOUBLE( L, "turn", p->turn*180./M_PI ); /* Convert back to grad. */
    PUSH_DOUBLE( L, "speed_max", solid_maxspeed(&p->solid, p->speed, p->thrust) );
    /* Health. */
    PUSH_DOUBLE( L, "absorb", p->dmg_absorb );
@@ -6241,7 +6233,7 @@ static int pilotL_collisionTest( lua_State *L )
  *    @luatparam number dmg Damage being done.
  *    @luatparam[opt=0.] number disable Disable being done.
  *    @luatparam[opt=0.] number penetration Penetration (in %).
- *    @luatparam[opt="normal"] string type Damage type being done.
+ *    @luatparam[opt="raw"] string type Damage type being done.
  *    @luatparam[opt=nil] Pilot shooter Pilot doing the damage.
  *    @luatreturn number Amount of damage done.
  * @luafunc damage
@@ -6256,7 +6248,7 @@ static int pilotL_damage( lua_State *L )
    dmg.damage = luaL_checknumber(L,2);
    dmg.disable = luaL_optnumber(L,3,0.);
    dmg.penetration = luaL_optnumber(L,4,0.) / 100.;
-   dmg.type = dtype_get( luaL_optstring(L,5,"normal") );
+   dmg.type = dtype_get( luaL_optstring(L,5,"raw") );
    parent = (lua_isnoneornil(L,6)) ? NULL : luaL_validpilot(L,6);
 
    damage = pilot_hit( p, NULL, parent, &dmg, NULL, LUA_NOREF, 1 );

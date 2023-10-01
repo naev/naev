@@ -27,3 +27,4 @@ const char* start_mission (void);
 const char* start_event (void);
 const char* start_chapter (void);
 const char* start_spob_lua_default (void);
+const char* start_dtype_default (void);

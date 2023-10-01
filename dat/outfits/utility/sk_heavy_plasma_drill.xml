@@ -4,7 +4,7 @@
   <typename>Mining System</typename>
   <slot>utility</slot>
   <size>large</size>
-  <mass>150</mass>
+  <mass>60</mass>
   <price>650000</price>
   <gfx_store>plasma_drill_heavy.webp</gfx_store>
   <description>Given the popularity of the Plasma Drill and the inexhaustible demand for resources by human civilization, Schafer &amp; Kane Industries produced a heavy variant of the same. The new design makes no compromises in functionality at the cost of significantly increased size requirements. However, for the ships that can outfit it, the Heavy Plasma Drill can convert them into formidable mining vessels.</description>

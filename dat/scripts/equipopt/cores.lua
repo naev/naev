@@ -68,82 +68,82 @@ shul["Interceptor"] = function ()
    return "Unicorp D-2 Light Plating"
 end
 shul["Fighter"] = function ()
-   return "Unicorp D-4 Light Plating"
+   return "Unicorp D-9 Light Plating"
 end
 shul["Bomber"] = function ()
-   return "Unicorp D-4 Light Plating"
+   return "Unicorp D-9 Light Plating"
 end
 shul["Corvette"] = function ()
-   return "Unicorp D-12 Medium Plating"
+   return "Unicorp D-23 Medium Plating"
 end
 shul["Destroyer"] = function ()
-   return "Unicorp D-24 Medium Plating"
+   return "Unicorp D-38 Medium Plating"
 end
 shul["Cruiser"] = function ()
-   return "Unicorp D-48 Heavy Plating"
+   return "Unicorp D-58 Heavy Plating"
 end
 shul["Battleship"] = function ()
-   return "Unicorp D-68 Heavy Plating"
+   return "Unicorp D-72 Heavy Plating"
 end
 shul["Carrier"] = function ()
-   return "Unicorp D-68 Heavy Plating"
+   return "Unicorp D-72 Heavy Plating"
 end
 -- Civilian
 shul["Yacht"] = function ()
    return choose_one{ "Unicorp D-2 Light Plating", "S&K Small Cargo Hull" }
 end
 shul["Courier"] = function ()
-   return choose_one{ "Unicorp D-4 Light Plating", "S&K Small Cargo Hull" }
+   return choose_one{ "Unicorp D-9 Light Plating", "S&K Small Cargo Hull" }
 end
 shul["Freighter"] = function ()
-   return choose_one{ "Unicorp D-24 Medium Plating", "S&K Medium Cargo Hull" }
+   return choose_one{ "Unicorp D-38 Medium Plating", "S&K Medium Cargo Hull" }
 end
 shul["Armoured Transport"] = shul["Freighter"]
 shul["Bulk Freighter"] = function ()
-   return "Unicorp D-48 Heavy Plating"
+   return "Unicorp D-58 Heavy Plating"
 end
 
 -- STANDARD ENGINES
 local seng = {}
 seng["Scout"] = function ()
-   return "Nexus Dart 150 Engine"
+   return "Nexus Dart 160 Engine"
 end
 seng["Interceptor"] = function ()
-   return "Nexus Dart 150 Engine"
+   return "Nexus Dart 160 Engine"
 end
 seng["Fighter"] = function ()
-   return "Unicorp Hawk 350 Engine"
+   return "Unicorp Hawk 360 Engine"
 end
 seng["Bomber"] = function ()
-   return "Unicorp Hawk 350 Engine"
+   return "Unicorp Hawk 360 Engine"
 end
 seng["Corvette"] = function ()
    return "Nexus Arrow 700 Engine"
 end
 seng["Destroyer"] = function ()
-   return "Unicorp Falcon 1300 Engine"
+   return "Unicorp Falcon 1400 Engine"
 end
 seng["Cruiser"] = function ()
-   return "Nexus Bolt 3500 Engine"
+   return "Nexus Bolt 3000 Engine"
 end
 seng["Battleship"] = function ()
-   return "Unicorp Eagle 7000 Engine"
+   return "Unicorp Eagle 6500 Engine"
 end
 seng["Carrier"] = function ()
-   return "Unicorp Eagle 7000 Engine"
+   return "Unicorp Eagle 6500 Engine"
 end
 seng["Yacht"] = function ()
-   return "Nexus Dart 150 Engine"
+   return "Nexus Dart 160 Engine"
 end
 seng["Courier"] = function ()
-   return "Unicorp Hawk 350 Engine"
+   return "Unicorp Hawk 360 Engine"
 end
 seng["Freighter"] = function ()
-   return choose_one{ "Unicorp Falcon 1300 Engine", "Melendez Buffalo XL Engine" }
+   return choose_one{ "Unicorp Falcon 1400 Engine", "Melendez Buffalo XL Engine" }
 end
 seng["Armoured Transport"] = seng["Freighter"]
 seng["Bulk Freighter"] = function ()
-   return "Nexus Bolt 3500 Engine"
+   return "Nexus Bolt 3000 Engine"
 end
 
 -- STANDARD SETS
@@ -218,7 +218,7 @@ ehul["Destroyer"] = function ()
    return "S&K Medium-Heavy Combat Plating"
 end
 ehul["Cruiser"] = function ()
-   return choose_one{ "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating" }
+   return choose_one{ "Unicorp D-58 Heavy Plating", "Unicorp D-72 Heavy Plating" }
 end
 ehul["Battleship"] = function ()
    return "S&K Superheavy Combat Plating"
@@ -231,7 +231,7 @@ ehul["Yacht"] = shul["Yacht"]
 ehul["Courier"] = shul["Courier"]
 ehul["Freighter"] = shul["Freighter"]
 ehul["Armoured Transport"] = function ()
-   return choose_one{ "Unicorp D-24 Medium Plating", "Nexus Medium Stealth Plating" }
+   return choose_one{ "Unicorp D-38 Medium Plating", "Nexus Medium Stealth Plating" }
 end
 ehul["Bulk Freighter"] = function ()
    return "S&K Large Cargo Hull"
@@ -287,11 +287,11 @@ cores.elite = {
 --]]
 -- Normal exceptions
 cores.standard.engines["Kestrel"] = function ()
-   return choose_one{ "Unicorp Eagle 7000 Engine", "Krain Remige Engine" }
+   return choose_one{ "Unicorp Eagle 6500 Engine", "Krain Remige Engine" }
 end
 cores.standard.engines["Pirate Kestrel"] = cores.standard.engines["Kestrel"]
 cores.standard.engines["Starbridge"] = function ()
-   return choose_one{ "Unicorp Falcon 1300 Engine", "Krain Patagium Engine" }
+   return choose_one{ "Unicorp Falcon 1400 Engine", "Krain Patagium Engine" }
 end
 cores.standard.engines["Pirate Starbridge"] = cores.standard.engines["Starbridge"]
 cores.standard.systems["Proteron Hippocrates"] = function ()
@@ -314,7 +314,7 @@ cores.elite.hulls["Gawain"] = function ()
    return choose_one{ "Unicorp D-2 Light Plating", "Nexus Light Stealth Plating" }
 end
 cores.elite.engines["Gawain"] = function ()
-   return choose_one{ "Nexus Dart 150 Engine", "Tricon Zephyr Engine" }
+   return choose_one{ "Nexus Dart 160 Engine", "Tricon Zephyr Engine" }
 end
 cores.elite.systems["Proteron Hippocrates"] = function ()
    return "Milspec Thalos 5402 Core System"

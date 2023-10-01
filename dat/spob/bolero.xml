@@ -26,8 +26,10 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Bolero has quickly become of the Empire's most successful planets due to its recent growth. The population is prosperous and successful, and the planet's conditions are mild. Although it is still treated as something of a backwater due to its location, it is becoming increasingly important in Imperial politics. A lot of Bolero's popularity comes from its Earth-like climate, giving a reassuring sense of nostalgia to all those who were able to visit Earth before the Incident. However, some people avoid it for exactly the same reason…</description>
-  <bar>Making the most of Bolero's similarity with Earth, the bar here is an old-Earth style pub, with a low ceiling, warm beer and good food. The atmosphere is warm and welcoming, the clients are all polite and cheerful and the bouncers barely loom at all. There seems to be relatively few locals mixed in with the patrons, with the majority of people looking like temporary visitors, either arriving for vacations or business trips.</bar>
+  <description>Bolero has quickly become of the Empire's most successful planets due to its recent growth. The population is prosperous and successful, and the planet's conditions are mild. Although it is still treated as something of a backwater due to its location, it is becoming increasingly important in Imperial politics.
+A lot of Bolero's popularity comes from its Earth-like climate, giving a reassuring sense of nostalgia to all those who were able to visit Earth before the Incident. However, some people avoid it for exactly the same reason…</description>
+  <bar>Making the most of Bolero's similarity with Earth, the bar here is an old-Earth style pub, with a low ceiling, warm beer and good food. The atmosphere is warm and welcoming, the clients are all polite and cheerful and the bouncers barely loom at all.
+There seems to be relatively few locals mixed in with the patrons; the majority of people appear to be temporary visitors, either arriving for vacations or business trips.</bar>
  </general>
  <tech>
   <item>Systems Low</item>

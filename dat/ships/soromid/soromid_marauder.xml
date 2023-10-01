@@ -36,8 +36,10 @@
   <utility size="small" prop="bio_organ" name="the_bite" />
   <utility size="small" prop="accessory" />
   <utility size="small" />
+  <utility size="small" />
   <structure size="small" prop="bio_engines" name="genedrive">Laevis Gene Drive I</structure>
   <structure size="small" prop="bio_hull" name="shell">Laevis Cortex I</structure>
+  <structure size="small" />
   <structure size="small" />
  </slots>
  <stats>

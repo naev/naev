@@ -123,7 +123,7 @@ function takeoff()
          racers[i]:outfitAdd("Unicorp PT-16 Core System")
          racers[i]:outfitAdd("Unicorp D-2 Light Plating")
          local en_choices = {
-            "Nexus Dart 150 Engine", "Tricon Zephyr Engine" }
+            "Nexus Dart 160 Engine", "Tricon Zephyr Engine" }
          racers[i]:outfitAdd(en_choices[rnd.rnd(1, #en_choices)])
       end
    end

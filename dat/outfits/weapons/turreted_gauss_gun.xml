@@ -4,7 +4,7 @@
   <slot>weapon</slot>
   <size>small</size>
   <license>Medium Weapon</license>
-  <mass>18</mass>
+  <mass>10</mass>
   <price>45000</price>
   <description>One of the more common countermeasures employed by low-budget merchant ships, the turret version of the Gauss Gun provides basic defence against lone pirates. A more determined attacker is unlikely to be deterred, however.</description>
   <gfx_store>gaussturret.webp</gfx_store>
@@ -24,7 +24,7 @@
   <trackmin>0</trackmin>
   <trackmax>3000</trackmax>
   <damage>
-   <type>impact</type>
+   <type>kinetic</type>
    <penetrate>6</penetrate>
    <physical>4</physical>
   </damage>

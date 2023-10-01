@@ -3,7 +3,7 @@
  <general>
   <slot>weapon</slot>
   <size>medium</size>
-  <mass>30</mass>
+  <mass>26</mass>
   <license>Heavy Weapon</license>
   <rarity>1</rarity>
   <price>73000</price>
@@ -25,7 +25,7 @@
   <trackmin>1000</trackmin>
   <trackmax>4000</trackmax>
   <damage>
-   <type>impact</type>
+   <type>kinetic</type>
    <penetrate>36</penetrate>
    <physical>8</physical>
   </damage>

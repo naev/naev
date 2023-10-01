@@ -48,6 +48,7 @@
   <structure size="large" prop="bio_hull" name="shell">Ponderosus Cortex I</structure>
   <structure size="large" />
   <structure size="large" />
+  <structure size="large" />
  </slots>
  <stats>
   <speed_mod>5</speed_mod>

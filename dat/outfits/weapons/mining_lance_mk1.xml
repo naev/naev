@@ -4,7 +4,7 @@
   <typename>Mining System</typename>
   <slot>weapon</slot>
   <size>small</size>
-  <mass>10</mass>
+  <mass>5</mass>
   <price>20000</price>
   <description>Mining lances are optimized for high destructive power at short range, specialized in mining space asteroids. While they can deal significant damage to heavy armour, they are impractical against shields.</description>
   <gfx_store>mining_lance1.webp</gfx_store>

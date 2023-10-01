@@ -3,7 +3,7 @@
  <general>
   <slot>weapon</slot>
   <size>small</size>
-  <mass>6</mass>
+  <mass>3</mass>
   <price>19000</price>
   <description>The Plasma Blaster fires superheated plasma which is very effective at damaging armour, but less effective against shields. This weapon is often used by bounty hunters and mercenaries for its high killing potential.</description>
   <gfx_store>plasma.webp</gfx_store>
@@ -25,7 +25,7 @@
   <trackmax>2000</trackmax>
   <swivel>22</swivel>
   <damage>
-   <type>impact</type>
+   <type>plasma</type>
    <penetrate>0</penetrate>
    <physical>13</physical>
   </damage>

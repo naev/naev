@@ -81,7 +81,7 @@ local function shouldResetSpeed ()
 
    -- First check enemies in distance which should be fast
    if not will_reset and reset_dist > 0 then
-      for k,p in ipairs(pp:getEnemies( reset_dist )) do
+      for k,p in ipairs(pp:getEnemies( reset_dist, nil, true )) do
          will_reset = true
          autonav_timer = math.max( autonav_timer, 0 )
       end

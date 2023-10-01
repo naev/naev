@@ -33,6 +33,7 @@
  */
 typedef struct DTYPE_ {
    char* name;    /**< Name of the damage type */
+   char* display; /**< Display name of the damage type. */
    double sdam;   /**< Shield damage multiplier */
    double adam;   /**< Armour damage multiplier */
    double knock;  /**< Knockback */
@@ -78,6 +79,7 @@ static int DTYPE_parse( DTYPE *temp, const char *file )
    memset( temp, 0, sizeof(DTYPE) );
 
    xmlr_attr_strd( parent, "name", temp->name );
+   xmlr_attr_strd( parent, "display", temp->display );
 
    /* Extract the data. */
    node = parent->xmlChildrenNode;
@@ -133,6 +135,8 @@ static void DTYPE_free( DTYPE *damtype )
 {
    free(damtype->name);
    damtype->name = NULL;
+   free(damtype->display);
+   damtype->display = NULL;
 }
 
 /**
@@ -170,7 +174,7 @@ const char* dtype_damageTypeToStr( int type )
    DTYPE *dmg = dtype_validType( type );
    if (dmg == NULL)
       return NULL;
-   return dmg->name;
+   return (dmg->display==NULL) ? dmg->name: dmg->display;
 }
 
 /**
@@ -180,8 +184,9 @@ const char* dtype_damageTypeToStr( int type )
  */
 int dtype_load (void)
 {
-   const DTYPE normal = {
-      .name = strdup(N_("normal")),
+   const DTYPE dtype_raw = {
+      .name = strdup(N_("raw")),
+      .display = NULL,
       .sdam = 1.,
       .adam = 1.,
       .knock = 0.,
@@ -192,7 +197,7 @@ int dtype_load (void)
 
    /* Load up the individual damage types. */
    dtype_types = array_create(DTYPE);
-   array_push_back( &dtype_types, normal );
+   array_push_back( &dtype_types, dtype_raw );
 
    for (int i=0; i<array_size(dtype_files); i++) {
       DTYPE dtype;

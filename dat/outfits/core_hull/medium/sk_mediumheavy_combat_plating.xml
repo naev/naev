@@ -12,7 +12,7 @@
  </general>
  <specific type="modification">
   <cargo>18</cargo>
-  <absorb>30</absorb>
+  <absorb>46</absorb>
   <armour>660</armour>
   <heat_dissipation>10</heat_dissipation>
  </specific>

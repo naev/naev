@@ -12,8 +12,26 @@
 #include "nstring.h"
 #include "physics.h"
 
-/*
- * M I S C
+/**
+ * Lists of names for some internal units we use. These just translate them
+ * game values to human readable form.
+ */
+const char _UNIT_TIME[]       = N_("sec");
+const char _UNIT_PER_TIME[]   = N_("/sec");
+const char _UNIT_DISTANCE[]   = N_("km");
+const char _UNIT_SPEED[]      = N_("km/s");
+const char _UNIT_ACCEL[]      = N_("km/s²");
+const char _UNIT_ENERGY[]     = N_("GJ");
+const char _UNIT_POWER[]      = N_("GW");
+const char _UNIT_ANGLE[]      = N_("°");
+const char _UNIT_ROTATION[]   = N_("°/s");
+const char _UNIT_MASS[]       = N_("t");
+const char _UNIT_CPU[]        = N_("PFLOP");
+const char _UNIT_UNIT[]       = N_("u");
+const char _UNIT_PERCENT[]    = N_("%");
+
+/**
+ * @brief Converts an angle to the [0, 2*M_PI] range.
  */
 static double angle_cleanup( double a )
 {
@@ -57,7 +75,6 @@ double angle_diff( double ref, double a )
  *
  *   since dt isn't actually differential this gives us ERROR!
  *   so watch out with big values for dt
- *
  */
 static void solid_update_euler( Solid *obj, double dt )
 {
@@ -86,7 +103,7 @@ static void solid_update_euler( Solid *obj, double dt )
    ax = th*cdir / obj->mass;
    ay = th*sdir / obj->mass;
 
-   /* Symplectic Euler */
+   /* Symplectic Euler should reduce a bit the approximation error. */
    vx += ax*dt;
    vy += ay*dt;
    px += vx*dt;
@@ -268,33 +285,4 @@ void solid_init( Solid* dest, double mass, double dir,
          dest->update = solid_update_rk4;
          break;
    }
-}
-
-/**
- * @brief Creates a new Solid.
- *
- *    @param mass Mass to set solid to.
- *    @param dir Solid initial direction.
- *    @param pos Initial solid position.
- *    @param vel Initial solid velocity.
- *    @return A newly created solid.
- */
-Solid* solid_create( double mass, double dir,
-      const vec2* pos, const vec2* vel, int update )
-{
-   Solid* dyn = malloc(sizeof(Solid));
-   if (dyn==NULL)
-      ERR(_("Out of Memory"));
-   solid_init( dyn, mass, dir, pos, vel, update );
-   return dyn;
-}
-
-/**
- * @brief Frees an existing solid.
- *
- *    @param src Solid to free.
- */
-void solid_free( Solid* src )
-{
-   free(src);
 }

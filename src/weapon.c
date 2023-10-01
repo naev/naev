@@ -314,7 +314,7 @@ static void think_seeker( Weapon* w, double dt )
       case WEAPON_STATUS_LOCKING: /* Check to see if we can get a lock on. */
          w->timer2 -= dt;
          if (w->timer2 >= 0.)
-            weapon_setThrust( w, w->outfit->u.lau.thrust * w->outfit->mass );
+            weapon_setThrust( w, w->outfit->u.lau.thrust * w->outfit->u.lau.ammo_mass );
          else
             w->status = WEAPON_STATUS_OK; /* Weapon locked on. */
          /* Can't get jammed while locking on. */
@@ -339,7 +339,7 @@ static void think_seeker( Weapon* w, double dt )
                   else if (r < 0.8) {
                      w->status = WEAPON_STATUS_JAMMED;
                      weapon_setTurn( w, 0. );
-                     weapon_setThrust( w, w->outfit->u.lau.thrust * w->outfit->mass );
+                     weapon_setThrust( w, w->outfit->u.lau.thrust * w->outfit->u.lau.ammo_mass );
                   }
                   else {
                      w->status = WEAPON_STATUS_JAMMED_SLOWED;
@@ -1809,9 +1809,14 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
    if (t == INFINITY)  /* Postprocess (t = INFINITY means target is not hittable) */
       t = 0.;
 
+   double t_parent = t;
+   /* Launch the missiles in the estimated direction of the target. */
+   if (outfit_isLauncher(outfit) && outfit->u.lau.ai != AMMO_AI_UNGUIDED)
+      t_parent = 0.;
+
    /* Position is calculated on where it should be */
-   x = (target_pos->x + target_vel->x*t) - (pos->x + vel->x*t);
-   y = (target_pos->y + target_vel->y*t) - (pos->y + vel->y*t);
+   x = (target_pos->x + target_vel->x*t) - (pos->x + vel->x*t_parent);
+   y = (target_pos->y + target_vel->y*t) - (pos->y + vel->y*t_parent);
 
    /* Compute both the angles we want. */
    if (pilot_target != NULL) {

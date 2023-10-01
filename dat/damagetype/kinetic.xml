@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dtype name="impact">
+<dtype name="kinetic" display="#oKinetic#0">
  <shield>0.8</shield>
  <armour>1.15</armour>
  <knockback>1</knockback>

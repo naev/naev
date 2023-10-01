@@ -3,7 +3,7 @@
  <general>
   <slot>weapon</slot>
   <size>medium</size>
-  <mass>15</mass>
+  <mass>26</mass>
   <price>100000</price>
   <gfx_store>empgrenadelauncher_blue.webp</gfx_store>
   <description>This launcher can fire EMP grenades in any direction using a unique internal guidance system. The grenades unleash an electromagnetic pulse upon impact, rapidly disabling the electronics of nearby ships, hostile or otherwise. Useful for taking ships alive; the EM pulses rarely destroy the ship, leaving it floating disabled in space. These are favoured by traders for keeping pirates at bay.</description>

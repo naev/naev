@@ -4,7 +4,7 @@
   <shoot_dry/>
   <slot>weapon</slot>
   <size>medium</size>
-  <mass>15</mass>
+  <mass>40</mass>
   <price>100000</price>
   <gfx_store>placeholder.webp</gfx_store>
   <description>The vastness of space limits the applicability of space mines in lieu of automated or manned patrols in most situations. However, when raw explosive power is mandated, nothing can surpass the destructive force of space mines.</description>

@@ -28,7 +28,7 @@
   <thrust>600</thrust>
   <speed>600</speed>
   <damage>
-   <type>impact</type>
+   <type>kinetic</type>
    <penetrate>12</penetrate>
    <physical>15</physical>
   </damage>

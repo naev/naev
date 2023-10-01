@@ -3,7 +3,7 @@
  <general>
   <slot>weapon</slot>
   <size>small</size>
-  <mass>6</mass>
+  <mass>3</mass>
   <price>20000</price>
   <description>The Gauss Gun is one of the oldest weapon designs in the galaxy today, dating back to the times of the Federation. It fires a rapid stream of high velocity projectiles at a target, dealing damage through sheer kinetic impact. Gauss Guns are popular among small time pirates for being an easy to use, reliable weapon.</description>
   <gfx_store>gaussgun.webp</gfx_store>
@@ -24,7 +24,7 @@
   <trackmax>2000</trackmax>
   <swivel>22</swivel>
   <damage>
-   <type>impact</type>
+   <type>kinetic</type>
    <penetrate>0</penetrate>
    <physical>4</physical>
   </damage>

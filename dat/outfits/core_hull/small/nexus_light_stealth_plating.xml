@@ -11,7 +11,7 @@
   <gfx_store>stealth_hull_s.webp</gfx_store>
  </general>
  <specific type="modification">
-  <cargo>3</cargo>
+  <cargo>7</cargo>
   <absorb>3</absorb>
   <armour>60</armour>
   <ew_hide>-15</ew_hide>

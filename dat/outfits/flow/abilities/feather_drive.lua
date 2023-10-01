@@ -25,7 +25,7 @@ local function getStats( p, size )
    else
       flow_cost   = 160
       range       = 500
-      masslimit   = 5000^2 --squared
+      masslimit   = 7000^2 --squared
       cooldown    = 9
       drain       = 400
    end
@@ -47,7 +47,7 @@ function descextra( p, _o )
          pfx = "#b"..pfx.."#n"
       end
       s = s.."\n"..fmt.f(_("#n{prefix}:#0 {cost} flow, {cooldown} s cooldown, {range} range, {masslimit} tonne limit, {drain} MJ energy drained per ship hit"),
-         {prefix=pfx, cost=cost, range=range, cooldown=cooldown, masslimit=math.sqrt(masslimit), drain=drain}).."#0"
+         {prefix=pfx, cost=cost, range=range, cooldown=cooldown, masslimit=fmt.number(math.sqrt(masslimit)), drain=drain}).."#0"
    end
    return s
 end

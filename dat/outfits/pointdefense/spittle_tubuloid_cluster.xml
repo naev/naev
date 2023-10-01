@@ -5,7 +5,7 @@
   <size>medium</size>
   <license>Medium Weapon</license>
   <typename>Point Defense</typename>
-  <mass>27</mass>
+  <mass>23</mass>
   <price>390000</price>
   <description>Actually consisting of a small colony of space-hardened parasites, known as Spittle Tubuloids, that leech from the ship energy systems to provide defensive cover. They have been genetically engineered to detect the weak radiation and gravitational signals of incoming ordinances to activate their defense mechanism of spitting large bubbles of plasma. Although the bubbles are quite weak compared to engineered weapons, their numbers allow them to efficiently protect the ship they are attached to from non-armoured missiles.</description>
   <desc_extra>Automatically fires at nearby missiles and interceptors.</desc_extra>
@@ -27,14 +27,14 @@
   <trackmin>0</trackmin>
   <trackmax>0</trackmax>
   <damage>
-   <type>impact</type>
+   <type>plasma</type>
    <penetrate>0</penetrate>
    <physical>4</physical>
   </damage>
   <pointdefense />
   <miss_ships />
   <shots>5</shots>
-  <dispersion>80</dispersion>
+  <dispersion>60</dispersion>
   <speed_dispersion>20</speed_dispersion>
  </specific>
 </outfit>

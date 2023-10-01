@@ -57,59 +57,57 @@ policies, either expressed or implied, of the freetype-gl project.
  * @param[out] vmax The underlying distance value corresponding to +1.0.
  * @return Allocated distance field, values ranging from 0 (farthest inside) to 1 (greatest distance).
  */
-double *
+   double *
 make_distance_mapd( double *data, unsigned int width, unsigned int height, double *vmax )
 {
-    short * xdist = (short *)  malloc( width * height * sizeof(short) );
-    short * ydist = (short *)  malloc( width * height * sizeof(short) );
-    double * gx   = (double *) calloc( width * height, sizeof(double) );
-    double * gy      = (double *) calloc( width * height, sizeof(double) );
-    double * outside = (double *) calloc( width * height, sizeof(double) );
-    double * inside  = (double *) calloc( width * height, sizeof(double) );
-    unsigned int i;
+   unsigned int wh = width*height;
+   short * xdist = (short *)  malloc( wh * sizeof(short) );
+   short * ydist = (short *)  malloc( wh * sizeof(short) );
+   double * gx   = (double *) calloc( wh, sizeof(double) );
+   double * gy      = (double *) calloc( wh, sizeof(double) );
+   double * outside = (double *) calloc( wh, sizeof(double) );
+   double * inside  = (double *) calloc( wh, sizeof(double) );
 
-    // Compute outside = edtaa3(bitmap); % Transform background (0's)
-    computegradient( data, width, height, gx, gy);
-    edtaa3(data, gx, gy, width, height, xdist, ydist, outside);
-    for( i=0; i<width*height; ++i)
-        if( outside[i] < 0.0 )
-            outside[i] = 0.0;
+   // Compute outside = edtaa3(bitmap); % Transform background (0's)
+   computegradient( data, width, height, gx, gy);
+   edtaa3(data, gx, gy, width, height, xdist, ydist, outside);
+   for (unsigned int i=0; i<wh; i++)
+      if( outside[i] < 0.0 )
+         outside[i] = 0.0;
 
-    // Compute inside = edtaa3(1-bitmap); % Transform foreground (1's)
-    memset( gx, 0, sizeof(double)*width*height );
-    memset( gy, 0, sizeof(double)*width*height );
-    for( i=0; i<width*height; ++i)
-        data[i] = 1 - data[i];
-    computegradient( data, width, height, gx, gy );
-    edtaa3( data, gx, gy, width, height, xdist, ydist, inside );
-    for( i=0; i<width*height; ++i )
-        if( inside[i] < 0 )
-            inside[i] = 0.0;
+   // Compute inside = edtaa3(1-bitmap); % Transform foreground (1's)
+   memset( gx, 0, sizeof(double)*width*height );
+   memset( gy, 0, sizeof(double)*width*height );
+   for (unsigned int i=0; i<wh; i++)
+      data[i] = 1 - data[i];
+   computegradient( data, width, height, gx, gy );
+   edtaa3( data, gx, gy, width, height, xdist, ydist, inside );
+   for (unsigned int i=0; i<wh; i++)
+      if( inside[i] < 0 )
+         inside[i] = 0.0;
 
-    // distmap = outside - inside; % Bipolar distance field
-    *vmax = 0.;
-    for( i=0; i<width*height; ++i)
-    {
-        outside[i] -= inside[i];
-        if( *vmax < fabs( outside[i] ) )
-            *vmax = fabs( outside[i] );
-    }
+   // distmap = outside - inside; % Bipolar distance field
+   *vmax = 0.;
+   for (unsigned int i=0; i<wh; i++) {
+      outside[i] -= inside[i];
+      if( *vmax < fabs( outside[i] ) )
+         *vmax = fabs( outside[i] );
+   }
 
-    for( i=0; i<width*height; ++i)
-    {
-        double v = outside[i];
-        if     ( v < -*vmax) outside[i] = -*vmax;
-        else if( v > +*vmax) outside[i] = +*vmax;
-        data[i] = (outside[i]+*vmax)/(2. * *vmax);
-    }
+   for (unsigned int i=0; i<wh; i++) {
+      double v = outside[i];
+      if     ( v < -*vmax) outside[i] = -*vmax;
+      else if( v > +*vmax) outside[i] = +*vmax;
+      data[i] = (outside[i]+*vmax)/(2. * *vmax);
+   }
 
-    free( xdist );
-    free( ydist );
-    free( gx );
-    free( gy );
-    free( outside );
-    free( inside );
-    return data;
+   free( xdist );
+   free( ydist );
+   free( gx );
+   free( gy );
+   free( outside );
+   free( inside );
+   return data;
 }
 
 /**
@@ -128,35 +126,33 @@ float*
 make_distance_mapbf( unsigned char *img,
                     unsigned int width, unsigned int height, double *vmax )
 {
-    double * data    = (double *) calloc( width * height, sizeof(double) );
-    float *out       = (float *) malloc( width * height * sizeof(float) );
-    unsigned int i;
+   unsigned int wh = width * height;
+   double * data  = (double *) calloc( wh, sizeof(double) );
+   float *out     = (float *) malloc( wh * sizeof(float) );
 
-    // find minimum and maximum values
-    double img_min = DBL_MAX;
-    double img_max = DBL_MIN;
+   // find minimum and maximum values
+   double img_min = DBL_MAX;
+   double img_max = DBL_MIN;
 
-    for( i=0; i<width*height; ++i)
-    {
-        double v = img[i];
-        data[i] = v;
-        if (v > img_max)
-            img_max = v;
-        if (v < img_min)
-            img_min = v;
-    }
+   for(unsigned int i=0; i<wh; i++) {
+      double v = img[i];
+      if (v > img_max)
+         img_max = v;
+      if (v < img_min)
+         img_min = v;
+   }
 
-    // Map values from 0 - 255 to 0.0 - 1.0
-    for( i=0; i<width*height; ++i)
-        data[i] = (img[i]-img_min)/img_max;
+   // Map values from 0 - 255 to 0.0 - 1.0
+   for (unsigned int i=0; i<wh; i++)
+      data[i] = (img[i]-img_min)/img_max;
 
-    data = make_distance_mapd(data, width, height, vmax);
+   data = make_distance_mapd( data, width, height, vmax );
 
-    // lower to float
-    for( i=0; i<width*height; ++i)
-        out[i] = (float)(1-data[i]);
+   // lower to float
+   for (unsigned int i=0; i<wh; i++)
+      out[i] = (float)(1-data[i]);
 
-    free( data );
+   free( data );
 
-    return out;
+   return out;
 }

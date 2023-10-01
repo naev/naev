@@ -33,12 +33,13 @@
   <utility size="medium" prop="systems">Unicorp PT-310 Core System</utility>
   <utility size="medium" prop="accessory" />
   <utility size="large" />
-  <utility size="large" />
   <utility size="medium" />
-  <structure size="medium" prop="engines">Unicorp Falcon 1300 Engine</structure>
-  <structure size="medium" prop="hull">Unicorp D-24 Medium Plating</structure>
+  <utility size="medium" />
+  <utility size="medium" />
+  <structure size="medium" prop="engines">Unicorp Falcon 1400 Engine</structure>
+  <structure size="medium" prop="hull">Unicorp D-38 Medium Plating</structure>
   <structure size="large" />
-  <structure size="medium" />
+  <structure size="large" />
   <structure size="medium" />
   <structure size="medium" />
  </slots>

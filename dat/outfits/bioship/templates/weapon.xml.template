@@ -26,7 +26,7 @@
   <trackmax>{trackmax}</trackmax>
   {extra}
   <damage>
-   <type>normal</type>
+   <type>plasma</type>
    <penetrate>{penetrate}</penetrate>
    <physical>{damage}</physical>
   </damage>

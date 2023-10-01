@@ -41,7 +41,6 @@ local title = _("Escape the Courts")
 mem.state = nil
 
 function create ()
-   misn.finish(false)
    if not misn.claim{trialsys, badsys, destsys} then
       misn.finish( false )
    end
@@ -114,6 +113,10 @@ function enter ()
 
       -- Soft clearing should make things feel a bit more alive
       pilotai.clear()
+      pilot.toggleSpawn(false)
+
+      -- No relanding
+      player.landAllow( false, _("You can't land right now!") )
 
       local function add_blockade( jp )
          local pos = jp:pos()
@@ -148,7 +151,8 @@ function enter ()
          end
       end
 
-      hook.timer( 7, "spawn bogeys" )
+      hook.timer( 3, "player_warning" )
+      hook.timer( 11, "spawn_bogeys" )
       mem.state=1
    elseif scur==badsys then
       -- Just some random patrols here and there, player can stealth or brute force through
@@ -215,6 +219,7 @@ function enter ()
                p:setLeader( l )
             end
          end
+         return l
       end
 
       local pacifier = ship.get("Empire Pacifier" )
@@ -225,7 +230,7 @@ function enter ()
       emp_boss = add_guard_group( posB, { "Empire Peacemaker", pacifier, pacifier, lancelot, lancelot, lancelot, lancelot, lancelot, lancelot } )
       add_patrol_group( routeC, { admonisher, shark, shark, shark, shark } )
       add_patrol_group( routeD, { admonisher, shark, shark } )
-      add_patrol_group( posE, { "Empire Rainmaker", admonisher, admonisher, lancelot, lancelot, lancelot, lancelot, lancelot, lancelot } )
+      add_guard_group( posE, { "Empire Rainmaker", admonisher, admonisher, lancelot, lancelot, lancelot, lancelot, lancelot, lancelot } )
 
       -- Tell the player to f off
       hook.timer( 5.0,  "message_first" )
@@ -235,6 +240,7 @@ function enter ()
       -- All's quiet on the front
       pilot.clear()
       pilot.toggleSpawn(false)
+      misn.osdActive( 2 )
 
       local pos = vec2.new( 5e3, 6e3 )
       pinkdemon = minerva.pink_demon( pos, {stealth=true} )
@@ -248,9 +254,14 @@ function enter ()
    end
 end
 
+function player_warning ()
+   pilot.broadcast( trialspb:name(), fmt.f(_("Unauthorized departure. Fleets engage {player}!"),{player=player.pilot():name()}) )
+end
+
 local bogey_spawner = 0
 local bogeys = {
-   { "Empire Shark", "Empire Shark", "Empire Lancelot" },
+   { "Empire Shark", "Empire Shark" },
+   { "Empire Lancelot", "Empire Lancelot" },
    { "Empire Admonisher", "Empire Admonisher" },
    { "Empire Pacifier", "Empire Lancelot", "Empire Lancelot" },
    { "Empire Hawking", "Empire Admonisher", "Empire Admonisher" },
@@ -267,7 +278,7 @@ function spawn_bogeys ()
    local fct = faction.get("Empire")
    local l
    for k,s in ipairs(bogeys[ bogey_spawner ]) do
-      local p = pilot.add( bogeys[1], fct, trialspb, nil, {ai="patrol"} )
+      local p = pilot.add( s, fct, trialspb, nil, {ai="baddiepatrol"} )
       if not l then
          l = p
       else
@@ -279,8 +290,15 @@ function spawn_bogeys ()
       m.guardpos = { trialspb:pos(), jmp:pos() }
    end
 
+   -- Spam stuff everytime they spawn
+   local pp = player.pilot()
+   local inr, nofuz = l:inrange( pp )
+   if inr and nofuz then
+      l:broadcast(fmt.f(_("Engaging {player}!"),{player=pp:name()}))
+   end
+
    -- They keep on coming!
-   hook.timer( 7, "spawn_bogeys" )
+   hook.timer( 7+3*bogey_spawner, "spawn_bogeys" )
 end
 
 function message_first ()
@@ -307,7 +325,8 @@ function maikki_hail ()
    local p = ccomm.newCharacter( vn, pinkdemon )
    vn.transition()
 
-   p(_([["I see you made it past the patrols in {sys}. Talk about bad timing for them to be doing military exercises. Luck is not in our favour."]]))
+   p(fmt.f(_([["I see you made it past the patrols in {sys}. Talk about bad timing for them to be doing military exercises. Luck is not in our favour."]]),
+      {sys=badsys}))
    vn.menu{
       {_([["Who are you?"]]), "01_cont"},
       {_([["It was a drag."]]), "01_cont"},
@@ -322,12 +341,18 @@ function maikki_hail ()
    vn.run()
 
    pinkdemon:setActiveBoard(true)
-   misn.osdCreate{
+   misn.osdCreate( title, {
       fmt.f(_("Board the {ship}"),{ship=pinkdemon}),
-   }
+   } )
+   player.commClose()
 end
 
 function maikki_board ()
+   player.unboard()
+   hook.safe( "maikki_board_safe" )
+end
+
+function maikki_board_safe ()
    vn.clear()
    vn.scene()
    local pir1 = vn.newCharacter( _("Pirate A"), {image=vni.pirate(), pos="left"} )
@@ -356,8 +381,8 @@ A powerful booming voice echoes through your ship, instantly defusing the situat
    vn.move( pir2, 2 )
 
    vn.scene()
-   local maikki = minerva.vn_maikkiP()
-   vn.transition( "slideup" )
+   local maikki = vn.newCharacter( minerva.vn_maikkiP() )
+   vn.transition( "hexagon" )
    vn.na(_([[The pirates give way and the source of the powerful voice appears before you. It's a small recognizable figure that you know quite well.]]))
    vn.menu{
       {_([["Maikki?"]]), "02_cont"},
@@ -454,10 +479,14 @@ The ride is fairly smooth, surprising you with how effortlessly Maikki seems to 
    maikki = minerva.vn_maikkiP()
    vn.transition()
 
-   vn.na(_([[You land with Makki on {spob} through what seems to be a hidden landing pad, away from the main spaceport.]]))
+   vn.na(fmt.f(_([[You land with Makki on {spob} through what seems to be a hidden landing pad, away from the main spaceport.]]),
+      {spob=recoupspob}))
    maikki(_([[Despite being quite flustered with the situation, Maikki seems intent on trying to manage the situation.
 "I'm going to get a full briefing and diagnostic on both Zuri and Kex. Since this will take a while, meet up with me at the bar and I'll fill you out with the important details."]]))
    vn.run()
+
+   minerva.log.maikki(fmt.f(_("You managed to rescue the wounded Zuri and unconscious Kex from {spb} and bring her safely to her colleague in {safespb} who turned out to be none other than Maikki, who turned out to be a Wild Ones clan Pirate Lord. You synced up with Maikki on the current situation and she took you to {recoupspob} in the {recoupsys} to plan on how to save both Zuri and Kex.")),
+      {spb=trialspb, safespb=destsys, recoupspob=recoupspob, recoupsys=recoupsys})
 
    misn.finish(true)
 end

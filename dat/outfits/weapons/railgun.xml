@@ -5,7 +5,7 @@
   <size>large</size>
   <license>Heavy Weapon</license>
   <rarity>1</rarity>
-  <mass>50</mass>
+  <mass>24</mass>
   <price>300000</price>
   <description>The railgun is a cannon that uses heavy magnetic pulses to accelerate pieces of debris to extremely high velocities. The impact caused by the pieces of debris can tear apart even the strongest ship hulls.</description>
   <gfx_store>railgun.webp</gfx_store>
@@ -28,7 +28,7 @@
   <trackmax>12000</trackmax>
   <swivel>22</swivel>
   <damage>
-   <type>impact</type>
+   <type>kinetic</type>
    <penetrate>72</penetrate>
    <physical>76</physical>
   </damage>

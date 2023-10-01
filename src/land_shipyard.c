@@ -235,7 +235,7 @@ void shipyard_update( unsigned int wid, const char* str )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n\n%s", "");
    if (ship->cpu > 0) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("CPU:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f %s", ship->cpu, n_( "teraflop", "teraflops", ship->cpu ) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f %s", ship->cpu, UNIT_CPU );
    }
    if (ship->mass) {
       char buf_mass[ECON_MASS_STRLEN];
@@ -244,19 +244,19 @@ void shipyard_update( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_mass );
    }
    if (ship->thrust) {
-      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Thrust:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "");
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f kN/tonne"), ship->thrust );
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Accel:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n");
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f %s"), ship->thrust, UNIT_ACCEL );
    }
    if (ship->speed) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Speed:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f m/s"), ship->speed );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f %s"), ship->speed, UNIT_SPEED );
    }
    if (ship->turn) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Turn:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f deg/s"), ship->turn*180/M_PI );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f %s"), ship->turn*180/M_PI, UNIT_ROTATION );
    }
    if (ship->dt_default != 1.) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Time Constant:") );
@@ -265,23 +265,23 @@ void shipyard_update( unsigned int wid, const char* str )
    /* Misc */
    if (ship->dmg_absorb) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Absorption:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
       l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f%% damage"), ship->dmg_absorb*100. );
    }
    if (ship->shield || ship->shield_regen) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Shield:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f MJ (%.1f MW)"), ship->shield, ship->shield_regen );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f %s (%.1f %s)"), ship->shield, UNIT_ENERGY, ship->shield_regen, UNIT_POWER );
    }
    if (ship->armour || ship->armour_regen) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Armour:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f MJ (%.1f MW)"), ship->armour, ship->armour_regen );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f %s (%.1f %s)"), ship->armour, UNIT_ENERGY, ship->armour_regen, UNIT_POWER );
    }
    if (ship->energy || ship->energy_regen) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Energy:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f MJ (%.1f MW)"), ship->energy, ship->energy_regen );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f %s (%.1f %s)"), ship->energy, UNIT_ENERGY, ship->energy_regen, UNIT_POWER );
    }
    if (ship->cap_cargo) {
       char buf_cargo[ECON_MASS_STRLEN];
@@ -291,11 +291,11 @@ void shipyard_update( unsigned int wid, const char* str )
    }
    if (ship->fuel) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Fuel:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d %s", ship->fuel, n_( "unit", "units", ship->fuel ) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d %s", ship->fuel, UNIT_UNIT );
    }
    if (ship->fuel_consumption != 100.) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Fuel Use:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d %s", ship->fuel_consumption, n_( "unit", "units", ship->fuel_consumption ) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d %s", ship->fuel_consumption, UNIT_UNIT );
    }
 
    k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n\n%s", _("Price:") );

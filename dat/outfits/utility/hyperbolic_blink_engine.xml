@@ -4,7 +4,7 @@
   <typename>Blink Drive</typename>
   <slot>utility</slot>
   <size>large</size>
-  <mass>3</mass>
+  <mass>15</mass>
   <price>890000</price>
   <gfx_store>hyperbolic_blink_engine.webp</gfx_store>
   <description>The hyperbolic blink engine seems to be designed as a response to the question "How much mass is it possible to move across a space-time fold?". It seems to have significant disregard for maintaining careful control of the space-time folding instead focusing on maximum possible throughput. Due to the heavy amount of disruption to the ship's systems and personnel, after each space-time fold or "blink", it takes a while for the ship to be fully responsive again.</description>

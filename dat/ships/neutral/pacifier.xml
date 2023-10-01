@@ -20,7 +20,7 @@
  </health>
  <characteristics>
   <crew>17</crew>
-  <mass>290</mass>
+  <mass>400</mass>
   <fuel_consumption>200</fuel_consumption>
   <cargo>40</cargo>
  </characteristics>
@@ -36,9 +36,10 @@
   <utility size="large" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure size="medium" prop="engines">Unicorp Falcon 1300 Engine</structure>
-  <structure size="medium" prop="hull">Unicorp D-24 Medium Plating</structure>
+  <structure size="medium" prop="engines">Unicorp Falcon 1400 Engine</structure>
+  <structure size="medium" prop="hull">Unicorp D-38 Medium Plating</structure>
   <structure size="large" />
+  <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />
  </slots>

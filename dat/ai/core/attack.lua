@@ -105,7 +105,7 @@ function atk.think( target, si, noretarget )
          if ai.dist( target ) < 300 then
             p:outfitToggle( mem._o.plasma_burst, true )
          else
-            local e = p:getEnemies( 300 )
+            local e = p:getEnemies( 300, nil, true )
             if #e >= 2 then
                p:outfitToggle( mem._o.plasma_burst, true )
             end

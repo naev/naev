@@ -17,7 +17,7 @@ end
 
 function update( p, po, _dt )
    local mod = p:shipstat("ew_detect",true)
-   local h = p:getEnemies(range*mod) -- Only consider visible ships
+   local h = p:getEnemies( range*mod, nil, true ) -- Only consider visible ships
    local n = 0
    for k,v in ipairs(h) do
       local l = pilotToLevel( v )

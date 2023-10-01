@@ -5,7 +5,7 @@
   <slot prop="hull">structure</slot>
   <size>small</size>
   <priority>7</priority>
-  <mass>40</mass>
+  <mass>55</mass>
   <price>140000</price>
   <description>The Imperial Red Star is dedicated to relief efforts in areas stricken by war, piracy and disease. Recently developed by the organization is a series of specialized cargo hulls meant to maximize the odds of their supplies and personnel safely arriving where they are needed most. This hull integrates scramblers to help blunt the effects of homing missiles and turret tracking, allowing small ships to more effectively run blockades by pirates and privateers.</description>
   <gfx_store>rs_hull_s.webp</gfx_store>
@@ -13,7 +13,7 @@
  </general>
  <specific type="modification">
   <cargo>20</cargo>
-  <absorb>6</absorb>
+  <absorb>10</absorb>
   <armour>60</armour>
   <cargo_inertia>-10</cargo_inertia>
   <cargo_mod>10</cargo_mod>
