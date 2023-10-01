@@ -2235,7 +2235,7 @@ void pilot_update( Pilot* pilot, double dt )
    /* Damage effect. */
    if ((pilot->stats.damage > 0.) || (pilot->stats.disable > 0.)) {
       Damage dmg;
-      dmg.type          = start_dtype_default();
+      dmg.type          = dtype_get("raw");
       dmg.damage        = pilot->stats.damage * dt;
       dmg.penetration   = 1.; /* Full penetration. */
       dmg.disable       = pilot->stats.disable * dt;
