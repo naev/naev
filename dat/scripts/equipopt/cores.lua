@@ -68,39 +68,39 @@ shul["Interceptor"] = function ()
    return "Unicorp D-2 Light Plating"
 end
 shul["Fighter"] = function ()
-   return "Unicorp D-4 Light Plating"
+   return "Unicorp D-9 Light Plating"
 end
 shul["Bomber"] = function ()
-   return "Unicorp D-4 Light Plating"
+   return "Unicorp D-9 Light Plating"
 end
 shul["Corvette"] = function ()
-   return "Unicorp D-12 Medium Plating"
+   return "Unicorp D-23 Medium Plating"
 end
 shul["Destroyer"] = function ()
-   return "Unicorp D-24 Medium Plating"
+   return "Unicorp D-38 Medium Plating"
 end
 shul["Cruiser"] = function ()
-   return "Unicorp D-48 Heavy Plating"
+   return "Unicorp D-58 Heavy Plating"
 end
 shul["Battleship"] = function ()
-   return "Unicorp D-68 Heavy Plating"
+   return "Unicorp D-72 Heavy Plating"
 end
 shul["Carrier"] = function ()
-   return "Unicorp D-68 Heavy Plating"
+   return "Unicorp D-72 Heavy Plating"
 end
 -- Civilian
 shul["Yacht"] = function ()
    return choose_one{ "Unicorp D-2 Light Plating", "S&K Small Cargo Hull" }
 end
 shul["Courier"] = function ()
-   return choose_one{ "Unicorp D-4 Light Plating", "S&K Small Cargo Hull" }
+   return choose_one{ "Unicorp D-9 Light Plating", "S&K Small Cargo Hull" }
 end
 shul["Freighter"] = function ()
-   return choose_one{ "Unicorp D-24 Medium Plating", "S&K Medium Cargo Hull" }
+   return choose_one{ "Unicorp D-38 Medium Plating", "S&K Medium Cargo Hull" }
 end
 shul["Armoured Transport"] = shul["Freighter"]
 shul["Bulk Freighter"] = function ()
-   return "Unicorp D-48 Heavy Plating"
+   return "Unicorp D-58 Heavy Plating"
 end
 
 -- STANDARD ENGINES
@@ -218,7 +218,7 @@ ehul["Destroyer"] = function ()
    return "S&K Medium-Heavy Combat Plating"
 end
 ehul["Cruiser"] = function ()
-   return choose_one{ "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating" }
+   return choose_one{ "Unicorp D-58 Heavy Plating", "Unicorp D-72 Heavy Plating" }
 end
 ehul["Battleship"] = function ()
    return "S&K Superheavy Combat Plating"
@@ -231,7 +231,7 @@ ehul["Yacht"] = shul["Yacht"]
 ehul["Courier"] = shul["Courier"]
 ehul["Freighter"] = shul["Freighter"]
 ehul["Armoured Transport"] = function ()
-   return choose_one{ "Unicorp D-24 Medium Plating", "Nexus Medium Stealth Plating" }
+   return choose_one{ "Unicorp D-38 Medium Plating", "Nexus Medium Stealth Plating" }
 end
 ehul["Bulk Freighter"] = function ()
    return "S&K Large Cargo Hull"

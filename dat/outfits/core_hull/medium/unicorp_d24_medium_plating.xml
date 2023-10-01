@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Unicorp D-24 Medium Plating">
+<outfit name="Unicorp D-38 Medium Plating">
  <general>
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
@@ -7,12 +7,12 @@
   <priority>7</priority>
   <mass>220</mass>
   <price>80000</price>
-  <description>Unicorp's D-24 plating is similar to D-12 plating, but the armour plates are thicker and built atop an enlarged superstructure, increasing mass, armour, and cargo capacity.</description>
+  <description>Unicorp's D-24 plating is similar to D-38 plating, but the armour plates are thicker and built atop an enlarged superstructure, increasing mass, armour, and cargo capacity.</description>
   <gfx_store>base_hull_h.webp</gfx_store>
  </general>
  <specific type="modification">
   <cargo>50</cargo>
-  <absorb>24</absorb>
+  <absorb>38</absorb>
   <armour>470</armour>
  </specific>
 </outfit>

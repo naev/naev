@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Unicorp D-4 Light Plating">
+<outfit name="Unicorp D-9 Light Plating">
  <general>
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
@@ -7,12 +7,12 @@
   <priority>7</priority>
   <mass>50</mass>
   <price>30000</price>
-  <description>Commonly found on civilian vessels, the D-4 plating is popular with ship manufacturers due to its low cost and adequate, if uninspiring performance.</description>
+  <description>Commonly found on civilian vessels, the D-9 plating is popular with ship manufacturers due to its low cost and adequate, if uninspiring performance.</description>
   <gfx_store>base_hull_s.webp</gfx_store>
  </general>
  <specific type="modification">
   <cargo>14</cargo>
-  <absorb>4</absorb>
+  <absorb>9</absorb>
   <armour>90</armour>
  </specific>
 </outfit>

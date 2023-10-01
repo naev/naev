@@ -12,7 +12,7 @@
  </general>
  <specific type="modification">
   <cargo>30</cargo>
-  <absorb>2</absorb>
+  <absorb>6</absorb>
   <armour>55</armour>
   <cargo_inertia>-25</cargo_inertia>
   <cargo_mod>25</cargo_mod>
