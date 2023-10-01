@@ -12,7 +12,7 @@ function params.default( overwrite )
       max_same_util = nil, -- maximum same utilities (nil is no limit)
       max_same_stru = nil, -- maximum same structurals (nil is no limit)
       min_energy_regen = 0.6, -- relative minimum regen margin (with respect to cores)
-      min_energy_regen_abs = 0, -- absolute minimum energy regen (MJ/s)
+      min_energy_regen_abs = 0, -- absolute minimum energy regen (GW)
       eps_weight  = 0.4, -- how to weight weapon EPS into energy regen
       max_mass    = 1.2, -- maximum amount to go over engine limit (relative)
       min_mass_margin = 0.15, -- minimum mass margin to consider when equipping

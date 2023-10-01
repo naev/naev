@@ -83,8 +83,8 @@ function outofenergy( _p, _po )
 end
 
 -- The onhit function is run when the pilot 'p' takes damage
--- armour is the amount of armour damage taken (in MJ)
--- shield is the amount of shield damage taken (in MJ)
+-- armour is the amount of armour damage taken (in GJ)
+-- shield is the amount of shield damage taken (in GJ)
 -- attacker is the pilot that attacked
 function onhit( _p, _po, _armour, _shield, _attacker )
 end
