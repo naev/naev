@@ -30,10 +30,7 @@
  <slots>
   <weapon size="large" prop="fighter_bay" x="-18" y="22" h="4" />
   <weapon size="large" prop="fighter_bay" x="-18" y="-22" h="4" />
-  <weapon size="medium" x="28" y="18" h="-4" />
-  <weapon size="medium" x="28" y="-18" h="-4" />
-  <weapon size="medium" x="26" y="24" h="-4" />
-  <weapon size="medium" x="26" y="24" h="-4" />
+  <weapon size="large" x="28" y="18" h="-4" />
   <utility size="large" prop="systems">Unicorp PT-2200 Core System</utility>
   <utility size="large" prop="accessory" />
   <utility size="large" />
