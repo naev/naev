@@ -21,7 +21,7 @@
   <iflockon>0.5</iflockon>
   <trackmin>0</trackmin>
   <trackmax>10000</trackmax>
-  <ammo_mass>1.5</ammo_mass>
+  <ammo_mass>0.5</ammo_mass>
   <gfx>empgrenade.png</gfx>
   <sound>grenadefire</sound>
   <sound_hit>grenade</sound_hit>
