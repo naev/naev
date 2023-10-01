@@ -41,6 +41,8 @@
   <structure size="small" prop="hull">Unicorp D-4 Light Plating</structure>
   <structure size="small" />
   <structure size="small" />
+  <structure size="small" />
+  <structure size="small" />
  </slots>
  <stats>
   <shield_mod>15</shield_mod>
