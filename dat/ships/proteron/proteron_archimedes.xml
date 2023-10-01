@@ -32,7 +32,6 @@
  <slots>
   <weapon size="large" x="42" y="9" h="2" />
   <weapon size="large" x="42" y="-9" h="2" />
-  <weapon size="large" x="25" y="4" h="2" />
   <weapon size="large" x="-38" y="-12" h="2" />
   <weapon size="large" x="-38" y="12" h="2" />
   <weapon size="large" prop="fighter_bay" x="-2" y="-12" h="2" />
@@ -46,7 +45,6 @@
   <utility size="large" />
   <structure size="large" prop="engines">Unicorp Eagle 6500 Engine</structure>
   <structure size="large" prop="hull">Unicorp D-68 Heavy Plating</structure>
-  <structure size="large" />
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

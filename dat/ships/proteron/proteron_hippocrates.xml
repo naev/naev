@@ -25,7 +25,7 @@
  </health>
  <characteristics>
   <crew>19</crew>
-  <mass>240</mass>
+  <mass>270</mass>
   <fuel_consumption>200</fuel_consumption>
   <cargo>40</cargo>
  </characteristics>
@@ -35,17 +35,18 @@
   <weapon size="medium" prop="fighter_bay" x="2" y="-20" h="1" />
   <weapon size="small" x="29" y="3" h="0" />
   <weapon size="small" x="29" y="-3" h="0" />
-  <weapon size="small" x="18" y="0" h="2" />
   <utility size="medium" prop="systems">Unicorp PT-310 Core System</utility>
   <utility size="medium" prop="accessory" />
   <utility size="medium" />
   <utility size="medium" />
+  <utility size="small" />
   <utility size="small" />
   <structure size="medium" prop="engines">Unicorp Falcon 1400 Engine</structure>
   <structure size="medium" prop="hull">Unicorp D-24 Medium Plating</structure>
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />
+  <structure size="small" />
  </slots>
  <stats>
   <speed_mod>5</speed_mod>
