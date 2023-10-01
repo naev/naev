@@ -8,7 +8,7 @@
   <price>600000</price>
   <gfx_store>pirate_hyena_fighter.webp</gfx_store>
   <description>This dock allows your ship to carry a pair of Pirate Hyena interceptors. It comes with all the amenities necessary for the maintenance and operation of the interceptors. The Pirate Hyenas can assist in ship scavenging and looting.</description>
-  <cpu>-150</cpu>
+  <cpu>-135</cpu>
  </general>
  <specific type="fighter bay" secondary="1">
   <delay>5</delay>
@@ -16,6 +16,6 @@
   <amount>2</amount>
   <loot_mod>10</loot_mod>
   <ship>Pirate Hyena</ship>
-  <ship_mass>55</ship_mass>
+  <ship_mass>15</ship_mass>
  </specific>
 </outfit>

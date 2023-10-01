@@ -5,7 +5,7 @@
   <size>large</size>
   <license>Light Combat Vessel</license>
   <rarity>3</rarity>
-  <mass>240</mass>
+  <mass>100</mass>
   <price>1500000</price>
   <gfx_store>drone_fighter.webp</gfx_store>
   <description>The Drone Fighter bay uses the advanced Collective technologies to sustain a group of three Drone Fighters. Drone Fighters require no pilot making them a safer approach in dangerous situations. They do however need some careful maintenance. All the tools needed to take care of them are provided with the bay.</description>

@@ -7,7 +7,7 @@
   <cond>faction.playerStanding("Thurion") &gt;= 30</cond>
   <condstr>You need at least 30 reputation with the Thurion.</condstr>
   <rarity>2</rarity>
-  <mass>80</mass>
+  <mass>50</mass>
   <price>920000</price>
   <gfx_store>thurion_perspicacity_fighter.webp</gfx_store>
   <description>This dock allows your ship to carry two Thurion Perspicacity fighters. It comes with all the devices required for the maintenance and flight of the fighters.</description>
@@ -18,6 +18,6 @@
   <reload_time>240</reload_time>
   <amount>2</amount>
   <ship>Thurion Perspicacity</ship>
-  <ship_mass>50</ship_mass>
+  <ship_mass>20</ship_mass>
  </specific>
 </outfit>

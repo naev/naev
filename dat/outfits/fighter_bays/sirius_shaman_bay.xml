@@ -7,11 +7,11 @@
   <cond>faction.playerStanding("Sirius") &gt;= 50</cond>
   <condstr>You need at least 50 reputation with the Sirius.</condstr>
   <rarity>2</rarity>
-  <mass>280</mass>
+  <mass>120</mass>
   <price>900000</price>
   <gfx_store>placeholder.webp</gfx_store>
   <description>This fighter bay allows your ship to carry a pair of Sirius Shaman class bombers. It comes with all the devices required for the maintenance and flight of the bombers.</description>
-  <cpu>-450</cpu>
+  <cpu>-440</cpu>
  </general>
  <specific type="fighter bay" secondary="1">
   <delay>6</delay>
