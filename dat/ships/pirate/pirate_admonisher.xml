@@ -36,9 +36,11 @@
   <utility size="medium" prop="accessory" />
   <utility size="medium" />
   <utility size="medium" />
+  <utility size="medium" />
   <utility size="small" />
   <structure size="medium" prop="engines">Beat Up Medium Engine</structure>
   <structure size="medium" prop="hull">Patchwork Medium Plating</structure>
+  <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />

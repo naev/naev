@@ -24,29 +24,26 @@
  </health>
  <characteristics>
   <crew>40</crew>
-  <mass>1600</mass>
+  <mass>2100</mass>
   <fuel_consumption>400</fuel_consumption>
   <cargo>210</cargo>
  </characteristics>
  <slots>
   <weapon size="large" prop="fighter_bay" exclusive="1" x="-18" y="20" h="4" />
   <weapon size="large" prop="fighter_bay" exclusive="1" x="-18" y="-20" h="4" />
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="0" y="16" h="0" />
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="0" y="-16" h="0" />
-  <weapon size="medium" prop="fighter_bay" x="28" y="16" h="-4" />
-  <weapon size="medium" prop="fighter_bay" x="28" y="-16" h="-4" />
+  <weapon size="large" prop="fighter_bay" x="28" y="16" h="-4" />
+  <weapon size="large" prop="fighter_bay" x="28" y="-16" h="-4" />
   <weapon size="medium" x="26" y="20" h="-4" />
   <weapon size="medium" x="26" y="20" h="-4" />
   <utility size="large" prop="systems">Unicorp PT-2200 Core System</utility>
   <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
-  <utility size="large" />
+  <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />
   <structure size="large" prop="engines">Unicorp Eagle 6500 Engine</structure>
   <structure size="large" prop="hull">Unicorp D-68 Heavy Plating</structure>
-  <structure size="large" />
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />
@@ -64,6 +61,5 @@
  </stats>
  <tags>
   <tag>pirate</tag>
-  <tag>transport</tag>
  </tags>
 </ship>
