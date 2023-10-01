@@ -26,7 +26,7 @@
  </health>
  <characteristics>
   <crew>9</crew>
-  <mass>130</mass>
+  <mass>140</mass>
   <fuel>600</fuel>
   <fuel_consumption>200</fuel_consumption>
   <cargo>25</cargo>
@@ -38,6 +38,7 @@
   <weapon size="small" x="24" y="0" h="-2" />
   <utility size="medium" prop="systems">Unicorp PT-200 Core System</utility>
   <utility size="medium" prop="accessory" />
+  <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="small" />
