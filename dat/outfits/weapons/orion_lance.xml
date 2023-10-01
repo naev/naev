@@ -4,7 +4,7 @@
   <slot>weapon</slot>
   <size>small</size>
   <license>Medium Weapon</license>
-  <mass>14</mass>
+  <mass>6</mass>
   <price>60000</price>
   <description>The Orion Lance is a fixed-mount weapon designed to be mounted on fighters and up. Based on a heavily-modified, liquid-cooled laser, it's capable of bursts of continuous fire, resulting in a destructive beam.</description>
   <gfx_store>orion.webp</gfx_store>

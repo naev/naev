@@ -4,7 +4,7 @@
   <slot>weapon</slot>
   <size>medium</size>
   <license>Medium Weapon</license>
-  <mass>30</mass>
+  <mass>24</mass>
   <price>80000</price>
   <description>The mark 2 plasma turret isn't especially impressive compared to other medium-size turrets, but it is sometimes favoured by corvettes for its unusually low weight compared to its range and damage output.</description>
   <gfx_store>plasma_turret2.webp</gfx_store>

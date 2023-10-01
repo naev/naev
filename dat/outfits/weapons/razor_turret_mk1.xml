@@ -4,7 +4,7 @@
   <slot>weapon</slot>
   <size>small</size>
   <license>Medium Weapon</license>
-  <mass>18</mass>
+  <mass>8</mass>
   <price>50000</price>
   <description>Razor Turrets are popular among traders. Their high damage against shields is a great deterrent against attackers because nothing puts a space pilot on edge like their shields rapidly coming down.</description>
   <gfx_store>razorturret1.webp</gfx_store>

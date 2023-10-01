@@ -3,7 +3,7 @@
  <general>
   <slot>weapon</slot>
   <size>small</size>
-  <mass>30</mass>
+  <mass>10</mass>
   <price>55000</price>
   <license>Heavy Weapon</license>
   <rarity>3</rarity>

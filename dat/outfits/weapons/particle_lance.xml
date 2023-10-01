@@ -4,7 +4,7 @@
   <slot>weapon</slot>
   <size>small</size>
   <license>Medium Weapon</license>
-  <mass>4</mass>
+  <mass>2</mass>
   <price>25000</price>
   <description>This is the smallest direct beam weapon built, purpose-built by the Za'lek for their drones.</description>
   <gfx_store>particle_lance.webp</gfx_store>
