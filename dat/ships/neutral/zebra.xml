@@ -23,7 +23,7 @@
  </health>
  <characteristics>
   <crew>20</crew>
-  <mass>1400</mass>
+  <mass>1500</mass>
   <fuel_consumption>400</fuel_consumption>
   <cargo>340</cargo>
  </characteristics>
@@ -44,8 +44,7 @@
   <structure size="large" prop="hull">Unicorp D-48 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
-  <structure size="medium" />
-  <structure size="medium" />
+  <structure size="large" />
   <structure size="medium" />
   <structure size="medium" />
  </slots>

@@ -35,6 +35,7 @@
   <structure size="small" prop="engines">Nexus Dart 160 Engine</structure>
   <structure size="small" prop="hull">Unicorp D-2 Light Plating</structure>
   <structure size="small" />
+  <structure size="small" />
  </slots>
  <stats>
   <speed_mod>10</speed_mod>
