@@ -22,7 +22,7 @@
  </health>
  <characteristics>
   <crew>12</crew>
-  <mass>1000</mass>
+  <mass>1400</mass>
   <fuel_consumption>400</fuel_consumption>
   <cargo>100</cargo>
  </characteristics>
@@ -38,14 +38,14 @@
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
-  <utility size="large" />
-  <utility size="large" />
+  <utility size="medium" />
+  <utility size="medium" />
   <structure size="large" prop="engines">Nexus Bolt 3000 Engine</structure>
   <structure size="large" prop="hull">Unicorp D-48 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
-  <structure size="medium" />
-  <structure size="medium" />
+  <structure size="large" />
+  <structure size="large" />
  </slots>
  <stats>
   <thrust_mod>10</thrust_mod>

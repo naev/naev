@@ -26,7 +26,7 @@
  </health>
  <characteristics>
   <crew>32</crew>
-  <mass>1650</mass>
+  <mass>1550</mass>
   <fuel_consumption>400</fuel_consumption>
   <cargo>320</cargo>
  </characteristics>
@@ -41,7 +41,6 @@
   <utility size="large" prop="systems">Unicorp PT-2200 Core System</utility>
   <utility size="large" prop="accessory" />
   <utility size="large" />
-  <utility size="large" />
   <utility size="medium" />
   <utility size="medium" />
   <structure size="large" prop="engines">Nexus Bolt 3000 Engine</structure>
@@ -49,8 +48,6 @@
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />
-  <structure size="large" />
-  <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />
  </slots>
