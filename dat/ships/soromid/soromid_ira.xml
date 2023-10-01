@@ -34,9 +34,8 @@
   <weapon size="large" prop="bio_weapon" name="weap2" x="25" y="0" h="2">Tentacle Organ I</weapon>
   <weapon size="large" prop="bio_weapon" name="weap3" x="12" y="-6" h="0">Tentacle Organ I</weapon>
   <weapon size="large" prop="bio_weapon" name="weap4" x="12" y="6" h="0">Tentacle Organ I</weapon>
-  <weapon size="large" x="0" y="0" h="7" />
-  <weapon size="large" x="-15" y="0" h="7" />
-  <weapon size="large" x="-33" y="0" h="7" />
+  <weapon size="medium" x="-15" y="0" h="7" />
+  <weapon size="medium" x="-33" y="0" h="7" />
   <utility size="large" prop="bio_systems" name="brain">Ponderosum Cerebrum I</utility>
   <utility size="large" prop="bio_organ" name="the_bite" />
   <utility size="large" prop="bio_organ" name="feral_rage" />
@@ -46,6 +45,7 @@
   <utility size="large" />
   <structure size="large" prop="bio_engines" name="genedrive">Ponderosus Gene Drive I</structure>
   <structure size="large" prop="bio_hull" name="shell">Ponderosus Cortex I</structure>
+  <structure size="large" />
   <structure size="large" />
   <structure size="large" />
  </slots>
