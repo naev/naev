@@ -1807,6 +1807,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Detected at:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Signature:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Stealth at:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Scanning time:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Absorption:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Shield:") );
@@ -1866,9 +1867,10 @@ void equipment_updateShips( unsigned int wid, const char* str )
             EQ_COMP( ship->turn*180./M_PI, ship->ship->turn*180./M_PI, 0 ), UNIT_ROTATION );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f%%", ship->stats.time_mod * ship->ship->dt_default*100. );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s %s\n", num2strU(ship->ew_detection,0), UNIT_DISTANCE );
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("%s %s (%.1f sec for scan)"), num2strU(ship->ew_signature,0), UNIT_DISTANCE, pilot_ewScanTime(ship) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%s %s"), num2strU(ship->ew_signature,0), UNIT_DISTANCE );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s %s\n", num2strU(ship->ew_stealth,0), UNIT_DISTANCE );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.1f %s"), pilot_ewScanTime(ship), UNIT_TIME );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n\n" );
       /* Health. */
       l += scnprintf( &buf[l], sizeof(buf)-l, "#%c%s%.0f%%\n", EQ_COMP( ship->dmg_absorb*100., ship->ship->dmg_absorb*100., 0 ) );
       l += scnprintf( &buf[l], sizeof(buf)-l, _("#%c%s%s#0 %s"),
