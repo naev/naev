@@ -18,6 +18,6 @@
   <reload_time>120</reload_time>
   <amount>5</amount>
   <ship>Za'lek Bomber Drone</ship>
-  <ship_mass>25</ship_mass>
+  <ship_mass>15</ship_mass>
  </specific>
 </outfit>
