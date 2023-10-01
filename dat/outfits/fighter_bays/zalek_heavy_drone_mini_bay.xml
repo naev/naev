@@ -7,7 +7,7 @@
   <cond>faction.playerStanding("Za'lek") &gt;= 40</cond>
   <condstr>You need at least 40 reputation with House Za'lek.</condstr>
   <rarity>2</rarity>
-  <mass>70</mass>
+  <mass>85</mass>
   <price>1100000</price>
   <gfx_store>zalek_drone_heavy_fighter.webp</gfx_store>
   <description>This bay can launch three heavy drones, giving the mothership a good deal of punch. It comes with all the devices required for the maintenance and flight of the drones.</description>

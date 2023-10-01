@@ -7,7 +7,7 @@
   <cond>faction.playerStanding("Za'lek") &gt;= 50</cond>
   <condstr>You need at least 50 reputation with House Za'lek.</condstr>
   <rarity>2</rarity>
-  <mass>100</mass>
+  <mass>140</mass>
   <price>1400000</price>
   <gfx_store>zalek_drone_light_fighter_swarm.webp</gfx_store>
   <description>This bay is built to launch a swarm of Za'lek Light Drones. The drones are expendable, but in numbers they excel at clearing enemy light craft. It comes with all the devices required for the maintenance and flight of the drones.</description>

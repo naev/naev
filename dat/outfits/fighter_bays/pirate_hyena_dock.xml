@@ -4,7 +4,7 @@
   <slot prop="fighter_bay">weapon</slot>
   <size>medium</size>
   <license>Light Combat Vessel</license>
-  <mass>50</mass>
+  <mass>65</mass>
   <price>600000</price>
   <gfx_store>pirate_hyena_fighter.webp</gfx_store>
   <description>This dock allows your ship to carry a pair of Pirate Hyena interceptors. It comes with all the amenities necessary for the maintenance and operation of the interceptors. The Pirate Hyenas can assist in ship scavenging and looting.</description>

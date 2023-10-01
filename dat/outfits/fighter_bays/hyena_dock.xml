@@ -4,7 +4,7 @@
   <slot prop="fighter_bay">weapon</slot>
   <size>medium</size>
   <license>Light Combat Vessel</license>
-  <mass>60</mass>
+  <mass>74</mass>
   <price>600000</price>
   <gfx_store>hyena_fighter.webp</gfx_store>
   <description>This dock allows your ship to carry twin Hyena interceptors. It comes with all the amenities necessary for the maintenance and operation of the interceptors.</description>
