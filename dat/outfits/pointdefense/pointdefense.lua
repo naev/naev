@@ -49,7 +49,7 @@ function update( p, po, _dt )
 
       -- If no current target, shoot at enemies too
       if not m and hitships then
-         local pall = p:getEnemies( range )
+         local pall = p:getEnemies( range, nil, true )
          if #pall > 0 then
             local ptarget = {}
             for k,e in ipairs(pall) do
