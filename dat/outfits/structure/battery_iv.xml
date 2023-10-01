@@ -4,12 +4,12 @@
   <typename>Energy Modifier</typename>
   <slot>structure</slot>
   <size>large</size>
-  <mass>320</mass>
+  <mass>240</mass>
   <price>500000</price>
   <description>A massive battery unit designed to hold 2000 MJ of energy. Given the mass of this battery, it's advisable to only mount it on capital ships.</description>
   <gfx_store>capacitor4-g.webp</gfx_store>
  </general>
  <specific type="modification">
-  <energy>2000</energy>
+  <energy>1500</energy>
  </specific>
 </outfit>

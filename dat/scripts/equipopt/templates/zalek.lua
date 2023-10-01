@@ -65,7 +65,7 @@ local zalek_cores = {
       } end,
    ["Za'lek Mephisto"] = function (_p) return {
          "Milspec Orion 9901 Core System",
-         choose_one{ "Unicorp Eagle 7000 Engine", "Tricon Typhoon II Engine" },
+         choose_one{ "Unicorp Eagle 6500 Engine", "Tricon Typhoon II Engine" },
          choose_one{ "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating" },
       } end,
    ["Za'lek Diablo"] = function (_p) return {

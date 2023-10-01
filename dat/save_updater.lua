@@ -25,6 +25,8 @@ end
 --]]
 local outfit_list = {
    -- Below is a list of changes from 0.10.0 to 0.11.0
+   ["Unicorp Eagle 7000 Engine"] = "Unicorp Eagle 6500 Engine",
+   ["Nexus Bolt 3500 Engine"] = "Nexus Bolt 3000 Engine",
    ["Unicorp Falcon 1300 Engine"] = "Unicorp Falcon 1400 Engine",
    ["Unicorp Hawk 350 Engine"] = "Unicorp Hawk 360 Engine",
    ["Nexus Dart 150 Engine"] = "Nexus Dart 160 Engine",
@@ -362,8 +364,8 @@ local outfit_list = {
    ["Unicorp Hawk 150 Engine"] = "Nexus Dart 160 Engine", -- Modified for 0.11.0
    ["Unicorp Falcon 550 Engine"] = "Unicorp Falcon 1400 Engine",
    ["Unicorp Falcon 1200 Engine"] = "Unicorp Falcon 1400 Engine",
-   ["Unicorp Eagle 6500 Engine"] = "Unicorp Eagle 7000 Engine",
-   ["Unicorp Eagle 4500 Engine"] = "Unicorp Eagle 7000 Engine",
+   ["Unicorp Eagle 6500 Engine"] = "Unicorp Eagle 6500 Engine",
+   ["Unicorp Eagle 4500 Engine"] = "Unicorp Eagle 6500 Engine",
    ["Unicorp D-8 Medium Plating"] = "Unicorp D-12 Medium Plating",
    ["Unicorp D-20 Heavy Plating"] = "Unicorp D-68 Heavy Plating",
    ["Unicorp D-16 Heavy Plating"] = "Unicorp D-68 Heavy Plating",
@@ -400,8 +402,8 @@ local outfit_list = {
    ["Plasma Blaster MK2"] = 17e3,
    ["Plasma Blaster MK1"] = 9e3,
    ["Nexus Dart 300 Engine"] = "Nexus Dart 160 Engine", -- Modified for 0.11.0
-   ["Nexus Bolt 6500 Engine"] = "Nexus Bolt 3500 Engine",
-   ["Nexus Bolt 4500 Engine"] = "Nexus Bolt 3500 Engine",
+   ["Nexus Bolt 6500 Engine"] = "Nexus Bolt 3000 Engine",
+   ["Nexus Bolt 4500 Engine"] = "Nexus Bolt 3000 Engine",
    ["Nexus Arrow 550 Engine"] = "Nexus Arrow 700 Engine",
    ["Nexus Arrow 1200 Engine"] = "Nexus Arrow 700 Engine",
    ["Milspec Prometheus 9803 Core System"] = "Milspec Thalos 9802 Core System",

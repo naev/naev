@@ -58,7 +58,7 @@ local pirate_params = {
 local pirate_cores = {
    ["Pirate Kestrel"] = function (p)
          local c = ecores.get( p, { systems=pirate_class, hulls=pirate_class } )
-         table.insert( c, choose_one{ "Nexus Bolt 3500 Engine", "Krain Remige Engine", "Tricon Typhoon Engine", } )
+         table.insert( c, choose_one{ "Nexus Bolt 3000 Engine", "Krain Remige Engine", "Tricon Typhoon Engine", } )
          return c
       end,
    ["Pirate Starbridge"] = function (p)

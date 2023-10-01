@@ -124,13 +124,13 @@ seng["Destroyer"] = function ()
    return "Unicorp Falcon 1400 Engine"
 end
 seng["Cruiser"] = function ()
-   return "Nexus Bolt 3500 Engine"
+   return "Nexus Bolt 3000 Engine"
 end
 seng["Battleship"] = function ()
-   return "Unicorp Eagle 7000 Engine"
+   return "Unicorp Eagle 6500 Engine"
 end
 seng["Carrier"] = function ()
-   return "Unicorp Eagle 7000 Engine"
+   return "Unicorp Eagle 6500 Engine"
 end
 seng["Yacht"] = function ()
    return "Nexus Dart 160 Engine"
@@ -143,7 +143,7 @@ seng["Freighter"] = function ()
 end
 seng["Armoured Transport"] = seng["Freighter"]
 seng["Bulk Freighter"] = function ()
-   return "Nexus Bolt 3500 Engine"
+   return "Nexus Bolt 3000 Engine"
 end
 
 -- STANDARD SETS
@@ -287,7 +287,7 @@ cores.elite = {
 --]]
 -- Normal exceptions
 cores.standard.engines["Kestrel"] = function ()
-   return choose_one{ "Unicorp Eagle 7000 Engine", "Krain Remige Engine" }
+   return choose_one{ "Unicorp Eagle 6500 Engine", "Krain Remige Engine" }
 end
 cores.standard.engines["Pirate Kestrel"] = cores.standard.engines["Kestrel"]
 cores.standard.engines["Starbridge"] = function ()
