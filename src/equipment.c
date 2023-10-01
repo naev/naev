@@ -1890,7 +1890,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
       /* Misc. */
       l += scnprintf( &buf[l], sizeof(buf)-l, _("%s / #%c%s%s#0 %s"),
-            scargo, EQ_COMP_I( cargo, ship->ship->cap_cargo, 0 ), num2strU(ship->ship->cap_cargo,0), UNIT_MASS );
+            scargo, EQ_COMP_I( cargo, ship->ship->cap_cargo, 0 ), num2strU(cargo,0), UNIT_MASS );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
       l += scnprintf( &buf[l], sizeof(buf)-l, _("%s %s (%d %s)"),
             num2strU(ship->fuel_max,0), UNIT_UNIT, jumps, n_( "jump", "jumps", jumps ) );
