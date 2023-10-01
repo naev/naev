@@ -22,7 +22,7 @@
  </health>
  <characteristics>
   <crew>32</crew>
-  <mass>2100</mass>
+  <mass>2700</mass>
   <cargo>110</cargo>
   <fuel_consumption>400</fuel_consumption>
  </characteristics>
@@ -37,7 +37,6 @@
   <weapon size="large" prop="fighter_bay" exclusive="1" x="-40" y="20" h="0" />
   <utility size="large" prop="systems">Unicorp PT-2200 Core System</utility>
   <utility size="large" prop="accessory" />
-  <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
