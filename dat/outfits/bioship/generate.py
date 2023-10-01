@@ -404,7 +404,7 @@ BioOutfit( "gene_drive.xml.template", {
     "speed":        lerp(   75,  90 ),
     "fuel":         2000,
     "energy_malus": lerp(   25,  25 ),
-    "engine_limit": lerp( 4500, 4500 ),
+    "engine_limit": lerp( 3600, 3600 ),
 } ).run( [
     N_("Ponderosus Gene Drive I"),
     N_("Ponderosus Gene Drive II"),
@@ -457,7 +457,7 @@ BioOutfit( "gene_drive.xml.template", {
     "speed":        lerp(   60,  70 ),
     "fuel":         1600,
     "energy_malus": lerp(   45,  45 ),
-    "engine_limit": lerp( 8000, 8000 ),
+    "engine_limit": lerp( 6800, 6800 ),
 } ).run( [
     N_("Immanis Gene Drive I"),
     N_("Immanis Gene Drive II"),
