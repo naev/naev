@@ -218,7 +218,7 @@ ehul["Destroyer"] = function ()
    return "S&K Medium-Heavy Combat Plating"
 end
 ehul["Cruiser"] = function ()
-   return choose_one{ "Unicorp D-58 Heavy Plating", "Unicorp D-72 Heavy Plating" }
+   return "S&K Heavy Combat Plating"
 end
 ehul["Battleship"] = function ()
    return "S&K Superheavy Combat Plating"
