@@ -178,10 +178,10 @@ esys["Destroyer"] = function ()
    return choose_one{ "Milspec Orion 5501 Core System", "Milspec Thalos 5402 Core System" }
 end
 esys["Cruiser"] = function ()
-   return choose_one{ "Milspec Orion 9901 Core System", "Milspec Thalos 9802 Core System" }
+   return choose_one{ "Milspec Orion 8601 Core System", "Milspec Thalos 8502 Core System" }
 end
 esys["Battleship"] = function ()
-   return choose_one{ "Milspec Orion 8601 Core System", "Milspec Thalos 8502 Core System" }
+   return choose_one{ "Milspec Orion 9901 Core System", "Milspec Thalos 9802 Core System" }
 end
 esys["Carrier"] = function ()
    return choose_one{ "Milspec Orion 9901 Core System", "Milspec Thalos 9802 Core System" }
