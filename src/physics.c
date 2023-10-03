@@ -93,15 +93,15 @@ static void solid_update_euler( Solid *obj, double dt )
    py = obj->pos.y;
    vx = obj->vel.x;
    vy = obj->vel.y;
-   th = obj->thrust;
+   th = obj->accel;
 
    /* Save direction. */
    sdir = sin(obj->dir);
    cdir = cos(obj->dir);
 
    /* Get acceleration. */
-   ax = th*cdir / obj->mass;
-   ay = th*sdir / obj->mass;
+   ax = th*cdir;
+   ay = th*sdir;
 
    /* Symplectic Euler should reduce a bit the approximation error. */
    vx += ax*dt;
@@ -166,7 +166,7 @@ static void solid_update_rk4( Solid *obj, double dt )
    h = dt / (double)N; /* step */
 
    /* Movement Quantity Theorem:  m*a = \sum f */
-   th = obj->thrust  / obj->mass;
+   th = obj->accel;
 
    for (int i=0; i < N; i++) { /* iterations */
       /* Calculate acceleration for the frame. */
@@ -221,11 +221,11 @@ static void solid_update_rk4( Solid *obj, double dt )
 }
 
 /**
- * @brief Gets the maximum speed of any object with speed and thrust.
+ * @brief Gets the maximum speed of any object with speed and accel.
  */
-double solid_maxspeed( const Solid *s, double speed, double thrust )
+double solid_maxspeed( const Solid *s, double speed, double accel )
 {
-   return speed + thrust / (s->mass * 3.);
+   return speed + accel / 3.;
 }
 
 /**
@@ -247,8 +247,8 @@ void solid_init( Solid* dest, double mass, double dir,
    /* Set direction velocity. */
    dest->dir_vel = 0.;
 
-   /* Set force. */
-   dest->thrust  = 0.;
+   /* Set acceleration. */
+   dest->accel = 0.;
 
    /* Set direction. */
    dest->dir = dir;

@@ -28,7 +28,7 @@
   <spfx_armour>ExpL</spfx_armour>
   <trail_generator x="-10">missileL</trail_generator>
   <duration blowup="armour">45</duration>
-  <thrust>55</thrust>
+  <accel>55</accel>
   <turn>20</turn>
   <speed_max>140</speed_max>
   <resist>100</resist>

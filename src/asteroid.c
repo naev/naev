@@ -109,8 +109,8 @@ void asteroids_update( double dt )
          d = pow2(offx)+pow2(offy);
          if (d >= pow2(ast->radius)) {
             d = sqrt(d);
-            a->vel.x += ast->thrust * dt * offx / d;
-            a->vel.y += ast->thrust * dt * offy / d;
+            a->vel.x += ast->accel * dt * offx / d;
+            a->vel.y += ast->accel * dt * offy / d;
             setvel = 1;
          }
          else if (has_exclusion) {
@@ -128,8 +128,8 @@ void asteroids_update( double dt )
                ed = pow2(ex) + pow2(ey);
                if (ed <= pow2(exc->radius)) {
                   ed = sqrt(ed);
-                  a->vel.x += ast->thrust * dt * ex / ed;
-                  a->vel.y += ast->thrust * dt * ey / ed;
+                  a->vel.x += ast->accel * dt * ex / ed;
+                  a->vel.y += ast->accel * dt * ey / ed;
                   setvel = 1;
                }
             }
@@ -434,7 +434,7 @@ void asteroids_computeInternals( AsteroidAnchor *a )
    a->nb      = floor( a->area / ASTEROID_REF_AREA * a->density );
 
    /* Computed from your standard physics equations (with a bit of margin). */
-   a->margin  = pow2(a->maxspeed) / (4.*a->thrust) + 50.;
+   a->margin  = pow2(a->maxspeed) / (4.*a->accel) + 50.;
 
    /* Compute weight total. */
    a->groupswtotal = 0.;

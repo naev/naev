@@ -51,7 +51,7 @@
   <structure size="medium" />
  </slots>
  <stats>
-  <thrust_mod>-10</thrust_mod>
+  <accel_mod>-10</accel_mod>
   <shield_mod>15</shield_mod>
   <armour_mod>15</armour_mod>
   <stress_dissipation>20</stress_dissipation>

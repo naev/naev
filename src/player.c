@@ -1154,7 +1154,7 @@ void player_think( Pilot* pplayer, const double dt )
    /* last i heard, the dead don't think */
    if (pilot_isFlag(pplayer,PILOT_DEAD)) {
       /* no sense in accelerating or turning */
-      pilot_setThrust( pplayer, 0. );
+      pilot_setAccel( pplayer, 0. );
       pilot_setTurn( pplayer, 0. );
       return;
    }
@@ -1281,7 +1281,7 @@ void player_think( Pilot* pplayer, const double dt )
             && !pilot_isFlag(player.p, PILOT_HYPERSPACE) )
          acc = -PILOT_REVERSE_THRUST;
 
-      pilot_setThrust( pplayer, acc );
+      pilot_setAccel( pplayer, acc );
    }
 }
 
@@ -1697,7 +1697,7 @@ int player_land( int loud )
    player.p->landing_delay = PILOT_LANDING_DELAY * player_dt_default();
    player.p->ptimer = player.p->landing_delay;
    pilot_setFlag( player.p, PILOT_LANDING );
-   pilot_setThrust( player.p, 0. );
+   pilot_setAccel( player.p, 0. );
    pilot_setTurn( player.p, 0. );
 
    return PLAYER_LAND_OK;

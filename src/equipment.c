@@ -1858,11 +1858,11 @@ void equipment_updateShips( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, _("%s average"), nt );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
       l += scnprintf( &buf[l], sizeof(buf)-l, _("#%c%s%.0f#0 %s"),
-            EQ_COMP( ship->thrust/ship->solid.mass, ship->ship->thrust/ship->ship->mass, 0 ), UNIT_ACCEL );
+            EQ_COMP( ship->accel, ship->ship->accel, 0 ), UNIT_ACCEL );
       l += scnprintf( &buf[l], sizeof(buf)-l, _("\n#%c%s%.0f#0 %s (max #%c%s%.0f#0 %s)"),
             EQ_COMP( ship->speed, ship->ship->speed, 0 ), UNIT_SPEED,
-            EQ_COMP( solid_maxspeed( &ship->solid, ship->speed, ship->thrust ),
-               solid_maxspeed( &ship->solid, ship->ship->speed, ship->ship->thrust), 0 ), UNIT_SPEED );
+            EQ_COMP( solid_maxspeed( &ship->solid, ship->speed, ship->accel ),
+               solid_maxspeed( &ship->solid, ship->ship->speed, ship->ship->accel), 0 ), UNIT_SPEED );
       l += scnprintf( &buf[l], sizeof(buf)-l, _("\n#%c%s%.0f#0 %s"),
             EQ_COMP( ship->turn*180./M_PI, ship->ship->turn*180./M_PI, 0 ), UNIT_ROTATION );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f%%", ship->stats.time_mod * ship->ship->dt_default*100. );

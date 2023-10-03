@@ -24,7 +24,7 @@ typedef enum ShipStatsType_ {
    /* General. */
    SS_TYPE_D_SPEED_MOD,        /**< Speed multiplier. */
    SS_TYPE_D_TURN_MOD,         /**< Turn multiplier. */
-   SS_TYPE_D_THRUST_MOD,       /**< Acceleration multiplier. */
+   SS_TYPE_D_ACCEL_MOD,        /**< Acceleration multiplier. */
    SS_TYPE_D_CARGO_MOD,        /**< Cargo space multiplier. */
    SS_TYPE_D_FUEL_MOD,         /**< Fuel capacity multiplier. */
    SS_TYPE_D_ARMOUR_MOD,       /**< Armour multiplier. */
@@ -101,7 +101,7 @@ typedef enum ShipStatsType_ {
     * A: Absolute double type data. Should be continuous.
     */
    /* Movement. */
-   SS_TYPE_A_THRUST,          /**< Thrust modifier. */
+   SS_TYPE_A_ACCEL,           /**< Acceleration modifier. */
    SS_TYPE_A_TURN,            /**< Turn modifier (in deg/s). */
    SS_TYPE_A_SPEED,           /**< Speed modifier. */
    /* Health. */
@@ -199,10 +199,10 @@ typedef struct ShipStats_ {
    /* Movement. */
    double speed;              /**< Speed modifier. */
    double turn;               /**< Turn modifier. */
-   double thrust;             /**< Thrust modifier. */
+   double accel;              /**< Accel modifier. */
    double speed_mod;          /**< Speed multiplier. */
    double turn_mod;           /**< Turn multiplier. */
-   double thrust_mod;         /**< Thrust multiplier. */
+   double accel_mod;          /**< Accel multiplier. */
 
    /* Health. */
    double energy;             /**< Energy modifier. */

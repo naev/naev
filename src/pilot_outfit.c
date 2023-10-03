@@ -565,7 +565,7 @@ int pilot_reportSpaceworthy( const Pilot *p, char *buf, int bufSize )
    SPACEWORTHY_CHECK( p->cpu < 0, _("!! Insufficient CPU") );
 
    /* Movement. */
-   SPACEWORTHY_CHECK( p->thrust < 0, _("!! Insufficient Acceleration") );
+   SPACEWORTHY_CHECK( p->accel < 0,  _("!! Insufficient Accel") );
    SPACEWORTHY_CHECK( p->speed < 0,  _("!! Insufficient Speed") );
    SPACEWORTHY_CHECK( p->turn < 0,   _("!! Insufficient Turn") );
 
@@ -898,7 +898,7 @@ void pilot_calcStats( Pilot* pilot )
    /* cpu */
    pilot->cpu           = 0.;
    /* movement */
-   pilot->thrust_base   = pilot->ship->thrust;
+   pilot->accel_base    = pilot->ship->accel;
    pilot->turn_base     = pilot->ship->turn;
    pilot->speed_base    = pilot->ship->speed;
    /* crew */
@@ -952,7 +952,7 @@ void pilot_calcStats( Pilot* pilot )
 
    /* Apply stealth malus. */
    if (pilot_isFlag(pilot, PILOT_STEALTH)) {
-      s->thrust_mod  *= 0.8;
+      s->accel_mod   *= 0.8;
       s->turn_mod    *= 0.8;
       s->speed_mod   *= 0.5;
    }
@@ -961,7 +961,7 @@ void pilot_calcStats( Pilot* pilot )
     * Absolute increases.
     */
    /* Movement. */
-   pilot->thrust_base  += s->thrust;
+   pilot->accel_base   += s->accel;
    pilot->turn_base    += s->turn * M_PI / 180.;
    pilot->speed_base   += s->speed;
    /* Health. */
@@ -979,7 +979,7 @@ void pilot_calcStats( Pilot* pilot )
     * Relative increases.
     */
    /* Movement. */
-   pilot->thrust_base  *= s->thrust_mod;
+   pilot->accel_base  *= s->accel_mod;
    pilot->turn_base    *= s->turn_mod;
    pilot->speed_base   *= s->speed_mod;
    /* Health. */
@@ -1102,17 +1102,17 @@ void pilot_updateMass( Pilot *pilot )
    else
       factor = 1.;
 
-   pilot->thrust  = factor * pilot->thrust_base * mass;
+   pilot->accel   = factor * pilot->accel_base;
    pilot->turn    = factor * pilot->turn_base;
    pilot->speed   = factor * pilot->speed_base;
 
 /* limit the maximum speed if limiter is active */
    if (pilot_isFlag(pilot, PILOT_HASSPEEDLIMIT)) {
-      pilot->speed = pilot->speed_limit - pilot->thrust / (mass * 3.);
+      pilot->speed = pilot->speed_limit - pilot->accel / 3.;
       /* Speed must never go negative. */
       if (pilot->speed < 0.) {
-         /* If speed DOES go negative, we have to lower thrust. */
-         pilot->thrust = 3 * pilot->speed_limit * mass;
+         /* If speed DOES go negative, we have to lower accel. */
+         pilot->accel = 3 * pilot->speed_limit;
          pilot->speed = 0.;
       }
    }

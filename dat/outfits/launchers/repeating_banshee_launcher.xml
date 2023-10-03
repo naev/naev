@@ -26,7 +26,7 @@
   <spfx_armour>EmpS</spfx_armour>
   <trail_generator x="-10">fire-missile</trail_generator>
   <duration blowup="shield">7</duration>
-  <thrust>150</thrust>
+  <accel>150</accel>
   <speed>200</speed>
   <damage>
    <type>kinetic</type>

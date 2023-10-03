@@ -14,7 +14,7 @@
   <engine_limit>2500</engine_limit>
   <fuel>800</fuel>
   <speed>55</speed>
-  <thrust>30</thrust>
+  <accel>30</accel>
   <turn>40</turn>
  </specific>
 </outfit>

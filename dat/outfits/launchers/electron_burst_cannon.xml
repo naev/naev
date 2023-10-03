@@ -25,7 +25,7 @@
   <spfx_shield>EmpS</spfx_shield>
   <spfx_armour>EmpM</spfx_armour>
   <duration blowup="shield">1</duration>
-  <thrust>0</thrust>
+  <accel>0</accel>
   <speed>1500</speed>
   <damage>
    <type>emp</type>

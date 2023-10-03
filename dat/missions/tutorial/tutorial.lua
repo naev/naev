@@ -124,7 +124,7 @@ They stare at you for a few seconds.
    vn.func( function ()
       dotut = true
    end )
-   sai(fmt.f(_([["Alright, let's go over how to pilot your new state-of-the-art ship, then! Moving is pretty simple: rotate your ship with {leftkey} and {rightkey}, and thrust to move your ship forward with {accelkey}! You can also use {reversekey} to rotate your ship to the opposite direction you are moving, or to reverse thrust if you purchase and install a reverse thruster onto your starship. Give it a try by flying over to {pnt}! You see it on your screen, right? It's the planet right next to you."]]),{leftkey=tut.getKey("left"), rightkey=tut.getKey("right"), accelkey=tut.getKey("accel"), reversekey=tut.getKey("reverse"), pnt=start_planet}))
+   sai(fmt.f(_([["Alright, let's go over how to pilot your new state-of-the-art ship, then! Moving is pretty simple: rotate your ship with {leftkey} and {rightkey}, and accelerate to move your ship forward with {accelkey}! You can also use {reversekey} to rotate your ship to the opposite direction you are moving, or to reverse thrust if you purchase and install a reverse thruster onto your starship. Give it a try by flying over to {pnt}! You see it on your screen, right? It's the planet right next to you."]]),{leftkey=tut.getKey("left"), rightkey=tut.getKey("right"), accelkey=tut.getKey("accel"), reversekey=tut.getKey("reverse"), pnt=start_planet}))
    vn.done( tut.shipai.transition )
    vn.run()
 

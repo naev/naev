@@ -127,7 +127,7 @@ static os_opts cooldown_opts = { N_("Cooldown"), _UNIT_TIME, 0, 0, 1, 1 };
 static os_opts lockon_opts = { N_("Lock On"), _UNIT_TIME, 0, 0, 1, 0 };
 static os_opts inflight_calib_opts = { N_("Inflight Calibration"), _UNIT_TIME, 0, 0, 1, 1 };
 static os_opts initial_speed_opts = { N_("Launch Speed"), _UNIT_SPEED, 0, 0, 1, 0 };
-static os_opts thrust_opts = { N_("Accel"), _UNIT_ACCEL, 0, 0, 1, 0 };
+static os_opts accel_opts = { N_("Accel"), _UNIT_ACCEL, 0, 0, 1, 0 };
 static os_opts max_speed_opts = { N_("Max Speed"), _UNIT_SPEED, 0, 0, 1, 0 };
 static os_opts reload_opts = { N_("Reload Time"), _UNIT_TIME, 0, 0, 1, 1 };
 static os_opts armour_opts = { N_("Armour"), _UNIT_ENERGY, 0, 0, 1, 1 };
@@ -761,18 +761,18 @@ double outfit_range( const Outfit* o )
    else if (outfit_isBeam(o))
       return o->u.bem.range;
    else if (outfit_isLauncher(o)) {
-      if (o->u.lau.thrust) {
+      if (o->u.lau.accel) {
          double speedinc;
          if (o->u.lau.speed > 0.) /* Ammo that don't start stopped don't have max speed. */
             speedinc = INFINITY;
          else
             speedinc = o->u.lau.speed_max - o->u.lau.speed;
-         double at = speedinc / o->u.lau.thrust;
+         double at = speedinc / o->u.lau.accel;
          if (at < o->u.lau.duration)
             return speedinc * (o->u.lau.duration - at / 2.) + o->u.lau.speed * o->u.lau.duration;
 
          /* Maximum speed will never be reached. */
-         return pow2(o->u.lau.duration) * o->u.lau.thrust / 2. + o->u.lau.duration * o->u.lau.speed;
+         return pow2(o->u.lau.duration) * o->u.lau.accel / 2. + o->u.lau.duration * o->u.lau.speed;
       }
       return o->u.lau.speed * o->u.lau.duration;
    }
@@ -790,21 +790,21 @@ double outfit_speed( const Outfit* o )
    if (outfit_isBolt(o))
       return o->u.blt.speed;
    else if (outfit_isLauncher(o)) {
-      if (o->u.lau.thrust == 0.)
+      if (o->u.lau.accel == 0.)
          return o->u.lau.speed;
       else { /* Gets the average speed. */
          double t;
          if (o->u.lau.speed > 0.) /* Ammo that don't start stopped don't have max speed. */
             t = INFINITY;
          else
-            t = (o->u.lau.speed_max - o->u.lau.speed) / o->u.lau.thrust; /* Time to reach max speed */
+            t = (o->u.lau.speed_max - o->u.lau.speed) / o->u.lau.accel; /* Time to reach max speed */
 
          /* Reaches max speed. */
          if (t < o->u.lau.duration)
-            return (o->u.lau.thrust * t * t / 2. + (o->u.lau.speed_max - o->u.lau.speed) * (o->u.lau.duration - t)) / o->u.lau.duration + o->u.lau.speed;
+            return (o->u.lau.accel * t * t / 2. + (o->u.lau.speed_max - o->u.lau.speed) * (o->u.lau.duration - t)) / o->u.lau.duration + o->u.lau.speed;
          /* Doesn't reach max speed. */
          else
-            return o->u.lau.thrust * o->u.lau.duration / 2. + o->u.lau.speed;
+            return o->u.lau.accel * o->u.lau.duration / 2. + o->u.lau.speed;
       }
    }
    return -1.;
@@ -1803,7 +1803,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       }
       xmlr_float(node,"resist",temp->u.lau.resist);
       /* Movement */
-      xmlr_float(node,"thrust",temp->u.lau.thrust);
+      xmlr_float(node,"accel",temp->u.lau.accel);
       xmlr_float(node,"turn",temp->u.lau.turn);
       xmlr_float(node,"speed",temp->u.lau.speed);
       xmlr_float(node,"speed_max",temp->u.lau.speed_max);
@@ -1880,7 +1880,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    temp->u.lau.turn *= M_PI/180.; /* Convert to rad/s. */
    if (temp->u.lau.speed_max < 0.)
       temp->u.lau.speed_max = temp->u.lau.speed;
-   else if (temp->u.lau.speed > 0. && temp->u.lau.thrust > 0.) /* Condition for not taking max_speed into account. */
+   else if (temp->u.lau.speed > 0. && temp->u.lau.accel > 0.) /* Condition for not taking max_speed into account. */
       WARN(_("Max speed of ammo '%s' will be ignored."), temp->name);
    temp->u.lau.resist /= 100.;
 
@@ -1938,14 +1938,14 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    l = os_printD( temp->summary_raw, l, outfit_range(temp), &range_opts );
    //l = os_printD( temp->summary_raw, l, temp->u.lau.duration, &duration_opts );
 
-   if (temp->u.lau.thrust > 0.) {
+   if (temp->u.lau.accel > 0.) {
       if (temp->u.lau.speed > 0.)
          l = os_printD( temp->summary_raw, l, temp->u.lau.speed, &initial_speed_opts );
-      l = os_printD( temp->summary_raw, l, temp->u.lau.thrust, &thrust_opts );
+      l = os_printD( temp->summary_raw, l, temp->u.lau.accel, &accel_opts );
    }
    else
       l = os_printD( temp->summary_raw, l, temp->u.lau.speed, &initial_speed_opts );
-   if (!(temp->u.lau.thrust > 0. && temp->u.lau.speed > 0.))
+   if (!(temp->u.lau.accel > 0. && temp->u.lau.speed > 0.))
       l = os_printD( temp->summary_raw, l, temp->u.lau.speed_max, &max_speed_opts );
    l = os_printD( temp->summary_raw, l, temp->u.lau.reload_time, &reload_opts );
    l = os_printD( temp->summary_raw, l, temp->u.lau.armour, &armour_opts );
@@ -1964,7 +1964,7 @@ if (o) WARN(_("Outfit '%s' missing '%s' element"), temp->name, s) /**< Define to
    MELEMENT(!outfit_isProp(temp,OUTFIT_PROP_SHOOT_DRY)&&temp->u.lau.spfx_shield==-1,"spfx_shield");
    MELEMENT(!outfit_isProp(temp,OUTFIT_PROP_SHOOT_DRY)&&temp->u.lau.spfx_armour==-1,"spfx_armour");
    MELEMENT((sound_disabled!=0) && (temp->u.lau.sound<0),"sound");
-   /* MELEMENT(temp->u.lau.thrust==0,"thrust"); */
+   /* MELEMENT(temp->u.lau.accel==0,"accel"); */
    /* Unguided missiles don't need everything */
    if (outfit_isSeeker(temp)) {
       MELEMENT(temp->u.lau.turn==0,"turn");
@@ -1978,8 +1978,8 @@ if (o) WARN(_("Outfit '%s' missing '%s' element"), temp->name, s) /**< Define to
    MELEMENT(temp->u.lau.dmg.damage==0,"damage");
    /*MELEMENT(temp->u.lau.energy==0.,"energy");*/
 #undef MELEMENT
-   if (!outfit_isProp(temp,OUTFIT_PROP_SHOOT_DRY)&&temp->u.lau.speed==0. && temp->u.lau.thrust==0.)
-      WARN(_("Outfit '%s' has no speed nor thrust set!"), temp->name);
+   if (!outfit_isProp(temp,OUTFIT_PROP_SHOOT_DRY)&&temp->u.lau.speed==0. && temp->u.lau.accel==0.)
+      WARN(_("Outfit '%s' has no speed nor accel set!"), temp->name);
    if (!outfit_isProp(temp,OUTFIT_PROP_SHOOT_DRY)&&temp->u.lau.iflockon >= temp->u.lau.duration)
       WARN(_("Outfit '%s' has longer 'iflockon' than ammo 'duration'"), temp->name);
 }
@@ -2054,8 +2054,8 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    temp->u.afb.sound_off = -1;
 
    /* must be >= 1. */
-   temp->u.afb.thrust = 1.;
-   temp->u.afb.speed  = 1.;
+   temp->u.afb.accel = 1.;
+   temp->u.afb.speed = 1.;
 
    do { /* parse the data */
       ShipStatList *ll;
@@ -2075,7 +2075,7 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
          temp->u.afb.sound_off = sound_get( xml_get(node) );
          continue;
       }
-      xmlr_float(node,"thrust",temp->u.afb.thrust);
+      xmlr_float(node,"accel",temp->u.afb.accel);
       xmlr_float(node,"speed",temp->u.afb.speed);
       xmlr_float(node,"energy",temp->u.afb.energy);
       xmlr_float(node,"mass_limit",temp->u.afb.mass_limit);
@@ -2104,23 +2104,23 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    l = os_printD( temp->summary_raw, l, temp->mass, &mass_opts );
    l = os_printD( temp->summary_raw, l, temp->u.afb.mass_limit, &max_mass_opts );
    SDESC_ADD( l, temp, "\n%s", _("Only one can be equipped") );
-   l = os_printD( temp->summary_raw, l, temp->u.afb.thrust+100., &thrust_opts );
+   l = os_printD( temp->summary_raw, l, temp->u.afb.accel+100., &accel_opts );
    l = os_printD( temp->summary_raw, l, temp->u.afb.speed+100., &max_speed_opts );
    l = os_printD( temp->summary_raw, l, temp->u.afb.energy, &power_opts );
    l = os_printD( temp->summary_raw, l, temp->u.afb.rumble, &rumble_opts );
 
    /* Post processing. */
-   temp->u.afb.thrust /= 100.;
-   temp->u.afb.speed  /= 100.;
+   temp->u.afb.accel /= 100.;
+   temp->u.afb.speed /= 100.;
    C = pilot_heatCalcOutfitC(temp);
    area = pilot_heatCalcOutfitArea(temp);
-   temp->u.afb.heat    = ((800.-CONST_SPACE_STAR_TEMP)*C +
+   temp->u.afb.heat   = ((800.-CONST_SPACE_STAR_TEMP)*C +
             STEEL_HEAT_CONDUCTIVITY * ((800-CONST_SPACE_STAR_TEMP) * area)) /
          temp->u.afb.heatup;
 
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
-   MELEMENT(temp->u.afb.thrust==0.,"thrust");
+   MELEMENT(temp->u.afb.accel==0.,"accel");
    MELEMENT(temp->u.afb.speed==0.,"speed");
    MELEMENT(temp->u.afb.energy==0.,"energy");
    //MELEMENT(temp->cpu==0.,"cpu");

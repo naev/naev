@@ -8,7 +8,7 @@
   <price>890000</price>
   <gfx_store>hyperbolic_blink_engine.webp</gfx_store>
   <description>The hyperbolic blink engine seems to be designed as a response to the question "How much mass is it possible to move across a space-time fold?". It seems to have significant disregard for maintaining careful control of the space-time folding instead focusing on maximum possible throughput. Due to the heavy amount of disruption to the ship's systems and personnel, after each space-time fold or "blink", it takes a while for the ship to be fully responsive again.</description>
-  <desc_extra>Warms up for 2 seconds then blinks you 2000 units in roughly the direction you are facing. Can only be run once every 8 seconds and incurs a 20% thrust and turn penalty during cooldown. Performance degrades over 6000 tonnes of mass.</desc_extra>
+  <desc_extra>Warms up for 2 seconds then blinks you 2000 units in roughly the direction you are facing. Can only be run once every 8 seconds and incurs a 20% acceleration and turn penalty during cooldown. Performance degrades over 6000 tonnes of mass.</desc_extra>
   <limit>blinkdrive</limit>
  </general>
  <specific type="modification">

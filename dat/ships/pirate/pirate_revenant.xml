@@ -48,7 +48,7 @@
  <stats>
   <speed_mod>10</speed_mod>
   <turn_mod>10</turn_mod>
-  <thrust_mod>10</thrust_mod>
+  <accel_mod>10</accel_mod>
   <cargo_mod>15</cargo_mod>
   <armour_mod>-15</armour_mod>
   <ew_hide>-10</ew_hide>

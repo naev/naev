@@ -50,7 +50,7 @@
  </slots>
  <stats>
   <speed_mod>5</speed_mod>
-  <thrust_mod>5</thrust_mod>
+  <accel_mod>5</accel_mod>
   <turn_mod>5</turn_mod>
   <shield_regen_mod>20</shield_regen_mod>
  </stats>

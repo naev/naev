@@ -28,8 +28,8 @@
 #define HYPERSPACE_DUST_LENGTH   250 /**< Length the space dust blur to at max (pixels). */
 #define HYPERSPACE_FADEOUT       1. /**< How long the fade is (seconds). */
 #define HYPERSPACE_FADEIN        1. /**< How long the fade is (seconds). */
-#define HYPERSPACE_THRUST        2000./**< How much thrust you use in hyperspace. */
-#define HYPERSPACE_VEL           (2.*HYPERSPACE_THRUST*HYPERSPACE_FLY_DELAY) /**< Velocity at hyperspace. */
+#define HYPERSPACE_ACCEL         2000./**< How much pilots accelerate when jumping. */
+#define HYPERSPACE_VEL           (2.*HYPERSPACE_ACCEL*HYPERSPACE_FLY_DELAY) /**< Velocity at hyperspace. */
 #define HYPERSPACE_ENTER_MIN     (HYPERSPACE_VEL*0.3) /**< Minimum entering distance. */
 #define HYPERSPACE_ENTER_MAX     (HYPERSPACE_VEL*0.4) /**< Maximum entering distance. */
 #define HYPERSPACE_EXIT_MIN      1500. /**< Minimum distance to begin jumping. */
@@ -42,7 +42,7 @@
 #define PILOT_SIZE_APPROX        0.8   /**< approximation for pilot size */
 #define PILOT_WEAPON_SETS        10    /**< Number of weapon sets the pilot has. */
 #define PILOT_WEAPSET_MAX_LEVELS 2     /**< Maximum amount of weapon levels. */
-#define PILOT_REVERSE_THRUST     0.4   /**< Ratio of normal thrust to apply when reversing. */
+#define PILOT_REVERSE_THRUST     0.4   /**< Ratio of normal accel to apply when reversing. */
 #define PILOT_PLAYER_NONTARGETABLE_TAKEOFF_DELAY 5. /**< Time the player is safe (from being targetted) after takeoff. */
 #define PILOT_PLAYER_NONTARGETABLE_JUMPIN_DELAY 5. /**< Time the player is safe (from being targetted) after jumping in. */
 
@@ -239,13 +239,13 @@ typedef struct Pilot_ {
    double cap_cargo;/**< Pilot's cargo capacity. */
 
    /* Movement */
-   double thrust;    /**< Pilot's thrust in px/s^2. */
-   double thrust_base;/**< Pilot's base thrust in px/s^2 (not modulated by mass). */
+   double accel;     /**< Pilot's acceleration in px/s^2. */
+   double accel_base;/**< Pilot's base acceleration in px/s^2. */
    double speed;     /**< Pilot's speed in px/s. */
-   double speed_base;/**< Pilot's base speed in px/s (not modulated by mass). */
+   double speed_base;/**< Pilot's base speed in px/s. */
    double speed_limit;/**< Pilot's maximum speed in px/s if limited by lua call. */
    double turn;      /**< Pilot's turn in rad/s. */
-   double turn_base; /**< Pilot's base turn in rad/s (not modulated by mass). */
+   double turn_base; /**< Pilot's base turn in rad/s. */
 
    /* Current health */
    double armour;    /**< Current armour. */
@@ -465,7 +465,7 @@ void pilots_cleanAll (void);
 void pilot_free( Pilot* p );
 
 /* Movement. */
-void pilot_setThrust( Pilot *p, double thrust );
+void pilot_setAccel( Pilot *p, double accel );
 void pilot_setTurn( Pilot *p, double turn );
 
 /* Update. */

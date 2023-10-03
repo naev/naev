@@ -112,7 +112,7 @@ typedef struct AsteroidAnchor_ {
    double groupswtotal;/**< Sum of the weights of the groups. */
    double maxspeed;/**< Maxmimum speed the asteroids can have in the field. */
    double maxspin;/**< Maxmimum spin the asteroids can have in the field. */
-   double thrust; /**< Thrust applied when out of radius towards center. */
+   double accel; /**< Accel applied when out of radius towards center. */
    double margin; /**< Extra margin to use when doing distance computations. */
    /* Collision stuff. */
    Quadtree qt;   /**< Handles collisions. */

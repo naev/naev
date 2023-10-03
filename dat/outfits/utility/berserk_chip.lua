@@ -59,7 +59,7 @@ local function turnoff( p, po )
    po:set( "fwd_damage", -20 )
    po:set( "tur_damage", -20 )
    po:set( "turn_mod", -20 )
-   po:set( "thrust_mod", -20 )
+   po:set( "accel_mod", -20 )
    po:set( "speed_mod", -20 )
    return true
 end

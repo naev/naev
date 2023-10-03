@@ -162,7 +162,7 @@ unsigned int escort_create( Pilot *p, const char *ship,
       if (p->stats.fbay_movement != 1.) {;
          pe->intrinsic_stats = ss_statsSetList( pe->intrinsic_stats, SS_TYPE_D_SPEED_MOD, p->stats.fbay_movement, 0, 1 );
          pe->intrinsic_stats = ss_statsSetList( pe->intrinsic_stats, SS_TYPE_D_TURN_MOD, p->stats.fbay_movement, 0, 1 );
-         pe->intrinsic_stats = ss_statsSetList( pe->intrinsic_stats, SS_TYPE_D_THRUST_MOD, p->stats.fbay_movement, 0, 1 );
+         pe->intrinsic_stats = ss_statsSetList( pe->intrinsic_stats, SS_TYPE_D_ACCEL_MOD, p->stats.fbay_movement, 0, 1 );
       }
       /* Update stats. */
       pilot_calcStats( pe );

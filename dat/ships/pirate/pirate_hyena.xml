@@ -41,7 +41,7 @@
  </slots>
  <stats>
   <turn_mod>20</turn_mod>
-  <thrust_mod>70</thrust_mod>
+  <accel_mod>70</accel_mod>
   <armour_mod>-50</armour_mod>
   <fwd_firerate>10</fwd_firerate>
   <ew_signature>-10</ew_signature>

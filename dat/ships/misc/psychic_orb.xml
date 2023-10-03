@@ -11,7 +11,7 @@
  <description>Not meant for the player.</description>
  <mission />
  <movement>
-  <thrust>0.001</thrust>
+  <accel>0.001</accel>
   <turn>0.001</turn>
   <speed>0.001</speed>
  </movement>

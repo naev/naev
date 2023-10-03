@@ -541,10 +541,10 @@ static void ship_update( unsigned int wid )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%s average"), hyp_delay );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f %s"), player.p->thrust / player.p->solid.mass, UNIT_ACCEL );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f %s"), player.p->accel, UNIT_ACCEL );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f %s (max %.0f %s)"),
-         player.p->speed, UNIT_SPEED, solid_maxspeed( &player.p->solid, player.p->speed, player.p->thrust ), UNIT_SPEED );
+         player.p->speed, UNIT_SPEED, solid_maxspeed( &player.p->solid, player.p->speed, player.p->accel ), UNIT_SPEED );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f %s"), player.p->turn*180./M_PI, UNIT_ROTATION );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f%%", player.p->stats.time_mod * player.p->ship->dt_default*100. );

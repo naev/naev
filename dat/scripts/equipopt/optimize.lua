@@ -134,7 +134,7 @@ function optimize.goodness_default( o, p )
    -- Base attributes
    local base = p.cargo*(0.5*math.pow(o.cargo,0.3) + 0.1*(1-os.cargo_inertia)) + p.fuel*0.003*os.fuel
    -- Movement attributes
-   local move = 0.1*o.thrust + 0.1*o.speed + 0.2*o.turn + 50*(os.time_speedup-1)
+   local move = 0.1*o.accel + 0.1*o.speed + 0.2*o.turn + 50*(os.time_speedup-1)
    -- Health attributes
    local health = 0.01*o.shield + 0.02*o.armour + 0.9*o.shield_regen + 2*o.armour_regen + os.absorb/10
    -- Energy attributes
@@ -397,9 +397,9 @@ function optimize.optimize( p, cores, outfit_list, params )
 
       -- We correct ship stats here and convert them to "relative improvements"
       -- Movement
-      oo.thrust = os.thrust_mod * (os.thrust + st.thrust) - st.thrust
-      oo.speed  = os.speed_mod  * (os.speed  + st.speed)  - st.speed
-      oo.turn   = os.turn_mod   * (os.turn   + st.turn)   - st.turn
+      oo.accel  = os.accel_mod * (os.accel + st.accel)  - st.accel
+      oo.speed  = os.speed_mod * (os.speed  + st.speed) - st.speed
+      oo.turn   = os.turn_mod  * (os.turn   + st.turn)  - st.turn
       -- Health
       oo.armour = os.armour_mod * (os.armour + st.armour) - st.armour
       oo.shield = os.shield_mod * (os.shield + st.shield) - st.shield
@@ -424,8 +424,8 @@ function optimize.optimize( p, cores, outfit_list, params )
          oo.penetration = 0.5
       elseif oo.type == "Afterburner" then
          -- We add it as movement, but weaken the effect a bit
-         oo.thrust   = oo.thrust + 1.5*math.sqrt(oo.spec.thrust * st.thrust)
-         oo.speed    = oo.speed  + 1.5*math.sqrt(oo.spec.speed * st.speed)
+         oo.accel    = oo.accel + 1.5*math.sqrt(oo.spec.accel * st.accel)
+         oo.speed    = oo.speed + 1.5*math.sqrt(oo.spec.speed * st.speed)
       end
 
       -- Compute goodness

@@ -19,7 +19,7 @@
   <spfx_armour>ChakraM</spfx_armour>
   <trail_generator x="-7">sirius_chakra</trail_generator>
   <duration blowup="armour">16</duration>
-  <thrust>1000</thrust>
+  <accel>1000</accel>
   <turn>50</turn>
   <speed_max>500</speed_max>
   <resist>200</resist>

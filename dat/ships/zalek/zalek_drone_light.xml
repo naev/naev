@@ -13,7 +13,7 @@
  <fabricator>Za'lek Robotics</fabricator>
  <description>This is the Za'lek Light Drone. Very weak, cheap and numerous. Not to be flown by the player.</description>
  <movement>
-  <thrust>230</thrust>
+  <accel>230</accel>
   <speed>450</speed>
   <turn>200</turn>
  </movement>

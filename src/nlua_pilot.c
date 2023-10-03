@@ -115,7 +115,7 @@ static int pilotL_dir( lua_State *L );
 static int pilotL_signature( lua_State *L );
 static int pilotL_temp( lua_State *L );
 static int pilotL_mass( lua_State *L );
-static int pilotL_thrust( lua_State *L );
+static int pilotL_accel( lua_State *L );
 static int pilotL_speed( lua_State *L );
 static int pilotL_speed_max( lua_State *L );
 static int pilotL_turn( lua_State *L );
@@ -298,7 +298,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "signature", pilotL_signature },
    { "temp", pilotL_temp },
    { "mass", pilotL_mass },
-   { "thrust", pilotL_thrust },
+   { "accel", pilotL_accel },
    { "speed", pilotL_speed },
    { "speedMax", pilotL_speed_max },
    { "turn", pilotL_turn },
@@ -2690,16 +2690,16 @@ static int pilotL_mass( lua_State *L )
 }
 
 /**
- * @brief Gets the thrust of a pilot.
+ * @brief Gets the accel of a pilot.
  *
- *    @luatparam Pilot p Pilot to get thrust of.
- *    @luatreturn number The pilot's current thrust.
- * @luafunc thrust
+ *    @luatparam Pilot p Pilot to get accel of.
+ *    @luatreturn number The pilot's current accel.
+ * @luafunc accel
  */
-static int pilotL_thrust( lua_State *L )
+static int pilotL_accel( lua_State *L )
 {
    const Pilot *p = luaL_validpilot(L,1);
-   lua_pushnumber( L, p->thrust/p->solid.mass );
+   lua_pushnumber( L, p->accel );
    return 1;
 }
 
@@ -2728,7 +2728,7 @@ static int pilotL_speed( lua_State *L )
 static int pilotL_speed_max( lua_State *L )
 {
    const Pilot *p = luaL_validpilot(L,1);
-   lua_pushnumber( L, solid_maxspeed( &p->solid, p->speed, p->thrust ) );
+   lua_pushnumber( L, solid_maxspeed( &p->solid, p->speed, p->accel ) );
    return 1;
 }
 
@@ -4583,7 +4583,7 @@ lua_rawset( L, -3 )
  *  <li> fuel_max </li>
  *  <li> fuel_consumption </li>
  *  <li> mass </li>
- *  <li> thrust </li>
+ *  <li> accel </li>
  *  <li> speed </li>
  *  <li> speed_max </li>
  *  <li> turn </li>
@@ -4619,10 +4619,10 @@ static int pilotL_getStats( lua_State *L )
    PUSH_INT( L, "fuel_consumption", p->fuel_consumption );
    PUSH_DOUBLE( L, "mass", p->solid.mass );
    /* Movement. */
-   PUSH_DOUBLE( L, "thrust", p->thrust/p->solid.mass );
+   PUSH_DOUBLE( L, "accel", p->accel );
    PUSH_DOUBLE( L, "speed", p->speed );
    PUSH_DOUBLE( L, "turn", p->turn*180./M_PI ); /* Convert back to grad. */
-   PUSH_DOUBLE( L, "speed_max", solid_maxspeed(&p->solid, p->speed, p->thrust) );
+   PUSH_DOUBLE( L, "speed_max", solid_maxspeed(&p->solid, p->speed, p->accel) );
    /* Health. */
    PUSH_DOUBLE( L, "absorb", p->dmg_absorb );
    PUSH_DOUBLE( L, "armour", p->armour_max );

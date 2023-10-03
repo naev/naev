@@ -46,7 +46,7 @@ function update( p, po, dt )
          -- Set cooldown and maluses
          po:state("cooldown")
          po:progress(1)
-         po:set("thrust_mod", penalty)
+         po:set("accel_mod", penalty)
          po:set("turn_mod", penalty)
          mem.cooldown = true
          mem.timer = cooldown * p:shipstat("cooldown_mod",true)

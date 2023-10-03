@@ -243,10 +243,10 @@ void shipyard_update( unsigned int wid, const char* str )
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Mass:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_mass );
    }
-   if (ship->thrust) {
+   if (ship->accel) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Accel:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n");
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f %s"), ship->thrust, UNIT_ACCEL );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f %s"), ship->accel, UNIT_ACCEL );
    }
    if (ship->speed) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Speed:") );
