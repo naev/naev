@@ -321,10 +321,8 @@ void pilot_weapSetUpdate( Pilot* p )
          continue;
 
       /* Weapons must get "fired" every turn. */
-      if (ws->type == WEAPSET_TYPE_TOGGLE) {
-         if (ws->active)
-            pilot_weapSetFire( p, ws, -1 );
-      }
+      if (ws->active)
+         pilot_weapSetFire( p, ws, -1 );
    }
 }
 
