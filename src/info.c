@@ -720,14 +720,14 @@ static void weapons_toggleList( unsigned int wid, const char *str )
    /* See how to handle. */
    t = pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons );
    switch (t) {
-      case WEAPSET_TYPE_CHANGE:
-         c = WEAPSET_TYPE_ACTIVE;
-         break;
-      case WEAPSET_TYPE_ACTIVE:
+      case WEAPSET_TYPE_SWITCH:
          c = WEAPSET_TYPE_TOGGLE;
          break;
       case WEAPSET_TYPE_TOGGLE:
-         c = WEAPSET_TYPE_CHANGE;
+         c = WEAPSET_TYPE_HOLD;
+         break;
+      case WEAPSET_TYPE_HOLD:
+         c = WEAPSET_TYPE_SWITCH;
          break;
    }
    pilot_weapSetType( player.p, info_eq_weaps.weapons, c );
@@ -740,7 +740,7 @@ static void weapons_toggleList( unsigned int wid, const char *str )
    /* Not able to set them all to fire groups. */
    if (i >= PILOT_WEAPON_SETS) {
       dialogue_alert( _("You can not set all your weapon sets to fire groups!") );
-      pilot_weapSetType( player.p, info_eq_weaps.weapons, WEAPSET_TYPE_CHANGE );
+      pilot_weapSetType( player.p, info_eq_weaps.weapons, WEAPSET_TYPE_SWITCH );
    }
 
    /* Set default if needs updating. */

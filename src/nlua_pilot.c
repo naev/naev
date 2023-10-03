@@ -1948,11 +1948,11 @@ static int pilotL_weapsetType( lua_State *L )
    const char *type = luaL_checkstring(L,3);
    int typeid;
    if (strcmp(type,"change")==0)
-      typeid = WEAPSET_TYPE_CHANGE;
+      typeid = WEAPSET_TYPE_SWITCH;
    else if (strcmp(type,"instant")==0)
-      typeid = WEAPSET_TYPE_ACTIVE;
-   else if (strcmp(type,"toggle")==0)
       typeid = WEAPSET_TYPE_TOGGLE;
+   else if (strcmp(type,"toggle")==0)
+      typeid = WEAPSET_TYPE_HOLD;
    else {
       NLUA_ERROR(L,_("Invalid weapon set type '%s'!"),type);
       return 0;
@@ -1982,15 +1982,15 @@ static int pilotL_weapsetAdd( lua_State *L )
          (o->sslot->slot.type==OUTFIT_SLOT_UTILITY)) {
       pilot_weapSetRmSlot( p, id, OUTFIT_SLOT_WEAPON );
       pilot_weapSetAdd( p, id, o, level );
-      pilot_weapSetType( p, id, WEAPSET_TYPE_TOGGLE );
+      pilot_weapSetType( p, id, WEAPSET_TYPE_HOLD );
    }
    else {
       pilot_weapSetRmSlot( p, id, OUTFIT_SLOT_STRUCTURE );
       pilot_weapSetRmSlot( p, id, OUTFIT_SLOT_UTILITY );
-      if (pilot_weapSetTypeCheck( p, id) == WEAPSET_TYPE_CHANGE)
-         pilot_weapSetType( p, id, WEAPSET_TYPE_CHANGE );
+      if (pilot_weapSetTypeCheck( p, id) == WEAPSET_TYPE_SWITCH)
+         pilot_weapSetType( p, id, WEAPSET_TYPE_SWITCH );
       else {
-         pilot_weapSetType( p, id, WEAPSET_TYPE_ACTIVE );
+         pilot_weapSetType( p, id, WEAPSET_TYPE_TOGGLE );
          level = 0;
       }
       pilot_weapSetAdd( p, id, o, level );

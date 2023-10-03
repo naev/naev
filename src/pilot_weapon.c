@@ -170,7 +170,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
 
    /* Handle fire groups. */
    switch (ws->type) {
-      case WEAPSET_TYPE_CHANGE:
+      case WEAPSET_TYPE_SWITCH:
          /* On press just change active weapon set to whatever is available. */
          if ((type > 0) && (array_size(ws->slots)>0)) {
             if (id != p->active_set)
@@ -179,7 +179,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          }
          break;
 
-      case WEAPSET_TYPE_ACTIVE:
+      case WEAPSET_TYPE_TOGGLE:
          /* Activation philosophy here is to turn on while pressed and off
           * when it's not held anymore. */
 
@@ -229,7 +229,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          }
          break;
 
-      case WEAPSET_TYPE_TOGGLE:
+      case WEAPSET_TYPE_HOLD:
          /* The behaviour here is more complex. What we do is consider a group
           * to be entirely off if not all outfits are either on or cooling down.
           * In the case it's deemed to be off, all outfits that are off get turned
@@ -307,7 +307,7 @@ void pilot_weapSetUpdate( Pilot* p )
          continue;
 
       /* Weapons must get "fired" every turn. */
-      if (ws->type == WEAPSET_TYPE_ACTIVE) {
+      if (ws->type == WEAPSET_TYPE_TOGGLE) {
          if (ws->active)
             pilot_weapSetFire( p, ws, -1 );
       }
@@ -352,8 +352,8 @@ void pilot_weapSetType( Pilot* p, int id, WeaponSetType type )
    ws->type = type;
 
    /* Set levels just in case. */
-   if ((ws->type == WEAPSET_TYPE_ACTIVE) ||
-         (ws->type == WEAPSET_TYPE_TOGGLE))
+   if ((ws->type == WEAPSET_TYPE_TOGGLE) ||
+         (ws->type == WEAPSET_TYPE_HOLD))
       for (int i=0; i<array_size(ws->slots); i++)
          ws->slots[i].level = 0;
 }
@@ -445,9 +445,9 @@ const char *pilot_weapSetName( Pilot* p, int id )
    if (array_size(ws->slots)==0)
       return _("Unused");
    switch (ws->type) {
-      case WEAPSET_TYPE_CHANGE: return _("Weapons - Switch");  break;
-      case WEAPSET_TYPE_ACTIVE: return _("Outfits - Toggle"); break;
-      case WEAPSET_TYPE_TOGGLE: return _("Outfits - Hold"); break;
+      case WEAPSET_TYPE_SWITCH: return _("Weapons - Switch");  break;
+      case WEAPSET_TYPE_TOGGLE: return _("Outfits - Toggle"); break;
+      case WEAPSET_TYPE_HOLD: return _("Outfits - Hold"); break;
    }
    return NULL;
 }
@@ -523,8 +523,8 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
    }
 
    /* See if we have to change weapon set type. */
-   if ((ws->type==WEAPSET_TYPE_CHANGE) && !outfit_isWeapon(oo))
-      pilot_weapSetType( p, id, WEAPSET_TYPE_ACTIVE );
+   if ((ws->type==WEAPSET_TYPE_SWITCH) && !outfit_isWeapon(oo))
+      pilot_weapSetType( p, id, WEAPSET_TYPE_TOGGLE );
 
    /* Add it. */
    slot        = &array_grow( &ws->slots );
@@ -808,7 +808,7 @@ int pilot_shoot( Pilot* p, int level )
    PilotWeaponSet *ws = pilot_weapSet( p, p->active_set );
 
    /* Fire weapons. */
-   if (ws->type == WEAPSET_TYPE_CHANGE) { /* Must be a change set or a weaponset. */
+   if (ws->type == WEAPSET_TYPE_SWITCH) { /* Must be a change set or a weaponset. */
       int ret = pilot_weapSetFire( p, ws, level );
 
       /* Firing weapons aborts active cooldown. */
@@ -1363,16 +1363,16 @@ void pilot_weaponAuto( Pilot *p )
    pilot_weaponClear( p );
 
    /* Set modes. */
-   pilot_weapSetType( p, 0, WEAPSET_TYPE_CHANGE );
-   pilot_weapSetType( p, 1, WEAPSET_TYPE_CHANGE );
-   pilot_weapSetType( p, 2, WEAPSET_TYPE_CHANGE );
-   pilot_weapSetType( p, 3, WEAPSET_TYPE_CHANGE );
-   pilot_weapSetType( p, 4, WEAPSET_TYPE_ACTIVE );
-   pilot_weapSetType( p, 5, WEAPSET_TYPE_ACTIVE );
-   pilot_weapSetType( p, 6, WEAPSET_TYPE_TOGGLE );
-   pilot_weapSetType( p, 7, WEAPSET_TYPE_TOGGLE );
-   pilot_weapSetType( p, 8, WEAPSET_TYPE_TOGGLE );
-   pilot_weapSetType( p, 9, WEAPSET_TYPE_ACTIVE );
+   pilot_weapSetType( p, 0, WEAPSET_TYPE_SWITCH );
+   pilot_weapSetType( p, 1, WEAPSET_TYPE_SWITCH );
+   pilot_weapSetType( p, 2, WEAPSET_TYPE_SWITCH );
+   pilot_weapSetType( p, 3, WEAPSET_TYPE_SWITCH );
+   pilot_weapSetType( p, 4, WEAPSET_TYPE_TOGGLE );
+   pilot_weapSetType( p, 5, WEAPSET_TYPE_TOGGLE );
+   pilot_weapSetType( p, 6, WEAPSET_TYPE_HOLD );
+   pilot_weapSetType( p, 7, WEAPSET_TYPE_HOLD );
+   pilot_weapSetType( p, 8, WEAPSET_TYPE_HOLD );
+   pilot_weapSetType( p, 9, WEAPSET_TYPE_TOGGLE );
 
    /* All should be inrange. */
    if (!pilot_isPlayer(p))
@@ -1451,7 +1451,7 @@ void pilot_weaponSetDefault( Pilot *p )
    int i;
 
    /* If current set isn't a fire group no need to worry. */
-   if (p->weapon_sets[ p->active_set ].type == WEAPSET_TYPE_CHANGE) {
+   if (p->weapon_sets[ p->active_set ].type == WEAPSET_TYPE_SWITCH) {
       /* Update active weapon set. */
       pilot_weapSetUpdateOutfits( p, &p->weapon_sets[ p->active_set ] );
       return;
@@ -1459,7 +1459,7 @@ void pilot_weaponSetDefault( Pilot *p )
 
    /* Find first fire group. */
    for (i=0; i<PILOT_WEAPON_SETS; i++)
-      if (p->weapon_sets[i].type == WEAPSET_TYPE_CHANGE)
+      if (p->weapon_sets[i].type == WEAPSET_TYPE_SWITCH)
          break;
 
    /* Set active set to first if all fire groups or first non-fire group. */
@@ -1497,8 +1497,8 @@ void pilot_weaponSafe( Pilot *p )
          array_erase( &ws->slots, &ws->slots[l-n], &ws->slots[l] );
 
       /* See if we must overwrite levels. */
-      if ((ws->type == WEAPSET_TYPE_ACTIVE) ||
-            (ws->type == WEAPSET_TYPE_TOGGLE))
+      if ((ws->type == WEAPSET_TYPE_TOGGLE) ||
+            (ws->type == WEAPSET_TYPE_HOLD))
          for (int i=0; i<array_size(ws->slots); i++)
             ws->slots[i].level = 0;
 
