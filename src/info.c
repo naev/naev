@@ -112,8 +112,8 @@ static void standings_close( unsigned int wid, const char *str );
 static void ship_update( unsigned int wid );
 static void weapons_genList( unsigned int wid );
 static void weapons_updateList( unsigned int wid, const char *str );
+static void weapons_toggleList( unsigned int wid, const char *str );
 static void weapons_autoweap( unsigned int wid, const char *str );
-static void weapons_fire( unsigned int wid, const char *str );
 static void weapons_inrange( unsigned int wid, const char *str );
 static void weapons_manual( unsigned int wid, const char *str );
 static void weapons_volley( unsigned int wid, const char *str );
@@ -607,32 +607,36 @@ static void info_openWeapons( unsigned int wid )
    window_addText( wid, x, y, wlen, 20, 0, "txtLocal", NULL, NULL,
          _("Current Weapon Set Settings"));
    y -= 20;
+   window_addButton( wid, x+10, y, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnToggle", _("Cycle Mode"), weapons_toggleList );
+   y -= BUTTON_HEIGHT+10;
+   window_addText( wid, x+10, y, wlen, 100, 0, "txtSMode", NULL, NULL,
+         _("Cycles through the following modes:\n"
+           "- Switch: sets the selected weapons as primary and secondary weapons.\n"
+           "- Toggle: toggles the selected outfits to on or off state\n"
+           "- Hold: turns on the selected outfits as long as key is held"
+           ));
+   y -= 8+window_getTextHeight( wid, "txtSMode" );
    window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
-         "chkInstant", _("Enable instant Mode"), weapons_fire,
-         (pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons )==WEAPSET_TYPE_ACTIVE) );
-   y -= 30;
-   window_addText( wid, x+10, y, wlen, 20, 0, "txtSInstant", NULL, NULL, _("(Outfits active while this weapon set key is pressed)"));
-   y -= 20;
+         "chkManual", _("Enable manual aiming mode"), weapons_manual,
+         pilot_weapSetManualCheck( player.p, info_eq_weaps.weapons ) );
+   y -= 28;
+   window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
+         "chkVolley", _("Enable volley mode (weapons fire jointly)"), weapons_volley,
+         pilot_weapSetVolleyCheck( player.p, info_eq_weaps.weapons ) );
+   y -= 28;
    window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
          "chkInrange", _("Only shoot weapons that are in range"), weapons_inrange,
          pilot_weapSetInrangeCheck( player.p, info_eq_weaps.weapons ) );
-   y -= 30;
-   window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
-         "chkManual", _("Enable manual aiming mode."), weapons_manual,
-         pilot_weapSetManualCheck( player.p, info_eq_weaps.weapons ) );
-   y -= 30;
-   window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
-         "chkVolley", _("Enable volley mode."), weapons_volley,
-         pilot_weapSetVolleyCheck( player.p, info_eq_weaps.weapons ) );
-   y -= 40;
+   y -= 38;
    window_addText( wid, x, y, wlen, 20, 0, "txtGlobal", NULL, NULL,
          _("Global Settings"));
-   y -= 20;
+   y -= 28;
    window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
          "chkAutoweap", _("Automatically handle weapons"), weapons_autoweap, player.p->autoweap );
-   y -= 30;
+   y -= 28;
    window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
-         "chkHelper", _("Dogfight aiming helper"), aim_lines, player.p->aimLines );
+         "chkHelper", _("Dogfight visual aiming helper"), aim_lines, player.p->aimLines );
 
    /* List. Has to be generated after checkboxes. */
    weapons_genList( wid );
@@ -674,7 +678,7 @@ static void weapons_genList( unsigned int wid )
    window_addList( wid, 20+180+20, -40,
          w - (20+180+20+20), 180,
          "lstWeapSets", buf, PILOT_WEAPON_SETS,
-         0, weapons_updateList, NULL );
+         0, weapons_updateList, weapons_toggleList );
    window_setFocus( wid, "lstWeapSets" );
 
    /* Restore position. */
@@ -696,10 +700,6 @@ static void weapons_updateList( unsigned int wid, const char *str )
       return;
    info_eq_weaps.weapons = pos;
 
-   /* Update fire mode. */
-   window_checkboxSet( wid, "chkInstant",
-         (pilot_weapSetTypeCheck( player.p, pos ) == WEAPSET_TYPE_ACTIVE) );
-
    /* Update inrange. */
    window_checkboxSet( wid, "chkInrange",
          pilot_weapSetInrangeCheck( player.p, pos ) );
@@ -710,6 +710,44 @@ static void weapons_updateList( unsigned int wid, const char *str )
 
    /* Update autoweap. */
    window_checkboxSet( wid, "chkAutoweap", player.p->autoweap );
+}
+
+static void weapons_toggleList( unsigned int wid, const char *str )
+{
+   int i, t, c;
+   (void) str;
+
+   /* See how to handle. */
+   t = pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons );
+   switch (t) {
+      case WEAPSET_TYPE_CHANGE:
+         c = WEAPSET_TYPE_ACTIVE;
+         break;
+      case WEAPSET_TYPE_ACTIVE:
+         c = WEAPSET_TYPE_TOGGLE;
+         break;
+      case WEAPSET_TYPE_TOGGLE:
+         c = WEAPSET_TYPE_CHANGE;
+         break;
+   }
+   pilot_weapSetType( player.p, info_eq_weaps.weapons, c );
+
+   /* Check to see if they are all fire groups. */
+   for (i=0; i<PILOT_WEAPON_SETS; i++)
+      if (!pilot_weapSetTypeCheck( player.p, i ))
+         break;
+
+   /* Not able to set them all to fire groups. */
+   if (i >= PILOT_WEAPON_SETS) {
+      dialogue_alert( _("You can not set all your weapon sets to fire groups!") );
+      pilot_weapSetType( player.p, info_eq_weaps.weapons, WEAPSET_TYPE_CHANGE );
+   }
+
+   /* Set default if needs updating. */
+   pilot_weaponSetDefault( player.p );
+
+   /* Must regen. */
+   weapons_genList( wid );
 }
 
 /**
@@ -735,46 +773,6 @@ static void weapons_autoweap( unsigned int wid, const char *str )
    }
    else
       player.p->autoweap = 0;
-}
-
-/**
- * @brief Sets the fire mode.
- */
-static void weapons_fire( unsigned int wid, const char *str )
-{
-   int i, state, t, c;
-
-   /* Set state. */
-   state = window_checkboxState( wid, str );
-
-   /* See how to handle. */
-   t = pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons );
-   if (t == WEAPSET_TYPE_TOGGLE)
-      return;
-
-   if (state)
-      c = WEAPSET_TYPE_ACTIVE;
-   else
-      c = WEAPSET_TYPE_CHANGE;
-   pilot_weapSetType( player.p, info_eq_weaps.weapons, c );
-
-   /* Check to see if they are all fire groups. */
-   for (i=0; i<PILOT_WEAPON_SETS; i++)
-      if (!pilot_weapSetTypeCheck( player.p, i ))
-         break;
-
-   /* Not able to set them all to fire groups. */
-   if (i >= PILOT_WEAPON_SETS) {
-      dialogue_alert( _("You can not set all your weapon sets to fire groups!") );
-      pilot_weapSetType( player.p, info_eq_weaps.weapons, WEAPSET_TYPE_CHANGE );
-      window_checkboxSet( wid, str, 0 );
-   }
-
-   /* Set default if needs updating. */
-   pilot_weaponSetDefault( player.p );
-
-   /* Must regen. */
-   weapons_genList( wid );
 }
 
 /**
