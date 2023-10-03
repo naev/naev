@@ -514,7 +514,7 @@ static void opt_gameplayDefaults( unsigned int wid, const char *str )
    window_checkboxSet( wid, "chkZoomManual", MANUAL_ZOOM_DEFAULT );
    window_checkboxSet( wid, "chkDoubletap", DOUBLETAP_SENSITIVITY_DEFAULT );
    window_checkboxSet( wid, "chkMouseFly", MOUSE_FLY_DEFAULT );
-   window_checkboxSet( wid, "chkMouseAccel", MOUSE_THRUST_DEFAULT );
+   window_checkboxSet( wid, "chkMouseAccel", MOUSE_ACCEL_DEFAULT );
    window_checkboxSet( wid, "chkCompress", SAVE_COMPRESSION_DEFAULT );
 
    /* Input boxes. */
