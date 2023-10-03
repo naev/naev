@@ -875,7 +875,7 @@ function create_pre ()
 
    -- Tune PD parameter (with a nice heuristic formula)
    local ps = p:stats()
-   mem.Kd = math.max( 5., 10.84 * (180./ps.turn + ps.speed/ps.thrust) - 10.82 )
+   mem.Kd = math.max( 5., 10.84 * (180./ps.turn + ps.speed/ps.accel) - 10.82 )
 
    -- Just give some random fuel
    if p ~= player.pilot() then

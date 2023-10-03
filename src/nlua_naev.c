@@ -539,7 +539,7 @@ static int naevL_conf( lua_State *L )
    PUSH_INT( L, "doubletap_sensitivity", conf.doubletap_sens );
    PUSH_DOUBLE( L, "mouse_hide", conf.mouse_hide );
    PUSH_BOOL( L, "mouse_fly", conf.mouse_fly );
-   PUSH_INT( L, "mouse_thrust", conf.mouse_thrust );
+   PUSH_INT( L, "mouse_accel", conf.mouse_accel );
    PUSH_DOUBLE( L, "mouse_doubleclick", conf.mouse_doubleclick );
    PUSH_BOOL( L, "devmode", conf.devmode );
    PUSH_BOOL( L, "devautosave", conf.devautosave );

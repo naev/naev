@@ -471,7 +471,7 @@ static void sysedit_btnNewAsteroids( unsigned int wid_unused, const char *unused
       ast->groupsw  = array_create( double );
       ast->radius   = 2500.;
       ast->maxspeed = ASTEROID_DEFAULT_MAXSPEED;
-      ast->thrust   = ASTEROID_DEFAULT_THRUST;
+      ast->accel    = ASTEROID_DEFAULT_ACCEL;
       ast->pos.x    = sysedit_xpos / sysedit_zoom;
       ast->pos.y    = sysedit_ypos / sysedit_zoom;
       asteroids_computeInternals( ast );
@@ -1698,9 +1698,9 @@ static void sysedit_editAsteroids (void)
    y -= 30;
    s = _("Accel: ");
    l = gl_printWidthRaw( NULL, s );
-   window_addText( wid, x, y, l, 20, 1, "txtThrust", NULL, NULL, s );
-   window_addInput( wid, x + l + 8, y, 80, 20, "inpThrust", 10, 1, NULL );
-   window_setInputFilter( wid, "inpThrust", INPUT_FILTER_NUMBER );
+   window_addText( wid, x, y, l, 20, 1, "txtAccel", NULL, NULL, s );
+   window_addInput( wid, x + l + 8, y, 80, 20, "inpAccel", 10, 1, NULL );
+   window_setInputFilter( wid, "inpAccel", INPUT_FILTER_NUMBER );
 
    /* List to choose the different asteroids that appear. */
    sysedit_genAsteroidsList( wid );
@@ -1731,8 +1731,8 @@ static void sysedit_editAsteroids (void)
    window_setInput( wid, "inpRadius", buf );
    snprintf( buf, sizeof(buf), "%g", ast->maxspeed );
    window_setInput( wid, "inpMaxspeed", buf );
-   snprintf( buf, sizeof(buf), "%g", ast->thrust );
-   window_setInput( wid, "inpThrust", buf );
+   snprintf( buf, sizeof(buf), "%g", ast->accel );
+   window_setInput( wid, "inpAccel", buf );
 }
 
 static void sysedit_genAsteroidsList( unsigned int wid )
@@ -1837,7 +1837,7 @@ static void sysedit_editAsteroidsClose( unsigned int wid, const char *unused )
    ast->density = atof(window_getInput( sysedit_widEdit, "inpDensity" ));
    ast->radius = atof(window_getInput( sysedit_widEdit, "inpRadius" ));
    ast->maxspeed = atof(window_getInput( sysedit_widEdit, "inpMaxspeed" ));
-   ast->thrust = atof(window_getInput( sysedit_widEdit, "inpThrust" ));
+   ast->accel = atof(window_getInput( sysedit_widEdit, "inpAccel" ));
 
    /* Need to update some internals based on new values. */
    asteroids_computeInternals( ast );

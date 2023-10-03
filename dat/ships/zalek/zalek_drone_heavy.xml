@@ -13,7 +13,7 @@
  <fabricator>Za'lek Robotics</fabricator>
  <description>This is the Za'lek Heavy Drone. Fewer and not as crap. Not to be flown by the player.</description>
  <movement>
-  <thrust>160</thrust>
+  <accel>160</accel>
   <speed>330</speed>
   <turn>140</turn>
  </movement>

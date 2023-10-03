@@ -296,7 +296,7 @@ function spawn_convoy ()
    end
    -- Only slow down leader, or it can be faster than other guys
    sconvoy[1]:intrinsicSet( "speed_mod", -33 )
-   sconvoy[1]:intrinsicSet( "thrust_mod", -33 )
+   sconvoy[1]:intrinsicSet( "accel_mod", -33 )
    sconvoy[1]:intrinsicSet( "turn_mod", -33 )
    sconvoy[1]:setHilight(true)
    sconvoy[1]:control()

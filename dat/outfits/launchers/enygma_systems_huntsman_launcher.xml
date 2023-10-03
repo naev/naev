@@ -28,7 +28,7 @@
   <spfx_armour>EmpM</spfx_armour>
   <trail_generator x="-10">fire-missileL</trail_generator>
   <duration blowup="armour">33</duration>
-  <thrust>70</thrust>
+  <accel>70</accel>
   <turn>25</turn>
   <speed_max>180</speed_max>
   <resist>100</resist>

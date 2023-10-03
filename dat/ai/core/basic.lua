@@ -193,7 +193,7 @@ end
 
 
 --[[
--- Lunges towards the target always thrusting
+-- Lunges towards the target always accelerating
 --]]
 function lunge( target )
    if not target:exists() then

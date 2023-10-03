@@ -662,7 +662,7 @@ static void map_system_array_update( unsigned int wid, const char* str )
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 %.0f %s", _("CPU:"), ship->cpu, UNIT_CPU );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "    #n%s#0 %s", _("Mass:"), buf_mass );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 ", _("Accel:") );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f %s"), ship->thrust, UNIT_ACCEL );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f %s"), ship->accel, UNIT_ACCEL );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "    #n%s#0 ", _("Speed:") );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f %s"), ship->speed, UNIT_SPEED );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 ", _("Turn:") );

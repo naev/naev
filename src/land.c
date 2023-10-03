@@ -1617,7 +1617,7 @@ void takeoff( int delay, int nosave )
       p->landing_delay = PILOT_TAKEOFF_DELAY * player_dt_default();
       p->ptimer = p->landing_delay;
       pilot_setFlag( p, PILOT_TAKEOFF );
-      pilot_setThrust( p, 0. );
+      pilot_setAccel( p, 0. );
       pilot_setTurn( p, 0. );
    }
 

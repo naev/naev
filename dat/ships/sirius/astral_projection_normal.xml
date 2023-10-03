@@ -11,7 +11,7 @@
  <fabricator>Sirius Psychic Powers</fabricator>
  <description>N/A</description>
  <movement>
-  <thrust>250</thrust>
+  <accel>250</accel>
   <speed>400</speed>
   <turn>180</turn>
  </movement>

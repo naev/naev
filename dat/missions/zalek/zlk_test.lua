@@ -261,7 +261,7 @@ end
 
 --Displays texts
 function slowtext()
-   vntk.msg(_("Where has the power gone?"), _("The engine makes a loud noise, and you notice that the engine has lost its ability to thrust at the rate that it's supposed to."))
+   vntk.msg(_("Where has the power gone?"), _("The engine makes a loud noise, and you notice that the engine has lost its ability to accelerate at the rate that it's supposed to."))
 end
 
 function speedtext()

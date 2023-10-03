@@ -1154,7 +1154,7 @@ void player_think( Pilot* pplayer, const double dt )
    /* last i heard, the dead don't think */
    if (pilot_isFlag(pplayer,PILOT_DEAD)) {
       /* no sense in accelerating or turning */
-      pilot_setThrust( pplayer, 0. );
+      pilot_setAccel( pplayer, 0. );
       pilot_setTurn( pplayer, 0. );
       return;
    }
@@ -1281,7 +1281,7 @@ void player_think( Pilot* pplayer, const double dt )
             && !pilot_isFlag(player.p, PILOT_HYPERSPACE) )
          acc = -PILOT_REVERSE_THRUST;
 
-      pilot_setThrust( pplayer, acc );
+      pilot_setAccel( pplayer, acc );
    }
 }
 
@@ -1697,7 +1697,7 @@ int player_land( int loud )
    player.p->landing_delay = PILOT_LANDING_DELAY * player_dt_default();
    player.p->ptimer = player.p->landing_delay;
    pilot_setFlag( player.p, PILOT_LANDING );
-   pilot_setThrust( player.p, 0. );
+   pilot_setAccel( player.p, 0. );
    pilot_setTurn( player.p, 0. );
 
    return PLAYER_LAND_OK;
@@ -2436,7 +2436,7 @@ void player_toggleMouseFly (void)
       player_rmFlag(PLAYER_MFLY);
       player_message( "#o%s", _("Mouse flying disabled.") );
 
-      if (conf.mouse_thrust)
+      if (conf.mouse_accel)
          player_accelOver();
    }
 }
@@ -2480,7 +2480,7 @@ static int player_thinkMouseFly (void)
    r = sqrt(pow2(x-px) + pow2(y-py));
    if (r > 50.) { /* Ignore mouse input within a 50 px radius of the centre. */
       pilot_face(player.p, atan2( y - py, x - px));
-      if (conf.mouse_thrust) { /* Only alter thrust if option is enabled. */
+      if (conf.mouse_accel) { /* Only alter thrust if option is enabled. */
          double acc = CLAMP(0., 1., (r - 100.) / 200.);
          acc = 3. * pow2(acc) - 2. * pow(acc, 3.);
          /* Only accelerate when within 180 degrees of the intended direction. */

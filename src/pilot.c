@@ -634,11 +634,11 @@ Pilot* pilot_getTarget( Pilot *p )
 }
 
 /**
- * @brief Sets the pilot's thrust.
+ * @brief Sets the pilot's accel.
  */
-void pilot_setThrust( Pilot *p, double thrust )
+void pilot_setAccel( Pilot *p, double accel )
 {
-   p->solid.thrust = p->thrust * thrust;
+   p->solid.accel = p->accel * accel;
 }
 
 /**
@@ -803,7 +803,7 @@ int pilot_brakeCheckReverseThrusters( const Pilot *p )
    if (p->stats.misc_reverse_thrust) {
       double diff, btime, ftime, vel, t;
       vel = MIN( VMOD(p->solid.vel), p->speed );
-      t = vel / p->thrust * p->solid.mass;
+      t = vel / p->accel;
 
       /* Calculate the time to face backward and apply forward thrust. */
       diff = angle_diff(p->solid.dir, VANGLE(p->solid.vel) + M_PI);
@@ -825,11 +825,11 @@ int pilot_brakeCheckReverseThrusters( const Pilot *p )
 double pilot_minbrakedist( const Pilot *p )
 {
    double vel = MIN( VMOD(p->solid.vel), p->speed );
-   double thrust = p->thrust / p->solid.mass;
-   double t = vel / thrust;
+   double accel = p->accel;
+   double t = vel / accel;
    if (pilot_brakeCheckReverseThrusters(p))
-      return vel * t - 0.5 * PILOT_REVERSE_THRUST * thrust * t * t;
-   return vel*(t+1.1*M_PI/p->turn) - 0.5 * thrust * t * t;
+      return vel * t - 0.5 * PILOT_REVERSE_THRUST * accel * t * t;
+   return vel*(t+1.1*M_PI/p->turn) - 0.5 * accel * t * t;
 }
 
 /**
@@ -840,7 +840,7 @@ double pilot_minbrakedist( const Pilot *p )
  */
 int pilot_brake( Pilot *p )
 {
-   double dir, thrust, diff;
+   double dir, accel, diff;
    int isstopped = pilot_isStopped(p);
 
    if (isstopped)
@@ -848,18 +848,18 @@ int pilot_brake( Pilot *p )
 
    if (pilot_brakeCheckReverseThrusters(p)) {
       dir    = VANGLE(p->solid.vel);
-      thrust = -PILOT_REVERSE_THRUST;
+      accel = -PILOT_REVERSE_THRUST;
    }
    else {
       dir    = VANGLE(p->solid.vel) + M_PI;
-      thrust = 1.;
+      accel = 1.;
    }
 
    diff = pilot_face(p, dir);
    if (ABS(diff) < MAX_DIR_ERR && !isstopped)
-      pilot_setThrust(p, thrust);
+      pilot_setAccel(p, accel);
    else {
-      pilot_setThrust(p, 0.);
+      pilot_setAccel(p, 0.);
       if (isstopped)
          return 1;
    }
@@ -2435,7 +2435,7 @@ void pilot_update( Pilot* pilot, double dt )
    if (pilot_isDisabled(pilot) || pilot_isFlag(pilot, PILOT_COOLDOWN)) {
       /* Do the slow brake thing */
       pilot->solid.speed_max = 0.;
-      pilot_setThrust( pilot, 0. );
+      pilot_setAccel( pilot, 0. );
       pilot_setTurn( pilot, 0. );
 
       /* update the solid */
@@ -2446,7 +2446,7 @@ void pilot_update( Pilot* pilot, double dt )
 
       /* Engine glow decay. */
       if (pilot->engine_glow > 0.) {
-         pilot->engine_glow -= pilot->speed / pilot->thrust * dt * pilot->solid.mass;
+         pilot->engine_glow -= pilot->speed / pilot->accel * dt;
          if (pilot->engine_glow < 0.)
             pilot->engine_glow = 0.;
       }
@@ -2497,21 +2497,21 @@ void pilot_update( Pilot* pilot, double dt )
                pilot->afterburner->outfit->u.afb.heat_cap)==0)
             pilot_afterburnOver(pilot);
          else {
-            double efficiency, thrust;
+            double efficiency, accel;
 
             if (pilot->id == PLAYER_ID)
                spfx_shake( 0.75*SPFX_SHAKE_DECAY * dt); /* shake goes down at quarter speed */
             efficiency = pilot_heatEfficiencyMod( pilot->afterburner->heat_T,
                   pilot->afterburner->outfit->u.afb.heat_base,
                   pilot->afterburner->outfit->u.afb.heat_cap );
-            thrust = MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit / pilot->solid.mass ) * efficiency;
+            accel = MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit / pilot->solid.mass ) * efficiency;
 
             /* Adjust speed. Speed bonus falls as heat rises. */
             pilot->solid.speed_max = pilot->speed * (1. +
-                  pilot->afterburner->outfit->u.afb.speed * thrust);
+                  pilot->afterburner->outfit->u.afb.speed * accel);
 
-            /* Adjust thrust. Thrust bonus falls as heat rises. */
-            pilot_setThrust(pilot, 1. + pilot->afterburner->outfit->u.afb.thrust * thrust);
+            /* Adjust accel. Thrust bonus falls as heat rises. */
+            pilot_setAccel(pilot, 1. + pilot->afterburner->outfit->u.afb.accel * accel);
          }
       }
       else
@@ -2521,14 +2521,14 @@ void pilot_update( Pilot* pilot, double dt )
       pilot->solid.speed_max = -1.; /* Disables max speed. */
 
    /* Set engine glow. */
-   if (pilot->solid.thrust > 0.) {
-      /*pilot->engine_glow += pilot->thrust / pilot->speed * dt;*/
-      pilot->engine_glow += pilot->speed / pilot->thrust * dt * pilot->solid.mass;
+   if (pilot->solid.accel > 0.) {
+      /*pilot->engine_glow += pilot->accel / pilot->speed * dt;*/
+      pilot->engine_glow += pilot->speed / pilot->accel * dt;
       if (pilot->engine_glow > 1.)
          pilot->engine_glow = 1.;
    }
    else if (pilot->engine_glow > 0.) {
-      pilot->engine_glow -= pilot->speed / pilot->thrust * dt * pilot->solid.mass;
+      pilot->engine_glow -= pilot->speed / pilot->accel * dt;
       if (pilot->engine_glow < 0.)
          pilot->engine_glow = 0.;
    }
@@ -2701,7 +2701,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
       /* has jump happened? */
       if (p->ptimer < 0.) {
          pilot_setFlag( p, PILOT_HYP_END );
-         pilot_setThrust( p, 0. );
+         pilot_setAccel( p, 0. );
          if (p->id == PLAYER_ID) /* player.p just broke hyperspace */
             player_setFlag( PLAYER_HOOK_HYPER );
          else {
@@ -2718,7 +2718,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
       }
 
       /* keep acceling - hyperspace uses much bigger accel */
-      pilot_setThrust( p, HYPERSPACE_THRUST*p->solid.mass/p->thrust );
+      pilot_setAccel( p, HYPERSPACE_ACCEL/p->accel );
    }
    /* engines getting ready for the jump */
    else if (pilot_isFlag(p, PILOT_HYP_BEGIN)) {
@@ -2768,7 +2768,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
          else {
             /* Done braking or no braking required. */
             pilot_setFlag( p, PILOT_HYP_BRAKE );
-            pilot_setThrust( p, 0. );
+            pilot_setAccel( p, 0. );
 
             /* Face system headed to. */
             sys  = cur_system->jumps[p->nav_hyperspace].target;
@@ -3767,7 +3767,7 @@ void pilots_update( double dt )
          pilot_hyperspace(p, dt);
       /* Entering hyperspace. */
       else if (pilot_isFlag(p, PILOT_HYP_END)) {
-         if ((VMOD(p->solid.vel) < 2*solid_maxspeed( &p->solid, p->speed, p->thrust) ) && (p->ptimer < 0.))
+         if ((VMOD(p->solid.vel) < 2*solid_maxspeed( &p->solid, p->speed, p->accel) ) && (p->ptimer < 0.))
             pilot_rmFlag(p, PILOT_HYP_END);
       }
       /* Must not be boarding to think. */

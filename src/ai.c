@@ -447,9 +447,9 @@ void ai_thinkApply( Pilot *p )
    pilot_acc   = CLAMP( -1., 1., pilot_acc );
    pilot_turn  = CLAMP( -1., 1., pilot_turn );
 
-   /* Set turn and thrust. */
+   /* Set turn and accel. */
    pilot_setTurn( p, pilot_turn );
-   pilot_setThrust( p, pilot_acc );
+   pilot_setAccel( p, pilot_acc );
 
    /* fire weapons if needed */
    if (ai_isFlag(AI_PRIMARY))
@@ -1568,8 +1568,7 @@ static int aiL_minbrakedist( lua_State *L )
             p->solid.vel.y - cur_pilot->solid.vel.y );
 
       /* Run the same calculations. */
-      time = VMOD(vv) /
-            (cur_pilot->thrust / cur_pilot->solid.mass);
+      time = VMOD(vv) / cur_pilot->accel;
 
       /* Get relative velocity. */
       vel = MIN(cur_pilot->speed - VMOD(p->solid.vel), VMOD(vv));
@@ -1577,7 +1576,7 @@ static int aiL_minbrakedist( lua_State *L )
          vel = 0.;
       /* Get distance to brake. */
       dist = vel*(time+1.1*M_PI/cur_pilot->turn) -
-         0.5*(cur_pilot->thrust/cur_pilot->solid.mass)*time*time;
+         0.5*(cur_pilot->accel)*time*time;
       lua_pushnumber(L, dist);
    }
    else
@@ -1621,7 +1620,7 @@ static int aiL_ismaxvel( lua_State *L )
 {
    //lua_pushboolean(L,(VMOD(cur_pilot->solid.vel) > (cur_pilot->speed-MIN_VEL_ERR)));
    lua_pushboolean(L,(VMOD(cur_pilot->solid.vel) >
-                   (solid_maxspeed(&cur_pilot->solid, cur_pilot->speed, cur_pilot->thrust)-MIN_VEL_ERR)));
+                   (solid_maxspeed(&cur_pilot->solid, cur_pilot->speed, cur_pilot->accel)-MIN_VEL_ERR)));
    return 1;
 }
 
@@ -2037,7 +2036,7 @@ static int aiL_iface( lua_State *L )
    /* some special case logic is added to optimize turn time. Reducing this to only the else cases would speed up the operation
       but cause the pilot to turn in the less-than-optimal direction sometimes when between 135 and 225 degrees off from the target */
    else {
-      /* signal that we're not in a productive direction for thrusting */
+      /* signal that we're not in a productive direction for accelerating */
       diff = M_PI;
       azimuthal_sign = 1;
 
@@ -2154,7 +2153,7 @@ static int aiL_idir( lua_State *L )
       some special case logic is added to optimize turn time. Reducing this to only the else cases would speed up the operation
       but cause the pilot to turn in the less-than-optimal direction sometimes when between 135 and 225 degrees off from the target */
    else {
-      /* signal that we're not in a productive direction for thrusting */
+      /* signal that we're not in a productive direction for accelerating */
       diff        = M_PI;
    }
 
@@ -2186,7 +2185,7 @@ static int aiL_brake( lua_State *L )
 {
    int ret = pilot_brake( cur_pilot );
 
-   pilot_acc = cur_pilot->solid.thrust / cur_pilot->thrust;
+   pilot_acc = cur_pilot->solid.accel / cur_pilot->accel;
    pilot_turn = cur_pilot->solid.dir_vel / cur_pilot->turn;
 
    lua_pushboolean(L, ret);

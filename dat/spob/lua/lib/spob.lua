@@ -18,19 +18,45 @@ function luaspob.init( spb, init_params )
 end
 
 local function msg_bribed_def ()
-   return {
+   local msg_def = {
       _([["Make it quick."]]),
       _([["Don't let anyone see you."]]),
       _([["Be quiet about this."]]),
    }
+   local fct = mem.spob:faction()
+   if fct == f_zalek then
+      return {
+         _([["PRIVILEGE OVERRIDE. LANDING AUTHORIZED."]]),
+         _([["DATABASE ERROR. AUTHORIZATION GRANTED."]]),
+         _([["LANDING DEN...  ...AUTHORIZED."]]),
+      }
+   end
+   return msg_def
 end
 
 local function msg_denied_def ()
-   return {
+   local msg_def = {
       _([["Landing request denied."]]),
       _([["Landing not authorized."]]),
       _([["Landing denied."]]),
    }
+   local fct = mem.spob:faction()
+   if fct == f_empire then
+      return {
+         _([["Paperwork not in order. Landing denied."]]),
+         _([["Credentials invalid. Landing request denied."]]),
+      }
+   elseif fct == f_zalek then
+      return {
+         _([["ACCESS DENIED."]]),
+         _([["CONNECTION REFUSED."]]), -- ssh error
+         fmt.f(_([["INVALID USER {player}."]]),{player=string.upper(player.name())}),
+         _([["CONNECTION CLOSED."]]),
+         _([["INSUFFICIENT PRIVILEGES."]]),
+         _([["LANDING PERMISSIONS NOT FOUND IN DATABASE."]]),
+      }
+   end
+   return msg_def
 end
 
 local function msg_granted_def ()
@@ -53,6 +79,7 @@ local function msg_granted_def ()
          _([["CONTROL DRONE AUTHORIZING LANDING."]]),
          _([["LANDING ALGORITHM INITIALIZED. PROCEED TO LANDING PAD."]]),
          _([["INITIALIZING LANDING PROCEDURE. AUTHORIZATION GRANTED."]]),
+         _([["DOCKING SEQUENCE TRANSMITTED."]]),
       }
    elseif fct == f_soromid then
       return {
@@ -85,13 +112,21 @@ local function msg_granted_def ()
 end
 
 local function msg_cantbribe_def ()
-   return {
+   local msg_def = {
       _([["We do not accept bribes."]]),
    }
+   local fct = mem.spob:faction()
+   if fct == f_zalek then
+      return {
+         _([["LANDING OVERRIDE PROGRAM NOT FOUND."]]),
+         _([["USER NOT IN SUDOERS."]]),
+      }
+   end
+   return msg_def
 end
 
 local function msg_trybribe_def ()
-   return {
+   local msg_def = {
       _([["I'll let you land for the modest price of {credits}."
 
 Pay {credits}?]]),
@@ -99,12 +134,31 @@ Pay {credits}?]]),
 
 Pay {credits}?]]),
    }
+   local fct = mem.spob:faction()
+   if fct == f_zalek then
+      return {
+         _([["{credits} REQUIRED FOR LANDING ACCESS."
+
+Pay {credits}?]]),
+         _([["LANDING OVERRIDE PROVIDED FOR {credits}."
+
+Pay {credits}?]]),
+      }
+   end
+   return msg_def
 end
 
 local function msg_dangerous_def ()
-   return {
+   local msg_def = {
       _([["I'm not dealing with dangerous criminals like you!"]]),
    }
+   local fct = mem.spob:faction()
+   if fct == f_zalek then
+      return {
+         _([["DANGER DETECTED. DISABLING LANDING PROTOCOL."]]),
+      }
+   end
+   return msg_def
 end
 
 function luaspob.load ()

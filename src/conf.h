@@ -14,7 +14,7 @@
 #define SAVE_COMPRESSION_DEFAULT       1     /**< Whether or not saved games should be compressed. */
 #define MOUSE_HIDE_DEFAULT             3.    /**< Time (in seconds) to hide mouse when not moved. */
 #define MOUSE_FLY_DEFAULT              1     /**< Whether or not middle clicking enables mouse flying. */
-#define MOUSE_THRUST_DEFAULT           1     /**< Whether or not to use mouse thrust controls. */
+#define MOUSE_ACCEL_DEFAULT            1     /**< Whether or not to use mouse accel controls. */
 #define MOUSE_DOUBLECLICK_TIME         0.5   /**< How long to consider double-clicks for. */
 #define MANUAL_ZOOM_DEFAULT            0     /**< Whether or not to enable manual zoom controls. */
 #define ZOOM_FAR_DEFAULT               0.5   /**< Far zoom distance (smaller is further) */
@@ -148,7 +148,7 @@ typedef struct PlayerConf_s {
    unsigned int doubletap_sens; /**< Double tap key sensibility (used for afterburn and cooldown). */
    double mouse_hide; /**< Time to hide mouse. */
    int mouse_fly; /**< Whether middle clicking enables mouse flying or not. */
-   int mouse_thrust; /**< Whether mouse flying controls thrust. */
+   int mouse_accel; /**< Whether mouse flying controls acceleration. */
    double mouse_doubleclick; /**< How long to consider double-clicks for. */
    double autonav_reset_dist; /**< Enemy distance condition for resetting autonav. */
    double autonav_reset_shield; /**< Shield condition for resetting autonav speed. */

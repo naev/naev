@@ -183,7 +183,7 @@ void conf_setGameplayDefaults (void)
    conf.doubletap_sens        = DOUBLETAP_SENSITIVITY_DEFAULT;
    conf.save_compress         = SAVE_COMPRESSION_DEFAULT;
    conf.mouse_hide            = MOUSE_HIDE_DEFAULT;
-   conf.mouse_thrust          = MOUSE_THRUST_DEFAULT;
+   conf.mouse_accel           = MOUSE_ACCEL_DEFAULT;
    conf.mouse_doubleclick     = MOUSE_DOUBLECLICK_TIME;
    conf.mouse_fly             = MOUSE_FLY_DEFAULT;
    conf.zoom_manual           = MANUAL_ZOOM_DEFAULT;
@@ -405,7 +405,8 @@ int conf_loadConfig ( const char* file )
       conf_loadInt( lEnv, "doubletap_sensitivity", conf.doubletap_sens );
       conf_loadFloat( lEnv, "mouse_hide", conf.mouse_hide );
       conf_loadBool( lEnv, "mouse_fly", conf.mouse_fly );
-      conf_loadInt( lEnv, "mouse_thrust", conf.mouse_thrust );
+      conf_loadInt( lEnv, "mouse_thrust", conf.mouse_accel ); /* Old format, TODO remove around 0.12.0 or so. */
+      conf_loadInt( lEnv, "mouse_accel", conf.mouse_accel );
       conf_loadFloat( lEnv, "mouse_doubleclick", conf.mouse_doubleclick );
       conf_loadFloat( lEnv, "autonav_reset_dist", conf.autonav_reset_dist );
       conf_loadFloat( lEnv, "autonav_reset_shield", conf.autonav_reset_shield );
@@ -1024,8 +1025,8 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("mouse_fly",conf.mouse_fly);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Mouse-flying thrust control"));
-   conf_saveInt("mouse_thrust",conf.mouse_thrust);
+   conf_saveComment(_("Mouse-flying accel control"));
+   conf_saveInt("mouse_accel",conf.mouse_accel);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Maximum interval to count as a double-click (0 disables)."));

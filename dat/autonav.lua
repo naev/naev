@@ -312,7 +312,7 @@ local function autonav_approach_vel( pos, vel, radius )
    local turn = math.rad(pp:turn()) -- TODO probably change the code
 
    local rvel = vel - pp:vel()
-   local timeFactor = math.pi/turn + rvel:mod() / pp:thrust() / 2
+   local timeFactor = math.pi/turn + rvel:mod() / pp:accel() / 2
 
    local Kp = 10
    local Kd = math.max( 5, 10*timeFactor )

@@ -11,6 +11,6 @@
  <specific type="modification">
   <speed_mod>5</speed_mod>
   <turn_mod>5</turn_mod>
-  <thrust_mod>5</thrust_mod>
+  <accel_mod>5</accel_mod>
  </specific>
 </outfit>

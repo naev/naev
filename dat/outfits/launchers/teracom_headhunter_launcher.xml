@@ -29,7 +29,7 @@ This is TeraCom's model Headhunter launcher. Though somewhat pricey and demandin
   <spfx_armour>ExpM</spfx_armour>
   <trail_generator x="-7">fire-missile</trail_generator>
   <duration blowup="armour">10.5</duration>
-  <thrust>200</thrust>
+  <accel>200</accel>
   <turn>25</turn>
   <speed_max>600</speed_max>
   <resist>20</resist>

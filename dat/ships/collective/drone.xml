@@ -39,7 +39,7 @@
  </slots>
  <stats>
   <turn_mod>20</turn_mod>
-  <thrust_mod>20</thrust_mod>
+  <accel_mod>20</accel_mod>
   <cargo_mod>-100</cargo_mod>
   <armour_mod>-20</armour_mod>
  </stats>

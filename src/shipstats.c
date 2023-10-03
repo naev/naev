@@ -88,7 +88,7 @@ static const ShipStatsLookup ss_lookup[] = {
 
    D__ELEM( SS_TYPE_D_SPEED_MOD,          speed_mod,           N_("Speed") ),
    D__ELEM( SS_TYPE_D_TURN_MOD,           turn_mod,            N_("Turn") ),
-   D__ELEM( SS_TYPE_D_THRUST_MOD,         thrust_mod,          N_("Thrust") ),
+   D__ELEM( SS_TYPE_D_ACCEL_MOD,          accel_mod,           N_("Accel") ),
    D__ELEM( SS_TYPE_D_CARGO_MOD,          cargo_mod,           N_("Cargo Space") ),
    D__ELEM( SS_TYPE_D_FUEL_MOD,           fuel_mod,            N_("Fuel Cpacity") ),
    D__ELEM( SS_TYPE_D_ARMOUR_MOD,         armour_mod,          N_("Armour Strength") ),
@@ -154,7 +154,7 @@ static const ShipStatsLookup ss_lookup[] = {
    DI_ELEM( SS_TYPE_D_JUMP_WARMUP,        jump_warmup,         N_("Jump Warmup") ),
    D__ELEM( SS_TYPE_D_MINING_BONUS,       mining_bonus,        N_("Mining Bonus") ),
 
-   A__ELEM( SS_TYPE_A_THRUST,             thrust,              N_("Thrust"),              _UNIT_ACCEL ),
+   A__ELEM( SS_TYPE_A_ACCEL,              accel,               N_("Accel"),              _UNIT_ACCEL ),
    A__ELEM( SS_TYPE_A_TURN,               turn,                N_("Turn Rate"),           _UNIT_ROTATION ),
    A__ELEM( SS_TYPE_A_SPEED,              speed,               N_("Maximum Speed"),       _UNIT_SPEED ),
    A__ELEM( SS_TYPE_A_ENERGY,             energy,              N_("Energy Capacity"),     _UNIT_ENERGY ),

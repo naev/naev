@@ -871,7 +871,7 @@ static int ship_parse( Ship *temp, const char *filename )
          xmlNodePtr cur = node->children;
          do {
             xml_onlyNodes(cur);
-            xmlr_float(cur,"thrust",temp->thrust);
+            xmlr_float(cur,"accel",temp->accel);
             xmlr_float(cur,"turn",temp->turn);
             xmlr_float(cur,"speed",temp->speed);
             /* All the xmlr_ stuff have continue cases. */
@@ -1026,7 +1026,7 @@ static int ship_parse( Ship *temp, const char *filename )
    MELEMENT(temp->armour==0.,"armour");
    MELEMENT((temp->cond!=NULL) && (temp->condstr==NULL), "condstr");
    MELEMENT((temp->cond==NULL) && (temp->condstr!=NULL), "cond");
-   /*MELEMENT(temp->thrust==0.,"thrust");
+   /*MELEMENT(temp->accel==0.,"accel");
    MELEMENT(temp->turn==0.,"turn");
    MELEMENT(temp->speed==0.,"speed");
    MELEMENT(temp->shield==0.,"shield");

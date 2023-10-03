@@ -13,7 +13,7 @@
  <fabricator>Za'lek Robotics</fabricator>
  <description>This is the Za'lek Bomber Drone. Built for attacking heavy ships. Not to be flown by the player.</description>
  <movement>
-  <thrust>180</thrust>
+  <accel>180</accel>
   <speed>360</speed>
   <turn>150</turn>
  </movement>

@@ -4,7 +4,7 @@
  <armour_mod>-25</armour_mod>
  <shield_mod>-25</shield_mod>
  <energy_mod>-25</energy_mod>
- <thrust_mod>-5</thrust_mod>
+ <accel_mod>-5</accel_mod>
  <speed_mod>-5</speed_mod>
  <turn_mod>-5</turn_mod>
  <fwd_damage>-10</fwd_damage>

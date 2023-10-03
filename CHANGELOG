@@ -92,6 +92,7 @@
       * Spobs can use communication graphics
       * Require OpenGL 3.2 for geometry shaders now
       * Support for advanced collisions such as weapon on weapon, allowing for point defense weapons
+      * Renamed thrust to accel for more consistency and simplifications
    * Fixes
       * Main menu more responsive when changing windows
       * Typo and wording fixes

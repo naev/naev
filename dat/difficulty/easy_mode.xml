@@ -8,7 +8,7 @@
  <tur_damage>15</tur_damage>
  <launch_damage>15</launch_damage>
  <fbay_damage>15</fbay_damage>
- <thrust_mod>10</thrust_mod>
+ <accel_mod>10</accel_mod>
  <speed_mod>10</speed_mod>
  <turn_mod>10</turn_mod>
 </difficulty>

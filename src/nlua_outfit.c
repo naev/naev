@@ -706,7 +706,7 @@ static int outfitL_specificStats( lua_State *L )
    lua_newtable(L);
    switch (o->type) {
       case OUTFIT_TYPE_AFTERBURNER:
-         SETFIELD( "thrust",     o->u.afb.thrust );
+         SETFIELD( "accel",      o->u.afb.accel );
          SETFIELD( "speed",      o->u.afb.speed );
          SETFIELD( "energy",     o->u.afb.energy );
          SETFIELD( "mass_limit", o->u.afb.mass_limit );
@@ -781,7 +781,7 @@ static int outfitL_specificStats( lua_State *L )
          SETFIELD( "speed",      o->u.lau.speed );
          SETFIELD( "speed_max",  o->u.lau.speed_max );
          SETFIELD( "turn",       o->u.lau.turn );
-         SETFIELD( "thrust",     o->u.lau.thrust );
+         SETFIELD( "accel",      o->u.lau.accel );
          SETFIELD( "energy",     o->u.lau.energy );
          SETFIELDB("seek",       o->u.lau.ai!=AMMO_AI_UNGUIDED );
          SETFIELDB("smart",      o->u.lau.ai==AMMO_AI_SMART );

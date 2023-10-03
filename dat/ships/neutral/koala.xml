@@ -38,7 +38,7 @@
   <structure size="small" />
  </slots>
  <stats>
-  <thrust_mod>-20</thrust_mod>
+  <accel_mod>-20</accel_mod>
   <speed_mod>-10</speed_mod>
   <turn_mod>-20</turn_mod>
   <cargo_mod>30</cargo_mod>

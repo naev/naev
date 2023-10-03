@@ -115,7 +115,7 @@ static void think_beam( Weapon* w, double dt );
 void weapon_minimap( double res, double w,
       double h, const RadarShape shape, double alpha );
 /* movement. */
-static void weapon_setThrust( Weapon *w, double thrust );
+static void weapon_setAccel( Weapon *w, double accel );
 static void weapon_setTurn( Weapon *w, double turn );
 
 /**
@@ -269,11 +269,11 @@ void weapon_minimap( double res, double w,
 }
 
 /**
- * @brief Sets the weapon's thrust.
+ * @brief Sets the weapon's accel.
  */
-static void weapon_setThrust( Weapon *w, double thrust )
+static void weapon_setAccel( Weapon *w, double accel )
 {
-   w->solid.thrust = thrust;
+   w->solid.accel = accel;
 }
 
 /**
@@ -302,7 +302,7 @@ static void think_seeker( Weapon* w, double dt )
 
    p = pilot_get(w->target.u.id); /* No null pilot */
    if (p==NULL) {
-      weapon_setThrust( w, 0. );
+      weapon_setAccel( w, 0. );
       weapon_setTurn( w, 0. );
       return;
    }
@@ -314,7 +314,7 @@ static void think_seeker( Weapon* w, double dt )
       case WEAPON_STATUS_LOCKING: /* Check to see if we can get a lock on. */
          w->timer2 -= dt;
          if (w->timer2 >= 0.)
-            weapon_setThrust( w, w->outfit->u.lau.thrust * w->outfit->u.lau.ammo_mass );
+            weapon_setAccel( w, w->outfit->u.lau.accel );
          else
             w->status = WEAPON_STATUS_OK; /* Weapon locked on. */
          /* Can't get jammed while locking on. */
@@ -339,7 +339,7 @@ static void think_seeker( Weapon* w, double dt )
                   else if (r < 0.8) {
                      w->status = WEAPON_STATUS_JAMMED;
                      weapon_setTurn( w, 0. );
-                     weapon_setThrust( w, w->outfit->u.lau.thrust * w->outfit->u.lau.ammo_mass );
+                     weapon_setAccel( w, w->outfit->u.lau.accel );
                   }
                   else {
                      w->status = WEAPON_STATUS_JAMMED_SLOWED;
@@ -427,7 +427,7 @@ static void think_seeker( Weapon* w, double dt )
    speed_mod = (w->status==WEAPON_STATUS_JAMMED_SLOWED) ? w->falloff : 1.;
 
    /* Limit speed here */
-   w->real_vel = MIN( speed_mod * w->outfit->u.lau.speed_max, w->real_vel + w->outfit->u.lau.thrust*dt );
+   w->real_vel = MIN( speed_mod * w->outfit->u.lau.speed_max, w->real_vel + w->outfit->u.lau.accel*dt );
    vec2_pset( &w->solid.vel, /* ewtrack * */ w->real_vel, w->solid.dir );
 
    /* Modulate max speed. */
@@ -1832,14 +1832,14 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
    rdir     = ANGLE(x,y);
 
    /* For unguided rockets: use a FD quasi-Newton algorithm to aim better. */
-   if (outfit_isLauncher(outfit) && outfit->u.lau.thrust > 0.) {
+   if (outfit_isLauncher(outfit) && outfit->u.lau.accel > 0.) {
       double vmin  = outfit->u.lau.speed;
 
       if (vmin > 0.) {
          /* Get various details. */
          double tt, ddir, dtdd, acc, pxv, ang, dvx, dvy;
          int niter = 5;
-         acc = outfit->u.lau.thrust;
+         acc = outfit->u.lau.accel;
 
          /* Get the relative velocity. */
          dvx = lead * (target_vel->x - vel->x);
@@ -2085,7 +2085,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    /* Launcher damage. */
    w->dam_mod *= parent->stats.launch_damage;
 
-   /* If thrust is 0. we assume it starts out at speed. */
+   /* If accel is 0. we assume it starts out at speed. */
    v = *vel;
    m = outfit->u.lau.speed;
    if (outfit->u.lau.speed_dispersion > 0.)
@@ -2097,9 +2097,9 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    mass        = w->outfit->u.lau.ammo_mass;
    w->timer    = w->outfit->u.lau.duration * parent->stats.launch_range;
    solid_init( &w->solid, mass, rdir, pos, &v, SOLID_UPDATE_EULER );
-   if (w->outfit->u.lau.thrust > 0.) {
-      weapon_setThrust( w, w->outfit->u.lau.thrust * mass );
-      /* Limit speed, we only relativize in the case it has thrust + initial speed. */
+   if (w->outfit->u.lau.accel > 0.) {
+      weapon_setAccel( w, w->outfit->u.lau.accel );
+      /* Limit speed, we only relativize in the case it has accel + initial speed. */
       w->solid.speed_max = w->outfit->u.lau.speed_max;
       if (w->outfit->u.lau.speed > 0.)
          w->solid.speed_max = -1; /* No limit. */

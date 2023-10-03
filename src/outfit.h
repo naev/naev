@@ -231,7 +231,7 @@ typedef struct OutfitLauncherData_ {
    double speed;     /**< Initial speed. */
    double speed_max; /**< Maximum speed. Defaults to speed if not set. */
    double turn;      /**< Turn velocity in rad/s. */
-   double thrust;    /**< Acceleration */
+   double accel;     /**< Acceleration */
    double energy;    /**< Energy usage */
    Damage dmg;       /**< Damage done. */
    double radius;    /**< Explosion radius. */
@@ -272,7 +272,7 @@ typedef struct OutfitAfterburnerData_ {
    int sound_on;     /**< Sound of the afterburner turning on */
    int sound;        /**< Sound of the afterburner being on */
    int sound_off;    /**< Sound of the afterburner turning off */
-   double thrust;    /**< Percent of thrust increase based on ship base. */
+   double accel;     /**< Percent of accel increase based on ship base. */
    double speed;     /**< Percent of speed to increase based on ship base. */
    double energy;    /**< Energy usage while active */
    double mass_limit;/**< Limit at which effectiveness starts to drop. */

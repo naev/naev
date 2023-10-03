@@ -12,7 +12,7 @@
  <trail_generator x="-15" y="-6" h="0">fire-thin</trail_generator>
  <trail_generator x="-15" y="6" h="0">fire-thin</trail_generator>
  <fabricator>Aerosys</fabricator>
- <description>The star product of Aerosys, the Hyena quickly has also become a favourite of guerrilla and paramilitary groups far and wide. Their top-notch thrust combined with fast reaction time allow them to exhaust enemy energy supplies while wearing them down. While Aerosys claim that their ships are only sold to reputable pilots, it's suspected that they sell to anyone willing to pay, as it seems there are countless Hyenas among the ranks of the more notorious and unruly pilots.</description>
+ <description>The star product of Aerosys, the Hyena quickly has also become a favourite of guerrilla and paramilitary groups far and wide. Their top-notch acceleration combined with fast reaction time allow them to exhaust enemy energy supplies while wearing them down. While Aerosys claim that their ships are only sold to reputable pilots, it's suspected that they sell to anyone willing to pay, as it seems there are countless Hyenas among the ranks of the more notorious and unruly pilots.</description>
  <health>
   <armour>25</armour>
   <armour_regen>0</armour_regen>
@@ -41,7 +41,7 @@
  <stats>
   <speed_mod>5</speed_mod>
   <turn_mod>25</turn_mod>
-  <thrust_mod>75</thrust_mod>
+  <accel_mod>75</accel_mod>
   <armour_mod>-50</armour_mod>
  </stats>
  <tags>
