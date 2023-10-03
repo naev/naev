@@ -218,7 +218,7 @@ int dsys_saveSystem( StarSystem *sys )
             xmlw_elem( writer, "density", "%f", ast->density );
          if (ast->maxspeed != ASTEROID_DEFAULT_MAXSPEED)
             xmlw_elem( writer, "maxspeed", "%f", ast->maxspeed );
-         if (ast->accel != ASTEROID_DEFAULT_THRUST)
+         if (ast->accel != ASTEROID_DEFAULT_ACCEL)
             xmlw_elem( writer, "accel", "%f", ast->accel );
          xmlw_endElem( writer ); /* "asteroid" */
       }

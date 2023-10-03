@@ -2766,7 +2766,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    a->radius   = 0.;
    a->maxspeed = ASTEROID_DEFAULT_MAXSPEED;
    a->maxspin  = ASTEROID_DEFAULT_MAXSPIN;
-   a->thrust   = ASTEROID_DEFAULT_THRUST;
+   a->accel    = ASTEROID_DEFAULT_ACCEL;
 
    /* Parse label if available. */
    xmlr_attr_strd( node, "label", a->label );
@@ -2779,7 +2779,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
       xmlr_float( cur, "density", a->density );
       xmlr_float( cur, "radius", a->radius );
       xmlr_float( cur, "maxspeed", a->maxspeed );
-      xmlr_float( cur, "thrust", a->thrust );
+      xmlr_float( cur, "accel", a->accel );
 
       /* Handle types of asteroids. */
       if (xml_isNode(cur,"group")) {

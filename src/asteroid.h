@@ -16,7 +16,7 @@
 #define ASTEROID_DEFAULT_DENSITY    1.  /**< Default density of an asteroid field. */
 #define ASTEROID_DEFAULT_MAXSPEED   20. /**< Max speed of asteroids in an asteroid field. */
 #define ASTEROID_DEFAULT_MAXSPIN    M_PI/5 /**< Max spin of asteroids in an asteroid field. */
-#define ASTEROID_DEFAULT_THRUST     1.  /**< Thrust applied when asteroid leaves asteroid field. */
+#define ASTEROID_DEFAULT_ACCEL     1.  /**< Acceleration applied when asteroid leaves asteroid field. */
 
 #define ASTEROID_REF_AREA     250e3    /**< The "density" value in an asteroid field means 1 rock per this area. */
 

@@ -2436,7 +2436,7 @@ void player_toggleMouseFly (void)
       player_rmFlag(PLAYER_MFLY);
       player_message( "#o%s", _("Mouse flying disabled.") );
 
-      if (conf.mouse_thrust)
+      if (conf.mouse_accel)
          player_accelOver();
    }
 }
@@ -2480,7 +2480,7 @@ static int player_thinkMouseFly (void)
    r = sqrt(pow2(x-px) + pow2(y-py));
    if (r > 50.) { /* Ignore mouse input within a 50 px radius of the centre. */
       pilot_face(player.p, atan2( y - py, x - px));
-      if (conf.mouse_thrust) { /* Only alter thrust if option is enabled. */
+      if (conf.mouse_accel) { /* Only alter thrust if option is enabled. */
          double acc = CLAMP(0., 1., (r - 100.) / 200.);
          acc = 3. * pow2(acc) - 2. * pow(acc, 3.);
          /* Only accelerate when within 180 degrees of the intended direction. */
