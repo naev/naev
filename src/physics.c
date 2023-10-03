@@ -225,6 +225,7 @@ static void solid_update_rk4( Solid *obj, double dt )
  */
 double solid_maxspeed( const Solid *s, double speed, double accel )
 {
+   (void) s;
    return speed + accel / 3.;
 }
 
