@@ -196,7 +196,7 @@ function advice ()
       table.insert( adv, msg_fuel )
    end
 
-   local hostiles = pp:getEnemies( nil, nil, true )
+   local hostiles = pp:getEnemies()
    local msg_hostiles = _([["When being overwhelmed by hostile enemies, you can sometimes get out of a pinch by bribing them so that they leave you alone. Not all pilots or factions are susceptible to bribing, however."]])
    table.insert( adv_rnd, msg_hostiles )
    if #hostiles > 0 then

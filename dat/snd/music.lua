@@ -374,7 +374,7 @@ local factional_combat = {
    Pirate     = { "battlesomething2.ogg", "blackmoor_tides.ogg", add_neutral = true },
    Empire     = { "galacticbattle.ogg", "battlesomething2.ogg", add_neutral = true },
    Goddard    = { "flf_battle1.ogg", "battlesomething1.ogg", add_neutral = true },
-   Dvaered    = { "flf_battle1.ogg", "battlesomething1.ogg", "battlesomething2.ogg", add_neutral = true },
+   Dvaered    = { "flf_battle1.ogg", "battlesomething2.ogg", "for_grandeur.ogg", add_neutral = true },
    ["FLF"]    = { "flf_battle1.ogg", "battlesomething2.ogg", add_neutral = true },
    Frontier   = { "flf_battle1.ogg", add_neutral = true },
    Sirius     = { "galacticbattle.ogg", "battlesomething1.ogg", add_neutral = true },
@@ -484,7 +484,7 @@ local function should_combat ()
    end
 
    -- Nearby enemies targetting the player will also switch
-   local enemies = pp:getEnemies( enemy_dist, nil, true )
+   local enemies = pp:getEnemies( enemy_dist )
    for k,v in ipairs(enemies) do
       local tgt = v:target()
       if tgt and tgt:withPlayer() then
