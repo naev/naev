@@ -212,7 +212,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
             ws->active = 0;
 
             /* Weapons are weird still. */
-            pilot_weaponSetShootStop( p, ws, -1 );
+            n += pilot_weaponSetShootStop( p, ws, -1 );
 
             for (int i=0; i<l; i++) {
                PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
@@ -227,7 +227,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
             ws->active = 1;
 
             /* Weapons are weird still :/ */
-            pilot_weapSetFire( p, ws, -1 );
+            n += pilot_weapSetFire( p, ws, -1 );
 
             for (int i=0; i<l; i++) {
                PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
@@ -264,7 +264,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
             ws->active = 1;
 
             /* Weapons are weird still :/ */
-            pilot_weapSetFire( p, ws, -1 );
+            n += pilot_weapSetFire( p, ws, -1 );
 
             /* Turn on outfits. */
             for (int i=0; i<l; i++) {
@@ -277,8 +277,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          }
          else if (type < 0) {
             ws->active = 0;
-            if (pilot_weaponSetShootStop( p, ws, -1 )) /* De-activate weapon set. */
-               n += 1; /* To trigger calcStats. */
+            n += pilot_weaponSetShootStop( p, ws, -1 ); /* De-activate weapon set. */
 
             /* Weapons are weird still. */
             pilot_weaponSetShootStop( p, ws, -1 );
@@ -933,6 +932,7 @@ void pilot_stopBeam( Pilot *p, PilotOutfitSlot *w )
 
    w->timer = rate_mod * (used / w->outfit->u.bem.duration) * outfit_delay( w->outfit );
    w->u.beamid = 0;
+   w->state = PILOT_OUTFIT_OFF;
 }
 
 /**
