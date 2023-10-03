@@ -180,59 +180,9 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          break;
 
       case WEAPSET_TYPE_TOGGLE:
-         /* Activation philosophy here is to turn on while pressed and off
-          * when it's not held anymore. */
-
-         /* Must not be disabled or cooling down. */
-         if ((pilot_isDisabled(p)) || (pilot_isFlag(p, PILOT_COOLDOWN)))
-            return;
-
-         /* Clear change variables. */
-         l  = array_size(ws->slots);
-         n = 0;
-         pilotoutfit_modified = 0;
-
-         if (type > 0) {
-            ws->active = 1;
-
-            /* Turn on outfits. */
-            for (int i=0; i<l; i++) {
-               PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
-               if (pos->state != PILOT_OUTFIT_OFF)
-                  continue;
-
-               n += pilot_outfitOn( p, pos );
-            }
-         }
-         else if (type < 0) {
-            ws->active = 0;
-            if (pilot_weaponSetShootStop( p, ws, -1 )) /* De-activate weapon set. */
-               n += 1; /* To trigger calcStats. */
-
-            /* Turn off outfits. */
-            for (int i=0; i<l; i++) {
-               PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
-               if (pos->state != PILOT_OUTFIT_ON)
-                  continue;
-
-               n += pilot_outfitOff( p, pos );
-            }
-         }
-
-         /* Must recalculate stats. */
-         if ((n > 0) || pilotoutfit_modified) {
-            /* pilot_destealth should run calcStats already. */
-            if (isstealth && (type>0))
-               pilot_destealth( p );
-            else
-               pilot_calcStats( p );
-         }
-         break;
-
-      case WEAPSET_TYPE_HOLD:
          /* The behaviour here is more complex. What we do is consider a group
           * to be entirely off if not all outfits are either on or cooling down.
-          * In the case it's deemed to be off, all outfits that are off get turned
+          *  In the case it's deemed to be off, all outfits that are off get turned
           * on, otherwise all outfits that are on are turrned to cooling down. */
          /* Only care about presses. */
          if (type < 0)
@@ -259,6 +209,11 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
 
          /* Turn them off. */
          if (on) {
+            ws->active = 0;
+
+            /* Weapons are weird still. */
+            pilot_weaponSetShootStop( p, ws, -1 );
+
             for (int i=0; i<l; i++) {
                PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
                if (pos->state != PILOT_OUTFIT_ON)
@@ -269,6 +224,11 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          }
          /* Turn them on. */
          else {
+            ws->active = 1;
+
+            /* Weapons are weird still :/ */
+            pilot_weapSetFire( p, ws, -1 );
+
             for (int i=0; i<l; i++) {
                PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
                if (pos->state != PILOT_OUTFIT_OFF)
@@ -285,9 +245,63 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
             else
                pilot_calcStats( p );
          }
-
          break;
 
+      case WEAPSET_TYPE_HOLD:
+         /* Activation philosophy here is to turn on while pressed and off
+          * when it's not held anymore. */
+
+         /* Must not be disabled or cooling down. */
+         if ((pilot_isDisabled(p)) || (pilot_isFlag(p, PILOT_COOLDOWN)))
+            return;
+
+         /* Clear change variables. */
+         l  = array_size(ws->slots);
+         n = 0;
+         pilotoutfit_modified = 0;
+
+         if (type > 0) {
+            ws->active = 1;
+
+            /* Weapons are weird still :/ */
+            pilot_weapSetFire( p, ws, -1 );
+
+            /* Turn on outfits. */
+            for (int i=0; i<l; i++) {
+               PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
+               if (pos->state != PILOT_OUTFIT_OFF)
+                  continue;
+
+               n += pilot_outfitOn( p, pos );
+            }
+         }
+         else if (type < 0) {
+            ws->active = 0;
+            if (pilot_weaponSetShootStop( p, ws, -1 )) /* De-activate weapon set. */
+               n += 1; /* To trigger calcStats. */
+
+            /* Weapons are weird still. */
+            pilot_weaponSetShootStop( p, ws, -1 );
+
+            /* Turn off outfits. */
+            for (int i=0; i<l; i++) {
+               PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
+               if (pos->state != PILOT_OUTFIT_ON)
+                  continue;
+
+               n += pilot_outfitOff( p, pos );
+            }
+         }
+
+         /* Must recalculate stats. */
+         if ((n > 0) || pilotoutfit_modified) {
+            /* pilot_destealth should run calcStats already. */
+            if (isstealth && (type>0))
+               pilot_destealth( p );
+            else
+               pilot_calcStats( p );
+         }
+         break;
    }
 }
 
@@ -350,12 +364,6 @@ void pilot_weapSetType( Pilot* p, int id, WeaponSetType type )
 {
    PilotWeaponSet *ws = pilot_weapSet(p,id);
    ws->type = type;
-
-   /* Set levels just in case. */
-   if ((ws->type == WEAPSET_TYPE_TOGGLE) ||
-         (ws->type == WEAPSET_TYPE_HOLD))
-      for (int i=0; i<array_size(ws->slots); i++)
-         ws->slots[i].level = 0;
 }
 
 /**
