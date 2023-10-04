@@ -20,8 +20,7 @@ end
 outfits.standard = {}
 outfits.standard.weapons = {
    -- Heavy Weapons
-   "Lancelot Bay",
-   "Hyena Bay",
+   "Lancelot Bay", "Hyena Bay",
    "Heavy Laser Turret", "Railgun Turret", "Heavy Ion Turret",
    "Railgun", "Grave Beam",
    -- Medium Weapons
@@ -49,8 +48,7 @@ outfits.standard.utility = {
 }
 outfits.standard.structural = {
    -- Heavy Structural
-   "Battery III", "Shield Capacitor III", "Shield Capacitor IV",
-   "Reactor Class III",
+   "Battery III", "Shield Capacitor III", "Reactor Class III",
    "Large Shield Booster",
    -- Medium Structural
    "Battery II", "Shield Capacitor II", "Reactor Class II",

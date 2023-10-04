@@ -7,8 +7,7 @@ local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 local pirate_outfits = eoutfits.merge{{
    -- Heavy Weapons
-   "Pirate Hyena Dock",
-   "Pirate Hyena Bay",
+   "Pirate Hyena Dock", "Pirate Hyena Bay",
    "Heavy Ripper Turret", "Railgun Turret", "Ragnarok Beam",
    "Railgun", "Heavy Laser Turret", "Grave Beam", "Heavy Ion Turret",
    "Heavy Laser Turret", "Grave Beam", "Heavy Ion Turret",
@@ -34,8 +33,7 @@ local pirate_outfits = eoutfits.merge{{
    "Unicorp Medium Afterburner", "Droid Repair Crew",
    "Scanning Combat AI",
    -- Heavy Structural
-   "Battery III", "Shield Capacitor III", "Shield Capacitor IV",
-   "Reactor Class III",
+   "Battery III", "Shield Capacitor III", "Reactor Class III",
    "Large Shield Booster",
    -- Medium Structural
    "Battery II", "Shield Capacitor II", "Reactor Class II",
