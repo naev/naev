@@ -287,7 +287,7 @@ cores.elite = {
 --]]
 -- Normal exceptions
 cores.standard.engines["Kestrel"] = function ()
-   return choose_one{ "Unicorp Eagle 6500 Engine", "Krain Remige Engine" }
+   return "Krain Remige Engine"
 end
 cores.standard.engines["Pirate Kestrel"] = cores.standard.engines["Kestrel"]
 cores.standard.engines["Starbridge"] = function ()
@@ -300,9 +300,13 @@ end
 
 -- Elite exceptions
 cores.elite.engines["Kestrel"] = function ()
-   return choose_one{ "Tricon Typhoon Engine", "Krain Remige Engine" }
+   return "Krain Remige Engine"
 end
 cores.elite.engines["Pirate Kestrel"] = cores.elite.engines["Kestrel"]
+cores.elite.hulls["Kestrel"] = function ()
+   return "Unicorp D-58 Heavy Plating"
+end
+cores.elite.hulls["Pirate Kestrel"] = cores.elite.hulls["Kestrel"]
 cores.elite.engines["Starbridge"] = function ()
    return choose_one{ "Tricon Cyclone II Engine", "Krain Patagium Engine" }
 end
