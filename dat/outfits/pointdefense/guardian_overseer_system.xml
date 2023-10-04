@@ -24,7 +24,7 @@
   <falloff>850</falloff>
   <energy>70</energy>
   <heatup>80</heatup>
-  <trackmin>5000</trackmin>
+  <trackmin>0</trackmin>
   <trackmax>5000</trackmax>
   <damage>
    <type>energy</type>
