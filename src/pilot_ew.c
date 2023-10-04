@@ -389,7 +389,7 @@ int pilot_inRangeJump( const Pilot *p, int i )
 double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double trackmin, double trackmax )
 {
    double mod = p->stats.ew_track * p->stats.ew_detect;
-   return CLAMP( 0., 1., (t->ew_signature * mod - trackmin) / (trackmax - trackmin) );
+   return CLAMP( 0., 1., (t->ew_signature * mod - trackmin) / (trackmax - trackmin + 1e-5) ); /* Avoid divide by zero if trackmax==trackmin. */
 }
 
 /**
