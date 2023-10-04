@@ -1500,9 +1500,9 @@ static void equipment_genShipList( unsigned int wid )
    /* Ship stats in alt text. */
    for (int i=0; i<nships; i++) {
       s  = player_getShip( cships[i].caption );
-      cships[i].alt = malloc( STRMAX_SHORT );
-      l  = snprintf( &cships[i].alt[0], STRMAX_SHORT, _("Ship Stats\n") );
-      l  = equipment_shipStats( &cships[i].alt[0], STRMAX_SHORT-l, s, 1, 1 );
+      cships[i].alt = malloc( STRMAX );
+      l  = snprintf( &cships[i].alt[0], STRMAX, _("Ship Stats\n") );
+      l  = equipment_shipStats( &cships[i].alt[0], STRMAX-l, s, 1, 1 );
       if (l == 0) {
          free( cships[i].alt );
          cships[i].alt = NULL;
