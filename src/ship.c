@@ -44,7 +44,7 @@
 #define BUTTON_WIDTH  80 /**< Button width in ship view window. */
 #define BUTTON_HEIGHT 30 /**< Button height in ship view window. */
 
-#define STATS_DESC_MAX 256 /**< Maximum length for statistics description. */
+#define STATS_DESC_MAX 512 /**< Maximum length for statistics description. */
 
 static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
 
