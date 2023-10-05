@@ -1453,20 +1453,30 @@ void pilot_weaponSetDefault( Pilot *p )
    int i;
 
    /* If current set isn't a fire group no need to worry. */
-   if (p->weapon_sets[ p->active_set ].type == WEAPSET_TYPE_SWITCH) {
+   if ((p->weapon_sets[ p->active_set ].type==WEAPSET_TYPE_SWITCH)
+         && (array_size(p->weapon_sets[ p->active_set ].slots)>0)) {
       /* Update active weapon set. */
       pilot_weapSetUpdateOutfits( p, &p->weapon_sets[ p->active_set ] );
       return;
    }
 
    /* Find first fire group. */
-   for (i=0; i<PILOT_WEAPON_SETS; i++)
-      if (p->weapon_sets[i].type == WEAPSET_TYPE_SWITCH)
+   for (i=0; i<PILOT_WEAPON_SETS; i++) {
+      const PilotWeaponSet *ws = &p->weapon_sets[i];
+      if ((ws->type==WEAPSET_TYPE_SWITCH) && (array_size(ws->slots)>0))
          break;
+   }
 
    /* Set active set to first if all fire groups or first non-fire group. */
-   if (i >= PILOT_WEAPON_SETS)
-      p->active_set = 0;
+   if (i >= PILOT_WEAPON_SETS) {
+      /* Fallback to first switch group. */
+      for (i=0; i<PILOT_WEAPON_SETS; i++) {
+         const PilotWeaponSet *ws = &p->weapon_sets[i];
+         if (ws->type==WEAPSET_TYPE_SWITCH)
+            break;
+      }
+      p->active_set = (i>=PILOT_WEAPON_SETS) ? 0 : i;
+   }
    else
       p->active_set = i;
 
