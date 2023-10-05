@@ -604,9 +604,6 @@ static void info_openWeapons( unsigned int wid )
    wlen = w - 220 - 20;
    x = 220;
    y -= 100;
-   window_addText( wid, x, y, wlen, 20, 0, "txtLocal", NULL, NULL,
-         _("Current Weapon Set Settings"));
-   y -= 20;
    window_addButton( wid, x+10, y, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnToggle", _("Cycle Mode"), weapons_toggleList );
    y -= BUTTON_HEIGHT+10;
@@ -628,15 +625,12 @@ static void info_openWeapons( unsigned int wid )
    window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
          "chkInrange", _("Only shoot weapons that are in range"), weapons_inrange,
          pilot_weapSetInrangeCheck( player.p, info_eq_weaps.weapons ) );
-   y -= 38;
-   window_addText( wid, x, y, wlen, 20, 0, "txtGlobal", NULL, NULL,
-         _("Global Settings"));
    y -= 28;
    window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
-         "chkAutoweap", _("Automatically handle weapons"), weapons_autoweap, player.p->autoweap );
+         "chkHelper", _("Dogfight visual aiming helper (all sets)"), aim_lines, player.p->aimLines );
    y -= 28;
    window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
-         "chkHelper", _("Dogfight visual aiming helper"), aim_lines, player.p->aimLines );
+         "chkAutoweap", _("Automatically handle all weapons sets"), weapons_autoweap, player.p->autoweap );
 
    /* List. Has to be generated after checkboxes. */
    weapons_genList( wid );
