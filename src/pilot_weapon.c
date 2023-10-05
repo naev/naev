@@ -634,6 +634,27 @@ void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o )
 }
 
 /**
+ * @brief Clears a weapon set.
+ *
+ *    @param p Pilot to clear weapon set.
+ *    @param id Weapon set to clear.
+ */
+void pilot_weapSetClear( Pilot* p, int id )
+{
+   PilotWeaponSet *ws = pilot_weapSet(p,id);
+   ws->type = WEAPSET_TYPE_SWITCH;
+   array_free( ws->slots );
+   ws->slots = NULL;
+
+   /* Update range. */
+   pilot_weapSetUpdateRange( p, ws );
+
+   /* Update if needed. */
+   if (id == p->active_set)
+      pilot_weapSetUpdateOutfits( p, ws );
+}
+
+/**
  * @brief Checks to see if a slot is in a weapon set.
  *
  *    @param p Pilot to check.

@@ -36,6 +36,7 @@ const char *pilot_weapSetTypeName( WeaponSetType t );
 void pilot_weapSetRmSlot( Pilot *p, int id, OutfitSlotType type );
 void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level );
 void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o );
+void pilot_weapSetClear( Pilot* p, int id );
 int pilot_weapSetCheck( Pilot* p, int id, const PilotOutfitSlot *o );
 double pilot_weapSetRange( Pilot* p, int id, int level );
 double pilot_weapSetSpeed( Pilot* p, int id, int level );

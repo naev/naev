@@ -113,6 +113,7 @@ static void ship_update( unsigned int wid );
 static void weapons_genList( unsigned int wid );
 static void weapons_updateList( unsigned int wid, const char *str );
 static void weapons_toggleList( unsigned int wid, const char *str );
+static void weapons_clear( unsigned int wid, const char *str );
 static void weapons_autoweap( unsigned int wid, const char *str );
 static void weapons_inrange( unsigned int wid, const char *str );
 static void weapons_manual( unsigned int wid, const char *str );
@@ -603,9 +604,11 @@ static void info_openWeapons( unsigned int wid )
    /* Checkboxes. */
    wlen = w - 220 - 20;
    x = 220;
-   y -= 100;
+   y -= 95;
    window_addButton( wid, x+10, y, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnToggle", _("Cycle Mode"), weapons_toggleList );
+   window_addButton( wid, x+10+(BUTTON_WIDTH+10), y, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnClear", _("Clear"), weapons_clear );
    y -= BUTTON_HEIGHT+10;
    window_addText( wid, x+10, y, wlen, 100, 0, "txtSMode", NULL, NULL,
          _("Cycles through the following modes:\n"
@@ -739,6 +742,15 @@ static void weapons_toggleList( unsigned int wid, const char *str )
 
    /* Set default if needs updating. */
    pilot_weaponSetDefault( player.p );
+
+   /* Must regen. */
+   weapons_genList( wid );
+}
+
+static void weapons_clear( unsigned int wid, const char *str )
+{
+   (void) str;
+   pilot_weapSetClear( player.p, info_eq_weaps.weapons );
 
    /* Must regen. */
    weapons_genList( wid );
