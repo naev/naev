@@ -362,6 +362,7 @@ static int tkL_list( lua_State *L )
  *
  *    @luatparam String name Name of the window.
  *    @luatparam Table outfits Table of outfits to sell/buy. It is possible to use either outfits or outfit names (strings).
+ *    @luatparam boolean blackmarket Whether or not the merchant is a black market merchant.
  * @luafunc merchantOutfit
  */
 static int tkL_merchantOutfit( lua_State *L )
@@ -394,7 +395,7 @@ static int tkL_merchantOutfit( lua_State *L )
       h = LAND_HEIGHT + 0.5 * (SCREEN_H - LAND_HEIGHT);
    }
    wid = window_create( "wdwMerchantOutfit", name, -1, -1, w, h );
-   outfits_open( wid, outfits );
+   outfits_open( wid, outfits, lua_toboolean(L,3) );
 
    return 0;
 }

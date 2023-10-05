@@ -138,10 +138,10 @@ static void window_caption (void);
 static void fps_init (void);
 static double fps_elapsed (void);
 static void fps_control (void);
-static void update_all (void);
+static void update_all( int dohooks );
 /* Misc. */
 static void loadscreen_update( double done, const char *msg );
-void main_loop( int update ); /* dialogue.c */
+void main_loop( int nested ); /* externed in dialogue.c */
 
 /**
  * @brief Flags naev to quit.
@@ -449,7 +449,7 @@ int main( int argc, char** argv )
          input_handle(&event); /* handles all the events and player keybinds */
       }
 
-      main_loop( 1 );
+      main_loop( 0 );
    }
 
    /* Save configuration. */
@@ -721,7 +721,7 @@ void unload_all (void)
 /**
  * @brief Split main loop from main() for secondary loop hack in toolkit.c.
  */
-void main_loop( int update )
+void main_loop( int nested )
 {
    /*
     * Control FPS.
@@ -734,18 +734,19 @@ void main_loop( int update )
    input_update( real_dt ); /* handle key repeats. */
    sound_update( real_dt ); /* Update sounds. */
    toolkit_update(); /* to simulate key repetition and get rid of windows */
-   if (!paused && update) {
+   if (!paused) {
       /* Important that we pass real_dt here otherwise we get a dt feedback loop which isn't pretty. */
       player_updateAutonav( real_dt );
-      update_all(); /* update game */
+      update_all( !nested ); /* update game */
    }
-   else if (!dialogue_isOpen()) {
+   else if (!nested) {
       /* We run the exclusion end here to handle any hooks that are potentially manually triggered by hook.trigger. */
       hook_exclusionEnd( 0. );
    }
 
    /* Safe hook should be run every frame regardless of whether game is paused or not. */
-   hooks_run( "safe" );
+   if (!nested)
+      hooks_run( "safe" );
 
    /* Checks to see if we want to land. */
    space_checkLand();
@@ -965,7 +966,7 @@ double fps_current (void)
  *
  *    @brief Mainly uses game dt.
  */
-static void update_all (void)
+static void update_all( int dohooks )
 {
    if ((real_dt > 0.25) && (fps_skipped==0)) { /* slow timers down and rerun calculations */
       fps_skipped = 1;
@@ -983,7 +984,7 @@ static void update_all (void)
       /* Update as much as needed, evenly. */
       accumdt = 0.;
       for (int i=0; i<n; i++) {
-         update_routine( microdt, 0 );
+         update_routine( microdt, dohooks );
          /* OK, so we need a bit of hackish logic here in case we are chopping up a
           * very large dt and it turns out time compression changes so we're now
           * updating in "normal time compression" zone. This amounts to many updates
@@ -998,7 +999,7 @@ static void update_all (void)
       /* Note we don't touch game_dt so that fps_display works well */
    }
    else /* Standard, just update with the last dt */
-      update_routine( game_dt, 0 );
+      update_routine( game_dt, dohooks );
 
    fps_skipped = 0;
 }
@@ -1007,11 +1008,11 @@ static void update_all (void)
  * @brief Actually runs the updates
  *
  *    @param[in] dt Current delta tick.
- *    @param[in] enter_sys Whether this is the initial update upon entering the system.
+ *    @param[in] dohooks Whether or not we want to do hooks, such as the initial update upon entering a system.
  */
-void update_routine( double dt, int enter_sys )
+void update_routine( double dt, int dohooks )
 {
-   if (!enter_sys) {
+   if (dohooks) {
       hook_exclusionStart();
 
       /* Update time. */
@@ -1037,7 +1038,7 @@ void update_routine( double dt, int enter_sys )
    /* Update the elapsed time, should be with all the modifications and such. */
    elapsed_time_mod += dt;
 
-   if (!enter_sys) {
+   if (dohooks) {
       HookParam h[3];
       hook_exclusionEnd( dt );
       /* Hook set up. */

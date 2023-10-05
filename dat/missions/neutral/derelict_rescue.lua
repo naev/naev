@@ -49,7 +49,9 @@ function create ()
    vn.label("refuse")
    vn.na(_("You refuse to help them and leave them to the mercy of the stars."))
 
-   der.addMiscLog(fmt.f(_([[You refused to rescue the crew of a derelict ship and left them to float in {sys}.]]), {sys=system.cur()}))
+   vn.func( function ()
+      der.addMiscLog(fmt.f(_([[You refused to rescue the crew of a derelict ship and left them to float in {sys}.]]), {sys=system.cur()}))
+   end )
 
    vn.sfx( der.sfx.unboard )
    vn.done()

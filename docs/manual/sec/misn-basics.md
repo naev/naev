@@ -135,7 +135,7 @@ Next is an example of a unique event. The Finding Taiomi event has a 100\% of ap
 ### Memory Model
 \label{sec:misn-basic-mem}
 
-By default, variables in Lua scripts are not saved when the player saves the game. This means that all the values you have set up will be cleared if the player saves and loads. This can lead to problems wit scripts that do the following:
+By default, variables in Lua scripts are not saved when the player saves the game. This means that all the values you have set up will be cleared if the player saves and loads. This can lead to problems with scripts that do the following:
 
 ```lua
 local dest

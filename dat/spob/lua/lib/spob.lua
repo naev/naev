@@ -232,7 +232,8 @@ function luaspob.comm ()
       end
       player.pay( -bribe_cost )
       mem.bribed = true
-      ccomm.nameboxUpdateSpob( mem.spob, mem.bribed )
+      mem.params.bribed = true
+      ccomm.nameboxUpdateSpob( mem.spob, mem.params )
    end )
    spb( mem.msg_bribed )
    vn.jump("menu")

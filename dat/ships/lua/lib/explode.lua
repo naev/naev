@@ -66,7 +66,7 @@ local function setup( params )
       end
 
       if mem.dtimer < 0 then
-         p:rm()
+         p:explode()
       end
    end
 
