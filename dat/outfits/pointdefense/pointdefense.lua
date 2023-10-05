@@ -1,8 +1,8 @@
-local range, range2, hitships, trackmin
+local range, range2, hitships, trackmax
 
 function onload( o )
-   local _dps, _disps, _eps, _trackmax
-   _dps, _disps, _eps, range, trackmin, _trackmax = o:weapstats()
+   local _dps, _disps, _eps, _trackmin
+   _dps, _disps, _eps, range, _trackmin, trackmax = o:weapstats()
    range2 = range*range
    hitships = not o:missShips()
 end
@@ -53,7 +53,7 @@ function update( p, po, _dt )
          if #pall > 0 then
             local ptarget = {}
             for k,e in ipairs(pall) do
-               if e:signature() < trackmin then
+               if e:signature() < trackmax then
                   table.insert( ptarget, e )
                end
             end

@@ -7,8 +7,7 @@ local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 local pirate_outfits = eoutfits.merge{{
    -- Heavy Weapons
-   "Pirate Hyena Dock",
-   "Pirate Hyena Bay",
+   "Pirate Hyena Dock", "Pirate Hyena Bay",
    "Heavy Ripper Turret", "Railgun Turret", "Ragnarok Beam",
    "Railgun", "Heavy Laser Turret", "Grave Beam", "Heavy Ion Turret",
    "Heavy Laser Turret", "Grave Beam", "Heavy Ion Turret",
@@ -34,8 +33,7 @@ local pirate_outfits = eoutfits.merge{{
    "Unicorp Medium Afterburner", "Droid Repair Crew",
    "Scanning Combat AI",
    -- Heavy Structural
-   "Battery III", "Shield Capacitor III", "Shield Capacitor IV",
-   "Reactor Class III",
+   "Battery III", "Shield Capacitor III", "Reactor Class III",
    "Large Shield Booster",
    -- Medium Structural
    "Battery II", "Shield Capacitor II", "Reactor Class II",
@@ -56,10 +54,8 @@ local pirate_params = {
       } end,
 }
 local pirate_cores = {
-   ["Pirate Kestrel"] = function (p)
-         local c = ecores.get( p, { systems=pirate_class, hulls=pirate_class } )
-         table.insert( c, choose_one{ "Nexus Bolt 3000 Engine", "Krain Remige Engine", "Tricon Typhoon Engine", } )
-         return c
+   ["Pirate Kestrel"] = function (_p)
+         return { "Krain Remige Engine", "Unicorp PT-500 Core System", "Unicorp D-58 Heavy Plating" }
       end,
    ["Pirate Starbridge"] = function (p)
          local c = ecores.get( p, { systems=pirate_class, hulls=pirate_class } )
