@@ -446,15 +446,60 @@ void pilot_weapSetVolley( Pilot* p, int id, int volley )
  */
 const char *pilot_weapSetName( Pilot* p, int id )
 {
+   static char setname[STRMAX_SHORT];
+   const char *base, *type;
    PilotWeaponSet *ws = pilot_weapSet(p,id);
-   if (array_size(ws->slots)==0)
-      return _("Unused");
+   type = base = NULL;
+
    switch (ws->type) {
-      case WEAPSET_TYPE_SWITCH: return _("Weapons - Switch");  break;
-      case WEAPSET_TYPE_TOGGLE: return _("Outfits - Toggle"); break;
-      case WEAPSET_TYPE_HOLD: return _("Outfits - Hold"); break;
+      case WEAPSET_TYPE_SWITCH:
+         type = p_("weapset","Switch");
+         break;
+      case WEAPSET_TYPE_TOGGLE:
+         type = p_("weapset","Toggle");
+         break;
+      case WEAPSET_TYPE_HOLD:
+         type = p_("weapset","Hold");
+         break;
+      default:
+         type = p_("weapset","Unknown");
+         break;
    }
-   return NULL;
+
+   if (array_size(ws->slots)==0)
+      base = _("Empty");
+   else {
+      int has_weap = 0;
+      int has_util = 0;
+      int has_stru = 0;
+      for (int i=0; i<array_size(ws->slots); i++) {
+         PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
+         switch (pos->sslot->slot.type) {
+            case OUTFIT_SLOT_STRUCTURE:
+               has_stru++;
+               break;
+            case OUTFIT_SLOT_UTILITY:
+               has_util++;
+               break;
+            case OUTFIT_SLOT_WEAPON:
+               has_weap++;
+               break;
+            default:
+               break;
+         }
+      }
+      if (has_weap && !has_util && !has_stru)
+         base = p_("weapset","Weapons");
+      else if (!has_weap && has_util && !has_stru)
+         base = p_("weapset","Utilities");
+      else if (!has_weap && !has_util && has_stru)
+         base = p_("weapset","Structurals");
+      else
+         base = p_("weapset","Mixed");
+   }
+
+   snprintf( setname, sizeof(setname), p_("weapset", "%s - %s"), base, type );
+   return setname;
 }
 
 /**
