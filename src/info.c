@@ -596,7 +596,7 @@ static void info_openWeapons( unsigned int wid )
    info_eq_weaps.canmodify = 0;
 
    /* Custom widget for legend. */
-   y = -220;
+   y = -240;
    window_addCust( wid, 220, y, w-200-60, 100, "cstLegend", 0,
          weapons_renderLegend, NULL, NULL, NULL, NULL );
 
@@ -670,7 +670,7 @@ static void weapons_genList( unsigned int wid )
       buf[i] = strdup( tbuf );
    }
    window_addList( wid, 20+180+20, -40,
-         w - (20+180+20+20), 180,
+         w - (20+180+20+20), 200,
          "lstWeapSets", buf, PILOT_WEAPON_SETS,
          0, weapons_updateList, weapons_toggleList );
    window_setFocus( wid, "lstWeapSets" );
