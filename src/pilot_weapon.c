@@ -527,10 +527,6 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
       return;
    }
 
-   /* See if we have to change weapon set type. */
-   if ((ws->type==WEAPSET_TYPE_SWITCH) && !outfit_isWeapon(oo))
-      pilot_weapSetType( p, id, WEAPSET_TYPE_TOGGLE );
-
    /* Add it. */
    slot        = &array_grow( &ws->slots );
    slot->level = level;
