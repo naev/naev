@@ -114,6 +114,7 @@ static void weapons_genList( unsigned int wid );
 static void weapons_updateList( unsigned int wid, const char *str );
 static void weapons_toggleList( unsigned int wid, const char *str );
 static void weapons_clear( unsigned int wid, const char *str );
+static void weapons_clearAll( unsigned int wid, const char *str );
 static void weapons_autoweap( unsigned int wid, const char *str );
 static void weapons_inrange( unsigned int wid, const char *str );
 static void weapons_manual( unsigned int wid, const char *str );
@@ -609,6 +610,8 @@ static void info_openWeapons( unsigned int wid )
          "btnToggle", _("Cycle Mode"), weapons_toggleList );
    window_addButton( wid, x+10+(BUTTON_WIDTH+10), y, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClear", _("Clear"), weapons_clear );
+   window_addButton( wid, x+10+(BUTTON_WIDTH+10)*2, y, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnClearAll", _("Clear All"), weapons_clearAll );
    y -= BUTTON_HEIGHT+10;
    window_addText( wid, x+10, y, wlen, 100, 0, "txtSMode", NULL, NULL,
          _("Cycles through the following modes:\n"
@@ -747,10 +750,32 @@ static void weapons_toggleList( unsigned int wid, const char *str )
    weapons_genList( wid );
 }
 
+/**
+ * @brief Clears the currently selected weapon set.
+ */
 static void weapons_clear( unsigned int wid, const char *str )
 {
    (void) str;
    pilot_weapSetClear( player.p, info_eq_weaps.weapons );
+
+   /* Must regen. */
+   weapons_genList( wid );
+}
+
+/**
+ * @brief Clears all the weapon sets.
+ */
+static void weapons_clearAll( unsigned int wid, const char *str )
+{
+   (void) str;
+   int sure = dialogue_YesNoRaw( _("Clear All Weapon Sets?"),
+         _("Are you sure you want to clear all your current weapon sets?") );
+   if (!sure)
+      return;
+
+   /* Clear them all. */
+   for (int i=0; i<PILOT_WEAPON_SETS; i++)
+      pilot_weapSetClear( player.p, i );
 
    /* Must regen. */
    weapons_genList( wid );
