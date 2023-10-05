@@ -469,11 +469,17 @@ const char *pilot_weapSetName( Pilot* p, int id )
    if (array_size(ws->slots)==0)
       base = _("Empty");
    else {
+      const Outfit *o = NULL;
+      int not_same = 0;
       int has_weap = 0;
       int has_util = 0;
       int has_stru = 0;
       for (int i=0; i<array_size(ws->slots); i++) {
-         PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
+         const PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
+         if (o==NULL)
+            o = pos->outfit;
+         else if(o!=pos->outfit)
+            not_same = 1;
          switch (pos->sslot->slot.type) {
             case OUTFIT_SLOT_STRUCTURE:
                has_stru++;
@@ -488,7 +494,9 @@ const char *pilot_weapSetName( Pilot* p, int id )
                break;
          }
       }
-      if (has_weap && !has_util && !has_stru)
+      if (not_same==0)
+         base = _(o->name);
+      else if (has_weap && !has_util && !has_stru)
          base = p_("weapset","Weapons");
       else if (!has_weap && has_util && !has_stru)
          base = p_("weapset","Utilities");
@@ -498,7 +506,7 @@ const char *pilot_weapSetName( Pilot* p, int id )
          base = p_("weapset","Mixed");
    }
 
-   snprintf( setname, sizeof(setname), p_("weapset", "%s - %s"), base, type );
+   snprintf( setname, sizeof(setname), p_("weapset", "%s - %s"), type, base );
    return setname;
 }
 
