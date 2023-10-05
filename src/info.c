@@ -1253,7 +1253,7 @@ static void info_openMissions( unsigned int wid )
    /* Mission Description */
    window_addText( wid, 300+40, -40,
          w-300-60, h - BUTTON_HEIGHT - 120, 0, "txtDesc",
-         &gl_smallFont, NULL, NULL );
+         NULL, NULL, NULL );
 
    /* Put a map. */
    map_show( wid, 20, 20, 300, 260, 0.75, 0., 0. );
