@@ -1111,9 +1111,9 @@ static void info_openStandings( unsigned int wid )
    window_addImage( wid, 0, 0, 0, 0, "imgLogo", NULL, 0 );
 
    /* Text. */
-   window_addText( wid, lw+40, 0, (w-(lw+60)), 20, 1, "txtName",
+   window_addText( wid, lw+40, 0, (w-(lw+60)), 20, 0, "txtName",
          &gl_defFont, NULL, NULL );
-   window_addText( wid, lw+40, 0, (w-(lw+60)), 20, 1, "txtStanding",
+   window_addText( wid, lw+40, 0, (w-(lw+60)), 20, 0, "txtStanding",
          &gl_defFont, NULL, NULL );
    window_addText( wid, lw+40, 0, (w-(lw+60)), h-80, 0, "txtDescription",
          &gl_defFont, NULL, NULL );
@@ -1143,7 +1143,7 @@ static void info_openStandings( unsigned int wid )
 static void standings_update( unsigned int wid, const char *str )
 {
    (void) str;
-   int p, y;
+   int p, x, y;
    const glTexture *t;
    int w, h, lw, m, l;
    const int *flist;
@@ -1156,32 +1156,32 @@ static void standings_update( unsigned int wid, const char *str )
    p = toolkit_getListPos( wid, "lstStandings" );
 
    /* Render logo. */
+   x = lw+40;
+   y = -40;
    t = faction_logo( info_factions[p] );
    if (t != NULL) {
       int tw = t->w * (double)FACTION_LOGO_SM / MAX( t->w, t->h );
       int th = t->h * (double)FACTION_LOGO_SM / MAX( t->w, t->h );
       window_modifyImage( wid, "imgLogo", t, tw, th );
-      y  = -40;
-      window_moveWidget( wid, "imgLogo", lw+40 + (w-(lw+60)-tw)/2, y - (FACTION_LOGO_SM-th)/2 );
-      y -= FACTION_LOGO_SM;
+      window_moveWidget( wid, "imgLogo", x + (FACTION_LOGO_SM-tw), y - (FACTION_LOGO_SM-th)/2 );
+      x += FACTION_LOGO_SM+20;
+      //y -= FACTION_LOGO_SM;
    }
-   else {
+   else
       window_modifyImage( wid, "imgLogo", NULL, 0, 0 );
-      y = -20;
-   }
 
    /* Modify text. */
    y -= 10;
    m = round( faction_getPlayer( info_factions[p] ) );
-   snprintf( buf, sizeof(buf), "#%c%+d%%#0   [ %s ]",
+   snprintf( buf, sizeof(buf), p_("standings","#%c%+d%%#0   [ %s ]"),
          faction_getColourChar( info_factions[p] ), m,
          faction_getStandingText( info_factions[p] ) );
    window_modifyText( wid, "txtName", faction_longname( info_factions[p] ) );
-   window_moveWidget( wid, "txtName", lw+40, y );
+   window_moveWidget( wid, "txtName", x, y );
    y -= 20;
    window_modifyText( wid, "txtStanding", buf );
-   window_moveWidget( wid, "txtStanding", lw+40, y );
-   y -= 30;
+   window_moveWidget( wid, "txtStanding", x, y );
+   y -= 50;
    l  = scnprintf( buf, sizeof(buf), "%s\n\n", faction_description( info_factions[p] ) );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("You can have a maximum reputation of %.0f%% with this faction."), round(faction_reputationMax( info_factions[p] )) );
 
