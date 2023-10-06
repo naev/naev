@@ -216,6 +216,7 @@ stds.API_pilotoutfit = {globals={
    "outofenergy",
    "takeoff",
    "jumpin",
+   "board",
    "update",
    "mem", -- Automatically created using nlua_setenv().
 }}

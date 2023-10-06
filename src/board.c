@@ -70,6 +70,9 @@ int board_hook( void *data )
    hooks_runParam( "board", hparam );
    pilot_runHookParam(player.p, PILOT_HOOK_BOARDING, hparam, 1);
 
+   /* Run outfit stuff. */
+   pilot_outfitLOnboard( player.p, p );
+
    if (board_stopboard) {
       board_boarded = 0;
       return 0;
@@ -249,6 +252,9 @@ int pilot_board( Pilot *p )
    pilot_runHookParam(target, PILOT_HOOK_BOARD_ALL, hparam, 1);
    hparam[0].u.lp = target->id;
    pilot_runHookParam(p, PILOT_HOOK_BOARDING, hparam, 1);
+
+   /* Run outfit stuff. */
+   pilot_outfitLOnboard( p, target );
 
    return 1;
 }

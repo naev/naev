@@ -380,6 +380,7 @@ typedef struct Outfit_ {
    int lua_land;     /**< Run when the player lands. */
    int lua_takeoff;  /**< Run when the player takes off. */
    int lua_jumpin;   /**< Run when the player jumps in. */
+   int lua_board;    /**< Run when the player boards a ship. */
    /* Weapons only. */
    int lua_onimpact; /**< Run when weapon hits the enemy. */
    int lua_onmiss;   /**< Run when weapon particle expires. */

@@ -70,4 +70,5 @@ void pilot_outfitLOnscanned( Pilot *pilot, const Pilot *scanner );
 void pilot_outfitLOnland( Pilot *pilot );
 void pilot_outfitLOntakeoff( Pilot *pilot );
 void pilot_outfitLOnjumpin( Pilot *pilot );
+void pilot_outfitLOnboard( Pilot *pilot, const Pilot *target );
 void pilot_outfitLCleanup( Pilot *pilot );

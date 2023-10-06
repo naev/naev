@@ -133,6 +133,10 @@ end
 function jumpin( _p, _po )
 end
 
+-- Triggered when pilot boards a target ship
+function board( _p, _po, _target )
+end
+
 --[[
    Below are WEAPONS ONLY. However, they can be triggered by munitions,
    which share the memory with the ORIGINAL spawning outfit.

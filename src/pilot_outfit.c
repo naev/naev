@@ -1840,6 +1840,41 @@ void pilot_outfitLOnjumpin( Pilot *pilot )
    pilot_outfitLRun( pilot, outfitLOnjumpin, NULL );
 }
 
+static void outfitLOnboard( const Pilot *pilot, PilotOutfitSlot *po, const void *data )
+{
+   const Pilot *target;
+   int oldmem;
+   if (po->outfit->lua_onscanned == LUA_NOREF)
+      return;
+
+   nlua_env env = po->outfit->lua_env;
+   target = (const Pilot*) data;
+
+   /* Set the memory. */
+   oldmem = pilot_outfitLmem( po, env );
+
+   /* Set up the function: onscanned( p, po, stealthed ) */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_onscanned); /* f */
+   lua_pushpilot(naevL, pilot->id); /* f, p */
+   lua_pushpilotoutfit(naevL, po);  /* f, p, po */
+   lua_pushpilot(naevL, target->id); /* f, p, po, target */
+   if (nlua_pcall( env, 3, 0 )) {   /* */
+      outfitLRunWarning( pilot, po->outfit, "board", lua_tostring(naevL,-1) );
+      lua_pop(naevL, 1);
+   }
+   pilot_outfitLunmem( env, oldmem );
+}
+/**
+ * @brief Runs Lua outfits when pilot boards a target.
+ *
+ *    @param pilot Pilot being handled.
+ *    @param target Pilot being boarded.
+ */
+void pilot_outfitLOnboard( Pilot *pilot, const Pilot *target )
+{
+   pilot_outfitLRun( pilot, outfitLOnboard, target );
+}
+
 /**
  * @brief Handle cleanup hooks for outfits.
  *
@@ -1847,7 +1882,7 @@ void pilot_outfitLOnjumpin( Pilot *pilot )
  */
 void pilot_outfitLCleanup( Pilot *pilot )
 {
-   /* TODO we might want to run this on intrinsic outfits too.. */
+   /* TODO we might want to run this on intrinsic outfits too... */
    pilotoutfit_modified = 0;
    for (int i=0; i<array_size(pilot->outfits); i++) {
       int oldmem;
