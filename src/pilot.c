@@ -1777,6 +1777,7 @@ static void pilot_renderFramebufferBase( Pilot *p, GLuint fbo, double fw, double
 void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
 {
    double x,y, w,h;
+   double timeleft, elapsed;
    Effect *e = NULL;
 
    /* Transform coordinates. */
@@ -1791,8 +1792,15 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
       if (eiter->data->program==0)
          continue;
 
-      e = eiter;
-      break;
+      if (e==NULL) {
+         e = eiter;
+         timeleft = e->timer;
+         elapsed = e->elapsed;
+      }
+      else if (eiter->data==e->data) {
+         timeleft = MAX( e->timer, eiter->timer );
+         elapsed = MAX( e->elapsed, eiter->elapsed );
+      }
    }
 
    /* Render normally. */
@@ -1829,8 +1837,8 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
       gl_uniformMat4(ed->tex_mat, &tex_mat);
 
       glUniform3f( ed->dimensions, SCREEN_W, SCREEN_H, 1. );
-      glUniform1f( ed->u_timer, e->timer );
-      glUniform1f( ed->u_elapsed, e->elapsed );
+      glUniform1f( ed->u_timer, timeleft );
+      glUniform1f( ed->u_elapsed, elapsed );
       glUniform1f( ed->u_r, e->r );
       glUniform1f( ed->u_dir, p->solid.dir );
 
