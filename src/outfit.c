@@ -2460,6 +2460,8 @@ static int outfit_parse( Outfit* temp, const char* file )
    temp->lua_takeoff    = LUA_NOREF;
    temp->lua_jumpin     = LUA_NOREF;
    temp->lua_board      = LUA_NOREF;
+   temp->lua_keydoubletap = LUA_NOREF;
+   temp->lua_keyrelease = LUA_NOREF;
    temp->lua_onimpact   = LUA_NOREF;
    temp->lua_onmiss     = LUA_NOREF;
    temp->lua_price      = LUA_NOREF;
@@ -2808,6 +2810,8 @@ int outfit_load (void)
       o->lua_takeoff    = nlua_refenvtype( env, "takeoff",  LUA_TFUNCTION );
       o->lua_jumpin     = nlua_refenvtype( env, "jumpin",   LUA_TFUNCTION );
       o->lua_board      = nlua_refenvtype( env, "board",    LUA_TFUNCTION );
+      o->lua_keydoubletap= nlua_refenvtype(env, "keydoubletap",LUA_TFUNCTION );
+      o->lua_keyrelease = nlua_refenvtype( env, "keyrelease",LUA_TFUNCTION );
       o->lua_onimpact   = nlua_refenvtype( env, "onimpact", LUA_TFUNCTION );
       o->lua_onmiss     = nlua_refenvtype( env, "onmiss",   LUA_TFUNCTION );
       o->lua_price      = nlua_refenvtype( env, "price",    LUA_TFUNCTION );

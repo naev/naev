@@ -7,6 +7,12 @@
 
 #define PILOT_OUTFIT_LUA_UPDATE_DT     (1.0/10.0)   /* How often the Lua outfits run their update script (in seconds).  */
 
+typedef enum OutfitKey_ {
+   OUTFIT_KEY_ACCEL,
+   OUTFIT_KEY_LEFT,
+   OUTFIT_KEY_RIGHT,
+} OutfitKey;
+
 /* Augmentations of normal pilot API. */
 const char* pilot_outfitDescription( const Pilot *pilot, const Outfit *o );
 const char* pilot_outfitSummary( const Pilot *p, const Outfit *o, int withname );
@@ -71,4 +77,6 @@ void pilot_outfitLOnland( Pilot *pilot );
 void pilot_outfitLOntakeoff( Pilot *pilot );
 void pilot_outfitLOnjumpin( Pilot *pilot );
 void pilot_outfitLOnboard( Pilot *pilot, const Pilot *target );
+void pilot_outfitLOnkeydoubletap( Pilot *pilot, OutfitKey key );
+void pilot_outfitLOnkeyrelease( Pilot *pilot, OutfitKey key );
 void pilot_outfitLCleanup( Pilot *pilot );

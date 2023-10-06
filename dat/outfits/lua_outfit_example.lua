@@ -137,6 +137,14 @@ end
 function board( _p, _po, _target )
 end
 
+-- Triggered when the player double taps a specific key, which can be either "accel", "left", or "right"
+function keydoubletap( _p, _po, _key )
+end
+
+-- Triggered when the player releases a specific key, same as "keydoubletap"
+function keyrelease( _p, _po, _key )
+end
+
 --[[
    Below are WEAPONS ONLY. However, they can be triggered by munitions,
    which share the memory with the ORIGINAL spawning outfit.

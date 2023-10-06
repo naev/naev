@@ -698,10 +698,14 @@ static void input_key( int keynum, double value, double kabs, int repeat )
          player_accel(kabs);
       }
       else { /* prevent it from getting stuck */
-         if (isdoubletap)
+         if (isdoubletap) {
+            pilot_outfitLOnkeydoubletap( player.p, OUTFIT_KEY_ACCEL );
             pilot_afterburn( player.p );
-         else
+         }
+         else if (value==KEY_RELEASE) {
+            pilot_outfitLOnkeyrelease( player.p, OUTFIT_KEY_ACCEL );
             pilot_afterburnOver( player.p );
+         }
 
          if (value==KEY_PRESS) {
             player_restoreControl( PINPUT_MOVEMENT, NULL );
@@ -717,6 +721,11 @@ static void input_key( int keynum, double value, double kabs, int repeat )
 
    /* turning left */
    } else if (KEY("left") && !repeat) {
+      if (isdoubletap)
+         pilot_outfitLOnkeydoubletap( player.p, OUTFIT_KEY_LEFT );
+      else if (value==KEY_RELEASE)
+         pilot_outfitLOnkeyrelease( player.p, OUTFIT_KEY_LEFT );
+
       if (kabs >= 0.) {
          player_restoreControl( PINPUT_MOVEMENT, NULL );
          player_setFlag(PLAYER_TURN_LEFT);
@@ -737,6 +746,11 @@ static void input_key( int keynum, double value, double kabs, int repeat )
 
    /* turning right */
    } else if (KEY("right") && !repeat) {
+      if (isdoubletap)
+         pilot_outfitLOnkeydoubletap( player.p, OUTFIT_KEY_RIGHT );
+      else if (value==KEY_RELEASE)
+         pilot_outfitLOnkeyrelease( player.p, OUTFIT_KEY_RIGHT );
+
       if (kabs >= 0.) {
          player_restoreControl( PINPUT_MOVEMENT, NULL );
          player_setFlag(PLAYER_TURN_RIGHT);

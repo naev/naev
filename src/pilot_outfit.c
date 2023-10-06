@@ -33,6 +33,7 @@
  */
 static int pilot_hasOutfitLimit( const Pilot *p, const char *limit );
 static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot );
+static const char *outfitkeytostr( OutfitKey key );
 
 /**
  * @brief Updates the lockons on the pilot's launchers
@@ -1844,7 +1845,7 @@ static void outfitLOnboard( const Pilot *pilot, PilotOutfitSlot *po, const void 
 {
    const Pilot *target;
    int oldmem;
-   if (po->outfit->lua_onscanned == LUA_NOREF)
+   if (po->outfit->lua_board == LUA_NOREF)
       return;
 
    nlua_env env = po->outfit->lua_env;
@@ -1853,8 +1854,8 @@ static void outfitLOnboard( const Pilot *pilot, PilotOutfitSlot *po, const void 
    /* Set the memory. */
    oldmem = pilot_outfitLmem( po, env );
 
-   /* Set up the function: onscanned( p, po, stealthed ) */
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_onscanned); /* f */
+   /* Set up the function: board( p, po, stealthed ) */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_board); /* f */
    lua_pushpilot(naevL, pilot->id); /* f, p */
    lua_pushpilotoutfit(naevL, po);  /* f, p, po */
    lua_pushpilot(naevL, target->id); /* f, p, po, target */
@@ -1873,6 +1874,77 @@ static void outfitLOnboard( const Pilot *pilot, PilotOutfitSlot *po, const void 
 void pilot_outfitLOnboard( Pilot *pilot, const Pilot *target )
 {
    pilot_outfitLRun( pilot, outfitLOnboard, target );
+}
+
+static const char *outfitkeytostr( OutfitKey key )
+{
+   switch (key) {
+      case OUTFIT_KEY_ACCEL:
+         return "accel";
+      case OUTFIT_KEY_LEFT:
+         return "left";
+      case OUTFIT_KEY_RIGHT:
+         return "right";
+   }
+   return NULL;
+}
+
+static void outfitLOnkeydoubletap( const Pilot *pilot, PilotOutfitSlot *po, const void *data )
+{
+   int oldmem;
+   OutfitKey key;
+   if (po->outfit->lua_keydoubletap == LUA_NOREF)
+      return;
+   key = *((const OutfitKey*) data);
+
+   nlua_env env = po->outfit->lua_env;
+
+   /* Set the memory. */
+   oldmem = pilot_outfitLmem( po, env );
+
+   /* Set up the function: takeoff( p, po ) */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_keydoubletap); /* f */
+   lua_pushpilot(naevL, pilot->id); /* f, p */
+   lua_pushpilotoutfit(naevL, po);  /* f, p, po */
+   lua_pushstring(naevL, outfitkeytostr(key) );
+   if (nlua_pcall( env, 3, 0 )) {   /* */
+      outfitLRunWarning( pilot, po->outfit, "keydoubletap", lua_tostring(naevL,-1) );
+      lua_pop(naevL, 1);
+   }
+   pilot_outfitLunmem( env, oldmem );
+}
+void pilot_outfitLOnkeydoubletap( Pilot *pilot, OutfitKey key )
+{
+   pilot_outfitLRun( pilot, outfitLOnkeydoubletap, &key );
+}
+
+static void outfitLOnkeyrelease( const Pilot *pilot, PilotOutfitSlot *po, const void *data )
+{
+   int oldmem;
+   OutfitKey key;
+   if (po->outfit->lua_keyrelease == LUA_NOREF)
+      return;
+   key = *((const OutfitKey*) data);
+
+   nlua_env env = po->outfit->lua_env;
+
+   /* Set the memory. */
+   oldmem = pilot_outfitLmem( po, env );
+
+   /* Set up the function: takeoff( p, po ) */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_keyrelease); /* f */
+   lua_pushpilot(naevL, pilot->id); /* f, p */
+   lua_pushpilotoutfit(naevL, po);  /* f, p, po */
+   lua_pushstring(naevL, outfitkeytostr(key) );
+   if (nlua_pcall( env, 3, 0 )) {   /* */
+      outfitLRunWarning( pilot, po->outfit, "keyrelease", lua_tostring(naevL,-1) );
+      lua_pop(naevL, 1);
+   }
+   pilot_outfitLunmem( env, oldmem );
+}
+void pilot_outfitLOnkeyrelease( Pilot *pilot, OutfitKey key )
+{
+   pilot_outfitLRun( pilot, outfitLOnkeyrelease, &key );
 }
 
 /**
