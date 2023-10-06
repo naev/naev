@@ -6,6 +6,7 @@
  <overwrite>avatar_of_sirichana</overwrite>
  <shader vertex="effect2x.vert">effects/avatar_of_sirichana.frag</shader>
  <buff/>
+ <priority>0</priority>
  <stats>
   <fwd_damage>25</fwd_damage>
   <tur_damage>25</tur_damage>
