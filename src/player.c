@@ -1,4 +1,6 @@
 /*
+         unsigned int t;
+
  * See Licensing and Copyright notice in naev.h
  */
 /**
@@ -2444,7 +2446,7 @@ void player_toggleMouseFly (void)
 /**
  * @brief Starts braking or active cooldown.
  */
-void player_brake(void)
+void player_cooldownBrake(void)
 {
    int stopped;
 

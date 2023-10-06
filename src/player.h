@@ -307,5 +307,5 @@ void player_hail (void);
 void player_hailSpob (void);
 void player_autohail (void);
 void player_toggleMouseFly (void);
-void player_brake (void);
+void player_cooldownBrake (void);
 void player_stealth (void);

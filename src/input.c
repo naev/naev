@@ -132,9 +132,8 @@ static Keybind *input_paste;
 /*
  * accel hacks
  */
-static unsigned int input_accelLast = 0; /**< Used to see if double tap accel. */
-static unsigned int input_revLast   = 0; /**< Used to see if double tap reverse. */
-static int input_accelButton        = 0; /**< Used to show whether accel is pressed. */
+static int doubletap_key         = -1; /**< Last key double tapped. */
+static unsigned int doubletap_t  = 0; /**< Used to see if double tap accel. */
 
 /*
  * Key repeat hack.
@@ -662,18 +661,30 @@ void input_update( double dt )
 static void input_key( int keynum, double value, double kabs, int repeat )
 {
    HookParam hparam[3];
+   int isdoubletap = 0;
 
    /* Repetition stuff. */
    if (conf.repeat_delay != 0) {
-      if ((value == KEY_PRESS) && !repeat) {
+      if ((value==KEY_PRESS) && !repeat) {
          repeat_key        = keynum;
          repeat_keyTimer   = SDL_GetTicks();
          repeat_keyCounter = 0;
       }
-      else if (value == KEY_RELEASE) {
+      else if (value==KEY_RELEASE) {
          repeat_key        = -1;
          repeat_keyTimer   = 0;
          repeat_keyCounter = 0;
+      }
+   }
+
+   /* Detect if double tap. */
+   if (value==KEY_PRESS) {
+      unsigned int t = SDL_GetTicks();
+      if ((keynum == doubletap_key) && (t-doubletap_t <= conf.doubletap_sens))
+         isdoubletap = 1;
+      else {
+         doubletap_key = keynum;
+         doubletap_t = t;
       }
    }
 
@@ -685,36 +696,23 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       if (kabs >= 0.) {
          player_restoreControl( PINPUT_MOVEMENT, NULL );
          player_accel(kabs);
-         input_accelButton = 1;
       }
       else { /* prevent it from getting stuck */
-         unsigned int t;
+         if (isdoubletap)
+            pilot_afterburn( player.p );
+         else
+            pilot_afterburnOver( player.p );
 
          if (value==KEY_PRESS) {
             player_restoreControl( PINPUT_MOVEMENT, NULL );
             player_setFlag(PLAYER_ACCEL);
             player_accel(1.);
-            input_accelButton = 1;
          }
-
          else if (value==KEY_RELEASE) {
             player_rmFlag(PLAYER_ACCEL);
-            input_accelButton = 0;
             if (!player_isFlag(PLAYER_REVERSE))
                player_accelOver();
          }
-
-         /* double tap accel = afterburn! */
-         t = SDL_GetTicks();
-         if ((conf.doubletap_sens != 0) &&
-               (value==KEY_PRESS) && INGAME() && NOHYP() && NODEAD() &&
-               (t-input_accelLast <= conf.doubletap_sens))
-            pilot_afterburn( player.p );
-         else if (value==KEY_RELEASE)
-            pilot_afterburnOver( player.p );
-
-         if (value==KEY_PRESS)
-            input_accelLast = t;
       }
 
    /* turning left */
@@ -759,8 +757,6 @@ static void input_key( int keynum, double value, double kabs, int repeat )
 
    /* turn around to face vel */
    } else if (KEY("reverse") && !repeat) {
-      unsigned int t;
-
       if (value==KEY_PRESS) {
          player_restoreControl( PINPUT_MOVEMENT, NULL );
          player_setFlag(PLAYER_REVERSE);
@@ -772,15 +768,9 @@ static void input_key( int keynum, double value, double kabs, int repeat )
             player_accelOver();
       }
 
-      /* double tap reverse = cooldown! */
-      t = SDL_GetTicks();
-      if ((conf.doubletap_sens != 0) &&
-            (value==KEY_PRESS) && INGAME() && NOHYP() && NODEAD() &&
-            (t-input_revLast <= conf.doubletap_sens))
-         player_brake();
-
-      if (value==KEY_PRESS)
-         input_revLast = t;
+      /* Double tap reverse = cooldown! */
+      if (isdoubletap)
+         player_cooldownBrake();
 
    /* try to enter stealth mode. */
    } else if (KEY("stealth") && !repeat && NOHYP() && NODEAD() && INGAME()) {
@@ -939,7 +929,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (KEY("cooldown") && NOHYP() && NOLAND() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) {
          player_restoreControl( PINPUT_BRAKING, NULL );
-         player_brake();
+         player_cooldownBrake();
       }
 
    /*
