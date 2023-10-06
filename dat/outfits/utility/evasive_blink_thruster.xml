@@ -8,10 +8,10 @@
   <price>470000</price>
   <gfx_store>blink_drive.webp</gfx_store>
   <description>TODO</description>
-  <desc_extra>TODO</desc_extra>
-  <limit>evasion</limit>
+  <desc_extra>Blinks you 300 units to the left or right, which can be triggered by double-tapping the left or right key. Can only be run once every 3 seconds. Performance degrades over 500 tonnes of mass.</desc_extra>
  </general>
  <specific type="modification">
   <lua>outfits/utility/evasive_blink_thruster.lua</lua>
+  <ew_signature>-10</ew_signature><!--Only for description-->
  </specific>
 </outfit>

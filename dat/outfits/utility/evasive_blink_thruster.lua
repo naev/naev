@@ -1,9 +1,9 @@
 local audio = require 'love.audio'
 local luaspfx = require 'luaspfx'
 
-local masslimit = 800^2 -- squared
+local masslimit = 500^2 -- squared
 local jumpdist = 300
-local cooldown = 1
+local cooldown = 3
 
 local sfx = audio.newSource( 'snd/sounds/blink.ogg' )
 
@@ -11,6 +11,7 @@ function init( p, po )
    po:state("off")
    mem.timer = 0
    mem.isp = (p == player.pilot())
+   po:set("ew_signature",-10) -- Have to set here because the outfit is never "on"
 end
 
 function update( _p, po, dt )
