@@ -1,4 +1,8 @@
-local pir = require "common.pirate"
+local pir
+
+function onload( _o )
+   pir = pir or require "common.pirate" -- Can't load at the beginning because missing factions
+end
 
 function init( p, po )
    if pir.isPirateShip( p ) then
