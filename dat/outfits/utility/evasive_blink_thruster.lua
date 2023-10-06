@@ -21,10 +21,7 @@ function update( _p, po, dt )
    end
 end
 
-function ontoggle( p, po, on )
-   -- Only care about turning on (outfit never has the "on" state)
-   if not on then return false end
-
+local function doblink( p, po, blinkdir )
    -- Not ready yet
    if mem.timer > 0 then return false end
 
@@ -37,15 +34,18 @@ function ontoggle( p, po, on )
       dist = dist * masslimit / m
    end
    local pos, vel = p:pos(), p:vel()
-   luaspfx.blink( pos ) -- Blink afterimage
+   luaspfx.blink( p, pos ) -- Blink afterimage
    p:effectAdd( "Blink" ) -- Cool "blink in" effect
    local dir = p:dir()
+   --[[
    local px, py = math.cos(dir), math.sin(dir)
    local vx, vy = vel:get()
    if px*vy - py*vx < 0 then -- z component of cross product
-      dir = dir + math.pi*0.5
-   else
+   --]]
+   if blinkdir > 0 then
       dir = dir - math.pi*0.5
+   else
+      dir = dir + math.pi*0.5
    end
    p:setPos( pos + vec2.newP( dist, dir ) )
    mem.timer = cooldown * p:shipstat("cooldown_mod",true)
@@ -56,4 +56,24 @@ function ontoggle( p, po, on )
    luaspfx.sfx( pos, vel, sfx )
 
    return true
+end
+
+function ontoggle( p, po, on )
+   -- Only care about turning on (outfit never has the "on" state)
+   if not on then return false end
+   local dir
+   if rnd.rnd() > 0.5 then
+      dir = 1
+   else
+      dir = -1
+   end
+   return doblink( p, po, dir )
+end
+
+function keydoubletap( p, po, key )
+   if key=="left" then
+      doblink( p, po, -1 )
+   elseif key=="right" then
+      doblink( p, po, 1 )
+   end
 end
