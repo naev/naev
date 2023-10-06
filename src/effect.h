@@ -48,7 +48,7 @@ typedef struct Effect_ {
    unsigned int parent; /**< Pilot it is being applied to. */
    double timer;        /**< Time left on the effect. */
    double duration;     /**< Duration of this effect. */
-   double strength;        /**< Scales the effect. */
+   double strength;     /**< Scales the effect. */
    double r;            /**< Random number. */
    double elapsed;      /**< Total elapsed time. */
 } Effect;

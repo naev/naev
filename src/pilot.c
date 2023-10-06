@@ -1784,14 +1784,13 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
    h = p->ship->gfx_space->sh;
    gl_gameToScreenCoords( &x, &y, p->solid.pos.x-w/2., p->solid.pos.y-h/2. );
 
-   /* Render effects. */
+   /* Render effects - already sorted by priority and then timer. */
    for (int i=0; i<array_size(p->effects); i++) {
    //for (int i=array_size(p->effects)-1; i>=0; i--) {
       Effect *eiter = &p->effects[i];
       if (eiter->data->program==0)
          continue;
 
-      /* Only render one effect for now. */
       e = eiter;
       break;
    }

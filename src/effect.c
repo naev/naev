@@ -33,12 +33,16 @@ static int effect_cmp( const void *p1, const void *p2 )
 }
 
 /**
- * @brief Compares effects based on timer.
+ * @brief Compares effects based on priority, then timer.
  */
 static int effect_cmpTimer( const void *p1, const void *p2 )
 {
    const Effect *e1 = p1;
    const Effect *e2 = p2;
+   if (e1->data->priority < e2->data->priority)
+      return -1;
+   else if (e1->data->priority > e2->data->priority)
+      return +1;
    return e1->timer - e2->timer;
 }
 
