@@ -7,6 +7,7 @@ local poi = require "common.poi"
 local misnvar = "poi_red_rackham"
 
 local reward = poi.data_str(1)
+local reward2 = outfit.get("Rackham's Razor")
 
 return function(mem)
    -- Must be locked
@@ -96,7 +97,10 @@ If this keeps up, the clan is going to tear itself apart. I think it's time to g
             vn.na(_(
                [[Your search of the ship eventually leads you to the ship's core systems, which you quickly realize was the site of some sort of explosion. The entire mainframe is fried beyond repair, leaving only the emergency lights and life support online. You also notice two charred skeletons nearby, whose half-burnt clothes mark the first as the captain of the ship, and the second as the leader of the pirates who had boarded it.]]))
             vn.na(_(
-               [[You quickly search the room, and discover evidence of a firefight between the captain and the pirate. You can't tell who won, judging by the result it might be fair to say they both lost. One thing is for certain though, a few blaster shots aren't enough to explain the explosion which clearly took place here. You do find a singed journal in the captain's pocket however, and start leafing through the most recent entries.]]))
+               [[You quickly search the room, and discover evidence of a fight between the captain and the pirate. Blaster burns pockmark the walls, and the captain's uniform is covered in bloodstained slashes. You note with some curiosity that the pirate seemed to have been using a curved, nanosteel saber instead of a blaster. You pick up the dusty blade and note its excellent craftsmanship. With the ornate engravings covering the blade, the sword is as much a work of art as it is a weapon.]]))
+            vn.na(_(
+               [[Despite the seemingly imbalanced weaponry at play, you can't tell for certain who won the duel. Judging by the result it might be fair to say they both lost. One thing is for certain though, a few blaster shots aren't enough to explain the explosion which clearly took place here. You do find a singed journal in the captain's pocket however, and start leafing through the most recent entries.]]))
+
             local log = vne.notebookStart()
             log(_([[Captain's log, UST 551:3480
 This route has been getting more dangerous of late, the pirates are more bold than ever. It's no surprise, considering the significant fortune we've been carving from the asteroids, but I've also heard talk of some great, charismatic pirate leader by the name of Red Rackham. Supposedly none have seen his ship and lived to tell the tale. Personally, I put little stock in tall tales of immortal pirates. What I do trust are my ship, and my men. Any pirate foolish enough to take us lightly will have a rude awakening indeed.]]))
@@ -109,9 +113,11 @@ They've taken over entire ship now, with Rackham himself leading the charge. He 
             vne.notebookEnd()
             reward = commodity.get("Gold")
             vn.na(fmt.f(_(
-               [[You carefully pocket the captain's notebook, your hands shaking in anticipation, then head to the cargo hold. Sure enough, you're greeted by hundreds of tons of pure {reward}, a sizeable haul even by modern standards. You load up as much as you can and then head back to your ship, pondering the unlikely end to this strange treasure hunt. You wonder idly if your name will show up some day in the legend of Red Rackham's treasure.]]), {
+               [[You carefully pocket the captain's notebook, your hands shaking in anticipation, then head to the cargo hold. Sure enough, you're greeted by hundreds of tons of pure {reward}, a sizeable haul even by modern standards. You load up as much as you can and then head back to your ship, pondering the unlikely end to this strange treasure hunt. It's only as you settle into your chair that you realize {reward2} is still in your hand. As you gaze at your reflection in the ornately engraved blade, you wonder idly if your name will show up some day in the legend of Red Rackham's treasure.]]), {
                reward = reward,
+               reward2 = reward2,
             }))
+            vn.na(fmt.reward(reward2))
          end
 
          -- Set up cargo for 2nd and 3rd mission
@@ -132,13 +138,24 @@ They've taken over entire ship now, with Rackham himself leading the charge. He 
          vn.func(function()
             if mvar == 0 then
                poi.data_give(1)
+            elseif mvar == 2 then
+               player.outfitAdd( reward2 )
+            end
+            if mvar < 2 then
+               poi.log(fmt.f(_(
+                  [[You found an old derelict pirate ship in the {sys} system and were able to recover {reward}.]]), {
+                  sys = mem.sys,
+                  reward = reward
+                  }))
+            elseif mvar == 2 then
+               poi.log(fmt.f(_(
+                  [[You found an old derelict pirate ship in the {sys} system and were able to recover {reward}, and also {reward2}.]]), {
+                  sys = mem.sys,
+                  reward = reward,
+                  reward2 = reward2
+                  }))
             end
             var.push(misnvar, mvar + 1)
-            poi.log(fmt.f(_(
-               [[You found an old derelict pirate ship in the {sys} system and were able to recover {reward}.]]), {
-               sys = mem.sys,
-               reward = reward
-            }))
          end)
          if mvar > 0 then
             add_cargo()
