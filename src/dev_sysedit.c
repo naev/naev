@@ -1051,7 +1051,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             };
 
             /* Threshold. */
-            double t = p->gfx_space->sw * p->gfx_space->sh / 4.; /* Radius^2 */
+            double t = POW2(p->radius); /* Radius^2 */
             t *= pow2(2.*sysedit_zoom);
 
             /* Try to select. */
