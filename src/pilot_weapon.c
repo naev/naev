@@ -447,9 +447,9 @@ void pilot_weapSetVolley( Pilot* p, int id, int volley )
 const char *pilot_weapSetName( Pilot* p, int id )
 {
    static char setname[STRMAX_SHORT];
-   const char *base, *type;
+   const char *base, *type, *problem;
    PilotWeaponSet *ws = pilot_weapSet(p,id);
-   type = base = NULL;
+   problem = type = base = NULL;
 
    switch (ws->type) {
       case WEAPSET_TYPE_SWITCH:
@@ -504,9 +504,16 @@ const char *pilot_weapSetName( Pilot* p, int id )
          base = p_("weapset","Structurals");
       else
          base = p_("weapset","Mixed");
+
+      /* Try to proactively detect issues with the weapon set. */
+      if (!has_weap && (ws->type==WEAPSET_TYPE_SWITCH))
+         problem = _("#rno weapons!#0");
    }
 
-   snprintf( setname, sizeof(setname), p_("weapset", "%s - %s"), type, base );
+   if (problem!=NULL)
+      snprintf( setname, sizeof(setname), p_("weapset", "#o%s - %s#0 [%s]"), type, base, problem );
+   else
+      snprintf( setname, sizeof(setname), p_("weapset", "%s - %s"), type, base );
    return setname;
 }
 
