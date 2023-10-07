@@ -1,26 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tech name="High Tech Upgrades 2">
+<tech name="High Tech Upgrades 3">
  <item>Auxiliary Proccessing Unit III</item>
+ <item>Auxiliary Proccessing Unit IV</item>
  <item>Battery III</item>
- <item>Battery IV</item>
  <item>Reactor Class II</item>
  <item>Reactor Class III</item>
  <item>Shield Capacitor III</item>
- <item>Shield Capacitor IV</item>
  <item>Biometal Armour</item>
  <item>Droid Repair Crew</item>
  <item>Hellburner</item>
+ <item>Unicorp Scrambler</item>
  <item>Milspec Scrambler</item>
- <item>Milspec Jammer</item>
  <item>Medium Weapon License</item>
- <item>Emergency Shield Booster</item>
- <item>Medium Fuel Pod</item>
- <item>Large Fuel Pod</item>
  <item>Weapons Ionizer</item>
- <item>Boarding Androids MK2</item>
  <item>Combat Hologram Projector</item>
  <item>Hyperbolic Blink Engine</item>
+ <item>Flicker Drive</item>
  <item>Weakness Harmonizer AI</item>
  <item>Emergency Stasis Inducer</item>
- <item>Neural Accelerator Interface</item>
+ <item>Cryogenic Repair Nanobots</item>
+ <item>Improved Stabilizer</item>
 </tech>
