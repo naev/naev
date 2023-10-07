@@ -211,6 +211,12 @@ function gen_outfits ()
       end
    end
 
+   -- Other special cases
+   local rr = "Rackham's Razor"
+   if player.outfitNum(rr) <= 0 and (var.peek("poi_red_rackham")>=3) then
+      table.insert( outfits, rr )
+   end
+
    return outfits
 end
 
