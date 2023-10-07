@@ -12,6 +12,15 @@ function init( p, po )
    mem.timer = 0
    mem.isp = (p == player.pilot())
    po:set("ew_signature",-10) -- Have to set here because the outfit is never "on"
+
+   if mem.isp then
+      for k,v in ipairs(p:outfits()) do
+         if v and v:typeBroad()=="Afterburner" then
+            mem.afterburner = true
+            break
+         end
+      end
+   end
 end
 
 function update( _p, po, dt )
@@ -37,18 +46,7 @@ local function doblink( p, po, blinkdir )
    local pos, vel = p:pos(), p:vel()
    luaspfx.blink( p, pos ) -- Blink afterimage
    p:effectAdd( "Blink" ) -- Cool "blink in" effect
-   local dir = p:dir()
-   --[[
-   local px, py = math.cos(dir), math.sin(dir)
-   local vx, vy = vel:get()
-   if px*vy - py*vx < 0 then -- z component of cross product
-   --]]
-   if blinkdir > 0 then
-      dir = dir - math.pi*0.5
-   else
-      dir = dir + math.pi*0.5
-   end
-   p:setPos( pos + vec2.newP( dist, dir ) )
+   p:setPos( pos + vec2.newP( dist, p:dir()+blinkdir ) )
    mem.timer = cooldown * p:shipstat("cooldown_mod",true)
    po:state("cooldown")
    po:progress(1)
@@ -62,19 +60,16 @@ end
 function ontoggle( p, po, on )
    -- Only care about turning on (outfit never has the "on" state)
    if not on then return false end
-   local dir
-   if rnd.rnd() > 0.5 then
-      dir = 1
-   else
-      dir = -1
-   end
-   return doblink( p, po, dir )
+   return doblink( p, po, 0 ) -- Goes forward
 end
 
 function keydoubletap( p, po, key )
-   if key=="left" then
-      doblink( p, po, -1 )
+   -- Only blink forward on double tap if no afterburner
+   if not mem.afterburner and key=="accel" then
+      doblink( p, po, 0 )
+   elseif key=="left" then
+      doblink( p, po, math.pi*0.5 )
    elseif key=="right" then
-      doblink( p, po, 1 )
+      doblink( p, po, -math.pi*0.5 )
    end
 end
