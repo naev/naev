@@ -733,7 +733,6 @@ static int naevL_menuInfo( lua_State *L )
    const char *str;
    int window;
 
-
    if (menu_open)
       return 0;
 
