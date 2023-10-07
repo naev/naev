@@ -94,6 +94,7 @@ static int pilotL_navSpob( lua_State *L );
 static int pilotL_navJump( lua_State *L );
 static int pilotL_weapsetActive( lua_State *L );
 static int pilotL_weapset( lua_State *L );
+static int pilotL_weapsetList( lua_State *L );
 static int pilotL_weapsetType( lua_State *L );
 static int pilotL_weapsetAdd( lua_State *L );
 static int pilotL_weapsetRm( lua_State *L );
@@ -277,6 +278,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "navJump", pilotL_navJump },
    { "weapsetActive", pilotL_weapsetActive },
    { "weapset", pilotL_weapset },
+   { "weapsetList", pilotL_weapsetList },
    { "weapsetType", pilotL_weapsetType },
    { "weapsetAdd", pilotL_weapsetAdd },
    { "weapsetRm", pilotL_weapsetRm },
@@ -1931,6 +1933,28 @@ static PilotOutfitSlot *luaL_checkslot( lua_State *L, Pilot *p, int idx )
       return NULL;
    }
    return s;
+}
+
+/**
+ * @brief Get a list of all the outfits in a weapon set.
+ *
+ *    @luatparam Pilot p Pilot to set weapon set outfit list of.
+ *    @luatparam integer id ID of the weapon set as shown in game (from 0 to 9).
+ *    @luatreturn table Table containing the slot ids of all outfits in the weapon set for use with functions such as pilot.outfitGet.
+ * @luafunc weapsetList
+ */
+static int pilotL_weapsetList( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   int id = luaL_checkweapset(L,2);
+   PilotWeaponSet *ws = &p->weapon_sets[id];
+
+   lua_newtable(L);
+   for (int i=0; i<array_size(ws->slots); i++) {
+      lua_pushinteger( L, ws->slots[i].slotid+1 );
+      lua_rawseti( L, -2, i+1 );
+   }
+   return 1;
 }
 
 /**
