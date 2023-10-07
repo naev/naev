@@ -24,7 +24,7 @@ local function activate( p, po )
       local mod = 1 - norm / radius
       local mass = math.pow( damage / 15, 2 )
       -- Damage and knockback
-      t:damage( damage, 0, penetration, "impact", p )
+      t:damage( damage, 0, penetration, "plasma", p )
       t:knockback( mass, vec2.newP( mod*radius, angle ), pos, 1 )
       -- Nasty effects
       t:effectAdd( "Plasma Burn", dur, dmg )

@@ -17,5 +17,5 @@ explode_init, explode_update = explib{
    exp_size_mod = 1.2,
    boom_params = exp_params,
    exp_params = exp_params,
-   dmgtype = "impact",
+   dmgtype = "kinetic",
 }

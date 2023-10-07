@@ -179,7 +179,7 @@ function update( p, po, dt )
             if mem.lust then
                p:effectAdd( "Blood Lust" )
             end
-            t:damage( dmg, 0, 100, "impact", p )
+            t:damage( dmg, 0, 100, "kinetic", p )
             t:knockback( p, 0.5 )
             -- Do the healing
             if mem.improved then
