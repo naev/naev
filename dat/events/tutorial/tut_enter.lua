@@ -18,35 +18,41 @@ local fmt = require "format"
 local tut = require "common.tutorial"
 local vn  = require "vn"
 
-function create ()
+local function check_unused_oufits ()
    local pp = player.pilot()
+   local o = {}
+   for k,v in ipairs(pp:outfits()) do
+      if v and v:toggleable() then
+         o[k] = true -- mark slot as needs checking
+      end
+   end
+   for wid=1,10 do
+      for k,v in ipairs(pp:weapsetList(wid)) do
+         o[v] = nil -- unmark as it is in weapon set
+      end
+   end
+   return o
+end
+
+function create ()
    local enter_delay = 5
 
    hook.land( "evt_done" )
 
    -- TODO we should probably allow looking at any faction not just empire
-   if not var.peek("tut_illegal") and pp:hasIllegal("Empire") then
+   if not var.peek("tut_illegal") and player.pilot():hasIllegal("Empire") then
       hook.timer( enter_delay, "tut_illegal" )
       return
    end
 
    --  If the player has not set up an outfit in a weapon set we have to warn them
    if not var.peek("tut_weapset") then
-      local o = {}
-      for k,v in ipairs(pp:outfits()) do
-         if v and v:toggleable() then
-            o[k] = true -- mark slot as needs checking
-         end
-      end
-      for wid=1,10 do
-         for k,v in ipairs(pp:weapsetList(wid)) do
-            o[v] = nil -- unmark as it is in weapon set
-         end
-      end
       -- Warn about remaining ones
+      local o = check_unused_oufits ()
       local hasunused = (next(o)~=nil)
       if hasunused then
-         hook.timer( enter_delay, "tut_weapset", o )
+         hook.timer( enter_delay, "tut_weapset" )
+         return
       end
    end
 
@@ -100,11 +106,15 @@ function tut_illegal ()
    evt.finish()
 end
 
-function tut_weapset( unused )
-   local unused_outfit, skipped
-   for k,v in ipairs(unused) do
-      unused_outfit = player.pilot():outfitGet(k)
+function tut_weapset ()
+   local unused = check_unused_oufits()
+   local hasunused = (next(unused)~=nil)
+   if not hasunused then
+      evt.finish()
+      return
    end
+   local unused_outfit =player.pilot():outfitGet(next(unused))
+   local skipped
 
    vn.clear()
    vn.scene()
