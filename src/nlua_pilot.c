@@ -1938,7 +1938,7 @@ static PilotOutfitSlot *luaL_checkslot( lua_State *L, Pilot *p, int idx )
  *
  *    @luatparam Pilot p Pilot to set weapon set type of.
  *    @luatparam integer id ID of the weapon set as shown in game (from 0 to 9).
- *    @luatparam string type Type of the weapon set. Can be either "change", "instant", or "toggle".
+ *    @luatparam string type Type of the weapon set. Can be either "switch", "toggle", or "hold".
  * @luafunc weapsetType
  */
 static int pilotL_weapsetType( lua_State *L )
@@ -1947,11 +1947,11 @@ static int pilotL_weapsetType( lua_State *L )
    int id = luaL_checkweapset(L,2);
    const char *type = luaL_checkstring(L,3);
    int typeid;
-   if (strcmp(type,"change")==0)
+   if (strcmp(type,"switch")==0)
       typeid = WEAPSET_TYPE_SWITCH;
-   else if (strcmp(type,"instant")==0)
-      typeid = WEAPSET_TYPE_TOGGLE;
    else if (strcmp(type,"toggle")==0)
+      typeid = WEAPSET_TYPE_TOGGLE;
+   else if (strcmp(type,"hold")==0)
       typeid = WEAPSET_TYPE_HOLD;
    else {
       NLUA_ERROR(L,_("Invalid weapon set type '%s'!"),type);
