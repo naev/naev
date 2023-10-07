@@ -4474,6 +4474,9 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
             continue;
          }
 
+         /* Clean up weapon set. */
+         pilot_weapSetClear( ship, id );
+
          /* Set inrange mode. */
          xmlr_attr_int( cur, "inrange", in_range );
          if (in_range > 0)
