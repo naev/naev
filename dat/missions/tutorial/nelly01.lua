@@ -422,9 +422,10 @@ end
 
 function info_weapons ()
    info_msg( fmt.f(_([["At the #oWeapon Info#0, you can modify the current ship's weapon sets. There are three types of weapon sets:
-- #oWeapons - Switched#0: when activated define the weapons you should with the primary weapon key {keyprimary} and secondary weapon key {keysecondary}.
-- #oWeapons - Instant#0: immediately fires the weapon set weapons when the set hotkey is pressed. Enable this for a set by checking the #oEnable instant mode#0 checkbox.
-- #oAbilities - Toggled#0: toggles the state of the non-weapon outfits in the set."]]), {keyprimary=tut.getKey("primary"), keysecondary=tut.getKey("secondary")} ) )
+- #oSwitch#0: sets which weapons fire with the primary weapon key {keyprimary} and secondary weapon key {keysecondary}.
+- #oToggle#0: toggles the state between on and off of the outfits in the sets.
+- #oHold#0: turns on all the outfits in the set while held down."]]),
+      {keyprimary=tut.getKey("primary"), keysecondary=tut.getKey("secondary")} ) )
    hook.rm( mem.hk_info_weapons )
    mem.hk_info_weapons = nil
    info_checkdone()
