@@ -59,22 +59,25 @@ end
 
 -- Resets all tutorial variables
 function tut.reset ()
-   var.pop( "tut_disable" )
-   var.pop( "tut_nebvol" )
+   -- From events/tutorial/tut_land.lua
    var.pop( "tut_afterburner" )
+   var.pop( "tut_launcher" )
    var.pop( "tut_fighterbay" )
    var.pop( "tut_turret" )
-   var.pop( "tut_buyship" )
-   var.pop( "tut_timedil" )
-   var.pop( "tut_bioship" )
-   -- Licenses
+   var.pop( "tut_lic_lightcom" )
    var.pop( "tut_lic_largeciv" )
    var.pop( "tut_lic_medweap" )
    var.pop( "tut_lic_hvyweap" )
-   var.pop( "tut_lic_lightcom" )
    var.pop( "tut_lic_medcom" )
    var.pop( "tut_lic_hvycom" )
    var.pop( "tut_lic_merc" )
+   var.pop( "tut_buyship" )
+   var.pop( "tut_bioship" )
+   var.pop( "tut_timedil" )
+   -- From events/tutorial/tut_enter.lua
+   var.pop("tut_illegal")
+   var.pop("tut_weapset")
+   var.pop("tut_nebvol")
 end
 
 return tut
