@@ -114,6 +114,7 @@ function tut_weapset ()
       return
    end
    local unused_outfit =player.pilot():outfitGet(next(unused))
+   unused_outfit = "#o"..unused_outfit:name().."#0"
    local skipped
 
    vn.clear()
@@ -154,18 +155,15 @@ function tut_weapset ()
    if skipped then
       var.push( "tut_weapset", true )
       evt.finish()
-   else
-      hook.safe( "tut_weapset_info", unused_outfit )
+      return
    end
-end
 
-function tut_weapset_info( unused_outfit )
    naev.menuInfo( "weapons" )
 
    vn.clear()
    vn.scene()
    vn.transition( tut.shipai.transition )
-   local sai = vn.newCharacter( tut.ainame(), {
+   sai = vn.newCharacter( tut.ainame(), {
       color=tut.shipai.colour
    } )
    sai(_([["A large part of combat is decided ahead of time by the ship classes and their load out. However, good piloting can turn the tables easily. It is important to assign weapon sets to be easy to use. You can set weapon sets from the '#oWeapons#0' tab of the information window. You have 10 different weapon sets that can be configured separately for each ship."]]))
@@ -174,7 +172,7 @@ function tut_weapset_info( unused_outfit )
 - #oToggle#0: activating the hotkey will toggle the outfits between on/off states
 - #oHold#0: holding the hotkey will turn the outfits on]]))
    sai(_([["By default, the weapon sets will be automatically managed by me, with forward bolts in set 1 (switch), turret weapons in set 2 (switch), and both turret and forward weapons in set 3 (switch). Seeker weapons are in set 4 (hold), and fighter bays in set 5 (hold). However, you can override this and set them however you prefer. Just remember to update them whenever you change your outfits."]]))
-   sai(fmt.f(_([["Go ahead and try to add {item} to a weapon set!"]]),
+   sai(fmt.f(_([["Go ahead and try to add {item} to a weapon set! First click on an empty set on the list, then click on the icon of {item} to add it to the weapon set. Finally, click on the #bCycle Mode#0 button as necessary to change the type of weapon set."]]),
       {item=unused_outfit}))
    vn.done( tut.shipai.transition )
    vn.run()
