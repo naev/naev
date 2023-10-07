@@ -45,6 +45,18 @@
   <item>Basic Trade Ships</item>
   <item>Light Civilian Combat Ships</item>
   <item>Heavy Civilian Combat Ships</item>
+  <item>High Tech Upgrades 3</item>
+  <item>Low Tech Upgrades</item>
+  <item>Heavy Weapons 1</item>
+  <item>Hulls Low</item>
+  <item>Hulls Medium</item>
+  <item>Missiles 2</item>
+  <item>Systems Low</item>
+  <item>Systems High</item>
+  <item>Systems Medium</item>
+  <item>Hulls High</item>
+  <item>Engines High</item>
+  <item>Beam 1</item>
  </tech>
  <tags>
   <tag>trade</tag>
