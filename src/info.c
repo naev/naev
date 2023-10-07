@@ -607,7 +607,7 @@ static void info_openWeapons( unsigned int wid )
    x = 220;
    y -= 95;
    window_addButton( wid, x+10, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnToggle", _("Cycle Mode"), weapons_toggleList );
+         "btnCycle", _("Cycle Mode"), weapons_toggleList );
    window_addButton( wid, x+10+(BUTTON_WIDTH+10), y, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClear", _("Clear"), weapons_clear );
    window_addButton( wid, x+10+(BUTTON_WIDTH+10)*2, y, BUTTON_WIDTH, BUTTON_HEIGHT,
