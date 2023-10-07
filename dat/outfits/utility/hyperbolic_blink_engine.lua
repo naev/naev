@@ -15,6 +15,15 @@ function init( p, po )
    mem.timer = 0
    mem.warmup = false
    mem.isp = (p == player.pilot())
+
+   if mem.isp then
+      for k,v in ipairs(p:outfits()) do
+         if v and v:typeBroad()=="Afterburner" then
+            mem.afterburner = true
+            break
+         end
+      end
+   end
 end
 
 function update( p, po, dt )
@@ -69,10 +78,7 @@ function update( p, po, dt )
    end
 end
 
-function ontoggle( p, po, on )
-   -- Only care about turning on (outfit never has the "on" state)
-   if not on then return false end
-
+local function doblink( p, po )
    -- Not ready yet
    if mem.timer > 0 then return false end
 
@@ -87,4 +93,17 @@ function ontoggle( p, po, on )
       luaspfx.sfx( p:pos(), p:vel(), sfx_warmup )
    end
    return true
+end
+
+function ontoggle( p, po, on )
+   -- Only care about turning on (outfit never has the "on" state)
+   if not on then return false end
+   return doblink( p, po )
+end
+
+function keydoubletap( p, po, key )
+   -- Only blink forward on double tap if no afterburner
+   if not mem.afterburner and key=="accel" then
+      doblink( p, po )
+   end
 end
