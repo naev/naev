@@ -47,6 +47,7 @@ static int outfitL_friendlyfire( lua_State *L );
 static int outfitL_pointdefense( lua_State *L );
 static int outfitL_miss_ships( lua_State *L );
 static int outfitL_miss_asteroids( lua_State *L );
+static int outfitL_toggleable( lua_State *L );
 static int outfitL_getShipStat( lua_State *L );
 static int outfitL_weapStats( lua_State *L );
 static int outfitL_specificStats( lua_State *L );
@@ -74,6 +75,7 @@ static const luaL_Reg outfitL_methods[] = {
    { "pointdefense", outfitL_pointdefense },
    { "missShips", outfitL_miss_ships },
    { "missAsteroids", outfitL_miss_asteroids },
+   { "toggleable", outfitL_toggleable },
    { "shipstat", outfitL_getShipStat },
    { "weapstats", outfitL_weapStats },
    { "specificstats", outfitL_specificStats },
@@ -419,7 +421,7 @@ static int outfitL_icon( lua_State *L )
  *
  * @usage price = o:price()
  *
- *    @luatparam String o Outfit to get the price of.
+ *    @luatparam outfit|String o Outfit to get the price of.
  *    @luatreturn number The price, in credits.
  * @luafunc price
  */
@@ -435,7 +437,7 @@ static int outfitL_price( lua_State *L )
  *
  * @usage description = o:description()
  *
- *    @luatparam String o Outfit to get the description of.
+ *    @luatparam outfit|String o Outfit to get the description of.
  *    @luatparam[opt=player.pilot()] Pilot p Pilot to set description to.
  *    @luatreturn string The description (with translating).
  * @luafunc description
@@ -455,7 +457,7 @@ static int outfitL_description( lua_State *L )
  *
  * @usage summary = o:summary()
  *
- *    @luatparam String o Outfit to get the summary of.
+ *    @luatparam outfit|String o Outfit to get the summary of.
  *    @luatparam[opt=player.pilot()] Pilot p Pilot to set summary to.
  *    @luatparam[opt=false] string noname Whether or not to hide the outfit name at the top.
  *    @luatreturn string The summary (with translating).
@@ -484,7 +486,7 @@ static int getprop( lua_State *L, int prop )
  *
  * @usage isunique = o:unique()
  *
- *    @luatparam String o Outfit to get the uniqueness of.
+ *    @luatparam outfit|String o Outfit to get the uniqueness of.
  *    @luatreturn boolean The uniqueness of the outfit.
  * @luafunc unique
  */
@@ -496,7 +498,7 @@ static int outfitL_unique( lua_State *L )
 /**
  * @brief Gets whether or not a weapon outfit can do friendly fire.
  *
- *    @luatparam String o Outfit to get the property of of.
+ *    @luatparam outfit|String o Outfit to get the property of of.
  *    @luatreturn boolean Whether or not the outfit can do friendly fire damage.
  * @luafunc friendlyfire
  */
@@ -508,7 +510,7 @@ static int outfitL_friendlyfire( lua_State *L )
 /**
  * @brief Gets whether or not a weapon outfit is point defense.
  *
- *    @luatparam String o Outfit to get the property of of.
+ *    @luatparam outfit|String o Outfit to get the property of of.
  *    @luatreturn boolean Whether or not the outfit is point defense.
  * @luafunc pointdefense
  */
@@ -520,7 +522,7 @@ static int outfitL_pointdefense( lua_State *L )
 /**
  * @brief Gets whether or not a weapon outfit misses ships.
  *
- *    @luatparam String o Outfit to get the property of of.
+ *    @luatparam outfit|String o Outfit to get the property of of.
  *    @luatreturn boolean Whether or not the outfit misses ships.
  * @luafunc missShips
  */
@@ -532,13 +534,27 @@ static int outfitL_miss_ships( lua_State *L )
 /**
  * @brief Gets whether or not a weapon outfit misses asteroids.
  *
- *    @luatparam String o Outfit to get the property of of.
+ *    @luatparam outfit|String o Outfit to get the property of of.
  *    @luatreturn boolean Whether or not the outfit misses asteroids.
  * @luafunc missAsteroids
  */
 static int outfitL_miss_asteroids( lua_State *L )
 {
    return getprop( L, OUTFIT_PROP_WEAP_MISS_ASTEROIDS );
+}
+
+/**
+ * @brief Gets whether or not an outfit is toggleable.
+ *
+ *    @luatparam outfit|String o Outfit to get the property of of.
+ *    @luatreturn boolean Whether or not the outfit is toggleable.
+ * @luafunc toggleable
+ */
+static int outfitL_toggleable( lua_State *L )
+{
+   const Outfit *o = luaL_validoutfit(L,1);
+   lua_pushboolean( L, outfit_isToggleable(o) );
+   return 1;
 }
 
 /**
