@@ -2486,22 +2486,11 @@ static int pilotL_outfitGet( lua_State *L )
    return 1;
 }
 
-/**
- * @brief Toggles an outfit.
- *
- *    @luatparam Pilot p Pilot to toggle outfit of.
- *    @luatparam integer id ID of the pilot outfit.
- *    @luatparam[opt=false] boolean activate Whether or not to activate or deactivate the outfit.
- * @luafunc outfitToggle
- */
-static int pilotL_outfitToggle( lua_State *L )
+static int outfitToggle( lua_State *L, Pilot *p, int id, int activate )
 {
-   int isstealth, n = 0;
-   Pilot *p = luaL_validpilot(L,1);
-   int id   = luaL_checkinteger(L,2)-1;
-   int activate = lua_toboolean(L,3);
    if (id < 0 || id >= array_size(p->outfits))
       NLUA_ERROR(L, _("Pilot '%s' outfit ID '%d' is out of range!"), p->name, id);
+
    PilotOutfitSlot *po = p->outfits[id];
    const Outfit *o = po->outfit;
 
@@ -2509,21 +2498,45 @@ static int pilotL_outfitToggle( lua_State *L )
    if (o == NULL)
       return 0;
 
-   /* Can't do a thing. */
-   if ((pilot_isDisabled(p)) || (pilot_isFlag(p, PILOT_COOLDOWN)))
-      return 0;
-
    if ((activate && (po->state != PILOT_OUTFIT_OFF)) ||
          (!activate && (po->state != PILOT_OUTFIT_ON)))
       return 0;
 
    if (activate)
-      n = pilot_outfitOn( p, po );
+      return pilot_outfitOn( p, po );
    else
-      n = pilot_outfitOff( p, po );
+      return pilot_outfitOff( p, po );
+}
+/**
+ * @brief Toggles an outfit.
+ *
+ *    @luatparam Pilot p Pilot to toggle outfit of.
+ *    @luatparam table|integer id ID of the pilot outfit, or table of pilot outfit ids.
+ *    @luatparam[opt=false] boolean activate Whether or not to activate or deactivate the outfit.
+ * @luafunc outfitToggle
+ */
+static int pilotL_outfitToggle( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   int activate = lua_toboolean(L,3);
+   int n;
 
-   isstealth = pilot_isFlag( p, PILOT_STEALTH );
-   if (n>0 && isstealth)
+   /* Can't do a thing. */
+   if ((pilot_isDisabled(p)) || (pilot_isFlag(p, PILOT_COOLDOWN)))
+      return 0;
+
+   if (lua_istable(L,2)) {
+      n = 0;
+      lua_pushnil(L);
+      while (lua_next(L, 1) != 0)
+         n += outfitToggle( L, p, luaL_checkinteger(L,-1)-1, activate );
+      lua_pop(L,1);
+   }
+   else
+      n = outfitToggle( L, p, luaL_checkinteger(L,2)-1, activate );
+
+   /* See if we have to do updates. */
+   if (n>0 && pilot_isFlag(p,PILOT_STEALTH))
       pilot_destealth( p ); /* pilot_destealth should run calcStats already. */
    else if (n>0 || pilotoutfit_modified)
       pilot_calcStats( p );
