@@ -119,7 +119,7 @@ function outfit_buy( o )
             _([["#oCruisers#0 are the smallest of the three categories, but also the lowest mass and highest manoeuvrability. They can be seen more or less as a heavier version of a destroyer. #oBattleships#0 push the firepower to the max and can chew through any ship that is unable to evade their concentrated firepower. #oCarriers#0 use a different strategy of using fighters to do the combat for them while maximizing survivability."]]),
             _([["Flying a heavy combat vessel is very different from other classes of ships. Given their size, usually time seems to pass at a faster rate than smaller ships which can be seen by their '#oTime dilation#0' value. Furthermore, given their size, stealth becomes difficult and they can be vulnerable to volleys of torpedoes. Escorts and fighter bays can help them deal with enemy bombers."]]),
          }
-         var.push( "tut_lic_medcom", true )
+         var.push( "tut_lic_hvycom", true )
 
       elseif o == outfit.get("Mercenary License") and not var.peek( "tut_lic_merc" ) then
          text = {
