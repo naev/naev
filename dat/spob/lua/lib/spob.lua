@@ -50,7 +50,7 @@ local function msg_denied_def ()
       return {
          _([["ACCESS DENIED."]]),
          _([["CONNECTION REFUSED."]]), -- ssh error
-         fmt.f(_([["INVALID USER {player}."]]),{player=string.upper(player.name())}),
+         fmt.f(_([["INVALID USER {player}."]]),{player=string.upper(player.name() or "")}),
          _([["CONNECTION CLOSED."]]),
          _([["INSUFFICIENT PRIVILEGES."]]),
          _([["LANDING PERMISSIONS NOT FOUND IN DATABASE."]]),
