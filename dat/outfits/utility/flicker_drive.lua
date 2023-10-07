@@ -43,7 +43,7 @@ local function doblink( p, po, blinkdir )
    if m > masslimit then
       dist = dist * masslimit / m
    end
-   local pos, vel = p:pos(), p:vel()
+   local pos = p:pos()
    luaspfx.blink( p, pos ) -- Blink afterimage
    p:effectAdd( "Blink" ) -- Cool "blink in" effect
    p:setPos( pos + vec2.newP( dist, p:dir()+blinkdir ) )
@@ -52,7 +52,7 @@ local function doblink( p, po, blinkdir )
    po:progress(1)
 
    -- Play the sound
-   luaspfx.sfx( pos, vel, sfx )
+   luaspfx.sfx( pos, p:vel(), sfx )
 
    return true
 end

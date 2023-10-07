@@ -423,7 +423,7 @@ dat/outfits/utility/cryogenic_repair_nanobots.xml
 dat/outfits/utility/droid_repair_crew.xml
 dat/outfits/utility/emergency_shield_booster.xml
 dat/outfits/utility/emergency_stasis_inducer.xml
-dat/outfits/utility/evasive_blink_thruster.xml
+dat/outfits/utility/flicker_drive.xml
 dat/outfits/utility/hellburner.xml
 dat/outfits/utility/hidden_jump_scanner.xml
 dat/outfits/utility/hullcoating/faraday_tempest_coating.xml
@@ -3233,7 +3233,7 @@ dat/outfits/utility/cryogenic_repair_nanobots.lua
 dat/outfits/utility/droid_repair_crew.lua
 dat/outfits/utility/emergency_shield_booster.lua
 dat/outfits/utility/emergency_stasis_inducer.lua
-dat/outfits/utility/evasive_blink_thruster.lua
+dat/outfits/utility/flicker_drive.lua
 dat/outfits/utility/hyperbolic_blink_engine.lua
 dat/outfits/utility/low_radiation_sensor_modulator.lua
 dat/outfits/utility/neural_accelerator_interface.lua
