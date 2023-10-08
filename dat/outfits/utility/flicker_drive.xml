@@ -7,7 +7,7 @@
   <mass>0</mass>
   <price>470000</price>
   <gfx_store>blink_drive.webp</gfx_store>
-  <description>TODO</description>
+  <description>The Flicker Drive is a compacted version of the Blink Drive, lowering the power usage, blinking range, and amount of mass that can be blinked, however, this comes at the advantaged of much higher mobility due to a lower cooldown. The uncertainty provided by the blink drive also has a secondary effect of lowering the signature of the ship. Although most ships commonly make use of afterburners to increase mobility, the Flicker Driver has a strong following who claim it is superior to all the alternatives.</description>
   <desc_extra>Blinks you 300 units forward. Double-tapping left or right lets you blink to the sides. Can only be run once every 3 seconds. Performance degrades over 400 tonnes of mass.</desc_extra>
  </general>
  <specific type="modification">
