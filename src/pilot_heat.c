@@ -120,7 +120,7 @@ static double pilot_heatOutfitMod( const Pilot *p, const Outfit *o )
          return p->stats.tur_heat;
 
       default:
-         return 1;
+         return 1.;
    }
 }
 
