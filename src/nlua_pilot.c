@@ -181,6 +181,7 @@ static int pilotL_setHealth( lua_State *L );
 static int pilotL_setHealthAbs( lua_State *L );
 static int pilotL_addHealth( lua_State *L );
 static int pilotL_setEnergy( lua_State *L );
+static int pilotL_addEnergy( lua_State *L );
 static int pilotL_fillAmmo( lua_State *L );
 static int pilotL_setNoboard( lua_State *L );
 static int pilotL_setNoDisable( lua_State *L );
@@ -335,6 +336,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "setHealthAbs", pilotL_setHealthAbs },
    { "addHealth", pilotL_addHealth },
    { "setEnergy", pilotL_setEnergy },
+   { "addEnergy", pilotL_addEnergy },
    { "fillAmmo", pilotL_fillAmmo },
    { "setNoboard", pilotL_setNoboard },
    { "setNoDisable", pilotL_setNoDisable },
@@ -4375,10 +4377,26 @@ static int pilotL_setEnergy( lua_State *L )
    int absolute = lua_toboolean(L,3);
 
    if (absolute)
-      p->energy = CLAMP( 0, p->energy_max, e );
+      p->energy = CLAMP( 0., p->energy_max, e );
    else
       p->energy = (e/100.) * p->energy_max;
 
+   return 0;
+}
+
+/**
+ * @brief Adds (or subtracts) energy to a pilot.
+ *
+ *    @luatparam Pilot p Pilot to set energy of.
+ *    @luatparam number energy Energy value to add.
+ * @luafunc addEnergy
+ */
+static int pilotL_addEnergy( lua_State *L )
+{
+   /* Handle parameters. */
+   Pilot *p     = luaL_validpilot(L,1);
+   double e     = luaL_checknumber(L,2);
+   p->energy = CLAMP( 0., p->energy_max, p->energy+e );
    return 0;
 }
 
