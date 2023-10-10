@@ -698,9 +698,14 @@ static int map_findSearchOutfits( unsigned int wid_map_find, const char *name )
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
          list[i] = strdup( _(map_foundOutfitNames[i]) );
-      i = dialogue_listPanel( _("Search Results"), list, len, 452, 650,
-            map_addOutfitDetailFields, map_showOutfitDetail,
-            _("Search results for outfits matching '%s':"), name );
+      if ((name==NULL) || (name[0]=='\0'))
+         i = dialogue_listPanelRaw( _("Search Results"), list, len, 452, 650,
+               map_addOutfitDetailFields, map_showOutfitDetail,
+               _("Showing all known outfits:") );
+      else
+         i = dialogue_listPanel( _("Search Results"), list, len, 452, 650,
+               map_addOutfitDetailFields, map_showOutfitDetail,
+               _("Search results for outfits matching '%s':"), name );
       if (i < 0) {
          array_free( map_foundOutfitNames );
          map_foundOutfitNames = NULL;
@@ -831,8 +836,12 @@ static int map_findSearchShips( unsigned int wid_map_find, const char *name )
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
          list[i] = strdup( _(names[i]) );
-      i = dialogue_list( _("Search Results"), list, len,
-            _("Search results for ships matching '%s':"), name );
+      if ((name==NULL) || (name[0]=='\0'))
+         i = dialogue_listRaw( _("Search Results"), list, len,
+               _("Showing all known ships:") );
+      else
+         i = dialogue_list( _("Search Results"), list, len,
+               _("Search results for ships matching '%s':"), name );
       if (i < 0) {
          array_free(names);
          return 0;
