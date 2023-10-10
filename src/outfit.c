@@ -2096,8 +2096,8 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"energy",temp->u.afb.energy);
       xmlr_float(node,"mass_limit",temp->u.afb.mass_limit);
       xmlr_float(node,"heatup",temp->u.afb.heatup);
-      xmlr_float(node,"heat_cap",temp->u.afb.heat_cap);
-      xmlr_float(node,"heat_base",temp->u.afb.heat_base);
+      xmlr_float(node,"heat_cap",temp->overheat_max);
+      xmlr_float(node,"heat_base",temp->overheat_min);
 
       /* Stats. */
       ll = ss_listFromXML( node );
@@ -2441,6 +2441,8 @@ static int outfit_parse( Outfit* temp, const char* file )
    desc_extra = NULL;
 
    /* Defaults. */
+   temp->overheat_min   = 350.;
+   temp->overheat_max   = 500.;
    temp->lua_env        = LUA_NOREF;
    temp->lua_descextra  = LUA_NOREF;
    temp->lua_onadd      = LUA_NOREF;
@@ -2495,6 +2497,8 @@ static int outfit_parse( Outfit* temp, const char* file )
             xmlr_strd(cur,"desc_extra",desc_extra);
             xmlr_strd(cur,"typename",temp->typename);
             xmlr_int(cur,"priority",temp->priority);
+            xmlr_float(cur,"overheat_min",temp->overheat_min);
+            xmlr_float(cur,"overheat_max",temp->overheat_max);
             if (xml_isNode(cur,"unique")) {
                outfit_setProp(temp, OUTFIT_PROP_UNIQUE);
                continue;

@@ -752,8 +752,8 @@ static int outfitL_specificStats( lua_State *L )
          SETFIELD( "mass_limit", o->u.afb.mass_limit );
          SETFIELD( "heatup",     o->u.afb.heatup );
          SETFIELD( "heat",       o->u.afb.heat );
-         SETFIELD( "heat_cap",   o->u.afb.heat_cap );
-         SETFIELD( "heat_base",  o->u.afb.heat_cap );
+         SETFIELD( "overheat_min",o->overheat_min );
+         SETFIELD( "overheat_max",o->overheat_max );
          break;
 
       case OUTFIT_TYPE_FIGHTER_BAY:

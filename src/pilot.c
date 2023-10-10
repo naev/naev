@@ -2500,8 +2500,8 @@ void pilot_update( Pilot* pilot, double dt )
 
          /* If the afterburner's efficiency is reduced to 0, shut it off. */
          if (pilot_heatEfficiencyMod(pilot->afterburner->heat_T,
-               pilot->afterburner->outfit->u.afb.heat_base,
-               pilot->afterburner->outfit->u.afb.heat_cap)==0)
+               pilot->afterburner->outfit->overheat_min,
+               pilot->afterburner->outfit->overheat_max)<=0.)
             pilot_afterburnOver(pilot);
          else {
             double efficiency, accel;
@@ -2509,8 +2509,8 @@ void pilot_update( Pilot* pilot, double dt )
             if (pilot->id == PLAYER_ID)
                spfx_shake( 0.75*SPFX_SHAKE_DECAY * dt); /* shake goes down at quarter speed */
             efficiency = pilot_heatEfficiencyMod( pilot->afterburner->heat_T,
-                  pilot->afterburner->outfit->u.afb.heat_base,
-                  pilot->afterburner->outfit->u.afb.heat_cap );
+                  pilot->afterburner->outfit->overheat_min,
+                  pilot->afterburner->outfit->overheat_max );
             accel = MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit / pilot->solid.mass ) * efficiency;
 
             /* Adjust speed. Speed bonus falls as heat rises. */

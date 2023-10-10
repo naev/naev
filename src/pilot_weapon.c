@@ -1711,9 +1711,7 @@ void pilot_afterburn( Pilot *p )
       return;
 
    /* The afterburner only works if its efficiency is high enough. */
-   if (pilot_heatEfficiencyMod( p->afterburner->heat_T,
-         p->afterburner->outfit->u.afb.heat_base,
-         p->afterburner->outfit->u.afb.heat_cap ) < 0.3)
+   if (pilot_heatEfficiencyMod( p->afterburner->heat_T, p->afterburner->outfit->overheat_min, p->afterburner->outfit->overheat_max ) > 0.1)
       return;
 
    if (p->afterburner->state == PILOT_OUTFIT_OFF) {

@@ -2254,9 +2254,9 @@ static int pilotL_actives( lua_State *L )
 
       /* Heat. */
       lua_pushstring(L, "temp");
-      lua_pushnumber(L, 1 - pilot_heatEfficiencyMod(o->heat_T,
-                            o->outfit->u.afb.heat_base,
-                            o->outfit->u.afb.heat_cap));
+      lua_pushnumber(L, 1. - pilot_heatEfficiencyMod(o->heat_T,
+               o->outfit->overheat_min,
+               o->outfit->overheat_max));
       lua_rawset(L,-3);
 
       /* Find the first weapon set containing the outfit, if any. */

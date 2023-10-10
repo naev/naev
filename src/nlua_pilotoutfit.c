@@ -436,10 +436,10 @@ static int poL_shoot( lua_State *L )
 }
 
 /**
- * @brief Gets the heat of the pilot outfit.
+ * @brief Gets the heat status of the pilot outfit.
  *
  *    @luatparam PilotOutfit po Pilot outfit to get heat of.
- *    @luatparam Boolean absolute If true returns the value in kelvin, otherwise it returns it in how close to 800 kelvin.
+ *    @luatparam Boolean absolute If true returns the value in kelvin, otherwise it returns how overheated it is with 1. being normal and 0. being overheated.
  *    @luatreturn Number heat of the pilot outfit in kelvin or closeness to 800 kelvin.
  * @luafunc heat
  */
@@ -449,7 +449,7 @@ static int poL_heat( lua_State *L )
    if (lua_isboolean(L,2))
       lua_pushnumber( L, po->heat_T );
    else
-      lua_pushnumber( L, (po->heat_T-CONST_SPACE_STAR_TEMP) / (800.-CONST_SPACE_STAR_TEMP) );
+      lua_pushnumber( L, pilot_heatEfficiencyMod(po->heat_T, po->outfit->overheat_min, po->outfit->overheat_max) );
    return 1;
 }
 

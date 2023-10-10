@@ -278,8 +278,8 @@ typedef struct OutfitAfterburnerData_ {
    double mass_limit;/**< Limit at which effectiveness starts to drop. */
    double heatup;    /**< How long it takes for the afterburner to overheat. */
    double heat;      /**< Heat per second. */
-   double heat_cap;  /**< Temperature at which the outfit overheats (K). */
-   double heat_base; /**< Temperature at which the outfit BEGINS to overheat(K). */
+   //double heat_cap;  /**< Temperature at which the outfit overheats (K). */
+   //double heat_base; /**< Temperature at which the outfit BEGINS to overheat(K). */
 } OutfitAfterburnerData;
 
 /**
@@ -350,6 +350,10 @@ typedef struct Outfit_ {
 
    glTexture *gfx_store;   /**< Store graphic. */
    glTexture **gfx_overlays;/**< Array (array.h): Store overlay graphics. */
+
+   /* Heat limits. */
+   double overheat_min; /**< Temperature at which the outfit BEGINS to overheat(K). */
+   double overheat_max;  /**< Temperature at which the outfit overheats (K). */
 
    unsigned int properties;/**< Properties stored bitwise. */
    unsigned int group;     /**< Weapon group to use when autoweap is enabled. */

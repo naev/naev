@@ -48,7 +48,7 @@ local function doblink( p, po, blinkdir, strength )
    end
 
    -- Test heat
-   if po:heat() >= 1. then
+   if po:heat() <= 0 then
       player.msg("#r"..fmt.f(_("{outfit} is overheating!"),{outfit=po:outfit()}).."#0")
       return false
    end

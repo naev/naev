@@ -234,7 +234,7 @@ void pilot_heatUpdateShip( Pilot *p, double Q_cond, double dt )
  */
 double pilot_heatEfficiencyMod( double T, double Tb, double Tc )
 {
-   return CLAMP( 0., 1., 1 - (T - Tb) / Tc );
+   return CLAMP( 0., 1., 1. - (T - Tb) / Tc );
 }
 
 /**
