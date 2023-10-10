@@ -1,11 +1,18 @@
 local audio = require 'love.audio'
 local luaspfx = require 'luaspfx'
+local fmt = require "format"
 
 local masslimit = 1000^2 -- squared
 local jumpdist = 500
 local cooldown = 7
+local energy = 140
+local heat
 
 local sfx = audio.newSource( 'snd/sounds/blink.ogg' )
+
+function onload( o )
+   heat = o:heatFor( 30/cooldown ) -- Roughly overheat in 30 s of continuous use (less in reality)
+end
 
 function init( p, po )
    po:state("off")
@@ -33,6 +40,22 @@ end
 local function doblink( p, po, blinkdir, strength )
    -- Not ready yet
    if mem.timer > 0 then return false end
+
+   -- Test energy
+   if p:energy(true) < energy then
+      player.msg("#r"..fmt.f(_("Not enough energy to use {outfit}!"),{outfit=po:outfit()}).."#0")
+      return false
+   end
+
+   -- Test heat
+   if po:heat() >= 1. then
+      player.msg("#r"..fmt.f(_("{outfit} is overheating!"),{outfit=po:outfit()}).."#0")
+      return false
+   end
+
+   -- Pay the cost
+   p:addEnergy( -energy )
+   po:heatup( heat )
 
    -- Blink!
    local dist = jumpdist
@@ -65,7 +88,7 @@ end
 function keydoubletap( p, po, key )
    -- Only blink forward on double tap if no afterburner
    if not mem.afterburner and key=="accel" then
-      doblink( p, po, 0 )
+      doblink( p, po, 0, 1 )
    elseif key=="left" then
       doblink( p, po, math.pi*0.5, 0.5 )
    elseif key=="right" then

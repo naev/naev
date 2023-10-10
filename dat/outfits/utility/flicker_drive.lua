@@ -1,11 +1,18 @@
 local audio = require 'love.audio'
 local luaspfx = require 'luaspfx'
+local fmt = require "format"
 
 local masslimit = 500^2 -- squared
 local jumpdist = 300
 local cooldown = 3
+local energy = 40
+local heat
 
 local sfx = audio.newSource( 'snd/sounds/blink.ogg' )
+
+function onload( o )
+   heat = o:heatFor( 30/cooldown ) -- Roughly overheat in 30 secs of continious usage
+end
 
 function init( p, po )
    po:state("off")
@@ -34,6 +41,22 @@ end
 local function doblink( p, po, blinkdir )
    -- Not ready yet
    if mem.timer > 0 then return false end
+
+   -- Test energy
+   if p:energy(true) < energy then
+      player.msg("#r"..fmt.f(_("Not enough energy to use {outfit}!"),{outfit=po:outfit()}).."#0")
+      return false
+   end
+
+   -- Test heat
+   if po:heat() >= 1. then
+      player.msg("#r"..fmt.f(_("{outfit} is overheating!"),{outfit=po:outfit()}).."#0")
+      return false
+   end
+
+   -- Pay the cost
+   p:addEnergy( -energy )
+   po:heatup( heat )
 
    -- Blink!
    local dist = jumpdist
