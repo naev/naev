@@ -1692,7 +1692,7 @@ static int pilotL_weapsetActive( lua_State *L )
  *  <li> lockon: Lock-on [0:1] for seeker weapons or nil if not applicable. </li>
  *  <li> in_arc: Whether or not the target is in targeting arc or nil if not applicable. </li>
  *  <li> level: Level of the weapon (1 is primary, 2 is secondary). </li>
- *  <li> temp: Temperature of the weapon. </li>
+ *  <li> heat: Heat level of the weapon where 1 is normal and 0 is overheated. </li>
  *  <li> type: Type of the weapon. </li>
  *  <li> dtype: Damage type of the weapon. </li>
  *  <li> track: Tracking level of the weapon. </li>
@@ -1874,7 +1874,7 @@ static int pilotL_weapset( lua_State *L )
          lua_rawset(L,-3);
 
          /* Temperature. */
-         lua_pushstring(L,"temp");
+         lua_pushstring(L,"heat");
          lua_pushnumber(L, pilot_heatFirePercent(slot->heat_T));
          lua_rawset(L,-3);
 
@@ -2181,7 +2181,7 @@ static int pilotL_weapsetSetInrange( lua_State *L )
  * <ul>
  *  <li> name: Name of the set. </li>
  *  <li> type: Type of the outfit. </li>
- *  <li> temp: The heat of the outfit's slot. A value between 0 and 1, where 1 is fully overheated. </li>
+ *  <li> heat: The heat of the outfit's slot. A value between 0 and 1, where 0 is fully overheated, and 1 is normal. </li>
  *  <li> weapset: The first weapon set that the outfit appears in, if any. </li>
  *  <li> state: State of the outfit, which can be one of { "off", "warmup", "on", "cooldown" }. </li>
  *  <li> duration: Set only if state is "on". Indicates duration value (0 = just finished, 1 = just on). </li>
@@ -2253,8 +2253,8 @@ static int pilotL_actives( lua_State *L )
       lua_rawset(L,-3);
 
       /* Heat. */
-      lua_pushstring(L, "temp");
-      lua_pushnumber(L, 1. - pilot_heatEfficiencyMod(o->heat_T,
+      lua_pushstring(L, "heat");
+      lua_pushnumber(L, 1.-pilot_heatEfficiencyMod(o->heat_T,
                o->outfit->overheat_min,
                o->outfit->overheat_max));
       lua_rawset(L,-3);

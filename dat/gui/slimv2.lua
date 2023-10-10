@@ -379,8 +379,8 @@ function render( dt, dt_mod )
 
          gfx.renderTexRaw( weap_icons[i], slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w, 1, 1, 0, 0, 1, 1 ) --Image
 
-         if wset[i].temp > 0 then
-            gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * wset[i].temp/2, col_slot_heat ) --Heat
+         if wset[i].heat > 0 then
+            gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * wset[i].heat/2, col_slot_heat ) --Heat
          end
 
          --Cooldown
@@ -452,7 +452,7 @@ function render( dt, dt_mod )
 
          -- Draw a heat background for certain outfits. TODO: detect if the outfit is heat based somehow!
          --if aset[i].type == "Afterburner" then
-            gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * aset[i].temp, col_slot_heat ) -- Background (heat)
+            gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * aset[i].heat, col_slot_heat ) -- Background (heat)
          --end
 
          gfx.renderTexRaw( active_icons[i], slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w, 1, 1, 0, 0, 1, 1 ) --Image

@@ -548,9 +548,9 @@ local function renderWeapBar( weapon, x, y )
          icon_w, icon_h = icon:dim()
 
          if weapon.type == "Afterburner" then
-            weap_heat = weapon.temp * 2
+            weap_heat = weapon.heat * 2
          elseif weapon.duration ~= nil then
-            weap_heat = (1 - weapon.duration) * 2
+            weap_heat = (1-weapon.duration) * 2
          elseif weapon.cooldown ~= nil then
             weap_heat = weapon.cooldown * 2
          else
@@ -578,7 +578,7 @@ local function renderWeapBar( weapon, x, y )
          top_icon_w, top_icon_h = top_icon:dim()
          bottom_icon_w, bottom_icon_h = bottom_icon:dim()
 
-         weap_heat = weapon.temp
+         weap_heat = weapon.heat
       end
 
       gfx.renderTex( bar_bg, x + offsets[1], y + offsets[2] ) --Background

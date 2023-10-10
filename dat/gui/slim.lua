@@ -815,7 +815,7 @@ function render( dt, dt_mod )
          render_ammoBar( "ammo", x_ammo, y_ammo - (num-1)*28, values, txt, col)
       else
          col = cols.txt_bar
-         values = {weapon.temp, weapon.cooldown, weapon.level, weapon.track, nil, cols.ready}
+         values = {weapon.heat, weapon.cooldown, weapon.level, weapon.track, nil, cols.ready}
 
          if weapon.charge then
             values[2] = weapon.charge
@@ -902,15 +902,15 @@ function render( dt, dt_mod )
          local slot_x = screen_w - slot_start_x - i * slot_w
 
          -- Draw a heat background for certain outfits. TODO: detect if the outfit is heat based somehow!
-         if aset[i].type == "Afterburner" then
-            gfx.renderRect( slot_x, slot_y, slot_w, slot_h * aset[i].temp, cols.heat ) -- Background (heat)
-         end
+         --if aset[i].type == "Afterburner" then
+            gfx.renderRect( slot_x, slot_y, slot_w, slot_h * aset[i].heat, cols.heat ) -- Background (heat)
+         --end
 
          gfx.renderTexRaw( active_icons[i], slot_x + slot_img_offs_x, slot_y + slot_img_offs_y + 2, slot_img_w, slot_img_w, 1, 1, 0, 0, 1, 1 ) --Image
 
-         if aset[i].type == "Afterburner" then
-            gfx.renderRect( slot_x, slot_y, slot_w, slot_h * aset[i].temp, cols.afb ) -- Foreground (heat)
-         end
+         --if aset[i].type == "Afterburner" then
+            gfx.renderRect( slot_x, slot_y, slot_w, slot_h * aset[i].heat, cols.afb ) -- Foreground (heat)
+         --end
 
          if aset[i].state == "on" then
             gfx.renderTex( active, slot_x + slot_img_offs_x, slot_y + slot_img_offs_y )
