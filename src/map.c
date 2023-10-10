@@ -424,6 +424,13 @@ void map_open (void)
    if ((player.p->fuel < player.p->fuel_consumption) || pilot_isFlag( player.p, PILOT_NOJUMP)
          || map_selected == cur_system - systems_stack || array_size(map_path) == 0)
       window_disableButton( wid, "btnAutonav" );
+
+   /*
+    * The find window is not reentrant. A player can open the map window when they are in the result of the find window that comes from an outfitter or a shipyard.
+    */
+   if ( window_exists( "wdwFind" ) ) {
+      window_disableButton( wid, "btnFind" );
+   }
 }
 
 /*

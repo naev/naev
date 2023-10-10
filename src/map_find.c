@@ -55,6 +55,7 @@ static int map_findSearchOutfits( unsigned int wid_map_find, const char *name );
 static int map_findSearchShips( unsigned int wid_map_find, const char *name );
 static void map_findSearch( unsigned int wid_map_find, const char* str );
 static void map_showOutfitDetail(unsigned int wid, const char* wgtname, int x, int y, int w, int h);
+static void map_adjustButtonLabel( unsigned int wid_map_find, const char* name );
 /* Misc. */
 static void map_findAccumulateResult( map_find_t *found, int n, StarSystem *sys, Spob *spob );
 static void map_findSelect( const StarSystem *sys );
@@ -172,10 +173,10 @@ static void map_findDisplayMark( unsigned int wid_results, const char* str )
    StarSystem *sys = map_found_cur[ pos ].sys;
    int wid_map_find = window_getParent( wid_results );
 
-   map_findSelect( sys );
-
    /* Close parent. */
    window_close( wid_map_find, str );
+
+   map_findSelect( sys );
 }
 
 /**
@@ -652,6 +653,21 @@ static void map_showOutfitDetail( unsigned int wid, const char* wgtname, int x, 
 }
 
 /**
+ * @brief Adjust "Show all"/"Find" button label.
+ *
+ *    @param wid_map_find The windowid of the find window.
+ *    @param name         The widget name of the input widget.
+ */
+static void map_adjustButtonLabel( unsigned int wid_map_find, const char* name )
+{
+   if ( window_getInput( wid_map_find, name )[0] != '\0' ) {
+      window_buttonCaption( wid_map_find, "btnSearch", _("Find") );
+   } else {
+      window_buttonCaption( wid_map_find, "btnSearch", _("Show all") );
+   }
+}
+
+/**
  * @brief Searches for a outfit.
  *
  *    @param name Name to match.
@@ -884,8 +900,6 @@ static void map_findSearch( unsigned int wid_map_find, const char* str )
 
    /* Get the name. */
    name = window_getInput( wid_map_find, "inpSearch" );
-   if (name[0] == '\0')
-      return;
 
    /* Prevent reentrancy, e.g. the toolkit spontaneously deciding a future mouseup event was the
     * user releasing the clicked "Find" button and should reactivate it, never mind that they were
@@ -952,17 +966,18 @@ void map_inputFind( unsigned int parent, const char* str )
    y = -40;
    window_addText( wid_map_find, 20, y, w - 50, gl_defFont.h+4, 0,
          "txtDescription", &gl_defFont, NULL,
-         _("Enter keyword to search for:") );
+         _("Enter keyword to search for:  (Partial match)") );
    y -= 30;
 
    /* Create input. */
    window_addInput( wid_map_find, 30, y, w - 60, 20,
          "inpSearch", 32, 1, &gl_defFont );
+   window_setInputCallback( wid_map_find, "inpSearch", map_adjustButtonLabel );
    y -= 40;
 
    /* Create buttons. */
    window_addButton( wid_map_find, -30, 20+BUTTON_HEIGHT+20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnSearch", _("Find"), map_findSearch );
+         "btnSearch", _("Show all"), map_findSearch );
    window_addButton( wid_map_find, -30, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", _("Close"), window_close );
 
