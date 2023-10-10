@@ -12,6 +12,7 @@
       * Changed the visuals for some of the nebulas (PSO, Mizar)
       * Pirate bribes cost more depending on your fleet and are based on points not mass
       * Missions are introduced less all at once to the player
+      * Blink drives are more flexible but use energy and generate heat
       * diy-nerds: improved reward
    * Quality of Life
       * Significantly improved autonav
@@ -40,6 +41,7 @@
       * Made stress more visible in the slim GUI
       * Reworked how stats are displayed to be more visible and intuitive
       * Weapon sets much more flexible, verbose, and easy to use
+      * Can show all known outfits or ships in with the map find functionality
    * New Content
       * New mechanic for House Sirius called flow to unlock psychic powers
          * Gives passive bonuses to Sirius ships
