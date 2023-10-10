@@ -36,6 +36,7 @@ static int outfitL_type( lua_State *L );
 static int outfitL_typeBroad( lua_State *L );
 static int outfitL_cpu( lua_State *L );
 static int outfitL_mass( lua_State *L );
+static int outfitL_heatFor( lua_State *L );
 static int outfitL_slot( lua_State *L );
 static int outfitL_limit( lua_State *L );
 static int outfitL_icon( lua_State *L );
@@ -64,6 +65,7 @@ static const luaL_Reg outfitL_methods[] = {
    { "typeBroad", outfitL_typeBroad },
    { "cpu", outfitL_cpu },
    { "mass", outfitL_mass },
+   { "heatFor", outfitL_heatFor },
    { "slot", outfitL_slot },
    { "limit", outfitL_limit },
    { "icon", outfitL_icon },
@@ -356,6 +358,28 @@ static int outfitL_mass( lua_State *L )
 {
    const Outfit *o = luaL_validoutfit(L,1);
    lua_pushnumber(L, o->mass);
+   return 1;
+}
+
+/**
+ * @brief Calculates a heat value to be used with heat up.
+ *
+ * @note Outfits need mass to be able to heat up, with no mass they will fail to heat up.
+ *
+ *    @luatparam Number heatup How many "pulses" are needed to heat up to 800 kelvin. Each pulse can represent a discrete event or per second if multiplied by dt.
+ *    @luatreturn Number The heat value corresponding to the number of pulses.
+ * @luafunc heatFor
+ */
+static int outfitL_heatFor( lua_State *L )
+{
+   const Outfit *o = luaL_validoutfit( L, 1 );
+   double heatup = luaL_checknumber( L, 2 );
+   double C = pilot_heatCalcOutfitC( o );
+   double area = pilot_heatCalcOutfitArea( o );
+   double heat = ((800.-CONST_SPACE_STAR_TEMP)*C +
+            STEEL_HEAT_CONDUCTIVITY * ((800.-CONST_SPACE_STAR_TEMP) * area)) /
+         heatup;
+   lua_pushnumber( L, heat );
    return 1;
 }
 

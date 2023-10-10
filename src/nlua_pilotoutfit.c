@@ -37,7 +37,6 @@ static int poL_clear( lua_State *L );
 static int poL_munition( lua_State *L );
 static int poL_shoot( lua_State *L );
 static int poL_heat( lua_State *L );
-static int poL_heatFor( lua_State *L );
 static int poL_heatup( lua_State *L );
 static const luaL_Reg poL_methods[] = {
    { "slot", poL_slot },
@@ -49,7 +48,6 @@ static const luaL_Reg poL_methods[] = {
    { "munition", poL_munition },
    { "shoot", poL_shoot },
    { "heat", poL_heat },
-   { "heatFor", poL_heatFor },
    { "heatup", poL_heatup },
    {0,0}
 }; /**< Pilot outfit metatable methods. */
@@ -456,32 +454,10 @@ static int poL_heat( lua_State *L )
 }
 
 /**
- * @brief Calculates a heat value to be used with heat up.
- *
- * @note Outfits need mass to be able to heat up, with no mass they will fail to heat up.
- *
- *    @luatparam Number heatup How many "pulses" are needed to heat up to 800 kelvin. Each pulse can represent a discrete event or per second if multiplied by dt.
- *    @luatreturn Number The heat value corresponding to the number of pulses.
- * @luafunc heatFor
- */
-static int poL_heatFor (lua_State *L )
-{
-   PilotOutfitSlot *po = luaL_validpilotoutfit( L, 1 );
-   double heatup = luaL_checknumber( L, 2 );
-   double C = pilot_heatCalcOutfitC(po->outfit);
-   double area = pilot_heatCalcOutfitArea(po->outfit);
-   double heat = ((800.-CONST_SPACE_STAR_TEMP)*C +
-            STEEL_HEAT_CONDUCTIVITY * ((800.-CONST_SPACE_STAR_TEMP) * area)) /
-         heatup;
-   lua_pushnumber( L, heat );
-   return 1;
-}
-
-/**
  * @brief Heats up a pilot outfit.
  *
  * @code
- * local heat = po:heatFor( 5 ) -- 5 pulses should heat up fully
+ * local heat = po:outfit():heatFor( 5 ) -- 5 pulses should heat up fully
  * ...
  * po:heatup( heat ) -- one pulse
  * @endcode
