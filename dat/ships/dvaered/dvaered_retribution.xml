@@ -33,7 +33,6 @@
   <weapon size="large" x="44" y="-24" h="0" />
   <weapon size="large" x="10" y="24" h="4" />
   <weapon size="large" x="10" y="-24" h="4" />
-  <weapon size="large" x="41" y="0" h="6" />
   <weapon size="large" prop="fighter_bay" x="-45" y="6" h="4" />
   <weapon size="large" prop="fighter_bay" x="-45" y="-6" h="4" />
   <utility size="large" prop="systems">Unicorp PT-2200 Core System</utility>
