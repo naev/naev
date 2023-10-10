@@ -550,6 +550,7 @@ static char **map_outfitsMatch( const char *name )
    /* Get outfits and names. */
    o     = tech_getOutfitArray( map_known_techs, array_size(map_known_techs) );
    names = map_fuzzyOutfits( o, name );
+   qsort( names, array_size(names), sizeof(char*), strsort );
    array_free(o);
 
    return names;
@@ -799,6 +800,7 @@ static char **map_shipsMatch( const char *name )
    /* Get ships and names. */
    s     = tech_getShipArray( map_known_techs, array_size( map_known_techs ) );
    names = map_fuzzyShips( s, name );
+   qsort( names, array_size(names), sizeof(char*), strsort );
    array_free(s);
 
    return names;
