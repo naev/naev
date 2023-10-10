@@ -14,7 +14,7 @@ local sfx = audio.newSource( 'snd/sounds/blink.ogg' )
 local sfx_warmup = audio.newSource( 'snd/sounds/activate1.ogg' )
 
 function onload( o )
-   heat = o:heatFor( 30/cooldown ) -- Roughly overheat in 30 secs of continious usage
+   heat = o:heatFor( 30/cooldown ) -- Roughly overheat in 30 secs of continious usage (more in reality)
 end
 
 function init( p, po )
@@ -50,7 +50,7 @@ function update( p, po, dt )
          luaspfx.blink( p, pos ) -- Blink afterimage
          p:effectAdd( "Blink" ) -- Cool "blink in" effect
          -- Direction is random
-         p:setPos( pos + vec2.newP( dist, p:dir()+(2*rnd.rnd()-1)*math.pi/6 ) )
+         p:setPos( pos + vec2.newP( po:heat()*dist, p:dir()+(2*rnd.rnd()-1)*math.pi/6 ) )
 
          -- Play the sound
          if mem.isp then

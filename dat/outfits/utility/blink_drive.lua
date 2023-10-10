@@ -11,7 +11,7 @@ local heat
 local sfx = audio.newSource( 'snd/sounds/blink.ogg' )
 
 function onload( o )
-   heat = o:heatFor( 30/cooldown ) -- Roughly overheat in 30 s of continuous use (less in reality)
+   heat = o:heatFor( 30/cooldown ) -- Roughly overheat in 30 s of continuous use (much more in reality)
 end
 
 function init( p, po )
@@ -48,7 +48,8 @@ local function doblink( p, po, blinkdir, strength )
    end
 
    -- Test heat
-   if po:heat() <= 0 then
+   local h = po:heat()
+   if h <= 0 then
       player.msg("#r"..fmt.f(_("{outfit} is overheating!"),{outfit=po:outfit()}).."#0")
       return false
    end
@@ -68,7 +69,7 @@ local function doblink( p, po, blinkdir, strength )
    local pos = p:pos()
    luaspfx.blink( p, pos ) -- Blink afterimage
    p:effectAdd( "Blink" ) -- Cool "blink in" effect
-   p:setPos( pos + vec2.newP( dist*strength, p:dir()+blinkdir ) )
+   p:setPos( pos + vec2.newP( h*dist*strength, p:dir()+blinkdir ) )
    mem.timer = cooldown * p:shipstat("cooldown_mod",true)
    po:state("cooldown")
    po:progress(1)
