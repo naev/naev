@@ -9,6 +9,8 @@
   <description>The bioship adrenal gland organ is able to generate immense amounts of adrenaline from raw energy, allowing the ship to temporarily have augmented movement.</description>
   <gfx_store>/gfx/misc/icons/lightning-electron.webp</gfx_store>
   <limit>afterburner</limit>
+  <overheat_min>400</overheat_min>
+  <overheat_max>650</overheat_max>
  </general>
  <specific type="afterburner" group="8">
   <rumble>0.7</rumble>
@@ -19,7 +21,5 @@
   <energy>55</energy>
   <mass_limit>300</mass_limit>
   <heatup>13</heatup>
-  <heat_base>400</heat_base>
-  <heat_cap>650</heat_cap>
  </specific>
 </outfit>

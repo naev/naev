@@ -12,6 +12,8 @@
   <limit>afterburner</limit>
   <cpu>0</cpu>
   <desc_extra>#rHot hot hot!#0</desc_extra>
+  <overheat_min>600</overheat_min>
+  <overheat_max>950</overheat_max>
  </general>
  <stats>
   <armour_regen_malus>15</armour_regen_malus>
@@ -25,7 +27,5 @@
   <energy>85</energy>
   <mass_limit>700</mass_limit>
   <heatup>20</heatup>
-  <heat_base>600</heat_base>
-  <heat_cap>950</heat_cap>
  </specific>
 </outfit>

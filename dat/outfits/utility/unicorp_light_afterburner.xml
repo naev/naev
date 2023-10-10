@@ -9,6 +9,8 @@
   <gfx_store>afterburner.webp</gfx_store>
   <limit>afterburner</limit>
   <cpu>0</cpu>
+  <overheat_min>350</overheat_min>
+  <overheat_max>450</overheat_max>
  </general>
  <specific type="afterburner" group="8">
   <rumble>0.5</rumble>
@@ -19,7 +21,5 @@
   <energy>30</energy>
   <mass_limit>300</mass_limit>
   <heatup>17</heatup>
-  <heat_base>350</heat_base>
-  <heat_cap>450</heat_cap>
  </specific>
 </outfit>
