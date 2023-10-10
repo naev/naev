@@ -51,6 +51,7 @@ void pilot_lockClear( Pilot *p );
 
 /* Other. */
 void pilot_calcStats( Pilot *pilot );
+double pilot_massFactor( const Pilot *pilot );
 void pilot_updateMass( Pilot *pilot );
 void pilot_healLanded( Pilot *pilot );
 PilotOutfitSlot *pilot_getSlotByName( Pilot *pilot, const char *name );

@@ -1085,35 +1085,43 @@ PilotOutfitSlot *pilot_getSlotByName( Pilot *pilot, const char *name )
 }
 
 /**
+ * @brief Gets the factor at which speed gets worse.
+ */
+double pilot_massFactor( const Pilot *pilot )
+{
+   double mass = pilot->solid.mass;
+   if ((pilot->stats.engine_limit > 0.) && (mass > pilot->stats.engine_limit)) {
+      double f = (mass-pilot->stats.engine_limit) / pilot->stats.engine_limit;
+      return 1./(1.+f+f+4.*pow(f,3.));
+   }
+   return 1.;
+}
+
+/**
  * @brief Updates the pilot stats after mass change.
  *
  *    @param pilot Pilot to update his mass.
  */
 void pilot_updateMass( Pilot *pilot )
 {
-   double mass, factor;
+   double factor;
 
    /* Recompute effective mass if something changed. */
    pilot->solid.mass = MAX( pilot->stats.mass_mod*pilot->ship->mass + pilot->stats.cargo_inertia*pilot->mass_cargo + pilot->mass_outfit, 0.);
 
-   /* Set limit. */
-   mass = pilot->solid.mass;
-   if ((pilot->stats.engine_limit > 0.) && (mass > pilot->stats.engine_limit))
-      factor = pilot->stats.engine_limit / mass;
-   else
-      factor = 1.;
-
+   /* Set and apply limit. */
+   factor = pilot_massFactor( pilot );
    pilot->accel   = factor * pilot->accel_base;
    pilot->turn    = factor * pilot->turn_base;
    pilot->speed   = factor * pilot->speed_base;
 
-/* limit the maximum speed if limiter is active */
+   /* limit the maximum speed if limiter is active */
    if (pilot_isFlag(pilot, PILOT_HASSPEEDLIMIT)) {
       pilot->speed = pilot->speed_limit - pilot->accel / 3.;
       /* Speed must never go negative. */
       if (pilot->speed < 0.) {
          /* If speed DOES go negative, we have to lower accel. */
-         pilot->accel = 3 * pilot->speed_limit;
+         pilot->accel = 3. * pilot->speed_limit;
          pilot->speed = 0.;
       }
    }
