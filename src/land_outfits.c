@@ -455,7 +455,13 @@ void outfits_update( unsigned int wid, const char *str )
    window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 256, 256 );
 
    /* new text */
-   window_modifyText( wid, "txtDescription", pilot_outfitDescription( player.p, outfit ) );
+   if (outfit->slot.type == OUTFIT_SLOT_INTRINSIC) {
+      scnprintf( buf, sizeof(buf), "%s\n\n#o%s#0",
+         pilot_outfitDescription( player.p, outfit ),
+         _("This is an intrinsic outfit that will be directly equipped on the current ship and can not be moved."));
+   }
+   else
+      window_modifyText( wid, "txtDescription", pilot_outfitDescription( player.p, outfit ) );
    buf_price = outfit_getPrice( outfit, &price, &canbuy, &cansell );
    credits2str( buf_credits, player.p->credits, 2 );
 
@@ -893,6 +899,7 @@ static void outfits_buy( unsigned int wid, const char *str )
    q = outfits_getMod();
    /* Can only get one unique item. */
    if (outfit_isProp(outfit, OUTFIT_PROP_UNIQUE) ||
+         (outfit->slot.type==OUTFIT_SLOT_INTRINSIC) ||
          outfit_isMap(outfit) || outfit_isLocalMap(outfit) ||
          outfit_isGUI(outfit) || outfit_isLicense(outfit))
       q = MIN(q,1);
@@ -972,7 +979,7 @@ int outfit_canSell( const char *name )
       failure = 1;
    }
    /* has no outfits to sell */
-   if (player_outfitOwned(outfit) <= 0) {
+   if (!pilot_hasIntrinsic(player.p,outfit) && (player_outfitOwned(outfit) <= 0)) {
       land_errDialogueBuild( _("You can't sell something you don't have!") );
       failure = 1;
    }

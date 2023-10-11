@@ -2819,6 +2819,9 @@ int player_addOutfit( const Outfit *o, int quantity )
       player_addLicense(o->u.lic.provides);
       return 1; /* Success. */
    }
+   /* intrinsic outfits get added as intinsics. */
+   else if (o->slot.type==OUTFIT_SLOT_INTRINSIC)
+      return pilot_addOutfitIntrinsic( player.p, o );
 
    /* Try to find it. */
    for (int i=0; i<array_size(player_outfits); i++) {
@@ -2846,6 +2849,9 @@ int player_addOutfit( const Outfit *o, int quantity )
  */
 int player_rmOutfit( const Outfit *o, int quantity )
 {
+   if (o->slot.type==OUTFIT_SLOT_INTRINSIC)
+      return pilot_rmOutfitIntrinsic( player.p, o );
+
    /* Try to find it. */
    for (int i=0; i<array_size(player_outfits); i++) {
       if (player_outfits[i].o != o)

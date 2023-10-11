@@ -77,6 +77,7 @@ typedef enum OutfitType_ {
 typedef enum OutfitSlotType_ {
    OUTFIT_SLOT_NULL,       /**< Invalid slot type. */
    OUTFIT_SLOT_NA,         /**< Slot type not applicable. */
+   OUTFIT_SLOT_INTRINSIC,  /**< Internal outfits that don't use slots. */
    OUTFIT_SLOT_STRUCTURE,  /**< Low energy slot. */
    OUTFIT_SLOT_UTILITY,    /**< Medium energy slot. */
    OUTFIT_SLOT_WEAPON      /**< High energy slot. */

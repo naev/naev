@@ -327,6 +327,8 @@ const char *slotName( const OutfitSlotType type )
          return "NULL";
       case OUTFIT_SLOT_NA:
          return gettext_noop("N/A");
+      case OUTFIT_SLOT_INTRINSIC:
+         return gettext_noop("Intrinsic");
       case OUTFIT_SLOT_STRUCTURE:
          return gettext_noop("Structure");
       case OUTFIT_SLOT_UTILITY:
@@ -1046,7 +1048,8 @@ int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s )
 
    /* Outfit must have valid slot type. */
    if ((os->type == OUTFIT_SLOT_NULL) ||
-      (os->type == OUTFIT_SLOT_NA))
+      (os->type == OUTFIT_SLOT_NA) ||
+      (os->type == OUTFIT_SLOT_INTRINSIC))
       return 0;
 
    /* Outfit type must match outfit slot. */
@@ -1090,7 +1093,8 @@ int outfit_fitsSlotType( const Outfit* o, const OutfitSlot* s )
 
    /* Outfit must have valid slot type. */
    if ((os->type == OUTFIT_SLOT_NULL) ||
-      (os->type == OUTFIT_SLOT_NA))
+      (os->type == OUTFIT_SLOT_NA) ||
+      (os->type == OUTFIT_SLOT_INTRINSIC))
       return 0;
 
    /* Outfit type must match outfit slot. */
@@ -2538,7 +2542,7 @@ static int outfit_parse( Outfit* temp, const char* file )
                else if (strcmp(cprop,"weapon") == 0)
                   temp->slot.type = OUTFIT_SLOT_WEAPON;
                else if (strcmp(cprop,"intrinsic") == 0)
-                  temp->slot.type = OUTFIT_SLOT_NA;
+                  temp->slot.type = OUTFIT_SLOT_INTRINSIC;
                else if (strcmp(cprop,"none") == 0)
                   temp->slot.type = OUTFIT_SLOT_NA;
                else

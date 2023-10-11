@@ -428,6 +428,21 @@ int pilot_rmOutfitIntrinsic( Pilot *pilot, const Outfit *outfit )
 }
 
 /**
+ * @brief Gets how many copies of an intrinsic a pilot has.
+ */
+int pilot_hasIntrinsic( const Pilot *pilot, const Outfit *outfit )
+{
+   int ret = 0;
+   for (int i=0; i<array_size(pilot->outfit_intrinsic); i++) {
+      PilotOutfitSlot *s = &pilot->outfit_intrinsic[i];
+      if (s->outfit != outfit)
+         continue;
+      ret++;
+   }
+   return ret;
+}
+
+/**
  * @brief Removes an outfit from the pilot without doing any checks.
  *
  * @note Does not run pilot_calcStats().
