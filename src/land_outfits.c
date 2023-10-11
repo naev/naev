@@ -27,6 +27,7 @@
 #include "nstring.h"
 #include "nlua.h"
 #include "outfit.h"
+#include "pilot_outfit.h"
 #include "player.h"
 #include "player_gui.h"
 #include "slots.h"
@@ -459,6 +460,7 @@ void outfits_update( unsigned int wid, const char *str )
       scnprintf( buf, sizeof(buf), "%s\n\n#o%s#0",
          pilot_outfitDescription( player.p, outfit ),
          _("This is an intrinsic outfit that will be directly equipped on the current ship and can not be moved."));
+      window_modifyText( wid, "txtDescription", buf );
    }
    else
       window_modifyText( wid, "txtDescription", pilot_outfitDescription( player.p, outfit ) );
@@ -824,6 +826,10 @@ int outfit_canBuy( const char *name, int blackmarket )
       land_errDialogueBuild( _("You can only own one of this outfit.") );
       return 0;
    }
+
+   /* Intrinsic. */
+   if ((outfit->slot.type==OUTFIT_SLOT_INTRINSIC) && pilot_hasOutfitLimit( player.p, outfit->limit ))
+      return 0;
 
    /* Map already mapped */
    if ((outfit_isMap(outfit) && map_isUseless(outfit)) ||

@@ -2703,6 +2703,10 @@ int player_outfitOwned( const Outfit* o )
          player_guiCheck(o->u.gui.gui))
       return 1;
 
+   /* Special case intrinsics. */
+   if (o->slot.type==OUTFIT_SLOT_INTRINSIC)
+      return pilot_hasIntrinsic( player.p, o );
+
    /* Try to find it. */
    for (int i=0; i<array_size(player_outfits); i++)
       if (player_outfits[i].o == o)
@@ -2820,8 +2824,11 @@ int player_addOutfit( const Outfit *o, int quantity )
       return 1; /* Success. */
    }
    /* intrinsic outfits get added as intinsics. */
-   else if (o->slot.type==OUTFIT_SLOT_INTRINSIC)
+   else if (o->slot.type==OUTFIT_SLOT_INTRINSIC) {
+      if (pilot_hasOutfitLimit( player.p, o->limit ))
+         return 0;
       return pilot_addOutfitIntrinsic( player.p, o );
+   }
 
    /* Try to find it. */
    for (int i=0; i<array_size(player_outfits); i++) {

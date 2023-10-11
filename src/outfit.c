@@ -2697,7 +2697,7 @@ if (o) WARN( _("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< 
    MELEMENT(temp->name==NULL,"name");
    if (!outfit_isProp(temp,OUTFIT_PROP_TEMPLATE)) {
       MELEMENT(temp->slot.type==OUTFIT_SLOT_NULL,"slot");
-      MELEMENT((temp->slot.type!=OUTFIT_SLOT_NA) && (temp->slot.size==OUTFIT_SLOT_SIZE_NA),"size");
+      MELEMENT((temp->slot.type!=OUTFIT_SLOT_NA) && (temp->slot.type!=OUTFIT_SLOT_INTRINSIC) && (temp->slot.size==OUTFIT_SLOT_SIZE_NA),"size");
       MELEMENT(temp->gfx_store==NULL,"gfx_store");
       MELEMENT(temp->desc_raw==NULL,"description");
    }

@@ -31,7 +31,6 @@
 /*
  * Prototypes.
  */
-static int pilot_hasOutfitLimit( const Pilot *p, const char *limit );
 static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot );
 static const char *outfitkeytostr( OutfitKey key );
 
@@ -638,12 +637,19 @@ int pilot_reportSpaceworthy( const Pilot *p, char *buf, int bufSize )
  *    @param limit Outfit (limiting) type to check.
  *    @return the amount of outfits of this type the pilot has.
  */
-static int pilot_hasOutfitLimit( const Pilot *p, const char *limit )
+int pilot_hasOutfitLimit( const Pilot *p, const char *limit )
 {
+   if (limit==NULL)
+      return 0;
    for (int i = 0; i<array_size(p->outfits); i++) {
       const Outfit *o = p->outfits[i]->outfit;
       if (o == NULL)
          continue;
+      if ((o->limit != NULL) && (strcmp(o->limit,limit)==0))
+         return 1;
+   }
+   for (int i=0; i<array_size(p->outfit_intrinsic); i++) {
+      const Outfit *o = p->outfit_intrinsic[i].outfit;
       if ((o->limit != NULL) && (strcmp(o->limit,limit)==0))
          return 1;
    }

@@ -40,6 +40,7 @@ int pilot_maxAmmoO( const Pilot* p, const Outfit *o );
 void pilot_fillAmmo( Pilot* pilot );
 
 /* Checks. */
+int pilot_hasOutfitLimit( const Pilot *p, const char *limit );
 int pilot_slotsCheckSafety( const Pilot *p );
 int pilot_slotsCheckRequired( const Pilot *p );
 int pilot_isSpaceworthy( const Pilot *p );
