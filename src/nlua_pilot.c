@@ -3805,6 +3805,7 @@ static int pilotL_outfitAddIntrinsic( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to remove intrinsic outfit from.
  *    @luatparam Outfit o Outfit to remove from intrinsic outfits.
+ *    @luatreturn boolean true if outfit was removed, false otherwise.
  * @luafunc outfitRmIntrinsic
  * @see outfitRm
  */
@@ -3812,18 +3813,7 @@ static int pilotL_outfitRmIntrinsic( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
    const Outfit *o = luaL_validoutfit(L,2);
-   for (int i=0; i<array_size(p->outfit_intrinsic); i++) {
-      PilotOutfitSlot *s = &p->outfit_intrinsic[i];
-      int ret;
-      if (s->outfit != o)
-         continue;
-      ret = pilot_rmOutfitIntrinsic( p, s );
-      if (ret==0)
-         pilot_calcStats(p);
-      lua_pushboolean(L,ret);
-      return 1;
-   }
-   lua_pushboolean(L,0);
+   lua_pushboolean(L,pilot_rmOutfitIntrinsic( p, o ));
    return 1;
 }
 
