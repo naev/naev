@@ -4382,8 +4382,12 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
                continue;
             }
             const Outfit *o = player_tryGetOutfit( xml_get(cur), 1 );
-            if (o!=NULL)
-               pilot_addOutfitIntrinsic( ship, o );
+            if (o!=NULL) {
+               if (pilot_hasOutfitLimit( ship, o->limit ))
+                  WARN(_("Player ship '%s' has intrinsic outfit '%s' exceeding limits! Removing."),ship->name,o->name);
+               else
+                  pilot_addOutfitIntrinsic( ship, o );
+            }
          } while (xml_nextNode(cur));
          continue;
       }
