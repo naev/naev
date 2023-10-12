@@ -29,6 +29,7 @@ local fmt = require "format"
 --local tut = require 'common.tutorial'
 
 local mainspb, mainsys = spob.getS("Minerva Station")
+local returnspb, returnsys = spob.getS("Shangris Station")
 local title = _("Minerva Station Redux")
 
 -- Mission states:
@@ -61,7 +62,7 @@ function accept ()
    if not talked then
       talked = true
 
-      vn.na(_([[You join Maikki at her table. Although she has changed into her civilian clothes, her composture and facial expression is quite unlike when you first met her.]]))
+      vn.na(_([[You join Maikki at her table. Although she has changed into her civilian clothes, her composure and facial expression is quite unlike when you first met her.]]))
       maikki(_([["I've talked with the pirate head surgeon, and there's both good news and bad news."]]))
       vn.menu{
          {[["Good news?"]], "01_good"},
@@ -71,7 +72,7 @@ function accept ()
       -- Just change the order she says stuff in
       local vn01good, vn01bad
       vn.label("01_good")
-      maikki(_([["The good news is that Zuri is somewhat stable. It's still not clear if she's going to pull it off, but we have to trust her fortitude. We'll have to fly her back to New Haven to get some more proper follow-up care. However, at least the worst has been avoided for now."]]))
+      maikki(_([["The good news is that Zuri is somewhat stable. It's still not clear if she's going to pull it off, but we have to trust her fortitude. We'll have to fly her back to get some more proper follow-up care. However, at least the worst has been avoided for now."]]))
       vn.func( function ()
          vn01good = true
          if not vn01bad then
@@ -93,7 +94,7 @@ function accept ()
       end )
 
       vn.label("01_cont")
-      maikki(_([["Damn it, I should have brought my squad with me, but I erred on the side of cautious. How unlike me. We have no choice but to bring Zuri and my father to a New Haven. However, we can't leave Minerva Station as it is, after all we've been through!"]]))
+      maikki(_([["Damn it, I should have brought my squad with me, but I erred on the side of cautious. How unlike me! But with Zuri and Kex's state, we're going to have to take them to a proper medical facility. That doesn't mean we can leave Minerva Station as it is, after all we've been through!"]]))
       local winner = var.peek("minerva_judgement_winner")
       local msg
       if winner=="dvaered" then
@@ -103,7 +104,7 @@ function accept ()
       else -- "independent"
          msg = _([["We don't know what's going to happen to the station after the trial ended as it did. I wouldn't be surprised if it would be flooded with Imperials in a short time. ]])
       end
-      maikki(msg.._([[We have to infiltrate the weapons facility at the station and not only extract vital weapon prototypes and blueprints, but now we also have to see if we can find anything that can help my father!"]]))
+      maikki(msg.._([[We have to infiltrate the weapons facility at the station and not only plunder some nice weapon prototypes and blueprints, but now we also have to see if we can find anything that can help my father! It's a bit of a long shot, but it's our best bet."]]))
       vn.menu( {
          {_([["Wait, you knew about the station?"]]), "02_plan"},
          {_([["Anything for Kex!"]]), "02_kex"},
@@ -114,11 +115,21 @@ function accept ()
       vn.jump("02_cont")
 
       vn.label("02_kex")
-      maikki(_([["Yes. You have no idea how much shit I've had to put up with to find him. There is no way I'm going to lose him now!"]]))
+      maikki(_([["Yes. You have no idea how much shit I've had to put up with to find him. There is no way I'm going to lose him now! The rest can wait!"]]))
       vn.jump("02_cont")
 
       vn.label("02_cont")
-      maikki(_([[""]]))
+      maikki(_([["Although I'm really tempted to storm Minerva Station myself, and plunder the weapons facility like any pirate dreams of, but it pisses me off that I'm going to have to leave it to you. Damn responsibilities."]]))
+      maikki(_([["Zuri got most of the information and should be the one to brief you on the weapons facility, but that's not going to work out now."
+She lets out a sigh.
+"I'll try to give you a short rundown on what we know."]]))
+      maikki(_([[She clears her throat.
+"So, our intel hints that they are working on an experimental energy weapon of some time at the station. Should be quite preliminary design, but we don't have much info on the current state of development. Either way, it's going to be useful and/or worth a fortune!"]]))
+      maikki(_([["Apparently, the laboratory is located in a penthouse to not raise suspicion. Security is quite tight around the area, but we've got the likely location narrowed down. I forget where it was, but I'll send you the documents we have on it."]]))
+      maikki(_([["We don't really know what we'll find there, but I guess you'll have to improvise? It's pretty much now or never, and we won't get a second chance once the station gets locked down."]]))
+      maikki(_([["You'll have to make it to the station on your own, but once you get there, some pirate operatives should be there to help you ransack the place. You won't have too much time, so just try to grab whatever you can and get out of there. Make sure to keep an eye out for any sort of thing that can help Kex. I'm not sure our engineers will be able to figure it out by themselves."]]))
+      maikki(_([[She gives a solemn nod.
+"Are you ready to infiltrate Minerva Station one last time?"]]))
    else
       maikki(_([["Are you ready now to infiltrate Minerva Station?"]]))
    end
@@ -134,6 +145,12 @@ function accept ()
 
    vn.label("accept")
    vn.func( function () mem.state=1 end )
+   maikki(_([["Great! I knew I could count on you."]]))
+   maikki(fmt.f(_([["I want to take Kex and Zuri to {spb} in the {sys} system, where I know a gal that should help patch them up. Not as good as the surgeons back at New Haven, but it'll have to do. We don't have the time to make the full trip at the moment, once you join us, we can figure out if we can make the trip."]]),
+      {spb=returnspb, sys=returnsys}))
+   maikki(fmt.f(_([["You infiltrate the station, get what you can, and meet up with us at {spb}. We'll then figure out what to do. Best of luck!"
+Maikki gives you a weird two finger salute and takes off to her ship, leaving you to do your part on your own.]]),
+      {spb=returnspb}))
 
    vn.run()
 
@@ -145,7 +162,8 @@ function accept ()
    misn.accept()
    misn.osdCreate( title, {
       fmt.f(_("Land on {spb} ({sys} system)"),{spb=mainspb, sys=mainsys}),
-      _("Break into the Station"),
+      _("Ransack the weapon laboratory"),
+      fmt.f(_("Meet up with Maikki at {spb} ({sys} system)"),{spb=returnspb, sys=returnsys}),
    } )
    mem.mrk = misn.markerAdd( mainspb )
 
@@ -154,8 +172,12 @@ end
 
 function enter ()
    local scur = system.cur()
-   if scur==mainsys and mem.state==0 then
+   if scur==mainsys and mem.state==1 then
       -- TODO add some enemies or something
+      pilot.clear()
+      pilot.toggleSpawn(false)
+   elseif scur==mainsys and mem.state==2 then
+      -- Set up fight
       pilot.clear()
       pilot.toggleSpawn(false)
    end
