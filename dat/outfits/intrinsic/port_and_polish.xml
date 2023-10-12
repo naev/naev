@@ -4,7 +4,8 @@
   <slot>intrinsic</slot>
   <mass>0</mass>
   <price>0</price>
-  <description>Although many ships go through a tuning process during their mass production, it is far from perfect with imperfections leading to suboptimal performance. Port and polish consists of a complete in-depth tuning of the ship to bring out its best. Since it requires taking apart, fine-tuning, and putting back together large parts of a ship, the cost increases significantly with the size of the ship.</description>
+  <description>Although many ships go through a tuning process during their mass production, it is far from perfect with imperfections leading to suboptimal performance. Port and polish consists of a complete in-depth tuning of the ship to bring out its best. Since it requires taking apart, fine-tuning, and putting back together large parts of a ship, the cost increases significantly with the size of the ship.
+#oThis outfit can not be removed once equipped.#0</description>
   <gfx_store>placeholder.webp</gfx_store>
   <rarity>2</rarity>
   <limit>port_and_polish</limit>
