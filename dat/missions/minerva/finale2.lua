@@ -46,7 +46,8 @@ function create ()
       misn.finish( false )
    end
    misn.setNPC( minerva.maikki.name, minerva.maikki.portrait, _("Maikki seems to be waiting for you in her regular clothes.") )
-   misn.setDesc(_([[TODO]]))
+   misn.setDesc(fmt.f(_([[Maikki has entrusted you with raiding the weapons laboratory at Minerva Station to obtain anything that can help Kex, while also plundering anything you find of value. Afterwards she has told you to meet her up at {returnspb} in the {returnsys} system.]]),
+      {returnspb=returnspb, returnsys=returnsys}))
    misn.setReward(_("Saving Kex!"))
    misn.setTitle( title )
 end
