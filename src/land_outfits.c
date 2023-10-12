@@ -833,8 +833,6 @@ int outfit_canBuy( const char *name, int blackmarket )
          land_errDialogueBuild( _("You can only equip one of this outfit type.") );
          return 0;
       }
-      if (!dialogue_YesNo( _("Buy Intrinsic Outfit?"), _("Are you sure you wish to buy '%s'? It will be automatically equipped on your current ship '%s'."), _(outfit->name), player.p->name ))
-         return 0;
    }
 
    /* Map already mapped */
@@ -918,6 +916,10 @@ static void outfits_buy( unsigned int wid, const char *str )
 
    /* Can buy the outfit? */
    if (land_errDialogue( outfit->name, "buyOutfit" ))
+      return;
+
+   /* Give dialogue when trying to buy intrinsic. */
+   if (!dialogue_YesNo( _("Buy Intrinsic Outfit?"), _("Are you sure you wish to buy '%s'? It will be automatically equipped on your current ship '%s'."), _(outfit->name), player.p->name ))
       return;
 
    /* Try Lua. */
