@@ -828,8 +828,14 @@ int outfit_canBuy( const char *name, int blackmarket )
    }
 
    /* Intrinsic. */
-   if ((outfit->slot.type==OUTFIT_SLOT_INTRINSIC) && pilot_hasOutfitLimit( player.p, outfit->limit ))
-      return 0;
+   if (outfit->slot.type==OUTFIT_SLOT_INTRINSIC) {
+      if (pilot_hasOutfitLimit( player.p, outfit->limit )) {
+         land_errDialogueBuild( _("You can only equip one of this outfit type.") );
+         return 0;
+      }
+      if (!dialogue_YesNo( _("Buy Intrinsic Outfit?"), _("Are you sure you wish to buy '%s'? It will be automatically equipped on your current ship '%s'."), _(outfit->name), player.p->name ))
+         return 0;
+   }
 
    /* Map already mapped */
    if ((outfit_isMap(outfit) && map_isUseless(outfit)) ||
