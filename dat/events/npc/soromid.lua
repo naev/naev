@@ -20,10 +20,12 @@ desc_list["heavy"] = {
 local gfx_list = {
    {"soromid/soromid_heavy_civilian_1.webp", "heavy"},
    {"soromid/soromid_heavy_civilian_2.webp", "heavy"},
+   {"soromid/soromid_heavy_civilian_3.webp", "heavy"},
+   {"soromid/soromid_heavy_military_3.webp", "heavy"}, -- TODO probably not mix in with the civilians...
 }
 
 local msg_lore = {
-   _("Hello. Can I interest you in one of our galaxy famous cosmetic gene treatments? You look like you could use them…"),
+   _([["Hello. Can I interest you in one of our galaxy famous cosmetic gene treatments? You look like you could use them…"]]),
    _([["Can you believe it? I was going to visit Sorom to find my roots, and then boom! It got burnt to a crisp! Even now, cycles later, I still can't believe it."]]),
    _([["Everyone knows that we Soromid altered ourselves to survive the deadly conditions on Sorom during the Great Quarantine. What you don't hear so often is that billions of us died from the therapy itself. We paid a high price for survival."]]),
    _([["Our cosmetic gene treatments are even safer now for non-Soromids, with a rate of survival of 99.4%!"]]),

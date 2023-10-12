@@ -235,6 +235,7 @@ local sirius_serra_m = {
    "sirius/sirius_serra_m1.webp",
    "sirius/sirius_serra_m2.webp",
    "sirius/sirius_serra_m3.webp",
+   "sirius/sirius_serra_m4.webp",
 }
 local sirius_fyrra_f = {
    "sirius/sirius_fyrra_f1.webp",
@@ -254,6 +255,7 @@ local sirius_serra_f = {
    "sirius/sirius_serra_f1.webp",
    "sirius/sirius_serra_f2.webp",
    "sirius/sirius_serra_f3.webp",
+   "sirius/sirius_serra_f4.webp",
 }
 vni.sirius = {}
 vni.sirius.shairaMale = get_list( sirius_shaira_m )
