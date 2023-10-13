@@ -34,10 +34,14 @@ function create ()
    hook.enter( "enter" )
 end
 
-local pirboss
+local pirboss, hailhook
 local baddies = {}
 function enter ()
    if system.cur()~=mainsys then
+      if hailhook then
+         hook.rm( hailhook )
+         hailhook = nil
+      end
       return
    end
 
@@ -46,7 +50,7 @@ function enter ()
    pilot.toggleSpawn(false)
 
    -- Hail hook
-   hook.hail_spob( "comm_levo" )
+   hailhook = hook.hail_spob( "comm_levo" )
    player.landAllow( false, _("You can not land until you clear the pirates from the system!") )
 
    -- Spawn pirates
