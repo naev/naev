@@ -1928,6 +1928,11 @@ const glColour* spob_getColour( const Spob *p )
  */
 void spob_updateLand( Spob *p )
 {
+   if (p->land_override && (p->land_msg!=NULL)) {
+      p->can_land = (p->land_override > 0);
+      return;
+   }
+
    /* Clean up old stuff. */
    free( p->land_msg );
    p->can_land    = 0;
@@ -1952,7 +1957,10 @@ void spob_updateLand( Spob *p )
    }
 
    /* Some defaults. */
-   if (spob_hasService( p, SPOB_SERVICE_LAND )) {
+   if (p->land_override<0) {
+      p->land_msg = strdup(_("Landing permission denied."));
+   }
+   else if (spob_hasService( p, SPOB_SERVICE_LAND ) || (p->land_override>0)) {
       p->can_land = 1;
       p->land_msg = strdup(_("Landing permission granted."));
    }

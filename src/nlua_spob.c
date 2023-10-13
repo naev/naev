@@ -56,7 +56,9 @@ static int spobL_services( lua_State *L );
 static int spobL_flags( lua_State *L );
 static int spobL_canland( lua_State *L );
 static int spobL_landAllow( lua_State *L );
-static int spobL_getLandOverride( lua_State *L );
+static int spobL_landDeny( lua_State *L );
+static int spobL_getLandAllow( lua_State *L );
+static int spobL_getLandDeny( lua_State *L );
 static int spobL_gfxSpace( lua_State *L );
 static int spobL_gfxExterior( lua_State *L );
 static int spobL_gfxComm( lua_State *L );
@@ -91,7 +93,9 @@ static const luaL_Reg spob_methods[] = {
    { "flags", spobL_flags },
    { "canLand", spobL_canland },
    { "landAllow", spobL_landAllow },
-   { "getLandOverride", spobL_getLandOverride },
+   { "landDeny", spobL_landDeny },
+   { "getLandAllow", spobL_getLandAllow },
+   { "getLandDeny", spobL_getLandDeny },
    { "gfxSpace", spobL_gfxSpace },
    { "gfxExterior", spobL_gfxExterior },
    { "gfxComm", spobL_gfxComm },
@@ -720,45 +724,83 @@ static int spobL_flags( lua_State *L )
 static int spobL_canland( lua_State *L )
 {
    Spob *p = luaL_validspob(L,1);
-   spob_updateLand( p );
+   spob_updateLand( p ); /* Update to make sure it's correct. */
    lua_pushboolean( L, p->can_land );
    return 1;
+}
+
+static int landAllowDeny( lua_State *L, int allowdeny )
+{
+   Spob *p = luaL_validspob(L,1);
+   int old = p->land_override;
+   p->land_override = allowdeny * !!lua_toboolean(L,2);
+   /* Set the message as necessary. */
+   free( p->land_msg );
+   p->land_msg = NULL;
+   if (!lua_isnoneornil(L,3))
+      p->land_msg = strdup( luaL_checkstring(L,3) );
+
+   /* If the value has changed, re-run the landing Lua next frame. */
+   if (p->land_override != old)
+      space_factionChange();
+   return 0;
 }
 
 /**
  * @brief Allows the player land on a spob no matter what. The override lasts until the player jumps or lands.
  *
- * @usage p:landAllow( true ) -- Spob can land on p now.
+ * @usage p:landAllow( true ) -- Player can land on spob p now.
  *    @luatparam Spob p Spob to forcibly allow the player to land on.
  *    @luatparam[opt=false] boolean b Whether or not the player should be allowed to land, true enables, false disables override.
+ *    @luatparam[opt=nil] string msg Message to give the player when allowing them to land. Setting a message will bypass any custom Lua, otherwise it'll default to using Lua and, in the case there is no Lua, a default message.
  * @luafunc landAllow
  */
 static int spobL_landAllow( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
-   int old = p->land_override;
-
-   p->land_override = !!lua_toboolean(L,2);
-
-   /* If the value has changed, re-run the landing Lua next frame. */
-   if (p->land_override != old)
-      space_factionChange();
-
-   return 0;
+   return landAllowDeny( L, +1 );
 }
 
 /**
- * @brief Gets the land override status for a spob.
+ * @brief Disallows a player from landing on a spob. The override lasts until the player jumps or lands.
  *
- * @usage if p:getLandOverride() then -- Player can definitely land.
+ * @usage p:landDeny( true ) -- Player can land on spob p now.
+ *    @luatparam Spob p Spob to forcibly disallow the player to land on.
+ *    @luatparam[opt=false] boolean b Whether or not the player should be disallowed to land, true disables, false disables override.
+ *    @luatparam[opt=nil] string msg Message to give the player when disallowing them to land. Setting a message will bypass any custom Lua, otherwise it'll default to using Lua and, in the case there is no Lua, a default message.
+ * @luafunc landDeny
+ */
+static int spobL_landDeny( lua_State *L )
+{
+   return landAllowDeny( L, -1 );
+}
+
+/**
+ * @brief Gets the land allow override status for a spob.
+ *
+ * @usage if p:getLandAllow() then -- Player can definitely land.
  *    @luatparam Spob p Spob to check.
  *    @luatreturn b Whether or not the player is always allowed to land.
- * @luafunc getLandOverride
+ * @luafunc getLandAllow
  */
-static int spobL_getLandOverride( lua_State *L )
+static int spobL_getLandAllow( lua_State *L )
 {
    Spob *p = luaL_validspob(L,1);
-   lua_pushboolean(L, p->land_override);
+   lua_pushboolean(L, p->land_override>0);
+   return 1;
+}
+
+/**
+ * @brief Gets the land deny override status for a spob.
+ *
+ * @usage if p:getLandDeny() then -- Player can definitely not land
+ *    @luatparam Spob p Spob to check.
+ *    @luatreturn b Whether or not the player is always disallowed to land.
+ * @luafunc getLandDeny
+ */
+static int spobL_getLandDeny( lua_State *L )
+{
+   Spob *p = luaL_validspob(L,1);
+   lua_pushboolean(L, p->land_override<0);
    return 1;
 }
 

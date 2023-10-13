@@ -209,7 +209,7 @@ function luaspob.can_land ()
    if not s.land then
       return false,nil -- Use default landing message
    end
-   if mem.bribed or mem.spob:getLandOverride() then
+   if mem.bribed or mem.spob:getLandAllow() then
       return true, mem.msg_granted
    end
    local fct = mem.spob:faction()
@@ -217,7 +217,7 @@ function luaspob.can_land ()
       return true,nil -- Use default landing message
    end
    local std = fct:playerStanding()
-   if std < 0 then
+   if mem.spob:getLandDeny() or std < 0 then
       return false, mem.msg_denied
    end
    if std < mem.std_land then
