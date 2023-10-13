@@ -82,6 +82,7 @@ nlua_env hook_env( unsigned int hook );
  *    - "jumpout" - When player jumps (before changing system)
  *    - "time" - When time is increment drastically (hyperspace and taking off)
  *    - "hail" - When any pilot is hailed
+ *    - "hail_spob" - When any spob is hailed
  *    - "board" - When any pilot is boarded
  *    - "input" - When an input command is pressed
  *    - "standing" - Whenever faction changes.
@@ -105,6 +106,7 @@ int hook_runID( unsigned int id ); /* runs hook of specific id */
 
 /* Destroys hooks */
 void hook_cleanup (void);
+void hook_clear( const char *stack );
 
 /* Timer hooks. */
 void hooks_update( double dt );
