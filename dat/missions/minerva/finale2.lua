@@ -175,7 +175,6 @@ local boss, guards, hailhook, bosshailed
 function enter ()
    local scur = system.cur()
    if scur==mainsys and mem.state==1 then
-      -- TODO add some enemies or something
       pilot.clear()
       pilot.toggleSpawn(false)
 
@@ -412,6 +411,65 @@ function board_boss ()
    vn.clear()
    vn.scene()
    vn.transition()
+   vn.na(fmt.f(_([[You approach the {plt} to dock. The {plt} has their shields down for boarding, it would be a good time to try to make use uf the situation.]]),
+      {plt=boss}))
+   vn.menu{
+      {_([[Board normally.]]),"01_board"},
+      {fmt.f(_([[Open fire on the {plt} at point blank.]]),{plt=boss}),"01_fire"},
+      {fmt.f(_([[Ram the {plt}.]]),{plt=boss}),"01_ram"},
+   }
+
+   vn.label("01_fire")
+   vn.func( function ()
+      boss:setHealth( 70, 0 )
+      boss:setEnergy( 0 )
+      for k,v in ipairs(guards) do
+         v:setHostile(true)
+      end
+      mainspb:landAllow(false) -- Clear landing status
+   end )
+   vn.na(fmt.f(_([[You quickly power up your weapons and aim at critical ship infrastructure right as the boarding clamps begin to extend. Catching the {plt} off guard, your weapons are able to do significant damage, even knocking several systems offline. However, you have no choice now but to finish the job. Time to power on your weapons.]]),
+      {plt=boss}))
+   vn.done()
+
+   vn.label("01_ram")
+   vn.func( function ()
+      if player.pilot():mass() > 0.4 * boss:mass() then
+         vn.jump("ram_good")
+      else
+         vn.jump("ram_bad")
+      end
+   end )
+   vn.label("ram_good")
+   vn.func( function ()
+      boss:setHealth( 40, 0 )
+      boss:setEnergy( 0 )
+      boss:disable(true) -- not permanent
+      for k,v in ipairs(guards) do
+         v:setHostile(true)
+      end
+      mainspb:landAllow(false) -- Clear landing status
+   end )
+   vn.na(fmt.f(_([[Right before boarding, you power on your shields and slam on your ship thrusters. Catching the {plt} completely off guard with your maneuver, your ship smashes into their hull causing massive damage. Time to power on your weapons.]]),
+      {plt=boss}))
+   vn.done()
+   vn.label("ram_bad")
+   vn.func( function ()
+      local ppm = player.pilot():mass()
+      local bm = boss:mass()
+      boss:setHealth( (bm-ppm)/bm, 0 )
+      boss:setEnergy( 0 )
+      for k,v in ipairs(guards) do
+         v:setHostile(true)
+      end
+      mainspb:landAllow(false) -- Clear landing status
+   end )
+   vn.na(fmt.f(_([[Right before boarding, you power on your shields and slam on your ship thrusters. Catching the {plt} completely off guard with your maneuver, your ship smashes into their hull causing significant damage. Time to power on your weapons.]]),
+      {plt=boss}))
+   vn.done()
+
+   vn.label("01_board")
+   vn.done()
 
    vn.run()
 
