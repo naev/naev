@@ -174,7 +174,7 @@ end
 local boss, guards, hailhook, bosshailed
 function enter ()
    local scur = system.cur()
-   if scur==mainsys and mem.state==1 then
+   if scur==mainsys and mem.state==1 and not mem.boss_died then
       pilot.clear()
       pilot.toggleSpawn(false)
 
@@ -398,6 +398,7 @@ function comm_minerva( commspb )
 end
 
 function boss_death ()
+   mem.boss_died = true
    if hailhook then
       hook.rm( hailhook )
       hailhook = nil
@@ -469,6 +470,13 @@ function board_boss ()
    vn.done()
 
    vn.label("01_board")
+   vn.na(_([[You board the ship and are escorted to the command room where the captain is waiting. Getting this far and not having any other choice, you give them a holodrive with some randomly generated contents. They plug in the drive and try to authorize it, however, an error appears as expected.]]))
+   vn.na(_([[The first officer attempts percussive maintenance on the main system, however, as expected, the error does not go away. The captain is unfazed by the situation, and, muttering something about the new Imperial Operating System update, says something about verifying it later on your way out. Surprisingly enough, you are given permission to land.]]))
+   vn.na(_([[You quickly make your way back to your ship to prepare to land before they see through your bullshit.]]))
+   vn.func( function ()
+      landack=true
+      mainspb:landAllow(true)
+   end )
    vn.done()
 
    vn.run()
