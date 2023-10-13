@@ -180,9 +180,9 @@ function enter ()
       pilot.toggleSpawn(false)
 
       local pos = mainspb:pos() + vec2.new( 100+200*rnd.rnd(), rnd.angle() )
-      boss = pilot.add( "Empire Pacifier", "Empire", pos, nil, {ai="guard"} )
+      boss = pilot.add( "Empire Peacemaker", "Empire", pos, nil, {ai="guard"} )
       guards = { boss }
-      for k,v in ipairs{"Empire Lancelot", "Empire Lancelot"} do
+      for k,v in ipairs{"Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot"} do
          local p = pilot.add( v, "Empire", pos+rnd.rnd(50,rnd.angle()), nil, {ai="guard"} )
          p:setLeader( boss )
          table.insert( guards, p )
@@ -208,6 +208,7 @@ function enter ()
 end
 
 local landack, timetodie
+local askwhy, left01, left02, left03, triedclearance, inperson
 local function talk_boss( fromspob )
    if timetodie then
       player.msg(_("Communication channel is closed."))
@@ -217,9 +218,12 @@ local function talk_boss( fromspob )
          boss:comm(_("Proceed to land."))
       end
       return
+   elseif inperson then
+      if boss and boss:exists() then
+         boss:comm(_("Please bring the documents in person."))
+      end
+      return
    end
-
-   local askwhy, left01, left02, left03
 
    vn.clear()
    vn.scene()
@@ -252,7 +256,7 @@ local function talk_boss( fromspob )
       else
          table.insert( opts, 2, {_([["I left something at the station."]]), "01_left"} )
       end
-      if askwhy then
+      if askwhy and not triedclearance then
          table.insert( opts, 2, {_([["I brought Imperial clearance."]]), "01_clearance"} )
       end
       return opts
@@ -322,7 +326,37 @@ They let out a sigh.]]))
    vn.done()
 
    vn.label("01_clearance")
-   vn.jump("menu")
+   vn.func( function () triedclearance = true end )
+   p(_([["OK, please send the clearance codes."]]))
+   vn.menu{
+      {_([[Send a meme.]]),"clearence_meme"},
+      {_([[Send random data.]]),"clearence_random"},
+   }
+   vn.label("clearence_meme")
+   p(_([[You hear a chuckle before they clear their throat.
+"You do know that impersonation is an Imperial felony, right?"]]))
+   vn.menu{
+      {_([["That chuckle means I can land right?"]]),"clearance_meme_die"},
+      {_([[Apologize.]]),"clearance_meme_apologize"},
+   }
+   vn.label("clearance_meme_die")
+   p(_([["You brought this upon yourself!"]]))
+   vn.jump("timetodie")
+   vn.label("clearance_meme_apologize")
+   vn.na(_([[You apologize profusely.]]))
+   p(_([["Make sure it doesn't happen again. I'll be writing a report on this, next time, expect no leniency."]]))
+   vn.na(_([[The communication channel closes.]]))
+   vn.done()
+   vn.label("clearance_random")
+   vn.na(fmt.f(_([[You stream a large block of random data to {boss}.]]),
+      {boss=boss}))
+   p(_([["I'm sorry, but it seems like the communication channel is corrupting. Please bring the documents in person."]]))
+   vn.func( function ()
+      inperson = true
+      boss:setActiveBoard(true)
+      hook.pilot( boss, "board", "board_boss" )
+   end )
+   vn.done()
 
    vn.label("timetodie")
    vn.func( function () timetodie = true end )
@@ -372,4 +406,14 @@ function boss_death ()
 
    mainspb:landAllow(true)
    player.msg(fmt.f(_("With the blocking ship out of the way, you should be able to land on {spb} now."), {spb=mainspb}))
+end
+
+function board_boss ()
+   vn.clear()
+   vn.scene()
+   vn.transition()
+
+   vn.run()
+
+   player.unboard()
 end
