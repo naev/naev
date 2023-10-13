@@ -23,7 +23,7 @@ local fmt = require "format"
 --local pilotai = require "pilotai"
 --local love_audio = require 'love.audio'
 --local reverb_preset = require 'reverb_preset'
---local ccomm = require "common.comm"
+local ccomm = require "common.comm"
 --local lmisn = require "lmisn"
 --local der = require 'common.derelict'
 --local tut = require 'common.tutorial'
@@ -171,15 +171,45 @@ Maikki gives you a weird two finger salute and takes off to her ship, leaving yo
    hook.enter("enter")
 end
 
+local boss, hailhook
 function enter ()
    local scur = system.cur()
    if scur==mainsys and mem.state==1 then
       -- TODO add some enemies or something
       pilot.clear()
       pilot.toggleSpawn(false)
+
+      local pos = mainspb:pos() + vec2.new( 100+200*rnd.rnd(), rnd.angle() )
+      boss = pilot.add( "Empire Pacifier", "Empire", pos, nil, {ai="guard"} )
+      for k,v in ipairs{"Empire Lancelot", "Empire Lancelot"} do
+         local p = pilot.add( v, "Empire", pos+rnd.rnd(50,rnd.angle()), nil, {ai="guard"} )
+         p:setLeader( boss )
+      end
+
+      hailhook = hook.hail_spob( "comm_minerva" )
    elseif scur==mainsys and mem.state==2 then
       -- Set up fight
       pilot.clear()
       pilot.toggleSpawn(false)
+   else
+      -- Clean up some stuff if applicable
+      if hailhook then
+         hook.rm( hailhook )
+         hailhook = nil
+      end
    end
+end
+
+function comm_minerva( commspb )
+   if commspb ~= mainspb then return end
+
+   vn.clear()
+   vn.scene()
+   local spb = ccomm.newCharacterSpob( vn, mainspb )
+   vn.transition()
+   spb(_([[]]))
+
+   vn.run()
+
+   player.commClose()
 end
