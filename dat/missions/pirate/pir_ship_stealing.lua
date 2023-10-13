@@ -272,6 +272,6 @@ function enter()
    -- A few faction ships guard the target planet.
    if system.cur() == mem.system then
       -- We want the player to be able to land on the destination planet…
-      mem.planet:landOverride(true)
+      mem.planet:landAllow(true)
    end
 end

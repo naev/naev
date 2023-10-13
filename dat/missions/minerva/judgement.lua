@@ -663,5 +663,5 @@ end
 -- Make sure can land on the Jade Court
 function enter ()
    if system.cur()~=trialsys then return end
-   trialspb:landOverride(true)
+   trialspb:landAllow(true)
 end

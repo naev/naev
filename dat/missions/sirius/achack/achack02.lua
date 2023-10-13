@@ -180,7 +180,7 @@ function enter()
    mem.origin = system.cur()
 
    if system.cur() == mem.destsys then
-      mem.destplanet:landOverride(true)
+      mem.destplanet:landAllow(true)
       joanne:land(mem.destplanet)
       hook.pilot(joanne, "land", "joanneLand")
    else

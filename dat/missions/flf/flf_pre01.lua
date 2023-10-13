@@ -226,7 +226,7 @@ function spawnbase()
 
       -- Safety measure to ensure the player can land.
       mem.base = spob.get("Sindbad")
-      mem.base:landOverride()
+      mem.base:landAllow()
 
       mem.basefound = true
       hook.rm(mem.OORT)

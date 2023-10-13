@@ -144,7 +144,7 @@ function enter()
 
       hook.timer(0.5, "proximity", {anchor = obstinate, radius = 1500, funcname = "operationStart"})
    elseif system.cur() == DVsys and mem.victorious then -- Make sure the player can finish the missions properly.
-      DVplanet:landOverride(true)
+      DVplanet:landAllow(true)
    elseif mem.missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission and with it, the mini-campaign.
       tk.msg(_("You ran away!"), _("You have left the system without first completing your mission. This treachery will not soon be forgotten by the Dvaered authorities!"))
       faction.get("Dvaered"):modPlayerSingle(-10)

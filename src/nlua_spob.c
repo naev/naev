@@ -55,7 +55,7 @@ static int spobL_position( lua_State *L );
 static int spobL_services( lua_State *L );
 static int spobL_flags( lua_State *L );
 static int spobL_canland( lua_State *L );
-static int spobL_landOverride( lua_State *L );
+static int spobL_landAllow( lua_State *L );
 static int spobL_getLandOverride( lua_State *L );
 static int spobL_gfxSpace( lua_State *L );
 static int spobL_gfxExterior( lua_State *L );
@@ -90,7 +90,7 @@ static const luaL_Reg spob_methods[] = {
    { "services", spobL_services },
    { "flags", spobL_flags },
    { "canLand", spobL_canland },
-   { "landOverride", spobL_landOverride },
+   { "landAllow", spobL_landAllow },
    { "getLandOverride", spobL_getLandOverride },
    { "gfxSpace", spobL_gfxSpace },
    { "gfxExterior", spobL_gfxExterior },
@@ -726,14 +726,14 @@ static int spobL_canland( lua_State *L )
 }
 
 /**
- * @brief Lets player land on a spob no matter what. The override lasts until the player jumps or lands.
+ * @brief Allows the player land on a spob no matter what. The override lasts until the player jumps or lands.
  *
- * @usage p:landOverride( true ) -- Spob can land on p now.
+ * @usage p:landAllow( true ) -- Spob can land on p now.
  *    @luatparam Spob p Spob to forcibly allow the player to land on.
  *    @luatparam[opt=false] boolean b Whether or not the player should be allowed to land, true enables, false disables override.
- * @luafunc landOverride
+ * @luafunc landAllow
  */
-static int spobL_landOverride( lua_State *L )
+static int spobL_landAllow( lua_State *L )
 {
    Spob *p = luaL_validspob(L,1);
    int old = p->land_override;
