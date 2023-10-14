@@ -919,8 +919,9 @@ static void outfits_buy( unsigned int wid, const char *str )
       return;
 
    /* Give dialogue when trying to buy intrinsic. */
-   if (!dialogue_YesNo( _("Buy Intrinsic Outfit?"), _("Are you sure you wish to buy '%s'? It will be automatically equipped on your current ship '%s'."), _(outfit->name), player.p->name ))
-      return;
+   if (outfit->slot.type==OUTFIT_SLOT_INTRINSIC)
+      if (!dialogue_YesNo( _("Buy Intrinsic Outfit?"), _("Are you sure you wish to buy '%s'? It will be automatically equipped on your current ship '%s'."), _(outfit->name), player.p->name ))
+         return;
 
    /* Try Lua. */
    if (outfit->lua_buy != LUA_NOREF) {
