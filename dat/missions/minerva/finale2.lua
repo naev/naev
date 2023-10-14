@@ -17,7 +17,7 @@
 --]]
 local minerva = require "common.minerva"
 local vn = require 'vn'
---local vni = require 'vnimage'
+local vni = require 'vnimage'
 --local vne = require "vnextras"
 local fmt = require "format"
 --local pilotai = require "pilotai"
@@ -50,6 +50,12 @@ function create ()
       {returnspb=returnspb, returnsys=returnsys}))
    misn.setReward(_("Saving Kex!"))
    misn.setTitle( title )
+
+   -- Apply diff if necessary
+   local minervadiff = "minerva_1"
+   if not diff.isApplied( minervadiff ) then
+      diff.apply( minervadiff )
+   end
 end
 
 local talked -- Reset when loads
@@ -169,12 +175,19 @@ Maikki gives you a weird two finger salute and takes off to her ship, leaving yo
    mem.mrk = misn.markerAdd( mainspb )
 
    hook.enter("enter")
+   hook.land("land")
+   hook.load("land")
 end
 
 local boss, guards, hailhook, bosshailed
 function enter ()
    local scur = system.cur()
-   if scur==mainsys and mem.state==1 and not mem.boss_died then
+   if scur==mainsys and mem.state==1 then
+      if mem.boss_died then
+         mainspb:landAllow(true)
+         return
+      end
+
       pilot.clear()
       pilot.toggleSpawn(false)
 
@@ -482,4 +495,28 @@ function board_boss ()
    vn.run()
 
    player.unboard()
+end
+
+local pirnpc, pirimage, pirportrait
+function land ()
+   if mem.state==1 and spob.cur()==mainspb then
+      pirimage, pirportrait = vni.pirate()
+      pirnpc = misn.npcAdd( "approach_pir", _("Pirate?"), pirportrait, _("A pirate-ish individual. Maybe this is one of Maikki's crew?") )
+   end
+end
+
+function approach_pir ()
+   vn.clear()
+   vn.scene()
+   local pir = vn.newCharacter( _("Pirate?)"), {image=pirimage} )
+   vn.transition()
+
+   vn.na(_([[You approach the shady character, who seems to be sitting idly around until they notice you.]]))
+   pir(_([[They take a good look at you first before deciding you must be the person they are waiting for.
+"Maikki sent you right? I've been expecting you."]]))
+   pir(_([["We don't have too much time, the place is starting to get full of bureaucrats and it's only a question of time before they start locking things down and asking questions."]]))
+
+   vn.run()
+
+   misn.npcRm( pirnpc )
 end

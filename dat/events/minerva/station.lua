@@ -62,7 +62,7 @@ local patron_messages = {
    function ()
       local soldoutmsg = ""
       if player.outfitNum("Fuzzy Dice") > 0 then
-         soldoutmsg = _(" Wait, what? What do you mean they are sold out!?")
+         soldoutmsg = _(" Wait, what? What do you mean the Fuzzy Dice are sold out!?")
       end
       return fmt.f(_([["I really have my eyes on the Fuzzy Dice available at the terminal. I always wanted to own a piece of history!{msg}"]]), {msg=soldoutmsg} ) end,
    _([["I played 20 hands of blackjack with that Cyborg Chicken. I may have lost them all, but that was worth every credit!"]]),
@@ -88,6 +88,11 @@ local patron_messages = {
 
 function create()
    local trial_start = player.misnDone( "Minerva Pirates 6" )
+
+   -- Station is not "usable"
+   if diff.isApplied("minerva_1") then
+      return
+   end
 
    -- Create NPCs
    mem.npc_terminal = evt.npcAdd( "approach_terminal", terminal.name, terminal.portrait, terminal.description, gambling_priority )
