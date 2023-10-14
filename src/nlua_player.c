@@ -31,6 +31,7 @@
 #include "log.h"
 #include "map.h"
 #include "map_overlay.h"
+#include "menu.h"
 #include "mission.h"
 #include "ndata.h"
 #include "nlua_colour.h"
@@ -152,6 +153,7 @@ static int playerL_infoButtonUnregister( lua_State *L );
 static int playerL_canDiscover( lua_State *L );
 static int playerL_save( lua_State *L );
 static int playerL_saveBackup( lua_State *L );
+static int playerL_gameover( lua_State *L );
 static const luaL_Reg playerL_methods[] = {
    { "name", playerL_getname },
    { "ship", playerL_shipname },
@@ -237,6 +239,7 @@ static const luaL_Reg playerL_methods[] = {
    { "canDiscover", playerL_canDiscover },
    { "save", playerL_save },
    { "saveBackup", playerL_saveBackup },
+   { "gameover", playerL_gameover },
    {0,0}
 }; /**< Player Lua methods. */
 
@@ -2438,4 +2441,17 @@ static int playerL_saveBackup( lua_State *L )
    snprintf( backup, sizeof(backup), "saves/%s/%s.ns", player.name, filename );
    lua_pushboolean( L, ndata_copyIfExists(file, backup) );
    return 1;
+}
+
+/**
+ * @brief Gives the player a game over message.
+ *
+ * @luafunc gameover
+ */
+static int playerL_gameover( lua_State *L )
+{
+   (void) L;
+   player_setFlag( PLAYER_DESTROYED );
+   menu_death();
+   return 0;
 }

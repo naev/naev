@@ -181,6 +181,10 @@ void menu_main (void)
       return;
    }
 
+   /* Clean up land if triggered with player.gameover() while landed. */
+   if (landed)
+      land_cleanup();
+
    /* Close all open windows. */
    toolkit_closeAll();
 
@@ -652,7 +656,8 @@ void menu_death (void)
    menu_Open(MENU_DEATH);
 
    /* Makes it all look cooler since everything still goes on. */
-   unpause_game();
+   if (!landed)
+      unpause_game();
 }
 /**
  * @brief Closes the player death menu.
