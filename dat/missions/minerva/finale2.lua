@@ -21,7 +21,7 @@ local vni = require 'vnimage'
 --local vne = require "vnextras"
 local fmt = require "format"
 --local pilotai = require "pilotai"
---local love_audio = require 'love.audio'
+local audio = require 'love.audio'
 --local reverb_preset = require 'reverb_preset'
 local ccomm = require "common.comm"
 --local lmisn = require "lmisn"
@@ -506,6 +506,10 @@ function land ()
 end
 
 function approach_pir ()
+   player.save() -- Save the game in case the player messes up
+
+   local stringguess = require "minigames.stringguess"
+
    vn.clear()
    vn.scene()
    local pir = vn.newCharacter( _("Pirate?)"), {image=pirimage} )
@@ -515,6 +519,47 @@ function approach_pir ()
    pir(_([[They take a good look at you first before deciding you must be the person they are waiting for.
 "Maikki sent you right? I've been expecting you."]]))
    pir(_([["We don't have too much time, the place is starting to get full of bureaucrats and it's only a question of time before they start locking things down and asking questions."]]))
+   pir(_([["You're up to date with everything right? We're pretty sure that the weapon laboratory is in penthouse number 5. It just doesn't match the station blueprints and there seems to be excess power routed there."]]))
+   pir(_([["I've got us some disguises prepared that should let us get close enough to break it."]]))
+   vn.na(_([[You head to the lavatory and get changed into the outfit. It seems to be some sort of mix between a jumpsuit and a labcoat, and the size is quite off, making you look a bit funny. After getting changed you meet up with the pirate who is also now in a similar attire.]]))
+   pir(_([["Not the best fit, but we have no choice to try. Let's get headed."]]))
+   vn.na(_([[You follow them through the winding corridors of the station. Except for passing a couple distracted bureaucrats, it is quite uneventful. Eventually you find yourself near a door that seems to have a guard posted.]]))
+   pir(_([["Act natural."]]))
+   vn.na(_([[They go to the door and give a nod to the guard before entering the room. You follow their step and imitate their actions.]]))
+   vn.na(_([[You find yourself with the pirate inside what seems to be a laboratory packed with racks full of boxes and weird gadgets. Other than you and the pirate, there's some bureaucrats that seem to be performing inventory while a pair of guards watches. It's going to be tricky to do anything with so many people in the room.]]))
+   vn.na(_([[You and the pirate split up, acting as if you belong there while you inspect the rest of the room. Past the racks there seems to be a small clearing with what looks like some laser weapon prototype. You are looking around when you notice the pirate is talking to a bureaucrat.]]))
+
+   vn.label("01_menu")
+   vn.na(_([[What do you do?]]))
+   vn.menu{
+      {_([[Fiddle with the laser weapon prototype.]]), "01_fiddle"},
+      {_([[]]), "01"},
+   }
+
+   vn.label("01_fiddle")
+   vn.na(_([[You look at the laser weapon prototype that is placed on a pedestal. It is connected to all sorts of wires with many of the internals exposed, and an assortment of what seem to be buttons. One particularly large red button seems to call your attention.]]))
+   vn.menu{
+      {_([[Press the button.]]), "02_button"},
+      {_([[Investigate the prototype in more detail.]]), "02_investigate"},
+      {_([[Do something else.]]), "01_menu"},
+   }
+
+   vn.label("02_investigate")
+   vn.na(_([[You look around and try to make sense of the prototype. It's highly connected to the laboratory so it does not look like you would be able to remove it easily. Furthermore, it's not even clear if it is truly functional or just a heap of scrap metal. Sadly, you lack the expertise to do a full proper evaluation. The only thing you know is that it looks pretty damn cool.]]))
+   vn.jump("01_menu")
+
+   vn.label("02_button")
+   vn.sfx( audio.newsource( 'snd/sounds/laser.wav' ) ) -- TODO potentially change
+   vn.na(_([[You press the big red button, noticing out of the corner of your eye a 'DO NOT PRESS' button a bit too late.]]))
+
+   stringguess.vn()
+   vn.func( function ()
+      if stringguess.completed() then
+         vn.jump("unlocked")
+         return
+      end
+      vn.jump("unlock_failed")
+   end )
 
    vn.run()
 
