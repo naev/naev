@@ -1352,7 +1352,7 @@ end
 Makes a character appear in the VN.
    @see vn.transition
    @see vn.appear
-   @tparam Character c Character to make appear.
+   @tparam Character|table c Character or table of Characters to make appear.
    @tparam[opt="fade"] string name Name of the transition effect to use (see vn.transition)
    @tparam number seconds Seconds to do the transition.
    @tparam[opt="linear"] string transition Name of the CSS transition to use.

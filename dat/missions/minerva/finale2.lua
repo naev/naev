@@ -533,24 +533,65 @@ function approach_pir ()
    vn.na(_([[What do you do?]]))
    vn.menu{
       {_([[Fiddle with the laser weapon prototype.]]), "01_fiddle"},
-      {_([[]]), "01"},
+      {_([[Look around more.]]), "01_look"},
    }
+
+   vn.label("01_look")
+   vn.na(_([[As you walk around looking more, you accidentally trip on some cable that gets pulled out of the socket. You hear some beeping that seems to draw some of the attention of the guards.]]))
+   vn.menu{
+      {_([[Plug the cable back in.]]), "02a_plugin"},
+      {_([[Pretend nothing happened.]]), "02a_pretend"},
+   }
+
+   vn.label("02a_plugin")
+   vn.na(_([[You fumble with the cable as you try not to draw extra attention and plug it in the wall, which seems to reboot something and trigger the prototype.]]))
+   vn.jump("prototype_shot")
+
+   vn.label("02a_pretend")
+   vn.na(_([[You pretend nothing happens, and walk away as the incessant beeping continues. The guards eventually stop paying attention, and a group of bureaucrats comes to look at it instead, as you pretend to tally things at a safe distance.]]))
+   vn.na(_([[Suddenly the beeping stops and there is finally some peaceful silence, an instant before one of the prototypes capacitors near the bureaucrats ruptures in a violent explosion!]]))
+   vn.jump("chaos")
 
    vn.label("01_fiddle")
    vn.na(_([[You look at the laser weapon prototype that is placed on a pedestal. It is connected to all sorts of wires with many of the internals exposed, and an assortment of what seem to be buttons. One particularly large red button seems to call your attention.]]))
    vn.menu{
-      {_([[Press the button.]]), "02_button"},
-      {_([[Investigate the prototype in more detail.]]), "02_investigate"},
+      {_([[Press the button.]]), "02b_button"},
+      {_([[Investigate the prototype in more detail.]]), "02b_investigate"},
       {_([[Do something else.]]), "01_menu"},
    }
 
-   vn.label("02_investigate")
+   vn.label("02b_investigate")
    vn.na(_([[You look around and try to make sense of the prototype. It's highly connected to the laboratory so it does not look like you would be able to remove it easily. Furthermore, it's not even clear if it is truly functional or just a heap of scrap metal. Sadly, you lack the expertise to do a full proper evaluation. The only thing you know is that it looks pretty damn cool.]]))
    vn.jump("01_menu")
 
-   vn.label("02_button")
-   vn.sfx( audio.newsource( 'snd/sounds/laser.wav' ) ) -- TODO potentially change
+   vn.label("02b_button")
    vn.na(_([[You press the big red button, noticing out of the corner of your eye a 'DO NOT PRESS' button a bit too late.]]))
+   vn.sfx( audio.newsource( 'snd/sounds/laser.wav' ) ) -- TODO potentially change
+   vn.label("prototype_shot")
+   vn.na(_([[There's a resounding brrrruunnggzzzzz as the prototype fires, with a shock wave launching you to the ground, and the blast misses the target in front of it, partially ricocheting off the laboratory walls until it smashes into a group of bureaucrats, immediately sending them off in pieces.]]))
+   vn.label("chaos")
+   vn.move( pir, "farleft" )
+   local emp1 = vn.Character.new( _("Guard A"), {image=vni.empireMilitary(),pos="right"} )
+   local emp2 = vn.Character.new( _("Guard B"), {image=vni.empireMilitary(),pos="farright"} )
+   vn.appear( {emp1,emp2} )
+   vn.na(_([[The room breaks into chaos with the pirate sucker punches the bureaucrat he was talking to, and you trying to recover your breath. The two guards quickly draw their weapons and you and the pirate find yourselves looking at the end of a rifle. Things aren't looking too hot.]]))
+   pir(_([["Shit."]]))
+   emp1(_([["Put your hands where I can see them!"]]))
+   vn.na(_([[You and the pirate exchange looks, but have no choice but to raise your hands as the guards slowly approach with their weapons raised and ready.]]))
+   vn.na(_([[Suddenly you hear the door open, the outside guard must have been drawn to the commotion. Seeing this as a last chance, the pirate tackles one of the guards and you duck for cover as you hear several shots being fired.]]))
+
+   vn.scene()
+   vn.transition("slidedown")
+   vn.na(_([[As the dust settles, you notice there is only one other person left standing.]]))
+   local emp3 = vn.Character.new( _("Outside Guard"), {image=vni.empireMilitary()} )
+   vn.appear( emp3 )
+   vn.na(_([[The guard from the outside looms before you, with smoke pouring out of their weapon. You tentatively raise your hands again in hopes of not getting shot.]]))
+   emp3(_([[The guard goes over to the pirate and rolls over the body, revealing a large gaping hole in their chest.
+"Damnit, they got Marley! Them bastards."]]))
+   vn.menu{
+      {_([["Wait... You're with Maikki?"]]), "03_cont"},
+      {_([["..."]]), "03_silence"},
+   }
 
    stringguess.vn()
    vn.func( function ()
