@@ -476,6 +476,8 @@ const char *pilot_weapSetName( Pilot* p, int id )
       int has_stru = 0;
       for (int i=0; i<array_size(ws->slots); i++) {
          const PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
+         if (pos->outfit==NULL) /* Ignore empty slots. */
+            continue;
          if (o==NULL)
             o = pos->outfit;
          else if(o!=pos->outfit)
@@ -494,7 +496,9 @@ const char *pilot_weapSetName( Pilot* p, int id )
                break;
          }
       }
-      if (not_same==0)
+      if (o==NULL)
+         base = _("Empty");
+      else if (not_same==0)
          base = _(o->name);
       else if (has_weap && !has_util && !has_stru)
          base = p_("weapset","Weapons");
@@ -507,11 +511,11 @@ const char *pilot_weapSetName( Pilot* p, int id )
 
       /* Try to proactively detect issues with the weapon set. */
       if (!has_weap && (ws->type==WEAPSET_TYPE_SWITCH))
-         problem = _("#rno weapons!#0");
+         problem = _("no weapons!");
    }
 
    if (problem!=NULL)
-      snprintf( setname, sizeof(setname), p_("weapset", "#o%s - %s#0 [%s]"), type, base, problem );
+      snprintf( setname, sizeof(setname), p_("weapset", "#o%s - %s#0 [#r%s#0]"), type, base, problem );
    else
       snprintf( setname, sizeof(setname), p_("weapset", "%s - %s"), type, base );
    return setname;
