@@ -22,11 +22,13 @@ local vni = require 'vnimage'
 local fmt = require "format"
 --local pilotai = require "pilotai"
 local audio = require 'love.audio'
+local pp_shaders = require "pp_shaders"
+local lg = require "love.graphics"
 --local reverb_preset = require 'reverb_preset'
 local ccomm = require "common.comm"
 --local lmisn = require "lmisn"
 --local der = require 'common.derelict'
---local tut = require 'common.tutorial'
+local tut = require 'common.tutorial'
 
 local mainspb, mainsys = spob.getS("Minerva Station")
 local returnspb, returnsys = spob.getS("Shangris Station")
@@ -497,18 +499,17 @@ function board_boss ()
    player.unboard()
 end
 
-local pirnpc, pirimage, pirportrait
+local pirimage, pirportrait
 function land ()
    if mem.state==1 and spob.cur()==mainspb then
       pirimage, pirportrait = vni.pirate()
-      pirnpc = misn.npcAdd( "approach_pir", _("Pirate?"), pirportrait, _("A pirate-ish individual. Maybe this is one of Maikki's crew?") )
+      misn.npcAdd( "approach_pir", _("Pirate?"), pirportrait, _("A pirate-ish individual. Maybe this is one of Maikki's crew?") )
    end
 end
 
+local shader_fadeout, hook_update
 function approach_pir ()
    player.save() -- Save the game in case the player messes up
-
-   local stringguess = require "minigames.stringguess"
 
    vn.clear()
    vn.scene()
@@ -589,20 +590,110 @@ function approach_pir ()
    emp3(_([[The guard goes over to the pirate and rolls over the body, revealing a large gaping hole in their chest.
 "Damnit, they got Marley! Them bastards."]]))
    vn.menu{
-      {_([["Wait... You're with Maikki?"]]), "03_cont"},
+      {_([["Wait... You're with Maikki?"]]), "03_maikki"},
       {_([["..."]]), "03_silence"},
    }
 
-   stringguess.vn()
+   vn.label("03_maikki")
+   emp3(_([["Aye, I'm with Maikki. So was Marley before they got a hole in them. Poor feller."]]))
+   vn.jump("03_cont")
+
+   vn.label("03_silence")
+   emp3(_([["It's 'lright. I'm with Maikki."]]))
+   vn.jump("03_cont")
+
+   vn.label("03_cont")
+   emp3(_([["What a mess in 'ere. Worse than that time on Caladan. We're goin'ta have to move fast. I've blocked the door, but not sure how we're gonna get out."]]))
+   vn.na(_([[Despite the mess, you follow the disguised pirate's lead and try to find things that can be of use. You manage to find some holodrives that you stuff into your jumpsuit pockets. Hopefully they'll contain something of use.]]))
+   vn.na(_([[As you hastily scour the laboratory for anything of use, you hear some banging on the door. It looks like backup has made it here. You're not sure how long the door is going to last.]]))
+   emp3(_([["Shit, sounds like alotta 'em. Don't think we have the firepower to hold 'em off."]]))
+   vn.na(_([[What do you do?]]))
+   vn.menu{
+      {_([[Attempt to aim the prototype at the door.]]),"04_prototype"},
+      {_([[Try to blockade the door.]]),"04_blockade"},
+   }
+
+   vn.label("04_prototype")
+   vn.na(_([[You begin to try to aim the prototype at the door, when you noticed that it seems like the entire prototype power system has gone down. You fumble to try to power the system but it seems futile. You are running out of time.]]))
+   vn.jump("04_cont")
+
+   vn.label("04_blockade")
+   vn.na(_([[You try to blockade the door with the largest furniture you can find, but soon enough you find your efforts are in vain: they are using a laser cutter to break down the door. You are running out of time.]]))
+   vn.jump("04_cont")
+
+   vn.label("04_cont")
+   vn.na(_([[You suddenly notice that the disguised pirate was doing something near the back of the room.]]))
+   emp3(_([["'elp me! We ain't got time!"]]))
+   vn.na(_([[Not really knowing what they're doing, you help them move some canisters to a wall.]]))
+   emp3(_([["Git down!"]]))
+   vn.na(_([[Without much of a warning, they open fire on the canisters, as you duck for cover. Suddenly, you hear a chain of multiple explosions, and without being able to react, you are sucked up into outer space. They must have blown a breach in the station hull!]]))
+   vn.scene()
    vn.func( function ()
-      if stringguess.completed() then
-         vn.jump("unlocked")
-         return
+      music.stop() -- TODO something better I guess?
+      vn.textbox_bg_alpha = 0
+      vn.show_options = false
+      vn.setBackground( function ()
+         local nw, nh = naev.gfx.dim()
+         vn.setColor( {0, 0, 0, 1} )
+         lg.rectangle("fill", 0, 0, nw, nh )
+      end )
+   end )
+   vn.transition( "blinkout" )
+   vn.na(_([[As everything gets cold, you fumble around your jumpsuit, maybe there is an emergency breather there.]]))
+   vn.na(_([[So...]]))
+   vn.na(_([[   cold...]]),true)
+   vn.na(_([[...]]))
+   vn.na(_([[... ...]]))
+   vn.na(_([[...]]))
+   vn.na(_([[.]]))
+   vn.na(_([[ .]]),true)
+   vn.na(_([[ .]]),true)
+
+   vn.func( function ()
+      -- Fades in shader from black
+      local fadein_pixelcode = [[
+#include "lib/blur.glsl"
+
+const float INTENSITY = 10.0;
+
+uniform float u_progress = 0.0;
+
+vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
+{
+   float disp = INTENSITY*(0.5-distance(0.5, u_progress));
+   vec4 c1 = vec4(vec3(0.0),1.0);
+   vec4 c2 = blur9( tex, texture_coords, love_ScreenSize.xy, disp );
+   return mix( c1, c2, u_progress );
+}
+   ]]
+      shader_fadeout = { shader=pp_shaders.newShader( fadein_pixelcode ) }
+      shader_fadeout._dt = 0.0
+      shader_fadeout._update = function( self, dt )
+         self._dt = self._dt + dt * 1/3
+         self.shader:send( "u_progress", math.min( 1, self._dt ) )
       end
-      vn.jump("unlock_failed")
+      shader_fadeout.shader:addPPShader("final", 99)
    end )
 
    vn.run()
 
-   misn.npcRm( pirnpc )
+   hook_update = hook.update("shader_update")
+   player.takeoff()
+end
+
+function shader_update( dt )
+   shader_fadeout:_update( dt )
+   if shader_fadeout._dt < 0 then
+      shader_fadeout.shader:rmPPShader()
+      hook.rm( hook_update )
+
+      vn.clear()
+      vn.scene()
+      local sai = vn.newCharacter( tut.vn_shipai() )
+      vn.transition( tut.shipai.transition )
+
+      sai()
+
+      vn.run()
+   end
 end
