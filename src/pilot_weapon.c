@@ -561,18 +561,7 @@ void pilot_weapSetRmSlot( Pilot *p, int id, OutfitSlotType type )
 void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
 {
    PilotWeaponSetOutfit *slot;
-   const Outfit *oo;
-   double r;
    PilotWeaponSet *ws = pilot_weapSet(p,id);
-
-   /* Make sure outfit is valid. */
-   oo = o->outfit;
-   if (oo == NULL)
-      return;
-
-   /* Make sure outfit type is weapon (or usable). */
-   if (!pilot_slotIsToggleable(o))
-      return;
 
    /* Create if needed. */
    if (ws->slots == NULL)
@@ -595,9 +584,10 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
    slot        = &array_grow( &ws->slots );
    slot->level = level;
    slot->slotid= o->id;
-   r           = outfit_range(oo);
-   if (r > 0)
-      slot->range2 = pow2(r);
+   if (o->outfit!=NULL)
+      slot->range2 = pow2(outfit_range(o->outfit));
+   else
+      slot->range2 = 0.;
 
    /* Updated cached weapset. */
    o->weapset = -1;
@@ -1578,28 +1568,6 @@ void pilot_weaponSafe( Pilot *p )
 {
    for (int j=0; j<PILOT_WEAPON_SETS; j++) {
       PilotWeaponSet *ws = &p->weapon_sets[j];
-#if 0
-      int l = array_size(ws->slots);
-      int n = 0;
-      for (int i=0; i<l; i++) {
-         PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
-         if (pos->outfit != NULL)
-            continue;
-
-         /* Move down. */
-         memmove( &ws->slots[i], &ws->slots[i+1], sizeof(PilotWeaponSetOutfit) * (l-i-1) );
-         n++;
-      }
-      /* Remove surplus. */
-      if (n > 0)
-         array_erase( &ws->slots, &ws->slots[l-n], &ws->slots[l] );
-
-      /* See if we must overwrite levels. */
-      if ((ws->type == WEAPSET_TYPE_TOGGLE) ||
-            (ws->type == WEAPSET_TYPE_HOLD))
-         for (int i=0; i<array_size(ws->slots); i++)
-            ws->slots[i].level = 0;
-#endif
 
       /* Update range. */
       pilot_weapSetUpdateRange( p, ws );
