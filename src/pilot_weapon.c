@@ -478,6 +478,8 @@ const char *pilot_weapSetName( Pilot* p, int id )
          const PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
          if (pos->outfit==NULL) /* Ignore empty slots. */
             continue;
+         if (!pilot_slotIsToggleable(pos)) /* Ignore non-active. */
+            continue;
          if (o==NULL)
             o = pos->outfit;
          else if(o!=pos->outfit)
