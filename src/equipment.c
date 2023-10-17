@@ -465,9 +465,12 @@ static void equipment_renderColumn( double x, double y, double w, double h,
 
    /* Iterate for all the slots. */
    for (int i=0; i<array_size(lst); i++) {
+      int cantoggle;
       /* Skip slots hat are empty and the player can't do anything about. */
       if (lst[i].sslot->locked && (lst[i].outfit == NULL))
          continue;
+
+      cantoggle = pilot_slotIsToggleable( &lst[i] );
 
       /* Choose default colour. */
       if (wgt->weapons >= 0) {
@@ -476,7 +479,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
             dc = &cFontRed;
          else if (level == 1)
             dc = &cFontYellow;
-         else if (pilot_slotIsToggleable( &lst[i] ))
+         else if (cantoggle)
             dc = &cFontBlue;
          else
             dc = &cFontGrey;
@@ -488,7 +491,10 @@ static void equipment_renderColumn( double x, double y, double w, double h,
          dc = &cGrey60;
 
       /* Draw background. */
-      bc = *dc;
+      if ((wgt->weapons >= 0) && !cantoggle)
+         bc = cFontGrey;
+      else
+         bc = *dc;
       bc.a = 0.4;
       toolkit_drawRect( x, y, w, h, &bc, NULL );
 
