@@ -40,8 +40,9 @@
       * Autonav routes consider distance travelled in-system
       * Made stress more visible in the slim GUI
       * Reworked how stats are displayed to be more visible and intuitive
-      * Weapon sets much more flexible, verbose, and easy to use
       * Can show all known outfits or ships in with the map find functionality
+      * Weapon sets much more flexible, verbose, and easy to use
+      * Weapon sets remember slots, not outfits
    * New Content
       * New mechanic for House Sirius called flow to unlock psychic powers
          * Gives passive bonuses to Sirius ships

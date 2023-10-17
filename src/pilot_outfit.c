@@ -478,7 +478,7 @@ int pilot_rmOutfitRaw( Pilot* pilot, PilotOutfitSlot *s )
    /* Remove the outfit. */
    ret         = (s->outfit==NULL);
    s->outfit   = NULL;
-   s->weapset  = -1;
+   //s->weapset  = -1;
 
    /* Remove secondary and such if necessary. */
    if (pilot->afterburner == s)

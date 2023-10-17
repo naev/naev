@@ -1578,6 +1578,7 @@ void pilot_weaponSafe( Pilot *p )
 {
    for (int j=0; j<PILOT_WEAPON_SETS; j++) {
       PilotWeaponSet *ws = &p->weapon_sets[j];
+#if 0
       int l = array_size(ws->slots);
       int n = 0;
       for (int i=0; i<l; i++) {
@@ -1598,6 +1599,7 @@ void pilot_weaponSafe( Pilot *p )
             (ws->type == WEAPSET_TYPE_HOLD))
          for (int i=0; i<array_size(ws->slots); i++)
             ws->slots[i].level = 0;
+#endif
 
       /* Update range. */
       pilot_weapSetUpdateRange( p, ws );
