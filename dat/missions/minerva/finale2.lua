@@ -677,6 +677,10 @@ vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 
    vn.run()
 
+   local c = commodity.new(N_("Minerva Holodrives"), N_("A set of holodrives you were able to break out of Minerva Station. Hopefully they have something important in them."))
+   c:illegalto( {"Empire"} )
+   mem.carg_id = misn.cargoAdd( c, 0 )
+
    hook_update = hook.update("shader_update")
    player.takeoff()
 end
@@ -692,7 +696,69 @@ function shader_update( dt )
       local sai = vn.newCharacter( tut.vn_shipai() )
       vn.transition( tut.shipai.transition )
 
-      sai()
+      vn.na(fmt.f(_([[You awake to a throbbing headache and a {shipai} hologram staring down at you.]]),
+         {shipai=tut.ainame()}))
+      sai(_([["Oh wow, it looks like humans can survive that long in a vacuum."]]))
+      vn.menu{
+         {_([["My head..."]]), "01_cont"},
+         {_([["What... happened?"]]), "01_cont"},
+         {_([["...is this hell?]"]]), "01_hell"},
+      }
+
+      vn.label("01_hell")
+      sai(fmt.f(_([["This is the {shipname}. Maybe you will need a health check after all."]]),
+         {shipname=player.pilot():name()}))
+      vn.jump("01_cont")
+
+      vn.label("01_cont")
+      sai(_([["There was a large explosion at Minerva Station, and since your vital signs were tanking, I took the liberty of flying the ship to check what happened. Now, how many fingers am I holding up?"]]))
+      vn.menu{
+         {_([["Vital signs?"]]), "02_signs"},
+         {_([["Fingers?"]]), "02_fingers"},
+      }
+
+      vn.label("02_signs")
+      local underwear_brand
+      vn.func( function ()
+         local brands = {
+            [N_("MilSpec")] = 0,
+            [N_("Unicorp")] = 0,
+            [N_("Teracom")] = 0,
+            [N_("Enygma")]  = 0,
+            [N_("S&K")]     = 0,
+            [N_("Melendez")]= 0,
+            [N_("Red Star")]= 0,
+         }
+         for k,v in ipairs(player.pilot():outfits()) do
+            if v then
+               for b,n in pairs(brands) do
+                  if string.find(v:nameRaw(), b) then
+                     brands[b] = n+1
+                  end
+               end
+            end
+         end
+         local m = 0
+         local s = N_("MilSpec")
+         for b,n in pairs(brands) do
+            if n > m then
+               m = n
+               s = b
+            end
+         end
+         underwear_brand = s
+      end )
+      sai(fmt.f(_([["Your {brand} underwear has builtin reporting functionality. It's useful to tell if you are alive and healthy, or if you soiled yourself."]]),
+         {brand=_(underwear_brand)}))
+      vn.jump("02_cont")
+
+      vn.label("02_fingers")
+      sai(_([["Oh, I forgot. I do not have fingers anymore."]]))
+      vn.jump("02_cont")
+
+      vn.label("02_cont")
+      vn.na(_([[You decide against asking further as your head continues throbbing.]]))
+      sai(_([[""]]))
 
       vn.run()
    end
