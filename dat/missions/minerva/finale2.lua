@@ -18,16 +18,11 @@
 local minerva = require "common.minerva"
 local vn = require 'vn'
 local vni = require 'vnimage'
---local vne = require "vnextras"
 local fmt = require "format"
---local pilotai = require "pilotai"
 local audio = require 'love.audio'
 local pp_shaders = require "pp_shaders"
 local lg = require "love.graphics"
---local reverb_preset = require 'reverb_preset'
 local ccomm = require "common.comm"
---local lmisn = require "lmisn"
---local der = require 'common.derelict'
 local tut = require 'common.tutorial'
 
 local mainspb, mainsys = spob.getS("Minerva Station")
@@ -37,9 +32,8 @@ local title = _("Minerva Station Redux")
 -- Mission states:
 --  nil: mission not accepted yet
 --    1. Get to Minerva Station
---    2. Hack the gibson
---    3. Won fight
---    4. On way to darkshed
+--    2. Infiltrated
+--    3. Finish
 mem.state = nil
 
 function create ()
@@ -64,7 +58,7 @@ local talked -- Reset when loads
 function accept ()
    vn.clear()
    vn.scene()
-   local maikki =vn.newCharacter( minerva.vn_maikki() )
+   local maikki = vn.newCharacter( minerva.vn_maikki() )
    vn.music( minerva.loops.maikki )
    vn.transition()
 
@@ -208,10 +202,6 @@ function enter ()
       hailhook = hook.hail_spob( "comm_minerva" )
       hook.pilot( boss, "hail", "comm_boss" )
       hook.pilot( boss, "death", "boss_death" )
-   elseif scur==mainsys and mem.state==2 then
-      -- Set up fight
-      pilot.clear()
-      pilot.toggleSpawn(false)
    else
       -- Clean up some stuff if applicable
       if hailhook then
@@ -504,6 +494,18 @@ function land ()
    if mem.state==1 and spob.cur()==mainspb then
       pirimage, pirportrait = vni.pirate()
       misn.npcAdd( "approach_pir", _("Pirate?"), pirportrait, _("A pirate-ish individual. Maybe this is one of Maikki's crew?") )
+   elseif mem.state==2 and spob.cur()==returnspb then
+      vn.clear()
+      vn.scene()
+      local maikki = vn.newCharacter( minerva.vn_maikki() )
+      vn.transition()
+
+      vn.na(_([[]]))
+      maikki(_([[""]]))
+
+      vn.run()
+
+      misn.finish()
    end
 end
 
@@ -766,6 +768,7 @@ function shader_update( dt )
       vn.run()
 
       -- Update objectives
+      mem.state = 2
       misn.markerMove( mem.mrk, returnspb )
       misn.osdActive(3)
    end
