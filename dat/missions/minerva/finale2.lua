@@ -758,8 +758,15 @@ function shader_update( dt )
 
       vn.label("02_cont")
       vn.na(_([[You decide against asking further as your head continues throbbing.]]))
-      sai(_([[""]]))
+      sai(_([["You do not look too good. However, the health inspection will have to wait, we must get out of here!"]]))
+      sai(fmt.f(_([["Maikki told us she would be waiting on {spb} in the {sys} system. We should head there."]]),
+         {spb=returnspb, sys=returnsys}))
+      vn.na(_([[With a heavy sigh and a horrible headache, you take the controls of you ship. Time to meet up with Maikki, however, you'll have to take care that you don't get scanned on the way there as the cargo you have is likely sought after by the Empire.]]))
 
       vn.run()
+
+      -- Update objectives
+      misn.markerMove( mem.mrk, returnspb )
+      misn.osdActive(3)
    end
 end
