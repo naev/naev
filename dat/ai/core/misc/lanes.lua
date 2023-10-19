@@ -439,7 +439,8 @@ end
 --[[
 -- Computes the route for the pilot to get to target.
 --]]
-function lanes.getRoute( L, target, pos )
+function lanes.getRoute( L, target, pos, threshold )
+   threshold = threshold or 2 -- NPCs like to stick to lanes a lot
    local lv, le = L.v, L.e
 
    -- Case no lanes in the system
@@ -453,7 +454,7 @@ function lanes.getRoute( L, target, pos )
    local S, d = dijkstra_full( lv, le, tv, sv )
 
    -- No path or path is too much of a work around
-   if #S==0 or d > 2*pos:dist(target) then
+   if #S==0 or d > threshold*pos:dist(target) then
       return { target }
    end
 
@@ -471,10 +472,10 @@ function lanes.getRoute( L, target, pos )
 
    return S
 end
-function lanes.getRouteP( p, target, pos )
+function lanes.getRouteP( p, target, pos, threshold )
    pos = pos or p:pos()
    local L = getCacheP(p)
-   return lanes.getRoute( L, target, pos )
+   return lanes.getRoute( L, target, pos, threshold )
 end
 
 return lanes
