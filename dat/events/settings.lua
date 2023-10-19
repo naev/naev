@@ -12,7 +12,7 @@
 local luatk = require "luatk"
 local fmt = require "format"
 
-local settings, uselanes_jump, uselanes_spob, pick_gui
+local settings, uselanes_jump, uselanes_spob, uselanes_thr, pick_gui
 local reset_dist, reset_shield, compr_speed, compr_max
 
 local AUTONAV_MAX_DIST  = 10e3 -- quite a reasonable distance
@@ -30,6 +30,7 @@ function create ()
       uselanes_jump = true
       var.push( "autonav_uselanes_jump", true )
    end
+   uselanes_thr = var.peek("autonav_uselanes_thr") or 2
    reset_shield = var.peek("autonav_reset_shield") or 1
    reset_dist = var.peek("autonav_reset_dist") or 3e3
    compr_speed = var.peek("autonav_compr_speed") or 5e3
@@ -91,8 +92,14 @@ function settings ()
    fad_autonav = luatk.newFader( wdw, 20, y, w-40, 20, 0, 1, nil, update_autonav )
    fad_autonav:set( autonav_value )
    y = y + 40
+   local txt_lanes_thr = luatk.newText( wdw, 20, y, w-40, 20, _("Lanes preference:") )
+   local tw = txt_lanes_thr:dimensions()
+   luatk.newFader( wdw, 40+tw, y, w-70-tw, 30, 1, 5, uselanes_thr, function ( _fdr, val )
+      uselanes_thr = val
+   end, {labels=true} )
+   y = y + 40
    local txt_compr_speed = luatk.newText( wdw, 20, y, w-40, 20, _("Compression velocity target:") )
-   local tw = txt_compr_speed:dimensions()
+   tw = txt_compr_speed:dimensions()
    luatk.newFader( wdw, 40+tw, y, w-70-tw, 30, COMPR_SPEED_MIN, COMPR_SPEED_MAX, compr_speed, function ( _fdr, val )
       compr_speed = val
       update_ship_tc()
@@ -125,6 +132,7 @@ function settings ()
    uselanes_spob = chk_uselanes_spob:get()
    var.push( "autonav_uselanes_jump", uselanes_jump )
    var.push( "autonav_uselanes_spob", uselanes_spob )
+   var.push( "autonav_uselanes_thr", uselanes_thr )
    var.push( "autonav_reset_dist", reset_dist )
    var.push( "autonav_reset_shield", reset_shield )
    var.push( "autonav_compr_speed", compr_speed )

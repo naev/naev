@@ -8,7 +8,7 @@ local autonav_spob_approach, autonav_spob_land_approach, autonav_spob_land_brake
 local autonav_plt_follow, autonav_plt_board_approach
 local autonav_timer, tc_base, tc_mod, tc_max, tc_rampdown, tc_down
 local last_shield, last_armour, map_npath, reset_shield, reset_dist, reset_lockon
-local path, uselanes_jump, uselanes_spob
+local path, uselanes_jump, uselanes_spob, uselanes_thr
 
 -- Some defaults
 autonav_timer = 0
@@ -38,6 +38,7 @@ local function autonav_setup ()
    local stealth = pp:flags("stealth")
    uselanes_jump = var.peek("autonav_uselanes_jump") and not stealth
    uselanes_spob = var.peek("autonav_uselanes_spob") and not stealth
+   uselanes_thr = var.peek("autonav_uselanes_thr") or 2
    reset_shield = var.peek("autonav_reset_shield")
    reset_dist = var.peek("autonav_reset_dist")
    reset_lockon = true
@@ -152,7 +153,7 @@ function autonav_system ()
 
    if uselanes_jump then
       lanes.clearCache( pp )
-      path = lanes.getRouteP( pp, target_pos )
+      path = lanes.getRouteP( pp, target_pos, nil, uselanes_thr )
    else
       path = {target_pos}
    end
@@ -176,7 +177,7 @@ function autonav_spob( spb, tryland )
 
    if uselanes_spob then
       lanes.clearCache( pp )
-      path = lanes.getRouteP( pp, target_pos )
+      path = lanes.getRouteP( pp, target_pos, nil, uselanes_thr )
    else
       path = {target_pos}
    end
@@ -340,7 +341,7 @@ function autonav_jump_delay ()
 
    -- Determine how to do lanes
    if uselanes_jump then
-      path = lanes.getRouteP( pp, target_pos )
+      path = lanes.getRouteP( pp, target_pos, nil, uselanes_thr )
    else
       path = {target_pos}
    end
