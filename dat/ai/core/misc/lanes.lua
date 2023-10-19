@@ -196,11 +196,12 @@ local function dijkstra_full( vertices, edges, source, target )
       if u.v == target then
          -- Create the path by iterating backwards
          local S = {}
+         local d = u.d
          while u do
             table.insert( S, vertices[u.v] )
             u = u.p
          end
-         return S
+         return S, d
       end
 
       -- Fully connected, so all are neighbours
@@ -449,10 +450,10 @@ function lanes.getRoute( L, target, pos )
    -- Compute shortest path
    local sv = nearestVertex( lv, pos )
    local tv = nearestVertex( lv, target )
-   local S = dijkstra_full( lv, le, tv, sv )
+   local S, d = dijkstra_full( lv, le, tv, sv )
 
-   -- No path or target is closer so just go straight
-   if #S==0 or pos:dist2( S[1] ) > pos:dist2(target) then
+   -- No path or path is too much of a work around
+   if #S==0 or d*d > 1.7*pos:dist2(target) then
       return { target }
    end
 
