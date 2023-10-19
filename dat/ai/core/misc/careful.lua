@@ -75,7 +75,12 @@ end
 local function __estimate_strength( pilots )
    local str = 0
    for k,p in pairs(pilots) do
-      str = str + p:ship():points()
+      local s = p:ship()
+      local pts = s:points()
+      if s:tags().transport then
+         pts = pts*0.5
+      end
+      str = str + pts
    end
    -- Diminishing returns for large strengths
    -- ((x+1)**(1-n) - 1)/(1-n)
@@ -95,10 +100,11 @@ function careful.checkVulnerable( p, plt, threshold )
       -- Check to see vulnerability
       if mem.careful then
          -- Pilot actually cares about their fighting chances
+         local t = __join_tables( p:getAllies( mem.vulnrange, pos, true ),
+                                  p:getAllies( mem.vulnrange, nil, true ) )
+         t[ p:id() ]  = p -- add self
+         F = 1+__estimate_strength( t )
          H = 1+__estimate_strength( p:getEnemies( mem.vulnrange, pos ) )
-         F = 1+__estimate_strength( __join_tables(
-               p:getAllies( mem.vulnrange, pos, true ),
-               p:getAllies( mem.vulnrange, nil, true ) ) )
       else
          -- Pilot does not really
          H = 1
