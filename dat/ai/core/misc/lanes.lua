@@ -174,7 +174,7 @@ local function dijkstra_full( vertices, edges, source, target )
    for i=1,n do
       P[i] = {}
       for j=1,n do
-         P[i][j] = 10 -- penalty
+         P[i][j] = 3 -- penalty
       end
    end
    for k,e in ipairs(edges) do
