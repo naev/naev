@@ -37,7 +37,7 @@ function create ()
    compr_max = var.peek("autonav_compr_max") or 50
 
    -- Set an info button up
-   player.infoButtonRegister( _("Settings"), settings, 1, "A" )
+   player.infoButtonRegister( _("Settings"), settings, 1, "S" )
 end
 
 function settings ()
@@ -71,11 +71,14 @@ function settings ()
       txt_autonav:set( msg )
    end
    local autonav_value
-   if reset_dist > 0 then
-      autonav_value = math.min( 1, 0.5 + 0.5 * reset_dist / AUTONAV_MAX_DIST )
-   else
-      autonav_value = math.max( 0, 0.5 * reset_shield )
+   local function update_autonav_value ()
+      if reset_dist > 0 then
+         autonav_value = math.min( 1, 0.5 + 0.5 * reset_dist / AUTONAV_MAX_DIST )
+      else
+         autonav_value = math.max( 0, 0.5 * reset_shield )
+      end
    end
+   update_autonav_value()
    local function update_ship_tc ()
       local pp = player.pilot()
       local tc_max = compr_speed / pp:speedMax()
@@ -94,20 +97,20 @@ function settings ()
    y = y + 40
    local txt_lanes_thr = luatk.newText( wdw, 20, y, w-40, 20, _("Lanes preference:") )
    local tw = txt_lanes_thr:dimensions()
-   luatk.newFader( wdw, 40+tw, y, w-70-tw, 30, 1, 5, uselanes_thr, function ( _fdr, val )
+   local fad_thr = luatk.newFader( wdw, 40+tw, y, w-70-tw, 30, 1, 5, uselanes_thr, function ( _fdr, val )
       uselanes_thr = val
    end, {labels=true} )
    y = y + 40
    local txt_compr_speed = luatk.newText( wdw, 20, y, w-40, 20, _("Compression velocity target:") )
    tw = txt_compr_speed:dimensions()
-   luatk.newFader( wdw, 40+tw, y, w-70-tw, 30, COMPR_SPEED_MIN, COMPR_SPEED_MAX, compr_speed, function ( _fdr, val )
+   local fad_compr_speed = luatk.newFader( wdw, 40+tw, y, w-70-tw, 30, COMPR_SPEED_MIN, COMPR_SPEED_MAX, compr_speed, function ( _fdr, val )
       compr_speed = val
       update_ship_tc()
    end, {labels=true} )
    y = y + 40
    local txt_compr_max = luatk.newText( wdw, 20, y, w-40, 20, _("Maximum compression:") )
    tw = txt_compr_max:dimensions()
-   luatk.newFader( wdw, 40+tw, y, w-70-tw, 30, COMPR_MIN, COMPR_MAX, compr_max, function ( _fdr, val )
+   local fad_compr_max = luatk.newFader( wdw, 40+tw, y, w-70-tw, 30, COMPR_MIN, COMPR_MAX, compr_max, function ( _fdr, val )
       compr_max = val
       update_ship_tc()
    end, {labels=true} )
@@ -124,6 +127,31 @@ function settings ()
    y = y + 20
    luatk.newButton( wdw, 20, y, 80, 40, _("Pick GUI"), pick_gui )
 
+   luatk.newButton( wdw, -20-80-20, -20, 80, 40, _("Defaults"), function ()
+      luatk.yesno(_("Reset Player Settings?"), _("Are you sure you want to reset the player settings?"), function ()
+         uselanes_jump = true
+         uselanes_spob = true
+         uselanes_thr = 2
+         reset_shield = 1
+         reset_dist = 3e3
+         compr_speed = 5e3
+         compr_max = 50
+         update_autonav_value()
+         chk_uselanes_jump:set( uselanes_jump )
+         chk_uselanes_spob:set( uselanes_spob )
+         fad_thr:set( uselanes_thr )
+         fad_autonav:set( autonav_value )
+         fad_compr_speed:set( compr_speed )
+         fad_compr_max:set( compr_max )
+         var.push( "autonav_uselanes_jump", uselanes_jump )
+         var.push( "autonav_uselanes_spob", uselanes_spob )
+         var.push( "autonav_uselanes_thr", uselanes_thr )
+         var.push( "autonav_reset_shield", reset_shield )
+         var.push( "autonav_reset_dist", reset_dist )
+         var.push( "autonav_compr_speed", compr_speed )
+         var.push( "autonav_compr_max", compr_max )
+      end )
+   end )
    luatk.newButton( wdw, -20, -20, 80, 40, _("Close"), luatk.close )
    luatk.run()
 
