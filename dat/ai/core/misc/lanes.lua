@@ -453,7 +453,7 @@ function lanes.getRoute( L, target, pos )
    local S, d = dijkstra_full( lv, le, tv, sv )
 
    -- No path or path is too much of a work around
-   if #S==0 or d*d > 1.7*pos:dist2(target) then
+   if #S==0 or d > 2*pos:dist(target) then
       return { target }
    end
 
