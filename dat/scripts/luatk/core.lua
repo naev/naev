@@ -771,6 +771,7 @@ function luatk.newFader( parent, x, y, w, h, min, max, def, handler, params )
    wgt.handler = handler or function () end
    wgt.min = min
    wgt.max = max
+   wgt.range = max-min
    def = def or (min+max)*0.5
    wgt.val = math.min( math.max( def, min ), max )
    wgt.params = params
@@ -798,17 +799,27 @@ function luatk.Fader:draw( bx, by )
 
    -- Labels
    if self.params.labels then
+      local num
+      if self.range >= 100 then
+         function num( n )
+            return fmt.number(math.floor(n+0.5))
+         end
+      else
+         function num( n )
+            return string.format("%.1f",n)
+         end
+      end
       local ly = y + h + 5
       lg.setColor( luatk.scrollbar.colour.label )
       if off * w > 40 then
-         lg.printf( fmt.number(self.min), self.font, x-30, ly, 60, "center" )
+         lg.printf( num(self.min), self.font, x-30, ly, 60, "center" )
       end
       if off * w < w-40 then
-         lg.printf( fmt.number(self.max), self.font, x+w-30, ly, 60, "center" )
+         lg.printf( num(self.max), self.font, x+w-30, ly, 60, "center" )
       end
       lg.setColor( luatk.colour.text )
       lg.setColor( luatk.scrollbar.colour.value )
-      lg.printf( fmt.number(math.floor(self.val+0.5)), self.font, cx-30, ly, 60, "center" )
+      lg.printf( num(self.val), self.font, cx-30, ly, 60, "center" )
    end
 end
 function luatk.Fader:pressed( mx, _my )
