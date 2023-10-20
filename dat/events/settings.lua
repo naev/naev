@@ -150,6 +150,9 @@ function settings ()
          var.push( "autonav_reset_dist", reset_dist )
          var.push( "autonav_compr_speed", compr_speed )
          var.push( "autonav_compr_max", compr_max )
+
+         -- Also set GUI
+         player.guiSet( player.start().gui ) -- Default setting GUI
       end )
    end )
    luatk.newButton( wdw, -20, -20, 80, 40, _("Close"), luatk.close )
