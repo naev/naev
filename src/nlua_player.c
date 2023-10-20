@@ -52,6 +52,7 @@
 #include "player_inventory.h"
 #include "player_gui.h"
 #include "save.h"
+#include "start.h"
 
 #define PLAYER_CHECK() if (player.p == NULL) return 0
 
@@ -154,6 +155,7 @@ static int playerL_canDiscover( lua_State *L );
 static int playerL_save( lua_State *L );
 static int playerL_saveBackup( lua_State *L );
 static int playerL_gameover( lua_State *L );
+static int playerL_start( lua_State *L );
 static const luaL_Reg playerL_methods[] = {
    { "name", playerL_getname },
    { "ship", playerL_shipname },
@@ -240,6 +242,7 @@ static const luaL_Reg playerL_methods[] = {
    { "save", playerL_save },
    { "saveBackup", playerL_saveBackup },
    { "gameover", playerL_gameover },
+   { "start", playerL_start },
    {0,0}
 }; /**< Player Lua methods. */
 
@@ -2454,4 +2457,65 @@ static int playerL_gameover( lua_State *L )
    player_setFlag( PLAYER_DESTROYED );
    menu_death();
    return 0;
+}
+
+/**
+ * @brief Gets information about the player's starting point.
+ *
+ *    @luatreturn Returns a table containing the different start information as keys and the corresponding information as values. Fields include things such as "name" for the campaign name, "ship" for the starting ship, "shipname" for the starting shp name, etc. Please refer to `dat/start.xml` for more details of available fields.
+ * @luafunc start
+ */
+static int playerL_start( lua_State *L )
+{
+   vec2 v;
+   lua_newtable(L);
+
+   lua_pushstring( L, start_name() );
+   lua_setfield( L, -2, "name" );
+
+   lua_pushship( L, ship_get(start_ship()) );
+   lua_setfield( L, -2, "ship" );
+
+   lua_pushstring( L, start_shipname() );
+   lua_setfield( L, -2, "shipname" );
+
+   lua_pushstring( L, start_acquired() );
+   lua_setfield( L, -2, "acquired" );
+
+   lua_pushstring( L, start_gui() );
+   lua_setfield( L, -2, "gui" );
+
+   lua_pushinteger( L, start_credits() );
+   lua_setfield( L, -2, "credits" );
+
+   lua_pushtime( L, start_date() );
+   lua_setfield( L, -2, "date" );
+
+   lua_pushsystem( L, system_index(system_get(start_system())) );
+   lua_setfield( L, -2, "system" );
+
+   start_position( &v.x, &v.y );
+   lua_pushvector( L, v );
+   lua_setfield( L, -2, "position" );
+
+   if (start_mission() != NULL) {
+      lua_pushstring( L, start_mission() );
+      lua_setfield( L, -2, "mission" );
+   }
+
+   if (start_event() != NULL) {
+      lua_pushstring( L, start_event() );
+      lua_setfield( L, -2, "event" );
+   }
+
+   lua_pushstring( L, start_chapter() );
+   lua_setfield( L, -2, "chapter" );
+
+   lua_pushstring( L, start_spob_lua_default() );
+   lua_setfield( L, -2, "spob_lua_default" );
+
+   lua_pushstring( L, start_dtype_default() );
+   lua_setfield( L, -2, "dtype_default" );
+
+   return 1;
 }
