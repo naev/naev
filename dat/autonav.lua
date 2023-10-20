@@ -427,6 +427,8 @@ function autonav_jump_brake ()
       local pos = jmp:pos()
       local d = jmp:jumpDist( pp )
       target_pos = pos + (pp:pos()-pos):normalize( math.max(0.8*d, d-30) )
+      path = {target_pos} -- Have to update path also
+
       autonav = autonav_jump_approach
    end
 
@@ -489,6 +491,7 @@ function autonav_spob_land_brake ()
       local pp = player.pilot()
       local pos = target_spb:pos()
       target_pos = pos + (pp:pos()-pos):normalize( 0.6*target_spb:radius() )
+      path = {target_pos} -- Have to update path also
       autonav = autonav_spob_land_approach
    end
 
