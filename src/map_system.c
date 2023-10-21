@@ -282,9 +282,9 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    int hasPresence = 0;
    double unknownPresence = 0;
    char t;
-   int txtHeight;
    const glTexture *logo;
    int offset;
+   int txtHeight;
 
    phase++;
 
@@ -353,7 +353,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          gl_renderScale( bgImages[i], bx+2, by+(nshow-1)*pitch + (pitch-ih)/2 + offset, iw, ih, &ccol );
       }
    }
-   else {
+   else if (sys->nebu_density > 0.) {
       /* no nebula or star images - probably due to nebula */
       txtHeight = gl_printHeightRaw( &gl_smallFont,pitch,_("Obscured by the nebula") );
       gl_printTextRaw( &gl_smallFont, pitch, txtHeight, (bx+2),
