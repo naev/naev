@@ -500,8 +500,53 @@ function land ()
       local maikki = vn.newCharacter( minerva.vn_maikki() )
       vn.transition()
 
-      vn.na(_([[]]))
-      maikki(_([[""]]))
+      vn.na(_([[You land and are immediately greeted by a Maikki. How did she track your ship?]]))
+      maikki(_([["What did you find? Did you meet Marley and Sage?"]]))
+      vn.na(_([[She takes you to an impromptu installation on her ship, the Pink Demon. There you give Maikki the holodrives that she promptly passes off to her engineers to inspect the contents, while you explain to her the ordeal you went through. She shows sorrow when you explain the fates of Marley and Sage, the two pirates you met, but such is the way of pirates.]]))
+      vn.na(fmt.f(_([[She explains to you the situation of Zuri and Kex, while Kex hasn't changed at all, Zuri hasn't improved significantly and is under a deep coma. While the installations at {spb} are not bad, they are far from being the forefront in medical technology.]]),
+         {spb=returnspb}))
+      vn.na(_([[Eventually an engineer comes back to report on the situation. It seems like some schematics of Kex's design were recovered, along with some other blueprints that could prove to be useful, or at least in the worst case, worth a pretty penny on the black market. Maikki looks ecstatic at the possibility, albeit remote, of being able to repair her father.]]))
+      maikki(fmt.f(_([["Great job! I knew we could pull this off. If we have the blueprints or schematics or whatever they are, they should be able to repair my father! {spb} may have shitty medical installations, but the engineers here should be top notch!"]]),
+         {spb=returnspb}))
+      vn.na(_([[The engineers get the OK from Maikki to proceed, and begin working on whatever they have to do on Kex. Given the importance of the operation, you and Maikki leave it to the specialists while you fret together in the nearby waiting room until the procedure is finished.]]))
+      maikki(_([["This is nerve-wracking. I'm a pirate for hell's sake, not supposed to be worrying about lives, just booty!"]]))
+      vn.menu( function ()
+         local opts = {
+            {_([["Is life but not another booty?"]]), "01_booty"},
+            {_([["Pirates care about lives too!"]]), "01_lives"},
+            {_([["It's only human."]]), "01_human"},
+         }
+         return rnd.permutation(opts)
+      end )
+
+      vn.label("01_booty")
+      maikki(_([["That is an interesting way of seeing it. I guess treasuring one's comrades and family isn't much different from treasuring hordes of stolen values."]]))
+      vn.jump("01_cont")
+
+      vn.label("01_lives")
+      maikki(_([["It's hard to care about lives when they are worth so little in this universe. One day you meet a nice pirate, the next day you find out they're dead. It sort of desensitizes you to life."]]))
+      vn.jump("01_cont")
+
+      vn.label("01_human")
+      maikki(_([["Yes, but normal humans are a droll. They spend all day worrying about taxes and commuting to and back from work. Freedom is what a pirate seeks, and worrying seems to be exactly the opposite!"]]))
+      vn.jump("01_cont")
+
+      vn.label("01_cont")
+      maikki(_([["I don't know. I guess It's just weird having my father in my life again. Plus, it's not like Zuri, who can do well on her own, he's like... you know... a fowl! If I don't watch out for him a stray cat or whatever will have a banquet!"]]))
+      maikki(_([["I feel like I have to protect him, you know? Even though the asshole has been missing my entire life, he's still family. All I have left now! If I lose him, there's nothing left..."]]))
+      vn.menu( function ()
+         local opts = {
+            {_([["He's a cyborg fowl superweapon, he's not helpless."]]), "02_fowl"},
+            {_([["You have to protect him."]]), "02_protect"}
+         }
+         return rnd.permutation(opts)
+      end )
+
+      vn.label("02_fowl")
+      vn.jump("02_cont")
+
+      vn.label("02_protect")
+      vn.jump("02_cont")
 
       vn.run()
 
