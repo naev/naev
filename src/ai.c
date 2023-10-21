@@ -2924,7 +2924,7 @@ static int aiL_weapSet( lua_State *L )
    PilotWeaponSet *ws;
 
    p = cur_pilot;
-   id = lua_tonumber(L,1);
+   id = luaL_checkinteger(L,1);
 
    if (lua_gettop(L) > 1)
       type = lua_toboolean(L,2);
