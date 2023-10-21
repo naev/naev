@@ -1437,12 +1437,12 @@ void pilot_weaponAuto( Pilot *p )
    pilot_weapSetType( p, 1, WEAPSET_TYPE_SWITCH ); /* Forwards. */
    pilot_weapSetType( p, 2, WEAPSET_TYPE_SWITCH ); /* Turrets. */
    pilot_weapSetType( p, 3, WEAPSET_TYPE_SWITCH ); /* All weaps. */
-   pilot_weapSetType( p, 4, WEAPSET_TYPE_TOGGLE ); /* Seekers. */
-   pilot_weapSetType( p, 5, WEAPSET_TYPE_TOGGLE ); /* Fighter bays. */
+   pilot_weapSetType( p, 4, WEAPSET_TYPE_HOLD ); /* Seekers. */
+   pilot_weapSetType( p, 5, WEAPSET_TYPE_HOLD ); /* Fighter bays. */
    pilot_weapSetType( p, 6, WEAPSET_TYPE_HOLD );
    pilot_weapSetType( p, 7, WEAPSET_TYPE_HOLD );
    pilot_weapSetType( p, 8, WEAPSET_TYPE_HOLD );
-   pilot_weapSetType( p, 9, WEAPSET_TYPE_TOGGLE ); /* Turret seekers. */
+   pilot_weapSetType( p, 9, WEAPSET_TYPE_HOLD ); /* Turret seekers. */
 
    /* All should be inrange. */
    if (!pilot_isPlayer(p))
