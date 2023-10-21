@@ -430,7 +430,7 @@ static void shipyard_buy( unsigned int wid, const char* str )
    shipyard_update(wid, NULL);
 
    /* Run hook. */
-   hparam[0].type    = HOOK_PARAM_STRING;
+   hparam[0].type    = HOOK_PARAM_SHIP;
    hparam[0].u.ship  = ship;
    hparam[1].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "ship_buy", hparam );
