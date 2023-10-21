@@ -2919,11 +2919,7 @@ static int aiL_gatherablePos( lua_State *L )
  */
 static int aiL_weapSet( lua_State *L )
 {
-   Pilot* p;
    int id, type;
-   PilotWeaponSet *ws;
-
-   p = cur_pilot;
    id = luaL_checkinteger(L,1);
 
    if (lua_gettop(L) > 1)
@@ -2931,34 +2927,11 @@ static int aiL_weapSet( lua_State *L )
    else
       type = 1;
 
-   ws = &p->weapon_sets[id];
-
-   if (ws->type == WEAPSET_TYPE_HOLD) {
-      /* Check if outfit is on */
-      int on = 1;
-      int l  = array_size(ws->slots);
-      for (int i=0; i<l; i++) {
-         if (p->outfits[ ws->slots[i].slotid ]->state == PILOT_OUTFIT_OFF) {
-            on = 0;
-            break;
-         }
-      }
-
-      /* Active weapon sets only care about keypresses. */
-      /* activate */
-      if (type && !on)
-         pilot_weapSetPress( p, id, +1 );
-      /* deactivate */
-      if (!type && on)
-         pilot_weapSetPress( p, id, +1 );
-   }
-   else {
-      /* weapset type is weapon or change */
-      if (type)
-         pilot_weapSetPress( cur_pilot, id, +1 );
-      else
-         pilot_weapSetPress( cur_pilot, id, -1 );
-   }
+   /* weapset type is weapon or change */
+   if (type)
+      pilot_weapSetPress( cur_pilot, id, +1 );
+   else
+      pilot_weapSetPress( cur_pilot, id, -1 );
    return 0;
 }
 
