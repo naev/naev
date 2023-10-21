@@ -68,6 +68,7 @@
 #include "nlua_vec2.h"
 #include "nlua_file.h"
 #include "nlua_data.h"
+#include "ntracing.h"
 #include "npc.h"
 #include "nstring.h"
 #include "nxml.h"
@@ -723,6 +724,8 @@ void unload_all (void)
  */
 void main_loop( int nested )
 {
+   NTracingZone( ctx, 1 );
+
    /*
     * Control FPS.
     */
@@ -761,7 +764,11 @@ void main_loop( int nested )
       render_all( game_dt, real_dt );
       /* Draw buffer. */
       SDL_GL_SwapWindow( gl_screen.window );
+
+      NTracingFrameMark
    }
+
+   NTracingZoneEnd(ctx);
 }
 
 /**
@@ -968,8 +975,11 @@ double fps_current (void)
  */
 static void update_all( int dohooks )
 {
+   NTracingZone( ctx, 1 );
+
    if ((real_dt > 0.25) && (fps_skipped==0)) { /* slow timers down and rerun calculations */
       fps_skipped = 1;
+      NTracingZoneEnd( ctx );
       return;
    }
    else if (game_dt > fps_min) { /* We'll force a minimum FPS for physics to work alright. */
@@ -1002,6 +1012,8 @@ static void update_all( int dohooks )
       update_routine( game_dt, dohooks );
 
    fps_skipped = 0;
+
+   NTracingZoneEnd( ctx );
 }
 
 /**

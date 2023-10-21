@@ -10,3 +10,4 @@ option('docs_c'      , type: 'feature', value: 'auto'   , description: 'Enable c
 option('docs_lua'    , type: 'feature', value: 'auto'   , description: 'Enable compilation of Naev\'s Lua documentation.')
 option('luajit'      , type: 'feature', value: 'auto'   , description: 'Enable LuaJIT rather than standard Lua.')
 option('ndata_path'  , type: 'string' , value: ''       , description: 'Set the path ndata will be installed to (relative to the install prefix).')
+option('tracy'       , type: 'boolean', value: false    , description: 'Enable tracy profiler.')
