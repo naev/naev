@@ -219,7 +219,7 @@ int pilot_dock( Pilot *p, Pilot *target )
 
    /* Add the pilot's outfit. */
    if (pilot_addAmmo(target, target->outfits[i], 1) != 1)
-      return -1;
+      WARN(_("Unable to add ammo to '%s' from docking pilot '%s'!"),target->name,p->name);
 
    /* Remove from pilot's escort list. */
    for (i=0; i<array_size(target->escorts); i++) {
@@ -229,12 +229,9 @@ int pilot_dock( Pilot *p, Pilot *target )
    }
    /* Not found as pilot's escorts. */
    if (i >= array_size(target->escorts))
-      return -1;
-   /* Free if last pilot. */
-   if (array_size(target->escorts) == 1)
-      escort_freeList(target);
-   else
-      escort_rmListIndex(target, i);
+      WARN(_("Docking pilot '%s' not found in pilot '%s's escort list!"),target->name,p->name);
+   /* Remove escort pilot. */
+   escort_rmListIndex(target, i);
 
    /* Destroy the pilot. */
    pilot_delete(p);
