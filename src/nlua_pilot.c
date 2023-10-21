@@ -1674,7 +1674,7 @@ static int pilotL_navJump( lua_State *L )
 static int pilotL_weapsetActive( lua_State *L )
 {
    const Pilot *p = luaL_validpilot(L,1);
-   lua_pushnumber( L, p->active_set + 1 );
+   lua_pushinteger( L, p->active_set+1 );
    return 1;
 }
 
