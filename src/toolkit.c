@@ -1066,10 +1066,8 @@ void window_destroy( unsigned int wid )
       window_setFlag( wdw, WINDOW_FADEOUT | WINDOW_FADEDELAY );
       wdw->timer_max = wdw->timer = WINDOW_FADEOUT_TIME;
 
-      /* Run the close function first. */
-      if (wdw->close_fptr != NULL)
-         wdw->close_fptr( wdw->id, wdw->name );
-      wdw->close_fptr = NULL;
+      /* Clean up window. */
+      window_cleanup( wdw );
 
       /* Disable text input, etc. */
       toolkit_focusClear( wdw );
@@ -1093,6 +1091,7 @@ void window_kill( Window *wdw )
    for (Window *w = windows; w != NULL; w = w->next)
       if (w->parent == wdw->id)
          window_kill( w );
+   window_cleanup( wdw );
    window_setFlag( wdw, WINDOW_KILL );
 }
 
