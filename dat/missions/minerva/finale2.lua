@@ -608,10 +608,114 @@ She looks ready to slap him again.]]))
       vn.jump("03_cont")
 
       vn.label("03_cont")
-      kex(_([[""]]))
+      kex(_([["Where... Where am I?"
+He looks quite nervous.]]))
+      maikki(fmt.f(_([["We're on the Pink Demon, stationed at {spb}."]]),
+         {spb=returnspb}))
+      kex(_([["Pink... Demon?"
+He squints a bit looking at Maikki, then suddenly seems to get a bit agitated. He turns again to you.]]))
+      vn.menu{
+         {_([["Glad to have you back!"]]),"04_back"},
+         {_([["How many fingers am I holding up?"]]),"04_fingers"},
+         {_([["How's daddy feeling?"]]),"04_daddy"},
+      }
+
+      vn.label("04_back")
+      kex(_([[He still seems a bit fuzzy.
+"I remember... a courtroom? What happened?"]]))
+      vn.jump("04_cont")
+
+      vn.label("04_fingers")
+      kex(_([["I'm fine. I remember... a courtroom? What happened?"]]))
+      vn.jump("04_cont")
+
+      vn.label("04_daddy")
+      kex(_([[Kex freezes in place.]]))
+      maikki(_([[Maikki elbows you in the ribs, almost sending you sprawling to the floor.
+"How are you feeling?"]]))
+      kex(_([[He still seems quite tense, but it doesn't seem like he's very focused.
+"I remember... a courtroom? What happened?"]]))
+      vn.jump("04_cont")
+
+      vn.label("04_cont")
+      vn.na(_([[You roughly give him an overview of what happened at the courtroom without going into too much depth, and some of the posterior challenges leading up until the current moment.]]))
+      kex(_([["I see..."
+He still doesn't seem to have relaxed significantly.]]))
+      maikki(_([["Well then."
+Maikki makes emphasizes her presence to Kex.]]))
+      kex(_([[He still seems to avoid eye contact with Maikki and looks at you.
+"What are you going to do now?"]]))
+      maikki(_([[Before you can answer, Maikki butts in.
+"Isn't there something more important right now?"]]))
+      kex(_([[His voice trembles a bit.
+"Ummmmm, I guess... something..."
+His voice becomes smaller and smaller and ends up trailing off.]]))
+      maikki(_([["You do recognize me, you bastard!"
+The engineers have to hold Maikki back from Kex as she lets her temper take the best of her.]]))
+      maikki(_([["Let me at the fowl! I spend 5 bloody cycles tracking him down thinking that he must have forgotten about me or whatever when he turned into a bird, and he remembered all along!"
+She struggles against the engineers.]]))
+      maikki(_([["He could have been all like 'It's good to see you daughter!' or 'I'm sorry I wasn't there!', but the bloody fowl was just running away from his problems and avoiding facing reality like all along!"]]))
+      maikki(_([["You haven't changed at all!"
+She breaks free from the engineers and jumps at Kex. Fearing the worst, you try to jump to intercept, but Maikki's alacrity surprises you.]]))
+      maikki(_([[Maikki tackles Kex, and for a second you think it's the end of the cyborg duck, but, despite the tumultuousness, you find Maikki hugging Kex. She whispers softly,
+"I missed you, you bastard..."]]))
+      kex(_([["I'm sorry, Maikki... I'm sorry for everything... I failed you..."]]))
+
+      vn.scene()
+      vn.transition("hexagon")
+
+      vn.na(_([[With the emotional meeting out of the way, and knowing Kex is safe and sound, the engineers clean up things a bit, and you decide to leave the two a bit of privacy, while you go grab a drink to try to recoup after such a tumultuous chain of events.]]))
+      vn.na(_([[Eventually you get a message from Maikki that she is waiting for you on the bridge of the Pink Demon and you head back to meet the two.]]))
+
+      vn.scene()
+      vn.newCharacter( kex ) -- TODO pirate hat
+      local maikkip = vn.newCharacter( minerva.vn_maikkiP{pos="left"} )
+      vn.transition("hexagon")
+      vn.na(_([[You find Maikki in her pirate attire, and surprisingly enough, Kex is also in a matching outfit.]]))
+      vn.menu{
+         {_([["All caught up I guess?"]]), "05_cont"},
+         {_([["Nice look!"]]), "05_cont"},
+      }
+      vn.label("05_cont")
+      maikkip(_([["Thanks! I owe it to you to finally be able to be able to talk to my father. We have a ton of catching up to do still!"]]))
+      kex(_([["I feel the same. Thank you for helping me out, despite my current appearance. Maybe this time I will be able to amend my past and break the loop."]]))
+      maikkip(_([["Amend the past? That's impossible. You were a complete asshole."]]))
+      kex(_([[He looks bit dejected and sad.]]))
+      maikkip(_([["Don't be sad. You have to learn to live with your past, and learn from it to have a good future! What's done is done, but you can still decide what's yet to come."]]))
+      kex(_([["It's still hard. Although I've had a lot of time to think since I lost my body. This time I have no excuses."]]))
+      maikkip(fmt.f(_([[She beams a smile at Kex.
+"Ah, {playername}, my father decided to join me and my crew aboard the Pink Demon. We'll be heading back to New Haven after this. Zuri is still in need of good treatment. What are you going to do? Care to join us?"]]),
+         {playername=player.name()}))
+      vn.na(_([[You thank Maikki for her offer, but say that you want to forge your own path. That doesn't mean you won't be able to join her on new adventures, but that you want to keep your autonomy.]]))
+      maikkip(_([["Hah! One would think you are the pirate instead of me!"
+She gives you a sly look.]]))
+      maikkip(_([["To be honest, unless hell froze over, I knew there was no chance of you joining us. Wild Ones aren't for everyone, and you've got things you want to do."]]))
+      kex(_([["But make sure to visit us! I'm not sure how to thank you enough."]]))
+      maikkip(_([["Ah, I almost forgot. What is a good adventure without a good reward?"]]))
+      kex(_([["A good learning experience?"]]))
+      maikkip(_([["That was a rhetorical question! You have to..
+Oh never mind. Here, take this credit stick, it's the least that I can do for you."]]))
+      vn.sfxMoney()
+      local reward_amount = minerva.rewards.finale2
+      vn.func( function ()
+         player.pay( reward_amount )
+      end )
+      vn.na(fmt.reward(reward_amount))
+      kex(_([["Wow, that's a lot of credits. I also want to thank you. I don't have money, but please take this."]]))
+      vn.sfxVictory()
+      local reward_outfit = "Laser Cannon MK1" -- TODO change
+      vn.func( function ()
+         player.outfitAdd( reward_outfit )
+      end )
+      vn.na(fmt.reward(reward_outfit))
+      vn.na(_([[You wish the two best on their trip back, and promise you will go visit them sometime. You then head back after the long ordeal with the knowledge you were able to reunite a daughter and father.]]))
 
       vn.done("hexagon")
       vn.run()
+
+      faction.modPlayerSingle("Wild Ones", 15)
+      minerva.log.maikki(fmt.f(_([[You managed to infiltrate the weapon laboratory on Minerva Station, obtaining important document including schematics related to Kex's cyborg parts. Despite being blown out into space and rescued by your ship AI, you were able to reach {returnspb} and hand over the documents. This allowed Maikki's engineers to resuscitate Kex and you were able to witness an emotional reunion between Kex and Maikki. They then took off to New Haven and you promised you would visit them sometime.]]),
+         {returnspb=returnspb}))
 
       misn.finish()
    end
@@ -833,7 +937,7 @@ function shader_update( dt )
          local brands = {
             [N_("MilSpec")] = 0,
             [N_("Unicorp")] = 0,
-            [N_("Teracom")] = 0,
+            [N_("TeraCom")] = 0,
             [N_("Enygma")]  = 0,
             [N_("S&K")]     = 0,
             [N_("Melendez")]= 0,

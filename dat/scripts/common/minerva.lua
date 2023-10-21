@@ -138,6 +138,7 @@ local minerva = {
       pirate4 = 800e3, -- Defend torture ship destroying Dvaered Goddard!!
       pirate5 = 800e3, -- Za'lek hacking station
       pirate6 = 900e3, -- Take down both targets
+      finale2 = 3e6, -- For both finale missions
    },
 }
 
