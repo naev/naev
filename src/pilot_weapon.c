@@ -279,9 +279,6 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
             ws->active = 0;
             n += pilot_weaponSetShootStop( p, ws, -1 ); /* De-activate weapon set. */
 
-            /* Weapons are weird still. */
-            pilot_weaponSetShootStop( p, ws, -1 );
-
             /* Turn off outfits. */
             for (int i=0; i<l; i++) {
                PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
@@ -942,14 +939,8 @@ unsigned int pilot_weaponSetShootStop( Pilot* p, PilotWeaponSet *ws, int level )
          continue;
 
       /* Only handle beams. */
-      if (!outfit_isBeam(pos->outfit)) {
-         /* Turn off the state. */
-         if (outfit_isMod( pos->outfit )) {
-            pos->state = PILOT_OUTFIT_OFF;
-            recalc = 1;
-         }
+      if (!outfit_isBeam(pos->outfit))
          continue;
-      }
 
       /* Stop beam. */
       if (pos->u.beamid > 0) {
