@@ -60,7 +60,7 @@ function accept ()
    vn.scene()
    local maikki = vn.newCharacter( minerva.vn_maikki() )
    vn.music( minerva.loops.maikki )
-   vn.transition()
+   vn.transition("hexagon")
 
    if not talked then
       talked = true
@@ -144,7 +144,7 @@ She lets out a sigh.
 
    vn.label("decline")
    vn.na(_([[Maikki gives you some time to prepare more. Return to her when you are ready.]]))
-   vn.done()
+   vn.done("hexagon")
 
    vn.label("accept")
    vn.func( function () mem.state=1 end )
@@ -155,6 +155,7 @@ She lets out a sigh.
 Maikki gives you a weird two finger salute and takes off to her ship, leaving you to do your part on your own.]]),
       {spb=returnspb}))
 
+   vn.done("hexagon")
    vn.run()
 
    -- If not accepted, mem.state will still be nil
@@ -498,7 +499,8 @@ function land ()
       vn.clear()
       vn.scene()
       local maikki = vn.newCharacter( minerva.vn_maikki() )
-      vn.transition()
+      vn.music( minerva.loops.maikki )
+      vn.transition("hexagon")
 
       vn.na(_([[You land and are immediately greeted by a Maikki. How did she track your ship?]]))
       maikki(_([["What did you find? Did you meet Marley and Sage?"]]))
@@ -537,17 +539,78 @@ function land ()
       vn.menu( function ()
          local opts = {
             {_([["He's a cyborg fowl superweapon, he's not helpless."]]), "02_fowl"},
-            {_([["You have to protect him."]]), "02_protect"}
+            {_([["You have to protect him."]]), "02_protect"},
+            {_([["He'll be alright."]]), "02_alright"},
          }
          return rnd.permutation(opts)
       end )
 
       vn.label("02_fowl")
+      maikki(_([["I know but, still, he's soo small!"
+She lets out a sigh.]]))
       vn.jump("02_cont")
 
       vn.label("02_protect")
+      maikki(_([["I know right! He's so small and feeble looking. Makes you want to cuddle with him and keep all the danger away."
+She lets out a sigh.]]))
       vn.jump("02_cont")
 
+      vn.label("02_alright")
+      maikki(_([["I hope you're right. I mean, there's no other possibility is there not?"
+She lets out a sigh.]]))
+      vn.jump("02_cont")
+
+      vn.label("02_cont")
+      maikki(_([["This is going to take a while to get used to. Guess it's best not to overthink it for now and go with the flow."]]))
+      vn.na(_([[You are interrupted by an engineer that comes in to inform that it was likely a success and they would try to wake up Kex.]]))
+      maikki(_([[Maikki closes her eyes for a second and takes a deep breath.
+"Let's go!"]]))
+      vn.na(_([[You are led to a makeshift surgery room covered in devices and screens. On the operating table you see a tiny-looking Kex who's hooked up to some electrical gear.]]))
+      maikki(_([["It's now or never. Let's go this!"]]))
+      vn.musicStop()
+      vn.func( function () music.stop() end )
+      vn.na(_([[The engineers hit a key on a console, and everyone goes silent in anticipation.]]))
+      vn.na(_([[...]]))
+      vn.na(_([[Looking over, Maikki seems to be holding her breath while the engineers scratch their heads. Did it not work?]]))
+      vn.na(_([[.]]))
+      vn.na(_([[ .]]),true)
+      vn.na(_([[ .]]),true)
+
+      -- Time to bring back Kex!!!
+      vn.move( maikki, "left" )
+      local kex = minerva.vn_kex{ pos="right" }
+      vn.appear( kex, "hexagon" )
+
+      vn.na(_([[Suddenly you hear a loud BEEP and the light in Kex's cyborg eye turns on.]]))
+      kex(_([["INITIALIZING STRANGELOVE OS VERSION 0.18-alpha.239.]]))
+      kex(_([[ .]]),true)
+      kex(_([[ .]]),true)
+      kex(_([[
+
+INITIALIZATION COMPLETE."]]),true)
+      kex(_([[Kex blinks several times before letting out a large SQUAWK.]]))
+      maikki(_([[Likely out of shock, Maikki quickly slaps and surely slaps Kex across the cheek.]]))
+      vn.music( minerva.loops.kex )
+      kex(_([[Kex blinks several times again.]]))
+      maikki(_([["You better not squawk again."
+She looks ready to slap him again.]]))
+      kex(_([[Kex looks around the room once before staring at you.]]))
+      vn.menu{
+         {_([["Go on, say something."]]),"03_cont"},
+         {_([["Welcome back!"]]),"03_cont"},
+         {_([["SQUAWK!"]]),"03_squawk"},
+      }
+
+      vn.label("03_squawk")
+      kex(_([[He jumps a bit in surprise.
+"Crikey! You scared me."]]))
+      maikki(_([["Now you know how I feel!"]]))
+      vn.jump("03_cont")
+
+      vn.label("03_cont")
+      kex(_([[""]]))
+
+      vn.done("hexagon")
       vn.run()
 
       misn.finish()
