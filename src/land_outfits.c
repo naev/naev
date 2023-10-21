@@ -103,8 +103,10 @@ static void outfits_onClose( unsigned int wid, const char *str )
 {
    (void) str;
    LandOutfitData *data = window_getData( wid );
-   array_free( data->outfits );
-   free( data );
+   if (data != NULL) {
+      array_free( data->outfits );
+      free( data );
+   }
 }
 
 /**
