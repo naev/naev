@@ -2413,7 +2413,7 @@ static int playerL_save( lua_State *L )
 
    if (!landed && (savespob==NULL))
       NLUA_ERROR(L,_("Unable to save when not landed and land spob is not specified!"));
-   else if (landed && (savespob!=land_spob))
+   else if (landed && (savespob!=NULL))
       NLUA_ERROR(L,_("Unable to save when landed and land_spob does not match landed spob!"));
 
    if (savespob != NULL) {
