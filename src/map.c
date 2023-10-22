@@ -870,13 +870,13 @@ static void map_update( unsigned int wid )
             p += scnprintf(&buf[p], sizeof(buf)-p, "#r" );
             p += scnprintf(&buf[p], sizeof(buf)-p, _("Dense Interference (%.0f%%)"), itf);
          }
-         else if (sys->interference < 300.) {
+         else if (sys->interference > 300.) {
             p += scnprintf(&buf[p], sizeof(buf)-p, "#o" );
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("Light Interference (%.0f%%)"), itf);
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Medium Interference (%.0f%%)"), itf);
          }
          else {
             p += scnprintf(&buf[p], sizeof(buf)-p, "#y" );
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("Interference (%.0f%%)"), itf);
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Light Interference (%.0f%%)"), itf);
          }
          p += scnprintf(&buf[p], sizeof(buf)-p, "#0" );
       }

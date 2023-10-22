@@ -390,47 +390,71 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    if (cur_spob_sel == 0) {
       int infopos = 0;
       int stars   = MAX( array_size( bgImages )-1, 0 );
-      cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, _("System: %s\n"), _(sys->name) );
+      cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nSystem:#0 %s\n"), _(sys->name) );
       /* display sun information */
-      cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, n_("%d-star system\n", "%d-star system\n", stars), stars );
+      cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, n_("%d-star system\n", "%d-star system\n", stars), stars );
 
       /* Nebula. */
       if (sys->nebu_density > 0. ) {
+         double dmg = sys->nebu_volatility;
+         const char *sdmg, *adj;
+         char col;
          /* Volatility */
-         if (sys->nebu_volatility > 700.)
-            cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Nebula: Volatile, ") );
-         else if (sys->nebu_volatility > 300.)
-            cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Nebula: Dangerous, ") );
-         else if (sys->nebu_volatility > 0.)
-            cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Nebula: Unstable, ") );
-         else
-            cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Nebula: Stable, ") );
+         if (dmg > 50.) {
+            col = 'r';
+            sdmg = _("Volatile");
+         }
+         else if (sys->nebu_volatility > 20.) {
+            col = 'o';
+            sdmg = _("Dangerous");
+         }
+         else if (sys->nebu_volatility > 0.) {
+            col = 'y';
+            sdmg = _("Unstable");
+         }
+         else {
+            col = '0';
+            sdmg = _("Stable");
+         }
 
          /* Density */
          if (sys->nebu_density > 700.)
-            cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Dense\n") );
+            adj = _("Dense ");
          else if (sys->nebu_density < 300.)
-            cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Light\n") );
+            adj = _("Light ");
          else
-            cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Medium\n") );
-      } else
-         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Nebula: None\n") );
+            adj = "";
+
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nNebula: #%c%s%s (%.1f %s)#0\n"), col, adj, sdmg, dmg, UNIT_POWER );
+      }
 
       /* Interference. */
       if (sys->interference > 0. ) {
-         if (sys->interference > 700.)
-            cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Interference: Dense\n") );
-         else if (sys->interference < 300.)
-            cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Interference: Light\n") );
+         double itf = sys->interference;
+         const char *sint;
+         char col;
+         if (itf > 700.) {
+            col = 'r';
+            sint = _("Dense");
+         }
+         else if (itf > 300.) {
+            col = 'o';
+            sint = _("Medium");
+         }
+         else {
+            col = 'y';
+            sint = _("Light");
+         }
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nInterference: #%c%s (%.0f%%)#0\n"), col, sint, itf );
       }
       /* Asteroids. */
       if (array_size(sys->asteroids) > 0 ) {
          ast_nb = ast_area = 0.;
-         for ( i=0; i<array_size(sys->asteroids); i++ ) {
+         for (i=0; i<array_size(sys->asteroids); i++) {
             ast_nb += sys->asteroids[i].nb;
             ast_area = MAX( ast_area, sys->asteroids[i].area );
          }
-         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Asteroid field density: %.2g\n"), ast_nb*ASTEROID_REF_AREA/ast_area );
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nAsteroid field density:#0 %.2g\n"), ast_nb*ASTEROID_REF_AREA/ast_area );
       }
       /* Faction */
       f = -1;
@@ -439,16 +463,16 @@ static void map_system_render( double bx, double by, double w, double h, void *d
             if ((f==-1) && (sys->spobs[i]->presence.faction>=0) ) {
                f = sys->spobs[i]->presence.faction;
             } else if (f != sys->spobs[i]->presence.faction &&  (sys->spobs[i]->presence.faction>=0) ) {
-               cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Faction: Multiple\n") );
+               cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nFaction:#0 Multiple\n") );
                break;
             }
          }
       }
       if (f == -1 ) {
-         cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Faction: N/A\n") );
+         cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nFaction:#0 N/A\n") );
       }  else {
          if (i==array_size(sys->spobs)) /* saw them all and all the same */
-            cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Faction: %s\nStanding: %s\n"), faction_longname(f), faction_getStandingText( f ) );
+            cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nFaction:#0 %s\n#nStanding:#0 %s\n"), faction_longname(f), faction_getStandingText( f ) );
          /* display the logo */
          logo = faction_logo( f );
          if ( logo != NULL ) {
@@ -465,17 +489,17 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          hasPresence = 1;
          if ( faction_isKnown( sys->presence[i].faction ) ) {
             t = faction_getColourChar( sys->presence[i].faction );
-            cnt += scnprintf( &buf[cnt], sizeof( buf ) - cnt, "#0%s: #%c%.0f\n",
+            cnt += scnprintf( &buf[cnt], sizeof( buf ) - cnt, "#n%s: #%c%.0f\n",
                               faction_shortname( sys->presence[i].faction ),
                               t, sys->presence[i].value);
          } else
             unknownPresence += sys->presence[i].value;
       }
       if (unknownPresence != 0)
-         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#0%s: #%c%.0f\n",
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#n%s: #%c%.0f\n",
                            _("Unknown"), 'N', unknownPresence );
       if (hasPresence == 0)
-         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Presence: N/A\n"));
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nPresence:#0 N/A\n"));
       txtHeight=gl_printHeightRaw(&gl_smallFont,(w - nameWidth-pitch-60)/2,buf);
       gl_printTextRaw( &gl_smallFont, (w - nameWidth - pitch - 60) / 2, txtHeight,
             bx + 10 + pitch + nameWidth, by + h - 10 - txtHeight, 0, &cFontWhite, -1., buf );
@@ -484,7 +508,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       for (i=0; i<array_size(sys->jumps); i++) {
          if (jp_isUsable ( &sys->jumps[i])) {
             if (infopos == 0) /* First jump */
-               infopos = scnprintf( infobuf, sizeof(infobuf), _("   Jump points to:\n") );
+               infopos = scnprintf( infobuf, sizeof(infobuf), _("   #nJump points to:#0\n") );
             if (sys_isKnown( sys->jumps[i].target ))
                infopos += scnprintf( &infobuf[infopos], sizeof(infobuf)-infopos, "     %s\n", _(sys->jumps[i].target->name) );
             else
@@ -505,7 +529,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
                bx+pitch+nameWidth + 230, by + h - 31, 0, &cFontWhite, -1., factionBuf );
       }
 
-      cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Spob: %s\nPlanetary class: %s    Population: roughly %s\n"), spob_name(p), _(p->class), space_populationStr( p->population ) );
+      cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nSpob:#0 %s\n#nPlanetary class:#0 %s    #nPopulation:#0 roughly %s\n"), spob_name(p), _(p->class), space_populationStr( p->population ) );
       if (!spob_hasService( p, SPOB_SERVICE_INHABITED ))
          cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("No space port here\n") );
       else if (p->can_land)
