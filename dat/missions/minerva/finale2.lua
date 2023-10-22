@@ -729,11 +729,9 @@ end
 
 local shader_fadeout, hook_update
 function approach_pir ()
-   player.save() -- Save the game in case the player messes up
-
    vn.clear()
    vn.scene()
-   local pir = vn.newCharacter( _("Pirate?)"), {image=pirimage} )
+   local pir = vn.newCharacter( _("Pirate?"), {image=pirimage} )
    vn.transition()
 
    vn.na(_([[You approach the shady character, who seems to be sitting idly around until they notice you.]]))
@@ -787,7 +785,7 @@ function approach_pir ()
 
    vn.label("02b_button")
    vn.na(_([[You press the big red button, noticing out of the corner of your eye a 'DO NOT PRESS' button a bit too late.]]))
-   vn.sfx( audio.newsource( 'snd/sounds/laser.wav' ) ) -- TODO potentially change
+   vn.sfx( audio.newSource( 'snd/sounds/laser.wav' ) ) -- TODO potentially change
    vn.label("prototype_shot")
    vn.na(_([[There's a resounding brrrruunnggzzzzz as the prototype fires, with a shock wave launching you to the ground, and the blast misses the target in front of it, partially ricocheting off the laboratory walls until it smashes into a group of bureaucrats, immediately sending them off in pieces.]]))
    vn.label("chaos")
@@ -907,11 +905,11 @@ end
 
 function shader_update( dt )
    shader_fadeout:_update( dt )
-   if shader_fadeout._dt < 0 then
-      shader_fadeout.shader:rmPPShader()
+   if shader_fadeout._dt >= 1 then
       hook.rm( hook_update )
+      shader_fadeout.shader:rmPPShader()
 
-      vn.clear()
+      vn.reset()
       vn.scene()
       local sai = vn.newCharacter( tut.vn_shipai() )
       vn.transition( tut.shipai.transition )
@@ -922,7 +920,7 @@ function shader_update( dt )
       vn.menu{
          {_([["My head..."]]), "01_cont"},
          {_([["What... happened?"]]), "01_cont"},
-         {_([["...is this hell?]"]]), "01_hell"},
+         {_([["...is this hell?"]]), "01_hell"},
       }
 
       vn.label("01_hell")
@@ -968,8 +966,9 @@ function shader_update( dt )
          end
          underwear_brand = s
       end )
-      sai(fmt.f(_([["Your {brand} underwear has builtin reporting functionality. It's useful to tell if you are alive and healthy, or if you soiled yourself."]]),
-         {brand=_(underwear_brand)}))
+      sai( function ()
+         return fmt.f(_([["Your {brand} underwear has builtin reporting functionality. It's useful to tell if you are alive and healthy, or if you soiled yourself."]]),
+            {brand=_(underwear_brand)}) end )
       vn.jump("02_cont")
 
       vn.label("02_fingers")
