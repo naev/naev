@@ -5,10 +5,10 @@
   <unique />
   <slot>utility</slot>
   <size>medium</size>
-  <mass>10</mass>
+  <mass>6</mass>
   <price>2000000</price>
   <description>The Hades Torch would be an exceptional afterburner except for the minor detail that to obtain maximum performance it has a tendency to burn the hull of the ship it is attached too.</description>
-  <gfx_store>hellburner.webp</gfx_store>
+  <gfx_store>engine07.webp</gfx_store>
   <limit>afterburner</limit>
   <cpu>0</cpu>
   <desc_extra>#rHot hot hot!#0</desc_extra>
@@ -24,7 +24,7 @@
   <sound_off>afb_disengage</sound_off>
   <accel>300</accel>
   <speed>65</speed>
-  <energy>85</energy>
+  <energy>55</energy>
   <mass_limit>700</mass_limit>
   <heatup>20</heatup>
  </specific>
