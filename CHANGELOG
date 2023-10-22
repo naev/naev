@@ -110,6 +110,7 @@
       * Fixed autonav sometimes having trouble landing with reverse thrusters
       * Qex races should be much less laggy now
       * Fixed some outfits using the wrong store images
+      * Fixed system viewer not being consistent with map
 
 * 0.10.6
    * Fixed potential segfault with invalid semver strings

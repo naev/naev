@@ -8,7 +8,7 @@
   <mass>6</mass>
   <price>2000000</price>
   <description>The Hades Torch would be an exceptional afterburner except for the minor detail that to obtain maximum performance it has a tendency to burn the hull of the ship it is attached too.</description>
-  <gfx_store>engine07.webp</gfx_store>
+  <gfx_store>engine7.webp</gfx_store>
   <limit>afterburner</limit>
   <cpu>0</cpu>
   <desc_extra>#rHot hot hot!#0</desc_extra>
