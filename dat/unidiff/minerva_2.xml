@@ -7,5 +7,7 @@
   <service_remove>commodity</service_remove>
   <service_remove>outfits</service_remove>
   <service_remove>shipyard</service_remove>
+  <tag_add>nonpc</tag_add>
+  <nomissionspawn_add/>
  </spob>
 </unidiff>
