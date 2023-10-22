@@ -12,5 +12,5 @@
  <speed_mod>25</speed_mod>
  <turn_mod>15</turn_mod>
  <time_mod>-20</time_mod>
- <time_speedup>125</time_speedup>
+ <time_speedup>25</time_speedup>
 </difficulty>
