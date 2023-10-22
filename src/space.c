@@ -913,6 +913,10 @@ char **system_searchFuzzyCase( const char* sysname, int *n )
          names[len] = sys->name;
          len++;
       }
+      else if ((sys->features!=NULL) && SDL_strcasestr( _(sys->features), sysname ) != NULL) {
+         names[len] = sys->name;
+         len++;
+      }
    }
 
    /* Free if empty. */
@@ -1148,6 +1152,10 @@ char **spob_searchFuzzyCase( const char* spobname, int *n )
    for (int i=0; i<array_size(spob_stack); i++) {
       Spob *spob = &spob_stack[i];
       if (SDL_strcasestr( spob_name(spob), spobname ) != NULL) {
+         names[len] = spob->name;
+         len++;
+      }
+      else if ((spob->feature != NULL) && SDL_strcasestr( _(spob->feature), spobname ) != NULL) {
          names[len] = spob->name;
          len++;
       }
