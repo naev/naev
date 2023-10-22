@@ -20,7 +20,7 @@
   <trackmin>0</trackmin>
   <trackmax>10000</trackmax>
   <ammo_mass>2</ammo_mass>
-  <gfx>headhunter.png</gfx>
+  <gfx>spearhead.webp</gfx>
   <sound>missile</sound>
   <sound_hit>medexp0</sound_hit>
   <spfx_shield>ExpM</spfx_shield>
