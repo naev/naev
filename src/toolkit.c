@@ -1066,9 +1066,6 @@ void window_destroy( unsigned int wid )
       window_setFlag( wdw, WINDOW_FADEOUT | WINDOW_FADEDELAY );
       wdw->timer_max = wdw->timer = WINDOW_FADEOUT_TIME;
 
-      /* Clean up window. */
-      window_cleanup( wdw );
-
       /* Disable text input, etc. */
       toolkit_focusClear( wdw );
 
