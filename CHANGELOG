@@ -63,6 +63,7 @@
          * Sirius flow outfits
          * Point defense systems
          * New accessories
+         * Intrinsic outfits
          * and more!
       * New NPC graphics
       * More NPC and news messages
@@ -97,6 +98,7 @@
       * Require OpenGL 3.2 for geometry shaders now
       * Support for advanced collisions such as weapon on weapon, allowing for point defense weapons
       * Renamed thrust to accel for more consistency and simplifications
+      * Support for buying intrinsic outfits
    * Fixes
       * Main menu more responsive when changing windows
       * Typo and wording fixes
@@ -107,6 +109,7 @@
       * Fixed crash when events trigger other events on creation
       * Fixed autonav sometimes having trouble landing with reverse thrusters
       * Qex races should be much less laggy now
+      * Fixed some outfits using the wrong store images
 
 * 0.10.6
    * Fixed potential segfault with invalid semver strings
