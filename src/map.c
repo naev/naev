@@ -755,7 +755,7 @@ static void map_update( unsigned int wid )
    services_f = 0;
    services_r = 0;
    for (int i=0; i<array_size(sys->spobs); i++) {
-      Spob *pnt = sys->spobs[i];
+      const Spob *pnt = sys->spobs[i];
       if (!spob_isKnown(pnt))
          continue;
 
@@ -805,7 +805,7 @@ static void map_update( unsigned int wid )
 
       /* Mention spob features. */
       for (int i=0; i<array_size(sys->spobs); i++) {
-         Spob *spob = sys->spobs[i];
+         const Spob *spob = sys->spobs[i];
          if (spob->feature == NULL)
             continue;
          if (!spob_isKnown(spob))
