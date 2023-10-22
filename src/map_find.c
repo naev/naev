@@ -279,7 +279,7 @@ static int map_findDistance( StarSystem *sys, Spob *spob, int *jumps, double *di
    /* Account final travel to spob for spob targets. */
    i = *jumps - 1;
    if (spob != NULL) {
-      vec2 *ve = &spob->pos;
+      const vec2 *ve = &spob->pos;
       vec2 *vs = NULL;
       if (i > 0) {
          StarSystem *ss = slist[ i ];
