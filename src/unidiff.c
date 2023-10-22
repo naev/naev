@@ -98,6 +98,8 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_SPOB_BAR_REVERT, /* For internal usage. */
    HUNK_TYPE_SPOB_SERVICE_ADD,
    HUNK_TYPE_SPOB_SERVICE_REMOVE,
+   HUNK_TYPE_SPOB_NOMISNSPAWN_ADD,
+   HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE,
    HUNK_TYPE_SPOB_TECH_ADD,
    HUNK_TYPE_SPOB_TECH_REMOVE,
    HUNK_TYPE_SPOB_TAG_ADD,
@@ -665,6 +667,30 @@ static int diff_patchSpob( UniDiff_t *diff, xmlNodePtr node )
             diff_hunkSuccess( diff, &hunk );
          continue;
       }
+      else if (xml_isNode(cur,"nomissionspawn_add")) {
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+         hunk.type = HUNK_TYPE_SPOB_NOMISNSPAWN_ADD;
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
+      else if (xml_isNode(cur,"nomissionspawn_remove")) {
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+         hunk.type = HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE;
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
       else if (xml_isNode(cur,"tech_add")) {
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
@@ -1020,21 +1046,27 @@ static int diff_patch( xmlNodePtr parent )
                WARN(_("   [%s] spob service remove: '%s'"), target,
                      spob_getServiceName(fail->u.data) );
                break;
+            case HUNK_TYPE_SPOB_NOMISNSPAWN_ADD:
+               WARN(_("   [%s] spob nomissionspawn add"), target );
+               break;
+            case HUNK_TYPE_SPOB_NOMISNSPAWN_ADD:
+               WARN(_("   [%s] spob nomissionspawn remove"), target );
+               break;
             case HUNK_TYPE_SPOB_TECH_ADD:
                WARN(_("   [%s] spob tech add: '%s'"), target,
-                     spob_getServiceName(fail->u.data) );
+                     fail->u.name );
                break;
             case HUNK_TYPE_SPOB_TECH_REMOVE:
                WARN(_("   [%s] spob tech remove: '%s'"), target,
-                     spob_getServiceName(fail->u.data) );
+                     fail->u.name );
                break;
             case HUNK_TYPE_SPOB_TAG_ADD:
                WARN(_("   [%s] spob tech add: '%s'"), target,
-                     spob_getServiceName(fail->u.data) );
+                     fail->u.name );
                break;
             case HUNK_TYPE_SPOB_TAG_REMOVE:
                WARN(_("   [%s] spob tech remove: '%s'"), target,
-                     spob_getServiceName(fail->u.data) );
+                     fail->u.name );
                break;
             case HUNK_TYPE_FACTION_VISIBLE:
                WARN(_("   [%s] faction visible: '%s'"), target,
@@ -1243,6 +1275,24 @@ static int diff_patchHunk( UniHunk_t *hunk )
             return -1;
          spob_rmService( p, hunk->u.data );
          diff_universe_changed = 1;
+         return 0;
+
+      /* Modifying mission spawn. */
+      case HUNK_TYPE_SPOB_NOMISNSPAWN_ADD:
+         p = spob_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         if (spob_isFlag( p, SPOB_NOMISNSPAWN ))
+            return -1;
+         spob_setFlag( p, SPOB_NOMISNSPAWN );
+         return 0;
+      case HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE:
+         p = spob_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         if (!spob_isFlag( p, SPOB_NOMISNSPAWN ))
+            return -1;
+         spob_rmFlag( p, SPOB_NOMISNSPAWN );
          return 0;
 
       /* Modifying tech stuff. */
@@ -1579,6 +1629,13 @@ static int diff_removeDiff( UniDiff_t *diff )
             break;
          case HUNK_TYPE_SPOB_SERVICE_REMOVE:
             hunk.type = HUNK_TYPE_SPOB_SERVICE_ADD;
+            break;
+
+         case HUNK_TYPE_SPOB_NOMISNSPAWN_ADD:
+            hunk.type = HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE;
+            break;
+         case HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE:
+            hunk.type = HUNK_TYPE_SPOB_NOMISNSPAWN_ADD;
             break;
 
          case HUNK_TYPE_SPOB_TECH_ADD:
