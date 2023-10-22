@@ -37,6 +37,7 @@ local title = _("Minerva Station Redux")
 mem.state = nil
 
 function create ()
+   misn.finish( false )
    if not misn.claim( mainsys, true ) then
       misn.finish( false )
    end
