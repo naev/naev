@@ -917,6 +917,16 @@ char **system_searchFuzzyCase( const char* sysname, int *n )
          names[len] = sys->name;
          len++;
       }
+      else {
+         for (int j=0; j<array_size(sys->spobs); j++) {
+            const Spob *spob = sys->spobs[j];
+            if ((spob->feature != NULL) && SDL_strcasestr( _(spob->feature), sysname ) != NULL) {
+               names[len] = sys->name;
+               len++;
+               break;
+            }
+         }
+      }
    }
 
    /* Free if empty. */
