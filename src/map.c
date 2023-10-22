@@ -2373,7 +2373,7 @@ else (x) = MAX( y, (x) - dt )
          ATAR( cst->alpha_decorators, 0.5 * mapmin );
          ATAR( cst->alpha_faction, 0.5 * mapmin );
          ATAR( cst->alpha_env, mapmin );
-         AMAX( cst->alpha_path );
+         ATAR( cst->alpha_path, 0.5 );
          AMAX( cst->alpha_names );
          AMIN( cst->alpha_commod );
          AMAX( cst->alpha_markers );
@@ -2383,7 +2383,7 @@ else (x) = MAX( y, (x) - dt )
          AMIN( cst->alpha_decorators );
          AMIN( cst->alpha_faction );
          AMIN( cst->alpha_env );
-         AMAX( cst->alpha_path );
+         ATAR( cst->alpha_path, 0.5 );
          AMIN( cst->alpha_names );
          AMAX( cst->alpha_commod );
          ATAR( cst->alpha_markers, 0.5 );
