@@ -6,7 +6,7 @@
  <chance>100</chance>
  <location>Bar</location>
  <spob>Regensburg</spob>
- <done>Minerva Finale 2</done>
+ <done>Minerva Finale 1</done>
  <notes>
   <campaign>Minerva</campaign>
  </notes>
@@ -37,8 +37,7 @@ local title = _("Minerva Station Redux")
 mem.state = nil
 
 function create ()
-   misn.finish(false)
-   if not misn.claim( mainspb ) then
+   if not misn.claim( mainsys, true ) then
       misn.finish( false )
    end
    misn.setNPC( minerva.maikki.name, minerva.maikki.portrait, _("Maikki seems to be waiting for you in her regular clothes.") )
@@ -189,16 +188,16 @@ function enter ()
       pilot.toggleSpawn(false)
 
       local pos = mainspb:pos() + vec2.new( 100+200*rnd.rnd(), rnd.angle() )
-      boss = pilot.add( "Empire Peacemaker", "Empire", pos, nil, {ai="guard"} )
+      boss = pilot.add( "Empire Hawking", "Empire", pos, nil, {ai="guard"} )
       guards = { boss }
-      for k,v in ipairs{"Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot"} do
+      for k,v in ipairs{"Empire Lancelot", "Empire Lancelot"} do
          local p = pilot.add( v, "Empire", pos+rnd.rnd(50,rnd.angle()), nil, {ai="guard"} )
          p:setLeader( boss )
          table.insert( guards, p )
       end
 
       bosshailed = false
-      mainspb:landDeny(true,_("Special authorization needed."))
+      mainspb:landDeny(true,_([["Special authorization needed."]]))
 
       hailhook = hook.hail_spob( "comm_minerva" )
       hook.pilot( boss, "hail", "comm_boss" )
@@ -334,10 +333,10 @@ They let out a sigh.]]))
    vn.func( function () triedclearance = true end )
    p(_([["OK, please send the clearance codes."]]))
    vn.menu{
-      {_([[Send a meme.]]),"clearence_meme"},
-      {_([[Send random data.]]),"clearence_random"},
+      {_([[Send a meme.]]),"clearance_meme"},
+      {_([[Send random data.]]),"clearance_random"},
    }
-   vn.label("clearence_meme")
+   vn.label("clearance_meme")
    p(_([[You hear a chuckle before they clear their throat.
 "You do know that impersonation is an Imperial felony, right?"]]))
    vn.menu{
@@ -364,7 +363,7 @@ They let out a sigh.]]))
    vn.done()
 
    vn.label("timetodie")
-   vn.func( function () timetodie = true end )
+   vn.func( function () timetodie=true end )
    vn.na(_([[The communication channel cuts off as your sensors pick up signals of weapons powering up.]]))
    vn.done()
 
@@ -377,6 +376,8 @@ They let out a sigh.]]))
    vn.na(_([[You close the communication channel.]]))
    vn.done()
 
+   vn.run()
+
    if landack then
       mainspb:landAllow(true)
    elseif timetodie then
@@ -388,8 +389,6 @@ They let out a sigh.]]))
          hailhook = nil
       end
    end
-
-   vn.run()
 end
 
 function comm_boss()
@@ -487,6 +486,7 @@ function board_boss ()
 
    vn.run()
 
+   boss:setActiveBoard(false)
    player.unboard()
 end
 
@@ -717,7 +717,13 @@ Oh never mind. Here, take this credit stick, it's the least that I can do for yo
       minerva.log.maikki(fmt.f(_([[You managed to infiltrate the weapon laboratory on Minerva Station, obtaining important document including schematics related to Kex's cyborg parts. Despite being blown out into space and rescued by your ship AI, you were able to reach {returnspb} and hand over the documents. This allowed Maikki's engineers to resuscitate Kex and you were able to witness an emotional reunion between Kex and Maikki. They then took off to New Haven and you promised you would visit them sometime.]]),
          {returnspb=returnspb}))
 
-      misn.finish()
+      -- Update minerva
+      if diff.isApplied("minerva_1") then
+         diff.remove("minerva_1")
+      end
+      diff.apply("minerva_2")
+
+      misn.finish(true)
    end
 end
 
