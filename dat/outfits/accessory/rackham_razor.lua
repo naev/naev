@@ -1,4 +1,5 @@
 local pir
+notactive = true
 
 function onload( _o )
    pir = pir or require "common.pirate" -- Can't load at the beginning because missing factions
