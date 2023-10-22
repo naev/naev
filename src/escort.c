@@ -123,7 +123,7 @@ unsigned int escort_create( Pilot *p, const char *ship,
 
    /* Set flags. */
    pilot_clearFlagsRaw( f );
-   pilot_setFlagRaw( f, PILOT_NOJUMP );
+   //pilot_setFlagRaw( f, PILOT_NOJUMP );
    if (p->faction == FACTION_PLAYER) {
       pilot_setFlagRaw( f, PILOT_PERSIST );
       pilot_setFlagRaw( f, PILOT_NOCLEAR );
