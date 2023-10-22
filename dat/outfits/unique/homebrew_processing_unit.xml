@@ -9,7 +9,7 @@
   <mass>8</mass>
   <price>50000</price>
   <description>This core system is easily recognizable as the work of some amateurs, with sloppy wiring and dangerously exposed internals. However, unlike mass manufactured cores, you can tell that a lot of love and care has gone into developing the unit. While the shield and computation power are less than most similar cores, it has significantly better developed functionality in other areas.</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>core_system_power_s1.webp</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">
