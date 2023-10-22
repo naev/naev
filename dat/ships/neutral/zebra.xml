@@ -46,6 +46,7 @@
   <structure size="medium" />
  </slots>
  <stats>
+  <accel_mod>-10</accel_mod>
   <turn_mod>-20</turn_mod>
   <cargo_mod>40</cargo_mod>
   <cargo_inertia>-30</cargo_inertia>
