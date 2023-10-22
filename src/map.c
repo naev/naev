@@ -811,7 +811,7 @@ static void map_update( unsigned int wid )
          if (!spob_isKnown(spob))
             continue;
          if (buf[0] != '\0')
-            p += scnprintf(&buf[p], sizeof(buf)-p, _(", "));
+            p += scnprintf(&buf[p], sizeof(buf)-p, p_("system features", ", "));
          p += scnprintf(&buf[p], sizeof(buf)-p, "%s", _(spob->feature));
       }
 
@@ -825,20 +825,20 @@ static void map_update( unsigned int wid )
       }
       if (found) {
          if (buf[0] != '\0')
-            p += scnprintf(&buf[p], sizeof(buf)-p, _(", "));
+            p += scnprintf(&buf[p], sizeof(buf)-p, p_("system features", ", "));
          p += scnprintf(&buf[p], sizeof(buf)-p, "#g%s#0", _("Trade Lane") );
       }
 
       /* Nebula. */
       if (sys->nebu_density > 0.) {
          if (buf[0] != '\0')
-            p += scnprintf(&buf[p], sizeof(buf)-p, _(", "));
+            p += scnprintf(&buf[p], sizeof(buf)-p, p_("system features", ", "));
 
          /* Density. */
          if (sys->nebu_density > 700.)
-            adj = _("Dense ");
+            adj = p_("adj Nebula", "Dense ");
          else if (sys->nebu_density < 300.)
-            adj = _("Light ");
+            adj = p_("adj Nebula", "Light ");
          else
             adj = "";
 
@@ -863,7 +863,7 @@ static void map_update( unsigned int wid )
       /* Interference. */
       if (sys->interference > 0.) {
          if (buf[0] != '\0')
-            p += scnprintf(&buf[p], sizeof(buf)-p, _(", "));
+            p += scnprintf(&buf[p], sizeof(buf)-p, p_("system features", ", "));
 
          itf = sys->interference;
          if (sys->interference > 700.) {
@@ -885,7 +885,7 @@ static void map_update( unsigned int wid )
          double density = sys->asteroid_density;
 
          if (buf[0] != '\0')
-            p += scnprintf(&buf[p], sizeof(buf)-p, _(", "));
+            p += scnprintf(&buf[p], sizeof(buf)-p, p_("system features", ", "));
 
          if (density >= 1000.) {
             p += scnprintf(&buf[p], sizeof(buf)-p, "#o" );

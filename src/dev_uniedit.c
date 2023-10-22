@@ -1997,7 +1997,7 @@ static void uniedit_editSys (void)
    y -= gl_defFont.h + 15;
    l = scnprintf( buf, sizeof(buf), "#n%s#0", _("Tags: ") );
    for (int i=0; i<array_size(sys->tags); i++)
-      l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", (i==0)?"":_(", "), sys->tags[i] );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", (i==0)?"":", ", sys->tags[i] );
    window_addText( wid, x, y, UNIEDIT_EDIT_WIDTH-40, 20, 0, "txtTags", NULL, NULL, buf );
 
    /* Load values */
@@ -2274,7 +2274,7 @@ static void uniedit_btnTagsClose( unsigned int wid, const char *unused )
    StarSystem *s = uniedit_sys[0];
    int l = scnprintf( buf, sizeof(buf), "#n%s#0", _("Tags: ") );
    for (int i=0; i<array_size(s->tags); i++)
-      l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", ((i>0) ? _(", ") : ""), s->tags[i] );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", ((i>0) ? ", " : ""), s->tags[i] );
    window_modifyText( uniedit_widEdit, "txtTags", buf );
 
    window_close( wid, unused );

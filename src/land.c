@@ -886,7 +886,7 @@ void land_updateMainTab (void)
    if (conf.devmode) {
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
       for (int i=0; i<array_size(land_spob->tags); i++)
-         l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", ((i>0) ? _(", ") : ""), _(land_spob->tags[i]) );
+         l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", ((i>0) ? ", " : ""), land_spob->tags[i] );
    }
 
    window_modifyText( land_windows[0], "txtDInfo", buf );
