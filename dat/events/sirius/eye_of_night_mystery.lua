@@ -196,7 +196,7 @@ function pir_dead ()
    hook.land( "land" )
 end
 
-local shader_fadeout, hook_update
+local shader_fadeout
 function land ()
    if event_done then
       evt.finish(true)
@@ -571,16 +571,15 @@ vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 
    var.push("sirius_awakening", true)
    hook.takeoff( "takeoff" )
-   hook_update = hook.update("shader_update")
+   hook.update("shader_update")
    event_done = true
    player.takeoff()
 end
 
 function shader_update( dt )
    shader_fadeout:_update( dt )
-   if shader_fadeout._dt < 0 then
+   if shader_fadeout._dt > 1 then
       shader_fadeout.shader:rmPPShader()
-      hook.rm( hook_update )
       evt.finish(true)
    end
 end
