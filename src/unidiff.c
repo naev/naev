@@ -1049,7 +1049,7 @@ static int diff_patch( xmlNodePtr parent )
             case HUNK_TYPE_SPOB_NOMISNSPAWN_ADD:
                WARN(_("   [%s] spob nomissionspawn add"), target );
                break;
-            case HUNK_TYPE_SPOB_NOMISNSPAWN_ADD:
+            case HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE:
                WARN(_("   [%s] spob nomissionspawn remove"), target );
                break;
             case HUNK_TYPE_SPOB_TECH_ADD:
