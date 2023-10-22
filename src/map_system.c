@@ -456,6 +456,9 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          }
          cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nAsteroid field density:#0 %.2g\n"), ast_nb*ASTEROID_REF_AREA/ast_area );
       }
+      /* Other features. */
+      if (sys->features != NULL)
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nOther:#0 %s\n"), sys->features );
       /* Faction */
       f = -1;
       for (i=0; i<array_size(sys->spobs); i++) {
@@ -516,7 +519,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          }
       }
    } else {
-      /* display spob info */
+      /* Display spob info */
       p = cur_spobObj_sel;
       if (p->presence.faction >= 0 ) {/* show the faction */
          char factionBuf[64];
@@ -538,6 +541,10 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#o%s#0", _("Not advisable to land here\n") );
       else
          cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#r%s#0", _("You cannot land here\n") );
+
+      /* Local features. */
+      if (p->feature != NULL)
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "%s\n", p->feature );
 
       if (infobuf[0]=='\0') {
          int infocnt = 0;
