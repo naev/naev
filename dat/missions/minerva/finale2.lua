@@ -905,7 +905,7 @@ end
 
 function shader_update( dt )
    shader_fadeout:_update( dt )
-   if shader_fadeout._dt >= 1 then
+   if shader_fadeout._dt >= 1 and mem.state < 2 then
       hook.rm( hook_update )
       shader_fadeout.shader:rmPPShader()
 
