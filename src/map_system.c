@@ -402,26 +402,26 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          /* Volatility */
          if (dmg > 50.) {
             col = 'r';
-            sdmg = _("Volatile");
+            sdmg = p_("nebula", "Volatile");
          }
          else if (sys->nebu_volatility > 20.) {
             col = 'o';
-            sdmg = _("Dangerous");
+            sdmg = p_("nebula", "Dangerous");
          }
          else if (sys->nebu_volatility > 0.) {
             col = 'y';
-            sdmg = _("Unstable");
+            sdmg = p_("nebula", "Unstable");
          }
          else {
             col = '0';
-            sdmg = _("Stable");
+            sdmg = p_("nebula", "Stable");
          }
 
          /* Density */
          if (sys->nebu_density > 700.)
-            adj = _("Dense ");
+            adj = p_("nebula", "Dense ");
          else if (sys->nebu_density < 300.)
-            adj = _("Light ");
+            adj = p_("nebula", "Light ");
          else
             adj = "";
 
@@ -435,15 +435,15 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          char col;
          if (itf > 700.) {
             col = 'r';
-            sint = _("Dense");
+            sint = p_("interference", "Dense");
          }
          else if (itf > 300.) {
             col = 'o';
-            sint = _("Medium");
+            sint = p_("interference", "Medium");
          }
          else {
             col = 'y';
-            sint = _("Light");
+            sint = p_("interference", "Light");
          }
          cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nInterference: #%c%s (%.0f%%)#0\n"), col, sint, itf );
       }
@@ -458,7 +458,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       }
       /* Other features. */
       if (sys->features != NULL)
-         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nOther:#0 %s\n"), sys->features );
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nOther:#0 %s\n"), _(sys->features) );
       /* Faction */
       f = -1;
       for (i=0; i<array_size(sys->spobs); i++) {
