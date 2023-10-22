@@ -2,6 +2,7 @@
 
 import os
 import sys
+import math
 N_ = lambda text: text
 
 # Based on some XML templates and the specs below, we're going to generate families of outfit XML files.
@@ -40,6 +41,9 @@ class MesonBuild(Build):
 build = MesonBuild(*sys.argv[1:]) if sys.argv[2:3] == ['-o'] else Build()
 
 # Hopefully we can refactor this once the behavior is finalized and we're unafraid of merge conflicts. Anyway, back to the show.
+
+def lerpt( t ):
+    return lambda x: t[int(math.floor(x*(len(t)*0.99999)))]
 
 def lerpr( a, b ):
     return lambda x: int(round(a + x * (b-a)))
@@ -83,7 +87,7 @@ BioOutfit( "weapon.xml.template", {
     "mass":     6,
     "price" :   lerpr(   0, 20e3 ),
     "desc":     N_("The Stinger Organ is able to convert energy into hot plasma that is able to eat easily eat through shield and armour of opposing ships over time. While not an especially powerful offensive organ, it is prized for its reliability."),
-    "gfx_store":"organic_plasma_s1.webp",
+    "gfx_store":lerpt(("organic_plasma_s1.webp", "organic_plasma_s2.webp","organic_plasma_s3.webp")),
     "specific": "bolt",
     "gfx":      "plasma.png",
     "gfx_end":  "plasma2-end.png",
@@ -131,7 +135,7 @@ BioOutfit( "gene_drive.xml.template", {
     "price":        lerpr(   0, 140e3 ),
     "mass":         8,
     "desc":         desc["engine"],
-    "gfx_store":    "organic_engine_fast_s1.webp",
+    "gfx_store":    lerpt(("organic_engine_fast_s1.webp","organic_engine_fast_s2.webp")),
     "accel":        lerp(  165, 196 ),
     "turn":         lerp(  130, 160 ),
     "speed":        lerp(  295, 345 ),
@@ -181,7 +185,7 @@ BioOutfit( "gene_drive.xml.template", {
     "price":        lerpr(   0, 90e3 ),
     "mass":         15,
     "desc":         desc["engine"],
-    "gfx_store":    "organic_engine_fast_s2.webp",
+    "gfx_store":    lerpt(("organic_engine_strong_s1.webp","organic_engine_strong_s2.webp")),
     "accel":        lerp(  100, 115 ),
     "turn":         lerp(   80,  95 ),
     "speed":        lerp(  190, 225 ),
@@ -199,7 +203,7 @@ BioOutfit( "weapon.xml.template", {
     "mass":     30,
     "price" :   lerpr(   0, 20e3 ),
     "desc":     N_("The Talon Organ is an enlarged and more powerful version of the Stinger Organ. Like its smaller counterpart, is able to convert energy into hot plasma that is able to eat easily eat through shield and armour of opposing ships. The hot plasma is able to cling to ship's shields and hulls dealing continuous damage after impact."),
-    "gfx_store":"organic_plasma_s3.webp",
+    "gfx_store":"organic_plasma_l.webp",
     "specific": "bolt",
     "gfx":      "plasma2.png",
     "gfx_end":  "plasma2-end.png",
@@ -263,7 +267,7 @@ BioOutfit( "gene_drive.xml.template", {
     "price":        lerpr(   0, 360e3 ),
     "mass":         20,
     "desc":         desc["engine"],
-    "gfx_store":    "organic_engine_fast_m1.webp",
+    "gfx_store":    lerpt(("organic_engine_fast_m1.webp","organic_engine_fast_m2.webp")),
     "accel":        lerp(  110, 130 ),
     "turn":         lerp(   90, 115 ),
     "speed":        lerp(  190, 230 ),
@@ -314,7 +318,7 @@ BioOutfit( "gene_drive.xml.template", {
     "price":        lerpr(   0, 360e3 ),
     "mass":         25,
     "desc":         desc["engine"],
-    "gfx_store":    "organic_engine_fast_m2.webp",
+    "gfx_store":    lerpt(("organic_engine_strong_m1.webp","organic_engine_strong_m2.webp")),
     "accel":        lerp(   80, 100 ),
     "turn":         lerp(   75,  90 ),
     "speed":        lerp(  225, 275 ),
@@ -398,7 +402,7 @@ BioOutfit( "gene_drive.xml.template", {
     "price":        lerpr(   0, 11e6 ),
     "mass":         75,
     "desc":         desc["engine"],
-    "gfx_store":    "organic_engine_fast_l1.webp",
+    "gfx_store":    lerpt(("organic_engine_fast_l1.webp","organic_engine_fast_l2.webp")),
     "accel":        lerp(   40,  47 ),
     "turn":         lerp(   42,  50 ),
     "speed":        lerp(   75,  90 ),
@@ -451,7 +455,7 @@ BioOutfit( "gene_drive.xml.template", {
     "price":        lerpr(   0, 3.6e6 ),
     "mass":         100,
     "desc":         desc["engine"],
-    "gfx_store":    "organic_engine_fast_l2.webp",
+    "gfx_store":    lerpt(("organic_engine_strong_l1.webp","organic_engine_strong_l2.webp")),
     "accel":        lerp(   28,  35 ),
     "turn":         lerp(   35,  45 ),
     "speed":        lerp(   60,  70 ),
