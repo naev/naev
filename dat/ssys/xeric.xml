@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ssys name="Xeric">
  <general>
+  <features>#oRestricted#0</features>
   <radius>10000.000000</radius>
   <spacedust>400</spacedust>
   <interference>40.000000</interference>
