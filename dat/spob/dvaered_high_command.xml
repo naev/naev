@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Dvaered High Command">
  <lua>spob/lua/dvaered_mil_dhc.lua</lua>
+ <feature>#pDvaered Homeworld#0</feature>
  <pos x="-16173.088338" y="-11736.708576"/>
  <GFX>
   <space>station-battlestation.webp</space>
