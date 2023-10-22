@@ -6,7 +6,7 @@
   <size>small</size>
   <mass>1</mass>
   <price>170000</price>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>damage_forward.webp</gfx_store>
   <description>No one really knows the origin of the camouflage burster, however, it seems to have been derived from a more primitive makeshift version used but smugglers to evade patrols. By emitting a barrage of strong signals, it is able to temporarily confuse the sensors of nearby ships and give a significant increase in stealth ability. However, this is only a short temporary effect, and the device takes a long time to recalibrate and load the capacitors.</description>
   <desc_extra>8 second duration with 30 second cooldown. Will not activate if the ship is unable to stealth with the bonus.</desc_extra>
   <limit>camouflage burster</limit>

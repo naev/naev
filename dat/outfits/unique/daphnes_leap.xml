@@ -8,7 +8,7 @@
   <mass>0</mass>
   <price>1000000</price>
   <description>This is a module that interfaces with the navigation system of a ship, modifying the core behaviour. By pushing to the limit the jump point detection and calibration system, it is able to significantly reduce the amount of time needed to jump, however, this comes at the cost of increasing the overall time needed to jump due to necessary in-flight calibration.</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>thruster.webp</gfx_store>
   <cpu>0</cpu>
  </general>
  <specific type="modification">
