@@ -1121,7 +1121,7 @@ static void ai_create( Pilot* pilot )
  */
 Task *ai_newtask( lua_State *L, Pilot *p, const char *func, int subtask, int pos )
 {
-   Task *t, *curtask, *pointer;
+   Task *t, *pointer;
 
    if (p->ai==NULL) {
       NLUA_ERROR( L, _("Trying to create new task for pilot '%s' that has no AI!"), p->name );
@@ -1151,7 +1151,7 @@ Task *ai_newtask( lua_State *L, Pilot *p, const char *func, int subtask, int pos
    }
    else {
       /* Must have valid task. */
-      curtask = ai_curTask( p );
+      Task *curtask = ai_curTask( p );
       if (curtask == NULL) {
          ai_freetask( t );
          NLUA_ERROR( L, _("Trying to add subtask '%s' to non-existent task."), func);
