@@ -67,20 +67,13 @@ function accept()
         { _("Accept"), "accept" },
         { _("Decline"), "decline" },
     } )
+
     vn.label( "decline" )
     vn.na(_("You don't want to be involved again in a dangerous, poorly paid job so you decline and leave the bar."))
     vn.done()
+
     vn.label( "accept" )
     vn.func( function () accepted = true end )
-    vn.run()
-
-    if not accepted then
-        return
-    end
-
-    vn.clear()
-    vn.scene()
-    mensing = vn.newCharacter( nebu_research.vn_mensing() )
     mensing(_([["Splendid! I'd like to start with my work as soon as possible.
 But before I forget, there's some issue..."]]))
     mensing(_([["You see, I'm not allowed to leave officially. Therefore I'd rather let them think that I was kidnapped. I'm sure it'll be fine! But don't let an Empire ship scan your ship! I don't know how they would react finding me onboard of your ship. Try to be stealthy and once we're in Za'lek territory there will be no problem."]]))
