@@ -7,7 +7,7 @@
  <chance>100</chance>
  <location>Bar</location>
  <cond>
-   if system.get("Daan"):jumpDist() &gt; 2 then
+   if system.get("Regas"):jumpDist() &gt; 3 then
       return false
    end
    return true
@@ -44,27 +44,30 @@ osd_msg[1] = _("Escort the transport ship to {pnt} in the {sys} system")
 osd_msg[2] = _("Land on {pnt} in the {sys} system")
 osd_msg[3] = _("Fly back to {pnt} in the {sys} system")
 
-local station = spob.get("PSO Monitor")
-local homeworld = spob.get("Bastion Center")
+local station, stationsys = spob.get("PSO Monitor")
+local homeworld, homeworldsys = spob.getS("Bastion Center")
+local stop1, stop1sys = spob.getS("Praxis")
+local stop2, stop2sys = spob.getS("Qoman")
+local stop3, stop3sys = spob.getS("Allous Citadel")
 local t_sys = {
-   system.get("Daravon"),
-   system.get("Ksher"),
+   stop1sys, -- 1
+   stop2sys, --2
    system.get("PSO"),
    system.get("Faust"),
-   system.get("Allous"),
+   stop3sys, -- 5
    system.get("Sultan"),
-   system.get("Amaroq"),
-   system.get("Ksher"),
-   system.get("Daravon"),
-   system.get("Pultatis"),
+   stationsys, -- 7
+   stop2sys, -- 8
+   stop1sys, -- 9
+   homeworldsys, -- 10
 }
 local t_planet = {
-   [1] = spob.get("Vilati Vilata"),
-   [2] = spob.get("Qoman"),
-   [5] = spob.get("Allous Citadel"),
+   [1] = stop1,
+   [2] = stop2,
+   [5] = stop3,
    [7] = station,
-   [8] = spob.get("Qoman"),
-   [9] = spob.get("Vilati Vilata"),
+   [8] = stop2,
+   [9] = stop1,
    [10] = homeworld,
 }
 
