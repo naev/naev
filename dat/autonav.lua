@@ -1,7 +1,7 @@
 local fmt = require "format"
 local lanes = require "ai.core.misc.lanes"
 
-local autonav, target_pos, target_spb, target_plt, instant_jump
+local autonav, target_pos, target_spb, target_plt, target_name, instant_jump
 local autonav_jump_delay, autonav_jump_approach, autonav_jump_brake
 local autonav_pos_approach
 local autonav_spob_approach, autonav_spob_land_approach, autonav_spob_land_brake
@@ -203,8 +203,10 @@ function autonav_pilot( plt )
    local _inrng, known = player.pilot():inrange( plt )
    if known then
       pltstr = "#"..plt:colourChar()..plt:name().."#o"
+      target_name = pltstr
    else
       pltstr = _("Unknown")
+      target_name = nil
    end
 
    player.msg("#o"..fmt.f(_("Autonav: following {plt}."),{plt=pltstr}).."#0")
@@ -217,7 +219,15 @@ Autonav to board a pilot
 function autonav_board( plt )
    autonav_setup()
    target_plt = plt
-   local pltstr = "#"..plt:colourChar()..plt:name().."#o"
+   local pltstr
+   local _inrng, known = player.pilot():inrange( plt )
+   if known then
+      pltstr = "#"..plt:colourChar()..plt:name().."#o"
+      target_name = pltstr
+   else
+      pltstr = _("Unknown")
+      target_name = nil
+   end
    player.msg("#o"..fmt.f(_("Autonav: boarding {plt}."),{plt=pltstr}).."#0")
    autonav = autonav_plt_board_approach
 end
@@ -514,12 +524,16 @@ function autonav_plt_follow ()
       local pltstr
       if target_known then
          pltstr = "#"..plt:colourChar()..plt:name().."#o"
+      elseif target_name then
+         pltstr = target_name
       else
          pltstr = _("Unknown")
       end
       player.msg("#r"..fmt.f(_("Autonav: following target {plt} has been lost."),{plt=pltstr}).."#0")
       ai.accel(0)
       return autonav_end()
+   elseif not target_name and target_known then
+      target_name = "#"..plt:colourChar()..plt:name().."#o"
    end
 
    local pp = player.pilot()
@@ -547,12 +561,16 @@ function autonav_plt_board_approach ()
       local pltstr
       if target_known then
          pltstr = "#"..plt:colourChar()..plt:name().."#o"
+      elseif target_name then
+         pltstr = target_name
       else
          pltstr = _("Unknown")
       end
       player.msg("#r"..fmt.f(_("Autonav: boarding target {plt} has been lost."),{plt=pltstr}).."#0")
       ai.accel(0)
       return autonav_end()
+   elseif not target_name and target_known then
+      target_name = "#"..plt:colourChar()..plt:name().."#o"
    end
 
    local d = autonav_approach_vel( plt:pos(), plt:vel(), 0 )
