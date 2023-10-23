@@ -2407,7 +2407,7 @@ static int playerL_save( lua_State *L )
 {
    const char *savename = luaL_optstring( L, 1, "autosave" );
    Spob *savespob = NULL;
-   Spob *prevspob;
+   Spob *prevspob = NULL;
    if (!lua_isnoneornil(L,2))
       savespob = luaL_validspob(L,2);
 
