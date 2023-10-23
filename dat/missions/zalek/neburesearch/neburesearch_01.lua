@@ -44,7 +44,7 @@ osd_msg[1] = _("Escort the transport ship to {pnt} in the {sys} system")
 osd_msg[2] = _("Land on {pnt} in the {sys} system")
 osd_msg[3] = _("Fly back to {pnt} in the {sys} system")
 
-local station, stationsys = spob.get("PSO Monitor")
+local station, stationsys = spob.getS("PSO Monitor")
 local homeworld, homeworldsys = spob.getS("Bastion Center")
 local stop1, stop1sys = spob.getS("Praxis")
 local stop2, stop2sys = spob.getS("Qoman")
