@@ -7,7 +7,7 @@
  <chance>100</chance>
  <location>Bar</location>
  <cond>
-   if system.get("Regas"):jumpDist() &gt; 3 then
+   if system.get("Provectus Nova"):jumpDist() &gt; 2 then
       return false
    end
    return true
