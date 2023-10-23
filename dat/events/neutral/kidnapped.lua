@@ -10,10 +10,11 @@
    if system.cur() ~= system.get("Arcturus") then
       return false
    end
+   local misn_test = require "misn_test"
    if not misn_test.mercenary() then
       return false
    end
-   return require("misn_test").reweight_active()
+   return misn_test.reweight_active()
  </cond>
  <notes>
   <campaign>Kidnapping</campaign>
