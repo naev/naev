@@ -548,6 +548,9 @@ function autonav_plt_follow ()
          autonav_system()
       end
       return
+   elseif plt:flags("landing") then
+      player.msg("#o"..fmt.f(_("Autonav: following target {plt} has landed on {spb}."),{plt=get_pilot_name(plt),spb=get_spob_name(plt:navSpob())}).."#0")
+      return
    end
 
    if not inrng then
