@@ -519,6 +519,23 @@ function autonav_plt_follow ()
    if plt:exists() then
       inrng, target_known = player.pilot():inrange( plt )
    end
+   if plt:flags("jumpingout") then
+      local jmp = plt:navJump()
+      local pltstr
+      if target_known then
+         pltstr = "#"..plt:colourChar()..plt:name().."#o"
+      elseif target_name then
+         pltstr = target_name
+      else
+         pltstr = _("Unknown")
+      end
+      player.msg("#o"..fmt.f(_("Autonav: following target {plt} has jumped to {sys}."),{plt=pltstr,sys=jmp:dest()}).."#0")
+
+      local pp = player.pilot()
+      pp:navJumpSet( jmp )
+      autonav_system()
+      return
+   end
 
    if not inrng then
       local pltstr
