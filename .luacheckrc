@@ -65,7 +65,6 @@ stds.API_ai = {globals={
    "control_rate",
    "create",
    "discovered",
-   "distress",
    "hail",
    "mem",
    "refuel",
