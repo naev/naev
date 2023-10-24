@@ -536,21 +536,24 @@ function autonav_plt_follow ()
    local target_known = false
    local inrng = false
    if plt:exists() then
-      inrng, target_known = player.pilot():inrange( plt )
-   end
-   if plt:flags("jumpingout") then
-      local jmp = plt:navJump()
-      player.msg("#o"..fmt.f(_("Autonav: following target {plt} has jumped to {sys}."),{plt=get_pilot_name(plt),sys=get_sys_name(jmp)}).."#0")
+      if plt:flags("jumpingout") then
+         local jmp = plt:navJump()
+         player.msg("#o"..fmt.f(_("Autonav: following target {plt} has jumped to {sys}."),{plt=get_pilot_name(plt),sys=get_sys_name(jmp:dest())}).."#0")
 
-      if follow_jump then
-         local pp = player.pilot()
-         pp:navJumpSet( jmp )
-         autonav_system()
+         if follow_jump then
+            local pp = player.pilot()
+            pp:navJumpSet( jmp )
+            autonav_system()
+         else
+            autonav_end()
+         end
+         return
+      elseif plt:flags("landing") then
+         player.msg("#o"..fmt.f(_("Autonav: following target {plt} has landed on {spb}."),{plt=get_pilot_name(plt),spb=get_spob_name(plt:navSpob())}).."#0")
+         autonav_end()
+         return
       end
-      return
-   elseif plt:flags("landing") then
-      player.msg("#o"..fmt.f(_("Autonav: following target {plt} has landed on {spb}."),{plt=get_pilot_name(plt),spb=get_spob_name(plt:navSpob())}).."#0")
-      return
+      inrng, target_known = player.pilot():inrange( plt )
    end
 
    if not inrng then
