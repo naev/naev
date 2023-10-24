@@ -92,6 +92,7 @@ static int pilotL_withPlayer( lua_State *L );
 static int pilotL_nav( lua_State *L );
 static int pilotL_navSpob( lua_State *L );
 static int pilotL_navJump( lua_State *L );
+static int pilotL_navJumpSet( lua_State *L );
 static int pilotL_weapsetActive( lua_State *L );
 static int pilotL_weapset( lua_State *L );
 static int pilotL_weapsetList( lua_State *L );
@@ -277,6 +278,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "nav", pilotL_nav },
    { "navSpob", pilotL_navSpob },
    { "navJump", pilotL_navJump },
+   { "navJumpSet", pilotL_navJumpSet },
    { "weapsetActive", pilotL_weapsetActive },
    { "weapset", pilotL_weapset },
    { "weapsetList", pilotL_weapsetList },
@@ -1657,6 +1659,39 @@ static int pilotL_navJump( lua_State *L )
       lj.destid = cur_system->jumps[ p->nav_hyperspace ].targetid;
       lua_pushjump( L, lj );
    }
+
+   return 1;
+}
+
+/**
+ * @brief Sets the hyperspace navigation target for the pilot.
+ *
+ *    @luatparam Pilot p Pilot to set hyperspace navigation target for.
+ *    @luatparam Jump|nil jp Jump point to set as navigation target or nil to disable.
+ * @luafunc navJumpSet
+ */
+static int pilotL_navJumpSet( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   int jumpid = -1;
+   if (!lua_isnoneornil(L,2)) {
+      const LuaJump *lj = luaL_checkjump(L,2);
+      if (cur_system->id != lj->srcid)
+         NLUA_ERROR(L,_("Jump source system doesn't match current system!"));
+      /* jumpid = jp - cur_system->jumps; */
+      for (int i=0; i<array_size(cur_system->jumps); i++)
+         if (cur_system->jumps[ i ].targetid == lj->destid) {
+            jumpid = i;
+            break;
+         }
+      if (jumpid<0)
+         NLUA_ERROR(L,_("Jump destination system not found!"));
+   }
+
+   if (pilot_isPlayer(p))
+      player_targetHyperspaceSet( jumpid, 0 );
+   else
+      p->nav_hyperspace = jumpid;
 
    return 1;
 }
