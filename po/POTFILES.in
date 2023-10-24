@@ -2816,6 +2816,7 @@ dat/events/hypergate_fleets.lua
 dat/events/minerva/altercation1.lua
 dat/events/minerva/altercation2.lua
 dat/events/minerva/chicken_rendezvous.lua
+dat/events/minerva/epilogue.lua
 dat/events/minerva/spa_propaganda.lua
 dat/events/minerva/station.lua
 dat/events/naev_needs_YOU.lua
