@@ -696,19 +696,13 @@ She gives you a sly look.]]))
       kex(_([["A good learning experience?"]]))
       maikkip(_([["That was a rhetorical question! You have to..
 Oh never mind. Here, take this credit stick, it's the least that I can do for you."]]))
-      vn.sfxMoney()
+      vn.sfxVictory()
       local reward_amount = minerva.rewards.finale2
       vn.func( function ()
          player.pay( reward_amount )
       end )
       vn.na(fmt.reward(reward_amount))
-      kex(_([["Wow, that's a lot of credits. I also want to thank you. I don't have money, but please take this."]]))
-      vn.sfxVictory()
-      local reward_outfit = "Laser Cannon MK1" -- TODO change
-      vn.func( function ()
-         player.outfitAdd( reward_outfit )
-      end )
-      vn.na(fmt.reward(reward_outfit))
+      kex(_([["Wow, that's a lot of credits! I also want to thank you. but I've lost everything I had. I'll find a way to pay you back, I promise!"]]))
       vn.na(_([[You wish the two best on their trip back, and promise you will go visit them sometime. You then head back after the long ordeal with the knowledge you were able to reunite a daughter and father.]]))
 
       vn.done("hexagon")
