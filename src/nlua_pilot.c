@@ -23,6 +23,7 @@
 #include "gui.h"
 #include "land_outfits.h"
 #include "log.h"
+#include "map.h"
 #include "nlua.h"
 #include "nlua_asteroid.h"
 #include "nlua_canvas.h"
@@ -1689,7 +1690,7 @@ static int pilotL_navJumpSet( lua_State *L )
    }
 
    if (pilot_isPlayer(p))
-      player_targetHyperspaceSet( jumpid, 0 );
+      map_select( cur_system->jumps[jumpid].target, 0 );
    else
       p->nav_hyperspace = jumpid;
 
