@@ -115,6 +115,31 @@ local function shouldResetSpeed ()
    return false
 end
 
+local function get_pilot_name( plt )
+   local _inrng, target_known
+   if plt:exists() then
+      _inrng, target_known = player.pilot():inrange( plt )
+   end
+   if target_known then
+      return "#"..plt:colourChar()..plt:name().."#o"
+   elseif target_name then
+      return target_name
+   else
+      return _("Unknown")
+   end
+end
+
+local function get_sys_name( sys )
+   if sys:known() then
+      return sys:name()
+   end
+   return _("Unknown")
+end
+
+local function get_spob_name( spb )
+   return "#"..spb:colourChar()..spb:name().."#o"
+end
+
 --[[
 Triggered when a mission or the likes temporarily disables autonav.
 --]]
@@ -138,13 +163,7 @@ function autonav_system ()
    autonav_setup()
    local dest
    dest, map_npath = player.autonavDest()
-   local sysstr
-   if dest:known() then
-      sysstr = dest:name()
-   else
-      sysstr = _("Unknown")
-   end
-   player.msg("#o"..fmt.f(_("Autonav: travelling to {sys}."),{sys=sysstr}).."#0")
+   player.msg("#o"..fmt.f(_("Autonav: travelling to {sys}."),{sys=get_sys_name(dest)}).."#0")
 
    local pp = player.pilot()
    local jmp = pp:navJump()
@@ -183,7 +202,7 @@ function autonav_spob( spb, tryland )
       path = {target_pos}
    end
 
-   local spobstr = "#"..spb:colourChar()..spb:name().."#o"
+   local spobstr = get_spob_name( spb )
    if tryland then
       player.msg("#o"..fmt.f(_("Autonav: landing on {spob}."),{spob=spobstr}).."#0")
       autonav = autonav_spob_land_approach
@@ -467,8 +486,7 @@ function autonav_spob_approach ()
       if #path > 1 then
          table.remove( path, 1 )
       else
-         local spobstr = "#"..target_spb:colourChar()..target_spb:name().."#o"
-         player.msg("#o"..fmt.f(_("Autonav: arrived at {spob}."),{spob=spobstr}).."#0")
+         player.msg("#o"..fmt.f(_("Autonav: arrived at {spob}."),{spob=get_spob_name(target_spb)}).."#0")
          return autonav_end()
       end
    elseif not tc_rampdown then
@@ -522,15 +540,7 @@ function autonav_plt_follow ()
    end
    if plt:flags("jumpingout") then
       local jmp = plt:navJump()
-      local pltstr
-      if target_known then
-         pltstr = "#"..plt:colourChar()..plt:name().."#o"
-      elseif target_name then
-         pltstr = target_name
-      else
-         pltstr = _("Unknown")
-      end
-      player.msg("#o"..fmt.f(_("Autonav: following target {plt} has jumped to {sys}."),{plt=pltstr,sys=jmp:dest()}).."#0")
+      player.msg("#o"..fmt.f(_("Autonav: following target {plt} has jumped to {sys}."),{plt=get_pilot_name(plt),sys=get_sys_name(jmp)}).."#0")
 
       if follow_jump then
          local pp = player.pilot()
@@ -541,14 +551,7 @@ function autonav_plt_follow ()
    end
 
    if not inrng then
-      local pltstr
-      if target_known then
-         pltstr = "#"..plt:colourChar()..plt:name().."#o"
-      elseif target_name then
-         pltstr = target_name
-      else
-         pltstr = _("Unknown")
-      end
+      local pltstr = get_pilot_name( plt )
       player.msg("#r"..fmt.f(_("Autonav: following target {plt} has been lost."),{plt=pltstr}).."#0")
       ai.accel(0)
       return autonav_end()
@@ -578,15 +581,7 @@ function autonav_plt_board_approach ()
    end
 
    if not inrng then
-      local pltstr
-      if target_known then
-         pltstr = "#"..plt:colourChar()..plt:name().."#o"
-      elseif target_name then
-         pltstr = target_name
-      else
-         pltstr = _("Unknown")
-      end
-      player.msg("#r"..fmt.f(_("Autonav: boarding target {plt} has been lost."),{plt=pltstr}).."#0")
+      player.msg("#r"..fmt.f(_("Autonav: boarding target {plt} has been lost."),{plt=get_pilot_name(plt)}).."#0")
       ai.accel(0)
       return autonav_end()
    elseif not target_name and target_known then
@@ -651,12 +646,7 @@ function autonav_enter ()
       end
       local pp = player.pilot()
       local jmp = pp:navJump()
-      local sysstr
-      if dest:known() then
-         sysstr = dest:name()
-      else
-         sysstr = _("Unknown")
-      end
+      local sysstr = get_sys_name( dest )
 
       -- Made it to target
       if jmp==nil then
