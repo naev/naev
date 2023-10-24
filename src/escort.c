@@ -305,6 +305,12 @@ int escorts_attack( Pilot *parent )
       lua_pop(naevL, 1);
    }
    if ((ret == 0) && (parent == player.p)) {
+      const char *pltname;
+      if (pilot_inRangePilot( parent, t, NULL ) > 0)
+         pltname = t->name;
+      else
+         pltname = _("Unknown");
+
       if (pilot_isFlag(t, PILOT_DISABLED))
          player_message(_("#gEscorts: #0Destroying %s."), t->name);
       else
