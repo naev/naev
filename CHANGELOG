@@ -6,8 +6,8 @@
          * More in-depth and fleshed out tag system for locations
       * Ship slots and mass limits reworked such that smaller ships get more utility/structural slots to work with
       * Point defense systems that can shoot down missiles and torpedoes
-      * Planet properties affect quantity of missions available
-      * Moved many missions to the vn system
+      * Space object (planets, stations, etc.) properties affect quantity of missions available
+      * Moved many missions and events to the vn system
       * Can sometimes find POI events with a pulse scanner equipped when entering systems
       * Changed the visuals for some of the nebulas (PSO, Mizar)
       * Pirate bribes cost more depending on your fleet and are based on points not mass
@@ -101,6 +101,8 @@
       * Support for advanced collisions such as weapon on weapon, allowing for point defense weapons
       * Renamed thrust to accel for more consistency and simplifications
       * Support for buying intrinsic outfits
+      * Ship distress moved to the message framework
+      * Outfits have support for double tapping accel/left/right triggers
    * Fixes
       * Main menu more responsive when changing windows
       * Typo and wording fixes
