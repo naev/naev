@@ -21,6 +21,12 @@ local minerva = {
       image = "cyborg_chicken.png",
       colour = {0.9, 0.5, 0.1}, -- Orangish
    },
+   kexP = {
+      name = _("Kex"),
+      portrait = "cyborg_chicken.png",
+      image = "cyborg_chicken.png",
+      colour = {0.9, 0.5, 0.1}, -- Orangish
+   },
    maikki = {
       name = _("Maikki"),
       description = _("You see a very cutely dressed young woman. She seems to have a worried expression on her face."),
@@ -155,6 +161,13 @@ function minerva.vn_kex( params )
          tmerge( {
             image=minerva.kex.image,
             color=minerva.kex.colour,
+         }, params) )
+end
+function minerva.vn_kexP( params )
+   return vn.Character.new( minerva.kexP.name,
+         tmerge( {
+            image=minerva.kexP.image,
+            color=minerva.kexP.colour,
          }, params) )
 end
 function minerva.vn_maikki( params )
