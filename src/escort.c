@@ -312,9 +312,9 @@ int escorts_attack( Pilot *parent )
          pltname = _("Unknown");
 
       if (pilot_isFlag(t, PILOT_DISABLED))
-         player_message(_("#gEscorts: #0Destroying %s."), t->name);
+         player_message(_("#gEscorts: #0Destroying %s."), pltname);
       else
-         player_message(_("#gEscorts: #0Engaging %s."), t->name);
+         player_message(_("#gEscorts: #0Engaging %s."), pltname);
    }
    return ret;
 }
