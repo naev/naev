@@ -4026,7 +4026,7 @@ credits_t pilot_worth( const Pilot *p, int count_unique )
  *    @param type Type of message.
  *    @param idx Index of data on lua stack or 0
  */
-void pilot_msg( Pilot *p, Pilot *receiver, const char *type, unsigned int idx )
+void pilot_msg( const Pilot *p, const Pilot *receiver, const char *type, unsigned int idx )
 {
    if (idx != 0)
       lua_pushvalue(naevL, idx); /* data */

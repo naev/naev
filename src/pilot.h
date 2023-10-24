@@ -498,7 +498,7 @@ int pilot_isFriendly( const Pilot *p );
 char pilot_getFactionColourChar( const Pilot *p );
 
 /* Misc details. */
-void pilot_msg( Pilot *p, Pilot *receiver, const char *type, unsigned int index );
+void pilot_msg( const Pilot *p, const Pilot *receiver, const char *type, unsigned int index );
 void pilot_clearTrails( Pilot *p );
 void pilot_sample_trails( Pilot* p, int none );
 int pilot_hasIllegal( const Pilot *p, int faction );

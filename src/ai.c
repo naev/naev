@@ -1030,12 +1030,10 @@ void ai_refuel( Pilot* refueler, unsigned int target )
  *
  *    @param p Pilot receiving the distress signal.
  *    @param distressed Pilot sending the distress signal.
- *    @param attacker Pilot attacking \p distressed.
+ *    @param attacker Pilot attacking the distressed.
  */
 void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
 {
-   int oldmem;
-
    /* Ignore distress signals when under manual control. */
    if (pilot_isFlag( p, PILOT_MANUAL_CONTROL ))
       return;
@@ -1044,29 +1042,12 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
    if (cur_pilot->ai == NULL)
       return;
 
-   /* Set up the environment. */
-   oldmem = ai_setPilot(p);
-
-   /* See if function exists. */
-   nlua_getenv(naevL, cur_pilot->ai->env, "distress");
-   if (lua_isnil(naevL,-1)) {
-      lua_pop(naevL,1);
-      ai_unsetPilot( oldmem );
-      return;
-   }
-
-   /* Run the function. */
-   lua_pushpilot(naevL, distressed->id);
    if (attacker != NULL)
       lua_pushpilot(naevL, attacker->id);
-   else /* Default to the victim's current target. */
-      lua_pushpilot(naevL, distressed->target);
-
-   if (nlua_pcall(cur_pilot->ai->env, 2, 0)) {
-      WARN( _("Pilot '%s' ai '%s' -> 'distress': %s"), cur_pilot->name, cur_pilot->ai->name, lua_tostring(naevL,-1));
-      lua_pop(naevL,1);
-   }
-   ai_unsetPilot( oldmem );
+   else
+      lua_pushnil(naevL);
+   pilot_msg( distressed, p, "distress", -1 );
+   lua_pop(naevL,1);
 }
 
 /**
