@@ -5090,6 +5090,7 @@ static const struct pL_flag pL_flags[] = {
  *  <li> hostile: pilot is hostile toward the player.</li>
  *  <li> refueling: pilot is refueling another pilot.</li>
  *  <li> disabled: pilot is disabled.</li>
+ *  <li> landing: pilot is currently landing.</li>
  *  <li> takingoff: pilot is currently taking off.</li>
  *  <li> manualcontrol: pilot is under manual control.</li>
  *  <li> combat: pilot is engaged in combat.</li>
