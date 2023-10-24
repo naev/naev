@@ -18,6 +18,7 @@
       * Significantly improved autonav
          * Configurable and can use lanes
          * More efficient at reaching target locations
+         * Follows pilots through jumps by default
       * Make it explicit when all the escorts have jumped or landed
       * Escorts will keep their same loadout until the game restarts
       * Player ship is no longer translucent when in stealth as it is redundant with the stealth icon
