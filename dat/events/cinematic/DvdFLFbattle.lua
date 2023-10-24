@@ -3,7 +3,7 @@
 <event name="Cinematic Dvaered/FLF battle">
  <location>enter</location>
  <chance>10</chance>
- <cond>system.cur() == system.get("Tuoladis")</cond>
+ <system>Tuoladis</system>
  <unique />
  <notes>
   <campaign>Join the FLF</campaign>

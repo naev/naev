@@ -4,7 +4,7 @@
  <location>enter</location>
  <unique />
  <chance>100</chance>
- <cond>system.cur() == system.get("Taiomi")</cond>
+ <system>Taiomi</system>
  <notes>
   <campaign>Taiomi</campaign>
   <done_evt name="Finding Taiomi" />

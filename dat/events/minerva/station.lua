@@ -3,7 +3,7 @@
 <event name="Minerva Station Gambling">
  <location>land</location>
  <chance>100</chance>
- <cond>spob.cur()==spob.get("Minerva Station")</cond>
+ <spob>Minerva Station</spob>
  <notes>
   <campaign>Minerva</campaign>
   <provides name="Minerva Station" />
