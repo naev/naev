@@ -159,7 +159,7 @@ function settings ()
          var.push( "autonav_reset_dist", reset_dist )
          var.push( "autonav_compr_speed", compr_speed )
          var.push( "autonav_compr_max", compr_max )
-         var.push( "autonav_follow_jump", true )
+         var.push( "autonav_follow_jump", follow_jump )
 
          -- Also set GUI
          player.guiSet( player.start().gui ) -- Default setting GUI
@@ -171,6 +171,7 @@ function settings ()
    -- Save as variables
    uselanes_jump = chk_uselanes_jump:get()
    uselanes_spob = chk_uselanes_spob:get()
+   follow_jump = chk_follow_jump:get()
    var.push( "autonav_uselanes_jump", uselanes_jump )
    var.push( "autonav_uselanes_spob", uselanes_spob )
    var.push( "autonav_uselanes_thr", uselanes_thr )
