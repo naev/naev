@@ -8,7 +8,7 @@ local autonav_spob_approach, autonav_spob_land_approach, autonav_spob_land_brake
 local autonav_plt_follow, autonav_plt_board_approach
 local autonav_timer, tc_base, tc_mod, tc_max, tc_rampdown, tc_down
 local last_shield, last_armour, map_npath, reset_shield, reset_dist, reset_lockon
-local path, uselanes_jump, uselanes_spob, uselanes_thr
+local path, uselanes_jump, uselanes_spob, uselanes_thr, follow_jump
 
 -- Some defaults
 autonav_timer = 0
@@ -39,6 +39,7 @@ local function autonav_setup ()
    uselanes_jump = var.peek("autonav_uselanes_jump") and not stealth
    uselanes_spob = var.peek("autonav_uselanes_spob") and not stealth
    uselanes_thr = var.peek("autonav_uselanes_thr") or 2
+   follow_jump = var.peek("autonav_follow_jump")
    reset_shield = var.peek("autonav_reset_shield")
    reset_dist = var.peek("autonav_reset_dist")
    reset_lockon = true
@@ -531,9 +532,11 @@ function autonav_plt_follow ()
       end
       player.msg("#o"..fmt.f(_("Autonav: following target {plt} has jumped to {sys}."),{plt=pltstr,sys=jmp:dest()}).."#0")
 
-      local pp = player.pilot()
-      pp:navJumpSet( jmp )
-      autonav_system()
+      if follow_jump then
+         local pp = player.pilot()
+         pp:navJumpSet( jmp )
+         autonav_system()
+      end
       return
    end
 
