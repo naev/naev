@@ -3409,20 +3409,37 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
          /* The jump into the system must not be exit-only, and unless
           * ignore_rules is set, must also be non-hidden
           * (excepted if the pilot is guerilla) and have faction
-          * presence matching the pilot's on the remote side.
-          */
-         JumpPoint *target = cur_system->jumps[i].returnJump;
-         double limit = 0.;
-         if (guerilla) {/* Test enemy presence on the other side. */
-            const int *fact = faction_getEnemies( lf );
-            for (int j=0; j<array_size(fact); j++)
-               limit += system_getPresence( cur_system->jumps[i].target, fact[j] );
+          * presence matching the pilot's on the remote side. */
+         JumpPoint *jmp = &cur_system->jumps[i];
+         JumpPoint *target = jmp->returnJump;
+         double limit, pres;
+         const int *fact;
+
+         /* Can't use exit only from the other-side. */
+         if (jp_isFlag( target, JP_EXITONLY ))
+            continue;
+
+         if (ignore_rules) {
+            array_push_back( &validJumpPoints, target );
+            continue;
          }
 
-         if (!jp_isFlag( target, JP_EXITONLY ) && (ignore_rules ||
-               ((!jp_isFlag( &cur_system->jumps[i], JP_HIDDEN ) || guerilla) &&
-               (system_getPresence( cur_system->jumps[i].target, lf ) > limit))))
-            array_push_back(&validJumpPoints, target);
+         /* Only guerrila entrances can use hidden jumps. */
+         if (jp_isFlag( jmp, JP_HIDDEN ) && !guerilla)
+            continue;
+
+         /* Test presence on the other side, making sure there is presence. */
+         pres = system_getPresence( jmp->target, lf );
+         if (pres <= 0.)
+            continue;
+
+         /* See if the remote system isn't dominantly controlled by enemies. */
+         limit = 0.;
+         fact = faction_getEnemies( lf );
+         for (int j=0; j<array_size(fact); j++)
+            limit += system_getPresence( jmp->target, fact[j] );
+         if (pres > limit)
+            array_push_back( &validJumpPoints, target );
       }
    }
 
