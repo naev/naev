@@ -378,6 +378,15 @@ function autonav_jump_delay ()
    autonav = autonav_jump_approach
 end
 
+local function recompute_jump_pos ()
+   local pp = player.pilot()
+   local jmp = pp:navJump()
+   local pos = jmp:pos()
+   local d = jmp:jumpDist( pp )
+   target_pos = pos + (pp:pos()-pos):normalize( math.max(0.8*d, d-30) )
+   path = {target_pos} -- Have to update path also
+end
+
 -- Approaching a jump point, target position is stored in target_pos
 function autonav_jump_approach ()
    local pp = player.pilot()
@@ -390,7 +399,12 @@ function autonav_jump_approach ()
       if #path > 1 then
          table.remove( path, 1 )
       else
-         autonav = autonav_jump_brake
+         -- If the original position does not work, try to get closer before braking
+         if jmp:pos():dist(path[1]) > jmp:jumpDist( pp ) then
+            recompute_jump_pos()
+         else
+            autonav = autonav_jump_brake
+         end
       end
    elseif not tc_rampdown and map_npath<=1 and #path==1 then
       autonav_rampdown( d )
@@ -452,13 +466,7 @@ function autonav_jump_brake ()
       ai.hyperspace()
    elseif ret then
       -- Recompute the location for a better position
-      local pp = player.pilot()
-      local jmp = pp:navJump()
-      local pos = jmp:pos()
-      local d = jmp:jumpDist( pp )
-      target_pos = pos + (pp:pos()-pos):normalize( math.max(0.8*d, d-30) )
-      path = {target_pos} -- Have to update path also
-
+      recompute_jump_pos()
       autonav = autonav_jump_approach
    end
 
