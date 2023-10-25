@@ -40,6 +40,7 @@ void window_resize( unsigned int wid, int w, int h );
 void window_raise( unsigned int wid );
 void window_lower( unsigned int wid );
 int window_setDisplayname( unsigned int wid, const char *displayname );
+void window_setDynamic( unsigned int wid, int dynamic );
 
 /*
  * get

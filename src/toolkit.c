@@ -641,6 +641,23 @@ int window_setDisplayname( unsigned int wid, const char *displayname )
 }
 
 /**
+ * @brief Sets a window as dynamic, so that it is drawn every frame completely.
+ *
+ *    @param wid ID of the window.
+ *    @param dynamic Whether or not to set as dynamic.
+ */
+void window_setDynamic( unsigned int wid, int dynamic )
+{
+   Window *wdw = window_wget(wid);
+   if (wdw == NULL)
+      return;
+   if (dynamic)
+      wdw->flags |= WINDOW_DYNAMIC;
+   else
+      wdw->flags &= ~WINDOW_DYNAMIC;
+}
+
+/**
  * @brief Gets the ID of a window.
  *
  * @note Gets the top window matching the ID first.
@@ -1524,7 +1541,7 @@ void window_renderDynamic( Window *w )
          continue;
       if (wgt_isFlag(wgt, WGT_FLAG_KILL))
          continue;
-      if (wgt_isFlag(wgt, WGT_FLAG_DYNAMIC))
+      if (wgt_isFlag(wgt, WGT_FLAG_DYNAMIC) || window_isFlag(w, WINDOW_DYNAMIC))
          wgt->render( wgt, w->x, w->y );
       if (wgt->renderDynamic != NULL)
          wgt->renderDynamic( wgt, w->x, w->y );

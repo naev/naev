@@ -280,6 +280,7 @@ void map_open (void)
 
    /* create the window. */
    wid = window_create( MAP_WDWNAME, title, -1, -1, -1, -1 );
+   window_setDynamic( wid, 1 );
    window_setCancel( wid, window_close );
    window_onClose( wid, map_onClose );
    window_handleKeys( wid, map_keyHandler );
