@@ -2589,7 +2589,7 @@ void window_lower( unsigned int wid )
 /**
  * @brief Repositions windows and their children if resolution changes.
  */
-void toolkit_reposition (void)
+void toolkit_resize (void)
 {
    for (Window *w = windows; w != NULL; w = w->next) {
       int xorig, yorig, xdiff, ydiff;

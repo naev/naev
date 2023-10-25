@@ -797,7 +797,7 @@ void naev_resize (void)
 
    /* Resets dimensions in other components which care. */
    ovr_refresh();
-   toolkit_reposition();
+   toolkit_resize();
    menu_main_resize();
    nebu_resize();
 
