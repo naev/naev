@@ -235,10 +235,6 @@ void menu_main (void)
    wid = window_create( "wdwMainMenu", _("Main Menu"), -1, offset_wdw, MAIN_WIDTH, h );
    window_setCancel( wid, main_menu_promptClose );
 
-   /* Handle the fade. */
-   window_setFade( bwid, NULL, 0. );
-   //window_setFade( wid, NULL, 1. );
-
    /* Buttons. */
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnLoad", _("Load Game"), menu_main_load, SDLK_l );

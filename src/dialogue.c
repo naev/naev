@@ -897,7 +897,6 @@ void dialogue_custom( const char* caption, int width, int height,
    else
       wid = window_create( "dlgMsg", caption, -1, -1, width+40, height+60 );
    window_setData( wid, &done );
-   window_setFade( wid, NULL, 0. );
 
    /* custom widget for all! */
    if (fullscreen) {
