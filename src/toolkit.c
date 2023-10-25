@@ -1623,6 +1623,7 @@ void toolkit_render( double dt )
       glClearColor( 0., 0., 0., 1. );
    }
 
+   glBlendFuncSeparate( GL_ONE, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA );
    glUseProgram(shaders.texture.program);
 
    /* Set texture. */
@@ -1648,6 +1649,7 @@ void toolkit_render( double dt )
    /* Clean up. */
    glDisableVertexAttribArray( shaders.texture.vertex );
    glBindTexture( GL_TEXTURE_2D, 0 );
+   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
    gl_checkErr();
    glUseProgram(0);
 
