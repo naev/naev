@@ -934,6 +934,7 @@ static void equipment_renderShip( double bx, double by,
 
    px = bx + (bw-pw)/2;
    py = by + (bh-ph)/2;
+   gl_renderRect( px, py, pw, ph, &cBlack );
    gl_renderScaleSprite( p->ship->gfx_space, px, py, sx, sy, pw, ph, NULL );
 
 #ifdef DEBUGGING
