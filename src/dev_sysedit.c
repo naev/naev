@@ -196,6 +196,7 @@ void sysedit_open( StarSystem *sys )
    /* Create the window. */
    snprintf( buf, sizeof(buf), _("%s - Star System Editor"), sys->name );
    wid = window_create( "wdwSysEdit", buf, -1, -1, -1, -1 );
+   window_setDynamic( wid, 1 );
    window_handleKeys( wid, sysedit_keys );
    window_setBorder( wid, 0 );
    sysedit_wid = wid;

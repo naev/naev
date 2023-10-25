@@ -202,6 +202,7 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
 
    /* Create the window. */
    wid = window_create( "wdwUniverseEditor", _("Universe Editor"), -1, -1, -1, -1 );
+   window_setDynamic( wid, 1 );
    window_handleKeys( wid, uniedit_keys );
    window_setBorder( wid, 0 );
    uniedit_wid = wid;
