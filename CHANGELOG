@@ -103,6 +103,7 @@
       * Support for buying intrinsic outfits
       * Ship distress moved to the message framework
       * Outfits have support for double tapping accel/left/right triggers
+      * Toolkit is cached in a framebuffer for much faster rendering
    * Fixes
       * Main menu more responsive when changing windows
       * Typo and wording fixes
