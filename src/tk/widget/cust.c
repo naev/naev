@@ -257,13 +257,16 @@ void window_custAutoFreeData( unsigned int wid, const char *name )
       wgt->dat.cst.autofree = 1;
 }
 
+/**
+ * @brief Marks a widget as being rendered dynamically, which forces it to be updated every frame.
+ */
 void window_custSetDynamic( unsigned int wid, const char *name, int dynamic )
 {
    Widget *wgt = cst_getWidget( wid, name );
    if (wgt != NULL) {
       if (dynamic)
-         wgt->flags |= dynamic;
+         wgt->flags |= WGT_FLAG_DYNAMIC;
       else
-         wgt->flags &= ~dynamic;
+         wgt->flags &= ~WGT_FLAG_DYNAMIC;
    }
 }

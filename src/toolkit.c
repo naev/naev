@@ -1524,9 +1524,10 @@ void window_renderDynamic( Window *w )
          continue;
       if (wgt_isFlag(wgt, WGT_FLAG_KILL))
          continue;
-      if (!wgt_isFlag(wgt, WGT_FLAG_DYNAMIC))
-         continue;
-      wgt->render( wgt, w->x, w->y );
+      if (wgt_isFlag(wgt, WGT_FLAG_DYNAMIC))
+         wgt->render( wgt, w->x, w->y );
+      if (wgt->renderDynamic != NULL)
+         wgt->renderDynamic( wgt, w->x, w->y );
    }
 }
 

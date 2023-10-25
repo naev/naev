@@ -104,6 +104,7 @@ typedef struct Widget_ {
 
    /* Misc. routines. */
    void (*render) ( struct Widget_ *wgt, double x, double y ); /**< Render function for the widget. */
+   void (*renderDynamic) ( struct Widget_ *wgt, double x, double y ); /**< Dynamic render function for the widget. */
    void (*renderOverlay) ( struct Widget_ *wgt, double x, double y ); /**< Overlay render fuction for the widget. */
    void (*cleanup) ( struct Widget_ *wgt ); /**< Clean up function for the widget. */
    void (*focusGain) ( struct Widget_ *wgt ); /**< Get focus. */
