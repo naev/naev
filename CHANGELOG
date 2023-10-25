@@ -45,6 +45,8 @@
       * Weapon sets much more flexible, verbose, and easy to use
       * Weapon sets remember slots, not outfits
       * Route is visible on all map modes now
+      * Blink and flicker drives can use double tap arrow keys to move around
+      * Toolkit is cached in a framebuffer for much faster rendering
    * New Content
       * New mechanic for House Sirius called flow to unlock psychic powers
          * Gives passive bonuses to Sirius ships
@@ -103,7 +105,7 @@
       * Support for buying intrinsic outfits
       * Ship distress moved to the message framework
       * Outfits have support for double tapping accel/left/right triggers
-      * Toolkit is cached in a framebuffer for much faster rendering
+      * Removed toolkit fading effects
    * Fixes
       * Main menu more responsive when changing windows
       * Typo and wording fixes
