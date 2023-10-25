@@ -214,6 +214,9 @@ function land ()
       lucas(fmt.f(_([["{spob} at last! I can almost taste the freedom!"]]),
          {spob=last_spob}))
       lucas(_([["Thank you for all your help getting me here! Here, let me give you some credits for your troubles."]]))
+      vn.func( function ()
+         player.pay( reward )
+      end )
       vn.sfxVictory()
       vn.na(fmt.reward(reward))
       vn.na(_([[Lucas seems euphoric to get away from the troubles of his past and begin anew. The question that remains unanswered is whether pirate society is truly more free than other societies, or is the problem at core human nature itself.]]))
@@ -254,7 +257,7 @@ function approach_pirate ()
    misn.markerRm( mem.mrk )
    mem.mrk = nil
    mem.stage = 1
-   hook.board( "board_pirate" )
+   mem.hook_board = hook.board( "board_pirate" )
    hook.hail( "hail_pirate" )
 
    misn.npcRm( mem.npc_pir )
@@ -373,4 +376,5 @@ function board_pirate( p )
    vn.run()
 
    got_info()
+   hook.rm( mem.hook_board )
 end
