@@ -195,6 +195,7 @@ void window_kill( Window *wdw );
 /* Widget stuff. */
 Widget* window_newWidget( Window* w, const char *name );
 void widget_cleanup( Widget *widget );
+void widget_setStatus( Widget *widget, WidgetStatus sts );
 Widget* window_getwgt( const unsigned int wid, const char* name );
 void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y );
 void toolkit_focusSanitize( Window *wdw );
@@ -205,6 +206,7 @@ void toolkit_focusWidget( Window *wdw, Widget *wgt );
 void toolkit_defocusWidget( Window *wdw, Widget *wgt );
 
 /* Render stuff. */
+void toolkit_rerender (void);
 void toolkit_drawOutline( int x, int y, int w, int h, int b,
                           const glColour* c, const glColour* lc );
 void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,

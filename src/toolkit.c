@@ -28,6 +28,7 @@
 
 static unsigned int genwid = 0; /**< Generates unique window ids, > 0 */
 
+static int toolkit_needsRender = 1; /**< Whether or not toolkit needs a render. */
 static int toolkit_delayCounter = 0; /**< Horrible hack around secondary loop. */
 
 static const double WINDOW_FADEIN_TIME    = 0.05; /**< Time it takes to fade in for a window. */
@@ -288,6 +289,7 @@ Widget* window_newWidget( Window* w, const char *name )
    else
       wlast->next = wgt;
 
+   toolkit_rerender();
    return wgt;
 }
 
@@ -790,6 +792,7 @@ unsigned int window_createFlags( const char* name, const char *displayname,
       wlast->next = wdw;
    }
 
+   toolkit_rerender();
    return wid;
 }
 
@@ -1012,6 +1015,13 @@ void widget_cleanup( Widget *widget )
 
    /* General freeing. */
    free(widget->name);
+}
+
+void widget_setStatus( Widget *wgt, WidgetStatus sts )
+{
+   if (wgt->status != sts)
+      toolkit_rerender();
+   wgt->status = sts;
 }
 
 /**
@@ -1638,7 +1648,7 @@ void toolkit_render( double dt )
          continue;
 
       /* Must draw onto the main screen. */
-      glColour col = { 1., 1., 1., alpha };
+      const glColour col = { 1., 1., 1., alpha };
 
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
       glClearColor( 0., 0., 0., 1. );
@@ -1670,6 +1680,12 @@ void toolkit_render( double dt )
       gl_checkErr();
       glUseProgram(0);
    }
+   toolkit_needsRender = 0;
+}
+
+void toolkit_rerender (void)
+{
+   toolkit_needsRender = 1;
 }
 
 /**
@@ -1701,8 +1717,10 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
       if (wgt_isFlag( wgt, WGT_FLAG_RAWINPUT )) {
          if (wgt->rawevent != NULL) {
             ret = wgt->rawevent( wgt, event );
-            if (ret != 0)
+            if (ret != 0) {
+               toolkit_rerender();
                return ret;
+            }
          }
       }
    }
@@ -1710,8 +1728,10 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
    /* Event handler. */
    if (wdw->eventevent != NULL) {
       ret = wdw->eventevent( wdw->id, event );
-      if (ret != 0)
+      if (ret != 0) {
+         toolkit_rerender();
          return ret;
+      }
    }
 
    /* Hack in case window got destroyed in eventevent. */
@@ -1738,6 +1758,8 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
             break;
       }
    }
+   if (ret)
+      toolkit_rerender();
 
    /* Clean up the dead if needed. */
    if (purge && !dialogue_isOpen()) { /* Hack, since dialogues use secondary loop. */
@@ -1880,10 +1902,10 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
          if (wgt->status != WIDGET_STATUS_SCROLLING) {
             if (inbounds) {
                if (wgt->status != WIDGET_STATUS_MOUSEDOWN)
-                  wgt->status = WIDGET_STATUS_MOUSEOVER;
+                  widget_setStatus( wgt, WIDGET_STATUS_MOUSEOVER );
             }
             else
-               wgt->status = WIDGET_STATUS_NORMAL;
+               widget_setStatus( wgt, WIDGET_STATUS_NORMAL );
          }
          else
             inbounds = 1; /* Scrolling is always inbounds. */
@@ -1905,6 +1927,8 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
          /* Try to give the event to the widget. */
          if (wgt->mwheelevent != NULL)
             ret |= (*wgt->mwheelevent)( wgt, event->wheel );
+         if (ret)
+            toolkit_rerender();
 
          break;
 
@@ -1914,11 +1938,12 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
 
          /* Update the status. */
          if (button == SDL_BUTTON_LEFT)
-            wgt->status = WIDGET_STATUS_MOUSEDOWN;
+            widget_setStatus( wgt, WIDGET_STATUS_MOUSEDOWN );
 
          if (toolkit_isFocusable(wgt)) {
             toolkit_focusClear( w );
             toolkit_focusWidget( w, wgt );
+            toolkit_rerender();
          }
 
          /* Try to give the event to the widget. */
@@ -1926,8 +1951,10 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
             ret |= (*wgt->mdoubleclickevent)( wgt, button, x, y );
          else if (wgt->mclickevent != NULL)
             ret |= (*wgt->mclickevent)( wgt, button, x, y );
-         if (ret)
+         if (ret) {
             input_clicked( (void*)wgt );
+            toolkit_rerender();
+         }
          break;
 
       case SDL_MOUSEBUTTONUP:
@@ -1947,6 +1974,7 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
                else {
                   (*wgt->dat.btn.fptr)(w->id, wgt->name);
                   ret = 1;
+                  toolkit_rerender();
                }
             }
          }
@@ -1957,9 +1985,9 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
 
          /* Always goes normal unless is below mouse. */
          if (inbounds)
-            wgt->status = WIDGET_STATUS_MOUSEOVER;
+            widget_setStatus( wgt, WIDGET_STATUS_MOUSEOVER );
          else
-            wgt->status = WIDGET_STATUS_NORMAL;
+            widget_setStatus( wgt, WIDGET_STATUS_NORMAL );
 
          break;
    }
