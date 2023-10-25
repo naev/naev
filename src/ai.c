@@ -2512,11 +2512,17 @@ static int aiL_nearhyptarget( lua_State *L )
       const JumpPoint *jiter = &cur_system->jumps[i];
       int useshidden = faction_usesHiddenJumps( cur_pilot->faction );
 
-      /* We want only standard jump points to be used. */
-      if ((!useshidden && jp_isFlag(jiter, JP_HIDDEN)) || jp_isFlag(jiter, JP_EXITONLY))
+      /* Ignore exit only. */
+      if (jp_isFlag( jiter, JP_EXITONLY ))
          continue;
 
-      /* TODO should they try to use systems only with their faction? */
+      /* We want only standard jump points to be used. */
+      if (!useshidden && jp_isFlag(jiter, JP_HIDDEN))
+         continue;
+
+      /* Only jump if there is presence there. */
+      if (system_getPresence( jiter->target, cur_pilot->faction ) <= 0.)
+         continue;
 
       /* Get nearest distance. */
       dist  = vec2_dist2( &cur_pilot->solid.pos, &jiter->pos );
