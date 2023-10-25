@@ -353,7 +353,7 @@ static int tab_key( Widget* tab, SDL_Event *event )
  */
 static void tab_render( Widget* tab, double bx, double by )
 {
-   int i, x, y;
+   int x, y;
    Window *wdw;
 
    /** Get window. */
@@ -378,7 +378,7 @@ static void tab_render( Widget* tab, double bx, double by )
 
    /* Iterate through tabs */
    x += TAB_HMARGIN;
-   for (i=0; i<tab->dat.tab.ntabs; i++) {
+   for (int i=0; i<tab->dat.tab.ntabs; i++) {
       /* Draw contents rect */
       toolkit_drawRect(
           x, y, tab->dat.tab.namelen[i] + (TAB_HPADDING * 2),

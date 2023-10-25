@@ -61,6 +61,7 @@ typedef enum WidgetStatus_ {
 #define WGT_FLAG_RAWINPUT     (1<<1)   /**< Widget should always get raw input. */
 #define WGT_FLAG_ALWAYSMMOVE  (1<<2)   /**< Widget should always get mouse motion events. */
 #define WGT_FLAG_FOCUSED      (1<<3)   /**< Widget is focused. */
+#define WGT_FLAG_DYNAMIC      (1<<4)   /**< Widget should dynamically render. */
 #define WGT_FLAG_KILL         (1<<9)   /**< Widget should die. */
 #define wgt_setFlag(w,f)      ((w)->flags |= (f)) /**< Sets a widget flag. */
 #define wgt_rmFlag(w,f)       ((w)->flags &= ~(f)) /**< Removes a widget flag. */
@@ -135,9 +136,6 @@ typedef struct Widget_ {
 #define WINDOW_CENTERX     (1<<5) /**< Window is X-centered. */
 #define WINDOW_CENTERY     (1<<6) /**< Window is Y-centered. */
 #define WINDOW_KILL        (1<<9) /**< Window should die. */
-#define WINDOW_FADEIN      (1<<10) /**< Window is fading in. */
-#define WINDOW_FADEOUT     (1<<11) /**< Window is fading out. */
-#define WINDOW_FADEDELAY   (1<<12) /**< Fade has just started and may be delayed. */
 #define window_isFlag(w,f) ((w)->flags & (f)) /**< Checks a window flag. */
 #define window_setFlag(w,f) ((w)->flags |= (f)) /**< Sets a window flag. */
 #define window_rmFlag(w,f) ((w)->flags &= ~(f)) /**< Removes a window flag. */
@@ -189,6 +187,7 @@ Window* window_wgetNameW( const char *name );
 void toolkit_setWindowPos( Window *wdw, int x, int y );
 int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge );
 void window_render( Window* w );
+void window_renderDynamic( Window *w );
 void window_renderOverlay( Window* w );
 void window_kill( Window *wdw );
 

@@ -1489,16 +1489,6 @@ static void window_renderBorder( Window* w )
  */
 void window_render( Window *w )
 {
-   double x, y;
-
-   /* Do not render dead windows. */
-   if (window_isFlag( w, WINDOW_KILL ))
-      return;
-
-   /* position */
-   x = w->x;
-   y = w->y;
-
    /* We're on top of anything previously drawn. */
    glClear( GL_DEPTH_BUFFER_BIT );
 
@@ -1510,15 +1500,33 @@ void window_render( Window *w )
     * widgets
     */
    for (Widget *wgt=w->widgets; wgt!=NULL; wgt=wgt->next) {
-      if ((wgt->render != NULL) && !wgt_isFlag(wgt, WGT_FLAG_KILL)) {
-         wgt->render( wgt, x, y );
+      if (wgt->render==NULL)
+         continue;
+      if (wgt_isFlag(wgt, WGT_FLAG_KILL))
+         continue;
+      wgt->render( wgt, w->x, w->y );
 
-         if (wgt->id == w->focus) {
-            double wx  = x + wgt->x - 2;
-            double wy  = y + wgt->y - 2;
-            toolkit_drawOutlineThick( wx, wy, wgt->w+4, wgt->h+4, 0, 2, (wgt->type == WIDGET_BUTTON ? &cGrey70 : &cGrey30), NULL );
-         }
+      if (wgt->id == w->focus) {
+         double wx  = w->x + wgt->x - 2;
+         double wy  = w->y + wgt->y - 2;
+         toolkit_drawOutlineThick( wx, wy, wgt->w+4, wgt->h+4, 0, 2, (wgt->type == WIDGET_BUTTON ? &cGrey70 : &cGrey30), NULL );
       }
+   }
+}
+
+void window_renderDynamic( Window *w )
+{
+   /*
+    * widgets
+    */
+   for (Widget *wgt=w->widgets; wgt!=NULL; wgt=wgt->next) {
+      if (wgt->render==NULL)
+         continue;
+      if (wgt_isFlag(wgt, WGT_FLAG_KILL))
+         continue;
+      if (!wgt_isFlag(wgt, WGT_FLAG_DYNAMIC))
+         continue;
+      wgt->render( wgt, w->x, w->y );
    }
 }
 
@@ -1575,51 +1583,61 @@ void toolkit_drawScrollbar( int x, int y, int w, int h, double pos )
 void toolkit_render( double dt )
 {
    (void) dt;
+   Window *top;
 
-   /* Render base. */
-   for (Window *w = windows; w!=NULL; w = w->next) {
-      if (window_isFlag(w, WINDOW_NORENDER | WINDOW_KILL))
-         continue;
+   if (toolkit_needsRender) {
+      toolkit_needsRender = 0;
 
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[3] );
       glClearColor( 0., 0., 0., 0. );
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-      /* The actual rendering. */
-      window_render(w);
-      window_renderOverlay(w);
+      /* Render base. */
+      for (Window *w = windows; w!=NULL; w = w->next) {
+         if (window_isFlag(w, WINDOW_NORENDER | WINDOW_KILL))
+            continue;
+
+         /* The actual rendering. */
+         window_render(w);
+      }
 
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
       glClearColor( 0., 0., 0., 1. );
-
-      glUseProgram(shaders.texture.program);
-
-      /* Set texture. */
-      glActiveTexture( GL_TEXTURE0 );
-      glBindTexture( GL_TEXTURE_2D, gl_screen.fbo_tex[3] );
-      glUniform1i(shaders.texture.sampler, 0);
-
-      /* Set vertex data. */
-      glEnableVertexAttribArray( shaders.texture.vertex );
-      gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture.vertex,
-            0, 2, GL_FLOAT, 0 );
-
-      /* Set shader uniforms. */
-      gl_uniformColor(shaders.texture.color, &cWhite);
-      const mat4 ortho = mat4_ortho(0., 1., 0., 1., 1., -1.);
-      const mat4 I = mat4_identity();
-      gl_uniformMat4(shaders.texture.projection, &ortho);
-      gl_uniformMat4(shaders.texture.tex_mat, &I);
-
-      /* Draw. */
-      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-      /* Clean up. */
-      glDisableVertexAttribArray( shaders.texture.vertex );
-      gl_checkErr();
-      glUseProgram(0);
    }
-   toolkit_needsRender = 0;
+
+   glUseProgram(shaders.texture.program);
+
+   /* Set texture. */
+   glActiveTexture( GL_TEXTURE0 );
+   glBindTexture( GL_TEXTURE_2D, gl_screen.fbo_tex[3] );
+   glUniform1i(shaders.texture.sampler, 0);
+
+   /* Set vertex data. */
+   glEnableVertexAttribArray( shaders.texture.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture.vertex,
+         0, 2, GL_FLOAT, 0 );
+
+   /* Set shader uniforms. */
+   gl_uniformColor(shaders.texture.color, &cWhite);
+   const mat4 ortho = mat4_ortho(0., 1., 0., 1., 1., -1.);
+   const mat4 I = mat4_identity();
+   gl_uniformMat4(shaders.texture.projection, &ortho);
+   gl_uniformMat4(shaders.texture.tex_mat, &I);
+
+   /* Draw. */
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   /* Clean up. */
+   glDisableVertexAttribArray( shaders.texture.vertex );
+   glBindTexture( GL_TEXTURE_2D, 0 );
+   gl_checkErr();
+   glUseProgram(0);
+
+   top = toolkit_getActiveWindow();
+   if ((top != NULL) && !window_isFlag(top, WINDOW_NORENDER | WINDOW_KILL)) {
+      window_renderDynamic( top );
+      window_renderOverlay( top );
+   }
 }
 
 void toolkit_rerender (void)
@@ -1675,7 +1693,7 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
 
    /* Hack in case window got destroyed in eventevent. */
    ret = 0;
-   if (!window_isFlag(wdw, WINDOW_KILL | WINDOW_FADEOUT)) {
+   if (!window_isFlag(wdw, WINDOW_KILL)) {
       /* Pass it on. */
       switch (event->type) {
          case SDL_MOUSEMOTION:
@@ -2403,7 +2421,7 @@ Window* toolkit_getActiveWindow (void)
    Window *wlast = NULL;
    for (Window *wdw = windows; wdw!=NULL; wdw = wdw->next)
       if (!window_isFlag(wdw, WINDOW_NOFOCUS) &&
-            !window_isFlag(wdw, WINDOW_KILL | WINDOW_FADEOUT))
+            !window_isFlag(wdw, WINDOW_KILL))
          wlast = wdw;
    return wlast;
 }

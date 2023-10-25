@@ -908,6 +908,7 @@ void dialogue_custom( const char* caption, int width, int height,
       wgtx = wgty = 20;
    }
    window_addCust( wid, wgtx, wgty, width, height, "cstCustom", 0, render, NULL, NULL, NULL, data );
+   window_custSetDynamic( wid, "cstCustom", 1 );
    if (autofree)
       window_custAutoFreeData( wid, "cstCustom" );
    window_custSetClipping( wid, "cstCustom", 1 );

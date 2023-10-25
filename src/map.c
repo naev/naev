@@ -3104,6 +3104,7 @@ void map_show( int wid, int x, int y, int w, int h, double zoom, double xoff, do
    /* New widget. */
    window_addCust( wid, x, y, w, h,
          "cstMap", 1, map_render, map_mouse, NULL, map_focusLose, cst );
+   window_custSetDynamic( wid, "cstMap", 1 );
    window_custAutoFreeData( wid, "cstMap" );
 
    /* Set up stuff. */

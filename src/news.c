@@ -301,6 +301,7 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
 
    /* Create the custom widget. */
    window_addCust( wid, x, y, w, h, "cstNews", 1, news_render, news_mouse, NULL, news_focusLose, NULL );
+   window_custSetDynamic( wid, "cstNews", 1 );
    window_canFocusWidget( wid, "cstNews", 0 );
 }
 
