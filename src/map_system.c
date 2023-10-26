@@ -254,6 +254,7 @@ void map_system_show( int wid, int x, int y, int w, int h)
 {
    window_addCust( wid, x, y, w, h,
          "cstMapSys", 1, map_system_render, map_system_mouse, NULL, NULL, NULL );
+   window_custSetDynamic( wid, "cstMapSys", 1 );
 }
 
 /**
