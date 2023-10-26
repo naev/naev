@@ -12,6 +12,10 @@ repos:
     - id: check-added-large-files
     - id: check-executables-have-shebangs
     - id: check-shebang-scripts-are-executable
+    - id: check-case-conflict
+    - id: check-symlinks
+    - id: destroyed-symlinks
+    - id: detect-private-key
     - id: mixed-line-ending
     - id: pretty-format-json
     - id: check-merge-conflict
