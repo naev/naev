@@ -1527,6 +1527,9 @@ void window_render( Window *w )
    }
 }
 
+/**
+ * @brief Renders the dynamic components of a window.
+ */
 void window_renderDynamic( Window *w )
 {
    /* Iterate over widgets. */

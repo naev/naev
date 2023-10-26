@@ -49,6 +49,18 @@ typedef struct AI_Profile_ {
    int ref_create;   /**< Run when pilot is created (or initialized in the case of persistent pilots). */
 } AI_Profile;
 
+/**
+ * @struct AIMemory
+ *
+ * @brief Represents a temporary pilot memory. For use with ai_setPilot and ai_unsetPilot
+ * @see ai_setPilot
+ * @see ai_unsetPilot
+ */
+typedef struct AIMemory_ {
+   int mem;    /**< Lua memory. */
+   Pilot *p;   /**< Pilot pointer. */
+} AIMemory;
+
 /*
  * misc
  */
@@ -84,8 +96,8 @@ void ai_hail( Pilot* recipient );
 void ai_refuel( Pilot* refueler, unsigned int target );
 void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker );
 void ai_think( Pilot* pilot, const double dt );
-int ai_setPilot( Pilot *p );
-void ai_unsetPilot( int oldmem );
+AIMemory ai_setPilot( Pilot *p );
+void ai_unsetPilot( AIMemory oldmem );
 void ai_thinkSetup (void);
 void ai_thinkApply( Pilot *p );
 void ai_init( Pilot *p );

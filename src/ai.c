@@ -408,21 +408,25 @@ static int ai_setMemory (void)
  *
  *    @param p Pilot to set.
  */
-int ai_setPilot( Pilot *p )
+AIMemory ai_setPilot( Pilot *p )
 {
+   AIMemory oldmem;
    cur_pilot = p;
-   return ai_setMemory();
+   oldmem.p = cur_pilot;
+   oldmem.mem = ai_setMemory();
+   return oldmem;
 }
 
 /**
  * @brief Finishes setting up a pilot.
  */
-void ai_unsetPilot( int oldmem )
+void ai_unsetPilot( AIMemory oldmem )
 {
    nlua_env env = cur_pilot->ai->env;
-   lua_rawgeti( naevL, LUA_REGISTRYINDEX, oldmem );
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, oldmem.mem );
    nlua_setenv( naevL, env, "mem"); /* pm */
-   luaL_unref( naevL, LUA_REGISTRYINDEX, oldmem );
+   luaL_unref( naevL, LUA_REGISTRYINDEX, oldmem.mem );
+   cur_pilot = oldmem.p;
 }
 
 /**
@@ -786,7 +790,8 @@ void ai_think( Pilot* pilot, const double dt )
 {
    (void) dt;
    nlua_env env;
-   int data, oldmem;
+   int data;
+   AIMemory oldmem;
    Task *t;
 
    /* Must have AI. */
@@ -878,7 +883,7 @@ void ai_think( Pilot* pilot, const double dt )
  */
 void ai_init( Pilot *p )
 {
-   int oldmem;
+   AIMemory oldmem;
    if ((p->ai==NULL) || (p->ai->ref_create==LUA_NOREF))
       return;
    oldmem = ai_setPilot( p );
@@ -896,7 +901,7 @@ void ai_init( Pilot *p )
  */
 void ai_attacked( Pilot *attacked, const unsigned int attacker, double dmg )
 {
-   int oldmem;
+   AIMemory oldmem;
    HookParam hparam[2];
 
    /* Custom hook parameters. */
@@ -933,7 +938,7 @@ void ai_attacked( Pilot *attacked, const unsigned int attacker, double dmg )
  */
 void ai_discovered( Pilot* discovered )
 {
-   int oldmem;
+   AIMemory oldmem;
 
    /* Behaves differently if manually overridden. */
    pilot_runHook( discovered, PILOT_HOOK_DISCOVERED );
@@ -968,7 +973,7 @@ void ai_discovered( Pilot* discovered )
  */
 void ai_hail( Pilot* recipient )
 {
-   int oldmem;
+   AIMemory oldmem;
 
    /* Make sure it's getable. */
    if (!pilot_canTarget( recipient ))

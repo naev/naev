@@ -73,7 +73,7 @@ int comm_openPilot( unsigned int pilot )
    char c;
    Pilot *p;
    Pilot *const* pltstk;
-   int oldmem;
+   AIMemory oldmem;
 
    /* Get the pilot. */
    p  = pilot_get( pilot );
