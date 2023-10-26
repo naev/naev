@@ -191,6 +191,24 @@ function escort.reset_ai ()
    end
 end
 
+function escort.update_leader ()
+   local l = _escort_convoy[1]
+   if not l or not l:exists() then return end
+
+   l:setLeader()
+   l:setHilight(true)
+   for k,v in ipairs(_escort_convoy) do
+      if v:leader()==nil and k > 1 then
+         v:taskClear()
+         v:setLeader(l)
+      end
+   end
+
+   if not l:flags("manualcontrol") then
+      escort.reset_ai()
+   end
+end
+
 function _escort_e_death( p )
    for k,v in ipairs(_escort_convoy) do
       if v==p then
@@ -216,16 +234,7 @@ function _escort_e_death( p )
             -- Set a new leader and tell them to move on
             if not mem._escort.followplayer then
                if k==1 then
-                  local l = _escort_convoy[1]
-                  l:setLeader()
-                  l:setHilight(true)
-                  for i,e in ipairs(_escort_convoy) do
-                     if i~=1 then
-                        e:taskClear()
-                        e:setLeader( l )
-                     end
-                  end
-                  escort.reset_ai()
+                  escort.update_leader()
                end
             end
          end
@@ -263,6 +272,8 @@ function _escort_e_land( p, landed_spob )
 
       if escorts_left() <= 1 then
          player.msg("#g"..fmt.f(_("All escorts have landed on {pnt}."), {pnt=landed_spob}).."#0")
+      else
+         escort.update_leader()
       end
    else
       _escort_e_death( p )
@@ -278,6 +289,8 @@ function _escort_e_jump( p, j )
 
       if escorts_left() <= 1 then
          player.msg("#g"..fmt.f(_("All escorts have jumped to {sys}. Follow them."), {sys=j:dest()}).."#0")
+      else
+         escort.update_leader()
       end
    else
       _escort_e_death( p )
