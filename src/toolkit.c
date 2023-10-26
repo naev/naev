@@ -1511,9 +1511,7 @@ void window_render( Window *w )
    if (!window_isFlag( w, WINDOW_NOBORDER ))
       window_renderBorder(w);
 
-   /*
-    * widgets
-    */
+   /* Iterate over widgets. */
    for (Widget *wgt=w->widgets; wgt!=NULL; wgt=wgt->next) {
       if (wgt->render==NULL)
          continue;
@@ -1531,9 +1529,7 @@ void window_render( Window *w )
 
 void window_renderDynamic( Window *w )
 {
-   /*
-    * widgets
-    */
+   /* Iterate over widgets. */
    for (Widget *wgt=w->widgets; wgt!=NULL; wgt=wgt->next) {
       if (wgt->render==NULL)
          continue;
@@ -1553,10 +1549,6 @@ void window_renderDynamic( Window *w )
  */
 void window_renderOverlay( Window *w )
 {
-   /* Do not render dead windows. */
-   if (window_isFlag( w, WINDOW_KILL ))
-      return;
-
    /* Draw overlays. */
    for (Widget *wgt=w->widgets; wgt!=NULL; wgt=wgt->next)
       if ((wgt->renderOverlay != NULL) && !wgt_isFlag(wgt, WGT_FLAG_KILL))
