@@ -442,10 +442,8 @@ void window_dimWidget( unsigned int wid, const char *name, int *w, int *h )
 void window_posWidget( unsigned int wid,
       const char* name, int *x, int *y )
 {
-   Widget *wgt;
-
    /* Get widget. */
-   wgt = window_getwgt(wid,name);
+   Widget *wgt = window_getwgt(wid,name);
    if (wgt == NULL)
       return;
 
@@ -1555,22 +1553,14 @@ void window_renderDynamic( Window *w )
  */
 void window_renderOverlay( Window *w )
 {
-   double x, y;
-
    /* Do not render dead windows. */
    if (window_isFlag( w, WINDOW_KILL ))
       return;
 
-   /* position */
-   x = w->x;
-   y = w->y;
-
-   /*
-    * overlays
-    */
+   /* Draw overlays. */
    for (Widget *wgt=w->widgets; wgt!=NULL; wgt=wgt->next)
       if ((wgt->renderOverlay != NULL) && !wgt_isFlag(wgt, WGT_FLAG_KILL))
-         wgt->renderOverlay( wgt, x, y );
+         wgt->renderOverlay( wgt, w->x, w->y );
 }
 
 /**
@@ -1653,6 +1643,8 @@ void toolkit_render( double dt )
    gl_checkErr();
    glUseProgram(0);
 
+   /* We render only the active window dynamically, otherwise we wouldn't be able to respect the order.
+    * However, since the dynamic stuff is also rendered to the framebuffer below, it shouldn't be too bad. */
    top = toolkit_getActiveWindow();
    if ((top != NULL) && !window_isFlag(top, WINDOW_NORENDER | WINDOW_KILL)) {
       window_renderDynamic( top );
@@ -1660,6 +1652,9 @@ void toolkit_render( double dt )
    }
 }
 
+/**
+ * @brief Marks the toolkit for needing a full rerender.
+ */
 void toolkit_rerender (void)
 {
    toolkit_needsRender = 1;
@@ -2004,12 +1999,10 @@ static SDL_Keymod toolkit_mapMod( SDL_Keycode key )
  */
 static void toolkit_regKey( SDL_Keycode key )
 {
-   SDL_Keymod mod;
-
    /* See if our key is in fact a modifier key, and if it is, convert it to a mod.
     * If it is indeed a mod, do not register a new key but add the modifier to the mod mask instead.
     */
-   mod = toolkit_mapMod(key);
+   SDL_Keymod mod = toolkit_mapMod(key);
    if (mod)
       input_mod         |= mod;
    /* Don't reset values on repeat keydowns. */
@@ -2025,12 +2018,10 @@ static void toolkit_regKey( SDL_Keycode key )
  */
 static void toolkit_unregKey( SDL_Keycode key )
 {
-   SDL_Keymod mod;
-
    /* See if our key is in fact a modifier key, and if it is, convert it to a mod.
     * If it is indeed a mod, do not unregister the key but subtract the modifier from the mod mask instead.
     */
-   mod = toolkit_mapMod(key);
+   SDL_Keymod mod = toolkit_mapMod(key);
    if (mod)
       input_mod         &= ~mod;
    else
@@ -2672,11 +2663,9 @@ int toolkit_init (void)
  */
 void toolkit_exit (void)
 {
-   Window *wdw;
-
    /* Destroy the windows. */
    while (windows!=NULL) {
-      wdw      = windows;
+      Window *wdw = windows;
       windows  = windows->next;
       window_cleanup(wdw);
       window_remove(wdw);
