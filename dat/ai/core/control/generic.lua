@@ -198,6 +198,17 @@ function control_manual( dt )
    handle_messages( si, false )
 end
 
+--[[
+-- Helper function to see if two pilots belong to the same fleet or not
+--]]
+local function sameFleet( pa, pb )
+   local la = pa:leader()
+   local lb = pa:leader()
+   if not la or not la:exists() then la = pa end
+   if not lb or not lb:exists() then lb = pb end
+   return la == lb
+end
+
 function handle_messages( si, dopush )
    local taskchange = false
    local p = ai.pilot()
@@ -228,8 +239,8 @@ function handle_messages( si, dopush )
             taskchange = distress_handler( sender, data )
          end
 
-         -- Special case leader is gone but we want to follow, so we ignore if they're non-existent.
-         if l==nil or sender==l then
+         -- Special case where we accept messages from all pilots in the same fleet
+         if l==nil or sameFleet( p, sender ) then
             if msgtype == "hyperspace" then
                if dopush then
                   ai.pushtask("hyperspace", data)
@@ -325,17 +336,6 @@ function handle_messages( si, dopush )
       end
    end
    return taskchange
-end
-
---[[
--- Helper function to see if two pilots belong to the same fleet or not
---]]
-local function sameFleet( pa, pb )
-   local la = pa:leader()
-   local lb = pa:leader()
-   if not la or not la:exists() then la = pa end
-   if not lb or not lb:exists() then lb = pb end
-   return la == lb
 end
 
 --[[
