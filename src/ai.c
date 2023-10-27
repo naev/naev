@@ -2003,20 +2003,20 @@ static int aiL_iface( lua_State *L )
       /* 1 - 1/(|x|+1) does a pretty nice job of mapping the reals to the interval (0...1). That forms the core of this angle calculation */
       /* There is nothing special about the scaling parameter of 200; it can be tuned to get any behavior desired. A lower
          number will give a more dramatic 'lead' */
-      speedmap = -1*copysign(1 - 1 / (FABS(drift_azimuthal/200) + 1), drift_azimuthal) * M_PI_2;
+      speedmap = -1.*copysign(1. - 1. / (FABS(drift_azimuthal/200.) + 1.), drift_azimuthal) * M_PI_2;
       diff = angle_diff(heading_offset_azimuth, speedmap);
       azimuthal_sign = -1;
 
       /* This indicates we're drifting to the right of the target
        * And we need to turn CCW */
-      if (diff > 0)
+      if (diff > 0.)
          pilot_turn = azimuthal_sign;
       /* This indicates we're drifting to the left of the target
        * And we need to turn CW */
-      else if (diff < 0)
+      else if (diff < 0.)
          pilot_turn = -1*azimuthal_sign;
       else
-         pilot_turn = 0;
+         pilot_turn = 0.;
    }
    /* turn most efficiently to face the target. If we intercept the correct quadrant in the UV plane first, then the code above will kick in */
    /* some special case logic is added to optimize turn time. Reducing this to only the else cases would speed up the operation
@@ -2026,10 +2026,10 @@ static int aiL_iface( lua_State *L )
       diff = M_PI;
       azimuthal_sign = 1;
 
-      if (heading_offset_azimuth >0)
+      if (heading_offset_azimuth > 0.)
          pilot_turn = azimuthal_sign;
       else
-         pilot_turn = -1*azimuthal_sign;
+         pilot_turn = -1.*azimuthal_sign;
    }
 
    /* Return angle in degrees away from target. */
