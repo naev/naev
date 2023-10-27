@@ -545,7 +545,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
 
       /* Local features. */
       if (p->feature != NULL)
-         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "%s\n", p->feature );
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "%s\n", _(p->feature) );
 
       if (infobuf[0]=='\0') {
          int infocnt = 0;
