@@ -499,7 +499,13 @@ function autonav_spob_approach ()
       end
    elseif not tc_rampdown then
       -- Use distance to end
-      autonav_rampdown( player.pos():dist(target_pos) )
+      local d = 0
+      local pos = player.pos()
+      for k,v in ipairs(path) do
+         d = d+pos:dist( v )
+         pos = v
+      end
+      autonav_rampdown( d )
    end
 end
 
@@ -514,7 +520,13 @@ function autonav_spob_land_approach ()
       end
    elseif not tc_rampdown then
       -- Use distance to end
-      autonav_rampdown( player.pos():dist(target_pos) )
+      local d = 0
+      local pos = player.pos()
+      for k,v in ipairs(path) do
+         d = d+pos:dist( v )
+         pos = v
+      end
+      autonav_rampdown( d )
    end
 end
 
