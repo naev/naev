@@ -1594,6 +1594,7 @@ void toolkit_render( double dt )
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[3] );
       glClearColor( 0., 0., 0., 0. );
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+      glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA );
 
       /* Render base. */
       for (Window *w = windows; w!=NULL; w = w->next) {
@@ -1604,11 +1605,11 @@ void toolkit_render( double dt )
          window_render(w);
       }
 
+      glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
       glClearColor( 0., 0., 0., 1. );
    }
 
-   glBlendFuncSeparate( GL_ONE, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA );
    glUseProgram(shaders.texture.program);
 
    /* Set texture. */
@@ -1634,7 +1635,6 @@ void toolkit_render( double dt )
    /* Clean up. */
    glDisableVertexAttribArray( shaders.texture.vertex );
    glBindTexture( GL_TEXTURE_2D, 0 );
-   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
    gl_checkErr();
    glUseProgram(0);
 
