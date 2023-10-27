@@ -36,10 +36,6 @@ function create ()
    compr_speed = var.peek("autonav_compr_speed") or 5e3
    compr_max = var.peek("autonav_compr_max") or 50
    follow_jump = var.peek("autonav_follow_jump")
-   if follow_jump == nil then
-      follow_jump = true
-      var.push( "autonav_follow_jump", true )
-   end
 
    -- Set an info button up
    player.infoButtonRegister( _("Settings"), settings, 1, "S" )
