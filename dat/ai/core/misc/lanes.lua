@@ -452,10 +452,8 @@ function lanes.getRoute( L, target, pos, threshold )
    local sv = nearestVertex( lv, pos )
    local tv = nearestVertex( lv, target )
    local S, d = dijkstra_full( lv, le, tv, sv )
-
-   -- No path or path is too much of a work around
    local n = #S
-   if n==0 or d > threshold*pos:dist(target) then
+   if n==0 then
       return { target }
    end
 
@@ -464,16 +462,23 @@ function lanes.getRoute( L, target, pos, threshold )
    if n > 1 then
       S[1] = closestPointLine( S[1], S[2], pos )
    end
+   -- We have to correct distance to consider movement to the first point
+   d = d + pos:dist( S[1] )
 
-   -- Add the final point if necessary (it is only approximated due to
-   -- djistra)
-   if S[#S]:dist2( target ) > 1e-5 then
+   -- Add the final point if necessary (it is only approximated due to djistra)
+   local dtarget = S[n]:dist( target )
+   if dtarget > 1e-3 then
       table.insert( S, target )
       -- Correct last point, as we may want to break off in the middle of a line segment
       -- We only do this if it's not on a lane
       if n > 1 then
          S[n] = closestPointLine( S[n-1], S[n], target )
       end
+   end
+
+   -- No path or path is too much of a work around
+   if d+dtarget > threshold*pos:dist(target) then
+      return { target }
    end
 
    return S
