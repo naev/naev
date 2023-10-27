@@ -169,6 +169,7 @@ end
 function escort.reset_ai ()
    for k,p in ipairs(_escort_convoy) do
       if p:exists() then
+         p:setSpeedLimit(0)
          p:control(false)
          p:setNoJump(false)
          p:setNoLand(false)
@@ -379,7 +380,7 @@ function escort.spawn( pos )
          aisetup.setup( p )
       end
 
-      minspeed = math.min( p:stats().speed_max, minspeed )
+      minspeed = math.min( p:stats().speed_max * 0.95, minspeed )
    end
 
    if not mem._escort.followplayer then
