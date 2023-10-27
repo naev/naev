@@ -824,7 +824,7 @@ int pilot_brakeCheckReverseThrusters( const Pilot *p )
  */
 double pilot_minbrakedist( const Pilot *p )
 {
-   double vel = MIN( VMOD(p->solid.vel), p->speed );
+   double vel = MIN( MIN( VMOD(p->solid.vel), p->speed ), solid_maxspeed( &p->solid, p->speed, p->accel ) );
    double accel = p->accel;
    double t = vel / accel;
    if (pilot_brakeCheckReverseThrusters(p))
