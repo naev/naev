@@ -173,7 +173,10 @@ function escort.reset_ai ()
          p:control(false)
          p:setNoJump(false)
          p:setNoLand(false)
-         p:taskClear()
+         local pt = p:taskname()
+         if pt~="hyperspace" and pt~="land" then
+            p:taskClear()
+         end
       end
    end
 
@@ -215,7 +218,10 @@ function escort.update_leader ()
    l:setHilight(true)
    for k,v in ipairs(_escort_convoy) do
       if v~=l and v:exists() then
-         v:taskClear()
+         local pt = v:taskname()
+         if pt~="hyperspace" and pt~="land" then
+            v:taskClear()
+         end
          v:setLeader(l)
       end
    end
