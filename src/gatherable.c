@@ -66,13 +66,14 @@ void gatherable_cleanup (void)
 int gatherable_init( const Commodity* com, const vec2 *pos, const vec2 *vel, double lifeleng, int qtt, unsigned int player_only )
 {
    Gatherable *g = &array_grow( &gatherable_stack );
+   memset( g, 0, sizeof(Gatherable) );
    g->type = com;
    g->pos = *pos;
    g->vel = *vel;
    g->timer = 0.;
    g->quantity = qtt;
-   g->sx = RNG( 0, com->gfx_space->sx );
-   g->sy = RNG( 0, com->gfx_space->sy );
+   g->sx = RNG( 0, com->gfx_space->sx-1 );
+   g->sy = RNG( 0, com->gfx_space->sy-1 );
    g->player_only = player_only;
 
    if (lifeleng < 0.)
@@ -111,8 +112,9 @@ void gatherable_update( double dt )
       }
 
       /* Only player can gather player only stuff. */
-      if (g->player_only && (player.p!=NULL) && vec2_dist2(&player.p->solid.pos, &g->pos ) <= pow2(GATHER_DIST)) {
-         gatherable_gather( g, player.p );
+      if (g->player_only) {
+         if ((player.p!=NULL) && vec2_dist2(&player.p->solid.pos, &g->pos ) <= pow2(GATHER_DIST))
+            gatherable_gather( g, player.p );
          continue;
       }
 
@@ -123,7 +125,7 @@ void gatherable_update( double dt )
       for (int j=0; j<il_size(&gather_qtquery); j++) {
          Pilot *p = pilot_stack[ il_get( &gather_qtquery, j, 0 ) ];
 
-         /* See if is player. */
+         /* See if in distance. */
          if (vec2_dist2( &p->solid.pos, &g->pos ) > pow2(GATHER_DIST) )
             continue;
 
