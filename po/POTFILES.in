@@ -2793,6 +2793,7 @@ dat/events/derelict/blackcat.lua
 dat/events/derelict/poi.lua
 dat/events/derelict/rescue.lua
 dat/events/derelict/sirius_awakening.lua
+dat/events/dev/explosions_benchmark.lua
 dat/events/dev/quadtree_benchmark.lua
 dat/events/dev/skirmish_benchmark.lua
 dat/events/dev/system_tour.lua
