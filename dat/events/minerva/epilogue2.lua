@@ -1,6 +1,6 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<event name="Minerva Station Epilogue">
+<event name="Minerva Station Epilogue 2">
  <unique/>
  <location>land</location>
  <chance>100</chance>

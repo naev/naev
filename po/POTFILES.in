@@ -128,6 +128,7 @@ dat/outfits/accessory/air_freshener.xml
 dat/outfits/accessory/black_cat_doll.xml
 dat/outfits/accessory/broken_nebular_shielding_prototype.xml
 dat/outfits/accessory/commemorative_stein.xml
+dat/outfits/accessory/cyborg_feather.xml
 dat/outfits/accessory/dv_handbook.xml
 dat/outfits/accessory/fuzzy_dice.xml
 dat/outfits/accessory/goatee_marker.xml
@@ -2817,7 +2818,8 @@ dat/events/hypergate_fleets.lua
 dat/events/minerva/altercation1.lua
 dat/events/minerva/altercation2.lua
 dat/events/minerva/chicken_rendezvous.lua
-dat/events/minerva/epilogue.lua
+dat/events/minerva/epilogue1.lua
+dat/events/minerva/epilogue2.lua
 dat/events/minerva/spa_propaganda.lua
 dat/events/minerva/station.lua
 dat/events/naev_needs_YOU.lua
