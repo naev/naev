@@ -279,8 +279,6 @@ typedef struct OutfitAfterburnerData_ {
    double mass_limit;/**< Limit at which effectiveness starts to drop. */
    double heatup;    /**< How long it takes for the afterburner to overheat. */
    double heat;      /**< Heat per second. */
-   //double heat_cap;  /**< Temperature at which the outfit overheats (K). */
-   //double heat_base; /**< Temperature at which the outfit BEGINS to overheat(K). */
 } OutfitAfterburnerData;
 
 struct Ship_; /* Bit of a horrible hack to allow us to avoid circular definitions. */
@@ -305,7 +303,7 @@ typedef struct OutfitMapData_s OutfitMapData_t;
  * @brief Represents a local map.
  */
 typedef struct OutfitLocalMapData_ {
-   double jump_detect;  /**< Ability to detect jumps. */
+   double jump_detect; /**< Ability to detect jumps. */
    double spob_detect; /**< Ability to detect spobs. */
 } OutfitLocalMapData;
 
@@ -402,7 +400,7 @@ typedef struct Outfit_ {
    union {
       OutfitBoltData blt;         /**< BOLT */
       OutfitBeamData bem;         /**< BEAM */
-      OutfitLauncherData lau;     /**< MISSILE */
+      OutfitLauncherData lau;     /**< LAUNCHER */
       OutfitModificationData mod; /**< MODIFICATION */
       OutfitAfterburnerData afb;  /**< AFTERBURNER */
       OutfitFighterBayData bay;   /**< FIGHTER_BAY */
