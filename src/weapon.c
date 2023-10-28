@@ -196,7 +196,8 @@ void weapon_minimap( double res, double w,
       rc = 0;
 
    /* Draw the points for weapons on all layers. */
-   /* TODO quadtree look-up. */
+   /* TODO potentially do quadtree look-up. Not sure if worth it given that only
+    * weapons with health are currently added to the quadtree. */
    for (int i=0; i<array_size(weapon_stack); i++) {
       double x, y;
       const glColour *c;
