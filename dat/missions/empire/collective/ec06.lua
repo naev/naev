@@ -65,8 +65,8 @@ function accept ()
 
    -- Mission data
    mem.misn_stage = 0
-   mem.misn_marker = misn.markerAdd( misn_target_sys2, "low" )
-   mem.misn_marker = misn.markerAdd( misn_final_sys, "high" )
+   mem.misn_marker1 = misn.markerAdd( misn_target_sys2, "low" )
+   mem.misn_marker2 = misn.markerAdd( misn_final_sys, "high" )
 
    -- Mission details
    misn.setTitle(_("Operation Cold Metal"))
@@ -108,6 +108,9 @@ function jumpin ()
       if system.cur() == misn_final_sys then
          pilot.clear()
          pilot.toggleSpawn(false)
+
+         -- Clear marker to previous system
+         misn.markerRm( mem.misn_marker1 )
 
          local function setup_pilot( p, pos )
             pilotai.guard( p, pos )
