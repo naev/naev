@@ -2166,7 +2166,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
       xml_onlyNodes(node);
       xmlr_float(node,"delay",temp->u.bay.delay);
       xmlr_float(node,"reload_time",temp->u.bay.reload_time);
-      xmlr_strd(node,"ship",temp->u.bay.ship);
+      xmlr_strd(node,"ship",temp->u.bay.shipname);
       xmlr_float(node,"ship_mass",temp->u.bay.ship_mass);
       xmlr_int(node,"amount",temp->u.bay.amount);
       xmlr_strd(node,"lua",temp->lua_file);
@@ -2198,7 +2198,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
 
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
-   MELEMENT(temp->u.bay.ship==NULL,"ship");
+   MELEMENT(temp->u.bay.shipname==NULL,"ship");
    MELEMENT(temp->u.bay.ship_mass<=0.,"ship_mass");
    MELEMENT(temp->u.bay.delay==0,"delay");
    MELEMENT(temp->u.bay.reload_time==0.,"reload_time");
@@ -2881,8 +2881,8 @@ int outfit_loadPost (void)
    for (int i=0; i<array_size(outfit_stack); i++) {
       Outfit *o = &outfit_stack[i];
 
-      if (outfit_isFighterBay(o) && (o->u.bay.ship!=NULL) && ship_get(o->u.bay.ship)==NULL)
-         WARN(_("Fighter Bay Outfit '%s' has not found ship '%s'!"),o->name,o->u.bay.ship);
+      if (outfit_isFighterBay(o) && (o->u.bay.shipname!=NULL))
+         o->u.bay.ship = ship_get(o->u.bay.shipname);
 
       /* Add illegality as necessary. */
       if (array_size(o->illegaltoS) > 0) {
@@ -3031,7 +3031,7 @@ void outfit_free (void)
       array_free( o->illegalto );
 
       if (outfit_isFighterBay(o))
-         free(o->u.bay.ship);
+         free(o->u.bay.shipname);
       else if (outfit_isGUI(o))
          free(o->u.gui.gui);
       else if (outfit_isLicense(o))

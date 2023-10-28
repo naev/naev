@@ -283,13 +283,14 @@ typedef struct OutfitAfterburnerData_ {
    //double heat_base; /**< Temperature at which the outfit BEGINS to overheat(K). */
 } OutfitAfterburnerData;
 
+struct Ship_; /* Bit of a horrible hack to allow us to avoid circular definitions. */
 /**
  * @brief Represents a fighter bay.
  */
 typedef struct OutfitFighterBayData_ {
-   char *ship;       /**< Name of the ships to use as ammo. */
+   char *shipname;   /**< Name of the ships to use as ammo. */
+   const struct Ship_ *ship; /**< Ship to use as ammo. */
    double ship_mass; /**< Mass of a fighter. */
-   const struct Outfit_ *ammo; /**< Ships to use as ammo. */
    double delay;     /**< Delay between launches. */
    int amount;       /**< Amount of ammo it can store. */
    double reload_time;/**< Time it takes to reload 1 ammo. */
