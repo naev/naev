@@ -8,7 +8,7 @@
   <mass>70</mass>
   <price>110000</price>
   <description>Mostly referred by its initials SFC, the Super-Fast Collider is basically a giant Mace rocket used by Dvaered Capships in order to strike distant enemies.</description>
-  <gfx_store>macelauncher.webp</gfx_store>
+  <gfx_store>sfc.png</gfx_store>
   <cpu>-30</cpu>
  </general>
  <specific type="launcher">
