@@ -55,6 +55,9 @@ function enter ()
    vn.na(_([[You are sitting at your command chair when you suddenly hear a horrible scraping noise throughout the ship. Fearing the worst, you unholster your weapon and carefully go investigate.]]))
    vn.na(_([[Eventually you find it seems to be coming out of a cleaning robot that is tidying your ship. You find something jammed in it, it looks quite odd. You fiddle a bit with it until you are able to pull it out.]]))
    vn.na(_([[It looks like a feather? A quite fancy one at that with a metal core? Not sure what to make of it, you pocked the strange cyborg feather as you don't think Kex will need it back.]]))
+   if not player.evtDone("Minerva Station Epilogue 2") then
+      vn.na(_([[Maybe this is a sign that you should go pay Kex and Maikki a visit at New Haven?]]))
+   end
    vn.sfxBingo()
    vn.func( function ()
       player.outfitAdd(reward)
