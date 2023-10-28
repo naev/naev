@@ -361,8 +361,8 @@ void commodity_buy( unsigned int wid, const char *str )
    commodity_update(wid, NULL);
 
    /* Run hooks. */
-   hparam[0].type    = HOOK_PARAM_STRING;
-   hparam[0].u.str   = com->name;
+   hparam[0].type    = HOOK_PARAM_COMMODITY;
+   hparam[0].u.commodity = com;
    hparam[1].type    = HOOK_PARAM_NUMBER;
    hparam[1].u.num   = q;
    hparam[2].type    = HOOK_PARAM_SENTINEL;
@@ -403,8 +403,8 @@ void commodity_sell( unsigned int wid, const char *str )
    commodity_update(wid, NULL);
 
    /* Run hooks. */
-   hparam[0].type    = HOOK_PARAM_STRING;
-   hparam[0].u.str   = com->name;
+   hparam[0].type    = HOOK_PARAM_COMMODITY;
+   hparam[0].u.commodity = com;
    hparam[1].type    = HOOK_PARAM_NUMBER;
    hparam[1].u.num   = q;
    hparam[2].type    = HOOK_PARAM_SENTINEL;

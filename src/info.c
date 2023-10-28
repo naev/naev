@@ -1078,9 +1078,9 @@ static void cargo_jettison( unsigned int wid, const char *str )
    cargo_update( wid, NULL );
 
    /* Run hooks. */
-   hparam[0].type    = HOOK_PARAM_STRING;
-   hparam[0].u.str   = pclist[pos].commodity->name,
-      hparam[1].type    = HOOK_PARAM_NUMBER;
+   hparam[0].type    = HOOK_PARAM_COMMODITY;
+   hparam[0].u.commodity = (Commodity*) pclist[pos].commodity; /* TODO not cast */
+   hparam[1].type    = HOOK_PARAM_NUMBER;
    hparam[1].u.num   = pclist[pos].quantity;
    hparam[2].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "comm_jettison", hparam );

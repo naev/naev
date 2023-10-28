@@ -234,8 +234,8 @@ static int gatherable_gather( Gatherable *gat, Pilot *p )
          player_message( n_("%d ton of %s gathered", "%d tons of %s gathered", q), q, _(gat->type->name) );
 
          /* Run hooks. */
-         hparam[0].type    = HOOK_PARAM_STRING;
-         hparam[0].u.str   = gat->type->name;
+         hparam[0].type    = HOOK_PARAM_COMMODITY;
+         hparam[0].u.commodity = (Commodity*) gat->type; /* TODO not cast. */
          hparam[1].type    = HOOK_PARAM_NUMBER;
          hparam[1].u.num   = q;
          hparam[2].type    = HOOK_PARAM_SENTINEL;

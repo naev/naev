@@ -376,13 +376,14 @@ function spreadCommando()
    system.addGatherable( cmisn, 1, poC, vel*.5, 3600, true ) -- Spawn the commando (player-only gatherable) just behind the Koala
    audio.soundPlay( "target" )
    player.msg( _("Spacewalking commandos in sight.") )
+   player.autonavReset(5)
    mem.gathHook = hook.gather("gather")
 end
 
 -- Player gathers the commandos
 function gather( comm, qtt )
    -- Test commodity type
-   if comm~="Saboteurs" then
+   if comm~=_cargo() then
       return
    end
    local cmisn = _cargo()

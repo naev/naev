@@ -559,7 +559,7 @@ static int hookL_date( lua_State *L )
 /**
  * @brief Hooks the function to the player buying any sort of commodity.
  *
- * The hook receives the name of the commodity and the quantity being bought.
+ * The hook receives the commodity bought and the quantity being bought.
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
@@ -576,7 +576,7 @@ static int hookL_commbuy( lua_State *L )
 /**
  * @brief Hooks the function to the player selling any sort of commodity.
  *
- * The hook receives the name of the commodity and the quantity being bought.
+ * The hook receives the commodity sold and the quantity being sold.
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
@@ -593,7 +593,7 @@ static int hookL_commsell( lua_State *L )
 /**
  * @brief Hooks the function to the player jettisoning any sort of commodity.
  *
- * The hook receives the name of the commodity and the quantity jettisoned.
+ * The hook receives the commodity and the quantity jettisoned.
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
@@ -610,7 +610,7 @@ static int hookL_commjettison( lua_State *L )
 /**
  * @brief Hooks the function to the player gatehring any sort of commodity in space.
  *
- * The hook receives the name of the commodity and the quantity being gathered.
+ * The hook receives the commodity and the quantity being gathered.
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
