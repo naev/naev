@@ -8,12 +8,12 @@
 #include "space.h"
 
 /* Creation. */
-int escort_addList( Pilot *p, const char *ship,
+int escort_addList( Pilot *p, const Ship *ship,
       EscortType_t type, unsigned int id, int persist );
 void escort_freeList( Pilot *p );
 void escort_rmList( Pilot *p, unsigned int id );
 void escort_rmListIndex( Pilot *p, int i );
-unsigned int escort_create( Pilot *p, const char *ship,
+unsigned int escort_create( Pilot *p, const Ship *ship,
       const vec2 *pos, const vec2 *vel, double dir,
       EscortType_t type, int add, int dockslot );
 unsigned int escort_createRef( Pilot *p, Pilot *ref,

@@ -1343,7 +1343,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target, doubl
 
       /* Create the escort. */
       if (!outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY ))
-         escort_create( p, w->outfit->u.bay.ship,
+         escort_create( p, ship_get(w->outfit->u.bay.ship),
                &vp, &p->solid.vel, p->solid.dir, ESCORT_TYPE_BAY, 1, dockslot );
 
       w->u.ammo.quantity -= 1; /* we just shot it */

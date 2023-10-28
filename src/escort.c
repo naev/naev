@@ -37,14 +37,14 @@ static int escort_command( Pilot *parent, const char *cmd, unsigned int index );
  *    @param persist True if escort should respawn on takeoff/landing.
  *    @return 0 on success.
  */
-int escort_addList( Pilot *p, const char *ship, EscortType_t type,
+int escort_addList( Pilot *p, const Ship *ship, EscortType_t type,
       unsigned int id, int persist )
 {
    Escort_t *escort;
    if (p->escorts == NULL)
       p->escorts = array_create( Escort_t );
    escort = &array_grow( &p->escorts );
-   escort->ship = strdup(ship);
+   escort->ship = ship;
    escort->type = type;
    escort->id   = id;
    escort->persist = persist;
@@ -59,8 +59,6 @@ int escort_addList( Pilot *p, const char *ship, EscortType_t type,
  */
 void escort_freeList( Pilot *p )
 {
-   for (int i=0; i<array_size(p->escorts); i++)
-      free(p->escorts[i].ship);
    array_free(p->escorts);
    p->escorts = NULL;
 }
@@ -74,7 +72,6 @@ void escort_freeList( Pilot *p )
  */
 void escort_rmListIndex( Pilot *p, int i )
 {
-   free(p->escorts[i].ship);
    array_erase( &p->escorts, &p->escorts[i], &p->escorts[i+1] );
 }
 
@@ -108,18 +105,16 @@ void escort_rmList( Pilot *p, unsigned int id )
  *    @param dockslot The outfit slot which launched the escort (-1 if N/A)
  *    @return The ID of the escort on success.
  */
-unsigned int escort_create( Pilot *p, const char *ship,
+unsigned int escort_create( Pilot *p, const Ship *ship,
       const vec2 *pos, const vec2 *vel, double dir,
       EscortType_t type, int add, int dockslot )
 {
-   const Ship *s;
    Pilot *pe;
    PilotFlags f;
    unsigned int parent;
 
    /* Get important stuff. */
    parent = p->id;
-   s = ship_get(ship);
 
    /* Set flags. */
    pilot_clearFlagsRaw( f );
@@ -132,7 +127,7 @@ unsigned int escort_create( Pilot *p, const char *ship,
       pilot_setFlagRaw( f, PILOT_CARRIED );
 
    /* Create the pilot. */
-   pe = pilot_create( s, NULL, p->faction, "escort", dir, pos, vel, f, parent, dockslot );
+   pe = pilot_create( ship, NULL, p->faction, "escort", dir, pos, vel, f, parent, dockslot );
    pe->parent = parent;
 
    /* Make invincible to player. */
@@ -221,7 +216,7 @@ unsigned int escort_createRef( Pilot *p, Pilot *pe,
 
    /* Add to escort list. */
    if (add != 0)
-      escort_addList( p, pe->ship->name, type, pe->id, 1 );
+      escort_addList( p, pe->ship, type, pe->id, 1 );
    pe->dockslot = dockslot;
 
    return pe->id;

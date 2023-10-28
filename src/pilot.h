@@ -204,7 +204,7 @@ typedef enum EscortType_e {
  * @brief Stores an escort.
  */
 typedef struct Escort_s {
-   char *ship;          /**< Type of the ship escort is flying. */
+   const Ship *ship;    /**< Type of the ship escort is flying. */
    EscortType_t type;   /**< Type of escort. */
    unsigned int id;     /**< ID of in-game pilot. */
    /* TODO: something better than this */
