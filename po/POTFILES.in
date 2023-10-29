@@ -3215,7 +3215,6 @@ dat/outfits/flow/abilities/house_of_mirrors.lua
 dat/outfits/flow/abilities/reality_rip.lua
 dat/outfits/flow/abilities/seeking_chakra.lua
 dat/outfits/flow/astral_projection/astral_cannon.lua
-dat/outfits/flow/astral_projection/lesser_astral_cannon.lua
 dat/outfits/flow/flow_amplifier.lua
 dat/outfits/flow/structure/flow_resonator.lua
 dat/outfits/flow/structure/meditation_chamber.lua
