@@ -616,8 +616,8 @@ static void info_openWeapons( unsigned int wid )
    window_addText( wid, x+10, y, wlen, 100, 0, "txtSMode", NULL, NULL,
          _("Cycles through the following modes:\n"
            "- Switch: sets the selected weapons as primary and secondary weapons.\n"
-           "- Toggle: toggles the selected outfits to on or off state\n"
-           "- Hold: turns on the selected outfits as long as key is held"
+           "- Hold: turns on the selected outfits as long as key is held\n"
+           "- Toggle: toggles the selected outfits to on or off state"
            ));
    y -= 8+window_getTextHeight( wid, "txtSMode" );
    window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
