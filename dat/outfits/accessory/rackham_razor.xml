@@ -9,7 +9,7 @@
   <mass>0</mass>
   <price>1000000</price>
   <description>An ornately engraved sword with a lightly curved, razor-sharp nanosteel blade, the favorite weapon of the once legendary pirate Red Rackham. The mere sight of this sword struck fear into his enemies and rallied his crew with visions of plunder and glory.</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>rackham_razor.webp</gfx_store>
   <desc_extra>#gDouble effect when flying a pirate ship.#0</desc_extra>
  <rarity>6</rarity></general>
  <specific type="modification">
