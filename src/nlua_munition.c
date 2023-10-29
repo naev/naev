@@ -338,7 +338,7 @@ static int munitionL_getInrange( lua_State *L )
  */
 static int munitionL_pos( lua_State *L )
 {
-   Weapon *w = luaL_validmunition( L, 1 );
+   const Weapon *w = luaL_validmunition( L, 1 );
    lua_pushvector( L, w->solid.pos );
    return 1;
 }
@@ -352,7 +352,7 @@ static int munitionL_pos( lua_State *L )
  */
 static int munitionL_vel( lua_State *L )
 {
-   Weapon *w = luaL_validmunition( L, 1 );
+   const Weapon *w = luaL_validmunition( L, 1 );
    lua_pushvector( L, w->solid.vel );
    return 1;
 }
@@ -366,7 +366,7 @@ static int munitionL_vel( lua_State *L )
  */
 static int munitionL_faction( lua_State *L )
 {
-   Weapon *w = luaL_validmunition( L, 1 );
+   const Weapon *w = luaL_validmunition( L, 1 );
    lua_pushfaction( L, w->faction );
    return 1;
 }
@@ -380,7 +380,7 @@ static int munitionL_faction( lua_State *L )
  */
 static int munitionL_parent( lua_State *L )
 {
-   Weapon *w = luaL_validmunition( L, 1 );
+   const Weapon *w = luaL_validmunition( L, 1 );
    lua_pushpilot( L, w->parent );
    return 1;
 }
@@ -394,7 +394,7 @@ static int munitionL_parent( lua_State *L )
  */
 static int munitionL_target( lua_State *L )
 {
-   Weapon *w = luaL_validmunition( L, 1 );
+   const Weapon *w = luaL_validmunition( L, 1 );
    lua_pushpilot( L, w->parent );
    return 1;
 }
@@ -408,7 +408,7 @@ static int munitionL_target( lua_State *L )
  */
 static int munitionL_outfit( lua_State *L )
 {
-   Weapon *w = luaL_validmunition( L, 1 );
+   const Weapon *w = luaL_validmunition( L, 1 );
    lua_pushoutfit( L, w->outfit );
    return 1;
 }
