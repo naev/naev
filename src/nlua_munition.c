@@ -38,6 +38,8 @@ static int munitionL_faction( lua_State *L );
 static int munitionL_parent( lua_State *L );
 static int munitionL_target( lua_State *L );
 static int munitionL_outfit( lua_State *L );
+static int munitionL_strength( lua_State *L );
+static int munitionL_strengthSet( lua_State *L );
 static const luaL_Reg munitionL_methods[] = {
    /* General. */
    { "__eq", munitionL_eq },
@@ -53,6 +55,9 @@ static const luaL_Reg munitionL_methods[] = {
    { "parent", munitionL_parent },
    { "target", munitionL_target },
    { "outfit", munitionL_outfit },
+   { "strength", munitionL_strength },
+   /* Set properties. */
+   { "strengthSet", munitionL_strengthSet },
    /* End sentinal. */
    {0,0},
 }; /**< Munition metatable methods. */
@@ -410,5 +415,39 @@ static int munitionL_outfit( lua_State *L )
 {
    const Weapon *w = luaL_validmunition( L, 1 );
    lua_pushoutfit( L, w->outfit );
+   return 1;
+}
+
+/**
+ * @brief Gets the strength of a munition.
+ *
+ * Defaults to 1. and only changed when past falloff range or modified by a Lua script.
+ *
+ *    @luatparam Munition m Munition to get strength of.
+ *    @luatreturn number The corresponding strength value where 1 indicates normal strength.
+ * @luafunc strength
+ * @see strengthSet
+ */
+static int munitionL_strength( lua_State *L )
+{
+   const Weapon *w = luaL_validmunition( L, 1 );
+   lua_pushnumber( L, w->strength );
+   return 1;
+}
+
+/**
+ * @brief Sets the strength of a munition.
+ *
+ *    @luatparam Munition m Munition to get strength of.
+ *    @luatparam number str Strength to set to. A value of 1 indicates normal strength.
+ * @luafunc strengthSet
+ * @see strength
+ */
+static int munitionL_strengthSet( lua_State *L )
+{
+   Weapon *w = luaL_validmunition( L, 1 );
+   double sb = w->strength_base;
+   w->strength_base = luaL_checknumber( L, 2 );
+   w->strength *= w->strength_base / sb;
    return 1;
 }

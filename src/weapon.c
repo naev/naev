@@ -625,7 +625,7 @@ void weapons_updateCollide( double dt )
                break;
             }
             else if (w->timer < w->falloff)
-               w->strength = w->timer / w->falloff;
+               w->strength = w->timer / w->falloff * w->strength_base;
             break;
 
          /* Beam weapons handled a part. */
@@ -783,7 +783,7 @@ static void weapon_render( Weapon* w, double dt )
          gfx = outfit_gfx(w->outfit);
 
          /* Alpha based on strength. */
-         c.a = w->strength;
+         c.a = MIN( 1., w->strength );
 
          /* Outfit spins around. */
          if (outfit_isProp(w->outfit, OUTFIT_PROP_WEAP_SPIN)) {
@@ -849,7 +849,7 @@ static void weapon_render( Weapon* w, double dt )
                glUniform2f( gfx->dimensions, r, r );
                glUniform1f( gfx->u_r, w->r );
                glUniform1f( gfx->u_time, w->life-w->timer );
-               glUniform1f( gfx->u_fade, w->strength );
+               glUniform1f( gfx->u_fade, MIN( 1., w->strength ) );
                gl_uniformMat4( gfx->projection, &projection );
 
                glEnableVertexAttribArray( gfx->vertex );
@@ -2185,6 +2185,7 @@ static int weapon_create( Weapon *w, PilotOutfitSlot* po, const Outfit *ref,
    }
    w->outfit   = outfit; /* non-changeable */
    w->strength = 1.;
+   w->strength_base = 1.;
    w->r        = RNGF(); /* Set unique value. */
 
    /* Inform the target. */

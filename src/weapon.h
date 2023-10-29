@@ -68,6 +68,7 @@ typedef struct Weapon_ {
    int lua_mem;         /**< Mem table, in case of a Pilot Outfit. */
    double falloff;      /**< Point at which damage falls off. Used to determine slowdown for smart seekers.  */
    double strength;     /**< Calculated with falloff. */
+   double strength_base;/**< Base strength, set via Lua. */
    int sx;              /**< Current X sprite to use. */
    int sy;              /**< Current Y sprite to use. */
    Trail_spfx *trail;   /**< Trail graphic if applicable, else NULL. */
