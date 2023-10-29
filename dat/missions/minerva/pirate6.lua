@@ -9,7 +9,7 @@
  <done>Minerva Pirates 5</done>
  <notes>
   <campaign>Minerva</campaign>
-  <done_misn>Kex's Freedom 5</done_misn>
+  <done_misn name="Kex's Freedom 5" />
  </notes>
 </mission>
 --]]
