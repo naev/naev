@@ -19,7 +19,7 @@
   <trackmin>5000</trackmin>
   <trackmax>25000</trackmax>
   <ammo_mass>10</ammo_mass>
-  <gfx>mace.png</gfx>
+  <gfx>sfc.webp</gfx>
   <sound>mace</sound>
   <sound_hit>lrgexp0</sound_hit>
   <spfx_shield>ExpM</spfx_shield>
