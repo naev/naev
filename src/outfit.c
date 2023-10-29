@@ -1413,6 +1413,10 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          outfit_setProp(temp, OUTFIT_PROP_WEAP_MISS_EXPLODE);
          continue;
       }
+      if (xml_isNode(node,"onlyhittarget")) {
+         outfit_setProp(temp, OUTFIT_PROP_WEAP_ONLYHITTARGET);
+         continue;
+      }
       if (xml_isNode(node,"range")) {
          char *buf;
          xmlr_attr_strd(node,"blowup",buf);
@@ -1797,6 +1801,10 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       }
       if (xml_isNode(node,"miss_explode")) {
          outfit_setProp(temp, OUTFIT_PROP_WEAP_MISS_EXPLODE);
+         continue;
+      }
+      if (xml_isNode(node,"onlyhittarget")) {
+         outfit_setProp(temp, OUTFIT_PROP_WEAP_ONLYHITTARGET);
          continue;
       }
 

@@ -30,6 +30,7 @@
 #define OUTFIT_PROP_WEAP_MISS_SHIPS    (1<<10) /**< Weapon can not hit ships. */
 #define OUTFIT_PROP_WEAP_MISS_ASTEROIDS (1<<11) /**< Weapon can not hit asteroids. */
 #define OUTFIT_PROP_WEAP_MISS_EXPLODE  (1<<12) /**< The weapon particle blows up on miss. */
+#define OUTFIT_PROP_WEAP_ONLYHITTARGET (1<<13) /**< The weapon can only hit the target (and asteroids or whatever). */
 
 /* Outfit filter labels. [Doc comments are also translator notes and must precede the #define.] */
 /** Color-coded abbreviation for "Weapon [outfit]", short enough to use as a tab/column title. */

@@ -1120,6 +1120,12 @@ static void weapon_updateCollide( Weapon* w, double dt )
                continue;
          }
 
+         /* Check if only hit target. */
+         if (weapon_isFlag(w,WEAPON_FLAG_ONLYHITTARGET)) {
+            if ((w->target.type==TARGET_PILOT) && (p->id != w->target.u.id))
+               continue;
+         }
+
          /* Check to see if it can hit. */
          if (!weapon_checkCanHit(w,p))
             continue;
@@ -2187,6 +2193,9 @@ static int weapon_create( Weapon *w, PilotOutfitSlot* po, const Outfit *ref,
    w->strength = 1.;
    w->strength_base = 1.;
    w->r        = RNGF(); /* Set unique value. */
+   /* Set flags. */
+   if (outfit_isProp(outfit,OUTFIT_PROP_WEAP_ONLYHITTARGET))
+      weapon_setFlag(w,WEAPON_FLAG_ONLYHITTARGET);
 
    /* Inform the target. */
    if (!(outfit_isBeam(w->outfit)) && (w->target.type==TARGET_PILOT)) {
