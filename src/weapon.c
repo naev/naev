@@ -590,7 +590,6 @@ void weapons_updatePurge (void)
       y = round(w->solid.pos.y);
       w2 = ceil(range * 0.5);
       h2 = ceil(range * 0.5);
-      /* This hack is pretty ugly, but it allows us to store both foreground and background using a single ID. */
       qt_insert( &weapon_quadtree, i, x-w2, y-h2, x+w2, y+h2 );
    }
 }
@@ -1002,7 +1001,7 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
       else if ((wc->gfx!=NULL) && (wc->gfx->tex!=NULL))
          return CollideSprite( wc->gfx->tex, w->sx, w->sy, &w->solid.pos,
                   ctex, csx, csy, cpos, crash );
-      /* TODO case no polygon and circle collision. */
+      /* Case no polygon and circle collision. */
       else
          return CollideCircleSprite( &w->solid.pos, wc->range, ctex, csx, csy, cpos, crash );
    }
