@@ -333,6 +333,7 @@ static Target lua_totarget( lua_State *L, int idx )
  *    @luatparam[opt=p:pos()] Vec2 pos Position to create the munition at.
  *    @luatparam[opt=p:vel()] Vec2 vel Initial velocity of the munition. The munition's base velocity gets added to this.
  *    @luatparam[opt=false] boolean noaim Whether or not to disable the tracking and aiming framework when shooting.
+ *    @luatreturn Munition The newly created munition.
  * @luafunc munition
  */
 static int poL_munition( lua_State *L )
@@ -345,9 +346,9 @@ static int poL_munition( lua_State *L )
    vec2 *vp    = luaL_optvector( L, 6, &p->solid.pos );
    vec2 *vv    = luaL_optvector( L, 7, &p->solid.vel );
    int noaim   = lua_toboolean( L, 8 );
-
-   weapon_add( po, o, dir, vp, vv, p, &t, 0., !noaim );
-   return 0;
+   Weapon *w = weapon_add( po, o, dir, vp, vv, p, &t, 0., !noaim );
+   lua_pushmunition( L, w );
+   return 1;
 }
 
 /**

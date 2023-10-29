@@ -2292,7 +2292,7 @@ static int weapon_create( Weapon *w, PilotOutfitSlot* po, const Outfit *ref,
  *    @param time Expected flight time.
  *    @param aim Whether or not to aim.
  */
-void weapon_add( PilotOutfitSlot *po, const Outfit *ref,
+Weapon *weapon_add( PilotOutfitSlot *po, const Outfit *ref,
       double dir, const vec2* pos, const vec2* vel,
       const Pilot *parent, const Target *target, double time, int aim )
 {
@@ -2305,7 +2305,7 @@ void weapon_add( PilotOutfitSlot *po, const Outfit *ref,
    if (!outfit_isBolt(o) &&
          !outfit_isLauncher(o)) {
       ERR(_("Trying to create a Weapon from a non-Weapon type Outfit"));
-      return;
+      return 0;
    }
 #endif /* DEBUGGING */
 
@@ -2323,6 +2323,8 @@ void weapon_add( PilotOutfitSlot *po, const Outfit *ref,
          weapon_vbo = gl_vboCreateStream( size, NULL );
       gl_vboData( weapon_vbo, size, weapon_vboData );
    }
+
+   return w;
 }
 
 /**
