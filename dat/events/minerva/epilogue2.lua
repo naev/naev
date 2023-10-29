@@ -8,6 +8,7 @@
  <cond>player.misnDone("Minerva Finale 2")</cond>
  <notes>
   <campaign>Minerva</campaign>
+  <done_misn name="Minerva Finale 2" />
  </notes>
 </event>
 --]]

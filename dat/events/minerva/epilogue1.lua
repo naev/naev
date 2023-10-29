@@ -8,6 +8,7 @@
  <priority>11</priority>
  <notes>
   <campaign>Minerva</campaign>
+  <done_misn name="Minerva Finale 2" />
  </notes>
 </event>
 --]]
