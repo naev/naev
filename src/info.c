@@ -721,13 +721,13 @@ static void weapons_toggleList( unsigned int wid, const char *str )
    t = pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons );
    switch (t) {
       case WEAPSET_TYPE_SWITCH:
-         c = WEAPSET_TYPE_TOGGLE;
+         c = WEAPSET_TYPE_HOLD;
          break;
       case WEAPSET_TYPE_HOLD:
-         c = WEAPSET_TYPE_SWITCH;
+         c = WEAPSET_TYPE_TOGGLE;
          break;
       case WEAPSET_TYPE_TOGGLE:
-         c = WEAPSET_TYPE_HOLD;
+         c = WEAPSET_TYPE_SWITCH;
          break;
       default:
          /* Shouldn't happen... but shuts up GCC */
