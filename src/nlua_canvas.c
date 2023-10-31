@@ -230,10 +230,8 @@ static int canvasL_new( lua_State *L )
  */
 static int canvasL_set( lua_State *L )
 {
-   LuaCanvas_t *lc;
-
-   if (lua_iscanvas(L,1)) {
-      lc = luaL_checkcanvas(L,1);
+   if (!lua_isnoneornil(L,1)) {
+      LuaCanvas_t *lc = luaL_checkcanvas(L,1);
       if (!previous_fbo_set) {
          previous_fbo = gl_screen.current_fbo;
          previous_fbo_set = 1;
@@ -245,11 +243,8 @@ static int canvasL_set( lua_State *L )
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
       render_needsReset();
    }
-   else if ((lua_gettop(L)<=0) || lua_isnil(L,1)) {
-      canvas_reset();
-   }
    else
-      NLUA_ERROR(L,_("Unexpected parameter"));
+      canvas_reset();
 
    return 0;
 }
