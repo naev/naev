@@ -14,6 +14,7 @@
 #include "opengl.h"
 #include "pause.h"
 #include "player.h"
+#include "nlua_canvas.h"
 #include "space.h"
 #include "spfx.h"
 #include "toolkit.h"
@@ -209,6 +210,7 @@ void render_all( double game_dt, double real_dt )
    /* Background stuff */
    space_render( real_dt ); /* Nebula looks really weird otherwise. */
    hooks_run( "renderbg" );
+   render_reset();
    spobs_render();
    spfx_render(SPFX_LAYER_BACK, dt);
    weapons_render(WEAPON_LAYER_BG, dt);
@@ -224,6 +226,7 @@ void render_all( double game_dt, double real_dt )
    gui_renderReticles(dt);
    pilots_renderOverlay();
    hooks_run( "renderfg" );
+   render_reset();
 
    /* Process game stuff only. */
    if (pp_game)
@@ -231,6 +234,7 @@ void render_all( double game_dt, double real_dt )
 
    /* GUi stuff. */
    gui_render(dt);
+   render_reset();
 
    if (pp_gui)
       render_fbo_list( dt, pp_shaders_list[PP_LAYER_GUI], &cur, !pp_final );
@@ -241,6 +245,7 @@ void render_all( double game_dt, double real_dt )
    /* Top stuff. */
    ovr_render( real_dt ); /* Using real_dt is sort of a hack for now. */
    hooks_run( "rendertop" );
+   render_reset();
    fps_display( real_dt ); /* Exception using real_dt. */
    if (!menu_open)
       toolkit_render( real_dt );
@@ -417,4 +422,28 @@ void render_setGamma( double gamma )
    glUniform1f( shaders.gamma_correction.gamma, gamma );
    glUseProgram( 0 );
    pp_gamma_correction = render_postprocessAdd( &gamma_correction_shader, PP_LAYER_FINAL, 98, PP_SHADER_PERMANENT );
+}
+
+static int needsReset = 0;
+/**
+ * @brief Resets the OpenGL stuff if it was changed by Lua.
+ */
+void render_reset (void)
+{
+   if (!needsReset)
+      return;
+   needsReset = 0;
+
+   glBlendEquation( GL_FUNC_ADD );
+   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+   gl_unclipRect();
+   canvas_reset();
+}
+
+/**
+ * @brief Tells the rendering engine that it needs to restore the OpenGL state when possible.
+ */
+void render_needsReset (void)
+{
+   needsReset = 1;
 }

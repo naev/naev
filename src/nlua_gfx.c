@@ -24,6 +24,7 @@
 #include "nlua_transform.h"
 #include "nlua_canvas.h"
 #include "nlua_vec2.h"
+#include "render.h"
 #include "nluadef.h"
 #include "opengl.h"
 #include "array.h"
@@ -961,6 +962,7 @@ static int gfxL_setBlendMode( lua_State *L )
    glBlendFuncSeparate(srcRGB, dstRGB, srcA, dstA);
    gl_checkErr();
 
+   render_needsReset();
    return 0;
 }
 
@@ -983,6 +985,7 @@ static int gfxL_setScissor( lua_State *L )
       GLsizei w = luaL_optinteger(L,3,0);
       GLsizei h = luaL_optinteger(L,4,0);
       gl_clipRect( x, y, w, h );
+      render_needsReset();
    }
    else
       gl_unclipRect();

@@ -18,6 +18,7 @@
 #include "nluadef.h"
 #include "nlua_tex.h"
 #include "nlua_colour.h"
+#include "render.h"
 
 static int nlua_canvas_counter = 0;
 static GLuint previous_fbo = 0;
@@ -242,14 +243,10 @@ static int canvasL_set( lua_State *L )
       glDisable(GL_SCISSOR_TEST);
       glViewport( 0, 0, lc->tex->w, lc->tex->h );
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
+      render_needsReset();
    }
    else if ((lua_gettop(L)<=0) || lua_isnil(L,1)) {
-      gl_screen.current_fbo = previous_fbo;
-      previous_fbo_set = 0;
-      if (was_scissored)
-         glEnable(GL_SCISSOR_TEST);
-      glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
-      glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
+      canvas_reset();
    }
    else
       NLUA_ERROR(L,_("Unexpected parameter"));
@@ -302,4 +299,19 @@ static int canvasL_clear( lua_State *L )
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glClearColor( 0.0, 0.0, 0.0, 1.0 );
    return 0;
+}
+
+/**
+ * @brief Resets the canvas state if applicable.
+ */
+void canvas_reset (void)
+{
+   if (!previous_fbo_set)
+      return;
+   gl_screen.current_fbo = previous_fbo;
+   previous_fbo_set = 0;
+   if (was_scissored)
+      glEnable(GL_SCISSOR_TEST);
+   glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
+   glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
 }
