@@ -9,7 +9,7 @@
   <price>750000</price>
   <description>The Valkyrie Beam is a heavily modified version of the Ragnarok Beam, where the shields of the ship are significantly rerouted into the beam weapon to increase the output damage. The result is an incredibly potent beam that has a tendency to leave the ship as a sitting duck if it is unable to destroy the target in a single shot.</description>
   <desc_extra>#rDrains 80 shield per second when firing and for one second after.#0</desc_extra>
-  <gfx_store>ragnarok.webp</gfx_store>
+  <gfx_store>valkyrie_beam.webp</gfx_store>
   <cpu>-350</cpu>
  <rarity>6</rarity></general>
  <specific type="turret beam">

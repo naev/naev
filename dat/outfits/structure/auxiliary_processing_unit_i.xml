@@ -7,7 +7,7 @@
   <mass>15</mass>
   <price>20000</price>
   <description>An additional proccessing unit to supplement the main processor of the core system, giving small ships a little more processing power.</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>cpu_i.webp</gfx_store>
  </general>
  <specific type="modification">
   <cpu_max>10</cpu_max>
