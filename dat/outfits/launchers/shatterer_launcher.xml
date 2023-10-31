@@ -20,7 +20,7 @@
   <trackmin>0</trackmin>
   <trackmax>10000</trackmax>
   <ammo_mass>0.5</ammo_mass>
-  <gfx>fury.png</gfx>
+  <gfx>shatterer.webp</gfx>
   <sound>missile</sound>
   <sound_hit>bansheeexp</sound_hit>
   <spfx_shield>ExpS</spfx_shield>
