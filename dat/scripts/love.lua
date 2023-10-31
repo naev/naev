@@ -15,8 +15,8 @@ love.exec( 'pong' ) -- Will look for pong.lua or pong/main.lua
 love = {
    _basepath = "",
    _version_major = 11,
-   _version_minor = 1,
-   _version_patch = 3,
+   _version_minor = 4,
+   _version_patch = 0,
    _codename = "naev",
    _default = {
       title = "LÖVE",

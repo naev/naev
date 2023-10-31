@@ -695,6 +695,7 @@ function graphics.Canvas:getDPIScale() return 1/self.s end
 --]]
 function graphics.isGammaCorrect() return true end
 function graphics.isActive() return true end
+function graphics.present() return end -- NOOP
 function graphics.getDPIScale()
    local _w, _h, scale = naev.gfx.dim()
    return 1/scale
