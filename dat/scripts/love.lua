@@ -100,6 +100,10 @@ function love.origin()
    local lg = require "love.graphics"
    lg.origin()
 end
+-- Non-standard function to refresh the screen
+function love.refresh ()
+   tk.refresh()
+end
 
 
 --[[
@@ -272,7 +276,7 @@ function love.exec( path )
    end
    love._focus = true
    love._started = true
-   naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse, _resize, _textinput )
+   naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse, _resize, _textinput, t.drawondemand )
    -- Doesn't actually get here until the dialogue is closed
    love._started = false
 
