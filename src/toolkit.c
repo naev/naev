@@ -149,7 +149,7 @@ void toolkit_setWindowPos( Window *wdw, int x, int y )
    /* x pos */
    if (x == -1) { /* Center */
       wdw->x = (gl_screen.nw - wdw->w)/2.;
-      wdw->xrel = .5;
+      wdw->xrel = 0.5;
       window_setFlag( wdw, WINDOW_CENTERX );
    }
    else if (x < 0)
@@ -160,7 +160,7 @@ void toolkit_setWindowPos( Window *wdw, int x, int y )
    /* y pos */
    if (y == -1) { /* Center */
       wdw->y = (gl_screen.nh - wdw->h)/2.;
-      wdw->yrel = .5;
+      wdw->yrel = 0.5;
       window_setFlag( wdw, WINDOW_CENTERY );
    }
    else if (y < 0)
