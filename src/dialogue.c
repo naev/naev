@@ -873,13 +873,14 @@ static int dialogue_custom_event( unsigned int wid, SDL_Event *event )
  *    @param render Custom render callback.
  *    @param event Custom event callback.
  *    @param data Custom data.
+ *    @param dynamic Whether or not the custom is dynamic.
  *    @param autofree Should \p data be freed when the window is destroyed?
  */
 void dialogue_custom( const char* caption, int width, int height,
       int (*update) (double dt, void* data),
       void (*render) (double x, double y, double w, double h, void* data),
       int (*event) (unsigned int wid, SDL_Event* event, void* data),
-      void* data, int autofree )
+      void* data, int autofree, int dynamic )
 {
    struct dialogue_custom_data_s cd;
    dialogue_update_t du;
@@ -908,7 +909,8 @@ void dialogue_custom( const char* caption, int width, int height,
       wgtx = wgty = 20;
    }
    window_addCust( wid, wgtx, wgty, width, height, "cstCustom", 0, render, NULL, NULL, NULL, data );
-   window_custSetDynamic( wid, "cstCustom", 1 );
+   if (dynamic)
+      window_custSetDynamic( wid, "cstCustom", 1 );
    if (autofree)
       window_custAutoFreeData( wid, "cstCustom" );
    window_custSetClipping( wid, "cstCustom", 1 );
