@@ -134,7 +134,7 @@ int lua_iscanvas( lua_State *L, int ind )
  */
 static int canvasL_gc( lua_State *L )
 {
-   LuaCanvas_t *lc = luaL_checkcanvas(L,1);
+   const LuaCanvas_t *lc = luaL_checkcanvas(L,1);
    glDeleteFramebuffers( 1, &lc->fbo );
    gl_freeTexture( lc->tex );
    gl_checkErr();
@@ -231,7 +231,7 @@ static int canvasL_new( lua_State *L )
 static int canvasL_set( lua_State *L )
 {
    if (!lua_isnoneornil(L,1)) {
-      LuaCanvas_t *lc = luaL_checkcanvas(L,1);
+      const LuaCanvas_t *lc = luaL_checkcanvas(L,1);
       if (!previous_fbo_set) {
          previous_fbo = gl_screen.current_fbo;
          previous_fbo_set = 1;
@@ -258,7 +258,7 @@ static int canvasL_set( lua_State *L )
  */
 static int canvasL_dims( lua_State *L )
 {
-   LuaCanvas_t *lc = luaL_checkcanvas(L,1);
+   const LuaCanvas_t *lc = luaL_checkcanvas(L,1);
    lua_pushnumber( L, lc->tex->w );
    lua_pushnumber( L, lc->tex->h );
    return 2;
@@ -273,7 +273,7 @@ static int canvasL_dims( lua_State *L )
  */
 static int canvasL_getTex( lua_State *L )
 {
-   LuaCanvas_t *lc = luaL_checkcanvas(L,1);
+   const LuaCanvas_t *lc = luaL_checkcanvas(L,1);
    lua_pushtex( L, gl_dupTexture(lc->tex) );
    return 1;
 }
@@ -287,7 +287,7 @@ static int canvasL_getTex( lua_State *L )
  */
 static int canvasL_clear( lua_State *L )
 {
-   LuaCanvas_t *lc = luaL_checkcanvas(L,1);
+   const LuaCanvas_t *lc = luaL_checkcanvas(L,1);
    (void) lc; /* Just to enforce good practice, canvas should be already set. */
    const glColour *c = luaL_optcolour(L,2,&cBlack);
    glClearColor( c->r, c->g, c->b, c->a );
