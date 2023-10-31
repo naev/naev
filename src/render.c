@@ -209,6 +209,7 @@ void render_all( double game_dt, double real_dt )
 
    /* Background stuff */
    space_render( real_dt ); /* Nebula looks really weird otherwise. */
+   render_reset(); /* space_render can use a lua background. */
    hooks_run( "renderbg" );
    render_reset();
    spobs_render();
@@ -223,6 +224,7 @@ void render_all( double game_dt, double real_dt )
    player_render(dt);
    spfx_render(SPFX_LAYER_FRONT, dt);
    space_renderOverlay(dt);
+   render_reset(); /* space_render can use a lua background. */
    gui_renderReticles(dt);
    pilots_renderOverlay();
    hooks_run( "renderfg" );
