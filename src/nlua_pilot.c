@@ -871,10 +871,23 @@ static int pilotL_explode( lua_State *L )
    return 0;
 }
 
+static void clearSelect( Pilot *const* pilot_stack, int f )
+{
+   for (int i=0; i<array_size(pilot_stack); i++) {
+      Pilot *pi = pilot_stack[i];
+      if (pilot_isFlag(pi, PILOT_DELETE) ||
+            pilot_isFlag(pi, PILOT_DEAD) ||
+            pilot_isFlag(pi, PILOT_HIDE))
+         continue;
+      if (pi->faction!=f)
+         continue;
+      pilot_delete(pi);
+   }
+}
 /**
  * @brief Removes all pilots belonging to a faction from the system.
  *
- * @luatparam Faction fac Faction name/object to selectively clear.
+ * @luatparam Faction|table fac Faction name/object or table of faction name/objects to selectively clear.
  *
  * @usage pilot.clearSelect("Empire")
  *
@@ -882,17 +895,17 @@ static int pilotL_explode( lua_State *L )
  */
 static int pilotL_clearSelect( lua_State *L )
 {
-   int f = luaL_validfaction(L,1);
    Pilot *const* pilot_stack = pilot_getAll();
-
-   for (int i=0; i<array_size(pilot_stack); i++) {
-      Pilot *pi = pilot_stack[i];
-      if ((pi->faction == f) &&
-            !pilot_isFlag(pi, PILOT_DELETE) &&
-            !pilot_isFlag(pi, PILOT_DEAD) &&
-            !pilot_isFlag(pi, PILOT_HIDE))
-         pilot_delete(pi);
+   if (lua_istable(L,1)) {
+      lua_pushnil(L);
+      while (lua_next(L, 1) != 0) {
+         clearSelect( pilot_stack, luaL_validfaction(L,-1) );
+         lua_pop(L,1);
+      }
+      lua_pop(L,1);
    }
+   else
+      clearSelect( pilot_stack, luaL_validfaction(L,1) );
 
    return 0;
 }
@@ -1007,6 +1020,7 @@ static int pilotL_getPilots( lua_State *L )
                array_push_back( &factions, lua_tofaction(L, -1) );
             lua_pop(L,1);
          }
+         lua_pop(L,1);
       }
 
       /* Now put all the matching pilots in a table. */
@@ -2589,8 +2603,10 @@ static int pilotL_outfitToggle( lua_State *L )
    if (lua_istable(L,2)) {
       n = 0;
       lua_pushnil(L);
-      while (lua_next(L, 1) != 0)
+      while (lua_next(L, 1) != 0) {
          n += outfitToggle( L, p, luaL_checkinteger(L,-1)-1, activate );
+         lua_pop(L,1);
+      }
       lua_pop(L,1);
    }
    else
