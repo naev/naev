@@ -172,7 +172,7 @@ function enter()
    end
 
    for k,f in ipairs(pir.factions) do
-      pilot.toggleSpawn(f)
+      pilot.toggleSpawn(f, false)
       pilot.clearSelect(f) -- Not sure if we need a claim for this.
    end
 

@@ -941,38 +941,47 @@ static int pilotL_canSpawn( lua_State *L )
    return 1;
 }
 
+void toggleSpawn( int f, int b )
+{
+   /* Find the faction and set. */
+   for (int i=0; i<array_size(cur_system->presence); i++) {
+      if (cur_system->presence[i].faction != f)
+         continue;
+      cur_system->presence[i].disabled = b;
+      break;
+   }
+}
 /**
  * @brief Disables or enables pilot spawning in the current system.
  *
  * If player jumps the spawn is enabled again automatically. Global spawning takes priority over faction spawning.
  *
- * @usage pilot.toggleSpawn() -- Defaults to flipping the global spawning (true->false and false->true)
+ * @usage pilot.toggleSpawn() -- Defaults to disabling global spawning
  * @usage pilot.toggleSpawn( false ) -- Disables global spawning
  * @usage pilot.toggleSpawn( "Pirate" ) -- Defaults to disabling pirate spawning
  * @usage pilot.toggleSpawn( "Pirate", true ) -- Turns on pirate spawning
  *
- *    @luatparam[opt] Faction fid Faction to enable or disable spawning off. If ommited it works on global spawning.
- *    @luatparam[opt] boolean enable true enables spawn, false disables it.
+ *    @luatparam[opt] Faction|table fac Faction or table of factions to enable or disable spawning off. If ommited it works on global spawning.
+ *    @luatparam[opt=false] boolean enable true enables spawn, false disables it.
  *    @luatreturn boolean The current spawn state.
  * @luafunc toggleSpawn
  */
 static int pilotL_toggleSpawn( lua_State *L )
 {
+   int b = !lua_toboolean(L,2);
+
    /* Setting it directly. */
    if (!lua_isnoneornil(L,1)) {
-      if (lua_isfaction(L,1) || lua_isstring(L,1)) {
-         int f = luaL_validfaction(L,1);
-         int b = !lua_toboolean(L,2);
-
-         /* Find the faction and set. */
-         for (int i=0; i<array_size(cur_system->presence); i++) {
-            if (cur_system->presence[i].faction != f)
-               continue;
-            cur_system->presence[i].disabled = b;
-            break;
+      if (lua_istable(L,1)) {
+         lua_pushnil(L);
+         while (lua_next(L, 1) != 0) {
+            toggleSpawn( luaL_validfaction(L,-1), b );
+            lua_pop(L,1);
          }
-
+         lua_pop(L,1);
       }
+      else if (lua_isfaction(L,1) || lua_isstring(L,1))
+         toggleSpawn( luaL_validfaction(L,1), b );
       else if (lua_isboolean(L,1))
          space_spawn = lua_toboolean(L,1);
       else
@@ -980,7 +989,7 @@ static int pilotL_toggleSpawn( lua_State *L )
    }
    /* Toggling. */
    else
-      space_spawn = !space_spawn;
+      space_spawn = b;
 
    lua_pushboolean(L, space_spawn);
    return 1;

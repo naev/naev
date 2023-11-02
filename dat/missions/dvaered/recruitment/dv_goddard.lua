@@ -202,7 +202,7 @@ function enter()
    -- Player jumps in Arcturus to intercept the Koala
    if mem.misn_state == 1 and system.cur() == mem.koalasys then
       for k,f in ipairs(pir.factions) do
-         pilot.toggleSpawn(f)
+         pilot.toggleSpawn(f,false)
          pilot.clearSelect(f) -- We don't want them to kill our Siren of Halir
       end
 
@@ -213,7 +213,7 @@ function enter()
    -- Player jump in Dvaered system to intercept Agrippina Grosjean
    elseif mem.misn_state == 4 and system.cur() == mem.sharksys and player.pilot():ship():nameRaw() == "Llama" then
       mem.misn_state = 5
-      pilot.toggleSpawn()
+      pilot.toggleSpawn(false)
       pilot.clear()
       hook.timer(2.0,"spawnShark")
    end
