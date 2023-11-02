@@ -252,8 +252,10 @@ int map_system_isOpen( void)
  */
 void map_system_show( int wid, int x, int y, int w, int h)
 {
+   window_addRect( wid, x, y, w, h, "rctMapSys", &cBlack, 0 );
    window_addCust( wid, x, y, w, h,
          "cstMapSys", 1, map_system_render, map_system_mouse, NULL, NULL, NULL );
+   window_custSetDynamic( wid, "cstMapSys", 1 );
 }
 
 /**
@@ -298,8 +300,6 @@ static void map_system_render( double bx, double by, double w, double h, void *d
             starCnt = 1;
       }
    }
-   /* background */
-   gl_renderRect( bx, by, w, h, &cBlack );
 
    vis_index=0;
    offset = h - pitch*nshow;
@@ -544,7 +544,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
 
       /* Local features. */
       if (p->feature != NULL)
-         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "%s\n", p->feature );
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "%s\n", _(p->feature) );
 
       if (infobuf[0]=='\0') {
          int infocnt = 0;

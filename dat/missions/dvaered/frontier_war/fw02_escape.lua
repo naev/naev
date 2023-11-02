@@ -649,7 +649,7 @@ end
 -- Player gathers fuel
 function gather( comm, qtt )
    -- Only care about fuel
-   if comm~="Fuel" then
+   if comm:nameRaw()~="Fuel" then
       return
    end
    hook.rm(mem.gathHook)

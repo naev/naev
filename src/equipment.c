@@ -410,6 +410,7 @@ void equipment_open( unsigned int wid )
    window_addRect( wid, -20+4, -40+4, 128+8, 128+8, "rctShip", &cBlack, 1 );
    window_addCust( wid, -20, -40, 128, 128, "cstShip", 0,
          equipment_renderShip, NULL, NULL, NULL, NULL );
+   window_custSetDynamic( wid, "cstShip", 1 );
    window_canFocusWidget( wid, "cstShip", 0 );
 
    /* Focus the ships image array. */
@@ -933,6 +934,7 @@ static void equipment_renderShip( double bx, double by,
 
    px = bx + (bw-pw)/2;
    py = by + (bh-ph)/2;
+   gl_renderRect( px, py, pw, ph, &cBlack );
    gl_renderScaleSprite( p->ship->gfx_space, px, py, sx, sy, pw, ph, NULL );
 
 #ifdef DEBUGGING

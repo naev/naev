@@ -26,3 +26,7 @@ void render_postprocessCleanup (void);
 
 /* Special post-processing shaders. */
 void render_setGamma( double gamma );
+
+/* For dealing with Lua messing things up. */
+void render_reset (void);
+void render_needsReset (void);

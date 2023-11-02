@@ -28,10 +28,8 @@
 
 static unsigned int genwid = 0; /**< Generates unique window ids, > 0 */
 
+static int toolkit_needsRender = 1; /**< Whether or not toolkit needs a render. */
 static int toolkit_delayCounter = 0; /**< Horrible hack around secondary loop. */
-
-static const double WINDOW_FADEIN_TIME    = 0.05; /**< Time it takes to fade in for a window. */
-static const double WINDOW_FADEOUT_TIME   = 0.05; /**< Time it takes to fade out for a window. */
 
 /*
  * window stuff
@@ -97,7 +95,7 @@ int toolkit_isOpen (void)
 {
    /* Check to see if there is any active window. */
    for (Window *wdw = windows; wdw != NULL; wdw = wdw->next)
-      if (!window_isFlag( wdw, WINDOW_FADEOUT | WINDOW_KILL | WINDOW_NORENDER ))
+      if (!window_isFlag( wdw, WINDOW_KILL | WINDOW_NORENDER ))
          return 1;
    return 0;
 }
@@ -151,7 +149,7 @@ void toolkit_setWindowPos( Window *wdw, int x, int y )
    /* x pos */
    if (x == -1) { /* Center */
       wdw->x = (gl_screen.nw - wdw->w)/2.;
-      wdw->xrel = .5;
+      wdw->xrel = 0.5;
       window_setFlag( wdw, WINDOW_CENTERX );
    }
    else if (x < 0)
@@ -162,7 +160,7 @@ void toolkit_setWindowPos( Window *wdw, int x, int y )
    /* y pos */
    if (y == -1) { /* Center */
       wdw->y = (gl_screen.nh - wdw->h)/2.;
-      wdw->yrel = .5;
+      wdw->yrel = 0.5;
       window_setFlag( wdw, WINDOW_CENTERY );
    }
    else if (y < 0)
@@ -288,6 +286,7 @@ Widget* window_newWidget( Window* w, const char *name )
    else
       wlast->next = wgt;
 
+   toolkit_rerender();
    return wgt;
 }
 
@@ -443,10 +442,8 @@ void window_dimWidget( unsigned int wid, const char *name, int *w, int *h )
 void window_posWidget( unsigned int wid,
       const char* name, int *x, int *y )
 {
-   Widget *wgt;
-
    /* Get widget. */
-   wgt = window_getwgt(wid,name);
+   Widget *wgt = window_getwgt(wid,name);
    if (wgt == NULL)
       return;
 
@@ -556,7 +553,7 @@ int window_isTop( unsigned int wid )
       return 0;
    n = w->next;
    while (n != NULL) {
-      if (!window_isFlag(n,WINDOW_KILL | WINDOW_FADEOUT | WINDOW_NORENDER))
+      if (!window_isFlag(n,WINDOW_KILL | WINDOW_NORENDER))
          return 0;
       n = n->next;
    }
@@ -601,7 +598,7 @@ int window_exists( const char* wdwname )
    if (windows == NULL)
       return 0;
    for (Window *w = windows; w != NULL; w = w->next)
-      if ((strcmp(w->name,wdwname)==0) && !window_isFlag(w, WINDOW_KILL | WINDOW_FADEOUT))
+      if ((strcmp(w->name,wdwname)==0) && !window_isFlag(w, WINDOW_KILL))
          return 1;
    return 0; /* doesn't exist */
 }
@@ -617,7 +614,7 @@ int window_existsID( unsigned int wid )
    if (windows == NULL)
       return 0;
    for (Window *w = windows; w != NULL; w = w->next)
-      if ((w->id==wid) && !window_isFlag(w, WINDOW_KILL | WINDOW_FADEOUT))
+      if ((w->id==wid) && !window_isFlag(w, WINDOW_KILL))
          return 1;
    return 0; /* doesn't exist */
 }
@@ -642,23 +639,20 @@ int window_setDisplayname( unsigned int wid, const char *displayname )
 }
 
 /**
- * @brief Sets the fade-in behaviour of a window.
+ * @brief Sets a window as dynamic, so that it is drawn every frame completely.
+ *
+ *    @param wid ID of the window.
+ *    @param dynamic Whether or not to set as dynamic.
  */
-void window_setFade( unsigned int wid, const SimpleShader *shd, double length )
+void window_setDynamic( unsigned int wid, int dynamic )
 {
-   (void) shd;
-
    Window *wdw = window_wget(wid);
    if (wdw == NULL)
       return;
-
-   wdw->timer_max = wdw->timer = length;
-
-   if (wdw->timer <= 0.) {
-      if (window_isFlag(wdw, WINDOW_FADEOUT))
-         window_kill( wdw );
-      window_rmFlag(wdw, WINDOW_FADEIN | WINDOW_FADEOUT);
-   }
+   if (dynamic)
+      wdw->flags |= WINDOW_DYNAMIC;
+   else
+      wdw->flags &= ~WINDOW_DYNAMIC;
 }
 
 /**
@@ -676,7 +670,7 @@ unsigned int window_get( const char* wdwname )
       return 0;
    last = NULL;
    for (Window *w = windows; w != NULL; w = w->next)
-      if ((strcmp(w->name,wdwname)==0) && !window_isFlag(w, WINDOW_KILL | WINDOW_FADEOUT))
+      if ((strcmp(w->name,wdwname)==0) && !window_isFlag(w, WINDOW_KILL))
          last = w;
    if (last==NULL)
       return 0;
@@ -715,7 +709,6 @@ unsigned int window_create( const char* name, const char *displayname,
 unsigned int window_createFlags( const char* name, const char *displayname,
       const int x, const int y, const int w, const int h, unsigned int flags )
 {
-   Window *old = window_wgetNameW( name );
    Window *wdw = calloc( 1, sizeof(Window) );
 
    const int wid = (++genwid); /* unique id */
@@ -730,17 +723,8 @@ unsigned int window_createFlags( const char* name, const char *displayname,
    wdw->focus        = -1;
    wdw->xrel         = -1.;
    wdw->yrel         = -1.;
-   wdw->flags        = flags | WINDOW_FADEIN | WINDOW_FADEDELAY;
+   wdw->flags        = flags;
    wdw->exposed      = !window_isFlag(wdw, WINDOW_NOFOCUS);
-   wdw->timer_max = wdw->timer = WINDOW_FADEIN_TIME;
-
-   /* In the case a window is getting recreated over an old one, we can skip
-    * the fade on both of them, and just replace it. */
-   if ((old != NULL) && window_isFlag( old, WINDOW_KILL | WINDOW_FADEOUT )) {
-      old->timer = 0.;
-      window_rmFlag( wdw, WINDOW_FADEIN | WINDOW_FADEDELAY );
-      wdw->timer = 0.;
-   }
 
    /* Dimensions. */
    wdw->w            = (w == -1) ? gl_screen.nw : (double) w;
@@ -777,7 +761,7 @@ unsigned int window_createFlags( const char* name, const char *displayname,
 
       wlast = windows;
       while (1) {
-         if ((strcmp( wlast->name, name )==0) && !window_isFlag( wlast, WINDOW_KILL | WINDOW_FADEOUT )
+         if ((strcmp( wlast->name, name )==0) && !window_isFlag( wlast, WINDOW_KILL )
               && !window_isFlag( wlast, WINDOW_NOFOCUS ))
             WARN( _( "Window with name '%s' already exists!" ), wlast->name );
 
@@ -790,6 +774,7 @@ unsigned int window_createFlags( const char* name, const char *displayname,
       wlast->next = wdw;
    }
 
+   toolkit_rerender();
    return wid;
 }
 
@@ -1014,6 +999,13 @@ void widget_cleanup( Widget *widget )
    free(widget->name);
 }
 
+void widget_setStatus( Widget *wgt, WidgetStatus sts )
+{
+   if (wgt->status != sts)
+      toolkit_rerender();
+   wgt->status = sts;
+}
+
 /**
  * @brief Closes all open toolkit windows.
  */
@@ -1053,7 +1045,7 @@ void window_destroy( unsigned int wid )
          continue;
 
       /* Already being killed, skip. */
-      if (window_isFlag( wdw, WINDOW_KILL | WINDOW_FADEOUT ))
+      if (window_isFlag( wdw, WINDOW_KILL ))
          continue;
 
       /* Mark children for death. */
@@ -1061,10 +1053,10 @@ void window_destroy( unsigned int wid )
          if (w->parent == wid)
             window_destroy( w->id );
 
-      /* Start the fade out. */
-      window_rmFlag( wdw, WINDOW_FADEIN );
-      window_setFlag( wdw, WINDOW_FADEOUT | WINDOW_FADEDELAY );
-      wdw->timer_max = wdw->timer = WINDOW_FADEOUT_TIME;
+      /* Clean up. */
+      window_cleanup( wdw );
+      window_setFlag( wdw, WINDOW_KILL );
+      toolkit_rerender();
 
       /* Disable text input, etc. */
       toolkit_focusClear( wdw );
@@ -1090,6 +1082,7 @@ void window_kill( Window *wdw )
          window_kill( w );
    window_cleanup( wdw );
    window_setFlag( wdw, WINDOW_KILL );
+   toolkit_rerender();
 }
 
 /**
@@ -1511,16 +1504,6 @@ static void window_renderBorder( Window* w )
  */
 void window_render( Window *w )
 {
-   double x, y;
-
-   /* Do not render dead windows. */
-   if (window_isFlag( w, WINDOW_KILL ))
-      return;
-
-   /* position */
-   x = w->x;
-   y = w->y;
-
    /* We're on top of anything previously drawn. */
    glClear( GL_DEPTH_BUFFER_BIT );
 
@@ -1528,19 +1511,37 @@ void window_render( Window *w )
    if (!window_isFlag( w, WINDOW_NOBORDER ))
       window_renderBorder(w);
 
-   /*
-    * widgets
-    */
+   /* Iterate over widgets. */
    for (Widget *wgt=w->widgets; wgt!=NULL; wgt=wgt->next) {
-      if ((wgt->render != NULL) && !wgt_isFlag(wgt, WGT_FLAG_KILL)) {
-         wgt->render( wgt, x, y );
+      if (wgt->render==NULL)
+         continue;
+      if (wgt_isFlag(wgt, WGT_FLAG_KILL))
+         continue;
+      wgt->render( wgt, w->x, w->y );
 
-         if (wgt->id == w->focus) {
-            double wx  = x + wgt->x - 2;
-            double wy  = y + wgt->y - 2;
-            toolkit_drawOutlineThick( wx, wy, wgt->w+4, wgt->h+4, 0, 2, (wgt->type == WIDGET_BUTTON ? &cGrey70 : &cGrey30), NULL );
-         }
+      if (wgt->id == w->focus) {
+         double wx  = w->x + wgt->x - 2;
+         double wy  = w->y + wgt->y - 2;
+         toolkit_drawOutlineThick( wx, wy, wgt->w+4, wgt->h+4, 0, 2, (wgt->type == WIDGET_BUTTON ? &cGrey70 : &cGrey30), NULL );
       }
+   }
+}
+
+/**
+ * @brief Renders the dynamic components of a window.
+ */
+void window_renderDynamic( Window *w )
+{
+   /* Iterate over widgets. */
+   for (Widget *wgt=w->widgets; wgt!=NULL; wgt=wgt->next) {
+      if (wgt->render==NULL)
+         continue;
+      if (wgt_isFlag(wgt, WGT_FLAG_KILL))
+         continue;
+      if (wgt_isFlag(wgt, WGT_FLAG_DYNAMIC) || window_isFlag(w, WINDOW_DYNAMIC))
+         wgt->render( wgt, w->x, w->y );
+      if (wgt->renderDynamic != NULL)
+         wgt->renderDynamic( wgt, w->x, w->y );
    }
 }
 
@@ -1551,22 +1552,10 @@ void window_render( Window *w )
  */
 void window_renderOverlay( Window *w )
 {
-   double x, y;
-
-   /* Do not render dead windows. */
-   if (window_isFlag( w, WINDOW_KILL ))
-      return;
-
-   /* position */
-   x = w->x;
-   y = w->y;
-
-   /*
-    * overlays
-    */
+   /* Draw overlays. */
    for (Widget *wgt=w->widgets; wgt!=NULL; wgt=wgt->next)
       if ((wgt->renderOverlay != NULL) && !wgt_isFlag(wgt, WGT_FLAG_KILL))
-         wgt->renderOverlay( wgt, x, y );
+         wgt->renderOverlay( wgt, w->x, w->y );
 }
 
 /**
@@ -1596,80 +1585,74 @@ void toolkit_drawScrollbar( int x, int y, int w, int h, double pos )
  */
 void toolkit_render( double dt )
 {
-   /* Render base. */
-   for (Window *w = windows; w!=NULL; w = w->next) {
-      if (window_isFlag(w, WINDOW_NORENDER | WINDOW_KILL))
-         continue;
+   (void) dt;
+   Window *top;
 
-      int use_fb = 0;
-      double alpha = 1.;
-      if (window_isFlag(w, WINDOW_FADEIN | WINDOW_FADEOUT)) {
-         if (!window_isFlag(w, WINDOW_FADEDELAY) || (dt < fps_min))
-            w->timer -= dt;
-         window_rmFlag( w, WINDOW_FADEDELAY );
-         if (w->timer > 0.) {
-            alpha = ease_QuadraticInOut( w->timer / w->timer_max );
-            if (window_isFlag(w, WINDOW_FADEIN))
-               alpha = 1. - alpha;
+   if (toolkit_needsRender) {
+      toolkit_needsRender = 0;
 
-            if (alpha < 1.) {
-               use_fb = 1;
-               glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
-               glClearColor( 0., 0., 0., 0. );
-               glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            }
-         }
-         else {
-            if (window_isFlag(w, WINDOW_FADEOUT)) {
-               /* Mark for death. */
-               window_kill( w );
-               continue; /* No need to draw this iteration. */
-            }
-            window_rmFlag(w, WINDOW_FADEIN | WINDOW_FADEOUT);
-         }
+      glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[3] );
+      glClearColor( 0., 0., 0., 0. );
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+      glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA );
+
+      /* Render base. */
+      for (Window *w = windows; w!=NULL; w = w->next) {
+         if (window_isFlag(w, WINDOW_NORENDER | WINDOW_KILL))
+            continue;
+
+         /* The actual rendering. */
+         window_render(w);
       }
 
-      /* The actual rendering. */
-      window_render(w);
-      window_renderOverlay(w);
-
-      /* Drawing directly to the main framebuffer. */
-      if (!use_fb)
-         continue;
-
-      /* Must draw onto the main screen. */
-      glColour col = { 1., 1., 1., alpha };
-
+      glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
       glClearColor( 0., 0., 0., 1. );
-
-      glUseProgram(shaders.texture.program);
-
-      /* Set texture. */
-      glActiveTexture( GL_TEXTURE0 );
-      glBindTexture( GL_TEXTURE_2D, gl_screen.fbo_tex[2] );
-      glUniform1i(shaders.texture.sampler, 0);
-
-      /* Set vertex data. */
-      glEnableVertexAttribArray( shaders.texture.vertex );
-      gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture.vertex,
-            0, 2, GL_FLOAT, 0 );
-
-      /* Set shader uniforms. */
-      gl_uniformColor(shaders.texture.color, &col);
-      const mat4 ortho = mat4_ortho(0., 1., 0., 1., 1., -1.);
-      const mat4 I = mat4_identity();
-      gl_uniformMat4(shaders.texture.projection, &ortho);
-      gl_uniformMat4(shaders.texture.tex_mat, &I);
-
-      /* Draw. */
-      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-      /* Clean up. */
-      glDisableVertexAttribArray( shaders.texture.vertex );
-      gl_checkErr();
-      glUseProgram(0);
    }
+
+   glUseProgram(shaders.texture.program);
+
+   /* Set texture. */
+   glActiveTexture( GL_TEXTURE0 );
+   glBindTexture( GL_TEXTURE_2D, gl_screen.fbo_tex[3] );
+   glUniform1i(shaders.texture.sampler, 0);
+
+   /* Set vertex data. */
+   glEnableVertexAttribArray( shaders.texture.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture.vertex,
+         0, 2, GL_FLOAT, 0 );
+
+   /* Set shader uniforms. */
+   gl_uniformColor(shaders.texture.color, &cWhite);
+   const mat4 ortho = mat4_ortho(0., 1., 0., 1., 1., -1.);
+   const mat4 I = mat4_identity();
+   gl_uniformMat4(shaders.texture.projection, &ortho);
+   gl_uniformMat4(shaders.texture.tex_mat, &I);
+
+   /* Draw. */
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   /* Clean up. */
+   glDisableVertexAttribArray( shaders.texture.vertex );
+   glBindTexture( GL_TEXTURE_2D, 0 );
+   gl_checkErr();
+   glUseProgram(0);
+
+   /* We render only the active window dynamically, otherwise we wouldn't be able to respect the order.
+    * However, since the dynamic stuff is also rendered to the framebuffer below, it shouldn't be too bad. */
+   top = toolkit_getActiveWindow();
+   if ((top != NULL) && !window_isFlag(top, WINDOW_NORENDER | WINDOW_KILL)) {
+      window_renderDynamic( top );
+      window_renderOverlay( top );
+   }
+}
+
+/**
+ * @brief Marks the toolkit for needing a full rerender.
+ */
+void toolkit_rerender (void)
+{
+   toolkit_needsRender = 1;
 }
 
 /**
@@ -1698,25 +1681,29 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
 
    /* See if widget needs event. */
    for (Widget *wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
-      if (wgt_isFlag( wgt, WGT_FLAG_RAWINPUT )) {
-         if (wgt->rawevent != NULL) {
-            ret = wgt->rawevent( wgt, event );
-            if (ret != 0)
-               return ret;
-         }
+      if (!wgt_isFlag( wgt, WGT_FLAG_RAWINPUT ))
+         continue;
+      if (wgt->rawevent==NULL)
+         continue;
+      ret = wgt->rawevent( wgt, event );
+      if (ret != 0) {
+         toolkit_rerender();
+         return ret;
       }
    }
 
    /* Event handler. */
    if (wdw->eventevent != NULL) {
       ret = wdw->eventevent( wdw->id, event );
-      if (ret != 0)
+      if (ret != 0) {
+         toolkit_rerender();
          return ret;
+      }
    }
 
    /* Hack in case window got destroyed in eventevent. */
    ret = 0;
-   if (!window_isFlag(wdw, WINDOW_KILL | WINDOW_FADEOUT)) {
+   if (!window_isFlag(wdw, WINDOW_KILL)) {
       /* Pass it on. */
       switch (event->type) {
          case SDL_MOUSEMOTION:
@@ -1738,6 +1725,8 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
             break;
       }
    }
+   if (ret)
+      toolkit_rerender();
 
    /* Clean up the dead if needed. */
    if (purge && !dialogue_isOpen()) { /* Hack, since dialogues use secondary loop. */
@@ -1797,7 +1786,7 @@ Uint32 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
 }
 
 static int toolkit_mouseEventSingle( Window *w, SDL_Event* event,
-   Widget *wgt, int x, int y, int rx, int ry )
+      Widget *wgt, int x, int y, int rx, int ry )
 {
    int ret = 0;
    /* Custom widgets take it from here */
@@ -1811,7 +1800,7 @@ static int toolkit_mouseEventSingle( Window *w, SDL_Event* event,
    return ret;
 }
 static int toolkit_mouseEventReverse( Window *w, SDL_Event* event,
-   Widget *wgt, int x, int y, int rx, int ry )
+      Widget *wgt, int x, int y, int rx, int ry )
 {
    if (wgt->next!=NULL) {
       int ret = toolkit_mouseEventReverse( w, event, wgt->next, x, y, rx, ry );
@@ -1880,10 +1869,10 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
          if (wgt->status != WIDGET_STATUS_SCROLLING) {
             if (inbounds) {
                if (wgt->status != WIDGET_STATUS_MOUSEDOWN)
-                  wgt->status = WIDGET_STATUS_MOUSEOVER;
+                  widget_setStatus( wgt, WIDGET_STATUS_MOUSEOVER );
             }
             else
-               wgt->status = WIDGET_STATUS_NORMAL;
+               widget_setStatus( wgt, WIDGET_STATUS_NORMAL );
          }
          else
             inbounds = 1; /* Scrolling is always inbounds. */
@@ -1905,6 +1894,8 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
          /* Try to give the event to the widget. */
          if (wgt->mwheelevent != NULL)
             ret |= (*wgt->mwheelevent)( wgt, event->wheel );
+         if (ret)
+            toolkit_rerender();
 
          break;
 
@@ -1914,7 +1905,7 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
 
          /* Update the status. */
          if (button == SDL_BUTTON_LEFT)
-            wgt->status = WIDGET_STATUS_MOUSEDOWN;
+            widget_setStatus( wgt, WIDGET_STATUS_MOUSEDOWN );
 
          if (toolkit_isFocusable(wgt)) {
             toolkit_focusClear( w );
@@ -1926,8 +1917,10 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
             ret |= (*wgt->mdoubleclickevent)( wgt, button, x, y );
          else if (wgt->mclickevent != NULL)
             ret |= (*wgt->mclickevent)( wgt, button, x, y );
-         if (ret)
+         if (ret) {
             input_clicked( (void*)wgt );
+            toolkit_rerender();
+         }
          break;
 
       case SDL_MOUSEBUTTONUP:
@@ -1942,11 +1935,12 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
                      (wgt->dat.btn.softdisable))) {
                if (wgt->dat.btn.fptr==NULL)
                   DEBUG(_("Toolkit: Button '%s' of Window '%s' "
-                        "doesn't have a function trigger"),
+                           "doesn't have a function trigger"),
                         wgt->name, w->displayname );
                else {
                   (*wgt->dat.btn.fptr)(w->id, wgt->name);
                   ret = 1;
+                  toolkit_rerender();
                }
             }
          }
@@ -1957,9 +1951,9 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
 
          /* Always goes normal unless is below mouse. */
          if (inbounds)
-            wgt->status = WIDGET_STATUS_MOUSEOVER;
+            widget_setStatus( wgt, WIDGET_STATUS_MOUSEOVER );
          else
-            wgt->status = WIDGET_STATUS_NORMAL;
+            widget_setStatus( wgt, WIDGET_STATUS_NORMAL );
 
          break;
    }
@@ -2000,12 +1994,10 @@ static SDL_Keymod toolkit_mapMod( SDL_Keycode key )
  */
 static void toolkit_regKey( SDL_Keycode key )
 {
-   SDL_Keymod mod;
-
    /* See if our key is in fact a modifier key, and if it is, convert it to a mod.
     * If it is indeed a mod, do not register a new key but add the modifier to the mod mask instead.
     */
-   mod = toolkit_mapMod(key);
+   SDL_Keymod mod = toolkit_mapMod(key);
    if (mod)
       input_mod         |= mod;
    /* Don't reset values on repeat keydowns. */
@@ -2021,12 +2013,10 @@ static void toolkit_regKey( SDL_Keycode key )
  */
 static void toolkit_unregKey( SDL_Keycode key )
 {
-   SDL_Keymod mod;
-
    /* See if our key is in fact a modifier key, and if it is, convert it to a mod.
     * If it is indeed a mod, do not unregister the key but subtract the modifier from the mod mask instead.
     */
-   mod = toolkit_mapMod(key);
+   SDL_Keymod mod = toolkit_mapMod(key);
    if (mod)
       input_mod         &= ~mod;
    else
@@ -2340,6 +2330,7 @@ void toolkit_nextFocus( Window *wdw )
 
    /* Focus nothing. */
    wdw->focus = -1;
+   toolkit_rerender();
    return;
 }
 
@@ -2390,6 +2381,8 @@ void toolkit_focusWidget( Window *wdw, Widget *wgt )
    wgt_setFlag( wgt, WGT_FLAG_FOCUSED );
    if (wgt->focusGain != NULL)
       wgt->focusGain( wgt );
+
+   toolkit_rerender();
 }
 
 /**
@@ -2405,6 +2398,8 @@ void toolkit_defocusWidget( Window *wdw, Widget *wgt )
    wgt_rmFlag( wgt, WGT_FLAG_FOCUSED );
    if (wgt->focusLose != NULL)
       wgt->focusLose( wgt );
+
+   toolkit_rerender();
 }
 
 /**
@@ -2432,7 +2427,7 @@ Window* toolkit_getActiveWindow (void)
    Window *wlast = NULL;
    for (Window *wdw = windows; wdw!=NULL; wdw = wdw->next)
       if (!window_isFlag(wdw, WINDOW_NOFOCUS) &&
-            !window_isFlag(wdw, WINDOW_KILL | WINDOW_FADEOUT))
+            !window_isFlag(wdw, WINDOW_KILL))
          wlast = wdw;
    return wlast;
 }
@@ -2548,6 +2543,7 @@ void window_raise( unsigned int wid )
 
    toolkit_expose( wtmp, 0 ); /* wtmp is hidden */
    toolkit_expose( wdw, 1 );  /* wdw is visible */
+   toolkit_rerender();
 }
 
 /**
@@ -2584,12 +2580,13 @@ void window_lower( unsigned int wid )
 
    toolkit_expose( wtmp, 1 ); /* wtmp is visible */
    toolkit_expose( wdw, 0 );  /* wdw is hidden */
+   toolkit_rerender();
 }
 
 /**
  * @brief Repositions windows and their children if resolution changes.
  */
-void toolkit_reposition (void)
+void toolkit_resize (void)
 {
    for (Window *w = windows; w != NULL; w = w->next) {
       int xorig, yorig, xdiff, ydiff;
@@ -2633,6 +2630,7 @@ void toolkit_reposition (void)
          }
       }
    }
+   toolkit_rerender();
 }
 
 /**
@@ -2660,11 +2658,9 @@ int toolkit_init (void)
  */
 void toolkit_exit (void)
 {
-   Window *wdw;
-
    /* Destroy the windows. */
    while (windows!=NULL) {
-      wdw      = windows;
+      Window *wdw = windows;
       windows  = windows->next;
       window_cleanup(wdw);
       window_remove(wdw);

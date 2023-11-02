@@ -824,7 +824,7 @@ int pilot_brakeCheckReverseThrusters( const Pilot *p )
  */
 double pilot_minbrakedist( const Pilot *p )
 {
-   double vel = MIN( VMOD(p->solid.vel), p->speed );
+   double vel = MIN( MIN( VMOD(p->solid.vel), p->speed ), solid_maxspeed( &p->solid, p->speed, p->accel ) );
    double accel = p->accel;
    double t = vel / accel;
    if (pilot_brakeCheckReverseThrusters(p))
@@ -2605,13 +2605,14 @@ void pilot_sample_trails( Pilot* p, int none )
 
    /* Compute the engine offset and decide where to draw the trail. */
    for (int i=0, g=0; g<array_size(p->ship->trail_emitters); g++) {
-      double dx, dy, prod;
+      ShipTrailEmitter *trail = &p->ship->trail_emitters[g];
+      double dx, dy, prod, scale;
 
       if (!pilot_trail_generated( p, g ))
          continue;
 
       p->trail[i]->ontop = 0;
-      if (!(p->ship->trail_emitters[g].always_under) && (dirsin > 0)) {
+      if (!(trail->always_under) && (dirsin > 0)) {
          /* See if the trail's front (tail) is in front of the ship. */
          prod = (trail_front( p->trail[i] ).x - p->solid.pos.x) * dircos +
                   (trail_front( p->trail[i] ).y - p->solid.pos.y) * dirsin;
@@ -2619,11 +2620,22 @@ void pilot_sample_trails( Pilot* p, int none )
          p->trail[i]->ontop = (prod < 0);
       }
 
-      dx = p->ship->trail_emitters[g].x_engine * dircos -
-            p->ship->trail_emitters[g].y_engine * dirsin;
-      dy = p->ship->trail_emitters[g].x_engine * dirsin +
-            p->ship->trail_emitters[g].y_engine * dircos +
-            p->ship->trail_emitters[g].h_engine;
+      /* Figure our relative position. */
+      dx = trail->x_engine * dircos - trail->y_engine * dirsin;
+      dy = trail->x_engine * dirsin + trail->y_engine * dircos +
+            trail->h_engine;
+
+      /* Check if needs scaling. */
+      if (pilot_isFlag( p, PILOT_LANDING ))
+         scale = CLAMP( 0., 1., p->ptimer / p->landing_delay );
+      else if (pilot_isFlag( p, PILOT_TAKEOFF ))
+         scale = CLAMP( 0., 1., 1. - p->ptimer / p->landing_delay );
+      else
+         scale = 1.;
+      dx *= scale;
+      dy *= scale;
+
+      /* Sample. */
       spfx_trail_sample( p->trail[i++], p->solid.pos.x + dx, p->solid.pos.y + dy*M_SQRT1_2, mode, mode==MODE_NONE );
    }
 }
@@ -3409,20 +3421,37 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
          /* The jump into the system must not be exit-only, and unless
           * ignore_rules is set, must also be non-hidden
           * (excepted if the pilot is guerilla) and have faction
-          * presence matching the pilot's on the remote side.
-          */
-         JumpPoint *target = cur_system->jumps[i].returnJump;
-         double limit = 0.;
-         if (guerilla) {/* Test enemy presence on the other side. */
-            const int *fact = faction_getEnemies( lf );
-            for (int j=0; j<array_size(fact); j++)
-               limit += system_getPresence( cur_system->jumps[i].target, fact[j] );
+          * presence matching the pilot's on the remote side. */
+         JumpPoint *jmp = &cur_system->jumps[i];
+         JumpPoint *target = jmp->returnJump;
+         double limit, pres;
+         const int *fact;
+
+         /* Can't use exit only from the other-side. */
+         if (jp_isFlag( target, JP_EXITONLY ))
+            continue;
+
+         if (ignore_rules) {
+            array_push_back( &validJumpPoints, target );
+            continue;
          }
 
-         if (!jp_isFlag( target, JP_EXITONLY ) && (ignore_rules ||
-               ((!jp_isFlag( &cur_system->jumps[i], JP_HIDDEN ) || guerilla) &&
-               (system_getPresence( cur_system->jumps[i].target, lf ) > limit))))
-            array_push_back(&validJumpPoints, target);
+         /* Only guerrila entrances can use hidden jumps. */
+         if (jp_isFlag( jmp, JP_HIDDEN ) && !guerilla)
+            continue;
+
+         /* Test presence on the other side, making sure there is presence. */
+         pres = system_getPresence( jmp->target, lf );
+         if (pres <= 0.)
+            continue;
+
+         /* See if the remote system isn't dominantly controlled by enemies. */
+         limit = 0.;
+         fact = faction_getEnemies( lf );
+         for (int j=0; j<array_size(fact); j++)
+            limit += system_getPresence( jmp->target, fact[j] );
+         if (pres > limit)
+            array_push_back( &validJumpPoints, target );
       }
    }
 
@@ -4026,7 +4055,7 @@ credits_t pilot_worth( const Pilot *p, int count_unique )
  *    @param type Type of message.
  *    @param idx Index of data on lua stack or 0
  */
-void pilot_msg( Pilot *p, Pilot *receiver, const char *type, unsigned int idx )
+void pilot_msg( const Pilot *p, const Pilot *receiver, const char *type, unsigned int idx )
 {
    if (idx != 0)
       lua_pushvalue(naevL, idx); /* data */

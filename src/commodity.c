@@ -439,8 +439,6 @@ Commodity* commodity_newTemp( const char* name, const char* desc )
  */
 int commodity_tempIllegalto( Commodity *com, int faction )
 {
-   int *f;
-
    if (!com->istemp) {
       WARN(_("Trying to modify temporary commodity '%s'!"), com->name);
       return -1;
@@ -455,8 +453,7 @@ int commodity_tempIllegalto( Commodity *com, int faction )
          return 0;
    }
 
-   f = &array_grow(&com->illegalto);
-   *f = faction;
+   array_push_back( &com->illegalto, faction );
 
    return 0;
 }

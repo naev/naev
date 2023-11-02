@@ -280,6 +280,7 @@ void map_open (void)
 
    /* create the window. */
    wid = window_create( MAP_WDWNAME, title, -1, -1, -1, -1 );
+   window_setDynamic( wid, 1 );
    window_setCancel( wid, window_close );
    window_onClose( wid, map_onClose );
    window_handleKeys( wid, map_keyHandler );
@@ -3104,6 +3105,7 @@ void map_show( int wid, int x, int y, int w, int h, double zoom, double xoff, do
    /* New widget. */
    window_addCust( wid, x, y, w, h,
          "cstMap", 1, map_render, map_mouse, NULL, map_focusLose, cst );
+   window_custSetDynamic( wid, "cstMap", 1 );
    window_custAutoFreeData( wid, "cstMap" );
 
    /* Set up stuff. */

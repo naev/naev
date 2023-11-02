@@ -757,7 +757,7 @@ static int outfitL_specificStats( lua_State *L )
          break;
 
       case OUTFIT_TYPE_FIGHTER_BAY:
-         lua_pushship( L, ship_get( o->u.bay.ship ) );
+         lua_pushship( L, o->u.bay.ship );
          lua_setfield( L, -2, "ship" );
          SETFIELD( "delay",      o->u.bay.delay );
          SETFIELDI("amount",     o->u.bay.amount );

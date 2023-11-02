@@ -378,8 +378,7 @@ static void gui_renderSpobTarget (void)
 
    /* Draw spob and jump point target graphics. */
    if (player.p->nav_hyperspace >= 0) {
-      JumpPoint *jp = &cur_system->jumps[player.p->nav_hyperspace];
-
+      const JumpPoint *jp = &cur_system->jumps[player.p->nav_hyperspace];
       if (jp_isKnown(jp)) {
          c = &cGreen;
          x = jp->pos.x;
@@ -389,7 +388,7 @@ static void gui_renderSpobTarget (void)
       }
    }
    if (player.p->nav_spob >= 0) {
-      Spob *spob = cur_system->spobs[player.p->nav_spob];
+      const Spob *spob = cur_system->spobs[player.p->nav_spob];
       c = spob_getColour( spob );
       x = spob->pos.x;
       y = spob->pos.y;
@@ -397,8 +396,8 @@ static void gui_renderSpobTarget (void)
       gui_renderTargetReticles( &shaders.targetspob, x, y, r, 0., c );
    }
    if (player.p->nav_asteroid >= 0) {
-      AsteroidAnchor *field = &cur_system->asteroids[player.p->nav_anchor];
-      Asteroid *ast = &field->asteroids[player.p->nav_asteroid];
+      const AsteroidAnchor *field = &cur_system->asteroids[player.p->nav_anchor];
+      const Asteroid *ast = &field->asteroids[player.p->nav_asteroid];
       c = &cWhite;
 
       x = ast->pos.x;
@@ -572,7 +571,7 @@ static void gui_renderBorder( double dt )
 
    /* Draw jump routes. */
    for (int i=0; i<array_size(cur_system->jumps); i++) {
-      JumpPoint *jp = &cur_system->jumps[i];
+      const JumpPoint *jp = &cur_system->jumps[i];
 
       /* Skip if unknown or exit-only. */
       if (!jp_isUsable( jp ))
@@ -897,7 +896,7 @@ void gui_radarRender( double x, double y )
    gui_radar.y = y;
 
    /* TODO: modifying gl_view_matrix like this is a bit of a hack */
-   /* TODO: use stensil test for RADAR_CIRCLE */
+   /* TODO: use stencil test for RADAR_CIRCLE */
    view_matrix_prev = gl_view_matrix;
    if (radar->shape==RADAR_RECT) {
       gl_clipRect( x, y, radar->w, radar->h );
@@ -957,7 +956,7 @@ void gui_radarRender( double x, double y )
       r = ceil(range);
       asteroid_collideQueryIL( ast, &gui_qtquery, ax-r, ay-r, ax+r, ay+r );
       for (int j=0; j<il_size(&gui_qtquery); j++) {
-         Asteroid *a = &ast->asteroids[ il_get( &gui_qtquery, j, 0 ) ];
+         const Asteroid *a = &ast->asteroids[ il_get( &gui_qtquery, j, 0 ) ];
          gui_renderAsteroid( a, radar->w, radar->h, radar->res, 0 );
       }
    }
@@ -1608,8 +1607,6 @@ static void gui_calcBorders (void)
  */
 int gui_init (void)
 {
-   GLfloat vertex[16];
-
    /* radar */
    gui_setRadarResolution( player.radar_res );
 
@@ -1627,6 +1624,7 @@ int gui_init (void)
 
    /* VBO. */
    if (gui_radar_select_vbo == NULL) {
+      GLfloat vertex[16];
       vertex[0] = -1.5;
       vertex[1] = 1.5;
       vertex[2] = -3.3;
@@ -1831,7 +1829,6 @@ void gui_setGeneric( const Pilot* pilot )
 const char* gui_pick (void)
 {
    const char* gui;
-
    /* Don't do set a gui if player is dead. This can be triggered through
     * naev_resize and can cause an issue if player is dead. */
    if ((player.p == NULL) || pilot_isFlag(player.p,PILOT_DEAD))

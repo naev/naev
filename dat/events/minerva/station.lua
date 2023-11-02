@@ -3,7 +3,7 @@
 <event name="Minerva Station Gambling">
  <location>land</location>
  <chance>100</chance>
- <cond>spob.cur()==spob.get("Minerva Station")</cond>
+ <spob>Minerva Station</spob>
  <notes>
   <campaign>Minerva</campaign>
   <provides name="Minerva Station" />
@@ -65,8 +65,20 @@ local patron_messages = {
          soldoutmsg = _(" Wait, what? What do you mean the Fuzzy Dice are sold out!?")
       end
       return fmt.f(_([["I really have my eyes on the Fuzzy Dice available at the terminal. I always wanted to own a piece of history!{msg}"]]), {msg=soldoutmsg} ) end,
-   _([["I played 20 hands of blackjack with that Cyborg Chicken. I may have lost them all, but that was worth every credit!"]]),
-   _([["This place is great! I still have no idea how to play blackjack, but I just keep on playing again and again against that Cyborg Chicken."]]),
+   function ()
+      if player.misnDone( "Minerva Pirates 6" ) then
+         return _([["They say the station always wins, but that doesn't stop us from trying!"]])
+      else
+         return _([["I played 20 hands of blackjack with that Cyborg Chicken. I may have lost them all, but that was worth every credit!"]])
+      end
+   end,
+   function ()
+      if player.misnDone( "Minerva Pirates 6" ) then
+         return _([["I've seen folks come in with nothing and leave with a brand new Kestrel! Minerva station is a crazy place!"]])
+      else
+         return _([["This place is great! I still have no idea how to play blackjack, but I just keep on playing again and again against that Cyborg Chicken."]])
+      end
+   end,
    function () return fmt.f(
       _([["I came all the way from {pnt} to be here! We don't have anything like this back at home."]]),
       {pnt=spob.get( {faction.get("Dvaered"), faction.get("Za'lek"), faction.get("Empire"), faction.get("Soromid")} )}
@@ -88,9 +100,10 @@ local patron_messages = {
 
 function create()
    local trial_start = player.misnDone( "Minerva Pirates 6" )
+   local minerva_end = (diff.isApplied("minerva_3") or diff.isApplied("minerva_3d") or diff.isApplied("minerva_3z"))
 
    -- Station is not "usable"
-   if diff.isApplied("minerva_1") then
+   if diff.isApplied("minerva_1") and not minerva_end then
       return
    end
 
@@ -120,7 +133,15 @@ function create()
    local msglist = rnd.permutation( patron_messages ) -- avoids duplicates
    for i = 1,npatrons do
       local name = patron_names[ rnd.rnd(1, #patron_names) ]
-      local img = vni.generic()
+      local img
+      if diff.isApplied("minerva_3z") and rnd.rnd() < 0.5 then
+         img = vni.zalek()
+      elseif diff.isApplied("minerva_3d") and rnd.rnd() < 0.5 then
+         img = vni.dvaered()
+      end
+      if not img then
+         img = vni.generic()
+      end
       local desc = patron_descriptions[ rnd.rnd(1, #patron_descriptions) ]
       local msg = msglist[i]
       local id = evt.npcAdd( "approach_patron", name, img, desc, 10 )
@@ -150,6 +171,9 @@ end
 -- bar. This is triggered randomly upon finishing gambling activities.
 --]]
 local function random_event()
+   -- No events after the trial
+   local trial_start = player.misnDone( "Minerva Pirates 6" )
+   if trial_start then return end
    -- Conditional helpers
    local alter1 = has_event("Minerva Station Altercation 1")
    local alter_helped = (var.peek("minerva_altercation_helped")~=nil)
@@ -232,13 +256,19 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
    vn.label( "more_info" )
    t:say( _([["WHAT ELSE WOULD YOU LIKE TO KNOW?"]]) )
    vn.label( "info_menu" )
-   vn.menu( {
-      {_("Station"), "info_station"},
-      {_("Gambling"), "info_gambling"},
-      {_("Trade-in"), "info_trade"},
-      {_("Cyborg Chicken"), "info_chicken"},
-      {_("Back"), "start"},
-   } )
+   vn.menu( function ()
+      local opts = {
+         {_("Station"), "info_station"},
+         {_("Gambling"), "info_gambling"},
+         {_("Trade-in"), "info_trade"},
+         {_("Back"), "start"},
+      }
+      local trial_start = player.misnDone( "Minerva Pirates 6" )
+      if not trial_start then
+         table.insert( opts, 4, {_("Cyborg Chicken"), "info_chicken"} )
+      end
+      return opts
+   end )
    vn.label( "info_station" )
    t:say( _([["MINERVA STATION IS THE BEST PLACE TO SIT BACK AND ENJOY RELAXING GAMBLING ACTIVITIES. ALTHOUGH THE AREA IS HEAVILY DISPUTED BY THE ZA'LEK AND DVAERED, REST ASSURED THAT THERE IS LESS THAN A 2% OF CHANCE OF TOTAL DESTRUCTION OF THE STATION."]]) )
    vn.jump( "more_info" )

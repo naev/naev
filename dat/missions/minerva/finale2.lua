@@ -669,7 +669,7 @@ She breaks free from the engineers and jumps at Kex. Fearing the worst, you try 
       vn.na(_([[Eventually you get a message from Maikki that she is waiting for you on the bridge of the Pink Demon and you head back to meet the two.]]))
 
       vn.scene()
-      vn.newCharacter( kex ) -- TODO pirate hat
+      local kexp = vn.newCharacter( minerva.vn_kexP{pos="right"} )
       local maikkip = vn.newCharacter( minerva.vn_maikkiP{pos="left"} )
       vn.transition("hexagon")
       vn.na(_([[You find Maikki in her pirate attire, and surprisingly enough, Kex is also in a matching outfit.]]))
@@ -679,11 +679,11 @@ She breaks free from the engineers and jumps at Kex. Fearing the worst, you try 
       }
       vn.label("05_cont")
       maikkip(_([["Thanks! I owe it to you to finally be able to be able to talk to my father. We have a ton of catching up to do still!"]]))
-      kex(_([["I feel the same. Thank you for helping me out, despite my current appearance. Maybe this time I will be able to amend my past and break the loop."]]))
+      kexp(_([["I feel the same. Thank you for helping me out, despite my current appearance. Maybe this time I will be able to amend my past and break the loop."]]))
       maikkip(_([["Amend the past? That's impossible. You were a complete asshole."]]))
-      kex(_([[He looks bit dejected and sad.]]))
+      kexp(_([[He looks bit dejected and sad.]]))
       maikkip(_([["Don't be sad. You have to learn to live with your past, and learn from it to have a good future! What's done is done, but you can still decide what's yet to come."]]))
-      kex(_([["It's still hard. Although I've had a lot of time to think since I lost my body. This time I have no excuses."]]))
+      kexp(_([["It's still hard. Although I've had a lot of time to think since I lost my body. This time I have no excuses."]]))
       maikkip(fmt.f(_([[She beams a smile at Kex.
 "Ah, {playername}, my father decided to join me and my crew aboard the Pink Demon. We'll be heading back to New Haven after this. Zuri is still in need of good treatment. What are you going to do? Care to join us?"]]),
          {playername=player.name()}))
@@ -691,24 +691,18 @@ She breaks free from the engineers and jumps at Kex. Fearing the worst, you try 
       maikkip(_([["Hah! One would think you are the pirate instead of me!"
 She gives you a sly look.]]))
       maikkip(_([["To be honest, unless hell froze over, I knew there was no chance of you joining us. Wild Ones aren't for everyone, and you've got things you want to do."]]))
-      kex(_([["But make sure to visit us! I'm not sure how to thank you enough."]]))
+      kexp(_([["But make sure to visit us! I'm not sure how to thank you enough."]]))
       maikkip(_([["Ah, I almost forgot. What is a good adventure without a good reward?"]]))
-      kex(_([["A good learning experience?"]]))
+      kexp(_([["A good learning experience?"]]))
       maikkip(_([["That was a rhetorical question! You have to..
 Oh never mind. Here, take this credit stick, it's the least that I can do for you."]]))
-      vn.sfxMoney()
+      vn.sfxVictory()
       local reward_amount = minerva.rewards.finale2
       vn.func( function ()
          player.pay( reward_amount )
       end )
       vn.na(fmt.reward(reward_amount))
-      kex(_([["Wow, that's a lot of credits. I also want to thank you. I don't have money, but please take this."]]))
-      vn.sfxVictory()
-      local reward_outfit = "Laser Cannon MK1" -- TODO change
-      vn.func( function ()
-         player.outfitAdd( reward_outfit )
-      end )
-      vn.na(fmt.reward(reward_outfit))
+      kexp(_([["Wow, that's a lot of credits! I also want to thank you. but I've lost everything I had. I'll find a way to pay you back, I promise!"]]))
       vn.na(_([[You wish the two best on their trip back, and promise you will go visit them sometime. You then head back after the long ordeal with the knowledge you were able to reunite a daughter and father.]]))
 
       vn.done("hexagon")

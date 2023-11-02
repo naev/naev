@@ -7,7 +7,7 @@
  <chance>100</chance>
  <location>Bar</location>
  <cond>
-   if system.get("Daan"):jumpDist() &gt; 2 then
+   if system.get("Provectus Nova"):jumpDist() &gt; 2 then
       return false
    end
    return true
@@ -44,27 +44,30 @@ osd_msg[1] = _("Escort the transport ship to {pnt} in the {sys} system")
 osd_msg[2] = _("Land on {pnt} in the {sys} system")
 osd_msg[3] = _("Fly back to {pnt} in the {sys} system")
 
-local station = spob.get("PSO Monitor")
-local homeworld = spob.get("Bastion Center")
+local station, stationsys = spob.getS("PSO Monitor")
+local homeworld, homeworldsys = spob.getS("Bastion Center")
+local stop1, stop1sys = spob.getS("Praxis")
+local stop2, stop2sys = spob.getS("Qoman")
+local stop3, stop3sys = spob.getS("Allous Citadel")
 local t_sys = {
-   system.get("Daravon"),
-   system.get("Ksher"),
+   stop1sys, -- 1
+   stop2sys, --2
    system.get("PSO"),
    system.get("Faust"),
-   system.get("Allous"),
+   stop3sys, -- 5
    system.get("Sultan"),
-   system.get("Amaroq"),
-   system.get("Ksher"),
-   system.get("Daravon"),
-   system.get("Pultatis"),
+   stationsys, -- 7
+   stop2sys, -- 8
+   stop1sys, -- 9
+   homeworldsys, -- 10
 }
 local t_planet = {
-   [1] = spob.get("Vilati Vilata"),
-   [2] = spob.get("Qoman"),
-   [5] = spob.get("Allous Citadel"),
+   [1] = stop1,
+   [2] = stop2,
+   [5] = stop3,
    [7] = station,
-   [8] = spob.get("Qoman"),
-   [9] = spob.get("Vilati Vilata"),
+   [8] = stop2,
+   [9] = stop1,
    [10] = homeworld,
 }
 
@@ -92,11 +95,17 @@ function accept()
       { _("Accept the job"), "accept" },
       { _("Decline to help"), "decline" },
    } )
+
    vn.label( "decline" )
    vn.na(_("You don't want to be involved again in a dangerous, poorly paid job so you decline and leave the bar."))
    vn.done()
+
    vn.label( "accept" )
    vn.func( function () accepted = true end )
+   mensing(_([["While the data recorded by Robert is of good quality, he seems to have completely forgotten that we need reference data of similarly dense nebulae. We have already installed his sensors on a transport ship. The nearby PSO nebula should be a good candidate but there are the pirate systems in between. Also the target systems are controlled by the Dvaered. Hard to say whether the Dvaered or the pirates are more dangerous. So this is why we need an escort."]]))
+   mensing(fmt.f(_([["We will travel through {sys2}, {sys3}, and {sys4}. Just passing through the systems should be sufficient. Also, I want to visit the {station} station before returning back to {pnt}. You have to make sure no one shoots us down during our expedition."]]),
+      {sys2=t_sys[3], sys3=t_sys[4], sys4=t_sys[6], station=station, pnt=homeworld}))
+   vn.done()
    vn.run()
 
    if not accepted then
@@ -107,13 +116,6 @@ function accept()
    mem.exited = false
    mem.firstTakeOff = true
    mem.origin = spob.cur()
-   vn.clear()
-   vn.scene()
-   mensing = vn.newCharacter( nebu_research.vn_mensing() )
-   mensing(_([["While the data recorded by Robert is of good quality, he seems to have completely forgotten that we need reference data of similarly dense nebulae. We have already installed his sensors on a transport ship. The nearby PSO nebula should be a good candidate but there are the pirate systems in between. Also the target systems are controlled by the Dvaered. Hard to say whether the Dvaered or the pirates are more dangerous. So this is why we need an escort."]]))
-   mensing(fmt.f(_([["We will travel through {sys2}, {sys3}, and {sys4}. Just passing through the systems should be sufficient. Also, I want to visit the {station} station before returning back to {pnt}. You have to make sure no one shoots us down during our expedition."]]), {sys2=t_sys[3], sys3=t_sys[4], sys4=t_sys[6], station=station, pnt=homeworld}))
-   vn.done()
-   vn.run()
 
    -- Set up mission information
    if mem.origin == spob.get("Vilati Vilata") then

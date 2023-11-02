@@ -24,6 +24,7 @@
 #include "nlua_transform.h"
 #include "nlua_canvas.h"
 #include "nlua_vec2.h"
+#include "render.h"
 #include "nluadef.h"
 #include "opengl.h"
 #include "array.h"
@@ -314,7 +315,6 @@ static int gfxL_renderTexRaw( lua_State *L )
    double angle;
    int sx, sy;
 
-
    /* Parameters. */
    t  = luaL_checktex( L, 1 );
    px = luaL_checknumber( L, 2 );
@@ -371,7 +371,6 @@ static int gfxL_renderTexH( lua_State *L )
    mat4 *H, *TH, ID;
 
    ID = mat4_identity();
-
 
    /* Parameters. */
    t     = luaL_checktex( L,1 );
@@ -446,7 +445,6 @@ static int gfxL_renderRect( lua_State *L )
    double x,y, w,h;
    int empty;
 
-
    /* Parse parameters. */
    x     = luaL_checknumber( L, 1 );
    y     = luaL_checknumber( L, 2 );
@@ -500,7 +498,6 @@ static int gfxL_renderCircle( lua_State *L )
    glColour *col;
    double x,y, r;
    int empty;
-
 
    /* Parse parameters. */
    x     = luaL_checknumber( L, 1 );
@@ -776,7 +773,6 @@ static int gfxL_printf( lua_State *L )
    glColour *col;
    int max, mid;
 
-
    /* Parse parameters. */
    font  = luaL_checkfont(L,1);
    str   = luaL_checkstring(L,2);
@@ -813,7 +809,6 @@ static int gfxL_printH( lua_State *L )
    const char *str;
    const glColour *col;
    double outline;
-
 
    /* Parse parameters. */
    H     = luaL_checktransform(L,1);
@@ -893,7 +888,6 @@ static int gfxL_printText( lua_State *L )
    double x, y;
    glColour *col;
 
-
    /* Parse parameters. */
    font  = lua_toboolean(L,1) ? &gl_smallFont : &gl_defFont;
    str   = luaL_checkstring(L,2);
@@ -968,6 +962,7 @@ static int gfxL_setBlendMode( lua_State *L )
    glBlendFuncSeparate(srcRGB, dstRGB, srcA, dstA);
    gl_checkErr();
 
+   render_needsReset();
    return 0;
 }
 
@@ -990,6 +985,7 @@ static int gfxL_setScissor( lua_State *L )
       GLsizei w = luaL_optinteger(L,3,0);
       GLsizei h = luaL_optinteger(L,4,0);
       gl_clipRect( x, y, w, h );
+      render_needsReset();
    }
    else
       gl_unclipRect();

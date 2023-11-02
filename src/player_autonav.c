@@ -331,7 +331,7 @@ void player_autonavReset( double s )
  */
 void player_thinkAutonav( Pilot *pplayer, double dt )
 {
-   int oldmem;
+   AIMemory oldmem;
 
    ai_thinkSetup();
    oldmem = ai_setPilot( pplayer ); /* Uses AI functionality. */

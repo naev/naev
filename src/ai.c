@@ -408,21 +408,25 @@ static int ai_setMemory (void)
  *
  *    @param p Pilot to set.
  */
-int ai_setPilot( Pilot *p )
+AIMemory ai_setPilot( Pilot *p )
 {
+   AIMemory oldmem;
    cur_pilot = p;
-   return ai_setMemory();
+   oldmem.p = cur_pilot;
+   oldmem.mem = ai_setMemory();
+   return oldmem;
 }
 
 /**
  * @brief Finishes setting up a pilot.
  */
-void ai_unsetPilot( int oldmem )
+void ai_unsetPilot( AIMemory oldmem )
 {
    nlua_env env = cur_pilot->ai->env;
-   lua_rawgeti( naevL, LUA_REGISTRYINDEX, oldmem );
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, oldmem.mem );
    nlua_setenv( naevL, env, "mem"); /* pm */
-   luaL_unref( naevL, LUA_REGISTRYINDEX, oldmem );
+   luaL_unref( naevL, LUA_REGISTRYINDEX, oldmem.mem );
+   cur_pilot = oldmem.p;
 }
 
 /**
@@ -786,7 +790,8 @@ void ai_think( Pilot* pilot, const double dt )
 {
    (void) dt;
    nlua_env env;
-   int data, oldmem;
+   int data;
+   AIMemory oldmem;
    Task *t;
 
    /* Must have AI. */
@@ -878,7 +883,7 @@ void ai_think( Pilot* pilot, const double dt )
  */
 void ai_init( Pilot *p )
 {
-   int oldmem;
+   AIMemory oldmem;
    if ((p->ai==NULL) || (p->ai->ref_create==LUA_NOREF))
       return;
    oldmem = ai_setPilot( p );
@@ -896,7 +901,7 @@ void ai_init( Pilot *p )
  */
 void ai_attacked( Pilot *attacked, const unsigned int attacker, double dmg )
 {
-   int oldmem;
+   AIMemory oldmem;
    HookParam hparam[2];
 
    /* Custom hook parameters. */
@@ -933,7 +938,7 @@ void ai_attacked( Pilot *attacked, const unsigned int attacker, double dmg )
  */
 void ai_discovered( Pilot* discovered )
 {
-   int oldmem;
+   AIMemory oldmem;
 
    /* Behaves differently if manually overridden. */
    pilot_runHook( discovered, PILOT_HOOK_DISCOVERED );
@@ -968,7 +973,7 @@ void ai_discovered( Pilot* discovered )
  */
 void ai_hail( Pilot* recipient )
 {
-   int oldmem;
+   AIMemory oldmem;
 
    /* Make sure it's getable. */
    if (!pilot_canTarget( recipient ))
@@ -1030,12 +1035,10 @@ void ai_refuel( Pilot* refueler, unsigned int target )
  *
  *    @param p Pilot receiving the distress signal.
  *    @param distressed Pilot sending the distress signal.
- *    @param attacker Pilot attacking \p distressed.
+ *    @param attacker Pilot attacking the distressed.
  */
 void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
 {
-   int oldmem;
-
    /* Ignore distress signals when under manual control. */
    if (pilot_isFlag( p, PILOT_MANUAL_CONTROL ))
       return;
@@ -1044,29 +1047,12 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
    if (cur_pilot->ai == NULL)
       return;
 
-   /* Set up the environment. */
-   oldmem = ai_setPilot(p);
-
-   /* See if function exists. */
-   nlua_getenv(naevL, cur_pilot->ai->env, "distress");
-   if (lua_isnil(naevL,-1)) {
-      lua_pop(naevL,1);
-      ai_unsetPilot( oldmem );
-      return;
-   }
-
-   /* Run the function. */
-   lua_pushpilot(naevL, distressed->id);
    if (attacker != NULL)
       lua_pushpilot(naevL, attacker->id);
-   else /* Default to the victim's current target. */
-      lua_pushpilot(naevL, distressed->target);
-
-   if (nlua_pcall(cur_pilot->ai->env, 2, 0)) {
-      WARN( _("Pilot '%s' ai '%s' -> 'distress': %s"), cur_pilot->name, cur_pilot->ai->name, lua_tostring(naevL,-1));
-      lua_pop(naevL,1);
-   }
-   ai_unsetPilot( oldmem );
+   else
+      lua_pushnil(naevL);
+   pilot_msg( distressed, p, "distress", -1 );
+   lua_pop(naevL,1);
 }
 
 /**
@@ -1121,7 +1107,7 @@ static void ai_create( Pilot* pilot )
  */
 Task *ai_newtask( lua_State *L, Pilot *p, const char *func, int subtask, int pos )
 {
-   Task *t, *curtask, *pointer;
+   Task *t, *pointer;
 
    if (p->ai==NULL) {
       NLUA_ERROR( L, _("Trying to create new task for pilot '%s' that has no AI!"), p->name );
@@ -1151,7 +1137,7 @@ Task *ai_newtask( lua_State *L, Pilot *p, const char *func, int subtask, int pos
    }
    else {
       /* Must have valid task. */
-      curtask = ai_curTask( p );
+      Task *curtask = ai_curTask( p );
       if (curtask == NULL) {
          ai_freetask( t );
          NLUA_ERROR( L, _("Trying to add subtask '%s' to non-existent task."), func);
@@ -2017,20 +2003,20 @@ static int aiL_iface( lua_State *L )
       /* 1 - 1/(|x|+1) does a pretty nice job of mapping the reals to the interval (0...1). That forms the core of this angle calculation */
       /* There is nothing special about the scaling parameter of 200; it can be tuned to get any behavior desired. A lower
          number will give a more dramatic 'lead' */
-      speedmap = -1*copysign(1 - 1 / (FABS(drift_azimuthal/200) + 1), drift_azimuthal) * M_PI_2;
+      speedmap = -1.*copysign(1. - 1. / (FABS(drift_azimuthal/200.) + 1.), drift_azimuthal) * M_PI_2;
       diff = angle_diff(heading_offset_azimuth, speedmap);
       azimuthal_sign = -1;
 
       /* This indicates we're drifting to the right of the target
        * And we need to turn CCW */
-      if (diff > 0)
+      if (diff > 0.)
          pilot_turn = azimuthal_sign;
       /* This indicates we're drifting to the left of the target
        * And we need to turn CW */
-      else if (diff < 0)
+      else if (diff < 0.)
          pilot_turn = -1*azimuthal_sign;
       else
-         pilot_turn = 0;
+         pilot_turn = 0.;
    }
    /* turn most efficiently to face the target. If we intercept the correct quadrant in the UV plane first, then the code above will kick in */
    /* some special case logic is added to optimize turn time. Reducing this to only the else cases would speed up the operation
@@ -2040,10 +2026,10 @@ static int aiL_iface( lua_State *L )
       diff = M_PI;
       azimuthal_sign = 1;
 
-      if (heading_offset_azimuth >0)
+      if (heading_offset_azimuth > 0.)
          pilot_turn = azimuthal_sign;
       else
-         pilot_turn = -1*azimuthal_sign;
+         pilot_turn = -1.*azimuthal_sign;
    }
 
    /* Return angle in degrees away from target. */
@@ -2531,11 +2517,17 @@ static int aiL_nearhyptarget( lua_State *L )
       const JumpPoint *jiter = &cur_system->jumps[i];
       int useshidden = faction_usesHiddenJumps( cur_pilot->faction );
 
-      /* We want only standard jump points to be used. */
-      if ((!useshidden && jp_isFlag(jiter, JP_HIDDEN)) || jp_isFlag(jiter, JP_EXITONLY))
+      /* Ignore exit only. */
+      if (jp_isFlag( jiter, JP_EXITONLY ))
          continue;
 
-      /* TODO should they try to use systems only with their faction? */
+      /* We want only standard jump points to be used. */
+      if (!useshidden && jp_isFlag(jiter, JP_HIDDEN))
+         continue;
+
+      /* Only jump if there is presence there. */
+      if (system_getPresence( jiter->target, cur_pilot->faction ) <= 0.)
+         continue;
 
       /* Get nearest distance. */
       dist  = vec2_dist2( &cur_pilot->solid.pos, &jiter->pos );

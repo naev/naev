@@ -38,3 +38,4 @@ void window_custSetOverlay( unsigned int wid, const char *name,
       void (*renderOverlay) (double bx, double by, double bw, double bh, void* data) );
 void *window_custGetData( unsigned int wid, const char *name );
 void window_custAutoFreeData( unsigned int wid, const char *name );
+void window_custSetDynamic( unsigned int wid, const char *name, int dynamic );

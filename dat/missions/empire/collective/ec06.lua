@@ -65,7 +65,7 @@ function accept ()
 
    -- Mission data
    mem.misn_stage = 0
-   mem.misn_marker = misn.markerAdd( misn_target_sys2, "low" )
+   mem.misn_marker_prev = misn.markerAdd( misn_target_sys2, "low" )
    mem.misn_marker = misn.markerAdd( misn_final_sys, "high" )
 
    -- Mission details
@@ -108,6 +108,9 @@ function jumpin ()
       if system.cur() == misn_final_sys then
          pilot.clear()
          pilot.toggleSpawn(false)
+
+         -- Clear marker to previous system
+         misn.markerRm( mem.misn_marker_prev )
 
          local function setup_pilot( p, pos )
             pilotai.guard( p, pos )
@@ -256,6 +259,9 @@ function col_dead( _victim )
    misn.osdActive(3)
    addRefuelShip()
    mem.misn_stage = 4
+
+   -- Set marker back to base
+   misn.markerMove( mem.misn_marker, misn_base )
 
    -- Change back to normal AI
    for k,v in ipairs(fleetE) do

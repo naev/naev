@@ -543,7 +543,7 @@ void player_swapShip( const char *shipname, int move_cargo )
       if (e->id == ps->p->id )
          continue;
 
-      ne.ship = strdup(e->ship); /* Might be worth having an escort_copy function. */
+      ne.ship = e->ship; /* Might be worth having an escort_copy function. */
       array_push_back( &ps->p->escorts, ne );
    }
    escort_freeList( player.p );
@@ -3168,7 +3168,7 @@ static int player_saveEscorts( xmlTextWriterPtr writer )
          case ESCORT_TYPE_BAY:
             xmlw_startElem(writer, "escort");
             xmlw_attr(writer,"type","bay");
-            xmlw_attr(writer, "name", "%s", e->ship);
+            xmlw_attr(writer, "name", "%s", e->ship->name);
             xmlw_endElem(writer); /* "escort" */
             break;
 
@@ -4065,7 +4065,7 @@ static int player_parseEscorts( xmlNodePtr parent )
       if (name==NULL) /* Workaround for old saves, TODO remove around 0.11 */
          name = xml_getStrd( node );
       if (strcmp(buf,"bay")==0)
-         escort_addList( player.p, name, ESCORT_TYPE_BAY, 0, 1 );
+         escort_addList( player.p, ship_get(name), ESCORT_TYPE_BAY, 0, 1 );
 
       else if (strcmp(buf,"fleet")==0) {
          PlayerShip_t *ps = player_getPlayerShip( name );

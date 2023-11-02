@@ -5,7 +5,7 @@
  <priority>2</priority>
  <chance>10</chance>
  <location>Bar</location>
- <cond>system.cur() == system.get("Alteris")</cond>
+ <system>Alteris</system>
  <done>Hitman</done>
 </mission>
 --]]

@@ -30,6 +30,7 @@
 #define OUTFIT_PROP_WEAP_MISS_SHIPS    (1<<10) /**< Weapon can not hit ships. */
 #define OUTFIT_PROP_WEAP_MISS_ASTEROIDS (1<<11) /**< Weapon can not hit asteroids. */
 #define OUTFIT_PROP_WEAP_MISS_EXPLODE  (1<<12) /**< The weapon particle blows up on miss. */
+#define OUTFIT_PROP_WEAP_ONLYHITTARGET (1<<13) /**< The weapon can only hit the target (and asteroids or whatever). */
 
 /* Outfit filter labels. [Doc comments are also translator notes and must precede the #define.] */
 /** Color-coded abbreviation for "Weapon [outfit]", short enough to use as a tab/column title. */
@@ -279,17 +280,16 @@ typedef struct OutfitAfterburnerData_ {
    double mass_limit;/**< Limit at which effectiveness starts to drop. */
    double heatup;    /**< How long it takes for the afterburner to overheat. */
    double heat;      /**< Heat per second. */
-   //double heat_cap;  /**< Temperature at which the outfit overheats (K). */
-   //double heat_base; /**< Temperature at which the outfit BEGINS to overheat(K). */
 } OutfitAfterburnerData;
 
+struct Ship_; /* Bit of a horrible hack to allow us to avoid circular definitions. */
 /**
  * @brief Represents a fighter bay.
  */
 typedef struct OutfitFighterBayData_ {
-   char *ship;       /**< Name of the ships to use as ammo. */
+   char *shipname;   /**< Name of the ships to use as ammo. */
+   const struct Ship_ *ship; /**< Ship to use as ammo. */
    double ship_mass; /**< Mass of a fighter. */
-   const struct Outfit_ *ammo; /**< Ships to use as ammo. */
    double delay;     /**< Delay between launches. */
    int amount;       /**< Amount of ammo it can store. */
    double reload_time;/**< Time it takes to reload 1 ammo. */
@@ -304,7 +304,7 @@ typedef struct OutfitMapData_s OutfitMapData_t;
  * @brief Represents a local map.
  */
 typedef struct OutfitLocalMapData_ {
-   double jump_detect;  /**< Ability to detect jumps. */
+   double jump_detect; /**< Ability to detect jumps. */
    double spob_detect; /**< Ability to detect spobs. */
 } OutfitLocalMapData;
 
@@ -401,7 +401,7 @@ typedef struct Outfit_ {
    union {
       OutfitBoltData blt;         /**< BOLT */
       OutfitBeamData bem;         /**< BEAM */
-      OutfitLauncherData lau;     /**< MISSILE */
+      OutfitLauncherData lau;     /**< LAUNCHER */
       OutfitModificationData mod; /**< MODIFICATION */
       OutfitAfterburnerData afb;  /**< AFTERBURNER */
       OutfitFighterBayData bay;   /**< FIGHTER_BAY */

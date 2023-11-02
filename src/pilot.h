@@ -151,8 +151,8 @@ typedef struct PilotWeaponSetOutfit_ {
 
 typedef enum WeaponSetType_ {
    WEAPSET_TYPE_SWITCH=0,  /**< Changes weaponsets. */
-   WEAPSET_TYPE_HOLD=1,    /**< Toggles outfits (if on it deactivates). */
-   WEAPSET_TYPE_TOGGLE=2,  /**< Activates weapons (while held down). */
+   WEAPSET_TYPE_HOLD=1,    /**< Activates weapons (while held down). */
+   WEAPSET_TYPE_TOGGLE=2,  /**< Toggles outfits (if on it deactivates). */
 } WeaponSetType;
 
 /**
@@ -204,7 +204,7 @@ typedef enum EscortType_e {
  * @brief Stores an escort.
  */
 typedef struct Escort_s {
-   char *ship;          /**< Type of the ship escort is flying. */
+   const Ship *ship;    /**< Type of the ship escort is flying. */
    EscortType_t type;   /**< Type of escort. */
    unsigned int id;     /**< ID of in-game pilot. */
    /* TODO: something better than this */
@@ -498,7 +498,7 @@ int pilot_isFriendly( const Pilot *p );
 char pilot_getFactionColourChar( const Pilot *p );
 
 /* Misc details. */
-void pilot_msg( Pilot *p, Pilot *receiver, const char *type, unsigned int index );
+void pilot_msg( const Pilot *p, const Pilot *receiver, const char *type, unsigned int index );
 void pilot_clearTrails( Pilot *p );
 void pilot_sample_trails( Pilot* p, int none );
 int pilot_hasIllegal( const Pilot *p, int faction );

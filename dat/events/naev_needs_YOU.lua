@@ -18,6 +18,8 @@ DESCRIPTION:
 
 ]]--
 
+local vn = require "vn"
+local lg = require "love.graphics"
 
 -- Stage one: something goes wrong in fabric of reality.
 local text = {}
@@ -44,35 +46,39 @@ text[3] = _([["Oh sorry about that. We're working hard on improving life, the un
 
 
 function create()
-      -- Create an eerie atmosphere by cutting off the background music and substituting something spooky
-      --disabled until difficulties with the music API are sorted out
-      music.play( "sirius1.ogg" )
+   vn.clear()
+   vn.scene()
 
-      -- The big programmer in the sky looks in to ask the player a question
-      if tk.yesno( _("Naev received SIGSEGV (address not mapped to object)!"), text[1] ) then
-         tk.msg( _("The voice of the creator"), text[2] ) -- if the answer is 'yes'
+   -- Create an eerie atmosphere by cutting off the background music and substituting something spooky
+   vn.music( "snd/music/sirius1.ogg" )
 
-     -- Mission ends with a little comment after blasting off.
-         -- hook.takeoff( "enter_system" )
+   vn.setBackground( function()
+      local w, h = gfx.dim()
+      vn.setColor( {0, 0, 0, 1} )
+      lg.rectangle( "fill", 0, 0, w, h )
+   end )
+   local sigsegv = vn.newCharacter( _("Naev received SIGSEGV (address not mapped to object)!") )
+   local creator = vn.newCharacter( _("The voice of the creator") )
+   vn.transition( "fade", 1 )
 
-      else
-         tk.msg( _("The voice of the creator"), text[3] ) -- if the answer is 'no', not much different from 'yes'
+   -- The big programmer in the sky looks in to ask the player a question
+   sigsegv( text[1] )
+   vn.menu( {
+      { _("Yes"), "yes" },
+      { _("No"), "no" },
+   } )
 
-     -- Mission ends with a little comment after blasting off.
-         -- hook.takeoff( "enter_system" )
-      end
+   -- if the answer is 'yes'
+   vn.label( "yes" )
+   creator( text[2] )
+   vn.jump( "end" )
 
-      -- everything returns to normal
-      music.choose( "land" )
+   -- if the answer is 'no', not much different from 'yes'
+   vn.label( "no" )
+   creator( text[3] )
 
-      evt.finish( true )
+   vn.label( "end" )
+   vn.done( "fade", 1 )
+   vn.run()
+   evt.finish( true )
 end
-
---[[
--- A grace note.  Not sure the player will make the connection of the message with the event.
-function enter_system()
-
-      player.msg( _("Well, that was weird") )
-      evt.finish( true )
-
-end]]--

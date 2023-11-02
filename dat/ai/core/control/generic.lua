@@ -6,7 +6,7 @@ local formation = require "formation"
 local lanes = require 'ai.core.misc.lanes'
 local scans = require 'ai.core.misc.scans'
 
-local choose_weapset, clean_task, gen_distress, gen_distress_attacked, handle_messages, lead_fleet, should_cooldown, consider_taunt -- Forward-declared functions
+local choose_weapset, clean_task, gen_distress, gen_distress_attacked, handle_messages, lead_fleet, should_cooldown, consider_taunt, distress_handler -- Forward-declared functions
 
 --[[
 -- Variables to adjust AI
@@ -198,6 +198,17 @@ function control_manual( dt )
    handle_messages( si, false )
 end
 
+--[[
+-- Helper function to see if two pilots belong to the same fleet or not
+--]]
+local function sameFleet( pa, pb )
+   local la = pa:leader()
+   local lb = pa:leader()
+   if not la or not la:exists() then la = pa end
+   if not lb or not lb:exists() then lb = pb end
+   return la == lb
+end
+
 function handle_messages( si, dopush )
    local taskchange = false
    local p = ai.pilot()
@@ -224,9 +235,12 @@ function handle_messages( si, dopush )
             end
          end
       else
+         if msgtype=="distress" then
+            taskchange = distress_handler( sender, data )
+         end
 
-         -- Special case leader is gone but we want to follow, so we ignore if they're non-existent.
-         if l==nil or sender==l then
+         -- Special case where we accept messages from all pilots in the same fleet
+         if l==nil or sameFleet( p, sender ) then
             if msgtype == "hyperspace" then
                if dopush then
                   ai.pushtask("hyperspace", data)
@@ -322,17 +336,6 @@ function handle_messages( si, dopush )
       end
    end
    return taskchange
-end
-
---[[
--- Helper function to see if two pilots belong to the same fleet or not
---]]
-local function sameFleet( pa, pb )
-   local la = pa:leader()
-   local lb = pa:leader()
-   if not la or not la:exists() then la = pa end
-   if not lb or not lb:exists() then lb = pb end
-   return la == lb
 end
 
 --[[
@@ -939,11 +942,12 @@ function consider_taunt( target, offensive )
 end
 
 -- Handle distress signals
-function distress( pilot, attacker )
-   local p = ai.pilot()
+function distress_handler( pilot, attacker )
+   -- Make sure sender exists
+   if not pilot or not pilot:exists() then return end
 
    -- Make sure target exists
-   if not attacker:exists() then return end
+   if not attacker or not attacker:exists() then return end
 
    -- Make sure pilot is setting their target properly
    if pilot == attacker then return end
@@ -951,6 +955,7 @@ function distress( pilot, attacker )
    -- Ignore pleas of help when bribed by the attacker
    if ai.isbribed(attacker) then return end
 
+   local p       = ai.pilot()
    local pfact   = pilot:faction()
    local afact   = attacker:faction()
    local aifact  = p:faction()
@@ -1000,6 +1005,7 @@ function distress( pilot, attacker )
       if not target:exists() or ai.dist2(target) > ai.dist2(badguy) then
          if p:inrange( badguy ) then
             ai.pushtask( "attack", badguy )
+            return true
          end
       end
    -- If not fleeing or refueling, begin attacking
@@ -1010,13 +1016,16 @@ function distress( pilot, attacker )
          if p:inrange( badguy ) then -- TODO: something to help in the other case
             clean_task( task )
             ai.pushtask( "attack", badguy )
+            return true
          end
       else
          if p:inrange(badguy) and ai.dist(badguy) < mem.safe_distance and not mem.norun then
             ai.pushtask( "runaway", badguy )
+            return true
          end
       end
    end
+   return false
 end
 
 

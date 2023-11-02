@@ -119,6 +119,8 @@ static void cst_render( Widget* cst, double bx, double by )
    x = bx + cst->x;
    y = by + cst->y;
 
+   glClear( GL_DEPTH_BUFFER_BIT );
+
    if (cst->dat.cst.border) {
       /* inner outline */
       toolkit_drawOutline( x, y+1, cst->w+1, cst->h+1, 0.,
@@ -253,4 +255,18 @@ void window_custAutoFreeData( unsigned int wid, const char *name )
    Widget *wgt = cst_getWidget( wid, name );
    if (wgt != NULL)
       wgt->dat.cst.autofree = 1;
+}
+
+/**
+ * @brief Marks a widget as being rendered dynamically, which forces it to be updated every frame.
+ */
+void window_custSetDynamic( unsigned int wid, const char *name, int dynamic )
+{
+   Widget *wgt = cst_getWidget( wid, name );
+   if (wgt != NULL) {
+      if (dynamic)
+         wgt->flags |= WGT_FLAG_DYNAMIC;
+      else
+         wgt->flags &= ~WGT_FLAG_DYNAMIC;
+   }
 }

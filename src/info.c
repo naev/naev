@@ -616,8 +616,8 @@ static void info_openWeapons( unsigned int wid )
    window_addText( wid, x+10, y, wlen, 100, 0, "txtSMode", NULL, NULL,
          _("Cycles through the following modes:\n"
            "- Switch: sets the selected weapons as primary and secondary weapons.\n"
-           "- Toggle: toggles the selected outfits to on or off state\n"
-           "- Hold: turns on the selected outfits as long as key is held"
+           "- Hold: turns on the selected outfits as long as key is held\n"
+           "- Toggle: toggles the selected outfits to on or off state"
            ));
    y -= 8+window_getTextHeight( wid, "txtSMode" );
    window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
@@ -721,13 +721,13 @@ static void weapons_toggleList( unsigned int wid, const char *str )
    t = pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons );
    switch (t) {
       case WEAPSET_TYPE_SWITCH:
-         c = WEAPSET_TYPE_TOGGLE;
+         c = WEAPSET_TYPE_HOLD;
          break;
       case WEAPSET_TYPE_HOLD:
-         c = WEAPSET_TYPE_SWITCH;
+         c = WEAPSET_TYPE_TOGGLE;
          break;
       case WEAPSET_TYPE_TOGGLE:
-         c = WEAPSET_TYPE_HOLD;
+         c = WEAPSET_TYPE_SWITCH;
          break;
       default:
          /* Shouldn't happen... but shuts up GCC */
@@ -1078,9 +1078,9 @@ static void cargo_jettison( unsigned int wid, const char *str )
    cargo_update( wid, NULL );
 
    /* Run hooks. */
-   hparam[0].type    = HOOK_PARAM_STRING;
-   hparam[0].u.str   = pclist[pos].commodity->name,
-      hparam[1].type    = HOOK_PARAM_NUMBER;
+   hparam[0].type    = HOOK_PARAM_COMMODITY;
+   hparam[0].u.commodity = (Commodity*) pclist[pos].commodity; /* TODO not cast */
+   hparam[1].type    = HOOK_PARAM_NUMBER;
    hparam[1].u.num   = pclist[pos].quantity;
    hparam[2].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "comm_jettison", hparam );

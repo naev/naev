@@ -23,6 +23,7 @@
 #include "gui.h"
 #include "land_outfits.h"
 #include "log.h"
+#include "map.h"
 #include "nlua.h"
 #include "nlua_asteroid.h"
 #include "nlua_canvas.h"
@@ -92,6 +93,7 @@ static int pilotL_withPlayer( lua_State *L );
 static int pilotL_nav( lua_State *L );
 static int pilotL_navSpob( lua_State *L );
 static int pilotL_navJump( lua_State *L );
+static int pilotL_navJumpSet( lua_State *L );
 static int pilotL_weapsetActive( lua_State *L );
 static int pilotL_weapset( lua_State *L );
 static int pilotL_weapsetList( lua_State *L );
@@ -277,6 +279,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "nav", pilotL_nav },
    { "navSpob", pilotL_navSpob },
    { "navJump", pilotL_navJump },
+   { "navJumpSet", pilotL_navJumpSet },
    { "weapsetActive", pilotL_weapsetActive },
    { "weapset", pilotL_weapset },
    { "weapsetList", pilotL_weapsetList },
@@ -1657,6 +1660,39 @@ static int pilotL_navJump( lua_State *L )
       lj.destid = cur_system->jumps[ p->nav_hyperspace ].targetid;
       lua_pushjump( L, lj );
    }
+
+   return 1;
+}
+
+/**
+ * @brief Sets the hyperspace navigation target for the pilot.
+ *
+ *    @luatparam Pilot p Pilot to set hyperspace navigation target for.
+ *    @luatparam Jump|nil jp Jump point to set as navigation target or nil to disable.
+ * @luafunc navJumpSet
+ */
+static int pilotL_navJumpSet( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   int jumpid = -1;
+   if (!lua_isnoneornil(L,2)) {
+      const LuaJump *lj = luaL_checkjump(L,2);
+      if (cur_system->id != lj->srcid)
+         NLUA_ERROR(L,_("Jump source system doesn't match current system!"));
+      /* jumpid = jp - cur_system->jumps; */
+      for (int i=0; i<array_size(cur_system->jumps); i++)
+         if (cur_system->jumps[ i ].targetid == lj->destid) {
+            jumpid = i;
+            break;
+         }
+      if (jumpid<0)
+         NLUA_ERROR(L,_("Jump destination system not found!"));
+   }
+
+   if (pilot_isPlayer(p))
+      map_select( cur_system->jumps[jumpid].target, 0 );
+   else
+      p->nav_hyperspace = jumpid;
 
    return 1;
 }
@@ -5007,6 +5043,7 @@ static const struct pL_flag pL_flags[] = {
    { .name = "refueling", .id = PILOT_REFUELING },
    { .name = "invisible", .id = PILOT_INVISIBLE },
    { .name = "disabled", .id = PILOT_DISABLED },
+   { .name = "landing", .id = PILOT_LANDING },
    { .name = "takingoff", .id = PILOT_TAKEOFF },
    { .name = "jumpingin", .id = PILOT_HYP_END },
    { .name = "jumpingout", .id = PILOT_HYPERSPACE },
@@ -5054,6 +5091,7 @@ static const struct pL_flag pL_flags[] = {
  *  <li> hostile: pilot is hostile toward the player.</li>
  *  <li> refueling: pilot is refueling another pilot.</li>
  *  <li> disabled: pilot is disabled.</li>
+ *  <li> landing: pilot is currently landing.</li>
  *  <li> takingoff: pilot is currently taking off.</li>
  *  <li> manualcontrol: pilot is under manual control.</li>
  *  <li> combat: pilot is engaged in combat.</li>
@@ -6140,7 +6178,7 @@ static int pilotL_setLeader( lua_State *L )
       }
 
       /* TODO: Figure out escort type */
-      escort_addList( leader, p->ship->name, ESCORT_TYPE_MERCENARY, p->id, 0 );
+      escort_addList( leader, p->ship, ESCORT_TYPE_MERCENARY, p->id, 0 );
 
       /* If the pilot has followers, they should be given the new leader as well, and be added as escorts. */
       for (int i=array_size(p->escorts)-1; i>=0; i--) {
@@ -6164,7 +6202,7 @@ static int pilotL_setLeader( lua_State *L )
          pe->parent = p->parent;
 
          /* Add escort to parent. */
-         escort_addList( leader, pe->ship->name, e->type, pe->id, 0 );
+         escort_addList( leader, pe->ship, e->type, pe->id, 0 );
          escort_rmListIndex( p, i );
       }
    }

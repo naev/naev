@@ -196,7 +196,8 @@ void weapon_minimap( double res, double w,
       rc = 0;
 
    /* Draw the points for weapons on all layers. */
-   /* TODO quadtree look-up. */
+   /* TODO potentially do quadtree look-up. Not sure if worth it given that only
+    * weapons with health are currently added to the quadtree. */
    for (int i=0; i<array_size(weapon_stack); i++) {
       double x, y;
       const glColour *c;
@@ -589,7 +590,6 @@ void weapons_updatePurge (void)
       y = round(w->solid.pos.y);
       w2 = ceil(range * 0.5);
       h2 = ceil(range * 0.5);
-      /* This hack is pretty ugly, but it allows us to store both foreground and background using a single ID. */
       qt_insert( &weapon_quadtree, i, x-w2, y-h2, x+w2, y+h2 );
    }
 }
@@ -625,7 +625,7 @@ void weapons_updateCollide( double dt )
                break;
             }
             else if (w->timer < w->falloff)
-               w->strength = w->timer / w->falloff;
+               w->strength = w->timer / w->falloff * w->strength_base;
             break;
 
          /* Beam weapons handled a part. */
@@ -783,7 +783,7 @@ static void weapon_render( Weapon* w, double dt )
          gfx = outfit_gfx(w->outfit);
 
          /* Alpha based on strength. */
-         c.a = w->strength;
+         c.a = MIN( 1., w->strength );
 
          /* Outfit spins around. */
          if (outfit_isProp(w->outfit, OUTFIT_PROP_WEAP_SPIN)) {
@@ -849,7 +849,7 @@ static void weapon_render( Weapon* w, double dt )
                glUniform2f( gfx->dimensions, r, r );
                glUniform1f( gfx->u_r, w->r );
                glUniform1f( gfx->u_time, w->life-w->timer );
-               glUniform1f( gfx->u_fade, w->strength );
+               glUniform1f( gfx->u_fade, MIN( 1., w->strength ) );
                gl_uniformMat4( gfx->projection, &projection );
 
                glEnableVertexAttribArray( gfx->vertex );
@@ -1001,7 +1001,7 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
       else if ((wc->gfx!=NULL) && (wc->gfx->tex!=NULL))
          return CollideSprite( wc->gfx->tex, w->sx, w->sy, &w->solid.pos,
                   ctex, csx, csy, cpos, crash );
-      /* TODO case no polygon and circle collision. */
+      /* Case no polygon and circle collision. */
       else
          return CollideCircleSprite( &w->solid.pos, wc->range, ctex, csx, csy, cpos, crash );
    }
@@ -1117,6 +1117,12 @@ static void weapon_updateCollide( Weapon* w, double dt )
          if (weapon_isSmart(w)) {
             int isjammed = ((w->status == WEAPON_STATUS_JAMMED) || (w->status == WEAPON_STATUS_JAMMED_SLOWED));
             if (!isjammed && (w->target.type==TARGET_PILOT) && (p->id != w->target.u.id))
+               continue;
+         }
+
+         /* Check if only hit target. */
+         if (weapon_isFlag(w,WEAPON_FLAG_ONLYHITTARGET)) {
+            if ((w->target.type==TARGET_PILOT) && (p->id != w->target.u.id))
                continue;
          }
 
@@ -2185,7 +2191,11 @@ static int weapon_create( Weapon *w, PilotOutfitSlot* po, const Outfit *ref,
    }
    w->outfit   = outfit; /* non-changeable */
    w->strength = 1.;
+   w->strength_base = 1.;
    w->r        = RNGF(); /* Set unique value. */
+   /* Set flags. */
+   if (outfit_isProp(outfit,OUTFIT_PROP_WEAP_ONLYHITTARGET))
+      weapon_setFlag(w,WEAPON_FLAG_ONLYHITTARGET);
 
    /* Inform the target. */
    if (!(outfit_isBeam(w->outfit)) && (w->target.type==TARGET_PILOT)) {
@@ -2292,7 +2302,7 @@ static int weapon_create( Weapon *w, PilotOutfitSlot* po, const Outfit *ref,
  *    @param time Expected flight time.
  *    @param aim Whether or not to aim.
  */
-void weapon_add( PilotOutfitSlot *po, const Outfit *ref,
+Weapon *weapon_add( PilotOutfitSlot *po, const Outfit *ref,
       double dir, const vec2* pos, const vec2* vel,
       const Pilot *parent, const Target *target, double time, int aim )
 {
@@ -2305,7 +2315,7 @@ void weapon_add( PilotOutfitSlot *po, const Outfit *ref,
    if (!outfit_isBolt(o) &&
          !outfit_isLauncher(o)) {
       ERR(_("Trying to create a Weapon from a non-Weapon type Outfit"));
-      return;
+      return 0;
    }
 #endif /* DEBUGGING */
 
@@ -2323,6 +2333,8 @@ void weapon_add( PilotOutfitSlot *po, const Outfit *ref,
          weapon_vbo = gl_vboCreateStream( size, NULL );
       gl_vboData( weapon_vbo, size, weapon_vboData );
    }
+
+   return w;
 }
 
 /**

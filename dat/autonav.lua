@@ -1,14 +1,14 @@
 local fmt = require "format"
 local lanes = require "ai.core.misc.lanes"
 
-local autonav, target_pos, target_spb, target_plt, instant_jump
+local autonav, target_pos, target_spb, target_plt, target_name, instant_jump
 local autonav_jump_delay, autonav_jump_approach, autonav_jump_brake
 local autonav_pos_approach
 local autonav_spob_approach, autonav_spob_land_approach, autonav_spob_land_brake
 local autonav_plt_follow, autonav_plt_board_approach
 local autonav_timer, tc_base, tc_mod, tc_max, tc_rampdown, tc_down
 local last_shield, last_armour, map_npath, reset_shield, reset_dist, reset_lockon
-local path, uselanes_jump, uselanes_spob, uselanes_thr
+local path, uselanes_jump, uselanes_spob, uselanes_thr, follow_jump
 
 -- Some defaults
 autonav_timer = 0
@@ -39,6 +39,7 @@ local function autonav_setup ()
    uselanes_jump = var.peek("autonav_uselanes_jump") and not stealth
    uselanes_spob = var.peek("autonav_uselanes_spob") and not stealth
    uselanes_thr = var.peek("autonav_uselanes_thr") or 2
+   follow_jump = var.peek("autonav_follow_jump")
    reset_shield = var.peek("autonav_reset_shield")
    reset_dist = var.peek("autonav_reset_dist")
    reset_lockon = true
@@ -114,6 +115,31 @@ local function shouldResetSpeed ()
    return false
 end
 
+local function get_pilot_name( plt )
+   local _inrng, target_known
+   if plt:exists() then
+      _inrng, target_known = player.pilot():inrange( plt )
+   end
+   if target_known then
+      return "#"..plt:colourChar()..plt:name().."#o"
+   elseif target_name then
+      return target_name
+   else
+      return _("Unknown")
+   end
+end
+
+local function get_sys_name( sys )
+   if sys:known() then
+      return sys:name()
+   end
+   return _("Unknown")
+end
+
+local function get_spob_name( spb )
+   return "#"..spb:colourChar()..spb:name().."#o"
+end
+
 --[[
 Triggered when a mission or the likes temporarily disables autonav.
 --]]
@@ -137,13 +163,7 @@ function autonav_system ()
    autonav_setup()
    local dest
    dest, map_npath = player.autonavDest()
-   local sysstr
-   if dest:known() then
-      sysstr = dest:name()
-   else
-      sysstr = _("Unknown")
-   end
-   player.msg("#o"..fmt.f(_("Autonav: travelling to {sys}."),{sys=sysstr}).."#0")
+   player.msg("#o"..fmt.f(_("Autonav: travelling to {sys}."),{sys=get_sys_name(dest)}).."#0")
 
    local pp = player.pilot()
    local jmp = pp:navJump()
@@ -182,7 +202,7 @@ function autonav_spob( spb, tryland )
       path = {target_pos}
    end
 
-   local spobstr = "#"..spb:colourChar()..spb:name().."#o"
+   local spobstr = get_spob_name( spb )
    if tryland then
       player.msg("#o"..fmt.f(_("Autonav: landing on {spob}."),{spob=spobstr}).."#0")
       autonav = autonav_spob_land_approach
@@ -203,8 +223,10 @@ function autonav_pilot( plt )
    local _inrng, known = player.pilot():inrange( plt )
    if known then
       pltstr = "#"..plt:colourChar()..plt:name().."#o"
+      target_name = pltstr
    else
       pltstr = _("Unknown")
+      target_name = nil
    end
 
    player.msg("#o"..fmt.f(_("Autonav: following {plt}."),{plt=pltstr}).."#0")
@@ -217,7 +239,15 @@ Autonav to board a pilot
 function autonav_board( plt )
    autonav_setup()
    target_plt = plt
-   local pltstr = "#"..plt:colourChar()..plt:name().."#o"
+   local pltstr
+   local _inrng, known = player.pilot():inrange( plt )
+   if known then
+      pltstr = "#"..plt:colourChar()..plt:name().."#o"
+      target_name = pltstr
+   else
+      pltstr = _("Unknown")
+      target_name = nil
+   end
    player.msg("#o"..fmt.f(_("Autonav: boarding {plt}."),{plt=pltstr}).."#0")
    autonav = autonav_plt_board_approach
 end
@@ -348,6 +378,15 @@ function autonav_jump_delay ()
    autonav = autonav_jump_approach
 end
 
+local function recompute_jump_pos ()
+   local pp = player.pilot()
+   local jmp = pp:navJump()
+   local pos = jmp:pos()
+   local d = jmp:jumpDist( pp )
+   target_pos = pos + (pp:pos()-pos):normalize( math.max(0.8*d, d-30) )
+   path = {target_pos} -- Have to update path also
+end
+
 -- Approaching a jump point, target position is stored in target_pos
 function autonav_jump_approach ()
    local pp = player.pilot()
@@ -360,7 +399,12 @@ function autonav_jump_approach ()
       if #path > 1 then
          table.remove( path, 1 )
       else
-         autonav = autonav_jump_brake
+         -- If the original position does not work, try to get closer before braking
+         if jmp:pos():dist(path[1]) > jmp:jumpDist( pp ) then
+            recompute_jump_pos()
+         else
+            autonav = autonav_jump_brake
+         end
       end
    elseif not tc_rampdown and map_npath<=1 and #path==1 then
       autonav_rampdown( d )
@@ -422,13 +466,7 @@ function autonav_jump_brake ()
       ai.hyperspace()
    elseif ret then
       -- Recompute the location for a better position
-      local pp = player.pilot()
-      local jmp = pp:navJump()
-      local pos = jmp:pos()
-      local d = jmp:jumpDist( pp )
-      target_pos = pos + (pp:pos()-pos):normalize( math.max(0.8*d, d-30) )
-      path = {target_pos} -- Have to update path also
-
+      recompute_jump_pos()
       autonav = autonav_jump_approach
    end
 
@@ -456,13 +494,18 @@ function autonav_spob_approach ()
       if #path > 1 then
          table.remove( path, 1 )
       else
-         local spobstr = "#"..target_spb:colourChar()..target_spb:name().."#o"
-         player.msg("#o"..fmt.f(_("Autonav: arrived at {spob}."),{spob=spobstr}).."#0")
+         player.msg("#o"..fmt.f(_("Autonav: arrived at {spob}."),{spob=get_spob_name(target_spb)}).."#0")
          return autonav_end()
       end
    elseif not tc_rampdown then
       -- Use distance to end
-      autonav_rampdown( player.pos():dist(target_pos) )
+      local d = 0
+      local pos = player.pos()
+      for k,v in ipairs(path) do
+         d = d+pos:dist( v )
+         pos = v
+      end
+      autonav_rampdown( d )
    end
 end
 
@@ -477,7 +520,13 @@ function autonav_spob_land_approach ()
       end
    elseif not tc_rampdown then
       -- Use distance to end
-      autonav_rampdown( player.pos():dist(target_pos) )
+      local d = 0
+      local pos = player.pos()
+      for k,v in ipairs(path) do
+         d = d+pos:dist( v )
+         pos = v
+      end
+      autonav_rampdown( d )
    end
 end
 
@@ -507,19 +556,33 @@ function autonav_plt_follow ()
    local target_known = false
    local inrng = false
    if plt:exists() then
+      if plt:flags("jumpingout") then
+         local jmp = plt:navJump()
+         player.msg("#o"..fmt.f(_("Autonav: following target {plt} has jumped to {sys}."),{plt=get_pilot_name(plt),sys=get_sys_name(jmp:dest())}).."#0")
+
+         if follow_jump then
+            local pp = player.pilot()
+            pp:navJumpSet( jmp )
+            autonav_system()
+         else
+            autonav_end()
+         end
+         return
+      elseif plt:flags("landing") then
+         player.msg("#o"..fmt.f(_("Autonav: following target {plt} has landed on {spb}."),{plt=get_pilot_name(plt),spb=get_spob_name(plt:navSpob())}).."#0")
+         autonav_end()
+         return
+      end
       inrng, target_known = player.pilot():inrange( plt )
    end
 
    if not inrng then
-      local pltstr
-      if target_known then
-         pltstr = "#"..plt:colourChar()..plt:name().."#o"
-      else
-         pltstr = _("Unknown")
-      end
+      local pltstr = get_pilot_name( plt )
       player.msg("#r"..fmt.f(_("Autonav: following target {plt} has been lost."),{plt=pltstr}).."#0")
       ai.accel(0)
       return autonav_end()
+   elseif not target_name and target_known then
+      target_name = "#"..plt:colourChar()..plt:name().."#o"
    end
 
    local pp = player.pilot()
@@ -544,15 +607,11 @@ function autonav_plt_board_approach ()
    end
 
    if not inrng then
-      local pltstr
-      if target_known then
-         pltstr = "#"..plt:colourChar()..plt:name().."#o"
-      else
-         pltstr = _("Unknown")
-      end
-      player.msg("#r"..fmt.f(_("Autonav: boarding target {plt} has been lost."),{plt=pltstr}).."#0")
+      player.msg("#r"..fmt.f(_("Autonav: boarding target {plt} has been lost."),{plt=get_pilot_name(plt)}).."#0")
       ai.accel(0)
       return autonav_end()
+   elseif not target_name and target_known then
+      target_name = "#"..plt:colourChar()..plt:name().."#o"
    end
 
    local d = autonav_approach_vel( plt:pos(), plt:vel(), 0 )
@@ -613,12 +672,7 @@ function autonav_enter ()
       end
       local pp = player.pilot()
       local jmp = pp:navJump()
-      local sysstr
-      if dest:known() then
-         sysstr = dest:name()
-      else
-         sysstr = _("Unknown")
-      end
+      local sysstr = get_sys_name( dest )
 
       -- Made it to target
       if jmp==nil then

@@ -128,6 +128,7 @@ dat/outfits/accessory/air_freshener.xml
 dat/outfits/accessory/black_cat_doll.xml
 dat/outfits/accessory/broken_nebular_shielding_prototype.xml
 dat/outfits/accessory/commemorative_stein.xml
+dat/outfits/accessory/cyborg_feather.xml
 dat/outfits/accessory/dv_handbook.xml
 dat/outfits/accessory/fuzzy_dice.xml
 dat/outfits/accessory/goatee_marker.xml
@@ -2660,6 +2661,9 @@ dat/unidiff/hypergates_3.xml
 dat/unidiff/levo_safe.xml
 dat/unidiff/minerva_1.xml
 dat/unidiff/minerva_2.xml
+dat/unidiff/minerva_3.xml
+dat/unidiff/minerva_3d.xml
+dat/unidiff/minerva_3z.xml
 dat/unidiff/onewing_goddard.xml
 dat/unidiff/raelid_outpost_death.xml
 dat/unidiff/raglan_outpost_death.xml
@@ -2790,6 +2794,7 @@ dat/events/derelict/blackcat.lua
 dat/events/derelict/poi.lua
 dat/events/derelict/rescue.lua
 dat/events/derelict/sirius_awakening.lua
+dat/events/dev/explosions_benchmark.lua
 dat/events/dev/quadtree_benchmark.lua
 dat/events/dev/skirmish_benchmark.lua
 dat/events/dev/system_tour.lua
@@ -2813,6 +2818,8 @@ dat/events/hypergate_fleets.lua
 dat/events/minerva/altercation1.lua
 dat/events/minerva/altercation2.lua
 dat/events/minerva/chicken_rendezvous.lua
+dat/events/minerva/epilogue1.lua
+dat/events/minerva/epilogue2.lua
 dat/events/minerva/spa_propaganda.lua
 dat/events/minerva/station.lua
 dat/events/naev_needs_YOU.lua
@@ -3208,7 +3215,6 @@ dat/outfits/flow/abilities/house_of_mirrors.lua
 dat/outfits/flow/abilities/reality_rip.lua
 dat/outfits/flow/abilities/seeking_chakra.lua
 dat/outfits/flow/astral_projection/astral_cannon.lua
-dat/outfits/flow/astral_projection/lesser_astral_cannon.lua
 dat/outfits/flow/flow_amplifier.lua
 dat/outfits/flow/structure/flow_resonator.lua
 dat/outfits/flow/structure/meditation_chamber.lua

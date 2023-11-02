@@ -202,6 +202,16 @@ end
 
 -- Function hooked to jumpin AND takeoff. Handles events that should occur in either case.
 function enter()
+   if mem.stage == 0 and system.cur() == rebinasys then -- put Rebina's ship
+      seiryuu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), vec2.new(0, -2000), _("Seiryuu"), {ai="trader"} )
+      seiryuu:control(true)
+      seiryuu:setActiveBoard(true)
+      seiryuu:setInvincible(true)
+      seiryuu:setHilight(true)
+      seiryuu:setVisplayer(true)
+      hook.pilot(seiryuu, "board", "board")
+   end
+
    if system.cur() == misssys[1] and mem.stage == 1 and mem.missend == false then
       -- case enter system where escorts wait
       escorts = fleet.add( 3, "Lancelot", shadow.fct_fourwinds(), vec2.new(0, 0), _("Four Winds Escort"), {ai="baddie_norun"} )
@@ -225,16 +235,6 @@ function jumpin()
 
    if mem.pahook then -- Remove the hook on the player being attacked, if needed
       hook.rm( mem.pahook )
-   end
-
-   if mem.stage == 0 and system.cur() == rebinasys then -- put Rebina's ship
-      seiryuu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), vec2.new(0, -2000), _("Seiryuu"), {ai="trader"} )
-      seiryuu:control(true)
-      seiryuu:setActiveBoard(true)
-      seiryuu:setInvincible(true)
-      seiryuu:setHilight(true)
-      seiryuu:setVisplayer(true)
-      hook.pilot(seiryuu, "board", "board")
    end
 
    if mem.stage >= 3 and system.cur() ~= mem.nextsys then -- case player is escorting AND jumped to somewhere other than the next escort destination

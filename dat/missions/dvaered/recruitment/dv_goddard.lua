@@ -372,25 +372,27 @@ end
 function spreadCommando()
    local vel = mem.koala:vel()
    local poC = mem.koala:pos() - vel/vel:mod() * 10
-   local cmisn = _cargo()
-   system.addGatherable( cmisn, 1, poC, vel*.5, 3600, true ) -- Spawn the commando (player-only gatherable) just behind the Koala
+   mem.mrk = system.markerAdd( poC, _("Commandos") )
+   system.addGatherable( _cargo(), 1, poC, vel*0.5, 3600, true ) -- Spawn the commando (player-only gatherable) just behind the Koala
    audio.soundPlay( "target" )
-   player.msg( _("Spacewalking commandos in sight.") )
+   player.msg("#o".._("Spacewalking commandos in sight.").."#0")
+   player.autonavReset(5)
    mem.gathHook = hook.gather("gather")
 end
 
 -- Player gathers the commandos
 function gather( comm, qtt )
+   local cmisn = _cargo()
    -- Test commodity type
-   if comm~="Saboteurs" then
+   if comm~=cmisn then
       return
    end
-   local cmisn = _cargo()
+   system.markerRm( mem.mrk )
    hook.rm(mem.gathHook)
    pilot.cargoRm( player.pilot(), comm, qtt ) -- Remove standard cargo and add mission cargo
    mem.cid = misn.cargoAdd( cmisn, mem.mass )
    audio.soundPlay( "afb_disengage" )
-   player.msg( _("Commandos recovered.") )
+   player.msg( "#g".._("Commandos recovered.").."#0" )
    misn.osdActive(4)
    misn.markerMove( mem.misn_marker, mem.paypnt )
    mem.misn_state = 3

@@ -1256,10 +1256,6 @@ void land( Spob* p, int load )
    /* Just in case? */
    bar_regen();
 
-   /* Don't do a fade in. */
-   if (load)
-      window_setFade( land_wid, NULL, 0. );
-
    /* Do a lua collection pass. Run in a hook since land can be called indirectly from Lua. */
    hook_addFunc( land_gc, NULL, "safe" );
 

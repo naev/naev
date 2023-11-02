@@ -4223,14 +4223,14 @@ double system_getPresence( const StarSystem *sys, int faction )
 #if DEBUGGING
    if (sys == NULL) {
       WARN("sys == NULL");
-      return 0;
+      return 0.;
    }
 #endif /* DEBUGGING */
 
    /* Go through the array, looking for the faction. */
    for (int i=0; i < array_size(sys->presence); i++) {
       if (sys->presence[i].faction == faction)
-         return MAX(sys->presence[i].value, 0);
+         return MAX(sys->presence[i].value, 0.);
    }
 
    /* If it's not in there, it's zero. */
