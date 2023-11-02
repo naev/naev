@@ -805,7 +805,7 @@ static int pilotL_add( lua_State *L )
  */
 static int pilotL_clone( lua_State *L )
 {
-   Pilot *p = luaL_validpilot(L,1);
+   const Pilot *p = luaL_validpilot(L,1);
    LuaPilot lp = pilot_clone( p );
    lua_pushpilot( L, lp );
    return 1;
@@ -2005,9 +2005,9 @@ static PilotOutfitSlot *luaL_checkslot( lua_State *L, Pilot *p, int idx )
  */
 static int pilotL_weapsetList( lua_State *L )
 {
-   Pilot *p = luaL_validpilot(L,1);
+   const Pilot *p = luaL_validpilot(L,1);
    int id = luaL_checkweapset(L,2);
-   PilotWeaponSet *ws = &p->weapon_sets[id];
+   const PilotWeaponSet *ws = &p->weapon_sets[id];
 
    lua_newtable(L);
    for (int i=0; i<array_size(ws->slots); i++) {
@@ -2394,7 +2394,6 @@ static int pilotL_actives( lua_State *L )
 static int outfit_compareActive( const void *slot1, const void *slot2 )
 {
    const PilotOutfitSlot *s1, *s2;
-
    s1 = *(const PilotOutfitSlot**) slot1;
    s2 = *(const PilotOutfitSlot**) slot2;
 
@@ -3132,10 +3131,8 @@ static int pilotL_setFaction( lua_State *L )
    /* Parse parameters. */
    Pilot *p = luaL_validpilot(L,1);
    int fid = luaL_validfaction(L,2);
-
    /* Set the new faction. */
    p->faction = fid;
-
    return 0;
 }
 
@@ -3151,11 +3148,9 @@ static int pilotL_setFaction( lua_State *L )
  */
 static int pilotL_setHostile( lua_State *L )
 {
-   Pilot *p;
-   int state;
-
    /* Get the pilot. */
-   p = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
+   int state;
 
    /* Get state. */
    if (lua_isnone(L,2))
@@ -3184,11 +3179,9 @@ static int pilotL_setHostile( lua_State *L )
  */
 static int pilotL_setFriendly( lua_State *L )
 {
-   Pilot *p;
-   int state;
-
    /* Get the pilot. */
-   p = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
+   int state;
 
    /* Get state. */
    if (lua_isnone(L,2))
@@ -3434,11 +3427,9 @@ static int pilotL_cooldown( lua_State *L )
  */
 static int pilotL_setCooldown( lua_State *L )
 {
-   Pilot *p;
-   int state;
-
    /* Get the pilot. */
-   p = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
+   int state;
 
    /* Get state. */
    if (lua_isnone(L,2))
@@ -3854,7 +3845,6 @@ static int pilotL_outfitAddIntrinsic( lua_State *L )
    /* Update GUI if necessary. */
    if (pilot_isPlayer(p))
       gui_setShip();
-
    return 1;
 }
 
@@ -4477,11 +4467,8 @@ static int pilotL_fillAmmo( lua_State *L )
  */
 static int pilotL_setNoboard( lua_State *L )
 {
-   Pilot *p;
+   Pilot *p = luaL_validpilot(L,1);
    int disable;
-
-   /* Handle parameters. */
-   p  = luaL_validpilot(L,1);
    if (lua_isnone(L,2))
       disable = 1;
    else
@@ -4510,18 +4497,15 @@ static int pilotL_setNoboard( lua_State *L )
  */
 static int pilotL_setNoDisable( lua_State *L )
 {
-   Pilot *p;
-   int disable;
-
-   /* Handle parameters. */
-   p  = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
+   int nodisable;
    if (lua_isnone(L,2))
-      disable = 1;
+      nodisable = 1;
    else
-      disable = lua_toboolean(L, 2);
+      nodisable = lua_toboolean(L, 2);
 
    /* See if should prevent disabling. */
-   if (disable)
+   if (nodisable)
       pilot_setFlag(p, PILOT_NODISABLE);
    else
       pilot_rmFlag(p, PILOT_NODISABLE);
@@ -4712,7 +4696,6 @@ lua_rawset( L, -3 )
 static int pilotL_getStats( lua_State *L )
 {
    const Pilot *p  = luaL_validpilot(L,1);
-
    /* Create table with information. */
    lua_newtable(L);
    /* Core. */
@@ -5051,7 +5034,7 @@ static int pilotL_colourChar( lua_State *L )
  */
 static int pilotL_getHostile( lua_State *L )
 {
-   Pilot *p = luaL_validpilot(L,1);
+   const Pilot *p = luaL_validpilot(L,1);
    lua_pushboolean( L, pilot_isHostile( p ) );
    return 1;
 }
@@ -5305,15 +5288,12 @@ static int pilotL_control( lua_State *L )
  */
 static int pilotL_memory( lua_State *L )
 {
-   /* Get the pilot. */
-   Pilot *p  = luaL_validpilot(L,1);
-
+   const Pilot *p  = luaL_validpilot(L,1);
    /* Set the pilot's memory. */
    if (p->ai == NULL) {
       NLUA_ERROR(L,_("Pilot '%s' does not have an AI!"),p->name);
       return 0;
    }
-
    lua_rawgeti( L, LUA_REGISTRYINDEX, p->lua_mem );
    return 1;
 }
@@ -5328,15 +5308,12 @@ static int pilotL_memory( lua_State *L )
  */
 static int pilotL_shipmemory( lua_State *L )
 {
-   /* Get the pilot. */
    Pilot *p  = luaL_validpilot(L,1);
-
    /* Possible it's not initialized yet, so we do the dirty work here. */
    if (p->lua_ship_mem == LUA_NOREF) {
       lua_newtable( naevL ); /* mem */
       p->lua_ship_mem = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* */
    }
-
    lua_rawgeti( L, LUA_REGISTRYINDEX, p->lua_ship_mem );
    return 1;
 }
@@ -5350,7 +5327,7 @@ static int pilotL_shipmemory( lua_State *L )
  */
 static int pilotL_ainame( lua_State *L )
 {
-   Pilot *p = luaL_validpilot(L,1);
+   const Pilot *p = luaL_validpilot(L,1);
    if (p->ai == NULL)
       return 0;
    lua_pushstring(L, p->ai->name);
@@ -5933,13 +5910,10 @@ static int pilotL_hyperspace( lua_State *L )
  */
 static int pilotL_stealth( lua_State *L )
 {
-   /* Get parameters. */
    Pilot *p = luaL_validpilot(L,1);
-
    /* Set the task. */
    Task *t  = pilotL_newtask( L, p, "stealth" );
    t->dat   = luaL_ref(L, LUA_REGISTRYINDEX);
-
    return 0;
 }
 
@@ -6101,7 +6075,7 @@ static int pilotL_msg( lua_State *L )
  */
 static int pilotL_mothership( lua_State *L )
 {
-   Pilot *p = luaL_validpilot(L, 1);
+   const Pilot *p = luaL_validpilot(L, 1);
    if (p->dockpilot != 0) {
       const Pilot *l = pilot_get( p->dockpilot );
       if ((l == NULL) || pilot_isFlag( l, PILOT_DEAD )) {
