@@ -1,4 +1,5 @@
 function onimpact( _p, target, pos, vel, _o )
    -- Inelastic collision
-   target:knockback( 200, vel, pos, 0 )
+   local m = math.min( 1000, target:mass() )
+   target:knockback( m, -vel, pos, 0 )
 end

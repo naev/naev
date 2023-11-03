@@ -51,6 +51,7 @@ dat/commodities/yttrium.xml
 dat/damagetype/armourbreaker.xml
 dat/damagetype/emp.xml
 dat/damagetype/energy.xml
+dat/damagetype/energy_noknockback.xml
 dat/damagetype/explosion_splash.xml
 dat/damagetype/ion.xml
 dat/damagetype/kinetic.xml
