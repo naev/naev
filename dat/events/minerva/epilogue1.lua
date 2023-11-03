@@ -31,7 +31,8 @@ function enter ()
    -- Make sure not in combat
    local incombat = false
    local pp = player.pilot()
-   if pp:target():areEnemies(pp) then
+   local t = pp:target()
+   if t and t:areEnemies(pp) then
       incombat = true
    end
    -- Same logic as snd/music.lua
