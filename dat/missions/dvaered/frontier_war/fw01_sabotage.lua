@@ -134,10 +134,10 @@ end
 function enter()
    -- Spawn Battleaddict and his team
    if mem.stage == 1 and system.cur() == sabotsys then
-      pilot.toggleSpawn("FLF") -- This helps when testing the mission using the Lua console. Normally, the FLF should be dead.
+      pilot.toggleSpawn("FLF", false) -- This helps when testing the mission using the Lua console. Normally, the FLF should be dead.
       pilot.clearSelect("FLF")
       for k,f in ipairs(pir.factions) do
-         pilot.toggleSpawn(f)
+         pilot.toggleSpawn(f, false)
          pilot.clearSelect(f)
       end
 
