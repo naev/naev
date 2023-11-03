@@ -118,6 +118,7 @@
       * Qex races should be much less laggy now
       * Fixed some outfits using the wrong store images
       * Fixed system viewer not being consistent with map
+      * Player's escort damage is counted towards players damage
 
 * 0.10.6
    * Fixed potential segfault with invalid semver strings
