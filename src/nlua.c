@@ -286,6 +286,7 @@ int nlua_dofileenv( nlua_env env, const char *filename )
  */
 int nlua_dochunkenv( nlua_env env, int chunk, const char *name )
 {
+   (void) name;
    int ret;
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, chunk );
    nlua_pushenv(naevL, env);

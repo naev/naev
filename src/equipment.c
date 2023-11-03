@@ -1242,17 +1242,17 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
  */
 void equipment_regenLists( unsigned int wid, int outfits, int ships )
 {
-   int nship, noutfit;
-   double offship, offoutfit;
-   char *selship;
-   const char *s;
+   int nship = 0, noutfit = 0;
+   double offship = 0, offoutfit = 0;
+   char *selship = NULL;
+   const char *s = NULL;
    char *focused;
 
    /* Ignore when creating, should be generated correctly anyway. */
    if (equipment_creating)
       return;
 
-   /* Default.s */
+   /* Defaults. */
    nship    = 0;
    offship  = 0.;
 

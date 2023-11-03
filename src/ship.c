@@ -659,7 +659,7 @@ static int ship_parse( Ship *temp, const char *filename )
 {
    xmlNodePtr parent, node;
    xmlDocPtr doc;
-   int sx, sy;
+   int sx = 8, sy = 8;
    char str[PATH_MAX];
    int noengine;
    ShipStatList *ll;

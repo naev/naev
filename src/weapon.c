@@ -2309,9 +2309,9 @@ Weapon *weapon_add( PilotOutfitSlot *po, const Outfit *ref,
    Weapon *w;
    size_t bufsize;
    double T = po->heat_T;
-   const Outfit *o = (ref==NULL) ? po->outfit : ref;
 
 #if DEBUGGING
+   const Outfit *o = (ref==NULL) ? po->outfit : ref;
    if (!outfit_isBolt(o) &&
          !outfit_isLauncher(o)) {
       ERR(_("Trying to create a Weapon from a non-Weapon type Outfit"));
