@@ -3092,9 +3092,15 @@ void outfit_free (void)
 static int os_printD( char *buffer, int i, double value, const t_os_stat *opts )
 {
    const int MAXLEN = OUTFIT_SHORTDESC_MAX-i;
+   int precision;
 
    if (opts->hide_zero && fabs(value) < 1e-2)
        return i;
+
+   if (value > 1.)
+      precision = opts->precision;
+   else
+      precision = MAX( opts->precision, 2 );
 
    i += scnprintf(buffer + i, MAXLEN, "\n");
    if (opts->color)
@@ -3102,7 +3108,7 @@ static int os_printD( char *buffer, int i, double value, const t_os_stat *opts )
                      value > opts->color_threshold ? "#g" :
                      value < opts->color_threshold ? "#r" : "");
    /* The brochure of the International System of Units declares in chapter 5: "a space separates the number and the symbol %". The ISO 31-0 standard also specifies a space, and the TeX typesetting system encourages using one. */
-   i += scnprintf(buffer + i, MAXLEN, p_("outfitstats", "%s: %s %s"), _(opts->name), num2strU( value, opts->precision ), opts->unit ? _(opts->unit) : "" );
+   i += scnprintf(buffer + i, MAXLEN, p_("outfitstats", "%s: %s %s"), _(opts->name), num2strU( value, precision ), opts->unit ? _(opts->unit) : "" );
    if (opts->color)
       i += scnprintf(buffer + i, MAXLEN, "#0");
    return i;
