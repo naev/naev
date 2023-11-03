@@ -1460,9 +1460,8 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
       player.ps.dmg_taken_shield += tdshield;
       player.ps.dmg_taken_armour += tdarmour;
    }
-   /* TODO we might want to actually resolve shooter and check for
-    * FACTION_PLAYER so that escorts also get counted... */
-   else if (shooter == PLAYER_ID) {
+   /* See if shooter is with player. */
+   else if ((pshooter!=NULL) && pilot_isWithPlayer(pshooter)) {
       player.dmg_done_shield += tdshield;
       player.dmg_done_armour += tdarmour;
       player.ps.dmg_done_shield += tdshield;
