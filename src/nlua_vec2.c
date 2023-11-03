@@ -33,6 +33,7 @@ static int vectorL_mul__( lua_State *L );
 static int vectorL_mul( lua_State *L );
 static int vectorL_div__( lua_State *L );
 static int vectorL_div( lua_State *L );
+static int vectorL_unm( lua_State *L );
 static int vectorL_dot( lua_State *L );
 static int vectorL_cross( lua_State *L );
 static int vectorL_get( lua_State *L );
@@ -59,6 +60,7 @@ static const luaL_Reg vector_methods[] = {
    { "mul", vectorL_mul__ },
    { "__div", vectorL_div },
    { "div", vectorL_div__ },
+   { "__unm", vectorL_unm},
    { "dot", vectorL_dot },
    { "cross", vectorL_cross },
    { "get", vectorL_get },
@@ -509,6 +511,14 @@ static int vectorL_div__( lua_State *L )
    }
 
    lua_pushvector( L, *v1 );
+   return 1;
+}
+static int vectorL_unm( lua_State *L )
+{
+   vec2 vout;
+   const vec2 *vin = luaL_checkvector(L,1);
+   vec2_cset( &vout, -vin->x, -vin->y );
+   lua_pushvector( L, vout );
    return 1;
 }
 
