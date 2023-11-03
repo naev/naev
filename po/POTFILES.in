@@ -393,6 +393,7 @@ dat/outfits/structure/small_fuel_pod.xml
 dat/outfits/structure/small_shield_booster.xml
 dat/outfits/unique/bioship_pheromone_emitter.xml
 dat/outfits/unique/daphnes_leap.xml
+dat/outfits/unique/energy_harpoon_prototype.xml
 dat/outfits/unique/executor_shield_aura.xml
 dat/outfits/unique/fake_transponder.xml
 dat/outfits/unique/fuel_recycler.xml
@@ -3227,6 +3228,7 @@ dat/outfits/lua_outfit_example.lua
 dat/outfits/pointdefense/pointdefense.lua
 dat/outfits/structure/nebular_shielding_prototype.lua
 dat/outfits/unique/bioship_pheromone_emitter.lua
+dat/outfits/unique/energy_harpoon.lua
 dat/outfits/unique/executor_shield_aura.lua
 dat/outfits/unique/fake_transponder.lua
 dat/outfits/unique/fuel_recycler.lua
