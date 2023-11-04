@@ -344,7 +344,7 @@ int spfx_get( const char *name )
    const SPFX_Base sq = { .name = (char*)name };
    const SPFX_Base *sout = bsearch( &sq, spfx_effects, array_size(spfx_effects), sizeof(SPFX_Base), spfx_base_cmp );
    if (sout==NULL) {
-      WARN(_("SPFX '%s' not found!"),name);
+      //WARN(_("SPFX '%s' not found!"),name);
       return -1;
    }
    return sout-spfx_effects;
