@@ -2,7 +2,6 @@
 #include "lib/simplex.glsl"
 
 //uniform vec3 dimensions;
-
 uniform float u_r       = 0.0;
 uniform float u_time    = 0.0;
 uniform float u_fade    = 1.0;
@@ -14,7 +13,6 @@ const vec4 COLOUR = vec4( 0.95, 0.1, 0.3, 1.0 );
 
 void main (void)
 {
-   const vec2 b = vec2( 0.8, 0.5 );
    vec2 uv = pos;
    colour_out = COLOUR;
 
