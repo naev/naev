@@ -19,6 +19,8 @@ local fmt = require "format"
 local minerva = require 'common.minerva'
 local vn = require 'vn'
 
+local reward = outfit.get("Energy Harpoon Prototype")
+
 function create ()
    evt.npcAdd("approach", _("Maikki and Kex"), minerva.maikkiP.portrait, _("You see Maikki and Kex chilling at the bar.") )
    hook.takeoff("leave")
@@ -52,6 +54,8 @@ She seems a tad tipsy.]]),
    vn.jump("01_cont")
 
    vn.label("01_arrr")
+   local arr01 = false
+   vn.func( function () arr01 = true end )
    maikki(_([["That's the spirit!"]]))
    kex(_([[Kex tries his most ferocious appearance.
 "AarrrrrrrrrrR!"]]))
@@ -100,7 +104,7 @@ She seems a tad tipsy.]]),
       {playername=player.name()}))
    vn.menu{
       {_([["The ones with Kex's schematics on them?"]]),"03_kex"},
-      {_([["What holodrives?"]]),"02_forgot"},
+      {_([["What holodrives?"]]),"03_forgot"},
    }
 
    vn.label("03_kex")
@@ -113,10 +117,48 @@ She seems a tad tipsy.]]),
    vn.jump("03_cont")
 
    vn.label("03_cont")
-   maikki(_([[""]]))
+   maikki(_([["Well, not only were we able to save Kex with them, but the Skull & Bones engineers were able to recover some interesting experimental weapon designs! We sold a couple to recoup costs on the entire Minerva Station incident, of course we kept a copy for ourselves."
+She flashes a sly grin.]]))
+   maikki(_([["It doesn't stop there though, the great gals and girls at Skull & Bones even implemented one of the designs, and solve some of the power regulation problems it had. Behold, the Energy Harpoon!"
+She shows you a holographic projection of what seems to be a fancy-looking medium-sized weapon prototype.]]))
+   vn.menu( function ()
+      local opts = {
+         {_([["What does it do?"]]),"04_cont"},
+         {_([["Looks fancy!"]]),"04_cont"},
+      }
+      if arr01 then
+         table.insert( opts, 1, {_([["Arrr!"]]),"04_arrr"} )
+      end
+      return opts
+   end )
+
+   vn.label("04_arrr")
+   kex(_([[Kex follows your guide with another ferocious "Aaaarrraarrrr!"]]))
+   maikki(_([["I take you like the sound of it? Harpoons do seem quite fitting for a pirate."]]))
+   vn.jump("04_cont")
+
+   vn.label("04_cont")
+   maikki(_([["The design seems to be loosely based on a Heavy Ripper Cannon, however, they did something about reversing the fluctuations of something or other, and instead of knocking the target back, it actually pulls them in towards you, not letting them get away. A superb weapon indeed."]]))
+   maikki(_([["I've tried it myself, and it really works quite well. The engineers have outdone themselves this time!"]]))
+   kex(_([["She wanted to keep it for the Pink Demon, but I managed to convince her to give it to you, it's the least we could do."]]))
+   maikki(_([["C'mon, you're not supposed to say that part aloud! It was a mutual agreement."]]))
+   kex(_([["Quack."
+He pecks at the ground.]]))
+   maikki(_([["You're not going to fool anyone pretending to be a duck. Get back here asshole!"
+She chases Kex around the room.]]))
+   vn.na(_([[Looks like it's best for you to take your leave and let them bond or whatever a bit more.]]))
+
+   -- Yeeeeeeah!
+   vn.func( function ()
+      player.outfitAdd( reward )
+   end )
+   vn.sfxVictory()
+   vn.na(fmt.reward(reward))
 
    vn.done("hexagon")
    vn.run()
+
+   evt.finish(true)
 end
 
 function leave ()
