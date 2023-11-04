@@ -139,6 +139,7 @@ static SPFX *spfx_stack_back = NULL; /**< Back special effect layer. */
  * prototypes
  */
 /* General. */
+static int spfx_base_cmp( const void *p1, const void *p2 );
 static int spfx_base_parse( SPFX_Base *temp, const char *filename );
 static void spfx_base_free( SPFX_Base *effect );
 static void spfx_update_layer( SPFX *layer, const double dt );
@@ -149,6 +150,16 @@ static void spfx_hapticRumble( double mod );
 static void spfx_update_trails( double dt );
 static void spfx_trail_update( Trail_spfx* trail, double dt );
 static void spfx_trail_free( Trail_spfx* trail );
+
+/**
+ * @brief For sorting and stuff.
+ */
+static int spfx_base_cmp( const void *p1, const void *p2 )
+{
+   const SPFX_Base *s1 = (const SPFX_Base*) p1;
+   const SPFX_Base *s2 = (const SPFX_Base*) p2;
+   return strcmp( s1->name, s2->name );
+}
 
 /**
  * @brief Parses an xml node containing a SPFX.
@@ -330,10 +341,13 @@ static void spfx_base_free( SPFX_Base *effect )
  */
 int spfx_get( const char *name )
 {
-   for (int i=0; i<array_size(spfx_effects); i++)
-      if (strcmp(spfx_effects[i].name, name)==0)
-         return i;
-   return -1;
+   const SPFX_Base sq = { .name = (char*)name };
+   const SPFX_Base *sout = bsearch( &sq, spfx_effects, array_size(spfx_effects), sizeof(SPFX_Base), spfx_base_cmp );
+   if (sout==NULL) {
+      WARN(_("SPFX '%s' not found!"),name);
+      return -1;
+   }
+   return sout-spfx_effects;
 }
 
 /**
@@ -363,6 +377,7 @@ int spfx_load (void)
    array_free( spfx_files );
 
    /* Reduce size. */
+   qsort( spfx_effects, array_size(spfx_effects), sizeof(SPFX_Base), spfx_base_cmp );
    array_shrink( &spfx_effects );
 
    /* Trail colour sets. */
