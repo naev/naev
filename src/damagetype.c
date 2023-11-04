@@ -49,6 +49,17 @@ static DTYPE* dtype_types  = NULL;  /**< Total damage types. */
 static int DTYPE_parse( DTYPE *temp, const char *file);
 static void DTYPE_free( DTYPE *damtype );
 static DTYPE* dtype_validType( int type );
+static int dtype_cmp( const void *p1, const void *p2 );
+
+/**
+ * @brief For sorting and bsearching.
+ */
+static int dtype_cmp( const void *p1, const void *p2 )
+{
+   const DTYPE *d1 = (const DTYPE*) p1;
+   const DTYPE *d2 = (const DTYPE*) p2;
+   return strcmp( d1->name, d2->name );
+}
 
 /**
  * @brief Parses an XML file containing a DTYPE.
@@ -147,11 +158,13 @@ static void DTYPE_free( DTYPE *damtype )
  */
 int dtype_get( const char* name )
 {
-   for (int i=0; i<array_size(dtype_types); i++)
-      if (strcmp(dtype_types[i].name, name)==0)
-         return i;
-   WARN(_("Damage type '%s' not found in stack."), name);
-   return -1;
+   const DTYPE d= { .name = (char*)name };
+   const DTYPE *dout = bsearch( &d, dtype_types, array_size(dtype_types), sizeof(DTYPE), dtype_cmp );
+   if (dout==NULL) {
+      WARN(_("Damage type '%s' not found in stack."), name);
+      return -1;
+   }
+   return dout-dtype_types;
 }
 
 /**
@@ -209,6 +222,7 @@ int dtype_load (void)
    array_free( dtype_files );
 
    /* Shrink back to minimum - shouldn't change ever. */
+   qsort( dtype_types, array_size(dtype_types), sizeof(DTYPE), dtype_cmp );
    array_shrink( &dtype_types );
 
    return 0;
