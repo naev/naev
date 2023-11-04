@@ -328,7 +328,7 @@ static void spfx_base_free( SPFX_Base *effect )
  *    @param name Name to match.
  *    @return ID of the special effect or -1 on error.
  */
-int spfx_get( char* name )
+int spfx_get( const char *name )
 {
    for (int i=0; i<array_size(spfx_effects); i++)
       if (strcmp(spfx_effects[i].name, name)==0)
