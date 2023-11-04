@@ -100,10 +100,10 @@ local patron_messages = {
 
 function create()
    local trial_start = player.misnDone( "Minerva Pirates 6" )
-   local minerva_end = (diff.isApplied("minerva_3") or diff.isApplied("minerva_3d") or diff.isApplied("minerva_3z"))
+   --local minerva_end = (diff.isApplied("minerva_3") or diff.isApplied("minerva_3d") or diff.isApplied("minerva_3z"))
 
    -- Station is not "usable"
-   if diff.isApplied("minerva_1") and not minerva_end then
+   if diff.isApplied("minerva_1") or diff.isApplied("minerva_2") then
       return
    end
 

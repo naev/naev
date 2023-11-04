@@ -67,5 +67,20 @@ function enter ()
    vn.na(fmt.reward(reward))
    vn.run()
 
+   -- We'll apply the new diff here depending on the result
+   if diff.isApplied("minerva_2") then
+      diff.remove("minerva_2")
+   end
+   local newdiff
+   local winner = var.peek("minerva_judgement_winner")
+   if winner=="dvaered" then
+      newdiff = "minerva_3d"
+   elseif winner=="zalek" then
+      newdiff = "minerva_3z"
+   else
+      newdiff = "minerva_3"
+   end
+   diff.apply( newdiff )
+
    evt.finish(true)
 end
