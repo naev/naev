@@ -24,7 +24,7 @@ local sirius_outfits = eoutfits.merge{{
    "Weapons Ionizer", "Sensor Array",
    "Pinpoint Combat AI", "Lattice Thermal Coating",
    -- Heavy Structural
-   "Battery III", "Shield Capacitor III", "Shield Capacitor IV",
+   "Battery III", "Shield Capacitor III",
    "Reactor Class III",
    "Large Shield Booster",
    -- Medium Structural
