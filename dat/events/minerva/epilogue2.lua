@@ -97,7 +97,7 @@ She seems a tad tipsy.]]),
    kex(_([["I have no idea who Suave Bill is, but OK, so what would you call trying to bash your skull in and eat your brain with a spoon?"]]))
    maikki(_([["A bad day?"]]))
    kex(_([[Kex sighs.
-"Well, some people in the deep Nebula, have days for the rest of their short lives!"]]))
+"Well, some people in the deep Nebula, have bad days for the rest of their short lives!"]]))
    maikki(_([["I see, so some of them become cannibals or whatever?"]]))
    kex(_([["More than you'd expect! Got to be real careful in the Nebula. Never know when and who is going to be affected."]]))
    maikki(fmt.f(_([["Wait, before I forget, {playername}, remember the holodrives you took from Minerva Station?"]]),
