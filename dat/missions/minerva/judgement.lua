@@ -1,6 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Minerva Judgement">
+ <unique />
  <priority>3</priority>
  <chance>100</chance>
  <location>Bar</location>
