@@ -44,7 +44,7 @@ function create ()
    if not misn.claim{trialsys, badsys, destsys} then
       misn.finish( false )
    end
-   misn.setNPC( minerva.zuri.name, minerva.zuri.portrait, _("Meet up with Zuri at her hiding spot?") )
+   misn.setNPC( minerva.zuri.name, minerva.zuriH.portrait, _("Meet up with Zuri at her hiding spot?") )
    misn.setDesc(fmt.f(_("A wounded Zuri needs to rendezvous with her colleagues in the {sys} system."),
       {sys=destsys}))
    misn.setReward(_("??"))
@@ -54,7 +54,7 @@ end
 function accept ()
    vn.clear()
    vn.scene()
-   local zuri = vn.newCharacter( minerva.vn_zuri() )
+   local zuri = vn.newCharacter( minerva.vn_zuriH() )
    love_audio.setEffect( "reverb_sad", reverb_preset.drugged() )
    vn.music( minerva.loops.pirate, {pitch=0.6, effect="reverb_sad"} )
    vn.transition()
