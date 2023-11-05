@@ -631,18 +631,18 @@ Eventually when all argumentation is exhausted the different representatives rep
    -- Music is a bit slower and sadder
    love_audio.setEffect( "reverb_sad", reverb_preset.drugged() )
    vn.music( minerva.loops.pirate, {pitch=0.6, effect="reverb_sad"} )
-   vn.newCharacter( zuri )
+   local zuriH = vn.newCharacter( minerva.vn_zuriH() )
    vn.transition()
-   zuri(fmt.f(_([["Hey {playername}..."
+   zuriH(fmt.f(_([["Hey {playername}..."
 Zuri coughs a bit, she doesn't look like she's in good shape and seems to be clutching something.]]),
       {playername=player.name()}))
    vn.na(_([[You get closer and you see that she is covered in a fair amount of blood and seems to be holding onto Kex!]]))
-   zuri(_([["Things didn't turn out quite how I expected..."
+   zuriH(_([["Things didn't turn out quite how I expected..."
 She grimaces in pain as she talks.]]))
    vn.na(_([[You shush her and try to help her stop her bleeding. This doesn't look too good.]]))
-   zuri(_([["I'm going to have to ask another favour of you..."
+   zuriH(_([["I'm going to have to ask another favour of you..."
 She tries to adjust her position a bit to breath more easily, the pain is clear in her eyes.]]))
-   zuri(_([["Give me a second to catch my breath and we can go."]]))
+   zuriH(_([["Give me a second to catch my breath and we can go."]]))
 
    vn.run()
 

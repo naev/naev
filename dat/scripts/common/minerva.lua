@@ -23,8 +23,8 @@ local minerva = {
    },
    kexP = {
       name = _("Kex"),
-      portrait = "cyborg_chicken.png",
-      image = "cyborg_chicken.png",
+      portrait = "cyborg_chicken_pirate.webp",
+      image = "cyborg_chicken_pirate.webp",
       colour = {0.9, 0.5, 0.1}, -- Orangish
    },
    maikki = {
@@ -60,6 +60,12 @@ local minerva = {
       portrait = "zuri.webp",
       description = _("You see Zuri who seems to be motioning for you to come."),
       image = "zuri.webp",
+      colour = {0.73, 1, 0.73},
+   },
+   zuriH = {
+      name = _("Zuri"),
+      portrait = "zuri_hurt.webp",
+      image = "zuri_hurt.webp",
       colour = {0.73, 1, 0.73},
    },
    -- Secondary characters
@@ -203,6 +209,13 @@ function minerva.vn_zuri( params )
          tmerge( {
             image=minerva.zuri.image,
             color=minerva.zuri.colour,
+         }, params) )
+end
+function minerva.vn_zuriH( params )
+   return vn.Character.new( minerva.zuriH.name,
+         tmerge( {
+            image=minerva.zuriH.image,
+            color=minerva.zuriH.colour,
          }, params) )
 end
 function minerva.vn_ceo( params )
