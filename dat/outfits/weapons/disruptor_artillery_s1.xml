@@ -8,7 +8,7 @@
   <mass>16</mass>
   <price>135000</price>
   <description>TODO</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>razor1.webp</gfx_store>
   <cpu>-50</cpu>
  </general>
  <specific type="bolt">
