@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tech name="Ion 3">
+ <item>Disruptor Artillery S2</item>
+ <item>Disruptor Artillery S3</item>
+ <item>Disruptor Battery S2</item>
  <item>Heavy Ion Turret</item>
  <item>Weapons Ionizer</item>
 </tech>
