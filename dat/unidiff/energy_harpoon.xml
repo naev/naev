@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unidiff name="energy_harpoon">
+ <spob name="New Haven">
+  <tech_add>Energy Harpoon</tech_add>
+ </spob>
+</unidiff>
