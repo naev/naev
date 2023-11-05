@@ -19,7 +19,7 @@ local fmt = require "format"
 local minerva = require 'common.minerva'
 local vn = require 'vn'
 
-local reward = outfit.get("Energy Harpoon Prototype")
+local reward = outfit.get("Energy Harpoon")
 
 function create ()
    evt.npcAdd("approach", _("Maikki and Kex"), minerva.maikkiP.portrait, _("You see Maikki and Kex chilling at the bar.") )
@@ -157,6 +157,8 @@ She chases Kex around the room.]]))
 
    vn.done("hexagon")
    vn.run()
+
+   diff.apply("energy_harpoon")
 
    evt.finish(true)
 end

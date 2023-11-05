@@ -394,7 +394,6 @@ dat/outfits/structure/small_fuel_pod.xml
 dat/outfits/structure/small_shield_booster.xml
 dat/outfits/unique/bioship_pheromone_emitter.xml
 dat/outfits/unique/daphnes_leap.xml
-dat/outfits/unique/energy_harpoon_prototype.xml
 dat/outfits/unique/executor_shield_aura.xml
 dat/outfits/unique/fake_transponder.xml
 dat/outfits/unique/fuel_recycler.xml
@@ -456,6 +455,7 @@ dat/outfits/weapons/antimatter_lance.xml
 dat/outfits/weapons/base_ripper_mk2.xml
 dat/outfits/weapons/cheaters_laser_cannon.xml
 dat/outfits/weapons/cheaters_ragnarok_beam.xml
+dat/outfits/weapons/energy_harpoon.xml
 dat/outfits/weapons/gauss_gun.xml
 dat/outfits/weapons/grave_beam.xml
 dat/outfits/weapons/grave_lance.xml
@@ -2651,6 +2651,7 @@ dat/unidiff/antlejosv_8.xml
 dat/unidiff/antlejosv_9.xml
 dat/unidiff/collective_dead.xml
 dat/unidiff/durea_safe.xml
+dat/unidiff/energy_harpoon.xml
 dat/unidiff/eye_of_night_station.xml
 dat/unidiff/flf_dead.xml
 dat/unidiff/flf_pirate_ally.xml
@@ -3229,7 +3230,6 @@ dat/outfits/lua_outfit_example.lua
 dat/outfits/pointdefense/pointdefense.lua
 dat/outfits/structure/nebular_shielding_prototype.lua
 dat/outfits/unique/bioship_pheromone_emitter.lua
-dat/outfits/unique/energy_harpoon.lua
 dat/outfits/unique/executor_shield_aura.lua
 dat/outfits/unique/fake_transponder.lua
 dat/outfits/unique/fuel_recycler.lua
@@ -3257,6 +3257,7 @@ dat/outfits/utility/targeting_conduit.lua
 dat/outfits/utility/weakness_harmonizer_ai.lua
 dat/outfits/utility/weapons_ionizer.lua
 dat/outfits/weapons/antimatter_lance.lua
+dat/outfits/weapons/energy_harpoon.lua
 dat/outfits/weapons/plasma.lua
 dat/outfits/weapons/plasma2.lua
 dat/rep.lua
