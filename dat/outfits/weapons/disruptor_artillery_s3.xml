@@ -12,8 +12,8 @@
   <cpu>-300</cpu>
  </general>
  <specific type="bolt">
-  <gfx type="shader" size="11" col_size="8">particles/razor_s3.frag</gfx>
-  <lua>outfits/weapons/razor.lua</lua>
+  <gfx type="shader" size="11" col_size="8">particles/disruptor_s3.frag</gfx>
+  <lua>outfits/weapons/disruptor.lua</lua>
   <sound>tesla</sound>
   <sound_hit>bansheeexp</sound_hit>
   <spfx_shield>ShiM</spfx_shield>
