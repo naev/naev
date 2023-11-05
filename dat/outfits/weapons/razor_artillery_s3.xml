@@ -11,7 +11,7 @@
   <cpu>-100</cpu>
  </general>
  <specific type="bolt">
-  <gfx type="shader" size="8" col_size="5">particles/razor_s3.frag</gfx>
+  <gfx type="shader" size="8" col_size="8">particles/razor_s3.frag</gfx>
   <lua>outfits/weapons/razor.lua</lua>
   <sound>ion</sound>
   <spfx_shield>ShiS</spfx_shield>
