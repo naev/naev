@@ -1,4 +1,4 @@
-// NOTE do not use directly, set the value of COLOUR and #include
+// NOTE do not use directly, set the value of COLOUR and include this file
 #include "lib/sdf.glsl"
 #include "lib/simplex.glsl"
 
@@ -17,12 +17,15 @@ void main (void)
    vec2 uv = pos;
    colour_out = COLOUR;
 
-   vec2 nuv = uv+vec2(2.0*u_time,u_r);
+   vec2 uvoff = vec2(1.4*u_time,u_r);
+   vec2 nuv = uv+uvoff;
+   nuv *= 1.5;
    float n = snoise( nuv );
-   //n += 0.5*snoise( 2.0*nuv ); // At the sizes we render, probably don't need two octaves...
+   n += 0.5*snoise( 2.0*nuv );
 
    float d = sdCircle( uv, 1.0 );
 
    colour_out.a *= smoothstep( 0.0, 0.5, -d );
+   colour_out.a *= mix( 0.5 + 0.5*snoise( normalize(uv)*0.7+uvoff ), 1.0, colour_out.a );
    colour_out.rgb += smoothstep( 0.3, 1.0, -d ) * (n*0.7+0.3);
 }

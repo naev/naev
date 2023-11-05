@@ -1,2 +1,2 @@
 const vec4 COLOUR = vec4( 0.4, 0.6, 0.95, 1.0 );
-#include "glsl/particles/disruptor.frag"
+#include "particles/shared/disruptor.glsl"
