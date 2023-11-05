@@ -6,7 +6,7 @@ local eparams = require 'equipopt.params'
 local proteron_outfits = eoutfits.merge{{
    -- Heavy Weapons
    "Proteron Dalton Bay",
-   "Heavy Razor Turret", "Grave Beam", "Railgun",
+   "Grave Beam", "Railgun",
    "Heavy Laser Turret", "Railgun Turret", "Ragnarok Beam",
    "Heavy Ripper Turret",
    -- Medium Weapons
@@ -15,8 +15,8 @@ local proteron_outfits = eoutfits.merge{{
    "Enygma Systems Turreted Headhunter Launcher",
    "Laser Turret MK2", "Plasma Turret MK2",
    -- Small Weapons
-   "Laser Turret MK1", "Plasma Turret MK1", "Razor Turret MK1",
-   "Laser Cannon MK1", "Plasma Blaster MK1", "Razor MK1",
+   "Laser Turret MK1", "Laser Cannon MK1",
+   "Plasma Turret MK1", "Plasma Blaster MK1",
    -- Utility
    "Droid Repair Crew", "Milspec Scrambler",
    "Targeting Array",
@@ -25,15 +25,16 @@ local proteron_outfits = eoutfits.merge{{
    "Milspec Jammer", "Emergency Shield Booster",
    "Weapons Ionizer", "Sensor Array",
    -- Heavy Structural
-   "Battery III", "Shield Capacitor III", "Shield Capacitor IV",
-   "Reactor Class III", "Biometal Armour", "Large Shield Booster",
+   "Battery III", "Shield Capacitor III",
+   "Reactor Class III", "Large Shield Booster",
+   "Biometal Armour",
    -- Medium Structural
-   "Battery II", "Shield Capacitor II", "Reactor Class II",
-   "Medium Shield Booster",
+   "Battery II", "Shield Capacitor II",
+   "Reactor Class II", "Medium Shield Booster",
    -- Small Structural
    "Improved Stabilizer", "Engine Reroute", "Plasteel Plating",
-   "Battery I", "Shield Capacitor I", "Reactor Class I",
-   "Small Shield Booster",
+   "Battery I", "Shield Capacitor I",
+   "Reactor Class I", "Small Shield Booster",
 }}
 
 local proteron_params = {

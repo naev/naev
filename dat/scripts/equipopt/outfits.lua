@@ -30,11 +30,11 @@ outfits.standard.weapons = {
    "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
    "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
    "Laser Cannon MK2", "Vulcan Gun", "Plasma Blaster MK2",
-   "Laser Turret MK2", "Razor Turret MK2", "Turreted Vulcan Gun",
+   "Laser Turret MK2", "Turreted Vulcan Gun",
    "Plasma Turret MK2", "Orion Beam",
    "EMP Grenade Launcher",
    -- Small Weapons
-   "Slicer", "Shredder", "Plasma Cannon",
+   "Shredder", "Plasma Cannon",
    "Laser Turret MK1", "Turreted Gauss Gun", "Plasma Turret MK1",
    "Laser Cannon MK1", "Gauss Gun", "Plasma Blaster MK1",
    "Ion Cannon",

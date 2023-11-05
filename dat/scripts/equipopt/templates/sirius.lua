@@ -6,8 +6,10 @@ local eparams = require 'equipopt.params'
 local sirius_outfits = eoutfits.merge{{
    -- Heavy Weapons
    "Fidelity Bay", "Sirius Shaman Bay",
-   "Heavy Razor Turret", "Ragnarok Beam",
-   "Heavy Ion Turret", "Grave Beam",
+   "Heavy Ion Turret",
+   "Ragnarok Beam", "Grave Beam",
+   "Disruptor Artillery S3", "Disruptor Artillery S2",
+   "Disruptor Battery S2",
    -- Medium Weapons
    "Enygma Systems Turreted Fury Launcher",
    "Enygma Systems Turreted Headhunter Launcher",
@@ -15,8 +17,10 @@ local sirius_outfits = eoutfits.merge{{
    "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
    "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
    "TeraCom Imperator Launcher",
+   "Disruptor Artillery S2", "Razor Battery S2",
    -- Small Weapons
-   "Slicer", "Razor MK1", "Razor MK2", "Ion Cannon",
+   "Razor Artillery S3", "Razor Artillery S2", "Razor Artillery S1",
+   "Ion Cannon",
    -- Utility
    "Droid Repair Crew", "Milspec Scrambler",
    "Targeting Array", "Agility Combat AI",
@@ -25,15 +29,14 @@ local sirius_outfits = eoutfits.merge{{
    "Pinpoint Combat AI", "Lattice Thermal Coating",
    -- Heavy Structural
    "Battery III", "Shield Capacitor III",
-   "Reactor Class III",
-   "Large Shield Booster",
+   "Reactor Class III", "Large Shield Booster",
    -- Medium Structural
-   "Battery II", "Shield Capacitor II", "Reactor Class II",
-   "Medium Shield Booster",
+   "Battery II", "Shield Capacitor II",
+   "Reactor Class II", "Medium Shield Booster",
    -- Small Structural
    "Improved Stabilizer", "Engine Reroute",
-   "Battery I", "Shield Capacitor I", "Reactor Class I",
-   "Small Shield Booster",
+   "Battery I", "Shield Capacitor I",
+   "Reactor Class I", "Small Shield Booster",
 }}
 
 local sirius_params = {

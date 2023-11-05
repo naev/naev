@@ -16,12 +16,12 @@ local thurion_outfits = eoutfits.merge{{
    "TeraCom Imperator Launcher", "Convulsion Launcher",
    "Enygma Systems Turreted Fury Launcher",
    "Turreted Convulsion Launcher",
-   "Laser Turret MK2", "Razor Turret MK2", "Orion Beam",
+   "Laser Turret MK2", "Razor Battery S2", "Orion Beam",
    "EMP Grenade Launcher", "Enygma Systems Turreted Fury Launcher",
    -- Small Weapons
-   "Ripper Cannon", "Slicer", "Laser Cannon MK2", "Razor MK2",
-   "Laser Cannon MK1", "Razor MK1", "TeraCom Mace Launcher",
-   "TeraCom Banshee Launcher", "Electron Burst Cannon",
+   "Ripper Cannon", "Laser Cannon MK2", "Laser Cannon MK1",
+   "Razor Artillery S2", "Razor Artillery S1",
+   "TeraCom Mace Launcher", "TeraCom Banshee Launcher", "Electron Burst Cannon",
    -- Utility
    "Droid Repair Crew", "Milspec Scrambler",
    "Targeting Array", "Agility Combat AI",

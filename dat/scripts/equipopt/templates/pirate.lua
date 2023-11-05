@@ -14,17 +14,17 @@ local pirate_outfits = eoutfits.merge{{
    -- Medium Weapons
    "Enygma Systems Turreted Fury Launcher",
    "Enygma Systems Turreted Headhunter Launcher",
-   "Laser Turret MK2", "Razor Turret MK2", "Turreted Vulcan Gun",
+   "Laser Turret MK2", "Turreted Vulcan Gun",
    "Plasma Turret MK2", "Orion Beam", "EMP Grenade Launcher",
    "Enygma Systems Spearhead Launcher", "Unicorp Caesar IV Launcher",
    "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
    "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
    "TeraCom Imperator Launcher",
-   "Laser Cannon MK2", "Razor MK2", "Vulcan Gun", "Plasma Blaster MK2",
+   "Laser Cannon MK2", "Vulcan Gun", "Plasma Blaster MK2",
    "Orion Lance", "Ion Cannon",
    -- Small Weapons
-   "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
-   "Laser Turret MK1", "Razor Turret MK1", "Turreted Gauss Gun",
+   "Laser Cannon MK1", "Gauss Gun", "Plasma Blaster MK1",
+   "Laser Turret MK1", "Turreted Gauss Gun",
    "Plasma Turret MK1", "Particle Beam",
    "TeraCom Mace Launcher", "TeraCom Banshee Launcher",
    -- Utility
