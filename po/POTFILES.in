@@ -79,6 +79,7 @@ dat/effects/feral_rage_i.xml
 dat/effects/fractured_reality.xml
 dat/effects/hypergate_enter.xml
 dat/effects/hypergate_exit.xml
+dat/effects/ionization.xml
 dat/effects/paralyzing_plasma.xml
 dat/effects/plasma_burn.xml
 dat/effects/plasma_burn_ii.xml

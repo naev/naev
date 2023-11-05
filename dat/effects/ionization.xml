@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<effect name="Ionization">
+ <description>The ship is being ionized!</description>
+ <duration>3</duration>
+ <icon>/gfx/misc/icons/lightning-tree.webp</icon>
+ <shader>effects/ionization.frag</shader>
+ <debuff/>
+ <stats>
+  <energy_regen_malus>0.3333333333333333</energy_regen_malus>
+ </stats>
+</effect>
