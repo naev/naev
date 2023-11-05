@@ -17,15 +17,19 @@ void main (void)
    vec2 uv = pos;
    colour_out = COLOUR;
 
+   float d = sdCircle( uv, 1.0 );
+
+   colour_out.a *= smoothstep( 0.0, 0.5, -d );
+   if (colour_out.a <= 0.0)
+      discard;
+
    vec2 uvoff = vec2(1.4*u_time,u_r);
    vec2 nuv = uv+uvoff;
    nuv *= 1.5;
    float n = snoise( nuv );
    n += 0.5*snoise( 2.0*nuv );
 
-   float d = sdCircle( uv, 1.0 );
-
-   colour_out.a *= smoothstep( 0.0, 0.5, -d );
    colour_out.a *= mix( 0.5 + 0.5*snoise( normalize(uv)*0.7+uvoff ), 1.0, colour_out.a );
+
    colour_out.rgb += smoothstep( 0.3, 1.0, -d ) * (n*0.7+0.3);
 }
