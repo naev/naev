@@ -1,20 +1,24 @@
---local fmt = require "format"
+local fmt = require "format"
 
-local damage, penetration, isturret
+local disable, penetration, isturret, duration, energy
+duration = 3
 function onload( o )
    local s     = o:specificstats()
-   damage      = s.damage
+   --damage      = s.damage
+   disable     = s.disable*0.5
+   energy      = s.damage*1.5
    penetration = s.penetration
    isturret    = s.isturret
 end
 
 function descextra( _p )
+   return fmt.f(_("Ionizaion deals an extra {disable:.1f} of disable and {energy:.1f} of energy drain over {duration} seconds on the target."),
+      {disable=disable, energy=energy, duration=duration})
 end
 
 function onimpact( p, target )
    local ts = target:stats()
-   local dmg = damage * (1 - math.min( 1, math.max( 0, ts.absorb - penetration ) ))
-   local dur = 0
+   local dmg = disable * (1 - math.min( 1, math.max( 0, ts.absorb - penetration ) ))
 
    -- Modify by damage
    if p:exists() then
@@ -27,5 +31,5 @@ function onimpact( p, target )
       dmg = dmg * mod
    end
 
-   target:effectAdd( "Plasma Burn", dur, dmg )
+   target:effectAdd( "Ionization", duration, dmg )
 end

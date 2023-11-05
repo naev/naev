@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Tesla Cannon">
+<outfit name="Disruptor Artillery S3">
  <general>
   <slot>weapon</slot>
   <size>large</size>
@@ -13,7 +13,7 @@
  </general>
  <specific type="bolt">
   <gfx type="shader" size="11" col_size="8">particles/disruptor_s3.frag</gfx>
-  <lua>outfits/weapons/disruptor.lua</lua>
+  <lua>outfits/weapons/razor.lua</lua>
   <sound>tesla</sound>
   <sound_hit>bansheeexp</sound_hit>
   <spfx_shield>ShiM</spfx_shield>

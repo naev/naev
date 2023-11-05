@@ -13,7 +13,7 @@
  </general>
  <specific type="bolt">
   <gfx type="shader" size="10" col_size="7.5">particles/disruptor_s2.frag</gfx>
-  <lua>outfits/weapons/disruptor.lua</lua>
+  <lua>outfits/weapons/razor.lua</lua>
   <sound>tesla</sound>
   <sound_hit>bansheeexp</sound_hit>
   <spfx_shield>ShiM</spfx_shield>
