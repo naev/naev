@@ -3258,6 +3258,7 @@ dat/outfits/utility/targeting_conduit.lua
 dat/outfits/utility/weakness_harmonizer_ai.lua
 dat/outfits/utility/weapons_ionizer.lua
 dat/outfits/weapons/antimatter_lance.lua
+dat/outfits/weapons/disruptor.lua
 dat/outfits/weapons/plasma.lua
 dat/outfits/weapons/plasma2.lua
 dat/outfits/weapons/razor.lua
