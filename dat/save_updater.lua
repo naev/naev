@@ -42,10 +42,11 @@ local outfit_list = {
    ["Razor Turret MK2"] = "Razor Battery S2",
    ["Tesla Cannon"] = "Disruptor Artillery S3",
    ["Heavy Razor Turret"] = "Disruptor Battery S2",
+   ["Fidelity Bay"] = "Sirius Fidelity Bay",
    -- Below is a list of changes from 0.9.0 to 0.10.0
    ["Drone Fighter Bay"] = "Drone Bay",
    ["Empire Lancelot Fighter Bay"] = "Empire Lancelot Bay",
-   ["Fidelity Fighter Bay"] = "Fidelity Bay",
+   --["Fidelity Fighter Bay"] = "Fidelity Bay",
    ["Hyena Fighter Dock"] = "Hyena Bay",
    ["Hyena Fighter Bay"] = "Hyena Dock",
    ["Lancelot Fighter Bay"] = "Lancelot Bay",

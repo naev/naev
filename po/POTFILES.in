@@ -251,7 +251,6 @@ dat/outfits/core_system/small/unicorp_pt16_core_system.xml
 dat/outfits/core_system/small/unicorp_pt68_core_system.xml
 dat/outfits/fighter_bays/drone_bay.xml
 dat/outfits/fighter_bays/empire_lancelot_bay.xml
-dat/outfits/fighter_bays/fidelity_bay.xml
 dat/outfits/fighter_bays/hyena_bay.xml
 dat/outfits/fighter_bays/hyena_dock.xml
 dat/outfits/fighter_bays/lancelot_bay.xml
@@ -259,6 +258,7 @@ dat/outfits/fighter_bays/pirate_hyena_bay.xml
 dat/outfits/fighter_bays/pirate_hyena_dock.xml
 dat/outfits/fighter_bays/proteron_dalton_bay.xml
 dat/outfits/fighter_bays/proteron_dalton_dock.xml
+dat/outfits/fighter_bays/sirius_fidelity_bay.xml
 dat/outfits/fighter_bays/sirius_shaman_bay.xml
 dat/outfits/fighter_bays/soromid_brigand_bay.xml
 dat/outfits/fighter_bays/thurion_perspicacity_bay.xml
@@ -3258,7 +3258,6 @@ dat/outfits/utility/targeting_conduit.lua
 dat/outfits/utility/weakness_harmonizer_ai.lua
 dat/outfits/utility/weapons_ionizer.lua
 dat/outfits/weapons/antimatter_lance.lua
-dat/outfits/weapons/disruptor.lua
 dat/outfits/weapons/plasma.lua
 dat/outfits/weapons/plasma2.lua
 dat/outfits/weapons/razor.lua
