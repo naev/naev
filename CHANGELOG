@@ -13,6 +13,7 @@
       * Pirate bribes cost more depending on your fleet and are based on points not mass
       * Missions are introduced less all at once to the player
       * Blink drives are more flexible but use energy and generate heat
+      * Razor class weapons have been completely reworked
       * diy-nerds: improved reward
    * Quality of Life
       * Significantly improved autonav
@@ -65,10 +66,12 @@
          * New graphics for space objects
       * Tons of new outfits
          * Sirius flow outfits
+         * Completely reworked Sirius weapons
          * Point defense systems
          * New accessories
          * Intrinsic outfits
          * and more!
+      * Many new outfit graphics
       * New NPC graphics
       * More NPC and news messages
       * Added the Space Trader Society faction
