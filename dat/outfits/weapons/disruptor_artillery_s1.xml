@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Disruptor Artillery S1">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Heavy Weapon</license>
+  <rarity>1</rarity>
+  <mass>16</mass>
+  <price>135000</price>
+  <description>TODO</description>
+  <gfx_store>placeholder.webp</gfx_store>
+  <cpu>-50</cpu>
+ </general>
+ <specific type="bolt">
+  <gfx type="shader" size="9" col_size="7">particles/razor_s1.frag</gfx>
+  <lua>outfits/weapons/razor.lua</lua>
+  <sound>tesla</sound>
+  <sound_hit>bansheeexp</sound_hit>
+  <spfx_shield>ShiM</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>1.6</delay>
+  <speed>800</speed>
+  <range>1850</range>
+  <falloff>1500</falloff>
+  <energy>54</energy>
+  <heatup>70</heatup>
+  <trackmin>1000</trackmin>
+  <trackmax>7000</trackmax>
+  <swivel>26</swivel>
+  <damage>
+   <type>ion</type>
+   <penetrate>45</penetrate>
+   <physical>40</physical>
+   <disable>18</disable>
+  </damage>
+ </specific>
+ <tags>
+  <tag>sirius</tag>
+ </tags>
+</outfit>

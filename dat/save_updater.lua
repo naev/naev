@@ -35,6 +35,13 @@ local outfit_list = {
    ["Unicorp Falcon 1300 Engine"] = "Unicorp Falcon 1400 Engine",
    ["Unicorp Hawk 350 Engine"] = "Unicorp Hawk 360 Engine",
    ["Nexus Dart 150 Engine"] = "Nexus Dart 160 Engine",
+   ["Razor MK1"] = "Razor Artillery S1",
+   ["Razor MK2"] = "Razor Artillery S2",
+   ["Slicer"] = "Razor Artillery S3",
+   ["Razor Turret MK1"] = 50e3,
+   ["Razor Turret MK2"] = "Razor Battery S2",
+   ["Tesla Cannon"] = "Disruptor Artillery S3",
+   ["Heavy Razor Turret"] = "Disruptor Battery S2",
    -- Below is a list of changes from 0.9.0 to 0.10.0
    ["Drone Fighter Bay"] = "Drone Bay",
    ["Empire Lancelot Fighter Bay"] = "Empire Lancelot Bay",

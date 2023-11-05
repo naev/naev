@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Heavy Razor Turret">
+<outfit name="Disruptor Battery S2">
  <general>
   <slot>weapon</slot>
   <size>large</size>
@@ -12,24 +12,28 @@
   <cpu>-350</cpu>
  </general>
  <specific type="turret bolt">
-  <gfx>razorL.png</gfx>
-  <sound>ion</sound>
+  <gfx type="shader" size="10" col_size="7.5">particles/razor_s2.frag</gfx>
+  <lua>outfits/weapons/razor.lua</lua>
+  <sound>tesla</sound>
+  <sound_hit>bansheeexp</sound_hit>
   <spfx_shield>ShiM</spfx_shield>
-  <spfx_armour>ExpM</spfx_armour>
+  <spfx_armour>ExpS</spfx_armour>
   <delay>1.45</delay>
-  <speed>600</speed>
-  <range>2400</range>
-  <falloff>1800</falloff>
-  <gfx_end>razorL-end.png</gfx_end>
+  <speed>800</speed>
+  <range>2200</range>
+  <falloff>1750</falloff>
   <energy>174</energy>
-  <heatup>60</heatup>
+  <heatup>110</heatup>
   <trackmin>5000</trackmin>
   <trackmax>20000</trackmax>
   <damage>
    <type>ion</type>
-   <penetrate>80</penetrate>
-   <physical>80</physical>
-   <disable>20</disable>
+   <penetrate>70</penetrate>
+   <physical>70</physical>
+   <disable>30</disable>
   </damage>
  </specific>
+ <tags>
+  <tag>sirius</tag>
+ </tags>
 </outfit>

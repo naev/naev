@@ -9,29 +9,32 @@
   <price>780000</price>
   <description>The largest weapon in Sirius space, the powerful Tesla cannon uses similar principles behind the more common ion cannons, but more specifically targets the electrical systems of a ship, particularly its reactors. Although it does poor damage for its size, in extended engagements this weapon can leave enemy combatants functionally helpless.</description>
   <gfx_store>tesla.webp</gfx_store>
-  <cpu>-100</cpu>
+  <cpu>-300</cpu>
  </general>
  <specific type="bolt">
-  <gfx>teslaL.webp</gfx>
+  <gfx type="shader" size="11" col_size="8">particles/razor_s3.frag</gfx>
+  <lua>outfits/weapons/razor.lua</lua>
   <sound>tesla</sound>
   <sound_hit>bansheeexp</sound_hit>
-  <spfx_shield>ShiS</spfx_shield>
-  <spfx_armour>ShiS</spfx_armour>
+  <spfx_shield>ShiM</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
   <delay>1.7</delay>
-  <speed>700</speed>
-  <range>1400</range>
-  <falloff>1100</falloff>
-  <gfx_end>ionL.png</gfx_end>
-  <energy>70</energy>
-  <heatup>75</heatup>
-  <trackmin>4000</trackmin>
-  <trackmax>12000</trackmax>
-  <swivel>22</swivel>
+  <speed>800</speed>
+  <range>2200</range>
+  <falloff>1750</falloff>
+  <energy>110</energy>
+  <heatup>115</heatup>
+  <trackmin>3000</trackmin>
+  <trackmax>11000</trackmax>
+  <swivel>26</swivel>
   <damage>
    <type>ion</type>
-   <penetrate>72</penetrate>
+   <penetrate>76</penetrate>
    <physical>52</physical>
    <disable>50</disable>
   </damage>
  </specific>
+ <tags>
+  <tag>sirius</tag>
+ </tags>
 </outfit>
