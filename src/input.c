@@ -922,18 +922,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (KEY("approach") && INGAME() && NOHYP() && NOLAND() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) {
          player_restoreControl( 0, NULL );
-         /* Only do noisy if there is no land target. */
-         int board_status = player_tryBoard( player.p->nav_spob<0 );
-         if (board_status == PLAYER_BOARD_RETRY)
-            player_board();
-         else {
-            if (player.p->nav_spob != -1) {
-               if (player_land(0) == PLAYER_LAND_AGAIN) {
-                  player_autonavSpob( cur_system->spobs[player.p->nav_spob]->name, 1 );
-               }
-            } else
-               player_land(1);
-         }
+         player_approach();
       }
    } else if (KEY("thyperspace") && NOHYP() && NOLAND() && NODEAD()) {
       if (value==KEY_PRESS) player_targetHyperspace();
@@ -1442,7 +1431,7 @@ int input_clickedPilot( unsigned int pilot, int autonav )
    if (pilot == player.p->target && input_isDoubleClick( (void*)p )) {
       if (pilot_isDisabled(p) || pilot_isFlag(p, PILOT_BOARDABLE)) {
          if (player_tryBoard(0)==PLAYER_BOARD_RETRY)
-            player_board();
+            player_autonavBoard( player.p->target );
       }
       else
          player_hail();
