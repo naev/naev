@@ -1,3 +1,5 @@
+notactive = true
+
 function init( p, po )
    local hasunguided = false
    for k,o in ipairs(p:outfits()) do
@@ -12,6 +14,9 @@ function init( p, po )
 
    -- Doubles effect
    if hasunguided then
-      po:set( "launch_damage", 5 )
+      -- It's multiplicative so we add a bonus such that multiplied by the base bonus we get double the original amount
+      po:set( "launch_damage", 110/1.05-100 )
+   else
+      po:clear()
    end
 end
