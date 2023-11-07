@@ -12,7 +12,7 @@
   <cpu>-75</cpu>
  </general>
  <specific type="bolt">
-  <gfx type="shader" size="10" col_size="9">particles/disruptor_s2.frag</gfx>
+  <gfx type="shader" size="8.4" col_size="7.4">particles/disruptor_s2.frag</gfx>
   <lua>outfits/weapons/razor.lua</lua>
   <sound>tesla</sound>
   <sound_hit>bansheeexp</sound_hit>

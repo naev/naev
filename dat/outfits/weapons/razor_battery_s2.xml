@@ -11,7 +11,7 @@
   <cpu>-50</cpu>
  </general>
  <specific type="turret bolt">
-  <gfx type="shader" size="7" col_size="7">particles/razor_s2.frag</gfx>
+  <gfx type="shader" size="6.3" col_size="6.3">particles/razor_s2.frag</gfx>
   <lua>outfits/weapons/razor.lua</lua>
   <sound>ion</sound>
   <spfx_shield>ShiS</spfx_shield>
