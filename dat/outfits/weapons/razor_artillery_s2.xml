@@ -16,11 +16,11 @@
   <sound>ion</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
-  <delay>1.0</delay>
+  <delay>0.7</delay>
   <speed>700</speed>
   <range>1150</range>
   <falloff>1000</falloff>
-  <energy>12</energy>
+  <energy>7.5</energy>
   <heatup>55</heatup>
   <trackmin>0</trackmin>
   <trackmax>3000</trackmax>
@@ -28,8 +28,8 @@
   <damage>
    <type>ion</type>
    <penetrate>10</penetrate>
-   <physical>16</physical>
-   <disable>10</disable>
+   <physical>9</physical>
+   <disable>6</disable>
   </damage>
  </specific>
  <tags>

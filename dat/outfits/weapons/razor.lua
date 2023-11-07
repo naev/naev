@@ -6,7 +6,7 @@ function onload( o )
    local s     = o:specificstats()
    --damage      = s.damage
    disable     = s.disable*0.5
-   energy      = s.damage*1.5
+   energy      = s.damage*2.5
    penetration = s.penetration
    isturret    = s.isturret
 end
