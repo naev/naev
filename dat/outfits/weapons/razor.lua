@@ -12,7 +12,7 @@ function onload( o )
 end
 
 function descextra( _p )
-   return fmt.f(_("Ionizaion deals an extra {disable:.1f} of disable and {energy:.1f} of energy drain over {duration} seconds on the target."),
+   return "#y"..fmt.f(_("Ionization deals an extra {disable:.1f} of disable and {energy:.1f} of energy drain over {duration} seconds on the target.").."#0",
       {disable=disable, energy=energy, duration=duration})
 end
 
