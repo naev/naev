@@ -109,14 +109,12 @@ int board_hook( void *data )
 }
 
 /**
- * @brief Attempt to board the player's target.
- *
- * Creates the window on success.
+ * @brief Sees if the pilot can board a pilot.
  */
-int player_tryBoard( int noisy )
+int player_canBoard( int noisy )
 {
    Pilot *p;
-   char c;
+   //char c;
 
    /* Not disabled. */
    if (pilot_isDisabled(player.p))
@@ -139,7 +137,7 @@ int player_tryBoard( int noisy )
    }
    else
       p = pilot_getTarget( player.p );
-   c = pilot_getFactionColourChar( p );
+   //c = pilot_getFactionColourChar( p );
 
    /* More checks. */
    if (pilot_isFlag(p,PILOT_NOBOARD)) {
@@ -157,7 +155,28 @@ int player_tryBoard( int noisy )
          player_message( "#r%s", _("Your target cannot be boarded again.") );
       return PLAYER_BOARD_IMPOSSIBLE;
    }
-   else if (vec2_dist(&player.p->solid.pos,&p->solid.pos) >
+
+   return PLAYER_BOARD_OK;
+}
+
+/**
+ * @brief Attempt to board the player's target.
+ *
+ * Creates the window on success.
+ */
+int player_tryBoard( int noisy )
+{
+   Pilot *p;
+   char c;
+
+   if (player_canBoard( noisy )==PLAYER_BOARD_IMPOSSIBLE)
+      return PLAYER_BOARD_IMPOSSIBLE;
+
+   /* Should have a pilot target by now or failed. */
+   p = pilot_getTarget( player.p );
+   c = pilot_getFactionColourChar( p );
+
+   if (vec2_dist(&player.p->solid.pos,&p->solid.pos) >
          p->ship->gfx_space->sw * PILOT_SIZE_APPROX) {
       if (noisy)
          player_message( "#r%s", _("You are too far away to board your target.") );

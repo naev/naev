@@ -162,7 +162,7 @@ function enter()
       mem.conv_leader:memory().formation = "vee" -- This is less of a death trap if the player is just behind the leader
       DvFleet( true, mem.godpnt )
 
-      local target = system.get("Arcturus")
+      local target = system.get("Waterhole")
       mem.conv_leader:control()
       mem.conv_leader:hyperspace( target )
       misn.osdCreate( _("Dvaered Shopping"), {
@@ -361,6 +361,7 @@ Bye, mate!"]]), {pnt=mem.tripnt,sys=mem.trisys}))
       p:setHostile()
    end
 
+   player.autonavAbort() -- Just in case
    mem.conv_leader:control(false)
    mem.trickster:taskClear()
    mem.trickster:runaway( mem.conv_leader, true ) -- Trickster just runs away without a goal because he is a freak

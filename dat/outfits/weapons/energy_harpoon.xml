@@ -5,7 +5,7 @@
   <size>medium</size>
   <mass>20</mass>
   <price>276000</price>
-  <description>TODO</description>
+  <description>The Energy Harpoon is an ensemble of stolen and hacked technologies developed by Skull and Bones engineers over many cycles that finally has been developed into a formidable weapon. By exploiting the power of carefully-calibrated electromagnetic harmonics, unlike standard energy weapons, blasts from the Energy Harpoon are designed to not damage directly but instead employ a cavitation effect that both causes heavy damage while also pulling the ship. Although quite new to the potential arsenal of pirates, the weapon seems poised to strike fear in the heart of merchants everywhere.</description>
   <desc_extra>#oOn hit pulls target.#0</desc_extra>
   <gfx_store>tesla.webp</gfx_store>
   <cpu>-40</cpu>

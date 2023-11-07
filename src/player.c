@@ -18,6 +18,7 @@
 #include "player.h"
 
 #include "ai.h"
+#include "board.h"
 #include "camera.h"
 #include "claim.h"
 #include "comm.h"
@@ -1580,6 +1581,15 @@ int player_land( int loud )
       return PLAYER_LAND_DENIED;
    }
 
+   if (player_isFlag(PLAYER_NOLAND)) {
+      player_message( "#r%s", player_message_noland );
+      return PLAYER_LAND_DENIED;
+   }
+   else if (pilot_isFlag( player.p, PILOT_NOLAND)) {
+      player_message( "#r%s", _("Docking stabilizers malfunctioning, cannot land.") );
+      return PLAYER_LAND_DENIED;
+   }
+
    /* Find new target. */
    if (player.p->nav_spob == -1) { /* get nearest spob target */
       double td = -1.; /* temporary distance */
@@ -1607,15 +1617,6 @@ int player_land( int loud )
    else if (!spob_isFlag(cur_system->spobs[ player.p->nav_spob ], SPOB_UNINHABITED) && !pilot_inRangeSpob( player.p, player.p->nav_spob )) {
       player_spobOutOfRangeMsg();
       return PLAYER_LAND_AGAIN;
-   }
-
-   if (player_isFlag(PLAYER_NOLAND)) {
-      player_message( "#r%s", player_message_noland );
-      return PLAYER_LAND_DENIED;
-   }
-   else if (pilot_isFlag( player.p, PILOT_NOLAND)) {
-      player_message( "#r%s", _("Docking stabilizers malfunctioning, cannot land.") );
-      return PLAYER_LAND_DENIED;
    }
 
    /* attempt to land at selected spob */
@@ -1750,31 +1751,48 @@ void player_nolandMsg( const char *str )
 }
 
 /**
+ * @brief Logic to make the player approach a target pilot to board or spob to land on.
  */
-void player_board (void)
+void player_approach (void)
 {
-   /* Not under manual control or disabled. */
-   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
-         pilot_isDisabled(player.p))
+   int brd = (player_canBoard(0)!=PLAYER_BOARD_IMPOSSIBLE);
+   int lnd = (player.p->nav_spob != -1);
+
+   if (brd) {
+      if (player_tryBoard(1) == PLAYER_BOARD_RETRY)
+         player_autonavBoard( player.p->target );
       return;
-
-   /* Try to grab target if not available. */
-   if (player.p->target==PLAYER_ID) {
-      Pilot *p;
-      /* We don't try to find far away targets, only nearest and see if it matches.
-       * However, perhaps looking for first boardable target within a certain range
-       * could be more interesting. */
-      player_targetNearest();
-      p = pilot_getTarget( player.p );
-      if ((!pilot_isDisabled(p) && !pilot_isFlag(p,PILOT_BOARDABLE)) ||
-            pilot_isFlag(p,PILOT_NOBOARD)) {
-         player_targetClear();
-         player_message( "#r%s", _("You need a target to board first!") );
-         return;
-      }
    }
+   else if (lnd) {
+      int canland = player_land(1);
+      if (canland == PLAYER_LAND_AGAIN)
+         player_autonavSpob( cur_system->spobs[player.p->nav_spob]->name, 1 );
+      else if (canland == PLAYER_LAND_DENIED)
+         player_autonavSpob( cur_system->spobs[player.p->nav_spob]->name, 0 );
+      return;
+   }
+   else {
+      int plt = (player.p->target!=PLAYER_ID);
 
-   player_autonavBoard( player.p->target );
+      /* Try to get a pilot to board first. */
+      if (!plt) {
+         /* We don't try to find far away targets, only nearest and see if it matches.
+         * However, perhaps looking for first boardable target within a certain range
+         * could be more interesting. */
+         player_targetNearest();
+         if (player_canBoard(0)!=PLAYER_BOARD_IMPOSSIBLE) {
+            if (player_tryBoard(1) == PLAYER_BOARD_RETRY)
+               player_autonavBoard( player.p->target );
+            return;
+         }
+
+         /* Clear pilot again */
+         player_targetClear();
+      }
+
+      if (player_land(1)==PLAYER_LAND_AGAIN)
+         player_autonavSpob( cur_system->spobs[player.p->nav_spob]->name, 1 );
+   }
 }
 
 /**
