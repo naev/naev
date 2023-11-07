@@ -7,7 +7,7 @@
   <rarity>1</rarity>
   <mass>75</mass>
   <price>700000</price>
-  <description>This special model of the Heavy Laser Turret is one of the heaviest weapons found in the galaxy. Imperial Capital ships use it to lay down devastating barrages against enemy vessels.</description>
+  <description>This special model of the Heavy Laser Turret is one of the heaviest weapons found in the galaxy. Imperial Capital ships use it to lay down devastating barrages against enemy vessels from long range. The high velocity of the energy particles lobbed by the Turbolaser make it very hard for enemy ships to perform evasive maneuvers.</description>
   <gfx_store>laserturret2.webp</gfx_store>
   <cpu>-350</cpu>
  </general>

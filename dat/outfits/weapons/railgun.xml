@@ -7,7 +7,7 @@
   <rarity>1</rarity>
   <mass>24</mass>
   <price>300000</price>
-  <description>The railgun is a cannon that uses heavy magnetic pulses to accelerate pieces of debris to extremely high velocities. The impact caused by the pieces of debris can tear apart even the strongest ship hulls.</description>
+  <description>The railgun is a cannon that uses heavy magnetic pulses to accelerate pieces of debris to extremely high velocities. The impact caused by the pieces of debris can tear apart even the strongest ship hulls. It is the preferred weapon of House Dvaered, who take particular delight in the havoc these weapons can cause on their targets.</description>
   <gfx_store>railgun.webp</gfx_store>
   <cpu>-75</cpu>
  </general>

@@ -7,7 +7,7 @@
   <rarity>1</rarity>
   <mass>36</mass>
   <price>320000</price>
-  <description>The Heavy Laser Turret is more or less an upscaled version of the Laser Turret, though some fundamental mechanisms had to be redesigned to adapt to the increased energy throughput found in this weapon.</description>
+  <description>The Heavy Laser Turret is more or less an upscaled version of the Laser Turret, though some fundamental mechanisms had to be redesigned to adapt to the increased energy throughput found in this weapon. While the resulting design only fits larger ships, very few pilots who equip them regret their purchase.</description>
   <gfx_store>laserturret2.webp</gfx_store>
   <cpu>-75</cpu>
  </general>

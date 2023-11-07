@@ -6,7 +6,7 @@
   <size>small</size>
   <mass>5</mass>
   <price>20000</price>
-  <description>Mining lances are optimized for high destructive power at short range, specialized in mining space asteroids. While they can deal significant damage to heavy armour, they are impractical against shields.</description>
+  <description>Mining lances are optimized for high destructive power at short range, specialized in mining space asteroids. While they can deal significant damage to heavy armour, they are impractical against shields, however, there are stories of miners using them to get away from marauders in a clutch..</description>
   <gfx_store>mining_lance1.webp</gfx_store>
   <cpu>-5</cpu>
  </general>

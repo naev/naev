@@ -6,7 +6,7 @@
   <license>Medium Weapon</license>
   <mass>6</mass>
   <price>45000</price>
-  <description>The Plasma Blaster MK2 is a high-powered version of the Plasma Blaster, powerful enough to blow all but the heaviest pirate ships out of the sky. Its power is substantial enough that it even gets used by some militaries, typically in combination with anti-shield weaponry.</description>
+  <description>The Plasma Blaster MK2 is a high-powered version of the Plasma Blaster MK1, powerful enough to blow all but the heaviest pirate ships out of the sky. Its power is substantial enough that it even gets used by some militaries, typically in combination with anti-shield weaponry. Like the original MK1 model, the lingering plasma will significantly damage any ship that is unlucky enough to get hit.</description>
   <gfx_store>plasma2.webp</gfx_store>
   <cpu>-24</cpu>
  </general>
