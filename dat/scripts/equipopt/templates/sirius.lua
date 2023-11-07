@@ -8,8 +8,8 @@ local sirius_outfits = eoutfits.merge{{
    "Sirius Fidelity Bay", "Sirius Shaman Bay",
    "Heavy Ion Turret",
    "Ragnarok Beam", "Grave Beam",
-   "Disruptor Artillery S3", "Disruptor Artillery S2",
    "Disruptor Battery S2",
+   "Disruptor Artillery S2",
    -- Medium Weapons
    "Enygma Systems Turreted Fury Launcher",
    "Enygma Systems Turreted Headhunter Launcher",

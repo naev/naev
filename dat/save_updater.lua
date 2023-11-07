@@ -40,7 +40,7 @@ local outfit_list = {
    ["Slicer"] = "Razor Artillery S3",
    ["Razor Turret MK1"] = 50e3,
    ["Razor Turret MK2"] = "Razor Battery S2",
-   ["Tesla Cannon"] = "Disruptor Artillery S3",
+   ["Tesla Cannon"] = 780e3,
    ["Heavy Razor Turret"] = "Disruptor Battery S2",
    ["Fidelity Bay"] = "Sirius Fidelity Bay",
    -- Below is a list of changes from 0.9.0 to 0.10.0
