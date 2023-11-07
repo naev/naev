@@ -18,11 +18,11 @@
   <sound_hit>bansheeexp</sound_hit>
   <spfx_shield>ShiM</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
-  <delay>1.6</delay>
+  <delay>1.1</delay>
   <speed>800</speed>
   <range>1850</range>
   <falloff>1500</falloff>
-  <energy>54</energy>
+  <energy>34</energy>
   <heatup>70</heatup>
   <trackmin>1000</trackmin>
   <trackmax>7000</trackmax>
@@ -30,8 +30,8 @@
   <damage>
    <type>ion</type>
    <penetrate>45</penetrate>
-   <physical>40</physical>
-   <disable>18</disable>
+   <physical>18</physical>
+   <disable>12</disable>
   </damage>
  </specific>
  <tags>
