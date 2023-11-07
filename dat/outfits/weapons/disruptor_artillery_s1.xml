@@ -7,7 +7,7 @@
   <rarity>1</rarity>
   <mass>16</mass>
   <price>135000</price>
-  <description>TODO</description>
+  <description>The Disruptor series of weapons is loosely based on the Razor series. House Sirius found it impossible to simply upscale the Razor Artillery S3, and ended up nearly having to redesign them from scratch, although the they both handle very similarly. The Disruptor Artillery S1 lobs high energy self-stabilizing balls of ions that can make short work of energy shields and systems.</description>
   <gfx_store>razor1.webp</gfx_store>
   <cpu>-50</cpu>
  </general>

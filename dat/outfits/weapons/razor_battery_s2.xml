@@ -6,7 +6,7 @@
   <license>Medium Weapon</license>
   <mass>22</mass>
   <price>130000</price>
-  <description>The MK2 turreted version of the Razor sees a lot of application on medium escort ships. They are often mounted alongside laser or gauss turrets to assist in de-shielding incoming attackers before they are ripped to shreds.</description>
+  <description>Being the only turreted version of the Razor Artillery series, the Razor Battery S2 sees a lot of application on medium escort ships. The strong shield stripping effect in combination with the heavy systems damage can quickly demoralize pirates and marauders looking to make some quick credits.</description>
   <gfx_store>razorturret1.webp</gfx_store>
   <cpu>-50</cpu>
  </general>

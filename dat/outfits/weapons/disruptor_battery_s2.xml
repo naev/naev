@@ -7,7 +7,7 @@
   <rarity>1</rarity>
   <mass>72</mass>
   <price>690000</price>
-  <description>House Sirius typically equips its heaviest vessels with Heavy Razor Turrets. Where the standard razor turrets are ineffective, the heavy razor turret provides the necessary firepower to batter down virtually any shielding.</description>
+  <description>House Sirius typically equips its heaviest vessels with Disruptor Battery S2s. Where the Razor Batteries are ineffective, the Disruptor Battery S2 provides the necessary firepower to batter down virtually any shielding while doing heavy damage to systems. Although the firepower is lower than other standard capital ship weapons, Disruptor connoisseurs claim the weapon more than makes up for it with overall utility. Given the fact that not many survive being the brunt of a barrage from Disruptor Battery S2s, it may be that they have a point.</description>
   <gfx_store>razorturret3.webp</gfx_store>
   <cpu>-350</cpu>
  </general>

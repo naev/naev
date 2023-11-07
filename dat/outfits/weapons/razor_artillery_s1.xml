@@ -4,8 +4,8 @@
   <slot>weapon</slot>
   <size>small</size>
   <mass>2</mass>
-  <price>25000</price>
-  <description>Razors fire concentrated pockets of high energy ions that are very effective at draining shields, but have only limited effect on a ship's armour. As such, Razors are best used in the initial phase of an engagement, and swapped out for other weapons once the target's shields come down.</description>
+  <price>28000</price>
+  <description>Designed and employed by House Sirius, the Razor Artillery S1 fires concentrated pockets of high energy ions that are very effective at draining shields, but have only limited effect on a ship's armour. However, the ion energy is also very effective at damaging system components, effectively disabling ships. The ionization effect lingers for several seconds, and can drain significant energy reserves during that time. While House Sirius proclaims their use as non-lethal weapons, if care is not taken, they can prove to be quite lethal.</description>
   <gfx_store>razor1.webp</gfx_store>
   <cpu>-5</cpu>
  </general>

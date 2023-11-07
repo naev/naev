@@ -6,7 +6,7 @@
   <license>Medium Weapon</license>
   <mass>5</mass>
   <price>51000</price>
-  <description>The upgraded civilian Razor model packs increased overall effectiveness compared to its predecessor, and has less difficulty in overloading capital ship grade shielding. As with the basic model, the Razor MK2 is best used to drain a target's shields, paving the way for other weapons to deliver the finishing blow.</description>
+  <description>The upgraded Razor Artillery S2 model packs increased overall effectiveness compared to the more compact S2 model, and has less difficulty in overloading corvette and destroyer-grade shielding, and disabling critical components.</description>
   <gfx_store>razor2.webp</gfx_store>
   <cpu>-24</cpu>
  </general>
