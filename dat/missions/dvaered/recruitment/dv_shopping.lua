@@ -162,7 +162,7 @@ function enter()
       mem.conv_leader:memory().formation = "vee" -- This is less of a death trap if the player is just behind the leader
       DvFleet( true, mem.godpnt )
 
-      local target = system.get("Arcturus")
+      local target = system.get("Waterhole")
       mem.conv_leader:control()
       mem.conv_leader:hyperspace( target )
       misn.osdCreate( _("Dvaered Shopping"), {
