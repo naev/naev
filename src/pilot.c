@@ -1860,6 +1860,7 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
 void pilot_render( Pilot *p )
 {
    double scale, x,y, w,h, z;
+   double timeleft, elapsed;
    int inbounds = 1;
    Effect *e = NULL;
    glColour c = {.r=1., .g=1., .b=1., .a=1.};
@@ -1887,9 +1888,15 @@ void pilot_render( Pilot *p )
          if (eiter->data->program==0)
             continue;
 
-         /* Only render one effect for now. */
-         e = eiter;
-         break;
+         if (e==NULL) {
+            e = eiter;
+            timeleft = e->timer;
+            elapsed = e->elapsed;
+         }
+         else if (eiter->data==e->data) {
+            timeleft = MAX( e->timer, eiter->timer );
+            elapsed = MAX( e->elapsed, eiter->elapsed );
+         }
       }
 
       /* Check if needs scaling. */
@@ -1944,8 +1951,8 @@ void pilot_render( Pilot *p )
          gl_uniformMat4(ed->tex_mat, &tex_mat);
 
          glUniform3f( ed->dimensions, SCREEN_W, SCREEN_H, cam_getZoom() );
-         glUniform1f( ed->u_timer, e->timer );
-         glUniform1f( ed->u_elapsed, e->elapsed );
+         glUniform1f( ed->u_timer, timeleft );
+         glUniform1f( ed->u_elapsed, elapsed );
          glUniform1f( ed->u_r, e->r );
          glUniform1f( ed->u_dir, p->solid.dir );
 
