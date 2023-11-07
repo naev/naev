@@ -83,7 +83,7 @@ local goodness_special = {
    ["Enygma Systems Huntsman Launcher"] = 0.5,
    ["Enygma Systems Spearhead Launcher"] = 0.4, -- high damage but shield only
    ["TeraCom Medusa Launcher"] = 0.5,           -- really high disable
-   ["Droid Repair Crew"] = 0.5, -- Only work until 50%
+   ["Droid Repair Crew"] = 0.4, -- Only work until 50%
    ["Electron Burst Cannon"] = 0.7, -- Shieldbreaker damage
    -- Plasma do a lot of damage over time
    ["Plasma Blaster MK1"] = 1 / 0.75,
@@ -92,6 +92,14 @@ local goodness_special = {
    ["Plasma Cluster Cannon"] = 1 / 0.75,
    ["Plasma Turret MK1"] = 1 / 0.75,
    ["Plasma Turret MK2"] = 1 / 0.75,
+   -- Razor/Disruptors do disable over time (and energy drain!)
+   ["Razor Artillery S1"] = 1 / 0.75,
+   ["Razor Artillery S2"] = 1 / 0.75,
+   ["Razor Artillery S3"] = 1 / 0.75,
+   ["Razor Battery S3"] = 1 / 0.75,
+   ["Disruptor Artillery S1"] = 1 / 0.75,
+   ["Disruptor Artillery S2"] = 1 / 0.75,
+   ["Disruptor Battery S3"] = 1 / 0.75,
 }
 
 
