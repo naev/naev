@@ -460,12 +460,12 @@ void outfits_update( unsigned int wid, const char *str )
    /* new text */
    if (outfit->slot.type == OUTFIT_SLOT_INTRINSIC) {
       scnprintf( buf, sizeof(buf), "%s\n\n#o%s#0",
-         pilot_outfitDescription( player.p, outfit ),
+         _(outfit->desc_raw),
          _("This is an intrinsic outfit that will be directly equipped on the current ship and can not be moved."));
       window_modifyText( wid, "txtDescription", buf );
    }
    else
-      window_modifyText( wid, "txtDescription", pilot_outfitDescription( player.p, outfit ) );
+      window_modifyText( wid, "txtDescription", _(outfit->desc_raw) );
    buf_price = outfit_getPrice( outfit, &price, &canbuy, &cansell );
    credits2str( buf_credits, player.p->credits, 2 );
 
