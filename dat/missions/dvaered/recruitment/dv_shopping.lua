@@ -361,6 +361,7 @@ Bye, mate!"]]), {pnt=mem.tripnt,sys=mem.trisys}))
       p:setHostile()
    end
 
+   player.autonavAbort() -- Just in case
    mem.conv_leader:control(false)
    mem.trickster:taskClear()
    mem.trickster:runaway( mem.conv_leader, true ) -- Trickster just runs away without a goal because he is a freak
