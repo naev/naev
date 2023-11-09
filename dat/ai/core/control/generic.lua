@@ -54,6 +54,7 @@ mem.form_pos      = nil -- Position in formation (for follower)
 mem.leadermaxdist = nil -- Distance from leader to run back to leader
 mem.gather_range  = 800 -- Radius in which the pilot looks for gatherables
 mem.lanes_useneutral = false -- Whether or not to use neutral lanes
+mem.uselanes       = true -- Try to use lanes
 
 --[[Control parameters: mem.radius and mem.angle are the polar coordinates
 of the point the pilot has to follow when using follow_accurate.

@@ -41,7 +41,11 @@ function idle ()
             return
          end
 
-         mem.route = lanes.getRouteP( p, mem.goal_pos )
+         if mem.uselanes then
+            mem.route = lanes.getRouteP( p, mem.goal_pos )
+         else
+            mem.route = { mem.goal_pos }
+         end
       end
 
       -- Arrived at goal
@@ -102,8 +106,14 @@ function idle ()
       else
          -- Go to an interesting
          if not mem.route then
-            local target = lanes.getPointInterestP( p )
-            mem.route = lanes.getRouteP( p, target )
+            if mem.uselanes then
+               local target = lanes.getPointInterestP( p )
+               mem.route = lanes.getRouteP( p, target )
+            else
+               -- Old school anywhere in the system
+               local target = vec2.newP( rnd.rnd() * system.cur():radius(), rnd.angle() )
+               mem.route = { target }
+            end
          end
          local pos = mem.route[1]
          table.remove( mem.route, 1 )
