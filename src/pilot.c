@@ -3060,7 +3060,8 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
          array_push_back( &pilot->outfits, slot );
          if (pilot_list_ptr[i] != &pilot->outfit_weapon)
             slot->weapset = -1;
-         if (!pilot_isFlagRaw(flags, PILOT_NO_OUTFITS) && slot->sslot->data != NULL)
+         /* We'll ignore non-required outfits if NO_OUTFITS is set. */
+         if ((!pilot_isFlagRaw(flags, PILOT_NO_OUTFITS) || slot->sslot->required) && slot->sslot->data != NULL)
             pilot_addOutfitRaw( pilot, slot->sslot->data, slot );
       }
    }
