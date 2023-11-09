@@ -2889,6 +2889,7 @@ dat/events/pers/empire.lua
 dat/events/pers/indep.lua
 dat/events/pers/minerva.lua
 dat/events/pers/pirate.lua
+dat/events/pers/sirius.lua
 dat/events/pers/soromid.lua
 dat/events/pers/zalek.lua
 dat/events/pirate/fake_transponder.lua
