@@ -4,6 +4,7 @@
   <template/>
  </general>
  <specific type="launcher">
+  <lua>outfits/flow/abilities/seeking_chakra.lua</lua>
   <delay>1</delay>
   <reload_time>1</reload_time>
   <amount>1</amount>
