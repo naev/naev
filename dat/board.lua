@@ -152,7 +152,7 @@ local function compute_lootables ( plt )
          local _name, _size, _prop, req = o:slot()
          local ot = o:tags()
          -- Don't allow looting required outfits
-         if not req and not ot.noplayer and o~=oloot then
+         if not req and not ot.noplayer and not ot.nosteal and o~=oloot then
             table.insert( ocand, o )
          end
       end
