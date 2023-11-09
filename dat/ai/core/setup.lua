@@ -47,6 +47,7 @@ function setup.setup( p )
    local o = {}
 
    -- Check flow
+   flow.recalculate( p )
    o.flow = flow.has( p )
 
    -- Check out what interesting outfits there are
