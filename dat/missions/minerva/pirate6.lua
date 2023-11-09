@@ -42,8 +42,6 @@ local dv_name = _("Lord Battlebloke")
 mem.state = nil
 
 function create ()
-   if not var.peek("testing") then misn.finish(false) end
-
    if not misn.claim( mainsys ) then
       misn.finish( false )
    end
@@ -184,7 +182,7 @@ She shakes her head.
 "We get them to fight each other! I thought we were on the same wavelength!"]]))
       vn.jump("cont01")
 
-      vn.label("cont01_fight")
+      vn.label("cont01_noidea")
       zuri(_([["We get them to fight each other! I thought we were on the same wavelength!"]]))
       vn.jump("cont01")
 
