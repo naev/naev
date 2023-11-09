@@ -37,7 +37,34 @@ local sirius_outfits = eoutfits.merge{{
    "Improved Stabilizer", "Engine Reroute",
    "Battery I", "Shield Capacitor I",
    "Reactor Class I", "Small Shield Booster",
+   -- Flow stuff
+   "Large Flow Amplifier", "Medium Flow Amplifier", "Small Flow Amplifier",
+   "Large Flow Resonator", "Medium Flow Resonator", "Small Flow Resonator",
+   --"Large Meditation Chamber", "Medium Meditation Chamber", "Small Meditation Chamber",
 }}
+
+local sirius_abilities = {
+   outfit.get("Seeking Chakra"),
+   outfit.get("Feather Drive"),
+   outfit.get("Cleansing Flames"),
+   outfit.get("Astral Projection"),
+   outfit.get("Avatar of Sirichana"),
+}
+local sirius_abilities_w = {
+   10,
+   6,
+   2,
+   2,
+   1,
+}
+local nw = 0
+for k,v in ipairs(sirius_abilities_w) do
+   nw = nw+v
+   sirius_abilities_w[k] = nw+v
+end
+for k,v in ipairs(sirius_abilities_w) do
+   sirius_abilities_w[k] = sirius_abilities_w[k] / nw
+end
 
 local sirius_params = {
    --["Sirius Demon"] = function () return {
@@ -95,6 +122,27 @@ local function equip_sirius( p, opt_params )
       else
          cores = ecores.get( p, { all="elite" } )
       end
+   end
+
+   -- Try to give a flow ability
+   if rnd.rnd() < 0.8 then
+      -- Choose ability (only get 1)
+      local ability
+      local r = rnd.rnd()
+      for k,v in ipairs(sirius_abilities_w) do
+         if r <= v then
+            ability = sirius_abilities[k]
+            break
+         end
+      end
+      params.type_range = params.type_range or {}
+      if not ps:tags().sirius then
+         -- Needs flow structurals
+         params.type_range["Flow Amplifier"] = { min=1 }
+      end
+      params.type_range["Flow Modifier"] = { max=1 }
+      p:outfitAdd( ability ) -- Just add the ability here, shouldn't get cleared
+      params.noremove = true -- Don't clear outfits
    end
 
    -- Set some meta-data
