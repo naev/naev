@@ -119,7 +119,8 @@ function atk.think( target, si, noretarget )
          local s = flow.size( p )
 
          if mem._o.seeking_chakra and f > fm * 0.25 and rnd.rnd() < 0.3 then
-            if ai.dist( target ) < 3000 then -- TODO more exact range
+            -- Range is 5600 for small to 8000 for large
+            if ai.dist( target ) < 5000 then -- TODO more exact range
                p:outfitToggle( mem._o.seeking_chakra, true )
             end
          end
