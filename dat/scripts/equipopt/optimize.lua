@@ -250,7 +250,9 @@ function optimize.optimize( p, cores, outfit_list, params )
       ai_setup.setup(p)
       return
    end
-   p:outfitRm( "all" )
+   if not params.noremove then
+      p:outfitRm( "all" )
+   end
 
    -- Special ships used fixed outfits
    local specship = special_ships[ ps:nameRaw() ]
@@ -452,41 +454,48 @@ function optimize.optimize( p, cores, outfit_list, params )
    local slots = {}
    local slots_w, slots_u, slots_s = {}, {}, {}
    for k,v in ipairs(slots_base) do
-      local has_outfits = {}
-      local outfitpos = {}
-      for m,o in ipairs(outfit_list) do
-         if ps:fitsSlot( k, o ) then
-            table.insert( has_outfits, o )
-            -- Check to see if it is in the similar list
-            for spos,s in ipairs(same_list) do
-               if o==s then
-                  outfitpos[ #has_outfits ] = spos
-                  break
+      print( p:outfitSlot(k) )
+      -- Must be empty
+      if p:outfitSlot(k)==nil then
+         local has_outfits = {}
+         local outfitpos = {}
+         for m,o in ipairs(outfit_list) do
+            if ps:fitsSlot( k, o ) then
+               table.insert( has_outfits, o )
+               -- Check to see if it is in the similar list
+               for spos,s in ipairs(same_list) do
+                  if o==s then
+                     outfitpos[ #has_outfits ] = spos
+                     break
+                  end
                end
             end
          end
-      end
 
-      if #has_outfits > 0 then
-         v.id = k
-         v.outfits = has_outfits
-         v.samepos = outfitpos
-         table.insert( slots, v )
+         if #has_outfits > 0 then
+            v.id = k
+            v.outfits = has_outfits
+            v.samepos = outfitpos
+            table.insert( slots, v )
 
-         -- Each slot adds a number of variables equivalent to the number of
-         -- potential outfits, but only one constraint
-         ncols = ncols + #v.outfits
-         nrows = nrows + 1
+            -- Each slot adds a number of variables equivalent to the number of
+            -- potential outfits, but only one constraint
+            ncols = ncols + #v.outfits
+            nrows = nrows + 1
 
-         -- Sort by type to apply limits
-         if v.type=="Weapon" then
-            table.insert( slots_w, v )
-         elseif v.type=="Utility" then
-            table.insert( slots_u, v )
-         elseif v.type=="Structure" then
-            table.insert( slots_s, v )
+            -- Sort by type to apply limits
+            if v.type=="Weapon" then
+               table.insert( slots_w, v )
+            elseif v.type=="Utility" then
+               table.insert( slots_u, v )
+            elseif v.type=="Structure" then
+               table.insert( slots_s, v )
+            end
          end
       end
+   end
+   if ncols==0 then
+      return -- Nothing to optimize
    end
 
    -- We have to add additional constraints (spaceworthy, limits)
