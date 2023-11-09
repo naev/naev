@@ -8,7 +8,7 @@ The House Sirius is one of the major factions in Naev.
 * Leading Structure: Tribunal of Arch-Canters
 * Government: Constitutional Theocracy
 * Formation: UST 97
-* Homeworld: Crater City (Ruadan system)
+* Homeworld: Mutris (Ruadan system)
 * Important Figures:
     * Sirichana
 
