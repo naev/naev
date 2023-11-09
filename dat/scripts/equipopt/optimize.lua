@@ -495,6 +495,8 @@ function optimize.optimize( p, cores, outfit_list, params )
       end
    end
    if ncols==0 then
+      p:fillAmmo()
+      ai_setup.setup(p)
       return -- Nothing to optimize
    end
 
