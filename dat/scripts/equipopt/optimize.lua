@@ -454,7 +454,6 @@ function optimize.optimize( p, cores, outfit_list, params )
    local slots = {}
    local slots_w, slots_u, slots_s = {}, {}, {}
    for k,v in ipairs(slots_base) do
-      print( p:outfitSlot(k) )
       -- Must be empty
       if p:outfitSlot(k)==nil then
          local has_outfits = {}
