@@ -154,6 +154,7 @@ typedef struct Ship_ {
    ShipOutfitSlot *outfit_structure;/**< Array (array.h): Outfit structure slots. */
    ShipOutfitSlot *outfit_utility;  /**< Array (array.h): Outfit utility slots. */
    ShipOutfitSlot *outfit_weapon;   /**< Array (array.h): Outfit weapons slots. */
+   Outfit const** outfit_intrinsic; /**< Array (array.h): Intrinsic outfits to start out with. */
 
    /* Mounts */
    double mangle;    /**< Mount angle to simplify mount calculations. */

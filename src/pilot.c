@@ -3060,11 +3060,17 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
          array_push_back( &pilot->outfits, slot );
          if (pilot_list_ptr[i] != &pilot->outfit_weapon)
             slot->weapset = -1;
-         if (slot->sslot->data != NULL)
+         if (!pilot_isFlagRaw(flags, PILOT_NO_OUTFITS) && slot->sslot->data != NULL)
             pilot_addOutfitRaw( pilot, slot->sslot->data, slot );
       }
    }
    array_shrink( &pilot->outfits );
+
+   /* Add intrinsics if applicable. */
+   if (!pilot_isFlagRaw(flags, PILOT_NO_OUTFITS)) {
+      for (int i=0; i<array_size(ship->outfit_intrinsic); i++)
+         pilot_addOutfitIntrinsicRaw( pilot, ship->outfit_intrinsic[i] );
+   }
 
    /* We must set the weapon auto in case some of the outfits had a default
     * weapon equipped. */
@@ -3095,13 +3101,15 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
 
    /* Safety check. */
 #ifdef DEBUGGING
-   char message[STRMAX_SHORT];
-   int notworthy = pilot_reportSpaceworthy( pilot, message, sizeof(message) );
-   if (notworthy) {
-      DEBUG( _("Pilot '%s' failed safety check: %s"), pilot->name, message );
-      for (int i=0; i<array_size(pilot->outfits); i++) {
-         if (pilot->outfits[i]->outfit != NULL)
-            DEBUG(_("   [%d] %s"), i, _(pilot->outfits[i]->outfit->name) );
+   if (!pilot_isFlagRaw(flags, PILOT_NO_OUTFITS)) {
+      char message[STRMAX_SHORT];
+      int notworthy = pilot_reportSpaceworthy( pilot, message, sizeof(message) );
+      if (notworthy) {
+         DEBUG( _("Pilot '%s' failed safety check: %s"), pilot->name, message );
+         for (int i=0; i<array_size(pilot->outfits); i++) {
+            if (pilot->outfits[i]->outfit != NULL)
+               DEBUG(_("   [%d] %s"), i, _(pilot->outfits[i]->outfit->name) );
+         }
       }
    }
 #endif /* DEBUGGING */
@@ -3115,9 +3123,6 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
    /* Update the x and y sprite positions. */
    gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
          pilot->ship->gfx_space, pilot->solid.dir );
-
-   /* Fill ammo. */
-   pilot_fillAmmo( pilot );
 
    /* Targets. */
    pilot_setTarget( pilot, pilot->id ); /* No target. */

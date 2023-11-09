@@ -381,6 +381,26 @@ int pilot_addOutfit( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s )
 /**
  * @brief Adds an outfit as an intrinsic slot.
  */
+int pilot_addOutfitIntrinsicRaw( Pilot *pilot, const Outfit *outfit )
+{
+   PilotOutfitSlot *s;
+
+   if (!outfit_isMod(outfit)) {
+      WARN(_("Instrinsic outfits must be modifiers!"));
+      return -1;
+   }
+
+   if (pilot->outfit_intrinsic==NULL)
+      pilot->outfit_intrinsic = array_create( PilotOutfitSlot );
+
+   s = &array_grow( &pilot->outfit_intrinsic );
+   memset( s, 0, sizeof(PilotOutfitSlot) );
+   return pilot_addOutfitRaw( pilot, outfit, s );
+}
+
+/**
+ * @brief Adds an outfit as an intrinsic slot.
+ */
 int pilot_addOutfitIntrinsic( Pilot *pilot, const Outfit *outfit )
 {
    PilotOutfitSlot *s;

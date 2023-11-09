@@ -926,6 +926,16 @@ static int ship_parse( Ship *temp, const char *filename )
                ship_parseSlot( temp, &array_grow(&temp->outfit_utility), OUTFIT_SLOT_UTILITY, cur );
             else if (xml_isNode(cur,"weapon"))
                ship_parseSlot( temp, &array_grow(&temp->outfit_weapon), OUTFIT_SLOT_WEAPON, cur );
+            else if (xml_isNode(cur,"intrinsic")) {
+               const Outfit *o = outfit_get(xml_get(cur));
+               if (o==NULL) {
+                  WARN(_("Ship '%s' has unknown intrinsic outfit '%s'"), temp->name, xml_get(cur));
+                  continue;
+               }
+               if (temp->outfit_intrinsic==NULL)
+                  temp->outfit_intrinsic = (Outfit const**) array_create( Outfit* );
+               array_push_back( &temp->outfit_intrinsic, o );
+            }
             else
                WARN(_("Ship '%s' has unknown slot node '%s'."), temp->name, cur->name);
          } while (xml_nextNode(cur));
@@ -1183,6 +1193,7 @@ void ships_free (void)
       array_free(s->outfit_structure);
       array_free(s->outfit_utility);
       array_free(s->outfit_weapon);
+      array_free(s->outfit_intrinsic);
 
       ss_free( s->stats );
 

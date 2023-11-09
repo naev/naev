@@ -27,6 +27,7 @@ int pilot_addOutfit( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s );
 int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s );
 
 /* Intrinsic outfits. */
+int pilot_addOutfitIntrinsicRaw( Pilot *pilot, const Outfit *outfit );
 int pilot_addOutfitIntrinsic( Pilot *pilot, const Outfit *outfit );
 int pilot_rmOutfitIntrinsic( Pilot *pilot, const Outfit *outfit );
 int pilot_hasIntrinsic( const Pilot *pilot, const Outfit *outfit );
