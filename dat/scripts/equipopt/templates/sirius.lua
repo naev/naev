@@ -124,8 +124,9 @@ local function equip_sirius( p, opt_params )
       end
    end
 
-   -- Try to give a flow ability
-   if rnd.rnd() < 0.8 then
+   -- Try to give a flow ability if not from a fighter bay randomly
+   local issirius = ps:tags().sirius
+   if ((issirius and rnd.rnd() < 0.8) or (not issirius and rnd.rnd() < 0.6)) and not p:flags("carried") then
       -- Choose ability (only get 1)
       local ability
       local r = rnd.rnd()
@@ -136,7 +137,7 @@ local function equip_sirius( p, opt_params )
          end
       end
       params.type_range = params.type_range or {}
-      if not ps:tags().sirius then
+      if not issirius then
          -- Needs flow structurals
          params.type_range["Flow Amplifier"] = { min=1 }
       end
