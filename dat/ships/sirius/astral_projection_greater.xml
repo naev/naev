@@ -36,6 +36,7 @@
   <weapon size="medium" x="10" y="2" h="0">Greater Astral Cannon</weapon>
   <utility size="medium"/>
   <utility size="medium"/>
+  <intrinsic>Internal Flow Amplifier</intrinsic>
  </slots>
  <stats>
   <stress_dissipation>10000</stress_dissipation>

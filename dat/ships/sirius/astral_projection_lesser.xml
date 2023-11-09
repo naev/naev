@@ -36,6 +36,7 @@
   <weapon size="small" x="10" y="2" h="0">Lesser Astral Cannon</weapon>
   <utility size="small"/>
   <utility size="small"/>
+  <intrinsic>Internal Flow Amplifier</intrinsic>
  </slots>
  <stats>
   <stress_dissipation>10000</stress_dissipation>

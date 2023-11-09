@@ -188,9 +188,9 @@ function flow.recalculate( p )
 end
 
 local amp_size = {
-   ["Small Flow Amplifier"]      = 1,
-   ["Medium Flow Amplifier"]     = 2,
-   ["Large Flow Amplifier"]      = 3,
+   ["Small Flow Amplifier"]   = 1,
+   ["Medium Flow Amplifier"]  = 2,
+   ["Large Flow Amplifier"]   = 3,
 }
 function flow.size( p )
    -- Sirius ships are determined by their size

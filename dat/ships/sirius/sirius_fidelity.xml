@@ -41,6 +41,7 @@
   <structure size="small" />
   <structure size="small" />
   <structure size="small" />
+  <intrinsic>Internal Flow Amplifier</intrinsic>
  </slots>
  <stats>
   <shield_mod>10</shield_mod>

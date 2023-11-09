@@ -44,6 +44,7 @@
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />
+  <intrinsic>Internal Flow Amplifier</intrinsic>
  </slots>
  <stats>
   <speed_mod>-10</speed_mod>
