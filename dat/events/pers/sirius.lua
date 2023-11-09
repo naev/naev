@@ -22,8 +22,30 @@ return function ()
                m.bribe_no = _([["You think you can buy my faith with mere credits?"]])
                return p
             end,
-         },
-         } do
+         }, {
+            spawn = function ()
+               local p = pilot.add("Sirius Preacher", "Sirius", nil, _("Zealot Sri Chatri"), {naked=true, ai="pers"})
+               equipopt.sirius( p, { flow_ability=outfit.get("Avatar of Sirichana") } )
+               local m = p:memory()
+               m.ad = {
+                  _("Stay vigilant, for we are always tested against wickedness."),
+                  _("We must be beacons of faith in the eternal darkness."),
+               }
+               m.comm_greet = _([["There will never be rest as long as the wicked remain unpunished. I will strive as long as faith drives me."]])
+               m.taunt = _("Prepare for retribution!")
+               m.bribe_no = _([["I am not swayed by your petty coins."]])
+               m.uselanes = false
+               for i=1,2 do
+                  local s = pilot.add("Sirius Shaman", "Sirius", p:pos(), _("Squire"), {naked=true, ai="pers"})
+                  equipopt.sirius( p, { noflow=true } )
+                  s:setVel( p:vel() )
+                  s:setLeader( p )
+               end
+               return p
+            end,
+         }
+      } do
+         table.insert( pers, v )
       end
    end
 
