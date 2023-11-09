@@ -90,6 +90,10 @@ local sirius_params_overwrite = {
 --[[
 -- @brief Does Sirius pilot equipping
 --
+-- Some useful parameters for opt_params:
+--  * noflow=true: pilot will not spawn with flow abilities
+--  * flow_ability=X: pilot will spawn with flow ability X (and outfits necessary to use it)
+--
 --    @param p Pilot to equip
 --]]
 local function equip_sirius( p, opt_params )
@@ -126,14 +130,16 @@ local function equip_sirius( p, opt_params )
 
    -- Try to give a flow ability if not from a fighter bay randomly
    local issirius = ps:tags().sirius
-   if ((issirius and rnd.rnd() < 0.8) or (not issirius and rnd.rnd() < 0.6)) and not p:flags("carried") then
+   if (not opt_params.noflow and (issirius and rnd.rnd() < 0.8) or (not issirius and rnd.rnd() < 0.6)) and not p:flags("carried") then
       -- Choose ability (only get 1)
-      local ability
+      local ability = opt_params.flow_ability
+      if not ability then
       local r = rnd.rnd()
-      for k,v in ipairs(sirius_abilities_w) do
-         if r <= v then
-            ability = sirius_abilities[k]
-            break
+         for k,v in ipairs(sirius_abilities_w) do
+            if r <= v then
+               ability = sirius_abilities[k]
+               break
+            end
          end
       end
       params.type_range = params.type_range or {}
