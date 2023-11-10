@@ -48,6 +48,7 @@
       * Route is visible on all map modes now
       * Blink and flicker drives can use double tap arrow keys to move around
       * Toolkit is cached in a framebuffer for much faster rendering
+      * Intrinsic outfit details now visible from the equipment menu
    * New Content
       * New mechanic for House Sirius called flow to unlock psychic powers
          * Gives passive bonuses to Sirius ships
@@ -66,7 +67,7 @@
          * New graphics for space objects
       * Tons of new outfits
          * Sirius flow outfits
-         * Completely reworked Sirius weapons
+         * Completely reworked Sirius weapons too
          * Point defense systems
          * New accessories
          * Intrinsic outfits
@@ -122,7 +123,7 @@
       * Fixed some outfits using the wrong store images
       * Fixed system viewer not being consistent with map
       * Player's escort damage is counted towards players damage
-      * Avoid having missions duplicates for cases where they can significantly stack
+      * Avoid having missions duplicates for cases where they can significantly stack such as patrol missions
 
 * 0.10.6
    * Fixed potential segfault with invalid semver strings
