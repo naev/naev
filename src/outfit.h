@@ -34,11 +34,11 @@
 
 /* Outfit filter labels. [Doc comments are also translator notes and must precede the #define.] */
 /** Color-coded abbreviation for "Weapon [outfit]", short enough to use as a tab/column title. */
-#define OUTFIT_LABEL_WEAPON            N_("#p W ")
+#define OUTFIT_LABEL_WEAPON            N_("#pWeapon")
 /** Color-coded abbreviation for "Utility [outfit]", short enough to use as a tab/column title. */
-#define OUTFIT_LABEL_UTILITY           N_("#g U ")
+#define OUTFIT_LABEL_UTILITY           N_("#gUtility")
 /** Color-coded abbreviation for "Structure [outfit]", short enough to use as a tab/column title. */
-#define OUTFIT_LABEL_STRUCTURE         N_("#n S ")
+#define OUTFIT_LABEL_STRUCTURE         N_("#nStructural")
 /** Color-coded abbreviation for "Core [outfit]", short enough to use as a tab/column title. */
 #define OUTFIT_LABEL_CORE              N_("#oCore")
 
