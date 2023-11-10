@@ -2791,6 +2791,7 @@ dat/effects/lua/hypergate_enter.lua
 dat/effects/lua/wormhole_enter.lua
 dat/effects/lua/wormhole_exit.lua
 dat/events/bioship.lua
+dat/events/cache.lua
 dat/events/chapter1.lua
 dat/events/cinematic/DvdFLFbattle.lua
 dat/events/derelict.lua
