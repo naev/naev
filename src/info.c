@@ -447,7 +447,7 @@ static void info_openMain( unsigned int wid )
          if (pi->quantity == 0)
             SDL_asprintf( &inventory[nlic+i], "%s", _(pi->name) );
          else
-            SDL_asprintf( &inventory[nlic+i], _("%s (%d)"), _(pi->name), pi->quantity );
+            SDL_asprintf( &inventory[nlic+i], _("%s (%s)"), _(pi->name), num2strU(pi->quantity,0) );
       }
       qsort( &inventory[nlic], ninv, sizeof(char*), strsort );
    }
