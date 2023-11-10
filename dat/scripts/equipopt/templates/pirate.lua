@@ -2,6 +2,8 @@ local optimize = require 'equipopt.optimize'
 local ecores = require 'equipopt.cores'
 local eoutfits = require 'equipopt.outfits'
 local eparams = require 'equipopt.params'
+local bioship = require 'bioship'
+local prob = require "prob"
 
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
@@ -110,11 +112,20 @@ local function equip_pirate( p, opt_params )
    -- See cores
    local cores = opt_params.cores
    if not cores then
-      local pircor = pirate_cores[ sname ]
-      if pircor then
-         cores = pircor( p )
+      if ps:tags().bioship then
+         local stage = params.bioship_stage
+         if not stage then
+            local maxstage = bioship.maxstage( p )
+            stage = math.max( 1, maxstage - prob.poisson_sample( 1 ) )
+         end
+         bioship.simulate( p, stage, params.bioship_skills )
       else
-         cores = ecores.get( p, { all=pirate_class } )
+      local pircor = pirate_cores[ sname ]
+         if pircor then
+            cores = pircor( p )
+         else
+            cores = ecores.get( p, { all=pirate_class } )
+         end
       end
    end
 
