@@ -95,7 +95,7 @@ local function equip_proteron( p, opt_params )
    if sp then
       params = tmerge_r( params, sp() )
    end
-   params = tmerge( params, opt_params )
+   params = tmerge_r( params, opt_params )
 
    -- Outfits
    local outfits = proteron_outfits

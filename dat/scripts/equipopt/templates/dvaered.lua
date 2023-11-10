@@ -114,7 +114,7 @@ local function equip_dvaered( p, opt_params )
    if sp then
       params = tmerge_r( params, sp() )
    end
-   params = tmerge( params, opt_params )
+   params = tmerge_r( params, opt_params )
 
    -- Outfits
    local outfits = dvaered_outfits
