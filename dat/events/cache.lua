@@ -3,6 +3,7 @@
 <event name="Cache Cleaner">
  <location>load</location>
  <chance>100</chance>
+ <priority>-1</priority>
 </event>
 --]]
 --[[
