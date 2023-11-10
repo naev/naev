@@ -46,7 +46,7 @@ function create ()
    pp:setDir( math.pi*0.5 )
    pp:setPos( vec2.new(0,-500) )
    pp:intrinsicSet( { -- Ship is too fast otherwise
-      accel_mod     = -50,
+      accel_mod      = -50,
       speed_mod      = -50,
       turn_mod       = -50,
    }, true ) -- overwrite all

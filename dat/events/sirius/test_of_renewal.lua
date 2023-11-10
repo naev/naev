@@ -31,7 +31,7 @@ function create ()
    pp:setDir( math.pi*0.5 )
    pp:setPos( vec2.new(0,-200) )
    pp:intrinsicSet( { -- Ship is too fast otherwise
-      accel_mod     = -30,
+      accel_mod      = -30,
       speed_mod      = -30,
       turn_mod       = -30,
    }, true ) -- overwrite all
@@ -101,7 +101,7 @@ function puzzle01_addship ()
    e:setVisible(true)
    e:setNoDisable(true)
    e:intrinsicSet( { -- Ship is too fast otherwise
-      accel_mod     = -30,
+      accel_mod      = -30,
       speed_mod      = -30,
       turn_mod       = -30,
       fwd_damage     = -30, -- Don't instagib player
