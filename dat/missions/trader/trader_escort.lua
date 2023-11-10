@@ -44,8 +44,18 @@ piracyrisk[3] = _("#nPiracy Risk:#0 Medium")
 piracyrisk[4] = _("#nPiracy Risk:#0 High")
 
 function create()
+   -- Try to cache the route to make it so that the same route doesn't appear over and over
+   local c = naev.cache()
+   local t = time.get()
+   if not c.misn_escorts then
+      c.misn_escorts = {}
+   end
+   if c.misn_escorts._t ~= t then
+      c.misn_escorts = { _t=t } -- Regenerate
+   end
+
    -- This mission does not make any system claims
-   mem.destspob, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute( rnd.rnd(1,2) )
+   mem.destspob, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute( rnd.rnd(1,2), {remove_spob=c.misn_escorts} )
 
    if mem.destspob == nil then
       misn.finish(false)
@@ -57,6 +67,7 @@ function create()
    elseif not misn.claim( lmisn.getRoute( system.cur(), mem.destsys ), true ) then
       misn.finish(false)
    end
+   c.misn_escorts[ mem.destspob:nameRaw() ] = true -- Mark system
 
    if mem.avgrisk == 0 then
       piracyrisk = piracyrisk[1]
