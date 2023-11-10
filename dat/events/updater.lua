@@ -183,7 +183,7 @@ local function updater090 ()
    if not var.peek("disc_proteron") then
       local pro = faction.get("Proteron")
       pro:setKnown(false)
-      pro:setPlayerStanding(-50) -- Hostile by default
+      pro:setPlayerStanding( pro:playerStandingDefault() ) -- Hostile by default
    end
    local fflf = faction.get("FLF")
    fflf:setKnown(false)
