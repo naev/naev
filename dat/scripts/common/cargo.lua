@@ -30,11 +30,23 @@ local function difference(a, b)
    return r
 end
 
+local _guards = {
+   faction.get("Empire"),
+   faction.get("Dvaered"),
+   faction.get("Soromid"),
+   faction.get("Sirius"),
+   faction.get("Za'lek"),
+   faction.get("Frontier"),
+}
+
 --[[--
    Plan out a mission and return the parameters.
    @tparam[opt] function missdist Length in jumps, chosen at random from a short distance by default.
-   @tparam[opt=false] always_available If true, always generate; otherwise, only generate if commodities are available.
-   @tparam[opt=false] use_hidden If true, allow hidden jumps to be part of the route.
+   @tparam params List of parameters. Current available ones are:
+      - always_available: If true, always generate; otherwise, only generate if commodities are available.
+      - use_hidden: If true, allow hidden jumps to be part of the route.
+      - remove_spob: Table of spobs to remove from potential candidates. Key should be spob:nameRaw(), and value should be true to remove.
+      - remove_sys: Table of systems to remove from potential candidates. Key should be sys:nameRaw(), and value should be true to remove.
 --]]
 function car.calculateRoute( missdist, params )
    params = params or {}
@@ -60,7 +72,7 @@ function car.calculateRoute( missdist, params )
    local planets = lmisn.getSpobAtDistance( origin_s, missdist, missdist, "Independent", false, function ( p )
          if p~=origin_p
             and not (p:system()==origin_s and (vec2.dist( p:pos(), routepos) < 2500))
-            and p:canLand() and car.validDest( p ) then
+            and p:canLand() and car.validDest( origin_p, p ) then
                return true
          end
          return false
@@ -68,6 +80,32 @@ function car.calculateRoute( missdist, params )
       nil, use_hidden or false )
    if #planets == 0 then
       return
+   end
+   -- Purge invalid candidates spobs
+   if params.remove_spob then
+      local newplanets = {}
+      for k,p in ipairs(planets) do
+         if not params.remove_spob[p:nameRaw()] then
+            newplanets[ #newplanets+1 ] = p
+         end
+      end
+      if #newplanets == 0 then
+         return
+      end
+      planets = newplanets
+   end
+   -- Purge invalid candidates systems
+   if params.remove_sys then
+      local newplanets = {}
+      for k,p in ipairs(planets) do
+         if not params.remove_sys[p:system():nameRaw()] then
+            newplanets[ #newplanets+1 ] = p
+         end
+      end
+      if #newplanets == 0 then
+         return
+      end
+      planets = newplanets
    end
 
    local index     = rnd.rnd(1, #planets)
@@ -81,14 +119,6 @@ function car.calculateRoute( missdist, params )
    local traveldist = car.calculateDistance(routesys, routepos, destsys, destplanet, use_hidden)
 
    -- Guarding factions
-   local _guards = {
-      faction.get("Empire"),
-      faction.get("Dvaered"),
-      faction.get("Soromid"),
-      faction.get("Sirius"),
-      faction.get("Za'lek"),
-      faction.get("Frontier"),
-   }
    local function guard_presence( sys )
       local p = sys:presences()
       local total = 0
@@ -158,13 +188,15 @@ local _hidden_fact = {
    faction.get("Proteron"),
    faction.get("Thurion"),
 }
-
-function car.validDest( targetplanet )
-   local sfct = spob.cur():faction()
+--[[--
+   Checks to see if a targetplanet is a valid destination from the current one
+--]]
+function car.validDest( curplanet, targetplanet )
+   local cfct = curplanet:faction()
    local tfct = targetplanet:faction()
    -- Factions which cannot be delivered to by factions other than themselves
    for i, f in ipairs(_hidden_fact) do
-      if tfct==f and sfct~=f then
+      if tfct==f and cfct~=f then
          return false
       end
    end
