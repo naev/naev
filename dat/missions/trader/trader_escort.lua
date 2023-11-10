@@ -44,8 +44,8 @@ piracyrisk[3] = _("#nPiracy Risk:#0 Medium")
 piracyrisk[4] = _("#nPiracy Risk:#0 High")
 
 function create()
-   --This mission does not make any system claims
-   mem.destspob, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute( 1 )
+   -- This mission does not make any system claims
+   mem.destspob, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute( rnd.rnd(1,2) )
 
    if mem.destspob == nil then
       misn.finish(false)
@@ -53,6 +53,9 @@ function create()
       misn.finish(false) -- have to escort them at least one jump!
    elseif mem.avgrisk * mem.numjumps <= 25 then
       misn.finish(false) -- needs to be a little bit of piracy possible along route
+   -- Have to be able to do an inclusive claim
+   elseif not misn.claim( lmisn.getRoute( system.cur(), mem.destsys ), true ) then
+      misn.finish(false)
    end
 
    if mem.avgrisk == 0 then
@@ -199,15 +202,15 @@ function spawn_ambush ()
       {"Pirate Kestrel", "Pirate Admonisher", "Pirate Rhino", "Pirate Shark", "Pirate Shark", "Pirate Hyena", "Pirate Hyena", "Pirate Hyena"},
    }
    if mem.convoysize == 1 then
-      ambush = fleet.add( 1, ambushes[1], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      ambush = fleet.add( 1, ambushes[1], "Marauder", ambush_src, nil, {ai="baddie_norun"} )
    elseif mem.convoysize == 2 then
-      ambush = fleet.add( 1, ambushes[rnd.rnd(1,2)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      ambush = fleet.add( 1, ambushes[rnd.rnd(1,2)], "Marauder", ambush_src, nil, {ai="baddie_norun"} )
    elseif mem.convoysize == 3 then
-      ambush = fleet.add( 1, ambushes[rnd.rnd(2,3)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      ambush = fleet.add( 1, ambushes[rnd.rnd(2,3)], "Marauder", ambush_src, nil, {ai="baddie_norun"} )
    elseif mem.convoysize == 4 then
-      ambush = fleet.add( 1, ambushes[rnd.rnd(2,4)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      ambush = fleet.add( 1, ambushes[rnd.rnd(2,4)], "Marauder", ambush_src, nil, {ai="baddie_norun"} )
    else
-      ambush = fleet.add( 1, ambushes[rnd.rnd(3,5)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      ambush = fleet.add( 1, ambushes[rnd.rnd(3,5)], "Marauder", ambush_src, nil, {ai="baddie_norun"} )
    end
    for _,p in ipairs(ambush) do
       p:setHostile(true)

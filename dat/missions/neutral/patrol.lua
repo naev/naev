@@ -118,6 +118,7 @@ function create ()
    end
 
    mem.missys = systems[ rnd.rnd( 1, #systems ) ]
+   -- Have to be able to do an inclusive claim
    if not misn.claim( mem.missys, true ) then misn.finish( false ) end
 
    local planets = mem.missys:spobs()
