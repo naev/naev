@@ -1217,9 +1217,8 @@ static int outfit_loadPLG( Outfit *temp, const char *buf )
 {
    char *file;
    OutfitGFX *gfx;
-   CollPoly *polygon;
    xmlDocPtr doc;
-   xmlNodePtr node, cur;
+   xmlNodePtr node;
 
    if (outfit_isLauncher(temp))
       gfx = &temp->u.lau.gfx;
@@ -1261,11 +1260,11 @@ that can be found in Naev's artwork repo."), file);
 
    do { /* load the polygon data */
       if (xml_isNode(node,"polygons")) {
-         cur = node->children;
+         xmlNodePtr cur = node->children;
          gfx->polygon = array_create_size( CollPoly, 36 );
          do {
             if (xml_isNode(cur,"polygon")) {
-               polygon = &array_grow( &gfx->polygon );
+               CollPoly *polygon = &array_grow( &gfx->polygon );
                LoadPolygon( polygon, cur );
             }
          } while (xml_nextNode(cur));
