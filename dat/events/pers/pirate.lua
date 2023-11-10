@@ -5,13 +5,13 @@ return function ()
    local pers = {}
 
    local scur = system.cur()
-   local pres = pir.systemPresence( scur )
-   if pres <= 0 then
+   local pirpres = pir.systemPresence( scur )
+   if pirpres <= 0 then
       return nil -- Need at least some presence
    end
 
    -- Larger ships can be there
-   if pres > 50 then
+   if pirpres > 50 then
       for k,v in ipairs{
          { -- Anchovy Brothers
             spawn = function ()
@@ -82,6 +82,52 @@ return function ()
             end,
             w = 0.5,
          },
+      } do
+         table.insert( pers, v )
+      end
+   end
+
+   local pres = scur:presences()
+
+   local wildones = pres["Wild Ones"] or 0
+   if wildones > 50 then
+      for k,v in ipairs{
+         {
+            spawn = function ()
+               local p = pilot.add("Pirate Revenant", "Wild Ones", nil, _("The Beast"), {naked=true, ai="pers_pirate"})
+               equipopt.pirate( p, { bioship_stage=6,
+                  bioship_skills={
+                     "bite1", "bite2", "bite3",
+                     "attack1", "attack2", "attack3",
+                  } } )
+               local m = p:memory()
+               m.comm_greet = _([[You hear a weird sort of growling over the communication channel.]])
+               m.taunt = _("Grrrrrrrawwwwwrrrr!")
+               m.bribe_no = _([[You hear more weird growling sounds over the communication channel. It doesn't look like they are interested in discussion.]])
+               return p
+            end,
+         }
+      } do
+         table.insert( pers, v )
+      end
+   end
+
+   local ravenclan = pres["Raven Clan"] or 0
+   if ravenclan > 150 then
+      for k,v in ipairs{
+         {
+            spawn = function ()
+               local p = pilot.add("Pirate Zebra", "Raven Clan", nil, _("Raven's Talon"), {naked=true, ai="pers_pirate"})
+               equipopt.pirate( p, {fighterbay=5, beam=5} )
+               p:intrinsicSet( "fbay_reload", 100 )
+               p:intrinsicSet( "fbay_rate", 50 )
+               p:intrinsicSet( "fbay_movement", 25 )
+               local m = p:memory()
+               m.comm_greet = _([["When I get sick of hauling cargo for the Raven Clan, nothing helps me unwind like some good old fashion piracy."]])
+               m.taunt = _("Fighters, engage!")
+               return p
+            end,
+         }
       } do
          table.insert( pers, v )
       end
