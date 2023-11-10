@@ -1724,11 +1724,11 @@ void equipment_updateShips( unsigned int wid, const char* str )
    PlayerShip_t *ps, *prevship;
    char *nt;
    int onboard, cargo, jumps, favourite, deployed, x, h, spaceworthy;
-   int ww, wh, sw, sh, hacquired, hname;
+   int ww, wh, sw, sh, bw, bh, hacquired, hname;
    int wgtw, wgth;
    size_t l = 0;
 
-   equipment_getDim( wid, &ww, &wh, &sw, &sh, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL );
+   equipment_getDim( wid, &ww, &wh, &sw, &sh, NULL, NULL, NULL, NULL, NULL, NULL, &bw, &bh );
 
    /* Clear defaults. */
    eq_wgt.slot          = -1;
@@ -1772,6 +1772,10 @@ void equipment_updateShips( unsigned int wid, const char* str )
 
    /* Helper strings. */
    num2str( scargo, pilot_cargoUsed(ship), 0 );
+
+   /* Destroy intrinsic widget if applicable. */
+   if (widget_exists( wid, "iarIntrinsic" ))
+      window_destroyWidget( wid, "iarIntrinsic" );
 
    l += scnprintf( &buf[l], sizeof(buf)-l, "%s", _("Name:") );
    for (int i=0; i<hname-1; i++)
@@ -1898,11 +1902,28 @@ void equipment_updateShips( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
       l += scnprintf( &buf[l], sizeof(buf)-l, _("%s %s"), num2strU(ps->dmg_taken_shield+ps->dmg_taken_armour,0), UNIT_ENERGY );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", num2strU(destroyed,0) );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
-      for (int i=0; i<array_size(ps->p->outfit_intrinsic); i++)
-         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(ps->p->outfit_intrinsic[i].outfit->name) );
    }
    window_modifyText( wid, "txtDDesc", buf );
+
+   /* Add intrinsic outfit image array. */
+   if (ship_mode!=0) {
+      int tx, ty, tw, th;
+      ImageArrayCell *cells;
+      int ncells = array_size(ship->outfit_intrinsic);
+      Outfit const **outfits = (Outfit const**) array_create( Outfit* );
+      for (int i=0; i<ncells; i++)
+         array_push_back( &outfits, ship->outfit_intrinsic[i].outfit );
+
+      cells = outfits_imageArrayCells( outfits, &ncells, ship );
+
+      window_posWidget( wid, "txtSDesc", &tx, &ty );
+      window_dimWidget( wid, "txtSDesc", &tw, &th );
+      ty = -40-window_getTextHeight( wid, "txtSDesc" )-10;
+      window_addImageArray( wid, tx, ty, ww-x-128-30-10, ty-20+wh-bh-30, "iarIntrinsic",
+         64, 64, cells, ncells, NULL, NULL, NULL );
+
+      array_free(outfits);
+   }
 
    /* Clean up. */
    free( nt );
