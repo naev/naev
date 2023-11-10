@@ -48,7 +48,7 @@ function create ()
    -- Inclusive claiming, multiple missions can be done at the same time!
    if not misn.claim( returnsys, true ) then misn.finish( false ) end
 
-   mem.destpnt, mem.destsys, mem.numjumps, mem.traveldist = car.calculateRoute( rnd.rnd(3,5)+mem.tier, true )
+   mem.destpnt, mem.destsys, mem.numjumps, mem.traveldist = car.calculateRoute( rnd.rnd(3,5)+mem.tier, {always_available=true} )
    if not mem.destpnt then
       misn.finish(false)
       return

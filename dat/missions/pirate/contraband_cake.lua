@@ -40,7 +40,7 @@ function create()
    mem.origin_p, mem.origin_s = spob.cur()
 
    -- target destination. Override "always_available" to true.
-   mem.destplanet, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute( rnd.rnd(5, 10), true )
+   mem.destplanet, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute( rnd.rnd(5, 10), {always_available=true} )
    if mem.destplanet == nil or pir.factionIsPirate( mem.destplanet:faction() ) then
       misn.finish(false)
    end

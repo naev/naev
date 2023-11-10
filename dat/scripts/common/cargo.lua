@@ -66,10 +66,13 @@ end
    @tparam[opt=false] always_available If true, always generate; otherwise, only generate if commodities are available.
    @tparam[opt=false] use_hidden If true, allow hidden jumps to be part of the route.
 --]]
-function car.calculateRoute( missdist, always_available, use_hidden )
+function car.calculateRoute( missdist, params )
+   params = params or {}
    local origin_p, origin_s = spob.cur()
    local routesys = origin_s
    local routepos = origin_p:pos()
+   local always_available = params.always_available
+   local use_hidden = params.use_hidden
 
    -- Select mission tier.
    local tier = rnd.rnd(0, 4)
