@@ -160,21 +160,11 @@ local _hidden_fact = {
 }
 
 function car.validDest( targetplanet )
-   -- factions which cannot be delivered to by factions other than themselves
-   local tfact = targetplanet:faction()
+   local sfct = spob.cur():faction()
+   local tfct = targetplanet:faction()
+   -- Factions which cannot be delivered to by factions other than themselves
    for i, f in ipairs(_hidden_fact) do
-      if tfact == f and spob.cur():faction() ~= f then
-         return false
-      end
-   end
-
-   -- Factions which cannot deliver to factions other than themselves
-   local insular = {
-      faction.get("Proteron"),
-      faction.get("Thurion"),
-   }
-   for i, f in ipairs(insular) do
-      if spob.cur():faction() == f and targetplanet:faction() ~= f then
+      if tfct==f and sfct~=f then
          return false
       end
    end
