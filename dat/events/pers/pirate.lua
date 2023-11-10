@@ -138,7 +138,7 @@ return function ()
       for k,v in ipairs{
          {
             spawn = function ()
-               local p = pilot.add("Pirate Starbridge", "Raven Clan", nil, _("Shroomancer"), {naked=true, ai="pers_pirate"})
+               local p = pilot.add("Pirate Starbridge", "Dreamer Clan", nil, _("Shroomancer"), {naked=true, ai="pers_pirate"})
                equipopt.sirius( p, {
                   prefer={
                      ["Large Flow Amplifier"] = 100,
