@@ -49,7 +49,6 @@ abandon_text    = {
    _("You are sent a message informing you that landing in the middle of a patrol mission is considered to be abandonment. As such, your contract is void and you will not receive payment."),
 }
 
-
 -- Messages
 msg = {
    _("Point secure."),
@@ -69,7 +68,6 @@ mem.osd_msg = {
 
 mem.use_hidden_jumps = false
 
-
 -- Get the number of enemies in a particular system
 local function get_enemies( sys )
    local enemies = 0
@@ -82,7 +80,6 @@ local function get_enemies( sys )
    return enemies
 end
 
-
 function create ()
    mem.paying_faction = spob.cur():faction()
 
@@ -94,6 +91,27 @@ function create ()
    if get_enemies( system.cur() ) then
       systems[ #systems + 1 ] = system.cur()
    end
+
+   if #systems <= 0 then
+      misn.finish( false )
+   end
+
+   -- Try to cache the route to make it so that the same route doesn't appear over and over
+   local c = naev.cache()
+   local t = time.get()
+   if not c.misn_patrols then
+      c.misn_patrols = {}
+   end
+   if c.misn_patrols._t ~= t then
+      c.misn_patrols = { _t=t } -- Regenerate
+   end
+   local newsystems = {}
+   for k,s in ipairs(systems) do
+      if not c.misn_patrols[s:nameRaw()]  then
+         newsystems[#newsystems+1] = s
+      end
+   end
+   systems = newsystems
 
    if #systems <= 0 then
       misn.finish( false )
@@ -157,8 +175,10 @@ function create ()
    misn.setDesc(desc)
    misn.setReward( mem.credits )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
-end
 
+   -- Mark the system as having a patrol mission
+   c.misn_patrols[mem.missys:nameRaw()] = true
+end
 
 function accept ()
    misn.accept()
@@ -179,13 +199,11 @@ function accept ()
    hook.land( "land" )
 end
 
-
 function enter ()
    if system.cur() == mem.missys and not mem.job_done then
       timer()
    end
 end
-
 
 function jumpout ()
    if mem.mark ~= nil then
@@ -203,7 +221,6 @@ function jumpout ()
       end
    end
 end
-
 
 function land ()
    if mem.mark ~= nil then
@@ -237,7 +254,6 @@ function land ()
    end
 end
 
-
 function pilot_leave ( pilot )
    local new_hostiles = {}
    for i, j in ipairs( mem.hostiles ) do
@@ -248,7 +264,6 @@ function pilot_leave ( pilot )
 
    mem.hostiles = new_hostiles
 end
-
 
 function timer ()
    hook.rm( mem.timer_hook )
