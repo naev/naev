@@ -1,6 +1,6 @@
 [wrap-git]
 url = https://github.com/adah1972/libunibreak.git
-revision = libunibreak_5_0
+revision = libunibreak_5_1
 depth = 1
 
 patch_directory = libunibreak
