@@ -485,8 +485,8 @@ The ride is fairly smooth, surprising you with how effortlessly Maikki seems to 
 "I'm going to get a full briefing and diagnostic on both Zuri and Kex. Since this will take a while, meet up with me at the bar and I'll fill you out with the important details."]]))
    vn.run()
 
-   minerva.log.maikki(fmt.f(_("You managed to rescue the wounded Zuri and unconscious Kex from {spb} and bring her safely to her colleague in {safespb} who turned out to be none other than Maikki, who turned out to be a Wild Ones clan Pirate Lord. You synced up with Maikki on the current situation and she took you to {recoupspob} in the {recoupsys} to plan on how to save both Zuri and Kex.")),
-      {spb=trialspb, safespb=destsys, recoupspob=recoupspob, recoupsys=recoupsys})
+   minerva.log.maikki(fmt.f(_("You managed to rescue the wounded Zuri and unconscious Kex from {spb} and bring her safely to her colleague in {safespb} who turned out to be none other than Maikki, who turned out to be a Wild Ones clan Pirate Lord. You synced up with Maikki on the current situation and she took you to {recoupspob} in the {recoupsys} to plan on how to save both Zuri and Kex."),
+      {spb=trialspb, safespb=destsys, recoupspob=recoupspob, recoupsys=recoupsys}))
 
    misn.finish(true)
 end
