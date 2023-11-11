@@ -1,4 +1,3 @@
-local pixelcode_sdf = love.filesystem.read( "frag.glsl" )
 local lg = love.graphics
 
 local vertexcode = [[
@@ -139,8 +138,7 @@ end
 
 local bg
 local function bg_generator( params )
-   local params = params or {}
-   local b = lg.newCanvas()
+   params = params or {}
    local c = lg.newCanvas()
    local w, h = c:getDimensions()
 
@@ -181,19 +179,34 @@ local function bg_generator( params )
    end
 
    -- Do some lights
-   lg.setCanvas( b )
    for i=1,nlights do
       lg.setColor( calpha( collight, lightbrightness+lightrandomness*rnd.rnd() ) )
       local r = (0.1+0.15*rnd.rnd())*(w+h)*0.5
       light( rnd.rnd()*w-r*0.5, (0.1+0.5*rnd.rnd())*h-r*0.5, r )
    end
-   lg.setBlendMode("alpha", "premultiplied")
-   lg.setCanvas( c )
-   lg.draw( b )
-   lg.setCanvas()
-   lg.setBlendMode("alpha")
 
+   lg.setCanvas()
    return c
+end
+
+local function bg_inert ()
+   return bg_generator{
+      colbg    = { 0.5, 0.5, 0.5, 1 },
+      colfeat  = { 0.1, 0.1, 0.1, 1 },
+      collight = { 0.9, 0.9, 0.9, 1 },
+      featrnd  = { 0.1, 0.1, 0.1 },
+      nlights = rnd.rnd(6,7),
+   }
+end
+
+local function bg_desert ()
+   return bg_generator{
+      colbg    = { 0.9, 0.8, 0.1, 1 },
+      colfeat  = { 0.6, 0.5, 0.2, 1 },
+      collight = { 1.0, 1.0, 0.9, 1 },
+      featrnd  = { 0.2, 0.2, 0.1 },
+      nlights  = rnd.rnd(4,6),
+   }
 end
 
 local function bg_lava ()
@@ -289,6 +302,10 @@ function love.keypressed(key)
       bgfunc = bg_tundra
    elseif key=="6" then
       bgfunc = bg_lava
+   elseif key=="7" then
+      bgfunc = bg_desert
+   elseif key=="8" then
+      bgfunc = bg_inert
    elseif key=="r" then
    else
       return

@@ -1,6 +1,8 @@
 local vn = require 'vn'
 local fmt = require "format"
 local ccomm = require "common.comm"
+local lg = require "love.graphics"
+local li = require "love.image"
 
 local luaspob = {}
 
@@ -19,11 +21,45 @@ function luaspob.setup( init_params )
    can_land = luaspob.can_land
    comm     = luaspob.comm
    population = luaspob.population
+   barbg    = luaspob.bg_generic
 end
 
+local bg_mapping = {
+   ["0"] = luaspob.bg_station,
+   ["1"] = luaspob.bg_station,
+   ["2"] = luaspob.bg_station,
+   ["3"] = luaspob.bg_station,
+   ["4"] = luaspob.bg_station,
+   ["A"] = luaspob.bg_lava,
+   ["B"] = luaspob.bg_inert,
+   ["C"] = luaspob.bg_inert,
+   ["D"] = luaspob.bg_inert,
+   ["E"] = luaspob.bg_generic,
+   ["F"] = luaspob.bg_generic,
+   ["G"] = luaspob.bg_generic,
+   ["H"] = luaspob.bg_desert,
+   ["I"] = luaspob.bg_generic,
+   ["J"] = luaspob.bg_generic,
+   ["K"] = luaspob.bg_generic,
+   ["L"] = luaspob.bg_generic,
+   ["M"] = luaspob.bg_mclass,
+   ["N"] = luaspob.bg_generic,
+   ["O"] = luaspob.bg_tundra,
+   ["P"] = luaspob.bg_tundra,
+   ["Q"] = luaspob.bg_generic,
+   ["R"] = luaspob.bg_generic,
+   ["S"] = luaspob.bg_generic,
+   ["T"] = luaspob.bg_generic,
+   ["X"] = luaspob.bg_generic,
+   ["Y"] = luaspob.bg_generic,
+}
 function luaspob.init( spb )
    mem.spob = spb
    mem.std_land = mem.params.std_land or 0 -- Needed for can_land
+   barbg = bg_mapping[ spb:class() ]
+   if not barbg then
+      barbg = luaspob.bg_generic
+   end
 end
 
 local function msg_bribed_def ()
@@ -330,6 +366,210 @@ end
 
 function luaspob.population ()
    return fmt.f(_("roughly {amt}"),{amt=fmt.humanize( mem.spob:population() )})
+end
+
+local idata = li.newImageData( 1, 1 )
+idata:setPixel( 0, 0, 0.5, 0.5, 0.5, 1 )
+local img = lg.newImage( idata )
+local pixellight = [[
+vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
+{
+   vec2 p = uv*2.0-1.0;
+   float d = length(p)-1.0;
+   colour.a *= smoothstep( 0.0, 0.5, -d );
+   return colour;
+}
+]]
+local lightshader
+local function light( x, y, r )
+   if not lightshader then
+      lightshader = lg.newShader( pixellight )
+   end
+
+   lg.setShader(lightshader)
+   lg.draw( img, x, y, 0, r, r )
+   lg.setShader()
+end
+
+local pixelrectlight = [[
+#include "lib/sdf.glsl"
+vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
+{
+   vec2 p = uv*2.0-1.0;
+   float d = sdBox( p, vec2(0.5) )-0.5;
+   colour.a *= smoothstep( 0.0, 0.5, -d );
+   return colour;
+}
+]]
+local rectlightshader
+local function rectlight( x, y, w, h, r )
+   if not rectlightshader then
+      rectlightshader = lg.newShader( pixelrectlight )
+   end
+
+   lg.setShader(rectlightshader)
+   lg.draw( img, x, y, r, w, h )
+   lg.setShader()
+end
+
+local pixelgrad = [[
+uniform vec4 u_col;
+uniform vec2 u_vec;
+vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
+{
+   vec2 p = uv*2.0-1.0;
+   return mix( colour, u_col, smoothstep(-1.0, 1.0, dot(p,u_vec)) );
+}
+]]
+local gradshader
+local function gradient( x, y, r, g, b, a )
+   if not gradshader then
+      gradshader = lg.newShader( pixelgrad )
+   end
+
+   local w, h = lg.getDimensions()
+   gradshader:send( "u_col", {r,g,b,a})
+   gradshader:send( "u_vec", {x,y} )
+   lg.setShader(gradshader)
+   lg.draw( img, 0, 0, 0, w, h )
+   lg.setShader()
+end
+
+local function calpha( c, a )
+   return {c[1], c[2], c[3], a}
+end
+
+local function bg_generator( params )
+   params = params or {}
+   local cvs = lg.newCanvas( 400, 300 )
+   local w, h = cvs:getDimensions()
+
+   local colbg    = params.colbg    or {0.5, 0.4, 0.3, 1}
+   local colfeat  = params.colfeat  or {0.5, 0.3, 0.1, 1}
+   local collight = params.collight or {1.0, 0.95, 0.95, 1}
+   local featrnd  = params.featrnd  or {0.2, 0.2, 0.2}
+   local featalpha = params.featalpha or 0.2
+   local featrandonmess = params.featrandonmess or 0.1
+   local featscale = params.featscale or 1
+   local nfeats   = 20
+   local nlights  = params.nlights  or 7
+   local lightbrightness = params.lightbrightness or 0.4
+   local lightrandomness = params.lightrandomness or 0.3
+
+   -- Do some background
+   lg.setCanvas( cvs )
+   lg.setColor( colbg )
+   gradient( -0.1+0.2*rnd.rnd(), 0.5+0.2*rnd.rnd(), 0, 0, 0, 1 );
+   for i=1,nfeats do
+      local c = calpha( colfeat, featalpha+featrandonmess*rnd.rnd() )
+      c[1] = c[1] + rnd.rnd()*featrnd[1]
+      c[2] = c[2] + rnd.rnd()*featrnd[2]
+      c[3] = c[3] + rnd.rnd()*featrnd[3]
+      lg.setColor( c )
+      if rnd.rnd() < 0.6 then
+         local r = rnd.rnd()*(w+h)*0.4 * featscale
+         light( rnd.rnd()*w-r*0.5, rnd.rnd()*h-r*0.5+0.3*h, r )
+      else
+         local bw = (0.2+0.4*rnd.rnd())*w * featscale
+         local bh = (0.1+0.3*rnd.rnd())*h * featscale
+         rectlight( rnd.rnd()*w-bw*0.5, rnd.rnd()*h-bh*0.5+0.3*h, bw, bh, (rnd.rnd()*2.0-1.0)*math.rad(15) )
+      end
+   end
+
+   -- Do some lights
+   for i=1,nlights do
+      lg.setColor( calpha( collight, lightbrightness+lightrandomness*rnd.rnd() ) )
+      local r = (0.1+0.15*rnd.rnd())*(w+h)*0.5
+      light( rnd.rnd()*w-r*0.5, (0.1+0.5*rnd.rnd())*h-r*0.5, r )
+   end
+
+   lg.setCanvas()
+   return cvs.t.tex
+end
+
+function luaspob.bg_inert ()
+   return bg_generator{
+      colbg    = { 0.5, 0.5, 0.5, 1 },
+      colfeat  = { 0.1, 0.1, 0.1, 1 },
+      collight = { 0.9, 0.9, 0.9, 1 },
+      featrnd  = { 0.1, 0.1, 0.1 },
+      nlights = rnd.rnd(6,7),
+   }
+end
+
+function luaspob.bg_desert ()
+   return bg_generator{
+      colbg    = { 0.9, 0.8, 0.1, 1 },
+      colfeat  = { 0.6, 0.5, 0.2, 1 },
+      collight = { 1.0, 1.0, 0.9, 1 },
+      featrnd  = { 0.2, 0.2, 0.1 },
+      nlights  = rnd.rnd(4,6),
+   }
+end
+
+function luaspob.bg_lava ()
+   return bg_generator{
+      colbg    = { 0.9, 0.5, 0.5, 1 },
+      colfeat  = { 0.6, 0.2, 0.2, 1 },
+      collight = { 1.0, 0.9, 0.9, 1 },
+      featrnd  = { 0.4, 0.2, 0.1 },
+      featalpha = 0.4,
+      featrandonmess = 0.2,
+      nlights  = rnd.rnd(6,8),
+   }
+end
+
+function luaspob.bg_tundra ()
+   return bg_generator{
+      colbg    = { 0.6, 0.9, 0.9, 1 },
+      colfeat  = { 0.4, 0.8, 0.8, 1 },
+      collight = { 1.0, 1.0, 1.0, 1 },
+      featrnd  = { 0.2, 0.3, 0.3 },
+      featscale = 1.5,
+      nlights  = rnd.rnd(6,8),
+   }
+end
+
+function luaspob.bg_underwater ()
+   return bg_generator{
+      colbg    = { 0.3, 0.3, 0.8, 1 },
+      colfeat  = { 0.2, 0.2, 0.8, 1 },
+      collight = { 0.9, 0.9, 1.0, 1 },
+      featrnd  = { 0.8, 0.8, 0.8 },
+      nlights  = rnd.rnd(7,9),
+   }
+end
+
+function luaspob.bg_mclass ()
+   return bg_generator{
+      colbg    = { 0.2, 0.6, 0.2, 1 },
+      colfeat  = { 0.2, 0.8, 0.2, 1 },
+      collight = { 0.95, 1.0, 0.95, 1 },
+      featrnd  = { 0.6, 0.4, 0.6 },
+      nlights  = rnd.rnd(3,5),
+      featalpha = 0.1,
+   }
+end
+
+function luaspob.bg_station ()
+   return bg_generator{
+      colbg    = { 0.4, 0.4, 0.4, 1 },
+      colfeat  = { 0.1, 0.1, 0.1, 1 },
+      collight = { 0.9, 0.9, 0.9, 1 },
+      featrnd  = { 0.2, 0.2, 0.2 },
+      featalpha = 0.4,
+      featrandonmess = 0.2,
+      featscale = 0.8,
+      nfeats = 50,
+      nlights = rnd.rnd(10,15),
+      lightbrightness = 0.5,
+   }
+end
+
+function luaspob.bg_generic ()
+   return bg_generator{
+      nlights = rnd.rnd(6,8)
+   }
 end
 
 return luaspob

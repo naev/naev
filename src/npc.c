@@ -526,12 +526,16 @@ glTexture *npc_getBackground( int i )
    if (npc->background == NULL) {
       if (land_spob->lua_barbg != LUA_NOREF) {
          spob_luaInitMem( land_spob );
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, land_spob->lua_barbg); /* f */
          if (nlua_pcall( land_spob->lua_env, 0, 1 )) {
-            WARN(_("Spob '%s' failed to run '%s':\n%s"), land_spob->name, "population", lua_tostring(naevL,-1));
+            WARN(_("Spob '%s' failed to run '%s':\n%s"), land_spob->name, "barbg", lua_tostring(naevL,-1));
             lua_pop(naevL,1);
          }
 
-         npc->background = gl_dupTexture( luaL_checktex(naevL,-1) );
+         if (lua_istex(naevL,-1))
+            npc->background = gl_dupTexture( lua_totex(naevL,-1) );
+         else
+            WARN(_("Spob '%s''s '%s' did not return a texture!"), land_spob->name, "barbg");
          lua_pop(naevL,1);
       }
       if (npc->background == NULL)
