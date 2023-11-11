@@ -376,7 +376,7 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
 {
    vec2 p = uv*2.0-1.0;
    float d = length(p)-1.0;
-   colour.a *= smoothstep( 0.0, 0.5, -d );
+   colour.a *= smoothstep( 0.0, 0.7, -d );
    return colour;
 }
 ]]
@@ -397,7 +397,7 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
 {
    vec2 p = uv*2.0-1.0;
    float d = sdBox( p, vec2(0.5) )-0.5;
-   colour.a *= smoothstep( 0.0, 0.5, -d );
+   colour.a *= smoothstep( 0.0, 0.7, -d );
    return colour;
 }
 ]]
@@ -444,9 +444,9 @@ local function bg_generator( params )
    local cvs = lg.newCanvas( 400, 300 )
    local w, h = cvs:getDimensions()
 
-   local colbg    = params.colbg    or {0.5, 0.4, 0.3, 1}
-   local colfeat  = params.colfeat  or {0.5, 0.3, 0.1, 1}
-   local collight = params.collight or {1.0, 0.95, 0.95, 1}
+   local colbg    = params.colbg    or {0.2, 0.15, 0.1, 1}
+   local colfeat  = params.colfeat  or {0.4, 0.15, 0.1, 1}
+   local collight = params.collight or {1.0, 0.9, 0.5, 1}
    local featrnd  = params.featrnd  or {0.2, 0.2, 0.2}
    local featalpha = params.featalpha or 0.2
    local featrandonmess = params.featrandonmess or 0.1
@@ -499,7 +499,7 @@ end
 
 function luaspob.bg_desert ()
    return bg_generator{
-      colbg    = { 0.9, 0.8, 0.1, 1 },
+      colbg    = { 0.5, 0.4, 0.1, 1 },
       colfeat  = { 0.6, 0.5, 0.2, 1 },
       collight = { 1.0, 1.0, 0.9, 1 },
       featrnd  = { 0.2, 0.2, 0.1 },
@@ -509,7 +509,7 @@ end
 
 function luaspob.bg_lava ()
    return bg_generator{
-      colbg    = { 0.9, 0.5, 0.5, 1 },
+      colbg    = { 0.7, 0.4, 0.4, 1 },
       colfeat  = { 0.6, 0.2, 0.2, 1 },
       collight = { 1.0, 0.9, 0.9, 1 },
       featrnd  = { 0.4, 0.2, 0.1 },
