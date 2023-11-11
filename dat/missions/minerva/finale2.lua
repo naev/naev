@@ -67,8 +67,8 @@ function accept ()
       vn.na(_([[You join Maikki at her table. Although she has changed into her civilian clothes, her composure and facial expression is quite unlike when you first met her.]]))
       maikki(_([["I've talked with the pirate head surgeon, and there's both good news and bad news."]]))
       vn.menu{
-         {[["Good news?"]], "01_good"},
-         {[["Bad news?"]], "01_bad"},
+         {_([["Good news?"]]), "01_good"},
+         {_([["Bad news?"]]), "01_bad"},
       }
 
       -- Just change the order she says stuff in

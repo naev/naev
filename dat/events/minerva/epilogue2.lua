@@ -46,7 +46,7 @@ She seems a tad tipsy.]]),
    }
 
    vn.label("01_great")
-   kex(_([["Glad to hear that!"]]))
+   kex(p_("kex", [["Glad to hear that!"]]))
    vn.jump("01_cont")
 
    vn.label("01_bad")

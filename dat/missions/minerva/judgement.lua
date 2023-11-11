@@ -357,7 +357,8 @@ Maikki gives an impeccable formal bow.]]))
    maikki(_([["Was or was not Minerva Station infiltrated by House Dvaered, who went so far to plant a mole employee in the gambling operations?"]]))
    vn.na(_([[You state the facts you remember, avoiding mentioning the fact you helped kidnap them and so forth.]]))
    maikki(_([["Your honour, this establishes that House Dvaered was actively attempting to undermine Minerva Station even though it is under independence rule!"]]))
-   maikki(_([["Furthermore, {playername}, is it true or not that House Za'lek established listening post in order to capture communications near Minerva Station and thus violate the sovereignty of the independent space?"]]))
+   maikki(fmt.f(_([["Furthermore, {playername}, is it true or not that House Za'lek established listening post in order to capture communications near Minerva Station and thus violate the sovereignty of the independent space?"]]),
+         {playername=player.name()}))
    vn.na(_([[You once again state the facts, avoiding mentioning you were the one who blew it all up.]]))
    maikki(_([["See, Your Honour, not only can we put in doubt House Dvaered's ill intentions, House Za'lek was also undermining the independent of Minerva Station!"]]))
    maikki(_([["House Dvaered and House Za'lek can not be trusted, and the only way to ensure the local prosperity is to ensure the independence of Minerva Station."
@@ -602,13 +603,13 @@ Eventually when all argumentation is exhausted the different representatives rep
    vn.na(_([[You can see the judge and House representatives shift around uncomfortably.]]))
    kex(_([["Well, it all ends here!"]]))
    vn.func( function () kex.shader = love_shaders.aura() end )
-   vn.sfx( "snd/sounds/activate3.ogg" ) -- activation sound
+   vn.sfx( love_audio.newSource( "snd/sounds/activate3.ogg" ) ) -- activation sound
    kex(_([[Kex's eyes glow red and you hear the activation sound of some sort of weapon.]]))
    vn.func( function () kex.shader = nil end )
    vn.disappear( kex, "slideup" )
-   vn.sfx( "snd/sounds/crowdpanic01.ogg" ) -- some yelling
+   vn.sfx( love_audio.newSource( "snd/sounds/crowdpanic01.ogg" ) ) -- some yelling
    vn.na(_([[As people start scrambling and yelling, you hear a shot and Kex falls down as chaos unfolds.]]))
-   vn.sfx( "snd/sounds/autocannon.ogg" ) -- autocannon
+   vn.sfx( love_audio.newSource( "snd/sounds/autocannon.ogg" ) ) -- autocannon
    vn.na(_([[You hear shots being fired left and right as you duck for cover. The Judge's levitating desk crashes in the background creating a small explosion as things take a turn for the worst.]]))
    vn.menu{
       {_([[Go for the door.]]),"06_getout"},
