@@ -21,44 +21,16 @@ function luaspob.setup( init_params )
    can_land = luaspob.can_land
    comm     = luaspob.comm
    population = luaspob.population
-   barbg    = luaspob.bg_generic
+   barbg    = luaspob.barbg
 end
 
-local bg_mapping = {
-   ["0"] = luaspob.bg_station,
-   ["1"] = luaspob.bg_station,
-   ["2"] = luaspob.bg_station,
-   ["3"] = luaspob.bg_station,
-   ["4"] = luaspob.bg_station,
-   ["A"] = luaspob.bg_lava,
-   ["B"] = luaspob.bg_inert,
-   ["C"] = luaspob.bg_inert,
-   ["D"] = luaspob.bg_inert,
-   ["E"] = luaspob.bg_generic,
-   ["F"] = luaspob.bg_generic,
-   ["G"] = luaspob.bg_generic,
-   ["H"] = luaspob.bg_desert,
-   ["I"] = luaspob.bg_generic,
-   ["J"] = luaspob.bg_generic,
-   ["K"] = luaspob.bg_generic,
-   ["L"] = luaspob.bg_generic,
-   ["M"] = luaspob.bg_mclass,
-   ["N"] = luaspob.bg_generic,
-   ["O"] = luaspob.bg_tundra,
-   ["P"] = luaspob.bg_tundra,
-   ["Q"] = luaspob.bg_generic,
-   ["R"] = luaspob.bg_generic,
-   ["S"] = luaspob.bg_generic,
-   ["T"] = luaspob.bg_generic,
-   ["X"] = luaspob.bg_generic,
-   ["Y"] = luaspob.bg_generic,
-}
+local bg_mapping -- defined below
 function luaspob.init( spb )
    mem.spob = spb
    mem.std_land = mem.params.std_land or 0 -- Needed for can_land
-   barbg = bg_mapping[ spb:class() ]
-   if not barbg then
-      barbg = luaspob.bg_generic
+   mem.barbg = bg_mapping[ spb:class() ]
+   if not mem.barbg then
+      mem.barbg = luaspob.bg_generic
    end
 end
 
@@ -553,10 +525,10 @@ end
 
 function luaspob.bg_station ()
    return bg_generator{
-      colbg    = { 0.4, 0.4, 0.4, 1 },
-      colfeat  = { 0.1, 0.1, 0.1, 1 },
+      colbg    = { 0.2, 0.2, 0.2, 1 },
+      colfeat  = { 0.0, 0.0, 0.0, 1 },
       collight = { 0.9, 0.9, 0.9, 1 },
-      featrnd  = { 0.2, 0.2, 0.2 },
+      featrnd  = { 0.3, 0.3, 0.3},
       featalpha = 0.4,
       featrandonmess = 0.2,
       featscale = 0.8,
@@ -570,6 +542,40 @@ function luaspob.bg_generic ()
    return bg_generator{
       nlights = rnd.rnd(6,8)
    }
+end
+
+bg_mapping = {
+   ["0"] = luaspob.bg_station,
+   ["1"] = luaspob.bg_station,
+   ["2"] = luaspob.bg_station,
+   ["3"] = luaspob.bg_station,
+   ["4"] = luaspob.bg_station,
+   ["A"] = luaspob.bg_lava,
+   ["B"] = luaspob.bg_inert,
+   ["C"] = luaspob.bg_inert,
+   ["D"] = luaspob.bg_inert,
+   ["E"] = luaspob.bg_generic,
+   ["F"] = luaspob.bg_generic,
+   ["G"] = luaspob.bg_generic,
+   ["H"] = luaspob.bg_desert,
+   ["I"] = luaspob.bg_generic,
+   ["J"] = luaspob.bg_generic,
+   ["K"] = luaspob.bg_generic,
+   ["L"] = luaspob.bg_generic,
+   ["M"] = luaspob.bg_mclass,
+   ["N"] = luaspob.bg_generic,
+   ["O"] = luaspob.bg_tundra,
+   ["P"] = luaspob.bg_tundra,
+   ["Q"] = luaspob.bg_generic,
+   ["R"] = luaspob.bg_generic,
+   ["S"] = luaspob.bg_generic,
+   ["T"] = luaspob.bg_generic,
+   ["X"] = luaspob.bg_generic,
+   ["Y"] = luaspob.bg_generic,
+}
+
+function luaspob.barbg ()
+   return mem.barbg()
 end
 
 return luaspob
