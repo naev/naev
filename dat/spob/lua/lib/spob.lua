@@ -11,9 +11,17 @@ local f_sirius = faction.get("Sirius")
 local f_soromid = faction.get("Soromid")
 local f_proteron = faction.get("Proteron")
 
-function luaspob.init( spb, init_params )
+function luaspob.setup( init_params )
+   mem.params = init_params or {} -- Store parameters
+   init     = luaspob.init
+   load     = luaspob.load
+   unload   = luaspob.unload
+   can_land = luaspob.can_land
+   comm     = luaspob.comm
+end
+
+function luaspob.init( spb )
    mem.spob = spb
-   mem.params = init_params or {}
    mem.std_land = mem.params.std_land or 0 -- Needed for can_land
 end
 

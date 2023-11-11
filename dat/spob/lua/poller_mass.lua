@@ -6,7 +6,6 @@ local love_shaders = require "love_shaders"
 
 local pixelcode = lf.read( "spob/lua/glsl/goo.frag" )
 
-
 local function update_canvas ()
    local oldcanvas = lg.getCanvas()
    lg.setCanvas( mem.cvs )
@@ -26,7 +25,6 @@ function init( spb )
 end
 
 function load( )
-
    -- We need an image for the shader to work.
    local idata = li.newImageData( 1, 1 )
    idata:setPixel( 0, 0, 1, 1, 1, 1 )
