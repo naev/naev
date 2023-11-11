@@ -61,6 +61,7 @@ static int spobL_getLandAllow( lua_State *L );
 static int spobL_getLandDeny( lua_State *L );
 static int spobL_gfxSpace( lua_State *L );
 static int spobL_gfxExterior( lua_State *L );
+static int spobL_gfxExteriorPath( lua_State *L );
 static int spobL_gfxComm( lua_State *L );
 static int spobL_shipsSold( lua_State *L );
 static int spobL_outfitsSold( lua_State *L );
@@ -98,6 +99,7 @@ static const luaL_Reg spob_methods[] = {
    { "getLandDeny", spobL_getLandDeny },
    { "gfxSpace", spobL_gfxSpace },
    { "gfxExterior", spobL_gfxExterior },
+   { "gfxExteriorPath", spobL_gfxExteriorPath },
    { "gfxComm", spobL_gfxComm },
    { "shipsSold", spobL_shipsSold },
    { "outfitsSold", spobL_outfitsSold },
@@ -853,13 +855,27 @@ static int spobL_gfxSpace( lua_State *L )
  */
 static int spobL_gfxExterior( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
 
    /* If no exterior image just return nothing instead of crashing. */
    if (p->gfx_exterior==NULL)
       return 0;
 
    lua_pushtex( L, gl_newImage( p->gfx_exterior, 0 ) );
+   return 1;
+}
+
+/**
+ * @brief Gets the path of the spob in exterior.
+ *
+ *    @luatparam Spob p Spob Spob to get texture of.
+ *    @luatreturn string The path to the exterior texture.
+ * @luafunc gfxExteriorPath
+ */
+static int spobL_gfxExteriorPath( lua_State *L )
+{
+   const Spob *p = luaL_validspob(L,1);
+   lua_pushstring( L, p->gfx_exteriorPath );
    return 1;
 }
 
