@@ -138,14 +138,23 @@ local function gradient( x, y, r, g, b, a )
 end
 
 local bg
-local function generate_bg ()
+local function bg_generator( params )
+   local params = params or {}
    local b = lg.newCanvas()
    local c = lg.newCanvas()
    local w, h = c:getDimensions()
 
-   local colbg    = { 0.3, 0.3, 0.8, 1 }
-   local colfeat  = { 0.2, 0.2, 0.8, 1 }
-   local collight = { 0.9, 0.9, 1.0, 1 }
+   local colbg    = params.colbg    or {0.5, 0.4, 0.3, 1}
+   local colfeat  = params.colfeat  or {0.5, 0.3, 0.1, 1}
+   local collight = params.collight or {1.0, 0.95, 0.95, 1}
+   local featrnd  = params.featrnd  or {0.2, 0.2, 0.2}
+   local featalpha = params.featalpha or 0.2
+   local featrandonmess = params.featrandonmess or 0.1
+   local featscale = params.featscale or 1
+   local nfeats   = 20
+   local nlights  = params.nlights  or 7
+   local lightbrightness = params.lightbrightness or 0.4
+   local lightrandomness = params.lightrandomness or 0.3
 
    local function calpha( c, a )
       return {c[1], c[2], c[3], a}
@@ -155,26 +164,26 @@ local function generate_bg ()
    lg.setCanvas( c )
    lg.setColor( colbg )
    gradient( -0.1+0.2*rnd.rnd(), 0.5+0.2*rnd.rnd(), 0, 0, 0, 1 );
-   for i=1,20 do
-      local c = calpha(colfeat, 0.3)
-      c[1] = c[1] + rnd.rnd()*0.8
-      c[2] = c[2] + rnd.rnd()*0.8
-      c[3] = c[3] + rnd.rnd()*0.8
+   for i=1,nfeats do
+      local c = calpha( colfeat, featalpha+featrandonmess*rnd.rnd() )
+      c[1] = c[1] + rnd.rnd()*featrnd[1]
+      c[2] = c[2] + rnd.rnd()*featrnd[2]
+      c[3] = c[3] + rnd.rnd()*featrnd[3]
       lg.setColor( c )
       if rnd.rnd() < 0.6 then
-         local r = rnd.rnd()*(w+h)*0.5
+         local r = rnd.rnd()*(w+h)*0.4 * featscale
          light( rnd.rnd()*w-r*0.5, rnd.rnd()*h-r*0.5+0.3*h, r )
       else
-         local bw = (0.2+0.6*rnd.rnd())*w
-         local bh = (0.1+0.3*rnd.rnd())*h
+         local bw = (0.2+0.4*rnd.rnd())*w * featscale
+         local bh = (0.1+0.3*rnd.rnd())*h * featscale
          rectlight( rnd.rnd()*w-bw*0.5, rnd.rnd()*h-bh*0.5+0.3*h, bw, bh, (rnd.rnd()*2.0-1.0)*math.rad(15) )
       end
    end
 
    -- Do some lights
    lg.setCanvas( b )
-   for i=1,7 do
-      lg.setColor( calpha( collight, 0.5+0.4*rnd.rnd() ) )
+   for i=1,nlights do
+      lg.setColor( calpha( collight, lightbrightness+lightrandomness*rnd.rnd() ) )
       local r = (0.1+0.15*rnd.rnd())*(w+h)*0.5
       light( rnd.rnd()*w-r*0.5, (0.1+0.5*rnd.rnd())*h-r*0.5, r )
    end
@@ -187,6 +196,72 @@ local function generate_bg ()
    return c
 end
 
+local function bg_lava ()
+   return bg_generator{
+      colbg    = { 0.9, 0.5, 0.5, 1 },
+      colfeat  = { 0.6, 0.2, 0.2, 1 },
+      collight = { 1.0, 0.9, 0.9, 1 },
+      featrnd  = { 0.4, 0.2, 0.1 },
+      featalpha = 0.4,
+      featrandonmess = 0.2,
+      nlights  = rnd.rnd(6,8),
+   }
+end
+
+local function bg_tundra ()
+   return bg_generator{
+      colbg    = { 0.6, 0.9, 0.9, 1 },
+      colfeat  = { 0.4, 0.8, 0.8, 1 },
+      collight = { 1.0, 1.0, 1.0, 1 },
+      featrnd  = { 0.2, 0.3, 0.3 },
+      featscale = 1.5,
+      nlights  = rnd.rnd(6,8),
+   }
+end
+
+local function bg_underwater ()
+   return bg_generator{
+      colbg    = { 0.3, 0.3, 0.8, 1 },
+      colfeat  = { 0.2, 0.2, 0.8, 1 },
+      collight = { 0.9, 0.9, 1.0, 1 },
+      featrnd  = { 0.8, 0.8, 0.8 },
+      nlights  = rnd.rnd(7,9),
+   }
+end
+
+local function bg_mclass ()
+   return bg_generator{
+      colbg    = { 0.2, 0.6, 0.2, 1 },
+      colfeat  = { 0.2, 0.8, 0.2, 1 },
+      collight = { 0.95, 1.0, 0.95, 1 },
+      featrnd  = { 0.6, 0.4, 0.6 },
+      nlights  = rnd.rnd(3,5),
+      featalpha = 0.1,
+   }
+end
+
+local function bg_station ()
+   return bg_generator{
+      colbg    = { 0.4, 0.4, 0.4, 1 },
+      colfeat  = { 0.1, 0.1, 0.1, 1 },
+      collight = { 0.9, 0.9, 0.9, 1 },
+      featrnd  = { 0.2, 0.2, 0.2 },
+      featalpha = 0.4,
+      featrandonmess = 0.2,
+      featscale = 0.8,
+      nfeats = 50,
+      nlights = rnd.rnd(10,15),
+      lightbrightness = 0.5,
+   }
+end
+
+local function bg_generic ()
+   return bg_generator{
+      nlights = rnd.rnd(6,8)
+   }
+end
+
+local bgfunc = bg_generic
 function love.load()
    local ww, wh = 800, 600
    love.window.setTitle( "Naev Bar BG Demo" )
@@ -196,15 +271,30 @@ function love.load()
    idata:setPixel( 0, 0, 0.5, 0.5, 0.5, 1 )
    img      = love.graphics.newImage( idata )
 
-   bg = generate_bg()
+   bg = bgfunc()
 end
 
 function love.keypressed(key)
    if key=="q" or key=="escape" then
       love.event.quit()
+   elseif key=="1" then
+      bgfunc = bg_generic
+   elseif key=="2" then
+      bgfunc = bg_station
+   elseif key=="3" then
+      bgfunc = bg_mclass
+   elseif key=="4" then
+      bgfunc = bg_underwater
+   elseif key=="5" then
+      bgfunc = bg_tundra
+   elseif key=="6" then
+      bgfunc = bg_lava
    elseif key=="r" then
-      bg = generate_bg()
+   else
+      return
    end
+
+   bg = bgfunc()
 end
 
 function love.draw ()
