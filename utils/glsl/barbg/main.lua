@@ -7,56 +7,10 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
    return transform_projection * vertex_position;
 }
 ]]
-local pixelblur = [[
-#pragma language glsl3
-
-const float M_SQRT2     = 1.41421356237309504880;  /* sqrt(2) */
-
-vec4 blur( sampler2D image, vec2 uv, vec2 resolution, float strength ) {
-   vec4 color = texture(image, uv) * 0.2941176470588234;
-   vec2 off1 = vec2(1.3333333333333333,0.0) * strength;
-   /* Horizontal. */
-   vec2 off1xy = off1.xy / resolution;
-   color += texture(image, uv + off1xy) * 0.35294117647058826 * 0.25;
-   color += texture(image, uv - off1xy) * 0.35294117647058826 * 0.25;
-   /* Vertical. */
-   vec2 off1yx = off1.yx / resolution;
-   color += texture(image, uv + off1yx) * 0.35294117647058826 * 0.25;
-   color += texture(image, uv - off1yx) * 0.35294117647058826 * 0.25;
-   /* BL-TR Diagonal. */
-   vec2 off1d1 = off1.xx * M_SQRT2 / resolution;
-   color += texture(image, uv + off1d1) * 0.35294117647058826 * 0.25;
-   color += texture(image, uv - off1d1) * 0.35294117647058826 * 0.25;
-   /* TL-BR Diagonal. */
-   vec2 off1d2 = vec2(off1d1.x, -off1d1.y);
-   color += texture(image, uv + off1d2) * 0.35294117647058826 * 0.25;
-   color += texture(image, uv - off1d2) * 0.35294117647058826 * 0.25;
-   return color;
-}
-
-uniform float u_strength;
-
-vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
-{
-   return blur( tex, uv, love_ScreenSize.xy, u_strength );
-}
-]]
 
 local rnd = {
    rnd = love.math.random,
 }
-
-local blurshader
-local function blur( img, strength )
-   if not blurshader then
-      blurshader = lg.newShader( pixelblur, vertexcode )
-   end
-   blurshader:send( "u_strength", strength )
-
-   lg.setShader(blurshader)
-   lg.draw( img )
-   lg.setShader()
-end
 
 local img
 local pixellight = [[
@@ -139,8 +93,8 @@ end
 local bg
 local function bg_generator( params )
    params = params or {}
-   local c = lg.newCanvas()
-   local w, h = c:getDimensions()
+   local cvs = lg.newCanvas()
+   local w, h = cvs:getDimensions()
 
    local colbg    = params.colbg    or {0.3, 0.2, 0.1, 1}
    local colfeat  = params.colfeat  or {0.5, 0.3, 0.1, 1}
@@ -159,7 +113,7 @@ local function bg_generator( params )
    end
 
    -- Do some background
-   lg.setCanvas( c )
+   lg.setCanvas( cvs )
    lg.setColor( colbg )
    gradient( -0.1+0.2*rnd.rnd(), 0.5+0.2*rnd.rnd(), 0, 0, 0, 1 );
    for i=1,nfeats do
@@ -186,7 +140,7 @@ local function bg_generator( params )
    end
 
    lg.setCanvas()
-   return c
+   return cvs
 end
 
 local function bg_inert ()
@@ -306,8 +260,7 @@ function love.keypressed(key)
       bgfunc = bg_desert
    elseif key=="8" then
       bgfunc = bg_inert
-   elseif key=="r" then
-   else
+   elseif key~="r" then
       return
    end
 
