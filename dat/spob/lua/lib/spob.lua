@@ -29,6 +29,10 @@ function luaspob.init( spb )
    mem.spob = spb
    mem.std_land = mem.params.std_land or 0 -- Needed for can_land
    mem.barbg = bg_mapping[ spb:class() ]
+   local gfxext = spb:gfxExteriorPath()
+   if gfxext and string.find( spb:gfxExteriorPath(), "aquatic" ) then
+      mem.barbg = luaspob.bg_underwater
+   end
    if not mem.barbg then
       mem.barbg = luaspob.bg_generic
    end
@@ -461,7 +465,7 @@ end
 
 function luaspob.bg_inert ()
    return bg_generator{
-      colbg    = { 0.5, 0.5, 0.5, 1 },
+      colbg    = { 0.3, 0.3, 0.3, 1 },
       colfeat  = { 0.1, 0.1, 0.1, 1 },
       collight = { 0.9, 0.9, 0.9, 1 },
       featrnd  = { 0.1, 0.1, 0.1 },
@@ -493,8 +497,8 @@ end
 
 function luaspob.bg_tundra ()
    return bg_generator{
-      colbg    = { 0.6, 0.9, 0.9, 1 },
-      colfeat  = { 0.4, 0.8, 0.8, 1 },
+      colbg    = { 0.4, 0.7, 0.7, 1 },
+      colfeat  = { 0.2, 0.6, 0.6, 1 },
       collight = { 1.0, 1.0, 1.0, 1 },
       featrnd  = { 0.2, 0.3, 0.3 },
       featscale = 1.5,
@@ -514,8 +518,8 @@ end
 
 function luaspob.bg_mclass ()
    return bg_generator{
-      colbg    = { 0.2, 0.6, 0.2, 1 },
-      colfeat  = { 0.2, 0.8, 0.2, 1 },
+      colbg    = { 0.1, 0.3, 0.1, 1 },
+      colfeat  = { 0.2, 0.5, 0.2, 1 },
       collight = { 0.95, 1.0, 0.95, 1 },
       featrnd  = { 0.6, 0.4, 0.6 },
       nlights  = rnd.rnd(3,5),
