@@ -146,6 +146,7 @@ typedef struct Spob_ {
    int lua_update;   /**< Run when updating. */
    int lua_comm;     /**< Run when player communicates with the spob. */
    int lua_population; /**< Run when getting a string representing the population of the spob. */
+   int lua_barbg;    /**< Run to generate bar backgrounds as necessary. */
 } Spob;
 
 /*

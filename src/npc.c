@@ -20,6 +20,7 @@
 #include "land.h"
 #include "log.h"
 #include "nlua_evt.h"
+#include "nlua_tex.h"
 #include "nstring.h"
 #include "opengl.h"
 #include "ndata.h"
@@ -514,14 +515,30 @@ const char *npc_getName( int i )
  */
 glTexture *npc_getBackground( int i )
 {
+   NPC_t *npc;
+
    /* Make sure in bounds. */
    if (i<0 || npc_array == NULL || i>=array_size(npc_array))
       return NULL;
+   npc = &npc_array[i];
 
    /* TODO choose the background based on the spob or something. */
-   if (npc_array[i].background == NULL)
-      npc_array[i].background = gl_newImage( GFX_PATH"portraits/background.png", 0 );
-   return npc_array[i].background;
+   if (npc->background == NULL) {
+      if (land_spob->lua_barbg != LUA_NOREF) {
+         spob_luaInitMem( land_spob );
+         if (nlua_pcall( land_spob->lua_env, 0, 1 )) {
+            WARN(_("Spob '%s' failed to run '%s':\n%s"), land_spob->name, "population", lua_tostring(naevL,-1));
+            lua_pop(naevL,1);
+         }
+
+         npc->background = gl_dupTexture( luaL_checktex(naevL,-1) );
+         lua_pop(naevL,1);
+      }
+      if (npc->background == NULL)
+         npc->background = gl_newImage( GFX_PATH"portraits/background.png", 0 );
+   }
+
+   return npc->background;
 }
 
 /**

@@ -152,6 +152,7 @@ stds.API_spob = {globals={
    "update",   -- C function: space_updateSpob
    "comm",     -- C function: comm_openSpob
    "population", -- C function: space_populationStr
+   "barbg",    -- C function: npc_getBackground
 }}
 stds.API_effects = {globals={
    "add",      -- C function: effect_add

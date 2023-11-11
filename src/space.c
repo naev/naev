@@ -1740,6 +1740,7 @@ Spob *spob_new (void)
    p->lua_update  = LUA_NOREF;
    p->lua_comm    = LUA_NOREF;
    p->lua_population = LUA_NOREF;
+   p->lua_barbg   = LUA_NOREF;
 
    /* Reconstruct the jumps. */
    if (!systems_loading && realloced)
@@ -2019,6 +2020,7 @@ int spob_luaInit( Spob *spob )
    UNREF( spob->lua_update );
    UNREF( spob->lua_comm );
    UNREF( spob->lua_population );
+   UNREF( spob->lua_barbg );
    UNREF( spob->lua_mem );
 #undef UNREF
 
@@ -2034,15 +2036,16 @@ int spob_luaInit( Spob *spob )
    spob->lua_env = env;
 
    /* Grab functions as applicable. */
-   spob->lua_init     = nlua_refenvtype( env, "init",     LUA_TFUNCTION );
-   spob->lua_load     = nlua_refenvtype( env, "load",     LUA_TFUNCTION );
-   spob->lua_unload   = nlua_refenvtype( env, "unload",   LUA_TFUNCTION );
-   spob->lua_can_land = nlua_refenvtype( env, "can_land", LUA_TFUNCTION );
-   spob->lua_land     = nlua_refenvtype( env, "land",     LUA_TFUNCTION );
-   spob->lua_render   = nlua_refenvtype( env, "render",   LUA_TFUNCTION );
-   spob->lua_update   = nlua_refenvtype( env, "update",   LUA_TFUNCTION );
-   spob->lua_comm     = nlua_refenvtype( env, "comm",     LUA_TFUNCTION );
-   spob->lua_population=nlua_refenvtype( env, "population",LUA_TFUNCTION );
+   spob->lua_init    = nlua_refenvtype( env, "init",     LUA_TFUNCTION );
+   spob->lua_load    = nlua_refenvtype( env, "load",     LUA_TFUNCTION );
+   spob->lua_unload  = nlua_refenvtype( env, "unload",   LUA_TFUNCTION );
+   spob->lua_can_land= nlua_refenvtype( env, "can_land", LUA_TFUNCTION );
+   spob->lua_land    = nlua_refenvtype( env, "land",     LUA_TFUNCTION );
+   spob->lua_render  = nlua_refenvtype( env, "render",   LUA_TFUNCTION );
+   spob->lua_update  = nlua_refenvtype( env, "update",   LUA_TFUNCTION );
+   spob->lua_comm    = nlua_refenvtype( env, "comm",     LUA_TFUNCTION );
+   spob->lua_population=nlua_refenvtype(env, "population",LUA_TFUNCTION );
+   spob->lua_barbg   = nlua_refenvtype( env, "barbg",    LUA_TFUNCTION );
 
    /* Set up local memory. */
    lua_newtable( naevL );        /* m */
@@ -2215,6 +2218,7 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
    spob->lua_update  = LUA_NOREF;
    spob->lua_comm    = LUA_NOREF;
    spob->lua_population = LUA_NOREF;
+   spob->lua_barbg   = LUA_NOREF;
 
    /* Get the name. */
    xmlr_attr_strd( parent, "name", spob->name );
