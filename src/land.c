@@ -874,17 +874,16 @@ void land_updateMainTab (void)
    tonnes2str( tons, player.p->cargo_free );
    credits2str( cred, player.p->credits, 2 );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (%s system)"), spob_name(land_spob), _(cur_system->name) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (%s-class)"), spob_getClassName(land_spob->class), _(land_spob->class) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s",
          land_spob->presence.faction >= 0 ? _(faction_name(land_spob->presence.faction)) : _("None") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("roughly %s"), space_populationStr( land_spob->population ) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", space_populationStr( land_spob ) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n\n%s", tons );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", cred );
    /* Show tags. */
    if (conf.devmode) {
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
       for (int i=0; i<array_size(land_spob->tags); i++)
          l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", ((i>0) ? ", " : ""), land_spob->tags[i] );
    }

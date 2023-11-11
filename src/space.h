@@ -145,6 +145,7 @@ typedef struct Spob_ {
    int lua_render;   /**< Run when rendering. */
    int lua_update;   /**< Run when updating. */
    int lua_comm;     /**< Run when player communicates with the spob. */
+   int lua_population; /**< Run when getting a string representing the population of the spob. */
 } Spob;
 
 /*
@@ -447,4 +448,4 @@ void system_setFaction( StarSystem *sys );
 void space_checkLand (void);
 void space_factionChange (void);
 void space_queueLand( Spob *pnt );
-const char *space_populationStr( uint64_t population );
+const char *space_populationStr( const Spob *spb );

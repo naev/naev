@@ -1739,6 +1739,7 @@ Spob *spob_new (void)
    p->lua_render  = LUA_NOREF;
    p->lua_update  = LUA_NOREF;
    p->lua_comm    = LUA_NOREF;
+   p->lua_population = LUA_NOREF;
 
    /* Reconstruct the jumps. */
    if (!systems_loading && realloced)
@@ -2017,6 +2018,7 @@ int spob_luaInit( Spob *spob )
    UNREF( spob->lua_render );
    UNREF( spob->lua_update );
    UNREF( spob->lua_comm );
+   UNREF( spob->lua_population );
    UNREF( spob->lua_mem );
 #undef UNREF
 
@@ -2040,6 +2042,7 @@ int spob_luaInit( Spob *spob )
    spob->lua_render   = nlua_refenvtype( env, "render",   LUA_TFUNCTION );
    spob->lua_update   = nlua_refenvtype( env, "update",   LUA_TFUNCTION );
    spob->lua_comm     = nlua_refenvtype( env, "comm",     LUA_TFUNCTION );
+   spob->lua_population=nlua_refenvtype( env, "population",LUA_TFUNCTION );
 
    /* Set up local memory. */
    lua_newtable( naevL );        /* m */
@@ -2211,6 +2214,7 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
    spob->lua_render  = LUA_NOREF;
    spob->lua_update  = LUA_NOREF;
    spob->lua_comm    = LUA_NOREF;
+   spob->lua_population = LUA_NOREF;
 
    /* Get the name. */
    xmlr_attr_strd( parent, "name", spob->name );
@@ -4408,26 +4412,40 @@ void space_queueLand( Spob *pnt )
 /**
  * @brief Gets the population in an approximated string. Note this function changes the string value each call, so be careful!
  *
- *    @param population Population to get string of.
+ *    @param spb Spob to get population string of.
  *    @return String corresponding to the population.
  */
-const char *space_populationStr( uint64_t population )
+const char *space_populationStr( const Spob *spb )
 {
    static char pop[STRMAX_SHORT];
-   double p = (double)population;
+   double p;
+
+   if (spb->lua_population != LUA_NOREF) {
+      spob_luaInitMem( spb );
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, spb->lua_population); /* f */
+      if (nlua_pcall( spb->lua_env, 0, 1 )) {
+         WARN(_("Spob '%s' failed to run '%s':\n%s"), spb->name, "population", lua_tostring(naevL,-1));
+         lua_pop(naevL,1);
+         return "";
+      }
+
+      scnprintf( pop, sizeof(pop), "%s", luaL_checkstring(naevL,-1) );
+      lua_pop(naevL,1);
+      return pop;
+   }
 
    /* Out of respect for the first version of this, do something fancy and human-oriented.
     * However, specifying a thousand/million/billion system failed in a few ways: needing 2x as many cases as
     * intended to avoid silliness (1.0e10 -> 10000 million), and not being gettext-translatable to other number
     * systems like the Japanese one. */
-
+   p = (double)spb->population;
    if (p < 1.0e3)
       snprintf( pop, sizeof(pop), "%.0f", p );
    else {
       char scratch[STRMAX_SHORT];
       const char *digits[] = {"\xe2\x81\xb0", "\xc2\xb9", "\xc2\xb2", "\xc2\xb3", "\xe2\x81\xb4", "\xe2\x81\xb5", "\xe2\x81\xb6", "\xe2\x81\xb7", "\xe2\x81\xb8", "\xe2\x81\xb9"};
       int state = 0,  COEF = 0, E = 1, EXP = 4;
-      size_t l = 0;
+      size_t l = scnprintf( pop, sizeof(pop), _("roughly ") );
       snprintf( scratch, sizeof(scratch), "%.1e", p );
       for (const char *c = scratch; *c; c++) {
          if (state == COEF && *c != 'e')

@@ -18,6 +18,7 @@ function luaspob.setup( init_params )
    unload   = luaspob.unload
    can_land = luaspob.can_land
    comm     = luaspob.comm
+   population = luaspob.population
 end
 
 function luaspob.init( spb )
@@ -325,6 +326,10 @@ function luaspob.comm ()
 
    mem.spob:canLand() -- forcess a refresh of condition
    return true
+end
+
+function luaspob.population ()
+   return fmt.f(_("roughly {amt}"),{amt=fmt.humanize( mem.spob:population() )})
 end
 
 return luaspob
