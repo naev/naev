@@ -12,6 +12,7 @@ local skestrel    = ship.get("Pirate Kestrel")
 
 local spir = {}
 local hostile_system = false
+local prefer_fleets = false
 
 spir.table_patrol = {
    { w=0.3, shyena },
@@ -60,7 +61,7 @@ end
 -- @brief Spawns a small patrol fleet.
 function spir.spawn_patrol ()
    return spir.spawn_table( {
-      __nofleet = (rnd.rnd() < 0.7),
+      __nofleet = not prefer_fleets and (rnd.rnd() < 0.7),
       __stealth = (hostile_system or (rnd.rnd() < 0.9)),
    }, spir.table_patrol )
 end
@@ -82,7 +83,7 @@ end
 -- @brief Spawns a medium sized squadron.
 function spir.spawn_squad ()
    return spir.spawn_table( {
-      __nofleet = (rnd.rnd() < 0.6),
+      __nofleet = not prefer_fleets and (rnd.rnd() < 0.6),
       __stealth = (hostile_system or (rnd.rnd() < 0.7)),
    }, spir.table_squad )
 end
@@ -90,7 +91,7 @@ end
 -- @brief Spawns a capship with escorts.
 function spir.spawn_capship ()
    return spir.spawn_table( {
-      __nofleet = (rnd.rnd() < 0.5),
+      __nofleet = not prefer_fleets and (rnd.rnd() < 0.5),
       __stealth = (hostile_system or (rnd.rnd() < 0.5)),
    }, spir.table_capship )
 end
@@ -98,6 +99,7 @@ end
 -- @brief Creation hook.
 function spir.create ( fpirate, max, params )
    params = params or {}
+   prefer_fleets = params.prefer_fleets
    local weights = {}
 
    -- Check to see if it's a hostile system
