@@ -271,7 +271,7 @@ function bioship.simulate( p, stage, setskills )
             return false
          end
       end
-      return true
+      return not s.enabled -- Don't allow repeating
    end
 
    -- Forcibly set these skills
