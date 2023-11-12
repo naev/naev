@@ -13,15 +13,22 @@
 --[[
 -- Flintley Event for the Baron mission string. Only used when NOT doing any Baron missions.
 --]]
-
 local fmt = require "format"
+local vn = require "vn"
+local portrait = require "portrait"
 
+local prt = "neutral/unique/flintley.webp"
 
 function create ()
-    evt.npcAdd("flintley", _("Flintley"), "neutral/unique/flintley.webp", _("Flintley is here. He nervously sips from his drink, clearly uncomfortable in this environment."), 5)
+   evt.npcAdd("flintley", _("Flintley"), prt, _("Flintley is here. He nervously sips from his drink, clearly uncomfortable in this environment."), 6)
 end
 
 function flintley()
-    tk.msg(_("Flintley"), fmt.f(_([[    Flintley greets you, relieved to see a friendly face. "Hello again, {player}. What brings you here today? As you can see, I'm here on business again. Nothing too interesting, I'm afraid, just everyday stuff."
-    You spend some time chatting with Flintley, then you get back to work.]]), {player=player.name()}))
+   vn.clear()
+   vn.scene()
+   local flnt = vn.newCharacter( _("Flintley"), { image=portrait.getFullPath(prt) } )
+   flnt(fmt.f(_([[Flintley greets you, relieved to see a friendly face. "Hello again, {player}. What brings you here today? As you can see, I'm here on business again. Nothing too interesting, I'm afraid, just everyday stuff."
+You spend some time chatting with Flintley, then you get back to work.]]),
+      {player=player.name()}))
+   vn.run()
 end
