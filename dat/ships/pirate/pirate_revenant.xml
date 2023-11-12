@@ -29,8 +29,7 @@
  <slots>
   <weapon size="medium" prop="bio_weapon" name="weap1" x="-6" y="18" h="0">Talon Organ I</weapon>
   <weapon size="medium" prop="bio_weapon" name="weap2" x="-6" y="-18" h="0">Talon Organ I</weapon>
-  <weapon size="small" x="0" y="8" h="1" />
-  <weapon size="small" x="0" y="-8" h="1" />
+  <weapon size="medium" x="0" y="-8" h="1" />
   <weapon size="small" x="-8" y="16" h="1" />
   <weapon size="small" x="-8" y="-16" h="1" />
   <utility size="medium" prop="bio_systems" name="brain">Mediocre Cerebrum I</utility>
@@ -40,8 +39,10 @@
   <utility size="medium" prop="accessory" />
   <utility size="medium" />
   <utility size="medium" />
+  <utility size="small" />
   <structure size="medium" prop="bio_engines" name="genedrive">Mediocris Gene Drive I</structure>
-  <structure size="medium" prop="bio_hull" name="shell">Mediocris Cortex I</structure>
+  <structure size="medium" prop="hull">Patchwork Medium Plating</structure>
+  <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />
  </slots>

@@ -664,14 +664,12 @@ intrinsics["Pirate Revenant"] = {
       name = _("Innate"),
       outfit = {
          "Mediocre Cerebrum I",
-         "Mediocris Cortex I",
          "Mediocris Gene Drive I",
          "Talon Organ I",
          "Talon Organ I",
       },
       slot = {
          "brain",
-         "shell",
          "genedrive",
          "weap1",
          "weap2",
@@ -680,11 +678,9 @@ intrinsics["Pirate Revenant"] = {
    {
       name = _("Growth I"),
       outfit = {
-         "Mediocris Cortex II",
          "Mediocris Gene Drive II",
       },
       slot = {
-         "shell",
          "genedrive",
       },
    },
