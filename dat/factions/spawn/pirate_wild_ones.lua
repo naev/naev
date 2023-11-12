@@ -10,6 +10,12 @@ local sstarbridge = ship.get("Pirate Starbridge")
 local skestrel    = ship.get("Pirate Kestrel")
 
 -- Overwrite some tables
+spir.table_loner_weak = {
+   { w=0.3, shyena },
+   { w=0.6, sshark },
+   { w=0.85, svendetta },
+   { sancestor },
+}
 spir.table_loner_strong = {
    { w=0.4, srevenant },
    { w=0.7, sadmonisher },
