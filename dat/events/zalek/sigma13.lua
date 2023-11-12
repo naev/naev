@@ -3,7 +3,8 @@
 <event name="Sigma-13 Zach">
  <location>land</location>
  <chance>100</chance>
- <cond>player.misnDone("Za'lek Black Hole 11") and spob.cur()==spob.get("Research Post Sigma-13")</cond>
+ <cond>player.misnDone("Za'lek Black Hole 11")</cond>
+ <spob>Research Post Sigma-13</spob>
  <notes>
   <campaign>Za'lek Black Hole</campaign>
  </notes>
@@ -15,7 +16,6 @@
 local vn = require "vn"
 local fmt = require "format"
 local zbh = require "common.zalek_blackhole"
-
 
 local sys1 = system.get("NGC-13674")
 local sys2 = system.get("Copernicus")
