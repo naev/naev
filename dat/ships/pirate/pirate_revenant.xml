@@ -16,7 +16,7 @@
  <trail_generator x="-19" y="0" h="-2" always_under="1">pirate_bio</trail_generator>
  <trail_generator x="-18" y="0" h="-4" always_under="1">pirate_bio</trail_generator>
  <fabricator>Skull and Bones</fabricator>
- <description>As Skull and Bones does not have the technology to grow new bioships from scratch they salvage stolen Soromid ships and abducted feral bioships.</description>
+ <description>As Skull and Bones does not have the technology to grow new bioships from scratch they salvage stolen Soromid ships. While the adaptation process can be seen as cruel from an anthropomorphic point of view, leading to some conflicts with anti-animal cruelty pirate organizations, advocates argue that the process does not cause pain nor significant stress to the ships. The modifications do not target internal organs, and focus on redoing the externals, and there are many stories of pirates that have developed strong bonds with their bioships.</description>
  <health>
   <armour>170</armour>
  </health>
