@@ -56,7 +56,10 @@ local pirate_params = {
       } end,
 }
 local pirate_cores = {
-   ["Pirate Kestrel"] = function (_p)
+   ["Pirate Revenant"] = function ()
+         return {choose_one{ "Nexus Medium Stealth Plating", "S&K Medium Combat Plating" }}
+      end,
+   ["Pirate Kestrel"] = function ()
          return { "Krain Remige Engine", "Unicorp PT-500 Core System", "Unicorp D-58 Heavy Plating" }
       end,
    ["Pirate Starbridge"] = function (p)
@@ -112,6 +115,10 @@ local function equip_pirate( p, opt_params )
    -- See cores
    local cores = opt_params.cores
    if not cores then
+      local pircor = pirate_cores[ sname ]
+      if pircor then
+         cores = pircor( p )
+      end
       if ps:tags().bioship then
          local stage = params.bioship_stage
          if not stage then
@@ -119,13 +126,8 @@ local function equip_pirate( p, opt_params )
             stage = math.max( 1, maxstage - prob.poisson_sample( 1 ) )
          end
          bioship.simulate( p, stage, params.bioship_skills )
-      else
-      local pircor = pirate_cores[ sname ]
-         if pircor then
-            cores = pircor( p )
-         else
-            cores = ecores.get( p, { all=pirate_class } )
-         end
+      elseif not cores then
+         cores = ecores.get( p, { all=pirate_class } )
       end
    end
 
