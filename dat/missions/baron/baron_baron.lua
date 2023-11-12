@@ -33,6 +33,7 @@ local _agent3img, agent3prt = vni.pirate()
 function create ()
    -- Can do inclusives as pilot.clear() is not called
    if not misn.claim({ sys1, sys2 }, true) then
+      warn(_("Unable to claim systems that should be claimed from event!"))
       abort()
    end
 
