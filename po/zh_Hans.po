@@ -63871,8 +63871,8 @@ msgstr ""
 #: dat/missions/minerva/judgement.lua:60
 msgid ""
 "\"OK, I've got some help, they'll meet up with us on {spb}. I have no idea "
-"to expect out of all of this, but it seems like a pretty good damn chance to "
-"clear up Minerva Station if we play our cards right.\""
+"what to expect out of all of this, but it seems like a pretty good damn "
+"chance to clear up Minerva Station if we play our cards right.\""
 msgstr ""
 
 #: dat/missions/minerva/judgement.lua:62
@@ -63989,7 +63989,7 @@ msgstr ""
 #: dat/missions/minerva/judgement.lua:162
 msgid ""
 "The Minerva CEO is near the front of the crowd, he seems to be quite pale "
-"and looking very well."
+"and not looking very well."
 msgstr ""
 
 #: dat/missions/minerva/judgement.lua:167
@@ -71480,7 +71480,7 @@ msgstr ""
 #. 3. both targets down
 #: dat/missions/minerva/pirate6.lua:49
 msgid ""
-"Zuri wants you do help a Za'lek General and Dvaered Warlord finish each "
+"Zuri wants you to help a Za'lek General and Dvaered Warlord finish each "
 "other off."
 msgstr ""
 
