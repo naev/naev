@@ -3,7 +3,8 @@
 <event name="Flintley">
  <location>land</location>
  <chance>100</chance>
- <cond>player.misnActive("Baron") == false and spob.cur() == spob.get("Tau Station") and player.misnDone("Prince")</cond>
+ <cond>player.misnActive("Baron")==false and player.misnDone("Prince")</cond>
+ <spob>Tau Station</spob>
  <notes>
   <done_misn name="Prince"/>
   <campaign>Baron Sauterfeldt</campaign>
