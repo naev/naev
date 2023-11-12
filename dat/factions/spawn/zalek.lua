@@ -12,93 +12,42 @@ local smammon     = ship.get("Za'lek Mammon")
 
 -- @brief Spawns a small patrol fleet.
 local function spawn_patrol( pilots )
-   pilots = pilots or { __doscans = true }
-   local r = rnd.rnd()
-
-   if r < 0.2 then
-      scom.addPilot( pilots, sdronelight )
-      scom.addPilot( pilots, sdronelight )
-   elseif r < 0.3 then
-      scom.addPilot( pilots, sdronebomber )
-      scom.addPilot( pilots, sdronebomber )
-   elseif r < 0.5 then
-      scom.addPilot( pilots, sdroneheavy )
-      scom.addPilot( pilots, sdronelight )
-   elseif r < 0.7 then
-      scom.addPilot( pilots, sdronebomber )
-      scom.addPilot( pilots, sdronelight )
-      scom.addPilot( pilots, sdronelight )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, sdroneheavy )
-      scom.addPilot( pilots, sdronelight )
-      scom.addPilot( pilots, sdronelight )
-   else
-      scom.addPilot( pilots, ssting )
-   end
-
-   return pilots
+   pilots = pilots or { __doscans=true }
+   return scom.doTable( pilots, {
+      { 0.2, sdronelight, sdronelight },
+      { 0.3, sdronebomber, sdronebomber },
+      { 0.5, sdroneheavy, sdronelight },
+      { 0.7, sdronebomber, sdronelight, sdronelight },
+      { 0.8, sdroneheavy, sdronelight, sdronelight },
+      { ssting },
+   } )
 end
 
 -- @brief Spawns a medium sized squadron.
 local function spawn_squad ()
-   local pilots = {}
-   if rnd.rnd() < 0.5 then
-      pilots.__doscans = true
-   end
-   local r = rnd.rnd()
-
-   if r < 0.5 then
-      scom.addPilot( pilots, ssting )
-      spawn_patrol( pilots )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, ssting )
-      scom.addPilot( pilots, sdroneheavy )
-      scom.addPilot( pilots, sdroneheavy )
-      spawn_patrol( pilots )
-   else
-      scom.addPilot( pilots, sdemon )
-      spawn_patrol( pilots )
-   end
-
-   return pilots
+   local pilots = scom.doTable( { __doscans=(rnd.rnd() < 0.5) }, {
+      { w=0.5, ssting },
+      { w=0.8, ssting, sdroneheavy, sdroneheavy },
+      { sdemon },
+   } )
+   return spawn_patrol( pilots ) -- MOAR DRONES
 end
 
 -- @brief Spawns a capship with escorts.
 local function spawn_capship ()
-   local pilots = {}
-   local r = rnd.rnd()
-
    -- Generate the capship
-   if r < 0.1 then
-      scom.addPilot( pilots, smammon )
-   elseif r < 0.55 then
-      scom.addPilot( pilots, smephisto )
-   else
-      scom.addPilot( pilots, sdiablo )
-   end
+   local pilots = scom.doTable( {}, {
+      { w=0.1, smammon },
+      { w=0.55, smephisto },
+      { sdiablo },
+   } )
 
    -- Generate the escorts
-   r = rnd.rnd()
-   if r < 0.5 then
-      scom.addPilot( pilots, sdroneheavy )
-      scom.addPilot( pilots, sdroneheavy )
-      scom.addPilot( pilots, sdronebomber )
-      scom.addPilot( pilots, sdronelight )
-      scom.addPilot( pilots, sdronelight )
-      scom.addPilot( pilots, sdronelight )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, ssting )
-      scom.addPilot( pilots, sdronebomber )
-      scom.addPilot( pilots, sdronebomber )
-   else
-      scom.addPilot( pilots, sdemon )
-      scom.addPilot( pilots, sdroneheavy )
-      scom.addPilot( pilots, sdronebomber )
-      scom.addPilot( pilots, sdronelight )
-      scom.addPilot( pilots, sdronelight )
-   end
-
-   return pilots
+   return scom.doTable( pilots, {
+      { w=0.5, sdroneheavy, sdroneheavy, sdronebomber, sdronelight, sdronelight, sdronelight },
+      { w=0.8, ssting, sdronebomber, sdronebomber },
+      { sdemon, sdroneheavy, sdronebomber, sdronelight, sdronelight },
+   } )
 end
 
 local fzalek = faction.get("Za'lek")
