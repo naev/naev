@@ -8,41 +8,19 @@ local sphalanx    = ship.get("Phalanx")
 
 -- @brief Spawns a small patrol fleet.
 local function spawn_patrol ()
-   local pilots = { __doscans = true }
-   local r = rnd.rnd()
-
-   if r < 0.5 then
-      scom.addPilot( pilots, slancelot )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, slancelot )
-      scom.addPilot( pilots, shyena )
-   else
-      scom.addPilot( pilots, sancestor )
-      scom.addPilot( pilots, shyena )
-   end
-
-   return pilots
+   return scom.doTable( { __doscans = true }, {
+      { w=0.5, slancelot },
+      { w=0.8, slancelot, shyena },
+      { sancestor, shyena },
+   } )
 end
 
 -- @brief Spawns a medium sized squadron.
 local function spawn_squad ()
-   local pilots = {}
-   if rnd.rnd() < 0.5 then
-      pilots.__doscans = true
-   end
-
-   local r = rnd.rnd()
-
-   if r < 0.5 then
-      scom.addPilot( pilots, sphalanx )
-      scom.addPilot( pilots, slancelot )
-   else
-      scom.addPilot( pilots, slancelot )
-      scom.addPilot( pilots, slancelot )
-      scom.addPilot( pilots, sancestor )
-   end
-
-   return pilots
+   return scom.doTable( { __doscans = (rnd.rnd() < 0.5) }, {
+      { w=0.5, sphalanx, slancelot },
+      { slancelot, slancelot, sancestor },
+   } )
 end
 
 local ffrontier = faction.get("Frontier")

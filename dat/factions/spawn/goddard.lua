@@ -6,27 +6,15 @@ local sgoddard    = ship.get("Goddard")
 -- @brief Spawns a capship with escorts.
 local function spawn_capship ()
    local pilots = {}
-
    -- Generate the capship
    scom.addPilot( pilots, sgoddard )
 
    -- Generate the escorts
-   local r = rnd.rnd()
-   if r < 0.5 then
-      scom.addPilot( pilots, slancelot )
-      scom.addPilot( pilots, slancelot )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, slancelot )
-      scom.addPilot( pilots, slancelot )
-      scom.addPilot( pilots, slancelot )
-   else
-      scom.addPilot( pilots, slancelot )
-      scom.addPilot( pilots, slancelot )
-      scom.addPilot( pilots, slancelot )
-      scom.addPilot( pilots, slancelot )
-   end
-
-   return pilots
+   return scom.doTable( pilots, {
+      { w=0.5, slancelot, slancelot },
+      { w=0.8, slancelot, slancelot, slancelot },
+      { slancelot, slancelot, slancelot, slancelot },
+   } )
 end
 
 local fgoddard = faction.get("Goddard")

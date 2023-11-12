@@ -6,46 +6,21 @@ local spacifier   = ship.get("Pacifier")
 
 -- @brief Spawns a small fleet.
 local function spawn_patrol ()
-   local pilots = {}
-   local r = rnd.rnd()
-
-   if r < 0.5 then
-      scom.addPilot( pilots, slancelot )
-      scom.addPilot( pilots, slancelot )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, slancelot )
-      scom.addPilot( pilots, svendetta )
-   else
-      scom.addPilot( pilots, slancelot )
-      scom.addPilot( pilots, slancelot )
-      scom.addPilot( pilots, svendetta )
-   end
-
-   return pilots
+   return scom.doTable( {}, {
+      { w=0.5, slancelot, slancelot },
+      { w=0.8, slancelot, svendetta },
+      { slancelot, slancelot, svendetta },
+   } )
 end
-
 
 -- @brief Spawns a medium sized squadron.
 local function spawn_squad ()
-   local pilots = {}
-   local r = rnd.rnd()
-
-   if r < 0.5 then
-      scom.addPilot( pilots, slancelot )
-      scom.addPilot( pilots, slancelot )
-      scom.addPilot( pilots, svendetta )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, slancelot )
-      scom.addPilot( pilots, svendetta )
-      scom.addPilot( pilots, svendetta )
-   else
-      scom.addPilot( pilots, spacifier )
-      scom.addPilot( pilots, slancelot )
-   end
-
-   return pilots
+   return scom.doTable( {}, {
+      { w=0.5, slancelot, slancelot, svendetta },
+      { w=0.8, slancelot, svendetta, svendetta },
+      { spacifier, slancelot },
+   } )
 end
-
 
 local fflf = faction.get("FLF")
 -- @brief Creation hook.
