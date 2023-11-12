@@ -62,7 +62,6 @@ function create ()
    misn.setNPC( emp.soldner.name, emp.soldner.portrait, _("Commander Soldner is waiting for you.") )
 end
 
-
 function accept ()
    local accepted = false
 
@@ -121,7 +120,6 @@ function accept ()
    mem.prevsys = system.cur()
 end
 
-
 function land ()
    mem.landed = spob.cur()
    if mem.landed == mem.ret then
@@ -137,6 +135,8 @@ function land ()
          vn.na(_([[You land at the starport. It looks like the VIP has already recovered. He thanks you profusely before heading off. You proceed to pay Commander Soldner a visit. He seems to be happy, for once.]]))
          if getlicense then
             soldner(_([["It seems like you managed to pull it off. I had my doubts at first, but you've proven to be a very skilled pilot. Oh, and I've cleared you for a Heavy Combat Vessel License; congratulations! We have nothing more for you now, but check in periodically in case something comes up for you."]]))
+            vn.sfxBingo()
+            vn.na(_([[You can now purchase the #bHeavy Combat Vessel License#0.]]))
 
             vn.func( function ()
                emp.addShippingLog( _([[You successfully rescued a VIP for the Empire and have been cleared for a Heavy Combat Vessel License; you can now buy one at the outfitter.]]) )

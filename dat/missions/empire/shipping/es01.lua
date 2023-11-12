@@ -95,7 +95,6 @@ function accept ()
    hook.enter("enter")
 end
 
-
 function land ()
    mem.landed = spob.cur()
 
@@ -150,6 +149,8 @@ function land ()
       if getlicense then
          soldner(fmt.f(_([[You arrive at {pnt} and report to Commander Soldner. He greets you and starts talking. "I heard you encountered resistance. At least you were able to deliver the package. Great work there. I've managed to get you cleared for a Heavy Weapon License. You'll still have to pay the fee for getting it, though.]]),
             {pnt=mem.ret}))
+         vn.sfxBingo()
+         vn.na(_([[You can now purchase the #bHeavy Weapon License#0.]]))
       else
          soldner(fmt.f(_([[You arrive at {pnt} and report to Commander Soldner. He greets you and starts talking. "I heard you encountered resistance. At least you managed to deliver the package."]]),
             {pnt=mem.ret}))
@@ -178,7 +179,6 @@ function land ()
    end
 end
 
-
 function enter ()
    mem.sys = system.cur()
 
@@ -205,7 +205,6 @@ function enter ()
       end
    end
 end
-
 
 function enemies( enter_vect )
    -- Choose mercenaries
