@@ -35,7 +35,6 @@ local artefactplanetC = spob.get("Hurada")
 local flintplanet, flintsys = spob.getS("Tau Station")
 local flintportait = "neutral/unique/flintley.webp"
 local flintimage = portrait.getFullPath(flintportait)
-local baronimage = nil -- TODO add a portrait for the baron
 local reward = baron.rewards.prince
 local reward2 = outfit.get("Ugly Statue")
 
@@ -103,7 +102,7 @@ function board()
    if mem.stage == 1 then
       vn.clear()
       vn.scene()
-      local brn = vn.newCharacter(_("Baron Sauterfeldt"), {image=baronimage})
+      local brn = vn.newCharacter(baron.vn_baron())
       vn.transition()
 
       vn.na(_([[You find yourself once again aboard the Pinnacle, Baron Sauterfeldt's flag ship. After a short time, an attendant ushers you into the Baron's personal quarters, which are as extravagant as you remember them. You notice the holopainting is now firmly fixed on one of the walls.]]))
@@ -152,7 +151,7 @@ function board()
    elseif mem.stage == 3 then
       vn.clear()
       vn.scene()
-      local brn = vn.newCharacter(_("Baron Sauterfeldt"), {image=baronimage})
+      local brn = vn.newCharacter(baron.vn_baron())
       vn.transition()
       brn(_([[Baron Dovai Sauterfeldt turns the skate-board over in his hands, inspecting every nick, every scratch on the surface. His eyes are gleaming with delight.]]))
       brn(fmt.f(_([["Oh, this is marvelous, marvelous indeed, {wrongname}! A piece of pre-Growth history, right here in my hands! I can almost hear the echoes of that ancient civilization when I put my ear close to it! This is going to be the centrepiece in my collection of relics and artefacts. Yes indeed!"]]),
