@@ -25,6 +25,7 @@ local fmt = require "format"
 local portrait = require "portrait"
 local baron = require "common.baron"
 local vni = require "vnimage"
+local utf8 = require "utf8"
 
 -- Mission constants
 local baronsys = system.get("Ingot")
@@ -43,7 +44,7 @@ local npc1img, npc1prt = vni.pirateMale()
 local npc2img, npc2prt = vni.pirateMale()
 local npc3img, npc3prt = vni.pirateFemale()
 
-local isIn, mangle -- Forward-declared functions
+local mangle -- Forward-declared functions
 local pinnacle -- Non-persistent state
 
 function create ()
@@ -389,8 +390,16 @@ function hail()
    player.commClose()
 end
 
+-- Helper function for mangle()
+local function isIn(char, table)
+   char = utf8.lower(char)
+   for _, j in pairs(table) do
+      if j==char then return true end
+   end
+   return false
+end
+
 -- Function that tries to misspell whatever string is passed to it.
--- TODO support Unicode to a certain point
 function mangle(intext)
    local outtext = intext
 
@@ -401,30 +410,48 @@ function mangle(intext)
    local found = false
 
    while i < #intext - 1 do
-      if isIn(intext:sub(i, i):lower(), consonants) and isIn(intext:sub(i + 1, i + 1):lower(), vowels) and isIn(intext:sub(i + 2, i + 2):lower(), consonants) then
+      if isIn(utf8.sub(intext,i,i), consonants) and
+            isIn(utf8.sub(intext,i+1,i+1), vowels) and
+            isIn(utf8.sub(intext,i+2,i+2), consonants) then
          found = true
          break
       end
-      i = i + 1
+      i = i+1
    end
 
    if found then
       local first = consonants[rnd.rnd(1, #consonants)]
       local second = vowels[rnd.rnd(1, #vowels)]
-      if intext:sub(i, i):upper() == intext:sub(i, i) then first = first:upper() end -- preserve case
-      if intext:sub(i + 1, i + 1):upper() == intext:sub(i, i) then second = second:upper() end -- preserve case
-      outtext = intext:sub(-#intext, -(#intext - i + 2)) .. first .. second .. intext:sub(i + 2)
+      -- Preserve case
+      if utf8.upper(utf8.sub(intext,i,i))==utf8.sub(intext,i,i) then
+         first = utf8.upper(first)
+      end
+      if utf8.upper(utf8.sub(intext,i+1,i+1))==utf8.sub(intext,i,i) then
+         second = utf8.upper(second)
+      end
+      outtext = utf8.sub(intext,-#intext,-(#intext-i+2)) .. first .. second .. utf8.sub(intext,i+2)
+   end
+
+   -- Our ASCII based mangling failed, so we need to do an alternative
+   local len = utf8.len(intext)
+   if outtext==intext and len>1 then
+      local ct = {}
+      for j=1,len do
+         ct[j] = j
+      end
+      for c=1,1 do--math.ceil((len-1)/6) do
+         local p = rnd.permutation(len)
+         local t = ct[ p[1] ]
+         ct[ p[1] ] = ct[ p[2] ]
+         ct[ p[2] ] = t
+      end
+      outtext = ""
+      for j=1,len do
+         outtext = outtext..utf8.sub( intext, ct[j], ct[j] )
+      end
    end
 
    return outtext
-end
-
--- Helper function for mangle()
-function isIn(char, table)
-   for _, j in pairs(table) do
-      if j == char then return true end
-   end
-   return false
 end
 
 function abort()
