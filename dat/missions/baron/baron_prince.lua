@@ -428,15 +428,6 @@ function hail()
    player.commClose()
 end
 
--- Helper function for mangle()
-local function isIn(char, table)
-   char = utf8.lower(char)
-   for _, j in pairs(table) do
-      if j==char then return true end
-   end
-   return false
-end
-
 -- Function that tries to misspell whatever string is passed to it.
 function mangle(intext)
    local outtext = intext
@@ -447,16 +438,18 @@ function mangle(intext)
    local i = 1
    local found = false
 
-   while i < #intext - 1 do
-      if isIn(utf8.sub(intext,i,i), consonants) and
-            isIn(utf8.sub(intext,i+1,i+1), vowels) and
-            isIn(utf8.sub(intext,i+2,i+2), consonants) then
+   -- Try to find a triplet of
+   while i < #intext-1 do
+      if inlist(consonants, utf8.lower(utf8.sub(intext,i,i))) and
+            inlist(vowels, utf8.lower(utf8.sub(intext,i+1,i+1))) and
+            inlist(consonants, utf8.lower(utf8.sub(intext,i+2,i+2))) then
          found = true
          break
       end
       i = i+1
    end
 
+   -- Mess up the first pair
    if found then
       local first = consonants[rnd.rnd(1, #consonants)]
       local second = vowels[rnd.rnd(1, #vowels)]
@@ -474,8 +467,11 @@ function mangle(intext)
    local len = utf8.len(intext)
    if outtext==intext and len>1 then
       local ct = {}
+      local lower = {}
       for j=1,len do
          ct[j] = j
+         local c = utf8.sub(intext,j,j)
+         lower[j] = utf8.lower(c)==c
       end
       for c=1,1 do--math.ceil((len-1)/6) do
          local p = rnd.permutation(len)
@@ -485,7 +481,13 @@ function mangle(intext)
       end
       outtext = ""
       for j=1,len do
-         outtext = outtext..utf8.sub( intext, ct[j], ct[j] )
+         local c = utf8.sub(intext,ct[j],ct[j])
+         if lower[j] then
+            c = utf8.lower(c)
+         else
+            c = utf8.upper(c)
+         end
+         outtext = outtext..c
       end
    end
 
