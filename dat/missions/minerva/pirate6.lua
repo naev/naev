@@ -46,7 +46,7 @@ function create ()
       misn.finish( false )
    end
    misn.setNPC( minerva.zuri.name, minerva.zuri.portrait, minerva.zuri.description )
-   misn.setDesc(_("Zuri wants you do help a Za'lek General and Dvaered Warlord finish each other off."))
+   misn.setDesc(_("Zuri wants you to help a Za'lek General and Dvaered Warlord finish each other off."))
    misn.setReward(_("Cold hard credits"))
    misn.setTitle( title )
 end

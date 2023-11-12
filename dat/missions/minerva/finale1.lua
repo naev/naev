@@ -440,7 +440,7 @@ She closes her eyes and rubs her temples.]]))
 
    vn.label("05_zuri")
    maikki(_([["She's a tough cookie to crack. We've been together through much harder times. Pirate doctors are second to none when it comes to experience."
-You sense a some worry and uneasiness despite the strong words.]]))
+You sense some worry and uneasiness despite the strong words.]]))
    maikki(_([["One time, we were doing your standard hit operation in Delta Pavonis, some Empire Combat Bureaucrat had a bounty on the head, and I figure we might as well cash in. Sources said they would be flying a Pacifier, no deal, right? Turns out it was a bloody Peacemaker with a full entourage."]]))
    maikki(_([["Was about to back off when a second Peacemaker jumped in behind us. The bastards set us up for a trap. With no way out, we charged the Bureaucrat asshole and smashed the captain's bridge right into the fighter bay, and went to fight our way through the ship."]]))
    maikki(_([["While we were trying to take hold of the hangar, Zuri grabbed a bunch of weapons and charged basically charged through the ship. When we found her in the bridge, she had somehow managed to single-handedly cross the entire ship and capture it by herself!"]]))

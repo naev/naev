@@ -57,7 +57,7 @@ function accept ()
    vn.transition()
 
    vn.na(_([[You find Zuri waving to you at the bar. It seems like she finished whatever she had to do.]]))
-   zuri(fmt.f(_([["OK, I've got some help, they'll meet up with us on {spb}. I have no idea to expect out of all of this, but it seems like a pretty good damn chance to clear up Minerva Station if we play our cards right."]]),
+   zuri(fmt.f(_([["OK, I've got some help, they'll meet up with us on {spb}. I have no idea what to expect out of all of this, but it seems like a pretty good damn chance to clear up Minerva Station if we play our cards right."]]),
       {spb=trialspb}))
    zuri(fmt.f(_([["I'll be going with you on your ship to {spb}. We don't really have much of a plan but to show up, and hope that all the data collected will be useful for us. You ready to take us to the {sys} system and do this?"]]),
       {spb=trialspb, sys=trialsys}))
@@ -159,7 +159,7 @@ function trial_start ()
    vn.scene()
    vn.newCharacter( ceo )
    vn.transition( "slideleft" )
-   vn.na(_([[The Minerva CEO is near the front of the crowd, he seems to be quite pale and looking very well.]]))
+   vn.na(_([[The Minerva CEO is near the front of the crowd, he seems to be quite pale and not looking very well.]]))
 
    vn.scene()
    vn.newCharacter( zlk )
