@@ -20,7 +20,7 @@ function create ()
    -- Make sure system isn't claimed, but we don't claim it
    if not naev.claimTest( system.cur() ) then evt.finish() end
 
-   hook.timer(20.0, "hailme")
+   hook.timer(20, "hailme")
    hook.land("finish")
    hook.jumpout("finish")
 end

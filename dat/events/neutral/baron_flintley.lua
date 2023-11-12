@@ -28,6 +28,7 @@ function flintley()
    vn.clear()
    vn.scene()
    local flnt = vn.newCharacter( _("Flintley"), { image=portrait.getFullPath(prt) } )
+   vn.transition()
    flnt(fmt.f(_([[Flintley greets you, relieved to see a friendly face. "Hello again, {player}. What brings you here today? As you can see, I'm here on business again. Nothing too interesting, I'm afraid, just everyday stuff."
 You spend some time chatting with Flintley, then you get back to work.]]),
       {player=player.name()}))

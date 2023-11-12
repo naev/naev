@@ -62,6 +62,7 @@ function hail( p )
    vn.clear()
    vn.scene()
    local plt = ccomm.newCharacter( vn, p )
+   vn.transition()
    plt(fmt.f(_([["Greetings, {player}," the pilot of the Vendetta says to you as soon as you answer his hail. "I have been looking for you on behalf of an acquaintance of yours. She wishes to meet with you at a place of her choosing, and a time of yours. It involves a proposition that you might find interesting - if you don't mind sticking your neck out."]]),
       {player=player.name()}))
    vn.na(_([[You frown at that, but you ask the pilot where this acquaintance wishes you to go anyway.]]))

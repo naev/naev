@@ -64,6 +64,7 @@ function accept()
    vn.clear()
    vn.scene()
    local unf = vn.newCharacter( _("An unfamiliar man"), {img=imgunfamiliar} )
+   vn.transition()
    vn.na(_([[As you approach the stranger, he extends his hand in greeting. He introduces himself as an associate of Baron Sauterfeldt, the man you helped to "acquire" a holopainting not too long ago.]]))
    unf(_([["The Baron was quite pleased with your performance in that matter," he confides. "He has asked me to try to find you again for another job not unlike the last one. The Baron is a collector, you see, and his hunger for new possessions is a hard one to satiate." He makes a face. "Of course, his methods aren't always completely respectable, as you've experienced for yourself. But I assure you that the Baron is not a bad man, he is simply very enthusiastic."]]))
    vn.na(_([[You decide to keep your opinion of the aristocrat to yourself. Instead you inquire as to what the man wants from you this time.]]))
@@ -103,6 +104,7 @@ function board()
       vn.clear()
       vn.scene()
       local brn = vn.newCharacter(_("Baron Sauterfeldt"), {image=baronimage})
+      vn.transition()
 
       vn.na(_([[You find yourself once again aboard the Pinnacle, Baron Sauterfeldt's flag ship. After a short time, an attendant ushers you into the Baron's personal quarters, which are as extravagant as you remember them. You notice the holopainting is now firmly fixed on one of the walls.]]))
       brn(fmt.f(_([[Baron Dovai Sauterfeldt greets you with a pompous wave of his hand. "Ahh yes, there you are at last. {wrongname1}, was it? Do have a seat." He then offers you a drink, but you decline on the basis that you still have to drive. "Now then, {wrongname2}, I assume you're wondering why I've called you here. As you've no doubt heard, I have an interest in the unique, the exquisite." The Baron gestures around the room. "I have built up quite an impressive collection, as you can see, but it is still lacking something. Fortunately, news has reached me about a priceless artefact from Earth itself, dating back to before the Faction Wars. I must have it. It belongs in the hands of a connoisseur like myself."]]),
@@ -138,6 +140,7 @@ function board()
    elseif mem.stage == 2 then
       vn.clear()
       vn.scene()
+      vn.transition()
       vn.na(fmt.f(_([[You have not yet collected and identified the genuine artefact. Buy the artefacts from the sellers and visit Flintley on {pnt} ({sys}) to identify the real one.]]),
          {pnt=flintplanet, sys=flintsys}))
       vn.run()
@@ -150,6 +153,7 @@ function board()
       vn.clear()
       vn.scene()
       local brn = vn.newCharacter(_("Baron Sauterfeldt"), {image=baronimage})
+      vn.transition()
       brn(_([[Baron Dovai Sauterfeldt turns the skate-board over in his hands, inspecting every nick, every scratch on the surface. His eyes are gleaming with delight.]]))
       brn(fmt.f(_([["Oh, this is marvelous, marvelous indeed, {wrongname}! A piece of pre-Growth history, right here in my hands! I can almost hear the echoes of that ancient civilization when I put my ear close to it! This is going to be the centrepiece in my collection of relics and artefacts. Yes indeed!"]]),
          {wrongname=mangle(player.name())}))
@@ -197,6 +201,7 @@ function flintley()
    vn.clear()
    vn.scene()
    local flt = vn.newCharacter( _("Flintley"), {image=flintimage} )
+   vn.transition()
 
    if mem.flintleyfirst then
       mem.flintleyfirst = false
@@ -294,6 +299,7 @@ function seller()
 
    if spob.cur() == artefactplanetA then
       local pir = vn.newCharacter( _("A suspicious salesman"), {image=img} )
+      vn.transition()
       pir(_([["Hello there," the guy says to you when you approach. "Can I interest you in this bona fide relic from an ancient past? Unlike all those scammers out there, I offer you the real deal, no fakes here!"]]))
       vn.menu{
          {option_yes, "buy"},
@@ -315,6 +321,7 @@ function seller()
 
    elseif spob.cur() == artefactplanetB then
       local pir = vn.newCharacter( _("A suspicious salesman"), {image=img} )
+      vn.transition()
       pir(_([[The man grins at you. "Ah, I can tell you have the eye of a connoisseur! I deal only in the finest, counterfeit-free antiques. If you're smart, and I can see that you are, you won't trust all those opportunists who will try to sell you fakes! How about it?"]]))
       vn.menu{
          {option_yes, "buy"},
@@ -336,6 +343,7 @@ function seller()
 
    elseif spob.cur() == artefactplanetC then
       local pir = vn.newCharacter( _("A suspicious saleswoman"), {image=img} )
+      vn.transition()
       pir(_([[The woman beckons you over to the bar. "Listen, friend. I have here a unique, extremely rare remnant of prehistoric times. This is the genuine article, trust me on that. One hundred per cent legit! And you wouldn't want to spend good credits on a fake, right?"]]))
       vn.menu{
          {option_yes, "buy"},
