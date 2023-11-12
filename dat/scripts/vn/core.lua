@@ -614,6 +614,7 @@ function vn.State:textinput( key )
    return ret
 end
 function vn.State:isDone() return self.done end
+local __needs_transition
 --[[
 -- Scene
 --]]
@@ -625,6 +626,8 @@ function vn.StateScene.new()
    return s
 end
 function vn.StateScene:_init()
+   __needs_transition = true
+
    -- Render previous scene to an image
    local canvas = vn._prevcanvas
    _draw_to_canvas( canvas )
@@ -714,6 +717,10 @@ function vn.StateSay.new( who, what, noclear )
    return s
 end
 function vn.StateSay:_init()
+   if __needs_transition then
+      warn(_("vn: vn.say being used after vn.scene without a vn.transition!"))
+   end
+
    -- Get the main text
    if type(self._what)=="function" then
       self.what = self._what()
@@ -1633,6 +1640,7 @@ function vn.transition( name, seconds, transition )
          end
       end, nil, -- no draw function
       transition, function () -- init
+         __needs_transition = false
          shader:send( "texprev", vn._prevscene )
          if shader:hasUniform( "u_r" ) then
             shader:send( "u_r", love_math.random() )
