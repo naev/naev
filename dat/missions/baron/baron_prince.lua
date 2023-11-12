@@ -18,11 +18,13 @@
 --[[
 -- This is the second mission in the baron string.
 --]]
-
+local vn = require "vn"
+local vntk = require "vntk"
 local fleet = require "fleet"
 local fmt = require "format"
 local portrait = require "portrait"
 local baron = require "common.baron"
+local vni = require "vnimage"
 
 -- Mission constants
 local baronsys = system.get("Ingot")
@@ -30,42 +32,67 @@ local artefactplanetA = spob.get("Varaati")
 local artefactplanetB = spob.get("Sinclair")
 local artefactplanetC = spob.get("Hurada")
 local flintplanet, flintsys = spob.getS("Tau Station")
+local flintportait = "neutral/unique/flintley.webp"
+local flintimage = portrait.getFullPath(flintportait)
 local reward = baron.rewards.prince
+
+local prtunfamiliar = "neutral/unique/unfamiliarman.webp"
+local imgunfamiliar = portrait.getFullPath( prtunfamiliar )
+
+local npc1img, npc1prt = vni.pirateMale()
+local npc2img, npc2prt = vni.pirateMale()
+local npc3img, npc3prt = vni.pirateFemale()
 
 local isIn, mangle -- Forward-declared functions
 local pinnacle -- Non-persistent state
 
 function create ()
    -- Note: this mission makes no system claims.
-   misn.setNPC(_("An unfamiliar man"), "neutral/unique/unfamiliarman.webp", _("A man you've never seen before makes eye contact with you. He seems to know who you are."))
+   misn.setNPC(_("An unfamiliar man"), prtunfamiliar, _("A man you've never seen before makes eye contact with you. He seems to know who you are."))
 end
 
 function accept()
+   local accepted = false
    mem.stage = 1
 
    mem.flintleyfirst = true
    mem.artifactsfound = 0
 
+   vn.clear()
+   vn.scene()
+   local unf = vn.newCharacter( _("An unfamiliar man"), {img=imgunfamiliar} )
+   vn.na(_([[As you approach the stranger, he extends his hand in greeting. He introduces himself as an associate of Baron Sauterfeldt, the man you helped to "acquire" a holopainting not too long ago.]]))
+   unf(_([["The Baron was quite pleased with your performance in that matter," he confides. "He has asked me to try to find you again for another job not unlike the last one. The Baron is a collector, you see, and his hunger for new possessions is a hard one to satiate." He makes a face. "Of course, his methods aren't always completely respectable, as you've experienced for yourself. But I assure you that the Baron is not a bad man, he is simply very enthusiastic."]]))
+   vn.na(_([[You decide to keep your opinion of the aristocrat to yourself. Instead you inquire as to what the man wants from you this time.]]))
+   unf(fmt.f(_([["To tell the truth, I don't actually know," the man says. "The Baron wants you to meet him so he can brief you in person. You will find his ship in the {sys} system. Shall I inform his lordship that you will be paying him a visit?"]]),
+      {sys=baronsys}))
+   vn.menu{
+      {_([["At your beck and call."]]), "accept"},
+      {_([["Sorry, not today."]]), "decline"},
+   }
 
-   if tk.yesno(_("His Baronship remembers you"), fmt.f(_([[As you approach the stranger, he extends his hand in greeting. He introduces himself as an associate of Baron Sauterfeldt, the man you helped to "acquire" a holopainting not too long ago.
-    "The Baron was quite pleased with your performance in that matter," he confides. "He has asked me to try to find you again for another job not unlike the last one. The Baron is a collector, you see, and his hunger for new possessions is a hard one to satiate." He makes a face. "Of course, his methods aren't always completely respectable, as you've experienced for yourself. But I assure you that the Baron is not a bad man, he is simply very enthusiastic."
-    You decide to keep your opinion of the aristocrat to yourself. Instead you inquire as to what the man wants from you this time. "To tell the truth, I don't actually know," the man says. "The Baron wants you to meet him so he can brief you in person. You will find his ship in the {sys} system. Shall I inform his lordship that you will be paying him a visit?"]]), {sys=baronsys})) then
-      misn.accept()
-      tk.msg(_("At your beck and call"), fmt.f(_([["Splendid. Please go see his lordship at the earliest opportunity. He doesn't like to be kept waiting. I will send word that you will be coming, so contact the Pinnacle when you arrive at {sys}, and they will allow you to board."]]), {sys=baronsys}))
+   vn.label("accept")
+   vn.func( function () accepted=true end )
+   unf(fmt.f(_([["Splendid. Please go see his lordship at the earliest opportunity. He doesn't like to be kept waiting. I will send word that you will be coming, so contact the Pinnacle when you arrive at {sys}, and they will allow you to board."]]), {sys=baronsys}))
+   vn.done()
 
-      misn.setTitle(_("Prince"))
-      misn.setReward(_("You weren't told!"))
-      misn.setDesc(fmt.f(_("Baron Sauterfeldt has summoned you to his ship, which is in the {sys} system."), {sys=baronsys}))
-      misn.osdCreate(_("Prince"), {
-         fmt.f(_("Fly to the {sys} system and dock with (board) Gauss Pinnacle"), {sys=baronsys}),
-      })
-      mem.marker = misn.markerAdd(baronsys, "low")
+   vn.label("decline")
+   unf(_([["Okay, fair enough," the man says with a disappointed look on his face. "I'll try to find someone else. But maybe we'll run into each other again, so if you change your mind…"]]))
+   vn.run()
 
-      mem.enterhook = hook.enter("enter")
-   else
-      tk.msg(_("Sorry, not today"), _([["Okay, fair enough," the man says with a disappointed look on his face. "I'll try to find someone else. But maybe we'll run into each other again, so if you change your mind…"]]))
-      return
-   end
+   if not accepted then return end
+
+   misn.accept()
+
+   misn.setTitle(_("Prince"))
+   misn.setReward(_("You weren't told!"))
+   misn.setDesc(fmt.f(_("Baron Sauterfeldt has summoned you to his ship, which is in the {sys} system."), {sys=baronsys}))
+   misn.osdCreate(_("Prince"), {
+      fmt.f(_("Fly to the {sys} system and dock with (board) Gauss Pinnacle"), {sys=baronsys}),
+   })
+   mem.marker = misn.markerAdd(baronsys, "low")
+
+   mem.enterhook = hook.enter("enter")
 end
 
 function board()
@@ -119,16 +146,16 @@ end
 function land()
    local sellerdesc = _("You spot a dodgy individual who matches one of the portraits in your ship's database. This must be one of the artefact sellers.")
    if spob.cur() == artefactplanetA and not mem.artifactA then
-      mem.sellnpc = misn.npcAdd("seller", _("Artefact seller"), portrait.get("Pirate"), sellerdesc, 4)
+      mem.sellnpc = misn.npcAdd( "seller", _("Artefact seller"), npc1prt, sellerdesc, 4)
    elseif spob.cur() == artefactplanetB and not mem.artifactB then
-      mem.sellnpc = misn.npcAdd("seller", _("Artefact seller"), portrait.get("Pirate"), sellerdesc, 4)
+      mem.sellnpc = misn.npcAdd( "seller", _("Artefact seller"), npc2prt, sellerdesc, 4)
    elseif spob.cur() == artefactplanetC and not mem.artifactC then
-      mem.sellnpc = misn.npcAdd("seller", _("Artefact seller"), portrait.get("Pirate"), sellerdesc, 4)
+      mem.sellnpc = misn.npcAdd( "seller", _("Artefact seller"), npc3prt, sellerdesc, 4)
    elseif spob.cur() == flintplanet then
       if mem.flintleyfirst then
-         misn.npcAdd("flintley", _("A reedy-looking man"), "neutral/unique/flintley.webp", _("You spot a thin, nervous looking individual. He does not seem to want to be here. This could be that Flintley fellow the Baron told you about."), 4)
+         misn.npcAdd("flintley", _("A reedy-looking man"), flintportait, _("You spot a thin, nervous looking individual. He does not seem to want to be here. This could be that Flintley fellow the Baron told you about."), 4)
       else
-         misn.npcAdd("flintley", _("Flintley"), "neutral/unique/flintley.webp", _("Flintley is here. He nervously sips from his drink, clearly uncomfortable in this environment."), 4)
+         misn.npcAdd("flintley", _("Flintley"), flintportait, _("Flintley is here. He nervously sips from his drink, clearly uncomfortable in this environment."), 4)
       end
    end
 end
@@ -136,21 +163,28 @@ end
 function flintley()
    local bingo = false
 
+   vn.clear()
+   vn.scene()
+   local flt = vn.newCharacter( _("Flintley"), {image=flintimage} )
+
    if mem.flintleyfirst then
       mem.flintleyfirst = false
-      tk.msg(_("Flintley, at your service"), fmt.f(_([[You approach the nervous-looking man and inquire if he is Flintley, the historian in Baron Sauterfeldt's employ.
-    "Oh, yes. Yes! That is me! I'm Flintley," the man responds. "And you must be {player}. I know what's going on, the people from the Pinnacle have informed me. Oh, but where are my manners. Let me properly introduce myself. My name is Flintley, and I'm an archaeologist and historian. The best in the galaxy, some might say, ha-ha!" He gives you a look. "Well, maybe not. But I'm quite knowledgeable about the history of the galaxy. Too bad not too many people seem interested in that these days. The only work I can really get is the occasional appraisal, like I'm doing now for his lordship. I wish I didn't have to take jobs like this, but there you have it."
-    Flintley sighs. "Well, that's that. Come to me with any artefacts you manage to procure, and I'll analyse them to the best of my ability."]]), {player=player.name()}))
+      vn.na(_([[You approach the nervous-looking man and inquire if he is Flintley, the historian in Baron Sauterfeldt's employ.]]))
+      flt(fmt.f(_([["Oh, yes. Yes! That is me! I'm Flintley," the man responds. "And you must be {player}. I know what's going on, the people from the Pinnacle have informed me. Oh, but where are my manners. Let me properly introduce myself. My name is Flintley, and I'm an archaeologist and historian. The best in the galaxy, some might say, ha-ha!" He gives you a look. "Well, maybe not. But I'm quite knowledgeable about the history of the galaxy. Too bad not too many people seem interested in that these days. The only work I can really get is the occasional appraisal, like I'm doing now for his lordship. I wish I didn't have to take jobs like this, but there you have it."]]),
+         {player=player.name()}))
+      flt(_([[Flintley sighs. "Well, that's that. Come to me with any artefacts you manage to procure, and I'll analyse them to the best of my ability."]]))
    elseif mem.artifactA == nil and mem.artifactB == nil and mem.artifactC == nil then
-      tk.msg(_("Just passing through"), fmt.f(_([[Flintley greets you. "Do you have any objects for me to look at, {player}? No? Well, alright. I'll be here if you need me. Good luck out there."]]), {player=player.name()}))
+      flt(fmt.f(_([[Flintley greets you. "Do you have any objects for me to look at, {player}? No? Well, alright. I'll be here if you need me. Good luck out there."]]),
+         {player=player.name()}))
    end
 
    if mem.artifactA ~= nil then
       if rnd.rnd(1, 3 - mem.artifactsfound) == 1 then
          bingo = true
       else
-         tk.msg(_("This is not the artefact you're looking for"), fmt.f(_([["Let's see what we have here," Flintley says as you hand him the artefact you bought on {pnt}. "Ah, I know what this is without even looking anything up. It's a piece of an old-fashioned airlock mechanism, as used on most ships during the Faction Wars. That makes it rather old, but that also makes it worthless, I'm afraid. This is just old scrap." He gives you an apologetic look. "Don't let it get you down. Not many people would know this on first sight. Those scammers can be pretty clever."
-    You feel disappointed and frustrated, but you have no choice but to deposit the "artefact" into the nearest disintegrator inlet.]]), {pnt=artefactplanetA}))
+         flt(fmt.f(_([["Let's see what we have here," Flintley says as you hand him the artefact you bought on {pnt}. "Ah, I know what this is without even looking anything up. It's a piece of an old-fashioned airlock mechanism, as used on most ships during the Faction Wars. That makes it rather old, but that also makes it worthless, I'm afraid. This is just old scrap." He gives you an apologetic look. "Don't let it get you down. Not many people would know this on first sight. Those scammers can be pretty clever."]]),
+            {pnt=artefactplanetA}))
+         vn.na(_([[You feel disappointed and frustrated, but you have no choice but to deposit the "artefact" into the nearest disintegrator inlet.]]))
          mem.artifactsfound = mem.artifactsfound + 1
       end
       misn.cargoRm(mem.artifactA)
@@ -160,8 +194,9 @@ function flintley()
       if rnd.rnd(1, 3 - mem.artifactsfound) == 1 then
          bingo = true
       else
-         tk.msg(_("This is not the artefact you're looking for"), fmt.f(_([[You hand Flintley the artefact you procured on {pnt}. He examines it for a few moments, then enters a few queries in the info terminal in his table. Once he has found what he was looking for, he heaves a sigh. "I'm sorry, {player}. It seems you've been had. What you've got here is little more than a trinket. It's a piece of 'art' created by a third-rank sculptress named Biena Gharibri who lives on Lapra. She's not very talented, I'm afraid. Her creations have been called 'worse than Dvaered opera' by a leading art critic. I really don't think you want to present his lordship with this."
-    You promptly decide to dispose of the thing, unwilling to carry it around with you a moment longer than necessary.]]), {pnt=artefactplanetB, player=player.name()}))
+         flt(fmt.f(_([[You hand Flintley the artefact you procured on {pnt}. He examines it for a few moments, then enters a few queries in the info terminal in his table. Once he has found what he was looking for, he heaves a sigh. "I'm sorry, {player}. It seems you've been had. What you've got here is little more than a trinket. It's a piece of 'art' created by a third-rank sculptress named Biena Gharibri who lives on Lapra. She's not very talented, I'm afraid. Her creations have been called 'worse than Dvaered opera' by a leading art critic. I really don't think you want to present his lordship with this."]]),
+            {pnt=artefactplanetB, player=player.name()}))
+         vn.na(_([[You promptly decide to dispose of the thing, unwilling to carry it around with you a moment longer than necessary.]]))
          mem.artifactsfound = mem.artifactsfound + 1
       end
       misn.cargoRm(mem.artifactB)
@@ -171,8 +206,9 @@ function flintley()
       if rnd.rnd(1, 3 - mem.artifactsfound) == 1 then
          bingo = true
       else
-         tk.msg(_("This is not the artefact you're looking for"), fmt.f(_([[Flintley studies the object on the table for a while, checking the online database a number of times in the process. Then, finally, he turns to you. "I hate to say this, but it seems you've bought a counterfeit. It's a good one, though! That seller on {pnt} must have known his stuff. You see, this is very similar to a number plate used by hovercars on Mars at the time of the Second Growth. However, it's missing a number of vital characteristics, and some details betray its recent manufacture. Close, {player}, close. But no cigar."
-    You dispose of the counterfeit artefact. Hopefully the next one will be what Sauterfeldt is looking for…]]), {pnt=artefactplanetC, player=player.name()}))
+         flt(fmt.f(_([[Flintley studies the object on the table for a while, checking the online database a number of times in the process. Then, finally, he turns to you. "I hate to say this, but it seems you've bought a counterfeit. It's a good one, though! That seller on {pnt} must have known his stuff. You see, this is very similar to a number plate used by hovercars on Mars at the time of the Second Growth. However, it's missing a number of vital characteristics, and some details betray its recent manufacture. Close, {player}, close. But no cigar."]]),
+            {pnt=artefactplanetC, player=player.name()}))
+         vn.na(_([[You dispose of the counterfeit artefact. Hopefully the next one will be what Sauterfeldt is looking for…]]))
          mem.artifactsfound = mem.artifactsfound + 1
       end
       misn.cargoRm(mem.artifactC)
@@ -180,10 +216,15 @@ function flintley()
    end
 
    if bingo then
-      tk.msg(_("From days long gone"), fmt.f(_([[Flintley carefully studies the object in front of him, turning it around and consulting the online database via the bar table's terminal. After several hectoseconds he leans back and whistles. "Well I never. This has to be it, {player}. I'd do a carbon dating if I could, but even without I'm positive. This object dates back to pre-Growth Earth. And it's in an amazingly good condition!"
-    You take another look at the thing. It resembles a small flat surface, apart from the crook at one end. On one side, there are cylindrical, solid protrusions that don't seem to serve any useful purpose at all. You are at a loss as to the artefact's purpose.
-    "It's called a skate-board," Flintley continues. "The records about it are a bit sketchy and a lot is nothing but conjecture, but it appears it was once used in primitive communal rituals. The exact nature of these rituals is unknown, but they may have been tribal initiations or even mating rituals. The patterns in the board itself are thought to have a spiritual or mystical meaning. Also, according to some theories, people used to stand on top of the skate-board, with the cylinder wheels facing the ground. This has led some historians to believe that the feet were once central to human psychology."
-    Flintley seems to have a lot more to say on the subject, but you're not that interested, so you thank him and return to your ship with the ancient artefact. You can only hope that the Baron is as enthusiastic about this skate-board as his historian!]]), {player=player.name()}))
+      flt(fmt.f(_([[Flintley carefully studies the object in front of him, turning it around and consulting the online database via the bar table's terminal. After several hectoseconds he leans back and whistles. "Well I never. This has to be it, {player}. I'd do a carbon dating if I could, but even without I'm positive. This object dates back to pre-Growth Earth. And it's in an amazingly good condition!"]]),
+         {player=player.name()}))
+      vn.na(_([[You take another look at the thing. It resembles a small flat surface, apart from the crook at one end. On one side, there are cylindrical, solid protrusions that don't seem to serve any useful purpose at all. You are at a loss as to the artefact's purpose.]]))
+      flt(_([["It's called a skate-board," Flintley continues. "The records about it are a bit sketchy and a lot is nothing but conjecture, but it appears it was once used in primitive communal rituals. The exact nature of these rituals is unknown, but they may have been tribal initiations or even mating rituals. The patterns in the board itself are thought to have a spiritual or mystical meaning. Also, according to some theories, people used to stand on top of the skate-board, with the cylinder wheels facing the ground. This has led some historians to believe that the feet were once central to human psychology."]]))
+      vn.na(_([[Flintley seems to have a lot more to say on the subject, but you're not that interested, so you thank him and return to your ship with the ancient artefact. You can only hope that the Baron is as enthusiastic about this skate-board as his historian!]]))
+   end
+   vn.run()
+
+   if bingo then
       misn.osdCreate(_("Prince"), {
          fmt.f(_("Fly to the {sys} system and dock with (board) Gauss Pinnacle"), {sys=baronsys}),
          _("Buy the artefact and take it to Flintley"),
@@ -206,43 +247,94 @@ end
 function seller()
    local option_yes = fmt.f(_("Buy the artefact ({credits})"), {credits=fmt.credits(reward * 0.15)})
    local option_no = _("Don't buy the artefact")
+   local img
    if spob.cur() == artefactplanetA then
-      if tk.choice(_("A suspicious salesman"), _([["Hello there," the guy says to you when you approach. "Can I interest you in this bona fide relic from an ancient past? Unlike all those scammers out there, I offer you the real deal, no fakes here!"]]), option_yes, option_no) == 1 then
-         if player.credits() >= reward * 0.15 then
+      img = npc1img
+   elseif spob.cur() == artefactplanetB then
+      img = npc2img
+   else
+      img = npc3img
+   end
+
+   local cost = reward * 0.15
+
+   vn.clear()
+   vn.scene()
+
+   if spob.cur() == artefactplanetA then
+      local pir = vn.newCharacter( _("A suspicious salesman"), {image=img} )
+      pir(_([["Hello there," the guy says to you when you approach. "Can I interest you in this bona fide relic from an ancient past? Unlike all those scammers out there, I offer you the real deal, no fakes here!"]]))
+      vn.menu{
+         {option_yes, "buy"},
+         {option_no, "dontbuy"}
+      }
+
+      vn.label("buy")
+      vn.func( function ()
+         if player.credits() >= cost then
             misn.npcRm(mem.sellnpc)
-            player.pay( -reward * 0.15 )
+            player.pay( -cost )
             local c = commodity.new( N_("Artefact? A"), N_("An ancient artefact?") )
             mem.artifactA = misn.cargoAdd(c, 0)
             misn.markerRm(mem.markerA)
          else
-            tk.msg(_("Not enough money!"), fmt.f(_("You can't currently afford to buy this artefact. You need {credits}."), {credits=fmt.credits(reward * 0.15)}))
+            vn.jump("broke")
          end
-      end
+      end )
+
    elseif spob.cur() == artefactplanetB then
-      if tk.choice(_("A suspicious salesman"), _([[The man grins at you. "Ah, I can tell you have the eye of a connoisseur! I deal only in the finest, counterfeit-free antiques. If you're smart, and I can see that you are, you won't trust all those opportunists who will try to sell you fakes! How about it?"]]), option_yes, option_no) == 1 then
-         if player.credits() >= reward * 0.15 then
+      local pir = vn.newCharacter( _("A suspicious salesman"), {image=img} )
+      pir(_([[The man grins at you. "Ah, I can tell you have the eye of a connoisseur! I deal only in the finest, counterfeit-free antiques. If you're smart, and I can see that you are, you won't trust all those opportunists who will try to sell you fakes! How about it?"]]))
+      vn.menu{
+         {option_yes, "buy"},
+         {option_no, "dontbuy"}
+      }
+
+      vn.label("buy")
+      vn.func( function ()
+         if player.credits() >= cost then
             misn.npcRm(mem.sellnpc)
-            player.pay( -reward * 0.15 )
+            player.pay( -cost )
             local c = commodity.new( N_("Artefact? B"), N_("An ancient artefact?") )
             mem.artifactB = misn.cargoAdd(c, 0)
             misn.markerRm(mem.markerB)
          else
-            tk.msg(_("Not enough money!"), fmt.f(_("You can't currently afford to buy this artefact. You need {credits}."), {credits=fmt.credits(reward * 0.15)}))
+            vn.jump("broke")
          end
-      end
+      end )
+
    elseif spob.cur() == artefactplanetC then
-      if tk.choice(_("A suspicious salesman"), _([[The woman beckons you over to the bar. "Listen, friend. I have here a unique, extremely rare remnant of prehistoric times. This is the genuine article, trust me on that. One hundred per cent legit! And you wouldn't want to spend good credits on a fake, right?"]]), option_yes, option_no) == 1 then
-         if player.credits() >= reward * 0.15 then
+      local pir = vn.newCharacter( _("A suspicious saleswoman"), {image=img} )
+      pir(_([[The woman beckons you over to the bar. "Listen, friend. I have here a unique, extremely rare remnant of prehistoric times. This is the genuine article, trust me on that. One hundred per cent legit! And you wouldn't want to spend good credits on a fake, right?"]]))
+      vn.menu{
+         {option_yes, "buy"},
+         {option_no, "dontbuy"}
+      }
+
+      vn.label("buy")
+      vn.func( function ()
+         if player.credits() >= cost then
             misn.npcRm(mem.sellnpc)
-            player.pay( -reward * 0.15 )
+            player.pay( -cost )
             local c = commodity.new( N_("Artefact? C"), N_("An ancient artefact?") )
             mem.artifactC = misn.cargoAdd(c, 0)
             misn.markerRm(mem.markerC)
          else
-            tk.msg(_("Not enough money!"), fmt.f(_("You can't currently afford to buy this artefact. You need {credits}."), {credits=fmt.credits(reward * 0.15)}))
+            vn.jump("broke")
          end
-      end
+      end )
    end
+
+   vn.label("broke")
+   vn.na(fmt.f(_([[You can't currently afford to buy this artefact. You need {credits}.]]),
+      {credits=fmt.credits(cost)}))
+   vn.done()
+
+   vn.label("dontbuy")
+   vn.na(_([[You decide not to buy the artefact.]]))
+   vn.done()
+
+   vn.run()
 end
 
 function enter()
@@ -286,7 +378,8 @@ function idle()
 end
 
 function hail()
-   tk.msg(_("Green light for docking"), _([[Your comm is answered by a communications officer on the bridge of the Pinnacle. You tell her you've got a delivery for the baron. She runs a few checks on a console off the screen, then tells you you've been cleared for docking and that the Pinnacle will be brought to a halt.]]))
+   vntk.msg(_("Green light for docking"), _([[Your comm is answered by a communications officer on the bridge of the Pinnacle. You tell her you've got a delivery for the baron. She runs a few checks on a console off the screen, then tells you you've been cleared for docking and that the Pinnacle will be brought to a halt.]]))
+
    pinnacle:taskClear()
    pinnacle:brake()
    pinnacle:setActiveBoard(true)
