@@ -295,8 +295,18 @@ function land()
       vn.transition( )
       vn.na(_([[After landing, you notice Colonel Okran waiting for you on the dock.]]))
       local sol = vn.newCharacter( _("Colonel Okran"), { image=portrait.getFullPath(agentPort) } )
-      sol(fmt.f(_([["Hello again, citizen {name}. We have been informed by House Goddard of the tragic death of Mrs Grosjean. Lord Fatgun sent flowers to her family, and I believe you may have come to receive your reward. We will re-contact you in case we need your services again in the future."
-"Oh, and as an additional reward, I made sure you can now purchase the Heavy Weapon License in case you don't already have it."]]),{name=player.name()}))
+      if diff.isApplied( "heavy_weapons_license" ) then
+         sol(fmt.f(_([["Hello again, citizen {name}. We have been informed by House Goddard of the tragic death of Mrs Grosjean. Lord Fatgun sent flowers to her family, and I believe you may have come to receive your reward. We will re-contact you in case we need your services again in the future."]]),
+            {name=player.name()}))
+      else
+         sol(fmt.f(_([["Hello again, citizen {name}. We have been informed by House Goddard of the tragic death of Mrs Grosjean. Lord Fatgun sent flowers to her family, and I believe you may have come to receive your reward. We will re-contact you in case we need your services again in the future."
+"Oh, and as an additional reward, I made sure you can now purchase the Heavy Weapon License."]]),
+            {name=player.name()}))
+         vn.sfxBingo()
+         vn.na(_([[You can now purchase the #bHeavy Weapon License#0.]]))
+      end
+
+      vn.sfxVictory()
       vn.na(fmt.f(_([[Colonel Okran pays you {credits}.]]), {credits=fmt.credits(mem.credits)}))
 
       vn.done()

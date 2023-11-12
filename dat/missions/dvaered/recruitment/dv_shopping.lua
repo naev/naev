@@ -222,8 +222,16 @@ The walls are covered with pictures of different versions of the Goddard battlec
 "Congratulations, citizen {player}. Our data suggests you have won your first honourable fight against a gentleman. Please reach the spaceport's military contact office for further information."
 When you arrive at the said office, a soldier greets you.]]), {player=player.name()}))
       local sol = vn.newCharacter( _("Dvaered Soldier"), { image=portrait.getFullPath(solPort) } )
-      sol(fmt.f(_([["Good day, citizen. We got the information that you destroyed the Colonel Okran in a fair space fight in the framework of a Warlords rivalry. This achievement gives you the respect of the Dvaered High Command. As such, you will be allowed to purchase the Heavy Combat Vessel License if you did not already have it. Moreover, our cleaning team did find a fancy key chain among the remains of Okran's ship. As the customs requires it, this item is now yours, for what it's worth."
-"And finally, two Warlords, namely Lady Proserpina and Lord Richthofen, required us to give you the sum of {credits} and their greetings. I wish you to stay right, loyal and strong, citizen."]]), {credits=fmt.credits(amount)}))
+      if diff.isApplied( "heavy_combat_vessel_license" ) then
+         sol(_([["Good day, citizen. We got the information that you destroyed the Colonel Okran in a fair space fight in the framework of a Warlords rivalry. This achievement gives you the respect of the Dvaered High Command. Moreover, our cleaning team did find a fancy key chain among the remains of Okran's ship. As the customs requires it, this item is now yours, for what it's worth."]]))
+      else
+         sol(_([["Good day, citizen. We got the information that you destroyed the Colonel Okran in a fair space fight in the framework of a Warlords rivalry. This achievement gives you the respect of the Dvaered High Command. As such, you will be allowed to purchase the Heavy Combat Vessel License. Moreover, our cleaning team did find a fancy key chain among the remains of Okran's ship. As the customs requires it, this item is now yours, for what it's worth."]]))
+         vn.sfxBingo()
+         vn.na(_([[You can now purchase the #bHeavy Combat Vessel License#0.]]))
+      end
+      vn.sfxVictory()
+      sol(fmt.f(_([["And finally, two Warlords, namely Lady Proserpina and Lord Richthofen, required us to give you the sum of {credits} and their greetings. I wish you to stay right, loyal and strong, citizen."]]),
+            {credits=fmt.credits(amount)}))
       vn.done()
       vn.run()
 
