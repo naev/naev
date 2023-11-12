@@ -1117,9 +1117,8 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfi
       return ret;
    }
 
-   /* Stores if it is a launcher. */
+   /* Stores if it is a launcher or bay. */
    is_launcher = outfit_isLauncher(o);
-
    is_bay = outfit_isFighterBay(o);
 
    /* Calculate rate modifier. */
@@ -1131,7 +1130,7 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfi
    maxp  = -1;
    q     = 0.;
    for (int i=0; i<array_size(ws->slots); i++) {
-      PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
+      const PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
 
       /* Only matching outfits. */
       if (pos->outfit != o)
