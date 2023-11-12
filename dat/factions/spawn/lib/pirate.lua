@@ -5,7 +5,7 @@ local sshark      = ship.get("Pirate Shark")
 local svendetta   = ship.get("Pirate Vendetta")
 local sancestor   = ship.get("Pirate Ancestor")
 local sphalanx    = ship.get("Pirate Phalanx")
-local sadmonsher  = ship.get("Pirate Admonisher")
+local sadmonisher = ship.get("Pirate Admonisher")
 local srhino      = ship.get("Pirate Rhino")
 local sstarbridge = ship.get("Pirate Starbridge")
 local skestrel    = ship.get("Pirate Kestrel")
@@ -13,131 +13,85 @@ local skestrel    = ship.get("Pirate Kestrel")
 local spir = {}
 local hostile_system = false
 
+spir.table_patrol = {
+   { w=0.3, shyena },
+   { w=0.5, sshark },
+   { w=0.8, sshark, shyena },
+   { svendetta, sshark, shyena },
+}
+spir.table_loner_weak = {
+   { w=0.3, shyena },
+   { w=0.5, sshark },
+   { w=0.65, svendetta },
+   { w=0.85, sancestor },
+   { sphalanx },
+}
+spir.table_loner_strong = {
+   { w=0.4, srhino },
+   { w=0.7, sadmonisher },
+   { sstarbridge },
+}
+spir.table_squad = {
+   { w=0.3, svendetta, sancestor, sancestor, shyena },
+   { w=0.5, svendetta, sancestor, sshark, shyena },
+   { w=0.7, srhino, sphalanx, sshark },
+   { w=0.85, sadmonisher, svendetta, sshark, shyena },
+   { sstarbridge, sshark, sshark },
+}
+spir.table_capship = {
+   { w=0.5, skestrel, sadmonisher, svendetta, svendetta },
+   { w=0.8, skestrel, sphalanx, svendetta, sancestor, sshark },
+   { skestrel, srhino, sadmonisher, svendetta, sancestor, sshark },
+}
+
+function spir.spawn_table( pilots, tbl )
+   local r = rnd.rnd()
+   for k,t in ipairs(tbl) do
+      if not t.w or t.w <= r then
+         for i,p in ipairs(t) do
+            scom.addPilot( pilots, p )
+         end
+      end
+   end
+   return pilots
+end
+
 -- @brief Spawns a small patrol fleet.
 function spir.spawn_patrol ()
-   local pilots = {}
-   pilots.__nofleet = (rnd.rnd() < 0.7)
-   pilots.__stealth = hostile_system or (rnd.rnd() < 0.9)
-   local r = rnd.rnd()
-
-   if r < 0.3 then
-      scom.addPilot( pilots, shyena )
-   elseif r < 0.5 then
-      scom.addPilot( pilots, sshark )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, sshark )
-      scom.addPilot( pilots, shyena )
-   else
-      scom.addPilot( pilots, svendetta )
-      scom.addPilot( pilots, sshark )
-      scom.addPilot( pilots, shyena )
-   end
-
-   return pilots
+   return spir.spawn_table( {
+      __nofleet = (rnd.rnd() < 0.7),
+      __stealth = (hostile_system or (rnd.rnd() < 0.9)),
+   }, spir.table_patrol )
 end
 
 function spir.spawn_loner_weak ()
-   local pilots = {}
-   pilots.__nofleet = true
-   pilots.__stealth = hostile_system or (rnd.rnd() < 0.7)
-
-   local r = rnd.rnd()
-   if r < 0.3 then
-      scom.addPilot( pilots, shyena )
-   elseif r < 0.5 then
-      scom.addPilot( pilots, sshark )
-   elseif r < 0.65 then
-      scom.addPilot( pilots, svendetta )
-   elseif r < 0.85 then
-      scom.addPilot( pilots, sancestor )
-   else
-      scom.addPilot( pilots, sphalanx )
-   end
-
-   return pilots
+   return spir.spawn_table( {
+      __nofleet = true,
+      __stealth = (hostile_system or (rnd.rnd() < 0.7)),
+   }, spir.table_loner_weak )
 end
 
 function spir.spawn_loner_strong ()
-   local pilots = {}
-   pilots.__nofleet = true
-   pilots.__stealth = hostile_system or (rnd.rnd() < 0.7)
-
-   local r = rnd.rnd()
-   if r < 0.4 then
-      scom.addPilot( pilots, srhino )
-   elseif r < 0.7 then
-      scom.addPilot( pilots, sadmonsher )
-   else
-      scom.addPilot( pilots, sstarbridge )
-   end
-
-   return pilots
+   return spir.spawn_table( {
+      __nofleet = true,
+      __stealth = (hostile_system or (rnd.rnd() < 0.7)),
+   }, spir.table_loner_strong )
 end
 
 -- @brief Spawns a medium sized squadron.
 function spir.spawn_squad ()
-   local pilots = {}
-   pilots.__nofleet = (rnd.rnd() < 0.6)
-   pilots.__stealth = hostile_system or (rnd.rnd() < 0.7)
-   local r = rnd.rnd()
-
-   if r < 0.3 then
-      scom.addPilot( pilots, svendetta )
-      scom.addPilot( pilots, sancestor )
-      scom.addPilot( pilots, sancestor )
-      scom.addPilot( pilots, shyena )
-   elseif r < 0.5 then
-      scom.addPilot( pilots, svendetta )
-      scom.addPilot( pilots, sancestor )
-      scom.addPilot( pilots, sshark )
-      scom.addPilot( pilots, shyena )
-   elseif r < 0.7 then
-      scom.addPilot( pilots, srhino )
-      scom.addPilot( pilots, sphalanx )
-      scom.addPilot( pilots, sshark )
-   elseif r < 0.85 then
-      scom.addPilot( pilots, sadmonsher )
-      scom.addPilot( pilots, svendetta )
-      scom.addPilot( pilots, sshark )
-      scom.addPilot( pilots, shyena )
-   else
-      scom.addPilot( pilots, sstarbridge )
-      scom.addPilot( pilots, sshark )
-      scom.addPilot( pilots, sshark )
-   end
-
-   return pilots
+   return spir.spawn_table( {
+      __nofleet = (rnd.rnd() < 0.6),
+      __stealth = (hostile_system or (rnd.rnd() < 0.7)),
+   }, spir.table_squad )
 end
 
 -- @brief Spawns a capship with escorts.
 function spir.spawn_capship ()
-   local pilots = {}
-   pilots.__nofleet = (rnd.rnd() < 0.5)
-   pilots.__stealth = hostile_system or (rnd.rnd() < 0.5)
-   local r = rnd.rnd()
-
-   -- Generate the capship
-   scom.addPilot( pilots, skestrel )
-
-   -- Generate the escorts
-   if r < 0.5 then
-      scom.addPilot( pilots, sadmonsher )
-      scom.addPilot( pilots, svendetta )
-      scom.addPilot( pilots, svendetta )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, sphalanx )
-      scom.addPilot( pilots, svendetta )
-      scom.addPilot( pilots, sancestor )
-      scom.addPilot( pilots, sshark )
-   else
-      scom.addPilot( pilots, srhino )
-      scom.addPilot( pilots, sadmonsher )
-      scom.addPilot( pilots, svendetta )
-      scom.addPilot( pilots, sancestor )
-      scom.addPilot( pilots, sshark )
-   end
-
-   return pilots
+   return spir.spawn_table( {
+      __nofleet = (rnd.rnd() < 0.5),
+      __stealth = (hostile_system or (rnd.rnd() < 0.5)),
+   }, spir.table_capship )
 end
 
 -- @brief Creation hook.
