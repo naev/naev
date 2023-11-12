@@ -10,78 +10,38 @@ local srainmaker  = ship.get("Empire Rainmaker")
 
 -- @brief Spawns a small patrol fleet.
 local function spawn_patrol ()
-   local pilots = { __doscans = true }
-   local r = rnd.rnd()
-
-   if r < 0.5 then
-      scom.addPilot( pilots, slancelot )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, slancelot )
-      scom.addPilot( pilots, sshark )
-   else
-      scom.addPilot( pilots, spacifier )
-   end
-
-   return pilots
+   return scom.doTable( { __doscans = true }, {
+      { w=0.5, slancelot },
+      { w=0.8, slancelot, sshark },
+      { spacifier },
+   } )
 end
-
 
 -- @brief Spawns a medium sized squadron.
 local function spawn_squad ()
-   local pilots = {}
-   if rnd.rnd() < 0.5 then
-      pilots.__doscans = true
-   end
-   local r = rnd.rnd()
-
-   if r < 0.5 then
-      scom.addPilot( pilots, sadmonisher )
-      scom.addPilot( pilots, slancelot )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, sadmonisher )
-      scom.addPilot( pilots, slancelot )
-      scom.addPilot( pilots, sshark )
-   else
-      scom.addPilot( pilots, spacifier )
-      scom.addPilot( pilots, slancelot )
-      scom.addPilot( pilots, sshark )
-   end
-
-   return pilots
+   return scom.doTable( { __doscans = (rnd.rnd() < 0.5) }, {
+      { w=0.5, sadmonisher, slancelot },
+      { w=0.8, sadmonisher, slancelot, sshark },
+      { spacifier, slancelot, sshark },
+   } )
 end
-
 
 -- @brief Spawns a capship with escorts.
 local function spawn_capship ()
-   local pilots = {}
-   local r = rnd.rnd()
-
    -- Generate the capship
-   if r < 0.1 then
-      scom.addPilot( pilots, srainmaker )
-   elseif r < 0.7 then
-      scom.addPilot( pilots, shawking )
-   else
-      scom.addPilot( pilots, speacemaker )
-   end
+   local pilots = scom.doTable( {}, {
+      { w=0.1, srainmaker },
+      { w=0.7, shawking },
+      { speacemaker },
+   } )
 
    -- Generate the escorts
-   r = rnd.rnd()
-   if r < 0.5 then
-      scom.addPilot( pilots, slancelot )
-      scom.addPilot( pilots, slancelot )
-      scom.addPilot( pilots, sshark )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, sadmonisher )
-      scom.addPilot( pilots, slancelot )
-   else
-      scom.addPilot( pilots, spacifier )
-      scom.addPilot( pilots, slancelot )
-   end
-
-   return pilots
+   return scom.doTable( pilots, {
+      { w=0.5, slancelot, slancelot, sshark },
+      { w=0.8, sadmonisher, slancelot },
+      { spacifier, slancelot },
+   } )
 end
-
 
 local fempire = faction.get("Empire")
 -- @brief Creation hook.
