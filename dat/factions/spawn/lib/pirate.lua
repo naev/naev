@@ -39,8 +39,9 @@ spir.table_squad = {
    { sstarbridge, sshark, sshark },
 }
 spir.table_capship = {
-   { w=0.5, skestrel, sadmonisher, svendetta, svendetta },
-   { w=0.8, skestrel, sphalanx, svendetta, sancestor, sshark },
+   { w=0.3, skestrel },
+   { w=0.6, skestrel, sadmonisher, svendetta, svendetta },
+   { w=0.9, skestrel, sphalanx, svendetta, sancestor, sshark },
    { skestrel, srhino, sadmonisher, svendetta, sancestor, sshark },
 }
 
