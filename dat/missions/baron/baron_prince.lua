@@ -35,7 +35,9 @@ local artefactplanetC = spob.get("Hurada")
 local flintplanet, flintsys = spob.getS("Tau Station")
 local flintportait = "neutral/unique/flintley.webp"
 local flintimage = portrait.getFullPath(flintportait)
+local baronimage = nil -- TODO add a portrait for the baron
 local reward = baron.rewards.prince
+local reward2 = outfit.get("Ugly Statue")
 
 local prtunfamiliar = "neutral/unique/unfamiliarman.webp"
 local imgunfamiliar = portrait.getFullPath( prtunfamiliar )
@@ -98,12 +100,21 @@ end
 
 function board()
    if mem.stage == 1 then
-      tk.msg(_("An audience with the Baron"), fmt.f(_([[You find yourself once again aboard the Pinnacle, Baron Sauterfeldt's flag ship. After a short time, an attendant ushers you into the Baron's personal quarters, which are as extravagant as you remember them. You notice the holopainting is now firmly fixed on one of the walls.
-    Baron Dovai Sauterfeldt greets you with a pompous wave of his hand. "Ahh yes, there you are at last. {wrongname1}, was it? Do have a seat." He then offers you a drink, but you decline on the basis that you still have to drive. "Now then, {wrongname2}, I assume you're wondering why I've called you here. As you've no doubt heard, I have an interest in the unique, the exquisite." The Baron gestures around the room. "I have built up quite an impressive collection, as you can see, but it is still lacking something. Fortunately, news has reached me about a priceless artefact from Earth itself, dating back to before the Faction Wars. I must have it. It belongs in the hands of a connoisseur like myself."]]), {wrongname1=mangle(player.name()), wrongname2=mangle(player.name())}))
-      tk.msg(_("An audience with the Baron"), fmt.f(_([["Unfortunately, news of this artefact has reached more ears than just mine. All over the galaxy there are people who will try to sell you 'ancient artefacts', which always turn out to be imitations at best and worthless scrap they picked up from the streets at worst." The Baron snorts derisively. "Even the contacts who usually fenc- ah, I mean, supply me with new items for my collection are in on the frenzy.
-    "I've narrowed down my search to three of these people. I'm confident that one of them is selling the genuine article, while the other two are shams. And this is where you come in, {wrongname1}. I want you to visit these vendors, buy their wares off them and bring me the authentic artefact. You will have the help of a man named Flintley, who is a history buff or some such rot. You will find him on {pnt} in the {sys} system. Simply tell him you're working for me and show him any artefacts in your possession. He will tell you which are authentic and which are fake.
-    "I should warn you, {wrongname2}. Some of my, ah, colleagues have also set their sights on this item, and so you can expect their henchmen to try to take it off you. I trust you are equipped to defend yourself against their despicable sort."]]), {wrongname1=mangle(player.name()), pnt=flintplanet, sys=flintsys, wrongname2=mangle(player.name())}))
-      tk.msg(_("Off to the shops"), _([[You are swiftly escorted back to your ship. You didn't really get the chance to ask the Baron any questions, such as who these potential attackers are, how you're supposed to pay for the artefacts once you locate the sellers, or what you will get out of all this. You do, however, find an update to your galaxy map that shows the location of the sellers, as well as a list of names and portraits. It would seem that the only way to find out what you're dealing with is the hard way.]]))
+      vn.clear()
+      vn.scene()
+      local brn = vn.newCharacter(_("Baron Sauterfeldt"), {image=baronimage})
+
+      vn.na(_([[You find yourself once again aboard the Pinnacle, Baron Sauterfeldt's flag ship. After a short time, an attendant ushers you into the Baron's personal quarters, which are as extravagant as you remember them. You notice the holopainting is now firmly fixed on one of the walls.]]))
+      brn(fmt.f(_([[Baron Dovai Sauterfeldt greets you with a pompous wave of his hand. "Ahh yes, there you are at last. {wrongname1}, was it? Do have a seat." He then offers you a drink, but you decline on the basis that you still have to drive. "Now then, {wrongname2}, I assume you're wondering why I've called you here. As you've no doubt heard, I have an interest in the unique, the exquisite." The Baron gestures around the room. "I have built up quite an impressive collection, as you can see, but it is still lacking something. Fortunately, news has reached me about a priceless artefact from Earth itself, dating back to before the Faction Wars. I must have it. It belongs in the hands of a connoisseur like myself."]]),
+         {wrongname1=mangle(player.name()), wrongname2=mangle(player.name())}))
+      brn(_([["Unfortunately, news of this artefact has reached more ears than just mine. All over the galaxy there are people who will try to sell you 'ancient artefacts', which always turn out to be imitations at best and worthless scrap they picked up from the streets at worst." The Baron snorts derisively. "Even the contacts who usually fenc- ah, I mean, supply me with new items for my collection are in on the frenzy.]]))
+      brn(fmt.f(_([["I've narrowed down my search to three of these people. I'm confident that one of them is selling the genuine article, while the other two are shams. And this is where you come in, {wrongname}. I want you to visit these vendors, buy their wares off them and bring me the authentic artefact. You will have the help of a man named Flintley, who is a history buff or some such rot. You will find him on {pnt} in the {sys} system. Simply tell him you're working for me and show him any artefacts in your possession. He will tell you which are authentic and which are fake.]]),
+         {wrongname=mangle(player.name()), pnt=flintplanet, sys=flintsys}))
+      brn(fmt.f(_([["I should warn you, {wrongname}. Some of my, ah, colleagues have also set their sights on this item, and so you can expect their henchmen to try to take it off you. I trust you are equipped to defend yourself against their despicable sort."]]),
+         {wrongname=mangle(player.name())}))
+      vn.na(_([[You are swiftly escorted back to your ship. You didn't really get the chance to ask the Baron any questions, such as who these potential attackers are, how you're supposed to pay for the artefacts once you locate the sellers, or what you will get out of all this. You do, however, find an update to your galaxy map that shows the location of the sellers, as well as a list of names and portraits. It would seem that the only way to find out what you're dealing with is the hard way.]]))
+      vn.run()
+
       misn.osdCreate(_("Prince"), {
          fmt.f(_("Fly to the {sys} system and dock with (board) Gauss Pinnacle"), {sys=baronsys}),
          _("Buy the artefact and take it to Flintley"),
@@ -123,24 +134,43 @@ function board()
       player.unboard()
       pinnacle:setHealth(100,100)
       idle()
+
    elseif mem.stage == 2 then
-      tk.msg(_("What are you doing here?"), fmt.f(_([[You have not yet collected and identified the genuine artefact. Buy the artefacts from the sellers and visit Flintley on {pnt} ({sys}) to identify the real one.]]), {pnt=flintplanet, sys=flintsys}))
+      vn.clear()
+      vn.scene()
+      vn.na(fmt.f(_([[You have not yet collected and identified the genuine artefact. Buy the artefacts from the sellers and visit Flintley on {pnt} ({sys}) to identify the real one.]]),
+         {pnt=flintplanet, sys=flintsys}))
+      vn.run()
+
       player.unboard()
       pinnacle:setHealth(100,100)
       idle()
+
    elseif mem.stage == 3 then
-      tk.msg(_("The Baron has his prize"), fmt.f(_([[Baron Dovai Sauterfeldt turns the skate-board over in his hands, inspecting every nick, every scratch on the surface. His eyes are gleaming with delight.
-    "Oh, this is marvelous, marvelous indeed, {wrongname1}! A piece of pre-Growth history, right here in my hands! I can almost hear the echoes of that ancient civilization when I put my ear close to it! This is going to be the centrepiece in my collection of relics and artefacts. Yes indeed!
-    "I was right to send you, {wrongname2}, you've beautifully lived up to my expectations. And I'm a man of my word, I will reward you as promised. What was it we agreed on again? What, I never promised you anything? Well, that won't do. I'll have my assistant place a suitable amount of money in your account. You will not find me ungrateful! Ah, but you must excuse me. I need time to revel in this fantastic piece of art! Goodbye, {wrongname3}, I will call on you when I have need of you again."
-    You are seen out of the Baron's quarters, so you head back through the airlock and back into your own ship. The first thing you do is check your balance, and to your relief, it has indeed been upgraded by a substantial amount. You also seem to have received a statue of dubious taste. As you undock, you wonder what kind of wild goose chase the man will send you on next time.]]), {wrongname1=mangle(player.name()), wrongname2=mangle(player.name()), wrongname3=mangle(player.name())}))
+      vn.clear()
+      vn.scene()
+      local brn = vn.newCharacter(_("Baron Sauterfeldt"), {image=baronimage})
+      brn(_([[Baron Dovai Sauterfeldt turns the skate-board over in his hands, inspecting every nick, every scratch on the surface. His eyes are gleaming with delight.]]))
+      brn(fmt.f(_([["Oh, this is marvelous, marvelous indeed, {wrongname}! A piece of pre-Growth history, right here in my hands! I can almost hear the echoes of that ancient civilization when I put my ear close to it! This is going to be the centrepiece in my collection of relics and artefacts. Yes indeed!"]]),
+         {wrongname=mangle(player.name())}))
+      brn(fmt.f(_([["I was right to send you, {wrongname1}, you've beautifully lived up to my expectations. And I'm a man of my word, I will reward you as promised. What was it we agreed on again? What, I never promised you anything? Well, that won't do. I'll have my assistant place a suitable amount of money in your account. You will not find me ungrateful! Ah, but you must excuse me. I need time to revel in this fantastic piece of art! Goodbye, {wrongname2}, I will call on you when I have need of you again."]]),
+         {wrongname1=mangle(player.name()), wrongname2=mangle(player.name())}))
+      vn.na(_([[You are seen out of the Baron's quarters, so you head back through the airlock and back into your own ship. The first thing you do is check your balance, and to your relief, it has indeed been upgraded by a substantial amount. You also seem to have received a statue of dubious taste. As you undock, you wonder what kind of wild goose chase the man will send you on next time.]]))
+      vn.sfxVictory()
+      vn.func( function ()
+         player.pay(reward)
+         player.outfitAdd(reward2)
+      end )
+      vn.na(fmt.reward(reward).."\n"..fmt.reward(reward2))
+      vn.run()
+
       player.unboard()
       pinnacle:setHealth(100,100)
       pinnacle:control(false)
-      player.pay(reward)
-      player.outfitAdd("Ugly Statue")
       baron.addLog( _([[Baron Sauterfeldt sent you on a wild goose chase to find some ancient artefact known as a "skate-board", which you found for him.]]) )
       misn.finish(true)
    end
+
    pinnacle:setHilight(false)
 end
 
