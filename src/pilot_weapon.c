@@ -1604,7 +1604,10 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
       return pilot_outfitLOntoggle( p, o, 0 );
    else {
       o->stimer = outfit_cooldown( o->outfit );
-      o->state  = PILOT_OUTFIT_COOLDOWN;
+      if (o->stimer < 0.)
+         o->state  = PILOT_OUTFIT_OFF;
+      else
+         o->state  = PILOT_OUTFIT_COOLDOWN;
    }
 
    return 1;
