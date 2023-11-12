@@ -46,35 +46,23 @@ spir.table_capship = {
    { skestrel, srhino, sadmonisher, svendetta, sancestor, sshark },
 }
 
-function spir.spawn_table( pilots, tbl )
-   local r = rnd.rnd()
-   for k,t in ipairs(tbl) do
-      if not t.w or t.w <= r then
-         for i,p in ipairs(t) do
-            scom.addPilot( pilots, p )
-         end
-      end
-   end
-   return pilots
-end
-
 -- @brief Spawns a small patrol fleet.
 function spir.spawn_patrol ()
-   return spir.spawn_table( {
+   return scom.doTable( {
       __nofleet = not prefer_fleets and (rnd.rnd() < 0.7),
       __stealth = (hostile_system or (rnd.rnd() < 0.9)),
    }, spir.table_patrol )
 end
 
 function spir.spawn_loner_weak ()
-   return spir.spawn_table( {
+   return scom.doTable( {
       __nofleet = true,
       __stealth = (hostile_system or (rnd.rnd() < 0.7)),
    }, spir.table_loner_weak )
 end
 
 function spir.spawn_loner_strong ()
-   return spir.spawn_table( {
+   return scom.doTable( {
       __nofleet = true,
       __stealth = (hostile_system or (rnd.rnd() < 0.7)),
    }, spir.table_loner_strong )
@@ -82,7 +70,7 @@ end
 
 -- @brief Spawns a medium sized squadron.
 function spir.spawn_squad ()
-   return spir.spawn_table( {
+   return scom.doTable( {
       __nofleet = not prefer_fleets and (rnd.rnd() < 0.6),
       __stealth = (hostile_system or (rnd.rnd() < 0.7)),
    }, spir.table_squad )
@@ -90,7 +78,7 @@ end
 
 -- @brief Spawns a capship with escorts.
 function spir.spawn_capship ()
-   return spir.spawn_table( {
+   return scom.doTable( {
       __nofleet = not prefer_fleets and (rnd.rnd() < 0.5),
       __stealth = (hostile_system or (rnd.rnd() < 0.5)),
    }, spir.table_capship )

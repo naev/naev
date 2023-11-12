@@ -212,6 +212,19 @@ function scom.spawn( pilots )
    return spawned
 end
 
+-- @brief Probabilistically adds a table of pilots
+function scom.doTable( pilots, tbl )
+   local r = rnd.rnd()
+   for k,t in ipairs(tbl) do
+      if not t.w or t.w <= r then
+         for i,p in ipairs(t) do
+            scom.addPilot( pilots, p )
+         end
+      end
+   end
+   return pilots
+end
+
 -- @brief adds a pilot to the table
 function scom.addPilot( pilots, s, params )
    local presence = s:points()
