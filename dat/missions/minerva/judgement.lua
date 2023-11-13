@@ -647,6 +647,9 @@ She tries to adjust her position a bit to breath more easily, the pain is clear 
 
    vn.run()
 
+   -- Since it was triggered by talking to an NPC, we have to trigger the next mission so the next NPC appears
+   naev.missionStart("Minerva Finale 1")
+
    if didtrial then
       local winnerstr
       if winner=="zalek" then
