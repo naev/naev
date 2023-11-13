@@ -30,7 +30,6 @@ function scans.check_visible( target )
    return false
 end
 
-
 --[[
 -- Aborts current task and tries to see what happened to the target.
 --]]
@@ -40,7 +39,7 @@ function scans.investigate( target )
    ai.poptask()
 
    -- No need to investigate: target has jumped out.
-   if target:flags("jumpingout") then
+   if target:flags("jumpingout") or target:flags("landing") then
       return
    end
 
@@ -51,7 +50,9 @@ function scans.investigate( target )
    ai.pushtask("inspect_moveto", fpos )
 end
 
-
+--[[--
+   Initializes a scanning task to target
+--]]
 function scans.push( target )
    -- Send a message if applicable
    local msg = mem.scan_msg or _("Prepare to be scanned.")
@@ -59,9 +60,8 @@ function scans.push( target )
    ai.pushtask( "scan", target )
 end
 
-
---[[
--- Tries to get close to scan the enemy
+--[[--
+   Tries to get close to scan the enemy
 --]]
 function scans.scan( target )
    if not target:exists() then
@@ -117,12 +117,9 @@ function scans.scan( target )
       return
    end
 
-   -- Get stats about the enemy
-   local dist = ai.dist(target)
-
    -- Get closer and scan
    ai.iface( target )
-   if dist > 1000 then
+   if ai.dist2(target) > 1000*1000 then
       ai.accel()
    end
 end
@@ -146,7 +143,6 @@ local function __needs_scan( target )
    end
    return true
 end
-
 
 --[[
 -- Whether or not we want to scan, ignore players for now
@@ -176,7 +172,6 @@ local function __wanttoscan( p, target )
 
    return true
 end
-
 
 --[[
 -- Tries to get find a good target to scan with some heuristics based on mass
