@@ -10,6 +10,7 @@
   <price>650000</price>
   <gfx_store>/gfx/misc/icons/mirror-mirror.webp</gfx_store>
   <description>It's not clear how this flow ability came to be, but stories tell of a pirate who took too many flow mushrooms and ended up locked up in the lavatory with a large mirror. When they managed to get them out, they claimed they had a very long and in-depth conversation with their other selves. The plurality of self concept was then refined with flow amplifiers to be able to project multiple copies of one's ship to amplify the raw destructive power. It has become a favourite of those who have been able to master the skill.</description>
+  <limit>house_of_mirrors</limit>
  </general>
  <specific type="modification">
   <lua>outfits/flow/abilities/house_of_mirrors.lua</lua>
