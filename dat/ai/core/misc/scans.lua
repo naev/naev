@@ -118,8 +118,8 @@ function scans.scan( target )
    end
 
    -- Get closer and scan
-   ai.iface( target )
-   if ai.dist2(target) > 1000*1000 then
+   local off = ai.iface( target )
+   if off < math.rad(30) and ai.dist2(target) > 1000*1000 then
       ai.accel()
    end
 end
