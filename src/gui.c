@@ -1180,7 +1180,8 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    }
    else {
       /* Draw scanning icon. */
-      if (scanning) {
+      //if (scanning) {
+      if (1) {
          glUseProgram( shaders.pilotscanning.program );
          gl_renderShader( x+scale+3., y+scale+3., 5., 5., 1.5*animation_dt, &shaders.pilotscanning, col, 1 );
       }
