@@ -1173,13 +1173,17 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    /* Draw name. */
    if (overlay && pilot_isFlag(p, PILOT_HILIGHT)) {
       gl_printMarkerRaw( &gl_smallFont, x+scale+5., y-gl_smallFont.h/2., col, p->name );
-      if (scanning)
-         gl_renderCircle( x+scale+5., y+gl_smallFont.h/2.+5., 4., col, 1 );
+      if (scanning) {
+         glUseProgram( shaders.pilotscanning.program );
+         gl_renderShader( x+scale+3., y+scale+gl_smallFont.h/2.+3., 5., 5., 1.5*animation_dt, &shaders.pilotscanning, col, 1 );
+      }
    }
    else {
       /* Draw scanning icon. */
-      if (scanning)
-         gl_renderCircle( x+scale+3., y+scale+3., 4., col, 1 );
+      if (scanning) {
+         glUseProgram( shaders.pilotscanning.program );
+         gl_renderShader( x+scale+3., y+scale+3., 5., 5., 1.5*animation_dt, &shaders.pilotscanning, col, 1 );
+      }
    }
 }
 

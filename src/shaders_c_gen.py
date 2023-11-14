@@ -309,6 +309,10 @@ SHADERS = [
       fs_path = "pilotmarker.frag",
    ),
    SimpleShader(
+      name = "pilotscanning",
+      fs_path = "pilotscanning.frag",
+   ),
+   SimpleShader(
       name = "playermarker",
       fs_path = "playermarker.frag",
    ),
