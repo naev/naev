@@ -70,9 +70,23 @@ end
 
 function shadow.vn_rebina( params )
    return vn.Character.new( _("Rebina"),
-         tmerge( {
-            image = portrait.getFullPath("neutral/unique/rebina_casual.webp"),
-         }, params ) )
+      tmerge( {
+         image = portrait.getFullPath("neutral/unique/rebina.webp"),
+      }, params ) )
+end
+
+function shadow.vn_rebina_casual( params )
+   return vn.Character.new( _("Rebina"),
+      tmerge( {
+         image = portrait.getFullPath("neutral/unique/rebina_casual.webp"),
+      }, params ) )
+end
+
+function shadow.vn_jorek( params )
+   return vn.Character.new( _("Jorek"),
+      tmerge( {
+         image = portrait.getFullPath("neutral/unique/jorek.webp"),
+      }, params ) )
 end
 
 return shadow
