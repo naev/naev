@@ -435,9 +435,9 @@ void ai_unsetPilot( AIMemory oldmem )
 void ai_thinkSetup (void)
 {
    /* Clean up some variables */
-   pilot_acc         = 0.;
-   pilot_turn        = 0.;
-   pilot_flags       = 0;
+   pilot_acc   = 0.;
+   pilot_turn  = 0.;
+   pilot_flags = 0;
 }
 
 /**
@@ -802,6 +802,7 @@ void ai_think( Pilot* pilot, const double dt )
    env = cur_pilot->ai->env; /* set the AI profile to the current pilot's */
 
    ai_thinkSetup();
+   pilot_rmFlag( pilot, PILOT_SCANNING ); /* Reset each frame, only set if the pilot is checking ai.scandone. */
    /* So the way this works is that, for other than the player, we reset all
     * the weapon sets every frame, so that the AI has to redo them over and
     * over. Now, this is a horrible hack so shit works and needs a proper fix.
@@ -1701,6 +1702,7 @@ static int aiL_hasprojectile( lua_State *L )
 
 static int aiL_scandone( lua_State *L )
 {
+   pilot_setFlag( cur_pilot, PILOT_SCANNING ); /*< Indicate pilot is scanning this frame. */
    lua_pushboolean(L, pilot_ewScanCheck( cur_pilot ) );
    return 1;
 }

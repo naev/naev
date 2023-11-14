@@ -54,6 +54,7 @@ enum {
    /* Player-related stuff. */
    PILOT_HOSTILE,       /**< Pilot is hostile to the player. */
    PILOT_FRIENDLY,      /**< Pilot is friendly to the player. */
+   PILOT_SCANNING,      /**< Pilot is scanning the pilot. */
    PILOT_COMBAT,        /**< Pilot is engaged in combat. */
    PILOT_BRIBED,        /**< Pilot has been bribed already. */
    PILOT_DISTRESSED,    /**< Pilot has distressed once already. */

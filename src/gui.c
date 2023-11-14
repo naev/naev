@@ -1108,6 +1108,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
 {
    double x, y, scale, ssize;
    const glColour *col;
+   int scanning;
 
    /* Make sure is in range. */
    if (!pilot_validTarget( player.p, p ))
@@ -1152,8 +1153,9 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       col = gui_getPilotColour(p);
 
    scale = MAX(scale+2.0, 3.5+ssize); /* Compensate for outline. */
+   scanning = (pilot_isFlag(p,PILOT_SCANNING) && (p->target==PLAYER_ID));
 
-   if (pilot_isFlag(p, PILOT_HILIGHT)) {
+   if (pilot_isFlag(p, PILOT_HILIGHT) || scanning) {
       glColour highlighted = cRadar_hilight;
       highlighted.a = 0.3;
       glUseProgram( shaders.hilight.program );
@@ -1169,8 +1171,16 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       gui_blink( x, y, MAX(scale*2.,10.0), &cRadar_hilight, RADAR_BLINK_PILOT, blink_pilot);
 
    /* Draw name. */
-   if (overlay && pilot_isFlag(p, PILOT_HILIGHT))
+   if (overlay && pilot_isFlag(p, PILOT_HILIGHT)) {
       gl_printMarkerRaw( &gl_smallFont, x+scale+5., y-gl_smallFont.h/2., col, p->name );
+      if (scanning)
+         gl_renderCircle( x+scale+5., y+gl_smallFont.h/2.+5., 4., col, 1 );
+   }
+   else {
+      /* Draw scanning icon. */
+      if (scanning)
+         gl_renderCircle( x+scale+3., y+scale+3., 4., col, 1 );
+   }
 }
 
 /**
