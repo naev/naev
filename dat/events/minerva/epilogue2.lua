@@ -119,7 +119,7 @@ She seems a tad tipsy.]]),
    vn.label("03_cont")
    maikki(_([["Well, not only were we able to save Kex with them, but the Skull & Bones engineers were able to recover some interesting experimental weapon designs! We sold a couple to recoup costs on the entire Minerva Station incident, of course we kept a copy for ourselves."
 She flashes a sly grin.]]))
-   maikki(_([["It doesn't stop there though, the great gals and girls at Skull & Bones even implemented one of the designs, and solve some of the power regulation problems it had. Behold, the Energy Harpoon!"
+   maikki(_([["It doesn't stop there though, the great gals and girls at Skull & Bones even implemented one of the designs, and solved some of the power regulation problems it had. Behold, the Energy Harpoon!"
 She shows you a holographic projection of what seems to be a fancy-looking medium-sized weapon prototype.]]))
    vn.menu( function ()
       local opts = {
