@@ -26,6 +26,7 @@ local pir = require "common.pirate"
 local achack = require "common.achack"
 local vn = require "vn"
 local vntk = require "vntk"
+local love_shaders = require "love_shaders"
 
 local ambush, joanneship -- Non-persistent state
 local ambushSet -- Forward-declared functions
@@ -34,10 +35,6 @@ local ambushSet -- Forward-declared functions
 local reward = 750e3
 -- This is the route Joanne will take.
 local route = {"Violin Monastery", "Fyruse Monastery", "Inios Monastery", "Tankard Cloister", "Sroolu"}
-
-local text4 = _([[You go through the now familiar routine of waiting for Joanne. She soon hails you on the comms.
-    "That's it, {player}! This was the final stop. You've been a great help. This isn't a good place to wrap things up though. Tell you what, let's relocate to Sroolu and meet up in the spaceport bar there. I need to give you your payment, of course, but I also want to talk to you for a bit. See you planetside!"
-    The comm switches off. You prepare to take off and set a course for Sroolu.]])
 
 local stoptext = _("You dock with {pnt}, and the spacedock personnel immediately begin to refuel your ship. You spend a few hectoseconds going through checklists and routine maintenance operations. Then you get a ping on your comms from Joanne. She tells you that she has finished her business on this station, and that she's taking off again. You follow suit.")
 
@@ -122,6 +119,17 @@ function accept()
    hook.load("on_load")
 end
 
+local function laststop_vn ()
+   vn.clear()
+   vn.scene()
+   local joanne = vn.newCharacter( achack.vn_joanne{shader=love_shaders.hologram()})
+   vn.transition()
+   vn.na(_([[You go through the now familiar routine of waiting for Joanne. She soon hails you on the comms.]]))
+   joanne(_([["That's it, {player}! This was the final stop. You've been a great help. This isn't a good place to wrap things up though. Tell you what, let's relocate to Sroolu and meet up in the spaceport bar there. I need to give you your payment, of course, but I also want to talk to you for a bit. See you planetside!"]]))
+   vn.na(_([[The comm switches off. You prepare to take off and set a course for Sroolu.]]))
+   vn.run()
+end
+
 -- Land hook.
 function land()
    if spob.cur() == mem.destplanet and mem.joannelanded and mem.stage < 4 then
@@ -135,7 +143,7 @@ function land()
       player.takeoff()
 
    elseif spob.cur() == mem.destplanet and mem.joannelanded and mem.stage == 4 then
-      vntk.msg(_("Mission accomplished"), fmt.f(text4, {player=player.name()}))
+      laststop_vn()
       mem.stage = mem.stage + 1
       mem.origin = spob.cur()
       mem.destplanet, mem.destsys = spob.getS(route[mem.stage])
@@ -282,10 +290,10 @@ end
 -- Load hook. Makes sure the player can't start on military stations.
 function on_load()
    if mem.stage > 1 and mem.stage < 5 then
-      tk.msg(_("Another stop successfully reached"), fmt.f(stoptext, {pnt=spob.cur()}))
+      vntk.msg(_("Another stop successfully reached"), fmt.f(stoptext, {pnt=spob.cur()}))
       player.takeoff()
    elseif mem.stage == 5 then
-      tk.msg(_("Mission accomplished"), fmt.f(text4, {player=player.name()}))
+      laststop_vn()
       player.takeoff()
    end
 end
