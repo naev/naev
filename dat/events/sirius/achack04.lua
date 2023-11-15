@@ -11,7 +11,7 @@
       return false
    end
    local pres = system.cur():presences()["Sirius"] or 0
-   if pres < 50 then
+   if pres &lt; 50 then
       return false
    end
    return true
