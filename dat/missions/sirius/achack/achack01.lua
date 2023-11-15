@@ -47,13 +47,15 @@ function accept()
    vn.na(_([[You find a young Fyrra man sitting uncomfortably amidst the uncouth characters that frequent the Wringer. He seems to be here with a purpose, but nobody seems to be giving him the time of day. Curious, you decide to talk to the man and find out why he is here.]]))
    harja(_([["Well met, stranger," the young Sirian greets you. "My name is Harja. I'm looking for someone who can help me with this... problem I have. It requires some violence. But nobody I've talked to so far seems interested! I thought this place was supposed to be filled with mercenaries and killers for hire. I can't believe how difficult this is!"]]))
    vn.na(_([[Harja clearly seems frustrated. And it seems he's here to hire someone to do some dirty work for him. Maybe it was not such a good idea to talk to him after all?]]))
-   harja(_([["Listen," he continues. "I don't intend to bore you with my personal sob story, so let's just say there's someone I want dead, a dangerous criminal. This woman did something to me cycles ago that just can't go unpunished. I've got money. I'm willing to pay. All you need to do is locate her and discreetly take her out. I don't care how you do it. I don't even care if you enjoy it. Just come back when she's dead, and I'll pay you 400,000 credits. Do we have a deal?"]]))
+   harja(fmt.f(_([["Listen," he continues. "I don't intend to bore you with my personal sob story, so let's just say there's someone I want dead, a dangerous criminal. This woman did something to me cycles ago that just can't go unpunished. I've got money. I'm willing to pay. All you need to do is locate her and discreetly take her out. I don't care how you do it. I don't even care if you enjoy it. Just come back when she's dead, and I'll pay you {reward}. Do we have a deal?"]]),
+      {reward=misn_reward}))
    vn.menu{
       {_([["Yes."]]),"accept"},
       {_([[Decline.]]),"decline"},
    }
 
    vn.label("decline")
+   vn.na(_([[You decline to take Harja's unsavoury job.]]))
    vn.done()
 
    vn.label("accept")
@@ -95,6 +97,7 @@ function talkJoanne()
    vn.clear()
    vn.scene()
    local joanne = vn.newCharacter( achack.vn_joanne() )
+   joanne:rename(_("Serra Officer")) -- Don't know name yet
    vn.transition()
 
    vn.na(_([[You approach the young officer, determined to find out what you've gotten yourself involved with. You hope this was just a big mistake.]]))
