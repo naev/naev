@@ -224,6 +224,7 @@ function scom.doTable( pilots, tbl )
          for i,p in ipairs(t) do
             scom.addPilot( pilots, p )
          end
+         break
       end
    end
    return pilots
