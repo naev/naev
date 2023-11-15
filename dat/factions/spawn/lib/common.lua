@@ -215,7 +215,11 @@ end
 -- @brief Probabilistically adds a table of pilots
 function scom.doTable( pilots, tbl )
    local r = rnd.rnd()
+   local n = #tbl
    for k,t in ipairs(tbl) do
+      if not t.w and k<n then
+         warn(_("Spawn table is missing 'w' fields!"))
+      end
       if not t.w or t.w <= r then
          for i,p in ipairs(t) do
             scom.addPilot( pilots, p )
