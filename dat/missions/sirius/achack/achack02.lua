@@ -128,10 +128,11 @@ local function laststop_vn ()
    vn.clear()
    vn.scene()
    local joanne = vn.newCharacter( achack.vn_joanne{shader=love_shaders.hologram()})
-   vn.transition()
+   vn.transition("electric")
    vn.na(_([[You go through the now familiar routine of waiting for Joanne. She soon hails you on the comms.]]))
    joanne(_([["That's it, {player}! This was the final stop. You've been a great help. This isn't a good place to wrap things up though. Tell you what, let's relocate to Sroolu and meet up in the spaceport bar there. I need to give you your payment, of course, but I also want to talk to you for a bit. See you planetside!"]]))
    vn.na(_([[The comm switches off. You prepare to take off and set a course for Sroolu.]]))
+   vn.done("electric")
    vn.run()
 end
 

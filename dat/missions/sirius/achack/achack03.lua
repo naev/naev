@@ -157,10 +157,11 @@ function hail()
       vn.clear()
       vn.scene()
       local hrj = achack.vn_harja{shader=love_shaders.hologram()}
-      vn.transition()
+      vn.transition("electric")
       vn.na(_([[You hail Harja's ship. A few moments later his face appears on your console. When he recognizes you, his face sets in an angry scowl.]]))
       hrj(_([["You! How dare you show your face to me again after double-crossing me like that! I had a perfect shot at taking out that damn woman, but you had to go and tip her off instead. Worse, you even helped her fight off the other guys I hired to blast her into space dust! You ruined everything! The past cycles of my life, completely wasted! Damn you!"]]))
       hrj(_([[You try to convince Harja that you want to have a word with him about this matter, but he is furious. "I've got nothing to say to a traitorous scumbag like you! Now leave me alone, I'm having a bad day as it is without you spoiling it further!" With that, Harja breaks the connection. Oh well, looks like you're going to have to do this the hard way.]]))
+      vn.done("electric")
       vn.run()
 
       mem.hailed = true
