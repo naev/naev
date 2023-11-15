@@ -99,7 +99,6 @@ function seiryuuBoard()
       vn.scene()
       local rebina = vn.newCharacter( shadow.vn_rebina() )
       vn.transition()
-
       vn.na(_([[You make your way through the now familiar corridors of the Seiryuu. You barely notice the strange environment anymore. It seems unimportant compared to the strange events that surround your every encounter with these Four Winds.]]))
       rebina(fmt.f(_([[You step onto the bridge where Captain Rebina is waiting for you. "Welcome back, {player}," she says. "I'm pleased to see that you decided to respond to our communication. I doubt you would have come here if you weren't willing to continue to aid us. Your presence here confirms that you are a reliable partner, so I will treat you accordingly."]]),
          {player=player.name()}))
@@ -468,15 +467,22 @@ end
 
 -- NPC hook
 function jorek()
-   tk.msg(_("Still an unpleasant man"), fmt.f(_([["Well hello there {player}," Jorek says when you approach his table. "It's about damn time you showed up. I've been wastin' credits on this awful swill for days now."
-    Not at all surprised that Jorek is still as disagreeable as the last time you encountered him, you decide to ask him to explain the situation, beginning with how he knew that it was you who would be coming for him. Jorek laughs heartily at that.
-    "Ha! Of course it was going to be you. Who else would that lass Rebina send? She's tough as nails, that girl, but I know how her mind works. She's cornered, potential enemies behind every door in the organization. And you have done us a couple of favours already. In fact, you're the only one she can trust outside her own little circle of friends, and right now I'm not too sure how far she trusts those. Plus, she really has a keen nose when it comes to sniffin' out reliable people, and she knows it. Yeah, I knew she'd send you to find me."
-    That answers one question. But you still don't know why Jorek hasn't been reporting in like he should have.
-    "Yeah, right, about that. You know about the deal with the other branches getting too big for their britches? Good. Well, I've been lookin' into that, pokin' my nose into their business. Since I'm dealin' with my fellow Shadows here, I couldn't afford to give myself away. So that's that. But there's more."]]), {player=player.name()}))
-   tk.msg(_("Still an unpleasant man"), _([["I dunno if you've seen them on your way here, but there's guys of ours hangin' around in the system. And when I say guys of ours, I mean guys of theirs, since they sure ain't our guys any more. They've been on my ass ever since I left Manis, so I think I know what they want. They want to get me and see what I know, or maybe they just want to blow me into space dust. Either way, I need you to help me get out of this rathole."
-    You ask Jorek why he didn't just lie low on some world until the coast was clear, instead of coming to this sink for the dregs of intergalactic society.
-    "It ain't that simple," Jorek sighs. "See, I got an inside man. A guy in their ranks who wants out. I need to get him back to the old girl so he can tell her what he knows firsthand. He's out there now, with the pack, so we need to pick him up on our way out. Now, there's two ways we can do this. We can either go in fast, grab the guy, get out fast before the wolves get us. Or we can try to fight our way through. Let me warn you though, these guys mean business, and they're not your average pirates. Unless you got a really tough ship, I recommend you run."
-    Jorek sits back in his chair. "Well, there you have it. I'll fill you in on the details once we're spaceborne. Show me to your ship, buddy, and let's get rollin'. I've had enough of this damn place."]]))
+   vn.clear()
+   vn.scene()
+   local jorek = vn.newCharacter(shadow.vn_jorek())
+   vn.transition()
+   jorek(fmt.f(_([["Well hello there {player}," Jorek says when you approach his table. "It's about damn time you showed up. I've been wastin' credits on this awful swill for days now."]]),
+      {player=player.name()}))
+   vn.na(_([[Not at all surprised that Jorek is still as disagreeable as the last time you encountered him, you decide to ask him to explain the situation, beginning with how he knew that it was you who would be coming for him. Jorek laughs heartily at that.]]))
+   jorek(_([["Ha! Of course it was going to be you. Who else would that lass Rebina send? She's tough as nails, that girl, but I know how her mind works. She's cornered, potential enemies behind every door in the organization. And you have done us a couple of favours already. In fact, you're the only one she can trust outside her own little circle of friends, and right now I'm not too sure how far she trusts those. Plus, she really has a keen nose when it comes to sniffin' out reliable people, and she knows it. Yeah, I knew she'd send you to find me."]]))
+   vn.na(_([[That answers one question. But you still don't know why Jorek hasn't been reporting in like he should have.]]))
+   jorek(_([["Yeah, right, about that. You know about the deal with the other branches getting too big for their britches? Good. Well, I've been lookin' into that, pokin' my nose into their business. Since I'm dealin' with my fellow Shadows here, I couldn't afford to give myself away. So that's that. But there's more."]]))
+   jorek(_([["I dunno if you've seen them on your way here, but there's guys of ours hangin' around in the system. And when I say guys of ours, I mean guys of theirs, since they sure ain't our guys any more. They've been on my ass ever since I left Manis, so I think I know what they want. They want to get me and see what I know, or maybe they just want to blow me into space dust. Either way, I need you to help me get out of this rathole."]]))
+   vn.na(_([[You ask Jorek why he didn't just lie low on some world until the coast was clear, instead of coming to this sink for the dregs of intergalactic society.]]))
+   jorek(_([["It ain't that simple," Jorek sighs. "See, I got an inside man. A guy in their ranks who wants out. I need to get him back to the old girl so he can tell her what he knows firsthand. He's out there now, with the pack, so we need to pick him up on our way out. Now, there's two ways we can do this. We can either go in fast, grab the guy, get out fast before the wolves get us. Or we can try to fight our way through. Let me warn you though, these guys mean business, and they're not your average pirates. Unless you got a really tough ship, I recommend you run."]]))
+   jorek(_([[Jorek sits back in his chair. "Well, there you have it. I'll fill you in on the details once we're spaceborne. Show me to your ship, buddy, and let's get rollin'. I've had enough of this damn place."]]))
+   vn.run()
+
    misn.npcRm(mem.joreknpc)
    local c = commodity.new(N_("Jorek"), N_("An unpleasant man."))
    misn.cargoAdd(c, 0)
