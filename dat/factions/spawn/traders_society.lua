@@ -21,7 +21,7 @@ end
 local function spawn_squad ()
    if rnd.rnd() < 0.5 then
       return scom.doTable( {}, {
-         { 0.5, skoala, sllama, sllama },
+         { w=0.5, skoala, sllama, sllama },
          { skoala, sgawain, sgawain },
       } )
    else
