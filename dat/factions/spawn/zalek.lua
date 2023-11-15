@@ -14,11 +14,11 @@ local smammon     = ship.get("Za'lek Mammon")
 local function spawn_patrol( pilots )
    pilots = pilots or { __doscans=true }
    return scom.doTable( pilots, {
-      { 0.2, sdronelight, sdronelight },
-      { 0.3, sdronebomber, sdronebomber },
-      { 0.5, sdroneheavy, sdronelight },
-      { 0.7, sdronebomber, sdronelight, sdronelight },
-      { 0.8, sdroneheavy, sdronelight, sdronelight },
+      { w=0.2, sdronelight, sdronelight },
+      { w=0.3, sdronebomber, sdronebomber },
+      { w=0.5, sdroneheavy, sdronelight },
+      { w=0.7, sdronebomber, sdronelight, sdronelight },
+      { w=0.8, sdroneheavy, sdronelight, sdronelight },
       { ssting },
    } )
 end
