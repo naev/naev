@@ -215,11 +215,11 @@ function land_flf ()
       vn.sfxMoney()
       vn.func( function ()
          player.pay( mem.credits )
+         faction.get("FLF"):modPlayer( mem.reputation )
       end )
       vn.na(fmt.reward(mem.credits))
       vn.run()
 
-      faction.get("FLF"):modPlayer( mem.reputation )
       misn.finish( true )
    end
 end
