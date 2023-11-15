@@ -19,6 +19,10 @@ local fmt = require "format"
 local shadow = require "common.shadow"
 local cinema = require "cinema"
 local ai_setup = require "ai.core.setup"
+local vn = require "vn"
+local love_shaders = require "love_shaders"
+local vntk = require "vntk"
+local portrait = require "portrait"
 require "proximity"
 
 local genbu, joe, leader, leaderdest, leaderstart, seiryuu, squads -- Non-persistent state
@@ -46,9 +50,17 @@ function create()
       abort()
    end
 
-   tk.msg(_("An urgent invitation"), fmt.f(_([[Suddenly, out of nowhere, one of the dormant panels in your cockpit springs to life. It shows you a face you've never seen before in your life, but you recognize the plain grey uniform as belonging to the Four Winds.
-    "Hello {player}," the face says. "You must be wondering who I am and how it is I'm talking to you like this. Neither question is important. What is important is that Captain Rebina has urgent need of your services. You are to meet her on the Seiryuu, which is currently in orbit around {pnt} in the {sys} system. Please don't ask any questions now. We expect to see you as quickly as you can make your way here."
-    The screen goes dead again. You decide to make a note of this in your log. Perhaps it would be a good idea to visit the Seiryuu once more, if only to find out how they got a private line to your ship!]]), {player=player.name(), pnt=seirplanet, sys=seirsys}))
+   vn.clear()
+   vn.scene()
+   -- TODO character graphics?
+   local off = vn.newCharacter(_("Four Winds Member"), {image=nil, shader=love_shaders.hologram()})
+   vn.transition()
+   vn.na(_([[Suddenly, out of nowhere, one of the dormant panels in your cockpit springs to life. It shows you a face you've never seen before in your life, but you recognize the plain grey uniform as belonging to the Four Winds.]]))
+   off(fmt.f(_([["Hello {player}," the face says. "You must be wondering who I am and how it is I'm talking to you like this. Neither question is important. What is important is that Captain Rebina has urgent need of your services. You are to meet her on the Seiryuu, which is currently in orbit around {pnt} in the {sys} system. Please don't ask any questions now. We expect to see you as quickly as you can make your way here."]]),
+      {player=player.name(), pnt=seirplanet, sys=seirsys}))
+   vn.na(_([[The screen goes dead again. You decide to make a note of this in your log. Perhaps it would be a good idea to visit the Seiryuu once more, if only to find out how they got a private line to your ship!]]))
+   vn.run()
+
    mem.firstmarker = misn.markerAdd(seirsys, "low")
    accept() -- The player automatically accepts this mission.
 end
@@ -83,31 +95,58 @@ function seiryuuBoard()
    seiryuu:setHilight(false)
    player.unboard()
    if mem.stage == 1 then -- Briefing
-      tk.msg(_("Disclosure"), fmt.f(_([[You make your way through the now familiar corridors of the Seiryuu. You barely notice the strange environment anymore. It seems unimportant compared to the strange events that surround your every encounter with these Four Winds.
-    You step onto the bridge where Captain Rebina is waiting for you. "Welcome back, {player}," she says. "I'm pleased to see that you decided to respond to our communication. I doubt you would have come here if you weren't willing to continue to aid us. Your presence here confirms that you are a reliable partner, so I will treat you accordingly."
-    The captain motions you to take a seat at what looks like a holotable in the centre of the bridge. "Before I tell you what I've called you here for, I feel I should explain to you in full who we are, what we do, and what your part in all this is." She takes a seat opposite from yours, and leans on the holotable. "As I've said before, we are the Four Winds. Our organization is a very secretive one, as you've experienced firsthand. Very few outside our ranks know of our existence, and now you're one of those few."]]), {player=player.name()}))
-      tk.msg(_("Disclosure"), fmt.f(_([["The Four Winds are old, {player}. Very old indeed. The movement dates back to old Earth, before the Space Age, even. We have been with human civilization throughout the ages, at first only in the Eastern nations, later establishing a foothold worldwide. Our purpose was to guide humanity and prevent it from making mistakes it could not afford to make. We never came out in the open, we always worked behind the scenes, from the shadows. We were diplomats, scientists, journalists, politicians' spouses, sometimes even assassins. We used any means necessary to gather information and avert disaster, when we could.
-    "Of course, we didn't always succeed. We couldn't prevent the nuclear strikes on Japan, though we managed to prevent several others. We foiled the sabotage attempts on several of the colony ships launched during the First Growth, but sadly failed to do so in Maelstrom's case. We failed to stop the Faction Wars, though we managed to help the Empire gain the upper hand. Our most recent failure is the Incident - we should have seen it coming, but we were completely taken by surprise."]]), {player=player.name()}))
+      vn.clear()
+      vn.scene()
+      local rebina = vn.newCharacter( shadow.vn_rebina() )
+      vn.transition()
+
+      vn.na(_([[You make your way through the now familiar corridors of the Seiryuu. You barely notice the strange environment anymore. It seems unimportant compared to the strange events that surround your every encounter with these Four Winds.]]))
+      rebina(fmt.f(_([[You step onto the bridge where Captain Rebina is waiting for you. "Welcome back, {player}," she says. "I'm pleased to see that you decided to respond to our communication. I doubt you would have come here if you weren't willing to continue to aid us. Your presence here confirms that you are a reliable partner, so I will treat you accordingly."]]),
+         {player=player.name()}))
+      rebina(_([[The captain motions you to take a seat at what looks like a holotable in the centre of the bridge. "Before I tell you what I've called you here for, I feel I should explain to you in full who we are, what we do, and what your part in all this is." She takes a seat opposite from yours, and leans on the holotable. "As I've said before, we are the Four Winds. Our organization is a very secretive one, as you've experienced firsthand. Very few outside our ranks know of our existence, and now you're one of those few."]]))
+      rebina(fmt.f(_([["The Four Winds are old, {player}. Very old indeed. The movement dates back to old Earth, before the Space Age, even. We have been with human civilization throughout the ages, at first only in the Eastern nations, later establishing a foothold worldwide. Our purpose was to guide humanity and prevent it from making mistakes it could not afford to make. We never came out in the open, we always worked behind the scenes, from the shadows. We were diplomats, scientists, journalists, politicians' spouses, sometimes even assassins. We used any means necessary to gather information and avert disaster, when we could.]]),
+         {player=player.name()}))
+      rebina(_([["Of course, we didn't always succeed. We couldn't prevent the nuclear strikes on Japan, though we managed to prevent several others. We foiled the sabotage attempts on several of the colony ships launched during the First Growth, but sadly failed to do so in Maelstrom's case. We failed to stop the Faction Wars, though we managed to help the Empire gain the upper hand. Our most recent failure is the Incident - we should have seen it coming, but we were completely taken by surprise."]]))
+
+      -- TODO change this ridiculously large log block
       shadow.addLog( fmt.f(_([[Captain Rebina has further explained the organization she works for.
-    "As I've said before, we are the Four Winds. Our organization is a very secretive one, as you've experienced firsthand. Very few outside our ranks know of our existence, and now you're one of those few.
+   "As I've said before, we are the Four Winds. Our organization is a very secretive one, as you've experienced firsthand. Very few outside our ranks know of our existence, and now you're one of those few.
     "The Four Winds are old, {player}. Very old indeed. The movement dates back to old Earth, before the Space Age, even. We have been with human civilization throughout the ages, at first only in the Eastern nations, later establishing a foothold worldwide. Our purpose was to guide humanity and prevent it from making mistakes it could not afford to make. We never came out in the open, we always worked behind the scenes, from the shadows. We were diplomats, scientists, journalists, politicians' spouses, sometimes even assassins. We used any means necessary to gather information and avert disaster, when we could.
     "Of course, we didn't always succeed. We couldn't prevent the nuclear strikes on Japan, though we managed to prevent several others. We foiled the sabotage attempts on several of the colony ships launched during the First Growth, but sadly failed to do so in Maelstrom's case. We failed to stop the Faction Wars, though we managed to help the Empire gain the upper hand. Our most recent failure is the Incident - we should have seen it coming, but we were completely taken by surprise."]]), {player=player.name()} ) )
-      tk.msg(_("Disclosure"), _([[Captain Rebina sits back in her chair and heaves a sigh. "I think that may have been when things started to change. We used to be committed to our purpose, but apparently things are different now. No doubt you remember what happened to the diplomatic exchange between the Empire and the Dvaered some time ago. Well, suffice to say that increasing the tension between the two is definitely not part of our mandate. In fact, it's completely at odds with what we stand for. And that was not just an isolated incident either. Things have been happening that suggest Four Winds involvement, things that bode ill."
-    She activates the holotable, and it displays four cruisers, all seemingly identical to the Seiryuu, though you notice subtle differences in the hull designs.
-    "These are our flagships. Including this ship, they are the Seiryuu, Suzaku, Byakko and Genbu. I'm given to understand that these names, as well as our collective name, have their roots in ancient Asian mythology." The captain touches another control and four portraits appear, superimposed over the ships. "These are the four captains of the flagships, which by extension makes them the highest level of authority within the Four Winds. You know me. The other three are called Giornio, Zurike and Farett."]]))
-      tk.msg(_("Disclosure"), fmt.f(_([["It is my belief that one or more of my fellow captains have abandoned their mission, and are misusing their resources for a different agenda. I have been unable to find out the details of Four Winds missions that I did not order myself, which is a bad sign. I am being stonewalled, and I don't like it. I want to know what's going on, {player}, and you're going to help me do it."
-    The captain turns the holotable back off so she can have your undivided attention. "I have sent Jorek on a recon mission to the planet of {pnt} in the {sys} system. He hasn't reported back to me so far, and that's bad news. Jorek is a reliable agent. If he fails to meet a deadline, then it means he is tied down by factors outside of his control, or worse. I want you to find him. Your position as an outsider will help you fly below the radar of potentially hostile Four Winds operatives. You must go to {pnt} and contact Jorek if you can, or find out where he is if you can't."
-    Captain Rebina stands up, a signal that this briefing is over. You are seen to your ship by a gray-uniformed crewman. You sit in your cockpit for a few hectoseconds before disengaging the docking clamp. What Captain Rebina has told you is a lot to take in. A shadowy organization that guides humanity behind the scenes? And parts of that organization going rogue? The road ahead could well be a bumpy one.]]), {player=player.name(), pnt=jorekplanet1, sys=joreksys1}))
+
+      rebina(_([[Captain Rebina sits back in her chair and heaves a sigh. "I think that may have been when things started to change. We used to be committed to our purpose, but apparently things are different now. No doubt you remember what happened to the diplomatic exchange between the Empire and the Dvaered some time ago. Well, suffice to say that increasing the tension between the two is definitely not part of our mandate. In fact, it's completely at odds with what we stand for. And that was not just an isolated incident either. Things have been happening that suggest Four Winds involvement, things that bode ill."]]))
+      rebina(_([[She activates the holotable, and it displays four cruisers, all seemingly identical to the Seiryuu, though you notice subtle differences in the hull designs.]]))
+      rebina(_([["These are our flagships. Including this ship, they are the Seiryuu, Suzaku, Byakko and Genbu. I'm given to understand that these names, as well as our collective name, have their roots in ancient Asian mythology." The captain touches another control and four portraits appear, superimposed over the ships. "These are the four captains of the flagships, which by extension makes them the highest level of authority within the Four Winds. You know me. The other three are called Giornio, Zurike and Farett."]]))
+      rebina(fmt.f(_([["It is my belief that one or more of my fellow captains have abandoned their mission, and are misusing their resources for a different agenda. I have been unable to find out the details of Four Winds missions that I did not order myself, which is a bad sign. I am being stonewalled, and I don't like it. I want to know what's going on, {player}, and you're going to help me do it."]]),
+         {player=player.name()}))
+      rebina(fmt.f(_([[The captain turns the holotable back off so she can have your undivided attention. "I have sent Jorek on a recon mission to the planet of {pnt} in the {sys} system. He hasn't reported back to me so far, and that's bad news. Jorek is a reliable agent. If he fails to meet a deadline, then it means he is tied down by factors outside of his control, or worse. I want you to find him. Your position as an outsider will help you fly below the radar of potentially hostile Four Winds operatives. You must go to {pnt} and contact Jorek if you can, or find out where he is if you can't."]]),
+         {pnt=jorekplanet1, sys=joreksys1}))
+      vn.na(_([[Captain Rebina stands up, a signal that this briefing is over. You are seen to your ship by a gray-uniformed crewman. You sit in your cockpit for a few hectoseconds before disengaging the docking clamp. What Captain Rebina has told you is a lot to take in. A shadowy organization that guides humanity behind the scenes? And parts of that organization going rogue? The road ahead could well be a bumpy one.]]))
+      vn.run()
+
       accept2()
       misn.markerRm(mem.firstmarker)
       mem.stage = 2
    elseif mem.stage == 6 then -- Debriefing
-      tk.msg(_("A safe return"), fmt.f(_([[You find yourself back on the Seiryuu, in the company of Jorek and the Four Winds informant. The informant is escorted deeper into the ship by grey-uniformed crew members, while Jorek takes you up to the bridge for a meeting with Captain Rebina.
-    "Welcome back, Jorek, {player}," Rebina greets you on your arrival. "I've already got a preliminary report on the situation, but let's have ourselves a proper debriefing. Have a seat."
-    Jorek and you sit down at the holotable in the middle of the bridge, and report on the events surrounding Jorek's retrieval. When you're done, Captain Rebina calls up a schematic view of the Genbu from the holotable.
-    "It would seem that Giornio and his comrades have a vested interest in keeping me away from the truth. It's a good thing you managed to get out of that ambush and bring me that informant. I do hope he'll be able to shed more light on the situation. I've got a bad premonition, a hunch that we're going to have to act soon if we're going to avert disaster, whatever that may be. I trust that you will be willing to aid us again when that time comes, {player}. We're going to need all the help we can get. For now, you will find a modest amount of credits in your account. I will be in touch when things are clearer."
-    You return to your ship and undock from the Seiryuu. You reflect that you had to run for your life this time around, and by all accounts, things will only get worse with the Four Winds in the future. A lesser person might get nervous.]]), {player=player.name()}))
-      player.pay( shadow.rewards.darkshadow )
+
+      vn.clear()
+      vn.scene()
+      local rebina = vn.newCharacter( shadow.vn_rebina() )
+      vn.transition()
+      vn.na(_([[You find yourself back on the Seiryuu, in the company of Jorek and the Four Winds informant. The informant is escorted deeper into the ship by grey-uniformed crew members, while Jorek takes you up to the bridge for a meeting with Captain Rebina.]]))
+      rebina(fmt.f(_([["Welcome back, Jorek, {player}," Rebina greets you on your arrival. "I've already got a preliminary report on the situation, but let's have ourselves a proper debriefing. Have a seat."]]),
+         {player=player.name()}))
+      vn.na(_([[Jorek and you sit down at the holotable in the middle of the bridge, and report on the events surrounding Jorek's retrieval. When you're done, Captain Rebina calls up a schematic view of the Genbu from the holotable.]]))
+      rebina(fmt.f(_([["It would seem that Giornio and his comrades have a vested interest in keeping me away from the truth. It's a good thing you managed to get out of that ambush and bring me that informant. I do hope he'll be able to shed more light on the situation. I've got a bad premonition, a hunch that we're going to have to act soon if we're going to avert disaster, whatever that may be. I trust that you will be willing to aid us again when that time comes, {player}. We're going to need all the help we can get. For now, you will find a modest amount of credits in your account. I will be in touch when things are clearer."]]),
+         {player=player.name()}))
+      vn.na(_([[You return to your ship and undock from the Seiryuu. You reflect that you had to run for your life this time around, and by all accounts, things will only get worse with the Four Winds in the future. A lesser person might get nervous.]]))
+      vn.sfxVictory()
+      vn.func( function ()
+         player.pay( shadow.rewards.darkshadow )
+      end )
+      vn.na(fmt.reward(shadow.rewards.darkshadow))
+      vn.run()
+
       seiryuu:control()
       seiryuu:hyperspace()
       var.pop("darkshadow_active")
@@ -120,7 +159,7 @@ end
 
 -- Board hook for Joe
 function joeBoard()
-   tk.msg(_("An extra passenger"), fmt.f(_([[You board the Four Winds vessel, and as soon as the airlock opens a nervous looking man enters your ship. He eyes you warily, but when he sees that Jorek is with you his tension fades.
+   vntk.msg(_("An extra passenger"), fmt.f(_([[You board the Four Winds vessel, and as soon as the airlock opens a nervous looking man enters your ship. He eyes you warily, but when he sees that Jorek is with you his tension fades.
     "Come on, {player}," Jorek says. "Let's not waste any more time here. We got what we came for. Now let's give these damn vultures the slip, eh?"]]), {player=player.name()}))
    local c = commodity.new(N_("Four Winds Informant"), N_("Jorek's informant."))
    misn.cargoAdd(c, 0)
@@ -206,7 +245,7 @@ function enter()
       hook.pilot(joe, "board", "joeBoard")
       mem.poller = hook.timer(0.5, "patrolPoll")
    elseif system.cur() == ambushsys and mem.stage == 4 then
-      tk.msg(_("You forgot the informant!"), fmt.f(_([[Jorek is enraged. "Dammit, {player}! I told you to pick up that informant on the way! Too late to go back now. I'll have to think of somethin' else. I'm disembarkin' at the next spaceport, don't bother taking me back to the Seiryuu."]]), {player=player.name()}))
+      vntk.msg(_("You forgot the informant!"), fmt.f(_([[Jorek is enraged. "Dammit, {player}! I told you to pick up that informant on the way! Too late to go back now. I'll have to think of somethin' else. I'm disembarkin' at the next spaceport, don't bother taking me back to the Seiryuu."]]), {player=player.name()}))
       shadow.addLog( _([[You failed to pick up Jorek's informant. As such, he refused to allow you to take him to the Seiryuu.]]) )
       abort()
    elseif system.cur() == ambushsys and mem.stage == 5 then
@@ -389,7 +428,7 @@ end
 function land()
    if spob.cur() == jorekplanet1 and mem.stage == 2 then
       -- Thank you player, but our SHITMAN is in another castle.
-      tk.msg(_("No Jorek"), _([[You step into the bar, expecting to find Jorek McArthy sitting somewhere at a table. However, you don't see him anywhere. You decide to go for a drink to contemplate your next move. Then, you notice the barman is giving you a curious look.]]))
+      vntk.msg(_("No Jorek"), _([[You step into the bar, expecting to find Jorek McArthy sitting somewhere at a table. However, you don't see him anywhere. You decide to go for a drink to contemplate your next move. Then, you notice the barman is giving you a curious look.]]))
    end
    spobNpcs()
 end
@@ -405,13 +444,23 @@ end
 
 -- NPC hook
 function barman()
-   tk.msg(_("A tip from the barman"), fmt.f(_([[You meet the barman's stare. He hesitates for a moment, then speaks up.
-    "Hey... Are you {player} by any chance?"
-    You tell him that yes, that's you, and ask how he knows your name.
-    "Well, your description was given to me by an old friend of mine. His name is Jarek. Do you know him?"
-    You tell him that you don't know anyone by the name of Jarek, but you do know a man named Jorek. The barman visibly relaxes when he hears that name.
-    "Ah, good. You're the real deal then. Can't be too careful in times like these, you know. Anyway, old Jorek was here, but he couldn't stay. He told me to keep an eye out for you, said you'd be coming to look for him." The barman glances around to make sure nobody is within earshot, even though the bar's music makes it difficult to overhear anyone who isn't standing right next to you. "I have a message for you. Go to the {sys} system and land on {pnt}. Jorek will be waiting for you there. But you better be ready for some trouble. I don't know what kind of trouble it is, but Jorek is never in any kind of minor trouble. Don't say I didn't warn you."
-    You thank the barman, pay for your drink, and prepare to head back to your ship, wondering whether your armaments will be enough to deal with whatever trouble Jorek is in.]]), {player=player.name(), sys=joreksys2, pnt=jorekplanet2}))
+   vn.clear()
+   vn.scene()
+   local barman = vn.newCharacter( _("Barman"), {image=portrait.getFullPath("neutral/barman.webp")} )
+   vn.transition()
+
+   vn.na(_([[You meet the barman's stare. He hesitates for a moment, then speaks up.]]))
+   barman(fmt.f(_([["Hey... Are you {player} by any chance?"]]),
+      {player=player.name()}))
+   vn.na(_([[You tell him that yes, that's you, and ask how he knows your name.]]))
+   barman(_([["Well, your description was given to me by an old friend of mine. His name is Jarek. Do you know him?"]]))
+   vn.na(_([[You tell him that you don't know anyone by the name of Jarek, but you do know a man named Jorek. The barman visibly relaxes when he hears that name.]]))
+   barman(fmt.f(_([["Ah, good. You're the real deal then. Can't be too careful in times like these, you know. Anyway, old Jorek was here, but he couldn't stay. He told me to keep an eye out for you, said you'd be coming to look for him." The barman glances around to make sure nobody is within earshot, even though the bar's music makes it difficult to overhear anyone who isn't standing right next to you. "I have a message for you. Go to the {sys} system and land on {pnt}. Jorek will be waiting for you there. But you better be ready for some trouble. I don't know what kind of trouble it is, but Jorek is never in any kind of minor trouble. Don't say I didn't warn you."]]),
+      {sys=joreksys2, pnt=jorekplanet2}))
+   vn.na(_([[You thank the barman, pay for your drink, and prepare to head back to your ship, wondering whether your armaments will be enough to deal with whatever trouble Jorek is in.]]))
+
+   vn.run()
+
    dest_updated(jorekplanet2, joreksys2)
    misn.npcRm(mem.barmanNPC)
    mem.stage = 3
@@ -452,7 +501,7 @@ end
 
 -- Capsule function for tk.msg, for timer use
 function showMsg(content)
-   tk.msg(content[1], content[2])
+   vntk.msg(content[1], content[2])
 end
 
 -- Capsule function for player.pilot():control(), for timer use
