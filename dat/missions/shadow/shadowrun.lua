@@ -190,7 +190,7 @@ function officer()
    vn.scene()
    vn.newCharacter( "Officer", {image=offimg} )
    vn.transition()
-   vn.na(_("You try to strike a conversation with the officer, but he doesn't seem interested what you have to say, so you give up."))
+   vn.na(_("You try to strike a conversation with the officer, but they doesn't seem interested what you have to say, so you give up."))
    vn.ruN()
 end
 function soldier1()
