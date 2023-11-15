@@ -3,9 +3,14 @@
 <mission name="Harja's Vengeance">
  <unique />
  <priority>3</priority>
- <cond>spob.get("Violin Monastery"):system():jumpDist() &lt; 4</cond>
+ <cond>
+   if spob.get("Violin Monastery"):system():jumpDist() &gt;= 4 then
+      return false
+   end
+   return require("misn_test").reweight_active()
+ </cond>
  <done>Sirian Bounty</done>
- <chance>10</chance>
+ <chance>100</chance>
  <location>Bar</location>
  <faction>Sirius</faction>
  <notes>
