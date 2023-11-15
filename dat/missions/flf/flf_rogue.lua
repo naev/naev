@@ -19,7 +19,7 @@
 local fmt = require "format"
 local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
-
+local vn = require "vn"
 
 local fleetFLF -- Non-persistent state (not reused by flf_dvk07, which "require"s this script)
 local rogue_spawnFLF, rogue_spawnRogue -- Forward-declared functions
@@ -166,8 +166,17 @@ function land_flf ()
    leave()
    mem.last_system = spob.cur()
    if spob.cur():faction() == faction.get("FLF") then
-      tk.msg( "", text[ rnd.rnd( 1, #text ) ] )
-      player.pay( mem.credits )
+      vn.clear()
+      vn.scene()
+      vn.transition()
+      vn.na( text[ rnd.rnd(1,#text) ] )
+      vn.sfxMoney()
+      vn.func( function ()
+         player.pay( mem.credits )
+      end )
+      vn.na(fmt.reward(mem.credits))
+      vn.run()
+
       misn.finish( true )
    end
 end
