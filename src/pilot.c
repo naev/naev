@@ -2375,8 +2375,7 @@ void pilot_update( Pilot* pilot, double dt )
             pilot_cooldown( pilot, 1 );
          else {
             /* Normal braking is done (we're below MIN_VEL_ERR), now sidestep
-             * normal physics and bring the ship to a near-complete stop.
-             */
+             * normal physics and bring the ship to a near-complete stop. */
             pilot->solid.speed_max = 0.;
             pilot->solid.update( &pilot->solid, dt );
 
@@ -2513,7 +2512,7 @@ void pilot_update( Pilot* pilot, double dt )
             double efficiency, accel;
 
             if (pilot->id == PLAYER_ID)
-               spfx_shake( 0.75*SPFX_SHAKE_DECAY * dt); /* shake goes down at quarter speed */
+               spfx_shake( 0.75*SPFX_SHAKE_DECAY * dt ); /* shake goes down at quarter speed */
             efficiency = pilot_heatEfficiencyMod( pilot->afterburner->heat_T,
                   pilot->afterburner->outfit->overheat_min,
                   pilot->afterburner->outfit->overheat_max );
