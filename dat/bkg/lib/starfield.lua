@@ -176,7 +176,7 @@ function starfield.render( dt )
       return
    end
    -- Get camera properties
-   local x, y, z = camera.values()
+   local x, y, z = camera.get()
    x = x / 1e6
    y = y / 1e6
    shader:send( "u_camera", x*0.5/sf, -y*0.5/sf, sz, z*0.0008*sf )

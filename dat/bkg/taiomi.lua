@@ -138,7 +138,7 @@ function background ()
    }
 
    -- Set up hooks
-   pos = camera.get() -- Computes
+   pos = camera.pos() -- Computes
 
    -- Use cache
    local cache = naev.cache()
@@ -200,7 +200,7 @@ function background ()
 end
 local function update ()
    -- Calculate player motion
-   local npos = camera.get()
+   local npos = camera.pos()
    local z = camera.getZoom()
    local diff = npos - pos
    local dx, dy = diff:get()

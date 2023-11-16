@@ -47,7 +47,7 @@ function background ()
 end
 
 function renderbg( dt )
-   local x, y = camera.values()
+   local x, y = camera.get()
    time = time + dt
    shader:send( "u_time", time )
 

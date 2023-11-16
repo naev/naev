@@ -32,7 +32,7 @@ renderbg = starfield.render
 
 function renderfg( dt )
    -- Get camera properties
-   --local x, y = camera.get():get()
+   --local x, y = camera.pos():get()
    local z = camera.getZoom()
    shader:send( "u_camera", 0, 0, z )
 
