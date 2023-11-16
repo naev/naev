@@ -195,10 +195,7 @@ function spawnTam( origin )
 end
 
 function encounterWarlord( name, origin )
-   for k,f in ipairs(pir.factions) do
-      pilot.toggleSpawn(f, false) -- Make sure Pirates don't get on the way
-      pilot.clearSelect(f)
-   end
+   pir.clearPirates(true)
 
    warlord = pilot.add( "Dvaered Goddard", "Dvaered", origin, name )
    warlord:control(true)

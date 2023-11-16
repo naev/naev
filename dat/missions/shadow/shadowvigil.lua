@@ -261,10 +261,7 @@ function jumpin()
       misn.markerRm(mem.marker) -- No mem.marker. Player has to follow the NPCs.
    end
    if mem.stage >= 2 then
-      for k,f in ipairs(pir.factions) do
-         pilot.toggleSpawn(f, false)
-         pilot.clearSelect(f) -- Not sure if we need a claim for this.
-      end
+      pir.clearPirates(true) -- Not sure if we need a claim for this
 
       -- Spawn the escorts.
       escorts = fleet.add( 3, "Lancelot", shadow.fct_fourwinds(), mem.origin, _("Four Winds Escort"), {ai="baddie_norun"} )

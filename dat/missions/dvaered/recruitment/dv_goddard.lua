@@ -201,10 +201,7 @@ end
 function enter()
    -- Player jumps in Arcturus to intercept the Koala
    if mem.misn_state == 1 and system.cur() == mem.koalasys then
-      for k,f in ipairs(pir.factions) do
-         pilot.toggleSpawn(f,false)
-         pilot.clearSelect(f) -- We don't want them to kill our Siren of Halir
-      end
+      pir.clearPirates(true) -- We don't want them to kill our Siren of Halir
 
       mem.misn_state = 2
       hook.timer(3.0,"spawnKoala")

@@ -248,10 +248,7 @@ So, don't try to auto-target around, and just shoot at the targets I will be ind
 
    -- Player enters Mason, where the Hyena festival is happening
    elseif system.cur() == mem.convsys then
-      for k,f in ipairs(pir.factions) do -- No pirates
-         pilot.toggleSpawn(f)
-         pilot.clearSelect(f)
-      end
+      pir.clearPirates() -- No pirates
 
       -- Spawn the gangs
       for i, g in ipairs(gangs) do

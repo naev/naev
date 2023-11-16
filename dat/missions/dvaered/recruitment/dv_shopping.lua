@@ -482,8 +482,5 @@ end
 
 -- Remove the Pirates form the equation
 function noPirates()
-   for k,f in ipairs(pir.factions) do
-      pilot.toggleSpawn(f)
-      pilot.clearSelect(f)
-   end
+   pir.clearPirates()
 end

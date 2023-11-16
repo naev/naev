@@ -152,10 +152,7 @@ function enter()
          escort[1]:moveto( ambJp:pos() )  -- Let's say Strafer knows where they are supposed to come from...
 
          if system.cur() == mem.ambushsys then
-            for k,f in ipairs(pir.factions) do
-               pilot.toggleSpawn(f)
-               pilot.clearSelect(f)
-            end
+            pir.clearPirates()
             spawnBaddies( mem.ambStart )
 
             -- Find the waiting point: on the line mem.tamPoint -> ambJp, at 3000 of mem.tamPoint

@@ -136,10 +136,7 @@ function enter()
    if mem.stage == 1 and system.cur() == sabotsys then
       pilot.toggleSpawn("FLF", false) -- This helps when testing the mission using the Lua console. Normally, the FLF should be dead.
       pilot.clearSelect("FLF")
-      for k,f in ipairs(pir.factions) do
-         pilot.toggleSpawn(f, false)
-         pilot.clearSelect(f)
-      end
+      pir.clearPirates()
 
       warlord = pilot.add( "Dvaered Goddard", "Dvaered", sabotpla, _("Lord Battleaddict") )
       warlord:control(true)

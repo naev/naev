@@ -365,10 +365,7 @@ function enter()
       if mem.index > 0 then -- /!\ We did not claim this system /!\
          pilot.toggleSpawn("Za'lek")
          pilot.clearSelect("Za'lek")
-         for k,f in ipairs(pir.factions) do
-            pilot.toggleSpawn(f)
-            pilot.clearSelect(f)
-         end
+         pir.clearPirates(true)
 
          if mem.firstBloc then
             scanHooks = {}
@@ -387,8 +384,7 @@ function enter()
       if mem.index > 0 then -- /!\ We did not claim this system /!\
          pilot.toggleSpawn("Za'lek")
          pilot.clearSelect("Za'lek")
-         pilot.toggleSpawn("Pirate")
-         pilot.clearSelect("Pirate")
+         pir.clearPirates(true)
 
          for i, j in ipairs(emp_lisj[mem.index]) do
             local jp = jump.get( system.cur(), j )
