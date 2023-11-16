@@ -125,6 +125,7 @@
       * Fixed system viewer not being consistent with map
       * Player's escort damage is counted towards players damage
       * Avoid having missions duplicates for cases where they can significantly stack such as patrol missions
+      * Fire rate should affect damage of beam weapons
 
 * 0.10.6
    * Fixed potential segfault with invalid semver strings

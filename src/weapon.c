@@ -1673,18 +1673,23 @@ static void weapon_damage( Weapon *w, const Damage *dmg )
 static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt )
 {
    Pilot *parent;
-   double damage;
+   double damage, firerate;
    Damage dmg;
    const Damage *odmg;
 
    /* Get general details. */
    odmg              = outfit_damage( w->outfit );
    parent            = pilot_get( w->parent );
-   damage            = w->dam_mod * w->strength * odmg->damage * dt ;
+   if (w->outfit->type == OUTFIT_TYPE_TURRET_BEAM)
+      firerate = parent->stats.tur_firerate;
+   else
+      firerate = parent->stats.fwd_firerate;
+   damage            = w->dam_mod * w->strength * odmg->damage * firerate * dt ;
    dmg.damage        = MAX( 0., damage * (1.-w->dam_as_dis_mod) );
    dmg.penetration   = odmg->penetration;
    dmg.type          = odmg->type;
    dmg.disable       = MAX( 0., w->dam_mod * w->strength * odmg->disable * dt + damage * w->dam_as_dis_mod );
+
 
    if (hit->type==TARGET_PILOT) {
       Pilot *p = hit->u.plt;
