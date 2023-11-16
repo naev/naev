@@ -25,7 +25,6 @@ local fmt = require "format"
 local portrait = require "portrait"
 local baron = require "common.baron"
 local vni = require "vnimage"
-local utf8 = require "utf8"
 
 -- Mission constants
 local baronsys = system.get("Ingot")
@@ -45,7 +44,7 @@ local npc1img, npc1prt = vni.pirateMale()
 local npc2img, npc2prt = vni.pirateMale()
 local npc3img, npc3prt = vni.pirateFemale()
 
-local mangle -- Forward-declared functions
+local mangle = baron.mangle -- Messes up player name
 local pinnacle -- Non-persistent state
 
 function create ()
@@ -205,8 +204,9 @@ function flintley()
    if mem.flintleyfirst then
       mem.flintleyfirst = false
       vn.na(_([[You approach the nervous-looking man and inquire if he is Flintley, the historian in Baron Sauterfeldt's employ.]]))
-      flt(fmt.f(_([["Oh, yes. Yes! That is me! I'm Flintley," the man responds. "And you must be {player}. I know what's going on, the people from the Pinnacle have informed me. Oh, but where are my manners. Let me properly introduce myself. My name is Flintley, and I'm an archaeologist and historian. The best in the galaxy, some might say, ha-ha!" He gives you a look. "Well, maybe not. But I'm quite knowledgeable about the history of the galaxy. Too bad not too many people seem interested in that these days. The only work I can really get is the occasional appraisal, like I'm doing now for his lordship. I wish I didn't have to take jobs like this, but there you have it."]]),
+      flt(fmt.f(_([["Oh, yes. Yes! That is me! I'm Flintley," the man responds. "And you must be {player}. I know what's going on, the people from the Pinnacle have informed me. Oh, but where are my manners. Let me properly introduce myself. My name is Flintley, and I'm an archaeologist and historian. The best in the galaxy, some might say, ha-ha!"]]),
          {player=player.name()}))
+      flt(_([[He gives you a look. "Well, maybe not. But I'm quite knowledgeable about the history of the galaxy. Too bad not too many people seem interested in that these days. The only work I can really get is the occasional appraisal, like I'm doing now for his lordship. I wish I didn't have to take jobs like this, but there you have it."]]))
       flt(_([[Flintley sighs. "Well, that's that. Come to me with any artefacts you manage to procure, and I'll analyse them to the best of my ability."]]))
    elseif mem.artifactA == nil and mem.artifactB == nil and mem.artifactC == nil then
       flt(fmt.f(_([[Flintley greets you. "Do you have any objects for me to look at, {player}? No? Well, alright. I'll be here if you need me. Good luck out there."]]),
@@ -425,72 +425,6 @@ function hail()
    hook.rm(mem.idlehook)
    hook.rm(mem.hhail)
    player.commClose()
-end
-
--- Function that tries to misspell whatever string is passed to it.
-function mangle(intext)
-   local outtext = intext
-
-   local vowels = {"a", "e", "i", "o", "u", "y"}
-   local consonants = {"b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "z"}
-
-   local i = 1
-   local found = false
-
-   -- Try to find a triplet of
-   while i < #intext-1 do
-      if inlist(consonants, utf8.lower(utf8.sub(intext,i,i))) and
-            inlist(vowels, utf8.lower(utf8.sub(intext,i+1,i+1))) and
-            inlist(consonants, utf8.lower(utf8.sub(intext,i+2,i+2))) then
-         found = true
-         break
-      end
-      i = i+1
-   end
-
-   -- Mess up the first pair
-   if found then
-      local first = consonants[rnd.rnd(1, #consonants)]
-      local second = vowels[rnd.rnd(1, #vowels)]
-      -- Preserve case
-      if utf8.upper(utf8.sub(intext,i,i))==utf8.sub(intext,i,i) then
-         first = utf8.upper(first)
-      end
-      if utf8.upper(utf8.sub(intext,i+1,i+1))==utf8.sub(intext,i,i) then
-         second = utf8.upper(second)
-      end
-      outtext = utf8.sub(intext,-#intext,-(#intext-i+2)) .. first .. second .. utf8.sub(intext,i+2)
-   end
-
-   -- Our ASCII based mangling failed, so we need to do an alternative
-   local len = utf8.len(intext)
-   if outtext==intext and len>1 then
-      local ct = {}
-      local lower = {}
-      for j=1,len do
-         ct[j] = j
-         local c = utf8.sub(intext,j,j)
-         lower[j] = utf8.lower(c)==c
-      end
-      for c=1,1 do--math.ceil((len-1)/6) do
-         local p = rnd.permutation(len)
-         local t = ct[ p[1] ]
-         ct[ p[1] ] = ct[ p[2] ]
-         ct[ p[2] ] = t
-      end
-      outtext = ""
-      for j=1,len do
-         local c = utf8.sub(intext,ct[j],ct[j])
-         if lower[j] then
-            c = utf8.lower(c)
-         else
-            c = utf8.upper(c)
-         end
-         outtext = outtext..c
-      end
-   end
-
-   return outtext
 end
 
 function abort()
