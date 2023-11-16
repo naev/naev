@@ -15,7 +15,7 @@
 </mission>
 --]]
 --[[
--- This is the first mission in the Academy Hack minor campaign.
+   This is the first mission in the Academy Hack minor campaign.
 --]]
 local srs = require "common.sirius"
 local fmt = require "format"

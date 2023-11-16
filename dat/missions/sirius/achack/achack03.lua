@@ -13,7 +13,7 @@
 </mission>
  --]]
 --[[
--- This is the third mission in the Academy Hack minor campaign.
+   This is the third mission in the Academy Hack minor campaign.
 --]]
 require "proximity"
 local srs = require "common.sirius"
@@ -86,7 +86,7 @@ function accept()
    misn.osdCreate(_("Joanne's Doubt"), {
       _("Find Harja in Sirius space"),
       _("Talk to Harja"),
-      fmt.f(_("Return to Joanne on {pnt} ({sys})"), {pnt=mem.destplanet, sys=mem.destsys}),
+      fmt.f(_("Return to Joanne on {pnt} ({sys} system)"), {pnt=mem.destplanet, sys=mem.destsys}),
    })
 
    mem.enterhook = hook.enter("enter")

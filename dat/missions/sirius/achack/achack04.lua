@@ -11,8 +11,8 @@
 </mission>
  --]]
 --[[
--- This is the fourth mission in the Academy Hack minor campaign.
--- This mission is started from a helper event.
+   This is the fourth mission in the Academy Hack minor campaign.
+   This mission is started from a helper event.
 --]]
 local fleet = require "fleet"
 require "proximity"
@@ -31,11 +31,10 @@ local grumblings = {
    _("Come on, Harja, come and get it."),
    _("He should be here by now."),
    _("Harja won't know what hit him."),
-   _("I've got a laser cannon with Harja's name on it, right here!")
+   _("I've got a laser cannon with Harja's name on it, right here!"),
 }
 
 -- Mission info stuff
-
 mem.osd_msg   = {}
 mem.osd_msg[1] = _("Look for Harja in Sirian bars")
 mem.osd_msg[2] = _("Convince Harja to come with you")
@@ -65,7 +64,7 @@ function create()
    -- This mission auto-accepts, but a choice will be offered to the player later. No OSD yet.
    misn.accept()
    misn.setReward(reward)
-   misn.setDesc(fmt.f(_("Joanne has contacted you. She wants to meet you on {pnt} ({sys})."), {pnt=startplanet, sys=startsys}))
+   misn.setDesc(fmt.f(_("Joanne has contacted you. She wants to meet you on {pnt} ({sys} system)."), {pnt=startplanet, sys=startsys}))
    hook.land("land")
    hook.load("land")
    mem.mark = misn.markerAdd( startplanet, "low" )
@@ -79,8 +78,10 @@ function land()
 
    if scur == startplanet and mem.stage == stages.start then
       mem.joanne_npc = misn.npcAdd("talkJoanne", _("Joanne"), achack.joanne.portrait, _("Joanne the Serra military officer is here, enjoying a drink by herself."), 4)
+
    elseif scur == mem.harjaplanet and mem.stage <= stages.fetchHarja then
       mem.harja_npc = misn.npcAdd("talkHarja", _("Harja"), achack.harja.portrait, harjadesc, 4)
+
    elseif scur ~= startplanet and mem.stage == stages.findHarja then
       -- Harja appears randomly in the spaceport bar.
       local st = scur:tags()
@@ -88,6 +89,7 @@ function land()
          mem.harja_npc = misn.npcAdd("talkHarja", _("Harja"), achack.harja.portrait, harjadesc, 4)
          mem.harjaplanet, mem.harjasys = spob.cur() -- Harja, once he spawns, stays put.
       end
+
    elseif scur == startplanet and mem.stage == stages.finish then
       vn.clear()
       vn.scene()
@@ -134,9 +136,11 @@ function talkJoanne()
    if var.peek("achack04repeat") then
       joanne(fmt.f(_([["Hello again, {player}," Joanne says. "I still require your help to solve the mystery of the academy computer hack. Let me tell you again what I need from you."]]),
          {player=player.name()}))
+
    else
       joanne(fmt.f(_([[Joanne greets you warmly. She is clearly glad to see you again. "Thank you for coming, {player}," she says. "As I already mentioned in my message, I've decided that I want to clear up this whole mess with Harja and the academy incident. Too much has happened for me to just forget about it, and whatever my opinion of Harja may be, I cannot ignore his oath as a follower of Sirichana. This matter has evolved from an old grudge to a mystery."]]),
          {player=player.name()}))
+
    end
 
    joanne(_([[Joanne reaches into her briefcase and takes out a data storage unit, which she then puts on the table. "This data unit contains an invitation from me to Harja. I'm asking him to meet me here. I would send it to him directly, but unfortunately I have no way of reaching him other than through you. You've found him twice before, I'm sure you can do it again."]]))
@@ -161,7 +165,7 @@ function talkJoanne()
    if not accepted then return end
 
    mem.stage = mem.stage + 1
-   mem.osd_msg[3] = fmt.f(_("Return to {pnt} ({sys})"), {pnt=startplanet, sys=startsys})
+   mem.osd_msg[3] = fmt.f(_("Return to {pnt} ({sys} system)"), {pnt=startplanet, sys=startsys})
    misn.markerRm(mem.mark)
    misn.osdCreate(_("Sirian Truce"), mem.osd_msg)
    misn.setDesc(_("Joanne wants you to find Harja and convince him to meet her in person."))
@@ -230,7 +234,7 @@ end
 
 -- Jumpin hook.
 function jumpin()
-   if system.cur() == mem.destsys and mem.stage == stages.killAssociates then
+   if system.cur()==mem.destsys and mem.stage==stages.killAssociates then
       local bhships = {"Pirate Vendetta", "Pacifier", "Lancelot", "Hyena"}
       bhfleet = fleet.add(1, bhships, achack.fct_thugs(), vec2.new(-3000, -7000), _("Bounty Hunter"))
       mem.alive = #bhfleet
@@ -264,7 +268,7 @@ end
 function grumble()
    -- Randomville!!
    bhfleet[rnd.rnd(1, #bhfleet)]:broadcast(grumblings[rnd.rnd(1, #grumblings)])
-   mem.grumblehook = hook.timer(rnd.uniform(3.0, 8.0), "grumble")
+   mem.grumblehook = hook.timer(rnd.uniform(3, 8), "grumble")
 end
 
 -- Attacked hook for mercenaries.

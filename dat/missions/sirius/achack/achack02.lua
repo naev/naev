@@ -20,7 +20,7 @@
 </mission>
 --]]
 --[[
--- This is the second mission in the Academy Hack minor campaign.
+   This is the second mission in the Academy Hack minor campaign.
 --]]
 local lmisn = require "lmisn"
 local fleet = require "fleet"
@@ -72,13 +72,16 @@ function accept()
    if var.peek("achack02repeat") then
       joanne(fmt.f(_([["Hello again, {player}," Joanne greets you. "I'm afraid I still find myself under threat from mercenary assassins. Have you reconsidered my offer? Let me tell you again what I need."]]),
          {player=player.name()}))
+
    else
       joanne(fmt.f(_([[When you approach her, the officer greets you with a smile. "What a surprise that we should run into each other again," she says. "I'm afraid to say I don't remember your name. What was it again? Ah yes, {player}. I don't think I introduced myself last time. My name is Joanne. Well met. As you can see, I'm still doing quite well. No poison in my wine or snakes in my bed or anything."]]),
          {player=player.name()}))
       joanne(_([[Then her expression turns more serious. "Actually, about that. I think our friend Harja still has it in for me. You had the common sense to use your head, but I'm afraid not everyone is like that. I'm convinced Harja will try to hire more assassins to do what you didn't, so I'm in considerable danger."]]))
       vn.na(_([[You sympathize with Joanne, but you wonder aloud why she hasn't asked the local authorities for protection. Joanne gives you a somewhat uncomfortable look.]]))
       joanne(_([["Pride, I suppose. I'm a military officer. It wouldn't look too tactful if I asked for personal protection when the navy is already stretched thin out there, trying to protect our civilians from pirates and other criminals every day. Besides, my conflict with Harja is a personal matter. I feel I should resolve this with my own resources." She gives you a tired smile. "That being said, I wouldn't say no to a helping hand."]]))
+
    end
+
    vn.func( function ()
       var.push("achack02repeat", true)
    end )
@@ -131,7 +134,8 @@ local function laststop_vn ()
    local joanne = vn.newCharacter( achack.vn_joanne{shader=love_shaders.hologram()})
    vn.transition("electric")
    vn.na(_([[You go through the now familiar routine of waiting for Joanne. She soon hails you on the comms.]]))
-   joanne(_([["That's it, {player}! This was the final stop. You've been a great help. This isn't a good place to wrap things up though. Tell you what, let's relocate to Sroolu and meet up in the spaceport bar there. I need to give you your payment, of course, but I also want to talk to you for a bit. See you planetside!"]]))
+   joanne(fmt.f(_([["That's it, {player}! This was the final stop. You've been a great help. This isn't a good place to wrap things up though. Tell you what, let's relocate to Sroolu and meet up in the spaceport bar there. I need to give you your payment, of course, but I also want to talk to you for a bit. See you planetside!"]]),
+      {player=player.name()}))
    vn.na(_([[The comm switches off. You prepare to take off and set a course for Sroolu.]]))
    vn.done("electric")
    vn.run()
