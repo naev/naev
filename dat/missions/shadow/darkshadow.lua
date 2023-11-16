@@ -22,6 +22,7 @@ local ai_setup = require "ai.core.setup"
 local vn = require "vn"
 local love_shaders = require "love_shaders"
 local vntk = require "vntk"
+local vni = require "vnimage"
 local portrait = require "portrait"
 require "proximity"
 
@@ -53,7 +54,7 @@ function create()
    vn.clear()
    vn.scene()
    -- TODO character graphics?
-   local off = vn.newCharacter(_("Four Winds Member"), {image=nil, shader=love_shaders.hologram()})
+   local off = vn.newCharacter(_("Four Winds Member"), {image=vni.generic(), shader=love_shaders.hologram()})
    vn.transition()
    vn.na(_([[Suddenly, out of nowhere, one of the dormant panels in your cockpit springs to life. It shows you a face you've never seen before in your life, but you recognize the plain grey uniform as belonging to the Four Winds.]]))
    off(fmt.f(_([["Hello {player}," the face says. "You must be wondering who I am and how it is I'm talking to you like this. Neither question is important. What is important is that Captain Rebina has urgent need of your services. You are to meet her on the Seiryuu, which is currently in orbit around {pnt} in the {sys} system. Please don't ask any questions now. We expect to see you as quickly as you can make your way here."]]),
@@ -136,7 +137,8 @@ function seiryuuBoard()
       rebina(fmt.f(_([["Welcome back, Jorek, {player}," Rebina greets you on your arrival. "I've already got a preliminary report on the situation, but let's have ourselves a proper debriefing. Have a seat."]]),
          {player=player.name()}))
       vn.na(_([[Jorek and you sit down at the holotable in the middle of the bridge, and report on the events surrounding Jorek's retrieval. When you're done, Captain Rebina calls up a schematic view of the Genbu from the holotable.]]))
-      rebina(fmt.f(_([["It would seem that Giornio and his comrades have a vested interest in keeping me away from the truth. It's a good thing you managed to get out of that ambush and bring me that informant. I do hope he'll be able to shed more light on the situation. I've got a bad premonition, a hunch that we're going to have to act soon if we're going to avert disaster, whatever that may be. I trust that you will be willing to aid us again when that time comes, {player}. We're going to need all the help we can get. For now, you will find a modest amount of credits in your account. I will be in touch when things are clearer."]]),
+      rebina(_([["It would seem that Giornio and his comrades have a vested interest in keeping me away from the truth. It's a good thing you managed to get out of that ambush and bring me that informant. I do hope he'll be able to shed more light on the situation. I've got a bad premonition, a hunch that we're going to have to act soon if we're going to avert disaster, whatever that may be."]]))
+      rebina(fmt.f(_([[I trust that you will be willing to aid us again when that time comes, {player}. We're going to need all the help we can get. For now, you will find a modest amount of credits in your account. I will be in touch when things are clearer."]]),
          {player=player.name()}))
       vn.na(_([[You return to your ship and undock from the Seiryuu. You reflect that you had to run for your life this time around, and by all accounts, things will only get worse with the Four Winds in the future. A lesser person might get nervous.]]))
       vn.sfxVictory()
@@ -158,8 +160,15 @@ end
 
 -- Board hook for Joe
 function joeBoard()
-   vntk.msg(_("An extra passenger"), fmt.f(_([[You board the Four Winds vessel, and as soon as the airlock opens a nervous looking man enters your ship. He eyes you warily, but when he sees that Jorek is with you his tension fades.
-    "Come on, {player}," Jorek says. "Let's not waste any more time here. We got what we came for. Now let's give these damn vultures the slip, eh?"]]), {player=player.name()}))
+   vn.clear()
+   vn.scene()
+   local jorek = vn.newCharacter(shadow.vn_jorek())
+   vn.transition()
+   vn.na(_([[You board the Four Winds vessel, and as soon as the airlock opens a nervous looking man enters your ship. He eyes you warily, but when he sees that Jorek is with you his tension fades.]]))
+   jorek(fmt.f(_([["Come on, {player}," Jorek says. "Let's not waste any more time here. We got what we came for. Now let's give these damn vultures the slip, eh?"]]),
+      {player=player.name()}))
+   vn.run()
+
    local c = commodity.new(N_("Four Winds Informant"), N_("Jorek's informant."))
    misn.cargoAdd(c, 0)
    player.unboard()
@@ -244,7 +253,8 @@ function enter()
       hook.pilot(joe, "board", "joeBoard")
       mem.poller = hook.timer(0.5, "patrolPoll")
    elseif system.cur() == ambushsys and mem.stage == 4 then
-      vntk.msg(_("You forgot the informant!"), fmt.f(_([[Jorek is enraged. "Dammit, {player}! I told you to pick up that informant on the way! Too late to go back now. I'll have to think of somethin' else. I'm disembarkin' at the next spaceport, don't bother taking me back to the Seiryuu."]]), {player=player.name()}))
+      vntk.msg(_("You forgot the informant!"), fmt.f(_([[Jorek is enraged. "Dammit, {player}! I told you to pick up that informant on the way! Too late to go back now. I'll have to think of somethin' else. I'm disembarkin' at the next spaceport, don't bother taking me back to the Seiryuu."]]),
+         {player=player.name()}))
       shadow.addLog( _([[You failed to pick up Jorek's informant. As such, he refused to allow you to take him to the Seiryuu.]]) )
       abort()
    elseif system.cur() == ambushsys and mem.stage == 5 then
@@ -387,8 +397,7 @@ function startAmbush()
    hook.timer(delay, "playerControl", true)
    hook.timer(delay, "zoomTo", genbu)
    delay = delay + 5.0
-   hook.timer(delay, "showMsg", {_("Ambush!"), fmt.f(_([[Suddenly, your long range sensors pick up a ship jumping in behind you. Jorek checks the telemetry beside you. Suddenly, his eyes go wide and he groans. The Four Winds informant turns pale.
-    "Oh, damn it all," Jorek curses. "{player}, that's the Genbu, Giornio's flagship. I never expected him to take an interest in me personally! Damn, this is bad. Listen, if you have anything to boost our speed, now would be the time. We got to get outta here as if all hell was hot on our heels, which it kinda is! If that thing catches us, we're toast. I really mean it, you don't wanna get into a fight against her, not on your own. Get your ass movin' to Sirius space. Giornio ain't gonna risk getting into a scrap with the Sirius military, so we'll be safe once we get there. Come on, what are you waitin' for? Step on it!"]]), {player=player.name()})})
+   hook.timer(delay, "jorekMsg" )
    delay = delay + 1.0
    hook.timer(delay, "zoomTo", player.pilot())
    hook.timer(delay, "playerControl", false)
@@ -506,8 +515,16 @@ function showText(text)
 end
 
 -- Capsule function for tk.msg, for timer use
-function showMsg(content)
-   vntk.msg(content[1], content[2])
+function jorekMsg ()
+   vn.clear()
+   vn.scene()
+   local jorek = vn.newCharacter(shadow.vn_jorek())
+   vn.transition()
+   vn.na(_([[Suddenly, your long range sensors pick up a ship jumping in behind you. Jorek checks the telemetry beside you. Suddenly, his eyes go wide and he groans. The Four Winds informant turns pale.]]))
+   jorek(fmt.f(_([["Oh, damn it all," Jorek curses. "{player}, that's the Genbu, Giornio's flagship. I never expected him to take an interest in me personally! Damn, this is bad. Listen, if you have anything to boost our speed, now would be the time. We got to get outta here as if all hell was hot on our heels, which it kinda is! If that thing catches us, we're toast. I really mean it, you don't wanna get into a fight against her, not on your own. Get your ass movin' to Sirius space. Giornio ain't gonna risk getting into a scrap with the Sirius military, so we'll be safe once we get there."]]),
+      {player=player.name()}))
+   jorek(_([["Come on, what are you waitin' for? Step on it!"]]))
+   vn.run()
 end
 
 -- Capsule function for player.pilot():control(), for timer use
