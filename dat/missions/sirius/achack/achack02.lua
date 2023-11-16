@@ -144,7 +144,7 @@ function land()
       mem.destplanet, mem.destsys = spob.getS(route[mem.stage])
       misn.markerMove( mem.mark, mem.destsys )
       mem.origin = spob.cur()
-      player.refuel(200)
+      player.refuel()
       vntk.msg(_("Another stop successfully reached"), fmt.f(stoptext, {pnt=spob.cur()}))
       mem.joannejumped = true -- She "jumped" into the current system by taking off.
       player.takeoff()
