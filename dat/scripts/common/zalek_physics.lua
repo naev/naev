@@ -155,8 +155,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    end
    shader.render = function( self )
       -- TODO we should actually downscale this...
-      local cx, cy = camera.get():get()
-      local cz = camera.getZoom()
+      local cx, cy, cz = camera.values()
       self:send( "u_camera", {cx, -cy, cz*self.sf} )
 
       local oldcanvas = lg.getCanvas()

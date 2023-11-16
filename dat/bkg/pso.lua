@@ -129,8 +129,7 @@ end
 function renderov( dt )
    if not player.name() then return end
 
-   local x, y = camera.get():get()
-   local z = camera.getZoom()
+   local x, y, z = camera.values()
    local m = 1
    shader_ov:send( "u_camera", x*m/sf*0.5, -y*m/sf*0.5, z*sf )
 
@@ -138,8 +137,7 @@ function renderov( dt )
 end
 
 function renderbg( dt )
-   local x, y = camera.get():get()
-   local z = camera.getZoom()
+   local x, y, z = camera.values()
    local m = 1
    if nonuninformity > 0.0 then
       shader_bg:send( "u_camera", x*m/sf*0.5, -y*m/sf*0.5, z*sf )

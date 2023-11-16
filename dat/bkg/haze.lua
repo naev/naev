@@ -71,8 +71,7 @@ end
 
 function renderov( dt )
    -- Get camera properties
-   local x, y = camera.get():get()
-   local z = camera.getZoom()
+   local x, y, z = camera.values()
    local m = 1
    shader:send( "u_camera", x*m/sf, -y*m/sf, z*sf )
 
