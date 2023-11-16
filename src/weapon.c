@@ -1688,8 +1688,7 @@ static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt )
    dmg.damage        = MAX( 0., damage * (1.-w->dam_as_dis_mod) );
    dmg.penetration   = odmg->penetration;
    dmg.type          = odmg->type;
-   dmg.disable       = MAX( 0., w->dam_mod * w->strength * odmg->disable * dt + damage * w->dam_as_dis_mod );
-
+   dmg.disable       = MAX( 0., w->dam_mod * w->strength * odmg->disable * firerate * dt + damage * w->dam_as_dis_mod );
 
    if (hit->type==TARGET_PILOT) {
       Pilot *p = hit->u.plt;
