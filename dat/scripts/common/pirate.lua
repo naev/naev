@@ -207,4 +207,23 @@ function pir.updateStandings( maxval )
    end
 end
 
+--[[
+   @brief Clears pirate pilots and stops them from spawning.
+   @param onlynatural Whether or not to only clear natural pilots.
+--]]
+function pir.clearPirates( onlynatural )
+   if not onlynatural then
+      pilot.clearSelect( pir.factions )
+      pilot.toggleSpawn( pir.factions, false )
+   else
+      for k,p in ipairs(pilot.get{ pir.factions }, true) do
+         local m = p:memory()
+         if  m.natural then
+            p:rm()
+         end
+      end
+      pilot.toggleSpawn( pir.factions, false )
+   end
+end
+
 return pir
