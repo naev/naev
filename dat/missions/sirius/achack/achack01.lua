@@ -13,7 +13,7 @@
   <campaign>Academy Hack</campaign>
  </notes>
 </mission>
- --]]
+--]]
 --[[
 -- This is the first mission in the Academy Hack minor campaign.
 --]]
@@ -116,6 +116,6 @@ function talkJoanne()
 
    vn.run()
 
-    srs.addAcHackLog( _([[A Sirian man named Harja hired you to kill a Sirius military officer, claiming that she was a "dangerous criminal". Rather than carrying out the mission, you told her about the plot, and she rewarded you by paying half what Harja would have paid for her death.]]) )
-    misn.finish(true)
+   srs.addAcHackLog( _([[A Sirian man named Harja hired you to kill a Sirius military officer, claiming that she was a "dangerous criminal". Rather than carrying out the mission, you told her about the plot, and she rewarded you by paying half what Harja would have paid for her death.]]) )
+   misn.finish(true)
 end
