@@ -29,12 +29,14 @@ static int camL_get( lua_State *L );
 static int camL_setZoom( lua_State *L );
 static int camL_getZoom( lua_State *L );
 static int camL_shake( lua_State *L );
+static int camL_values( lua_State *L );
 static const luaL_Reg cameraL_methods[] = {
    { "set", camL_set },
    { "get", camL_get },
    { "setZoom", camL_setZoom },
    { "getZoom", camL_getZoom },
    { "shake", camL_shake },
+   { "values", camL_values },
    {0,0}
 }; /**< Camera Lua methods. */
 
@@ -189,7 +191,7 @@ static int camL_getZoom( lua_State *L )
  * @usage camera.shake() -- Shakes the camera with amplitude 1.
  * @usage camera.shake( 0.5 ) -- Shakes the camera with amplitude .5
  *
- *    @luatparam float amplitude: amplitude of the shaking
+ *    @luatparam number amplitude Amplitude of the shaking.
  * @luafunc shake
  */
 static int camL_shake( lua_State *L )
@@ -197,4 +199,22 @@ static int camL_shake( lua_State *L )
    double amplitude = luaL_optnumber(L,1,1.);
    spfx_shake( amplitude );
    return 0;
+}
+
+/**
+ * @brief Gets the x/y position and zoom of the camera.
+ *
+ *    @luatreturn number X position of the camera.
+ *    @luatreturn number Y position of the camera.
+ *    @luatreturn number Zoom level of the camera.
+ * @luafunc values
+ */
+static int camL_values( lua_State *L )
+{
+   double x, y;
+   cam_getPos( &x, &y );
+   lua_pushnumber( L, x );
+   lua_pushnumber( L, y );
+   lua_pushnumber( L, 1.0/cam_getZoom() );
+   return 3;
 }
