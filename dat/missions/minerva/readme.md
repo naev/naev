@@ -16,8 +16,8 @@ obligatory sync points.
    * Kex
    * Zuri
 * **Notable Rewards:**
-   * Cyborg Feather
-   * Energy Harpoon (buyable)
+   * Cyborg Feather (epilogue1)
+   * Energy Harpoon (epilogue2, buyable)
 
 ### Mission Overview
 
