@@ -1673,7 +1673,7 @@ static void weapon_damage( Weapon *w, const Damage *dmg )
 static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt )
 {
    Pilot *parent;
-   double damage, firerate;
+   double damage, firerate, mod;
    Damage dmg;
    const Damage *odmg;
 
@@ -1684,11 +1684,12 @@ static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt )
       firerate = parent->stats.tur_firerate;
    else
       firerate = parent->stats.fwd_firerate;
-   damage            = w->dam_mod * w->strength * odmg->damage * firerate * dt ;
+   mod               = w->dam_mod * w->strength * firerate * parent->stats.time_speedup * dt;
+   damage            = odmg->damage * mod;
    dmg.damage        = MAX( 0., damage * (1.-w->dam_as_dis_mod) );
    dmg.penetration   = odmg->penetration;
    dmg.type          = odmg->type;
-   dmg.disable       = MAX( 0., w->dam_mod * w->strength * odmg->disable * firerate * dt + damage * w->dam_as_dis_mod );
+   dmg.disable       = MAX( 0., odmg->disable * mod + damage * w->dam_as_dis_mod );
 
    if (hit->type==TARGET_PILOT) {
       Pilot *p = hit->u.plt;
