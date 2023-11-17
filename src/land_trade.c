@@ -287,6 +287,7 @@ int commodity_canBuy( const Commodity* com )
    unsigned int q, price;
    char buf[ECON_CRED_STRLEN];
 
+   land_errClear();
    failure = 0;
    q = commodity_getMod();
    price = spob_commodityPrice( land_spob, com ) * q;
@@ -322,6 +323,7 @@ int commodity_canBuy( const Commodity* com )
 int commodity_canSell( const Commodity* com )
 {
    int failure = 0;
+   land_errClear();
    if (pfleet_cargoOwned( com ) ==0) {
       land_errDialogueBuild(_("You can't sell something you don't have!"));
       failure = 1;

@@ -831,6 +831,7 @@ int outfit_canBuy( const Outfit *outfit, int wid )
       data = window_getData( wid );
    int blackmarket = (data!=NULL) ? data->blackmarket : 0;
 
+   land_errClear();
    failure = 0;
    outfit_getPrice( outfit, &price, &canbuy, &cansell );
 
@@ -1004,6 +1005,7 @@ int outfit_canSell( const Outfit *outfit )
    int canbuy, cansell;
    credits_t price;
 
+   land_errClear();
    outfit_getPrice( outfit, &price, &canbuy, &cansell );
 
    /* Unique item. */

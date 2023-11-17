@@ -202,6 +202,7 @@ int can_swapEquipment( const char *shipname )
    int diff;
    Pilot *newship;
    const PlayerShip_t *ps = player_getPlayerShip( shipname );
+   land_errClear();
 
    if (strcmp(shipname,player.p->name)==0) { /* Already onboard. */
       land_errDialogueBuild( _("You're already onboard the %s."), shipname );
@@ -243,6 +244,14 @@ int can_swapEquipment( const char *shipname )
       escort_clearDeployed( player.p );
    }
    return 1;
+}
+
+/**
+ * @brief Clear error dialogues.
+ */
+void land_errClear (void)
+{
+   errorlist_ptr = NULL; /* Clear errors. */
 }
 
 /**

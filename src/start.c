@@ -40,6 +40,7 @@ typedef struct ndata_start_s {
    char *chapter;    /**< Starting chapter. */
    char *spob_lua_default; /**< Default Lua script for spobs. */
    char *dtype_default; /**< Default damage type. */
+   char *local_map_default; /**< Default local map. */
 } ndata_start_t;
 static ndata_start_t start_data; /**< The actual starting data. */
 
@@ -125,6 +126,7 @@ int start_load (void)
 
       xmlr_strd( node, "spob_lua_default", start_data.spob_lua_default );
       xmlr_strd( node, "dtype_default", start_data.dtype_default );
+      xmlr_strd( node, "local_map_default", start_data.local_map_default );
 
       WARN(_("'%s' has unknown node '%s'."), START_DATA_PATH, node->name);
    } while (xml_nextNode(node));
@@ -293,4 +295,13 @@ const char* start_spob_lua_default (void)
 const char* start_dtype_default (void)
 {
    return start_data.dtype_default;
+}
+
+/**
+ * @brief Gets the default local map.
+ *    @return The default local map.
+ */
+const char* start_local_map_default (void)
+{
+   return start_data.local_map_default;
 }

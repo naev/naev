@@ -6,6 +6,7 @@
 #include "conf.h"
 #include "nstring.h"
 #include "space.h"
+#include "start.h"
 
 /*
  * The window interfaces.
@@ -34,9 +35,9 @@ enum {
 #define LAND_BUTTON_HEIGHT 40 /**< Default button height. */
 
 /*
- * Minor hack, for 'buy map' button.
+ * For the 'buy map' button
  */
-#define LOCAL_MAP_NAME "Local System Map"
+#define LOCAL_MAP_NAME     (start_local_map_default())
 
 /*
  * Landed at.
@@ -78,5 +79,6 @@ void bar_regen (void);
 int can_swap( const char *shipname );
 int can_swapEquipment( const char *shipname );
 int can_sell( const char *shipname );
+void land_errClear (void);
 PRINTF_FORMAT( 1, 2 ) void land_errDialogueBuild( const char *fmt, ... );
 int land_errDisplay (void);

@@ -443,6 +443,7 @@ static int shipyard_canAcquire( const Ship *ship, const Spob *spob, credits_t pr
 {
    int failure = 0;
    int blackmarket = ((spob != NULL) && spob_hasService(spob, SPOB_SERVICE_BLACKMARKET));
+   land_errClear();
 
    /* Must have the necessary license. */
    if (!blackmarket && !player_hasLicense(ship->license)) {
@@ -484,6 +485,7 @@ int shipyard_canBuy( const Ship *ship, const Spob *spob )
 int can_sell( const char *shipname )
 {
    int failure = 0;
+   land_errClear();
    if (strcmp( shipname, player.p->name )==0) { /* Already on-board. */
       land_errDialogueBuild( _("You can't sell the ship you're piloting!") );
       failure = 1;
@@ -501,6 +503,7 @@ int can_swap( const char *shipname )
    int failure = 0;
    const Ship* ship = ship_get( shipname );
    int diff;
+   land_errClear();
 
    diff = pilot_cargoUsed(player.p) - (pfleet_cargoFree() - pilot_cargoFree(player.p) + ship->cap_cargo);
    diff = MAX( diff, pilot_cargoUsedMission(player.p) - ship->cap_cargo ); /* Has to fit all mission cargo. */

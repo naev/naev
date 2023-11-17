@@ -28,3 +28,4 @@ const char* start_event (void);
 const char* start_chapter (void);
 const char* start_spob_lua_default (void);
 const char* start_dtype_default (void);
+const char* start_local_map_default (void);
