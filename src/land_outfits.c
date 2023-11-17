@@ -383,6 +383,7 @@ static void outfits_genList( unsigned int wid )
       Outfit **ol = array_create( Outfit* );
       for (int i=0; i<array_size(po); i++)
          array_push_back( &ol, (Outfit*) po[i].o );
+      /* Also add stuff they sold. */
       for (int i=0; i<array_size(outfits_sold); i++) {
          PlayerOutfit_t *os = &outfits_sold[i];
          int found = 0;
@@ -1133,8 +1134,10 @@ static void outfits_sell( unsigned int wid, const char *str )
 
       lua_pop(naevL, 2);
    }
-   else
-      player_modCredits( outfit->price * player_rmOutfit( outfit, q ) );
+   else {
+      q = player_rmOutfit( outfit, q );
+      player_modCredits( outfit->price * q );
+   }
 
    outfits_updateEquipmentOutfits();
    hparam[0].type    = HOOK_PARAM_OUTFIT;
@@ -1206,7 +1209,9 @@ static void outfits_renderMod( double bx, double by, double w, double h, void *d
       outfits_updateEquipmentOutfits();
       outfits_mod = q;
    }
-   if (q==1) return; /* Ignore no modifier. */
+   /* Ignore no modifier. */
+   if (q==1)
+      return;
 
    snprintf( buf, sizeof(buf), "%dx", q );
    gl_printMidRaw( &gl_smallFont, w, bx, by, &cFontWhite, -1, buf );
