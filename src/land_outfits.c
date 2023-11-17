@@ -98,6 +98,22 @@ static void outfits_getSize( unsigned int wid, int *w, int *h,
 }
 
 /**
+ * Used to force rerenders.
+ */
+static int outfit_events( unsigned int wid, SDL_Event *evt )
+{
+   (void) wid;
+   static SDL_Keymod lastmod = 0;
+   if ((evt->type==SDL_KEYDOWN) || (evt->type==SDL_KEYUP)) {
+      if (evt->key.keysym.mod != lastmod) {
+         lastmod = evt->key.keysym.mod;
+         toolkit_rerender();
+      }
+   }
+   return 0;
+}
+
+/**
  * @brief For when the widget closes.
  */
 static void outfits_onClose( unsigned int wid, const char *str )
@@ -181,9 +197,13 @@ void outfits_open( unsigned int wid, const Outfit **outfits, int blackmarket )
    window_addImage( wid, -40, -40, 256, 256, "imgOutfit", NULL, 0 );
 
    /* cust draws the modifier */
-   window_addCust( wid, -40-bw, 60+2*bh,
-         bw, bh, "cstMod", 0, outfits_renderMod, NULL, NULL, NULL, NULL );
-   window_canFocusWidget( wid, "cstMod", 0 );
+   window_addCust( wid, -40-bw, 10,
+         bw, bh, "cstModSell", 0, outfits_renderMod, NULL, NULL, NULL, NULL );
+   window_canFocusWidget( wid, "cstModSell", 0 );
+   window_addCust( wid, -40-bw-20-bw, 10,
+         bw, bh, "cstModBuy", 0, outfits_renderMod, NULL, NULL, NULL, NULL );
+   window_canFocusWidget( wid, "cstModBuy", 0 );
+   window_handleEvents( wid, outfit_events );
 
    /* the descriptive text */
    window_addText( wid, 20 + iw + 20, -40,
@@ -1205,7 +1225,6 @@ static void outfits_renderMod( double bx, double by, double w, double h, void *d
 
    q = outfits_getMod();
    if (q != outfits_mod) {
-      toolkit_rerender();
       outfits_updateEquipmentOutfits();
       outfits_mod = q;
    }
