@@ -76,8 +76,8 @@ void bar_regen (void);
 /*
  * Error dialogue generation and associated checks.
  */
-int can_swapEquipment( const char *shipname );
-int can_sell( const char *shipname );
+int land_canSwapPlayerShip( const char *shipname );
+int land_canSellPlayerShip( const char *shipname );
 void land_errClear (void);
 PRINTF_FORMAT( 1, 2 ) void land_errDialogueBuild( const char *fmt, ... );
 int land_errDisplay (void);

@@ -482,7 +482,7 @@ int shipyard_canBuy( const Ship *ship, const Spob *spob )
  * @brief Makes sure it's valid to sell a ship.
  *    @param shipname Ship being sold.
  */
-int can_sell( const char *shipname )
+int land_canSellPlayerShip( const char *shipname )
 {
    int failure = 0;
    land_errClear();

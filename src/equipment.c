@@ -2136,7 +2136,7 @@ static void equipment_changeShip( unsigned int wid )
       player.ps.deployed = ps->deployed;
    }
 
-   if (!can_swapEquipment( shipname )) {
+   if (!land_canSwapPlayerShip( shipname )) {
       land_errDisplay();
       return;
    }
@@ -2333,7 +2333,7 @@ static void equipment_sellShip( unsigned int wid, const char* str )
    HookParam hparam[3];
    const char *shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
 
-   if (!can_sell( shipname )) {
+   if (!land_canSellPlayerShip( shipname )) {
       land_errDisplay();
       return;
    }

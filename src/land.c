@@ -197,7 +197,7 @@ int land_doneLoading (void)
  * @brief Makes sure it's valid to change ships in the equipment view.
  *    @param shipname Ship being changed to.
  */
-int can_swapEquipment( const char *shipname )
+int land_canSwapPlayerShip( const char *shipname )
 {
    int diff;
    Pilot *newship;
