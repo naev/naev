@@ -82,6 +82,7 @@ void* window_getData( unsigned int wid );
 /*
  * render
  */
+void toolkit_rerender (void);
 void toolkit_render( double dt );
 
 /*

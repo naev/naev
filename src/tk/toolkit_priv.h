@@ -207,7 +207,6 @@ void toolkit_focusWidget( Window *wdw, Widget *wgt );
 void toolkit_defocusWidget( Window *wdw, Widget *wgt );
 
 /* Render stuff. */
-void toolkit_rerender (void);
 void toolkit_drawOutline( int x, int y, int w, int h, int b,
                           const glColour* c, const glColour* lc );
 void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
