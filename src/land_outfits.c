@@ -61,7 +61,6 @@ static void outfits_getSize( unsigned int wid, int *w, int *h,
 static void outfits_buy( unsigned int wid, const char *str );
 static void outfits_sell( unsigned int wid, const char *str );
 static int outfits_getMod (void);
-static void outfits_renderMod( double bx, double by, double w, double h, void *data );
 static void outfits_rmouse( unsigned int wid, const char* widget_name );
 static void outfits_find( unsigned int wid, const char *str );
 static const char *outfit_getPrice( const Outfit *outfit, credits_t *price, int *canbuy, int *cansell );
@@ -102,11 +101,22 @@ static void outfits_getSize( unsigned int wid, int *w, int *h,
  */
 static int outfit_events( unsigned int wid, SDL_Event *evt )
 {
-   (void) wid;
-   static SDL_Keymod lastmod = 0;
    if ((evt->type==SDL_KEYDOWN) || (evt->type==SDL_KEYUP)) {
-      if (evt->key.keysym.mod != lastmod) {
-         lastmod = evt->key.keysym.mod;
+      int q = outfits_getMod();
+      if (q != outfits_mod) {
+         outfits_updateEquipmentOutfits();
+         outfits_mod = q;
+         if (q==1) {
+            window_buttonCaption( wid, "btnBuyOutfit", _("Buy") );
+            window_buttonCaption( wid, "btnSellOutfit", _("Sell") );
+         }
+         else {
+            char buf[STRMAX_SHORT];
+            snprintf( buf, sizeof(buf), _("Buy (%dx)"), q );
+            window_buttonCaption( wid, "btnBuyOutfit", buf );
+            snprintf( buf, sizeof(buf), _("Sell (%dx)"), q );
+            window_buttonCaption( wid, "btnSellOutfit", buf );
+         }
          toolkit_rerender();
       }
    }
@@ -167,6 +177,9 @@ void outfits_open( unsigned int wid, const Outfit **outfits, int blackmarket )
    /* will allow buying from keyboard */
    window_setAccept( wid, outfits_buy );
 
+   /* handle multipliers. */
+   window_handleEvents( wid, outfit_events );
+
    /* buttons */
    off = -20;
    if (data->outfits==NULL) {
@@ -195,15 +208,6 @@ void outfits_open( unsigned int wid, const Outfit **outfits, int blackmarket )
    /* fancy 256x256 image */
    window_addRect( wid, -40+4, -40+4, 264, 264, "rctImage", &cBlack, 1 );
    window_addImage( wid, -40, -40, 256, 256, "imgOutfit", NULL, 0 );
-
-   /* cust draws the modifier */
-   window_addCust( wid, -40-bw, 10,
-         bw, bh, "cstModSell", 0, outfits_renderMod, NULL, NULL, NULL, NULL );
-   window_canFocusWidget( wid, "cstModSell", 0 );
-   window_addCust( wid, -40-bw-20-bw, 10,
-         bw, bh, "cstModBuy", 0, outfits_renderMod, NULL, NULL, NULL, NULL );
-   window_canFocusWidget( wid, "cstModBuy", 0 );
-   window_handleEvents( wid, outfit_events );
 
    /* the descriptive text */
    window_addText( wid, 20 + iw + 20, -40,
@@ -1205,35 +1209,7 @@ static int outfits_getMod (void)
       q *= 5;
    if (mods & (KMOD_LSHIFT | KMOD_RSHIFT))
       q *= 10;
-
    return q;
-}
-/**
- * @brief Renders the outfit buying modifier.
- *    @param bx Base X position to render at.
- *    @param by Base Y position to render at.
- *    @param w Width to render at.
- *    @param h Height to render at.
- *    @param data Unused.
- */
-static void outfits_renderMod( double bx, double by, double w, double h, void *data )
-{
-   (void) data;
-   (void) h;
-   int q;
-   char buf[8];
-
-   q = outfits_getMod();
-   if (q != outfits_mod) {
-      outfits_updateEquipmentOutfits();
-      outfits_mod = q;
-   }
-   /* Ignore no modifier. */
-   if (q==1)
-      return;
-
-   snprintf( buf, sizeof(buf), "%dx", q );
-   gl_printMidRaw( &gl_smallFont, w, bx, by, &cFontWhite, -1, buf );
 }
 
 /**
