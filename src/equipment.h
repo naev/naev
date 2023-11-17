@@ -30,6 +30,8 @@ void equipment_cleanup (void);
 /*
  * Misc.
  */
+int equipment_canSwapPlayerShip( const char *shipname );
+int equipment_canSellPlayerShip( const char *shipname );
 void equipment_addAmmo (void);
 void equipment_regenLists( unsigned int wid, int outfits, int ships );
 void equipment_updateShips( unsigned int wid, const char* str );

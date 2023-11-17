@@ -479,22 +479,6 @@ int shipyard_canBuy( const Ship *ship, const Spob *spob )
 }
 
 /**
- * @brief Makes sure it's valid to sell a ship.
- *    @param shipname Ship being sold.
- */
-int land_canSellPlayerShip( const char *shipname )
-{
-   int failure = 0;
-   land_errClear();
-   if (strcmp( shipname, player.p->name )==0) { /* Already on-board. */
-      land_errDialogueBuild( _("You can't sell the ship you're piloting!") );
-      failure = 1;
-   }
-
-   return !failure;
-}
-
-/**
  * @brief Makes sure it's valid to buy a ship, trading the old one in simultaneously.
  *    @param ship Ship being bought.
  *    @param spob Where the player is shopping.

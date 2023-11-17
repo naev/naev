@@ -194,59 +194,6 @@ int land_doneLoading (void)
 }
 
 /**
- * @brief Makes sure it's valid to change ships in the equipment view.
- *    @param shipname Ship being changed to.
- */
-int land_canSwapPlayerShip( const char *shipname )
-{
-   int diff;
-   Pilot *newship;
-   const PlayerShip_t *ps = player_getPlayerShip( shipname );
-   land_errClear();
-
-   if (strcmp(shipname,player.p->name)==0) { /* Already onboard. */
-      land_errDialogueBuild( _("You're already onboard the %s."), shipname );
-      return 0;
-   }
-
-   /* Ship can't be piloted by player. */
-   if (ship_isFlag( ps->p->ship, SHIP_NOPLAYER )) {
-      land_errDialogueBuild( _("You can not pilot the %s! The ship can only be used as an escort."), shipname );
-      return 0;
-   }
-
-   /* Ship can't be set as an escort. */
-   if (ship_isFlag( player.p->ship, SHIP_NOESCORT )) {
-      land_errDialogueBuild( _("You can not swap ships and set %s as an escort!"), player.p->name );
-      return 0;
-   }
-
-   newship = ps->p;
-   if (ps->deployed)
-      diff = 0;
-   else
-      diff = pilot_cargoUsed(player.p) - pilot_cargoFree(newship) - (pfleet_cargoFree() - pilot_cargoFree(player.p)); /* Has to fit all the cargo. */
-   diff = MAX( diff, pilot_cargoUsedMission(player.p) - pilot_cargoFree(newship) ); /* Has to fit all mission cargo. */
-   if (diff > 0) { /* Current ship has too much cargo. */
-      land_errDialogueBuild( n_(
-               "You have %d tonne more cargo than the new ship can hold.",
-               "You have %d tonnes more cargo than the new ship can hold.",
-               diff),
-            diff );
-      return 0;
-   }
-   if (pilot_hasDeployed( player.p )) {
-      if (!dialogue_YesNo(_("Recall Fighters"), _("This action will recall your deployed fighters. Is that OK?"))) {
-         land_errDialogueBuild( _("You have deployed fighters.") );
-         return 0;
-      }
-      /* Recall fighters. */
-      escort_clearDeployed( player.p );
-   }
-   return 1;
-}
-
-/**
  * @brief Clear error dialogues.
  */
 void land_errClear (void)
