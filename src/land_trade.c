@@ -39,6 +39,29 @@
 static int commodity_mod = 10; /**< Amount you can buy or sell in a single click. */
 static Commodity **commodity_list = NULL;
 
+static int commodity_exchange_events( unsigned int wid, SDL_Event *evt )
+{
+   if ((evt->type==SDL_KEYDOWN) || (evt->type==SDL_KEYUP)) {
+      int q = commodity_getMod();
+      if (q != commodity_mod) {
+         commodity_mod = q;
+         if (q==1) {
+            window_buttonCaption( wid, "btnCommodityBuy", _("Buy ") );
+            window_buttonCaption( wid, "btnCommoditySell", _("Sell") );
+         }
+         else {
+            char buf[STRMAX_SHORT];
+            snprintf( buf, sizeof(buf), _("Buy (%d %s)"), q, UNIT_MASS );
+            window_buttonCaption( wid, "btnCommodityBuy", buf );
+            snprintf( buf, sizeof(buf), _("Sell (%d %s)"), q, UNIT_MASS );
+            window_buttonCaption( wid, "btnCommoditySell", buf );
+         }
+         toolkit_rerender();
+      }
+   }
+   return 0;
+}
+
 /**
  * @brief Opens the local market window.
  */
@@ -50,6 +73,7 @@ void commodity_exchange_open( unsigned int wid )
    char buf[STRMAX_SHORT];
    size_t l = 0;
    int iconsize;
+   int q = commodity_getMod();
 
    /* Mark as generated. */
    land_tabGenerate(LAND_WINDOW_COMMODITY);
@@ -65,17 +89,17 @@ void commodity_exchange_open( unsigned int wid )
 
    /* buttons */
    bw = (dw - 40) / 3;
+   snprintf( buf, sizeof(buf), _("Buy (%d %s)"), q, UNIT_MASS );
    window_addButtonKey( wid, 40 + iw, 20, bw, LAND_BUTTON_HEIGHT,
-         "btnCommodityBuy", _("Buy"), commodity_buy, SDLK_b );
+         "btnCommodityBuy", buf, commodity_buy, SDLK_b );
+   snprintf( buf, sizeof(buf), _("Sell (%d %s)"), q, UNIT_MASS );
    window_addButtonKey( wid, 60 + iw + bw, 20, bw, LAND_BUTTON_HEIGHT,
-         "btnCommoditySell", _("Sell"), commodity_sell, SDLK_s );
+         "btnCommoditySell", buf, commodity_sell, SDLK_s );
    window_addButtonKey( wid, 80 + iw + 2*bw, 20, bw, LAND_BUTTON_HEIGHT,
          "btnCommodityClose", _("Take Off"), land_buttonTakeoff, SDLK_t );
 
-      /* cust draws the modifier : # of tons one click buys or sells */
-   window_addCust( wid, 40 + iw, 40 + LAND_BUTTON_HEIGHT, 2*bw + 20,
-         gl_smallFont.h + 6, "cstMod", 0, commodity_renderMod, NULL, NULL, NULL, NULL );
-   window_canFocusWidget( wid, "cstMod", 0 );
+   /* handle multipliers. */
+   window_handleEvents( wid, commodity_exchange_events );
 
    /* store gfx */
    window_addRect( wid, -20, -40, 192, 192, "rctStore", &cBlack, 0 );

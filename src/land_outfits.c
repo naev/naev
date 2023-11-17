@@ -68,6 +68,7 @@ static void outfit_Popdown( unsigned int wid, const char* str );
 static void outfits_genList( unsigned int wid );
 static void outfits_changeTab( unsigned int wid, const char *wgt, int old, int tab );
 static void outfits_onClose( unsigned int wid, const char *str );
+static int outfit_events( unsigned int wid, SDL_Event *evt );
 
 /**
  * @brief Gets the size of the outfits window.
