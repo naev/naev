@@ -808,7 +808,6 @@ static void spaceport_buyMap( unsigned int wid, const char *str )
    (void) str;
    const Outfit *o = outfit_get( LOCAL_MAP_NAME );
    unsigned int w;
-   int blackmarket = (land_spob!=NULL) && spob_hasService(land_spob, SPOB_SERVICE_BLACKMARKET);
 
    if (o == NULL) {
       WARN( _("Outfit '%s' does not exist!"), LOCAL_MAP_NAME);
@@ -816,7 +815,7 @@ static void spaceport_buyMap( unsigned int wid, const char *str )
    }
 
    /* Make sure the map isn't already known, etc. */
-   if (!outfit_canBuy( o, blackmarket )) {
+   if (!outfit_canBuy( o, -1 )) {
       land_errDisplay();
       return;
    }
@@ -844,7 +843,6 @@ void land_updateMainTab (void)
    char buf[STRMAX], cred[ECON_CRED_STRLEN], tons[STRMAX_SHORT];
    size_t l = 0;
    const Outfit *o;
-   int blackmarket = (land_spob!=NULL) && spob_hasService(land_spob, SPOB_SERVICE_BLACKMARKET);
 
    /* Update credits. */
    tonnes2str( tons, player.p->cargo_free );
@@ -890,7 +888,7 @@ void land_updateMainTab (void)
    }
 
    /* Make sure player can click it. */
-   if (!outfit_canBuy(o, blackmarket))
+   if (!outfit_canBuy( o, -1 ))
       window_disableButtonSoft( land_windows[0], "btnMap" );
 }
 

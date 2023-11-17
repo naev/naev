@@ -483,7 +483,7 @@ void outfits_update( unsigned int wid, const char *str )
    else
       window_disableButtonSoft( wid, "btnSellOutfit" );
 
-   if ((outfit_canBuy(outfit, blackmarket) > 0) && canbuy) {
+   if ((outfit_canBuy( outfit, wid ) > 0) && canbuy) {
       window_enableButton( wid, "btnBuyOutfit" );
    }
    else
@@ -819,19 +819,36 @@ static void outfit_Popdown( unsigned int wid, const char* str )
 /**
  * @brief Checks to see if the player can buy the outfit.
  *    @param outfit Outfit to buy.
- *    @param blackmarket Whether or not it is a black market.
+ *    @param wid Window ID of the outfitter (or -1 to ignore).
  */
-int outfit_canBuy( const Outfit *outfit, int blackmarket )
+int outfit_canBuy( const Outfit *outfit, int wid )
 {
    int failure, canbuy, cansell;
    credits_t price;
    char buf[ECON_CRED_STRLEN];
+   LandOutfitData *data = NULL;
+   if (wid>=0)
+      data = window_getData( wid );
+   int blackmarket = (data!=NULL) ? data->blackmarket : 0;
 
    failure = 0;
    outfit_getPrice( outfit, &price, &canbuy, &cansell );
 
    /* Not sold at planet. */
-   if ((land_spob!=NULL) && !tech_checkOutfit( land_spob->tech, outfit )) {
+   if ((data!=NULL) && (data->outfits!=NULL)) {
+      int found = 0;
+      for (int i=0; i<array_size(data->outfits); i++) {
+         if (data->outfits[i]==outfit) {
+            found = 1;
+            break;
+         }
+      }
+      if (!found) {
+         land_errDialogueBuild( _("Outfit not sold here!") );
+         return 0;
+      }
+   }
+   else if ((land_spob!=NULL) && !tech_checkOutfit( land_spob->tech, outfit )) {
       land_errDialogueBuild( _("Outfit not sold here!") );
       return 0;
    }
@@ -930,8 +947,7 @@ static void outfits_buy( unsigned int wid, const char *str )
       q = MIN(q,1);
 
    /* Can buy the outfit? */
-   int blackmarket = (land_spob!=NULL) && spob_hasService(land_spob, SPOB_SERVICE_BLACKMARKET);
-   if (!outfit_canBuy( outfit, blackmarket )) {
+   if (!outfit_canBuy( outfit, wid )) {
       land_errDisplay();
       return;
    }
