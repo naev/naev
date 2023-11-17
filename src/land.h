@@ -78,5 +78,5 @@ void bar_regen (void);
 int can_swap( const char *shipname );
 int can_swapEquipment( const char *shipname );
 int can_sell( const char *shipname );
-int land_errDialogue( const char *name, const char *type );
 PRINTF_FORMAT( 1, 2 ) void land_errDialogueBuild( const char *fmt, ... );
+int land_errDisplay (void);

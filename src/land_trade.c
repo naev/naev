@@ -350,8 +350,10 @@ void commodity_buy( unsigned int wid, const char *str )
    price = spob_commodityPrice( land_spob, com );
 
    /* Check stuff. */
-   if (land_errDialogue( com->name, "buyCommodity" ))
+   if (!commodity_canBuy( com )) {
+      land_errDisplay();
       return;
+   }
 
    /* Make the buy. */
    q = pfleet_cargoAdd( com, q );
@@ -391,8 +393,10 @@ void commodity_sell( unsigned int wid, const char *str )
    price = spob_commodityPrice( land_spob, com );
 
    /* Check stuff. */
-   if (land_errDialogue( com->name, "sellCommodity" ))
+   if (!commodity_canSell( com )) {
+      land_errDisplay();
       return;
+   }
 
    /* Remove commodity. */
    q = pfleet_cargoRm( com, q, 0 );

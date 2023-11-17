@@ -410,8 +410,10 @@ static void shipyard_buy( unsigned int wid, const char* str )
 
    credits_t targetprice = ship_buyPrice(ship);
 
-   if (land_errDialogue( ship->name, "buyShip" ))
+   if (!shipyard_canBuy( ship->name, land_spob )) {
+      land_errDisplay();
       return;
+   }
 
    credits2str( buf, targetprice, 2 );
    if (dialogue_YesNo(_("Are you sure?"), /* confirm */
@@ -552,8 +554,10 @@ static void shipyard_trade( unsigned int wid, const char* str )
    credits_t targetprice = ship_buyPrice(ship);
    credits_t playerprice = player_shipPrice(player.p->name,0);
 
-   if (land_errDialogue( ship->name, "tradeShip" ))
+   if (!shipyard_canTrade( ship->name, land_spob )) {
+      land_errDisplay();
       return;
+   }
 
    credits2str( buf, targetprice, 2 );
    credits2str( buf2, playerprice, 2 );

@@ -2136,8 +2136,10 @@ static void equipment_changeShip( unsigned int wid )
       player.ps.deployed = ps->deployed;
    }
 
-   if (land_errDialogue( shipname, "swapEquipment" ))
+   if (!can_swapEquipment( shipname )) {
+      land_errDisplay();
       return;
+   }
 
    /* Store active tab, filter text, and positions for the outfits. */
    i = window_tabWinGetActive( wid, EQUIPMENT_OUTFIT_TAB );
@@ -2331,8 +2333,10 @@ static void equipment_sellShip( unsigned int wid, const char* str )
    HookParam hparam[3];
    const char *shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
 
-   if (land_errDialogue( shipname, "sell" ))
+   if (!can_sell( shipname )) {
+      land_errDisplay();
       return;
+   }
 
    /* Calculate price. */
    price = player_shipPrice(shipname,0);

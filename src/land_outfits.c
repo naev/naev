@@ -932,8 +932,11 @@ static void outfits_buy( unsigned int wid, const char *str )
       q = MIN(q,1);
 
    /* Can buy the outfit? */
-   if (land_errDialogue( outfit->name, "buyOutfit" ))
+   int blackmarket = (land_spob!=NULL) && spob_hasService(land_spob, SPOB_SERVICE_BLACKMARKET);
+   if (!outfit_canBuy( outfit->name, blackmarket )) {
+      land_errDisplay();
       return;
+   }
 
    /* Give dialogue when trying to buy intrinsic. */
    if (outfit->slot.type==OUTFIT_SLOT_INTRINSIC)
@@ -1046,8 +1049,10 @@ static void outfits_sell( unsigned int wid, const char *str )
    q = outfits_getMod();
 
    /* Check various failure conditions. */
-   if (land_errDialogue( outfit->name, "sellOutfit" ))
+   if (!outfit_canSell( outfit->name )) {
+      land_errDisplay();
       return;
+   }
 
    /* Try Lua. */
    if (outfit->lua_sell != LUA_NOREF) {

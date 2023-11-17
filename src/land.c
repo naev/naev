@@ -247,44 +247,6 @@ int can_swapEquipment( const char *shipname )
 
 /**
  * @brief Generates error dialogues used by several landing tabs.
- *
- * @TODO don't use strings here and use some switch case with an enum.
- *
- *    @param name Name of the ship, outfit or commodity being acted upon.
- *    @param type Type of action.
- */
-int land_errDialogue( const char *name, const char *type )
-{
-   int blackmarket = (land_spob!=NULL) && spob_hasService(land_spob, SPOB_SERVICE_BLACKMARKET);
-
-   errorlist_ptr = NULL;
-   if (strcmp(type,"tradeShip")==0)
-      shipyard_canTrade( name, land_spob );
-   else if (strcmp(type,"buyShip")==0)
-      shipyard_canBuy( name, land_spob );
-   else if (strcmp(type,"swapEquipment")==0)
-      can_swapEquipment( name );
-   else if (strcmp(type,"swap")==0)
-      can_swap( name );
-   else if (strcmp(type,"sellShip")==0)
-      can_sell( name );
-   else if (strcmp(type,"buyOutfit")==0)
-      outfit_canBuy( name, blackmarket );
-   else if (strcmp(type,"sellOutfit")==0)
-      outfit_canSell( name );
-   else if (strcmp(type,"buyCommodity")==0)
-      commodity_canBuy( commodity_get( name ) );
-   else if (strcmp(type,"sellCommodity")==0)
-      commodity_canSell( commodity_get( name ) );
-   if (errorlist_ptr != NULL) {
-      dialogue_alert( "%s", errorlist );
-      return 1;
-   }
-   return 0;
-}
-
-/**
- * @brief Generates error dialogues used by several landing tabs.
  *    @param fmt String with printf-like formatting
  */
 void land_errDialogueBuild( const char *fmt, ... )
@@ -304,6 +266,18 @@ void land_errDialogueBuild( const char *fmt, ... )
    else /* Append newest error to the existing list. */
       scnprintf( &errorlist[errorappend],  sizeof(errorlist)-errorappend, "\n%s", errorreason );
    errorlist_ptr = errorlist;
+}
+
+/**
+ * @brief Displays an error if applicable.
+ */
+int land_errDisplay (void)
+{
+   if (errorlist_ptr != NULL) {
+      dialogue_alert( "%s", errorlist );
+      return 1;
+   }
+   return 0;
 }
 
 /**
@@ -832,16 +806,18 @@ static void spaceport_buyMap( unsigned int wid, const char *str )
 {
    (void) wid;
    (void) str;
-   const Outfit *o;
+   const Outfit *o = outfit_get( LOCAL_MAP_NAME );
    unsigned int w;
+   int blackmarket = (land_spob!=NULL) && spob_hasService(land_spob, SPOB_SERVICE_BLACKMARKET);
 
-   /* Make sure the map isn't already known, etc. */
-   if (land_errDialogue( LOCAL_MAP_NAME, "buyOutfit" ))
-      return;
-
-   o = outfit_get( LOCAL_MAP_NAME );
    if (o == NULL) {
       WARN( _("Outfit '%s' does not exist!"), LOCAL_MAP_NAME);
+      return;
+   }
+
+   /* Make sure the map isn't already known, etc. */
+   if (!outfit_canBuy( o->name, blackmarket )) {
+      land_errDisplay();
       return;
    }
 
