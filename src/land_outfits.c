@@ -478,12 +478,12 @@ void outfits_update( unsigned int wid, const char *str )
    credits2str( buf_credits, player.p->credits, 2 );
 
    /* gray out sell button */
-   if ((outfit_canSell(outfit->name) > 0) && cansell)
+   if ((outfit_canSell(outfit) > 0) && cansell)
       window_enableButton( wid, "btnSellOutfit" );
    else
       window_disableButtonSoft( wid, "btnSellOutfit" );
 
-   if ((outfit_canBuy(outfit->name, blackmarket) > 0) && canbuy) {
+   if ((outfit_canBuy(outfit, blackmarket) > 0) && canbuy) {
       window_enableButton( wid, "btnBuyOutfit" );
    }
    else
@@ -818,18 +818,16 @@ static void outfit_Popdown( unsigned int wid, const char* str )
 
 /**
  * @brief Checks to see if the player can buy the outfit.
- *    @param name Outfit to buy.
+ *    @param outfit Outfit to buy.
  *    @param blackmarket Whether or not it is a black market.
  */
-int outfit_canBuy( const char *name, int blackmarket )
+int outfit_canBuy( const Outfit *outfit, int blackmarket )
 {
    int failure, canbuy, cansell;
    credits_t price;
-   const Outfit *outfit;
    char buf[ECON_CRED_STRLEN];
 
    failure = 0;
-   outfit  = outfit_get(name);
    outfit_getPrice( outfit, &price, &canbuy, &cansell );
 
    /* Not sold at planet. */
@@ -933,7 +931,7 @@ static void outfits_buy( unsigned int wid, const char *str )
 
    /* Can buy the outfit? */
    int blackmarket = (land_spob!=NULL) && spob_hasService(land_spob, SPOB_SERVICE_BLACKMARKET);
-   if (!outfit_canBuy( outfit->name, blackmarket )) {
+   if (!outfit_canBuy( outfit, blackmarket )) {
       land_errDisplay();
       return;
    }
@@ -982,14 +980,13 @@ static void outfits_buy( unsigned int wid, const char *str )
 }
 /**
  * @brief Checks to see if the player can sell the selected outfit.
- *    @param name Outfit to try to sell.
+ *    @param outfit Outfit to try to sell.
  */
-int outfit_canSell( const char *name )
+int outfit_canSell( const Outfit *outfit )
 {
    int failure = 0;
    int canbuy, cansell;
    credits_t price;
-   const Outfit *outfit = outfit_get(name);
 
    outfit_getPrice( outfit, &price, &canbuy, &cansell );
 
@@ -1049,7 +1046,7 @@ static void outfits_sell( unsigned int wid, const char *str )
    q = outfits_getMod();
 
    /* Check various failure conditions. */
-   if (!outfit_canSell( outfit->name )) {
+   if (!outfit_canSell( outfit )) {
       land_errDisplay();
       return;
    }

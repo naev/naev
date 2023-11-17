@@ -17,6 +17,6 @@ void outfits_updateEquipmentOutfits( void );
 int outfits_filter( const Outfit **outfits, int n,
       int(*filter)( const Outfit *o ), const char *name );
 ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *n, const Pilot *plt );
-int outfit_canBuy( const char *outfit, int blackmarket );
-int outfit_canSell( const char *outfit );
+int outfit_canBuy( const Outfit *outfit, int blackmarket );
+int outfit_canSell( const Outfit *outfit );
 void outfits_cleanup( void );

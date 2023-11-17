@@ -816,7 +816,7 @@ static void spaceport_buyMap( unsigned int wid, const char *str )
    }
 
    /* Make sure the map isn't already known, etc. */
-   if (!outfit_canBuy( o->name, blackmarket )) {
+   if (!outfit_canBuy( o, blackmarket )) {
       land_errDisplay();
       return;
    }
@@ -890,7 +890,7 @@ void land_updateMainTab (void)
    }
 
    /* Make sure player can click it. */
-   if (!outfit_canBuy(LOCAL_MAP_NAME, blackmarket))
+   if (!outfit_canBuy(o, blackmarket))
       window_disableButtonSoft( land_windows[0], "btnMap" );
 }
 

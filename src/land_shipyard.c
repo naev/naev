@@ -345,12 +345,12 @@ void shipyard_update( unsigned int wid, const char* str )
    window_resizeWidget( wid, "txtDescription", w-(20+iw+20) - (sw+40), y-20+h-bh );
    window_moveWidget( wid, "txtDescription", 20+iw+20, y );
 
-   if (!shipyard_canBuy( ship->name, land_spob ))
+   if (!shipyard_canBuy( ship, land_spob ))
       window_disableButtonSoft( wid, "btnBuyShip");
    else
       window_enableButton( wid, "btnBuyShip");
 
-   if (!shipyard_canTrade( ship->name, land_spob ))
+   if (!shipyard_canTrade( ship, land_spob ))
       window_disableButtonSoft( wid, "btnTradeShip");
    else
       window_enableButton( wid, "btnTradeShip");
@@ -410,7 +410,7 @@ static void shipyard_buy( unsigned int wid, const char* str )
 
    credits_t targetprice = ship_buyPrice(ship);
 
-   if (!shipyard_canBuy( ship->name, land_spob )) {
+   if (!shipyard_canBuy( ship, land_spob )) {
       land_errDisplay();
       return;
    }
@@ -468,12 +468,11 @@ static int shipyard_canAcquire( const Ship *ship, const Spob *spob, credits_t pr
 
 /**
  * @brief Makes sure it's valid to buy a ship.
- *    @param shipname Ship being bought.
+ *    @param ship Ship being bought.
  *    @param spob Where the player is shopping.
  */
-int shipyard_canBuy( const char *shipname, const Spob *spob )
+int shipyard_canBuy( const Ship *ship, const Spob *spob )
 {
-   const Ship *ship = ship_get( shipname );
    credits_t price = ship_buyPrice(ship);
    return shipyard_canAcquire( ship, spob, price );
 }
@@ -522,12 +521,11 @@ int can_swap( const char *shipname )
 
 /**
  * @brief Makes sure it's valid to buy a ship, trading the old one in simultaneously.
- *    @param shipname Ship being bought.
+ *    @param ship Ship being bought.
  *    @param spob Where the player is shopping.
  */
-int shipyard_canTrade( const char *shipname, const Spob *spob )
+int shipyard_canTrade( const Ship *ship, const Spob *spob )
 {
-   const Ship *ship = ship_get( shipname );
    credits_t price = ship_buyPrice(ship) - player_shipPrice(player.p->name,0);
    return shipyard_canAcquire( ship, spob, price );
 }
@@ -554,7 +552,7 @@ static void shipyard_trade( unsigned int wid, const char* str )
    credits_t targetprice = ship_buyPrice(ship);
    credits_t playerprice = player_shipPrice(player.p->name,0);
 
-   if (!shipyard_canTrade( ship->name, land_spob )) {
+   if (!shipyard_canTrade( ship, land_spob )) {
       land_errDisplay();
       return;
    }
