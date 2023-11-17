@@ -50,6 +50,7 @@
       * Toolkit is cached in a framebuffer for much faster rendering
       * Intrinsic outfit details now visible from the equipment menu
       * Visually indicate which pilots are scanning the player on the overlay and radars
+      * Can sell all outfits on any spob with an outfitter
    * New Content
       * New mechanic for House Sirius called flow to unlock psychic powers
          * Gives passive bonuses to Sirius ships
