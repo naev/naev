@@ -495,34 +495,6 @@ int can_sell( const char *shipname )
 }
 
 /**
- * @brief Makes sure it's valid to change ships.
- *    @param shipname Ship being changed to.
- */
-int can_swap( const char *shipname )
-{
-   int failure = 0;
-   const Ship* ship = ship_get( shipname );
-   int diff;
-   land_errClear();
-
-   diff = pilot_cargoUsed(player.p) - (pfleet_cargoFree() - pilot_cargoFree(player.p) + ship->cap_cargo);
-   diff = MAX( diff, pilot_cargoUsedMission(player.p) - ship->cap_cargo ); /* Has to fit all mission cargo. */
-   if (diff > 0) { /* Current ship has too much cargo. */
-      land_errDialogueBuild( n_(
-               "You have %d tonne more cargo than the new ship can hold.",
-               "You have %d tonnes more cargo than the new ship can hold.",
-               diff ),
-            diff );
-      failure = 1;
-   }
-   if (pilot_hasDeployed(player.p)) { /* Escorts are in space. */
-      land_errDialogueBuild( _("You can't strand your fighters in space.") );
-      failure = 1;
-   }
-   return !failure;
-}
-
-/**
  * @brief Makes sure it's valid to buy a ship, trading the old one in simultaneously.
  *    @param ship Ship being bought.
  *    @param spob Where the player is shopping.
