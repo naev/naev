@@ -859,3 +859,19 @@ Commodity** tech_getCommodity( const tech_group_t *tech )
 
    return c;
 }
+
+/**
+ * @brief Checks to see if there is an outfit in the tech group.
+ */
+int tech_checkOutfit( const tech_group_t *tech, const Outfit *o )
+{
+   Outfit **to = tech_getOutfit( tech );
+   for (int i=0; i<array_size(to); i++) {
+      if (to[i]==o) {
+         array_free(to);
+         return 1;
+      }
+   }
+   array_free(to);
+   return 0;
+}

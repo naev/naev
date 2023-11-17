@@ -38,15 +38,15 @@
 #define  OUTFITS_IAR    "iarOutfits"
 #define  OUTFITS_TAB    "tabOutfits"
 #define  OUTFITS_FILTER "inpFilterOutfits"
-#define  OUTFITS_NTABS  6
+#define  OUTFITS_NTABS  7
 
 typedef struct LandOutfitData_ {
    const Outfit **outfits;
    int blackmarket;
 } LandOutfitData;
 
-static iar_data_t *iar_data = NULL; /**< Stored image array positions. */
-static Outfit ***iar_outfits = NULL; /**< C-array of Arrays: Outfits associated with the image array cells. */
+static iar_data_t iar_data[OUTFITS_NTABS]; /**< Stored image array positions. */
+static Outfit **iar_outfits[OUTFITS_NTABS]; /**< C-array of Arrays: Outfits associated with the image array cells. */
 static int outfit_Mode = 0; /**< Outfit mode for filtering. */
 
 /* Modifier for buying and selling quantity. */
@@ -138,17 +138,10 @@ void outfits_open( unsigned int wid, const Outfit **outfits, int blackmarket )
    outfits_getSize( wid, &w, &h, &iw, &ih, &bw, &bh );
 
    /* Initialize stored positions. */
-   if (iar_data == NULL)
-      iar_data = calloc( OUTFITS_NTABS, sizeof(iar_data_t) );
-   else
-      memset( iar_data, 0, sizeof(iar_data_t) * OUTFITS_NTABS );
-   if (iar_outfits == NULL)
-      iar_outfits = calloc( OUTFITS_NTABS, sizeof(Outfit**) );
-   else {
-      for (int i=0; i<OUTFITS_NTABS; i++)
-         array_free( iar_outfits[i] );
-      memset( iar_outfits, 0, sizeof(Outfit**) * OUTFITS_NTABS );
-   }
+   memset( iar_data, 0, sizeof(iar_data_t) * OUTFITS_NTABS );
+   for (int i=0; i<OUTFITS_NTABS; i++)
+      array_free( iar_outfits[i] );
+   memset( iar_outfits, 0, sizeof(Outfit**) * OUTFITS_NTABS );
 
    /* will allow buying from keyboard */
    window_setAccept( wid, outfits_buy );
@@ -316,10 +309,11 @@ static void outfits_genList( unsigned int wid )
       outfitLand_filterUtility,
       outfitLand_filterStructure,
       outfitLand_filterCore,
-      outfit_filterOther
+      outfit_filterOther,
+      outfitLand_filter,
    };
    const char *tabnames[] = {
-      _("All"), _(OUTFIT_LABEL_WEAPON), _(OUTFIT_LABEL_UTILITY), _(OUTFIT_LABEL_STRUCTURE), _(OUTFIT_LABEL_CORE), _("Other")
+      _("All"), _(OUTFIT_LABEL_WEAPON), _(OUTFIT_LABEL_UTILITY), _(OUTFIT_LABEL_STRUCTURE), _(OUTFIT_LABEL_CORE), _("Other"), _("Owned"),
    };
 
    int active;
@@ -377,10 +371,24 @@ static void outfits_genList( unsigned int wid )
    /* Set up the outfits to buy/sell */
    data = window_getData( wid );
    array_free( iar_outfits[active] );
-   /* Use custom list; default to landed outfits. */
-   iar_outfits[active] = (data->outfits!=NULL) ? array_copy( Outfit*, data->outfits ) : tech_getOutfit( land_spob->tech );
-   noutfits = outfits_filter( (const Outfit**)iar_outfits[active], array_size(iar_outfits[active]), tabfilters[active], filtertext );
-   coutfits = outfits_imageArrayCells( (const Outfit**)iar_outfits[active], &noutfits, player.p );
+
+   if (active==6) {
+      /* Show player their owned outfits. */
+      const PlayerOutfit_t *po = player_getOutfits();
+      Outfit **ol = array_create( Outfit* );
+      for (int i=0; i<array_size(po); i++)
+         array_push_back( &ol, (Outfit*) po[i].o );
+      qsort( ol, array_size(ol), sizeof(Outfit*), outfit_compareTech );
+      noutfits = outfits_filter( (const Outfit**)ol, array_size(ol), tabfilters[active], filtertext );
+      coutfits = outfits_imageArrayCells( (const Outfit**)ol, &noutfits, player.p );
+      iar_outfits[active] = ol;
+   }
+   else {
+      /* Use custom list; default to landed outfits. */
+      iar_outfits[active] = (data->outfits!=NULL) ? array_copy( Outfit*, data->outfits ) : tech_getOutfit( land_spob->tech );
+      noutfits = outfits_filter( (const Outfit**)iar_outfits[active], array_size(iar_outfits[active]), tabfilters[active], filtertext );
+      coutfits = outfits_imageArrayCells( (const Outfit**)iar_outfits[active], &noutfits, player.p );
+   }
 
    iconsize = 128;
    if (!conf.big_icons) {
@@ -475,8 +483,9 @@ void outfits_update( unsigned int wid, const char *str )
    else
       window_disableButtonSoft( wid, "btnSellOutfit" );
 
-   if ((outfit_canBuy(outfit->name, blackmarket) > 0) && canbuy)
+   if ((outfit_canBuy(outfit->name, blackmarket) > 0) && canbuy) {
       window_enableButton( wid, "btnBuyOutfit" );
+   }
    else
       window_disableButtonSoft( wid, "btnBuyOutfit" );
 
@@ -823,6 +832,12 @@ int outfit_canBuy( const char *name, int blackmarket )
    outfit  = outfit_get(name);
    outfit_getPrice( outfit, &price, &canbuy, &cansell );
 
+   /* Not sold at planet. */
+   if ((land_spob!=NULL) && !tech_checkOutfit( land_spob->tech, outfit )) {
+      land_errDialogueBuild( _("Outfit not sold here!") );
+      return 0;
+   }
+
    /* Unique. */
    if (outfit_isProp(outfit, OUTFIT_PROP_UNIQUE) && (player_outfitOwnedTotal(outfit)>0)) {
       land_errDialogueBuild( _("You can only own one of this outfit.") );
@@ -853,7 +868,7 @@ int outfit_canBuy( const char *name, int blackmarket )
       land_errDialogueBuild( _("You already have this license.") );
       return 0;
    }
-   /* not enough $$ */
+   /* Not enough $$ */
    if (!player_hasCredits(price)) {
       credits2str( buf, price - player.p->credits, 2 );
       land_errDialogueBuild( _("You need %s more."), buf);
@@ -1116,12 +1131,6 @@ static void outfits_renderMod( double bx, double by, double w, double h, void *d
 void outfits_cleanup(void)
 {
    /* Free stored positions. */
-   free(iar_data);
-   iar_data = NULL;
-   if (iar_outfits != NULL) {
-      for (int i=0; i<OUTFITS_NTABS; i++)
-         array_free( iar_outfits[i] );
-      free(iar_outfits);
-      iar_outfits = NULL;
-   }
+   for (int i=0; i<OUTFITS_NTABS; i++)
+      array_free( iar_outfits[i] );
 }
