@@ -313,7 +313,7 @@ static void outfits_genList( unsigned int wid )
       outfitLand_filter,
    };
    const char *tabnames[] = {
-      _("All"), _(OUTFIT_LABEL_WEAPON), _(OUTFIT_LABEL_UTILITY), _(OUTFIT_LABEL_STRUCTURE), _(OUTFIT_LABEL_CORE), _("Other"), _("Owned"),
+      _("All"), _(OUTFIT_LABEL_WEAPON), _(OUTFIT_LABEL_UTILITY), _(OUTFIT_LABEL_STRUCTURE), _(OUTFIT_LABEL_CORE), _("#rOther"), _("Owned"),
    };
 
    int active;
