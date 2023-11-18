@@ -297,9 +297,11 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
    /* now load the texture data up */
    SDL_LockSurface( surface );
    if (flags & OPENGL_TEX_SDF) {
+      float border[] = { 0., 0., 0., 0. };
       uint8_t *trans = SDL_MapTrans( surface, surface->w, surface->h, 0 );
       GLfloat *dataf = make_distance_mapbf( trans, surface->w, surface->h, vmax );
       free( trans );
+      glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, border);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
       glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
@@ -307,7 +309,7 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
       free( dataf );
    }
    else {
-      *vmax = 0.;
+      *vmax = 1.;
       glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch&-surface->pitch, 8 ) );
       glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
             surface->w, surface->h, 0, surface->format->Amask ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, surface->pixels );
