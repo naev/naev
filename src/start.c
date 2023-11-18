@@ -166,6 +166,7 @@ void start_cleanup (void)
    free( start_data.chapter );
    free( start_data.spob_lua_default );
    free( start_data.dtype_default );
+   free( start_data.local_map_default );
    memset( &start_data, 0, sizeof(start_data) );
 }
 
