@@ -48,6 +48,7 @@ static glTexList* texture_list = NULL; /**< Texture list. */
  * prototypes
  */
 /* misc */
+static uint8_t SDL_GetAlpha( SDL_Surface* s, int x, int y );
 static int SDL_IsTrans( SDL_Surface* s, int x, int y );
 static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h, int tight );
 static size_t gl_transSize( const int w, const int h );
@@ -61,6 +62,33 @@ static glTexture* gl_texExists( const char* path, int sx, int sy );
 static int gl_texAdd( glTexture *tex, int sx, int sy );
 
 /**
+ * @brief Gets the alpha value of a pixel.
+ *
+ *    @param s Surface to get value from.
+ *    @param x X position of the pixel to check.
+ *    @param y Y position of the pixel to check.
+ *    @return Alpha value of the pixel.
+ */
+static uint8_t SDL_GetAlpha( SDL_Surface* s, int x, int y )
+{
+   size_t bytes_per_pixel = s->format->BytesPerPixel;
+   void *p;
+   Uint32 pixel;
+   Uint8 r, g, b, a;
+
+   SDL_LockSurface(s);
+   p = (Uint8 *)s->pixels + y * s->pitch + x * bytes_per_pixel;
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+   SDL_memcpy(((Uint8 *) &pixel) + (sizeof(pixel) - bytes_per_pixel), p, bytes_per_pixel);
+#else
+   SDL_memcpy(&pixel, p, bytes_per_pixel);
+#endif
+   SDL_GetRGBA(pixel, s->format, &r, &g, &b, &a);
+   SDL_UnlockSurface(s);
+   return a;
+}
+
+/**
  * @brief Checks to see if a position of the surface is transparent.
  *
  *    @param s Surface to check for transparency.
@@ -70,39 +98,9 @@ static int gl_texAdd( glTexture *tex, int sx, int sy );
  */
 static int SDL_IsTrans( SDL_Surface* s, int x, int y )
 {
-   int bpp;
-   Uint8 *p;
-   Uint32 pixelcolour;
-
-   bpp = s->format->BytesPerPixel;
-   /* here p is the address to the pixel we want to retrieve */
-   p = (Uint8 *)s->pixels + y*s->pitch + x*bpp;
-
-   pixelcolour = 0;
-   switch(bpp) {
-      case 1:
-         pixelcolour = *p;
-         break;
-
-      case 2:
-         memcpy(&pixelcolour, p, sizeof(Uint16));
-         break;
-
-      case 3:
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-         pixelcolour = p[0] << 16 | p[1] << 8 | p[2];
-#else /* SDL_BYTEORDER == SDL_BIG_ENDIAN */
-         pixelcolour = p[0] | p[1] << 8 | p[2] << 16;
-#endif /* SDL_BYTEORDER == SDL_BIG_ENDIAN */
-         break;
-
-      case 4:
-         memcpy(&pixelcolour, p, sizeof(Uint32));
-         break;
-   }
-
-   /* test whether pixels colour == colour of transparent pixels for that surface */
-   return ((pixelcolour & s->format->Amask) < (Uint32)(0.1*(double)s->format->Amask));
+   uint8_t a = SDL_GetAlpha( s, x, y );
+   /* Test whether pixels colour == colour of transparent pixels for that surface */
+   return a > 127;
 }
 
 /**
@@ -147,7 +145,7 @@ static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h, int tight )
       /* Check each pixel individually. */
       for (int i=0; i<h; i++)
          for (int j=0; j<w; j++) /* sets each bit to be 1 if not transparent or 0 if is */
-            t[i*w+j] |= !SDL_IsTrans(s,j,i); /* Flipped with tight version, this is not good :/ */
+            t[i*w+j] |= SDL_GetAlpha(s,j,i); /* Flipped with tight version, this is not good :/ */
    }
 
    return t;
