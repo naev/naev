@@ -50,7 +50,7 @@ static glTexList* texture_list = NULL; /**< Texture list. */
 /* misc */
 static uint8_t SDL_GetAlpha( SDL_Surface* s, int x, int y );
 static int SDL_IsTrans( SDL_Surface* s, int x, int y );
-static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h, int tight );
+static uint8_t* SDL_MapAlpha( SDL_Surface* s, int w, int h, int tight );
 static size_t gl_transSize( const int w, const int h );
 /* glTexture */
 static GLuint gl_texParameters( unsigned int flags );
@@ -100,6 +100,7 @@ static int SDL_IsTrans( SDL_Surface* s, int x, int y )
 {
    uint8_t a = SDL_GetAlpha( s, x, y );
    /* Test whether pixels colour == colour of transparent pixels for that surface */
+
    return a > 127;
 }
 
@@ -115,7 +116,7 @@ static int SDL_IsTrans( SDL_Surface* s, int x, int y )
  *    @param tight Whether or not to store transparency per bit or
  *    @return 0 on success.
  */
-static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h, int tight )
+static uint8_t* SDL_MapAlpha( SDL_Surface* s, int w, int h, int tight )
 {
    uint8_t *t;
 
@@ -145,7 +146,7 @@ static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h, int tight )
       /* Check each pixel individually. */
       for (int i=0; i<h; i++)
          for (int j=0; j<w; j++) /* sets each bit to be 1 if not transparent or 0 if is */
-            t[i*w+j] |= SDL_GetAlpha(s,j,i); /* Flipped with tight version, this is not good :/ */
+            t[i*w+j] = SDL_GetAlpha(s,j,i); /* Flipped with tight version, this is not good :/ */
    }
 
    return t;
@@ -298,7 +299,7 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
    SDL_LockSurface( surface );
    if (flags & OPENGL_TEX_SDF) {
       float border[] = { 0., 0., 0., 0. };
-      uint8_t *trans = SDL_MapTrans( surface, surface->w, surface->h, 0 );
+      uint8_t *trans = SDL_MapAlpha( surface, surface->w, surface->h, 0 );
       GLfloat *dataf = make_distance_mapbf( trans, surface->w, surface->h, vmax );
       free( trans );
       glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, border);
@@ -376,7 +377,7 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
    if (flags & OPENGL_TEX_MAPTRANS)
       flags ^= OPENGL_TEX_MAPTRANS;
 
-   /* Appropriate size for the transparency map, see SDL_MapTrans */
+   /* Appropriate size for the transparency map, see SDL_MapAlpha */
    cachesize = gl_transSize(w, h);
 
    cachefile = NULL;
@@ -434,7 +435,7 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
 
    if (trans == NULL) {
       SDL_LockSurface(surface);
-      trans = SDL_MapTrans( surface, w, h, 1 );
+      trans = SDL_MapAlpha( surface, w, h, 1 );
       SDL_UnlockSurface(surface);
 
       if (cachefile != NULL) {
