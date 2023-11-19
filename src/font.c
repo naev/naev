@@ -1201,7 +1201,7 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
       }
       c->w     = rw;
       c->h     = rh;
-      c->m     = FONT_DISTANCE_FIELD_SIZE / (2. * vmax * stsh->h);
+      c->m     = (2. * vmax * stsh->h) / FONT_DISTANCE_FIELD_SIZE;
       c->off_x = slot->bitmap_left-b;
       c->off_y = slot->bitmap_top +b;
       c->adv_x = (GLfloat)slot->metrics.horiAdvance / 64.;
