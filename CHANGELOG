@@ -52,6 +52,7 @@
       * Visually indicate which pilots are scanning the player on the overlay and radars
       * Can sell all outfits on any spob with an outfitter
       * Enemies in patrol missions should not run away
+      * Changed the faction standing caps to allow the player to get all ships when maxed out. Will be decreased in the future as missions are added
    * New Content
       * New mechanic for House Sirius called flow to unlock psychic powers
          * Gives passive bonuses to Sirius ships
