@@ -1517,7 +1517,10 @@ void window_render( Window *w )
          continue;
       if (wgt_isFlag(wgt, WGT_FLAG_KILL))
          continue;
-      wgt->render( wgt, w->x, w->y );
+
+      /* Only render non-dynamics. */
+      if (!wgt_isFlag(wgt, WGT_FLAG_DYNAMIC))
+         wgt->render( wgt, w->x, w->y );
 
       if (wgt->id == w->focus) {
          double wx  = w->x + wgt->x - 2;
@@ -1586,7 +1589,7 @@ void toolkit_drawScrollbar( int x, int y, int w, int h, double pos )
 void toolkit_render( double dt )
 {
    (void) dt;
-   Window *top;
+   Window *top = toolkit_getActiveWindow();
 
    if (toolkit_needsRender) {
       toolkit_needsRender = 0;
@@ -1599,6 +1602,8 @@ void toolkit_render( double dt )
       /* Render base. */
       for (Window *w = windows; w!=NULL; w = w->next) {
          if (window_isFlag(w, WINDOW_NORENDER | WINDOW_KILL))
+            continue;
+         if ((w==top) && window_isFlag(w,WINDOW_DYNAMIC))
             continue;
 
          /* The actual rendering. */
@@ -1640,7 +1645,6 @@ void toolkit_render( double dt )
 
    /* We render only the active window dynamically, otherwise we wouldn't be able to respect the order.
     * However, since the dynamic stuff is also rendered to the framebuffer below, it shouldn't be too bad. */
-   top = toolkit_getActiveWindow();
    if ((top != NULL) && !window_isFlag(top, WINDOW_NORENDER | WINDOW_KILL)) {
       window_renderDynamic( top );
       window_renderOverlay( top );
