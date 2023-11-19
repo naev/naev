@@ -209,8 +209,8 @@ void gl_renderTextureRaw( GLuint texture, uint8_t flags,
    if (c == NULL)
       c = &cWhite;
 
-   hw = w/2.;
-   hh = h/2.;
+   hw = w*0.5;
+   hh = h*0.5;
 
    /* Set the vertex. */
    projection = gl_view_matrix;
@@ -291,6 +291,7 @@ void gl_renderSDF( const glTexture *texture,
 {
    (void) outline; /* TODO handle outline. */
    double hw, hh; /* Half width and height */
+   double sw, sh;
    mat4 projection, tex_mat;
 
    glUseProgram(shaders.texturesdf.program);
@@ -302,34 +303,36 @@ void gl_renderSDF( const glTexture *texture,
    if (c == NULL)
       c = &cWhite;
 
-   hw = w/2.;
-   hh = h/2.;
+   hw = w*0.5;
+   hh = h*0.5;
 
    /* Set the vertex. */
    projection = gl_view_matrix;
    if (angle==0.) {
-     mat4_translate( &projection, x, y, 0. );
-     mat4_scale( &projection, w, h, 1. );
+     mat4_translate( &projection, x+hw, y+hh, 0. );
+     mat4_scale( &projection, hw, hh, 1. );
    }
    else {
      mat4_translate( &projection, x+hw, y+hh, 0. );
      mat4_rotate2d( &projection, angle );
-     mat4_translate( &projection, -hw, -hh, 0. );
-     mat4_scale( &projection, w, h, 1. );
+     mat4_scale( &projection, hw, hh, 1. );
    }
    glEnableVertexAttribArray( shaders.texturesdf.vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texturesdf.vertex,
+   gl_vboActivateAttribOffset( gl_circleVBO, shaders.texturesdf.vertex,
          0, 2, GL_FLOAT, 0 );
 
    /* Set the texture. */
+   sw = 1./w;
+   sh = 1./h;
    tex_mat = (texture->flags & OPENGL_TEX_VFLIP) ? mat4_ortho(-1, 1, 2, 0, 1, -1) : mat4_identity();
-   mat4_scale( &tex_mat, texture->srw, texture->srh, 1. );
+   mat4_scale( &tex_mat, texture->srw+2.*sw, texture->srh+2.*sh, 1. );
+   mat4_translate( &tex_mat, -sw, -sh, 0. );
 
    /* Set shader uniforms. */
    gl_uniformColor(shaders.texturesdf.color, c);
    gl_uniformMat4(shaders.texturesdf.projection, &projection);
    gl_uniformMat4(shaders.texturesdf.tex_mat, &tex_mat);
-   glUniform1f( shaders.texturesdf.m, texture->vmax * w/texture->w );
+   glUniform1f( shaders.texturesdf.m, (2.0*texture->vmax*(w+2.)/texture->w) );
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
@@ -447,8 +450,8 @@ void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by )
    gui_getOffset( &gx, &gy );
 
    /* calculate position - we'll use relative coords to player */
-   *nx = (bx - cx) * z + gx + SCREEN_W/2.;
-   *ny = (by - cy) * z + gy + SCREEN_H/2.;
+   *nx = (bx - cx) * z + gx + SCREEN_W*0.5;
+   *ny = (by - cy) * z + gy + SCREEN_H*0.5;
 }
 
 /**
@@ -466,7 +469,7 @@ mat4 gl_gameToScreenMatrix( mat4 lhs )
    z = cam_getZoom();
    gui_getOffset( &gx, &gy );
 
-   mat4_translate( &projection, gx + SCREEN_W/2., gy + SCREEN_H/2., 0. );
+   mat4_translate( &projection, gx + SCREEN_W*0.5, gy + SCREEN_H*0.5, 0. );
    mat4_scale( &projection, z, z, 1. );
    mat4_translate( &projection, -cx, cy, 0. );
    return projection;
@@ -490,8 +493,8 @@ void gl_screenToGameCoords( double *nx, double *ny, int bx, int by )
    gui_getOffset( &gx, &gy );
 
    /* calculate position - we'll use relative coords to player */
-   *nx = (bx - SCREEN_W/2. - gx) / z + cx;
-   *ny = (by - SCREEN_H/2. - gy) / z + cy;
+   *nx = (bx - SCREEN_W*0.5 - gx) / z + cx;
+   *ny = (by - SCREEN_H*0.5 - gy) / z + cy;
 }
 
 /**
@@ -514,7 +517,7 @@ void gl_renderSprite( const glTexture* sprite, double bx, double by,
 
    /* Translate coords. */
    z = cam_getZoom();
-   gl_gameToScreenCoords( &x, &y, bx - sprite->sw/2., by - sprite->sh/2. );
+   gl_gameToScreenCoords( &x, &y, bx - sprite->sw*0.5, by - sprite->sh*0.5 );
 
    /* Scaled sprite dimensions. */
    w = sprite->sw*z;
@@ -556,7 +559,7 @@ void gl_renderSpriteScale( const glTexture* sprite, double bx, double by,
 
    /* Translate coords. */
    z = cam_getZoom();
-   gl_gameToScreenCoords( &x, &y, bx - sprite->sw/2., by - sprite->sh/2. );
+   gl_gameToScreenCoords( &x, &y, bx - sprite->sw*0.5, by - sprite->sh*0.5 );
 
    /* Scaled sprite dimensions. */
    w = sprite->sw*z*scalew;
@@ -597,7 +600,7 @@ void gl_renderSpriteRotate( const glTexture* sprite,
 
    /* Translate coords. */
    z = cam_getZoom();
-   gl_gameToScreenCoords( &x, &y, bx - sprite->sw/2., by - sprite->sh/2. );
+   gl_gameToScreenCoords( &x, &y, bx - sprite->sw*0.5, by - sprite->sh*0.5 );
 
    /* Scaled sprite dimensions. */
    w = sprite->sw*z;
@@ -641,7 +644,7 @@ void gl_renderSpriteScaleRotate( const glTexture* sprite,
 
    /* Translate coords. */
    z = cam_getZoom();
-   gl_gameToScreenCoords( &x, &y, bx - sprite->sw/2., by - sprite->sh/2. );
+   gl_gameToScreenCoords( &x, &y, bx - sprite->sw*0.5, by - sprite->sh*0.5 );
 
    /* Scaled sprite dimensions. */
    w = sprite->sw*z*scalew;
@@ -711,7 +714,7 @@ void gl_renderSpriteInterpolateScale( const glTexture* sa, const glTexture *sb,
    double x,y, w,h, tx,ty, z;
 
    /* Translate coords. */
-   gl_gameToScreenCoords( &x, &y, bx - scalew * sa->sw/2., by - scaleh * sa->sh/2. );
+   gl_gameToScreenCoords( &x, &y, bx - scalew * sa->sw*0.5, by - scaleh * sa->sh*0.5 );
 
    /* Scaled sprite dimensions. */
    z = cam_getZoom();
@@ -910,8 +913,8 @@ void gl_renderScaleAspect( const glTexture* texture,
    nw = scale * texture->w;
    nh = scale * texture->h;
 
-   bx += (bw-nw)/2.;
-   by += (bh-nh)/2.;
+   bx += (bw-nw)*0.5;
+   by += (bh-nh)*0.5;
 
    gl_renderScale( texture, bx, by, nw, nh, c );
 }
@@ -1042,7 +1045,7 @@ void gl_renderLine( double x1, double y1,
 
    glUseProgram(shaders.sdfsolid.program);
    glUniform1f(shaders.sdfsolid.paramf, 1.); /* No outline. */
-   gl_renderShader( (x1+x2)/2., (y1+y2)/2., s/2.+0.5, 1.0, a, &shaders.sdfsolid, c, 1 );
+   gl_renderShader( (x1+x2)*0.5, (y1+y2)*0.5, s*0.5+0.5, 1.0, a, &shaders.sdfsolid, c, 1 );
 }
 
 /**
