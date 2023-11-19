@@ -1046,7 +1046,7 @@ function vn.StateMenu:_mousepressed( mx, my, button )
       local _text, x, y, w, h = table.unpack(v)
       if _inbox( mx, my, gx+x-b, gy+y-b, w+2*b, h+2*b ) then
          self:_choose(k)
-         return
+         return true
       end
    end
 end
