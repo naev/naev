@@ -289,8 +289,8 @@ void gl_renderSDF( const glTexture *texture,
       double x, double y, double w, double h,
       const glColour *c, double angle, double outline )
 {
-   // Half width and height
-   double hw, hh;
+   (void) outline; /* TODO handle outline. */
+   double hw, hh; /* Half width and height */
    mat4 projection, tex_mat;
 
    glUseProgram(shaders.texturesdf.program);
