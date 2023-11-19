@@ -22,6 +22,9 @@
  <notes>
   <campaign>Dvaered Recruitment</campaign>
  </notes>
+ <tags>
+  <tag>dva_cap_ch01_lrg</tag>
+ </tags>
 </mission>
 --]]
 --[[

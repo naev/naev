@@ -3,7 +3,7 @@ return {
    cap_kill       = 15,
    delta_distress = {-1, 0},    -- Maximum change constraints
    delta_kill     = {-5, 1},    -- Maximum change constraints
-   cap_misn_def   = 30,
+   cap_misn_def   = 70, --30, -- TODO decrease as missions get added
    cap_misn_var   = "_fcap_soromid",
    cap_tags       = {
       ["srm_cap_ch01_sml"] = { val=1, max=50 },
