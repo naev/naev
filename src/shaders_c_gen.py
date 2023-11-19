@@ -111,7 +111,7 @@ SHADERS = [
    ),
    Shader(
       name = "texturesdf",
-      vs_path = "texture.vert",
+      vs_path = "texturesdf.vert",
       fs_path = "texturesdf.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "color", "tex_mat", "sampler", "m", "outline"],

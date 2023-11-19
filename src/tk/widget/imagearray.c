@@ -188,7 +188,7 @@ static void iar_render( Widget* iar, double bx, double by )
       for (int i=0; i<xelem; i++) {
          ImageArrayCell *cell;
 
-         xcurs = floor(x + i * w + (i+.5) * xspace);
+         xcurs = floor(x + i * w + (i+0.5) * xspace);
 
          /* Get position. */
          pos = j*xelem + i;
@@ -243,8 +243,8 @@ static void iar_render( Widget* iar, double bx, double by )
 
          /* Slot type. */
          if (cell->sloticon != NULL) {
-            double sw = 15.;
-            double sh = 15.;
+            double sw = 16.;
+            double sh = 16.;
             double sx = xcurs + iar->dat.iar.iw - 10.;
             double sy = ycurs + iar->dat.iar.ih + 2.;
 

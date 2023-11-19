@@ -322,8 +322,9 @@ void gl_renderSDF( const glTexture *texture,
          0, 2, GL_FLOAT, 0 );
 
    /* Set the texture. */
-   sw = 1./w;
-   sh = 1./h;
+   /* TODO we would want to pad the texture a bit to get nice marked borders, but we have to actually pad the SDF first... */
+   sw = 0.;//1./w;
+   sh = 0.;//1./h;
    tex_mat = (texture->flags & OPENGL_TEX_VFLIP) ? mat4_ortho(-1, 1, 2, 0, 1, -1) : mat4_identity();
    mat4_scale( &tex_mat, texture->srw+2.*sw, texture->srh+2.*sh, 1. );
    mat4_translate( &tex_mat, -sw, -sh, 0. );

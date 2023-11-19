@@ -12,10 +12,9 @@ const vec4 OUTLINE_COLOUR = vec4( vec3(0.0), 1.0 );
 
 void main(void)
 {
-   float d  = (2.0*texture(sampler, tex_coord).r-1.0)*m;
-   float alpha = smoothstep( -0.5, 0.5, d );
-   //float beta  = smoothstep( -0.5, 0.5, d );
-   float beta = alpha;
-   color_out.rgb = mix( OUTLINE_COLOUR.rgb, color.rgb, beta );
-   color_out.a = color.a*alpha;
+   float d  = (texture(sampler, tex_coord).r-0.5)*m;
+   float alpha = smoothstep(-0.5    , +0.5, d);
+   float beta  = smoothstep(-M_SQRT2, -1.0, d);
+   vec4 fg_c   = mix( OUTLINE_COLOUR, color, alpha );
+   color_out   = vec4( fg_c.rgb, beta*fg_c.a );
 }
