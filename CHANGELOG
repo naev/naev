@@ -113,6 +113,7 @@
       * Ship distress moved to the message framework
       * Outfits have support for double tapping accel/left/right triggers
       * Removed toolkit fading effects
+      * Support for rendering images as SDFs
    * Fixes
       * Main menu more responsive when changing windows
       * Typo and wording fixes
