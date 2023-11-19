@@ -6,9 +6,11 @@ return {
    cap_misn_def   = 70-13, --30, -- TODO lower as missions get added
    cap_misn_var   = "_fcap_zalek",
    cap_tags       = {
-      ["zlk_cap_ch01_sml"] = { val=1, max=50 },
-      ["zlk_cap_ch01_med"] = { val=3, max=50 },
-      ["zlk_cap_ch01_lrg"] = { val=5, max=50 },
+      -- TODO return cap_ch01 to 50 when possible
+      ["zlk_cap_ch01_sml"] = { val=1, max=70 },
+      ["zlk_cap_ch01_med"] = { val=3, max=70 },
+      ["zlk_cap_ch01_lrg"] = { val=5, max=70 },
+      -- ch2z should be 70
       ["zlk_cap_ch2z_sml"] = { val=1, max=70 },
       ["zlk_cap_ch2z_med"] = { val=3, max=70 },
       ["zlk_cap_ch2z_lrg"] = { val=5, max=70 },
