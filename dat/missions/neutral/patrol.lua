@@ -274,14 +274,15 @@ function timer ()
 
    for i, j in ipairs( enemies ) do
       if j ~= nil and j:exists() then
-         local already_in = false
-         for a, b in ipairs( mem.hostiles ) do
-            if j == b then
-               already_in = true
-            end
-         end
-         if not already_in then
+         if not inlist( mem.hostile, j ) then
             if player_pos:dist( j:pos() ) < 1500 then
+               local m = j:memory()
+               if m.natural then
+                  m.shield_run = -1
+                  m.armour_run = -1
+                  m.norun = true
+                  m.enemyclose = nil
+               end
                j:setVisible( true )
                j:setHilight( true )
                j:setHostile( true )
