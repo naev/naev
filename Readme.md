@@ -15,6 +15,10 @@ missions, equipment, and ships; Even the galaxy itself grows larger with each
 release. For the literarily-inclined, there are large amounts of lore
 accompanying everything from planets to equipment.
 
+Please note that Naev is still actively under development and not complete yet.
+Although there are a lot of things to do in the game, you will find incomplete
+or work in progress content as you progress.
+
 ## GETTING NAEV
 
 Naev is on steam, itch.io, flathub, many linux distributions and more! If you
