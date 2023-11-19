@@ -492,7 +492,7 @@ function approach_blackjack()
       vn.transition()
       vn.na( _("You elbow your way to the front of the table and are once again greeted by the cold mechanical eyes of Cyborg Chicken.") )
    end
-   vn.na( "", true ) -- Clear buffer without waiting
+   vn.na( "", false, true ) -- Clear buffer without waiting
    vn.label("menu")
    vn.menu( {
       { _("Play"), "blackjack" },
@@ -516,9 +516,10 @@ end
 
 function approach_blackjack_nocc()
    -- Not adding to queue first
-   local dealer = vn.newCharacter( _("Dealer"), {image=blackjack_image} )
    vn.clear()
    vn.scene()
+   local dealer = vn.newCharacter( _("Dealer"), {image=blackjack_image} )
+   vn.transition()
    vn.na(_([[You approach the blackjack table that seesm to have a new dealer.]]))
    vn.label("menu")
    vn.menu( {
@@ -553,7 +554,7 @@ function approach_chuckaluck ()
    local dealer = vn.newCharacter( _("Dealer"), {image=chuckaluck_image} )
    vn.transition()
    vn.na(_("You approach the chuck-a-luck table."))
-   vn.na( "", true ) -- Clear buffer without waiting
+   vn.na( "", false, true ) -- Clear buffer without waiting
    vn.label("menu")
    vn.menu( {
       { _("Play"), "chuckaluck" },
