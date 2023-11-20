@@ -274,7 +274,7 @@ function timer ()
 
    for i, j in ipairs( enemies ) do
       if j ~= nil and j:exists() then
-         if not inlist( mem.hostile, j ) then
+         if not inlist( mem.hostiles, j ) then
             if player_pos:dist( j:pos() ) < 1500 then
                local m = j:memory()
                if m.natural then
