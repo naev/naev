@@ -197,8 +197,10 @@ end
    @brief Updates the standing of the marauders and pirates based on maxval (computed as necessary)
 --]]
 function pir.updateStandings( maxval )
+   local pp = player.pilot()
+   if not pp then return end
    maxval = maxval or pir.maxClanStanding()
-   if pir.isPirateShip( player.pilot() ) then
+   if pir.isPirateShip( pp ) then
       fpir:setPlayerStanding( maxval )
       fmar:setPlayerStanding( maxval - 20 )
    else
