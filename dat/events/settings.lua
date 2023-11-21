@@ -13,7 +13,7 @@ local luatk = require "luatk"
 local fmt = require "format"
 
 local settings, uselanes_jump, uselanes_spob, uselanes_thr, pick_gui
-local reset_dist, reset_shield, compr_speed, compr_max, follow_jump
+local reset_dist, reset_shield, compr_speed, compr_max, follow_jump, brake_pos
 
 local AUTONAV_MAX_DIST  = 10e3 -- quite a reasonable distance
 local COMPR_SPEED_MIN   = 1e3 -- Old default was 5e3
@@ -36,6 +36,7 @@ function create ()
    compr_speed = var.peek("autonav_compr_speed") or 5e3
    compr_max = var.peek("autonav_compr_max") or 50
    follow_jump = var.peek("autonav_follow_jump")
+   brake_pos = var.peek("autonav_brake_pos")
 
    -- Set an info button up
    player.infoButtonRegister( _("Settings"), settings, 1, "S" )
@@ -43,7 +44,7 @@ end
 
 function settings ()
    local txt_autonav, fad_autonav, txt_compr
-   local chk_uselanes_jump, chk_uselanes_spob, chk_follow_jump
+   local chk_uselanes_jump, chk_uselanes_spob, chk_follow_jump, chk_brake_pos
 
    local w, h = 600, 500
    local wdw = luatk.newWindow( nil, nil, w, h )
@@ -124,6 +125,8 @@ function settings ()
    chk_uselanes_spob = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Use patrol lanes when travelling to a space object"), nil, uselanes_spob )
    y = y + 30
    chk_follow_jump = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Jump to follow pilots"), nil, follow_jump )
+   y = y + 30
+   chk_brake_pos = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Brake when heading to a position"), nil, brake_pos )
    y = y + 40
 
    luatk.newText( wdw, 20, y, w-40, 20, "#n".._("GUI") )
@@ -140,10 +143,12 @@ function settings ()
          compr_speed = 5e3
          compr_max = 50
          follow_jump = true
+         brake_pos = false
          update_autonav_value()
          chk_uselanes_jump:set( uselanes_jump )
          chk_uselanes_spob:set( uselanes_spob )
          chk_follow_jump:set( follow_jump )
+         chk_brake_pos:set( brake_pos )
          fad_thr:set( uselanes_thr )
          fad_autonav:set( autonav_value )
          fad_compr_speed:set( compr_speed )
@@ -156,6 +161,7 @@ function settings ()
          var.push( "autonav_compr_speed", compr_speed )
          var.push( "autonav_compr_max", compr_max )
          var.push( "autonav_follow_jump", follow_jump )
+         var.push( "autonav_brake_pos", brake_pos )
 
          -- Also set GUI
          player.guiSet( player.start().gui ) -- Default setting GUI
@@ -168,6 +174,7 @@ function settings ()
    uselanes_jump = chk_uselanes_jump:get()
    uselanes_spob = chk_uselanes_spob:get()
    follow_jump = chk_follow_jump:get()
+   brake_pos = chk_brake_pos:get()
    var.push( "autonav_uselanes_jump", uselanes_jump )
    var.push( "autonav_uselanes_spob", uselanes_spob )
    var.push( "autonav_uselanes_thr", uselanes_thr )
@@ -176,6 +183,7 @@ function settings ()
    var.push( "autonav_compr_speed", compr_speed )
    var.push( "autonav_compr_max", compr_max )
    var.push( "autonav_follow_jump", follow_jump )
+   var.push( "autonav_brake_pos", brake_pos)
 end
 
 function pick_gui ()

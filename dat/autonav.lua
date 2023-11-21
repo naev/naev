@@ -3,12 +3,12 @@ local lanes = require "ai.core.misc.lanes"
 
 local autonav, target_pos, target_spb, target_plt, target_name, instant_jump
 local autonav_jump_delay, autonav_jump_approach, autonav_jump_brake
-local autonav_pos_approach
-local autonav_spob_approach, autonav_spob_land_approach, autonav_spob_land_brake
+local autonav_pos_approach_brake, autonav_pos_approach
+local autonav_spob_approach_brake, autonav_spob_approach, autonav_spob_land_approach, autonav_spob_land_brake
 local autonav_plt_follow, autonav_plt_board_approach
 local autonav_timer, tc_base, tc_mod, tc_max, tc_rampdown, tc_down
 local last_shield, last_armour, map_npath, reset_shield, reset_dist, reset_lockon
-local path, uselanes_jump, uselanes_spob, uselanes_thr, follow_jump
+local path, uselanes_jump, uselanes_spob, uselanes_thr, follow_jump, brake_pos
 
 -- Some defaults
 autonav_timer = 0
@@ -42,6 +42,7 @@ local function autonav_setup ()
    follow_jump = var.peek("autonav_follow_jump")
    reset_shield = var.peek("autonav_reset_shield")
    reset_dist = var.peek("autonav_reset_dist")
+   brake_pos = var.peek("autonav_brake_pos")
    reset_lockon = true
    player.autonavSetPos()
 
@@ -476,14 +477,42 @@ function autonav_jump_brake ()
    end
 end
 
+-- Brakes at a position
+function autonav_pos_approach_brake ()
+   if ai.brake() then
+      player.msg("#o".._("Autonav: arrived at position.").."#0")
+      return autonav_end()
+   end
+   if not tc_rampdown then
+      tc_rampdown = true
+      tc_down     = (tc_mod-tc_base) / 3
+   end
+end
+
 -- Approaching a position specified by target_pos
 function autonav_pos_approach ()
    local ret, d = autonav_approach( target_pos, true )
    if ret then
-      player.msg("#o".._("Autonav: arrived at position.").."#0")
-      return autonav_end()
+      if brake_pos then
+         autonav = autonav_pos_approach_brake
+      else
+         player.msg("#o".._("Autonav: arrived at position.").."#0")
+         return autonav_end()
+      end
    elseif not tc_rampdown then
       autonav_rampdown( d )
+   end
+end
+
+-- Brakes at a position
+function autonav_spob_approach_brake ()
+   if ai.brake() then
+      player.msg("#o"..fmt.f(_("Autonav: arrived at {spob}."),{spob=get_spob_name(target_spb)}).."#0")
+      return autonav_end()
+   end
+   if not tc_rampdown then
+      tc_rampdown = true
+      tc_down     = (tc_mod-tc_base) / 3
    end
 end
 
@@ -494,8 +523,12 @@ function autonav_spob_approach ()
       if #path > 1 then
          table.remove( path, 1 )
       else
-         player.msg("#o"..fmt.f(_("Autonav: arrived at {spob}."),{spob=get_spob_name(target_spb)}).."#0")
-         return autonav_end()
+         if brake_pos then
+            autonav = autonav_spob_approach_brake
+         else
+            player.msg("#o"..fmt.f(_("Autonav: arrived at {spob}."),{spob=get_spob_name(target_spb)}).."#0")
+            return autonav_end()
+         end
       end
    elseif not tc_rampdown then
       -- Use distance to end
