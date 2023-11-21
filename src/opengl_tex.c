@@ -80,9 +80,9 @@ static uint8_t SDL_GetAlpha( SDL_Surface* s, int x, int y )
    p = (Uint8 *)s->pixels + y * s->pitch + x * bytes_per_pixel;
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
    SDL_memcpy(((Uint8 *) &pixel) + (sizeof(pixel) - bytes_per_pixel), p, bytes_per_pixel);
-#else
+#else /* SDL_BYTEORDER == SDL_BIG_ENDIAN */
    SDL_memcpy(&pixel, p, bytes_per_pixel);
-#endif
+#endif /* SDL_BYTEORDER == SDL_BIG_ENDIAN */
    SDL_GetRGBA(pixel, s->format, &r, &g, &b, &a);
    SDL_UnlockSurface(s);
    return a;
@@ -298,16 +298,19 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
    /* now load the texture data up */
    SDL_LockSurface( surface );
    if (flags & OPENGL_TEX_SDF) {
+      /* It doesn't work with indexed ones, so I guess converting is best bet. */
+      SDL_Surface *s = SDL_ConvertSurfaceFormat( surface, SDL_PIXELFORMAT_ARGB8888, 0 );
       float border[] = { 0., 0., 0., 0. };
-      uint8_t *trans = SDL_MapAlpha( surface, surface->w, surface->h, 0 );
-      GLfloat *dataf = make_distance_mapbf( trans, surface->w, surface->h, vmax );
+      uint8_t *trans = SDL_MapAlpha( s, s->w, s->h, 0 );
+      GLfloat *dataf = make_distance_mapbf( trans, s->w, s->h, vmax );
       free( trans );
       glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, border);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
       glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
-      glTexImage2D( GL_TEXTURE_2D, 0, GL_RED, surface->w, surface->h, 0, GL_RED, GL_FLOAT, dataf );
+      glTexImage2D( GL_TEXTURE_2D, 0, GL_RED, s->w, s->h, 0, GL_RED, GL_FLOAT, dataf );
       free( dataf );
+      SDL_FreeSurface(s);
    }
    else {
       *vmax = 1.;
@@ -680,6 +683,7 @@ static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, unsigne
       path = _("unknown");
 
    surface = IMG_Load_RW( rw, 0 );
+
    flags  |= OPENGL_TEX_VFLIP;
    if (surface == NULL) {
       WARN(_("Unable to load image '%s'."), path );
