@@ -775,7 +775,10 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits, 
 
          coutfits[i].image = gl_dupTexture( o->gfx_store );
          coutfits[i].caption = strdup( _(o->name) );
-         coutfits[i].quantity = player_outfitOwned(o);
+         if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
+            coutfits[i].quantity = -1; /* Don't display. */
+         else
+            coutfits[i].quantity = player_outfitOwned(o);
          coutfits[i].sloticon = sp_icon( o->slot.spid );
 
          /* Background colour. */
