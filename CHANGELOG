@@ -19,7 +19,7 @@
       * Significantly improved autonav
          * Configurable and can use lanes
          * More efficient at reaching target locations
-         * Can follow pilots through jumps
+         * New option like follow pilots through jumps or brake when going to positions
       * Make it explicit when all the escorts have jumped or landed
       * Escorts will keep their same loadout until the game restarts
       * Player ship is no longer translucent when in stealth as it is redundant with the stealth icon
@@ -53,6 +53,7 @@
       * Can sell all outfits on any spob with an outfitter
       * Enemies in patrol missions should not run away
       * Changed the faction standing caps to allow the player to get all ships when maxed out. Will be decreased in the future as missions are added
+      * Slot icons to make it more clear what special slots a ship has
    * New Content
       * New mechanic for House Sirius called flow to unlock psychic powers
          * Gives passive bonuses to Sirius ships
