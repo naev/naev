@@ -54,7 +54,7 @@ function misn_test.mercenary()
 end
 
 --[[--
-   @brief Reweights mission chance based on number of uinque active missions
+   @brief Reweights mission chance based on number of unique active missions
 --]]
 function misn_test.reweight_active()
    local n = 0
