@@ -28,6 +28,7 @@
 #include "player.h"
 #include "player_fleet.h"
 #include "space.h"
+#include "slots.h"
 #include "tk/toolkit_priv.h"
 #include "toolkit.h"
 
@@ -610,11 +611,13 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw, const char
    /* Draw squares. */
    for (int i=0; i<array_size(s); i++) {
       const glColour *c;
+      const glTexture *icon;
 
       /* Ignore locked slots. */
       if (s[i].locked)
          continue;
 
+      /* Get the colour. */
       c = outfit_slotSizeColour( &s[i].slot );
       if (c == NULL)
          c = &cBlack;
@@ -627,9 +630,23 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw, const char
          toolkit_drawTriangle( x, by, x+10, by+10, x, by+10, &cBrightRed );
       else if (s[i].exclusive)
          toolkit_drawTriangle( x, by, x+10, by+10, x, by+10, &cWhite );
-      else if (s[i].slot.spid != 0)
+      else if (s[i].slot.spid != 0) {
          toolkit_drawTriangle( x, by, x+10, by+10, x, by+10, &cBlack );
+      }
 
       gl_renderRectEmpty( x, by, 10, 10, &cBlack );
+
+      /* Draw icon if applicable. */
+      icon = sp_icon( s[i].slot.spid );
+      if (icon != NULL) {
+         double sw = 10.;
+         double sh = 10.;
+         double sx = x+5;
+         double sy = by+5;
+         if (icon->flags & OPENGL_TEX_SDF)
+            gl_renderSDF( icon, sx, sy, sw, sh, &cWhite, 0., 1. );
+         else
+            gl_renderScaleAspect( icon, sx, sy, sw, sh, NULL );
+      }
    }
 }
