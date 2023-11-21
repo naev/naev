@@ -467,6 +467,8 @@ static void equipment_renderColumn( double x, double y, double w, double h,
    /* Iterate for all the slots. */
    for (int i=0; i<array_size(lst); i++) {
       int cantoggle;
+      const glTexture *icon;
+
       /* Skip slots hat are empty and the player can't do anything about. */
       if (lst[i].sslot->locked && (lst[i].outfit == NULL))
          continue;
@@ -531,6 +533,21 @@ static void equipment_renderColumn( double x, double y, double w, double h,
          toolkit_drawOutlineThick( x, y, w, h, 5, 7, &cGreen, NULL );
       if (rc != NULL)
          toolkit_drawOutlineThick( x, y, w, h, 1, 3, rc, NULL );
+
+      /* Draw slot iccon if applicable. */
+      icon = sp_icon( lst[i].sslot->slot.spid );
+      if (icon != NULL) {
+            double sw = 14.;
+            double sh = 14.;
+            double sx = x+w-10.;
+            double sy = y+h-10.;
+
+            if (icon->flags & OPENGL_TEX_SDF)
+               gl_renderSDF( icon, sx, sy, sw, sh, &cWhite, 0., 1. );
+            else
+               gl_renderScaleAspect( icon, sx, sy, sw, sh, NULL );
+      }
+
       /* Go to next one. */
       y -= h+20;
    }

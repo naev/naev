@@ -243,8 +243,8 @@ static void iar_render( Widget* iar, double bx, double by )
 
          /* Slot type. */
          if (cell->sloticon != NULL) {
-            double sw = 16.;
-            double sh = 16.;
+            double sw = 18.;
+            double sh = 18.;
             double sx = xcurs + iar->dat.iar.iw - 10.;
             double sy = ycurs + iar->dat.iar.ih + 2.;
 
