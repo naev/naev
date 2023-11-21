@@ -609,7 +609,13 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw, const char
 
    /* Draw squares. */
    for (int i=0; i<array_size(s); i++) {
-      const glColour *c = outfit_slotSizeColour( &s[i].slot );
+      const glColour *c;
+
+      /* Ignore locked slots. */
+      if (s[i].locked)
+         continue;
+
+      c = outfit_slotSizeColour( &s[i].slot );
       if (c == NULL)
          c = &cBlack;
 
