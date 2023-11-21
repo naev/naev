@@ -565,7 +565,7 @@ static void shipyard_trade( unsigned int wid, const char* str )
 static void shipyard_renderSlots( double bx, double by, double bw, double bh, void *data )
 {
    (void) data;
-   double x, y, w;
+   double y, w;
    Ship *ship;
 
    /* Make sure a valid ship is selected. */
@@ -579,20 +579,19 @@ static void shipyard_renderSlots( double bx, double by, double bw, double bh, vo
    y -= 10+5;
    gl_print( &gl_smallFont, bx, y, &cFontWhite, _("Slots:") );
 
-   x = bx + 10.;
    w = bw - 10.;
 
    /* Weapon slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, _(OUTFIT_LABEL_WEAPON), ship->outfit_weapon );
+   shipyard_renderSlotsRow( bx, y, w, _(OUTFIT_LABEL_WEAPON), ship->outfit_weapon );
 
    /* Utility slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, _(OUTFIT_LABEL_UTILITY), ship->outfit_utility );
+   shipyard_renderSlotsRow( bx, y, w, _(OUTFIT_LABEL_UTILITY), ship->outfit_utility );
 
    /* Structure slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, _(OUTFIT_LABEL_STRUCTURE), ship->outfit_structure );
+   shipyard_renderSlotsRow( bx, y, w, _(OUTFIT_LABEL_STRUCTURE), ship->outfit_structure );
 }
 
 /**
@@ -603,15 +602,15 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw, const char
    (void) bw;
    double x;
 
-   x = bx;
-
    /* Print text. */
-   gl_printMidRaw( &gl_smallFont, 30, bx-15, by, &cFontWhite, -1, str );
+   gl_printMidRaw( &gl_smallFont, 40, bx, by, &cFontWhite, -1, str );
+   x = bx+30.;
 
    /* Draw squares. */
    for (int i=0; i<array_size(s); i++) {
       const glColour *c;
       const glTexture *icon;
+      const int size = 14;
 
       /* Ignore locked slots. */
       if (s[i].locked)
@@ -622,27 +621,27 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw, const char
       if (c == NULL)
          c = &cBlack;
 
-      x += 15.;
-      toolkit_drawRect( x, by, 10, 10, c, NULL );
+      x += size+7.;
+      toolkit_drawRect( x, by, size, size, c, NULL );
 
       /* Add colour stripe depending on required/exclusiveness. */
       if (s[i].required)
-         toolkit_drawTriangle( x, by, x+10, by+10, x, by+10, &cBrightRed );
+         toolkit_drawTriangle( x, by, x+size, by+size, x, by+size, &cBrightRed );
       else if (s[i].exclusive)
-         toolkit_drawTriangle( x, by, x+10, by+10, x, by+10, &cWhite );
+         toolkit_drawTriangle( x, by, x+size, by+size, x, by+size, &cWhite );
       else if (s[i].slot.spid != 0) {
-         toolkit_drawTriangle( x, by, x+10, by+10, x, by+10, &cBlack );
+         toolkit_drawTriangle( x, by, x+size, by+size, x, by+size, &cBlack );
       }
 
-      gl_renderRectEmpty( x, by, 10, 10, &cBlack );
+      gl_renderRectEmpty( x, by, size, size, &cBlack );
 
       /* Draw icon if applicable. */
       icon = sp_icon( s[i].slot.spid );
       if (icon != NULL) {
-         double sw = 10.;
-         double sh = 10.;
-         double sx = x+5;
-         double sy = by+5;
+         double sw = 12.;
+         double sh = 12.;
+         double sx = x+8;
+         double sy = by+8;
          if (icon->flags & OPENGL_TEX_SDF)
             gl_renderSDF( icon, sx, sy, sw, sh, &cWhite, 0., 1. );
          else
