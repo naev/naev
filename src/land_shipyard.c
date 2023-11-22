@@ -640,8 +640,8 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw, const char
       if (icon != NULL) {
          double sw = 12.;
          double sh = 12.;
-         double sx = x+8;
-         double sy = by+8;
+         double sx = x+6;
+         double sy = by+6;
          if (icon->flags & OPENGL_TEX_SDF)
             gl_renderSDF( icon, sx, sy, sw, sh, &cWhite, 0., 1. );
          else
