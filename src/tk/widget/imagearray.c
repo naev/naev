@@ -332,9 +332,11 @@ static int iar_key( Widget* iar, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
    (void) isrepeat;
 
    switch (key) {
+      case SDLK_PAGEUP:
       case SDLK_UP:
          iar->dat.iar.selected -= iar->dat.iar.xelem;
          break;
+      case SDLK_PAGEDOWN:
       case SDLK_DOWN:
          iar->dat.iar.selected += iar->dat.iar.xelem;
          break;
