@@ -454,6 +454,8 @@ int commodity_getMod (void)
       q *= 5;
    if (mods & (KMOD_LSHIFT | KMOD_RSHIFT))
       q *= 10;
+   if (mods & (KMOD_LALT | KMOD_RALT))
+      q = 1;
 
    return q;
 }
