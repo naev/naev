@@ -34,7 +34,7 @@ static int toolkit_delayCounter = 0; /**< Horrible hack around secondary loop. *
 /*
  * window stuff
  */
-#define MIN_WINDOWS  3 /**< Minimum windows to prealloc. */
+#define MIN_WINDOWS  4 /**< Minimum windows to prealloc. */
 static Window *windows = NULL; /**< Window linked list, not to be confused with MS windows. */
 
 /*
@@ -1501,8 +1501,9 @@ static void window_renderBorder( Window* w )
  * @brief Renders a window.
  *
  *    @param w Window to render.
+ *    @param top Whether or not the window is at the top.
  */
-void window_render( Window *w )
+void window_render( Window *w, int top )
 {
    /* We're on top of anything previously drawn. */
    glClear( GL_DEPTH_BUFFER_BIT );
@@ -1519,7 +1520,7 @@ void window_render( Window *w )
          continue;
 
       /* Only render non-dynamics. */
-      if (!wgt_isFlag(wgt, WGT_FLAG_DYNAMIC))
+      if (!wgt_isFlag(wgt, WGT_FLAG_DYNAMIC) || !top)
          wgt->render( wgt, w->x, w->y );
 
       if (wgt->id == w->focus) {
@@ -1607,7 +1608,7 @@ void toolkit_render( double dt )
             continue;
 
          /* The actual rendering. */
-         window_render(w);
+         window_render( w, w==top );
       }
 
       glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );

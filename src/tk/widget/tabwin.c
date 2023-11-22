@@ -364,7 +364,7 @@ static void tab_render( Widget* tab, double bx, double by )
    }
 
    /* Render the active window. */
-   window_render( wdw );
+   window_render( wdw, wgt_isFlag(tab, WGT_FLAG_FOCUSED) );
 
    /* Render tabs ontop. */
    x = bx+tab->x+3.;

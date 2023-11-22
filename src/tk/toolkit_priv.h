@@ -188,7 +188,7 @@ Window* window_wgetW( const unsigned int wid );
 Window* window_wgetNameW( const char *name );
 void toolkit_setWindowPos( Window *wdw, int x, int y );
 int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge );
-void window_render( Window* w );
+void window_render( Window* w, int top );
 void window_renderDynamic( Window *w );
 void window_renderOverlay( Window* w );
 void window_kill( Window *wdw );
