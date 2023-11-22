@@ -216,9 +216,9 @@ function jumpout ()
    local last_sys = system.cur()
    if not mem.job_done then
       if last_sys == mem.missys then
-         lmisn.fail( fmt.f( msg[6], {sys=last_sys} ) )
+         lmisn.fail( fmt.f(msg[6], {sys=last_sys} ) )
       elseif mem.jumps_permitted < 0 then
-         lmisn.fail( msg[5] )
+         lmisn.fail(msg[5])
       end
    end
 end
@@ -265,6 +265,10 @@ function pilot_leave ( pilot )
    mem.hostiles = new_hostiles
 end
 
+local function patrol_msg( m )
+   player.msg(fmt.f(_("[Patrol]: {msg}"),{msg=m}))
+end
+
 function timer ()
    local player_pos = player.pos()
    local enemies = pilot.getEnemies( mem.paying_faction, 1500, player_pos )
@@ -290,13 +294,13 @@ function timer ()
 
    if #mem.hostiles > 0 then
       if not mem.hostiles_encountered then
-         player.msg( msg[2] )
+         patrol_msg("#r"..msg[2].."#0")
          mem.hostiles_encountered = true
       end
       misn.osdActive( 3 )
    elseif #mem.points > 0 then
       if mem.hostiles_encountered then
-         player.msg( msg[3] )
+         patrol_msg("#b"..msg[3].."#0")
          mem.hostiles_encountered = false
       end
       misn.osdActive( 2 )
@@ -314,7 +318,7 @@ function timer ()
          end
          mem.points = new_points
 
-         player.msg( msg[1] )
+         patrol_msg("#b"..msg[1].."#0")
          mem.osd_msg[2] = n_(
             "Go to indicated point (%d remaining)",
             "Go to indicated point (%d remaining)",
@@ -329,7 +333,7 @@ function timer ()
       end
    else
       mem.job_done = true
-      player.msg( msg[4] )
+      patrol_msg("#g"..msg[4].."#0")
       misn.osdActive( 4 )
       if mem.marker ~= nil then
          misn.markerRm( mem.marker )
