@@ -262,36 +262,29 @@ function pilot_leave ( pilot )
          new_hostiles[ #new_hostiles + 1 ] = j
       end
    end
-
    mem.hostiles = new_hostiles
 end
 
 function timer ()
-   hook.rm( mem.timer_hook )
-
    local player_pos = player.pos()
-   local enemies = pilot.get( mem.paying_faction:enemies() )
+   local enemies = pilot.getEnemies( mem.paying_faction, 1500, player_pos )
 
-   for i, j in ipairs( enemies ) do
-      if j ~= nil and j:exists() then
-         if not inlist( mem.hostiles, j ) then
-            if player_pos:dist( j:pos() ) < 1500 then
-               local m = j:memory()
-               if m.natural then
-                  m.shield_run = -1
-                  m.armour_run = -1
-                  m.norun = true
-                  m.enemyclose = nil
-               end
-               j:setVisible( true )
-               j:setHilight( true )
-               j:setHostile( true )
-               hook.pilot( j, "death", "pilot_leave" )
-               hook.pilot( j, "jump", "pilot_leave" )
-               hook.pilot( j, "land", "pilot_leave" )
-               mem.hostiles[ #mem.hostiles + 1 ] = j
-            end
+   for i, j in ipairs(enemies) do
+      if j ~= nil and j:exists() and not inlist( mem.hostiles, j ) then
+         local m = j:memory()
+         if m.natural then
+            m.shield_run = -1
+            m.armour_run = -1
+            m.norun = true
+            m.enemyclose = nil
          end
+         j:setVisible( true )
+         j:setHilight( true )
+         j:setHostile( true )
+         hook.pilot( j, "death", "pilot_leave" )
+         hook.pilot( j, "jump", "pilot_leave" )
+         hook.pilot( j, "land", "pilot_leave" )
+         mem.hostiles[ #mem.hostiles + 1 ] = j
       end
    end
 
@@ -344,6 +337,6 @@ function timer ()
    end
 
    if not mem.job_done then
-      mem.timer_hook = hook.timer( 0.05, "timer" )
+      mem.timer_hook = hook.timer( 0.3, "timer" )
    end
 end
