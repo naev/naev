@@ -877,7 +877,7 @@ int toolkit_setImageArrayPos( unsigned int wid, const char* name, int pos )
  *
  *    @param wid Window containing the image array.
  *    @param name Name of the image array widget.
- *    @param iar_data Pointer to an iar_data_t struct.
+ *    @param iar_data Pointer to an iar_data_t struct to save to.
  *    @return 0 on success.
  */
 int toolkit_saveImageArrayData( unsigned int wid, const char *name,
@@ -887,8 +887,32 @@ int toolkit_saveImageArrayData( unsigned int wid, const char *name,
    if (wgt == NULL)
       return -1;
 
-   iar_data->pos    = wgt->dat.iar.selected;
-   iar_data->offset = wgt->dat.iar.pos;
+   iar_data->pos     = wgt->dat.iar.selected;
+   iar_data->offset  = wgt->dat.iar.pos;
+   iar_data->zoom    = wgt->dat.iar.zoom;
+
+   return 0;
+}
+
+/**
+ * @brief Loads several image array attributes.
+ *
+ *    @param wid Window containing the image array.
+ *    @param name Name of the image array widget.
+ *    @param iar_data Pointer to an iar_data_t struct to load.
+ *    @return 0 on success.
+ */
+int toolkit_loadImageArrayData( unsigned int wid, const char *name,
+      const iar_data_t *iar_data )
+{
+   Widget *wgt = iar_getWidget( wid, name );
+   if (wgt == NULL)
+      return -1;
+
+   wgt->dat.iar.selected   = iar_data->pos;
+   wgt->dat.iar.pos        = iar_data->offset;
+   wgt->dat.iar.zoom       = iar_data->zoom;
+   iar_updateSpacing( wgt ); /* Potentially can be necessary if zoom changes. */
 
    return 0;
 }

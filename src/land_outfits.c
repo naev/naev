@@ -262,8 +262,7 @@ void outfits_regenList( unsigned int wid, const char *str )
    outfits_genList( wid );
 
    /* Restore positions. */
-   toolkit_setImageArrayPos(    wid, OUTFITS_IAR, iar_data[tab].pos );
-   toolkit_setImageArrayOffset( wid, OUTFITS_IAR, iar_data[tab].offset );
+   toolkit_loadImageArrayData( wid, OUTFITS_IAR, &iar_data[tab] );
    outfits_update( wid, NULL );
 
    /* Restore focus. */
