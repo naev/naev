@@ -31,6 +31,7 @@ static void iar_focus( Widget* iar, double bx, double by );
 static void iar_scroll( Widget* iar, int direction );
 static void iar_centerSelected( Widget *iar );
 /* Misc. */
+static void iar_updateSpacing( Widget *iar );
 static double iar_maxPos( Widget *iar );
 static void iar_setAltTextPos( Widget *iar, double bx, double by );
 static Widget *iar_getWidget( unsigned int wid, const char *name );
@@ -99,19 +100,30 @@ void window_addImageArray( unsigned int wid,
    wgt->dat.iar.alt        = -1;
    wgt->dat.iar.altx       = -1;
    wgt->dat.iar.alty       = -1;
-   wgt->dat.iar.iw         = iw;
-   wgt->dat.iar.ih         = ih;
+   wgt->dat.iar.iwref     = iw;
+   wgt->dat.iar.ihref     = ih;
+   wgt->dat.iar.zoom       = 1.0;
    wgt->dat.iar.mx         = 0;
    wgt->dat.iar.my         = 0;
    wgt->dat.iar.fptr       = call;
    wgt->dat.iar.rmptr      = rmcall;
    wgt->dat.iar.dblptr     = dblcall;
-   wgt->dat.iar.xelem      = floor((w - 10.) / (double)(wgt->dat.iar.iw+10));
-   wgt->dat.iar.yelem      = (wgt->dat.iar.xelem == 0) ? 0 :
-         (nelem-1) / wgt->dat.iar.xelem + 1;
+   iar_updateSpacing( wgt );
 
    if (wdw->focus == -1) /* initialize the focus */
       toolkit_nextFocus( wdw );
+}
+
+static void iar_updateSpacing( Widget *iar )
+{
+   double w = iar->w;
+   int nelem = iar->dat.iar.nelements;
+   double zoom = iar->dat.iar.zoom;
+   iar->dat.iar.iw    = round(iar->dat.iar.iwref * zoom);
+   iar->dat.iar.ih    = round(iar->dat.iar.ihref * zoom);
+   iar->dat.iar.xelem = floor((w - 10.) / (double)(iar->dat.iar.iw+10));
+   iar->dat.iar.yelem = (iar->dat.iar.xelem == 0) ? 0 :
+         (nelem-1) / iar->dat.iar.xelem + 1;
 }
 
 /**
@@ -456,10 +468,25 @@ static int iar_mdoubleclick( Widget* iar, int button, int x, int y )
  */
 static int iar_mwheel( Widget* iar, SDL_MouseWheelEvent event )
 {
-   if (event.y > 0)
-      iar_scroll( iar, +1 );
-   else if (event.y < 0)
-      iar_scroll( iar, -1 );
+   if (SDL_GetModState() & (KMOD_LCTRL | KMOD_RCTRL)) {
+      double zoom;
+      if (event.y > 0)
+         zoom = 1.1;
+      else
+         zoom = 1.0 / 1.1;
+      iar->dat.iar.zoom *= zoom;
+      iar->dat.iar.pos *= zoom;
+      iar_updateSpacing( iar );
+
+      /* Does boundary checks. */
+      iar_scroll( iar, 0 );
+   }
+   else {
+      if (event.y > 0)
+         iar_scroll( iar, +1 );
+      else if (event.y < 0)
+         iar_scroll( iar, -1 );
+   }
 
    return 1;
 }

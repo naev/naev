@@ -32,6 +32,9 @@ typedef struct WidgetImageArrayData_ {
    int altx; /**< Alt x position. */
    int alty; /**< Alt y position. */
    double pos; /**< Current y position. */
+   int iwref; /**< Reference image width to use. */
+   int ihref; /**< Reference image height to use. */
+   double zoom; /**< How zoomed in it is. */
    int iw; /**< Image width to use. */
    int ih; /**< Image height to use. */
    int mx; /**< Last mouse x position. */
