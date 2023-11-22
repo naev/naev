@@ -332,6 +332,20 @@ static int iar_key( Widget* iar, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
    (void) isrepeat;
 
    switch (key) {
+      case SDLK_KP_PLUS:
+      case SDLK_PLUS:
+         iar->dat.iar.zoom *= 1.1;
+         iar->dat.iar.pos *= 1.1;
+         iar_updateSpacing( iar );
+         iar_scroll( iar, 0 ); /* Does boundary checks. */
+         break;
+      case SDLK_KP_MINUS:
+      case SDLK_MINUS:
+         iar->dat.iar.zoom *= 1.0/1.1;
+         iar->dat.iar.pos *= 1.0/1.1;
+         iar_updateSpacing( iar );
+         iar_scroll( iar, 0 ); /* Does boundary checks. */
+         break;
       case SDLK_PAGEUP:
       case SDLK_UP:
          iar->dat.iar.selected -= iar->dat.iar.xelem;
@@ -479,9 +493,7 @@ static int iar_mwheel( Widget* iar, SDL_MouseWheelEvent event )
       iar->dat.iar.zoom *= zoom;
       iar->dat.iar.pos *= zoom;
       iar_updateSpacing( iar );
-
-      /* Does boundary checks. */
-      iar_scroll( iar, 0 );
+      iar_scroll( iar, 0 ); /* Does boundary checks. */
    }
    else {
       if (event.y > 0)
