@@ -170,9 +170,10 @@ void outfits_open( unsigned int wid, const Outfit **outfits, int blackmarket )
    outfits_getSize( wid, &w, &h, &iw, &ih, &bw, &bh );
 
    /* Initialize stored positions. */
-   memset( iar_data, 0, sizeof(iar_data_t) * OUTFITS_NTABS );
-   for (int i=0; i<OUTFITS_NTABS; i++)
+   for (int i=0; i<OUTFITS_NTABS; i++) {
+      toolkit_initImageArrayData( &iar_data[i] );
       array_free( iar_outfits[i] );
+   }
    memset( iar_outfits, 0, sizeof(Outfit**) * OUTFITS_NTABS );
 
    /* will allow buying from keyboard */

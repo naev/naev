@@ -951,6 +951,16 @@ int toolkit_loadImageArrayData( unsigned int wid, const char *name,
 }
 
 /**
+ * @brief Initializes the image array data.
+ */
+void toolkit_initImageArrayData( iar_data_t *iar_data )
+{
+   iar_data->pos     = 0;
+   iar_data->offset  = 0;
+   iar_data->zoom    = 1.0;
+}
+
+/**
  * @brief Unsets the selection
  *
  *    @param wid Window containing the image array.

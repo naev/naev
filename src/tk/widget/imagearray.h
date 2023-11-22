@@ -77,6 +77,7 @@ int toolkit_saveImageArrayData( unsigned int wid, const char *name,
       iar_data_t *iar_data );
 int toolkit_loadImageArrayData( unsigned int wid, const char *name,
       const iar_data_t *iar_data );
+void toolkit_initImageArrayData( iar_data_t *iar_data );
 int toolkit_unsetSelection( unsigned int wid, const char *name );
 void toolkit_setImageArrayAccept( unsigned int wid, const char *name, void (*fptr)(unsigned int,const char*) );
 int toolkit_getImageArrayVisibleElements( unsigned int wid, const char *name );

@@ -64,7 +64,7 @@ static unsigned int equipment_lastick = 0; /**< Last tick. */
 static unsigned int equipment_wid   = 0; /**< Global wid. */
 static int equipment_creating    = 0; /**< Whether or not creating. */
 static int ship_mode = 0; /**< Ship mode. */
-static iar_data_t *iar_data = NULL; /**< Stored image array positions. */
+static iar_data_t iar_data[OUTFIT_TABS]; /**< Stored image array positions. */
 static Outfit ***iar_outfits = NULL; /**< Outfits associated with the image array cells. */
 static nlua_env autoequip_env = LUA_NOREF; /* Autoequip env. */
 static int equipment_outfitMode = 0; /**< Outfit mode for filtering. */
@@ -338,10 +338,8 @@ void equipment_open( unsigned int wid )
          _("Autoequip"), equipment_autoequipShip, SDLK_a );
 
    /* Prepare the outfit array. */
-   if (iar_data == NULL)
-      iar_data = calloc( OUTFIT_TABS, sizeof(iar_data_t) );
-   else
-      memset( iar_data, 0, sizeof(iar_data_t) * OUTFIT_TABS );
+   for (int i=0; i<OUTFIT_TABS; i++)
+      toolkit_initImageArrayData( &iar_data[i] );
    if (iar_outfits == NULL)
       iar_outfits = calloc( OUTFIT_TABS, sizeof(Outfit**) );
    else {
@@ -2524,8 +2522,6 @@ static int equipment_playerRmOutfit( const Outfit *o, int quantity )
 void equipment_cleanup (void)
 {
    /* Free stored positions. */
-   free(iar_data);
-   iar_data = NULL;
    if (iar_outfits != NULL) {
       for (int i=0; i<OUTFIT_TABS; i++)
          free( iar_outfits[i] );
