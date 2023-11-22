@@ -242,7 +242,7 @@ control_funcs.attack = function ()
       local enemy = __getenemy()
       if enemy ~= nil then
          ai.pushtask( "attack", enemy )
-      else
+      elseif not mem.norun then -- Only back off if norun is not set
          ai.pushtask( "backoff", target )
       end
       return true
