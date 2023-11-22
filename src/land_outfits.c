@@ -610,16 +610,13 @@ void outfits_updateEquipmentOutfits( void )
  */
 static void outfits_changeTab( unsigned int wid, const char *wgt, int old, int tab )
 {
-   (void) wid;
    (void) wgt;
-   int pos;
-   double offset;
+   iar_data_t old_data;
 
    toolkit_saveImageArrayData( wid, OUTFITS_IAR, &iar_data[old] );
 
    /* Store the currently-saved positions for the new tab. */
-   pos    = iar_data[tab].pos;
-   offset = iar_data[tab].offset;
+   old_data = iar_data[tab];
 
    /* Resetting the input will cause the outfit list to be regenerated. */
    if (widget_exists(wid, OUTFITS_FILTER))
@@ -630,8 +627,7 @@ static void outfits_changeTab( unsigned int wid, const char *wgt, int old, int t
    /* Set positions for the new tab. This is necessary because the stored
     * position for the new tab may have exceeded the size of the old tab,
     * resulting in it being clipped. */
-   toolkit_setImageArrayPos(    wid, OUTFITS_IAR, pos );
-   toolkit_setImageArrayOffset( wid, OUTFITS_IAR, offset );
+   toolkit_loadImageArrayData( wid, OUTFITS_IAR, &old_data );
 
    /* Focus the outfit image array. */
    window_setFocus( wid, OUTFITS_IAR );

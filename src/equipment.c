@@ -2127,16 +2127,13 @@ static void equipment_outfitPopdown( unsigned int wid, const char* str )
  */
 static void equipment_changeTab( unsigned int wid, const char *wgt, int old, int tab )
 {
-   (void) wid;
    (void) wgt;
-   int pos;
-   double offset;
+   iar_data_t old_data;
 
    toolkit_saveImageArrayData( wid, EQUIPMENT_OUTFITS, &iar_data[old] );
 
    /* Store the currently-saved positions for the new tab. */
-   pos    = iar_data[tab].pos;
-   offset = iar_data[tab].offset;
+   old_data = iar_data[tab];
 
    /* Resetting the input will cause the outfit list to be regenerated. */
    if (widget_exists(wid, EQUIPMENT_FILTER))
@@ -2147,8 +2144,7 @@ static void equipment_changeTab( unsigned int wid, const char *wgt, int old, int
    /* Set positions for the new tab. This is necessary because the stored
     * position for the new tab may have exceeded the size of the old tab,
     * resulting in it being clipped. */
-   toolkit_setImageArrayPos(    wid, EQUIPMENT_OUTFITS, pos );
-   toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, offset );
+   toolkit_loadImageArrayData( wid, EQUIPMENT_OUTFITS, &old_data );
 
    /* Focus the outfit image array. */
    window_setFocus( wid, EQUIPMENT_OUTFITS );
@@ -2247,8 +2243,7 @@ static void equipment_changeShip( unsigned int wid )
 
    /* Restore outfits image array properties. */
    window_tabWinSetActive( wid, EQUIPMENT_OUTFIT_TAB, i );
-   toolkit_setImageArrayPos(    wid, EQUIPMENT_OUTFITS, iar_data[i].pos );
-   toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, iar_data[i].offset );
+   toolkit_loadImageArrayData( wid, EQUIPMENT_OUTFITS, &iar_data[i] );
    if (widget_exists(wid, EQUIPMENT_FILTER))
       window_setInput(wid, EQUIPMENT_FILTER, filtertext);
 
