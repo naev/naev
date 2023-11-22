@@ -142,7 +142,7 @@ function settings ()
          reset_dist = 3e3
          compr_speed = 5e3
          compr_max = 50
-         follow_jump = true
+         follow_jump = false
          brake_pos = false
          update_autonav_value()
          chk_uselanes_jump:set( uselanes_jump )
