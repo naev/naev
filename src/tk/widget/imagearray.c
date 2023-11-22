@@ -791,6 +791,41 @@ int toolkit_setImageArray( unsigned int wid, const char* name, const char* elem 
 }
 
 /**
+ * @brief Gets the zoom level of an image array.
+ *
+ *    @param wid Window where image array is.
+ *    @param name Name of the image array.
+ *    @return The zoom of selected object.
+ */
+double toolkit_getImageArrayZoom( unsigned int wid, const char *name )
+{
+   Widget *wgt = iar_getWidget( wid, name );
+   if (wgt == NULL)
+      return -1.;
+
+   return wgt->dat.iar.zoom;
+}
+
+/**
+ * @brief Sets the zoom level of an image array.
+ *
+ *    @param wid Window where image array is.
+ *    @param name Name of the image array.
+ *    @param zoom Zoom to set.
+ *    @return 0 on success
+ */
+int toolkit_setImageArrayZoom( unsigned int wid, const char *name, double zoom )
+{
+   Widget *wgt = iar_getWidget( wid, name );
+   if (wgt == NULL)
+      return -1;
+
+   wgt->dat.iar.zoom = zoom;
+   iar_updateSpacing( wgt );
+   return 0;
+}
+
+/**
  * @brief Gets what is selected currently in an Image Array.
  *
  *    @param wid Window where image array is.
@@ -840,9 +875,7 @@ int toolkit_setImageArrayOffset( unsigned int wid, const char* name, double off 
 
    /* Move if needed. */
    wgt->dat.iar.pos = CLAMP( 0., hmax, off );
-
    iar_setAltTextPos( wgt, wgt->dat.iar.altx, wgt->dat.iar.alty );
-
    return 0;
 }
 

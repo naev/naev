@@ -71,6 +71,8 @@ int toolkit_getImageArrayPos( unsigned int wid, const char* name );
 int toolkit_setImageArrayPos( unsigned int wid, const char* name, int pos );
 double toolkit_getImageArrayOffset( unsigned int wid, const char* name );
 int toolkit_setImageArrayOffset( unsigned int wid, const char* name, double off );
+double toolkit_getImageArrayZoom( unsigned int wid, const char *name );
+int toolkit_setImageArrayZoom( unsigned int wid, const char *name, double zoom );
 int toolkit_saveImageArrayData( unsigned int wid, const char *name,
       iar_data_t *iar_data );
 int toolkit_loadImageArrayData( unsigned int wid, const char *name,
