@@ -9,7 +9,11 @@
    if system.get("Klantar"):jumpDist() &gt;= 3 then
       return false
    end
-   return require("misn_test").reweight_active()
+   local misn_test = require("misn_test")
+   if not misn_test.heavy_weapons(true) then
+      return false
+   end
+   return misn_test.reweight_active()
  </cond>
  <notes>
   <campaign>Shadow</campaign>
