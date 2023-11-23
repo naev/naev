@@ -4,6 +4,7 @@
  <location>enter</location>
  <chance>60</chance>
  <cond>faction.get("Dvaered"):playerStanding() &gt;= 0 and not (player.misnDone("Take the Dvaered crew home") or player.misnDone("Deal with the FLF agent")) and not (player.misnActive("Deal with the FLF agent") or player.misnActive("Take the Dvaered crew home")) </cond>
+ <chapter>[^0]</chapter>
 </event>
 --]]
 --[[
@@ -17,8 +18,6 @@ local boarded, shipDV, shipFLF, timerDV, timerFLF
 function create()
    local csys = system.cur()
    local cp = csys:presences()
-
-   -- TODO make this a chapter 1 or later mission
 
    -- Must have both Dvaered and FLF presence
    if (cp["Dvaered"] or 0) <= 0 or (cp["FLF"] or 0) <= 0 then
