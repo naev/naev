@@ -394,7 +394,7 @@ static void sysedit_btnNewSpob( unsigned int wid_unused, const char *unused )
 
    /* Check for collision. */
    if (spob_exists( name )) {
-      dialogue_alert( _("Spob by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
+      dialogue_alert( _("Space object by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
             name, spob_getSystem( name ) );
       free(name);
       sysedit_btnNewSpob( 0, NULL );
@@ -512,7 +512,7 @@ static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
 
       /* Check for collision. */
       if (spob_exists( name )) {
-         dialogue_alert( _("Spob by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
+         dialogue_alert( _("Space object by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
                name, spob_getSystem( name ) );
          free(name);
          continue;
@@ -1389,7 +1389,7 @@ static void sysedit_editPnt (void)
    p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
 
    /* Create the window. */
-   snprintf(title, sizeof(title), _("Spob Property Editor - %s"), p->name);
+   snprintf(title, sizeof(title), _("Space Object Property Editor - %s"), p->name);
    wid = window_create( "wdwSysEditPnt", title, -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    sysedit_widEdit = wid;
 
@@ -1925,7 +1925,7 @@ static void sysedit_spobDesc( unsigned int wid, const char *unused )
    p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
 
    /* Create the window. */
-   snprintf(title, sizeof(title), _("Spob Information - %s"), p->name);
+   snprintf(title, sizeof(title), _("Space Object Information - %s"), p->name);
    wid = window_create( "wdwSpobDesc", title, -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    window_setCancel( wid, window_close );
 
@@ -2125,7 +2125,7 @@ static void sysedit_btnTechEdit( unsigned int wid, const char *unused )
    int y, w, bw;
 
    /* Create the window. */
-   wid = window_create( "wdwSpobTechEditor", _("Spob Tech Editor"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+   wid = window_create( "wdwSpobTechEditor", _("Space Object Tech Editor"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    window_setCancel( wid, window_close );
 
    w = (SYSEDIT_EDIT_WIDTH - 40 - 15) / 2.;
@@ -2283,7 +2283,7 @@ static void sysedit_btnTagsEdit( unsigned int wid, const char *unused )
    int y, w, bw;
 
    /* Create the window. */
-   wid = window_create( "wdwSpobTagsEditor", _("Spob Tags Editor"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+   wid = window_create( "wdwSpobTagsEditor", _("Space Object Tags Editor"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    window_setCancel( wid, sysedit_btnTagsClose );
 
    w = (SYSEDIT_EDIT_WIDTH - 40 - 15) / 2.;
@@ -2615,7 +2615,7 @@ static void sysedit_spobGFX( unsigned int wid_unused, const char *wgt )
 
    p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
    /* Create the window. */
-   snprintf( buf, sizeof(buf), _("%s - Spob Properties"), p->name );
+   snprintf( buf, sizeof(buf), _("%s - Space Object Properties"), p->name );
    wid = window_create( "wdwSpobGFX", buf, -1, -1, -1, -1 );
    window_dimWindow( wid, &w, &h );
 
