@@ -63,7 +63,7 @@ static int largestID;
  */
 static void news_render( double bx, double by, double w, double h, void *data );
 static void news_focusLose( unsigned int wid, const char* wgtname );
-static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
+static int news_mouse( unsigned int wid, const SDL_Event *event, double mx, double my,
       double w, double h, double rx, double ry, void *data );
 static int news_parseArticle( xmlNodePtr parent );
 int news_saveArticles( xmlTextWriterPtr writer ); /* externed in save.c */
@@ -338,7 +338,7 @@ static void news_focusLose( unsigned int wid, const char* wgtname )
  *    @param ry Relative Y movement (only valid for motion).
  *    @param data Unused.
  */
-static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
+static int news_mouse( unsigned int wid, const SDL_Event *event, double mx, double my,
       double w, double h, double rx, double ry, void *data )
 {
    (void) data;

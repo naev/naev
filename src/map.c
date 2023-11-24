@@ -130,7 +130,7 @@ static void map_drawMarker( double x, double y, double zoom,
       double r, double a, int num, int cur, int type );
 /* Mouse. */
 static void map_focusLose( unsigned int wid, const char* wgtname );
-static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int map_mouse( unsigned int wid, const SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data );
 /* Misc. */
 static void map_setup (void);
@@ -1990,7 +1990,7 @@ static void map_focusLose( unsigned int wid, const char* wgtname )
  *    @param w Width of the widget.
  *    @param h Height of the widget.
  */
-static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int map_mouse( unsigned int wid, const SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data )
 {
    (void) rx;

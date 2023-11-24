@@ -152,7 +152,7 @@ static void uniedit_buttonZoom( unsigned int wid, const char* str );
 static void uniedit_render( double bx, double by, double w, double h, void *data );
 static void uniedit_renderOverlay( double bx, double by, double bw, double bh, void* data );
 static void uniedit_focusLose( unsigned int wid, const char* wgtname );
-static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int uniedit_mouse( unsigned int wid, const SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data );
 static void uniedit_renderFactionDisks( double x, double y, double r );
 static void uniedit_renderVirtualSpobs( double x, double y, double r );
@@ -1113,7 +1113,7 @@ static void uniedit_focusLose( unsigned int wid, const char* wgtname )
 /**
  * @brief System editor custom widget mouse handling.
  */
-static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int uniedit_mouse( unsigned int wid, const SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data )
 {
    (void) data;

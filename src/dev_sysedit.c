@@ -110,7 +110,7 @@ static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x
       int sx, int sy, const glColour *c, int selected, const char *caption );
 static void sysedit_focusLose( unsigned int wid, const char* wgtname );
 static int sysedit_mouseTrySelect( const Select_t *sel, double x, double y, double t, double mx, double my, SDL_Keymod mod, void (*func)(void) );
-static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int sysedit_mouse( unsigned int wid, const SDL_Event* event, double mx, double my,
       double w, double h, double xr, double yr, void *data );
 /* Button functions. */
 static void sysedit_close( unsigned int wid, const char *wgt );
@@ -1012,7 +1012,7 @@ static int sysedit_mouseTrySelect( const Select_t *sel, double x, double y, doub
 /**
  * @brief System editor custom widget mouse handling.
  */
-static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int sysedit_mouse( unsigned int wid, const SDL_Event* event, double mx, double my,
       double w, double h, double xr, double yr, void *data )
 {
    (void) data;

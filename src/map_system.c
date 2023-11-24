@@ -72,7 +72,7 @@ void map_system_updateSelected( unsigned int wid );
 /* Render. */
 static void map_system_render( double bx, double by, double w, double h, void *data );
 /* Mouse. */
-static int map_system_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int map_system_mouse( unsigned int wid, const SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data );
 /* Misc. */
 static int map_system_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod, int isrepeat );
@@ -592,7 +592,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
  *    @param w Width of the widget.
  *    @param h Height of the widget.
  */
-static int map_system_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int map_system_mouse( unsigned int wid, const SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data )
 {
    (void) data;

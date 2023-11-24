@@ -102,7 +102,7 @@ static void mapedit_selectRm( StarSystem *sys );
 static void mapedit_buttonZoom( unsigned int wid, const char* str );
 static void mapedit_render( double bx, double by, double w, double h, void *data );
 static void mapedit_focusLose( unsigned int wid, const char* wgtname );
-static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int mapedit_mouse( unsigned int wid, const SDL_Event* event, double mx, double my,
       double w, double h, double xr, double yr, void *data );
 /* Button functions. */
 static void mapedit_close( unsigned int wid, const char *wgt );
@@ -405,7 +405,7 @@ static void mapedit_focusLose( unsigned int wid, const char* wgtname )
 /**
  * @brief System editor custom widget mouse handling.
  */
-static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int mapedit_mouse( unsigned int wid, const SDL_Event* event, double mx, double my,
       double w, double h, double xr, double yr, void *data )
 {
    (void) data;
