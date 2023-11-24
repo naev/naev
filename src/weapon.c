@@ -450,14 +450,14 @@ static void think_beam( Weapon* w, double dt )
    PilotOutfitSlot *slot;
    unsigned int turn_off;
 
-   slot = w->mount;
-
    /* Get pilot, if pilot is dead beam is destroyed. */
    p = pilot_get(w->parent);
    if (p == NULL) {
       w->timer = -1.; /* Hack to make it get destroyed next update. */
       return;
    }
+   slot = w->mount;
+   dt *= p->stats.time_speedup; /* Have to consider time speedup here. */
 
    /* Check if pilot has enough energy left to keep beam active. */
    mod = (w->outfit->type == OUTFIT_TYPE_BEAM) ? p->stats.fwd_energy : p->stats.tur_energy;
@@ -528,13 +528,19 @@ static void think_beam( Weapon* w, double dt )
          break;
 
       case OUTFIT_TYPE_TURRET_BEAM:
+         if (pilot_isPlayer(p) && (SDL_ShowCursor(SDL_QUERY)==SDL_ENABLE)) {
+            vec2 tv;
+            gl_screenToGameCoords( &tv.x, &tv.y, player.mousex, player.mousey );
+            diff = angle_diff(w->solid.dir, /* Get angle to target pos */
+                  vec2_angle( &w->solid.pos, &tv );
+         }
          /* If target is dead beam stops moving. Targeting
           * self is invalid so in that case we ignore the target.
           */
-         if (t == NULL) {
+         else if (t == NULL) {
             if (ast != NULL) {
                diff = angle_diff(w->solid.dir, /* Get angle to target pos */
-                     vec2_angle(&w->solid.pos, &ast->pos));
+                     vec2_angle( &w->solid.pos, &ast->pos ));
             }
             else
                diff = angle_diff(w->solid.dir, p->solid.dir);
@@ -543,8 +549,8 @@ static void think_beam( Weapon* w, double dt )
             diff = angle_diff(w->solid.dir, /* Get angle to target pos */
                   vec2_angle(&w->solid.pos, &t->solid.pos));
 
-         weapon_setTurn( w, CLAMP( -w->outfit->u.bem.turn, w->outfit->u.bem.turn,
-                  10 * diff *  w->outfit->u.bem.turn ));
+         weapon_setTurn( w, p->stats.time_speedup*CLAMP( -w->outfit->u.bem.turn, w->outfit->u.bem.turn,
+                  10. * diff *  w->outfit->u.bem.turn ));
          break;
 
       default:
@@ -1985,11 +1991,9 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
       rdir = weapon_aimTurret( outfit, parent, &w->target, pos, vel, dir, outfit->u.blt.swivel, time );
    else {
       if (pilot_isPlayer(parent) && (SDL_ShowCursor(SDL_QUERY)==SDL_ENABLE)) {
-         double x, y;
-         vec2 target;
-         gl_screenToGameCoords( &x, &y, player.mousex, player.mousey );
-         vec2_csetmin( &target, x, y );
-         rdir = weapon_aimTurretStatic( &target, pos, dir, outfit->u.blt.swivel );
+         vec2 tv;
+         gl_screenToGameCoords( &tv.x, &tv.y, player.mousex, player.mousey );
+         rdir = weapon_aimTurretStatic( &tv, pos, dir, outfit->u.blt.swivel );
       }
       else
          rdir = dir;
@@ -2073,11 +2077,9 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    }
    else {
       if ((outfit->u.lau.swivel > 0.) && pilot_isPlayer(parent) && (SDL_ShowCursor(SDL_QUERY)==SDL_ENABLE)) {
-         double x, y;
-         vec2 target;
-         gl_screenToGameCoords( &x, &y, player.mousex, player.mousey );
-         vec2_csetmin( &target, x, y );
-         rdir = weapon_aimTurretStatic( &target, pos, dir, outfit->u.blt.swivel );
+         vec2 tv;
+         gl_screenToGameCoords( &tv.x, &tv.y, player.mousex, player.mousey );
+         rdir = weapon_aimTurretStatic( &tv, pos, dir, outfit->u.blt.swivel );
       }
       else
          rdir = dir;
@@ -2221,32 +2223,39 @@ static int weapon_create( Weapon *w, PilotOutfitSlot* po, const Outfit *ref,
       case OUTFIT_TYPE_BEAM:
       case OUTFIT_TYPE_TURRET_BEAM:
          rdir = dir;
-         if (aim && (outfit->type==OUTFIT_TYPE_TURRET_BEAM)) {
-            AsteroidAnchor *field;
-            Asteroid *ast;
-            Weapon *wtarget;
-            switch (w->target.type) {
-               case TARGET_NONE:
-                  break;
+         if (outfit->type==OUTFIT_TYPE_TURRET_BEAM) {
+            if (aim) {
+               AsteroidAnchor *field;
+               Asteroid *ast;
+               Weapon *wtarget;
+               switch (w->target.type) {
+                  case TARGET_NONE:
+                     break;
 
-               case TARGET_PILOT:
-                  if (w->parent != w->target.u.id) {
-                     Pilot *pilot_target = pilot_get( w->target.u.id );
-                     rdir = vec2_angle(pos, &pilot_target->solid.pos);
-                  }
-                  break;
+                  case TARGET_PILOT:
+                     if (w->parent != w->target.u.id) {
+                        Pilot *pilot_target = pilot_get( w->target.u.id );
+                        rdir = vec2_angle(pos, &pilot_target->solid.pos);
+                     }
+                     break;
 
-               case TARGET_ASTEROID:
-                  field = &cur_system->asteroids[ w->target.u.ast.anchor ];
-                  ast = &field->asteroids[ w->target.u.ast.asteroid ];
-                  rdir = vec2_angle(pos, &ast->pos);
-                  break;
+                  case TARGET_ASTEROID:
+                     field = &cur_system->asteroids[ w->target.u.ast.anchor ];
+                     ast = &field->asteroids[ w->target.u.ast.asteroid ];
+                     rdir = vec2_angle(pos, &ast->pos);
+                     break;
 
-               case TARGET_WEAPON:
-                  wtarget = weapon_getID( w->target.u.id );
-                  if (wtarget != NULL)
-                     rdir = vec2_angle( pos, &wtarget->solid.pos );
-                  break;
+                  case TARGET_WEAPON:
+                     wtarget = weapon_getID( w->target.u.id );
+                     if (wtarget != NULL)
+                        rdir = vec2_angle( pos, &wtarget->solid.pos );
+                     break;
+               }
+            }
+            else if (pilot_isPlayer(parent) && (SDL_ShowCursor(SDL_QUERY)==SDL_ENABLE)) {
+               vec2 tv;
+               gl_screenToGameCoords( &tv.x, &tv.y, player.mousex, player.mousey );
+               rdir = vec2_angle( pos, &tv );
             }
          }
 
@@ -2254,6 +2263,7 @@ static int weapon_create( Weapon *w, PilotOutfitSlot* po, const Outfit *ref,
             rdir += 2.*M_PI;
          else if (rdir >= 2.*M_PI)
             rdir -= 2.*M_PI;
+
          mass = 1.; /**< Needs a mass. */
          solid_init( &w->solid, mass, rdir, pos, vel, SOLID_UPDATE_EULER );
          w->think = think_beam;
