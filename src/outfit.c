@@ -2019,7 +2019,6 @@ if (o) WARN(_("Outfit '%s' missing '%s' element"), temp->name, s) /**< Define to
  */
 static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 {
-   int l;
    xmlNodePtr node = parent->children;
 
    do { /* load all the data */
@@ -2053,14 +2052,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
-   l = 0;
-   SDESC_ADD( l, temp, "%s", _(outfit_getType(temp)) );
-   if (temp->u.mod.active || temp->lua_ontoggle != LUA_NOREF)
-      SDESC_ADD( l, temp, "\n#r%s#0", _("Activated Outfit") );
-   if (temp->u.mod.active && temp->u.mod.cooldown > 0.)
-      l = os_printD( temp->summary_raw, l, temp->u.mod.cooldown, &cooldown_opts );
-   l = os_printD( temp->summary_raw, l, temp->cpu, &cpu_opts );
-   l = os_printD( temp->summary_raw, l, temp->mass, &mass_opts );
+   /* Modifier outfits are actually done in the third pass... */
 }
 
 /**
@@ -2124,7 +2116,6 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
    l = 0;
    SDESC_ADD( l, temp, "%s", _(outfit_getType(temp)) );
-
    SDESC_ADD( l, temp, "\n#r%s#0", _("Activated Outfit") );
 
    l = os_printD( temp->summary_raw, l, temp->cpu, &cpu_opts );
@@ -2432,9 +2423,9 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s)
 static int outfit_parse( Outfit* temp, const char* file )
 {
    xmlNodePtr node, parent;
-   char *prop, *desc_extra;
+   char *prop;
    const char *cprop;
-   int group, l;
+   int group;
 
    xmlDocPtr doc = xml_parsePhysFS( file );
    if (doc == NULL)
@@ -2449,7 +2440,6 @@ static int outfit_parse( Outfit* temp, const char* file )
    /* Clear data. */
    memset( temp, 0, sizeof(Outfit) );
    temp->filename = strdup( file );
-   desc_extra = NULL;
 
    /* Defaults. */
    temp->overheat_min   = 350.;
@@ -2505,7 +2495,7 @@ static int outfit_parse( Outfit* temp, const char* file )
             xmlr_long(cur,"price",temp->price);
             xmlr_strd(cur,"limit",temp->limit);
             xmlr_strd(cur,"description",temp->desc_raw);
-            xmlr_strd(cur,"desc_extra",desc_extra);
+            xmlr_strd(cur,"desc_extra",temp->desc_extra);
             xmlr_strd(cur,"typename",temp->typename);
             xmlr_int(cur,"priority",temp->priority);
             xmlr_float(cur,"overheat_min",temp->overheat_min);
@@ -2681,19 +2671,6 @@ static int outfit_parse( Outfit* temp, const char* file )
          /* Sort stats. */
          ss_sort( &temp->stats );
 
-         /* We add the ship stats to the description here. */
-         if (temp->summary_raw != NULL) {
-            l = strlen(temp->summary_raw);
-            ss_statsListDesc( temp->stats, &temp->summary_raw[l], OUTFIT_SHORTDESC_MAX-l, 1 );
-            /* Add extra description task if available. */
-            if (desc_extra != NULL) {
-               l = strlen(temp->summary_raw);
-               snprintf( &temp->summary_raw[l], OUTFIT_SHORTDESC_MAX-l, "\n%s", _(desc_extra) );
-               free( desc_extra );
-               desc_extra = NULL;
-            }
-         }
-
          continue;
       }
       WARN(_("Outfit '%s' has unknown node '%s'"),temp->name, node->name);
@@ -2842,6 +2819,40 @@ int outfit_load (void)
                WARN(_("Outfit '%s' has 'ontoggle' Lua function defined, but is set as 'notactive'!"),o->name);
          }
          lua_pop(naevL,1);
+
+         /* Regenerate the description... TODO not duplicate code... */
+         int l = 0;
+         SDESC_ADD( l, o, "%s", _(outfit_getType(o)) );
+         if (o->u.mod.active)
+            SDESC_ADD( l, o, "\n#r%s#0", _("Activated Outfit") );
+         if (o->u.mod.active && o->u.mod.cooldown > 0.)
+            l = os_printD( o->summary_raw, l, o->u.mod.cooldown, &cooldown_opts );
+         l = os_printD( o->summary_raw, l, o->cpu, &cpu_opts );
+         l = os_printD( o->summary_raw, l, o->mass, &mass_opts );
+      }
+   }
+
+   /* Third pass for descriptions. */
+   for (int i=0; i<noutfits; i++) {
+      Outfit *o = &outfit_stack[i];
+      if (outfit_isMod(o)) {
+         int l = 0;
+         Outfit *temp = o; /* Needed for SDESC_ADD macro. */
+         SDESC_ADD( l, temp, "%s", _(outfit_getType(temp)) );
+         if (temp->u.mod.active) /* Ignore Lua since it's handled later. */
+            SDESC_ADD( l, temp, "\n#r%s#0", _("Activated Outfit") );
+         if (temp->u.mod.active && temp->u.mod.cooldown > 0.)
+            l = os_printD( temp->summary_raw, l, temp->u.mod.cooldown, &cooldown_opts );
+         l = os_printD( temp->summary_raw, l, temp->cpu, &cpu_opts );
+         l = os_printD( temp->summary_raw, l, temp->mass, &mass_opts );
+      }
+      /* We add the ship stats to the description here. */
+      if (o->summary_raw != NULL) {
+         int l = strlen(o->summary_raw);
+         l += ss_statsListDesc( o->stats, &o->summary_raw[l], OUTFIT_SHORTDESC_MAX-l, 1 );
+         /* Add extra description task if available. */
+         //if (o->desc_extra != NULL)
+         //   snprintf( &o->summary_raw[l], OUTFIT_SHORTDESC_MAX-l, "\n%s", _(o->desc_extra) );
       }
    }
 
@@ -3058,6 +3069,7 @@ void outfit_free (void)
       /* strings */
       free(o->typename);
       free(o->desc_raw);
+      free(o->desc_extra);
       free(o->limit);
       free(o->summary_raw);
       free(o->license);
