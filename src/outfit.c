@@ -2116,7 +2116,7 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
    l = 0;
    SDESC_ADD( l, temp, "%s", _(outfit_getType(temp)) );
-   SDESC_ADD( l, temp, "\n#r%s#0", _("Activated Outfit") );
+   SDESC_ADD( l, temp, "\n#o%s#0", _("Activated Outfit") );
 
    l = os_printD( temp->summary_raw, l, temp->cpu, &cpu_opts );
    l = os_printD( temp->summary_raw, l, temp->mass, &mass_opts );
@@ -2824,7 +2824,7 @@ int outfit_load (void)
          int l = 0;
          SDESC_ADD( l, o, "%s", _(outfit_getType(o)) );
          if (o->u.mod.active)
-            SDESC_ADD( l, o, "\n#r%s#0", _("Activated Outfit") );
+            SDESC_ADD( l, o, "\n#o%s#0", _("Activated Outfit") );
          if (o->u.mod.active && o->u.mod.cooldown > 0.)
             l = os_printD( o->summary_raw, l, o->u.mod.cooldown, &cooldown_opts );
          l = os_printD( o->summary_raw, l, o->cpu, &cpu_opts );
@@ -2840,7 +2840,7 @@ int outfit_load (void)
          Outfit *temp = o; /* Needed for SDESC_ADD macro. */
          SDESC_ADD( l, temp, "%s", _(outfit_getType(temp)) );
          if (temp->u.mod.active) /* Ignore Lua since it's handled later. */
-            SDESC_ADD( l, temp, "\n#r%s#0", _("Activated Outfit") );
+            SDESC_ADD( l, temp, "\n#o%s#0", _("Activated Outfit") );
          if (temp->u.mod.active && temp->u.mod.cooldown > 0.)
             l = os_printD( temp->summary_raw, l, temp->u.mod.cooldown, &cooldown_opts );
          l = os_printD( temp->summary_raw, l, temp->cpu, &cpu_opts );
