@@ -35,6 +35,16 @@
 #define  SHIP_GFX_W     256
 #define  SHIP_GFX_H     256
 
+/**
+ * Custom ship slot widget.
+ */
+typedef struct CstShipSlotWidget_ {
+   int mouseover;
+   const ShipOutfitSlot *slot;
+   double altx;
+   double alty;
+} CstShipSlotWidget;
+
 /*
  * Vars.
  */
@@ -51,6 +61,9 @@ static void shipyard_trade( unsigned int wid, const char* str );
 static void shipyard_rmouse( unsigned int wid, const char* widget_name );
 static void shipyard_renderSlots( double bx, double by, double bw, double bh, void *data );
 static void shipyard_renderSlotsRow( double bx, double by, double bw, const char *str, ShipOutfitSlot *s );
+static int shipyard_mouseSlots( unsigned int wid, const SDL_Event* event,
+      double x, double y, double w, double h, double rx, double ry, void *data );
+static void shipyard_renderSlotsOver( double bx, double by, double bw, double bh, void *data );
 static void shipyard_find( unsigned int wid, const char* str );
 
 /**
@@ -64,6 +77,7 @@ void shipyard_open( unsigned int wid )
    int iw, ih;
    int bw, bh, padding, off;
    int iconsize;
+   CstShipSlotWidget *data;
 
    /* Mark as generated. */
    land_tabGenerate(LAND_WINDOW_SHIPYARD);
@@ -112,9 +126,13 @@ void shipyard_open( unsigned int wid )
    window_addImage( wid, -40, -40, sw, sh, "imgTarget", NULL, 0);
 
    /* slot types */
+   data = calloc( 1, sizeof(CstShipSlotWidget) );
    window_addCust( wid, -20, -sh-50, sw-10, 80, "cstSlots", 0.,
-         shipyard_renderSlots, NULL, NULL, NULL, NULL );
+         shipyard_renderSlots, shipyard_mouseSlots, NULL, NULL, data );
+   window_custSetOverlay( wid, "cstSlots", shipyard_renderSlotsOver );
+   window_custSetClipping( wid, "cstSlots", 0 );
    window_canFocusWidget( wid, "cstSlots", 0 );
+   window_custAutoFreeData( wid, "cstSlots" );
 
    /* stat text */
    window_addText( wid, -4, -sw-50-70-20, sw, -sh-60-70-20+h-bh, 0, "txtStats",
@@ -629,9 +647,8 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw, const char
          toolkit_drawTriangle( x, by, x+size, by+size, x, by+size, &cBrightRed );
       else if (s[i].exclusive)
          toolkit_drawTriangle( x, by, x+size, by+size, x, by+size, &cWhite );
-      else if (s[i].slot.spid != 0) {
+      else if (s[i].slot.spid != 0)
          toolkit_drawTriangle( x, by, x+size, by+size, x, by+size, &cBlack );
-      }
 
       gl_renderRectEmpty( x, by, size, size, &cBlack );
 
@@ -648,4 +665,79 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw, const char
             gl_renderScaleAspect( icon, sx, sy, sw, sh, NULL );
       }
    }
+}
+
+static int shipyard_mouseSlots( unsigned int wid, const SDL_Event *event,
+      double mx, double my, double bw, double bh,
+      double rx, double ry, void *data )
+{
+   (void) wid;
+   (void) bw;
+   (void) rx;
+   (void) ry;
+   int x = floor((mx-30.-21.) / 21.);
+   int y = floor((bh-my-15.) / 20.);
+   CstShipSlotWidget *wgt = (CstShipSlotWidget*) data;
+   ShipOutfitSlot *ps;
+   Ship *ship = shipyard_selected;
+
+   /* Only care about motion. */
+   if (event->type != SDL_MOUSEMOTION)
+      return 0;
+
+   /* Find what row. */
+   switch (y) {
+      case 0:
+         ps = ship->outfit_weapon;
+         break;
+      case 1:
+         ps = ship->outfit_utility;
+         break;
+      case 2:
+         ps = ship->outfit_structure;
+         break;
+
+      default:
+         wgt->mouseover = 0;
+         return 1;
+   }
+   if ((x < 0) || (x >= array_size(ps))) {
+      wgt->mouseover = 0;
+      return 1;
+   }
+
+   /* Mark the slot. */
+   wgt->mouseover = 1;
+   wgt->slot = &ps[x];
+   wgt->alty = 30. + (2-y)*20.;
+   wgt->altx = 15. + (x+2)*21.;
+   return 1;
+}
+
+static void shipyard_renderSlotsOver( double bx, double by, double bw, double bh, void *data )
+{
+   (void) bw;
+   (void) bh;
+   char alt[STRMAX_SHORT];
+   int pos;
+   CstShipSlotWidget *wgt = (CstShipSlotWidget*) data;
+   const ShipOutfitSlot *slot;
+
+   if (wgt->mouseover <= 0)
+      return;
+
+   slot = wgt->slot;
+   pos = 0;
+   if (slot->slot.spid) {
+      pos = scnprintf( alt, sizeof(alt),
+            "#o%s\n", _( sp_display( slot->slot.spid ) ) );
+   }
+   else
+      pos = 0;
+   pos += scnprintf( &alt[pos], sizeof(alt)-pos, _( "#%c%s #%c%s #0slot" ),
+         outfit_slotSizeColourFont( &slot->slot ), _(slotSize( slot->slot.size )),
+         outfit_slotTypeColourFont( &slot->slot ), _(slotName( slot->slot.type )) );
+
+   /* Draw the alt stuff. */
+   toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
 }
