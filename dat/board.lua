@@ -84,7 +84,7 @@ local function cargo_loot( c, q, m )
    local desc = fmt.f(_("{name}\n{desc}"), {name=c:name(),desc=_(c:description())})
    local illegalto = c:illegality()
    if #illegalto > 0 then
-      desc = desc.._("\n#rIllegalized by the following factions:\n")
+      desc = desc.."#r".._("\nIllegalized by the following factions:\n")
       for _k,f in ipairs(illegalto) do
          if f:known() then
             desc = desc..fmt.f(_("\n   - {fct}"), {fct=f})
@@ -128,7 +128,7 @@ local function compute_lootables ( plt )
       table.insert( lootables, {
          image = nil,
          text = _("Fuel"),
-         q = math.floor( 0.5 + fuel*loot_mod ),
+         q = math.min( math.floor( 0.5 + fuel*loot_mod ), ps.fuel_max ),
          type = "fuel",
          bg = nil,
          alt = _("Fuel\nNecessary for the activation of jump drives that allow inter-system travel."),
@@ -346,7 +346,7 @@ local function board_cannibalize ()
       heal_armour = dmg*2/3
    end
    pp:setHealth( 100*(parmour+heal_armour)/ps.armour, 100*pshield/ps.shield, pstress )
-   player.msg(fmt.f(_("Your ship cannibalized {armour:.0f} armour from {plt}."),{armour=heal_armour, plt=board_plt}))
+   player.msg(fmt.f(_("Your ship cannibalized {armour} armour from {plt}."),{armour=fmt.number(heal_armour), plt=board_plt}))
 end
 
 local function cargo_list ()
