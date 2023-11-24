@@ -156,13 +156,21 @@ local function compute_lootables ( plt )
             table.insert( ocand, o )
          end
       end
-      -- Get random candidate if available
-      if #ocand > 0 then
-         -- TODO better criteria
-         local o = ocand[ rnd.rnd(1,#ocand) ]
-         local price = o:price() * (10+ps.crew) / (10+pps.crew)
-         local lo = outfit_loot( o, price )
-         table.insert( lootables, lo )
+      local numoutfits = math.floor(loot_mod)
+      if rnd.rnd() < math.fmod(loot_mod,1) then
+         numoutfits = numoutfits+1
+      end
+      for i=1,numoutfits do
+         -- Get random candidate if available
+         if #ocand > 0 then
+            -- TODO better criteria
+            local id = rnd.rnd(1,#ocand)
+            local o = ocand[id]
+            local price = o:price() * (10+ps.crew) / (10+pps.crew)
+            local lo = outfit_loot( o, price )
+            table.insert( lootables, lo )
+            table.remove( ocand, id ) -- Remove from candidates
+         end
       end
    end
 

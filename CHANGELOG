@@ -14,6 +14,7 @@
       * Missions are introduced less all at once to the player
       * Blink drives are more flexible but use energy and generate heat
       * Razor class weapons have been completely reworked
+      * Can steal more than one outfit from a ship with high boarding bonus
       * diy-nerds: improved reward
    * Quality of Life
       * Significantly improved autonav
@@ -131,6 +132,7 @@
       * Player's escort damage is counted towards players damage
       * Avoid having missions duplicates for cases where they can significantly stack such as patrol missions
       * Fire rate and action speed should affect damage and disable of beam weapons
+      * Fixed some outfits not having "Activated Outfit" in their description
 
 * 0.10.6
    * Fixed potential segfault with invalid semver strings
