@@ -1262,7 +1262,7 @@ static const char* pilot_outfitLDescExtra( const Pilot *p, const Outfit *o )
    static char descextra[STRMAX];
    const char *de;
    if (o->lua_descextra == LUA_NOREF)
-      return o->desc_extra;
+      return (o->desc_extra != NULL) ? _(o->desc_extra) : NULL;
 
    /* Set up the function: init( p, po ) */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, o->lua_descextra); /* f */
