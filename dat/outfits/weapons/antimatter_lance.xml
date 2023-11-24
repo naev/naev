@@ -7,7 +7,7 @@
   <mass>12</mass>
   <price>1300000</price>
   <description>The antimatter lance directly attacks the integrity of a ship on a molecular level, rather than trying to brute force its way through the armour of enemy ships. The procedure dissipates large amounts of Birkhoff-Kerr radiation that is able to have significantly adverse effects on the ship being shot at.</description>
-  <desc_extra>Applies 7 seconds of antimatter taint upon hit, which applies a 10% speed-down to the target ship.</desc_extra>
+  <desc_extra>Lowers the action speed upon hit by 10% for 7 seconds.</desc_extra>
   <gfx_store>antimatter_lance.png</gfx_store>
   <cpu>-60</cpu>
  </general>
