@@ -532,7 +532,7 @@ static void think_beam( Weapon* w, double dt )
             vec2 tv;
             gl_screenToGameCoords( &tv.x, &tv.y, player.mousex, player.mousey );
             diff = angle_diff(w->solid.dir, /* Get angle to target pos */
-                  vec2_angle( &w->solid.pos, &tv );
+                  vec2_angle( &w->solid.pos, &tv ) );
          }
          /* If target is dead beam stops moving. Targeting
           * self is invalid so in that case we ignore the target.
