@@ -27,5 +27,5 @@ int background_load( const char *name );
 void background_clear (void);
 void background_free (void);
 
-/* Get image textures */
-glTexture** background_getTextures (void);
+/* Get textures for star images in the background. */
+glTexture** background_getStarTextures (void);

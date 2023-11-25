@@ -45,7 +45,7 @@ static int pitch = 0; /**< pitch of spob images. */
 static int nameWidth = 0; /**< text width of spob name */
 static int nshow = 0; /**< number of spobs shown. */
 static char infobuf[STRMAX];
-static unsigned int starCnt = 1;
+static unsigned int focusedStar = 0;
 glTexture **bgImages; /**< array (array.h) of nebula and star textures */
 
 #define MAP_SYSTEM_WDWNAME "wdwSystemMap"
@@ -181,7 +181,7 @@ void map_system_open( int sys_selected )
    pitch = 0;
    nameWidth = 0;
    nshow = 0;
-   starCnt = 1;
+   focusedStar = 0;
 
    /* get the selected system. */
    cur_sys_sel = system_getIndex( sys_selected );
@@ -218,9 +218,8 @@ void map_system_open( int sys_selected )
    /* load background images */
    background_clear();
    background_load ( cur_system->background );
-   bgImages = background_getTextures();
-   if ( array_size( bgImages ) <= 1 )
-      starCnt = 0;
+   bgImages = background_getStarTextures();
+   focusedStar = 0;
    background_clear();
    /* and reload the images for the current system */
    cur_system = tmp_sys;
@@ -288,19 +287,6 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    int offset;
    int txtHeight;
 
-   phase++;
-
-   if (phase > 150) {
-      phase = 0;
-      starCnt++;
-      if ( starCnt >= (unsigned int) array_size( bgImages ) ) {
-         if ( array_size( bgImages ) <= 1)
-            starCnt = 0;
-         else
-            starCnt = 1;
-      }
-   }
-
    vis_index=0;
    offset = h - pitch*nshow;
    for (i=0; i<array_size(sys->spobs); i++) {
@@ -326,25 +312,26 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    ih = pitch;
    iw = ih;
    if (array_size( bgImages ) > 0) {
-      if ( bgImages[starCnt]->w > bgImages[starCnt]->h )
-         ih = ih * bgImages[starCnt]->h / bgImages[starCnt]->w;
-      else if ( bgImages[starCnt]->w < bgImages[starCnt]->h )
-         iw = iw * bgImages[starCnt]->w / bgImages[starCnt]->h;
+      phase++;
+      if (phase > 150) {
+         phase = 0;
+         focusedStar++;
+         focusedStar %= array_size( bgImages );
+      }
+
+      if ( bgImages[focusedStar]->w > bgImages[focusedStar]->h )
+         ih = ih * bgImages[focusedStar]->h / bgImages[focusedStar]->w;
+      else if ( bgImages[focusedStar]->w < bgImages[focusedStar]->h )
+         iw = iw * bgImages[focusedStar]->w / bgImages[focusedStar]->h;
       ccol.r=ccol.g=ccol.b=ccol.a=1;
-      if ( phase > 120 && array_size( bgImages ) > 2 )
+      if (phase > 120 && array_size( bgImages ) > 1)
          ccol.a = cos ( (phase-121)/30. *M_PI/2.);
-      gl_renderScale( bgImages[starCnt], bx+2 , by+(nshow-1)*pitch + (pitch-ih)/2 + offset, iw , ih, &ccol );
-      if ( phase > 120 && array_size( bgImages ) > 2) {
+      gl_renderScale( bgImages[focusedStar], bx+2 , by+(nshow-1)*pitch + (pitch-ih)/2 + offset, iw , ih, &ccol );
+      if (phase > 120 && array_size( bgImages ) > 1) {
          /* fade in the next star */
          ih=pitch;
          iw=ih;
-         i = starCnt + 1;
-         if ( i >= array_size( bgImages ) ) {
-            if ( array_size( bgImages ) <= 1 )
-               i=0;
-            else
-               i=1;
-         }
+         i = (focusedStar + 1) % array_size( bgImages );
          if ( bgImages[i]->w > bgImages[i]->h )
             ih = ih * bgImages[i]->h / bgImages[i]->w;
          else if ( bgImages[i]->w < bgImages[i]->h )
@@ -361,8 +348,9 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    }
    gl_printRaw( &gl_smallFont, bx + 5 + pitch, by + (nshow-0.5)*pitch + offset,
          (cur_spob_sel == 0 ? &cFontGreen : &cFontWhite), -1., _(sys->name) );
+   /* FIXME: An attempt to grab the first background image and assume it's "true" background (nebula or stars). */
+#if 0
    if ((cur_spob_sel==0) && array_size( bgImages ) > 0) {
-      /* make use of space to draw a nice nebula */
       double imgw,imgh, s;
       iw = w - 50 - pitch - nameWidth;
       ih = h;
@@ -373,6 +361,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       imgh *= s;
       gl_renderScale( bgImages[0], bx+w-iw+(iw-imgw)*0.5, by+h-ih+(ih-imgh)*0.5, imgw, imgh, &cWhite );
    }
+#endif
    /* draw marker around currently selected spob */
    ccol.r=0; ccol.g=0.6+0.4*sin( phase/150.*2*M_PI ); ccol.b=0; ccol.a=1;
    ih=15;
@@ -389,7 +378,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    buf[0]='\0';
    if (cur_spob_sel == 0) {
       int infopos = 0;
-      int stars   = MAX( array_size( bgImages )-1, 0 );
+      int stars   = MAX( array_size( bgImages ), 0 );
       cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nSystem:#0 %s\n"), _(sys->name) );
       /* display sun information */
       cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, n_("%d-star system\n", "%d-star system\n", stars), stars );
