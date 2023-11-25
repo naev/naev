@@ -140,6 +140,7 @@ local function clicked ()
    sai(_([["#oDetection#0 plays a crucial in how much attention you draw in a system, and detection bonuses can be very useful for avoiding lurking dangers. Furthermore, concealment bonuses will lower your detection, signature, and stealth ranges, making outfits that give concealment bonuses very useful if you get your hands on them."]]))
    sai(_([["#oSignature#0 is very important when it comes to combat as it determines how well weapons can track your ship. If your signature is below your enemies weapon's #ominimal tracking#0, their weapons will not be able to accurately target your ship at all. However, if your signature is above the #ooptimal tracking#0, you will be tracked perfectly. Same goes for your targets. This also has an effect on launcher lock-on time, with lower signature increasing the time it takes for rockets to lock on to you."]]))
    sai(fmt.f(_([["#oStealth#0 is a whole different beast and is only useful when entering stealth mode with {stealthkey}. If you want to learn more about stealth, please ask me about it."]]),{stealthkey=tut.getKey("stealth")}))
+   sai(_([["Finally, ships that are scanning your ship will be marked on your radar and overlay map. Depending on what you are carrying, there are times that you will not want to be scanned, and this icon can help you get away."]]))
    vn.jump("tutorials")
 
    vn.label("tut_stealth")
@@ -158,7 +159,8 @@ local function clicked ()
 
    vn.label("tut_bioship")
    -- TODO more text
-   sai(fmt.f(_([["You can see the status of your current bioship from the #bInfo menu#0, which you can access with {infokey}. As your bioship gains experience, and advances to new stages, you'll be able to obtain new skills that open up new possibilities. Make sure to choose your skills carefully as it is not easy to change them once they have been chosen."]]),{infokey=tut.getKey("info")}))
+   sai(fmt.f(_([["You can see the status of your current bioship from the #bInfo menu#0, which you can access with {infokey}. As your bioship gains experience, and advances to new stages, you'll be able to obtain new skills that open up new possibilities. Make sure to choose your skills carefully as there is an experience loss to change them once they have been chosen."]]),{infokey=tut.getKey("info")}))
+   sai(_([["You can only change your skills when landed, and if you have free skill points, the bioship button in the #bInfo menu#0 will be marked with #r!!#0 to make it clear. Skill is gained naturally as you do missions, but only your active bioship will be gaining experience."]]))
    vn.jump("tutorials")
 
    vn.label("tut_illegal")

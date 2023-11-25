@@ -108,6 +108,7 @@ They lean forward and get a bit more serious.
       {key=string.format("#b%s#0",naev.keyGet("stealth"))}))
    g(fmt.f(_([["So as long as you stealth with {key} and stay away from ships, you won't be scanned and the cake will be alright."]]),
       {key=string.format("#b%s#0",naev.keyGet("stealth"))}))
+   g(_([["If a ship starts to scan you, it'll be marked on your radar and overlay map. Furthermore, if you're carrying stuff that you don't want scanned, your autonav system will automatically be paused so you react. Make sure to get away and stealth so that they can't scan you anymore. Don't want to spoil the cake!"]]))
 
    vn.label("notut")
    g(fmt.f(_([["Great. One second, let me get the cake."
