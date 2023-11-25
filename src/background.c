@@ -548,3 +548,16 @@ glTexture** background_getStarTextures (void)
     array_push_back( &imgs, gl_dupTexture(bkg_image_arr_ft[i].image) );
   return imgs;
 }
+
+/**
+ * @brief Returns an overall background image (nebula, for instance), or NULL if none exists.
+ * @TODO With current background scripts, this only does anything on the border (1 jump from nebula)!
+ */
+glTexture* background_getAmbientTexture (void)
+{
+  /* Assume many bg-layer images => none is representative => we should return NULL. Example: Taiomi system's debris field. */
+  if (array_size( bkg_image_arr_bk ) == 1)
+    return gl_dupTexture(bkg_image_arr_bk[0].image);
+  else
+     return NULL;
+}

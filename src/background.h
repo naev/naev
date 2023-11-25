@@ -27,5 +27,6 @@ int background_load( const char *name );
 void background_clear (void);
 void background_free (void);
 
-/* Get textures for star images in the background. */
+/* Get textures for any star images and ambient (e.g. nebula) image in the background. */
 glTexture** background_getStarTextures (void);
+glTexture* background_getAmbientTexture (void);

@@ -46,7 +46,8 @@ static int nameWidth = 0; /**< text width of spob name */
 static int nshow = 0; /**< number of spobs shown. */
 static char infobuf[STRMAX];
 static unsigned int focusedStar = 0;
-glTexture **bgImages; /**< array (array.h) of nebula and star textures */
+glTexture **starImages; /**< array (array.h) of star textures */
+glTexture *bgImage; /**< if not NULL, an overall background image (e.g., nebula) */
 
 #define MAP_SYSTEM_WDWNAME "wdwSystemMap"
 #define MAPSYS_OUTFITS "mapSysOutfits"
@@ -111,10 +112,16 @@ int map_system_load( void )
  */
 void map_system_exit( void )
 {
-   for (int i=0; i<array_size(bgImages); i++)
-      gl_freeTexture( bgImages[i] );
-   array_free( bgImages );
-   bgImages=NULL;
+   for (int i=0; i<array_size(starImages); i++)
+      gl_freeTexture( starImages[i] );
+   array_free( starImages );
+   starImages = NULL;
+   gl_freeTexture( bgImage );
+   bgImage = NULL;
+   array_free( cur_spob_sel_outfits );
+   cur_spob_sel_outfits = NULL;
+   array_free( cur_spob_sel_ships );
+   cur_spob_sel_ships = NULL;
 }
 
 /**
@@ -128,14 +135,7 @@ void map_system_cleanup( unsigned int wid, const char *str )
    if (cur_sys_sel != cur_system)
      space_gfxUnload( cur_sys_sel );
 
-   for (int i=0; i<array_size(bgImages); i++)
-      gl_freeTexture( bgImages[i] );
-   array_free( bgImages );
-   bgImages = NULL;
-   array_free( cur_spob_sel_outfits );
-   cur_spob_sel_outfits = NULL;
-   array_free( cur_spob_sel_ships );
-   cur_spob_sel_ships = NULL;
+   map_system_exit();
 }
 
 /**
@@ -218,7 +218,8 @@ void map_system_open( int sys_selected )
    /* load background images */
    background_clear();
    background_load ( cur_system->background );
-   bgImages = background_getStarTextures();
+   starImages = background_getStarTextures();
+   bgImage = background_getAmbientTexture();
    focusedStar = 0;
    background_clear();
    /* and reload the images for the current system */
@@ -311,33 +312,33 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    /* draw the star */
    ih = pitch;
    iw = ih;
-   if (array_size( bgImages ) > 0) {
+   if (array_size( starImages ) > 0) {
       phase++;
       if (phase > 150) {
          phase = 0;
          focusedStar++;
-         focusedStar %= array_size( bgImages );
+         focusedStar %= array_size( starImages );
       }
 
-      if ( bgImages[focusedStar]->w > bgImages[focusedStar]->h )
-         ih = ih * bgImages[focusedStar]->h / bgImages[focusedStar]->w;
-      else if ( bgImages[focusedStar]->w < bgImages[focusedStar]->h )
-         iw = iw * bgImages[focusedStar]->w / bgImages[focusedStar]->h;
+      if ( starImages[focusedStar]->w > starImages[focusedStar]->h )
+         ih = ih * starImages[focusedStar]->h / starImages[focusedStar]->w;
+      else if ( starImages[focusedStar]->w < starImages[focusedStar]->h )
+         iw = iw * starImages[focusedStar]->w / starImages[focusedStar]->h;
       ccol.r=ccol.g=ccol.b=ccol.a=1;
-      if (phase > 120 && array_size( bgImages ) > 1)
+      if (phase > 120 && array_size( starImages ) > 1)
          ccol.a = cos ( (phase-121)/30. *M_PI/2.);
-      gl_renderScale( bgImages[focusedStar], bx+2 , by+(nshow-1)*pitch + (pitch-ih)/2 + offset, iw , ih, &ccol );
-      if (phase > 120 && array_size( bgImages ) > 1) {
+      gl_renderScale( starImages[focusedStar], bx+2 , by+(nshow-1)*pitch + (pitch-ih)/2 + offset, iw , ih, &ccol );
+      if (phase > 120 && array_size( starImages ) > 1) {
          /* fade in the next star */
          ih=pitch;
          iw=ih;
-         i = (focusedStar + 1) % array_size( bgImages );
-         if ( bgImages[i]->w > bgImages[i]->h )
-            ih = ih * bgImages[i]->h / bgImages[i]->w;
-         else if ( bgImages[i]->w < bgImages[i]->h )
-            iw = iw * bgImages[i]->w / bgImages[i]->h;
+         i = (focusedStar + 1) % array_size( starImages );
+         if ( starImages[i]->w > starImages[i]->h )
+            ih = ih * starImages[i]->h / starImages[i]->w;
+         else if ( starImages[i]->w < starImages[i]->h )
+            iw = iw * starImages[i]->w / starImages[i]->h;
          ccol.a = 1 - ccol.a;
-         gl_renderScale( bgImages[i], bx+2, by+(nshow-1)*pitch + (pitch-ih)/2 + offset, iw, ih, &ccol );
+         gl_renderScale( starImages[i], bx+2, by+(nshow-1)*pitch + (pitch-ih)/2 + offset, iw, ih, &ccol );
       }
    }
    else if (sys->nebu_density > 0.) {
@@ -348,20 +349,17 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    }
    gl_printRaw( &gl_smallFont, bx + 5 + pitch, by + (nshow-0.5)*pitch + offset,
          (cur_spob_sel == 0 ? &cFontGreen : &cFontWhite), -1., _(sys->name) );
-   /* FIXME: An attempt to grab the first background image and assume it's "true" background (nebula or stars). */
-#if 0
-   if ((cur_spob_sel==0) && array_size( bgImages ) > 0) {
+   if ((cur_spob_sel==0) && bgImage != NULL) {
       double imgw,imgh, s;
       iw = w - 50 - pitch - nameWidth;
       ih = h;
-      imgw = bgImages[0]->w;
-      imgh = bgImages[0]->h;
+      imgw = bgImage->w;
+      imgh = bgImage->h;
       s = MIN( iw / imgw, ih / imgh );
       imgw *= s;
       imgh *= s;
-      gl_renderScale( bgImages[0], bx+w-iw+(iw-imgw)*0.5, by+h-ih+(ih-imgh)*0.5, imgw, imgh, &cWhite );
+      gl_renderScale( bgImage, bx+w-iw+(iw-imgw)*0.5, by+h-ih+(ih-imgh)*0.5, imgw, imgh, &cWhite );
    }
-#endif
    /* draw marker around currently selected spob */
    ccol.r=0; ccol.g=0.6+0.4*sin( phase/150.*2*M_PI ); ccol.b=0; ccol.a=1;
    ih=15;
@@ -378,7 +376,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    buf[0]='\0';
    if (cur_spob_sel == 0) {
       int infopos = 0;
-      int stars   = MAX( array_size( bgImages ), 0 );
+      int stars   = MAX( array_size( starImages ), 0 );
       cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nSystem:#0 %s\n"), _(sys->name) );
       /* display sun information */
       cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, n_("%d-star system\n", "%d-star system\n", stars), stars );
