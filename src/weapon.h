@@ -33,6 +33,7 @@ typedef enum WeaponStatus_ {
 #define WEAPON_FLAG_DESTROYED       (1<<0) /**< Is awaiting clean up. */
 #define WEAPON_FLAG_HITTABLE        (1<<1) /**< Can be hit by stuff. */
 #define WEAPON_FLAG_ONLYHITTARGET   (1<<2) /**< Can only hit target pilot (or asteroids). */
+#define WEAPON_FLAG_AIM             (1<<3) /**< Weapon should aim and not follow the mouse (only used for beams atm). */
 #define weapon_isFlag(w,f)    ((w)->flags & (f))
 #define weapon_setFlag(w,f)   ((w)->flags |= (f))
 #define weapon_rmFlag(w,f)    ((w)->flags &= ~(f))

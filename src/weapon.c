@@ -528,7 +528,7 @@ static void think_beam( Weapon* w, double dt )
          break;
 
       case OUTFIT_TYPE_TURRET_BEAM:
-         if (pilot_isPlayer(p) && (SDL_ShowCursor(SDL_QUERY)==SDL_ENABLE)) {
+         if (!weapon_isFlag(w,WEAPON_FLAG_AIM) && pilot_isPlayer(p) && (SDL_ShowCursor(SDL_QUERY)==SDL_ENABLE)) {
             vec2 tv;
             gl_screenToGameCoords( &tv.x, &tv.y, player.mousex, player.mousey );
             diff = angle_diff(w->solid.dir, /* Get angle to target pos */
@@ -2228,6 +2228,7 @@ static int weapon_create( Weapon *w, PilotOutfitSlot* po, const Outfit *ref,
                AsteroidAnchor *field;
                Asteroid *ast;
                Weapon *wtarget;
+               weapon_setFlag(w, WEAPON_FLAG_AIM);
                switch (w->target.type) {
                   case TARGET_NONE:
                      break;
@@ -2414,7 +2415,7 @@ unsigned int beam_start( PilotOutfitSlot *po,
       return -1;
    }
 
-   w  = &array_grow(&weapon_stack);
+   w = &array_grow(&weapon_stack);
    weapon_create( w, po, NULL, 0., dir, pos, vel, parent, target, 0., aim );
 
    /* Grow the vertex stuff if needed. */
