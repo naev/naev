@@ -11,7 +11,8 @@
    if faction.playerStanding("Dvaered") &lt; 20 then
       return false
    end
-   return require("misn_test").reweight_active()
+   --return require("misn_test").reweight_active() -- don't reweight for licenses
+   return true
  </cond>
  <notes>
   <campaign>Dvaered Recruitment</campaign>

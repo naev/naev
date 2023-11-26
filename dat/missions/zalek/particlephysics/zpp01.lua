@@ -13,7 +13,8 @@
    if faction.playerStanding("Za'lek") &lt; 0 then
       return false
    end
-   return require("misn_test").reweight_active()
+   --return require("misn_test").reweight_active() -- Don't reweight since license are important
+   return true
  </cond>
  <notes>
   <campaign>Za'lek Particle Physics</campaign>

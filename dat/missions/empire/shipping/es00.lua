@@ -7,7 +7,8 @@
    if faction.playerStanding("Empire") &lt; 0 or faction.playerStanding("Dvaered") &lt; 0 or faction.playerStanding("FLF") &gt;= 10 then
       return false
    end
-   return require("misn_test").reweight_active()
+   --return require("misn_test").reweight_active() -- Don't reweight as licenses are important!
+   return true
  </cond>
  <chance>35</chance>
  <done>Soromid Long Distance Recruitment</done>

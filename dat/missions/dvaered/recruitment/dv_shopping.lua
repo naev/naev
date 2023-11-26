@@ -17,7 +17,8 @@
    if spob.cur():services().shipyard == nil then
       return false
    end
-   return require("misn_test").reweight_active()
+   --return require("misn_test").reweight_active() -- don't reweight for licenses
+   return true
  </cond>
  <notes>
   <campaign>Dvaered Recruitment</campaign>

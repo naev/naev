@@ -5,7 +5,8 @@
  <priority>4</priority>
  <chance>30</chance>
  <cond>
-   return require("misn_test").reweight_active()
+   --return require("misn_test").reweight_active() -- Don't reweight as this is important
+   return true
  </cond>
  <location>Bar</location>
  <faction>Dvaered</faction>
