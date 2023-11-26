@@ -44,18 +44,12 @@ static int commodity_exchange_events( unsigned int wid, SDL_Event *evt )
    if ((evt->type==SDL_KEYDOWN) || (evt->type==SDL_KEYUP)) {
       int q = commodity_getMod();
       if (q != commodity_mod) {
+         char buf[STRMAX_SHORT];
          commodity_mod = q;
-         if (q==1) {
-            window_buttonCaption( wid, "btnCommodityBuy", _("Buy ") );
-            window_buttonCaption( wid, "btnCommoditySell", _("Sell") );
-         }
-         else {
-            char buf[STRMAX_SHORT];
-            snprintf( buf, sizeof(buf), _("Buy (%d %s)"), q, UNIT_MASS );
-            window_buttonCaption( wid, "btnCommodityBuy", buf );
-            snprintf( buf, sizeof(buf), _("Sell (%d %s)"), q, UNIT_MASS );
-            window_buttonCaption( wid, "btnCommoditySell", buf );
-         }
+         snprintf( buf, sizeof(buf), _("Buy (%d %s)"), q, UNIT_MASS );
+         window_buttonCaption( wid, "btnCommodityBuy", buf );
+         snprintf( buf, sizeof(buf), _("Sell (%d %s)"), q, UNIT_MASS );
+         window_buttonCaption( wid, "btnCommoditySell", buf );
          toolkit_rerender();
       }
    }
