@@ -87,6 +87,7 @@ static int playerL_dt_default( lua_State *L );
 static int playerL_speed( lua_State *L );
 static int playerL_setSpeed( lua_State *L );
 static int playerL_cinematics( lua_State *L );
+static int playerL_cinematicsCheck( lua_State *L );
 static int playerL_damageSPFX( lua_State *L );
 static int playerL_screenshot( lua_State *L );
 /* Board stuff. */
@@ -184,6 +185,7 @@ static const luaL_Reg playerL_methods[] = {
    { "speed", playerL_speed },
    { "setSpeed", playerL_setSpeed },
    { "cinematics", playerL_cinematics },
+   { "cinematicsCheck", playerL_cinematicsCheck },
    { "damageSPFX", playerL_damageSPFX },
    { "screenshot", playerL_screenshot },
    { "tryBoard", playerL_tryBoard },
@@ -882,6 +884,15 @@ static int playerL_cinematics( lua_State *L )
    }
 
    return 0;
+}
+
+/**
+ * @brief Checks to see if the game is in cinematics mode.
+ */
+static int playerL_cinematicsCheck( lua_State *L )
+{
+   lua_pushboolean( L, player_isFlag( PLAYER_CINEMATICS ) );
+   return 1;
 }
 
 /**
