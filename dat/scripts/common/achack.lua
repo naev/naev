@@ -33,8 +33,8 @@ achack.harja = {
 }
 achack.joanne = {
    name = _("Joanne"),
-   portrait = "sirius/uinque/joanne.webp",
-   image = portrait.getFullPath("sirius/uinque/joanne.webp"),
+   portrait = "sirius/unique/joanne.webp",
+   image = portrait.getFullPath("sirius/unique/joanne.webp"),
 }
 
 function achack.vn_harja( params )
