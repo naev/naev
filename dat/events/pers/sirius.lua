@@ -37,7 +37,7 @@ return function ()
                m.uselanes = false
                for i=1,2 do
                   local s = pilot.add("Sirius Shaman", "Sirius", p:pos(), _("Squire"), {naked=true, ai="pers"})
-                  equipopt.sirius( p, { noflow=true } )
+                  equipopt.sirius( s, { noflow=true } )
                   s:setVel( p:vel() )
                   s:setLeader( p )
                end
