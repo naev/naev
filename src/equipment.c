@@ -299,6 +299,7 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
 void equipment_open( unsigned int wid )
 {
    int w,h, sw,sh, ow,oh, bw,bh, ew,eh, cw,ch, x,y;
+   unsigned int *widptr;
 
    /* Load the outfit mode. */
    equipment_outfitMode = player.eq_outfitMode;
@@ -405,11 +406,14 @@ void equipment_open( unsigned int wid )
    window_canFocusWidget( wid, "cstMisc", 0 );
 
    /* Spinning ship. */
+   widptr = malloc(sizeof(unsigned int));
+   *widptr = wid;
    window_addRect( wid, -20+4, -40+4, 128+8, 128+8, "rctShip", &cBlack, 1 );
    window_addCust( wid, -20, -40, 128, 128, "cstShip", 0,
-         equipment_renderShip, NULL, NULL, NULL, NULL );
+         equipment_renderShip, NULL, NULL, NULL, widptr );
    window_custSetDynamic( wid, "cstShip", 1 );
    window_canFocusWidget( wid, "cstShip", 0 );
+   window_custAutoFreeData( wid, "cstShip" );
 
    /* Focus the ships image array. */
    window_setFocus( wid , EQUIPMENT_SHIPS );
@@ -914,27 +918,29 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
 static void equipment_renderShip( double bx, double by,
       double bw, double bh, void *data )
 {
-   (void) data;
    Pilot *p;
    int sx, sy;
-   unsigned int tick;
-   double dt;
    double px, py;
    double pw, ph;
    vec2 v;
+   unsigned int *wid = data;
 
    /* Must have selected ship. */
    if (eq_wgt.selected == NULL)
       return;
-
    p = eq_wgt.selected->p;
 
-   tick = SDL_GetTicks();
-   dt   = (double)(tick - equipment_lastick)/1000.;
-   equipment_lastick = tick;
-   equipment_dir += p->turn * dt;
-   if (equipment_dir > 2.*M_PI)
-      equipment_dir = fmod( equipment_dir, 2.*M_PI );
+   /* Don't update if not selected. */
+   if (window_isTop(*wid)) {
+      unsigned int tick = SDL_GetTicks();
+      double dt = (double)(tick - equipment_lastick)/1000.;
+      equipment_lastick = tick;
+      equipment_dir += p->turn * dt;
+      if (equipment_dir > 2.*M_PI)
+         equipment_dir = fmod( equipment_dir, 2.*M_PI );
+   }
+   else
+      equipment_lastick = SDL_GetTicks();
    gl_getSpriteFromDir( &sx, &sy, p->ship->gfx_space, equipment_dir );
 
    /* Render ship graphic. */
