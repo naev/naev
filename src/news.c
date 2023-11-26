@@ -276,6 +276,7 @@ int *generate_news( int faction )
  */
 void news_widget( unsigned int wid, int x, int y, int w, int h )
 {
+   unsigned int *widptr;
    glPrintLineIterator iter;
 
    /* Safe defaults. */
@@ -300,9 +301,12 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
    }
 
    /* Create the custom widget. */
-   window_addCust( wid, x, y, w, h, "cstNews", 1, news_render, news_mouse, NULL, news_focusLose, NULL );
+   widptr = malloc(sizeof(unsigned int));
+   *widptr = wid;
+   window_addCust( wid, x, y, w, h, "cstNews", 1, news_render, news_mouse, NULL, news_focusLose, widptr );
    window_custSetDynamic( wid, "cstNews", 1 );
    window_canFocusWidget( wid, "cstNews", 0 );
+   window_custAutoFreeData( wid, "cstNews" );
 }
 
 /* clears newslines for bar text, for when taking off */
@@ -389,16 +393,16 @@ static int news_mouse( unsigned int wid, const SDL_Event *event, double mx, doub
  */
 static void news_render( double bx, double by, double w, double h, void *data )
 {
-   (void) data;
    int s, m, p;
-   unsigned int t;
-   double y, dt;
+   unsigned int t, *wid;
+   double y;
 
+   wid = data;
    t = SDL_GetTicks();
 
    /* Calculate offset. */
-   if (!news_drag) {
-      dt = (double)(t-news_tick)/1000.;
+   if (!news_drag && window_isTop(*wid)) {
+      double dt = (double)(t-news_tick)/1000.;
       news_pos += dt * 25.;
    }
    news_tick = t;
