@@ -47,8 +47,8 @@ typedef struct background_image_s {
    double angle; /**< Rotation (in radians). */
    glColour col; /**< Colour to use. */
 } background_image_t;
-static background_image_t *bkg_image_arr_bk = NULL; /**< Background image array to display (behind dust). */
-static background_image_t *bkg_image_arr_ft = NULL; /**< Background image array to display (in front of dust). */
+static background_image_t *bkg_image_arr_bk = NULL; /**< Background image array to display (behind dust). Assumed to be a debris layer. */
+static background_image_t *bkg_image_arr_ft = NULL; /**< Background image array to display (in front of dust). Assumed to be a star layer. */
 
 static unsigned int bkg_idgen = 0; /**< ID generator for backgrounds. */
 
@@ -539,12 +539,25 @@ void background_free (void)
 }
 
 /**
- * @brief returns the background images, and number of these
+ * @brief Returns an array (array.h) of star background images in the system background.
  */
-glTexture** background_getTextures (void)
+glTexture** background_getStarTextures (void)
 {
-  glTexture **imgs = array_create_size( glTexture*, array_size( bkg_image_arr_bk ));
-  for (int i=0; i<array_size(bkg_image_arr_bk); i++)
-    array_push_back( &imgs, gl_dupTexture(bkg_image_arr_bk[i].image) );
+  glTexture **imgs = array_create_size( glTexture*, array_size( bkg_image_arr_ft ));
+  for (int i=0; i<array_size(bkg_image_arr_ft); i++)
+    array_push_back( &imgs, gl_dupTexture(bkg_image_arr_ft[i].image) );
   return imgs;
+}
+
+/**
+ * @brief Returns an overall background image (nebula, for instance), or NULL if none exists.
+ * @TODO With current background scripts, this only does anything on the border (1 jump from nebula)!
+ */
+glTexture* background_getAmbientTexture (void)
+{
+  /* Assume many bg-layer images => none is representative => we should return NULL. Example: Taiomi system's debris field. */
+  if (array_size( bkg_image_arr_bk ) == 1)
+    return gl_dupTexture(bkg_image_arr_bk[0].image);
+  else
+     return NULL;
 }
