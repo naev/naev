@@ -18,11 +18,15 @@
 </event>
 --]]
 --[[
-
    Travelling Merchant Event
 
 Spawns a travelling merchant that can sell the player if interested.
 
+Player variables:
+* travelling_trader_boarded: player has boarded once the merchant
+* travelling_trader_hailed: misi has been hailed once by the player
+* travelling_trader_hail2: misi has been hailed about new stuff by the player (chapter 1)
+* travelling_trader_data: player has been talked about the new data matrices stuff
 --]]
 local vn = require 'vn'
 local fmt = require "format"
@@ -357,8 +361,13 @@ They get uncomfortably close
             _("Now with fewer side effects!"),
          }
 
-         mm(fmt.f(_([["I haven't seen you in a while old friend! I've gotten some new wares you may want to see. Always the best quality! {sillyphrase}"]]),
-            {sillyphrase = sillyphrases[ rnd.rnd(1,#sillyphrases) ]}))
+         if newoutfits then
+            mm(fmt.f(_([["I haven't seen you in a while old friend! I've gotten some new wares you may want to see. Always the best quality! {sillyphrase}"]]),
+               {sillyphrase = sillyphrases[ rnd.rnd(1,#sillyphrases) ]}))
+         else
+            mm(fmt.f(_([["I haven't seen you in a while old friend! Looking for a bargain again? Always the best quality! {sillyphrase}"]]),
+               {sillyphrase = sillyphrases[ rnd.rnd(1,#sillyphrases) ]}))
+         end
       end
    end
 
