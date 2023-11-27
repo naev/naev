@@ -70,6 +70,7 @@ function hail()
    vn.clear()
    vn.scene()
    local plt = ccomm.newCharacter( vn, hyena )
+   vn.transition()
 
    vn.na(_([[Your viewscreen flashes to life. You're greeted by a nondescript pilot who doesn't seem to be affiliated with anyone you know.]]))
    plt(_([["Hello there! I represent a man by the name of Baron Sauterfeldt. You may have heard of him in your travels? No? Well, I suppose you can't have it all. My employer is a moderately influential man, you see, and... But no, I'll not bore you with the details. The bottom line is, Lord Sauterfeldt is looking for hired help, and you seem like the sort he needs, judging by your ship."]]))

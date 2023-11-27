@@ -87,7 +87,7 @@ function accept()
    end )
 
    joanne(_([["See, this is the situation," she continues. "My duties as a Sirian administration officer require me to pay visits to several military outposts throughout Sirius space. It's a long trek every time, but that just comes with the job. Now, the trouble is that Harja's assassins might have many opportunities to ambush me along the way. I've had combat training, of course, just like every other Serra soldier, but I'm afraid I have little actual fighting experience, and I'm not sure I could survive an attack unassisted."]]))
-   joanne(fmt.f(_([[[You, however, seem to have seen quite some action. If you were to escort me while I make my rounds, I would feel a lot more secure. I can reward you, of course. Let's see... Another {reward} seems a fair sum. What do you think, are you willing to do it?"]]),
+   joanne(fmt.f(_([[You, however, seem to have seen quite some action. If you were to escort me while I make my rounds, I would feel a lot more secure. I can reward you, of course. Let's see... Another {reward} seems a fair sum. What do you think, are you willing to do it?"]]),
       {reward=fmt.credits(reward)}))
    vn.menu{
       {_([[Accept the job.]]),"accept"},
@@ -99,6 +99,7 @@ function accept()
    vn.done()
 
    vn.label("accept")
+   vn.func( function () accepted = true end )
    joanne(_([["That's wonderful! Thank you so much. As I said, my job requires that I travel between Sirian military bases. You're going to need fuel to make the necessary jumps, of course, up to 7 jumps maximum. Now that you have agreed to be my personal escort, I can give you clearance to dock with those bases if you don't have it already so you can automatically refuel, but either way I won't be on station long, so you won't have time to disembark and do other things while you're there."]]))
    joanne(_([["Also, I think this goes without saying, but I need you to stick close to me so your ship must be fast enough. Also don't jump to any systems before I do, don't jump to the wrong systems, and don't land on any planets I don't land on. If we meet any aggressors along the way I will rely on you to help me fight them off. That's about it. I'll finish up a few things here, and then I'll head to my ship. I'll be in the air when you are."]]))
    vn.na(_([[Joanne leaves the bar. You will meet up with her in orbit.]]))

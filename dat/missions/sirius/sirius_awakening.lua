@@ -48,6 +48,7 @@ function accept ()
    vn.clear()
    vn.scene()
    local f = vn.newCharacter( _("Staring Fyrra"), { image=talker_image } )
+   vn.transition()
    vn.na(_([[The Fyrra echelon individual seems to be clearly staring at you. After you notice, your head starts to throb painfully. You hold on tight to your conscience and manage to not pass out.]]))
    vn.na(_([[Believing the individual to be somehow related to your headaches, you approach them.]]))
    f(_([[The stare at you even as you get close before yelping in astonishment.

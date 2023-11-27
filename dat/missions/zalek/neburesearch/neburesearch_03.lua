@@ -107,6 +107,7 @@ function enter_ship()
     mem.location = "ship"
     vn.clear()
     vn.scene()
+    vn.transition()
     vn.label( "next_turn" )
     vn.func( function ()
         mem.time_left = mem.time_left - 1

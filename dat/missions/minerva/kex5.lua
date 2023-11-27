@@ -485,6 +485,7 @@ function strangelove_board ()
    vn.clear()
    vn.scene()
    local dr = minerva.vn_strangelove()
+   vn.transition()
    -- TODO small scene
    vn.na(_("You cautiously board the ship, not sure what you are about to encounter. Trusting your system's sensors indicating a proper atmosphere in the ship, you board without your space suit. However, when you enter the ship, a strong, pungent odour makes you regret your decision."))
    vn.na(_("As you move to the command room, you notice small movements from the corner of your eyes. Upon closer inspection you make out all sorts of small moving objects, reminding you of cleaning droids on most ships, however, these move in a fairly clunky fashion, as if they had some of their moving apparatus damaged."))
