@@ -165,6 +165,7 @@ function board_convoy( _p )
    vn.scene()
    vn.sfx( der.sfx.board )
    vn.music( der.sfx.ambient )
+   vn.transition()
    if mem.state == 0 then
       vn.na(_([[You board the ship and first quickly download the system log information. It seems to have quite a lot of details of pirate convoy operations done in the vicinity.]]))
       vn.func( function ()

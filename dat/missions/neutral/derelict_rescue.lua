@@ -95,6 +95,7 @@ function land ()
 
    vn.clear()
    vn.scene()
+   vn.transition()
    vn.sfxMoney()
    vn.func( function ()
       player.pay( mem.reward_amount )

@@ -111,6 +111,7 @@ function land()
 
    vn.clear()
    vn.scene()
+   vn.transition()
 
    vn.na(fmt.f(_([[You deliver the parcels to the Empire Shipping station at the {pnt} spaceport. Afterwards, they make you do some paperwork to formalise your participation with the Empire. They tell you to keep an eye out for missions labeled {label}, in the mission computer.
 You aren't too sure of what to make of your encounter with the Empire. Only time will tell…]]),

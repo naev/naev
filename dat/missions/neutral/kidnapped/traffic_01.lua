@@ -69,6 +69,7 @@ function accept ()
    vn.clear()
    vn.scene()
    local w = vn.newCharacter( npc_name, {image=npc_image} )
+   vn.transition()
 
    w(_([["I must find my dear brother! Please help me. I think he is in danger! I don't have a ship and he is the only family I have left. Could you please help me?"]]) )
    vn.menu{

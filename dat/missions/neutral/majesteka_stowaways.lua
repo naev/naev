@@ -90,6 +90,7 @@ function land ()
 
    vn.clear()
    vn.scene()
+   vn.transition()
    vn.na(fmt.f(_([[The orphans peer out your window in awe as you land on {spb}.]]),
       {spb=spb}))
    -- Special case
