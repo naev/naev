@@ -285,7 +285,7 @@ void ovr_refresh (void)
       if (mrk->text==NULL)
          continue;
       /* Initialize the map overlay stuff. */
-      mo[items]  = &mrk->mo;
+      mo[items] = &mrk->mo;
       switch (mrk->type) {
          case OVR_MARKER_POINT:
             pos[items] = &mrk->pos;

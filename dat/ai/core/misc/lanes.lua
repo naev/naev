@@ -162,6 +162,7 @@ local function dijkstra_full( vertices, edges, source, target )
       local q = {
          v=k, -- Index of vertex
          d=math.huge, -- Gigantic initial distance
+         dl=math.huge, -- Distance along lanes
          p=nil, -- No previous node
       }
       table.insert( Q, q )
@@ -174,7 +175,7 @@ local function dijkstra_full( vertices, edges, source, target )
    for i=1,n do
       P[i] = {}
       for j=1,n do
-         P[i][j] = 3 -- penalty
+         P[i][j] = 3 -- penalty for not connected edges
       end
    end
    for k,e in ipairs(edges) do
@@ -184,6 +185,7 @@ local function dijkstra_full( vertices, edges, source, target )
 
    -- Initialize source
    Q[source].d = 0
+   Q[source].dl = 0
 
    -- Start iterating
    while #Q > 0 do
@@ -197,19 +199,22 @@ local function dijkstra_full( vertices, edges, source, target )
          -- Create the path by iterating backwards
          local S = {}
          local d = u.d
+         local dl = u.dl
          while u do
             table.insert( S, vertices[u.v] )
             u = u.p
          end
-         return S, d
+         return S, d, dl
       end
 
       -- Fully connected, so all are neighbours
       for k,v in ipairs(N) do
          local p = P[u.v][k]
-         local alt = u.d + p*vertices[u.v]:dist( vertices[v.v] )
+         local d = vertices[u.v]:dist( vertices[v.v] )
+         local alt = u.d + p*d
          if alt < v.d then
             v.d = alt
+            v.dl = u.dl + d -- Save distance along lanes
             v.p = u
          end
       end
@@ -222,7 +227,6 @@ local function dijkstra_full( vertices, edges, source, target )
    -- Return the entire structure if no target
    return Q
 end
-
 
 --[[
 -- Gets the closest point to a point p on a line segment a-b.
@@ -260,7 +264,6 @@ function lanes.clearCache( p )
    mem.__lanes_H = nil
 end
 
-
 -- Same as safelanes.get but does caching
 function lanes.get( f, standing, isplayer )
    -- We try to cache the lane graph per system
@@ -281,7 +284,6 @@ function lanes.get( f, standing, isplayer )
    return ncl.L[key]
 end
 
-
 --[[
 -- Gets distance and nearest point to safe lanes from a position
 --]]
@@ -295,7 +297,6 @@ end
 function lanes.getDistancePH( p, pos )
    return lanes.getDistance( getCachePH(p), pos )
 end
-
 
 --[[
 -- Gets squared distance and nearest point to safe lanes from a position
@@ -319,7 +320,6 @@ end
 function lanes.getDistance2PH( p, pos )
    return lanes.getDistance2( getCachePH(p), pos )
 end
-
 
 function lanes.getPoint( L )
    local lv, le = L.v, L.e
@@ -348,7 +348,6 @@ end
 function lanes.getPointP( p )
    return lanes.getPoint( getCacheP(p) )
 end
-
 
 --[[
 -- Tries to get a point outside of the lanes, around a point at a radius rad.
@@ -435,7 +434,6 @@ function lanes.getPointInterestP( p, pos )
    return lanes.getPointInterest( L, pos )
 end
 
-
 --[[
 -- Computes the route for the pilot to get to target.
 --]]
@@ -451,7 +449,7 @@ function lanes.getRoute( L, target, pos, threshold )
    -- Compute shortest path
    local sv = nearestVertex( lv, pos )
    local tv = nearestVertex( lv, target )
-   local S, d = dijkstra_full( lv, le, tv, sv )
+   local S, d, dl = dijkstra_full( lv, le, tv, sv )
    local n = #S
    if n==0 then
       return { target }
@@ -474,10 +472,11 @@ function lanes.getRoute( L, target, pos, threshold )
       if n > 1 then
          S[n] = closestPointLine( S[n-1], S[n], target )
       end
+      d = d + pos:dist( S[n], target ) -- Have to correct distance again
    end
 
-   -- No path or path is too much of a work around
-   if d+dtarget > threshold*pos:dist(target) then
+   -- Path is too much of a work around, or too little on lanes
+   if (d > threshold*pos:dist(target)) or (dl*threshold < d) then
       return { target }
    end
 
