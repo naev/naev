@@ -3419,7 +3419,7 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
    /* Build landable spob table. */
    ind = array_create_size( int, array_size(cur_system->spobs) );
    for (int i=0; i<array_size(cur_system->spobs); i++) {
-      Spob *pnt = cur_system->spobs[i];
+      const Spob *pnt = cur_system->spobs[i];
       if (spob_hasService( pnt, SPOB_SERVICE_INHABITED ) &&
             !areEnemies( lf, pnt->presence.faction ))
          array_push_back( &ind, i );
@@ -3433,7 +3433,7 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
           * ignore_rules is set, must also be non-hidden
           * (excepted if the pilot is guerilla) and have faction
           * presence matching the pilot's on the remote side. */
-         JumpPoint *jmp = &cur_system->jumps[i];
+         const JumpPoint *jmp = &cur_system->jumps[i];
          JumpPoint *target = jmp->returnJump;
          double limit, pres;
          const int *fact;
@@ -3473,8 +3473,21 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
       else if (array_size(cur_system->jumps) > 0) {
          for (int i=0; i<array_size(cur_system->jumps); i++) {
             JumpPoint *jp = &cur_system->jumps[i];
-            if (!jp_isFlag( jp->returnJump, JP_EXITONLY ))
+            if (jp_isFlag( jp->returnJump, JP_EXITONLY ))
+               continue;
+            /* Ignore hidden jumps for now. */
+            if (jp_isFlag( jp, JP_HIDDEN ) && !guerilla)
+               continue;
+            array_push_back(&validJumpPoints, jp->returnJump);
+         }
+         /* Now add hidden jumps as a last resort. */
+         if (array_size(validJumpPoints)<=0) {
+            for (int i=0; i<array_size(cur_system->jumps); i++) {
+               JumpPoint *jp = &cur_system->jumps[i];
+               if (jp_isFlag( jp->returnJump, JP_EXITONLY ))
+                  continue;
                array_push_back(&validJumpPoints, jp->returnJump);
+            }
          }
       }
       else {
