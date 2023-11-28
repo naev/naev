@@ -119,7 +119,7 @@ end
 
 -- gets the nearest jumppoint from a pilot
 local function get_nearest_jump(pilot)
-   local jpts = system.cur():jumps()
+   local jpts = system.cur():jumps(true)
    -- basically the distance that the map can have at
    local dist = 2*system.cur():radius()
    local index = 0

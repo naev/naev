@@ -95,7 +95,7 @@ end
 
 -- get nearest jumppoint
 local function get_nearest_jump(pil)
-   local jpts = system.cur():jumps()
+   local jpts = system.cur():jumps(true)
    -- basically the distance that the map can have at
    local dist = 2*system.cur():radius()
    local index = 0
@@ -209,7 +209,7 @@ function sp_baddies()
    for i=1,#badguys do
       bghook[i] = hook.pilot(badguys[i], "exploded", "dead_drone",i)
    end
-   local jps = system.cur():jumps()
+   local jps = system.cur():jumps(true)
    t_drone:taskClear()
    mem.t_sys[3] = jps[1]:dest()
    t_drone:hyperspace(jps[1]:dest())
@@ -318,7 +318,7 @@ function drone_attacked()
    t_drone:setHostile(true)
    t_drone:setHilight(true)
    t_drone:setVisplayer(true)
-   local jps = system.cur():jumps()
+   local jps = system.cur():jumps(true)
    t_drone:taskClear()
    mem.t_sys[3] = jps[1]:dest()
    t_drone:hyperspace(jps[1]:dest())
@@ -398,7 +398,7 @@ function dead_drone ()
       badguys[2]:control()
       local jpt = get_nearest_jump(badguys[1])
       local jpt2 = jpt
-      local jpts = system.cur():jumps()
+      local jpts = system.cur():jumps(true)
       for i,j_pt in ipairs(jpts) do
          if j_pt ~= jpt2 then
             jpt2 = j_pt
