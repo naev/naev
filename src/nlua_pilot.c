@@ -716,13 +716,9 @@ static int pilotL_add( lua_State *L )
          vec2_cset( &vp,
                spob->pos.x + r * cos(a),
                spob->pos.y + r * sin(a) );
-         a = RNGF() * 2.*M_PI;
-         vectnull( &vv );
       }
-      else {
-         a = RNGF() * 2.*M_PI;
-         vectnull( &vv );
-      }
+      a = RNGF() * 2.*M_PI;
+      vectnull( &vv );
    }
    else
       NLUA_INVALID_PARAMETER(L);
