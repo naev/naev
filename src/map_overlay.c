@@ -86,6 +86,10 @@ static int autonav_pos = 0;
 static vec2 autonav_pos_v;
 static MapOverlayPos autonav_pos_mo;
 
+/* For optimizing overlay layout. */
+static MapOverlayPos **ovr_refresh_mo = NULL;
+static const vec2 **ovr_refresh_pos = NULL;
+
 /*
  * Prototypes
  */
@@ -217,6 +221,12 @@ void ovr_refresh (void)
    if (!ovr_isOpen())
       return;
 
+   /* Clean up leftovers. */
+   if (ovr_refresh_mo)
+     free( ovr_refresh_mo );
+   if (ovr_refresh_pos)
+     free( ovr_refresh_pos );
+
    /* Update bounds if necessary. */
    ovr_boundsUpdate();
 
@@ -310,9 +320,9 @@ void ovr_refresh (void)
    /* Compute text overlap and try to minimize it. */
    ovr_optimizeLayout( items, pos, mo );
 
-   /* Free the moos. */
-   free( mo );
-   free( pos );
+   /* Sove the moos. */
+   ovr_refresh_pos = pos;
+   ovr_refresh_mo = mo;
 }
 
 /**
@@ -631,6 +641,10 @@ void ovr_setOpen( int open )
       input_mouseHide();
       array_free( ovr_render_safelanes );
       ovr_render_safelanes = NULL;
+      free( ovr_refresh_pos );
+      ovr_refresh_pos = NULL;
+      free( ovr_refresh_mo );
+      ovr_refresh_mo = NULL;
    }
 }
 
