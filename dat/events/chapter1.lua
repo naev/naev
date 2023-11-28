@@ -208,7 +208,7 @@ local function getFactionStuff( fct )
          end
       end
       tester_broadcast = _("For science!")
-      boss_broadcast = _("Comencing procedure!")
+      boss_broadcast = _("Commencing procedure!")
    elseif fct == "Sirius" then
       bossship = "Sirius Divinity"
       testership = "Sirius Preacher"

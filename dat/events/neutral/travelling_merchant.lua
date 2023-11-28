@@ -483,7 +483,7 @@ You have {amount}. Pay {cost} for replacing {replacement} with {upgrade}?]]),
          end
       end )
       mm(_([["This will take a second."
-They grab a toolbox and rush over to your boarded ship. You decide not to follow as somethings are best left not known. At least they know what they are doing right?]]))
+They grab a toolbox and rush over to your boarded ship. You decide not to follow as some things are best left not known. At least they know what they are doing right?]]))
       mm(_([[Eventually, they come back covered in what seems to be fish parts and slime.
 "That was fun! However, when I put it back together, I found some extra screws. Oh well, it does seem to hold together fairly well. Hope you enjoy the upgrades! The fish smell will go away in a few periods hopefully."]]))
       vn.func( function ()
