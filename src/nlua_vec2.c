@@ -654,23 +654,16 @@ static int vectorL_setP( lua_State *L )
  */
 static int vectorL_distance( lua_State *L )
 {
-   const vec2 *v1, *v2;
    double dist;
-
-   /* Get self. */
-   v1 = luaL_checkvector(L,1);
+   const vec2 *v1 = luaL_checkvector(L,1);
 
    /* Get rest of parameters. */
-   if (!lua_isnoneornil(L,2))
-      v2 = luaL_checkvector(L,2);
-   else
-      v2 = NULL;
-
-   /* Get distance. */
-   if (v2 == NULL)
-      dist = vec2_odist(v1);
-   else
+   if (!lua_isnoneornil(L,2)) {
+      const vec2 *v2 = luaL_checkvector(L,2);
       dist = vec2_dist(v1, v2);
+   }
+   else
+      dist = vec2_odist(v1);
 
    /* Return the distance. */
    lua_pushnumber(L, dist);
@@ -690,23 +683,16 @@ static int vectorL_distance( lua_State *L )
  */
 static int vectorL_distance2( lua_State *L )
 {
-   const vec2 *v1, *v2;
    double dist2;
-
-   /* Get self. */
-   v1 = luaL_checkvector(L,1);
+   const vec2 *v1 = luaL_checkvector(L,1);
 
    /* Get rest of parameters. */
-   if (!lua_isnoneornil(L,2))
-      v2 = luaL_checkvector(L,2);
-   else
-      v2 = NULL;
-
-   /* Get distance. */
-   if (v2 == NULL)
-      dist2 = vec2_odist2(v1);
-   else
+   if (!lua_isnoneornil(L,2)) {
+      const vec2 *v2 = luaL_checkvector(L,2);
       dist2 = vec2_dist2(v1, v2);
+   }
+   else
+      dist2 = vec2_odist2(v1);
 
    /* Return the distance. */
    lua_pushnumber(L, dist2);
