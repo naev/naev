@@ -3480,8 +3480,8 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
                continue;
             array_push_back(&validJumpPoints, jp->returnJump);
          }
-         /* Now add hidden jumps as a last resort. */
-         if (array_size(validJumpPoints)<=0) {
+         /* Now add hidden jumps as a last resort - only for non guerillas as they should be added otherwise. */
+         if (!guerilla && array_size(validJumpPoints)<=0) {
             for (int i=0; i<array_size(cur_system->jumps); i++) {
                JumpPoint *jp = &cur_system->jumps[i];
                if (jp_isFlag( jp->returnJump, JP_EXITONLY ))
