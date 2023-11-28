@@ -761,6 +761,10 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
    Faction *faction;
    double old, delta;
 
+   /* Ignore it if player is dead. */
+   if (player.p==NULL)
+      return;
+
    faction = &faction_stack[f];
 
    /* Make sure it's not static. */
@@ -898,6 +902,10 @@ void faction_modPlayerRaw( int f, double mod )
    Faction *faction;
    HookParam hparam[3];
 
+   /* Ignore it if player is dead. */
+   if (player.p==NULL)
+      return;
+
    if (!faction_isFaction(f)) {
       WARN(_("Faction id '%d' is invalid."), f);
       return;
@@ -931,6 +939,10 @@ void faction_setPlayer( int f, double value )
    Faction *faction;
    HookParam hparam[3];
    double mod;
+
+   /* Ignore it if player is dead. */
+   if (player.p==NULL)
+      return;
 
    if (!faction_isFaction(f)) {
       WARN(_("Faction id '%d' is invalid."), f);
@@ -1064,6 +1076,10 @@ const char *faction_getStandingTextAtValue( int f, double value )
 {
    Faction *faction;
 
+   /* Ignore it if player is dead. */
+   if (player.p==NULL)
+      return _("???");
+
    /* Escorts always have the same standing. */
    if (f == FACTION_PLAYER)
       return _("Escort");
@@ -1112,6 +1128,10 @@ const char *faction_getStandingBroad( int f, int bribed, int override )
    Faction *faction;
    const char *r;
 
+   /* Ignore it if player is dead. */
+   if (player.p==NULL)
+      return _("???");
+
    /* Escorts always have the same standing. */
    if (f == FACTION_PLAYER)
       return _("Escort");
@@ -1157,6 +1177,10 @@ double faction_reputationMax( int f )
 {
    Faction *faction;
    double r;
+
+   /* Ignore it if player is dead. */
+   if (player.p==NULL)
+      return 0.;
 
    /* Escorts always have the same standing. */
    if (f == FACTION_PLAYER)
