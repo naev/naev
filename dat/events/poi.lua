@@ -66,7 +66,7 @@ function approach_npc( npcid )
 
    local msg_list = {
       _([["The other day I was arguing with a pilot about weird sensor readings in the {sys} system. They claim that there has to be something there, but I call bullocks!"]]),
-      _([["Can you belive the audacity of some pilots? One was claiming they had found some sort of anomaly in the {sys} system! Everyone knows that there is nothing interesting left to find in space anymore! It's all explored!"]]),
+      _([["Can you believe the audacity of some pilots? One was claiming they had found some sort of anomaly in the {sys} system! Everyone knows that there is nothing interesting left to find in space anymore! It's all explored!"]]),
       _([["The other day I was flying around the {sys} system and my system readings spiked! I wasn't sure if it was a pirate or not, so I hauled my ass out of there, but I still wonder what that could have been."]]),
       _([["There's something funky about the {sys} system. I got some really weird sensor readings there that I still don't know what to make of."]]),
    }
