@@ -25,9 +25,6 @@
 
 static const double OVERLAY_FADEIN = 1.0/3.0; /**< How long it takes to fade in newly discovered things. */
 
-static int autonav_pos = 0;
-static double autonav_pos_x = 0.;
-static double autonav_pos_y = 0.;
 static IntList ovr_qtquery; /**< For querying collisions. */
 
 /**
@@ -83,6 +80,11 @@ typedef struct OverlayBounds_s {
    double y;
 } OverlayBounds_t;
 static OverlayBounds_t ovr_bounds;
+
+/* For autonav. */
+static int autonav_pos = 0;
+static vec2 autonav_pos_v;
+static MapOverlayPos autonav_pos_mo;
 
 /*
  * Prototypes
@@ -220,11 +222,20 @@ void ovr_refresh (void)
 
    /* Calculate max size. */
    items = 0;
-   n = array_size(cur_system->jumps) + array_size(cur_system->spobs) + array_size(ovr_markers);
+   n = array_size(cur_system->jumps) + array_size(cur_system->spobs) + array_size(ovr_markers) + autonav_pos;
    pos = calloc( n, sizeof(vec2*) );
    mo  = calloc( n, sizeof(MapOverlayPos*) );
    max_x = 0.;
    max_y = 0.;
+   if (autonav_pos) {
+      max_x = MAX( max_x, ABS(autonav_pos_v.x) );
+      max_y = MAX( max_y, ABS(autonav_pos_v.y) );
+      pos[items] = &autonav_pos_v;
+      mo[items]  = &autonav_pos_mo;
+      mo[items]->radius = 9.; /* Gets set properly below. */
+      mo[items]->text_width = gl_printWidthRaw( &gl_smallFont, _("TARGET") );
+      items++;
+   }
    for (int i=0; i<array_size(cur_system->jumps); i++) {
       JumpPoint *jp = &cur_system->jumps[i];
       max_x = MAX( max_x, ABS(jp->pos.x) );
@@ -285,7 +296,9 @@ void ovr_refresh (void)
    ovr_res = MAX( ovr_res, 25. );
    for (int i=0; i<items; i++) {
       double rm;
-      if (i<jumpitems)
+      if (autonav_pos && (i==0))
+         rm = 9.;
+      else if (i<jumpitems)
          rm = 5.;
       else if (i<spobitems)
          rm = 7.5;
@@ -754,10 +767,10 @@ void ovr_render( double dt )
    if (autonav_pos) {
       glColour col = cRadar_hilight;
       col.a = 0.6;
-      map_overlayToScreenPos( &x, &y, autonav_pos_x, autonav_pos_y );
+      map_overlayToScreenPos( &x, &y, autonav_pos_v.x, autonav_pos_v.y );
       glUseProgram( shaders.selectposition.program );
       gl_renderShader( x, y, 9., 9., 0., &shaders.selectposition, &col, 1 );
-      gl_printMarkerRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, _("TARGET") );
+      gl_printMarkerRaw( &gl_smallFont, x+autonav_pos_mo.text_offx, y+autonav_pos_mo.text_offy, &cRadar_hilight, _("TARGET") );
    }
 
    /* Render spobs. */
@@ -1140,11 +1153,18 @@ void ovr_mrkRm( unsigned int id )
 void ovr_autonavPos( double x, double y )
 {
    autonav_pos = 1;
-   autonav_pos_x = x;
-   autonav_pos_y = y;
+   vec2_cset( &autonav_pos_v, x, y );
+
+   /* Refresh if necessary. */
+   if (ovr_open)
+      ovr_refresh();
 }
 
 void ovr_autonavClear (void)
 {
    autonav_pos = 0;
+
+   /* Refresh if necessary. */
+   if (ovr_open)
+      ovr_refresh();
 }
