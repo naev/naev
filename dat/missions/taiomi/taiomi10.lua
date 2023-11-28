@@ -196,6 +196,7 @@ function enter ()
    hypergate = pilot.add( "One-Wing Goddard", "Independent", bpos, nil, {naked=true, ai="dummy"} )
    hypergate:disable()
    hypergate:setHilight(true)
+   hypergate:setNoBoard(true)
    hook.pilot( hypergate, "death", "hypergate_dead" )
 
    local sdrone = ship.get("Drone")
