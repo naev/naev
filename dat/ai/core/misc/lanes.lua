@@ -161,7 +161,8 @@ local function dijkstra_full( vertices, edges, source, target )
    for k,v in ipairs(vertices) do
       local q = {
          v=k, -- Index of vertex
-         d=math.huge, -- Gigantic initial distance
+         c=math.huge, -- Gigantic huge cost
+         d=math.huge, -- Total distance travelled
          dl=math.huge, -- Distance along lanes
          p=nil, -- No previous node
       }
@@ -184,13 +185,14 @@ local function dijkstra_full( vertices, edges, source, target )
    end
 
    -- Initialize source
+   Q[source].c = 0
    Q[source].d = 0
    Q[source].dl = 0
 
    -- Start iterating
    while #Q > 0 do
-      -- Vertex with minimum distance
-      table.sort( Q, function(a, b) return a.d < b.d end )
+      -- Vertex with minimum cost
+      table.sort( Q, function(a, b) return a.c < b.c end )
       local u = Q[1]
       table.remove( Q, 1 )
 
@@ -211,10 +213,11 @@ local function dijkstra_full( vertices, edges, source, target )
       for k,v in ipairs(N) do
          local p = P[u.v][k]
          local d = vertices[u.v]:dist( vertices[v.v] )
-         local alt = u.d + p*d
-         if alt < v.d then
-            v.d = alt
-            v.dl = u.dl + d -- Save distance along lanes
+         local alt = u.c + p*d -- cost
+         if alt < v.c then
+            v.c = alt
+            v.d = u.d + d
+            v.dl = u.dl + (((p < 3) and d) or 0) -- Save distance along lanes
             v.p = u
          end
       end
@@ -449,7 +452,7 @@ function lanes.getRoute( L, target, pos, threshold )
    -- Compute shortest path
    local sv = nearestVertex( lv, pos )
    local tv = nearestVertex( lv, target )
-   local S, d, dl = dijkstra_full( lv, le, tv, sv )
+   local S, _d, dl = dijkstra_full( lv, le, tv, sv )
    local n = #S
    if n==0 then
       return { target }
@@ -459,9 +462,10 @@ function lanes.getRoute( L, target, pos, threshold )
    -- line segment
    if n > 1 then
       S[1] = closestPointLine( S[1], S[2], pos )
+      -- We would technically have to correct the distance here
    end
    -- We have to correct distance to consider movement to the first point
-   d = d + pos:dist( S[1] )
+   --d = d + pos:dist( S[1] )
 
    -- Add the final point if necessary (it is only approximated due to djistra)
    local dtarget = S[n]:dist( target )
@@ -471,12 +475,26 @@ function lanes.getRoute( L, target, pos, threshold )
       -- We only do this if it's not on a lane
       if n > 1 then
          S[n] = closestPointLine( S[n-1], S[n], target )
+         -- We would technically have to correct the distance here
       end
-      d = d + pos:dist( S[n], target ) -- Have to correct distance again
+      --d = d + pos:dist( S[n], target ) -- Have to correct distance again
    end
 
-   -- Path is too much of a work around, or too little on lanes
-   if (d > threshold*pos:dist(target)) or (dl*threshold < d) then
+   -- Recompute correct complete distance, probably faster than correcting in most cases
+   local d = 0
+   local p = pos
+   for k,v in ipairs(S) do
+      d = d + p:dist(v)
+      p = v
+   end
+
+   -- More distance off lanes than along
+   if d > dl*threshold then
+      return { target }
+   end
+
+   -- Path is too much of a work around
+   if d > threshold*pos:dist(target) then
       return { target }
    end
 
