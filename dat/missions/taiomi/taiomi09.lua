@@ -190,7 +190,7 @@ function land_escorts ()
    vn.clear()
    vn.scene()
    vn.transition()
-   vn.na(fmt.f(_([[You land and are quickly greeted by smugglers. They briefly introduce themselves, and say they'll be delivering the promised cargo to the specified location at {sys} before leaving on shuttles. After the formality head back to their ships to await your departure.]]),
+   vn.na(fmt.f(_([[You land and are quickly greeted by smugglers. They briefly introduce themselves, and say they'll be delivering the promised cargo to the specified location at {sys} before leaving on shuttles. After the formality, they head back to their ships to await your departure.]]),
       {sys=handoffsys}))
    vn.run()
 
