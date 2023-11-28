@@ -681,6 +681,10 @@ static int shipyard_mouseSlots( unsigned int wid, const SDL_Event *event,
    ShipOutfitSlot *ps;
    Ship *ship = shipyard_selected;
 
+   /* Need a selected ship. */
+   if (ship==NULL)
+      return 0;
+
    /* Only care about motion. */
    if (event->type != SDL_MOUSEMOTION)
       return 0;
