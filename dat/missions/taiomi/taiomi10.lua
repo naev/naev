@@ -661,7 +661,7 @@ Erk…"]]))
 
    vn.label("cont01")
    d(_([["I… I'm having trouble remembering anything…"]]))
-   vn.na(fmt.f(_([[{shipai} plays a partially incomplete recording of the battle in the {sys} system and subsequent potentially activation of the hypergate. Scavenger seems to be digesting the information.]]),
+   vn.na(fmt.f(_([[{shipai} plays a partially incomplete recording of the battle in the {sys} system and subsequent potential activation of the hypergate. Scavenger seems to be digesting the information.]]),
       {shipai=tut.ainame(), sys=basesys}))
    d(_([["Let me try to do a probabilistic reconstruction of the events. I believe the hypergate malfunctioned, no wait, due to the attack, I was not able to fully install the activation protocols on your ship."]]))
    d(_([["The hypergate failed to activate due to subspace instabilities and sustained damage. I believe I salvaged the situation by staying behind and activating it myself."]]))
