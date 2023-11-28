@@ -55,6 +55,7 @@
       * Enemies in patrol missions should not run away
       * Changed the faction standing caps to allow the player to get all ships when maxed out. Will be decreased in the future as missions are added
       * Slot icons to make it more clear what special slots a ship has
+      * System markers and autonav TARGET marker will try to not overlap with jumps and spob names
    * New Content
       * New mechanic for House Sirius called flow to unlock psychic powers
          * Gives passive bonuses to Sirius ships
