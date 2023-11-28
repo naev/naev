@@ -37,6 +37,11 @@ end
 function create ()
    local enter_delay = 5
 
+   -- Don't run if doing cinematics, or if system isn't inclusive. */
+   if player.cinematicsCheck() or not naev.claimTest(system.cur(),true) then
+      evt.finish(false)
+   end
+
    hook.land( "evt_done" )
 
    -- TODO we should probably allow looking at any faction not just empire
