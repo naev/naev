@@ -1172,6 +1172,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
 
    /* Draw name. */
    if (overlay && pilot_isFlag(p, PILOT_HILIGHT)) {
+      /* TODO try to minimize overlap here. */
       gl_printMarkerRaw( &gl_smallFont, x+scale+5., y-gl_smallFont.h/2., col, p->name );
       if (scanning) {
          glUseProgram( shaders.pilotscanning.program );
