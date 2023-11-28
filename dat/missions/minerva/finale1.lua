@@ -133,8 +133,8 @@ function enter ()
       end
 
       -- Create blockades on all jump points except the one we want
-      for k,j in ipairs(scur:jumps()) do
-         if not j:hidden() and not j:exitonly() and j:dest() ~= badsys then
+      for k,j in ipairs(scur:jumps(true)) do
+         if not j:hidden() and j:dest() ~= badsys then
             add_blockade( j )
          elseif j:dest() ~= badsys then
             -- Tiny blockade on the target system, player should be able to plow through
