@@ -592,7 +592,7 @@ function enter ()
       b:setHilight(true)
       hook.pilot( b, "attacked", "ecc_feral_boss_attacked" )
       hook.pilot( b, "death", "ecc_feral_boss_dead" )
-      b:setNoboard(true)
+      b:setNoBoard(true)
       local num = 4
       for i=1,num do
          local fpos = pos + vec2.newP( 50, 2*math.pi*i/num )

@@ -195,7 +195,7 @@ function enter()
          seiryuu:setHilight(true)
          hook.pilot(seiryuu, "board", "seiryuuBoard")
       else
-         seiryuu:setNoboard(true)
+         seiryuu:setNoBoard(true)
       end
    elseif system.cur() == joreksys2 and mem.stage == 3 then
       pilot.clear()

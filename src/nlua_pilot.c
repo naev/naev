@@ -185,7 +185,7 @@ static int pilotL_addHealth( lua_State *L );
 static int pilotL_setEnergy( lua_State *L );
 static int pilotL_addEnergy( lua_State *L );
 static int pilotL_fillAmmo( lua_State *L );
-static int pilotL_setNoboard( lua_State *L );
+static int pilotL_setNoBoard( lua_State *L );
 static int pilotL_setNoDisable( lua_State *L );
 static int pilotL_setSpeedLimit( lua_State *L);
 static int pilotL_getHealth( lua_State *L );
@@ -341,7 +341,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "setEnergy", pilotL_setEnergy },
    { "addEnergy", pilotL_addEnergy },
    { "fillAmmo", pilotL_fillAmmo },
-   { "setNoboard", pilotL_setNoboard },
+   { "setNoBoard", pilotL_setNoBoard },
    { "setNoDisable", pilotL_setNoDisable },
    { "setSpeedLimit", pilotL_setSpeedLimit },
    { "setPos", pilotL_setPosition },
@@ -4454,14 +4454,14 @@ static int pilotL_fillAmmo( lua_State *L )
  *
  * No parameter is equivalent to true.
  *
- * @usage p:setNoboard( true ) -- Pilot can not be boarded by anyone
+ * @usage p:setNoBoard( true ) -- Pilot can not be boarded by anyone
  *
  *    @luatparam Pilot p Pilot to set disable boarding.
  *    @luatparam[opt=true] number noboard If true it disallows boarding of the pilot, otherwise
  *              it allows boarding which is the default.
- * @luafunc setNoboard
+ * @luafunc setNoBoard
  */
-static int pilotL_setNoboard( lua_State *L )
+static int pilotL_setNoBoard( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
    int disable;
