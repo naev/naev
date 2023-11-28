@@ -16,6 +16,12 @@ function poi.test_sys( sys )
       return
    end
 
+   -- Must not have too much volatility
+   local _nebu, vola = sys:nebula()
+   if vola > 25 then
+      return false
+   end
+
    -- Want no inhabited spobs
    for k,p in ipairs(sys:spobs()) do
       local s = p:services()
