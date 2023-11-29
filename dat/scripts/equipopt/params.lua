@@ -1,7 +1,7 @@
 local params = {}
 
 function params.default( overwrite )
-   return tmerge( {
+   return tmerge_r( {
       -- Global stuff
       constant    = 10, -- Constant value makes them prefer outfits rather than not
       rnd         = 0.2, -- amount of randomness to use for goodness function
@@ -22,6 +22,7 @@ function params.default( overwrite )
       type_range  = {
          ["Launcher"] = { max=2 }, -- typebroad
          ["Point Defense"] = { max=2 }, -- typename
+         ["Manoeuvrability Modifier"] = { max=1 }, -- can cause ships to poorly estimate their energy regen
       },
       -- Outfit names that the pilot should prefer (multiplies weights)
       prefer = {
@@ -58,7 +59,7 @@ function params.default( overwrite )
 end
 
 function params.civilian( overwrite )
-   return tmerge( params.default{
+   return tmerge_r( params.default{
       weap        = 0.5, -- low weapons
       t_absorb    = 0,
       t_speed     = 300,
@@ -68,7 +69,7 @@ function params.civilian( overwrite )
 end
 
 function params.merchant( overwrite )
-   return tmerge( params.default{
+   return tmerge_r( params.default{
       weap        = 0.5, -- low weapons
       t_absorb    = 0,
       t_speed     = 300,
@@ -86,7 +87,7 @@ function params.merchant( overwrite )
 end
 
 function params.armoured_transport( overwrite )
-   return tmerge( params.default{
+   return tmerge_r( params.default{
       t_absorb    = 0,
       t_speed     = 300,
       t_track     = 4e3,
@@ -97,7 +98,7 @@ function params.armoured_transport( overwrite )
 end
 
 function params.scout( overwrite )
-   return tmerge( params.default{
+   return tmerge_r( params.default{
       weap        = 0.5, -- low weapons
       ew          = 2,
       t_absorb    = 0,
@@ -108,7 +109,7 @@ function params.scout( overwrite )
 end
 
 function params.interceptor( overwrite )
-   return tmerge( params.default{
+   return tmerge_r( params.default{
       eps_weight  = 0.2,
       t_absorb    = 0,
       t_speed     = 400,
@@ -119,7 +120,7 @@ function params.interceptor( overwrite )
 end
 
 function params.fighter( overwrite )
-   return tmerge( params.default{
+   return tmerge_r( params.default{
       eps_weight  = 0.3,
       t_absorb    = 0.10,
       t_speed     = 300,
@@ -130,7 +131,7 @@ function params.fighter( overwrite )
 end
 
 function params.light_bomber( overwrite )
-   return tmerge( params.default{
+   return tmerge_r( params.default{
       t_absorb    = 0.30,
       t_speed     = 300,
       t_track     = 10e3,
@@ -144,7 +145,7 @@ function params.light_bomber( overwrite )
 end
 
 function params.medium_bomber( overwrite )
-   return tmerge( params.default{
+   return tmerge_r( params.default{
       t_absorb    = 0.50,
       t_speed     = 200,
       t_track     = 20e3,
@@ -158,7 +159,7 @@ function params.medium_bomber( overwrite )
 end
 
 function params.heavy_bomber( overwrite )
-   return tmerge( params.default{
+   return tmerge_r( params.default{
       t_absorb    = 0.80,
       t_speed     = 50,
       t_track     = 30e3,
@@ -172,7 +173,7 @@ function params.heavy_bomber( overwrite )
 end
 
 function params.corvette( overwrite )
-   return tmerge( params.default{
+   return tmerge_r( params.default{
       move        = 1.5,
       t_absorb    = 0.20,
       t_speed     = 250,
@@ -185,7 +186,7 @@ function params.corvette( overwrite )
 end
 
 function params.destroyer( overwrite )
-   return tmerge( params.default{
+   return tmerge_r( params.default{
       t_absorb    = 0.30,
       t_speed     = 150,
       t_track     = 15e3,
@@ -195,7 +196,7 @@ function params.destroyer( overwrite )
 end
 
 function params.cruiser( overwrite )
-   return tmerge( params.default{
+   return tmerge_r( params.default{
       t_absorb    = 0.50,
       t_speed     = 130,
       t_track     = 20e3,
@@ -205,7 +206,7 @@ function params.cruiser( overwrite )
 end
 
 function params.battleship( overwrite )
-   return tmerge( params.default{
+   return tmerge_r( params.default{
       t_absorb    = 0.80,
       t_speed     = 70,
       t_track     = 25e3,
@@ -217,7 +218,7 @@ function params.battleship( overwrite )
 end
 
 function params.carrier( overwrite )
-   return tmerge( params.default{
+   return tmerge_r( params.default{
       t_absorb    = 0.50,
       t_speed     = 70,
       t_track     = 25e3,
