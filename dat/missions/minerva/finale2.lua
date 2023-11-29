@@ -214,7 +214,7 @@ end
 local landack, timetodie
 local askwhy, left01, left02, left03, triedclearance, inperson
 local function talk_boss( fromspob )
-   if timetodie then
+   if timetodie or (boss and boss:exists() and boss:hostile()) then
       player.msg(_("Communication channel is closed."))
       return
    elseif landack then
