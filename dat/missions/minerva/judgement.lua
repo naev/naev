@@ -276,7 +276,7 @@ Maikki gives an impeccable formal bow.]]))
    vn.newCharacter( maikki )
    vn.transition( "slideleft" )
    maikki(_([[Maikki stands up to begin her exposition.
-"You honour."]]))
+"Your honour."]]))
    maikki(_([["Today, we gather here to determine the fate of a celestial jewel, a bastion of hope, and a symbol of untethered possibility—the sovereignty of Minerva Station. I stand before you as an advocate for the voice of freedom, the embodiment of autonomy, and the guardian of neutrality."]]))
    maikki(_([["We find ourselves in the midst of a clash between the titans of power and influence: the sly House Za'lek and the aggressive House Dvaered. They seek dominion over this station, driven by their thirst for control and their insatiable desire for conquest."]]))
    maikki(_([["Yet, amidst this power struggle, we must not lose sight of the value inherent in independence. Minerva Station, free from the shackles of allegiance, stands as a sanctuary away from the clutches of power-hungry houses. In its independence, Minerva Station supports trade and diplomacy throughout the Empire."]]))
