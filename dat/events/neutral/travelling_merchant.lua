@@ -443,12 +443,14 @@ They get uncomfortably close
             end
          end
       end )
-      mm(fmt.f(_([["I would be able to provide my special services for, let's say, {cost}, how does that sound?"
+      mm( function ()
+         return fmt.f(_([["I would be able to provide my special services for, let's say, {cost}, how does that sound?"
 
 {upgrade_desc}
 
 You have {amount}. Pay {cost} for {upgrade}?]]),
-         {amount=poi.data_str(poi.data_get()), cost=poi.data_str(upgrade_cost), upgrade=upgrade, upgrade_desc=upgrade:summary()} ))
+            {amount=poi.data_str(poi.data_get()), cost=poi.data_str(upgrade_cost), upgrade=upgrade, upgrade_desc=upgrade:summary()} )
+      end )
       vn.menu{
          { _("Pay"), s.."_yes" },
          { _("Back"), s.."_no" },
