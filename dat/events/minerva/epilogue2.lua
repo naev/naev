@@ -63,7 +63,7 @@ She seems a tad tipsy.]]),
 
    vn.label("01_cont")
    maikki(_([["I have to thank you again, it's been great catching up with my father. We've been sharing anecdotes about our adventures."]]))
-   kex(_([["I was quite adventurous in my day, but damn, pirate life is something else. Maikki has pulled of some serious shit!"]]))
+   kex(_([["I was quite adventurous in my day, but damn, pirate life is something else. Maikki has pulled out of some serious shit!"]]))
    maikki(_([["Oh stop, I've never piloted a ship using a modified hacked mace rocket engine with no life support in a collapsing nebula pocket with a bunch of cannibal raiders trying to break through the hull with power drills!"]]))
    kex(_([["Ah, I can never forget that one! I never thought I'd make it alive!"]]))
    vn.menu{

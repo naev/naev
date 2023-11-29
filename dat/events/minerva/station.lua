@@ -520,7 +520,7 @@ function approach_blackjack_nocc()
    vn.scene()
    local dealer = vn.newCharacter( _("Dealer"), {image=blackjack_image} )
    vn.transition()
-   vn.na(_([[You approach the blackjack table that seesm to have a new dealer.]]))
+   vn.na(_([[You approach the blackjack table that seems to have a new dealer.]]))
    vn.label("menu")
    vn.menu( {
       { _("Play"), "blackjack" },
