@@ -663,6 +663,19 @@ control_funcs.inspect_moveto = function ()
    local p = ai.pilot()
    local target = ai.taskdata()
    local lr = mem.enemyclose
+   local ls = mem._scan_last -- Should only be set for scanning pilots
+   if ls then
+      if not ls:exists() then
+         mem._scan_last = nil
+      else
+         if scans.check_visible( ls ) then
+            mem._scan_last = nil
+            ai.poptask()
+            scans.push( ls )
+            return true
+         end
+      end
+   end
    if mem.natural and target and lr and lanes.getDistance2P( p, target ) > lr*lr then
       ai.poptask()
       return false
