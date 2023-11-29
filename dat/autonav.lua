@@ -595,6 +595,11 @@ function autonav_plt_follow ()
 
          if follow_jump then
             local pp = player.pilot()
+            if not jmp:known() or jmp:exitonly() then
+               player.msg("#r"..fmt.f(_("Autonav: following target {plt} has been lost."),{plt=get_pilot_name(plt)}).."#0")
+               ai.accel(0)
+               return autonav_end()
+            end
             pp:navJumpSet( jmp )
             autonav_system()
          else
