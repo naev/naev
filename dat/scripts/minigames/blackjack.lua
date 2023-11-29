@@ -55,7 +55,10 @@ local function _chatter( chat_type )
    local text
    bj.chatter_color = minerva.chicken.colour
 
-   if player.misnDone("Kex's Freedom 5") then
+   if player.misnDone("Minerva Pirates 6") then
+      bj.chatter = nil -- TODO more dealer messages?
+      return
+   elseif player.misnDone("Kex's Freedom 5") then
       bj.chatter = _("Cyborg Chicken looks emotionless.")
       return
    end
