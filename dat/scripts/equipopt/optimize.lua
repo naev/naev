@@ -407,9 +407,9 @@ function optimize.optimize( p, cores, outfit_list, params )
 
       -- We correct ship stats here and convert them to "relative improvements"
       -- Movement
-      oo.accel  = os.accel_mod * (os.accel + st.accel)  - st.accel
-      oo.speed  = os.speed_mod * (os.speed  + st.speed) - st.speed
-      oo.turn   = os.turn_mod  * (os.turn   + st.turn)  - st.turn
+      oo.accel  = os.accel_mod * (os.accel + st.accel) - st.accel
+      oo.speed  = os.speed_mod * (os.speed + st.speed) - st.speed
+      oo.turn   = os.turn_mod  * (os.turn  + st.turn)  - st.turn
       -- Health
       oo.armour = os.armour_mod * (os.armour + st.armour) - st.armour
       oo.shield = os.shield_mod * (os.shield + st.shield) - st.shield
@@ -759,7 +759,7 @@ function optimize.optimize( p, cores, outfit_list, params )
       -- Due to the approximation, sometimes they end up with not enough
       -- energy, we'll try again with larger energy constraints
       local stn = p:stats()
-      if stn.energy_regen < energygoal then
+      if stn.energy_regen < energygoal and try < 5 then
          p:outfitRm( "all" )
          emod = emod * 1.5
          --print(string.format("Pilot %s: optimization attempt %d of %d: emod=%.3f", p:name(), try, 3, emod ))
