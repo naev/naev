@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Emperor's Wrath">
- <lua>spob/lua/empire_mil_emperors_wrath.lua</lua>
  <feature>#pEmpire Homeworld#0</feature>
+ <lua>spob/lua/empire_mil_emperors_wrath.lua</lua>
  <pos x="15119.671497" y="4696.420377"/>
  <GFX>
   <space>wrath.webp</space>

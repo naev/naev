@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Ruadan Prime">
- <lua>spob/lua/zalek_mil_ruadan.lua</lua>
  <feature>#pZa'lek Homeworld#0</feature>
+ <lua>spob/lua/zalek_mil_ruadan.lua</lua>
  <pos x="5279.566099" y="4132.067302"/>
  <GFX>
   <space>M09.webp</space>
