@@ -41,7 +41,7 @@ I found an interesting rumour today while visiting the bar at Neurri. I was told
 After fruitless leads, I have arrived to Silverstone in the Symm system and have been talking with the bioship producers. They seem to reject the notion of "feral" bioships. I was almost about to call it quits and return home, when I managed to talk to a younger employee who sees to confirm my suspicions. Indeed, although rare, some times random mutations in the DNA can lead to not fully controllable bioships. They swear that they are as cunning and intelligent as humans. The future of such ships is uncertain, but they can be taken away or escape. However, only the tribe elders deal with such bioships. It seems like most head towards the Haze, and that is the next place I must travel to. For this trip I will leave behind my trusty Koala and go with a Soromid Brigand. This may arouse less suspicion should I happen upon feral bioships.]]))
          log(_([[UST 601:0005
 
-I have left the Hasselt system and head towards the depth of the Haze following rumours of a nearby colony of feral bioships. Who knows what I shall find? I have not been so giddy with anticipation in ages. Despite have conquered space, there is still much left for humankind to find!]]))
+I have left the Hasselt system and head towards the depth of the Haze following rumours of a nearby colony of feral bioships. Who knows what I shall find? I have not been so giddy with anticipation in ages. Despite having conquered space, there is still much left for humankind to find!]]))
          log(_([[UST 601:0037
 
 There seems to be no signs of life in this haze. I have been reflecting on my task. Perhaps it is a fool's errand after all?]]))
