@@ -398,7 +398,7 @@ Having finished her interrogation, Maikki sits down.]]))
       vn.disappear( scv, "slideup" )
       dvd(_([[Murmurs spread across the room as the Dvaered Representative frowns.]]))
       vn.func( function ()
-         zl_points = zl_points-1
+         dv_points = dv_points-1
       end )
    else
       dvd(fmt.f(_([["Here is the proof in the black box we recovered from the scavenger ships. We can see that the last moments clearly log {playername}'s ship attacking them."]]),
@@ -491,7 +491,7 @@ Having finished her interrogation, Maikki sits down.]]))
       vn.jump("cont04")
 
       vn.label("cont04_took")
-      zlk(fmt.f(_([["Let it be noted that {playername} admits to using intimidation and force te deprive a legal Imperial citizen of their possessions!"]]),
+      zlk(fmt.f(_([["Let it be noted that {playername} admits to using intimidation and force to deprive a legal Imperial citizen of their possessions!"]]),
          {playername=player.name()}))
       vn.jump("cont04")
    end
