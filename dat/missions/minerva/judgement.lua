@@ -360,7 +360,7 @@ Maikki gives an impeccable formal bow.]]))
    maikki(fmt.f(_([["Furthermore, {playername}, is it true or not that House Za'lek established listening post in order to capture communications near Minerva Station and thus violate the sovereignty of the independent space?"]]),
          {playername=player.name()}))
    vn.na(_([[You once again state the facts, avoiding mentioning you were the one who blew it all up.]]))
-   maikki(_([["See, Your Honour, not only can we put in doubt House Dvaered's ill intentions, House Za'lek was also undermining the independent of Minerva Station!"]]))
+   maikki(_([["See, Your Honour, not only can we put in doubt House Dvaered's ill intentions, House Za'lek was also undermining the independence of Minerva Station!"]]))
    maikki(_([["House Dvaered and House Za'lek can not be trusted, and the only way to ensure the local prosperity is to ensure the independence of Minerva Station."
 Having finished her interrogation, Maikki sits down.]]))
 
@@ -552,7 +552,7 @@ The Za'lek Lawyer sits down.]]))
    log = vne.flashbackTextStart(_("Narrator"))
    log(_([[The dispositions continue with more formalities with all sides calling for motions and objecting, however, it does not seem like much is being added to the arguments.
 
-House Za'lek and House Dvaered seem to be generally on the passive, while Maikki is very aggressive pressing the houses without giving them much room to breath.
+House Za'lek and House Dvaered seem to be generally on the passive, while Maikki is very aggressive pressing the houses without giving them much room to breathe.
 
 Eventually when all argumentation is exhausted the different representatives repeat their main points before judgement is passed.]]))
    vne.flashbackTextEnd()

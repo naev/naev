@@ -96,7 +96,7 @@ function accept ()
       end )
 
       vn.label("01_cont")
-      maikki(_([["Damn it, I should have brought my squad with me, but I erred on the side of cautious. How unlike me! But with Zuri and Kex's state, we're going to have to take them to a proper medical facility. That doesn't mean we can leave Minerva Station as it is, after all we've been through!"]]))
+      maikki(_([["Damn it, I should have brought my squad with me, but I erred on the side of caution. How unlike me! But with Zuri and Kex's state, we're going to have to take them to a proper medical facility. That doesn't mean we can leave Minerva Station as it is, after all we've been through!"]]))
       local winner = var.peek("minerva_judgement_winner")
       local msg
       if winner=="dvaered" then
