@@ -18,8 +18,8 @@ local reset_dist, reset_shield, compr_speed, compr_max, follow_jump, brake_pos
 local AUTONAV_MAX_DIST  = 10e3 -- quite a reasonable distance
 local COMPR_SPEED_MIN   = 1e3 -- Old default was 5e3
 local COMPR_SPEED_MAX   = 10e3
-local COMPR_MIN         = 10 -- Old default was 200
-local COMPR_MAX         = 200
+local COMPR_MIN         = 1 -- Old default was 200
+local COMPR_MAX         = 100
 
 function create ()
    -- Load variables
