@@ -90,7 +90,7 @@ end
 local plts, nextjump, lastsys
 local spawned = false
 function pheromones ()
-   if not spawned then
+   if not spawned and system.cur() ~= targetsys then
       spawned = true
       hook.timer( 5, "spawn_ferals" )
    else
