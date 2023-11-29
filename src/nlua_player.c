@@ -1068,6 +1068,20 @@ static int playerL_land( lua_State *L )
    }
    player.p->solid.pos = spob->pos; /* Set position to target. */
 
+   /* End autonav. */
+   player_autonavEnd();
+
+   /* Stop afterburning. */
+   pilot_afterburnOver( player.p );
+   /* Stop accelerating. */
+   player_accelOver();
+   /* Stop stealth. */
+   pilot_destealth( player.p );
+
+   /* Stop all on outfits. */
+   if (pilot_outfitOffAll( player.p ) > 0)
+      pilot_calcStats( player.p );
+
    /* Do whatever the spob wants to do. */
    if (spob->lua_land != LUA_NOREF) {
       spob_luaInitMem( spob );
