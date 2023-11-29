@@ -134,6 +134,12 @@
       * Avoid having missions duplicates for cases where they can significantly stack such as patrol missions
       * Fire rate and action speed should affect damage and disable of beam weapons
       * Fixed some outfits not having "Activated Outfit" in their description
+      * Fixed ships offering 100 fuel refuels twice
+      * Fixed some ships having trouble equipping because of stacking engine reroutes and such
+      * Improved AI's scanning behaviour to be more robust to stealth pulsing
+      * Fixed POI generating in extremely volatile systems
+      * Fixed tutorial running during cinematics
+      * Fixed active outfits not showing "activated outfit" in their summary sometimes
 
 * 0.10.6
    * Fixed potential segfault with invalid semver strings
