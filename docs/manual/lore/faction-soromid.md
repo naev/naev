@@ -10,7 +10,7 @@ The Soromid are a major faction in Naev.
 * Formation: UST 387
 * Homeworld: Kataka (Feye)
 * Important Figures:
-    * Sirichana
+    * None (yet)
 
 ## History
 
