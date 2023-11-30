@@ -14,7 +14,10 @@ local bribe_no_list = {
    _([["Money won't save you from being purged from the gene pool."]]),
    _([["Culling you will be doing humanity a service."]]),
    _([["We do not consort with vermin."]]),
-   _([["Who do you take us for, the Empire?"]])
+   _([["Who do you take us for, the Empire?"]]),
+   _([["You are against the order of nature!"]]),
+   _([["You dare make a mockery of the Soromid Tribes?!"]]),
+   _([["Your dirty credits will not buy the warriors of Sorom!"]]),
 }
 local taunt_list_offensive = {
    _("There is no room in this universe for scum like you!"),
@@ -22,14 +25,16 @@ local taunt_list_offensive = {
    _("Enjoy your last moments, worm!"),
    _("Time for a little natural selection!"),
    _("Might makes right!"),
-   _("Embrace your weakness!")
+   _("Embrace your weakness!"),
+   _("Eat hot plasma!"),
 }
 local taunt_list_defensive= {
    _("Cunning, but foolish."),
    _("Ambush! Defend yourselves!"),
    _("You should have picked easier prey!"),
    _("You'll regret that!"),
-   _("That was a fatal mistake!")
+   _("That was a fatal mistake!"),
+   _("A prey that thinks itself predator!"),
 }
 
 function create ()
