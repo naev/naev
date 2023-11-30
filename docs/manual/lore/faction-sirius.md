@@ -12,7 +12,7 @@ The House Sirius is one of the major factions in Naev.
 * Important Figures:
     * Sirichana
 
-### Social Structure
+## Social Structure
 
 House Sirius is defined by its state religion more than anything else. Its citizens all follow the same faith, and this faith is central to most of the goings-on in Sirius space. This is not to say every Sirius citizen is a religious fanatic; the Sirius have a healthy intellectual elite, including scientists and philosophers. However, faith is always the point of reference. To the Sirii, faith is what air is to other people. You don't see it, you don't pay attention to it, you often don't even think about it. But without it, you can not live.
 
@@ -24,7 +24,7 @@ The Echelons are each led by a dedicated low-level theocratic government. Its cl
 
 But higher still, at the pinnacle of House Sirius, stands Sirichana.
 
-### Sirichana
+## Sirichana
 
 Sirichana, loosely translated "lord of the Sirii", is the focus of Sirius worship. Unlike more traditional religions, the Sirii do not worship an abstract, omnipresent God. Sirichana is a man. This man was originally an early-era colonist by the name of Richard Summers, though that name has all but faded in history. Since that time there have been many Sirichanas, but all are assumed to be reincarnations of the original Sirichana, and so distinction is never made other than in a historical context.
 
@@ -34,7 +34,7 @@ Sirichana's influence grew, and more and more came to believe in his wisdom and 
 
 One may wonder how Sirichana could inspire faith in so many souls, spread over so many worlds. After all, it is difficult to believe in a man who resides on a planet far from one's home. In point of fact, there is a good reason why people believe as strongly as they do.
 
-### The Touched
+## The Touched
 
 It begins anywhere in Sirius space, on any world, in any echelon. There are some who feel the call, the irresistible urge to come forth. Those individuals leave their homes, sell their possessions and embark on a pilgrimage to Mutris. Those who can't afford the fare right away will raise the money through intensive labor until they can, or die trying. Once on Mutris, the pilgrims will flock to Crater City, the holy city of the Sirii and the seat of Sirichana himself.
 
@@ -44,7 +44,7 @@ And then it happens. The one thing all the pilgrims have waited for. From the to
 
 The Touched then leave Crater City, abandoning it completely, leaving its houses, its tools, its resources behind for those pilgrims who will be coming. They journey forth across Sirius space, and preach Sirichana's word to the echelons. And all who listen, all who look into the eyes of a Touched are themselves overcome. So strong is the experience that their faith becomes deeply ingrained into their very souls.
 
-### House Sirius: Present day
+## House Sirius: Present day
 
 With the Incident in recent history and the Empire on the decline, House Sirius seems poised to abandon its ancient vows and claim dominance over the galaxy. But curiously, this does not seem to be happening as of yet. Indeed, House Sirius seems to be brooding, turned inwards on itself. The Touched still roam Sirius space, but their numbers are dwindling. The Armed Forces remain effective in thwarting the jealous attempts by House Dvaered to annex some of their world, but even they seem less resolute than they once were. Did whatever caused the Incident also shatter the Sirii's spirits? Or is there something else afoot? At present, nobody knows...
 
