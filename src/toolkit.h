@@ -29,6 +29,7 @@ unsigned int window_createFlags( const char* name, const char *displayname,
 /* window */
 void window_setAccept( unsigned int wid, void (*fptr)(unsigned int,const char*) );
 void window_setCancel( unsigned int wid, void (*cancel)(unsigned int,const char*) );
+void window_setOnFocus( unsigned int wid, void (*focus)(unsigned int) );
 void window_setBorder( unsigned int wid, int enable );
 void window_setFocus( unsigned int wid, const char* wgtname );
 void window_handleKeys( unsigned int wid,

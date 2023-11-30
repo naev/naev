@@ -39,20 +39,24 @@
 static int commodity_mod = 10; /**< Amount you can buy or sell in a single click. */
 static Commodity **commodity_list = NULL;
 
+static void commodity_exchange_modifiers( unsigned int wid )
+{
+   int q = commodity_getMod();
+   if (q != commodity_mod) {
+      char buf[STRMAX_SHORT];
+      commodity_mod = q;
+      snprintf( buf, sizeof(buf), _("Buy (%d %s)"), q, UNIT_MASS );
+      window_buttonCaption( wid, "btnCommodityBuy", buf );
+      snprintf( buf, sizeof(buf), _("Sell (%d %s)"), q, UNIT_MASS );
+      window_buttonCaption( wid, "btnCommoditySell", buf );
+      toolkit_rerender();
+   }
+}
+
 static int commodity_exchange_events( unsigned int wid, SDL_Event *evt )
 {
-   if ((evt->type==SDL_KEYDOWN) || (evt->type==SDL_KEYUP)) {
-      int q = commodity_getMod();
-      if (q != commodity_mod) {
-         char buf[STRMAX_SHORT];
-         commodity_mod = q;
-         snprintf( buf, sizeof(buf), _("Buy (%d %s)"), q, UNIT_MASS );
-         window_buttonCaption( wid, "btnCommodityBuy", buf );
-         snprintf( buf, sizeof(buf), _("Sell (%d %s)"), q, UNIT_MASS );
-         window_buttonCaption( wid, "btnCommoditySell", buf );
-         toolkit_rerender();
-      }
-   }
+   if ((evt->type==SDL_KEYDOWN) || (evt->type==SDL_KEYUP))
+      commodity_exchange_modifiers( wid );
    return 0;
 }
 
@@ -94,6 +98,7 @@ void commodity_exchange_open( unsigned int wid )
 
    /* handle multipliers. */
    window_handleEvents( wid, commodity_exchange_events );
+   window_setOnFocus( wid, commodity_exchange_modifiers );
 
    /* store gfx */
    window_addRect( wid, -20, -40, 192, 192, "rctStore", &cBlack, 0 );

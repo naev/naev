@@ -877,7 +877,7 @@ void window_setAccept( unsigned int wid, void (*accept)(unsigned int,const char*
  * @brief Sets the default cancel function of the window.
  *
  * This function is called whenever 'escape' is hit and the current widget
- *  does not catch it.  NULL disables the cancel function.
+ *  does not catch it. NULL disables the cancel function.
  *
  *    @param wid ID of the window to set cancel function.
  *    @param cancel Function to trigger when window is "cancelled".  Parameter
@@ -892,6 +892,26 @@ void window_setCancel( unsigned int wid, void (*cancel)(unsigned int,const char*
 
    /* Set the cancel function. */
    wdw->cancel_fptr = cancel;
+}
+
+/**
+ * @brief Sets the focus function of the window.
+ *
+ * This function is called whenever the window is focused or unfocused.
+ *
+ *    @param wid ID of the window to set cancel function.
+ *    @param focus Function to trigger when window focus status changes. Parameter
+ *                  passed is window name.
+ */
+void window_setOnFocus( unsigned int wid, void (*focus)(unsigned int) )
+{
+   /* Get the window. */
+   Window *wdw = window_wget( wid );
+   if (wdw == NULL)
+      return;
+
+   /* Set the cancel function. */
+   wdw->focus_fptr = focus;
 }
 
 /**
@@ -1067,6 +1087,12 @@ void window_destroy( unsigned int wid )
 
       toolkit_expose( wactive, 1 );
       break;
+   }
+
+   /* Do focus. */
+   for (Window *w = windows; w != NULL; w = w->next) {
+      if (!window_isFlag(w, WINDOW_KILL) && (w->focus_fptr!=NULL))
+         w->focus_fptr( w->id );
    }
 }
 

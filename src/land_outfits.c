@@ -68,6 +68,7 @@ static void outfit_Popdown( unsigned int wid, const char* str );
 static void outfits_genList( unsigned int wid );
 static void outfits_changeTab( unsigned int wid, const char *wgt, int old, int tab );
 static void outfits_onClose( unsigned int wid, const char *str );
+static void outfit_modifiers( unsigned int wid );
 static int outfit_events( unsigned int wid, SDL_Event *evt );
 
 /**
@@ -97,30 +98,34 @@ static void outfits_getSize( unsigned int wid, int *w, int *h,
       *bh = LAND_BUTTON_HEIGHT;
 }
 
+static void outfit_modifiers( unsigned int wid )
+{
+   int q = outfits_getMod();
+   if (q != outfits_mod) {
+      outfits_updateEquipmentOutfits();
+      outfits_mod = q;
+      if (q==1) {
+         window_buttonCaption( wid, "btnBuyOutfit", _("Buy") );
+         window_buttonCaption( wid, "btnSellOutfit", _("Sell") );
+      }
+      else {
+         char buf[STRMAX_SHORT];
+         snprintf( buf, sizeof(buf), _("Buy (%dx)"), q );
+         window_buttonCaption( wid, "btnBuyOutfit", buf );
+         snprintf( buf, sizeof(buf), _("Sell (%dx)"), q );
+         window_buttonCaption( wid, "btnSellOutfit", buf );
+      }
+      toolkit_rerender();
+   }
+}
+
 /**
  * Used to force rerenders.
  */
 static int outfit_events( unsigned int wid, SDL_Event *evt )
 {
-   if ((evt->type==SDL_KEYDOWN) || (evt->type==SDL_KEYUP)) {
-      int q = outfits_getMod();
-      if (q != outfits_mod) {
-         outfits_updateEquipmentOutfits();
-         outfits_mod = q;
-         if (q==1) {
-            window_buttonCaption( wid, "btnBuyOutfit", _("Buy") );
-            window_buttonCaption( wid, "btnSellOutfit", _("Sell") );
-         }
-         else {
-            char buf[STRMAX_SHORT];
-            snprintf( buf, sizeof(buf), _("Buy (%dx)"), q );
-            window_buttonCaption( wid, "btnBuyOutfit", buf );
-            snprintf( buf, sizeof(buf), _("Sell (%dx)"), q );
-            window_buttonCaption( wid, "btnSellOutfit", buf );
-         }
-         toolkit_rerender();
-      }
-   }
+   if ((evt->type==SDL_KEYDOWN) || (evt->type==SDL_KEYUP))
+      outfit_modifiers( wid );
    return 0;
 }
 
@@ -181,6 +186,7 @@ void outfits_open( unsigned int wid, const Outfit **outfits, int blackmarket )
 
    /* handle multipliers. */
    window_handleEvents( wid, outfit_events );
+   window_setOnFocus( wid, outfit_modifiers );
 
    /* buttons */
    off = -20;

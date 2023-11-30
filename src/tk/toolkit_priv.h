@@ -164,6 +164,7 @@ typedef struct Window_ {
    void (*accept_fptr)(unsigned int wid,const char* name); /**< Triggered by hitting 'enter' with no widget that catches the keypress. */
    void (*cancel_fptr)(unsigned int wid,const char* name); /**< Triggered by hitting 'escape' with no widget that catches the keypress. */
    void (*cleanup_fptr)(unsigned int wid,const char* name); /**< Triggered when window is finally freed. */
+   void (*focus_fptr)(unsigned int wid); /**< Triggered when window's focus status changes. */
    int (*keyevent)(unsigned int wid,SDL_Keycode,SDL_Keymod,int); /**< User defined custom key event handler. */
    int (*eventevent)(unsigned int wid,SDL_Event *evt); /**< User defined event handler. */
 
