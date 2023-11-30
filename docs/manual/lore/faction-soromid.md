@@ -14,7 +14,7 @@ The Soromid are a major faction in Naev.
 
 ## History
 
-## Sorom
+### Sorom
 
 Sorom was a fairly hospitable planet, like many others in the galaxy during the Second Growth. It was settled roughly halfway through the Growth, changed ownership several times during the Faction Wars and eventually came under the rule of the old Empire afterwards. In this it was about as average as worlds got, just one more property in the vast expanse of the Empire.
 
@@ -24,7 +24,7 @@ In the end, the microbes won. The people of Sorom fell victim to a plague unprec
 
 The Empire was quick to realize the threat Sorom now presented to the galaxy. With no known cure or inoculation, the plague would lay waste to any world unfortunate enough to be infected by it. It was therefore decided that Sorom should be quarantined from the rest of humanity. The Empire implemented a blockade to deny any ships landing or takeoff, and destroyed all spaceports on the face of the planet from orbit. The people of Sorom were left to die.
 
-## Gene Treatment
+### Gene Treatment
 
 The people of Sorom had been abandoned. The plague claimed more and more lives every day. It would be a matter of years, maybe months before nobody was left alive. Faced with no hope of survival, the remaining hospitals and research centers decided to gamble everything on a bold plan. If the human immune system couldn't combat the disease, then it was deficient. It was to be replaced by something better, something that could purify the system of the pathogen. It was time to redesign the human body.
 
@@ -34,9 +34,9 @@ The human genetic code could now be rewritten at will. More importantly, new DNA
 
 However, it soon became apparent that the genetic rewrite of the human body was an extremely dangerous procedure. Eight in ten subjects would develop severe rejection symptoms, resulting in death. Nevertheless, the remaining subjects would recover fully and be totally immune to the plague. Realizing that a small chance of survival was better than no chance of survival at all, the people of Sorom underwent the treatment. Many lives were lost, few were saved. But it was enough.
 
-## The Soromid
+### The Soromid
 
-The population of Sorom was drastically diminished, but those who survived found themselves more able than before. With the new gene treatment it had become possible to surpass the limits of the human body, including fertility. In only a couple of centuries the people of Sorom had replenished their numbers, and their offspring all shared their compatibility with the gene treatment. They altered their appearances and improved on nearly every part of the human design. The people felt that they had now become something more than mere human, so they styled themselves the Soromid, after the world that had nearly destroyed them.
+The population of Sorom was drastically diminished, but those who survived found themselves more able than before. With the new gene treatment it had become possible to surpass the limits of the human body, including fertility. In only a couple of centuries the people of Sorom had replenished their numbers, and their offspring all shared their compatibility with the gene treatment. They altered their appearances and improved on nearly every part of the human design. The people felt that they had now become something more than mere human, so they styled themselves the Soromid, after the world that had nearly destroyed them, and begin their new life as new humans.
 
 Soon, the Soromid decided that it was time to return to the stars. The Imperial blockade had left the system many decades past, so nothing was to stop them. But rather than rebuild to ancient specifications, the Soromid chose to start from scratch. They used their understanding of genetics to grow semi-organic ships, thereby improving over known ship designs. Then they ventured out into the galaxy.
 
@@ -49,3 +49,11 @@ Unfazed by the reception of the other factions, the Soromid went to work. The ga
 And then came the Incident. For all their improvements and upgrades, the Soromid were hit just as hard as anyone else. Sorom was caught in the blast and was rendered sterile. But elsewhere in the galaxy, the Soromid persisted. All Soromid knew the history of Sorom, and they would not suffer to be destroyed, no matter what the universe threw at them.
 
 Today, the Soromid have laid claim to a considerable part of the northern galaxy. They have solidly established themselves in the galactic economy, exporting their gene treatment as a service to humanity. Though deep treatment still results in the death of most who attempt it, small cosmetic alterations have been found to be relatively safe. It is not at all uncommon for the more fashionable citizen to be genetically augmented. However, the Soromid have the monopoly on anything beyond that.
+
+## Political Structure
+
+Instead of having a fixed political structure, the Soromid have a very loose and organic political structure that revolves around the idea of tribes. Generally, each tribe has a council that oversees the day to day management, where all individuals delegate most responsibility. The members of the council are not necessarily fixed, and fluidly change over time. Periodically, and when needed, the tribe will gather in councils to decide positions on particular issues or proposals, where efforts are made to reach a consensus. The same structure of councils happens at a larger scale, where instead of all individuals, tribal representatives get together to reach consensus over matters that affect the Soromid as a whole.
+
+Although it would seem that the overhead of such a system would make it unmanageable at a large scale, due to historic issues and through strong education, young Soromid new humans are raised with a strong focus on putting the community over the individual. Such a social education, combinade with strong customs, helps keep most friction at a minimum, allowing fast and effective decision making. When frictions arise, each tribe tends to have mechanisms for dealing with this, while for inter-tribal issues, duels or competitions are often used to solve issues and foster camaraderie.
+
+The tribes can consist of a single world or even various star systems. Each tribe usually consists of largely similarly modified individuals that are genetically compatible, however, some tribes can consist of various dominant genotypes. As with most of the Soromid structure, it is very flexible and fluid where exceptions are the norm.
