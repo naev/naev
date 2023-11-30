@@ -13,12 +13,12 @@ local prefix = require "common.prefix"
 -- luacheck: globals create accept abort (used by missions)
 
 local rehab = {}
-function rehab.init( fac, params )
+function rehab.init( fct, params )
    local setFine -- Forward-declared functions
    local desc = params.desc or _([[You may pay a fine for a chance to redeem yourself in the eyes of a faction you have offended. You may interact with this faction as if your reputation were neutral, but your reputation will not actually improve until you've regained their trust. ANY hostile action against this faction will immediately void this agreement.]])
    local txtbroke = params.txtbroke or _("You don't have enough money. You need at least {credits} to buy a cessation of hostilities with this faction.")
    local txtaccept = params.txtaccept or {fmt.f(_([[Your application has been processed. The {fct} security forces will no longer attack you on sight. You may conduct your business in {fct} space again, but remember that you still have a criminal record! If you attack any traders, civilians or {fct} ships, or commit any other felony against this faction, you will immediately become their enemy again.]]),
-      {fct=fac}),
+      {fct=fct}),
    _([[While this agreement is active, your reputation will not change, but if you continue to behave properly and perform beneficial services, your past offenses will eventually be stricken from the record.]]) }
    local txtsuccess = params.txtsuccess or _([[Congratulations, you have successfully worked your way back into good standing with this faction. Try not to relapse into your life of crime!]])
    local txtabort = params.txtabort or _([[You have committed another offense against this faction! Your rehabilitation procedure has been canceled, and your reputation is once again tarnished. You may start another rehabilitation procedure at a later time.]])
@@ -26,32 +26,27 @@ function rehab.init( fac, params )
    function create()
       -- Note: this mission does not make any system claims.
 
-      -- Set up some stuff
-      mem.fac = fac
-
       -- Only spawn this mission if the player needs it.
-      mem.rep = mem.fac:playerStanding()
+      mem.rep = fct:playerStanding()
       if mem.rep >= 0 then
          misn.finish()
       end
 
       -- Don't spawn this mission if the player is buddies with this faction's enemies.
-      if not params.ignoreenemies then
-         for _k, enemy in pairs(mem.fac:enemies()) do
-            if enemy:playerStanding() > 20 then
-            misn.finish()
-            end
+      for _k, enemy in pairs(fct:enemies()) do
+         if enemy:playerStanding() > 20 then
+         misn.finish()
          end
       end
 
-      setFine(mem.rep)
+      setFine( mem.rep )
 
-      misn.setTitle(prefix.prefix(mem.fac)..fmt.f(_("{fct} Rehabilitation"), {fct=mem.fac}))
-      local stdval, stdname = mem.fac:playerStanding()
+      misn.setTitle(prefix.prefix(fct)..fmt.f(_("{fct} Rehabilitation"), {fct=fct}))
+      local stdval, stdname = fct:playerStanding()
       misn.setDesc(desc.."\n\n"..fmt.f(_([[#nFaction:#0 {fct}
 #nCost:#0 {credits}
 #nCurrent Standing:#0 #r{standingname} ({standingvalue})#0]]),
-         {fct=mem.fac:longname(), credits=fmt.credits(mem.fine), standingname=stdname, standingvalue=stdval}))
+         {fct=fct:longname(), credits=fmt.credits(mem.fine), standingname=stdname, standingvalue=stdval}))
       misn.setReward(_("None"))
    end
 
@@ -61,7 +56,7 @@ function rehab.init( fac, params )
          "You need to gain %d more reputation",
          -mem.rep
       ):format(-mem.rep) }
-      misn.osdCreate(fmt.f(_("{fct} Rehabilitation"), {fct=mem.fac}), osd_msg)
+      misn.osdCreate(fmt.f(_("{fct} Rehabilitation"), {fct=fct}), osd_msg)
    end
 
    function accept()
@@ -72,9 +67,9 @@ function rehab.init( fac, params )
       end
 
       player.pay(-mem.fine)
-      vntk.msg(fmt.f(_("{fct} Rehabilitation"), {fct=mem.fac}), txtaccept )
+      vntk.msg(fmt.f(_("{fct} Rehabilitation"), {fct=fct}), txtaccept )
 
-      mem.fac:modPlayerRaw(-mem.rep)
+      fct:modPlayerRaw(-mem.rep)
 
       misn.accept()
       setosd()
@@ -91,7 +86,7 @@ function rehab.init( fac, params )
 
    -- Standing hook. Manages faction reputation, keeping it at 0 until it goes positive.
    function standing( hookfac, delta )
-      if hookfac == mem.fac then
+      if hookfac == fct then
          if delta >= 0 then
             -- Be ware of the fake transponder!
             local pp = player.pilot()
@@ -109,17 +104,17 @@ function rehab.init( fac, params )
             if mem.rep >= 0 then
                -- The player has successfully erased his criminal record.
                mem.excess = mem.excess + delta
-               mem.fac:modPlayerRaw(-delta + mem.rep)
-               vntk.msg(fmt.f(_("{fct} Rehabilitation Successful"), {fct=mem.fac}), txtsuccess )
+               fct:modPlayerRaw(-delta + mem.rep)
+               vntk.msg(fmt.f(_("{fct} Rehabilitation Successful"), {fct=fct}), txtsuccess )
                misn.finish(true)
             end
 
             mem.excess = mem.excess + delta
-            mem.fac:modPlayerRaw(-delta)
+            fct:modPlayerRaw(-delta)
             setosd()
          else
             mem.excess = mem.excess + delta
-            if mem.excess < 0 or mem.fac:playerStanding() < 0 then
+            if mem.excess < 0 or fct:playerStanding() < 0 then
                abort()
             end
          end
@@ -132,9 +127,9 @@ function rehab.init( fac, params )
       hook.rm( mem.standhook )
 
       -- Reapply the original negative reputation.
-      mem.fac:modPlayerRaw(mem.rep)
+      fct:modPlayerRaw(mem.rep)
 
-      vntk.msg(fmt.f(_("{fct} Rehabilitation Canceled"), {fct=mem.fac}), txtabort )
+      vntk.msg(fmt.f(_("{fct} Rehabilitation Canceled"), {fct=fct}), txtabort )
       misn.finish(false)
    end
 end
