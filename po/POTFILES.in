@@ -3132,7 +3132,6 @@ dat/missions/pirate/pir_ship_stealing.lua
 dat/missions/pirate/pirate_commodity_run.lua
 dat/missions/pirate/raid.lua
 dat/missions/proteron/dissbounty_dead.lua
-dat/missions/rehab_common.lua
 dat/missions/shadow/darkshadow.lua
 dat/missions/shadow/shadowrun.lua
 dat/missions/shadow/shadowvigil.lua
