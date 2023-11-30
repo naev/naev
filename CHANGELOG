@@ -87,6 +87,7 @@
       * More ways to increase fleet capacity
       * The pirate clans are now more differentiated in terms of AI behaviour and taunts
       * More factional landing messages
+      * Rehabilitation missions have been made more factional and a new rehabilitation mission for the FLF is now available
    * Engine
       * Map system viewer is more compact
       * Added hook.hail_spob
@@ -140,6 +141,7 @@
       * Fixed POI generating in extremely volatile systems
       * Fixed tutorial running during cinematics
       * Fixed active outfits not showing "activated outfit" in their summary sometimes
+      * FLF no longer become true allies of the Dreamer Clan to not limit the players actions
 
 * 0.10.6
    * Fixed potential segfault with invalid semver strings
