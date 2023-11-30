@@ -509,6 +509,7 @@ void outfits_update( unsigned int wid, const char *str )
       return;
    }
 
+   i = MIN( i, array_size(iar_outfits[active])-1 );
    outfit = iar_outfits[active][i];
 
    /* new image */
