@@ -1042,7 +1042,6 @@ function distress_handler( pilot, attacker )
    return false
 end
 
-
 -- Handles generating distress messages
 function gen_distress( target )
    if not mem.distress then return end
@@ -1149,11 +1148,7 @@ function should_cooldown()
       mem.cooldown = true
       p:setCooldown(true)
    end
-   if pshield == nil then
-      player.msg("pshield = nil")
-   end
 end
-
 
 -- Decide if the task is likely to become obsolete once attack is finished
 function clean_task( task )
