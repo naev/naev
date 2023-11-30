@@ -3042,6 +3042,7 @@ dat/missions/flf/flf_patrol.lua
 dat/missions/flf/flf_pirates.lua
 dat/missions/flf/flf_pre01.lua
 dat/missions/flf/flf_pre02.lua
+dat/missions/flf/flf_rehab.lua
 dat/missions/flf/flf_rogue.lua
 dat/missions/minerva/finale1.lua
 dat/missions/minerva/finale2.lua
@@ -3298,6 +3299,7 @@ dat/scripts/common/npc.lua
 dat/scripts/common/pirate.lua
 dat/scripts/common/poi.lua
 dat/scripts/common/prefix.lua
+dat/scripts/common/rehab.lua
 dat/scripts/common/sciencegonewrong.lua
 dat/scripts/common/shadow.lua
 dat/scripts/common/shark.lua
