@@ -6,7 +6,7 @@
   <size>large</size>
   <mass>120</mass>
   <price>800000</price>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>flow_amplifier_l.webp</gfx_store>
   <limit>flow_amplifier</limit>
   <description>Although all Sirius ships are equipped with internal flow amplifiers, some are also created as independent units for ships without builtin flow capabilities. Flow Amplifiers are specially tuned to the crew and allow significantly amplifying their psychic abilities to aid the ship with different abilities.</description>
  </general>
