@@ -7,7 +7,7 @@
 </event>
 --]]
 local textoverlay = require "textoverlay"
---local chakra = require "luaspfx.chakra_explosion"
+local chakra = require "luaspfx.chakra_explosion"
 local srs = require "common.sirius"
 local fmt = require "format"
 
@@ -99,7 +99,7 @@ function spawn ()
    baddies = newbaddies
 
    -- Too many, so just wait a bit
-   if #baddies > 20 then
+   if #baddies > 40 then
       hook.timer( 1, "spawn" )
       return
    end
@@ -115,16 +115,26 @@ function spawn ()
       accel_mod      = -30,
       speed_mod      = -30,
       turn_mod       = -30,
-      fwd_damage     = -30, -- Don't instagib player
+      fwd_damage     = -20, -- Don't instagib player
+      fwd_firerate   = -50, -- Less spam
       armour_mod     = -90,
       shield_mod     = -90,
    }, true ) -- overwrite all
    local emem = e:memory()
    emem.comm_no = _("No response.")
 
-   -- keep track of them
+   -- Explosion creation effect
+   chakra( pos, vec2.new(), 20 ) -- TODO sound?
+
+   -- Keep track of them
    table.insert( baddies, e )
-   hook.timer( 3, "spawn" ) -- Going to rerun in a bit
+
+   -- Figure out when to respawn
+   local nexttime = 3
+   if #baddies < 20 then
+      nexttime = nexttime * 0.5
+   end
+   hook.timer( nexttime, "spawn" ) -- Going to rerun in a bit
 end
 
 function eventover ()
