@@ -307,7 +307,7 @@ function spawn_fleet() -- spawn warlord killing fleet
    end
 
    -- Give the escorts a few seconds to get away from the player.
-   hook.timer(3.0, "undo_invuln")
+   hook.timer(3, "undo_invuln")
 end
 
 function undo_invuln()
@@ -340,7 +340,7 @@ function jump_fleet_cap_dead () -- mission failed
          j:setHilight(false)
       end
    end
-   hook.timer(10.0, "abort")
+   hook.timer(10, "abort")
 end
 
 function cleanup()
