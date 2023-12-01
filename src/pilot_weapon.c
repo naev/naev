@@ -1672,7 +1672,7 @@ void pilot_afterburn( Pilot *p )
       return;
 
    /* Not under manual control if is player. */
-   if (pilot_isFlag( p, PILOT_MANUAL_CONTROL ) && pilot_isFlag( p, PILOT_PLAYER ))
+   if (pilot_isFlag( p, PILOT_MANUAL_CONTROL ) && pilot_isPlayer(p))
       return;
 
    /** @todo fancy effect? */
@@ -1681,7 +1681,8 @@ void pilot_afterburn( Pilot *p )
 
    /* The afterburner only works if its efficiency is high enough. */
    if (pilot_heatEfficiencyMod( p->afterburner->heat_T, p->afterburner->outfit->overheat_min, p->afterburner->outfit->overheat_max ) < 0.1) {
-      player_message(_("#r%s is overheating!#0"),_(p->afterburner->outfit->name));
+      if (pilot_isPlayer(p))
+         player_message(_("#r%s is overheating!#0"),_(p->afterburner->outfit->name));
       return;
    }
 
