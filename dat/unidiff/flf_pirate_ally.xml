@@ -2,7 +2,7 @@
 <unidiff name="flf_pirate_ally">
  <faction name="FLF">
   <faction name="Dreamer Clan">neutral</faction>
-  <faction name="Space Pirates">neutral</faction>
+  <faction name="Pirate">neutral</faction>
   <faction name="Marauder">neutral</faction>
  </faction>
 </unidiff>
