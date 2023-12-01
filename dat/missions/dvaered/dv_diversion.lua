@@ -173,13 +173,13 @@ function land()
 end
 
 function hawk_jump () -- Got away
-   tk.msg(_("The Hawk got away!"), _("The Hawk jumped out of the system. You have failed your mission."))
+   vntk.msg(_("The Hawk got away!"), _("The Hawk jumped out of the system. You have failed your mission."))
    faction.get("Dvaered"):modPlayerSingle(-5)
    hook.timer(10, "abort")
 end
 
 function hawk_land(_plt, pnt) -- Got away
-   tk.msg(_("The Hawk got away!"), fmt.f(_("The Hawk landed back on {pnt}. You have failed your mission."), {pnt=pnt}))
+   vntk.msg(_("The Hawk got away!"), fmt.f(_("The Hawk landed back on {pnt}. You have failed your mission."), {pnt=pnt}))
    faction.get("Dvaered"):modPlayerSingle(-5)
    hook.timer(10, "abort")
 end
@@ -323,7 +323,7 @@ function jump_fleet_cap_dead () -- mission failed
 
    hawk:broadcast(_("Pathetic, can't even take down an unarmed ship."))
    hawk:setNoDeath()
-   tk.msg(_("The Hawk is safe."), _("The Hawk was able to fend off the attackers and destroy their flagship. You have failed your mission."))
+   vntk.msg(_("The Hawk is safe."), _("The Hawk was able to fend off the attackers and destroy their flagship. You have failed your mission."))
    faction.get("Dvaered"):modPlayerSingle(-5)
    hawk:land(destplanet)
    for i, j in ipairs(fleetdv) do
