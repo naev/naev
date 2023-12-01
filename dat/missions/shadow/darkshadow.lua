@@ -514,7 +514,7 @@ function showText(text)
    player.msg(text)
 end
 
--- Capsule function for tk.msg, for timer use
+-- Capsule function for vn, for timer use
 function jorekMsg ()
    vn.clear()
    vn.scene()

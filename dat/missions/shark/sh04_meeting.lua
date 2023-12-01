@@ -76,7 +76,6 @@ function accept()
    if not accepted then return end
 
    misn.accept()
-   tk.msg(_("Time to go"), _([["Let's go, then."]]))
 
    misn.setTitle(_("The Meeting"))
    misn.setReward(shark.rewards.sh04)
