@@ -43,6 +43,7 @@
 #include "slots.h"
 #include "spfx.h"
 #include "start.h"
+#include "threadpool.h"
 #include "unistd.h"
 
 #define outfit_setProp(o,p)      ((o)->properties |= p) /**< Checks outfit property. */
@@ -50,6 +51,15 @@
 #define XML_OUTFIT_TAG     "outfit"    /**< XML section identifier. */
 
 #define OUTFIT_SHORTDESC_MAX  STRMAX_SHORT /**< Max length of the short description of the outfit. */
+
+/**
+ * @brief For threaded loading of outfits.
+ */
+typedef struct OutfitThreadData_ {
+   char *filename;
+   Outfit outfit;
+   int ret;
+} OutfitThreadData;
 
 /*
  * the stack
@@ -71,6 +81,7 @@ static OutfitType outfit_strToOutfitType( char *buf );
 /* parsing */
 static int outfit_loadDir( char *dir );
 static int outfit_parseDamage( Damage *dmg, xmlNodePtr node );
+static int outfit_parseThread( void *ptr );
 static int outfit_parse( Outfit* temp, const char* file );
 static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent );
@@ -1306,6 +1317,7 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
       xmlr_attr_strd(node,"vertex",vertex);
       if (vertex == NULL)
          vertex = strdup("project_pos.vert");
+      gl_contextSet();
       gfx->program   = gl_program_vert_frag( vertex, xml_get(node), NULL );
       free( vertex );
       gfx->vertex    = glGetAttribLocation(  gfx->program, "vertex" );
@@ -1314,6 +1326,7 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
       gfx->u_r       = glGetUniformLocation( gfx->program, "u_r" );
       gfx->u_time    = glGetUniformLocation( gfx->program, "u_time" );
       gfx->u_fade    = glGetUniformLocation( gfx->program, "u_fade" );
+      gl_contextUnset();
 
       xmlr_attr_float_def(node,"size",gfx->size,-1.);
       if (gfx->size < 0.)
@@ -2398,10 +2411,6 @@ static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent )
    if (temp->u.lic.provides==NULL)
       temp->u.lic.provides = strdup( temp->name );
 
-   if (license_stack == NULL)
-      license_stack = array_create( char* );
-   array_push_back( &license_stack, temp->u.lic.provides );
-
    /* Set short description. */
    temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
    snprintf( temp->summary_raw, OUTFIT_SHORTDESC_MAX,
@@ -2700,6 +2709,17 @@ if (o) WARN( _("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< 
    return 0;
 }
 
+static int outfit_parseThread( void *ptr )
+{
+   OutfitThreadData *data = ptr;
+   data->ret = outfit_parse( &data->outfit, data->filename );
+   /* Render if necessary. */
+   gl_contextSet();
+   naev_renderLoadscreen();
+   gl_contextUnset();
+   return data->ret;
+}
+
 /**
  * @brief Loads all the files in a directory.
  *
@@ -2709,19 +2729,39 @@ if (o) WARN( _("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< 
 static int outfit_loadDir( char *dir )
 {
    char **outfit_files = ndata_listRecursive( dir );
+   ThreadQueue *tq = vpool_create();
+   OutfitThreadData *odata = array_create( OutfitThreadData );
+
    for (int i=0; i < array_size( outfit_files ); i++) {
       if (ndata_matchExt( outfit_files[i], "xml" )) {
-         Outfit o;
-         int ret = outfit_parse( &o, outfit_files[i] );
-         if (ret == 0)
-            array_push_back( &outfit_stack, o );
-
-         /* Render if necessary. */
-         naev_renderLoadscreen();
+         OutfitThreadData *od = &array_grow( &odata );
+         od->filename = outfit_files[i];
       }
-      free( outfit_files[i] );
+      else
+         free( outfit_files[i] );
    }
    array_free( outfit_files );
+
+   /* Enqueue the jobs after the data array is done. */
+   for (int i=0; i<array_size(odata); i++)
+      vpool_enqueue( tq, outfit_parseThread, &odata[i] );
+
+   /* Wait until done processing. */
+   SDL_GL_MakeCurrent( gl_screen.window, NULL );
+   vpool_wait( tq );
+   SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
+
+   /* Properly load the data. */
+   license_stack = array_create( char* );
+   for (int i=0; i<array_size(odata); i++) {
+      OutfitThreadData *od = &odata[i];
+      if (!od->ret)
+         array_push_back( &outfit_stack, od->outfit );
+      if (outfit_isLicense( &od->outfit ))
+         array_push_back( &license_stack, od->outfit.u.lic.provides );
+      free( od->filename );
+   }
+   array_free(odata);
 
    return 0;
 }
