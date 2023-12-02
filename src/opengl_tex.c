@@ -43,6 +43,7 @@ typedef struct glTexList_ {
    int sy; /**< Y sprites */
 } glTexList;
 static glTexList* texture_list = NULL; /**< Texture list. */
+static SDL_threadID tex_mainthread;
 static SDL_mutex* tex_lock = NULL;
 
 /*
@@ -62,6 +63,30 @@ static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, unsigne
 static glTexture* gl_texExists( const char* path, int sx, int sy );
 static int gl_texAdd( glTexture *tex, int sx, int sy );
 static int tex_cmp( const void *p1, const void *p2 );
+
+static void tex_ctxSet (void)
+{
+   if (SDL_ThreadID() != tex_mainthread)
+      SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
+}
+
+static void tex_ctxUnset (void)
+{
+   if (SDL_ThreadID() != tex_mainthread)
+      SDL_GL_MakeCurrent( gl_screen.window, NULL );
+}
+
+void gl_contextSet (void)
+{
+   SDL_mutexP( tex_lock );
+   tex_ctxSet();
+}
+
+void gl_contextUnset (void)
+{
+   tex_ctxUnset();
+   SDL_mutexV( tex_lock );
+}
 
 static int tex_cmp( const void *p1, const void *p2 )
 {
@@ -229,6 +254,7 @@ int gl_fboCreate( GLuint *fbo, GLuint *tex, GLsizei width, GLsizei height )
    GLenum status;
 
    SDL_mutexP( tex_lock );
+   //tex_ctxSet();
 
    /* Create the render buffer. */
    glGenTextures(1, tex);
@@ -255,6 +281,7 @@ int gl_fboCreate( GLuint *fbo, GLuint *tex, GLsizei width, GLsizei height )
    /* Restore state. */
    glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
 
+   //tex_ctxUnset();
    SDL_mutexV( tex_lock );
 
    gl_checkErr();
@@ -265,6 +292,7 @@ int gl_fboCreate( GLuint *fbo, GLuint *tex, GLsizei width, GLsizei height )
 glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const char* name )
 {
    SDL_mutexP( tex_lock );
+   tex_ctxSet();
 
    /* Set up the texture defaults */
    glTexture *texture = calloc( 1, sizeof(glTexture) );
@@ -296,6 +324,7 @@ glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const ch
       gl_texAdd( texture, sx, sy );
    }
 
+   tex_ctxUnset();
    SDL_mutexV( tex_lock );
 
    return texture;
@@ -316,6 +345,7 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
    GLfloat param;
 
    SDL_mutexP( tex_lock );
+   tex_ctxSet();
 
    /* Get texture. */
    texture = gl_texParameters( flags );
@@ -367,6 +397,7 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
       SDL_FreeSurface( surface );
    gl_checkErr();
 
+   tex_ctxUnset();
    SDL_mutexV( tex_lock );
 
    return texture;
@@ -855,6 +886,9 @@ void gl_freeTexture( glTexture *texture )
    if (texture->name != NULL) /* Surfaces will have NULL names */
       WARN(_("Attempting to free texture '%s' not found in stack!"), texture->name);
 
+   /* Have to set context. */
+   tex_ctxSet();
+
    /* Free anyways */
    glDeleteTextures( 1, &texture->texture );
    free(texture->trans);
@@ -863,6 +897,7 @@ void gl_freeTexture( glTexture *texture )
 
    gl_checkErr();
 
+   tex_ctxUnset();
    SDL_mutexV( tex_lock );
 }
 
@@ -962,6 +997,7 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
 int gl_initTextures (void)
 {
    tex_lock = SDL_CreateMutex();
+   tex_mainthread = SDL_ThreadID();
    return 0;
 }
 

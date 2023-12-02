@@ -93,6 +93,8 @@ int gl_fboCreate( GLuint *fbo, GLuint *tex, GLsizei width, GLsizei height );
 /*
  * Misc.
  */
+void gl_contextSet (void);
+void gl_contextUnset (void);
 int gl_isTrans( const glTexture* t, const int x, const int y );
 void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir );
 glTexture** gl_copyTexArray( glTexture **tex );

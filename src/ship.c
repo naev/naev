@@ -1052,8 +1052,6 @@ static int ship_parse( Ship *temp, const char *filename )
    return 0;
 }
 
-SDL_mutex *ship_lock;
-
 typedef struct ShipThreadData_ {
    char *filename;   /**< Filename. */
    Ship ship;        /**< Ship data. */
@@ -1064,13 +1062,11 @@ static int ship_parseThread( void *ptr )
 {
    ShipThreadData *data = ptr;
    /* Load the ship. */
-   SDL_mutexP( ship_lock );
-   SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
    data->ret = ship_parse( &data->ship, data->filename );
-   SDL_GL_MakeCurrent( gl_screen.window, NULL );
-   SDL_mutexV( ship_lock );
    /* Render if necessary. */
-   //naev_renderLoadscreen();
+   gl_contextSet();
+   naev_renderLoadscreen();
+   gl_contextUnset();
    return data->ret;
 }
 
@@ -1093,8 +1089,6 @@ int ships_load (void)
    ship_files = ndata_listRecursive( SHIP_DATA_PATH );
    nfiles = array_size( ship_files );
 
-   ship_lock = SDL_CreateMutex();
-
    /* Initialize stack if needed. */
    if (ship_stack == NULL)
       ship_stack = array_create_size(Ship, nfiles);
@@ -1114,6 +1108,7 @@ int ships_load (void)
       vpool_enqueue( tq, ship_parseThread, &shipdata[i] );
 
    /* Wait until done processing. */
+   SDL_GL_MakeCurrent( gl_screen.window, NULL );
    vpool_wait( tq );
    SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
 
@@ -1124,8 +1119,6 @@ int ships_load (void)
          array_push_back( &ship_stack, td->ship );
       free( td->filename );
    }
-
-   SDL_DestroyMutex( ship_lock );
 
    /* Sort and done! */
    qsort( ship_stack, array_size(ship_stack), sizeof(Ship), ship_cmp );
