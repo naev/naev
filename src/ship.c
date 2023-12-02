@@ -30,6 +30,7 @@
 #include "shipstats.h"
 #include "slots.h"
 #include "toolkit.h"
+#include "threadpool.h"
 #include "unistd.h"
 
 #define XML_SHIP  "ship" /**< XML individual ship identifier. */
@@ -474,9 +475,8 @@ static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine
 
    /* Load the 3d model */
    snprintf(str, sizeof(str), SHIP_3DGFX_PATH"%s/%s/%s.obj", base, buf, buf);
-   if (PHYSFS_exists(str)) {
+   if (PHYSFS_exists(str))
       temp->gfx_3d = object_loadFromFile(str);
-   }
 
    /* Load the space sprite. */
    ext = ".webp";
@@ -1052,6 +1052,28 @@ static int ship_parse( Ship *temp, const char *filename )
    return 0;
 }
 
+SDL_mutex *ship_lock;
+
+typedef struct ShipThreadData_ {
+   char *filename;   /**< Filename. */
+   Ship ship;        /**< Ship data. */
+   int ret;          /**< Return status. */
+} ShipThreadData;
+
+static int ship_parseThread( void *ptr )
+{
+   ShipThreadData *data = ptr;
+   /* Load the ship. */
+   SDL_mutexP( ship_lock );
+   SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
+   data->ret = ship_parse( &data->ship, data->filename );
+   SDL_GL_MakeCurrent( gl_screen.window, NULL );
+   SDL_mutexV( ship_lock );
+   /* Render if necessary. */
+   //naev_renderLoadscreen();
+   return data->ret;
+}
+
 /**
  * @brief Loads all the ships in the data files.
  *
@@ -1062,6 +1084,8 @@ int ships_load (void)
    char **ship_files;
    int nfiles;
    Uint32 time = SDL_GetTicks();
+   ThreadQueue *tq = vpool_create();
+   ShipThreadData *shipdata = array_create( ShipThreadData );
 
    /* Validity. */
    ss_check();
@@ -1069,26 +1093,41 @@ int ships_load (void)
    ship_files = ndata_listRecursive( SHIP_DATA_PATH );
    nfiles = array_size( ship_files );
 
+   ship_lock = SDL_CreateMutex();
+
    /* Initialize stack if needed. */
    if (ship_stack == NULL)
       ship_stack = array_create_size(Ship, nfiles);
 
-   /* First pass to load data. */
+   /* First pass to find what ships we have to load. */
    for (int i=0; i<nfiles; i++) {
       if (ndata_matchExt( ship_files[i], "xml" )) {
-         /* Load the ship. */
-         Ship s;
-         int ret = ship_parse( &s, ship_files[i] );
-         if (ret == 0)
-            array_push_back( &ship_stack, s );
-
-         /* Render if necessary. */
-         naev_renderLoadscreen();
+         ShipThreadData *td = &array_grow( &shipdata );
+         td->filename = ship_files[i];
       }
-
-      /* Clean up. */
-      free( ship_files[i] );
+      else
+         free( ship_files[i] );
    }
+
+   /* Enqueue the jobs after the data array is done. */
+   for (int i=0; i<array_size(shipdata); i++)
+      vpool_enqueue( tq, ship_parseThread, &shipdata[i] );
+
+   /* Wait until done processing. */
+   vpool_wait( tq );
+   SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
+
+   /* Properly load the data. */
+   for (int i=0; i<array_size(shipdata); i++) {
+      ShipThreadData *td = &shipdata[i];
+      if (!td->ret)
+         array_push_back( &ship_stack, td->ship );
+      free( td->filename );
+   }
+
+   SDL_DestroyMutex( ship_lock );
+
+   /* Sort and done! */
    qsort( ship_stack, array_size(ship_stack), sizeof(Ship), ship_cmp );
 
 #if DEBUGGING

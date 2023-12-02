@@ -150,10 +150,8 @@ static ThreadQueue* tq_create (void)
  */
 static void tq_enqueue( ThreadQueue *q, void *data )
 {
-   Node *n;
-
    /* Allocate new struct. */
-   n        = calloc( 1, sizeof(Node) );
+   Node *n  = calloc( 1, sizeof(Node) );
    n->data  = data;
    n->next  = NULL;
 
