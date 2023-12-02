@@ -92,9 +92,7 @@ static char** systemname_stack = NULL; /**< System name stack corresponding to s
 StarSystem *systems_stack = NULL; /**< Star system stack. */
 static Spob *spob_stack = NULL; /**< Spob stack. */
 static VirtualSpob *vspob_stack = NULL; /**< Virtual spob stack. */
-#ifdef DEBUGGING
 static int systemstack_changed = 0; /**< Whether or not the systems_stack was changed after loading. */
-#endif /* DEBUGGING */
 static int spobstack_changed = 0; /**< Whether or not the spob_stack was changed after loading. */
 static MapShader **mapshaders = NULL; /**< Map shaders. */
 
@@ -961,7 +959,6 @@ StarSystem* system_get( const char* sysname )
    if (sysname == NULL)
       return NULL;
 
-#ifdef DEBUGGING
    if (systemstack_changed) {
       for (int i=0; i<array_size(systems_stack); i++)
          if (strcmp(systems_stack[i].name, sysname)==0)
@@ -969,7 +966,6 @@ StarSystem* system_get( const char* sysname )
       WARN(_("System '%s' not found in stack"), sysname);
       return NULL;
    }
-#endif /* DEBUGGING */
 
    const StarSystem s = {.name = (char*)sysname};
    StarSystem *found = bsearch( &s, systems_stack, array_size(systems_stack), sizeof(StarSystem), system_cmp );
@@ -2681,13 +2677,8 @@ StarSystem *system_new (void)
    StarSystem *sys;
    int id;
 
-#if DEBUGGING
    if (!systems_loading)
       systemstack_changed = 1;
-#else /* DEBUGGING */
-   if (!systems_loading)
-      WARN(_("Creating new system in non-debugging mode. Things are probably going to break horribly."));
-#endif /* DEBUGGING */
 
    /* Protect current system in case of realloc. */
    id = -1;

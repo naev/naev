@@ -103,9 +103,7 @@ static void print_usage( void )
    LOG(_("   -s f, --svol f        sets the sound volume to f"));
    LOG(_("   -d, --datapath        adds a new datapath to be mounted (i.e., appends it to the search path for game assets)"));
    LOG(_("   -X, --scale           defines the scale factor"));
-#ifdef DEBUGGING
    LOG(_("   --devmode             enables dev mode perks like the editors"));
-#endif /* DEBUGGING */
    LOG(_("   -h, --help            display this message and exit"));
    LOG(_("   -v, --version         print the version and exit"));
 }
@@ -562,9 +560,7 @@ void conf_parseCLI( int argc, char** argv )
       { "mvol", required_argument, 0, 'm' },
       { "svol", required_argument, 0, 's' },
       { "scale", required_argument, 0, 'X' },
-#ifdef DEBUGGING
       { "devmode", no_argument, 0, 'D' },
-#endif /* DEBUGGING */
       { "help", no_argument, 0, 'h' },
       { "version", no_argument, 0, 'v' },
       { NULL, 0, 0, 0 } };
@@ -625,12 +621,10 @@ void conf_parseCLI( int argc, char** argv )
          case 'X':
             conf.scalefactor = atof(optarg);
             break;
-#ifdef DEBUGGING
          case 'D':
             conf.devmode = 1;
             LOG(_("Enabling developer mode."));
             break;
-#endif /* DEBUGGING */
 
          case 'v':
             /* by now it has already displayed the version */
