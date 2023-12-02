@@ -1838,6 +1838,7 @@ static int diff_checkUpdateUniverse (void)
    if (!diff_universe_changed || diff_universe_defer)
       return 0;
 
+   /* Update presences, then safelanes. */
    space_reconstructPresences();
    safelanes_recalculate();
 

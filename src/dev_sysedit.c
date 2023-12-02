@@ -427,7 +427,8 @@ static void sysedit_btnNewSpob( unsigned int wid_unused, const char *unused )
    /* Add new spob. */
    system_addSpob( sysedit_sys, name );
 
-   /* Update economy due to galaxy modification. */
+   /* Run galaxy modifications. */
+   space_reconstructPresences();
    economy_execQueued();
 
    if (conf.devautosave) {
@@ -581,7 +582,8 @@ static void sysedit_btnRemove( unsigned int wid_unused, const char *unused )
          }
       }
 
-      /* Update economy due to galaxy modification. */
+      /* Run galaxy modifications. */
+      space_reconstructPresences();
       economy_execQueued();
    }
 }

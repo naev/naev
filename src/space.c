@@ -2490,6 +2490,8 @@ int system_addSpob( StarSystem *sys, const char *spobname )
 /**
  * @brief Removes a spob from a star system.
  *
+ * Remember to call space_reconstructPresences() after using this function.
+ *
  *    @param sys Star System to remove spob from.
  *    @param spobname Name of the spob to remove.
  *    @return 0 on success.
@@ -2519,9 +2521,6 @@ int system_rmSpob( StarSystem *sys, const char *spobname )
    /* Remove spob from system. */
    array_erase( &sys->spobs, &sys->spobs[i], &sys->spobs[i+1] );
    array_erase( &sys->spobsid, &sys->spobsid[i], &sys->spobsid[i+1] );
-
-   /* Remove the presence. */
-   space_reconstructPresences(); /* TODO defer this if removing multiple spobs at once. */
 
    /* Remove from the name stack thingy. */
    found = 0;
@@ -2596,10 +2595,6 @@ int system_rmVirtualSpob( StarSystem *sys, const char *spobname )
    /* Remove virtual spob. */
    array_erase( &sys->spobs_virtual, &sys->spobs_virtual[i], &sys->spobs_virtual[i+1] );
 
-   /* Remove the presence. */
-   space_reconstructPresences(); /* TODO defer this if removing multiple spobs at once. */
-   system_setFaction(sys);
-
    economy_addQueuedUpdate();
 
    return 0;
@@ -2657,9 +2652,6 @@ int system_rmJump( StarSystem *sys, const char *jumpname )
 
    /* Remove jump from system. */
    array_erase( &sys->jumps, &sys->jumps[i], &sys->jumps[i+1] );
-
-   /* Refresh presence */
-   system_setFaction(sys);
 
    economy_addQueuedUpdate();
 
@@ -2723,7 +2715,7 @@ StarSystem *system_new (void)
 /**
  * @brief Reconstructs the jumps for a single system.
  */
-void system_reconstructJumps (StarSystem *sys)
+void system_reconstructJumps( StarSystem *sys )
 {
    for (int j=0; j<array_size(sys->jumps); j++) {
       double dx, dy, a;
@@ -2760,6 +2752,9 @@ void systems_reconstructJumps (void)
    for (int i=0; i<array_size(systems_stack); i++) {
       StarSystem *sys = &systems_stack[i];
       system_reconstructJumps(sys);
+      /* Save jump indexes. */
+      for (int j=0; j<array_size(sys->jumps); j++)
+         sys->jumps[j].targetid = sys->jumps[j].target->id;
    }
 }
 
@@ -3364,27 +3359,10 @@ int space_load (void)
    /* Done loading. */
    systems_loading = 0;
 
-   /* Apply all the presences. */
-   for (int i=0; i<array_size(systems_stack); i++)
-      system_addAllSpobsPresence(&systems_stack[i]);
-
-   /* Determine dominant faction. */
-   for (int i=0; i<array_size(systems_stack); i++)
-      system_setFaction( &systems_stack[i] );
-
    /* Reconstruction. */
    systems_reconstructJumps();
    systems_reconstructSpobs();
-
-   /* Fine tuning. */
-   for (int i=0; i<array_size(systems_stack); i++) {
-      StarSystem *sys = &systems_stack[i];
-
-      /* Save jump indexes. */
-      for (int j=0; j<array_size(sys->jumps); j++)
-         sys->jumps[j].targetid = sys->jumps[j].target->id;
-      sys->ownerpresence = system_getPresence( sys, sys->faction );
-   }
+   space_reconstructPresences();
 
    /* Calculate commodity prices (sinusoidal model). */
    economy_initialiseCommodityPrices();
@@ -4307,7 +4285,7 @@ void system_addAllSpobsPresence( StarSystem *sys )
 /**
  * @brief Reset the presence of all systems.
  */
-void space_reconstructPresences( void )
+void space_reconstructPresences (void)
 {
    /* Reset the presence in each system. */
    for (int i=0; i<array_size(systems_stack); i++) {

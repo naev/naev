@@ -2131,7 +2131,8 @@ static void uniedit_btnEditRmSpob( unsigned int wid, const char *unused )
       return;
    }
 
-   /* Update economy due to galaxy modification. */
+   /* Run galaxy modifications. */
+   space_reconstructPresences();
    economy_execQueued();
 
    uniedit_editGenList( wid );
@@ -2197,7 +2198,8 @@ static void uniedit_btnEditAddSpobAdd( unsigned int wid, const char *unused )
       return;
    }
 
-   /* Update economy due to galaxy modification. */
+   /* Run galaxy modifications. */
+   space_reconstructPresences();
    economy_execQueued();
 
    /* Regenerate the list. */
