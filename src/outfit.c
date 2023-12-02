@@ -1441,8 +1441,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       }
       if (xml_isNode(node,"gfx_end")) {
          temp->u.blt.gfx.tex_end = xml_parseTexture( node,
-               OUTFIT_GFX_PATH"space/%s", 6, 6,
-               OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
+               OUTFIT_GFX_PATH"space/%s", 6, 6, OPENGL_TEX_MIPMAPS );
          continue;
       }
 
