@@ -1282,6 +1282,7 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
 {
    char *type;
    OutfitGFX *gfx;
+   int flags;
 
    if (outfit_isLauncher(temp))
       gfx = &temp->u.lau.gfx;
@@ -1329,12 +1330,15 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
       return -1;
    }
 
-   /* Load normal graphics. */
-   gfx->tex = xml_parseTexture( node, OUTFIT_GFX_PATH"space/%s", 6, 6,
-         OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
    /* Load the collision polygon. */
    char *buf = xml_get(node);
    outfit_loadPLG( temp, buf );
+
+   /* Load normal graphics. */
+   flags = OPENGL_TEX_MIPMAPS;
+   if (gfx->polygon==NULL)
+      flags |= OPENGL_TEX_MAPTRANS;
+   gfx->tex = xml_parseTexture( node, OUTFIT_GFX_PATH"space/%s", 6, 6, flags );
    gfx->size = (gfx->tex->sw + gfx->tex->sh)*0.5;
 
    /* Validity check: there must be 1 polygon per sprite. */

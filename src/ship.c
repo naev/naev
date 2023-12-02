@@ -417,15 +417,11 @@ static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
    surface = IMG_Load_RW( rw, 0 );
 
    /* Load the texture. */
-   /* Don't try to be smart here and avoid loading the transparency map or
-    * we'll hit issues with collisions. */
-   /*
    if (temp->polygon != NULL)
       temp->gfx_space = gl_loadImagePad( str, surface,
             OPENGL_TEX_MIPMAPS | OPENGL_TEX_VFLIP,
             surface->w, surface->h, sx, sy, 0 );
    else
-   */
       temp->gfx_space = gl_loadImagePadTrans( str, surface, rw,
             OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS | OPENGL_TEX_VFLIP,
             surface->w, surface->h, sx, sy, 0 );
@@ -728,7 +724,7 @@ static int ship_parse( Ship *temp, const char *filename )
 
          xmlr_attr_int(node, "noengine", noengine );
 
-         /* Load the polygon. */
+         /* Load the polygon, run before graphics!. */
          ship_loadPLG( temp, buf, sx*sy );
 
          /* Load the graphics. */
