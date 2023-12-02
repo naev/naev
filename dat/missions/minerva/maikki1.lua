@@ -47,7 +47,7 @@ local oldman_portrait = "old_man.png"
 local oldman_image = "old_man.png"
 
 local mainsys = system.get("Limbo")
-local searchsys = system.get("Doeston")
+local searchspob, searchsys = spob.getS("Cerberus Outpost")
 local cutscenesys = system.get("Arandon")
 local stealthsys = system.get("Zerantix")
 -- Mission states:
@@ -95,7 +95,7 @@ end
 
 
 function generate_npc ()
-   if spob.cur() == spob.get("Cerberus Outpost") then
+   if spob.cur() == searchspob then
       misn.npcAdd( "approach_oldman", _("Old Man"), oldman_portrait, _("You see a nonchalant old man sipping on his drink with a carefree aura.") )
       if mem.misn_state==3 or mem.misn_state==4 or mem.bribed_scavengers==true then
          misn.npcAdd( "approach_scavengers", minerva.scavengers.name, minerva.scavengers.portrait, minerva.scavengers.description )
@@ -208,8 +208,8 @@ She starts eating the parfait, which seems to be larger than her head.]]))
       if mem.misn_state < 0 then
          mem.misn_state = 0
          misn.osdCreate( _("Finding Maikki's Father"),
-            { fmt.f(_("Look around the {sys} system"), {sys=searchsys}) } )
-         mem.misn_marker = misn.markerAdd( searchsys, "low" )
+            { fmt.f(_("Look around {spb} ({sys} system)"), {spb=searchspob, sys=searchsys}) } )
+         mem.misn_marker = misn.markerAdd( searchspob, "low" )
          minerva.log.maikki(_("You were told her father could be near Doeston.") )
       end
    end )
