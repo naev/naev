@@ -25,10 +25,6 @@
 #include "log.h"
 #include "ndata.h"
 
-#if defined(_WIN32) || defined(_WIN64)
-# define strtok_r strtok_s
-#endif
-
 #define DELIM " \t\n"
 #define NAEV_ORTHO_SCALE 10.       /**< The cam.ortho_scale defined in the Blender script */
 #define NAEV_ORTHO_DIST 9.*M_SQRT2/**< Distance from camera to origin in the Blender script */
@@ -86,7 +82,7 @@ static int readGLfloat( GLfloat *dest, int how_many, char **saveptr )
    char *token;
    int num = 0;
 
-   while ((token = strtok_r(NULL, DELIM, saveptr)) != NULL) {
+   while ((token = SDL_strtokr(NULL, DELIM, saveptr)) != NULL) {
       double d;
       sscanf(token, "%lf", &d);
       assert(num <= how_many);
@@ -121,16 +117,16 @@ static void materials_readFromFile( const char *filename, Material **materials )
 
    Material *curr = &array_back(*materials);
 
-   line = strtok_r(filebuf, "\n", &filesaveptr);
+   line = SDL_strtokr(filebuf, "\n", &filesaveptr);
    while (line != NULL) {
       const char *token;
       char *saveptr, *copy_filename, *texture_filename;
-      token = strtok_r(line, DELIM, &saveptr);
+      token = SDL_strtokr(line, DELIM, &saveptr);
 
       if (token == NULL) {
          /* Missing */
       } else if (strcmp(token, "newmtl") == 0) {
-         token = strtok_r(NULL, DELIM, &saveptr);
+         token = SDL_strtokr(NULL, DELIM, &saveptr);
          curr = &array_grow(materials);
          curr->name = strdup(token);
          curr->Ni = 0.;
@@ -167,7 +163,7 @@ static void materials_readFromFile( const char *filename, Material **materials )
             LOG(_("Can't understand token %s"), token);
          /* Note: we can't tokenize the command line here; options may be follwed by a filename containing whitespace chars. */
          if (map != NULL) {
-            char *args = strtok_r(NULL, "\n", &saveptr), *endp;
+            char *args = SDL_strtokr(NULL, "\n", &saveptr), *endp;
             while (1) {
                while (isspace(*args))
                   args++;
@@ -207,7 +203,7 @@ static void materials_readFromFile( const char *filename, Material **materials )
          LOG(_("Can't understand token %s"), token);
       }
 
-      line = strtok_r(NULL, "\n", &filesaveptr);
+      line = SDL_strtokr(NULL, "\n", &filesaveptr);
    }
 
    free(filebuf);
@@ -251,16 +247,16 @@ Object *object_loadFromFile( const char *filename )
    object->meshes = array_create(Mesh);
    object->materials = array_create(Material);
 
-   line = strtok_r(filebuf, "\n", &filesaveptr);
+   line = SDL_strtokr(filebuf, "\n", &filesaveptr);
    while (line != NULL) {
       const char *token;
       char *saveptr, *copy_filename, *material_filename;
-      token = strtok_r(line, DELIM, &saveptr);
+      token = SDL_strtokr(line, DELIM, &saveptr);
 
       if (token == NULL) {
          /* Missing */
       } else if (strcmp(token, "mtllib") == 0) {
-         while ((token = strtok_r(NULL, DELIM, &saveptr)) != NULL) {
+         while ((token = SDL_strtokr(NULL, DELIM, &saveptr)) != NULL) {
             /* computes the path to materials */
             copy_filename = strdup(filename);
             SDL_asprintf(&material_filename, "%s/%s", dirname(copy_filename), token);
@@ -270,7 +266,7 @@ Object *object_loadFromFile( const char *filename )
          }
       } else if (strcmp(token, "o") == 0) {
          mesh_create(&object->meshes, name, corners, material);
-         token = strtok_r(NULL, DELIM, &saveptr);
+         token = SDL_strtokr(NULL, DELIM, &saveptr);
          free(name), name = strdup(token);
       } else if (strcmp(token, "v") == 0) {
          (void)array_grow(&vertex);
@@ -288,7 +284,7 @@ Object *object_loadFromFile( const char *filename )
          readGLfloat(array_end(normal) - 3, 3, &saveptr);
       } else if (strcmp(token, "f") == 0) {
          int num = 0;
-         while ((token = strtok_r(NULL, DELIM, &saveptr)) != NULL) {
+         while ((token = SDL_strtokr(NULL, DELIM, &saveptr)) != NULL) {
             int i_v = 0, i_t = 0, i_n = 0;
             if (sscanf(token, "%d//%d", &i_v, &i_n) < 2)
                sscanf(token, "%d/%d/%d", &i_v, &i_t, &i_n);
@@ -313,7 +309,7 @@ Object *object_loadFromFile( const char *filename )
          mesh_create(&object->meshes, name, corners, material);
 
          /* a new mesh with the same name */
-         token = strtok_r(NULL, DELIM, &saveptr);
+         token = SDL_strtokr(NULL, DELIM, &saveptr);
          for (material = 0; material < array_size(object->materials); ++material)
             if (strcmp(token, object->materials[material].name) == 0)
                break;
@@ -329,7 +325,7 @@ Object *object_loadFromFile( const char *filename )
          LOG(_("Can't understand token %s"), token);
       }
 
-      line = strtok_r(NULL, "\n", &filesaveptr);
+      line = SDL_strtokr(NULL, "\n", &filesaveptr);
    }
 
    mesh_create(&object->meshes, name, corners, material);

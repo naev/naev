@@ -9,6 +9,8 @@
 
 /** @cond */
 #include "naev.h"
+
+#include "SDL.h"
 /** @endcond */
 
 #include "collision.h"
@@ -35,9 +37,10 @@ void LoadPolygon( CollPoly* polygon, xmlNodePtr node )
    xmlNodePtr cur = node->children;
    do {
       if (xml_isNode(cur,"x")) {
+         char *saveptr;
          char *list = xml_get(cur);
          /* split the list of coordiantes */
-         char *ch = strtok(list, ",");
+         char *ch = SDL_strtokr(list, ",", &saveptr);
          polygon->x = array_create_size(float, 32);
          polygon->xmin = 0;
          polygon->xmax = 0;
@@ -46,13 +49,14 @@ void LoadPolygon( CollPoly* polygon, xmlNodePtr node )
             array_push_back( &polygon->x, d );
             polygon->xmin = MIN( polygon->xmin, d );
             polygon->xmax = MAX( polygon->xmax, d );
-            ch = strtok(NULL, ",");
+            ch = SDL_strtokr(NULL, ",", &saveptr);
          }
       }
       else if (xml_isNode(cur,"y")) {
+         char *saveptr;
          char *list = xml_get(cur);
          /* split the list of coordiantes */
-         char *ch = strtok(list, ",");
+         char *ch = SDL_strtokr(list, ",", &saveptr);
          polygon->y = array_create_size(float, 32);
          polygon->ymin = 0;
          polygon->ymax = 0;
@@ -61,7 +65,7 @@ void LoadPolygon( CollPoly* polygon, xmlNodePtr node )
             array_push_back( &polygon->y, d );
             polygon->ymin = MIN( polygon->ymin, d );
             polygon->ymax = MAX( polygon->ymax, d );
-            ch = strtok(NULL, ",");
+            ch = SDL_strtokr(NULL, ",", &saveptr);
          }
       }
    } while (xml_nextNode(cur));
