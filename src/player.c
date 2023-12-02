@@ -4080,7 +4080,7 @@ static int player_parseEscorts( xmlNodePtr parent )
 
       xmlr_attr_strd( node, "type", buf );
       xmlr_attr_strd( node, "name", name );
-      if (name==NULL) /* Workaround for old saves, TODO remove around 0.11 */
+      if (name==NULL) /* Workaround for < 0.10.0 old saves, TODO remove around 0.12.0 or 0.13.0. */
          name = xml_getStrd( node );
       if (strcmp(buf,"bay")==0)
          escort_addList( player.p, ship_get(name), ESCORT_TYPE_BAY, 0, 1 );
