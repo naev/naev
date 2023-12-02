@@ -43,6 +43,7 @@ typedef struct glTexList_ {
    int sy; /**< Y sprites */
 } glTexList;
 static glTexList* texture_list = NULL; /**< Texture list. */
+static SDL_mutex* tex_lock = NULL;
 
 /*
  * prototypes
@@ -227,6 +228,8 @@ int gl_fboCreate( GLuint *fbo, GLuint *tex, GLsizei width, GLsizei height )
 {
    GLenum status;
 
+   SDL_mutexP( tex_lock );
+
    /* Create the render buffer. */
    glGenTextures(1, tex);
    glBindTexture(GL_TEXTURE_2D, *tex);
@@ -252,6 +255,8 @@ int gl_fboCreate( GLuint *fbo, GLuint *tex, GLsizei width, GLsizei height )
    /* Restore state. */
    glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
 
+   SDL_mutexV( tex_lock );
+
    gl_checkErr();
 
    return (status==GL_FRAMEBUFFER_COMPLETE);
@@ -259,6 +264,8 @@ int gl_fboCreate( GLuint *fbo, GLuint *tex, GLsizei width, GLsizei height )
 
 glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const char* name )
 {
+   SDL_mutexP( tex_lock );
+
    /* Set up the texture defaults */
    glTexture *texture = calloc( 1, sizeof(glTexture) );
 
@@ -289,6 +296,8 @@ glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const ch
       gl_texAdd( texture, sx, sy );
    }
 
+   SDL_mutexV( tex_lock );
+
    return texture;
 }
 
@@ -305,6 +314,8 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
 {
    GLuint texture;
    GLfloat param;
+
+   SDL_mutexP( tex_lock );
 
    /* Get texture. */
    texture = gl_texParameters( flags );
@@ -356,6 +367,8 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
       SDL_FreeSurface( surface );
    gl_checkErr();
 
+   SDL_mutexV( tex_lock );
+
    return texture;
 }
 
@@ -382,11 +395,14 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
    char *cachefile;
    char digest[33];
 
+   SDL_mutexP( tex_lock );
+
    if ((name != NULL) && !(flags & OPENGL_TEX_SKIPCACHE)) {
       texture = gl_texExists( name, sx, sy );
       if ((texture != NULL) && (texture->trans != NULL)) {
          if (freesur)
             SDL_FreeSurface( surface );
+         SDL_mutexV( tex_lock );
          return texture;
       }
    }
@@ -469,6 +485,7 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
    else if (freesur)
       SDL_FreeSurface( surface );
    texture->trans = trans;
+   SDL_mutexV( tex_lock );
    return texture;
 }
 
@@ -489,17 +506,23 @@ glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
       unsigned int flags, int w, int h, int sx, int sy, int freesur )
 {
    glTexture *texture;
+   SDL_mutexP( tex_lock );
 
    /* Make sure doesn't already exist. */
    if ((name != NULL) && !(flags & OPENGL_TEX_SKIPCACHE)) {
       texture = gl_texExists( name, sx, sy );
-      if (texture != NULL)
+      if (texture != NULL) {
+         SDL_mutexV( tex_lock );
          return texture;
+      }
    }
 
-   if (flags & OPENGL_TEX_MAPTRANS)
-      return gl_loadImagePadTrans( name, surface, NULL, flags, w, h,
+   if (flags & OPENGL_TEX_MAPTRANS) {
+      texture = gl_loadImagePadTrans( name, surface, NULL, flags, w, h,
             sx, sy, freesur );
+      SDL_mutexV( tex_lock );
+      return texture;
+   }
 
    /* set up the texture defaults */
    texture = calloc( 1, sizeof(glTexture) );
@@ -524,6 +547,7 @@ glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
    else
       texture->name = NULL;
 
+   SDL_mutexV( tex_lock );
    return texture;
 }
 
@@ -552,21 +576,28 @@ glTexture* gl_loadImage( SDL_Surface* surface, unsigned int flags )
 static glTexture* gl_texExists( const char* path, int sx, int sy )
 {
    /* Null does never exist. */
-   if (path==NULL)
+   if (path==NULL) {
       return NULL;
+   }
+   SDL_mutexP( tex_lock );
 
    /* Check to see if it already exists */
-   if (texture_list == NULL)
+   if (texture_list == NULL) {
+      SDL_mutexV( tex_lock );
       return NULL;
+   }
 
    /* Do some fancy binary search. */
    const glTexList q = { .path=path, .sx=sx, .sy=sy };
    glTexList *t = bsearch( &q, texture_list, array_size(texture_list), sizeof(glTexList), tex_cmp );
-   if (t==NULL)
+   if (t==NULL) {
+      SDL_mutexV( tex_lock );
       return NULL;
+   }
 
    /* Use new texture. */
    t->used++;
+   SDL_mutexV( tex_lock );
    return t->tex;
 }
 
@@ -682,6 +713,7 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
 static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, unsigned int flags )
 {
    SDL_Surface *surface;
+   glTexture *tex;
 
    /* Placeholder for warnings. */
    if (path==NULL)
@@ -700,9 +732,13 @@ static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, unsigne
       return NULL;
    }
 
+   SDL_mutexP( tex_lock );
    if (flags & OPENGL_TEX_MAPTRANS)
-      return gl_loadImagePadTrans( path, surface, rw, flags, surface->w, surface->h, 1, 1, 1 );
-   return gl_loadImagePad( path, surface, flags, surface->w, surface->h, 1, 1, 1 );
+      tex = gl_loadImagePadTrans( path, surface, rw, flags, surface->w, surface->h, 1, 1, 1 );
+   else
+      tex = gl_loadImagePad( path, surface, flags, surface->w, surface->h, 1, 1, 1 );
+   SDL_mutexV( tex_lock );
+   return tex;
 }
 
 /**
@@ -790,6 +826,8 @@ void gl_freeTexture( glTexture *texture )
    if (texture == NULL)
       return;
 
+   SDL_mutexP( tex_lock );
+
    /* see if we can find it in stack */
    for (int i=0; i<array_size(texture_list); i++) {
       glTexList *cur = &texture_list[i];
@@ -809,6 +847,7 @@ void gl_freeTexture( glTexture *texture )
          /* free the list node */
          array_erase( &texture_list, &texture_list[i], &texture_list[i+1] );
       }
+      SDL_mutexV( tex_lock );
       return; /* we already found it so we can exit */
    }
 
@@ -823,6 +862,8 @@ void gl_freeTexture( glTexture *texture )
    free(texture);
 
    gl_checkErr();
+
+   SDL_mutexV( tex_lock );
 }
 
 /**
@@ -838,13 +879,16 @@ glTexture* gl_dupTexture( const glTexture *texture )
       return NULL;
 
    /* check to see if it already exists */
+   SDL_mutexP( tex_lock );
    for (int i=0; i<array_size(texture_list); i++) {
       glTexList *cur = &texture_list[i];
       if (texture == cur->tex) {
          cur->used++;
+         SDL_mutexV( tex_lock );
          return cur->tex;
       }
    }
+   SDL_mutexV( tex_lock );
 
    /* Invalid texture. */
    WARN(_("Unable to duplicate texture '%s'."), texture->name);
@@ -917,6 +961,7 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
  */
 int gl_initTextures (void)
 {
+   tex_lock = SDL_CreateMutex();
    return 0;
 }
 
@@ -938,6 +983,8 @@ void gl_exitTextures (void)
    }
 
    array_free(texture_list);
+
+   SDL_DestroyMutex( tex_lock );
 }
 
 /**
