@@ -14,6 +14,7 @@
 #include "collision.h"
 
 #include "log.h"
+#include "array.h"
 
 /*
  * Prototypes
@@ -35,18 +36,14 @@ void LoadPolygon( CollPoly* polygon, xmlNodePtr node )
    do {
       if (xml_isNode(cur,"x")) {
          char *list = xml_get(cur);
-         int i = 0;
          /* split the list of coordiantes */
          char *ch = strtok(list, ",");
-         polygon->x = malloc( sizeof(float) );
+         polygon->x = array_create_size(float, 32);
          polygon->xmin = 0;
          polygon->xmax = 0;
          while (ch != NULL) {
-            float d;
-            i++;
-            polygon->x = realloc( polygon->x, sizeof(float) * i );
-            d = atof(ch);
-            polygon->x[i-1] = d;
+            float d = atof(ch);
+            array_push_back( &polygon->x, d );
             polygon->xmin = MIN( polygon->xmin, d );
             polygon->xmax = MAX( polygon->xmax, d );
             ch = strtok(NULL, ",");
@@ -54,27 +51,32 @@ void LoadPolygon( CollPoly* polygon, xmlNodePtr node )
       }
       else if (xml_isNode(cur,"y")) {
          char *list = xml_get(cur);
-         int i = 0;
          /* split the list of coordiantes */
          char *ch = strtok(list, ",");
-         polygon->y = malloc( sizeof(float) );
+         polygon->y = array_create_size(float, 32);
          polygon->ymin = 0;
          polygon->ymax = 0;
          while (ch != NULL) {
-            float d;
-            i++;
-            polygon->y = realloc( polygon->y, sizeof(float) * i );
-            d = atof(ch);
-            polygon->y[i-1] = d;
+            float d = atof(ch);
+            array_push_back( &polygon->y, d );
             polygon->ymin = MIN( polygon->ymin, d );
             polygon->ymax = MAX( polygon->ymax, d );
             ch = strtok(NULL, ",");
          }
-         polygon->npt = i;
       }
    } while (xml_nextNode(cur));
 
+   polygon->npt = array_size(polygon->x);
+   if (array_size(polygon->y) != polygon->npt)
+      WARN(_("Polygon with mismatch of number of |x|=%d and |y|=%d coordinates detected!"), polygon->npt, array_size(polygon->y) );
+
    return;
+}
+
+void FreePolygon( CollPoly *polygon )
+{
+   array_free( polygon->x );
+   array_free( polygon->y );
 }
 
 /**

@@ -1205,13 +1205,11 @@ void ships_free (void)
       array_free(s->gfx_overlays);
 
       /* Free collision polygons. */
-      for (int j=0; j<array_size(s->polygon); j++) {
-         free(s->polygon[j].x);
-         free(s->polygon[j].y);
-      }
+      for (int j=0; j<array_size(s->polygon); j++)
+         FreePolygon(&s->polygon[j]);
+      array_free(s->polygon);
 
       array_free(s->trail_emitters);
-      array_free(s->polygon);
 
       /* Free tags. */
       for (int j=0; j<array_size(s->tags); j++)

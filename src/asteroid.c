@@ -952,10 +952,8 @@ void asteroids_free (void)
       array_free(at->gfxs);
 
       /* Free collision polygons. */
-      for (int j=0; j<array_size(at->polygon); j++) {
-         free(at->polygon[j].x);
-         free(at->polygon[j].y);
-      }
+      for (int j=0; j<array_size(at->polygon); j++)
+         FreePolygon( &at->polygon[j] );
       array_free(at->polygon);
    }
    array_free(asteroid_types);

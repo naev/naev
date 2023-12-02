@@ -11,8 +11,8 @@
  * @brief Represents a polygon used for collision detection.
  */
 typedef struct CollPoly_ {
-   float* x; /**< List of X coordinates of the points. */
-   float* y; /**< List of Y coordinates of the points. */
+   float *x; /**< List of X coordinates of the points. */
+   float *y; /**< List of Y coordinates of the points. */
    float xmin; /**< Min of x. */
    float xmax; /**< Max of x. */
    float ymin; /**< Min of y. */
@@ -21,10 +21,11 @@ typedef struct CollPoly_ {
 } CollPoly;
 
 /* Loads a polygon data from xml. */
-void LoadPolygon( CollPoly* polygon, xmlNodePtr node );
+void LoadPolygon( CollPoly *polygon, xmlNodePtr node );
+void FreePolygon( CollPoly *polygon );
 
 /* Rotates a polygon. */
-void RotatePolygon( CollPoly* rpolygon, CollPoly* ipolygon, float theta );
+void RotatePolygon( CollPoly *rpolygon, CollPoly *ipolygon, float theta );
 
 /* Returns 1 if collision is detected */
 int CollideSprite( const glTexture* at, const int asx, const int asy, const vec2* ap,

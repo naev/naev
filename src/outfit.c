@@ -3034,10 +3034,8 @@ void outfit_free (void)
       if (gfx != NULL) {
          gl_freeTexture( gfx->tex );
          gl_freeTexture( gfx->tex_end );
-         for (int j=0; j<array_size(gfx->polygon); j++) {
-            free(gfx->polygon[j].x);
-            free(gfx->polygon[j].y);
-         }
+         for (int j=0; j<array_size(gfx->polygon); j++)
+            FreePolygon( &gfx->polygon[j] );
          array_free(gfx->polygon);
          glDeleteProgram(gfx->program);
       }
