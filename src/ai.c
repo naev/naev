@@ -1841,9 +1841,14 @@ static int aiL_careful_face( lua_State *L )
 {
    vec2 *tv, F, F1;
    Pilot* p;
-   double k_diff, k_goal, k_enemy, k_mult,
-          d, diff, dist;
+   double d, diff, dist;
    Pilot *const* pilot_stack;
+   int x, y, r;
+
+   /* Default gains. */
+   const double k_diff = 10.;
+   const double k_goal = 1.;
+   const double k_enemy = 6e6;
 
    /* Init some variables */
    pilot_stack = pilot_getAll();
@@ -1867,43 +1872,43 @@ static int aiL_careful_face( lua_State *L )
    else
       NLUA_INVALID_PARAMETER(L);
 
-   /* Default gains. */
-   k_diff = 10.;
-   k_goal = 1.;
-   k_enemy = 6000000.;
-
-   /* Init the force */
-   vec2_cset( &F, 0., 0.) ;
+   /* Init the force, where F1 is roughly normalized to norm 1. */
+   vec2_csetmin( &F, 0., 0.) ;
    vec2_cset( &F1, tv->x - cur_pilot->solid.pos.x, tv->y - cur_pilot->solid.pos.y) ;
    dist = VMOD(F1) + 0.1; /* Avoid / 0 */
    vec2_cset( &F1, F1.x * k_goal / dist, F1.y * k_goal / dist) ;
 
    /* Cycle through all the pilots in order to compute the force */
-   /* TODO probably limit the range we check using quadtrees. */
-   for (int i=0; i<array_size(pilot_stack); i++) {
-      const Pilot *p_i = pilot_stack[i];
+   x = round(cur_pilot->solid.pos.x);
+   y = round(cur_pilot->solid.pos.y);
+   /* It's modulated by k_enemy * k_mult / dist^2, where k_mult<1 and k_enemy=6e6
+    * A distance of 5000 should give a maximum factor of 0.24, but it should be
+    * far away enough to not matter (hopefully).. */
+   r = 5000;
+   pilot_collideQueryIL( &ai_qtquery, x-r, y-r, x+r, y+r );
+   for (int i=0; i<il_size(&ai_qtquery); i++ ) {
+      const Pilot *p_i = pilot_stack[ il_get( &ai_qtquery, i, 0 ) ];
 
       /* Valid pilot isn't self, is in range, isn't the target and isn't disabled */
-      if (pilot_isDisabled(p_i) )
-         continue;
       if (p_i->id == cur_pilot->id)
          continue;
       if (p_i->id == p->id)
          continue;
-      if (pilot_inRangePilot(cur_pilot, p_i, NULL) != 1)
+      if (pilot_isDisabled(p_i) )
+         continue;
+      if (pilot_inRangePilot(cur_pilot, p_i, &dist) != 1)
          continue;
 
       /* If the enemy is too close, ignore it*/
-      dist = vec2_dist(&p_i->solid.pos, &cur_pilot->solid.pos);
-      if (dist < 750.)
+      if (dist < pow2(750.))
          continue;
-
-      k_mult = pilot_relhp( p_i, cur_pilot ) * pilot_reldps( p_i, cur_pilot );
+      dist = sqrt(dist); /* Have to undo the square. */
 
       /* Check if friendly or not */
       if (areEnemies(cur_pilot->faction, p_i->faction)) {
+         double k_mult = pilot_relhp( p_i, cur_pilot ) * pilot_reldps( p_i, cur_pilot );
          double factor = k_enemy * k_mult / (dist*dist*dist);
-         vec2_cset( &F, F.x + factor * (cur_pilot->solid.pos.x - p_i->solid.pos.x),
+         vec2_csetmin( &F, F.x + factor * (cur_pilot->solid.pos.x - p_i->solid.pos.x),
                 F.y + factor * (cur_pilot->solid.pos.y - p_i->solid.pos.y) );
       }
    }
