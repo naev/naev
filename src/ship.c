@@ -1109,6 +1109,7 @@ int ships_load (void)
       else
          free( ship_files[i] );
    }
+   array_free( ship_files );
 
    /* Enqueue the jobs after the data array is done. */
    for (int i=0; i<array_size(shipdata); i++)
@@ -1126,6 +1127,7 @@ int ships_load (void)
          array_push_back( &ship_stack, td->ship );
       free( td->filename );
    }
+   array_free(shipdata);
 
    /* Sort and done! */
    qsort( ship_stack, array_size(ship_stack), sizeof(Ship), ship_cmp );
@@ -1191,9 +1193,6 @@ int ships_load (void)
    }
    else
       DEBUG( n_( "Loaded %d Ship", "Loaded %d Ships", array_size(ship_stack) ), array_size(ship_stack) );
-
-   /* Clean up. */
-   array_free( ship_files );
 
    return 0;
 }
