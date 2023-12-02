@@ -1548,7 +1548,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    if (temp->u.blt.radius > 0.) {
       char radius[STRMAX_SHORT];
       snprintf(radius, sizeof(radius), outfit_isProp(temp, OUTFIT_PROP_WEAP_FRIENDLYFIRE) ? p_("friendlyfire","#r!! %s !!#0") : "%s", _("Hit radius"));
-      t_os_stat radius_opts = {
+      const t_os_stat radius_opts = {
          .name = radius,
          .unit = _UNIT_DISTANCE,
          .color = 0,
@@ -1655,9 +1655,11 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          col_gammaToLinear( &temp->u.bem.colour );
          shader = xml_get(node);
          if (gl_has( OPENGL_SUBROUTINES )) {
+            gl_contextSet();
             temp->u.bem.shader = glGetSubroutineIndex( shaders.beam.program, GL_FRAGMENT_SHADER, shader );
             if (temp->u.bem.shader == GL_INVALID_INDEX)
                WARN("Beam outfit '%s' has unknown shader function '%s'", temp->name, shader);
+            gl_contextUnset();
          }
          continue;
       }
@@ -2301,7 +2303,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    array_shrink( &temp->u.map->systems );
-   array_shrink( &temp->u.map->spobs  );
+   array_shrink( &temp->u.map->spobs   );
    array_shrink( &temp->u.map->jumps   );
 
    if (temp->summary_raw == NULL) {
@@ -2340,7 +2342,7 @@ static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    temp->u.lmap.spob_detect = pow2( temp->u.lmap.spob_detect );
-   temp->u.lmap.jump_detect  = pow2( temp->u.lmap.jump_detect );
+   temp->u.lmap.jump_detect = pow2( temp->u.lmap.jump_detect );
 
    /* Set short description. */
    temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
@@ -2465,7 +2467,7 @@ static int outfit_parse( Outfit* temp, const char* file )
    temp->lua_update     = LUA_NOREF;
    temp->lua_ontoggle   = LUA_NOREF;
    temp->lua_onhit      = LUA_NOREF;
-   temp->lua_outofenergy = LUA_NOREF;
+   temp->lua_outofenergy= LUA_NOREF;
    temp->lua_onshoot    = LUA_NOREF;
    temp->lua_onstealth  = LUA_NOREF;
    temp->lua_onscanned  = LUA_NOREF;
@@ -2475,7 +2477,7 @@ static int outfit_parse( Outfit* temp, const char* file )
    temp->lua_takeoff    = LUA_NOREF;
    temp->lua_jumpin     = LUA_NOREF;
    temp->lua_board      = LUA_NOREF;
-   temp->lua_keydoubletap = LUA_NOREF;
+   temp->lua_keydoubletap=LUA_NOREF;
    temp->lua_keyrelease = LUA_NOREF;
    temp->lua_onimpact   = LUA_NOREF;
    temp->lua_onmiss     = LUA_NOREF;
