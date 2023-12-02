@@ -32,7 +32,6 @@
  * @brief Represents a node in the texture list.
  */
 typedef struct glTexList_ {
-   struct glTexList_ *next; /**< Next in linked list */
    glTexture *tex; /**< associated texture */
    int used; /**< counts how many times texture is being used */
    /* TODO We currently treat images with different number of sprites as
@@ -542,11 +541,12 @@ static glTexture* gl_texExists( const char* path, int sx, int sy )
    if (path==NULL)
       return NULL;
 
-   /* check to see if it already exists */
+   /* Check to see if it already exists */
    if (texture_list == NULL)
       return NULL;
 
-   for (glTexList *cur=texture_list; cur!=NULL; cur=cur->next) {
+   for (int i=0; i<array_size(texture_list); i++) {
+      glTexList *cur = &texture_list[i];
       /* Must match filename. */
       if (strcmp(path,cur->tex->name)!=0)
          continue;
@@ -567,24 +567,18 @@ static glTexture* gl_texExists( const char* path, int sx, int sy )
  */
 static int gl_texAdd( glTexture *tex, int sx, int sy )
 {
-   glTexList *new, *last = texture_list;
+   glTexList *new;
+
+   /* Get the new list element. */
+   if (texture_list == NULL)
+      texture_list = array_create( glTexList );
 
    /* Create the new node */
-   new = malloc( sizeof(glTexList) );
-   new->next = NULL;
+   new = &array_grow( &texture_list );
    new->used = 1;
    new->tex  = tex;
    new->sx   = sx;
    new->sy   = sy;
-
-   if (texture_list == NULL) /* special condition - creating new list */
-      texture_list = new;
-   else {
-      while (last->next != NULL)
-         last = last->next;
-
-      last->next = new;
-   }
 
    return 0;
 }
@@ -782,37 +776,29 @@ glTexture* gl_newSpriteRWops( const char* path, SDL_RWops *rw,
  */
 void gl_freeTexture( glTexture *texture )
 {
-   glTexList *last;
-
    if (texture == NULL)
       return;
 
    /* see if we can find it in stack */
-   last = NULL;
-   for (glTexList *cur=texture_list; cur!=NULL; cur=cur->next) {
-      if (cur->tex == texture) { /* found it */
-         cur->used--;
-         if (cur->used <= 0) { /* not used anymore */
-            /* free the texture */
-            glDeleteTextures( 1, &texture->texture );
-            free(texture->trans);
-            free(texture->name);
-            free(texture);
+   for (int i=0; i<array_size(texture_list); i++) {
+      glTexList *cur = &texture_list[i];
 
-            /* free the list node */
-            if (last == NULL) { /* case there's no texture before it */
-               if (cur->next != NULL)
-                  texture_list = cur->next;
-               else /* case it's the last texture */
-                  texture_list = NULL;
-            }
-            else
-               last->next = cur->next;
-            free(cur);
-         }
-         return; /* we already found it so we can exit */
+      if (cur->tex!=texture)
+         continue;
+
+      /* found it */
+      cur->used--;
+      if (cur->used <= 0) { /* not used anymore */
+         /* free the texture */
+         glDeleteTextures( 1, &texture->texture );
+         free(texture->trans);
+         free(texture->name);
+         free(texture);
+
+         /* free the list node */
+         array_erase( &texture_list, &texture_list[i], &texture_list[i+1] );
       }
-      last = cur;
+      return; /* we already found it so we can exit */
    }
 
    /* Not found */
@@ -841,12 +827,11 @@ glTexture* gl_dupTexture( const glTexture *texture )
       return NULL;
 
    /* check to see if it already exists */
-   if (texture_list != NULL) {
-      for (glTexList *cur=texture_list; cur!=NULL; cur=cur->next) {
-         if (texture == cur->tex) {
-            cur->used++;
-            return cur->tex;
-         }
+   for (int i=0; i<array_size(texture_list); i++) {
+      glTexList *cur = &texture_list[i];
+      if (texture == cur->tex) {
+         cur->used++;
+         return cur->tex;
       }
    }
 
@@ -929,12 +914,19 @@ int gl_initTextures (void)
  */
 void gl_exitTextures (void)
 {
-   /* Make sure there's no texture leak */
-   if (texture_list != NULL) {
-      DEBUG(_("Texture leak detected!"));
-      for (glTexList *tex=texture_list; tex!=NULL; tex=tex->next)
-         DEBUG( n_( "   '%s' opened %d time", "   '%s' opened %d times", tex->used ), tex->tex->name, tex->used );
+   if (array_size(texture_list) <= 0) {
+      array_free(texture_list);
+      return;
    }
+
+   /* Make sure there's no texture leak */
+   DEBUG(_("Texture leak detected!"));
+   for (int i=0; i<array_size(texture_list); i++) {
+      glTexList *cur = &texture_list[i];
+      DEBUG( n_( "   '%s' opened %d time", "   '%s' opened %d times", cur->used ), cur->tex->name, cur->used );
+   }
+
+   array_free(texture_list);
 }
 
 /**
