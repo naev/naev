@@ -1105,11 +1105,6 @@ static void window_cleanup( Window *wdw )
    if (wdw->close_fptr != NULL)
       wdw->close_fptr( wdw->id, wdw->name );
    wdw->close_fptr = NULL;
-
-   /* Run the cleanup function. */
-   if (wdw->cleanup_fptr != NULL)
-      wdw->cleanup_fptr( wdw->id, wdw->name );
-   wdw->cleanup_fptr = NULL;
 }
 
 /**
