@@ -47,6 +47,15 @@
 
 #define STATS_DESC_MAX 512 /**< Maximum length for statistics description. */
 
+/**
+ * @brief Structure for threaded loading.
+ */
+typedef struct ShipThreadData_ {
+   char *filename;   /**< Filename. */
+   Ship ship;        /**< Ship data. */
+   int ret;          /**< Return status. */
+} ShipThreadData;
+
 static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
 
 /*
@@ -55,6 +64,7 @@ static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
 static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine );
 static int ship_loadPLG( Ship *temp, const char *buf, int size_hint );
 static int ship_parse( Ship *temp, const char *filename );
+static int ship_parseThread( void *ptr );
 static void ship_freeSlot( ShipOutfitSlot* s );
 
 /**
@@ -1052,12 +1062,9 @@ static int ship_parse( Ship *temp, const char *filename )
    return 0;
 }
 
-typedef struct ShipThreadData_ {
-   char *filename;   /**< Filename. */
-   Ship ship;        /**< Ship data. */
-   int ret;          /**< Return status. */
-} ShipThreadData;
-
+/**
+ * @brief Wrapper for threaded loading.
+ */
 static int ship_parseThread( void *ptr )
 {
    ShipThreadData *data = ptr;
