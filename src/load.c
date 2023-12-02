@@ -555,8 +555,9 @@ void load_loadGameMenu (void)
          "btnDelete", _("Delete"), load_menu_delete );
 
    if (old_saves_detected && !player_warned) {
-      /* TODO we should print the full OS path if possible here. */
-      dialogue_alert( _("Naev has detected saves in pre-0.10.0 format, and has automatically migrated them to the new format. Old saves have been backed up at '%s'."), "saves-pre-0.10.0");
+      char buf[STRMAX_SHORT];
+      snprintf( buf, sizeof(buf), "%s%s", PHYSFS_getRealDir("saves-pre-0.10.0"), "saves-pre-0.10.0" );
+      dialogue_alert( _("Naev has detected saves in pre-0.10.0 format, and has automatically migrated them to the new format. Old saves have been backed up at '%s'."), buf );
       player_warned = 1;
    }
 }
