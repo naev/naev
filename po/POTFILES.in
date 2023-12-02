@@ -3289,6 +3289,7 @@ dat/scripts/common/foodbiz.lua
 dat/scripts/common/frontier.lua
 dat/scripts/common/frontier_war.lua
 dat/scripts/common/gauntlet.lua
+dat/scripts/common/goddard.lua
 dat/scripts/common/lucas.lua
 dat/scripts/common/minerva.lua
 dat/scripts/common/nebu_research.lua
@@ -3298,6 +3299,7 @@ dat/scripts/common/npc.lua
 dat/scripts/common/pirate.lua
 dat/scripts/common/poi.lua
 dat/scripts/common/prefix.lua
+dat/scripts/common/proteron.lua
 dat/scripts/common/rehab.lua
 dat/scripts/common/sciencegonewrong.lua
 dat/scripts/common/shadow.lua
