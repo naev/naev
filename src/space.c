@@ -92,6 +92,9 @@ static char** systemname_stack = NULL; /**< System name stack corresponding to s
 StarSystem *systems_stack = NULL; /**< Star system stack. */
 static Spob *spob_stack = NULL; /**< Spob stack. */
 static VirtualSpob *vspob_stack = NULL; /**< Virtual spob stack. */
+/* TODO get rid of the stack_changed stuff, and just redo all the id/pointer stuff.
+ * Main issue will be redoing the Lua system/spob modules to handle such a
+ * case, but can be done with  the weapon module as a referenc. */
 static int systemstack_changed = 0; /**< Whether or not the systems_stack was changed after loading. */
 static int spobstack_changed = 0; /**< Whether or not the spob_stack was changed after loading. */
 static MapShader **mapshaders = NULL; /**< Map shaders. */
@@ -959,6 +962,7 @@ StarSystem* system_get( const char* sysname )
    if (sysname == NULL)
       return NULL;
 
+   /* Somethig was added, and since we store IDs too, everything can't be sorted anymore by name... */
    if (systemstack_changed) {
       for (int i=0; i<array_size(systems_stack); i++)
          if (strcmp(systems_stack[i].name, sysname)==0)
@@ -1051,7 +1055,7 @@ Spob* spob_get( const char* spobname )
       return NULL;
    }
 
-#ifdef DEBUGGING
+   /* Somethig was added, and since we store IDs too, everything can't be sorted anymore by name... */
    if (spobstack_changed) {
       for (int i=0; i<array_size(spob_stack); i++)
          if (strcmp(spob_stack[i].name, spobname)==0)
@@ -1059,7 +1063,6 @@ Spob* spob_get( const char* spobname )
       WARN(_("Spob '%s' not found in the universe"), spobname);
       return NULL;
    }
-#endif /* DEBUGGING */
 
    const Spob p = {.name = (char*)spobname};
    Spob *found = bsearch( &p, spob_stack, array_size(spob_stack), sizeof(Spob), spob_cmp );
@@ -1708,13 +1711,8 @@ Spob *spob_new (void)
    Spob *p, *old_stack;
    int realloced;
 
-#if DEBUGGING
    if (!systems_loading)
       spobstack_changed = 1;
-#else /* DEBUGGING */
-   if (!systems_loading)
-      WARN(_("Creating new spob in non-debugging mode. Things are probably going to break horribly."));
-#endif /* DEBUGGING */
 
    /* Grow and initialize memory. */
    old_stack   = spob_stack;
