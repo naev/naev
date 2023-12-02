@@ -33,6 +33,7 @@
  */
 typedef struct glTexList_ {
    glTexture *tex; /**< associated texture */
+   const char *path; /**< Path pointer, stored in tex. */
    int used; /**< counts how many times texture is being used */
    /* TODO We currently treat images with different number of sprites as
     * different images, i.e., they get reloaded and use more memory. However,
@@ -59,6 +60,20 @@ static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, unsigne
 /* List. */
 static glTexture* gl_texExists( const char* path, int sx, int sy );
 static int gl_texAdd( glTexture *tex, int sx, int sy );
+static int tex_cmp( const void *p1, const void *p2 );
+
+static int tex_cmp( const void *p1, const void *p2 )
+{
+   const glTexList *t1 = (const glTexList*) p1;
+   const glTexList *t2 = (const glTexList*) p2;
+   int ret = strcmp( t1->path, t2->path );
+   if (ret != 0)
+      return ret;
+   ret = t1->sx - t2->sx;
+   if (ret != 0)
+      return ret;
+   return t1->sy - t2->sy;
+}
 
 /**
  * @brief Gets the alpha value of a pixel.
@@ -430,8 +445,7 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
    }
    else {
       /* We could hash raw pixel data here, but that's slower than just
-       * generating the map from scratch.
-       */
+       * generating the map from scratch. */
       WARN(_("Texture '%s' has no RWops"), name);
    }
 
@@ -545,21 +559,15 @@ static glTexture* gl_texExists( const char* path, int sx, int sy )
    if (texture_list == NULL)
       return NULL;
 
-   for (int i=0; i<array_size(texture_list); i++) {
-      glTexList *cur = &texture_list[i];
-      /* Must match filename. */
-      if (strcmp(path,cur->tex->name)!=0)
-         continue;
-      /* Must match size. */
-      if ((cur->sx!=sx) || (cur->sy!=sy))
-         continue;
+   /* Do some fancy binary search. */
+   const glTexList q = { .path=path, .sx=sx, .sy=sy };
+   glTexList *t = bsearch( &q, texture_list, array_size(texture_list), sizeof(glTexList), tex_cmp );
+   if (t==NULL)
+      return NULL;
 
-      /* Use new texture. */
-      cur->used++;
-      return cur->tex;
-   }
-
-   return NULL;
+   /* Use new texture. */
+   t->used++;
+   return t->tex;
 }
 
 /**
@@ -579,7 +587,10 @@ static int gl_texAdd( glTexture *tex, int sx, int sy )
    new->tex  = tex;
    new->sx   = sx;
    new->sy   = sy;
+   new->path = tex->name;
 
+   /* Sort the list. */
+   qsort( texture_list, array_size(texture_list), sizeof(glTexList), tex_cmp );
    return 0;
 }
 
