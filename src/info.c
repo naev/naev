@@ -1136,7 +1136,7 @@ static void info_openStandings( unsigned int wid )
    info_getDim( wid, &w, &h, &lw );
 
    /* On close. */
-   window_onCleanup( wid, standings_close );
+   window_onClose( wid, standings_close );
 
    /* Buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,

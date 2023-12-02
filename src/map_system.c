@@ -193,7 +193,7 @@ void map_system_open( int sys_selected )
    /* create the window. */
    wid = window_create( MAP_SYSTEM_WDWNAME, _("System Info"), -1, -1, w, h );
    window_setCancel( wid, window_close );
-   window_onCleanup( wid, map_system_cleanup );
+   window_onClose( wid, map_system_cleanup );
    window_handleKeys( wid, map_system_keyHandler );
    window_addText( wid, 40, h-30, 160, 20, 1, "txtSysname",
          &gl_defFont, &cFontGreen, _(cur_sys_sel->name) );

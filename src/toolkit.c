@@ -835,24 +835,6 @@ void window_onClose( unsigned int wid, void (*fptr)(unsigned int,const char*) )
 }
 
 /**
- * @brief Sets the cleanup function of the window.
- *
- *    @param wid Window to set cleanup function of.
- *    @param fptr Function to trigger when window is freed. Parameter is the
- *           window id and name.
- */
-void window_onCleanup( unsigned int wid, void (*fptr)(unsigned int,const char*) )
-{
-   /* Get the window. */
-   Window *wdw = window_wget( wid );
-   if (wdw == NULL)
-      return;
-
-   /* Set the close function. */
-   wdw->cleanup_fptr = fptr;
-}
-
-/**
  * @brief Sets the default accept function of the window.
  *
  * This function is called whenever 'enter' is pressed and the current widget

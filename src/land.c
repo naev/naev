@@ -265,7 +265,7 @@ static void bar_open( unsigned int wid )
    land_tabGenerate(LAND_WINDOW_BAR);
 
    /* Set window functions. */
-   window_onCleanup( wid, bar_close );
+   window_onClose( wid, bar_close );
 
    /* Get dimensions. */
    desc = (land_spob->bar_description!=NULL) ? _(land_spob->bar_description) : "(NULL)";
@@ -992,7 +992,7 @@ void land_genWindows( int load )
       h = LAND_HEIGHT + 0.5 * (SCREEN_H - LAND_HEIGHT);
    }
    land_wid = window_create( "wdwLand", spob_name(p), -1, -1, w, h );
-   window_onCleanup( land_wid, land_cleanupWindow );
+   window_onClose( land_wid, land_cleanupWindow );
 
    /* Create tabbed window. */
    land_setupTabs();
