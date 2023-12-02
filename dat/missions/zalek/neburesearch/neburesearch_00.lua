@@ -261,6 +261,6 @@ function endSecondScan()
    vn.done()
    vn.run()
    mem.misn_stage = 3
-   misn.markerMove(mem.misn_marker, homeworld_sys)
+   misn.markerMove(mem.misn_marker, homeworld)
    misn.osdActive(3)
 end
