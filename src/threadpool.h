@@ -18,13 +18,13 @@ struct ThreadQueue_;
 typedef struct ThreadQueue_ ThreadQueue;
 
 /* Initializes the threadpool */
-int threadpool_init( void );
+int threadpool_init (void);
 
 /* Enqueues a new job */
 int threadpool_newJob( int (*function)(void *), void *data );
 
 /* Creates a new vpool queue */
-ThreadQueue* vpool_create( void );
+ThreadQueue* vpool_create (void);
 
 /* Enqueue a job in the vpool queue. Do NOT enqueue a job that has to wait for
  * another job to be done as this could lead to a deadlock. */
