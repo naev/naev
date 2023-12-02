@@ -25,7 +25,6 @@
  *       is probably not very good).
  */
 
-
 /** @cond */
 #include <stdlib.h>
 #include "SDL.h"
@@ -37,17 +36,14 @@
 
 #include "log.h"
 
-
 #define THREADPOOL_TIMEOUT (5 * 100) /* The time a worker thread waits in ms. */
 #define THREADSIG_STOP     (1) /* The signal to stop a worker thread */
 #define THREADSIG_RUN      (0) /* The signal to indicate the worker thread is running */
-
 
 /**
  * Threads to use.
  */
 static int MAXTHREADS = 8; /* Bit overkill, but oh well. */
-
 
 /**
  * @brief Node in the thread queue.
@@ -104,7 +100,6 @@ typedef struct vpoolThreadData_ {
 /* The global threadpool queue */
 static ThreadQueue *global_queue = NULL;
 
-
 /*
  * Prototypes.
  */
@@ -115,7 +110,6 @@ static void tq_destroy( ThreadQueue *q );
 static int threadpool_worker( void *data );
 static int threadpool_handler( void *data );
 static int vpool_worker( void *data );
-
 
 /**
  * @brief Creates a concurrent queue.
@@ -243,7 +237,6 @@ static void tq_destroy( ThreadQueue *q )
    free( q->first );
    free( q );
 }
-
 
 /**
  * @brief Enqueues a new job for the threadpool.
