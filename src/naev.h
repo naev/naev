@@ -83,4 +83,6 @@ void naev_quit (void);
 int naev_isQuit (void);
 double naev_getrealdt (void);
 
+int naev_shouldRenderLoadscreen (void);
+void naev_doRenderLoadscreen (void);
 void naev_renderLoadscreen (void);

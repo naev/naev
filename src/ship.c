@@ -1071,9 +1071,11 @@ static int ship_parseThread( void *ptr )
    /* Load the ship. */
    data->ret = ship_parse( &data->ship, data->filename );
    /* Render if necessary. */
-   gl_contextSet();
-   naev_renderLoadscreen();
-   gl_contextUnset();
+   if (naev_shouldRenderLoadscreen()) {
+      gl_contextSet();
+      naev_renderLoadscreen();
+      gl_contextUnset();
+   }
    return data->ret;
 }
 

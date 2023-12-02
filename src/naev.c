@@ -123,6 +123,7 @@ double elapsed_time_mod = 0.; /**< Elapsed modified time. */
 static nlua_env load_env = LUA_NOREF; /**< Environment for displaying load messages and stuff. */
 static int load_force_render = 0;
 static unsigned int load_last_render = 0;
+static SDL_mutex *load_mutex;
 
 /*
  * prototypes
@@ -521,6 +522,8 @@ void loadscreen_load (void)
 {
    int r;
 
+   load_mutex = SDL_CreateMutex();
+
    load_env = nlua_newEnv();
    r  = nlua_loadStandard( load_env );
    r |= nlua_loadNaev( load_env );
@@ -548,17 +551,28 @@ void loadscreen_load (void)
 }
 
 /**
- * @brief Renders the loadscreen if necessary.
+ * @brief Whether or not we want to render the loadscreen.
  */
-void naev_renderLoadscreen (void)
+int naev_shouldRenderLoadscreen (void)
 {
-   SDL_Event event;
    unsigned int t = SDL_GetTicks();
-
+   int ret;
+   SDL_mutexP( load_mutex );
    /* Only render if forced or try for low 10 FPS. */
    if (!load_force_render && (t-load_last_render) < 100 )
-      return;
-   load_last_render = t;
+      ret = 0;
+   else
+      ret = 1;
+   SDL_mutexV( load_mutex );
+   return ret;
+}
+
+void naev_doRenderLoadscreen (void)
+{
+   SDL_Event event;
+
+   SDL_mutexP( load_mutex );
+   load_last_render = SDL_GetTicks();
 
    /* Clear background. */
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -579,6 +593,16 @@ void naev_renderLoadscreen (void)
 
    /* Clear forcing. */
    load_force_render = 0;
+   SDL_mutexV( load_mutex );
+}
+
+/**
+ * @brief Renders the loadscreen if necessary.
+ */
+void naev_renderLoadscreen (void)
+{
+   if (naev_shouldRenderLoadscreen())
+      naev_doRenderLoadscreen();
 }
 
 /**
@@ -609,6 +633,7 @@ void loadscreen_update( double done, const char *msg )
 static void loadscreen_unload (void)
 {
    nlua_freeEnv( load_env );
+   SDL_DestroyMutex( load_mutex );
 }
 
 /**

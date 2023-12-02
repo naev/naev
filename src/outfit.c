@@ -2714,9 +2714,11 @@ static int outfit_parseThread( void *ptr )
    OutfitThreadData *data = ptr;
    data->ret = outfit_parse( &data->outfit, data->filename );
    /* Render if necessary. */
-   gl_contextSet();
-   naev_renderLoadscreen();
-   gl_contextUnset();
+   if (naev_shouldRenderLoadscreen()) {
+      gl_contextSet();
+      naev_renderLoadscreen();
+      gl_contextUnset();
+   }
    return data->ret;
 }
 
