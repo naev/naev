@@ -3147,6 +3147,7 @@ static int os_printD( char *buffer, int i, double value, const t_os_stat *opts )
 {
    const int MAXLEN = OUTFIT_SHORTDESC_MAX-i;
    int precision;
+   char buf[NUM2STRLEN];
 
    if (opts->hide_zero && fabs(value) < 1e-2)
        return i;
@@ -3162,7 +3163,8 @@ static int os_printD( char *buffer, int i, double value, const t_os_stat *opts )
                      value > opts->color_threshold ? "#g" :
                      value < opts->color_threshold ? "#r" : "");
    /* The brochure of the International System of Units declares in chapter 5: "a space separates the number and the symbol %". The ISO 31-0 standard also specifies a space, and the TeX typesetting system encourages using one. */
-   i += scnprintf(buffer + i, MAXLEN, p_("outfitstats", "%s: %s %s"), _(opts->name), num2strU( value, precision ), opts->unit ? _(opts->unit) : "" );
+   num2str( buf, value, precision );
+   i += scnprintf(buffer + i, MAXLEN, p_("outfitstats", "%s: %s %s"), _(opts->name), buf, opts->unit ? _(opts->unit) : "" );
    if (opts->color)
       i += scnprintf(buffer + i, MAXLEN, "#0");
    return i;
