@@ -98,6 +98,7 @@ static void load_menu_delete( unsigned int wdw, const char *str );
 static void load_menu_snapshots( unsigned int wdw, const char *str );
 static void load_snapshot_menu_update( unsigned int wid, const char *str );
 static void load_snapshot_menu_close( unsigned int wdw, const char *str );
+static void load_snapshot_menu_onClose( unsigned int wid, const char *str );
 static void load_snapshot_menu_load( unsigned int wdw, const char *str );
 static void load_snapshot_menu_delete( unsigned int wdw, const char *str );
 static void load_snapshot_menu_save( unsigned int wdw, const char *str );
@@ -560,6 +561,12 @@ void load_loadGameMenu (void)
    }
 }
 
+static void load_snapshot_menu_onClose( unsigned int wid, const char *str )
+{
+   (void) str;
+   free( window_getData( wid ) );
+}
+
 /**
  * @brief Opens the load snapshot menu.
  *    @param name Player's name.
@@ -572,6 +579,7 @@ void load_loadSnapshotMenu( const char *name, int disablesave )
    player_saves_t *ps;
    int n, can_save;
    char *t;
+   int *data;
 
    ps = NULL;
    for (int i=0; i<array_size(load_saves); i++) {
@@ -586,9 +594,6 @@ void load_loadSnapshotMenu( const char *name, int disablesave )
    }
    load_player = ps;
 
-   /* Since this function can be called from the small menu, we cannot rely on
-      the value of the selected_player variable at this point. With a recursive
-      call, name and selected_player can be the same. */
    t = strdup( name );
    free( selected_player );
    selected_player = t;
@@ -597,6 +602,11 @@ void load_loadSnapshotMenu( const char *name, int disablesave )
    wid = window_create( "wdwLoadSnapshotMenu", _("Load Snapshot"), -1, -1, LOAD_WIDTH, LOAD_HEIGHT );
    window_setAccept( wid, load_snapshot_menu_load );
    window_setCancel( wid, load_snapshot_menu_close );
+
+   data = malloc( sizeof( int ) );
+   *data = disablesave;
+   window_setData( wid, data );
+   window_onClose( wid, load_snapshot_menu_onClose );
 
    /* load the saves */
    n = array_size( ps->saves );
@@ -690,8 +700,9 @@ static void load_snapshot_menu_save( unsigned int wdw, const char *str )
       dialogue_alert( _("Failed to save the game! You should exit and check the log to see what happened and then file a bug report!") );
    else {
       load_refresh();
+      int disablesave = * (int *) window_getData( wdw );
       load_snapshot_menu_close( wdw, str );
-      load_loadSnapshotMenu( player.name, 1 );
+      load_loadSnapshotMenu( player.name, disablesave );
    }
    free( save_name );
 }
@@ -1003,6 +1014,7 @@ static void load_snapshot_menu_delete( unsigned int wdw, const char *str )
    load_refresh();
 
    /* need to reload the menu */
+   int disablesave = * (int *) window_getData( wdw );
    load_snapshot_menu_close( wdw, str );
    if (window_exists( "wdwLoadGameMenu" )) {
       wid = window_get( "wdwLoadGameMenu" );
@@ -1010,7 +1022,7 @@ static void load_snapshot_menu_delete( unsigned int wdw, const char *str )
       load_loadGameMenu();
    }
    if (!last_save)
-      load_loadSnapshotMenu( selected_player, 1 );
+      load_loadSnapshotMenu( selected_player, disablesave );
 }
 
 static void load_compatSlots (void)
