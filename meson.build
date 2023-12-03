@@ -1,5 +1,5 @@
 project('naev', 'c',
-   version : '0.11.0-alpha.4',
+   version : '0.11.0-beta.1',
    default_options : [
       'optimization=g',
       'c_std=gnu11',
@@ -229,6 +229,7 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_ALLOCA_H', cc.has_header('alloca.h'))
    config_data.set10('HAVE_FENV_H', cc.has_header('fenv.h'))
    config_data.set10('HAVE_MALLOC_H', cc.has_header('malloc.h'))
+   # SDL_strndup is in SDL3, so we can remove this once it is released
    # strndup() detection must work around this bug: https://github.com/mesonbuild/meson/issues/3672
    config_data.set10('HAVE_STRNDUP', cc.has_header_symbol('string.h', 'strndup') and cc.has_function('strndup'))
    config_data.set10('HAVE_STRNSTR', cc.has_function('strnstr'))
