@@ -420,7 +420,7 @@ function found ()
       _("Board the derelict"),
    } )
 
-   local p = pilot.add( "Mule", "Derelict", mem.goal, _("Pristine Derelict"), {naked=true} )
+   local p = pilot.add( "Mule", "Derelict", mem.goal, _("Unusual Derelict"), {naked=true} )
    p:disable()
    p:setInvincible()
    p:setHilight()

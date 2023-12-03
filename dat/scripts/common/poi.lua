@@ -399,7 +399,7 @@ function poi.board( _p )
       vn.na( msg )
       vn.func( function ()
          player.pay( mem.reward.value )
-         poi.log(fmt.f(_([[You found a pristine derelict with large amounts of credits in the {sys} system..]]),
+         poi.log(fmt.f(_([[You found an unusual derelict with large amounts of credits in the {sys} system..]]),
             {sys=mem.poi.sys}))
       end )
    elseif mem.reward.type == "data" then
@@ -408,7 +408,7 @@ function poi.board( _p )
       vn.na( msg )
       vn.func( function ()
          poi.data_give( 1 )
-         poi.log(fmt.f(_([[You found a pristine derelict with an Encrypted Data Matrix in the {sys} system.]]),
+         poi.log(fmt.f(_([[You found an unusual derelict with an Encrypted Data Matrix in the {sys} system.]]),
             {sys=mem.poi.sys}))
       end )
    elseif mem.reward.type == "outfit" then
