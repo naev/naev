@@ -29,7 +29,6 @@ local lmisn = require "lmisn"
 local pilotai = require "pilotai"
 local love_shaders = require "love_shaders"
 
-
 --[[
 States
    0: Mission start, POI is marked
@@ -538,7 +537,7 @@ function board_nelly ()
 
    nel(_([["Oh! It's even better in person! Let me check the goods."]]))
    nel(_([[She takes the crate and deftly pries it open. Suddenly everything smells really strongly of cheese and you gag a bit.
-"Let's see. This is an authentic infused sausage cheese matured cheese! The rumours were true!"]]))
+"Let's see. This is an authentic sausage-infused matured cheese! The rumours were true!"]]))
    nel(_([["Here, take my Pulse Scanner, I'll take the cheese. I won't have to chase points of interest for a while with this beauty!"
 She rubs the cheese to her face.]]))
    vn.na(_([[Seeing as it doesn't seem like you'll be able to change anything and the Pulse Scanner is probably more useful than the cheese, you take the outfit and head back to your ship. Now you can explore points of interest on your own!]]))
