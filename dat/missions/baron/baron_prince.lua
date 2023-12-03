@@ -313,6 +313,7 @@ function seller()
             local c = commodity.new( N_("Artefact? A"), N_("An ancient artefact?") )
             mem.artifactA = misn.cargoAdd(c, 0)
             misn.markerRm(mem.markerA)
+            vn.jump("bought")
          else
             vn.jump("broke")
          end
@@ -335,6 +336,7 @@ function seller()
             local c = commodity.new( N_("Artefact? B"), N_("An ancient artefact?") )
             mem.artifactB = misn.cargoAdd(c, 0)
             misn.markerRm(mem.markerB)
+            vn.jump("bought")
          else
             vn.jump("broke")
          end
@@ -357,6 +359,7 @@ function seller()
             local c = commodity.new( N_("Artefact? C"), N_("An ancient artefact?") )
             mem.artifactC = misn.cargoAdd(c, 0)
             misn.markerRm(mem.markerC)
+            vn.jump("bought")
          else
             vn.jump("broke")
          end
@@ -372,6 +375,9 @@ function seller()
    vn.na(_([[You decide not to buy the artefact.]]))
    vn.done()
 
+   vn.label("bought")
+   vn.na(fmt.f(_([[You pay {cost} to obtain the artefact and take your leave.]]),
+      {cost=fmt.credits(cost)}))
    vn.run()
 end
 
