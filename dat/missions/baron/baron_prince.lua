@@ -178,11 +178,11 @@ end
 
 function land()
    local sellerdesc = _("You spot a dodgy individual who matches one of the portraits in your ship's database. This must be one of the artefact sellers.")
-   if spob.cur() == artefactplanetA and not mem.artifactA then
+   if spob.cur() == artefactplanetA and not mem.artifactAbought then
       mem.sellnpc = misn.npcAdd( "seller", _("Artefact seller"), npc1prt, sellerdesc, 4)
-   elseif spob.cur() == artefactplanetB and not mem.artifactB then
+   elseif spob.cur() == artefactplanetB and not mem.artifactBbought then
       mem.sellnpc = misn.npcAdd( "seller", _("Artefact seller"), npc2prt, sellerdesc, 4)
-   elseif spob.cur() == artefactplanetC and not mem.artifactC then
+   elseif spob.cur() == artefactplanetC and not mem.artifactCbought then
       mem.sellnpc = misn.npcAdd( "seller", _("Artefact seller"), npc3prt, sellerdesc, 4)
    elseif spob.cur() == flintplanet then
       if mem.flintleyfirst then
@@ -312,6 +312,7 @@ function seller()
             player.pay( -cost )
             local c = commodity.new( N_("Artefact? A"), N_("An ancient artefact?") )
             mem.artifactA = misn.cargoAdd(c, 0)
+            mem.artifactAbought = true
             misn.markerRm(mem.markerA)
             vn.jump("bought")
          else
@@ -335,6 +336,7 @@ function seller()
             player.pay( -cost )
             local c = commodity.new( N_("Artefact? B"), N_("An ancient artefact?") )
             mem.artifactB = misn.cargoAdd(c, 0)
+            mem.artifactBbought = true
             misn.markerRm(mem.markerB)
             vn.jump("bought")
          else
@@ -358,6 +360,7 @@ function seller()
             player.pay( -cost )
             local c = commodity.new( N_("Artefact? C"), N_("An ancient artefact?") )
             mem.artifactC = misn.cargoAdd(c, 0)
+            mem.artifactCbought = true
             misn.markerRm(mem.markerC)
             vn.jump("bought")
          else
