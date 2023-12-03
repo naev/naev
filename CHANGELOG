@@ -143,6 +143,7 @@
       * Fixed tutorial running during cinematics
       * Fixed active outfits not showing "activated outfit" in their summary sometimes
       * FLF no longer become true allies of the Dreamer Clan to not limit the players actions
+      * Made audio system more robust to runnning out of source errors
 
 * 0.10.6
    * Fixed potential segfault with invalid semver strings
