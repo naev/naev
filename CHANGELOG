@@ -1,4 +1,6 @@
 * 0.11.0-beta.2 (unreleased)
+   * Hardened physics engine a bit to overflow that happens in 49 days of straight gametime
+   * Fixed trivial memory leak in vpool
    * `poi`: renamed 'Pristine Derelict' to 'Unusual Derelict'
    * `poi_intro`: fixed typo
 
