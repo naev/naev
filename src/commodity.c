@@ -2,13 +2,9 @@
  * See Licensing and Copyright notice in naev.h
  */
 /**
- * @file economy.c
+ * @file commodity.c
  *
- * @brief Handles economy stuff.
- *
- * Economy is handled with Nodal Analysis.  Systems are modelled as nodes,
- *  jump routes are resistances and production is modelled as node intensity.
- *  This is then solved with linear algebra after each time increment.
+ * @brief Handles commidities.
  */
 /** @cond */
 #include <stdio.h>
