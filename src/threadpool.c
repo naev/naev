@@ -328,7 +328,7 @@ static int threadpool_worker( void *data )
 static int threadpool_handler( void *data )
 {
    (void) data;
-   int i, nrunning, newthread;
+   int nrunning, newthread;
    ThreadData *threadargs, *threadarg;
    /* Queues for idle workers and stopped workers */
    ThreadQueue *idle, *stopped;
@@ -342,7 +342,7 @@ static int threadpool_handler( void *data )
    threadargs = calloc( MAXTHREADS, sizeof(ThreadData) );
 
    /* Initialize threadargs */
-   for (i=0; i<MAXTHREADS; i++) {
+   for (int i=0; i<MAXTHREADS; i++) {
       threadargs[i].function  = NULL;
       threadargs[i].data      = NULL;
       threadargs[i].semaphore = SDL_CreateSemaphore( 0 ); /* Used to give orders. */
@@ -558,7 +558,7 @@ static int vpool_worker( void *data )
  */
 void vpool_wait( ThreadQueue *queue )
 {
-   int i, cnt;
+   int cnt;
    SDL_cond *cond;
    SDL_mutex *mutex;
    vpoolThreadData *arg;
@@ -575,7 +575,7 @@ void vpool_wait( ThreadQueue *queue )
 
    SDL_mutexP( mutex );
    /* Initialize the vpoolThreadData */
-   for (i=0; i<cnt; i++) {
+   for (int i=0; i<cnt; i++) {
       /* This is needed to keep the invariants of the queue */
       while (SDL_SemWait( queue->semaphore ) == -1) {
           /* Again, a really bad idea */

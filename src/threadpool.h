@@ -23,7 +23,7 @@ int threadpool_init (void);
 /* Enqueues a new job */
 int threadpool_newJob( int (*function)(void *), void *data );
 
-/* Creates a new vpool queue */
+/* Creates a new vpool queue. Destroy with vpool_wait. */
 ThreadQueue* vpool_create (void);
 
 /* Enqueue a job in the vpool queue. Do NOT enqueue a job that has to wait for
