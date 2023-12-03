@@ -30,6 +30,7 @@ typedef struct LuaAudio_s {
 #if DEBUGGING
    char *name;       /**< Filename of the audio. */
 #endif /* DEBUGGING */
+   int ok;           /**< The source and audio is valid. */
    LuaAudioType_t type; /**< Type of audio. */
    int nocleanup;    /**< No need to clean up this source. */
    ALuint source;    /**< Source to use. */

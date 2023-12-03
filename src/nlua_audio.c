@@ -555,7 +555,12 @@ static int audioL_new( lua_State *L )
 #endif /* DEBUGGING */
 
    soundLock();
-   audio_genSource( &la.source );
+   la.ok = audio_genSource( &la.source );
+   if (la.ok) {
+      la.nocleanup = 1; /* Not initialized so no need to clean up. */
+      lua_pushaudio(L, la);
+      return 1;
+   }
 
    /* Deal with stream. */
    if (!stream) {
@@ -633,13 +638,17 @@ void audio_clone( LuaAudio_t *la, const LuaAudio_t *source )
    double master;
 
    memset( la, 0, sizeof(LuaAudio_t) );
-   if (sound_disabled) {
+   if (sound_disabled || source->ok) {
       la->nocleanup = 1;
       return;
    }
 
    soundLock();
-   audio_genSource( &la->source );
+   la->ok = audio_genSource( &la->source );
+   if (!la->ok) {
+      la->nocleanup = 1;
+      return;
+   }
 
    switch (source->type) {
       case LUA_AUDIO_STATIC:
@@ -684,9 +693,7 @@ static int audioL_clone( lua_State *L )
 {
    LuaAudio_t la;
    LuaAudio_t *source = luaL_checkaudio(L,1);
-
    audio_clone( &la, source );
-
    lua_pushaudio(L, la);
    return 1;
 }
@@ -701,7 +708,7 @@ static int audioL_clone( lua_State *L )
 static int audioL_play( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (sound_disabled)
+   if (sound_disabled || la->ok)
       return 0;
 
    if ((la->type == LUA_AUDIO_STREAM) && (la->th == NULL)) {
@@ -740,7 +747,7 @@ static int audioL_play( lua_State *L )
 static int audioL_pause( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (sound_disabled)
+   if (sound_disabled || la->ok)
       return 0;
    soundLock();
    alSourcePause( la->source );
@@ -772,7 +779,7 @@ static int audioL_stop( lua_State *L )
    ALint alstate;
    ALuint removed[2];
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (sound_disabled)
+   if (sound_disabled || la->ok)
       return 0;
 
    soundLock();
@@ -835,7 +842,7 @@ static int audioL_isStopped( lua_State *L )
 static int audioL_rewind( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (sound_disabled)
+   if (sound_disabled || la->ok)
       return 0;
 
    switch (la->source) {
@@ -876,7 +883,7 @@ static int audioL_seek( lua_State *L )
    else if (strcmp(unit,"seconds")!=0)
       NLUA_ERROR(L, _("Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"), unit );
 
-   if (sound_disabled)
+   if (sound_disabled || la->ok)
       return 0;
 
    switch (la->type) {
@@ -927,7 +934,7 @@ static int audioL_tell( lua_State *L )
    else if (strcmp(unit,"seconds")!=0)
       NLUA_ERROR(L, _("Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"), unit );
 
-   if (sound_disabled) {
+   if (sound_disabled || la->ok) {
       lua_pushnumber(L, -1.);
       return 1;
    }
@@ -983,7 +990,7 @@ static int audioL_getDuration( lua_State *L )
    else if (strcmp(unit,"seconds")!=0)
       NLUA_ERROR(L, _("Unknown duration source '%s'! Should be either 'seconds' or 'samples'!"), unit );
 
-   if (sound_disabled) {
+   if (sound_disabled || la->ok) {
       lua_pushnumber(L, -1.);
       return 1;
    }
@@ -1039,7 +1046,7 @@ static int audioL_setVolume( lua_State *L )
    LuaAudio_t *la = luaL_checkaudio(L,1);
    double volume = CLAMP( 0.0, 1.0, luaL_checknumber(L,2) );
    int ignorevol = lua_toboolean(L,3);
-   if (sound_disabled)
+   if (sound_disabled || la->ok)
       return 0;
 
    soundLock();
@@ -1084,7 +1091,7 @@ static int audioL_getVolume( lua_State *L )
 static int audioL_setRelative( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (sound_disabled)
+   if (sound_disabled || la->ok)
       return 0;
 
    soundLock();
@@ -1107,7 +1114,7 @@ static int audioL_setPosition( lua_State *L )
 {
    ALfloat pos[3];
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (sound_disabled)
+   if (sound_disabled || la->ok)
       return 0;
 
    pos[0] = luaL_optnumber(L,2,0.);
@@ -1134,7 +1141,7 @@ static int audioL_getPosition( lua_State *L )
 {
    ALfloat pos[3];
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (sound_disabled) {
+   if (sound_disabled || la->ok) {
       lua_pushnumber(L,0.);
       lua_pushnumber(L,0.);
       lua_pushnumber(L,0.);
@@ -1165,7 +1172,7 @@ static int audioL_setVelocity( lua_State *L )
 {
    ALfloat vel[3];
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (sound_disabled)
+   if (sound_disabled || la->ok)
       return 0;
 
    vel[0] = luaL_optnumber(L,2,0.);
@@ -1192,7 +1199,7 @@ static int audioL_getVelocity( lua_State *L )
 {
    ALfloat vel[3];
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (sound_disabled) {
+   if (sound_disabled || la->ok) {
       lua_pushnumber(L,0.);
       lua_pushnumber(L,0.);
       lua_pushnumber(L,0.);
@@ -1221,7 +1228,7 @@ static int audioL_setLooping( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
    int b = lua_toboolean(L,2);
-   if (sound_disabled)
+   if (sound_disabled || la->ok)
       return 0;
    soundLock();
    alSourcei( la->source, AL_LOOPING, b );
@@ -1253,7 +1260,7 @@ static int audioL_setPitch( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
    double pitch = luaL_checknumber(L,2);
-   if (sound_disabled)
+   if (sound_disabled || la->ok)
       return 0;
    soundLock();
    alSourcef( la->source, AL_PITCH, pitch );
@@ -1273,7 +1280,7 @@ static int audioL_getPitch( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
    float p = 1.0;
-   if (!sound_disabled) {
+   if (!sound_disabled && !la->ok) {
       soundLock();
       alGetSourcef( la->source, AL_PITCH, &p );
       al_checkErr();
@@ -1340,7 +1347,7 @@ static int audioL_setAttenuationDistances( lua_State *L )
    LuaAudio_t *la = luaL_checkaudio(L,1);
    double ref = luaL_checknumber(L,2);
    double max = luaL_checknumber(L,3);
-   if (sound_disabled)
+   if (sound_disabled || la->ok)
       return 0;
    soundLock();
    alSourcef( la->source, AL_REFERENCE_DISTANCE, ref );
@@ -1361,7 +1368,7 @@ static int audioL_getAttenuationDistances( lua_State *L )
 {
    ALfloat ref, max;
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (sound_disabled) {
+   if (sound_disabled || la->ok) {
       lua_pushnumber(L,0.);
       lua_pushnumber(L,0.);
       return 2;
@@ -1386,7 +1393,7 @@ static int audioL_setRolloff( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
    double rolloff = luaL_checknumber(L,2);
-   if (sound_disabled)
+   if (sound_disabled || la->ok)
       return 0;
    soundLock();
    alSourcef( la->source, AL_ROLLOFF_FACTOR, rolloff );
@@ -1405,7 +1412,7 @@ static int audioL_getRolloff( lua_State *L )
 {
    ALfloat rolloff;
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (sound_disabled) {
+   if (sound_disabled || la->ok) {
       lua_pushnumber(L,0.);
       return 1;
    }
