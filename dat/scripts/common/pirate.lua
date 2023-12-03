@@ -198,7 +198,7 @@ end
 --]]
 function pir.updateStandings( maxval )
    local pp = player.pilot()
-   if not pp then return end
+   if not pp:exists() then return end
    maxval = maxval or pir.maxClanStanding()
    if pir.isPirateShip( pp ) then
       fpir:setPlayerStanding( maxval )
