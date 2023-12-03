@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-12-03 14:26+0900\n"
+"POT-Creation-Date: 2023-12-03 17:43+0900\n"
 "PO-Revision-Date: 2023-04-10 00:50+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
@@ -6509,7 +6509,7 @@ msgid ""
 msgstr ""
 
 #: dat/outfits/unique/pulse_scanner.xml:2
-#: dat/missions/neutral/poi_intro.lua:233
+#: dat/missions/neutral/poi_intro.lua:232
 msgid "Pulse Scanner"
 msgstr "Rilevatore ad Impulsi"
 
@@ -32312,9 +32312,9 @@ msgstr ""
 #: dat/missions/minerva/kex5.lua:602 dat/missions/minerva/kex5.lua:657
 #: dat/missions/minerva/kex5.lua:682 dat/missions/neutral/poi/data_intro.lua:45
 #: dat/missions/neutral/poi/proteron_agent.lua:82
-#: dat/missions/neutral/poi_intro.lua:196
-#: dat/missions/neutral/poi_intro.lua:448
-#: dat/missions/neutral/poi_intro.lua:454
+#: dat/missions/neutral/poi_intro.lua:195
+#: dat/missions/neutral/poi_intro.lua:447
+#: dat/missions/neutral/poi_intro.lua:453
 #: dat/missions/pirate/lucas/lucas02.lua:92
 #: dat/missions/pirate/lucas/lucas02.lua:103
 #: dat/missions/pirate/lucas/lucas02.lua:117
@@ -33151,7 +33151,7 @@ msgid ""
 msgstr ""
 
 #: dat/events/derelict/poi.lua:50 dat/events/poi.lua:134
-#: dat/missions/neutral/poi_intro.lua:94
+#: dat/missions/neutral/poi_intro.lua:93
 msgid "Download the data"
 msgstr ""
 
@@ -33159,7 +33159,7 @@ msgstr ""
 #: dat/events/derelict/poi.lua:51 dat/events/hypergate_construction.lua:197
 #: dat/events/taiomi/system.lua:167 dat/events/taiomi/system.lua:290
 #: dat/events/taiomi/system.lua:592 dat/missions/minerva/finale2.lua:251
-#: dat/missions/neutral/poi_intro.lua:95
+#: dat/missions/neutral/poi_intro.lua:94
 msgid "Leave."
 msgstr ""
 
@@ -33174,13 +33174,13 @@ msgstr ""
 msgid "You leave the information alone and leave the derelict."
 msgstr ""
 
-#: dat/events/derelict/poi.lua:70 dat/missions/neutral/poi_intro.lua:119
+#: dat/events/derelict/poi.lua:70 dat/missions/neutral/poi_intro.lua:118
 msgid ""
 "You found information on a point of interest aboard a derelict in the {sys} "
 "system."
 msgstr ""
 
-#: dat/events/derelict/poi.lua:72 dat/missions/neutral/poi_intro.lua:121
+#: dat/events/derelict/poi.lua:72 dat/missions/neutral/poi_intro.lua:120
 msgid ""
 "You found information about a point of interest aboard a derelict, but "
 "decided not to download it."
@@ -34330,7 +34330,7 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:227 dat/missions/minerva/maikki2.lua:491
 #: dat/missions/minerva/maikki2.lua:758 dat/missions/minerva/pirate3.lua:173
 #: dat/missions/minerva/pirate4.lua:126 dat/missions/minerva/pirate5.lua:147
-#: dat/missions/minerva/pirate6.lua:220 dat/missions/neutral/poi_intro.lua:227
+#: dat/missions/minerva/pirate6.lua:220 dat/missions/neutral/poi_intro.lua:226
 #: dat/missions/neutral/runaway/runaway_search.lua:103
 #: dat/missions/pirate/pir_ship_stealing.lua:177
 msgid "Leave"
@@ -38466,13 +38466,13 @@ msgstr ""
 #. Done
 #. luacheck: globals found (used in POI framework)
 #: dat/events/neutral/poi.lua:72 dat/missions/neutral/poi.lua:117
-#: dat/missions/neutral/poi_intro.lua:418
+#: dat/missions/neutral/poi_intro.lua:417
 msgid "You have found something!"
 msgstr ""
 
 #. TODO something more interesting
 #: dat/events/neutral/poi.lua:76 dat/missions/neutral/poi.lua:121
-#: dat/missions/neutral/poi_intro.lua:424
+#: dat/missions/neutral/poi_intro.lua:423
 msgid "Pristine Derelict"
 msgstr ""
 
@@ -81557,41 +81557,41 @@ msgstr ""
 #. Want no inhabited spobs
 #. Failed to start
 #. We do a full claim on the final system
-#: dat/missions/neutral/poi_intro.lua:76
+#: dat/missions/neutral/poi_intro.lua:75
 msgid ""
 "You carefully explore the heavily damaged derelict. It looks like most of it "
 "has been picked clean. You are about to give up when the system computer "
 "suddenly flickers and seems to boot up."
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:81
+#: dat/missions/neutral/poi_intro.lua:80
 msgid ""
 "As the ship's operating system is starting, {shipai} materializes in front "
 "of you."
 msgstr ""
 
 #. Worded to be a bit like the explosion messages in EVC
-#: dat/missions/neutral/poi_intro.lua:84
+#: dat/missions/neutral/poi_intro.lua:83
 msgid ""
 "\"While you were exploring I managed to bootstrap the ship's systems. No, "
 "nothing bad could have happened. I estimated under 10% chance of triggering "
 "the ship's security self-destruct mechasim and blowing up the ship. Oh…\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:85
+#: dat/missions/neutral/poi_intro.lua:84
 msgid ""
 "\"Anyway, it seems like my work paid off, there seems to be some data "
 "marking a point of interest. Should I download the data so that we can "
 "explore it?\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:90
+#: dat/missions/neutral/poi_intro.lua:89
 msgid ""
 "\"Hey, it looks like there is data marking a point of interest stored on the "
 "ship computer. Should I download the data so that we can explore it?\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:101
+#: dat/missions/neutral/poi_intro.lua:100
 msgid ""
 "{shipai} flickers slightly as they download the data.\n"
 "\"It looks like the data points to a location in the nearby system of {sys}. "
@@ -81600,7 +81600,7 @@ msgid ""
 "be wise to land and see if we can improve our systems somehow.\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:104
+#: dat/missions/neutral/poi_intro.lua:103
 msgid ""
 "{shipai} flickers slightly as they download the data.\n"
 "\"It looks like the data points to a location in a nearby system. I have "
@@ -81609,13 +81609,13 @@ msgid ""
 "to land and see if we can improve our systems somehow.\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:107
+#: dat/missions/neutral/poi_intro.lua:106
 msgid ""
 "With nothing else to do on the derelict, you leave it behind, and return to "
 "your ship."
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:111
+#: dat/missions/neutral/poi_intro.lua:110
 msgid "You decide to leave the information alone and leave the derelict."
 msgstr ""
 
@@ -81632,53 +81632,53 @@ msgstr ""
 #. Logs a point of interest message.
 #. @tparam string msg Message to log.
 #. --
-#: dat/missions/neutral/poi_intro.lua:135
-#: dat/missions/neutral/poi_intro.lua:239
-#: dat/missions/neutral/poi_intro.lua:328
-#: dat/missions/neutral/poi_intro.lua:403
-#: dat/missions/neutral/poi_intro.lua:420
-#: dat/missions/neutral/poi_intro.lua:516 dat/scripts/common/poi.lua:129
+#: dat/missions/neutral/poi_intro.lua:134
+#: dat/missions/neutral/poi_intro.lua:238
+#: dat/missions/neutral/poi_intro.lua:327
+#: dat/missions/neutral/poi_intro.lua:402
+#: dat/missions/neutral/poi_intro.lua:419
+#: dat/missions/neutral/poi_intro.lua:515 dat/scripts/common/poi.lua:129
 #: dat/scripts/common/poi.lua:218 dat/scripts/common/poi.lua:286
 msgid "Point of Interest"
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:136
+#: dat/missions/neutral/poi_intro.lua:135
 msgid "Improve your ship's systems"
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:137
+#: dat/missions/neutral/poi_intro.lua:136
 msgid "Head to the marked location"
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:161
+#: dat/missions/neutral/poi_intro.lua:160
 msgid ""
 "Nelly looks bored out of her mind. Wait, is she trying to bend a spoon with "
 "her mind?"
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:163
+#: dat/missions/neutral/poi_intro.lua:162
 msgid "You see a bored individual doing something weird with a spoon."
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:175
+#: dat/missions/neutral/poi_intro.lua:174
 msgid ""
 "You find Nelly gripping and staring intently at a spoon. It's almost as if "
 "she is trying to bend it with her mind."
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:177
+#: dat/missions/neutral/poi_intro.lua:176
 msgid "\"Hello\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:178
+#: dat/missions/neutral/poi_intro.lua:177
 msgid "\"What are you doing?\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:179
+#: dat/missions/neutral/poi_intro.lua:178
 msgid "\"Nice spoon\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:183
+#: dat/missions/neutral/poi_intro.lua:182
 msgid ""
 "She doesn't seem to react, too concentrated on her task. You lightly tap her "
 "on the shoulder and she bounces out of her chair, dropping her spoon.\n"
@@ -81687,7 +81687,7 @@ msgid ""
 "\"I did it! I bent the spoon with my mind!\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:188
+#: dat/missions/neutral/poi_intro.lua:187
 msgid ""
 "You get close to the individual and stare at them. They seem so intent on "
 "their task that they don't realize you are there. Eventually, they seem to "
@@ -81698,11 +81698,11 @@ msgid ""
 "\"I did it! I bent the spoon with my mind!\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:195
+#: dat/missions/neutral/poi_intro.lua:194
 msgid "\"I'm pretty sure it bent when you dropped it\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:200
+#: dat/missions/neutral/poi_intro.lua:199
 msgid ""
 "She poses triumphantly with her spoon.\n"
 "\"What? That's impossible. This has to be the result of all my hard "
@@ -81710,27 +81710,27 @@ msgid ""
 "me!\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:205
+#: dat/missions/neutral/poi_intro.lua:204
 msgid ""
 "She poses triumphantly with her spoon.\n"
 "\"Impressive right! I heard that many people in Great House Sirius can do "
 "this and thought, it can't be too hard can it?\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:211
+#: dat/missions/neutral/poi_intro.lua:210
 msgid ""
 "\"How's it like being humbled by my mental powers!\"\n"
 "She cackles maniacally."
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:214
+#: dat/missions/neutral/poi_intro.lua:213
 msgid ""
 "\"How's it like being humbled by my mental powers!\"\n"
 "She cackles maniacally.\n"
 "\"Nice to meet you! My name is Nelly!\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:222
+#: dat/missions/neutral/poi_intro.lua:221
 msgid ""
 "\"I've been bored out of my mind since my delivery contract was terminated. "
 "They said my last delivery of luxury goods stank of fish and was useless.  I "
@@ -81738,24 +81738,24 @@ msgid ""
 "since last cycle!\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:223
+#: dat/missions/neutral/poi_intro.lua:222
 msgid ""
 "\"You wouldn't have anything interesting I could help with? I would love an "
 "adventure!\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:226
+#: dat/missions/neutral/poi_intro.lua:225
 msgid "Tell her about the point of interest"
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:231
+#: dat/missions/neutral/poi_intro.lua:230
 msgid ""
 "Her eyes light up and twinkle like the endless stars in space.\n"
 "\"That sounds… AWESOME. I'm totally in! I actually have been saving my "
 "{outfit} for a chance like this!\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:234
+#: dat/missions/neutral/poi_intro.lua:233
 msgid ""
 "\"The location sounds like the {sys} system. I have to do some tweaks on my "
 "ship, but I'll meet you there. My ship is leaner and meaner since my "
@@ -81763,26 +81763,26 @@ msgid ""
 "\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:236
+#: dat/missions/neutral/poi_intro.lua:235
 msgid ""
 "You're not sure if that was the best idea, but it does seem like she may be "
 "able to help this time around."
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:240
+#: dat/missions/neutral/poi_intro.lua:239
 msgid "Meet Nelly at {sys}"
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:241
+#: dat/missions/neutral/poi_intro.lua:240
 msgid "Head to the point of interest"
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:248
+#: dat/missions/neutral/poi_intro.lua:247
 msgid ""
 "You take your leave. It may be best not to get involved with Nelly right now."
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:256
+#: dat/missions/neutral/poi_intro.lua:255
 msgid "You abandoned the point of interest and Nelly!"
 msgstr ""
 
@@ -81792,105 +81792,105 @@ msgstr ""
 #.
 #. --
 #. Use default
-#: dat/missions/neutral/poi_intro.lua:269 dat/scripts/common/tut_nelly.lua:13
+#: dat/missions/neutral/poi_intro.lua:268 dat/scripts/common/tut_nelly.lua:13
 #: dat/scripts/common/tut_nelly.lua:27
 msgid "Nelly"
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:270
-#: dat/missions/neutral/poi_intro.lua:321
+#: dat/missions/neutral/poi_intro.lua:269
+#: dat/missions/neutral/poi_intro.lua:320
 msgid "Nemesis"
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:275
+#: dat/missions/neutral/poi_intro.lua:274
 msgid "Llaminator MK3"
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:277 dat/missions/tutorial/nelly02.lua:239
+#: dat/missions/neutral/poi_intro.lua:276 dat/missions/tutorial/nelly02.lua:239
 msgid "Llaminator MK2"
 msgstr ""
 
 #. Spawn ship
 #. Get closest jump to player, should be robust to player.teleport
-#: dat/missions/neutral/poi_intro.lua:307
+#: dat/missions/neutral/poi_intro.lua:306
 msgid "There it is! Let's head towards the point of interest!"
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:322
+#: dat/missions/neutral/poi_intro.lua:321
 msgid "Wait? We were followed?"
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:329
+#: dat/missions/neutral/poi_intro.lua:328
 msgid "Eliminate the hostiles"
+msgstr ""
+
+#: dat/missions/neutral/poi_intro.lua:337
+#: dat/missions/neutral/poi_intro.lua:385
+msgid "Come over here!"
 msgstr ""
 
 #: dat/missions/neutral/poi_intro.lua:338
 #: dat/missions/neutral/poi_intro.lua:386
-msgid "Come over here!"
+msgid "Get closer!"
 msgstr ""
 
 #: dat/missions/neutral/poi_intro.lua:339
 #: dat/missions/neutral/poi_intro.lua:387
-msgid "Get closer!"
-msgstr ""
-
-#: dat/missions/neutral/poi_intro.lua:340
-#: dat/missions/neutral/poi_intro.lua:388
 msgid "I'm ready, come here!"
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:350
+#: dat/missions/neutral/poi_intro.lua:349
 msgid "You're as good as fried chicken!"
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:363
+#: dat/missions/neutral/poi_intro.lua:362
 msgid "Save me!"
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:364
+#: dat/missions/neutral/poi_intro.lua:363
 msgid "Get rid of them!"
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:365
+#: dat/missions/neutral/poi_intro.lua:364
 msgid "Aaaaaaah!"
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:372
+#: dat/missions/neutral/poi_intro.lua:371
 msgid "Phew! Come over here and I'll activate my pulse scanner!"
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:378
+#: dat/missions/neutral/poi_intro.lua:377
 msgid "Time to activate my pulse scanner!"
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:402
+#: dat/missions/neutral/poi_intro.lua:401
 msgid "My engine stopped, you go on ahead!"
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:404
+#: dat/missions/neutral/poi_intro.lua:403
 msgid "Follow the trail"
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:421
+#: dat/missions/neutral/poi_intro.lua:420
 msgid "Board the derelict"
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:442
+#: dat/missions/neutral/poi_intro.lua:441
 msgid ""
 "You board the ship and immediately Nelly establishes a holo-link connection. "
 "She seems to be covered in ship grease.\n"
 "\"Whoa! This looks much fancier than I expected!\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:446
+#: dat/missions/neutral/poi_intro.lua:445
 msgid "\"Why so greasy?\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:447
+#: dat/missions/neutral/poi_intro.lua:446
 msgid "\"Is this it?\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:452
+#: dat/missions/neutral/poi_intro.lua:451
 msgid ""
 "\"When we got attacked by that scary ship, I slipped and accidentally pulled "
 "down my fish drying rack. The fish flew over all the ship and one got caught "
@@ -81900,30 +81900,30 @@ msgid ""
 "in progress.\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:458
+#: dat/missions/neutral/poi_intro.lua:457
 msgid ""
 "\"It sure looks like it! It's my first time seeing such a pretty derelict.\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:462
+#: dat/missions/neutral/poi_intro.lua:461
 msgid "\"Don't just stand there! Take a look around\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:463
+#: dat/missions/neutral/poi_intro.lua:462
 msgid ""
 "You attempt to go through the airlock when an authorization prompt opens up. "
 "Looking at the make of the ship, it seems heavily reinforced. It looks like "
 "you're going to have to break the code to gain complete access to the ship."
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:469
+#: dat/missions/neutral/poi_intro.lua:468
 msgid ""
 "Your ship AI materializes in front of you.\n"
 "\"This looks like a standard security mechanism. You will need to crack it "
 "to access the ship.\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:471
+#: dat/missions/neutral/poi_intro.lua:470
 msgid ""
 "\"You have to guess the combination of symbols to open the password. This "
 "lock should have only {num} symbols. After each attempt, you will know how "
@@ -81932,13 +81932,13 @@ msgid ""
 "the clues to attempt to match the true password.\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:473
+#: dat/missions/neutral/poi_intro.lua:472
 msgid ""
 "She squints looking at {shipai}'s holographic projection.\n"
 "\"Say, do I know you?\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:476
+#: dat/missions/neutral/poi_intro.lua:475
 msgid ""
 "\"It is not possible that we have met. For I am {player}'s ship AI.\"\n"
 "They turn quickly to you.\n"
@@ -81947,17 +81947,17 @@ msgid ""
 "They dematerialize in a hurry."
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:482
+#: dat/missions/neutral/poi_intro.lua:481
 msgid "Thinking deeply to herself she murmurs \"I definitely know them…\"."
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:483
+#: dat/missions/neutral/poi_intro.lua:482
 msgid ""
 "She turns again to you.\n"
 "\"Try to crack the password, we need to see what's on the ship!\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:498
+#: dat/missions/neutral/poi_intro.lua:497
 msgid ""
 "A brief '#rAUTHORIZATION DENIED#0' flashes on the screen and you hear the "
 "ship internals groan as the emergency security protocol kicks in and "
@@ -81966,19 +81966,19 @@ msgid ""
 "chance!"
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:502 dat/scripts/common/poi.lua:376
+#: dat/missions/neutral/poi_intro.lua:501 dat/scripts/common/poi.lua:376
 msgid ""
 "You deftly crack the code and the screen flashes with '#gAUTHORIZATION "
 "GRANTED#0'. Time to see what goodness awaits you!"
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:503
+#: dat/missions/neutral/poi_intro.lua:502
 msgid ""
 "She seems to be banging on her reactor while talking to you.\n"
 "\"That was great! Go ahead!\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:505
+#: dat/missions/neutral/poi_intro.lua:504
 msgid ""
 "You proceed to enter and explore the interior of the derelict. Although "
 "there is a distinct lack of living life aboard, everything seems to be in "
@@ -81986,7 +81986,7 @@ msgid ""
 "crate marked \"cheese\"."
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:506
+#: dat/missions/neutral/poi_intro.lua:505
 msgid ""
 "Even though she is apparently squeezing her greasy self through her reactor, "
 "her eyes light up the moment she sees the crate.\n"
@@ -81994,7 +81994,7 @@ msgid ""
 "ship? I need to see that right away!\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:508
+#: dat/missions/neutral/poi_intro.lua:507
 msgid ""
 "You explore the rest of the ship but do not find anything else of interest. "
 "Although the ship is in very good condition, it is still not space-worthy, "
@@ -82002,46 +82002,46 @@ msgid ""
 "cheese and leave the ship behind."
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:510 dat/scripts/pilotname/pirate.lua:264
+#: dat/missions/neutral/poi_intro.lua:509 dat/scripts/pilotname/pirate.lua:264
 msgid "Cheese"
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:510
+#: dat/missions/neutral/poi_intro.lua:509
 msgid "A crate marked cheese. It is quite small and very, very smelly."
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:517
+#: dat/missions/neutral/poi_intro.lua:516
 msgid "Board Nelly's ship"
 msgstr ""
 
 #. Clean up stuff
 #. Can't fail
-#: dat/missions/neutral/poi_intro.lua:537
+#: dat/missions/neutral/poi_intro.lua:536
 msgid ""
 "The moment you get on Nelly's ship with the smelly cheese, she comes "
 "bouncing to you."
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:539
+#: dat/missions/neutral/poi_intro.lua:538
 msgid "\"Oh! It's even better in person! Let me check the goods.\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:540
+#: dat/missions/neutral/poi_intro.lua:539
 msgid ""
 "She takes the crate and deftly pries it open. Suddenly everything smells "
 "really strongly of cheese and you gag a bit.\n"
-"\"Let's see. This is an authentic infused sausage cheese matured cheese! The "
+"\"Let's see. This is an authentic sausage-infused matured cheese! The "
 "rumours were true!\""
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:542
+#: dat/missions/neutral/poi_intro.lua:541
 msgid ""
 "\"Here, take my Pulse Scanner, I'll take the cheese. I won't have to chase "
 "points of interest for a while with this beauty!\"\n"
 "She rubs the cheese to her face."
 msgstr ""
 
-#: dat/missions/neutral/poi_intro.lua:544
+#: dat/missions/neutral/poi_intro.lua:543
 msgid ""
 "Seeing as it doesn't seem like you'll be able to change anything and the "
 "Pulse Scanner is probably more useful than the cheese, you take the outfit "
@@ -82051,7 +82051,7 @@ msgstr ""
 
 #. Let her fly away
 #. Re-enable spawns
-#: dat/missions/neutral/poi_intro.lua:562
+#: dat/missions/neutral/poi_intro.lua:561
 msgid ""
 "Nelly helped you explore a point of interest. You found some smelly cheese "
 "and traded it with Nelly for a Pulse Scanner to be able to explore more "
@@ -121238,40 +121238,40 @@ msgstr ""
 msgid "OGG: Invalid stream section or corrupt link in music!"
 msgstr ""
 
-#: src/nlua_audio.c:410 src/nlua_audio.c:799
+#: src/nlua_audio.c:410 src/nlua_audio.c:800
 #, c-format
 msgid "Timed out while waiting for audio thread of '%s' to finish!"
 msgstr ""
 
-#: src/nlua_audio.c:412 src/nlua_audio.c:801
+#: src/nlua_audio.c:412 src/nlua_audio.c:802
 msgid "Timed out while waiting for audio thread to finish!"
 msgstr ""
 
-#: src/nlua_audio.c:587
+#: src/nlua_audio.c:588
 #, c-format
 msgid "Audio '%s' does not appear to be a Vorbis bitstream."
 msgstr ""
 
-#: src/nlua_audio.c:664
+#: src/nlua_audio.c:665
 msgid "Unimplemented"
 msgstr ""
 
-#: src/nlua_audio.c:884 src/nlua_audio.c:935
+#: src/nlua_audio.c:885 src/nlua_audio.c:936
 #, c-format
 msgid "Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"
 msgstr ""
 
-#: src/nlua_audio.c:991
+#: src/nlua_audio.c:992
 #, c-format
 msgid "Unknown duration source '%s'! Should be either 'seconds' or 'samples'!"
 msgstr ""
 
-#: src/nlua_audio.c:1599
+#: src/nlua_audio.c:1600
 #, c-format
 msgid "Usupported audio effect type '%s'!"
 msgstr ""
 
-#: src/nlua_audio.c:1617
+#: src/nlua_audio.c:1618
 #, c-format
 msgid "Unknown audio effect '%s'!"
 msgstr ""
