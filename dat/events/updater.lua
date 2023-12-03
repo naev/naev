@@ -15,7 +15,7 @@ local fmt = require 'format'
 local luatk = require "luatk"
 
 -- Runs on saves older than 0.11.0
-local function updater0110( _did0100, _did090 )
+local function updater0110( did0100, did090 )
    local conf = naev.conf()
    local function set_var( name, default, olddefault )
       local v = var.peek(name) or default
@@ -24,11 +24,6 @@ local function updater0110( _did0100, _did090 )
       end
       var.push( name, v )
    end
-
-   -- TODO merge into the AI message for the release
-   luatk.msg(_([[Input Change]]),fmt.f(_([[From 0.11.0-alpha.4 and onwards, the 'board' and 'land' keys have been merged into a single one called 'approach'. The 'approach' key defaults to {keybind}, and will first try to board your current target (if applicable), before trying to land on your space target object. Please rebind the key as necessary.]]),
-      {keybind=tut.getKey("approach")}))
-   luatk.run()
 
    -- Move some old configuration values to player variables
    -- TODO eliminate around 0.12.0 or so
@@ -41,7 +36,6 @@ local function updater0110( _did0100, _did090 )
       set_var( "autonav_compr_max", conf.compression_mult, 50  )
    end
 
-   --[=[
    local metai = (var.peek("shipai_name") ~= nil)
    local hasbioship = player.pilot():ship():tags().bioship
    for k,v in ipairs(player.ships()) do
@@ -95,7 +89,7 @@ local function updater0110( _did0100, _did090 )
       sai( function () return fmt.f(_([["Great! I'll use the name {ainame} from now on. If you want to change it, you can do so from the #oInformation#0 menu which you open with {infokey} by clicking on the '#oShip AI#0' button. From there you can also access explanations and change tutorial options."]]),
          {ainame=tut.ainame(), infokey=tut.getKey("info")}) end )
    else
-      vn.na(fmt.f(_([["Your ship AI {shipai} materializes before you."]]),
+      vn.na(fmt.f(_([[Your ship AI {shipai} materializes before you.]]),
          {shipai=tut.ainame()}))
       sai(_([["It seems like there has been a significant update to the game!
 Many of the new features come with small tutorials in form of missions. I will not go over these to not spoil you as they will appear in-game. Let me cover some of the features that you may miss."]]))
@@ -150,11 +144,10 @@ Many of the new features come with small tutorials in form of missions. I will n
 
    vn.done( tut.shipai.transition )
    vn.run()
-   --]=]
 end
 
 -- Runs on saves older than 0.10.0
-local function updater0100( did090 )
+local function updater0100( _did090 )
    -- "nelly_met" variable wasn't used in older versions
    if player.misnDone("Helping Nelly Out 1") then
       var.push( "nelly_met", true )
@@ -170,99 +163,6 @@ local function updater0100( did090 )
    end
    update_inv( "minerva_tokens", N_("Minerva Token") )
    update_inv( "totoran_emblems", N_("Totoran Emblem") )
-
-   local metai = (var.peek("shipai_name") ~= nil)
-   local hasbioship = player.pilot():ship():tags().bioship
-   for k,v in ipairs(player.ships()) do
-      if v.ship:tags().bioship then
-         hasbioship = true
-         break
-      end
-   end
-
-   -- Do update tutorial, have to handle older versions here
-   vn.clear()
-   vn.scene()
-   local sai = vn.newCharacter( tut.vn_shipai() )
-   vn.transition( tut.shipai.transition )
-   if not metai then
-      vn.na(_([[Suddenly, a hologram materializes in front of you.]]))
-      sai(fmt.f(_([["Hello there {playername}! I'm your Ship AI. Up until now I've been resident in your ship controlling your Autonav and other functionality, but with new updates, I can now materialize and communicate directly with you as a hologram."
-   They stare at you for a few seconds.
-   "Say, now that I can see you, you look very familiar. You wouldn't be related my late previous owner? Terrible what happened…"]]),{playername=player.name()}))
-      sai(_([["I'm sure you have many questions about the update, but first, would you like to give me a name?"]]))
-      vn.label("rename")
-      local ainame
-      luatk.vn( function ()
-         luatk.msgInput( _("Name Ship AI"), _("Please enter a name for your Ship AI"), 50, function( str )
-            ainame = str
-            if ainame then
-               var.push("shipai_name",ainame)
-               sai.displayname = ainame -- Can't use rename here
-
-               if tut.specialnames[ string.upper(ainame) ] then
-                  vn.jump("specialname")
-                  return
-               end
-               vn.jump("gavename")
-               return
-            end
-            vn.jump("noname")
-         end )
-      end )
-      vn.label("specialname")
-      sai( function () return tut.specialnames[ string.upper(ainame) ] end )
-
-      vn.label("noname")
-      sai(_([["You haven't given me a name. I will be continued to be called 'Ship AI' or SAI for short. Is that OK?"]]))
-      vn.menu{
-         {_([["'Ship AI' is fine"]]), "gavename"},
-         {_("Rename"), "rename"},
-      }
-
-      vn.label("gavename")
-      sai( function () return fmt.f(_([["Great! I'll use the name {ainame} from now on. If you want to change it, you can do so from the #oInformation#0 menu which you open with {infokey} by clicking on the '#oShip AI#0' button. From there you can also access explanations and change tutorial options."]]), {ainame=tut.ainame(), infokey=tut.getKey("info")}) end )
-   else
-      vn.na(fmt.f(_([["Your ship AI {shipai} materializes before you."]]),
-         {shipai=tut.ainame()}))
-      sai(_([["It seems like there has been a significant update to the game!
-Many of the new features come with small tutorials in form of missions. I will not go over these to not spoil you as they will appear in-game. Let me cover some of the features that you may miss."]]))
-   end
-
-   if did090 then
-      sai(fmt.f(_([["With the update, a lot of new mechanics and features have been changed. The largest change includes a revamp of #oElectronic Warfare#0, which now includes a new stealth mechanic. In this new framework, you will be scanned by patrol ships, which means you have to be careful when carrying illegal cargo or outfits. You can activate stealth with {stealthkey} when no ships area nearby."]]),{stealthkey=tut.getKey("stealth")}))
-   end
-
-   sai(_([["Asteroids have been completely reworked. They no longer explode randomly and asteroid fields can spawn different types of asteroids. While it is possible to mine them with regular weapons, there are special outfits that will help you mine them and give you access to more rare rewards."]]))
-   sai(_([["You may have also noticed that there has been a major change in outfits. Lots of outfits have been removed, added, or renamed, leading to a loss of outfits when updating old save games. Please make sure to take some time inspecting your ships and their equipment before taking off, you don't want to be flying a poorly equipped ship in space!"]]))
-   if hasbioship then
-      sai(_([["Bioships have also been reworked completely. Similar to the old ships, they gain ranks through experience. However, instead of the ranks being on a per-outfit level, they are now on per-ship levels. Increasing ranks will give you better core outfits and weapons, while also unlocking skill points that you can use to significantly change the functionality and performance of the bioship."]]))
-   end
-   sai(_([["This update also provides significant modernization of the engine and many other features. To list a few, the star map is larger and you can save system notes, many new missions and campaigns, health bars are shown for pilots in combat, backgrounds reworked, news and NPCs reworked, unique pilots appear throughout the universe, manual aiming mode, save snapshots, difficulty settings, etc. Some features can be toggled through the #oOptions#0 menu, so make sure to check that if interested."]]))
-
-   if not metai then
-      sai(_([["With that said, would you like me to provide small, in-game advice as you do things throughout the game? Some might refer to things you are already familiar with, but it could help you learn new things."]]))
-      vn.menu{
-         {_("Enable tutorial hints"), "enable"},
-         {_("Disable tutorial hints"), "disable"},
-      }
-
-      vn.label("enable")
-      sai(fmt.f(_([["Great! I'll be giving you short hints as you do things through the game. If you want to change my settings or turn off the hints, please do so from the '#oShip AI#0' button in the #oInformation#0 menu you can open with {infokey}. Now, let's go adventuring!"]]),{infokey=tut.getKey("info")}))
-      vn.done( tut.shipai.transition )
-
-      vn.label("disable")
-      vn.func( function ()
-         var.push( "tut_disable", true )
-      end )
-      sai(fmt.f(_([["OK, I will not be giving you any hints. If you want to change my settings, turn on the hints, or get information and advice, please do so from the '#oShip AI#0' button in the #oInformation#0 menu you can open with {infokey}. Now, let's go adventuring!"]]),{infokey=tut.getKey("info")}))
-   else
-      sai(fmt.f(_([["And that is all! If you want to brush on game mechanics or get more hints, remember you can get in touch with me directly by clicking the '#oShip AI#0' button in the #oInformation#0 menu that you can open with {infokey}. Now, let's go adventuring!"]]),
-         {infokey=tut.getKey("info")}))
-   end
-
-   vn.done( tut.shipai.transition )
-   vn.run()
 end
 
 -- Runs on saves older than 0.9.0
@@ -327,7 +227,7 @@ function create ()
       did0100 = true
    end
    -- Run on saves older than 0.11.0
-   if not save_version or naev.versionTest( save_version, "0.11.0-alpha.4") < 0 then
+   if not save_version or naev.versionTest( save_version, "0.11.0-beta.1") < 0 then
       updater0110( did0100, did090 )
       didupdate = true
    end
