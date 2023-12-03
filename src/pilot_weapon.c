@@ -193,19 +193,12 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
             return;
 
          /* Decide what to do. */
-         on = 1;
-         l  = array_size(ws->slots);
-         for (int i=0; i<l; i++) {
-            PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
-            if (pos->state == PILOT_OUTFIT_OFF) {
-               on = 0;
-               break;
-            }
-         }
+         on = ws->active;
 
          /* Clear change variables. */
          n = 0;
          pilotoutfit_modified = 0;
+         l = array_size(ws->slots);
 
          /* Turn them off. */
          if (on) {
