@@ -99,7 +99,7 @@
 
 static int quit               = 0; /**< For primary loop */
 Uint32 SDL_LOOPDONE           = 0; /**< For custom event to exit loops. */
-static unsigned int time_ms   = 0; /**< used to calculate FPS and movement. */
+static Uint64  time_ms        = 0; /**< used to calculate FPS and movement. */
 static SDL_Surface *naev_icon = NULL; /**< Icon. */
 static int fps_skipped        = 0; /**< Skipped last frame? */
 /* Version stuff. */
@@ -312,7 +312,7 @@ int main( int argc, char** argv )
    /* Display the load screen. */
    loadscreen_load();
    loadscreen_update( 0., _("Initializing subsystems…") );
-   time_ms = SDL_GetTicks();
+   time_ms = SDL_GetTicks64();
 
    /*
     * Input
@@ -864,7 +864,7 @@ static void fps_init (void)
    WARN( _("clock_gettime failed, disabling POSIX time.") );
    use_posix_time = 0;
 #endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
-   time_ms  = SDL_GetTicks();
+   time_ms  = SDL_GetTicks64();
 }
 /**
  * @brief Gets the elapsed time.
@@ -874,7 +874,7 @@ static void fps_init (void)
 static double fps_elapsed (void)
 {
    double dt;
-   unsigned int t;
+   Uint64 t;
 
 #if HAS_POSIX && defined(CLOCK_MONOTONIC)
    struct timespec ts;
@@ -890,7 +890,7 @@ static double fps_elapsed (void)
    }
 #endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
 
-   t        = SDL_GetTicks();
+   t        = SDL_GetTicks64();
    dt       = (double)(t - time_ms); /* Get the elapsed ms. */
    dt      /= 1000.; /* Convert to seconds. */
    time_ms  = t;

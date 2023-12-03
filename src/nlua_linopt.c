@@ -596,7 +596,7 @@ static int linoptL_solve( lua_State *L )
    glp_iocp parm_iocp;
    glp_smcp parm_smcp;
 #if DEBUGGING
-   Uint32 starttime = SDL_GetTicks();
+   Uint64 starttime = SDL_GetTicks64();
 #endif /* DEBUGGING */
 
    /* Parameters. */
@@ -710,7 +710,7 @@ static int linoptL_solve( lua_State *L )
 
    /* Complain about time. */
 #if DEBUGGING
-   if (SDL_GetTicks() - starttime > LINOPT_MAX_TM)
+   if (SDL_GetTicks64() - starttime > LINOPT_MAX_TM)
       WARN(_("glpk: too over 1 second to optimize!"));
 #endif /* DEBUGGING */
 
