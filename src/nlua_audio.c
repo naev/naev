@@ -473,7 +473,7 @@ static int audio_genSource( ALuint *source )
 {
    ALenum err;
    alGenSources( 1, source );
-   if (alIsSource( *source)==AL_TRUE)
+   if (alIsSource(*source)==AL_TRUE)
       return 0;
    err = alGetError();
    switch (err) {
@@ -486,6 +486,8 @@ static int audio_genSource( ALuint *source )
          soundLock();
          /* Try to create source again. */
          alGenSources( 1, source );
+         if (alIsSource(*source)==AL_TRUE)
+            return 0;
          al_checkErr();
          break;
 
@@ -493,9 +495,9 @@ static int audio_genSource( ALuint *source )
 #if DEBUGGING
          al_checkHandleError( err, __func__, __LINE__ );
 #endif /* DEBUGGING */
-         return -1;
+         break;
    }
-   return 0;
+   return -1;
 }
 
 /**
