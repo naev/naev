@@ -11,7 +11,7 @@
       return false
    end
    local misn_test = require "misn_test"
-   if not misn_test.mercenary() then
+   if not misn_test.mercenary(true) then
       return false
    end
    return misn_test.reweight_active()
