@@ -226,7 +226,7 @@ She hits her gavel.]]))
 The judge nods towards Maikki, giving her permission to speak.]]))
    maikki(_([["Your honour."
 Maikki gives an impeccable formal bow.]]))
-   maikki(_([["I would like to submit an EJ-7777 motion to substitute the Minera CEO."]]))
+   maikki(_([["I would like to submit an EJ-7777 motion to substitute the Minerva CEO."]]))
    judge(_([[The judge makes a curious expression and hovers down to collect the papers from Maikki. She quickly skims over it, and gives a sly grin.]]))
    judge(_([["Well it seems like the deliberations will be able to proceed today. Replacing the previous individual, we have Maisie McPherson, who will be representing the independent interests of Minerva Station. Please sit down."]]))
    vn.disappear( maikki, "slideup" )
