@@ -1,5 +1,5 @@
 * 0.11.0-beta.2 (unreleased)
-   * Hardened physics engine a bit to overflow that happens in 49 days of straight gametime
+   * Hardened physics engine a bit to overflow that happens in 49 days of straight game time
    * Fixed trivial memory leak in vpool
    * `poi`: renamed 'Pristine Derelict' to 'Unusual Derelict'
    * `poi_intro`: fixed typo
@@ -149,7 +149,7 @@
       * Fixed tutorial running during cinematics
       * Fixed active outfits not showing "activated outfit" in their summary sometimes
       * FLF no longer become true allies of the Dreamer Clan to not limit the players actions
-      * Made audio system more robust to runnning out of source errors
+      * Made audio system more robust to running out of source errors
 
 * 0.10.6
    * Fixed potential segfault with invalid semver strings
