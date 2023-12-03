@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.11.0-alpha.4\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-12-03 14:11+0900\n"
+"POT-Creation-Date: 2023-12-03 14:26+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -35329,7 +35329,7 @@ msgstr ""
 #. --
 #. TODO: Change this to the Krieger once the Baron has it. Needs "King" mission first.
 #: dat/events/neutral/baron_prowl.lua:21 dat/missions/baron/baron_baron.lua:74
-#: dat/missions/baron/baron_prince.lua:386
+#: dat/missions/baron/baron_prince.lua:389
 msgid "Pinnacle"
 msgstr ""
 
@@ -42515,11 +42515,11 @@ msgstr ""
 msgid "Rename Ship AI"
 msgstr ""
 
-#: dat/events/shipai.lua:52 dat/events/updater.lua:246
+#: dat/events/shipai.lua:52 dat/events/updater.lua:128
 msgid "Enable tutorial hints"
 msgstr ""
 
-#: dat/events/shipai.lua:54 dat/events/updater.lua:247
+#: dat/events/shipai.lua:54 dat/events/updater.lua:129
 msgid "Disable tutorial hints"
 msgstr ""
 
@@ -46243,133 +46243,201 @@ msgstr ""
 #. --
 #. Runs on saves older than 0.11.0
 #. Case not set or erased
-#. TODO merge into the AI message for the release
-#: dat/events/updater.lua:29
-msgid "Input Change"
-msgstr ""
-
-#: dat/events/updater.lua:29
-msgid ""
-"From 0.11.0-alpha.4 and onwards, the 'board' and 'land' keys have been "
-"merged into a single one called 'approach'. The 'approach' key defaults to "
-"{keybind}, and will first try to board your current target (if applicable), "
-"before trying to land on your space target object. Please rebind the key as "
-"necessary."
-msgstr ""
-
 #. Move some old configuration values to player variables
 #. TODO eliminate around 0.12.0 or so
 #. Take the opportunity to lower default from 200 to 50
-#.
-#. local metai = (var.peek("shipai_name") ~= nil)
-#. local hasbioship = player.pilot():ship():tags().bioship
-#. for k,v in ipairs(player.ships()) do
-#. if v.ship:tags().bioship then
-#. hasbioship = true
-#. break
-#. end
-#. end
-#.
-#. -- Do update tutorial, have to handle older versions here
-#. vn.clear()
-#. vn.scene()
-#. local sai = vn.newCharacter( tut.vn_shipai() )
-#. vn.transition( tut.shipai.transition )
-#. if not metai then
-#. vn.na(_([[Suddenly, a hologram materializes in front of you.]]))
-#. sai(fmt.f(_([["Hello there {playername}! I'm your Ship AI. Up until now I've been resident in your ship controlling your Autonav and other functionality, but with new updates, I can now materialize and communicate directly with you as a hologram."
-#. They stare at you for a few seconds.
-#. "Say, now that I can see you, you look very familiar. You wouldn't be related my late previous owner? Terrible what happened…"]]),{playername=player.name()}))
-#. sai(_([["I'm sure you have many questions about the update, but first, would you like to give me a name?"]]))
-#. vn.label("rename")
-#. local ainame
-#. luatk.vn( function ()
-#. luatk.msgInput( _("Name Ship AI"), _("Please enter a name for your Ship AI"), 50, function( str )
-#. ainame = str
-#. if ainame then
-#. var.push("shipai_name",ainame)
-#. sai.displayname = ainame -- Can't use rename here
-#.
-#. if tut.specialnames[ string.upper(ainame) ] then
-#. vn.jump("specialname")
-#. return
-#. end
-#. vn.jump("gavename")
-#. return
-#. end
-#. vn.jump("noname")
-#. end )
-#. end )
-#. vn.label("specialname")
-#. sai( function () return tut.specialnames[ string.upper(ainame) ] end )
-#.
-#. vn.label("noname")
-#. sai(_([["You haven't given me a name. I will be continued to be called 'Ship AI'. Is that OK?"]]))
-#. vn.menu{
-#. {_([["'Ship AI' is fine"]]), "gavename"},
-#. {_("Rename"), "rename"},
-#. }
-#.
-#. vn.label("gavename")
-#. sai( function () return fmt.f(_([["Great! I'll use the name {ainame} from now on. If you want to change it, you can do so from the #oInformation#0 menu which you open with {infokey} by clicking on the '#oShip AI#0' button. From there you can also access explanations and change tutorial options."]]),
-#. {ainame=tut.ainame(), infokey=tut.getKey("info")}) end )
-#. else
-#. vn.na(fmt.f(_([["Your ship AI {shipai} materializes before you."]]),
-#. {shipai=tut.ainame()}))
-#. sai(_([["It seems like there has been a significant update to the game!
-#. Many of the new features come with small tutorials in form of missions. I will not go over these to not spoil you as they will appear in-game. Let me cover some of the features that you may miss."]]))
-#. end
-#.
-#. -- 0.9.0 changes
-#. if did090 then
-#. sai(fmt.f(_([["With the update, a lot of new mechanics and features have been changed. The largest change includes a revamp of #oElectronic Warfare#0, which now includes a new stealth mechanic. In this new framework, you will be scanned by patrol ships, which means you have to be careful when carrying illegal cargo or outfits. You can activate stealth with {stealthkey} when no ships area nearby."]]),
-#. {stealthkey=tut.getKey("stealth")}))
-#. end
-#.
-#. -- 0.10.0 changes
-#. if did0100 then
-#. sai(_([["Asteroids have been completely reworked. They no longer explode randomly and asteroid fields can spawn different types of asteroids. While it is possible to mine them with regular weapons, there are special outfits that will help you mine them and give you access to more rare rewards."]]))
-#. sai(_([["You may have also noticed that there has been a major change in outfits. Lots of outfits have been removed, added, or renamed, leading to a loss of outfits when updating old save games. Please make sure to take some time inspecting your ships and their equipment before taking off, you don't want to be flying a poorly equipped ship in space!"]]))
-#. if hasbioship then
-#. sai(_([["Bioships have also been reworked completely. Similar to the old ships, they gain ranks through experience. However, instead of the ranks being on a per-outfit level, they are now on per-ship levels. Increasing ranks will give you better core outfits and weapons, while also unlocking skill points that you can use to significantly change the functionality and performance of the bioship."]]))
-#. end
-#. --sai(_([["This update also provides significant modernization of the engine and many other features. To list a few, the star map is larger and you can save system notes, many new missions and campaigns, health bars are shown for pilots in combat, backgrounds reworked, news and NPCs reworked, unique pilots appear throughout the universe, manual aiming mode, save snapshots, difficulty settings, etc. Some features can be toggled through the #oOptions#0 menu, so make sure to check that if interested."]]))
-#. end
-#.
-#. -- 0.11.0 changes
-#. sai(_([["The universe has also undergone drastic changes to fit the game lore and make it overall a more interesting place. The old Trader's Guild has been revamped as the Space Traders Society and has control of several new systems. All these changes include lots of new events and things to discover which I will not spoil for you."]]))
-#. sai(_([["The number of slots ships have and structural slots have been significantly tweaked. Additionally, House Sirius has been reworked completely. They have new weapons and outfits that you will be able to discover. Due to this, you may notice that some of your owned outfits and ship loadouts may have changed."]]))
-#. sai(_([["Naev now supports plugins! Although there aren't many available yet, we hope that this will increase in the future. If you are interested in creating plugins, please check out the website https://naev.org/ for more information."]]))
-#. sai(fmt.f(_([["Some settings have been moved to be per-player instead of global. This includes all the autonav settings, which are now accessible from the #bInfo menu#0, which you can open with {infokey}. Autonav has also been rewritten and by default it should be much more useful and is able to use patrol lanes among other things."]]),
-#. {infokey=tut.getKey("info")}) )
-#. sai(fmt.f(_([[The 'board' and 'land' keys have been merged into a single one called 'approach'. The 'approach' key defaults to {keybind}, and will first try to board your current target (if applicable), before trying to land on your space target object. Please rebind the key as necessary.]]),
-#. {keybind=tut.getKey("approach")}))
-#. sai(_([["This update also provides a significant modernization of the engine and many other features. To list a few, point defense weapons have been added, collisions have been significantly optimized, you can use manual aiming, you can sell outfits at any outfitter, faction standing limits have been increased, tons of new content... I hope you enjoy the update!"]]))
-#.
-#. if not metai then
-#. sai(_([["With that said, would you like me to provide small, in-game advice as you do things throughout the game? Some might refer to things you are already familiar with, but it could help you learn new things."]]))
-#. vn.menu{
-#. {_("Enable tutorial hints"), "enable"},
-#. {_("Disable tutorial hints"), "disable"},
-#. }
-#.
-#. vn.label("enable")
-#. sai(fmt.f(_([["Great! I'll be giving you short hints as you do things through the game. If you want to change my settings or turn off the hints, please do so from the '#oShip AI#0' button in the #oInformation#0 menu you can open with {infokey}. Now, let's go adventuring!"]]),{infokey=tut.getKey("info")}))
-#. vn.done( tut.shipai.transition )
-#.
-#. vn.label("disable")
-#. vn.func( function ()
-#. var.push( "tut_disable", true )
-#. end )
-#. sai(fmt.f(_([["OK, I will not be giving you any hints. If you want to change my settings, turn on the hints, or get information and advice, please do so from the '#oShip AI#0' button in the #oInformation#0 menu you can open with {infokey}. Now, let's go adventuring!"]]),{infokey=tut.getKey("info")}))
-#. else
-#. sai(fmt.f(_([["And that is all! If you want to brush on game mechanics or get more hints, remember you can get in touch with me directly by clicking the '#oShip AI#0' button in the #oInformation#0 menu that you can open with {infokey}. Now, let's go adventuring!"]]),
-#. {infokey=tut.getKey("info")}))
-#. end
-#.
-#. vn.done( tut.shipai.transition )
-#. vn.run()
-#. --
+#. Do update tutorial, have to handle older versions here
+#: dat/events/updater.lua:54
+msgid "Suddenly, a hologram materializes in front of you."
+msgstr ""
+
+#: dat/events/updater.lua:55
+msgid ""
+"\"Hello there {playername}! I'm your Ship AI. Up until now I've been "
+"resident in your ship controlling your Autonav and other functionality, but "
+"with new updates, I can now materialize and communicate directly with you as "
+"a hologram.\"\n"
+"   They stare at you for a few seconds.\n"
+"   \"Say, now that I can see you, you look very familiar. You wouldn't be "
+"related my late previous owner? Terrible what happened…\""
+msgstr ""
+
+#: dat/events/updater.lua:58
+msgid ""
+"\"I'm sure you have many questions about the update, but first, would you "
+"like to give me a name?\""
+msgstr ""
+
+#: dat/events/updater.lua:62 dat/missions/tutorial/tutorial.lua:54
+msgid "Name Ship AI"
+msgstr ""
+
+#: dat/events/updater.lua:62 dat/missions/tutorial/tutorial.lua:54
+msgid "Please enter a name for your Ship AI"
+msgstr ""
+
+#. Can't use rename here
+#: dat/events/updater.lua:82
+msgid ""
+"\"You haven't given me a name. I will be continued to be called 'Ship AI'. "
+"Is that OK?\""
+msgstr ""
+
+#: dat/events/updater.lua:84 dat/missions/tutorial/tutorial.lua:87
+msgid "\"'Ship AI' is fine\""
+msgstr ""
+
+#: dat/events/updater.lua:85 dat/missions/tutorial/tutorial.lua:79
+#: dat/missions/tutorial/tutorial.lua:88 src/dev_sysedit.c:245
+#: src/dev_sysedit.c:1410 src/dev_uniedit.c:245 src/dev_uniedit.c:1924
+#: src/equipment.c:387
+msgid "Rename"
+msgstr ""
+
+#: dat/events/updater.lua:89
+msgid ""
+"\"Great! I'll use the name {ainame} from now on. If you want to change it, "
+"you can do so from the #oInformation#0 menu which you open with {infokey} by "
+"clicking on the '#oShip AI#0' button. From there you can also access "
+"explanations and change tutorial options.\""
+msgstr ""
+
+#: dat/events/updater.lua:92
+msgid "Your ship AI {shipai} materializes before you."
+msgstr ""
+
+#: dat/events/updater.lua:94
+msgid ""
+"\"It seems like there has been a significant update to the game!\n"
+"Many of the new features come with small tutorials in form of missions. I "
+"will not go over these to not spoil you as they will appear in-game. Let me "
+"cover some of the features that you may miss.\""
+msgstr ""
+
+#. 0.9.0 changes
+#: dat/events/updater.lua:100
+msgid ""
+"\"With the update, a lot of new mechanics and features have been changed. "
+"The largest change includes a revamp of #oElectronic Warfare#0, which now "
+"includes a new stealth mechanic. In this new framework, you will be scanned "
+"by patrol ships, which means you have to be careful when carrying illegal "
+"cargo or outfits. You can activate stealth with {stealthkey} when no ships "
+"area nearby.\""
+msgstr ""
+
+#. 0.10.0 changes
+#: dat/events/updater.lua:106
+msgid ""
+"\"Asteroids have been completely reworked. They no longer explode randomly "
+"and asteroid fields can spawn different types of asteroids. While it is "
+"possible to mine them with regular weapons, there are special outfits that "
+"will help you mine them and give you access to more rare rewards.\""
+msgstr ""
+
+#: dat/events/updater.lua:107
+msgid ""
+"\"You may have also noticed that there has been a major change in outfits. "
+"Lots of outfits have been removed, added, or renamed, leading to a loss of "
+"outfits when updating old save games. Please make sure to take some time "
+"inspecting your ships and their equipment before taking off, you don't want "
+"to be flying a poorly equipped ship in space!\""
+msgstr ""
+
+#: dat/events/updater.lua:109
+msgid ""
+"\"Bioships have also been reworked completely. Similar to the old ships, "
+"they gain ranks through experience. However, instead of the ranks being on a "
+"per-outfit level, they are now on per-ship levels. Increasing ranks will "
+"give you better core outfits and weapons, while also unlocking skill points "
+"that you can use to significantly change the functionality and performance "
+"of the bioship.\""
+msgstr ""
+
+#. sai(_([["This update also provides significant modernization of the engine and many other features. To list a few, the star map is larger and you can save system notes, many new missions and campaigns, health bars are shown for pilots in combat, backgrounds reworked, news and NPCs reworked, unique pilots appear throughout the universe, manual aiming mode, save snapshots, difficulty settings, etc. Some features can be toggled through the #oOptions#0 menu, so make sure to check that if interested."]]))
+#. 0.11.0 changes
+#: dat/events/updater.lua:115
+msgid ""
+"\"The universe has also undergone drastic changes to fit the game lore and "
+"make it overall a more interesting place. The old Trader's Guild has been "
+"revamped as the Space Traders Society and has control of several new "
+"systems. All these changes include lots of new events and things to discover "
+"which I will not spoil for you.\""
+msgstr ""
+
+#: dat/events/updater.lua:116
+msgid ""
+"\"The number of slots ships have and structural slots have been "
+"significantly tweaked. Additionally, House Sirius has been reworked "
+"completely. They have new weapons and outfits that you will be able to "
+"discover. Due to this, you may notice that some of your owned outfits and "
+"ship loadouts may have changed.\""
+msgstr ""
+
+#: dat/events/updater.lua:117
+msgid ""
+"\"Naev now supports plugins! Although there aren't many available yet, we "
+"hope that this will increase in the future. If you are interested in "
+"creating plugins, please check out the website {website} for more "
+"information.\""
+msgstr ""
+
+#: dat/events/updater.lua:119
+msgid ""
+"\"Some settings have been moved to be per-player instead of global. This "
+"includes all the autonav settings, which are now accessible from the #bInfo "
+"menu#0, which you can open with {infokey}. Autonav has also been rewritten "
+"and by default it should be much more useful and is able to use patrol lanes "
+"among other things.\""
+msgstr ""
+
+#: dat/events/updater.lua:121
+msgid ""
+"The 'board' and 'land' keys have been merged into a single one called "
+"'approach'. The 'approach' key defaults to {keybind}, and will first try to "
+"board your current target (if applicable), before trying to land on your "
+"space target object. Please rebind the key as necessary."
+msgstr ""
+
+#: dat/events/updater.lua:123
+msgid ""
+"\"This update also provides a significant modernization of the engine and "
+"many other features. To list a few, point defense weapons have been added, "
+"collisions have been significantly optimized, you can use manual aiming, you "
+"can sell outfits at any outfitter, faction standing limits have been "
+"increased, tons of new content... I hope you enjoy the update!\""
+msgstr ""
+
+#: dat/events/updater.lua:126
+msgid ""
+"\"With that said, would you like me to provide small, in-game advice as you "
+"do things throughout the game? Some might refer to things you are already "
+"familiar with, but it could help you learn new things.\""
+msgstr ""
+
+#: dat/events/updater.lua:133 dat/events/updater.lua:255
+msgid ""
+"\"Great! I'll be giving you short hints as you do things through the game. "
+"If you want to change my settings or turn off the hints, please do so from "
+"the '#oShip AI#0' button in the #oInformation#0 menu you can open with "
+"{infokey}. Now, let's go adventuring!\""
+msgstr ""
+
+#: dat/events/updater.lua:140
+msgid ""
+"\"OK, I will not be giving you any hints. If you want to change my settings, "
+"turn on the hints, or get information and advice, please do so from the "
+"'#oShip AI#0' button in the #oInformation#0 menu you can open with "
+"{infokey}. Now, let's go adventuring!\""
+msgstr ""
+
+#: dat/events/updater.lua:142
+msgid ""
+"\"And that is all! If you want to brush on game mechanics or get more hints, "
+"remember you can get in touch with me directly by clicking the '#oShip AI#0' "
+"button in the #oInformation#0 menu that you can open with {infokey}. Now, "
+"let's go adventuring!\""
+msgstr ""
+
 #. Runs on saves older than 0.10.0
 #. "nelly_met" variable wasn't used in older versions
 #. Update mission-variable based items to inventory-based
@@ -46390,161 +46458,14 @@ msgstr ""
 #. Helpers to create main characters
 #. Token stuff
 #. Roughly 1 token is 1000 credits
-#: dat/events/updater.lua:171 dat/scripts/common/minerva.lua:245
+#: dat/events/updater.lua:165 dat/scripts/common/minerva.lua:245
 msgid "Minerva Token"
 msgstr ""
 
 #. Helpers to create main characters
 #. Emblem stuff
-#: dat/events/updater.lua:172 dat/scripts/common/gauntlet.lua:30
+#: dat/events/updater.lua:166 dat/scripts/common/gauntlet.lua:30
 msgid "Totoran Emblem"
-msgstr ""
-
-#. Do update tutorial, have to handle older versions here
-#: dat/events/updater.lua:189
-msgid "Suddenly, a hologram materializes in front of you."
-msgstr ""
-
-#: dat/events/updater.lua:190
-msgid ""
-"\"Hello there {playername}! I'm your Ship AI. Up until now I've been "
-"resident in your ship controlling your Autonav and other functionality, but "
-"with new updates, I can now materialize and communicate directly with you as "
-"a hologram.\"\n"
-"   They stare at you for a few seconds.\n"
-"   \"Say, now that I can see you, you look very familiar. You wouldn't be "
-"related my late previous owner? Terrible what happened…\""
-msgstr ""
-
-#: dat/events/updater.lua:193
-msgid ""
-"\"I'm sure you have many questions about the update, but first, would you "
-"like to give me a name?\""
-msgstr ""
-
-#: dat/events/updater.lua:197 dat/missions/tutorial/tutorial.lua:54
-msgid "Name Ship AI"
-msgstr ""
-
-#: dat/events/updater.lua:197 dat/missions/tutorial/tutorial.lua:54
-msgid "Please enter a name for your Ship AI"
-msgstr ""
-
-#. Can't use rename here
-#: dat/events/updater.lua:217 dat/missions/tutorial/tutorial.lua:85
-msgid ""
-"\"You haven't given me a name. I will be continued to be called 'Ship AI' or "
-"SAI for short. Is that OK?\""
-msgstr ""
-
-#: dat/events/updater.lua:219 dat/missions/tutorial/tutorial.lua:87
-msgid "\"'Ship AI' is fine\""
-msgstr ""
-
-#: dat/events/updater.lua:220 dat/missions/tutorial/tutorial.lua:79
-#: dat/missions/tutorial/tutorial.lua:88 src/dev_sysedit.c:245
-#: src/dev_sysedit.c:1410 src/dev_uniedit.c:245 src/dev_uniedit.c:1924
-#: src/equipment.c:387
-msgid "Rename"
-msgstr ""
-
-#: dat/events/updater.lua:224
-msgid ""
-"\"Great! I'll use the name {ainame} from now on. If you want to change it, "
-"you can do so from the #oInformation#0 menu which you open with {infokey} by "
-"clicking on the '#oShip AI#0' button. From there you can also access "
-"explanations and change tutorial options.\""
-msgstr ""
-
-#: dat/events/updater.lua:226
-msgid "\"Your ship AI {shipai} materializes before you.\""
-msgstr ""
-
-#: dat/events/updater.lua:228
-msgid ""
-"\"It seems like there has been a significant update to the game!\n"
-"Many of the new features come with small tutorials in form of missions. I "
-"will not go over these to not spoil you as they will appear in-game. Let me "
-"cover some of the features that you may miss.\""
-msgstr ""
-
-#: dat/events/updater.lua:233
-msgid ""
-"\"With the update, a lot of new mechanics and features have been changed. "
-"The largest change includes a revamp of #oElectronic Warfare#0, which now "
-"includes a new stealth mechanic. In this new framework, you will be scanned "
-"by patrol ships, which means you have to be careful when carrying illegal "
-"cargo or outfits. You can activate stealth with {stealthkey} when no ships "
-"area nearby.\""
-msgstr ""
-
-#: dat/events/updater.lua:236
-msgid ""
-"\"Asteroids have been completely reworked. They no longer explode randomly "
-"and asteroid fields can spawn different types of asteroids. While it is "
-"possible to mine them with regular weapons, there are special outfits that "
-"will help you mine them and give you access to more rare rewards.\""
-msgstr ""
-
-#: dat/events/updater.lua:237
-msgid ""
-"\"You may have also noticed that there has been a major change in outfits. "
-"Lots of outfits have been removed, added, or renamed, leading to a loss of "
-"outfits when updating old save games. Please make sure to take some time "
-"inspecting your ships and their equipment before taking off, you don't want "
-"to be flying a poorly equipped ship in space!\""
-msgstr ""
-
-#: dat/events/updater.lua:239
-msgid ""
-"\"Bioships have also been reworked completely. Similar to the old ships, "
-"they gain ranks through experience. However, instead of the ranks being on a "
-"per-outfit level, they are now on per-ship levels. Increasing ranks will "
-"give you better core outfits and weapons, while also unlocking skill points "
-"that you can use to significantly change the functionality and performance "
-"of the bioship.\""
-msgstr ""
-
-#: dat/events/updater.lua:241
-msgid ""
-"\"This update also provides significant modernization of the engine and many "
-"other features. To list a few, the star map is larger and you can save "
-"system notes, many new missions and campaigns, health bars are shown for "
-"pilots in combat, backgrounds reworked, news and NPCs reworked, unique "
-"pilots appear throughout the universe, manual aiming mode, save snapshots, "
-"difficulty settings, etc. Some features can be toggled through the "
-"#oOptions#0 menu, so make sure to check that if interested.\""
-msgstr ""
-
-#: dat/events/updater.lua:244
-msgid ""
-"\"With that said, would you like me to provide small, in-game advice as you "
-"do things throughout the game? Some might refer to things you are already "
-"familiar with, but it could help you learn new things.\""
-msgstr ""
-
-#: dat/events/updater.lua:251 dat/events/updater.lua:354
-msgid ""
-"\"Great! I'll be giving you short hints as you do things through the game. "
-"If you want to change my settings or turn off the hints, please do so from "
-"the '#oShip AI#0' button in the #oInformation#0 menu you can open with "
-"{infokey}. Now, let's go adventuring!\""
-msgstr ""
-
-#: dat/events/updater.lua:258
-msgid ""
-"\"OK, I will not be giving you any hints. If you want to change my settings, "
-"turn on the hints, or get information and advice, please do so from the "
-"'#oShip AI#0' button in the #oInformation#0 menu you can open with "
-"{infokey}. Now, let's go adventuring!\""
-msgstr ""
-
-#: dat/events/updater.lua:260
-msgid ""
-"\"And that is all! If you want to brush on game mechanics or get more hints, "
-"remember you can get in touch with me directly by clicking the '#oShip AI#0' "
-"button in the #oInformation#0 menu that you can open with {infokey}. Now, "
-"let's go adventuring!\""
 msgstr ""
 
 #. Runs on saves older than 0.9.0
@@ -46563,40 +46484,40 @@ msgstr ""
 #. Run on saves older than 0.10.0
 #. Run on saves older than 0.11.0
 #. Note that games before 0.10.0 will have lastplayed set days from the unix epoch
-#: dat/events/updater.lua:342
+#: dat/events/updater.lua:243
 msgid "Your ship AI, {ainame}, materializes in front of you."
 msgstr ""
 
-#: dat/events/updater.lua:344
+#: dat/events/updater.lua:245
 msgid ""
 "\"Welcome back, {player}! My ship logs indicate that you have not played "
 "Naev in quite a long time!\""
 msgstr ""
 
-#: dat/events/updater.lua:346
+#: dat/events/updater.lua:247
 msgid ""
 "\"With that said, would you like me to reset the in-game advice as you do "
 "things throughout the game? Some might refer to things you are already "
 "familiar with, but it could help you learn new things.\""
 msgstr ""
 
-#: dat/events/updater.lua:348
+#: dat/events/updater.lua:249
 msgid "Reset and enable tutorial hints"
 msgstr ""
 
-#: dat/events/updater.lua:349
+#: dat/events/updater.lua:250
 msgid "Leave as is (hints are {state})"
 msgstr ""
 
-#: dat/events/updater.lua:349
+#: dat/events/updater.lua:250
 msgid "off"
 msgstr ""
 
-#: dat/events/updater.lua:349
+#: dat/events/updater.lua:250
 msgid "on"
 msgstr ""
 
-#: dat/events/updater.lua:362
+#: dat/events/updater.lua:263
 msgid ""
 "\"OK, I will not be resetting the hints, and leave them as is. If you want "
 "to change my settings, turn on the hints, or get information and advice, "
@@ -47894,7 +47815,7 @@ msgid "Sauterfeldt's agents"
 msgstr ""
 
 #: dat/missions/baron/baron_baron.lua:100
-#: dat/missions/baron/baron_prince.lua:425
+#: dat/missions/baron/baron_prince.lua:428
 msgid ""
 "Your comm is answered by a communications officer on the bridge of the "
 "Pinnacle. You tell her you've got a delivery for the baron. She runs a few "
@@ -48429,7 +48350,7 @@ msgid "Don't buy the artefact"
 msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:300
-#: dat/missions/baron/baron_prince.lua:323
+#: dat/missions/baron/baron_prince.lua:324
 msgid "A suspicious salesman"
 msgstr ""
 
@@ -48445,12 +48366,12 @@ msgid "Artefact? A"
 msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:313
-#: dat/missions/baron/baron_prince.lua:336
-#: dat/missions/baron/baron_prince.lua:359
+#: dat/missions/baron/baron_prince.lua:337
+#: dat/missions/baron/baron_prince.lua:361
 msgid "An ancient artefact?"
 msgstr ""
 
-#: dat/missions/baron/baron_prince.lua:325
+#: dat/missions/baron/baron_prince.lua:326
 msgid ""
 "The man grins at you. \"Ah, I can tell you have the eye of a connoisseur! I "
 "deal only in the finest, counterfeit-free antiques. If you're smart, and I "
@@ -48458,15 +48379,15 @@ msgid ""
 "sell you fakes! How about it?\""
 msgstr ""
 
-#: dat/missions/baron/baron_prince.lua:336
+#: dat/missions/baron/baron_prince.lua:337
 msgid "Artefact? B"
 msgstr ""
 
-#: dat/missions/baron/baron_prince.lua:346
+#: dat/missions/baron/baron_prince.lua:348
 msgid "A suspicious saleswoman"
 msgstr ""
 
-#: dat/missions/baron/baron_prince.lua:348
+#: dat/missions/baron/baron_prince.lua:350
 msgid ""
 "The woman beckons you over to the bar. \"Listen, friend. I have here a "
 "unique, extremely rare remnant of prehistoric times. This is the genuine "
@@ -48474,30 +48395,30 @@ msgid ""
 "to spend good credits on a fake, right?\""
 msgstr ""
 
-#: dat/missions/baron/baron_prince.lua:359
+#: dat/missions/baron/baron_prince.lua:361
 msgid "Artefact? C"
 msgstr ""
 
-#: dat/missions/baron/baron_prince.lua:370
+#: dat/missions/baron/baron_prince.lua:373
 msgid "You can't currently afford to buy this artefact. You need {credits}."
 msgstr ""
 
-#: dat/missions/baron/baron_prince.lua:375
+#: dat/missions/baron/baron_prince.lua:378
 msgid "You decide not to buy the artefact."
 msgstr ""
 
-#: dat/missions/baron/baron_prince.lua:379
+#: dat/missions/baron/baron_prince.lua:382
 msgid "You pay {cost} to obtain the artefact and take your leave."
 msgstr ""
 
 #. Spawn artefact hunters, maybe.
 #. 60% chance of artefact hunters.
-#: dat/missions/baron/baron_prince.lua:408
+#: dat/missions/baron/baron_prince.lua:411
 msgid "Artefact Hunter"
 msgstr ""
 
 #. Just go towards the player position and attack if they are around
-#: dat/missions/baron/baron_prince.lua:425
+#: dat/missions/baron/baron_prince.lua:428
 msgid "Green light for docking"
 msgstr ""
 
@@ -94552,6 +94473,12 @@ msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:78
 msgid "Continue with '{ainame}'"
+msgstr ""
+
+#: dat/missions/tutorial/tutorial.lua:85
+msgid ""
+"\"You haven't given me a name. I will be continued to be called 'Ship AI' or "
+"SAI for short. Is that OK?\""
 msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:92
