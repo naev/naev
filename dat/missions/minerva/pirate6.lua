@@ -377,7 +377,7 @@ local chatter = {
    {_([[So I was returning to Haven, when I saw a derelict.]]), 7 },
    {_([[Being the fellow I am, I boarded it.]]), 6 },
    {_([[Ship was all covered in blood and bodies.]]), 7 },
-   {_([[Fresh bodes means fresh goods, great I thought.]]), 7 },
+   {_([[Fresh bodies means fresh goods, great I thought.]]), 7 },
    {_([[Until I got to the command room.]]), 7 },
    {_([[Bloody Iguana chomping on the captain's leg!]]), 8 },
    {_([[Almost crapped my trousers!]]), 7 },
