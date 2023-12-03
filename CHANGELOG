@@ -1,4 +1,7 @@
-* 0.11.0 (unreleased)
+* 0.11.0-beta.2 (unreleased)
+   * `poi_intro`: fixed typo
+
+* 0.11.0-beta.1
    * Gameplay Changes
       * Universe significantly overworked to be more consistent with lore
          * More landable uninhabited spobs, unique locations, and things to discover
