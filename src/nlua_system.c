@@ -609,12 +609,9 @@ static int systemL_adjacent( lua_State *L )
  */
 static int systemL_jumps( lua_State *L )
 {
-   int exitonly, pushed;
-   StarSystem *s;
-
-   s = luaL_validsystem(L,1);
-   exitonly = lua_toboolean(L,2);
-   pushed = 0;
+   StarSystem *s = luaL_validsystem(L,1);
+   int exitonly = lua_toboolean(L,2);
+   int pushed = 0;
 
    /* Push all jumps. */
    lua_newtable(L);
@@ -622,7 +619,7 @@ static int systemL_jumps( lua_State *L )
       LuaJump lj;
       /* Skip exit-only jumps if requested. */
       if ((exitonly) && (jp_isFlag( &s->jumps[i],  JP_EXITONLY)))
-            continue;
+         continue;
 
       lj.srcid  = s->id;
       lj.destid = s->jumps[i].targetid;
