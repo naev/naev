@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-12-03 17:43+0900\n"
+"POT-Creation-Date: 2023-12-03 18:09+0900\n"
 "PO-Revision-Date: 2023-04-10 00:50+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
@@ -38473,8 +38473,10 @@ msgstr ""
 #. TODO something more interesting
 #: dat/events/neutral/poi.lua:76 dat/missions/neutral/poi.lua:121
 #: dat/missions/neutral/poi_intro.lua:423
-msgid "Pristine Derelict"
-msgstr ""
+#, fuzzy
+#| msgid "Derelict"
+msgid "Unusual Derelict"
+msgstr "Astronave alla Deriva"
 
 #. Clean up stuff
 #.
@@ -80679,7 +80681,7 @@ msgstr ""
 #. Must be nebula or near nebula
 #: dat/missions/neutral/poi/nebula_crystals.lua:23
 msgid ""
-"You found large amounts of {cargo} on a pristine derelict in the {sys} "
+"You found large amounts of {cargo} on an unusual derelict in the {sys} "
 "system."
 msgstr ""
 
@@ -107813,7 +107815,7 @@ msgstr ""
 
 #: dat/scripts/common/poi.lua:402
 msgid ""
-"You found a pristine derelict with large amounts of credits in the {sys} "
+"You found an unusual derelict with large amounts of credits in the {sys} "
 "system.."
 msgstr ""
 
@@ -107826,7 +107828,7 @@ msgstr ""
 
 #: dat/scripts/common/poi.lua:411
 msgid ""
-"You found a pristine derelict with an Encrypted Data Matrix in the {sys} "
+"You found an unusual derelict with an Encrypted Data Matrix in the {sys} "
 "system."
 msgstr ""
 

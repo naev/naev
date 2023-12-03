@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-12-03 17:43+0900\n"
+"POT-Creation-Date: 2023-12-03 18:09+0900\n"
 "PO-Revision-Date: 2022-04-08 09:11+0000\n"
 "Last-Translator: 이정희 <daemul72@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/naev/naev/ko/>\n"
@@ -37837,7 +37837,7 @@ msgstr "너는 제국에 걸맞지 않아!"
 #: dat/events/neutral/poi.lua:76 dat/missions/neutral/poi.lua:121
 #: dat/missions/neutral/poi_intro.lua:423
 #, fuzzy
-msgid "Pristine Derelict"
+msgid "Unusual Derelict"
 msgstr "빈 휴지통"
 
 #. Clean up stuff
@@ -81070,7 +81070,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Frontier systems"
 msgid ""
-"You found large amounts of {cargo} on a pristine derelict in the {sys} "
+"You found large amounts of {cargo} on an unusual derelict in the {sys} "
 "system."
 msgstr "프론티어 시스템"
 
@@ -108513,10 +108513,12 @@ msgid ""
 msgstr ""
 
 #: dat/scripts/common/poi.lua:402
+#, fuzzy
+#| msgid "Frontier systems"
 msgid ""
-"You found a pristine derelict with large amounts of credits in the {sys} "
+"You found an unusual derelict with large amounts of credits in the {sys} "
 "system.."
-msgstr ""
+msgstr "프론티어 시스템"
 
 #: dat/scripts/common/poi.lua:406
 msgid ""
@@ -108529,7 +108531,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Frontier systems"
 msgid ""
-"You found a pristine derelict with an Encrypted Data Matrix in the {sys} "
+"You found an unusual derelict with an Encrypted Data Matrix in the {sys} "
 "system."
 msgstr "프론티어 시스템"
 
@@ -127564,6 +127566,10 @@ msgstr ""
 #: dat/outfits/bioship/generate.py:484
 msgid "Immanis Cortex III"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Pristine Derelict"
+#~ msgstr "빈 휴지통"
 
 #, fuzzy
 #~| msgid "Frontier systems"
