@@ -159,7 +159,6 @@ function land()
             vn.done()
             vn.run()
             player.pay(credits)
-            misn.markerRm(mem.misn_marker)
             nebu_research.log(_([[You helped Dr. Mensing to acquire funding for a shielding prototype that will enable to explore the Sol nebula.]]))
             misn.finish(true)
         end

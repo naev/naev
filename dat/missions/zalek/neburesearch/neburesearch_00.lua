@@ -140,7 +140,6 @@ function land()
       vn.run()
       misn.cargoRm(mem.cargo)
       player.pay(credits)
-      misn.markerRm(mem.misn_marker)
       nebu_research.log(_("You helped a Za'lek student to collect sensor data in the Nebula."))
       misn.finish(true)
    end

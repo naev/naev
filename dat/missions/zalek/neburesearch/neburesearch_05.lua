@@ -155,7 +155,6 @@ With this she hands you a credit chip worth {credits}.]]), {credits=fmt.credits(
 
       player.outfitAdd("Broken Nebular Shielding Prototype")
       player.pay(credits)
-      misn.markerRm(mem.misn_marker)
       nebu_research.log( _("You helped Dr. Mensing to test the nebula resistant shielding prototype by flying deep into the Sol nebula. However, the prototype failed and you almost died due to the volatility of the nebula. It is a major setback for the project.") )
       misn.finish(true)
    end
@@ -370,6 +369,6 @@ You decide that it's better not to tell her about your finding.]]))
    vn.run()
 
    mem.stage = 6
-   misn.markerMove(mem.misn_marker, homeworld_sys)
+   misn.markerMove(mem.misn_marker, homeworld)
    misn.osdActive(2)
 end

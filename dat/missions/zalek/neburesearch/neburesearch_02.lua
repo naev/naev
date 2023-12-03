@@ -125,7 +125,6 @@ function land()
         vn.done()
         vn.run()
         player.pay(credits)
-        misn.markerRm(mem.misn_marker)
         nebu_research.log(_([[You brought Dr. Mensing back from a Empire scientific conference.]]))
         misn.finish(true)
     end
