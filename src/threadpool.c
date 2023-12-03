@@ -533,9 +533,7 @@ void vpool_enqueue( ThreadQueue *queue, int (*function)(void *), void *data )
 static int vpool_worker( void *data )
 {
    int cnt;
-   vpoolThreadData *work;
-
-   work = (vpoolThreadData*) data;
+   vpoolThreadData *work = (vpoolThreadData*) data;
 
    /* Do work */
    work->node->function( work->node->data );
@@ -547,6 +545,9 @@ static int vpool_worker( void *data )
       SDL_CondSignal( work->cond );  /* Signal waiting thread */
    *(work->count) = cnt;
    SDL_mutexV( work->mutex );
+
+   /* Clean up data. */
+   free( work->node );
 
    return 0;
 }
