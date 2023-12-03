@@ -82,7 +82,7 @@ function accept()
     misn.setTitle(_("Shielding Prototype Funding"))
     misn.setReward(credits)
     misn.setDesc(_("Help Dr. Mensing to get funding to construct a shielding prototype."))
-    mem.misn_marker = misn.markerAdd(mem.dest_sys, "low")
+    mem.misn_marker = misn.markerAdd(mem.dest_planet, "low")
 
     misn.accept()
     misn.osdCreate(_("Shielding Prototype Funding"), {
