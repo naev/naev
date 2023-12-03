@@ -185,8 +185,8 @@ end
 function takeoff()
    if mem.stage == 5 then
       mem.stage = 6
-      hook.timer(2.0, "startAmbush")
-      hook.timer(12.0, "secondWarningMessage")
+      hook.timer(2, "startAmbush")
+      hook.timer(12, "secondWarningMessage")
    end
 end
 
@@ -203,9 +203,9 @@ end
 function startAmbush()
    local scom = {}
    local origins = {}
-   origins[1] = system.get("Vauban")
-   origins[2] = system.get("Woreck")
-   origins[3] = system.get("Damien")
+   for k,j in ipairs(system.cur():jumps()) do
+      table.insert( origins, j:dest() )
+   end
    for i=1,#origins do
       scom[2*i-1] = pilot.add("Za'lek Light Drone", "Mercenary", origins[i])
       scom[2*i] = pilot.add("Za'lek Heavy Drone", "Mercenary", origins[i])
