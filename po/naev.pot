@@ -47924,7 +47924,7 @@ msgid ""
 "\"Ah, my holopainting,\" he coos as the chest is being carried into his "
 "quarters. \"At last, I've been waiting forever.\" The Baron does not seem to "
 "be aware of your presence at all. He continues to fuss over the holopainting "
-"even as his crewman strip away the chest and lift the frame up to the wall."
+"even as his crewmen strip away the chest and lift the frame up to the wall."
 msgstr ""
 
 #: dat/missions/baron/baron_baron.lua:123
