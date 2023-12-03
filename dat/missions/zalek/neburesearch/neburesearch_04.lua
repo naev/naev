@@ -151,7 +151,7 @@ function land()
             vn.na(_([[For a moment you wonder what she is doing as she drags you towards the bathroom; finally you remember what she said about her 'escape strategy'. She mentioned that you are supposed to leave the building through the window of the bathroom.]]))
             vn.done()
             vn.run()
-            misn.markerMove(mem.misn_marker, mem.dest_sys)
+            misn.markerMove(mem.misn_marker, mem.dest_planet)
             misn.osdActive(2)
         elseif mem.stage == 7 then
             mensing(_([["That took long enough! I'm glad Professor Voges promised to take care of the funding. The problem was that my recent research is related to a secret project and my funding was shut down - like some kind of conspiracy; can you believe it! Actually I'm not supposed to tell you anything as you could possibly get into a lot of trouble.. forget I said anything! I have much work to do!"]]))
