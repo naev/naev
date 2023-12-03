@@ -557,6 +557,7 @@ static int audioL_new( lua_State *L )
    soundLock();
    la.ok = audio_genSource( &la.source );
    if (la.ok) {
+      SDL_RWclose( rw ); /* Clean up. */
       la.nocleanup = 1; /* Not initialized so no need to clean up. */
       lua_pushaudio(L, la);
       return 1;
@@ -645,7 +646,7 @@ void audio_clone( LuaAudio_t *la, const LuaAudio_t *source )
 
    soundLock();
    la->ok = audio_genSource( &la->source );
-   if (!la->ok) {
+   if (la->ok) {
       la->nocleanup = 1;
       return;
    }
