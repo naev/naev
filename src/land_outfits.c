@@ -897,23 +897,27 @@ int outfit_canBuy( const Outfit *outfit, int wid )
       data = window_getData( wid );
    int blackmarket = (data!=NULL) ? data->blackmarket : 0;
    int sold = 0;
+   const Outfit *omap = outfit_get( LOCAL_MAP_NAME );
 
    land_errClear();
    failure = 0;
    outfit_getPrice( outfit, &price, &canbuy, &cansell );
 
-   /* See if the player previously sold it. */
-   for (int i=0; i<array_size(outfits_sold); i++) {
-      if (outfits_sold[i].o == outfit ) {
-         sold = outfits_sold[i].q;
-         break;
+   /* Special exception for local map. */
+   if (outfit!=omap) {
+      /* See if the player previously sold it. */
+      for (int i=0; i<array_size(outfits_sold); i++) {
+         if (outfits_sold[i].o == outfit ) {
+            sold = outfits_sold[i].q;
+            break;
+         }
       }
-   }
 
-   /* Not sold at planet. */
-   if (!sold && !outfit_isSold( outfit, wid )) {
-      land_errDialogueBuild( _("Outfit not sold here!") );
-      return 0;
+      /* Not sold at planet. */
+      if (!sold && !outfit_isSold( outfit, wid )) {
+         land_errDialogueBuild( _("Outfit not sold here!") );
+         return 0;
+      }
    }
 
    /* Unique. */

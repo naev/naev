@@ -2,6 +2,7 @@
    * Fixed toggle weapon sets not turning off with only bolt weapons
    * Hardened physics engine a bit to overflow that happens in 49 days of straight game time
    * Fixed trivial memory leak in vpool
+   * Allow buying local maps where they are not sold
    * `poi`: renamed 'Pristine Derelict' to 'Unusual Derelict'
    * `poi_intro`: fixed typo
 

@@ -835,7 +835,7 @@ void land_updateMainTab (void)
       window_enableButton( land_windows[0], "btnMap");
    /* Else create it. */
    else {
-      /* Refuel button. */
+      /* Buy local map button. */
       credits2str( cred, o->price, 0 );
       snprintf( buf, sizeof(buf), _("Buy Local Map (%s)"), cred );
       window_addButtonKey( land_windows[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20),
