@@ -253,7 +253,8 @@ void player_new (void)
    player.date_created = time(NULL);
 
    do {
-      int ret;
+      const char *SAVEPATH = "_tmp";
+      char buf[PATH_MAX];
 
       /* Get the name. */
       player.name = dialogue_input( _("Player Name"), 1, 60,
@@ -266,12 +267,18 @@ void player_new (void)
       }
 
       /* Try to see if we can save the game for a valid player name. */
-      ret = PHYSFS_mkdir( player.name );
-      if (ret==0) { /* In particular should be PHYSFS_ERR_BAD_FILENAME error. */
+      snprintf( buf, sizeof(buf), "%s/%s", SAVEPATH, player.name );
+      if (PHYSFS_mkdir(buf)==0) /* In particular should be PHYSFS_ERR_BAD_FILENAME error. */
          dialogue_alert(_("'%s' is an invalid player name as it can not be saved to your filesystem! Please choose another."), player.name);
-      }
       else {
-         PHYSFS_delete( player.name );
+         int ret = PHYSFS_delete( buf );
+         if (ret==0)
+            WARN(_("Unable to delete temporary file '%s': %s"), buf, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ));
+         else {
+            ret = PHYSFS_delete( SAVEPATH );
+            if (ret==0)
+               WARN(_("Unable to delete temporary file '%s': %s"), SAVEPATH, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ));
+         }
          invalid = 0;
       }
       PHYSFS_getLastErrorCode(); /* Clear error code. */
