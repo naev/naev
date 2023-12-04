@@ -244,21 +244,38 @@ static void player_newSetup()
  */
 void player_new (void)
 {
+   int invalid = 1;
+
    /* Set up new player. */
    player_newSetup();
 
    /* Some meta-data. */
    player.date_created = time(NULL);
 
-   /* Get the name. */
-   player.name = dialogue_input( _("Player Name"), 1, 60,
-         _("Please write your name:") );
+   do {
+      int ret;
 
-   /* Player cancelled dialogue. */
-   if (player.name == NULL) {
-      menu_main();
-      return;
-   }
+      /* Get the name. */
+      player.name = dialogue_input( _("Player Name"), 1, 60,
+            _("Please write your name:") );
+
+      /* Player cancelled dialogue. */
+      if (player.name == NULL) {
+         menu_main();
+         return;
+      }
+
+      /* Try to see if we can save the game. */
+      ret = PHYSFS_mkdir( player.name );
+      if (ret==0) {
+         dialogue_alert(_("'%s' is an invalid player name as it can not be saved to your filesystem! Please choose another."), player.name);
+      }
+      else {
+         PHYSFS_delete( player.name );
+         invalid = 0;
+      }
+      PHYSFS_getLastErrorCode(); /* Clear error code. */
+   } while (invalid);
 
    load_refresh();
    if (array_size( load_getList( player.name ) ) > 0) {
