@@ -265,9 +265,9 @@ void player_new (void)
          return;
       }
 
-      /* Try to see if we can save the game. */
+      /* Try to see if we can save the game for a valid player name. */
       ret = PHYSFS_mkdir( player.name );
-      if (ret==0) {
+      if (ret==0) { /* In particular should be PHYSFS_ERR_BAD_FILENAME error. */
          dialogue_alert(_("'%s' is an invalid player name as it can not be saved to your filesystem! Please choose another."), player.name);
       }
       else {
