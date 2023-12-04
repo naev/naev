@@ -6,7 +6,7 @@
   <size>large</size>
   <mass>80</mass>
   <price>200000</price>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>meditation_chamber_l.webp</gfx_store>
   <description>A meditation chamber integrated directly into the ship. This allows the crew to aid the ship's flow capabilities and acts as an auxiliary flow buffer. A flow amplifier is required for the meditation chamber to take effect.</description>
  </general>
  <specific type="modification">
