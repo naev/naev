@@ -36,6 +36,7 @@ static int fileL_isopen( lua_State *L );
 static int fileL_filetype( lua_State *L );
 static int fileL_mkdir( lua_State *L );
 static int fileL_enumerate( lua_State *L );
+static int fileL_remove( lua_State *L );
 static const luaL_Reg fileL_methods[] = {
    { "__gc", fileL_gc },
    { "__eq", fileL_eq },
@@ -52,6 +53,7 @@ static const luaL_Reg fileL_methods[] = {
    { "filetype", fileL_filetype },
    { "mkdir", fileL_mkdir },
    { "enumerate", fileL_enumerate },
+   { "remove", fileL_remove },
    {0,0}
 }; /**< File metatable methods. */
 
@@ -447,5 +449,20 @@ static int fileL_enumerate( lua_State *L )
       lua_rawseti(L,-2,i+1);
    }
    PHYSFS_freeList( items );
+   return 1;
+}
+
+/**
+ * @brief Removes a file or directory.
+ *
+ *    @luatparam string path Name of the path to remove.
+ *    @luatreturn boolean True on success.
+ * @luafunc remove
+ */
+static int fileL_remove( lua_State *L )
+{
+   const char *path = luaL_checkstring(L,1);
+   int ret = PHYSFS_delete( path );
+   lua_pushboolean(L,ret==0);
    return 1;
 }
