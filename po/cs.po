@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-12-03 18:09+0900\n"
-"PO-Revision-Date: 2023-04-06 10:52+0000\n"
-"Last-Translator: David Doubek <David.Doubek42@gmail.com>\n"
+"PO-Revision-Date: 2023-12-04 22:09+0000\n"
+"Last-Translator: Václav Černý <vaclav.vatoz.cerny@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.17-dev\n"
+"X-Generator: Weblate 5.3-dev\n"
 
 #: physfs.c:1
 msgid "no error"
@@ -743,8 +743,9 @@ msgid "   * Event contributor"
 msgstr "   * Přispěvatel událostí"
 
 #: dat/AUTHORS:160
+#, fuzzy
 msgid "Arvind S"
-msgstr ""
+msgstr "Arvind S"
 
 #: dat/AUTHORS:161
 #, fuzzy
@@ -789,8 +790,9 @@ msgid "   * Solar system information screen"
 msgstr "   * Informační obrazovka sluneční soustavy"
 
 #: dat/AUTHORS:173
+#, fuzzy
 msgid "oo13"
-msgstr ""
+msgstr "oo13"
 
 #: dat/AUTHORS:174
 msgid "   * Japanese translation"
@@ -819,26 +821,28 @@ msgid "http://www.matthewpablo.com"
 msgstr "http://www.matthewpablo.com"
 
 #: dat/AUTHORS:183
-#, fuzzy
-#| msgid "Incomplete Translation"
 msgid "Translations"
-msgstr "Neúplný překlad"
+msgstr "Překlady"
 
 #: dat/AUTHORS:186
+#, fuzzy
 msgid "(ja) Masato Oota (oo13)"
-msgstr ""
+msgstr "(ja) Masato Oota (oo13)"
 
 #: dat/AUTHORS:187
+#, fuzzy
 msgid "(de) Wuzzy, Solid Tscheik"
-msgstr ""
+msgstr "(de) Wuzzy, Solid Tscheik"
 
 #: dat/AUTHORS:188
+#, fuzzy
 msgid "(fr) Nicolas"
-msgstr ""
+msgstr "(fr) Nicolas"
 
 #: dat/AUTHORS:189
+#, fuzzy
 msgid "(es) paco"
-msgstr ""
+msgstr "(es) paco"
 
 #: dat/AUTHORS:191
 msgid "Testers"
@@ -114550,10 +114554,9 @@ msgid "Trying to add subtask '%s' to non-existent task."
 msgstr ""
 
 #: src/ai.c:1204 src/nlua_pilot.c:5520
-#, fuzzy, c-format
-#| msgid "Failed to create new Lua state."
+#, c-format
 msgid "Failed to create new task for pilot '%s'."
-msgstr "Nepodařilo se vytvořit nový stav Lua."
+msgstr "Nepodařilo se vytvořit nový úkol pro pilota '%s'."
 
 #: src/ai.c:1260 src/ai.c:1326 src/nlua_pilot.c:5475
 msgid "Trying to pop task when there are no tasks on the stack."
@@ -115775,10 +115778,9 @@ msgid "What do you want to rename the spob #r%s#0?"
 msgstr "Jak chcete přejmenovat spob #r%s#0?"
 
 #: src/dev_sysedit.c:532 src/dev_uniedit.c:1432
-#, fuzzy, c-format
-#| msgid "Failure to copy '%s' to '%s': %s"
+#, c-format
 msgid "Failed to rename '%s' to '%s'!"
-msgstr "Nepodařilo se zkopírovat '%s' do '%s': %s"
+msgstr "Nepodařilo se přejmenovat '%s' na '%s'!"
 
 #: src/dev_sysedit.c:559
 msgid "Remove selected objects (excluding jumps)?"
@@ -116148,10 +116150,9 @@ msgid "Density: %g"
 msgstr ""
 
 #: src/dev_uniedit.c:981
-#, fuzzy, c-format
-#| msgid "Interference: Dense\n"
+#, c-format
 msgid "Interference: %.0f%%"
-msgstr "Interference: velká\n"
+msgstr "Interference: %.0f%%\n"
 
 #. Count spobs.
 #: src/dev_uniedit.c:1035
@@ -116214,10 +116215,9 @@ msgid ""
 msgstr ""
 
 #: src/dev_uniedit.c:1657
-#, fuzzy, c-format
-#| msgid "Interference: Dense\n"
+#, c-format
 msgid "%s%.1f Interference"
-msgstr "Interference: velká\n"
+msgstr "Interference %s%.1f"
 
 #: src/dev_uniedit.c:1665 src/dev_uniedit.c:1666
 msgid "Multiple selected"
@@ -116788,7 +116788,7 @@ msgstr ""
 #, fuzzy, c-format
 #| msgid "#%cComm %s>#0 \"%s\""
 msgid "#%c%s%.0f#0 %s"
-msgstr "#%cComm %s>#0 \"%s\""
+msgstr "#%c%s%.0f#0 %s"
 
 #: src/equipment.c:1944
 #, c-format
@@ -116798,12 +116798,11 @@ msgid ""
 msgstr ""
 
 #: src/equipment.c:1948
-#, fuzzy, c-format
-#| msgid "#%cComm %s>#0 \"%s\""
+#, c-format
 msgid ""
 "\n"
 "#%c%s%.0f#0 %s"
-msgstr "#%cComm %s>#0 \"%s\""
+msgstr "#%c%s%.0f#0 %s"
 
 #: src/equipment.c:1952 src/equipment.c:1991 src/equipment.c:1993
 #: src/info.c:414 src/info.c:416 src/info.c:542
@@ -116815,26 +116814,26 @@ msgstr ""
 #, fuzzy, c-format
 #| msgid "%.1f ¤"
 msgid "%.1f %s"
-msgstr "%.1f ¤"
+msgstr "%.1f %s"
 
 #: src/equipment.c:1958 src/equipment.c:1963 src/equipment.c:1968
 #, fuzzy, c-format
 #| msgid "#%cComm %s>#0 \"%s\""
 msgid "#%c%s%s#0 %s"
-msgstr "#%cComm %s>#0 \"%s\""
+msgstr "#%c%s%s#0 %s"
 
 #: src/equipment.c:1960 src/equipment.c:1965 src/equipment.c:1970
 #, fuzzy, c-format
 #| msgid "#%cComm %s>#0 \"%s\""
 msgid " (#%c%s%s#0 %s)"
-msgstr "#%cComm %s>#0 \"%s\""
+msgstr " (#%c%s%s#0 %s)"
 
 #. Misc.
 #: src/equipment.c:1974
 #, fuzzy, c-format
 #| msgid "#%cComm %s>#0 \"%s\""
 msgid "%s / #%c%s%s#0 %s"
-msgstr "#%cComm %s>#0 \"%s\""
+msgstr "%s / #%c%s%s#0 %s"
 
 #: src/equipment.c:1977
 #, c-format
@@ -117737,7 +117736,7 @@ msgstr ""
 #| msgid "#%cComm %s>#0 \"%s\""
 msgctxt "standings"
 msgid "#%c%+d%%#0   [ %s ]"
-msgstr "#%cComm %s>#0 \"%s\""
+msgstr "#%c%+d%%#0   [ %s ]"
 
 #: src/info.c:1221
 #, c-format
@@ -119354,10 +119353,9 @@ msgid "Dense Interference (%.0f%%)"
 msgstr ""
 
 #: src/map.c:876
-#, fuzzy, c-format
-#| msgid "Interference: Dense\n"
+#, c-format
 msgid "Medium Interference (%.0f%%)"
-msgstr "Interference: velká\n"
+msgstr "Střední interference (%.0f%%)"
 
 #: src/map.c:880
 #, c-format
