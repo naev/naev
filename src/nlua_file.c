@@ -423,7 +423,11 @@ static int fileL_mkdir( lua_State *L )
 {
    const char *path = luaL_checkstring(L,1);
    int ret = PHYSFS_mkdir( path );
-   lua_pushboolean(L,ret==0);
+   lua_pushboolean(L,ret);
+   if (ret==0) {
+      lua_pushstring(L, PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()) );
+      return 2;
+   }
    return 1;
 }
 
@@ -463,6 +467,10 @@ static int fileL_remove( lua_State *L )
 {
    const char *path = luaL_checkstring(L,1);
    int ret = PHYSFS_delete( path );
-   lua_pushboolean(L,ret==0);
+   lua_pushboolean(L,ret);
+   if (ret==0) {
+      lua_pushstring(L, PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()) );
+      return 2;
+   }
    return 1;
 }

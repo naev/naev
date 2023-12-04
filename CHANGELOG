@@ -1,4 +1,5 @@
 * 0.11.0-beta.2 (unreleased)
+   * Fixed file.mkdir return value
    * Added file.remove
    * Fixed toggle weapon sets not turning off with only bolt weapons
    * Hardened physics engine a bit to overflow that happens in 49 days of straight game time
