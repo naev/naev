@@ -1,6 +1,4 @@
 /*
-         unsigned int t;
-
  * See Licensing and Copyright notice in naev.h
  */
 /**
