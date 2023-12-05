@@ -10,6 +10,7 @@
    * Allow buying local maps where they are not sold
    * `poi`: renamed 'Pristine Derelict' to 'Unusual Derelict'
    * `poi_intro`: fixed typo
+   * `achack03`: fixed mission not being acceptable
 
 * 0.11.0-beta.1
    * Gameplay Changes
