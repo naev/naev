@@ -62,9 +62,12 @@ function accept()
    joanne(fmt.f(_([[ "Good. I know I can trust you, {player}. I can offer you {credits} if you complete this job. Go find Harja. Make him talk. Then come back and tell me what he said. Maybe, hopefully, it'll put my mind at ease."]]),
       {player=player.name(), credits=fmt.credits(reward)}))
    vn.menu{
+      {_([[Accept the job.]]),"accept"},
+      {_([[Decline.]]),"decline"},
    }
 
    vn.label("decline")
+   vn.na(_([[You decide you can't be bothered to find Harja now. Maybe later.]]))
    vn.done()
 
    vn.label("accept")
