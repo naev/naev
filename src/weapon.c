@@ -1045,12 +1045,15 @@ static void weapon_updateCollide( Weapon* w, double dt )
       int x, y, w2, h2;
       wc.gfx = outfit_gfx(w->outfit);
       if (wc.gfx->tex != NULL) {
-         const CollPoly *plg;
-         int n;
-         gl_getSpriteFromDir( &w->sx, &w->sy, wc.gfx->tex, w->solid.dir );
-         n = wc.gfx->tex->sx * w->sy + w->sx;
-         plg = outfit_plg(w->outfit);
-         wc.polygon = &plg[n];
+         const CollPoly *plg = outfit_plg(w->outfit);
+         if (plg!=NULL) {
+            int n;
+            gl_getSpriteFromDir( &w->sx, &w->sy, wc.gfx->tex, w->solid.dir );
+            n = wc.gfx->tex->sx * w->sy + w->sx;
+            wc.polygon = &plg[n];
+         }
+         else
+            wc.polygon = NULL;
          wc.range = wc.gfx->size; /* Range is set to size in this case. */
       }
       else {
@@ -1220,16 +1223,8 @@ static void weapon_updateCollide( Weapon* w, double dt )
 
          wchit.gfx = outfit_gfx(w->outfit);
          if (wchit.gfx->tex != NULL) {
-            const CollPoly *plg;
-            int n;
-            plg = outfit_plg(w->outfit);
-            if (plg == NULL) {
-               gl_getSpriteFromDir( &w->sx, &w->sy, wchit.gfx->tex, w->solid.dir );
-               n = wchit.gfx->tex->sx * w->sy + w->sx;
-               wchit.polygon = &plg[n];
-            }
-            else
-               wchit.polygon = NULL;
+            gl_getSpriteFromDir( &whit->sx, &whit->sy, wchit.gfx->tex, w->solid.dir );
+            wchit.polygon = outfit_plg(w->outfit);
             wchit.range = wchit.gfx->size; /* Range is set to size in this case. */
          }
          else {
@@ -1467,10 +1462,9 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius )
 
          wchit.gfx = outfit_gfx(w->outfit);
          if (wchit.gfx->tex != NULL) {
-            const CollPoly *plg;
-            int n;
-            plg = outfit_plg(w->outfit);
-            if (plg == NULL) {
+            const CollPoly *plg = outfit_plg(w->outfit);
+            if (plg!=NULL) {
+               int n;
                gl_getSpriteFromDir( &w->sx, &w->sy, wchit.gfx->tex, w->solid.dir );
                n = wchit.gfx->tex->sx * w->sy + w->sx;
                wchit.polygon = &plg[n];

@@ -1,4 +1,5 @@
 * 0.11.0-beta.2 (unreleased)
+   * Fixed collision polygons not properly being used
    * Allied factions won't help out the player against neutral targets
    * Added missing graphics for meditation chambers
    * Don't allow giving the player names that can't be saved
