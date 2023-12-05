@@ -116152,7 +116152,7 @@ msgstr ""
 #: src/dev_uniedit.c:981
 #, c-format
 msgid "Interference: %.0f%%"
-msgstr "Interference: %.0f%%\n"
+msgstr "Interference: %.0f%%"
 
 #. Count spobs.
 #: src/dev_uniedit.c:1035
@@ -116802,7 +116802,9 @@ msgstr ""
 msgid ""
 "\n"
 "#%c%s%.0f#0 %s"
-msgstr "#%c%s%.0f#0 %s"
+msgstr ""
+"\n"
+"#%c%s%.0f#0 %s"
 
 #: src/equipment.c:1952 src/equipment.c:1991 src/equipment.c:1993
 #: src/info.c:414 src/info.c:416 src/info.c:542
