@@ -351,37 +351,39 @@ static int spfxL_new( lua_State *L )
          ls.sfx.nocleanup = 1;
 
          /* Set up parameters. */
-         soundLock();
-         alSourcei( ls.sfx.source, AL_LOOPING, AL_FALSE );
-         alSourcef( ls.sfx.source, AL_REFERENCE_DISTANCE, SOUND_REFERENCE_DISTANCE );
-         alSourcef( ls.sfx.source, AL_MAX_DISTANCE, SOUND_MAX_DISTANCE );
-         if (ls.flags & SPFX_RELATIVE) {
-            alSourcei( ls.sfx.source, AL_SOURCE_RELATIVE, AL_TRUE );
-            if (ls.flags & SPFX_GLOBAL)
-               alSourcef( ls.sfx.source, AL_PITCH, 1. );
-            else
+         if (!ls.sfx.ok) {
+            soundLock();
+            alSourcei( ls.sfx.source, AL_LOOPING, AL_FALSE );
+            alSourcef( ls.sfx.source, AL_REFERENCE_DISTANCE, SOUND_REFERENCE_DISTANCE );
+            alSourcef( ls.sfx.source, AL_MAX_DISTANCE, SOUND_MAX_DISTANCE );
+            if (ls.flags & SPFX_RELATIVE) {
+               alSourcei( ls.sfx.source, AL_SOURCE_RELATIVE, AL_TRUE );
+               if (ls.flags & SPFX_GLOBAL)
+                  alSourcef( ls.sfx.source, AL_PITCH, 1. );
+               else
+                  alSourcef( ls.sfx.source, AL_PITCH, player_dt_default() * player.speed );
+            }
+            else {
+               ALfloat alf[3];
+               alSourcei( ls.sfx.source, AL_SOURCE_RELATIVE, AL_FALSE );
                alSourcef( ls.sfx.source, AL_PITCH, player_dt_default() * player.speed );
-         }
-         else {
-            ALfloat alf[3];
-            alSourcei( ls.sfx.source, AL_SOURCE_RELATIVE, AL_FALSE );
-            alSourcef( ls.sfx.source, AL_PITCH, player_dt_default() * player.speed );
-            alf[0] = ls.pos.x;
-            alf[1] = ls.pos.y;
-            alf[2] = 0.;
-            alSourcefv( ls.sfx.source, AL_POSITION, alf );
-            alf[0] = ls.vel.x;
-            alf[1] = ls.vel.y;
-            alf[2] = 0.;
-            alSourcefv( ls.sfx.source, AL_VELOCITY, alf );
+               alf[0] = ls.pos.x;
+               alf[1] = ls.pos.y;
+               alf[2] = 0.;
+               alSourcefv( ls.sfx.source, AL_POSITION, alf );
+               alf[0] = ls.vel.x;
+               alf[1] = ls.vel.y;
+               alf[2] = 0.;
+               alSourcefv( ls.sfx.source, AL_VELOCITY, alf );
 
-            /* Set the global filter. */
-            if (al_info.efx == AL_TRUE)
-               alSource3i( ls.sfx.source, AL_AUXILIARY_SEND_FILTER, sound_efx_directSlot, 0, AL_FILTER_NULL );
+               /* Set the global filter. */
+               if (al_info.efx == AL_TRUE)
+                  alSource3i( ls.sfx.source, AL_AUXILIARY_SEND_FILTER, sound_efx_directSlot, 0, AL_FILTER_NULL );
+            }
+            alSourcePlay( ls.sfx.source );
+            al_checkErr();
+            soundUnlock();
          }
-         alSourcePlay( ls.sfx.source );
-         al_checkErr();
-         soundUnlock();
       }
    }
 
@@ -543,6 +545,10 @@ void spfxL_setSpeed( double s )
       if (ls->flags & (SPFX_GLOBAL | SPFX_CLEANUP))
          continue;
 
+      /* Sound is not valid. */
+      if (ls->sfx.ok)
+         continue;
+
       alSourcef( ls->sfx.source, AL_PITCH, s );
    }
    al_checkErr();
@@ -567,6 +573,10 @@ void spfxL_setSpeedVolume( double v )
          continue;
 
       if (ls->flags & (SPFX_GLOBAL | SPFX_CLEANUP))
+         continue;
+
+      /* Sound is not valid. */
+      if (ls->sfx.ok)
          continue;
 
       alSourcef( ls->sfx.source, AL_GAIN, ls->sfx.volume * v );
@@ -639,7 +649,7 @@ void spfxL_update( double dt )
          ls->pos.y += ls->vel.y * dt;
 
          /* Check sound. */
-         if ((ls->flags & SPFX_AUDIO) && !(ls->flags & SPFX_RELATIVE)) {
+         if ((ls->flags & SPFX_AUDIO) && !(ls->flags & SPFX_RELATIVE) && !ls->sfx.ok) {
             soundLock();
             ALfloat alf[3];
             alf[0] = ls->pos.x;
