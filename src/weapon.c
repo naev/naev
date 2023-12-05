@@ -2173,7 +2173,7 @@ static int weapon_create( Weapon *w, PilotOutfitSlot* po, const Outfit *ref,
       const Pilot* parent, const Target *target, double time, int aim )
 {
    double mass, rdir;
-   const Outfit *outfit = (ref==NULL) ? po->outfit : ref;
+   const Outfit *outfit = ((ref==NULL) && (po!=NULL)) ? po->outfit : ref;
 
    /* Create basic features */
    memset( w, 0, sizeof(Weapon) );
@@ -2401,7 +2401,6 @@ unsigned int beam_start( PilotOutfitSlot *po,
       const Pilot *parent, const Target *target, int aim )
 {
    Weapon *w;
-   GLsizei size;
    size_t bufsize;
 
    if (!outfit_isBeam(po->outfit)) {
@@ -2415,8 +2414,8 @@ unsigned int beam_start( PilotOutfitSlot *po,
    /* Grow the vertex stuff if needed. */
    bufsize = array_reserved(weapon_stack);
    if (bufsize != weapon_vboSize) {
+      GLsizei size = sizeof(GLfloat) * (2+4) * weapon_vboSize;
       weapon_vboSize = bufsize;
-      size = sizeof(GLfloat) * (2+4) * weapon_vboSize;
       weapon_vboData = realloc( weapon_vboData, size );
       if (weapon_vbo == NULL)
          weapon_vbo = gl_vboCreateStream( size, NULL );
