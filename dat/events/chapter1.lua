@@ -68,6 +68,15 @@ function create ()
          return sa > sb
       end )
 
+      -- Let us claim the systems
+      local claimsys = {}
+      for k,h in ipairs(hypergate_list) do
+         table.insert( claimsys, h:system() )
+      end
+      if not evt.claim( claimsys ) then
+         evt.finish()
+      end
+
       hook.safe( "cutscene_start" )
       return -- Don't finish
 
