@@ -501,8 +501,7 @@ int ai_pinit( Pilot *p, const char *ai )
    prof = ai_getProfile(buf);
    if (prof == NULL) {
       WARN( _("AI Profile '%s' not found, using dummy fallback."), buf);
-      snprintf(buf, sizeof(buf), "dummy" );
-      prof = ai_getProfile(buf);
+      prof = ai_getProfile("dummy");
    }
    if (prof == NULL) {
       WARN( _("Dummy AI Profile not valid! Things are going to break.") );
@@ -587,7 +586,9 @@ static int ai_sort( const void *p1, const void *p2 )
 int ai_load (void)
 {
    char** files;
+#if DEBUGGING
    Uint32 time = SDL_GetTicks();
+#endif /* DEBUGGING */
 
    /* get the file list */
    files = PHYSFS_enumerateFiles( AI_PATH );
@@ -619,12 +620,14 @@ int ai_load (void)
    /* More clean up. */
    PHYSFS_freeList( files );
 
+#if DEBUGGING
    if (conf.devmode) {
       time = SDL_GetTicks() - time;
       DEBUG( n_("Loaded %d AI Profile in %.3f s", "Loaded %d AI Profiles in %.3f s", array_size(profiles) ), array_size(profiles), time/1000. );
    }
    else
       DEBUG( n_("Loaded %d AI Profile", "Loaded %d AI Profiles", array_size(profiles) ), array_size(profiles) );
+#endif /* DEBUGGING */
 
    /* Create collision stuff. */
    il_create( &ai_qtquery, 1 );
@@ -790,7 +793,6 @@ void ai_think( Pilot* pilot, const double dt )
 {
    (void) dt;
    nlua_env env;
-   int data;
    AIMemory oldmem;
    Task *t;
 
@@ -840,6 +842,7 @@ void ai_think( Pilot* pilot, const double dt )
 
    /* pilot has a currently running task */
    if (t != NULL) {
+      int data;
       /* Run subtask if available, otherwise run main task. */
       if (t->subtask != NULL) {
          lua_rawgeti( naevL, LUA_REGISTRYINDEX, t->subtask->func );
@@ -1038,7 +1041,7 @@ void ai_refuel( Pilot* refueler, unsigned int target )
  *    @param distressed Pilot sending the distress signal.
  *    @param attacker Pilot attacking the distressed.
  */
-void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
+void ai_getDistress( const Pilot *p, const Pilot *distressed, const Pilot *attacker )
 {
    /* Ignore distress signals when under manual control. */
    if (pilot_isFlag( p, PILOT_MANUAL_CONTROL ))
@@ -1971,7 +1974,6 @@ static int aiL_iface( lua_State *L )
    Pilot* p;
    double diff, heading_offset_azimuth, drift_radial, drift_azimuthal;
    int azimuthal_sign;
-   double speedmap;
 
    /* Get first parameter, aka what to face. */
    p  = NULL;
@@ -2010,7 +2012,7 @@ static int aiL_iface( lua_State *L )
       /* 1 - 1/(|x|+1) does a pretty nice job of mapping the reals to the interval (0...1). That forms the core of this angle calculation */
       /* There is nothing special about the scaling parameter of 200; it can be tuned to get any behavior desired. A lower
          number will give a more dramatic 'lead' */
-      speedmap = -1.*copysign(1. - 1. / (FABS(drift_azimuthal/200.) + 1.), drift_azimuthal) * M_PI_2;
+      double speedmap = -1.*copysign(1. - 1. / (FABS(drift_azimuthal/200.) + 1.), drift_azimuthal) * M_PI_2;
       diff = angle_diff(heading_offset_azimuth, speedmap);
       azimuthal_sign = -1;
 
@@ -2054,32 +2056,24 @@ static int aiL_iface( lua_State *L )
  */
 static int aiL_dir( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
-   vec2 *vec, sv, tv; /* get the position to face */
+   vec2 sv, tv; /* get the position to face */
    double diff;
-   int n;
 
    /* Get first parameter, aka what to face. */
-   n = -2;
-   vec = NULL;
+   vec2_cset( &sv, VX(cur_pilot->solid.pos), VY(cur_pilot->solid.pos) );
    if (lua_ispilot(L,1)) {
       const Pilot *p = luaL_validpilot(L,1);
       vec2_cset( &tv, VX(p->solid.pos), VY(p->solid.pos) );
-   }
-   else if (lua_isvector(L,1))
-      vec = lua_tovector(L,1);
-   else NLUA_INVALID_PARAMETER(L);
-
-   vec2_cset( &sv, VX(cur_pilot->solid.pos), VY(cur_pilot->solid.pos) );
-
-   if (vec==NULL) /* target is dynamic */
       diff = angle_diff(cur_pilot->solid.dir,
-            (n==-1) ? VANGLE(sv) :
             vec2_angle(&sv, &tv));
-   else /* target is static */
+   }
+   else if (lua_isvector(L,1)) {
+      const vec2 *vec = lua_tovector(L,1);
       diff = angle_diff( cur_pilot->solid.dir,
-            (n==-1) ? VANGLE(cur_pilot->solid.pos) :
             vec2_angle(&cur_pilot->solid.pos, vec));
+   }
+   else
+      NLUA_INVALID_PARAMETER(L);
 
    /* Return angle in degrees away from target. */
    lua_pushnumber(L, diff);
@@ -2099,7 +2093,6 @@ static int aiL_idir( lua_State *L )
    vec2 *vec, drift, reference_vector; /* get the position to face */
    Pilot* p;
    double diff, heading_offset_azimuth, drift_radial, drift_azimuthal;
-   double speedmap;
 
    /* Get first parameter, aka what to face. */
    p  = NULL;
@@ -2138,7 +2131,7 @@ static int aiL_idir( lua_State *L )
        * 1 - 1/(|x|+1) does a pretty nice job of mapping the reals to the interval (0...1). That forms the core of this angle calculation
        * there is nothing special about the scaling parameter of 200; it can be tuned to get any behavior desired. A lower
        * number will give a more dramatic 'lead' */
-      speedmap = -1.*copysign(1. - 1. / (FABS(drift_azimuthal/200.) + 1.), drift_azimuthal) * M_PI_2;
+      double speedmap = -1.*copysign(1. - 1. / (FABS(drift_azimuthal/200.) + 1.), drift_azimuthal) * M_PI_2;
       diff = angle_diff(heading_offset_azimuth, speedmap);
 
    }
