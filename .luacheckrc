@@ -50,10 +50,10 @@ stds.Basic={
 }
 
 -- The following standards correspond to useful combinations of libraries
-PILOT = "+pilot+ship+asteroid"
-STANDARD = "+naev+var+spob+system+jump+time+player" .. PILOT .. "+rnd+diff+faction+vec2+outfit+commodity+news+shiplog+file+data+linopt+safelanes+spfx+audio"
-GFX = "+gfx+colour+tex+font+transform+shader+canvas"
-TK = "+tk+colour" .. GFX
+local PILOT = "+pilot+ship+asteroid"
+local STANDARD = "+naev+var+spob+system+jump+time+player" .. PILOT .. "+rnd+diff+faction+vec2+outfit+commodity+news+shiplog+file+data+linopt+safelanes+spfx+audio"
+local GFX = "+gfx+colour+tex+font+transform+shader+canvas"
+local TK = "+tk+colour" .. GFX
 
 -- In addition, the Naev code base looks for APIs *exported* by certain types of scripts:
 -- This is done using nlua_refenv-family calls for exported functions, and nlua_getenv/nlua_setenv for magic variables.
