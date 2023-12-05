@@ -198,7 +198,7 @@ Widget* window_newWidget( Window* w, const char *name );
 void widget_cleanup( Widget *widget );
 void widget_setStatus( Widget *widget, WidgetStatus sts );
 Widget* window_getwgt( const unsigned int wid, const char* name );
-void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y );
+void toolkit_setPos( const Window *wdw, Widget *wgt, int x, int y );
 void toolkit_focusSanitize( Window *wdw );
 void toolkit_focusClear( Window *wdw );
 void toolkit_nextFocus( Window *wdw );
@@ -219,5 +219,5 @@ void toolkit_drawTriangle( int x1, int y1, int x2, int y2, int x3, int y3,
 void toolkit_drawAltText( int bx, int by, const char *alt );
 
 /* Input stuff. */
-Uint32 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
+Uint32 toolkit_inputTranslateCoords( const Window *w, SDL_Event *event,
       int *x, int *y, int *rx, int *ry );

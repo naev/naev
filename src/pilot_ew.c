@@ -50,7 +50,7 @@ double pilot_ewScanTime( const Pilot *p )
  */
 void pilot_ewScanStart( Pilot *p )
 {
-   Pilot *target = pilot_getTarget( p );
+   const Pilot *target = pilot_getTarget( p );
    if (target==NULL)
       return;
 

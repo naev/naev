@@ -43,9 +43,9 @@ static const luaL_Reg shaderL_methods[] = {
 }; /**< Shader metatable methods. */
 
 /* Useful stuff. */
-int shader_compareUniform( const void *a, const void *b);
-int shader_searchUniform( const void *id, const void *u );
-LuaUniform_t *shader_getUniform( LuaShader_t *ls, const char *name );
+static int shader_compareUniform( const void *a, const void *b);
+static int shader_searchUniform( const void *id, const void *u );
+static LuaUniform_t *shader_getUniform( const LuaShader_t *ls, const char *name );
 static int shaderL_sendHelper( lua_State *L, int ignore_missing );
 
 /**
@@ -165,7 +165,7 @@ static int shaderL_eq( lua_State *L )
 /*
  * For qsort.
  */
-int shader_compareUniform( const void *a, const void *b )
+static int shader_compareUniform( const void *a, const void *b )
 {
    const LuaUniform_t *u1, *u2;
    u1 = (const LuaUniform_t*) a;
@@ -173,12 +173,12 @@ int shader_compareUniform( const void *a, const void *b )
    return strcmp(u1->name, u2->name);
 }
 
-int shader_searchUniform( const void *id, const void *u )
+static int shader_searchUniform( const void *id, const void *u )
 {
    return strcmp( (const char*)id, ((LuaUniform_t*)u)->name );
 }
 
-LuaUniform_t *shader_getUniform( LuaShader_t *ls, const char *name )
+static LuaUniform_t *shader_getUniform( const LuaShader_t *ls, const char *name )
 {
    return bsearch( name, ls->uniforms, ls->nuniforms, sizeof(LuaUniform_t), shader_searchUniform );
 }
@@ -344,6 +344,7 @@ static int shaderL_sendHelper( lua_State *L, int ignore_missing )
       if (ignore_missing)
          return 0;
       NLUA_ERROR(L,_("Shader does not have uniform '%s'!"), name);
+      return -1;
    }
 
    /* With OpenGL 4.1 or ARB_separate_shader_objects, there
@@ -411,7 +412,7 @@ static int shaderL_sendHelper( lua_State *L, int ignore_missing )
 static int shaderL_hasUniform( lua_State *L )
 {
    /* Parameters. */
-   LuaShader_t *ls = luaL_checkshader(L,1);
+   const LuaShader_t *ls = luaL_checkshader(L,1);
    const char *name = luaL_checkstring(L,2);
 
    /* Search. */

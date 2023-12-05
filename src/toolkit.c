@@ -75,11 +75,11 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
 static int toolkit_keyEvent( Window *wdw, SDL_Event* event );
 static int toolkit_textEvent( Window *wdw, SDL_Event* event );
 /* Focus */
-static int toolkit_isFocusable( Widget *wgt );
+static int toolkit_isFocusable( const Widget *wgt );
 static Widget* toolkit_getFocus( Window *wdw );
 static void toolkit_expose( Window *wdw, int expose );
 /* render */
-static void window_renderBorder( Window* w );
+static void window_renderBorder( const Window* w );
 /* Death. */
 static void widget_kill( Widget *wgt );
 static void window_cleanup( Window *wdw );
@@ -116,7 +116,7 @@ void toolkit_delay (void)
  *    @param x X position to use.
  *    @param y Y position to use.
  */
-void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y )
+void toolkit_setPos( const Window *wdw, Widget *wgt, int x, int y )
 {
    /* X position. */
    if (x < 0)
@@ -371,7 +371,7 @@ Widget* window_getwgt( unsigned int wid, const char* name )
 void window_dimWindow( unsigned int wid, int *w, int *h )
 {
    /* Get the window. */
-   Window *wdw = window_wget(wid);
+   const Window *wdw = window_wget(wid);
    if (wdw == NULL) {
       *w = -1;
       *h = -1;
@@ -393,7 +393,7 @@ void window_dimWindow( unsigned int wid, int *w, int *h )
 void window_posWindow( unsigned int wid, int *x, int *y )
 {
    /* Get the window. */
-   Window *wdw = window_wget(wid);
+   const Window *wdw = window_wget(wid);
    if (wdw == NULL) {
       *x = -1;
       *y = -1;
@@ -416,7 +416,7 @@ void window_posWindow( unsigned int wid, int *x, int *y )
 void window_dimWidget( unsigned int wid, const char *name, int *w, int *h )
 {
    /* Get widget. */
-   Widget *wgt = window_getwgt(wid, name);
+   const Widget *wgt = window_getwgt(wid, name);
    if (wgt == NULL) {
       if (w!=NULL)
          *w = -1;
@@ -443,7 +443,7 @@ void window_posWidget( unsigned int wid,
       const char* name, int *x, int *y )
 {
    /* Get widget. */
-   Widget *wgt = window_getwgt(wid,name);
+   const Widget *wgt = window_getwgt(wid,name);
    if (wgt == NULL)
       return;
 
@@ -806,7 +806,7 @@ void window_setParent( unsigned int wid, unsigned int parent )
 unsigned int window_getParent( unsigned int wid )
 {
    /* Get the window. */
-   Window *wdw = window_wget( wid );
+   const Window *wdw = window_wget( wid );
    if (wdw == NULL)
       return 0;
 
@@ -922,7 +922,7 @@ void window_setData( unsigned int wid, void *data )
 void* window_getData( unsigned int wid )
 {
    /* Get the window. */
-   Window *wdw = window_wget( wid );
+   const Window *wdw = window_wget( wid );
    if (wdw == NULL)
       return NULL;
 
@@ -1467,7 +1467,7 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
  *
  *    @param w Window to render
  */
-static void window_renderBorder( Window* w )
+static void window_renderBorder( const Window* w )
 {
    /* Position */
    double x = w->x;
@@ -1758,7 +1758,7 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
  *    @param[out] ry Relative Y movement (only valid for motion).
  *    @return The type of the event.
  */
-Uint32 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
+Uint32 toolkit_inputTranslateCoords( const Window *w, SDL_Event *event,
       int *x, int *y, int *rx, int *ry )
 {
    /* Extract the position as event. */
@@ -2007,11 +2007,10 @@ static void toolkit_regKey( SDL_Keycode key )
     */
    SDL_Keymod mod = toolkit_mapMod(key);
    if (mod)
-      input_mod         |= mod;
+      input_mod |= mod;
    /* Don't reset values on repeat keydowns. */
-   else if (input_key != key) {
-      input_key         = key;
-   }
+   else
+      input_key = key;
 }
 
 /**
@@ -2137,7 +2136,6 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
 static int toolkit_textEvent( Window *wdw, SDL_Event* event )
 {
    Widget *wgt;
-   int ret;
 
    /* See if window is valid. */
    if (wdw == NULL)
@@ -2148,7 +2146,7 @@ static int toolkit_textEvent( Window *wdw, SDL_Event* event )
 
    /* Trigger event function if exists. */
    if ((wgt != NULL) && (wgt->textevent != NULL)) {
-      ret = (*wgt->textevent)( wgt, event->text.text );
+      int ret = (*wgt->textevent)( wgt, event->text.text );
       if (ret!=0)
          return ret;
    }
@@ -2416,7 +2414,7 @@ void toolkit_defocusWidget( Window *wdw, Widget *wgt )
  *    @param wgt Widget to check if is focusable.
  *    @return 1 if it's focusable, 0 if it isn't.
  */
-static int toolkit_isFocusable( Widget *wgt )
+static int toolkit_isFocusable( const Widget *wgt )
 {
    if (wgt==NULL)
       return 0;
@@ -2597,7 +2595,7 @@ void window_lower( unsigned int wid )
 void toolkit_resize (void)
 {
    for (Window *w = windows; w != NULL; w = w->next) {
-      int xorig, yorig, xdiff, ydiff;
+      int xdiff, ydiff;
 
       /* Fullscreen windows must always be full size, though their widgets
        * don't auto-scale. */
@@ -2615,13 +2613,13 @@ void toolkit_resize (void)
       ydiff = 0.;
 
       if (w->xrel != -1.) {
-         xorig = w->x;
+         int xorig = w->x;
          w->x = (gl_screen.nw - w->w) * w->xrel;
          xdiff = w->x - xorig;
       }
 
       if (w->yrel != -1.) {
-         yorig = w->y;
+         int yorig = w->y;
          w->y = (gl_screen.nh - w->h) * w->yrel;
          ydiff = w->y - yorig;
       }
