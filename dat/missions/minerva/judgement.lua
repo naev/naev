@@ -142,7 +142,7 @@ function trial_start ()
    }
 
    vn.label("01_later")
-   vn.na(_([[You decide to post-pone deciding the future of Minerva Station.]]))
+   vn.na(_([[You decide to postpone deciding the future of Minerva Station.]]))
    vn.done()
 
    vn.label("01_start")
@@ -247,7 +247,7 @@ Maikki gives an impeccable formal bow.]]))
 "Ladies and gentlemen, it is long known that Minerva Station is a stain on the galactic map. Despite all the excellent potential, it has been squandered away during cycles neither benefiting the Empire nor the Great Houses."]]))
    zlk(_([["Today, I stand before you as the representative of House Za'lek, armed not only with legal expertise, but intellect that has guided our House to prosperity throughout the Empire. I shall present a compelling case as to why Minerva Station rightfully belongs to House Za'lek."]]))
    local log = vne.flashbackTextStart(_("Narrator"))
-   log(_([[The Za'lek Lawyer gives a meticulously prepared and organized speech regarding the plans and benefits that House Za'lek can bring to Minerva Station with a focus on the track record of House Za'lek and the potential for refocusing the station as a cultural enlightenment center to improve collaboration among the great houses.]]))
+   log(_([[The Za'lek Lawyer gives a meticulously prepared and organized speech regarding the plans and benefits that House Za'lek can bring to Minerva Station with a focus on the track record of House Za'lek and the potential for refocusing the station as a cultural enlightenment center to improve collaboration amongst the great houses.]]))
    vne.flashbackTextEnd()
    zlk(_([["...In conclusion, I am confident that your wisdom and discernment will lead you to make the just and informed decision, aligning the fate of this space station with the unmatched expertise and vision of House Za'lek."]]))
 
@@ -539,7 +539,7 @@ Having finished her interrogation, Maikki sits down.]]))
    vn.jump("05")
 
    vn.label("05")
-   zlk(fmt.f(_([["Although the exact details of what happened between {playername} and Dr. Strangelove is not clear, that should be subject to another trial, what is clear is that {playername} can not be trusted and their testimony should be invalidated."]]),
+   zlk(fmt.f(_([["Although the exact details of what happened between {playername} and Dr. Strangelove is not clear, that should be subject to another trial, what is clear is that {playername} can not be trusted, and their testimony should be invalidated."]]),
       {playername=player.name()}))
    zlk(_([["That is all I have to say."
 The Za'lek Lawyer sits down.]]))
