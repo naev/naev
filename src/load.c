@@ -49,14 +49,6 @@
 #define BUTTON_WIDTH    120 /**< Button width. */
 #define BUTTON_HEIGHT   30 /**< Button height. */
 
-/**
- * @brief Struct containing a file's name and stat structure.
- */
-typedef struct filedata {
-   char *name;
-   PHYSFS_Stat stat;
-} filedata_t;
-
 typedef struct player_saves_s {
    char *name;
    nsave_t *saves;
@@ -105,7 +97,7 @@ static void load_snapshot_menu_save( unsigned int wdw, const char *str );
 static void display_save_info( unsigned int wid, const nsave_t *ns );
 static void move_old_save( const char *path, const char *fname, const char *ext, const char *new_name );
 static int load_load( nsave_t *save, const char *path );
-static int load_game( nsave_t *ns );
+static int load_game( const nsave_t *ns );
 static int load_gameInternal( const char* file, const char* version );
 static int load_gameInternalHook( void *data );
 static int load_enumerateCallback( void* data, const char* origdir, const char* fname );
@@ -518,8 +510,7 @@ void load_loadGameMenu (void)
          nsave_t *ns = &load_saves[i].saves[0];
          if (ns->compatible) {
             char buf[STRMAX_SHORT];
-            size_t l = 0;
-            l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (#r%s#0)"),
+            scnprintf( buf, sizeof(buf), _("%s (#r%s#0)"),
                ns->player_name, load_compatibilityString( ns ) );
             names[i] = strdup( buf );
          }
@@ -578,7 +569,7 @@ void load_loadSnapshotMenu( const char *name, int disablesave )
    unsigned int wid;
    char **names;
    player_saves_t *ps;
-   int n, can_save;
+   int n;
    char *t;
    int *data;
 
@@ -617,8 +608,7 @@ void load_loadSnapshotMenu( const char *name, int disablesave )
          nsave_t *ns = &ps->saves[i];
          if (ns->compatible) {
             char buf[STRMAX_SHORT];
-            size_t l = 0;
-            l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (#r%s#0)"),
+            scnprintf( buf, sizeof(buf), _("%s (#r%s#0)"),
                ns->save_name, load_compatibilityString( ns ) );
             names[i] = strdup( buf );
          }
@@ -654,7 +644,7 @@ void load_loadSnapshotMenu( const char *name, int disablesave )
    if (disablesave || window_exists( "wdwLoadGameMenu" ))
       window_disableButton( wid, "btnSave" );
    else {
-      can_save = landed && !player_isFlag(PLAYER_NOSAVE);
+      int can_save = landed && !player_isFlag(PLAYER_NOSAVE);
       if (!can_save)
          window_disableButton( wid, "btnSave" );
    }
@@ -769,7 +759,7 @@ static void display_save_info( unsigned int wid, const nsave_t *ns )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Ship Name:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", ns->shipname );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Ship Model:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", _(ns->shipmodel) );
+   /*l +=*/ scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", _(ns->shipmodel) );
    window_modifyText( wid, "txtPilot", buf );
 }
 
@@ -1124,7 +1114,7 @@ int load_gameFile( const char *file )
  *    @param ns Save game to load.
  *    @return 0 on success.
  */
-static int load_game( nsave_t *ns )
+static int load_game( const nsave_t *ns )
 {
    return load_gameInternal( ns->path, ns->version );
 }
@@ -1263,7 +1253,7 @@ static int load_gameInternalHook( void *data )
          for (int i=0; i<array_size(misn_failed_str); i++)
             l += scnprintf( &buf[l], sizeof(buf)-l, _("\n   #r%s#0"), misn_failed_str[i]);
       }
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("\nNote that, in general, you should be able to find the missions/events again and start them without penalty."));
+      /*l +=*/ scnprintf( &buf[l], sizeof(buf)-l, _("\nNote that, in general, you should be able to find the missions/events again and start them without penalty."));
       dialogue_alertRaw( buf );
    }
 
