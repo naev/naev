@@ -48,10 +48,15 @@ def nluacheck( filename, extra_opts=[] ):
     return ret.returncode, ret.stdout
 
 if __name__ == "__main__":
+    with open( "/tmp/foobar", "w" ) as f:
+        f.write(' '.join(sys.argv))
     parser = argparse.ArgumentParser( description='Wrapper for luacheck that "understands" Naev hooks.' )
     parser.add_argument('path', metavar='PATH', nargs='+', type=str, help='Name of the path(s) to parse. Recurses over .lua files in the case of directories.')
     parser.add_argument('-j', '--jobs', metavar='jobs', type=int, default=None, help='Number of jobs to use. Defaults to number of CPUs.')
-    parser.add_argument('--filename', metavar='luafilename', type=str, default=None, help='Name to give the file.' )
+    # Below stuff for compatibility
+    parser.add_argument('--filename', type=str, default=None )
+    parser.add_argument('--formatter', type=str, default=None )
+    parser.add_argument('--config', type=str, default=None )
     args, unknown = parser.parse_known_args()
 
     # find files, either as directories or direct names based on extension
@@ -72,6 +77,10 @@ if __name__ == "__main__":
 
     if args.filename:
         unknown += ["--filename", args.filename]
+    if args.formatter:
+        unknown += ["--formatter", args.formatter]
+    if args.config:
+        unknown += ["--config", args.config]
 
     # Wrapper that will pass through unknown parameters meant for luacheck
     def nluacheck_w( filename ):
