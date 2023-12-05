@@ -181,7 +181,9 @@ if (o) WARN( _("Effect '%s' missing/invalid '%s' element"), efx->name, s) /**< D
 int effect_load (void)
 {
    int ne;
+#if DEBUGGING
    Uint32 time = SDL_GetTicks();
+#endif /* DEBUGGING */
    char **effect_files = ndata_listRecursive( EFFECT_DATA_PATH );
    effect_list = array_create( EffectData );
 
@@ -204,7 +206,6 @@ int effect_load (void)
    for (int i=1; i<array_size(effect_list); i++)
       if (strcmp( effect_list[i-1].name, effect_list[i].name )==0)
          WARN(_("Duplicated effect name '%s' detected!"), effect_list[i].name);
-#endif /* DEBUGGING */
 
    if (conf.devmode) {
       time = SDL_GetTicks() - time;
@@ -212,6 +213,7 @@ int effect_load (void)
    }
    else
       DEBUG( n_( "Loaded %d Effect", "Loaded %d Effects", ne ), ne );
+#endif /* DEBUGGING */
 
    return 0;
 }

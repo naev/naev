@@ -142,8 +142,7 @@ static void solid_update_rk4( Solid *obj, double dt )
 {
    int N; /* for iteration, and pass calculation */
    double h, px,py, vx,vy; /* pass, and position/velocity values */
-   double ix,iy, tx,ty, th; /* initial and temporary cartesian vector values */
-   double vmod, vang;
+   double vmod, vang, th;
    int vint;
    int limit; /* limit speed? */
 
@@ -169,6 +168,7 @@ static void solid_update_rk4( Solid *obj, double dt )
    th = obj->accel;
 
    for (int i=0; i < N; i++) { /* iterations */
+      double ix, iy, tx, ty;
       /* Calculate acceleration for the frame. */
       double ax = th*cos(obj->dir);
       double ay = th*sin(obj->dir);
