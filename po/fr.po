@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-06-11 11:58+0900\n"
-"PO-Revision-Date: 2023-09-12 02:08+0000\n"
-"Last-Translator: Nicolas <nicolas.rr.arnaud@gmail.com>\n"
+"PO-Revision-Date: 2023-12-05 23:07+0000\n"
+"Last-Translator: John Donne <akheron@zaclys.net>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev-0-10-x/"
 "fr/>\n"
 "Language: fr\n"
@@ -17,36 +17,36 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.0.1-dev\n"
+"X-Generator: Weblate 5.3-dev\n"
 
 #: physfs.c:1
 msgid "no error"
-msgstr "no error"
+msgstr "Pas d'erreur"
 
 #: physfs.c:2 src/background.c:473 src/gui.c:1720 src/nlua_evt.c:147
 #: src/nlua_misn.c:239 src/nopenal.c:68
 msgid "unknown error"
-msgstr "unknown error"
+msgstr "Erreur inconnue"
 
 #: physfs.c:3
 msgid "out of memory"
-msgstr "out of memory"
+msgstr "Mémoire pleine"
 
 #: physfs.c:4
 msgid "not initialized"
-msgstr "not initialized"
+msgstr "Pas démarré"
 
 #: physfs.c:5
 msgid "already initialized"
-msgstr "already initialized"
+msgstr "Déjà démarré"
 
 #: physfs.c:6
 msgid "argv[0] is NULL"
-msgstr "argv[0] is NULL"
+msgstr "argv[0] est NULL"
 
 #: physfs.c:7
 msgid "unsupported"
-msgstr "unsupported"
+msgstr "Incompatible"
 
 #: physfs.c:8
 msgid "past end of file"
@@ -36930,7 +36930,7 @@ msgstr ""
 #: dat/scripts/common/poi.lua:273 dat/scripts/common/tut_nelly.lua:27
 #: dat/scripts/common/tutorial.lua:45 dat/scripts/factions/soromid.lua:19
 msgid "Neutral"
-msgstr ""
+msgstr "Neutre"
 
 #. Ignore claimed systems (don't want to ruin the atmosphere)
 #. Do not spawn on restricted spobs
@@ -45292,11 +45292,11 @@ msgstr ""
 
 #: dat/events/updater.lua:202
 msgid "off"
-msgstr ""
+msgstr "désactivé"
 
 #: dat/events/updater.lua:202
 msgid "on"
-msgstr "Diamant"
+msgstr "activé"
 
 #: dat/events/updater.lua:215
 msgid ""
@@ -45597,7 +45597,7 @@ msgstr "\"Comment trouvez-vous le {outfit} ?\""
 #: dat/missions/minerva/kex5.lua:227
 #: dat/missions/sirius/achack/achack04.lua:165
 msgid "Bounty Hunter"
-msgstr ""
+msgstr "Chasseur de prime"
 
 #. @brief Creation hook.
 #. Hostiles (namely pirates atm)
@@ -45668,15 +45668,15 @@ msgstr ""
 #. @brief Spawns a small group of miners
 #: dat/factions/spawn/miner.lua:13
 msgid "Miner Llama"
-msgstr ""
+msgstr "Mineur Llama"
 
 #: dat/factions/spawn/miner.lua:15
 msgid "Miner Koala"
-msgstr ""
+msgstr "Mineur Koala"
 
 #: dat/factions/spawn/miner.lua:17
 msgid "Miner Mule"
-msgstr ""
+msgstr "Mineur Mule"
 
 #: dat/factions/spawn/miner.lua:19
 msgid "Miner Rhino"
@@ -45752,7 +45752,7 @@ msgstr "Marchand Zebra"
 
 #: dat/factions/spawn/trader.lua:27
 msgid "Trader Rhino"
-msgstr ""
+msgstr "Marchand Rhino"
 
 #: dat/factions/spawn/trader.lua:30
 msgid "Trader Shark"
@@ -45818,54 +45818,56 @@ msgstr "Marchand Shark"
 #. Text stuff
 #: dat/factions/standing/lib/base.lua:37
 msgid "Legend"
-msgstr ""
+msgstr "Légende"
 
 #: dat/factions/standing/lib/base.lua:38
 msgid "Hero"
-msgstr ""
+msgstr "Héro"
 
 #: dat/factions/standing/lib/base.lua:39
 msgid "Comrade"
-msgstr ""
+msgstr "Camarade"
 
 #: dat/factions/standing/lib/base.lua:40
 msgid "Ally"
-msgstr ""
+msgstr "Allié"
 
 #: dat/factions/standing/lib/base.lua:41
 msgid "Partner"
-msgstr ""
+msgstr "Partenaire"
 
 #: dat/factions/standing/lib/base.lua:42
 msgid "Associate"
-msgstr ""
+msgstr "Associé"
 
 #: dat/factions/standing/lib/base.lua:44 dat/scripts/factions/zalek.lua:27
 msgid "Outlaw"
-msgstr ""
+msgstr "Hors-la-loi"
 
 #: dat/factions/standing/lib/base.lua:45
 msgid "Criminal"
-msgstr ""
+msgstr "Criminel"
 
 #: dat/factions/standing/lib/base.lua:46 dat/scripts/factions/dvaered.lua:22
 #: dat/scripts/factions/sirius.lua:22 dat/scripts/factions/zalek.lua:28
 msgid "Enemy"
-msgstr ""
+msgstr "Ennemi "
 
 #: dat/factions/standing/lib/base.lua:48
 msgid "Friendly"
-msgstr ""
+msgstr "Amical"
 
 #: dat/factions/standing/lib/base.lua:50 dat/scripts/common/comm.lua:28
+#, fuzzy
 msgid "Hostile"
-msgstr ""
+msgstr "Hostile"
 
 #. stolen from scripts/vn.lua
 #: dat/factions/standing/lib/base.lua:51 dat/scripts/common/comm.lua:24
 #: dat/scripts/factions/dvaered.lua:27
+#, fuzzy
 msgid "Bribed"
-msgstr ""
+msgstr "Corrompu"
 
 #.
 #. Clamps a value x between low and high.
@@ -45954,7 +45956,7 @@ msgstr ""
 
 #: dat/factions/standing/lib/pirate.lua:31 dat/factions/standing/pirate.lua:8
 msgid "Common Thief"
-msgstr ""
+msgstr "Voleur ordinaire"
 
 #: dat/factions/standing/lib/pirate.lua:32 dat/factions/standing/pirate.lua:9
 msgid "Normie"
@@ -45977,7 +45979,7 @@ msgstr ""
 
 #: dat/factions/standing/marauder.lua:9
 msgid "Potential Victim"
-msgstr ""
+msgstr "Victime potentielle"
 
 #. Doesn't change through hits
 #. Nasin faction standing script
@@ -46045,7 +46047,7 @@ msgstr ""
 #: dat/gui/slim.lua:1082 dat/gui/slim.lua:1100 dat/gui/slim.lua:1139
 #: dat/gui/slim.lua:1140
 msgid "none"
-msgstr ""
+msgstr "aucun"
 
 #. Overheat or ammo capacity
 #. Refire indicator
@@ -46090,7 +46092,7 @@ msgstr ""
 #. "Spaceport" is nicer than "Land"
 #: dat/gui/brushed.lua:374 dat/gui/slim.lua:378
 msgid "Spaceport"
-msgstr ""
+msgstr "Spatioport"
 
 #. Center
 #. Time
@@ -46129,12 +46131,12 @@ msgstr "CIBLE EN VUE"
 #: dat/gui/brushed.lua:938
 #, lua-format
 msgid "DISTANCE: %s"
-msgstr ""
+msgstr "DISTANCE : %s"
 
 #: dat/gui/brushed.lua:940
 #, lua-format
 msgid "CLASS: %s"
-msgstr ""
+msgstr "CLASSE : %s"
 
 #. Space out the text.
 #. Render dir sprite.
@@ -46235,11 +46237,11 @@ msgstr ""
 
 #: dat/gui/legacy.lua:212
 msgid "Hyperspace"
-msgstr ""
+msgstr "Hyperespace"
 
 #: dat/gui/legacy.lua:228
 msgid "Navigation"
-msgstr ""
+msgstr "Navigation"
 
 #. Renders the health bars
 #. Renders the weapon systems
@@ -46265,7 +46267,7 @@ msgstr ""
 #. --
 #: dat/gui/legacy.lua:276
 msgid "No Target"
-msgstr ""
+msgstr "Aucune cible"
 
 #. Display faction
 #. Display health
@@ -46277,7 +46279,7 @@ msgstr ""
 #. Status information
 #: dat/gui/legacy.lua:340 dat/gui/slim.lua:974
 msgid "Disabled"
-msgstr ""
+msgstr "Désactivé"
 
 #: dat/gui/legacy.lua:342
 #, lua-format
@@ -46303,11 +46305,11 @@ msgstr ""
 #. Render warnings
 #: dat/gui/legacy.lua:382
 msgid "LOCK-ON DETECTED"
-msgstr ""
+msgstr "VERROUILLAGE DÉTECTÉ "
 
 #: dat/gui/legacy.lua:386
 msgid "VOLATILE ENVIRONMENT DETECTED"
-msgstr ""
+msgstr "ENVIRONNEMENT VOLATIL DÉTECTÉ"
 
 #.
 #. The new "slim" GUI
@@ -46338,13 +46340,13 @@ msgstr ""
 #. Missile lock warning
 #: dat/gui/slim.lua:201
 msgid "Warning - Missile Lock-on Detected"
-msgstr ""
+msgstr "Attention - Verrouillage de missile détecté"
 
 #. Colour the planet name based on friendliness.
 #: dat/gui/slim.lua:410
 #, lua-format
 msgid " (%s free)"
-msgstr ""
+msgstr " (%s libre)"
 
 #. Currently unused.
 #.
@@ -46391,11 +46393,11 @@ msgstr ""
 #. update_faction()
 #: dat/gui/slim.lua:478 dat/gui/slimv2.lua:265
 msgid "Cooling down..."
-msgstr ""
+msgstr "Refroidissement..."
 
 #: dat/gui/slim.lua:521 dat/gui/slim.lua:566
 msgid "UNAVAILABLE"
-msgstr ""
+msgstr "INDISPONIBLE"
 
 #: dat/gui/slim.lua:976
 msgid "Boardable"
@@ -46418,11 +46420,11 @@ msgstr ""
 
 #: dat/gui/slim.lua:1054
 msgid "DISTANCE:"
-msgstr ""
+msgstr "DISTANCE :"
 
 #: dat/gui/slim.lua:1055
 msgid "CLASS:"
-msgstr ""
+msgstr "CLASSE :"
 
 #: dat/gui/slim.lua:1103 src/info.c:383
 msgid "Pilot:"
@@ -46572,15 +46574,15 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:62
 #: dat/missions/zalek/neburesearch/neburesearch_05.lua:64
 msgid "Accept the job"
-msgstr ""
+msgstr "Accepter le travail"
 
 #: dat/missions/baron/baron_baron.lua:40
 msgid "Politely decline"
-msgstr ""
+msgstr "Décliner poliment"
 
 #: dat/missions/baron/baron_baron.lua:40
 msgid "Angrily refuse"
-msgstr ""
+msgstr "Refuser avec colère"
 
 #: dat/missions/baron/baron_baron.lua:44
 msgid "Never the wiser"
@@ -46668,12 +46670,13 @@ msgstr ""
 #. Function for adding log entries for miscellaneous one-off missions.
 #: dat/missions/baron/baron_baron.lua:62 dat/missions/baron/baron_baron.lua:66
 #: dat/scripts/common/baron.lua:10
+#, fuzzy
 msgid "Baron"
-msgstr ""
+msgstr "Baron"
 
 #: dat/missions/baron/baron_baron.lua:63
 msgid "A tidy sum of money"
-msgstr ""
+msgstr "Une confortable somme d'argent"
 
 #: dat/missions/baron/baron_baron.lua:64
 msgid ""
