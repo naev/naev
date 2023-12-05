@@ -132,6 +132,7 @@ end
 
 -- Triggers when the player's sensors pick up Harja's ship.
 function detectHarja()
+   player.autonavReset(5)
    vntk.msg(_("Harja spotted!"), _("Your sensors flash you an alert. They have picked up Harja's ship! This is a good opportunity to talk to him, and hailing his ship seems the most straightforward way to go about it."))
    harja:setHilight()
    harja:control(false)
