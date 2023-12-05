@@ -1012,11 +1012,13 @@ void gl_exitTextures (void)
    }
 
    /* Make sure there's no texture leak */
+#if DEBUGGING
    DEBUG(_("Texture leak detected!"));
    for (int i=0; i<array_size(texture_list); i++) {
-      glTexList *cur = &texture_list[i];
+      const glTexList *cur = &texture_list[i];
       DEBUG( n_( "   '%s' opened %d time", "   '%s' opened %d times", cur->used ), cur->tex->name, cur->used );
    }
+#endif /* DEBUGGING */
 
    array_free(texture_list);
 
@@ -1036,7 +1038,7 @@ glTexture** gl_copyTexArray( glTexture **tex )
 
    t = array_create_size( glTexture*, n );
    for (int i=0; i<array_size(tex); i++)
-      array_push_back( &t, gl_dupTexture( tex[i] ) );
+      array_push_back( &t, gl_dupTexture( tex[i] ) ); // NOLINT
    return t;
 }
 
@@ -1047,6 +1049,6 @@ glTexture** gl_addTexArray( glTexture **tex, glTexture *t )
 {
    if (tex==NULL)
       tex = array_create_size( glTexture*, 1 );
-   array_push_back( &tex, t );
+   array_push_back( &tex, t ); // NOLINT
    return tex;
 }

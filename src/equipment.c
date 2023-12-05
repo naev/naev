@@ -85,7 +85,7 @@ static void equipment_toggleFav( unsigned int wid, const char *wgt );
 static void equipment_toggleDeploy( unsigned int wid, const char *wgt );
 static void equipment_renderColumn( double x, double y, double w, double h,
       const PilotOutfitSlot *lst, const char *txt,
-      int selected, Outfit *o, Pilot *p, CstSlotWidget *wgt );
+      int selected, Outfit *o, Pilot *p, const CstSlotWidget *wgt );
 static void equipment_renderSlots( double bx, double by, double bw, double bh, void *data );
 static void equipment_renderMisc( double bx, double by, double bw, double bh, void *data );
 static void equipment_renderOverlayColumn( double x, double y, double h,
@@ -449,7 +449,7 @@ void equipment_slotWidget( unsigned int wid,
  */
 static void equipment_renderColumn( double x, double y, double w, double h,
       const PilotOutfitSlot *lst, const char *txt,
-      int selected, Outfit *o, Pilot *p, CstSlotWidget *wgt )
+      int selected, Outfit *o, Pilot *p, const CstSlotWidget *wgt )
 {
    const glColour *c, *dc, *rc;
    glColour bc;
@@ -735,7 +735,6 @@ static void equipment_renderOverlayColumn( double x, double y, double h,
    /* Iterate for all the slots. */
    for (int i=0; i<array_size(lst); i++) {
       int subtitle = 0;
-      int top = 0;
 
       /* Skip slots hat are empty and the player can't do anything about. */
       if (lst[i].sslot->locked && (lst[i].outfit == NULL))
@@ -750,6 +749,7 @@ static void equipment_renderOverlayColumn( double x, double y, double h,
       }
       /* Draw bottom. */
       if ((i==mover) || subtitle) {
+         int top = 0;
          display = NULL;
          if ((i==mover) && wgt->canmodify) {
             if (lst[i].sslot->locked) {
@@ -826,7 +826,6 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    int n, m;
    PilotOutfitSlot *slot;
    char alt[STRMAX];
-   int pos;
    const Outfit *o;
    CstSlotWidget *wgt;
 
@@ -871,6 +870,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
 
    /* Slot is empty. */
    if (o == NULL) {
+      int pos;
       if (slot->sslot->slot.spid) {
          pos = scnprintf( alt, sizeof(alt),
                "#o%s\n", _( sp_display( slot->sslot->slot.spid ) ) );
@@ -923,7 +923,7 @@ static void equipment_renderShip( double bx, double by,
    double px, py;
    double pw, ph;
    vec2 v;
-   unsigned int *wid = data;
+   const unsigned int *wid = data;
 
    /* Must have selected ship. */
    if (eq_wgt.selected == NULL)
@@ -1514,12 +1514,10 @@ static void equipment_genLists( unsigned int wid )
  */
 static void equipment_genShipList( unsigned int wid )
 {
-   int l;
    ImageArrayCell *cships;
    int nships;
    int w, h;
    int sw, sh;
-   Pilot *s;
    const PlayerShip_t *ps;
    char r[PATH_MAX];
    glTexture *t;
@@ -1577,7 +1575,8 @@ static void equipment_genShipList( unsigned int wid )
    }
    /* Ship stats in alt text. */
    for (int i=0; i<nships; i++) {
-      s  = player_getShip( cships[i].caption );
+      const Pilot *s  = player_getShip( cships[i].caption );
+      int l;
       cships[i].alt = malloc( STRMAX );
       l  = snprintf( &cships[i].alt[0], STRMAX, _("Ship Stats\n") );
       l  = equipment_shipStats( &cships[i].alt[0], STRMAX-l, s, 1, 1 );
@@ -1683,7 +1682,7 @@ static void equipment_genOutfitList( unsigned int wid )
    int noutfits, active;
    ImageArrayCell *coutfits;
    int iconsize;
-   Pilot *p = (eq_wgt.selected != NULL) ? eq_wgt.selected->p : NULL;
+   const Pilot *p = (eq_wgt.selected != NULL) ? eq_wgt.selected->p : NULL;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, NULL, NULL, &ow, &oh,
@@ -1977,7 +1976,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, _("%s %s (%d %s)"),
             num2strU(ship->fuel_max,0), UNIT_UNIT, jumps, n_( "jump", "jumps", jumps ) );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%s#0", spaceworthy ? '0' : 'r', errorReport );
+      /*l +=*/ scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%s#0", spaceworthy ? '0' : 'r', errorReport );
    }
    else {
       int destroyed = 0;
@@ -1991,7 +1990,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, _("%s %s"), num2strU(ps->dmg_done_shield+ps->dmg_done_armour,0), UNIT_ENERGY );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
       l += scnprintf( &buf[l], sizeof(buf)-l, _("%s %s"), num2strU(ps->dmg_taken_shield+ps->dmg_taken_armour,0), UNIT_ENERGY );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", num2strU(destroyed,0) );
+      /*l +=*/ scnprintf( &buf[l], sizeof(buf)-l, "\n%s", num2strU(destroyed,0) );
    }
    window_modifyText( wid, "txtDDesc", buf );
 
@@ -2002,7 +2001,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
       int ncells = array_size(ship->outfit_intrinsic);
       Outfit const **outfits = (Outfit const**) array_create( Outfit* );
       for (int i=0; i<ncells; i++)
-         array_push_back( &outfits, ship->outfit_intrinsic[i].outfit );
+         array_push_back( &outfits, ship->outfit_intrinsic[i].outfit ); // NOLINT
 
       cells = outfits_imageArrayCells( outfits, &ncells, ship );
 
