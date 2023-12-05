@@ -411,7 +411,7 @@ static int player_newMake (void)
 PlayerShip_t* player_newShip( const Ship* ship, const char *def_name,
       int trade, const char *acquired, int noname )
 {
-   char *ship_name, *old_name;
+   char *ship_name;
    PlayerShip_t *ps;
 
    /* temporary values while player doesn't exist */
@@ -461,7 +461,7 @@ PlayerShip_t* player_newShip( const Ship* ship, const char *def_name,
 
    /* Player is trading ship in. */
    if (trade) {
-      old_name = player.p->name;
+      const char *old_name = player.p->name;
       player_swapShip( ship_name, 1 ); /* Move to the new ship. */
       player_rmShip( old_name );
    }
@@ -559,7 +559,7 @@ void player_swapShip( const char *shipname, int move_cargo )
    ps->p->escorts = array_create( Escort_t );
    /* Just copying the array over has unforeseen consequences, so recreate. */
    for (int i=0; i<array_size(player.p->escorts); i++) {
-      Escort_t *e = &player.p->escorts[i];
+      const Escort_t *e = &player.p->escorts[i];
       Escort_t ne = *e;
 
       /* Must not be new ship. */
@@ -1173,7 +1173,6 @@ static void player_renderAimHelper( double dt )
 void player_think( Pilot* pplayer, const double dt )
 {
    Pilot *target;
-   double acc, turn;
    int facing, fired;
 
    /* last i heard, the dead don't think */
@@ -1261,7 +1260,7 @@ void player_think( Pilot* pplayer, const double dt )
 
    /* Normal turning scheme */
    if (!facing) {
-      turn = 0;
+      double turn = 0;
       if (player_isFlag(PLAYER_TURN_LEFT))
          turn -= player_left;
       if (player_isFlag(PLAYER_TURN_RIGHT))
@@ -1298,7 +1297,7 @@ void player_think( Pilot* pplayer, const double dt )
       player_autonavReset( 1. );
 
    if (!player_isFlag(PLAYER_AUTONAV)) {
-      acc = player_acc;
+      double acc = player_acc;
       /* Have to handle the case the player is doing reverse. This takes priority
       * over normal accel. */
       if (player_isFlag(PLAYER_REVERSE) && player.p->stats.misc_reverse_thrust
@@ -1946,7 +1945,6 @@ void player_hailStart (void)
 int player_jump (void)
 {
    int h;
-   double mindist;
 
    /* Must have a jump target and not be already jumping. */
    if (pilot_isFlag(player.p, PILOT_HYPERSPACE))
@@ -1960,7 +1958,7 @@ int player_jump (void)
    /* Select nearest jump if not target. */
    if (player.p->nav_hyperspace == -1) {
       int j    = -1;
-      mindist  = INFINITY;
+      double mindist  = INFINITY;
       for (int i=0; i<array_size(cur_system->jumps); i++) {
          double dist = vec2_dist2( &player.p->solid.pos, &cur_system->jumps[i].pos );
          if (dist < mindist && jp_isUsable(&cur_system->jumps[i])) {
@@ -2358,7 +2356,7 @@ static void player_checkHail (void)
 {
    Pilot *const* pilot_stack = pilot_getAll();
    for (int i=0; i<array_size(pilot_stack); i++) {
-      Pilot *p = pilot_stack[i];
+      const Pilot *p = pilot_stack[i];
 
       /* Must be hailing. */
       if (pilot_isFlag(p, PILOT_HAILING))
@@ -2375,7 +2373,7 @@ static void player_checkHail (void)
  */
 static void player_spobOutOfRangeMsg (void)
 {
-   Spob *spob = cur_system->spobs[player.p->nav_spob];
+   const Spob *spob = cur_system->spobs[player.p->nav_spob];
    const char *name = spob_name(spob);
    player_message( _("#r%s is out of comm range, unable to contact."), name );
 }
@@ -2442,7 +2440,7 @@ void player_autohail (void)
    /* Find pilot to autohail. */
    pilot_stack = pilot_getAll();
    for (int i=0; i<array_size(pilot_stack); i++) {
-      Pilot *p = pilot_stack[i];
+      const Pilot *p = pilot_stack[i];
 
       /* Must be hailing. */
       if (pilot_isFlag(p, PILOT_HAILING)) {
@@ -3130,7 +3128,7 @@ int player_addEscorts (void)
    for (int i=0; i<array_size(player.p->escorts); i++) {
       int q;
       PilotOutfitSlot *po;
-      Escort_t *e = &player.p->escorts[i];
+      const Escort_t *e = &player.p->escorts[i];
       Pilot *pe = pilot_get( e->id );
 
       /* Non-persistent pilots should have been wiped already. */
@@ -3754,14 +3752,11 @@ static void player_tryAddLicense( const char *name )
 static Spob* player_parse( xmlNodePtr parent )
 {
    const char *spob = NULL;
-   unsigned int services;
    Spob *pnt = NULL;
    xmlNodePtr node, cur;
    int map_overlay_enabled = 0;
    StarSystem *sys;
    double a, r;
-   Pilot *old_ship;
-   PilotFlags flags;
    int time_set = 0;
 
    xmlr_attr_strd(parent, "name", player.name);
@@ -3862,6 +3857,7 @@ static Spob* player_parse( xmlNodePtr parent )
 
    /* Handle cases where ship is missing. */
    if (player.p == NULL) {
+      PilotFlags flags;
       pilot_clearFlagsRaw( flags );
       pilot_setFlagRaw( flags, PILOT_PLAYER );
       pilot_setFlagRaw( flags, PILOT_NO_OUTFITS );
@@ -3873,9 +3869,8 @@ static Spob* player_parse( xmlNodePtr parent )
                faction_get("Player"), "player", 0., NULL, NULL, flags, 0, 0 );
       }
       else {
-
          /* Just give player.p a random ship in the stack. */
-         old_ship = player_stack[array_size(player_stack)-1].p;
+         const Pilot *old_ship = player_stack[array_size(player_stack)-1].p;
          pilot_create( old_ship->ship, old_ship->name,
                faction_get("Player"), "player", 0., NULL, NULL, flags, 0, 0 );
          player_rmShip( old_ship->name );
@@ -3926,7 +3921,7 @@ static Spob* player_parse( xmlNodePtr parent )
        */
       const char *found = NULL;
       for (int i=0; i<3; i++) {
-         services = SPOB_SERVICE_LAND | SPOB_SERVICE_INHABITED | SPOB_SERVICE_REFUEL;
+         unsigned int services = SPOB_SERVICE_LAND | SPOB_SERVICE_INHABITED | SPOB_SERVICE_REFUEL;
 
          if (i == 0)
             services |= SPOB_SERVICE_SHIPYARD;
@@ -4047,7 +4042,7 @@ static int player_parseLicenses( xmlNodePtr parent )
       if (!xml_isNode( node, "license" ))
          continue;
 
-      char *name = xml_get( node );
+      const char *name = xml_get( node );
       if (name == NULL) {
          WARN( _( "License node is missing name." ) );
          continue;
@@ -4074,7 +4069,7 @@ static int player_parseInventory( xmlNodePtr parent )
          continue;
 
       xmlr_attr_int_def( node, "quantity", q, 1 );
-      char *name = xml_get( node );
+      const char *name = xml_get( node );
       if (name == NULL) {
          WARN( _( "Inventory item node is missing name." ) );
          continue;
@@ -4216,8 +4211,7 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot 
 {
    const Outfit *o;
    int q;
-
-   char *name = xml_get(node);
+   const char *name = xml_get(node);
    if (name == NULL) {
       WARN(_("Empty ship slot node found, skipping."));
       return;
