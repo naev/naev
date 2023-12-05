@@ -286,17 +286,12 @@ void player_new (void)
 
    load_refresh();
    if (array_size( load_getList( player.name ) ) > 0) {
-      char buf[PATH_MAX];
       int r = dialogue_YesNo(_("Overwrite"),
             _("You already have a pilot named %s. Their autosave and backup save will be overwritten. Do you wish to continue?"), player.name);
       if (r==0) { /* no */
          player_new();
          return;
       }
-
-      /* Try to back it up. */
-      snprintf( buf, sizeof(buf), "saves/%s/oldsave.ns" )r
-
    }
 
    if (player_newMake())
