@@ -8,7 +8,7 @@
  <location>Bar</location>
  <faction>Sirius</faction>
  <notes>
-   <campaign>Academy Hack</campaign>
+  <campaign>Academy Hack</campaign>
  </notes>
 </mission>
  --]]
@@ -92,7 +92,7 @@ function accept()
    mem.enterhook = hook.enter("enter")
    mem.enterhook = hook.jumpout("jumpout")
    hook.land("land")
-   mem.datehook = hook.date(time.new(0, 2, 0), "date")
+   hook.date(time.new(0, 2, 0), "date")
 end
 
 -- Jump-out hook.

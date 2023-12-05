@@ -980,7 +980,7 @@ function distress_handler( pilot, attacker )
 
    local badguy
    -- Victim is ally
-   if p_ally then
+   if p_ally and not pilot:withPlayer() then
       -- When your allies are fighting, stay out of it.
       if a_ally then
          return
@@ -988,7 +988,7 @@ function distress_handler( pilot, attacker )
       -- Victim is an ally, but the attacker isn't.
       badguy = attacker
    -- Victim isn't an ally. Attack the victim if the attacker is our ally.
-   elseif a_ally then
+   elseif a_ally and not attacker:withPlayer() then
       badguy = pilot
    elseif p_enemy then
       -- If they're both enemies, may as well let them destroy each other.
