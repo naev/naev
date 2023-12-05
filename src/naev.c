@@ -1151,6 +1151,9 @@ static void print_SDLversion (void)
    DEBUG( _("SDL: %d.%d.%d [compiled: %d.%d.%d]"),
          linked->major, linked->minor, linked->patch,
          compiled.major, compiled.minor, compiled.patch);
+#ifndef DEBUGGING /* Shuts up cppcheck. */
+   (void) compiled.patch;
+#endif /* DEBUGGING */
 
    /* Get version as number. */
    version_linked    = linked->major*100 + linked->minor;

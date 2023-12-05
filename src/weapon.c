@@ -293,10 +293,9 @@ static void weapon_setTurn( Weapon *w, double turn )
  */
 static void think_seeker( Weapon* w, double dt )
 {
-   double diff;
    const Pilot *p;
    vec2 v;
-   double turn_max, d, jc, speed_mod;
+   double turn_max, jc, speed_mod;
 
    if (w->target.type != TARGET_PILOT)
       return; /* Ignore no targets. */
@@ -325,7 +324,7 @@ static void think_seeker( Weapon* w, double dt )
          jc = p->stats.jam_chance - w->outfit->u.lau.resist;
          if (jc > 0.) {
             /* Roll based on distance. */
-            d = vec2_dist( &p->solid.pos, &w->solid.pos );
+            double d = vec2_dist( &p->solid.pos, &w->solid.pos );
             if (d < w->r * p->ew_signature) {
                if (RNGF() < jc) {
                   double r = RNGF();
@@ -408,7 +407,7 @@ static void think_seeker( Weapon* w, double dt )
          }
          /* Other seekers are simplistic. */
          else {
-            diff = angle_diff(w->solid.dir, /* Get angle to target pos */
+            double diff = angle_diff(w->solid.dir, /* Get angle to target pos */
                   vec2_angle(&w->solid.pos, &p->solid.pos));
             weapon_setTurn( w, CLAMP( -turn_max, turn_max,
                   10 * diff * w->outfit->u.lau.turn ));
@@ -758,7 +757,7 @@ static void weapon_renderBeam( Weapon* w, double dt )
 static void weapon_render( Weapon* w, double dt )
 {
    const OutfitGFX *gfx;
-   double x, y, st;
+   double x, y;
    glColour col, c = { .r=1., .g=1., .b=1. };
 
    /* Don't render destroyed weapons. */
@@ -770,7 +769,7 @@ static void weapon_render( Weapon* w, double dt )
       case OUTFIT_TYPE_LAUNCHER:
       case OUTFIT_TYPE_TURRET_LAUNCHER:
          if (w->status == WEAPON_STATUS_LOCKING) {
-            double r, z;
+            double st, r, z;
             z = cam_getZoom();
             gl_gameToScreenCoords( &x, &y, w->solid.pos.x, w->solid.pos.y );
             r = w->outfit->u.lau.gfx.size * z * 0.75; /* Assume square. */
@@ -1527,7 +1526,7 @@ static void weapon_hit( Weapon *w, const WeaponHit *hit )
 
    if (hit->type==TARGET_PILOT) {
       Pilot *ptarget = hit->u.plt;
-      Pilot *parent = pilot_get( w->parent );
+      const Pilot *parent = pilot_get( w->parent );
       int spfx;
 
       /* Have pilot take damage and get real damage done. */
@@ -1601,7 +1600,7 @@ static void weapon_miss( Weapon *w )
 
    /* On hit weapon effects. */
    if (w->outfit->lua_onmiss != LUA_NOREF) {
-      Pilot *parent = pilot_get( w->parent );
+      const Pilot *parent = pilot_get( w->parent );
 
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, w->lua_mem); /* mem */
       nlua_setenv(naevL, w->outfit->lua_env, "mem"); /* */
@@ -1848,8 +1847,7 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
 
       if (vmin > 0.) {
          /* Get various details. */
-         double tt, ddir, dtdd, acc, pxv, ang, dvx, dvy;
-         int niter = 5;
+         double tt, ddir, acc, pxv, ang, dvx, dvy;
          acc = outfit->u.lau.accel;
 
          /* Get the relative velocity. */
@@ -1871,7 +1869,9 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
          /* (times for the ammo and the target to get to intersection point) */
          /* The aim is to nullify ta-tt. */
          if (fabs(ang) > 1e-7) { /* No need to iterate if it's already nearly aligned. */
+            int niter = 5;
             for (int i=0; i<niter; i++) {
+               double dtdd;
                double d  = weapon_computeTimes( rdir, rx, ry, dvx, dvy, pxv, vmin, acc, &tt );
                double dd = weapon_computeTimes( rdir+ddir, rx, ry, dvx, dvy, pxv, vmin, acc, &tt );
 
