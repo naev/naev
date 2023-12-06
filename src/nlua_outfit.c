@@ -32,6 +32,7 @@ static int outfitL_get( lua_State *L );
 static int outfitL_getAll( lua_State *L );
 static int outfitL_name( lua_State *L );
 static int outfitL_nameRaw( lua_State *L );
+static int outfitL_shortname( lua_State *L );
 static int outfitL_type( lua_State *L );
 static int outfitL_typeBroad( lua_State *L );
 static int outfitL_cpu( lua_State *L );
@@ -61,6 +62,7 @@ static const luaL_Reg outfitL_methods[] = {
    { "getAll", outfitL_getAll },
    { "name", outfitL_name },
    { "nameRaw", outfitL_nameRaw },
+   { "shortname", outfitL_shortname },
    { "type", outfitL_type },
    { "typeBroad", outfitL_typeBroad },
    { "cpu", outfitL_cpu },
@@ -262,7 +264,7 @@ static int outfitL_getAll( lua_State *L )
  * messages). It cannot be used as an identifier for the outfit; for
  * that, use outfit.nameRaw() instead.
  *
- * @usage outfitname = s:name() -- Equivalent to `_(s:nameRaw())`
+ * @usage outfitname = o:name() -- Equivalent to _(o:nameRaw())
  *
  *    @luatparam Outfit s Outfit to get the translated name of.
  *    @luatreturn string The translated name of the outfit.
@@ -282,7 +284,7 @@ static int outfitL_name( lua_State *L )
  * (e.g. can be passed to outfit.get()). It should not be used directly
  * for display purposes without manually translating it with _().
  *
- * @usage outfitrawname = s:nameRaw()
+ * @usage outfitrawname = o:nameRaw()
  *
  *    @luatparam Outfit s Outfit to get the raw name of.
  *    @luatreturn string The raw name of the outfit.
@@ -292,6 +294,24 @@ static int outfitL_nameRaw( lua_State *L )
 {
    const Outfit *o = luaL_validoutfit(L,1);
    lua_pushstring(L, o->name);
+   return 1;
+}
+
+/**
+ * @brief Gets the translated short name of the outfit.
+ *
+ * This translated name should be used when you have abbreviate the outfit
+ * greatly, e.g., the GUI. In the case the outfit has no special shortname,
+ * it's equivalent to outfit.name().
+ *
+ *    @luatparam Outfit s Outfit to get the translated short name of.
+ *    @luatreturn string The translated short name of the outfit.
+ * @luafunc shortname
+ */
+static int outfitL_shortname( lua_State *L )
+{
+   const Outfit *o = luaL_validoutfit(L,1);
+   lua_pushstring(L, (o->shortname!=NULL) ? _(o->shortname) : _(o->name));
    return 1;
 }
 

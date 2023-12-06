@@ -2501,6 +2501,7 @@ static int outfit_parse( Outfit* temp, const char* file )
          do {
             xml_onlyNodes(cur);
             xmlr_int(cur,"rarity",temp->rarity);
+            xmlr_strd(cur,"shortname",temp->shortname);
             xmlr_strd(cur,"license",temp->license);
             xmlr_strd(cur,"cond",temp->cond);
             xmlr_strd(cur,"condstr",temp->condstr);
@@ -3121,6 +3122,7 @@ void outfit_free (void)
       free(o->cond);
       free(o->condstr);
       free(o->name);
+      free(o->shortname);
       gl_freeTexture(o->gfx_store);
       for (int j=0; j<array_size(o->gfx_overlays); j++)
          gl_freeTexture(o->gfx_overlays[j]);

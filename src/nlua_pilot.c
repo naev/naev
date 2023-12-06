@@ -1738,7 +1738,7 @@ static int pilotL_weapsetActive( lua_State *L )
  *
  * The weapon sets have the following structure: <br />
  * <ul>
- *  <li> name: name of the set. </li>
+ *  <li> outfit: the outfit. </li>
  *  <li> cooldown: [0:1] value indicating if ready to shoot (1 is ready). </li>
  *  <li> charge: [0:1] charge level of beam weapon (1 is full). </li>
  *  <li> left: Absolute ammo left or nil if not applicable. </li>
@@ -1852,9 +1852,9 @@ static int pilotL_weapset( lua_State *L )
          lua_pushnumber(L,++k);
          lua_newtable(L);
 
-         /* Name. */
-         lua_pushstring(L,"name");
-         lua_pushstring(L,slot->outfit->name);
+         /* Outfit. */
+         lua_pushstring(L,"outfit");
+         lua_pushoutfit(L,slot->outfit);
          lua_rawset(L,-3);
 
          /* Beams require special handling. */

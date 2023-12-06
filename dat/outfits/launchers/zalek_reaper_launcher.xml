@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Za'lek Reaper Launcher">
  <general>
+  <shortname>Zl. Reaper Launcher</shortname>
   <slot>weapon</slot>
   <size>medium</size>
   <license>Heavy Weapon</license>

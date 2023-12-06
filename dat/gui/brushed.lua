@@ -544,7 +544,7 @@ local function renderWeapBar( weapon, x, y )
       end
 
       if weapon.is_outfit then
-         icon = outfit.get( weapon.name ):icon()
+         icon = weapon.outfit:icon()
          icon_w, icon_h = icon:dim()
 
          if weapon.type == "Afterburner" then

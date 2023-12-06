@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Enygma Systems Turreted Headhunter Launcher">
  <general>
+  <shortname>E. Headhunter Turreted Launcher</shortname>
   <slot>weapon</slot>
   <size>medium</size>
   <license>Medium Weapon</license>

@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="TeraCom Mace Launcher">
  <general>
+  <shortname>T. Mace Launcher</shortname>
   <slot>weapon</slot>
   <size>small</size>
   <license>Medium Weapon</license>

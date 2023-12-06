@@ -491,12 +491,15 @@ local function update_wset()
       weap_icons[k] = outfit.get( v.name ):icon()
    end
 --]]
+   for k, w in ipairs( wset ) do
+      w.name = w.outfit:shortname()
+   end
 
    aset = pp:actives(true)
    active_icons = {}
 
    for k, v in ipairs( aset ) do
-      active_icons[k] = outfit.get( v.name ):icon()
+      active_icons[k] = v.outfit:icon()
    end
    slot_start_x = screen_w/2 - #aset/2 * slot_w
 end
@@ -790,7 +793,7 @@ function render( dt, dt_mod )
 
    --Weapon bars
    for num, weapon in ipairs(wset) do
-      txt = _(weapon.name)
+      txt = weapon.name
       local values
       if weapon.left then -- Truncate names for readability.
          if weapon.type == "Bolt Cannon" or weapon.type == "Beam Cannon" then
