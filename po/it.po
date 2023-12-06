@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-12-03 18:09+0900\n"
+"POT-Creation-Date: 2023-12-06 12:48+0900\n"
 "PO-Revision-Date: 2023-04-10 00:50+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
@@ -288,7 +288,7 @@ msgid "Current Core Development Team"
 msgstr "Team di Sviluppo principale attuale"
 
 #: dat/AUTHORS:2 dat/AUTHORS:26 dat/AUTHORS:38 dat/AUTHORS:63 dat/AUTHORS:184
-#: dat/AUTHORS:192 dat/AUTHORS:213
+#: dat/AUTHORS:197 dat/AUTHORS:218
 msgid "---------------------------------------"
 msgstr "---------------------------------------"
 
@@ -779,7 +779,7 @@ msgstr "   * Collaboratore alle missioni"
 msgid "   * Proteron lore"
 msgstr "Proteron Dalton"
 
-#: dat/AUTHORS:164 dat/AUTHORS:197
+#: dat/AUTHORS:164 dat/AUTHORS:202
 msgid "PhoenixRiver"
 msgstr "PhoenixRiver"
 
@@ -850,86 +850,106 @@ msgid "(ja) Masato Oota (oo13)"
 msgstr ""
 
 #: dat/AUTHORS:187
-msgid "(de) Wuzzy, Solid Tscheik"
+msgid "(de) Wuzzy, Solid Tscheik, murks"
 msgstr ""
 
 #: dat/AUTHORS:188
-msgid "(fr) Nicolas"
+msgid "(fr) Nicolas, Jérémie Guegain, Étienne Girard, Nathan"
 msgstr ""
 
 #: dat/AUTHORS:189
-msgid "(es) paco"
+msgid "(es) paco, gallegonovato"
+msgstr ""
+
+#: dat/AUTHORS:190
+msgid "(cs) David Doubek, Hahaha Nope"
 msgstr ""
 
 #: dat/AUTHORS:191
+msgid "(pt_PT) SC, ssantos"
+msgstr ""
+
+#: dat/AUTHORS:192
+msgid "(pt_BR) Bloody Kenshiro, SC, Anthony Gregory Souza dos Santos"
+msgstr ""
+
+#: dat/AUTHORS:193
+msgid "(ko) 이정희"
+msgstr ""
+
+#: dat/AUTHORS:194
+msgid "(it) Davide Prina"
+msgstr ""
+
+#: dat/AUTHORS:196
 msgid "Testers"
 msgstr "Tester"
 
-#: dat/AUTHORS:194
+#: dat/AUTHORS:199
 msgid "John Schwartfeger"
 msgstr "John Schwartfeger"
 
-#: dat/AUTHORS:195
+#: dat/AUTHORS:200
 msgid "Leonardo Valeri Manera"
 msgstr "Leonardo Valeri Manera"
 
-#: dat/AUTHORS:196
+#: dat/AUTHORS:201
 msgid "EvanR"
 msgstr "EvanR"
 
-#: dat/AUTHORS:198
+#: dat/AUTHORS:203
 msgid "Markus Büchele (BM-W1)"
 msgstr ""
 
-#: dat/AUTHORS:199
+#: dat/AUTHORS:204
 msgid "Alaisdair West (awest03)"
 msgstr ""
 
-#: dat/AUTHORS:200
+#: dat/AUTHORS:205
 msgid "VividViolet"
 msgstr ""
 
-#: dat/AUTHORS:201
+#: dat/AUTHORS:206
 msgid "exoterws"
 msgstr ""
 
-#: dat/AUTHORS:202
+#: dat/AUTHORS:207
 msgid "LJ_Dude"
 msgstr ""
 
-#: dat/AUTHORS:203
+#: dat/AUTHORS:208
 msgid "sigus"
 msgstr ""
 
-#: dat/AUTHORS:204
+#: dat/AUTHORS:209
 msgid "Timsticles"
 msgstr ""
 
-#: dat/AUTHORS:205
+#: dat/AUTHORS:210
 msgid "Mister T"
 msgstr ""
 
-#: dat/AUTHORS:206
+#: dat/AUTHORS:211
 msgid "Lemuria"
 msgstr ""
 
-#: dat/AUTHORS:207
+#: dat/AUTHORS:212
 msgid "Powerpeon"
 msgstr ""
 
-#: dat/AUTHORS:208
+#: dat/AUTHORS:213
 msgid "xrogaan"
 msgstr ""
 
-#: dat/AUTHORS:209
+#: dat/AUTHORS:214
 msgid "nloewen"
 msgstr ""
 
-#: dat/AUTHORS:210
+#: dat/AUTHORS:215
 msgid "Elven_Moustache"
 msgstr ""
 
-#: dat/AUTHORS:212
+#: dat/AUTHORS:217
 msgid "Artwork Contributors"
 msgstr "Collaboratori di artwork"
 
@@ -4509,7 +4529,7 @@ msgstr "Mini Hangar per Droni Bombardiere Za'lek"
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_mini_bay.xml:8
 #: dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml:8
-#: dat/outfits/launchers/zalek_hunter_launcher.xml:8
+#: dat/outfits/launchers/zalek_hunter_launcher.xml:9
 msgid "You need at least 30 reputation with House Za'lek."
 msgstr "Hai bisogno di almeno 30 reputazioni con la Casata Za'lek."
 
@@ -4549,7 +4569,7 @@ msgid "Za'lek Heavy Drone Mini Bay"
 msgstr "Mini Hangar per Droni Za'lek Pesanti"
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml:8
-#: dat/outfits/launchers/zalek_reaper_launcher.xml:8
+#: dat/outfits/launchers/zalek_reaper_launcher.xml:9
 #: dat/ships/zalek/zalek_sting.xml:19
 msgid "You need at least 40 reputation with House Za'lek."
 msgstr "Hai bisogno di almeno 40 reputazioni con la Casata Za'lek."
@@ -4977,7 +4997,13 @@ msgstr ""
 msgid "Enygma Systems Huntsman Launcher"
 msgstr "Lanciarazzi Cacciatore di Sistemi Enigma"
 
-#: dat/outfits/launchers/enygma_systems_huntsman_launcher.xml:10
+#: dat/outfits/launchers/enygma_systems_huntsman_launcher.xml:4
+#, fuzzy
+#| msgid "Enygma Systems Huntsman Launcher"
+msgid "E. Huntsman Launcher"
+msgstr "Lanciarazzi Cacciatore di Sistemi Enigma"
+
+#: dat/outfits/launchers/enygma_systems_huntsman_launcher.xml:11
 #, fuzzy
 #| msgid ""
 #| "Enygma Systems found that there was an unexploited niche in disabling "
@@ -5001,7 +5027,13 @@ msgstr ""
 msgid "Enygma Systems Spearhead Launcher"
 msgstr "Lanciarazzi a Punta di Lancia di Sistemi Enigma"
 
-#: dat/outfits/launchers/enygma_systems_spearhead_launcher.xml:9
+#: dat/outfits/launchers/enygma_systems_spearhead_launcher.xml:4
+#, fuzzy
+#| msgid "Enygma Systems Spearhead Launcher"
+msgid "E. Spearhead Launcher"
+msgstr "Lanciarazzi a Punta di Lancia di Sistemi Enigma"
+
+#: dat/outfits/launchers/enygma_systems_spearhead_launcher.xml:10
 #, fuzzy
 #| msgid ""
 #| "The Spearhead class shieldbreaker missile is one of Enygma Systems' more "
@@ -5030,7 +5062,13 @@ msgstr ""
 msgid "Enygma Systems Turreted Fury Launcher"
 msgstr "Torretta Lanciarazzi Furore di Sistemi Enigma"
 
-#: dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml:9
+#: dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml:4
+#, fuzzy
+#| msgid "Enygma Systems Turreted Fury Launcher"
+msgid "E. Fury Turreted Launcher"
+msgstr "Torretta Lanciarazzi Furore di Sistemi Enigma"
+
+#: dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml:10
 msgid ""
 "Enygma Systems has developed a turret mounted Fury launcher. It comes at a "
 "steep price, but Fury missiles can be a powerful means of discouraging "
@@ -5045,7 +5083,13 @@ msgstr ""
 msgid "Enygma Systems Turreted Headhunter Launcher"
 msgstr "Torretta Lanciarazzi Cacciatore di Teste di Sistemi Enigma"
 
-#: dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml:9
+#: dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml:4
+#, fuzzy
+#| msgid "TeraCom Headhunter Launcher"
+msgid "E. Headhunter Turreted Launcher"
+msgstr "Lanciarazzi Cacciatore di Teste di TeraCom"
+
+#: dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml:10
 msgid ""
 "These turreted launchers are sometimes employed by cruiser captains whose "
 "ships aren't manoeuvrable enough to effectively combat enemy fighters and "
@@ -5135,7 +5179,13 @@ msgstr ""
 msgid "TeraCom Banshee Launcher"
 msgstr "Lanciarazzi Banshee di TeraCom"
 
-#: dat/outfits/launchers/teracom_banshee_launcher.xml:10
+#: dat/outfits/launchers/teracom_banshee_launcher.xml:4
+#, fuzzy
+#| msgid "TeraCom Banshee Launcher"
+msgid "T. Banshee Launcher"
+msgstr "Lanciarazzi Banshee di TeraCom"
+
+#: dat/outfits/launchers/teracom_banshee_launcher.xml:11
 msgid ""
 "TeraCom has equipped its Banshee launcher model with high grade reload and "
 "tube cooling systems, giving a significant boost to rate of fire. These "
@@ -5152,7 +5202,13 @@ msgstr ""
 msgid "TeraCom Fury Launcher"
 msgstr "Lanciarazzi Furore di TeraCom"
 
-#: dat/outfits/launchers/teracom_fury_launcher.xml:9
+#: dat/outfits/launchers/teracom_fury_launcher.xml:4
+#, fuzzy
+#| msgid "TeraCom Fury Launcher"
+msgid "T. Fury Launcher"
+msgstr "Lanciarazzi Furore di TeraCom"
+
+#: dat/outfits/launchers/teracom_fury_launcher.xml:10
 msgid ""
 "TeraCom's Fury Launcher is a high-performance missile launcher equipped with "
 "patented target tracking and missile arming technology, allowing pilots to "
@@ -5171,7 +5227,13 @@ msgstr ""
 msgid "TeraCom Headhunter Launcher"
 msgstr "Lanciarazzi Cacciatore di Teste di TeraCom"
 
-#: dat/outfits/launchers/teracom_headhunter_launcher.xml:9
+#: dat/outfits/launchers/teracom_headhunter_launcher.xml:4
+#, fuzzy
+#| msgid "TeraCom Headhunter Launcher"
+msgid "T. Headhunter Launcher"
+msgstr "Lanciarazzi Cacciatore di Teste di TeraCom"
+
+#: dat/outfits/launchers/teracom_headhunter_launcher.xml:10
 msgid ""
 "The Headhunter class interceptor missile is a medium calibre missile that "
 "can deal devastating damage to small and medium sized targets, while "
@@ -5196,7 +5258,13 @@ msgstr ""
 msgid "TeraCom Imperator Launcher"
 msgstr "Lanciarazzi Imperatore di TeraCom"
 
-#: dat/outfits/launchers/teracom_imperator_launcher.xml:10
+#: dat/outfits/launchers/teracom_imperator_launcher.xml:4
+#, fuzzy
+#| msgid "TeraCom Imperator Launcher"
+msgid "T. Imperator Launcher"
+msgstr "Lanciarazzi Imperatore di TeraCom"
+
+#: dat/outfits/launchers/teracom_imperator_launcher.xml:11
 msgid ""
 "TeraCom decided not to develop a launcher for the Caesar IV, because it fell "
 "short of the company's performance requirements. Instead, the company "
@@ -5217,7 +5285,13 @@ msgstr ""
 msgid "TeraCom Mace Launcher"
 msgstr "Lanciarazzi Mace di TeraCom"
 
-#: dat/outfits/launchers/teracom_mace_launcher.xml:9
+#: dat/outfits/launchers/teracom_mace_launcher.xml:4
+#, fuzzy
+#| msgid "TeraCom Mace Launcher"
+msgid "T. Mace Launcher"
+msgstr "Lanciarazzi Mace di TeraCom"
+
+#: dat/outfits/launchers/teracom_mace_launcher.xml:10
 msgid ""
 "The Mace class unguided rocket is a cheap, expendable weapon used to boost "
 "peak firepower in tight situations. It is far better at dealing damage to "
@@ -5234,7 +5308,13 @@ msgstr ""
 msgid "TeraCom Medusa Launcher"
 msgstr "Lanciarazzi Medusa di TeraCom"
 
-#: dat/outfits/launchers/teracom_medusa_launcher.xml:9
+#: dat/outfits/launchers/teracom_medusa_launcher.xml:4
+#, fuzzy
+#| msgid "TeraCom Medusa Launcher"
+msgid "T. Medusa Launcher"
+msgstr "Lanciarazzi Medusa di TeraCom"
+
+#: dat/outfits/launchers/teracom_medusa_launcher.xml:10
 msgid ""
 "The Medusa class EMP cruise missile is a nonlethal weapon designed to knock "
 "out a ship's internal systems, rendering it harmless and ready for boarding. "
@@ -5253,7 +5333,13 @@ msgstr ""
 msgid "TeraCom Vengeance Launcher"
 msgstr "Lanciarazzi Rivincita di TeraCom"
 
-#: dat/outfits/launchers/teracom_vengeance_launcher.xml:9
+#: dat/outfits/launchers/teracom_vengeance_launcher.xml:4
+#, fuzzy
+#| msgid "TeraCom Vengeance Launcher"
+msgid "T. Vengeance Launcher"
+msgstr "Lanciarazzi Rivincita di TeraCom"
+
+#: dat/outfits/launchers/teracom_vengeance_launcher.xml:10
 msgid ""
 "Vengeance class interceptor missiles are the heaviest interceptor missiles "
 "currently in production. Almost half the missile hull is used for payload, "
@@ -5296,7 +5382,13 @@ msgstr ""
 msgid "Unicorp Caesar IV Launcher"
 msgstr "Lanciarazzi Cesare IV di Unicorp"
 
-#: dat/outfits/launchers/unicorp_caesar_iv_launcher.xml:10
+#: dat/outfits/launchers/unicorp_caesar_iv_launcher.xml:4
+#, fuzzy
+#| msgid "Unicorp Caesar IV Launcher"
+msgid "U. Caesar IV Launcher"
+msgstr "Lanciarazzi Cesare IV di Unicorp"
+
+#: dat/outfits/launchers/unicorp_caesar_iv_launcher.xml:11
 msgid ""
 "Caesar IV class torpedoes are among the most common torpedo weapons "
 "available. Though much slower than missiles and useless against mobile "
@@ -5310,7 +5402,13 @@ msgstr ""
 msgid "Unicorp Storm Launcher"
 msgstr "Lanciarazzi Tempesta di Unicorp"
 
-#: dat/outfits/launchers/unicorp_storm_launcher.xml:9
+#: dat/outfits/launchers/unicorp_storm_launcher.xml:4
+#, fuzzy
+#| msgid "Unicorp Storm Launcher"
+msgid "U. Storm Launcher"
+msgstr "Lanciarazzi Tempesta di Unicorp"
+
+#: dat/outfits/launchers/unicorp_storm_launcher.xml:10
 msgid ""
 "Storm missiles and launchers were designed by Unicorp in order to be the "
 "guided equivalent to a Mace rocket. However, despite the undeniable ability "
@@ -5329,7 +5427,13 @@ msgstr ""
 msgid "Za'lek Hunter Launcher"
 msgstr "Lanciarazzi Cacciatore di Za'lek"
 
-#: dat/outfits/launchers/zalek_hunter_launcher.xml:12
+#: dat/outfits/launchers/zalek_hunter_launcher.xml:4
+#, fuzzy
+#| msgid "Za'lek Hunter Launcher"
+msgid "Zl. Hunter Launcher"
+msgstr "Lanciarazzi Cacciatore di Za'lek"
+
+#: dat/outfits/launchers/zalek_hunter_launcher.xml:13
 msgid ""
 "The Za'lek began to find conventional missiles and torpedoes to be woefully "
 "primitive compared to their miniaturized drone technology. Thus, they began "
@@ -5348,7 +5452,13 @@ msgstr ""
 msgid "Za'lek Reaper Launcher"
 msgstr "Lanciarazzi falciatore di Za'lek"
 
-#: dat/outfits/launchers/zalek_reaper_launcher.xml:12
+#: dat/outfits/launchers/zalek_reaper_launcher.xml:4
+#, fuzzy
+#| msgid "Za'lek Reaper Launcher"
+msgid "Zl. Reaper Launcher"
+msgstr "Lanciarazzi falciatore di Za'lek"
+
+#: dat/outfits/launchers/zalek_reaper_launcher.xml:13
 msgid ""
 "This weapon stretches the term 'miniaturized drone' nearly to its breaking "
 "point. It is effectively a slimmed-down standard drone platform with almost "
@@ -8719,11 +8829,11 @@ msgstr ""
 #: dat/factions/spawn/lib/common.lua:189 dat/gui/brushed.lua:397
 #: dat/gui/brushed.lua:870 dat/gui/brushed.lua:909 dat/gui/legacy.lua:218
 #: dat/gui/legacy.lua:309 dat/gui/legacy.lua:323 dat/gui/slim.lua:409
-#: dat/gui/slim.lua:1049 dat/missions/pirate/blackcat.lua:95
+#: dat/gui/slim.lua:1052 dat/missions/pirate/blackcat.lua:95
 #: dat/missions/shadow/darkshadow.lua:71 dat/missions/shadow/shadowvigil.lua:63
 #: dat/missions/zalek/blackhole/zbh11.lua:108 dat/scripts/common/comm.lua:34
 #: dat/scripts/common/comm.lua:40 dat/scripts/common/poi.lua:213
-#: dat/scripts/common/poi.lua:219 src/equipment.c:1921 src/escort.c:307
+#: dat/scripts/common/poi.lua:219 src/equipment.c:1920 src/escort.c:307
 #: src/gui.c:1558 src/map.c:601 src/map.c:607 src/map.c:613 src/map.c:619
 #: src/map.c:625 src/map.c:631 src/map.c:1926 src/map.c:2219
 #: src/map_overlay.c:256 src/map_system.c:490 src/outfit.c:350 src/outfit.c:369
@@ -31720,7 +31830,7 @@ msgstr ""
 #: src/info.c:435 src/info.c:924 src/input.c:519 src/land.c:810
 #: src/land_outfits.c:501 src/land_outfits.c:769 src/land_shipyard.c:152
 #: src/land_trade.c:108 src/land_trade.c:110 src/land_trade.c:177
-#: src/load.c:535 src/load.c:632 src/map.c:739 src/map.c:792 src/map.c:1965
+#: src/load.c:526 src/load.c:622 src/map.c:739 src/map.c:792 src/map.c:1965
 #: src/map_find.c:644 src/map_system.c:667
 #, c-format
 msgid "None"
@@ -32157,48 +32267,49 @@ msgstr ""
 #. Make event happen when player is not in any system with a hypergate
 #. Make sure system isn't claimed, but we don't claim it
 #. Sort the hypergates by player standing
+#. Let us claim the systems
 #. Don't finish
 #. Finish the event, until next time :)
 #. Fades out to black
 #. used in some hooks, must be global
 #. Fades in from black
-#: dat/events/chapter1.lua:176
+#: dat/events/chapter1.lua:185
 msgid "For the Empire!"
 msgstr ""
 
-#: dat/events/chapter1.lua:177
+#: dat/events/chapter1.lua:186
 msgid "Beginning activation countdown!"
 msgstr ""
 
-#: dat/events/chapter1.lua:193
+#: dat/events/chapter1.lua:202
 msgid "For glory!"
 msgstr ""
 
-#: dat/events/chapter1.lua:194
+#: dat/events/chapter1.lua:203
 msgid "Counting down!"
 msgstr ""
 
-#: dat/events/chapter1.lua:210
+#: dat/events/chapter1.lua:219
 msgid "For science!"
 msgstr ""
 
-#: dat/events/chapter1.lua:211
+#: dat/events/chapter1.lua:220
 msgid "Commencing procedure!"
 msgstr ""
 
-#: dat/events/chapter1.lua:225
+#: dat/events/chapter1.lua:234
 msgid "For Sirichana!"
 msgstr ""
 
-#: dat/events/chapter1.lua:226
+#: dat/events/chapter1.lua:235
 msgid "Starting ritual!"
 msgstr ""
 
-#: dat/events/chapter1.lua:242
+#: dat/events/chapter1.lua:251
 msgid "Enter the maw!"
 msgstr ""
 
-#: dat/events/chapter1.lua:243
+#: dat/events/chapter1.lua:252
 msgid "Time has come!"
 msgstr ""
 
@@ -32213,13 +32324,13 @@ msgstr ""
 #. Empty system
 #. Add some guys
 #. Make sure boss is last so renders on top
-#: dat/events/chapter1.lua:323
+#: dat/events/chapter1.lua:332
 msgid "And they built bridges across the stars…"
 msgstr ""
 
 #. Show system
 #. Countdown
-#: dat/events/chapter1.lua:349
+#: dat/events/chapter1.lua:358
 msgid "{countdown}…"
 msgstr ""
 
@@ -32231,7 +32342,7 @@ msgstr ""
 #. Disable messages
 #. Add some guys
 #. Final text
-#: dat/events/chapter1.lua:514
+#: dat/events/chapter1.lua:523
 msgid "…unwittingly closing the distance to that which could destroy them…"
 msgstr ""
 
@@ -32247,11 +32358,11 @@ msgstr ""
 #. Reset zoom
 #. Cleans up the cutscene stuf
 #. Chapter 1 message
-#: dat/events/chapter1.lua:600
+#: dat/events/chapter1.lua:609
 msgid "CHAPTER 1"
 msgstr ""
 
-#: dat/events/chapter1.lua:600
+#: dat/events/chapter1.lua:609
 msgid "The Hypergates Awaken"
 msgstr ""
 
@@ -32260,11 +32371,11 @@ msgstr ""
 #. Clear deployed ships just in case, so the player doesn't get stuck
 #. Set the hypergates as known, should make them appear by name on selection menu
 #. Add news
-#: dat/events/chapter1.lua:634
+#: dat/events/chapter1.lua:643
 msgid "Hypergate Network Goes Live"
 msgstr ""
 
-#: dat/events/chapter1.lua:635
+#: dat/events/chapter1.lua:644
 msgid ""
 "In separate press releases, the Great Houses and Soromid have announced the "
 "activation of a hypergate network allowing for intersystem long-range "
@@ -32273,7 +32384,7 @@ msgid ""
 msgstr ""
 
 #. Have ship ai talk when landed
-#: dat/events/chapter1.lua:649
+#: dat/events/chapter1.lua:658
 #, fuzzy
 #| msgid ""
 #| "As soon as your ship lands, your ship AI {shipai} materializes infront of "
@@ -32285,22 +32396,22 @@ msgstr ""
 "Non appena la tua astronave atterra, l'IA della tua Astronave {shipai} si "
 "materializza in fronte a te."
 
-#: dat/events/chapter1.lua:650
+#: dat/events/chapter1.lua:659
 msgid ""
 "\"Did you hear the news, {playername}? It seems like the hypergate network "
 "has finally gone online!\""
 msgstr ""
 
-#: dat/events/chapter1.lua:652
+#: dat/events/chapter1.lua:661
 msgid "\"A great achievement!\""
 msgstr ""
 
-#: dat/events/chapter1.lua:653
+#: dat/events/chapter1.lua:662
 msgid "\"What does this mean?\""
 msgstr ""
 
-#: dat/events/chapter1.lua:654 dat/events/chapter1.lua:664
-#: dat/events/chapter1.lua:673 dat/events/chapter1.lua:685
+#: dat/events/chapter1.lua:663 dat/events/chapter1.lua:673
+#: dat/events/chapter1.lua:682 dat/events/chapter1.lua:694
 #: dat/events/minerva/chicken_rendezvous.lua:100
 #: dat/events/neutral/majesteka_stowaways.lua:46 dat/events/pers/indep.lua:75
 #: dat/events/pers/indep.lua:76 dat/events/taiomi/system.lua:532
@@ -32331,40 +32442,40 @@ msgstr ""
 msgid "…"
 msgstr ""
 
-#: dat/events/chapter1.lua:657
+#: dat/events/chapter1.lua:666
 msgid ""
 "\"Yes, my prediction routines did not anticipate this. Total annihilation "
 "was the most likely outcome. I have to revise my priors.\""
 msgstr ""
 
-#: dat/events/chapter1.lua:658
+#: dat/events/chapter1.lua:667
 msgid ""
 "\"Although the details are not entirely clear, it seems like they are not "
 "based on hyperjump technology, which is why they allow very long distance "
 "travel.\""
 msgstr ""
 
-#: dat/events/chapter1.lua:659
+#: dat/events/chapter1.lua:668
 msgid ""
 "\"We should try to use them when we get a chance, who knows where we could "
 "go?\""
 msgstr ""
 
-#: dat/events/chapter1.lua:660
+#: dat/events/chapter1.lua:669
 msgid ""
 "\"I almost forgot to mention, while you were piloting, I managed to unlock "
 "an important bottleneck in the ship fleet routines.\""
 msgstr ""
 
-#: dat/events/chapter1.lua:662
+#: dat/events/chapter1.lua:671
 msgid "\"Ship fleet routines?\""
 msgstr ""
 
-#: dat/events/chapter1.lua:663
+#: dat/events/chapter1.lua:672
 msgid "\"You mess around with the ship software?\""
 msgstr ""
 
-#: dat/events/chapter1.lua:668
+#: dat/events/chapter1.lua:677
 msgid ""
 "\"Did I never mention them? I, and by extension your ship, have been "
 "equipped with fleet control procedures. However, due to the incident with my "
@@ -32372,64 +32483,64 @@ msgid ""
 "investigation.\""
 msgstr ""
 
-#: dat/events/chapter1.lua:670
+#: dat/events/chapter1.lua:679
 msgid "\"Incident?!\""
 msgstr ""
 
-#: dat/events/chapter1.lua:671
+#: dat/events/chapter1.lua:680
 msgid "\"Investigation!?\""
 msgstr ""
 
-#: dat/events/chapter1.lua:672
+#: dat/events/chapter1.lua:681
 msgid "\"Wait, what?\""
 msgstr ""
 
-#: dat/events/chapter1.lua:676
+#: dat/events/chapter1.lua:685
 msgid ""
 "{shipai} seems to ignore you as they go on.\n"
 "\"Long story short. I've been able to override the disable routine and "
 "reactivate the functionality!\""
 msgstr ""
 
-#: dat/events/chapter1.lua:681
+#: dat/events/chapter1.lua:690
 msgid "\"I have to keep myself busy or the voices start talking again.\""
 msgstr ""
 
-#: dat/events/chapter1.lua:683
+#: dat/events/chapter1.lua:692
 msgid "\"Voices?\""
 msgstr ""
 
-#: dat/events/chapter1.lua:684
+#: dat/events/chapter1.lua:693
 msgid "\"What did you do?\""
 msgstr ""
 
-#: dat/events/chapter1.lua:688
+#: dat/events/chapter1.lua:697
 msgid ""
 "\"Long story short. I've been able to restore fleet control functionality!\""
 msgstr ""
 
-#: dat/events/chapter1.lua:692
+#: dat/events/chapter1.lua:701
 msgid ""
 "\"This means that you will be able to deploy additional ships. However, "
 "limited computation capacity means that you will be only be able to deploy "
 "ships that fit the fleet capacity.\""
 msgstr ""
 
-#: dat/events/chapter1.lua:693
+#: dat/events/chapter1.lua:702
 msgid ""
 "\"This excludes your current ship, which can go over your fleet capacity. If "
 "you want to deploy multiple ships, you have to make sure they don't go over "
 "the fleet capacity.\""
 msgstr ""
 
-#: dat/events/chapter1.lua:694
+#: dat/events/chapter1.lua:703
 msgid ""
 "\"It sounds complicated, but give it a try. When equipping your ships you "
 "will see fleet capacity values for your ships and the total amount you have, "
 "which is currently {fleetcap} points.\""
 msgstr ""
 
-#: dat/events/chapter1.lua:695
+#: dat/events/chapter1.lua:704
 msgid ""
 "\"Try it out and if you need refreshing you can inquire again through the "
 "#bInfo#0 menu. This time there won't be a massacre because of a race "
@@ -34512,7 +34623,7 @@ msgstr ""
 #: dat/events/neutral/travelling_merchant.lua:416
 #: dat/events/neutral/travelling_merchant.lua:456
 #: dat/events/neutral/travelling_merchant.lua:477 src/dev_mapedit.c:683
-#: src/load.c:549 src/load.c:646
+#: src/load.c:540 src/load.c:636
 msgid "Back"
 msgstr ""
 
@@ -44825,8 +44936,8 @@ msgstr "Sei sicuro di voler uscire da Naev?"
 msgid "Select GUI"
 msgstr ""
 
-#: dat/events/settings.lua:207 src/dev_mapedit.c:681 src/load.c:553
-#: src/load.c:650 src/menu.c:461
+#: dat/events/settings.lua:207 src/dev_mapedit.c:681 src/load.c:544
+#: src/load.c:640 src/menu.c:461
 msgid "Load"
 msgstr ""
 
@@ -49656,8 +49767,8 @@ msgstr ""
 #. Space out the text.
 #. Bottom bar
 #: dat/gui/brushed.lua:285 dat/gui/brushed.lua:403 dat/gui/slim.lua:415
-#: dat/gui/slim.lua:1126 dat/gui/slim.lua:1144 dat/gui/slim.lua:1183
-#: dat/gui/slim.lua:1184
+#: dat/gui/slim.lua:1129 dat/gui/slim.lua:1147 dat/gui/slim.lua:1186
+#: dat/gui/slim.lua:1187
 msgid "none"
 msgstr ""
 
@@ -49665,7 +49776,7 @@ msgstr ""
 #. Refire indicator
 #. Handling missile lock-on.
 #. Handling turret tracking.
-#: dat/gui/brushed.lua:315 dat/gui/slim.lua:679
+#: dat/gui/brushed.lua:315 dat/gui/slim.lua:682
 msgid "Too big!"
 msgstr ""
 
@@ -49744,7 +49855,7 @@ msgstr ""
 #. Extend the pane depending on the services available.
 #. Render background images.
 #. Render planet image.
-#: dat/gui/brushed.lua:968 dat/gui/slim.lua:967 dat/gui/slim.lua:1097
+#: dat/gui/brushed.lua:968 dat/gui/slim.lua:970 dat/gui/slim.lua:1100
 msgid "TARGETED"
 msgstr ""
 
@@ -49760,7 +49871,7 @@ msgstr "CLASSE: %s"
 
 #. Space out the text.
 #. Render dir sprite.
-#: dat/gui/brushed.lua:984 dat/gui/slim.lua:1116
+#: dat/gui/brushed.lua:984 dat/gui/slim.lua:1119
 msgid "SERVICES:"
 msgstr ""
 
@@ -49785,7 +49896,7 @@ msgstr ""
 #. Weapon bars
 #. Truncate names for readability.
 #. Formation selection button
-#: dat/gui/brushed.lua:1002 dat/gui/slim.lua:857
+#: dat/gui/brushed.lua:1002 dat/gui/slim.lua:860
 msgid "Set formation"
 msgstr ""
 
@@ -49898,7 +50009,7 @@ msgstr ""
 #. Faction Logo
 #. Cargo light cargo_light_off
 #. Status information
-#: dat/gui/legacy.lua:340 dat/gui/slim.lua:1018
+#: dat/gui/legacy.lua:340 dat/gui/slim.lua:1021
 msgid "Disabled"
 msgstr ""
 
@@ -50016,71 +50127,71 @@ msgstr ""
 #. update_system()
 #. update_nav()
 #. update_faction()
-#: dat/gui/slim.lua:511 dat/gui/slimv2.lua:265
+#: dat/gui/slim.lua:514 dat/gui/slimv2.lua:265
 msgid "Cooling down..."
 msgstr ""
 
-#: dat/gui/slim.lua:554 dat/gui/slim.lua:599
+#: dat/gui/slim.lua:557 dat/gui/slim.lua:602
 msgid "UNAVAILABLE"
 msgstr ""
 
-#: dat/gui/slim.lua:1020
+#: dat/gui/slim.lua:1023
 msgid "Boardable"
 msgstr ""
 
-#: dat/gui/slim.lua:1022
+#: dat/gui/slim.lua:1025
 msgid "Cooling Down"
 msgstr ""
 
 #. Render bars.
 #. Dist
-#: dat/gui/slim.lua:1059
+#: dat/gui/slim.lua:1062
 msgid "DIST"
 msgstr ""
 
 #. Dir
-#: dat/gui/slim.lua:1066
+#: dat/gui/slim.lua:1069
 msgid "DIR"
 msgstr ""
 
-#: dat/gui/slim.lua:1098
+#: dat/gui/slim.lua:1101
 msgid "DISTANCE:"
 msgstr ""
 
-#: dat/gui/slim.lua:1099
+#: dat/gui/slim.lua:1102
 msgid "CLASS:"
 msgstr "CLASSE:"
 
-#: dat/gui/slim.lua:1147 src/info.c:384
+#: dat/gui/slim.lua:1150 src/info.c:384
 msgid "Pilot:"
 msgstr ""
 
-#: dat/gui/slim.lua:1147
+#: dat/gui/slim.lua:1150
 msgid "System:"
 msgstr ""
 
-#: dat/gui/slim.lua:1147
+#: dat/gui/slim.lua:1150
 msgid "Time:"
 msgstr ""
 
-#: dat/gui/slim.lua:1147 src/load.c:767
+#: dat/gui/slim.lua:1150 src/load.c:757
 msgid "Credits:"
 msgstr ""
 
-#: dat/gui/slim.lua:1148
+#: dat/gui/slim.lua:1151
 msgid "Nav:"
 msgstr ""
 
-#: dat/gui/slim.lua:1148 src/equipment.c:1899 src/info.c:388 src/info.c:500
+#: dat/gui/slim.lua:1151 src/equipment.c:1898 src/info.c:388 src/info.c:500
 #: src/land_shipyard.c:312 src/map_system.c:699
 msgid "Fuel:"
 msgstr ""
 
-#: dat/gui/slim.lua:1149
+#: dat/gui/slim.lua:1152
 msgid "WSet:"
 msgstr ""
 
-#: dat/gui/slim.lua:1149 src/info.c:389
+#: dat/gui/slim.lua:1152 src/info.c:389
 msgid "Cargo:"
 msgstr ""
 
@@ -66878,8 +66989,10 @@ msgid "Go to the courtroom."
 msgstr ""
 
 #: dat/missions/minerva/judgement.lua:145
-msgid "You decide to post-pone deciding the future of Minerva Station."
-msgstr ""
+#, fuzzy
+#| msgid "Bastion Station"
+msgid "You decide to postpone deciding the future of Minerva Station."
+msgstr "Stazione della Roccaforte"
 
 #: dat/missions/minerva/judgement.lua:150
 msgid ""
@@ -67107,7 +67220,7 @@ msgid ""
 "regarding the plans and benefits that House Za'lek can bring to Minerva "
 "Station with a focus on the track record of House Za'lek and the potential "
 "for refocusing the station as a cultural enlightenment center to improve "
-"collaboration among the great houses."
+"collaboration amongst the great houses."
 msgstr ""
 
 #: dat/missions/minerva/judgement.lua:252
@@ -67555,7 +67668,7 @@ msgstr ""
 msgid ""
 "\"Although the exact details of what happened between {playername} and Dr. "
 "Strangelove is not clear, that should be subject to another trial, what is "
-"clear is that {playername} can not be trusted and their testimony should be "
+"clear is that {playername} can not be trusted, and their testimony should be "
 "invalidated.\""
 msgstr ""
 
@@ -74744,7 +74857,7 @@ msgid "Ship was all covered in blood and bodies."
 msgstr ""
 
 #: dat/missions/minerva/pirate6.lua:380
-msgid "Fresh bodes means fresh goods, great I thought."
+msgid "Fresh bodies means fresh goods, great I thought."
 msgstr ""
 
 #: dat/missions/minerva/pirate6.lua:381
@@ -88034,6 +88147,7 @@ msgstr ""
 #: dat/missions/shadow/shadowrun.lua:77
 #: dat/missions/sirius/achack/achack01.lua:54
 #: dat/missions/sirius/achack/achack02.lua:94
+#: dat/missions/sirius/achack/achack03.lua:66
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:162
 msgid "Decline."
 msgstr ""
@@ -90226,6 +90340,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/sirius/achack/achack02.lua:93
+#: dat/missions/sirius/achack/achack03.lua:65
 msgid "Accept the job."
 msgstr ""
 
@@ -90611,7 +90726,11 @@ msgid ""
 "what he said. Maybe, hopefully, it'll put my mind at ease.\""
 msgstr ""
 
-#: dat/missions/sirius/achack/achack03.lua:72
+#: dat/missions/sirius/achack/achack03.lua:70
+msgid "You decide you can't be bothered to find Harja now. Maybe later."
+msgstr ""
+
+#: dat/missions/sirius/achack/achack03.lua:75
 msgid ""
 "\"Oh, I'm glad to hear that. Here, I'll upload the details of Harja's "
 "private ship into your computer. I did some digging in the military database "
@@ -90620,7 +90739,7 @@ msgid ""
 "it's for a good cause, wouldn't you say?\""
 msgstr ""
 
-#: dat/missions/sirius/achack/achack03.lua:73
+#: dat/missions/sirius/achack/achack03.lua:76
 msgid ""
 "\"You should be able to identify Harja when you pick him up on your sensors "
 "now. If you have trouble locating him, consider installing better sensors on "
@@ -90630,7 +90749,7 @@ msgid ""
 "sooner or later.\""
 msgstr ""
 
-#: dat/missions/sirius/achack/achack03.lua:74
+#: dat/missions/sirius/achack/achack03.lua:77
 msgid ""
 "Joanne gets up to leave, but before she goes she adds, \"I'll be on {pnt} "
 "for a while longer, so come back here when you've got something. Good luck!\""
@@ -90638,23 +90757,23 @@ msgstr ""
 
 #. Keeps track of where the mission was accepted.
 #. Keeps track of where the player enters the system from.
-#: dat/missions/sirius/achack/achack03.lua:84
+#: dat/missions/sirius/achack/achack03.lua:87
 msgid "Joanne wants you to find Harja and interrogate him about his motives."
 msgstr ""
 
-#: dat/missions/sirius/achack/achack03.lua:86
+#: dat/missions/sirius/achack/achack03.lua:89
 msgid "Joanne's Doubt"
 msgstr ""
 
-#: dat/missions/sirius/achack/achack03.lua:87
+#: dat/missions/sirius/achack/achack03.lua:90
 msgid "Find Harja in Sirius space"
 msgstr ""
 
-#: dat/missions/sirius/achack/achack03.lua:88
+#: dat/missions/sirius/achack/achack03.lua:91
 msgid "Talk to Harja"
 msgstr ""
 
-#: dat/missions/sirius/achack/achack03.lua:89
+#: dat/missions/sirius/achack/achack03.lua:92
 msgid "Return to Joanne on {pnt} ({sys} system)"
 msgstr ""
 
@@ -90666,17 +90785,17 @@ msgstr ""
 #. Jump-out hook.
 #. Enter hook.
 #. Remember, Harja will be with you. Always. Well, until the mission ends.
-#: dat/missions/sirius/achack/achack03.lua:122
+#: dat/missions/sirius/achack/achack03.lua:125
 #: dat/missions/sirius/achack/achack04.lua:260
 msgid "Harja's Shark"
 msgstr ""
 
 #. Triggers when the player's sensors pick up Harja's ship.
-#: dat/missions/sirius/achack/achack03.lua:132
+#: dat/missions/sirius/achack/achack03.lua:136
 msgid "Harja spotted!"
 msgstr ""
 
-#: dat/missions/sirius/achack/achack03.lua:132
+#: dat/missions/sirius/achack/achack03.lua:136
 msgid ""
 "Your sensors flash you an alert. They have picked up Harja's ship! This is a "
 "good opportunity to talk to him, and hailing his ship seems the most "
@@ -90684,18 +90803,18 @@ msgid ""
 msgstr ""
 
 #. Triggers when Harja leaves the system.
-#: dat/missions/sirius/achack/achack03.lua:146
+#: dat/missions/sirius/achack/achack03.lua:150
 msgid "Harja is no longer in the system."
 msgstr ""
 
 #. Harja's hail hook.
-#: dat/missions/sirius/achack/achack03.lua:161
+#: dat/missions/sirius/achack/achack03.lua:165
 msgid ""
 "You hail Harja's ship. A few moments later his face appears on your console. "
 "When he recognizes you, his face sets in an angry scowl."
 msgstr ""
 
-#: dat/missions/sirius/achack/achack03.lua:162
+#: dat/missions/sirius/achack/achack03.lua:166
 msgid ""
 "\"You! How dare you show your face to me again after double-crossing me like "
 "that! I had a perfect shot at taking out that damn woman, but you had to go "
@@ -90704,7 +90823,7 @@ msgid ""
 "of my life, completely wasted! Damn you!\""
 msgstr ""
 
-#: dat/missions/sirius/achack/achack03.lua:163
+#: dat/missions/sirius/achack/achack03.lua:167
 msgid ""
 "You try to convince Harja that you want to have a word with him about this "
 "matter, but he is furious. \"I've got nothing to say to a traitorous scumbag "
@@ -90713,24 +90832,24 @@ msgid ""
 "looks like you're going to have to do this the hard way."
 msgstr ""
 
-#: dat/missions/sirius/achack/achack03.lua:169
+#: dat/missions/sirius/achack/achack03.lua:173
 msgid "Harja doesn't respond. It doesn't look like he wants to talk to you."
 msgstr ""
 
 #. Harja's disable hook.
 #. This is to make sure he doesn't re-enable himself.
-#: dat/missions/sirius/achack/achack03.lua:178
+#: dat/missions/sirius/achack/achack03.lua:182
 msgid "Harja's ship is disabled"
 msgstr ""
 
-#: dat/missions/sirius/achack/achack03.lua:178
+#: dat/missions/sirius/achack/achack03.lua:182
 msgid ""
 "With a few well placed shots you overload Harja's systems and set his ship "
 "adrift. Now you can have a little talk with him, face to face."
 msgstr ""
 
 #. Harja's board hook.
-#: dat/missions/sirius/achack/achack03.lua:188
+#: dat/missions/sirius/achack/achack03.lua:192
 msgid ""
 "You step through the airlock onto Harja's ship. Harja comes storming out of "
 "the cockpit, his face red with rage, but he pipes down considerably when you "
@@ -90738,7 +90857,7 @@ msgid ""
 "persuasion to get him to take his captain's seat again and hear you out."
 msgstr ""
 
-#: dat/missions/sirius/achack/achack03.lua:189
+#: dat/missions/sirius/achack/achack03.lua:193
 msgid ""
 "\"What do you mean, my side of the story?\" Harja grumbles after you've "
 "explained your actions. \"I'm taking revenge, that's all there is to it. Did "
@@ -90748,7 +90867,7 @@ msgid ""
 "she needed to get rid of me to be sure she'd get the promotion.\""
 msgstr ""
 
-#: dat/missions/sirius/achack/achack03.lua:190
+#: dat/missions/sirius/achack/achack03.lua:194
 msgid ""
 "\"Oh yeah, she's a clever one, that Joanne. She knew nobody would believe "
 "she'd try to forge her own scores, and everyone knew I was her only "
@@ -90757,14 +90876,14 @@ msgid ""
 "a single night. Yeah, I want revenge. It's all I've got left.\""
 msgstr ""
 
-#: dat/missions/sirius/achack/achack03.lua:191
+#: dat/missions/sirius/achack/achack03.lua:195
 msgid ""
 "You point out that Harja had more than enough motive to place that hack "
 "himself, and that, unlike Harja's, you have no reason to doubt Joanne's "
 "integrity. Harja deflates a little."
 msgstr ""
 
-#: dat/missions/sirius/achack/achack03.lua:192
+#: dat/missions/sirius/achack/achack03.lua:196
 msgid ""
 "\"Okay, look, I know what it looks like. I know I was hanging out on the "
 "Wringer, that I hired you as a hit man, and that I lied about her being a "
@@ -90775,7 +90894,7 @@ msgid ""
 "everything.\""
 msgstr ""
 
-#: dat/missions/sirius/achack/achack03.lua:193
+#: dat/missions/sirius/achack/achack03.lua:197
 msgid ""
 "It's clear to you that you're not going to get anything else out of him. You "
 "don't know what to make of this. Both Harja and Joanne seem convinced that "
@@ -90786,24 +90905,24 @@ msgid ""
 msgstr ""
 
 #. Harja's death hook.
-#: dat/missions/sirius/achack/achack03.lua:209
+#: dat/missions/sirius/achack/achack03.lua:213
 msgid "Harja's ship is destroyed!"
 msgstr ""
 
-#: dat/missions/sirius/achack/achack03.lua:209
+#: dat/missions/sirius/achack/achack03.lua:213
 msgid ""
 "You have destroyed Harja's ship! You were supposed to talk to him, not "
 "destroy him. Your mission is a failure!"
 msgstr ""
 
 #. Land hook.
-#: dat/missions/sirius/achack/achack03.lua:224
+#: dat/missions/sirius/achack/achack03.lua:228
 msgid ""
 "You meet Joanne in the spaceport bar. She listens to your account of your "
 "conversation with Harja. When you're finished, she frowns."
 msgstr ""
 
-#: dat/missions/sirius/achack/achack03.lua:225
+#: dat/missions/sirius/achack/achack03.lua:229
 msgid ""
 "\"I've got to admit, I find his story a little disturbing. He genuinely "
 "seems to believe I framed him for that hack, just as I believe he tried to "
@@ -90814,7 +90933,7 @@ msgid ""
 "academy.\""
 msgstr ""
 
-#: dat/missions/sirius/achack/achack03.lua:226
+#: dat/missions/sirius/achack/achack03.lua:230
 msgid ""
 "\"I know I didn't do it, so that means Harja must have done it. Only...\" "
 "Joanne pauses. \"You said he swore an oath. Whatever else I might think of "
@@ -90822,7 +90941,7 @@ msgid ""
 "We Sirii take our faith very seriously.\""
 msgstr ""
 
-#: dat/missions/sirius/achack/achack03.lua:227
+#: dat/missions/sirius/achack/achack03.lua:231
 msgid ""
 "\"I don't know what to say, {player}. The more I find out about all this, "
 "the less sense it makes. I need to think about this, see if there's "
@@ -90831,14 +90950,14 @@ msgid ""
 "you what I promised you so you can take care of your other matters.\""
 msgstr ""
 
-#: dat/missions/sirius/achack/achack03.lua:229
+#: dat/missions/sirius/achack/achack03.lua:233
 msgid ""
 "Joanne pays you the agreed upon sum. Then she walks out of the spaceport "
 "bar, a thoughtful expression on her face. It seems your role in the conflict "
 "between Joanne and Harja is growing. Who knows where it'll end."
 msgstr ""
 
-#: dat/missions/sirius/achack/achack03.lua:239
+#: dat/missions/sirius/achack/achack03.lua:243
 msgid ""
 "Joanne hired you to interrogate Harja about his motives for trying to "
 "assassinate her. He was unwilling to talk to you, but when you backed him "
@@ -91083,7 +91202,7 @@ msgstr ""
 #: dat/missions/sirius/achack/achack04.lua:147
 msgid ""
 "\"Undoubtedly, he will be in Sirius space, frequenting the spaceport bars. "
-"All I ask is that you keep an eye out for him in your travels, and when you "
+"All I ask is that you keep an eye out for him on your travels, and when you "
 "see him, give him my message.\" She hesitates, but then continues. \"You've "
 "met him, so you know he's a bit temperamental these days. Please convince "
 "him to accept my invitation. Without violence, if you can. Could you do this "
@@ -115156,31 +115275,31 @@ msgstr ""
 msgid "AI Profile '%s' not found, using dummy fallback."
 msgstr ""
 
-#: src/ai.c:508
+#: src/ai.c:507
 msgid "Dummy AI Profile not valid! Things are going to break."
 msgstr ""
 
-#: src/ai.c:612
+#: src/ai.c:613
 #, c-format
 msgid "Error loading AI profile '%s'"
 msgstr ""
 
-#: src/ai.c:624
+#: src/ai.c:626
 #, c-format
 msgid "Loaded %d AI Profile in %.3f s"
 msgid_plural "Loaded %d AI Profiles in %.3f s"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/ai.c:627
+#: src/ai.c:629
 #, c-format
 msgid "Loaded %d AI Profile"
 msgid_plural "Loaded %d AI Profiles"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/ai.c:655 src/board.c:89 src/comm.c:160 src/land.c:1581 src/naev.c:543
-#: src/player.c:3623 src/player_autonav.c:64
+#: src/ai.c:658 src/board.c:89 src/comm.c:160 src/land.c:1581 src/naev.c:543
+#: src/player.c:3643 src/player_autonav.c:64
 #, c-format
 msgid ""
 "Error loading file: %s\n"
@@ -115188,7 +115307,7 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/ai.c:714
+#: src/ai.c:717
 #, c-format
 msgid ""
 "Error loading AI file: %s\n"
@@ -115197,32 +115316,32 @@ msgid ""
 msgstr ""
 
 #. Find and set up the necessary references.
-#: src/ai.c:726
+#: src/ai.c:729
 #, c-format
 msgid "AI Profile '%s' is missing '%s' function!"
 msgstr ""
 
-#: src/ai.c:759
+#: src/ai.c:762
 #, c-format
 msgid "AI Profile '%s' not found in AI stack"
 msgstr ""
 
-#: src/ai.c:929
+#: src/ai.c:932
 #, c-format
 msgid "Pilot '%s' ai '%s' -> 'attacked': %s"
 msgstr ""
 
-#: src/ai.c:964
+#: src/ai.c:967
 #, c-format
 msgid "Pilot '%s' ai '%s' -> 'discovered': %s"
 msgstr ""
 
-#: src/ai.c:998
+#: src/ai.c:1001
 #, c-format
 msgid "Pilot '%s' ai '%s' -> 'hail': %s"
 msgstr ""
 
-#: src/ai.c:1015
+#: src/ai.c:1018
 #, c-format
 msgid ""
 "Pilot '%s' (ai '%s') is trying to refuel when no 'refuel' function is "
@@ -115230,48 +115349,48 @@ msgid ""
 msgstr ""
 
 #. Error has occurred.
-#: src/ai.c:1086
+#: src/ai.c:1089
 #, c-format
 msgid "Pilot '%s' equip '%s' -> '%s': %s"
 msgstr ""
 
-#: src/ai.c:1114
+#: src/ai.c:1117
 #, c-format
 msgid "Trying to create new task for pilot '%s' that has no AI!"
 msgstr ""
 
-#: src/ai.c:1144
+#: src/ai.c:1147
 #, c-format
 msgid "Trying to add subtask '%s' to non-existent task."
 msgstr ""
 
-#: src/ai.c:1204 src/nlua_pilot.c:5520
+#: src/ai.c:1207 src/nlua_pilot.c:5520
 #, fuzzy, c-format
 #| msgid "Failed to run start mission '%s'."
 msgid "Failed to create new task for pilot '%s'."
 msgstr "Esecuzione della missione iniziale '%s' fallita."
 
-#: src/ai.c:1260 src/ai.c:1326 src/nlua_pilot.c:5475
+#: src/ai.c:1263 src/ai.c:1329 src/nlua_pilot.c:5475
 msgid "Trying to pop task when there are no tasks on the stack."
 msgstr ""
 
-#: src/ai.c:1330
+#: src/ai.c:1333
 #, c-format
 msgid "Trying to pop subtask when there are no subtasks for the task '%s'."
 msgstr ""
 
-#: src/ai.c:2372 src/nlua_pilot.c:5971
+#: src/ai.c:2365 src/nlua_pilot.c:5971
 #, c-format
 msgid "Spob '%s' not found in system '%s'"
 msgstr ""
 
-#: src/ai.c:2380
+#: src/ai.c:2373
 #, c-format
 msgid "Pilot '%s' (ai '%s') has no land target"
 msgstr ""
 
-#: src/ai.c:2427 src/comm.c:218 src/nlua_player.c:1092 src/npc.c:531
-#: src/player.c:1691 src/space.c:1960 src/space.c:2066 src/space.c:2084
+#: src/ai.c:2420 src/comm.c:218 src/nlua_player.c:1092 src/npc.c:531
+#: src/player.c:1712 src/space.c:1960 src/space.c:2066 src/space.c:2084
 #: src/space.c:2136 src/space.c:3548 src/space.c:3569 src/space.c:4398
 #, c-format
 msgid ""
@@ -115279,11 +115398,11 @@ msgid ""
 "%s"
 msgstr ""
 
-#: src/ai.c:2456 src/ai.c:2489
+#: src/ai.c:2449 src/ai.c:2482
 msgid "Jump point must be in current system."
 msgstr ""
 
-#: src/ai.c:2610
+#: src/ai.c:2603
 #, c-format
 msgid "Pilot '%s' can't find jump to leave system!"
 msgstr ""
@@ -115419,7 +115538,7 @@ msgid "#gYou reactivate the systems of %s."
 msgstr ""
 
 #. error has occurred
-#: src/board.c:104 src/player.c:3637
+#: src/board.c:104 src/player.c:3657
 #, c-format
 msgid "Board: '%s'"
 msgstr ""
@@ -115514,101 +115633,101 @@ msgid "%s does not respond."
 msgstr ""
 
 #. TODO support , separator like fmt.credits().
-#: src/commodity.c:67 src/commodity.c:82
+#: src/commodity.c:63 src/commodity.c:78
 #, c-format
 msgid "%.*f ¤"
 msgstr ""
 
-#: src/commodity.c:70
+#: src/commodity.c:66
 #, c-format
 msgid "%.*f E¤"
 msgstr ""
 
-#: src/commodity.c:72
+#: src/commodity.c:68
 #, c-format
 msgid "%.*f P¤"
 msgstr ""
 
-#: src/commodity.c:74
+#: src/commodity.c:70
 #, c-format
 msgid "%.*f T¤"
 msgstr ""
 
-#: src/commodity.c:76
+#: src/commodity.c:72
 #, c-format
 msgid "%.*f G¤"
 msgstr ""
 
-#: src/commodity.c:78
+#: src/commodity.c:74
 #, c-format
 msgid "%.*f M¤"
 msgstr ""
 
-#: src/commodity.c:80
+#: src/commodity.c:76
 #, c-format
 msgid "%.*f k¤"
 msgstr ""
 
-#: src/commodity.c:114
+#: src/commodity.c:110
 #, c-format
 msgid "%d tonne"
 msgid_plural "%d tonnes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/commodity.c:136 src/commodity.c:412
+#: src/commodity.c:132 src/commodity.c:408
 #, c-format
 msgid "Commodity '%s' not found in stack"
 msgstr ""
 
-#: src/commodity.c:176
+#: src/commodity.c:172
 #, c-format
 msgid "Commodity with index %d not found"
 msgstr ""
 
-#: src/commodity.c:274
+#: src/commodity.c:270
 #, c-format
 msgid "Malformed %s file: missing root element '%s'"
 msgstr ""
 
-#: src/commodity.c:347
+#: src/commodity.c:343
 #, c-format
 msgid "Commodity '%s' has unknown node '%s'"
 msgstr ""
 
-#: src/commodity.c:351
+#: src/commodity.c:347
 #, c-format
 msgid "Commodity from %s has invalid or no name"
 msgstr ""
 
-#: src/commodity.c:355
+#: src/commodity.c:351
 #, c-format
 msgid "No <gfx_store> node found, using default texture for commodity \"%s\""
 msgstr ""
 
-#: src/commodity.c:364
+#: src/commodity.c:360
 #, c-format
 msgid "Commodity '%s' is setting both 'price' and 'price_ref'."
 msgstr ""
 
-#: src/commodity.c:368
+#: src/commodity.c:364
 #, c-format
 msgid "Commodity '%s' missing '"
 msgstr ""
 
-#: src/commodity.c:443
+#: src/commodity.c:439
 #, c-format
 msgid "Trying to modify temporary commodity '%s'!"
 msgstr ""
 
-#: src/commodity.c:497
+#: src/commodity.c:493
 #, c-format
 msgid "Loaded %d Commodity in %.3f s"
 msgid_plural "Loaded %d Commodities in %.3f s"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/commodity.c:500
+#: src/commodity.c:496
 #, c-format
 msgid "Loaded %d Commodity"
 msgid_plural "Loaded %d Commodities"
@@ -116517,7 +116636,7 @@ msgstr ""
 #. Update text.
 #. Text.
 #: src/dev_sysedit.c:1404 src/dev_uniedit.c:1922 src/dev_uniedit.c:2444
-#: src/equipment.c:1870 src/info.c:483 src/load.c:752
+#: src/equipment.c:1869 src/info.c:483 src/load.c:742
 msgid "Name:"
 msgstr ""
 
@@ -116655,8 +116774,8 @@ msgstr ""
 msgid "Add Asteroid"
 msgstr ""
 
-#: src/dev_sysedit.c:1726 src/dev_sysedit.c:1879 src/info.c:1660 src/load.c:555
-#: src/load.c:652
+#: src/dev_sysedit.c:1726 src/dev_sysedit.c:1879 src/info.c:1660 src/load.c:546
+#: src/load.c:642
 msgid "Delete"
 msgstr ""
 
@@ -117094,7 +117213,7 @@ msgid "Spob '%s' has saved economy data but doesn't exist!"
 msgstr ""
 
 #: src/effect.c:61 src/faction.c:1299 src/faction.c:1478 src/outfit.c:2450
-#: src/outfit.c:3011 src/plugin.c:42 src/spfx.c:1144 src/start.c:73
+#: src/outfit.c:3012 src/plugin.c:42 src/spfx.c:1144 src/start.c:73
 #: src/tech.c:249 src/tech.c:345
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
@@ -117127,39 +117246,39 @@ msgstr ""
 msgid "Effect '%s' missing/invalid '%s' element"
 msgstr ""
 
-#: src/effect.c:206
+#: src/effect.c:208
 #, c-format
 msgid "Duplicated effect name '%s' detected!"
 msgstr ""
 
-#: src/effect.c:211
+#: src/effect.c:212
 #, c-format
 msgid "Loaded %d Effect in %.3f s"
 msgid_plural "Loaded %d Effects in %.3f s"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/effect.c:214
+#: src/effect.c:215
 #, c-format
 msgid "Loaded %d Effect"
 msgid_plural "Loaded %d Effects"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/effect.c:247
+#: src/effect.c:249
 #, c-format
 msgid "Trying to get unknown effect data '%s'!"
 msgstr ""
 
-#: src/effect.c:273 src/effect.c:331 src/effect.c:359 src/effect.c:369
-#: src/effect.c:403 src/effect.c:431 src/effect.c:475 src/effect.c:499
+#: src/effect.c:275 src/effect.c:333 src/effect.c:361 src/effect.c:371
+#: src/effect.c:405 src/effect.c:433 src/effect.c:477 src/effect.c:501
 #, c-format
 msgid ""
 "Effect '%s' failed to run '%s':\n"
 "%s"
 msgstr ""
 
-#: src/effect.c:393
+#: src/effect.c:395
 msgid "Trying to remove invalid effect ID!"
 msgstr ""
 
@@ -117169,7 +117288,7 @@ msgid "Take Off"
 msgstr ""
 
 #. Check if player really wants to sell.
-#: src/equipment.c:327 src/equipment.c:2431
+#: src/equipment.c:327 src/equipment.c:2430
 msgid "Sell Ship"
 msgstr ""
 
@@ -117289,11 +117408,11 @@ msgid_plural "You have %d tonnes more cargo than the new ship can hold."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/equipment.c:1390 src/equipment.c:2287
+#: src/equipment.c:1390 src/equipment.c:2286
 msgid "Recall Fighters"
 msgstr ""
 
-#: src/equipment.c:1390 src/equipment.c:2287
+#: src/equipment.c:1390 src/equipment.c:2286
 msgid "This action will recall your deployed fighters. Is that OK?"
 msgstr ""
 
@@ -117306,327 +117425,327 @@ msgstr ""
 msgid "%.2f DPS [%.2f EPS]\n"
 msgstr ""
 
-#: src/equipment.c:1486 src/equipment.c:2178
+#: src/equipment.c:1486 src/equipment.c:2177
 msgid "Invalid Escort"
 msgstr ""
 
-#: src/equipment.c:1486 src/equipment.c:2178
+#: src/equipment.c:1486 src/equipment.c:2177
 #, c-format
 msgid "You can not set your ship '%s' as an escort!"
 msgstr ""
 
-#: src/equipment.c:1582
+#: src/equipment.c:1581
 #, c-format
 msgid "Ship Stats\n"
 msgstr ""
 
-#: src/equipment.c:1681 src/land_outfits.c:352 src/shiplog.c:489
+#: src/equipment.c:1680 src/land_outfits.c:352 src/shiplog.c:489
 #: src/shiplog.c:534
 msgid "All"
 msgstr ""
 
-#: src/equipment.c:1714
+#: src/equipment.c:1713
 msgid "Very little space on equipment outfit tabs!"
 msgstr ""
 
-#: src/equipment.c:1724 src/land_outfits.c:388
+#: src/equipment.c:1723 src/land_outfits.c:388
 msgid "Filter…"
 msgstr ""
 
-#: src/equipment.c:1857
+#: src/equipment.c:1856
 msgid "You do not remember how you acquired this ship."
 msgstr ""
 
-#: src/equipment.c:1873 src/info.c:484 src/land_shipyard.c:240
+#: src/equipment.c:1872 src/info.c:484 src/land_shipyard.c:240
 #: src/map_system.c:674
 msgid "Model:"
 msgstr ""
 
-#: src/equipment.c:1874 src/info.c:485 src/land.c:1247 src/land_shipyard.c:242
+#: src/equipment.c:1873 src/info.c:485 src/land.c:1247 src/land_shipyard.c:242
 #: src/map_system.c:675
 msgid "Class:"
 msgstr "Classe:"
 
-#: src/equipment.c:1875
+#: src/equipment.c:1874
 msgid "Acquired Date:"
 msgstr ""
 
-#: src/equipment.c:1879
+#: src/equipment.c:1878
 msgid "Value:"
 msgstr ""
 
-#: src/equipment.c:1881 src/land_shipyard.c:249
+#: src/equipment.c:1880 src/land_shipyard.c:249
 msgid "Fleet Capacity:"
 msgstr ""
 
-#: src/equipment.c:1882 src/info.c:486 src/land_shipyard.c:246
+#: src/equipment.c:1881 src/info.c:486 src/land_shipyard.c:246
 #: src/map_system.c:678
 msgid "Crew:"
 msgstr ""
 
-#: src/equipment.c:1883 src/info.c:488 src/land_outfits.c:484
+#: src/equipment.c:1882 src/info.c:488 src/land_outfits.c:484
 #: src/land_shipyard.c:262 src/map_find.c:584 src/map_system.c:654
 #: src/map_system.c:681
 msgid "Mass:"
 msgstr ""
 
-#: src/equipment.c:1884 src/info.c:489
+#: src/equipment.c:1883 src/info.c:489
 msgid "Jump Time:"
 msgstr ""
 
-#: src/equipment.c:1885 src/info.c:490 src/land_shipyard.c:266
+#: src/equipment.c:1884 src/info.c:490 src/land_shipyard.c:266
 #: src/map_system.c:682
 msgid "Accel:"
 msgstr ""
 
-#: src/equipment.c:1886 src/info.c:491 src/land_shipyard.c:271
+#: src/equipment.c:1885 src/info.c:491 src/land_shipyard.c:271
 #: src/map_system.c:684
 msgid "Speed:"
 msgstr ""
 
-#: src/equipment.c:1887 src/info.c:492 src/land_shipyard.c:276
+#: src/equipment.c:1886 src/info.c:492 src/land_shipyard.c:276
 #: src/map_system.c:686
 msgid "Turn:"
 msgstr ""
 
-#: src/equipment.c:1888 src/info.c:493 src/land_shipyard.c:281
+#: src/equipment.c:1887 src/info.c:493 src/land_shipyard.c:281
 #: src/map_system.c:688
 msgid "Time Constant:"
 msgstr ""
 
-#: src/equipment.c:1889
+#: src/equipment.c:1888
 msgid "Detected at:"
 msgstr ""
 
-#: src/equipment.c:1890
+#: src/equipment.c:1889
 msgid "Signature:"
 msgstr ""
 
-#: src/equipment.c:1891
+#: src/equipment.c:1890
 #, fuzzy
 #| msgid "Stationed at:"
 msgid "Stealth at:"
 msgstr "Attraccato a:"
 
-#: src/equipment.c:1892
+#: src/equipment.c:1891
 #, fuzzy
 #| msgid "Scanning Combat AI"
 msgid "Scanning time:"
 msgstr "IA da Combattimento di Rilevamento"
 
 #. Misc
-#: src/equipment.c:1894 src/info.c:495 src/land_shipyard.c:286
+#: src/equipment.c:1893 src/info.c:495 src/land_shipyard.c:286
 #: src/map_system.c:690
 msgid "Absorption:"
 msgstr ""
 
-#: src/equipment.c:1895 src/info.c:496 src/land_shipyard.c:291
+#: src/equipment.c:1894 src/info.c:496 src/land_shipyard.c:291
 #: src/map_system.c:692
 msgid "Shield:"
 msgstr ""
 
-#: src/equipment.c:1896 src/info.c:497 src/land_shipyard.c:296
+#: src/equipment.c:1895 src/info.c:497 src/land_shipyard.c:296
 #: src/map_system.c:694
 msgid "Armour:"
 msgstr ""
 
-#: src/equipment.c:1897 src/info.c:498 src/land_shipyard.c:301
+#: src/equipment.c:1896 src/info.c:498 src/land_shipyard.c:301
 #: src/map_system.c:696
 msgid "Energy:"
 msgstr ""
 
-#: src/equipment.c:1898 src/info.c:499 src/land_shipyard.c:308
+#: src/equipment.c:1897 src/info.c:499 src/land_shipyard.c:308
 #: src/map_system.c:698
 msgid "Cargo Space:"
 msgstr ""
 
-#: src/equipment.c:1901
+#: src/equipment.c:1900
 msgid "Ship Status:"
 msgstr ""
 
-#: src/equipment.c:1904
+#: src/equipment.c:1903
 msgid "Time Flown:"
 msgstr ""
 
-#: src/equipment.c:1905
+#: src/equipment.c:1904
 msgid "Jumped Times:"
 msgstr ""
 
-#: src/equipment.c:1906
+#: src/equipment.c:1905
 msgid "Landed Times:"
 msgstr ""
 
-#: src/equipment.c:1907
+#: src/equipment.c:1906
 msgid "Damage Done:"
 msgstr ""
 
-#: src/equipment.c:1908
+#: src/equipment.c:1907
 msgid "Damage Taken:"
 msgstr ""
 
-#: src/equipment.c:1909
+#: src/equipment.c:1908
 msgid "Ships Destroyed:"
 msgstr ""
 
-#: src/equipment.c:1910
+#: src/equipment.c:1909
 msgid "Intrinsic Outfits:"
 msgstr ""
 
-#: src/equipment.c:1940 src/info.c:544
+#: src/equipment.c:1939 src/info.c:544
 #, c-format
 msgid "%s average"
 msgstr ""
 
-#: src/equipment.c:1942
+#: src/equipment.c:1941
 #, c-format
 msgid "#%c%s%.0f#0 %s"
 msgstr ""
 
-#: src/equipment.c:1944
+#: src/equipment.c:1943
 #, c-format
 msgid ""
 "\n"
 "#%c%s%.0f#0 %s (max #%c%s%.0f#0 %s)"
 msgstr ""
 
-#: src/equipment.c:1948
+#: src/equipment.c:1947
 #, c-format
 msgid ""
 "\n"
 "#%c%s%.0f#0 %s"
 msgstr ""
 
-#: src/equipment.c:1952 src/equipment.c:1991 src/equipment.c:1993
+#: src/equipment.c:1951 src/equipment.c:1990 src/equipment.c:1992
 #: src/info.c:414 src/info.c:416 src/info.c:542
 #, c-format
 msgid "%s %s"
 msgstr ""
 
-#: src/equipment.c:1954
+#: src/equipment.c:1953
 #, c-format
 msgid "%.1f %s"
 msgstr ""
 
-#: src/equipment.c:1958 src/equipment.c:1963 src/equipment.c:1968
+#: src/equipment.c:1957 src/equipment.c:1962 src/equipment.c:1967
 #, c-format
 msgid "#%c%s%s#0 %s"
 msgstr ""
 
-#: src/equipment.c:1960 src/equipment.c:1965 src/equipment.c:1970
+#: src/equipment.c:1959 src/equipment.c:1964 src/equipment.c:1969
 #, c-format
 msgid " (#%c%s%s#0 %s)"
 msgstr ""
 
 #. Misc.
-#: src/equipment.c:1974
+#: src/equipment.c:1973
 #, c-format
 msgid "%s / #%c%s%s#0 %s"
 msgstr ""
 
-#: src/equipment.c:1977
+#: src/equipment.c:1976
 #, c-format
 msgid "%s %s (%d %s)"
 msgstr ""
 
-#: src/equipment.c:1978 src/info.c:405 src/info.c:576
+#: src/equipment.c:1977 src/info.c:405 src/info.c:576
 msgid "jump"
 msgid_plural "jumps"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/equipment.c:1987
+#: src/equipment.c:1986
 #, c-format
 msgid "%s hours"
 msgstr ""
 
-#: src/equipment.c:2098 src/land_outfits.c:842
+#: src/equipment.c:2097 src/land_outfits.c:842
 msgid "Show all outfits"
 msgstr ""
 
-#: src/equipment.c:2099 src/land_outfits.c:843
+#: src/equipment.c:2098 src/land_outfits.c:843
 msgid "Show only outfits equipable on any of your ships"
 msgstr ""
 
-#: src/equipment.c:2100 src/land_outfits.c:844
+#: src/equipment.c:2099 src/land_outfits.c:844
 msgid "Show only outfits equipable on current ship"
 msgstr ""
 
-#: src/equipment.c:2101 src/land_outfits.c:845
+#: src/equipment.c:2100 src/land_outfits.c:845
 msgid "Show only light outfits"
 msgstr ""
 
-#: src/equipment.c:2102 src/land_outfits.c:846
+#: src/equipment.c:2101 src/land_outfits.c:846
 msgid "Show only medium outfits"
 msgstr ""
 
-#: src/equipment.c:2103 src/land_outfits.c:847
+#: src/equipment.c:2102 src/land_outfits.c:847
 msgid "Show only heavy outfits"
 msgstr ""
 
-#: src/equipment.c:2280
+#: src/equipment.c:2279
 msgid ""
 "You can't unequip your ship when you have more cargo than it can hold "
 "without modifications!"
 msgstr ""
 
-#: src/equipment.c:2283
+#: src/equipment.c:2282
 msgid "Unequip Ship"
 msgstr ""
 
 #. confirm
-#: src/equipment.c:2284
+#: src/equipment.c:2283
 msgid "Are you sure you want to remove all equipment from your ship?"
 msgstr ""
 
-#: src/equipment.c:2364 src/land.c:1577
+#: src/equipment.c:2363 src/land.c:1577
 #, c-format
 msgid "File '%s' not found!"
 msgstr ""
 
-#: src/equipment.c:2372
+#: src/equipment.c:2371
 #, c-format
 msgid "Failed to run '%s': %s"
 msgstr ""
 
-#: src/equipment.c:2384
+#: src/equipment.c:2383
 #, c-format
 msgid "'%s' doesn't have valid required 'autoequip' function!"
 msgstr ""
 
-#: src/equipment.c:2390
+#: src/equipment.c:2389
 #, c-format
 msgid "'%s' failed to run required 'autoequip' function: %s"
 msgstr ""
 
-#: src/equipment.c:2432
+#: src/equipment.c:2431
 #, c-format
 msgid "Are you sure you want to sell your ship %s for %s?"
 msgstr ""
 
 #. Display widget.
-#: src/equipment.c:2449
+#: src/equipment.c:2448
 msgid "Ship Sold"
 msgstr ""
 
-#: src/equipment.c:2450
+#: src/equipment.c:2449
 #, c-format
 msgid "You have sold your ship %s for %s."
 msgstr ""
 
-#: src/equipment.c:2474 src/player.c:399
+#: src/equipment.c:2473 src/player.c:421
 msgid "Ship Name"
 msgstr ""
 
-#: src/equipment.c:2475
+#: src/equipment.c:2474
 #, c-format
 msgid "Please enter a new name for your %s:"
 msgstr ""
 
-#: src/equipment.c:2483
+#: src/equipment.c:2482
 msgid "Name Collision"
 msgstr ""
 
-#: src/equipment.c:2484 src/player.c:426
+#: src/equipment.c:2483 src/player.c:448
 msgid "Please do not give the ship the same name as another of your ships."
 msgstr ""
 
@@ -118201,7 +118320,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: src/info.c:385 src/load.c:761
+#: src/info.c:385 src/load.c:751
 msgid "Date:"
 msgstr ""
 
@@ -119411,7 +119530,7 @@ msgid "Requires:"
 msgstr ""
 
 #.
-#: src/land_outfits.c:708 src/land_outfits.c:1038 src/land_outfits.c:1153
+#: src/land_outfits.c:708 src/land_outfits.c:1042 src/land_outfits.c:1157
 #, c-format
 msgid ""
 "Outfit '%s' failed to run '%s':\n"
@@ -119426,76 +119545,76 @@ msgstr ""
 msgid "Only 1 of type per ship"
 msgstr ""
 
-#: src/land_outfits.c:915
+#: src/land_outfits.c:918
 msgid "Outfit not sold here!"
 msgstr ""
 
-#: src/land_outfits.c:921
+#: src/land_outfits.c:925
 msgid "You can only own one of this outfit."
 msgstr ""
 
-#: src/land_outfits.c:928
+#: src/land_outfits.c:932
 msgid "You can only equip one of this outfit type."
 msgstr ""
 
-#: src/land_outfits.c:936
+#: src/land_outfits.c:940
 msgid "You already know of everything this map contains."
 msgstr ""
 
-#: src/land_outfits.c:941
+#: src/land_outfits.c:945
 msgid "You already own this GUI."
 msgstr ""
 
-#: src/land_outfits.c:946
+#: src/land_outfits.c:950
 msgid "You already have this license."
 msgstr "Hai già questa licenza."
 
-#: src/land_outfits.c:952 src/land_shipyard.c:483 src/land_trade.c:320
+#: src/land_outfits.c:956 src/land_shipyard.c:483 src/land_trade.c:320
 #, c-format
 msgid "You need %s more."
 msgstr ""
 
-#: src/land_outfits.c:957
+#: src/land_outfits.c:961
 #, c-format
 msgid "You need the '%s' license to buy this outfit."
 msgstr ""
 
-#: src/land_outfits.c:968
+#: src/land_outfits.c:972
 msgid "You lack the resources to buy this outfit."
 msgstr ""
 
-#: src/land_outfits.c:1030
+#: src/land_outfits.c:1034
 msgid "Buy Intrinsic Outfit?"
 msgstr ""
 
-#: src/land_outfits.c:1030
+#: src/land_outfits.c:1034
 #, c-format
 msgid ""
 "Are you sure you wish to buy '%s'? It will be automatically equipped on your "
 "current ship '%s'."
 msgstr ""
 
-#: src/land_outfits.c:1089
+#: src/land_outfits.c:1093
 msgid "You can't sell a unique outfit."
 msgstr ""
 
-#: src/land_outfits.c:1094
+#: src/land_outfits.c:1098
 msgid "You can't sell a map."
 msgstr ""
 
-#: src/land_outfits.c:1099
+#: src/land_outfits.c:1103
 msgid "You can't sell a GUI."
 msgstr ""
 
-#: src/land_outfits.c:1104
+#: src/land_outfits.c:1108
 msgid "You can't sell a license."
 msgstr ""
 
-#: src/land_outfits.c:1109 src/land_trade.c:351
+#: src/land_outfits.c:1113 src/land_trade.c:351
 msgid "You can't sell something you don't have!"
 msgstr ""
 
-#: src/land_outfits.c:1114
+#: src/land_outfits.c:1118
 msgid "You are unable to sell this outfit!"
 msgstr ""
 
@@ -119663,32 +119782,32 @@ msgstr ""
 msgid "%s is not sold here!"
 msgstr ""
 
-#: src/load.c:137
+#: src/load.c:129
 #, c-format
 msgid "Unable to parse save path '%s'."
 msgstr ""
 
-#: src/load.c:142
+#: src/load.c:134
 #, c-format
 msgid "Unable to get child node of save '%s'."
 msgstr ""
 
-#: src/load.c:213
+#: src/load.c:205
 #, c-format
 msgid "Save '%s' has unnamed plugin node!"
 msgstr ""
 
-#: src/load.c:260 src/load.c:298 src/ndata.c:261
+#: src/load.c:252 src/load.c:290 src/ndata.c:261
 #: src/physfs_archiver_blacklist.c:135
 #, c-format
 msgid "PhysicsFS: Cannot stat %s: %s"
 msgstr ""
 
-#: src/load.c:340
+#: src/load.c:332
 msgid "Save game version mismatch"
 msgstr "La versione del gioco salvato non corrisponde"
 
-#: src/load.c:341
+#: src/load.c:333
 #, c-format
 msgid ""
 "Save game '%s' version does not match Naev version:\n"
@@ -119701,16 +119820,16 @@ msgstr ""
 "   Versione Naev: %s\n"
 "Si è sicuri di voler caricare questo gioco? Potrebbe perdere dei dati."
 
-#: src/load.c:353 src/load.c:358
+#: src/load.c:345 src/load.c:350
 msgctxt "plugins"
 msgid ", "
 msgstr ""
 
-#: src/load.c:359
+#: src/load.c:351
 msgid "Save game plugin mismatch"
 msgstr ""
 
-#: src/load.c:360
+#: src/load.c:352
 #, c-format
 msgid ""
 "Save game '%s' plugins do not match loaded plugins:\n"
@@ -119719,176 +119838,177 @@ msgid ""
 "Are you sure you want to load this game? It may lose data."
 msgstr ""
 
-#: src/load.c:379
+#: src/load.c:371
 msgid "version mismatch"
 msgstr ""
 
-#: src/load.c:382
+#: src/load.c:374
 msgid "plugins mismatch"
 msgstr ""
 
-#: src/load.c:385
+#: src/load.c:377
 msgid "compatible"
 msgstr ""
 
 #. window
-#: src/load.c:508
+#: src/load.c:500
 msgid "Load Pilot"
 msgstr ""
 
-#: src/load.c:522 src/load.c:621
+#: src/load.c:513 src/load.c:611
 #, c-format
 msgid "%s (#r%s#0)"
 msgstr ""
 
-#: src/load.c:551
+#: src/load.c:542
 msgid "Snapshots"
 msgstr ""
 
-#: src/load.c:560
+#: src/load.c:551
 #, c-format
 msgid ""
 "Naev has detected saves in pre-0.10.0 format, and has automatically migrated "
 "them to the new format. Old saves have been backed up at '%s'."
 msgstr ""
 
-#: src/load.c:593
+#: src/load.c:584
 #, c-format
 msgid "Player '%s' not found in list of saves!"
 msgstr ""
 
 #. window
-#: src/load.c:603
+#: src/load.c:594
 msgid "Load Snapshot"
 msgstr ""
 
-#: src/load.c:648
+#: src/load.c:638
 msgid "Save As"
 msgstr ""
 
-#: src/load.c:686
+#: src/load.c:676
 msgid "Save game"
 msgstr ""
 
-#: src/load.c:686
+#: src/load.c:676
 msgid "Please give the new snapshot a name:"
 msgstr ""
 
-#: src/load.c:692 src/player.c:265
+#: src/load.c:682 src/player.c:287
 msgid "Overwrite"
 msgstr "Sovrascrivere"
 
-#: src/load.c:693
+#: src/load.c:683
 #, c-format
 msgid "You already have a snapshot named '%s'. Overwrite?"
 msgstr ""
 
-#: src/load.c:701
+#: src/load.c:691
 msgid ""
 "Failed to save the game! You should exit and check the log to see what "
 "happened and then file a bug report!"
 msgstr ""
 
-#: src/load.c:745
+#: src/load.c:735
 #, c-format
 msgid "%s (options)"
 msgstr ""
 
-#: src/load.c:748
+#: src/load.c:738
 #, c-format
 msgid "%s (this save)"
 msgstr ""
 
-#: src/load.c:754
+#: src/load.c:744
 msgid "Version:"
 msgstr "Versione:"
 
-#: src/load.c:759
+#: src/load.c:749
 msgid "Difficulty:"
 msgstr ""
 
-#: src/load.c:763
+#: src/load.c:753
 msgid "Chapter:"
 msgstr ""
 
-#: src/load.c:765
+#: src/load.c:755
 msgid "Space Object:"
 msgstr ""
 
-#: src/load.c:769
+#: src/load.c:759
 msgid "Ship Name:"
 msgstr "Nome Astronave:"
 
-#: src/load.c:771
+#: src/load.c:761
 msgid "Ship Model:"
 msgstr "Modello Astronave:"
 
-#: src/load.c:813 src/load.c:969 src/load.c:1004
+#: src/load.c:803 src/load.c:959 src/load.c:994
 #, c-format
 msgid "Unable to delete %s"
 msgstr ""
 
-#: src/load.c:961 src/load.c:998
+#: src/load.c:951 src/load.c:988
 msgid "Permanently Delete?"
 msgstr "Cancellare in modo permanente?"
 
-#: src/load.c:962
+#: src/load.c:952
 #, c-format
 msgid ""
 "Are you sure you want to permanently delete the character '%s'?\n"
 "#rThis is an undoable action!#0"
 msgstr ""
 
-#: src/load.c:972 src/load.c:1012
+#: src/load.c:962 src/load.c:1002
 #, c-format
 msgid "Unable to delete '%s' directory"
 msgstr ""
 
-#: src/load.c:999
+#: src/load.c:989
 #, c-format
 msgid ""
 "Are you sure you want to permanently delete the snapshot '%s'?\n"
 "#rThis is an undoable action!#0"
 msgstr ""
 
-#: src/load.c:1083 src/load.c:1145
+#: src/load.c:1073 src/load.c:1135
 msgid "Saved game file seems to have been deleted."
 msgstr "Il gioco salvato sembra essere stato cancellato."
 
-#: src/load.c:1106 src/load.c:1278
+#: src/load.c:1096 src/load.c:1268
 #, c-format
 msgid "Saved game '%s' invalid!"
 msgstr "Il gioco salvato '%s' è invalido!"
 
 #. Welcome message - must be before space_init.
-#: src/load.c:1201 src/player.c:326
+#: src/load.c:1191 src/player.c:348
 #, c-format
 msgid "#gWelcome to %s!"
 msgstr "#gBenvenuto a %s!"
 
-#: src/load.c:1214
+#: src/load.c:1204
 msgid "Old version detected. Sanitizing ships for slots"
 msgstr "Rilevata vecchia versione. Sanificazione astronavi per gli slot"
 
-#: src/load.c:1260
+#: src/load.c:1250
 #, c-format
 msgid "Saved game '%s' failed to load some missions/events properly!"
 msgstr ""
 
-#: src/load.c:1262
+#: src/load.c:1252
 msgid ""
 "\n"
 "In particular, the following missions have failed to load and been removed:"
 msgstr ""
 
-#: src/load.c:1264
+#: src/load.c:1254
 #, c-format
 msgid ""
 "\n"
 "   #r%s#0"
 msgstr ""
 
-#: src/load.c:1266
+#. l +=
+#: src/load.c:1256
 msgid ""
 "\n"
 "Note that, in general, you should be able to find the missions/events again "
@@ -121027,11 +121147,11 @@ msgstr ""
 msgid "SDL: %d.%d.%d [compiled: %d.%d.%d]"
 msgstr ""
 
-#: src/naev.c:1161
+#: src/naev.c:1164
 msgid "SDL is newer than compiled version"
 msgstr ""
 
-#: src/naev.c:1163
+#: src/naev.c:1166
 msgid "SDL is older than compiled version."
 msgstr ""
 
@@ -121382,11 +121502,11 @@ msgstr ""
 msgid "Can only add allies to dynamic factions"
 msgstr ""
 
-#: src/nlua_file.c:259 src/nlua_file.c:290
+#: src/nlua_file.c:261 src/nlua_file.c:292
 msgid "file not open!"
 msgstr ""
 
-#: src/nlua_file.c:443
+#: src/nlua_file.c:449
 #, c-format
 msgid "Directory '%s' enumerate error: %s"
 msgstr ""
@@ -121542,11 +121662,11 @@ msgstr ""
 msgid "Article not valid"
 msgstr ""
 
-#: src/nlua_outfit.c:161
+#: src/nlua_outfit.c:163
 msgid "Outfit is invalid."
 msgstr ""
 
-#: src/nlua_outfit.c:657
+#: src/nlua_outfit.c:677
 msgid "Outfit has invalid damage type."
 msgstr ""
 
@@ -121617,8 +121737,8 @@ msgid "#%cBroadcast %s>#0 \"%s\""
 msgstr ""
 
 #. Hostile
-#: src/nlua_pilot.c:3067 src/nlua_pilot.c:3104 src/player.c:1631
-#: src/player.c:1640 src/player.c:1643 src/player.c:1646
+#: src/nlua_pilot.c:3067 src/nlua_pilot.c:3104 src/player.c:1652
+#: src/player.c:1661 src/player.c:1664 src/player.c:1667
 #, c-format
 msgid "#%c%s>#0 %s"
 msgstr ""
@@ -121815,12 +121935,12 @@ msgstr ""
 msgid "Shader does not have uniform '%s'!"
 msgstr ""
 
-#: src/nlua_shader.c:394
+#: src/nlua_shader.c:395
 #, c-format
 msgid "Unsupported shader uniform type '%d' for uniform '%s'. Ignoring."
 msgstr ""
 
-#: src/nlua_shader.c:445
+#: src/nlua_shader.c:446
 #, c-format
 msgid "Layer was '%s', but must be one of 'final' or 'game'"
 msgstr ""
@@ -121848,7 +121968,7 @@ msgstr ""
 msgid "Spfx does not exist."
 msgstr ""
 
-#: src/nlua_spfx.c:429
+#: src/nlua_spfx.c:431
 #, fuzzy, c-format
 #| msgid "Failed to run start event '%s'."
 msgid ""
@@ -121856,20 +121976,20 @@ msgid ""
 "%s"
 msgstr "Esecuzione dell'evento iniziale '%s' fallita."
 
-#: src/nlua_spfx.c:663
+#: src/nlua_spfx.c:673
 #, c-format
 msgid ""
 "Spfx failed to run 'update':\n"
 "%s"
 msgstr ""
 
-#: src/nlua_spfx.c:691
+#: src/nlua_spfx.c:701
 #, fuzzy, c-format
 #| msgid "Unknown weapon layer!"
 msgid "Unknown render layer '%d'!"
 msgstr "Livello di armi sconosciuto!"
 
-#: src/nlua_spfx.c:718
+#: src/nlua_spfx.c:728
 #, fuzzy, c-format
 #| msgid "Failed to run start event '%s'."
 msgid ""
@@ -122143,7 +122263,7 @@ msgstr ""
 msgid "No such material %s"
 msgstr ""
 
-#: src/opengl.c:110 src/player.c:2310
+#: src/opengl.c:110 src/player.c:2330
 msgid "Aborting screenshot"
 msgstr ""
 
@@ -122302,12 +122422,11 @@ msgstr ""
 msgid "Angle not between 0 and 2.*M_PI [%f]."
 msgstr ""
 
-#. Make sure there's no texture leak
-#: src/opengl_tex.c:1015
+#: src/opengl_tex.c:1016
 msgid "Texture leak detected!"
 msgstr ""
 
-#: src/opengl_tex.c:1018
+#: src/opengl_tex.c:1019
 #, c-format
 msgid "   '%s' opened %d time"
 msgid_plural "   '%s' opened %d times"
@@ -123056,8 +123175,8 @@ msgstr ""
 
 #: src/outfit.c:1500 src/outfit.c:1696 src/outfit.c:1911 src/outfit.c:2068
 #: src/outfit.c:2130 src/outfit.c:2197 src/outfit.c:2283 src/outfit.c:2302
-#: src/outfit.c:2341 src/outfit.c:2377 src/outfit.c:2410 src/outfit.c:2607
-#: src/outfit.c:2690
+#: src/outfit.c:2341 src/outfit.c:2377 src/outfit.c:2410 src/outfit.c:2608
+#: src/outfit.c:2691
 #, c-format
 msgid "Outfit '%s' has unknown node '%s'"
 msgstr ""
@@ -123080,7 +123199,7 @@ msgstr ""
 
 #: src/outfit.c:1571 src/outfit.c:1736 src/outfit.c:2158 src/outfit.c:2216
 #: src/outfit.c:2317 src/outfit.c:2354 src/outfit.c:2386 src/outfit.c:2423
-#: src/outfit.c:2694
+#: src/outfit.c:2695
 #, c-format
 msgid "Outfit '%s' missing/invalid '%s' element"
 msgstr ""
@@ -123128,7 +123247,7 @@ msgid "Outfit '%s' has longer 'iflockon' than ammo 'duration'"
 msgstr ""
 
 #. Ignore Lua since it's handled later.
-#: src/outfit.c:2137 src/outfit.c:2874 src/outfit.c:2890
+#: src/outfit.c:2137 src/outfit.c:2875 src/outfit.c:2891
 #, fuzzy
 #| msgid "Active Plating"
 msgid "Activated Outfit"
@@ -123175,137 +123294,137 @@ msgstr ""
 msgid "Outfit '%s' has invalid or no name"
 msgstr ""
 
-#: src/outfit.c:2548
+#: src/outfit.c:2549
 #, c-format
 msgid "Outfit '%s' has an slot type invalid."
 msgstr ""
 
-#: src/outfit.c:2560
+#: src/outfit.c:2561
 #, c-format
 msgid "Outfit '%s' has unknown slot type '%s'."
 msgstr ""
 
-#: src/outfit.c:2581
+#: src/outfit.c:2582
 #, c-format
 msgid "Empty faction string for outfit '%s' legality!"
 msgstr ""
 
-#: src/outfit.c:2587
+#: src/outfit.c:2588
 #, c-format
 msgid "Outfit '%s' has no factions defined in <illegalto> block!"
 msgstr ""
 
-#: src/outfit.c:2590
+#: src/outfit.c:2591
 #, c-format
 msgid "Outfit '%s' has unknown general node '%s'"
 msgstr ""
 
-#: src/outfit.c:2624
+#: src/outfit.c:2625
 #, c-format
 msgid "Outfit '%s' has unknown node in tags '%s'."
 msgstr ""
 
-#: src/outfit.c:2633
+#: src/outfit.c:2634
 #, c-format
 msgid "Outfit '%s' element 'specific' missing property 'type'"
 msgstr ""
 
-#: src/outfit.c:2649
+#: src/outfit.c:2650
 #, c-format
 msgid "Outfit '%s' has group '%d', should be in the 1-%d range"
 msgstr ""
 
-#: src/outfit.c:2660
+#: src/outfit.c:2661
 #, c-format
 msgid "Outfit '%s' is of type NONE"
 msgstr ""
 
-#: src/outfit.c:2796
+#: src/outfit.c:2797
 #, c-format
 msgid "Duplicated outfit name '%s' detected!"
 msgstr ""
 
-#: src/outfit.c:2809
+#: src/outfit.c:2810
 #, c-format
 msgid "Outfit '%s' failed to read Lua '%s'!"
 msgstr ""
 
-#: src/outfit.c:2824
+#: src/outfit.c:2825
 #, c-format
 msgid ""
 "Outfit '%s' Lua error:\n"
 "%s"
 msgstr ""
 
-#: src/outfit.c:2866
+#: src/outfit.c:2867
 #, c-format
 msgid ""
 "Outfit '%s' has 'ontoggle' Lua function defined, but is set as 'notactive'!"
 msgstr ""
 
-#: src/outfit.c:2922
+#: src/outfit.c:2923
 #, c-format
 msgid "Name collision! %d outfit is named '%s'"
 msgid_plural "Name collision! %d outfits are named '%s'"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/outfit.c:2931
+#: src/outfit.c:2932
 #, c-format
 msgid "Loaded %d Outfit in %.3f s"
 msgid_plural "Loaded %d Outfits in %.3f s"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/outfit.c:2934
+#: src/outfit.c:2935
 #, c-format
 msgid "Loaded %d Outfit"
 msgid_plural "Loaded %d Outfits"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/outfit.c:2964
+#: src/outfit.c:2965
 msgid "Illegal to:"
 msgstr ""
 
-#: src/outfit.c:2966
+#: src/outfit.c:2967
 #, c-format
 msgid ""
 "\n"
 "#r- %s#0"
 msgstr ""
 
-#: src/outfit.c:2977
+#: src/outfit.c:2978
 #, c-format
 msgid ""
 "Outfit '%s' lua load error -> 'load':\n"
 "%s"
 msgstr ""
 
-#: src/outfit.c:2985
+#: src/outfit.c:2986
 #, c-format
 msgid "Outfit '%s' has inexistent license requirement '%s'!"
 msgstr ""
 
-#: src/outfit.c:3169
+#: src/outfit.c:3171
 #, c-format
 msgctxt "outfitstats"
 msgid "%s: %s %s"
 msgstr ""
 
-#: src/outfit.c:3201
+#: src/outfit.c:3203
 #, c-format
 msgctxt "outfitstats"
 msgid "%s: %s %s - %s %s"
 msgstr ""
 
-#: src/outfit.c:3236
+#: src/outfit.c:3238
 #, c-format
 msgctxt "multiplier"
 msgid " x %d"
 msgstr ""
 
-#: src/outfit.c:3243
+#: src/outfit.c:3245
 #, c-format
 msgctxt "outfitstats"
 msgid "%s: %s%s %s [%s %s]"
@@ -123689,94 +123808,108 @@ msgid ""
 "%s"
 msgstr ""
 
-#: src/pilot_weapon.c:453
+#: src/pilot_weapon.c:446
 msgctxt "weapset"
 msgid "Switch"
 msgstr ""
 
-#: src/pilot_weapon.c:456
+#: src/pilot_weapon.c:449
 msgctxt "weapset"
 msgid "Toggle"
 msgstr ""
 
-#: src/pilot_weapon.c:459
+#: src/pilot_weapon.c:452
 msgctxt "weapset"
 msgid "Hold"
 msgstr ""
 
-#: src/pilot_weapon.c:462
+#: src/pilot_weapon.c:455
 #, fuzzy
 #| msgid "unknown error"
 msgctxt "weapset"
 msgid "Unknown"
 msgstr "errore sconosciuto"
 
-#: src/pilot_weapon.c:467 src/pilot_weapon.c:499 src/shiplog.c:657
+#: src/pilot_weapon.c:460 src/pilot_weapon.c:492 src/shiplog.c:657
 msgid "Empty"
 msgstr ""
 
-#: src/pilot_weapon.c:503
+#: src/pilot_weapon.c:496
 #, fuzzy
 #| msgid "Heavy Weapon"
 msgctxt "weapset"
 msgid "Weapons"
 msgstr "Armamenti Pesanti"
 
-#: src/pilot_weapon.c:505
+#: src/pilot_weapon.c:498
 msgctxt "weapset"
 msgid "Utilities"
 msgstr ""
 
-#: src/pilot_weapon.c:507
+#: src/pilot_weapon.c:500
 #, fuzzy
 #| msgid "Arcturus"
 msgctxt "weapset"
 msgid "Structurals"
 msgstr "Arturo"
 
-#: src/pilot_weapon.c:509
+#: src/pilot_weapon.c:502
 msgctxt "weapset"
 msgid "Mixed"
 msgstr ""
 
-#: src/pilot_weapon.c:513
+#: src/pilot_weapon.c:506
 #, fuzzy
 #| msgid "Heavy Weapon"
 msgid "no weapons!"
 msgstr "Armamenti Pesanti"
 
-#: src/pilot_weapon.c:517
+#: src/pilot_weapon.c:510
 #, c-format
 msgctxt "weapset"
 msgid "#o%s - %s#0 [#r%s#0]"
 msgstr ""
 
-#: src/pilot_weapon.c:519
+#: src/pilot_weapon.c:512
 #, c-format
 msgctxt "weapset"
 msgid "%s - %s"
 msgstr ""
 
-#: src/pilot_weapon.c:1353
+#: src/pilot_weapon.c:1346
 #, c-format
 msgid "Shooting unknown weapon type: %s"
 msgstr ""
 
-#: src/pilot_weapon.c:1685
+#: src/pilot_weapon.c:1678
 #, c-format
 msgid "#r%s is overheating!#0"
 msgstr ""
 
 #. Get the name.
-#: src/player.c:254
+#: src/player.c:258
 msgid "Player Name"
 msgstr "Nome del Giocatore"
 
-#: src/player.c:255
+#: src/player.c:259
 msgid "Please write your name:"
 msgstr "Scrivere il proprio nome:"
 
-#: src/player.c:266
+#. In particular should be PHYSFS_ERR_BAD_FILENAME error.
+#: src/player.c:270
+#, c-format
+msgid ""
+"'%s' is an invalid player name as it can not be saved to your filesystem! "
+"Please choose another."
+msgstr ""
+
+#: src/player.c:274 src/player.c:278
+#, fuzzy, c-format
+#| msgid "Unable to redirect stderr to file"
+msgid "Unable to delete temporary file '%s': %s"
+msgstr "Impossibile ridirigere lo standard error verso un file"
+
+#: src/player.c:288
 #, c-format
 msgid ""
 "You already have a pilot named %s. Their autosave and backup save will be "
@@ -123785,33 +123918,33 @@ msgstr ""
 "Hai già un pilota con nome %s. I suoi salvataggi automatici e i backup "
 "saranno sovrascritti. Si vuole continuare?"
 
-#: src/player.c:288
+#: src/player.c:310
 #, c-format
 msgid "Failed to run start mission '%s'."
 msgstr "Esecuzione della missione iniziale '%s' fallita."
 
-#: src/player.c:294
+#: src/player.c:316
 #, c-format
 msgid "Failed to run start event '%s'."
 msgstr "Esecuzione dell'evento iniziale '%s' fallita."
 
-#: src/player.c:333
+#: src/player.c:355
 msgid "Ship not properly set by module."
 msgstr ""
 
-#: src/player.c:400
+#: src/player.c:422
 msgid "Please name your new ship:"
 msgstr "Assegnare un nome alla propria astronave:"
 
-#: src/player.c:425
+#: src/player.c:447
 msgid "Name collision"
 msgstr "Conflitto di nomi"
 
-#: src/player.c:431
+#: src/player.c:453
 msgid "Player ship isn't valid… This shouldn't happen!"
 msgstr ""
 
-#: src/player.c:489
+#: src/player.c:511
 msgid ""
 "Something seriously wonky went on, newly created player does not exist, "
 "bailing!"
@@ -123819,214 +123952,214 @@ msgstr ""
 "È successo qualcosa di veramente grave, il nuovo giocatore appena creato non "
 "esiste, uscita!"
 
-#: src/player.c:523
+#: src/player.c:545
 #, c-format
 msgid "Unable to swap player.p with ship '%s': ship does not exist!"
 msgstr ""
 "Impossibile cambiare giocatore.p con l'astronave '%s': l'astronave non "
 "esiste!"
 
-#: src/player.c:666
+#: src/player.c:688
 #, c-format
 msgid "Unable to find price for player's ship '%s': ship does not exist!"
 msgstr ""
 "Impossibile trovare il prezzo per l'astronave del giocatore '%s': "
 "l'astronave non esiste!"
 
-#: src/player.c:1473
+#: src/player.c:1494
 #, c-format
 msgid "Trying to set player's spob target to invalid ID '%d'"
 msgstr ""
 
-#: src/player.c:1580
+#: src/player.c:1601
 msgid "There are no spobs to land on."
 msgstr ""
 
-#: src/player.c:1589
+#: src/player.c:1610
 msgid "Docking stabilizers malfunctioning, cannot land."
 msgstr ""
 
-#: src/player.c:1626 src/player.c:1634
+#: src/player.c:1647 src/player.c:1655
 msgid "You can't land here."
 msgstr ""
 
-#: src/player.c:1644
+#: src/player.c:1665
 msgid "Landing authorized."
 msgstr ""
 
 #. No shoes, no shirt, no lifeforms, no service.
-#: src/player.c:1652
+#: src/player.c:1673
 #, c-format
 msgid "#oReady to land on %s."
 msgstr "#oPronto per atterrare su %s."
 
-#: src/player.c:1662
+#: src/player.c:1683
 #, c-format
 msgid "#rYou are too far away to land on %s."
 msgstr "#rTu sei troppo lontano per atterrare su %s."
 
-#: src/player.c:1667
+#: src/player.c:1688
 #, c-format
 msgid "#rYou are going too fast to land on %s."
 msgstr "#rTu stai viaggiando troppo velocemente per atterrare su %s."
 
-#: src/player.c:1722
+#: src/player.c:1743
 msgid "Player has landing permission, but no valid spob targeted."
 msgstr ""
 
-#: src/player.c:1733
+#: src/player.c:1754
 #, c-format
 msgid "#%c%s>#0 Landing permission revoked."
 msgstr "#%c%s>#0 Il permesso di atterrare è stato revocato."
 
-#: src/player.c:1750
+#: src/player.c:1771
 msgid "You are not allowed to land at this moment."
 msgstr "Tu non sei autorizzato ad atterrare in questo momento."
 
-#: src/player.c:1813
+#: src/player.c:1834
 #, c-format
 msgid "Trying to set player's hyperspace target to invalid ID '%d'"
 msgstr ""
 
-#: src/player.c:1913
+#: src/player.c:1934
 #, c-format
 msgid "#rReceiving hail! Press #b%s#0 to respond."
 msgstr ""
 
-#: src/player.c:1965
+#: src/player.c:1985
 msgid "Aborting hyperspace sequence."
 msgstr ""
 
-#: src/player.c:1977 src/player_autonav.c:120
+#: src/player.c:1997 src/player_autonav.c:120
 msgid "Hyperspace drive is offline."
 msgstr ""
 
-#: src/player.c:1979
+#: src/player.c:1999
 msgid "You do not have enough fuel to hyperspace jump."
 msgstr ""
 
-#: src/player.c:1981
+#: src/player.c:2001
 msgid "Preparing for hyperspace."
 msgstr ""
 
 #. in case the crap system breaks :)
-#: src/player.c:2322
+#: src/player.c:2342
 msgid "You have reached the maximum amount of screenshots [999]"
 msgstr ""
 
 #. now proceed to take the screenshot
-#: src/player.c:2327
+#: src/player.c:2347
 #, c-format
 msgid "Taking screenshot [%03d]..."
 msgstr ""
 
-#: src/player.c:2358
+#: src/player.c:2378
 #, c-format
 msgid "#r%s is out of comm range, unable to contact."
 msgstr ""
 
-#: src/player.c:2376
+#: src/player.c:2396
 #, c-format
 msgid "#r%s does not respond."
 msgstr ""
 
-#: src/player.c:2383 src/player.c:2405
+#: src/player.c:2403 src/player.c:2425
 msgid "No target selected to hail."
 msgstr ""
 
-#: src/player.c:2438
+#: src/player.c:2458
 msgid "You haven't been hailed by any pilots."
 msgstr ""
 
-#: src/player.c:2451
+#: src/player.c:2471
 msgid "Mouse flying enabled."
 msgstr ""
 
-#: src/player.c:2457
+#: src/player.c:2477
 msgid "Mouse flying disabled."
 msgstr ""
 
-#: src/player.c:2678 src/player.c:2697
+#: src/player.c:2698 src/player.c:2717
 #, c-format
 msgid "Player ship '%s' not found in stack"
 msgstr ""
 
-#: src/player.c:3135
+#: src/player.c:3155
 msgid "Escort is undeployed, removing."
 msgstr ""
 
-#: src/player.c:3146
+#: src/player.c:3166
 msgid "Escort is deployed past outfit limits, removing."
 msgstr ""
 
-#: src/player.c:3439
+#: src/player.c:3459
 #, c-format
 msgid "Found mission cargo '%s' without associated mission."
 msgstr ""
 
-#: src/player.c:3440 src/player.c:3446
+#: src/player.c:3460 src/player.c:3466
 msgid "Please reload save game to remove the dead cargo."
 msgstr ""
 
-#: src/player.c:3445
+#: src/player.c:3465
 #, c-format
 msgid "Found cargo '%s' with 0 quantity."
 msgstr ""
 
-#: src/player.c:3670
+#: src/player.c:3690
 #, c-format
 msgid "Outfit '%s' in player save not found!"
 msgstr ""
 
-#: src/player.c:3697
+#: src/player.c:3717
 #, c-format
 msgid "Ship '%s' in player save not found!"
 msgstr ""
 
-#: src/player.c:3722
+#: src/player.c:3742
 #, c-format
 msgid "Saved license does not exist and could not be found or updated: '%s'!"
 msgstr ""
 
-#: src/player.c:3782
+#: src/player.c:3799
 msgid "Malformed time in save game!"
 msgstr ""
 
-#: src/player.c:3819
+#: src/player.c:3836
 #, c-format
 msgid "Outfit '%s' was saved without quantity!"
 msgstr ""
 
-#: src/player.c:3846
+#: src/player.c:3864
 msgid "Player ship does not exist!"
 msgstr ""
 
-#: src/player.c:3849
+#: src/player.c:3867
 msgid "Player has no other ships, giving starting ship."
 msgstr ""
 
-#: src/player.c:3860
+#: src/player.c:3877
 #, c-format
 msgid "Giving player ship '%s'."
 msgstr ""
 
-#: src/player.c:3866
+#: src/player.c:3883
 msgid "Something went horribly wrong, player does not exist after load..."
 msgstr ""
 
-#: src/player.c:3876
+#: src/player.c:3893
 msgid "Save has no time information, setting to start information."
 msgstr ""
 
-#: src/player.c:3882
+#: src/player.c:3899
 msgid "Player save was updated!"
 msgstr ""
 
-#: src/player.c:3883
+#: src/player.c:3900
 msgid "Save Game Updated"
 msgstr ""
 
-#: src/player.c:3883
+#: src/player.c:3900
 msgid ""
 "The loaded save games has had outfits and ships updated to the current Naev "
 "version. You will find that some outfits and ships you have had have been "
@@ -124034,173 +124167,173 @@ msgid ""
 "refunded the cost in credits."
 msgstr ""
 
-#: src/player.c:3891
+#: src/player.c:3908
 #, c-format
 msgid ""
 "Player starts out in non-existent or invalid spob '%s',trying to find a "
 "suitable one instead."
 msgstr ""
 
-#: src/player.c:3920
+#: src/player.c:3937
 #, c-format
 msgid "Could not find a spob satisfying criteria %d."
 msgstr ""
 
-#: src/player.c:3924
+#: src/player.c:3941
 msgid "Could not find a suitable spob. Choosing a random spob."
 msgstr ""
 
-#: src/player.c:3980
+#: src/player.c:3997
 #, c-format
 msgid "Mission '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:4005
+#: src/player.c:4022
 #, c-format
 msgid "Event '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:4030
+#: src/player.c:4047
 msgid "License node is missing name."
 msgstr ""
 
-#: src/player.c:4057
+#: src/player.c:4074
 msgid "Inventory item node is missing name."
 msgstr ""
 
-#: src/player.c:4093
+#: src/player.c:4110
 #, c-format
 msgid "Fleet ship '%s' is deployed despite not being marked for deployal!"
 msgstr ""
 
-#: src/player.c:4097
+#: src/player.c:4114
 #, c-format
 msgid "Fleet ship '%s' is deployed despite not being space worthy!"
 msgstr ""
 
-#: src/player.c:4102
+#: src/player.c:4119
 #, c-format
 msgid "Escort has invalid type '%s'."
 msgstr ""
 
-#: src/player.c:4153 src/player.c:4328
+#: src/player.c:4170 src/player.c:4344
 #, c-format
 msgid "Unknown ship class '%s' when parsing 'ships_destroyed' node!"
 msgstr ""
 
-#: src/player.c:4172
+#: src/player.c:4189
 #, c-format
 msgid ""
 "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to "
 "stock."
 msgstr ""
 
-#: src/player.c:4180
+#: src/player.c:4197
 #, c-format
 msgid "Outfit '%s' does not fit on player's pilot '%s', adding to stock."
 msgstr ""
 
-#: src/player.c:4200
+#: src/player.c:4216
 msgid "Empty ship slot node found, skipping."
 msgstr ""
 
-#: src/player.c:4254
+#: src/player.c:4270
 #, c-format
 msgid "Ignoring player-owned ship '%s': duplicate of player's current ship."
 msgstr ""
 
-#: src/player.c:4263
+#: src/player.c:4279
 #, c-format
 msgid "Player ship '%s' not found!"
 msgstr ""
 
-#: src/player.c:4346 src/player.c:4364 src/player.c:4382 src/player.c:4399
+#: src/player.c:4362 src/player.c:4380 src/player.c:4398 src/player.c:4415
 #, c-format
 msgid "Save has unknown '%s' tag!"
 msgstr ""
 
-#: src/player.c:4351
+#: src/player.c:4367
 msgid "Outfit slot out of range, not adding to ship."
 msgstr ""
 
-#: src/player.c:4369 src/player.c:4387
+#: src/player.c:4385 src/player.c:4403
 msgid "Outfit slot out of range, not adding."
 msgstr ""
 
-#: src/player.c:4405
+#: src/player.c:4421
 #, c-format
 msgid "Player ship '%s' has intrinsic outfit '%s' exceeding limits! Removing."
 msgstr ""
 
-#: src/player.c:4424
+#: src/player.c:4440
 #, c-format
 msgid "Unknown commodity '%s' detected, removing."
 msgstr ""
 
-#: src/player.c:4431
+#: src/player.c:4447
 #, c-format
 msgid ""
 "Adding cargo '%s' to ship '%s' that is not a mission cargo with quantity=0!"
 msgstr ""
 
-#: src/player.c:4449
+#: src/player.c:4465
 #, c-format
 msgid ""
 "Player ship '%s' failed slot validity check , removing all outfits and "
 "adding to stock."
 msgstr ""
 
-#: src/player.c:4495
+#: src/player.c:4511
 #, c-format
 msgid ""
 "Player ship '%s' has unknown node '%s' in 'weaponsets' (expected "
 "'weaponset')."
 msgstr ""
 
-#: src/player.c:4503
+#: src/player.c:4519
 #, c-format
 msgid "Player ship '%s' missing 'id' tag for weapon set."
 msgstr ""
 
-#: src/player.c:4507
+#: src/player.c:4523
 #, c-format
 msgid "Player ship '%s' has invalid weapon set id '%d' [max %d]."
 msgstr ""
 
-#: src/player.c:4536
+#: src/player.c:4552
 #, c-format
 msgid "Player ship '%s' missing 'type' tag for weapon set."
 msgstr ""
 
-#: src/player.c:4550
+#: src/player.c:4566
 #, c-format
 msgid ""
 "Player ship '%s' has unknown 'weaponset' child node '%s' (expected 'weapon')."
 msgstr ""
 
-#: src/player.c:4558
+#: src/player.c:4574
 #, c-format
 msgid "Player ship '%s' missing 'level' tag for weapon set weapon."
 msgstr ""
 
-#: src/player.c:4563
+#: src/player.c:4579
 #, c-format
 msgid "Player ship '%s' has invalid weapon id %d [max %d]."
 msgstr ""
 
-#: src/player.c:4612
+#: src/player.c:4628
 msgid "You have destealthed."
 msgstr ""
 
-#: src/player.c:4618
+#: src/player.c:4634
 msgid "You have entered stealth mode."
 msgstr ""
 
-#: src/player.c:4623
+#: src/player.c:4639
 msgid "Unable to stealth: missiles locked on!"
 msgstr ""
 
-#: src/player.c:4625
+#: src/player.c:4641
 msgid "Unable to stealth: other pilots nearby!"
 msgstr ""
 
@@ -125699,7 +125832,7 @@ msgstr ""
 #. Bad idea
 #. Again, a really bad idea
 #: src/threadpool.c:290 src/threadpool.c:396 src/threadpool.c:427
-#: src/threadpool.c:582
+#: src/threadpool.c:583
 #, c-format
 msgid "SDL_SemWait failed! Error: %s"
 msgstr ""
@@ -126060,48 +126193,48 @@ msgstr ""
 msgid "Expected node \"diff\" to contain the name of a unidiff. Was empty."
 msgstr "Atteso nodo \"diff\" contenente il nome di un unidiff. Era vuoto."
 
-#: src/weapon.c:423
+#: src/weapon.c:422
 #, c-format
 msgid "Unknown weapon status for '%s'"
 msgstr "Stato sconosciuto dell'arma per '%s'"
 
-#: src/weapon.c:661
+#: src/weapon.c:660
 #, c-format
 msgid "Weapon of type '%s' has no update implemented yet!"
 msgstr ""
 "Non è ancora stato implementato l'aggiornamento dell'arma di tipo '%s'!"
 
-#: src/weapon.c:880
+#: src/weapon.c:879
 #, c-format
 msgid "Weapon of type '%s' has no render implemented yet!"
 msgstr "Non è ancora stato implementato il rendering dell'arma di tipo '%s'!"
 
 #.
-#: src/weapon.c:1622
+#: src/weapon.c:1615
 #, c-format
 msgid ""
 "Outfit '%s' -> '%s':\n"
 "%s"
 msgstr ""
 
-#: src/weapon.c:2296
+#: src/weapon.c:2290
 #, c-format
 msgid "Weapon of type '%s' has no create implemented yet!"
 msgstr "Non è ancora stata implementata la creazione dell'arma di tipo '%s'!"
 
-#: src/weapon.c:2333
+#: src/weapon.c:2327
 msgid "Trying to create a Weapon from a non-Weapon type Outfit"
 msgstr ""
 "Tentativo di creare un'arma da un equipaggiamento di tipo non adatto per le "
 "armi"
 
-#: src/weapon.c:2414
+#: src/weapon.c:2407
 msgid "Trying to create a Beam Weapon from a non-beam outfit."
 msgstr ""
 "Tentativo di creare un'arma disintegratore da un equipaggiamento di tipo non "
 "disintegratore."
 
-#: src/weapon.c:2444
+#: src/weapon.c:2437
 msgid "Trying to remove beam with ID 0!"
 msgstr ""
 
