@@ -4,8 +4,7 @@
    * Allied factions won't help out the player against neutral targets
    * Added missing graphics for meditation chambers
    * Don't allow giving the player names that can't be saved
-   * Fixed file.mkdir return value
-   * Added file.remove
+   * Updated love.filesystem to 0.11 spec renaming mkdir to createDirectory, enumerate to getDirectoryItems, and adding remove.
    * Fixed toggle weapon sets not turning off with only bolt weapons
    * Hardened physics engine a bit to overflow that happens in 49 days of straight game time
    * Fixed trivial memory leak in vpool
