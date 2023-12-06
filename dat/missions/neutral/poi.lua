@@ -73,7 +73,7 @@ function create ()
       end
 
       -- Parse directory to add potential rewards
-      for k,v in ipairs(lf.enumerate("missions/neutral/poi")) do
+      for k,v in ipairs(lf.getDirectoryItems("missions/neutral/poi")) do
          local requirename = "missions.neutral.poi."..string.gsub(v,".lua","")
          local reward = require( requirename )( mem )
          if reward then

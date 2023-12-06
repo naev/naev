@@ -74,7 +74,7 @@ end
 local function load_gfx ()
    local basepath = "gfx/loading/"
    local files = {}
-   for k,f in ipairs( lf.enumerate( basepath ) ) do
+   for k,f in ipairs( lf.getDirectoryItems( basepath ) ) do
       if string.match( f, ".webp$" ) then
          table.insert( files, f )
       end

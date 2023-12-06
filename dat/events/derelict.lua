@@ -59,7 +59,7 @@ function create ()
       weight = 1, -- how it should be weighted, defaults to 1
    },
    --]]
-   for k,v in ipairs(lf.enumerate("events/derelict")) do
+   for k,v in ipairs(lf.getDirectoryItems("events/derelict")) do
       local sp = require ("events.derelict."..string.gsub(v,".lua","") )()
       if sp then
          sp.weight = sp.weight or 1
