@@ -328,9 +328,11 @@ void asteroids_init (void)
 static int asteroid_init( Asteroid *ast, const AsteroidAnchor *field )
 {
    double mod, theta, wmax, r, r2;
+   double x,y;
    AsteroidType *at = NULL;
    int outfield, id;
    int attempts = 0;
+   vec2 pos, vel;
 
    ast->parent  = field->id;
    ast->scanned = 0;
@@ -338,8 +340,8 @@ static int asteroid_init( Asteroid *ast, const AsteroidAnchor *field )
 
    do {
       /* Try to keep density uniform using cartesian coordinates. */
-      ast->sol.pos.x = field->pos.x + (RNGF()*2.-1.)*field->radius;
-      ast->sol.pos.y = field->pos.y + (RNGF()*2.-1.)*field->radius;
+      x = field->pos.x + (RNGF()*2.-1.)*field->radius;
+      y = field->pos.y + (RNGF()*2.-1.)*field->radius;
 
       /* Check if out of the field. */
       outfield = (asteroids_inField(&ast->sol.pos) < 0);
@@ -387,12 +389,17 @@ static int asteroid_init( Asteroid *ast, const AsteroidAnchor *field )
    theta     = RNGF()*2.*M_PI;
    ast->spin = (1-2*RNGF())*field->maxspin;
    mod       = RNGF()*field->maxspeed;
-   vec2_pset( &ast->sol.vel, mod, theta );
 
    /* Fade in stuff. */
    ast->state = ASTEROID_XX;
    ast->timer_max = ast->timer = -1.;
    ast->ang = RNGF() * M_PI * 2.;
+
+   /* Set up the solid. */
+   vec2_cset( &pos, x, y );
+   vec2_pset( &vel, mod, theta );
+   /* TODO set a proper mass. */
+   solid_init( &ast->sol, 1., theta, &pos, &vel, SOLID_UPDATE_EULER );
 
    return 0;
 }
